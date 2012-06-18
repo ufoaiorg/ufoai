@@ -352,6 +352,7 @@ typedef struct campaign_s {
 	float ufoReductionRate;		/**< is used in the equation which spawns UFOs to determine the probability that a UFO will not be spawned.
 								 * It works like this: the game says: 10 UFOs can be spawned in this cycle. For each UFO it picks a number between 0.0 and 1.0.
 								 * If the number is higher than ufoReductionRate, it is spawned. Otherwise it is not. So higher numbers lead to fewer UFOs. */
+	int initialInterest;
 } campaign_t;
 
 int CP_GetSalaryBaseEmployee(const salary_t *salary, employeeType_t type);

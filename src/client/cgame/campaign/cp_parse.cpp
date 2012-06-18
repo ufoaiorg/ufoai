@@ -353,6 +353,7 @@ static const value_t campaign_vals[] = {
 	{"firstbase", V_STRING, offsetof(campaign_t, firstBaseTemplate), 0},
 	{"researchrate", V_FLOAT, offsetof(campaign_t, researchRate), MEMBER_SIZEOF(campaign_t, researchRate)},
 	{"uforeductionrate", V_FLOAT, offsetof(campaign_t, ufoReductionRate), MEMBER_SIZEOF(campaign_t, ufoReductionRate)},
+	{"initialinterest", V_INT, offsetof(campaign_t, initialInterest), MEMBER_SIZEOF(campaign_t, initialInterest)},
 	{NULL, V_NULL, 0, 0}
 };
 
@@ -394,6 +395,7 @@ static void CP_ParseCampaign (const char *name, const char **text)
 	Q_strncpyz(cp->researched, "researched_human", sizeof(cp->researched));
 	cp->researchRate = 0.8f;
 	cp->ufoReductionRate = NON_OCCURRENCE_PROBABILITY;
+	cp->initialInterest = INITIAL_OVERALL_INTEREST;
 
 	/* get it's body */
 	token = Com_Parse(text);

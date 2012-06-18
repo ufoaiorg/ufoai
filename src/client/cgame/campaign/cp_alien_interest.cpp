@@ -39,11 +39,11 @@ void INT_ResetAlienInterest (void)
 
 	ccs.lastInterestIncreaseDelay = 0;
 	ccs.lastMissionSpawnedDelay = 0;
-	ccs.overallInterest = INITIAL_OVERALL_INTEREST;
+	ccs.overallInterest = ccs.curCampaign->initialInterest;
 
 	for (i = 0; i < INTERESTCATEGORY_MAX; i++)
 		ccs.interest[i] = 0;
-	ccs.interest[INTERESTCATEGORY_RECON] = INITIAL_OVERALL_INTEREST;
+	ccs.interest[INTERESTCATEGORY_RECON] = ccs.curCampaign->initialInterest;
 }
 
 /**
