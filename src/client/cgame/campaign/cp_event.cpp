@@ -76,6 +76,7 @@ static const value_t eventMail_vals[] = {
 	{"body", V_TRANSLATION_STRING, offsetof(eventMail_t, body), 0},
 	{"icon", V_HUNK_STRING, offsetof(eventMail_t, icon), 0},
 	{"model", V_HUNK_STRING, offsetof(eventMail_t, model), 0},
+	{"skipmessage", V_BOOL, offsetof(eventMail_t, skipMessage), MEMBER_SIZEOF(eventMail_t, skipMessage)},
 
 	{NULL, V_NULL, 0, 0}
 };
@@ -215,12 +216,15 @@ void CL_ParseCampaignEvents (const char *name, const char **text)
  */
 void CL_EventAddMail (const char *eventMailId)
 {
-	message_t *m;
 	char dateBuf[MAX_VAR] = "";
 
 	eventMail_t* eventMail = CL_GetEventMail(eventMailId);
 	if (!eventMail) {
 		Com_Printf("CL_EventAddMail: Could not find eventmail with id '%s'\n", eventMailId);
+		return;
+	}
+
+	if (eventMail->sent) {
 		return;
 	}
 
@@ -237,11 +241,15 @@ void CL_EventAddMail (const char *eventMailId)
 		eventMail->date = Mem_PoolStrDup(dateBuf, cp_campaignPool, 0);
 	}
 
-	m = MS_AddNewMessage("", va(_("You've got a new mail: %s"), _(eventMail->subject)), MSG_EVENT);
-	if (m)
-		m->eventMail = eventMail;
-	else
-		Com_Printf("CL_EventAddMail: Could not add message with id: %s\n", eventMailId);
+	eventMail->sent = true;
+
+	if (!eventMail->skipMessage) {
+		message_t *m = MS_AddNewMessage("", va(_("You've got a new mail: %s"), _(eventMail->subject)), MSG_EVENT);
+		if (m)
+			m->eventMail = eventMail;
+		else
+			Com_Printf("CL_EventAddMail: Could not add message with id: %s\n", eventMailId);
+	}
 
 	UP_OpenEventMail(eventMailId);
 }

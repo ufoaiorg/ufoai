@@ -48,7 +48,9 @@ typedef struct eventMail_s {
 	char *body;			/**< the body of the event mail */
 	char *icon;			/**< icon in the mailclient */
 	char *model;		/**< model name of the sender */
-	bool read;		/**< already read the mail? */
+	bool read;			/**< already read the mail? */
+	bool sent;			/**< already sent, don't send twice */
+	bool skipMessage;	/**< don't add the mail to the message stack (won't be saved) */
 } eventMail_t;
 
 void CL_EventAddMail_f(void);

@@ -46,6 +46,7 @@ mail tip_buildufoyard
 	body "_tip_build_ufo_yard_txt"
 	model "characters/navarre"
 	icon "icons/mail_tech"
+	skipmessage	true
 }
 
 mail tip_capturelivealien
@@ -56,6 +57,7 @@ mail tip_capturelivealien
 	body "_tip_capture_live_alien_txt"
 	model "characters/connor"
 	icon "icons/mail_alien"
+	skipmessage	true
 }
 
 mail alienbreathing
