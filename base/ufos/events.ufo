@@ -38,6 +38,26 @@ mail prolog
 	icon "icons/mail_un"
 }
 
+mail tip_buildufoyard
+{
+	from "_mail_from_paul_navarre"
+	to "_mail_to_base_commander"
+	subject "_Memo: UFO Yard"
+	body "_tip_build_ufo_yard_txt"
+	model "characters/navarre"
+	icon "icons/mail_tech"
+}
+
+mail tip_capturelivealien
+{
+	from "_mail_from_dr_connor"
+	to "_mail_to_base_commander"
+	subject "_Memo: Live Aliens "
+	body "_tip_capture_live_alien_txt"
+	model "characters/connor"
+	icon "icons/mail_alien"
+}
+
 mail alienbreathing
 {
 	from "_mail_from_paul_navarre"
