@@ -45,7 +45,7 @@ mail alienbreathing
 	subject "_Alien died"
 	body "_mail_stunned_alien_died"
 	model "characters/navarre"
-	icon "icons/mail_un"
+	icon "icons/mail_tech"
 }
 
 mail alien_base_discovered
@@ -65,5 +65,5 @@ mail ufocarrier
 	subject "_UFO-Carrier"
 	body "_mail_ufocarrier"
 	model "characters/navarre"
-	icon "icons/mail_un"
+	icon "icons/mail_tech"
 }
