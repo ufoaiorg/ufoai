@@ -52,7 +52,7 @@ mail tip_capturelivealien
 {
 	from "_mail_from_dr_connor"
 	to "_mail_to_base_commander"
-	subject "_Memo: Live Aliens "
+	subject "_Memo: Live Aliens"
 	body "_tip_capture_live_alien_txt"
 	model "characters/connor"
 	icon "icons/mail_alien"
