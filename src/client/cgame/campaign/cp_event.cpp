@@ -156,23 +156,27 @@ const campaignEvents_t *CP_GetEventsByID (const char *name)
 static int CP_CheckTriggerEvent (const char *expression, const void* userdata)
 {
 	const char *type;
-	char value[MAX_VAR];
-	const char *format = "[%"STRINGIFY(MAX_VAR)"s]";
 
 	/* check that a particular installation type is built already */
-	type = Q_stristr(expression, "installation");
+	type = Q_strstart(expression, "installation");
 	if (type != 0) {
-		sscanf(type, format, value);
-		const installationType_t type = INS_GetType(value);
-		if (INS_HasType(type, INSTALLATION_NOT_USED))
+		if (strlen(type) <= 1)
+			return -1;
+		char value[MAX_VAR];
+		Q_strncpyz(value, type + 1, sizeof(value));
+		value[strlen(value) - 1] = '\0';
+		const installationType_t insType = INS_GetType(value);
+		if (INS_HasType(insType, INSTALLATION_NOT_USED))
 			return 1;
 		return 0;
 	}
 
 	/* check whether a particular ufo was detected */
-	type = Q_stristr(expression, "ufo");
+	type = Q_strstart(expression, "ufo");
 	if (type != 0) {
-		sscanf(type, format, value);
+		char value[MAX_VAR];
+		if (sscanf(type, "[%64s]", value) != 1)
+			return -1;
 		const char* detectedUFO = static_cast<const char*>(userdata);
 		if (!Q_strvalid(detectedUFO))
 			return -1;
@@ -180,10 +184,11 @@ static int CP_CheckTriggerEvent (const char *expression, const void* userdata)
 	}
 
 	/* check that the given xvi level is reached in any nation */
-	type = Q_stristr(expression, "xvi");
+	type = Q_strstart(expression, "xvi");
 	if (type != 0) {
-		sscanf(type, format, value);
-		const int xvi = atoi(value);
+		int xvi;
+		if (sscanf(type, "[%i]", &xvi) != 1)
+			return -1;
 		int i;
 		/* check for XVI infection rate */
 		for (i = 0; i < ccs.numNations; i++) {
@@ -196,10 +201,11 @@ static int CP_CheckTriggerEvent (const char *expression, const void* userdata)
 	}
 
 	/* check that these days have passed in the campaign */
-	type = Q_stristr(expression, "days");
+	type = Q_strstart(expression, "days");
 	if (type != 0) {
-		sscanf(type, format, value);
-		const int days = atoi(value);
+		int days;
+		if (sscanf(type, "[%i]", &days) != 1)
+			return -1;
 		date_t d = ccs.curCampaign->date;
 		d.day += days;
 		if (Date_IsDue(&d))
