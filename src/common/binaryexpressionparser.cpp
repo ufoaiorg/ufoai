@@ -152,6 +152,9 @@ public:
 
 bool BEP_Evaluate (const char *expr, BEPEvaluteCallback_t varFuncParam)
 {
+	if (!Q_strvalid(expr))
+		return true;
+
 	BinaryExpressionParser bep(expr, varFuncParam);
 	const bool result = bep.getResult();
 	const binaryExpressionParserError_t error = bep.getError();

@@ -624,6 +624,7 @@ static void testBinaryExpressionParser (void)
 	CU_ASSERT_FALSE(BEP_Evaluate("b|(d&c)", TEST_BEP));
 	CU_ASSERT_TRUE(BEP_Evaluate("b|(a&c)", TEST_BEP));
 	CU_ASSERT_FALSE(BEP_Evaluate("a^c", TEST_BEP));
+	CU_ASSERT_TRUE(BEP_Evaluate("", TEST_BEP));
 }
 
 int UFO_AddGenericTests (void)

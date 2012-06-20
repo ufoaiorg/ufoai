@@ -59,7 +59,7 @@ static void SCP_CampaignActivateStageSets (stage_t *stage)
 			const date_t zero = {0, 0};
 			int i;
 			/* check needed sets */
-			if (set->def->needed[0] != '\0' && !BEP_Evaluate(set->def->needed, SCP_StageSetDone))
+			if (!BEP_Evaluate(set->def->needed, SCP_StageSetDone))
 				continue;
 
 			Com_Printf("activate stage set '%s'\n", set->def->name);
