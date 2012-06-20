@@ -93,7 +93,6 @@ static bool CheckAND (const char **s)
 	bool result = true;
 	bool negate = false;
 	bool goon = false;
-	int value;
 
 	do {
 		while (**s == '!') {
@@ -108,7 +107,7 @@ static bool CheckAND (const char **s)
 			NextChar(s);
 		} else {
 			/* get the variable state */
-			value = varFunc(GetSwitchName(s));
+			int value = varFunc(GetSwitchName(s));
 			if (value == -1)
 				binaryExpressionParserError = BEPERR_NOTFOUND;
 			else

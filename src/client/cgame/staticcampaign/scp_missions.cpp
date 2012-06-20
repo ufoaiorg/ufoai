@@ -33,17 +33,19 @@
 #include "../../../common/binaryexpressionparser.h"
 #include "save/save_staticcampaign.h"
 
-static bool SCP_StageSetDone (const char *name)
+static int SCP_StageSetDone (const char *name)
 {
 	setState_t *set;
 	int i;
 
 	for (i = 0, set = &scd->set[scd->testStage->first]; i < scd->testStage->num; i++, set++)
-		if (Q_streq(name, set->def->name))
-			return set->done >= set->def->quota;
+		if (Q_streq(name, set->def->name)) {
+			const int value = (set->done >= set->def->quota) ? 1 : 0;
+			return value;
+		}
 
 	/* didn't find set */
-	return false;
+	return -1;
 }
 
 static void SCP_CampaignActivateStageSets (stage_t *stage)
