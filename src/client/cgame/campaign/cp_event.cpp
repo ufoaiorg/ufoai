@@ -163,7 +163,7 @@ static int CP_CheckTriggerEvent (const char *expression, const void* userdata)
 	if (type != 0) {
 		sscanf(type, format, value);
 		const installationType_t type = INS_GetType(value);
-		if (INS_HasType(type))
+		if (INS_HasType(type, INSTALLATION_NOT_USED))
 			return 1;
 		return 0;
 	}
@@ -270,6 +270,7 @@ void CP_ParseEventTrigger (const char *name, const char **text)
 	OBJZERO(*event);
 	Com_DPrintf(DEBUG_CLIENT, "...found event %s\n", name);
 	ccs.numCampaignTriggerEvents++;
+	event->active = true;
 
 	do {
 		token = Com_EParse(text, errhead, name);
