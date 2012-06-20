@@ -317,7 +317,7 @@ bool CP_TriggerEventLoadXML (xmlNode_t *p)
 
 	n = XML_GetNode(p, SAVE_TRIGGEREVENTS_TRIGGEREVENTS);
 	if (!n)
-		return false;
+		return true;
 
 	for (s = XML_GetNode(n, SAVE_TRIGGEREVENTS_TRIGGEREVENT); s; s = XML_GetNextNode(s,n, SAVE_TRIGGEREVENTS_TRIGGEREVENT)) {
 		const char *id = XML_GetString(s, SAVE_TRIGGEREVENTS_NAME);
