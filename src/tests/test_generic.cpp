@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "test_shared.h"
 #include "../common/common.h"
 #include "../common/http.h"
+#include "../common/binaryexpressionparser.h"
 #include "../shared/utf8.h"
 #include "../shared/shared.h"
 #include "../shared/infostring.h"
@@ -609,6 +610,22 @@ static void testComFilePath (void)
 	CU_ASSERT_STRING_EQUAL(buf, "");
 }
 
+static int TEST_BEP (const char *id)
+{
+	return Q_streq(id, "a") || Q_streq(id, "c");
+}
+
+static void testBinaryExpressionParser (void)
+{
+	CU_ASSERT_TRUE(BEP_Evaluate("a|b", TEST_BEP));
+	CU_ASSERT_FALSE(BEP_Evaluate("a&b", TEST_BEP));
+	CU_ASSERT_TRUE(BEP_Evaluate("a&(b|c)", TEST_BEP));
+	CU_ASSERT_TRUE(BEP_Evaluate("a|(b&c)", TEST_BEP));
+	CU_ASSERT_FALSE(BEP_Evaluate("b|(d&c)", TEST_BEP));
+	CU_ASSERT_TRUE(BEP_Evaluate("b|(a&c)", TEST_BEP));
+	CU_ASSERT_FALSE(BEP_Evaluate("a^c", TEST_BEP));
+}
+
 int UFO_AddGenericTests (void)
 {
 	/* add a suite to the registry */
@@ -670,6 +687,9 @@ int UFO_AddGenericTests (void)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(GenericSuite, testComFilePath) == NULL)
+		return CU_get_error();
+
+	if (CU_ADD_TEST(GenericSuite, testBinaryExpressionParser) == NULL)
 		return CU_get_error();
 
 	return CUE_SUCCESS;
