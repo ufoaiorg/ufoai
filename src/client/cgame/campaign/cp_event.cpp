@@ -157,12 +157,12 @@ const campaignEvents_t *CP_GetEventsByID (const char *name)
  */
 void CL_ParseCampaignEvents (const char *name, const char **text)
 {
-	const char *errhead = "CL_ParseCampaignEvents: unexpected end of file (mail ";
+	const char *errhead = "CL_ParseCampaignEvents: unexpected end of file (events ";
 	const char *token;
 	campaignEvents_t* events;
 
 	if (ccs.numCampaignEventDefinitions >= MAX_CAMPAIGNS) {
-		Com_Printf("CL_ParseCampaignEvents: max event def limit hit\n");
+		Com_Printf("CL_ParseCampaignEvents: max events def limit hit\n");
 		return;
 	}
 
@@ -171,7 +171,7 @@ void CL_ParseCampaignEvents (const char *name, const char **text)
 		return;
 
 	if (!*text || token[0] != '{') {
-		Com_Printf("CL_ParseCampaignEvents: event def '%s' without body ignored\n", name);
+		Com_Printf("CL_ParseCampaignEvents: events def '%s' without body ignored\n", name);
 		return;
 	}
 
