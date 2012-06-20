@@ -80,6 +80,7 @@ typedef enum {
 
 typedef struct {
 	campaignTriggerEventType_t type;
+	char *id;
 	char *require;
 	char *command;
 	bool once;

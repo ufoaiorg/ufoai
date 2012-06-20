@@ -271,6 +271,7 @@ void CP_ParseEventTrigger (const char *name, const char **text)
 	Com_DPrintf(DEBUG_CLIENT, "...found event %s\n", name);
 	ccs.numCampaignTriggerEvents++;
 	event->active = true;
+	event->id = Mem_PoolStrDup(name, cp_campaignPool, 0);
 
 	do {
 		token = Com_EParse(text, errhead, name);
