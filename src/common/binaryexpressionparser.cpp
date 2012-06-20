@@ -30,118 +30,133 @@ typedef enum
 	BEPERR_NONE, BEPERR_BRACE, BEPERR_NOEND, BEPERR_NOTFOUND
 } binaryExpressionParserError_t;
 
-static binaryExpressionParserError_t binaryExpressionParserError;
-static BEPEvaluteCallback_t varFunc;
+class BinaryExpressionParser {
+private:
+	binaryExpressionParserError_t binaryExpressionParserError;
+	BEPEvaluteCallback_t varFunc;
+	char varName[MAX_VAR];
+	bool result;
 
-static bool CheckAND (const char **s);
-
-static void SkipWhiteSpaces (const char **s)
-{
-	while (**s == ' ')
-		(*s)++;
-}
-
-static void NextChar (const char **s)
-{
-	(*s)++;
-	/* skip white-spaces too */
-	SkipWhiteSpaces(s);
-}
-
-static const char *GetSwitchName (const char **s)
-{
-	static char varName[MAX_VAR];
-	int pos = 0;
-
-	while (**s > 32 && **s != '^' && **s != '|' && **s != '&' && **s != '!' && **s != '(' && **s != ')') {
-		varName[pos++] = **s;
-		(*s)++;
+	inline void SkipWhiteSpaces (const char **s) const
+	{
+		while (**s == ' ')
+			(*s)++;
 	}
-	varName[pos] = 0;
 
-	return varName;
-}
+	inline void NextChar (const char **s) const
+	{
+		(*s)++;
+		/* skip white-spaces too */
+		SkipWhiteSpaces(s);
+	}
 
-static bool CheckOR (const char **s)
-{
-	bool result = false;
-	int goon = 0;
+	const char *GetSwitchName (const char **s)
+	{
+		int pos = 0;
 
-	SkipWhiteSpaces(s);
-	do {
-		if (goon == 2)
-			result ^= CheckAND(s);
-		else
-			result |= CheckAND(s);
-
-		if (**s == '|') {
-			goon = 1;
-			NextChar(s);
-		} else if (**s == '^') {
-			goon = 2;
-			NextChar(s);
-		} else {
-			goon = 0;
+		while (**s > 32 && **s != '^' && **s != '|' && **s != '&' && **s != '!' && **s != '(' && **s != ')') {
+			varName[pos++] = **s;
+			(*s)++;
 		}
-	} while (goon && !binaryExpressionParserError);
+		varName[pos] = 0;
 
-	return result;
-}
+		return varName;
+	}
 
-static bool CheckAND (const char **s)
-{
-	bool result = true;
-	bool negate = false;
-	bool goon = false;
+	bool CheckOR (const char **s)
+	{
+		bool result = false;
+		int goon = 0;
 
-	do {
-		while (**s == '!') {
-			negate ^= true;
-			NextChar(s);
-		}
-		if (**s == '(') {
-			NextChar(s);
-			result &= CheckOR(s) ^ negate;
-			if (**s != ')')
-				binaryExpressionParserError = BEPERR_BRACE;
-			NextChar(s);
-		} else {
-			/* get the variable state */
-			int value = varFunc(GetSwitchName(s));
-			if (value == -1)
-				binaryExpressionParserError = BEPERR_NOTFOUND;
+		SkipWhiteSpaces(s);
+		do {
+			if (goon == 2)
+				result ^= CheckAND(s);
 			else
-				result &= value ^ negate;
-			SkipWhiteSpaces(s);
-		}
+				result |= CheckAND(s);
 
-		if (**s == '&') {
-			goon = true;
-			NextChar(s);
-		} else {
-			goon = false;
-		}
-		negate = false;
-	} while (goon && !binaryExpressionParserError);
+			if (**s == '|') {
+				goon = 1;
+				NextChar(s);
+			} else if (**s == '^') {
+				goon = 2;
+				NextChar(s);
+			} else {
+				goon = 0;
+			}
+		} while (goon && !binaryExpressionParserError);
 
-	return result;
-}
+		return result;
+	}
+
+	bool CheckAND (const char **s)
+	{
+		bool result = true;
+		bool negate = false;
+		bool goon = false;
+
+		do {
+			while (**s == '!') {
+				negate ^= true;
+				NextChar(s);
+			}
+			if (**s == '(') {
+				NextChar(s);
+				result &= CheckOR(s) ^ negate;
+				if (**s != ')')
+					binaryExpressionParserError = BEPERR_BRACE;
+				NextChar(s);
+			} else {
+				/* get the variable state */
+				int value = varFunc(GetSwitchName(s));
+				if (value == -1)
+					binaryExpressionParserError = BEPERR_NOTFOUND;
+				else
+					result &= value ^ negate;
+				SkipWhiteSpaces(s);
+			}
+
+			if (**s == '&') {
+				goon = true;
+				NextChar(s);
+			} else {
+				goon = false;
+			}
+			negate = false;
+		} while (goon && !binaryExpressionParserError);
+
+		return result;
+	}
+
+public:
+	BinaryExpressionParser (const char *expr, BEPEvaluteCallback_t varFuncParam) :
+		binaryExpressionParserError(BEPERR_NONE), varFunc(varFuncParam)
+	{
+		const char *str = expr;
+		result = CheckOR(&str);
+		/* check for no end error */
+		if (*str && !binaryExpressionParserError)
+			binaryExpressionParserError = BEPERR_NOEND;
+	}
+
+	inline bool getResult() const
+	{
+		return result;
+	}
+
+	inline binaryExpressionParserError_t getError() const
+	{
+		return binaryExpressionParserError;
+	}
+};
 
 bool BEP_Evaluate (const char *expr, BEPEvaluteCallback_t varFuncParam)
 {
-	bool result;
-	const char *str;
+	BinaryExpressionParser bep(expr, varFuncParam);
+	const bool result = bep.getResult();
+	const binaryExpressionParserError_t error = bep.getError();
 
-	binaryExpressionParserError = BEPERR_NONE;
-	varFunc = varFuncParam;
-	str = expr;
-	result = CheckOR(&str);
-
-	// check for no end error
-	if (*str && !binaryExpressionParserError)
-		binaryExpressionParserError = BEPERR_NOEND;
-
-	switch (binaryExpressionParserError) {
+	switch (error) {
 	case BEPERR_NONE:
 		/* do nothing */
 		return result;
