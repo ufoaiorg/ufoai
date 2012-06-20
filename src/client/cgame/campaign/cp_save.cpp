@@ -653,6 +653,7 @@ void SAV_Init (void)
 	static saveSubsystems_t xvi_subsystemXML = {"xvirate", XVI_SaveXML, XVI_LoadXML};
 	static saveSubsystems_t ins_subsystemXML = {"installation", INS_SaveXML, INS_LoadXML};
 	static saveSubsystems_t mso_subsystemXML = {"messageoptions", MSO_SaveXML, MSO_LoadXML};
+	static saveSubsystems_t event_subsystemXML = {"triggerevents", CP_TriggerEventSaveXML, CP_TriggerEventLoadXML};
 	static saveSubsystems_t us_subsystemXML = {"ufostores", US_SaveXML, US_LoadXML};
 
 	saveSubsystemsAmount = 0;
@@ -681,6 +682,7 @@ void SAV_Init (void)
 	SAV_AddSubsystem(&trans_subsystemXML);
 	SAV_AddSubsystem(&xvi_subsystemXML);
 	SAV_AddSubsystem(&mso_subsystemXML);
+	SAV_AddSubsystem(&event_subsystemXML);
 
 	/* Check whether there is a quicksave at all */
 	Cmd_AddCommand("game_quickloadinit", SAV_GameQuickLoadInit_f, "Load the game from the quick save slot.");

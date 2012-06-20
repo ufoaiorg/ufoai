@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../../common/binaryexpressionparser.h"
 #include "cp_campaign.h"
 #include "cp_time.h"
+#include "save/save_triggerevents.h"
 
 static linkedList_t *eventMails = NULL;
 
@@ -286,6 +287,47 @@ void CP_ParseEventTrigger (const char *name, const char **text)
 
 	Com_UnregisterConstVariable("new_day");
 	Com_UnregisterConstVariable("ufo_detection");
+}
+
+bool CP_TriggerEventSaveXML (xmlNode_t *p)
+{
+	xmlNode_t *n = XML_AddNode(p, SAVE_TRIGGEREVENTS_TRIGGEREVENTS);
+	int i;
+
+	for (i = 0; i < ccs.numCampaignTriggerEvents; i++) {
+		const campaignTriggerEvent_t *event = &ccs.campaignTriggerEvents[i];
+		xmlNode_t *s = XML_AddNode(n, SAVE_TRIGGEREVENTS_TRIGGEREVENT);
+
+		XML_AddString(s, SAVE_TRIGGEREVENTS_NAME, event->id);
+		XML_AddBool(s, SAVE_TRIGGEREVENTS_STATE, event->active);
+	}
+
+	return true;
+}
+
+bool CP_TriggerEventLoadXML (xmlNode_t *p)
+{
+	xmlNode_t *n, *s;
+
+	n = XML_GetNode(p, SAVE_TRIGGEREVENTS_TRIGGEREVENTS);
+	if (!n)
+		return false;
+
+	for (s = XML_GetNode(n, SAVE_TRIGGEREVENTS_TRIGGEREVENT); s; s = XML_GetNextNode(s,n, SAVE_TRIGGEREVENTS_TRIGGEREVENT)) {
+		const char *id = XML_GetString(s, SAVE_TRIGGEREVENTS_NAME);
+		const bool state = XML_GetBool(s, SAVE_TRIGGEREVENTS_STATE, true);
+
+		int i;
+		for (i = 0; i < ccs.numCampaignTriggerEvents; i++) {
+			campaignTriggerEvent_t *event = &ccs.campaignTriggerEvents[i];
+			if (Q_streq(event->id, id)) {
+				event->active = state;
+				break;
+			}
+		}
+	}
+
+	return true;
 }
 
 /**

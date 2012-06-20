@@ -71,7 +71,7 @@ void XML_AddBool (xmlNode_t *parent, const char *name, bool value)
 void XML_AddBoolValue (xmlNode_t *parent, const char *name, bool value)
 {
 	if (value)
-		mxmlElementSetAttr(parent, name, value ? "true" : "false");
+		mxmlElementSetAttr(parent, name, "true");
 }
 
 /**
