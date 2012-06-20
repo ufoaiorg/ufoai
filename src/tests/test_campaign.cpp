@@ -1346,6 +1346,13 @@ static void testRandomPosMissions (void)
 	}
 }
 
+static void testEventTrigger (void)
+{
+	ResetCampaignData();
+
+	CP_TriggerEvent(NEW_DAY);
+}
+
 int UFO_AddCampaignTests (void)
 {
 	/* add a suite to the registry */
@@ -1440,6 +1447,9 @@ int UFO_AddCampaignTests (void)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(campaignSuite, testRandomPosMissions) == NULL)
+		return CU_get_error();
+
+	if (CU_ADD_TEST(campaignSuite, testEventTrigger) == NULL)
 		return CU_get_error();
 
 	return CUE_SUCCESS;

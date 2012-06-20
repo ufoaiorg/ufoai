@@ -73,8 +73,25 @@ typedef struct campaignEvents_s {
 	char *id;				/**< script id */
 } campaignEvents_t;
 
+typedef enum {
+	NEW_DAY,
+	UFO_DETECTION
+} campaignTriggerEventType_t;
+
+typedef struct {
+	campaignTriggerEventType_t type;
+	char *require;
+	char *command;
+	bool once;
+	bool active;
+} campaignTriggerEvent_t;
+
+#define MAX_CAMPAIGN_TRIGGER_EVENTS 32
+
 void CP_CheckCampaignEvents(struct campaign_s *campaign);
 void CL_ParseCampaignEvents(const char *name, const char **text);
+void CP_ParseEventTrigger(const char *name, const char **text);
+void CP_TriggerEvent(campaignTriggerEventType_t type, const void* userdata = NULL);
 const campaignEvents_t *CP_GetEventsByID(const char *name);
 
 #endif /* CLIENT_CL_EVENT */

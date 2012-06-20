@@ -578,6 +578,7 @@ void CP_CampaignRun (campaign_t *campaign, float secondsSinceLastFrame)
 			/* should be executed after all daily event that could
 			 * change XVI overlay */
 			CP_UpdateNationXVIInfection();
+			CP_TriggerEvent(NEW_DAY);
 		}
 
 		if (dt > 0) {

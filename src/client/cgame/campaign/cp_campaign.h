@@ -513,6 +513,9 @@ typedef struct ccs_s {
 	campaignEvents_t campaignEvents[MAX_CAMPAIGNS];	/**< holds all campaign events (cl_event.c) */
 	int numCampaignEventDefinitions;	/**< how many event definitions (script-id: events) parsed */
 
+	campaignTriggerEvent_t campaignTriggerEvents[MAX_CAMPAIGN_TRIGGER_EVENTS];
+	int numCampaignTriggerEvents;
+
 	/* == buildings in bases == */
 	/* A list of all possible unique buildings. */
 	building_t buildingTemplates[MAX_BUILDINGS];

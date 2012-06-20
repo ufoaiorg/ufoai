@@ -36,6 +36,7 @@ private:
 	BEPEvaluteCallback_t varFunc;
 	char varName[MAX_VAR];
 	bool result;
+	const void* userdata;
 
 	inline void SkipWhiteSpaces (const char **s) const
 	{
@@ -108,7 +109,7 @@ private:
 				NextChar(s);
 			} else {
 				/* get the variable state */
-				int value = varFunc(GetSwitchName(s));
+				int value = varFunc(GetSwitchName(s), userdata);
 				if (value == -1)
 					binaryExpressionParserError = BEPERR_NOTFOUND;
 				else
@@ -129,8 +130,8 @@ private:
 	}
 
 public:
-	BinaryExpressionParser (const char *expr, BEPEvaluteCallback_t varFuncParam) :
-		binaryExpressionParserError(BEPERR_NONE), varFunc(varFuncParam)
+	BinaryExpressionParser (const char *expr, BEPEvaluteCallback_t varFuncParam, const void* userdataPtr) :
+		binaryExpressionParserError(BEPERR_NONE), varFunc(varFuncParam), userdata(userdataPtr)
 	{
 		const char *str = expr;
 		result = CheckOR(&str);
@@ -150,12 +151,12 @@ public:
 	}
 };
 
-bool BEP_Evaluate (const char *expr, BEPEvaluteCallback_t varFuncParam)
+bool BEP_Evaluate (const char *expr, BEPEvaluteCallback_t varFuncParam, const void* userdata)
 {
 	if (!Q_strvalid(expr))
 		return true;
 
-	BinaryExpressionParser bep(expr, varFuncParam);
+	BinaryExpressionParser bep(expr, varFuncParam, userdata);
 	const bool result = bep.getResult();
 	const binaryExpressionParserError_t error = bep.getError();
 

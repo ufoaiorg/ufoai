@@ -636,6 +636,8 @@ static void CP_ParseScriptFirst (const char *type, const char *name, const char 
 		CL_ParseEventMails(name, text);
 	else if (Q_streq(type, "events"))
 		CL_ParseCampaignEvents(name, text);
+	else if (Q_streq(type, "event"))
+		CP_ParseEventTrigger(name, text);
 	else if (Q_streq(type, "components"))
 		CP_ParseComponents(name, text);
 	else if (Q_streq(type, "alienteam"))

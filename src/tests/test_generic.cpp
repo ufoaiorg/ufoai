@@ -610,7 +610,7 @@ static void testComFilePath (void)
 	CU_ASSERT_STRING_EQUAL(buf, "");
 }
 
-static int TEST_BEP (const char *id)
+static int TEST_BEP (const char *id, const void* userdata)
 {
 	return Q_streq(id, "a") || Q_streq(id, "c");
 }

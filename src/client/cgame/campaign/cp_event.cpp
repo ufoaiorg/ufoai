@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../cl_shared.h"
 #include "../../../shared/parse.h"
+#include "../../../common/binaryexpressionparser.h"
 #include "cp_campaign.h"
 #include "cp_time.h"
 
@@ -149,6 +150,140 @@ const campaignEvents_t *CP_GetEventsByID (const char *name)
 	}
 
 	return NULL;
+}
+
+static int CP_CheckTriggerEvent (const char *expression, const void* userdata)
+{
+	const char *type;
+	char value[MAX_VAR];
+	const char *format = "[%"STRINGIFY(MAX_VAR)"s]";
+
+	/* check that a particular installation type is built already */
+	type = Q_stristr(expression, "installation");
+	if (type != 0) {
+		sscanf(type, format, value);
+		const installationType_t type = INS_GetType(value);
+		if (INS_HasType(type))
+			return 1;
+		return 0;
+	}
+
+	/* check whether a particular ufo was detected */
+	type = Q_stristr(expression, "ufo");
+	if (type != 0) {
+		sscanf(type, format, value);
+		const char* detectedUFO = static_cast<const char*>(userdata);
+		if (!Q_strvalid(detectedUFO))
+			return -1;
+		return Q_streq(detectedUFO, value);
+	}
+
+	/* check that the given xvi level is reached in any nation */
+	type = Q_stristr(expression, "xvi");
+	if (type != 0) {
+		sscanf(type, format, value);
+		const int xvi = atoi(value);
+		int i;
+		/* check for XVI infection rate */
+		for (i = 0; i < ccs.numNations; i++) {
+			const nation_t *nation = NAT_GetNationByIDX(i);
+			const nationInfo_t *stats = NAT_GetCurrentMonthInfo(nation);
+			if (stats->xviInfection >= xvi)
+				return 1;
+		}
+		return 0;
+	}
+
+	/* check that these days have passed in the campaign */
+	type = Q_stristr(expression, "days");
+	if (type != 0) {
+		sscanf(type, format, value);
+		const int days = atoi(value);
+		date_t d = ccs.curCampaign->date;
+		d.day += days;
+		if (Date_IsDue(&d))
+			return 1;
+		return 0;
+	}
+	return -1;
+}
+
+/**
+ * @brief Triggers a campaign event with a special type
+ * @param[in] type the event type
+ * @param[in] userdata Any userdata that is passed to the bep checker function
+ */
+void CP_TriggerEvent (campaignTriggerEventType_t type, const void* userdata)
+{
+	int i;
+
+	for (i = 0; i < ccs.numCampaignTriggerEvents; i++) {
+		campaignTriggerEvent_t *event = &ccs.campaignTriggerEvents[i];
+		if (event->type != type || !event->active)
+			continue;
+
+		if (BEP_Evaluate(event->require, CP_CheckTriggerEvent, userdata)) {
+			if (Q_strvalid(event->command))
+				Cmd_ExecuteString(event->command);
+		}
+
+		/** @todo add this to the savegame */
+		if (event->once) {
+			event->active = false;
+		}
+	}
+}
+
+/** @brief Valid event mail parameters */
+static const value_t event_vals[] = {
+	{"type", V_INT, offsetof(campaignTriggerEvent_t, type), MEMBER_SIZEOF(campaignTriggerEvent_t, type)},
+	{"require", V_HUNK_STRING, offsetof(campaignTriggerEvent_t, require), 0},
+	{"command", V_HUNK_STRING, offsetof(campaignTriggerEvent_t, command), 0},
+	{"once", V_BOOL, offsetof(campaignTriggerEvent_t, once), MEMBER_SIZEOF(campaignTriggerEvent_t, once)},
+
+	{NULL, V_NULL, 0, 0}
+};
+
+void CP_ParseEventTrigger (const char *name, const char **text)
+{
+	const char *errhead = "CP_ParseEventTrigger: unexpected end of file (event ";
+	const char *token;
+
+	if (ccs.numCampaignTriggerEvents >= MAX_CAMPAIGN_TRIGGER_EVENTS) {
+		Com_Printf("CP_ParseEventTrigger: max event def limit hit\n");
+		return;
+	}
+
+	token = Com_EParse(text, errhead, name);
+	if (!*text)
+		return;
+
+	if (!*text || token[0] != '{') {
+		Com_Printf("CP_ParseEventTrigger: event def '%s' without body ignored\n", name);
+		return;
+	}
+
+	Com_RegisterConstInt("new_day", NEW_DAY);
+	Com_RegisterConstInt("ufo_detection", UFO_DETECTION);
+
+	campaignTriggerEvent_t *event = &ccs.campaignTriggerEvents[ccs.numCampaignTriggerEvents];
+	OBJZERO(*event);
+	Com_DPrintf(DEBUG_CLIENT, "...found event %s\n", name);
+	ccs.numCampaignTriggerEvents++;
+
+	do {
+		token = Com_EParse(text, errhead, name);
+		if (!*text)
+			break;
+		if (*token == '}')
+			break;
+		if (!Com_ParseBlockToken(name, text, event, event_vals, cp_campaignPool, token)) {
+			Com_Printf("CP_ParseEventTrigger: Ignoring unknown event value '%s'\n", token);
+		}
+	} while (*text);
+
+	Com_UnregisterConstVariable("new_day");
+	Com_UnregisterConstVariable("ufo_detection");
 }
 
 /**

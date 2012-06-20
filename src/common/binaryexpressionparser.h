@@ -28,8 +28,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /**
  * @return -1 not found, 1 = true, 0 = false
  */
-typedef int (*BEPEvaluteCallback_t) (const char *var);
+typedef int (*BEPEvaluteCallback_t) (const char *var, const void* userdata);
 
-bool BEP_Evaluate (const char *expr, BEPEvaluteCallback_t varFunc);
+bool BEP_Evaluate (const char *expr, BEPEvaluteCallback_t varFunc, const void* userdata = NULL);
 
 #endif
