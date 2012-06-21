@@ -303,6 +303,8 @@ bool CP_TriggerEventSaveXML (xmlNode_t *p)
 
 	for (i = 0; i < ccs.numCampaignTriggerEvents; i++) {
 		const campaignTriggerEvent_t *event = &ccs.campaignTriggerEvents[i];
+		if (event->active)
+			continue;
 		xmlNode_t *s = XML_AddNode(n, SAVE_TRIGGEREVENTS_TRIGGEREVENT);
 
 		XML_AddString(s, SAVE_TRIGGEREVENTS_NAME, event->id);
