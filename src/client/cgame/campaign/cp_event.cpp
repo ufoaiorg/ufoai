@@ -233,7 +233,6 @@ void CP_TriggerEvent (campaignTriggerEventType_t type, const void* userdata)
 			if (Q_strvalid(event->command))
 				Cmd_ExecuteString(event->command);
 
-			/** @todo add this to the savegame */
 			if (event->once) {
 				event->active = false;
 			}
