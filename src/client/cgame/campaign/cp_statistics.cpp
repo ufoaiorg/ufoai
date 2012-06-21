@@ -167,6 +167,7 @@ bool STATS_SaveXML (xmlNode_t *parent)
 	XML_AddIntValue(stats, SAVE_STATS_SOLDIERSLOST, ccs.campaignStats.soldiersLost);
 	XML_AddIntValue(stats, SAVE_STATS_SOLDIERSNEW, ccs.campaignStats.soldiersNew);
 	XML_AddIntValue(stats, SAVE_STATS_KILLEDALIENS, ccs.campaignStats.killedAliens);
+	XML_AddIntValue(stats, SAVE_STATS_CAPTUREDALIENS, ccs.campaignStats.capturedAliens);
 	XML_AddIntValue(stats, SAVE_STATS_RESCUEDCIVILIANS, ccs.campaignStats.rescuedCivilians);
 	XML_AddIntValue(stats, SAVE_STATS_RESEARCHEDTECHNOLOGIES, ccs.campaignStats.researchedTechnologies);
 	XML_AddIntValue(stats, SAVE_STATS_MONEYINTERCEPTIONS, ccs.campaignStats.moneyInterceptions);
@@ -205,6 +206,7 @@ bool STATS_LoadXML (xmlNode_t *parent)
 	ccs.campaignStats.soldiersLost = XML_GetInt(stats, SAVE_STATS_SOLDIERSLOST, 0);
 	ccs.campaignStats.soldiersNew = XML_GetInt(stats, SAVE_STATS_SOLDIERSNEW, 0);
 	ccs.campaignStats.killedAliens = XML_GetInt(stats, SAVE_STATS_KILLEDALIENS, 0);
+	ccs.campaignStats.capturedAliens = XML_GetInt(stats, SAVE_STATS_CAPTUREDALIENS, 0);
 	ccs.campaignStats.rescuedCivilians = XML_GetInt(stats, SAVE_STATS_RESCUEDCIVILIANS, 0);
 	ccs.campaignStats.researchedTechnologies = XML_GetInt(stats, SAVE_STATS_RESEARCHEDTECHNOLOGIES, 0);
 	ccs.campaignStats.moneyInterceptions = XML_GetInt(stats, SAVE_STATS_MONEYINTERCEPTIONS, 0);

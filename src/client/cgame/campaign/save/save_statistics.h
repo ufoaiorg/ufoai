@@ -36,6 +36,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SAVE_STATS_SOLDIERSLOST "soldiersLost"
 #define SAVE_STATS_SOLDIERSNEW "soldiersNew"
 #define SAVE_STATS_KILLEDALIENS "killedAliens"
+#define SAVE_STATS_CAPTUREDALIENS "capturedAliens"
 #define SAVE_STATS_RESCUEDCIVILIANS "rescuedCivilians"
 #define SAVE_STATS_RESEARCHEDTECHNOLOGIES "researchedTechnologies"
 #define SAVE_STATS_MONEYINTERCEPTIONS "moneyInterceptions"
@@ -64,6 +65,7 @@ DTD:
 	soldiersLost				CDATA	'0'
 	soldiersNew					CDATA	'0'
 	killedAliens				CDATA	'0'
+	capturedAliens				CDATA	'0'
 	rescuedCivilians			CDATA	'0'
 	researchedTechnologies		CDATA	'0'
 	moneyInterceptions			CDATA	'0'

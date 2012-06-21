@@ -214,6 +214,14 @@ static int CP_CheckTriggerEvent (const char *expression, const void* userdata)
 			return 1;
 		return 0;
 	}
+
+	type = Q_strstart(expression, "alienscaptured");
+	if (type != 0) {
+		if (ccs.campaignStats.capturedAliens > 0)
+			return 1;
+		return 0;
+	}
+
 	return -1;
 }
 

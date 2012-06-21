@@ -58,7 +58,7 @@ mail tip_capturelivealien
 	icon "icons/mail_alien"
 }
 
-// TODO: not yet used
+// sent if a humanoid alien was captured alive and it died
 mail alienbreathing
 {
 	from "_mail_from_paul_navarre"
@@ -89,13 +89,22 @@ mail ufocarrier
 	icon "icons/mail_tech"
 }
 
-event build_ufo_yard
+event buildufoyard
 {
 	type	"new_day"
 	// after 30 days and if no installation ufoyard was built yet
 	require "days[30] & !installation[ufoyard]"
 	once	true // remove this event after it triggers
 	command	"addeventmail tip_buildufoyard"
+}
+
+event capturelivealien
+{
+	type	"new_day"
+	// after 30 days and if no alive aliens were captured yet
+	require "days[30] & !alienscaptured"
+	once	true // remove this event after it triggers
+	command	"addeventmail tip_capturelivealien"
 }
 
 /*

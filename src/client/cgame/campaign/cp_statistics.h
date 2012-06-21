@@ -37,6 +37,7 @@ typedef struct stats_s {
 	int soldiersLost;
 	int soldiersNew;			/**< new recruits */
 	int killedAliens;
+	int capturedAliens;			/**< 'alive' aliens captured - the other ones count as killed */
 	int rescuedCivilians;
 	int researchedTechnologies;
 	int moneyInterceptions;

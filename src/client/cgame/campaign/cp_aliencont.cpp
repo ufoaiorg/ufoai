@@ -174,12 +174,13 @@ void AL_AddAliens (aircraft_t *aircraft)
 			if (ac->teamDef == cargo[i].teamDef) {
 				const bool isRobot = CHRSH_IsTeamDefRobot(cargo[i].teamDef);
 				ac->amountDead += cargo[i].amountDead;
-
+				ccs.campaignStats.killedAliens += cargo[i].amountDead;
 				if (cargo[i].amountAlive <= 0)
 					continue;
 				if (!alienBreathing && !isRobot) {
 					/* We can not store living (i.e. no robots or dead bodies) aliens without rs_alien_breathing tech */
 					ac->amountDead += cargo[i].amountAlive;
+					ccs.campaignStats.killedAliens += cargo[i].amountAlive;
 					/* only once */
 					if (!messageAlreadySet) {
 						MS_AddNewMessage(_("Notice"), _("You can't hold live aliens yet. Aliens died."), MSG_DEATH);
@@ -196,6 +197,7 @@ void AL_AddAliens (aircraft_t *aircraft)
 						/* Check base capacity. */
 						if (AL_CheckAliveFreeSpace(toBase, NULL, 1)) {
 							AL_ChangeAliveAlienNumber(toBase, ac, 1);
+							ccs.campaignStats.capturedAliens++;
 						} else {
 							/* Every exceeding alien is killed
 							 * Display a message only when first one is killed */
@@ -206,6 +208,7 @@ void AL_AddAliens (aircraft_t *aircraft)
 							}
 							/* Just kill aliens which don't fit the limit. */
 							ac->amountDead++;
+							ccs.campaignStats.killedAliens++;
 						}
 					}
 					/* only once */
