@@ -1350,7 +1350,11 @@ static void testEventTrigger (void)
 {
 	ResetCampaignData();
 
-	CP_TriggerEvent(NEW_DAY);
+	int i;
+	for (i = 0; i < 60; i++) {
+		CP_TriggerEvent(NEW_DAY);
+		ccs.date.day++;
+	}
 }
 
 int UFO_AddCampaignTests (void)

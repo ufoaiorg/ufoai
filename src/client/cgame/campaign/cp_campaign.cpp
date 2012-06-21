@@ -1093,13 +1093,6 @@ void CP_CampaignInit (campaign_t *campaign, bool load)
 
 	CP_ReadCampaignData(campaign);
 
-	/* initialise date */
-	ccs.date = campaign->date;
-	/* get day */
-	while (ccs.date.sec > SECONDS_PER_DAY) {
-		ccs.date.sec -= SECONDS_PER_DAY;
-		ccs.date.day++;
-	}
 	CP_UpdateTime();
 
 	RS_InitTree(campaign, load);		/**< Initialise all data in the research tree. */

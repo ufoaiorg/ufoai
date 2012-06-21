@@ -823,4 +823,12 @@ void CP_ReadCampaignData (const campaign_t *campaign)
 	Com_DPrintf(DEBUG_CLIENT, "Second stage parsing started...\n");
 	while ((type = FS_NextScriptHeader("ufos/*.ufo", &name, &text)) != NULL)
 		CP_ParseScriptCampaignRelated(campaign, type, name, &text);
+
+	/* initialise date */
+	ccs.date = campaign->date;
+	/* get day */
+	while (ccs.date.sec > SECONDS_PER_DAY) {
+		ccs.date.sec -= SECONDS_PER_DAY;
+		ccs.date.day++;
+	}
 }
