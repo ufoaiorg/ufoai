@@ -58,6 +58,7 @@ mail tip_capturelivealien
 	icon "icons/mail_alien"
 }
 
+// TODO: not yet used
 mail alienbreathing
 {
 	from "_mail_from_paul_navarre"
