@@ -751,6 +751,8 @@ void UFO_DetectNewUFO (aircraft_t *ufocraft)
 	if (!MAP_IsRadarOverlayActivated())
 		MAP_SetOverlay("radar");
 
+	CP_TriggerEvent(UFO_DETECTION, Com_UFOTypeToShortName(ufocraft->ufotype));
+
 	MAP_UpdateGeoscapeDock();
 }
 

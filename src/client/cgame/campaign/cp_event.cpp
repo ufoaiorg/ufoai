@@ -174,11 +174,13 @@ static int CP_CheckTriggerEvent (const char *expression, const void* userdata)
 	/* check whether a particular ufo was detected */
 	type = Q_strstart(expression, "ufo");
 	if (type != 0) {
-		char value[MAX_VAR];
-		if (sscanf(type, "[%64s]", value) != 1)
+		if (strlen(type) <= 1)
 			return -1;
+		char value[MAX_VAR];
+		Q_strncpyz(value, type + 1, sizeof(value));
+		value[strlen(value) - 1] = '\0';
 		const char* detectedUFO = static_cast<const char*>(userdata);
-		if (!Q_strvalid(detectedUFO))
+		if (Q_strnull(detectedUFO))
 			return -1;
 		return Q_streq(detectedUFO, value);
 	}
