@@ -101,7 +101,6 @@ static bool SAV_VerifyHeader (saveFileHeader_t const * const header)
 	}
 	if (header->subsystems != 0 && header->subsystems != saveSubsystemsAmount) {
 		Com_DPrintf(DEBUG_CLIENT, "Savefile has incompatible amount of subsystems\n");
-		return false;
 	}
 
 	/* saved games should not be bigger than 15MB */
