@@ -34,6 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_node_abstractnode.h"
 
 #include "../../client.h"
+#include "../../cl_language.h"
 #include "../../../shared/parse.h"
 
 #define EXTRADATA_TYPE textExtraData_t
@@ -358,8 +359,13 @@ void uiTextNode::updateCache (uiNode_t *node)
 	case UI_SHARED_TEXT:
 		{
 			const char* t = shared->data.text;
-			if (t[0] == '_')
+			if (t[0] == '_') {
 				t = _(++t);
+			} else {
+				const char* msgid = Q_strstart(t, "*msgid:");
+				if (msgid != NULL)
+					t = CL_GetMessageID(msgid);
+			}
 			drawText(node, t, NULL, true);
 		}
 		break;
@@ -382,8 +388,13 @@ void uiTextNode::draw (uiNode_t *node)
 
 	if (EXTRADATA(node).dataID == TEXT_NULL && node->text != NULL) {
 		const char* t = UI_GetReferenceString(node, node->text);
-		if (t[0] == '_')
+		if (t[0] == '_') {
 			t = _(++t);
+		} else {
+			const char* msgid = Q_strstart(t, "*msgid:");
+			if (msgid != NULL)
+				t = CL_GetMessageID(msgid);
+		}
 		drawText(node, t, NULL, false);
 		return;
 	}
@@ -394,8 +405,13 @@ void uiTextNode::draw (uiNode_t *node)
 	case UI_SHARED_TEXT:
 	{
 		const char* t = shared->data.text;
-		if (t[0] == '_')
+		if (t[0] == '_') {
 			t = _(++t);
+		} else {
+			const char* msgid = Q_strstart(t, "*msgid:");
+			if (msgid != NULL)
+				t = CL_GetMessageID(msgid);
+		}
 		drawText(node, t, NULL, false);
 		break;
 	}

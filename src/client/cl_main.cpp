@@ -757,6 +757,7 @@ void CL_InitAfter (void)
 	IN_JoystickInitMenu();
 
 	CL_LanguageInit();
+	CL_ParseMessageIDs();
 
 	GAME_InitUIData();
 
@@ -1127,8 +1128,10 @@ void CL_Frame (int now, void *data)
 void CL_SlowFrame (int now, void *data)
 {
 	/* language */
-	if (s_language->modified)
-		CL_LanguageTryToSet(s_language->string);
+	if (s_language->modified) {
+		if (CL_LanguageTryToSet(s_language->string))
+			CL_ParseMessageIDs();
+	}
 
 	Irc_Logic_Frame();
 

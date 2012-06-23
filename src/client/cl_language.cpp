@@ -33,7 +33,105 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui/node/ui_node_abstractoption.h"
 
 static cvar_t *fs_i18ndir;
+static memPool_t* cl_msgidPool;
 
+#define MAX_MSGIDS 128
+/**
+ * The msgids are reparsed each time that we change the language - we are only
+ * pointing to the po file content to not waste memory for our long texts.
+ */
+typedef struct msgid_s {
+	char *id;	/**< the msgid id used for referencing via *msgid:<id> */
+	char *text;	/**< the pointer to the po file */
+} msgid_t;
+
+static msgid_t msgIDs[MAX_MSGIDS];
+static int numMsgIDs;
+
+static void CL_ParseMessageID (const char *name, const char **text)
+{
+	const char *errhead = "CL_ParseMessageID: unexpected end of file (msgid ";
+	const char *token;
+	int i;
+
+	/* get it's body */
+	token = Com_Parse(text);
+	if (!*text || *token != '{') {
+		Com_Printf("CL_ParseMessageID: msgid \"%s\" without body ignored\n", name);
+		return;
+	}
+
+	/* search for game types with same name */
+	for (i = 0; i < numMsgIDs; i++)
+		if (Q_streq(token, msgIDs[i].id))
+			break;
+
+	if (i == numMsgIDs) {
+		msgid_t *msgid = &msgIDs[numMsgIDs++];
+
+		if (numMsgIDs >= MAX_MSGIDS)
+			Sys_Error("CL_ParseMessageID: MAX_MSGIDS exceeded\n");
+
+		OBJZERO(*msgid);
+		msgid->id = Mem_PoolStrDup(name, cl_msgidPool, 0);
+		do {
+			token = Com_EParse(text, errhead, name);
+			if (!*text)
+				break;
+			if (*token == '}')
+				break;
+			if (Q_streq(token, "text")) {
+				/* found a definition */
+				token = Com_EParse(text, errhead, name);
+				if (!*text)
+					break;
+				if (token[0] == '_')
+					token++;
+				msgid->text = _(token);
+				if (msgid->text == token) {
+					msgid->text = Mem_PoolStrDup(token, cl_msgidPool, 0);
+					Com_Printf("no translation for %s\n", msgid->id);
+				}
+			}
+		} while (*text);
+	} else {
+		Com_Printf("CL_ParseMessageID: msgid \"%s\" with same already exists - ignore the second one\n", name);
+		FS_SkipBlock(text);
+	}
+}
+
+const char* CL_GetMessageID (const char* id)
+{
+	int i;
+
+	for (i = 0; i < numMsgIDs; i++)
+		if (Q_streq(id, msgIDs[i].id))
+			return msgIDs[i].text;
+	return id;
+}
+
+void CL_ParseMessageIDs (void)
+{
+	const char *type, *name, *text;
+
+	if (cl_msgidPool != NULL) {
+		Mem_FreePool(cl_msgidPool);
+	} else {
+		cl_msgidPool = Mem_CreatePool("msgids");
+	}
+
+	Com_Printf("\n----------- parse msgids -----------\n");
+
+	Com_Printf("%i msgid files\n", FS_BuildFileList("ufos/msgid/*.ufo"));
+	text = NULL;
+
+	FS_NextScriptHeader(NULL, NULL, NULL);
+
+	while ((type = FS_NextScriptHeader("ufos/msgid/*.ufo", &name, &text)) != NULL) {
+		if (Q_streq(type, "msgid"))
+			CL_ParseMessageID(name, &text);
+	}
+}
 
 /**
  * @brief List of all mappings for a locale

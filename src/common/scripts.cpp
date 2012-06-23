@@ -1597,7 +1597,6 @@ static bool Com_ParseFire (const char *name, const char **text, fireDef_t * fd)
 	return true;
 }
 
-
 /**
  * @brief Parses the armour definitions or the team resistance values from script files. The
  * protection and rating values.
@@ -3195,7 +3194,7 @@ mapDef_t* Com_GetMapDefByIDX (int index)
 
 mapDef_t* Com_GetMapDefinitionByID (const char *mapDefID)
 {
-	mapDef_t *md;;
+	mapDef_t *md;
 
 	assert(mapDefID);
 

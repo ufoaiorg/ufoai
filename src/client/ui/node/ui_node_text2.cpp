@@ -34,6 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_node_abstractnode.h"
 
 #include "../../client.h"
+#include "../../cl_language.h"
 #include "../../../shared/parse.h"
 
 #define EXTRADATA_TYPE text2ExtraData_t
@@ -65,8 +66,13 @@ static void UI_TextNodeGenerateLineSplit (uiNode_t *node)
 	} else
 		return;
 
-	if (data[0] == '_')
-		data = _(data + 1);
+	if (data[0] == '_') {
+		data = _(++data);
+	} else {
+		const char* msgid = Q_strstart(data, "*msgid:");
+		if (msgid != NULL)
+			data = CL_GetMessageID(msgid);
+	}
 
 	while (data[0] != '\0') {
 		const char *next = strchr(data, '\n');
@@ -212,7 +218,7 @@ void uiText2Node::drawText (uiNode_t* node, const linkedList_t* list, bool noDra
 		} else {
 			if (noDraw) {
 				int lines = 0;
-				R_FontTextSize (font, cur, width, (longlines_t)EXTRADATA(node).super.longlines, NULL, NULL, &lines, NULL);
+				R_FontTextSize(font, cur, width, (longlines_t)EXTRADATA(node).super.longlines, NULL, NULL, &lines, NULL);
 				fullSizeY += lines;
 			} else
 				UI_DrawString(font, (align_t)node->contentAlign, x1, y, x, width, EXTRADATA(node).super.lineHeight, cur, viewSizeY, EXTRADATA(node).super.super.scrollY.viewPos, &fullSizeY, true, (longlines_t)EXTRADATA(node).super.longlines);
