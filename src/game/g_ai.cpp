@@ -199,7 +199,7 @@ static bool AI_CheckCrouch (const edict_t *ent)
  */
 static bool AI_HideNeeded (const edict_t *ent)
 {
-	/* only brave aliens are trying to stay on the field if no dangerous actor is visible */
+	/* aliens will consider hiding if they are not brave, or there is a dangerous enemy in sight */
 	if (ent->morale > mor_brave->integer) {
 		edict_t *from = NULL;
 		/* test if check is visible */
