@@ -157,7 +157,7 @@ static bool CP_IsAlienTeamForCategory (const alienTeamCategory_t *cat, const int
  * @param[in] mission Pointer to the mission.
  * @param[out] battleParameters The battlescape parameter the alien team is stored in
  */
-static void CP_SetAlienTeamByInterest (const mission_t *mission, battleParam_t *battleParameters)
+static void CP_SetAlienTeamByInterest (mission_t *mission, battleParam_t *battleParameters)
 {
 	int i, j;
 	const int MAX_AVAILABLE_GROUPS = 4;
@@ -182,9 +182,11 @@ static void CP_SetAlienTeamByInterest (const mission_t *mission, battleParam_t *
 		}
 	}
 
-	if (!numAvailableGroup)
+	if (!numAvailableGroup) {
+		CP_MissionRemove(mission);
 		Com_Error(ERR_DROP, "CP_SetAlienTeamByInterest: no available alien team for mission '%s': interest = %i -- category = %i",
 			mission->id, mission->initialOverallInterest, mission->category);
+	}
 
 	/* Pick up one group randomly */
 	i = rand() % numAvailableGroup;
