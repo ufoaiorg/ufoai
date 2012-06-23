@@ -100,6 +100,9 @@ static void CL_ParseMessageID (const char *name, const char **text)
 	}
 }
 
+/**
+ * @todo add hashing
+ */
 const char* CL_GetMessageID (const char* id)
 {
 	int i;
@@ -113,6 +116,8 @@ const char* CL_GetMessageID (const char* id)
 void CL_ParseMessageIDs (void)
 {
 	const char *type, *name, *text;
+
+	numMsgIDs = 0;
 
 	if (cl_msgidPool != NULL) {
 		Mem_FreePool(cl_msgidPool);
