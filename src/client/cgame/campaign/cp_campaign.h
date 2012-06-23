@@ -110,7 +110,7 @@ struct campaign_s;
 /**
  * @brief The amount of time (in hours) it takes for the interest to increase by 1. Is later affected by difficulty.
  */
-#define HOURS_PER_ONE_INTEREST				22
+#define HOURS_PER_ONE_INTEREST				24
 
 /**
  * @brief Determines the interest interval for a single campaign
