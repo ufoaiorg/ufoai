@@ -45,6 +45,10 @@ typedef enum {
 	SKILL_ASSAULT,
 	SKILL_SNIPER,
 	SKILL_EXPLOSIVE,
+	/* Pilot skills */
+	SKILL_PILOTING,
+	SKILL_TARGETING,
+	SKILL_EVADING,
 	SKILL_NUM_TYPES
 } abilityskills_t;
 

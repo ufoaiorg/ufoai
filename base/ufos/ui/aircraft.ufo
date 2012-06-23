@@ -271,6 +271,14 @@ window iaircraft
 		*cvar:mn_tsnp = ""
 		*cvar:mn_texp = ""
 		*cvar:mn_thp = ""
+		*cvar:mn_vpil = ""
+		*cvar:mn_vpili = ""
+		*cvar:mn_tpil = ""
+		*cvar:mn_vtar = ""
+		*cvar:mn_vtari = ""
+		*cvar:mn_ttar = ""
+		*cvar:mn_vevad = ""
+		*cvar:mn_vevadi = ""
+		*cvar:mn_tevad = ""
 	}
-
 }

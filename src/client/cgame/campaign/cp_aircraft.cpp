@@ -1042,10 +1042,11 @@ void AIR_DeleteAircraft (aircraft_t *aircraft)
 /**
  * @brief Removes an aircraft from its base and the game.
  * @param[in] aircraft Pointer to aircraft that should be removed.
+ * @param[in] killPilot Should pilot be removed from game or not?
  * @note aircraft and assigned soldiers (if any) are removed from game.
  * @todo Return status of deletion for better error handling.
  */
-void AIR_DestroyAircraft (aircraft_t *aircraft)
+void AIR_DestroyAircraft (aircraft_t *aircraft, bool killPilot)
 {
 	employee_t *pilot;
 
@@ -1059,10 +1060,15 @@ void AIR_DestroyAircraft (aircraft_t *aircraft)
 	/* remove the pilot */
 	pilot = AIR_GetPilot(aircraft);
 	if (pilot) {
-		if (E_DeleteEmployee(pilot))
+		if (killPilot) {
+			if (E_DeleteEmployee(pilot))
+				AIR_SetPilot(aircraft, NULL);
+			else
+				Com_Error(ERR_DROP, "AIR_DestroyAircraft: Could not remove pilot from game: %s (ucn: %i)\n",
+						pilot->chr.name, pilot->chr.ucn);
+		} else {
 			AIR_SetPilot(aircraft, NULL);
-		else
-			Com_Error(ERR_DROP, "AIR_DestroyAircraft: Could not remove pilot from game: %s (ucn: %i)\n", pilot->chr.name, pilot->chr.ucn);
+		}
 	} else {
 		if (aircraft->status != AIR_CRASHED)
 			Com_Error(ERR_DROP, "AIR_DestroyAircraft: aircraft id %s had no pilot\n", aircraft->id);
@@ -2152,6 +2158,54 @@ employee_t* AIR_GetPilot (const aircraft_t *aircraft)
 		return NULL;
 
 	return E_GetEmployeeByTypeFromChrUCN(e->type, e->chr.ucn);
+}
+
+/**
+ * @brief Determine if an aircraft's pilot survived a crash, based on his piloting skill (and a bit of randomness)
+ * @param[in] aircraft Pointer to crashed aircraft
+ * @return true if survived, false if not
+ */
+bool AIR_PilotSurvivedCrash (const aircraft_t* aircraft)
+{
+	if (aircraft == NULL)
+		return false;
+
+	if (aircraft->pilot == NULL)
+		return false;
+
+	const int pilotSkill = aircraft->pilot->chr.score.skills[SKILL_PILOTING];
+	float baseProbability = (float) pilotSkill;
+
+	const byte *color = MAP_GetColor(aircraft->pos, MAPTYPE_TERRAIN, NULL);
+	/* Crash over water: chances for survival are very bad */
+	if (MapIsWater(color)) {
+		baseProbability /= 10.0f;
+	}
+
+	/* Crash over arctic or wasted terrain; fare a little better */
+	if (MapIsArctic(color) || MapIsWasted(color)) {
+		baseProbability /= 8.0f;
+	}
+
+	/* Crash over mountain, desert or cold terrain: survive a little longer */
+	if (MapIsCold(color) || MapIsDesert(color) || MapIsMountain(color)) {
+		baseProbability /= 3.0f;
+	}
+
+	/* Crash over tropical or fertile are: This is the good life :) */
+	if (MapIsGrass(color) || MapIsTropical(color)) {
+		baseProbability *= 2.5f;
+	}
+
+	/* Add a random factor to our probability */
+	float randomProbability = crand() * (float) pilotSkill;
+	if (randomProbability > 0.25f * baseProbability) {
+		while (randomProbability > 0.25f * baseProbability)
+			randomProbability /= 2.0f;
+	}
+
+	const float survivalProbability = baseProbability + randomProbability;
+	return survivalProbability >= (float) pilotSkill;
 }
 
 /**

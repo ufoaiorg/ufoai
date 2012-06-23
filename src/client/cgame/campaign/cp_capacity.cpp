@@ -95,6 +95,7 @@ void CAP_RemoveAircraftExceedingCapacity (base_t* base, baseCapacities_t capacit
 		else {
 			/* Destroy the aircraft and everything onboard - the aircraft pointer
 			 * is no longer valid after this point */
+			/* Pilot skills; really kill pilot in this case? */
 			AIR_DestroyAircraft(aircraft);
 		}
 	}

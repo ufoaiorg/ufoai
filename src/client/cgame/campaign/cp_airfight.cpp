@@ -298,11 +298,84 @@ static float AIRFIGHT_ProbabilityToHit (const aircraft_t *shooter, const aircraf
 	if (shooter)
 		probability *= shooter->stats[AIR_STATS_ACCURACY] / 100.0f;
 
+	Com_DPrintf(DEBUG_CLIENT, "AIRFIGHT_ProbabilityToHit: Probability after accounting items of attacker: %f\n", probability);
+
 	/* Modify this probability by items of the aimed aircraft (stats is in percent) */
 	if (target)
 		probability /= target->stats[AIR_STATS_ECM] / 100.0f;
 
+	Com_DPrintf(DEBUG_CLIENT, "AIRFIGHT_ProbabilityToHit: Probability after accounting ECM of target: %f\n", probability);
+
+	/* If shooter is a PHALANX craft, check the targeting skills of the pilot */
+	if (shooter && shooter->type != AIRCRAFT_UFO) {
+		if (shooter->pilot) {
+			const float basicHitRand = frand();
+			/* Basic piloting skill gives a small increase to hit chance of shooter */
+			if (shooter->pilot->chr.score.skills[SKILL_PILOTING] > 0) {
+				float basicHitIncrease = basicHitRand * shooter->pilot->chr.score.skills[SKILL_PILOTING];
+				if (basicHitIncrease > probability / 10.0f) {
+					while (basicHitIncrease > probability / 10.0f)
+						basicHitIncrease /= 2.0f;
+				}
+
+				probability *= basicHitIncrease / 100.0f;
+
+				Com_DPrintf(DEBUG_CLIENT, "AIRFIGHT_ProbabilityToHit: Probability after accounting piloting skill of shooter: %f\n", probability);
+			}
+			/* Then, add targeting skill increase for hit chance of shooter */
+			if (shooter->pilot->chr.score.skills[SKILL_TARGETING] > 0) {
+				float targetingHitIncrease = basicHitRand * shooter->pilot->chr.score.skills[SKILL_TARGETING];
+
+				if (targetingHitIncrease > probability / 5.0f) {
+					while (targetingHitIncrease > probability / 5.0f)
+						targetingHitIncrease /= 2.0f;
+				}
+
+				probability *= targetingHitIncrease / 100.0f;
+
+				Com_DPrintf(DEBUG_CLIENT, "AIRFIGHT_ProbabilityToHit: Probability after accounting targeting skill of shooter: %f\n",
+						probability);
+			}
+		}
+	}
+
+	/* If target is a PHALANX craft, check the evading skills of the pilot */
+	if (target && target->type != AIRCRAFT_UFO) {
+		if (target->pilot) {
+			/* Basic piloting skill gives a small decrease to hit chance of shooter */
+			const float basicEvasionRand = frand();
+			if (target->pilot->chr.score.skills[SKILL_PILOTING] > 0) {
+				float basicHitDecrease = basicEvasionRand * target->pilot->chr.score.skills[SKILL_PILOTING];
+
+				if (basicHitDecrease > probability / 8.0f) {
+					while (basicHitDecrease > probability / 8.0f)
+						basicHitDecrease /= 2.0f;
+				}
+
+				probability /= basicHitDecrease * 100.0f;
+
+				Com_DPrintf(DEBUG_CLIENT, "AIRFIGHT_ProbabilityToHit: Probability after accounting piloting skill of target: %f\n",
+						probability);
+			}
+			/* Then, subtract evading skill decrease for hit chance of shooter */
+			if (target->pilot->chr.score.skills[SKILL_EVADING] > 0) {
+				float evadingHitDecrease = basicEvasionRand * target->pilot->chr.score.skills[SKILL_EVADING];
+
+				if (evadingHitDecrease > probability / 5.0f) {
+					while (evadingHitDecrease > probability / 5.0f)
+						evadingHitDecrease /= 2.0f;
+				}
+
+				probability /= evadingHitDecrease * 100.0f;
+
+				Com_DPrintf(DEBUG_CLIENT, "AIRFIGHT_ProbabilityToHit: Probability after accounting evasion skill of target: %f\n",
+						probability);
+			}
+		}
+	}
+
 	Com_DPrintf(DEBUG_CLIENT, "AIRFIGHT_ProbabilityToHit: Probability to hit: %f\n", probability);
+
 	return probability;
 }
 
@@ -330,8 +403,13 @@ void AIRFIGHT_ExecuteActions (const campaign_t* campaign, aircraft_t* shooter, a
 		if (AIRFIGHT_AddProjectile(NULL, NULL, shooter, target, &(shooter->weapons[slotIdx]))) {
 			/* will we miss the target ? */
 			const float probability = frand();
+			Com_Printf("AIRFIGHT_ExecuteActions: %s - Random probability to hit: %f\n", shooter->name, probability);
 			shooter->weapons[slotIdx].delayNextShot = ammo->craftitem.weaponDelay;
-			if (probability > AIRFIGHT_ProbabilityToHit(shooter, target, shooter->weapons + slotIdx))
+
+			float calculatedProbability = AIRFIGHT_ProbabilityToHit(shooter, target, shooter->weapons + slotIdx);
+			Com_Printf("AIRFIGHT_ExecuteActions: %s - Calculated probability to hit: %f\n", shooter->name, calculatedProbability);
+
+			if (probability > calculatedProbability)
 				AIRFIGHT_MissTarget(&ccs.projectiles[ccs.numProjectiles - 1], false);
 
 			if (shooter->type != AIRCRAFT_UFO) {
@@ -456,12 +534,22 @@ void AIRFIGHT_ActionsAfterAirfight (const campaign_t* campaign, aircraft_t *shoo
 		/* notify UFOs that a phalanx aircraft has been destroyed */
 		UFO_NotifyPhalanxAircraftRemoved(aircraft);
 
-		if (!MapIsWater(MAP_GetColor(aircraft->pos, MAPTYPE_TERRAIN, NULL)))
+		if (!MapIsWater(MAP_GetColor(aircraft->pos, MAPTYPE_TERRAIN, NULL))) {
 			CP_SpawnRescueMission(aircraft, shooter);
-		else {
+
+		} else {
 			/* Destroy the aircraft and everything onboard - the aircraft pointer
 			 * is no longer valid after this point */
-			AIR_DestroyAircraft(aircraft);
+			bool pilotSurvived = false;
+			if (AIR_PilotSurvivedCrash(aircraft))
+				pilotSurvived = true;
+
+			AIR_DestroyAircraft(aircraft, pilotSurvived);
+
+			if (pilotSurvived)
+				MS_AddNewMessage(_("Interception"), _("Pilot ejected from craft"), MSG_EVENT);
+			else
+				MS_AddNewMessage(_("Interception"), _("Pilot killed in action"), MSG_EVENT);
 		}
 
 		/* Make UFO proceed with its mission, if it has not been already destroyed */

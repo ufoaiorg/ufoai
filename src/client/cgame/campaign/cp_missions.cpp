@@ -1249,9 +1249,13 @@ void CP_SpawnRescueMission (aircraft_t *aircraft, aircraft_t *ufo)
 
 	/* Handle events about crash */
 	/* Do this first, if noone survived the crash => no mission to spawn */
-	pilot = AIR_GetPilot(aircraft);
-	/** @todo don't "kill" everyone - this should depend on luck and a little bit on the skills */
-	E_DeleteEmployee(pilot);
+
+	bool pilotSurvived = AIR_PilotSurvivedCrash(aircraft);
+	if (!pilotSurvived) {
+		pilot = AIR_GetPilot(aircraft);
+		/** @todo don't "kill" everyone - this should depend on luck and a little bit on the skills */
+		E_DeleteEmployee(pilot);
+	}
 
 	LIST_Foreach(aircraft->acTeam, employee_t, employee) {
 #if 0
@@ -1286,7 +1290,7 @@ void CP_SpawnRescueMission (aircraft_t *aircraft, aircraft_t *ufo)
 	}
 
 	if (survivors == 0) {
-		AIR_DestroyAircraft(aircraft);
+		AIR_DestroyAircraft(aircraft, pilotSurvived);
 		return;
 	}
 

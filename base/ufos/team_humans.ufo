@@ -1650,7 +1650,9 @@ team phalanx_pilot
 		}
 	}
 	templates (
-		soldier_common
+		average_pilot
+		fighter_pilot
+		ace_pilot
 	)
 }
 

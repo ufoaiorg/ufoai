@@ -196,7 +196,9 @@ static void E_EmployeeList_f (void)
 	if (employeesInCurrentList == 0) {
 		Cvar_Set("mn_show_employee", "0");
 	} else {
-		if (employeeCategory == EMPL_PILOT || employeeCategory == EMPL_SCIENTIST || employeeCategory == EMPL_WORKER)
+		if (employeeCategory == EMPL_SCIENTIST || employeeCategory == EMPL_WORKER)
+			Cvar_Set("mn_show_employee", "3");
+		else if (employeeCategory == EMPL_PILOT)
 			Cvar_Set("mn_show_employee", "2");
 		else
 			Cvar_Set("mn_show_employee", "1");

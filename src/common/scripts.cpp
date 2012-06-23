@@ -1419,6 +1419,9 @@ static const char *const skillNames[SKILL_NUM_TYPES + 1] = {
 	"assault",
 	"sniper",
 	"explosive",
+	"piloting",
+	"targeting",
+	"evading",
 	"health"
 };
 

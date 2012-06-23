@@ -912,6 +912,7 @@ static void B_MoveAircraftOnGeoscapeToOtherBases (const base_t *base)
 				} else {
 					/* Destroy the aircraft and everything onboard - the aircraft pointer
 					 * is no longer valid after this point */
+					/** @todo Pilot skills; really kill pilot in this case? */
 					AIR_DestroyAircraft(aircraft);
 				}
 			}

@@ -457,6 +457,49 @@ window employees
 		string	kills_val { pos "190 338" size "130 20" string *cvar:mn_chrkillalien contentalign ALIGN_UR }
 	}
 
+	panel pilot_info {
+		{
+			visiblewhen "*cvar:mn_show_employee == 2"
+			pos		"670 380"
+			size	"330 360"
+		}
+		cmpDefNamedTbar pil {
+			{
+				pos "5 3"
+			}
+			tbar bar   { current *cvar:mn_vpil }
+			string lbl { string "_Piloting:" }
+			string val { string *cvar:mn_tpil }
+		}
+
+		cmpDefNamedTbar tar {
+			{
+				pos "5 33"
+			}
+			tbar bar   { current *cvar:mn_vtar }
+			string lbl { string "_Targeting:" }
+			string val { string *cvar:mn_ttar }
+		}
+
+		cmpDefNamedTbar evad {
+			{
+				pos "5 63"
+			}
+			tbar bar   { current *cvar:mn_vevad }
+			string lbl { string "_Evading:" }
+			string val { string *cvar:mn_tevad }
+		}
+
+		cmpDefNamedTbar hp {
+			{
+				pos "5 283"
+			}
+			tbar bar   { current *cvar:mn_vhp max *cvar:mn_vhpmax image "ui/bar_health" }
+			string lbl { string "_Health:" }
+			string val { string *cvar:mn_thp }
+		}
+	}
+
 	// ==================
 	// buttons
 	// ==================

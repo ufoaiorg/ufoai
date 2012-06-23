@@ -23,6 +23,9 @@ chrtemplate soldier_common {
 	assault	"15 25"
 	sniper	"15 25"
 	explosive	"15 25"
+	piloting	"0 0"
+	targeting	"0 0"
+	evading	"0 0"
 	health	"80 110"
 }
 
@@ -37,6 +40,9 @@ chrtemplate soldier_close {
 	assault	"13 23"
 	sniper	"13 23"
 	explosive	"13 23"
+	piloting	"0 0"
+	targeting	"0 0"
+	evading	"0 0"
 	health	"80 110"
 }
 
@@ -51,6 +57,9 @@ chrtemplate soldier_heavy {
 	assault	"13 23"
 	sniper	"13 23"
 	explosive	"13 23"
+	piloting	"0 0"
+	targeting	"0 0"
+	evading	"0 0"
 	health	"80 110"
 }
 
@@ -65,6 +74,9 @@ chrtemplate soldier_assault {
 	assault	"25 40"
 	sniper	"13 23"
 	explosive	"13 23"
+	piloting	"0 0"
+	targeting	"0 0"
+	evading	"0 0"
 	health	"80 110"
 }
 
@@ -79,6 +91,9 @@ chrtemplate soldier_sniper {
 	assault	"13 23"
 	sniper	"25 40"
 	explosive	"13 23"
+	piloting	"0 0"
+	targeting	"0 0"
+	evading	"0 0"
 	health	"80 110"
 }
 
@@ -93,6 +108,9 @@ chrtemplate soldier_blast {
 	assault	"13 23"
 	sniper	"13 23"
 	explosive	"25 40"
+	piloting	"0 0"
+	targeting	"0 0"
+	evading	"0 0"
 	health	"80 110"
 }
 
@@ -107,7 +125,61 @@ chrtemplate soldier_elite {
 	assault	"25 40"
 	sniper	"25 40"
 	explosive	"25 40"
+	piloting	"0 0"
+	targeting	"0 0"
+	evading	"0 0"
 	health	"100 130"
+}
+
+chrtemplate average_pilot {
+	rate		80
+	strength	"0 0"
+	speed		"0 0"
+	accuracy	"0 0"
+	mind		"0 0"
+	close		"0 0"
+	heavy		"0 0"
+	assault	"0 0"
+	sniper	"0 0"
+	explosive	"0 0"
+	piloting	"20 35"
+	targeting	"20 35"
+	evading	"20 35"
+	health	"20 30"
+}
+
+chrtemplate fighter_pilot {
+	rate		15
+	strength	"0 0"
+	speed		"0 0"
+	accuracy	"0 0"
+	mind		"0 0"
+	close		"0 0"
+	heavy		"0 0"
+	assault	"0 0"
+	sniper	"0 0"
+	explosive	"0 0"
+	piloting	"20 35"
+	targeting	"25 45"
+	evading	"20 35"
+	health	"20 30"
+}
+
+chrtemplate ace_pilot {
+	rate		5
+	strength	"0 0"
+	speed		"0 0"
+	accuracy	"0 0"
+	mind		"0 0"
+	close		"0 0"
+	heavy		"0 0"
+	assault	"0 0"
+	sniper	"0 0"
+	explosive	"0 0"
+	piloting	"25 45"
+	targeting	"25 45"
+	evading	"25 45"
+	health	"20 30"
 }
 
 chrtemplate soldier_civil {
@@ -120,6 +192,9 @@ chrtemplate soldier_civil {
 	assault	"5 10"
 	sniper	"5 10"
 	explosive	"5 10"
+	piloting	"0 0"
+	targeting	"0 0"
+	evading	"0 0"
 	health	"20 30"
 }
 
@@ -133,6 +208,9 @@ chrtemplate soldier_taman {
 	assault	"50 90"
 	sniper	"50 90"
 	explosive	"50 90"
+	piloting	"0 0"
+	targeting	"0 0"
+	evading	"0 0"
 	health	"100 130"
 }
 
@@ -146,6 +224,9 @@ chrtemplate soldier_ortnok {
 	assault	"50 90"
 	sniper	"50 90"
 	explosive	"50 90"
+	piloting	"0 0"
+	targeting	"0 0"
+	evading	"0 0"
 	health	"150 190"
 }
 
@@ -159,6 +240,9 @@ chrtemplate soldier_shevaar {
 	assault	"50 90"
 	sniper	"50 90"
 	explosive	"50 90"
+	piloting	"0 0"
+	targeting	"0 0"
+	evading	"0 0"
 	health	"120 160"
 }
 
@@ -172,6 +256,9 @@ chrtemplate soldier_blood {
 	assault	"50 50"
 	sniper	"50 50"
 	explosive	"50 50"
+	piloting	"0 0"
+	targeting	"0 0"
+	evading	"0 0"
 	health	"150 150"
 }
 
@@ -185,6 +272,9 @@ chrtemplate soldier_hovernet {
 	assault	"50 50"
 	sniper	"50 50"
 	explosive	"50 50"
+	piloting	"0 0"
+	targeting	"0 0"
+	evading	"0 0"
 	health	"100 100"
 }
 
@@ -198,6 +288,9 @@ chrtemplate soldier_robot {
 	assault	"50 50"
 	sniper	"50 50"
 	explosive	"50 50"
+	piloting	"0 0"
+	targeting	"0 0"
+	evading	"0 0"
 	health	"200 200"
 }
 
@@ -213,5 +306,8 @@ chrtemplate soldier_mp {
 	assault	"20 75"
 	sniper	"20 75"
 	explosive	"50 50"
+	piloting	"0 0"
+	targeting	"0 0"
+	evading	"0 0"
 	health	"80 130"
 }

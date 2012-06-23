@@ -264,7 +264,7 @@ bool AIR_IsAircraftInBase(const aircraft_t *aircraft);
 bool AIR_IsAircraftOnGeoscape(const aircraft_t *aircraft);
 
 void AIR_DeleteAircraft(aircraft_t *aircraft);
-void AIR_DestroyAircraft(aircraft_t *aircraft);
+void AIR_DestroyAircraft(aircraft_t *aircraft, bool killPilot = true);
 bool AIR_MoveAircraftIntoNewHomebase(aircraft_t *aircraft, struct base_s *base);
 
 void AIR_ResetAircraftTeam(aircraft_t *aircraft);
@@ -304,6 +304,9 @@ void AII_CollectingItems(aircraft_t *aircraft, int won);
 
 bool AIR_SetPilot(aircraft_t *aircraft, struct employee_s* pilot);
 struct employee_s* AIR_GetPilot(const aircraft_t *aircraft);
+
+bool AIR_PilotSurvivedCrash(const aircraft_t *aircraft);
+
 void AIR_AutoAddPilotToAircraft(const struct base_s* base, struct employee_s* pilot);
 void AIR_RemovePilotFromAssignedAircraft(const struct base_s* base, const struct employee_s* pilot);
 void AIR_RemoveEmployees(aircraft_t* aircraft);
