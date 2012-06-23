@@ -387,6 +387,7 @@ static void CL_NewLanguage (void)
 	R_FontInit();
 	UI_InitFonts();
 	R_FontSetTruncationMarker(_("..."));
+	CL_ParseMessageIDs();
 }
 
 /**
