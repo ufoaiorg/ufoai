@@ -101,7 +101,7 @@ struct campaign_s;
 #define HAPPINESS_MAX_MISSION_IMPACT		0.07
 
 /* Maximum alien groups per alien team category */
-#define MAX_ALIEN_GROUP_PER_CATEGORY	4
+#define MAX_ALIEN_GROUP_PER_CATEGORY	8
 /* Maximum alien team category defined in scripts */
 #define ALIENCATEGORY_MAX	8
 #define BID_FACTOR 0.9
