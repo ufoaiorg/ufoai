@@ -324,6 +324,9 @@ void CL_LanguageShutdown (void)
 {
 	languageCount = 0;
 	languageList = NULL;
+	Mem_DeletePool(cl_msgidPool);
+	cl_msgidPool = NULL;
+	numMsgIDs = 0;
 }
 
 /**
