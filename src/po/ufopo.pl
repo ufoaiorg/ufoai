@@ -54,7 +54,7 @@ foreach my $file (@ARGV)
 		elsif (!defined $str and m/\"_(.*)/)
 		{
 			$translatable = ($1 ne '');
-			$str = $1;
+			$str = $1 . "\n";
 		}
 		# end of multi-line
 		elsif (m/(.*?)\"(.*)/)
