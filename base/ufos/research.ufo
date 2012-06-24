@@ -3556,7 +3556,6 @@ tech rs_craft_inter_dragon
 
 	provides	craft_inter_dragon
 	require_AND {
-		tech rs_antimatter
 		tech rs_craft_alien_propulsion
 	}
 	time	10000
@@ -4806,6 +4805,7 @@ tech rs_craft_alien_propulsion
 	provides	craft_alien_propulsion
 	require_AND {
 		tech	rs_alien_materials
+		tech 	rs_antimatter
 		item	(craft_alien_propulsion 1)
 	}
 	time		3500
@@ -4842,7 +4842,6 @@ tech rs_craft_alien_detection
 	}
 	provides	craft_alien_detection
 	require_AND {
-		tech	rs_alien_materials
 		item	(craft_alien_detection 1)
 	}
 	time		3500
