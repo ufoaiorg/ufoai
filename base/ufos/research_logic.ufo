@@ -50,6 +50,19 @@ tech rs_fighter_OR_harvester
 
 //========================================================
 
+tech rs_any_needler
+{
+	type "logic"
+	name	"LOGIC:needler OR heavy needler"
+	require_OR
+	{
+		tech rs_weapon_needlergun
+		tech rs_weapon_needlerheavy
+	}
+}
+
+//========================================================
+
 tech rs_antimatter_extra
 {
 	type    "logic"

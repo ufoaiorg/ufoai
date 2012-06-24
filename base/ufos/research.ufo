@@ -2089,7 +2089,7 @@ tech rs_weapon_coilgun
 	{
 		tech rs_skill_sniper
 		tech rs_weapon_bolterrifle
-		tech rs_weapon_needlergun
+		tech rs_any_needler
 	}
 
 	require_for_production
