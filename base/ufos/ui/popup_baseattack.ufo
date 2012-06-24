@@ -444,13 +444,13 @@ window popup_baseattack
 
 		onClick		{
 			if ( *node:root.liftcrafts@current > 0 ) {
-				cmd "air_liftall;"
+				cmd "cp_aircraft_liftall <baseid>;"
 			}
 			if ( *node:root.killaliens@current > 0 ) {
-				cmd "aliencont_killall;"
+				cmd "cp_aliencont_killall <baseid>;"
 			}
 			if ( *node:root.powerdown@current > 0 ) {
-				cmd "pwr_down;"
+				cmd "cp_powerdown <baseid>;"
 			}
 			cmd "game_go;"
 		}
