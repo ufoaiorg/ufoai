@@ -468,7 +468,7 @@ aircraft craft_ufo_fighter
 	numteam		5
 	price		12000
 	image		"geoscape/air_ufo"
-	interestlevel 0
+	interestlevel 50
 	slot {
 		type		"weapon"
 		size		"heavy"
@@ -496,7 +496,7 @@ aircraft craft_ufo_harvester
 	numteam		12
 	price		18000
 	image		"geoscape/air_ufo"
-	interestlevel 0
+	interestlevel 80
 	slot {
 		type		"weapon"
 		size		"heavy"
@@ -508,52 +508,6 @@ aircraft craft_ufo_harvester
 		size		"heavy"
 		contains	rs_craft_weapon_particle
 		ammo		rs_craft_ammo_particle
-	}
-	slot {
-		type		"weapon"
-		size		"heavy"
-		contains	rs_craft_weapon_alien_launcher
-		ammo		rs_craft_ammo_am_missile
-	}
-}
-
-aircraft craft_ufo_gunboat
-{
-	param {
-		speed		13
-		maxspeed	17
-		shield		6
-		ecm			120
-		damage		350
-		accuracy	50
-		range		347
-	}
-	name		"_UFO - Gunboat"
-	defaultname	"_Gunboat U"
-	type		"ufo"
-	model		"geoscape/ufo_gunboat"
-	size		2
-	numteam		8
-	price		23000
-	image		"geoscape/air_ufo"
-	interestlevel 300
-	slot {
-		type		"weapon"
-		size		"heavy"
-		contains	rs_craft_weapon_particle
-		ammo		rs_craft_ammo_particle
-	}
-	slot {
-		type		"weapon"
-		size		"heavy"
-		contains	rs_craft_weapon_particle
-		ammo		rs_craft_ammo_particle
-	}
-	slot {
-		type		"weapon"
-		size		"heavy"
-		contains	rs_craft_weapon_alien_launcher
-		ammo		rs_craft_ammo_am_missile
 	}
 	slot {
 		type		"weapon"
@@ -594,7 +548,7 @@ aircraft craft_ufo_corrupter
 		contains	rs_craft_weapon_particle
 		ammo		rs_craft_ammo_particle
 	}
-	interestlevel	400
+	interestlevel	200
 }
 
 aircraft craft_ufo_supply
@@ -616,6 +570,93 @@ aircraft craft_ufo_supply
 	numteam		7
 	price		20000
 	image		"geoscape/air_ufo"
+	interestlevel	200
+}
+
+aircraft craft_ufo_gunboat
+{
+	param {
+		speed		13
+		maxspeed	17
+		shield		6
+		ecm			120
+		damage		350
+		accuracy	50
+		range		347
+	}
+	name		"_UFO - Gunboat"
+	defaultname	"_Gunboat U"
+	type		"ufo"
+	model		"geoscape/ufo_gunboat"
+	size		2
+	numteam		8
+	price		23000
+	image		"geoscape/air_ufo"
+	interestlevel 310
+	slot {
+		type		"weapon"
+		size		"heavy"
+		contains	rs_craft_weapon_particle
+		ammo		rs_craft_ammo_particle
+	}
+	slot {
+		type		"weapon"
+		size		"heavy"
+		contains	rs_craft_weapon_particle
+		ammo		rs_craft_ammo_particle
+	}
+	slot {
+		type		"weapon"
+		size		"heavy"
+		contains	rs_craft_weapon_alien_launcher
+		ammo		rs_craft_ammo_am_missile
+	}
+	slot {
+		type		"weapon"
+		size		"heavy"
+		contains	rs_craft_weapon_alien_launcher
+		ammo		rs_craft_ammo_am_missile
+	}
+}
+
+aircraft craft_ufo_bomber
+{
+	param {
+		speed		18
+		maxspeed	27
+		shield		8
+		ecm			100
+		damage		900
+		accuracy	80
+		range		347
+	}
+	name		"_UFO - Bomber"
+	defaultname	"_Bomber U"
+	type		"ufo"
+	model		"geoscape/ufo_bomber"
+	size		2
+	numteam		25
+	price		45000
+	image		"geoscape/air_ufo"
+	slot {
+		type		"weapon"
+		size		"heavy"
+		contains	rs_craft_weapon_particle
+		ammo		rs_craft_ammo_particle
+	}
+	slot {
+		type		"weapon"
+		size		"heavy"
+		contains	rs_craft_weapon_particle
+		ammo		rs_craft_ammo_particle
+	}
+	slot {
+		type		"weapon"
+		size		"heavy"
+		contains	rs_craft_weapon_particle
+		ammo		rs_craft_ammo_particle
+	}
+	interestlevel	310
 }
 
 aircraft craft_ufo_ripper
@@ -661,46 +702,6 @@ aircraft craft_ufo_ripper
 		contains	rs_craft_weapon_particle
 		ammo		rs_craft_ammo_particle
 	}
-}
-
-aircraft craft_ufo_bomber
-{
-	param {
-		speed		18
-		maxspeed	27
-		shield		8
-		ecm			100
-		damage		900
-		accuracy	80
-		range		347
-	}
-	name		"_UFO - Bomber"
-	defaultname	"_Bomber U"
-	type		"ufo"
-	model		"geoscape/ufo_bomber"
-	size		2
-	numteam		25
-	price		45000
-	image		"geoscape/air_ufo"
-	slot {
-		type		"weapon"
-		size		"heavy"
-		contains	rs_craft_weapon_particle
-		ammo		rs_craft_ammo_particle
-	}
-	slot {
-		type		"weapon"
-		size		"heavy"
-		contains	rs_craft_weapon_particle
-		ammo		rs_craft_ammo_particle
-	}
-	slot {
-		type		"weapon"
-		size		"heavy"
-		contains	rs_craft_weapon_particle
-		ammo		rs_craft_ammo_particle
-	}
-	interestlevel	500
 }
 
 // TODO: Battleship goes here
