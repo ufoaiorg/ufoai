@@ -177,7 +177,7 @@ static void CP_SetAlienTeamByInterest (mission_t *mission, battleParam_t *battle
 		 * the alien team should not change depending on when you encounter it */
 		for (j = 0; j < cat->numAlienTeamGroups; j++) {
 			if (cat->alienTeamGroups[j].minInterest <= mission->initialOverallInterest
-			 && cat->alienTeamGroups[j].maxInterest > mission->initialOverallInterest)
+			 && cat->alienTeamGroups[j].maxInterest >= mission->initialOverallInterest)
 				availableGroups[numAvailableGroup++] = &cat->alienTeamGroups[j];
 		}
 	}
@@ -204,7 +204,7 @@ static void CP_SetAlienTeamByInterest (mission_t *mission, battleParam_t *battle
  */
 static bool CP_IsAlienEquipmentSelectable (const mission_t *mission, const equipDef_t *equip, linkedList_t *equipPack)
 {
-	if (mission->initialOverallInterest > equip->maxInterest || mission->initialOverallInterest <= equip->minInterest)
+	if (mission->initialOverallInterest > equip->maxInterest || mission->initialOverallInterest < equip->minInterest)
 		return false;
 
 	LIST_Foreach(equipPack, const char, name) {
