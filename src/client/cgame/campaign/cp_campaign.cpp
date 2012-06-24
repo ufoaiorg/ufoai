@@ -66,6 +66,7 @@ typedef struct {
 	int HP;
 	int STUN;
 	int morale;
+	int maxHP;
 
 	chrScoreGlobal_t chrscore;
 } updateCharacter_t;
@@ -97,6 +98,7 @@ void CP_ParseCharacterData (struct dbuffer *msg)
 			chr->HP = std::min(c->HP, chr->maxHP);
 			chr->STUN = c->STUN;
 			chr->morale = c->morale;
+			chr->maxHP = c->maxHP;
 
 			memcpy(chr->score.experience, c->chrscore.experience, sizeof(chr->score.experience));
 			memcpy(chr->score.skills, c->chrscore.skills, sizeof(chr->score.skills));
@@ -121,6 +123,7 @@ void CP_ParseCharacterData (struct dbuffer *msg)
 			c.HP = NET_ReadShort(msg);
 			c.STUN = NET_ReadByte(msg);
 			c.morale = NET_ReadByte(msg);
+			c.maxHP = NET_ReadShort(msg);
 
 			for (j = 0; j < SKILL_NUM_TYPES + 1; j++)
 				c.chrscore.experience[j] = NET_ReadLong(msg);

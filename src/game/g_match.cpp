@@ -225,6 +225,7 @@ static void G_SendCharacterData (const edict_t* ent)
 	gi.WriteShort(ent->HP);
 	gi.WriteByte(ent->STUN);
 	gi.WriteByte(ent->morale);
+	gi.WriteShort(ent->chr.maxHP);
 
 	/** Scores @sa inv_shared.h:chrScoreGlobal_t */
 	for (k = 0; k < SKILL_NUM_TYPES + 1; k++)
