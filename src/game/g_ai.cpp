@@ -325,18 +325,18 @@ bool AI_FindHidingLocation (int team, edict_t *ent, const pos3_t from, int *tuLe
 
 	for (ent->pos[1] = minY; ent->pos[1] <= maxY; ent->pos[1]++) {
 		for (ent->pos[0] = minX; ent->pos[0] <= maxX; ent->pos[0]++) {
-			/* time */
+			/* Don't have TUs  to walk there */
 			const pos_t delta = gi.MoveLength(hidePathingTable, ent->pos, crouchingState, false);
 			if (delta > *tuLeft || delta == ROUTING_NOT_REACHABLE)
 				continue;
 
-			/* visibility */
+			/* If enemies see this position, it doesn't qualify as hiding spot */
 			G_EdictCalcOrigin(ent);
-			if (G_TestVis(team, ent, VT_PERISH | VT_NOFRUSTUM) & VIS_YES)
+			if (G_IsVisibleForTeam(ent, team))
 				continue;
 
 			*tuLeft -= delta;
-			return true;
+			return true; /** @todo it could be a good idea to return the best spot found, not the the first found */
 		}
 	}
 

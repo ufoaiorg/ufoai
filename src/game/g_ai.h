@@ -27,8 +27,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define G_AI_H
 
 typedef struct {
-	pos3_t to;			/**< grid pos to walk to */
-	pos3_t stop;		/**< grid pos to stop at (e.g. hiding spots) */
+	pos3_t to;			/**< grid pos to walk to for performing the action */
+	pos3_t stop;		/**< grid pos to end turn at (e.g. hiding spots) */
 	shoot_types_t shootType;	/**< the shoot type */
 	byte shots;			/**< how many shoots can this actor do - only set this if the target is an actor */
 	edict_t *target;	/**< the target edict */
