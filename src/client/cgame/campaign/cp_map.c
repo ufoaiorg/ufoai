@@ -381,6 +381,7 @@ qboolean MAP_MapClick (uiNode_t* node, int x, int y)
 			/* Move the selected aircraft to the position clicked */
 			MAP_MapCalcLine(aircraft->pos, pos, &aircraft->route);
 			aircraft->status = AIR_TRANSIT;
+			aircraft->aircraftTarget = NULL;
 			aircraft->time = 0;
 			aircraft->point = 0;
 			return qtrue;
