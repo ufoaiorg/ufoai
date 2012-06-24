@@ -992,7 +992,6 @@ tech rs_weapon_bolterrifle
 	name	"_Electromagnetic Rifle"
 	type	"weapon"
 	up_chapter	equipment
-	delay 1 // 1 day == 24 hour
 
 	description {
 		default "_bolterrifle_txt"
@@ -1021,6 +1020,7 @@ tech rs_weapon_bolterrifle
 	{
 		tech rs_skill_sniper
 		tech rs_skill_assault
+		tech rs_alien_body_armour
 	}
 	provides	bolterrifle
 	time	1500
