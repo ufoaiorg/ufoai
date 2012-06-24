@@ -156,6 +156,7 @@ window equipment extends objectinfo
 			*node:parent.soldierlist.member<node:root.selected@integer>.name@color = "0 .78 0 1"
 		}
 		*node:root.selected@integer = <1>
+		*cvar:mn_ucn = <1>
 		if ( *node:root.selected@integer >= 0 ) {
 			*node:parent.soldierlist.member<1>.name@color = "1 1 1 1"
 			cmd "ui_team_select_ucn <node:root.selected@integer>;"
