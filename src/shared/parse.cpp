@@ -176,8 +176,10 @@ skipwhite:
 			}
 
 			if (len < sizeof(com_token)) {
-				com_token[len] = c;
-				len++;
+				if (c != '\r') {
+					com_token[len] = c;
+					len++;
+				}
 			}
 		}
 
