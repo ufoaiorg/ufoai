@@ -340,7 +340,6 @@ tech rs_alien_breathing
 	{
 		tech rs_alien_ortnok_autopsy
 		tech rs_alien_taman_autopsy
-
 		tech rs_alien_shevaar_autopsy
 	}
 
