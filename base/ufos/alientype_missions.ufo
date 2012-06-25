@@ -23,31 +23,31 @@ alienteam scouts
 	{
 		mininterest 0
 		maxinterest 49
-		team (taman bloodspider)
+		team (taman)
 	}
 	teaminterest
 	{
 		mininterest 50
 		maxinterest 79
-		team (taman bloodspider hovernet)
+		team (taman)
 	}
 	teaminterest
 	{
 		mininterest 80
 		maxinterest 199
-		team (taman shevaar bloodspider hovernet)
+		team (taman shevaar)
 	}
 	teaminterest
 	{
 		mininterest 200
 		maxinterest 279
-		team (taman shevaar bloodspider_adv hovernet)
+		team (taman shevaar)
 	}
 	teaminterest
 	{
 		mininterest 280
 		maxinterest 10000
-		team (taman shevaar bloodspider_adv hovernet_adv)
+		team (taman shevaar)
 	}
 }
 
