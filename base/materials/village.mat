@@ -17,55 +17,9 @@
 	}
 }
 {
-	material tex_nature/water
-	{
-		envmap 0
-	}
-}
-
-/* flares for neon003 truck lights */
-{
-	material tex_lights/neon003
-	{
-		flare 4
-		color 1.0 0.3 0.1
-	}
-}
-
-/* ufo2: (Harvester, Corrupter, Bomber) */
-
-/* ufo2_01: Outside Hull clean */
-{
-	material tex_ufo/ufo2_01
+	material tex_ctp1/hedge01
+	specular 0.0
+	hardness 0.0
 	bump 1.0
-	hardness 1.0
 	parallax 1.0
-	specular 1.0
-	{
-		lightmap
-	}
-}
-
-/* ufo2_02: Inside Wall like ufo2_03 without reliefs */
-{
-	material tex_ufo/ufo2_02
-	bump 1.0
-	hardness 0.8
-	parallax 1.0
-	specular 5.0
-	{
-		lightmap
-	}
-}
-
-/* ufo2_03: Inside Wall & Outside Hull (Harvester only) with reliefs */
-{
-	material tex_ufo/ufo2_03
-	bump 1.0
-	hardness 0.8
-	parallax 1.0
-	specular 5.0
-	{
-		lightmap
-	}
 }
