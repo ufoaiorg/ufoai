@@ -512,16 +512,18 @@ static void G_SplashDamage (edict_t *ent, const fireDef_t *fd, vec3_t impact, sh
 		if (dist > fd->splrad)
 			continue;
 
-		if (fd->irgoggles && G_IsActor(check)) {
-			/* check whether this actor (check) is in the field of view of the 'shooter' (ent) */
-			if (G_FrustumVis(ent, check->origin)) {
-				if (!mock) {
-					const unsigned int playerMask = G_TeamToPM(ent->team) ^ G_VisToPM(check->visflags);
-					G_AppearPerishEvent(playerMask, true, check, ent);
-					G_VisFlagsAdd(check, G_PMToVis(playerMask));
+		if (fd->irgoggles) {
+			if (G_IsActor(check)) {
+				/* check whether this actor (check) is in the field of view of the 'shooter' (ent) */
+				if (G_FrustumVis(ent, check->origin)) {
+					if (!mock) {
+						const unsigned int playerMask = G_TeamToPM(ent->team) ^ G_VisToPM(check->visflags);
+						G_AppearPerishEvent(playerMask, true, check, ent);
+						G_VisFlagsAdd(check, G_PMToVis(playerMask));
+					}
 				}
-				continue;
 			}
+			continue;
 		}
 
 		/* check for walls */
