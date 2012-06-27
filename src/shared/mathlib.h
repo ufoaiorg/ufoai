@@ -69,6 +69,11 @@ bool Q_IsPowerOfTwo(int i);
 #define YAW    1   /* rotation around z axis - left / right (0 up to 360 degree) */
 #define ROLL   2   /* rotation around x axis - fall over */
 
+/* axis */
+#define	AXIS_FORWARD	0
+#define	AXIS_RIGHT		1
+#define	AXIS_UP			2
+
 /* earth map data */
 /* values of sinus and cosinus of earth inclination (23,5 degrees) for faster day and night calculations */
 #define SIN_ALPHA   0.39875

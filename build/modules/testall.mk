@@ -8,7 +8,7 @@ endif
 
 $(TARGET)_LINKER   := $(CXX)
 $(TARGET)_FILE     := $(TARGET)$(EXE_EXT)
-$(TARGET)_CFLAGS   += -DCOMPILE_UFO -DHARD_LINKED_GAME -DCOMPILE_UNITTESTS $(BFD_CFLAGS) $(SDL_CFLAGS) $(CURL_CFLAGS) $(OGG_CFLAGS) $(MXML_CFLAGS)
+$(TARGET)_CFLAGS   += -DCOMPILE_UFO -DHARD_LINKED_GAME -DCOMPILE_UNITTESTS $(BFD_CFLAGS) $(SDL_CFLAGS) $(CURL_CFLAGS) $(OGG_CFLAGS) $(MXML_CFLAGS) $(MUMBLE_CFLAGS)
 $(TARGET)_LDFLAGS  += -lcunit -lpng -ljpeg $(BFD_LIBS) $(INTL_LIBS) $(SDL_TTF_LIBS) $(SDL_MIXER_LIBS) $(OPENGL_LIBS) $(SDL_LIBS) $(CURL_LIBS) $(THEORA_LIBS) $(XVID_LIBS) $(VORBIS_LIBS) $(OGG_LIBS) $(MXML_LIBS) $(SO_LIBS) -lz
 
 $(TARGET)_SRCS      = \
@@ -109,6 +109,7 @@ $(TARGET)_SRCS      = \
 	\
 	client/sound/s_music.cpp \
 	client/sound/s_main.cpp \
+	client/sound/s_mumble.cpp \
 	client/sound/s_mix.cpp \
 	client/sound/s_sample.cpp \
 	\
@@ -264,7 +265,9 @@ $(TARGET)_SRCS      = \
 	\
 	$(game_SRCS) \
 	\
-	$(MXML_SRCS)
+	$(MXML_SRCS) \
+	\
+	$(MUMBLE_SRCS)
 
 ifeq ($(TARGET_OS),mingw32)
 	$(TARGET)_SRCS += \

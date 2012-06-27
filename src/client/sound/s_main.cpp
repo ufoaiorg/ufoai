@@ -29,6 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "s_music.h"
 #include "s_sample.h"
 #include "s_mix.h"
+#include "s_mumble.h"
 
 #define COMPARE_VERSION(major,minor,micro) \
 	(SDL_MIXER_MAJOR_VERSION > (major) || \
@@ -56,10 +57,10 @@ static void S_Restart_f(void);
  */
 void S_Stop (void)
 {
+	S_MumbleUnlink();
 	if (!s_env.initialized)
 		return;
 	Mix_HaltChannel(-1);
-
 	OBJZERO(s_env.channels);
 }
 
@@ -84,7 +85,8 @@ void S_Frame (void)
 		le_t *le;
 
 		/* update right angle for stereo panning */
-		AngleVectors(cl.cam.angles, NULL, s_env.right, NULL);
+		VectorCopy(cl.cam.axis[AXIS_RIGHT], s_env.right);
+		S_MumbleUpdate(cl.cam.camorg, cl.cam.axis[AXIS_FORWARD], cl.cam.axis[AXIS_RIGHT], cl.cam.axis[AXIS_UP]);
 
 		/* update spatialization for current sounds */
 		ch = s_env.channels;
@@ -252,6 +254,7 @@ void S_Init (void)
 	s_env.initialized = true;
 
 	M_Init();
+	S_MumbleInit();
 }
 
 /**

@@ -23,6 +23,7 @@
 					<Add option="-DHAVE_XVID_H" />
 					<Add option="-DHAVE_THEORA_THEORA_H" />
 					<Add directory="..\..\src\libs\mxml\" />
+					<Add directory="..\..\src\libs\mumble\" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -299,6 +300,7 @@
 		<Unit filename="..\..\src\client\renderer\r_surface.cpp" />
 		<Unit filename="..\..\src\client\renderer\r_thread.cpp" />
 		<Unit filename="..\..\src\client\sound\s_main.cpp" />
+		<Unit filename="..\..\src\client\sound\s_mumble.cpp" />
 		<Unit filename="..\..\src\client\sound\s_mix.cpp" />
 		<Unit filename="..\..\src\client\sound\s_music.cpp" />
 		<Unit filename="..\..\src\client\sound\s_sample.cpp" />
@@ -483,6 +485,7 @@
 		<Unit filename="..\..\src\game\lua\print.cpp" />
 		<Unit filename="..\..\src\game\q_shared.cpp" />
 		<Unit filename="..\..\src\game\q_shared.h" />
+		<Unit filename="..\..\src\libs\mumble\libmumblelink.c" />
 		<Unit filename="..\..\src\libs\mxml\config.h" />
 		<Unit filename="..\..\src\libs\mxml\mxml-attr.c">
 			<Option compilerVar="CC" />

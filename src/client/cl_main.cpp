@@ -51,6 +51,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "input/cl_joystick.h"
 #include "cinematic/cl_cinematic.h"
 #include "sound/s_music.h"
+#include "sound/s_mumble.h"
 #include "renderer/r_main.h"
 #include "renderer/r_particle.h"
 #include "ui/ui_main.h"
@@ -603,6 +604,8 @@ void CL_RequestNextDownload (void)
 	}
 
 	cls.waitingForStart = CL_Milliseconds();
+
+	S_MumbleLink();
 }
 
 

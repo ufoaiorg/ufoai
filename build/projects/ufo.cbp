@@ -89,6 +89,7 @@
 			<Add option="-DCOMPILE_UFO" />
 			<Add option="-DHARD_LINKED_CGAME" />
 			<Add directory="..\..\src\libs\mxml\" />
+			<Add directory="..\..\src\libs\mumble\" />
 		</Compiler>
 		<Linker>
 			<Add library="SDL" />
@@ -554,6 +555,8 @@
 		<Unit filename="..\..\src\client\sound\s_local.h" />
 		<Unit filename="..\..\src\client\sound\s_main.cpp" />
 		<Unit filename="..\..\src\client\sound\s_main.h" />
+		<Unit filename="..\..\src\client\sound\s_mumble.cpp" />
+		<Unit filename="..\..\src\client\sound\s_mumble.h" />
 		<Unit filename="..\..\src\client\sound\s_mix.cpp" />
 		<Unit filename="..\..\src\client\sound\s_mix.h" />
 		<Unit filename="..\..\src\client\sound\s_music.cpp" />
@@ -753,6 +756,7 @@
 		<Unit filename="..\..\src\game\inventory.cpp" />
 		<Unit filename="..\..\src\game\q_shared.cpp" />
 		<Unit filename="..\..\src\game\q_shared.h" />
+		<Unit filename="..\..\src\libs\mumble\libmumblelink.c" />
 		<Unit filename="..\..\src\libs\mxml\config.h" />
 		<Unit filename="..\..\src\libs\mxml\mxml-attr.c">
 			<Option compilerVar="CC" />
