@@ -38,6 +38,9 @@ struct campaign_s;
 
 #define MAX_ASSEMBLIES	16
 
+/* fraction of nation that can be below min happiness before the game is lost */
+#define NATIONBELOWLIMITPERCENTAGE 0.5f
+
 /** @todo rename this after merging with savegame breakage branch and also change the value to -1 */
 #define	BYTES_NONE	0xFF
 

@@ -294,8 +294,6 @@ void CP_EndCampaign (bool won)
 void CP_CheckLostCondition (const campaign_t *campaign)
 {
 	bool endCampaign = false;
-	/* fraction of nation that can be below min happiness before the game is lost */
-	const float nationBelowLimitPercentage = 0.5f;
 
 	if (cp_missiontest->integer)
 		return;
@@ -332,7 +330,7 @@ void CP_CheckLostCondition (const campaign_t *campaign)
 					nationBelowLimit++;
 				}
 			}
-			if (nationBelowLimit >= nationBelowLimitPercentage * ccs.numNations) {
+			if (nationBelowLimit >= NATIONBELOWLIMITPERCENTAGE * ccs.numNations) {
 				/* lost the game */
 				cgi->UI_RegisterText(TEXT_STANDARD, _("Under your command, PHALANX operations have"
 					" consistently failed to protect nations."

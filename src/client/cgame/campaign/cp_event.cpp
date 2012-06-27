@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../../common/binaryexpressionparser.h"
 #include "cp_campaign.h"
 #include "cp_time.h"
+#include "cp_xvi.h"
 #include "save/save_triggerevents.h"
 
 static linkedList_t *eventMails = NULL;
@@ -199,6 +200,37 @@ static int CP_CheckTriggerEvent (const char *expression, const void* userdata)
 			if (stats->xviInfection >= xvi)
 				return 1;
 		}
+		return 0;
+	}
+
+	/* check for nation happiness - also see the lost conditions in the campaign */
+	type = Q_strstart(expression, "nationhappiness");
+	if (type != 0) {
+		int j, nationBelowLimit = 0;
+		for (j = 0; j < ccs.numNations; j++) {
+			const nation_t *nation = NAT_GetNationByIDX(j);
+			const nationInfo_t *stats = NAT_GetCurrentMonthInfo(nation);
+			if (stats->happiness < ccs.curCampaign->minhappiness) {
+				nationBelowLimit++;
+			}
+		}
+		if (nationBelowLimit / 2 >= NATIONBELOWLIMITPERCENTAGE * ccs.numNations) {
+			return 1;
+		}
+		return 0;
+	}
+
+	/* check that the given average xvi level is reached */
+	type = Q_strstart(expression, "averagexvi");
+	if (type != 0) {
+		int xvipercent;
+		if (sscanf(type, "[%i]", &xvipercent) != 1)
+			return -1;
+		if (xvipercent < 0 || xvipercent > 100)
+			return -1;
+		const int xvi = CP_GetAverageXVIRate();
+		if (xvi > ccs.curCampaign->maxAllowedXVIRateUntilLost * xvipercent / 100)
+			return 1;
 		return 0;
 	}
 
