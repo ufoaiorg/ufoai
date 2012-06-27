@@ -326,7 +326,7 @@ mapdef bridge
 	ufos
 	(
 		craft_crash_fighter
-		craft_crash_scout
+		// craft_crash_scout
 	)
 
 	terrains
