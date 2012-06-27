@@ -82,6 +82,7 @@ typedef struct {
 	campaignTriggerEventType_t type;
 	char *id;
 	char *require;
+	char *reactivate;
 	char *command;
 	bool once;
 	bool active;

@@ -268,16 +268,20 @@ void CP_TriggerEvent (campaignTriggerEventType_t type, const void* userdata)
 
 	for (i = 0; i < ccs.numCampaignTriggerEvents; i++) {
 		campaignTriggerEvent_t *event = &ccs.campaignTriggerEvents[i];
-		if (event->type != type || !event->active)
+		if (event->type != type || (!event->active && event->reactivate == NULL))
 			continue;
 
-		if (BEP_Evaluate(event->require, CP_CheckTriggerEvent, userdata)) {
-			if (Q_strvalid(event->command))
-				Cmd_ExecuteString(event->command);
+		if (event->active) {
+			if (BEP_Evaluate(event->require, CP_CheckTriggerEvent, userdata)) {
+				if (Q_strvalid(event->command))
+					Cmd_ExecuteString(event->command);
 
-			if (event->once) {
-				event->active = false;
+				if (event->once) {
+					event->active = false;
+				}
 			}
+		} else {
+			event->active = BEP_Evaluate(event->reactivate, CP_CheckTriggerEvent, userdata);
 		}
 	}
 }
@@ -286,6 +290,7 @@ void CP_TriggerEvent (campaignTriggerEventType_t type, const void* userdata)
 static const value_t event_vals[] = {
 	{"type", V_INT, offsetof(campaignTriggerEvent_t, type), MEMBER_SIZEOF(campaignTriggerEvent_t, type)},
 	{"require", V_HUNK_STRING, offsetof(campaignTriggerEvent_t, require), 0},
+	{"reactivate", V_HUNK_STRING, offsetof(campaignTriggerEvent_t, reactivate), 0},
 	{"command", V_HUNK_STRING, offsetof(campaignTriggerEvent_t, command), 0},
 	{"once", V_BOOL, offsetof(campaignTriggerEvent_t, once), MEMBER_SIZEOF(campaignTriggerEvent_t, once)},
 
