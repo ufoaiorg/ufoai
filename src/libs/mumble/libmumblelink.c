@@ -20,7 +20,7 @@
 
  */
 
-#ifdef WIN32
+#ifdef _WIN32
 #include <windows.h>
 #define uint32_t UINT32
 #else
@@ -63,7 +63,7 @@ typedef struct
 
 static LinkedMem *lm = NULL;
 
-#ifdef WIN32
+#ifdef _WIN32
 static HANDLE hMapObject = NULL;
 #else
 static int32_t GetTickCount (void)
@@ -77,7 +77,7 @@ static int32_t GetTickCount (void)
 
 int mumble_link (const char* name)
 {
-#ifdef WIN32
+#ifdef _WIN32
 	if(lm)
 		return 0;
 
@@ -169,7 +169,7 @@ void mumble_unlink ()
 {
 	if (!lm)
 		return;
-#ifdef WIN32
+#ifdef _WIN32
 	UnmapViewOfFile(lm);
 	CloseHandle(hMapObject);
 	hMapObject = NULL;
