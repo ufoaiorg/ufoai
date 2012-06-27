@@ -20,6 +20,12 @@
 
  */
 
+#include <fcntl.h>
+#include <inttypes.h>
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
+
 #ifdef _WIN32
 #include <windows.h>
 #define uint32_t UINT32
@@ -30,12 +36,6 @@
 #include <sys/stat.h>
 #include <sys/time.h>
 #endif
-
-#include <fcntl.h>
-#include <inttypes.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdio.h>
 
 #include "libmumblelink.h"
 
