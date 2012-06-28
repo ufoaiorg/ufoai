@@ -297,35 +297,38 @@ static void INS_Click_f (void)
 
 	int index = atoi(Cmd_Argv(1));
 
-	for (int i = 0; i < ccs.numInstallationTemplates; i++) {
-		const installationTemplate_t *tpl = &ccs.installationTemplates[i];
-		if (tpl->tech == NULL || RS_IsResearched_ptr(tpl->tech)) {
-			if (tpl->once && INS_HasType(tpl->type, INSTALLATION_NOT_USED))
-				continue;
-			if (index-- == 0) {
-				/* if player hit the "create base" button while creating base mode is enabled
-				 * that means that player wants to quit this mode */
-				if (ccs.mapAction == MA_NEWINSTALLATION || INS_GetCount() >= B_GetInstallationLimit()) {
-					MAP_ResetAction();
+	if (INS_GetCount() < B_GetInstallationLimit()) {
+		for (int i = 0; i < ccs.numInstallationTemplates; i++) {
+			const installationTemplate_t *tpl = &ccs.installationTemplates[i];
+			if (tpl->tech == NULL || RS_IsResearched_ptr(tpl->tech)) {
+				if (tpl->once && INS_HasType(tpl->type, INSTALLATION_NOT_USED))
+					continue;
+				if (index-- == 0) {
+					/* if player hit the "create installation" button while creating installation mode is enabled
+					 * that means that player wants to quit this mode */
+					if (ccs.mapAction == MA_NEWINSTALLATION) {
+						MAP_ResetAction();
+					} else {
+						ccs.mapAction = MA_NEWINSTALLATION;
+
+						/* show radar overlay (if not already displayed) */
+						if (tpl->type == INSTALLATION_RADAR && !MAP_IsRadarOverlayActivated())
+							MAP_SetOverlay("radar");
+
+						INS_SetInstallationTitle(tpl->type);
+						Cvar_Set("mn_installation_type", tpl->id);
+					}
+					/* select the installation type */
 					return;
-				} else {
-					ccs.mapAction = MA_NEWINSTALLATION;
-
-					/* show radar overlay (if not already displayed) */
-					if (tpl->type == INSTALLATION_RADAR && !MAP_IsRadarOverlayActivated())
-						MAP_SetOverlay("radar");
-
-					INS_SetInstallationTitle(tpl->type);
-					Cvar_Set("mn_installation_type", tpl->id);
 				}
-				/* select the installation type */
-				return;
 			}
 		}
 	}
+
 	if (index == 0) {
 		/* base is the last */
 		B_SelectBase(NULL);
+		return;
 	}
 }
 
