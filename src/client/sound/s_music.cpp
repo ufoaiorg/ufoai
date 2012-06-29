@@ -53,6 +53,7 @@ typedef struct music_s {
 	bool playingStream; /**< if this is set no action to M_Start and M_Stop might happen, otherwise we might run
 	 * into a deadlock. This is due to the installed hook function for music mixing that is used
 	 * whenever we stream the music on our own */
+	bool interruptStream;
 } music_t;
 
 #define MUSIC_MAX_ENTRIES 64
@@ -300,6 +301,14 @@ static int M_CompleteMusic (const char *partial, const char **match)
 	return n;
 }
 
+static void M_MusicStreamUpdate (void)
+{
+	if (music.interruptStream) {
+		music.interruptStream = false;
+		M_StopMusicStream(NULL);
+	}
+}
+
 void M_Frame (void)
 {
 	if (snd_music->modified) {
@@ -310,7 +319,10 @@ void M_Frame (void)
 		Mix_VolumeMusic(snd_music_volume->integer);
 		snd_music_volume->modified = false;
 	}
-	if (!music.playingStream && music.nextTrack[0] != '\0') {
+
+	if (music.playingStream) {
+		M_MusicStreamUpdate();
+	} else if (music.nextTrack[0] != '\0') {
 		if (!Mix_PlayingMusic()) {
 			M_Stop(); /* free the allocated memory */
 			M_Start(music.nextTrack);
@@ -352,12 +364,18 @@ void M_Shutdown (void)
 
 static void M_MusicStreamCallback (musicStream_t *userdata, byte *stream, int length)
 {
+	int tries = 0;
 	while (1) {
-		const int availableBytes = (userdata->mixerPos > userdata->samplePos) ? MAX_RAW_SAMPLES - userdata->mixerPos + userdata->samplePos : userdata->samplePos - userdata->mixerPos;
 		if (!userdata->playing)
 			return;
+		const int availableBytes = (userdata->mixerPos > userdata->samplePos) ? MAX_RAW_SAMPLES - userdata->mixerPos + userdata->samplePos : userdata->samplePos - userdata->mixerPos;
 		if (length < availableBytes)
 			break;
+		if (++tries > 50) {
+			userdata->playing = false;
+			music.interruptStream = true;
+			return;
+		}
 		Sys_Sleep(10);
 	}
 
@@ -428,7 +446,9 @@ void M_PlayMusicStream (musicStream_t *userdata)
 
 void M_StopMusicStream (musicStream_t *userdata)
 {
-	userdata->playing = false;
+	if (userdata != NULL)
+		userdata->playing = false;
 	music.playingStream = false;
+	music.interruptStream = false;
 	Mix_HookMusic(NULL, NULL);
 }
