@@ -83,8 +83,6 @@ typedef struct {
 	int				startTime;	/**< cinematic start timestamp */
 	int				currentFrame;
 
-	int				soundChannel;	/**< the mixer channel the sound is played on */
-
 	byte			data[ROQ_MAX_CHUNK_SIZE + ROQ_CHUNK_HEADER_SIZE];
 	byte *			header;
 
