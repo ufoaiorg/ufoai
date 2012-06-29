@@ -596,8 +596,6 @@ int CIN_ROQ_OpenCinematic (cinematic_t *cin, const char *fileName)
 	/* Fill it in */
 	Q_strncpyz(cin->name, fileName, sizeof(cin->name));
 
-	M_PlayMusicStream(&ROQCIN.musicStream);
-
 	ROQCIN.size = size;
 	ROQCIN.offset = sizeof(header);
 

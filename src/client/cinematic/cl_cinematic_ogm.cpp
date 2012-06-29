@@ -711,8 +711,6 @@ int CIN_OGM_OpenCinematic (cinematic_t *cin, const char* filename)
 	}
 #endif
 
-	M_PlayMusicStream(&OGMCIN.musicStream);
-
 	return 0;
 }
 

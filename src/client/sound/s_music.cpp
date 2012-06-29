@@ -392,6 +392,18 @@ static void M_MusicStreamCallback (musicStream_t *userdata, byte *stream, int le
 	}
 }
 
+static void M_PlayMusicStream (musicStream_t *userdata)
+{
+	if (userdata->playing)
+		return;
+
+	M_Stop();
+
+	userdata->playing = true;
+	music.playingStream = true;
+	Mix_HookMusic((void (*)(void*, Uint8*, int)) M_MusicStreamCallback, userdata);
+}
+
 /**
  * @brief Add stereo samples with a 16 byte width to the stream buffer
  * @param[in] samples The amount of stereo samples that should be added to the stream buffer (this
@@ -407,6 +419,8 @@ void M_AddToSampleBuffer (musicStream_t *userdata, int rate, int samples, const 
 
 	if (!s_env.initialized)
 		return;
+
+	M_PlayMusicStream(userdata);
 
 	if (rate != s_env.rate) {
 		const float scale = (float)rate / s_env.rate;
@@ -433,15 +447,6 @@ void M_AddToSampleBuffer (musicStream_t *userdata, int rate, int samples, const 
 			userdata->samplePos %= MAX_RAW_SAMPLES;
 		}
 	}
-}
-
-void M_PlayMusicStream (musicStream_t *userdata)
-{
-	M_Stop();
-
-	userdata->playing = true;
-	music.playingStream = true;
-	Mix_HookMusic((void (*)(void*, Uint8*, int)) M_MusicStreamCallback, userdata);
 }
 
 void M_StopMusicStream (musicStream_t *userdata)
