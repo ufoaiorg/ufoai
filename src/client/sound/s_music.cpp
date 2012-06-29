@@ -366,14 +366,15 @@ static void M_MusicStreamCallback (musicStream_t *userdata, byte *stream, int le
 {
 	int tries = 0;
 	while (1) {
-		if (!userdata->playing)
+		if (!userdata->playing) {
+			music.interruptStream = true;
 			return;
+		}
 		const int availableBytes = (userdata->mixerPos > userdata->samplePos) ? MAX_RAW_SAMPLES - userdata->mixerPos + userdata->samplePos : userdata->samplePos - userdata->mixerPos;
 		if (length < availableBytes)
 			break;
 		if (++tries > 50) {
 			userdata->playing = false;
-			music.interruptStream = true;
 			return;
 		}
 		Sys_Sleep(10);
