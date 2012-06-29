@@ -557,14 +557,14 @@ static void AI_SearchBestTarget (aiAction_t *aia, const edict_t *ent, edict_t *c
  * @todo fill z_align values
  * @todo optimize this
  */
-static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * aia)
+static float AI_FighterCalcActionScore (edict_t * ent, pos3_t to, aiAction_t * aia)
 {
 	edict_t *check = NULL;
 	int tu;
 	pos_t move;
 	shoot_types_t shootType;
 	float minDist;
-	float bestActionPoints, maxDmg;
+	float bestActionScore, maxDmg;
 	int bestTime = -1;
 
 	move = gi.MoveLength(level.pathingMap, to,
@@ -575,7 +575,7 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 	if (tu < 0 || move == ROUTING_NOT_REACHABLE)
 		return AI_ACTION_NOTHING_FOUND;
 
-	bestActionPoints = 0.0;
+	bestActionScore = 0.0;
 	OBJZERO(*aia);
 
 	/* set basic parameters */
@@ -609,9 +609,9 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 			}
 		} /* firedefs */
 	}
-	/* add damage to bestActionPoints */
+	/* add damage to bestActionScore */
 	if (aia->target) {
-		bestActionPoints += maxDmg;
+		bestActionScore += maxDmg;
 		assert(bestTime > 0);
 		tu -= bestTime;
 	}
@@ -621,7 +621,7 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 		/* hide */
 		if (!AI_HideNeeded(ent) || !(G_TestVis(hidingTeam, ent, VT_PERISH | VT_NOFRUSTUM) & VIS_YES)) {
 			/* is a hiding spot */
-			bestActionPoints += SCORE_HIDE + (aia->target ? SCORE_CLOSE_IN : 0);
+			bestActionScore += SCORE_HIDE + (aia->target ? SCORE_CLOSE_IN : 0);
 		} else if (aia->target && tu >= TU_MOVE_STRAIGHT) {
 			/* reward short walking to shooting spot, when seen by enemies; */
 			/** @todo do this decently, only penalizing the visible part of walk
@@ -630,7 +630,7 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 			 * e.g. they may now choose only the closer doors;
 			 * however it's still better than going three times around soldier
 			 * and only then firing at him */
-			bestActionPoints += std::max(SCORE_CLOSE_IN - move, 0);
+			bestActionScore += std::max(SCORE_CLOSE_IN - move, 0);
 
 			if (!AI_FindHidingLocation(hidingTeam, ent, to, &tu)) {
 				/* nothing found */
@@ -639,7 +639,7 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 			} else {
 				/* found a hiding spot */
 				VectorCopy(ent->pos, aia->stop);
-				bestActionPoints += SCORE_HIDE;
+				bestActionScore += SCORE_HIDE;
 				/** @todo also add bonus for fleeing from reaction fire
 				 * and a huge malus if more than 1 move under reaction */
 			}
@@ -655,7 +655,7 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 			minDist = std::min(dist, minDist);
 		}
 	}
-	bestActionPoints += SCORE_CLOSE_IN * (1.0 - minDist / CLOSE_IN_DIST);
+	bestActionScore += SCORE_CLOSE_IN * (1.0 - minDist / CLOSE_IN_DIST);
 
 	/* penalize herding */
 	check = NULL;
@@ -663,11 +663,11 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 		if (check->team == ent->team) {
 			const float dist = VectorDist(ent->origin, check->origin);
 			if (dist < HERD_THRESHOLD)
-				bestActionPoints -= HERDING_PENALTY;
+				bestActionScore -= HERDING_PENALTY;
 		}
 	}
 
-	return bestActionPoints;
+	return bestActionScore;
 }
 
 /**
@@ -678,19 +678,19 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
  * @sa AI_ActorThink
  * @note Even civilians can use weapons if the teamdef allows this
  */
-static float AI_CivilianCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * aia)
+static float AI_CivilianCalcActionScore (edict_t * ent, pos3_t to, aiAction_t * aia)
 {
 	edict_t *check = NULL;
 	int tu;
 	pos_t move;
 	float minDist, minDistCivilian, minDistFighter;
-	float bestActionPoints;
+	float bestActionScore;
 	float reactionTrap = 0.0;
 	float delta = 0.0;
 	const byte crouchingState = G_IsCrouched(ent) ? 1 : 0;
 
 	/* set basic parameters */
-	bestActionPoints = 0.0;
+	bestActionScore = 0.0;
 	OBJZERO(*aia);
 	VectorCopy(to, aia->to);
 	VectorCopy(to, aia->stop);
@@ -707,9 +707,9 @@ static float AI_CivilianCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * a
 	if (ent->chr.teamDef) {
 		const teamDef_t* teamDef = ent->chr.teamDef;
 		if (!G_IsPaniced(ent) && teamDef->weapons)
-			return AI_FighterCalcBestAction(ent, to, aia);
+			return AI_FighterCalcActionScore(ent, to, aia);
 	} else
-		gi.DPrintf("AI_CivilianCalcBestAction: Error - civilian team with no teamdef\n");
+		gi.DPrintf("AI_CivilianCalcActionScore: Error - civilian team with no teamdef\n");
 
 	/* run away */
 	minDist = minDistCivilian = minDistFighter = RUN_AWAY_DIST * UNIT_SIZE;
@@ -779,15 +779,15 @@ static float AI_CivilianCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * a
 			reactionTrap += 25.0;
 	}
 	delta -= reactionTrap;
-	bestActionPoints += delta;
+	bestActionScore += delta;
 
 	/* add laziness */
 	if (ent->TU)
-		bestActionPoints += SCORE_CIV_LAZINESS * tu / ent->TU;
+		bestActionScore += SCORE_CIV_LAZINESS * tu / ent->TU;
 	/* add random effects */
-	bestActionPoints += SCORE_CIV_RANDOM * frand();
+	bestActionScore += SCORE_CIV_RANDOM * frand();
 
-	return bestActionPoints;
+	return bestActionScore;
 }
 
 /**
@@ -798,7 +798,7 @@ static float AI_CivilianCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * a
  */
 static int AI_CheckForMissionTargets (const player_t* player, edict_t *ent, aiAction_t *aia)
 {
-	int bestActionPoints = AI_ACTION_NOTHING_FOUND;
+	int bestActionScore = AI_ACTION_NOTHING_FOUND;
 	const byte crouchingState = G_IsCrouched(ent) ? 1 : 0;
 
 	/* reset any previous given action set */
@@ -824,7 +824,7 @@ static int AI_CheckForMissionTargets (const player_t* player, edict_t *ent, aiAc
 
 					/* test for time and distance */
 					length = ent->TU - move;
-					bestActionPoints = SCORE_MISSION_TARGET + length;
+					bestActionScore = SCORE_MISSION_TARGET + length;
 
 					ent->count = checkPoint->count;
 					VectorCopy(checkPoint->pos, aia->to);
@@ -842,17 +842,17 @@ static int AI_CheckForMissionTargets (const player_t* player, edict_t *ent, aiAc
 				VectorCopy(mission->pos, aia->to);
 				aia->target = mission;
 				if (player->pers.team == mission->team) {
-					bestActionPoints = SCORE_MISSION_TARGET;
+					bestActionScore = SCORE_MISSION_TARGET;
 					break;
 				} else {
 					/* try to prevent the phalanx from reaching their mission target */
-					bestActionPoints = SCORE_MISSION_OPPONENT_TARGET;
+					bestActionScore = SCORE_MISSION_OPPONENT_TARGET;
 				}
 			}
 		}
 	}
 
-	return bestActionPoints;
+	return bestActionScore;
 }
 
 #define AI_MAX_DIST	30
@@ -869,7 +869,7 @@ static aiAction_t AI_PrepBestAction (const player_t *player, edict_t * ent)
 	vec3_t oldOrigin;
 	int xl, yl, xh, yh;
 	int dist;
-	float bestActionPoints, best;
+	float bestActionScore, best;
 	const byte crouchingState = G_IsCrouched(ent) ? 1 : 0;
 
 	/* calculate move table */
@@ -897,13 +897,13 @@ static aiAction_t AI_PrepBestAction (const player_t *player, edict_t * ent)
 				const pos_t move = gi.MoveLength(level.pathingMap, to, crouchingState, true);
 				if (move != ROUTING_NOT_REACHABLE && move <= ent->TU) {
 					if (G_IsCivilian(ent) || G_IsPaniced(ent))
-						bestActionPoints = AI_CivilianCalcBestAction(ent, to, &aia);
+						bestActionScore = AI_CivilianCalcActionScore(ent, to, &aia);
 					else
-						bestActionPoints = AI_FighterCalcBestAction(ent, to, &aia);
+						bestActionScore = AI_FighterCalcActionScore(ent, to, &aia);
 
-					if (bestActionPoints > best) {
+					if (bestActionScore > best) {
 						bestAia = aia;
-						best = bestActionPoints;
+						best = bestActionScore;
 					}
 				}
 			}
@@ -911,10 +911,10 @@ static aiAction_t AI_PrepBestAction (const player_t *player, edict_t * ent)
 	VectorCopy(oldPos, ent->pos);
 	VectorCopy(oldOrigin, ent->origin);
 
-	bestActionPoints = AI_CheckForMissionTargets(player, ent, &aia);
-	if (bestActionPoints > best) {
+	bestActionScore = AI_CheckForMissionTargets(player, ent, &aia);
+	if (bestActionScore > best) {
 		bestAia = aia;
-		best = bestActionPoints;
+		best = bestActionScore;
 	}
 
 	/* nothing found to do */
@@ -994,8 +994,8 @@ static void AI_TryToReloadWeapon (edict_t *ent, containerIndex_t containerID)
  * @brief The think function for the ai controlled aliens
  * @param[in] player
  * @param[in] ent
- * @sa AI_FighterCalcBestAction
- * @sa AI_CivilianCalcBestAction
+ * @sa AI_FighterCalcActionScore
+ * @sa AI_CivilianCalcActionScore
  * @sa G_ClientMove
  * @sa G_ClientShoot
  */
