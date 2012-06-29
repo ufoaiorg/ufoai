@@ -791,6 +791,83 @@ static float AI_CivilianCalcActionScore (edict_t * ent, pos3_t to, aiAction_t * 
 }
 
 /**
+ * @brief Calculates possible actions for a panicking unit.
+ * @param[in] ent Pointer to an edict which is panicking.
+ * @param[in] to The grid position to walk to.
+ * @param[in] aia Pointer to aiAction containing informations about possible action.
+ * @sa AI_ActorThink
+ * @note Panicking units will run away from everyone other than their own team (e.g. aliens will run away even from civilians)
+ */
+static float AI_PanicCalcActionScore (edict_t * ent, pos3_t to, aiAction_t * aia)
+{
+	edict_t *check = NULL;
+	int tu;
+	pos_t move;
+	float minDistFriendly, minDistOthers;
+	float bestActionScore = 0.0;
+	const byte crouchingState = G_IsCrouched(ent) ? 1 : 0;
+
+	/* set basic parameters */
+	OBJZERO(*aia);
+	VectorCopy(to, aia->to);
+	VectorCopy(to, aia->stop);
+	G_EdictSetOrigin(ent, to);
+
+	move = gi.MoveLength(level.pathingMap, to, crouchingState, true);
+	tu = ent->TU - move;
+
+	/* test for time */
+	if (tu < 0 || move == ROUTING_NOT_REACHABLE)
+		return AI_ACTION_NOTHING_FOUND;
+
+	/* run away */
+	minDistFriendly = minDistOthers = RUN_AWAY_DIST * UNIT_SIZE;
+
+	while ((check = G_EdictsGetNextLivingActor(check))) {
+		float dist;
+		if (ent == check)
+			continue;
+		dist = VectorDist(ent->origin, check->origin);
+		/* if we are trying to walk to a position that is occupied by another actor already we just return */
+		if (!dist)
+			return AI_ACTION_NOTHING_FOUND;
+		if (check->team == ent->team) {
+			if (dist < minDistFriendly)
+				minDistFriendly = dist;
+		} else {
+			if (dist < minDistOthers)
+				minDistOthers = dist;
+		}
+	}
+
+	minDistFriendly /= UNIT_SIZE;
+	minDistOthers /= UNIT_SIZE;
+
+	bestActionScore += 300.0 / minDistFriendly;
+	bestActionScore -= 500.0 / minDistOthers;
+
+	/* try to hide */
+	check = NULL;
+	while ((check = G_EdictsGetNextLivingActor(check))) {
+		if (ent == check)
+			continue;
+		if (G_IsInsane(ent))
+			continue;
+
+		if (!G_IsVisibleForTeam(check, ent->team))
+			continue;
+
+		if (G_ActorVis(check->origin, check, ent, true) > 0.25)
+			bestActionScore -= 25.0;
+	}
+
+	/* add random effects */
+	bestActionScore += 25.0 * frand();
+
+	return bestActionScore;
+}
+
+/**
  * @brief Searches the map for mission edicts and try to get there
  * @sa AI_PrepBestAction
  * @note The routing table is still valid, so we can still use
@@ -896,8 +973,10 @@ static aiAction_t AI_PrepBestAction (const player_t *player, edict_t * ent)
 			for (to[0] = xl; to[0] < xh; to[0]++) {
 				const pos_t move = gi.MoveLength(level.pathingMap, to, crouchingState, true);
 				if (move != ROUTING_NOT_REACHABLE && move <= ent->TU) {
-					if (G_IsCivilian(ent) || G_IsPaniced(ent))
+					if (G_IsCivilian(ent))
 						bestActionScore = AI_CivilianCalcActionScore(ent, to, &aia);
+					else if (G_IsPaniced(ent))
+						bestActionScore = AI_PanicCalcActionScore(ent, to, &aia);
 					else
 						bestActionScore = AI_FighterCalcActionScore(ent, to, &aia);
 
