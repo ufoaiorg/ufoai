@@ -29,7 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /**
  * @sa CL_InvAdd
  */
-void CL_InvDel (const eventRegister_t *self, struct dbuffer *msg)
+void CL_InvDel (const eventRegister_t *self, dbuffer *msg)
 {
 	le_t	*le;
 	int		number;

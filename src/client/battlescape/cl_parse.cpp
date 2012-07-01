@@ -58,7 +58,7 @@ SERVER CONNECTING MESSAGES
 /**
  * @brief Written by SV_New_f in sv_user.c
  */
-static void CL_ParseServerData (struct dbuffer *msg)
+static void CL_ParseServerData (dbuffer *msg)
 {
 	char str[1024];
 	int i;
@@ -120,7 +120,7 @@ const char *CL_PlayerGetName (unsigned int player)
 /**
  * @sa SV_Configstring
  */
-static void CL_ParseConfigString (struct dbuffer *msg)
+static void CL_ParseConfigString (dbuffer *msg)
 {
 	const int i = NET_ReadShort(msg);
 	const char *s = CL_SetConfigString(i, msg);
@@ -158,7 +158,7 @@ ACTION MESSAGES
  * @param[in] cmd The action that should be parsed from the data
  * @param[in,out] msg The client stream message buffer to read from
  */
-void CL_ParseServerMessage (svc_ops_t cmd, struct dbuffer *msg)
+void CL_ParseServerMessage (svc_ops_t cmd, dbuffer *msg)
 {
 	char s[4096];
 	int i;
@@ -176,7 +176,7 @@ void CL_ParseServerMessage (svc_ops_t cmd, struct dbuffer *msg)
 		break;
 
 	case svc_ping: {
-		struct dbuffer *ack = new_dbuffer();
+		dbuffer *ack = new_dbuffer();
 		NET_WriteByte(ack, clc_ack);
 		NET_WriteMsg(cls.netStream, ack);
 		break;

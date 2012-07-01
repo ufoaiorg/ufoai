@@ -206,7 +206,7 @@ static void GAME_MP_ChangeGametype_f (void)
  * @param numStunned The amount of stunned actors for all teams. The first dimension contains
  * the attacker team, the second the victim team
  */
-static void GAME_MP_Results (struct dbuffer *msg, int winner, int *numSpawned, int *numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS], bool nextmap)
+static void GAME_MP_Results (dbuffer *msg, int winner, int *numSpawned, int *numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS], bool nextmap)
 {
 	linkedList_t *list = NULL;
 	int enemiesKilled, enemiesStunned;
@@ -277,7 +277,7 @@ static void GAME_MP_AddChatMessage (const char *text)
 	cgi->UI_TextScrollEnd("hud_chat.allchats.chatscreen.chat");
 }
 
-static bool GAME_MP_HandleServerCommand (const char *command, struct dbuffer *msg)
+static bool GAME_MP_HandleServerCommand (const char *command, dbuffer *msg)
 {
 	/* teaminfo command */
 	if (Q_streq(command, "teaminfo")) {

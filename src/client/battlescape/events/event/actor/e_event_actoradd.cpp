@@ -34,7 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @note EV_ACTOR_ADD
  * @sa G_SendInvisible
  */
-void CL_ActorAdd (const eventRegister_t *self, struct dbuffer *msg)
+void CL_ActorAdd (const eventRegister_t *self, dbuffer *msg)
 {
 	le_t *le;
 	int entnum;

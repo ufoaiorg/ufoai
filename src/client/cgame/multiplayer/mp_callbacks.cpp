@@ -81,7 +81,7 @@ static void CL_Connect_f (void)
 
 static void CL_RconCallback (struct net_stream *s)
 {
-	struct dbuffer *buf = cgi->NET_ReadMsg(s);
+	dbuffer *buf = cgi->NET_ReadMsg(s);
 	if (buf) {
 		const int cmd = cgi->NET_ReadByte(buf);
 		char commandBuf[8];

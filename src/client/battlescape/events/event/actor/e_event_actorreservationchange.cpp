@@ -33,7 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @param self The event pointer
  * @param msg The network message to parse the event data from
  */
-void CL_ActorReservationChange (const eventRegister_t *self, struct dbuffer *msg)
+void CL_ActorReservationChange (const eventRegister_t *self, dbuffer *msg)
 {
 	le_t *le;
 	int entnum, reaction, shot, crouch;

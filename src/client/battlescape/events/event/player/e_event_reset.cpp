@@ -33,7 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @sa G_ClientStartMatch
  * @sa EV_RESET
  */
-void CL_Reset (const eventRegister_t *self, struct dbuffer *msg)
+void CL_Reset (const eventRegister_t *self, dbuffer *msg)
 {
 	CL_ActorSelect(NULL);
 	cl.numTeamList = 0;

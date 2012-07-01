@@ -37,7 +37,7 @@ static void LET_DoorSlidingClose (le_t * le)
  * @sa G_ClientUseEdict
  * @sa Touch_DoorTrigger
  */
-void CL_DoorClose (const eventRegister_t *self, struct dbuffer *msg)
+void CL_DoorClose (const eventRegister_t *self, dbuffer *msg)
 {
 	/* get local entity */
 	int number;

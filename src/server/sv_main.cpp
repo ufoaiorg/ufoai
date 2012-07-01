@@ -139,7 +139,7 @@ client_t *SV_GetClient (int index)
 void SV_DropClient (client_t * drop, const char *message)
 {
 	/* add the disconnect */
-	struct dbuffer *msg = new_dbuffer();
+	dbuffer *msg = new_dbuffer();
 	NET_WriteByte(msg, svc_disconnect);
 	NET_WriteString(msg, message);
 	NET_WriteMsg(drop->stream, msg);
@@ -184,7 +184,7 @@ CONNECTIONLESS COMMANDS
 static void SVC_TeamInfo (struct net_stream *s)
 {
 	client_t *cl;
-	struct dbuffer *msg = new_dbuffer();
+	dbuffer *msg = new_dbuffer();
 	char infoGlobal[MAX_INFO_STRING] = "";
 
 	NET_WriteByte(msg, clc_oob);
@@ -223,7 +223,7 @@ static void SVC_Status (struct net_stream *s)
 {
 	client_t *cl;
 	char player[1024];
-	struct dbuffer *msg = new_dbuffer();
+	dbuffer *msg = new_dbuffer();
 	NET_WriteByte(msg, clc_oob);
 	NET_WriteRawString(msg, "print\n");
 
@@ -462,7 +462,7 @@ static void SVC_RemoteCommand (struct net_stream *stream)
  * @param[out] stream The stream to write to
  * @param msg The message buffer to read the connectionless data from
  */
-static void SV_ConnectionlessPacket (struct net_stream *stream, struct dbuffer *msg)
+static void SV_ConnectionlessPacket (struct net_stream *stream, dbuffer *msg)
 {
 	const char *c;
 	char s[512];
@@ -497,7 +497,7 @@ static void SV_ConnectionlessPacket (struct net_stream *stream, struct dbuffer *
 void SV_ReadPacket (struct net_stream *s)
 {
 	client_t *cl = (client_t *)NET_StreamGetData(s);
-	struct dbuffer *msg;
+	dbuffer *msg;
 
 	while ((msg = NET_ReadMsg(s))) {
 		const int cmd = NET_ReadByte(msg);
@@ -636,7 +636,7 @@ static void SV_PingPlayers (void)
 	cl = NULL;
 	while ((cl = SV_GetNextClient(cl)) != NULL)
 		if (cl->state != cs_free) {
-			struct dbuffer *msg = new_dbuffer();
+			dbuffer *msg = new_dbuffer();
 			NET_WriteByte(msg, svc_ping);
 			NET_WriteMsg(cl->stream, msg);
 		}
@@ -827,7 +827,7 @@ void SV_Init (void)
 static void SV_FinalMessage (const char *message, bool reconnect)
 {
 	client_t *cl;
-	struct dbuffer *msg = new_dbuffer();
+	dbuffer *msg = new_dbuffer();
 
 	if (reconnect)
 		NET_WriteByte(msg, svc_reconnect);

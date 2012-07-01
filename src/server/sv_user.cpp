@@ -76,7 +76,7 @@ static void SV_New_f (client_t *cl)
 	/* send the serverdata */
 	{
 		const int playernum = cl - SV_GetClient(0);
-		struct dbuffer *msg = new_dbuffer();
+		dbuffer *msg = new_dbuffer();
 		NET_WriteByte(msg, svc_serverdata);
 		NET_WriteLong(msg, PROTOCOL_VERSION);
 
@@ -102,7 +102,7 @@ static void SV_New_f (client_t *cl)
 
 			configString = SV_GetConfigString(i);
 			if (configString[0] != '\0') {
-				struct dbuffer *msg = new_dbuffer();
+				dbuffer *msg = new_dbuffer();
 				Com_DPrintf(DEBUG_SERVER, "sending configstring %d: %s\n", i, configString);
 				NET_WriteByte(msg, svc_configstring);
 				NET_WriteShort(msg, i);
@@ -231,7 +231,7 @@ static void SV_ExecuteUserCommand (client_t * cl, const char *s)
 /**
  * @brief The current net_message is parsed for the given client
  */
-void SV_ExecuteClientMessage (client_t * cl, int cmd, struct dbuffer *msg)
+void SV_ExecuteClientMessage (client_t * cl, int cmd, dbuffer *msg)
 {
 	if (cmd == -1)
 		return;

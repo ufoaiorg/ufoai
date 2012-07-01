@@ -49,8 +49,8 @@ struct cgame_import_s;
 void CL_PingServers_f(void);
 void CL_PrintServerList_f(void);
 
-void CL_ParseTeamInfoMessage(struct dbuffer *msg);
-void CL_ParseServerInfoMessage(struct dbuffer *msg, const char *hostname);
+void CL_ParseTeamInfoMessage(dbuffer *msg);
+void CL_ParseServerInfoMessage(dbuffer *msg, const char *hostname);
 
 void MP_ServerListInit(const struct cgame_import_s *import);
 void MP_ServerListShutdown(void);

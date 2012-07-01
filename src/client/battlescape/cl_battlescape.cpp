@@ -373,7 +373,7 @@ int CL_GetConfigStringInteger (int index)
 	return atoi(CL_GetConfigString(index));
 }
 
-char *CL_SetConfigString (int index, struct dbuffer *msg)
+char *CL_SetConfigString (int index, dbuffer *msg)
 {
 	if (!Com_CheckConfigStringIndex(index))
 		Com_Error(ERR_DROP, "invalid access to configstring array with index: %i", index);

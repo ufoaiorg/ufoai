@@ -35,7 +35,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * server is a '+', we will select a random sound file by replacing the '+'
  * character with a number between 01..99
  */
-void CL_SoundEvent (const eventRegister_t *self, struct dbuffer *msg)
+void CL_SoundEvent (const eventRegister_t *self, dbuffer *msg)
 {
 	char sound[MAX_QPATH];
 	vec3_t origin;

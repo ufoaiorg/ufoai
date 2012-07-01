@@ -80,7 +80,7 @@ typedef struct {
  * @sa GAME_SendCurrentTeamSpawningInfo
  * @sa E_Save
  */
-void CP_ParseCharacterData (struct dbuffer *msg)
+void CP_ParseCharacterData (dbuffer *msg)
 {
 	static linkedList_t *updateCharacters = NULL;
 

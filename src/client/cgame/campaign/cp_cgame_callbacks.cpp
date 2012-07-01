@@ -193,7 +193,7 @@ static inline void AL_AddAlienTypeToAircraftCargo_ (void *data, const teamDef_t 
  * @param numStunned The amount of stunned actors for all teams. The first dimension contains
  * the attacker team, the second the victim team
  */
-void GAME_CP_Results (struct dbuffer *msg, int winner, int *numSpawned, int *numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS], bool nextmap)
+void GAME_CP_Results (dbuffer *msg, int winner, int *numSpawned, int *numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS], bool nextmap)
 {
 	int i, j;
 	int ownSurvived, ownKilled, ownStunned;
@@ -376,10 +376,10 @@ const char* GAME_CP_GetTeamDef (void)
  * @brief Changes some actor states for a campaign game
  * @param team The team to change the states for
  */
-struct dbuffer *GAME_CP_InitializeBattlescape (const chrList_t *team)
+dbuffer *GAME_CP_InitializeBattlescape (const chrList_t *team)
 {
 	int i;
-	struct dbuffer *msg = new_dbuffer();
+	dbuffer *msg = new_dbuffer();
 
 	NET_WriteByte(msg, clc_initactorstates);
 	NET_WriteByte(msg, team->num);

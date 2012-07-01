@@ -28,7 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /**
  * @brief Decides if following events should be delayed
  */
-int CL_ActorShootHiddenTime (const eventRegister_t *self, struct dbuffer *msg, eventTiming_t *eventTiming)
+int CL_ActorShootHiddenTime (const eventRegister_t *self, dbuffer *msg, eventTiming_t *eventTiming)
 {
 	int first;
 	int objIdx;
@@ -61,7 +61,7 @@ int CL_ActorShootHiddenTime (const eventRegister_t *self, struct dbuffer *msg, e
  * @brief Shoot with weapon but don't bother with animations - actor is hidden.
  * @sa CL_ActorShoot
  */
-void CL_ActorShootHidden (const eventRegister_t *self, struct dbuffer *msg)
+void CL_ActorShootHidden (const eventRegister_t *self, dbuffer *msg)
 {
 	const fireDef_t *fd;
 	int first;

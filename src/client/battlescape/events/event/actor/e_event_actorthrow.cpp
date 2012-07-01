@@ -29,7 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /**
  * @brief Decides if following events should be delayed
  */
-int CL_ActorDoThrowTime (const eventRegister_t *self, struct dbuffer *msg, eventTiming_t *eventTiming)
+int CL_ActorDoThrowTime (const eventRegister_t *self, dbuffer *msg, eventTiming_t *eventTiming)
 {
 	const int eventTime = eventTiming->nextTime;
 
@@ -47,7 +47,7 @@ int CL_ActorDoThrowTime (const eventRegister_t *self, struct dbuffer *msg, event
  * @param[in] msg The netchannel message
  * @sa EV_ACTOR_THROW
  */
-void CL_ActorDoThrow (const eventRegister_t *self, struct dbuffer *msg)
+void CL_ActorDoThrow (const eventRegister_t *self, dbuffer *msg)
 {
 	const fireDef_t *fd;
 	vec3_t muzzle, v0;

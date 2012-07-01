@@ -1390,10 +1390,9 @@ void AI_CheckRespawn (int team)
 		if (ent == NULL)
 			break;
 
-		const int status = G_CheckVis(ent, false);
-		if (!(status & VIS_CHANGE)) {
-			G_EventActorAdd(~G_VisToPM(ent->visflags), ent);
-		}
+		G_AppearPerishEvent(G_VisToPM(ent->visflags), true, ent, NULL);
+		G_EventActorAdd(~G_VisToPM(ent->visflags), ent);
+
 		diff--;
 	}
 }

@@ -26,7 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../../cl_view.h"
 #include "e_event_centerview.h"
 
-void CL_CenterView (const eventRegister_t *self, struct dbuffer *msg)
+void CL_CenterView (const eventRegister_t *self, dbuffer *msg)
 {
 	pos3_t pos;
 

@@ -32,7 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @note The amount of the item_t struct should not be needed here - because
  * the amount is only valid for idFloor and idEquip
  */
-static void CL_NetReceiveItem (struct dbuffer *buf, item_t *item, containerIndex_t *container, int *x, int *y)
+static void CL_NetReceiveItem (dbuffer *buf, item_t *item, containerIndex_t *container, int *x, int *y)
 {
 	const eventRegister_t *eventData = CL_GetEvent(EV_INV_TRANSFER);
 
@@ -52,7 +52,7 @@ static void CL_NetReceiveItem (struct dbuffer *buf, item_t *item, containerIndex
 /**
  * @brief Decides if following events should be delayed.
  */
-int CL_InvAddTime (const struct eventRegister_s *self, struct dbuffer *msg, eventTiming_t *eventTiming)
+int CL_InvAddTime (const struct eventRegister_s *self, dbuffer *msg, eventTiming_t *eventTiming)
 {
 	if (eventTiming->parsedDeath) { /* drop items after death (caused by impact) */
 		/* EV_INV_ADD messages are the last events sent after a death */
@@ -70,7 +70,7 @@ int CL_InvAddTime (const struct eventRegister_s *self, struct dbuffer *msg, even
  * @sa G_SendInventory
  * @sa EV_INV_ADD
  */
-void CL_InvAdd (const eventRegister_t *self, struct dbuffer *msg)
+void CL_InvAdd (const eventRegister_t *self, dbuffer *msg)
 {
 	const int number = NET_ReadShort(msg);
 	le_t *le = LE_Get(number);

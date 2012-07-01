@@ -33,7 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @brief Some events will be delayed if they are executed in the context of a dying actor. That's why we set
  * the @c parsedDeath value to @c true here.
  */
-int CL_ActorDieTime (const struct eventRegister_s *self, struct dbuffer *msg, eventTiming_t *eventTiming)
+int CL_ActorDieTime (const struct eventRegister_s *self, dbuffer *msg, eventTiming_t *eventTiming)
 {
 	eventTiming->parsedDeath = true;
 	return eventTiming->impactTime;
@@ -45,7 +45,7 @@ int CL_ActorDieTime (const struct eventRegister_s *self, struct dbuffer *msg, ev
  * @param[in] msg The netchannel message
  * @param[in] self Pointer to the event structure that is currently executed
  */
-void CL_ActorDie (const eventRegister_t *self, struct dbuffer *msg)
+void CL_ActorDie (const eventRegister_t *self, dbuffer *msg)
 {
 	le_t *le;
 	int entnum, state, playerNum;

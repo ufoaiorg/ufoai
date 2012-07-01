@@ -97,7 +97,7 @@ memPool_t* vid_modelPool;	/**< modeldata - wiped with every new map */
 void Cmd_ForwardToServer (void)
 {
 	const char *cmd = Cmd_Argv(0);
-	struct dbuffer *msg;
+	dbuffer *msg;
 
 	if (cls.state <= ca_connected || cmd[0] == '-' || cmd[0] == '+') {
 		Com_Printf("Unknown command \"%s\" - wasn't sent to server\n", cmd);
@@ -144,7 +144,7 @@ static void CL_ForwardToServer_f (void)
 
 	/* don't forward the first argument */
 	if (Cmd_Argc() > 1) {
-		struct dbuffer *msg;
+		dbuffer *msg;
 		msg = new_dbuffer();
 		NET_WriteByte(msg, clc_stringcmd);
 		dbuffer_add(msg, Cmd_Args(), strlen(Cmd_Args()) + 1);
@@ -255,7 +255,7 @@ static void CL_ClearState (void)
  */
 void CL_Disconnect (void)
 {
-	struct dbuffer *msg;
+	dbuffer *msg;
 
 	if (cls.state < ca_connecting)
 		return;
@@ -339,7 +339,7 @@ static void CL_Packet_f (void)
  * @sa SVC_DirectConnect
  * @param[in,out] msg The client stream message buffer to read from
  */
-static void CL_ConnectionlessPacket (struct dbuffer *msg)
+static void CL_ConnectionlessPacket (dbuffer *msg)
 {
 	char s[1024];
 	const char *c;
@@ -424,7 +424,7 @@ static void CL_ConnectionlessPacket (struct dbuffer *msg)
  */
 static void CL_ReadPackets (void)
 {
-	struct dbuffer *msg;
+	dbuffer *msg;
 	while ((msg = NET_ReadMsg(cls.netStream))) {
 		const svc_ops_t cmd = NET_ReadByte(msg);
 		if (cmd == clc_oob)
@@ -594,7 +594,7 @@ void CL_RequestNextDownload (void)
 	CL_ViewLoadMedia();
 
 	{
-		struct dbuffer *msg = new_dbuffer();
+		dbuffer *msg = new_dbuffer();
 		/* send begin */
 		/* this will activate the render process (see client state ca_active) */
 		NET_WriteByte(msg, clc_stringcmd);
@@ -967,7 +967,7 @@ static void CL_SendChangedUserinfos (void)
 	/* send a userinfo update if needed */
 	if (cls.state >= ca_connected) {
 		if (Com_IsUserinfoModified()) {
-			struct dbuffer *msg = new_dbuffer();
+			dbuffer *msg = new_dbuffer();
 			NET_WriteByte(msg, clc_userinfo);
 			NET_WriteString(msg, Cvar_Userinfo());
 			NET_WriteMsg(cls.netStream, msg);

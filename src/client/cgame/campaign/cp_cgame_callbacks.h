@@ -32,13 +32,13 @@ const char* GAME_CP_GetItemModel(const char *string);
 void GAME_CP_InitStartup(void);
 void GAME_CP_Shutdown(void);
 bool GAME_CP_Spawn(chrList_t *chrList);
-void GAME_CP_Results(struct dbuffer *msg, int winner, int *numSpawned, int *numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS], bool nextmap);
+void GAME_CP_Results(dbuffer *msg, int winner, int *numSpawned, int *numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS], bool nextmap);
 bool GAME_CP_ItemIsUseable(const objDef_t *od);
 equipDef_t *GAME_CP_GetEquipmentDefinition(void);
 void GAME_CP_CharacterCvars(const character_t *chr);
 bool GAME_CP_TeamIsKnown(const teamDef_t *teamDef);
 void GAME_CP_Drop(void);
-struct dbuffer *GAME_CP_InitializeBattlescape(const chrList_t *team);
+dbuffer *GAME_CP_InitializeBattlescape(const chrList_t *team);
 void GAME_CP_Frame(float secondsSinceLastFrame);
 const char* GAME_CP_GetTeamDef(void);
 

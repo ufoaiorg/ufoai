@@ -31,7 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 static void CL_NextRound_f (void)
 {
-	struct dbuffer *msg;
+	dbuffer *msg;
 	/* can't end round if we are not in battlescape */
 	if (!CL_BattlescapeRunning())
 		return;

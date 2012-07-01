@@ -27,14 +27,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../../../cgame/cl_game.h"
 #include "e_event_invreload.h"
 
-int CL_InvReloadTime (const eventRegister_t *self, struct dbuffer *msg, eventTiming_t *eventTiming)
+int CL_InvReloadTime (const eventRegister_t *self, dbuffer *msg, eventTiming_t *eventTiming)
 {
 	const int eventTime = eventTiming->nextTime;
 	eventTiming->nextTime += 600;
 	return eventTime;
 }
 
-void CL_InvReload (const eventRegister_t *self, struct dbuffer *msg)
+void CL_InvReload (const eventRegister_t *self, dbuffer *msg)
 {
 	invList_t	*ic;
 	le_t	*le;

@@ -72,7 +72,7 @@ static pos3_t mouseLastPos;
 void MSG_Write_PA (player_action_t playerAction, int entnum, ...)
 {
 	va_list ap;
-	struct dbuffer *msg = new_dbuffer();
+	dbuffer *msg = new_dbuffer();
 
 	va_start(ap, entnum);
 	NET_WriteFormat(msg, "bbs", clc_action, playerAction, entnum);

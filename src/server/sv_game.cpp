@@ -120,7 +120,7 @@ static unsigned int SV_FindIndex (const char *name, int start, int max, bool cre
 	SV_SetConfigString(start + i, name);
 
 	if (Com_ServerState() != ss_loading) {	/* send the update to everyone */
-		struct dbuffer *msg = new_dbuffer();
+		dbuffer *msg = new_dbuffer();
 		NET_WriteByte(msg, svc_configstring);
 		NET_WriteShort(msg, start + i);
 		NET_WriteString(msg, name);
@@ -176,7 +176,7 @@ static void SV_Configstring (int index, const char *fmt, ...)
 	SV_SetConfigString(index, val);
 
 	if (Com_ServerState() != ss_loading) { /* send the update to everyone */
-		struct dbuffer *msg = new_dbuffer();
+		dbuffer *msg = new_dbuffer();
 		NET_WriteByte(msg, svc_configstring);
 		NET_WriteShort(msg, index);
 		NET_WriteString(msg, val);
@@ -203,10 +203,9 @@ static void SV_WriteByte (byte c)
 static byte* SV_WriteDummyByte (byte c)
 {
 	pending_event_t *p = &sv->pendingEvent;
-	byte *pos = (byte*) p->buf->end;
 	NET_WriteByte(p->buf, c);
-	assert(pos != NULL);
-	return pos;
+	char *pos = &p->buf->back();
+	return (byte*)pos;
 }
 
 static void SV_WriteShort (int c)

@@ -28,33 +28,33 @@ const vec3_t bytedirs[] = {
 #include "../shared/vertex_normals.h"
 };
 
-void NET_WriteChar (struct dbuffer *buf, char c)
+void NET_WriteChar (dbuffer *buf, char c)
 {
 	dbuffer_add(buf, &c, 1);
 	Com_DPrintf(DEBUG_EVENTSYS, "char event data: %s (%i)\n", Com_ByteToBinary(c), c);
 }
 
-void NET_WriteByte (struct dbuffer *buf, byte c)
+void NET_WriteByte (dbuffer *buf, byte c)
 {
 	dbuffer_add(buf, (char *)&c, 1);
 	Com_DPrintf(DEBUG_EVENTSYS, "byte event data: %s (%i)\n", Com_ByteToBinary(c), c);
 }
 
-void NET_WriteShort (struct dbuffer *buf, int c)
+void NET_WriteShort (dbuffer *buf, int c)
 {
 	unsigned short v = LittleShort(c);
 	dbuffer_add(buf, (char *)&v, 2);
 	Com_DPrintf(DEBUG_EVENTSYS, "short event data: %i\n", c);
 }
 
-void NET_WriteLong (struct dbuffer *buf, int c)
+void NET_WriteLong (dbuffer *buf, int c)
 {
 	int v = LittleLong(c);
 	dbuffer_add(buf, (char *)&v, 4);
 	Com_DPrintf(DEBUG_EVENTSYS, "long event data: %i\n", c);
 }
 
-void NET_WriteString (struct dbuffer *buf, const char *str)
+void NET_WriteString (dbuffer *buf, const char *str)
 {
 	if (!str)
 		dbuffer_add(buf, "", 1);
@@ -63,7 +63,7 @@ void NET_WriteString (struct dbuffer *buf, const char *str)
 	Com_DPrintf(DEBUG_EVENTSYS, "string event data: %s\n", str);
 }
 
-void NET_WriteRawString (struct dbuffer *buf, const char *str)
+void NET_WriteRawString (dbuffer *buf, const char *str)
 {
 	if (str) {
 		dbuffer_add(buf, str, strlen(str));
@@ -71,7 +71,7 @@ void NET_WriteRawString (struct dbuffer *buf, const char *str)
 	}
 }
 
-void NET_WriteCoord (struct dbuffer *buf, float f)
+void NET_WriteCoord (dbuffer *buf, float f)
 {
 	NET_WriteLong(buf, (int) (f * 32));
 }
@@ -79,7 +79,7 @@ void NET_WriteCoord (struct dbuffer *buf, float f)
 /**
  * @sa NET_Read2Pos
  */
-void NET_Write2Pos (struct dbuffer *buf, const vec2_t pos)
+void NET_Write2Pos (dbuffer *buf, const vec2_t pos)
 {
 	NET_WriteLong(buf, (long) (pos[0] * 32.));
 	NET_WriteLong(buf, (long) (pos[1] * 32.));
@@ -88,26 +88,26 @@ void NET_Write2Pos (struct dbuffer *buf, const vec2_t pos)
 /**
  * @sa NET_ReadPos
  */
-void NET_WritePos (struct dbuffer *buf, const vec3_t pos)
+void NET_WritePos (dbuffer *buf, const vec3_t pos)
 {
 	NET_WriteLong(buf, (long) (pos[0] * 32.));
 	NET_WriteLong(buf, (long) (pos[1] * 32.));
 	NET_WriteLong(buf, (long) (pos[2] * 32.));
 }
 
-void NET_WriteGPos (struct dbuffer *buf, const pos3_t pos)
+void NET_WriteGPos (dbuffer *buf, const pos3_t pos)
 {
 	NET_WriteByte(buf, pos[0]);
 	NET_WriteByte(buf, pos[1]);
 	NET_WriteByte(buf, pos[2]);
 }
 
-void NET_WriteAngle (struct dbuffer *buf, float f)
+void NET_WriteAngle (dbuffer *buf, float f)
 {
 	NET_WriteByte(buf, (int) (f * 256 / 360) & 255);
 }
 
-void NET_WriteAngle16 (struct dbuffer *buf, float f)
+void NET_WriteAngle16 (dbuffer *buf, float f)
 {
 	NET_WriteShort(buf, ANGLE2SHORT(f));
 }
@@ -116,7 +116,7 @@ void NET_WriteAngle16 (struct dbuffer *buf, float f)
  * @note EV_ACTOR_SHOOT is using WriteDir for writing the normal, but ReadByte
  * for reading it - keep that in mind when you change something here
  */
-void NET_WriteDir (struct dbuffer *buf, const vec3_t dir)
+void NET_WriteDir (dbuffer *buf, const vec3_t dir)
 {
 	int i, best;
 	float bestd;
@@ -146,7 +146,7 @@ void NET_WriteDir (struct dbuffer *buf, const vec3_t dir)
  * for variable arguments, to call it from other functions with variable arguments
  * @note short and char are promoted to int when passed to variadic functions!
  */
-void NET_vWriteFormat (struct dbuffer *buf, const char *format, va_list ap)
+void NET_vWriteFormat (dbuffer *buf, const char *format, va_list ap)
 {
 	char typeID;
 
@@ -216,7 +216,7 @@ void NET_vWriteFormat (struct dbuffer *buf, const char *format, va_list ap)
 /**
  * @brief The user-friendly version of NET_WriteFormat that writes variable arguments to buffer according to format
  */
-void NET_WriteFormat (struct dbuffer *buf, const char *format, ...)
+void NET_WriteFormat (dbuffer *buf, const char *format, ...)
 {
 	va_list ap;
 	va_start(ap, format);
@@ -230,7 +230,7 @@ void NET_WriteFormat (struct dbuffer *buf, const char *format, ...)
 /**
  * returns -1 if no more characters are available
  */
-int NET_ReadChar (struct dbuffer *buf)
+int NET_ReadChar (dbuffer *buf)
 {
 	char c;
 	if (dbuffer_extract(buf, &c, 1) == 0)
@@ -244,7 +244,7 @@ int NET_ReadChar (struct dbuffer *buf)
  * @note Beware that you don't put this into a byte or short - this will overflow
  * use an int value to store the return value when you read this via the net format strings!!!
  */
-int NET_ReadByte (struct dbuffer *buf)
+int NET_ReadByte (dbuffer *buf)
 {
 	unsigned char c;
 	if (dbuffer_extract(buf, (char *)&c, 1) == 0)
@@ -253,7 +253,7 @@ int NET_ReadByte (struct dbuffer *buf)
 		return c;
 }
 
-int NET_ReadShort (struct dbuffer *buf)
+int NET_ReadShort (dbuffer *buf)
 {
 	unsigned short v;
 	if (dbuffer_extract(buf, (char *)&v, 2) < 2)
@@ -267,7 +267,7 @@ int NET_ReadShort (struct dbuffer *buf)
  * @param buf The buffer, returned unchanged, no need to be copied before.
  * @return The short at the beginning of the buffer, -1 if it couldn't be read.
  */
-int NET_PeekShort (const struct dbuffer *buf)
+int NET_PeekShort (const dbuffer *buf)
 {
 	uint16_t v;
 	if (dbuffer_get(buf, (char *)&v, 2) < 2)
@@ -276,7 +276,7 @@ int NET_PeekShort (const struct dbuffer *buf)
 	return LittleShort(v);
 }
 
-int NET_ReadLong (struct dbuffer *buf)
+int NET_ReadLong (dbuffer *buf)
 {
 	unsigned int v;
 	if (dbuffer_extract(buf, (char *)&v, 4) < 4)
@@ -296,7 +296,7 @@ int NET_ReadLong (struct dbuffer *buf)
  * @param[out] string The output buffer to read the string into
  * @param[in] length The size of the output buffer
  */
-int NET_ReadString (struct dbuffer *buf, char *string, size_t length)
+int NET_ReadString (dbuffer *buf, char *string, size_t length)
 {
 	unsigned int l;
 
@@ -320,7 +320,7 @@ int NET_ReadString (struct dbuffer *buf, char *string, size_t length)
 /**
  * @sa NET_ReadString
  */
-int NET_ReadStringLine (struct dbuffer *buf, char *string, size_t length)
+int NET_ReadStringLine (dbuffer *buf, char *string, size_t length)
 {
 	unsigned int l;
 
@@ -341,7 +341,7 @@ int NET_ReadStringLine (struct dbuffer *buf, char *string, size_t length)
 	return l;
 }
 
-float NET_ReadCoord (struct dbuffer *buf)
+float NET_ReadCoord (dbuffer *buf)
 {
 	return (float) NET_ReadLong(buf) * (1.0 / 32);
 }
@@ -349,7 +349,7 @@ float NET_ReadCoord (struct dbuffer *buf)
 /**
  * @sa NET_Write2Pos
  */
-void NET_Read2Pos (struct dbuffer *buf, vec2_t pos)
+void NET_Read2Pos (dbuffer *buf, vec2_t pos)
 {
 	pos[0] = NET_ReadLong(buf) / 32.;
 	pos[1] = NET_ReadLong(buf) / 32.;
@@ -358,7 +358,7 @@ void NET_Read2Pos (struct dbuffer *buf, vec2_t pos)
 /**
  * @sa NET_WritePos
  */
-void NET_ReadPos (struct dbuffer *buf, vec3_t pos)
+void NET_ReadPos (dbuffer *buf, vec3_t pos)
 {
 	pos[0] = NET_ReadLong(buf) / 32.;
 	pos[1] = NET_ReadLong(buf) / 32.;
@@ -370,19 +370,19 @@ void NET_ReadPos (struct dbuffer *buf, vec3_t pos)
  * @sa NET_ReadByte
  * @note pos3_t are byte values
  */
-void NET_ReadGPos (struct dbuffer *buf, pos3_t pos)
+void NET_ReadGPos (dbuffer *buf, pos3_t pos)
 {
 	pos[0] = NET_ReadByte(buf);
 	pos[1] = NET_ReadByte(buf);
 	pos[2] = NET_ReadByte(buf);
 }
 
-float NET_ReadAngle (struct dbuffer *buf)
+float NET_ReadAngle (dbuffer *buf)
 {
 	return (float) NET_ReadChar(buf) * (360.0 / 256);
 }
 
-float NET_ReadAngle16 (struct dbuffer *buf)
+float NET_ReadAngle16 (dbuffer *buf)
 {
 	short s;
 
@@ -390,7 +390,7 @@ float NET_ReadAngle16 (struct dbuffer *buf)
 	return (float) SHORT2ANGLE(s);
 }
 
-void NET_ReadData (struct dbuffer *buf, void *data, int len)
+void NET_ReadData (dbuffer *buf, void *data, int len)
 {
 	int i;
 
@@ -398,7 +398,7 @@ void NET_ReadData (struct dbuffer *buf, void *data, int len)
 		((byte *) data)[i] = NET_ReadByte(buf);
 }
 
-void NET_ReadDir (struct dbuffer *buf, vec3_t dir)
+void NET_ReadDir (dbuffer *buf, vec3_t dir)
 {
 	const int b = NET_ReadByte(buf);
 	if (b >= lengthof(bytedirs))
@@ -413,7 +413,7 @@ void NET_ReadDir (struct dbuffer *buf, vec3_t dir)
  * @param[in] buf The buffer we read the data from
  * @param[in] format The format string may not be NULL
  */
-void NET_vReadFormat (struct dbuffer *buf, const char *format, va_list ap)
+void NET_vReadFormat (dbuffer *buf, const char *format, va_list ap)
 {
 	while (*format) {
 		const char typeID = *format++;
@@ -477,7 +477,7 @@ void NET_vReadFormat (struct dbuffer *buf, const char *format, va_list ap)
 /**
  * @brief The user-friendly version of NET_ReadFormat that reads variable arguments from a buffer according to format
  */
-void NET_ReadFormat (struct dbuffer *buf, const char *format, ...)
+void NET_ReadFormat (dbuffer *buf, const char *format, ...)
 {
 	va_list ap;
 
@@ -514,7 +514,7 @@ void NET_OOB_Printf (struct net_stream *s, const char *format, ...)
  * @note Frees the msg buffer
  * @sa NET_WriteConstMsg
  */
-void NET_WriteMsg (struct net_stream *s, struct dbuffer *buf)
+void NET_WriteMsg (struct net_stream *s, dbuffer *buf)
 {
 	char tmp[4096];
 	int len = LittleLong(dbuffer_len(buf));
@@ -536,7 +536,7 @@ void NET_WriteMsg (struct net_stream *s, struct dbuffer *buf)
  * @note Make sure that you free the msg buffer after you called this
  * @sa NET_WriteMsg
  */
-void NET_WriteConstMsg (struct net_stream *s, const struct dbuffer *buf)
+void NET_WriteConstMsg (struct net_stream *s, const dbuffer *buf)
 {
 	char tmp[4096];
 	int len = LittleLong(dbuffer_len(buf));
@@ -558,11 +558,11 @@ void NET_WriteConstMsg (struct net_stream *s, const struct dbuffer *buf)
  * @sa NET_StreamDequeue
  * @sa dbuffer_add
  */
-struct dbuffer *NET_ReadMsg (struct net_stream *s)
+dbuffer *NET_ReadMsg (struct net_stream *s)
 {
 	unsigned int v;
 	unsigned int len;
-	struct dbuffer *buf;
+	dbuffer *buf;
 	char tmp[4096];
 	if (NET_StreamPeek(s, (char *)&v, 4) < 4)
 		return NULL;
@@ -583,7 +583,7 @@ struct dbuffer *NET_ReadMsg (struct net_stream *s)
 	return buf;
 }
 
-void NET_VPrintf (struct dbuffer *buf, const char *format, va_list ap, char *str, size_t length)
+void NET_VPrintf (dbuffer *buf, const char *format, va_list ap, char *str, size_t length)
 {
 	const int len = Q_vsnprintf(str, length, format, ap);
 	dbuffer_add(buf, str, len);

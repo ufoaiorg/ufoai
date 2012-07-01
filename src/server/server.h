@@ -70,7 +70,7 @@ typedef struct pending_event_s {
 	/** player mask of the current event */
 	int playerMask;
 	int type;
-	struct dbuffer *buf;
+	dbuffer *buf;
 } pending_event_t;
 
 typedef struct {
@@ -116,7 +116,7 @@ typedef struct {
 
 	char configstrings[MAX_CONFIGSTRINGS][MAX_TOKEN_CHARS];
 
-	struct dbuffer *messageBuffer;
+	dbuffer *messageBuffer;
 	pending_event_t pendingEvent;
 
 	mapData_t mapData;
@@ -198,13 +198,13 @@ void SV_MapcycleClear(void);
 /* sv_init.c */
 void SV_Map(bool day, const char *levelstring, const char *assembly);
 
-void SV_Multicast(int mask, struct dbuffer *msg);
+void SV_Multicast(int mask, dbuffer *msg);
 void SV_ClientCommand(client_t *client, const char *fmt, ...) __attribute__((format(printf,2,3)));
 void SV_ClientPrintf(client_t * cl, int level, const char *fmt, ...) __attribute__((format(printf,3,4)));
 void SV_BroadcastPrintf(int level, const char *fmt, ...) __attribute__((format(printf,2,3)));
 
 /* sv_user.c */
-void SV_ExecuteClientMessage(client_t * cl, int cmd, struct dbuffer *msg);
+void SV_ExecuteClientMessage(client_t * cl, int cmd, dbuffer *msg);
 void SV_SetClientState(client_t* client, client_state_t state);
 
 /* sv_ccmds.c */

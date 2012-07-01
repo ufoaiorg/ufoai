@@ -32,7 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @sa CL_ParseEvent
  * @sa G_SendStats
  */
-void CL_ActorStats (const eventRegister_t *self, struct dbuffer *msg)
+void CL_ActorStats (const eventRegister_t *self, dbuffer *msg)
 {
 	le_t *le;
 	int entnum, oldTUs = 0;

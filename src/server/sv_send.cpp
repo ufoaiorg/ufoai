@@ -41,7 +41,7 @@ void SV_ClientCommand (client_t *client, const char *fmt, ...)
 {
 	va_list ap;
 	char str[1024];
-	struct dbuffer *msg = new_dbuffer();
+	dbuffer *msg = new_dbuffer();
 
 	NET_WriteByte(msg, svc_stufftext);
 
@@ -58,7 +58,7 @@ void SV_ClientCommand (client_t *client, const char *fmt, ...)
 void SV_ClientPrintf (client_t * cl, int level, const char *fmt, ...)
 {
 	va_list argptr;
-	struct dbuffer *msg;
+	dbuffer *msg;
 	char str[1024];
 
 	if (level > cl->messagelevel)
@@ -81,7 +81,7 @@ void SV_ClientPrintf (client_t * cl, int level, const char *fmt, ...)
 void SV_BroadcastPrintf (int level, const char *fmt, ...)
 {
 	va_list argptr;
-	struct dbuffer *msg;
+	dbuffer *msg;
 	client_t *cl;
 	char str[1024];
 
@@ -127,7 +127,7 @@ void SV_BroadcastPrintf (int level, const char *fmt, ...)
  * @param[in] mask Bitmask of the players to send the multicast to
  * @param[in,out] msg The message to send to the clients
  */
-void SV_Multicast (int mask, struct dbuffer *msg)
+void SV_Multicast (int mask, dbuffer *msg)
 {
 	client_t *cl;
 	int j;

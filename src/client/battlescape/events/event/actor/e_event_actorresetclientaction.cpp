@@ -32,7 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @sa EV_RESET_CLIENT_ACTION
  * @sa G_ClientMove
  */
-void CL_ActorResetClientAction (const eventRegister_t *self, struct dbuffer *msg)
+void CL_ActorResetClientAction (const eventRegister_t *self, dbuffer *msg)
 {
 	le_t* le;
 	int number;

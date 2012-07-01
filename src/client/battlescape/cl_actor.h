@@ -76,7 +76,7 @@ void CL_ActorCleanup(le_t *le);
 void CL_ActorSelectMouse(void);
 void CL_ActorReload(le_t *le, containerIndex_t containerID);
 void CL_ActorTurnMouse(void);
-void CL_ActorDoTurn(struct dbuffer *msg);
+void CL_ActorDoTurn(dbuffer *msg);
 void CL_ActorStartMove(le_t *le, const pos3_t to);
 void CL_ActorShoot(const le_t *le, const pos3_t at);
 int CL_ActorGetContainerForReload(invList_t **ic, const inventory_t *inv, const objDef_t *weapon);

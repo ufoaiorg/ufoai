@@ -238,7 +238,7 @@ static void CL_QueryMasterServer (const char *action, http_callback_t callback)
 	HTTP_GetURL(va("%s/ufo/masterserver.php?%s", masterserver_url->string, action), callback);
 }
 
-bool GAME_HandleServerCommand (const char *command, struct dbuffer *msg)
+bool GAME_HandleServerCommand (const char *command, dbuffer *msg)
 {
 	const cgame_export_t *list = GAME_GetCurrentType();
 	if (!list || list->HandleServerCommand == NULL)
@@ -1047,7 +1047,7 @@ bool GAME_ItemIsUseable (const objDef_t *od)
  * @param numStunned The amount of stunned actors for all teams. The first dimension contains
  * the attacker team, the second the victim team
  */
-void GAME_HandleResults (struct dbuffer *msg, int winner, int *numSpawned, int *numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS], bool nextmap)
+void GAME_HandleResults (dbuffer *msg, int winner, int *numSpawned, int *numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS], bool nextmap)
 {
 	const cgame_export_t *list = GAME_GetCurrentType();
 	if (list)
@@ -1062,7 +1062,7 @@ void GAME_HandleResults (struct dbuffer *msg, int winner, int *numSpawned, int *
  * @note The amount of the item_t struct should not be needed here - because
  * the amount is only valid for idFloor and idEquip
  */
-static void GAME_NetSendItem (struct dbuffer *buf, item_t item, containerIndex_t container, int x, int y)
+static void GAME_NetSendItem (dbuffer *buf, item_t item, containerIndex_t container, int x, int y)
 {
 	const int ammoIdx = item.m ? item.m->idx : NONE;
 	const eventRegister_t *eventData = CL_GetEvent(EV_INV_TRANSFER);
@@ -1075,7 +1075,7 @@ static void GAME_NetSendItem (struct dbuffer *buf, item_t item, containerIndex_t
 /**
  * @sa G_SendInventory
  */
-static void GAME_NetSendInventory (struct dbuffer *buf, const inventory_t *i)
+static void GAME_NetSendInventory (dbuffer *buf, const inventory_t *i)
 {
 	containerIndex_t container;
 	int nr = 0;
@@ -1104,7 +1104,7 @@ static void GAME_NetSendInventory (struct dbuffer *buf, const inventory_t *i)
  * @param[out] buf The net channel buffer to write the character data into.
  * @param[in] chr The character to get the data from.
  */
-static void GAME_NetSendCharacter (struct dbuffer * buf, const character_t *chr)
+static void GAME_NetSendCharacter (dbuffer * buf, const character_t *chr)
 {
 	int j;
 
@@ -1153,7 +1153,7 @@ static void GAME_NetSendCharacter (struct dbuffer * buf, const character_t *chr)
  * @sa MP_SaveTeamMultiplayerInfo
  * @note Called in CL_Precache_f to send the team info to server
  */
-static void GAME_SendCurrentTeamSpawningInfo (struct dbuffer * buf, chrList_t *team)
+static void GAME_SendCurrentTeamSpawningInfo (dbuffer * buf, chrList_t *team)
 {
 	int i;
 
@@ -1254,7 +1254,7 @@ static void GAME_InitializeBattlescape (chrList_t *team)
 	}
 
 	if (list && list->InitializeBattlescape) {
-		struct dbuffer *msg = list->InitializeBattlescape(team);
+		dbuffer *msg = list->InitializeBattlescape(team);
 		if (msg != NULL)
 			NET_WriteMsg(cls.netStream, msg);
 	}
@@ -1278,7 +1278,7 @@ void GAME_SpawnSoldiers (void)
 	Com_Printf("Used inventory slots: %i\n", cls.i.GetUsedSlots(&cls.i));
 
 	if (spawnStatus && cl.chrList.num > 0) {
-		struct dbuffer *msg;
+		dbuffer *msg;
 
 		/* send team info */
 		msg = new_dbuffer();
@@ -1290,7 +1290,7 @@ void GAME_SpawnSoldiers (void)
 void GAME_StartMatch (void)
 {
 	if (cl.chrList.num > 0) {
-		struct dbuffer *msg = new_dbuffer();
+		dbuffer *msg = new_dbuffer();
 		NET_WriteByte(msg, clc_stringcmd);
 		NET_WriteString(msg, "startmatch\n");
 		NET_WriteMsg(cls.netStream, msg);

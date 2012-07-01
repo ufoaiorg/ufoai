@@ -33,7 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * delay is relative to the distance the projectile flies. There are other fire definition related options
  * that might delay the execution of further events.
  */
-int CL_ActorDoShootTime (const eventRegister_t *self, struct dbuffer *msg, eventTiming_t *eventTiming)
+int CL_ActorDoShootTime (const eventRegister_t *self, dbuffer *msg, eventTiming_t *eventTiming)
 {
 	const fireDef_t *fd;
 	int flags, dummy;
@@ -141,7 +141,7 @@ static void CL_ActorGetMuzzle (const le_t* actor, vec3_t muzzle, shoot_types_t s
  * @todo Improve detection of left- or right animation.
  * @sa EV_ACTOR_SHOOT
  */
-void CL_ActorDoShoot (const eventRegister_t *self, struct dbuffer *msg)
+void CL_ActorDoShoot (const eventRegister_t *self, dbuffer *msg)
 {
 	const fireDef_t *fd;
 	le_t *leShooter, *leVictim;

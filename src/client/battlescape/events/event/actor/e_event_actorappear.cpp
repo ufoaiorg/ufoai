@@ -35,7 +35,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /**
  * @brief Decides if following events should be delayed
  */
-int CL_ActorAppearTime (const eventRegister_t *self, struct dbuffer *msg, eventTiming_t *eventTiming)
+int CL_ActorAppearTime (const eventRegister_t *self, dbuffer *msg, eventTiming_t *eventTiming)
 {
 	const int eventTime = eventTiming->nextTime;
 
@@ -76,7 +76,7 @@ static void CL_DrawLineOfSight (const le_t *watcher, const le_t *target)
  * @sa CL_ActorAdd
  * @note EV_ACTOR_APPEAR
  */
-void CL_ActorAppear (const eventRegister_t *self, struct dbuffer *msg)
+void CL_ActorAppear (const eventRegister_t *self, dbuffer *msg)
 {
 	le_t *le, *leResponsible;
 	int entnum, entnumResponsible, modelnum1, modelnum2;

@@ -35,7 +35,7 @@ static void LET_DoorSlidingOpen (le_t * le)
  * @brief Callback for EV_DOOR_OPEN event - rotates the inline model and recalc routing
  * @sa Touch_DoorTrigger
  */
-void CL_DoorOpen (const eventRegister_t *self, struct dbuffer *msg)
+void CL_DoorOpen (const eventRegister_t *self, dbuffer *msg)
 {
 	/* get local entity */
 	int number;

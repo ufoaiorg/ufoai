@@ -624,7 +624,7 @@ bool CP_CheckCredits (int costs);
 void CP_UpdateCredits(int credits);
 
 /* Other functions */
-void CP_ParseCharacterData(struct dbuffer *msg);
+void CP_ParseCharacterData(dbuffer *msg);
 bool CP_CheckNextStageDestination(const campaign_t* campaign, aircraft_t *ufo);
 
 const city_t * CP_GetCity(const char *id);

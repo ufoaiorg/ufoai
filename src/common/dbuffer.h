@@ -16,92 +16,72 @@
  *   Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA
  */
 
-#ifdef DBUFFER_H
-struct dbuffer;
-#else
+#ifndef DBUFFER_H
 #define DBUFFER_H
 
 #include <sys/types.h>
+#include <vector>
 
 /**
  * @file
- * @brief Data buffers (struct dbuffer)
+ * @brief Data buffers (dbuffer)
  */
 
-/** @defgroup dbuffer Data buffers (struct dbuffer)
+/** @defgroup dbuffer Data buffers (dbuffer)
  * @ingroup datastructure
  * A dbuffer is a dynamically sized buffer that stores arbitrary bytes
  * in a queue. It does not provide random access; characters may be
  * inserted only at the end and removed only from the beginning.
  */
 
-struct dbuffer_element;
-
-/** @brief Opaque dbuffer struct
- * @internal
- * Stores pointers that describe the dbuffer (the actual data is kept
- * in the struct dbuffer_element members)
- *
- * When len == 0, then start == end and head == tail.
- * When start == end, then len == 0
- */
-struct dbuffer
+class dbuffer: public std::vector<char>
 {
-	/** @internal Current number of bytes stored in the buffer */
-	size_t len;
+private:
+	/** this is the length of the entries in the
+	 * buffer, not the allocated size of the buffer */
+	size_t _length;
 
-	/** @internal Current number of unused bytes allocated to this buffer
-	* (All unused bytes are at the end of the buffer) */
-	size_t space;
+public:
+	dbuffer ();
+	virtual ~dbuffer ();
 
-	/** @internal Pointer to the first dbuffer_element allocated to this buffer */
-	struct dbuffer_element *head;
+	/* Append the given byte string to the buffer */
+	void add (const char *, size_t);
+	/* Read the given number of bytes from the start of the buffer */
+	size_t get (char *, size_t) const;
+	/* Read the given number of bytes from the given position */
+	size_t getAt (size_t, char *, size_t) const;
+	/* Remove the given number of bytes from the start of the buffer */
+	size_t remove (size_t);
+	/* Read and remove in one pass */
+	size_t extract (char *, size_t);
+	/* Duplicate the buffer */
+	dbuffer *dup () const;
 
-	/** @internal Pointer to the last dbuffer_element allocated to this buffer */
-	struct dbuffer_element *tail;
-
-	/** @internal Pointer to the first byte stored in the buffer, or to
-	* the first free space if there are no bytes in the buffer at
-	* present
-	*
-	* This should always point into head */
-	char *start;
-
-	/** @internal Pointer to the first unused byte allocated to this
-	* buffer, and therefore to the byte immediately after the last
-	* byte stored
-	*
-	* When start == end, the buffer is empty.
-	*
-	* This should always point into tail. Thusly head == tail when the
-	* buffer is empty. */
-	char *end;
-
-	/** @internal Pointer to the next free buffer (or NULL if this
-	*  buffer is not free) */
-	struct dbuffer *next_free;
+	size_t length () const;
 };
 
-extern struct dbuffer *new_dbuffer(void) __attribute__((malloc));
-extern void free_dbuffer(struct dbuffer *);
+inline size_t dbuffer::length () const
+{
+	return _length;
+}
+
+#define new_dbuffer() new dbuffer
+#define free_dbuffer(dbuf) delete dbuf
 
 /* Append the given byte string to the buffer */
-extern void dbuffer_add(struct dbuffer *, const char *, size_t);
+#define dbuffer_add(dbuf, data, dataSize) (dbuf)->add((data), (dataSize))
 /* Read the given number of bytes from the start of the buffer */
-extern size_t dbuffer_get(const struct dbuffer *, char *, size_t);
+#define dbuffer_get(dbuf, data, dataSize) (dbuf)->get((data), (dataSize))
 /* Read the given number of bytes from the given position */
-extern size_t dbuffer_get_at(const struct dbuffer *, size_t, char *, size_t);
+#define dbuffer_get_at(dbuf, size, data, dataSize) (dbuf)->getAt((size), (data), (dataSize))
 /* Remove the given number of bytes from the start of the buffer */
-extern size_t dbuffer_remove(struct dbuffer *, size_t);
+#define dbuffer_remove(dbuf, size) (dbuf)->remove((size))
 /* Read and remove in one pass */
-extern size_t dbuffer_extract(struct dbuffer *, char *, size_t);
+#define dbuffer_extract(dbuf, data, dataSize) (dbuf)->extract((data), (dataSize))
 /* Duplicate the buffer */
-extern struct dbuffer *dbuffer_dup(struct dbuffer *);
+#define dbuffer_dup(dbuf) (dbuf)->dup()
 
-void dbuffer_shutdown(void);
-void dbuffer_init(void);
-void dbuffer_cleanup(void);
-
-#define dbuffer_len(A) (A ? (A)->len : 0)
+#define dbuffer_len(dbuf) (dbuf ? (dbuf)->length() : 0)
 
 #endif

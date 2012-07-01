@@ -43,7 +43,7 @@ typedef struct cgame_export_s {
 	/** some gametypes only support special maps */
 	const mapDef_t* (EXPORT *MapInfo) (int step);
 	/** some gametypes require extra data in the results parsing (like e.g. campaign mode) */
-	void (EXPORT *Results) (struct dbuffer *msg, int, int*, int*, int[][MAX_TEAMS], int[][MAX_TEAMS], bool nextmap);
+	void (EXPORT *Results) (dbuffer *msg, int, int*, int*, int[][MAX_TEAMS], int[][MAX_TEAMS], bool nextmap);
 	/** check whether the given item is usable in the current game mode */
 	bool (EXPORT *IsItemUseable) (const objDef_t *od);
 	/** if you want to display a different model for the given object in your game mode, implement this function */
@@ -57,7 +57,7 @@ typedef struct cgame_export_s {
 	/** called on errors */
 	void (EXPORT *Drop) (void);
 	/** called after the team spawn messages where send, can e.g. be used to set initial actor states */
-	struct dbuffer *(EXPORT *InitializeBattlescape) (const chrList_t *team);
+	dbuffer *(EXPORT *InitializeBattlescape) (const chrList_t *team);
 	/** callback that is executed every frame */
 	void (EXPORT *RunFrame) (float secondsSinceLastFrame);
 	void (EXPORT *EndRoundAnnounce) (int playerNum, int team);
@@ -65,7 +65,7 @@ typedef struct cgame_export_s {
 	const char* (EXPORT *GetTeamDef) (void);
 	void (EXPORT *NotifyEvent) (event_t eventType);
 	void (EXPORT *AddChatMessage) (const char *message);
-	bool (EXPORT *HandleServerCommand) (const char *command, struct dbuffer *msg);
+	bool (EXPORT *HandleServerCommand) (const char *command, dbuffer *msg);
 } cgame_export_t;
 
 typedef struct cgameType_s {
@@ -157,10 +157,10 @@ typedef struct cgame_import_s {
 	bool (IMPORT *R_ImageExists) (const char *pname, ...) __attribute__((format(printf, 1, 2)));
 	void (IMPORT *R_Color) (const vec4_t rgba);
 
-	struct dbuffer *(IMPORT *NET_ReadMsg)  (struct net_stream *s);
-	int (IMPORT *NET_ReadByte)  (struct dbuffer *buf);
-	int (IMPORT *NET_ReadStringLine)  (struct dbuffer *buf, char *string, size_t length);
-	int (IMPORT *NET_ReadString)  (struct dbuffer *buf, char *string, size_t length);
+	dbuffer *(IMPORT *NET_ReadMsg)  (struct net_stream *s);
+	int (IMPORT *NET_ReadByte)  (dbuffer *buf);
+	int (IMPORT *NET_ReadStringLine)  (dbuffer *buf, char *string, size_t length);
+	int (IMPORT *NET_ReadString)  (dbuffer *buf, char *string, size_t length);
 	struct net_stream *(IMPORT *NET_Connect)  (const char *node, const char *service, stream_onclose_func *onclose);
 	void (IMPORT *NET_StreamSetCallback)  (struct net_stream *s, stream_callback_func *func);
 	void (IMPORT *NET_OOB_Printf) (struct net_stream *s, const char *format, ...) __attribute__((format(printf,2,3)));

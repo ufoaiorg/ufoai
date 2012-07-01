@@ -31,51 +31,51 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define NUMVERTEXNORMALS	162
 extern const vec3_t bytedirs[NUMVERTEXNORMALS];
 
-void NET_WriteChar(struct dbuffer *buf, char c);
-void NET_WriteByte(struct dbuffer *buf, byte c);
-void NET_WriteShort(struct dbuffer *buf, int c);
-void NET_WriteLong(struct dbuffer *buf, int c);
-void NET_WriteString(struct dbuffer *buf, const char *str);
-void NET_WriteRawString(struct dbuffer *buf, const char *str);
-void NET_WriteCoord(struct dbuffer *buf, float f);
-void NET_WritePos(struct dbuffer *buf, const vec3_t pos);
-void NET_Write2Pos(struct dbuffer *buf, const vec2_t pos);
-void NET_WriteGPos(struct dbuffer *buf, const pos3_t pos);
-void NET_WriteAngle(struct dbuffer *buf, float f);
-void NET_WriteAngle16(struct dbuffer *buf, float f);
-void NET_WriteDir(struct dbuffer *buf, const vec3_t vector);
-void NET_vWriteFormat(struct dbuffer *buf, const char *format, va_list ap);
-void NET_WriteFormat(struct dbuffer *buf, const char *format, ...);
-void NET_VPrintf(struct dbuffer *buf, const char *format, va_list ap, char *str, size_t length);
+void NET_WriteChar(dbuffer *buf, char c);
+void NET_WriteByte(dbuffer *buf, byte c);
+void NET_WriteShort(dbuffer *buf, int c);
+void NET_WriteLong(dbuffer *buf, int c);
+void NET_WriteString(dbuffer *buf, const char *str);
+void NET_WriteRawString(dbuffer *buf, const char *str);
+void NET_WriteCoord(dbuffer *buf, float f);
+void NET_WritePos(dbuffer *buf, const vec3_t pos);
+void NET_Write2Pos(dbuffer *buf, const vec2_t pos);
+void NET_WriteGPos(dbuffer *buf, const pos3_t pos);
+void NET_WriteAngle(dbuffer *buf, float f);
+void NET_WriteAngle16(dbuffer *buf, float f);
+void NET_WriteDir(dbuffer *buf, const vec3_t vector);
+void NET_vWriteFormat(dbuffer *buf, const char *format, va_list ap);
+void NET_WriteFormat(dbuffer *buf, const char *format, ...);
+void NET_VPrintf(dbuffer *buf, const char *format, va_list ap, char *str, size_t length);
 
 /* This frees the buf argument */
-void NET_WriteMsg(struct net_stream *s, struct dbuffer *buf);
+void NET_WriteMsg(struct net_stream *s, dbuffer *buf);
 
 /* This keeps buf intact */
-void NET_WriteConstMsg(struct net_stream *s, const struct dbuffer *buf);
+void NET_WriteConstMsg(struct net_stream *s, const dbuffer *buf);
 
 void NET_OOB_Printf(struct net_stream *s, const char *format, ...) __attribute__((format(printf,2,3)));
 
-int NET_ReadChar(struct dbuffer *buf);
-int NET_ReadByte(struct dbuffer *buf);
-int NET_ReadShort(struct dbuffer *buf);
-int NET_PeekShort(const struct dbuffer *buf);
-int NET_ReadLong(struct dbuffer *buf);
-int NET_ReadString(struct dbuffer *buf, char *string, size_t length);
-int NET_ReadStringLine(struct dbuffer *buf, char *string, size_t length);
+int NET_ReadChar(dbuffer *buf);
+int NET_ReadByte(dbuffer *buf);
+int NET_ReadShort(dbuffer *buf);
+int NET_PeekShort(const dbuffer *buf);
+int NET_ReadLong(dbuffer *buf);
+int NET_ReadString(dbuffer *buf, char *string, size_t length);
+int NET_ReadStringLine(dbuffer *buf, char *string, size_t length);
 
-float NET_ReadCoord(struct dbuffer *buf);
-void NET_ReadPos(struct dbuffer *buf, vec3_t pos);
-void NET_Read2Pos(struct dbuffer *buf, vec2_t pos);
-void NET_ReadGPos(struct dbuffer *buf, pos3_t pos);
-float NET_ReadAngle(struct dbuffer *buf);
-float NET_ReadAngle16(struct dbuffer *buf);
-void NET_ReadDir(struct dbuffer *buf, vec3_t vector);
+float NET_ReadCoord(dbuffer *buf);
+void NET_ReadPos(dbuffer *buf, vec3_t pos);
+void NET_Read2Pos(dbuffer *buf, vec2_t pos);
+void NET_ReadGPos(dbuffer *buf, pos3_t pos);
+float NET_ReadAngle(dbuffer *buf);
+float NET_ReadAngle16(dbuffer *buf);
+void NET_ReadDir(dbuffer *buf, vec3_t vector);
 
-void NET_ReadData(struct dbuffer *buf, void *buffer, int size);
-void NET_vReadFormat(struct dbuffer *buf, const char *format, va_list ap);
-void NET_ReadFormat(struct dbuffer *buf, const char *format, ...);
+void NET_ReadData(dbuffer *buf, void *buffer, int size);
+void NET_vReadFormat(dbuffer *buf, const char *format, va_list ap);
+void NET_ReadFormat(dbuffer *buf, const char *format, ...);
 
-struct dbuffer *NET_ReadMsg(struct net_stream *s);
+dbuffer *NET_ReadMsg(struct net_stream *s);
 
 #endif

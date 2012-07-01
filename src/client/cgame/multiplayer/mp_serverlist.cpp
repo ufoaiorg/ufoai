@@ -111,7 +111,7 @@ static inline bool CL_ShowServer (const serverList_t *server)
  */
 static void CL_PingServerCallback (struct net_stream *s)
 {
-	struct dbuffer *buf = cgi->NET_ReadMsg(s);
+	dbuffer *buf = cgi->NET_ReadMsg(s);
 	serverList_t *server = (serverList_t *)cgi->NET_StreamGetData(s);
 	const int cmd = cgi->NET_ReadByte(buf);
 	char str[512];
@@ -209,7 +209,7 @@ static void CL_AddServerToList (const char *node, const char *service)
  * @sa SVC_TeamInfo
  * @sa CL_SelectTeam_Init_f
  */
-void CL_ParseTeamInfoMessage (struct dbuffer *msg)
+void CL_ParseTeamInfoMessage (dbuffer *msg)
 {
 	char str[4096];
 	int cnt = 0;
@@ -276,7 +276,7 @@ static char userInfoText[256];
  * @sa CL_ServerInfoCallback
  * @sa SVC_Info
  */
-void CL_ParseServerInfoMessage (struct dbuffer *msg, const char *hostname)
+void CL_ParseServerInfoMessage (dbuffer *msg, const char *hostname)
 {
 	const char *value;
 	const char *token;
@@ -358,7 +358,7 @@ void CL_ParseServerInfoMessage (struct dbuffer *msg, const char *hostname)
  */
 static void CL_ServerInfoCallback (struct net_stream *s)
 {
-	struct dbuffer *buf = cgi->NET_ReadMsg(s);
+	dbuffer *buf = cgi->NET_ReadMsg(s);
 	if (buf) {
 		const int cmd = cgi->NET_ReadByte(buf);
 		char str[8];
