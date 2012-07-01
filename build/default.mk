@@ -44,6 +44,7 @@ ifdef HAVE_BFD_H
 BFD_CFLAGS               ?=
 BFD_LIBS                 ?= -lbfd
 endif
+MUMBLE_LIBS              ?= -lrt
 MUMBLE_SRCS               = libs/mumble/libmumblelink.c
 MUMBLE_CFLAGS             = -Isrc/libs/mumble
 ifndef HAVE_MXML_H
