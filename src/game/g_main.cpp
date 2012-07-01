@@ -104,6 +104,7 @@ cvar_t *m_panic_stop;
 
 cvar_t *g_endlessaliens;
 cvar_t *g_ailua;
+cvar_t *g_aihumans;
 cvar_t *g_aidebug;
 cvar_t *g_drawtraces;
 cvar_t *g_nodamage;
@@ -222,6 +223,7 @@ static void G_Init (void)
 
 	g_endlessaliens = gi.Cvar_Get("g_endlessaliens", "0", CVAR_LATCH|CVAR_SERVERINFO, "Spawn endless aliens");
 	g_ailua = gi.Cvar_Get("g_ailua", "0", 0, "Activate or deactivate the LUA AI");
+	g_aihumans = gi.Cvar_Get("g_aihumans", "0", CVAR_DEVELOPER, "Activate or deactivate the ai for human actors");
 	g_aidebug = gi.Cvar_Get("g_aidebug", "0", CVAR_DEVELOPER|CVAR_CHEAT, "All AI actors are visible");
 	g_drawtraces = gi.Cvar_Get("g_drawtraces", "0", CVAR_DEVELOPER, "All traces will be rendered");
 	g_nodamage = gi.Cvar_Get("g_nodamage", "0", CVAR_DEVELOPER|CVAR_CHEAT, "No damage in developer mode");

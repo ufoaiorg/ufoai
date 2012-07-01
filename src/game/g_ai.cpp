@@ -552,6 +552,24 @@ static void AI_SearchBestTarget (aiAction_t *aia, const edict_t *ent, edict_t *c
 	}
 }
 
+static inline bool AI_IsValidTarget (const edict_t *ent, const edict_t *target)
+{
+	if (ent == target)
+		return false;
+
+	if (G_IsInsane(ent))
+		return true;
+
+	if (target->team == ent->team)
+		return false;
+
+	/* don't shoot civs in multiplayer */
+	if (sv_maxclients->integer > 1 || (g_aihumans->integer && !G_IsAI(ent)))
+		return !G_IsCivilian(target);
+
+	return true;
+}
+
 /**
  * @sa AI_ActorThink
  * @todo fill z_align values
@@ -586,28 +604,25 @@ static float AI_FighterCalcActionScore (edict_t * ent, pos3_t to, aiAction_t * a
 	maxDmg = 0.0;
 	/* search best target */
 	while ((check = G_EdictsGetNextLivingActor(check))) {
-		if (ent != check && (check->team != ent->team || G_IsInsane(ent)) && !G_EdictPosIsSameAs(check, to)) {
-			/* don't shoot civilians in mp */
-			if (G_IsCivilian(check) && sv_maxclients->integer > 1 && !G_IsInsane(ent))
+		if (G_EdictPosIsSameAs(check, to) || !AI_IsValidTarget(ent, check))
+			continue;
+
+		/* shooting */
+		maxDmg = 0.0;
+		for (shootType = ST_RIGHT; shootType < ST_NUM_SHOOT_TYPES; shootType++) {
+			const item_t *item;
+			const fireDef_t *fdArray;
+
+			item = AI_GetItemForShootType(shootType, ent);
+			if (!item)
 				continue;
 
-			/* shooting */
-			maxDmg = 0.0;
-			for (shootType = ST_RIGHT; shootType < ST_NUM_SHOOT_TYPES; shootType++) {
-				const item_t *item;
-				const fireDef_t *fdArray;
+			fdArray = FIRESH_FiredefForWeapon(item);
+			if (fdArray == NULL)
+				continue;
 
-				item = AI_GetItemForShootType(shootType, ent);
-				if (!item)
-					continue;
-
-				fdArray = FIRESH_FiredefForWeapon(item);
-				if (fdArray == NULL)
-					continue;
-
-				AI_SearchBestTarget(aia, ent, check, item, shootType, tu, &maxDmg, &bestTime, fdArray);
-			}
-		} /* firedefs */
+			AI_SearchBestTarget(aia, ent, check, item, shootType, tu, &maxDmg, &bestTime, fdArray);
+		}
 	}
 	/* add damage to bestActionScore */
 	if (aia->target) {
@@ -1140,6 +1155,29 @@ void AI_ActorThink (player_t * player, edict_t * ent)
 	}
 }
 
+static void AI_PlayerRun (player_t *player)
+{
+	if (level.activeTeam == player->pers.team) {
+		/* find next actor to handle */
+		edict_t *ent = player->pers.last;
+
+		while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, player->pers.team))) {
+			if (ent->TU) {
+				if (g_ailua->integer)
+					AIL_ActorThink(player, ent);
+				else
+					AI_ActorThink(player, ent);
+				player->pers.last = ent;
+				return;
+			}
+		}
+
+		/* nothing left to do, request endround */
+		G_ClientEndRound(player);
+		player->pers.last = NULL;
+		return;
+	}
+}
 
 /**
  * @brief Every server frame one single actor is handled - always in the same order
@@ -1153,28 +1191,16 @@ void AI_Run (void)
 	if (level.framenum % 10)
 		return;
 
+	/* set players to ai players and cycle over all of them */
 	player = NULL;
 	while ((player = G_PlayerGetNextActiveAI(player))) {
-		/* set players to ai players and cycle over all of them */
-		if (G_IsAIPlayer(player) && level.activeTeam == player->pers.team) {
-			/* find next actor to handle */
-			edict_t *ent = player->pers.last;
+		AI_PlayerRun(player);
+	}
 
-			while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, player->pers.team))) {
-				if (ent->TU) {
-					if (g_ailua->integer)
-						AIL_ActorThink(player, ent);
-					else
-						AI_ActorThink(player, ent);
-					player->pers.last = ent;
-					return;
-				}
-			}
-
-			/* nothing left to do, request endround */
-			G_ClientEndRound(player);
-			player->pers.last = NULL;
-			return;
+	if (g_aihumans->integer) {
+		player = NULL;
+		while ((player = G_PlayerGetNextActiveHuman(player))) {
+			AI_PlayerRun(player);
 		}
 	}
 }

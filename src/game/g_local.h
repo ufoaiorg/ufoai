@@ -298,6 +298,7 @@ extern cvar_t *m_panic_stop;
 
 extern cvar_t *g_endlessaliens;
 extern cvar_t *g_ailua;
+extern cvar_t *g_aihumans;
 extern cvar_t *g_aidebug;
 extern cvar_t *g_drawtraces;
 extern cvar_t *g_nodamage;
