@@ -678,7 +678,7 @@ static float AI_FighterCalcActionScore (edict_t * ent, pos3_t to, aiAction_t * a
 		if (check->team == ent->team) {
 			const float dist = VectorDist(ent->origin, check->origin);
 			if (dist < HERD_THRESHOLD)
-				bestActionScore -= HERDING_PENALTY;
+				bestActionScore -= SCORE_HERDING_PENALTY;
 		}
 	}
 
@@ -791,7 +791,7 @@ static float AI_CivilianCalcActionScore (edict_t * ent, pos3_t to, aiAction_t * 
 			continue;
 
 		if (G_ActorVis(check->origin, check, ent, true) > 0.25)
-			reactionTrap += 25.0;
+			reactionTrap += SCORE_NONHIDING_PLACE_PENALTY;
 	}
 	delta -= reactionTrap;
 	bestActionScore += delta;
@@ -858,8 +858,8 @@ static float AI_PanicCalcActionScore (edict_t * ent, pos3_t to, aiAction_t * aia
 	minDistFriendly /= UNIT_SIZE;
 	minDistOthers /= UNIT_SIZE;
 
-	bestActionScore += 300.0 / minDistFriendly;
-	bestActionScore -= 500.0 / minDistOthers;
+	bestActionScore += SCORE_PANIC_RUN_TO_FRIENDS / minDistFriendly;
+	bestActionScore -= SCORE_PANIC_FLEE_FROM_STRANGERS / minDistOthers;
 
 	/* try to hide */
 	check = NULL;
@@ -873,11 +873,11 @@ static float AI_PanicCalcActionScore (edict_t * ent, pos3_t to, aiAction_t * aia
 			continue;
 
 		if (G_ActorVis(check->origin, check, ent, true) > 0.25)
-			bestActionScore -= 25.0;
+			bestActionScore -= SCORE_NONHIDING_PLACE_PENALTY;
 	}
 
 	/* add random effects */
-	bestActionScore += 25.0 * frand();
+	bestActionScore +=  SCORE_PANIC_RANDOM  * frand();
 
 	return bestActionScore;
 }
