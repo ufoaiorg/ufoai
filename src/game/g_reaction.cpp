@@ -475,8 +475,8 @@ static bool G_ReactionFireIsPossible (const edict_t *ent, const edict_t *target)
 	/* @todo Should this situation even happen when G_IsReaction(ent) is true? */
 	if (!ACTOR_GET_INV(ent, ent->chr.RFmode.hand)) {
 		/* print character info if this happens, for now */
-		gi.DPrintf("Reaction fire enabled but no weapon for hand (name=%s,hand=%i,fmIdx=%i)\n",
-				ent->chr.name, ent->chr.RFmode.hand, ent->chr.RFmode.fmIdx);
+		gi.DPrintf("Reaction fire enabled but no weapon for hand (name=%s,entnum=%i,hand=%i,fmIdx=%i)\n",
+				ent->chr.name, ent->number, ent->chr.RFmode.hand, ent->chr.RFmode.fmIdx);
 		return false;
 	}
 
@@ -666,7 +666,7 @@ void G_ReactionFirePreShot (const edict_t *target, const int fdTime)
 		repeat = false;
 		/* check all ents to see who wins and who loses a draw */
 		while ((shooter = G_EdictsGetNextLivingActor(shooter))) {
-			int entTUs = G_ReactionFireGetTUsForItem(shooter, target, RIGHT(shooter));
+			const int entTUs = G_ReactionFireGetTUsForItem(shooter, target, RIGHT(shooter));
 			if (entTUs > 1) {	/* indicates an RF weapon is there */
 				if (G_ReactionFireTargetsExpired(shooter, target, fdTime)) {
 					if (G_ReactionFireTryToShoot(shooter, target)) {
