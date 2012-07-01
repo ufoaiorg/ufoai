@@ -198,6 +198,13 @@ void CL_ParseServerMessage (svc_ops_t cmd, struct dbuffer *msg)
 		i = NET_ReadByte(msg);
 		NET_ReadString(msg, s, sizeof(s));
 		switch (i) {
+		case PRINT_HUD:
+			/* all game lib messages or server messages should be printed
+			 * untranslated with BroadcastPrintf or PlayerPrintf */
+			/* see src/po/OTHER_STRINGS */
+			HUD_DisplayMessage(_(s));
+			Com_Printf("%s\n", s);
+			break;
 		case PRINT_CHAT:
 			GAME_AddChatMessage(s);
 			/* skip format strings */
@@ -205,17 +212,11 @@ void CL_ParseServerMessage (svc_ops_t cmd, struct dbuffer *msg)
 				memmove(s, &s[2], sizeof(s) - 2);
 			/* also print to console */
 			break;
-		case PRINT_HUD:
-			/* all game lib messages or server messages should be printed
-			 * untranslated with BroadcastPrintf or PlayerPrintf */
-			/* see src/po/OTHER_STRINGS */
-			HUD_DisplayMessage(_(s));
-			break;
 		default:
+			Com_Printf("%s", s);
 			break;
 		}
 		Com_DPrintf(DEBUG_CLIENT, "svc_print(%d): %s", i, s);
-		Com_Printf("%s", s);
 		break;
 
 	case svc_stufftext:
