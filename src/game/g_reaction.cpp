@@ -51,6 +51,8 @@ public:
 	int triggerTUs;		/* the amount of TUS of the target(!) at which the reaction takes place */
 };
 
+#define RF_NO_ENTNUM -1
+
 class ReactionFireTargetList
 {
 public:
@@ -58,8 +60,8 @@ public:
 	int count;
 	ReactionFireTarget targets[MAX_RF_TARGETS];
 
-	inline void Init(void) {entnum = -1; count = 0;}
-	inline void Reset(void) {count = 0;}
+	inline void init(void) {entnum = RF_NO_ENTNUM; count = 0;}
+	inline void reset(void) {count = 0;}
 
 protected:
 };
@@ -74,7 +76,7 @@ void G_ReactionFireTargetsInit (void)
 	int i;
 
 	for (i = 0; i < MAX_RF_DATA; i++) {
-		rfData[i].Init();
+		rfData[i].init();
 	}
 }
 
@@ -86,7 +88,7 @@ static void G_ReactionFireTargetsReset (void)
 	int i;
 
 	for (i = 0; i < MAX_RF_DATA; i++) {
-		rfData[i].Reset();
+		rfData[i].reset();
 	}
 }
 
@@ -122,7 +124,7 @@ void G_ReactionFireTargetsCreate (const edict_t *shooter)
 		gi.Error("Entity already has rfData");
 
 	for (i = 0; i < MAX_RF_DATA; i++) {
-		if (rfData[i].entnum == -1) {
+		if (rfData[i].entnum == RF_NO_ENTNUM) {
 			rfData[i].entnum = shooter->number;
 			break;
 		}
