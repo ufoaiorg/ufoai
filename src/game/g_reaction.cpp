@@ -374,6 +374,9 @@ static bool G_ReactionFireSetDefault (edict_t *ent)
 	ent->chr.RFmode.hand = hand;
 	ent->chr.RFmode.weapon = weapon;
 
+	if (!G_ActorHasWorkingFireModeSet(ent))
+		return false;
+
 	if (!G_IsAI(ent))
 		G_EventReactionFireChange(ent);
 

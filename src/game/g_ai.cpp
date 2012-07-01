@@ -1270,8 +1270,9 @@ static void AI_InitPlayer (const player_t * player, edict_t * ent, const equipDe
 	ent->head = gi.ModelIndex(CHRSH_CharGetHead(&ent->chr));
 
 	/* no need to call G_SendStats for the AI - reaction fire is serverside only for the AI */
-	if (frand() < 0.75f)
+	if (frand() < 0.75f) {
 		G_ClientStateChange(player, ent, STATE_REACTION, false);
+	}
 
 	/* initialize the LUA AI now */
 	if (team == TEAM_CIVILIAN)
