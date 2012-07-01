@@ -395,6 +395,29 @@ static void G_DestroyEdict_f (void)
 	e->destroy(e);
 }
 
+static void G_StateChange_f (void)
+{
+	if (gi.Cmd_Argc() < 3) {
+		gi.DPrintf("Usage: %s <entnum> <state>\n States are: panic, rage, shaken", gi.Cmd_Argv(0));
+		return;
+	}
+
+	const int entnum = atoi(gi.Cmd_Argv(1));
+	edict_t *e = G_EdictsGetByNum(entnum);
+	if (e == NULL)
+		return;
+
+	const char *state = gi.Cmd_Argv(2);
+	if (Q_strcasecmp(state, "panic")) {
+		e->morale = mor_panic->integer / 2;
+	} else if (Q_strcasecmp(state, "shaken")) {
+		e->morale = mor_shaken->integer / 2;
+	} else if (Q_strcasecmp(state, "rage")) {
+		e->morale = m_rage->integer / 2;
+	}
+
+	G_MoraleBehaviour(e->team);
+}
 #endif
 
 void G_ClientCommand (player_t * player)
@@ -427,6 +450,8 @@ void G_ClientCommand (player_t * player)
 		G_UseEdict_f();
 	else if (Q_strcasecmp(cmd, "debug_edictdestroy") == 0)
 		G_DestroyEdict_f();
+	else if (Q_strcasecmp(cmd, "debug_statechange") == 0)
+		G_StateChange_f();
 #endif
 	else
 		/* anything that doesn't match a command will be a chat */

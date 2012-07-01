@@ -144,7 +144,6 @@ static bool G_IsMoraleEnabled (void)
 void G_MoraleBehaviour (int team)
 {
 	edict_t *ent = NULL;
-	int newMorale;
 
 	while ((ent = G_EdictsGetNextInUse(ent))) {
 		/* this only applies to ET_ACTOR but not to ET_ACTOR2x2 */
@@ -186,15 +185,15 @@ void G_MoraleBehaviour (int team)
 			G_ActorSetMaxs(ent);
 
 			/* morale-regeneration, capped at max: */
-			newMorale = ent->morale + MORALE_RANDOM(mor_regeneration->value);
-			if (newMorale > GET_MORALE(ent->chr.score.skills[ABILITY_MIND]))
-				ent->morale = GET_MORALE(ent->chr.score.skills[ABILITY_MIND]);
+			int newMorale = ent->morale + MORALE_RANDOM(mor_regeneration->value);
+			const int maxMorale = GET_MORALE(ent->chr.score.skills[ABILITY_MIND]);
+			if (newMorale > maxMorale)
+				ent->morale = maxMorale;
 			else
 				ent->morale = newMorale;
 
 			/* send phys data and state: */
 			G_SendStats(ent);
-			gi.EndEvents();
 		}
 	}
 }

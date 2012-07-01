@@ -937,6 +937,7 @@ static void CL_InitLocal (void)
 	Cmd_AddCommand("debug_killteam", NULL, "Kills a given team");
 	Cmd_AddCommand("debug_stunteam", NULL, "Stuns a given team");
 	Cmd_AddCommand("debug_listscore", NULL, "Shows mission-score entries of all team members");
+	Cmd_AddCommand("debug_statechange", NULL, "Change the state of an edict");
 #endif
 
 	IN_Init();
