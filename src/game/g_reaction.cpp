@@ -468,7 +468,7 @@ static bool G_ReactionFireIsPossible (const edict_t *ent, const edict_t *target)
 		return false;
 
 	/* check ent has reaction fire enabled */
-	if (!G_IsShaken(ent) && !G_IsReaction(ent))
+	if (!G_IsReaction(ent))
 		return false;
 
 	/* check ent has weapon in RF hand */
@@ -711,10 +711,6 @@ void G_ReactionFireReset (int team)
 	edict_t *ent = NULL;
 
 	while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, team))) {
-		/** @todo why do we send the state here and why do we change the "shaken"
-		 * state? - see G_MoraleBehaviour */
 		G_RemoveShaken(ent);
-
-		G_EventActorStateChange(G_TeamToPM(ent->team), ent);
 	}
 }

@@ -122,12 +122,13 @@ static void G_MoraleStopRage (edict_t * ent)
  * the case in singleplayer matches, and might be disabled for multiplayer matches.
  * @return @c true if the morale is activated for this game.
  */
-static bool G_IsMoraleEnabled (void)
+static bool G_IsMoraleEnabled (int team)
 {
 	if (sv_maxclients->integer == 1)
 		return true;
 
-	if (sv_maxclients->integer >= 2 && sv_enablemorale->integer == 1)
+	/* multiplayer */
+	if (team == TEAM_CIVILIAN || sv_enablemorale->integer == 1)
 		return true;
 
 	return false;
@@ -143,57 +144,52 @@ static bool G_IsMoraleEnabled (void)
  */
 void G_MoraleBehaviour (int team)
 {
+	bool enabled = G_IsMoraleEnabled(team);
+	if (!enabled)
+		return;
+
 	edict_t *ent = NULL;
-
-	while ((ent = G_EdictsGetNextInUse(ent))) {
+	while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, team)) != NULL) {
 		/* this only applies to ET_ACTOR but not to ET_ACTOR2x2 */
-		if (ent->type == ET_ACTOR && ent->team == team && !G_IsDead(ent)) {
-			/* civilians have a 1:1 chance to randomly run away in multiplayer */
-			if (sv_maxclients->integer >= 2 && level.activeTeam == TEAM_CIVILIAN && 0.5 > frand())
-				G_MoralePanic(ent, false);
-			/* multiplayer needs enabled sv_enablemorale */
-			/* singleplayer has this in every case */
-			if (G_IsMoraleEnabled()) {
-				/* if panic, determine what kind of panic happens: */
-				if (ent->morale <= mor_panic->value && !G_IsPaniced(ent) && !G_IsRaged(ent)) {
-					bool sanity;
-					if ((float) ent->morale / mor_panic->value > (m_sanity->value * frand()))
-						sanity = true;
-					else
-						sanity = false;
-					if ((float) ent->morale / mor_panic->value > (m_rage->value * frand()))
-						G_MoralePanic(ent, sanity);
-					else
-						G_MoraleRage(ent, sanity);
-					/* if shaken, well .. be shaken; */
-				} else if (ent->morale <= mor_shaken->value && !G_IsPaniced(ent)
-						&& !G_IsRaged(ent)) {
-					/* shaken is later reset along with reaction fire */
-					G_SetShaken(ent);
-					G_ClientStateChange(G_PLAYER_FROM_ENT(ent), ent, STATE_REACTION, false);
-					G_EventSendState(G_VisToPM(ent->visflags), ent);
-					G_ClientPrintf(G_PLAYER_FROM_ENT(ent), PRINT_HUD, _("%s is currently shaken."),
-							ent->chr.name);
-				} else {
-					if (G_IsPaniced(ent))
-						G_MoraleStopPanic(ent);
-					else if (G_IsRaged(ent))
-						G_MoraleStopRage(ent);
-				}
+		if (ent->type != ET_ACTOR)
+			continue;
+
+		/* if panic, determine what kind of panic happens: */
+		if (!G_IsPaniced(ent) && !G_IsRaged(ent)) {
+			if (ent->morale <= mor_panic->integer) {
+				const float ratio = (float) ent->morale / mor_panic->value;
+				const bool sanity = ratio > (m_sanity->value * frand());
+				if (ratio > (m_rage->value * frand()))
+					G_MoralePanic(ent, sanity);
+				else
+					G_MoraleRage(ent, sanity);
+				/* if shaken, well .. be shaken; */
+			} else if (ent->morale <= mor_shaken->integer) {
+				/* shaken is later reset along with reaction fire */
+				G_SetShaken(ent);
+				G_ClientStateChange(G_PLAYER_FROM_ENT(ent), ent, STATE_REACTION, false);
+				G_EventSendState(G_VisToPM(ent->visflags), ent);
+				G_ClientPrintf(G_PLAYER_FROM_ENT(ent), PRINT_HUD, _("%s is currently shaken."),
+						ent->chr.name);
 			}
-
-			G_ActorSetMaxs(ent);
-
-			/* morale-regeneration, capped at max: */
-			int newMorale = ent->morale + MORALE_RANDOM(mor_regeneration->value);
-			const int maxMorale = GET_MORALE(ent->chr.score.skills[ABILITY_MIND]);
-			if (newMorale > maxMorale)
-				ent->morale = maxMorale;
-			else
-				ent->morale = newMorale;
-
-			/* send phys data and state: */
-			G_SendStats(ent);
+		} else {
+			if (G_IsPaniced(ent))
+				G_MoraleStopPanic(ent);
+			else if (G_IsRaged(ent))
+				G_MoraleStopRage(ent);
 		}
+
+		G_ActorSetMaxs(ent);
+
+		/* morale-regeneration, capped at max: */
+		int newMorale = ent->morale + MORALE_RANDOM(mor_regeneration->value);
+		const int maxMorale = GET_MORALE(ent->chr.score.skills[ABILITY_MIND]);
+		if (newMorale > maxMorale)
+			ent->morale = maxMorale;
+		else
+			ent->morale = newMorale;
+
+		/* send phys data and state: */
+		G_SendStats(ent);
 	}
 }

@@ -414,6 +414,8 @@ static void G_StateChange_f (void)
 		e->morale = mor_shaken->integer / 2;
 	} else if (Q_strcasecmp(state, "rage")) {
 		e->morale = m_rage->integer / 2;
+	} else {
+		e->morale = 0;
 	}
 
 	G_MoraleBehaviour(e->team);
