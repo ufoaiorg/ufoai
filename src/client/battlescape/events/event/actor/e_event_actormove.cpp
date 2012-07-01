@@ -97,11 +97,11 @@ void CL_ActorDoMove (const eventRegister_t *self, struct dbuffer *msg)
 		LE_NotFoundError(number);
 
 	if (!LE_IsActor(le))
-		Com_Error(ERR_DROP, "Can't move, LE doesn't exist or is not an actor (number: %i, type: %i)\n",
+		Com_Error(ERR_DROP, "Can't move, LE doesn't exist or is not an actor (entnum: %i, type: %i)\n",
 			number, le->type);
 
 	if (LE_IsDead(le))
-		Com_Error(ERR_DROP, "Can't move, actor on team %i dead", le->team);
+		Com_Error(ERR_DROP, "Can't move, actor on team %i dead (entnum: %i)", le->team, number);
 
 	/* lock this le for other events, the corresponding unlock is in LE_DoEndPathMove() */
 	LE_Lock(le);
@@ -117,7 +117,7 @@ void CL_ActorDoMove (const eventRegister_t *self, struct dbuffer *msg)
 
 	le->pathLength = newPathLength;
 	if (le->pathLength >= MAX_LE_PATHLENGTH)
-		Com_Error(ERR_DROP, "Overflow in pathLength");
+		Com_Error(ERR_DROP, "Overflow in pathLength (entnum: %i)", number);
 
 	/* Also get the final position */
 	le->newPos[0] = NET_ReadByte(msg);
@@ -131,7 +131,7 @@ void CL_ActorDoMove (const eventRegister_t *self, struct dbuffer *msg)
 	}
 
 	if (VectorCompare(le->newPos, le->pos))
-		Com_Error(ERR_DROP, "start and end pos are the same");
+		Com_Error(ERR_DROP, "start and end pos are the same (entnum: %i)", number);
 
 	/* activate PathMove function */
 	FLOOR(le) = NULL;
