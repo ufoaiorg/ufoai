@@ -1,6 +1,6 @@
 /**
  * @file
- * @brief Artificial Intelligence.
+ * @brief Artificial Intelligence for opponents or human controlled actors that are panicked.
  */
 
 /*
@@ -1070,9 +1070,9 @@ static void AI_TryToReloadWeapon (edict_t *ent, containerIndex_t containerID)
 }
 
 /**
- * @brief The think function for the ai controlled aliens
- * @param[in] player
- * @param[in] ent
+ * @brief The think function for the ai controlled aliens or paniced humans
+ * @param[in] player The AI or human player object
+ * @param[in] ent The ai controlled edict or the human actor edict
  * @sa AI_FighterCalcActionScore
  * @sa AI_CivilianCalcActionScore
  * @sa G_ClientMove
