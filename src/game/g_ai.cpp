@@ -1162,20 +1162,22 @@ static void AI_PlayerRun (player_t *player)
 		edict_t *ent = player->pers.last;
 
 		while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, player->pers.team))) {
-			if (ent->TU) {
+			const int beforeTUs = ent->TU;
+			if (beforeTUs > 0) {
 				if (g_ailua->integer)
 					AIL_ActorThink(player, ent);
 				else
 					AI_ActorThink(player, ent);
 				player->pers.last = ent;
-				return;
+
+				if (beforeTUs > ent->TU)
+					return;
 			}
 		}
 
 		/* nothing left to do, request endround */
 		G_ClientEndRound(player);
 		player->pers.last = NULL;
-		return;
 	}
 }
 
