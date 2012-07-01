@@ -466,10 +466,10 @@ static void G_ActorRevitalise (edict_t *ent)
 	G_ActorSetMaxs(ent);
 
 	/* check if the player appears/perishes, seen from other teams */
-	G_CheckVis(ent, true);
+	G_CheckVis(ent);
 
 	/* calc new vis for this player */
-	G_CheckVisTeamAll(ent->team, false, ent);
+	G_CheckVisTeamAll(ent->team, 0, ent);
 }
 
 void G_ActorCheckRevitalise (edict_t *ent)
@@ -543,14 +543,14 @@ bool G_ActorDieOrStun (edict_t * ent, edict_t *attacker)
 	G_InventoryToFloor(ent);
 
 	/* check if the player appears/perishes, seen from other teams */
-	G_CheckVis(ent, true);
+	G_CheckVis(ent);
 
 	/* check if the attacker appears/perishes, seen from other teams */
 	if (attacker)
-		G_CheckVis(attacker, true);
+		G_CheckVis(attacker);
 
 	/* calc new vis for this player */
-	G_CheckVisTeamAll(ent->team, false, attacker);
+	G_CheckVisTeamAll(ent->team, 0, attacker);
 
 	/* unlink the floor container */
 	FLOOR(ent) = NULL;
@@ -737,7 +737,7 @@ bool G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, cons
 		/* A new container was created for the floor. */
 		if (newFloor) {
 			/* Send item info to the clients */
-			G_CheckVis(floor, true);
+			G_CheckVis(floor);
 		} else {
 			/* use the backup item to use the old amount values, because the clients have to use the same actions
 			 * on the original amount. Otherwise they would end in a different amount of items as the server (+1) */

@@ -1070,7 +1070,7 @@ edict_t* G_ClientGetFreeSpawnPointForActorSize (const player_t *player, const ac
 	ent->chr.fieldSize = actorSize;
 	ent->fieldSize = ent->chr.fieldSize;
 	ent->flags |= FL_DESTROYABLE;
-	ent->visflags = 0;
+	G_VisFlagsReset(ent);
 	gi.LinkEdict(ent);
 
 	if (ent->spawnflags & STATE_CROUCHED) {

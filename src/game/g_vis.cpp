@@ -243,10 +243,9 @@ static bool G_VisShouldStop (const edict_t *ent)
 	return G_IsLivingActor(ent) && !G_IsCivilian(ent);
 }
 
-static int G_DoTestVis (const int team, edict_t * check, bool perish, int playerMask, const edict_t *ent)
+static int G_DoTestVis (const int team, edict_t * check, int visFlags, int playerMask, const edict_t *ent)
 {
 	int status = 0;
-	const int visFlags = perish ? VT_PERISH : 0;
 	const int vis = G_TestVis(team, check, visFlags);
 
 	/* visibility has changed ... */
@@ -266,6 +265,9 @@ static int G_DoTestVis (const int team, edict_t * check, bool perish, int player
 				status |= VIS_STOP;
 		} else
 			status |= VIS_PERISH;
+	} else if (vis == 0 && (visFlags & VIS_NEW)) {
+		if (G_IsActor(check))
+			G_EventActorAdd(playerMask, check);
 	}
 	return status;
 }
@@ -276,7 +278,7 @@ static int G_DoTestVis (const int team, edict_t * check, bool perish, int player
  * @sa G_CheckVisTeam
  * @sa G_AppearPerishEvent
  */
-int G_CheckVisPlayer (player_t* player, bool perish)
+int G_CheckVisPlayer (player_t* player, int visFlags)
 {
 	int status = 0;
 	edict_t* ent = NULL;
@@ -284,7 +286,7 @@ int G_CheckVisPlayer (player_t* player, bool perish)
 	/* check visibility */
 	while ((ent = G_EdictsGetNextInUse(ent))) {
 		/* check if he's visible */
-		status |= G_DoTestVis(player->pers.team, ent, perish, G_PlayerToPM(player), NULL);
+		status |= G_DoTestVis(player->pers.team, ent, visFlags, G_PlayerToPM(player), NULL);
 	}
 
 	return status;
@@ -313,14 +315,14 @@ int G_CheckVisPlayer (player_t* player, bool perish)
  * @note If something appears, the needed information for those clients that are affected
  * are also send in @c G_AppearPerishEvent
  */
-int G_CheckVisTeam (const int team, edict_t *check, bool perish, const edict_t *ent)
+int G_CheckVisTeam (const int team, edict_t *check, int visFlags, const edict_t *ent)
 {
 	int status = 0;
 
 	/* check visibility */
 	if (check->inuse) {
 		/* check if he's visible */
-		status |= G_DoTestVis(team, check, perish, G_TeamToPM(team), ent);
+		status |= G_DoTestVis(team, check, visFlags, G_TeamToPM(team), ent);
 	}
 
 	return status;
@@ -329,13 +331,13 @@ int G_CheckVisTeam (const int team, edict_t *check, bool perish, const edict_t *
 /**
  * @brief Do @c G_CheckVisTeam for all entities
  */
-int G_CheckVisTeamAll (const int team, bool perish, const edict_t *ent)
+int G_CheckVisTeamAll (const int team, int visFlags, const edict_t *ent)
 {
 	edict_t *chk = NULL;
 	int status = 0;
 
 	while ((chk = G_EdictsGetNextInUse(chk))) {
-		status |= G_CheckVisTeam(team, chk, perish, ent);
+		status |= G_CheckVisTeam(team, chk, visFlags, ent);
 	}
 	return status;
 }
@@ -363,7 +365,7 @@ void G_VisMakeEverythingVisible (void)
  * @return Bitmask of VIS_* values
  * @sa G_CheckVisTeam
  */
-int G_CheckVis (edict_t * check, bool perish)
+int G_CheckVis (edict_t * check, int visFlags)
 {
 	int team;
 	int status;
@@ -372,9 +374,9 @@ int G_CheckVis (edict_t * check, bool perish)
 	for (team = 0; team < MAX_TEAMS; team++)
 		if (level.num_alive[team]) {
 			if (!check)	/* no special entity given, so check them all */
-				status |= G_CheckVisTeamAll(team, perish, NULL);
+				status |= G_CheckVisTeamAll(team, visFlags, NULL);
 			else
-				status |= G_CheckVisTeam(team, check, perish, NULL);
+				status |= G_CheckVisTeam(team, check, visFlags, NULL);
 		}
 
 	return status;

@@ -1340,6 +1340,7 @@ static edict_t* G_SpawnAIPlayer (const player_t * player, const equipDef_t *ed)
 	G_TouchTriggers(ent);
 
 	gi.DPrintf("Spawned ai player for team %i with entnum %i (%s)\n", ent->team, ent->number, ent->chr.name);
+	G_CheckVis(ent, VIS_PERISH | VIS_NEW);
 
 	return ent;
 }
