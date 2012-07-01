@@ -86,7 +86,7 @@ static invList_t *I_AddToInventory (inventoryInterface_t* self, inventory_t * co
 	assert(inv);
 	assert(container);
 
-	if (container->single && inv->c[container->id] && inv->c[container->id]->next)
+	if (container->single && inv->c[container->id])
 		return NULL;
 
 	/* idEquip and idFloor */
