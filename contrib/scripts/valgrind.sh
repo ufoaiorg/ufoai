@@ -73,10 +73,26 @@ BIN_ONLY=$(basename "${APP}")
 
 echo "Debugging ${APP_PATH}"
 
+if [ -z "$SUP" ]
+then
+	# path to the valgrind suppression file
+	SUP=$(readlink -f "${0}")
+	SUP=$(dirname "${SUP}")
+	SUP="${SUP}/valgrind.sup"
+fi
+
+if [ -f "${SUP}" ]
+then
+	echo "Using valgrind suppression file from '${SUP}'"
+	VALGRIND_OPTIONS="${VALGRIND_OPTIONS} --suppressions=${SUP}"
+else
+	echo "No valgrind suppression file at '${SUP}'"
+fi
+
 if [ ${GENERATE_SUPPRESSION} ]
 then
 	valgrind \
-		--gen-suppressions=yes \
+		--gen-suppressions=all \
 		--verbose \
 		--demangle=yes \
 		$VALGRIND_OPTIONS \
@@ -84,22 +100,6 @@ then
 else
 	if [ $TOOL = "memcheck" ]
 	then
-		if [ -z "$SUP" ]
-		then
-			# path to the valgrind suppression file
-			SUP=$(readlink -f "${0}")
-			SUP=$(dirname "${SUP}")
-			SUP="${SUP}/valgrind.sup"
-		fi
-
-		if [ -f "${SUP}" ]
-		then
-			echo "Using valgrind suppression file from '${SUP}'"
-			VALGRIND_OPTIONS="${VALGRIND_OPTIONS} --suppressions=${SUP}"
-		else
-			echo "No valgrind suppression file at '${SUP}'"
-		fi
-
 		if [ -z "$NO_LOG" ]
 		then
 			LOG=${PATH_ONLY}/valgrind.log
@@ -107,7 +107,7 @@ else
 			echo "Log file will be created at ${LOG}"
 		fi
 		VALGRIND_OPTIONS="--show-reachable=yes $VALGRIND_OPTIONS"
-		VALGRIND_OPTIONS="--leak-check=full $VALGRIND_OPTIONS"
+		VALGRIND_OPTIONS="--leak-check=no $VALGRIND_OPTIONS"
 		VALGRIND_OPTIONS="--track-fds=yes $VALGRIND_OPTIONS"
 		VALGRIND_OPTIONS="--run-libc-freeres=no $VALGRIND_OPTIONS"
 	else

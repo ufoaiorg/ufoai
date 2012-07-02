@@ -86,6 +86,88 @@
    obj:/usr/lib/libGLcore.so.185.18.36
 }
 {
+   nvidia_gl5
+   Memcheck:Cond
+   obj:/usr/lib/nvidia-current/libnvidia-glcore.so.280.13
+   obj:*
+   obj:*
+   obj:*
+   obj:*
+   obj:*
+   obj:*
+   obj:*
+   obj:/usr/lib/nvidia-current/libnvidia-glcore.so.280.13
+   obj:*
+   obj:*
+   obj:*
+}
+{
+   nvidia_gl6
+   Memcheck:Cond
+   obj:/usr/lib/nvidia-current/libnvidia-glcore.so.280.13
+   obj:*
+}
+{
+   nvidia_gl7
+   Memcheck:Cond
+   obj:/usr/lib/nvidia-current/libnvidia-glcore.so.280.13
+   obj:*
+   obj:*
+   obj:*
+   obj:*
+}
+{
+   nvidia_gl8
+   Memcheck:Cond
+   obj:/usr/lib/nvidia-current/libnvidia-glcore.so.280.13
+   obj:*
+   obj:/usr/lib/nvidia-current/libnvidia-glcore.so.280.13
+}
+{
+   nvidia_gl9
+   Memcheck:Cond
+   obj:/usr/lib/nvidia-current/libnvidia-glcore.so.280.13
+   obj:/home/mgerhardy/dev/ufoai/ufo
+   obj:*
+   obj:*
+   obj:*
+   obj:*
+   obj:*
+   obj:*
+}
+{
+   gettext
+   Memcheck:Cond
+   fun:__GI___strcasecmp_l
+   fun:__gconv_open
+   fun:_nl_find_msg
+   fun:__dcigettext
+   fun:_ZL15UI_RegisterFontPK8uiFont_s
+   fun:_Z12UI_InitFontsv
+   fun:_ZL14CL_NewLanguagev
+   fun:_Z19CL_LanguageTryToSetPKc
+   fun:_Z15CL_LanguageInitv
+   fun:_Z12CL_InitAfterv
+   fun:_Z12Qcommon_InitiPPc
+   fun:main
+}
+{
+   png-zlib
+   Memcheck:Cond
+   fun:inflateReset2
+   fun:inflateInit2_
+   fun:png_create_read_struct_2
+   fun:png_create_read_struct
+   fun:_ZL11Img_LoadPNGPKc
+   fun:_Z13Img_LoadImagePKc
+   fun:_Z11R_FindImagePKc11imagetype_t
+   fun:_Z12R_InitImagesv
+   fun:_Z6R_Initv
+   fun:_Z8VID_Initv
+   fun:_Z7CL_Initv
+   fun:_Z12Qcommon_InitiPPc
+}
+{
    fglrx_param
    Memcheck:Param
    ioctl(generic)
