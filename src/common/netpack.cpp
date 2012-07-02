@@ -276,6 +276,15 @@ int NET_PeekShort (const dbuffer *buf)
 	return LittleShort(v);
 }
 
+int NET_PeekLong (const dbuffer *buf)
+{
+	uint32_t v;
+	if (dbuffer_get(buf, (char *)&v, 4) < 4)
+		return -1;
+
+	return LittleLong(v);
+}
+
 int NET_ReadLong (dbuffer *buf)
 {
 	unsigned int v;

@@ -60,6 +60,7 @@ int NET_ReadChar(dbuffer *buf);
 int NET_ReadByte(dbuffer *buf);
 int NET_ReadShort(dbuffer *buf);
 int NET_PeekShort(const dbuffer *buf);
+int NET_PeekLong(const dbuffer *buf);
 int NET_ReadLong(dbuffer *buf);
 int NET_ReadString(dbuffer *buf, char *string, size_t length);
 int NET_ReadStringLine(dbuffer *buf, char *string, size_t length);
