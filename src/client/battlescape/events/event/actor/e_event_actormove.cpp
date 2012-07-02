@@ -79,17 +79,7 @@ int CL_ActorDoMoveTime (const eventRegister_t *self, dbuffer *msg, eventTiming_t
 void CL_ActorDoMove (const eventRegister_t *self, dbuffer *msg)
 {
 	le_t *le;
-	int i;
 	const int number = NET_ReadShort(msg);
-	const int newPathLength = NET_ReadByte(msg);
-
-	/* skip empty routes */
-	if (newPathLength == 0) {
-		NET_ReadByte(msg);
-		NET_ReadByte(msg);
-		NET_ReadByte(msg);
-		return;
-	}
 
 	/* get le */
 	le = LE_Get(number);
@@ -115,20 +105,23 @@ void CL_ActorDoMove (const eventRegister_t *self, dbuffer *msg)
 		}
 	}
 
-	le->pathLength = newPathLength;
-	if (le->pathLength >= MAX_LE_PATHLENGTH)
-		Com_Error(ERR_DROP, "Overflow in pathLength (entnum: %i)", number);
-
-	/* Also get the final position */
-	le->newPos[0] = NET_ReadByte(msg);
-	le->newPos[1] = NET_ReadByte(msg);
-	le->newPos[2] = NET_ReadByte(msg);
-
-	for (i = 0; i < le->pathLength; i++) {
+	int i = 0;
+	/* the end of this event is marked with a 0 */
+	while (NET_PeekLong(msg) != 0) {
 		le->dvtab[i] = NET_ReadShort(msg); /** Don't adjust dv values here- the whole thing is needed to move the actor! */
 		le->speed[i] = NET_ReadShort(msg);
 		le->pathContents[i] = NET_ReadShort(msg);
+		i++;
 	}
+	le->pathLength = i;
+
+	if (le->pathLength >= MAX_LE_PATHLENGTH)
+		Com_Error(ERR_DROP, "Overflow in pathLength (entnum: %i)", number);
+
+	/* skip the end of move marker */
+	NET_ReadLong(msg);
+	/* Also get the final position */
+	NET_ReadGPos(msg, le->newPos);
 
 	if (VectorCompare(le->newPos, le->pos))
 		Com_Error(ERR_DROP, "start and end pos are the same (entnum: %i)", number);

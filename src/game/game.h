@@ -71,6 +71,7 @@ struct edict_s {
 
 	vec3_t origin;		/**< the position in the world */
 	vec3_t angles;		/**< the rotation in the world (pitch, yaw, roll) */
+	pos3_t pos;			/** < the grid position of the actor */
 
 	/** tracing info SOLID_BSP, SOLID_BBOX, ... */
 	solid_t solid;
@@ -169,7 +170,6 @@ typedef struct {
 	void (IMPORT *WriteChar) (char c);
 
 	void (IMPORT *WriteByte) (byte c);
-	byte* (IMPORT *WriteDummyByte) (byte c);
 	void (IMPORT *WriteShort) (int c);
 
 	void (IMPORT *WriteLong) (int c);
@@ -182,7 +182,7 @@ typedef struct {
 
 	void (IMPORT *AbortEvents) (void);
 	void (IMPORT *EndEvents) (void);
-	void (IMPORT *AddEvent) (unsigned int mask, int eType);
+	void (IMPORT *AddEvent) (unsigned int mask, int eType, int entnum);
 	int (IMPORT *GetEvent) (void);
 
 	/* network messaging (reading) */

@@ -273,7 +273,7 @@ static void G_MatchSendResults (int team, bool nextmap)
 	G_VisMakeEverythingVisible();
 
 	/* send results */
-	gi.AddEvent(PM_ALL, EV_RESULTS);
+	gi.AddEvent(PM_ALL, EV_RESULTS, -1);
 	gi.WriteByte(MAX_TEAMS);
 	gi.WriteByte(team);
 	gi.WriteByte(nextmap);

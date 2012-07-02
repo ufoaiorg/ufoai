@@ -45,6 +45,7 @@ void CL_ActorAdd (const eventRegister_t *self, dbuffer *msg)
 	le = LE_Get(entnum);
 	if (le) {
 		Com_Printf("CL_ActorAdd: Actor with number %i already exists\n", entnum);
+		NET_SkipFormat(msg, self->formatString);
 		return;
 	}
 	le = LE_Add(entnum);

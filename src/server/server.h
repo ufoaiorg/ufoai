@@ -70,6 +70,7 @@ typedef struct pending_event_s {
 	/** player mask of the current event */
 	int playerMask;
 	int type;
+	int entnum;
 	dbuffer *buf;
 } pending_event_t;
 

@@ -675,6 +675,7 @@ struct edict_s {
 
 	vec3_t origin;		/**< the position in the world */
 	vec3_t angles;		/**< the rotation in the world (pitch, yaw, roll) */
+	pos3_t pos;			/**< the position on the grid @sa @c UNIT_SIZE */
 
 	/** tracing info SOLID_BSP, SOLID_BBOX, ... */
 	solid_t solid;
@@ -705,7 +706,6 @@ struct edict_s {
 
 	int contentFlags;			/**< contents flags of the brush the actor is walking in */
 
-	pos3_t pos;					/**< the position on the grid @sa @c UNIT_SIZE */
 	byte dir;					/**< direction the player looks at */
 
 	int TU;						/**< remaining timeunits for actors or timeunits needed to 'use' this entity */

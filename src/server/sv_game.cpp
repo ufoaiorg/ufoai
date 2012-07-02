@@ -196,18 +196,6 @@ static void SV_WriteByte (byte c)
 	NET_WriteByte(sv->pendingEvent.buf, c);
 }
 
-/**
- * @brief Use this if the value might change and you need the position in the buffer
- * @note If someone aborts or adds an event, this pointer is of course no longer valid
- */
-static byte* SV_WriteDummyByte (byte c)
-{
-	pending_event_t *p = &sv->pendingEvent;
-	NET_WriteByte(p->buf, c);
-	char *pos = &p->buf->back();
-	return (byte*)pos;
-}
-
 static void SV_WriteShort (int c)
 {
 	NET_WriteShort(sv->pendingEvent.buf, c);
@@ -342,6 +330,13 @@ static void SV_EndEvents (void)
 	if (!p->pending)
 		return;
 
+	if (p->type == EV_ACTOR_MOVE) {
+		/* mark the end of the steps */
+		NET_WriteLong(p->buf, 0);
+		assert(p->entnum != -1);
+		const sv_edict_t &e = sv->edicts[p->entnum];
+		NET_WriteGPos(p->buf, e.ent->pos);
+	}
 	NET_WriteByte(p->buf, EV_NULL);
 	SV_Multicast(p->playerMask, p->buf);
 	p->pending = false;
@@ -410,13 +405,13 @@ const eventNames_t eventNames[] = {
  * @sa gi.AddEvent
  * @param[in] mask The player bitmask to send the events to. Use @c PM_ALL to send to every connected player.
  */
-static void SV_AddEvent (unsigned int mask, int eType)
+static void SV_AddEvent (unsigned int mask, int eType, int entnum)
 {
 	pending_event_t *p = &sv->pendingEvent;
 	const int rawType = eType &~ EVENT_INSTANTLY;
 	const char *eventName = eType >= 0 ? eventNames[rawType].name : "-";
-	Com_DPrintf(DEBUG_EVENTSYS, "Event type: %s (%i - %i) (mask %s)\n", eventName,
-			rawType, eType, Com_UnsignedIntToBinary(mask));
+	Com_DPrintf(DEBUG_EVENTSYS, "Event type: %s (%i - %i) (mask %s) (entnum: %i)\n", eventName,
+			rawType, eType, Com_UnsignedIntToBinary(mask), entnum);
 
 	/* finish the last event */
 	if (p->pending)
@@ -426,11 +421,14 @@ static void SV_AddEvent (unsigned int mask, int eType)
 	p->pending = true;
 	p->playerMask = mask;
 	p->type = eType;
+	p->entnum = entnum;
 	p->buf = new_dbuffer();
 
 	/* write header */
 	NET_WriteByte(p->buf, svc_event);
 	NET_WriteByte(p->buf, eType);
+	if (entnum != -1)
+		NET_WriteShort(p->buf, entnum);
 }
 
 /**
@@ -695,7 +693,6 @@ void SV_InitGameProgs (void)
 
 	import.WriteChar = SV_WriteChar;
 	import.WriteByte = SV_WriteByte;
-	import.WriteDummyByte = SV_WriteDummyByte;
 	import.WriteShort = SV_WriteShort;
 	import.WriteLong = SV_WriteLong;
 	import.WriteString = SV_WriteString;

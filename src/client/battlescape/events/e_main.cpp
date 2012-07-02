@@ -96,13 +96,13 @@ const eventRegister_t events[] = {
 	{E(EV_ENT_APPEAR), "sbg", CL_EntAppear, CL_EntAppearTime, NULL},
 	{E(EV_ENT_PERISH), "sb", CL_EntPerish, NULL, NULL},
 	{E(EV_ENT_DESTROY), "s", CL_EntDestroy, NULL, NULL},
-	{E(EV_ADD_BRUSH_MODEL), "bssbppsbb", CL_AddBrushModel, NULL, NULL},
+	{E(EV_ADD_BRUSH_MODEL), "sbsbppsbb", CL_AddBrushModel, NULL, NULL},
 	{E(EV_ADD_EDICT), "sbpp", CL_AddEdict, NULL, NULL},
 
 	{E(EV_ACTOR_APPEAR), "!s!sbbbsbgbssssbbsbbbs", CL_ActorAppear, CL_ActorAppearTime, CL_CheckDefault},
 	{E(EV_ACTOR_ADD), "!sbbbbgsb", CL_ActorAdd, NULL, NULL},
 	{E(EV_ACTOR_TURN), "sb", CL_ActorDoTurn, NULL, NULL},
-	{E(EV_ACTOR_MOVE), "!sbbs", CL_ActorDoMove, CL_ActorDoMoveTime, CL_CheckDefault}, /* Don't use this format string - see CL_ActorDoMove for more info */
+	{E(EV_ACTOR_MOVE), "ssss!lg", CL_ActorDoMove, CL_ActorDoMoveTime, CL_CheckDefault}, /* Don't use this format string - see CL_ActorDoMove for more info */
 	{E(EV_ACTOR_REACTIONFIRECHANGE), "sbbs", CL_ActorReactionFireChange, NULL, NULL},
 
 	{E(EV_ACTOR_START_SHOOT), "sbgg", CL_ActorStartShoot, CL_ActorStartShootTime, NULL},
