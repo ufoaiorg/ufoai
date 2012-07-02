@@ -307,21 +307,23 @@ int NET_ReadLong (dbuffer *buf)
  */
 int NET_ReadString (dbuffer *buf, char *string, size_t length)
 {
-	unsigned int l;
+	unsigned int l = 0;
 
-	l = 0;
-	do {
+	for (;;) {
 		int c = NET_ReadByte(buf);
 		if (c == -1 || c == 0)
 			break;
-		/* translate all format specs to avoid crash bugs */
-		if (c == '%')
-			c = '.';
-		string[l] = c;
+		if (string && l < length - 1) {
+			/* translate all format specs to avoid crash bugs */
+			if (c == '%')
+				c = '.';
+			string[l] = c;
+		}
 		l++;
-	} while (l < length - 1);
+	}
 
-	string[l] = '\0';
+	if (string)
+		string[l] = '\0';
 
 	return l;
 }
