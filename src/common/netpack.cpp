@@ -485,6 +485,61 @@ void NET_vReadFormat (dbuffer *buf, const char *format, va_list ap)
 		Com_Error(ERR_DROP, "ReadFormat: Too many arguments!");
 }
 
+void NET_SkipFormat (dbuffer *buf, const char *format)
+{
+	while (*format) {
+		const char typeID = *format++;
+
+		switch (typeID) {
+		case 'c':
+			NET_ReadChar(buf);
+			break;
+		case 'b':
+			NET_ReadByte(buf);
+			break;
+		case 's':
+			NET_ReadShort(buf);
+			break;
+		case 'l':
+			NET_ReadLong(buf);
+			break;
+		case 'p': {
+			vec3_t v;
+			NET_ReadPos(buf, v);
+			break;
+		}
+		case 'g': {
+			pos3_t p;
+			NET_ReadGPos(buf, p);
+			break;
+		}
+		case 'd': {
+			vec3_t v;
+			NET_ReadDir(buf, v);
+			break;
+		}
+		case 'a':
+			NET_ReadAngle(buf);
+			break;
+		case '!':
+			format++;
+			break;
+		case '&':
+			NET_ReadString(buf, NULL, 0);
+			break;
+		case '*': {
+			int i;
+			const int n = NET_ReadShort(buf);
+			for (i = 0; i < n; i++)
+				NET_ReadByte(buf);
+			break;
+		}
+		default:
+			Com_Error(ERR_DROP, "ReadFormat: Unknown type!");
+		}
+	}
+}
+
 /**
  * @brief The user-friendly version of NET_ReadFormat that reads variable arguments from a buffer according to format
  */
