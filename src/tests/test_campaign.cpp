@@ -829,6 +829,8 @@ static void testAirFight (void)
 	/* ensure that one hit will destroy the craft */
 	ufo->aircraftTarget->damage = 1;
 	srand(1);
+	/* don't take any pilot skill into account here */
+	OBJZERO(ufo->aircraftTarget->pilot->chr.score.skills);
 	UFO_CheckShootBack(campaign, ufo, ufo->aircraftTarget);
 
 	/* one projectile should be spawned */

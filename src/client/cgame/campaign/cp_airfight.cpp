@@ -292,7 +292,7 @@ static float AIRFIGHT_ProbabilityToHit (const aircraft_t *shooter, const aircraf
 
 	/* Take Base probability from the ammo of the attacking aircraft */
 	probability = slot->ammo->craftitem.stats[AIR_STATS_ACCURACY];
-	Com_DPrintf(DEBUG_CLIENT, "AIRFIGHT_ProbabilityToHit: Base probablity: %f\n", probability);
+	Com_DPrintf(DEBUG_CLIENT, "AIRFIGHT_ProbabilityToHit: Base probability: %f\n", probability);
 
 	/* Modify this probability by items of the attacking aircraft (stats is in percent) */
 	if (shooter)
