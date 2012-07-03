@@ -263,7 +263,7 @@ aircraft craft_inter_saracen
 	type		"interceptor"
 	model		"geoscape/inter_saracen"
 	numteam		0
-	size		2
+	size		1
 	price		30000
 	building	building_intercept
 	image		"geoscape/air_interceptor"
