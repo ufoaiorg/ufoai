@@ -162,6 +162,7 @@ void CL_ParseServerMessage (svc_ops_t cmd, dbuffer *msg)
 {
 	char s[4096];
 	int i;
+	static svc_ops_t lastCmd;
 
 	/* parse the message */
 	if (cmd < svc_bad || cmd >= svc_oob)
@@ -243,6 +244,8 @@ void CL_ParseServerMessage (svc_ops_t cmd, dbuffer *msg)
 		break;
 
 	default:
-		Com_Error(ERR_DROP,"CL_ParseServerMessage: Illegal server message %d", cmd);
+		Com_Error(ERR_DROP,"CL_ParseServerMessage: Illegal server message %d (last cmd was: %d)", cmd, lastCmd);
 	}
+
+	lastCmd = cmd;
 }
