@@ -389,17 +389,10 @@ const char *Sys_ConsoleInput (void)
 	return NULL;
 }
 
-/**
- * @note if the user is editing a line when something gets printed to the early
- * console then it won't look good so we provide CON_Hide and CON_Show to be
- * called before and after a stdout or stderr output
- */
 void Sys_ConsoleOutput (const char *string)
 {
 	/* BUG: for some reason, NDELAY also affects stdout (1) when used on stdin (0). */
 	const int origflags = fcntl(STDOUT_FILENO, F_GETFL, 0);
-
-	Sys_ShowConsole(false);
 
 	fcntl(STDOUT_FILENO, F_SETFL, origflags & ~FNDELAY);
 	while (*string) {
@@ -409,6 +402,4 @@ void Sys_ConsoleOutput (const char *string)
 		string += written;
 	}
 	fcntl(STDOUT_FILENO, F_SETFL, origflags);
-
-	Sys_ShowConsole(true);
 }
