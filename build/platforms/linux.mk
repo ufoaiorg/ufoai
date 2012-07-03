@@ -8,5 +8,7 @@ CFLAGS                   += -D_GNU_SOURCE -D_BSD_SOURCE -D_XOPEN_SOURCE
 
 LDFLAGS                  +=
 
+MUMBLE_LIBS              ?= -lrt
+
 game_CFLAGS              += -DLUA_USE_LINUX
 testall_CFLAGS           += -DLUA_USE_LINUX

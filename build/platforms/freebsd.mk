@@ -8,3 +8,4 @@ CFLAGS                   += -DSHARED_EXT=\"$(SO_EXT)\"
 LDFLAGS                  +=
 
 INTL_LIBS                ?= -lintl
+MUMBLE_LIBS              ?= -lrt
