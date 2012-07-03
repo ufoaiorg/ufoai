@@ -122,7 +122,7 @@ aircraft craft_drop_herakles
 	param {
 		speed		9
 		maxspeed	13
-		shield		5
+		shield		0
 		ecm			80
 		damage		400
 		accuracy	70
@@ -157,7 +157,7 @@ aircraft craft_drop_raptor
 	param {
 		speed		13
 		maxspeed	16
-		shield		6
+		shield		0
 		ecm			80
 		damage		250
 		accuracy	70
@@ -252,7 +252,7 @@ aircraft craft_inter_saracen
 	param {
 		speed		12
 		maxspeed	18
-		shield		3
+		shield		0
 		ecm			80
 		damage		200
 		accuracy	70
@@ -292,7 +292,7 @@ aircraft craft_inter_dragon
 	param {
 		speed		17
 		maxspeed	23
-		shield		5
+		shield		0
 		ecm			100
 		damage		500
 		accuracy	80
@@ -333,7 +333,7 @@ aircraft craft_inter_starchaser
 	param {
 		speed		19
 		maxspeed	28
-		shield		7
+		shield		0
 		ecm			100
 		damage		700
 		accuracy	100
@@ -379,7 +379,7 @@ aircraft craft_inter_stingray
 	param {
 		speed		25
 		maxspeed	37
-		shield		7
+		shield		0
 		ecm			100
 		damage		900
 		accuracy	100
@@ -454,7 +454,7 @@ aircraft craft_ufo_fighter
 	param {
 		speed		8
 		maxspeed	14
-		shield		2
+		shield		0
 		ecm			90
 		damage		160
 		accuracy	80
@@ -482,7 +482,7 @@ aircraft craft_ufo_harvester
 	param {
 		speed		10
 		maxspeed	18
-		shield		4
+		shield		0
 		ecm			100
 		damage		300
 		accuracy	100
@@ -522,7 +522,7 @@ aircraft craft_ufo_corrupter
 	param {
 		speed		13
 		maxspeed	17
-		shield		5
+		shield		0
 		ecm			100
 		damage		500
 		accuracy	80
@@ -578,7 +578,7 @@ aircraft craft_ufo_gunboat
 	param {
 		speed		13
 		maxspeed	17
-		shield		6
+		shield		0
 		ecm			120
 		damage		350
 		accuracy	50
@@ -624,7 +624,7 @@ aircraft craft_ufo_bomber
 	param {
 		speed		18
 		maxspeed	27
-		shield		8
+		shield		0
 		ecm			100
 		damage		900
 		accuracy	80
@@ -664,7 +664,7 @@ aircraft craft_ufo_ripper
 	param {
 		speed		10
 		maxspeed	14
-		shield		6
+		shield		0
 		ecm			100
 		damage		600
 		accuracy	80
