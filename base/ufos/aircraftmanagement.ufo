@@ -230,12 +230,12 @@ aircraft craft_inter_stiletto
 	slot {
 		type		"weapon"
 		position	"wing_left"
-		size		"medium"
+		size		"heavy"
 	}
 	slot {
 		type		"weapon"
 		position	"wing_right"
-		size		"medium"
+		size		"heavy"
 	}
 	slot {
 		type		"electronics"
@@ -311,12 +311,12 @@ aircraft craft_inter_dragon
 	slot {
 		type		"weapon"
 		position	"wing_left"
-		size		"medium"
+		size		"heavy"
 	}
 	slot {
 		type		"weapon"
 		position	"wing_right"
-		size		"medium"
+		size		"heavy"
 	}
 	slot {
 		type		"electronics"
@@ -357,12 +357,12 @@ aircraft craft_inter_starchaser
 	slot {
 		type		"weapon"
 		position	"wing_left"
-		size		"medium"
+		size		"heavy"
 	}
 	slot {
 		type		"weapon"
 		position	"wing_right"
-		size		"medium"
+		size		"heavy"
 	}
 	slot {
 		type		"electronics"
@@ -403,12 +403,12 @@ aircraft craft_inter_stingray
 	slot {
 		type		"weapon"
 		position	"wing_left"
-		size		"medium"
+		size		"heavy"
 	}
 	slot {
 		type		"weapon"
 		position	"wing_right"
-		size		"medium"
+		size		"heavy"
 	}
 	slot {
 		type		"electronics"
@@ -847,7 +847,7 @@ craftitem craft_weapon_sparrowhawk
 {
 	name				"_Sparrowhawk AA Missile Rack"
 	crafttype			"weapon"
-	size				90 // "medium"
+	size				110 // "medium"
 	installationTime	3
 	price				7000
 	model				"aircraft/craft_weapon_sparrow/sparrowhawk_rack"
@@ -859,7 +859,6 @@ craftitem craft_ammo_sparrowhawk
 	crafttype	"ammo"
 	craftweapon	craft_weapon_sparrowhawk
 	price		1000
-	size		40 // "light"
 	model		"geoscape/missile_sparrow"
 
 	ammo		7
