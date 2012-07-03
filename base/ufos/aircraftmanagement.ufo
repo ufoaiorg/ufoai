@@ -90,7 +90,7 @@ aircraft craft_drop_firebird
 		shield		0
 		ecm			70
 		damage		200
-		accuracy	70
+		accuracy	100
 		range		240
 	}
 	name		"_Firebird-class Dropship"
@@ -125,7 +125,7 @@ aircraft craft_drop_herakles
 		shield		0
 		ecm			80
 		damage		400
-		accuracy	70
+		accuracy	100
 		range		240
 	}
 	name		"_Herakles-class Heavy Lifter"
@@ -160,7 +160,7 @@ aircraft craft_drop_raptor
 		shield		0
 		ecm			80
 		damage		250
-		accuracy	70
+		accuracy	100
 		range		220
 		antimatter	186
 	}
@@ -255,7 +255,7 @@ aircraft craft_inter_saracen
 		shield		0
 		ecm			80
 		damage		200
-		accuracy	70
+		accuracy	100
 		range		110
 	}
 	name		"_Saracen-class Interceptor"
@@ -295,7 +295,7 @@ aircraft craft_inter_dragon
 		shield		0
 		ecm			100
 		damage		500
-		accuracy	80
+		accuracy	100
 		range		146
 		antimatter	120
 	}
@@ -435,7 +435,7 @@ aircraft craft_ufo_scout
 		shield		0
 		ecm			70
 		damage		120
-		accuracy	50
+		accuracy	100
 		range		208
 	}
 	name		"_UFO - Scout"
@@ -457,7 +457,7 @@ aircraft craft_ufo_fighter
 		shield		0
 		ecm			90
 		damage		160
-		accuracy	80
+		accuracy	100
 		range		236
 	}
 	name		"_UFO - Fighter"
@@ -525,7 +525,7 @@ aircraft craft_ufo_corrupter
 		shield		0
 		ecm			100
 		damage		500
-		accuracy	80
+		accuracy	100
 		range		347
 	}
 	name		"_UFO - Corrupter"
@@ -559,7 +559,7 @@ aircraft craft_ufo_supply
 		shield		0
 		ecm			80
 		damage		250
-		accuracy	50
+		accuracy	100
 		range		208
 	}
 	name		"_UFO - Supply Ship"
@@ -581,7 +581,7 @@ aircraft craft_ufo_gunboat
 		shield		0
 		ecm			120
 		damage		350
-		accuracy	50
+		accuracy	100
 		range		347
 	}
 	name		"_UFO - Gunboat"
@@ -627,7 +627,7 @@ aircraft craft_ufo_bomber
 		shield		0
 		ecm			100
 		damage		900
-		accuracy	80
+		accuracy	100
 		range		347
 	}
 	name		"_UFO - Bomber"
@@ -667,7 +667,7 @@ aircraft craft_ufo_ripper
 		shield		0
 		ecm			100
 		damage		600
-		accuracy	80
+		accuracy	100
 		range		500
 	}
 	name		"_UFO - Ripper"
@@ -718,7 +718,7 @@ aircraft craft_ufo_carrier
 		shield		0
 		ecm			100
 		damage		60
-		accuracy	50
+		accuracy	100
 		range		347
 	}
 	name		"_UFO - Carrier"
@@ -740,7 +740,7 @@ aircraft craft_ufo_mothership
 		shield		0
 		ecm			100
 		damage		60
-		accuracy	50
+		accuracy	100
 		range		347
 	}
 	name		"_UFO - Mothership"
