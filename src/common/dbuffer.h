@@ -21,6 +21,7 @@
 
 #include <sys/types.h>
 #include <vector>
+#include "../shared/sharedptr.h"
 
 /**
  * @file
@@ -60,6 +61,8 @@ public:
 
 	size_t length () const;
 };
+
+typedef SharedPtr<dbuffer> dbufferptr;
 
 inline size_t dbuffer::length () const
 {

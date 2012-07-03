@@ -103,8 +103,8 @@ struct net_stream {
 	int family;
 	int addrlen;
 
-	dbuffer *inbound;
-	dbuffer *outbound;
+	dbufferptr inbound;
+	dbufferptr outbound;
 
 	stream_onclose_func *onclose;
 	stream_callback_func *func;
@@ -249,8 +249,8 @@ static struct net_stream *NET_StreamNew (int index)
 	s->finished = false;
 	s->ready = false;
 	s->socket = INVALID_SOCKET;
-	s->inbound = NULL;
-	s->outbound = NULL;
+	s->inbound = dbufferptr();
+	s->outbound = dbufferptr();
 	s->index = index;
 	s->family = 0;
 	s->addrlen = 0;
@@ -349,24 +349,19 @@ static void NET_StreamClose (struct net_stream *s)
 
 	if (s->loopback_peer) {
 		/* Detach the peer, so that it won't send us anything more */
-		s->loopback_peer->outbound = NULL;
+		s->loopback_peer->outbound = dbufferptr();
 		s->loopback_peer->loopback_peer = NULL;
 	}
 
 	s->closed = true;
 	Com_DPrintf(DEBUG_SERVER, "Close stream at index: %i\n", s->index);
 
-	/* If we have a loopback peer, don't free the outbound buffer,
-	 * because it's our peer's inbound buffer */
-	if (!s->loopback_peer)
-		free_dbuffer(s->outbound);
-
-	s->outbound = NULL;
+	s->outbound = dbufferptr();
 	s->socket = INVALID_SOCKET;
 
 	/* Note that this is potentially invalid after the callback returns */
 	if (s->finished) {
-		free_dbuffer(s->inbound);
+		s->inbound = dbufferptr();
 		if (s->onclose != NULL)
 			s->onclose();
 		Mem_Free(s);
@@ -391,8 +386,8 @@ static void do_accept (SOCKET sock)
 
 	s = NET_StreamNew(index);
 	s->socket = sock;
-	s->inbound = new_dbuffer();
-	s->outbound = new_dbuffer();
+	s->inbound = dbufferptr(new_dbuffer());
+	s->outbound = dbufferptr(new_dbuffer());
 	s->family = server_family;
 	s->addrlen = server_addrlen;
 	s->func = server_func;
@@ -603,8 +598,8 @@ static struct net_stream *NET_DoConnect (const char *node, const char *service, 
 
 	s = NET_StreamNew(i);
 	s->socket = sock;
-	s->inbound = new_dbuffer();
-	s->outbound = new_dbuffer();
+	s->inbound = dbufferptr(new_dbuffer());
+	s->outbound = dbufferptr(new_dbuffer());
 	s->family = addr->ai_family;
 	s->addrlen = addr->ai_addrlen;
 	s->onclose = onclose;
@@ -684,8 +679,8 @@ struct net_stream *NET_ConnectToLoopBack (stream_onclose_func *onclose)
 
 	client = NET_StreamNew(client_index);
 	client->loopback = true;
-	client->inbound = new_dbuffer();
-	client->outbound = new_dbuffer();
+	client->inbound = dbufferptr(new_dbuffer());
+	client->outbound = dbufferptr(new_dbuffer());
 	client->onclose = onclose;
 
 	server = NET_StreamNew(server_index);
@@ -806,10 +801,9 @@ void NET_StreamFinished (struct net_stream *s)
 
 	/* Stop the loopback peer from queueing stuff up in here */
 	if (s->loopback_peer)
-		s->loopback_peer->outbound = NULL;
+		s->loopback_peer->outbound = dbufferptr();
 
-	free_dbuffer(s->inbound);
-	s->inbound = NULL;
+	s->inbound = dbufferptr();
 
 	/* If there's nothing in the outbound buffer, any finished stream is
 	 * ready to be closed */
