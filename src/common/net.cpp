@@ -1073,7 +1073,7 @@ struct datagram_socket *NET_DatagramSocketNew (const char *node, const char *ser
 
 	if (rc != 0) {
 		Com_Printf("Failed to resolve host %s:%s: %s\n", node ? node : "*", service, gai_strerror(rc));
-		return false;
+		return NULL;
 	}
 
 	s = NET_DatagramSocketDoNew(res);
