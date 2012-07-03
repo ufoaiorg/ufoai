@@ -60,6 +60,10 @@ public:
 	int count;
 	ReactionFireTarget targets[MAX_RF_TARGETS];
 
+	ReactionFireTargetList() {
+		init();
+	}
+
 	inline void init(void) {entnum = RF_NO_ENTNUM; count = 0;}
 	inline void reset(void) {count = 0;}
 
