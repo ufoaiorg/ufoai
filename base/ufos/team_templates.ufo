@@ -131,42 +131,8 @@ chrtemplate soldier_elite {
 	health	"100 130"
 }
 
-chrtemplate average_pilot {
-	rate		80
-	strength	"0 0"
-	speed		"0 0"
-	accuracy	"0 0"
-	mind		"0 0"
-	close		"0 0"
-	heavy		"0 0"
-	assault	"0 0"
-	sniper	"0 0"
-	explosive	"0 0"
-	piloting	"10 16"
-	targeting	"10 16"
-	evading		"10 16"
-	health		"40 50"
-}
-
-chrtemplate fighter_pilot {
-	rate		15
-	strength	"0 0"
-	speed		"0 0"
-	accuracy	"0 0"
-	mind		"0 0"
-	close		"0 0"
-	heavy		"0 0"
-	assault	"0 0"
-	sniper	"0 0"
-	explosive	"0 0"
-	piloting	"10 16"
-	targeting	"10 16"
-	evading		"10 16"
-	health		"40 50"
-}
-
-chrtemplate ace_pilot {
-	rate		5
+chrtemplate pilot {
+	rate		100
 	strength	"0 0"
 	speed		"0 0"
 	accuracy	"0 0"

@@ -1650,9 +1650,7 @@ team phalanx_pilot
 		}
 	}
 	templates (
-		average_pilot
-		fighter_pilot
-		ace_pilot
+		pilot
 	)
 }
 
