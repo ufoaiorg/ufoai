@@ -47,7 +47,7 @@ static cvar_t* mn_production_amount;	/**< Amount of the current production; if n
  * @sa PR_ProductionRun
  * @sa PR_ItemProductionInfo
  * @sa PR_DisassemblyInfo
- * @return 0 if the production does not make any progress, 1 if the whole item is built in 1 minute
+ * @return the production in minutes. Does at least return 1 minute
  */
 static double PR_CalculateProductionTimeInMinutes (const base_t *base, const productionData_t *prodData)
 {
@@ -70,7 +70,8 @@ static double PR_CalculateProductionTimeInMinutes (const base_t *base, const pro
 		timeDefault *= std::max(1.0, GetDistanceOnGlobe(storedUFO->installation->pos, base->pos) / 45.0);
 	}
 	/* Calculate the time needed for production of the item for our amount of workers. */
-	double const timeScaled = timeDefault * (MINUTES_PER_HOUR * PRODUCE_WORKERS) / maxWorkers;
+	const float rate = PRODUCE_WORKERS / ccs.curCampaign->produceRate;
+	double const timeScaled = timeDefault * (MINUTES_PER_HOUR * rate) / maxWorkers;
 	/* Don't allow to return a time of less than 1 (you still need at least 1 minute to produce an item). */
 	return std::max(1.0, timeScaled);
 }
