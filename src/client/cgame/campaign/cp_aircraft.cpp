@@ -1544,6 +1544,7 @@ void AIR_ParseAircraft (const char *name, const char **text, bool assignAircraft
 									break;
 								default:
 									itemType = MAX_ACITEMS;
+									break;
 								}
 								break;
 							}
@@ -1589,6 +1590,7 @@ void AIR_ParseAircraft (const char *name, const char **text, bool assignAircraft
 								break;
 							default:
 								Com_Printf("Ignoring item value '%s' due to unknown slot type\n", token);
+								break;
 							}
 						}
 					} else if (Q_streq(token, "ammo")) {
