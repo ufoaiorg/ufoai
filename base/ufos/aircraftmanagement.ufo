@@ -861,6 +861,7 @@ craftitem craft_ammo_sparrowhawk
 	price		1000
 	model		"geoscape/missile_sparrow"
 
+	size		40 // light
 	ammo		7
 	wdamage		30
 	accuracy	0.4
