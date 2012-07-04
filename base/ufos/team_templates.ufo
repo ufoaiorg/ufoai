@@ -142,10 +142,10 @@ chrtemplate average_pilot {
 	assault	"0 0"
 	sniper	"0 0"
 	explosive	"0 0"
-	piloting	"20 35"
-	targeting	"20 35"
-	evading	"20 35"
-	health	"20 30"
+	piloting	"10 16"
+	targeting	"10 16"
+	evading		"10 16"
+	health		"40 50"
 }
 
 chrtemplate fighter_pilot {
@@ -159,10 +159,10 @@ chrtemplate fighter_pilot {
 	assault	"0 0"
 	sniper	"0 0"
 	explosive	"0 0"
-	piloting	"20 35"
-	targeting	"25 45"
-	evading	"20 35"
-	health	"20 30"
+	piloting	"10 16"
+	targeting	"10 16"
+	evading		"10 16"
+	health		"40 50"
 }
 
 chrtemplate ace_pilot {
@@ -176,10 +176,10 @@ chrtemplate ace_pilot {
 	assault	"0 0"
 	sniper	"0 0"
 	explosive	"0 0"
-	piloting	"25 45"
-	targeting	"25 45"
-	evading	"25 45"
-	health	"20 30"
+	piloting	"10 16"
+	targeting	"10 16"
+	evading		"10 16"
+	health		"40 50"
 }
 
 chrtemplate soldier_civil {
