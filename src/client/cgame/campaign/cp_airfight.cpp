@@ -309,70 +309,37 @@ static float AIRFIGHT_ProbabilityToHit (const aircraft_t *shooter, const aircraf
 	/* If shooter is a PHALANX craft, check the targeting skills of the pilot */
 	if (shooter && shooter->type != AIRCRAFT_UFO) {
 		if (shooter->pilot) {
-			const float basicHitRand = frand();
-			/* Basic piloting skill gives a small increase to hit chance of shooter */
-			if (shooter->pilot->chr.score.skills[SKILL_PILOTING] > 0) {
-				float basicHitIncrease = basicHitRand * shooter->pilot->chr.score.skills[SKILL_PILOTING];
-				if (basicHitIncrease > probability / 10.0f) {
-					while (basicHitIncrease > probability / 10.0f)
-						basicHitIncrease /= 2.0f;
-				}
 
-				probability *= basicHitIncrease / 100.0f;
+			/**
+			 * Targeting skill increases hit chance for shooter
+			 * With this equation, max increase (0.29) is reached at skill level 70. Any higher skill rating actually
+			 * reduces the bonus, so a skill cap should be placed at 70 when skill increase is implemented for pilots.
+			 */
+			probability += ( ( ( 1.4f - ( shooter->pilot->chr.score.skills[SKILL_TARGETING] / 100.0f ) ) * ( shooter->pilot->chr.score.skills[SKILL_TARGETING] / 100.0f ) ) - 0.2f );
 
-				Com_DPrintf(DEBUG_CLIENT, "AIRFIGHT_ProbabilityToHit: Probability after accounting piloting skill of shooter: %f\n", probability);
-			}
-			/* Then, add targeting skill increase for hit chance of shooter */
-			if (shooter->pilot->chr.score.skills[SKILL_TARGETING] > 0) {
-				float targetingHitIncrease = basicHitRand * shooter->pilot->chr.score.skills[SKILL_TARGETING];
-
-				if (targetingHitIncrease > probability / 5.0f) {
-					while (targetingHitIncrease > probability / 5.0f)
-						targetingHitIncrease /= 2.0f;
-				}
-
-				probability *= targetingHitIncrease / 100.0f;
-
-				Com_DPrintf(DEBUG_CLIENT, "AIRFIGHT_ProbabilityToHit: Probability after accounting targeting skill of shooter: %f\n",
-						probability);
-			}
+			Com_DPrintf(DEBUG_CLIENT, "AIRFIGHT_ProbabilityToHit: Probability after accounting targeting skill of shooter: %f\n",
+					probability);
 		}
 	}
 
 	/* If target is a PHALANX craft, check the evading skills of the pilot */
 	if (target && target->type != AIRCRAFT_UFO) {
 		if (target->pilot) {
-			/* Basic piloting skill gives a small decrease to hit chance of shooter */
-			const float basicEvasionRand = frand();
-			if (target->pilot->chr.score.skills[SKILL_PILOTING] > 0) {
-				float basicHitDecrease = basicEvasionRand * target->pilot->chr.score.skills[SKILL_PILOTING];
 
-				if (basicHitDecrease > probability / 8.0f) {
-					while (basicHitDecrease > probability / 8.0f)
-						basicHitDecrease /= 2.0f;
-				}
+			/**
+			 * Evasion skill decreases hit chance for shooter
+			 * With this equation, max decrease (0.29) is reached at skill level 70. Any higher skill rating actually
+			 * reduces the bonus, so a skill cap should be placed at 70 when skill increase is implemented for pilots.
+			 */
+			probability -= ( ( ( 1.4f - ( target->pilot->chr.score.skills[SKILL_EVADING] / 100.0f ) ) * ( target->pilot->chr.score.skills[SKILL_EVADING] / 100.0f ) ) - 0.2f );
 
-				probability /= basicHitDecrease * 100.0f;
-
-				Com_DPrintf(DEBUG_CLIENT, "AIRFIGHT_ProbabilityToHit: Probability after accounting piloting skill of target: %f\n",
-						probability);
-			}
-			/* Then, subtract evading skill decrease for hit chance of shooter */
-			if (target->pilot->chr.score.skills[SKILL_EVADING] > 0) {
-				float evadingHitDecrease = basicEvasionRand * target->pilot->chr.score.skills[SKILL_EVADING];
-
-				if (evadingHitDecrease > probability / 5.0f) {
-					while (evadingHitDecrease > probability / 5.0f)
-						evadingHitDecrease /= 2.0f;
-				}
-
-				probability /= evadingHitDecrease * 100.0f;
-
-				Com_DPrintf(DEBUG_CLIENT, "AIRFIGHT_ProbabilityToHit: Probability after accounting evasion skill of target: %f\n",
-						probability);
-			}
+			Com_DPrintf(DEBUG_CLIENT, "AIRFIGHT_ProbabilityToHit: Probability after accounting evasion skill of target: %f\n",
+					probability);
 		}
 	}
+
+	/* Probability should not exceed 0.95 so there is always a chance to miss */
+	probability = std::min(probability, 0.95f);
 
 	Com_DPrintf(DEBUG_CLIENT, "AIRFIGHT_ProbabilityToHit: Probability to hit: %f\n", probability);
 
