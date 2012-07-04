@@ -639,13 +639,7 @@ team phalanx
 		}
 	}
 	templates (
-		soldier_common
-		soldier_close
-		soldier_heavy
-		soldier_assault
-		soldier_sniper
-		soldier_blast
-		soldier_elite
+		soldier
 		soldier_mp // For multiplayer characters ONLY!
 	)
 }
@@ -1231,7 +1225,7 @@ team phalanx_scientist
 		}
 	}
 	templates (
-		soldier_civil
+		civilian
 	)
 }
 
@@ -2061,7 +2055,7 @@ team phalanx_worker
 		}
 	}
 	templates (
-		soldier_civil
+		civilian
 	)
 }
 
@@ -2128,7 +2122,7 @@ team phalanx_ugv_phoenix
 		stun_gas 999
 	}
 	templates (
-		soldier_robot
+		robot
 	)
 }
 
@@ -2192,6 +2186,6 @@ team phalanx_ugv_ares_w
 		stun_gas 999
 	}
 	templates (
-		soldier_robot
+		robot
 	)
 }

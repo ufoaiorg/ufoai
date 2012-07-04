@@ -12,7 +12,7 @@
 //
 //========================================================================
 
-chrtemplate soldier_common {
+chrtemplate soldier {
 	rate	74
 	strength	"15 25"
 	speed	"15 25"
@@ -26,109 +26,7 @@ chrtemplate soldier_common {
 	piloting	"0 0"
 	targeting	"0 0"
 	evading	"0 0"
-	health	"80 110"
-}
-
-chrtemplate soldier_close {
-	rate	5
-	strength	"15 25"
-	speed	"15 25"
-	accuracy	"20 30"
-	mind	"20 35"
-	close	"25 40"
-	heavy	"13 23"
-	assault	"13 23"
-	sniper	"13 23"
-	explosive	"13 23"
-	piloting	"0 0"
-	targeting	"0 0"
-	evading	"0 0"
-	health	"80 110"
-}
-
-chrtemplate soldier_heavy {
-	rate	5
-	strength	"15 25"
-	speed	"15 25"
-	accuracy	"2 30"
-	mind	"20 35"
-	close	"13 23"
-	heavy	"25 40"
-	assault	"13 23"
-	sniper	"13 23"
-	explosive	"13 23"
-	piloting	"0 0"
-	targeting	"0 0"
-	evading	"0 0"
-	health	"80 110"
-}
-
-chrtemplate soldier_assault {
-	rate	5
-	strength	"15 25"
-	speed	"15 25"
-	accuracy	"20 30"
-	mind	"20 35"
-	close	"13 23"
-	heavy	"13 23"
-	assault	"25 40"
-	sniper	"13 23"
-	explosive	"13 23"
-	piloting	"0 0"
-	targeting	"0 0"
-	evading	"0 0"
-	health	"80 110"
-}
-
-chrtemplate soldier_sniper {
-	rate	5
-	strength	"15 25"
-	speed	"15 25"
-	accuracy	"20 30"
-	mind	"20 35"
-	close	"13 23"
-	heavy	"13 23"
-	assault	"13 23"
-	sniper	"25 40"
-	explosive	"13 23"
-	piloting	"0 0"
-	targeting	"0 0"
-	evading	"0 0"
-	health	"80 110"
-}
-
-chrtemplate soldier_blast {
-	rate	5
-	strength	"15 25"
-	speed	"15 25"
-	accuracy	"20 30"
-	mind	"20 35"
-	close	"13 23"
-	heavy	"13 23"
-	assault	"13 23"
-	sniper	"13 23"
-	explosive	"25 40"
-	piloting	"0 0"
-	targeting	"0 0"
-	evading	"0 0"
-	health	"80 110"
-}
-
-chrtemplate soldier_elite {
-	rate	1
-	strength	"25 35"
-	speed	"25 35"
-	accuracy	"30 40"
-	mind	"30 45"
-	close	"25 40"
-	heavy	"25 40"
-	assault	"25 40"
-	sniper	"25 40"
-	explosive	"25 40"
-	piloting	"0 0"
-	targeting	"0 0"
-	evading	"0 0"
-	health	"100 130"
+	health	"90 110"
 }
 
 chrtemplate pilot {
@@ -148,7 +46,7 @@ chrtemplate pilot {
 	health		"40 50"
 }
 
-chrtemplate soldier_civil {
+chrtemplate civilian {
 	strength	"5 10"
 	speed	"5 10"
 	accuracy	"10 15"
@@ -164,7 +62,7 @@ chrtemplate soldier_civil {
 	health	"20 30"
 }
 
-chrtemplate soldier_taman {
+chrtemplate alien_taman {
 	strength	"25 35"
 	speed	"25 35"
 	accuracy	"40 50"
@@ -180,7 +78,7 @@ chrtemplate soldier_taman {
 	health	"100 130"
 }
 
-chrtemplate soldier_ortnok {
+chrtemplate alien_ortnok {
 	strength	"45 65"
 	speed	"20 30"
 	accuracy	"30 45"
@@ -196,7 +94,7 @@ chrtemplate soldier_ortnok {
 	health	"150 190"
 }
 
-chrtemplate soldier_shevaar {
+chrtemplate alien_shevaar {
 	strength	"30 40"
 	speed	"30 40"
 	accuracy	"40 70"
@@ -212,7 +110,7 @@ chrtemplate soldier_shevaar {
 	health	"120 160"
 }
 
-chrtemplate soldier_blood {
+chrtemplate alien_blood {
 	strength	"55 55"
 	speed	"50 50"
 	accuracy	"50 50"
@@ -228,7 +126,7 @@ chrtemplate soldier_blood {
 	health	"150 150"
 }
 
-chrtemplate soldier_hovernet {
+chrtemplate alien_hovernet {
 	strength	"55 55"
 	speed	"70 70"
 	accuracy	"50 50"
@@ -244,7 +142,7 @@ chrtemplate soldier_hovernet {
 	health	"100 100"
 }
 
-chrtemplate soldier_robot {
+chrtemplate robot {
 	strength	"55 55"
 	speed	"40 40"
 	accuracy	"50 50"

@@ -121,7 +121,7 @@ team taman
 		stun_gas 0
 	}
 	templates (
-		soldier_taman
+		alien_taman
 	)
 }
 
@@ -242,7 +242,7 @@ team ortnok
 		stun_gas 0
 	}
 	templates (
-		soldier_ortnok
+		alien_ortnok
 	)
 }
 
@@ -344,7 +344,7 @@ team shevaar
 		stun_gas -10
 	}
 	templates (
-		soldier_shevaar
+		alien_shevaar
 	)
 }
 
@@ -443,7 +443,7 @@ team bloodspider
 		stun_gas 999
 	}
 	templates (
-		soldier_blood
+		alien_blood
 	)
 }
 
@@ -543,7 +543,7 @@ team bloodspider_adv
 		stun_gas		999
 	}
 	templates (
-		soldier_blood
+		alien_blood
 	)
 }
 
@@ -642,7 +642,7 @@ team hovernet
 		stun_gas 999
 	}
 	templates (
-		soldier_hovernet
+		alien_hovernet
 	)
 }
 
@@ -741,6 +741,6 @@ team hovernet_adv
 		stun_gas		999
 	}
 	templates (
-		soldier_hovernet
+		alien_hovernet
 	)
 }

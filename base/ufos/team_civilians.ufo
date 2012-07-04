@@ -55,7 +55,7 @@ team africa
 		}
 	}
 	templates (
-		soldier_civil
+		civilian
 	)
 }
 
@@ -102,7 +102,7 @@ team asia
 		}
 	}
 	templates (
-		soldier_civil
+		civilian
 	)
 }
 
@@ -191,7 +191,7 @@ team europe
 		}
 	}
 	templates (
-		soldier_civil
+		civilian
 	)
 }
 
@@ -241,7 +241,7 @@ team latin
 		}
 	}
 	templates (
-		soldier_civil
+		civilian
 	)
 }
 
@@ -291,7 +291,7 @@ team middle
 		}
 	}
 	templates (
-		soldier_civil
+		civilian
 	)
 }
 
@@ -380,7 +380,7 @@ team states
 		}
 	}
 	templates (
-		soldier_civil
+		civilian
 	)
 }
 
@@ -429,7 +429,7 @@ team oceania
 		}
 	}
 	templates (
-		soldier_civil
+		civilian
 	)
 }
 
@@ -504,7 +504,7 @@ team russia
 		}
 	}
 	templates (
-		soldier_civil
+		civilian
 	)
 }
 
@@ -542,7 +542,7 @@ team armysoldier
 		}
 	}
 	templates (
-		soldier_common
+		soldier
 	)
 }
 
@@ -578,7 +578,7 @@ team miner
 		}
 	}
 	templates (
-		soldier_civil
+		civilian
 	)
 }
 
@@ -629,7 +629,7 @@ team scientist
 		}
 	}
 	templates (
-		soldier_civil
+		civilian
 	)
 }
 
@@ -665,6 +665,6 @@ team worker
 		}
 	}
 	templates (
-		soldier_civil
+		civilian
 	)
 }
