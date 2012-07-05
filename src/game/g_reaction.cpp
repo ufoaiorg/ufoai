@@ -60,14 +60,18 @@ public:
 	int count;
 	ReactionFireTarget targets[MAX_RF_TARGETS];
 
-	ReactionFireTargetList() {
+	ReactionFireTargetList () {
 		init();
 	}
 
-	inline void init(void) {entnum = RF_NO_ENTNUM; count = 0;}
-	inline void reset(void) {count = 0;}
+	inline void init (void) {
+		entnum = RF_NO_ENTNUM;
+		count = 0;
+	}
 
-protected:
+	inline void reset (void) {
+		count = 0;
+	}
 };
 
 static ReactionFireTargetList rfData[MAX_RF_DATA];
@@ -103,15 +107,14 @@ static void G_ReactionFireTargetsReset (void)
 static ReactionFireTargetList* G_ReactionFireTargetsFind (const edict_t *shooter)
 {
 	int i;
-	ReactionFireTargetList *rfts = NULL;
 
 	for (i = 0; i < MAX_RF_DATA; i++) {
-		if (rfData[i].entnum == shooter->number) {
-			rfts = &rfData[i];
-			break;
+		ReactionFireTargetList *rfts = &rfData[i];
+		if (rfts->entnum == shooter->number) {
+			return rfts;
 		}
 	}
-	return rfts;
+	return NULL;
 }
 
 
@@ -196,7 +199,7 @@ static void G_ReactionFireTargetsRemove (edict_t *shooter, const edict_t *target
 static bool G_ReactionFireTargetsExpired (const edict_t *shooter, const edict_t *target, const int tusTarget)
 {
 	int i;
-	ReactionFireTargetList *rfts = G_ReactionFireTargetsFind(shooter);
+	const ReactionFireTargetList *rfts = G_ReactionFireTargetsFind(shooter);
 
 	if (!rfts)
 		return false;	/* the shooter doesn't aim at anything */
