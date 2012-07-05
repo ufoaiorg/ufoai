@@ -454,7 +454,7 @@ bool G_ReactionFireSettingsReserveTUs (edict_t *ent)
  * @param[in] target The entity that might be fired at
  * @return @c true if 'ent' can actually fire at 'target', @c false otherwise
  */
-static bool G_ReactionFireIsPossible (const edict_t *ent, const edict_t *target)
+static bool G_ReactionFireIsPossible (edict_t *ent, const edict_t *target)
 {
 	float actorVis;
 	bool frustum;
@@ -479,11 +479,11 @@ static bool G_ReactionFireIsPossible (const edict_t *ent, const edict_t *target)
 		return false;
 
 	/* check ent has weapon in RF hand */
-	/* @todo Should this situation even happen when G_IsReaction(ent) is true? */
 	if (!ACTOR_GET_INV(ent, ent->chr.RFmode.hand)) {
 		/* print character info if this happens, for now */
 		gi.DPrintf("Reaction fire enabled but no weapon for hand (name=%s,entnum=%i,hand=%i,fmIdx=%i)\n",
 				ent->chr.name, ent->number, ent->chr.RFmode.hand, ent->chr.RFmode.fmIdx);
+		G_RemoveReaction(ent);
 		return false;
 	}
 
