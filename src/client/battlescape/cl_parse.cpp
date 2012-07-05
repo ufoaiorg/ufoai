@@ -163,6 +163,7 @@ void CL_ParseServerMessage (svc_ops_t cmd, dbuffer *msg)
 	char s[4096];
 	int i;
 	static svc_ops_t lastCmd;
+	static int eType;
 
 	/* parse the message */
 	if (cmd < svc_bad || cmd >= svc_oob)
@@ -236,7 +237,7 @@ void CL_ParseServerMessage (svc_ops_t cmd, dbuffer *msg)
 		break;
 
 	case svc_event:
-		CL_ParseEvent(msg);
+		eType = CL_ParseEvent(msg);
 		break;
 
 	case svc_bad:
@@ -244,7 +245,8 @@ void CL_ParseServerMessage (svc_ops_t cmd, dbuffer *msg)
 		break;
 
 	default:
-		Com_Error(ERR_DROP,"CL_ParseServerMessage: Illegal server message %d (last cmd was: %d)", cmd, lastCmd);
+		Com_Error(ERR_DROP,"CL_ParseServerMessage: Illegal server message %d (last cmd was: %d, eType: %i)",
+				cmd, lastCmd, eType);
 	}
 
 	lastCmd = cmd;
