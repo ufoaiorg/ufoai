@@ -362,16 +362,17 @@ void AIRFIGHT_ExecuteActions (const campaign_t* campaign, aircraft_t* shooter, a
 
 	/* if weapon found that can shoot */
 	if (slotIdx >= AIRFIGHT_WEAPON_CAN_SHOOT) {
-		const objDef_t *ammo = shooter->weapons[slotIdx].ammo;
+		aircraftSlot_t *weaponSlot = &shooter->weapons[slotIdx];
+		const objDef_t *ammo = weaponSlot->ammo;
 
 		/* shoot */
-		if (AIRFIGHT_AddProjectile(NULL, NULL, shooter, target, &(shooter->weapons[slotIdx]))) {
+		if (AIRFIGHT_AddProjectile(NULL, NULL, shooter, target, weaponSlot)) {
 			/* will we miss the target ? */
 			const float probability = frand();
 			Com_DPrintf(DEBUG_CLIENT, "AIRFIGHT_ExecuteActions: %s - Random probability to hit: %f\n", shooter->name, probability);
-			shooter->weapons[slotIdx].delayNextShot = ammo->craftitem.weaponDelay;
+			weaponSlot->delayNextShot = ammo->craftitem.weaponDelay;
 
-			float calculatedProbability = AIRFIGHT_ProbabilityToHit(shooter, target, shooter->weapons + slotIdx);
+			const float calculatedProbability = AIRFIGHT_ProbabilityToHit(shooter, target, shooter->weapons + slotIdx);
 			Com_DPrintf(DEBUG_CLIENT, "AIRFIGHT_ExecuteActions: %s - Calculated probability to hit: %f\n", shooter->name, calculatedProbability);
 
 			if (probability > calculatedProbability)
