@@ -1266,12 +1266,13 @@ void AIR_CampaignRun (const campaign_t* campaign, int dt, bool updateRadarOverla
 		}
 
 		for (k = 0; k < aircraft->maxWeapons; k++) {
+			aircraftSlot_t *slot = &aircraft->weapons[k];
 			/* Update delay to launch next projectile */
-			if (AIR_IsAircraftOnGeoscape(aircraft) && (aircraft->weapons[k].delayNextShot > 0))
-				aircraft->weapons[k].delayNextShot -= dt;
+			if (AIR_IsAircraftOnGeoscape(aircraft) && slot->delayNextShot > 0)
+				slot->delayNextShot -= dt;
 			/* Reload if needed */
-			if (aircraft->weapons[k].ammoLeft <= 0)
-				AII_ReloadWeapon(&aircraft->weapons[k]);
+			if (slot->ammoLeft <= 0)
+				AII_ReloadWeapon(slot);
 		}
 	}
 

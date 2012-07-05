@@ -309,7 +309,6 @@ static float AIRFIGHT_ProbabilityToHit (const aircraft_t *shooter, const aircraf
 	/* If shooter is a PHALANX craft, check the targeting skills of the pilot */
 	if (shooter && shooter->type != AIRCRAFT_UFO) {
 		if (shooter->pilot) {
-
 			/**
 			 * Targeting skill increases hit chance for shooter
 			 * With this equation, max increase (0.29) is reached at skill level 70. Any higher skill rating actually
@@ -325,7 +324,6 @@ static float AIRFIGHT_ProbabilityToHit (const aircraft_t *shooter, const aircraf
 	/* If target is a PHALANX craft, check the evading skills of the pilot */
 	if (target && target->type != AIRCRAFT_UFO) {
 		if (target->pilot) {
-
 			/**
 			 * Evasion skill decreases hit chance for shooter
 			 * With this equation, max decrease (0.29) is reached at skill level 70. Any higher skill rating actually
