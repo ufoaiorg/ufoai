@@ -105,7 +105,7 @@ aircraft craft_drop_firebird
 	slot {
 		type		"weapon"
 		position	"nose_center"
-		size		"medium"
+		size		"light"
 	}
 	slot {
 		type		"electronics"
@@ -140,7 +140,7 @@ aircraft craft_drop_herakles
 	slot {
 		type		"weapon"
 		position	"nose_center"
-		size		"medium"
+		size		"light"
 	}
 	slot {
 		type		"electronics"
@@ -209,7 +209,7 @@ aircraft craft_inter_stiletto
 		maxspeed	14
 		shield		0
 		ecm			100
-		damage		120
+		damage		150
 		accuracy	100
 		range		80
 	}
@@ -254,7 +254,7 @@ aircraft craft_inter_saracen
 		maxspeed	18
 		shield		0
 		ecm			80
-		damage		200
+		damage		125
 		accuracy	100
 		range		110
 	}
@@ -433,8 +433,8 @@ aircraft craft_ufo_scout
 		speed		7
 		maxspeed	13
 		shield		0
-		ecm			70
-		damage		120
+		ecm			100
+		damage		100
 		accuracy	100
 		range		208
 	}
@@ -454,9 +454,9 @@ aircraft craft_ufo_fighter
 	param {
 		speed		8
 		maxspeed	14
-		shield		0
+		shield		2
 		ecm			90
-		damage		160
+		damage		150
 		accuracy	100
 		range		236
 	}
@@ -512,8 +512,8 @@ aircraft craft_ufo_harvester
 	slot {
 		type		"weapon"
 		size		"heavy"
-		contains	rs_craft_weapon_alien_launcher
-		ammo		rs_craft_ammo_am_missile
+		contains	rs_craft_weapon_particle
+		ammo		rs_craft_ammo_particle
 	}
 }
 
@@ -779,12 +779,12 @@ craftitem craft_ammo_alc
 	virtual				true
 
 	beamcolor			"1 .874 .294 1"
-	ammo				20
-	wdamage				10
-	accuracy			0.7
+	ammo				40
+	wdamage				5
+	accuracy			0.6
 	wrange				1.8
 	wspeed				900
-	delay				200
+	delay				12
 	size				10 // "light"
 }
 
@@ -806,12 +806,12 @@ craftitem craft_ammo_shiva_API
 	craftweapon	craft_weapon_shiva
 	price		600
 
-	ammo		30
-	wdamage		8
-	accuracy	0.3
-	wrange		1.07
+	ammo		100
+	wdamage		5
+	accuracy	0.2
+	wrange		1
 	wspeed		62
-	delay		3
+	delay		10
 	size		10 // "light"
 }
 
@@ -820,14 +820,14 @@ craftitem craft_ammo_shiva_HEI
 	name			"_SHIVA 20mm HEI Rounds"
 	crafttype		"ammo"
 	craftweapon		craft_weapon_shiva
-	price			640
+	price			600
 
-	ammo		30
-	wdamage		10
+	ammo		100
+	wdamage		5
 	accuracy	0.2
-	wrange		1.07
+	wrange		1
 	wspeed		62
-	delay		60
+	delay		10
 	size		10 // "light"
 }
 
@@ -864,10 +864,10 @@ craftitem craft_ammo_sparrowhawk
 	size		40 // light
 	ammo		7
 	wdamage		30
-	accuracy	0.4
-	wrange		2.5
+	accuracy	0.6
+	wrange		3
 	wspeed		25
-	delay		400
+	delay		250
 }
 
 craftitem craft_weapon_tr20
@@ -895,11 +895,11 @@ craftitem craft_ammo_tr20
 // The value (12) below is a workaround until we can display (or fake) high numbers of projectiles in interception
 	size		10 // "light"
 	ammo		12
-	wdamage		15
+	wdamage		20
 	accuracy	0.4
-	wrange		1.07
+	wrange		2
 	wspeed		19
-	delay		120
+	delay		150
 }
 
 craftitem craft_weapon_particle_beam
@@ -924,9 +924,9 @@ craftitem craft_ammo_particle_beam
 
 	beamcolor			".590 .762 .738 1"
 	ammo				10
-	wdamage				20
+	wdamage				40
 	accuracy			0.6
-	wrange				3
+	wrange				2
 	wspeed				900
 	delay				200
 	size				10 // "light"
