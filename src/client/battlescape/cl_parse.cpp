@@ -163,7 +163,7 @@ void CL_ParseServerMessage (svc_ops_t cmd, dbuffer *msg)
 	char s[4096];
 	int i;
 	static svc_ops_t lastCmd;
-	static int eType;
+	static event_t eType;
 
 	/* parse the message */
 	if (cmd < svc_bad || cmd >= svc_oob)

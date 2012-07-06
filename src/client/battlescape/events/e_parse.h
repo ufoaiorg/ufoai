@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 extern cvar_t *cl_log_battlescape_events;
 
-int CL_ParseEvent(dbuffer *msg);
+event_t CL_ParseEvent(dbuffer *msg);
 int CL_ClearBattlescapeEvents(void);
 void CL_BlockBattlescapeEvents(bool block);
 

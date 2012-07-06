@@ -212,14 +212,14 @@ static int CL_GetEventTime (const event_t eType, dbuffer *msg, eventTiming_t *ev
  * @sa CL_ParseServerMessage
  * @param[in] msg The client stream message buffer to read from
  */
-int CL_ParseEvent (dbuffer *msg)
+event_t CL_ParseEvent (dbuffer *msg)
 {
 	static eventTiming_t eventTiming;
 	bool now;
 	const eventRegister_t *eventData;
 	int eType = NET_ReadByte(msg);
 	if (eType == EV_NULL)
-		return eType;
+		return EV_NULL;
 
 	/* check instantly flag */
 	if (eType & EVENT_INSTANTLY) {
@@ -260,5 +260,5 @@ int CL_ParseEvent (dbuffer *msg)
 		Com_DPrintf(DEBUG_EVENTSYS, "event(at %d): %s %p\n", when, eventData->name, (void*)cur);
 	}
 
-	return eType;
+	return (event_t)eType;
 }
