@@ -33,9 +33,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 int CL_ActorDoMoveTime (const eventRegister_t *self, dbuffer *msg, eventTiming_t *eventTiming)
 {
 	le_t *le;
-	int number, i;
+	int number;
 	int time = 0;
-	int pathLength;
 	byte crouchingState;
 	pos3_t pos, oldPos;
 	const int eventTime = eventTiming->nextTime;
@@ -46,17 +45,11 @@ int CL_ActorDoMoveTime (const eventRegister_t *self, dbuffer *msg, eventTiming_t
 	if (!le)
 		LE_NotFoundError(number);
 
-	pathLength = NET_ReadByte(msg);
-
-	/* Also skip the final position */
-	NET_ReadByte(msg);
-	NET_ReadByte(msg);
-	NET_ReadByte(msg);
-
 	VectorCopy(le->pos, pos);
 	crouchingState = LE_IsCrouched(le) ? 1 : 0;
 
-	for (i = 0; i < pathLength; i++) {
+	/* the end of this event is marked with a 0 */
+	while (NET_PeekLong(msg) != 0) {
 		const dvec_t dvec = NET_ReadShort(msg);
 		const byte dir = getDVdir(dvec);
 		VectorCopy(pos, oldPos);
@@ -64,6 +57,17 @@ int CL_ActorDoMoveTime (const eventRegister_t *self, dbuffer *msg, eventTiming_t
 		time += LE_ActorGetStepTime(le, pos, oldPos, dir, NET_ReadShort(msg));
 		NET_ReadShort(msg);
 	}
+
+	/* skip the end of move marker */
+	NET_ReadLong(msg);
+
+	/* Also skip the final position */
+	NET_ReadByte(msg);
+	NET_ReadByte(msg);
+	NET_ReadByte(msg);
+
+	assert(NET_PeekByte(msg) == EV_NULL);
+
 	eventTiming->nextTime += time + 400;
 
 	return eventTime;

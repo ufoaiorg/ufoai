@@ -59,6 +59,7 @@ void NET_OOB_Printf(struct net_stream *s, const char *format, ...) __attribute__
 int NET_ReadChar(dbuffer *buf);
 int NET_ReadByte(dbuffer *buf);
 int NET_ReadShort(dbuffer *buf);
+int NET_PeekByte(const dbuffer *buf);
 int NET_PeekShort(const dbuffer *buf);
 int NET_PeekLong(const dbuffer *buf);
 int NET_ReadLong(dbuffer *buf);

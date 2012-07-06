@@ -235,8 +235,7 @@ int NET_ReadChar (dbuffer *buf)
 	char c;
 	if (dbuffer_extract(buf, &c, 1) == 0)
 		return -1;
-	else
-		return c;
+	return c;
 }
 
 /**
@@ -249,8 +248,7 @@ int NET_ReadByte (dbuffer *buf)
 	unsigned char c;
 	if (dbuffer_extract(buf, (char *)&c, 1) == 0)
 		return -1;
-	else
-		return c;
+	return c;
 }
 
 int NET_ReadShort (dbuffer *buf)
@@ -260,6 +258,14 @@ int NET_ReadShort (dbuffer *buf)
 		return -1;
 
 	return LittleShort(v);
+}
+
+int NET_PeekByte (const dbuffer *buf)
+{
+	unsigned char c;
+	if (dbuffer_get(buf, (char *)&c, 1) == 0)
+		return -1;
+	return c;
 }
 
 /**
