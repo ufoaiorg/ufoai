@@ -174,7 +174,7 @@ void G_ClientEndRound (player_t * player)
 		if (!player->roundDone) {
 			player->roundDone = true;
 			G_EventEndRoundAnnounce(player);
-			gi.EndEvents();
+			G_EventEnd();
 		}
 		p = NULL;
 		while ((p = G_PlayerGetNextActiveHuman(p)))
@@ -228,7 +228,7 @@ void G_ClientEndRound (player_t * player)
 		gi.Error("Could not find player for team %i", level.activeTeam);
 
 	/* finish off events */
-	gi.EndEvents();
+	G_EventEnd();
 
 	/* reset ready flag for every player on the current team (even ai players) */
 	p = NULL;

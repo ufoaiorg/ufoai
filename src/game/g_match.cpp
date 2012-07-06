@@ -314,7 +314,7 @@ static void G_MatchSendResults (int team, bool nextmap)
 		}
 	}
 
-	gi.EndEvents();
+	G_EventEnd();
 }
 
 /**

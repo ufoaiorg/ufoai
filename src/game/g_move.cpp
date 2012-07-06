@@ -141,7 +141,7 @@ void G_ActorFall (edict_t *ent)
 
 	G_EventActorFall(ent);
 
-	gi.EndEvents();
+	G_EventEnd();
 }
 
 /**
@@ -300,7 +300,7 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos
 	numdv = G_FillDirectionTable(dvtab, lengthof(dvtab), crouchingState, pos);
 
 	/* make sure to end any other pending events - we rely on EV_ACTOR_MOVE not being active anymore */
-	gi.EndEvents();
+	G_EventEnd();
 
 	/* everything ok, found valid route? */
 	if (VectorCompare(pos, ent->pos)) {
@@ -455,7 +455,7 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos
 
 		/* end the move */
 		G_GetFloorItems(ent);
-		gi.EndEvents();
+		G_EventEnd();
 	}
 
 	if (autoCrouchRequired) {

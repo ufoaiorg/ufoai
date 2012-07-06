@@ -378,5 +378,5 @@ void G_SendInventory (unsigned int playerMask, const edict_t *ent)
 			G_WriteItem(&ic->item, INVDEF(container), ic->x, ic->y);
 		}
 	}
-	gi.EndEvents();
+	G_EventEnd();
 }

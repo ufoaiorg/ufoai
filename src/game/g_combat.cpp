@@ -1285,7 +1285,7 @@ bool G_ClientShoot (const player_t * player, edict_t* ent, const pos3_t at, shoo
 		}
 
 		/* end events */
-		gi.EndEvents();
+		G_EventEnd();
 
 		/* check for win/draw conditions */
 		G_MatchEndCheck();

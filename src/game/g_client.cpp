@@ -425,7 +425,7 @@ static void G_ClientTurn (player_t * player, edict_t* ent, dvec_t dvec)
 	G_SendStats(ent);
 
 	/* end the event */
-	gi.EndEvents();
+	G_EventEnd();
 }
 
 /**
@@ -449,7 +449,7 @@ static void G_ClientStateChangeUpdate (edict_t *ent)
 	G_SendStats(ent);
 
 	/* End the event. */
-	gi.EndEvents();
+	G_EventEnd();
 }
 
 /**
@@ -614,7 +614,7 @@ bool G_ClientUseEdict (const player_t *player, edict_t *actor, edict_t *edict)
 	/* send the new TUs */
 	G_SendStats(actor);
 
-	gi.EndEvents();
+	G_EventEnd();
 
 	return true;
 }
@@ -1332,7 +1332,7 @@ bool G_ClientBegin (player_t* player)
 	G_ClientSendEdictsAndBrushModels(player);
 
 	/* ensure that the start event is send */
-	gi.EndEvents();
+	G_EventEnd();
 
 	/* set the net name */
 	gi.ConfigString(CS_PLAYERNAMES + player->num, "%s", player->pers.netname);
@@ -1369,7 +1369,7 @@ void G_ClientStartMatch (player_t * player)
 	G_SendPlayerStats(player);
 
 	/* ensure that the last event is send, too */
-	gi.EndEvents();
+	G_EventEnd();
 
 	if (sv_maxclients->integer > 1) {
 		/* ensure that we restart the round time limit */
