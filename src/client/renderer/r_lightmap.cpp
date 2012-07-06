@@ -86,6 +86,7 @@ static void R_UploadLightmapBlock (void)
 }
 
 /**
+ * Find a suitable location to store data in the texture atlas
  * @brief returns a texture number and the position inside it
  */
 static bool R_AllocLightmapBlock (int w, int h, int *x, int *y)
@@ -99,6 +100,7 @@ static bool R_AllocLightmapBlock (int w, int h, int *x, int *y)
 		glGenTextures(1, &r_lightmaps.deluxemap_texnums[++r_lightmaps.deluxemap_count]);
 	}
 
+	/* the height to store the data in the atlas */
 	best = r_lightmaps.size;
 
 	for (i = 0; i < r_lightmaps.size - w; i++) {
