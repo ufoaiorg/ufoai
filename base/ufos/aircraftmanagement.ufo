@@ -782,7 +782,7 @@ craftitem craft_ammo_alc
 	ammo				40
 	wdamage				5
 	accuracy			0.6
-	wrange				1.8
+	wrange				1
 	wspeed				900
 	delay				12
 	size				10 // "light"
