@@ -482,9 +482,9 @@ aircraft craft_ufo_harvester
 	param {
 		speed		10
 		maxspeed	18
-		shield		0
+		shield		2
 		ecm			100
-		damage		300
+		damage		350
 		accuracy	100
 		range		278
 	}
