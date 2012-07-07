@@ -96,12 +96,12 @@ bool INV_LoadWeapon (const invList_t *weaponList, inventory_t *inv, const invDef
 
 	assert(weaponList);
 
-	weapon = weaponList->item.t;
+	weapon = weaponList->item.item;
 	if (weapon->oneshot) {
 		ic = INVSH_FindInInventory(inv, destContainer, &weaponList->item);
 		if (ic) {
-			ic->item.a = weapon->ammo;
-			ic->item.m = weapon;
+			ic->item.ammoLeft = weapon->ammo;
+			ic->item.ammo = weapon;
 			return true;
 		}
 	} else {
@@ -131,10 +131,10 @@ bool INV_UnloadWeapon (invList_t *weapon, inventory_t *inv, const invDef_t *cont
 {
 	assert(weapon);
 	if (container && inv) {
-		const item_t item = {NONE_AMMO, NULL, weapon->item.m, 0, 0};
+		const item_t item = {NONE_AMMO, NULL, weapon->item.ammo, 0, 0};
 		if (cls.i.AddToInventory(&cls.i, inv, &item, container, NONE, NONE, 1) != NULL) {
-			weapon->item.m = NULL;
-			weapon->item.a = 0;
+			weapon->item.ammo = NULL;
+			weapon->item.ammoLeft = 0;
 			return true;
 		}
 	}
@@ -359,9 +359,9 @@ invList_t *INV_SearchInInventoryWithFilter (const inventory_t* const i, const in
 
 	for (ic = i->c[container->id]; ic; ic = ic->next) {
 		/* Search only in the items that could get displayed. */
-		if (ic && ic->item.t && (filterType == MAX_FILTERTYPES || INV_ItemMatchesFilter(ic->item.t, filterType))) {
+		if (ic && ic->item.item && (filterType == MAX_FILTERTYPES || INV_ItemMatchesFilter(ic->item.item, filterType))) {
 			/* We search _everything_, no matter what location it is (i.e. x/y are ignored). */
-			if (item == ic->item.t)
+			if (item == ic->item.item)
 				return ic;
 		}
 	}

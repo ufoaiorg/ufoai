@@ -38,14 +38,14 @@ static void CL_NetReceiveItem (dbuffer *buf, item_t *item, containerIndex_t *con
 
 	/* reset */
 	int t, m;
-	item->t = item->m = NULL;
-	item->a = NONE_AMMO;
-	NET_ReadFormat(buf, eventData->formatString, &t, &item->a, &m, container, x, y, &item->rotated, &item->amount);
+	item->item = item->ammo = NULL;
+	item->ammoLeft = NONE_AMMO;
+	NET_ReadFormat(buf, eventData->formatString, &t, &item->ammoLeft, &m, container, x, y, &item->rotated, &item->amount);
 
-	item->t = INVSH_GetItemByIDX(t);
-	item->m = INVSH_GetItemByIDX(m);
+	item->item = INVSH_GetItemByIDX(t);
+	item->ammo = INVSH_GetItemByIDX(m);
 
-	if (!item->t)
+	if (!item->item)
 		Com_Error(ERR_DROP, "no weapon given for item");
 }
 
@@ -96,16 +96,16 @@ void CL_InvAdd (const eventRegister_t *self, dbuffer *msg)
 
 		if (cls.i.AddToInventory(&cls.i, &le->i, &item, INVDEF(container), x, y, item.amount) == NULL)
 			Com_Error(ERR_DROP, "InvAdd failed - could not add %i item(s) of %s to container %i",
-					item.amount, item.t->id, container);
+					item.amount, item.item->id, container);
 
 		if (container == csi.idRight)
-			le->right = item.t->idx;
+			le->right = item.item->idx;
 		else if (container == csi.idLeft)
-			le->left = item.t->idx;
+			le->left = item.item->idx;
 		else if (container == csi.idExtension)
-			le->extension = item.t->idx;
+			le->extension = item.item->idx;
 		else if (container == csi.idHeadgear)
-			le->headgear = item.t->idx;
+			le->headgear = item.item->idx;
 	}
 
 	switch (le->type) {

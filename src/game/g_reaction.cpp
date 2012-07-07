@@ -249,8 +249,8 @@ static void G_ReactionFireTargetsAdvance (const edict_t *shooter, const edict_t 
  */
 static int G_ReactionFireGetTUsForItem (const edict_t *ent, const edict_t *target, const invList_t *invList)
 {
-	if (invList && invList->item.m && invList->item.t->weapon
-	 && (!invList->item.t->reload || invList->item.a > 0)) {
+	if (invList && invList->item.ammo && invList->item.item->weapon
+	 && (!invList->item.item->reload || invList->item.ammoLeft > 0)) {
 		const fireDef_t *fdArray = FIRESH_FiredefForWeapon(&invList->item);
 		const chrFiremodeSettings_t *fmSetting;
 		if (fdArray == NULL)

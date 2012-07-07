@@ -150,12 +150,12 @@ static void CL_ActorCvars (const character_t * chr, const char* cvarPrefix)
 	/* visible equipment */
 	weapon = RIGHT(chr);
 	if (weapon)
-		Cvar_Set(va("%s%s", cvarPrefix, "rweapon"), weapon->item.t->model);
+		Cvar_Set(va("%s%s", cvarPrefix, "rweapon"), weapon->item.item->model);
 	else
 		Cvar_Set(va("%s%s", cvarPrefix, "rweapon"), "");
 	weapon = LEFT(chr);
 	if (weapon)
-		Cvar_Set(va("%s%s", cvarPrefix, "lweapon"), weapon->item.t->model);
+		Cvar_Set(va("%s%s", cvarPrefix, "lweapon"), weapon->item.item->model);
 	else
 		Cvar_Set(va("%s%s", cvarPrefix, "lweapon"), "");
 }

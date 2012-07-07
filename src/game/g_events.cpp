@@ -338,8 +338,8 @@ void G_EventEndRound (void)
 void G_EventInventoryReload (const edict_t* ent, int playerMask, const item_t* item, const invDef_t* invDef, const invList_t* ic)
 {
 	gi.AddEvent(playerMask, EV_INV_RELOAD, ent->number);
-	gi.WriteByte(item->t->ammo);
-	gi.WriteByte(item->m->idx);
+	gi.WriteByte(item->item->ammo);
+	gi.WriteByte(item->ammo->idx);
 	gi.WriteByte(invDef->id);
 	gi.WriteByte(ic->x);
 	gi.WriteByte(ic->y);
@@ -469,13 +469,13 @@ void G_EventActorAppear (unsigned int playerMask, const edict_t *check, const ed
 	gi.WriteGPos(check->pos);
 	gi.WriteByte(check->dir);
 	if (RIGHT(check)) {
-		gi.WriteShort(RIGHT(check)->item.t->idx);
+		gi.WriteShort(RIGHT(check)->item.item->idx);
 	} else {
 		gi.WriteShort(NONE);
 	}
 
 	if (LEFT(check)) {
-		gi.WriteShort(LEFT(check)->item.t->idx);
+		gi.WriteShort(LEFT(check)->item.item->idx);
 	} else {
 		gi.WriteShort(NONE);
 	}

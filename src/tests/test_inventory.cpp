@@ -93,9 +93,9 @@ static void testItemAdd (void)
 	container = INVSH_GetInventoryDefinitionByID("right");
 	CU_ASSERT_PTR_NOT_NULL(container);
 
-	item.t = od;
-	item.m = NULL;
-	item.a = 0;
+	item.item = od;
+	item.ammo = NULL;
+	item.ammoLeft = 0;
 
 	CU_ASSERT(INVSH_ExistsInInventory(&inv, container, &item) == false);
 
@@ -122,9 +122,9 @@ static void testItemDel (void)
 	container = INVSH_GetInventoryDefinitionByID("right");
 	CU_ASSERT_PTR_NOT_NULL(container);
 
-	item.t = od;
-	item.m = NULL;
-	item.a = 0;
+	item.item = od;
+	item.ammo = NULL;
+	item.ammoLeft = 0;
 
 	CU_ASSERT(INVSH_ExistsInInventory(&inv, container, &item) == false);
 
@@ -156,9 +156,9 @@ static void testItemMove (void)
 	container = INVSH_GetInventoryDefinitionByID("right");
 	CU_ASSERT_PTR_NOT_NULL(container);
 
-	item.t = od;
-	item.m = NULL;
-	item.a = 0;
+	item.item = od;
+	item.ammo = NULL;
+	item.ammoLeft = 0;
 
 	CU_ASSERT(INVSH_ExistsInInventory(&inv, container, &item) == false);
 
@@ -194,9 +194,9 @@ static void testItemReload (void)
 	container = INVSH_GetInventoryDefinitionByID("right");
 	CU_ASSERT_PTR_NOT_NULL(container);
 
-	item.t = od;
-	item.m = NULL;
-	item.a = 0;
+	item.item = od;
+	item.ammo = NULL;
+	item.ammoLeft = 0;
 
 	CU_ASSERT(INVSH_ExistsInInventory(&inv, container, &item) == false);
 
@@ -208,9 +208,9 @@ static void testItemReload (void)
 	ad = INVSH_GetItemByIDSilent("rpg_ammo");
 	CU_ASSERT_PTR_NOT_NULL(ad);
 
-	ammo.t = ad;
-	ammo.m = NULL;
-	ammo.a = 0;
+	ammo.item = ad;
+	ammo.ammo = NULL;
+	ammo.ammoLeft = 0;
 
 	containerFrom = INVSH_GetInventoryDefinitionByID("backpack");
 	CU_ASSERT_PTR_NOT_NULL(containerFrom);
@@ -226,17 +226,17 @@ static void testItemReload (void)
 
 	CU_ASSERT(INVSH_ExistsInInventory(&inv, containerFrom, &ammo) == false);
 
-	item.m = ad;
-	item.a = 1;
+	item.ammo = ad;
+	item.ammoLeft = 1;
 
 	CU_ASSERT(INVSH_ExistsInInventory(&inv, container, &item) == true);
 
 	ad = INVSH_GetItemByIDSilent("rpg_incendiary_ammo");
 	CU_ASSERT_PTR_NOT_NULL(ad);
 
-	ammoFrom.t = ad;
-	ammoFrom.m = NULL;
-	ammoFrom.a = 0;
+	ammoFrom.item = ad;
+	ammoFrom.ammo = NULL;
+	ammoFrom.ammoLeft = 0;
 
 	CU_ASSERT(INVSH_ExistsInInventory(&inv, containerFrom, &ammoFrom) == false);
 
@@ -250,7 +250,7 @@ static void testItemReload (void)
 	CU_ASSERT(INVSH_ExistsInInventory(&inv, containerFrom, &ammoFrom) == false);
 	CU_ASSERT(INVSH_ExistsInInventory(&inv, containerFrom, &ammo) == true);
 
-	item.m = ad;
+	item.ammo = ad;
 
 	CU_ASSERT(INVSH_ExistsInInventory(&inv, container, &item) == true);
 }
@@ -259,9 +259,9 @@ static bool testAddSingle (inventory_t *inv, const objDef_t *od, const invDef_t 
 {
 	item_t item;
 
-	item.t = od;
-	item.m = NULL;
-	item.a = 0;
+	item.item = od;
+	item.ammo = NULL;
+	item.ammoLeft = 0;
 
 	return i.TryAddToInventory(&i, inv, &item, container);
 }
@@ -347,9 +347,9 @@ static void testItemToHeadgear (void)
 	container = INVSH_GetInventoryDefinitionByID("headgear");
 	CU_ASSERT_PTR_NOT_NULL_FATAL(container);
 
-	item.t = od;
-	item.m = NULL;
-	item.a = 0;
+	item.item = od;
+	item.ammo = NULL;
+	item.ammoLeft = 0;
 
 	CU_ASSERT_FALSE(INVSH_ExistsInInventory(&inv, container, &item));
 

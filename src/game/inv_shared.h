@@ -336,9 +336,9 @@ typedef struct invDef_s {
  * ammo loaded or assigned to this weapon
  */
 typedef struct item_s {
-	int a;			/**< Number of ammo rounds left - see NONE_AMMO */
-	const objDef_t *m;	/**< Pointer to ammo type. */
-	const objDef_t *t;	/**< Pointer to weapon. */
+	int ammoLeft;			/**< Number of ammo rounds left - see NONE_AMMO */
+	const objDef_t *ammo;	/**< Pointer to ammo type. */
+	const objDef_t *item;	/**< Pointer to weapon. */
 	int amount;		/**< The amount of items of this type on the same x and y location in the container */
 	int rotated;	/**< If the item is currently displayed rotated (true or 1) or not (false or 0)
 					 * @note don't change this to anything smaller than 4 bytes - the network

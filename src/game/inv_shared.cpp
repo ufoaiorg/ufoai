@@ -174,9 +174,9 @@ static bool INVSH_CheckToInventory_shape (const inventory_t * const i, const inv
 				continue;
 
 			if (ic->item.rotated)
-				INVSH_MergeShapes(mask, INVSH_ShapeRotate(ic->item.t->shape), ic->x, ic->y);
+				INVSH_MergeShapes(mask, INVSH_ShapeRotate(ic->item.item->shape), ic->x, ic->y);
 			else
-				INVSH_MergeShapes(mask, ic->item.t->shape, ic->x, ic->y);
+				INVSH_MergeShapes(mask, ic->item.item->shape, ic->x, ic->y);
 		}
 	}
 
@@ -228,7 +228,7 @@ int INVSH_CheckToInventory (const inventory_t * const i, const objDef_t *od, con
 
 	/* left hand is busy if right wields twohanded */
 	if (INV_IsLeftDef(container)) {
-		if (i->c[CSI->idRight] && i->c[CSI->idRight]->item.t->holdTwoHanded)
+		if (i->c[CSI->idRight] && i->c[CSI->idRight]->item.item->holdTwoHanded)
 			return INV_DOES_NOT_FIT;
 
 		/* can't put an item that is 'fireTwoHanded' into the left hand */
@@ -287,7 +287,7 @@ bool INVSH_CompareItem (const item_t *const item1, const item_t *const item2)
 	if (item1 == NULL || item2 == NULL)
 		return false;
 
-	if (item1->t == item2->t && item1->m == item2->m && item1->a == item2->a)
+	if (item1->item == item2->item && item1->ammo == item2->ammo && item1->ammoLeft == item2->ammoLeft)
 		return true;
 
 	return false;
@@ -321,9 +321,9 @@ static bool INVSH_ShapeCheckPosition (const invList_t *ic, const int x, const in
 
 	/* Check if the position is inside the shape (depending on rotation value) of the item. */
 	if (ic->item.rotated) {
-		shape = INVSH_ShapeRotate(ic->item.t->shape);
+		shape = INVSH_ShapeRotate(ic->item.item->shape);
 	} else {
-		shape = ic->item.t->shape;
+		shape = ic->item.item->shape;
 	}
 
 	return INVSH_CheckShapeSmall(shape, x - ic->x, y - ic->y);
@@ -464,7 +464,7 @@ invList_t *INVSH_SearchInInventoryByItem (const inventory_t* const i, const invD
 		return NULL;
 
 	for (ic = i->c[container->id]; ic; ic = ic->next) {
-		if (ic && item == ic->item.t)
+		if (ic && item == ic->item.item)
 			return ic;
 	}
 
@@ -501,7 +501,7 @@ void INVSH_FindSpace (const inventory_t* const inv, const item_t *item, const in
 
 	for (y = 0; y < SHAPE_BIG_MAX_HEIGHT; y++) {
 		for (x = 0; x < SHAPE_BIG_MAX_WIDTH; x++) {
-			const int checkedTo = INVSH_CheckToInventory(inv, item->t, container, x, y, ignoredItem);
+			const int checkedTo = INVSH_CheckToInventory(inv, item->item, container, x, y, ignoredItem);
 			if (checkedTo) {
 				cacheCheckToInventory = INV_DOES_NOT_FIT;
 				*px = x;
@@ -516,7 +516,7 @@ void INVSH_FindSpace (const inventory_t* const inv, const item_t *item, const in
 
 #ifdef PARANOID
 	Com_DPrintf(DEBUG_SHARED, "INVSH_FindSpace: no space for %s: %s in %s\n",
-		item->t->type, item->t->id, container->name);
+		item->item->type, item->item->id, container->name);
 #endif
 	*px = *py = NONE;
 }
@@ -644,13 +644,13 @@ const fireDef_t* FIRESH_GetFiredef (const objDef_t *obj, const weaponFireDefInde
 const fireDef_t *FIRESH_FiredefForWeapon (const item_t *item)
 {
 	int i;
-	const objDef_t *ammo = item->m;
-	const objDef_t *weapon = item->t;
+	const objDef_t *ammo = item->ammo;
+	const objDef_t *weapon = item->item;
 
 	/* this weapon does not use ammo, check for
 	 * existing firedefs in the weapon. */
 	if (weapon->numWeapons > 0)
-		ammo = item->t;
+		ammo = item->item;
 
 	if (!ammo)
 		return NULL;
@@ -674,10 +674,10 @@ const objDef_t* INVSH_HasReactionFireEnabledWeapon (const invList_t *invList)
 		return NULL;
 
 	while (invList) {
-		if (invList->item.t) {
+		if (invList->item.item) {
 			const fireDef_t *fd = FIRESH_FiredefForWeapon(&invList->item);
 			if (fd && fd->reaction)
-				return invList->item.t;
+				return invList->item.item;
 		}
 		invList = invList->next;
 	}

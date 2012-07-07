@@ -213,11 +213,11 @@ static bool AI_HideNeeded (const edict_t *ent)
 			if (G_IsVisibleForTeam(from, ent->team)) {
 				const invList_t *invlist = RIGHT(from);
 				const fireDef_t *fd = NULL;
-				if (invlist && invlist->item.t) {
+				if (invlist && invlist->item.item) {
 					fd = FIRESH_FiredefForWeapon(&invlist->item);
 				} else {
 					invlist = LEFT(from);
-					if (invlist && invlist->item.t)
+					if (invlist && invlist->item.item)
 						fd = FIRESH_FiredefForWeapon(&invlist->item);
 				}
 				/* search the (visible) inventory (by just checking the weapon in the hands of the enemy */
@@ -248,7 +248,7 @@ static inline const item_t* AI_GetItemFromInventory (const invList_t *ic)
 {
 	if (ic != NULL) {
 		const item_t *item = &ic->item;
-		if (item->m && item->t->weapon && (!item->t->reload || item->a > 0))
+		if (item->ammo && item->item->weapon && (!item->item->reload || item->ammoLeft > 0))
 			return item;
 	}
 	return NULL;
@@ -460,7 +460,7 @@ static void AI_SearchBestTarget (aiAction_t *aia, const edict_t *ent, edict_t *c
 	fireDefIndex_t fdIdx;
 	float dist;
 
-	for (fdIdx = 0; fdIdx < item->m->numFiredefs[fdArray->weapFdsIdx]; fdIdx++) {
+	for (fdIdx = 0; fdIdx < item->ammo->numFiredefs[fdArray->weapFdsIdx]; fdIdx++) {
 		const fireDef_t *fd = &fdArray[fdIdx];
 		const float nspread = SPREAD_NORM((fd->spread[0] + fd->spread[1]) * 0.5 +
 			GET_ACC(ent->chr.score.skills[ABILITY_ACCURACY], fd->weaponSkill));
@@ -500,7 +500,7 @@ static void AI_SearchBestTarget (aiAction_t *aia, const edict_t *ent, edict_t *c
 
 			/* take into account armour */
 			if (CONTAINER(check, gi.csi->idArmour)) {
-				const objDef_t *ad = CONTAINER(check, gi.csi->idArmour)->item.t;
+				const objDef_t *ad = CONTAINER(check, gi.csi->idArmour)->item.item;
 				dmg *= 1.0 - ad->protection[fd->dmgweight] * 0.01;
 			}
 
@@ -1099,9 +1099,9 @@ void AI_ActorThink (player_t * player, edict_t * ent)
 
 	/* if a weapon can be reloaded we attempt to do so if TUs permit, otherwise drop it */
 	if (!G_IsPaniced(ent)) {
-		if (RIGHT(ent) && RIGHT(ent)->item.t->reload && RIGHT(ent)->item.a == 0)
+		if (RIGHT(ent) && RIGHT(ent)->item.item->reload && RIGHT(ent)->item.ammoLeft == 0)
 			AI_TryToReloadWeapon(ent, gi.csi->idRight);
-		if (LEFT(ent) && LEFT(ent)->item.t->reload && LEFT(ent)->item.a == 0)
+		if (LEFT(ent) && LEFT(ent)->item.item->reload && LEFT(ent)->item.ammoLeft == 0)
 			AI_TryToReloadWeapon(ent, gi.csi->idLeft);
 	}
 

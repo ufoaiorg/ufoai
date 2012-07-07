@@ -77,7 +77,7 @@ static invList_t *I_AddToInventory (inventoryInterface_t* self, inventory_t * co
 	invList_t *ic;
 	int checkedTo;
 
-	if (!item->t)
+	if (!item->item)
 		return NULL;
 
 	if (amount <= 0)
@@ -95,7 +95,7 @@ static invList_t *I_AddToInventory (inventoryInterface_t* self, inventory_t * co
 			if (INVSH_CompareItem(&ic->item, item)) {
 				ic->item.amount += amount;
 				Com_DPrintf(DEBUG_SHARED, "I_AddToInventory: Amount of '%s': %i (%s)\n",
-					ic->item.t->name, ic->item.amount, self->name);
+					ic->item.item->name, ic->item.amount, self->name);
 				return ic;
 			}
 	}
@@ -107,7 +107,7 @@ static invList_t *I_AddToInventory (inventoryInterface_t* self, inventory_t * co
 			return NULL;
 	}
 
-	checkedTo = INVSH_CheckToInventory(inv, item->t, container, x, y, NULL);
+	checkedTo = INVSH_CheckToInventory(inv, item->item, container, x, y, NULL);
 	assert(checkedTo);
 
 	/* not found - add a new one */
@@ -158,7 +158,7 @@ static bool I_RemoveFromInventory (inventoryInterface_t* self, inventory_t* cons
 		if (container->temp && ic->item.amount > 1) {
 			ic->item.amount--;
 			Com_DPrintf(DEBUG_SHARED, "I_RemoveFromInventory: Amount of '%s': %i (%s)\n",
-				ic->item.t->name, ic->item.amount, self->name);
+				ic->item.item->name, ic->item.amount, self->name);
 			return true;
 		}
 
@@ -185,7 +185,7 @@ static bool I_RemoveFromInventory (inventoryInterface_t* self, inventory_t* cons
 			if (ic->item.amount > 1 && container->temp) {
 				ic->item.amount--;
 				Com_DPrintf(DEBUG_SHARED, "I_RemoveFromInventory: Amount of '%s': %i (%s)\n",
-					ic->item.t->name, ic->item.amount, self->name);
+					ic->item.item->name, ic->item.amount, self->name);
 				return true;
 			}
 
@@ -263,7 +263,7 @@ static inventory_action_t I_MoveInInventory (inventoryInterface_t* self, invento
 		for (; ic; ic = ic->next) {
 			if (ic == fItem) {
 				if (ic->item.amount > 1) {
-					checkedTo = INVSH_CheckToInventory(inv, ic->item.t, to, tx, ty, fItem);
+					checkedTo = INVSH_CheckToInventory(inv, ic->item.item, to, tx, ty, fItem);
 					if (checkedTo & INV_FITS) {
 						ic->x = tx;
 						ic->y = ty;
@@ -279,21 +279,21 @@ static inventory_action_t I_MoveInInventory (inventoryInterface_t* self, invento
 
 	/* If weapon is twohanded and is moved from hand to hand do nothing. */
 	/* Twohanded weapon are only in CSI->idRight. */
-	if (fItem->item.t->fireTwoHanded && INV_IsLeftDef(to) && INV_IsRightDef(from)) {
+	if (fItem->item.item->fireTwoHanded && INV_IsLeftDef(to) && INV_IsRightDef(from)) {
 		return IA_NONE;
 	}
 
 	/* If non-armour moved to an armour slot then abort.
 	 * Same for non extension items when moved to an extension slot. */
-	if ((to->armour && !INV_IsArmour(fItem->item.t))
-	 || (to->extension && !fItem->item.t->extension)
-	 || (to->headgear && !fItem->item.t->headgear)) {
+	if ((to->armour && !INV_IsArmour(fItem->item.item))
+	 || (to->extension && !fItem->item.item->extension)
+	 || (to->headgear && !fItem->item.item->headgear)) {
 		return IA_NONE;
 	}
 
 	/* Check if the target is a blocked inv-armour and source!=dest. */
 	if (to->single)
-		checkedTo = INVSH_CheckToInventory(inv, fItem->item.t, to, 0, 0, fItem);
+		checkedTo = INVSH_CheckToInventory(inv, fItem->item.item, to, 0, 0, fItem);
 	else {
 		if (tx == NONE || ty == NONE)
 			INVSH_FindSpace(inv, &fItem->item, to, &tx, &ty, fItem);
@@ -301,7 +301,7 @@ static inventory_action_t I_MoveInInventory (inventoryInterface_t* self, invento
 		if (tx == NONE || ty == NONE)
 			return IA_NONE;
 
-		checkedTo = INVSH_CheckToInventory(inv, fItem->item.t, to, tx, ty, fItem);
+		checkedTo = INVSH_CheckToInventory(inv, fItem->item.item, to, tx, ty, fItem);
 	}
 
 	if (to->armour && from != to && !checkedTo) {
@@ -315,7 +315,7 @@ static inventory_action_t I_MoveInInventory (inventoryInterface_t* self, invento
 		/* Check if destination/blocking item is the same as source/from item.
 		 * In that case the move is not needed -> abort. */
 		icTo = INVSH_SearchInInventory(inv, to, tx, ty);
-		if (fItem->item.t == icTo->item.t)
+		if (fItem->item.item == icTo->item.item)
 			return IA_NONE;
 
 		/* Actually remove the ammo from the 'from' container. */
@@ -337,20 +337,20 @@ static inventory_action_t I_MoveInInventory (inventoryInterface_t* self, invento
 		 * scroll because checkedTo is always true here. */
 		ic = INVSH_SearchInInventory(inv, to, tx, ty);
 
-		if (ic && !INV_IsEquipDef(to) && INVSH_LoadableInWeapon(fItem->item.t, ic->item.t)) {
+		if (ic && !INV_IsEquipDef(to) && INVSH_LoadableInWeapon(fItem->item.item, ic->item.item)) {
 			/* A target-item was found and the dragged item (implicitly ammo)
 			 * can be loaded in it (implicitly weapon). */
-			if (ic->item.a >= ic->item.t->ammo && ic->item.m == fItem->item.t) {
+			if (ic->item.ammoLeft >= ic->item.item->ammo && ic->item.ammo == fItem->item.item) {
 				/* Weapon already fully loaded with the same ammunition -> abort */
 				return IA_NORELOAD;
 			}
-			time += ic->item.t->reload;
+			time += ic->item.item->reload;
 			if (!TU || *TU >= time) {
 				if (TU)
 					*TU -= time;
-				if (ic->item.a >= ic->item.t->ammo) {
+				if (ic->item.ammoLeft >= ic->item.item->ammo) {
 					/* exchange ammo */
-					const item_t item = {NONE_AMMO, NULL, ic->item.m, 0, 0};
+					const item_t item = {NONE_AMMO, NULL, ic->item.ammo, 0, 0};
 					/* Put current ammo in place of the new ammo unless floor - there can be more than 1 item */
 					const int cacheFromX = INV_IsFloorDef(from) ? NONE : fItem->x;
 					const int cacheFromY = INV_IsFloorDef(from) ? NONE : fItem->y;
@@ -363,7 +363,7 @@ static inventory_action_t I_MoveInInventory (inventoryInterface_t* self, invento
 					if (self->AddToInventory(self, inv, &item, from, cacheFromX, cacheFromY, 1) == NULL)
 						Sys_Error("Could not reload the weapon - add to inventory failed (%s)", self->name);
 
-					ic->item.m = self->cacheItem.t;
+					ic->item.ammo = self->cacheItem.item;
 					if (icp)
 						*icp = ic;
 					return IA_RELOAD_SWAP;
@@ -372,9 +372,9 @@ static inventory_action_t I_MoveInInventory (inventoryInterface_t* self, invento
 					if (!self->RemoveFromInventory(self, inv, from, fItem))
 						return IA_NONE;
 
-					ic->item.m = self->cacheItem.t;
+					ic->item.ammo = self->cacheItem.item;
 					/* loose ammo of type ic->item.m saved on server side */
-					ic->item.a = ic->item.t->ammo;
+					ic->item.ammoLeft = ic->item.item->ammo;
 					if (icp)
 						*icp = ic;
 					return IA_RELOAD;
@@ -401,7 +401,7 @@ static inventory_action_t I_MoveInInventory (inventoryInterface_t* self, invento
 	}
 
 	/* twohanded exception - only CSI->idRight is allowed for fireTwoHanded weapons */
-	if (fItem->item.t->fireTwoHanded && INV_IsLeftDef(to))
+	if (fItem->item.item->fireTwoHanded && INV_IsLeftDef(to))
 		to = &self->csi->ids[self->csi->idRight];
 
 	if (checkedTo == INV_FITS_ONLY_ROTATED) {
@@ -421,7 +421,7 @@ static inventory_action_t I_MoveInInventory (inventoryInterface_t* self, invento
 	if (TU)
 		*TU -= time;
 
-	assert(self->cacheItem.t);
+	assert(self->cacheItem.item);
 	ic = self->AddToInventory(self, inv, &self->cacheItem, to, tx, ty, 1);
 
 	/* return data */
@@ -431,7 +431,7 @@ static inventory_action_t I_MoveInInventory (inventoryInterface_t* self, invento
 	}
 
 	if (INV_IsArmourDef(to)) {
-		assert(INV_IsArmour(self->cacheItem.t));
+		assert(INV_IsArmour(self->cacheItem.item));
 		return IA_ARMOUR;
 	} else
 		return IA_MOVE;
@@ -456,7 +456,7 @@ static bool I_TryAddToInventory (inventoryInterface_t* self, inventory_t* const 
 		assert(y == NONE);
 		return false;
 	} else {
-		const int checkedTo = INVSH_CheckToInventory(inv, item->t, container, x, y, NULL);
+		const int checkedTo = INVSH_CheckToInventory(inv, item->item, container, x, y, NULL);
 		if (!checkedTo)
 			return false;
 		else {
@@ -541,19 +541,19 @@ static int I_PackAmmoAndWeapon (inventoryInterface_t *self, inventory_t* const i
 	int ammoMult = 1;
 
 	assert(!INV_IsArmour(weapon));
-	item.t = weapon;
+	item.item = weapon;
 
 	/* are we going to allow trying the left hand */
-	allowLeft = !(inv->c[self->csi->idRight] && inv->c[self->csi->idRight]->item.t->fireTwoHanded);
+	allowLeft = !(inv->c[self->csi->idRight] && inv->c[self->csi->idRight]->item.item->fireTwoHanded);
 
 	if (weapon->oneshot) {
 		/* The weapon provides its own ammo (i.e. it is charged or loaded in the base.) */
-		item.a = weapon->ammo;
-		item.m = weapon;
+		item.ammoLeft = weapon->ammo;
+		item.ammo = weapon;
 		Com_DPrintf(DEBUG_SHARED, "I_PackAmmoAndWeapon: oneshot weapon '%s' in equipment '%s' (%s).\n",
 				weapon->id, ed->id, self->name);
 	} else if (!weapon->reload) {
-		item.m = item.t; /* no ammo needed, so fire definitions are in t */
+		item.ammo = item.item; /* no ammo needed, so fire definitions are in t */
 	} else {
 		/* find some suitable ammo for the weapon (we will have at least one if there are ammos for this
 		 * weapon in equipment definition) */
@@ -585,11 +585,11 @@ static int I_PackAmmoAndWeapon (inventoryInterface_t *self, inventory_t* const i
 			return 0;
 		}
 		/* load ammo */
-		item.a = weapon->ammo;
-		item.m = ammo;
+		item.ammoLeft = weapon->ammo;
+		item.ammo = ammo;
 	}
 
-	if (!item.m) {
+	if (!item.ammo) {
 		Com_Printf("I_PackAmmoAndWeapon: no ammo for sidearm or primary weapon '%s' in equipment '%s' (%s).\n",
 				weapon->id, ed->id, self->name);
 		return 0;
@@ -622,7 +622,7 @@ static int I_PackAmmoAndWeapon (inventoryInterface_t *self, inventory_t* const i
 		while (num--) {
 			item_t mun = {NONE_AMMO, NULL, NULL, 0, 0};
 
-			mun.t = ammo;
+			mun.item = ammo;
 			/* ammo to backpack; belt is for knives and grenades */
 			numpacked += self->TryAddToInventory(self, inv, &mun, &self->csi->ids[self->csi->idBackpack]);
 			/* no problem if no space left; one ammo already loaded */
@@ -653,9 +653,9 @@ static void I_EquipActorMelee (inventoryInterface_t *self, inventory_t* const in
 	obj = td->onlyWeapon;
 
 	/* Prepare item. This kind of item has no ammo, fire definitions are in item.t. */
-	item.t = obj;
-	item.m = item.t;
-	item.a = NONE_AMMO;
+	item.item = obj;
+	item.ammo = item.item;
+	item.ammoLeft = NONE_AMMO;
 	/* Every melee actor weapon definition is firetwohanded, add to right hand. */
 	if (!obj->fireTwoHanded)
 		Sys_Error("INVSH_EquipActorMelee: melee weapon %s for team %s is not firetwohanded! (%s)\n",
@@ -676,13 +676,13 @@ static void I_EquipActorRobot (inventoryInterface_t *self, inventory_t* const in
 	assert(weapon);
 
 	/* Prepare weapon in item. */
-	item.t = weapon;
-	item.a = weapon->ammo;
+	item.item = weapon;
+	item.ammoLeft = weapon->ammo;
 
 	/* Get ammo for item/weapon. */
 	assert(weapon->numAmmos > 0);	/* There _has_ to be at least one ammo-type. */
 	assert(weapon->ammos[0]);
-	item.m = weapon->ammos[0];
+	item.ammo = weapon->ammos[0];
 
 	self->TryAddToInventory(self, inv, &item, &self->csi->ids[self->csi->idRight]);
 }

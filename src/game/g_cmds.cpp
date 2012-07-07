@@ -304,13 +304,13 @@ void G_InvList_f (const player_t *player)
 			const invList_t *ic = CONTAINER(ent, container);
 			Com_Printf("Container: %i\n", container);
 			while (ic) {
-				Com_Printf(".. item.t: %i, item.m: %i, item.a: %i, x: %i, y: %i\n",
-						(ic->item.t ? ic->item.t->idx : NONE), (ic->item.m ? ic->item.m->idx : NONE),
-						ic->item.a, ic->x, ic->y);
-				if (ic->item.t)
-					Com_Printf(".... weapon: %s\n", ic->item.t->id);
-				if (ic->item.m)
-					Com_Printf(".... ammo:   %s (%i)\n", ic->item.m->id, ic->item.a);
+				Com_Printf(".. item.item: %i, item.ammo: %i, item.ammoLeft: %i, x: %i, y: %i\n",
+						(ic->item.item ? ic->item.item->idx : NONE), (ic->item.ammo ? ic->item.ammo->idx : NONE),
+						ic->item.ammoLeft, ic->x, ic->y);
+				if (ic->item.item)
+					Com_Printf(".... weapon: %s\n", ic->item.item->id);
+				if (ic->item.ammo)
+					Com_Printf(".... ammo:   %s (%i)\n", ic->item.ammo->id, ic->item.ammoLeft);
 				ic = ic->next;
 			}
 		}

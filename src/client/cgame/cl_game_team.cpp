@@ -523,18 +523,18 @@ void GAME_ActorSelect_f (void)
  */
 static void GAME_SaveItem (xmlNode_t *p, const item_t *item, containerIndex_t container, int x, int y)
 {
-	assert(item->t != NULL);
+	assert(item->item != NULL);
 
 	XML_AddString(p, SAVE_INVENTORY_CONTAINER, INVDEF(container)->name);
 	XML_AddInt(p, SAVE_INVENTORY_X, x);
 	XML_AddInt(p, SAVE_INVENTORY_Y, y);
 	XML_AddIntValue(p, SAVE_INVENTORY_ROTATED, item->rotated);
-	XML_AddString(p, SAVE_INVENTORY_WEAPONID, item->t->id);
+	XML_AddString(p, SAVE_INVENTORY_WEAPONID, item->item->id);
 	/** @todo: is there any case when amount != 1 for soldier inventory item? */
 	XML_AddInt(p, SAVE_INVENTORY_AMOUNT, item->amount);
-	if (item->a > NONE_AMMO) {
-		XML_AddString(p, SAVE_INVENTORY_MUNITIONID, item->m->id);
-		XML_AddInt(p, SAVE_INVENTORY_AMMO, item->a);
+	if (item->ammoLeft > NONE_AMMO) {
+		XML_AddString(p, SAVE_INVENTORY_MUNITIONID, item->ammo->id);
+		XML_AddInt(p, SAVE_INVENTORY_AMMO, item->ammoLeft);
 	}
 }
 
@@ -590,19 +590,19 @@ static void GAME_LoadItem (xmlNode_t *n, item_t *item, containerIndex_t *contain
 	}
 	*container = i;
 
-	item->t = INVSH_GetItemByID(itemID);
+	item->item = INVSH_GetItemByID(itemID);
 	*x = XML_GetInt(n, SAVE_INVENTORY_X, 0);
 	*y = XML_GetInt(n, SAVE_INVENTORY_Y, 0);
 	item->rotated = XML_GetInt(n, SAVE_INVENTORY_ROTATED, 0);
 	item->amount = XML_GetInt(n, SAVE_INVENTORY_AMOUNT, 1);
-	item->a = XML_GetInt(n, SAVE_INVENTORY_AMMO, NONE_AMMO);
-	if (item->a > NONE_AMMO) {
+	item->ammoLeft = XML_GetInt(n, SAVE_INVENTORY_AMMO, NONE_AMMO);
+	if (item->ammoLeft > NONE_AMMO) {
 		itemID = XML_GetString(n, SAVE_INVENTORY_MUNITIONID);
-		item->m = INVSH_GetItemByID(itemID);
+		item->ammo = INVSH_GetItemByID(itemID);
 
 		/* reset ammo count if ammunition (item) not found */
-		if (!item->m)
-			item->a = NONE_AMMO;
+		if (!item->ammo)
+			item->ammoLeft = NONE_AMMO;
 	}
 }
 
@@ -625,10 +625,10 @@ static void GAME_LoadInventory (xmlNode_t *p, inventory_t *i)
 
 		GAME_LoadItem(s, &item, &container, &x, &y);
 		if (INVDEF(container)->temp)
-			Com_Error(ERR_DROP, "GAME_LoadInventory failed, tried to add '%s' to a temp container %i", item.t->id, container);
+			Com_Error(ERR_DROP, "GAME_LoadInventory failed, tried to add '%s' to a temp container %i", item.item->id, container);
 
 		if (!cls.i.AddToInventory(&cls.i, i, &item, INVDEF(container), x, y, 1))
-			Com_Printf("Could not add item '%s' to inventory\n", item.t ? item.t->id : "NULL");
+			Com_Printf("Could not add item '%s' to inventory\n", item.item ? item.item->id : "NULL");
 	}
 }
 

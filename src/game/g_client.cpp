@@ -523,11 +523,11 @@ bool G_ClientCanReload (edict_t *ent, containerIndex_t containerID)
 	const objDef_t *weapon;
 
 	if (CONTAINER(ent, containerID)) {
-		weapon = CONTAINER(ent, containerID)->item.t;
-	} else if (containerID == gi.csi->idLeft && RIGHT(ent)->item.t->holdTwoHanded) {
+		weapon = CONTAINER(ent, containerID)->item.item;
+	} else if (containerID == gi.csi->idLeft && RIGHT(ent)->item.item->holdTwoHanded) {
 		/* Check for two-handed weapon */
 		containerID = gi.csi->idRight;
-		weapon = CONTAINER(ent, containerID)->item.t;
+		weapon = CONTAINER(ent, containerID)->item.item;
 	} else
 		return false;
 
@@ -536,7 +536,7 @@ bool G_ClientCanReload (edict_t *ent, containerIndex_t containerID)
 	/* also try the temp containers */
 	for (container = 0; container < gi.csi->numIDs; container++)
 		for (ic = CONTAINER(ent, container); ic; ic = ic->next)
-			if (INVSH_LoadableInWeapon(ic->item.t, weapon))
+			if (INVSH_LoadableInWeapon(ic->item.item, weapon))
 				return true;
 	return false;
 }
@@ -574,8 +574,8 @@ void G_ClientGetWeaponFromInventory (edict_t *ent)
 			 * to retrieve the ammo from them than the one
 			 * we've already found. */
 			for (ic = CONTAINER(ent, container); ic; ic = ic->next) {
-				assert(ic->item.t);
-				if (ic->item.t->weapon && (ic->item.a > 0 || !ic->item.t->reload)) {
+				assert(ic->item.item);
+				if (ic->item.item->weapon && (ic->item.ammoLeft > 0 || !ic->item.item->reload)) {
 					icFinal = ic;
 					bestContainer = INVDEF(container);
 					tu = bestContainer->out;
@@ -1107,10 +1107,10 @@ static void G_ClientReadInventory (edict_t *ent)
 		int x, y;
 		G_ReadItem(&item, &container, &x, &y);
 		if (container->temp)
-			gi.Error("G_ClientReadInventory failed, tried to add '%s' to a temp container %i", item.t->id, container->id);
+			gi.Error("G_ClientReadInventory failed, tried to add '%s' to a temp container %i", item.item->id, container->id);
 		if (!level.noEquipment && game.i.AddToInventory(&game.i, &ent->chr.i, &item, container, x, y, 1) == NULL)
 			gi.Error("G_ClientReadInventory failed, could not add item '%s' to container %i (x:%i,y:%i)",
-					item.t->id, container->id, x, y);
+					item.item->id, container->id, x, y);
 	}
 }
 

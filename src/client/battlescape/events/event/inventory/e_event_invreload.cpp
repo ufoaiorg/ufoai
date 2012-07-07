@@ -58,22 +58,22 @@ void CL_InvReload (const eventRegister_t *self, dbuffer *msg)
 	if (!ic)
 		return;
 
-	S_LoadAndPlaySample(ic->item.t->reloadSound, le->origin, ic->item.t->reloadAttenuation, SND_VOLUME_WEAPONS);
+	S_LoadAndPlaySample(ic->item.item->reloadSound, le->origin, ic->item.item->reloadAttenuation, SND_VOLUME_WEAPONS);
 
 	/* if the displaced clip had any remaining bullets
 	 * store them as loose, unless the removed clip was full */
 	ed = GAME_GetEquipmentDefinition();
-	if (ed && ic->item.a > 0 && ic->item.a != ic->item.t->ammo) {
-		assert(ammo == ic->item.t->ammo);
-		ed->numItemsLoose[ic->item.m->idx] += ic->item.a;
+	if (ed && ic->item.ammoLeft > 0 && ic->item.ammoLeft != ic->item.item->ammo) {
+		assert(ammo == ic->item.item->ammo);
+		ed->numItemsLoose[ic->item.ammo->idx] += ic->item.ammoLeft;
 		/* Accumulate loose ammo into clips (only accessible post-mission) */
-		if (ed->numItemsLoose[ic->item.m->idx] >= ic->item.t->ammo) {
-			ed->numItemsLoose[ic->item.m->idx] -= ic->item.t->ammo;
-			ed->numItems[ic->item.m->idx]++;
+		if (ed->numItemsLoose[ic->item.ammo->idx] >= ic->item.item->ammo) {
+			ed->numItemsLoose[ic->item.ammo->idx] -= ic->item.item->ammo;
+			ed->numItems[ic->item.ammo->idx]++;
 		}
 	}
 
 	/* set new ammo */
-	ic->item.a = ammo;
-	ic->item.m = INVSH_GetItemByIDX(type);
+	ic->item.ammoLeft = ammo;
+	ic->item.ammo = INVSH_GetItemByIDX(type);
 }

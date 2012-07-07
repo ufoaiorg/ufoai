@@ -78,12 +78,12 @@ bool G_InventoryRemoveItemByID (const char *itemID, edict_t *ent, containerIndex
 {
 	invList_t *ic = CONTAINER(ent, container);
 	while (ic) {
-		const objDef_t *item = ic->item.t;
+		const objDef_t *item = ic->item.item;
 		if (item != NULL && Q_streq(item->id, itemID)) {
 			/* remove the virtual item to update the inventory lists */
 			if (!game.i.RemoveFromInventory(&game.i, &ent->chr.i, INVDEF(container), ic))
 				gi.Error("Could not remove item '%s' from inventory %i",
-						ic->item.t->id, container);
+						ic->item.item->id, container);
 			G_EventInventoryDelete(ent, G_VisToPM(ent->visflags), INVDEF(container), ic->x, ic->y);
 			return true;
 		}
@@ -111,13 +111,13 @@ static bool G_InventoryDropToFloorCheck (edict_t* ent, containerIndex_t containe
 	if (ic) {
 		bool check = false;
 		while (ic) {
-			assert(ic->item.t);
-			if (ic->item.t->isVirtual) {
+			assert(ic->item.item);
+			if (ic->item.item->isVirtual) {
 				invList_t *next = ic->next;
 				/* remove the virtual item to update the inventory lists */
 				if (!game.i.RemoveFromInventory(&game.i, &ent->chr.i, INVDEF(container), ic))
 					gi.Error("Could not remove virtual item '%s' from inventory %i",
-							ic->item.t->id, container);
+							ic->item.item->id, container);
 				ic = next;
 			} else {
 				/* there are none virtual items left that should be send to the client */
@@ -152,7 +152,7 @@ bool G_AddItemToFloor (const pos3_t pos, const char *itemID)
 	if (!floor)
 		floor = G_SpawnFloor(pos);
 
-	item.t = od;
+	item.item = od;
 	return game.i.TryAddToInventory(&game.i, &floor->chr.i, &item, INVDEF(gi.csi->idFloor));
 }
 
@@ -272,10 +272,10 @@ void G_InventoryToFloor (edict_t *ent)
 			assert(item.amount == 1);
 			if (!game.i.RemoveFromInventory(&game.i, &ent->chr.i, INVDEF(container), ic))
 				gi.Error("Could not remove item '%s' from inventory %i of entity %i",
-						ic->item.t->id, container, ent->number);
+						ic->item.item->id, container, ent->number);
 			if (game.i.AddToInventory(&game.i, &floor->chr.i, &item, INVDEF(gi.csi->idFloor), NONE, NONE, 1) == NULL)
 				gi.Error("Could not add item '%s' from inventory %i of entity %i to floor container",
-						ic->item.t->id, container, ent->number);
+						ic->item.item->id, container, ent->number);
 #ifdef ADJACENT
 			G_InventoryPlaceItemAdjacent(ent);
 #endif
@@ -304,18 +304,18 @@ void G_ReadItem (item_t *item, const invDef_t **container, int *x, int *y)
 	int t, m;
 	containerIndex_t containerID;
 
-	gi.ReadFormat("sbsbbbbs", &t, &item->a, &m, &containerID, x, y, &item->rotated, &item->amount);
+	gi.ReadFormat("sbsbbbbs", &t, &item->ammoLeft, &m, &containerID, x, y, &item->rotated, &item->amount);
 
 	if (t < 0 || t >= gi.csi->numODs)
 		gi.Error("Item index out of bounds: %i", t);
-	item->t = &gi.csi->ods[t];
+	item->item = &gi.csi->ods[t];
 
 	if (m != NONE) {
 		if (m < 0 || m >= gi.csi->numODs)
 			gi.Error("Ammo index out of bounds: %i", m);
-		item->m = &gi.csi->ods[m];
+		item->ammo = &gi.csi->ods[m];
 	} else {
-		item->m = NULL;
+		item->ammo = NULL;
 	}
 
 	if (containerID >= 0 && containerID < gi.csi->numIDs)
@@ -336,8 +336,8 @@ void G_ReadItem (item_t *item, const invDef_t **container, int *x, int *y)
 void G_WriteItem (const item_t *item, const invDef_t *container, int x, int y)
 {
 	assert(item);
-	assert(item->t);
-	gi.WriteFormat("sbsbbbbs", item->t->idx, item->a, item->m ? item->m->idx : NONE, container->id, x, y, item->rotated, item->amount);
+	assert(item->item);
+	gi.WriteFormat("sbsbbbbs", item->item->idx, item->ammoLeft, item->ammo ? item->ammo->idx : NONE, container->id, x, y, item->rotated, item->amount);
 }
 
 /**
@@ -374,7 +374,7 @@ void G_SendInventory (unsigned int playerMask, const edict_t *ent)
 			continue;
 		for (ic = CONTAINER(ent, container); ic; ic = ic->next) {
 			/* send a single item */
-			assert(ic->item.t);
+			assert(ic->item.item);
 			G_WriteItem(&ic->item, INVDEF(container), ic->x, ic->y);
 		}
 	}

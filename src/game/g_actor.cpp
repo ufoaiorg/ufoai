@@ -150,7 +150,7 @@ int G_ActorGetTUForReactionFire (const edict_t *ent)
 
 	invlistWeapon = ACTOR_GET_INV(ent, fm->hand);
 	assert(invlistWeapon);
-	assert(invlistWeapon->item.t);
+	assert(invlistWeapon->item.item);
 
 	fd = FIRESH_FiredefForWeapon(&invlistWeapon->item);
 	assert(fd);
@@ -305,7 +305,7 @@ int G_ActorGetArmourTUPenalty (const edict_t *ent)
 	if (ARMOUR(ent) == NULL)
 		return 0;
 
-	armour = invList->item.t;
+	armour = invList->item.item;
 	if (armour->weight >= weightToCausePenalty)
 		penalty = (armour->weight - weightToCausePenalty - 1) / 10;
 	else
@@ -587,7 +587,7 @@ bool G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, cons
 	player = G_PLAYER_FROM_ENT(ent);
 
 	assert(fItem);
-	assert(fItem->item.t);
+	assert(fItem->item.item);
 
 	/* Store the location/item of 'from' BEFORE actually moving items with I_MoveInInventory. */
 	fItemBackup = *fItem;
@@ -705,9 +705,9 @@ bool G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, cons
 		if (ia == IA_RELOAD) {
 			return true;
 		} else { /* ia == IA_RELOAD_SWAP */
-			item.a = NONE_AMMO;
-			item.m = NULL;
-			item.t = tItemBackup.item.m;
+			item.ammoLeft = NONE_AMMO;
+			item.ammo = NULL;
+			item.item = tItemBackup.item.ammo;
 			item.rotated = fItemBackup.item.rotated;
 			item.amount = tItemBackup.item.amount;
 			to = from;
@@ -794,11 +794,11 @@ void G_ActorReload (edict_t* ent, const invDef_t *invDef)
 	bestContainer = NULL;
 
 	if (CONTAINER(ent, invDef->id)) {
-		weapon = CONTAINER(ent, invDef->id)->item.t;
-	} else if (INV_IsLeftDef(invDef) && RIGHT(ent)->item.t->holdTwoHanded) {
+		weapon = CONTAINER(ent, invDef->id)->item.item;
+	} else if (INV_IsLeftDef(invDef) && RIGHT(ent)->item.item->holdTwoHanded) {
 		/* Check for two-handed weapon */
 		invDef = INVDEF(gi.csi->idRight);
-		weapon = CONTAINER(ent, invDef->id)->item.t;
+		weapon = CONTAINER(ent, invDef->id)->item.item;
 	} else
 		return;
 
@@ -816,7 +816,7 @@ void G_ActorReload (edict_t* ent, const invDef_t *invDef)
 			 * to retrieve the ammo from them than the one
 			 * we've already found. */
 			for (ic = CONTAINER(ent, containerID); ic; ic = ic->next)
-				if (INVSH_LoadableInWeapon(ic->item.t, weapon)) {
+				if (INVSH_LoadableInWeapon(ic->item.item, weapon)) {
 					icFinal = ic;
 					bestContainer = INVDEF(containerID);
 					tu = bestContainer->out;

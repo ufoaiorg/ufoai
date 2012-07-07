@@ -106,10 +106,10 @@ static void CL_ActorGetMuzzle (const le_t* actor, vec3_t muzzle, shoot_types_t s
 		invlistWeapon = LEFT(actor);
 	}
 
-	if (!invlistWeapon || !invlistWeapon->item.t)
+	if (!invlistWeapon || !invlistWeapon->item.item)
 		return;
 
-	od = invlistWeapon->item.t;
+	od = invlistWeapon->item.item;
 
 	model = cls.modelPool[od->idx];
 	if (!model)

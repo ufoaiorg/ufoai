@@ -361,8 +361,8 @@ static void GAME_CollectItems (void *data, int won, void (*item)(void*, const ob
 			if (won) {
 				invList_t *i;
 				for (i = FLOOR(le); i; i = i->next) {
-					item(data, i->item.t, 1);
-					if (i->item.t->reload && i->item.a > 0)
+					item(data, i->item.item, 1);
+					if (i->item.item->reload && i->item.ammoLeft > 0)
 						ammo(data, i);
 				}
 			}
@@ -373,7 +373,7 @@ static void GAME_CollectItems (void *data, int won, void (*item)(void*, const ob
 			if (won && LE_IsDead(le)) {
 				invList_t *i = ARMOUR(le);
 				if (i)
-					item(data, i->item.t, 1);
+					item(data, i->item.item, 1);
 			} else if (le->team == cls.team && !LE_IsDead(le)) {
 				/* Finally, the living actor from our team. */
 				ownitems(&le->i);
@@ -1064,12 +1064,12 @@ void GAME_HandleResults (dbuffer *msg, int winner, int *numSpawned, int *numAliv
  */
 static void GAME_NetSendItem (dbuffer *buf, item_t item, containerIndex_t container, int x, int y)
 {
-	const int ammoIdx = item.m ? item.m->idx : NONE;
+	const int ammoIdx = item.ammo ? item.ammo->idx : NONE;
 	const eventRegister_t *eventData = CL_GetEvent(EV_INV_TRANSFER);
-	assert(item.t);
+	assert(item.item);
 	Com_DPrintf(DEBUG_CLIENT, "GAME_NetSendItem: Add item %s to container %i (t=%i:a=%i:m=%i) (x=%i:y=%i)\n",
-		item.t->id, container, item.t->idx, item.a, ammoIdx, x, y);
-	NET_WriteFormat(buf, eventData->formatString, item.t->idx, item.a, ammoIdx, container, x, y, item.rotated, item.amount);
+		item.item->id, container, item.item->idx, item.ammoLeft, ammoIdx, x, y);
+	NET_WriteFormat(buf, eventData->formatString, item.item->idx, item.ammoLeft, ammoIdx, container, x, y, item.rotated, item.amount);
 }
 
 /**

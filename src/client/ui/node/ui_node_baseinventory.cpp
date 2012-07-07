@@ -216,35 +216,35 @@ static void UI_BaseInventoryNodeUpdateScroll (uiNode_t* node)
  */
 static void UI_GetItemTooltip (item_t item, char *tooltipText, size_t stringMaxLength)
 {
-	assert(item.t);
+	assert(item.item);
 
 	if (item.amount > 1)
-		Com_sprintf(tooltipText, stringMaxLength, "%i x %s\n", item.amount, _(item.t->name));
+		Com_sprintf(tooltipText, stringMaxLength, "%i x %s\n", item.amount, _(item.item->name));
 	else
-		Com_sprintf(tooltipText, stringMaxLength, "%s\n", _(item.t->name));
+		Com_sprintf(tooltipText, stringMaxLength, "%s\n", _(item.item->name));
 
 	/* Only display further info if item.t is researched */
-	if (GAME_ItemIsUseable(item.t)) {
-		if (item.t->weapon) {
+	if (GAME_ItemIsUseable(item.item)) {
+		if (item.item->weapon) {
 			/* Get info about used ammo (if there is any) */
-			if (item.t == item.m) {
+			if (item.item == item.ammo) {
 				/* Item has no ammo but might have shot-count */
-				if (item.a) {
-					Q_strcat(tooltipText, va(_("Ammo: %i\n"), item.a), stringMaxLength);
+				if (item.ammoLeft) {
+					Q_strcat(tooltipText, va(_("Ammo: %i\n"), item.ammoLeft), stringMaxLength);
 				}
-			} else if (item.m) {
+			} else if (item.ammo) {
 				/* Search for used ammo and display name + ammo count */
-				Q_strcat(tooltipText, va(_("%s loaded\n"), _(item.m->name)), stringMaxLength);
-				Q_strcat(tooltipText, va(_("Ammo: %i\n"),  item.a), stringMaxLength);
+				Q_strcat(tooltipText, va(_("%s loaded\n"), _(item.ammo->name)), stringMaxLength);
+				Q_strcat(tooltipText, va(_("Ammo: %i\n"),  item.ammoLeft), stringMaxLength);
 			}
-		} else if (item.t->numWeapons) {
+		} else if (item.item->numWeapons) {
 			/* Check if this is a non-weapon and non-ammo item */
-			if (!(item.t->numWeapons == 1 && item.t->weapons[0] == item.t)) {
+			if (!(item.item->numWeapons == 1 && item.item->weapons[0] == item.item)) {
 				int i;
 				/* If it's ammo get the weapon names it can be used in */
 				Q_strcat(tooltipText, _("Usable in:\n"), stringMaxLength);
-				for (i = 0; i < item.t->numWeapons; i++) {
-					const objDef_t *weapon = item.t->weapons[i];
+				for (i = 0; i < item.item->numWeapons; i++) {
+					const objDef_t *weapon = item.item->weapons[i];
 					if (GAME_ItemIsUseable(weapon)) {
 						Q_strcat(tooltipText, va("* %s\n", _(weapon->name)), stringMaxLength);
 					}
@@ -375,27 +375,27 @@ static int UI_BaseInventoryNodeDrawItems (uiNode_t *node, const objDef_t *highli
 		if (obj->weapon && EXTRADATA(node).displayAmmoOfWeapon) {
 			int ammoIdx;
 			for (ammoIdx = 0; ammoIdx < obj->numAmmos; ammoIdx++) {
-				tempItem.t = obj->ammos[ammoIdx];
+				tempItem.item = obj->ammos[ammoIdx];
 
 				/* skip unusable ammo */
-				if (!GAME_ItemIsUseable(tempItem.t))
+				if (!GAME_ItemIsUseable(tempItem.item))
 					continue;
 
 				/* find and skip none existing ammo */
-				icItem = UI_ContainerNodeGetExistingItem(node, tempItem.t, (itemFilterTypes_t) EXTRADATA(node).filterEquipType);
+				icItem = UI_ContainerNodeGetExistingItem(node, tempItem.item, (itemFilterTypes_t) EXTRADATA(node).filterEquipType);
 				if (!icItem)
 					continue;
 
 				/* Calculate the center of the item model/image. */
-				ammopos[0] += icItem->item.t->sx * C_UNIT / 2.0;
-				ammopos[1] -= icItem->item.t->sy * C_UNIT / 2.0;
+				ammopos[0] += icItem->item.item->sx * C_UNIT / 2.0;
+				ammopos[1] -= icItem->item.item->sy * C_UNIT / 2.0;
 				UI_DrawItem(node, ammopos, &tempItem, -1, -1, scale, colorDefault);
 				UI_DrawString("f_verysmall", ALIGN_LC,
-					ammopos[0] + icItem->item.t->sx * C_UNIT / 2.0, ammopos[1] + icItem->item.t->sy * C_UNIT / 2.0,
-					ammopos[0] + icItem->item.t->sx * C_UNIT / 2.0, cellWidth - 5 - ammopos[0],	/* maxWidth */
+					ammopos[0] + icItem->item.item->sx * C_UNIT / 2.0, ammopos[1] + icItem->item.item->sy * C_UNIT / 2.0,
+					ammopos[0] + icItem->item.item->sx * C_UNIT / 2.0, cellWidth - 5 - ammopos[0],	/* maxWidth */
 					0, va("x%i", icItem->item.amount));
-				ammopos[0] += icItem->item.t->sx * C_UNIT / 2.0;
-				ammopos[1] += icItem->item.t->sy * C_UNIT / 2.0;
+				ammopos[0] += icItem->item.item->sx * C_UNIT / 2.0;
+				ammopos[1] += icItem->item.item->sy * C_UNIT / 2.0;
 			}
 		}
 		cellHeight += 10;
@@ -483,7 +483,7 @@ void uiBaseInventoryNode::draw (uiNode_t *node)
 
 	/* Highlight weapons that the dragged ammo (if it is one) can be loaded into. */
 	if (UI_DNDIsDragging() && UI_DNDGetType() == DND_ITEM) {
-		highlightType = UI_DNDGetItem()->t;
+		highlightType = UI_DNDGetItem()->item;
 	}
 
 	UI_BaseInventoryNodeDraw2(node, highlightType);
@@ -711,7 +711,7 @@ void uiBaseInventoryNode::onMouseDown (uiNode_t *node, int x, int y, int button)
 			oldMouseX = x;
 			oldMouseY = y;
 			UI_SetMouseCapture(node);
-			EXTRADATA(node).super.lastSelectedId = dragInfoIC->item.t->idx;
+			EXTRADATA(node).super.lastSelectedId = dragInfoIC->item.item->idx;
 			if (EXTRADATA(node).super.onSelect) {
 				UI_ExecuteEventActions(node, EXTRADATA(node).super.onSelect);
 			}

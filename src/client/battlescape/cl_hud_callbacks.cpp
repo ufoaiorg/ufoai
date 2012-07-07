@@ -39,7 +39,7 @@ invList_t* HUD_GetLeftHandWeapon (const le_t *actor, containerIndex_t *container
 
 	if (!invList) {
 		invList = RIGHT(actor);
-		if (invList == NULL || !invList->item.t->holdTwoHanded)
+		if (invList == NULL || !invList->item.item->holdTwoHanded)
 			invList = NULL;
 		else if (container != NULL)
 			*container = csi.idRight;
@@ -62,7 +62,7 @@ const fireDef_t *HUD_GetFireDefinitionForHand (const le_t * actor, const actorHa
 		return NULL;
 
 	invlistWeapon = ACTOR_GET_INV(actor, hand);
-	if (!invlistWeapon || !invlistWeapon->item.t)
+	if (!invlistWeapon || !invlistWeapon->item.item)
 		return NULL;
 
 	return FIRESH_FiredefForWeapon(&invlistWeapon->item);
@@ -82,17 +82,17 @@ static bool HUD_CheckShooting (const le_t* le, invList_t *weapon)
 		return false;
 
 	/* No item in hand. */
-	if (!weapon || !weapon->item.t) {
+	if (!weapon || !weapon->item.item) {
 		HUD_DisplayMessage(_("No item in hand."));
 		return false;
 	}
 	/* Cannot shoot because of lack of ammo. */
-	if (weapon->item.a <= 0 && weapon->item.t->reload) {
+	if (weapon->item.ammoLeft <= 0 && weapon->item.item->reload) {
 		HUD_DisplayMessage(_("Can't perform action:\nOut of ammo."));
 		return false;
 	}
 	/* Cannot shoot because weapon is fireTwoHanded, yet both hands handle items. */
-	if (weapon->item.t->fireTwoHanded && LEFT(le)) {
+	if (weapon->item.item->fireTwoHanded && LEFT(le)) {
 		HUD_DisplayMessage(_("This weapon cannot be fired\none handed."));
 		return false;
 	}
@@ -254,18 +254,18 @@ static bool HUD_CheckReload (const le_t* le, const invList_t *weapon, containerI
 		return false;
 
 	/* No item in hand. */
-	if (!weapon || !weapon->item.t) {
+	if (!weapon || !weapon->item.item) {
 		HUD_DisplayMessage(_("No item in hand."));
 		return false;
 	}
 
 	/* Cannot reload because this item is not reloadable. */
-	if (!weapon->item.t->reload) {
+	if (!weapon->item.item->reload) {
 		HUD_DisplayMessage(_("Can't perform action:\nThis item is not reloadable."));
 		return false;
 	}
 
-	tus = HUD_CalcReloadTime(le, weapon->item.t, container);
+	tus = HUD_CalcReloadTime(le, weapon->item.item, container);
 	/* Cannot reload because of no ammo in inventory. */
 	if (tus == -1) {
 		HUD_DisplayMessage(_("Can't perform action:\nAmmo not available."));

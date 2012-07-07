@@ -740,14 +740,14 @@ static int AIL_reactionfire (lua_State *L)
 static int AIL_roundsleft (lua_State *L)
 {
 	/* Right hand */
-	if (RIGHT(AIL_ent) && RIGHT(AIL_ent)->item.t->reload)
-		lua_pushnumber(L, RIGHT(AIL_ent)->item.a);
+	if (RIGHT(AIL_ent) && RIGHT(AIL_ent)->item.item->reload)
+		lua_pushnumber(L, RIGHT(AIL_ent)->item.ammoLeft);
 	else
 		lua_pushnil(L);
 
 	/* Left hand */
-	if (LEFT(AIL_ent) && LEFT(AIL_ent)->item.t->reload)
-		lua_pushnumber(L, LEFT(AIL_ent)->item.a);
+	if (LEFT(AIL_ent) && LEFT(AIL_ent)->item.item->reload)
+		lua_pushnumber(L, LEFT(AIL_ent)->item.ammoLeft);
 	else
 		lua_pushnil(L);
 	return 2;

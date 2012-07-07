@@ -789,11 +789,11 @@ static void AM_MoveCharacterInventoryIntoItemCargo (aircraft_t *aircraft, charac
 			const item_t *item = &ic->item;
 			const invList_t *next = ic->next;
 
-			if (item->t) {
-				AII_CollectItem(aircraft, item->t, 1);
+			if (item->item) {
+				AII_CollectItem(aircraft, item->item, 1);
 
-				if (item->a && item->m)
-					AII_CollectItem(aircraft, item->m, 1);
+				if (item->ammoLeft && item->ammo)
+					AII_CollectItem(aircraft, item->ammo, 1);
 			}
 			ic = next;
 		}
