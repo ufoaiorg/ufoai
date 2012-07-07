@@ -489,15 +489,18 @@ void AIRFIGHT_ActionsAfterAirfight (const campaign_t* campaign, aircraft_t *shoo
 			CP_MissionIsOverByUFO(aircraft);
 		}
 
-		/* Increase targeting skill of pilot who destroyed UFO. Never more than 70, see AIRFIGHT_ProbabilityToHit() */
-		shooter->pilot->chr.score.skills[SKILL_TARGETING] += 1;
-		shooter->pilot->chr.score.skills[SKILL_TARGETING] = std::min(shooter->pilot->chr.score.skills[SKILL_TARGETING], 70);
+		/* skill increase (for aircraft only, base defences skip) */
+		if (shooter) {
+			/* Increase targeting skill of pilot who destroyed UFO. Never more than 70, see AIRFIGHT_ProbabilityToHit() */
+			shooter->pilot->chr.score.skills[SKILL_TARGETING] += 1;
+			shooter->pilot->chr.score.skills[SKILL_TARGETING] = std::min(shooter->pilot->chr.score.skills[SKILL_TARGETING], 70);
 
-		/* Increase evasion skill of pilot who destroyed UFO if the aircraft it attacked can carry weapons.
-		 * Never more than 70, see AIRFIGHT_ProbabilityToHit() */
-		if (aircraft->maxWeapons > 0) {
-			shooter->pilot->chr.score.skills[SKILL_EVADING] += 1;
-			shooter->pilot->chr.score.skills[SKILL_EVADING] = std::min(shooter->pilot->chr.score.skills[SKILL_EVADING], 70);
+			/* Increase evasion skill of pilot who destroyed UFO if the aircraft it attacked can carry weapons.
+			 * Never more than 70, see AIRFIGHT_ProbabilityToHit() */
+			if (aircraft->maxWeapons > 0) {
+				shooter->pilot->chr.score.skills[SKILL_EVADING] += 1;
+				shooter->pilot->chr.score.skills[SKILL_EVADING] = std::min(shooter->pilot->chr.score.skills[SKILL_EVADING], 70);
+			}
 		}
 	} else {
 		/* change destination of other projectiles aiming aircraft */
