@@ -256,10 +256,14 @@ static void AIR_AircraftUpdateList_f (void)
  * @brief Creates console command to change the name of an aircraft.
  * Copies the value of the cvar mn_aircraftname over as the name of the
  * current selected aircraft
+ * @note empty name will reset aircraft's name to the default
+ * @note renaming to name with only non printable characters (eg. space) is denied
+ * @TODO make it not using cvar and default aircraft but get them from parameterlist
  */
 static void AIR_ChangeAircraftName_f (void)
 {
 	const base_t *base = B_GetCurrentSelectedBase();
+	const char *newName = Cvar_GetString("mn_aircraftname");
 	aircraft_t *aircraft;
 
 	if (!base)
@@ -268,7 +272,22 @@ static void AIR_ChangeAircraftName_f (void)
 	if (!aircraft)
 		return;
 
-	Q_strncpyz(aircraft->name, Cvar_GetString("mn_aircraftname"), sizeof(aircraft->name));
+	/* set default name on empty new name*/
+	if (Q_strnull(newName)) {
+		Q_strncpyz(aircraft->name, _(aircraft->defaultName), sizeof(aircraft->name));
+		return;
+	}
+
+	/* refuse to set name contains only non-printable characters */
+	int i;
+	for (i = 0; newName[i] != '\0'; i++) {
+		if (newName[i] > 0x20)
+			break;
+	}
+	if (newName[i] == '\0')
+		return;
+
+	Q_strncpyz(aircraft->name, newName, sizeof(aircraft->name));
 }
 
 
