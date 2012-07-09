@@ -107,7 +107,7 @@ static int G_PlayerSoldiersCount (const player_t* player)
  * @c G_GiveTimeUnits. It @b has to be called afterwards.
  * @param[in] team The index of the team to update the values for.
  * @sa G_GiveTimeUnits
- * @todo Make this depend on the character-attributes. http://lists.cifrid.net/pipermail/ufoai/2008-February/000346.html
+ * @todo Make this depend on the character-attributes.
  */
 static void G_UpdateStunState (int team)
 {
