@@ -470,6 +470,8 @@ static void G_ActorRevitalise (edict_t *ent)
 
 	/* calc new vis for this player */
 	G_CheckVisTeamAll(ent->team, 0, ent);
+
+	G_PrintStats("%s is revitalized.", ent->chr.name);
 }
 
 void G_ActorCheckRevitalise (edict_t *ent)
@@ -529,7 +531,7 @@ bool G_ActorDieOrStun (edict_t * ent, edict_t *attacker)
 
 	/* no state change performed? */
 	if (!state) {
-		Com_Printf("State wasn't changed\n");
+		gi.DPrintf("G_ActorDieOrStun: State wasn't changed\n");
 		return false;
 	}
 

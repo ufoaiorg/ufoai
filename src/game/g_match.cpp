@@ -169,8 +169,8 @@ static void G_UpdateCharacterSkills (edict_t *ent)
 		chr->score.experience[i] += gainedXP;
 		totalGainedXP += gainedXP;
 		chr->score.skills[i] = chr->score.initialSkills[i] + (int) (pow((float) (chr->score.experience[i]) / 100, 0.6f));
-		G_PrintStats(va("Soldier %s earned %d experience points in skill #%d (total experience: %d). It is now %d higher.",
-				chr->name, gainedXP, i, chr->score.experience[i], chr->score.skills[i] - chr->score.initialSkills[i]));
+		G_PrintStats("Soldier %s earned %d experience points in skill #%d (total experience: %d). It is now %d higher.",
+				chr->name, gainedXP, i, chr->score.experience[i], chr->score.skills[i] - chr->score.initialSkills[i]);
 	}
 
 	/* Health isn't part of abilityskills_t, so it needs to be handled separately. */
@@ -180,8 +180,8 @@ static void G_UpdateCharacterSkills (edict_t *ent)
 
 	chr->score.experience[i] += gainedXP;
 	chr->maxHP = chr->score.initialSkills[i] + (int) (pow((float) (chr->score.experience[i]) / 100, 0.6f));
-	G_PrintStats(va("Soldier %s earned %d experience points in skill #%d (total experience: %d). It is now %d higher.",
-			chr->name, gainedXP, i, chr->score.experience[i], chr->maxHP - chr->score.initialSkills[i]));
+	G_PrintStats("Soldier %s earned %d experience points in skill #%d (total experience: %d). It is now %d higher.",
+			chr->name, gainedXP, i, chr->score.experience[i], chr->maxHP - chr->score.initialSkills[i]);
 }
 
 /**
@@ -325,7 +325,7 @@ bool G_MatchDoEnd (void)
 {
 	/* check for intermission */
 	if (level.intermissionTime > 0.0 && level.time > level.intermissionTime) {
-		G_PrintStats(va("End of game - Team %i is the winner", level.winningTeam));
+		G_PrintStats("End of game - Team %i is the winner", level.winningTeam);
 		G_MatchSendResults(level.winningTeam, level.nextMapSwitch);
 
 		/* now we cleanup the AI */

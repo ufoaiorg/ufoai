@@ -359,7 +359,7 @@ player_t* G_GetPlayerForTeam(int team);
 int G_GetActiveTeam(void);
 const char* G_GetWeaponNameForFiredef(const fireDef_t *fd);
 void G_PrintActorStats(const edict_t *victim, const edict_t *attacker, const fireDef_t *fd);
-void G_PrintStats(const char *buffer);
+void G_PrintStats(const char *format, ...) __attribute__((format(printf, 1, 2)));
 int G_TouchTriggers(edict_t *ent);
 int G_TouchSolids(edict_t *ent, float extend);
 void G_TouchEdicts(edict_t *ent, float extend);

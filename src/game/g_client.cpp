@@ -943,7 +943,7 @@ static void G_GetStartingTeam (const player_t* player)
 
 	if (teamCount) {
 		const int teamIndex = (int) (frand() * (teamCount - 1) + 0.5);
-		G_PrintStats(va("Starting new game: %s with %i teams", level.mapname, teamCount));
+		G_PrintStats("Starting new game: %s with %i teams", level.mapname, teamCount);
 		level.activeTeam = knownTeams[teamIndex];
 		p = NULL;
 		while ((p = G_PlayerGetNextActiveHuman(p)))

@@ -299,8 +299,15 @@ const char* G_GetPlayerName (int pnum)
  * @brief Prints stats to game console and stats log file
  * @sa G_PrintActorStats
  */
-void G_PrintStats (const char *buffer)
+void G_PrintStats (const char *format, ...)
 {
+	char buffer[512];
+	va_list argptr;
+
+	va_start(argptr, format);
+	Q_vsnprintf(buffer, sizeof(buffer), format, argptr);
+	va_end(argptr);
+
 	gi.DPrintf("[STATS] %s\n", buffer);
 	if (logstatsfile) {
 		struct tm *t;
@@ -381,7 +388,7 @@ void G_PrintActorStats (const edict_t *victim, const edict_t *attacker, const fi
 		Com_sprintf(buffer, sizeof(buffer), "%s (%s) was %s (entnum: %i)",
 			victimName, victim->chr.name, (victim->HP == 0 ? "killed" : "stunned"), victim->number);
 	}
-	G_PrintStats(buffer);
+	G_PrintStats("%s", buffer);
 }
 
 /**
