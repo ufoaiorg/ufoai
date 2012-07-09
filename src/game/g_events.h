@@ -69,6 +69,7 @@ void G_EventSpawnSound(unsigned int playerMask, bool instant, const edict_t* ent
 void G_EventStart(const player_t *player, bool teamplay);
 void G_EventStartShoot(const edict_t* ent, vismask_t visMask, shoot_types_t shootType, const pos3_t at);
 void G_EventThrow(vismask_t visMask, const fireDef_t *fd, float dt, byte flags, const vec3_t position, const vec3_t velocity);
+void G_EventAdd(unsigned int mask, int eType, int entnum);
 void G_EventEnd(void);
 
 #endif

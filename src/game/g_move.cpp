@@ -189,7 +189,7 @@ static void G_WriteStep (edict_t* ent, byte** stepAmount, const int dvec, const 
 {
 	/* write move header if not yet done */
 	if (gi.GetEvent() != EV_ACTOR_MOVE) {
-		gi.AddEvent(G_VisToPM(ent->visflags), EV_ACTOR_MOVE, ent->number);
+		G_EventAdd(G_VisToPM(ent->visflags), EV_ACTOR_MOVE, ent->number);
 	}
 
 	/* the moveinfo stuff is used inside the G_PhysicsStep think function */
