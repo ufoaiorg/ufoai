@@ -270,41 +270,41 @@ void SV_ExecuteClientMessage (client_t * cl, int cmd, dbuffer *msg)
 
 	case clc_action:
 		/* client actions are handled by the game module */
-		sv->messageBuffer = msg;
 		TH_MutexLock(svs.serverMutex);
+		sv->messageBuffer = msg;
 		svs.ge->ClientAction(cl->player);
-		TH_MutexUnlock(svs.serverMutex);
 		sv->messageBuffer = NULL;
+		TH_MutexUnlock(svs.serverMutex);
 		break;
 
 	case clc_endround:
 		/* player wants to end round */
-		sv->messageBuffer = msg;
 		TH_MutexLock(svs.serverMutex);
+		sv->messageBuffer = msg;
 		svs.ge->ClientEndRound(cl->player);
-		TH_MutexUnlock(svs.serverMutex);
 		sv->messageBuffer = NULL;
+		TH_MutexUnlock(svs.serverMutex);
 		break;
 
 	case clc_teaminfo:
 		/* player sends team info */
 		/* actors spawn accordingly */
-		sv->messageBuffer = msg;
 		TH_MutexLock(svs.serverMutex);
+		sv->messageBuffer = msg;
 		svs.ge->ClientTeamInfo(cl->player);
-		TH_MutexUnlock(svs.serverMutex);
 		sv->messageBuffer = NULL;
+		TH_MutexUnlock(svs.serverMutex);
 		SV_SetClientState(cl, cs_spawned);
 		break;
 
 	case clc_initactorstates:
 		/* player sends team info */
 		/* actors spawn accordingly */
-		sv->messageBuffer = msg;
 		TH_MutexLock(svs.serverMutex);
+		sv->messageBuffer = msg;
 		svs.ge->ClientInitActorStates(cl->player);
-		TH_MutexUnlock(svs.serverMutex);
 		sv->messageBuffer = NULL;
+		TH_MutexUnlock(svs.serverMutex);
 		break;
 	}
 }

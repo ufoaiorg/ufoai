@@ -117,7 +117,7 @@ typedef struct {
 
 	char configstrings[MAX_CONFIGSTRINGS][MAX_TOKEN_CHARS];
 
-	dbuffer *messageBuffer;
+	dbuffer *messageBuffer;			/**< the message buffer that was received from the client. */
 	pending_event_t pendingEvent;
 
 	mapData_t mapData;
