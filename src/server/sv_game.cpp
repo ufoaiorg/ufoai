@@ -330,13 +330,6 @@ static void SV_EndEvents (void)
 	if (!p->pending)
 		return;
 
-	if (p->type == EV_ACTOR_MOVE) {
-		/* mark the end of the steps */
-		NET_WriteLong(p->buf, 0);
-		assert(p->entnum != -1);
-		const sv_edict_t &e = sv->edicts[p->entnum];
-		NET_WriteGPos(p->buf, e.ent->pos);
-	}
 	NET_WriteByte(p->buf, EV_NULL);
 	SV_Multicast(p->playerMask, p->buf);
 	p->pending = false;

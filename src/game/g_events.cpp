@@ -588,10 +588,18 @@ void G_EventModelExplode (const edict_t *ent)
 
 void G_EventAdd (unsigned int mask, int eType, int entnum)
 {
+	G_EventEnd();
 	gi.AddEvent(mask, eType, entnum);
 }
 
 void G_EventEnd (void)
 {
+	if (gi.GetEvent() == EV_ACTOR_MOVE) {
+		/* mark the end of the steps */
+		gi.WriteLong(0);
+		const edict_t *ent = gi.GetEventEdict();
+		assert(ent);
+		gi.WriteGPos(ent->pos);
+	}
 	gi.EndEvents();
 }
