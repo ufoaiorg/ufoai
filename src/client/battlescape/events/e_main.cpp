@@ -120,6 +120,7 @@ const eventRegister_t events[] = {
 	{E(EV_INV_DEL), "sbbb", CL_InvDel, NULL, NULL},
 	{E(EV_INV_AMMO), "sbbbbb", CL_InvAmmo, NULL, NULL},
 	{E(EV_INV_RELOAD), "sbbbbb", CL_InvReload, CL_InvReloadTime, NULL},
+	/** @sa G_ReadItem, G_WriteItem */
 	{E(EV_INV_TRANSFER), "sbsbbbbs", NULL, NULL, NULL},
 
 	{E(EV_MODEL_EXPLODE), "s", CL_Explode, CL_ExplodeTime, NULL},
