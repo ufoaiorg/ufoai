@@ -494,6 +494,7 @@ void G_EventActorAppear (unsigned int playerMask, const edict_t *check, const ed
 	gi.WriteByte(G_ActorCalculateMaxTU(check));
 	gi.WriteByte(std::min(MAX_SKILL, GET_MORALE(check->chr.score.skills[ABILITY_MIND])));
 	gi.WriteShort(check->chr.maxHP);
+	G_EventEnd();
 
 	if (mask) {
 		G_EventActorStateChange(mask, check);

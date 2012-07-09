@@ -184,6 +184,7 @@ typedef struct {
 	void (IMPORT *EndEvents) (void);
 	void (IMPORT *AddEvent) (unsigned int mask, int eType, int entnum);
 	int (IMPORT *GetEvent) (void);
+	edict_t* (IMPORT *GetEventEdict) (void);
 
 	/* network messaging (reading) */
 	int (IMPORT *ReadChar) (void);

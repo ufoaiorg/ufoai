@@ -443,6 +443,19 @@ static int SV_GetEvent (void)
 	return p->type;
 }
 
+static edict_t* SV_GetEventEdict (void)
+{
+	const pending_event_t *p = &sv->pendingEvent;
+	if (!p->pending)
+		return NULL;
+
+	if (p->entnum == -1)
+		return NULL;
+
+	const sv_edict_t &e = sv->edicts[p->entnum];
+	return e.ent;
+}
+
 /**
  * @brief Makes sure the game DLL does not use client, or signed tags
  */
@@ -706,6 +719,7 @@ void SV_InitGameProgs (void)
 	import.EndEvents = SV_EndEvents;
 	import.AddEvent = SV_AddEvent;
 	import.GetEvent = SV_GetEvent;
+	import.GetEventEdict = SV_GetEventEdict;
 
 	import.ReadChar = SV_ReadChar;
 	import.ReadByte = SV_ReadByte;
