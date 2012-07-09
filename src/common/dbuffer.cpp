@@ -7,8 +7,6 @@
 
 #include "common.h"
 
-#define INITIAL_CAPACITY 4000
-
 dbuffer::dbuffer () : _length(0)
 {
 	reserve(INITIAL_CAPACITY);

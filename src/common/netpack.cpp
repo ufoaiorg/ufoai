@@ -588,7 +588,7 @@ void NET_OOB_Printf (struct net_stream *s, const char *format, ...)
  */
 void NET_WriteMsg (struct net_stream *s, dbuffer *buf)
 {
-	char tmp[4096];
+	char tmp[INITIAL_CAPACITY];
 	int len = LittleLong(dbuffer_len(buf));
 	NET_StreamEnqueue(s, (char *)&len, 4);
 
@@ -633,9 +633,9 @@ void NET_WriteConstMsg (struct net_stream *s, const dbuffer *buf)
 dbuffer *NET_ReadMsg (struct net_stream *s)
 {
 	unsigned int v;
-	unsigned int len;
+	int len;
 	dbuffer *buf;
-	char tmp[4096];
+	char tmp[INITIAL_CAPACITY];
 	if (NET_StreamPeek(s, (char *)&v, 4) < 4)
 		return NULL;
 
@@ -647,7 +647,7 @@ dbuffer *NET_ReadMsg (struct net_stream *s)
 
 	buf = new_dbuffer();
 	while (len > 0) {
-		const int x = NET_StreamDequeue(s, tmp, std::min(len, (unsigned int)4096));
+		const int x = NET_StreamDequeue(s, tmp, std::min(len, INITIAL_CAPACITY));
 		dbuffer_add(buf, tmp, x);
 		len -= x;
 	}

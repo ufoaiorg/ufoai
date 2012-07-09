@@ -28,6 +28,8 @@
  * @brief Data buffers (dbuffer)
  */
 
+#define INITIAL_CAPACITY 4096
+
 /** @defgroup dbuffer Data buffers (dbuffer)
  * @ingroup datastructure
  * A dbuffer is a dynamically sized buffer that stores arbitrary bytes
