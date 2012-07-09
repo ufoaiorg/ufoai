@@ -203,8 +203,8 @@ void SV_Map (bool day, const char *levelstring, const char *assembly)
 	/* precache and static commands can be issued during map initialization */
 	Com_SetServerState(ss_loading);
 
-	TH_MutexLock(svs.serverMutex);
 	/* load and spawn all other entities */
+	TH_MutexLock(svs.serverMutex);
 	svs.ge->SpawnEntities(sv->name, SV_GetConfigStringInteger(CS_LIGHTMAP), sv->mapData.mapEntityString);
 	TH_MutexUnlock(svs.serverMutex);
 

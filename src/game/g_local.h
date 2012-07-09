@@ -378,7 +378,7 @@ bool G_TestLineWithEnts(const vec3_t start, const vec3_t end);
 bool G_TestLine(const vec3_t start, const vec3_t end);
 
 /* g_combat.c */
-void G_GetShotOrigin (const edict_t *shooter, const fireDef_t *fd, const vec3_t dir, vec3_t shotOrigin);
+void G_GetShotOrigin(const edict_t *shooter, const fireDef_t *fd, const vec3_t dir, vec3_t shotOrigin);
 
 /* g_reaction.c */
 void G_ReactionFirePreShot(const edict_t *target, const int fdTime);
