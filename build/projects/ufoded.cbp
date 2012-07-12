@@ -132,6 +132,7 @@
 		<Unit filename="..\..\src\server\sv_main.cpp" />
 		<Unit filename="..\..\src\server\sv_mapcycle.cpp" />
 		<Unit filename="..\..\src\server\sv_rma.cpp" />
+		<Unit filename="..\..\src\server\sv_rma.h" />
 		<Unit filename="..\..\src\server\sv_send.cpp" />
 		<Unit filename="..\..\src\server\sv_user.cpp" />
 		<Unit filename="..\..\src\server\sv_world.cpp" />
