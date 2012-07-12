@@ -116,7 +116,7 @@ typedef struct mapInfo_s {
 	mToPlace_t mToPlace[MAX_TILETYPES];
 	int numToPlace;								/**< the size of the to place list */
 
-	Assembly mAssembly[MAX_MAPASSEMBLIES];		/**< A list of parsed assembly definitions. */
+	Assembly Assemblies[MAX_MAPASSEMBLIES];		/**< A list of parsed assembly definitions. */
 	int numAssemblies;							/**< The number of assemblies in mAssembly. */
 
 	mPlaced_t mPlaced[MAX_MAPTILES];			/**< Holds all tiles that have been placed on the current map. */
