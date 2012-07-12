@@ -324,21 +324,21 @@ typedef struct mapDef_s {
 	char *civTeam;			/**< the civilian team to use for this map - this can also be NULL */
 
 	/* multiplayer */
-	bool multiplayer;	/**< is this map multiplayer ready at all */
+	bool multiplayer;		/**< is this map multiplayer ready at all */
 	int teams;				/**< multiplayer teams */
-	linkedList_t *gameTypes;	/**< gametype strings this map is useable for */
+	linkedList_t *gameTypes;/**< gametype strings this map is useable for */
 
 
 	/* singleplayer */
 	bool campaign;			/**< available in campaign mode? */
 	bool singleplayer;		/**< is this map available in singleplayer games? */
-	int maxAliens;				/**< Number of spawning points on the map */
+	int maxAliens;			/**< Number of spawning points on the map */
 	bool hurtAliens;		/**< hurt the aliens on spawning them - e.g. for ufocrash missions */
 
 	linkedList_t *terrains;		/**< terrain strings this map is useable for */
 	linkedList_t *populations;	/**< population strings this map is useable for */
 	linkedList_t *cultures;		/**< culture strings this map is useable for */
-	bool storyRelated;		/**< Is this a mission story related? */
+	bool storyRelated;			/**< Is this a mission story related? */
 	int timesAlreadyUsed;		/**< Number of times the map has already been used */
 	linkedList_t *ufos;			/**< Type of allowed UFOs on the map */
 	linkedList_t *aircraft;		/**< Type of allowed aircraft on the map */
