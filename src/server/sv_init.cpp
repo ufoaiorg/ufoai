@@ -44,7 +44,7 @@ static const char* SV_GetMapTitle (const mapInfo_t *map, const char* const mapna
 	assert(mapname);
 
 	if (mapname[0] == '+') {
-		const mAssembly_t *mAsm = &map->mAssembly[map->mAsm];
+		const Assembly *mAsm = &map->mAssembly[map->AsmIdx];
 		if (mAsm && mAsm->title[0]) {
 			/* return the assembly title itself - must be translated client side */
 			if (mAsm->title[0] == '_')

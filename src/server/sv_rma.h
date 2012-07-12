@@ -59,8 +59,10 @@ typedef struct mTileSet_s {
  * @brief Stores the parsed data of an assembly definition.
  * See *.ump files
  */
-typedef struct mAssembly_s {
-	char id[MAX_VAR];		/**< The id (string) of the assembly as defined in the ump file (next to "assembly"). */
+class Assembly
+{
+public:
+	char id[MAX_VAR];			/**< The id (string) of the assembly as defined in the ump file (next to "assembly"). */
 	char title[MAX_VAR];		/**< The full title for this assembly. This string should be marked as translatable (_). */
 	byte min[MAX_TILETYPES];	/**< Minimum tile number for each used tile-type. */
 	byte max[MAX_TILETYPES];	/**< Maximum tile number for each used tile-type. */
@@ -80,7 +82,7 @@ typedef struct mAssembly_s {
 	int seeds[MAX_ASSEMBLY_SEEDS]; /**< seeds that are used to assemble this assembly definition if the previous used
 				* seed did not lead to a solution. The seeds given in the seeds block of the assembly are known to work. */
 	int numSeeds;
-} mAssembly_t;
+};
 
 /**
  * @brief Defines a tile to place
@@ -114,7 +116,7 @@ typedef struct mapInfo_s {
 	mToPlace_t mToPlace[MAX_TILETYPES];
 	int numToPlace;								/**< the size of the to place list */
 
-	mAssembly_t mAssembly[MAX_MAPASSEMBLIES];	/**< A list of parsed assembly definitions. */
+	Assembly mAssembly[MAX_MAPASSEMBLIES];		/**< A list of parsed assembly definitions. */
 	int numAssemblies;							/**< The number of assemblies in mAssembly. */
 
 	mPlaced_t mPlaced[MAX_MAPTILES];			/**< Holds all tiles that have been placed on the current map. */
