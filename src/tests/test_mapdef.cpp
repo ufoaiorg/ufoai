@@ -241,7 +241,7 @@ static void testMapDefStatistic (void)
 			}
 
 			SV_PrepareTilesToPlace(theMap);
-			mAssembly_t *ass = &theMap->mAssembly[theMap->mAsm];
+			Assembly *ass = &theMap->mAssembly[theMap->mAsm];
 
 			required = 0;
 			solids = 0;
