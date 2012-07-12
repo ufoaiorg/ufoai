@@ -130,7 +130,7 @@ typedef struct mapInfo_s {
 	char basePath[MAX_QPATH];					/**< the base path of the main rma */
 	char inheritBasePath[MAX_QPATH];			/**< only used during parsing, don't rely on any reasonable data after the parsing stage */
 
-	int mAsm;									/**< the index of the selected assembly */
+	int AsmIdx;									/**< the index of the selected assembly */
 
 	int retryCnt;								/**< amount of retries in case the assembly didn't assemble and we are using the defined seeds */
 } mapInfo_t;
