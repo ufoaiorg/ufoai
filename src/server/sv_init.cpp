@@ -39,7 +39,7 @@ serverInstanceGame_t * sv;					/* local server */
  * @note the title string must be translated client side
  * @return Never NULL - mapname or maptitle (if defined in assembly)
  */
-static const char* SV_GetMapTitle (const mapInfo_t *map, const char* const mapname)
+static const char* SV_GetMapTitle (const MapInfo *map, const char* const mapname)
 {
 	assert(mapname);
 
@@ -116,7 +116,7 @@ void SV_Map (bool day, const char *levelstring, const char *assembly)
 	unsigned checksum = 0;
 	char * map = SV_GetConfigString(CS_TILES);
 	char * pos = SV_GetConfigString(CS_POSITIONS);
-	mapInfo_t *randomMap = NULL;
+	MapInfo *randomMap = NULL;
 	client_t *cl;
 
 	/* any partially connected client will be restarted */

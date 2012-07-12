@@ -104,7 +104,9 @@ typedef struct mPlaced_s {
 	int idx, pos;	/**< Stores the state of the placement algorithm */
 } mPlaced_t;
 
-typedef struct mapInfo_s {
+class MapInfo
+{
+public:
 	char name[MAX_TOKEN_CHARS * MAX_TILESTRINGS];
 	/** @brief Stores the alternatives information for the assembled map */
 	unsigned long curMap[MAX_RANDOM_MAP_HEIGHT][MAX_RANDOM_MAP_WIDTH];
@@ -135,12 +137,12 @@ typedef struct mapInfo_s {
 	int AsmIdx;									/**< the index of the selected assembly */
 
 	int retryCnt;								/**< amount of retries in case the assembly didn't assemble and we are using the defined seeds */
-} mapInfo_t;
+};
 
-mapInfo_t* SV_AssembleMap(const char *name, const char *assembly, char *asmMap, char *asmPos, const unsigned int seed);
+MapInfo* SV_AssembleMap(const char *name, const char *assembly, char *asmMap, char *asmPos, const unsigned int seed);
 
 /* the next two functions are only exported for cunits tests */
-void SV_ParseUMP(const char *name, mapInfo_t *map, bool inherit);
-void SV_PrepareTilesToPlace (mapInfo_t *map);
+void SV_ParseUMP(const char *name, MapInfo *map, bool inherit);
+void SV_PrepareTilesToPlace (MapInfo *map);
 
 #endif /* SV_RMA_H_ */
