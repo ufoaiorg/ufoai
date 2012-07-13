@@ -1344,7 +1344,7 @@ static bool SV_GapListBuild (MapInfo *map, int tilePosListCnt)
  * @param nx y of the absolute map position to investigate
  * @return @c true if no matching tile was found
  */
-static bool SV_GapCheckNeighbour (MapInfo *map, int tc1, int mapW, int nx, int ny)
+static bool SV_GapCheckNeighbour (MapInfo *map, int tc1, int mapW,  int mapH, int nx, int ny)
 {
 	if (nx < 1)
 		/* map border */
@@ -1353,7 +1353,7 @@ static bool SV_GapCheckNeighbour (MapInfo *map, int tc1, int mapW, int nx, int n
 		return false;
 	if (nx > mapW)
 		return false;
-	if (ny > map->Assemblies[map->AsmIdx].height)
+	if (ny > mapH)
 		return false;
 
 	if (gapList[nx][ny][0] < 1)
@@ -1393,12 +1393,13 @@ static int SV_GapListReduce (MapInfo *map)
 {
 	const Assembly *mAsm = map->getCurrentAssembly();
 	const int mapW = mAsm->width;
+	const int mapH = mAsm->height;
 	int x, y;
 	int n = 0;	/** number of tiles marked for elinimation */
 
 	/** if there is a tile that doesn't match ANY of the tiles available for the adjacent gap we can eliminate it. */
-	for (y = 1; y < mAsm->height + 1; y++) {
-		for (x = 1; x < mAsm->width + 1; x++) {
+	for (y = 1; y < mapH + 1; y++) {
+		for (x = 1; x < mapW + 1; x++) {
 			if (gapList[x][y][0] < 1)	/* solid ? */
 				continue;
 
@@ -1409,25 +1410,25 @@ static int SV_GapListReduce (MapInfo *map)
 					break;	/* there are more tiles than we stored the tc's of. */
 
 				/* check the neighbour to the right */
-				if (SV_GapCheckNeighbour(map, tc1, mapW, x+1, y)) {
+				if (SV_GapCheckNeighbour(map, tc1, mapW, mapH, x+1, y)) {
 					posTileList[1][n] = tc1;
 					n++;
 					continue;
 				}
 				/* check the neighbour to the left */
-				if (SV_GapCheckNeighbour(map, tc1, mapW, x-1, y)) {
+				if (SV_GapCheckNeighbour(map, tc1, mapW, mapH, x-1, y)) {
 					posTileList[1][n] = tc1;
 					n++;
 					continue;
 				}
 				/* check the upper neighbour */
-				if (SV_GapCheckNeighbour(map, tc1, mapW, x, y+1)) {
+				if (SV_GapCheckNeighbour(map, tc1, mapW, mapH, x, y+1)) {
 					posTileList[1][n] = tc1;
 					n++;
 					continue;
 				}
 				/* check the neighbour below */
-				if (SV_GapCheckNeighbour(map, tc1, mapW, x, y-1)) {
+				if (SV_GapCheckNeighbour(map, tc1, mapW, mapH, x, y-1)) {
 					posTileList[1][n] = tc1;
 					n++;
 					continue;
