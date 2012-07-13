@@ -817,7 +817,7 @@ static bool SV_FitTile (const MapInfo *map, const mTile_t * tile, const int x, c
 	int tx, ty;
 	const unsigned long *spec = NULL;
 	const unsigned long *m = NULL;
-	const Assembly *mAsm = &map->Assemblies[map->AsmIdx];
+	const Assembly *mAsm = map->getCurrentAssembly();
 
 	/* check for valid grid positions */
 	assert(x % mAsm->dx == 0);
@@ -867,7 +867,7 @@ static bool SV_FitTile (const MapInfo *map, const mTile_t * tile, const int x, c
 static bool SV_TestFilled (const MapInfo *map)
 {
 	int x, y;
-	const Assembly *mAsm = &map->Assemblies[map->AsmIdx];
+	const Assembly *mAsm = map->getCurrentAssembly();
 
 	for (y = 1; y < mAsm->height + 1; y++)
 		for (x = 1; x < mAsm->width + 1; x++)
@@ -883,7 +883,7 @@ static bool SV_TestFilled (const MapInfo *map)
 static void SV_DumpPlaced (const MapInfo *map, int pl)
 {
 	int x, y;
-	const Assembly *mAsm = &map->Assemblies[map->AsmIdx];
+	const Assembly *mAsm = map->getCurrentAssembly();
 	const int h = mAsm->height;
 	const int w = mAsm->width;
 	const mPlaced_t *placed = &map->mPlaced[pl];
@@ -923,7 +923,7 @@ static void SV_AddTile (MapInfo *map, const mTile_t *tile, int x, int y, int idx
 {
 	int tx, ty;
 #ifdef DEBUG
-	const Assembly *mAsm = &map->Assemblies[map->AsmIdx];
+	const Assembly *mAsm = map->getCurrentAssembly();
 
 	/* check vor valid grid positions */
 	assert(x % mAsm->dx == 0);
@@ -1017,11 +1017,11 @@ static void SV_RemoveTile (MapInfo *map, int* idx, int* pos)
  * @param[out] asmPos The pos string for the assembly. For each tile from the @c asmMap
  * string this string contains three coordinates for shifting the given tile names.
  */
-static void SV_PrintMapStrings (MapInfo *map, char *asmMap, char *asmPos)
+static void SV_PrintMapStrings (const MapInfo *map, char *asmMap, char *asmPos)
 {
 	int i;
-	Assembly *mAsm;
-	mAsm = &map->Assemblies[map->AsmIdx];
+	const Assembly *mAsm;
+	mAsm = map->getCurrentAssembly();
 
 	for (i = 0; i < map->numPlaced; i++) {
 		const mPlaced_t *pl = &map->mPlaced[i];
@@ -1080,7 +1080,7 @@ static int availableTiles[MAX_TILETYPES][2];	/* the 2nd dimension is index and c
 static bool SV_AddMissingTiles_r (MapInfo *map, int rec, int posListCnt, short myPosList[], const mTile_t *prevTile, int prevX, int prevY)
 {
 	static int callCnt = 0;
-	const Assembly *mAsm = &map->Assemblies[map->AsmIdx];
+	const Assembly *mAsm = map->getCurrentAssembly();
 	const int mapW = mAsm->width;
 	const mToPlace_t *mToPlace = map->mToPlace;
 	int i, j = 0;
@@ -1290,7 +1290,7 @@ static bool SV_AddMissingTiles_r (MapInfo *map, int rec, int posListCnt, short m
  */
 static bool SV_GapListBuild (MapInfo *map, int tilePosListCnt)
 {
-	const Assembly *mAsm = &map->Assemblies[map->AsmIdx];
+	const Assembly *mAsm = map->getCurrentAssembly();
 	const int mapW = mAsm->width;
 	const mToPlace_t *mToPlace = map->mToPlace;
 
@@ -1390,7 +1390,7 @@ static bool SV_GapCheckNeighbour (MapInfo *map, int tc1, int mapW, int nx, int n
  */
 static int SV_GapListReduce (MapInfo *map)
 {
-	const Assembly *mAsm = &map->Assemblies[map->AsmIdx];
+	const Assembly *mAsm = map->getCurrentAssembly();
 	const int mapW = mAsm->width;
 	int x, y;
 	int n = 0;	/** number of tiles marked for elinimation */
@@ -1462,7 +1462,7 @@ static int SV_GapListReduce (MapInfo *map)
 static bool SV_AddMissingTiles (MapInfo *map)
 {
 	static int attempts = 0;			/* how often this function is called in the RMA process */
-	const Assembly *mAsm = &map->Assemblies[map->AsmIdx];
+	const Assembly *mAsm = map->getCurrentAssembly();
 	const int mapSize = mAsm->size;		/* the # of grid squares in the assembly. A grid suare is usually 8x8 cells. */
 	const int mapW = mAsm->width;
 	const mToPlace_t *mToPlace = map->mToPlace;
@@ -1589,7 +1589,7 @@ static bool SV_AddMapTiles (MapInfo *map)
 {
 	int idx;	/* index in the array of available tiles */
 	int pos;	/* index in the array of random positions */
-	const Assembly *mAsm = &map->Assemblies[map->AsmIdx];
+	const Assembly *mAsm = map->getCurrentAssembly();
 	const int mapW = mAsm->width;		/* width in x-direction */
 	const int mapSize = mAsm->size;		/* the # of grid squares in the assembly. A grid suare is usually 8x8 cells. */
 	const int numToPlace = map->numToPlace;
@@ -1699,7 +1699,7 @@ static bool SV_AddMapTiles (MapInfo *map)
 void SV_PrepareTilesToPlace (MapInfo *map)
 {
 	int i;
-	const Assembly *mAsm = &map->Assemblies[map->AsmIdx];
+	const Assembly *mAsm = map->getCurrentAssembly();
 
 	map->numToPlace = 0;
 	OBJZERO(map->mToPlace);
@@ -1936,7 +1936,7 @@ static int cmpTileAreaSize (const void * a, const void * b)
 static MapInfo* SV_DoMapAssemble (MapInfo *map, const char *assembly, char *asmMap, char *asmPos, const unsigned int seed)
 {
 	int i;
-	Assembly *mAsm = &map->Assemblies[map->AsmIdx];
+	const Assembly *mAsm = map->getCurrentAssembly();
 
 	Com_DPrintf(DEBUG_SERVER, "Use assembly: '%s'\n", mAsm->id);
 

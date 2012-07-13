@@ -137,6 +137,8 @@ public:
 	int AsmIdx;									/**< the index of the selected assembly */
 
 	int retryCnt;								/**< amount of retries in case the assembly didn't assemble and we are using the defined seeds */
+
+	inline const Assembly* getCurrentAssembly() const {return &Assemblies[AsmIdx];}
 };
 
 MapInfo* SV_AssembleMap(const char *name, const char *assembly, char *asmMap, char *asmPos, const unsigned int seed);
