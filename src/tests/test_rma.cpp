@@ -61,7 +61,7 @@ char posStr[MAX_TOKEN_CHARS * MAX_TILESTRINGS];
 
 static void testUMPExtends (void)
 {
-	mapInfo_t *randomMap;
+	MapInfo *randomMap;
 
 	srand(0);
 	randomMap = SV_AssembleMap("test_extends", "default", mapStr, posStr, 0);
@@ -71,7 +71,7 @@ static void testUMPExtends (void)
 
 static void testAssembly (void)
 {
-	mapInfo_t *randomMap;
+	MapInfo *randomMap;
 
 	srand(0);
 	randomMap = SV_AssembleMap("forest", "large", mapStr, posStr, 0);
@@ -84,7 +84,7 @@ static void testMassAssemblyTimeout (void)
 {
 	int i;
 	long time;
-	mapInfo_t *randomMap;
+	MapInfo *randomMap;
 
 	sv_threads->integer = 1;
 	for (i = 0; i < 10; i++) {
@@ -105,7 +105,7 @@ static void testMassAssemblyParallel (void)
 {
 	int i;
 	long time;
-	mapInfo_t *randomMap;
+	MapInfo *randomMap;
 
 	sv_threads->integer = 2;
 	for (i = 0; i < 10; i++) {
@@ -127,7 +127,7 @@ static void testMassAssemblySequential (void)
 {
 	int i;
 	long time;
-	mapInfo_t *randomMap;
+	MapInfo *randomMap;
 
 	sv_threads->integer = 0;
 	for (i = 0; i < 10; i++) {
@@ -148,7 +148,7 @@ static void testSeedlists (void)
 {
 	int i, n;
 	long time, timeSum = 0;
-	mapInfo_t *randomMap;
+	MapInfo *randomMap;
 	size_t length;
 	const char* assNames[][2] = {
 		{"farm", "medium"},
@@ -191,7 +191,7 @@ static void testNewSeedlists (void)
 {
 	int i;
 	long time, timeSum = 0;
-	mapInfo_t *randomMap;
+	MapInfo *randomMap;
 
 	sv_threads->integer = 0;
 	for (i = 0; i < 50; i++) {
