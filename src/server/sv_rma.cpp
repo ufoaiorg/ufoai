@@ -166,14 +166,15 @@ static void SV_TileMaskToString (unsigned long m, char *str)
 #define MMH 13	/* map max height */
 static void SV_RmaPrintMap (const MapInfo *map)
 {
+	const Assembly *mAsm = map->getCurrentAssembly();
 	char screen[(MMH + 1) * ACH][(MMW + 1) * ACW];
 	int i, j;
 
-	assert(map->Assemblies[map->AsmIdx].height < MMH);
-	assert(map->Assemblies[map->AsmIdx].width < MMW);
+	assert(mAsm->height < MMH);
+	assert(mAsm->width < MMW);
 
 	/* initialize */
-	int rb = (1 + map->Assemblies[map->AsmIdx].width) * ACW;	/* index of right border */
+	int rb = (1 + mAsm->width) * ACW;	/* index of right border */
 	OBJSET(screen, ' ');
 	for (i = 0; i < MMH * ACH + 1; i++) {
 		screen[i][rb + 1] = '|';
@@ -239,8 +240,8 @@ static void SV_RmaPrintMap (const MapInfo *map)
 
 	/* now add the specs of the gaps */
 	int cx, cy;
-	int height = map->Assemblies[map->AsmIdx].height;
-	int width = map->Assemblies[map->AsmIdx].width;
+	int height = mAsm->height;
+	int width = mAsm->width;
 	for (cy = 0; cy <= height; cy++) {
 		for (cx = 0; cx <= width; cx++) {
 			if (!IS_SOLID(map->curMap[cy][cx])) {
@@ -264,7 +265,7 @@ static void SV_RmaPrintMap (const MapInfo *map)
 	/* print it */
 	const char *underscores = "_________________________________________________________________________\n";
 	Com_Printf("\nCurrent state of the map:\n");
-	int w = ACW * (MMW - 1 - map->Assemblies[map->AsmIdx].width);
+	int w = ACW * (MMW - 1 - mAsm->width);
 	Com_Printf("%s", underscores + w);
 	int h = ACH * (height + 1);
 	for (i = h; i >= ACH; i--)
