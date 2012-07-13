@@ -766,7 +766,6 @@ static bool SV_ParseAssembly (MapInfo *map, const char *filename, const char **t
  * @param[in] tileAlts Pointer to the alternatives info field of the tile.
  * @param[in,out] mapRating Pointer to the rating field of the map.
  * @sa SV_AssembleMap
- * @sa SV_AddRegion
  * @sa SV_FitTile
  */
 static void SV_CombineAlternatives (unsigned long *mapAlts, const unsigned long tileAlts, char *mapRating)
@@ -810,8 +809,6 @@ static void SV_ClearMap (MapInfo *map)
  * @param[in] x The x position in the map where the tile is supposed to be placed/checked.
  * @param[in] y The y position in the map where the tile is supposed to be placed/checked.
  * @return @c true if the tile fits, @c false if the tile does not fit or an error was encountered.
- * @sa SV_AddMandatoryParts
- * @sa SV_AddRegion
  */
 static bool SV_FitTile (const MapInfo *map, const mTile_t * tile, const int x, const int y)
 {
@@ -862,7 +859,6 @@ static bool SV_FitTile (const MapInfo *map, const mTile_t * tile, const int x, c
  * @brief Checks if the map is completely filled.
  * @return @c true if the map is filled, @c false if the map has still empty fields
  * @sa SV_AssembleMap
- * @sa SV_AddRegion
  * @sa SV_FitTile
  */
 static bool SV_TestFilled (const MapInfo *map)
@@ -917,7 +913,6 @@ static void SV_DumpPlaced (const MapInfo *map, int pl)
  * @param[in] idx The index of the placement algorithm.
  * @param[in] pos The position of the placement algorithm.
  * @sa SV_AssembleMap
- * @sa SV_AddRegion
  * @sa SV_FitTile
  */
 static void SV_AddTile (MapInfo *map, const mTile_t *tile, int x, int y, int idx, int pos)
@@ -2038,7 +2033,6 @@ static MapInfo* SV_DoMapAssemble (MapInfo *map, const char *assembly, char *asmM
  * @param[in] seed random seed to use (for cunit tests). If 0, the called functions can use their own seed setting.
  * @sa B_AssembleMap_f
  * @sa SV_AddTile
- * @sa SV_AddMandatoryParts
  * @sa SV_ParseAssembly
  * @sa SV_ParseMapTile
  * @note Make sure to free the returned pointer
