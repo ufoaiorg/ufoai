@@ -112,7 +112,7 @@ static void RandomList (const int n, short *list)
  * surroundings - the letters of the surroundings must have a tile definition with
  * a + and the letter, too - otherwise the placing of the tile may fail
  *
- * @note If you marked a tile with + the mTile_t->spec at that position will be SOLID
+ * @note If you marked a tile with + the Tile->spec at that position will be SOLID
  * @note valid tile characters are 0-5 and a-z
  */
 static unsigned long tileMask (const char chr)
@@ -184,7 +184,7 @@ static void SV_RmaPrintMap (const MapInfo *map)
 	/* fill in the data */
 	for (i = 0; i < map->numPlaced; i++) {
 		const mPlaced_t *mp = &map->mPlaced[i];
-		const mTile_t *tile = mp->tile;
+		const Tile *tile = mp->tile;
 		int tx, ty;
 		const char *tn = tile->id + 1;
 
@@ -286,12 +286,12 @@ static const mTileSet_t *SV_GetMapTileSet (const MapInfo *map, const char *tileS
 	return NULL;
 }
 
-static inline const mTile_t *SV_GetMapTile (const MapInfo *map, const char *tileName)
+static inline const Tile *SV_GetMapTile (const MapInfo *map, const char *tileName)
 {
 	int i;
 
 	for (i = 0; i < map->numTiles; i++) {
-		const mTile_t *tile = &map->mTile[i];
+		const Tile *tile = &map->mTile[i];
 		if (Q_streq(tileName, tile->id))
 			return tile;
 	}
@@ -369,7 +369,7 @@ static bool SV_ParseMapTile (const char *filename, const char **text, MapInfo *m
 	const char *errhead = "SV_ParseMapTile: Unexpected end of file (";
 	const char *token;
 	int x, y, i;
-	mTile_t *target = &map->mTile[map->numTiles];
+	Tile *target = &map->mTile[map->numTiles];
 	target->area = 0;
 
 	/* get tile name */
@@ -537,7 +537,7 @@ static void SV_GetTilesFromTileSet (const MapInfo *map, const char *filename, co
 {
 	const char *errhead = "SV_GetTilesFromTileSet: Unexpected end of file (";
 	const mTileSet_t *tileSet;
-	const mTile_t *tile;
+	const Tile *tile;
 	int c, x, y, random;
 	const char *token;
 
@@ -606,7 +606,7 @@ static bool SV_ParseAssembly (MapInfo *map, const char *filename, const char **t
 	const char *errhead = "SV_ParseAssembly: Unexpected end of file (";
 	const char *token;
 	int x, y;
-	const mTile_t *tile;
+	const Tile *tile;
 
 	/* get assembly name */
 	token = Com_EParse(text, errhead, filename);
@@ -648,7 +648,7 @@ static bool SV_ParseAssembly (MapInfo *map, const char *filename, const char **t
 			/* a multiplayer only tile - forced to be exactly once in the map when
 			 * we are playing a multiplayer match */
 			if (sv_maxclients->integer >= 2) {
-				const mTile_t *t = SV_GetMapTile(map, token);
+				const Tile *t = SV_GetMapTile(map, token);
 				if (t != NULL) {
 					const ptrdiff_t i = t - map->mTile;
 					a->min[i] = 1;
@@ -685,7 +685,7 @@ static bool SV_ParseAssembly (MapInfo *map, const char *filename, const char **t
 			continue;
 		/* fix tilename "x y" */
 		} else if (Q_streq(token, "fix")) {
-			const mTile_t *t;
+			const Tile *t;
 
 			/* get tile */
 			token = Com_EParse(text, errhead, filename);
@@ -810,7 +810,7 @@ static void SV_ClearMap (MapInfo *map)
  * @param[in] y The y position in the map where the tile is supposed to be placed/checked.
  * @return @c true if the tile fits, @c false if the tile does not fit or an error was encountered.
  */
-static bool SV_FitTile (const MapInfo *map, const mTile_t * tile, const int x, const int y)
+static bool SV_FitTile (const MapInfo *map, const Tile * tile, const int x, const int y)
 {
 	int tx, ty;
 	const unsigned long *spec = NULL;
@@ -915,7 +915,7 @@ static void SV_DumpPlaced (const MapInfo *map, int pl)
  * @sa SV_AssembleMap
  * @sa SV_FitTile
  */
-static void SV_AddTile (MapInfo *map, const mTile_t *tile, int x, int y, int idx, int pos)
+static void SV_AddTile (MapInfo *map, const Tile *tile, int x, int y, int idx, int pos)
 {
 	int tx, ty;
 #ifdef DEBUG
@@ -979,7 +979,7 @@ static void SV_RemoveTile (MapInfo *map, int* idx, int* pos)
 	}
 
 	for (i = map->numPlaced; i--;) {
-		const mTile_t *tile = map->mPlaced[i].tile;
+		const Tile *tile = map->mPlaced[i].tile;
 		const int x = map->mPlaced[i].x;
 		const int y = map->mPlaced[i].y;
 		assert(i >= 0);
@@ -1055,7 +1055,7 @@ static unsigned long SV_GapGetFlagsAtAbsPos (MapInfo *map, int tileCode, int map
 	const int posX = pos % mapW;
 	const int posY = pos / mapW;
 	const mToPlace_t *mToPlace = map->mToPlace;
-	const mTile_t *tile = mToPlace[ti].tile;
+	const Tile *tile = mToPlace[ti].tile;
 
 	return tile->spec[mapY - posY][mapX - posX];
 }
@@ -1073,7 +1073,7 @@ static unsigned long SV_GapGetFlagsAtAbsPos (MapInfo *map, int tileCode, int map
  */
 static int availableTiles[MAX_TILETYPES][2];	/* the 2nd dimension is index and count */
 
-static bool SV_AddMissingTiles_r (MapInfo *map, int rec, int posListCnt, short myPosList[], const mTile_t *prevTile, int prevX, int prevY)
+static bool SV_AddMissingTiles_r (MapInfo *map, int rec, int posListCnt, short myPosList[], const Tile *prevTile, int prevX, int prevY)
 {
 	static int callCnt = 0;
 	const Assembly *mAsm = map->getCurrentAssembly();
@@ -1103,7 +1103,7 @@ static bool SV_AddMissingTiles_r (MapInfo *map, int rec, int posListCnt, short m
 		if (mToPlace[ti].cnt >= mToPlace[ti].max)
 			continue;
 
-		const mTile_t *cTile = mToPlace[ti].tile;
+		const Tile *cTile = mToPlace[ti].tile;
 		bool ok = false;
 		/** try to reduce the # of calls to SV_FitTile by checking only those gaps affected by the placement of the previous tile */
 		if (rec > 0) {	/* the first recursion doesn't have a previous tile */
@@ -1170,7 +1170,7 @@ static bool SV_AddMissingTiles_r (MapInfo *map, int rec, int posListCnt, short m
 		const int ti = posTileList[rec][i] % TCM;
 		const int x = pos % mapW;
 		const int y = pos / mapW;
-		const mTile_t *tile = mToPlace[ti].tile;
+		const Tile *tile = mToPlace[ti].tile;
 		int tx, ty;
 		for (ty = 0; ty < tile->h; ty++) {
 			for (tx = 0; tx < tile->w; tx++) {
@@ -1307,7 +1307,7 @@ static bool SV_GapListBuild (MapInfo *map, int tilePosListCnt)
 		const int ti = posTileList[0][i] % TCM;
 		x = pos % mapW;
 		y = pos / mapW;
-		mTile_t *tile = mToPlace[ti].tile;
+		Tile *tile = mToPlace[ti].tile;
 		for (int ty = 0; ty < tile->h; ty++) {
 			for (int tx = 0; tx < tile->w; tx++) {
 				if (IS_SOLID(tile->spec[ty][tx])) {

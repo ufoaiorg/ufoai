@@ -40,12 +40,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MAX_RANDOM_MAP_HEIGHT 32
 
 /** @brief Stores the parsed data for a map tile. (See *.ump files) */
-typedef struct mTile_s {
+class Tile {
+public:
 	char id[MAX_VAR];	/**< The id (string) of the tile as defined in the ump file (next to "tile"). */
 	unsigned long spec[MAX_TILESIZE][MAX_TILESIZE];	/**< connection/alternatives info for the tile  */
 	int w, h;			/**< The width and height of the tile. */
 	int area;			/**< Number of solid parts */
-} mTile_t;
+};
 
 typedef struct mTileSet_s {
 	char id[MAX_VAR];
@@ -86,22 +87,22 @@ public:
 
 /**
  * @brief Defines a tile to place
- * @sa mTile_t
+ * @sa Tile
  */
 typedef struct mToPlace_s {
-	mTile_t *tile;	/**< The tile to place. */
+	Tile *tile;		/**< The tile to place. */
 	int min, max;	/**< Minimum and maximum count of placements. */
-	int cnt;	/**< Current count of placements */
+	int cnt;		/**< Current count of placements */
 } mToPlace_t;
 
 /**
  * @brief Defines a placed tile
- * @sa mTile_t
+ * @sa Tile
  */
 typedef struct mPlaced_s {
-	const mTile_t *tile;	/**< The tile that was/is placed. */
-	int x, y;	/**< The position in the map the tile was/is placed in. */
-	int idx, pos;	/**< Stores the state of the placement algorithm */
+	const Tile *tile;	/**< The tile that was/is placed. */
+	int x, y;			/**< The position in the map the tile was/is placed in. */
+	int idx, pos;		/**< Stores the state of the placement algorithm */
 } mPlaced_t;
 
 class MapInfo
@@ -127,7 +128,7 @@ public:
 	mTileSet_t mTileSets[MAX_TILESETS];			/**< A list of parsed map-tiles. */
 	int numTileSets;							/**< Length of the mTile list */
 
-	mTile_t mTile[MAX_TILETYPES];				/**< A list of parsed map-tiles. */
+	Tile mTile[MAX_TILETYPES];					/**< A list of parsed map-tiles. */
 	int numTiles;								/**< Length of the mTile list */
 	unsigned long lineFlags;					/** the combined bit values of the tiles that must form a line, ie. river, street etc. */
 
