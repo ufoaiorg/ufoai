@@ -136,11 +136,11 @@ public:
 	char basePath[MAX_QPATH];					/**< the base path of the main rma */
 	char inheritBasePath[MAX_QPATH];			/**< only used during parsing, don't rely on any reasonable data after the parsing stage */
 
-	int AsmIdx;									/**< the index of the selected assembly */
+	int asmIdx;									/**< the index of the selected assembly */
 
 	int retryCnt;								/**< amount of retries in case the assembly didn't assemble and we are using the defined seeds */
 
-	inline const Assembly* getCurrentAssembly() const {return &assemblies[AsmIdx];}
+	inline const Assembly* getCurrentAssembly() const {return &assemblies[asmIdx];}
 };
 
 MapInfo* SV_AssembleMap(const char *name, const char *assembly, char *asmMap, char *asmPos, const unsigned int seed);

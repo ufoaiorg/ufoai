@@ -2063,14 +2063,14 @@ MapInfo* SV_AssembleMap (const char *name, const char *assembly, char *asmMap, c
 #endif
 
 	/* use random assembly, if no valid one has been specified */
-	map->AsmIdx = rand() % map->numAssemblies;
+	map->asmIdx = rand() % map->numAssemblies;
 
 	/* overwrite with specified, if any */
 	if (assembly && assembly[0]) {
 		int i;
 		for (i = 0; i < map->numAssemblies; i++)
 			if (Q_streq(assembly, map->assemblies[i].id)) {
-				map->AsmIdx = i;
+				map->asmIdx = i;
 				break;
 			}
 		if (i == map->numAssemblies) {
