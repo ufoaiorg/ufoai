@@ -1771,6 +1771,26 @@ static void MIS_DeleteMissions_f (void)
 			UFO_RemoveFromGeoscape(ccs.ufos);
 	}
 }
+
+/**
+ * @brief Debug function to delete a mission
+ * @note called with debug_missiondelete
+ */
+static void MIS_DeleteMission_f (void)
+{
+	mission_t *mission;
+
+	if (Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <missionid>\n", Cmd_Argv(0));
+		return;
+	}
+	mission = CP_GetMissionByID(Cmd_Argv(1));
+
+	if (!mission)
+		return;
+
+	CP_MissionRemove(mission);
+}
 #endif
 
 /**
@@ -1999,6 +2019,7 @@ void MIS_InitStartup (void)
 	Cmd_AddCommand("debug_missionsetmap", MIS_MissionSetMap_f, "Changes the map for a spawned mission");
 	Cmd_AddCommand("debug_missionadd", MIS_SpawnNewMissions_f, "Add a new mission");
 	Cmd_AddCommand("debug_missiondeleteall", MIS_DeleteMissions_f, "Remove all missions from global array");
+	Cmd_AddCommand("debug_missiondelete", MIS_DeleteMission_f, "Remove mission by a given name");
 	Cmd_AddCommand("debug_missionlist", MIS_MissionList_f, "Debug function to show all missions");
 #endif
 }
@@ -2015,6 +2036,7 @@ void MIS_Shutdown (void)
 	Cmd_RemoveCommand("debug_missionsetmap");
 	Cmd_RemoveCommand("debug_missionadd");
 	Cmd_RemoveCommand("debug_missiondeleteall");
+	Cmd_RemoveCommand("debug_missiondelete");
 	Cmd_RemoveCommand("debug_missionlist");
 #endif
 }
