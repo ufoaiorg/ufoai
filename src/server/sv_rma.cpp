@@ -1335,8 +1335,9 @@ static bool SV_GapListBuild (MapInfo *map, int tilePosListCnt)
  * @param map All we know about the map to assemble
  * @param tc1 encoded tile and position
  * @param mapW width of the map. Needed to decode tc1
+ * @param mapH height of the map. Needed to validate ny
  * @param nx x of the absolute map position to investigate
- * @param nx y of the absolute map position to investigate
+ * @param ny y of the absolute map position to investigate
  * @return @c true if no matching tile was found
  */
 static bool SV_GapCheckNeighbour (MapInfo *map, int tc1, int mapW,  int mapH, int nx, int ny)
