@@ -48,6 +48,7 @@ public:
 	int area;			/**< Number of solid parts */
 };
 
+/** @brief A list of tiles with the same size and neighbouring requirements to randomly pick from */
 class TileSet {
 public:
 	char id[MAX_VAR];
@@ -126,8 +127,8 @@ public:
 	mPlaced_t mPlaced[MAX_MAPTILES];			/**< Holds all tiles that have been placed on the current map. */
 	int numPlaced;								/**< The number of tiles in mPlaced. */
 
-	TileSet tileSets[MAX_TILESETS];				/**< A list of parsed map-tiles. */
-	int numTileSets;							/**< Length of the mTile list */
+	TileSet tileSets[MAX_TILESETS];				/**< A list of parsed map-tilesets. */
+	int numTileSets;							/**< Length of the tileSets list */
 
 	Tile mTile[MAX_TILETYPES];					/**< A list of parsed map-tiles. */
 	int numTiles;								/**< Length of the mTile list */
