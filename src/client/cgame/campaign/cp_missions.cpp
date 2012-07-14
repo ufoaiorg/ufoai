@@ -1838,6 +1838,7 @@ bool MIS_SaveXML (xmlNode_t *parent)
 				XML_AddShort(missionNode, SAVE_MISSIONS_CRASHED_AIRCRAFT, aircraft->idx);
 			}
 			break;
+		case INTERESTCATEGORY_ALIENBASE:
 		case INTERESTCATEGORY_BUILDING:
 		case INTERESTCATEGORY_SUPPLY:
 			{
@@ -1962,6 +1963,7 @@ bool MIS_LoadXML (xmlNode_t *parent)
 				}
 			}
 			break;
+		case INTERESTCATEGORY_ALIENBASE:
 		case INTERESTCATEGORY_BUILDING:
 		case INTERESTCATEGORY_SUPPLY:
 			{
