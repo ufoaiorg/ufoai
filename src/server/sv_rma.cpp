@@ -273,12 +273,12 @@ static void SV_RmaPrintMap (const MapInfo *map)
 	Com_Printf("%s", underscores + w);
 }
 
-static const mTileSet_t *SV_GetMapTileSet (const MapInfo *map, const char *tileSetName)
+static const TileSet *SV_GetMapTileSet (const MapInfo *map, const char *tileSetName)
 {
 	int i;
 
 	for (i = 0; i < map->numTileSets; i++) {
-		const mTileSet_t *tileSet = &map->mTileSets[i];
+		const TileSet *tileSet = &map->tileSets[i];
 		if (Q_streq(tileSetName, tileSet->id))
 			return tileSet;
 	}
@@ -308,7 +308,7 @@ static bool SV_ParseMapTileSet (const char *filename, const char **text, MapInfo
 {
 	const char *errhead = "SV_ParseMapTileSet: Unexpected end of file (";
 	const char *token;
-	mTileSet_t *target = &map->mTileSets[map->numTileSets];
+	TileSet *target = &map->tileSets[map->numTileSets];
 
 	OBJZERO(*target);
 
@@ -480,7 +480,7 @@ static const char *SV_GetCvarToken (const Assembly *a, const char* token, const 
 static const char *SV_GetTileFromTileSet (const MapInfo *map, const char *filename, const char **text, const Assembly *a)
 {
 	const char *errhead = "SV_GetTileFromTileSet: Unexpected end of file (";
-	const mTileSet_t *tileSet;
+	const TileSet *tileSet;
 	int random;
 	const char *token;
 
@@ -536,7 +536,7 @@ static bool SV_ParseAssemblySeeds (MapInfo *map, const char *filename, const cha
 static void SV_GetTilesFromTileSet (const MapInfo *map, const char *filename, const char **text, Assembly *a)
 {
 	const char *errhead = "SV_GetTilesFromTileSet: Unexpected end of file (";
-	const mTileSet_t *tileSet;
+	const TileSet *tileSet;
 	const Tile *tile;
 	int c, x, y, random;
 	const char *token;

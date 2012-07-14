@@ -48,11 +48,12 @@ public:
 	int area;			/**< Number of solid parts */
 };
 
-typedef struct mTileSet_s {
+class TileSet {
+public:
 	char id[MAX_VAR];
 	char tiles[MAX_TILESETTILES][MAX_VAR];
 	int numTiles;
-} mTileSet_t;
+};
 
 #define MAX_ASSEMBLY_SEEDS 32
 
@@ -125,7 +126,7 @@ public:
 	mPlaced_t mPlaced[MAX_MAPTILES];			/**< Holds all tiles that have been placed on the current map. */
 	int numPlaced;								/**< The number of tiles in mPlaced. */
 
-	mTileSet_t mTileSets[MAX_TILESETS];			/**< A list of parsed map-tiles. */
+	TileSet tileSets[MAX_TILESETS];				/**< A list of parsed map-tiles. */
 	int numTileSets;							/**< Length of the mTile list */
 
 	Tile mTile[MAX_TILETYPES];					/**< A list of parsed map-tiles. */
