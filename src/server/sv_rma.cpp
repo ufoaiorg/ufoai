@@ -1903,7 +1903,7 @@ void SV_ParseUMP (const char *name, MapInfo *map, bool inherit)
 			} else {
 				if (map->numAssemblies >= MAX_MAPASSEMBLIES)
 					Com_Printf("SV_ParseUMP: Too many map assemblies (%s)\n", filename);
-				else if (SV_ParseAssembly(map, filename, &text, &map->Assemblies[map->numAssemblies]))
+				else if (SV_ParseAssembly(map, filename, &text, &map->assemblies[map->numAssemblies]))
 					map->numAssemblies++;
 			}
 		} else if (token[0] == '{') {
@@ -2069,7 +2069,7 @@ MapInfo* SV_AssembleMap (const char *name, const char *assembly, char *asmMap, c
 	if (assembly && assembly[0]) {
 		int i;
 		for (i = 0; i < map->numAssemblies; i++)
-			if (Q_streq(assembly, map->Assemblies[i].id)) {
+			if (Q_streq(assembly, map->assemblies[i].id)) {
 				map->AsmIdx = i;
 				break;
 			}
