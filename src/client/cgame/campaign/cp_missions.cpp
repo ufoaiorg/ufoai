@@ -1873,7 +1873,6 @@ bool MIS_LoadXML (xmlNode_t *parent)
 {
 	xmlNode_t *missionNode;
 	xmlNode_t *node;
-	bool success = true;
 
 	Com_RegisterConstList(saveInterestConstants);
 	Com_RegisterConstList(saveMissionConstants);
@@ -1892,8 +1891,7 @@ bool MIS_LoadXML (xmlNode_t *parent)
 		mission.idx = XML_GetInt(node, SAVE_MISSIONS_MISSION_IDX, 0);
 		if (mission.idx <= 0) {
 			Com_Printf("mission has invalid or no index\n");
-			success = false;
-			break;
+			continue;
 		}
 
 		name = XML_GetString(node, SAVE_MISSIONS_MAPDEF_ID);
@@ -1909,14 +1907,12 @@ bool MIS_LoadXML (xmlNode_t *parent)
 
 		if (!Com_GetConstIntFromNamespace(SAVE_INTERESTCAT_NAMESPACE, categoryId, (int*) &mission.category)) {
 			Com_Printf("Invalid mission category '%s'\n", categoryId);
-			success = false;
-			break;
+			continue;
 		}
 
 		if (!Com_GetConstIntFromNamespace(SAVE_MISSIONSTAGE_NAMESPACE, stageId, (int*) &mission.stage)) {
 			Com_Printf("Invalid mission stage '%s'\n", stageId);
-			success = false;
-			break;
+			continue;
 		}
 
 		mission.active = XML_GetBool(node, SAVE_MISSIONS_ACTIVE, false);
@@ -1950,7 +1946,7 @@ bool MIS_LoadXML (xmlNode_t *parent)
 						mission.data.installation = installation;
 					else {
 						Com_Printf("Mission on non-existent installation\n");
-						success = false;
+						continue;
 					}
 				}
 			}
@@ -1962,7 +1958,7 @@ bool MIS_LoadXML (xmlNode_t *parent)
 				if (mission.data.aircraft == NULL) {
 					Com_Printf("Error while loading rescue mission (missionidx %i, aircraftidx: %i, category: %i, stage: %i)\n",
 							mission.idx, aircraftIdx, mission.category, mission.stage);
-					success = false;
+					continue;
 				}
 			}
 			break;
@@ -1975,17 +1971,15 @@ bool MIS_LoadXML (xmlNode_t *parent)
 					mission.data.alienBase = alienBase;
 				}
 				if (!mission.data.alienBase && !CP_BasemissionIsSubvertingGovernmentMission(&mission) && mission.stage >= STAGE_BUILD_BASE) {
-					Com_Printf("Error while loading Alien Base mission (missionidx %i, baseidx: %i, category: %i, stage: %i)\n",
+					Com_Printf("Error loading Alien Base mission (missionidx %i, baseidx: %i, category: %i, stage: %i): no such base\n",
 							mission.idx, baseIDX, mission.category, mission.stage);
-					success = false;
+					continue;
 				}
 			}
 			break;
 		default:
 			break;
 		}
-		if (!success)
-			break;
 
 		Q_strncpyz(mission.location, XML_GetString(node, SAVE_MISSIONS_LOCATION), sizeof(mission.location));
 
@@ -2005,7 +1999,7 @@ bool MIS_LoadXML (xmlNode_t *parent)
 	Com_UnregisterConstList(saveInterestConstants);
 	Com_UnregisterConstList(saveMissionConstants);
 
-	return success;
+	return true;
 }
 
 /**
