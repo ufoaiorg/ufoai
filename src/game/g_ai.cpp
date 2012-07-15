@@ -1219,6 +1219,26 @@ static void AI_SetStats (edict_t * ent)
 	ent->morale = ent->chr.morale;
 	ent->STUN = 0;
 
+	/* hurt aliens in ufo crash missions (5%: almost dead, 15%: wounded, 30%: stunned)  */
+	if (level.hurtAliens && CHRSH_IsTeamDefAlien(ent->chr.teamDef)) {
+		const float random = frand();
+		bodyPartData_t bodyData;
+		int damage, stun;
+		if (random <= 0.05f) {
+			damage = ent->HP * 0.95f;
+		} else if (random <= 0.15f) {
+			stun = ent->HP * 0.3f;
+			damage = ent->HP * 0.5f;
+		} else if (random <= 0.3f) {
+			stun = ent->HP * 0.75f;
+		}
+		ent->HP -= damage;
+		if (!CHRSH_IsTeamDefRobot(ent->chr.teamDef))
+			ent->STUN = stun;
+		for (int i = 0; i < BODYPART_MAXTYPE; ++i)
+			ent->chr.wounds.treatmentLevel[bodyData.GetRandomBodyPart()] += damage / BODYPART_MAXTYPE;
+	}
+
 	G_ActorGiveTimeUnits(ent);
 }
 

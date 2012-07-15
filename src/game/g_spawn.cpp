@@ -720,19 +720,6 @@ static void SP_alien_start (edict_t *ent)
 	/* set stats */
 	ent->STUN = 0;
 	ent->HP = MAX_HP;
-	/* hurt aliens in ufo crash missions (5%: almost dead, 15%: wounded, 30%: stunned)  */
-	if (level.hurtAliens) {
-		const float random = frand();
-		if (random <= .05f) {
-			ent->STUN = 50;
-			ent->HP = 5;
-		} else if (random <= .15f) {
-			ent->STUN = 30;
-			ent->HP /= 2;
-		} else if (random <= .3f) {
-			ent->STUN = 75;
-		}
-	}
 
 	G_ActorSpawn(ent);
 }
