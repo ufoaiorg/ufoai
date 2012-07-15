@@ -218,8 +218,8 @@ int CL_GetHitProbability (const le_t* actor)
 	if (!chr)
 		Com_Error(ERR_DROP, "No character given for local entity");
 
-	acc = GET_ACC(chr->score.skills[ABILITY_ACCURACY],
-			actor->fd->weaponSkill ? chr->score.skills[actor->fd->weaponSkill] : 0.0);
+	acc = GET_ACC(chr->score.skills[ABILITY_ACCURACY], actor->fd->weaponSkill ? chr->score.skills[actor->fd->weaponSkill] : 0.0)
+			* CL_ActorInjuryModifier(actor, MODIFIER_ACCURACY);
 
 	crouch = (LE_IsCrouched(actor) && actor->fd->crouch) ? actor->fd->crouch : 1.0;
 

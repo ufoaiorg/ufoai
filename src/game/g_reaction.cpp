@@ -458,6 +458,7 @@ static bool G_ReactionFireIsPossible (edict_t *ent, const edict_t *target)
 {
 	float actorVis;
 	bool frustum;
+	const int spotDist = G_ActorSpotDist(ent);
 
 	/* an entity can't reaction fire at itself */
 	if (ent == target)
@@ -498,7 +499,7 @@ static bool G_ReactionFireIsPossible (edict_t *ent, const edict_t *target)
 			return false;
 
 	/* check in range and visible */
-	if (VectorDistSqr(ent->origin, target->origin) > MAX_SPOT_DIST * MAX_SPOT_DIST)
+	if (VectorDistSqr(ent->origin, target->origin) > spotDist * spotDist)
 		return false;
 
 	frustum = G_FrustumVis(ent, target->origin);

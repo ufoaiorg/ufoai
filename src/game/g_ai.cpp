@@ -141,7 +141,7 @@ bool AI_CheckUsingDoor (const edict_t *ent, const edict_t *door)
 			if (!G_FrustumVis(check, ent->origin))
 				continue;
 			/* check whether the enemy is close enough to change the state */
-			if (VectorDist(check->origin, ent->origin) > MAX_SPOT_DIST)
+			if (VectorDist(check->origin, ent->origin) > G_ActorSpotDist(ent))
 				continue;
 			actorVis = G_ActorVis(check->origin, check, ent, true);
 			/* there is a visible enemy, don't use that door */
@@ -182,7 +182,7 @@ static bool AI_CheckCrouch (const edict_t *ent)
 		if (!G_FrustumVis(check, ent->origin))
 			continue;
 		/* check whether the enemy is close enough to change the state */
-		if (VectorDist(check->origin, ent->origin) > MAX_SPOT_DIST)
+		if (VectorDist(check->origin, ent->origin) > G_ActorSpotDist(ent))
 			continue;
 		actorVis = G_ActorVis(check->origin, check, ent, true);
 		if (actorVis >= ACTOR_VIS_50)
@@ -462,8 +462,9 @@ static void AI_SearchBestTarget (aiAction_t *aia, const edict_t *ent, edict_t *c
 
 	for (fdIdx = 0; fdIdx < item->ammo->numFiredefs[fdArray->weapFdsIdx]; fdIdx++) {
 		const fireDef_t *fd = &fdArray[fdIdx];
-		const float nspread = SPREAD_NORM((fd->spread[0] + fd->spread[1]) * 0.5 +
-				GET_ACC(ent->chr.score.skills[ABILITY_ACCURACY], fd->weaponSkill));
+		const float acc = GET_ACC(ent->chr.score.skills[ABILITY_ACCURACY], fd->weaponSkill) *
+				G_ActorGetInjuryPenalty(ent, MODIFIER_ACCURACY);
+		const float nspread = SPREAD_NORM((fd->spread[0] + fd->spread[1]) * 0.5 + acc);
 		const int time = G_GetActorTimeForFiredef(ent, fd, false);
 		/* how many shoots can this actor do */
 		const int shots = tu / time;

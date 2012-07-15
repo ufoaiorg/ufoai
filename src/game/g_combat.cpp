@@ -630,7 +630,8 @@ static void G_ShootGrenade (const player_t *player, edict_t *ent, const fireDef_
 		speed = fd->range;
 
 	/* add random effects and get new dir */
-	acc = GET_ACC(ent->chr.score.skills[ABILITY_ACCURACY], fd->weaponSkill ? ent->chr.score.skills[fd->weaponSkill] : 0);
+	acc = GET_ACC(ent->chr.score.skills[ABILITY_ACCURACY], fd->weaponSkill ? ent->chr.score.skills[fd->weaponSkill] : 0) *
+			G_ActorGetInjuryPenalty(ent, MODIFIER_ACCURACY);
 
 	VecToAngles(startV, angles);
 	/** @todo Remove the 2.0f and use gaussian random number instead of crand() */
@@ -827,7 +828,8 @@ static void G_ShootSingle (edict_t *ent, const fireDef_t *fd, const vec3_t from,
 	VecToAngles(dir, angles);		/* Get the angles of the direction vector. */
 
 	/* Get accuracy value for this attacker. */
-	acc = GET_ACC(ent->chr.score.skills[ABILITY_ACCURACY], fd->weaponSkill ? ent->chr.score.skills[fd->weaponSkill] : 0);
+	acc = GET_ACC(ent->chr.score.skills[ABILITY_ACCURACY], fd->weaponSkill ? ent->chr.score.skills[fd->weaponSkill] : 0) *
+			G_ActorGetInjuryPenalty(ent, MODIFIER_ACCURACY);
 
 	/* Get 2 gaussian distributed random values */
 	gaussrand(&gauss1, &gauss2);

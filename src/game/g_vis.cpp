@@ -139,6 +139,11 @@ float G_ActorVis (const vec3_t from, const edict_t *ent, const edict_t *check, b
 	}
 }
 
+int G_ActorSpotDist (const edict_t *const ent)
+{
+	return MAX_SPOT_DIST * G_ActorGetInjuryPenalty(ent, MODIFIER_SIGHT);
+}
+
 /**
  * @brief test if check is visible by from
  * @param[in] team Living team members are always visible. If this is a negative
@@ -180,7 +185,8 @@ bool G_Vis (const int team, const edict_t *from, const edict_t *check, int flags
 		return false;
 
 	/* view distance check */
-	if (VectorDistSqr(from->origin, check->origin) > MAX_SPOT_DIST * MAX_SPOT_DIST)
+	const int spotDist = G_ActorSpotDist(from);
+	if (VectorDistSqr(from->origin, check->origin) > spotDist * spotDist)
 		return false;
 
 	/* view frustum check */
