@@ -411,6 +411,8 @@ typedef struct csi_s {
 	chrTemplate_t chrTemplates[MAX_CHARACTER_TEMPLATES];
 	int numChrTemplates;
 
+	linkedList_t *bodyTemplates;
+
 	ugv_t ugvs[MAX_UGV];
 	int numUGV;
 

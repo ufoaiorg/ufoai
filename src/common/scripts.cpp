@@ -2458,6 +2458,15 @@ static void Com_ParseActorSounds (const char *name, const char **text, teamDef_t
 	} while (*text);
 }
 
+static const BodyData* Com_GetBodyTemplateByID (const char *id)
+{
+	LIST_Foreach(csi.bodyTemplates, BodyData, bd)
+		if (Q_streq(id, bd->id()))
+			return bd;
+	Com_Printf("Com_GetBodyTemplateByID: could not find template: '%s'\n", id);
+	return NULL;
+}
+
 /** @brief possible teamdesc values (ufo-scriptfiles) */
 static const value_t teamDefValues[] = {
 	{"tech", V_STRING, offsetof(teamDef_t, tech), 0}, /**< tech id from research.ufo */
@@ -2559,6 +2568,13 @@ static void Com_ParseTeam (const char *name, const char **text)
 						break;
 				}
 				LIST_Delete(&list);
+			} else if (Q_streq(token, "bodytype")) {
+				const BodyData *bd;
+				token = Com_EParse(text, errhead, name);
+				bd = Com_GetBodyTemplateByID(token);
+				if (bd == NULL)
+					Sys_Error("Com_ParseTeam: Could not find body type %s in team def %s\n", token, name);
+				td->bodyTemplate = bd;
 			} else if (Q_streq(token, "models"))
 				Com_ParseActorModels(name, text, td);
 			else if (Q_streq(token, "names"))
@@ -2577,6 +2593,8 @@ static void Com_ParseTeam (const char *name, const char **text)
 		Q_strncpyz(td->deathTextureName, va("pics/sfx/blood_%i", i), sizeof(td->deathTextureName));
 		Com_DPrintf(DEBUG_CLIENT, "Using random blood for teamdef: '%s' (%i)\n", td->id, i);
 	}
+	if (td->bodyTemplate == NULL)
+		Sys_Error("Teamdef without body data: %s\n", td->id);
 }
 
 /**
@@ -2697,6 +2715,132 @@ static void Com_ParseCharacterTemplate (const char *name, const char **text)
 				Com_Printf("Com_ParseCharacterTemplate: unknown token \"%s\" ignored (template %s)\n", token, name);
 		}
 	} while (*text);
+}
+
+static const value_t bodyPartValues[] = {
+		{"name", V_TRANSLATION_STRING, offsetof(bodyPartData_t, name), 0},
+		{"area", V_INT, offsetof(bodyPartData_t, bodyArea), MEMBER_SIZEOF(bodyPartData_t, bodyArea)},
+		{"bleed", V_INT, offsetof(bodyPartData_t, bleedingFactor), MEMBER_SIZEOF(bodyPartData_t, bleedingFactor)},
+		{"threshold", V_INT, offsetof(bodyPartData_t, woundThreshold), MEMBER_SIZEOF(bodyPartData_t, woundThreshold)},
+
+		{NULL, V_NULL, 0, 0}
+};
+
+static const char *const penaltyNames[MODIFIER_MAX] = {
+		"accuracy", "shooting", "movement", "visibility", "reaction", "max_tu"
+};
+
+static void Com_ParseBodyPart (const char *name, const char **text, BodyData *bd)
+{
+	const char *errhead = "Com_ParseBodyPart: unexpected end of file";
+	const char *token;
+	bodyPartData_t bp;
+	int i;
+
+	for (i = 0; i < bd->numBodyParts(); i++) {
+		if (Q_streq(name, bd->id(i))) {
+			Com_Printf("Com_ParseBodyPart: BodyPart with same name found, second ignored '%s'\n", name);
+			return;
+		}
+	}
+
+	if (i > BODYPART_MAXTYPE) {
+		Com_Printf("Com_ParseBodyPart: too many BodyParts '%s' ignored ('%s')\n", name, bd->id());
+	}
+
+	OBJZERO(bp);
+	Q_strncpyz(bp.id, name, sizeof(bp.id));
+
+	token = Com_Parse(text);
+
+	if (!*text || *token != '{') {
+		Com_Printf("Com_ParseBodyPart: BodyPart '%s' without body ignored\n", name);
+		return;
+	}
+
+	do {
+		token = Com_EParse(text, errhead, name);
+		if (!*text || *token == '}')
+			break;
+
+		if (!Com_ParseBlockToken(name, text, &bp, bodyPartValues, NULL, token)) {
+			if (Q_streq(token, "penalty")) {
+				linkedList_t *list;
+				if (!Com_ParseList(text, &list)) {
+					Com_Error(ERR_DROP, "Com_ParseBodyPart: error while reading penalties ('%s')", name);
+				}
+
+				if (LIST_Count(list) != 2) {
+					LIST_Delete(&list);
+					Com_Error(ERR_DROP, "Com_ParseBodyPart: penalty tuple must contain 2 elements ('%s')", name);
+				}
+
+				linkedList_t *element = list;
+				for (i = 0; i < MODIFIER_MAX; i++) {
+					if (Q_streq(static_cast<const char*>(element->data), penaltyNames[i])) {
+						/* Found a definition */
+						element = element->next;
+						Com_EParseValue(&bp.penalties[i], static_cast<const char*>(element->data), V_INT, 0, sizeof(bp.penalties[i]));
+						break;
+					}
+				}
+				if (i >= MODIFIER_MAX)
+					Com_Printf("Com_ParseBodyPart: Unknown penalty '%s' ignored ('%s')\n", static_cast<const char*>(element->data), name);
+
+				LIST_Delete(&list);
+			} else {
+				Com_Printf("Com_ParseBodyPart: Unknown token '%s' ignored ('%s')\n", token, name);
+			}
+		}
+	} while (*text);
+
+	bd->addBodyPart(bp);
+}
+
+static void Com_ParseBodyTemplate (const char *name, const char **text)
+{
+	const char *errhead = "Com_ParseBodyTemplate: unexpected end of file";
+	const char *token;
+	BodyData bd;
+
+	LIST_Foreach(csi.bodyTemplates, BodyData, bt) {
+		if (Q_streq(name, bt->id())) {
+			Com_Printf("Com_ParseBodyTemplate: BodyTemplate with same name found, second ignored '%s'\n", name);
+			return;
+		}
+	}
+
+	token = Com_Parse(text);
+
+	if (!*text || *token != '{') {
+		Com_Printf("Com_ParseBodyTemplate: body template '%s' without body ignored\n", name);
+		return;
+	}
+
+	bd.setId(name);
+
+	do {
+		token = Com_EParse(text, errhead, name);
+		if (!*text || *token == '}')
+			break;
+
+		if (Q_streq(token, "bodypart")) {
+			token = Com_EParse(text, errhead, name);
+			if (!*text)
+				break;
+
+			Com_ParseBodyPart (token, text, &bd);
+		} else {
+			Com_Printf("Com_ParseBodyTemplate: unknown token '%s' ignored ('%s')\n", token, name);
+		}
+	} while (*text);
+
+	if (bd.numBodyParts() < 1) {
+		Com_Printf("Body template without bodyparts %s ignored!\n", name);
+		return;
+	}
+
+	LIST_Add(&csi.bodyTemplates, bd);
 }
 
 /*
@@ -3259,6 +3403,8 @@ void Com_ParseScripts (bool onlyServer)
 			Com_ParseCharacterTemplate(name, &text);
 		else if (Q_streq(type, "mapdef"))
 			Com_ParseMapDefinition(name, &text);
+		else if (Q_streq(type, "bodydef"))
+			Com_ParseBodyTemplate(name, &text);
 		else if (!onlyServer)
 			CL_ParseClientData(type, name, &text);
 	}

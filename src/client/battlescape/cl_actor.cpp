@@ -323,14 +323,14 @@ void CL_ActorReserveTUs (const le_t * le, const reservation_types_t type, const 
 float CL_ActorInjuryModifier (const le_t *le, const modifier_types_t type) {
 	int bodyPart;
 	float mod = 0;
-	bodyPartData_t bodyData;
 
 	if (le) {
-		for (bodyPart = 0; bodyPart < BODYPART_MAXTYPE; ++bodyPart) {
-			const int threshold = le->maxHP * bodyData.woundThreshold(bodyPart);
+		const BodyData *bodyTemplate = CL_ActorGetChr(le)->teamDef->bodyTemplate;
+		for (bodyPart = 0; bodyPart < bodyTemplate->numBodyParts(); ++bodyPart) {
+			const int threshold = le->maxHP * bodyTemplate->woundThreshold(bodyPart);
 			const int injury = (le->wounds.woundLevel[bodyPart] + le->wounds.treatmentLevel[bodyPart] * 0.5);
 			if (injury > threshold)
-				mod += 2 * bodyData.penalty(bodyPart, type) * injury / le->maxHP;
+				mod += 2 * bodyTemplate->penalty(bodyPart, type) * injury / le->maxHP;
 		}
 
 		switch (type) {

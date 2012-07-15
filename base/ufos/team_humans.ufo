@@ -61,6 +61,7 @@ team phalanx
 	size 1
 	hit_particle blood
 	team	"phalanx"
+	bodytype		humanoid_standard
 
 	names {
 		female (
@@ -656,6 +657,7 @@ team phalanx_scientist
 	weapons	false
 	armour	false
 	team	"civilian"
+	bodytype		humanoid_standard
 
 	names {
 		female (
@@ -1239,6 +1241,7 @@ team phalanx_pilot
 	hit_particle blood
 	name	"_Pilot"
 	armour	false
+	bodytype		humanoid_standard
 
 	names {
 		male (
@@ -1660,6 +1663,7 @@ team phalanx_worker
 	weapons	false
 	armour	false
 	team	"civilian"
+	bodytype		humanoid_standard
 
 	names {
 		male (
@@ -2072,6 +2076,7 @@ team phalanx_ugv_phoenix
 	//hit_particle none
 	// we can't assign any extra armour
 	armour	false
+	bodytype		default_unipart
 
 	names {
 		neutral (
@@ -2136,6 +2141,7 @@ team phalanx_ugv_ares_w
 	//hit_particle none
 	// we can't assign any extra armour
 	armour	false
+	bodytype		default_unipart
 
 	names {
 		neutral (

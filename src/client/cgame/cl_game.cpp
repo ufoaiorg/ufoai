@@ -1134,7 +1134,7 @@ static void GAME_NetSendCharacter (dbuffer * buf, const character_t *chr)
 	NET_WriteByte(buf, chr->STUN);
 	NET_WriteByte(buf, chr->morale);
 
-	for (j = 0; j < BODYPART_MAXTYPE; ++j)
+	for (j = 0; j < chr->teamDef->bodyTemplate->numBodyParts(); ++j)
 		NET_WriteByte(buf, chr->wounds.treatmentLevel[j]);
 
 	for (j = 0; j < SKILL_NUM_TYPES + 1; j++)

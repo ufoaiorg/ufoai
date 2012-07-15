@@ -24,8 +24,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "g_local.h"
 
-bodyPartData_t bodyData;
-
 /**
  * @brief Deals damage and causes wounds.
  * @param[in,out] target Pointer to the actor we want to damage.
@@ -34,7 +32,7 @@ bodyPartData_t bodyData;
 void G_DamageActor (edict_t *target, const int damage)
 {
 	assert(target->chr.teamDef);
-	int bodyPart = bodyData.GetRandomBodyPart();
+	int bodyPart = target->chr.teamDef->bodyTemplate->getRandomBodyPart();
 
 	G_TakeDamage(target, damage);
 	if (damage > 0 && target->HP > 0) {
@@ -45,7 +43,7 @@ void G_DamageActor (edict_t *target, const int damage)
 			/* Knockback -- currently disabled, not planned in the specs, also there's no way to tell stunned and dead actors apart */
 			target->STUN = std::min(255.0f, target->STUN + std::max(0.0f, damage * crand() * 0.25f));
 #endif
-		if (target->chr.wounds.woundLevel[bodyPart] > target->chr.maxHP * bodyData.woundThreshold(bodyPart))
+		if (target->chr.wounds.woundLevel[bodyPart] > target->chr.maxHP * target->chr.teamDef->bodyTemplate->woundThreshold(bodyPart))
 			G_ClientPrintf(G_PLAYER_FROM_ENT(target), PRINT_HUD, _("%s has been wounded!\n"), target->chr.name);
 	}
 }
@@ -67,12 +65,12 @@ void G_TreatActor (edict_t *target, const fireDef_t *const fd, const int heal, c
 		woundInfo_t *wounds = &target->chr.wounds;
 
 		/* Find the worst not treated wound */
-		for (bodyPart = 0; bodyPart < BODYPART_MAXTYPE; ++bodyPart)
+		for (bodyPart = 0; bodyPart < target->chr.teamDef->bodyTemplate->numBodyParts(); ++bodyPart)
 			if (wounds->woundLevel[bodyPart] > wounds->woundLevel[mostWounded])
 				mostWounded = bodyPart;
 
 		if (wounds->woundLevel[mostWounded] > 0) {
-			const int woundsHealed = std::min(static_cast<int>(abs(heal) / bodyData.bleedingFactor(mostWounded)),
+			const int woundsHealed = std::min(static_cast<int>(abs(heal) / target->chr.teamDef->bodyTemplate->bleedingFactor(mostWounded)),
 					wounds->woundLevel[mostWounded]);
 			G_TakeDamage(target, heal);
 			wounds->woundLevel[mostWounded] -= woundsHealed;
@@ -112,9 +110,9 @@ void G_BleedWounds (const int team)
 		int bodyPart, damage = 0;
 		if (CHRSH_IsTeamDefRobot(ent->chr.teamDef))
 			continue;
-		for (bodyPart = 0; bodyPart < BODYPART_MAXTYPE; ++bodyPart)
-			if (ent->chr.wounds.woundLevel[bodyPart] > ent->chr.maxHP * bodyData.woundThreshold(bodyPart))
-				damage += ent->chr.wounds.woundLevel[bodyPart] * bodyData.bleedingFactor(bodyPart);
+		for (bodyPart = 0; bodyPart < ent->chr.teamDef->bodyTemplate->numBodyParts(); ++bodyPart)
+			if (ent->chr.wounds.woundLevel[bodyPart] > ent->chr.maxHP * ent->chr.teamDef->bodyTemplate->woundThreshold(bodyPart))
+				damage += ent->chr.wounds.woundLevel[bodyPart] * ent->chr.teamDef->bodyTemplate->bleedingFactor(bodyPart);
 		if (damage > 0) {
 			G_PrintStats("%s is bleeding (damage: %i)\n", ent->chr.name, damage);
 			G_TakeDamage(ent, damage);
@@ -128,7 +126,7 @@ void G_BleedWounds (const int team)
 void G_SendWoundStats (edict_t *const ent)
 {
 	int i;
-	for (i = 0; i < BODYPART_MAXTYPE; ++i) {
+	for (i = 0; i < ent->chr.teamDef->bodyTemplate->numBodyParts(); ++i) {
 		/* Sanity checks */
 		ent->chr.wounds.woundLevel[i] = std::max(0, ent->chr.wounds.woundLevel[i]);
 		ent->chr.wounds.treatmentLevel[i] = std::max(0, ent->chr.wounds.treatmentLevel[i]);
@@ -150,11 +148,11 @@ float G_ActorGetInjuryPenalty (const edict_t *const ent, const modifier_types_t 
 	int bodyPart;
 	float penalty = 0;
 
-	for (bodyPart = 0; bodyPart < BODYPART_MAXTYPE; ++bodyPart) {
-		const int threshold = ent->chr.maxHP * bodyData.woundThreshold(bodyPart);
+	for (bodyPart = 0; bodyPart < ent->chr.teamDef->bodyTemplate->numBodyParts(); ++bodyPart) {
+		const int threshold = ent->chr.maxHP * ent->chr.teamDef->bodyTemplate->woundThreshold(bodyPart);
 		const int injury = (ent->chr.wounds.woundLevel[bodyPart] + ent->chr.wounds.treatmentLevel[bodyPart] * 0.5);
 		if (injury > threshold)
-			penalty += 2 * bodyData.penalty(bodyPart, type) * injury / ent->chr.maxHP;
+			penalty += 2 * ent->chr.teamDef->bodyTemplate->penalty(bodyPart, type) * injury / ent->chr.maxHP;
 	}
 
 	switch (type) {

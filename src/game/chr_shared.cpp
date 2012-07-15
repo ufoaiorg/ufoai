@@ -181,32 +181,68 @@ const char *CHRSH_CharGetHead (const character_t * const chr)
 	return returnModel;
 }
 
-bodyPartData_t::bodyPartData_t (void) : _numBodyParts(BODYPART_MAXTYPE), _totalBodyArea(100)
-	{
-		//** @todo Script all this data and get rid of this ASAP! */
-		const bodyPartData_s bodyInfo[BODYPART_MAXTYPE] = {
-				{"_Head", 9, {50, 0, 0, 50, 0, 0}, 10, 10},
-				{"_Arms", 18, {50, 25, 0, 0, 0, 0}, 10, 10},
-				{"_Legs", 36, {0, 0, 1, 0, 0, 0}, 10, 10},
-				{"_Torso", 37, {0, 0, 0, 0, 25, 0}, 10, 10}
-		};
-		memcpy(_bodyParts, bodyInfo, sizeof(_bodyParts));
-	}
+BodyData::BodyData (void)  : _totalBodyArea(0), _numBodyParts(0) { }
 
-int bodyPartData_t::GetRandomBodyPart (void)
-	{
-		const int rnd = rand() % _totalBodyArea;
-		int  currentArea = 0;
-		int bodyPart;
+short BodyData::getRandomBodyPart (void) const
+{
+	const int rnd = rand() % (_totalBodyArea + 1);
+	int  currentArea = 0;
+	short bodyPart;
 
-		for (bodyPart = 0; bodyPart < _numBodyParts; ++bodyPart) {
-			currentArea += _bodyParts[bodyPart].bodyArea;
-			if (rnd <= currentArea)
-				break;
-		}
-		if (bodyPart >= _numBodyParts) {
-			bodyPart = _numBodyParts - 1;
-			Com_DPrintf(DEBUG_SHARED, "Warning: No bodypart hit, defaulting to %s!\n", name(bodyPart));
-		}
-		return bodyPart;
+	for (bodyPart = 0; bodyPart < _numBodyParts; ++bodyPart) {
+		currentArea += _bodyParts[bodyPart].bodyArea;
+		if (rnd <= currentArea)
+			break;
 	}
+	if (bodyPart >= _numBodyParts) {
+		bodyPart = 0;
+		Com_DPrintf(DEBUG_SHARED, "Warning: No bodypart hit, defaulting to %s!\n", name(bodyPart));
+	}
+	return bodyPart;
+}
+
+const char *BodyData::id (void) const
+{
+	return _id;
+}
+
+const char *BodyData::id (const short bodyPart) const
+{
+	return _bodyParts[bodyPart].id;
+}
+
+const char *BodyData::name (const short bodyPart) const
+{
+	return _bodyParts[bodyPart].name;
+}
+
+float BodyData::penalty (const short bodyPart, const modifier_types_t type) const
+{
+	return _bodyParts[bodyPart].penalties[type] * 0.01;
+}
+
+float BodyData::bleedingFactor (const short bodyPart) const
+{
+	return _bodyParts[bodyPart].bleedingFactor * 0.01;
+}
+
+float BodyData::woundThreshold (const short bodyPart) const
+{
+	return _bodyParts[bodyPart].woundThreshold * 0.01;
+}
+
+short BodyData::numBodyParts (void) const
+{
+	return _numBodyParts;
+}
+
+void BodyData::setId (const char *id)
+{
+	Q_strncpyz(_id, id, sizeof(_id));
+}
+
+void BodyData::addBodyPart (bodyPartData_t bodyPart)
+{
+	_bodyParts[_numBodyParts++] = bodyPart;
+	_totalBodyArea += bodyPart.bodyArea;
+}

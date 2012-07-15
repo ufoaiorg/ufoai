@@ -175,3 +175,72 @@ chrtemplate soldier_mp {
 	evading	"0 0"
 	health	"80 130"
 }
+
+//========================================================================
+// List of body definitions.
+//========================================================================
+//Description:
+//
+// bodydef <id> {}
+//	defines a body type
+//	bodypart <id> {}
+//	 defines a part of the body
+//		name
+//			Translatable name for the body part
+//		area
+//			Body area comprised by this body part (chance of this part getting wounded)
+//		threshold
+//			Damage needed before this part is considered wounded (% of max HP)
+//		penalty
+//			Penalties received when this part is wounded, number is the median penalty (roughly equivalent to a wound worth 50% of character's max HP)
+//			Valid penalties:
+//				accuracy: reduced accuracy (%)
+//				visibility: reduced detection range (%)
+//				shooting: increased shooting TU cost (%)
+//				reaction: increased shooting TU cost when using rection fire (%)
+//				movement: increased movement TU cost (absolute number per tile moved)
+//				max_tu: reduced max TU (%)
+//
+//========================================================================
+
+bodydef default_unipart {
+	bodypart default_body {
+		name "_Body"
+		area 100
+		threshold 10
+		penalty (max_tu 10)
+	}
+}
+
+bodydef humanoid_standard {
+	bodypart humanoid_torso {
+		name "_Torso"
+		area 37
+		bleed 10
+		threshold 10
+		penalty (reaction 25)
+	}
+	bodypart humanoid_legs {
+		name "_Legs"
+		area 36
+		bleed 10
+		threshold 10
+		penalty (movement 1)
+	}
+	bodypart humanoid_arms {
+		name "_Arms"
+		area 18
+		bleed 10
+		threshold 10
+		penalty (accuracy 50)
+		penalty (shooting 25)
+	}
+	bodypart humanoid_head {
+		name "_Head"
+		area 9
+		bleed 10
+		threshold 10
+		penalty (accuracy 50)
+		penalty (visibility 50)
+	}
+}

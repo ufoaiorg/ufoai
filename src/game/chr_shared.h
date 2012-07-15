@@ -199,6 +199,50 @@ typedef struct ugv_s {
 	int price;
 } ugv_t;
 
+enum modifier_types_t {
+	 MODIFIER_ACCURACY,		/**< Modifier to accuracy */
+	 MODIFIER_SHOOTING,		/**< Modifier to shooting */
+	 MODIFIER_MOVEMENT,		/**< Modifier to movement */
+	 MODIFIER_SIGHT,		/**< Modifier to LoS range */
+	 MODIFIER_REACTION,		/**< Modifier to reactions */
+	 MODIFIER_TU,			/**< Modifier to TUs */
+
+	 MODIFIER_MAX
+};
+
+#define BODYPART_MAXTYPE 4
+
+typedef struct bodyPartData_s {
+	char id[MAX_TEXPATH];
+	char name[MAX_TEXPATH];
+	int penalties[MODIFIER_MAX];
+	int bodyArea;
+	int bleedingFactor;
+	int woundThreshold;
+} bodyPartData_t;
+
+class BodyData {
+private:
+	char _id[MAX_TEXPATH];
+	bodyPartData_t _bodyParts[BODYPART_MAXTYPE];
+	int _totalBodyArea;
+	short _numBodyParts;
+
+
+public:
+	BodyData(void);
+	const char *id(void) const;
+	const char *id(const short bodyPart) const;
+	const char *name(const short bodyPart) const;
+	float penalty(const short bodyPart, const modifier_types_t type) const;
+	float bleedingFactor(const short bodyPart) const;
+	float woundThreshold(const short bodyPart) const;
+	short getRandomBodyPart(void) const;
+	short numBodyParts (void) const;
+	void setId(const char *id);
+	void addBodyPart(bodyPartData_t bodyPart);
+};
+
 typedef struct teamDef_s {
 	int idx;			/**< The index in the teamDef array. */
 	char id[MAX_VAR];	/**< id from script file. */
@@ -240,9 +284,9 @@ typedef struct teamDef_s {
 
 	const chrTemplate_t *characterTemplates[MAX_TEMPLATES_PER_TEAM];
 	int numTemplates;
-} teamDef_t;
 
-#define BODYPART_MAXTYPE 4
+	const BodyData *bodyTemplate;
+} teamDef_t;
 
 /** @brief Info on a wound */
 typedef struct woundInfo_s {
@@ -281,39 +325,6 @@ typedef struct character_s {
 	chrReservations_t reservedTus;	/** < Stores the reserved TUs for actions. @sa See chrReserveSettings_t for more. */
 	chrFiremodeSettings_t RFmode;	/** < Stores the firemode to be used for reaction fire (if the fireDef allows that) See also reaction_firemode_type_t */
 } character_t;
-
-enum modifier_types_t {
-	 MODIFIER_ACCURACY,		/**< Modifier to accuracy */
-	 MODIFIER_SHOOTING,		/**< Modifier to shooting */
-	 MODIFIER_MOVEMENT,		/**< Modifier to movement */
-	 MODIFIER_SIGHT,		/**< Modifier to LoS range */
-	 MODIFIER_REACTION,		/**< Modifier to reactions */
-	 MODIFIER_TU,			/**< Modifier to TUs */
-
-	 MODIFIER_MAX
-};
-
-class bodyPartData_t {
-private:
-	struct bodyPartData_s {
-		char name[MAX_VAR];
-		int bodyArea;
-		int penalties[MODIFIER_MAX];
-		int bleedingFactor;
-		int woundThreshold;
-	} _bodyParts[BODYPART_MAXTYPE];
-	int _numBodyParts;
-	int _totalBodyArea;
-
-public:
-	bodyPartData_t(void);
-
-	int GetRandomBodyPart(void);
-	char *name (int bodyPart) { return _bodyParts[bodyPart].name; }
-	float penalty (int bodyPart, modifier_types_t type) { return _bodyParts[bodyPart].penalties[type] * 0.01; }
-	float bleedingFactor (int bodyPart) { return _bodyParts[bodyPart].bleedingFactor * 0.01; }
-	float woundThreshold (int bodyPart) { return _bodyParts[bodyPart].woundThreshold * 0.01; }
-};
 
 /* ================================ */
 /*  CHARACTER GENERATING FUNCTIONS  */

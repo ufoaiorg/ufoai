@@ -666,7 +666,7 @@ bool GAME_SaveCharacter (xmlNode_t *p, const character_t* chr)
 
 	sInjuries = XML_AddNode(p, SAVE_CHARACTER_INJURIES);
 	/* Store wounds */
-	for (k = 0; k < BODYPART_MAXTYPE; ++k) {
+	for (k = 0; k < chr->teamDef->bodyTemplate->numBodyParts(); ++k) {
 		if (chr->wounds.treatmentLevel[k]) {
 			xmlNode_t *sWound = XML_AddNode(sInjuries, SAVE_CHARACTER_WOUND);
 
@@ -763,7 +763,7 @@ bool GAME_LoadCharacter (xmlNode_t *p, character_t *chr)
 	for (sWound = XML_GetNode(sInjuries, SAVE_CHARACTER_WOUND); sWound; sWound = XML_GetNextNode(sWound, sInjuries, SAVE_CHARACTER_WOUND)) {
 		const int type = XML_GetInt(sWound, SAVE_CHARACTER_WOUNDTYPE, 0);
 
-		if (type < 0 || type >= BODYPART_MAXTYPE) {
+		if (type < 0 || type >= chr->teamDef->bodyTemplate->numBodyParts()) {
 			Com_Printf("Invalid body part type '%i' for %s (ucn: %i)\n", type, chr->name, chr->ucn);
 			return false;
 		}

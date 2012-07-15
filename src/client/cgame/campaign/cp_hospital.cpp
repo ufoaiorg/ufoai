@@ -35,7 +35,7 @@ static void HOS_HealWounds (character_t* chr, int healing)
 	int bodyPart;
 	woundInfo_t *wounds = &chr->wounds;
 
-	for (bodyPart = 0; bodyPart < BODYPART_MAXTYPE; ++bodyPart)
+	for (bodyPart = 0; bodyPart < chr->teamDef->bodyTemplate->numBodyParts(); ++bodyPart)
 		if (wounds->treatmentLevel[bodyPart] > 0)
 			wounds->treatmentLevel[bodyPart] = std::max(0, wounds->treatmentLevel[bodyPart] - healing);
 

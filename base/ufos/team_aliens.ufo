@@ -12,6 +12,7 @@ team taman
 	team			"alien"
 	size			1
 	hit_particle	blood
+	bodytype		humanoid_standard
 
 	names {
 		neutral (
@@ -133,6 +134,7 @@ team ortnok
 	size			1
 	//hit_particle	none
 	death_texture	"pics/sfx/blood/blood_green_0"
+	bodytype		humanoid_standard
 
 	names {
 		neutral (
@@ -254,6 +256,7 @@ team shevaar
 	armour			false
 	size			1
 	hit_particle	blood
+	bodytype		humanoid_standard
 
 	names {
 		neutral (
@@ -360,6 +363,7 @@ team bloodspider
 	size		1
 	//hit_particle	none
 	death_texture	"pics/sfx/blood/blood_oil_2"
+	bodytype		default_unipart
 
 	names {
 		neutral (
@@ -459,6 +463,7 @@ team bloodspider_adv
 	size		1
 	//hit_particle	none
 	death_texture	"pics/sfx/blood/blood_oil_2"
+	bodytype		default_unipart
 
 	names {
 		neutral (
@@ -560,6 +565,7 @@ team hovernet
 	size		1
 	//hit_particle	none
 	death_texture	"pics/sfx/blood/blood_oil_2"
+	bodytype		default_unipart
 
 	names {
 		neutral (
@@ -658,6 +664,7 @@ team hovernet_adv
 	size		1
 	//hit_particle	none
 	death_texture	"pics/sfx/blood/blood_oil_2"
+	bodytype		default_unipart
 
 	names {
 		neutral (

@@ -1221,7 +1221,6 @@ static void AI_SetStats (edict_t * ent)
 	/* hurt aliens in ufo crash missions (5%: almost dead, 15%: wounded, 30%: stunned)  */
 	if (level.hurtAliens && CHRSH_IsTeamDefAlien(ent->chr.teamDef)) {
 		const float random = frand();
-		bodyPartData_t bodyData;
 		int damage, stun;
 		if (random <= 0.05f) {
 			damage = ent->HP * 0.95f;
@@ -1234,8 +1233,8 @@ static void AI_SetStats (edict_t * ent)
 		ent->HP -= damage;
 		if (!CHRSH_IsTeamDefRobot(ent->chr.teamDef))
 			ent->STUN = stun;
-		for (int i = 0; i < BODYPART_MAXTYPE; ++i)
-			ent->chr.wounds.treatmentLevel[bodyData.GetRandomBodyPart()] += damage / BODYPART_MAXTYPE;
+		for (int i = 0; i < ent->chr.teamDef->bodyTemplate->numBodyParts(); ++i)
+				ent->chr.wounds.treatmentLevel[ent->chr.teamDef->bodyTemplate->getRandomBodyPart()] += damage / BODYPART_MAXTYPE;
 	}
 
 	G_ActorGiveTimeUnits(ent);

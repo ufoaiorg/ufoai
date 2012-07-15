@@ -14,6 +14,7 @@ team africa
 	weapons			false
 	armour			false
 	team			"civilian"
+	bodytype		humanoid_standard
 
 	names {
 		female ( "a" )
@@ -66,6 +67,7 @@ team asia
 	weapons			false
 	armour			false
 	team			"civilian"
+	bodytype		humanoid_standard
 
 	names {
 		female ( "a" )
@@ -113,6 +115,7 @@ team europe
 	weapons			false
 	armour			false
 	team			"civilian"
+	bodytype		humanoid_standard
 
 	names {
 		female ( "a" )
@@ -202,6 +205,7 @@ team latin
 	weapons			false
 	armour			false
 	team			"civilian"
+	bodytype		humanoid_standard
 
 	names {
 		female ( "a" )
@@ -252,6 +256,7 @@ team middle
 	weapons			false
 	armour			false
 	team			"civilian"
+	bodytype		humanoid_standard
 
 	names {
 		female ( "a" )
@@ -302,6 +307,7 @@ team states
 	weapons			false
 	armour			false
 	team			"civilian"
+	bodytype		humanoid_standard
 
 	names {
 		female ( "a" )
@@ -391,6 +397,7 @@ team oceania
 	weapons			false
 	armour			false
 	team			"civilian"
+	bodytype		humanoid_standard
 
 	names {
 		female ( "a" )
@@ -440,6 +447,7 @@ team russia
 	weapons			false
 	armour			false
 	team			"civilian"
+	bodytype		humanoid_standard
 
 	names {
 		female ( "a" )
@@ -519,6 +527,7 @@ team armysoldier
 	weapons			false
 	armour			false
 	team			"civilian"
+	bodytype		humanoid_standard
 
 	names {
 		male ( "b" )
@@ -553,6 +562,7 @@ team miner
 	weapons			false
 	armour			false
 	team			"civilian"
+	bodytype		humanoid_standard
 
 	names {
 		male ( "b" )
@@ -589,6 +599,7 @@ team scientist
 	weapons			false
 	armour			false
 	team			"civilian"
+	bodytype		humanoid_standard
 
 	names {
 		female ( "a" )
@@ -640,6 +651,7 @@ team worker
 	weapons			false
 	armour			false
 	team			"civilian"
+	bodytype		humanoid_standard
 
 	names {
 		male ( "b" )
