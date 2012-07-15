@@ -51,7 +51,7 @@ static void HOS_HealWounds (character_t* chr, int healing)
 bool HOS_HealCharacter (character_t* chr, bool hospital)
 {
 	assert(chr);
-	float healing = 1.0f;
+	float healing = ccs.curCampaign->healingRate;
 
 	if (hospital) {
 		healing *= GET_HP_HEALING(chr->score.skills[ABILITY_POWER]);
