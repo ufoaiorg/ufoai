@@ -641,6 +641,7 @@ bool GAME_SaveCharacter (xmlNode_t *p, const character_t* chr)
 {
 	xmlNode_t *sScore;
 	xmlNode_t *sInventory;
+	xmlNode_t *sInjuries;
 	int k;
 	const chrScoreGlobal_t *score;
 
@@ -662,6 +663,17 @@ bool GAME_SaveCharacter (xmlNode_t *p, const character_t* chr)
 	XML_AddInt(p, SAVE_CHARACTER_MORALE, chr->morale);
 	XML_AddInt(p, SAVE_CHARACTER_FIELDSIZE, chr->fieldSize);
 	XML_AddIntValue(p, SAVE_CHARACTER_STATE, chr->state);
+
+	sInjuries = XML_AddNode(p, SAVE_CHARACTER_INJURIES);
+	/* Store wounds */
+	for (k = 0; k < BODYPART_MAXTYPE; ++k) {
+		if (chr->wounds.treatmentLevel[k]) {
+			xmlNode_t *sWound = XML_AddNode(sInjuries, SAVE_CHARACTER_WOUND);
+
+			XML_AddInt(sWound, SAVE_CHARACTER_WOUNDTYPE, k);
+			XML_AddInt(sWound, SAVE_CHARACTER_WOUNDSEVERITY, chr->wounds.treatmentLevel[k]);
+		}
+	}
 
 	score = &chr->score;
 
@@ -717,6 +729,8 @@ bool GAME_LoadCharacter (xmlNode_t *p, character_t *chr)
 	xmlNode_t *sSkill;
 	xmlNode_t *sKill;
 	xmlNode_t *sInventory;
+	xmlNode_t *sInjuries;
+	xmlNode_t *sWound;
 	bool success = true;
 
 	/* Load the character data */
@@ -743,6 +757,18 @@ bool GAME_LoadCharacter (xmlNode_t *p, character_t *chr)
 	chr->teamDef = Com_GetTeamDefinitionByID(s);
 	if (!chr->teamDef)
 		return false;
+
+	sInjuries = XML_GetNode(p, SAVE_CHARACTER_INJURIES);
+	/* Load wounds */
+	for (sWound = XML_GetNode(sInjuries, SAVE_CHARACTER_WOUND); sWound; sWound = XML_GetNextNode(sWound, sInjuries, SAVE_CHARACTER_WOUND)) {
+		const int type = XML_GetInt(sWound, SAVE_CHARACTER_WOUNDTYPE, 0);
+
+		if (type < 0 || type >= BODYPART_MAXTYPE) {
+			Com_Printf("Invalid body part type '%i' for %s (ucn: %i)\n", type, chr->name, chr->ucn);
+			return false;
+		}
+		chr->wounds.treatmentLevel[type] = XML_GetInt(sWound, SAVE_CHARACTER_WOUNDSEVERITY, 0);
+	}
 
 	Com_RegisterConstList(saveCharacterConstants);
 

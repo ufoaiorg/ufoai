@@ -41,6 +41,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SAVE_CHARACTER_FIELDSIZE "fieldSize"
 #define SAVE_CHARACTER_STATE "state"
 
+#define SAVE_CHARACTER_INJURIES "injuries"
+#define SAVE_CHARACTER_WOUND "wound"
+#define SAVE_CHARACTER_WOUNDTYPE "type"
+#define SAVE_CHARACTER_WOUNDSEVERITY "severity"
+
 #define SAVE_CHARACTER_SCORES "scores"
 
 #define SAVE_CHARACTER_SKILLS "skill"
