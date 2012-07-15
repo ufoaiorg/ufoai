@@ -750,9 +750,22 @@ int CL_ActorCheckAction (const le_t *le)
  */
 static byte CL_ActorMoveLength (const le_t *le, const pos3_t to)
 {
-	const byte crouchingState = LE_IsCrouched(le) ? 1 : 0;
-	const byte length = Grid_MoveLength(&cl.pathMap, to, crouchingState, false);
-	return length;
+	byte crouchingState = LE_IsCrouched(le) ? 1 : 0;
+	const int length = Grid_MoveLength(&cl.pathMap, to, crouchingState, false);
+	int dvec, numSteps = 0;
+	pos3_t pos;
+
+	if (!length || length == ROUTING_NOT_REACHABLE)
+		return length;
+
+	VectorCopy(to, pos);
+	while ((dvec = Grid_MoveNext(&cl.pathMap, pos, crouchingState)) != ROUTING_UNREACHABLE) {
+		++numSteps;
+		PosSubDV(pos, crouchingState, dvec); /* We are going backwards to the origin. */
+	}
+
+	return std::min(ROUTING_NOT_REACHABLE, length + static_cast<int>(numSteps
+			* CL_ActorInjuryModifier(le, MODIFIER_MOVEMENT)));
 }
 
 /**
@@ -2008,8 +2021,7 @@ static bool CL_AddPathingBox (pos3_t pos, bool addUnreachableCells)
 	int height; /* The total opening size */
 	int base; /* The floor relative to this cell */
 
-	const byte crouchingState = LE_IsCrouched(selActor) ? 1 : 0;
-	const int TUneed = Grid_MoveLength(&cl.pathMap, pos, crouchingState, false);
+	const int TUneed = CL_ActorMoveLength(selActor, pos);
 	const int TUhave = CL_ActorUsableTUs(selActor);
 	if (!addUnreachableCells && TUhave < TUneed)
 		return false;

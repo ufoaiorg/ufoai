@@ -326,7 +326,7 @@ bool AI_FindHidingLocation (int team, edict_t *ent, const pos3_t from, int *tuLe
 	for (ent->pos[1] = minY; ent->pos[1] <= maxY; ent->pos[1]++) {
 		for (ent->pos[0] = minX; ent->pos[0] <= maxX; ent->pos[0]++) {
 			/* Don't have TUs  to walk there */
-			const pos_t delta = gi.MoveLength(hidePathingTable, ent->pos, crouchingState, false);
+			const pos_t delta = G_ActorMoveLength(ent, hidePathingTable, ent->pos, false);
 			if (delta > *tuLeft || delta == ROUTING_NOT_REACHABLE)
 				continue;
 
@@ -390,7 +390,7 @@ bool AI_FindHerdLocation (edict_t *ent, const pos3_t from, const vec3_t target, 
 	for (ent->pos[1] = minY; ent->pos[1] <= maxY; ent->pos[1]++) {
 		for (ent->pos[0] = minX; ent->pos[0] <= maxX; ent->pos[0]++) {
 			/* time */
-			const pos_t delta = gi.MoveLength(herdPathingTable, ent->pos, crouchingState, false);
+			const pos_t delta = G_ActorMoveLength(ent, herdPathingTable, ent->pos, false);
 			if (delta > tu || delta == ROUTING_NOT_REACHABLE)
 				continue;
 
@@ -585,8 +585,7 @@ static float AI_FighterCalcActionScore (edict_t * ent, pos3_t to, aiAction_t * a
 	float bestActionScore, maxDmg;
 	int bestTime = -1;
 
-	move = gi.MoveLength(level.pathingMap, to,
-			G_IsCrouched(ent) ? 1 : 0, true);
+	move = G_ActorMoveLength(ent, level.pathingMap, to, true);
 	tu = G_ActorUsableTUs(ent) - move;
 
 	/* test for time */
@@ -702,7 +701,6 @@ static float AI_CivilianCalcActionScore (edict_t * ent, pos3_t to, aiAction_t * 
 	float bestActionScore;
 	float reactionTrap = 0.0;
 	float delta = 0.0;
-	const byte crouchingState = G_IsCrouched(ent) ? 1 : 0;
 
 	/* set basic parameters */
 	bestActionScore = 0.0;
@@ -711,7 +709,7 @@ static float AI_CivilianCalcActionScore (edict_t * ent, pos3_t to, aiAction_t * 
 	VectorCopy(to, aia->stop);
 	G_EdictSetOrigin(ent, to);
 
-	move = gi.MoveLength(level.pathingMap, to, crouchingState, true);
+	move = G_ActorMoveLength(ent, level.pathingMap, to, true);
 	tu = ent->TU - move;
 
 	/* test for time */
@@ -828,7 +826,7 @@ static float AI_PanicCalcActionScore (edict_t * ent, pos3_t to, aiAction_t * aia
 	VectorCopy(to, aia->stop);
 	G_EdictSetOrigin(ent, to);
 
-	move = gi.MoveLength(level.pathingMap, to, crouchingState, true);
+	move = G_ActorMoveLength(ent, level.pathingMap, to, true);
 	tu = ent->TU - move;
 
 	/* test for time */
@@ -891,7 +889,6 @@ static float AI_PanicCalcActionScore (edict_t * ent, pos3_t to, aiAction_t * aia
 static int AI_CheckForMissionTargets (const player_t* player, edict_t *ent, aiAction_t *aia)
 {
 	int bestActionScore = AI_ACTION_NOTHING_FOUND;
-	const byte crouchingState = G_IsCrouched(ent) ? 1 : 0;
 
 	/* reset any previous given action set */
 	OBJZERO(*aia);
@@ -909,7 +906,7 @@ static int AI_CheckForMissionTargets (const player_t* player, edict_t *ent, aiAc
 			/* the lower the count value - the nearer the final target */
 			if (checkPoint->count < ent->count) {
 				if (VectorDist(ent->origin, checkPoint->origin) <= WAYPOINT_CIV_DIST) {
-					const pos_t move = gi.MoveLength(level.pathingMap, checkPoint->pos, crouchingState, true);
+					const pos_t move = G_ActorMoveLength(ent, level.pathingMap, checkPoint->pos, true);
 					i++;
 					if (move == ROUTING_NOT_REACHABLE)
 						continue;
@@ -986,7 +983,7 @@ static aiAction_t AI_PrepBestAction (const player_t *player, edict_t * ent)
 	for (to[2] = 0; to[2] < PATHFINDING_HEIGHT; to[2]++)
 		for (to[1] = yl; to[1] < yh; to[1]++)
 			for (to[0] = xl; to[0] < xh; to[0]++) {
-				const pos_t move = gi.MoveLength(level.pathingMap, to, crouchingState, true);
+				const pos_t move = G_ActorMoveLength(ent, level.pathingMap, to, true);
 				if (move != ROUTING_NOT_REACHABLE && move <= ent->TU) {
 					if (G_IsCivilian(ent))
 						bestActionScore = AI_CivilianCalcActionScore(ent, to, &aia);

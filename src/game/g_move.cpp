@@ -228,6 +228,34 @@ static int G_FillDirectionTable (dvec_t *dvtab, size_t size, byte crouchingState
 }
 
 /**
+* @brief Return the needed TUs to walk to a given position
+* @param ent Edict to calculate move length for
+* @param path Pointer to pathing table
+* @param to Position to walk to
+* @param stored Use the stored mask (the cached move) of the routing data
+* @return ROUTING_NOT_REACHABLE if the move isn't possible, length of move otherwise (TUs)
+*/
+byte G_ActorMoveLength(const edict_t *ent, const pathing_t *path, const pos3_t to, bool stored)
+{
+	byte crouchingState = G_IsCrouched(ent) ? 1 : 0;
+	const int length = gi.MoveLength(path, to, crouchingState, stored);
+	int dvec, numSteps = 0;
+	pos3_t pos;
+
+	if (!length || length == ROUTING_NOT_REACHABLE)
+		return length;
+
+	VectorCopy(to, pos);
+	while ((dvec = gi.MoveNext(level.pathingMap, pos, crouchingState)) != ROUTING_UNREACHABLE) {
+		++numSteps;
+		PosSubDV(pos, crouchingState, dvec); /* We are going backwards to the origin. */
+	}
+
+	return std::min(ROUTING_NOT_REACHABLE, length + static_cast<int>(numSteps *
+			G_ActorGetInjuryPenalty(ent, MODIFIER_MOVEMENT)));
+}
+
+/**
  * @brief Generates the client events that are send over the netchannel to move an actor
  * @param[in] player Player who is moving an actor
  * @param[in] visTeam The team to check the visibility for - if this is 0 we build the forbidden list
@@ -265,7 +293,7 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos
 
 	/* calculate move table */
 	G_MoveCalc(visTeam, ent, ent->pos, crouchingState, ent->TU);
-	length = gi.MoveLength(level.pathingMap, to, crouchingState, false);
+	length = G_ActorMoveLength(ent, level.pathingMap, to, false);
 
 	/* length of ROUTING_NOT_REACHABLE means not reachable */
 	if (length && length >= ROUTING_NOT_REACHABLE)
@@ -283,7 +311,7 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos
 			crouchingState = G_IsCrouched(ent) ? 1 : 0;
 			if (!crouchingState) {
 				G_MoveCalc(visTeam, ent, ent->pos, crouchingState, ent->TU);
-				length = gi.MoveLength(level.pathingMap, to, crouchingState, false);
+				length = G_ActorMoveLength(ent, level.pathingMap, to, false);
 				autoCrouchRequired = true;
 			}
 		}
@@ -308,6 +336,7 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos
 		int usedTUs = 0;
 		/* no floor inventory at this point */
 		FLOOR(ent) = NULL;
+		const int movingModifier = G_ActorGetInjuryPenalty(ent, MODIFIER_MOVEMENT);
 
 		while (numdv > 0) {
 			/* A flag to see if we needed to change crouch state */
@@ -344,9 +373,9 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos
 
 			/* decrease TUs */
 			div = gi.GetTUsForDirection(dir, G_IsCrouched(ent));
-			if ((int) (usedTUs + div) > ent->TU)
+			if ((int) (usedTUs + div + movingModifier) > ent->TU)
 				break;
-			usedTUs += div;
+			usedTUs += div + movingModifier;
 
 			/* This is now a flag to indicate a change in crouching - we need this for
 			 * the stop in mid move call(s), because we need the updated entity position */
