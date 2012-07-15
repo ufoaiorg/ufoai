@@ -30,6 +30,17 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define GET_HP_HEALING( ab ) (1 + (ab) * 15/MAX_SKILL)
 
+static void HOS_HealWounds (character_t* chr, int healing)
+{
+	int bodyPart;
+	woundInfo_t *wounds = &chr->wounds;
+
+	for (bodyPart = 0; bodyPart < BODYPART_MAXTYPE; ++bodyPart)
+		if (wounds->treatmentLevel[bodyPart] > 0)
+			wounds->treatmentLevel[bodyPart] = std::max(0, wounds->treatmentLevel[bodyPart] - healing);
+
+}
+
 /**
  * @brief Heals character.
  * @param[in] chr Character data of an employee
@@ -40,19 +51,22 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 bool HOS_HealCharacter (character_t* chr, bool hospital)
 {
 	assert(chr);
-	if (chr->HP < chr->maxHP) {
-		float healing = 1.0f;
+	float healing = 1.0f;
 
-		if (hospital)
-			healing = GET_HP_HEALING(chr->score.skills[ABILITY_POWER]);
+	if (hospital) {
+		healing *= GET_HP_HEALING(chr->score.skills[ABILITY_POWER]);
+		HOS_HealWounds(chr, healing);
+	}
+
+	if (chr->HP < chr->maxHP) {
 
 		/* if the character has less that 100 hitpoints, he will be disadvantaged by using the percentage
 		 * method of allocating hitpoints.  So just give the character "healing" as Hitpoints, otherwise
 		 * allocate "healing" as a percentage of the characters total hitpoints. */
 		if (chr->maxHP < MAX_HP)
-			chr->HP = std::min(chr->HP + (int)healing, chr->maxHP);
+			chr->HP = std::min(chr->HP + static_cast<int>(healing), chr->maxHP);
 		else
-			chr->HP = std::min(chr->HP + (int)(((healing / 100.0f) * chr->maxHP)), chr->maxHP);
+			chr->HP = std::min(chr->HP + static_cast<int>(((healing / 100.0f) * chr->maxHP)), chr->maxHP);
 
 		if (chr->HP == chr->maxHP)
 			return false;
