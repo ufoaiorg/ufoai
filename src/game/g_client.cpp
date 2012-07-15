@@ -1144,6 +1144,9 @@ static void G_ClientReadCharacter (edict_t *ent)
 	ent->chr.STUN = gi.ReadByte();
 	ent->chr.morale = gi.ReadByte();
 
+	for (k = 0; k < BODYPART_MAXTYPE; ++k)
+		ent->chr.wounds.treatmentLevel[k] = gi.ReadByte();
+
 	for (k = 0; k < SKILL_NUM_TYPES + 1; k++) /* new attributes */
 		ent->chr.score.experience[k] = gi.ReadLong();
 	for (k = 0; k < SKILL_NUM_TYPES; k++) /* new attributes */

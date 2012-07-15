@@ -231,6 +231,9 @@ static void G_SendCharacterData (const edict_t* ent)
 	gi.WriteByte(ent->morale);
 	gi.WriteShort(ent->chr.maxHP);
 
+	for (k = 0; k < BODYPART_MAXTYPE; ++k)
+		gi.WriteByte(ent->chr.wounds.woundLevel[k] + ent->chr.wounds.treatmentLevel[k]);
+
 	/** Scores @sa inv_shared.h:chrScoreGlobal_t */
 	for (k = 0; k < SKILL_NUM_TYPES + 1; k++)
 		gi.WriteLong(ent->chr.score.experience[k]);

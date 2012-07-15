@@ -67,6 +67,7 @@ typedef struct {
 	int STUN;
 	int morale;
 	int maxHP;
+	woundInfo_t wounds;
 
 	chrScoreGlobal_t chrscore;
 } updateCharacter_t;
@@ -100,6 +101,8 @@ void CP_ParseCharacterData (dbuffer *msg)
 			chr->morale = c->morale;
 			chr->maxHP = c->maxHP;
 
+			memcpy(chr->wounds.treatmentLevel, c->wounds.treatmentLevel, sizeof(chr->wounds.treatmentLevel));
+
 			memcpy(chr->score.experience, c->chrscore.experience, sizeof(chr->score.experience));
 			memcpy(chr->score.skills, c->chrscore.skills, sizeof(chr->score.skills));
 			memcpy(chr->score.kills, c->chrscore.kills, sizeof(chr->score.kills));
@@ -124,6 +127,9 @@ void CP_ParseCharacterData (dbuffer *msg)
 			c.STUN = NET_ReadByte(msg);
 			c.morale = NET_ReadByte(msg);
 			c.maxHP = NET_ReadShort(msg);
+
+			for (j = 0; j < BODYPART_MAXTYPE; ++j)
+				c.wounds.treatmentLevel[j] = NET_ReadByte(msg);
 
 			for (j = 0; j < SKILL_NUM_TYPES + 1; j++)
 				c.chrscore.experience[j] = NET_ReadLong(msg);
