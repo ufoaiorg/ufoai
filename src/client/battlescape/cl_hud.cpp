@@ -213,7 +213,7 @@ static bool HUD_CheckFiremodeReservation (void)
 			const objDef_t *ammo = fireDef->obj;
 			for (i = 0; i < ammo->numFiredefs[fireDef->weapFdsIdx]; i++) {
 				/* Check if at least one firemode is available for reservation. */
-				if (CL_ActorUsableTUs(selActor) + CL_ActorReservedTUs(selActor, RES_SHOT) >= ammo->fd[fireDef->weapFdsIdx][i].time)
+				if (CL_ActorUsableTUs(selActor) + CL_ActorReservedTUs(selActor, RES_SHOT) >= CL_ActorTimeForFireDef(selActor, &ammo->fd[fireDef->weapFdsIdx][i]))
 					return true;
 			}
 		}
@@ -292,9 +292,10 @@ static void HUD_PopupFiremodeReservation (const le_t *le, bool popupReload)
 
 			for (i = 0; i < ammo->numFiredefs[fd->weapFdsIdx]; i++) {
 				const fireDef_t* ammoFD = &ammo->fd[fd->weapFdsIdx][i];
-				if (CL_ActorUsableTUs(le) + CL_ActorReservedTUs(le, RES_SHOT) >= ammoFD->time) {
+				const int time = CL_ActorTimeForFireDef(le, ammoFD);
+				if (CL_ActorUsableTUs(le) + CL_ActorReservedTUs(le, RES_SHOT) >= time) {
 					/* Get firemode name and TUs. */
-					Com_sprintf(text, lengthof(text), _("[%i TU] %s"), ammoFD->time, _(ammoFD->name));
+					Com_sprintf(text, lengthof(text), _("[%i TU] %s"), time, _(ammoFD->name));
 
 					/* Store text for popup */
 					LIST_AddString(&popupListText, text);
@@ -303,7 +304,7 @@ static void HUD_PopupFiremodeReservation (const le_t *le, bool popupReload)
 					reserveShotData.hand = hand;
 					reserveShotData.fireModeIndex = i;
 					reserveShotData.weaponIndex = ammo->weapons[fd->weapFdsIdx]->idx;
-					reserveShotData.TUs = ammoFD->time;
+					reserveShotData.TUs = time;
 					LIST_Add(&popupListData, reserveShotData);
 
 					/* Remember the line that is currently selected (if any). */
@@ -401,7 +402,7 @@ static void HUD_ShotReserve_f (void)
  */
 static void HUD_DisplayFiremodeEntry (const char* callback, const le_t* actor, const objDef_t* ammo, const weaponFireDefIndex_t weapFdsIdx, const actorHands_t hand, int index)
 {
-	int usableTusForRF;
+	int usableTusForRF, time;
 	char tuString[MAX_VAR];
 	bool status;
 	const fireDef_t *fd;
@@ -411,6 +412,7 @@ static void HUD_DisplayFiremodeEntry (const char* callback, const le_t* actor, c
 	if (index < ammo->numFiredefs[weapFdsIdx]) {
 		/* We have a defined fd ... */
 		fd = &ammo->fd[weapFdsIdx][index];
+		time = CL_ActorTimeForFireDef(actor, fd);
 	} else {
 		return;
 	}
@@ -418,11 +420,11 @@ static void HUD_DisplayFiremodeEntry (const char* callback, const le_t* actor, c
 	assert(actor);
 	assert(hand == ACTOR_HAND_RIGHT || hand == ACTOR_HAND_LEFT);
 
-	status = fd->time <= CL_ActorUsableTUs(actor);
+	status = time <= CL_ActorUsableTUs(actor);
 	usableTusForRF = HUD_UsableReactionTUs(actor);
 
-	if (usableTusForRF > fd->time) {
-		Com_sprintf(tuString, sizeof(tuString), _("Remaining TUs: %i"), usableTusForRF - fd->time);
+	if (usableTusForRF > time) {
+		Com_sprintf(tuString, sizeof(tuString), _("Remaining TUs: %i"), usableTusForRF - time);
 		tooltip = tuString;
 	} else
 		tooltip = _("No remaining TUs left after shot.");
@@ -432,7 +434,7 @@ static void HUD_DisplayFiremodeEntry (const char* callback, const le_t* actor, c
 	Com_sprintf(id, sizeof(id), "fire_hand%c_i%i", ACTOR_GET_HAND_CHAR(hand), index);
 
 	UI_ExecuteConfunc("%s firemode %s %c %i %i %i \"%s\" \"%i\" \"%i\" \"%s\"", callback, id, ACTOR_GET_HAND_CHAR(hand),
-			fd->fdIdx, fd->reaction, status, _(fd->name), fd->time, fd->ammo, tooltip);
+			fd->fdIdx, fd->reaction, status, _(fd->name), time, fd->ammo, tooltip);
 
 	/* Display checkbox for reaction firemode */
 	if (fd->reaction) {
@@ -833,6 +835,7 @@ static void HUD_RefreshButtons (const le_t *le)
 	int rightCanBeReloaded, leftCanBeReloaded;
 	const int time = CL_ActorUsableTUs(le);
 	const char *reason;
+	const float shootingPenalty = CL_ActorInjuryModifier(le, MODIFIER_SHOOTING);
 
 	if (!le)
 		return;
@@ -926,7 +929,7 @@ static void HUD_RefreshButtons (const le_t *le)
 
 	/* Headgear button */
 	if (headgear) {
-		const int minheadgeartime = HUD_GetMinimumTUsForUsage(headgear);
+		const int minheadgeartime = HUD_GetMinimumTUsForUsage(headgear) * shootingPenalty;
 		if (time < minheadgeartime)
 			HUD_SetWeaponButton(BT_HEADGEAR, BT_STATE_DISABLE);
 		else
@@ -937,7 +940,7 @@ static void HUD_RefreshButtons (const le_t *le)
 
 	/* Weapon firing buttons. */
 	if (weaponr) {
-		const int minweaponrtime = HUD_GetMinimumTUsForUsage(weaponr);
+		const int minweaponrtime = HUD_GetMinimumTUsForUsage(weaponr) * shootingPenalty;
 		if (time < minweaponrtime)
 			HUD_SetWeaponButton(BT_RIGHT_FIRE, BT_STATE_DISABLE);
 		else
@@ -947,7 +950,7 @@ static void HUD_RefreshButtons (const le_t *le)
 	}
 
 	if (weaponl) {
-		const int minweaponltime = HUD_GetMinimumTUsForUsage(weaponl);
+		const int minweaponltime = HUD_GetMinimumTUsForUsage(weaponl) * shootingPenalty;
 		if (time < minweaponltime)
 			HUD_SetWeaponButton(BT_LEFT_FIRE, BT_STATE_DISABLE);
 		else
@@ -1151,13 +1154,13 @@ static int HUD_UpdateActorFireMode (le_t *actor)
 
 			Com_sprintf(infoText, lengthof(infoText),
 						"%s\n%s (%i) [%i%%] %i\n", _(selWeapon->item.item->name), _(actor->fd->name),
-						actor->fd->ammo, hitProbability, actor->fd->time);
+						actor->fd->ammo, hitProbability, CL_ActorTimeForFireDef(actor, actor->fd));
 
 			/* Save the text for later display next to the cursor. */
 			Q_strncpyz(mouseText, infoText, lengthof(mouseText));
 			UI_RegisterText(TEXT_MOUSECURSOR_RIGHT, mouseText);
 
-			time = actor->fd->time;
+			time = CL_ActorTimeForFireDef(actor, actor->fd);
 			/* if no TUs left for this firing action
 			 * or if the weapon is reloadable and out of ammo,
 			 * then change to move mode */

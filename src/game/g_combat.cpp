@@ -1078,6 +1078,7 @@ bool G_ClientShoot (const player_t * player, edict_t* ent, const pos3_t at, shoo
 	int mask;
 	bool quiet;
 	vec3_t impact;
+	int time;
 
 	/* just in 'test-whether-it's-possible'-mode or the player is an
 	 * ai - no readable feedback needed */
@@ -1093,16 +1094,17 @@ bool G_ClientShoot (const player_t * player, edict_t* ent, const pos3_t at, shoo
 	}
 
 	ammo = weapon->ammoLeft;
+	time = G_GetActorTimeForFiredef(ent, fd, allowReaction);
 	/* if this is reaction fire, don't keep trying to reserve TUs for reaction fire */
 	reactionLeftover = IS_SHOT_REACTION(shootType) ? std::max(0, player->reactionLeftover - ent->chr.reservedTus.reaction) : 0;
 
 	/* check if action is possible
 	 * if allowReaction is false, it is a shot from reaction fire, so don't check the active team */
 	if (allowReaction) {
-		if (!G_ActionCheckForCurrentTeam(player, ent, fd->time + reactionLeftover))
+		if (!G_ActionCheckForCurrentTeam(player, ent, time + reactionLeftover))
 			return false;
 	} else {
-		if (!G_ActionCheckForReaction(player, ent, fd->time + reactionLeftover))
+		if (!G_ActionCheckForReaction(player, ent, time + reactionLeftover))
 			return false;
 	}
 
@@ -1138,7 +1140,7 @@ bool G_ClientShoot (const player_t * player, edict_t* ent, const pos3_t at, shoo
 		/** @todo check for direct shot / splash damage shot? */
 		if (fd->splrad > 0.0) {
 			/* Splash damage */
-			ent->chr.scoreMission->firedSplashTUs[fd->weaponSkill] += fd->time;
+			ent->chr.scoreMission->firedSplashTUs[fd->weaponSkill] += time;
 			ent->chr.scoreMission->firedSplash[fd->weaponSkill]++;
 			for (i = 0; i < KILLED_NUM_TYPES; i++) {
 				/** Reset status. @see G_UpdateHitScore for the check. */
@@ -1146,7 +1148,7 @@ bool G_ClientShoot (const player_t * player, edict_t* ent, const pos3_t at, shoo
 			}
 		} else {
 			/* Direct hits */
-			ent->chr.scoreMission->firedTUs[fd->weaponSkill] += fd->time;
+			ent->chr.scoreMission->firedTUs[fd->weaponSkill] += time;
 			ent->chr.scoreMission->fired[fd->weaponSkill]++;
 			for (i = 0; i < KILLED_NUM_TYPES; i++) {
 				/** Reset status. @see G_UpdateHitScore for the check. */
@@ -1211,7 +1213,7 @@ bool G_ClientShoot (const player_t * player, edict_t* ent, const pos3_t at, shoo
 
 		/* check whether this has forced any reaction fire */
 		if (allowReaction) {
-			G_ReactionFirePreShot(ent, fd->time);
+			G_ReactionFirePreShot(ent, time);
 			if (G_IsDead(ent))
 				/* dead men can't shoot */
 				return false;
@@ -1269,7 +1271,7 @@ bool G_ClientShoot (const player_t * player, edict_t* ent, const pos3_t at, shoo
 
 		/* send TUs if ent still alive */
 		if (ent->inuse && !G_IsDead(ent)) {
-			G_ActorSetTU(ent, ent->TU - fd->time);
+			G_ActorSetTU(ent, ent->TU - time);
 			G_SendStats(ent);
 		}
 

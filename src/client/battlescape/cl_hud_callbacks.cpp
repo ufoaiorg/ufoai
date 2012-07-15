@@ -136,7 +136,7 @@ static void HUD_FireWeapon_f (void)
 	if (!HUD_CheckShooting(actor, ACTOR_GET_INV(actor, hand)))
 		return;
 
-	if (ammo->fd[fd->weapFdsIdx][firemode].time <= CL_ActorUsableTUs(actor)) {
+	if (CL_ActorTimeForFireDef(actor, &ammo->fd[fd->weapFdsIdx][firemode]) <= CL_ActorUsableTUs(actor)) {
 		/* Actually start aiming. This is done by changing the current mode of display. */
 		if (hand == ACTOR_HAND_RIGHT)
 			CL_ActorSetMode(actor, M_FIRE_R);

@@ -463,9 +463,10 @@ static void AI_SearchBestTarget (aiAction_t *aia, const edict_t *ent, edict_t *c
 	for (fdIdx = 0; fdIdx < item->ammo->numFiredefs[fdArray->weapFdsIdx]; fdIdx++) {
 		const fireDef_t *fd = &fdArray[fdIdx];
 		const float nspread = SPREAD_NORM((fd->spread[0] + fd->spread[1]) * 0.5 +
-			GET_ACC(ent->chr.score.skills[ABILITY_ACCURACY], fd->weaponSkill));
+				GET_ACC(ent->chr.score.skills[ABILITY_ACCURACY], fd->weaponSkill));
+		const int time = G_GetActorTimeForFiredef(ent, fd, false);
 		/* how many shoots can this actor do */
-		const int shots = tu / fd->time;
+		const int shots = tu / time;
 		if (shots) {
 			float dmg;
 			float vis = ACTOR_VIS_0;
@@ -528,7 +529,7 @@ static void AI_SearchBestTarget (aiAction_t *aia, const edict_t *ent, edict_t *c
 			/* check if most damage can be done here */
 			if (dmg > *maxDmg) {
 				*maxDmg = dmg;
-				*bestTime = fd->time * shots;
+				*bestTime = time * shots;
 				aia->shootType = shootType;
 				aia->shots = shots;
 				aia->target = check;
@@ -542,7 +543,7 @@ static void AI_SearchBestTarget (aiAction_t *aia, const edict_t *ent, edict_t *c
 					 * others (human victims) should be preferred, that's why we don't
 					 * want a too high value here */
 					*maxDmg = (fd->damage[0] + fd->spldmg[0]);
-					*bestTime = fd->time * shots;
+					*bestTime = time * shots;
 					aia->shootType = shootType;
 					aia->shots = shots;
 					aia->fd = fd;

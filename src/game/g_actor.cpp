@@ -154,7 +154,7 @@ int G_ActorGetTUForReactionFire (const edict_t *ent)
 
 	fd = FIRESH_FiredefForWeapon(&invlistWeapon->item);
 	assert(fd);
-	return fd[fm->fmIdx].time;
+	return G_GetActorTimeForFiredef(ent, &fd[fm->fmIdx], true);
 }
 
 /**
@@ -832,4 +832,9 @@ void G_ActorReload (edict_t* ent, const invDef_t *invDef)
 	/* send request */
 	if (bestContainer)
 		G_ActorInvMove(ent, bestContainer, icFinal, invDef, 0, 0, true);
+}
+
+int G_GetActorTimeForFiredef (const edict_t *const ent, const fireDef_t *const fd, const bool reaction)
+{
+	return fd->time * G_ActorGetInjuryPenalty(ent, reaction ? MODIFIER_REACTION : MODIFIER_SHOOTING);
 }

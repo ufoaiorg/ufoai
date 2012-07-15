@@ -342,6 +342,7 @@ int G_ActorGetReservedTUs(const edict_t *ent);
 void G_ActorCheckRevitalise(edict_t *ent);
 int G_ActorCalculateMaxTU(const edict_t *ent);
 int G_ActorGetArmourTUPenalty(const edict_t *ent);
+int G_GetActorTimeForFiredef(const edict_t *ent, const fireDef_t *const fd, bool reaction);
 
 /* g_mission.c */
 bool G_MissionTouch(edict_t *self, edict_t *activator);

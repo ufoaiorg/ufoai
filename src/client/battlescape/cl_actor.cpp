@@ -350,6 +350,11 @@ float CL_ActorInjuryModifier (const le_t *le, const modifier_types_t type) {
 	return mod;
 }
 
+int CL_ActorTimeForFireDef (const le_t *le, const fireDef_t *fd)
+{
+	return (fd ? fd->time * CL_ActorInjuryModifier(le, MODIFIER_SHOOTING) : 0);
+}
+
 /*
 ==============================================================
 ACTOR SELECTION AND TEAM LIST
