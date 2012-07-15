@@ -14,7 +14,9 @@ item medikit
 	price		80
 	size		15
 	is_misc	true
-	thrown		true
+	thrown		false
+	oneshot		true
+	ammo			5
 	dmgtype 	"normal"
 
 	weapon_mod
@@ -30,31 +32,46 @@ item medikit
 			speed	0
 			range	1.5
 			shots	1
+			ammo		1
 			time	20
-			damage	"-40 20"
+			damage	"-3 1"
 			reaction	false
+			dmgweight "normal"
 		}
 		firedef
 		{
-			name	"_Throw"
-			skill	"close"
-			projtl	medikit_ptl
-			impsnd	"weapons/grenade-bounce"
-			bodysnd "weapons/grenade-bounce"
-			gravity	true
-			speed	220
-			range	8
-			spread	"4 7"
+			name	"_Stimulants"
+			projtl	null
+			impact	null
+			hitbody heal
+			firesnd	weapons/medikit
+			speed	0
+			range	1.5
 			shots	1
-			ammo	1
-			time	10
-			damage	"1 1"
-			dmgweight "normal_medium"
+			ammo		1
+			time	20
+			damage	"-20 5"
 			reaction	false
+			dmgweight "stun_electro"
+		}
+		firedef
+		{
+			name	"_Antipsychotics"
+			projtl	null
+			impact	null
+			hitbody heal
+			firesnd	weapons/medikit
+			speed	0
+			range	1.5
+			shots	1
+			ammo		1
+			time	20
+			damage	"-13 2"
+			reaction	false
+			dmgweight "shock"
 		}
 	}
 }
-
 
 // =======================
 // IR-GOGGLES

@@ -26,6 +26,7 @@ $(TARGET)_SRCS      = \
 	game/g_edicts.cpp \
 	game/g_events.cpp \
 	game/g_func.cpp \
+	game/g_health.cpp \
 	game/g_inventory.cpp \
 	game/g_main.cpp \
 	game/g_match.cpp \

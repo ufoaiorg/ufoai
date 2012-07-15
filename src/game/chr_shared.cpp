@@ -180,3 +180,33 @@ const char *CHRSH_CharGetHead (const character_t * const chr)
 		Com_sprintf(returnModel, sizeof(returnModel), "%s/%s", chr->path, chr->head);
 	return returnModel;
 }
+
+bodyPartData_t::bodyPartData_t (void) : _numBodyParts(BODYPART_MAXTYPE), _totalBodyArea(100)
+	{
+		//** @todo Script all this data and get rid of this ASAP! */
+		const bodyPartData_s bodyInfo[BODYPART_MAXTYPE] = {
+				{"_Head", 9, {50, 0, 0, 50, 0, 0}, 10, 10},
+				{"_Arms", 18, {50, 25, 0, 0, 0, 0}, 10, 10},
+				{"_Legs", 36, {0, 0, 1, 0, 0, 0}, 10, 10},
+				{"_Torso", 37, {0, 0, 0, 0, 25, 0}, 10, 10}
+		};
+		memcpy(_bodyParts, bodyInfo, sizeof(_bodyParts));
+	}
+
+int bodyPartData_t::GetRandomBodyPart (void)
+	{
+		const int rnd = rand() % _totalBodyArea;
+		int  currentArea = 0;
+		int bodyPart;
+
+		for (bodyPart = 0; bodyPart < _numBodyParts; ++bodyPart) {
+			currentArea += _bodyParts[bodyPart].bodyArea;
+			if (rnd <= currentArea)
+				break;
+		}
+		if (bodyPart >= _numBodyParts) {
+			bodyPart = _numBodyParts - 1;
+			Com_DPrintf(DEBUG_SHARED, "Warning: No bodypart hit, defaulting to %s!\n", name(bodyPart));
+		}
+		return bodyPart;
+	}

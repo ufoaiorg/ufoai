@@ -347,7 +347,7 @@ static void G_Damage (edict_t *target, const fireDef_t *fd, int damage, edict_t 
 		} else {
 			damage = std::max(1, damage - nd);
 		}
-	} else if (damage < 0) {
+	} else if (damage < 0){
 		/* Robots can't be healed. */
 		if (isRobot)
 			return;
@@ -390,23 +390,12 @@ static void G_Damage (edict_t *target, const fireDef_t *fd, int damage, edict_t 
 				return;
 			}
 		} else {
-			G_TakeDamage(target, damage);
 			if (damage < 0) {
 				/* The 'attacker' is healing the target. */
-				/* Update stats here to get info on how many TUs the target received. */
-				if (target->chr.scoreMission)
-					target->chr.scoreMission->heal += abs(damage);
-
-				/** @todo Also increase the morale a little bit when
-				 * soldier gets healing and morale is lower than max possible? */
-				if (G_IsStunned(target)) {
-					/* reduce STUN */
-					target->STUN += damage;
-					G_ActorCheckRevitalise(target);
-				}
+				G_TreatActor(target, fd, damage, attacker->team);
 			} else {
 				/* Real damage was dealt. */
-
+				G_DamageActor(target, damage);
 				/* Update overall splash damage for stats/score. */
 				if (!mock && damage > 0 && fd->splrad) /**< Check for >0 and splrad to not count this as direct hit. */
 					G_UpdateHitScore(attacker, target, fd, damage);

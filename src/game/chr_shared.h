@@ -242,6 +242,14 @@ typedef struct teamDef_s {
 	int numTemplates;
 } teamDef_t;
 
+#define BODYPART_MAXTYPE 4
+
+/** @brief Info on a wound */
+typedef struct woundInfo_s {
+	int woundLevel[BODYPART_MAXTYPE];
+	int treatmentLevel[BODYPART_MAXTYPE];
+} woundInfo_t;
+
 /** @brief Describes a character with all its attributes */
 typedef struct character_s {
 	int ucn;					/**< unique character number */
@@ -257,6 +265,7 @@ typedef struct character_s {
 	int maxHP;					/**< Maximum health points (as in: 100% == fully healed). */
 	int STUN;
 	int morale;
+	woundInfo_t wounds;			/**< Character wounds */
 
 	int state;					/**< a character can request some initial states when the team is spawned (like reaction fire) */
 
@@ -272,6 +281,39 @@ typedef struct character_s {
 	chrReservations_t reservedTus;	/** < Stores the reserved TUs for actions. @sa See chrReserveSettings_t for more. */
 	chrFiremodeSettings_t RFmode;	/** < Stores the firemode to be used for reaction fire (if the fireDef allows that) See also reaction_firemode_type_t */
 } character_t;
+
+enum modifier_types_t {
+	 MODIFIER_ACCURACY,		/**< Modifier to accuracy */
+	 MODIFIER_SHOOTING,		/**< Modifier to shooting */
+	 MODIFIER_MOVEMENT,		/**< Modifier to movement */
+	 MODIFIER_SIGHT,		/**< Modifier to LoS range */
+	 MODIFIER_REACTION,		/**< Modifier to reactions */
+	 MODIFIER_TU,			/**< Modifier to TUs */
+
+	 MODIFIER_MAX
+};
+
+class bodyPartData_t {
+private:
+	struct bodyPartData_s {
+		char name[MAX_VAR];
+		int bodyArea;
+		int penalties[MODIFIER_MAX];
+		int bleedingFactor;
+		int woundThreshold;
+	} _bodyParts[BODYPART_MAXTYPE];
+	int _numBodyParts;
+	int _totalBodyArea;
+
+public:
+	bodyPartData_t(void);
+
+	int GetRandomBodyPart(void);
+	char *name (int bodyPart) { return _bodyParts[bodyPart].name; }
+	float penalty (int bodyPart, modifier_types_t type) { return _bodyParts[bodyPart].penalties[type] * 0.01; }
+	float bleedingFactor (int bodyPart) { return _bodyParts[bodyPart].bleedingFactor * 0.01; }
+	float woundThreshold (int bodyPart) { return _bodyParts[bodyPart].woundThreshold * 0.01; }
+};
 
 /* ================================ */
 /*  CHARACTER GENERATING FUNCTIONS  */

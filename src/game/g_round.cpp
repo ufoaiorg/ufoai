@@ -210,6 +210,9 @@ void G_ClientEndRound (player_t * player)
 	/* store the round start time to be able to abort the round after a give time */
 	level.roundstartTime = level.time;
 
+	/* Wounded team members bleed */
+	G_BleedWounds(level.activeTeam);
+
 	/* Update the state of stuned team-members. The actual statistics are sent below! */
 	G_UpdateStunState(level.activeTeam);
 

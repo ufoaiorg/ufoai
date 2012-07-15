@@ -3072,8 +3072,7 @@ void AIR_MoveEmployeeInventoryIntoStorage (const aircraft_t *aircraft, equipDef_
 				invList_t *next = ic->next;
 
 				ed->numItems[type->idx]++;
-				if (item.ammoLeft) {
-					assert(type->reload);
+				if (item.ammoLeft && type->reload) {
 					assert(item.ammo);
 					ed->numItemsLoose[item.ammo->idx] += item.ammoLeft;
 					/* Accumulate loose ammo into clips */
