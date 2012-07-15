@@ -1312,6 +1312,32 @@ static void HUD_ActorGetCvarData_f (void)
 	}
 }
 
+static void HUD_ActorWoundData_f (void)
+{
+	if (!CL_BattlescapeRunning())
+		return;
+
+		/* check if actor exists */
+	if (selActor) {
+		int bodyPart;
+		woundInfo_t *wounds = &selActor->wounds;
+		const character_t *chr = CL_ActorGetChr(selActor);
+		const BodyData *bodyData = chr->teamDef->bodyTemplate;
+
+		for (bodyPart = 0; bodyPart < bodyData->numBodyParts(); ++bodyPart) {
+			const int woundThreshold = selActor->maxHP * bodyData->woundThreshold(bodyPart);
+			if (wounds->woundLevel[bodyPart] + wounds->treatmentLevel[bodyPart] * 0.5 > woundThreshold) {
+				const int bleeding = wounds->woundLevel[bodyPart] * (wounds->woundLevel[bodyPart] > woundThreshold
+									 ? bodyData->bleedingFactor(bodyPart) : 0);
+				const char *desc = CHRSH_IsTeamDefRobot(chr->teamDef) ? _("Damaged") : _("Wounded");
+				char text[MAX_VAR];
+				Com_sprintf(text, lengthof(text), _("%s %s (bleeding: %i)"), desc, bodyData->name(bodyPart), bleeding);
+				UI_ExecuteConfunc("actor_wounds %s %i \"%s\"", bodyData->id(bodyPart), bleeding, text);
+			}
+		}
+	}
+}
+
 /**
  * @brief Updates the hud for one actor
  * @param actor The actor to update the hud values for
@@ -1553,6 +1579,7 @@ void HUD_InitStartup (void)
 	Cmd_AddCommand("hud_listfiremodes", HUD_DisplayFiremodes_f, "Display a list of firemodes for a weapon+ammo.");
 	Cmd_AddCommand("hud_listactions", HUD_DisplayActions_f, "Display a list of action from the selected soldier.");
 	Cmd_AddCommand("hud_getactorcvar", HUD_ActorGetCvarData_f, "Update cvars from actor from list.");
+	Cmd_AddCommand("hud_updateactorwounds", HUD_ActorWoundData_f, "Update info on actor wounds.");
 
 	/** @note We can't check the value at startup cause scripts are not yet loaded */
 	cl_hud = Cvar_Get("cl_hud", "hud_default", CVAR_ARCHIVE | CVAR_LATCH, "Current selected HUD.");

@@ -43,6 +43,34 @@ static int hospitalNumEntries;
 /** @brief Number of entries in a line of the hospital menu. */
 #define HOS_MENU_LINE_ENTRIES 3
 
+static void HOS_EntryWoundData (const character_t *const chr, const int entry)
+{
+	const BodyData *bodyData = chr->teamDef->bodyTemplate;
+	int bodyPart;
+	const woundInfo_t *const wounds = &chr->wounds;
+
+	for (bodyPart = 0; bodyPart < bodyData->numBodyParts(); ++bodyPart) {
+		if (wounds->treatmentLevel[bodyPart] != 0) {
+			const float severity = static_cast<float>(wounds->treatmentLevel[bodyPart]) / chr->maxHP;
+			const char *desc = CHRSH_IsTeamDefRobot(chr->teamDef) ? _("Damaged") : _("Wounded");
+			char text[MAX_VAR];
+			Com_sprintf(text, lengthof(text), _("%s %s (damage: %i)"), desc, bodyData->name(bodyPart), wounds->treatmentLevel[bodyPart]);
+			cgi->UI_ExecuteConfunc("hospital_wounds %i %s %f \"%s\"", entry, bodyData->id(bodyPart), severity, text);
+		}
+	}
+}
+
+static float HOS_InjuryLevel(const character_t *const chr)
+{
+	float injuryLevel = 0;
+	int i;
+
+	for (i = 0; i < chr->teamDef->bodyTemplate->numBodyParts(); ++i)
+		injuryLevel += static_cast<float>(chr->wounds.treatmentLevel[i]) / chr->maxHP;
+
+	return injuryLevel;
+}
+
 /**
  * @brief Updates the hospital menu.
  * @sa HOS_Init_f
@@ -63,13 +91,14 @@ static void HOS_UpdateMenu (void)
 
 	for (type = 0, j = 0, entry = 0; type < MAX_EMPL; type++) {
 		E_Foreach(type, employee) {
+			float injuryLevel = HOS_InjuryLevel(&employee->chr);
 			if (!E_IsInBase(employee, base))
 				continue;
 			/* Don't show soldiers who are gone in mission */
 			if (E_IsAwayFromBase(employee))
 				continue;
 			/* Don't show healthy employees */
-			if (employee->chr.HP >= employee->chr.maxHP)
+			if (employee->chr.HP >= employee->chr.maxHP && injuryLevel <= 0)
 				continue;
 
 			if (j >= hospitalFirstEntry && entry < HOS_MENU_MAX_ENTRIES) {
@@ -83,10 +112,10 @@ static void HOS_UpdateMenu (void)
 					Q_strncpyz(rank, E_GetEmployeeString(employee->type, 1), sizeof(rank));
 				Com_DPrintf(DEBUG_CLIENT, "%s ucn: %i entry: %i\n", name, employee->chr.ucn, entry);
 				/* If the employee is seriously wounded (HP <= 50% maxHP), make him red. */
-				if (employee->chr.HP <= (int) (employee->chr.maxHP * 0.5))
+				if (employee->chr.HP <= (int) (employee->chr.maxHP * 0.5) || injuryLevel >= 0.5)
 					cgi->UI_ExecuteConfunc("hospitalserious %i", entry);
 				/* If the employee is semi-seriously wounded (HP <= 85% maxHP), make him yellow. */
-				else if (employee->chr.HP <= (int) (employee->chr.maxHP * 0.85))
+				else if (employee->chr.HP <= (int) (employee->chr.maxHP * 0.85) || injuryLevel >= 0.15)
 					cgi->UI_ExecuteConfunc("hospitalmedium %i", entry);
 				else
 					cgi->UI_ExecuteConfunc("hospitallight %i", entry);
@@ -98,6 +127,10 @@ static void HOS_UpdateMenu (void)
 				/* Prepare the health bar */
 				Cvar_Set(va("mn_hos_hp%i", entry), va("%i", employee->chr.HP));
 				Cvar_Set(va("mn_hos_hpmax%i", entry), va("%i", employee->chr.maxHP));
+
+				/* Send wound info */
+				HOS_EntryWoundData(&employee->chr, entry);
+
 				/* Increase the counter of list entries. */
 				entry++;
 			}
@@ -185,7 +218,7 @@ static void HOS_ListClick_f (void)
 			if (!E_IsInBase(employee, base))
 				continue;
 			/* only those that need healing */
-			if (employee->chr.HP >= employee->chr.maxHP)
+			if (employee->chr.HP >= employee->chr.maxHP && HOS_InjuryLevel(&employee->chr) <= 0)
 				continue;
 			/* Don't select soldiers that are gone to a mission */
 			if (E_IsAwayFromBase(employee))

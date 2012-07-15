@@ -1,6 +1,31 @@
 // ============================
 // BATTLESCAPE PHYSDATA WINDOW
 // ============================
+component cmpWhumanoid_head extends button {
+	color "1 0 0 1"
+	pos			"0 0"
+	size		"15 15"
+}
+component cmpWhumanoid_torso extends button {
+	color "1 0 0 1"
+	pos			"0 15"
+	size		"15 15"
+}
+component cmpWhumanoid_arms extends button {
+	color "1 0 0 1"
+	pos			"15 0"
+	size		"15 15"
+}
+component cmpWhumanoid_legs extends button {
+	color "1 0 0 1"
+	pos			"15 15"
+	size		"15 15"
+}
+component cmpWdefault_body extends button {
+	color "1 0 0 1"
+	pos			"7 7"
+	size		"15 15"
+}
 
 component cmpPhysNamedTbar extends cmpDefNamedTbar {
 	/** @todo Remove me */
@@ -310,6 +335,11 @@ window physdata
 		scale		2.0
 	}
 
+	panel wounds
+	{
+		pos		"40 365"
+		size		"30 30"
+	}
 	// ==================
 	// buttons
 	// ==================
@@ -324,8 +354,31 @@ window physdata
 		onClick		{ cmd "ui_pop;" }
 	}
 
+	cvarlistener cl_selected { cmd "updateactorwounds;" }
+
+	// <1> Body part type (id)
+	// <2> Severity of bleeding, if 0 all wounds are treated
+	// (Note: Robots don't bleed, this just means they have serious damage in this part)
+	// <3> Tooltip
+
+	confunc actor_wounds {
+		call *node:root.wounds@createChild("wound_<1>", "cmpW<1>")
+		if (<2> > 0) {
+			*node:root.wounds.wound_<1>@icon = "icons/message_debug"
+		} else {
+			*node:root.wounds.wound_<1>@icon = "icons/message_info"
+		}
+		*node:root.wounds.wound_<1>@tooltip = "<3>"
+	}
+
+	confunc updateactorwounds {
+		call *node:root.wounds@removeAllchild
+		cmd "hud_updateactorwounds;"
+	}
+
 	func onWindowOpened {
 		*cvar:physdat_window_open = 1
+		cmd "updateactorwounds;"
 		// if we are in campaign mode, we need these cvars
 		if ( *cvar:mn_base_count > 0 ) {
 			*cvar:mn_missions_label_string = "_Missions Performed:"

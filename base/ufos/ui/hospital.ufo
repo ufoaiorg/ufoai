@@ -2,6 +2,32 @@
 // HOSPITAL MENU
 // ==================
 
+component cmpHhumanoid_head extends button {
+	color "1 0 0 1"
+	pos			"0 0"
+	size		"15 15"
+}
+component cmpHhumanoid_torso extends button {
+	color "1 0 0 1"
+	pos			"20 0"
+	size		"15 15"
+}
+component cmpHhumanoid_arms extends button {
+	color "1 0 0 1"
+	pos			"40 0"
+	size		"15 15"
+}
+component cmpHhumanoid_legs extends button {
+	color "1 0 0 1"
+	pos			"60 0"
+	size		"15 15"
+}
+component cmpHdefault_body extends button {
+	color "1 0 0 1"
+	pos			"0 0"
+	size		"15 15"
+}
+
 component cmpHospitalNamedTbar extends cmpDefNamedTbar {
 	/** @todo Remove me */
 	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
@@ -46,6 +72,11 @@ component cmpHospitalPanel extends panel {
 		tooltip "_Unused"
 		onClick { cmd "hosp_list_click <node:parent@num>;" }
 	}
+
+	panel wounds {
+		pos "150 30"
+		size "225 20"
+	}
 }
 
 window hospital
@@ -86,9 +117,10 @@ window hospital
 	confunc hospital_clear
 	{
 		*cvar:i = 0
-		while ( *cvar:i < 20 ) {
+		while ( *cvar:i < 21 ) {
 			*node:root.hos<cvar:i>.button@src = "ui/hosp_button_green"
 			*node:root.hos<cvar:i>.click_button@tooltip = "_Unused"
+			call *node:root.hos<cvar:i>.wounds@removeAllchild
 			*cvar:i = ( *cvar:i + 1 )
 		}
 	delete *cvar:i
@@ -113,6 +145,21 @@ window hospital
 		*node:root.hos<1>.icon@icon				= "icons/health_unused"
 		*node:root.hos<1>.button@src			= "ui/hosp_button_green"
 		*node:root.hos<1>.click_button@tooltip	= "_Unused"
+	}
+
+	// <2> Body part type (id)
+	// <3> Severity of wounds
+	// <4> Tooltip
+	confunc hospital_wounds {
+		call *node:root.hos<1>.wounds@createChild("wound_<2>", "cmpH<2>")
+		if (<3> >= 0.5) {
+			*node:root.hos<1>.wounds.wound_<2>@icon = "icons/message_death"
+		} elif (<3> >= 0.15) {
+			*node:root.hos<1>.wounds.wound_<2>@icon = "icons/message_debug"
+		} else {
+			*node:root.hos<1>.wounds.wound_<2>@icon = "icons/message_info"
+		}
+		*node:root.hos<1>.wounds.wound_<2>@tooltip = "<4>"
 	}
 
 	zone hos_scroll_zone
