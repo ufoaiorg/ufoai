@@ -504,10 +504,12 @@ static bool G_ActorDie (edict_t * ent, const edict_t *attacker)
 	G_SetState(ent, 1 + rand() % MAX_DEATH);
 	G_ActorSetMaxs(ent);
 
-	if (stunned)
-		G_ActorModifyCounters(attacker, ent, 0, 1, -1);
-	else
+	if (stunned) {
+		G_ActorModifyCounters(attacker, ent, 0, 1, 0);
+		G_ActorModifyCounters(ent->link, ent, 0, 0, -1);
+	} else {
 		G_ActorModifyCounters(attacker, ent, -1, 1, 0);
+	}
 
 	return true;
 }
