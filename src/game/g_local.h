@@ -560,6 +560,7 @@ void G_DamageActor(edict_t *target, const int damage);
 void G_TreatActor(edict_t *target, const fireDef_t *const fd, const int heal, const int healerTeam);
 void G_BleedWounds(const int team);
 void G_SendWoundStats(edict_t *const ent);
+float G_ActorGetInjuryPenalty(const edict_t *const ent, const modifier_types_t type);
 
 /** Functions handling the storage and lifecycle of all edicts */
 edict_t* G_EdictsInit(void);

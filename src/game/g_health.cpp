@@ -137,5 +137,46 @@ void G_SendWoundStats (edict_t *const ent)
 		if (ent->chr.wounds.woundLevel[i] + ent->chr.wounds.treatmentLevel[i] > 0)
 			G_EventActorWound(ent, i);
 	}
+}
 
+/**
+ * @brief Returns the penalty to the given stat caused by the actor wounds.
+ * @param[in] ent Pointer to the actor we want to calculate the penalty for.
+ * @param[in] type The stat we want to calculate the penalty for.
+ * @return The penalty as a percent.
+ */
+float G_ActorGetInjuryPenalty (const edict_t *const ent, const modifier_types_t type)
+{
+	int bodyPart;
+	float penalty = 0;
+
+	for (bodyPart = 0; bodyPart < BODYPART_MAXTYPE; ++bodyPart) {
+		const int threshold = ent->chr.maxHP * bodyData.woundThreshold(bodyPart);
+		const int injury = (ent->chr.wounds.woundLevel[bodyPart] + ent->chr.wounds.treatmentLevel[bodyPart] * 0.5);
+		if (injury > threshold)
+			penalty += 2 * bodyData.penalty(bodyPart, type) * injury / ent->chr.maxHP;
+	}
+
+	switch (type) {
+	case MODIFIER_REACTION:
+		penalty += G_ActorGetInjuryPenalty(ent, MODIFIER_SHOOTING);
+		break;
+	case MODIFIER_SHOOTING:
+	case MODIFIER_ACCURACY:
+		++penalty;
+		break;
+	case MODIFIER_TU:
+	case MODIFIER_SIGHT:
+		penalty = 1 - penalty;
+		break;
+	case MODIFIER_MOVEMENT:
+		penalty = ceil(penalty);
+		break;
+	default:
+		gi.DPrintf("G_ActorGetInjuryPenalty: Unknown modifier type %i\n", type);
+		penalty = 0;
+		break;
+	}
+
+	return penalty;
 }

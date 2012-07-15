@@ -315,6 +315,41 @@ void CL_ActorReserveTUs (const le_t * le, const reservation_types_t type, const 
 	}
 }
 
+/**
+ * @brief Returns the actor injury multiplier of the specified type.
+ * @param[in] le The actor.
+ * @param[in] type The injury mutiplier type.
+ */
+float CL_ActorInjuryModifier (const le_t *le, const modifier_types_t type) {
+	int bodyPart;
+	float mod = 0;
+	bodyPartData_t bodyData;
+
+	if (le) {
+		for (bodyPart = 0; bodyPart < BODYPART_MAXTYPE; ++bodyPart) {
+			const int threshold = le->maxHP * bodyData.woundThreshold(bodyPart);
+			const int injury = (le->wounds.woundLevel[bodyPart] + le->wounds.treatmentLevel[bodyPart] * 0.5);
+			if (injury > threshold)
+				mod += 2 * bodyData.penalty(bodyPart, type) * injury / le->maxHP;
+		}
+
+		switch (type) {
+		case MODIFIER_ACCURACY:
+		case MODIFIER_SHOOTING:
+			++mod;
+			break;
+		case MODIFIER_MOVEMENT:
+			mod = ceil(mod);
+			break;
+		default:
+			Com_Printf("CL_ActorInjuryPenalty: Unused modifier type %i\n", type);
+			mod = 0;
+			break;
+		}
+	}
+	return mod;
+}
+
 /*
 ==============================================================
 ACTOR SELECTION AND TEAM LIST
