@@ -575,6 +575,7 @@ static bool AM_CheckFire (autoMissionBattle_t *battle, autoUnit_t *currUnit, aut
 	character_t *eChr = eUnit->chr;
 	double calcRand = frand();
 	int strikeDamage;
+	bodyPartData_t bodyData;
 
 	if (AM_IsHostile(battle, currUnit->team, eUnit->team)) {
 		if (calcRand > effective)
@@ -589,6 +590,9 @@ static bool AM_CheckFire (autoMissionBattle_t *battle, autoUnit_t *currUnit, aut
 	}
 
 	eChr->HP = std::max(0, eChr->HP - strikeDamage);
+	/* Wound the target */
+	if (eChr->HP > 0)
+		eChr->wounds.treatmentLevel[bodyData.GetRandomBodyPart()] += strikeDamage;
 
 	/* If target is still active, continue */
 	if (AM_IsUnitActive(eUnit))
