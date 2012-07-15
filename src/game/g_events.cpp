@@ -325,6 +325,21 @@ void G_EventActorStats (const edict_t* ent, int playerMask)
 }
 
 /**
+ * @brief Actor has been wounded/treated
+ * @param[in] ent The actor whose wound status has changed
+ * @note This event is sent to the player this actor belongs to
+ */
+void G_EventActorWound (const edict_t *ent, const int bodyPart)
+{
+	const int mask = G_PlayerToPM(G_PLAYER_FROM_ENT(ent));
+	gi.AddEvent(mask, EV_ACTOR_WOUND, ent->number);
+	gi.WriteByte(bodyPart);
+	gi.WriteByte(ent->chr.wounds.woundLevel[bodyPart]);
+	gi.WriteByte(ent->chr.wounds.treatmentLevel[bodyPart]);
+	gi.EndEvents();
+}
+
+/**
  * @brief End of turn event for the current active team
  * @note This event is send to every connected client
  */

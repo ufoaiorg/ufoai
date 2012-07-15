@@ -3,7 +3,7 @@
  */
 
 /*
-Copyright (C) 2002-2011 UFO: Alien Invasion.
+Copyright (C) 2002-2012 UFO: Alien Invasion.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -22,33 +22,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "g_local.h"
+#ifndef E_EVENT_ACTORWOUND_H_
+#define E_EVENT_ACTORWOUND_H_
 
-/**
- * @brief Send stats to network buffer
- * @sa CL_ActorStats
- */
-void G_SendStats (edict_t * ent)
-{
-	/* extra sanity checks */
-	assert(ent->TU >= 0);
-	ent->HP = std::max(ent->HP, 0);
-	ent->STUN = std::min(ent->STUN, 255);
-	ent->morale = std::max(ent->morale, 0);
+#include "../../e_main.h"
 
-	G_EventActorStats(ent, G_TeamToPM(ent->team));
-	G_SendWoundStats(ent);
-}
+void CL_ActorWound(const eventRegister_t *self, struct dbuffer *msg);
 
-/**
- * @brief Write player stats to network buffer
- * @sa G_SendStats
- */
-void G_SendPlayerStats (const player_t *player)
-{
-	edict_t *ent = NULL;
-
-	while ((ent = G_EdictsGetNextActor(ent)))
-		if (ent->team == player->pers.team)
-			G_EventActorStats(ent, G_PlayerToPM(player));
-}
+#endif /* E_EVENT_ACTORWOUND_H_ */

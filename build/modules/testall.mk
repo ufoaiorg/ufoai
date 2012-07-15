@@ -85,6 +85,7 @@ $(TARGET)_SRCS      = \
 	client/battlescape/events/event/actor/e_event_actorstats.cpp \
 	client/battlescape/events/event/actor/e_event_actorthrow.cpp \
 	client/battlescape/events/event/actor/e_event_actorturn.cpp \
+	client/battlescape/events/event/actor/e_event_actorwound.cpp \
 	client/battlescape/events/event/inventory/e_event_invadd.cpp \
 	client/battlescape/events/event/inventory/e_event_invammo.cpp \
 	client/battlescape/events/event/inventory/e_event_invdel.cpp \

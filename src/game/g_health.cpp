@@ -50,7 +50,6 @@ void G_DamageActor (edict_t *target, const int damage)
 	}
 }
 
-
 /**
  * @brief Heals a target and treats wounds.
  * @param[in,out] target Pointer to the actor who we want to treat.
@@ -124,4 +123,19 @@ void G_BleedWounds (const int team)
 	}
 	/* Maybe the last team member bled to death */
 	G_MatchEndCheck();
+}
+
+void G_SendWoundStats (edict_t *const ent)
+{
+	int i;
+	for (i = 0; i < BODYPART_MAXTYPE; ++i) {
+		/* Sanity checks */
+		ent->chr.wounds.woundLevel[i] = std::max(0, ent->chr.wounds.woundLevel[i]);
+		ent->chr.wounds.treatmentLevel[i] = std::max(0, ent->chr.wounds.treatmentLevel[i]);
+		ent->chr.wounds.woundLevel[i] = std::min(255, ent->chr.wounds.woundLevel[i]);
+		ent->chr.wounds.treatmentLevel[i] = std::min(255, ent->chr.wounds.treatmentLevel[i]);
+		if (ent->chr.wounds.woundLevel[i] + ent->chr.wounds.treatmentLevel[i] > 0)
+			G_EventActorWound(ent, i);
+	}
+
 }

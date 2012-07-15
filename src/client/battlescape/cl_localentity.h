@@ -69,6 +69,7 @@ typedef struct le_s {
 	int HP, maxHP;				/**< health points */
 	int STUN;					/**< if stunned - state STATE_STUN */
 	int state;					/**< rf states, dead, crouched and so on */
+	woundInfo_t wounds;
 
 	float angles[3];	/**< rotation angle, for actors only the YAW is used */
 	float alpha;		/**< alpha color value for rendering */

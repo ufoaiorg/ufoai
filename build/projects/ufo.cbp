@@ -263,6 +263,8 @@
 		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actorthrow.h" />
 		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actorturn.cpp" />
 		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actorturn.h" />
+		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actorwound.cpp" />
+		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actorwound.h" />
 		<Unit filename="..\..\src\client\battlescape\events\event\inventory\e_event_invadd.cpp" />
 		<Unit filename="..\..\src\client\battlescape\events\event\inventory\e_event_invadd.h" />
 		<Unit filename="..\..\src\client\battlescape\events\event\inventory\e_event_invammo.cpp" />

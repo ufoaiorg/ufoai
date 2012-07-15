@@ -71,5 +71,6 @@ void G_EventStartShoot(const edict_t* ent, vismask_t visMask, shoot_types_t shoo
 void G_EventThrow(vismask_t visMask, const fireDef_t *fd, float dt, byte flags, const vec3_t position, const vec3_t velocity);
 void G_EventAdd(unsigned int mask, int eType, int entnum);
 void G_EventEnd(void);
+void G_EventActorWound(const edict_t *ent, const int bodyPart);
 
 #endif
