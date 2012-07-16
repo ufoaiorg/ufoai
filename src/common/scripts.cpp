@@ -2935,7 +2935,7 @@ MAIN SCRIPT PARSING FUNCTION
 /**
  * @brief Returns the name of an aircraft or an ufo that is used in the ump files for
  * the random map assembly
- * @see cvar rm_drop, rm_ufo
+ * @see cvar rm_drop, rm_ufo, rm_crashed
  * @note Uses a static buffer - so after you got the name you should ensure that you
  * put it into a proper location. Otherwise it will get overwritten with the next call
  * of this function.
@@ -2960,9 +2960,8 @@ const char *Com_GetRandomMapAssemblyNameForCrashedCraft (const char *craftID)
 		return "+craft_crash_inter_saracen";
 	else if (Q_streq(craftID, "craft_inter_starchaser"))
 		return "+craft_crash_inter_starchaser";
-	else
-		/** @todo other tiles does not yet exist */
-		return "+craft_crash_drop_firebird";
+
+	return "";
 }
 
 /**

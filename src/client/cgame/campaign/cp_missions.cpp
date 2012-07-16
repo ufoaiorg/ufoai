@@ -329,6 +329,10 @@ void CP_CreateBattleParameters (mission_t *mission, battleParam_t *param, const 
 	Mem_Free(param->param);
 	param->param = NULL;
 
+	Cvar_Set("rm_ufo", "");
+	Cvar_Set("rm_drop", "");
+	Cvar_Set("rm_crashed", "");
+
 	param->mission = mission;
 	color = MAP_GetColor(mission->pos, MAPTYPE_TERRAIN, NULL);
 	zoneType = MAP_GetTerrainType(color);
@@ -365,8 +369,6 @@ void CP_CreateBattleParameters (mission_t *mission, battleParam_t *param, const 
 	if (mission->mapDef->map[0] == '+') {
 		if (mission->category == INTERESTCATEGORY_RESCUE) {
 			Cvar_Set("rm_crashed", Com_GetRandomMapAssemblyNameForCrashedCraft(mission->data.aircraft->id));
-		} else {
-			Cvar_Set("rm_crashed", "");
 		}
 		Cvar_Set("rm_drop", Com_GetRandomMapAssemblyNameForCraft(aircraft->id));
 	}

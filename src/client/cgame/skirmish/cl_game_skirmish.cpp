@@ -252,6 +252,7 @@ static inline void GAME_SK_HideUFOs (const linkedList_t *ufos)
 
 		cgi->UI_ExecuteConfunc("skirmish_hide_ufos false");
 	}
+	cgi->Cvar_Set("rm_crashed", "");
 }
 
 static const mapDef_t* GAME_SK_MapInfo (int step)
