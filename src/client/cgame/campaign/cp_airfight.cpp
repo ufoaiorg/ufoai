@@ -516,7 +516,6 @@ void AIRFIGHT_ActionsAfterAirfight (const campaign_t* campaign, aircraft_t *shoo
 
 		if (!MapIsWater(MAP_GetColor(aircraft->pos, MAPTYPE_TERRAIN, NULL))) {
 			CP_SpawnRescueMission(aircraft, shooter);
-
 		} else {
 			/* Destroy the aircraft and everything onboard - the aircraft pointer
 			 * is no longer valid after this point */
