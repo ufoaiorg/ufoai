@@ -3,21 +3,21 @@ msgstr ""
 "Project-Id-Version: UFO: Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
 "POT-Creation-Date: 2011-11-04 17:13+0700\n"
-"PO-Revision-Date: 2012-04-05 13:53+0100\n"
-"Last-Translator: Tamás Fehérvári <geever@users.sourceforge.net>\n"
+"PO-Revision-Date: 2012-07-16 20:46+0200\n"
+"Last-Translator: Tamás <geever@users.sourceforge.net>\n"
+"Language-Team: \n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Pootle 2.1.6\n"
-"Language-Team: \n"
 
 msgid "Autocannon Module"
 msgstr "Gépágyúmodul"
 
 msgid "mail_mission_summary"
-msgstr ""
+msgstr "Küldetés összegzés"
 
 msgid "Alien Base Discovered -- %s"
 msgstr "Idegen bázis felfedezve: %s"
@@ -26,7 +26,7 @@ msgid "Mediocre"
 msgstr "Közepes"
 
 msgid "mail_alien_base_discovered"
-msgstr ""
+msgstr "Az idegen bázis feltérképezve."
 
 msgid "Competent"
 msgstr "Alkalmas"
@@ -38,7 +38,7 @@ msgid "Very Good"
 msgstr "Nagyon Jó"
 
 msgid "mail_lost_radar_tracking"
-msgstr ""
+msgstr "Radar kapcsolat elveszett"
 
 msgid "Excellent"
 msgstr "Kitűnő"
@@ -50,7 +50,7 @@ msgid "Superhuman"
 msgstr "Szuperhős"
 
 msgid "mail_new_radar_contact"
-msgstr ""
+msgstr "Új radar kapcsolat"
 
 msgid "You cannot reload this unknown item.\n"
 msgstr "Nem tölthetsz újra ismeretlen tárgyakat.\n"
@@ -65,10 +65,10 @@ msgid "Response Too Late -- %s"
 msgstr "Túl késő válasz: %s"
 
 msgid "Update an actor"
-msgstr ""
+msgstr "Katona frissítése"
 
 msgid "mail_response_too_late"
-msgstr ""
+msgstr "Túl késő válasz"
 
 msgid "Toggle the headgear"
 msgstr ""
@@ -80,7 +80,7 @@ msgid "Confirm the current action"
 msgstr "Parancs megerősítése"
 
 msgid "mail_ufo_shot_down"
-msgstr ""
+msgstr "UFÓ lelőve"
 
 msgid "Toggle camera to the next alien."
 msgstr "Következő idegen."
@@ -131,13 +131,13 @@ msgid "mail_aircraft_lost_target"
 msgstr ""
 
 msgid "Weapon cannot be reloaded."
-msgstr ""
+msgstr "A fegyvert nem lehet újratölteni."
 
 msgid "Aircraft Ready -- %s"
 msgstr "Repülőgép készen áll: %s"
 
 msgid "Not enough TUs for reloading weapon."
-msgstr ""
+msgstr "Nincs elég idő a fegyver újratöltéséhez."
 
 msgid "mail_aircraft_ready"
 msgstr ""
@@ -159,6 +159,8 @@ msgid ""
 "%i TUs reserved for crouching/standing up.\n"
 "Click to clear."
 msgstr ""
+"%i időegység tartalékolva a gugoláshoz/felálláshoz.\n"
+"Katt törléshez."
 
 msgid "Aircraft Landed -- %s"
 msgstr "Repülő leszállt: %s"
@@ -170,7 +172,7 @@ msgid "mail_aircraft_landed"
 msgstr ""
 
 msgid "Reserve TUs for shooting."
-msgstr ""
+msgstr "Időegység tartalékolása lövéshez."
 
 msgid "media/DejaVuSans.ttf"
 msgstr "media/DejaVuSans.ttf"
@@ -361,7 +363,7 @@ msgid "Estonian"
 msgstr "Észt"
 
 msgid "Insane"
-msgstr ""
+msgstr "Őrült"
 
 msgid "Finnish"
 msgstr "Finn"
@@ -375,7 +377,7 @@ msgstr "Francia"
 msgid "soldier"
 msgid_plural "soldiers"
 msgstr[0] "katona"
-msgstr[1] "katonák"
+msgstr[1] "katona"
 
 msgid "Greek"
 msgstr "Görög"
@@ -383,7 +385,7 @@ msgstr "Görög"
 msgid "worker"
 msgid_plural "workers"
 msgstr[0] "munkás"
-msgstr[1] "munkások"
+msgstr[1] "munkás"
 
 msgid "Hungarian"
 msgstr "Magyar"
@@ -457,7 +459,7 @@ msgid "Japanese"
 msgstr "Japán"
 
 msgid "That base is beyond this aircraft's range."
-msgstr ""
+msgstr "Az a bázis ennek repülőnek a hatótávolságán kívül van."
 
 msgid "Chinese"
 msgstr "Kínai"
@@ -470,7 +472,7 @@ msgid "Traditional Chinese"
 msgstr "hagyományos kínai"
 
 msgid "Assign one or more soldiers to this aircraft first."
-msgstr ""
+msgstr "Először rendelj hozzá egy vagy több katonát ehhez a géphez."
 
 msgid "Bulgarian"
 msgstr "Bolgár"
@@ -506,18 +508,18 @@ msgid "Operational range:\t%i km\n"
 msgstr "Ható távolság:\t%i km\n"
 
 msgid "A suburb that has received a visit from a Harvester."
-msgstr ""
+msgstr "Egy külváros amit meglátogatott egy Betakarító."
 
 #, c-format
 msgid "Armour:\t%i on 1\n"
 msgstr "Pajzs:\t%i / 1\n"
 
 msgid "A suburb that has been visited by an UFO."
-msgstr ""
+msgstr "Egy külváros amit meglátogatott egy UFO."
 
 #, c-format
 msgid "A UFO is shooting at %s"
-msgstr ""
+msgstr "Egy UFO %s-re lő."
 
 msgid "A Bomber has landed in the middle of a city."
 msgstr "Egy bombázó landolt a város közepén."
@@ -562,10 +564,10 @@ msgid "You've won the battle"
 msgstr "Megnyerted a csatát"
 
 msgid "UFO crashed in this sparsely populated forest region."
-msgstr ""
+msgstr "UFO zuhant le ezen a ritkán lakott erdős területen."
 
 msgid "Collected alien bodies"
-msgstr ""
+msgstr "Összegyüjtött Idegen testek"
 
 msgid "An industrial area in a cold region."
 msgstr "Ipari terület egy hideg régióban."
@@ -581,7 +583,7 @@ msgid "Working 100%"
 msgstr ""
 
 msgid "UFO landed in hills area."
-msgstr ""
+msgstr "UFO szállt le ezen a dombos területen."
 
 msgid "Down"
 msgstr "Le"
@@ -598,24 +600,25 @@ msgstr "Egy klasszikus keleti külváros."
 #, c-format
 msgid "%i Day to build\n"
 msgid_plural "%i Days to build\n"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%i nap a megépítéshez.\n"
+msgstr[1] "%i nap a megépítéshez.\n"
 
 msgid "A laboratory where they examined found UFO wreck tiles."
 msgstr "Egy laboratórium ahol vizsgálják az UFO roncsokat."
 
 #, c-format
 msgid "Needs:\t%s\n"
-msgstr ""
+msgstr "Szükséges:\t %s\n"
 
 msgid "A suburban district of an oriental area."
 msgstr "Egy keleties terület külvárosa."
 
 msgid "No aircraft in this base - You first have to purchase or transfer an aircraft\n"
-msgstr ""
+msgstr "Nincs repülő ezen a bázison - Először át kell helyezned vagy vásárolnod "
+"egyet.\n"
 
 msgid "Crashed UFO in oriental suburban district."
-msgstr ""
+msgstr "Keleti külvárosi kerületben lezuhant UFO."
 
 msgid "Antimatter (current/max):"
 msgstr "Antianyag (jelenleg/max):"
@@ -632,7 +635,7 @@ msgstr "Egy folyó szeli át ezt a dzsungelt."
 
 #, c-format
 msgid "By selling %s you gathered %i credits."
-msgstr ""
+msgstr "%s eladásával %i creditet gyüjtöttél."
 
 msgid "UFO Crashsite."
 msgstr "Lezuhant UFÓ."
@@ -646,10 +649,10 @@ msgstr "Egy békés utca a külvárosban."
 
 #, c-format
 msgid "%s does not have Antimatter Storage Facility. %i units of antimatter got removed."
-msgstr ""
+msgstr "%s helyen nincs Antianyag Tároló. %i egységnyi antianyag elveszett."
 
 msgid "Cemetery terror mission."
-msgstr ""
+msgstr "Temetői terror küldetés."
 
 #, c-format
 msgid "Base #%i"
@@ -739,14 +742,19 @@ msgstr "Egy ipari telep logisztikai része."
 
 msgid "You can't destroy this building! It is the only connection to other buildings!"
 msgstr ""
+"Nem semmisítheted meg ezt az épületet! Ez az egyetlen kapcsolat más "
+"épületekhez!"
 
 msgid "A small bungalow."
-msgstr ""
+msgstr "Kis bungalló."
 
 msgid ""
 "If you destroy this hangar, you will also destroy the aircraft inside.\n"
 "Are you sure you want to destroy this building?"
 msgstr ""
+"Ha megsemmisíted ezt a hangárt, vele együtt a benne lévő repülőt is "
+"megsemmisíted.\n"
+"Biztos vagy benne, hogy meg akarod semmisíteni ezt az épületet?"
 
 msgid "A bunker used in a previous conflict."
 msgstr "Egy bunker amit egy régebbi összecsapás alkalmával használtak."
@@ -773,6 +781,9 @@ msgid ""
 "If you destroy this Quarters, every employee inside will be killed.\n"
 "Are you sure you want to destroy this building?"
 msgstr ""
+"Ha megsemmisíted ezt a Lakóteret, az összes itt elszállásolt alkalmazott "
+"meghal.\n"
+"Biztos, hogy meg akarod semmisíteni ezt az épületet?"
 
 msgid "An estate owned by rich and influential people."
 msgstr "Egy ingatlan amit gazdag és befolyásos emberek birtokolnak."
@@ -787,6 +798,8 @@ msgid ""
 "If you destroy this Storage, every items inside will be destroyed.\n"
 "Are you sure you want to destroy this building?"
 msgstr ""
+"Ha megsemmisíted ezt a Raktárat, minden itt levő dolgot is megsemmisítesz.\n"
+"Biztos, hogy meg akarod semmisíteni ezt az épületet?"
 
 msgid "A ferry."
 msgstr "Egy komp."
@@ -811,7 +824,7 @@ msgstr "Egy helyi kikötő."
 
 #, c-format
 msgid "You need a building %s to make building %s functional."
-msgstr ""
+msgstr "Szükséged van %s épületre, hogy %s működjön."
 
 msgid "A small settlement in winter."
 msgstr "Egy kis télies település."
@@ -825,7 +838,7 @@ msgstr "Egy öreg bánya."
 
 #, c-format
 msgid "Build a %s first."
-msgstr ""
+msgstr "Építs egy %s-t először."
 
 msgid "An office complex on the outskirts of town."
 msgstr "Egy külvárosi irodaház."
@@ -840,7 +853,7 @@ msgid "^BBuildings\t\t\t\t\t\tCapacity\t\t\t\tAmount\n"
 msgstr "^BÉpület\t\t\t\t\t\tKapacitás\t\t\t\tDarab\n"
 
 msgid "Underground pipe construction site."
-msgstr ""
+msgstr "Föld alatti csővezeték építési terület."
 
 msgid "^BProduction\t\t\t\t\t\tQuantity\t\t\t\tPercent\n"
 msgstr "^BGyártás\t\t\t\t\t\tMennyiség\t\t\t\t%\n"
@@ -875,7 +888,7 @@ msgid "A suburban district."
 msgstr "Külvárosi rész."
 
 msgid "Removing"
-msgstr ""
+msgstr "Eltávolítás"
 
 msgid "Wilderness terror mission."
 msgstr "Terror a vadonban."
@@ -887,7 +900,7 @@ msgid "An alien base."
 msgstr "Egy idegen bázis."
 
 msgid "You've lost your bases and don't have enough money to build new ones."
-msgstr ""
+msgstr "Elvesztetted a bázisaidat és nincs elég pénzed, hogy újakat építs."
 
 msgid "Base is under attack."
 msgstr "Támadják a bázist."
@@ -905,13 +918,13 @@ msgid ""
 msgstr ""
 
 msgid "Training Zone: Alpha"
-msgstr ""
+msgstr "Kiképző zóna: Alfa"
 
 msgid "Soldier"
 msgstr "Katona"
 
 msgid "Training Zone: Bravo"
-msgstr ""
+msgstr "Kiképző zóna: Bravo"
 
 msgid "Worker"
 msgstr "Munkás"
@@ -929,9 +942,11 @@ msgid ""
 "You don't have enough quarters for your employees.\n"
 "Build more quarters."
 msgstr ""
+"Nincs elég lakótér az alkalmazottaidnak.\n"
+"Építs több Lakóteret."
 
 msgid "Rifleman"
-msgstr ""
+msgstr "Közlegény"
 
 msgid "Could not hire employee"
 msgstr "Nem veheted fel"
@@ -944,13 +959,13 @@ msgid "You've got a new mail: %s"
 msgstr "Új levelet kaptál: %s"
 
 msgid "Lance-Corporal"
-msgstr ""
+msgstr "Szakaszvezető"
 
 msgid "Armour"
 msgstr "Páncél"
 
 msgid "LCpl"
-msgstr ""
+msgstr "Szvez"
 
 msgid "Ammo"
 msgstr "Töltény"
@@ -962,7 +977,7 @@ msgid "No item assigned.\n"
 msgstr ""
 
 msgid "Cpl"
-msgstr ""
+msgstr "Tzds"
 
 msgid "This item is functional.\n"
 msgstr ""
@@ -975,32 +990,32 @@ msgid "%s will be removed in %i hours.\n"
 msgstr ""
 
 msgid "Sgt"
-msgstr ""
+msgstr "Őrmtr"
 
 #, c-format
 msgid "This item will be removed in %i hours.\n"
 msgstr ""
 
 msgid "Warrant Officer"
-msgstr ""
+msgstr "Zászlós"
 
 msgid "No ammo needed"
-msgstr ""
+msgstr "Nincs szükség munícióra"
 
 msgid "WO"
-msgstr ""
+msgstr "Zls"
 
 msgid "No item selected."
 msgstr "Nincs felszerelés kijelölve."
 
 msgid "Senior Warrant Officer"
-msgstr ""
+msgstr "Törzszászlós"
 
 msgid "Technology requested is not yet completed."
 msgstr ""
 
 msgid "SWO"
-msgstr ""
+msgstr "Tzls"
 
 msgid "Equip a weapon first."
 msgstr "Szerelj fel fegyvert."
@@ -1012,7 +1027,7 @@ msgid "Unknown problem."
 msgstr "Ismeretlen probléma."
 
 msgid "2Lt"
-msgstr ""
+msgstr "Hdngy"
 
 #, c-format
 msgid "Installation %s was destroyed."
@@ -1026,45 +1041,45 @@ msgid "Construction of installation %s finished."
 msgstr ""
 
 msgid "Lt"
-msgstr ""
+msgstr "Fhgy"
 
 #, c-format
 msgid "%d c"
 msgstr "%d c"
 
 msgid "Captain"
-msgstr "Kapitány"
+msgstr "Százados"
 
 msgid "Installation"
 msgstr "Állomás"
 
 msgid "Capt"
-msgstr ""
+msgstr "Szds"
 
 #, c-format
 msgid "A new installation has been built: %s"
 msgstr "Új állomás épült: %s"
 
 msgid "Major"
-msgstr ""
+msgstr "Őrnagy"
 
 msgid "Not enough credits to set up a new installation."
 msgstr "Nincs elég pénzed, hogy új állomást építs."
 
 msgid "Maj"
-msgstr ""
+msgstr "Őrngy"
 
 msgid "Do you really want to destroy this installation?"
 msgstr "Biztos, hogy le akarod rombolni ezt az állomást?"
 
 msgid "Lieutenant-Colonel"
-msgstr ""
+msgstr "Alezredes"
 
 msgid "Cancel"
 msgstr "Mégse"
 
 msgid "Lt Col"
-msgstr ""
+msgstr "Alezr"
 
 msgid "Aircraft"
 msgstr "Repülők"
@@ -1150,7 +1165,7 @@ msgstr "Egyesült Amerika"
 
 #, c-format
 msgid "%s was successfully removed from installation %s."
-msgstr ""
+msgstr "%s sikeresen el lett távolítva %s állomásról."
 
 msgid "The Greater European Union"
 msgstr "A Nagy Európai Únió"
@@ -1193,12 +1208,14 @@ msgid ""
 "You cannot buy this aircraft.\n"
 "Not enough credits.\n"
 msgstr ""
+"Nem tudod megvásárolni ezt a repülőt.\n"
+"Nincs elég pénzed.\n"
 
 msgid "Antimatter"
 msgstr "Antianyag"
 
 msgid "You can't sell an aircraft that is not in base"
-msgstr ""
+msgstr "Nem adhatsz el egy repülőt ami nincs a bázison."
 
 msgid "Alien Breathing Apparatus"
 msgstr "Idegen légzőkészülék"
@@ -1944,34 +1961,68 @@ msgstr ""
 "\n"
 "Filed: 20 March 2084\n"
 "\n"
-"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic "
+"Operations Command\n"
 "\n"
 "\n"
 "\n"
 "Overview\n"
 "\n"
-"The alien attack on Mumbai made our situation painfully clear. Their technology is far more advanced than ours. The complete inability of Commonwealth troops to make a dent in the Mumbai offensive revealed critical weaknesses in current military training and equipment. They lost three battalions just bringing the aliens to a standstill without inflicting significant casualties. PHALANX has to overcome these odds, and to do that we need the very best human technology has to offer.\n"
+"The alien attack on Mumbai made our situation painfully clear. Their "
+"technology is far more advanced than ours. The complete inability of "
+"Commonwealth troops to make a dent in the Mumbai offensive revealed critical "
+"weaknesses in current military training and equipment. They lost three "
+"battalions just bringing the aliens to a standstill without inflicting "
+"significant casualties. PHALANX has to overcome these odds, and to do that "
+"we need the very best human technology has to offer.\n"
 "\n"
-"The Excalibur Program was created to find the most effective weapons on Earth by reviewing their manufacturing standards, durability, operational record, and their combat performance in the situations where we've managed to bring the aliens to battle.\n"
+"The Excalibur Program was created to find the most effective weapons on "
+"Earth by reviewing their manufacturing standards, durability, operational "
+"record, and their combat performance in the situations where we've managed "
+"to bring the aliens to battle.\n"
 "\n"
-"With the return of armour to the battlefield, starting with steel helmets in World War 1 and fragmentation vests in Vietnam, pistols have had a harder and harder time keeping up. Due to their far lower muzzle velocity compared to longer-barreled and/or fully automatic weapons, they've had increasing trouble penetrating the new, ever-higher standards of human armour -- much less advanced alien composites. The very concept of the pistol in military use came under fire at one point in the 21st century, and was saved only by the advent of super-high-velocity powder.\n"
+"With the return of armour to the battlefield, starting with steel helmets in "
+"World War 1 and fragmentation vests in Vietnam, pistols have had a harder "
+"and harder time keeping up. Due to their far lower muzzle velocity compared "
+"to longer-barreled and/or fully automatic weapons, they've had increasing "
+"trouble penetrating the new, ever-higher standards of human armour -- much "
+"less advanced alien composites. The very concept of the pistol in military "
+"use came under fire at one point in the 21st century, and was saved only by "
+"the advent of super-high-velocity powder.\n"
 "\n"
-"The major drawback of super-high-velocity powder is that it cannot be used in fully-automatic weapons, since no firearms action on this Earth can survive that much violence for long without breaking. The British APMP pistol ignores these concerns by using more ordinary smokeless powder and a longer, almost SMG-length barrel to achieve higher velocities and greater kinetic power. It is a true machine pistol, fully automatic and capable of firing 600 rounds per minute from its surprisingly slim-lined 30-round detachable box magazine. It has three firing modes: semi-automatic, 3-round burst, and full-automatic.\n"
+"The major drawback of super-high-velocity powder is that it cannot be used "
+"in fully-automatic weapons, since no firearms action on this Earth can "
+"survive that much violence for long without breaking. The British APMP "
+"pistol ignores these concerns by using more ordinary smokeless powder and a "
+"longer, almost SMG-length barrel to achieve higher velocities and greater "
+"kinetic power. It is a true machine pistol, fully automatic and capable of "
+"firing 600 rounds per minute from its surprisingly slim-lined 30-round "
+"detachable box magazine. It has three firing modes: semi-automatic, 3-round "
+"burst, and full-automatic.\n"
 "\n"
-"The APMP fires the specially-developed 4.2x24mm round that goes through kevlar like it wasn't there. Once inside a human body this tiny round tumbles like a madman and creates huge wound cavities. It has a deal of trouble penetrating modern body armour, but this is offset by the APMP's ability to deliver repeated hits from its large magazine, all in a pistol-sized package. Unfortunately, the APMP can be a little unwieldy due to its size. Accuracy during burst and fully-automatic fire suffers as a result.\n"
+"Whenever we need an automatic weapon no larger than our own P-12, this is "
+"the weapon that fills the gap.\n"
 "\n"
-"Whenever we need an automatic weapon no larger than our own P-12, this is the weapon that fills the gap.\n"
-"\n"
-"For PHALANX use, we have given this machine pistol the classification MP-699.\n"
+"For PHALANX use, we have given this machine pistol the classification "
+"MP-699.\n"
 "\n"
 "\n"
 "Recommended Doctrine\n"
 "\n"
-"The MP-699 is primarily a backup weapon. It is a significant step up from the combat knife as a weapon of last resort, and it lets a soldier respond to new close-range threats if the primary weapon is rendered ineffective at such ranges or has run out of ammo. It is a good alternative for soldiers who have trouble hitting anything with the P-12, but the MP-699 is low-powered in comparison with the P-12. Furthermore, its magazines are large enough to preclude hanging them from a soldier's belt and far fewer of them can be carried conveniently.\n"
+"The MP-699 is primarily a backup weapon. It is a significant step up from "
+"the combat knife as a weapon of last resort, and it lets a soldier respond "
+"to new close-range threats if the primary weapon is rendered ineffective at "
+"such ranges or has run out of ammo. It is a good alternative for soldiers "
+"who have trouble hitting anything with the P-12, but the MP-699 is low-"
+"powered in comparison with the P-12. Furthermore, its magazines are large "
+"enough to preclude hanging them from a soldier's belt and far fewer of them "
+"can be carried conveniently.\n"
 "\n"
-"Ambidextrous soldiers may consider using two pistols at the same time, though this will negatively impact accuracy and reduce the soldier's already minimal effective range.\n"
-"\n"
-"A single MP-699 should rarely be considered as a primary weapon, as it is outclassed in this role by nearly every other weapon in our arsenal. Its advantages are the advantages of a sidearm -- small size and weight. Still, it may find a use as a primary weapon with field medics and technicians who do not have room for larger weapons.\n"
+"A single MP-699 should rarely be considered as a primary weapon, as it is "
+"outclassed in this role by nearly every other weapon in our arsenal. Its "
+"advantages are the advantages of a sidearm -- small size and weight. Still, "
+"it may find a use as a primary weapon with field medics and technicians who "
+"do not have room for larger weapons.\n"
 "\n"
 "\n"
 "Addenda\n"
@@ -3026,19 +3077,46 @@ msgstr "Adminisztratív költségek:\t%i c\n"
 
 msgid "laserpistol_txt"
 msgstr ""
-"Commander, I apologise in advance if my typing isn't up to standard in this message. We've had a lot of sleepless nights down here in DivEngine working on the laser pistol project. It's been a gruelling amount of work, but I'm very proud to say that we've pulled it off. We have prototyped a working laser pistol.\n"
+"Commander, I apologise in advance if my typing isn't up to standard in this "
+"message. We've had a lot of sleepless nights down here in DivEngine working "
+"on the laser pistol project. It's been a gruelling amount of work, but I'm "
+"very proud to say that we've pulled it off. We have prototyped a working "
+"laser pistol.\n"
 "\n"
-"The system is essentially the same as the one I've outlined for you in my report on Continuous Wave Laser Operation. Excited molecules of deuterium fluoride are lased and focused through a series of intelligent lenses. Waste gases are put through our custom filtering system, which we've scaled down even further. However, the reduced capacity of the filtering system and the smaller optical resonator have demanded some tradeoffs.\n"
+"The system is essentially the same as the one I've outlined for you in my "
+"report on Continuous Wave Laser Operation. Excited molecules of deuterium "
+"fluoride are lased and focused through a series of intelligent lenses. Waste "
+"gases are put through our custom filtering system, which we've scaled down "
+"even further. However, the reduced capacity of the filtering system and the "
+"smaller optical resonator have demanded some tradeoffs.\n"
 "\n"
-"The laser pistol can only lase deuterium-fluoride at about half the rate as our old Continuous Wave Laser prototype. Naturally this produces only a half-strength beam, doing half the damage of a larger weapon. It requires a period of continuous exposure -- several seconds at least -- for the beam to inflict enough damage to kill an unarmoured target. Armour will complicate the issue even further, and it's impossible for lasers to shoot through clouds of smoke, gas or fire. Still, as long as the target isn't obscured or immune to highly-focused light or heat, the laser will burn through anything given enough time.\n"
+"The laser pistol can only lase deuterium-fluoride at about half the rate as "
+"our old Continuous Wave Laser prototype. Naturally this produces only a "
+"weaker beam, doing less damage than a larger weapon. It requires a period of "
+"continuous exposure -- several seconds at least -- for the beam to inflict "
+"enough damage to kill an unarmoured target. Armour will complicate the issue "
+"even further. Still, as long as the target isn't obscured or immune to "
+"highly-focused light or heat, the laser will burn through anything given "
+"enough time.\n"
 "\n"
-"All the usual advantages of laser weaponry are present in the pistol. It's very quick to fire, and if the soldier misses his target at first, he can adjust his aim without letting go of the trigger. And there's another bonus particular to our pistol design. Thanks to the extremely high accuracy inherent in laser weaponry, it will be easy for ambidextrous soldiers to use two laser pistols at once.\n"
+"All the usual advantages of laser weaponry are present in the pistol. It's "
+"very quick to fire, and if the soldier misses his target at first, he can "
+"adjust his aim without letting go of the trigger. The weapon can send out "
+"Wave Fire, a short burst, or switched to a Pulse Fire mode for a more "
+"sustained and deadly beam.\n"
 "\n"
-"We've designed the pistol to use the standard deuterium-fluoride cartridges which we've drawn up to power all of our laser weaponry. This means it uses the same amount of D-F as the larger designs, but uses it up at a much lower rate, effectively giving the laser pistol more ammunition than any of our other laser weapons.\n"
+"We've designed the pistol to use the standard deuterium-fluoride cartridges "
+"which we've drawn up to power all of our laser weaponry. This means it uses "
+"the same amount of D-F as the larger designs, but uses it up at a much lower "
+"rate, effectively giving the laser pistol more ammunition than any of our "
+"other laser weapons.\n"
 "\n"
-"As with all handguns, the laser pistol is strictly a backup weapon. It isn't powerful enough to compete with rifles of any kind. On the other hand, the laser pistol completely eliminates the problems regarding range and accuracy that plague conventional handguns. Its range is quite impressive indeed for a handgun. It can shoot out to 60 metres with pinpoint accuracy thanks to the aim-correcting lenses, and it can fire continuously for minutes without reloading. This will make it particularly valuable in wide open terrain.\n"
+"As with all handguns, the laser pistol is strictly a backup weapon. It isn't "
+"powerful enough to compete with rifles of any kind. On the other hand, its "
+"range is quite impressive for a handgun.\n"
 "\n"
-"We will need to have at least one D-F Cartridge on hand at all times in order to be able to load and use a laser pistol.\n"
+"We will need to have at least one D-F Cartridge on hand at all times in "
+"order to be able to load and use a laser pistol.\n"
 "\n"
 "--Cdr. Navarre"
 
@@ -3074,17 +3152,37 @@ msgstr ""
 
 msgid "laserrifle_txt"
 msgstr ""
-"It's done, Commander. We are now the proud owners of a working laser rifle, with full production plans loaded into our computers. We've eliminated several moving parts and refined the electronics to bring production and maintenance costs down into our budget range. I believe you'll find the weapon's specs to your satisfaction.\n"
+"It's done, Commander. We are now the proud owners of a working laser rifle, "
+"with full production plans loaded into our computers. We've eliminated "
+"several moving parts and refined the electronics to bring production and "
+"maintenance costs down into our budget range. I believe you'll find the "
+"weapon's specs to your satisfaction.\n"
 "\n"
-"This rifle is possibly the most accurate weapon ever designed. It's light, rests easily in the shooter's hands, and the focusing lenses automatically correct the user's aim to help bring the beam on target -- and keep it there. It may inflict less damage per shot than its conventional projectile-firing counterparts, but it can do more over time if the shooter keeps the target in his sights. Eight troops with conventional assault rifles firing away at full-auto can easily miss a moving target. With laser rifles, that becomes a near-impossibility.\n"
+"It is quick to fire, has a good magazine capacity, no recoil, a respectable "
+"range and does away with many other issues that plague conventional "
+"firearms. It will never misfire or suffer a jammed mechanism. It will never "
+"blow up due to a fouled or bent barrel. It will never have problems with "
+"incompatible or faulty ammunition. It can suffer cracked lenses if subjected "
+"to severe mistreatment, but those are thoroughly shielded, set into shock-"
+"resistant foam and protected from the outside by a metal iris that only "
+"opens when the weapon is ready to fire.\n"
 "\n"
-"It is quick to fire, has a good magazine capacity, no recoil, a respectable range and does away with many other issues that plague conventional firearms. It will never misfire or suffer a jammed mechanism. It will never blow up due to a fouled or bent barrel. It will never have problems with incompatible or faulty ammunition. It can suffer cracked lenses if subjected to severe mistreatment, but those are thoroughly shielded, set into shock-resistant foam and protected from the outside by a metal iris that only opens when the weapon is ready to fire.\n"
+"This rifle is possibly the most accurate assault rifle ever designed. It's "
+"light and rests easily in the shooter's hands. The lack of recoil makes it "
+"great for sustained fire. A lengthy blast in Pulse mode is just as accurate. "
+"Due to difficulties in keeping the beam on a moving target, however, "
+"soldiers will probably experience a sense of lower accuracy in the field. "
+"Lasers require time on target to deal damage and this presents challenges to "
+"a soldier on the battlefield.\n"
 "\n"
-"The laser rifle's biggest weakness is its inability to shoot through clouds of smoke, gas or fire. All our lasers have this problem; clouds of material will quickly refract the beam into harmless light, so we'll have to be careful about our application of smoke and incendiary weapons.\n"
+"We've designed the rifle to use the standard deuterium-fluoride cartridges "
+"which we've drawn up to power all of our laser weaponry. A soldier can fire "
+"a while before a new cartridge must be inserted. The cartridges can be "
+"popped out and left on the ground without risk of contaminating the area, "
+"but they will require special hazard disposal once the mission is completed.\n"
 "\n"
-"We've designed the rifle to use the standard deuterium-fluoride cartridges which we've drawn up to power all of our laser weaponry. This gives it approximately two minutes of continuous wave fire before a new cartridge must be inserted. The cartridges can be popped out and left on the ground without risk of contaminating the area, but they will require special hazard disposal once the mission is completed.\n"
-"\n"
-"We'll need to have at least one D-F Cartridge on hand at all times in order to be able to load and use a laser rifle.\n"
+"We'll need to have at least one D-F Cartridge on hand at all times in order "
+"to be able to load and use a laser rifle.\n"
 "\n"
 "--Cdr. Navarre"
 
@@ -3108,19 +3206,42 @@ msgstr "5 perc"
 
 msgid "heavylaser_txt"
 msgstr ""
-"Commander, our heavy laser program has been a success. We've got it prototyped and ready to go into production at your say-so.\n"
+"Commander, our heavy laser program has been a success. We've got it "
+"prototyped and ready to go into production at your say-so.\n"
 "\n"
-"As promised, the heavy laser is a revolution in our heavy weapons arsenal. In the hands of a qualified soldier, it can provide long-range continuous wave fire that is both far more accurate than conventional heavy weapons and far more powerful than our other infantry laser designs. We in DivEngine have no doubt that it will serve a vital role throughout the war.\n"
+"As promised, the heavy laser is a revolution in our arsenal. In the hands of "
+"a qualified soldier, it can provide long-range continuous wave fire that is "
+"more powerful than our other infantry laser designs. We in DivEngine have "
+"no doubt that it will serve a vital role throughout the war.\n"
 "\n"
-"This is not to say the heavy laser doesn't have its downsides. For one, it's very bulky and very heavy, requiring a strong troop to shoot it effectively. It doesn't sacrifice accuracy despite its size, but it's less quick to fire or respond than we would like, and its ammo consumption is staggering. It can chew through a full deuterium-fluoride cartridge in only 30 seconds of continuous fire. This requires a large number of magazines to be kept on hand, and the heavy laser is not particularly quick to reload.\n"
+"This is not to say the heavy laser doesn't have its downsides. For one, it's "
+"very bulky and very heavy. While the weapon itself is very heavy, soldiers "
+"in the field will likely find it difficult to reproduce the accuracy or "
+"speed of smaller laser weapons. Its ammo consumption is staggering. It can "
+"chew through a full deuterium-fluoride cartridge at an incredible rate. This "
+"requires a number of magazines to be kept on hand, and the heavy laser is "
+"not particularly quick to reload.\n"
 "\n"
-"Another weakness is the fact that the heavy laser cannot shoot through clouds of smoke, gas or fire. All our lasers have this problem; clouds of material will quickly refract the beam into harmless light, so we'll have to be careful about our application of smoke and incendiary weapons. Great care will also have to be taken that no bystanders or PHALANX troops get into the path of the invisible beam. Even momentary exposure to an unobstructed beam will char bone and liquefy flesh. A hit to the eyes will result in permanent, irreparable blindness. We've talked to our training and field officers about this and have underlined safety in our field manual at every turn, but it won't hurt the troops to hear it again from you, Commander.\n"
+"Great care will also have to be taken that no bystanders or PHALANX troops "
+"get into the path of the invisible beam. Even momentary exposure to an "
+"unobstructed beam will char bone and liquefy flesh. A hit to the eyes will "
+"result in permanent, irreparable blindness. We've talked to our training and "
+"field officers about this and have underlined safety in our field manual at "
+"every turn, but it won't hurt the troops to hear it again from you, "
+"Commander.\n"
 "\n"
-"Robotic or armoured aliens may be able to survive a beam for some time, even from a heavy laser, before their armour fails. It's recommended to engage these with several soldiers at once and concentrate fire in order to bring them down as quickly as possible.\n"
+"Robotic or armoured aliens may be able to survive a beam for some time, even "
+"from a heavy laser, before their armour fails. It's recommended to engage "
+"these with several soldiers at once and concentrate fire in order to bring "
+"them down as quickly as possible.\n"
 "\n"
-"It's also recommended that you not replace all our conventional heavy weapons with heavy lasers, Commander. We need a good balance of weapons to play to the strengths of our troops and to the weaknesses of the aliens. A varied arsenal is a healthy arsenal, and can't be easily defended against.\n"
+"It's also recommended that you not replace all our conventional heavy "
+"weapons with heavy lasers, Commander. We need a good balance of weapons to "
+"play to the strengths of our troops and to the weaknesses of the aliens. A "
+"varied arsenal is a healthy arsenal, and can't be easily defended against.\n"
 "\n"
-"We'll need to have at least one D-F Cartridge on hand at all times in order to be able to load and use a heavy laser.\n"
+"We'll need to have at least one D-F Cartridge on hand at all times in order "
+"to be able to load and use a heavy laser.\n"
 "\n"
 "--Cdr. Navarre"
 
@@ -3129,11 +3250,20 @@ msgstr "1 óra"
 
 msgid "heavylaser_pre_txt"
 msgstr ""
-"This is one of several proposals I'm submitting for the research and development of new laser weaponry. Each of these will have to be developed separately due to the size differences, power levels and complexity of the systems involved.\n"
+"This is one of several proposals I'm submitting for the research and "
+"development of new laser weaponry. Each of these will have to be developed "
+"separately due to the size differences, power levels and complexity of the "
+"systems involved.\n"
 "\n"
-"Thanks to the experience we've gained from our Continuous Wave Laser research, my team and I have figured out one or two possible ways to further amplify the damage output of our infantry lasers. However, this will require significant research and refining of our prototype, as well as enlarging several of the components. The result will be a strictly heavy-infantry weapon of about the same size and weight as our HPML Rocket Launcher.\n"
+"Thanks to the experience we've gained from our Continuous Wave Laser "
+"research, my team and I have figured out one or two possible ways to further "
+"amplify the damage output of our infantry lasers. However, this will "
+"require significant research and refining of our prototype, as well as "
+"enlarging several of the components.\n"
 "\n"
-"We estimate that this weapon could be invaluable in a fire support role or as a direct-fire blockade breaker, capable of dissolving enemy strongpoints with powerful, pinpoint accurate fire. It would have attributes and capabilities which may be lacking in our current heavy weapons arsenal. Accuracy at range is generally abysmal in Earth-built heavy weapons, and they can be difficult to employ in situations where we need to avoid collateral damage. The heavy laser would avoid these issues altogether.\n"
+"We estimate that this weapon could be invaluable in a fire support role or "
+"as a direct-fire blockade breaker, capable of dissolving enemy strongpoints "
+"with powerful, pinpoint accurate fire.\n"
 "\n"
 "It's certainly worth looking into, Commander.\n"
 "\n"
@@ -3144,21 +3274,49 @@ msgstr "1 nap"
 
 msgid "electrolaser_txt"
 msgstr ""
-"Commander, I'd like to report that we've successfully prototyped the new electrolaser design and have approved final plans for a production model. We can now begin to utilise it in combat. As per usual, I've written up the specs and deployment advice here for you.\n"
+"Commander, I'd like to report that we've successfully prototyped the new "
+"electrolaser design and have approved final plans for a production model. We "
+"can now begin to utilise it in combat. As per usual, I've written up the "
+"specs and deployment advice here for you.\n"
 "\n"
-"From a technical standpoint, the electrolaser works on almost the same principles as natural lightning. It pumps electricity through a channel of ionised air -- what we refer to as a 'plasma channel' -- that is more conductive than the air around it, allowing the electricity to arc all the way to the target and then earth itself, causing severe shock damage. This plasma channel is created by a short, high-powered laser pulse which causes the air to begin ionising\n"
+"From a technical standpoint, the electrolaser works on almost the same "
+"principles as natural lightning. It pumps electricity through a channel of "
+"ionised air -- what we refer to as a 'plasma channel' -- that is more "
+"conductive than the air around it, allowing the electricity to arc all the "
+"way to the target and then earth itself, causing severe shock damage. This "
+"plasma channel is created by a short, high-powered laser pulse which causes "
+"the air to begin ionising\n"
 "\n"
-"Electrolasers are a tried and true concept on Earth. They have a history of use going back several decades as less-than-lethal weapons. At their most basic, they are a 'taser without the wires', but until now they've suffered serious limitations due to battery capacity and the power levels required to knock out a soldier in insulated body armour. For this reason they've only ever been developed practically as single-shot disposables and close-range civilian weapons. Thanks to the output of our deuterium-fluoride lasers and energy systems, though, we've been able to go a lot further than that.\n"
+"Electrolasers are a tried and true concept on Earth. They have a history of "
+"use going back several decades as less-than-lethal weapons. At their most "
+"basic, they are a 'taser without the wires', but until now they've suffered "
+"serious limitations due to battery capacity and the power levels required to "
+"knock out a soldier in insulated body armour. For this reason they've only "
+"ever been developed practically as single-shot disposables and close-range "
+"civilian weapons. Thanks to the output of our deuterium-fluoride lasers and "
+"energy systems, though, we've been able to go a lot further than that.\n"
 "\n"
-"Our electrolaser can project a stable plasma channel at short to medium ranges, depending on atmospheric conditions, and deliver previously unheard-of voltages to the target. It is effective against both organic and robotic enemies. It can be toggled to different power levels depending on the needs of the moment, from a simple stunning shock to full-blown electrocution which can kill weaker targets outright.\n"
+"Our electrolaser can project a stable plasma channel at short to medium "
+"ranges, depending on atmospheric conditions, and deliver previously unheard-"
+"of voltages to the target. It is effective against both organic and robotic "
+"enemies. It can be toggled to different power levels depending on the needs "
+"of the moment, from a simple stunning shock to full-blown electrocution "
+"which can kill weaker targets outright.\n"
 "\n"
 "Now for the cons.\n"
 "\n"
-"The more powerful electrical systems and laser equipment have increased size and weight considerably compared to the stun rod, putting the electrolaser firmly in the Heavy Weapons category. Like all laser-based weapons it's affected by rain, fog, smoke and other conditions that thicken the air or release particles into it. Like all electric weapons, firing at airborne targets will produce limited results, unless they're close enough to an earthed object to allow the electricity to arc between them. In addition, any electrolaser needs the right kind of atmosphere to be able to create a plasma channel; taking them off of Earth could render them useless.\n"
+"The more powerful electrical systems and laser equipment have increased size "
+"and weight considerably compared to the stun rod. Another, more practical "
+"issue is the power unit. We couldn't quite achieve the desired power output "
+"profile using our standard deuterium-fluoride cartridges, so we've had to "
+"make adjustments to the ammunition package itself. I'm afraid this means "
+"that ammunition for the electrolaser is NOT interchangeable with ammunition "
+"for our regular laser weaponry.\n"
 "\n"
-"Another, more practical issue is the power unit. We couldn't quite achieve the desired power output profile using our standard deuterium-fluoride cartridges, so we've had to make adjustments to the ammunition package itself. I'm afraid this means that ammunition for the electrolaser is NOT interchangeable with ammunition for our regular laser weaponry.\n"
-"\n"
-"Of course, no matter what the drawbacks might be, performance is light-years ahead of Dr. Connor's stun rod. I highly recommend we replace all stun rods currently in use with electrolasers as soon as humanly possible. For the sake of our troops, if nothing else.\n"
+"Of course, no matter what the drawbacks might be, performance is light-years "
+"ahead of Dr. Connor's stun rod. I highly recommend we replace all stun rods "
+"currently in use with electrolasers as soon as humanly possible. For the "
+"sake of our troops, if nothing else.\n"
 "\n"
 "--Cdr. Navarre"
 
@@ -3266,17 +3424,52 @@ msgid "plasatomizer_txt"
 msgstr ""
 "When the aliens need a sidearm, they don't screw around.\n"
 "\n"
-"This plasma pistol is a nasty piece of work, Commander. Its operation is extremely complex and inventive, requiring a great deal of technical skill to create. The power pack alone is hundreds of years ahead of our technology. It stores enough power to heat several charges of hydrogen to a plasmatic state inside the miniature fusion chamber, which are expelled as plasma using the ionised particles' own velocity.\n"
+"This plasma pistol is a nasty piece of work, Commander. Its operation is "
+"extremely complex and inventive, requiring a great deal of technical skill "
+"to create. The power pack alone is hundreds of years ahead of our "
+"technology. It stores enough power to heat several charges of hydrogen to a "
+"plasmatic state inside the miniature fusion chamber, which are expelled as "
+"plasma using the ionised particles' own velocity.\n"
 "\n"
-"Unlike human firearms, the projectiles themselves are not stored in a magazine or reservoir. They are generated inside the pistol from hydrogen contained in the magazine, powered by the magazine's power-pack. Once the plasma is heated, a thin film of liquid plastic is created between the two 'spinnerets' located vertically opposite each other in front of the grip. The plasma particles are then rapidly fired into the film so that the plastic deforms into an orb or 'bolt'. The plastic contains and protects the plasma, keeping it from dispersing until it reaches the target. By the time a bolt reaches the target, the inside of the plastic will be so eaten away that it will burst upon impact like a soap bubble, splashing its payload across the target. The maximum range of a pistol bolt -- the point it can reach before the plasma eats into open air and disperses -- is approximately 20 metres.\n"
+"Unlike human firearms, the projectiles themselves are not stored in a "
+"magazine or reservoir. They are generated inside the pistol from hydrogen "
+"contained in the magazine, powered by the magazine's power-pack. Once the "
+"plasma is heated, a thin film of liquid plastic is created between the two "
+"'spinnerets' located vertically opposite each other in front of the grip. "
+"The plasma particles are then rapidly fired into the film so that the "
+"plastic deforms into an orb or 'bolt'. The plastic contains and protects the "
+"plasma, keeping it from dispersing until it reaches the target. By the time "
+"a bolt reaches the target, the inside of the plastic will be so eaten away "
+"that it will burst upon impact like a soap bubble, splashing its payload "
+"across the target. The maximum range of a pistol bolt -- the point it can "
+"reach before the plasma eats into open air and disperses -- is not very far, "
+"but its appropriate for a secondary weapon.\n"
 "\n"
-"A bolt fired from the plasma pistol is so hot that even a near-miss can be lethal. The effects on a victim are truly horrific; I will try to list them all here.\n"
+"A bolt fired from the plasma pistol is so hot that even a near-miss can be "
+"lethal. The effects on a victim are truly horrific; I will try to list them "
+"all here.\n"
 "\n"
-"Any unarmoured human sprayed with this plasma will suffer extreme pain and injuries all across the splash zone. Adipose (fatty) tissue will melt like water. Blood and other bodily fluids boil in place. The plasma will actually eat its way into a human body, causing bone-deep charring in a large region around the splash zone. A large chunk of the body will be literally burnt to a crisp.\n"
+"Any unarmoured human sprayed with this plasma will suffer extreme pain and "
+"injuries all across the splash zone. Adipose (fatty) tissue will melt like "
+"water. Blood and other bodily fluids boil in place. The plasma will actually "
+"eat its way into a human body, causing bone-deep charring in a large region "
+"around the splash zone. A large chunk of the body will be literally burnt "
+"to a crisp.\n"
 "\n"
-"Any kind of tough fabric will provide some protection against a plasma hit. High-tech armour in particular will disperse the heat as best it can, and will resist the burning plasma for a time. Hopefully this will be enough time to allow air-cooling to take place, bringing the plasma down to non-lethal temperatures.\n"
+"Any kind of tough fabric will provide some protection against a plasma hit. "
+"High-tech armour in particular will disperse the heat as best it can, and "
+"will resist the burning plasma for a time. Hopefully this will be enough "
+"time to allow air-cooling to take place, bringing the plasma down to non-"
+"lethal temperatures.\n"
 "\n"
-"I won't pretend to know how the aliens managed to squeeze all this stuff into a pistol, but it does look as though they've made the same tradeoffs between power and size that we have done with our handguns. It's almost certain that larger, more powerful versions of these weapons exist and will appear against us in this war. However, my team and I have figured out the control scheme of the pistols, and we've written an appropriate field manual for human use. Our soldiers will now be able to employ the plasma pistol in a combat scenario as they would any other weapon.\n"
+"I won't pretend to know how the aliens managed to squeeze all this stuff "
+"into a pistol, but it does look as though they've made the same tradeoffs "
+"between power and size that we have done with our handguns. It's almost "
+"certain that larger, more powerful versions of these weapons exist and will "
+"appear against us in this war. However, my team and I have figured out the "
+"control scheme of the pistols, and we've written an appropriate field manual "
+"for human use. Our soldiers will now be able to employ the plasma pistol in "
+"a combat scenario as they would any other weapon.\n"
 "\n"
 "--Cdr. Navarre"
 
@@ -3307,13 +3500,17 @@ msgid "plasblaster_txt"
 msgstr ""
 "Commander, here's my report on our alien plasma blaster research.\n"
 "\n"
-"This is by far the heaviest member we've observed out of the plasma weapon family, and it seems unlikely that they will get any larger. The blaster requires at least two people and a heavy-duty cart to get it in and out of secure storage. It's barely man-portable, requiring a troop with great strength to carry it into battle. It is so large that, if it were a vehicle-mounted piece, it wouldn't even fit on most of our UGVs. The magazines weigh nearly a kilogramme apiece and the plasma generated is hot enough to melt through conventional armoured vehicles.\n"
+"This is the heaviest member we've observed out of the plasma weapon family. "
+"The heavy-duty plasma chamber and upgraded plastic spinnerets are capable of "
+"producing an extraordinarily large and deadly ball of plasma. The blaster "
+"sacrifices accuracy for power, making this a more effective weapon for close "
+"quarters engagements.\n"
 "\n"
-"One of the notable improvements over the plasma rifle is the blaster's increased range, made possible by thicker containment plastic and higher bolt speeds. Ballistic testing has confirmed that blaster shots can reach distances of up to 400m before dispersing. The accuracy may be poor, but the blaster also has a far higher rate of fire. A heavy-duty plasma chamber and upgraded plastic spinnerets can produce up to 250 rounds per minute. Unfortunately for us, despite the containment plastic's increased thickness, the bolts will still burst and deploy their plasma properly even at extreme close range. This makes the blaster highly dangerous at all ranges at which PHALANX troops may encounter it. We recommend that any enemies found carrying one be neutralised ASAP, as they are an extreme threat to everyone and everything in the line of fire.\n"
+"We recommend that any enemies found carrying one be neutralised ASAP, as "
+"they are an extreme threat to everyone and everything in the line of fire.\n"
 "\n"
-"The aliens seem to use the blaster mostly in the role of heavy machine gun and anti-vehicle weapon. Another interesting fact is that their use is almost completely exclusive to the Ortnok species. Most Tamans -- like most humans -- would have extreme difficulty trying to lift and aim one and require mechanical assistance to do so. Cybernetic enhancements and/or the development of powered armour would certainly rectify many of the blaster's inherent weaknesses from a human point of view.\n"
-"\n"
-"Lastly, we've mapped out the weapon's full control scheme for you, which is documented in the attached field manual. Our troops should now be able to train with and use the plasma blaster in combat as any other weapon, provided they're able to lift it.\n"
+"Our troops should now be able to train with and use the plasma blaster in "
+"combat as any other weapon.\n"
 "\n"
 "--Cdr. Navarre"
 
@@ -3428,15 +3625,37 @@ msgid "plasrifle_txt"
 msgstr ""
 "Commander, here's my report on our alien plasma rifle research.\n"
 "\n"
-"At its most basic level, the plasma rifle is little more than an upscaled version of the plasma pistol. However, as any firearms fanatic will tell you, pistols are pistols and rifles are rifles. Handguns are small, personal defence weapons. Rifles are weapons of war. The disparity in power is remarkable.\n"
+"At its most basic level, the plasma rifle is little more than an upscaled "
+"version of the plasma pistol. However, as any firearms fanatic will tell "
+"you, pistols are pistols and rifles are rifles. Handguns are small, personal "
+"defence weapons. Rifles are weapons of war. The disparity in power is "
+"remarkable.\n"
 "\n"
-"Rifle plasma is over 20% hotter than pistol plasma and capable of burning through even heavy armour. The plastic globes containing the rifle's plasma shots are much thicker than the pistol's, only beginning to disintegrate at distances between 80-100m. This is a short maximum range for a general-purpose assault rifle, but ideal for urban infantry engagements and other close-quarters work. The bolts do not suffer from projectile drop and they're far too massive to be affected by wind conditions. This makes the plasma rifle highly accurate at all ranges.\n"
+"Rifle plasma is over 20% hotter than pistol plasma and capable of burning "
+"through even heavy armour. The plastic globes containing the rifle's plasma "
+"shots are much thicker than the pistol's, giving them a greater range before "
+"disintegrating. This is a short maximum range for a general-purpose assault "
+"rifle, but ideal for urban infantry engagements. The bolts do not suffer "
+"from projectile drop and they're far too massive to be affected by wind "
+"conditions. This makes it an accurate weapon, but its unusual design makes "
+"it more difficult for our soldiers to aim than the standard-issue assault "
+"rifles they are used to.\n"
 "\n"
-"The scariest new feature of this weapon is the fact that it is capable of automatic fire. Its rate of fire on full-auto may not be very high -- approx. 180 rounds per minute -- and the recoil is difficult to handle, but it more than makes up for these failings with sheer power. Two or three solid plasma rifle hits are usually all it takes to kill a human in light or medium-grade armour. An unarmoured soldier has no hope at all.\n"
+"The scariest new feature of this weapon is the fact that it is capable of "
+"automatic fire. Its rate of fire on full-auto may not be very high and the "
+"recoil is difficult to handle, but it more than makes up for these failings "
+"with sheer power. Two or three solid plasma rifle hits are usually all it "
+"takes to burn through light or medium-grade armour. An unarmoured soldier "
+"has no hope at all.\n"
 "\n"
-"We've figured out the controls on the rifle and written up a manual for field use. Our troops should be able to make good use of it.\n"
+"We've figured out the controls on the rifle and written up a manual for "
+"field use. Our troops should be able to make good use of it.\n"
 "\n"
-"There can be no doubt that this weapon was designed and manufactured for war, and not in any defensive capacity. The aliens clearly know armed conflict very well. The rifle's power and lethality do not imply that they invaded us because of some mistake or misunderstanding. They came to Earth with a plan, Commander, and that really scares me.\n"
+"There can be no doubt that this weapon was designed and manufactured for "
+"war, and not in any defensive capacity. The aliens clearly know armed "
+"conflict very well. The rifle's power and lethality do not imply that they "
+"invaded us because of some mistake or misunderstanding. They came to Earth "
+"with a plan, Commander, and that really scares me.\n"
 "\n"
 "--Cdr. Navarre"
 
@@ -3463,17 +3682,31 @@ msgstr "Pilóta %s"
 
 msgid "needlergun_txt"
 msgstr ""
-"Commander, we've finished analysing the alien needler gun, and I've prepared a threat assessment and technical overview for you.\n"
+"Commander, we've finished analysing the alien needler gun, and I've prepared "
+"a threat assessment and technical overview for you.\n"
 "\n"
-"As I mentioned in my research proposal, the needler is indeed a type of sniper rifle, but an unusual one. It ignores the normal concept of firing powerful slugs to make single, long-range kills. Instead it vomits out hundreds and hundreds of ultra-fast silicon steel needles which can easily tear apart a target at any range.\n"
+"As I mentioned in my research proposal, the needler is indeed a type of "
+"rifle, but an unusual one. It ignores the normal concept of firing powerful "
+"slugs. Instead it vomits out hundreds and hundreds of ultra-fast silicon "
+"steel needles which can easily tear apart a target.\n"
 "\n"
-"The needles are fired by a fast-changing magnetic field inside the barrel, hooked up to a feed mechanism that injects thousands of needles a minute into the barrel. This creates a near-constant stream of fire which lasts for as long as you hold down the trigger and the magazine holds out. Unlike bullets, these needles have a practically flat trajectory from muzzle to target. They punch through most armour like it doesn't exist. They're so low in mass that there's little appreciable recoil when firing, giving them excellent accuracy, but at the same time thin enough to avoid being overly affected by weather. Wind, rain and physical obstructions can knock some of the needles off course but not enough to make the weapon much less effective.\n"
+"The needles are fired by a fast-changing magnetic field inside the barrel, "
+"hooked up to a feed mechanism that injects thousands of needles a minute "
+"into the barrel. This creates a near-constant stream of fire which lasts for "
+"as long as you hold down the trigger and the magazine holds out. Unlike "
+"bullets, these needles have a practically flat trajectory from muzzle to "
+"target. They punch through most armour like it doesn't exist. They're so low "
+"in mass that there's little appreciable recoil when firing, giving them "
+"excellent accuracy, but in field tests the needles can be easily knocked off "
+"course by slight variations in the environment.\n"
 "\n"
-"One of the main components that caught my attention is the powerful electromagnet array. It's laid out as a 'coilgun', many electromagnetic coils wrapped around the barrel, a method we'd previously thought to be too energy-inefficient to use on the battlefield. The aliens seem to have made it viable through clever use of superconductors and alien engineering. We may be able to adapt this technology to our own EM weapons research, I'll take a closer look and get back to you when I have anything concrete.\n"
-"\n"
-"Instead of an ordinary top-mounted sniper scope, the aliens have incorporated a highly effective holographic aiming mechanism and rangefinder which projects directly in front of the user's leading eye. Targets are shown with absolute clarity at any range, the sight automatically compensates for natural body motions, and it will even tell the user the exact chances of scoring a hit at any time. We've run this thing by our own troops and -- once they got used to it -- the alien holo-sight was the preferred choice by an amazing 100% compared to our own scopes. If we can adapt and duplicate this sight in a self-contained package, we could create the ultimate aiming unit to use on any of our rifles, possibly even some handguns.\n"
-"\n"
-"Equipped with a bipod for prone firing and a very large magazine, the needler is a serious threat to our troops. Snipers can inflict serious casualties on exposed troops and we cannot afford the losses. If a needler is spotted, our soldiers will have to make optimal use of cover and try to flank whilst staying out of sight. A direct assault on an entrenched needler gun will likely prove suicidal and I don't recommend anyone to try it, Commander.\n"
+"One of the main components that caught my attention is the powerful "
+"electromagnet array. It's laid out as a 'coilgun', many electromagnetic "
+"coils wrapped around the barrel, a method we'd previously thought to be too "
+"energy-inefficient to use on the battlefield. The aliens seem to have made "
+"it viable through clever use of superconductors and alien engineering. We "
+"may be able to adapt this technology to our own EM weapons research. I'll "
+"take a closer look and get back to you when I have anything concrete.\n"
 "\n"
 "--Cdr. Navarre"
 
@@ -3483,7 +3716,12 @@ msgstr "Repülő: %s"
 
 msgid "needlergun_pre_txt"
 msgstr ""
-"Commander, it seems we've recovered a new alien weapon, some kind of fully-automatic sniper rifle that fires masses of paper-thin needles made from silicon steel. Preliminary testing shows that the needles are virtually unaffected by ordinary body armour and will pass through most surfaces without even slowing down. It's a very interesting design and we'd like to figure out exactly how it's meant to work.\n"
+"Commander, it seems we've recovered a new alien weapon, some kind of fully-"
+"automatic rifle that fires masses of paper-thin needles made from silicon "
+"steel. Preliminary testing shows that the needles are virtually unaffected "
+"by ordinary body armour and will pass through most surfaces without even "
+"slowing down. It's a very interesting design and we'd like to figure out "
+"exactly how it's meant to work.\n"
 "\n"
 "Please authorise this program at your convenience, Commander.\n"
 "\n"
@@ -3646,36 +3884,78 @@ msgstr ""
 "\n"
 "Filed: 20 March 2084\n"
 "\n"
-"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic "
+"Operations Command\n"
 "\n"
 "\n"
 "\n"
 "Overview\n"
 "\n"
-"The alien attack on Mumbai made our situation painfully clear. Their technology is far more advanced than ours. The complete inability of Commonwealth troops to make a dent in the Mumbai offensive revealed critical weaknesses in current military training and equipment. They lost three battalions just bringing the aliens to a standstill without inflicting significant casualties. PHALANX has to overcome these odds, and to do that we need the very best human technology has to offer.\n"
+"The alien attack on Mumbai made our situation painfully clear. Their "
+"technology is far more advanced than ours. The complete inability of "
+"Commonwealth troops to make a dent in the Mumbai offensive revealed critical "
+"weaknesses in current military training and equipment. They lost three "
+"battalions just bringing the aliens to a standstill without inflicting "
+"significant casualties. PHALANX has to overcome these odds, and to do that "
+"we need the very best human technology has to offer.\n"
 "\n"
-"The Excalibur Program was created to find the most effective weapons on Earth by reviewing their manufacturing standards, durability, operational record, and their combat performance in the situations where we've managed to bring the aliens to battle.\n"
+"The Excalibur Program was created to find the most effective weapons on "
+"Earth by reviewing their manufacturing standards, durability, operational "
+"record, and their combat performance in the situations where we've managed "
+"to bring the aliens to battle.\n"
 "\n"
-"From our experiences in Mumbai and other stricken cities, we've concluded that the aliens seem to concentrate their efforts on population centres, especially dense urban areas. A majority of engagements have taken place at knife-fighting range. For the purposes of the Excalibur Program, we've chosen several high-performance weapons for our Close Range Combat package.\n"
+"From our experiences in Mumbai and other stricken cities, we've concluded "
+"that the aliens seem to concentrate their efforts on population centres, "
+"especially dense urban areas. A majority of engagements have taken place at "
+"knife-fighting range. For the purposes of the Excalibur Program, we've "
+"chosen several high-performance weapons for our Close Range Combat package.\n"
 "\n"
-"The 425 Blesk is a miniature shotgun hailing from the Czech Republic, a favourite of anti-terrorist and military reconnaissance units around the world. It is highly prized for its small frame, manoeuvrability, lightweight construction and reliable operation in combat. It is a significant competitor with the CRC-212 Riot Shotgun for the hearts and minds of shotgun-wielding soldiers.\n"
+"The 425 Blesk is a miniature shotgun hailing from the Czech Republic, a "
+"favourite of anti-terrorist and military reconnaissance units around the "
+"world. It is highly prized for its small frame, manoeuvrability, lightweight "
+"construction and reliable operation in combat. It is a significant "
+"competitor with the CRC-212 Riot Shotgun for the hearts and minds of "
+"shotgun-wielding soldiers.\n"
 "\n"
-"The Blesk sacrifices versatility and range for raw speed. It is a 12mm semi-automatic, able to shoot as fast as the operator can pull the trigger; there is no other shotgun in existence that responds as fast or as easily to new threats as the Blesk. In its standard configuration, the weapon features a folding foregrip in lieu of a buttstock in order to help the operator deal with the recoil of repeated firings.\n"
+"The Blesk sacrifices versatility and range for raw speed. It is a 12mm semi-"
+"automatic, able to shoot as fast as the operator can pull the trigger; there "
+"is no other shotgun in existence that responds as fast or as easily to new "
+"threats as the Blesk. In its standard configuration, the weapon features a "
+"folding foregrip in lieu of a buttstock in order to help the operator deal "
+"with the recoil of repeated firings.\n"
 "\n"
-"Unfortunately, the short barrel cuts badly into effective range, making it accurate only out to 10-20 metres, but this is usually enough for the tight urban situations in which PHALANX will be operating most often. It is also more than enough for a sidearm; the Blesk will fit into a sidearm holster with minor modifications and can be set to deploy the foregrip as the weapon is drawn, allowing immediate accurate fire as needed.\n"
+"Unfortunately, the short barrel cuts badly into effective range, making it "
+"accurate only out to 10-20 metres, but this is usually enough for the tight "
+"urban situations in which PHALANX will be operating most often. It is also "
+"more than enough for a sidearm; the Blesk will fit into a sidearm holster "
+"with minor modifications and can be set to deploy the foregrip as the weapon "
+"is drawn, allowing immediate accurate fire as needed.\n"
 "\n"
-"The weapon chambered for the common 12mm shotgun calibre. It can fit 7 slugs in a handy pistol-style magazine contained in the grip, which makes it much faster to reload than the CRC-212 Riot Shotgun. However, it requires short shells that can fit into the grip magazine, such as our flechette shells. It cannot fit the full-length saboted slugs.\n"
+"The weapon chambered for the common 12mm shotgun calibre. It can fit 7 slugs "
+"in a handy pistol-style magazine contained in the grip, which makes it much "
+"faster to reload than the CRC-212 Riot Shotgun. However, it requires short "
+"shells that can fit into the grip magazine, such as our flechette shells. It "
+"cannot fit the full-length saboted slugs.\n"
 "\n"
-"There are only a handful of weapons that can compete with the Blesk for sheer short-range devastation. Its speed combined with flechette ammo makes for a deadly mix that can be relied upon to quickly dispatch any enemy stupid enough to get into range.\n"
+"There are only a handful of weapons that can compete with the Blesk for "
+"sheer short-range devastation. Its speed combined with flechette ammo makes "
+"for a deadly mix that can be relied upon to quickly dispatch any enemy "
+"stupid enough to get into range.\n"
 "\n"
 "For PHALANX use, we have given this shotgun the classification CRC-M9.\n"
 "\n"
 "\n"
 "Recommended Doctrine\n"
 "\n"
-"All the restrictions that plague shotguns are magnified in the M9: short range, low ammo capacity, high recoil. This makes its function very clear. It is meant only for close-range firefights, where shotguns and sidearms shine. However, M9 operators should keep a close eye on their ammo level so that they don't run out in a tight spot.\n"
+"All the restrictions that plague shotguns are magnified in the M9: short "
+"range, low ammo capacity, high recoil. This makes its function very clear. "
+"It is meant only for close-range firefights, where shotguns and sidearms "
+"shine. However, M9 operators should keep a close eye on their ammo level so "
+"that they don't run out in a tight spot.\n"
 "\n"
-"While not technically designed as a sidearm, the M9 performs well as one despite its relative bulk. It does more damage than the P-12 Pistol and is more accurate than the CRC-8 SMG. It is a good choice for snipers in particular.\n"
+"While not technically designed as a sidearm, the M9 performs well as one "
+"despite its relative bulk. It is a good choice for snipers or anyone who "
+"needs a powerful backup for close range engagements.\n"
 "\n"
 "\n"
 "Addenda\n"
@@ -3734,37 +4014,74 @@ msgstr ""
 "\n"
 "Filed: 20 March 2084\n"
 "\n"
-"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic "
+"Operations Command\n"
 "\n"
 "\n"
 "\n"
 "Overview\n"
 "\n"
-"The alien attack on Mumbai made our situation painfully clear. Their technology is far more advanced than ours. The complete inability of Commonwealth troops to make a dent in the Mumbai offensive revealed critical weaknesses in current military training and equipment. They lost three battalions just bringing the aliens to a standstill without inflicting significant casualties. PHALANX has to overcome these odds, and to do that we need the very best human technology has to offer.\n"
+"The alien attack on Mumbai made our situation painfully clear. Their "
+"technology is far more advanced than ours. The complete inability of "
+"Commonwealth troops to make a dent in the Mumbai offensive revealed critical "
+"weaknesses in current military training and equipment. They lost three "
+"battalions just bringing the aliens to a standstill without inflicting "
+"significant casualties. PHALANX has to overcome these odds, and to do that "
+"we need the very best human technology has to offer.\n"
 "\n"
-"The Excalibur Program was created to find the most effective weapons on Earth by reviewing their manufacturing standards, durability, operational record, and their combat performance in the situations where we've managed to bring the aliens to battle.\n"
+"The Excalibur Program was created to find the most effective weapons on "
+"Earth by reviewing their manufacturing standards, durability, operational "
+"record, and their combat performance in the situations where we've managed "
+"to bring the aliens to battle.\n"
 "\n"
-"From our experiences in Mumbai and other stricken cities, we've concluded that the aliens seem to concentrate their efforts on population centres, especially dense urban areas. A majority of engagements have taken place at knife-fighting range. For the purposes of the Excalibur Program, we've chosen several high-performance weapons for our Close Range Combat package.\n"
+"From our experiences in Mumbai and other stricken cities, we've concluded "
+"that the aliens seem to concentrate their efforts on population centres, "
+"especially dense urban areas. A majority of engagements have taken place at "
+"knife-fighting range. For the purposes of the Excalibur Program, we've "
+"chosen several high-performance weapons for our Close Range Combat package.\n"
 "\n"
-"Designed and manufactured in mainland China, the Ohm 55 SMG is one of the most frightening weapons to come out of the Second Cold War. It was first prototyped in 2035 by scientists working for the Communist Chinese government. Production models were only trickling into government units by the end of the war, but the rebel and Commonwealth troops quickly learned to respect the Ohm's ferocity.\n"
+"Designed and manufactured in mainland China, the Ohm 55 SMG is one of the "
+"most frightening weapons to come out of the Second Cold War. It was first "
+"prototyped in 2035 by scientists working for the Communist Chinese "
+"government. Production models were only trickling into government units by "
+"the end of the war, but the rebel and Commonwealth troops quickly learned to "
+"respect the Ohm's ferocity.\n"
 "\n"
-"Its rate of fire at full auto exceeds 1200 rounds per minute. It can chew through a 50-round magazine in three seconds. It fires an upgraded version of the Belgian 5.7mm armour-piercing round, a steel penetrator with aluminium core, which can tear kevlar like paper and tumbles brutally through flesh and bone. Even modern ballistic fibre cannot stop this round at anything closer than 12 metres. The Ohm 55 has dominated the field of SMGs for the past 50 years and will continue to do so for at least the next decade.\n"
+"Its rate of fire at full auto exceeds 1200 rounds per minute. It can chew "
+"through a 30-round magazine in two seconds. It fires an upgraded version of "
+"the Belgian 5.7mm armour-piercing round, a steel penetrator with aluminium "
+"core, which can tear kevlar like paper and tumbles brutally through flesh "
+"and bone. Even modern ballistic fibre cannot stop this round at anything "
+"closer than 12 metres. The Ohm 55 has dominated the field of SMGs for the "
+"past 50 years and will continue to do so for at least the next decade.\n"
 "\n"
-"The Ohm is highly manoeuvrable with a short barrel and sleek lines, but can suffer from excessive muzzle climb on full auto due to the sheer weight of lead the weapon puts out. Autofire also tends to empty the magazine before the shooter even realises he's holding down the trigger. Still, after nearly 50 years in service around the world, this remains the Ohm 55's only known design flaw.\n"
+"The Ohm is highly manoeuvrable with a short barrel and sleek lines, but can "
+"suffer from excessive muzzle climb on full auto due to the sheer weight of "
+"lead the weapon puts out. Autofire also tends to empty the magazine before "
+"the shooter even realises he's holding down the trigger. Still, after nearly "
+"50 years in service around the world, this remains the Ohm 55's only known "
+"design flaw.\n"
 "\n"
 "For PHALANX use, we have given this submachine gun the classification CRC-8.\n"
 "\n"
 "\n"
 "Recommended Doctrine\n"
 "\n"
-"The CRC-8 is intended for point-blank urban firefights. It will perform very well in this role, but don't expect it to hit the broad side of a barn out to medium range. It can also function as a high-powered sidearm, but may be too bulky for most soldiers to use in this manner.\n"
+"The CRC-8 is intended for point-blank urban firefights. It will perform very "
+"well in this role, but don't expect it to hit the broad side of a barn out "
+"to medium range. It can also function as a high-powered sidearm, but may be "
+"too bulky for most soldiers to use in this manner.\n"
 "\n"
-"While the CRC-8 does suffer excessive muzzle climb on full auto, throwing off the aim of even experienced users, it is much more docile in its standard burst mode. Full auto should rarely be considered outside of panic situations.\n"
+"While the CRC-8 does suffer excessive muzzle climb on full auto, throwing "
+"off the aim of even experienced users, it is much more docile in its "
+"standard burst mode. Full auto should rarely be considered outside of panic "
+"situations.\n"
 "\n"
 "\n"
 "Addenda\n"
 "\n"
-"Despite good penetration against organics, this weapon performs very poorly against robotic targets."
+"Despite good penetration against organics, this weapon performs very poorly "
+"against robotic targets."
 
 msgid "No power supplies in this base.\n"
 msgstr ""
@@ -4058,17 +4375,32 @@ msgstr "%s:\t%i %%\n"
 
 msgid "pbeampistol_txt"
 msgstr ""
-"Commander, I've got the specs of the new alien pistol for you, and they're not good.\n"
+"Commander, I've got the specs of the new alien pistol for you, and they're "
+"not good.\n"
 "\n"
-"We've always suspected that a real alien army would field more than just plasma weapons and Kerrblades. Now they've gone and proved us right. This particle beam weaponry is extremely advanced, a quantum leap above the plasma weapons, miniaturised far beyond our ability to duplicate.\n"
+"We've always suspected that a real alien army would field more than just "
+"plasma weapons and Kerrblades. Now they've gone and proved us right. This "
+"particle beam weaponry is extremely advanced, a quantum leap above the "
+"plasma weapons, miniaturised far beyond our ability to duplicate.\n"
 "\n"
-"Particle-beam weaponry is designed to hit a target object with a stream of accelerated particles moving at near-light velocities, therefore carrying tremendous kinetic energy. Until now we've only seen the aliens use this technology in large UFO weapons. Now, however, they're using it on the ground in the worst way.\n"
+"Particle-beam weaponry is designed to hit a target object with a stream of "
+"accelerated particles moving at near-light velocities, therefore carrying "
+"tremendous kinetic energy. Until now we've only seen the aliens use this "
+"technology in large UFO weapons. Now, however, they're using it on the "
+"ground in the worst way.\n"
 "\n"
-"The pistol itself is quite simple in build, just a shell covering a set of magnets and electrostatic lenses for focusing and constricting the particle beam. This is all stuff we can duplicate easily with enough money and effort. However, we've yet to figure out the weapon's ammo supply. The energy readings we've taken from the magazines are extreme, and despite our efforts, we haven't managed to disable or disarm one in order to safely open it up. Even shooting it dry doesn't completely deactivate one of these magazines. More research will be required before we can try and understand them, much less reproduce them.\n"
+"The pistol itself is quite simple in build, just a shell covering a set of "
+"magnets and electrostatic lenses for focusing and constricting the particle "
+"beam. This is all stuff we can duplicate easily with enough money and "
+"effort. However, we've yet to figure out the weapon's ammo supply. The "
+"energy readings we've taken from the magazines are extreme, and despite our "
+"efforts, we haven't managed to disable or disarm one in order to safely open "
+"it up. Even shooting it dry doesn't completely deactivate one of these "
+"magazines. More research will be required before we can try and understand "
+"them, much less reproduce them.\n"
 "\n"
-"Certainly this pistol is the nastiest handgun I've ever seen in my career, with impressive armour-piercing capabilities and extreme damage potential. The high-speed particle beam can kill a lightly-armoured human in one shot at ranges of up to 40 metres. Just one shot. With regards to lethality at range, it outperforms even our laser pistol. The only good news is that the PB pistol is significantly less accurate than our lasers and produce too much of a kick to make repeated accurate shots.\n"
-"\n"
-"In fact, firing the pistol may be difficult for troops with less than the required physical strength. The particles leaving the barrel move at a fraction of the speed of light, so they generate an unholy amount of recoil against the shooter. It would be an extreme challenge for weaker troops to keep the weapon on-target. If these pistols are deployed, we recommend they only be issued to the stronger troops on our squad.\n"
+"Certainly this pistol is the nastiest handgun I've ever seen in my career, "
+"with impressive armour-piercing capabilities and extreme damage potential.\n"
 "\n"
 "I'll keep you posted on our progress with the magazines, Commander.\n"
 "\n"
@@ -5263,30 +5595,74 @@ msgstr ""
 "\n"
 "Filed: 19 March 2084\n"
 "\n"
-"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic "
+"Operations Command\n"
 "\n"
 "\n"
 "\n"
 "Overview\n"
 "\n"
-"It is clear that the Stiletto-class Interceptor, while a terrific aircraft, does not cover all our needs. We must be ready to defend our planet and our people anywhere across the globe. The Stiletto's operational range is too limited and it is not fast enough to engage all the UFOs we might detect.\n"
+"It is clear that the Stiletto-class Interceptor, while a terrific aircraft, "
+"does not cover all our needs. We must be ready to defend our planet and our "
+"people anywhere across the globe. The Stiletto's operational range is too "
+"limited and it is not fast enough to engage all the UFOs we might detect.\n"
 "\n"
-"Only one aircraft in the world is capable of filling the operational gap we face; the Argentinian KB-550 Hypersonic Wing, dubbed the \"Saracen\" in NATO code. Mixing old and new stealth technology into a single airframe, the Saracen most resembles the ancient SR-71 \"Blackbird\" in its shape and bearing. It is black as the night itself, covered in radiation-absorbing paint that makes it practically invisible to radar, lidar and most other forms of active scanning. Its fuselage is composed almost entirely of carbon nanotubes and sheets of graphite-reinforced plastic. This makes the craft extremely strong and heat-resistant enough to cope with the temperatures of cruising at speeds in excess of Mach 4. The Saracen is the fastest military airplane still flying today.\n"
+"Only one aircraft in the world is capable of filling the operational gap we "
+"face; the Argentinian KB-550 Hypersonic Wing, dubbed the \"Saracen\" in NATO "
+"code. Mixing old and new stealth technology into a single airframe, the "
+"Saracen most resembles the ancient SR-71 \"Blackbird\" in its shape and "
+"bearing. It is black as the night itself, covered in radiation-absorbing "
+"paint that makes it practically invisible to radar, lidar and most other "
+"forms of active scanning. Its fuselage is composed almost entirely of carbon "
+"nanotubes and sheets of graphite-reinforced plastic. This makes the craft "
+"extremely strong and heat-resistant enough to cope with the temperatures of "
+"cruising at speeds in excess of Mach 4. The Saracen is the fastest military "
+"airplane still flying today.\n"
 "\n"
-"In terms of its capabilities, the Saracen pushes our interception range into international territory. Its huge, armoured tanks and amazing fuel-efficiency allow it to go anywhere up to 10,000 kilometres from its hangar at hypersonic speeds -- and back again -- with fuel to spare for combat manoeuvres. Its stealthy design, high speed and tough airframe allow it to engage UFOs that our Stiletto-class Interceptors may simply be unable to catch. It has tough armour and can fly home even on one engine. Thanks to the power of its engines and a set of additional manoeuvring thrusters in its belly, it can take off almost vertically; this is definitely within the restrictions of our hangar facilities.\n"
+"In terms of its capabilities, the Saracen pushes our interception range into "
+"international territory. Its huge, armoured tanks and amazing fuel-"
+"efficiency allow it to go anywhere up to 10,000 kilometres from its hangar "
+"at hypersonic speeds -- and back again -- with fuel to spare for combat "
+"manoeuvres. Its stealthy design, high speed and tough airframe allow it to "
+"engage UFOs that our Stiletto-class Interceptors may simply be unable to "
+"catch. It has tough armour and can fly home even on one engine. Thanks to "
+"the power of its engines and a set of additional manoeuvring thrusters in "
+"its belly, it can take off almost vertically; this is definitely within the "
+"restrictions of our hangar facilities.\n"
 "\n"
-"Its electronics suite is similarly impressive. It has state-of-the-art targeting computers, advanced radar and lidar systems, advanced ECM (Electronic Counter-Measures) equipment, in-helmet VR imaging for the pilot, and more. The Saracen can carry about twice the electronics load of a Stiletto-class Interceptor, with room to spare for further modular equipment.\n"
+"Its electronics suite is similarly impressive. It has state-of-the-art "
+"targeting computers, advanced radar and lidar systems, advanced ECM "
+"(Electronic Counter-Measures) equipment, in-helmet VR imaging for the pilot, "
+"and more. The Saracen can carry about twice the electronics load of a "
+"Stiletto-class Interceptor, with room to spare for further modular "
+"equipment.\n"
 "\n"
-"Unfortunately, for all its strengths, it is costly to lease and maintain, and its heavy load of fuel and armour cuts badly into weapons capacity. The Saracen cannot equal the weapons load of the far smaller and less expensive Stiletto. Nor can it hope to equal the Stiletto's manoeuvrability. Despite thrust-vectoring technology (the ability to change the shape of its engine nozzles to direct thrust), electro-elastic wing surface (the ability to dynamically change the shape of its wings) and other terrific advances, the Saracen is still a large fixed-wing aircraft with all the limitations that implies. Though it can take much more damage than a Stiletto and remain effective, the Saracen will not perform as well in combat with alien craft.\n"
+"Unfortunately, for all its strengths, it is costly to lease and maintain, "
+"and its heavy load of fuel and armour cuts badly into weapons capacity. The "
+"Saracen cannot equal the weapons load of the far smaller and less expensive "
+"Stiletto. Nor can it hope to equal the Stiletto's manoeuvrability. Despite "
+"thrust-vectoring technology (the ability to change the shape of its engine "
+"nozzles to direct thrust), electro-elastic wing surface (the ability to "
+"dynamically change the shape of its wings) and other terrific advances, the "
+"Saracen is still a large fixed-wing aircraft with all the limitations that "
+"implies.\n"
 "\n"
-"The Saracen requires 1 Large Hangar for storage, maintenance and deployment. It has 2 weapon hardpoints; 2 medium belly bays.\n"
+"The Saracen requires 1 Small Hangar for storage, maintenance and deployment. "
+"It has 2 weapon hardpoints; 2 medium belly bays.\n"
 "\n"
 "\n"
 "Recommended Doctrine\n"
 "\n"
-"At its heart the Saracen is a long-range interceptor to be used against extremely distant or fast UFOs. Unlike the alien craft, it is barely slowed by moving inside Earth atmosphere, making it slightly faster than most of the UFOs we have observed so far. This will allow PHALANX to catch the aliens wherever they may be going -- short of interplanetary space.\n"
+"At its heart the Saracen is a long-range interceptor to be used against "
+"extremely distant or fast UFOs. Unlike the alien craft, it is barely slowed "
+"by moving inside Earth atmosphere, making it slightly faster than most of "
+"the UFOs we have observed so far. This will allow PHALANX to catch the "
+"aliens wherever they may be going -- short of interplanetary space.\n"
 "\n"
-"As always, the Saracen's performance against extraterrestrial craft can't be measured without solid observational data from at least one real combat encounter. However, if deployed in large enough flights, it should be able to cut up alien craft of all varieties.\n"
+"As always, the Saracen's performance against extraterrestrial craft can't be "
+"measured without solid observational data from at least one real combat "
+"encounter. However, if deployed in large enough flights, it should be able "
+"to cut up alien craft of all varieties.\n"
 "\n"
 "\n"
 "Addenda\n"
@@ -8652,17 +9028,31 @@ msgstr "A pilóta eltávolítása a gépről"
 
 msgid "mail_prolog"
 msgstr ""
-"Welcome to your new post, Commander. You now have full command over the PHALANX Extraterrestrial Response Unit. Your mission is to protect the citizens of Earth and stop the alien threat at all costs. How you accomplish this is up to you; our only requirement is that you succeed.\n"
+"Üdvözöljük az új posztján parancsnok úr! Mostantól PHALANX Földönkívüli-"
+"ellenes Gyorsreagálású Egység teljes mértékben az ön parancsnoksága alá "
+"tartozik. Feladata megvédeni a Föld polgári lakosságát és elhárítani az "
+"idegen fenyegetést, bármi áron. Hogy ezt hogyan éri el, csak önön múlik. Mi "
+"mindössze azt várjuk el, hogy sikerrel járjon.\n"
 "\n"
-"Your first order of business is to set up a headquarters. The UN has access to military bases all over the world, so you may consider any region for your base of operations. Choose the location wisely, because it will have great influence on the success of the PHALANX project.\n"
+"A legelső teendő a főhadiszállás felállítása. Az ENSZ hozzáférést biztosít "
+"minden katonai bázishoz a világon, ezért műveleteink bázisául bármely régiót "
+"választhatja. Válasszon bölcsen, az elhelyezkedés nagyban fogja "
+"befolyásolni a PHALANX projekt sikerét.\n"
 "\n"
-"A recent analysis of the attacks on Mumbai and Bonn reveal that UFO sightings and alien activity seems to focus on the most densely populated regions of Earth, including coastal North- and South-America, Europe, Eastasia, South and Mediterranean Africa, and Australia. You should consider including these territories in your field of operations.\n"
+"A bombay-i és a bonni támadásokról készült legfrissebb elemzések rámutattak, "
+"hogy az UFO észlelések és az idegenek aktivitása a legsűrűbben lakott földi "
+"területekre összpontosul: Észak- és Dél-Amerika partvidéke, Európa, "
+"Kelet-Ázsia, Dél-Afrika és a Földközi-tenger afrikai partvidéke, valamint "
+"Ausztrália. Fontolja meg ezen területek bevonását működési hatókörünkbe.\n"
 "\n"
-"Once you've established your first base, you must prepare your soldiers. The recruits we have assigned to PHALANX must be stationed on your dropship, then equipped for battle.\n"
+"Amint felépült az első bázis, a katonáit kell felkészítenie. A PHALANX "
+"rendelkezésére bocsátott újoncok beosztását a csapatszállító gépre, azok "
+"felfegyverzését önnek kell elvégezni.\n"
 "\n"
-"Take care of them, Commander. The rest of us are all counting on you, and praying for you.\n"
+"Viselje gondjukat parancsnok úr. Mindannyian számítunk önre és imádkozunk "
+"sikeréért.\n"
 "\n"
-"That is all. Good luck and good hunting."
+"Ez volna minden. Sok szerencsét, jó vadászatot!"
 
 msgid "Equip soldiers"
 msgstr "Katonák felfegyverzése"
@@ -13404,120 +13794,178 @@ msgstr "Ipoh"
 
 #~ msgid "Accept"
 #~ msgstr "Elfogad"
+
 #~ msgid "Only for moving"
 #~ msgstr "Csak mozgáskor"
+
 #~ msgid "Contrast:"
 #~ msgstr "Kontraszt:"
+
 #~ msgid "Brightness:"
 #~ msgstr "Fényesség:"
+
 #~ msgid "An industrial compound."
 #~ msgstr "Egy gyárkomplexum"
+
 #~ msgid "Big city"
 #~ msgstr "Nagyváros"
+
 #~ msgid "Alienbase"
 #~ msgstr "Idegen bázis"
+
 #~ msgid "Bring up the in-game console"
 #~ msgstr "játékkonzol felnyitása"
+
 #~ msgid "Saves to the quick save slot"
 #~ msgstr "Mentés a gyorsmentésre"
+
 #~ msgid "Opens or closes a door"
 #~ msgstr "Ajtó nyitás/csukás"
+
 #~ msgid "Enable weather effects."
 #~ msgstr "Időjárási hatások engedélyezése."
+
 #~ msgid "Enable real-time lighting."
 #~ msgstr "Valósidejű fényhatások bekapcsolása"
+
 #~ msgid "3D or 2D geoscape."
 #~ msgstr "2 vagy 3 dimenziós Földgömb nézet."
+
 #~ msgid "Your name."
 #~ msgstr "neved"
+
 #~ msgid "Open UFOpaedia"
 #~ msgstr "UFÓpédia"
+
 #~ msgid "Reload the last automatically saved campaign state"
 #~ msgstr "Utolsó automatikus mentés visszatöltése."
+
 #~ msgid "Personal message"
 #~ msgstr "Személyes üzenet"
+
 #~ msgid "Show chat history"
 #~ msgstr "Cset előzmények"
+
 #~ msgid "Charlotte Amalie"
 #~ msgstr "Charlotte Amalie"
+
 #~ msgid "Aircraft size:\t%s\n"
 #~ msgstr "Repülő mérete:\t%s\n"
+
 #~ msgid "Send a message to all players"
 #~ msgstr "Üzenet küldés minden játékosnak"
+
 #~ msgid "Send a message to allied team members"
 #~ msgstr "Üzenet küldés a szövetségeseknek"
+
 #~ msgid "Assign tanks"
 #~ msgstr "Tankok kijelölése"
+
 #~ msgid "Assign soldiers"
 #~ msgstr "Katonák hozzárendelése"
+
 #~ msgid "Buildings already built in the initial base"
 #~ msgstr "Legyenek épületek építve a kezdőbázison"
+
 #~ msgid "Start with buildings"
 #~ msgstr "Kezdés épületekkel"
+
 #~ msgid "Employees already hired at campaign start"
 #~ msgstr "Legyen már személyzet felvéve kezdéskor"
+
 #~ msgid "Start with employees"
 #~ msgstr "Kezdés személyzettel"
+
 #~ msgid "Alien"
 #~ msgstr "Idegen"
+
 #~ msgid "Graphic settings."
 #~ msgstr "Grafikai beállítások"
+
 #~ msgid "Paid %i credits to soldiers"
 #~ msgstr "%i kredit kifizetve a katonáknak"
+
 #~ msgid "Paid %i credits to workers"
 #~ msgstr "%i kredit kifizetve a munkásoknak"
+
 #~ msgid "Paid %i credits to scientists"
 #~ msgstr "%i kredit kifizetve a tudósoknak"
+
 #~ msgid "Paid %i credits for robots"
 #~ msgstr "%i kredit kifizetve a robotokra"
+
 #~ msgid "Not enough workers"
 #~ msgstr "Nincs elég munkás"
+
 #~ msgid "Queue full!"
 #~ msgstr "A sor tele van!"
+
 #~ msgid "You cannot queue any more items!"
 #~ msgstr "Nem tehetsz több dolgot a gyártási sorba!"
+
 #~ msgid "Disassembling of %s started"
 #~ msgstr "%s szétszerelése elkezdődött"
+
 #~ msgid "Manage your aircraft"
 #~ msgstr "Repülők kezelése"
+
 #~ msgid "Buy/Sell Equipment"
 #~ msgstr "Vásárlás/Eladás"
+
 #~ msgid "Transfer equipment or personnel"
 #~ msgstr "Személyzet vagy felszerelés átcsoportosítása"
+
 #~ msgid "Produce new equipment"
 #~ msgstr "Felszerelések gyártása"
+
 #~ msgid "Deal with Aliens in Alien Containment"
 #~ msgstr "Idegenek kezelése a tárolóban"
+
 #~ msgid "Medical and Surgery operations"
 #~ msgstr "Orvosi beavatkozások"
+
 #~ msgid "Base Information"
 #~ msgstr "Bázis információ"
+
 #~ msgid "Game"
 #~ msgstr "Játék"
+
 #~ msgid "Sound"
 #~ msgstr "Hang"
+
 #~ msgid "Input"
 #~ msgstr "Vezérlő"
+
 #~ msgid "Centring at soldier selecting, shooting and appearing"
 #~ msgstr "Katonához ugrás megjelenéskor, kijelöléskor, lövéskor"
+
 #~ msgid "Use 3D geoscape"
 #~ msgstr "3D-s Földgömb használata"
+
 #~ msgid "Input settings"
 #~ msgstr "Vezérlő beállítások"
+
 #~ msgid "Camera"
 #~ msgstr "Kamera"
+
 #~ msgid "Keys"
 #~ msgstr "Billentyűk"
+
 #~ msgid "Want To Maintain resolution"
 #~ msgstr "Képfelbontás beállítása"
+
 #~ msgid "Small UFO Hangar"
 #~ msgstr "Kis UFÓ hangár"
+
 #~ msgid "Large UFO Hangar"
 #~ msgstr "Nagy UFÓ hangár"
+
 #~ msgid "Team Room"
 #~ msgstr "Csapat szoba"
+
 #~ msgid "craft_upgrade_am_engines_pre_txt"
 #~ msgstr "<TODO>"
+
 #~ msgid "b_teamroom_txt"
 #~ msgstr ""
 #~ "Blueprints -- Team Room\n"
@@ -13557,6 +14005,7 @@ msgstr "Ipoh"
 #~ "Addenda\n"
 #~ "\n"
 #~ "None."
+
 #~ msgid "b_small_ufo_hangar_txt"
 #~ msgstr ""
 #~ "Blueprints -- Small UFO Hangar\n"
@@ -13596,6 +14045,7 @@ msgstr "Ipoh"
 #~ "Addenda\n"
 #~ "\n"
 #~ "None."
+
 #~ msgid "b_large_ufo_hangar_txt"
 #~ msgstr ""
 #~ "Blueprints -- Large UFO Hangar\n"
@@ -13635,6 +14085,7 @@ msgstr "Ipoh"
 #~ "Addenda\n"
 #~ "\n"
 #~ "None."
+
 #~ msgid "media/FreeSans.ttf"
 #~ msgstr "media/FreeSans.ttf"
 
@@ -13657,52 +14108,72 @@ msgstr "Ipoh"
 #, fuzzy
 #~ msgid "Not enough TUs for reloading weapon in right hand."
 #~ msgstr "Nincs elég időegység a felálláshoz."
+
 #~ msgid "You've reached the installation limit."
 #~ msgstr "Nem lehet több állomásod."
 
 #, fuzzy
 #~ msgid "Base-Defense Laser Turret"
 #~ msgstr "Lézer torony"
+
 #~ msgid "Enemy spotted"
 #~ msgstr "Ellenséget vettünk észre"
+
 #~ msgid "Rename installation"
 #~ msgstr "Állomás átnevezése"
+
 #~ msgid "Build a %s or %s first."
 #~ msgstr "Építs %s-t vagy %s-t előbb."
+
 #~ msgid "Build %s first."
 #~ msgstr "Építs %s-t előbb."
+
 #~ msgid "Mission won for team %i\n"
 #~ msgstr "A küldetést a(z) %i. csapat nyerte.\n"
+
 #~ msgid "Click the big button in the lower right corner when ready"
 #~ msgstr "Kattints a gombra a jobb alsó sarokban, ha készen vagy"
+
 #~ msgid "Please wait"
 #~ msgstr "Kérem várjon"
+
 #~ msgid "Previous ammunition compatible with this weapon"
 #~ msgstr "Előző muníció ami használható ezzel a fegyverrel"
+
 #~ msgid "Next ammunition compatible with this weapon"
 #~ msgstr "Következő muníció ami használható ezzel a fegyverrel"
+
 #~ msgid "With ammo:"
 #~ msgstr "Munícióval:"
+
 #~ msgid "Slot %i:\t%s (%s)"
 #~ msgstr "Állvány %i:\t%s (%s)"
+
 #~ msgid "  * %i x\t%s\n"
 #~ msgstr "  * %i x\t%s\n"
+
 #~ msgid "  * %s\n"
 #~ msgstr "  * %s\n"
+
 #~ msgid "Devastating alien terror attack on Mumbai"
 #~ msgstr "Pusztító idegen terror Mumbaiban"
+
 #~ msgid "Alien aircraft spotted"
 #~ msgstr "Idegen Repülőt találtunk"
+
 #~ msgid "Add selected item"
 #~ msgstr "Elem hozzáadása"
+
 #~ msgid "Remove item from slot"
 #~ msgstr "Elem levétele"
 
 #, fuzzy
 #~ msgid "D-F Tank"
 #~ msgstr "DF-tartály"
+
 #~ msgid "AA51 Cicada SAM"
 #~ msgstr "AA51 Cicada SAM"
+
 #~ msgid "%d day\n"
 #~ msgid_plural "%d days\n"
 #~ msgstr[0] "%d nap\n"
@@ -13711,106 +14182,155 @@ msgstr "Ipoh"
 #, fuzzy
 #~ msgid "%s"
 #~ msgstr "%s\n"
+
 #~ msgid "Previous category"
 #~ msgstr "Előző kategória"
+
 #~ msgid "Next category"
 #~ msgstr "Következő kategória"
+
 #~ msgid "Replace UFO"
 #~ msgstr "UFÓ kicserélése"
 
 #, fuzzy
 #~ msgid "Activate Sound"
 #~ msgstr "Csevegés aktiválása"
+
 #~ msgid "Selected base"
 #~ msgstr "Kiválasztott bázis"
+
 #~ msgid "Unload"
 #~ msgstr "Kipakolás"
+
 #~ msgid "Previous entry"
 #~ msgstr "Előző"
+
 #~ msgid "Next entry"
 #~ msgstr "Követkető"
+
 #~ msgid "Research results"
 #~ msgstr "Kutatás eredményei"
+
 #~ msgid "Leave UFOpaedia"
 #~ msgstr "UFOpédia elhagyása"
+
 #~ msgid "Base facility destroyed"
 #~ msgstr "Bázis épület elpusztult"
+
 #~ msgid "You've lost a missile battery system."
 #~ msgstr "Elvesztetted a rakéta védelmi rendszert."
+
 #~ msgid "You've lost a laser battery system."
 #~ msgstr "Elvesztetted a lézer védelmi rendszert."
+
 #~ msgid "You've lost a base facility (%s)."
 #~ msgstr "Elvesztettél egy bázis épületet (%s)."
+
 #~ msgid "%s [Transferred]"
 #~ msgstr "%s [Átszállítva]"
+
 #~ msgid "%i c\n"
 #~ msgstr "%i c\n"
+
 #~ msgid "Missing Large UFO Hangar"
 #~ msgstr "Nagy UFÓ Hangár hiányzik"
+
 #~ msgid "Destination base does not have functional Small UFO Hangar.\n"
 #~ msgstr "A célbázison nincs működő Kis UFÓ Hangár.\n"
+
 #~ msgid "Missing Small UFO Hangar"
 #~ msgstr "Kis UFÓ hangár hiányzik"
+
 #~ msgid "%s (%i for transfer)"
 #~ msgstr "%s (%i szállításra)"
+
 #~ msgid "Corpse of %s (%i for transfer)"
 #~ msgstr "%s tetem (%i szállításra)"
+
 #~ msgid "%s (%i for transfer, %i left)"
 #~ msgstr "%s (%i szállításra, %i marad)"
+
 #~ msgid "%s (%i available)"
 #~ msgstr "%s (%i van)"
+
 #~ msgid "Corpse of %s (%i for transfer, %i left)"
 #~ msgstr "%s tetem (%i szállításra, %i marad)"
+
 #~ msgid "Alive %s (%i for transfer, %i left)"
 #~ msgstr "Élő %s (%i szállításra, %i marad)"
+
 #~ msgid "Alive %s (%i available)"
 #~ msgstr "Élő %s (%i van)"
+
 #~ msgid "Replace %s at %s (%i stored available)\n"
 #~ msgstr "%s lecserélése %s bázison (%i db van)\n"
+
 #~ msgid "previously recovered %s from base %s"
 #~ msgstr "korábban szerzett %s a(z) %s bázisról"
+
 #~ msgid "Your are changing this defence system"
 #~ msgstr "Megváltoztatod ezt a védelmi berendezést"
+
 #~ msgid "Selected defence:"
 #~ msgstr "Kiválasztott védelem:"
+
 #~ msgid "Install selected defence system"
 #~ msgstr "Kiválasztott védelmi rendszer telepítése"
+
 #~ msgid "Choose defence system to build"
 #~ msgstr "Jelenlegi védelmi rendszer"
+
 #~ msgid "Change ammo in the defence system"
 #~ msgstr "Muníció kivétele a védelmi rendszerből"
+
 #~ msgid "Current defence system"
 #~ msgstr "Jelenlegi védelmi rendszer"
+
 #~ msgid "Ammo to use with installed system"
 #~ msgstr "Muníció használata a telepített rendszerrel"
+
 #~ msgid "No ammo assigned to this defence system."
 #~ msgstr "Nincs muníció rendelve a védelmi rendszerhez"
+
 #~ msgid "The server has disconnected.\n"
 #~ msgstr "A szerver lekapcsolódott.\n"
+
 #~ msgid "Sound is not activated"
 #~ msgstr "A hang nincs aktiválva"
+
 #~ msgid "not implemented"
 #~ msgstr "nincs kész"
+
 #~ msgid "Installation #%i"
 #~ msgstr "Állomás #%i"
+
 #~ msgid "Slow down time"
 #~ msgstr "Idő lassítása"
+
 #~ msgid "Speed up time"
 #~ msgstr "Idő gyorsítása"
+
 #~ msgid "Toggle between full zoom and half zoom"
 #~ msgstr "Teljes zoom és fél-zoom közötti váltás"
+
 #~ msgid "Could not set up your installation at this location"
 #~ msgstr "Nem lehetett állomást építeni a megadott helyre"
+
 #~ msgid "Could not set up your base at this location"
 #~ msgstr "Nem lehetett bázist építeni a megadott helyre"
+
 #~ msgid "10 sec"
 #~ msgstr "10 mp"
+
 #~ msgid "1 min"
 #~ msgstr "1 perc"
+
 #~ msgid "10 mins"
 #~ msgstr "10 perc"
+
 #~ msgid "Nobody selected\n"
 #~ msgstr "Senki sincs kijelölve\n"
+
 #~ msgid "Sniper"
 #~ msgstr "Mesterlövész"
 
@@ -13821,294 +14341,431 @@ msgstr "Ipoh"
 #, fuzzy
 #~ msgid "Sell ufo"
 #~ msgstr "Elad"
+
 #~ msgid "Installation #2"
 #~ msgstr "Állomás #2"
+
 #~ msgid "Installation #3"
 #~ msgstr "Állomás #3"
+
 #~ msgid "Installation #4"
 #~ msgstr "Állomás #4"
+
 #~ msgid "Installation #5"
 #~ msgstr "Állomás #5"
+
 #~ msgid "Installation #6"
 #~ msgstr "Állomás #6"
+
 #~ msgid "Installation #7"
 #~ msgstr "Állomás #7"
+
 #~ msgid "Installation #8"
 #~ msgstr "Állomás #8"
+
 #~ msgid "Previous alien containment"
 #~ msgstr "Előző idegen tároló"
+
 #~ msgid "Next alien containment"
 #~ msgstr "Következő idegen tároló"
+
 #~ msgid "Amounts"
 #~ msgstr "Mennyiségek"
+
 #~ msgid "Create base"
 #~ msgstr "Bázis építés"
+
 #~ msgid "Max. bases reached"
 #~ msgstr "Maximális bázis szám elérve"
+
 #~ msgid "Max. installations reached"
 #~ msgstr "Maximális állomás szám elérve"
+
 #~ msgid "No UFO hangars or no power supply"
 #~ msgstr "Nincs UFÓ hangár vagy erőmű."
+
 #~ msgid "Store the UFO in base"
 #~ msgstr "UFÓ tárolása a bázison"
+
 #~ msgid "Sell the UFO to desired nation"
 #~ msgstr "Az UFO eladása a kiválasztott nemzetnek"
+
 #~ msgid "Destroy UFO"
 #~ msgstr "UFÓ elpusztítása"
+
 #~ msgid "Destroy recovered UFO"
 #~ msgstr "Pusztítsd el az UFÓt"
+
 #~ msgid "Couldn't open file"
 #~ msgstr "Fájl nem nyitható meg"
 
 #, fuzzy
 #~ msgid "Error saving xml game."
 #~ msgstr "Hiba a játék mentésekor."
+
 #~ msgid "Alien spotted: %s!"
 #~ msgstr "Idegent vettünk észre: %s!"
+
 #~ msgid "Alien spotted!\n"
 #~ msgstr "Idegent vettünk észre!\n"
+
 #~ msgid "CREDIT"
 #~ msgstr "PÉNZ"
+
 #~ msgid "Serverbrowser"
 #~ msgstr "Szerverkereső"
+
 #~ msgid "Production queue/producible items"
 #~ msgstr "Gyártási sor/gyártható felszerelések"
+
 #~ msgid "New game"
 #~ msgstr "Új játék"
+
 #~ msgid "No game to save"
 #~ msgstr "Nincs mit menteni"
+
 #~ msgid "Baseinfo"
 #~ msgstr "Bázisinfó"
+
 #~ msgid "Cargo onboard"
 #~ msgstr "Rakomány a fedélzeten"
+
 #~ msgid "Primary weapons"
 #~ msgstr "Elsődleges fegyverek"
+
 #~ msgid "Secondary weapons"
 #~ msgstr "Másodlagos fegyverek"
+
 #~ msgid "Heavy weapons"
 #~ msgstr "Nehéz fegyverek"
+
 #~ msgid "Personal Armour"
 #~ msgstr "Személyi páncélok"
+
 #~ msgid "An alien was stunned: %s\n"
 #~ msgstr "Egy idegen elkábítva: %s\n"
+
 #~ msgid "An alien was killed: %s\n"
 #~ msgstr "Egy idegen megölve: %s\n"
+
 #~ msgid "Base #3"
 #~ msgstr "Bázis #3"
+
 #~ msgid "Base #4"
 #~ msgstr "Bázis #4"
+
 #~ msgid "Base #5"
 #~ msgstr "Bázis #5"
+
 #~ msgid "Base #6"
 #~ msgstr "Bázis #6"
+
 #~ msgid "Base #7"
 #~ msgstr "Bázis #7"
+
 #~ msgid "Base #8"
 #~ msgstr "Bázis #8"
+
 #~ msgid "Buy/Sell Aircraft..."
 #~ msgstr "Vásárlás/Eladás..."
+
 #~ msgid "Buy or sell aircraft"
 #~ msgstr "Repülő vásárlása vagy eladása"
+
 #~ msgid "Produce..."
 #~ msgstr "Gyártás..."
+
 #~ msgid "Produce aircraft or aircraft components"
 #~ msgstr "Repülő vagy repülőfelszerelés gyártása"
+
 #~ msgid "Enter base"
 #~ msgstr "Belépés a bázisra"
+
 #~ msgid "Variable:"
 #~ msgstr "Változó:"
+
 #~ msgid "Value:"
 #~ msgstr "Érték:"
+
 #~ msgid "Current Team"
 #~ msgstr "Jelenlegi csapat"
+
 #~ msgid "Edit your team after loading"
 #~ msgstr "Csapat módosítása betöltés után"
+
 #~ msgid "Edit"
 #~ msgstr "Módosít"
+
 #~ msgid "Generate a team automatically"
 #~ msgstr "Csapat automatikus létrehozása"
+
 #~ msgid "Race:"
 #~ msgstr "Faj:"
+
 #~ msgid "Use current skin with every soldier aboard"
 #~ msgstr "Jelenlegi kinézet használata az összes katonánál a fedélzeten"
+
 #~ msgid "Assign Soldiers"
 #~ msgstr "Katonák"
+
 #~ msgid "Equip aircraft components"
 #~ msgstr "Repülő felszerelése"
+
 #~ msgid "Switch to the previous aircraft"
 #~ msgstr "Előző repülő"
+
 #~ msgid "Switch to the next aircraft"
 #~ msgstr "Következő repülő"
+
 #~ msgid "Assign your squad"
 #~ msgstr "Katonák hozzárendelése a géphez"
+
 #~ msgid "Aircraft absent from base"
 #~ msgstr "A gép nincs a bázison"
+
 #~ msgid "Previous aircraft"
 #~ msgstr "Előző gép"
+
 #~ msgid "Currently being healed"
 #~ msgstr "Jelenleg kezelés alatt"
+
 #~ msgid "Show available primary weapons"
 #~ msgstr "Mutasd az elsődleges fegyvereket"
+
 #~ msgid "Show available secondary weapons"
 #~ msgstr "Mutasd a másodlagos fegyvereket"
+
 #~ msgid "Show available heavy weapons"
 #~ msgstr "Mutasd a nehézfegyvereket"
+
 #~ msgid "Show available miscellaneous equipment and weapons"
 #~ msgstr "Mutasd az egyéb felszereléseket és fegyvereket"
+
 #~ msgid "Show available armour"
 #~ msgstr "Mutasd a páncélokat"
+
 #~ msgid "You don't have any aircraft in the base - what do you want to do?"
 #~ msgstr "Nincs egyetlen repülőd se ezen a bázison, mit tegyünk?"
+
 #~ msgid "Buy aircraft"
 #~ msgstr "Reülő vásárlása"
+
 #~ msgid "Buy"
 #~ msgstr "Vásárlás"
+
 #~ msgid "New team created"
 #~ msgstr "Új csapat létrehozva"
+
 #~ msgid ""
 #~ "Aliens captured\t%i\n"
 #~ "\n"
 #~ msgstr ""
 #~ "Elfogott idegenek\t%i\n"
 #~ "\n"
+
 #~ msgid ""
 #~ "Enemies captured\t%i\n"
 #~ "\n"
 #~ msgstr ""
 #~ "Elfogott ellenség\t%i\n"
 #~ "\n"
+
 #~ msgid ""
 #~ "Enemy survivors\t%i\n"
 #~ "\n"
 #~ msgstr ""
 #~ "Ellenséges túlélők\t%i\n"
 #~ "\n"
+
 #~ msgid "Team losses\t%i\n"
 #~ msgstr "Csapat veszteségek\t%i\n"
+
 #~ msgid "Civilians killed by the Enemies\t%i\n"
 #~ msgstr "Ellenség által megölt civilek\t%i\n"
+
 #~ msgid "Civilians killed by your Team\t%i\n"
 #~ msgstr "Általad megölt civilek\t%i\n"
+
 #~ msgid "Crashed UFO - Scout"
 #~ msgstr "Lezuhant UFÓ - Felderítő"
+
 #~ msgid "Aircraft away"
 #~ msgstr "Repülő úton"
+
 #~ msgid "Start your aircraft"
 #~ msgstr "Repülő elindítása"
+
 #~ msgid "Call back aircraft"
 #~ msgstr "Repülő visszahívása"
+
 #~ msgid "Stop time"
 #~ msgstr "Idő megállítása"
+
 #~ msgid "Remove ammo from this defence system"
 #~ msgstr "Muníció kivétele a védelmi rendszerből"
+
 #~ msgid "Choose defence system to build after removing current one"
 #~ msgstr "Válaszd ki, hogy milyen védelmi rendszert telepítesz a jelenlegi eltávolítása után"
+
 #~ msgid "System to install after removal"
 #~ msgstr "Az eltávolítás utáni rendszer telepítése"
+
 #~ msgid "Hire soldiers"
 #~ msgstr "Katonák felbérelése"
+
 #~ msgid "Hire scientists"
 #~ msgstr "Tudósok felvétele"
+
 #~ msgid "Hire workers"
 #~ msgstr "Munkások felvétele"
+
 #~ msgid "Hire pilots"
 #~ msgstr "Pilóták felvétele"
+
 #~ msgid "you should try the multiplayer features"
 #~ msgstr "ki kéne próbálnod a több játékos lehetőségeket"
+
 #~ msgid "Visit http://ufoai.sf.net"
 #~ msgstr "Látogasd meg a http://ufoai.sf.net weboldalt"
+
 #~ msgid "and join irc.freenode.org #ufo:ai"
 #~ msgstr "és csatlakozz az irc.freenode.org #ufo:ai chathez"
+
 #~ msgid "Pilot %s %s\n"
 #~ msgstr "Pilóta %s %s\n"
+
 #~ msgid "Soldier %s %s\n"
 #~ msgstr "Katona %s %s\n"
+
 #~ msgid "Aircraft %s\n"
 #~ msgstr "Repülő %s\n"
+
 #~ msgid "Close down messages"
 #~ msgstr "Üzenetablak bezárása"
+
 #~ msgid "Soldier 1"
 #~ msgstr "1. katona"
+
 #~ msgid "Soldier 2"
 #~ msgstr "2. katona"
+
 #~ msgid "Soldier 3"
 #~ msgstr "3. katona"
+
 #~ msgid "Soldier 4"
 #~ msgstr "4. katona"
+
 #~ msgid "Soldier 5"
 #~ msgstr "5. katona"
+
 #~ msgid "Soldier 6"
 #~ msgstr "6. katona"
+
 #~ msgid "Soldier 7"
 #~ msgstr "7. katona"
+
 #~ msgid "Soldier 8"
 #~ msgstr "8. katona"
+
 #~ msgid "Scroll backward"
 #~ msgstr "Lapozz hátra"
+
 #~ msgid "Scroll forward"
 #~ msgstr "Lapozz előre"
+
 #~ msgid "Increase production by 1"
 #~ msgstr "Termelés növelése eggyel"
+
 #~ msgid "Decrease production by 1"
 #~ msgstr "Termelés csökkentése eggyel"
+
 #~ msgid "Increase production by 10"
 #~ msgstr "Termelés növelése tízzel"
+
 #~ msgid "Decrease production by 10"
 #~ msgstr "Termelés csökkentése tízzel"
+
 #~ msgid "Build at least one workshop"
 #~ msgstr "Építs legalább egy műhelyet"
+
 #~ msgid "Build at least one functional Hangar (click for more info)"
 #~ msgstr "Építs legalább egy működő hangárt (további infóért kattints)"
+
 #~ msgid "Build at least one functional Storage (click for more info)"
 #~ msgstr "Építs legalább egy működő raktárat (további infóért kattints)"
+
 #~ msgid "Can't transfer (click for more info)"
 #~ msgstr "Nem lehet átszállítani (több infóért kattints)"
+
 #~ msgid "Build at least one functional Laboratory (click for more info)"
 #~ msgstr "Építs legalább egy működő labort (további infóért kattints)"
+
 #~ msgid "Build at least one functional Workshop (click for more info)"
 #~ msgstr "Építs legalább egy működő műhelyet (további infóért kattints)"
+
 #~ msgid "Build at least one functional Living Quarter (click for more info)"
 #~ msgstr "Építs legalább egy működő lakónegyedet (további infóért kattints)"
+
 #~ msgid "Build at least one functional Alien Containment (click for more info)"
 #~ msgstr "Építs legalább egy működő idegen tárolót (további infóért kattints)"
+
 #~ msgid "Build at least one functional Hospital (click for more info)"
 #~ msgstr "Építs legalább egy működő kórházat (további infóért kattints)"
+
 #~ msgid "Buy item"
 #~ msgstr "Vásárlás"
+
 #~ msgid "Sell item"
 #~ msgstr "Eladás"
+
 #~ msgid "What to do?"
 #~ msgstr "Mit tegyünk?"
+
 #~ msgid "Enable all pause settings"
 #~ msgstr "Minden üzenet-állj tiltása"
+
 #~ msgid "Disable all"
 #~ msgstr "Mindet ki"
+
 #~ msgid "Enable all notification messages"
 #~ msgstr "Minden üzenet engedélyezése"
+
 #~ msgid "Disable all notification messages"
 #~ msgstr "Minden üzenet tiltása"
+
 #~ msgid "Change all sound settings"
 #~ msgstr "Minden üzenet-hang beállítás megváltoztatása"
+
 #~ msgid "Add scientist"
 #~ msgstr "Tudós hozzáadása"
+
 #~ msgid "Start base defence"
 #~ msgstr "Bázis megvédése"
+
 #~ msgid "Automatically resolve mission"
 #~ msgstr "Küldetés"
+
 #~ msgid "Ready for drop down"
 #~ msgstr "Kész a ledobásra"
+
 #~ msgid "Being transfered"
 #~ msgstr "Átszállítás alatt"
+
 #~ msgid "Back to base"
 #~ msgstr "Visszatér a bázisra"
+
 #~ msgid "not a working hangar"
 #~ msgstr "nincs működő hangár"
+
 #~ msgid "no more room in storage"
 #~ msgstr "nincs több hely a raktrárban"
+
 #~ msgid "Your aircraft doesn't have enough fuel to go there and then come back to its home base."
 #~ msgstr "A repülőnek nincs elég üzemanyaga, hogy oda menjen és visszaérjen a bázisra."
+
 #~ msgid "xaw95_ammo_pre_txt"
 #~ msgstr "<TODO>"
+
 #~ msgid "chaingun_ammo_pre_txt"
 #~ msgstr "<TODO>"
 
@@ -14123,48 +14780,70 @@ msgstr "Ipoh"
 #, fuzzy
 #~ msgid "Base defence item was successfully removed."
 #~ msgstr "Repülőgép-felszerelés telepítve."
+
 #~ msgid "Show miscellaneous equipment"
 #~ msgstr "Mutasd a vegyes felszereléseket"
+
 #~ msgid "Show heavy equipment"
 #~ msgstr "Nehézfegyverzet"
+
 #~ msgid "Show other items and materials"
 #~ msgstr "Mutasd az egyéb felszereléseket és anyagokat"
+
 #~ msgid "Sell aircraft"
 #~ msgstr "Repülő eladása"
+
 #~ msgid "Buy craftitem"
 #~ msgstr "Gépfelszerelés váaárlása"
+
 #~ msgid "Sell craftitem"
 #~ msgstr "Gépfelszerelés eladása"
+
 #~ msgid "No power supplies in this base"
 #~ msgstr "Nincs erőmű ezen a bázison."
+
 #~ msgid "No storage in this base"
 #~ msgstr "Nincs raktár ezen a bázison."
+
 #~ msgid "Show aircraft"
 #~ msgstr "Repülők mutatása"
+
 #~ msgid "Show craftitems"
 #~ msgstr "Mutasd a repülőfelszereléseket"
+
 #~ msgid "Back to hangar"
 #~ msgstr "Vissza a hangárba"
+
 #~ msgid "Disassembling items"
 #~ msgstr "Tárgyak szétszerelése"
+
 #~ msgid "Hangar capacity:"
 #~ msgstr "Hangár kapacitás"
+
 #~ msgid "Very slow"
 #~ msgstr "Nagyon lassú"
+
 #~ msgid "Slow"
 #~ msgstr "Lassú"
+
 #~ msgid "Assign heavy equipment"
 #~ msgstr "Nehézfegyverzet hozzáadása"
+
 #~ msgid "Show primary weapons in store"
 #~ msgstr "Mutasd az elsődleges fegyvereket"
+
 #~ msgid "Show armour in store"
 #~ msgstr "Mutasd a páncélokat"
+
 #~ msgid "Headshot"
 #~ msgstr "Fejlövés"
+
 #~ msgid "Hire medics"
 #~ msgstr "Orvosok felvétele"
+
 #~ msgid "Heal this soldier"
 #~ msgstr "Gyógyitsd meg"
+
 #~ msgid "medic"
 #~ msgid_plural "medics"
 #~ msgstr[0] "orvos"
@@ -14173,40 +14852,58 @@ msgstr "Ipoh"
 #, fuzzy
 #~ msgid "Test"
 #~ msgstr "Sivatagi"
+
 #~ msgid "eXtraterrestial Viral Infection"
 #~ msgstr "Földönkívüli vírus fertőzés"
+
 #~ msgid "Alien Medium Armour"
 #~ msgstr "Közepes idegen páncél"
+
 #~ msgid "UFO - Condor"
 #~ msgstr "UFÓ - Kondor"
+
 #~ msgid "steelblade"
 #~ msgstr "acélpenge"
+
 #~ msgid "monomolecularblade"
 #~ msgstr "monomolekuláris-penge"
+
 #~ msgid "Camera Scroll:"
 #~ msgstr "Kamera mozgatás:"
+
 #~ msgid "Camera Rotation:"
 #~ msgstr "Kamera forgatás:"
+
 #~ msgid "%s\t%0.2f%%\n"
 #~ msgstr "%s\t%.02f%%\n"
+
 #~ msgid "Crashed Alien Ship. Secure the area."
 #~ msgstr "Lezuhant idegen gép. Biztosítsd a területet!"
+
 #~ msgid "Alive aliens in all bases:"
 #~ msgstr "Élő idegenek összesen:"
+
 #~ msgid "Alive aliens in this base:"
 #~ msgstr "Élő idegenek ezen a bázison:"
+
 #~ msgid "Aliens available to process:"
 #~ msgstr "Feldolgozható idegenek:"
+
 #~ msgid "Alien type"
 #~ msgstr "Idegen fajta"
+
 #~ msgid "Examined"
 #~ msgstr "Megvizsgálva"
+
 #~ msgid "Killed:"
 #~ msgstr "Megölt:"
+
 #~ msgid "Captured in all bases:"
 #~ msgstr "Elfogott összesen:"
+
 #~ msgid "Buy or sell aircrafts"
 #~ msgstr "Repülők vásárlása/eladása"
+
 #~ msgid "Show aircrafts"
 #~ msgstr "Mutasd a repülőket"
 
