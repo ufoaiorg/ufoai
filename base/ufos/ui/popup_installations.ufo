@@ -1,3 +1,70 @@
+// Popup new base
+window popup_newbase {
+	{
+		pos			"264 262"
+		size		"400 210"
+		dragbutton	true
+		modal		true
+		background	"ui/popup_alpha_tile"
+		string		"_New base"
+	}
+
+	string name_label {
+		string		"_Name:"
+		pos			"25 50"
+		size		"75 20"
+		font		"f_small_bold"
+	}
+	textentry name {
+		string		*cvar:mn_base_title
+		pos			"25 75"
+		size		"330 25"
+		font		"f_big"
+		background	"ui/button_green_verysmall"
+		contentalign	ALIGN_CL
+		color		"0 .78 0 1"
+		selectcolor	"1 1 1 1"
+	}
+
+	button bt_nameedit {
+		tooltip		"_Rename your base"
+		icon		"icons/pen"
+		pos			"360 75"
+		size		"25 25"
+		padding		0
+		onClick {
+			call *node:root.name@edit
+		}
+	}
+
+	string cost_label {
+		string		"_Cost:"
+		pos			"25 110"
+		size		"75 20"
+		font		"f_small_bold"
+	}
+	string cost {
+		string		*cvar:mn_base_cost
+		pos			"100 110"
+		size		"100 25"
+	}
+
+	cmpPopupButton bt_build {
+		string		"_Build"
+		tooltip		"_Build the base"
+		pos			"21 150"
+		onClick	{
+			cmd "ui_pop;mn_base_build;"
+		}
+	}
+	cmpCancelButton bt_cancel {
+		pos			"205 150"
+		onClick	{
+			cmd "ui_pop;mn_mapaction_reset;"
+		}
+	}
+}
+
 // Installation popup windows
 
 component cmp_ufoyard_entry extends panel {
