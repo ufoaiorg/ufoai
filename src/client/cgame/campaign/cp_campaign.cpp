@@ -154,7 +154,7 @@ bool CP_IsRunning (void)
  * @param[in] mapIdx idx of the map in the mapdef array
  * @return false if map is not selectable
  */
-static bool CP_MapIsSelectable (mission_t *mission, mapDef_t *md, const vec2_t pos)
+static bool CP_MapIsSelectable (const mission_t *mission, const mapDef_t *md, const vec2_t pos)
 {
 	if (md->storyRelated)
 		return false;
