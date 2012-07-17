@@ -1047,6 +1047,87 @@ mapdef frozen_small
 	)
 }
 
+mapdef frozen_crash_medium_industrial
+{
+	map			"+frozen"
+	param		"crash_medium_industrial"
+	multiplayer	false
+	description	"_An underpopulated area in a cold region."
+	maxaliens	12 //TODO: This is an arbitrary value right now.
+	hurtaliens	true
+
+	aircraft
+	(
+		craft_drop_firebird
+		craft_drop_raptor
+		craft_drop_herakles
+	)
+
+	ufos
+	(
+		craft_crash_supply
+	)
+
+	terrains
+	(
+		"arctic"
+		"cold"
+	)
+
+	cultures
+	(
+		// any
+	)
+
+	populations
+	(
+		"rural"
+		"village"
+		"suburban"
+	)
+}
+
+mapdef frozen_crash_medium_nature
+{
+	map			"+frozen"
+	param		"crash_medium_nature"
+	multiplayer	false
+	description	"_An underpopulated area in a cold region."
+	maxaliens	12 //TODO: This is an arbitrary value right now.
+	hurtaliens	true
+
+	aircraft
+	(
+		craft_drop_firebird
+		craft_drop_raptor
+		craft_drop_herakles
+	)
+
+	ufos
+	(
+		craft_crash_supply
+	)
+
+	terrains
+	(
+		"arctic"
+		"cold"
+	)
+
+	cultures
+	(
+		// any
+	)
+
+	populations
+	(
+		"nopopulation"
+		"rural"
+		"village"
+		"suburban"
+	)
+}
+
 /////////////////////////
 // HARBOUR RANDOM MAPS //
 /////////////////////////
