@@ -228,7 +228,6 @@ private:
 	int _totalBodyArea;
 	short _numBodyParts;
 
-
 public:
 	BodyData(void);
 	const char *id(void) const;
@@ -240,7 +239,7 @@ public:
 	short getRandomBodyPart(void) const;
 	short numBodyParts (void) const;
 	void setId(const char *id);
-	void addBodyPart(bodyPartData_t bodyPart);
+	void addBodyPart(const bodyPartData_t &bodyPart);
 };
 
 typedef struct teamDef_s {

@@ -241,7 +241,7 @@ void BodyData::setId (const char *id)
 	Q_strncpyz(_id, id, sizeof(_id));
 }
 
-void BodyData::addBodyPart (bodyPartData_t bodyPart)
+void BodyData::addBodyPart (const bodyPartData_t &bodyPart)
 {
 	_bodyParts[_numBodyParts++] = bodyPart;
 	_totalBodyArea += bodyPart.bodyArea;

@@ -820,7 +820,6 @@ static float AI_PanicCalcActionScore (edict_t * ent, pos3_t to, aiAction_t * aia
 	pos_t move;
 	float minDistFriendly, minDistOthers;
 	float bestActionScore = 0.0;
-	const byte crouchingState = G_IsCrouched(ent) ? 1 : 0;
 
 	/* set basic parameters */
 	OBJZERO(*aia);
@@ -877,7 +876,7 @@ static float AI_PanicCalcActionScore (edict_t * ent, pos3_t to, aiAction_t * aia
 	}
 
 	/* add random effects */
-	bestActionScore +=  SCORE_PANIC_RANDOM  * frand();
+	bestActionScore += SCORE_PANIC_RANDOM  * frand();
 
 	return bestActionScore;
 }

@@ -36,7 +36,6 @@ void G_DamageActor (edict_t *target, const int damage)
 
 	G_TakeDamage(target, damage);
 	if (damage > 0 && target->HP > 0) {
-
 		target->chr.wounds.woundLevel[bodyPart] += damage;
 #if 0
 		if (!CHRSH_IsTeamDefRobot(target->chr.teamDef))
@@ -44,7 +43,7 @@ void G_DamageActor (edict_t *target, const int damage)
 			target->STUN = std::min(255.0f, target->STUN + std::max(0.0f, damage * crand() * 0.25f));
 #endif
 		if (target->chr.wounds.woundLevel[bodyPart] > target->chr.maxHP * target->chr.teamDef->bodyTemplate->woundThreshold(bodyPart))
-			G_ClientPrintf(G_PLAYER_FROM_ENT(target), PRINT_HUD, _("%s has been wounded!\n"), target->chr.name);
+			G_ClientPrintf(G_PLAYER_FROM_ENT(target), PRINT_HUD, _("%s has been wounded!"), target->chr.name);
 	}
 }
 
@@ -110,9 +109,11 @@ void G_BleedWounds (const int team)
 		int bodyPart, damage = 0;
 		if (CHRSH_IsTeamDefRobot(ent->chr.teamDef))
 			continue;
-		for (bodyPart = 0; bodyPart < ent->chr.teamDef->bodyTemplate->numBodyParts(); ++bodyPart)
-			if (ent->chr.wounds.woundLevel[bodyPart] > ent->chr.maxHP * ent->chr.teamDef->bodyTemplate->woundThreshold(bodyPart))
-				damage += ent->chr.wounds.woundLevel[bodyPart] * ent->chr.teamDef->bodyTemplate->bleedingFactor(bodyPart);
+		const teamDef_t *const teamDef = ent->chr.teamDef;
+		woundInfo_t &wounds = ent->chr.wounds;
+		for (bodyPart = 0; bodyPart < teamDef->bodyTemplate->numBodyParts(); ++bodyPart)
+			if (wounds.woundLevel[bodyPart] > ent->chr.maxHP * teamDef->bodyTemplate->woundThreshold(bodyPart))
+				damage += wounds.woundLevel[bodyPart] * teamDef->bodyTemplate->bleedingFactor(bodyPart);
 		if (damage > 0) {
 			G_PrintStats("%s is bleeding (damage: %i)\n", ent->chr.name, damage);
 			G_TakeDamage(ent, damage);
@@ -128,11 +129,12 @@ void G_SendWoundStats (edict_t *const ent)
 	int i;
 	for (i = 0; i < ent->chr.teamDef->bodyTemplate->numBodyParts(); ++i) {
 		/* Sanity checks */
-		ent->chr.wounds.woundLevel[i] = std::max(0, ent->chr.wounds.woundLevel[i]);
-		ent->chr.wounds.treatmentLevel[i] = std::max(0, ent->chr.wounds.treatmentLevel[i]);
-		ent->chr.wounds.woundLevel[i] = std::min(255, ent->chr.wounds.woundLevel[i]);
-		ent->chr.wounds.treatmentLevel[i] = std::min(255, ent->chr.wounds.treatmentLevel[i]);
-		if (ent->chr.wounds.woundLevel[i] + ent->chr.wounds.treatmentLevel[i] > 0)
+		woundInfo_t &wounds = ent->chr.wounds;
+		wounds.woundLevel[i] = std::max(0, wounds.woundLevel[i]);
+		wounds.treatmentLevel[i] = std::max(0, wounds.treatmentLevel[i]);
+		wounds.woundLevel[i] = std::min(255, wounds.woundLevel[i]);
+		wounds.treatmentLevel[i] = std::min(255, wounds.treatmentLevel[i]);
+		if (wounds.woundLevel[i] + wounds.treatmentLevel[i] > 0)
 			G_EventActorWound(ent, i);
 	}
 }
@@ -148,11 +150,12 @@ float G_ActorGetInjuryPenalty (const edict_t *const ent, const modifier_types_t 
 	int bodyPart;
 	float penalty = 0;
 
-	for (bodyPart = 0; bodyPart < ent->chr.teamDef->bodyTemplate->numBodyParts(); ++bodyPart) {
-		const int threshold = ent->chr.maxHP * ent->chr.teamDef->bodyTemplate->woundThreshold(bodyPart);
+	const teamDef_t *const teamDef = ent->chr.teamDef;
+	for (bodyPart = 0; bodyPart < teamDef->bodyTemplate->numBodyParts(); ++bodyPart) {
+		const int threshold = ent->chr.maxHP * teamDef->bodyTemplate->woundThreshold(bodyPart);
 		const int injury = (ent->chr.wounds.woundLevel[bodyPart] + ent->chr.wounds.treatmentLevel[bodyPart] * 0.5);
 		if (injury > threshold)
-			penalty += 2 * ent->chr.teamDef->bodyTemplate->penalty(bodyPart, type) * injury / ent->chr.maxHP;
+			penalty += 2 * teamDef->bodyTemplate->penalty(bodyPart, type) * injury / ent->chr.maxHP;
 	}
 
 	switch (type) {

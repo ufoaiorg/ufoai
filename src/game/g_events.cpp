@@ -332,11 +332,11 @@ void G_EventActorStats (const edict_t* ent, int playerMask)
 void G_EventActorWound (const edict_t *ent, const int bodyPart)
 {
 	const int mask = G_PlayerToPM(G_PLAYER_FROM_ENT(ent));
-	gi.AddEvent(mask, EV_ACTOR_WOUND, ent->number);
+	G_EventAdd(mask, EV_ACTOR_WOUND, ent->number);
 	gi.WriteByte(bodyPart);
 	gi.WriteByte(ent->chr.wounds.woundLevel[bodyPart]);
 	gi.WriteByte(ent->chr.wounds.treatmentLevel[bodyPart]);
-	gi.EndEvents();
+	G_EventEnd();
 }
 
 /**
