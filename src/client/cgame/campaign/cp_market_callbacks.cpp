@@ -56,7 +56,8 @@ static void BS_MarketAircraftDescription (const aircraft_t *aircraftTemplate)
  */
 static void BS_MarketInfoClick_f (void)
 {
-	const technology_t *tech = RS_GetTechByProvided(Cvar_GetString("mn_item"));
+	const char *item = Cvar_GetString("mn_item");
+	const technology_t *tech = RS_GetTechByProvided(item);
 
 	if (tech)
 		UP_OpenWith(tech->id);
@@ -71,7 +72,7 @@ static void BS_SetAutosell_f (void)
 	const technology_t *tech;
 
 	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <item-id> [0|1]\nWhere second parameter is the state (off/on), if ommitted the autosell property will be flipped.\n", Cmd_Argv(0));
+		Com_Printf("Usage: %s <item-id> [0|1]\nWhere second parameter is the state (off/on), if omitted the autosell property will be flipped.\n", Cmd_Argv(0));
 		return;
 	}
 	/* aircraft check */
