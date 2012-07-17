@@ -72,7 +72,8 @@ static void BS_SetAutosell_f (void)
 	const technology_t *tech;
 
 	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <item-id> [0|1]\nWhere second parameter is the state (off/on), if omitted the autosell property will be flipped.\n", Cmd_Argv(0));
+		Com_Printf("Usage: %s <item-id> [0|1]\nWhere second parameter is the state (off/on), if omitted the autosell property will be flipped.\n",
+				Cmd_Argv(0));
 		return;
 	}
 	/* aircraft check */
@@ -119,7 +120,8 @@ static void BS_Buy_f (void)
 	const objDef_t *od;
 
 	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <item-id> <count> [base-idx] \nNegative count means selling. If base index is ommitted buys on the currently selected base.\n", Cmd_Argv(0));
+		Com_Printf("Usage: %s <item-id> <count> [base-idx] \nNegative count means selling. If base index is omitted buys on the currently selected base.\n",
+				Cmd_Argv(0));
 		return;
 	}
 
