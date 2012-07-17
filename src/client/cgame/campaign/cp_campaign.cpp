@@ -164,9 +164,9 @@ static bool CP_MapIsSelectable (const mission_t *mission, const mapDef_t *md, co
 
 	if (!mission->ufo) {
 		/* a mission without UFO should not use a map with UFO */
-		if (md->ufos)
+		if (!LIST_IsEmpty(md->ufos))
 			return false;
-	} else if (md->ufos) {
+	} else if (!LIST_IsEmpty(md->ufos)) {
 		/* A mission with UFO should use a map with UFO
 		 * first check that list is not empty */
 		const ufoType_t type = mission->ufo->ufotype;
