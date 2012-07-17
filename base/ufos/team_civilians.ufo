@@ -516,7 +516,7 @@ team armysoldier
 {
 	size			1
 	hit_particle	blood
-	weapons			true
+	weapons			false
 	armour			false
 	team			"civilian"
 
