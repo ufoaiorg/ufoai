@@ -159,9 +159,6 @@ static bool CP_MapIsSelectable (const mission_t *mission, const mapDef_t *md, co
 	if (md->storyRelated)
 		return false;
 
-	if (pos && !MAP_PositionFitsTCPNTypes(pos, md->terrains, md->cultures, md->populations, NULL))
-		return false;
-
 	if (!mission->ufo) {
 		/* a mission without UFO should not use a map with UFO */
 		if (!LIST_IsEmpty(md->ufos))
@@ -180,6 +177,9 @@ static bool CP_MapIsSelectable (const mission_t *mission, const mapDef_t *md, co
 		if (!LIST_ContainsString(md->ufos, ufoID))
 			return false;
 	}
+
+	if (pos && !MAP_PositionFitsTCPNTypes(pos, md->terrains, md->cultures, md->populations, NULL))
+		return false;
 
 	return true;
 }
