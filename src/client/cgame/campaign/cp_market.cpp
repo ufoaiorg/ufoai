@@ -393,9 +393,9 @@ bool BS_BuyItem (const objDef_t *od, base_t *base, int count)
 	if (!base)
 		Com_Error(ERR_DROP, "BS_BuyItem: Called on NULL base!");
 
-	if (!BS_IsOnMarket(od))
-		return false;
 	if (count <= 0)
+		return false;
+	if (!BS_IsOnMarket(od))
 		return false;
 	if (ccs.credits < BS_GetItemBuyingPrice(od) * count)
 		return false;
@@ -423,9 +423,9 @@ bool BS_SellItem (const objDef_t *od, base_t *base, int count)
 	if (!od)
 		Com_Error(ERR_DROP, "BS_SellItem: Called on NULL objDef!");
 
-	if (!BS_IsOnMarket(od))
-		return false;
 	if (count <= 0)
+		return false;
+	if (!BS_IsOnMarket(od))
 		return false;
 
 	if (base) {
