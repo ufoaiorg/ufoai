@@ -320,12 +320,16 @@ void CL_ActorReserveTUs (const le_t * le, const reservation_types_t type, const 
  * @param[in] le The actor.
  * @param[in] type The injury mutiplier type.
  */
-float CL_ActorInjuryModifier (const le_t *le, const modifier_types_t type) {
+float CL_ActorInjuryModifier (const le_t *le, const modifier_types_t type)
+{
 	int bodyPart;
 	float mod = 0;
 
 	if (le) {
-		const BodyData *bodyTemplate = CL_ActorGetChr(le)->teamDef->bodyTemplate;
+		const character_t *chr = CL_ActorGetChr(le);
+		if (!chr)
+			return 0;
+		const BodyData *bodyTemplate = chr->teamDef->bodyTemplate;
 		for (bodyPart = 0; bodyPart < bodyTemplate->numBodyParts(); ++bodyPart) {
 			const int threshold = le->maxHP * bodyTemplate->woundThreshold(bodyPart);
 			const int injury = (le->wounds.woundLevel[bodyPart] + le->wounds.treatmentLevel[bodyPart] * 0.5);
