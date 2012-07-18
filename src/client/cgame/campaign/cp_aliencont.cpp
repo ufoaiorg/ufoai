@@ -227,7 +227,7 @@ void AL_AddAliens (aircraft_t *aircraft)
 		technology_t *tech = ac->tech;
 #ifdef DEBUG
 		if (!tech)
-			Sys_Error("AL_AddAliens: Failed to initialize the tech for '%s'\n", ac->teamDef->name);
+			Sys_Error("AL_AddAliens: Failed to initialize the tech for '%s'", ac->teamDef->name);
 #endif
 		/* we need this to let RS_Collected_ return true */
 		if (ac->amountAlive + ac->amountDead > 0)

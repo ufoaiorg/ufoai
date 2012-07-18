@@ -459,7 +459,7 @@ static void U2M_Parameter (int argc, char **argv)
 					config.nolighting = LIGHTING_NONE;
 				}
 			} else {
-				Sys_Error("invalid parameter count\n");
+				Sys_Error("invalid parameter count");
 			}
 		} else if (Q_streq(argv[i], "-V") || Q_streq(argv[i], "--version")) {
 			Verb_Printf(VERB_LESS, "version:" VERSION " revision:" REVISION "\n");
@@ -471,7 +471,7 @@ static void U2M_Parameter (int argc, char **argv)
 	}
 
 	if (config.fixMap && config.performMapCheck) {
-		Sys_Error("do not specify both -fix and -check\n");
+		Sys_Error("do not specify both -fix and -check");
 	}
 
 	/* if any check or fix option is active then skip footsteps and materials */

@@ -658,7 +658,7 @@ static void I_EquipActorMelee (inventoryInterface_t *self, inventory_t* const in
 	item.ammoLeft = NONE_AMMO;
 	/* Every melee actor weapon definition is firetwohanded, add to right hand. */
 	if (!obj->fireTwoHanded)
-		Sys_Error("INVSH_EquipActorMelee: melee weapon %s for team %s is not firetwohanded! (%s)\n",
+		Sys_Error("INVSH_EquipActorMelee: melee weapon %s for team %s is not firetwohanded! (%s)",
 				obj->id, td->id, self->name);
 	self->TryAddToInventory(self, inv, &item, &self->csi->ids[self->csi->idRight]);
 }

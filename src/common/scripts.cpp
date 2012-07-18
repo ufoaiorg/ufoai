@@ -908,10 +908,10 @@ int Com_SetValue (void *base, const void *set, valueTypes_t type, int ofs, size_
 			Com_Printf("Warning: Size mismatch: given size: " UFO_SIZE_T ", should be: " UFO_SIZE_T ". File: '%s', line: %i (type: %i)\n", size, vt_sizes[type], file, line, type);
 
 		if (size < vt_sizes[type])
-			Sys_Error("Size mismatch: given size: " UFO_SIZE_T ", should be: " UFO_SIZE_T ". File: '%s', line: %i (type: %i)\n", size, vt_sizes[type], file, line, type);
+			Sys_Error("Size mismatch: given size: " UFO_SIZE_T ", should be: " UFO_SIZE_T ". File: '%s', line: %i (type: %i)", size, vt_sizes[type], file, line, type);
 #else
 		if (size < vt_sizes[type])
-			Sys_Error("Size mismatch: given size: " UFO_SIZE_T ", should be: " UFO_SIZE_T ". (type: %i)\n", size, vt_sizes[type], type);
+			Sys_Error("Size mismatch: given size: " UFO_SIZE_T ", should be: " UFO_SIZE_T ". (type: %i)", size, vt_sizes[type], type);
 #endif
 	}
 
@@ -2674,7 +2674,7 @@ static void Com_ParseCharacterTemplate (const char *name, const char **text)
 		}
 
 	if (i >= MAX_CHARACTER_TEMPLATES)
-		Sys_Error("Com_ParseCharacterTemplate: too many character templates\n");
+		Sys_Error("Com_ParseCharacterTemplate: too many character templates");
 
 	/* initialize the character template */
 	ct = &csi.chrTemplates[csi.numChrTemplates++];
@@ -2944,12 +2944,12 @@ static void Com_ParseGameTypes (const char *name, const char **text)
 
 	if (i == csi.numGTs) {
 		if (i >= MAX_GAMETYPES)
-			Sys_Error("Com_ParseGameTypes: MAX_GAMETYPES exceeded\n");
+			Sys_Error("Com_ParseGameTypes: MAX_GAMETYPES exceeded");
 		gt = &csi.gts[csi.numGTs++];
 		OBJZERO(*gt);
 		Q_strncpyz(gt->id, name, sizeof(gt->id));
 		if (csi.numGTs >= MAX_GAMETYPES)
-			Sys_Error("Com_ParseGameTypes: Too many gametypes.\n");
+			Sys_Error("Com_ParseGameTypes: Too many gametypes.");
 
 		do {
 			token = Com_EParse(text, errhead, name);
@@ -2960,30 +2960,30 @@ static void Com_ParseGameTypes (const char *name, const char **text)
 
 			if (!Com_ParseBlockToken(name, text, gt, gameTypeValues, NULL, token)) {
 				if (!Q_streq(token, "cvarlist"))
-					Sys_Error("Com_ParseGameTypes: gametype \"%s\" without cvarlist\n", name);
+					Sys_Error("Com_ParseGameTypes: gametype \"%s\" without cvarlist", name);
 
 				token = Com_EParse(text, errhead, name);
 				if (!*text)
 					break;
 				if (*token != '{')
-					Sys_Error("Com_ParseGameTypes: gametype \"%s\" without cvarlist\n", name);
+					Sys_Error("Com_ParseGameTypes: gametype \"%s\" without cvarlist", name);
 
 				do {
 					token = Com_EParse(text, errhead, name);
 					if (!*text || *token == '}') {
 						if (!gt->num_cvars)
-							Sys_Error("Com_ParseGameTypes: gametype \"%s\" with empty cvarlist\n", name);
+							Sys_Error("Com_ParseGameTypes: gametype \"%s\" with empty cvarlist", name);
 						else
 							break;
 					}
 					/* initial pointer */
 					cvarlist = &gt->cvars[gt->num_cvars++];
 					if (gt->num_cvars >= MAX_CVARLISTINGAMETYPE)
-						Sys_Error("Com_ParseGameTypes: gametype \"%s\" max cvarlist hit\n", name);
+						Sys_Error("Com_ParseGameTypes: gametype \"%s\" max cvarlist hit", name);
 					Q_strncpyz(cvarlist->name, token, sizeof(cvarlist->name));
 					token = Com_EParse(text, errhead, name);
 					if (!*text || *token == '}')
-						Sys_Error("Com_ParseGameTypes: gametype \"%s\" cvar \"%s\" with no value\n", name, cvarlist->name);
+						Sys_Error("Com_ParseGameTypes: gametype \"%s\" cvar \"%s\" with no value", name, cvarlist->name);
 					Q_strncpyz(cvarlist->value, token, sizeof(cvarlist->value));
 				} while (*text && *token != '}');
 			}
@@ -3062,7 +3062,7 @@ static void Com_ParseDamageTypes (const char *name, const char **text)
 
 			csi.numDTs++;
 			if (csi.numDTs >= MAX_DAMAGETYPES)
-				Sys_Error("Com_ParseDamageTypes: Too many damage types.\n");
+				Sys_Error("Com_ParseDamageTypes: Too many damage types.");
 		} else {
 			Com_Printf("Com_ParseDamageTypes: damage type \"%s\" in list \"%s\" with same already exists - ignore the second one (#%i)\n", token, name, csi.numDTs);
 		}

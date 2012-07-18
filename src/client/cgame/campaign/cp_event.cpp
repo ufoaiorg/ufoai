@@ -440,7 +440,7 @@ void CL_ParseCampaignEvents (const char *name, const char **text)
 		Com_EParseValue(event, token, V_INT, offsetof(campaignEvent_t, interest), sizeof(int));
 
 		if (event->interest < 0)
-			Sys_Error("Illegal interest value in events definition '%s' for tech '%s'\n", events->id, event->tech);
+			Sys_Error("Illegal interest value in events definition '%s' for tech '%s'", events->id, event->tech);
 	} while (*text);
 }
 

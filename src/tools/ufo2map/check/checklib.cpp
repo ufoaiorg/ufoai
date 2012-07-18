@@ -136,10 +136,10 @@ void Check_InitEntityDefs (void)
 		return;
 
 	if (FS_LoadFile("ufos/entities.ufo", (byte **)&entitiesUfoBuf) == -1)
-		Sys_Error("CheckEntities: Unable to read entities.ufo\n");
+		Sys_Error("CheckEntities: Unable to read entities.ufo");
 
 	if (ED_Parse((const char *)entitiesUfoBuf) == ED_ERROR)
-		Sys_Error("Error while parsing entities.ufo: %s\n", ED_GetLastError());
+		Sys_Error("Error while parsing entities.ufo: %s", ED_GetLastError());
 
 	/* info has been copied to new malloc'd space in ED_Parse */
 	Mem_Free(entitiesUfoBuf);

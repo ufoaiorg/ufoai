@@ -172,7 +172,7 @@ skipspace:
 			if (script->script_p == script->end_p)
 				break;
 			if (token_p == &parsedToken[MAX_TOKEN_CHARS])
-				Sys_Error("Token too large on line %i\n", script->line);
+				Sys_Error("Token too large on line %i", script->line);
 		}
 		script->script_p++;
 	} else	/* regular token */
@@ -181,7 +181,7 @@ skipspace:
 			if (script->script_p == script->end_p)
 				break;
 			if (token_p == &parsedToken[MAX_TOKEN_CHARS])
-				Sys_Error("Token too large on line %i\n", script->line);
+				Sys_Error("Token too large on line %i", script->line);
 		}
 
 	*token_p = 0;

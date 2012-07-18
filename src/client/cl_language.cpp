@@ -70,7 +70,7 @@ static void CL_ParseMessageID (const char *name, const char **text)
 		msgid_t *msgid = &msgIDs[numMsgIDs++];
 
 		if (numMsgIDs >= MAX_MSGIDS)
-			Sys_Error("CL_ParseMessageID: MAX_MSGIDS exceeded\n");
+			Sys_Error("CL_ParseMessageID: MAX_MSGIDS exceeded");
 
 		OBJZERO(*msgid);
 		msgid->id = Mem_PoolStrDup(name, cl_msgidPool, 0);

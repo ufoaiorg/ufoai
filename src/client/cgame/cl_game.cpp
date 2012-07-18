@@ -899,7 +899,7 @@ void GAME_ParseModes (const char *name, const char **text)
 	}
 
 	if (i >= MAX_CGAMETYPES)
-		Sys_Error("GAME_ParseModes: MAX_CGAMETYPES exceeded\n");
+		Sys_Error("GAME_ParseModes: MAX_CGAMETYPES exceeded");
 
 	/* initialize the equipment definition */
 	cgame = &cgameTypes[numCGameTypes++];

@@ -295,14 +295,14 @@ void *_Mem_Alloc (size_t size, bool zeroFill, memPool_t *pool, const int tagNum,
 
 	/* Check pool */
 	if (!pool)
-		Sys_Error("Mem_Alloc: Error - no pool given\n" "alloc: %s:#%i\n", fileName, fileLine);
+		Sys_Error("Mem_Alloc: Error - no pool given\n" "alloc: %s:#%i", fileName, fileLine);
 
 	/* Check size */
 	if (size <= 0)
-		Sys_Error("Mem_Alloc: Attempted allocation of '" UFO_SIZE_T "' memory ignored\n" "alloc: %s:#%i\n", size, fileName, fileLine);
+		Sys_Error("Mem_Alloc: Attempted allocation of '" UFO_SIZE_T "' memory ignored\n" "alloc: %s:#%i", size, fileName, fileLine);
 
 	if (size > 0x40000000)
-		Sys_Error("Mem_Alloc: Attempted allocation of '" UFO_SIZE_T "' bytes!\n" "alloc: %s:#%i\n", size, fileName, fileLine);
+		Sys_Error("Mem_Alloc: Attempted allocation of '" UFO_SIZE_T "' bytes!\n" "alloc: %s:#%i", size, fileName, fileLine);
 
 	/* Add header and round to cacheline */
 	size = (size + sizeof(memBlock_t) + sizeof(memBlockFoot_t) + 31) & ~31;

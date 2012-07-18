@@ -169,7 +169,7 @@ static void Sys_Signal (int s)
 		break;
 #endif
 	default:
-		Sys_Error("Received signal %d.\n", s);
+		Sys_Error("Received signal %d.", s);
 		break;
 	}
 }

@@ -288,11 +288,11 @@ int FS_Seek (qFILE * f, long offset, int origin)
 			_origin = SEEK_SET;
 			break;
 		default:
-			Sys_Error("Bad origin in FS_Seek\n");
+			Sys_Error("Bad origin in FS_Seek");
 		}
 		return fseek(f->f, offset, _origin);
 	} else
-		Sys_Error("FS_Seek: no file opened\n");
+		Sys_Error("FS_Seek: no file opened");
 }
 
 /**
@@ -1735,7 +1735,7 @@ void FS_CopyFile (const char *fromOSPath, const char *toOSPath)
 	}
 
 	if (fwrite(buf, 1, len, f) != len)
-		Sys_Error("Short write in FS_CopyFile()");
+		Sys_Error("Short write in FS_CopyFile");
 
 	fclose(f);
 	Mem_Free(buf);
