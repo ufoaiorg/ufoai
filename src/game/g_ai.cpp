@@ -1232,8 +1232,9 @@ static void AI_SetStats (edict_t * ent)
 		ent->HP -= damage;
 		if (!CHRSH_IsTeamDefRobot(ent->chr.teamDef))
 			ent->STUN = stun;
+
 		for (int i = 0; i < ent->chr.teamDef->bodyTemplate->numBodyParts(); ++i)
-				ent->chr.wounds.treatmentLevel[ent->chr.teamDef->bodyTemplate->getRandomBodyPart()] += damage / BODYPART_MAXTYPE;
+			ent->chr.wounds.treatmentLevel[ent->chr.teamDef->bodyTemplate->getRandomBodyPart()] += damage / BODYPART_MAXTYPE;
 	}
 
 	G_ActorGiveTimeUnits(ent);
