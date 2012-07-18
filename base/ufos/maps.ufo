@@ -1328,8 +1328,7 @@ mapdef ice_medium
 		campaign 		true
 		singleplayer	true
 		multiplayer     false
-		maxaliens       5
-			// randomspawn enabled
+		maxaliens       12
 
 		aircraft
         (
@@ -1343,6 +1342,45 @@ mapdef ice_medium
 			craft_ufo_supply
 			craft_ufo_harvester
 			craft_ufo_gunboat
+		)
+
+        terrains
+        (
+            "arctic"
+        )
+
+        cultures
+        (
+            // any
+        )
+
+        populations
+        (
+            "nopopulation"
+        )
+}
+
+mapdef ice_crash_medium
+{
+        map             "+ice"
+        description     "_An icy environment."
+		param           "medium"
+		campaign 		true
+		singleplayer	true
+		multiplayer     false
+		maxaliens       12
+		hurtaliens		true
+
+		aircraft
+        (
+			craft_drop_firebird
+			craft_drop_raptor
+			craft_drop_herakles
+        )
+
+        ufos
+        (
+			craft_crash_gunboat
 		)
 
         terrains

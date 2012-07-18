@@ -79,7 +79,7 @@ a     +d     +d     +d    +d    +d    a
 tile +craft_ufo_gunboat
 {
 6 7
-0      a      a     a     0     0
+0      a      a     a     a     0
 a     +d     +d     +d    +d    a
 a     +d     +d     +d    +d    a
 a     +d     +d     +d    +d    a
@@ -91,7 +91,7 @@ a     +d     +d     +d    +d    a
 tile +craft_ufo_supply
 {
 6 7
-0      a      a     a     0     0
+0      a      a     a     a     0
 a     +d     +d     +d    +d    a
 a     +d     +d     +d    +d    a
 a     +d     +d     +d    +d    a
@@ -122,6 +122,17 @@ a     +d     +d     +d    a
 0      a      a     a     0
 }
 
+tile +craft_crash_gunboat
+{
+7 6
+0      a      a     a     a     a     0
+a     +d     +d     +d    +d    +d    a
+a     +d     +d     +d    +d    +d    a
+a     +d     +d     +d    +d    +d    a
+a     +d     +d     +d    +d    +d    a
+0      a      a     a     a     a     0
+}
+
 // Common tiles -----------------------------------------------------
 
 tile +r01
@@ -147,7 +158,7 @@ adu     +a     +a       adu
 }
 
 tile +r03
-	// iceb lock with niche
+	// ice lock with niche
 	// 4 x info_alien_start
 {
 4 4

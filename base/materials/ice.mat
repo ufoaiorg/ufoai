@@ -16,7 +16,7 @@
 	bump 0.01
 }
 
-// material definitions for UFO Gunboat -----------------------------
+// material definitions for UFO Harvester ---------------------------
 
 {
 	material tex_lights/mtl_l1_fx1
@@ -25,7 +25,6 @@
 		scroll.s 2
 	}
 }
-
 
 {
 	material tex_ufo/ufo2_01
@@ -38,7 +37,6 @@
 	}
 }
 
-
 {
 	material tex_ufo/ufo2_02
 	bump 1.0
@@ -49,7 +47,6 @@
 		lightmap
 	}
 }
-
 
 {
 	material tex_ufo/ufo2_03
@@ -62,6 +59,75 @@
 	}
 }
 
+{
+	material tex_ufo/ufo2_12
+	{
+		texture tex_ufo/ufo2_12
+		blend GL_SRC_COLOR GL_SRC_ALPHA
+		pulse 0.5
+	}
+}
+
+{
+	material tex_ufo/ufo2_light
+	{
+		texture tex_ufo/ufo2_light
+		blend GL_SRC_COLOR GL_SRC_ALPHA
+		pulse 0.2
+	}
+}
+
+{
+	material tex_lights/land_li_green
+	{
+		texture tex_lights/land_li_green
+		blend GL_SRC_COLOR GL_SRC_ALPHA
+		pulse 0.5
+	}
+}
+
+// material definitions for UFO Gunboat -----------------------------
+
+{
+	material tex_lights/mtl_l1_fx1
+	{
+		texture tex_lights/mtl_l1_fx1
+		scroll.s 2
+	}
+}
+
+{
+	material tex_ufo/ufo2_01
+	bump 1.0
+	hardness 1.0
+	parallax 1.0
+	specular 1.0
+	{
+		lightmap
+	}
+}
+
+{
+	material tex_ufo/ufo2_02
+	bump 1.0
+	hardness 0.8
+	parallax 1.0
+	specular 5.0
+	{
+		lightmap
+	}
+}
+
+{
+	material tex_ufo/ufo2_03
+	bump 1.0
+	hardness 0.8
+	parallax 1.0
+	specular 5.0
+	{
+		lightmap
+	}
+}
 
 {
 	material tex_ufo/ufo2_12
