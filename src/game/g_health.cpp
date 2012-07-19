@@ -115,7 +115,7 @@ void G_BleedWounds (const int team)
 			if (wounds.woundLevel[bodyPart] > ent->chr.maxHP * teamDef->bodyTemplate->woundThreshold(bodyPart))
 				damage += wounds.woundLevel[bodyPart] * teamDef->bodyTemplate->bleedingFactor(bodyPart);
 		if (damage > 0) {
-			G_PrintStats("%s is bleeding (damage: %i)\n", ent->chr.name, damage);
+			G_PrintStats("%s is bleeding (damage: %i)", ent->chr.name, damage);
 			G_TakeDamage(ent, damage);
 			G_CheckDeathOrKnockout(ent, NULL, NULL, damage);
 		}
