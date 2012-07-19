@@ -44,7 +44,7 @@ item medikit
 			projtl	null
 			impact	null
 			hitbody heal
-			firesnd	weapons/medikit
+			firesnd	"weapons/medikit"
 			speed	0
 			range	1.5
 			shots	1
@@ -60,7 +60,7 @@ item medikit
 			projtl	null
 			impact	null
 			hitbody heal
-			firesnd	weapons/medikit
+			firesnd	"weapons/medikit"
 			speed	0
 			range	1.5
 			shots	1
