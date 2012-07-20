@@ -144,6 +144,18 @@ a     +d     +d     +d    +d    +d    a
 0      a      a     a     a     a     0
 }
 
+tile +craft_crash_supply
+{
+8 7
+0      a      a     a     a     a     a     0
+a     +d     +d     +d    +d    +d    +d    a
+a     +d     +d     +d    +d    +d    +d    a
+a     +d     +d     +d    +d    +d    +d    a
+a     +d     +d     +d    +d    +d    +d    a
+a     +d     +d     +d    +d    +d    +d    a
+0      a      a     a     a     a     a     0
+}
+
 // Common tiles -----------------------------------------------------
 
 tile +r01

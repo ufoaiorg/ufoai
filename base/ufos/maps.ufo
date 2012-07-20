@@ -1382,6 +1382,7 @@ mapdef ice_crash_medium
 	(
 		craft_crash_gunboat
 		craft_crash_harvester
+		craft_crash_supply
 	)
 
 	terrains
