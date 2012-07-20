@@ -1322,162 +1322,160 @@ mapdef hills_small
 
 mapdef ice_medium
 {
-        map             "+ice"
-        description     "_An icy environment."
-		param           "medium"
-		campaign 		true
-		singleplayer	true
-		multiplayer     false
-		maxaliens       12
+	map				"+ice"
+	description		"_An icy environment."
+	param			"medium"
+	campaign 		true
+	singleplayer	true
+	multiplayer		false
+	maxaliens		12
 
-		aircraft
-        (
-			craft_drop_firebird
-			craft_drop_raptor
-			craft_drop_herakles
-        )
+	aircraft
+	(
+		craft_drop_firebird
+		craft_drop_raptor
+		craft_drop_herakles
+	)
 
-        ufos
-        (
-			craft_ufo_supply
-			craft_ufo_harvester
-			craft_ufo_gunboat
-		)
+	ufos
+	(
+		craft_ufo_supply
+		craft_ufo_harvester
+		craft_ufo_gunboat
+	)
 
-        terrains
-        (
-            "arctic"
-        )
+	terrains
+	(
+		"arctic"
+	)
 
-        cultures
-        (
-            // any
-        )
+	cultures
+	(
+		// any
+	)
 
-        populations
-        (
-            "nopopulation"
-        )
+	populations
+	(
+		"nopopulation"
+	)
 }
 
 mapdef ice_crash_medium
 {
-		map             "+ice"
-		description     "_An icy environment."
-		param           "medium"
-		campaign 		true
-		singleplayer	true
-		multiplayer     false
-		maxaliens       12
-		hurtaliens		true
+	map					"+ice"
+	description		"_An icy environment."
+	param			"medium"
+	campaign		true
+	singleplayer	true
+	multiplayer		false
+	maxaliens		12
+	hurtaliens		true
 
-		aircraft
-		(
-			craft_drop_firebird
-			craft_drop_raptor
-			craft_drop_herakles
-		)
+	aircraft
+	(
+		craft_drop_firebird
+		craft_drop_raptor
+		craft_drop_herakles
+	)
 
-		ufos
-		(
-			craft_crash_gunboat
-		)
+	ufos
+	(
+		craft_crash_gunboat
+	)
 
-		terrains
-		(
-			"arctic"
-		)
+	terrains
+	(
+		"arctic"
+	)
 
-		cultures
-		(
-			// any
-		)
+	cultures
+	(
+		// any
+	)
 
-		populations
-		(
-			"nopopulation"
-		)
+	populations
+	(
+		"nopopulation"
+	)
 }
 
 mapdef ice_small
 {
-        map             "+ice"
-        description     "_An icy environment."
-		param           "small"
-		campaign 		true
-		singleplayer	true
-		multiplayer     false
-		maxaliens       5
-			// randomspawn enabled
+	map				"+ice"
+	description		"_An icy environment."
+	param			"small"
+	campaign 		true
+	singleplayer	true
+	multiplayer		false
+	maxaliens		5
 
-		aircraft
-        (
-			craft_drop_firebird
-			craft_drop_raptor
-			craft_drop_herakles
-        )
+	aircraft
+	(
+		craft_drop_firebird
+		craft_drop_raptor
+		craft_drop_herakles
+	)
 
-        ufos
-        (
-			craft_ufo_fighter
-            craft_ufo_scout
-		)
+	ufos
+	(
+		craft_ufo_fighter
+		craft_ufo_scout
+	)
 
-        terrains
-        (
-            "arctic"
-        )
+	terrains
+	(
+		"arctic"
+	)
 
-        cultures
-        (
-            // any
-        )
+	cultures
+	(
+		// any
+	)
 
-        populations
-        (
-            "nopopulation"
-        )
+	populations
+	(
+		"nopopulation"
+	)
 }
 
 mapdef ice_crash_small
 {
-        map             "+ice"
-        description     "_An icy environment."
-		param           "small"
-		campaign 		true
-		singleplayer	true
-		multiplayer     false
-		maxaliens       5
-		hurtaliens		true
-			// randomspawn enabled
+	map				"+ice"
+	description		"_An icy environment."
+	param		"small"
+	campaign 		true
+	singleplayer	true
+	multiplayer		false
+	maxaliens		5
+	hurtaliens		true
 
-		aircraft
-        (
-			craft_drop_firebird
-			craft_drop_raptor
-			craft_drop_herakles
-        )
+	aircraft
+	(
+		craft_drop_firebird
+		craft_drop_raptor
+		craft_drop_herakles
+	)
 
-        ufos
-        (
-			craft_crash_fighter
-			craft_crash_scout
-        )
+	ufos
+	(
+		craft_crash_fighter
+		craft_crash_scout
+	)
 
-        terrains
-        (
-            "arctic"
-        )
+	terrains
+	(
+		"arctic"
+	)
 
-        cultures
-        (
-            // any
-        )
+	cultures
+	(
+		// any
+	)
 
-        populations
-        (
-            "nopopulation"
-        )
+    populations
+	(
+		"nopopulation"
+	)
 }
 
 ////////////////////////////
