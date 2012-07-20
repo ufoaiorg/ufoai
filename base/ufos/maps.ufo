@@ -1473,7 +1473,7 @@ mapdef ice_crash_small
 		// any
 	)
 
-    populations
+	populations
 	(
 		"nopopulation"
 	)
