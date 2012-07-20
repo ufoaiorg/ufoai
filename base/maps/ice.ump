@@ -210,6 +210,24 @@ adu     +a     adu
 0      adu     0
 }
 
+tile +r06_a
+	// an ice block
+{
+4 3
+0      adu     adu    0
+adu     +a     +a     adu
+0      adu     adu    0
+}
+
+tile +r06_b
+	// a plateau
+{
+5 3
+0      adu     adu    adu    0
+adu     +a     +a     +a     adu
+0      adu     adu    adu    0
+}
+
 tile +r07
 	// plain
 {
@@ -239,38 +257,105 @@ adu     +a     adu
 0      adu     0
 }
 
+tile +r10
+	// 3 x info_alien_start
+{
+5 4
+0      adu     adu      adu		0
+adu     +a     +a       +a		adu
+adu     +a     +a       +a		adu
+0      adu     adu      adu		0
+}
+
+tile +r11_a
+	// a crack in the surface
+	// 2 x info_alien_start
+{
+3 5
+0      adu     0
+adu     +a     adu
+adu     +a     adu
+adu     +a     adu
+0      adu     0
+}
+
+tile +r11_b
+	// a crack in the surface
+	// 2 x info_alien_start
+{
+3 5
+0      adu     0
+adu     +a     adu
+adu     +a     adu
+adu     +a     adu
+0      adu     0
+}
+
+tile +r11_c
+	// a crack in the surface
+	// 2 x info_alien_start
+{
+5 3
+0      adu     adu     adu	   0
+adu     +a     +a	   +a	   adu
+0      adu     adu     adu	   0
+}
+
+tile +r11_d
+	// a crack in the surface
+	// 2 x info_alien_start
+{
+5 3
+0      adu     adu     adu	   0
+adu     +a     +a	   +a	   adu
+0      adu     adu     adu	   0
+}
+
 // map assemblies ---------------------------------------------------
 
 assembly small
 {
 size "8 5"
 title "_Ice"
-+r01 "0 1"
-+r02 "0 1"
-+r03 "0 1"
-+r04 "0 1"
-+r05 "0 1"
-+r06 "0 4"
-+r07 "0 4"
-+r08 "0 1"
-+r09 "0 1"
++r01	"0 1"
++r02	"0 1"
++r03	"0 1"
++r04	"0 1"
++r05	"0 1"
++r06	"0 1"
++r06_a	"0 1"
++r06_b  "0 1"
++r07	"0 99"
++r08	"0 1"
++r09	"0 1"
++r11_a	"0 1"
++r11_b	"0 1"
++r11_c	"0 1"
++r11_d	"0 1"
 *rm_ufo +craft_ufo_scout "1 1"
 *rm_drop +craft_drop_firebird "1 1"
 }
 
 assembly medium
 {
-size "8 8"
+size "9 9"
 title "_Ice"
-+r01 "0 2"
-+r02 "0 2"
-+r03 "0 2"
-+r04 "0 2"
-+r05 "0 2"
-+r06 "0 15"
-+r07 "0 15"
-+r08 "0 2"
-+r09 "0 1"
++r01	"0 1"
++r02	"0 1"
++r03	"0 1"
++r04	"0 1"
++r05	"0 1"
++r06	"0 1"
++r06_a	"0 1"
++r06_b  "0 1"
++r07	"0 99"
++r08	"0 1"
++r09	"0 1"
++r10	"0 1"
++r11_a	"0 1"
++r11_b	"0 1"
++r11_c	"0 1"
++r11_d	"0 1"
 *rm_ufo +craft_ufo_harvester "1 1"
 *rm_drop +craft_drop_firebird "1 1"
 }

@@ -385,9 +385,16 @@ base/maps/ice/ice_r03.map | GNU General Public License 2.0 or later
 base/maps/ice/ice_r04.map | GNU General Public License 2.0 or later
 base/maps/ice/ice_r05.map | GNU General Public License 2.0 or later
 base/maps/ice/ice_r06.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/ice/ice_r06_a.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/ice/ice_r06_b.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
 base/maps/ice/ice_r07.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
 base/maps/ice/ice_r08.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
 base/maps/ice/ice_r09.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/ice/ice_r10.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/ice/ice_r11_a.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/ice/ice_r11_b.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/ice/ice_r11_c.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/ice/ice_r11_d.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
 base/maps/industrial.ump | GNU General Public License 2.0 or later
 base/maps/industrial/craft_drop_firebird.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
 base/maps/industrial/craft_drop_herakles.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
