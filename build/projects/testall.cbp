@@ -301,8 +301,8 @@
 		<Unit filename="..\..\src\client\renderer\r_surface.cpp" />
 		<Unit filename="..\..\src\client\renderer\r_thread.cpp" />
 		<Unit filename="..\..\src\client\sound\s_main.cpp" />
-		<Unit filename="..\..\src\client\sound\s_mumble.cpp" />
 		<Unit filename="..\..\src\client\sound\s_mix.cpp" />
+		<Unit filename="..\..\src\client\sound\s_mumble.cpp" />
 		<Unit filename="..\..\src\client\sound\s_music.cpp" />
 		<Unit filename="..\..\src\client\sound\s_sample.cpp" />
 		<Unit filename="..\..\src\client\ui\node\ui_node_abstractnode.cpp" />
@@ -321,11 +321,11 @@
 		<Unit filename="..\..\src\client\ui\node\ui_node_data.cpp" />
 		<Unit filename="..\..\src\client\ui\node\ui_node_editor.cpp" />
 		<Unit filename="..\..\src\client\ui\node\ui_node_ekg.cpp" />
+		<Unit filename="..\..\src\client\ui\node\ui_node_geoscape.cpp" />
 		<Unit filename="..\..\src\client\ui\node\ui_node_image.cpp" />
 		<Unit filename="..\..\src\client\ui\node\ui_node_item.cpp" />
 		<Unit filename="..\..\src\client\ui\node\ui_node_keybinding.cpp" />
 		<Unit filename="..\..\src\client\ui\node\ui_node_linechart.cpp" />
-		<Unit filename="..\..\src\client\ui\node\ui_node_geoscape.cpp" />
 		<Unit filename="..\..\src\client\ui\node\ui_node_material_editor.cpp" />
 		<Unit filename="..\..\src\client\ui\node\ui_node_messagelist.cpp" />
 		<Unit filename="..\..\src\client\ui\node\ui_node_model.cpp" />
@@ -410,6 +410,7 @@
 		<Unit filename="..\..\src\game\g_edicts.cpp" />
 		<Unit filename="..\..\src\game\g_events.cpp" />
 		<Unit filename="..\..\src\game\g_func.cpp" />
+		<Unit filename="..\..\src\game\g_health.cpp" />
 		<Unit filename="..\..\src\game\g_inventory.cpp" />
 		<Unit filename="..\..\src\game\g_local.h" />
 		<Unit filename="..\..\src\game\g_main.cpp" />
@@ -486,7 +487,9 @@
 		<Unit filename="..\..\src\game\lua\print.cpp" />
 		<Unit filename="..\..\src\game\q_shared.cpp" />
 		<Unit filename="..\..\src\game\q_shared.h" />
-		<Unit filename="..\..\src\libs\mumble\libmumblelink.c" />
+		<Unit filename="..\..\src\libs\mumble\libmumblelink.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\libs\mxml\config.h" />
 		<Unit filename="..\..\src\libs\mxml\mxml-attr.c">
 			<Option compilerVar="CC" />
