@@ -1717,14 +1717,14 @@ mapdef laboratory
 
 mapdef mansion_huge
 {
-    map				"+mansion"
-    description		"_A mansion near the coast."
+	map				"+mansion"
+	description		"_A mansion near the coast."
 	param			"huge"
 	maxaliens		19
-    multiplayer		true
+	multiplayer		true
 	teams			4
-    gametypes
-    (
+	gametypes
+	(
 		fight1on1
 		fight1on1on1
 		fight2on2
@@ -1736,45 +1736,45 @@ mapdef mansion_huge
 		coop2
 		coop3
 		coop4
-    )
-    aircraft
-    (
+	)
+	aircraft
+	(
 		craft_drop_firebird
 		craft_drop_herakles
 		craft_drop_raptor
-    )
+	)
 
-    ufos
-    (
-	    craft_ufo_fighter
+	ufos
+	(
+		craft_ufo_fighter
 		craft_ufo_scout
 		craft_ufo_harvester
 		craft_ufo_supply
-    )
+	)
 
-    terrains
-    (
+	terrains
+	(
 		"coast"
-    )
+	)
 
-    cultures
-    (
+	cultures
+	(
 		"western"
-    )
+	)
 
-    populations
-    (
+	populations
+	(
 		"urban"
 		"village"
-    )
+	)
 }
 
 mapdef mansion_medium
 {
-    map				"+mansion1"
-    description		"_A mansion. An important and influential person lives here."
+	map				"+mansion1"
+	description		"_A mansion. An important and influential person lives here."
 	param			"medium"
-    maxaliens		18
+	maxaliens		18
 	singleplayer	true
 	campaign		true
 	multiplayer		true
@@ -1787,43 +1787,43 @@ mapdef mansion_medium
 		fight4on4
 	)
 	aircraft
-    (
+	(
 		craft_drop_firebird
 		craft_drop_herakles
 		craft_drop_raptor
-    )
+	)
 
-    ufos
-    (
-	    // any
-    )
+	ufos
+	(
+		// any
+	)
 
-    terrains
-    (
+	terrains
+	(
 		"coast"
 		"grass"
-    )
+	)
 
-    cultures
-    (
+	cultures
+	(
 		"western"
-    )
+	)
 
-    populations
-    (
+	populations
+	(
 		"urban"
 		"suburban"
 		"village"
-    )
+	)
 }
 
 mapdef mansion_small
 {
-    map				"+mansion"
-    description		"_A mansion. An important and influential person lives here."
+	map				"+mansion"
+	description		"_A mansion. An important and influential person lives here."
 	param			"small"
 	maxaliens		15
-    singleplayer	true
+	singleplayer	true
 	campaign		true
 	multiplayer		true
 	teams			2
@@ -1836,32 +1836,32 @@ mapdef mansion_small
 	)
 
 	aircraft
-    (
+	(
 		// any
-    )
+	)
 
-    ufos
-    (
-	    // any
-    )
+	ufos
+	(
+		// any
+	)
 
-    terrains
-    (
+	terrains
+	(
 		"coast"
 		"grass"
-    )
+	)
 
-    cultures
-    (
+	cultures
+	(
 		"western"
-    )
+	)
 
-    populations
-    (
+	populations
+	(
 		"urban"
 		"suburban"
 		"village"
-    )
+	)
 }
 
 //////////////////////////
@@ -2509,29 +2509,29 @@ mapdef base_initial
 	maxaliens	14
 
 	aircraft
-        (
-				// any
-        )
+	(
+		// any
+	)
 
-        ufos
-        (
-                // any
-        )
+	ufos
+	(
+		// any
+	)
 
-        terrains
-        (
-                // any
-        )
+	terrains
+	(
+		// any
+	)
 
-        cultures
-        (
-                // any
-        )
+	cultures
+	(
+		// any
+	)
 
-        populations
-        (
-                // any
-        )
+	populations
+	(
+		// any
+	)
 }
 
 mapdef base_random
@@ -2544,29 +2544,29 @@ mapdef base_random
 	maxaliens	16
 
 	aircraft
-        (
-				// any
-        )
+	(
+		// any
+	)
 
-        ufos
-        (
-                // any
-        )
+	ufos
+	(
+		// any
+	)
 
-        terrains
-        (
-                // any
-        )
+	terrains
+	(
+		// any
+	)
 
-        cultures
-        (
-                // any
-        )
+	cultures
+	(
+		// any
+	)
 
-        populations
-        (
-                // any
-        )
+	populations
+	(
+		// any
+	)
 }
 
 //////////////////////////
@@ -2617,38 +2617,39 @@ mapdef cemetery_main
 
 mapdef city2
 {
-        map             "+city2"
-        description     "_A city high rise."
-		param			"city2"
-        multiplayer     false
-		campaign		true
-        maxaliens       23
-        aircraft
-        (
-			craft_drop_firebird
-			craft_drop_herakles
-			craft_drop_raptor
-        )
+	map				"+city2"
+	description		"_A city high rise."
+	param			"city2"
+	multiplayer		false
+	campaign		true
+	maxaliens		23
 
-        ufos
-        (
-			//any
-        )
+	aircraft
+	(
+		craft_drop_firebird
+		craft_drop_herakles
+		craft_drop_raptor
+	)
 
-        terrains
-        (
-			//any
-        )
+	ufos
+	(
+		//any
+	)
 
-        cultures
-        (
-			//any
-        )
+	terrains
+	(
+		//any
+	)
 
-        populations
-        (
-			"urban"
-        )
+	cultures
+	(
+		//any
+	)
+
+	populations
+	(
+		"urban"
+	)
 }
 
 ////////////////////////
@@ -2657,40 +2658,40 @@ mapdef city2
 
 mapdef city3
 {
-        map             "+city3"
-        description     "_A hospital in the outskirts of a city."
-		param			"city3"
-		maxaliens       8
-        campaign		false
-		singleplayer	true
-		multiplayer     false
+	map				"+city3"
+	description		"_A hospital in the outskirts of a city."
+	param			"city3"
+	maxaliens		8
+	campaign		false
+	singleplayer	true
+	multiplayer		false
 
-        aircraft
-        (
-			craft_drop_firebird
-			craft_drop_herakles
-			craft_drop_raptor
-        )
+	aircraft
+	(
+		craft_drop_firebird
+		craft_drop_herakles
+		craft_drop_raptor
+	)
 
-        ufos
-        (
-			//any
-        )
+	ufos
+	(
+		//any
+	)
 
-        terrains
-        (
-			//any
-        )
+	terrains
+	(
+		//any
+	)
 
-        cultures
-        (
-			//any
-        )
+	cultures
+	(
+		//any
+	)
 
-        populations
-        (
-			"urban"
-        )
+	populations
+	(
+		"urban"
+	)
 }
 
 ////////////////////////////
@@ -4850,14 +4851,14 @@ mapdef wilderness
 
 mapdef city2mp
 {
-        map             "+city2"
-        description     "_A city high rise."
+		map				"+city2"
+		description		"_A city high rise."
 		param			"city2mp"
-        singleplayer    false
+		singleplayer	false
 		campaign		false
-        multiplayer     true
+		multiplayer		true
 		teams			4
-		maxaliens       23
+		maxaliens		23
 		gametypes
 		(
 			fight1on1
