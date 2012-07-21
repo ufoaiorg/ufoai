@@ -65,7 +65,6 @@ mapdef africa_large
 	)
 	description		"_A suburb that has received a visit from a Harvester."
 	maxaliens		16
-	// randomspawn	enabled
 
 	civilianteam	africa
 
@@ -117,7 +116,6 @@ mapdef africa_small
 	)
 	description		"_A suburb that has been visited by an UFO."
 	maxaliens		6
-	// randomspawn	enabled
 
 	civilianteam	africa
 
@@ -166,7 +164,6 @@ mapdef africa_small_crash
 	description	"_Crashed UFO in an african suburban district."
 	size		"small"
 	maxaliens	8
-	// randomspawn enabled
 
 	aircraft
 	(
@@ -266,7 +263,6 @@ mapdef bomber_city
 		coop4
 	)
 	maxaliens		16
-	// randomspawn enabled
 
 	aircraft
 	(
@@ -312,7 +308,6 @@ mapdef bridge
 	multiplayer		false
 	gametypes ( )
 	maxaliens		30
-	//	randomspawn enabled
 
 	hurtaliens		true
 
@@ -362,7 +357,6 @@ mapdef bridge_mp
 	)
 
 	maxaliens		30
-	//	randomspawn enabled
 
 	hurtaliens		true
 
@@ -502,7 +496,6 @@ mapdef desert_harvester_crash
 	)
 	description		"_An alien Harvester has crashed in the wastelands."
 	maxaliens		14
-	// randomspawn	enabled
 
 	aircraft
 	(
@@ -886,7 +879,6 @@ mapdef frozen_alienlandingindustrial
 	multiplayer	false
 	description	"_An industrial area in a cold region."
 	maxaliens	14
-	// randomspawn enabled
 
 	aircraft
 	(
@@ -929,7 +921,6 @@ mapdef frozen_alienlandingnature
 	multiplayer	false
 	description	"_An industrial area in a cold region."
 	maxaliens	8
-	// randomspawn enabled
 
 	aircraft
 	(
@@ -972,7 +963,6 @@ mapdef frozen_industrial
 	multiplayer	false
 	description	"_An industrial area in a cold region."
 	maxaliens	8 //TODO: This is an arbitrary value right now.
-	// randomspawn enabled
 
 	aircraft
 	(
@@ -1013,7 +1003,6 @@ mapdef frozen_small
 	multiplayer	false
 	description	"_An underpopulated area in a cold region."
 	maxaliens	8 //TODO: This is an arbitrary value right now.
-	// randomspawn enabled
 
 	aircraft
 	(
@@ -1686,7 +1675,6 @@ mapdef laboratory
 		coop4
 	)
 	maxaliens		24
-	// randomspawn	enabled
 
 	civilianteam	scientist
 
@@ -2105,7 +2093,6 @@ mapdef tropic_bigufo
 	param		"bigufo"
 	multiplayer	false
 	maxaliens	25
-	// randomspawn enabled
 
 	aircraft
 	(
@@ -2146,7 +2133,6 @@ mapdef tropic_drug
 	param		"drug"
 	multiplayer	false
 	maxaliens	14
-	// randomspawn enabled
 
 	aircraft
 	(
@@ -2188,7 +2174,6 @@ mapdef tropic_drug_crash
 	param		"drug_crash"
 	multiplayer	false
 	maxaliens	14
-	// randomspawn enabled
 	hurtaliens	true
 
 	aircraft
@@ -2230,7 +2215,6 @@ mapdef tropic_river
 	param		"river"
 	multiplayer	false
 	maxaliens	6
-	// randomspawn enabled
 
 	aircraft
 	(
@@ -2272,7 +2256,6 @@ mapdef tropic_river_crash
 	hurtaliens	true
 	multiplayer	false
 	maxaliens	6
-	// randomspawn enabled
 
 	aircraft
 	(
@@ -2524,7 +2507,6 @@ mapdef base_initial
 	campaign	false
 	multiplayer	false
 	maxaliens	14
-		// randomspawn enabled
 
 	aircraft
         (
@@ -2560,7 +2542,6 @@ mapdef base_random
 	campaign	false
 	multiplayer	false
 	maxaliens	16
-		// randomspawn enabled
 
 	aircraft
         (
@@ -2730,7 +2711,6 @@ mapdef city_disco
 		coop4
 	)
 	maxaliens		21
-	// randomspawn	enabled
 
 	aircraft
 	(
@@ -2832,7 +2812,6 @@ mapdef construction
 		coop4
 	)
 	maxaliens		29
-	// randomspawn	enabled
 
 	aircraft
 	(
@@ -2882,7 +2861,6 @@ mapdef druglord
 		coop4
 	)
 	maxaliens		25
-	// randomspawn	enabled
 
 	aircraft
 	(
@@ -2930,7 +2908,6 @@ mapdef eaglenest
 		coop4
 	)
 	maxaliens		18
-	// randomspawn	enabled
 
 	description		"_A small estate in the mountains."
 
@@ -3033,7 +3010,6 @@ mapdef italy
 	)
 
 	maxaliens		22
-	// randomspawn	enabled
 
 	aircraft
 	(
@@ -3084,7 +3060,6 @@ mapdef japan_default
 		coop4
 	)
 	maxaliens		16	// arc:2, bridge:2, buddha:2, harvester:14, scout:4, f1:2, f2:2, f3:2, f4:2, fill1:2, h1:6, h2:4, h3:6, h4:7, h5:0, p_bl:2, p_br:2, p_btl:2, p_h:2, p_tl:2, p_tr:0, p_v:0, sw:2, w1:0
-	// randomspawn	enabled
 
 	civilianteam	asia
 
@@ -3137,7 +3112,6 @@ mapdef mart
 	)
 
 	maxaliens		23
-	// randomspawn	enabled
 
 	aircraft
 	(
@@ -3237,7 +3211,6 @@ mapdef oriental_mosque
 		coop4
 	)
 	maxaliens		20
-	// randomspawn	enabled
 
 	civilianteam	middle
 
@@ -3296,7 +3269,7 @@ mapdef shelter
 		coop4
 	)
 	maxaliens		21 //TODO: This is an arbitrary value right now.
-		// randomspawn enabled
+
 	civilianteam	armysoldier
 
 	aircraft
@@ -3346,7 +3319,6 @@ mapdef spedition
 		coop4
 	)
 	maxaliens		28
-	// randomspawn	enabled
 
 	civilianteam	worker
 
@@ -3398,7 +3370,6 @@ mapdef stadium
 	)
 
 	maxaliens		21
-	// randomspawn enabled
 
 	aircraft
 	(
@@ -3453,7 +3424,6 @@ mapdef tower
 		coop4
 	)
 	maxaliens		29
-	// randomspawn	enabled
 
 	aircraft
 	(
@@ -3642,7 +3612,6 @@ mapdef bunker
 		coop4
 	)
 	maxaliens		16
-	// randomspawn enabled
 
 	civilianteam	armysoldier
 
@@ -3832,7 +3801,6 @@ mapdef dam
 	)
 
 	maxaliens		12
-			// randomspawn enabled
 
 	civilianteam	worker
 
@@ -3967,9 +3935,9 @@ mapdef excavation
 	multiplayer		true
 	teams			2
 	maxaliens		23
-	// randomspawn enabled
 
 	civilianteam	middle
+
 	gametypes (
 		fight1on1
 		fight2on2
@@ -4067,7 +4035,6 @@ mapdef fighter_crash
 	multiplayer		true
 	teams			2
 	maxaliens		6 //info_alien_start spawnpoints:19
-		// randomspawn enabled
 	hurtaliens		true
 
 	gametypes (
@@ -4294,7 +4261,7 @@ mapdef lake_ice_big
 	teams			3
 	description		"_A small settlement in winter."
 	maxaliens		28
-		// randomspawn enabled
+
 	gametypes (
 		fight1on1
 		fight1on1on1
@@ -4356,7 +4323,6 @@ mapdef mine
 		coop4
 	)
 	maxaliens	26
-	// randomspawn	enabled
 
 	civilianteam	miner
 
@@ -4405,7 +4371,6 @@ mapdef neighbourhood
 		coop2
 	)
 	maxaliens	17
-		// randomspawn	enabled
 
 	aircraft
 	(
@@ -4497,7 +4462,7 @@ mapdef oriental
 		coop4
 	)
 	maxaliens		14
-		// randomspawn enabled
+
 	civilianteam	middle
 
 	aircraft
@@ -4548,7 +4513,6 @@ mapdef pipes_const
 		coop4
 	)
 	maxaliens		21
-	// randomspawn enabled
 
 	civilianteam	miner
 
@@ -4592,7 +4556,6 @@ mapdef resort
 		coop4
 	)
 	maxaliens		24
-	// randomspawn enabled
 
 	aircraft
 	(
@@ -4804,7 +4767,6 @@ mapdef village
 		coop4
 	)
 	maxaliens		22
-	// randomspawn enabled
 
 	aircraft
 	(
@@ -4849,7 +4811,6 @@ mapdef wilderness
 		coop2
 	)
 	maxaliens		16
-	// randomspawn enabled
 
 	aircraft
 	(
