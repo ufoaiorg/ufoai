@@ -874,11 +874,22 @@ mapdef forest_small_crash
 
 mapdef frozen_alienlandingindustrial
 {
-	map			"+frozen"
-	param		"alienlandingindustrial"
-	multiplayer	false
-	description	"_An industrial area in a cold region."
-	maxaliens	14
+	map				"+frozen"
+	param			"alienlandingindustrial"
+	description		"_An industrial area in a cold region."
+	maxaliens		14
+	multiplayer		true
+	teams			2
+	gametypes
+	(
+		fight1on1
+		fight2on2
+		fight3on3
+		fight4on4
+		coop2
+		coop3
+		coop4
+	)
 
 	aircraft
 	(
@@ -918,9 +929,20 @@ mapdef frozen_alienlandingnature
 {
 	map			"+frozen"
 	param		"alienlandingnature"
-	multiplayer	false
 	description	"_An industrial area in a cold region."
 	maxaliens	8
+	multiplayer		true
+	teams			2
+	gametypes
+	(
+		fight1on1
+		fight2on2
+		fight3on3
+		fight4on4
+		coop2
+		coop3
+		coop4
+	)
 
 	aircraft
 	(
@@ -960,9 +982,20 @@ mapdef frozen_industrial
 {
 	map			"+frozen"
 	param		"industrial"
-	multiplayer	false
 	description	"_An industrial area in a cold region."
 	maxaliens	8 //TODO: This is an arbitrary value right now.
+	multiplayer		true
+	teams			2
+	gametypes
+	(
+		fight1on1
+		fight2on2
+		fight3on3
+		fight4on4
+		coop2
+		coop3
+		coop4
+	)
 
 	aircraft
 	(
@@ -1000,9 +1033,20 @@ mapdef frozen_small
 {
 	map			"+frozen"
 	param		"small"
-	multiplayer	false
 	description	"_An underpopulated area in a cold region."
 	maxaliens	8 //TODO: This is an arbitrary value right now.
+	multiplayer		true
+	teams			2
+	gametypes
+	(
+		fight1on1
+		fight2on2
+		fight3on3
+		fight4on4
+		coop2
+		coop3
+		coop4
+	)
 
 	aircraft
 	(
@@ -1040,10 +1084,21 @@ mapdef frozen_crash_medium_industrial
 {
 	map			"+frozen"
 	param		"crash_medium_industrial"
-	multiplayer	false
 	description	"_An underpopulated area in a cold region."
 	maxaliens	12 //TODO: This is an arbitrary value right now.
 	hurtaliens	true
+	multiplayer		true
+	teams			2
+	gametypes
+	(
+		fight1on1
+		fight2on2
+		fight3on3
+		fight4on4
+		coop2
+		coop3
+		coop4
+	)
 
 	aircraft
 	(
@@ -1080,10 +1135,21 @@ mapdef frozen_crash_medium_nature
 {
 	map			"+frozen"
 	param		"crash_medium_nature"
-	multiplayer	false
 	description	"_An underpopulated area in a cold region."
 	maxaliens	12 //TODO: This is an arbitrary value right now.
 	hurtaliens	true
+	multiplayer		true
+	teams			2
+	gametypes
+	(
+		fight1on1
+		fight2on2
+		fight3on3
+		fight4on4
+		coop2
+		coop3
+		coop4
+	)
 
 	aircraft
 	(
@@ -4845,34 +4911,73 @@ mapdef wilderness
 // MULTIPLAYER ONLY MAPS //
 // ===================== //
 
-//////////////////////////
-// CITY2 MULTIPLAYER MAP//
-//////////////////////////
+///////////////////////////
+// CITY2 MULTIPLAYER MAP //
+///////////////////////////
 
 mapdef city2mp
 {
-		map				"+city2"
-		description		"_A city high rise."
-		param			"city2mp"
-		singleplayer	false
-		campaign		false
-		multiplayer		true
-		teams			4
-		maxaliens		23
-		gametypes
-		(
-			fight1on1
-			fight1on1on1
-			fight2on2
-			fight2on2on2
-			fight3on3
-			fight3on3on3
-			fight4on4
-			fight4on4on4
-		)
-
+	map				"+city2"
+	description		"_A city high rise."
+	param			"city2mp"
+	maxaliens		23
+	singleplayer	false
+	campaign		false
+	multiplayer		true
+	teams			4
+	gametypes
+	(
+		fight1on1
+		fight1on1on1
+		fight2on2
+		fight2on2on2
+		fight3on3
+		fight3on3on3
+		fight4on4
+		fight4on4on4
+	)
 }
 
+//////////////////////////////
+// +FROZEN MULTIPLAYER MAPS //
+//////////////////////////////
+
+mapdef frozen_mp_coop
+{
+	map				"+frozen"
+	description		"_An underpopulated area in a cold region."
+	param			"multiplayercoop"
+	maxaliens		12
+	singleplayer	false
+	campaign		false
+	multiplayer		true
+	teams			2
+	gametypes
+	(
+		coop2
+		coop3
+		coop4
+	)
+}
+
+mapdef frozen_mp_deathmatch
+{
+	map				"+frozen"
+	description		"_An underpopulated area in a cold region."
+	param			"multiplayerdeathmatch"
+	maxaliens		12
+	singleplayer	false
+	campaign		false
+	multiplayer		true
+	teams			2
+	gametypes
+	(
+		fight1on1
+		fight2on2
+		fight3on3
+		fight4on4
+	)
+}
 
 // ============ //
 // SPECIAL MAPS //

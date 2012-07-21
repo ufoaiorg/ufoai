@@ -370,6 +370,7 @@ assembly crash_medium_industrial
 {
 size "8 8"
 title "_A UFO crashed into the snow here."
+multiplayer +mp_team2
 +n01 "0 8"
 +n02 "0 8"
 +n03 "0 8"
@@ -391,6 +392,7 @@ assembly crash_medium_nature
 {
 size "8 8"
 title "_A UFO crashed into the snow here."
+multiplayer +mp_team2
 +n01 "0 8"
 +n02 "0 8"
 +n03 "0 8"
