@@ -10145,7 +10145,7 @@ msgstr "Obrona rakietowa"
 
 #: ../base/ufos/ui/basedefence.ufo:40
 msgid "Laser Defences"
-msgstr "Obrona rakietowa"
+msgstr "Obrona laserowa"
 
 #: ../base/ufos/ui/basedefence.ufo:109
 msgid "Weapon slots"
@@ -10219,7 +10219,7 @@ msgstr "Usuń instalację"
 #: ../base/ufos/ui/main.ufo:321 ../base/ufos/ui/physdat.ufo:320
 #: ../base/ufos/ui/popup_baseattack.ufo:309 ../base/ufos/ui/transfer.ufo:688
 msgid "Close"
-msgstr "bezpoś."
+msgstr "Zamknij"
 
 #: ../base/ufos/ui/bases.ufo:80
 msgid "Back to geoscape"
