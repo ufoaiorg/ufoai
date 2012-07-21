@@ -27,7 +27,7 @@ msgstr "Kwatera główna"
 
 #: ../base/maps/bomber_city.ump:68
 msgid "Bomber_city"
-msgstr ""
+msgstr "Zbombardowane miasto"
 
 #: ../base/maps/bridge.ump:67
 msgid "Bridge"
@@ -51,11 +51,11 @@ msgstr "Plac budowy"
 
 #: ../base/maps/desert.ump:53
 msgid "Crashed Harvester"
-msgstr "Uszkodzony Żniwiarz"
+msgstr "Rozbity Żniwiarz"
 
 #: ../base/maps/druglord.ump:67
 msgid "Druglord"
-msgstr ""
+msgstr "Narkotykowy bos"
 
 #: ../base/maps/eaglenest.ump:66
 msgid "Eaglenest"
@@ -100,7 +100,7 @@ msgstr "Stacja paliw"
 #: ../base/maps/hills.ump:488 ../base/maps/hills.ump:519
 #: ../base/maps/hills.ump:571
 msgid "UFO landed in hills area"
-msgstr ""
+msgstr "UFO - teren górzysty"
 
 #: ../base/maps/industrial.ump:257 ../base/maps/industrial.ump:281
 msgid "UFO Landed"
@@ -138,22 +138,22 @@ msgstr "Konwój wojskowy"
 #: ../base/maps/mm_harbour.ump:529
 #, fuzzy
 msgid "Harbour"
-msgstr "Hamburg"
+msgstr "Port"
 
 #: ../base/maps/mm_harbour.ump:550
 #, fuzzy
 msgid "Area"
-msgstr "Arequipa"
+msgstr "Strefa"
 
 #: ../base/maps/mm_harbour.ump:578
 #, fuzzy
 msgid "Test"
-msgstr "Pustynny"
+msgstr "Test"
 
 #: ../base/maps/mm_harbour.ump:624
 #, fuzzy
 msgid "mini"
-msgstr "1 min"
+msgstr "Mała"
 
 #: ../base/maps/oriental.ump:464
 msgid "Oriental small"
@@ -171,7 +171,7 @@ msgstr "Orientalna duża"
 #: ../base/maps/rescue.ump:85
 #, fuzzy
 msgid "Rescue mission"
-msgstr "Automisja"
+msgstr "Misja ratunkowa"
 
 #: ../base/maps/spedition.ump:62
 msgid "Spedition"
@@ -184,7 +184,7 @@ msgstr "Stadion"
 #: ../base/maps/tower.ump:62
 #, fuzzy
 msgid "Tower"
-msgstr "Siła:"
+msgstr "Wieża"
 
 #: ../base/maps/transport.ump:66
 msgid "Transport"
@@ -192,7 +192,7 @@ msgstr "Transport"
 
 #: ../base/maps/tropic.ump:359 ../base/maps/tropic.ump:391
 msgid "Tropical river"
-msgstr "Rzeka w tropikach"
+msgstr "Rzeka w tropiku"
 
 #: ../base/maps/tropic.ump:423 ../base/maps/tropic.ump:448
 msgid "Tropical drug"
@@ -339,11 +339,11 @@ msgstr "Zaopatrzeniowiec U"
 
 #: ../base/ufos/aircraftmanagement.ufo:632 ../base/ufos/research.ufo:4009
 msgid "UFO - Ripper"
-msgstr ""
+msgstr "UFO - Rozpruwacz"
 
 #: ../base/ufos/aircraftmanagement.ufo:633
 msgid "Ripper U"
-msgstr ""
+msgstr "Rozpruwacz U"
 
 #: ../base/ufos/aircraftmanagement.ufo:678 ../base/ufos/research.ufo:3880
 msgid "UFO - Bomber"
@@ -355,19 +355,19 @@ msgstr "Bombowiec U"
 
 #: ../base/ufos/aircraftmanagement.ufo:725 ../base/ufos/research.ufo:3837
 msgid "UFO - Carrier"
-msgstr ""
+msgstr "UFO - Krążownik"
 
 #: ../base/ufos/aircraftmanagement.ufo:726
 msgid "Carrier U"
-msgstr ""
+msgstr "Krążownik U"
 
 #: ../base/ufos/aircraftmanagement.ufo:748 ../base/ufos/research.ufo:4095
 msgid "UFO - Mothership"
-msgstr ""
+msgstr "UFO - Okręt Bazowy"
 
 #: ../base/ufos/aircraftmanagement.ufo:749
 msgid "Mothership U"
-msgstr ""
+msgstr "Okręt Bazowy U"
 
 #: ../base/ufos/aircraftmanagement.ufo:765 ../base/ufos/research.ufo:4728
 msgid "Aerial Laser Cannon"
@@ -2456,26 +2456,26 @@ msgstr "Wieloosobowa"
 #: ../base/ufos/equipment.ufo:81
 #, fuzzy
 msgid "Multiplayer Alien"
-msgstr "Wieloosobowa"
+msgstr "Wieloosobowa Obcymi"
 
 #: ../base/ufos/equipment.ufo:160
 #, fuzzy
 msgid "Multiplayer Phalanx"
-msgstr "Wieloosobowa"
+msgstr "Wieloosobowa Phalanx"
 
 #: ../base/ufos/equipment.ufo:242
 #, fuzzy
 msgid "Assault Rifles Only"
-msgstr "Karabin szturmowy"
+msgstr "Tylko karabin szturmowy"
 
 #: ../base/ufos/equipment.ufo:249
 #, fuzzy
 msgid "No IR Goggles"
-msgstr "Termowizor"
+msgstr "Bez termowizora"
 
 #: ../base/ufos/equipment.ufo:308
 msgid "Flamers/Rifles/Grenades"
-msgstr ""
+msgstr "Miotacz/Karabin/Granaty"
 
 #: ../base/ufos/equipment.ufo:326
 #, fuzzy
@@ -2484,11 +2484,11 @@ msgstr "Kampania"
 
 #: ../base/ufos/equipment.ufo:369
 msgid "Campaign Start (Market)"
-msgstr ""
+msgstr "Kampania (Sklep)"
 
 #: ../base/ufos/equipment.ufo:424
 msgid "Asymptotic Market"
-msgstr ""
+msgstr "Docelowy sklep"
 
 #: ../base/ufos/equipment.ufo:448
 msgid "Alien Campaign Start (Alien Campaign)"
@@ -2957,7 +2957,7 @@ msgstr "Wieża Radarowa"
 
 #: ../base/ufos/installation.ufo:18
 msgid "The radar tower is an unmanned, expendable installation that can be placed anywhere in the world to boost our detection range. It is cheap to build and highly useful, but its camouflage is not very effective. Alien craft may detect the active scanning and attempt to destroy the tower once they find it. It is recommended that radar towers be protected with SAM sites."
-msgstr ""
+msgstr "Wieża radarowa jest stałą bezzałogową instalacją, można ją umieścić w dowolnym miejscu a służy do zwikszenia zasigu wykrywania. Jest tanią i wysoce przydatną inwestycją ale jej kamuflaż nie jest zbyt efektywny. Obce pojazdy mogą wykryć jej aktywność i próbować zniszczyć wieżę natychmiast po wykryciu. Zalecane jest umieszczanie wież radarowych obok wyrzutni SAM."
 
 #: ../base/ufos/installation.ufo:23 ../base/ufos/ui/geoscape.ufo:998
 #: ../base/ufos/ui/lostwon.ufo:227
@@ -2966,7 +2966,7 @@ msgstr "Hangar UFO"
 
 #: ../base/ufos/installation.ufo:33
 msgid "The UFO Yard is a camouflaged storage field for captured UFOs. It can be placed anywhere in the world to store captured UFOs for dismantling and research, and can transfer UFOs to other Yards. UFOs stored in a Yard can be researched and/or dismantled from any PHALANX base with appropriate facilities, but these activities proceed more slowly the further away the UFO Yard is from the base."
-msgstr ""
+msgstr "Ten hangar jest zakamuflowanym miejscem do przechowywania zdobytych UFO. Można go umieścić w dowolnym miejscu a słuzy do demontażu, badań i transferu pojazdów do innych hangarów. Zgromadzone UFO mogą zostać zbadane i/lub zdemontowane przez dowolną bazę PHALANX z odpowiednim zapleczem technicznym. Czas jaki na to będzie potrzebny zależy od odległosci hangaru od bazy."
 
 #: ../base/ufos/installation.ufo:38 ../base/ufos/ui/geoscape.ufo:956
 msgid "SAM Site"
