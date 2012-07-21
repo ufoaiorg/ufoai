@@ -53,13 +53,14 @@
 				<Option projectIncludeDirsRelation="1" />
 				<Option projectLibDirsRelation="1" />
 				<Compiler>
-					<Add option="-O0" />
 					<Add option="-pg" />
+					<Add option="-O0" />
 					<Add option="-DDEBUG" />
 					<Add option="-DHAVE_VORBIS_CODEC_H" />
 					<Add option="-DHAVE_XVID_H" />
 					<Add option="-DHAVE_THEORA_THEORA_H" />
 					<Add directory="..\..\src\libs\mxml\" />
+					<Add directory="..\..\src\libs\mumble\" />
 				</Compiler>
 				<Linker>
 					<Add option="-pg -lgmon" />
@@ -100,6 +101,7 @@
 			<Add option="-DHARD_LINKED_GAME" />
 			<Add option="-DHARD_LINKED_CGAME" />
 			<Add directory="..\..\src\libs\mxml\" />
+			<Add directory="..\..\src\libs\mumble\" />
 		</Compiler>
 		<Linker>
 			<Add library="cunit" />
