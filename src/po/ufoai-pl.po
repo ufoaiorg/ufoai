@@ -630,7 +630,7 @@ msgstr "Zagraj Obcymi"
 
 #: ../base/ufos/campaign.ufo:196
 msgid "alien_campaign_txt"
-msgstr "Ta kampania pozwala zagrać druga strona konfliktu - wcielić się w obcych i najechać ziemię."
+msgstr "Ta kampania pozwala zagrać drugą stroną konfliktu - wcielić się w obcych i najechać ziemię."
 
 #: ../base/ufos/cities.ufo:15
 msgid "Amsterdam"
