@@ -2735,7 +2735,7 @@ msgid "mail_production_finished"
 msgstr ""
 "Zespół inżynierów zakończył produkcję {item} w {location}. Całe wyposażenie jest przetestowane i gotowe do użycia.\n"
 "\n"
-"--kontradm. Navarre"
+"--mjr. Navarre"
 
 #: ../base/ufos/events.ufo:110 ../base/ufos/events.ufo:132
 #: ../base/ufos/events.ufo:143 ../base/ufos/events.ufo:154
@@ -2951,7 +2951,7 @@ msgstr "Kampania"
 #: ../base/ufos/gamemodes.ufo:21
 #, fuzzy
 msgid "Static Campaign"
-msgstr "Rozpocznij"
+msgstr "Kampania Statyczna"
 
 #: ../base/ufos/gamemodes.ufo:26
 msgid "Skirmish"
@@ -3126,7 +3126,7 @@ msgstr "Chiński"
 #: ../base/ufos/language.ufo:336
 #, fuzzy
 msgid "Traditional Chinese"
-msgstr "Dodatkowe podziękowania dla"
+msgstr "Chiński Tradycyjny"
 
 #: ../base/ufos/language.ufo:345
 msgid "Bulgarian"
@@ -3139,7 +3139,7 @@ msgstr "Norweski"
 #: ../base/ufos/language.ufo:363
 #, fuzzy
 msgid "Turkish"
-msgstr "Tunis"
+msgstr "Turecki"
 
 #: ../base/ufos/language.ufo:372
 msgid "No language"
@@ -3188,11 +3188,11 @@ msgstr "Dom otoczony budynkami gospodarczymi. UFO wylądowało na polu nieopodal
 #: ../base/ufos/maps.ufo:643 ../base/ufos/maps.ufo:683
 #: ../base/ufos/maps.ufo:724
 msgid "Aliens are up to no good in this sparsely populated forest region."
-msgstr ""
+msgstr "Obcy zabłądzili do rzadko zaludnionego terenu leśnego."
 
 #: ../base/ufos/maps.ufo:765
 msgid "UFO crashed in this sparsely populated forest region."
-msgstr ""
+msgstr "UFO rozbiło się w rzadko zaludnionym terenie leśnym."
 
 #: ../base/ufos/maps.ufo:809 ../base/ufos/maps.ufo:851
 #: ../base/ufos/maps.ufo:893
@@ -3205,16 +3205,16 @@ msgstr "Słabo zaludniony teren w zimnym klimacie."
 
 #: ../base/ufos/maps.ufo:974
 msgid "An important container harbour is attacked by alien invaders."
-msgstr ""
+msgstr "Ważny port transportowy jest atakowany przez Obcych."
 
 #: ../base/ufos/maps.ufo:1022 ../base/ufos/maps.ufo:1067
 #: ../base/ufos/maps.ufo:1109
 msgid "UFO landed in hills area."
-msgstr ""
+msgstr "UFO wylądowało w górzystym terenie."
 
 #: ../base/ufos/maps.ufo:1156 ../base/ufos/maps.ufo:1200
 msgid "Industrial theme."
-msgstr ""
+msgstr "Strefa przemysłowa."
 
 #: ../base/ufos/maps.ufo:1247 ../base/ufos/maps.ufo:1297
 #: ../base/ufos/maps.ufo:2446
@@ -3227,7 +3227,7 @@ msgstr "Laboratorium, w którym badano znalezione szczątki UFO."
 
 #: ../base/ufos/maps.ufo:1407
 msgid "A mansion near the coast."
-msgstr ""
+msgstr "Rezydencja na wybrzeżu"
 
 #: ../base/ufos/maps.ufo:1458 ../base/ufos/maps.ufo:1498
 #: ../base/ufos/maps.ufo:1581
@@ -3236,7 +3236,7 @@ msgstr "Podmiejska dzielnica w strefie orientalnej."
 
 #: ../base/ufos/maps.ufo:1540
 msgid "Crashed UFO in oriental suburban district."
-msgstr ""
+msgstr "Rozbite UFO w orientalnej dzielnicy."
 
 #: ../base/ufos/maps.ufo:1624 ../base/ufos/maps.ufo:1664
 #: ../base/ufos/maps.ufo:1705
@@ -3291,7 +3291,7 @@ msgstr "Niewielkie biuro w górzystym terenie."
 
 #: ../base/ufos/maps.ufo:2501
 msgid "A kind of communal gathering centre annex foraging facility, known as a supermarket."
-msgstr ""
+msgstr "Część centrum handlowego z supermarketem spożywczym"
 
 #: ../base/ufos/maps.ufo:2556
 msgid "A military convoy has caught the eye of the aliens."
@@ -3319,7 +3319,7 @@ msgstr "Strefa przemysłowa wykorzystywania do przeładunku towarów."
 
 #: ../base/ufos/maps.ufo:2873 ../base/ufos/maps.ufo:2918
 msgid "A small bungalow."
-msgstr ""
+msgstr "Mały bungalow"
 
 #: ../base/ufos/maps.ufo:2965
 msgid "A bunker used in a previous conflict."
@@ -3424,15 +3424,15 @@ msgstr "Baza jest atakowana."
 #: ../base/ufos/maps.ufo:4300
 #, fuzzy
 msgid "Rescue mission."
-msgstr "Automisja"
+msgstr "Misja ratunkowa"
 
 #: ../base/ufos/maps.ufo:4330
 msgid "Training Zone: Alpha"
-msgstr ""
+msgstr "Strefa treningowa: Alfa"
 
 #: ../base/ufos/maps.ufo:4347
 msgid "Training Zone: Bravo"
-msgstr ""
+msgstr "Strefa treningowa: Bravo"
 
 #: ../base/ufos/medals.ufo:3
 msgid "Cross"
@@ -3446,7 +3446,7 @@ msgstr "Moneta"
 #: client/cgame/campaign/cp_employee.c:202
 #, fuzzy
 msgid "Scientist"
-msgid_plural "Scientists"
+msgid_plural "Naukowiec"
 msgstr[0] "Naukowiec"
 msgstr[1] "Naukowiec"
 msgstr[2] "Naukowiec"
@@ -3455,7 +3455,7 @@ msgstr[2] "Naukowiec"
 #: client/cgame/campaign/cp_employee.c:206
 #, fuzzy
 msgid "Pilot"
-msgid_plural "Pilots"
+msgid_plural "Pilot"
 msgstr[0] "Pilot"
 msgstr[1] "Pilot"
 msgstr[2] "Pilot"
@@ -3473,7 +3473,7 @@ msgstr[2] "UPN"
 #: client/cgame/campaign/cp_employee.c:204
 #, fuzzy
 msgid "Worker"
-msgid_plural "Workers"
+msgid_plural "Technik"
 msgstr[0] "Technik"
 msgstr[1] "Technik"
 msgstr[2] "Technik"
@@ -3576,31 +3576,31 @@ msgstr "płk."
 
 #: ../base/ufos/msgcategories.ufo:7
 msgid "install_equipment"
-msgstr ""
+msgstr "Instalacja sprzętu"
 
 #: ../base/ufos/msgcategories.ufo:16
 msgid "installation_construction"
-msgstr ""
+msgstr "Konstruowanie instalacji"
 
 #: ../base/ufos/msgcategories.ufo:23
 msgid "research"
-msgstr "badania"
+msgstr "Badania"
 
 #: ../base/ufos/msgcategories.ufo:30
 msgid "production"
-msgstr "produkcja"
+msgstr "Produkcja"
 
 #: ../base/ufos/msgcategories.ufo:37
 msgid "nations_happiness"
-msgstr ""
+msgstr "Zadowolenie narodów"
 
 #: ../base/ufos/msgcategories.ufo:44
 msgid "transfer"
-msgstr "przesyłka"
+msgstr "Przesyłka"
 
 #: ../base/ufos/msgcategories.ufo:53
 msgid "ufo_activity"
-msgstr ""
+msgstr "Aktywność UFO"
 
 #: ../base/ufos/msgcategories.ufo:60
 #, fuzzy
@@ -3695,7 +3695,7 @@ msgstr "Autopsje i obserwacje"
 
 #: ../base/ufos/research.ufo:118
 msgid "The Alien Threat"
-msgstr "Zagrożenie Obcych"
+msgstr "Zagrożenie ze strony Obcych"
 
 #: ../base/ufos/research.ufo:127
 msgid "Continuous Wave Laser Operation"
