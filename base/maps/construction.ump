@@ -24,35 +24,35 @@ tile +main
 
 tile +craft_drop_firebird
 {
-4 5
-
-0      0      0      0
-a      +b     +b     0
-a      +b     +b     0
-a      +b     +b     0
-a      a      a      0
+5 6
+0      0      0      0      0
+a      +b     +b     +b     0
+a      +b     +b     +b     0
+a      +b     +b     +b     0
+a      a      a      +b     0
+a      0      0      0      0
 }
 
 tile +craft_drop_herakles
 {
-4 5
-
-0      0      0      0
-a      +b     +b     0
-a      +b     +b     0
-a      +b     +b     0
-a      a      a      0
+5 6
+0      0      0      0      0
+a      +b     +b     +b     0
+a      +b     +b     +b     0
+a      +b     +b     +b     0
+a      a      a      +b     0
+a      0      0      0      0
 }
 
 tile +craft_drop_raptor
 {
-4 5
-
-0      0      0      0
-a      +b     +b     0
-a      +b     +b     0
-a      +b     +b     0
-a      a      a      0
+5 6
+0      0      0      0      0
+a      +b     +b     +b     0
+a      +b     +b     +b     0
+a      +b     +b     +b     0
+a      a      a      +b     0
+a      0      0      0      0
 }
 
 // ########################################
@@ -60,7 +60,7 @@ a      a      a      0
 
 assembly default
 {
-size "7 4"
+size "8 4"
 title "_Construction"
 +main "1 1"
 *rm_drop +craft_drop_firebird "1 1"

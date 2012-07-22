@@ -2869,16 +2869,20 @@ mapdef construction
 {
 	map				"+construction"
 	description		"_An office complex under construction."
+	param			"default"
+	maxaliens		29
 	multiplayer		true
 	teams			2
-	gametypes (
+	gametypes
+	(
 		fight1on1
 		fight2on2
+		fight3on3
+		fight4on4
 		coop2
 		coop3
 		coop4
 	)
-	maxaliens		29
 
 	aircraft
 	(
@@ -2887,9 +2891,10 @@ mapdef construction
 		craft_drop_raptor
 	)
 
-//	ufos
-//	{
-//	}
+	ufos
+	{
+		// any
+	}
 
 	terrains
 	(
@@ -2899,7 +2904,7 @@ mapdef construction
 
 	cultures
 	(
-		//any
+		// any
 	)
 
 	populations
