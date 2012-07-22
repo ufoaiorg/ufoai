@@ -3446,7 +3446,7 @@ msgstr "Moneta"
 #: client/cgame/campaign/cp_employee.c:202
 #, fuzzy
 msgid "Scientist"
-msgid_plural "Naukowiec"
+msgid_plural "Scientists"
 msgstr[0] "Naukowiec"
 msgstr[1] "Naukowiec"
 msgstr[2] "Naukowiec"
@@ -3455,7 +3455,7 @@ msgstr[2] "Naukowiec"
 #: client/cgame/campaign/cp_employee.c:206
 #, fuzzy
 msgid "Pilot"
-msgid_plural "Pilot"
+msgid_plural "Pilots"
 msgstr[0] "Pilot"
 msgstr[1] "Pilot"
 msgstr[2] "Pilot"
@@ -3473,7 +3473,7 @@ msgstr[2] "UPN"
 #: client/cgame/campaign/cp_employee.c:204
 #, fuzzy
 msgid "Worker"
-msgid_plural "Technik"
+msgid_plural "Workers"
 msgstr[0] "Technik"
 msgstr[1] "Technik"
 msgstr[2] "Technik"
