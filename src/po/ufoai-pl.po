@@ -2680,7 +2680,7 @@ msgstr "Obcy zginął"
 #: ../base/ufos/events.ufo:46
 msgid "mail_stunned_alien_died"
 msgstr ""
-"Do Dowódcy, \ n"
+"Do Dowódcy, \n"
 "\n"
 "Obawiam się, że mam złą wiadomość. Pomimo naszych wysiłków, okazy Obcych pozyskane w naszej ostatniej misji przeterminowały sie w Kwarantannie. Jesteśmy niezdolni do stabilizacji ich funkcji życiowych, aby zdążyć dowiedzieć się czegos wartościowego.\n"
 "\n"
@@ -2697,7 +2697,7 @@ msgstr "Raport o zabezpieczeniu UFO -- %s"
 #: ../base/ufos/events.ufo:58
 msgid "mail_alien_ufo_crashed"
 msgstr ""
-"Dowódco, %s jest zbyt uszkodzone by coś odzyskać. Byliśmy w stanie ocalić jedynie część wyposażenia z wraku. Uzyskane z %s przedmioty przybędą naszym transportowcem:\ n"
+"Dowódco, %s jest zbyt uszkodzone by coś odzyskać. Byliśmy w stanie ocalić jedynie część wyposażenia z wraku. Uzyskane z %s przedmioty przybędą naszym transportowcem:\n"
 "\n"
 "%s"
 
