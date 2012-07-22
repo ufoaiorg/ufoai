@@ -275,7 +275,7 @@ msgstr "Dragon I"
 
 #: ../base/ufos/aircraftmanagement.ufo:343
 msgid "Starchaser-class Interceptor"
-msgstr "Myśliwiec, klasa Interceptor"
+msgstr "Myśliwiec, klasa Starchaser"
 
 #: ../base/ufos/aircraftmanagement.ufo:344
 msgid "Starchaser"
@@ -283,7 +283,7 @@ msgstr "Starchaser"
 
 #: ../base/ufos/aircraftmanagement.ufo:389
 msgid "Stingray Interceptor"
-msgstr "Myśliwiec, klasa Interceptor"
+msgstr "Myśliwiec, klasa Stingray"
 
 #: ../base/ufos/aircraftmanagement.ufo:390
 msgid "Stingray"
