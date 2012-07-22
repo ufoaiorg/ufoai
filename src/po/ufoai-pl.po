@@ -279,7 +279,7 @@ msgstr "Myśliwiec, klasa Starchaser"
 
 #: ../base/ufos/aircraftmanagement.ufo:344
 msgid "Starchaser"
-msgstr "Starchaser"
+msgstr "Starchaser I"
 
 #: ../base/ufos/aircraftmanagement.ufo:389
 msgid "Stingray Interceptor"
@@ -287,7 +287,7 @@ msgstr "Myśliwiec, klasa Stingray"
 
 #: ../base/ufos/aircraftmanagement.ufo:390
 msgid "Stingray"
-msgstr "Stingray"
+msgstr "Stingray I"
 
 #: ../base/ufos/aircraftmanagement.ufo:441 ../base/ufos/research.ufo:3709
 msgid "UFO - Scout"
