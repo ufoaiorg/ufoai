@@ -2735,7 +2735,7 @@ msgid "mail_production_finished"
 msgstr ""
 "Zespół inżynierów zakończył produkcję {item} w {location}. Całe wyposażenie jest przetestowane i gotowe do użycia.\n"
 "\n"
-"--Kontradm. Navarre"
+"--kontradm. Navarre"
 
 #: ../base/ufos/events.ufo:110 ../base/ufos/events.ufo:132
 #: ../base/ufos/events.ufo:143 ../base/ufos/events.ufo:154
@@ -2895,7 +2895,7 @@ msgid "mail_aircraft_lost_target"
 msgstr ""
 "Dowódco, %s  zgubił ślad radarowy po %s i jest niezdolny do podjęcia dalszego śledzenia. Proszę o nowe rozkazy.\n"
 "\ n"
-"-- COMAIR"
+"-- Dowództwo Sił Powietrznych"
 
 #: ../base/ufos/events.ufo:288
 msgid "Aircraft Ready -- %s"
@@ -2906,7 +2906,7 @@ msgid "mail_aircraft_ready"
 msgstr ""
 "Dowódco, %s został %s i jest gotowy do akcji.\n"
 "\n"
-"-- COMAIR"
+"-- Dowództwo Sił Powietrznych"
 
 #: ../base/ufos/events.ufo:299
 msgid "Aircraft Bingo Fuel -- %s"
@@ -2917,7 +2917,7 @@ msgid "mail_aircraft_bingo_fuel"
 msgstr ""
 "Dowódco, %s zakończył patrol. Pozostało mu paliwa jedynie na powrót do %s. Misję przerwano.\n"
 "\n"
-"-- COMAIR"
+"-- Dowództwo Sił Powietrznych"
 
 #: ../base/ufos/events.ufo:310
 msgid "Aircraft Landed -- %s"
@@ -2928,7 +2928,7 @@ msgid "mail_aircraft_landed"
 msgstr ""
 "Dowódco, %s wylądował w %s. I rozpoczął %s. Oszacowano że nim wystartuje pozostanie w tym miejscu jeszcze %s godz.\n"
 "\n"
-"-- COMAIR"
+"-- Dowództwo Sił Powietrznych"
 
 #: ../base/ufos/fonts.ufo:11 ../base/ufos/fonts.ufo:18
 #: ../base/ufos/fonts.ufo:24 ../base/ufos/fonts.ufo:31
