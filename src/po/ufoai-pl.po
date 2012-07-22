@@ -3007,7 +3007,7 @@ msgstr "Wieża Radarowa"
 
 #: ../base/ufos/installation.ufo:18
 msgid "The radar tower is an unmanned, expendable installation that can be placed anywhere in the world to boost our detection range. It is cheap to build and highly useful, but its camouflage is not very effective. Alien craft may detect the active scanning and attempt to destroy the tower once they find it. It is recommended that radar towers be protected with SAM sites."
-msgstr "Wieża radarowa jest stałą bezzałogową instalacją, można ją umieścić w dowolnym miejscu a służy do zwikszenia zasigu wykrywania. Jest tanią i wysoce przydatną inwestycją ale jej kamuflaż nie jest zbyt efektywny. Obce pojazdy mogą wykryć jej aktywność i próbować zniszczyć wieżę natychmiast po wykryciu. Zalecane jest umieszczanie wież radarowych obok wyrzutni SAM."
+msgstr "Wieża radarowa jest stałą bezzałogową instalacją, można ją umieścić w dowolnym miejscu a służy do zwikszenia zasigu wykrywania. Jest tanią i wysoce przydatną inwestycją ale jej kamuflaż nie jest zbyt efektywny. Obce pojazdy mogą wykryć jej aktywność i próbować zniszczyć wieżę natychmiast po wykryciu. Zalecane jest umieszczanie wież radarowych obok wyrzutni rakietowych."
 
 #: ../base/ufos/installation.ufo:23 ../base/ufos/ui/geoscape.ufo:998
 #: ../base/ufos/ui/lostwon.ufo:227
@@ -3024,7 +3024,7 @@ msgstr "Bateria rakiet"
 
 #: ../base/ufos/installation.ufo:48
 msgid "The SAM site is an unmanned, expendable installation that can be placed anywhere in the world to automatically engage detected UFOs with surface-to-air missiles. It is cheap to build and highly useful, but its camouflage is not very effective. Alien craft may detect the missile launches and attempt to destroy the site once they find it. The SAM site is sturdy but will succumb to repeated bombing. Missile reloads are delivered free to our sites by UN forces."
-msgstr ""
+msgstr "Bateria rakiet jest stałą bezzałogową instalacją, mozna ją umieścić w dowolnym miejscu by automatycznie ostrzeliwała wykryte UFO pociskami ziemia-powietrze. Jest tanią i wysoce przydatną inwestycją ale jej kamuflaż nie jest zbyt efektywny. Obce pojazdy mogą wykryć jej aktywność i próbować zniszczyć wurzutnię natychmiast po jej wykryciu. Wyrzutnia jest silna lecz ulegnie zmasowanym bombardowaniom. Uzupełnienie amunicji następuje automatyczie z naszych baz."
 
 #: ../base/ufos/language.ufo:2
 msgid "English"
