@@ -2926,7 +2926,7 @@ msgid "media/languages.ttf"
 msgstr "media/DejaVuSans.ttf"
 
 #: ../base/ufos/gamemodes.ufo:16 ../base/ufos/ui/stats.ufo:158
-msgid "Campaign"
+msgid "Full Campaign"
 msgstr "Kampania"
 
 #: ../base/ufos/gamemodes.ufo:21
