@@ -96,20 +96,42 @@ tile +empty1
 	// 1x info_civilian_start
 {
 3 3
-0		3		0
-2		+a14	ab
+0		4		0
+2		+a1		ab
 0		ab		0
 }
 
 tile +empty2
-	// lower right part of the hill
-	// upper left corner of the map
+	// lower left part of the hill
+	// upper right corner of the map
 	// 1x info_alien_start
 {
 3 3
 0		3		0
-ab		+a12	4
+ab		+a2		1
 0		ab		0
+}
+
+tile +empty3
+	// upper left part of the hill
+	// lower right corner of the map
+	// 1x info_alien_start
+{
+3 3
+0		ab		0
+ab		+a3		4
+0		2		0
+}
+
+tile +empty4
+	// upper right part of the hill
+	// lower left corner of the map
+	// 1x info_alien_start
+{
+3 3
+0		ab		0
+3		+a4		ab
+0		1		0
 }
 
 tile +empty5
@@ -338,6 +360,8 @@ title "_Africa"
 multiplayer +mp_team2
 +empty1		"0 1"
 +empty2		"0 1"
++empty3		"0 1"
++empty4		"0 1"
 +empty6		"0 99"
 +house1		"1 4"
 +house2		"1 4"
@@ -356,11 +380,13 @@ tileset rock_a		"0 1"
 
 assembly small_crash
 {
-size "6 6"
+size "8 5"
 title "_Africa"
 multiplayer +mp_team2
 +empty1		"0 1"
 +empty2		"0 1"
++empty3		"0 1"
++empty4		"0 1"
 +empty6		"0 99"
 +house1		"1 4"
 +house2		"1 4"
@@ -383,6 +409,8 @@ title "_Africa"
 multiplayer +mp_team2
 +empty1		"0 1"
 +empty2		"0 1"
++empty3		"0 1"
++empty4		"0 1"
 +empty6		"0 99"
 +house1		"0 4"
 +house2		"0 4"
