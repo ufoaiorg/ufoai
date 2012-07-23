@@ -129,7 +129,7 @@ msgstr "Laboratorium"
 
 #: ../base/maps/mart.ump:64
 msgid "Mart"
-msgstr "Sklep"
+msgstr "Targowisko"
 
 #: ../base/maps/military_convoy.ump:69
 msgid "Military convoy"
@@ -143,7 +143,7 @@ msgstr "Port"
 #: ../base/maps/mm_harbour.ump:550
 #, fuzzy
 msgid "Area"
-msgstr "Strefa"
+msgstr "Arequipa"
 
 #: ../base/maps/mm_harbour.ump:578
 #, fuzzy
@@ -153,7 +153,7 @@ msgstr "Test"
 #: ../base/maps/mm_harbour.ump:624
 #, fuzzy
 msgid "mini"
-msgstr "Mała"
+msgstr "1 min"
 
 #: ../base/maps/oriental.ump:464
 msgid "Oriental small"
@@ -363,11 +363,11 @@ msgstr "Krążownik U"
 
 #: ../base/ufos/aircraftmanagement.ufo:748 ../base/ufos/research.ufo:4095
 msgid "UFO - Mothership"
-msgstr "UFO - Okręt Bazowy"
+msgstr "UFO - Okręt Baza"
 
 #: ../base/ufos/aircraftmanagement.ufo:749
 msgid "Mothership U"
-msgstr "Okręt Bazowy U"
+msgstr "Okręt Baza U"
 
 #: ../base/ufos/aircraftmanagement.ufo:765 ../base/ufos/research.ufo:4728
 msgid "Aerial Laser Cannon"
@@ -451,35 +451,35 @@ msgstr "zwykłe"
 
 #: ../base/ufos/armour.ufo:30
 msgid "blast"
-msgstr "wybuch"
+msgstr "Wybuch"
 
 #: ../base/ufos/armour.ufo:31
 msgid "fire"
-msgstr "ogień"
+msgstr "Ogień"
 
 #: ../base/ufos/armour.ufo:36
 msgid "shock"
-msgstr "elektryczość"
+msgstr "Elektryczość"
 
 #: ../base/ufos/armour.ufo:37
 msgid "laser"
-msgstr "laser"
+msgstr "Laser"
 
 #: ../base/ufos/armour.ufo:41
 msgid "plasma"
-msgstr "plazma"
+msgstr "Plazma"
 
 #: ../base/ufos/armour.ufo:45
 msgid "particlebeam"
-msgstr "strumień cząstek"
+msgstr "Strumień cząstek"
 
 #: ../base/ufos/armour.ufo:49
 msgid "stun_electro"
-msgstr "ogłuszenie prądem"
+msgstr "Ogłuszenie prądem"
 
 #: ../base/ufos/armour.ufo:50
 msgid "stun_gas"
-msgstr "ogłuszenie gazem"
+msgstr "Ogłuszenie gazem"
 
 #: ../base/ufos/armour.ufo:59
 msgid "Combat Armour"
@@ -495,7 +495,7 @@ msgstr "Pancerz nanokompozytowy"
 
 #: ../base/ufos/armour.ufo:242
 msgid "Power Armour"
-msgstr "Pancerz wspomagany"
+msgstr "Pancerz wzmocniony"
 
 #: ../base/ufos/armour.ufo:484
 msgid "Alien Body Armour"
@@ -507,7 +507,7 @@ msgstr "Średni pancerz Obcych"
 
 #: ../base/ufos/basemanagement.ufo:35
 msgid "Alien Containment Facility"
-msgstr "Kwarantanna"
+msgstr "Pomieszczenie Kwarantanny"
 
 #: ../base/ufos/basemanagement.ufo:51
 msgid "Entrance"
@@ -630,7 +630,7 @@ msgstr "Zagraj Obcymi"
 
 #: ../base/ufos/campaign.ufo:196
 msgid "alien_campaign_txt"
-msgstr ""
+msgstr "Ta kampania pozwala zagrać drugą stroną konfliktu - wcielić się w obcych i najechać ziemię."
 
 #: ../base/ufos/cities.ufo:15
 msgid "Amsterdam"
@@ -2492,11 +2492,11 @@ msgstr "Docelowy sklep"
 
 #: ../base/ufos/equipment.ufo:448
 msgid "Alien Campaign Start (Alien Campaign)"
-msgstr ""
+msgstr "Kampania Obcymi"
 
 #: ../base/ufos/equipment.ufo:470
 msgid "Alien Campaign Start (Market)"
-msgstr ""
+msgstr "Kampania Obcymi (Sklep)"
 
 #: ../base/ufos/events.ufo:33
 msgid "mail_from_un"
@@ -2600,6 +2600,17 @@ msgstr "Powodzenia"
 #: ../base/ufos/events.ufo:37
 msgid "mail_prolog"
 msgstr ""
+"Pragniemy Cię powitać, Dowódco. Od teraz masz pełną kontrolę nad PHALANX - Pozaziemską Jednostką Reagowania. Twoją misją jest ochronić obywateli Ziemi i powstrzymać za wszelką cenę zagrożenie ze strony Obcych. Jedynie od Ciebie zależy jak tego dokonasz; nasz warunek to odniesienia sukcesu.\n"
+"\n"
+"Twoje piewsze posunięcie to ustanowienie Kwatery Głównej. UN ma dostęp do wojskowych baz na całym świecie, więc możesz wybrać dowolny region dla rozpoczęcia działań. Wybierz miejsce mądrze, to może mieć wielki wpływ na odniesienie sukcesu projektu PHALANX.\n"
+"\n"
+"Niedawna analiza ataków na Bombaj i Bonn ujawniła, że zasięg UFO i obca aktywność wydaje się skupiać na najgęściej zaludnionych regionach Ziemi, między innymi północne i południowe wybrzeża Ameryki, Europy, Azji wschodniej, Południowej oraz centralnej Afryki i Australii. Powinieneś rozważyć włączenie tych terenów w zakres działań bojowych.\n"
+"\n"
+"Gdy tylko założysz pierwszą bazę, musisz przygotować swoich żołnierzy. Rekruci, których wyznaczono do PHALANX mają być przydzieleni do transportowców, oraz wyposażeni do walki.\n"
+"\n"
+"Troszcz się o nich, Dowódco. Wszyscy pokładamy spore nadzieje i modlimy sie za Ciebie.\n"
+"\n"
+"To wszystko. Powodzenia i udanych łowów."
 
 #: ../base/ufos/events.ufo:43 ../base/ufos/events.ufo:55
 #: ../base/ufos/events.ufo:66 ../base/ufos/events.ufo:77
@@ -2669,6 +2680,15 @@ msgstr "Obcy zginął"
 #: ../base/ufos/events.ufo:46
 msgid "mail_stunned_alien_died"
 msgstr ""
+"Do Dowódcy, \n"
+"\n"
+"Obawiam się, że mam złą wiadomość. Pomimo naszych wysiłków, okazy Obcych pozyskane w naszej ostatniej misji przeterminowały sie w Kwarantannie. Jesteśmy niezdolni do stabilizacji ich funkcji życiowych, aby zdążyć dowiedzieć się czegos wartościowego.\n"
+"\n"
+"Zewnętrzne symptomy wskazuja na przyczynę śmierci, jest nią nagłe i śmiertelne uduszenie. Wydaje sie że Obcy mogą żyć w naszej atmosferze ograniczony czas nim się uduszą. Nie wykonaliśmy pełnych badań ciał, czekamy jedynie na Twoją autoryzację w celu wykonania silnie zalecanej sekcji zwłok. Musimy znaleźć sposób na utrzymanie ich przy życia dłużej, bez tego nie będziemy w stanie prowadzić jakiś znaczących badań.\n"
+"\n"
+"Moja prośba o autopsję będzie czekać w R&D na Twoją aprobatę. Dziękuję, Dowódco.\n"
+"\n"
+"Z poważaniem, dr Connor"
 
 #: ../base/ufos/events.ufo:57 ../base/ufos/events.ufo:68
 msgid "Recovery Report -- %s"
@@ -2677,10 +2697,18 @@ msgstr "Raport o zabezpieczeniu UFO -- %s"
 #: ../base/ufos/events.ufo:58
 msgid "mail_alien_ufo_crashed"
 msgstr ""
+"Dowódco, %s jest zbyt uszkodzone by coś odzyskać. Byliśmy w stanie ocalić jedynie część wyposażenia z wraku. Uzyskane z %s przedmioty przybędą naszym transportowcem:\n"
+"\n"
+"%s"
 
 #: ../base/ufos/events.ufo:69
 msgid "mail_alien_ufo_recovered"
 msgstr ""
+"Dowódco, nasz zespół zabezpieczył %s w misji. Nakazałem by zostało przekazane do %s, potrwa to 2 dni.\n"
+"\n"
+"Jak tylko przybędzie chcemy rozmontować go na części,. Nasi inżynierowie sporządzą listę przydatnego wypozażenia:\n"
+"\n"
+"%s"
 
 #: ../base/ufos/events.ufo:79
 msgid "Not Enough Money -- %s"
@@ -2705,6 +2733,9 @@ msgstr "Produkcja ukończona -- %s"
 #: ../base/ufos/events.ufo:102
 msgid "mail_production_finished"
 msgstr ""
+"Zespół inżynierów zakończył produkcję {item} w {location}. Całe wyposażenie jest przetestowane i gotowe do użycia.\n"
+"\n"
+"--mjr. Navarre"
 
 #: ../base/ufos/events.ufo:110 ../base/ufos/events.ufo:132
 #: ../base/ufos/events.ufo:143 ../base/ufos/events.ufo:154
@@ -2833,6 +2864,13 @@ msgstr "Wykryto aktywność Obcych -- %s"
 #: ../base/ufos/events.ufo:256
 msgid "mail_alien_activity_reported"
 msgstr ""
+"Dzień dobry, Dowódco.\n"
+"\n"
+"Mamy potwierdzenie zauważenia Obcych w %s. Cywile są zagrozeni; Zalecam wysłać tam bezzwłocznie oddziały. Powodzenia i udanych łowów.\n"
+"\n"
+"Z wyrazami szacunku,\n"
+"\n"
+"płk. Falkland"
 
 #: ../base/ufos/events.ufo:264 ../base/ufos/events.ufo:275
 #: ../base/ufos/events.ufo:286 ../base/ufos/events.ufo:297
@@ -2855,6 +2893,9 @@ msgstr "Statek powietrzny utracił kontakt z celem -- %s"
 #: ../base/ufos/events.ufo:278
 msgid "mail_aircraft_lost_target"
 msgstr ""
+"Dowódco, %s  zgubił ślad radarowy po %s i jest niezdolny do podjęcia dalszego śledzenia. Proszę o nowe rozkazy.\n"
+"\ n"
+"-- Dowództwo Sił Powietrznych"
 
 #: ../base/ufos/events.ufo:288
 msgid "Aircraft Ready -- %s"
@@ -2863,6 +2904,9 @@ msgstr "Statek powietrzny gotowy -- %s"
 #: ../base/ufos/events.ufo:289
 msgid "mail_aircraft_ready"
 msgstr ""
+"Dowódco, %s został %s i jest gotowy do akcji.\n"
+"\n"
+"-- Dowództwo Sił Powietrznych"
 
 #: ../base/ufos/events.ufo:299
 msgid "Aircraft Bingo Fuel -- %s"
@@ -2871,6 +2915,9 @@ msgstr ""
 #: ../base/ufos/events.ufo:300
 msgid "mail_aircraft_bingo_fuel"
 msgstr ""
+"Dowódco, %s zakończył patrol. Pozostało mu paliwa jedynie na powrót do %s. Misję przerwano.\n"
+"\n"
+"-- Dowództwo Sił Powietrznych"
 
 #: ../base/ufos/events.ufo:310
 msgid "Aircraft Landed -- %s"
@@ -2879,6 +2926,9 @@ msgstr "Statek powietrzny wylądował -- %s"
 #: ../base/ufos/events.ufo:311
 msgid "mail_aircraft_landed"
 msgstr ""
+"Dowódco, %s wylądował w %s. I rozpoczął %s. Oszacowano że nim wystartuje pozostanie w tym miejscu jeszcze %s godz.\n"
+"\n"
+"-- Dowództwo Sił Powietrznych"
 
 #: ../base/ufos/fonts.ufo:11 ../base/ufos/fonts.ufo:18
 #: ../base/ufos/fonts.ufo:24 ../base/ufos/fonts.ufo:31
@@ -2901,7 +2951,7 @@ msgstr "Kampania"
 #: ../base/ufos/gamemodes.ufo:21
 #, fuzzy
 msgid "Static Campaign"
-msgstr "Rozpocznij"
+msgstr "Kampania Statyczna"
 
 #: ../base/ufos/gamemodes.ufo:26
 msgid "Skirmish"
@@ -2957,7 +3007,7 @@ msgstr "Wieża Radarowa"
 
 #: ../base/ufos/installation.ufo:18
 msgid "The radar tower is an unmanned, expendable installation that can be placed anywhere in the world to boost our detection range. It is cheap to build and highly useful, but its camouflage is not very effective. Alien craft may detect the active scanning and attempt to destroy the tower once they find it. It is recommended that radar towers be protected with SAM sites."
-msgstr "Wieża radarowa jest stałą bezzałogową instalacją, można ją umieścić w dowolnym miejscu a służy do zwikszenia zasigu wykrywania. Jest tanią i wysoce przydatną inwestycją ale jej kamuflaż nie jest zbyt efektywny. Obce pojazdy mogą wykryć jej aktywność i próbować zniszczyć wieżę natychmiast po wykryciu. Zalecane jest umieszczanie wież radarowych obok wyrzutni SAM."
+msgstr "Wieża radarowa jest stałą bezzałogową instalacją, można ją umieścić w dowolnym miejscu a służy do zwikszenia zasigu wykrywania. Jest tanią i wysoce przydatną inwestycją ale jej kamuflaż nie jest zbyt efektywny. Obce pojazdy mogą wykryć jej aktywność i próbować zniszczyć wieżę natychmiast po wykryciu. Zalecane jest umieszczanie wież radarowych obok wyrzutni rakietowych."
 
 #: ../base/ufos/installation.ufo:23 ../base/ufos/ui/geoscape.ufo:998
 #: ../base/ufos/ui/lostwon.ufo:227
@@ -2974,7 +3024,7 @@ msgstr "Bateria rakiet"
 
 #: ../base/ufos/installation.ufo:48
 msgid "The SAM site is an unmanned, expendable installation that can be placed anywhere in the world to automatically engage detected UFOs with surface-to-air missiles. It is cheap to build and highly useful, but its camouflage is not very effective. Alien craft may detect the missile launches and attempt to destroy the site once they find it. The SAM site is sturdy but will succumb to repeated bombing. Missile reloads are delivered free to our sites by UN forces."
-msgstr ""
+msgstr "Bateria rakiet jest stałą bezzałogową instalacją, mozna ją umieścić w dowolnym miejscu by automatycznie ostrzeliwała wykryte UFO pociskami ziemia-powietrze. Jest tanią i wysoce przydatną inwestycją ale jej kamuflaż nie jest zbyt efektywny. Obce pojazdy mogą wykryć jej aktywność i próbować zniszczyć wurzutnię natychmiast po jej wykryciu. Wyrzutnia jest silna lecz ulegnie zmasowanym bombardowaniom. Uzupełnienie amunicji następuje automatyczie z naszych baz."
 
 #: ../base/ufos/language.ufo:2
 msgid "English"
@@ -3076,7 +3126,7 @@ msgstr "Chiński"
 #: ../base/ufos/language.ufo:336
 #, fuzzy
 msgid "Traditional Chinese"
-msgstr "Dodatkowe podziękowania dla"
+msgstr "Chiński Tradycyjny"
 
 #: ../base/ufos/language.ufo:345
 msgid "Bulgarian"
@@ -3089,7 +3139,7 @@ msgstr "Norweski"
 #: ../base/ufos/language.ufo:363
 #, fuzzy
 msgid "Turkish"
-msgstr "Tunis"
+msgstr "Turecki"
 
 #: ../base/ufos/language.ufo:372
 msgid "No language"
@@ -3138,11 +3188,11 @@ msgstr "Dom otoczony budynkami gospodarczymi. UFO wylądowało na polu nieopodal
 #: ../base/ufos/maps.ufo:643 ../base/ufos/maps.ufo:683
 #: ../base/ufos/maps.ufo:724
 msgid "Aliens are up to no good in this sparsely populated forest region."
-msgstr ""
+msgstr "Obcy zabłądzili do rzadko zaludnionego terenu leśnego."
 
 #: ../base/ufos/maps.ufo:765
 msgid "UFO crashed in this sparsely populated forest region."
-msgstr ""
+msgstr "UFO rozbiło się w rzadko zaludnionym terenie leśnym."
 
 #: ../base/ufos/maps.ufo:809 ../base/ufos/maps.ufo:851
 #: ../base/ufos/maps.ufo:893
@@ -3155,16 +3205,16 @@ msgstr "Słabo zaludniony teren w zimnym klimacie."
 
 #: ../base/ufos/maps.ufo:974
 msgid "An important container harbour is attacked by alien invaders."
-msgstr ""
+msgstr "Ważny port transportowy jest atakowany przez Obcych."
 
 #: ../base/ufos/maps.ufo:1022 ../base/ufos/maps.ufo:1067
 #: ../base/ufos/maps.ufo:1109
 msgid "UFO landed in hills area."
-msgstr ""
+msgstr "UFO wylądowało w górzystym terenie."
 
 #: ../base/ufos/maps.ufo:1156 ../base/ufos/maps.ufo:1200
 msgid "Industrial theme."
-msgstr ""
+msgstr "Strefa przemysłowa."
 
 #: ../base/ufos/maps.ufo:1247 ../base/ufos/maps.ufo:1297
 #: ../base/ufos/maps.ufo:2446
@@ -3177,7 +3227,7 @@ msgstr "Laboratorium, w którym badano znalezione szczątki UFO."
 
 #: ../base/ufos/maps.ufo:1407
 msgid "A mansion near the coast."
-msgstr ""
+msgstr "Rezydencja na wybrzeżu"
 
 #: ../base/ufos/maps.ufo:1458 ../base/ufos/maps.ufo:1498
 #: ../base/ufos/maps.ufo:1581
@@ -3186,7 +3236,7 @@ msgstr "Podmiejska dzielnica w strefie orientalnej."
 
 #: ../base/ufos/maps.ufo:1540
 msgid "Crashed UFO in oriental suburban district."
-msgstr ""
+msgstr "Rozbite UFO w orientalnej dzielnicy."
 
 #: ../base/ufos/maps.ufo:1624 ../base/ufos/maps.ufo:1664
 #: ../base/ufos/maps.ufo:1705
@@ -3241,7 +3291,7 @@ msgstr "Niewielkie biuro w górzystym terenie."
 
 #: ../base/ufos/maps.ufo:2501
 msgid "A kind of communal gathering centre annex foraging facility, known as a supermarket."
-msgstr ""
+msgstr "Część centrum handlowego z supermarketem spożywczym"
 
 #: ../base/ufos/maps.ufo:2556
 msgid "A military convoy has caught the eye of the aliens."
@@ -3269,7 +3319,7 @@ msgstr "Strefa przemysłowa wykorzystywania do przeładunku towarów."
 
 #: ../base/ufos/maps.ufo:2873 ../base/ufos/maps.ufo:2918
 msgid "A small bungalow."
-msgstr ""
+msgstr "Mały bungalow"
 
 #: ../base/ufos/maps.ufo:2965
 msgid "A bunker used in a previous conflict."
@@ -3374,15 +3424,15 @@ msgstr "Baza jest atakowana."
 #: ../base/ufos/maps.ufo:4300
 #, fuzzy
 msgid "Rescue mission."
-msgstr "Automisja"
+msgstr "Misja ratunkowa"
 
 #: ../base/ufos/maps.ufo:4330
 msgid "Training Zone: Alpha"
-msgstr ""
+msgstr "Strefa treningowa: Alfa"
 
 #: ../base/ufos/maps.ufo:4347
 msgid "Training Zone: Bravo"
-msgstr ""
+msgstr "Strefa treningowa: Bravo"
 
 #: ../base/ufos/medals.ufo:3
 msgid "Cross"
@@ -3526,31 +3576,31 @@ msgstr "płk."
 
 #: ../base/ufos/msgcategories.ufo:7
 msgid "install_equipment"
-msgstr ""
+msgstr "Instalacja sprzętu"
 
 #: ../base/ufos/msgcategories.ufo:16
 msgid "installation_construction"
-msgstr ""
+msgstr "Konstruowanie instalacji"
 
 #: ../base/ufos/msgcategories.ufo:23
 msgid "research"
-msgstr "badania"
+msgstr "Badania"
 
 #: ../base/ufos/msgcategories.ufo:30
 msgid "production"
-msgstr "produkcja"
+msgstr "Produkcja"
 
 #: ../base/ufos/msgcategories.ufo:37
 msgid "nations_happiness"
-msgstr ""
+msgstr "Zadowolenie narodów"
 
 #: ../base/ufos/msgcategories.ufo:44
 msgid "transfer"
-msgstr "przesyłka"
+msgstr "Przesyłka"
 
 #: ../base/ufos/msgcategories.ufo:53
 msgid "ufo_activity"
-msgstr ""
+msgstr "Aktywność UFO"
 
 #: ../base/ufos/msgcategories.ufo:60
 #, fuzzy
@@ -3645,7 +3695,7 @@ msgstr "Autopsje i obserwacje"
 
 #: ../base/ufos/research.ufo:118
 msgid "The Alien Threat"
-msgstr "Zagrożenie Obcych"
+msgstr "Zagrożenie ze strony Obcych"
 
 #: ../base/ufos/research.ufo:127
 msgid "Continuous Wave Laser Operation"
