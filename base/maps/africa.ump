@@ -245,6 +245,18 @@ ab		+a		ab
 0		ab		0
 }
 
+tile +house1a
+	// house 4x5, two carpets, entrance west, a palm south
+	// 1x info_alien_start
+	// 1x info_civilian_start
+{
+3 4
+0		ab		0
+ab		+a		ab
+ab		+a		ab
+0		ab		0
+}
+
 tile +house2
 	// house 5x4,two carpets, entrance south
 	// 1x info_alien_start
@@ -253,6 +265,16 @@ tile +house2
 0		ab		0
 ab		+a		ab
 0		ab		0
+}
+
+tile +house2a
+	// house 5x4,two carpets, entrance south
+	// 1x info_alien_start
+{
+4 3
+0		ab		ab		0
+ab		+a		+a		ab
+0		ab		ab		0
 }
 
 tile +house3
@@ -264,6 +286,17 @@ tile +house3
 0		ab		0
 ab		+a		ab
 0		ab		0
+}
+
+tile +house3a
+	// house 4x5, two utensils, entrance east, a palm west
+	// 1x info_alien_start
+	// 2x info_civilian_start
+{
+4 3
+0		ab		ab		0
+ab		+a		+a		ab
+0		ab		ab		0
 }
 
 tile +house4
@@ -363,9 +396,12 @@ multiplayer +mp_team2
 +empty3		"0 1"
 +empty4		"0 1"
 +empty6		"0 99"
-+house1		"1 4"
-+house2		"1 4"
-+house3		"1 4"
++house1		"0 2"
++house1a	"0 2"
++house2		"0 2"
++house2a	"0 2"
++house3		"0 2"
++house3a	"0 2"
 +fence1		"0 1"
 +fence2		"0 1"
 +fence3		"0 1"
@@ -388,9 +424,12 @@ multiplayer +mp_team2
 +empty3		"0 1"
 +empty4		"0 1"
 +empty6		"0 99"
-+house1		"1 4"
-+house2		"1 4"
-+house3		"1 4"
++house1		"0 2"
++house1a	"0 2"
++house2		"0 2"
++house2a	"0 2"
++house3		"0 2"
++house3a	"0 2"
 +fence1		"0 1"
 +fence2		"0 1"
 +fence3		"0 1"
@@ -412,9 +451,12 @@ multiplayer +mp_team2
 +empty3		"0 1"
 +empty4		"0 1"
 +empty6		"0 99"
-+house1		"0 4"
-+house2		"0 4"
-+house3		"0 4"
++house1		"0 3"
++house1a	"0 3"
++house2		"0 3"
++house2a	"0 3"
++house3		"0 3"
++house3a	"0 3"
 +fence1		"0 2"
 +fence2		"0 2"
 +fence3		"0 2"
