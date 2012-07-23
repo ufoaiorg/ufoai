@@ -8,284 +8,393 @@ base africa/af_
 // ----------
 // +: tile contains something
 // a: main
-// b: dropship
+// b: dropship, ufo
 
 // 1-4 (trbl)
 
+// UFOs -------------------------------------------------------------
 
 tile +craft_ufo_scout
 {
 4 4
-
-0  a  a  0
-a +a +a  a
-a +a +a  a
-0  a  a  0
+0		a		a		0
+a		+b		+b		a
+a		+b		+b		a
+0		a		a		0
 }
 
 tile +craft_ufo_fighter
 {
 5 5
-
-0  a   a  a  0
-0  a  +a +a  a
-a +a  +a +a  a
-0  a  +a +a  a
-0  0   a  a  0
+0		a		a		a		0
+0		a		+b		+b		a
+a		+b		+b		+b		a
+0		a		+b		+b		a
+0		0		a		a		0
 }
 
 tile +craft_crash_fighter
 {
 4 4
-
-0  a  a  0
-a +a +a  a
-a +a +a  a
-0  a  a  0
+0		a		a		0
+a		+b		+b		a
+a		+b		+b		a
+0		a		a		0
 }
-
 
 tile +craft_ufo_harvester
 {
 10 6
-
-0       0      0      0      0      0      0      0      0     0
-a      +a     +a     +a     +a     +a     +a     +a     +a     0
-a      +a     +a     +a     +a     +a     +a     +a     +a     0
-0       a     +a     +a     +a     +a     +a     +a     +a     0
-0       a     +a     +a     +a     +a     +a     +a     +a     0
-0       0      0      0      0      0      0      0      0     0
+0		a		a		a		a		a		a		a		a		0
+a		+b		+b		+b		+b		+b		+b		+b		+b		0
+a		+b		+b		+b		+b		+b		+b		+b		+b		0
+0		ab		+b		+b		+b		+b		+b		+b		+b		0
+0		ab		+b		+b		+b		+b		+b		+b		+b		0
+0		a		a		a		a		a		a		a		a		0
 }
+
+// dropships --------------------------------------------------------
 
 tile +craft_drop_firebird
 {
 4 5
-
-0      a      a      0
-a      +b     +b     a
-a      +b     +b     a
-z      +b     +b     a
-0      a      a      0
+0		a		a		0
+a		+b		+b		a
+a		+b		+b		a
+a		+b		+b		a
+0		a		a		0
 }
 
 tile +craft_drop_herakles
 {
 4 5
-
-0      a      a      0
-a      +b     +b     a
-a      +b     +b     a
-z      +b     +b     a
-0      a      a      0
+0		a		a		0
+a		+b		+b		a
+a		+b		+b		a
+a		+b		+b		a
+0		a		a		0
 }
 
 tile +craft_drop_raptor
 {
 4 5
-
-0      a      a      0
-a      +b     +b     a
-a      +b     +b     a
-z      +b     +b     a
-0      a      a      0
+0		a		a		0
+a		+b		+b		a
+a		+b		+b		a
+a		+b		+b		a
+0		a		a		0
 }
 
-// Multiplayer tile with a house and starting positions for team no 2
+// common tiles -----------------------------------------------------
 
-tile +mp_team2
-{
-4 4
-
-0      0      0      0
-0      +a     +a     0
-0      +a     +a     0
-0      0      0      0
-}
-
-
-// Empty tiles:
+// tiles empty1 and empty2 either form a small hill or can be located in the maps corners
 
 tile +empty1
+	// lower right part of the hill
+	// upper left corner of the map
+	// 1x info_alien_start
+	// 1x info_civilian_start
 {
 3 3
-
-0    3   0
-2  +a14  ab
-0   ab   0
+0		3		0
+2		+a14	ab
+0		ab		0
 }
 
 tile +empty2
+	// lower right part of the hill
+	// upper left corner of the map
+	// 1x info_alien_start
 {
 3 3
-
-0   3    0
-ab +a12  4
-0   ab   0
+0		3		0
+ab		+a12	4
+0		ab		0
 }
 
 tile +empty5
+	// rock vertically
+	// 3x info_alien_start
 {
 4 4
+0		ab		ab		0
+ab		+a		+a		ab
+ab		+a		+a		ab
+0		ab		ab		0
+}
 
-0   ab  ab  0
-ab  +a  +a  ab
-ab  +a  +a  ab
-0   ab  ab  0
+tile +empty5a
+	// rock horizontally
+	// 3x info_alien_start
+{
+4 4
+0		ab		ab		0
+ab		+a		+a		ab
+ab		+a		+a		ab
+0		ab		ab		0
 }
 
 tile +empty6
+	// plain
 {
 3 3
+0		ab		0
+ab		+a		ab
+0		ab		0
+}
 
-0   ab  0
-ab  +a  ab
-0   ab  0
+tile +empty6a
+	// a single palm
+	// 1x info_alien_start
+{
+3 3
+0		ab		0
+ab		+a		ab
+0		ab		0
+}
+
+tile +empty6b
+	// a single palm
+	// 1x info_alien_start
+{
+3 3
+0		ab		0
+ab		+a		ab
+0		ab		0
+}
+
+tile +empty6c
+	// a single palm
+	// 1x info_alien_start
+{
+3 3
+0		ab		0
+ab		+a		ab
+0		ab		0
 }
 
 tile +fence1
+	// fence looks like C
+	// 2x info_player_start
 {
 3 3
-
-0   ab  0
-ab  +a  ab
-0   ab  0
+0		ab		0
+ab		+a		ab
+0		ab		0
 }
 
 tile +fence2
+	// fence looks like horizontally line
+	// 3x info_alien_start
 {
 4 3
-
-0   ab  ab  0
-ab  +a  +a  ab
-0   ab  ab  0
+0		ab		ab		0
+ab		+a		+a		ab
+0		ab		ab		0
 }
 
 tile +fence3
+	// two L-shaped fences form an O
+	// 2x info_alien_start
 {
 3 3
-
-0   ab  0
-ab  +a  ab
-0   ab  0
+0		ab		0
+ab		+a		ab
+0		ab		0
 }
 
-// fire with shed
 tile +misc1
+	// fire with shed
 {
 3 3
-
-0   ab  0
-ab  +a  ab
-0   ab  0
+0		ab		0
+ab		+a		ab
+0		ab		0
 }
 
-
-// houses
 tile +house1
+	// house 4x5, two carpets, entrance west
+	// 1x info_alien_start
+	// 1x info_civilian_start
 {
 3 3
-
-0   ab  0
-ab  +a  ab
-0   ab  0
+0		ab		0
+ab		+a		ab
+0		ab		0
 }
 
 tile +house2
+	// house 5x4,two carpets, entrance south
+	// 1x info_alien_start
 {
 3 3
-
-0   ab  0
-ab  +a  ab
-0   ab  0
+0		ab		0
+ab		+a		ab
+0		ab		0
 }
 
 tile +house3
+	// house 4x5, two utensils, entrance west
+	// 1x info_alien_start
+	// 2x info_civilian_start
 {
 3 3
-
-0   ab  0
-ab  +a  ab
-0   ab  0
+0		ab		0
+ab		+a		ab
+0		ab		0
 }
 
 tile +house4
+	// house 7x6, carpets, two benches and pictures
+	// small entrance west, wide entrance east, fence east
+	// 2x info_alien_start
+	// 3x info_civilian_start
 {
 4 3
+0		ab		ab		0
+ab		+a		+a		ab
+0		ab		ab		0
+}
 
-0   ab  ab  0
-ab  +a  +a  ab
-0   ab  ab  0
+tile +house4a
+	// house 7x6, carpets, two benches and pictures
+	// small entrance west, wide entrance east, fence east
+	// 2x info_alien_start
+	// 3x info_civilian_start
+{
+3 4
+0		ab		0
+ab		+a		ab
+ab		+a		ab
+0		ab		0
 }
 
 tile +house5
+	// cowshed and fence
+	// 2x info_alien_start
 {
 4 3
-
-0   ab  ab  0
-ab  +a  +a  ab
-0   ab  ab  0
+0		ab		ab		0
+ab		+a		+a		ab
+0		ab		ab		0
 }
 
+tile +house5a
+	// cowshed and fence
+	// 2x info_alien_start
+{
+3 4
+0		ab		0
+ab		+a		ab
+ab		+a		ab
+0		ab		0
+}
 
-// ########################################
-// ########### Maps for the game ###########
+// multiplayer tiles ------------------------------------------------
+
+tile +mp_team2
+	//a house and starting positions for team no 2
+{
+4 4
+0		a		a		0
+a		+b		+b		a
+a		+b		+b		a
+0		a		a		0
+}
+
+// tilesets ---------------------------------------------------------
+
+tileset cowshed
+{
++house5
++house5a
+}
+
+tileset rock_a
+{
++empty5
++empty5a
+}
+
+tileset house_a
+{
++house4
++house4a
+}
+
+tileset filler_a
+{
++empty6a
++empty6b
++empty6c
+}
+
+// map assemblies ---------------------------------------------------
+
 assembly small
 {
-size "6 4"
+size "8 5"
 title "_Africa"
 multiplayer +mp_team2
-+empty1 "1 1"
-+empty2 "1 1"
-+empty5 "0 3"
-+house1 "1 4"
-+house2 "1 4"
-+house3 "1 4"
-+house4 "1 1"
-+house5 "1 1"
-+fence1 "0 1"
-+fence2 "0 1"
-+fence3 "0 1"
-+misc1  "0 4"
++empty1		"0 1"
++empty2		"0 1"
++empty6		"0 99"
++house1		"1 4"
++house2		"1 4"
++house3		"1 4"
++fence1		"0 1"
++fence2		"0 1"
++fence3		"0 1"
++misc1		"0 1"
+tileset cowshed		"1 1"
+tileset filler_a	"1 4"
+tileset house_a		"1 1"
+tileset rock_a		"0 1"
 *rm_drop +craft_drop_firebird "1 1"
 *rm_ufo +craft_ufo_scout "1 1"
 }
 
 assembly small_crash
 {
-size "6 4"
+size "6 6"
 title "_Africa"
-+empty1 "1 1"
-+empty2 "1 1"
-+empty5 "0 3"
-+house1 "1 4"
-+house2 "1 4"
-+house3 "1 4"
-+house5 "1 1"
-+fence1 "0 1"
-+fence2 "0 1"
-+fence3 "0 1"
-+misc1  "0 4"
+multiplayer +mp_team2
++empty1		"0 1"
++empty2		"0 1"
++empty6		"0 99"
++house1		"1 4"
++house2		"1 4"
++house3		"1 4"
++fence1		"0 1"
++fence2		"0 1"
++fence3		"0 1"
++misc1		"0 1"
+tileset cowshed		"1 1"
+tileset filler_a	"1 4"
+tileset rock_a		"0 1"
 *rm_drop +craft_drop_firebird "1 1"
 *rm_ufo +craft_crash_fighter "1 1"
 }
 
 assembly large
 {
-size "11 4"
+size "10 10"
 title "_Africa"
 multiplayer +mp_team2
-+empty1 "0 1"
-+empty2 "0 1"
-+empty5 "0 3"
-+house1 "0 4"
-+house2 "0 4"
-+house3 "0 4"
-+house4 "0 1"
-+house5 "0 1"
-+fence1 "0 2"
-+fence2 "0 2"
-+fence3 "0 2"
-+misc1  "0 4"
++empty1		"0 1"
++empty2		"0 1"
++empty6		"0 99"
++house1		"0 4"
++house2		"0 4"
++house3		"0 4"
++fence1		"0 2"
++fence2		"0 2"
++fence3		"0 2"
++misc1		"0 1"
+tileset cowshed		"1 1"
+tileset filler_a	"1 4"
+tileset house_a		"1 1"
+tileset rock_a		"0 1"
 *rm_ufo +craft_ufo_harvester "1 1"
 *rm_drop +craft_drop_firebird "1 1"
 }
