@@ -2655,8 +2655,8 @@ mapdef cemetery_main
 	)
 
 //	ufos
-//	{
-//	}
+//	(
+//	)
 
 	terrains
 	(
@@ -2787,8 +2787,8 @@ mapdef city_disco
 	)
 
 //	ufos
-//	{
-//	}
+//	(
+//	)
 
 	terrains
 	(
@@ -2838,8 +2838,8 @@ mapdef community_centre
 	)
 
 //	ufos
-//	{
-//	}
+//	(
+//	)
 
 	terrains
 	(
@@ -2892,9 +2892,9 @@ mapdef construction
 	)
 
 	ufos
-	{
+	(
 		// any
-	}
+	)
 
 	terrains
 	(
@@ -2942,8 +2942,8 @@ mapdef druglord
 	)
 
 //	ufos
-//	{
-//	}
+//	(
+//	)
 
 	terrains
 	(
@@ -2991,8 +2991,8 @@ mapdef eaglenest
 	)
 
 //	ufos
-//	{
-//	}
+//	(
+//	)
 
 	terrains
 	(
@@ -3042,8 +3042,8 @@ mapdef gasstation
 	)
 
 //	ufos
-//	{
-//	}
+//	(
+//	)
 
 	terrains
 	(
@@ -3091,8 +3091,8 @@ mapdef italy
 	)
 
 //	ufos
-//	{
-//	}
+//	(
+//	)
 
 	terrains
 	(
@@ -3143,8 +3143,8 @@ mapdef japan_default
 	)
 
 //	ufos
-//	{
-//	}
+//	(
+//	)
 
 	terrains
 	(
@@ -3193,8 +3193,8 @@ mapdef mart
 	)
 
 //	ufos
-//	{
-//	}
+//	(
+//	)
 
 	terrains
 	(
@@ -3245,8 +3245,8 @@ mapdef military_convoy
 	)
 
 //	ufos
-//	{
-//	}
+//	(
+//	)
 
 	terrains
 	(
@@ -3402,8 +3402,8 @@ mapdef spedition
 	)
 
 //	ufos
-//	{
-//	}
+//	(
+//	)
 
 	terrains
 	(
@@ -3451,8 +3451,8 @@ mapdef stadium
 	)
 
 //	ufos
-//	{
-//	}
+//	(
+//	)
 
 	terrains
 	(
@@ -3505,8 +3505,8 @@ mapdef tower
 	)
 
 //	ufos
-//	{
-//	}
+//	(
+//	)
 
 	terrains
 	(
@@ -3555,8 +3555,8 @@ mapdef transport
 	)
 
 //	ufos
-//	{
-//	}
+//	(
+//	)
 
 	terrains
 	(
