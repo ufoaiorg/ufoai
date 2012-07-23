@@ -526,9 +526,9 @@ void AIRFIGHT_ActionsAfterAirfight (const campaign_t* campaign, aircraft_t *shoo
 			AIR_DestroyAircraft(aircraft, pilotSurvived);
 
 			if (pilotSurvived)
-				MS_AddNewMessage(_("Interception"), _("Pilot ejected from craft"), MSG_EVENT);
+				MS_AddNewMessage(_("Interception"), _("Pilot ejected from craft"), MSG_STANDARD);
 			else
-				MS_AddNewMessage(_("Interception"), _("Pilot killed in action"), MSG_EVENT);
+				MS_AddNewMessage(_("Interception"), _("Pilot killed in action"), MSG_STANDARD);
 		}
 
 		/* Make UFO proceed with its mission, if it has not been already destroyed */

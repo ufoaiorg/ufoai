@@ -46,7 +46,8 @@ typedef enum {
 	MSG_NEWS,
 	MSG_DEATH,
 	MSG_CRASHSITE,
-	MSG_EVENT,
+
+	MSG_EVENT,			/**< Eventmail only! used by CL_EventAddMail */
 
 	MSG_MAX
 } messageType_t;
