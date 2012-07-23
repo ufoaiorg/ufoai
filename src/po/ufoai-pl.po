@@ -2894,7 +2894,7 @@ msgstr "Statek powietrzny utracił kontakt z celem -- %s"
 msgid "mail_aircraft_lost_target"
 msgstr ""
 "Dowódco, %s  zgubił ślad radarowy po %s i jest niezdolny do podjęcia dalszego śledzenia. Proszę o nowe rozkazy.\n"
-"\ n"
+"\n"
 "-- Dowództwo Sił Powietrznych"
 
 #: ../base/ufos/events.ufo:288
