@@ -456,6 +456,7 @@ static edict_t *AI_SearchDestroyableObject (const edict_t *ent, const fireDef_t 
  */
 static void AI_SearchBestTarget (aiAction_t *aia, const edict_t *ent, edict_t *check, const item_t *item, shoot_types_t shootType, int tu, float *maxDmg, int *bestTime, const fireDef_t *fdArray)
 {
+	float vis = ACTOR_VIS_0;
 	bool visChecked = false;	/* only check visibily once for an actor */
 	fireDefIndex_t fdIdx;
 	float dist;
@@ -470,7 +471,6 @@ static void AI_SearchBestTarget (aiAction_t *aia, const edict_t *ent, edict_t *c
 		const int shots = tu / time;
 		if (shots) {
 			float dmg;
-			float vis = ACTOR_VIS_0;
 			if (!AI_FighterCheckShoot(ent, check, fd, &dist))
 				continue;
 
