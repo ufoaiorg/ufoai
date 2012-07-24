@@ -515,7 +515,7 @@ tileset rock_a		"0 1"
 *rm_ufo +craft_crash_fighter "1 1"
 }
 
-assembly large
+assembly medium
 {
 size "10 8"
 title "_Africa"

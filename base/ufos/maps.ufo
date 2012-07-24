@@ -50,10 +50,10 @@
 // AFRICA RANDOM MAPS //
 ////////////////////////
 
-mapdef africa_large
+mapdef africa_medium
 {
 	map				"+africa"
-	param			"large"
+	param			"medium"
 	multiplayer		true
 	teams			2
 	gametypes (
