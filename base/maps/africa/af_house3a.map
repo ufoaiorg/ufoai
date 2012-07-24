@@ -875,24 +875,3 @@
 "model" "models/objects/vegi/palm1/palm1.md2"
 "origin" "97 160 35"
 }
-// entity 9
-{
-"classname" "misc_model"
-"model" "-"
-"origin" "111 157 35"
-"spawnflags" "255"
-}
-// entity 10
-{
-"classname" "misc_model"
-"model" "-"
-"origin" "111 157 35"
-"spawnflags" "255"
-}
-// entity 11
-{
-"classname" "misc_model"
-"model" "-"
-"origin" "111 157 35"
-"spawnflags" "255"
-}
