@@ -11,12 +11,11 @@ base/maps/africa/af_empty1.map | GNU General Public License 2.0 or later | Kosti
 base/maps/africa/af_empty2.map | GNU General Public License 2.0 or later
 base/maps/africa/af_empty3.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
 base/maps/africa/af_empty4.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
-base/maps/africa/af_empty5.map | GNU General Public License 2.0 or later
-base/maps/africa/af_empty5a.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | base/maps/africa/af_empty5.map
 base/maps/africa/af_empty6.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
 base/maps/africa/af_empty6a.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | base/maps/africa/af_empty6.map
 base/maps/africa/af_empty6b.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | base/maps/africa/af_empty6.map
 base/maps/africa/af_empty6c.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | base/maps/africa/af_empty6.map
+base/maps/africa/af_empty6d.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | base/maps/africa/af_empty6.map
 base/maps/africa/af_fence1.map | GNU General Public License 2.0 or later
 base/maps/africa/af_fence2.map | GNU General Public License 2.0 or later
 base/maps/africa/af_fence3.map | GNU General Public License 2.0 or later
@@ -30,7 +29,14 @@ base/maps/africa/af_house4.map | GNU General Public License 2.0 or later
 base/maps/africa/af_house5.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
 base/maps/africa/af_house5a.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | base/maps/africa/af_house5.map
 base/maps/africa/af_misc1.map | GNU General Public License 2.0 or later
+base/maps/africa/af_misc2.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/africa/af_mountain1a.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/africa/af_mountain1b.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
 base/maps/africa/af_mp_team2.map | GNU General Public License 2.0 or later
+base/maps/africa/af_rock1a.map | GNU General Public License 2.0 or later
+base/maps/africa/af_rock1b.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | base/maps/africa/af_empty5.map
+base/maps/africa/af_rock2a.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/africa/af_rock2b.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
 base/maps/b/aliencont.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/b/antimatter.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/b/base_empty.map | GNU General Public License 2.0 or later | Martin Gerhardy
