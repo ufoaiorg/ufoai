@@ -45,7 +45,7 @@ typedef struct sustain_s {
  * the time it takes for each entity to sort the light list at each
  * frame (this is based on the number of lights actually used, not
  * the max number allowed) */
-#define MAX_STATIC_LIGHTS 256
+#define MAX_STATIC_LIGHTS 1024
 
 /** @todo - integrate the particle-based lights into the new dynamic light system */
 void R_AddLight(const vec3_t origin, float radius, const vec3_t color);
