@@ -7472,6 +7472,8 @@ msgstr ""
 "Prędkość przelotowa: +/- 2 200 km/h\n"
 "\n"
 "Prędkość maksymalna: +/- 4 100 km/h\n"
+"\n"
+"Załoga: maksymalnie do 12 Obcych\n"
 
 #: ../base/ufos/research.ufo:4022
 msgid "ufo_harvester_pre_txt"
