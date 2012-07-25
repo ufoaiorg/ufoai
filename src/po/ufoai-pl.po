@@ -50,7 +50,7 @@ msgstr "Dyskoteka"
 
 #: ../base/maps/community_centre.ump:61
 msgid "Community_centre"
-msgstr "Centrum komunikacji"
+msgstr "Ośrodek kultury"
 
 #: ../base/maps/construction.ump:64
 msgid "Construction"
@@ -95,7 +95,7 @@ msgstr "Lądowanie Obcych - strefa przemysłowa"
 #: ../base/maps/frozen.ump:372 ../base/maps/frozen.ump:394
 #, fuzzy
 msgid "A UFO crashed into the snow here."
-msgstr "Niewielkie UFO rozbiło się w okolicy kopalni."
+msgstr "Niewielkie UFO rozbiło się zaśnieżonym terenie."
 
 #: ../base/maps/frozen.ump:412
 msgid "Multiplayer Coop"
@@ -121,7 +121,7 @@ msgstr ""
 #: ../base/maps/hills.ump:488 ../base/maps/hills.ump:519
 #: ../base/maps/hills.ump:572
 msgid "UFO landed in hills area"
-msgstr "UFO - teren górzysty"
+msgstr "UFO wylądowało w górzystym terenie"
 
 #: ../base/maps/ice.ump:331 ../base/maps/ice.ump:354
 #, fuzzy
@@ -130,7 +130,7 @@ msgstr "Incheon"
 
 #: ../base/maps/industrial.ump:257 ../base/maps/industrial.ump:281
 msgid "UFO Landed"
-msgstr "Lądowanie UFO"
+msgstr "UFO wylądowało"
 
 #: ../base/maps/italy.ump:61
 msgid "Italy"
@@ -279,7 +279,7 @@ msgstr "Saracen I"
 
 #: ../base/ufos/aircraftmanagement.ufo:302
 msgid "Dragon Interceptor"
-msgstr "Myśliwiec, klasa Dragon"
+msgstr "Myśliwiec Dragon"
 
 #: ../base/ufos/aircraftmanagement.ufo:303
 msgid "Dragon"
@@ -291,15 +291,15 @@ msgstr "Myśliwiec, klasa Starchaser"
 
 #: ../base/ufos/aircraftmanagement.ufo:344
 msgid "Starchaser"
-msgstr "Starchaser I"
+msgstr "Starchaser"
 
 #: ../base/ufos/aircraftmanagement.ufo:389
 msgid "Stingray Interceptor"
-msgstr "Myśliwiec, klasa Stingray"
+msgstr "Myśliwiec Stingray"
 
 #: ../base/ufos/aircraftmanagement.ufo:390
 msgid "Stingray"
-msgstr "Stingray I"
+msgstr "Stingray"
 
 #: ../base/ufos/aircraftmanagement.ufo:441 ../base/ufos/research.ufo:3671
 msgid "UFO - Scout"
@@ -473,7 +473,7 @@ msgstr "Wieżyczka laserowa"
 
 #: ../base/ufos/armour.ufo:22
 msgid "normal"
-msgstr "zwykłe"
+msgstr "Zwykłe"
 
 #: ../base/ufos/armour.ufo:30
 msgid "blast"
@@ -2750,8 +2750,7 @@ msgstr "Odkryto bazę Obcych -- %s"
 
 #: ../base/ufos/events.ufo:77
 msgid "mail_alien_base_discovered"
-msgstr ""
-
+msgstr "Dowódco, nasze służby odkryły na Ziemi lokalizację sporej Obcej instalacji. Zagraża ona poważnie działaniom PHALANX jak i całej ludzkości, musimy ją przejąć tak szybko jak to tylko możliwe."
 #: ../base/ufos/events.ufo:86
 #: client/cgame/campaign/missions/cp_mission_ufocarrier.cpp:62
 #, fuzzy
@@ -3129,7 +3128,7 @@ msgstr "Misja - cmentarny terror."
 
 #: ../base/ufos/maps.ufo:2687 ../base/ufos/maps.ufo:4926
 msgid "A city high rise."
-msgstr ""
+msgstr "Wysoko rozwinięte miasto"
 
 #: ../base/ufos/maps.ufo:2728
 #, fuzzy
@@ -3242,7 +3241,7 @@ msgstr "Stacja paliw, którą Obcy próbują zniszczyć."
 
 #: ../base/ufos/maps.ufo:4194
 msgid "A depot with the name 'The Gate' where secret technology is stored."
-msgstr ""
+msgstr "Składnica o nazwie 'The Gate' gdzie zmagazynowano sekretne technologie."
 
 #: ../base/ufos/maps.ufo:4242
 msgid "A local harbour."
@@ -3258,7 +3257,7 @@ msgstr "Stara kopalnia."
 
 #: ../base/ufos/maps.ufo:4436
 msgid "Neighbourhood."
-msgstr ""
+msgstr "Sąsiedztwo."
 
 #: ../base/ufos/maps.ufo:4480
 msgid "An office complex on the outskirts of town."
@@ -3447,28 +3446,28 @@ msgstr "płk."
 
 #: ../base/ufos/msgid/tips.ufo:9
 msgid ""
-"Commander, our last mission killed the UFO's crew but we have nowhere to store the craft. The UFO is too large to house within our own base's engineering and research facilities. You should build a UFO Yard as soon as possible so that we can store the alien vehicles at an off-base installation. We won't be able to conduct any research on the crafts until we can safely store them.\n"
+"Dowódco, w ostatniek misji zabito załogę UFO lecz nie mamy możliwości przechować ten pojazd. UFO jest zbyt duże by umieścić je w warsztatach lub laboratoriach naszej bazy. Musisz wybudować tak szybko jak tylko możliwe Hangar UFO aby przechowywać pojazdy Obcych poza terenem baz. Nie możemy prowadzić prac nad tą technologią bez możliwości bezpiecznego jej składowania.\n"
 "\n"
-"Once we have a UFO in storage, our scientists can get to work conducting their research. Once their done, our engineers will be able to disassemble the UFO to collect materials and parts.\n"
+"Gdu UFO będa już zmagazynowane, nasi naukowcy będa mogli rozpocząć badania. Gdy zostana ukończone, nasi inżynierowie będą mogli zdemontować UFO aby odzyskać materiały i części.\n"
 "\n"
-"Work on the UFOs will force our scientists and engineers to move back and forth between the base and the UFO yard, so build the site as close as possible to the base where the work is being conducted.\n"
+"Prace nad UFO zmuszą naszych naukowców i inżynierów do przemieszczania się pomiędzy bazą a Hangarem UFO, więc warto miejsce wybudowania wybrać jak najbliżej bazy z której będą wyznaczane prace.\n"
 "\n"
 "\n"
-"--Cdr. Navarre"
+"--mjr. Navarre"
 msgstr ""
 
 #: ../base/ufos/msgid/tips.ufo:24
 msgid ""
-"Commander,\n"
+"Dowódco,\n"
 "\n"
-"We need to capture some aliens alive if we're ever going to understand our enemy. We can learn a lot from performing an autopsy on alien corpses, but to figure out how these creatures tick we need to observe live specimens.\n"
+"Potrzebujemy schwytać żywych Obcych jeśli chcemy zrozumieć wroga. Możemy wiele dowiedzieć się z przeprowadzonych autopsji zwłok, ale do obserwacji ich zachowań wymagane są żywe okazy tych kreatur.\n"
 "\n"
-"If you can stun aliens on the battlefield and bring them in alive to a base with an alien containment facility, there's no telling what we could accomplish. We can see better how their biological organisms function and probe them for weaknesses. In time we might even be able to develop a way to communicate with them.\n"
+"Jeśli zdołasz ogłuszyć Obcego w walce a następnie dostarczyć go do bazy z instalacja Kwarantanny, będziemy mieli o wiele więcej do powiedzenia. Lepiej poznamy jak funkcjonuje ich biologiczny organizm i posiądziemy wiedzę o ich słabościach. W miarę czasu moglibyśmy nawet rozwinąc metodę porozumiewania sie z nimi.\n
 "\n"
-"I know it's a great risk to your soldiers to capture them alive, sir, but it's a risk we'll have to take if we're ever going to win this war. Send your men out with some stun grenades and make sure they use them.\n"
+"Wiem że to wielkie ryzyko dla żołnierzy schwytać żywego przeciwnika, jednak jest to ryzyko którego będziemy musieli się podjąć jeśli chcemy wygrać tę wojnę. Wysyłaj swych ludzi wyposażonych w granaty ogłuszające i upewnij się że będą ich używali.\n"
 "\n"
 "\n"
-"Sincerely,\n"
+"Z poważaniem,\n"
 "\n"
 "Dr. Connor"
 msgstr ""
@@ -7211,13 +7210,13 @@ msgstr ""
 #: ../base/ufos/research.ufo:3579
 msgid "inter_starchaser_txt"
 msgstr ""
-"Commander, excuse me if I sound a little incoherent, but I've been up all night finishing the final blueprints. It is with great pleasure that I present you the Starchaser Space Superiority Fighter. Yes, you read that right, space superiority. One of the most striking improvements over the Dragon - though it's certainly not the only one! - is the ability of sustained orbital flight and combat. We now have the ability of intercepting the enemy outside our own atmosphere, and while this seems a minor boon so long as we don't know where the enemy is coming from, I'm certain that we're going to need this capability sooner or later.\n"
+"Dowódco, wybacz jeśli będę troche niespójny, ale całą noc pracowałem nad ostatnimi fotokopiami i jestem przemęczony. Z wielką przyjemnością chcę przedstawic Ci Myśliwiec Ponadprzestrzenny Starchasere. Tak, to jest prawdą, ponadprzestrzenny. Zasadniczą modyfikacją i zmianami w stosunku do myśliwca Dragon - ale nie jedynymi istotnymi! - jest zdolność do lotów orbitalnych i walki. Od tertaz będziemy mogli przejmować pojazdy wroga poza nasza atmosferą, ile będzie prościej wiedzieć skąd nadlatują jednostki wroga, jestem przekonany ze ta zdolnośc przyda się nam predzej czy później.\n"
 "\n"
-"Until that time comes, let's focus on more down-to-Earth matters. The Starchaser is equipped with an alien-tech propulsion system that, along with its sleek, aerodynamic design, bestows it with both speed and manoeuvrability. The hull itself is made out of dense layers of alien materials, providing an unprecedented level of durability. Finally, despite the fact that the compact design leaves us with only limited options for modular weapon and support systems, we've managed to improve firepower over the Dragon design.\n"
+A teraz konkrety, skupmy sie na sprawach technicznych. Starchaser jest wyposażony w Obcą technologię systemu napędu impulsowego, który w połączeniu z jego aerodynamiczną powłoką daje mu szybkośc jak i zdolność manewrową. Kadłub jest stworzony z użuciem zagęszczonych warstw obcych materiałów, nadaje mu to niesamowitą wytrzymałość. Na koniec, wbrew opinii, że kompaktowe projekty ograniczają możliwość instalacji modułów broni i systemów wspomagania, zdołaliśmy zwiększyć siłę ognia ponad mozliwości projektu mysliwca Dragon.\n"
 "\n"
-"The Starchaser is truly the next generation in aerial combat, commander. It matches or outperforms any other fighter design we have, so I recommend we begin phasing it in immediately. Be advised, however, that the Starchaser is rather costly to produce, in terms of credits, raw materials and time alike.\n"
+"Dowódco, Starchaser to zdecydowanie kolejna generacja w walkach powietrznych. Przewysza wszelkie projekty myśliwców jakie do tej pory wykonaliśmy, zalecam więc natychmiastowe wdrożenie. Jednak Starchaser jest zdecydowanie bardzo kosztowny pod względem  finansów, materiału i czasu.\n"
 "\n"
-"--Cdr. Navarre"
+"--mjr. Navarre"
 
 #: ../base/ufos/research.ufo:3582
 msgid "inter_starchaser_pre_txt"
