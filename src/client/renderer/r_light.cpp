@@ -402,6 +402,7 @@ void R_UpdateLightList (entity_t *ent)
 	vec3_t diametralVec; /** < conservative estimate of entity's bounding sphere diameter, in vector form */
 	float diameter; /** < value of this entity's diameter (approx) */
 	vec3_t fakeSunPos; /**< as if sun wasn't at infinite distance */
+	bool cached = false;
 
 	/* Find the root of tagent tree which actually owns the lighting data; it is assumed that there is no loops,
 	 * since R_CalcTransform calls Com_Error on those */
@@ -429,33 +430,52 @@ void R_UpdateLightList (entity_t *ent)
 	VectorSubtract(ent->maxs, ent->mins, diametralVec); /** @todo what if origin is NOT inside aabb? then this estimate will not be conservative enough */
 	diameter = VectorLength(diametralVec);
 
-	ltng->numLights = 0; /* clear the list of lights */
+	/** @todo clear caches when r_dynamic_lights cvar is changed OR always keep maximal # of static lights in the cache */
+	if (VectorDist(pos, ltng->lastCachePos) < CACHE_CLEAR_TRESHOLD) {
+		cached = true;
+	} else {
+		ltng->numLights = 0; /* clear the list of lights */
+		ltng->numCachedLights = 0;
+		VectorCopy(pos, ltng->lastCachePos);
+	}
 
 	/* Check if origin of this entity is hit by sunlight (not the best test, but at least fast) */
-	/** @todo cache whenever possible */
-	if (ent->flags & RF_ACTOR) { /** @todo Hack to avoid dropships being shadowed by lightclips placed at them. Should be removed once correct global illumination model is done */
-		VectorMA(pos, 8192.0, refdef.sunVector, fakeSunPos);
-		R_Trace(pos, fakeSunPos, 0, MASK_SOLID);
-		ltng->inShadow = refdef.trace.fraction != 1.0;
-	} else {
-		ltng->inShadow = false;
+	if (!cached) {
+		if (ent->flags & RF_ACTOR) { /** @todo Hack to avoid dropships being shadowed by lightclips placed at them. Should be removed once correct global illumination model is done */
+			VectorMA(pos, 8192.0, refdef.sunVector, fakeSunPos);
+			R_Trace(pos, fakeSunPos, 0, MASK_SOLID);
+			ltng->inShadow = refdef.trace.fraction != 1.0;
+		} else {
+			ltng->inShadow = false;
+		}
 	}
 
 	if (!r_dynamic_lights->integer)
 		return;
 
-	for (i = 0; i < refdef.numStaticLights; i++) {
-		light_t *light = &refdef.staticLights[i];
-		const float distSqr = VectorDistSqr(pos, light->origin);
+	if (!cached) {
+		/* Rebuild list of static lights */
+		for (i = 0; i < refdef.numStaticLights; i++) {
+			light_t *light = &refdef.staticLights[i];
+			const float distSqr = VectorDistSqr(pos, light->origin);
 
-		if (distSqr > (diameter + light->radius) * (diameter + light->radius))
-			continue;
+			if (distSqr > (diameter + light->radius) * (diameter + light->radius))
+				continue;
 
-		/** @todo Cache at least for static light -> static model interaction */
-		R_Trace(pos, light->origin, 0, MASK_SOLID);
+			R_Trace(pos, light->origin, 0, MASK_SOLID);
 
-		if (refdef.trace.fraction == 1.0)
-			R_AddLightToEntity(pos, ltng, light, distSqr);
+			if (refdef.trace.fraction == 1.0)
+				R_AddLightToEntity(pos, ltng, light, distSqr);
+		}
+		/* Save static lights to cache */
+		for (i = 0; i < ltng->numLights; i++)
+			ltng->cachedLights[i] = ltng->lights[i];
+		ltng->numCachedLights = ltng->numLights;
+	} else {
+		/* Copy static lights from cache */
+		for (i = 0; i < ltng->numCachedLights; i++)
+			ltng->lights[i] = ltng->cachedLights[i];
+		ltng->numLights = ltng->numCachedLights;
 	}
 
 	/* add dynamic lights, too */
