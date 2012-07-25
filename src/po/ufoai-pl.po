@@ -95,7 +95,7 @@ msgstr "Lądowanie Obcych - strefa przemysłowa"
 #: ../base/maps/frozen.ump:372 ../base/maps/frozen.ump:394
 #, fuzzy
 msgid "A UFO crashed into the snow here."
-msgstr "Niewielkie UFO rozbiło się zaśnieżonym terenie."
+msgstr "Niewielkie UFO rozbiło się w zaśnieżonym terenie."
 
 #: ../base/maps/frozen.ump:412
 msgid "Multiplayer Coop"
