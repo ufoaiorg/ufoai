@@ -633,8 +633,6 @@ static void LET_PathMove (le_t * le)
 	if (cl.time < le->startTime)
 		return;
 
-	le->lighting.state = LIGHTING_DIRTY;
-
 	/* move ahead */
 	while (cl.time >= le->endTime) {
 		/* Ensure that we are displayed where we are supposed to be, in case the last frame came too quickly. */

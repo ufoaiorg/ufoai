@@ -26,14 +26,18 @@
 #ifndef R_LIGHTING_H
 #define R_LIGHTING_H
 
-typedef enum {
-	LIGHTING_INIT, LIGHTING_DIRTY, LIGHTING_READY
-} lightingState_t;
-
-/** @brief lighting structures contain static lighting info for entities */
+/** @brief lighting structure which contains static and dynamic lighting info for entities */
 typedef struct lighting_s {
+	/* Lights */
+	const light_t *lights[MAX_ENTITY_LIGHTS]; /**< static and dynamic lights sorted by distance */
+	int numLights;
+	int lastLitFrame; /**< renderer frame for which those lights were calculated */
+
+	/* Shadows */
+	bool inShadow; /**< true if entity is shadowed from the sun */
+	/* Stencil shadow (not necessarily from the sun) */
 	vec3_t shadowOrigin;
-	lightingState_t state;
+	int lastShadowedFrame; /**< renderer frame for which this origin was calculated */
 } lighting_t;
 
 #define LIGHTING_MAX_SHADOW_DISTANCE 128.0

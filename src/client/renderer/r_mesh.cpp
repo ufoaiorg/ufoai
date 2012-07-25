@@ -607,7 +607,7 @@ static bool R_UpdateShadowOrigin (entity_t *e)
 	if (e->lighting == NULL)
 		return false;
 
-	if (e->lighting->state == LIGHTING_READY)
+	if (e->lighting->lastShadowedFrame == r_locals.frame)
 		return true;
 
 	VectorCopy(e->origin, start);
@@ -622,7 +622,7 @@ static bool R_UpdateShadowOrigin (entity_t *e)
 	if (refdef.trace.leafnum) {
 		/* hit something */
 		VectorCopy(refdef.trace.endpos, e->lighting->shadowOrigin);
-		e->lighting->state = LIGHTING_READY;
+		e->lighting->lastShadowedFrame = r_locals.frame;
 		return true;
 	}
 
@@ -748,12 +748,12 @@ void R_DrawAliasModel (entity_t *e)
 	R_EnableGlowMap(skin->glowmap);
 
 	R_UpdateLightList(e);
-	R_EnableModelLights(e->lights, e->numLights, e->inShadow, true);
+	R_EnableModelLights(e->lighting->lights, e->lighting->numLights, e->lighting->inShadow, true);
 
 	/** @todo this breaks the encapsulation - don't call CL_* functions from within the renderer code */
 	if (r_debug_lights->integer) {
-		for (i = 0; i < e->numLights && i < r_dynamic_lights->integer; i++)
-			CL_ParticleSpawn("lightTracerDebug", 0, e->transform.matrix + 12, e->lights[i]->origin);
+		for (i = 0; i < e->lighting->numLights && i < r_dynamic_lights->integer; i++)
+			CL_ParticleSpawn("lightTracerDebug", 0, e->transform.matrix + 12, e->lighting->lights[i]->origin);
 	}
 
 	if (skin->normalmap)

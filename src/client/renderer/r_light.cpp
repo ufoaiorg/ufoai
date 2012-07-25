@@ -343,20 +343,19 @@ void R_ClearStaticLights (void)
  * @brief Adds light to the entity's lights list, sorted by distance
  * @note Since list is very small (8 elements), insertion sort is used - it beats qsort and other fancy algos in case of a small list
  * and allows a better integration with other parts of code.
- * @param[in] ent The entity for which light is added
+ * @param[in] pos Origin of entity for which light is added
+ * @param[in] ltng Lighting data for entity being updated
  * @param[in] light The light itself
  * @param[in] distSqr Squared distance from entity's origin to the light
  * @sa R_UpdateLightList
  */
-static void R_AddLightToEntity (entity_t *ent, const light_t *light, const float distSqr)
+static void R_AddLightToEntity (const vec_t *pos, lighting_t *ltng, const light_t *light, const float distSqr)
 {
 	int i;
 	int maxLights = r_dynamic_lights->integer;
-	const light_t **el = ent->lights;
-	/* we have to use the offset from accumulated transform matrix, because origin is relative to attachment point for submodels */
-	const vec_t *pos = ent->transform.matrix + 12; /* type system hack, sorry */
+	const light_t **el = ltng->lights;
 
-	for (i = 0; i < ent->numLights; i++) {
+	for (i = 0; i < ltng->numLights; i++) {
 		if (i == maxLights)
 			return;
 		if (distSqr < VectorDistSqr((el[i]->origin), pos)) { /** @todo will caching VectorDistSqr() results improve the rendering speed? */
@@ -367,7 +366,7 @@ static void R_AddLightToEntity (entity_t *ent, const light_t *light, const float
 				return;
 			}
 
-			while (i < ent->numLights) {
+			while (i < ltng->numLights) {
 				const light_t *tmp = el[i];
 				el[i++] = light;
 				light = tmp;
@@ -381,11 +380,13 @@ static void R_AddLightToEntity (entity_t *ent, const light_t *light, const float
 		return;
 
 	el[i++] = light;
-	ent->numLights = i;
+	ltng->numLights = i;
 }
 
+static lighting_t fakeLightingData; /**< To return if no actual lighting data is provided */
+
 /** @todo bad implementation -- copying light pointers every frame is a very wrong idea
- * @brief Recalculate active lights list for the given entity
+ * @brief Recalculate active lights list for the given entity; R_CalcTransform(ent) should be called before this
  * @note to accelerate math, the diagonal of aabb is used to approximate max distance from entity's origin to its most distant point
  * while this is a gross exaggeration for many models, the sole purpose of it is to be used for filtering out distant lights,
  * so nothing is broken by it.
@@ -395,25 +396,49 @@ static void R_AddLightToEntity (entity_t *ent, const light_t *light, const float
 void R_UpdateLightList (entity_t *ent)
 {
 	int i;
-	/* we have to use the offset from accumulated transform matrix, because origin is relative to attachment point for submodels */
-	const vec_t *pos = ent->transform.matrix + 12; /* type system hack, sorry */
+	vec_t *pos; /**< Worldspace position for which lighting is calculated */
+	entity_t *rootEnt; /**< The root entitity of tagent tree, which holds the lighting data (af any) */
+	lighting_t *ltng; /**< Lighting data for the entity being processed */
 	vec3_t diametralVec; /** < conservative estimate of entity's bounding sphere diameter, in vector form */
 	float diameter; /** < value of this entity's diameter (approx) */
 	vec3_t fakeSunPos; /**< as if sun wasn't at infinite distance */
 
+	/* Find the root of tagent tree which actually owns the lighting data; it is assumed that there is no loops,
+	 * since R_CalcTransform calls Com_Error on those */
+	 for (rootEnt = ent; rootEnt->tagent; rootEnt = ent->tagent)
+		;
+
+	ltng = ent->lighting = rootEnt->lighting;
+
+	if (!ltng) {
+		/* Entity got no lighting data, so substitute defaults (no dynamic lights, but exposed to sunlight) */
+		/** @todo Replace this hack with something more legit (hack can cause bizarre stencil shadows if enabled) */
+		OBJZERO(fakeLightingData);
+		ent->lighting = &fakeLightingData;
+		return;
+	}
+
+	if (ltng->lastLitFrame == r_locals.frame)
+		return; /* nothing to do, already calculated lighting for this frame */
+
+	ltng->lastLitFrame = r_locals.frame;
+
+	/* we have to use the offset from (accumulated) transform matrix, because entity origin is not necessarily the point where model is acually rendered */
+	pos = ent->transform.matrix + 12; /* type system hack, sorry */
+
 	VectorSubtract(ent->maxs, ent->mins, diametralVec); /** @todo what if origin is NOT inside aabb? then this estimate will not be conservative enough */
 	diameter = VectorLength(diametralVec);
 
-	ent->numLights = 0; /* clear the list of lights */
+	ltng->numLights = 0; /* clear the list of lights */
 
 	/* Check if origin of this entity is hit by sunlight (not the best test, but at least fast) */
 	/** @todo cache whenever possible */
 	if (ent->flags & RF_ACTOR) { /** @todo Hack to avoid dropships being shadowed by lightclips placed at them. Should be removed once correct global illumination model is done */
 		VectorMA(pos, 8192.0, refdef.sunVector, fakeSunPos);
 		R_Trace(pos, fakeSunPos, 0, MASK_SOLID);
-		ent->inShadow = refdef.trace.fraction != 1.0;
+		ltng->inShadow = refdef.trace.fraction != 1.0;
 	} else {
-		ent->inShadow = false;
+		ltng->inShadow = false;
 	}
 
 	if (!r_dynamic_lights->integer)
@@ -430,7 +455,7 @@ void R_UpdateLightList (entity_t *ent)
 		R_Trace(pos, light->origin, 0, MASK_SOLID);
 
 		if (refdef.trace.fraction == 1.0)
-			R_AddLightToEntity(ent, light, distSqr);
+			R_AddLightToEntity(pos, ltng, light, distSqr);
 	}
 
 	/* add dynamic lights, too */
@@ -444,6 +469,6 @@ void R_UpdateLightList (entity_t *ent)
 		R_Trace(pos, light->origin, 0, MASK_SOLID);
 
 		if (refdef.trace.fraction == 1.0)
-			R_AddLightToEntity(ent, light, distSqr);
+			R_AddLightToEntity(pos, ltng, light, distSqr);
 	}
 }
