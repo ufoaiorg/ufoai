@@ -2751,6 +2751,7 @@ msgstr "Odkryto bazę Obcych -- %s"
 #: ../base/ufos/events.ufo:77
 msgid "mail_alien_base_discovered"
 msgstr "Dowódco, nasze służby odkryły na Ziemi lokalizację sporej Obcej instalacji. Zagraża ona poważnie działaniom PHALANX jak i całej ludzkości, musimy ją przejąć tak szybko jak to tylko możliwe."
+
 #: ../base/ufos/events.ufo:86
 #: client/cgame/campaign/missions/cp_mission_ufocarrier.cpp:62
 #, fuzzy
