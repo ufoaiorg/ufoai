@@ -337,12 +337,6 @@ void R_GetLevelSurfaceLists (void)
 {
 	int i, tile, mask;
 
-	r_locals.frame++;
-
-	/* avoid overflows, negatives are reserved */
-	if (r_locals.frame > 0xffff)
-		r_locals.frame = 0;
-
 	if (!r_drawworld->integer)
 		return;
 

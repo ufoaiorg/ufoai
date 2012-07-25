@@ -175,6 +175,7 @@ mapdef africa_small_crash
 	ufos
 	(
 		craft_crash_fighter
+		craft_crash_scout
 	)
 
 	terrains

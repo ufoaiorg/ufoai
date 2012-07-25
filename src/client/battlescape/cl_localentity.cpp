@@ -135,7 +135,7 @@ static void LM_AddToSceneOrder (bool parents)
 			/** @todo what if the tagent is not rendered due to different level flags? */
 			ent.tagent = R_GetEntity(lm->parent->renderEntityNum);
 			if (ent.tagent == NULL)
-				Com_Error(ERR_DROP, "Invalid entity num for local model (%s/%s): %i",
+				Com_Error(ERR_DROP, "Invalid parent entity num for local model (%s/%s): %i",
 						lm->model->name, lm->id, lm->parent->renderEntityNum);
 			ent.tagname = lm->tagname;
 		} else {
@@ -632,8 +632,6 @@ static void LET_PathMove (le_t * le)
 	/* check for start of the next step */
 	if (cl.time < le->startTime)
 		return;
-
-	le->lighting.state = LIGHTING_DIRTY;
 
 	/* move ahead */
 	while (cl.time >= le->endTime) {

@@ -29,6 +29,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 static sustain_t r_sustainArray[MAX_GL_LIGHTS];
 
+/**
+ * @brief Create light to be rendered in the current frame (will be removed before the next)
+ * @note Call before actual 3D rendering begins to avoid missing or partially rendered lights
+ */
 void R_AddLight (const vec3_t origin, float radius, const vec3_t color)
 {
 	int i;
@@ -100,6 +104,9 @@ void R_UpdateSustainedLights (void)
 	}
 }
 
+/**
+ * @brief Set up lighting data for the GLSL world shader
+ */
 void R_EnableWorldLights (void)
 {
 	int i;
@@ -246,6 +253,11 @@ void R_EnableModelLights (const light_t **lights, int numLights, bool inShadow, 
 	R_ProgramParameter4fvs("LIGHTPARAMS", maxLights, (GLfloat *)lightParams);
 }
 
+/**
+ * @brief Add static light for model lighting (world already got them baked into lightmap)
+ * @note To be called from map loader only
+ * @sa SP_light
+ */
 void R_AddStaticLight (const vec3_t origin, float radius, const vec3_t color)
 {
 	light_t *l;
@@ -283,6 +295,10 @@ void R_DisableLights (void)
 	glDisable(GL_LIGHTING);
 }
 
+/**
+ * @brief Remove all static light data
+ * @note To be called before loading a new map
+ */
 void R_ClearStaticLights (void)
 {
 	refdef.numStaticLights = 0;
@@ -327,20 +343,19 @@ void R_ClearStaticLights (void)
  * @brief Adds light to the entity's lights list, sorted by distance
  * @note Since list is very small (8 elements), insertion sort is used - it beats qsort and other fancy algos in case of a small list
  * and allows a better integration with other parts of code.
- * @param[in] ent The entity for which light is added
+ * @param[in] pos Origin of entity for which light is added
+ * @param[in] ltng Lighting data for entity being updated
  * @param[in] light The light itself
  * @param[in] distSqr Squared distance from entity's origin to the light
  * @sa R_UpdateLightList
  */
-static void R_AddLightToEntity (entity_t *ent, const light_t *light, const float distSqr)
+static void R_AddLightToEntity (const vec_t *pos, lighting_t *ltng, const light_t *light, const float distSqr)
 {
 	int i;
 	int maxLights = r_dynamic_lights->integer;
-	const light_t **el = ent->lights;
-	/* we have to use the offset from accumulated transform matrix, because origin is relative to attachment point for submodels */
-	const vec_t *pos = ent->transform.matrix + 12; /* type system hack, sorry */
+	const light_t **el = ltng->lights;
 
-	for (i = 0; i < ent->numLights; i++) {
+	for (i = 0; i < ltng->numLights; i++) {
 		if (i == maxLights)
 			return;
 		if (distSqr < VectorDistSqr((el[i]->origin), pos)) { /** @todo will caching VectorDistSqr() results improve the rendering speed? */
@@ -351,7 +366,7 @@ static void R_AddLightToEntity (entity_t *ent, const light_t *light, const float
 				return;
 			}
 
-			while (i < ent->numLights) {
+			while (i < ltng->numLights) {
 				const light_t *tmp = el[i];
 				el[i++] = light;
 				light = tmp;
@@ -365,11 +380,13 @@ static void R_AddLightToEntity (entity_t *ent, const light_t *light, const float
 		return;
 
 	el[i++] = light;
-	ent->numLights = i;
+	ltng->numLights = i;
 }
 
+static lighting_t fakeLightingData; /**< To return if no actual lighting data is provided */
+
 /** @todo bad implementation -- copying light pointers every frame is a very wrong idea
- * @brief Recalculate active lights list for the given entity
+ * @brief Recalculate active lights list for the given entity; R_CalcTransform(ent) should be called before this
  * @note to accelerate math, the diagonal of aabb is used to approximate max distance from entity's origin to its most distant point
  * while this is a gross exaggeration for many models, the sole purpose of it is to be used for filtering out distant lights,
  * so nothing is broken by it.
@@ -379,42 +396,86 @@ static void R_AddLightToEntity (entity_t *ent, const light_t *light, const float
 void R_UpdateLightList (entity_t *ent)
 {
 	int i;
-	/* we have to use the offset from accumulated transform matrix, because origin is relative to attachment point for submodels */
-	const vec_t *pos = ent->transform.matrix + 12; /* type system hack, sorry */
+	vec_t *pos; /**< Worldspace position for which lighting is calculated */
+	entity_t *rootEnt; /**< The root entitity of tagent tree, which holds the lighting data (af any) */
+	lighting_t *ltng; /**< Lighting data for the entity being processed */
 	vec3_t diametralVec; /** < conservative estimate of entity's bounding sphere diameter, in vector form */
 	float diameter; /** < value of this entity's diameter (approx) */
 	vec3_t fakeSunPos; /**< as if sun wasn't at infinite distance */
+	bool cached = false;
+
+	/* Find the root of tagent tree which actually owns the lighting data; it is assumed that there is no loops,
+	 * since R_CalcTransform calls Com_Error on those */
+	 for (rootEnt = ent; rootEnt->tagent; rootEnt = ent->tagent)
+		;
+
+	ltng = ent->lighting = rootEnt->lighting;
+
+	if (!ltng) {
+		/* Entity got no lighting data, so substitute defaults (no dynamic lights, but exposed to sunlight) */
+		/** @todo Replace this hack with something more legit (hack can cause bizarre stencil shadows if enabled) */
+		OBJZERO(fakeLightingData);
+		ent->lighting = &fakeLightingData;
+		return;
+	}
+
+	if (ltng->lastLitFrame == r_locals.frame)
+		return; /* nothing to do, already calculated lighting for this frame */
+
+	ltng->lastLitFrame = r_locals.frame;
+
+	/* we have to use the offset from (accumulated) transform matrix, because entity origin is not necessarily the point where model is acually rendered */
+	pos = ent->transform.matrix + 12; /* type system hack, sorry */
 
 	VectorSubtract(ent->maxs, ent->mins, diametralVec); /** @todo what if origin is NOT inside aabb? then this estimate will not be conservative enough */
 	diameter = VectorLength(diametralVec);
 
-	ent->numLights = 0; /* clear the list of lights */
+	/** @todo clear caches when r_dynamic_lights cvar is changed OR always keep maximal # of static lights in the cache */
+	if (VectorDist(pos, ltng->lastCachePos) < CACHE_CLEAR_TRESHOLD) {
+		cached = true;
+	} else {
+		ltng->numLights = 0; /* clear the list of lights */
+		ltng->numCachedLights = 0;
+		VectorCopy(pos, ltng->lastCachePos);
+	}
 
 	/* Check if origin of this entity is hit by sunlight (not the best test, but at least fast) */
-	/** @todo cache whenever possible */
-	if (ent->flags & RF_ACTOR) { /** @todo Hack to avoid dropships being shadowed by lightclips placed at them. Should be removed once correct global illumination model is done */
-		VectorMA(pos, 8192.0, refdef.sunVector, fakeSunPos);
-		R_Trace(pos, fakeSunPos, 0, MASK_SOLID);
-		ent->inShadow = refdef.trace.fraction != 1.0;
-	} else {
-		ent->inShadow = false;
+	if (!cached) {
+		if (ent->flags & RF_ACTOR) { /** @todo Hack to avoid dropships being shadowed by lightclips placed at them. Should be removed once correct global illumination model is done */
+			VectorMA(pos, 8192.0, refdef.sunVector, fakeSunPos);
+			R_Trace(pos, fakeSunPos, 0, MASK_SOLID);
+			ltng->inShadow = refdef.trace.fraction != 1.0;
+		} else {
+			ltng->inShadow = false;
+		}
 	}
 
 	if (!r_dynamic_lights->integer)
 		return;
 
-	for (i = 0; i < refdef.numStaticLights; i++) {
-		light_t *light = &refdef.staticLights[i];
-		const float distSqr = VectorDistSqr(pos, light->origin);
+	if (!cached) {
+		/* Rebuild list of static lights */
+		for (i = 0; i < refdef.numStaticLights; i++) {
+			light_t *light = &refdef.staticLights[i];
+			const float distSqr = VectorDistSqr(pos, light->origin);
 
-		if (distSqr > (diameter + light->radius) * (diameter + light->radius))
-			continue;
+			if (distSqr > (diameter + light->radius) * (diameter + light->radius))
+				continue;
 
-		/** @todo Cache at least for static light -> static model interaction */
-		R_Trace(pos, light->origin, 0, MASK_SOLID);
+			R_Trace(pos, light->origin, 0, MASK_SOLID);
 
-		if (refdef.trace.fraction == 1.0)
-			R_AddLightToEntity(ent, light, distSqr);
+			if (refdef.trace.fraction == 1.0)
+				R_AddLightToEntity(pos, ltng, light, distSqr);
+		}
+		/* Save static lights to cache */
+		for (i = 0; i < ltng->numLights; i++)
+			ltng->cachedLights[i] = ltng->lights[i];
+		ltng->numCachedLights = ltng->numLights;
+	} else {
+		/* Copy static lights from cache */
+		for (i = 0; i < ltng->numCachedLights; i++)
+			ltng->lights[i] = ltng->cachedLights[i];
+		ltng->numLights = ltng->numCachedLights;
 	}
 
 	/* add dynamic lights, too */
@@ -428,6 +489,6 @@ void R_UpdateLightList (entity_t *ent)
 		R_Trace(pos, light->origin, 0, MASK_SOLID);
 
 		if (refdef.trace.fraction == 1.0)
-			R_AddLightToEntity(ent, light, distSqr);
+			R_AddLightToEntity(pos, ltng, light, distSqr);
 	}
 }

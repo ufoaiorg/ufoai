@@ -213,6 +213,12 @@ static inline void R_ClearScene (void)
  */
 void R_BeginFrame (void)
 {
+	r_locals.frame++;
+
+	/* avoid overflows, negatives and zero are reserved */
+	if (r_locals.frame > 0xffff)
+		r_locals.frame = 1;
+
 	if (Com_IsRenderModified()) {
 		Com_Printf("Modified render related cvars\n");
 		if (Cvar_PendingCvars(CVAR_R_PROGRAMS))
