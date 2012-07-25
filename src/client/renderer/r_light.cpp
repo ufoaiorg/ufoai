@@ -29,6 +29,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 static sustain_t r_sustainArray[MAX_GL_LIGHTS];
 
+/**
+ * @brief Create light to be rendered in the current frame (will be removed before the next)
+ * @note Call before actual 3D rendering begins to avoid missing or partially rendered lights
+ */
 void R_AddLight (const vec3_t origin, float radius, const vec3_t color)
 {
 	int i;
@@ -100,6 +104,9 @@ void R_UpdateSustainedLights (void)
 	}
 }
 
+/**
+ * @brief Set up lighting data for the GLSL world shader
+ */
 void R_EnableWorldLights (void)
 {
 	int i;
@@ -246,6 +253,11 @@ void R_EnableModelLights (const light_t **lights, int numLights, bool inShadow, 
 	R_ProgramParameter4fvs("LIGHTPARAMS", maxLights, (GLfloat *)lightParams);
 }
 
+/**
+ * @brief Add static light for model lighting (world already got them baked into lightmap)
+ * @note To be called from map loader only
+ * @sa SP_light
+ */
 void R_AddStaticLight (const vec3_t origin, float radius, const vec3_t color)
 {
 	light_t *l;
@@ -283,6 +295,10 @@ void R_DisableLights (void)
 	glDisable(GL_LIGHTING);
 }
 
+/**
+ * @brief Remove all static light data
+ * @note To be called before loading a new map
+ */
 void R_ClearStaticLights (void)
 {
 	refdef.numStaticLights = 0;
