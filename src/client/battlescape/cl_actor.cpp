@@ -1491,6 +1491,7 @@ bool CL_AddActor (le_t * le, entity_t * ent)
 		return false;
 
 	bool hasTagHead = R_GetTagIndexByName(le->model1, "tag_head") != -1;
+	const int delta = hasTagHead ? 2 : 1;
 
 	if (LE_IsStunned(le)) {
 		if (!le->ptl)
@@ -1508,7 +1509,7 @@ bool CL_AddActor (le_t * le, entity_t * ent)
 				Com_Error(ERR_DROP, "Actor model for left hand weapon wasn't found!");
 
 			/* point to the body ent which will be added last */
-			add.tagent = R_GetFreeEntity() + 2 + addRightHandWeapon;
+			add.tagent = R_GetFreeEntity() + delta + addRightHandWeapon;
 			add.tagname = "tag_lweapon";
 
 			R_AddEntity(&add);
@@ -1524,7 +1525,6 @@ bool CL_AddActor (le_t * le, entity_t * ent)
 				Com_Error(ERR_DROP, "Actor model for right hand weapon wasn't found!");
 
 			/* point to the body ent which will be added last */
-			const int delta = hasTagHead ? 2 : 1;
 			add.tagent = R_GetFreeEntity() + delta;
 			add.tagname = "tag_rweapon";
 
