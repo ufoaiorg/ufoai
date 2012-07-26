@@ -3463,7 +3463,7 @@ msgid ""
 "\n"
 "Potrzebujemy schwytać żywych Obcych jeśli chcemy zrozumieć wroga. Możemy wiele dowiedzieć się z przeprowadzonych autopsji zwłok, ale do obserwacji ich zachowań wymagane są żywe okazy tych kreatur.\n"
 "\n"
-"Jeśli zdołasz ogłuszyć Obcego w walce a następnie dostarczyć go do bazy z instalacja Kwarantanny, będziemy mieli o wiele więcej do powiedzenia. Lepiej poznamy jak funkcjonuje ich biologiczny organizm i posiądziemy wiedzę o ich słabościach. W miarę czasu moglibyśmy nawet rozwinąc metodę porozumiewania sie z nimi.\n
+"Jeśli zdołasz ogłuszyć Obcego w walce a następnie dostarczyć go do bazy z instalacja Kwarantanny, będziemy mieli o wiele więcej do powiedzenia. Lepiej poznamy jak funkcjonuje ich biologiczny organizm i posiądziemy wiedzę o ich słabościach. W miarę czasu moglibyśmy nawet rozwinąc metodę porozumiewania sie z nimi.\n"
 "\n"
 "Wiem że to wielkie ryzyko dla żołnierzy schwytać żywego przeciwnika, jednak jest to ryzyko którego będziemy musieli się podjąć jeśli chcemy wygrać tę wojnę. Wysyłaj swych ludzi wyposażonych w granaty ogłuszające i upewnij się że będą ich używali.\n"
 "\n"
