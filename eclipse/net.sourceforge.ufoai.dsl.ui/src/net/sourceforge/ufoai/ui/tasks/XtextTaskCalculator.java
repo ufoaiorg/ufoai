@@ -109,7 +109,6 @@ public class XtextTaskCalculator extends IXtextEditorCallback.NullImpl {
 			if (document == null)
 				return;
 			document.readOnly(new IUnitOfWork<Void, XtextResource>() {
-				@Override
 				public java.lang.Void exec(XtextResource argState) throws Exception {
 					if (argState != null && !argState.getContents().isEmpty()) {
 						EObject varModel = argState.getContents().get(0);

@@ -22,7 +22,6 @@ public class UFOScriptSelectionChangeListener implements ISelectionChangedListen
 		this.editor = editor;
 	}
 
-	@Override
 	public void selectionChanged(SelectionChangedEvent event) {
 		try {
 			ISelection selection = event.getSelection();

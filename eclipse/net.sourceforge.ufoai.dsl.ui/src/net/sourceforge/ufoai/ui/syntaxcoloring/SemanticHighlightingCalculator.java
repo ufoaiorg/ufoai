@@ -23,7 +23,6 @@ public class SemanticHighlightingCalculator implements ISemanticHighlightingCalc
 	@Inject
 	ITaskElementChecker objElementChecker;
 
-	@Override
 	public void provideHighlightingFor(XtextResource resource, IHighlightedPositionAcceptor acceptor) {
 		if (resource == null) {
 			return;

@@ -11,7 +11,6 @@ public class UFOScriptTaskElementChecker implements ITaskElementChecker {
 	@Inject
 	private UFOScriptGrammarAccess objGrammarAccess;
 
-	@Override
 	public String getPrefixToIgnore(INode argNode) {
 		if (objGrammarAccess.getSL_COMMENTRule().equals(argNode.getGrammarElement())) {
 			// if it's a single line comment, its a leaf node
