@@ -247,6 +247,7 @@ typedef struct teamDef_s {
 	char id[MAX_VAR];	/**< id from script file. */
 	char name[MAX_VAR];	/**< Translatable name. */
 	char tech[MAX_VAR];	/**< technology_t id from research.ufo */
+	char footstepSound[MAX_VAR];
 
 	linkedList_t *names[NAME_NUM_TYPES];	/**< Names list per gender. */
 	int numNames[NAME_NUM_TYPES];	/**< Amount of names in this list for all different genders. */

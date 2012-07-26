@@ -562,6 +562,7 @@ team hovernet
 	robot		true
 	weapons		false
 	onlyWeapon	hovernet_plasma
+	footstepsound	""
 	size		1
 	//hit_particle	none
 	death_texture	"pics/sfx/blood/blood_oil_2"
@@ -661,6 +662,7 @@ team hovernet_adv
 	robot		true
 	weapons		false
 	onlyWeapon	hovernet_adv_plasma
+	footstepsound	""
 	size		1
 	//hit_particle	none
 	death_texture	"pics/sfx/blood/blood_oil_2"

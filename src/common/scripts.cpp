@@ -2470,6 +2470,7 @@ static const BodyData* Com_GetBodyTemplateByID (const char *id)
 /** @brief possible teamdesc values (ufo-scriptfiles) */
 static const value_t teamDefValues[] = {
 	{"tech", V_STRING, offsetof(teamDef_t, tech), 0}, /**< tech id from research.ufo */
+	{"footstepsound", V_STRING, offsetof(teamDef_t, footstepSound), 0}, /**< tech id from research.ufo */
 	{"name", V_TRANSLATION_STRING, offsetof(teamDef_t, name), 0}, /**< internal team name */
 	{"armour", V_BOOL, offsetof(teamDef_t, armour), MEMBER_SIZEOF(teamDef_t, armour)}, /**< are these team members able to wear armour? */
 	{"weapons", V_BOOL, offsetof(teamDef_t, weapons), MEMBER_SIZEOF(teamDef_t, weapons)}, /**< are these team members able to use weapons? */
