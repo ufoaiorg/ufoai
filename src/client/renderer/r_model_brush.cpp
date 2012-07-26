@@ -519,7 +519,7 @@ static void R_ModShiftTile (void)
 static void R_LoadBspVertexArrays (model_t *mod)
 {
 	int i, j;
-	int vertind, coordind, tangind;
+	int vertOfs, texCoordOfs, tangOfs;
 	float *vecShifted;
 	float soff, toff, s, t;
 	float *point, *sdir, *tdir;
@@ -527,25 +527,26 @@ static void R_LoadBspVertexArrays (model_t *mod)
 	vec3_t binormal;
 	mBspSurface_t *surf;
 	mBspVertex_t *vert;
-	int vertexcount;
+	int vertexCount;
 
-	vertind = coordind = tangind = vertexcount = 0;
+	vertOfs = texCoordOfs = tangOfs = 0;
+	vertexCount = 0;
 
 	for (i = 0, surf = mod->bsp.surfaces; i < mod->bsp.numsurfaces; i++, surf++)
 		for (j = 0; j < surf->numedges; j++)
-			vertexcount++;
+			vertexCount++;
 
 	surf = mod->bsp.surfaces;
 
 	/* allocate the vertex arrays */
-	mod->bsp.texcoords   = Mem_PoolAllocTypeN(GLfloat, vertexcount * 2, vid_modelPool);
-	mod->bsp.lmtexcoords = Mem_PoolAllocTypeN(GLfloat, vertexcount * 2, vid_modelPool);
-	mod->bsp.verts       = Mem_PoolAllocTypeN(GLfloat, vertexcount * 3, vid_modelPool);
-	mod->bsp.normals     = Mem_PoolAllocTypeN(GLfloat, vertexcount * 3, vid_modelPool);
-	mod->bsp.tangents    = Mem_PoolAllocTypeN(GLfloat, vertexcount * 4, vid_modelPool);
+	mod->bsp.texcoords   = Mem_PoolAllocTypeN(GLfloat, vertexCount * 2, vid_modelPool);
+	mod->bsp.lmtexcoords = Mem_PoolAllocTypeN(GLfloat, vertexCount * 2, vid_modelPool);
+	mod->bsp.verts       = Mem_PoolAllocTypeN(GLfloat, vertexCount * 3, vid_modelPool);
+	mod->bsp.normals     = Mem_PoolAllocTypeN(GLfloat, vertexCount * 3, vid_modelPool);
+	mod->bsp.tangents    = Mem_PoolAllocTypeN(GLfloat, vertexCount * 4, vid_modelPool);
 
 	for (i = 0; i < mod->bsp.numsurfaces; i++, surf++) {
-		surf->index = vertind / 3;
+		surf->index = vertOfs / 3;
 
 		for (j = 0; j < surf->numedges; j++) {
 			const float *normal;
@@ -563,7 +564,7 @@ static void R_LoadBspVertexArrays (model_t *mod)
 			point = vert->position;
 
 			/* shift it for assembled maps */
-			vecShifted = &mod->bsp.verts[vertind];
+			vecShifted = &mod->bsp.verts[vertOfs];
 			/* origin (func_door, func_rotating) bmodels must not have shifted vertices,
 			 * they are translated by their entity origin value */
 			if (surf->isOriginBrushModel)
@@ -585,8 +586,8 @@ static void R_LoadBspVertexArrays (model_t *mod)
 			t = DotProduct(point, tdir) + toff;
 			t /= surf->texinfo->image->height;
 
-			mod->bsp.texcoords[coordind + 0] = s;
-			mod->bsp.texcoords[coordind + 1] = t;
+			mod->bsp.texcoords[texCoordOfs + 0] = s;
+			mod->bsp.texcoords[texCoordOfs + 1] = t;
 
 			if (surf->flags & MSURF_LIGHTMAP) {  /* lightmap coordinates */
 				s = DotProduct(point, sdir) + soff;
@@ -602,8 +603,8 @@ static void R_LoadBspVertexArrays (model_t *mod)
 				t /= r_lightmaps.size * surf->lightmap_scale;
 			}
 
-			mod->bsp.lmtexcoords[coordind + 0] = s;
-			mod->bsp.lmtexcoords[coordind + 1] = t;
+			mod->bsp.lmtexcoords[texCoordOfs + 0] = s;
+			mod->bsp.lmtexcoords[texCoordOfs + 1] = t;
 
 			/* normal vectors */
 			if ((surf->texinfo->flags & SURF_PHONG) && VectorNotEmpty(vert->normal))
@@ -611,41 +612,41 @@ static void R_LoadBspVertexArrays (model_t *mod)
 			else
 				normal = surf->normal; /* per plane */
 
-			memcpy(&mod->bsp.normals[vertind], normal, sizeof(vec3_t));
+			memcpy(&mod->bsp.normals[vertOfs], normal, sizeof(vec3_t));
 
 			/* tangent vector */
 			TangentVectors(normal, sdir, tdir, tangent, binormal);
-			memcpy(&mod->bsp.tangents[tangind], tangent, sizeof(vec4_t));
+			memcpy(&mod->bsp.tangents[tangOfs], tangent, sizeof(vec4_t));
 
-			vertind += 3;
-			coordind += 2;
-			tangind += 4;
+			vertOfs += 3;
+			texCoordOfs += 2;
+			tangOfs += 4;
 		}
 	}
 
-	R_ReallocateStateArrays(vertind / 3);
+	R_ReallocateStateArrays(vertOfs / 3);
 
 	if (qglBindBuffer) {
 		/* and also the vertex buffer objects */
 		qglGenBuffers(1, &mod->bsp.vertex_buffer);
 		qglBindBuffer(GL_ARRAY_BUFFER, mod->bsp.vertex_buffer);
-		qglBufferData(GL_ARRAY_BUFFER, vertind * sizeof(GLfloat), mod->bsp.verts, GL_STATIC_DRAW);
+		qglBufferData(GL_ARRAY_BUFFER, vertOfs * sizeof(GLfloat), mod->bsp.verts, GL_STATIC_DRAW);
 
 		qglGenBuffers(1, &mod->bsp.texcoord_buffer);
 		qglBindBuffer(GL_ARRAY_BUFFER, mod->bsp.texcoord_buffer);
-		qglBufferData(GL_ARRAY_BUFFER, coordind * sizeof(GLfloat), mod->bsp.texcoords, GL_STATIC_DRAW);
+		qglBufferData(GL_ARRAY_BUFFER, texCoordOfs * sizeof(GLfloat), mod->bsp.texcoords, GL_STATIC_DRAW);
 
 		qglGenBuffers(1, &mod->bsp.lmtexcoord_buffer);
 		qglBindBuffer(GL_ARRAY_BUFFER, mod->bsp.lmtexcoord_buffer);
-		qglBufferData(GL_ARRAY_BUFFER, coordind * sizeof(GLfloat), mod->bsp.lmtexcoords, GL_STATIC_DRAW);
+		qglBufferData(GL_ARRAY_BUFFER, texCoordOfs * sizeof(GLfloat), mod->bsp.lmtexcoords, GL_STATIC_DRAW);
 
 		qglGenBuffers(1, &mod->bsp.normal_buffer);
 		qglBindBuffer(GL_ARRAY_BUFFER, mod->bsp.normal_buffer);
-		qglBufferData(GL_ARRAY_BUFFER, vertind * sizeof(GLfloat), mod->bsp.normals, GL_STATIC_DRAW);
+		qglBufferData(GL_ARRAY_BUFFER, vertOfs * sizeof(GLfloat), mod->bsp.normals, GL_STATIC_DRAW);
 
 		qglGenBuffers(1, &mod->bsp.tangent_buffer);
 		qglBindBuffer(GL_ARRAY_BUFFER, mod->bsp.tangent_buffer);
-		qglBufferData(GL_ARRAY_BUFFER, tangind * sizeof(GLfloat), mod->bsp.tangents, GL_STATIC_DRAW);
+		qglBufferData(GL_ARRAY_BUFFER, tangOfs * sizeof(GLfloat), mod->bsp.tangents, GL_STATIC_DRAW);
 
 		qglBindBuffer(GL_ARRAY_BUFFER, 0);
 	}
