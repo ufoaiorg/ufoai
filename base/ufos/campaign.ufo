@@ -23,6 +23,7 @@ campaign veryhard
 	events				main
 	researchrate		0.8
 	uforeductionrate	0.65
+	healingrate			2
 
 	date		"2084 79 6"
 	basecost	100000
@@ -56,6 +57,7 @@ campaign hard
 	events				main
 	researchrate		0.8
 	uforeductionrate	0.65
+	healingrate			2
 
 	date		"2084 79 6"
 	basecost	100000
@@ -109,6 +111,7 @@ campaign main
 	events				main
 	researchrate		0.8
 	uforeductionrate	0.65
+	healingrate			2
 
 	date		"2084 79 6"
 	basecost	100000
@@ -142,6 +145,7 @@ campaign easy
 	events				main
 	researchrate		0.8
 	uforeductionrate	0.65
+	healingrate			2
 
 	date		"2084 79 6"
 	basecost	100000
@@ -194,6 +198,7 @@ campaign veryeasy
 	events				main
 	researchrate		0.8
 	uforeductionrate	0.65
+	healingrate			2
 
 	date		"2084 79 6"
 	basecost	100000
