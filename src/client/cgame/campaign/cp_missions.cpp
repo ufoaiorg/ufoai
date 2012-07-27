@@ -359,7 +359,7 @@ void CP_CreateBattleParameters (mission_t *mission, battleParam_t *param, const 
 
 		Com_sprintf(mission->onwin, sizeof(mission->onwin), "cp_uforecovery_init %s %f", ufo->id, ufoCondition);
 		/* Set random map UFO if this is a random map */
-		if (mission->mapDef->map[0] == '+') {
+		if (mission->mapDef->map[0] == '+' && !LIST_IsEmpty(mission->mapDef->ufos)) {
 			/* set rm_ufo to the ufo type used */
 			Cvar_Set("rm_ufo", Com_GetRandomMapAssemblyNameForCraft(shortUFOType));
 		}
@@ -370,7 +370,8 @@ void CP_CreateBattleParameters (mission_t *mission, battleParam_t *param, const 
 		if (mission->category == INTERESTCATEGORY_RESCUE) {
 			Cvar_Set("rm_crashed", Com_GetRandomMapAssemblyNameForCrashedCraft(mission->data.aircraft->id));
 		}
-		Cvar_Set("rm_drop", Com_GetRandomMapAssemblyNameForCraft(aircraft->id));
+		if (!LIST_IsEmpty(mission->mapDef->aircraft))
+			Cvar_Set("rm_drop", Com_GetRandomMapAssemblyNameForCraft(aircraft->id));
 	}
 }
 
