@@ -66,33 +66,36 @@ a		a		a		+b		+b		+b		0
 // dropships --------------------------------------------------------
 
 tile +craft_drop_firebird
+	// 2x info_civilian_start
 {
-4 5
-0		a		a		0
-a		+b		+b		a
-a		+b		+b		a
-a		+b		+b		a
-0		a		a		0
+5 5
+0		a		a		a		0
+a		+b		+b		+b		a
+a		+b		+b		+b		a
+a		+b		+b		+b		a
+0		a		a		a		0
 }
 
 tile +craft_drop_herakles
 {
-4 5
-0		a		a		0
-a		+b		+b		a
-a		+b		+b		a
-a		+b		+b		a
-0		a		a		0
+5 6
+0		a		a		a		0
+a		+b		+b		+b		a
+a		+b		+b		+b		a
+a		+b		+b		a		0
+a		+b		+b		a		0
+0		a		a		0		0
 }
 
 tile +craft_drop_raptor
 {
-4 5
-0		a		a		0
-a		+b		+b		a
-a		+b		+b		a
-a		+b		+b		a
-0		a		a		0
+6 6
+0		0		0		a		a		0
+0		a		a		+b		+b		a
+a		a		+b		+b		+b		a
+a		+b		+b		+b		+b		a
+a		+b		+b		+b		+b		a
+0		a		a		a		a		0
 }
 
 // common tiles -----------------------------------------------------
@@ -350,6 +353,37 @@ ab		+a		ab
 0		ab		0
 }
 
+tile +house6
+	// honeycombed house 6x6, a carpet, entrance north
+	// 1x info_civilian_start
+{
+3 3
+0		ab		0
+ab		+a		ab
+0		ab		0
+}
+tile +house6a
+	// honeycombed house 6x6, a carpet, entrance east
+	// 1x info_alien_start
+{
+3 4
+0		ab		0
+ab		+a		ab
+ab		+a		ab
+0		ab		0
+}
+
+tile +house6b
+	// honeycombed house 6x6, a carpet, entrance east
+	// 1x info_alien_start
+{
+4 4
+0		ab		ab		0
+ab		+a		+a		ab
+ab		+a		+a		ab
+0		ab		ab		0
+}
+
 tile +mountain1a
 	// a big rock, horizontally
 	// 4x info_alien_start
@@ -486,6 +520,9 @@ multiplayer +mp_team2
 +house2a	"0 2"
 +house3		"0 2"
 +house3a	"0 2"
++house6		"0 1"
++house6a	"0 1"
++house6b	"0 1"
 +fence1		"0 1"
 +fence2		"0 1"
 +fence3		"0 1"
@@ -508,12 +545,15 @@ multiplayer +mp_team2
 +empty3		"0 1"
 +empty4		"0 1"
 +empty6		"0 99"
-+house1		"0 2"
-+house1a	"0 2"
-+house2		"0 2"
-+house2a	"0 2"
-+house3		"0 2"
-+house3a	"0 2"
++house1		"0 1"
++house1a	"0 1"
++house2		"0 1"
++house2a	"0 1"
++house3		"0 1"
++house3a	"0 1"
++house6		"0 1"
++house6a	"0 1"
++house6b	"0 1"
 +fence1		"0 1"
 +fence2		"0 1"
 +fence3		"0 1"
@@ -537,6 +577,9 @@ multiplayer +mp_team2
 +house2a	"0 3"
 +house3		"0 3"
 +house3a	"0 3"
++house6		"0 2"
++house6a	"0 1"
++house6b	"0 1"
 +fence1		"0 2"
 +fence2		"0 2"
 +fence3		"0 2"
