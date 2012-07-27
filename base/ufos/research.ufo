@@ -5407,6 +5407,7 @@ tech news_new_twist
 	}
 
 	time		0
+	image		"techs/news_new_twist"
 }
 
 // http://ufoai.org/wiki/index.php/Aliens/The_Enemy_On_Earth
