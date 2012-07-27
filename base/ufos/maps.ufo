@@ -63,7 +63,7 @@ mapdef africa_medium
 		coop3
 		coop4
 	)
-	description		"_A suburb that has received a visit from a Harvester."
+	description		"_A suburb that has received a visit from a UFO."
 	maxaliens		16
 
 	civilianteam	africa
@@ -77,7 +77,60 @@ mapdef africa_medium
 
 	ufos
 	(
+		craft_ufo_gunboat
 		craft_ufo_harvester
+	)
+
+	terrains
+	(
+		"grass"
+		"tropical"
+		"desert"
+		"mountain"
+	)
+
+	cultures
+	(
+		"african"
+	)
+
+	populations
+	(
+		"village"
+		"suburban"
+		"urban"
+	)
+}
+
+mapdef africa_medium_crash
+{
+	map				"+africa"
+	param			"medium"
+	description		"_A UFO crashed here."
+	multiplayer		true
+	teams			2
+	gametypes (
+		fight1on1
+		fight2on2
+		coop2
+		coop3
+		coop4
+	)
+	maxaliens		12
+	hurtaliens		true
+
+	civilianteam	africa
+
+	aircraft
+	(
+		craft_drop_firebird
+		craft_drop_herakles
+		craft_drop_raptor
+	)
+
+	ufos
+	(
+		craft_crash_gunboat
 	)
 
 	terrains

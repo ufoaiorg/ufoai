@@ -52,6 +52,29 @@ a		+b		+b		a
 0		a		a		0
 }
 
+tile +craft_ufo_gunboat
+{
+6 7
+0		0		a		a		0		0
+a		a		+b		+b		a		0
+a		+b		+b		+b		+b		0
+a		+b		+b		+b		+b		0
+a		+b		+b		+b		+b		0
+a		a		+b		+b		a		0
+0		0		a		a		0		0
+}
+
+tile +craft_crash_gunboat
+{
+9 6
+0		0		a		a		a		0		0		a		0
+0		a		+b		+b		+b		a		a		+b		a
+a		+b		+b		+b		+b		+b		a		a		0
+a		+b		+b		+b		+b		+b		a		0		0
+0		a		+b		+b		+b		a		0		0		0
+0		0		a		a		a		0		0		0		0
+}
+
 tile +craft_ufo_harvester
 {
 7 6
@@ -454,6 +477,14 @@ ab		+a		+a		ab
 0		ab		ab		0
 }
 
+tile +well1
+{
+3 3
+0		ab		0
+ab		+a		ab
+0		ab		0
+}
+
 // multiplayer tiles ------------------------------------------------
 
 tile +mp_team2
@@ -527,6 +558,7 @@ multiplayer +mp_team2
 +fence2		"0 1"
 +fence3		"0 1"
 +misc1		"0 1"
++well1		"0 1"
 tileset cowshed		"1 1"
 tileset filler_a	"1 4"
 tileset house_a		"1 1"
@@ -558,6 +590,7 @@ multiplayer +mp_team2
 +fence2		"0 1"
 +fence3		"0 1"
 +misc1		"0 1"
++well1		"0 1"
 tileset cowshed		"1 1"
 tileset filler_a	"1 4"
 tileset rock_a		"0 1"
@@ -585,6 +618,7 @@ multiplayer +mp_team2
 +fence3		"0 2"
 +misc1		"0 1"
 +misc2		"0 1"
++well1		"0 1"
 tileset cowshed		"0 1"
 tileset filler_a	"0 4"
 tileset house_a		"0 1"

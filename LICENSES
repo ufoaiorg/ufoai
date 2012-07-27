@@ -1,11 +1,13 @@
 filename | license | author | source
 base/maps/africa.ump | GNU General Public License 2.0 or later | "SparX" Beyeler
 base/maps/africa/af_craft_crash_fighter.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/africa/af_craft_crash_gunboat.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
 base/maps/africa/af_craft_crash_scout.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
 base/maps/africa/af_craft_drop_firebird.map | GNU General Public License 2.0 or later | "SparX" Beyeler
 base/maps/africa/af_craft_drop_herakles.map | GNU General Public License 2.0 or later | "SparX" Beyeler
 base/maps/africa/af_craft_drop_raptor.map | GNU General Public License 2.0 or later
 base/maps/africa/af_craft_ufo_fighter.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
+base/maps/africa/af_craft_ufo_gunboat.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
 base/maps/africa/af_craft_ufo_harvester.map | GNU General Public License 2.0 or later | "SparX" Beyeler
 base/maps/africa/af_craft_ufo_scout.map | GNU General Public License 2.0 or later
 base/maps/africa/af_empty1.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
@@ -38,6 +40,7 @@ base/maps/africa/af_rock1a.map | GNU General Public License 2.0 or later
 base/maps/africa/af_rock1b.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | base/maps/africa/af_empty5.map
 base/maps/africa/af_rock2a.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
 base/maps/africa/af_rock2b.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/africa/af_well1.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
 base/maps/b/aliencont.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/b/antimatter.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/b/base_empty.map | GNU General Public License 2.0 or later | Martin Gerhardy
