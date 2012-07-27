@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
-"POT-Creation-Date: 2012-07-24 07:45+0200\n"
-"PO-Revision-Date: 2012-03-24 22:48-0600\n"
+"POT-Creation-Date: 2012-07-26 19:18-0500\n"
+"PO-Revision-Date: 2012-07-26 19:17-0600\n"
 "Last-Translator: DarkRain <darkrainx@users.sourceforge.net>\n"
 "Language-Team: \n"
 "Language: es\n"
@@ -15,8 +15,8 @@ msgstr ""
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Poedit-Basepath: ../\n"
 
-#: ../base/maps/africa.ump:392 ../base/maps/africa.ump:420
-#: ../base/maps/africa.ump:447
+#: ../base/maps/africa.ump:476 ../base/maps/africa.ump:504
+#: ../base/maps/africa.ump:531
 msgid "Africa"
 msgstr "África"
 
@@ -35,9 +35,8 @@ msgid "Bridge"
 msgstr "Puente"
 
 #: ../base/maps/bridge.ump:103
-#, fuzzy
 msgid "Bridge (MP)"
-msgstr "Puente"
+msgstr "Puente (MJ)"
 
 #: ../base/maps/cemetery.ump:222
 msgid "Small cemetery"
@@ -92,9 +91,8 @@ msgid "Alien landing - Industrial"
 msgstr "Aterrizaje OVNI - Industrial"
 
 #: ../base/maps/frozen.ump:372 ../base/maps/frozen.ump:394
-#, fuzzy
 msgid "A UFO crashed into the snow here."
-msgstr "Un pequeño OVNI se ha estrellado en esta región minera."
+msgstr "Un OVNI se ha estrellado en la nieve en este lugar."
 
 #: ../base/maps/frozen.ump:412
 msgid "Multiplayer Coop"
@@ -122,9 +120,8 @@ msgid "UFO landed in hills area"
 msgstr "Aterrizaje OVNI en un área montañosa"
 
 #: ../base/maps/ice.ump:331 ../base/maps/ice.ump:354
-#, fuzzy
 msgid "Ice"
-msgstr "Incheon"
+msgstr "Hielo"
 
 #: ../base/maps/industrial.ump:257 ../base/maps/industrial.ump:281
 msgid "UFO Landed"
@@ -415,18 +412,16 @@ msgid "Particle Beam Weapon"
 msgstr "Arma de Flujo de Partículas"
 
 #: ../base/ufos/aircraftmanagement.ufo:937 ../base/ufos/research.ufo:5100
-#, fuzzy
 msgid "Alien Launcher"
-msgstr "Lanza Granadas"
+msgstr "Lanzamisiles Alienígena"
 
 #: ../base/ufos/aircraftmanagement.ufo:947 ../base/ufos/research.ufo:5148
-#, fuzzy
 msgid "Antimatter Missile"
-msgstr "Antimateria"
+msgstr "Misil de Antimateria"
 
 #: ../base/ufos/aircraftmanagement.ufo:964 ../base/ufos/research.ufo:5199
 msgid "Hybrid Missile"
-msgstr ""
+msgstr "Misil Híbrido"
 
 #: ../base/ufos/aircraftmanagement.ufo:981 ../base/ufos/research.ufo:5249
 msgid "Targeting Computer"
@@ -2470,9 +2465,8 @@ msgid "Multiplayer"
 msgstr "Multijugador"
 
 #: ../base/ufos/equipment.ufo:81
-#, fuzzy
 msgid "Alien Skirmish"
-msgstr "Tiroteo"
+msgstr "Tiroteo Alienígena"
 
 #: ../base/ufos/equipment.ufo:108
 msgid "Multiplayer Phalanx"
@@ -2682,9 +2676,8 @@ msgid "mail_from_paul_navarre"
 msgstr "Cte. Paul Navarre, I+D: División de Ingeniería, PHALANX, Comando de Operaciones del Atlántico"
 
 #: ../base/ufos/events.ufo:45
-#, fuzzy
 msgid "Memo: UFO Yard"
-msgstr "Almacén para OVNI"
+msgstr "Memorando: Almacén para OVNI"
 
 #: ../base/ufos/events.ufo:53 ../base/ufos/research.ufo:283
 #: ../base/ufos/research.ufo:292 ../base/ufos/research.ufo:323
@@ -2708,9 +2701,8 @@ msgid "mail_from_dr_connor"
 msgstr "Dr. Connor, I+D: División Biología y Contención, PHALANX, Comando de Operaciones del Atlántico"
 
 #: ../base/ufos/events.ufo:55
-#, fuzzy
 msgid "Memo: Live Aliens"
-msgstr "Extraterrestre"
+msgstr "Memorando: Extraterrestres vivos"
 
 #: ../base/ufos/events.ufo:66
 msgid "Alien died"
@@ -2721,7 +2713,7 @@ msgid "mail_stunned_alien_died"
 msgstr ""
 "Comandante,\n"
 "\n"
-"Temo que tengo malas noticias. A pesar de nuestro mayores esfuerzos, los espécimenes alienígenas recuperados durante la última misión táctica han perecido en la celda de contención. Fuimos completamente incapaces de estabilizar su condición médica lo suficiente como para obtener alguna información útil.\n"
+"Temo que tengo malas noticias. A pesar de nuestros mayores esfuerzos, los espécimenes alienígenas recuperados durante la última misión táctica han perecido en la celda de contención. Fuimos completamente incapaces de estabilizar su condición médica lo suficiente como para obtener alguna información útil.\n"
 "\n"
 "Las señales externas indican que la causa de muerte fue asfixia repentina. Al parecer los alienígenas solo pueden permanecer en nuestra atmósfera por un tiempo limitado antes de sofocarse. No hemos realizado un examen completo del cuerpo, no sin su autorización, pero recomiendo enfáticamente que en este punto recurramos a la autopsia. Debemos encontrar alguna forma de mantenerlos con vida por más tiempo o no podremos realizar ninguna investigación significativa en ellos.\n"
 "\n"
@@ -2743,7 +2735,6 @@ msgstr "Señor, nuestros agentes han descubierto la ubicación de una gran insta
 
 #: ../base/ufos/events.ufo:86
 #: client/cgame/campaign/missions/cp_mission_ufocarrier.cpp:62
-#, fuzzy
 msgid "UFO-Carrier"
 msgstr "OVNI - Transportador de Naves"
 
@@ -2826,7 +2817,6 @@ msgid "Radar Tower"
 msgstr "Torre de Radar"
 
 #: ../base/ufos/installation.ufo:17
-#, fuzzy
 msgid "The radar tower is an unmanned installation that can be placed anywhere in the world to boost our detection range. It is cheap to build and highly useful, but its camouflage is not very effective. Alien craft may detect the active scanning and attempt to destroy the tower once they find it. It is recommended that radar towers be protected with SAM sites."
 msgstr "La torre de radar es una instalación menor sin personal que puede construirse en cualquier parte del globo para ampliar nuestro alcance de radar. Es barata y muy útil, pero su camuflaje no es muy efectivo. Las naves alienígenas podrían detectar el escaneo activo e intentar destruir la torre una vez que la encuentren. Es recomendable proteger las torres de radar con silos MTA."
 
@@ -2843,14 +2833,12 @@ msgid "SAM Site"
 msgstr "Silo MTA"
 
 #: ../base/ufos/installation.ufo:47
-#, fuzzy
 msgid "The SAM site is an unmanned installation that can be placed anywhere in the world to automatically engage detected UFOs with surface-to-air missiles. It is cheap to build and highly useful, but its camouflage is not very effective. Alien craft may detect the missile launches and attempt to destroy the site once they find it. The SAM site is sturdy but will succumb to repeated bombing. Missile reloads are delivered free to our sites by UN forces."
 msgstr "El silo MTA es una instalación menor sin personal que puede construirse en cualquier parte del globo para atacar automáticamente a los OVNI detectados con Misiles Tierra-Aire. Es barato y muy útil, pero su camuflaje no es muy efectivo. Las naves alienígenas podrían detectar el lanzamiento de los misiles e intentar destruir el silo una vez que lo encuentren. El silo MTA es resistente pero caerá ante bombardeos persistentes. Los misiles de recarga son llevados gratuitamente a nuestros silos por las tropas de las Naciones Unidas."
 
 #: ../base/ufos/installation.ufo:52
-#, fuzzy
 msgid "Orbital Rocket Launcher"
-msgstr "Lanzamisiles"
+msgstr "Silo de Misiles Orbitales"
 
 #: ../base/ufos/language.ufo:2
 msgid "English"
@@ -2977,305 +2965,303 @@ msgid "A suburb that has been visited by an UFO."
 msgstr "Un suburbio que ha sido visitado por un OVNI."
 
 #: ../base/ufos/maps.ufo:164
-#, fuzzy
 msgid "Crashed UFO in an african suburban district."
-msgstr "OVNI caído en un distrito suburbano de una región oriental."
+msgstr "OVNI caído en un distrito suburbano."
 
-#: ../base/ufos/maps.ufo:208
+#: ../base/ufos/maps.ufo:209
 msgid "An UFO crashsite."
 msgstr "Lugar del choque OVNI"
 
-#: ../base/ufos/maps.ufo:249
+#: ../base/ufos/maps.ufo:250
 msgid "A Bomber has landed in the middle of a city."
 msgstr "Un Bombardero ha aterrizado en medio de una ciudad."
 
-#: ../base/ufos/maps.ufo:307 ../base/ufos/maps.ufo:349
-#: ../base/ufos/maps.ufo:4106
+#: ../base/ufos/maps.ufo:308 ../base/ufos/maps.ufo:350
+#: ../base/ufos/maps.ufo:4107
 msgid "A small UFO has crashed in this mining region."
 msgstr "Un pequeño OVNI se ha estrellado en esta región minera."
 
-#: ../base/ufos/maps.ufo:402 ../base/ufos/maps.ufo:444
+#: ../base/ufos/maps.ufo:403 ../base/ufos/maps.ufo:445
 msgid "Some houses in the desert."
 msgstr "Algunas casas en el desierto."
 
-#: ../base/ufos/maps.ufo:497
+#: ../base/ufos/maps.ufo:498
 msgid "An alien Harvester has crashed in the wastelands."
 msgstr "Un Recolector alienígena caído en el desierto."
 
-#: ../base/ufos/maps.ufo:537 ../base/ufos/maps.ufo:579
-#: ../base/ufos/maps.ufo:618
+#: ../base/ufos/maps.ufo:538 ../base/ufos/maps.ufo:580
+#: ../base/ufos/maps.ufo:619
 msgid "A farm in a rural area. Lots of land to cover, but few obstacles to impair line of sight."
 msgstr "Granja de una zona rural. Mucho terreno que cubrir, pero pocos obstáculos que obstruyan la visibilidad."
 
-#: ../base/ufos/maps.ufo:661
+#: ../base/ufos/maps.ufo:662
 msgid "A farmhouse surrounded by fields and sheds. A UFO has landed in one of the fields."
 msgstr "Una hacienda rodeada de campos y corrales. Un OVNI ha aterrizado en uno de los campos."
 
-#: ../base/ufos/maps.ufo:714 ../base/ufos/maps.ufo:754
-#: ../base/ufos/maps.ufo:795
+#: ../base/ufos/maps.ufo:715 ../base/ufos/maps.ufo:755
+#: ../base/ufos/maps.ufo:796
 msgid "Aliens are up to no good in this sparsely populated forest region."
 msgstr "Los alienígenas llevan a cabo siniestras actividades en esta área casi despoblada del bosque."
 
-#: ../base/ufos/maps.ufo:836
+#: ../base/ufos/maps.ufo:837
 msgid "UFO crashed in this sparsely populated forest region."
 msgstr "Un OVNI caído en una región casi despoblada del bosque."
 
-#: ../base/ufos/maps.ufo:879 ../base/ufos/maps.ufo:932
-#: ../base/ufos/maps.ufo:985
+#: ../base/ufos/maps.ufo:880 ../base/ufos/maps.ufo:933
+#: ../base/ufos/maps.ufo:986
 msgid "An industrial area in a cold region."
 msgstr "Una zona industrial en una región helada."
 
-#: ../base/ufos/maps.ufo:1036 ../base/ufos/maps.ufo:1087
-#: ../base/ufos/maps.ufo:1138 ../base/ufos/maps.ufo:4953
-#: ../base/ufos/maps.ufo:4971
+#: ../base/ufos/maps.ufo:1037 ../base/ufos/maps.ufo:1088
+#: ../base/ufos/maps.ufo:1139 ../base/ufos/maps.ufo:4954
+#: ../base/ufos/maps.ufo:4972
 msgid "An underpopulated area in a cold region."
 msgstr "Zona de baja población en una región helada."
 
-#: ../base/ufos/maps.ufo:1193
+#: ../base/ufos/maps.ufo:1194
 msgid "An important container harbour is attacked by alien invaders."
 msgstr "Un importante puerto de carga es atacado por invasores alienígenas."
 
-#: ../base/ufos/maps.ufo:1248 ../base/ufos/maps.ufo:1293
-#: ../base/ufos/maps.ufo:1335
+#: ../base/ufos/maps.ufo:1249 ../base/ufos/maps.ufo:1294
+#: ../base/ufos/maps.ufo:1336
 msgid "UFO landed in hills area."
 msgstr "Aterrizaje OVNI en una zona montañosa."
 
-#: ../base/ufos/maps.ufo:1381 ../base/ufos/maps.ufo:1421
-#: ../base/ufos/maps.ufo:1462 ../base/ufos/maps.ufo:1501
+#: ../base/ufos/maps.ufo:1382 ../base/ufos/maps.ufo:1422
+#: ../base/ufos/maps.ufo:1463 ../base/ufos/maps.ufo:1502
 msgid "An icy environment."
-msgstr ""
+msgstr "Un ambiente helado"
 
-#: ../base/ufos/maps.ufo:1546 ../base/ufos/maps.ufo:1587
+#: ../base/ufos/maps.ufo:1547 ../base/ufos/maps.ufo:1588
 msgid "Industrial theme."
 msgstr "Sitio industrial"
 
-#: ../base/ufos/maps.ufo:1632 ../base/ufos/maps.ufo:1680
-#: ../base/ufos/maps.ufo:3123
+#: ../base/ufos/maps.ufo:1633 ../base/ufos/maps.ufo:1681
+#: ../base/ufos/maps.ufo:3124
 msgid "A classic eastern suburban area."
 msgstr "Una típica área suburbana occidental."
 
-#: ../base/ufos/maps.ufo:1731
+#: ../base/ufos/maps.ufo:1732
 msgid "A laboratory where they examined found UFO wreck tiles."
 msgstr "Un laboratorio donde se examinaban algunos restos OVNI."
 
-#: ../base/ufos/maps.ufo:1787
+#: ../base/ufos/maps.ufo:1788
 msgid "A mansion near the coast."
 msgstr "Una mansión cerca de la costa."
 
-#: ../base/ufos/maps.ufo:1841 ../base/ufos/maps.ufo:1889
+#: ../base/ufos/maps.ufo:1842 ../base/ufos/maps.ufo:1890
 msgid "A mansion. An important and influential person lives here."
 msgstr "Una mansión. Una persona rica e influyente vive aquí."
 
-#: ../base/ufos/maps.ufo:1942 ../base/ufos/maps.ufo:1982
-#: ../base/ufos/maps.ufo:2065
+#: ../base/ufos/maps.ufo:1943 ../base/ufos/maps.ufo:1983
+#: ../base/ufos/maps.ufo:2066
 msgid "A suburban district of an oriental area."
 msgstr "Un distrito suburbano de una región oriental."
 
-#: ../base/ufos/maps.ufo:2024
+#: ../base/ufos/maps.ufo:2025
 msgid "Crashed UFO in oriental suburban district."
 msgstr "OVNI caído en un distrito suburbano de una región oriental."
 
-#: ../base/ufos/maps.ufo:2117
+#: ../base/ufos/maps.ufo:2118
 msgid "A crashed Scout UFO."
 msgstr "Un OVNI explorador caído"
 
-#: ../base/ufos/maps.ufo:2158 ../base/ufos/maps.ufo:2198
-#: ../base/ufos/maps.ufo:2239
+#: ../base/ufos/maps.ufo:2159 ../base/ufos/maps.ufo:2199
+#: ../base/ufos/maps.ufo:2240
 msgid "A cleared stretch of land in the middle of the jungle."
 msgstr "Un claro a la mitad de la selva."
 
-#: ../base/ufos/maps.ufo:2280 ../base/ufos/maps.ufo:2320
+#: ../base/ufos/maps.ufo:2281 ../base/ufos/maps.ufo:2321
 msgid "A river runs through this piece of jungle."
 msgstr "Hay un río que corre a travez de esta parte de la selva."
 
-#: ../base/ufos/maps.ufo:2366
+#: ../base/ufos/maps.ufo:2367
 msgid "UFO Crashsite."
 msgstr "Lugar del choque OVNI"
 
-#: ../base/ufos/maps.ufo:2399 ../base/ufos/maps.ufo:2441
-#: ../base/ufos/maps.ufo:2482 ../base/ufos/maps.ufo:2525
+#: ../base/ufos/maps.ufo:2400 ../base/ufos/maps.ufo:2442
+#: ../base/ufos/maps.ufo:2483 ../base/ufos/maps.ufo:2526
 msgid "A peaceful neighbourhood on the outskirts of a centre of population."
 msgstr "Un barrio pacifico a las afueras de un centro de población."
 
-#: ../base/ufos/maps.ufo:2572 ../base/ufos/maps.ufo:2607
-#: ../base/ufos/maps.ufo:5018
+#: ../base/ufos/maps.ufo:2573 ../base/ufos/maps.ufo:2608
+#: ../base/ufos/maps.ufo:5019
 msgid "Base is under attack."
 msgstr "Base bajo ataque"
 
-#: ../base/ufos/maps.ufo:2646
+#: ../base/ufos/maps.ufo:2647
 msgid "Cemetery terror mission."
 msgstr "Misión de terror en un cementerio"
 
-#: ../base/ufos/maps.ufo:2687 ../base/ufos/maps.ufo:4926
+#: ../base/ufos/maps.ufo:2688 ../base/ufos/maps.ufo:4927
 msgid "A city high rise."
 msgstr "Un rascacielos en la ciudad."
 
-#: ../base/ufos/maps.ufo:2728
-#, fuzzy
+#: ../base/ufos/maps.ufo:2729
 msgid "A hospital in the outskirts of a city."
-msgstr "Un complejo de oficinas a las afueras de la ciudad."
+msgstr "Un complejo de oficinas a las afueras de una ciudad."
 
-#: ../base/ufos/maps.ufo:2770 ../base/ufos/maps.ufo:3770
+#: ../base/ufos/maps.ufo:2771 ../base/ufos/maps.ufo:3771
 msgid "A small neighbourhood in a warm urban region."
 msgstr "Un pequeño vecindario urbano en una región templada."
 
-#: ../base/ufos/maps.ufo:2819
+#: ../base/ufos/maps.ufo:2820
 msgid "A place where people come to relax and mingle."
 msgstr "Un lugar a donde la gente viene a relajarse y convivir."
 
-#: ../base/ufos/maps.ufo:2871
+#: ../base/ufos/maps.ufo:2872
 msgid "An office complex under construction."
 msgstr "Un complejo de oficinas en construcción."
 
-#: ../base/ufos/maps.ufo:2925
+#: ../base/ufos/maps.ufo:2926
 msgid "A tropical area where several suspected criminals have made their homes."
 msgstr "Una región tropical donde varios presuntos criminales han hecho sus hogares."
 
-#: ../base/ufos/maps.ufo:2984
+#: ../base/ufos/maps.ufo:2985
 msgid "A small estate in the mountains."
 msgstr "Una pequeña finca en las montañas."
 
-#: ../base/ufos/maps.ufo:3025
+#: ../base/ufos/maps.ufo:3026
 msgid "A place where citizens come to replenish their vehicles' fuel supply."
 msgstr "Una estación de gasolina."
 
-#: ../base/ufos/maps.ufo:3073
+#: ../base/ufos/maps.ufo:3074
 msgid "A small office in a mountainous region."
 msgstr "Una pequeña oficina en una región montañosa."
 
-#: ../base/ufos/maps.ufo:3175
+#: ../base/ufos/maps.ufo:3176
 msgid "A kind of communal gathering centre annex foraging facility, known as a supermarket."
 msgstr "Un supermercado."
 
-#: ../base/ufos/maps.ufo:3227
+#: ../base/ufos/maps.ufo:3228
 msgid "A military convoy has caught the eye of the aliens."
 msgstr "Un convoy militar ha llamado la atención de los alienígenas."
 
-#: ../base/ufos/maps.ufo:3275 ../base/ufos/maps.ufo:4526
+#: ../base/ufos/maps.ufo:3276 ../base/ufos/maps.ufo:4527
 msgid "An urban district in an oriental region."
 msgstr "Zona urbana de una región oriental."
 
-#: ../base/ufos/maps.ufo:3326
+#: ../base/ufos/maps.ufo:3327
 msgid "A shelter that was built to house people in times of major disasters. Some internal blast doors may have been closed."
 msgstr "Un refugio construido para situaciones de emergencia. Algunas puertas pueden estar bloqueadas."
 
-#: ../base/ufos/maps.ufo:3383
+#: ../base/ufos/maps.ufo:3384
 msgid "A small industrial area."
 msgstr "Una pequeña zona industrial."
 
-#: ../base/ufos/maps.ufo:3433
+#: ../base/ufos/maps.ufo:3434
 msgid "A stadium used for various recreational events."
 msgstr "Un estadio utilizado para eventos recreativos."
 
-#: ../base/ufos/maps.ufo:3484
+#: ../base/ufos/maps.ufo:3485
 msgid "An office complex in the centre of town."
 msgstr "Un complejo de oficinas en el centro de la ciudad."
 
-#: ../base/ufos/maps.ufo:3538
+#: ../base/ufos/maps.ufo:3539
 msgid "An industrial area, used for loading and unloading goods."
 msgstr "Una zona industrial, usada para carga y descarga de bienes."
 
-#: ../base/ufos/maps.ufo:3586 ../base/ufos/maps.ufo:3630
+#: ../base/ufos/maps.ufo:3587 ../base/ufos/maps.ufo:3631
 msgid "A small bungalow."
 msgstr "Una pequeña cabaña."
 
-#: ../base/ufos/maps.ufo:3676
+#: ../base/ufos/maps.ufo:3677
 msgid "A bunker used in a previous conflict."
 msgstr "Un refugio subterráneo usado en un conflicto anterior."
 
-#: ../base/ufos/maps.ufo:3725
+#: ../base/ufos/maps.ufo:3726
 msgid "A small industry city area."
 msgstr "Una pequeña zona industrial."
 
-#: ../base/ufos/maps.ufo:3818
+#: ../base/ufos/maps.ufo:3819
 msgid "A crashed UFO-Corrupter."
 msgstr "Un OVNI - Corruptor caído."
 
-#: ../base/ufos/maps.ufo:3864
+#: ../base/ufos/maps.ufo:3865
 msgid "A hydroelectricity dam that is threatened by the alien invaders."
 msgstr "Una central hidroeléctrica amenazada por los invasores alienígenas."
 
-#: ../base/ufos/maps.ufo:3912
+#: ../base/ufos/maps.ufo:3913
 msgid "A small village."
 msgstr "Una pequeña villa."
 
-#: ../base/ufos/maps.ufo:3961
+#: ../base/ufos/maps.ufo:3962
 msgid "An estate owned by rich and influential people."
 msgstr "Una finca de gente rica e influyente."
 
-#: ../base/ufos/maps.ufo:4006
+#: ../base/ufos/maps.ufo:4007
 msgid "An excavation site that has fallen under alien attack."
 msgstr "Un sitio de excavación que ha sido atacado por los alienígenas."
 
-#: ../base/ufos/maps.ufo:4056
+#: ../base/ufos/maps.ufo:4057
 msgid "A ferry."
 msgstr "Un transbordador."
 
-#: ../base/ufos/maps.ufo:4154
+#: ../base/ufos/maps.ufo:4155
 msgid "A fuel depot the aliens try to destroy."
 msgstr "Un almacén de combustible que los alienígenas intentan destruir."
 
-#: ../base/ufos/maps.ufo:4194
+#: ../base/ufos/maps.ufo:4195
 msgid "A depot with the name 'The Gate' where secret technology is stored."
 msgstr "Un almacén llamado \"The Gate\" donde se resguarda tecnología secreta"
 
-#: ../base/ufos/maps.ufo:4242
+#: ../base/ufos/maps.ufo:4243
 msgid "A local harbour."
 msgstr "Un puerto local."
 
-#: ../base/ufos/maps.ufo:4297 ../base/ufos/maps.ufo:4334
+#: ../base/ufos/maps.ufo:4298 ../base/ufos/maps.ufo:4335
 msgid "A small settlement in winter."
 msgstr "Un pequeño asentamiento invernal."
 
-#: ../base/ufos/maps.ufo:4383
+#: ../base/ufos/maps.ufo:4384
 msgid "An old mine."
 msgstr "Una vieja mina."
 
-#: ../base/ufos/maps.ufo:4436
+#: ../base/ufos/maps.ufo:4437
 msgid "Neighbourhood."
 msgstr "Vecindario."
 
-#: ../base/ufos/maps.ufo:4480
+#: ../base/ufos/maps.ufo:4481
 msgid "An office complex on the outskirts of town."
 msgstr "Un complejo de oficinas a las afueras de la ciudad."
 
-#: ../base/ufos/maps.ufo:4573
+#: ../base/ufos/maps.ufo:4574
 msgid "Underground pipe construction site."
 msgstr "Zona de construcción de una tubería subterránea."
 
-#: ../base/ufos/maps.ufo:4620
+#: ../base/ufos/maps.ufo:4621
 msgid "A luxurious vacation resort."
 msgstr "Un lujoso sitio vacacional."
 
-#: ../base/ufos/maps.ufo:4666
+#: ../base/ufos/maps.ufo:4667
 msgid "A rather old-fashioned suburban district."
 msgstr "Un antiguo distrito suburbano."
 
-#: ../base/ufos/maps.ufo:4784
+#: ../base/ufos/maps.ufo:4785
 msgid "A subway station in a suburban part of town."
 msgstr "Una estación del metro en una zona suburbana de la ciudad."
 
-#: ../base/ufos/maps.ufo:4831
+#: ../base/ufos/maps.ufo:4832
 msgid "A suburban district."
 msgstr "Un distrito suburbano."
 
-#: ../base/ufos/maps.ufo:4877
+#: ../base/ufos/maps.ufo:4878
 msgid "Wilderness terror mission."
 msgstr "Misión de terror en el desierto"
 
-#: ../base/ufos/maps.ufo:4998
+#: ../base/ufos/maps.ufo:4999
 msgid "An alien base."
 msgstr "Una base alienígena"
 
-#: ../base/ufos/maps.ufo:5030
+#: ../base/ufos/maps.ufo:5031
 msgid "Rescue mission."
 msgstr "Misión de rescate"
 
-#: ../base/ufos/maps.ufo:5060
+#: ../base/ufos/maps.ufo:5061
 msgid "Training Zone: Alpha"
 msgstr "Zona de Entrenamiento: Alfa"
 
-#: ../base/ufos/maps.ufo:5077
+#: ../base/ufos/maps.ufo:5078
 msgid "Training Zone: Bravo"
 msgstr "Zona de Entrenamiento: Bravo"
 
@@ -3303,7 +3289,6 @@ msgstr[1] "Pilotos"
 
 #: ../base/ufos/medals.ufo:46 ../base/ufos/team_humans.ufo:2083
 #: ../base/ufos/team_humans.ufo:2148 client/cgame/campaign/cp_employee.cpp:208
-#, fuzzy
 msgid "UGV"
 msgid_plural "UGVs"
 msgstr[0] "VTNT"
@@ -3423,6 +3408,13 @@ msgid ""
 "\n"
 "--Cdr. Navarre"
 msgstr ""
+"Comandante, nuestra ultima misión logro eliminar a al tripulación del OVNI pero no tenemos un lugar donde almacenar la nave. El OVNI es demasiado grande para alojarlo en nuestras instalaciones de ingeniería y desarrollo dentro de la base. Deberíamos construir un Almacén para OVNI a fin de poder almacenar los vehículos alienígenas en una instalación externa. No podremos realizar ninguna investigación en estas naves hasta que podamos almacenarlas con seguridad.\n"
+"\n"
+"Una vez que tengamos un OVNI en nuestro almacén, nuestros científicos podrán realizar su investigación. Una vez que concluyan, nuestros ingenieros podrán desmantelar el OVNI para recuperar materiales y partes.\n"
+"\n"
+"El trabajo en los OVNI obligara a nuestros científicos e ingenieros a realizar el viaje de ida y vuelta hasta el Almacén para OVNI, así que debemos construir el sitio tan cerca como sea posible de la base donde se realizará el trabajo.\n"
+"\n"
+"--Cte. Navarre "
 
 #: ../base/ufos/msgid/tips.ufo:24
 msgid ""
@@ -3439,6 +3431,17 @@ msgid ""
 "\n"
 "Dr. Connor"
 msgstr ""
+"Comandante,\n"
+"\n"
+"Necesitamos capturar algunos alienígenas con vida si queremos llegar a entender a nuestros enemigos. Podemos aprender mucho por medio de realizar autopsias a los cadáveres alienígenas, pero para entender realmente a estas criaturas debemos observar ejemplares vivos.\n"
+"\n"
+"Si fuera posible neutralizar a los alienígenas en el campo de batalla y llevarlos con vida a una base con una Celda para Alienígenas, no hay palabras para describir lo que podríamos lograr. Podríamos ver más claramente como funcionan sus sistemas biológicos y realizarles pruebas para determinar sus debilidades. Con el tiempo podríamos incluso desarrollar una forma de comunicarnos con ellos.\n"
+"\n"
+"Se que capturar ejemplares vivos es un gran riesgo para nuestros soldados, señor, pero es un riesgo que tendremos que correr si algún día esperamos ganar esta guerra.\n"
+"\n"
+"Atentamente,\n"
+"\n"
+"Dr. Connor "
 
 #: ../base/ufos/msgoptions.ufo:13
 msgid "install_equipment"
@@ -3521,14 +3524,12 @@ msgid "Stab"
 msgstr "Estocada"
 
 #: ../base/ufos/otheritems.ufo:99
-#, fuzzy
 msgid "Hovernet Plasma Weapon"
-msgstr "Hovernet - Diseño"
+msgstr "Arma de Plasma del Hovernet"
 
 #: ../base/ufos/otheritems.ufo:118
-#, fuzzy
 msgid "Hovernet Plasma Ammo"
-msgstr "Hovernet - Notas de Combates"
+msgstr "Munición de Plasma del Hovernet"
 
 #: ../base/ufos/otheritems.ufo:133
 msgid "Single Shot"
@@ -3536,11 +3537,11 @@ msgstr "Un Disparo"
 
 #: ../base/ufos/otheritems.ufo:158
 msgid "Combat Hovernet Plasma Weapon"
-msgstr ""
+msgstr "Arma de Plasma del Hovernet de Combate"
 
 #: ../base/ufos/otheritems.ufo:177
 msgid "Combat Hovernet Plasma Ammo"
-msgstr ""
+msgstr "Munición de Plasma del Hovernet de Combate"
 
 #: ../base/ufos/otheritems.ufo:192 ../base/ufos/weapons_plasma.ufo:65
 msgid "Burst"
@@ -3801,7 +3802,7 @@ msgstr ""
 "\n"
 "En un experimento, a un ejemplar alienígena se le dio una caja de alimentos protegida por una cerradura de dos dígitos. El sujeto tardó seis horas en encontrar la combinación correcta por el método de ensayo y error. Esto sitúa el índice de inteligencia del alienígena muy por debajo del de la mayoría de los grandes mamíferos terrestres; sin embargo, cuando se asignó la misma tarea a otros individuos de la Unidad de Contención, con exactamente la misma cerradura, todos introdujeron inmediatamente la combinación correcta al primer intento, sin haber sido testigos en ningún momento de los intentos del primer individuo. Sabemos lo que esto parece, Comandante, pero le aseguro que mi equipo y yo hemos sido rigurosamente meticulosos en lo referente a la seguridad y a la separación de los espécimenes. No hemos permitido ninguna clase de comunicación entre los alienígenas. Todavía no queremos aventurar ninguna hipótesis definitiva sobre estos acontecimientos, si bien estamos trabajando en ello.\n"
 "\n"
-"Por desgracia, los resultados de los demás experimentos han sido, en el mejor de los casos, poco concluyentes. Se ha probado varios modos de comunicación sin éxito. A pesar de que poseen cuerdas vocales plenamente funcionales y/o las manos, no parecen hablar o hacer señales que seamos capaces de comprender. La comunicación por medio de feromonas tampoco ha tenido ningún efecto, más allá de simples reacciones físicas. La gran disparidad biológica existente entre las diferentes especies alienígenas también crea ciertos problemas en cuanto a su confinamiento y comunicación - por favor, remítase a los informes de las autopsias alienígenas para obtener más detalles sobre la fisiología alienígena de las distintas especies.\n"
+"Por desgracia, los resultados de los demás experimentos han sido, en el mejor de los casos, poco concluyentes. Se ha probado varios modos de comunicación sin éxito. A pesar de que poseen cuerdas vocales plenamente funcionales y/o las manos, no parecen hablar o hacer señales que seamos capaces de comprender. La comunicación por medio de feromonas tampoco ha tenido efecto, más allá de simples reacciones físicas. La gran disparidad biológica existente entre las diferentes especies alienígenas también crea ciertos problemas en cuanto a su confinamiento y comunicación - por favor, remítase a los informes de las autopsias alienígenas para obtener más detalles sobre la fisiología alienígena de las distintas especies.\n"
 "\n"
 "En cualquier caso, creo que estamos haciendo progresos, aunque lentamente. Ciertamente, la comunicación con los alienígenas entra en el marco de lo posible. Nuestros estudios confirman que todos los espécimenes alienígenas reaccionan frente a los estímulos externos. Esto significa que podemos provocar su respuesta, ya sea de una manera o de otra. Actualmente, el Dr. Yamamura está trabajando en enseñar a un grupo aislado cómo expresar deseo, aceptación y rechazo. Su inteligencia es demasiado limitada para intentar algo más sofisticado por ahora. Una vez que hayan dominado estos conceptos básicos, dispondremos de datos sobre la velocidad de aprendizaje de los alienígenas y un sólido fundamento sobre el que construir. El Dr. Yamamura espera que podamos mejorar gradualmente sus habilidades comunicativas hasta que consigan hacerse inteligibles para nosotros, de modo que luego compartan este conocimiento con otros de su clase que puedan poseer un intelecto y un talento superiores.\n"
 "\n"
@@ -4182,8 +4183,6 @@ msgstr ""
 "\n"
 "El mayor inconveniente de la nueva pólvora es que no puede usarse en armas completamente automáticas, ya que ningún arma conocida puede soportar las altísimas presiones que se producen en las explosiones sucesivas durante mucho tiempo sin romperse. La pistola británica APMP no se preocupa de estos detalles al usar pólvora sin humo ordinaria y un cañón más largo (casi de escopeta) para conseguir mayores velocidades y fuerza cinética. Es una verdadera pistola automática, capaz de disparar 600 balas por minuto a partir de su sorprendentemente ligero cargador con capacidad de 30 balas. Esta arma cuenta con tres modos de disparo, semiautomático, ráfaga de tres disparos y automático.\n"
 "\n"
-"El APMP usa una munición especialmente diseñada de 4.2 x 24mm que puede atravesar el kevlar como si no existiera. Una vez dentro del cuerpo, esta pequeña bala se pulveriza y crea enormes heridas internas. Puede tener problemas en penetrar los blindajes más modernos, pero es un problema menor gracias a su capacidad de causar daños repetidos al enemigo en la misma ráfaga con un sólo cargador. Desafortunadamente su pequeño tamaño también provoca algunos problemas de precisión durante el disparo en modo automático o de ráfaga.\n"
-"\n"
 "En cualquier circunstancia en la que necesitamos un arma automática no más grande que nuestra propia P-12, esta es el arma recomendada.\n"
 "\n"
 "Para uso interno de PHALANX, hemos denominado esta arma como MP-699.\n"
@@ -4192,8 +4191,6 @@ msgstr ""
 "Doctrina recomendada\n"
 "\n"
 "La MP-699 es principalmente un arma de respaldo. Es mucho más efectiva que el cuchillo de combate como último recurso cuando todo lo demás falla, y permite al soldado responder a un ataque a corto alcance si el arma principal no es efectiva en esas situaciones o si ha agotado su munición. Es una buena alternativa para los soldados que tengan problemas acertando con la P-12, aunque hay que tener en cuenta que tiene menos potencia que aquella. Además, sus cargadores son demasiado grandes como para colocarse con comodidad en el cinturón del soldado y muchos menos de ellos se pueden llevar de forma conveniente.\n"
-"\n"
-"Los soldados ambidiestros pueden considerar usar dos pistolas al mismo tiempo, aunque esto puede afectar negativamente la precisión y reducir aun más, si cabe, el alcance efectivo de sus armas.\n"
 "\n"
 "Una MP-699 no debe ser considerada como un arma primaria en ninguna circunstancia normal, ya que casi cualquier otra arma de nuestro arsenal supera sus capacidades ofensivas. Sus ventajas son las ventajas de cualquier arma secundaria: pequeña y ligera. Aún así puede ser útil como arma primaria para efectivos no combatientes, como médicos y técnicos que no suelen tener espacio para armas más potentes.\n"
 "\n"
@@ -4700,18 +4697,20 @@ msgstr ""
 "\n"
 "Los proyectiles son dardos de 3.2x40mm con aletas especialmente desarrollados, fabricados a partir de grandes hojas de aleación de tungsteno. Son navajas afiladas, con excelentes cualidades de perforación de armadura, que giran como demonios dentro del objetivo. Los agujeros que estos dardos producen son varias veces más grandes que su tamaño real.\n"
 "\n"
-"Esta elección de sistema de carga hace al Bólter lento y torpe para recargar, con enormes y costosos cartuchos (consume un nuevo barril y un paquete de baterías por cada recarga) y teniendo una pequeña capacidad de munición: 4 disparos por barril. Por contra parte, la potencia del Bólter es mucho mayor que la de cualquier arma química de nuestro arsenal. Se puede utilizar tanto como rifle de francotirador o como una poderosa arma de asalto, en función de si se dispara en semi-automático o modo ráfaga de 4 disparos. Es un arma muy versátil, con muchas posibles aplicaciones, y su valor táctico sin duda se verá una vez que tengamos alguna experiencia de combate real con la misma.\n"
+"Esta elección de sistema de carga hace al Bólter lento y torpe para recargar, con enormes y costosos cartuchos (consume un nuevo barril y un paquete de baterías por cada recarga) y teniendo una pequeña capacidad de munición. Por contra parte, la potencia del Bólter es mucho mayor que la de cualquier arma química de nuestro arsenal.\n"
 "\n"
 "--Cte. Navarre"
 
 #: ../base/ufos/research.ufo:1000
 msgid "bolterrifle_pre_txt"
 msgstr ""
-"Comandante, hemos recibido una serie de archivos de investigación de las Naciones Unidas relativos a la investigación y desarrollo de armas electromagnéticas portátiles; diversos diseños que se han propuesto, e incluso prototipos de cañones de raíles y cañones gauss. Por supuesto, todos estos experimentos han fracasado, ya que las armas electromagnéticas requieren enormes cantidades de energía- y, por lo tanto, bancos de condensadores tan pesados que ningún soldado humano podría llevarlo. Incluso las pilas atómicas no han dado la potencia de salida que necesitamos para hacer de los cañones electromagnéticos portátiles una realidad. Es sencillamente imposible.\n"
+"Comandante, la armadura alienígena que estudiamos ha probado ser altamente efectiva contra el armamento actual de nuestros francotiradores. He tomado la iniciativa de ordenar un análisis general de los archivos de investigación de varias naciones que forman parte de las naciones unidas y creo haber encontrado una avenida de investigación prometedora.\n"
 "\n"
-"Al menos, eso es lo que pensábamos, hasta que los alienígenas aparecieron.\n"
+"Se han propuesto varios diseños e incluso prototipos de armas electromagnéticas portátiles, incluyendo armas de raíles y armas gauss. Por supuesto, todos estos experimentos han fallado, debido a que las armas electromagnéticas requieren enormes cantidades de energía - y por tanto bancos de capacitores tan pesados que ningún soldado humano podría levarlos.\n"
 "\n"
-"Ver las aeronaves alienígenas en nuestros cielos, a avanzados robots escudriñar nuestras calles, y a sus armas de alta potencia desgarrar a nuestra gente nos ha dado un gran número de nuevas ideas. También nos ha obligado a revisar muy de cerca la información recolectada sobre las investigaciones de las Naciones Unidas. Es nada menos que una mina de oro encubierta. Al combinar lo mejor de cada una de estas piezas de rompecabezas, creemos que podemos ser capaces de concebir una nueva arma para nuestros equipos tácticos que será a la vez portátil y efectiva en combate. Esta arma tendrá el alcance extremo y la potencia necesarios para servirnos bien en los próximos días.\n"
+"Al menos eso es lo que pensábamos.\n"
+"\n"
+"Desde entonces el equipo de investigación de PHALANX ha cosechado un éxito tras otro y ahora estamos seguros de poder producir un diseño portátil y efectivo en combate, con la habilidad de disparar municiones lo suficientemente pesadas como para atravesar la avanzada armadura alienígena.\n"
 "\n"
 "Esta idea es muy prometedora, Comandante. Nos gustaría su autorización sobre tiempo de laboratorio y fondos, a fin de hacer de las armas electromagnéticas una realidad.\n"
 "\n"
@@ -4832,7 +4831,7 @@ msgstr ""
 "\n"
 "Doctrina Recomendada\n"
 "\n"
-"El CRC-FL es un arma de corto alcance; el usuario necesita ser rápido para situarse cerca del enemigo y descargar tanto calor como sea posible. Es un arma pesada a pesar de su diseño relativamente fino, así que la fuerza también será una característica necesaria para que el soldado pueda sacar todo el potencial al arma.\n"
+"El CRC-FL es un arma de corto alcance; el usuario necesita ser rápido para situarse cerca del enemigo y descargar tanto calor como sea posible. Es también un arma algo pesada a pesar de su diseño relativamente fino.\n"
 "\n"
 "\n"
 "Apéndices\n"
@@ -5269,7 +5268,7 @@ msgstr ""
 "\n"
 "La pistola láser solo puede quemar fluoruro de deuterio aproximadamente a la mitad de la tasa de nuestro Láser de Onda Completa. Lógicamente esto produce un haz de la mitad de la potencia, haciendo la mitad del daño que haría un arma más grande. Esto requiere de un período de exposición continua de al menos varios segundos para infligir suficiente daño para matar a un objetivo sin blindaje. El blindaje complica el asunto, y es imposible para los láseres disparar a través de humo, gas o fuego. Aunque, mientras el objetivo no este camuflado o sea inmune a luz muy enfocada o calor, el láser quemará a través de lo que sea dado el tiempo suficiente.\n"
 "\n"
-"Todas las ventajas típicas del armamento láser están presentes en esta pistola. Es muy veloz de disparar, y si el soldado falla su objetivo, podrá ajustar su mira sin soltar el gatillo. Y hay otra ventaja adicional en el diseño de nuestra pistola. Gracias a la alta puntería del armamento láser, será fácil para un soldado ambidiestro el usar dos pistolas láser al mismo tiempo.\n"
+"Todas las ventajas típicas del armamento láser están presentes en esta pistola. Es muy veloz de disparar, y si el soldado falla su objetivo, podrá ajustar su mira sin soltar el gatillo.\n"
 "\n"
 "Hemos diseñado la pistola para usar los cartuchos estándares de fluoruro de deuterio con los cuales hemos alimentado todo nuestro armamento láser. Esto significa que utiliza la misma cantidad de FD que los diseños más grandes, pero los emplea a una tasa mucho menor, dándole efectivamente más municiones a la pistola láser que cualquier otra de nuestras armas láser.\n"
 "\n"
@@ -5301,13 +5300,11 @@ msgid "laserrifle_txt"
 msgstr ""
 "Esta hecho, Comandante. Ahora somos poseedores de un rifle láser funcional, con los planes completos de producción cargados en nuestras computadoras. Hemos eliminado varias partes móviles y refinado los electrónicos para mantener los costos de producción y mantenimiento dentro del alcance de nuestro presupuesto. Creo que encontrará satisfactorios los parámetros del arma.\n"
 "\n"
-"Este rifle es posiblemente el arma más precisa diseñada hasta ahora. Es ligero, se acomoda fácilmente a la mano del tirador, y los lentes de enfoque corrigen automáticamente la puntería del usuario para ayudarle a posicionar el haz en el objetivo - y mantenerlo ahí. Puede causar menos daño por disparo que sus contrapartes convencionales basadas en proyectiles, pero puede causar más daño con el tiempo si el tirador mantiene el objetivo en la mira. Ocho soldados con rifles de asalto convencionales disparando en modo automático contra un objetivo en movimiento pueden fallar fácilmente. Con rifles láser, fallar se vuelve casi imposible.\n"
-"\n"
 "Cuenta con un disparo rápido, tiene buena capacidad de munición, no causa retroceso, tiene un alcance respetable y evita muchos otros problemas que plagan a las armas de fuego convencionales. El mecanismo nunca fallara ni se atascara. No hay peligro de explosión debido a un barril dañado. Nunca tendrá problemas con municiones dañadas o incompatibles. Los lentes pueden estrellarse si son sometidos a maltrato severo, pero están altamente protegidos, montados en espuma anti-impacto y protegidos del exterior por un iris de metal que solamente se abre cuando el arma esta a punto de disparar.\n"
 "\n"
-"La mayor debilidad del rifle láser es su incapacidad de disparar a través de nubes de humo, gas o fuego. Todos nuestros láseres tienen este problema; estas nubes de material refractan rápidamente el haz en luz inofensiva, por lo tanto debemos ser cuidadosos en el uso de armas incendiarias y de humo.\n"
+"Este rifle es posiblemente el arma más precisa diseñada hasta ahora. Es ligero, se acomoda fácilmente a la mano del tirador, y la ausencia de retroceso lo hace ideal para fuego sostenido. Una ráfaga prolongada en modo pulsante es igualmente precisa. Sin embargo, debido a la dificultad en mantener el haz sobre un objetivo en movimiento, los soldados probablemente experimentaran una sensación de precisión reducida. Un láser requiere de tiempo para causar daño al objetivo y esto puede resultar un desafío para nuestros soldados.\n"
 "\n"
-"Hemos diseñado el rifle para usar los cartuchos de fluoruro de deuterio que hemos desarrollado para alimentar todo nuestro armamento láser. Esto le da aproximadamente dos minutos de fuego continuo antes de que se necesite insertar un cartucho nuevo. Los cartuchos pueden ser retirados y dejados en el suelo sin riesgo de contaminar el área, pero se requerirá que sean eliminados por un equipo NBQ (Nuclear-biológico-químico) una vez que la misión haya terminado.\n"
+"Hemos diseñado el rifle para usar los cartuchos de fluoruro de deuterio que hemos desarrollado para alimentar todo nuestro armamento láser. Un soldado podrá realizar varios disparos antes de que se necesite insertar un cartucho nuevo. Los cartuchos pueden ser retirados y dejados en el suelo sin riesgo de contaminar el área, pero se requerirá que sean eliminados por un equipo NBQ (Nuclear-biológico-químico) una vez que la misión haya terminado.\n"
 "\n"
 "Necesitaremos tener al menos un cartucho F-D a la mano en todo momento para poder cargar y emplear un rifle láser.\n"
 "\n"
@@ -5331,11 +5328,11 @@ msgid "heavylaser_txt"
 msgstr ""
 "Comandante, nuestro programa del láser pesado ha sido un éxito. Hemos fabricado un prototipo y estamos listo para iniciar la producción cuando usted diga.\n"
 "\n"
-"Como se prometió, el láser pesado es una revolución en nuestro armamento pesado. En las manos de un soldado calificado, puede proveer de fuego continuo a larga distancia que es a la vez más preciso que las armas pesadas convencionales y más poderoso que nuestros otros diseños de armamento láser. En la División de Ingeniería no tenemos dudas de que tendrá un rol vital a lo largo de esta guerra.\n"
+"Como se prometió, el láser pesado es una revolución en nuestro armamento. En las manos de un soldado calificado, puede proveer de fuego continuo a larga distancia que es más poderoso que nuestros otros diseños de armamento láser. En la División de Ingeniería no tenemos dudas de que tendrá un rol vital a lo largo de esta guerra.\n"
 "\n"
-"Esto no significa que el láser pesado no tenga sus debilidades. Una de ellas por ejemplo, es muy abultado y pesado, siendo necesario un soldado fuerte para dispararlo efectivamente. No sacrifica precisión debido a su tamaño, pero es más lento para disparar o responder de lo que desearíamos, y su consumo de municiones es alto. Puede consumir un cartucho de fluoruro de deuterio en tan solo 30 segundos de fuego continuo. Requiere tener a mano una gran cantidad de cargadores, y el láser pesado no es particularmente rápido de recargar.\n"
+"Esto no significa que el láser pesado no tenga sus debilidades. Una de ellas por ejemplo, es muy abultado y pesado. Debido al peso del arma, los soldados en el campo podrían tener dificultades en reproducir la velocidad y precisión de otras armas láser mas pequeñas. Su consumo de municiones es alto. Puede consumir un cartucho de fluoruro de deuterio a una velocidad increible. Requiere tener a mano una gran cantidad de cargadores, y el láser pesado no es particularmente rápido de recargar.\n"
 "\n"
-"Otra debilidad es el hecho que el láser pesado no puede disparar a través de nubes de humo, gas o fuego. Todos nuestros láseres tienen este problema; estas nubes de material refractan rápidamente el haz en luz inofensiva, por lo tanto debemos ser cuidadosos en el uso de armas incendiarias y de humo. Se debe tener gran cuidado también que ningún civil o soldado de PHALANX interfiera con el camino de los haces invisibles. Incluso una exposición momentánea ante un haz directo es capaz de carbonizar huesos y fundir la carne. La exposición directa en los ojos resultará en ceguera permanente e irreparable. Ya hemos hablado con nuestros oficiales de entrenamiento y de campo al respecto y hemos recalcado la seguridad en nuestro manual de campo reiteradamente, pero no haría daño que las tropas escucharan esto directamente de usted, Comandante.\n"
+"Se debe tener gran cuidado también que ningún civil o soldado de PHALANX interfiera con el camino de los haces invisibles. Incluso una exposición momentánea ante un haz directo es capaz de carbonizar huesos y fundir la carne. La exposición directa en los ojos resultará en ceguera permanente e irreparable. Ya hemos hablado con nuestros oficiales de entrenamiento y de campo al respecto y hemos recalcado la seguridad en nuestro manual de campo reiteradamente, pero no haría daño que las tropas escucharan esto directamente de usted, Comandante.\n"
 "\n"
 "Alienígenas robóticos o blindados pudieran sobrevivir a un haz por cierto tiempo, incluso de un láser pesado, antes de que su blindaje fallara. Es recomendable enfrentarlos con varios soldados al mismo tiempo y concentrar el fuego para neutralizarlos tan rápido como sea posible.\n"
 "\n"
@@ -5371,9 +5368,7 @@ msgstr ""
 "\n"
 "Ahora los contras.\n"
 "\n"
-"Los sistemas eléctricos y el equipamiento láser más poderosos han incrementado el tamaño y el peso considerablemente comparado con el Bastón Aturdidor, poniendo al Electroláser firmemente en la categoría de armas pesadas. Como todas las armas basadas en láser es afectado por la lluvia, niebla, humo y otras condiciones que enturbian el aire o liberan partículas en él. Como todas las armas eléctricas, disparar a objetivos en vuelo producirá resultados limitados, a menos que estén lo suficientemente cerca de un objeto que haga tierra como para que la electricidad salte entre ellos. Además, todo electroláser necesita la clase correcta de atmosfera para poder crear un canal de plasma; sacarlos de la Tierra podría volverlos inútiles.\n"
-"\n"
-"Otra dificultad práctica más importante es la fuente de poder. No pudimos lograr los niveles de potencia deseados usando nuestros cartuchos de fluoruro de deuterio estándares, así que tuvimos que hacer ajustes en las municiones. Temo que esto significa que las municiones para el electroláser no son intercambiables con las de nuestro armamento láser estándar.\n"
+"Los sistemas eléctricos y el equipamiento láser más poderosos han incrementado el tamaño y el peso considerablemente comparado con el Bastón Aturdidor. Otra dificultad práctica más importante es la fuente de poder. No pudimos lograr los niveles de potencia deseados usando nuestros cartuchos de fluoruro de deuterio estándares, así que tuvimos que hacer ajustes en las municiones. Temo que esto significa que las municiones para el electroláser no son intercambiables con las de nuestro armamento láser estándar.\n"
 "\n"
 "Por supuesto, sin importar cuales sean las desventajas, su desempeño está a años luz del bastón aturdidor del Dr. Connor. Recomiendo altamente que reemplacemos los bastones aturdidores que actualmente están en uso por electroláseres tan pronto como sea humanamente posible. Por el bien de nuestras tropas, si no por otra razón.\n"
 "\n"
@@ -5473,7 +5468,7 @@ msgstr ""
 "\n"
 "Esta pistola de plasma es una pieza de trabajo duro, Comandante. Su operación es en extremo compleja e inventiva, y requiere un alto nivel de habilidad técnica para su creación. Tan solo la batería esta cientos de años adelante de nuestra tecnología. Almacena suficiente potencia para calentar varias cargas de hidrógeno a un estado plasmático dentro de la cámara de fusión en miniatura, las cuales son expulsadas como plasma aprovechando la misma velocidad de las partículas ionizadas.\n"
 "\n"
-"A diferencia de las armas de fuego humanas, los proyectiles mismos no están almacenados en un cartucho o reserva. Son generados dentro de la pistola a partir del hidrógeno almacenado dentro del cartucho, alimentado por la batería incluida en el mismo. Una vez que se ha calentado el plasma, una fina película de plástico liquido se crea entre las dos \"hileras\" localizadas verticalmente en lados opuestos enfrente de la empuñadura. Entonces las partículas de plasma se disparan rápidamente hacia la película de manera que se deforme en una esfera o \"proyectil\". El plástico contiene y protege el plasma, evitando que se disperse hasta que alcance el objetivo. Para cuando el proyectil alcanza el objetivo, el plástico estará tan derretido en el interior que se reventara al impacto como una burbuja de jabón, esparciendo su carga por todo el objetivo. El alcance máximo de un proyectil de pistola -el punto que puede alcanzar antes de que el plasma derrita el plástico y se disperse en el aire- es de aproximadamente 20 metros.\n"
+"A diferencia de las armas de fuego humanas, los proyectiles mismos no están almacenados en un cartucho o reserva. Son generados dentro de la pistola a partir del hidrógeno almacenado dentro del cartucho, alimentado por la batería incluida en el mismo. Una vez que se ha calentado el plasma, una fina película de plástico liquido se crea entre las dos \"hileras\" localizadas verticalmente en lados opuestos enfrente de la empuñadura. Entonces las partículas de plasma se disparan rápidamente hacia la película de manera que se deforme en una esfera o \"proyectil\". El plástico contiene y protege el plasma, evitando que se disperse hasta que alcance el objetivo. Para cuando el proyectil alcanza el objetivo, el plástico estará tan derretido en el interior que se reventara al impacto como una burbuja de jabón, esparciendo su carga por todo el objetivo. El alcance máximo de un proyectil de pistola -el punto que puede alcanzar antes de que el plasma derrita el plástico y se disperse en el aire- no es muy elevado pero es apropiado para un arma secundaria.\n"
 "\n"
 "Un proyectil disparado desde la pistola de plasma es tan caliente que incluso un tiro fallado por poco puede ser letal. Los efectos en la víctima son verdaderamente horribles; trataré de enlistarlos todos aquí.\n"
 "\n"
@@ -5506,13 +5501,11 @@ msgid "plasblaster_txt"
 msgstr ""
 "Comandante, aquí está mi reporte de nuestra investigación sobre el cañón de plasma alienígena.\n"
 "\n"
-"Este es por mucho el miembro más pesado que hemos observado en la familia de armas de plasma, y parece poco probable que existan versiones más grandes. El cañón de plasma requiere de al menos dos personas y una carretilla para trabajo pesado para traerlo de ida y vuelta del almacén. Apenas se le puede llamar portátil, requiriendo de un soldado con gran fuerza para llevarlo al combate. Es tan grande que, si fuera un arma montada en un vehículo, ni siquiera cabria en la mayoría de nuestros VTNT. Los cartuchos pesan casi un kilogramo cada uno y el plasma generado es lo bastante caliente como para derretir la armadura de un vehículo blindado convencional.\n"
+"Este es por mucho el miembro más pesado que hemos observado en la familia de armas de plasma. La cámara de plasma de alto rendimiento e hileras de plástico mejoradas pueden producir una carga de plasma extraordinariamente grande y letal. El cañón de plasma sacrifica la precisión a cambio de potencia, haciéndolo más adecuado para enfrentamientos a corta distancia.\n"
 "\n"
-"Una de las notables mejoras sobre el rifle de plasma es su mayor alcance, hecho posible mediante un plástico de contención más grueso y mayores velocidades del proyectil. Las pruebas de balística han confirmado que los disparos del cañón de plasma pueden alcanzar distancias de hasta 400m antes de dispersarse. Su precisión puede ser pobre, pero cuenta con una cadencia de tiro mucho mayor. Una cámara de plasma de alto rendimiento e hileras de plástico mejoradas pueden producir hasta 250 disparos por minuto. Desafortunadamente para nosotros, a pesar del mayor grueso del plástico de contención, los proyectiles aun se reventarán y esparcirán el plasma correctamente incluso a distancias extremadamente cortas. Esto hace al cañón de plasma altamente peligroso a cualquier distancia a la que las tropas de PHALANX lleguen a encontrarlo. Recomendamos que cualquier enemigo que porte un de estos sea neutralizado inmediatamente, ya que son un peligro extremo para cualquiera que se encuentre en la línea de fuego.\n"
+"Recomendamos que cualquier enemigo que porte un de estos sea neutralizado inmediatamente, ya que son un peligro extremo para cualquiera que se encuentre en la línea de fuego.\n"
 "\n"
-"Los alienígenas parecen utilizar el cañón de plasma principalmente como ametralladora pesada o arma anti-vehículos. Otro hecho interesante es que su uso es casi completamente exclusivo de la especie Ortnok. La mayoría de los Taman -al igual que la mayoría de los humanos- tendría gran dificultad tratando de levantar y apuntar uno de estos y requiere asistencia mecánica para hacerlo. Mejoras cibernéticas y/o el desarrollo de armaduras mecánicas ciertamente rectificarían muchas de las desventajas inherentes al cañón de plasma desde un punto de vista humano.\n"
-"\n"
-"Finalmente, hemos delineado todo el sistema de control del arma para usted, el cual está documentado en el manual de campo adjunto. Nuestras tropas ahora podrán entrenar y combatir con el cañón de plasma como lo harían con cualquier otra arma, suponiendo que puedan levantarlo.\n"
+"Nuestras tropas ahora podrán entrenar y combatir con el cañón de plasma como lo harían con cualquier otra arma.\n"
 "\n"
 "--Cte. Navarre"
 
@@ -5598,9 +5591,9 @@ msgstr ""
 "\n"
 "En su nivel más básico, el rifle de plasma es poco más que una versión agrandada de la pistola de plasma. Sin embargo, como cualquier fanático de las armas de fuego le diría, las pistolas son pistolas y los rifles son rifles. Las pistolas son armas pequeñas para defensa personal. Los rifles armas de guerra. La diferencia en poder es remarcable.\n"
 "\n"
-"El plasma del rifle es 20% más caliente que el de la pistola y es capaz de derretir incluso blindaje pesado. El plástico que envuelve el plasma es más grueso que en la pistola, y solo comienza a desintegrarse a distancias de entre 80 y100 metros. Este alcance máximo es muy corto para un rifle de asalto de uso general, pero es ideal para enfrentamientos urbanos de infantería y combate a corta distancia. Los proyectiles no experimentan descenso y son demasiado pesados como para ser afectados por el viento. Esto le da al rifle de plasma alta precisión a cualquier distancia.\n"
+"El plasma del rifle es 20% más caliente que el de la pistola y es capaz de derretir incluso blindaje pesado. El plástico que envuelve el plasma es más grueso que en la pistola, dándole un mayor alcance antes de desintegrarse. Este alcance máximo es muy corto para un rifle de asalto de uso general, pero es ideal para enfrentamientos urbanos de infantería. Los proyectiles no experimentan descenso y son demasiado pesados como para ser afectados por el viento. Esto le da al rifle de plasma buena precisión, pero su inusual diseño lo hará mas difícil de usar para nuestros soldados que los rifles estándar a los que están acostumbrados.\n"
 "\n"
-"La nueva característica más aterradora de esta arma es el hecho de que sea capaz de disparar en modo automático. Su cadencia de tiro en modo automático puede no ser muy alta -aproximadamente 180 disparos por minuto- y el retroceso es difícil de controlar, pero su gran potencia hace más que compensar estas fallas. Dos o tres disparos directos del rifle de plasma son normalmente todo lo que se necesita para matar a un humano con armadura ligera o media. Un soldado sin armadura no tiene ninguna esperanza.\n"
+"La nueva característica más aterradora de esta arma es el hecho de que sea capaz de disparar en modo automático. Su cadencia de tiro en modo automático puede no ser muy alta -aproximadamente 180 disparos por minuto- y el retroceso es difícil de controlar, pero su gran potencia hace más que compensar estas fallas. Dos o tres disparos directos del rifle de plasma son normalmente todo lo que se necesita para atravesar armadura ligera o media. Un soldado sin armadura no tiene ninguna esperanza.\n"
 "\n"
 "Hemos determinado los controles del rifle y hemos escrito un manual de campo para su uso. Nuestras tropas deberían poder darle un buen uso.\n"
 "\n"
@@ -5625,22 +5618,18 @@ msgid "needlergun_txt"
 msgstr ""
 "Comandante, hemos terminado de analizar el aguijoneador alienígena, y he preparado una evaluación de riesgo y un resumen técnico para usted.\n"
 "\n"
-"Tal como mencione en mi propuesta de investigación, el aguijoneador es de hecho un rifle de francotirador, pero uno inusual. Ignora el concepto normal de disparar potentes proyectiles para matar un enemigo a gran distancia. En su lugar vomita cientos y cientos de agujas ultrarrápidas de acero al silicio las cuales pueden despedazar fácilmente al objetivo a cualquier distancia.\n"
+"Tal como mencione en mi propuesta de investigación, el aguijoneador es de hecho una especie de rifle, pero uno inusual. Ignora el concepto normal de disparar potentes proyectiles. En su lugar vomita cientos y cientos de agujas ultrarrápidas de acero al silicio las cuales pueden despedazar fácilmente al objetivo.\n"
 "\n"
-"Las agujas son disparadas por un campo magnético que cambia a alta velocidad dentro del cañón, conectado a un mecanismo de alimentación que inyecta miles de agujas por minuto dentro del cañón. Esto crea un flujo casi constante de agujas el cual dura por tanto tiempo como se mantenga presionado el gatillo y el cartucho tenga munición. A diferencia de las balas, estas agujas tienen una trayectoria prácticamente plana del arma al objetivo. Atraviesan cualquier armadura como si no existiera. Tienen tan poca masa que el retroceso al disparar es mínimo, dándoles excelente precisión, pero al mismo tiempo lo suficiente delgadas para evitar ser afectadas en demasía por el clima. El viento, la lluvia y obstrucciones físicas pueden desviar algunas de su curso pero no suficientes para hacer el arma mucho menos efectiva.\n"
+"Las agujas son disparadas por un campo magnético que cambia a alta velocidad dentro del cañón, conectado a un mecanismo de alimentación que inyecta miles de agujas por minuto dentro del cañón. Esto crea un flujo casi constante de agujas el cual dura por tanto tiempo como se mantenga presionado el gatillo y el cartucho tenga munición. A diferencia de las balas, estas agujas tienen una trayectoria prácticamente plana del arma al objetivo. Atraviesan cualquier armadura como si no existiera. Tienen tan poca masa que el retroceso al disparar es mínimo, dándoles excelente precisión, pero en las pruebas de campo las agujas pueden ser desviadas por variaciones en el ambiente.\n"
 "\n"
 "Uno de los principales componentes que llamaron mi atención es el potente juego de electromagnetos. Está compuesto como un \"cañón Gauss\", varias bobinas electromagnéticas rodeando el cañón, un método que previamente pensábamos tenía una eficiencia energética muy baja para ser usado en el campo de batalla. Los alienígenas parecen haberlo hecho viable mediante el astuto uso de superconductores y la ingeniería alienígena. Tal vez podamos adaptar esta tecnología a nuestra propia investigación en armamento electromagnético, lo analizaré más detenidamente y me comunicare con usted en cuanto tenga algo concreto.\n"
-"\n"
-"En lugar de una mira de francotirador ordinaria montada en la parte superior, los alienígenas han incorporado un mecanismo holográfico muy efectivo y un buscador de distancias que se proyectan directamente enfrente del ojo del tirador. Los objetivos son mostrados con absoluta claridad a cualquier distancia, la mira compensa automáticamente los movimientos naturales del cuerpo, e incluso le mostrara al usuario las probabilidades exactas de acertar un tiro en cualquier momento. Hemos probado el sistema con nuestras propias tropas y -una vez que se han acostumbrado- la mira holográfica alienígena fue la opción preferida por un sorprendente 100% comparada con nuestras propias miras. Si podemos adaptar y duplicar esta mira en una unidad auto contenida, podríamos crear la mejor mira para usarse en cualquiera de nuestros rifles, posiblemente incluso algunas armas cortas.\n"
-"\n"
-"Equipado con un bípode para disparar tendido en el suelo y un cartucho bastante grande, el aguijoneador es una seria amenaza para nuestras tropas. Los francotiradores pueden causar serias bajas a tropas expuestas y no podemos permitirnos las perdidas. Si se detecta un aguijoneador, nuestros soldados tendrán que hacer uso óptimo de la cobertura y tratar de flanquear al enemigo manteniéndose fuera de vista. Un asalto directo contra un aguijoneador atrincherado seguramente resultaría suicida y no le recomiendo a nadie que lo intente, Comandante.\n"
 "\n"
 "--Cte. Navarre"
 
 #: ../base/ufos/research.ufo:1953
 msgid "needlergun_pre_txt"
 msgstr ""
-"Comandante, parece que hemos recuperado una nueva arma alienígena, alguna clase de rifle de francotirador completamente automático que dispara en masa delgadas agujas hechas de acero al silicio. Las pruebas preliminares muestran que las agujas prácticamente no son afectadas por la armadura corporal ordinaria y pasaran a través de la mayoría de las superficies sin siquiera perder velocidad. Es un diseño muy interesante y nos gustaría averiguar exactamente como se supone que funcione.\n"
+"Comandante, parece que hemos recuperado una nueva arma alienígena, alguna clase de rifle completamente automático que dispara en masa delgadas agujas hechas de acero al silicio. Las pruebas preliminares muestran que las agujas prácticamente no son afectadas por la armadura corporal ordinaria y pasaran a través de la mayoría de las superficies sin siquiera perder velocidad. Es un diseño muy interesante y nos gustaría averiguar exactamente como se supone que funcione.\n"
 "\n"
 "Por favor autorice este programa en cuanto le sea posible, Comandante.\n"
 "\n"
@@ -5829,7 +5818,7 @@ msgstr ""
 "\n"
 "Todas las restricciones que plagan a las escopetas aumentan en la M9: corto alcance, baja capacidad de las municiones, fuerte retroceso. Esto hace su función bien clara. Está diseñada solo para combates a corta distancia, donde las escopetas y armas de respaldo se destacan. Sin embargo, los usuarios de la M9 deben cuidar no desperdiciar munición si no quieren quedarse sin municiones a mitad del combate.\n"
 "\n"
-"Aunque técnicamente no fue diseñada como un arma de respaldo, la M9 funciona bien como tal a pesar de su tamaño relativamente grande. Causa más daño que la Pistola P-12 y es más precisa que el Subfusil CRC-8. Es una buena elección para los francotiradores en particular.\n"
+"Aunque técnicamente no fue diseñada como un arma de respaldo, la M9 funciona bien como tal a pesar de su tamaño relativamente grande. Es una buena elección para los francotiradores o quienquiera que necesite un arma de respaldo potente para combate a corta distancia.\n"
 "\n"
 "\n"
 "Apéndices\n"
@@ -5898,7 +5887,7 @@ msgstr ""
 "\n"
 "Diseñado y producido en China continental, el Subfusil Ohm 55 es una de las armas más aterradoras que se diseñaron durante la Segunda Guerra Fría. El primer prototipo se diseñó en 2035 por científicos trabajando para el gobierno Comunista Chino. Lo modelos de producción comenzaron a llegar a las tropas del gobierno solamente hacia el final de la guerra, pero las tropas rebeldes y de la Comunidad de Naciones aprendieron rápidamente a respetar la ferocidad del Ohm.\n"
 "\n"
-"Su cadencia de tiro en modo automático excede los 1200 disparos por minuto. Puede vaciar un cargador de 50 cartuchos en tres segundos. Dispara una versión mejorada de los cartuchos antiblindaje belgas de 5.7mm, penetradores de acero con núcleo de aluminio, los cuales atraviesan el kevlar como si fuera papel y se fragmentan fácilmente al atravesar piel o hueso. Incluso las modernas fibras balísticas no pueden detenerlos a distancias menores de 12 metros. El Ohm 55 ha dominado entre los subfusiles por los últimos 50 años y continuara haciéndolo al menos por la próxima década.\n"
+"Su cadencia de tiro en modo automático excede los 1200 disparos por minuto. Puede vaciar un cargador de 30 cartuchos en dos segundos. Dispara una versión mejorada de los cartuchos antiblindaje belgas de 5.7mm, penetradores de acero con núcleo de aluminio, los cuales atraviesan el kevlar como si fuera papel y se fragmentan fácilmente al atravesar piel o hueso. Incluso las modernas fibras balísticas no pueden detenerlos a distancias menores de 12 metros. El Ohm 55 ha dominado entre los subfusiles por los últimos 50 años y continuara haciéndolo al menos por la próxima década.\n"
 "\n"
 "El Ohm es altamente maniobrable con un cañón corto y diseño elegante, pero puede sufrir una pronunciada elevación del cañón en modo automático debido a su gran potencia de disparo. El modo automático también tiende a vaciar el cargador antes que el soldado se de cuenta de que no ha soltado el gatillo. Aún así, después de casi 50 años de servicio por todo el mundo, esta es la única falla de diseño conocida en el Ohm 55.\n"
 "\n"
@@ -6193,9 +6182,7 @@ msgstr ""
 "\n"
 "La pistola en sí misma es bastante simple en su construcción, no es más que una cubierta de metal alrededor de un juego de magnetos y lentes electrostáticos, utilizados para enfocar y concentrar el flujo de partículas. Todo esto no es nada que no podamos duplicar fácilmente con suficiente dinero y esfuerzo. Lo único que aun no comprendemos es la provisión de municiones. Las lecturas de energía que hemos obtenido de los cartucho son extremas, y a pesar de nuestros esfuerzos, no hemos logrado desactivar o desarmar uno para abrirlo de forma segura. Incluso gastar todos los disparos no desactiva completamente el cartucho. Más investigación será necesaria antes de poder tratar de entender cómo funcionan, mucho menos reproducirlos.\n"
 "\n"
-"Ciertamente esta pistola es la más peligrosa que he visto en toda mi carrera, con capacidad impresionante para perforar blindajes y extremo potencial de daño. El flujo de partículas de alta energía puede matar a un humano en armadura ligera con un solo tiro a distancias de hasta 40 metros. Un solo tiro. Con respecto a su letalidad a distancia, es superior incluso que nuestra pistola láser. La única buena noticia es que Pistola de Flujo de Partículas es significativamente menos precisa que nuestros láseres y tiene un retroceso demasiado fuerte que impide hacer disparos repetidos con precisión.\n"
-"\n"
-"De hecho, disparar la pistola puede ser difícil para los soldados con una fuerza física menor a la requerida. Las partículas que salen del cañón se mueven a una fracción de la velocidad de la luz, así que generan una terrible cantidad de retroceso contra el tirador. Sería un gran desafío para los soldados más débiles mantener el arma apuntando al objetivo. Si se utilizan estas pistolas, recomendamos que solo se les proporcionen a los miembros más fuertes del escuadrón.\n"
+"Ciertamente esta pistola es la más peligrosa que he visto en toda mi carrera, con capacidad impresionante para perforar blindajes y extremo potencial de daño.\n"
 "\n"
 "Le mantendré informado sobre nuestro progreso con los cartuchos, Comandante.\n"
 "\n"
@@ -6386,36 +6373,24 @@ msgstr ""
 "--Cte. Navarre"
 
 #: ../base/ufos/research.ufo:2753
-#, fuzzy
 msgid "power_armour_txt"
 msgstr ""
-"¡Comandante, me complace comunicarle el éxito de nuestra investigación para la producción de nanocompuesto!\n"
+"Comandante, hemos completado con éxito el prototipo de nuestra armadura servo asistida. El prototipo esta esperando en I+D en caso de que desee probarlo personalmente.\n"
 "\n"
-"No le aburriré con los detalles de la fabricación de NTC; es suficiente con que le diga que, gracias al estudio de las marcas dejadas por las lineas de producción alienígenas, hemos podido identificar algunos de sus procesos. Aparentemente los extraterrestres usan algún tipo de horno de plasma para orientar, moldear y presionar los nanotubos según el patrón requerido. Hemos podido crear un prototipo de horno por nosotros mismos, y hemos realizado varias modificaciones a nuestros propios procesos de producción de nanotubos basados en el ejemplo alienígena. El resultado es un aumento significativo en eficiencia energética y volumen de producción.\n"
+"Nuestro diseño de producción está orientado hacia una protección máxima. Es básicamente, un traje hermético blindado con articulaciones servoasitidas y un sistema de control abordo. El blindaje esta formado por un compuesto flexible de tres capas, con capas externas compuestas de nanotubos de fulereno, y una capa interna compuesta de un gel especial de polímero, mezclado con polvo de wolframio y molibdeno. cuando la capa exterior del compuesto se quema, le gel se evapora al instante, disipando el calor, y el polvo metálico crea una nube alrededor del área afectada, creando así un efecto refractivo localizado que consume la mayor parte de la energía.\n"
 "\n"
-"A partir de ahora restringiré mi informe a las capacidades y habilidades tácticas de la nueva armadura, las cuales estoy seguro que encontrará fascinantes y esperanzadoras.\n"
+"El interior consiste en una gruesa capa de gel de memoria con una cubierta eléctricamente sensible. El gel permite ajustar el traje a una gran variedad de tallas y alturas, así que esperamos no tener que fabricar trajes personalizados para cada soldado. La cubierta interior es una parte importante del sistema de control; detecta los impulsos nerviosos a través de la piel del operador, interpreta estas señales, y las usa para predecir los movimientos del operador. Esto le permite moverse de forma simultanea al cuerpo en lugar de presentar resistencia a los movimientos del usuario.\n"
 "\n"
-"Hemos conseguido duplicar prácticamente toda la funcionalidad de la armadura alienígena, desde las placas de nanocompuesto hasta el movimiento servo-asistido. La armadura es increíblemente ligera para su tamaño, pero sigue siendo considerablemente más pesada que nuestra Armadura de Combate. Protege casi tanto como la armadura fabricada por los alienígenas y proporciona una rapidez de movimiento similar y una puntería superior.\n"
-"\n"
-"Sin embargo existen algunas limitaciones que no podemos resolver. El hecho es que los alienígenas tienen considerablemente mas experiencia con estos materiales y pueden trabajar con ellos de una manera mucho más elegante que nosotros. Nuestra armadura es más grande y pesada, más rígida y la electrónica no funciona tan bien. Esto puede tener un impacto negativo en nuestra velocidad de fuego y tiempo de reacción. Nuestra versión del polímero no es tan buena como la suya y tiende a quebrarse con más facilidad. Nuestros servomotores en particular son grandes y poco manejables comparados con los diseños alienígenas más compactos. No hay manera de reducir su tamaño más de lo que lo hemos hecho hasta ahora.\n"
-"\n"
-"Estamos un poco avergonzados a propósito de las botas, pero honestamente hemos hecho lo que hemos podido. Sencillamente no tenemos la maquinaria de precisión necesaria para hacer los servomotores tal y como los hacen los alienígenas. En cualquier caso, hemos hecho todo lo posible para hacer las botas seguras y ligeras, con un potente sistema de suspensión en las suelas para hacerlas elásticas y permitir un movimiento rápido.\n"
-"\n"
-"Las aplicaciones tácticas de la nueva armadura son numerosas. Es lo suficientemente ligera como para ser utilizada por las unidades de vanguardia de nuestros equipos, siendo lo suficientemente resistente como para resistir fuego pesado. La armadura funcionará excepcionalmente bien para las tropas de asalto de corto alcance que necesitan, a la vez, velocidad y protección para rendir al máximo.\n"
+"Un efecto positivo del gel de memoria es que puede absorber fuerza expansiva, lo que le da una mayor protección contra explosivos que nuestros modelos anteriores. El sistema respiratorio del traje también protege al usuario contra contaminantes aereos.\n"
 "\n"
 "--Cte. Navarre"
 
 #: ../base/ufos/research.ufo:2756
-#, fuzzy
 msgid "power_armour_pre_txt"
 msgstr ""
-"El examen de la armadura corporal alienígena nos ha llevado a varias conclusiones interesantes. Obviamente, la clave para crear una armadura más efectiva basada en los trajes alienígenas pasa por la utilización de nanocompuestos. Esto requerirá grandes cantidades de nanotubos de carbono.\n"
+"Comandante, el armamento empleado por los alienígenas en combate se vuelva más devastador a cada momento. Necesitamos un sistema de soporte para nuestros soldados que equilibre el campo de batalla y le de a nuestros soldados una oportunidad real en combate. Nuestros talleres son incapaces de producir el denso tejido de nanotubos encontrado en las muestras más recientes de armadura alienígena. Aún si pudiéramos producirlos, nuestros hombres no podrían caminar con semejante peso. Pero esto no significa que no podamos encontrar una solución.\n"
 "\n"
-"En el pasado, la fabricación de nanotubos de carbono ha sido cara y difícil, y tratar de ensamblarlos en formas apropiadas ha sido aún peor. A causa de esto, la armadura de nanocompuesto nunca ha sido usada excepto en vehículos de muy alto coste, tales como aviones y tanques, e incluso en estas situaciones solamente si el proceso de fabricación no requería una técnica avanzada para el moldeado. La armadura alienígena, sin embargo, usa compuestos de nanotubos de carbono en abundancia. Parece claro que es nuestro proceso de fabricación lo que nos mantiene por detrás en esta tecnología.\n"
-"\n"
-"Con la armadura alienígena en nuestro poder y con suficientes recursos a nuestra disposición creo que podemos desarrollar nuevos métodos de producción y procesos de moldeado que nos permitirían la fabricación de nanocompuestos a nivel industrial, permitiendo por fin un uso completo de esta tecnología.\n"
-"\n"
-"Este proyecto necesitará bastante cantidad de tiempo en el laboratorio y fondos. Empezaremos tan pronto como recibamos su autorización, Comandante.\n"
+"Con su permiso, me gustaría asignar a nuestro equipo la investigación de una armadura servoasistida que pueda soportar placas de nanocompuesto más pesadas mediante la incorporación de un sistema de soporte en la armadura. La armadura servoasistida se ha utilizado en conflictos recientes, pero los diseños militares actuales tienen más en común con los tanques que con la infantería y es imposible que cumplan con nuestros requisitos de espacio y movilidad. Creemos que podemos utilizar lo que hemos aprendido de estudiar los servomotores de la armadura alienígena más reciente para desarrollar una armadura servoasistida más delgada y más resistente que cualquiera que se haya visto hasta ahora.\n"
 "\n"
 "--Cte. Navarre"
 
@@ -6456,7 +6431,7 @@ msgstr ""
 "\n"
 "Como buena noticia, la armadura no encapsula completamente al alienígena, dejando algo de piel y algunos conductos de tubos de respiración expuestos al aire. Esto significa que la granada de gas seguirá siendo eficaz, aunque tardará más tiempo para que logre un efecto completo.\n"
 "\n"
-"Los trajes alienígenas no se pueden ajustar a nuestras tropas sin modificaciones que los debiliten críticamente. Hemos tenido problemas para reproducir los densos nanopolímeros, ya que nuestra maquinaria del taller en la actualidad es incapaz de tejer tantos nanotubos a la vez. Sin embargo, tengo algunas ideas sobre la manera de mejorar esto, como así también de algunos diseños de una nueva armadura para aprovechar esas actualizaciones. La propuesta debe estar en su casilla de correo ahora, Comandante.\n"
+"Los trajes alienígenas no se pueden ajustar a nuestras tropas sin modificaciones que los debiliten críticamente. Hemos tenido problemas para reproducir los densos nanopolímeros, ya que nuestra maquinaria del taller en la actualidad es incapaz de tejer tantos nanotubos a la vez.\n"
 "\n"
 "Ahora perdóneme, señor, he estado en mi escritorio por doce horas y creo que mis ojos empiezan a sangrar.¡Buenas Noches!\n"
 "\n"
@@ -6989,13 +6964,13 @@ msgstr ""
 "\n"
 "Comandante, hemos tenido que realizar profundos cambios en los diseños de las antiguas instalaciones de radar para ponerlas al día. El antiguo informe ya no resulta aplicable, así que he decidido reemplazarlo por éste.\n"
 "\n"
-"Nuestro Radar no es una gran estación de radar en sí mismo. En realidad se trata del centro de control de una serie de antenas de radar camufladas, situadas en terrenos elevados alrededor de la base. Hay entre 8 y 12 antenas por cada instalación, dependiendo del espacio disponible y de la cobertura individual de cada antena. Cada una de ellas está equipada con numerosos dispositivos de detección y no con un simple sistema de radar, ya que éste tiene problemas para mantener el contacto una vez que ha detectado una nave alienígena. Entre dichos sistemas adicionales se incluyen, sin estar limitados a ellos, sensores de infrarrojos y de sistemas de guiado por láser.\n"
+"Nuestro Radar está directamente conectado al registro de tráfico aéreo de las Naciones Unidas y puede cruzar los datos de cualquier aeronave civil con su plan de vuelo y su cargamento. También se ha solicitado a las aeronaves militares no pertenecientes a PHALANX que registren sus rutas de vuelo en nuestra base de datos, pero no podemos estar seguros de que los diferentes mandos militares se esfuercen en cumplir esta directiva.\n"
 "\n"
 "La instalación es operada día y noche en turnos de 6 horas, revisando los datos procesados una vez que nuestras computadoras han recopilado toda la información discernible de un contacto. Los operadores humanos son absolutamente necesarios y deben estar disponibles en todo momento para realizar dicha supervisión; lo que las computadoras podrían confundir con una imagen fantasma de radar podría ser una nave alienígena camuflada lista para atacar a una población civil. Los instintos y la experiencia son tan importantes como la inteligencia del software.\n"
 "\n"
 "La construcción de varios Radares en una misma base no incrementará el alcance de nuestra cobertura de radar. Un solo Radar cubrirá su radio de cobertura con la máxima eficacia posible; el único modo de incrementar su rendimiento y su alcance es mejorar nuestros sistemas con tecnología futura o construir instalaciones de radar adicionales fuera de la base.\n"
 "\n"
-"Nuestro Radar está directamente conectado al registro de tráfico aéreo de las Naciones Unidas y puede cruzar los datos de cualquier aeronave civil con su plan de vuelo y su cargamento. También se ha solicitado a las aeronaves militares no pertenecientes a PHALANX que registren sus rutas de vuelo en nuestra base de datos, pero no podemos estar seguros de que los diferentes mandos militares se esfuercen en cumplir esta directiva.\n"
+"Nuestro Radar está directamente conectado al registro de tráfico aéreo de la ONU y puede cruzar los datos de cualquier aeronave civil con su plan de vuelo y su cargamento. También se ha solicitado a las aeronaves militares no pertenecientes a PHALANX que registren sus rutas de vuelo en nuestra base de datos, pero no podemos estar seguros de que los diferentes mandos militares se esfuercen en cumplir esta directiva.\n"
 "\n"
 "El Radar no puede funcionar sin una Planta de Energía operativa y un Centro de Comando que lo coordine con nuestros esfuerzos tácticos.\n"
 "\n"
@@ -7296,9 +7271,9 @@ msgstr ""
 "\n"
 "Su equipamiento electrónico es igualmente impresionante. Dispone de ordenadores de objetivo de última generación, sistemas de radar y lidar avanzados, modernos equipos de CME (contramedidas electrónicas) y visores de realidad virtual integrados en el casco del piloto, entre otros elementos. El Sarraceno puede transportar casi el doble de dispositivos electrónicos que el interceptor de clase Stiletto, y aún le queda espacio libre para añadir equipos modulares.\n"
 "\n"
-"Desafortunadamente, todos estos puntos fuertes tienen un alto coste de producción y de mantenimiento, y su enorme carga de combustible y blindaje limitan severamente su capacidad de armamento. El Sarraceno no puede igualar el armamento del Stiletto, mucho más pequeño y barato. Tampoco se puede esperar que iguale su maniobrabilidad. A pesar de su tecnología de impulso vectorial (la capacidad de cambiar la forma de las bocas de los motores para dirigir el empuje), la superficie electro-elástica de las alas (la capacidad de cambiar dinámicamente la forma de sus alas) y otras innovaciones tremendas, el Sarraceno sigue siendo una aeronave grande de alas rígidas, con todas las limitaciones que esto implica. Aunque puede recibir mucho más daño que un Stiletto y continuar siendo efectivo, el Sarraceno no se comportará tan bien en combate contra las naves alienígenas.\n"
+"Desafortunadamente, todos estos puntos fuertes tienen un alto coste de producción y de mantenimiento, y su enorme carga de combustible y blindaje limitan severamente su capacidad de armamento. El Sarraceno no puede igualar el armamento del Stiletto, mucho más pequeño y barato. Tampoco se puede esperar que iguale su maniobrabilidad. A pesar de su tecnología de impulso vectorial (la capacidad de cambiar la forma de las bocas de los motores para dirigir el empuje), la superficie electro-elástica de las alas (la capacidad de cambiar dinámicamente la forma de sus alas) y otras innovaciones tremendas, el Sarraceno sigue siendo una aeronave grande de alas rígidas, con todas las limitaciones que esto implica.\n"
 "\n"
-"El Sarraceno requiere 1 Hangar Grande para su almacenamiento, mantenimiento y despliegue. Posee 2 soportes de armas localizados en la parte inferior.\n"
+"El Sarraceno requiere 1 Hangar Pequeño para su almacenamiento, mantenimiento y despliegue. Posee 2 soportes de armas localizados en la parte inferior.\n"
 "\n"
 "\n"
 "Doctrina recomendada\n"
@@ -7367,7 +7342,7 @@ msgstr "The F-48 is the backbone of the Phalanx air superiority force. Powered b
 
 #: ../base/ufos/research.ufo:3626
 msgid "inter_stingray_pre_txt"
-msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr "No existe información disponible previa a la investigación."
 
 #: ../base/ufos/research.ufo:3676
 msgid "ufo_scout_txt"
@@ -7547,10 +7522,6 @@ msgstr ""
 "\n"
 "El Recolector parece descartar nuestras teorías acerca de que la capacidad de combustible sea el mayor factor limitante de la velocidad de los OVNI, ya que es más rápido así como más grande que los que hemos observado anteriormente. Es capaz de transportar una mayor reserva de antimateria y protegerla de manera aún más efectiva, con un fuselaje más resistente, un blindaje más grueso, y procedimientos más efectivos para arrojar la antimateria en caso de emergencia. Incluso si ocurre una explosión, la mayor parte del daño será contenido por la construcción extremadamente fuerte del OVNI.\n"
 "\n"
-"El depósito de combustible del Recolector puede contener hasta 0.6 gramos de antimateria y tiene una fuerza explosiva de aproximadamente 25 kilotones cuando está lleno.\n"
-"\n"
-"Tiene tres montajes de armas frontales dispuestos en forma de triangulo alrededor de la cabina del piloto. Dos de ellos están equipados con los rayos de partículas que hemos visto en otros OVNI, pero el tercero contiene un interesante tipo de lanzamisiles alienígena. Los misiles tienen un sistema de guía altamente sofisticado y están impulsados por cohetes de antimateria similares a los propulsores de los OVNI. Estos misiles son extremadamente rápidos, tanto que no necesitan una carga explosiva para destruir su objetivo, bastando solamente la fuerza del impacto y la detonación del combustible sobrante. Realizar una mayor investigación acerca de esta arma será una prioridad.\n"
-"\n"
 "En el aire, el Recolector es altamente peligroso y debe ser un blanco principal. Combinando sus dos rayos de partículas y su lanzamisiles alienígena, tiene un mayor poder de fuego del que podemos disponer actualmente. Su única debilidad evidente es su pobre maniobrabilidad comparado con otros OVNI de clases más pequeñas. Nuestros interceptores son considerablemente más ágiles y tienen mucha mayor experiencia combatiendo dentro de la atmósfera de la Tierra que los alienígenas. Esta es una de las pocas ventajas que tendremos contra el Recolector, y sería recomendable actualizar nuestro equipamiento para mitigar los efectos de la superioridad tecnológica de los alienígenas.\n"
 "\n"
 "Cuando los enfrentemos, deberíamos concentrar nuestros mejores pilotos y aeronaves en cualquier Recolector en el área y derribarlos tan pronto como sea posible. Solo entonces podremos ocuparnos de derribar a sus escoltas.\n"
@@ -7609,7 +7580,7 @@ msgstr ""
 "\n"
 "Las pruebas de balística realizadas sobre el blindaje de la Araña Sanguinaria revelaron que es muy resistente y tiene una excelente capacidad de aislamiento, siendo efectivo contra una amplia variedad de armas.\n"
 "\n"
-"- El blindaje es muy resistente a los láseres, la electricidad y la munición incendiaria, pero puede ser traspasado por municiones perforadoras de blindaje de alta velocidad.\n"
+"- El blindaje es muy resistente a los láseres, la electricidad y la munición incendiaria, pero puede ser traspasada por municiones perforadoras de blindaje de alta velocidad.\n"
 "\n"
 "- Los explosivos potentes también resultan efectivos, ya que dañan las vulnerables articulaciones de las patas. Este podría ser el método más eficaz para derribar a estas criaturas.\n"
 "\n"
@@ -7631,45 +7602,34 @@ msgstr ""
 "Dr. Connor"
 
 #: ../base/ufos/research.ufo:4182
-#, fuzzy
 msgid "Alien Autopsy - Combat Bloodspider"
-msgstr "Autopsia Alienígena - Araña Sanguinaria"
+msgstr "Autopsia Alienígena - Araña de Combate"
 
 #: ../base/ufos/research.ufo:4187
-#, fuzzy
 msgid "bloodspider_adv_autopsy_txt"
 msgstr ""
 "Comandante,\n"
 "\n"
 "Mi equipo ha analizado los restos de la máquina con forma de araña recuperada por nuestros agentes, y hemos preparado un informe para su revisión.\n"
 "\n"
-"La autopsia ha revelado que la criatura es un complejo robot sin ningún componente orgánico. Su cuerpo recuerda al de la araña terrestre: un cuerpo central -que abriga un cerebro artificial y baterías- y ocho patas movidas por poderosos servomotores, que le permiten atravesar el campo de batalla a velocidades inquietantes. Está equipada con mandíbulas afiladísimas que pueden trocear rápidamente un cuerpo humano y almacenar tejidos u órganos enteros en una gran cavidad localizada delante de sus baterías. Existen grabaciones de estas máquinas en acción, desmembrando a humanos vivos durante una misión de terror y guardando su biomasa para su posterior recuperación. El proceso es macabro y muy, muy rápido.\n"
+"Esta criatura es similar a la Araña Sanguinaria que hemos encontrado anteriormente en el campo de batalla, pero ha recibido mejoras que la hacen mucho más letal. Sus filosas navajas son más largas y su blindaje ha recibido significativas revisiones. Estas criaturas son aterradoras en el campo de batalla si logran acercarse, y esta nueva variante es más capaz de sobrevivir algunos disparos de nuestros soldados y continuar su carga. Tendremos que enfrentar a la Araña de Combate en grupos.\n"
 "\n"
-"Nuestros soldados han apodado a esta criatura como la \"Araña Sanguinaria\", y el nombre se ha mantenido.\n"
-"\n"
-"Las pruebas de balística realizadas sobre el blindaje de la Araña Sanguinaria revelaron que es muy resistente y tiene una excelente capacidad de aislamiento, siendo efectivo contra una amplia variedad de armas.\n"
-"\n"
-"- El blindaje es muy resistente a los láseres, la electricidad y la munición incendiaria, pero puede ser traspasado por municiones perforadoras de blindaje de alta velocidad.\n"
-"\n"
-"- Los explosivos potentes también resultan efectivos, ya que dañan las vulnerables articulaciones de las patas. Este podría ser el método más eficaz para derribar a estas criaturas.\n"
-"\n"
-"La existencia de esta criatura suscita cuestiones inquietantes. Sugiere que los alienígenas tienen un interés muy particular por la raza humana y no tienen ninguna clase de escrúpulos. Comandante, estas máquinas representan una enorme amenaza para cualquier ser humano que se aproxime. En caso de encontrarlas, deben ser destruidas inmediatamente a como dé lugar.\n"
+"No podemos asegurarlo, pero tememos que las mejoras al blindaje hayan sido diseñadas como respuesta a la experiencia en combate contra nosotros. Si esto es cierto, significa que los alienígenas podrían estar mejorando otros de sus sistemas de combate también.\n"
 "\n"
 "Atentamente,\n"
 "\n"
-"Dr. Connor"
+"Dr. Connor "
 
 #: ../base/ufos/research.ufo:4190
-#, fuzzy
 msgid "bloodspider_adv_autopsy_pre_txt"
 msgstr ""
 "Comandante,\n"
 "\n"
-"Hemos recuperado un nuevo cuerpo alienígena del campo de batalla. Deberíamos empezar su disección y análisis lo antes posible.\n"
+"Hemos recuperado un nuevo cadáver alienígena del campo de batalla. Parece ser una variante más letal de la Araña Sanguinaria con la que estamos familiarizados. Su disección y análisis podría darnos una idea de las nuevas capacidades de este alienígena.\n"
 "\n"
 "Atentamente,\n"
 "\n"
-"Dr. Connor"
+"Dr. Connor "
 
 #: ../base/ufos/research.ufo:4238
 msgid "Alien Autopsy - Ortnok"
@@ -7752,7 +7712,7 @@ msgid "ortnok_autopsy_pre_txt"
 msgstr ""
 "Comandante,\n"
 "\n"
-"Hemos recuperado un nuevo cadáver alienígena del campo de batalla. Deberíamos empezar su disección y su análisis lo antes posible.\n"
+"Hemos recuperado un nuevo cadáver alienígena del campo de batalla. Deberíamos empezar su disección y análisis lo antes posible.\n"
 "\n"
 "Atentamente,\n"
 "\n"
@@ -7763,7 +7723,7 @@ msgid "ortnok_autopsy_extra_pre_txt"
 msgstr ""
 "Comandante,\n"
 "\n"
-"Hemos recuperado un nuevo cadáver alienígena del campo de batalla. Deberíamos empezar su disección y su análisis lo antes posible.\n"
+"Hemos recuperado un nuevo cadáver alienígena del campo de batalla. Deberíamos empezar su disección y análisis lo antes posible.\n"
 "\n"
 "Atentamente,\n"
 "\n"
@@ -7854,7 +7814,7 @@ msgid "taman_autopsy_pre_txt"
 msgstr ""
 "Comandante,\n"
 "\n"
-"Hemos recuperado un nuevo cadáver alienígena del campo de batalla. Deberíamos empezar su disección y su análisis lo antes posible.\n"
+"Hemos recuperado un nuevo cadáver alienígena del campo de batalla. Deberíamos empezar su disección y análisis lo antes posible.\n"
 "\n"
 "Atentamente,\n"
 "\n"
@@ -7865,7 +7825,7 @@ msgid "taman_autopsy_extra_pre_txt"
 msgstr ""
 "Comandante,\n"
 "\n"
-"Hemos recuperado un nuevo cadáver alienígena del campo de batalla. Deberíamos empezar su disección y su análisis lo antes posible.\n"
+"Hemos recuperado un nuevo cadáver alienígena del campo de batalla. Deberíamos empezar su disección y análisis lo antes posible.\n"
 "\n"
 "Atentamente,\n"
 "\n"
@@ -7952,7 +7912,7 @@ msgid "shevaar_autopsy_pre_txt"
 msgstr ""
 "Comandante,\n"
 "\n"
-"Hemos rescatado un nuevo cadáver alienígena del campo de batalla. Deberíamos empezar su disección y su análisis lo antes posible.\n"
+"Hemos recuperado un nuevo cadáver alienígena del campo de batalla. Deberíamos empezar su disección y análisis lo antes posible.\n"
 "\n"
 "Atentamente,\n"
 "\n"
@@ -7963,41 +7923,72 @@ msgid "shevaar_autopsy_extra_pre_txt"
 msgstr ""
 "Comandante,\n"
 "\n"
-"Hemos rescatado un nuevo cadáver alienígena del campo de batalla. Deberíamos empezar su disección y su análisis lo antes posible.\n"
+"Hemos recuperado un nuevo cadáver alienígena del campo de batalla. Deberíamos empezar su disección y análisis lo antes posible.\n"
 "\n"
 "Atentamente,\n"
 "\n"
 "Dr. Connor"
 
 #: ../base/ufos/research.ufo:4370
-#, fuzzy
 msgid "Alien Autopsy - Hovernet"
-msgstr "Autopsia Alienígena - Ortnok"
+msgstr "Autopsia Alienígena - Hovernet"
 
 #: ../base/ufos/research.ufo:4375
-#, fuzzy
 msgid "hovernet_autopsy_txt"
-msgstr "Untangling the network of loose, fibrous material that forms at least 90% of the hovernet reveals a solid disc of unknown construction. Mounting points for weaponry are clearly visible, though the markings alongside them have yet to be deciphered and would be our first breakthrough in understanding the alien language.No joints can be seen between the disc and the dozens of fibres that protrude from it, even under an electron microscope. It is possible that the fibres are extruded from the disc itself, which must provide the most efficient distribution of the hovernet's energy and propulsive force.The loose arrangement of the fibres suggests that a successful hit with a projectile or directed energy weapon is unlikely, and blast or incendiary weapons would have greater effect."
+msgstr ""
+"Comandante,\n"
+"\n"
+"Mi equipo y yo hemos completado el desensamblado y la autopsia de la criatura alienígena descubierta. Aquí está un resumen de nuestros descubrimientos.\n"
+"\n"
+"Al principio asumimos que la criatura era un robot, pero al investigarlo descubrimos una pequeña biomasa en su núcleo. Este núcleo biológico alienígena está encerrado en una cápsula de sensores que creemos interpreta sus señales para operar la maquinaria eléctrica. Para todos los efectos, este alienígena es poco más que un \"cerebro\" a cargo de un complejo dispositivo. Llamarlo un cerebro podría ser demasiado generoso. No creemos que esté lo suficientemente desarrollado para llevar a cabo procesos mentales mayores a funciones motoras básicas, pero las tropas reportan haberlo visto coordinarse con otros alienígenas en el campo de batalla.\n"
+"\n"
+"El dispositivo en si mismo es un disco móvil, pequeño, pero pesado, capaz de flotar sobre el suelo. A causa de su movimiento aéreo, es capaz de cruzar el campo de batalla rápidamente. Nuestros soldados tendrán que derribarlo antes de que logre ponerse en rango de tiro, lo cual no será fácil considerando su tamaño y capacidad de movimiento.\n"
+"\n"
+"Los modelos descubiertos están equipados con un arma de plasma capaz de realizar disparos individuales. Cualquiera que sea sorprendido dentro de su rango lo lamentará. Dado su tamaño y funcionalidad limitada, creemos que este alienígena esta diseñado únicamente para misiones de combate ligero - tal vez como una unidad de reconocimiento.\n"
+"\n"
+"Atentamente,\n"
+"\n"
+"Dr. Connor "
 
 #: ../base/ufos/research.ufo:4378
-#, fuzzy
 msgid "hovernet_autopsy_pre_txt"
-msgstr "Untangling the network of loose, fibrous material that forms at least 90% of the hovernet reveals a solid disc of unknown construction. Mounting points for weaponry are clearly visible, though the markings alongside them have yet to be deciphered and would be our first breakthrough in understanding the alien language.No joints can be seen between the disc and the dozens of fibres that protrude from it, even under an electron microscope. It is possible that the fibres are extruded from the disc itself, which must provide the most efficient distribution of the hovernet's energy and propulsive force.The loose arrangement of the fibres suggests that a successful hit with a projectile or directed energy weapon is unlikely, and blast or incendiary weapons would have greater effect."
+msgstr ""
+"Comandante,\n"
+"\n"
+"Hemos recuperado un nuevo cadáver alienígena del campo de batalla. Deberíamos empezar su disección y análisis lo antes posible.\n"
+"\n"
+"Atentamente,\n"
+"\n"
+"Dr. Connor"
 
 #: ../base/ufos/research.ufo:4443
-#, fuzzy
 msgid "Alien Autopsy - Combat Hovernet"
-msgstr "Autopsia Alienígena - Taman"
+msgstr "Autopsia Alienígena - Hovernet de Combate"
 
 #: ../base/ufos/research.ufo:4448
 #, fuzzy
 msgid "hovernet_adv_autopsy_txt"
-msgstr "Untangling the network of loose, fibrous material that forms at least 90% of the hovernet reveals a solid disc of unknown construction. Mounting points for weaponry are clearly visible, though the markings alongside them have yet to be deciphered and would be our first breakthrough in understanding the alien language.No joints can be seen between the disc and the dozens of fibres that protrude from it, even under an electron microscope. It is possible that the fibres are extruded from the disc itself, which must provide the most efficient distribution of the hovernet's energy and propulsive force.The loose arrangement of the fibres suggests that a successful hit with a projectile or directed energy weapon is unlikely, and blast or incendiary weapons would have greater effect."
+msgstr ""
+"Commander,\n"
+"\n"
+"My team has analysed the remains our operatives brought back, and we have prepared a summary for your review.\n"
+"\n"
+"(incomplete)\n"
+"\n"
+"Sincerely,\n"
+"\n"
+"Dr. Connor"
 
 #: ../base/ufos/research.ufo:4451
-#, fuzzy
 msgid "hovernet_adv_autopsy_pre_txt"
-msgstr "Untangling the network of loose, fibrous material that forms at least 90% of the hovernet reveals a solid disc of unknown construction. Mounting points for weaponry are clearly visible, though the markings alongside them have yet to be deciphered and would be our first breakthrough in understanding the alien language.No joints can be seen between the disc and the dozens of fibres that protrude from it, even under an electron microscope. It is possible that the fibres are extruded from the disc itself, which must provide the most efficient distribution of the hovernet's energy and propulsive force.The loose arrangement of the fibres suggests that a successful hit with a projectile or directed energy weapon is unlikely, and blast or incendiary weapons would have greater effect."
+msgstr ""
+"Comandante,\n"
+"\n"
+"Hemos recuperado un nuevo cadáver alienígena del campo de batalla. Parece ser una variante más letal del Hovernet con el que estamos familiarizados. Su disección y análisis podría darnos una idea de las nuevas capacidades de este alienígena.\n"
+"\n"
+"Atentamente,\n"
+"\n"
+"Dr. Connor"
 
 #: ../base/ufos/research.ufo:4541 ../base/ufos/team_humans.ufo:2072
 msgid "Phoenix UGV"
@@ -8209,8 +8200,6 @@ msgstr ""
 "\n"
 "Es posible programar nuestras propias cartas estelares en la unidad de astronavegación, pero sólo puedo imaginarme qué primitivas e incompletas serían comparadas con las que poseen los alienígenas. No recomendaría ningún viaje interestelar con estas unidades hasta que capturemos una carta estelar alienígena. Sin embargo, durante ese tiempo podríamos ciertamente utilizar esas cartas para navegar alrededor del sistema solar si pudiéramos diseñar una nave PHALANX capaz de alcanzar el espacio. Ello simplificaría enormemente el proceso completo del viaje interplanetario, hasta el punto de que seríamos capaces de lanzar misiones a Saturno e incluso Plutón con solo pulsar un botón.\n"
 "\n"
-"Y esto es algo que deberíamos hacer tan pronto como sea humanamente posible.\n"
-"\n"
 "--Cte. Navarre"
 
 #: ../base/ufos/research.ufo:4786
@@ -8271,11 +8260,7 @@ msgstr ""
 "\n"
 "Todo este poder de detección se conecta a un avanzado sistema informático que hace pasar automáticamente los resultados a través de una serie de filtros, que pueden ser ajustados en cualquier momento para adaptarse a las necesidades del piloto y de la tripulación. Esto permite discriminar los objetivos del confuso ruido de fondo o bien incrementar la sensibilidad para buscar algo camuflado.\n"
 "\n"
-"Algo interesante es que el ordenador de detección parece tener una conexión directa con el control de armas, ayudando a anticiparse a las maniobras del objetivo y el control de defensa perimétrica, si el aparato tiene esa capacidad.\n"
-"\n"
-"Parte de esta tecnología puede ser adaptada a nuestras instalaciones en tierra y a los radares de nuestras aeronaves. Debería ampliar su alcance e incrementar su resolución, haciendo mucho más complicado a los OVNI esconderse. Sin embargo, la mayor ventaja práctica vendrá de aplicar esta tecnología en la creación de nueva instrumentación aérea para incrementar las posibilidades de supervivencia en combate de nuestros interceptores.\n"
-"\n"
-"Por supuesto, los usos inmediatos no son los más importantes. Estos detectores son vitales para cualquier nave espacial PHALANX futura. En el espacio, sin el apoyo de los radares de tierra, esta potencia extra será absolutamente necesaria.\n"
+"He realizado diseños para adaptar nuestras instalaciones en tierra y los radares de nuestras aeronaves, incluyendo una instalación de radar avanzado. Debería ampliar su alcance e incrementar su resolución, haciendo mucho más complicado a los OVNI esconderse.\n"
 "\n"
 "--Cte. Navarre"
 
@@ -8617,69 +8602,64 @@ msgstr ""
 "--Cte. Navarre"
 
 #: ../base/ufos/research.ufo:5105
-#, fuzzy
 msgid "craft_weapon_alien_launcher_pre_txt"
 msgstr ""
-"Esta es una de las varias propuestas que le estoy enviando para la investigación y desarrollo del nuevo armamento láser. Cada una de estas tendrá que ser desarrollada por separado debido a las diferencias de tamaño, niveles de potencia y complejidad de los sistemas involucrados.\n"
+"Comandante, hemos terminado con el lanzamisiles alienígena. Es un asunto bastante sencillo. El fuego está controlado directamente por la computadora de objetivo del OVNI. Unas potentes bobinas electromagnéticas alrededor del tubo de lanzamiento aceleran el misil hasta una velocidad extrema que alcanza mach 4 en el momento en el que aquél abandona el tubo. Sólo cuando lo ha hecho por completo se activan los cohetes propulsores del misil.\n"
 "\n"
-"El Cañón Láser es el más grande y potente de nuestros nuevos diseños de láser. Tal como nuestras armas de infantería está basado en la reacción de fluoruro de deuterio, pero a una escala mucho mayor y amplificado por el propio sistema eléctrico de la aeronave. Estamos considerando varias ideas prometedoras.\n"
+"La buena noticia es que hemos conseguido adaptar montaje, controles y alimentación para poder acoplarlo con seguridad a nuestras aeronaves. La mala es que hemos tenido que reducir drásticamente el tamaño de sus cargadores para no superar las restricciones de peso y tamaño de las aeronaves.\n"
 "\n"
-"No solo se trata del más grande, también podría ser el más difícil de crear. Cualquier canon para aeronaves tendrá que ser capaz de disparar a través de varios kilómetros de atmósfera -y la consecuente difusión atmosférica- y aún tener suficiente potencia para atravesar el fuselaje de un OVNI. Esos niveles de potencia se han logrado antes usando dispositivos masivos montados en aviones jumbo, pero nunca en dispositivos de un tamaño adecuado para montarse en cazas de combate.\n"
+"Nuestras aeronaves son demasiado pequeñas y ligeras, y la mayoría no están diseñadas para llevar cargadores internos de misiles. Hemos tenido que improvisar un cargador montado con el lanzamisiles, con una capacidad menor que los cargadores de los OVNI.\n"
 "\n"
-"El producto final deberá ser capaz de alcanzar a los OVNI con una gran precisión a distancias mayores que el cañón SHIVA, y aunque el daño causado puede ser bajo, esperamos que la habilidad de mantener a las aeronaves enemigas bajo fuego y presión continuos será muy útil en el futuro.\n"
+"No es tan terrible como parece. Creemos poder modificar el tubo lanzador para que dispare tanto misiles terrestres como alienígenas. Tendremos que desarrollar nuestro propio misil, por supuesto - ningún misil terrestre actual puede soportar la tensión de ser disparado desde este lanzamisiles. No obstante, estamos seguros de que podemos diseñar uno que pueda sobrevivir al lanzamiento e incorpore nueva tecnología de rastreo y mejores capacidades de seguimiento y contramedidas electrónicas.\n"
 "\n"
-"Por favor apruebe el tiempo de laboratorio y el presupuesto cuando esté listo, Comandante.\n"
+"Le enviaré el diseño propuesto tan pronto como pueda, Comandante.\n"
 "\n"
-"--Cte. Navarre"
+"-- Cte. Navarre"
 
 #: ../base/ufos/research.ufo:5108
-#, fuzzy
 msgid "craft_weapon_alien_launcher_txt"
 msgstr ""
-"Comandante, he completado mi reporte sobre nuestro más reciente programa láser. Hemos completado exitosamente el prototipo del Cañón Láser y estamos listos para iniciar su producción.\n"
+"Comandante, hemos terminado con el lanzamisiles alienígena. Es un asunto bastante sencillo. El fuego está controlado directamente por la computadora de objetivo del OVNI. Unas potentes bobinas electromagnéticas alrededor del tubo de lanzamiento aceleran el misil hasta una velocidad extrema que alcanza mach 4 en el momento en el que aquél abandona el tubo. Sólo cuando lo ha hecho por completo se activan los cohetes propulsores del misil.\n"
 "\n"
-"Hemos logrado lo que nos propusimos: crear un láser de onda continua, basado en la reacción de fluoruro de deuterio con una potencia de varios megavatios, capaz de rastrear y alcanzar un OVNI a una distancia de hasta 5km. La precisión es excelente, estorbada solo por las CME (Contra-Medidas Electrónicas) del enemigo, y a diferencia de todas nuestras otras armas no le afecta la distancia. El láser viaja en línea recta y atraviesa la distancia entre el arma y el objetivo de forma casi instantánea. Es difícil fallar con el.\n"
+"La buena noticia es que hemos conseguido adaptar montaje, controles y alimentación para poder acoplarlo con seguridad a nuestras aeronaves. La mala es que hemos tenido que reducir drásticamente el tamaño de sus cargadores para no superar las restricciones de peso y tamaño de las aeronaves.\n"
 "\n"
-"Desafortunadamente la difusión atmosférica aún es un problema, y el láser pierde potencia rápidamente conforme aumenta la distancia hasta el objetivo. A su máximo alcance, 5 kilómetros, toma 32 segundos de fuego continuo en el mismo punto para atravesar el casco de un OVNI. Raramente tendremos tanto tiempo para esperar. La distancia ideal para esta arma está entre los 2 y los 3 kilómetros donde alcanza un buen balance entre daño y distancia. El daño promedio por Segundo es un poco menor que el del Cañón Giratorio SHIVA, pero el alcance es mayor por cerca de 1.5 kilómetros. Aún más que nuestras anteriores armas, el Cañón Láser es ideal para conducir y suprimir al enemigo con una andanada de disparos.\n"
+"Nuestras aeronaves son demasiado pequeñas y ligeras, y la mayoría no están diseñadas para llevar cargadores internos de misiles. Hemos tenido que improvisar un cargador montado con el lanzamisiles, con una capacidad menor que los cargadores de los OVNI.\n"
 "\n"
-"El canon cuenta con un cartucho de fluoruro de deuterio integrado el cual le permite disparar hasta por treinta minutos continuos. Ya que el fluoruro de deuterio es muy peligroso para almacenarlo en la base, y tenemos acceso a grandes reservas de los componentes necesarios en almacenes externos, no necesitaremos mantener municiones para el cañón láser en nuestros almacenes.\n"
+"No es tan terrible como parece. Creemos poder modificar el tubo lanzador para que dispare tanto misiles terrestres como alienígenas. Tendremos que desarrollar nuestro propio misil, por supuesto - ningún misil terrestre actual puede soportar la tensión de ser disparado desde este lanzamisiles. No obstante, estamos seguros de que podemos diseñar uno que pueda sobrevivir al lanzamiento e incorpore nueva tecnología de rastreo y mejores capacidades de seguimiento y contramedidas electrónicas.\n"
 "\n"
-"El uso de esta arma se deja a su discreción, Comandante, pero me gustaría recomendarle que remplace los cañones SHIVA de nuestras aeronaves por cañones láser excepto en aquellas aeronaves especialmente equipadas para combate cerrado. Cualquier cosa que sea menos maniobrable que un OVNI tendrá problemas para mantener el objetivo bajo fuego con cañones SHIVA, así que el láser ofrece una mejor solución con casi la misma capacidad de municiones.\n"
+"Le enviaré el diseño propuesto tan pronto como pueda, Comandante.\n"
 "\n"
-"--Cdr. Navarre"
+"-- Cte. Navarre "
 
 #: ../base/ufos/research.ufo:5153
-#, fuzzy
 msgid "alien_antimatter_missile_pre_txt"
 msgstr ""
-"Comandante, como dije en mi informe anterior, el OVNI que se recuperó está recubierto con una aleación muy interesante que combina metal y plástico en un único material. Esta aleación parece ser utilizada casi universalmente en toda la base tecnológica alienígena. Es un material avanzado, enormemente versátil y con miles de usos posibles.\n"
+"Comandante, hemos recuperado una interesante clase de misil alienígena del OVNI desmantelado. Parece ser propulsado por antimateria, con avanzados sistemas de guía, extensa capacidad de GE (Guerra Electrónica) y velocidades máximas muy superiores a cualquier cosa que hayamos visto.\n"
 "\n"
-"Creo que esto merece una investigación para ver si podemos reproducir este material en nuestros Talleres, pero incluso si no podemos, es muy probable que podamos conseguirlo en grandes cantidades con cada OVNI que rescatemos. Sin duda, seremos capaces de encontrarle nuevas aplicaciones para el ser humano, que extenderán y expandirán nuestras capacidades de combate.\n"
+"Estos misiles podrían ser la mayor amenaza para nuestras aeronaves hasta el momento, incluso peor que el armamento de partículas alienígena. Pruebas preliminares muestran que sus sistemas de guía prácticamente se burlan de nuestras CME, en la mayoría de los casos pasando justo por en medio de todo lo que podemos interponer.\n"
+"\n"
+"Es extremadamente importante que investiguemos estos misiles y comprendamos como funcionan para desarrollar alguna defensa en su contra.\n"
 "\n"
 "--Cte. Navarre"
 
 #: ../base/ufos/research.ufo:5156
-#, fuzzy
 msgid "alien_antimatter_missile_txt"
 msgstr ""
-"Comandante, creo que hemos desvelado el secreto de los materiales alienígenas. Después de realizar algunas modificaciones en la maquinaria de nuestros Talleres, ahora deberíamos ser capaces de usarlos e incluso de \"programarles\" en nuevas formas avanzadas.\n"
+"Comandante, mi equipo y yo hemos completado nuestro trabajo con el misil antimateria recuperado por nuestro equipo de campo. Como siempre, hay buenas y malas noticias. Iré directo al grano.\n"
 "\n"
-"Tal y como mencioné anteriormente, los materiales alienígenas forman una \"aleación con memoria\", capaces de adoptar diversas formas y cambiar de una a otra si se les aplica el estímulo adecuado. Sorprendentemente, la aleación alienígena puede ser estimulada con dos cosas diferentes: el calor y la electricidad. El calor es una opción obvia para hacer que el OVNI despliegue su fuselaje durante un vuelo a través de la atmósfera, para obtener un mejor ascenso. La electricidad, en cambio, es algo nuevo.\n"
+"La estructura principal del misil consiste de un fuselaje exterior rígido compuesto de materiales alienígenas, los mismos que usan para fabricar los cascos OVNI, y esta diseñado para fragmentarse al impacto en cientos de esquirlas formando una metralla caliente de alta velocidad. Este casco contiene compartimientos individuales para sistemas de guía, aviónica, equipo GE y otros electrónicos, y -ocupando la mayor parte de la mitad trasera del misil- un cohete de desintegración protón-antiprotón.\n"
 "\n"
-"Al aplicar electricidad, la aleación alienígena únicamente responde ante una corriente continua con un bajo voltaje y una intensidad de corriente muy específica. El material se deformará y permanecerá deformado mientras se mantenga dicha corriente eléctrica. Una vez que se interrumpa la corriente, el material volverá a adoptar su \"forma de reposo\" original, o bien una forma inducida por el calor, en caso de aplicarse suficiente calor. La forma inducida por la electricidad tiene prioridad frente a la forma inducida por la temperatura.\n"
+"El cohete es por mucho el más poderoso sistema de propulsión de misiles jamás visto en la Tierra, capaz de alcanzar velocidades que son simplemente imposibles mediante reacciones químicas ordinarias. Esto impulsa al misil a velocidades a las que ya no necesita una carga explosiva abordo. La energía cinética generada por el impacto es suficiente para despedazar un avión de pasajeros humano no blindado, e incluso una detonación cercana del combustible de antimateria del misil es normalmente suficiente para derribar un avión de combate. Nuestros interceptores no están diseñados para soportar esta clase de violencia.\n"
 "\n"
-"Esto significa que la forma del fuselaje del OVNI (y de cualquier cosa hecha con este material) puede ser cambiada de forma a voluntad, tanto por medio de una orden enviada por el operador como por sistemas electrónicos automatizados.\n"
+"Los electrónicos de abordo del misil han sido particularmente interesantes. Son muy superiores a los nuestros, pero tengo buenas noticias. Hemos rastreado suficientes de las frecuencias electromagnéticas usadas por el equipo GE del misil que podemos empezar a tomar alguna acción en su contra. Me he tomado la libertad de actualizar el software de nuestras aeronaves con la nueva información, lo que significa que deberíamos tener más posibilidades de rastrear estas cosas en nuestro radar, así como darles a nuestras aeronaves mayor oportunidad de evadir los misiles alienígenas.\n"
 "\n"
-"Esto nos ha proporcionado infinidad de nuevas ideas. Solamente podremos desarrollar unas pocas ideas a tiempo para usarlas en la guerra, ya que algunas otras requerirían años de investigación; en cualquier caso, estos materiales alienígenas nos permitirán construir cosas que nunca antes habíamos intentado.\n"
-"\n"
-"Los Materiales Alienígenas deberían estar ya disponibles para su producción. Por desgracia, requieren una gran cantidad de componentes raros y costosos, algunos de los cuales sólo pueden ser encontrados en cantidades ínfimas en la Tierra. No hay manera de que podamos obtener los materiales necesarios en cantidades suficientes para permitirnos la fabricación de productos prescindibles. Tendremos que rescatar lo que necesitamos de los alienígenas, ya que no seremos capaces de producir cualquiera de estos en un futuro cercano.\n"
+"Podemos duplicar los misiles bastante bien, pero aun requerirán antimateria como combustible, probablemente la sustancia más valiosa en el universo en este momento. Tengo algunas ideas sobre como podemos salvar esta situación, pero aún no estoy listo para enviar ninguna propuesta en este momento. Le haré saber cuando lo haya resuelto, Comandante.\n"
 "\n"
 "--Cte. Navarre"
 
 #: ../base/ufos/research.ufo:5204
-#, fuzzy
 msgid "craft_ammo_hybrid_missile_pre_txt"
-msgstr "<TODO>"
+msgstr "No existe información disponible previa a la investigación."
 
 #: ../base/ufos/research.ufo:5207
 #, fuzzy
@@ -8982,7 +8962,7 @@ msgstr ""
 "\n"
 "Hasta que fue redescubierto el 9 de Marzo de 2084 por un anciano que recordaba haber leído sobre él en un archivo polvoriento de su oficina demolida varios años atrás.\n"
 "\n"
-"El horror y la enormidad de los acontecimientos de Bombay impactaron al mundo. La existencia de vida alienígena inteligente había dejado de ser una cuestión de fe. No solo existía, había hecho contacto de la peor forma posible. Las masacres habían sido demasiado grandes y visibles como para permitir a los gobiernos de la Tierra mantenerlas en secreto. Evidencia en video de las calles humeantes y manchadas de sangre fué transmitida a los televisores de todo el mundo. Los alienígenas no habían dejado otra evidencia de su visita; diligentemente recogieron sus muertos y recolectaron cada trozo de tecnología antes de retirarse.\n"
+"El horror y la enormidad de los acontecimientos de Bombay impactaron al mundo. La existencia de vida alienígena inteligente había dejado de ser una cuestión de fe. No solo existía, había hecho contacto de la peor forma posible. Las masacres habían sido demasiado grandes y visibles como para permitir a los gobiernos de la Tierra mantenerlas en secreto. Evidencia en video de las calles humeantes y manchadas de sangre fue transmitida a los televisores de todo el mundo. Los alienígenas no habían dejado otra evidencia de su visita; diligentemente recogieron sus muertos y recolectaron cada trozo de tecnología antes de retirarse.\n"
 "\n"
 "El pánico cundió como el fuego tras la estela de las transmisiones de Bombay, y las cosas se pusieron peor cuando empezaron los rumores de las matanzas ocurridas en Bonn, Johannesburgo y Bangkok. El mundo sabía que había sido visitado, y ahora empezaba a darse cuenta de que estaba bajo ataque.\n"
 "\n"
@@ -9001,14 +8981,54 @@ msgid "A New Twist"
 msgstr "Un Nuevo Giro"
 
 #: ../base/ufos/research.ufo:5390
-#, fuzzy
 msgid "news_new_twist_txt"
-msgstr "<TODO>"
+msgstr ""
+"Comandante,\n"
+"\n"
+"Nueva información ha salido a la luz durante la última ronda de autopsias que solicitó. Nuestros informes aún tienen validez, pero hemos descubierto ciertas características en común entre las diferentes especies que pueden arrojar nueva luz sobre el tema de la diversidad de los alienígenas.\n"
+"\n"
+"Durante nuestro primer análisis de la estructura celular de los alienígenas, encontramos una anomalía en que nuestras pruebas de replicación de ADN fallaban debido a una inexplicable contaminación de las muestras. Inicialmente lo descartamos como error humano, pero el problema continuó surgiendo con sorprendente regularidad. El mismo resultado, una y otra vez; siempre que examinábamos una muestra que no hubiese sido previamente criogenizada para almacenamiento, teníamos dificultad en extraer una secuencia siquiera que no estuviese contaminada. He pasado algunas de mis horas libres estudiando el problema, y creo que he encontrado la causa.\n"
+"\n"
+"La explicación más simple es esta: Hay dos tipos de ADN presentes en nuestras muestras de sangre. La prevalencia del ADN foráneo es total; estas secuencias pueden hallarse en todos de los miembros de la especie Taman, y un estudio más riguroso ha confirmado que existen secuencias similares en la sangre de las demás especies que hemos recuperado. Su origen parece estar en un tipo de organismo unicelular muy abundante en el torrente sanguíneo de los alienígenas. Existen varias versiones de este, una para cada especie de alienígena, y todas presentan notables similitudes en su ADN. Es interesante que, aunque estos organismos tienen todos el mismo número de cromosomas, ninguno de ellos puede sobrevivir en un cuerpo que no sea miembro de su especie de origen. También es curioso el hecho de que no hay absolutamente ninguna diferencia en el ADN de organismos de una misma versión. Esto nos lleva a pensar que las distintas versiones pueden haber sido diseñadas -del todo o en parte- para adaptarse a la especie individual.\n"
+"\n"
+"Ahora conjeturamos que todos los alienígenas son portadores de esta infección microorgánica. La función del organismo no es fácilmente aparente. Hemos realizado pruebas en varias muestras experimentales de tejido, tanto infectadas como de control. Los tejidos infectados no parecen sufrir ningún efecto negativo -o positivo para el caso- por la presencia del organismo. Son esencialmente idénticas a las muestras sin infectar. Puesto que el microorganismo requiere un huésped vivo para sobrevivir, parece ser un parásito o un simbionte con efectos benéficos que no hemos observado hasta el momento.\n"
+"\n"
+"Hemos denominado a este organismo \"Infección Viral EXtraterrestre\", o IVX. Éste podría ser un término equivocado en términos microbiológicos, el IVX es un organismo pluricelular complejo mucho mas grande que cualquier virus terrestre, pero actúa y se reproduce exactamente como uno. Por lo tanto nos parece que el término está justificado. Puesto que cada una de las especies alienígenas porta una cepa única de la infección, les hemos dado designaciones alfabéticas según la especie en que se encuentra la cepa. Los Taman tienen IVX-T, los Sheevar la IVX-S, etcétera.\n"
+"\n"
+"El propósito de la infección sigue siendo una nebulosa por el momento, pero es lo único que hemos encontrado que vincule físicamente estas razas tan diversas. Podemos asumir que nuevas cepas de la infección han sido producidas para adaptarse a cada especie, tal vez permitiéndoles coexistir en la forma que lo hacen.\n"
+"\n"
+"No hay indicios de que el microorganismo sea contagioso para los humanos. Al inyectar cultivos de tejido humano con sangre alienígena fresca, hemos observado que la sangre alienígena es rechazada por completo, como era de esperarse. Inesperadamente, todo rastro de la infección fue posteriormente aniquilado por los linfocitos T. El organismo resultó incapaz de arraigarse ante nuestro sistema inmunológico.\n"
+"\n"
+"Actualmente, no creemos que el IVX suponga un riesgo para nuestros soldados en el campo de batalla. No obstante, continuaremos investigando y le mantendremos informado acerca de futuras novedades. Un análisis de sangre exhaustivo de todo nuestro personal está en progreso, por si acaso, y se mantendrán procedimientos de cuarentena estrictos en el laboratorio.\n"
+"\n"
+"Atentamente,\n"
+"\n"
+"Dr. Connor"
 
 #: ../base/ufos/research.ufo:5391
-#, fuzzy
 msgid "news_new_twist_alt_txt"
-msgstr "<TODO>"
+msgstr ""
+"Comandante,\n"
+"\n"
+"Éste es un informe extremadamente urgente; por favor, créame cuando digo que no puede esperar ni un minuto más.\n"
+"\n"
+"Hemos llegado a conclusiones inquietantes durante nuestra continua investigación sobre el organismo IVX. Tengo razones para creer que la infección IVX puede jugar un papel incluso mayor de lo que habíamos creído en un principio en el plan de los alienígenas.\n"
+"\n"
+"En primer lugar, algunos antecedentes. Durante nuestros análisis preliminares de esta estructura celular alienígena, encontramos algunas anomalías porque nuestras pruebas de replicación de ADN fracasaban debido a una inexplicable contaminación de las muestras. Inicialmente lo atribuimos a un error humano, pero el problema ha continuado produciéndose con absoluta regularidad. El mismo resultado, una y otra vez; siempre que examinábamos una muestra que no hubiese sido criogenizada para su almacenamiento, no lográbamos extraer una sola secuencia genética que no estuviese contaminada. Nada de esto tenía sentido hasta nuestro reciente descubrimiento de infecciones por IVX entre la población civil. Inmediatamente sospeché una correlación, pero quería esperar hasta que pudiera demostrarlo, y desde entonces he pasado la mayor parte de mi tiempo libre estudiando el problema. Ahora creo que he encontrado la causa - el propio IVX.\n"
+"\n"
+"He llegado a la conclusión de que cada especie alienígena es portadora de una variante de este microorganismo infeccioso. Esto se puede atribuir a diferencias en la anatomía y el tipo de sangre del huésped -algunas de estas variantes incluso parecen no vivir en la sangre-, pero todas son inconfundiblemente lo mismo. Sólo podemos suponer que las distintas variantes fueron diseñadas para adaptarse a cada especie.\n"
+"\n"
+"Dado que cada especie alienígena lleva una variedad única de la infección, he decidido modificar ligeramente nuestra nomenclatura, asignando a cada variante del virus la letra inicial de su huésped. Así, los seres humanos son portadores del IVX-H, los Taman del IVX-T, y así sucesivamente.\n"
+"\n"
+"La función del microorganismo en los alienígenas no es evidente, ya que no disponemos de individuos sin infectar como control para medir el efecto de la infección. Sin embargo, teniendo en cuenta la información disponible, tenemos que concluir que el IVX es más que una simple arma biológica utilizada contra la humanidad. Incluso podría ser utilizado de manera similar - un dispositivo esclavizador que suprime la conciencia individual y supedita al sujeto a la mente colectiva, tanto si hay un grupo como si no. Quizá todos los alienígenas enviados a la Tierra sean miembros de una especie de casta de soldados esclavos, o incluso prisioneros obligados a combatir, como los batallones de convictos del Ejército Rojo en la Segunda Guerra Mundial. Sobre este punto apenas podemos empezar a especular.\n"
+"\n"
+"Comandante, creo que deberíamos llevar a cabo una agresiva investigación sobre el virus IVX para que podamos encontrar la verdad oculta tras algunos de estos misterios. Tenemos que determinar el verdadero propósito de este organismo, lo que implica para la guerra y para nosotros como especie. El IVX-H es posiblemente la mayor amenaza a la que nos hayamos enfrentado jamás.\n"
+"\n"
+"No podemos permitir que estas cosas esclavicen a nuestro planeta.\n"
+"\n"
+"Atentamente,\n"
+"\n"
+"Dr. Connor "
 
 #: ../base/ufos/research.ufo:5415
 msgid "The Enemy On Earth"
@@ -9072,7 +9092,7 @@ msgstr ""
 "\n"
 "No me podría imaginar un escenario de más pesadillas para nosotros. Nuestras tropas indudablemente se enfrentan cada vez contra más y más oponentes humanos durante los ataques alienígenas sobre la tierra. Es posible, incluso encontrarlos tripulando naves para los alienígenas. Es una locura.\n"
 "\n"
-"Comandante, necesitamos desarrollar una vacuna contra el virus IVX-H lo antes posible. El peligro de que nuestros soldados y personal de recuperación caigan víctimas de la infección en el campo de batalla es demasiado grande como para ignorarlo siquiera por un momento, y mucho menos permitir que la población en general caiga presa de esta abominación. Por medio de la presente solicito su permiso para comenzar a desarrollar una vacuna inmediatamente. Por favor, agradeceríamos que responda a la mayor brevedad posible\n"
+"Comandante, necesitamos desarrollar una vacuna contra el virus IVX-H lo antes posible. El peligro de que nuestros soldados y personal de recuperación caigan víctimas de la infección en el campo de batalla es demasiado grande como para ignorarlo siquiera por un momento, y mucho menos permitir que la población en general caiga presa de esta abominación. Por medio de la presente solicito su permiso para comenzar a desarrollar una vacuna inmediatamente. Por favor, agradeceríamos que responda a la mayor brevedad posible.\n"
 "\n"
 "Sinceramente,\n"
 "\n"
@@ -9256,9 +9276,8 @@ msgstr ""
 "Cnl. Falkland"
 
 #: ../base/ufos/research.ufo:5595
-#, fuzzy
 msgid "Alien Psi Device"
-msgstr "Base Alienígena Descubierta"
+msgstr "Dispositivo Psiónico Alienígena"
 
 #: ../base/ufos/research.ufo:5600
 #, fuzzy
@@ -9277,25 +9296,12 @@ msgstr ""
 "Dr. Connor"
 
 #: ../base/ufos/research.ufo:5603
-#, fuzzy
 msgid "alien_psi_device_pre_txt"
-msgstr ""
-"Comandante,\n"
-"\n"
-"¡Hemos capturado un alienígena vivo en el campo de batalla! La criatura ha sido recuperada de nuestra última misión táctica y se encuentra en nuestra nueva unidad de contención alienígena, me alegra reportar que está funcionando bien.\n"
-"\n"
-"No necesito explicarle porqué necesitamos iniciar las investigaciones sobre este espécimen. La información que podremos extraer de él, supera toda consideración. Hasta ahora no habíamos tenido la oportunidad de investigar la mente alienígena, sus deseos y motivaciones, excepto a través de sus continuos ataques a nuestro mundo. Esta es nuestra primera oportunidad de descubrir el propósito de los extraterrestres contra la humanidad, tal vez incluso una explicación. ¿Quienes son? ¿Porqué están aquí? ¿Qué podemos hacer contra ellos? No podemos saber nada sin antes investigar este espécimen.\n"
-"\n"
-"Por favor, envíe su aprobación a este programa lo antes posible.\n"
-"\n"
-"Atentamente,\n"
-"\n"
-"Dr. Connor"
+msgstr "No existe información disponible previa a la investigación."
 
 #: ../base/ufos/research.ufo:5627
-#, fuzzy
 msgid "Alien Infiltration"
-msgstr "Astronavegación Alienígena"
+msgstr "Infiltración Alienígena"
 
 #: ../base/ufos/research.ufo:5632
 #, fuzzy
@@ -9316,26 +9322,12 @@ msgstr ""
 "Dr. Connor"
 
 #: ../base/ufos/research.ufo:5635
-#, fuzzy
 msgid "alien_infiltration_pre_txt"
-msgstr ""
-"Comandante, el aumento del intelecto de los alienígenas cautivos en nuestra Unidad de Contención me lleva a concluir que finalmente podemos comenzar a tener una verdadera comunicación con los alienígenas y, lo que es más importante, conseguir de ellos alguna información aprovechable. Citando mi informe 'Comportamiento extraño':\n"
-"\n"
-"(Comportamiento extraño) \"Hay varias especies de alienígenas que reúnen los requisitos fisiológicos necesarios para desarrollar la conciencia, pero muestran poca o ninguna actividad cerebral individual. Esto implica la presencia de algún tipo de 'pensamiento compartido' entre ellas, una mente colectiva más inteligente cuanto están juntos.\"\n"
-"\n"
-"\"Ahora que poseemos varios espécimenes capturados, su inteligencia parece acercarse al nivel de los humanos. Si somos capaces de crear un dispositivo apropiado de traducción, o un lenguaje común, podríamos finalmente comunicarnos con los cautivos. Quizás algunos de nuestros lingüistas o psicólogos pueda establecer diálogo. Ésta es una gran oportunidad de investigación que no podemos permitirnos ignorar.\"\n"
-"\n"
-"El Dr.Yamamura está empezando a hacer un verdadero progreso en este frente, enseñado a los alienígenas varios nuevos signos de lenguaje cada día, pero requeriremos tiempo de laboratorio y la financiación para un estudio adecuado de lo que estos alienígenas conocen y sobre la forma en que esto puede ayudarnos. La capacidad de interrogarlos sobre su propia tecnología podría ser de invaluable para nuestros soldados e ingenieros. El Cte. Navarra esta tan entusiasmado ante la perspectiva, que él mismo en esta oportunidad se manifestó a favor de la División de Biología.\n"
-"\n"
-"Gracias por su tiempo, Comandante. Por favor, apruebe este programa tan pronto como sea posible.\n"
-"\n"
-"Atentamente,\n"
-"\n"
-"Dr. Connor"
+msgstr "No existe información disponible previa a la investigación."
 
 #: ../base/ufos/research.ufo:5658
 msgid "Human Vaccine"
-msgstr ""
+msgstr "Vacuna Humana"
 
 #: ../base/ufos/research.ufo:5663
 #, fuzzy
@@ -9386,22 +9378,8 @@ msgstr ""
 "Ninguno."
 
 #: ../base/ufos/research.ufo:5666
-#, fuzzy
 msgid "human_vaccine_pre_txt"
-msgstr ""
-"Good morning, Sir.\n"
-"\n"
-"With these new developments regarding the infection of Earth's civilian population by this alien organism, the need arises for a way to determine the number of infected people in various regions and the rate of spread. Easier said than done, I know, but it may be every bit as important as finding a cure. We can't help anyone if we don't know they're sick.\n"
-"\n"
-"What I propose to do is to create a long-term rolling census that checks all registered individuals on the entire planet for XVI infection by way of a small blood test. Everyone will be required to submit to this test once a week to make sure they're clean -- more frequently if they fall under suspicion of infection. Samples will only need to be as large as a single drop of blood, taken from a random vein to prevent tampering. Fortunately the XVI organism is large and prevalent enough that we can test these samples on the spot with near-100%-confidence results.\n"
-"\n"
-"This is going to be a major undertaking that requires careful liaising with the intelligence services of Earth's eight big nations. I've already prepared plans and simulations to demonstrate the operation and effectiveness of this program. With some time and funding, we can convince them of the project's importance and have everything operational in a matter of weeks.\n"
-"\n"
-"All we need is your signature on the dotted line, Sir.\n"
-"\n"
-"With kind regards,\n"
-"\n"
-"Col. Falkland"
+msgstr "No existe información disponible previa a la investigación."
 
 #: ../base/ufos/seq_credits.ufo:137 ../base/ufos/seq_credits.ufo:170
 msgid "Project leader"
@@ -9593,7 +9571,7 @@ msgstr "Copyright 2004-2011 por UFO: AI Team"
 
 #: ../base/ufos/seq_intro.ufo:36
 msgid "intro_sentence1"
-msgstr "Es el año 2084. La Tierra, nunca el lugar mas políticamente estable, disfruta de un tiempo de relativa paz. Los violentos inicios del siglo XXI están muy lejos; recuerdos distantes, aunque no tan distantes como para haber sido olvidados. Para la mayoría de la gente de la Tierra la Segunda Guerra Fría es una oscura sombra del pasado, como las guerras mundiales para los hijos de fines del siglo XX."
+msgstr "Es el año 2084. La Tierra, que nunca ha sido el lugar mas políticamente estable, disfruta de un tiempo de relativa paz. Los violentos inicios del siglo XXI están muy lejos; recuerdos distantes, aunque no tan distantes como para haber sido olvidados. Para la mayoría de la gente de la Tierra la Segunda Guerra Fría es una oscura sombra del pasado, como las guerras mundiales para los hijos de fines del siglo XX."
 
 #: ../base/ufos/seq_intro.ufo:48
 msgid "intro_sentence2"
@@ -9855,19 +9833,16 @@ msgid "Bloodspider"
 msgstr "Araña Sanguinaria"
 
 #: ../base/ufos/team_aliens.ufo:456
-#, fuzzy
 msgid "Combat Bloodspider"
-msgstr "Araña Sanguinaria"
+msgstr "Araña de Combate"
 
 #: ../base/ufos/team_aliens.ufo:558
-#, fuzzy
 msgid "Hovernet"
-msgstr "Hanóver"
+msgstr "Hovernet"
 
-#: ../base/ufos/team_aliens.ufo:657
-#, fuzzy
+#: ../base/ufos/team_aliens.ufo:658
 msgid "Combat Hovernet"
-msgstr "Cuchillo de Combate"
+msgstr "Hovernet de Combate"
 
 #: ../base/ufos/team_humans.ufo:60
 msgid "Phalanx"
@@ -9879,24 +9854,23 @@ msgstr "Ares R"
 
 #: ../base/ufos/team_templates.ufo:208
 msgid "Body"
-msgstr ""
+msgstr "Cuerpo"
 
 #: ../base/ufos/team_templates.ufo:217
 msgid "Torso"
-msgstr ""
+msgstr "Torso"
 
 #: ../base/ufos/team_templates.ufo:224
 msgid "Legs"
-msgstr ""
+msgstr "Piernas"
 
 #: ../base/ufos/team_templates.ufo:231
 msgid "Arms"
-msgstr ""
+msgstr "Brazos"
 
 #: ../base/ufos/team_templates.ufo:239
-#, fuzzy
 msgid "Head"
-msgstr "Equipo"
+msgstr "Cabeza"
 
 #: ../base/ufos/tips.ufo:4
 msgid "Use the [Shift] key to align your targeting height - useful to shoot a rocketlauncher in front of an alien group, for example."
@@ -10044,11 +10018,11 @@ msgstr "Puedes incluir tus propios mapas para juegos multijugador o crear tus pr
 
 #: ../base/ufos/tips.ufo:40
 msgid "You can use [space] to cycle between all geoscape items."
-msgstr "Puedes usar [espacio] para moverte entre los objetos del mapa."
+msgstr "Puedes usar [barra espaciadora] para moverte entre los objetos del mapa."
 
 #: ../base/ufos/tips.ufo:41
 msgid "You can accelerate/decelerate time on the geoscape by using the mouse wheel, the time buttons, or by pressing [-], [+/=]. Alternatively you can press [n] and [m]. [backspace] will stop the flow of time."
-msgstr "Puedes acelerar o desacelerar el tiempo en la vista de la Tierra usando la rueda del ratón, los botones de tiempo, o presionando [-], [+] y [=]. Otra alternativa es presionar [n] y [m]. [retroceso] detendrá el paso del tiempo."
+msgstr "Puedes acelerar o desacelerar el tiempo en la vista de la Tierra usando la rueda del ratón, los botones de tiempo, o presionando [-], [+/=]. Otra alternativa es presionar [n] y [m]. [retroceso] detendrá el paso del tiempo."
 
 #: ../base/ufos/tips.ufo:42
 msgid "Be sure to equip your interceptor with weapons before launching it."
@@ -10233,22 +10207,24 @@ msgid "Keyinfo and General Help"
 msgstr "Atajos del Teclado y Ayuda General"
 
 #: ../base/ufos/ui/_menu.ufo:612
-#, fuzzy
 msgid ""
 "Visit our forums and join the community at http://ufoai.org.\n"
 "Hint: Press CTRL+G to grab/release the mousepointer."
-msgstr "Visita nuestros foros y únete a la comunidad en http://ufoai.org."
+msgstr ""
+"Visita nuestros foros y únete a la comunidad en http://ufoai.org.\n"
+"Consejo: Presiona CTRL+G para capturar/liberar el puntero del ratón."
 
 #: ../base/ufos/ui/_menu.ufo:614
 msgid "Visit our forums and join the community at http://ufoai.org."
 msgstr "Visita nuestros foros y únete a la comunidad en http://ufoai.org."
 
 #: ../base/ufos/ui/_menu.ufo:619
-#, fuzzy
 msgid ""
 "Note: Campaign-specific keybindings visible in Campaign mode only.\n"
 "Hint: Press CTRL+G to grab/release the mousepointer."
-msgstr "Nota: Los atajos específicos de la Campaña solo son visibles en el modo de Campaña."
+msgstr ""
+"Nota: Los atajos específicos de la Campaña solo son visibles en el modo de Campaña.\n"
+"Consejo: Presiona CTRL+G para capturar/liberar el puntero del ratón."
 
 #: ../base/ufos/ui/_menu.ufo:621
 msgid "Note: Campaign-specific keybindings visible in Campaign mode only."
@@ -11030,7 +11006,7 @@ msgstr "Terminar misión automáticamente"
 
 #: ../base/ufos/ui/geoscape.ufo:795
 msgid "This kind of mission cannot be done automatically"
-msgstr ""
+msgstr "Las misiones de este tipo no pueden realizarse de forma automatizada"
 
 #: ../base/ufos/ui/geoscape.ufo:816
 msgid "New installation"
@@ -11163,18 +11139,16 @@ msgid "Enemies Killed:"
 msgstr "Enemigos Asesinados:"
 
 #: ../base/ufos/ui/hire.ufo:471
-#, fuzzy
 msgid "Piloting:"
-msgstr "Filtrado:"
+msgstr "Pilotaje:"
 
 #: ../base/ufos/ui/hire.ufo:480
-#, fuzzy
 msgid "Targeting:"
-msgstr "Computadora de Objetivo"
+msgstr "Puntería:"
 
 #: ../base/ufos/ui/hire.ufo:489
 msgid "Evading:"
-msgstr ""
+msgstr "Evasión:"
 
 #: ../base/ufos/ui/hire.ufo:514 ../base/ufos/ui/hire.ufo:530
 msgid "Occupation"
@@ -11293,9 +11267,8 @@ msgid "TUs reserved"
 msgstr "UTs reservadas"
 
 #: ../base/ufos/ui/hud_alt.ufo:1192 ../base/ufos/ui/hud_default.ufo:827
-#, fuzzy
 msgid "Keyinfo/General Help window"
-msgstr "Botón Izquierdo: Mostrar/Botón Derecho: Ocultar - Ventana de Atajos del Teclado y Ayuda General"
+msgstr "Ventana de Atajos del Teclado y Ayuda General"
 
 #: ../base/ufos/ui/hud_alt.ufo:1245 ../base/ufos/ui/hud_default.ufo:695
 msgid "Use headgear"
@@ -11495,7 +11468,6 @@ msgstr ""
 "Tecla: 8"
 
 #: ../base/ufos/ui/hud_mini.ufo:419
-#, fuzzy
 msgid ""
 "LMB/RMB:Select\n"
 "Wheel:Select Next/Prev\n"
@@ -11503,10 +11475,9 @@ msgid ""
 msgstr ""
 "Botón Izquierdo/Botón Derecho: Seleccionar\n"
 "Rueda: Seleccionar Siguiente/Anterior\n"
-"Tecla: 1"
+"Tecla: 9"
 
 #: ../base/ufos/ui/hud_mini.ufo:438
-#, fuzzy
 msgid ""
 "LMB/RMB:Select\n"
 "Wheel:Select Next/Prev\n"
@@ -11514,17 +11485,15 @@ msgid ""
 msgstr ""
 "Botón Izquierdo/Botón Derecho: Seleccionar\n"
 "Rueda: Seleccionar Siguiente/Anterior\n"
-"Tecla: 1"
+"Tecla: 0"
 
 #: ../base/ufos/ui/hud_mini.ufo:457 ../base/ufos/ui/hud_mini.ufo:476
-#, fuzzy
 msgid ""
 "LMB/RMB:Select\n"
 "Wheel:Select Next/Prev"
 msgstr ""
 "Botón Izquierdo/Botón Derecho: Seleccionar\n"
-"Rueda: Seleccionar Siguiente/Anterior\n"
-"Tecla: 1"
+"Rueda: Seleccionar Siguiente/Anterior"
 
 #: ../base/ufos/ui/hud_mini.ufo:679
 msgid "Wheel:Select Next/Previous"
@@ -11577,19 +11546,16 @@ msgstr ""
 "Rueda Arriba: Mano Derecha"
 
 #: ../base/ufos/ui/hud_mini.ufo:1557
-#, fuzzy
 msgid "End turn"
 msgstr "Terminar turno"
 
 #: ../base/ufos/ui/hud_mini.ufo:1570
-#, fuzzy
 msgid "LMB:Show/Hide Physical Data"
-msgstr "Botón Izquierdo: Mostrar/Botón Derecho: Ocultar - Estado Físico"
+msgstr "Botón Izquierdo: Mostrar/Ocultar Estado Físico"
 
 #: ../base/ufos/ui/hud_mini.ufo:1579
-#, fuzzy
 msgid "LMB:Show/Hide Inventory"
-msgstr "Botón Izquierdo: Mostrar/Botón Derecho: Ocultar - Inventario"
+msgstr "Botón Izquierdo: Mostrar/Ocultar Inventario"
 
 #: ../base/ufos/ui/hud_mini.ufo:1588
 msgid "LMB:Show/RMB:Hide Radar"
@@ -11910,27 +11876,24 @@ msgid "Name"
 msgstr "Nombre"
 
 #: ../base/ufos/ui/market.ufo:181
-#, fuzzy
 msgid "Store"
 msgstr "Almacenes"
 
 #: ../base/ufos/ui/market.ufo:182
-#, fuzzy
 msgid "Number of such items in base"
-msgstr "Nombre de esta base"
+msgstr "Numero de tales objetos en la base"
 
 #: ../base/ufos/ui/market.ufo:189
 msgid "Market"
-msgstr ""
+msgstr "Mercado"
 
 #: ../base/ufos/ui/market.ufo:190
 msgid "Number of such items on the market"
-msgstr ""
+msgstr "Numero de tales objetos en el mercado"
 
 #: ../base/ufos/ui/market.ufo:197
-#, fuzzy
 msgid "Price"
-msgstr "Precio:"
+msgstr "Precio"
 
 #: ../base/ufos/ui/market.ufo:314
 msgid "Storage (used/all):"
@@ -12082,7 +12045,7 @@ msgstr ""
 
 #: ../base/ufos/ui/mods.ufo:13
 msgid "Mods"
-msgstr ""
+msgstr "Modificaciones"
 
 #: ../base/ufos/ui/multiplayer.ufo:9
 msgid "Connect to this server"
@@ -12378,23 +12341,20 @@ msgid "Several Tips"
 msgstr "Mostrar Consejos"
 
 #: ../base/ufos/ui/options.ufo:185
-#, fuzzy
 msgid "Show cursor tooltips in menus."
-msgstr "Activar los consejos emergentes."
+msgstr "Mostrar los consejos emergentes en el menú."
 
 #: ../base/ufos/ui/options.ufo:186
-#, fuzzy
 msgid "Tooltips (menu):"
-msgstr "Consejos emergentes:"
+msgstr "Consejos emergentes (menú):"
 
 #: ../base/ufos/ui/options.ufo:202
 msgid "Show cursor tooltips in tactical mode."
-msgstr ""
+msgstr "Mostrar los consejos emergentes en el modo táctico."
 
 #: ../base/ufos/ui/options.ufo:203
-#, fuzzy
 msgid "Tooltips (battlescape):"
-msgstr "Inclinar la cámara hacia arriba"
+msgstr "Consejos Emergentes (combate):"
 
 #: ../base/ufos/ui/options.ufo:218
 msgid "Show 'Tip of the Day':"
@@ -12466,11 +12426,11 @@ msgstr "Estirar la Pantalla a una Proporción de 4:3:"
 
 #: ../base/ufos/ui/options.ufo:431
 msgid "Prevent the mousepointer from leaving the game window."
-msgstr ""
+msgstr "Evitar que el puntero del ratón salga de la ventana."
 
 #: ../base/ufos/ui/options.ufo:432
 msgid "Hint: Press CTRL+G to grab/release the mousepointer."
-msgstr ""
+msgstr "Consejo: Presiona CTRL+G para capturar/liberar el puntero del ratón."
 
 #: ../base/ufos/ui/options.ufo:443
 msgid "Calibrate your display here."
@@ -12645,9 +12605,8 @@ msgid "GLSL Shaders:"
 msgstr "Sombreado GLSL:"
 
 #: ../base/ufos/ui/options.ufo:789
-#, fuzzy
 msgid "Set the OpenGL shader quality - or disable them."
-msgstr "Configura la calidad del sombreado OpenGL o lo desactiva"
+msgstr "Configura la calidad del sombreado OpenGL o lo desactiva."
 
 #: ../base/ufos/ui/options.ufo:799
 msgid "Disabled"
@@ -12690,18 +12649,16 @@ msgid "Set to '0' to turn v-sync off (faster). Set to '1' or higher to turn v-sy
 msgstr "Selecciona 0 para desactivar la sincronía vertical (más rapidez). Selecciona 1 o más para activar la sincronía vertical (mejor calidad)."
 
 #: ../base/ufos/ui/options.ufo:893
-#, fuzzy
 msgid "Post-processing shader effects like glowing textures."
-msgstr "Efectos de sombreado del post-procesador gráfico tales como texturas brillantes (solo disponible si el sombreado GLSL está activado)."
+msgstr "Efectos de sombreado del post-procesador gráfico tales como texturas brillantes."
 
 #: ../base/ufos/ui/options.ufo:894
 msgid "Post-Processing Shader Effects:"
 msgstr "Efectos de Sombreado del Post-Procesador:"
 
 #: ../base/ufos/ui/options.ufo:900
-#, fuzzy
 msgid "Enable post processing shader effects."
-msgstr "Efectos de Sombreado del Post-Procesador:"
+msgstr "Activar los efectos de sombreado del post-procesador."
 
 #: ../base/ufos/ui/options.ufo:910
 msgid "Realtime lighting of the 3D world in UFO:AI. / Maximum number of dynamic hardware accelerated lights allowed."
@@ -12712,9 +12669,8 @@ msgid "Realtime Lighting / Max Dynamic Lights:"
 msgstr "Luz en Tiempo Real/Luces Dinámicas:"
 
 #: ../base/ufos/ui/options.ufo:923
-#, fuzzy
 msgid "Change the number of allowed hardware accelerated dynamic lights."
-msgstr "Cambiar el número de dinámicas luces aceleradas por hardware. ATENCIÓN: La iluminación en tiempo real debe estar activa para que esto funcione."
+msgstr "Cambiar el número de dinámicas luces aceleradas por hardware permitidas."
 
 #: ../base/ufos/ui/options.ufo:952
 msgid "Also known as bumpmapping."
@@ -12725,9 +12681,8 @@ msgid "Texture Normalmapping:"
 msgstr "Relieve de la Textura:"
 
 #: ../base/ufos/ui/options.ufo:959
-#, fuzzy
 msgid "Enable normal-/bumpmapping."
-msgstr "Mapa de relieve de las texturas."
+msgstr "Activar el mapa de normales/relieve de las texturas."
 
 #: ../base/ufos/ui/options.ufo:970
 msgid "Amount of light emitting from the sun and shining on the earth."
@@ -12767,15 +12722,15 @@ msgstr "Bajo significa una resolución máxima del mapa de luz de 51x512 píxele
 
 #: ../base/ufos/ui/options.ufo:1074
 msgid "Enabled by default for compatibility reasons."
-msgstr ""
+msgstr "Activado por defecto por razones de compatibilidad."
 
 #: ../base/ufos/ui/options.ufo:1075
 msgid "Intel Graphics Hardware Hack:"
-msgstr ""
+msgstr "Hack del Hardware de Gráficos de Intel:"
 
 #: ../base/ufos/ui/options.ufo:1081
 msgid "This hack activates texture compression and deactivates GLSL shaders on Intel chips. Disable it to be able to turn on advanced rendering features."
-msgstr ""
+msgstr "Este hack activa la compresión de texturas y desactiva el sombreado GLSL en los chips de Intel. Desactívalo para poder utilizar las características avanzadas de renderizado."
 
 #: ../base/ufos/ui/options.ufo:1114
 msgid "Flares are used to display light reflection effects. Flare visibility is calculated according to the angle of the surface emitting the light."
@@ -12975,12 +12930,11 @@ msgstr "Mapa en 3D:"
 
 #: ../base/ufos/ui/options.ufo:1678
 msgid "Show/Hide the panel decoration on the geoscape."
-msgstr ""
+msgstr "Mostrar/Ocultar la decoración del panel en el mapa."
 
 #: ../base/ufos/ui/options.ufo:1679
-#, fuzzy
 msgid "Show decoration:"
-msgstr "Reservar Disparos"
+msgstr "Mostrar decoración:"
 
 #: ../base/ufos/ui/options.ufo:1694
 msgid "The minimum/maximum zoom of the geoscape camera"
@@ -13494,13 +13448,12 @@ msgid "Heal"
 msgstr "Sanar"
 
 #: ../base/ufos/weapons.ufo:43
-#, fuzzy
 msgid "Stimulants"
-msgstr "Implantes"
+msgstr "Estimulantes"
 
 #: ../base/ufos/weapons.ufo:59
 msgid "Antipsychotics"
-msgstr ""
+msgstr "Antipsicóticos"
 
 #: ../base/ufos/weapons.ufo:81
 msgid "IR Goggles"
@@ -13736,27 +13689,23 @@ msgstr "Granadas AIT de 25mm"
 
 #: ../base/ufos/weapons_human.ufo:1224 ../base/ufos/weapons_human.ufo:1354
 #: ../base/ufos/weapons_human.ufo:1531
-#, fuzzy
 msgid "Snap Shot (Impact)"
-msgstr "Disparo Rápido"
+msgstr "Disparo Rápido (Impacto)"
 
 #: ../base/ufos/weapons_human.ufo:1250 ../base/ufos/weapons_human.ufo:1381
 #: ../base/ufos/weapons_human.ufo:1557
-#, fuzzy
 msgid "Aimed Shot (Impact)"
-msgstr "Disparo de Precisión"
+msgstr "Disparo de Precisión (Impacto)"
 
 #: ../base/ufos/weapons_human.ufo:1276 ../base/ufos/weapons_human.ufo:1408
 #: ../base/ufos/weapons_human.ufo:1582
-#, fuzzy
 msgid "Snap Shot (Timer)"
-msgstr "D. Rápido - Temporizado"
+msgstr "D. Rápido (Temporizado)"
 
 #: ../base/ufos/weapons_human.ufo:1305 ../base/ufos/weapons_human.ufo:1438
 #: ../base/ufos/weapons_human.ufo:1610
-#, fuzzy
 msgid "Aimed Shot (Timer)"
-msgstr "D. de Precisión - Temporizado"
+msgstr "D. de Precisión (Temporizado)"
 
 #: ../base/ufos/weapons_human.ufo:1336
 msgid "25mm IC Grenades"
@@ -13861,14 +13810,12 @@ msgid "Shotgun"
 msgstr "Escopeta"
 
 #: ../base/ufos/weapons_multiplayer.ufo:165
-#, fuzzy
 msgid "Single Barrel"
-msgstr "Pulso Único"
+msgstr "Barril Único"
 
 #: ../base/ufos/weapons_multiplayer.ufo:188
-#, fuzzy
 msgid "Double Barrel"
-msgstr "Descarga Doble"
+msgstr "Doble Barril"
 
 #: ../base/ufos/weapons_multiplayer.ufo:217
 msgid "VHS Assault Rifle"
@@ -13911,9 +13858,8 @@ msgid "Cannon Particle Accelerator"
 msgstr "Acelerador de Partículas para Cañón"
 
 #: ../base/ufos/weapons_particle.ufo:261
-#, fuzzy
 msgid "4-Round Burst"
-msgstr "Ráfaga de 3 Disparos"
+msgstr "Ráfaga de 4 Disparos"
 
 #: ../base/ufos/weapons_particle.ufo:283
 msgid "Unrestricted Blast"
@@ -13966,9 +13912,8 @@ msgid "Chaingun Belt"
 msgstr "Cinturón para cañón automático"
 
 #: ../base/ufos/weapons_ugv.ufo:82
-#, fuzzy
 msgid "25-Round Burst"
-msgstr "Ráfaga de 5 Disparos"
+msgstr "Ráfaga de 25 Disparos"
 
 #: ../base/ufos/weapons_ugv.ufo:159
 msgid "Autocannon Module"
@@ -14020,9 +13965,8 @@ msgid "It is not your turn!"
 msgstr "¡No es tu turno!"
 
 #: client/battlescape/cl_actor.cpp:1009
-#, fuzzy
 msgid "You cannot reload this unknown item."
-msgstr "No puedes recargar este objeto desconocido.\n"
+msgstr "No puedes recargar este objeto desconocido."
 
 #: client/battlescape/cl_actor.cpp:1848
 msgid "Unknown alien race"
@@ -14198,13 +14142,12 @@ msgid "Reload weapon (%i TU)."
 msgstr "Recarga el arma (%i UT)"
 
 #: client/battlescape/cl_hud.cpp:1149
-#, fuzzy
 msgid ""
 "You cannot use this unknown item.\n"
 "You need to research it first."
 msgstr ""
 "No puedes usar este objeto desconocido.\n"
-"Primero debes investigarlo.\n"
+"Primero debes investigarlo."
 
 #: client/battlescape/cl_hud.cpp:1170
 #, c-format
@@ -14226,21 +14169,21 @@ msgid "Morale  %i"
 msgstr "Estado moral  %i"
 
 #: client/battlescape/cl_hud.cpp:1199
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Morale  %i | Reserved TUs: %i\n"
 "%s %i (%i|%i TUs left)\n"
 msgstr ""
-"Estado moral  %i | UTs reservadas: %i\n"
+"Estado moral %i | UTs reservadas: %i\n"
 "%s %i (%i|%i UT restantes)\n"
 
 #: client/battlescape/cl_hud.cpp:1203
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Morale  %i\n"
 "%s %i (%i TUs left)\n"
 msgstr ""
-"Estado moral  %i\n"
+"Estado moral %i\n"
 "%s %i (%i UT restantes)\n"
 
 #: client/battlescape/cl_hud.cpp:1235
@@ -14258,20 +14201,18 @@ msgstr ""
 
 #: client/battlescape/cl_hud.cpp:1332
 #: client/cgame/campaign/cp_hospital_callbacks.cpp:55
-#, fuzzy
 msgid "Damaged"
-msgstr "Daño:\t%i\n"
+msgstr "Dañado"
 
 #: client/battlescape/cl_hud.cpp:1332
 #: client/cgame/campaign/cp_hospital_callbacks.cpp:55
-#, fuzzy
 msgid "Wounded"
-msgstr "Yaundé"
+msgstr "Herido"
 
 #: client/battlescape/cl_hud.cpp:1334
 #, c-format
 msgid "%s %s (bleeding: %i)"
-msgstr ""
+msgstr "%s %s (sangrado: %i)"
 
 #: client/battlescape/cl_hud.cpp:1356
 msgid "Currently panics!\n"
@@ -14279,109 +14220,94 @@ msgstr "¡En pánico!\n"
 
 #: client/battlescape/cl_hud_callbacks.cpp:86
 #: client/battlescape/cl_hud_callbacks.cpp:258
-#, fuzzy
 msgid "No item in hand."
-msgstr "Ningún objeto en la mano.\n"
+msgstr "Ningún objeto en la mano."
 
 #: client/battlescape/cl_hud_callbacks.cpp:91
-#, fuzzy
 msgid ""
 "Can't perform action:\n"
 "Out of ammo."
 msgstr ""
 "No se puede efectuar la acción:\n"
-"No hay municiones.\n"
+"No hay municiones."
 
 #: client/battlescape/cl_hud_callbacks.cpp:96
-#, fuzzy
 msgid ""
 "This weapon cannot be fired\n"
 "one handed."
 msgstr ""
 "Esta arma no se puede disparar con\n"
-"una mano.\n"
+"una mano."
 
 #: client/battlescape/cl_hud_callbacks.cpp:150
 #: client/battlescape/cl_hud_callbacks.cpp:276
-#, fuzzy
 msgid ""
 "Can't perform action:\n"
 "Not enough TUs."
 msgstr ""
 "No se puede efectuar la acción:\n"
-"No hay suficientes UTs.\n"
+"No hay suficientes UT."
 
 #: client/battlescape/cl_hud_callbacks.cpp:177
-#, fuzzy
 msgid "Disabled automatic crouching/standing up."
-msgstr "Reservar %i UTs para agacharse o levantarse."
+msgstr "Se desactivó el agacharse/levantarse automáticamente."
 
 #: client/battlescape/cl_hud_callbacks.cpp:181
-#, fuzzy, c-format
+#, c-format
 msgid "Reserved %i TUs for crouching/standing up."
-msgstr "Reservar %i UTs para agacharse o levantarse."
+msgstr "Se reservaron %i UT para agacharse/levantarse."
 
 #: client/battlescape/cl_hud_callbacks.cpp:198
-#, fuzzy
 msgid "Reaction fire enabled."
-msgstr "No hay un arma que pueda ser usada para reacción de disparo.\n"
+msgstr "Disparo de reacción activado."
 
 #: client/battlescape/cl_hud_callbacks.cpp:201
-#, fuzzy
 msgid "Reaction fire disabled."
-msgstr "Reacción de disparo"
+msgstr "Disparo de reacción desactivado."
 
 #: client/battlescape/cl_hud_callbacks.cpp:264
-#, fuzzy
 msgid ""
 "Can't perform action:\n"
 "This item is not reloadable."
 msgstr ""
 "No se puede efectuar la acción:\n"
-"Este objeto no se puede recargar.\n"
+"Este objeto no se puede recargar."
 
 #: client/battlescape/cl_hud_callbacks.cpp:271
-#, fuzzy
 msgid ""
 "Can't perform action:\n"
 "Ammo not available."
 msgstr ""
 "No se puede efectuar la acción:\n"
-"No hay municiones disponibles.\n"
+"No hay municiones disponibles."
 
 #: client/battlescape/cl_hud_callbacks.cpp:297
-#, fuzzy
 msgid "Left hand weapon reloaded."
-msgstr "El arma no puede recargarse."
+msgstr "Arma en la mano izquierda recargada."
 
 #: client/battlescape/cl_hud_callbacks.cpp:310
-#, fuzzy
 msgid "Right hand weapon reloaded."
-msgstr "Recarga el arma de la mano derecha"
+msgstr "Arma en la mano derecha recargada."
 
 #: client/battlescape/cl_hud_callbacks.cpp:351
-#, fuzzy
 msgid "Set selected actor to move mode (it cancels the fire mode)."
-msgstr "Activar el modo de movimiento para el actor seleccionado (cancelara el modo de disparo)."
+msgstr "Activa el modo de movimiento para el actor seleccionado (cancela el modo de disparo)."
 
 #: client/battlescape/cl_hud_callbacks.cpp:352
-#, fuzzy
 msgid "Reload the weapon in the soldiers left hand."
-msgstr "Recargar el arma en la mano izquierda del soldado"
+msgstr "Recargar el arma en la mano izquierda del soldado."
 
 #: client/battlescape/cl_hud_callbacks.cpp:353
-#, fuzzy
 msgid "Reload the weapon in the soldiers right hand."
-msgstr "Recargar el arma en la mano derecha del soldado"
+msgstr "Recargar el arma en la mano derecha del soldado."
 
 #: client/battlescape/cl_hud_callbacks.cpp:354
 msgid "Toggle reservation for crouching."
 msgstr "Activa o desactiva la reserva para agacharse"
 
 #: client/battlescape/cl_hud_callbacks.cpp:355
-#, fuzzy
 msgid "Toggle reaction fire."
-msgstr "Cambia la reacción de disparo"
+msgstr "Alterna el disparo de reacción."
 
 #: client/battlescape/cl_hud_callbacks.cpp:356
 msgid "Start aiming the weapon."
@@ -14414,14 +14340,12 @@ msgid "Enemy spotted: %s!"
 msgstr "¡Enemigo encontrado: %s!"
 
 #: client/battlescape/events/event/actor/e_event_actorappear.cpp:170
-#, fuzzy
 msgid "Unknown enemy spotted!"
-msgstr "¡Enemigo encontrado!\n"
+msgstr "¡Enemigo desconocido encontrado!"
 
 #: client/battlescape/events/event/actor/e_event_actorappear.cpp:172
-#, fuzzy
 msgid "Civilian spotted."
-msgstr "¡Civil a la vista!\n"
+msgstr "Civil a la vista."
 
 #: client/battlescape/events/event/actor/e_event_actordie.cpp:88
 #, c-format
@@ -14439,44 +14363,38 @@ msgid "%s was killed\n"
 msgstr "%s fue asesinado\n"
 
 #: client/battlescape/events/event/actor/e_event_actordie.cpp:106
-#, fuzzy
 msgid "A civilian was stunned."
-msgstr "Un civil fue paralizado.\n"
+msgstr "Un civil fue paralizado."
 
 #: client/battlescape/events/event/actor/e_event_actordie.cpp:108
-#, fuzzy
 msgid "A civilian was killed."
-msgstr "Un civil fue asesinado.\n"
+msgstr "Un civil fue asesinado."
 
 #: client/battlescape/events/event/actor/e_event_actordie.cpp:112
-#, fuzzy
 msgid "An alien was stunned."
-msgstr "Un alienígena fue paralizado.\n"
+msgstr "Un alienígena fue paralizado."
 
 #: client/battlescape/events/event/actor/e_event_actordie.cpp:114
-#, fuzzy
 msgid "An alien was killed."
-msgstr "Un alienígena fue asesinado.\n"
+msgstr "Un alienígena fue asesinado."
 
 #: client/battlescape/events/event/actor/e_event_actordie.cpp:118
-#, fuzzy
 msgid "A soldier was stunned."
-msgstr "Un soldado fue paralizado.\n"
+msgstr "Un soldado fue paralizado."
 
 #: client/battlescape/events/event/actor/e_event_actordie.cpp:120
-#, fuzzy
 msgid "A soldier was killed."
-msgstr "Un soldado fue asesinado.\n"
+msgstr "Un soldado fue asesinado."
 
 #: client/battlescape/events/event/actor/e_event_actordie.cpp:124
-#, fuzzy, c-format
+#, c-format
 msgid "A member of team %i was stunned."
-msgstr "Un miembro del equipo %i fue paralizado.\n"
+msgstr "Un miembro del equipo %i fue paralizado."
 
 #: client/battlescape/events/event/actor/e_event_actordie.cpp:126
-#, fuzzy, c-format
+#, c-format
 msgid "A member of team %i was killed."
-msgstr "Un miembro del equipo %i fue asesinado.\n"
+msgstr "Un miembro del equipo %i fue asesinado."
 
 #: client/battlescape/events/event/actor/e_event_actorrevitalised.cpp:69
 #, c-format
@@ -14484,29 +14402,25 @@ msgid "%s was revitalised\n"
 msgstr "%s fue reanimado\n"
 
 #: client/battlescape/events/event/actor/e_event_actorrevitalised.cpp:75
-#, fuzzy
 msgid "A civilian was revitalised."
-msgstr "Un civil fue reanimado.\n"
+msgstr "Un civil fue reanimado."
 
 #: client/battlescape/events/event/actor/e_event_actorrevitalised.cpp:78
-#, fuzzy
 msgid "An alien was revitalised."
-msgstr "Un alienígena fue reanimado.\n"
+msgstr "Un alienígena fue reanimado."
 
 #: client/battlescape/events/event/actor/e_event_actorrevitalised.cpp:81
-#, fuzzy
 msgid "A soldier was revitalised."
-msgstr "Un soldado fue reanimado.\n"
+msgstr "Un soldado fue reanimado."
 
 #: client/battlescape/events/event/actor/e_event_actorrevitalised.cpp:84
-#, fuzzy, c-format
+#, c-format
 msgid "A member of team %i was revitalised."
-msgstr "Un miembro del equipo %i fue reanimado.\n"
+msgstr "Un miembro del equipo %i fue reanimado."
 
 #: client/battlescape/events/event/player/e_event_doendround.cpp:57
-#, fuzzy
 msgid "Your round started!"
-msgstr "¡Tu turno ha comenzado!\n"
+msgstr "¡Tu turno ha comenzado!"
 
 #: client/cgame/campaign/cp_aircraft.cpp:417
 msgid "ON RED ALERT"
@@ -14671,9 +14585,9 @@ msgid "That base is beyond this aircraft's range."
 msgstr "La base está fuera del alcance de esta aeronave."
 
 #: client/cgame/campaign/cp_aircraft.cpp:1157
-#, fuzzy, c-format
+#, c-format
 msgid "Craft %s has returned to %s."
-msgstr "La aeronave %s ha recargado combustible en %s."
+msgstr "La aeronave %s ha regresado a %s."
 
 #: client/cgame/campaign/cp_aircraft.cpp:1198
 #, c-format
@@ -14746,19 +14660,19 @@ msgid "Operational range:\t%i km\n"
 msgstr "Alcance operativo:\t%i km\n"
 
 #: client/cgame/campaign/cp_aircraft_callbacks.cpp:218
-#, fuzzy, c-format
+#, c-format
 msgid "Weapons:\t%i of %i\n"
-msgstr "Armas:\t%i en %i\n"
+msgstr "Armas:\t%i de %i\n"
 
 #: client/cgame/campaign/cp_aircraft_callbacks.cpp:219
-#, fuzzy, c-format
+#, c-format
 msgid "Armour:\t%i of 1\n"
-msgstr "Blindaje:\t%i en 1\n"
+msgstr "Blindaje:\t%i de 1\n"
 
 #: client/cgame/campaign/cp_aircraft_callbacks.cpp:220
-#, fuzzy, c-format
+#, c-format
 msgid "Electronics:\t%i of %i"
-msgstr "Electrónicos:\t%i en %i"
+msgstr "Electrónicos:\t%i de %i"
 
 #: client/cgame/campaign/cp_airfight.cpp:388
 #, c-format
@@ -14781,14 +14695,12 @@ msgid "UFO interception successful -- UFO lost to sea."
 msgstr "Intercepción del OVNI exitosa -- El OVNI se ha hundido en el mar."
 
 #: client/cgame/campaign/cp_airfight.cpp:529
-#, fuzzy
 msgid "Pilot ejected from craft"
-msgstr "Piloto en la aeronave"
+msgstr "El piloto se expulso de la aeronave"
 
 #: client/cgame/campaign/cp_airfight.cpp:531
-#, fuzzy
 msgid "Pilot killed in action"
-msgstr "Piloto en la aeronave"
+msgstr "Piloto muerto en acción"
 
 #: client/cgame/campaign/cp_airfight.cpp:538
 #: client/cgame/campaign/cp_auto_mission.cpp:771
@@ -14835,9 +14747,8 @@ msgid "You've won the battle"
 msgstr "Has ganado la batalla"
 
 #: client/cgame/campaign/cp_auto_mission.cpp:768
-#, fuzzy
 msgid "You've defeated the enemy, but did poorly, and many civilians were killed"
-msgstr "Has derrotado al enemigo, pero tu desempeño fue pobre, y muchos civiles fueron asesinados."
+msgstr "Has derrotado al enemigo, pero tu desempeño fue pobre, y muchos civiles fueron asesinados"
 
 #: client/cgame/campaign/cp_auto_mission.cpp:832
 msgid "Collected alien bodies"
@@ -15490,7 +15401,7 @@ msgstr "Funcional"
 #: client/cgame/campaign/cp_hospital_callbacks.cpp:57
 #, c-format
 msgid "%s %s (damage: %i)"
-msgstr ""
+msgstr "%s %s (daño: %i)"
 
 #: client/cgame/campaign/cp_installation.cpp:155
 #, c-format
@@ -15560,14 +15471,14 @@ msgid "Condition: %3.0f%%"
 msgstr "Condición: %3.0f%%"
 
 #: client/cgame/campaign/cp_installation_callbacks.cpp:279
-#, fuzzy, c-format
+#, c-format
 msgid "%s\t%i\t%i c"
-msgstr "Daños:\t%i / %i\n"
+msgstr "%s\t%i\t%i c"
 
 #: client/cgame/campaign/cp_installation_callbacks.cpp:285
-#, fuzzy, c-format
+#, c-format
 msgid "Base\t-\t%i c"
-msgstr "Base (%s):\t%i c\n"
+msgstr "Base\t-\t%i c"
 
 #: client/cgame/campaign/cp_map.cpp:343
 msgid "Base"
@@ -15767,12 +15678,11 @@ msgstr ""
 
 #: client/cgame/campaign/cp_market_callbacks.cpp:393
 msgid "UGV is away from home"
-msgstr ""
+msgstr "El VTNT está fuera de la base"
 
 #: client/cgame/campaign/cp_market_callbacks.cpp:435
-#, fuzzy
 msgid "Aircraft is away from home"
-msgstr "Aeronave"
+msgstr "La aeronave está fuera de la base"
 
 #: client/cgame/campaign/cp_messageoptions.cpp:35
 msgid "installation_installed"
@@ -16669,24 +16579,20 @@ msgid "%i of %i"
 msgstr "%i de %i"
 
 #: client/cgame/campaign/cp_team_callbacks.cpp:205
-#, fuzzy
 msgid "No more employee can be assigned to this aircraft"
-msgstr "No se pueden asignar más soldados a esta aeronave"
+msgstr "No se pueden asignar más empleados a esta aeronave"
 
 #: client/cgame/campaign/cp_team_callbacks.cpp:216
-#, fuzzy
 msgid "Employee is assigned to another aircraft"
-msgstr "El piloto está asignado a otra aeronave"
+msgstr "El empleado está asignado a otra aeronave"
 
 #: client/cgame/campaign/cp_team_callbacks.cpp:286
-#, fuzzy
 msgid "Employee is away from base"
-msgstr "El empleado está fuera"
+msgstr "El empleado está fuera de la base"
 
 #: client/cgame/campaign/cp_team_callbacks.cpp:288
-#, fuzzy
 msgid "No more employee can be assigned to this team"
-msgstr "No se pueden asignar más soldados a esta aeronave"
+msgstr "No se pueden asignar más empleados a este equipo"
 
 #: client/cgame/campaign/cp_time.cpp:40
 msgid "stopped"
@@ -16823,9 +16729,8 @@ msgid "Transport mission started, cargo is being transported to %s"
 msgstr "Misión de transporte iniciada, en ruta hacia %s"
 
 #: client/cgame/campaign/cp_transfer.cpp:251
-#, fuzzy
 msgid "The destination base no longer exists! Transfer cargo was lost, personnel has been discharged."
-msgstr "¡El destino ya no existe! La carga se ha perdido, el personal ha sido descargado."
+msgstr "¡El destino ya no existe! La carga se ha perdido, el personal ha sido despedido."
 
 #: client/cgame/campaign/cp_transfer.cpp:256
 #, c-format
@@ -17368,27 +17273,25 @@ msgid "Base '%s' is under attack!"
 msgstr "¡La base '%s' esta bajo ataque!"
 
 #: client/cgame/campaign/missions/cp_mission_baseattack.cpp:206
-#, fuzzy, c-format
+#, c-format
 msgid "Base '%s' is under attack! What to do?"
-msgstr "¡Tu base, %s, está siendo atacada! ¿Qué quieres hacer?"
+msgstr "¡La base '%s' está siendo atacada! ¿Qué quieres hacer?"
 
 #: client/cgame/campaign/missions/cp_mission_ufocarrier.cpp:62
 msgid "The Carrier UFO is in range. Should we launch the missiles?"
-msgstr ""
+msgstr "El Transportador de Naves OVNI esta al alcance. ¿Debemos lanzar los misiles?"
 
 #: client/cgame/campaign/missions/cp_mission_ufocarrier.cpp:63
 msgid "Don't attack the UFO-Carrier"
-msgstr ""
+msgstr "No atacar al Transportador de Naves OVNI"
 
 #: client/cgame/campaign/missions/cp_mission_ufocarrier.cpp:64
-#, fuzzy
 msgid "Attack"
-msgstr "Ataque Terrorista"
+msgstr "Atacar"
 
 #: client/cgame/campaign/missions/cp_mission_ufocarrier.cpp:64
-#, fuzzy
 msgid "Attack the UFO-Carrier"
-msgstr "OVNI - Transportador de Naves"
+msgstr "Atacar al Transportador de Naves OVNI"
 
 #: client/cgame/cl_game_team.cpp:263
 msgid "Error saving team. Nothing to save yet."
@@ -17570,6 +17473,10 @@ msgid ""
 "%i of %i team members survived, %i enemy kills, %i friendly fire kills.\n"
 "%i of %i civilians saved, %i enemy kills, %i friendly fire kills."
 msgstr ""
+"\n"
+"%i de %i enemigos muertos, %i paralizados, %i sobrevivientes.\n"
+"%i de %i miembros del equipo sobrevivieron, %i muertos por el enemigo, %i muertos por fuego aliado.\n"
+"%i de %i civiles rescatados, %i muertos por el enemigo, %i muertos por fuego aliado."
 
 #: client/cgame/skirmish/cl_game_skirmish.cpp:209
 msgid "Congratulations"
@@ -17718,14 +17625,12 @@ msgid "Target your shot to the ground"
 msgstr "Apunta tu disparo hacia el suelo"
 
 #: client/cl_main.cpp:1152
-#, fuzzy
 msgid "This change requires a restart!"
-msgstr "Este cambio requiere reiniciar el juego"
+msgstr "¡Este cambio requiere reiniciar el juego!"
 
 #: client/cl_main.cpp:1157
-#, fuzzy
 msgid "This change might require a restart."
-msgstr "Este cambio puede requerir reiniciar el juego"
+msgstr "Este cambio puede requerir reiniciar el juego."
 
 #: client/cl_menu.cpp:76
 msgid "^BGlobal bindings"
@@ -17774,28 +17679,24 @@ msgid "Move battlescape camera left"
 msgstr "Mover la cámara a la izquierda"
 
 #: client/input/cl_input.cpp:1013
-#, fuzzy
 msgid "Move battlescape camera top left"
-msgstr "Mover la cámara a la izquierda"
+msgstr "Mover la cámara arriba a la izquierda"
 
 #: client/input/cl_input.cpp:1015
-#, fuzzy
 msgid "Move battlescape camera bottom left"
-msgstr "Mover la cámara a la izquierda"
+msgstr "Mover la cámara abajo a la izquierda"
 
 #: client/input/cl_input.cpp:1017
 msgid "Move battlescape camera right"
 msgstr "Mover la cámara a la derecha"
 
 #: client/input/cl_input.cpp:1019
-#, fuzzy
 msgid "Move battlescape camera top right"
-msgstr "Mover la cámara a la derecha"
+msgstr "Mover la cámara arriba a la derecha"
 
 #: client/input/cl_input.cpp:1021
-#, fuzzy
 msgid "Move battlescape camera bottom right"
-msgstr "Mover la cámara a la derecha"
+msgstr "Mover la cámara abajo a la derecha"
 
 #: client/input/cl_input.cpp:1023
 msgid "Move battlescape camera forward"
@@ -17915,64 +17816,52 @@ msgid "Key: %s"
 msgstr "Tecla: %s"
 
 #: game/g_actor.cpp:88
-#, fuzzy
 msgid "Soldier entered the rescue zone."
-msgstr "El soldado entró en la zona de rescate\n"
+msgstr "El soldado entró en la zona de rescate."
 
 #: game/g_actor.cpp:90
-#, fuzzy
 msgid "Soldier left the rescue zone."
-msgstr "El soldado ha dejado la zona de rescate\n"
+msgstr "El soldado ha dejado la zona de rescate."
 
 #: game/g_actor.cpp:658
-#, fuzzy
 msgid "Can't perform action - not enough TUs!"
-msgstr "No se puede efectuar la acción - ¡No hay suficientes UTs!\n"
+msgstr "No se puede efectuar la acción - ¡No hay suficientes UT!"
 
 #: game/g_actor.cpp:662
-#, fuzzy
 msgid "Can't perform action - weapon already fully loaded with the same ammunition!"
-msgstr "No se puede efectuar la acción - ¡El arma ya esta cargada con esta clase de munición!\n"
+msgstr "No se puede efectuar la acción - ¡El arma ya esta cargada con esta clase de munición!"
 
 #: game/g_client.cpp:326
-#, fuzzy
 msgid "Can't perform action - object not present!"
-msgstr "No se puede efectuar la acción - ¡Objeto no presente!\n"
+msgstr "No se puede efectuar la acción - ¡Objeto no presente!"
 
 #: game/g_client.cpp:331
-#, fuzzy
 msgid "Can't perform action - not an actor!"
-msgstr "No se puede efectuar la acción - ¡No es un personaje!\n"
+msgstr "No se puede efectuar la acción - ¡No es un personaje!"
 
 #: game/g_client.cpp:336
-#, fuzzy
 msgid "Can't perform action - actor is stunned!"
-msgstr "No se puede efectuar la acción - ¡El personaje esta paralizado!\n"
+msgstr "No se puede efectuar la acción - ¡El personaje esta paralizado!"
 
 #: game/g_client.cpp:341
-#, fuzzy
 msgid "Can't perform action - actor is dead!"
-msgstr "No se puede efectuar la acción - ¡El personaje esta muerto!\n"
+msgstr "No se puede efectuar la acción - ¡El personaje esta muerto!"
 
 #: game/g_client.cpp:346
-#, fuzzy
 msgid "Can't perform action - not on same team!"
-msgstr "No se puede efectuar la acción - ¡No es del mismo equipo!\n"
+msgstr "No se puede efectuar la acción - ¡No es del mismo equipo!"
 
 #: game/g_client.cpp:351
-#, fuzzy
 msgid "Can't perform action - no control over allied actors!"
-msgstr "No se puede efectuar la acción - ¡No es posible el control sobre personajes aliados!\n"
+msgstr "No se puede efectuar la acción - ¡No es posible el control sobre personajes aliados!"
 
 #: game/g_client.cpp:374
-#, fuzzy
 msgid "Can't perform action - it is not your turn!"
-msgstr "No se puede efectuar la acción - ¡No es tu turno!\n"
+msgstr "No se puede efectuar la acción - ¡No es tu turno!"
 
 #: game/g_client.cpp:485
-#, fuzzy
 msgid "Currently shaken, won't let their guard down."
-msgstr "Actualmente conmocionado, no va a bajar su guardia.\n"
+msgstr "Actualmente conmocionado, no va a bajar su guardia."
 
 #: game/g_cmds.cpp:68
 #, c-format
@@ -17985,143 +17874,121 @@ msgid "Flood protection: You can't talk for %d seconds.\n"
 msgstr "Protección contra desbordamiento: No podrás conversar por %d segundos.\n"
 
 #: game/g_combat.cpp:389
-#, fuzzy
 msgid ""
 "Soldier is dazed!\n"
 "Enemy used flashbang!"
 msgstr ""
 "¡El soldado está aturdido!\n"
-"¡El enemigo uso una granada aturdidora!\n"
+"¡El enemigo uso una granada aturdidora!"
 
 #: game/g_combat.cpp:623
-#, fuzzy
 msgid "Can't perform action - impossible throw!"
-msgstr "No se puede efectuar la acción - ¡Lanzamiento imposible!\n"
+msgstr "No se puede efectuar la acción - ¡Lanzamiento imposible!"
 
 #: game/g_combat.cpp:1094
-#, fuzzy
 msgid "Can't perform action - object not activatable!"
-msgstr "No se puede efectuar la acción - ¡El objeto no puede ser activado!\n"
+msgstr "No se puede efectuar la acción - ¡El objeto no puede ser activado!"
 
 #: game/g_combat.cpp:1120
-#, fuzzy
 msgid "Can't perform action - weapon cannot be fired one handed!"
-msgstr "No se puede efectuar la acción - ¡El arma no se puede disparar con una sola mano!\n"
+msgstr "No se puede efectuar la acción - ¡El arma no se puede disparar con una sola mano!"
 
 #: game/g_combat.cpp:1127
-#, fuzzy
 msgid "Can't perform action - no ammo!"
-msgstr "No se puede efectuar la acción - ¡No hay municiones!\n"
+msgstr "No se puede efectuar la acción - ¡No hay municiones!"
 
 #: game/g_combat.cpp:1135
-#, fuzzy
 msgid "Can't perform action - target out of range!"
-msgstr "No se puede efectuar la acción - ¡El blanco esta fuera de alcance!\n"
+msgstr "No se puede efectuar la acción - ¡El blanco esta fuera de alcance!"
 
 #: game/g_combat.cpp:1181
-#, fuzzy
 msgid "Can't perform action - not enough ammo!"
-msgstr "No se puede efectuar la acción - ¡No hay municiones suficientes!\n"
+msgstr "No se puede efectuar la acción - ¡No hay municiones suficientes!"
 
 #: game/g_health.cpp:46
-#, fuzzy, c-format
+#, c-format
 msgid "%s has been wounded!"
-msgstr "%s ha sido ascendido a %s\n"
+msgstr "¡%s ha sido herido!"
 
 #: game/g_mission.cpp:48
-#, fuzzy
 msgid "Aliens entered target zone!"
-msgstr "Los alienígenas han entrado a la zona objetivo\n"
+msgstr "¡Los alienígenas han entrado a la zona objetivo!"
 
 #: game/g_mission.cpp:79
-#, fuzzy
 msgid "Item was placed."
-msgstr "El objeto fue colocado.\n"
+msgstr "El objeto fue colocado."
 
 #: game/g_mission.cpp:86
-#, fuzzy
 msgid "Target zone is occupied!"
-msgstr "La zona objetivo está ocupada\n"
+msgstr "¡La zona objetivo está ocupada!"
 
 #: game/g_morale.cpp:36
-#, fuzzy, c-format
+#, c-format
 msgid "%s panics!"
-msgstr "¡%s entró en pánico!\n"
+msgstr "¡%s entró en pánico!"
 
 #: game/g_morale.cpp:94
-#, fuzzy, c-format
+#, c-format
 msgid "%s is on a rampage!"
-msgstr "%s esta agitado.\n"
+msgstr "¡%s está desenfrenado!"
 
 #: game/g_morale.cpp:98
-#, fuzzy, c-format
+#, c-format
 msgid "%s is consumed by mad rage!"
-msgstr "%s esta loco de rabia!\n"
+msgstr "¡%s está loco de rabia!"
 
 #: game/g_morale.cpp:177
-#, fuzzy, c-format
+#, c-format
 msgid "%s is currently shaken."
-msgstr "%s Esta actualmente conmocionado.\n"
+msgstr "%s está actualmente conmocionado."
 
 #: game/g_reaction.cpp:415
-#, fuzzy
 msgid "No reaction fire enabled weapon."
-msgstr "No hay un arma que pueda ser usada para reacción de disparo.\n"
+msgstr "No hay un arma que pueda ser usada para el disparo de reacción."
 
 #: game/g_reaction.cpp:420
-#, fuzzy
 msgid "No fire mode selected for reaction fire."
-msgstr "No se ha seleccionado un modo de disparo para la reacción de disparo.\n"
+msgstr "No se ha seleccionado un modo de disparo para disparo de reacción."
 
 #: game/g_reaction.cpp:425
-#, fuzzy
 msgid "Not enough TUs left for activating reaction fire."
-msgstr "No hay suficientes UTs para activar la reacción de disparo.\n"
+msgstr "No hay suficientes UT para activar disparo de reacción."
 
 #: game/g_round.cpp:49
-#, fuzzy
 msgid "4 minutes left until forced turn end."
-msgstr "4 minutos antes de forzar el fin del turno.\n"
+msgstr "4 minutos antes de forzar el fin del turno."
 
 #: game/g_round.cpp:52
-#, fuzzy
 msgid "3 minutes left until forced turn end."
-msgstr "3 minutos antes de forzar el fin del turno.\n"
+msgstr "3 minutos antes de forzar el fin del turno."
 
 #: game/g_round.cpp:55
-#, fuzzy
 msgid "2 minutes left until forced turn end."
-msgstr "2 minutos antes de forzar el fin del turno.\n"
+msgstr "2 minutos antes de forzar el fin del turno."
 
 #: game/g_round.cpp:58
-#, fuzzy
 msgid "1 minute left until forced turn end."
-msgstr "1 minuto antes de forzar el fin del turno.\n"
+msgstr "1 minuto antes de forzar el fin del turno."
 
 #: game/g_round.cpp:61
-#, fuzzy
 msgid "30 seconds left until forced turn end."
-msgstr "30 segundos antes de forzar el fin del turno.\n"
+msgstr "30 segundos antes de forzar el fin del turno."
 
 #: game/g_round.cpp:64
-#, fuzzy
 msgid "15 seconds left until forced turn end."
-msgstr "15 segundos antes de forzar el fin del turno.\n"
+msgstr "15 segundos antes de forzar el fin del turno."
 
 #: game/g_round.cpp:72
-#, fuzzy
 msgid "Current active team hit the max round time."
-msgstr "El equipo activo ha alcanzado el límite de tiempo por turno\n"
+msgstr "El equipo activo ha alcanzado el límite de tiempo por turno."
 
 #: game/g_trigger.cpp:142
-#, fuzzy
 msgid "Switching map!"
-msgstr "¡Cambiando de mapa!\n"
+msgstr "¡Cambiando de mapa!"
 
 #: game/g_trigger.cpp:171
-#, fuzzy
 msgid "You are now ready to switch the map."
-msgstr "Ahora estas listo para cambiar de mapa\n"
+msgstr "Ahora estas listo para cambiar de mapa."
 
 #: po/OTHER_STRINGS:2
 msgid "human"
