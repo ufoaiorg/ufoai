@@ -212,19 +212,20 @@ enum modifier_types_t {
 
 #define BODYPART_MAXTYPE 4
 
-typedef struct bodyPartData_s {
+class BodyPartData {
+public:
 	char id[MAX_TEXPATH];
 	char name[MAX_TEXPATH];
 	int penalties[MODIFIER_MAX];
 	int bodyArea;
 	int bleedingFactor;
 	int woundThreshold;
-} bodyPartData_t;
+};
 
 class BodyData {
 private:
 	char _id[MAX_TEXPATH];
-	bodyPartData_t _bodyParts[BODYPART_MAXTYPE];
+	BodyPartData _bodyParts[BODYPART_MAXTYPE];
 	int _totalBodyArea;
 	short _numBodyParts;
 
@@ -239,7 +240,7 @@ public:
 	short getRandomBodyPart(void) const;
 	short numBodyParts (void) const;
 	void setId(const char *id);
-	void addBodyPart(const bodyPartData_t &bodyPart);
+	void addBodyPart(const BodyPartData &bodyPart);
 };
 
 typedef struct teamDef_s {

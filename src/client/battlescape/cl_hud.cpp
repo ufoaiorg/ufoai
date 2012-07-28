@@ -1329,9 +1329,9 @@ static void HUD_ActorWoundData_f (void)
 			if (wounds->woundLevel[bodyPart] + wounds->treatmentLevel[bodyPart] * 0.5 > woundThreshold) {
 				const int bleeding = wounds->woundLevel[bodyPart] * (wounds->woundLevel[bodyPart] > woundThreshold
 									 ? bodyData->bleedingFactor(bodyPart) : 0);
-				const char *desc = CHRSH_IsTeamDefRobot(chr->teamDef) ? _("Damaged") : _("Wounded");
 				char text[MAX_VAR];
-				Com_sprintf(text, lengthof(text), _("%s %s (bleeding: %i)"), desc, bodyData->name(bodyPart), bleeding);
+				Com_sprintf(text, lengthof(text), CHRSH_IsTeamDefRobot(chr->teamDef) ?
+						_("Damaged %s (deterioration: %i)") : _("Wounded %s (bleeding: %i)"), _(bodyData->name(bodyPart)), bleeding);
 				UI_ExecuteConfunc("actor_wounds %s %i \"%s\"", bodyData->id(bodyPart), bleeding, text);
 			}
 		}

@@ -52,9 +52,9 @@ static void HOS_EntryWoundData (const character_t *const chr, const int entry)
 	for (bodyPart = 0; bodyPart < bodyData->numBodyParts(); ++bodyPart) {
 		if (wounds->treatmentLevel[bodyPart] != 0) {
 			const float severity = static_cast<float>(wounds->treatmentLevel[bodyPart]) / chr->maxHP;
-			const char *desc = CHRSH_IsTeamDefRobot(chr->teamDef) ? _("Damaged") : _("Wounded");
 			char text[MAX_VAR];
-			Com_sprintf(text, lengthof(text), _("%s %s (damage: %i)"), desc, bodyData->name(bodyPart), wounds->treatmentLevel[bodyPart]);
+			Com_sprintf(text, lengthof(text), CHRSH_IsTeamDefRobot(chr->teamDef) ? _("Damaged %s (damage: %i)") :
+					_("Wounded %s (damage: %i)"), _(bodyData->name(bodyPart)), wounds->treatmentLevel[bodyPart]);
 			cgi->UI_ExecuteConfunc("hospital_wounds %i %s %f \"%s\"", entry, bodyData->id(bodyPart), severity, text);
 		}
 	}

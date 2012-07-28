@@ -2719,10 +2719,10 @@ static void Com_ParseCharacterTemplate (const char *name, const char **text)
 }
 
 static const value_t bodyPartValues[] = {
-		{"name", V_TRANSLATION_STRING, offsetof(bodyPartData_t, name), 0},
-		{"area", V_INT, offsetof(bodyPartData_t, bodyArea), MEMBER_SIZEOF(bodyPartData_t, bodyArea)},
-		{"bleed", V_INT, offsetof(bodyPartData_t, bleedingFactor), MEMBER_SIZEOF(bodyPartData_t, bleedingFactor)},
-		{"threshold", V_INT, offsetof(bodyPartData_t, woundThreshold), MEMBER_SIZEOF(bodyPartData_t, woundThreshold)},
+		{"name", V_TRANSLATION_STRING, offsetof(BodyPartData, name), 0},
+		{"area", V_INT, offsetof(BodyPartData, bodyArea), MEMBER_SIZEOF(BodyPartData, bodyArea)},
+		{"bleed", V_INT, offsetof(BodyPartData, bleedingFactor), MEMBER_SIZEOF(BodyPartData, bleedingFactor)},
+		{"threshold", V_INT, offsetof(BodyPartData, woundThreshold), MEMBER_SIZEOF(BodyPartData, woundThreshold)},
 
 		{NULL, V_NULL, 0, 0}
 };
@@ -2735,7 +2735,7 @@ static void Com_ParseBodyPart (const char *name, const char **text, BodyData *bd
 {
 	const char *errhead = "Com_ParseBodyPart: unexpected end of file";
 	const char *token;
-	bodyPartData_t bp;
+	BodyPartData bp;
 	int i;
 
 	for (i = 0; i < bd->numBodyParts(); i++) {
