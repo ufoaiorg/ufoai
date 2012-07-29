@@ -124,6 +124,10 @@ void G_BleedWounds (const int team)
 	G_MatchEndCheck();
 }
 
+/**
+ * @brief Send wound stats to network buffer
+ * @sa G_SendStats
+ */
 void G_SendWoundStats (edict_t *const ent)
 {
 	int i;
@@ -143,7 +147,7 @@ void G_SendWoundStats (edict_t *const ent)
  * @brief Returns the penalty to the given stat caused by the actor wounds.
  * @param[in] ent Pointer to the actor we want to calculate the penalty for.
  * @param[in] type The stat we want to calculate the penalty for.
- * @return The penalty as a percent.
+ * @return The given penalty for this actor.
  */
 float G_ActorGetInjuryPenalty (const edict_t *const ent, const modifier_types_t type)
 {

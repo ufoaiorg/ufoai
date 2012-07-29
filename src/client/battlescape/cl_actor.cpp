@@ -316,9 +316,10 @@ void CL_ActorReserveTUs (const le_t * le, const reservation_types_t type, const 
 }
 
 /**
- * @brief Returns the actor injury multiplier of the specified type.
+ * @brief Returns the actor injury modifier of the specified type.
  * @param[in] le The actor.
- * @param[in] type The injury mutiplier type.
+ * @param[in] type The injury modifier type.
+ * @return The injury modifier for this actor.
  */
 float CL_ActorInjuryModifier (const le_t *le, const modifier_types_t type)
 {
@@ -354,6 +355,12 @@ float CL_ActorInjuryModifier (const le_t *le, const modifier_types_t type)
 	return mod;
 }
 
+/**
+ * @brief Find the TUs needed for the given fireDef taking into account the actor wound penalties.
+ * @param[in] le The actor.
+ * @param[in] fd The fire definition.
+ * @return The TUs needed for the fireDef for this actor.
+ */
 int CL_ActorTimeForFireDef (const le_t *le, const fireDef_t *fd)
 {
 	return (fd ? fd->time * CL_ActorInjuryModifier(le, MODIFIER_SHOOTING) : 0);
