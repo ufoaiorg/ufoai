@@ -747,7 +747,7 @@ void UI_ContainerNodeAutoPlaceItem (uiNode_t* node, invList_t *ic)
 			} else {
 				/* left and right are single containers, but this might change - it's cleaner to check
 				 * for available space here, too */
-				const containerIndex_t idxArray[] = { csi.idRight, csi.idLeft, csi.idBelt, csi.idHolster, csi.idBackpack };
+				const containerIndex_t idxArray[] = { csi.idRight, csi.idBelt, csi.idHolster, csi.idBackpack, csi.idLeft };
 				const size_t size = lengthof(idxArray);
 				unsigned int i;
 				for (i = 0; i < size; i++) {
