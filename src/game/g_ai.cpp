@@ -720,7 +720,7 @@ static float AI_CivilianCalcActionScore (edict_t * ent, pos3_t to, aiAction_t * 
 	G_EdictSetOrigin(ent, to);
 
 	move = G_ActorMoveLength(ent, level.pathingMap, to, true);
-	tu = ent->TU - move;
+	tu = G_ActorUsableTUs(ent) - move;
 
 	/* test for time */
 	if (tu < 0 || move == ROUTING_NOT_REACHABLE)
@@ -921,7 +921,7 @@ static int AI_CheckForMissionTargets (const player_t* player, edict_t *ent, aiAc
 						continue;
 
 					/* test for time and distance */
-					length = ent->TU - move;
+					length = G_ActorUsableTUs(ent) - move;
 					bestActionScore = SCORE_MISSION_TARGET + length;
 
 					ent->count = checkPoint->count;
@@ -968,15 +968,16 @@ static aiAction_t AI_PrepBestAction (const player_t *player, edict_t * ent)
 	int xl, yl, xh, yh;
 	int dist;
 	float bestActionScore, best;
+	/* The actor will be forced to stand before doing the move, so calculations her might be a little off */
 	const byte crouchingState = G_IsCrouched(ent) ? 1 : 0;
 
 	/* calculate move table */
-	G_MoveCalc(0, ent, ent->pos, crouchingState, ent->TU);
+	G_MoveCalc(0, ent, ent->pos, crouchingState, G_ActorUsableTUs(ent));
 	Com_DPrintf(DEBUG_ENGINE, "AI_PrepBestAction: Called MoveMark.\n");
 	gi.MoveStore(level.pathingMap);
 
 	/* set borders */
-	dist = (ent->TU + 1) / 2;
+	dist = (G_ActorUsableTUs(ent) + 1) / 2;
 	xl = std::max((int) ent->pos[0] - dist, 0);
 	yl = std::max((int) ent->pos[1] - dist, 0);
 	xh = std::min((int) ent->pos[0] + dist, PATHFINDING_WIDTH);
@@ -993,7 +994,7 @@ static aiAction_t AI_PrepBestAction (const player_t *player, edict_t * ent)
 		for (to[1] = yl; to[1] < yh; to[1]++)
 			for (to[0] = xl; to[0] < xh; to[0]++) {
 				const pos_t move = G_ActorMoveLength(ent, level.pathingMap, to, true);
-				if (move != ROUTING_NOT_REACHABLE && move <= ent->TU) {
+				if (move != ROUTING_NOT_REACHABLE && move <= G_ActorUsableTUs(ent)) {
 					if (G_IsCivilian(ent))
 						bestActionScore = AI_CivilianCalcActionScore(ent, to, &aia);
 					else if (G_IsPaniced(ent))
