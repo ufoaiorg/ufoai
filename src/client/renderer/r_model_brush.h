@@ -245,6 +245,7 @@ typedef struct mBspModel_s {
 	unsigned int lmtexcoord_buffer;
 	unsigned int tangent_buffer;
 	unsigned int normal_buffer;
+	unsigned int index_buffer;
 
 	byte lightquant;
 	byte *lightdata;

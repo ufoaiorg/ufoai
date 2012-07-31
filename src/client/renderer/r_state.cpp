@@ -157,6 +157,9 @@ void R_BindArray (GLenum target, GLenum type, const void *array)
 	case GL_COLOR_ARRAY:
 		glColorPointer(4, type, 0, array);
 		break;
+	case GL_INDEX_ARRAY:
+		glIndexPointer(type, 0, array);
+		break;
 	case GL_NORMAL_ARRAY:
 		glNormalPointer(type, 0, array);
 		break;
@@ -190,6 +193,9 @@ void R_BindDefaultArray (GLenum target)
 	case GL_COLOR_ARRAY:
 		R_BindArray(target, GL_FLOAT, r_state.color_array);
 		break;
+	case GL_INDEX_ARRAY:
+		R_BindArray(target, GL_INT, r_state.index_array);
+		break;
 	case GL_NORMAL_ARRAY:
 		R_BindArray(target, GL_FLOAT, r_state.normal_array);
 		break;
@@ -216,7 +222,12 @@ void R_BindBuffer (GLenum target, GLenum type, GLuint id)
 	if (!r_vertexbuffers->integer)
 		return;
 
-	qglBindBuffer(GL_ARRAY_BUFFER, id);
+	if (target == GL_INDEX_ARRAY) {
+		qglBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id);
+		return; /* No need to call glIndexPoiner -- this binding is special and automates that */
+	} else {
+		qglBindBuffer(GL_ARRAY_BUFFER, id);
+	}
 
 	if (type && id)  /* assign the array pointer as well */
 		R_BindArray(target, type, NULL);
@@ -849,6 +860,9 @@ void R_SetDefaultState (void)
 	glEnableClientState(GL_VERTEX_ARRAY);
 	R_BindDefaultArray(GL_VERTEX_ARRAY);
 
+	glEnableClientState(GL_INDEX_ARRAY);
+	R_BindDefaultArray(GL_INDEX_ARRAY);
+
 	R_EnableColorArray(true);
 	R_BindDefaultArray(GL_COLOR_ARRAY);
 	R_EnableColorArray(false);
@@ -942,6 +956,7 @@ void R_ReallocateStateArrays (int size)
 	r_state.vertex_array_3d = (GLfloat *) Mem_SafeReAlloc(r_state.vertex_array_3d, size * 3 * sizeof(GLfloat));
 	r_state.vertex_array_2d = (GLshort *) Mem_SafeReAlloc(r_state.vertex_array_2d, size * 2 * sizeof(GLshort));
 	r_state.color_array = (GLfloat *) Mem_SafeReAlloc(r_state.color_array, size * 4 * sizeof(GLfloat));
+	r_state.index_array = (GLint *) Mem_SafeReAlloc(r_state.index_array, size * sizeof(GLint));
 	r_state.normal_array = (GLfloat *) Mem_SafeReAlloc(r_state.normal_array, size * 3 * sizeof(GLfloat));
 	r_state.tangent_array = (GLfloat *) Mem_SafeReAlloc(r_state.tangent_array, size * 4 * sizeof(GLfloat));
 	r_state.next_vertex_array_3d = (GLfloat *) Mem_SafeReAlloc(r_state.next_vertex_array_3d, size * 3 * sizeof(GLfloat));
@@ -950,6 +965,7 @@ void R_ReallocateStateArrays (int size)
 	r_state.array_size = size;
 	R_BindDefaultArray(GL_VERTEX_ARRAY);
 	R_BindDefaultArray(GL_COLOR_ARRAY);
+	R_BindDefaultArray(GL_INDEX_ARRAY);
 	R_BindDefaultArray(GL_NORMAL_ARRAY);
 	R_BindDefaultArray(GL_TANGENT_ARRAY);
 	R_BindDefaultArray(GL_NEXT_VERTEX_ARRAY);

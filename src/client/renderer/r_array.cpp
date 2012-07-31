@@ -33,6 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define R_ARRAY_TANGENT			0x8
 #define R_ARRAY_TEX_DIFFUSE		0x10
 #define R_ARRAY_TEX_LIGHTMAP	0x20
+#define R_ARRAY_ELEMENT	0x1000
 
 typedef struct r_array_state_s {
 	const mBspModel_t *bspmodel;
@@ -52,7 +53,7 @@ static int R_ArraysMask (void)
 {
 	int mask;
 
-	mask = R_ARRAY_VERTEX;
+	mask = R_ARRAY_VERTEX | R_ARRAY_ELEMENT;
 
 	if (r_state.color_array_enabled)
 		mask |= R_ARRAY_COLOR;
@@ -82,6 +83,10 @@ static inline void R_SetVertexArrayState (const mBspModel_t* bsp, int mask)
 	/* vertex array */
 	if (mask & R_ARRAY_VERTEX)
 		R_BindArray(GL_VERTEX_ARRAY, GL_FLOAT, bsp->verts);
+
+	/* index array */
+	if (mask & R_ARRAY_ELEMENT)
+		R_BindArray(GL_INDEX_ARRAY, GL_INT, bsp->indexes);
 
 	/* normals and tangents for lighting */
 	if (r_state.lighting_enabled) {
@@ -117,6 +122,10 @@ static inline void R_SetVertexBufferState (const mBspModel_t* bsp, int mask)
 	/* vertex array */
 	if (mask & R_ARRAY_VERTEX)
 		R_BindBuffer(GL_VERTEX_ARRAY, GL_FLOAT, bsp->vertex_buffer);
+
+	/* index array */
+	if (mask & R_ARRAY_ELEMENT)
+		R_BindBuffer(GL_INDEX_ARRAY, GL_INT, bsp->index_buffer);
 
 	if (r_state.lighting_enabled) { /* normals and tangents for lighting */
 		if (mask & R_ARRAY_NORMAL)
@@ -181,6 +190,8 @@ void R_ResetArrayState (void)
 
 	/* vbo */
 	R_BindBuffer(0, 0, 0);
+	if (qglBindBuffer && r_vertexbuffers->integer)
+		qglBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0); /** @todo proper logic for unbinding buffers */
 
 	/* vertex array */
 	R_BindDefaultArray(GL_VERTEX_ARRAY);

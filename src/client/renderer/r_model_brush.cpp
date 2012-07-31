@@ -883,6 +883,19 @@ static void R_GenerateTriangleSoup ()
 		R_GenerateTriangleSoup_(&r_modelsInline[i]);
 
 	Com_Printf("World model: %i triangles\n", totalBspTriangles);
+
+	/* Create buffer objects for indexes */
+	if (qglBindBuffer) {
+		for (i = 0; i < r_numMapTiles; i++) {
+			mBspModel_t *bsp = &r_mapTiles[i]->bsp;
+
+			qglGenBuffers(1, &bsp->index_buffer);
+			qglBindBuffer(GL_ELEMENT_ARRAY_BUFFER, bsp->index_buffer);
+			qglBufferData(GL_ELEMENT_ARRAY_BUFFER, bsp->numIndexes * sizeof(GLint), bsp->indexes, GL_STATIC_DRAW);
+		}
+
+		qglBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	}
 }
 
 /**
