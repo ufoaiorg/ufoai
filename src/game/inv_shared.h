@@ -75,16 +75,16 @@ typedef int32_t fireDefIndex_t;
 /** @brief this is a fire definition for our weapons/ammo */
 typedef struct fireDef_s {
 	const char *name;			/**< fire definition name (translatable) */
-	const char *projectile;	/**< projectile particle */
-	const char *impact;		/**< impact particle */
+	const char *projectile;		/**< projectile particle */
+	const char *impact;			/**< impact particle */
 	const char *impactSound;	/**< the sound that is played on impact */
 	const char *hitBody;		/**< hit the body particles */
 	const char *hitBodySound;	/**< the sound that is played on hitting a body */
-	const char *fireSound;	/**< the sound when a recruits fires */
+	const char *fireSound;		/**< the sound when a recruits fires */
 	const char *bounceSound;	/**< bouncing sound */
 
 	float fireAttenuation;		/**< attenuation of firing (less louder over distance), see S_PlaySample() */
-	float impactAttenuation;		/**< attenuation of impact (less louder over distance), see S_PlaySample() */
+	float impactAttenuation;	/**< attenuation of impact (less louder over distance), see S_PlaySample() */
 
 	/* These values are created in Com_ParseItem and Com_AddObjectLinks.
 	 * They are used for self-referencing the firedef. */
@@ -100,30 +100,30 @@ typedef struct fireDef_s {
 	bool launched;		/**< used for calculating parabolas in Com_GrenadeTarget() */
 	bool rolled;		/**< Can it be rolled - e.g. grenades - used in "Roll" firemodes, see Com_GrenadeTarget() */
 	bool reaction;		/**< This firemode can be used/selected for reaction fire.*/
-	int throughWall;		/**< allow the shooting through a wall */
-	byte dmgweight;			/**< used in G_Damage() to apply damagetype effects - redundant with obj->dmgtype */
-	float speed;			/**< projectile-related; zero value means unlimited speed (most of the cases).
-					     for that unlimited speed we use special particle (which cannot work with speed non-zero valued. */
-	vec2_t shotOrg;			/**< This can shift a muzzle vertically (first value) and horizontally (second value) for the trace that is done on the server side. */
-	vec2_t spread;			/**< used for accuracy calculations (G_ShootGrenade(), G_ShootSingle()) */
+	int throughWall;	/**< allow the shooting through a wall */
+	byte dmgweight;		/**< used in G_Damage() to apply damagetype effects - redundant with obj->dmgtype */
+	float speed;		/**< projectile-related; zero value means unlimited speed (most of the cases).
+							 for that unlimited speed we use special particle (which cannot work with speed non-zero valued. */
+	vec2_t shotOrg;		/**< This can shift a muzzle vertically (first value) and horizontally (second value) for the trace that is done on the server side. */
+	vec2_t spread;		/**< used for accuracy calculations (G_ShootGrenade(), G_ShootSingle()) */
 	int delay;			/**< applied on grenades and grenade launcher. If no delay is set, a touch with an actor will lead to
 						 * an explosion or a hit of the projectile. If a delay is set, the (e.g. grenade) may bounce away again. */
 	int bounce;			/**< amount of max possible bounces, for example grenades */
-	float bounceFac;		/**< used in G_ShootGrenade() to apply VectorScale() effect */
-	float crouch;			/**< used for accuracy calculations - must be greater than 0.0 */
-	float range;			/**< range of the weapon ammunition, defined per firemode */
+	float bounceFac;	/**< used in G_ShootGrenade() to apply VectorScale() effect */
+	float crouch;		/**< used for accuracy calculations - must be greater than 0.0 */
+	float range;		/**< range of the weapon ammunition, defined per firemode */
 	int shots;			/**< how many shots this firemode will produce */
 	int ammo;			/**< how many ammo this firemode will use */
 	float delayBetweenShots;	/**< delay between shots (sounds and particles) for this firemode;
 					     the higher the value, the less the delay (1000/delay) */
 	int time;			/**< amount of TU used for this firemode */
-	vec2_t damage;			/**< G_Damage(), damage[0] is min value of damage, damage[1] is used for randomized calculations
+	vec2_t damage;		/**< G_Damage(), damage[0] is min value of damage, damage[1] is used for randomized calculations
 					     of additional damage; damage[0] < 0 means healing, not applying damage */
-	vec2_t spldmg;			/**< G_SplashDamage(), currently we use only first value (spldmg[0]) for apply splashdamage effect */
-	float splrad;			/**< splash damage radius */
-	int weaponSkill;		/**< What weapon skill is needed to fire this weapon. */
-	bool irgoggles;			/**< Is this an irgoggle? */
-	int rounds;				/**< e.g. for incendiary grenades */
+	vec2_t spldmg;		/**< G_SplashDamage(), currently we use only first value (spldmg[0]) for apply splashdamage effect */
+	float splrad;		/**< splash damage radius */
+	int weaponSkill;	/**< What weapon skill is needed to fire this weapon. */
+	bool irgoggles;		/**< Is this an irgoggle? */
+	int rounds;			/**< e.g. for incendiary grenades */
 } fireDef_t;
 
 /**
