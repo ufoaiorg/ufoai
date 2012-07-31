@@ -412,7 +412,7 @@ void R_AddBspRRef (const mBspModel_t *model, const vec3_t origin, const vec3_t a
 	}
 }
 
-typedef void (*drawSurfaceFunc)(const mBspSurfaces_t *surfs);
+typedef void (*drawSurfaceFunc)(const mBspSurfaces_t *surfs, char *indexPtr);
 
 /**
  * @param[in] drawFunc The function pointer to the surface draw function
@@ -423,12 +423,20 @@ static void R_RenderBspRRefs (drawSurfaceFunc drawFunc, surfaceArrayType_t surfT
 	for (i = 0; i < numBspRRefs; i++) {
 		const bspRenderRef_t *const bspRR = &bspRRefs[i];
 		const mBspModel_t *const bsp = bspRR->bsp;
+		const mBspModel_t *const tile = &r_mapTiles[bsp->maptile]->bsp;
+		char *indexPtr;
 
 		if (!bsp->sorted_surfaces[surfType]->count)
 			continue;
 
 		/* This is required to find the tile (world) bsp model to which arrays belong (submodels do not own arrays, but use world model ones) */
-		R_SetArrayState(&r_mapTiles[bsp->maptile]->bsp);
+		R_SetArrayState(tile);
+
+		/* Vertex buffers are NULL-based, arrays are not */
+		if (qglBindBuffer && r_vertexbuffers->integer)
+			indexPtr = 0;
+		else
+			indexPtr = (char *)tile->indexes;
 
 		glPushMatrix();
 
@@ -437,9 +445,9 @@ static void R_RenderBspRRefs (drawSurfaceFunc drawFunc, surfaceArrayType_t surfT
 		glRotatef(bspRR->angles[PITCH], 0, 1, 0);
 		glRotatef(bspRR->angles[ROLL], 1, 0, 0);
 
-		drawFunc(bsp->sorted_surfaces[surfType]);
+		drawFunc(bsp->sorted_surfaces[surfType], indexPtr);
 
-		/** @todo make it work again */
+		/** @todo make it work again; also reimplement r_showbox 2 */
 #if 0
 		/* show model bounding box */
 		if (r_showbox->integer) {

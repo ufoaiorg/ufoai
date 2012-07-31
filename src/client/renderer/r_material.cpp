@@ -396,7 +396,7 @@ static void R_DrawSurfaceStage (mBspSurface_t *surf, materialStage_t *stage)
  * throughout the iteration, so there is a concerted effort to restore the
  * state after all surface stages have been rendered.
  */
-void R_DrawMaterialSurfaces (const mBspSurfaces_t *surfs)
+void R_DrawMaterialSurfaces (const mBspSurfaces_t *surfs, char *indexPtr)
 {
 	int i;
 

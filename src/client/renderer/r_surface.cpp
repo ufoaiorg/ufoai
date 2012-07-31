@@ -90,28 +90,12 @@ static void R_SetSurfaceState (const mBspSurface_t *surf)
 }
 
 /**
- * @brief Use the vertex, texture and normal arrays to draw a surface
- * @sa R_DrawSurfaces
- */
-static inline void R_DrawSurface (const mBspSurface_t *surf)
-{
-	glDrawArrays(GL_TRIANGLE_FAN, surf->index, surf->numedges);
-
-	refdef.batchCount++;
-
-	if (r_showbox->integer == 2)
-		R_DrawBoundingBox(surf->mins, surf->maxs);
-
-	refdef.brushCount++;
-}
-
-/**
  * @brief General surface drawing function, that draw the surface chains
  * @note The needed states for the surfaces must be set before you call this
  * @sa R_DrawSurface
  * @sa R_SetSurfaceState
  */
-void R_DrawSurfaces (const mBspSurfaces_t *surfs)
+void R_DrawSurfaces (const mBspSurfaces_t *surfs, char *indexPtr)
 {
 	int numSurfaces = surfs->count;
 	mBspSurface_t **surfPtrList = surfs->surfaces;
@@ -123,10 +107,16 @@ void R_DrawSurfaces (const mBspSurfaces_t *surfs)
 
 	while (numSurfaces--) {
 		const mBspSurface_t *surf = *surfPtrList++;
+		const int numTriangles = surf->numTriangles;
 		mBspTexInfo_t *texInfo;
 		int texFlags;
+
 		if (surf->frame != frame)
 			continue;
+		if (numTriangles <= 0)
+			continue;
+
+		refdef.brushCount += numTriangles;
 
 		/** @todo integrate it better with R_SetSurfaceState - maybe cache somewhere in the mBspSurface_t ? */
 		texInfo = surf->texinfo;
@@ -139,7 +129,8 @@ void R_DrawSurfaces (const mBspSurfaces_t *surfs)
 			R_SetSurfaceState(surf);
 		}
 
-		R_DrawSurface(surf);
+		glDrawElements(GL_TRIANGLES, numTriangles * 3, GL_UNSIGNED_INT, indexPtr + surf->firstTriangle * 3 * sizeof(int));
+		refdef.batchCount++;
 	}
 
 	/* reset state */
