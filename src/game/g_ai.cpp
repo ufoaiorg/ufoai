@@ -523,6 +523,10 @@ static void AI_SearchBestTarget (aiAction_t *aia, const edict_t *ent, edict_t *c
 			if (G_IsCivilian(check) && !G_IsInsane(ent))
 				dmg *= SCORE_CIV_FACTOR;
 
+			/* Stunned malus */
+			if (G_IsStunned(check))
+				dmg *= SCORE_DISABLED_FACTOR;
+
 			/* add random effects */
 			if (dmg > 0)
 				dmg += SCORE_RANDOM * frand();
@@ -535,6 +539,10 @@ static void AI_SearchBestTarget (aiAction_t *aia, const edict_t *ent, edict_t *c
 				aia->shots = shots;
 				aia->target = check;
 				aia->fd = fd;
+				if (G_IsStunned(check))
+					aia->z_align = GROUND_DELTA;
+				else
+					aia->z_align = 0;
 			}
 
 			if (!aia->target) {
