@@ -107,7 +107,9 @@ typedef struct mBspSurface_s {
 	int light_s, light_t;		/**< gl lightmap coordinates */
 	int lightmap_scale;
 
-	unsigned int index;
+	unsigned int index; /**< of the first vertex in the vertex array */
+	int firstTriangle; /* -1 means no triangles are generated for this surface yet */
+	unsigned int numTriangles;
 
 	int tracenum;
 
@@ -234,6 +236,8 @@ typedef struct mBspModel_s {
 	float *lmtexcoords;
 	float *tangents;
 	float *normals;
+	int *indexes; /* be lazy, assume >64K arrays */
+	int numIndexes;
 
 	/* vertex buffer objects */
 	unsigned int vertex_buffer;

@@ -527,14 +527,17 @@ static void R_LoadBspVertexArrays (model_t *mod)
 	vec3_t binormal;
 	mBspSurface_t *surf;
 	mBspVertex_t *vert;
-	int vertexCount;
+	int vertexCount, indexCount;
 
 	vertOfs = texCoordOfs = tangOfs = 0;
-	vertexCount = 0;
+	vertexCount = indexCount = 0;
 
-	for (i = 0, surf = mod->bsp.surfaces; i < mod->bsp.numsurfaces; i++, surf++)
-		for (j = 0; j < surf->numedges; j++)
-			vertexCount++;
+	for (i = 0, surf = mod->bsp.surfaces; i < mod->bsp.numsurfaces; i++, surf++) {
+		const int numedges = surf->numedges;
+		vertexCount += numedges;
+		if (numedges > 2) /* no triangles for degenerate polys */
+			indexCount += (numedges - 2) * 3;
+	}
 
 	surf = mod->bsp.surfaces;
 
@@ -544,9 +547,11 @@ static void R_LoadBspVertexArrays (model_t *mod)
 	mod->bsp.verts       = Mem_PoolAllocTypeN(GLfloat, vertexCount * 3, vid_modelPool);
 	mod->bsp.normals     = Mem_PoolAllocTypeN(GLfloat, vertexCount * 3, vid_modelPool);
 	mod->bsp.tangents    = Mem_PoolAllocTypeN(GLfloat, vertexCount * 4, vid_modelPool);
+	mod->bsp.indexes    = Mem_PoolAllocTypeN(GLint, indexCount, vid_modelPool); /* Will be filled at the end of map loading, after building surface lists */
 
 	for (i = 0; i < mod->bsp.numsurfaces; i++, surf++) {
 		surf->index = vertOfs / 3;
+		surf->firstTriangle = -1; /* Mark as "no triangles generated yet" */
 
 		for (j = 0; j < surf->numedges; j++) {
 			const float *normal;
@@ -821,6 +826,65 @@ static void R_LoadSurfacesArrays (void)
 		R_LoadSurfacesArrays_(&r_modelsInline[i]);
 }
 
+static int totalBspTriangles;
+
+static void R_GenerateTriangleSoup_ (model_t *mod)
+{
+	mBspModel_t *bsp = &mod->bsp; /* can be aliased with baseTile, so beware */
+	mBspModel_t *baseTile = &r_mapTiles[bsp->maptile]->bsp; /**< owns vertex arrays */
+	int i, j, k;
+	int tris = 0;
+
+	Com_DPrintf(DEBUG_RENDERER, "Soup: model %i/%i\n", bsp->maptile, bsp->firstmodelsurface);
+
+	for (i = 0; i < NUM_SURFACES_ARRAYS; i++) {
+		mBspSurfaces_t *surfaces = mod->bsp.sorted_surfaces[i];
+
+		for (j = 0; j < surfaces->count; j++) {
+			mBspSurface_t *surf = surfaces->surfaces[j];
+
+			if (surf->firstTriangle >= 0)
+				continue; /* Already allocated */
+
+			surf->firstTriangle = baseTile->numIndexes / 3;
+
+			if (surf->numedges <= 2) {
+				/* degenerate poly, no triangles */
+				surf->numTriangles = 0;
+			} else {
+				/* Build triangle list for this surface */
+				int numTris = surf->numedges - 2;
+				surf->numTriangles = numTris;
+				for (k = 0; k < numTris; k++) {
+					/* k'th element of triangle fan */
+					baseTile->indexes[baseTile->numIndexes++] = surf->index;
+					baseTile->indexes[baseTile->numIndexes++] = surf->index + k + 1;
+					baseTile->indexes[baseTile->numIndexes++] = surf->index + k + 2;
+					tris++;
+				}
+			}
+		}
+	}
+
+	totalBspTriangles += tris;
+	Com_DPrintf(DEBUG_RENDERER, "                  surfs: %i tris: %i\n", bsp->nummodelsurfaces, tris);
+}
+
+static void R_GenerateTriangleSoup ()
+{
+	int i;
+
+	totalBspTriangles = 0;
+
+	for (i = 0; i < r_numMapTiles; i++)
+		R_GenerateTriangleSoup_(r_mapTiles[i]);
+
+	for (i = 0; i < r_numModelsInline; i++)
+		R_GenerateTriangleSoup_(&r_modelsInline[i]);
+
+	Com_Printf("World model: %i triangles\n", totalBspTriangles);
+}
+
 /**
  * @sa R_SetParent
  */
@@ -1022,6 +1086,7 @@ static void R_ModEndLoading (const char *mapName)
 	R_EndBuildingLightmaps();
 	R_LoadMaterials(mapName);
 	R_LoadSurfacesArrays();
+	R_GenerateTriangleSoup();
 }
 
 /**
