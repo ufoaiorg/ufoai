@@ -302,8 +302,8 @@ typedef struct character_s {
 	char path[MAX_VAR];
 	char body[MAX_VAR];
 	char head[MAX_VAR];
-	int bodySkin;					/**< Index of skin. */
-	int headSkin;					/**< Index of skin. */
+	int bodySkin;				/**< Index of skin. */
+	int headSkin;				/**< Index of skin. */
 
 	int HP;						/**< Health points (current ones). */
 	int minHP;					/**< Minimum hp during combat */
@@ -315,16 +315,16 @@ typedef struct character_s {
 	int state;					/**< a character can request some initial states when the team is spawned (like reaction fire) */
 
 	chrScoreGlobal_t score;		/**< Array of scores/stats the soldier/unit collected over time. */
-	chrScoreMission_t *scoreMission;		/**< Array of scores/stats the soldier/unit collected in a mission - only used in battlescape (server side). Otherwise it's NULL. */
+	chrScoreMission_t *scoreMission;	/**< Array of scores/stats the soldier/unit collected in a mission - only used in battlescape (server side). Otherwise it's NULL. */
 
 	actorSizeEnum_t fieldSize;
 
-	inventory_t i;			/**< Inventory definition. */
+	inventory_t i;					/**< Inventory definition. */
 
-	const teamDef_t *teamDef;			/**< Pointer to team definition. */
-	int gender;				/**< Gender index. */
-	chrReservations_t reservedTus;	/** < Stores the reserved TUs for actions. @sa See chrReserveSettings_t for more. */
-	chrFiremodeSettings_t RFmode;	/** < Stores the firemode to be used for reaction fire (if the fireDef allows that) See also reaction_firemode_type_t */
+	const teamDef_t *teamDef;		/**< Pointer to team definition. */
+	int gender;						/**< Gender index. */
+	chrReservations_t reservedTus;	/**< Stores the reserved TUs for actions. @sa See chrReserveSettings_t for more. */
+	chrFiremodeSettings_t RFmode;	/**< Stores the firemode to be used for reaction fire (if the fireDef allows that) See also reaction_firemode_type_t */
 } character_t;
 
 /* ================================ */
