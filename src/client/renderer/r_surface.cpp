@@ -105,11 +105,14 @@ void R_DrawSurfaces (const mBspSurfaces_t *surfs, char *indexPtr)
 	image_t *lastTexture = NULL;
 	uint32_t lastFlags = ~0;
 
+	int batchStart = 0, batchSize = 0; /* in triangles */
+
 	while (numSurfaces--) {
 		const mBspSurface_t *surf = *surfPtrList++;
 		const int numTriangles = surf->numTriangles;
 		mBspTexInfo_t *texInfo;
 		int texFlags;
+		bool newBatch = false;
 
 		if (surf->frame != frame)
 			continue;
@@ -118,10 +121,28 @@ void R_DrawSurfaces (const mBspSurfaces_t *surfs, char *indexPtr)
 
 		refdef.brushCount += numTriangles;
 
+		if (batchStart + batchSize != surf->firstTriangle) {
+			/* Cannot continue assebling the batch, draw it and start a new one*/
+			if (batchSize > 0) {
+				glDrawElements(GL_TRIANGLES, batchSize * 3, GL_UNSIGNED_INT, indexPtr + batchStart * 3 * sizeof(int));
+				refdef.batchCount++;
+			}
+			batchStart = surf->firstTriangle;
+			batchSize = 0;
+			newBatch = true;
+		}
+
 		/** @todo integrate it better with R_SetSurfaceState - maybe cache somewhere in the mBspSurface_t ? */
 		texInfo = surf->texinfo;
 		texFlags = texInfo->flags & (SURF_BLEND33 | SURF_BLEND66 | MSURF_LIGHTMAP); /* should match flags that affect R_SetSurfaceState behavior */
 		if (texInfo->image != lastTexture || surf->lightmap_texnum != lastLightMap || surf->deluxemap_texnum != lastDeluxeMap || texFlags != lastFlags) {
+			if (!newBatch) {
+				/* changes in texturing require new batch */
+				glDrawElements(GL_TRIANGLES, batchSize * 3, GL_UNSIGNED_INT, indexPtr + batchStart * 3 * sizeof(int));
+				refdef.batchCount++;
+				batchStart = surf->firstTriangle;
+				batchSize = 0;
+			}
 			lastTexture = texInfo->image;
 			lastLightMap = surf->lightmap_texnum;
 			lastDeluxeMap = surf->deluxemap_texnum;
@@ -129,7 +150,12 @@ void R_DrawSurfaces (const mBspSurfaces_t *surfs, char *indexPtr)
 			R_SetSurfaceState(surf);
 		}
 
-		glDrawElements(GL_TRIANGLES, numTriangles * 3, GL_UNSIGNED_INT, indexPtr + surf->firstTriangle * 3 * sizeof(int));
+		batchSize += numTriangles;
+	}
+
+	/* finish uncomplete batch, if any */
+	if (batchSize > 0) {
+		glDrawElements(GL_TRIANGLES, batchSize * 3, GL_UNSIGNED_INT, indexPtr + batchStart * 3 * sizeof(int));
 		refdef.batchCount++;
 	}
 
