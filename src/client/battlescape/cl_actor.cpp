@@ -211,8 +211,8 @@ void CL_ActorSetRFMode (character_t *chr, actorHands_t hand, int fireModeIndex, 
 }
 
 /**
- * @brief Sets shoot firemode for given actor.
- * @param[out] chr Pointer to an actor for which shoot is being set.
+ * @brief Sets firemode for given actor.
+ * @param[out] chr Pointer to an actor for which firemode is being set.
  * @param[in] hand Store the given hand.
  * @param[in] fireModeIndex Store the given firemode for this hand.
  * @param[in] weapon Pointer to weapon in the hand.
