@@ -198,7 +198,7 @@ void R_DrawBspNormals (int tile)
 }
 
 /**
- * @brief Recurse down the bsp tree and mark all surfaces as visible (if in front)
+ * @brief Recurse down the bsp tree and mark all surfaces as visible
  * for being rendered
  * @sa R_DrawWorld
  * @sa R_RecurseWorld
@@ -208,9 +208,8 @@ void R_DrawBspNormals (int tile)
  */
 static void R_RecursiveVisibleWorldNode (const mBspNode_t * node, int tile)
 {
-	int i, sidebit;
+	int i;
 	mBspSurface_t *surf;
-	float dot;
 
 	/* if a leaf node, nothing to mark */
 	if (node->contents > CONTENTS_NODE)
@@ -219,28 +218,9 @@ static void R_RecursiveVisibleWorldNode (const mBspNode_t * node, int tile)
 	/* pathfinding nodes are invalid here */
 	assert(node->plane);
 
-	/* node is just a decision point, so go down the appropriate sides
-	 * find which side of the node we are on */
-	if (r_isometric->integer) {
-		dot = -DotProduct(r_locals.forward, node->plane->normal);
-	} else if (!AXIAL(node->plane)) {
-		dot = DotProduct(refdef.viewOrigin, node->plane->normal) - node->plane->dist;
-	} else {
-		dot = refdef.viewOrigin[node->plane->type] - node->plane->dist;
-	}
-
-	if (dot >= 0) {
-		sidebit = 0;
-	} else {
-		sidebit = MSURF_PLANEBACK;
-	}
-
 	surf = r_mapTiles[tile]->bsp.surfaces + node->firstsurface;
-	for (i = 0; i < node->numsurfaces; i++, surf++) {
-		/* visible (front) side */
-		if ((surf->flags & MSURF_PLANEBACK) == sidebit)
-			surf->frame = r_locals.frame;
-	}
+	for (i = 0; i < node->numsurfaces; i++, surf++)
+		surf->frame = r_locals.frame;
 
 	/* recurse down the children */
 	R_RecursiveVisibleWorldNode(node->children[0], tile);
@@ -248,7 +228,7 @@ static void R_RecursiveVisibleWorldNode (const mBspNode_t * node, int tile)
 }
 
 /**
- * @brief Recurse down the bsp tree and mark surfaces that are visible (not culled and in front)
+ * @brief Recurse down the bsp tree and mark surfaces that are visible (not culled)
  * for being rendered
  * @sa R_DrawWorld
  * @sa R_RecurseWorld
@@ -258,10 +238,9 @@ static void R_RecursiveVisibleWorldNode (const mBspNode_t * node, int tile)
  */
 static void R_RecursiveWorldNode (const mBspNode_t * node, int tile)
 {
-	int i, sidebit;
+	int i;
 	int cullState;
 	mBspSurface_t *surf;
-	float dot;
 
 	/* if a leaf node, nothing to mark */
 	if (node->contents > CONTENTS_NODE)
@@ -275,30 +254,12 @@ static void R_RecursiveWorldNode (const mBspNode_t * node, int tile)
 	/* pathfinding nodes are invalid here */
 	assert(node->plane);
 
-	/* node is just a decision point, so go down the appropriate sides
-	 * find which side of the node we are on */
-	if (r_isometric->integer) {
-		dot = -DotProduct(r_locals.forward, node->plane->normal);
-	} else if (!AXIAL(node->plane)) {
-		dot = DotProduct(refdef.viewOrigin, node->plane->normal) - node->plane->dist;
-	} else {
-		dot = refdef.viewOrigin[node->plane->type] - node->plane->dist;
-	}
-
-	if (dot >= 0) {
-		sidebit = 0;
-	} else {
-		sidebit = MSURF_PLANEBACK;
-	}
-
 	surf = r_mapTiles[tile]->bsp.surfaces + node->firstsurface;
-	for (i = 0; i < node->numsurfaces; i++, surf++) {
-		/* visible (front) side */
-		if ((surf->flags & MSURF_PLANEBACK) == sidebit)
-			surf->frame = r_locals.frame;
-	}
+	for (i = 0; i < node->numsurfaces; i++, surf++)
+		surf->frame = r_locals.frame;
 
 	/* recurse down the children */
+	/** @todo avoid being too precise, it's a waste of CPU time; possibly, granularity of 256x256x256 should be enough */
 	if (cullState == PSIDE_FRONT) {
 		/* completely inside the frustum - no need to do any further checks */
 		R_RecursiveVisibleWorldNode(node->children[0], tile);
@@ -420,6 +381,10 @@ typedef void (*drawSurfaceFunc)(const mBspSurfaces_t *surfs, char *indexPtr);
 static void R_RenderBspRRefs (drawSurfaceFunc drawFunc, surfaceArrayType_t surfType)
 {
 	int i;
+
+	glEnable(GL_CULL_FACE);
+	glCullFace(GL_FRONT); /* our triangles are backwards to what OpenGL expects, so tell it to render only back faces */
+
 	for (i = 0; i < numBspRRefs; i++) {
 		const bspRenderRef_t *const bspRR = &bspRRefs[i];
 		const mBspModel_t *const bsp = bspRR->bsp;
@@ -461,6 +426,8 @@ static void R_RenderBspRRefs (drawSurfaceFunc drawFunc, surfaceArrayType_t surfT
 
 	/* and restore array pointers */
 	R_ResetArrayState();
+
+	glDisable(GL_CULL_FACE);
 }
 
 /**
