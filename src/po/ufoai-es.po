@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
-"POT-Creation-Date: 2012-07-26 19:18-0500\n"
-"PO-Revision-Date: 2012-07-26 19:17-0600\n"
+"POT-Creation-Date: 2012-08-01 17:07-0500\n"
+"PO-Revision-Date: 2012-08-01 17:06-0600\n"
 "Last-Translator: DarkRain <darkrainx@users.sourceforge.net>\n"
 "Language-Team: \n"
 "Language: es\n"
@@ -15,8 +15,8 @@ msgstr ""
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Poedit-Basepath: ../\n"
 
-#: ../base/maps/africa.ump:476 ../base/maps/africa.ump:504
-#: ../base/maps/africa.ump:531
+#: ../base/maps/africa.ump:541 ../base/maps/africa.ump:573
+#: ../base/maps/africa.ump:604
 msgid "Africa"
 msgstr "África"
 
@@ -207,7 +207,7 @@ msgstr "OVNI en el trópico"
 
 #: ../base/maps/ufocrash.ump:352 ../base/maps/ufocrash.ump:369
 #: ../base/maps/ufocrash.ump:386 ../base/maps/ufocrash.ump:403
-#: ../base/maps/ufocrash.ump:420 client/cgame/campaign/cp_missions.cpp:460
+#: ../base/maps/ufocrash.ump:420 client/cgame/campaign/cp_missions.cpp:461
 msgid "Crashed UFO"
 msgstr "OVNI caído"
 
@@ -389,15 +389,15 @@ msgstr "Municiones AEI SHIVA de 20mm"
 
 #: ../base/ufos/aircraftmanagement.ufo:836
 msgid "Raven ECM Unit"
-msgstr "Unidad CME \"Raven\""
+msgstr "Unidad CME 'Raven'"
 
 #: ../base/ufos/aircraftmanagement.ufo:848
 msgid "Sparrowhawk AA Missile Rack"
-msgstr "Lanzamisiles AA \"Sparrowhawk\""
+msgstr "Lanzamisiles AA 'Sparrowhawk'"
 
 #: ../base/ufos/aircraftmanagement.ufo:858
 msgid "Sparrowhawk Missile"
-msgstr "Misil \"Sparrowhawk\""
+msgstr "Misil 'Sparrowhawk'"
 
 #: ../base/ufos/aircraftmanagement.ufo:875 ../base/ufos/research.ufo:5004
 msgid "TR-20 Rocket Pod"
@@ -590,55 +590,55 @@ msgstr ""
 "\n"
 "Esta opción representa el nivel Muy Difícil, y es la recomendada para aquellos que han conseguido terminar la campaña Difícil y todavía sienten la necesidad de castigarse a sí mismos."
 
-#: ../base/ufos/campaign.ufo:33
+#: ../base/ufos/campaign.ufo:34
 msgid "Hard Campaign"
 msgstr "Campaña Difícil"
 
-#: ../base/ufos/campaign.ufo:34
+#: ../base/ufos/campaign.ufo:35
 msgid "hard_campaign_txt"
 msgstr ""
 "Esta es una versión más difícil que la Campaña Normal. Recibes menos soldados, ingenieros y científicos, las naciones son más difíciles de complacer, la investigación es más lenta y exigente y los alienígenas son más resistentes.\n"
 "\n"
 "Esta opción representa el nivel Difícil, y es la recomendada para los jugadores expertos."
 
-#: ../base/ufos/campaign.ufo:66
+#: ../base/ufos/campaign.ufo:68
 msgid "Standard Campaign"
 msgstr "Campaña Normal"
 
-#: ../base/ufos/campaign.ufo:67
+#: ../base/ufos/campaign.ufo:69
 msgid "standard_campaign_txt"
 msgstr ""
 "Este es un escenario de invasión militar para un jugador. El jugador asume el mando del Proyecto PHALANX, la respuesta de la Tierra a la amenaza alienígena, y puede jugar a un juego dinámico con una historia sólida y varios elementos aleatorios.\n"
 "\n"
 "Esta campaña está disponible en varios niveles de dificultad. Esta opción representa el nivel de dificultad Normal, y es la recomendada para los jugadores novatos que busquen un desafío."
 
-#: ../base/ufos/campaign.ufo:119
+#: ../base/ufos/campaign.ufo:122
 msgid "Easy Campaign"
 msgstr "Campaña Fácil"
 
-#: ../base/ufos/campaign.ufo:120
+#: ../base/ufos/campaign.ufo:123
 msgid "easy_campaign_txt"
 msgstr ""
 "Esta es una versión más suave que la Campaña Normal. Los alienígenas son menos resistentes, las incursiones OVNI son menos frecuentes y recibes más reclutas para suplir las pérdidas en combate.\n"
 "\n"
 "Esta campaña representa el nivel Fácil, y es la opción para los jugadores novatos que prefieren una partida más tranquila que la ofrecida por la Campaña Normal."
 
-#: ../base/ufos/campaign.ufo:152
+#: ../base/ufos/campaign.ufo:156
 msgid "Very Easy Campaign"
 msgstr "Campaña Muy Fácil"
 
-#: ../base/ufos/campaign.ufo:153
+#: ../base/ufos/campaign.ufo:157
 msgid "veryeasy_campaign_txt"
 msgstr ""
 "Esta es una versión mucho más relajada que la Campaña Normal. Tus fuerzas son más poderosas y los alienígenas son menos peligrosos, y tendrás pocas bajas durante la campaña.\n"
 "\n"
 "Esta campaña representa el nivel Muy Fácil, y es la opción para los jugadores novatos que simplemente quieran saber en qué consiste UFO: AI."
 
-#: ../base/ufos/campaign.ufo:205
+#: ../base/ufos/campaign.ufo:210
 msgid "Play the aliens"
 msgstr "Juega con los extraterrestres"
 
-#: ../base/ufos/campaign.ufo:206
+#: ../base/ufos/campaign.ufo:211
 #, fuzzy
 msgid "alien_campaign_txt"
 msgstr "alien_campaign_txt"
@@ -2584,12 +2584,12 @@ msgstr "Sec. Gen. Mahouf Serra, Naciones Unidas, Ciudad de Nueva York"
 #: ../base/ufos/research.ufo:5164 ../base/ufos/research.ufo:5172
 #: ../base/ufos/research.ufo:5215 ../base/ufos/research.ufo:5223
 #: ../base/ufos/research.ufo:5300 ../base/ufos/research.ufo:5308
-#: ../base/ufos/research.ufo:5397 ../base/ufos/research.ufo:5430
-#: ../base/ufos/research.ufo:5438 ../base/ufos/research.ufo:5469
-#: ../base/ufos/research.ufo:5478 ../base/ufos/research.ufo:5510
-#: ../base/ufos/research.ufo:5518 ../base/ufos/research.ufo:5548
-#: ../base/ufos/research.ufo:5576 ../base/ufos/research.ufo:5609
-#: ../base/ufos/research.ufo:5641 ../base/ufos/research.ufo:5672
+#: ../base/ufos/research.ufo:5397 ../base/ufos/research.ufo:5431
+#: ../base/ufos/research.ufo:5439 ../base/ufos/research.ufo:5470
+#: ../base/ufos/research.ufo:5479 ../base/ufos/research.ufo:5511
+#: ../base/ufos/research.ufo:5519 ../base/ufos/research.ufo:5549
+#: ../base/ufos/research.ufo:5577 ../base/ufos/research.ufo:5610
+#: ../base/ufos/research.ufo:5642 ../base/ufos/research.ufo:5673
 msgid "mail_to_base_commander"
 msgstr "Comandante de la Base, PHALANX, Comando de Operaciones del Atlántico"
 
@@ -2694,9 +2694,9 @@ msgstr "Memorando: Almacén para OVNI"
 #: ../base/ufos/research.ufo:4350 ../base/ufos/research.ufo:4383
 #: ../base/ufos/research.ufo:4392 ../base/ufos/research.ufo:4456
 #: ../base/ufos/research.ufo:4465 ../base/ufos/research.ufo:5396
-#: ../base/ufos/research.ufo:5429 ../base/ufos/research.ufo:5437
-#: ../base/ufos/research.ufo:5509 ../base/ufos/research.ufo:5517
-#: ../base/ufos/research.ufo:5671
+#: ../base/ufos/research.ufo:5430 ../base/ufos/research.ufo:5438
+#: ../base/ufos/research.ufo:5510 ../base/ufos/research.ufo:5518
+#: ../base/ufos/research.ufo:5672
 msgid "mail_from_dr_connor"
 msgstr "Dr. Connor, I+D: División Biología y Contención, PHALANX, Comando de Operaciones del Atlántico"
 
@@ -2957,311 +2957,315 @@ msgid "No language"
 msgstr "Ningún idioma"
 
 #: ../base/ufos/maps.ufo:66
-msgid "A suburb that has received a visit from a Harvester."
-msgstr "Un suburbio que ha recibido la visita de un Recolector."
+msgid "A suburb that has received a visit from a UFO."
+msgstr "Un suburbio que ha recibido la visita de un OVNI."
 
-#: ../base/ufos/maps.ufo:117
+#: ../base/ufos/maps.ufo:109
+msgid "A UFO crashed here."
+msgstr "Un OVNI se ha estrellado en este lugar."
+
+#: ../base/ufos/maps.ufo:170
 msgid "A suburb that has been visited by an UFO."
 msgstr "Un suburbio que ha sido visitado por un OVNI."
 
-#: ../base/ufos/maps.ufo:164
+#: ../base/ufos/maps.ufo:217
 msgid "Crashed UFO in an african suburban district."
 msgstr "OVNI caído en un distrito suburbano."
 
-#: ../base/ufos/maps.ufo:209
+#: ../base/ufos/maps.ufo:262
 msgid "An UFO crashsite."
 msgstr "Lugar del choque OVNI"
 
-#: ../base/ufos/maps.ufo:250
+#: ../base/ufos/maps.ufo:303
 msgid "A Bomber has landed in the middle of a city."
 msgstr "Un Bombardero ha aterrizado en medio de una ciudad."
 
-#: ../base/ufos/maps.ufo:308 ../base/ufos/maps.ufo:350
-#: ../base/ufos/maps.ufo:4107
+#: ../base/ufos/maps.ufo:361 ../base/ufos/maps.ufo:403
+#: ../base/ufos/maps.ufo:4160
 msgid "A small UFO has crashed in this mining region."
 msgstr "Un pequeño OVNI se ha estrellado en esta región minera."
 
-#: ../base/ufos/maps.ufo:403 ../base/ufos/maps.ufo:445
+#: ../base/ufos/maps.ufo:456 ../base/ufos/maps.ufo:498
 msgid "Some houses in the desert."
 msgstr "Algunas casas en el desierto."
 
-#: ../base/ufos/maps.ufo:498
+#: ../base/ufos/maps.ufo:551
 msgid "An alien Harvester has crashed in the wastelands."
 msgstr "Un Recolector alienígena caído en el desierto."
 
-#: ../base/ufos/maps.ufo:538 ../base/ufos/maps.ufo:580
-#: ../base/ufos/maps.ufo:619
+#: ../base/ufos/maps.ufo:591 ../base/ufos/maps.ufo:633
+#: ../base/ufos/maps.ufo:672
 msgid "A farm in a rural area. Lots of land to cover, but few obstacles to impair line of sight."
 msgstr "Granja de una zona rural. Mucho terreno que cubrir, pero pocos obstáculos que obstruyan la visibilidad."
 
-#: ../base/ufos/maps.ufo:662
+#: ../base/ufos/maps.ufo:715
 msgid "A farmhouse surrounded by fields and sheds. A UFO has landed in one of the fields."
 msgstr "Una hacienda rodeada de campos y corrales. Un OVNI ha aterrizado en uno de los campos."
 
-#: ../base/ufos/maps.ufo:715 ../base/ufos/maps.ufo:755
-#: ../base/ufos/maps.ufo:796
+#: ../base/ufos/maps.ufo:768 ../base/ufos/maps.ufo:808
+#: ../base/ufos/maps.ufo:849
 msgid "Aliens are up to no good in this sparsely populated forest region."
 msgstr "Los alienígenas llevan a cabo siniestras actividades en esta área casi despoblada del bosque."
 
-#: ../base/ufos/maps.ufo:837
+#: ../base/ufos/maps.ufo:890
 msgid "UFO crashed in this sparsely populated forest region."
 msgstr "Un OVNI caído en una región casi despoblada del bosque."
 
-#: ../base/ufos/maps.ufo:880 ../base/ufos/maps.ufo:933
-#: ../base/ufos/maps.ufo:986
+#: ../base/ufos/maps.ufo:933 ../base/ufos/maps.ufo:986
+#: ../base/ufos/maps.ufo:1039
 msgid "An industrial area in a cold region."
 msgstr "Una zona industrial en una región helada."
 
-#: ../base/ufos/maps.ufo:1037 ../base/ufos/maps.ufo:1088
-#: ../base/ufos/maps.ufo:1139 ../base/ufos/maps.ufo:4954
-#: ../base/ufos/maps.ufo:4972
+#: ../base/ufos/maps.ufo:1090 ../base/ufos/maps.ufo:1141
+#: ../base/ufos/maps.ufo:1192 ../base/ufos/maps.ufo:5007
+#: ../base/ufos/maps.ufo:5025
 msgid "An underpopulated area in a cold region."
 msgstr "Zona de baja población en una región helada."
 
-#: ../base/ufos/maps.ufo:1194
+#: ../base/ufos/maps.ufo:1247
 msgid "An important container harbour is attacked by alien invaders."
 msgstr "Un importante puerto de carga es atacado por invasores alienígenas."
 
-#: ../base/ufos/maps.ufo:1249 ../base/ufos/maps.ufo:1294
-#: ../base/ufos/maps.ufo:1336
+#: ../base/ufos/maps.ufo:1302 ../base/ufos/maps.ufo:1347
+#: ../base/ufos/maps.ufo:1389
 msgid "UFO landed in hills area."
 msgstr "Aterrizaje OVNI en una zona montañosa."
 
-#: ../base/ufos/maps.ufo:1382 ../base/ufos/maps.ufo:1422
-#: ../base/ufos/maps.ufo:1463 ../base/ufos/maps.ufo:1502
+#: ../base/ufos/maps.ufo:1435 ../base/ufos/maps.ufo:1475
+#: ../base/ufos/maps.ufo:1516 ../base/ufos/maps.ufo:1555
 msgid "An icy environment."
 msgstr "Un ambiente helado"
 
-#: ../base/ufos/maps.ufo:1547 ../base/ufos/maps.ufo:1588
+#: ../base/ufos/maps.ufo:1600 ../base/ufos/maps.ufo:1641
 msgid "Industrial theme."
 msgstr "Sitio industrial"
 
-#: ../base/ufos/maps.ufo:1633 ../base/ufos/maps.ufo:1681
-#: ../base/ufos/maps.ufo:3124
+#: ../base/ufos/maps.ufo:1686 ../base/ufos/maps.ufo:1734
+#: ../base/ufos/maps.ufo:3177
 msgid "A classic eastern suburban area."
 msgstr "Una típica área suburbana occidental."
 
-#: ../base/ufos/maps.ufo:1732
+#: ../base/ufos/maps.ufo:1785
 msgid "A laboratory where they examined found UFO wreck tiles."
 msgstr "Un laboratorio donde se examinaban algunos restos OVNI."
 
-#: ../base/ufos/maps.ufo:1788
+#: ../base/ufos/maps.ufo:1841
 msgid "A mansion near the coast."
 msgstr "Una mansión cerca de la costa."
 
-#: ../base/ufos/maps.ufo:1842 ../base/ufos/maps.ufo:1890
+#: ../base/ufos/maps.ufo:1895 ../base/ufos/maps.ufo:1943
 msgid "A mansion. An important and influential person lives here."
 msgstr "Una mansión. Una persona rica e influyente vive aquí."
 
-#: ../base/ufos/maps.ufo:1943 ../base/ufos/maps.ufo:1983
-#: ../base/ufos/maps.ufo:2066
+#: ../base/ufos/maps.ufo:1996 ../base/ufos/maps.ufo:2036
+#: ../base/ufos/maps.ufo:2119
 msgid "A suburban district of an oriental area."
 msgstr "Un distrito suburbano de una región oriental."
 
-#: ../base/ufos/maps.ufo:2025
+#: ../base/ufos/maps.ufo:2078
 msgid "Crashed UFO in oriental suburban district."
 msgstr "OVNI caído en un distrito suburbano de una región oriental."
 
-#: ../base/ufos/maps.ufo:2118
+#: ../base/ufos/maps.ufo:2171
 msgid "A crashed Scout UFO."
 msgstr "Un OVNI explorador caído"
 
-#: ../base/ufos/maps.ufo:2159 ../base/ufos/maps.ufo:2199
-#: ../base/ufos/maps.ufo:2240
+#: ../base/ufos/maps.ufo:2212 ../base/ufos/maps.ufo:2252
+#: ../base/ufos/maps.ufo:2293
 msgid "A cleared stretch of land in the middle of the jungle."
 msgstr "Un claro a la mitad de la selva."
 
-#: ../base/ufos/maps.ufo:2281 ../base/ufos/maps.ufo:2321
+#: ../base/ufos/maps.ufo:2334 ../base/ufos/maps.ufo:2374
 msgid "A river runs through this piece of jungle."
 msgstr "Hay un río que corre a travez de esta parte de la selva."
 
-#: ../base/ufos/maps.ufo:2367
+#: ../base/ufos/maps.ufo:2420
 msgid "UFO Crashsite."
 msgstr "Lugar del choque OVNI"
 
-#: ../base/ufos/maps.ufo:2400 ../base/ufos/maps.ufo:2442
-#: ../base/ufos/maps.ufo:2483 ../base/ufos/maps.ufo:2526
+#: ../base/ufos/maps.ufo:2453 ../base/ufos/maps.ufo:2495
+#: ../base/ufos/maps.ufo:2536 ../base/ufos/maps.ufo:2579
 msgid "A peaceful neighbourhood on the outskirts of a centre of population."
 msgstr "Un barrio pacifico a las afueras de un centro de población."
 
-#: ../base/ufos/maps.ufo:2573 ../base/ufos/maps.ufo:2608
-#: ../base/ufos/maps.ufo:5019
+#: ../base/ufos/maps.ufo:2626 ../base/ufos/maps.ufo:2661
+#: ../base/ufos/maps.ufo:5072
 msgid "Base is under attack."
 msgstr "Base bajo ataque"
 
-#: ../base/ufos/maps.ufo:2647
+#: ../base/ufos/maps.ufo:2700
 msgid "Cemetery terror mission."
 msgstr "Misión de terror en un cementerio"
 
-#: ../base/ufos/maps.ufo:2688 ../base/ufos/maps.ufo:4927
+#: ../base/ufos/maps.ufo:2741 ../base/ufos/maps.ufo:4980
 msgid "A city high rise."
 msgstr "Un rascacielos en la ciudad."
 
-#: ../base/ufos/maps.ufo:2729
+#: ../base/ufos/maps.ufo:2782
 msgid "A hospital in the outskirts of a city."
 msgstr "Un complejo de oficinas a las afueras de una ciudad."
 
-#: ../base/ufos/maps.ufo:2771 ../base/ufos/maps.ufo:3771
+#: ../base/ufos/maps.ufo:2824 ../base/ufos/maps.ufo:3824
 msgid "A small neighbourhood in a warm urban region."
 msgstr "Un pequeño vecindario urbano en una región templada."
 
-#: ../base/ufos/maps.ufo:2820
+#: ../base/ufos/maps.ufo:2873
 msgid "A place where people come to relax and mingle."
 msgstr "Un lugar a donde la gente viene a relajarse y convivir."
 
-#: ../base/ufos/maps.ufo:2872
+#: ../base/ufos/maps.ufo:2925
 msgid "An office complex under construction."
 msgstr "Un complejo de oficinas en construcción."
 
-#: ../base/ufos/maps.ufo:2926
+#: ../base/ufos/maps.ufo:2979
 msgid "A tropical area where several suspected criminals have made their homes."
 msgstr "Una región tropical donde varios presuntos criminales han hecho sus hogares."
 
-#: ../base/ufos/maps.ufo:2985
+#: ../base/ufos/maps.ufo:3038
 msgid "A small estate in the mountains."
 msgstr "Una pequeña finca en las montañas."
 
-#: ../base/ufos/maps.ufo:3026
+#: ../base/ufos/maps.ufo:3079
 msgid "A place where citizens come to replenish their vehicles' fuel supply."
 msgstr "Una estación de gasolina."
 
-#: ../base/ufos/maps.ufo:3074
+#: ../base/ufos/maps.ufo:3127
 msgid "A small office in a mountainous region."
 msgstr "Una pequeña oficina en una región montañosa."
 
-#: ../base/ufos/maps.ufo:3176
+#: ../base/ufos/maps.ufo:3229
 msgid "A kind of communal gathering centre annex foraging facility, known as a supermarket."
 msgstr "Un supermercado."
 
-#: ../base/ufos/maps.ufo:3228
+#: ../base/ufos/maps.ufo:3281
 msgid "A military convoy has caught the eye of the aliens."
 msgstr "Un convoy militar ha llamado la atención de los alienígenas."
 
-#: ../base/ufos/maps.ufo:3276 ../base/ufos/maps.ufo:4527
+#: ../base/ufos/maps.ufo:3329 ../base/ufos/maps.ufo:4580
 msgid "An urban district in an oriental region."
 msgstr "Zona urbana de una región oriental."
 
-#: ../base/ufos/maps.ufo:3327
+#: ../base/ufos/maps.ufo:3380
 msgid "A shelter that was built to house people in times of major disasters. Some internal blast doors may have been closed."
 msgstr "Un refugio construido para situaciones de emergencia. Algunas puertas pueden estar bloqueadas."
 
-#: ../base/ufos/maps.ufo:3384
+#: ../base/ufos/maps.ufo:3437
 msgid "A small industrial area."
 msgstr "Una pequeña zona industrial."
 
-#: ../base/ufos/maps.ufo:3434
+#: ../base/ufos/maps.ufo:3487
 msgid "A stadium used for various recreational events."
 msgstr "Un estadio utilizado para eventos recreativos."
 
-#: ../base/ufos/maps.ufo:3485
+#: ../base/ufos/maps.ufo:3538
 msgid "An office complex in the centre of town."
 msgstr "Un complejo de oficinas en el centro de la ciudad."
 
-#: ../base/ufos/maps.ufo:3539
+#: ../base/ufos/maps.ufo:3592
 msgid "An industrial area, used for loading and unloading goods."
 msgstr "Una zona industrial, usada para carga y descarga de bienes."
 
-#: ../base/ufos/maps.ufo:3587 ../base/ufos/maps.ufo:3631
+#: ../base/ufos/maps.ufo:3640 ../base/ufos/maps.ufo:3684
 msgid "A small bungalow."
 msgstr "Una pequeña cabaña."
 
-#: ../base/ufos/maps.ufo:3677
+#: ../base/ufos/maps.ufo:3730
 msgid "A bunker used in a previous conflict."
 msgstr "Un refugio subterráneo usado en un conflicto anterior."
 
-#: ../base/ufos/maps.ufo:3726
+#: ../base/ufos/maps.ufo:3779
 msgid "A small industry city area."
 msgstr "Una pequeña zona industrial."
 
-#: ../base/ufos/maps.ufo:3819
+#: ../base/ufos/maps.ufo:3872
 msgid "A crashed UFO-Corrupter."
 msgstr "Un OVNI - Corruptor caído."
 
-#: ../base/ufos/maps.ufo:3865
+#: ../base/ufos/maps.ufo:3918
 msgid "A hydroelectricity dam that is threatened by the alien invaders."
 msgstr "Una central hidroeléctrica amenazada por los invasores alienígenas."
 
-#: ../base/ufos/maps.ufo:3913
+#: ../base/ufos/maps.ufo:3966
 msgid "A small village."
 msgstr "Una pequeña villa."
 
-#: ../base/ufos/maps.ufo:3962
+#: ../base/ufos/maps.ufo:4015
 msgid "An estate owned by rich and influential people."
 msgstr "Una finca de gente rica e influyente."
 
-#: ../base/ufos/maps.ufo:4007
+#: ../base/ufos/maps.ufo:4060
 msgid "An excavation site that has fallen under alien attack."
 msgstr "Un sitio de excavación que ha sido atacado por los alienígenas."
 
-#: ../base/ufos/maps.ufo:4057
+#: ../base/ufos/maps.ufo:4110
 msgid "A ferry."
 msgstr "Un transbordador."
 
-#: ../base/ufos/maps.ufo:4155
+#: ../base/ufos/maps.ufo:4208
 msgid "A fuel depot the aliens try to destroy."
 msgstr "Un almacén de combustible que los alienígenas intentan destruir."
 
-#: ../base/ufos/maps.ufo:4195
+#: ../base/ufos/maps.ufo:4248
 msgid "A depot with the name 'The Gate' where secret technology is stored."
-msgstr "Un almacén llamado \"The Gate\" donde se resguarda tecnología secreta"
+msgstr "Un almacén llamado 'The Gate' donde se resguarda tecnología secreta"
 
-#: ../base/ufos/maps.ufo:4243
+#: ../base/ufos/maps.ufo:4296
 msgid "A local harbour."
 msgstr "Un puerto local."
 
-#: ../base/ufos/maps.ufo:4298 ../base/ufos/maps.ufo:4335
+#: ../base/ufos/maps.ufo:4351 ../base/ufos/maps.ufo:4388
 msgid "A small settlement in winter."
 msgstr "Un pequeño asentamiento invernal."
 
-#: ../base/ufos/maps.ufo:4384
+#: ../base/ufos/maps.ufo:4437
 msgid "An old mine."
 msgstr "Una vieja mina."
 
-#: ../base/ufos/maps.ufo:4437
+#: ../base/ufos/maps.ufo:4490
 msgid "Neighbourhood."
 msgstr "Vecindario."
 
-#: ../base/ufos/maps.ufo:4481
+#: ../base/ufos/maps.ufo:4534
 msgid "An office complex on the outskirts of town."
 msgstr "Un complejo de oficinas a las afueras de la ciudad."
 
-#: ../base/ufos/maps.ufo:4574
+#: ../base/ufos/maps.ufo:4627
 msgid "Underground pipe construction site."
 msgstr "Zona de construcción de una tubería subterránea."
 
-#: ../base/ufos/maps.ufo:4621
+#: ../base/ufos/maps.ufo:4674
 msgid "A luxurious vacation resort."
 msgstr "Un lujoso sitio vacacional."
 
-#: ../base/ufos/maps.ufo:4667
+#: ../base/ufos/maps.ufo:4720
 msgid "A rather old-fashioned suburban district."
 msgstr "Un antiguo distrito suburbano."
 
-#: ../base/ufos/maps.ufo:4785
+#: ../base/ufos/maps.ufo:4838
 msgid "A subway station in a suburban part of town."
 msgstr "Una estación del metro en una zona suburbana de la ciudad."
 
-#: ../base/ufos/maps.ufo:4832
+#: ../base/ufos/maps.ufo:4885
 msgid "A suburban district."
 msgstr "Un distrito suburbano."
 
-#: ../base/ufos/maps.ufo:4878
+#: ../base/ufos/maps.ufo:4931
 msgid "Wilderness terror mission."
 msgstr "Misión de terror en el desierto"
 
-#: ../base/ufos/maps.ufo:4999
+#: ../base/ufos/maps.ufo:5052
 msgid "An alien base."
 msgstr "Una base alienígena"
 
-#: ../base/ufos/maps.ufo:5031
+#: ../base/ufos/maps.ufo:5084
 msgid "Rescue mission."
 msgstr "Misión de rescate"
 
-#: ../base/ufos/maps.ufo:5061
+#: ../base/ufos/maps.ufo:5114
 msgid "Training Zone: Alpha"
 msgstr "Zona de Entrenamiento: Alfa"
 
-#: ../base/ufos/maps.ufo:5078
+#: ../base/ufos/maps.ufo:5131
 msgid "Training Zone: Bravo"
 msgstr "Zona de Entrenamiento: Bravo"
 
@@ -3880,7 +3884,7 @@ msgid "alien_communication_txt"
 msgstr ""
 "Comandante, me complace informarle que hemos recibido los primeros buenos resultados de nuestros continuos esfuerzos para interrogar a los alienígenas cautivos en nuestra Unidad de Contención. El enfoque del Dr. Yamamura ha empezado a dar frutos poco a poco. Los alienígenas han aprendido a transmitir mensajes tanto en código binario como mediante un lenguaje de signos comprensible para los humanos, y parecen comprender una amplia gama de preguntas e instrucciones. El Dr. Yamamura y su personal continúan trabajando para perfeccionar la lengua de signos que hemos estado utilizando, mientras que el resto de mi equipo se ha concentrado en tratar de extraer información útil de la mente colectiva. Esto no ha sido fácil. Los alienígenas son muy reticentes y requieren una gran cantidad de estimulantes químicos para entrar en un estado mental más colaborador. La tasa de muertes se ha elevado.\n"
 "\n"
-"Sin embargo, lo que hemos conseguido es significativo. Por ejemplo, la mente colectiva parece no tener una identidad. Parece incapaz de dominar conceptos como \"Yo\" o \"Nosotros\", o incluso \"Tu\" y \"Ellos\". Solo acepta estas palabras como diferenciadores numéricos: un individuo o muchos, un humano o un grupo. Esto indica una gran diferenciación entre el pensamiento humano y el alienígena. La conciencia compartida ni siquiera piensa en ella misma como una entidad individual. Esto, junto con otras respuestas que hemos juntado a partir de nuestras continuas sesiones, nos hace pensar que efectivamente todos los alienígenas comparten una misma mente. Y me refiero a todos ellos, Comandante. No es solo una manera de incrementar la eficacia del trabajo en equipo o animar el espíritu del grupo; es un componente indispensable en la sociedad alienígena. Cada alienígena que vive y respira es una parte igual e idéntica de la gran mente colectiva, incluso entre individuos de diferentes especies. La única diversidad en los alienígenas reconocerán será las diferentes sustancias requeridas para mantener vivas a las distintas especies.\n"
+"Sin embargo, lo que hemos conseguido es significativo. Por ejemplo, la mente colectiva parece no tener una identidad. Parece incapaz de dominar conceptos como 'Yo' o 'Nosotros', o incluso 'Tu' y 'Ellos'. Solo acepta estas palabras como diferenciadores numéricos: un individuo o muchos, un humano o un grupo. Esto indica una gran diferenciación entre el pensamiento humano y el alienígena. La conciencia compartida ni siquiera piensa en ella misma como una entidad individual. Esto, junto con otras respuestas que hemos juntado a partir de nuestras continuas sesiones, nos hace pensar que efectivamente todos los alienígenas comparten una misma mente. Y me refiero a todos ellos, Comandante. No es solo una manera de incrementar la eficacia del trabajo en equipo o animar el espíritu del grupo; es un componente indispensable en la sociedad alienígena. Cada alienígena que vive y respira es una parte igual e idéntica de la gran mente colectiva, incluso entre individuos de diferentes especies. La única diversidad en los alienígenas reconocerán será las diferentes sustancias requeridas para mantener vivas a las distintas especies.\n"
 "\n"
 "Además, la mente colectiva ha mostrado estupor ante nuestros esfuerzos por comunicarnos con alienígenas individuales, y más aún mediante algo tan burdo como el lenguaje de signos. Una analogía comprensible para el hombre podría ser tratar de mantener una conversación profunda con la uña del pie de alguien, o de hablar con una simple célula de tu propio cuerpo. Por supuesto, esto nos lleva a la pregunta de donde están realmente los oídos y el cerebro del alienígena.\n"
 "\n"
@@ -3897,9 +3901,9 @@ msgid "alien_communication_pre_txt"
 msgstr ""
 "Comandante, el aumento del intelecto de los alienígenas cautivos en nuestra Unidad de Contención me lleva a concluir que finalmente podemos comenzar a tener una verdadera comunicación con los alienígenas y, lo que es más importante, conseguir de ellos alguna información aprovechable. Citando mi informe 'Comportamiento extraño':\n"
 "\n"
-"(Comportamiento extraño) \"Hay varias especies de alienígenas que reúnen los requisitos fisiológicos necesarios para desarrollar la conciencia, pero muestran poca o ninguna actividad cerebral individual. Esto implica la presencia de algún tipo de 'pensamiento compartido' entre ellas, una mente colectiva más inteligente cuanto están juntos.\"\n"
+"(Comportamiento extraño) 'Hay varias especies de alienígenas que reúnen los requisitos fisiológicos necesarios para desarrollar la conciencia, pero muestran poca o ninguna actividad cerebral individual. Esto implica la presencia de algún tipo de 'pensamiento compartido' entre ellas, una mente colectiva más inteligente cuanto están juntos.'\n"
 "\n"
-"\"Ahora que poseemos varios espécimenes capturados, su inteligencia parece acercarse al nivel de los humanos. Si somos capaces de crear un dispositivo apropiado de traducción, o un lenguaje común, podríamos finalmente comunicarnos con los cautivos. Quizás algunos de nuestros lingüistas o psicólogos pueda establecer diálogo. Ésta es una gran oportunidad de investigación que no podemos permitirnos ignorar.\"\n"
+"'Ahora que poseemos varios espécimenes capturados, su inteligencia parece acercarse al nivel de los humanos. Si somos capaces de crear un dispositivo apropiado de traducción, o un lenguaje común, podríamos finalmente comunicarnos con los cautivos. Quizás algunos de nuestros lingüistas o psicólogos pueda establecer diálogo. Ésta es una gran oportunidad de investigación que no podemos permitirnos ignorar.'\n"
 "\n"
 "El Dr.Yamamura está empezando a hacer un verdadero progreso en este frente, enseñado a los alienígenas varios nuevos signos de lenguaje cada día, pero requeriremos tiempo de laboratorio y la financiación para un estudio adecuado de lo que estos alienígenas conocen y sobre la forma en que esto puede ayudarnos. La capacidad de interrogarlos sobre su propia tecnología podría ser de invaluable para nuestros soldados e ingenieros. El Cte. Navarra esta tan entusiasmado ante la perspectiva, que él mismo en esta oportunidad se manifestó a favor de la División de Biología.\n"
 "\n"
@@ -3910,7 +3914,7 @@ msgstr ""
 "Dr. Connor"
 
 #: ../base/ufos/research.ufo:473 client/cgame/campaign/cp_alienbase.cpp:156
-#: client/cgame/campaign/cp_missions.cpp:456
+#: client/cgame/campaign/cp_missions.cpp:457
 msgid "Alien base"
 msgstr "Base Alienígena"
 
@@ -4032,9 +4036,9 @@ msgstr ""
 "Cnl. Falkland"
 
 #: ../base/ufos/research.ufo:549 ../base/ufos/research.ufo:558
-#: ../base/ufos/research.ufo:5468 ../base/ufos/research.ufo:5477
-#: ../base/ufos/research.ufo:5547 ../base/ufos/research.ufo:5575
-#: ../base/ufos/research.ufo:5608 ../base/ufos/research.ufo:5640
+#: ../base/ufos/research.ufo:5469 ../base/ufos/research.ufo:5478
+#: ../base/ufos/research.ufo:5548 ../base/ufos/research.ufo:5576
+#: ../base/ufos/research.ufo:5609 ../base/ufos/research.ufo:5641
 msgid "mail_from_col_falkland"
 msgstr "Cnel. Ingrid Falkland, División de Inteligencia, PHALANX, Comando de Operaciones del Atlántico"
 
@@ -4055,7 +4059,7 @@ msgstr ""
 "\n"
 "-- La nave es extremadamente difícil de ver con equipamiento de detección humano, independientemente de la capacidad de los equipos electrónicos de guerra que poseen los alienígenas. Esto en gran medida es debido a los materiales del casco que absorben efectivamente todo tipo de radiación. Hemos tenido mas suerte en la detección pasiva de infrarrojos y de radiación gamma, debido que los motores basados en antimateria producen mucha de ambas.\n"
 "\n"
-"-- El diseño delgado, que genera una pobre sustentación y un difícil manejo en el aire, es parcialmente debido a los pesados materiales del casco. Sería imposible crear unas alas efectivas de dichos materiales. En vez de eso, cada gramo de material en exceso ha sido eliminado, y la nave se mueve a tan altas velocidades que es necesario muy poca superficie de sustentación. El material en si mismo es asombroso, parte metal, parte polímero de plástico. Funciona como una aleación con memoria, \"recordando\" al menos dos formas asignadas, encogiéndose en formas mas compactas cuando están frías pero expandiéndose automáticamente y asumiendo una forma mucho mas confortable para volar una vez que se calienta. Es mas duro y resistente que cualquier material conocido en la Tierra (exceptuando los nanotubos de carbono puro) y mucho mas versátil en el diseño de aeronaves.\n"
+"-- El diseño delgado, que genera una pobre sustentación y un difícil manejo en el aire, es parcialmente debido a los pesados materiales del casco. Sería imposible crear unas alas efectivas de dichos materiales. En vez de eso, cada gramo de material en exceso ha sido eliminado, y la nave se mueve a tan altas velocidades que es necesario muy poca superficie de sustentación. El material en si mismo es asombroso, parte metal, parte polímero de plástico. Funciona como una aleación con memoria, 'recordando' al menos dos formas asignadas, encogiéndose en formas mas compactas cuando están frías pero expandiéndose automáticamente y asumiendo una forma mucho mas confortable para volar una vez que se calienta. Es mas duro y resistente que cualquier material conocido en la Tierra (exceptuando los nanotubos de carbono puro) y mucho mas versátil en el diseño de aeronaves.\n"
 "\n"
 "Armados con estos hechos, ahora podemos empezar a analizar los diferentes componentes y roles del OVNI. He recomendado a nuestros ingenieros empezar en seguida a desmantelar esta nave por partes. ¿Quién sabe qué descubriremos en los pedazos y las pequeñas piezas que tenemos frente a nosotros?\n"
 "\n"
@@ -4375,7 +4379,7 @@ msgstr ""
 "\n"
 "El Programa Excalibur fue creado para encontrar las armas más efectivas de la Tierra a través de la revisión de sus parámetros de manufactura, durabilidad, registro operacional y eficacia de combate en aquellas situaciones donde se ha logrado enfrentar a los alienígenas en batalla.\n"
 "\n"
-"La SA-3000 GPG (General-Purpose Gun) Inglesa, comúnmente conocida como \"La Gran Arma Inglesa\", es una versátil ametralladora de tambor que ha estado en servicio por todo el mundo a lo largo de sus 16 años de vida operacional. Utilizada por primera vez en 2068, rápidamente encontró su lugar como una ametralladora ligera para el uso de infantería y helicópteros de soporte terrestre, al ser fácil de disparar ya sea sobre el muslo del soldado un bipié o en un montaje pivotante.\n"
+"La SA-3000 GPG (General-Purpose Gun) Inglesa, comúnmente conocida como 'La Gran Arma Inglesa', es una versátil ametralladora de tambor que ha estado en servicio por todo el mundo a lo largo de sus 16 años de vida operacional. Utilizada por primera vez en 2068, rápidamente encontró su lugar como una ametralladora ligera para el uso de infantería y helicópteros de soporte terrestre, al ser fácil de disparar ya sea sobre el muslo del soldado un bipié o en un montaje pivotante.\n"
 "\n"
 "La versión para uso de infantería de la GPG es un arma muy versátil y confiable. A diferencia de la mayoría de las ametralladoras la GPG utiliza balas sin casquillo en un cartucho tipo tambor en vez de una cinta. Esto limita la velocidad de disparo y la duración de las municiones, pero es también la razón de la versatilidad de esta arma. El proceso de recarga de la GPG es casi tan rápido y sencillo como el de un rifle de asalto, y los cartuchos contienen 100 balas cada uno. Esto permite que la GPG sea usada casi como un rifle pesado de asalto. Los cartuchos son algo voluminosos, pero aún lo suficientemente ligeros y pequeños para permitir que un soldado lleve varios de ellos al campo de batalla.\n"
 "\n"
@@ -4459,7 +4463,7 @@ msgstr ""
 "\n"
 "El sistema sudafricano MPMDS (Multi-Purpose Missile Delivery System) es el lanzamisiles de infantería más pesado que existe en el mercado, capaz de disparar munición antitanque así como cohetes explosivos capaces de reducir a la nada a la infantería enemiga. Inicialmente diseñada como artillería ligera, esta arma es relativamente nueva; su única experiencia en combate fue durante ataque a Bombay a manos de las tropas de La Comunidad de Oceanía. Fue una de las pocas armas eficaces que eventualmente decidieron el resultado de la batalla - y hay una buena razón para ello.\n"
 "\n"
-"Las naves alienígenas en tierra emiten increíbles campos electromagnéticos que interfieren con nuestros dispositivos. De hecho, sus emisiones hicieron que nuestros misiles guiados \"inteligentes\" fueran completamente inútiles. Si alguna de las radiaciones extraterrestres no fue capaz de confundir el cerebro relativamente estúpido de nuestros misiles, sin duda alguna cualquier otro dispositivo alienígena lo hizo. Nuestros ingenieros todavía no han encontrado la forma de superar este obstáculo. El MPMDS, sin embargo, al usar cohetes no guiados no se vio afectado por estas técnicas de guerra electrónica.\n"
+"Las naves alienígenas en tierra emiten increíbles campos electromagnéticos que interfieren con nuestros dispositivos. De hecho, sus emisiones hicieron que nuestros misiles guiados 'inteligentes' fueran completamente inútiles. Si alguna de las radiaciones extraterrestres no fue capaz de confundir el cerebro relativamente estúpido de nuestros misiles, sin duda alguna cualquier otro dispositivo alienígena lo hizo. Nuestros ingenieros todavía no han encontrado la forma de superar este obstáculo. El MPMDS, sin embargo, al usar cohetes no guiados no se vio afectado por estas técnicas de guerra electrónica.\n"
 "\n"
 "Los cohetes que usa son monstruos de 120mm, el tamaño de la munición de artillería convencional. Se dispara a través de un cañón de guiado estabilizándose en el aire, y tienen un alcance efectivo máximo de 70 metros. Sorprendentemente están fabricados con sólo tres piezas: el impulsor, la cabeza explosiva y el sensor de impacto. Su relativa simpleza les permite una fiabilidad extraordinaria en los más adversos escenarios de combate. A pesar de que los cohetes no son especialmente certeros pueden devastar cualquier cosa que se encuentre en su camino, incluyendo extraterrestres. Con sólo un buen disparo se puede hacer saltar al enemigo por los aires.\n"
 "\n"
@@ -4683,7 +4687,7 @@ msgstr "Rifle Electromagnético"
 #: ../base/ufos/research.ufo:997
 msgid "bolterrifle_txt"
 msgstr ""
-"El proyecto \"Rifle EM\" ha sido un éxito rotundo! Por primera vez en la historia de la humanidad, hemos creado un arma electromagnética portátil real. Hemos llamado la nueva arma \"Rifle Bólter\" para evitar ambigüedades existentes con otras implementaciones de AAM (Armas de Aceleración Magnética). Trataré de explicar su funcionamiento en este breve resumen.\n"
+"El proyecto 'Rifle EM' ha sido un éxito rotundo! Por primera vez en la historia de la humanidad, hemos creado un arma electromagnética portátil real. Hemos llamado la nueva arma 'Rifle Bólter' para evitar ambigüedades existentes con otras implementaciones de AAM (Armas de Aceleración Magnética). Trataré de explicar su funcionamiento en este breve resumen.\n"
 "\n"
 "El Rifle Bólter esta confeccionado según la configuración de Arma de Raíles (Railgun), en oposición a las armas de tipo Cañón Gauss (Coilgun), debido a la ineficiencia y generalmente pobre desempeño de estas últimas.\n"
 "\n"
@@ -4768,7 +4772,7 @@ msgid "monoknife_txt"
 msgstr ""
 "Comandante, por este medo reporto nuestro éxito al crear un cuchillo hecho con los materiales alienígenas. Hemos cargado las especificaciones de producción en la maquinaria de nuestros talleres y hemos construido una pequeña fragua para dar forma a nuestros nuevos cuchillos monomoleculares.\n"
 "\n"
-"El proceso de reproducción ha sido muy interesante en este caso. Una vez que encontramos como \"cocinar\" el plástico alienígena a las temperaturas correctas, obtuvimos barras de material increíblemente duro a las cuales entonces tratamos de dar forma de cuchillo. En nuestros primeros intentos tratamos de crear un cuchillo de hoja recta con punta reforzada, como la mayoría de los cuchillos de combate modernos, de manera que pudiera usarse tanto para cortar como para apuñalar. Todos estos modelos se partieron en dos durante el proceso de enfriamiento. Tuvimos gran dificultad para averiguar por qué hasta que pusimos una pequeña cámara dentro del horno.\n"
+"El proceso de reproducción ha sido muy interesante en este caso. Una vez que encontramos como 'cocinar' el plástico alienígena a las temperaturas correctas, obtuvimos barras de material increíblemente duro a las cuales entonces tratamos de dar forma de cuchillo. En nuestros primeros intentos tratamos de crear un cuchillo de hoja recta con punta reforzada, como la mayoría de los cuchillos de combate modernos, de manera que pudiera usarse tanto para cortar como para apuñalar. Todos estos modelos se partieron en dos durante el proceso de enfriamiento. Tuvimos gran dificultad para averiguar por qué hasta que pusimos una pequeña cámara dentro del horno.\n"
 "\n"
 "Resulta que la curvatura del Sable Kerr no es una opción de diseño - es una función del material mismo. El plástico se curva radicalmente y se expande durante el moldeado por calor en nuestro horno, y se contrae de nuevo durante el enfriamiento, lo que terminó partiendo nuestros modelos de hoja recta. Se requiere una forma curva particular para que mantenga su durabilidad como cuchillo. Tuvimos que rediseñar el cuchillo completamente tomando en cuenta este efecto, lo cual nos llevó a su forma actual.\n"
 "\n"
@@ -4781,7 +4785,7 @@ msgstr ""
 #: ../base/ufos/research.ufo:1077
 msgid "monoknife_pre_txt"
 msgstr ""
-"Comandante, ahora que le hemos dado una buena mirada a la tecnología de las armas cortantes alienígenas desde varias fuentes -las \"mandíbulas\" de la Araña Sanguinaria y el Sable Kerr- estamos comenzando a hacernos una idea de cómo recrear los materiales desconocidos o poco entendidos usados en su construcción.\n"
+"Comandante, ahora que le hemos dado una buena mirada a la tecnología de las armas cortantes alienígenas desde varias fuentes -las 'mandíbulas' de la Araña Sanguinaria y el Sable Kerr- estamos comenzando a hacernos una idea de cómo recrear los materiales desconocidos o poco entendidos usados en su construcción.\n"
 "\n"
 "Mucho de esto es nuevo para nosotros. El plástico del cual están hechos los sables alienígenas es más duro que el acero, más filoso que una navaja de afeitar, y aún así es resistente a impactos y lo suficientemente flexible como para sobrevivir las presiones del combate cuerpo a cuerpo. Una vez forjados son casi imposibles de romper, astillar o doblar. Aplicar cincel y martillo directamente a la hoja simplemente resulta en dos mitades de cincel cortadas limpiamente.\n"
 "\n"
@@ -4939,12 +4943,12 @@ msgstr ""
 "\n"
 "El concepto de la granada de fragmentación ha cambiado poco desde el momento de su concepción, cuando los soldados Chinos introducían pólvora en contenedores metálicos o de cerámica. Solo se ha solidificado más hacia el final del Siglo XX. Las mejoras en tecnología de explosivos y materiales de revestimiento las han hecho un poco más rápidas, y un poco más letales, pero los mecanismos son los mismos: Una sustancia explosiva en el núcleo de la granada causa que su estructura de revestimiento (y posiblemente otros compuestos como alambre enrollado en espiral o fósforo blanco alrededor del explosivo) sea fragmentada en metralla y se desplace, a altas velocidades, en toda dirección, matando o hiriendo a los objetivos en su área de efecto. El temporizador es activado al tirar de la anilla y liberar el mango, el cual usualmente es liberado cuando la granada está siendo lanzada. Esta detonará tras unos cuantos segundos.\n"
 "\n"
-"Para los propósitos de PHALANX, hemos seleccionado la Granada HG15 Australiana como la mejor del conjunto. Esta granada está compuesta por una extremadamente convencional carga del explosivo químico sólido C8, una capa interna de alambres en espiral y una fina capa externa de acero cromado. Está diseñada para maximizar su área de cobertura al colocar mucha más metralla que cualquier otra granada en el mercado. La cobertura exterior de la HG15 es lisa y sin relieves, a diferencia de la vieja \"Granada de Piña\" de la Segunda Guerra Mundial, para facilitar su desplazamiento sobre distintas superficies. El explosivo C8 en su núcleo puede ser antiguo en diseño, pero es muy poderoso y se puede contar con que funcionará bajo las más extremas condiciones. La fiabilidad es un muy importante atributo en cualquier tipo de explosivo manual.\n"
+"Para los propósitos de PHALANX, hemos seleccionado la Granada HG15 Australiana como la mejor del conjunto. Esta granada está compuesta por una extremadamente convencional carga del explosivo químico sólido C8, una capa interna de alambres en espiral y una fina capa externa de acero cromado. Está diseñada para maximizar su área de cobertura al colocar mucha más metralla que cualquier otra granada en el mercado. La cobertura exterior de la HG15 es lisa y sin relieves, a diferencia de la vieja 'Granada de Piña' de la Segunda Guerra Mundial, para facilitar su desplazamiento sobre distintas superficies. El explosivo C8 en su núcleo puede ser antiguo en diseño, pero es muy poderoso y se puede contar con que funcionará bajo las más extremas condiciones. La fiabilidad es un muy importante atributo en cualquier tipo de explosivo manual.\n"
 "\n"
 "\n"
 "Doctrina Recomendada\n"
 "\n"
-"A pesar de ser efectiva contra la infantería enemiga, las granadas de fragmentación son \"armas de oportunidad\", y no un substituto para las armas de fuego o artillería portátil. Su alcance es altamente limitado, y su radio de mortandad es pequeño. Aun así, si la situación requiere el uso de fuego indirecto a corta distancia o de algo letal arrojado al doblar de la esquina, la granada de Fragmentación es justamente lo que se debe usar.\n"
+"A pesar de ser efectiva contra la infantería enemiga, las granadas de fragmentación son 'armas de oportunidad', y no un substituto para las armas de fuego o artillería portátil. Su alcance es altamente limitado, y su radio de mortandad es pequeño. Aun así, si la situación requiere el uso de fuego indirecto a corta distancia o de algo letal arrojado al doblar de la esquina, la granada de Fragmentación es justamente lo que se debe usar.\n"
 "\n"
 "Se deben tomar precauciones para que ningún aliado (civiles especialmente) sea atrapado en su área de efecto. En tal situación no se aconseja el uso granadas letales; se debe dar preferencia a las granadas aturdidoras.\n"
 "\n"
@@ -4978,9 +4982,9 @@ msgstr ""
 "\n"
 "El Programa Excalibur fue creado para encontrar las armas más efectivas de la Tierra a través de la revisión de sus parámetros de manufactura, durabilidad, registro operacional y eficacia de combate en aquellas situaciones donde se ha logrado enfrentar a los alienígenas en batalla.\n"
 "\n"
-"Las granadas incendiarias son \"armas de negación de zona\", cubriendo una larga extensión de terreno con llamas ardientes las cuales son casi imposibles de extinguir. Una vez lanzada, el cuerpo de la granada explota, esparciendo el compuesto incendiario sobre el área vecina - y sobre cualquiera que por mala suerte se encuentre en su área de efecto. El compuesto en sí mismo es una modificación de la mezcla usada desde la Segunda Guerra Mundial; termita, nitrato de bario, sulfuro y un agente aglutinante. El temporizador es activado al tirar de la anilla y liberar el mango, el cual usualmente es liberado cuando la granada está siendo lanzada. Esta detonará tras unos cuantos segundos.\n"
+"Las granadas incendiarias son 'armas de negación de zona', cubriendo una larga extensión de terreno con llamas ardientes las cuales son casi imposibles de extinguir. Una vez lanzada, el cuerpo de la granada explota, esparciendo el compuesto incendiario sobre el área vecina - y sobre cualquiera que por mala suerte se encuentre en su área de efecto. El compuesto en sí mismo es una modificación de la mezcla usada desde la Segunda Guerra Mundial; termita, nitrato de bario, sulfuro y un agente aglutinante. El temporizador es activado al tirar de la anilla y liberar el mango, el cual usualmente es liberado cuando la granada está siendo lanzada. Esta detonará tras unos cuantos segundos.\n"
 "\n"
-"La granada estándar M71 Americana consiste en un núcleo de explosivo C8, una capa interna de agente incendiario y una cubierta plástica externa que no se fragmenta y, aún más importante, no demora, o de alguna manera impide, el esparcimiento de la carga sobre un amplia área. La cubierta externa de la M71 es cilíndrica y lisa, a diferencia de la antigua \"Granada de Piña\" de la Segunda Guerra Mundial, lo cual facilita su desplazamiento a través de distintas superficies.\n"
+"La granada estándar M71 Americana consiste en un núcleo de explosivo C8, una capa interna de agente incendiario y una cubierta plástica externa que no se fragmenta y, aún más importante, no demora, o de alguna manera impide, el esparcimiento de la carga sobre un amplia área. La cubierta externa de la M71 es cilíndrica y lisa, a diferencia de la antigua 'Granada de Piña' de la Segunda Guerra Mundial, lo cual facilita su desplazamiento a través de distintas superficies.\n"
 "\n"
 "Como toda granada de mano, su alcance es limitado, pero puede ser un arma esencial para tomar el control del campo de batalla.\n"
 "\n"
@@ -5027,7 +5031,7 @@ msgstr ""
 "\n"
 "Esta arma cuenta con dos modalidades de tiro; disparo temporizado, en el cual las granadas detonarán después de transcurrido un tiempo desde ser expulsadas del barril, y estallido aéreo, en el cual las granadas detonarán en el aire tras haber recorrido cierta distancia. La máxima cadencia de tiro del RA6 es de un disparo por segundo en modo semi-automático, o puede recorrer rápidamente su cilindro en modo ráfaga, disparando rápidas ráfagas de 3 disparos capaces de devastar extensas áreas.\n"
 "\n"
-"La munición estándar para el RA6 es la granada de 25mm AIT (Alto Impulso Termobárico), la cual es una munición \"gas-aire\" que usa el oxígeno atmosférico para generar una explosión, en vez de albergar un agente oxidante. Las armas termobáricas producen una fuerza explosiva superior a la que, posiblemente, podría generar un explosivo convencional del mismo tamaño. Ellas basan su letalidad en la energía de la explosión, conmoción y el calor en vez de en la fragmentación, como la mayoría de los explosivos convencionales.\n"
+"La munición estándar para el RA6 es la granada de 25mm AIT (Alto Impulso Termobárico), la cual es una munición 'gas-aire' que usa el oxígeno atmosférico para generar una explosión, en vez de albergar un agente oxidante. Las armas termobáricas producen una fuerza explosiva superior a la que, posiblemente, podría generar un explosivo convencional del mismo tamaño. Ellas basan su letalidad en la energía de la explosión, conmoción y el calor en vez de en la fragmentación, como la mayoría de los explosivos convencionales.\n"
 "\n"
 "Esta es una de las más versátiles y efectivas armas de nuestro arsenal. Aún no siendo tan poderoso como el Lanzacohetes, es un arma de soporte y pieza de artillería de infantería fiable.\n"
 "\n"
@@ -5038,7 +5042,7 @@ msgstr ""
 "\n"
 "El HPGL es el sueño de un estratega hecho realidad. Cuenta con excelente daño y alcance, puede alcanzar a varios objetivos agrupados con una sola descarga y puede ser utilizado para tareas especializadas como negación de zonas con granadas incendiarias. Puede ser tan efectivo en situaciones cerradas como en largos espacios abiertos, aún así diferentes tácticas serán necesarias.\n"
 "\n"
-"El modo de disparo de estallido aéreo es de uso preferible en terrenos abiertos; sacrifica algo de alcance al eliminar el \"factor rebote\", esto también tiene sus beneficios. El factor rebote puede seriamente dañar la exactitud del disparo si la granada aterriza en terreno desnivelado, permitiendo al enemigo escapar o ponerse a cubierto antes de la detonación. El modo de estallido aéreo también permite al operador colocar las granadas exactamente donde se desea. A menos que ocurra una catastrófica falla con el detonador, cualquier disparo realizado por el HPGL en modo estallido aéreo detonará en el punto destinado con una mínima posibilidad de error mecánico.\n"
+"El modo de disparo de estallido aéreo es de uso preferible en terrenos abiertos; sacrifica algo de alcance al eliminar el 'factor rebote', esto también tiene sus beneficios. El factor rebote puede seriamente dañar la exactitud del disparo si la granada aterriza en terreno desnivelado, permitiendo al enemigo escapar o ponerse a cubierto antes de la detonación. El modo de estallido aéreo también permite al operador colocar las granadas exactamente donde se desea. A menos que ocurra una catastrófica falla con el detonador, cualquier disparo realizado por el HPGL en modo estallido aéreo detonará en el punto destinado con una mínima posibilidad de error mecánico.\n"
 "\n"
 "En situaciones cerradas, las granadas temporizadas pueden rebotar de las paredes y esquinas para alcanzar lugares peligrosos o inconvenientes donde otras armas no funcionarían. Sin embargo se debe tomar la precaución que el operador no dispare granadas que lo dejen a él, o a tropas aliadas, dentro del radio de explosión. Esto haría al operador bastante impopular con lo que reste del equipo. Debido al factor rebote en las granadas temporizadas, estas pueden convertirse en un grave riesgo para cualquier civil en el área. No es aconsejable el uso del Lanzagranadas en situaciones donde civiles puedan resultar heridos por daño colateral.\n"
 "\n"
@@ -5068,7 +5072,7 @@ msgstr ""
 "\n"
 "Descripción\n"
 "\n"
-"Esta es una caja que contiene 9 granadas AIT (Alto Impulso Termobárico) de 25mm. Estas son disparadas electrónicamente por un encendedor de chispa dentro del barril del lanzagranadas. Estas granadas son del tipo de munición \"gas-aire\" que usa el oxígeno atmosférico para generar una explosión, en vez de albergar un agente oxidante. Las armas termobáricas producen una fuerza explosiva superior a la que, posiblemente, podría generar un explosivo convencional del mismo tamaño.\n"
+"Esta es una caja que contiene 9 granadas AIT (Alto Impulso Termobárico) de 25mm. Estas son disparadas electrónicamente por un encendedor de chispa dentro del barril del lanzagranadas. Estas granadas son del tipo de munición 'gas-aire' que usa el oxígeno atmosférico para generar una explosión, en vez de albergar un agente oxidante. Las armas termobáricas producen una fuerza explosiva superior a la que, posiblemente, podría generar un explosivo convencional del mismo tamaño.\n"
 "\n"
 "Estas granadas son para ser cargadas en el Lanzagranadas HPGL\n"
 "\n"
@@ -5134,7 +5138,7 @@ msgstr ""
 "\n"
 "Descripción\n"
 "\n"
-"Esta es una caja que contiene 9 granadas IC (Incendiarias) de 25mm. Estas son disparadas electrónicamente por un encendedor de chispa dentro del barril del lanzagranadas. Estas granadas son \"armas de negación de zona\", cubriendo una larga extensión de terreno con llamas ardientes las cuales son casi imposibles de extinguir. El compuesto en sí mismo es una modificación de la mezcla usada desde la Segunda Guerra Mundial; termita, nitrato de bario, sulfuro y un agente aglutinante. Gracias a la moderna tecnología de miniaturización cabe en un ligero cartucho de 25mm.\n"
+"Esta es una caja que contiene 9 granadas IC (Incendiarias) de 25mm. Estas son disparadas electrónicamente por un encendedor de chispa dentro del barril del lanzagranadas. Estas granadas son 'armas de negación de zona', cubriendo una larga extensión de terreno con llamas ardientes las cuales son casi imposibles de extinguir. El compuesto en sí mismo es una modificación de la mezcla usada desde la Segunda Guerra Mundial; termita, nitrato de bario, sulfuro y un agente aglutinante. Gracias a la moderna tecnología de miniaturización cabe en un ligero cartucho de 25mm.\n"
 "\n"
 "Estas granadas son para ser cargadas en el Lanzagranadas HPGL\n"
 "\n"
@@ -5251,9 +5255,9 @@ msgstr ""
 #: ../base/ufos/research.ufo:1353
 msgid "kerrblade_pre_txt"
 msgstr ""
-"Comandante, hemos recuperado una interesante arma alienígena en el campo de batalla. Parece ser alguna clase de cuchillo o espada con un filo mucho más agudo que cualquiera en la Tierra. Puede cortar a través del acero como si fuera papel y pasa a través de la armadura de combate de nuestros soldados como si no existiera. Las tropas lo han llamado el \"Sable Kerr\" debido al peculiar sonido que hace al cortar nuestra armadura.\n"
+"Comandante, hemos recuperado una interesante arma alienígena en el campo de batalla. Parece ser alguna clase de cuchillo o espada con un filo mucho más agudo que cualquiera en la Tierra. Puede cortar a través del acero como si fuera papel y pasa a través de la armadura de combate de nuestros soldados como si no existiera. Las tropas lo han llamado el 'Sable Kerr' debido al peculiar sonido que hace al cortar nuestra armadura.\n"
 "\n"
-"Debemos examinar este \"sable\" para determinar su función y como esta construido. Podría haber una forma de duplicar esta tecnología de una forma compatible para uso humano, con lo cual la desventaja de los enfrentamientos cuerpo a cuerpo con los alienígenas sería mucho menor que al enfrentarlos con un cuchillo de combate.\n"
+"Debemos examinar este 'sable' para determinar su función y como esta construido. Podría haber una forma de duplicar esta tecnología de una forma compatible para uso humano, con lo cual la desventaja de los enfrentamientos cuerpo a cuerpo con los alienígenas sería mucho menor que al enfrentarlos con un cuchillo de combate.\n"
 "\n"
 "Por supuesto, este programa necesitara que su aprobación de tiempo de laboratorio y financiamiento.\n"
 "\n"
@@ -5360,9 +5364,9 @@ msgid "electrolaser_txt"
 msgstr ""
 "Comandante, quisiera reportar que hemos completado exitosamente el prototipo de nuestro nuevo diseño de electroláser y se han aprobado los planes finales para un modelo de producción. Ahora podemos comenzar a utilizarlo en combate. Como es usual, he escrito las especificaciones y sugerencias de uso aquí para usted.\n"
 "\n"
-"Desde un punto de vista técnico, el electroláser trabaja con casi los mismos principios que los relámpagos naturales. Envía electricidad a través de un canal de aire ionizado -al que nos referimos como un \"canal de plasma\"- que es más conductivo que el aire a su alrededor, permitiendo a la electricidad salvar la distancia hasta el objetivo pasando a través de él hacia tierra, causando un severo choque eléctrico. Este canal de plasma es creado por un rápido pulso láser de alta potencia el cual provoca que el aire comience a ionizarse.\n"
+"Desde un punto de vista técnico, el electroláser trabaja con casi los mismos principios que los relámpagos naturales. Envía electricidad a través de un canal de aire ionizado -al que nos referimos como un 'canal de plasma'- que es más conductivo que el aire a su alrededor, permitiendo a la electricidad salvar la distancia hasta el objetivo pasando a través de él hacia tierra, causando un severo choque eléctrico. Este canal de plasma es creado por un rápido pulso láser de alta potencia el cual provoca que el aire comience a ionizarse.\n"
 "\n"
-"Los electroláseres son un concepto probado en la Tierra. Se han usado como armas no letales desde hace varias décadas. En su forma más básica, son un \"taser sin cables\", pero hasta ahora han sufrido de serias limitaciones debido a la capacidad de la batería y los niveles de potencia requeridos para noquear a un soldado en armadura aislante. Por esta razón solo se han desarrollado de forma práctica como armas descartables de un solo tiro y armas de corto alcance de uso civil. Gracias a la potencia de los láseres de fluoruro de deuterio y sus sistemas de energía, sin embargo, hemos sido capaces de ir más allá que eso.\n"
+"Los electroláseres son un concepto probado en la Tierra. Se han usado como armas no letales desde hace varias décadas. En su forma más básica, son un 'taser sin cables', pero hasta ahora han sufrido de serias limitaciones debido a la capacidad de la batería y los niveles de potencia requeridos para noquear a un soldado en armadura aislante. Por esta razón solo se han desarrollado de forma práctica como armas descartables de un solo tiro y armas de corto alcance de uso civil. Gracias a la potencia de los láseres de fluoruro de deuterio y sus sistemas de energía, sin embargo, hemos sido capaces de ir más allá que eso.\n"
 "\n"
 "Nuestro proyecto de electroláser puede proyectar un canal de plasma estable a distancias medias o cortas, dependiendo de las condiciones atmosféricas, y enviar voltajes nunca antes vistos al objetivo. Es efectivo contra enemigos tanto orgánicos como robóticos. Puede ser ajustado a distintos niveles de potencia dependiendo de las necesidades del momento, desde un simple choque paralizante hasta una electrocución completa la cual puede matar a los objetivos más débiles en el acto.\n"
 "\n"
@@ -5405,7 +5409,7 @@ msgid "laser_ammo_pre_txt"
 msgstr ""
 "Comandante, esta es una de varias propuestas que estoy presentando para la investigación y el desarrollo de nuevas armas láser. Cada una de ellas tendrá que ser desarrollada por separado debido a las diferencias de tamaño, niveles de potencia y complejidad de los sistemas involucrados.\n"
 "\n"
-"Para impulsar nuestro armamento láser de fluoruro de deuterio, tenemos que diseñar cartuchos de seguridad que puedan almacenar una gran cantidad de diferentes materiales peligrosos. Etileno, trifluoruro de nitrógeno, helio y deuterio -tres de los cuales son compuestos tóxicos- deben ser mantenidos en compartimentos separados a presión, bajo completo control en todo momento. Si estos materiales se mezclaran, sería lo que los ingenieros llaman una \"cosa mala\".\n"
+"Para impulsar nuestro armamento láser de fluoruro de deuterio, tenemos que diseñar cartuchos de seguridad que puedan almacenar una gran cantidad de diferentes materiales peligrosos. Etileno, trifluoruro de nitrógeno, helio y deuterio -tres de los cuales son compuestos tóxicos- deben ser mantenidos en compartimentos separados a presión, bajo completo control en todo momento. Si estos materiales se mezclaran, sería lo que los ingenieros llaman una 'cosa mala'.\n"
 "\n"
 "Ya tenemos un diseño básico que debe superar estos problemas, pero necesitamos las instalaciones de laboratorio y el financiamiento con el fin de probarlo, hacer un prototipo y producirlo en relación a las especificaciones de seguridad de las Naciones Unidas. Es un duro trabajo, pero debemos conseguirlo para conseguir que nuestro armamento láser sea lo suficientemente seguro para poder utilizarlo en el campo de batalla. No estoy dispuesto a correr ningún riesgo de envenenamiento por parte de nuestros soldados con gas de deuterio por no habernos esforzado lo suficiente. Tenemos que preparar este protocolo de seguridad para que se pueda usar este armamento sin ningún riesgo.\n"
 "\n"
@@ -5468,7 +5472,7 @@ msgstr ""
 "\n"
 "Esta pistola de plasma es una pieza de trabajo duro, Comandante. Su operación es en extremo compleja e inventiva, y requiere un alto nivel de habilidad técnica para su creación. Tan solo la batería esta cientos de años adelante de nuestra tecnología. Almacena suficiente potencia para calentar varias cargas de hidrógeno a un estado plasmático dentro de la cámara de fusión en miniatura, las cuales son expulsadas como plasma aprovechando la misma velocidad de las partículas ionizadas.\n"
 "\n"
-"A diferencia de las armas de fuego humanas, los proyectiles mismos no están almacenados en un cartucho o reserva. Son generados dentro de la pistola a partir del hidrógeno almacenado dentro del cartucho, alimentado por la batería incluida en el mismo. Una vez que se ha calentado el plasma, una fina película de plástico liquido se crea entre las dos \"hileras\" localizadas verticalmente en lados opuestos enfrente de la empuñadura. Entonces las partículas de plasma se disparan rápidamente hacia la película de manera que se deforme en una esfera o \"proyectil\". El plástico contiene y protege el plasma, evitando que se disperse hasta que alcance el objetivo. Para cuando el proyectil alcanza el objetivo, el plástico estará tan derretido en el interior que se reventara al impacto como una burbuja de jabón, esparciendo su carga por todo el objetivo. El alcance máximo de un proyectil de pistola -el punto que puede alcanzar antes de que el plasma derrita el plástico y se disperse en el aire- no es muy elevado pero es apropiado para un arma secundaria.\n"
+"A diferencia de las armas de fuego humanas, los proyectiles mismos no están almacenados en un cartucho o reserva. Son generados dentro de la pistola a partir del hidrógeno almacenado dentro del cartucho, alimentado por la batería incluida en el mismo. Una vez que se ha calentado el plasma, una fina película de plástico liquido se crea entre las dos 'hileras' localizadas verticalmente en lados opuestos enfrente de la empuñadura. Entonces las partículas de plasma se disparan rápidamente hacia la película de manera que se deforme en una esfera o 'proyectil'. El plástico contiene y protege el plasma, evitando que se disperse hasta que alcance el objetivo. Para cuando el proyectil alcanza el objetivo, el plástico estará tan derretido en el interior que se reventara al impacto como una burbuja de jabón, esparciendo su carga por todo el objetivo. El alcance máximo de un proyectil de pistola -el punto que puede alcanzar antes de que el plasma derrita el plástico y se disperse en el aire- no es muy elevado pero es apropiado para un arma secundaria.\n"
 "\n"
 "Un proyectil disparado desde la pistola de plasma es tan caliente que incluso un tiro fallado por poco puede ser letal. Los efectos en la víctima son verdaderamente horribles; trataré de enlistarlos todos aquí.\n"
 "\n"
@@ -5622,7 +5626,7 @@ msgstr ""
 "\n"
 "Las agujas son disparadas por un campo magnético que cambia a alta velocidad dentro del cañón, conectado a un mecanismo de alimentación que inyecta miles de agujas por minuto dentro del cañón. Esto crea un flujo casi constante de agujas el cual dura por tanto tiempo como se mantenga presionado el gatillo y el cartucho tenga munición. A diferencia de las balas, estas agujas tienen una trayectoria prácticamente plana del arma al objetivo. Atraviesan cualquier armadura como si no existiera. Tienen tan poca masa que el retroceso al disparar es mínimo, dándoles excelente precisión, pero en las pruebas de campo las agujas pueden ser desviadas por variaciones en el ambiente.\n"
 "\n"
-"Uno de los principales componentes que llamaron mi atención es el potente juego de electromagnetos. Está compuesto como un \"cañón Gauss\", varias bobinas electromagnéticas rodeando el cañón, un método que previamente pensábamos tenía una eficiencia energética muy baja para ser usado en el campo de batalla. Los alienígenas parecen haberlo hecho viable mediante el astuto uso de superconductores y la ingeniería alienígena. Tal vez podamos adaptar esta tecnología a nuestra propia investigación en armamento electromagnético, lo analizaré más detenidamente y me comunicare con usted en cuanto tenga algo concreto.\n"
+"Uno de los principales componentes que llamaron mi atención es el potente juego de electromagnetos. Está compuesto como un 'cañón Gauss', varias bobinas electromagnéticas rodeando el cañón, un método que previamente pensábamos tenía una eficiencia energética muy baja para ser usado en el campo de batalla. Los alienígenas parecen haberlo hecho viable mediante el astuto uso de superconductores y la ingeniería alienígena. Tal vez podamos adaptar esta tecnología a nuestra propia investigación en armamento electromagnético, lo analizaré más detenidamente y me comunicare con usted en cuanto tenga algo concreto.\n"
 "\n"
 "--Cte. Navarre"
 
@@ -5723,7 +5727,7 @@ msgstr ""
 "\n"
 "De nuestra experiencia en Bombay y en otras ciudades atacadas, hemos llegado a la conclusión de que los alienígenas parecen concentrar sus esfuerzos en centros muy poblados, especialmente en las áreas urbanas más densas. Una gran parte de los combates se realizan a corta distancia, incluso cuerpo a cuerpo. Como resultado del Programa Excalibur se han elegido varias armas muy eficientes para la categoría de Armas de Corto Alcance.\n"
 "\n"
-"Mucha excelentes escopetas se han diseñado en Italia en los últimos dos siglos; la más reciente es la Rossi AAA, una escopeta de combate semiautomática desarrollada para ser utilizada por unidades SWAT y de combate antiterrorista. Cuenta con varias tecnologías innovadoras, pero su característica más impresionante es sin duda su cañón \"Twist\" especialmente diseñado. El Twist es un nuevo diseño de cañón de escopeta, con un rápido giro de la guarda delantera, puede proyectar o retraer las estrías dentro del cañón. Con este mecanismo, la AAA puede cambiar su cañón de ánima lisa a ánima rayada y viceversa en una décima de segundo. El cañón incluso ajusta su propio diámetro para adaptarse a cualquier tipo de munición en la recamara. Estas dos innovaciones le permiten a la AAA ajustarse para disparar cualquier clase de munición para escopeta en un instante.\n"
+"Mucha excelentes escopetas se han diseñado en Italia en los últimos dos siglos; la más reciente es la Rossi AAA, una escopeta de combate semiautomática desarrollada para ser utilizada por unidades SWAT y de combate antiterrorista. Cuenta con varias tecnologías innovadoras, pero su característica más impresionante es sin duda su cañón 'Twist' especialmente diseñado. El Twist es un nuevo diseño de cañón de escopeta, con un rápido giro de la guarda delantera, puede proyectar o retraer las estrías dentro del cañón. Con este mecanismo, la AAA puede cambiar su cañón de ánima lisa a ánima rayada y viceversa en una décima de segundo. El cañón incluso ajusta su propio diámetro para adaptarse a cualquier tipo de munición en la recamara. Estas dos innovaciones le permiten a la AAA ajustarse para disparar cualquier clase de munición para escopeta en un instante.\n"
 "\n"
 "Las municiones más comunes para uso militar y de unidades SWAT son los cartuchos de dardos de 12mm. Cada cartucho contiene 8 pequeños dardos - agujas de acero sólido estabilizadas en el aire mediante aletas. Esta munición tiene una precisión superior comparada con la munición gruesa y tiene un desempeño excelente contra objetivos blindados. Los dardos también son propensos a fragmentarse después de la penetración, resultando en heridas impresionantes para un proyectil tan pequeño. Sus desventajas son vulnerabilidad al viento y otras condiciones que puedan desviar los dardos. Sin embargo, otros tipos de municiones están disponibles para solventar estos problemas - y la AAA puede utilizarlas todas.\n"
 "\n"
@@ -5762,7 +5766,7 @@ msgstr ""
 "\n"
 "Descripción\n"
 "\n"
-"Este es un cartucho que contiene 7 balas subcalibradas para escopeta. Estas balas son encapsuladas en copas de plástico duro, llamadas \"sabot\", las cuales se rompen al dejar el cañón. El sabot permite que estas balas sean disparadas por armas de mayor calibre, de manera que pueden alcanzar velocidades mucho mayores que las municiones de escopeta y las balas convencionales. Las balas en sí mismas están echas de acero con núcleo de aluminio; su potencia no debe ser subestimada. Cuando se disparan de una escopeta de alto calibre, estas balas pueden dañar incluso vehículos blindados.\n"
+"Este es un cartucho que contiene 7 balas subcalibradas para escopeta. Estas balas son encapsuladas en copas de plástico duro, llamadas 'sabot', las cuales se rompen al dejar el cañón. El sabot permite que estas balas sean disparadas por armas de mayor calibre, de manera que pueden alcanzar velocidades mucho mayores que las municiones de escopeta y las balas convencionales. Las balas en sí mismas están echas de acero con núcleo de aluminio; su potencia no debe ser subestimada. Cuando se disparan de una escopeta de alto calibre, estas balas pueden dañar incluso vehículos blindados.\n"
 "\n"
 "El cartucho está diseñado para ser cargado en la Escopeta Antimotín CRC-212. No puede ser cargado en la Escopeta Recortada CRC-M9.\n"
 "\n"
@@ -5961,9 +5965,9 @@ msgstr ""
 "\n"
 "El Programa Excalibur fue creado para encontrar las armas más efectivas de la Tierra a través de la revisión de sus parámetros de manufactura, durabilidad, registro operacional y eficacia de combate en aquellas situaciones donde se ha logrado enfrentar a los alienígenas en batalla.\n"
 "\n"
-"La granada de humo \"Niebla Artificial\" fue desarrollada por la liga de naciones africanas durante la guerra de los carteles del diamante. Es un ingenioso diseño que prueba que, incluso en la era de la detección electrónica, la granada de humo no ha dejado de ser útil. No existe un sistema de detección que no pueda ser burlado de algún modo, y las granadas de humo mejoradas, como la granada de Niebla Artificial, pueden bloquear el equipo de visión infrarroja tan fácilmente como bloquean el Globo Ocular Mk. 1.\n"
+"La granada de humo 'Niebla Artificial' fue desarrollada por la liga de naciones africanas durante la guerra de los carteles del diamante. Es un ingenioso diseño que prueba que, incluso en la era de la detección electrónica, la granada de humo no ha dejado de ser útil. No existe un sistema de detección que no pueda ser burlado de algún modo, y las granadas de humo mejoradas, como la granada de Niebla Artificial, pueden bloquear el equipo de visión infrarroja tan fácilmente como bloquean el Globo Ocular Mk. 1.\n"
 "\n"
-"La granada de Niebla Artificial es llamada una granada de humo de \"ráfaga\". En vez de expulsar humo a través de aberturas en la parte superior, explota de manera similar a una granada incendiaria y cubre un amplia área con tetracloruro de Titanio, el cual rápidamente produce grandes nubes de humo blanco corrosivo. La granada también llena el aire con minúsculas partículas de hierro que refractan las señales de radar y en general interfieren con la imagen electrónica del campo de batalla. Otros aditivos añadidos al humo ayudan a refractar casi todas las frecuencias no visibles del espectro electromagnético. Incluso la tecnología alienígena tiene dificultad en penetrar esta densa mezcla.\n"
+"La granada de Niebla Artificial es llamada una granada de humo de 'ráfaga'. En vez de expulsar humo a través de aberturas en la parte superior, explota de manera similar a una granada incendiaria y cubre un amplia área con tetracloruro de Titanio, el cual rápidamente produce grandes nubes de humo blanco corrosivo. La granada también llena el aire con minúsculas partículas de hierro que refractan las señales de radar y en general interfieren con la imagen electrónica del campo de batalla. Otros aditivos añadidos al humo ayudan a refractar casi todas las frecuencias no visibles del espectro electromagnético. Incluso la tecnología alienígena tiene dificultad en penetrar esta densa mezcla.\n"
 "\n"
 "El humo de tetracloruro de Titanio es por si mismo ligeramente dañino al ser humano debido a su acidez. Los aditivos lo hacen más peligroso, especialmente inhalar partículas de hierro, pero no es algo que nuestros médicos no puedan remediar.\n"
 "\n"
@@ -6002,11 +6006,11 @@ msgstr ""
 "\n"
 "El Programa Excalibur fue creado para encontrar las armas más efectivas de la Tierra a través de la revisión de sus parámetros de manufactura, durabilidad, registro operacional y eficacia de combate en aquellas situaciones donde se ha logrado enfrentar a los alienígenas en batalla.\n"
 "\n"
-"Originalmente diseñado como un rifle antimaterial, el Forrester LRWS (Long Range Weapon System) de construcción Canadiense ha sido adoptado desde entonces por muchos países como su principal rifle de francotirador Es uno de solo un puñado de rifles de francotirador desarrollados después de 2040 que no utilizan la configuración bullpup (\"bullpup\" significa que el cargador y el mecanismo se ubican detrás del gatillo para reducir el largo total del arma). Dispara los masivos cartuchos HMG (Heavy Machine Gun) 20mm, alimentado por cargadores de 5 cartuchos los cuales pueden pesar hasta un kilogramo cada uno. La recamara flotante con pistón de retardo esta equipada con un intrincado sistema de dispersión de gases que reduce el retroceso percibido al nivel del de un rifle de caza ordinario. Esto permite disparar de forma repetida rápidamente en modo semiautomático sin sacrificar la precisión.\n"
+"Originalmente diseñado como un rifle antimaterial, el Forrester LRWS (Long Range Weapon System) de construcción Canadiense ha sido adoptado desde entonces por muchos países como su principal rifle de francotirador Es uno de solo un puñado de rifles de francotirador desarrollados después de 2040 que no utilizan la configuración bullpup ('bullpup' significa que el cargador y el mecanismo se ubican detrás del gatillo para reducir el largo total del arma). Dispara los masivos cartuchos HMG (Heavy Machine Gun) 20mm, alimentado por cargadores de 5 cartuchos los cuales pueden pesar hasta un kilogramo cada uno. La recamara flotante con pistón de retardo esta equipada con un intrincado sistema de dispersión de gases que reduce el retroceso percibido al nivel del de un rifle de caza ordinario. Esto permite disparar de forma repetida rápidamente en modo semiautomático sin sacrificar la precisión.\n"
 "\n"
 "Las mayores ventajas del LRWS sobre otros rifles de francotirador modernos son su cañón increíblemente corto y su peso ligero, es el único rifle de su clase capaz de disparar los cartuchos HMG 20mm. Esto es posible gracias a su recamara y cañón reforzados únicos fabricados casi completamente de aleaciones de tungsteno y titanio, capaces de resistir la fuerza de la pólvora de velocidad super-alta de los cartuchos. Debido a su cañón corto, diseñado para situaciones tácticas urbanas, el LRWS tiene un alcance efectivo de solo un kilómetro aproximadamente - apenas un tercio del de un rifle antimaterial estándar - pero estimamos que PHALANX nunca debe enfrentarse a una situación donde esto pueda ser un problema. Su menor precisión es compensada con una mira de alta tecnología que calcula y muestra trayectorias inteligentes de tiro a donde sea que apunte el rifle.\n"
 "\n"
-"El bípode \"inteligente\" integrado cuenta con un sistema neumático de suspensión que mantiene el cañón perfectamente horizontal permitiendo realizar disparos de precisión incluso en terreno accidentado. La culata y la empuñadura se amoldan automáticamente a cualquier tirador. Aun más importante, este rifle ha causado más bajas alienígenas en Bombay que cualquier otra arma desplegada durante el conflicto.\n"
+"El bípode 'inteligente' integrado cuenta con un sistema neumático de suspensión que mantiene el cañón perfectamente horizontal permitiendo realizar disparos de precisión incluso en terreno accidentado. La culata y la empuñadura se amoldan automáticamente a cualquier tirador. Aun más importante, este rifle ha causado más bajas alienígenas en Bombay que cualquier otra arma desplegada durante el conflicto.\n"
 "\n"
 "Con la mitad del peso de otros rifles de francotirador y el doble de maniobrabilidad, el LRWS ofrece la potencia y flexibilidad que nuestros agentes necesitan. Esta es un arma que no decepcionará.\n"
 "\n"
@@ -6068,7 +6072,7 @@ msgstr ""
 "\n"
 "Hemos logrado resultados en nuestro esfuerzo por crear agentes químicos anti-alienígenas que puedan ser utilizados de manera efectiva en el campo de batalla. Un agente en particular ha sido clasificado apto para situaciones de combate y esta listo para ser usado tan pronto como usted diga.\n"
 "\n"
-"El agente en cuestión es un cóctel de cloruro, gas mostaza, tetracloruro de titanio y varios compuestos dañinos, que se combinan para formar una sustancia a la que hemos llamado \"CHOKE\". Es un poderoso agente vesicante que reacciona con tejidos orgánicos en segundos en lugar de horas. Reacciona violentamente con el aire proveyendo varios minutos de cobertura de gas en un área pequeña y concentrada.\n"
+"El agente en cuestión es un cóctel de cloruro, gas mostaza, tetracloruro de titanio y varios compuestos dañinos, que se combinan para formar una sustancia a la que hemos llamado 'CHOKE'. Es un poderoso agente vesicante que reacciona con tejidos orgánicos en segundos en lugar de horas. Reacciona violentamente con el aire proveyendo varios minutos de cobertura de gas en un área pequeña y concentrada.\n"
 "\n"
 "Los efectos en los tejidos orgánicos son severos. Incluso contacto leve con la piel o membranas mucosas causará grave irritación, resultando en dificultad para respirar e intenso dolor. El contacto con los ojos puede provocar ceguera prolongada, e incluso permanente si no se recibe tratamiento. La agonía causada por el gas CHOKE es tan aguda e incapacitante que pondrá fuera de combate a casi todo el que entre en contacto con el. Nuestros prisioneros alienígenas orgánicos han mostrado respuestas muy satisfactorias; la mayoría de los objetivos entran en shock y pierden la capacidad motriz hasta que reciben tratamiento con analgésicos y medicación anti-CHOKE. Su aparato respiratorio no ofrece protección contra un agente que no necesita entrar en los pulmones.\n"
 "\n"
@@ -6159,7 +6163,7 @@ msgstr ""
 "\n"
 "Es por ello que quisiera proponer una simple pero poderosa arma de descarga eléctrica, similar a un arma aturdidora militar, diseñada para incapacitar a nuestros enemigos sin matarlos. Sería un arma portátil a dos manos con una amplia batería y varias configuraciones de potencia, la más alta de las cuales debería bastar para inhabilitar incluso robots como la Araña Sanguinaria. Nosotros en la División de Biología creemos que cualquier alienígena alcanzado por esta arma estará incapacitado el tiempo suficiente para que nuestros soldados tomen control de la situación y aseguren a los prisioneros.\n"
 "\n"
-"El Cte. Navarre, sin embargo, siente que un arma como esta sería peligrosa para nuestros soldados y \"un retroceso hacia el Siglo XX\", y se rehúsa a dar su respaldo. No parece comprender. No tenemos un método alternativo de incapacitar a un enemigo a los voltajes requeridos. Comandante, necesitamos esta arma tan urgentemente como necesitamos capturar alienígenas vivos en el campo de batalla. No podemos simplemente dispararles y esperar poder revivir de nuevo a uno o dos de vuelta en la base. Incluso si tenemos éxito con esa forma de pensar, las necesidades de mi división serán muy, muy superiores que eso para una investigación e interrogación apropiadas.\n"
+"El Cte. Navarre, sin embargo, siente que un arma como esta sería peligrosa para nuestros soldados y 'un retroceso hacia el Siglo XX', y se rehúsa a dar su respaldo. No parece comprender. No tenemos un método alternativo de incapacitar a un enemigo a los voltajes requeridos. Comandante, necesitamos esta arma tan urgentemente como necesitamos capturar alienígenas vivos en el campo de batalla. No podemos simplemente dispararles y esperar poder revivir de nuevo a uno o dos de vuelta en la base. Incluso si tenemos éxito con esa forma de pensar, las necesidades de mi división serán muy, muy superiores que eso para una investigación e interrogación apropiadas.\n"
 "\n"
 "Espero que comprenda. Por favor autorice tiempo de laboratorio y presupuesto para este proyecto tan pronto como pueda, y reuniré algunos miembros de la División de Ingeniería para desarrollar este proyecto adecuadamente. Por supuesto estaría encantado si pudiera explicarle las cosas al Cte. Navarre. Estoy seguro que le alegrara recibir un mensaje de su parte.\n"
 "\n"
@@ -6274,7 +6278,7 @@ msgstr ""
 "\n"
 "La aparición del armamento de flujo de partículas sugiere una seria escalada en esta guerra. Antes de que nos dispararán con él, no teníamos idea de que los alienígenas poseían tecnología tan avanzada, y no tenemos idea de por qué no la habían utilizado hasta ahora. Las motivaciones y la estrategia de los alienígenas siguen siendo un completo misterio para nosotros. Aun así, no creo estar exagerando al decir que estas armas lo cambian todo.\n"
 "\n"
-"Mientras trato de describir esto, tiene que entender que no hablo de las armas en sí mismas. Como he mencionado en mis reportes, las armas mismas básicamente no son más que una cubierta de metal alrededor de un juego de magnetos y lentes electrostáticos, utilizados para enfocar y concentrar el flujo de partículas. La verdadera magia sucede en un espacio del tamaño de mi puño. Hablo de lo que habíamos pensado como de un \"cartucho\", hasta ahora. Lo que es realmente es increíble.\n"
+"Mientras trato de describir esto, tiene que entender que no hablo de las armas en sí mismas. Como he mencionado en mis reportes, las armas mismas básicamente no son más que una cubierta de metal alrededor de un juego de magnetos y lentes electrostáticos, utilizados para enfocar y concentrar el flujo de partículas. La verdadera magia sucede en un espacio del tamaño de mi puño. Hablo de lo que habíamos pensado como de un 'cartucho', hasta ahora. Lo que es realmente es increíble.\n"
 "\n"
 "Cada cartucho individual es en realidad un acelerador de partículas sincrotrón de proporciones increíblemente pequeñas, fabricado alrededor de un paquete de baterías tan pequeño que no podemos siquiera comenzar a imaginar cómo lo fabricaron. El sincrotrón acelera las partículas una y otra vez en un diminuto círculo -menor al radio del cartucho- hasta que alcanzan suficiente velocidad. Entonces las partículas son desviadas mediante un campo magnético hacia el arreglo de enfoque, en donde son comprimidas magnéticamente en un rayo coherente.\n"
 "\n"
@@ -6423,7 +6427,7 @@ msgstr ""
 #: ../base/ufos/research.ufo:2829
 msgid "alien_medium_armour_txt"
 msgstr ""
-"En cuanto a armaduras se refiere, la filosofía de diseño alienígena parece ser: \"si funciona, usemos más de lo mismo\". Esta nueva armadura es similar en diseño a las anteriores armaduras alienígenas, pero acaba con los compromisos y los delicados equilibrios de una armadura ligera. En lugar de simplemente proteger el torso y la cabeza, esta armadura intenta cubrir todas las áreas vitales con placas mucho más densas de nanopolímeros, incluidas las arterias principales y grupos de nervios sensibles. En comparación con la primera, en ésta se ha duplicado el número de fibras de nanotubos por centímetro cuadrado. Como resultado, estas placas son casi impenetrables a las armas de fuego humanas convencionales e incluso hasta la suave malla que cubre las articulaciones puede detener las balas con preocupante facilidad.\n"
+"En cuanto a armaduras se refiere, la filosofía de diseño alienígena parece ser: 'si funciona, usemos más de lo mismo'. Esta nueva armadura es similar en diseño a las anteriores armaduras alienígenas, pero acaba con los compromisos y los delicados equilibrios de una armadura ligera. En lugar de simplemente proteger el torso y la cabeza, esta armadura intenta cubrir todas las áreas vitales con placas mucho más densas de nanopolímeros, incluidas las arterias principales y grupos de nervios sensibles. En comparación con la primera, en ésta se ha duplicado el número de fibras de nanotubos por centímetro cuadrado. Como resultado, estas placas son casi impenetrables a las armas de fuego humanas convencionales e incluso hasta la suave malla que cubre las articulaciones puede detener las balas con preocupante facilidad.\n"
 "\n"
 "Como he mencionado anteriormente, este conjunto hace mayor hincapié en la protección que en la movilidad. Las grandes placas de trauma se interponen en el camino de quien la usa sin importar la raza o el tamaño que pueda tener, y los densos polímeros de nanotubos utilizados son tan pesados que su peso total ralentiza incluso a un Ortnok. Existen numerosos servomotores y otras partes mecánicas que ayudan a hacer frente a un poco del peso, pero su efecto es limitado en general. Otros dispositivos están integrados en la armadura con el objetivo de ayudar a la puntería y visión. Estos son muy interesantes y podemos ser capaces de reproducirlos a gran escala como mejoras en nuestras armas.\n"
 "\n"
@@ -6549,7 +6553,7 @@ msgstr ""
 "\n"
 "En primer lugar, las cámaras habitables herméticas proporcionan un lugar para confinar y mantener vivos a los extraterrestres (EXT) durante un periodo de tiempo prolongado. Sus generadores de atmósfera pueden bombear cualquier mezcla de gases que se desee hasta cualquier celda. Esto permite proporcionar una atmósfera respirable a un EXT durante al menos varias semanas, un tiempo muy superior al período de vida previsto para los ejemplares en nuestros proyectos de investigación. Los elementos exóticos que no se encuentran de forma natural en la Tierra pueden ser difíciles de conseguir, pero la probabilidad de que esto se convierta en un impedimento para nuestras investigaciones es infinitesimal. En el peor de los casos posibles, los generadores de atmósfera están diseñados para permitir su conexión a cualquier equipo de soporte vital recuperado del enemigo.\n"
 "\n"
-"En segundo lugar, en el interior de cada celda individual hay aparatos médicos y de interrogatorio manejados por control remoto, capaces de aplicar inyecciones de sedantes, medicamentos o cualquier otro agente químico a los EXT mediante un lanzador de dardos neumático, así como de administrar choques eléctricos durante los interrogatorios. También cuentan con un \"botón de pánico\" instalado en cada celda individual y en la sala de control de cada bloque de celdas. El botón del pánico permite incinerar inmediatamente el contenido de cada celda en caso de emergencia.\n"
+"En segundo lugar, en el interior de cada celda individual hay aparatos médicos y de interrogatorio manejados por control remoto, capaces de aplicar inyecciones de sedantes, medicamentos o cualquier otro agente químico a los EXT mediante un lanzador de dardos neumático, así como de administrar choques eléctricos durante los interrogatorios. También cuentan con un 'botón de pánico' instalado en cada celda individual y en la sala de control de cada bloque de celdas. El botón del pánico permite incinerar inmediatamente el contenido de cada celda en caso de emergencia.\n"
 "\n"
 "Las celdas y los pasillos de la Unidad de Contención están especialmente diseñados para permitir la introducción y el confinamiento de EXT de cualquier forma y tamaño. Adicionalmente, dispone de una cámara mortuoria criogénica completamente equipada, que permite almacenar cuerpos, órganos y tejidos para su estudio posterior.\n"
 "\n"
@@ -6558,7 +6562,7 @@ msgstr ""
 "\n"
 "En caso de una invasión, la Unidad de Contención de Alienígenas debería ser utilizada al máximo de su capacidad, almacenando tanto EXT vivos como muertos para investigación y permitirnos examinarlos con vida. No hay mayor prioridad que descubrir el proceso de pensamiento de la mente alienígena, conocer sus motivaciones y tal vez llegar a alguna forma de acuerdo, una posibilidad de comunicarnos o, en el peor de los casos, una estrategia de contraataque adecuada para neutralizar al enemigo de una vez por todas.\n"
 "\n"
-"Si una base de PHALANX fuera atacada, se debería considerar inmediatamente el empleo del \"botón de pánico\" en toda la Unidad de Contención. A no ser haya ejemplares irreemplazables en ella, no podemos correr el riesgo de que los EXT atacantes liberen a sus camaradas cautivos. Otra estrategia más arriesgada sería la sedación completa e inmediata de los prisioneros durante el ataque - sin embargo, insisto en que no podemos ganar una guerra con medidas tibias.\n"
+"Si una base de PHALANX fuera atacada, se debería considerar inmediatamente el empleo del 'botón de pánico' en toda la Unidad de Contención. A no ser haya ejemplares irreemplazables en ella, no podemos correr el riesgo de que los EXT atacantes liberen a sus camaradas cautivos. Otra estrategia más arriesgada sería la sedación completa e inmediata de los prisioneros durante el ataque - sin embargo, insisto en que no podemos ganar una guerra con medidas tibias.\n"
 "\n"
 "\n"
 "Apéndice\n"
@@ -6667,9 +6671,9 @@ msgstr ""
 "\n"
 "Esto prueba que los alienígenas no son invulnerables a nuestros misiles. simplemente necesitamos los mejores para el trabajo. Este descubrimiento nos ha llevado a adaptar los planos de algunas antiguas baterías de misiles y equiparlas con lanzadores nuevos. nuestros resultados son prometedores.\n"
 "\n"
-"La batería consiste de cuatro lanzadores que se \"asoman\" a la superficie cuando van a disparar sobre un objetivo. Cada lanzador carga 20 MTA AA51 \"Cicada\". Este es uno de los misiles mas avanzados de la tierra, con una carga de aparatos electrónicos mayor que la de un avión de pasajeros comercial, diseñado para derribar naves enemigas sin importar cuan rápido estas se desplacen. No hay mejor arma defensiva de emergencia en el planeta al momento de preparar este documento.\n"
+"La batería consiste de cuatro lanzadores que se 'asoman' a la superficie cuando van a disparar sobre un objetivo. Cada lanzador carga 20 MTA AA51 'Cicada'. Este es uno de los misiles mas avanzados de la tierra, con una carga de aparatos electrónicos mayor que la de un avión de pasajeros comercial, diseñado para derribar naves enemigas sin importar cuan rápido estas se desplacen. No hay mejor arma defensiva de emergencia en el planeta al momento de preparar este documento.\n"
 "\n"
-"Enfrentado a naves alienígenas, las probabilidades de éxito de un \"Cicada\" serán bajas, pero en cantidades suficientes les harán daño. Evidentemente, los misiles y su equipamiento electrónico son extremadamente costosos, muy por encima de nuestro presupuesto en los números que necesitaríamos para poder enfrentar con éxito a los OVNI entrantes. Afortunadamente, las Naciones Unidas han acordado proveernos todos los MTA estándar de sus reservas estratégicas sin costo para nosotros.\n"
+"Enfrentado a naves alienígenas, las probabilidades de éxito de un 'Cicada' serán bajas, pero en cantidades suficientes les harán daño. Evidentemente, los misiles y su equipamiento electrónico son extremadamente costosos, muy por encima de nuestro presupuesto en los números que necesitaríamos para poder enfrentar con éxito a los OVNI entrantes. Afortunadamente, las Naciones Unidas han acordado proveernos todos los MTA estándar de sus reservas estratégicas sin costo para nosotros.\n"
 "\n"
 "\n"
 "Doctrina Recomendada\n"
@@ -7100,7 +7104,7 @@ msgid "b_antimatter_txt"
 msgstr ""
 "Descripción\n"
 "\n"
-"El Almacén de Antimateria está diseñado para almacenar seguramente antimateria para su uso posterior, o al menos tan seguramente como es posible. Se basa en un sistema de contención magnético avanzado que hemos derivado de la tecnología de antimateria alienígena, que llamamos \"casco interior\". El \"casco exterior\" consta de varias esclusas de radiación en los corredores principales, una sala de control fuertemente blindada, y una serie de medidas de seguridad y contención adicionales - todas diseñadas para mantener la radiación dentro del casco exterior.\n"
+"El Almacén de Antimateria está diseñado para almacenar seguramente antimateria para su uso posterior, o al menos tan seguramente como es posible. Se basa en un sistema de contención magnético avanzado que hemos derivado de la tecnología de antimateria alienígena, que llamamos 'casco interior'. El 'casco exterior' consta de varias esclusas de radiación en los corredores principales, una sala de control fuertemente blindada, y una serie de medidas de seguridad y contención adicionales - todas diseñadas para mantener la radiación dentro del casco exterior.\n"
 "\n"
 "El diseño del casco exterior se basa fuertemente en los depósitos de municiones de las Naciones Unidas. En caso de problemas con el casco interior, hay un sistema de seguridad automático que se activará al instante que los niveles de contención bajen del umbral de seguridad. La instalación primero cerrará las puertas blindadas, luego asegurará todas las esclusas con barras de tungsteno, llenará la atmósfera del casco exterior con gas retardador de radiación e inyectará espuma amortiguadora tras las paredes, para luego intentar contener la inevitable explosión.\n"
 "\n"
@@ -7265,7 +7269,7 @@ msgstr ""
 "\n"
 "Está claro que aunque la nave de caza Stiletto es un aparato excelente, no cubre todas nuestras necesidades. Debemos estar preparados para defender nuestro planeta y a nuestra gente en cualquier lugar del globo. El campo de acción del Stiletto es demasiado limitado y no es lo suficientemente rápido como para alcanzar todos los tipos de OVNI que podríamos detectar.\n"
 "\n"
-"Sólo una nave en el mundo es capaz de llenar el hueco técnico al que nos enfrentamos; el Ala Hipersónica KB-550 argentino, apodado \"Sarraceno\" en el código de la OTAN. Combinando antiguas y nuevas tecnologías de camuflaje en un mismo fuselaje, el Sarraceno recuerda al viejo SR-71 \"Blackbird\" en aspecto y rendimiento. Es negro como la noche, cubierto con pintura que absorbe la radiación, lo que lo hace prácticamente invisible al radar y al lidar, así como a la mayoría de las técnicas de detección activas. Su fuselaje está compuesto casi por completo por nanotubos de carbón y láminas de plástico reforzadas con grafito. Esto hace que la aeronave sea extremadamente sólida y lo suficientemente resistente al calor para resistir las temperaturas alcanzadas al navegar a velocidades superiores al Mach 4. El Sarraceno es la aeronave militar más veloz que permanece en activo.\n"
+"Sólo una nave en el mundo es capaz de llenar el hueco técnico al que nos enfrentamos; el Ala Hipersónica KB-550 argentino, apodado 'Sarraceno' en el código de la OTAN. Combinando antiguas y nuevas tecnologías de camuflaje en un mismo fuselaje, el Sarraceno recuerda al viejo SR-71 'Blackbird' en aspecto y rendimiento. Es negro como la noche, cubierto con pintura que absorbe la radiación, lo que lo hace prácticamente invisible al radar y al lidar, así como a la mayoría de las técnicas de detección activas. Su fuselaje está compuesto casi por completo por nanotubos de carbón y láminas de plástico reforzadas con grafito. Esto hace que la aeronave sea extremadamente sólida y lo suficientemente resistente al calor para resistir las temperaturas alcanzadas al navegar a velocidades superiores al Mach 4. El Sarraceno es la aeronave militar más veloz que permanece en activo.\n"
 "\n"
 "En términos de rendimiento, el Sarraceno amplía nuestra capacidad de intercepción hasta el territorio internacional. Sus enormes depósitos blindados de combustible y su excepcional eficiencia de consumo le permiten cubrir 10.000 kilómetros desde su hangar a velocidades hipersónicas -y regresar- con combustible suficiente para realizar maniobras de combate. Su diseño robusto, su alta velocidad y su capacidad de volar sin ser detectado le permiten combatir a los OVNI a los que el Stiletto simplemente no puede dar alcance. Está fuertemente blindado y puede regresar al hangar incluso con un solo motor. Gracias a la potencia de sus motores y a una serie de turbinas adicionales colocadas en su parte inferior, puede despegar casi verticalmente, lo que se ajusta a las restricciones de nuestros hangares.\n"
 "\n"
@@ -7576,7 +7580,7 @@ msgstr ""
 "\n"
 "La autopsia ha revelado que la criatura es un complejo robot sin ningún componente orgánico. Su cuerpo recuerda al de la araña terrestre: un cuerpo central -que abriga un cerebro artificial y baterías- y ocho patas movidas por poderosos servomotores, que le permiten atravesar el campo de batalla a velocidades inquietantes. Está equipada con mandíbulas afiladísimas que pueden trocear rápidamente un cuerpo humano y almacenar tejidos u órganos enteros en una gran cavidad localizada delante de sus baterías. Existen grabaciones de estas máquinas en acción, desmembrando a humanos vivos durante una misión de terror y guardando su biomasa para su posterior recuperación. El proceso es macabro y muy, muy rápido.\n"
 "\n"
-"Nuestros soldados han apodado a esta criatura como la \"Araña Sanguinaria\", y el nombre se ha mantenido.\n"
+"Nuestros soldados han apodado a esta criatura como la 'Araña Sanguinaria', y el nombre se ha mantenido.\n"
 "\n"
 "Las pruebas de balística realizadas sobre el blindaje de la Araña Sanguinaria revelaron que es muy resistente y tiene una excelente capacidad de aislamiento, siendo efectivo contra una amplia variedad de armas.\n"
 "\n"
@@ -7740,9 +7744,9 @@ msgstr ""
 "\n"
 "Mi equipo ha terminado la autopsia del cuerpo 'gris' que recuperamos. Aquí tiene el resumen de nuestros hallazgos.\n"
 "\n"
-"Cuando las tropas de la Comunidad llegaron a Bombay, confusos y aprensivos, fueron rodeados por una multitud de nativos histéricos, completamente aterrorizados y desesperados por protección. La mayoría de los soldados ni siquiera hablaba su lengua, incapaces de entender lo que les decían. Cuando les preguntaban qué ocurría, los civiles simplemente gritaban \"xuRta AwmA\" - término hindú que significa 'espíritu maligno' o 'demonio'.\n"
+"Cuando las tropas de la Comunidad llegaron a Bombay, confusos y aprensivos, fueron rodeados por una multitud de nativos histéricos, completamente aterrorizados y desesperados por protección. La mayoría de los soldados ni siquiera hablaba su lengua, incapaces de entender lo que les decían. Cuando les preguntaban qué ocurría, los civiles simplemente gritaban 'xuRta AwmA' - término hindú que significa 'espíritu maligno' o 'demonio'.\n"
 "\n"
-"Bajo fuego, el término se acortó rápidamente a \"Taama\", y cuando el enfrentamiento había terminado había mutado todavía más. Todo el mundo había adoptado \"Taman\" (pronunciado 'tah-man') como la palabra que describía a los grises seres de pesadilla responsables de la carnicería. El nombre quedó, pero hoy en día podemos decir con confianza que estos alienígenas están hechos de carne y hueso y no de fuego y oscuridad.\n"
+"Bajo fuego, el término se acortó rápidamente a 'Taama', y cuando el enfrentamiento había terminado había mutado todavía más. Todo el mundo había adoptado 'Taman' (pronunciado 'tah-man') como la palabra que describía a los grises seres de pesadilla responsables de la carnicería. El nombre quedó, pero hoy en día podemos decir con confianza que estos alienígenas están hechos de carne y hueso y no de fuego y oscuridad.\n"
 "\n"
 "Lo primero, y probablemente más interesante, es el hecho de que esta criatura parece casi humana. Dos brazos, dos piernas, un torso y una cabeza, locomoción bípeda, órganos visuales, olfativos y auditivos localizados aproximadamente en la misma ubicación. Las manos y los pies del sujeto tienen tres largos dedos, uno de los cuales (el 'pulgar') es oponible. Esta especie tiene una estatura media menor que los humanos, y posee una constitución fina, casi delicada, que oculta su dureza.\n"
 "\n"
@@ -7779,9 +7783,9 @@ msgstr ""
 "\n"
 "Mi equipo ha terminado la autopsia del cuerpo 'gris' que recuperamos. Aquí tiene el resumen de nuestros hallazgos.\n"
 "\n"
-"Cuando las tropas de la Comunidad llegaron a Bombay, confusos y aprensivos, fueron rodeados por una multitud de nativos histéricos, completamente aterrorizados y desesperados por protección. La mayoría de los soldados ni siquiera hablaba su lengua, incapaces de entender lo que les decían. Cuando les preguntaban qué ocurría, los civiles simplemente gritaban \"xuRta AwmA\" - término hindú que significa 'espíritu maligno' o 'demonio'.\n"
+"Cuando las tropas de la Comunidad llegaron a Bombay, confusos y aprensivos, fueron rodeados por una multitud de nativos histéricos, completamente aterrorizados y desesperados por protección. La mayoría de los soldados ni siquiera hablaba su lengua, incapaces de entender lo que les decían. Cuando les preguntaban qué ocurría, los civiles simplemente gritaban 'xuRta AwmA' - término hindú que significa 'espíritu maligno' o 'demonio'.\n"
 "\n"
-"Bajo fuego, el término se acortó rápidamente a \"Taama\", y cuando el enfrentamiento había terminado había mutado todavía más. Todo el mundo había adoptado \"Taman\" (pronunciado 'tah-man') como la palabra que describía a los grises seres de pesadilla responsables de la carnicería. El nombre quedó, pero hoy en día podemos decir con confianza que estos alienígenas están hechos de carne y hueso y no de fuego y oscuridad.\n"
+"Bajo fuego, el término se acortó rápidamente a 'Taama', y cuando el enfrentamiento había terminado había mutado todavía más. Todo el mundo había adoptado 'Taman' (pronunciado 'tah-man') como la palabra que describía a los grises seres de pesadilla responsables de la carnicería. El nombre quedó, pero hoy en día podemos decir con confianza que estos alienígenas están hechos de carne y hueso y no de fuego y oscuridad.\n"
 "\n"
 "Lo primero, y probablemente más interesante, es el hecho de que esta criatura parece casi humana. Dos brazos, dos piernas, un torso y una cabeza, locomoción bípeda, órganos visuales, olfativos y auditivos localizados aproximadamente en la misma ubicación. Las manos y los pies del sujeto tienen tres largos dedos, uno de los cuales (el 'pulgar') es oponible. Esta especie tiene una estatura media menor que los humanos, y posee una constitución fina, casi delicada, que oculta su dureza.\n"
 "\n"
@@ -7940,7 +7944,7 @@ msgstr ""
 "\n"
 "Mi equipo y yo hemos completado el desensamblado y la autopsia de la criatura alienígena descubierta. Aquí está un resumen de nuestros descubrimientos.\n"
 "\n"
-"Al principio asumimos que la criatura era un robot, pero al investigarlo descubrimos una pequeña biomasa en su núcleo. Este núcleo biológico alienígena está encerrado en una cápsula de sensores que creemos interpreta sus señales para operar la maquinaria eléctrica. Para todos los efectos, este alienígena es poco más que un \"cerebro\" a cargo de un complejo dispositivo. Llamarlo un cerebro podría ser demasiado generoso. No creemos que esté lo suficientemente desarrollado para llevar a cabo procesos mentales mayores a funciones motoras básicas, pero las tropas reportan haberlo visto coordinarse con otros alienígenas en el campo de batalla.\n"
+"Al principio asumimos que la criatura era un robot, pero al investigarlo descubrimos una pequeña biomasa en su núcleo. Este núcleo biológico alienígena está encerrado en una cápsula de sensores que creemos interpreta sus señales para operar la maquinaria eléctrica. Para todos los efectos, este alienígena es poco más que un 'cerebro' a cargo de un complejo dispositivo. Llamarlo un cerebro podría ser demasiado generoso. No creemos que esté lo suficientemente desarrollado para llevar a cabo procesos mentales mayores a funciones motoras básicas, pero las tropas reportan haberlo visto coordinarse con otros alienígenas en el campo de batalla.\n"
 "\n"
 "El dispositivo en si mismo es un disco móvil, pequeño, pero pesado, capaz de flotar sobre el suelo. A causa de su movimiento aéreo, es capaz de cruzar el campo de batalla rápidamente. Nuestros soldados tendrán que derribarlo antes de que logre ponerse en rango de tiro, lo cual no será fácil considerando su tamaño y capacidad de movimiento.\n"
 "\n"
@@ -8062,12 +8066,12 @@ msgstr "Por: Cte. Paul Navarre, I+D: División de Ingeniería, PHALANX, Comando 
 
 #: ../base/ufos/research.ufo:4669
 msgid "'Raven' ECM Unit"
-msgstr "Unidad CME \"Raven\""
+msgstr "Unidad CME 'Raven'"
 
 #: ../base/ufos/research.ufo:4672
 msgid "craft_electronics_raven_txt"
 msgstr ""
-"Especificaciones Técnicas: Unidad CME \"Raven\"\n"
+"Especificaciones Técnicas: Unidad CME 'Raven'\n"
 "\n"
 "CLASIFICACIÓN NIVEL NEGRO\n"
 "\n"
@@ -8089,14 +8093,14 @@ msgstr ""
 "\n"
 "Así como ocurre con el Globo Ocular Mk. 1, la electrónica de detección de objetivos puede ser engañada, y los dispositivos que engañan a la electrónica de detección de objetivos pueden ser engañados a su vez. Es una carrera sin fin por la superioridad técnica a la que solemos referirnos por 'Guerra Electrónica'. Las CME (Contra-Medidas Electrónicas) se usan para proteger la nave en las que están montadas usando interferencias, transmisiones e imágenes de radar falsas y demás estratagemas. Las CCME (Contra-Contra-Medidas-Electrónicas) intentan por el contrario contrarrestar el efecto de las CME. Y una cosa está clara; los alienígenas son muy buenos en ambos campos.\n"
 "\n"
-"Por esta razón hemos adoptado el Sistema de Guerra Electrónica \"Raven\", el paquete de CME más avanzado disponible en el mundo. Es lo mejor que la humanidad puede ofrecer en el campo de las interferencias a los sistemas de detección de objetivos y rastreo enemigos. Cualquier aeronave equipada con este equipo tendrá muchas más probabilidades de sobrevivir frente a misiles y cualquier otra munición independiente. Resulta menos efectiva contra los cañones montados a bordo de las naves alienígenas, ya que estos cuentan con sistemas adicionales a bordo y es más difícil confundirlos o engañarlos; pero aún así la unidad \"Raven\" puede ser de gran ayuda en combate.\n"
+"Por esta razón hemos adoptado el Sistema de Guerra Electrónica 'Raven', el paquete de CME más avanzado disponible en el mundo. Es lo mejor que la humanidad puede ofrecer en el campo de las interferencias a los sistemas de detección de objetivos y rastreo enemigos. Cualquier aeronave equipada con este equipo tendrá muchas más probabilidades de sobrevivir frente a misiles y cualquier otra munición independiente. Resulta menos efectiva contra los cañones montados a bordo de las naves alienígenas, ya que estos cuentan con sistemas adicionales a bordo y es más difícil confundirlos o engañarlos; pero aún así la unidad 'Raven' puede ser de gran ayuda en combate.\n"
 "\n"
 "El equipo es muy costoso debido a la avanzada electrónica de la que dispone, y ocupará una bahía modular completa en la nave en la que se monte; sin embargo una cosa es cierta: su precio no es ni la mitad del coste de perder una de nuestras aeronaves con su tripulación.\n"
 "\n"
 "\n"
 "Doctrina Recomendada\n"
 "\n"
-"Se recomienda que toda nave enviada a un combate con un OVNI armado lleve instalado una de estas unidades de CME o en su defecto una capa adicional de Blindaje de Polímero. Incluso contra la superioridad técnica de los sistemas alienígenas, la protección adicional que brinda el sistema \"Raven\" ayudará nuestros pilotos a cumplir su misión en los cielos de la Tierra. El precio puede parecer prohibitivo, pero la supervivencia de nuestras aeronaves y nuestros pilotos justifican sobradamente este coste a largo plazo.\n"
+"Se recomienda que toda nave enviada a un combate con un OVNI armado lleve instalado una de estas unidades de CME o en su defecto una capa adicional de Blindaje de Polímero. Incluso contra la superioridad técnica de los sistemas alienígenas, la protección adicional que brinda el sistema 'Raven' ayudará nuestros pilotos a cumplir su misión en los cielos de la Tierra. El precio puede parecer prohibitivo, pero la supervivencia de nuestras aeronaves y nuestros pilotos justifican sobradamente este coste a largo plazo.\n"
 "\n"
 "\n"
 "Apéndices\n"
@@ -8164,11 +8168,11 @@ msgid "craft_shield_plating_txt"
 msgstr ""
 "Comandante, tenemos buenas noticias. Mi equipo y yo hemos completado el prototipo de nuestro proyecto de recubrimiento alienígena para aeronaves. Nuestro Nuevo blindaje está listo para entrar en producción.\n"
 "\n"
-"Este ha sido un proyecto difícil desde el principio. Hemos tenido grandes dificultades para diseñar un equipo capaz de forjar los materiales alienígenas con la forma deseada, y “programar” los materiales para que cambien de forma en el momento y modo que deseemos. Al final logramos superar esos obstáculos, pero hemos tenido que lidiar con las limitaciones naturales del material.\n"
+"Este ha sido un proyecto difícil desde el principio. Hemos tenido grandes dificultades para diseñar un equipo capaz de forjar los materiales alienígenas con la forma deseada, y 'programar' los materiales para que cambien de forma en el momento y modo que deseemos. Al final logramos superar esos obstáculos, pero hemos tenido que lidiar con las limitaciones naturales del material.\n"
 "\n"
 "La principal desventaja de los materiales alienígenas es su peso. Son significativamente más pesados que los materiales de que están hechas las aeronaves humanas modernas, y cualquier cosa que fabriquemos a partir de ellos sufrirá por el peso extra. La única forma en que los alienígenas logran mantener a sus OVNI en el aire sin alas es la enorme potencia de sus propulsores. La velocidad, la maniobrabilidad, el consumo de combustible, y el máximo alcance operacional - todos se verán afectados negativamente al poner materiales alienígenas en la aeronave.\n"
 "\n"
-"Sin embargo, no tenemos otra opción que hacer este sacrificio. Incluso un recubrimiento muy delgado de materiales alienígenas ofrece un considerable aumento en la protección, siendo capaz de soportar impactos que destruirían a nuestro Blindaje de Polímero para Aeronaves. Durante las pruebas de nuestro nuevo blindaje, uno de nuestros propios misiles \"Sparrowhawk\" -los cuales pueden derribar a la mayoría de las aeronaves construidas en la Tierra con un solo impacto- fue incapaz de infligir un daño significativo en la aeronave de prueba. No es una broma. Hemos recolectado media hora de grabaciones en vídeo que prueban lo que acabo de decir.\n"
+"Sin embargo, no tenemos otra opción que hacer este sacrificio. Incluso un recubrimiento muy delgado de materiales alienígenas ofrece un considerable aumento en la protección, siendo capaz de soportar impactos que destruirían a nuestro Blindaje de Polímero para Aeronaves. Durante las pruebas de nuestro nuevo blindaje, uno de nuestros propios misiles 'Sparrowhawk' -los cuales pueden derribar a la mayoría de las aeronaves construidas en la Tierra con un solo impacto- fue incapaz de infligir un daño significativo en la aeronave de prueba. No es una broma. Hemos recolectado media hora de grabaciones en vídeo que prueban lo que acabo de decir.\n"
 "\n"
 "El nuevo recubrimiento que hemos diseñado toma ventaja de estas características y demuestra la enorme resistencia de los materiales alienígenas. El blindaje puede resistir impactos del Arma de Flujo de Partículas a corta distancia sin ser destruido. Por primera vez, nuestras aeronaves serán capaces de soportar grandes cantidades de daño y permanecer en el aire tal como lo hacen los alienígenas. Aún no estamos a su mismo nivel, pero nos estamos acercando.\n"
 "\n"
@@ -8192,7 +8196,7 @@ msgstr ""
 "\n"
 "Hemos concluido pronto en nuestro examen que esta unidad de astronavegación es, en su núcleo, un ordenador de extraordinaria potencia diseñado específicamente y con software especializado -- todo ello con el único propósito de trazar una ruta desde un punto del espacio hasta otro. Utiliza un nuevo sistema de anotaciones astronómicas que hemos decido adoptar para poder hacer uso de este hardware alienígena.\n"
 "\n"
-"Ahora que hemos descifrado su sistema de anotaciones, podemos ver que la unidad de astronavegación es muy buena en lo que hace. Dándole un dato inicial correcto, el sistema puede trazar un curso de cualquier sito a cualquier otro sitio en cuestión de segundos, y puede recalcular inteligentemente ese curso con filtros como \"menor tiempo de viaje\", \"distancia más corta\", \"navegación menos peligrosa\" y otros parecidos. Estos filtros pueden superponerse sin fin hasta que el sistema muestra la ruta exacta que tú quieres. Es incluso capaz en tener en cuenta la capacidad de superar la velocidad de la luz al trazar la ruta, lo que verifica la teoría de que en efecto los alienígenas tienen acceso a algún tipo de tecnología de Salto Súper-Lumínico.\n"
+"Ahora que hemos descifrado su sistema de anotaciones, podemos ver que la unidad de astronavegación es muy buena en lo que hace. Dándole un dato inicial correcto, el sistema puede trazar un curso de cualquier sito a cualquier otro sitio en cuestión de segundos, y puede recalcular inteligentemente ese curso con filtros como 'menor tiempo de viaje', 'distancia más corta', 'navegación menos peligrosa' y otros parecidos. Estos filtros pueden superponerse sin fin hasta que el sistema muestra la ruta exacta que tú quieres. Es incluso capaz en tener en cuenta la capacidad de superar la velocidad de la luz al trazar la ruta, lo que verifica la teoría de que en efecto los alienígenas tienen acceso a algún tipo de tecnología de Salto Súper-Lumínico.\n"
 "\n"
 "El único problema con el sistema de trazado de la unidad es que requiere una carta estelar para proporcionar rutas precias más allá del alcance de los sensores del OVNI. No hemos encontrado nunca una carta estelar cargada en los OVNI que hemos recuperado. Quizá sólo los OVNI con dispositivos SSL tengan cargada una carta estelar; seguramente la necesitan para la navegación.\n"
 "\n"
@@ -8218,7 +8222,7 @@ msgstr ""
 "\n"
 "Citando mi anterior informe:\n"
 "\n"
-"(Teoría OVNI): \"El sistema de propulsión alienígena es de un tipo de motor-cohete diferente a cualquier cosa fabricada en la Tierra. Usa un desintegrador directo de materia-antimateria para generar empuje inyectando protones y antiprotones en la cámara de reacción, que luego conduce esta fuerza explosiva por detrás del motor. Esto confiere al OVNI una potencia extrema y no necesita aire ni otros gases para alimentar la reacción, permitiéndole arder en el vacío extremo. Hay un sistema de refrigeración altamente avanzado bombeando nitrógeno liquido a través de la estructura del motor para enfriarlo y para reducir la señal infrarroja. El calor generado además es usado para proveer de la electricidad necesaria para cubrir las necesidades de la nave.\"\n"
+"(Teoría OVNI): 'El sistema de propulsión alienígena es de un tipo de motor-cohete diferente a cualquier cosa fabricada en la Tierra. Usa un desintegrador directo de materia-antimateria para generar empuje inyectando protones y antiprotones en la cámara de reacción, que luego conduce esta fuerza explosiva por detrás del motor. Esto confiere al OVNI una potencia extrema y no necesita aire ni otros gases para alimentar la reacción, permitiéndole arder en el vacío extremo. Hay un sistema de refrigeración altamente avanzado bombeando nitrógeno liquido a través de la estructura del motor para enfriarlo y para reducir la señal infrarroja. El calor generado además es usado para proveer de la electricidad necesaria para cubrir las necesidades de la nave.'\n"
 "\n"
 "Con este proyecto hemos aprendido mucho sobre como son construidos esos motores, como controlarlos, y como podríamos integrarlos en nuestra flota aérea. Deberíamos ser capaces de replicar esos motores y usarlos para cualquier aplicación que podamos necesitar en el futuro. Tengo que advertirle que serán extremadamente costosos de producir. Entre lo complejo de usar materiales alienígenas, la sensibilidad de los sistemas electromagnéticos y el sistema de refrigeración por nitrógeno liquido, es algo que reduce los limites de nuestra capacidad de producción.\n"
 "\n"
@@ -8421,12 +8425,12 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:4966
 msgid "'Sparrowhawk' AA Missile Rack"
-msgstr "Lanzamisiles AA \"Sparrowhawk\""
+msgstr "Lanzamisiles AA 'Sparrowhawk'"
 
 #: ../base/ufos/research.ufo:4969
 msgid "craft_weapon_sparrowhawk_txt"
 msgstr ""
-"Especificaciones Técnicas: Lanzamisiles AA “Sparrowhawk”\n"
+"Especificaciones Técnicas: Lanzamisiles AA 'Sparrowhawk'\n"
 "\n"
 "CLASIFICACIÓN NIVEL NEGRO\n"
 "\n"
@@ -8474,12 +8478,12 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:4983
 msgid "'Sparrowhawk' Missile"
-msgstr "Misil \"Sparrowhawk\""
+msgstr "Misil 'Sparrowhawk'"
 
 #: ../base/ufos/research.ufo:4986
 msgid "craft_ammo_sparrowhawk_txt"
 msgstr ""
-"Especificaciones Técnicas: Misil \"Sparrowhawk\"\n"
+"Especificaciones Técnicas: Misil 'Sparrowhawk'\n"
 "\n"
 "CLASIFICACIÓN NIVEL NEGRO\n"
 "\n"
@@ -8495,13 +8499,13 @@ msgstr ""
 "\n"
 "Descripción\n"
 "\n"
-"Este es el misil guiado antiaéreo \"Sparrowhawk\". Está diseñado para ser cargado en el Lanzamisiles AA \"Sparrowhawk\".\n"
+"Este es el misil guiado antiaéreo 'Sparrowhawk'. Está diseñado para ser cargado en el Lanzamisiles AA 'Sparrowhawk'.\n"
 "\n"
-"El misil “Sparrowhawk” es una antigüedad que nunca pasó de la fase de prototipo. Se probó por primera vez en 2019, y utilizaba la entonces revolucionaria tecnología de imagen digital para mejorar el viejo sistema de búsqueda por contraste. Esta técnica utiliza un juego de cámaras ópticas montadas en la nariz de fibra de vidrio transparente que tiene el misil. La computadora de a bordo busca el punto en la imagen donde el contraste cambia más rápidamente, e intenta mantenerlo continuamente en el punto de mira. Este sistema ha sido empleado sobre todo en misiles aire-tierra debido a la mayor efectividad que poseían otros contra las aeronaves terrestres.\n"
+"El misil 'Sparrowhawk' es una antigüedad que nunca pasó de la fase de prototipo. Se probó por primera vez en 2019, y utilizaba la entonces revolucionaria tecnología de imagen digital para mejorar el viejo sistema de búsqueda por contraste. Esta técnica utiliza un juego de cámaras ópticas montadas en la nariz de fibra de vidrio transparente que tiene el misil. La computadora de a bordo busca el punto en la imagen donde el contraste cambia más rápidamente, e intenta mantenerlo continuamente en el punto de mira. Este sistema ha sido empleado sobre todo en misiles aire-tierra debido a la mayor efectividad que poseían otros contra las aeronaves terrestres.\n"
 "\n"
 "El programa Sparrowhawk fue cancelado meses antes de que el diseño fuera puesto en servicio. Estaba listo entonces y está listo ahora. Hemos reactivado el programa Sparrowhawk AA y las Naciones Unidas han aceptado su producción masiva.\n"
 "\n"
-"Los \"Sparrowhawk\" están montados en lanzamisiles con 7 misiles que pueden ser instalados en los soportes apropiados de nuestras naves. El alcance de los misiles es muy superior al de cualquier otro armamento disponible hoy en día; su efectividad alcanza los 12 kilómetros gracias a su avanzada tecnología de guiado. Asimismo, los misiles están protegidos contra armas de PEM para prevenir su desconexión electrónica.\n"
+"Los 'Sparrowhawk' están montados en lanzamisiles con 7 misiles que pueden ser instalados en los soportes apropiados de nuestras naves. El alcance de los misiles es muy superior al de cualquier otro armamento disponible hoy en día; su efectividad alcanza los 12 kilómetros gracias a su avanzada tecnología de guiado. Asimismo, los misiles están protegidos contra armas de PEM para prevenir su desconexión electrónica.\n"
 "\n"
 "Los misiles pesan aproximadamente 65 kilos cada uno. Un lanzamisiles completamente cargado pesa aproximadamente 600 kilos.\n"
 "\n"
@@ -8778,11 +8782,11 @@ msgstr ""
 #: ../base/ufos/research.ufo:5291 ../base/ufos/research.ufo:5327
 msgid "alien_materials_txt"
 msgstr ""
-"Comandante, creo que hemos desvelado el secreto de los materiales alienígenas. Después de realizar algunas modificaciones en la maquinaria de nuestros Talleres, ahora deberíamos ser capaces de usarlos e incluso de \"programarles\" en nuevas formas avanzadas.\n"
+"Comandante, creo que hemos desvelado el secreto de los materiales alienígenas. Después de realizar algunas modificaciones en la maquinaria de nuestros Talleres, ahora deberíamos ser capaces de usarlos e incluso de 'programarles' en nuevas formas avanzadas.\n"
 "\n"
-"Tal y como mencioné anteriormente, los materiales alienígenas forman una \"aleación con memoria\", capaces de adoptar diversas formas y cambiar de una a otra si se les aplica el estímulo adecuado. Sorprendentemente, la aleación alienígena puede ser estimulada con dos cosas diferentes: el calor y la electricidad. El calor es una opción obvia para hacer que el OVNI despliegue su fuselaje durante un vuelo a través de la atmósfera, para obtener un mejor ascenso. La electricidad, en cambio, es algo nuevo.\n"
+"Tal y como mencioné anteriormente, los materiales alienígenas forman una 'aleación con memoria', capaces de adoptar diversas formas y cambiar de una a otra si se les aplica el estímulo adecuado. Sorprendentemente, la aleación alienígena puede ser estimulada con dos cosas diferentes: el calor y la electricidad. El calor es una opción obvia para hacer que el OVNI despliegue su fuselaje durante un vuelo a través de la atmósfera, para obtener un mejor ascenso. La electricidad, en cambio, es algo nuevo.\n"
 "\n"
-"Al aplicar electricidad, la aleación alienígena únicamente responde ante una corriente continua con un bajo voltaje y una intensidad de corriente muy específica. El material se deformará y permanecerá deformado mientras se mantenga dicha corriente eléctrica. Una vez que se interrumpa la corriente, el material volverá a adoptar su \"forma de reposo\" original, o bien una forma inducida por el calor, en caso de aplicarse suficiente calor. La forma inducida por la electricidad tiene prioridad frente a la forma inducida por la temperatura.\n"
+"Al aplicar electricidad, la aleación alienígena únicamente responde ante una corriente continua con un bajo voltaje y una intensidad de corriente muy específica. El material se deformará y permanecerá deformado mientras se mantenga dicha corriente eléctrica. Una vez que se interrumpa la corriente, el material volverá a adoptar su 'forma de reposo' original, o bien una forma inducida por el calor, en caso de aplicarse suficiente calor. La forma inducida por la electricidad tiene prioridad frente a la forma inducida por la temperatura.\n"
 "\n"
 "Esto significa que la forma del fuselaje del OVNI (y de cualquier cosa hecha con este material) puede ser cambiada de forma a voluntad, tanto por medio de una orden enviada por el operador como por sistemas electrónicos automatizados.\n"
 "\n"
@@ -8948,9 +8952,9 @@ msgstr "PHALANX y las Consecuencias de Bombay"
 #: ../base/ufos/research.ufo:5375
 msgid "news_phalanx_and_mumbai_aftermath_txt"
 msgstr ""
-"El \"Proyecto PHALANX\" fue concebido inicialmente por el Departamento de Defensa de los Estados Unidos en 1955, después de años de creciente preocupación por el elevado número de avistamientos OVNI alrededor del mundo. La posibilidad de una invasión alienígena acosaba la mente de políticos ya suficientemente nerviosos con el poder nuclear de la Unión Soviética. La existencia de vida extraterrestre hostil era una posibilidad muy remota, y aún más que estas criaturas hostiles encontraran la Tierra entre la inmensidad del espacio; pero ¿podía América correr ese riesgo?\n"
+"El 'Proyecto PHALANX' fue concebido inicialmente por el Departamento de Defensa de los Estados Unidos en 1955, después de años de creciente preocupación por el elevado número de avistamientos OVNI alrededor del mundo. La posibilidad de una invasión alienígena acosaba la mente de políticos ya suficientemente nerviosos con el poder nuclear de la Unión Soviética. La existencia de vida extraterrestre hostil era una posibilidad muy remota, y aún más que estas criaturas hostiles encontraran la Tierra entre la inmensidad del espacio; pero ¿podía América correr ese riesgo?\n"
 "\n"
-"Los partidarios del proyecto pasaron dos años consiguiendo apoyo en los más altos niveles del gobierno. Finalmente, en 1957, PHALANX recibió su primera partida de gastos. Una parte importante del 'presupuesto fantasma' de ese año fue destinado a la construcción de un avanzado complejo subterráneo en el desierto de Nevada, en algún lugar de la Base Aérea Nellis. El complejo fue denominado \"Comando de Operaciones del Pacífico de PHALANX\", cargado con equipo de punta, y con el mejor personal disponible para discutir como mejor combatir una incursión extraterrestre en suelo americano.\n"
+"Los partidarios del proyecto pasaron dos años consiguiendo apoyo en los más altos niveles del gobierno. Finalmente, en 1957, PHALANX recibió su primera partida de gastos. Una parte importante del 'presupuesto fantasma' de ese año fue destinado a la construcción de un avanzado complejo subterráneo en el desierto de Nevada, en algún lugar de la Base Aérea Nellis. El complejo fue denominado 'Comando de Operaciones del Pacífico de PHALANX', cargado con equipo de punta, y con el mejor personal disponible para discutir como mejor combatir una incursión extraterrestre en suelo americano.\n"
 "\n"
 "El proyecto fue un éxito enardecedor en sus primeros años, desarrollando tecnologías vanguardistas y produciendo prototipos funcionales de cosas que el mundo nunca había visto, todo por una fracción del costo en que un contratista civil habría incurrido. Por su naturaleza, el Proyecto PHALANX fue objeto de intensas batallas presupuestarias año tras año, pero sus éxitos en I+D siempre dieron al proyecto una razón para continuar incluso a los ojos de los mas pragmáticos.\n"
 "\n"
@@ -8993,7 +8997,7 @@ msgstr ""
 "\n"
 "Ahora conjeturamos que todos los alienígenas son portadores de esta infección microorgánica. La función del organismo no es fácilmente aparente. Hemos realizado pruebas en varias muestras experimentales de tejido, tanto infectadas como de control. Los tejidos infectados no parecen sufrir ningún efecto negativo -o positivo para el caso- por la presencia del organismo. Son esencialmente idénticas a las muestras sin infectar. Puesto que el microorganismo requiere un huésped vivo para sobrevivir, parece ser un parásito o un simbionte con efectos benéficos que no hemos observado hasta el momento.\n"
 "\n"
-"Hemos denominado a este organismo \"Infección Viral EXtraterrestre\", o IVX. Éste podría ser un término equivocado en términos microbiológicos, el IVX es un organismo pluricelular complejo mucho mas grande que cualquier virus terrestre, pero actúa y se reproduce exactamente como uno. Por lo tanto nos parece que el término está justificado. Puesto que cada una de las especies alienígenas porta una cepa única de la infección, les hemos dado designaciones alfabéticas según la especie en que se encuentra la cepa. Los Taman tienen IVX-T, los Sheevar la IVX-S, etcétera.\n"
+"Hemos denominado a este organismo 'Infección Viral EXtraterrestre', o IVX. Éste podría ser un término equivocado en términos microbiológicos, el IVX es un organismo pluricelular complejo mucho mas grande que cualquier virus terrestre, pero actúa y se reproduce exactamente como uno. Por lo tanto nos parece que el término está justificado. Puesto que cada una de las especies alienígenas porta una cepa única de la infección, les hemos dado designaciones alfabéticas según la especie en que se encuentra la cepa. Los Taman tienen IVX-T, los Sheevar la IVX-S, etcétera.\n"
 "\n"
 "El propósito de la infección sigue siendo una nebulosa por el momento, pero es lo único que hemos encontrado que vincule físicamente estas razas tan diversas. Podemos asumir que nuevas cepas de la infección han sido producidas para adaptarse a cada especie, tal vez permitiéndoles coexistir en la forma que lo hacen.\n"
 "\n"
@@ -9030,11 +9034,11 @@ msgstr ""
 "\n"
 "Dr. Connor "
 
-#: ../base/ufos/research.ufo:5415
+#: ../base/ufos/research.ufo:5416
 msgid "The Enemy On Earth"
 msgstr "El Enemigo en la Tierra"
 
-#: ../base/ufos/research.ufo:5420
+#: ../base/ufos/research.ufo:5421
 msgid "enemy_on_earth_alt_txt"
 msgstr ""
 "Propuesta\n"
@@ -9067,7 +9071,7 @@ msgstr ""
 "\n"
 "Dr. Connor."
 
-#: ../base/ufos/research.ufo:5421
+#: ../base/ufos/research.ufo:5422
 msgid "enemy_on_earth_txt"
 msgstr ""
 "Comandante,\n"
@@ -9086,7 +9090,7 @@ msgstr ""
 "\n"
 "Curiosamente, nuestros intentos de infectar a otras formas de vida terrestres -incluso vertebrados inteligentes como delfines mulares y elefantes- han fracasado completamente. Este organismo debe haber sido diseñado en su totalidad o en parte para infectar específicamente la especie humana.\n"
 "\n"
-"Hemos bautizado al organismo la \"infección viral extraterrestre \", o IVX. Esto puede ser un nombre algo inapropiado en términos microbiológicos; IVX es un complejo organismo pluricelular mucho más grande que cualquier virus terrestre, pero actúa y se reproduce igual.\n"
+"Hemos bautizado al organismo la 'infección viral extraterrestre', o IVX. Esto puede ser un nombre algo inapropiado en términos microbiológicos; IVX es un complejo organismo pluricelular mucho más grande que cualquier virus terrestre, pero actúa y se reproduce igual.\n"
 "\n"
 "Realmente, lo que estamos viendo aquí es un arma biológica de proporciones sin precedentes. En vez de matar a sus víctimas toma el control de ellas sin la opción de resistencia y -de momento- no se dispone de cura o defensa. El civil más humilde e inofensivo puede ser infectado y, con la instantánea maestría que comparte la gran mente compartida, convertirse en un guerrero eficaz para los alienígenas mientras reducen nuestros números. Cuando los alienígenas también los abastecen con armas, podemos ver el verdadero rostro del horror.\n"
 "\n"
@@ -9098,7 +9102,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:5424
+#: ../base/ufos/research.ufo:5425
 msgid "enemy_on_earth_pre_txt"
 msgstr ""
 "Comandante,\n"
@@ -9121,11 +9125,11 @@ msgstr ""
 "\n"
 "Dr. Connor."
 
-#: ../base/ufos/research.ufo:5455
+#: ../base/ufos/research.ufo:5456
 msgid "XVI Census"
 msgstr "Censo XVI"
 
-#: ../base/ufos/research.ufo:5460
+#: ../base/ufos/research.ufo:5461
 msgid "xvi_census_txt"
 msgstr ""
 "Buenos días, Señor.\n"
@@ -9148,7 +9152,7 @@ msgstr ""
 "\n"
 "Cnl. Falkland"
 
-#: ../base/ufos/research.ufo:5463
+#: ../base/ufos/research.ufo:5464
 msgid "xvi_census_pre_txt"
 msgstr ""
 "Buenos días, Señor.\n"
@@ -9165,11 +9169,11 @@ msgstr ""
 "\n"
 "Cnl. Falkland"
 
-#: ../base/ufos/research.ufo:5496
+#: ../base/ufos/research.ufo:5497
 msgid "The Enemy On Earth - Revisited"
 msgstr "El Enemigo en la Tierra - Revisado"
 
-#: ../base/ufos/research.ufo:5501
+#: ../base/ufos/research.ufo:5502
 #, fuzzy
 msgid "enemy_on_earth_rev_txt"
 msgstr ""
@@ -9191,15 +9195,15 @@ msgstr ""
 "\n"
 "Sincerely,Dr. Connor"
 
-#: ../base/ufos/research.ufo:5504
+#: ../base/ufos/research.ufo:5505
 msgid "enemy_on_earth_rev_pre_txt"
 msgstr "No existe información disponible previa a la investigación."
 
-#: ../base/ufos/research.ufo:5537
+#: ../base/ufos/research.ufo:5538
 msgid "The Alien Strategy"
 msgstr "La Estrategia Alienígena"
 
-#: ../base/ufos/research.ufo:5542
+#: ../base/ufos/research.ufo:5543
 msgid "alien_strategy_txt"
 msgstr ""
 "Propuesta\n"
@@ -9226,11 +9230,11 @@ msgstr ""
 "\n"
 "Cnl. Falkland"
 
-#: ../base/ufos/research.ufo:5565
+#: ../base/ufos/research.ufo:5566
 msgid "Orbital UFO Activity"
 msgstr "Actividad OVNI en Órbita"
 
-#: ../base/ufos/research.ufo:5570
+#: ../base/ufos/research.ufo:5571
 msgid "orbital_ufo_activity_txt"
 msgstr ""
 "Propuesta\n"
@@ -9263,7 +9267,7 @@ msgstr ""
 "\n"
 "La única pregunta que podemos hacer acerca de la actividad orbital OVNI es ¿Cómo vamos a luchar contra ella? Hasta ahora no hemos sido capaces de cambiar la situación, pero, con el creciente incremento presupuestario y reputación en las Naciones Unidas, las piezas comienzan a encajar para poder seguir el siguiente paso en nuestra estrategia.\n"
 "\n"
-"Por mucho la idea más prometedora a corto plazo para un arma de respuesta orbital es adaptar uno de los \"cañones espaciales\" usados por la NASA y la Agencia Espacial Europea para lanzar satélites y -antes de que la invasión nos forzara a evacuar nuestras instalaciones extra planetarias- lanzar paquetes de provisiones a la colonia Base de la Tranquilidad en la luna. Estos cañones son en esencia cañones electromagnéticos gigantes con suficiente potencia para lanzar una carga del tamaño de un satélite hacia la órbita terrestre. Con nuestros archivos de las Naciones Unidas sobre la investigación en armamento electromagnético, podemos mejorar uno de estos cañones y convertirlo en un arma anti-orbital capaz de derribar a las naves alienígenas. Confiamos en que podemos convencer al menos a una de las agencias espaciales Terrestres de prestarnos un cañón apropiado para este fin.\n"
+"Por mucho la idea más prometedora a corto plazo para un arma de respuesta orbital es adaptar uno de los 'cañones espaciales' usados por la NASA y la Agencia Espacial Europea para lanzar satélites y -antes de que la invasión nos forzara a evacuar nuestras instalaciones extra planetarias- lanzar paquetes de provisiones a la colonia Base de la Tranquilidad en la luna. Estos cañones son en esencia cañones electromagnéticos gigantes con suficiente potencia para lanzar una carga del tamaño de un satélite hacia la órbita terrestre. Con nuestros archivos de las Naciones Unidas sobre la investigación en armamento electromagnético, podemos mejorar uno de estos cañones y convertirlo en un arma anti-orbital capaz de derribar a las naves alienígenas. Confiamos en que podemos convencer al menos a una de las agencias espaciales Terrestres de prestarnos un cañón apropiado para este fin.\n"
 "\n"
 "Sin embargo existen problemas. Obviamente estas armas no se pueden mover, estando construidas en la ladera de una montaña, así que el objetivo tendría que pasar directamente enfrente del arma para que tengamos la oportunidad de atacarlo. Ya que no podemos contar con que los alienígenas nos presenten un blanco directo, esto ha sido una gran piedra de tropiezo, pero creemos que puede haber una solución: si el arma no se puede mover para acertar al objetivo, los proyectiles tendrán que moverse en su lugar.\n"
 "\n"
@@ -9275,11 +9279,11 @@ msgstr ""
 "\n"
 "Cnl. Falkland"
 
-#: ../base/ufos/research.ufo:5595
+#: ../base/ufos/research.ufo:5596
 msgid "Alien Psi Device"
 msgstr "Dispositivo Psiónico Alienígena"
 
-#: ../base/ufos/research.ufo:5600
+#: ../base/ufos/research.ufo:5601
 #, fuzzy
 msgid "alien_psi_device_txt"
 msgstr ""
@@ -9295,15 +9299,15 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:5603
+#: ../base/ufos/research.ufo:5604
 msgid "alien_psi_device_pre_txt"
 msgstr "No existe información disponible previa a la investigación."
 
-#: ../base/ufos/research.ufo:5627
+#: ../base/ufos/research.ufo:5628
 msgid "Alien Infiltration"
 msgstr "Infiltración Alienígena"
 
-#: ../base/ufos/research.ufo:5632
+#: ../base/ufos/research.ufo:5633
 #, fuzzy
 msgid "alien_infiltration_txt"
 msgstr ""
@@ -9321,15 +9325,15 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:5635
+#: ../base/ufos/research.ufo:5636
 msgid "alien_infiltration_pre_txt"
 msgstr "No existe información disponible previa a la investigación."
 
-#: ../base/ufos/research.ufo:5658
+#: ../base/ufos/research.ufo:5659
 msgid "Human Vaccine"
 msgstr "Vacuna Humana"
 
-#: ../base/ufos/research.ufo:5663
+#: ../base/ufos/research.ufo:5664
 #, fuzzy
 msgid "human_vaccine_txt"
 msgstr ""
@@ -9377,7 +9381,7 @@ msgstr ""
 "\n"
 "Ninguno."
 
-#: ../base/ufos/research.ufo:5666
+#: ../base/ufos/research.ufo:5667
 msgid "human_vaccine_pre_txt"
 msgstr "No existe información disponible previa a la investigación."
 
@@ -9990,7 +9994,7 @@ msgstr "Mantén a tus soldados juntos, para que puedan asistirse unos a otros (s
 
 #: ../base/ufos/tips.ufo:33
 msgid "Always have a disposable soldier or two, so you don't have to put your primary units into very risky situations."
-msgstr "Siempre ten disponibles uno o dos soldados \"desechables\", así no tendrás que poner a tus mejores unidades en situaciones de alto riesgo."
+msgstr "Siempre ten disponibles uno o dos soldados 'desechables', así no tendrás que poner a tus mejores unidades en situaciones de alto riesgo."
 
 #: ../base/ufos/tips.ufo:34
 msgid "You can increase a base's radar range by building an advanced radar facility. Remember that you have to research it first!"
@@ -10002,7 +10006,7 @@ msgstr "El Estallido Aéreo del Lanzagranadas te permite hacer estallar las gran
 
 #: ../base/ufos/tips.ufo:36
 msgid "When throwing grenades, try to avoid straight throws along the grid. With at least a little bit of an angle, the chances of bouncing it back at yourself becomes much less on a 'missed' throw."
-msgstr "Al arrojar granadas, trata de evitar lanzamientos rectos a lo largo de la cuadricula. Con solo un pequeño ángulo, las probabilidades de que reboten de regreso hacia ti si \"fallas\" el lanzamiento son mucho menores."
+msgstr "Al arrojar granadas, trata de evitar lanzamientos rectos a lo largo de la cuadricula. Con solo un pequeño ángulo, las probabilidades de que reboten de regreso hacia ti si 'fallas' el lanzamiento son mucho menores."
 
 #: ../base/ufos/tips.ufo:37
 msgid "Before throwing a grenade, look closely at the shape of the land. A slight slope will affect the direction that the grenade bounces."
@@ -11822,7 +11826,7 @@ msgstr "Idioma:"
 
 #: ../base/ufos/ui/main.ufo:235
 msgid "You have to set the playername and hit the 'OK' button:"
-msgstr "Necesitas configurar el nombre de jugador y presionar el boton \"Listo\":"
+msgstr "Necesitas configurar el nombre de jugador y presionar el boton 'Listo':"
 
 #: ../base/ufos/ui/main.ufo:243 ../base/ufos/ui/multiplayer.ufo:1415
 #: ../base/ufos/ui/sys_popup.ufo:49 ../base/ufos/ui/sys_popup.ufo:111
@@ -12634,7 +12638,7 @@ msgstr "Vertex Buffers:"
 
 #: ../base/ufos/ui/options.ufo:853
 msgid "OpenGL multisample buffers provide a mechanism to antialias all GL primitives. / The Swap Interval selects when a buffer swap will occur. The value '0' means that the swap will occur immediately (also known as 'v-sync off')."
-msgstr "Los Multisample Buffers OpenGL son una forma de alisar las formas GL primitivas. / El Intervalo de Sincronización Vertical ajusta cuando se refresca el buffer. Un valor de 0 significa que el buffer se refresca inmediatamente (también se conoce como \"desactivar la sincronía vertical\")."
+msgstr "Los Multisample Buffers OpenGL son una forma de alisar las formas GL primitivas. / El Intervalo de Sincronización Vertical ajusta cuando se refresca el buffer. Un valor de 0 significa que el buffer se refresca inmediatamente (también se conoce como 'desactivar la sincronía vertical')."
 
 #: ../base/ufos/ui/options.ufo:854
 msgid "Multisample Buffers / Swap Interval:"
@@ -12886,7 +12890,7 @@ msgstr "Confirmar Acciones:"
 
 #: ../base/ufos/ui/options.ufo:1589
 msgid "'No' means all your orders on the battlescape will be executed immediately. 'Yes' means you will be prompted to confirm all of your orders before the soldier begins to execute them. 'Only for moving' means the path will be displayed before you confirm a soldier's move."
-msgstr "\"No\" significa que tus ordenes durante el combate serán ejecutadas de inmediato. \"Si\" quiere decir que se te pedirá confirmar todas tus ordenes antes de que el soldado comience a ejecutarlas. \"Solo al desplazarse\" significa que se mostrará la ruta antes de que confirmes el movimiento de un soldado."
+msgstr "'No' significa que tus ordenes durante el combate serán ejecutadas de inmediato. 'Si' quiere decir que se te pedirá confirmar todas tus ordenes antes de que el soldado comience a ejecutarlas. 'Solo al desplazarse' significa que se mostrará la ruta antes de que confirmes el movimiento de un soldado."
 
 #: ../base/ufos/ui/options.ufo:1595 po/OTHER_STRINGS:4
 msgid "Yes"
@@ -13959,60 +13963,60 @@ msgstr "Impresionante"
 msgid "Superhuman"
 msgstr "Sobrehumano"
 
-#: client/battlescape/cl_actor.cpp:745
+#: client/battlescape/cl_actor.cpp:752
 #: client/battlescape/events/e_server.cpp:41
 msgid "It is not your turn!"
 msgstr "¡No es tu turno!"
 
-#: client/battlescape/cl_actor.cpp:1009
+#: client/battlescape/cl_actor.cpp:1016
 msgid "You cannot reload this unknown item."
 msgstr "No puedes recargar este objeto desconocido."
 
-#: client/battlescape/cl_actor.cpp:1848
+#: client/battlescape/cl_actor.cpp:1855
 msgid "Unknown alien race"
 msgstr "Raza alienígena desconocida"
 
-#: client/battlescape/cl_actor.cpp:2543
+#: client/battlescape/cl_actor.cpp:2550
 msgid "Toggle to next living actor"
 msgstr "Cambiar al siguiente personaje"
 
-#: client/battlescape/cl_actor.cpp:2544
+#: client/battlescape/cl_actor.cpp:2551
 msgid "Toggle to previous living actor"
 msgstr "Cambiar al personaje anterior"
 
-#: client/battlescape/cl_actor.cpp:2545
+#: client/battlescape/cl_actor.cpp:2552
 msgid "Select an actor from list"
 msgstr "Seleccionar a un personaje de la lista"
 
-#: client/battlescape/cl_actor.cpp:2546
+#: client/battlescape/cl_actor.cpp:2553
 msgid "Update an actor"
 msgstr "Actualizar un personaje"
 
-#: client/battlescape/cl_actor.cpp:2547
+#: client/battlescape/cl_actor.cpp:2554
 msgid "Toggle stand/crouch."
 msgstr "Cambiar entre parado/agachado"
 
-#: client/battlescape/cl_actor.cpp:2548
+#: client/battlescape/cl_actor.cpp:2555
 msgid "Toggle the headgear"
 msgstr "Encender/Apagar el equipo"
 
-#: client/battlescape/cl_actor.cpp:2549
+#: client/battlescape/cl_actor.cpp:2556
 msgid "Use"
 msgstr "Usar"
 
-#: client/battlescape/cl_actor.cpp:2550
+#: client/battlescape/cl_actor.cpp:2557
 msgid "Confirm the current action"
 msgstr "Confirmar la acción actual:"
 
-#: client/battlescape/cl_actor.cpp:2551
+#: client/battlescape/cl_actor.cpp:2558
 msgid "Toggle to the next alien in sight of the selected actor."
 msgstr "Enfocar el siguiente alienígena que el soldado seleccionado puede ver."
 
-#: client/battlescape/cl_actor.cpp:2553
+#: client/battlescape/cl_actor.cpp:2560
 msgid "Toggle camera to the next visible alien."
 msgstr "Enfocar el siguiente alienígena visible."
 
-#: client/battlescape/cl_actor.cpp:2554
+#: client/battlescape/cl_actor.cpp:2561
 msgid "Toggle camera to the previous visible alien."
 msgstr "Enfocar el alienígena visible anterior."
 
@@ -14199,20 +14203,15 @@ msgstr ""
 "- Reservadas: %i\n"
 "- Restantes: %i\n"
 
-#: client/battlescape/cl_hud.cpp:1332
-#: client/cgame/campaign/cp_hospital_callbacks.cpp:55
-msgid "Damaged"
-msgstr "Dañado"
-
-#: client/battlescape/cl_hud.cpp:1332
-#: client/cgame/campaign/cp_hospital_callbacks.cpp:55
-msgid "Wounded"
-msgstr "Herido"
+#: client/battlescape/cl_hud.cpp:1334
+#, c-format
+msgid "Damaged %s (deterioration: %i)"
+msgstr "Daños en %s (deterioro: %i)"
 
 #: client/battlescape/cl_hud.cpp:1334
 #, c-format
-msgid "%s %s (bleeding: %i)"
-msgstr "%s %s (sangrado: %i)"
+msgid "Wounded %s (bleeding: %i)"
+msgstr "Heridas en %s (sangrado: %i)"
 
 #: client/battlescape/cl_hud.cpp:1356
 msgid "Currently panics!\n"
@@ -14536,8 +14535,8 @@ msgstr "Un nuevo %s esta listo en %s"
 #: client/cgame/campaign/cp_market_callbacks.cpp:193
 #: client/cgame/campaign/cp_market_callbacks.cpp:199
 #: client/cgame/campaign/cp_mission_callbacks.cpp:63
-#: client/cgame/campaign/cp_missions.cpp:699
-#: client/cgame/campaign/cp_missions.cpp:1052
+#: client/cgame/campaign/cp_missions.cpp:700
+#: client/cgame/campaign/cp_missions.cpp:1053
 #: client/cgame/campaign/cp_nation.cpp:807
 #: client/cgame/campaign/cp_nation.cpp:824
 #: client/cgame/campaign/cp_nation.cpp:837
@@ -15398,10 +15397,15 @@ msgstr "Problema desconocido"
 msgid "Ok"
 msgstr "Funcional"
 
+#: client/cgame/campaign/cp_hospital_callbacks.cpp:56
+#, c-format
+msgid "Damaged %s (damage: %i)"
+msgstr "Daños en %s (daño: %i)"
+
 #: client/cgame/campaign/cp_hospital_callbacks.cpp:57
 #, c-format
-msgid "%s %s (damage: %i)"
-msgstr "%s %s (daño: %i)"
+msgid "Wounded %s (damage: %i)"
+msgstr "Heridas en %s (daño: %i)"
 
 #: client/cgame/campaign/cp_installation.cpp:155
 #, c-format
@@ -15876,50 +15880,50 @@ msgstr ""
 "\n"
 "  - El equipo de desarrollo de UFO:AI"
 
-#: client/cgame/campaign/cp_missions.cpp:445
+#: client/cgame/campaign/cp_missions.cpp:446
 msgid "Crashed aircraft"
 msgstr "Aeronave caída"
 
-#: client/cgame/campaign/cp_missions.cpp:450
+#: client/cgame/campaign/cp_missions.cpp:451
 msgid "Landed UFO"
 msgstr "Aterrizaje OVNI"
 
-#: client/cgame/campaign/cp_missions.cpp:452
+#: client/cgame/campaign/cp_missions.cpp:453
 msgid "Terror mission"
 msgstr "Misión de terror"
 
-#: client/cgame/campaign/cp_missions.cpp:454
+#: client/cgame/campaign/cp_missions.cpp:455
 #: client/cgame/campaign/missions/cp_mission_baseattack.cpp:164
 msgid "Base attack"
 msgstr "Ataque a la base"
 
-#: client/cgame/campaign/cp_missions.cpp:458
+#: client/cgame/campaign/cp_missions.cpp:459
 msgid "Harvesting mission"
 msgstr "Misión de recolección"
 
-#: client/cgame/campaign/cp_missions.cpp:670
+#: client/cgame/campaign/cp_missions.cpp:671
 #, c-format
 msgid "Go on a rescue mission at %s to save your soldiers, some of whom may still be alive."
 msgstr "Ve a una misión de rescate a %s para salvar a tus soldados, algunos de los cuales podrían estar aún con vida."
 
-#: client/cgame/campaign/cp_missions.cpp:672
+#: client/cgame/campaign/cp_missions.cpp:673
 #, c-format
 msgid "Alien activity has been detected in %s."
 msgstr "Actividad alienígena ha sido reportada en '%s'"
 
-#: client/cgame/campaign/cp_missions.cpp:1050
+#: client/cgame/campaign/cp_missions.cpp:1051
 #, c-format
 msgid "Defence of base: %s successful!"
 msgstr "¡Defensa de la base: %s exitosa!"
 
-#: client/cgame/campaign/cp_missions.cpp:1225
+#: client/cgame/campaign/cp_missions.cpp:1226
 #: client/cgame/campaign/missions/cp_mission_harvest.cpp:170
 #: client/cgame/campaign/missions/cp_mission_recon.cpp:161
 #: client/cgame/staticcampaign/scp_missions.cpp:213
 msgid "No nation"
 msgstr "Sin nación"
 
-#: client/cgame/campaign/cp_missions.cpp:1313
+#: client/cgame/campaign/cp_missions.cpp:1314
 msgid "Crashed"
 msgstr "Lugar del choque:"
 
@@ -18001,6 +18005,12 @@ msgstr "alienígena"
 #: po/OTHER_STRINGS:6
 msgid "Take a screenshot"
 msgstr "Tomar una captura de pantalla"
+
+#~ msgid "Damaged"
+#~ msgstr "Dañado"
+
+#~ msgid "Wounded"
+#~ msgstr "Herido"
 
 #~ msgid "Advanced Combat Armour"
 #~ msgstr "Armadura de Combate Avanzada"
