@@ -1229,7 +1229,7 @@ static void AI_SetStats (edict_t * ent)
 	/* hurt aliens in ufo crash missions (5%: almost dead, 10%: wounded, 15%: stunned)  */
 	if (level.hurtAliens && CHRSH_IsTeamDefAlien(ent->chr.teamDef)) {
 		const float random = frand();
-		int damage, stun;
+		int damage = 0, stun = 0;
 		if (random <= 0.05f) {
 			damage = ent->HP * 0.95f;
 		} else if (random <= 0.15f) {
