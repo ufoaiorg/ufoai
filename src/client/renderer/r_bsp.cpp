@@ -427,6 +427,7 @@ static void R_RenderBspRRefs (drawSurfaceFunc drawFunc, surfaceArrayType_t surfT
 	/* and restore array pointers */
 	R_ResetArrayState();
 
+	glCullFace(GL_BACK);
 	glDisable(GL_CULL_FACE);
 }
 
