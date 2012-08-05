@@ -278,8 +278,22 @@ bool AB_CheckSupplyMissionPossible (void)
  */
 alienBase_t* AB_ChooseBaseToSupply (void)
 {
-	const int baseIDX = rand() % AB_GetAlienBaseNumber();
-	return AB_GetByIDX(baseIDX);
+	const int baseCount = AB_GetAlienBaseNumber();
+
+	if (baseCount <= 0) {
+		Com_Printf("AB_ChooseBaseToSupply: no bases exists (basecount: %d)\n", baseCount);
+		return NULL;
+	}
+
+	const int selected = rand() % baseCount;
+
+	int i = 0;
+	AB_Foreach(alienBase) {
+		if (i == selected)
+			return alienBase;
+		i++;
+	}
+	return NULL;
 }
 
 /**
