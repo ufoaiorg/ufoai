@@ -45,4 +45,4 @@ OPENGL_CFLAGS            ?=
 OPENGL_LIBS              ?= -framework OpenGL
 OPENAL_CFLAGS            ?=
 OPENAL_LIBS              ?= -framework OpenAL
-MUMBLE_LIBS              ?= -lrt
+MUMBLE_LIBS              ?=
