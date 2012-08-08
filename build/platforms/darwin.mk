@@ -46,3 +46,4 @@ OPENGL_LIBS              ?= -framework OpenGL
 OPENAL_CFLAGS            ?=
 OPENAL_LIBS              ?= -framework OpenAL
 MUMBLE_LIBS              ?=
+INTL_LIBS                ?= -lintl
