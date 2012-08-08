@@ -37,11 +37,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../client/renderer/r_model.h"
 #include "../../client/renderer/r_state.h"
 #include "../../shared/images.h"
+#include "../../common/common.h"
 #include <SDL_main.h>
 
 #define VERSION "0.2"
 
-#if defined (__APPLE__) || defined (MACOSX)
 /**
  * We have to ensure that our new/delete overrides can take place before main is going to get executed
  */
@@ -50,7 +50,6 @@ void really_init ()
 {
 	com_genericPool = Mem_CreatePool("Generic");
 }
-#endif
 
 rstate_t r_state;
 image_t *r_noTexture;
