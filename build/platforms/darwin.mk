@@ -11,7 +11,7 @@ LDFLAGS                  += -framework IOKit -framework Foundation -framework Co
 ### check for that, and if present, add to CFLAGS/LDFLAGS (really convenient!)
 ifneq ($(wildcard /opt/local),)
 	LIB_BASE_DIR     ?= /opt/local
-	FRAMEWORK_DIR    ?= $(BASE_DIR)/Library/Frameworks
+	FRAMEWORK_DIR    ?= $(LIB_BASE_DIR)/Library/Frameworks
 else
 ifneq ($(wildcard /sw),)
 	LIB_BASE_DIR     ?= /sw
@@ -19,7 +19,7 @@ ifneq ($(wildcard /sw),)
 endif
 endif
 
-ifneq ($(BASE_DIR),)
+ifneq ($(LIB_BASE_DIR),)
 	CFLAGS           += -I$(LIB_BASE_DIR)/include
 	LDFLAGS          += -L$(LIB_BASE_DIR)/lib
 endif
