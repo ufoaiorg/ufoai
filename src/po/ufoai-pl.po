@@ -17425,6 +17425,8 @@ msgid ""
 "\n"
 "Secured crashed %s (%.0f%%)\n"
 msgstr ""
+"\n"
+"Zabezpieczono rozbity %s (%.0f%%)\n"
 
 #: client/cgame/campaign/cp_uforecovery_callbacks.cpp:115
 #, c-format
