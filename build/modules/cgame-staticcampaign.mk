@@ -17,20 +17,7 @@ $(TARGET)_SRCS      = \
 	client/cgame/staticcampaign/scp_parse.cpp
 
 ifneq ($(HARD_LINKED_CGAME),1)
-	$(TARGET)_SRCS += shared/mathlib.cpp \
-		shared/shared.cpp \
-		shared/utf8.cpp \
-		shared/parse.cpp \
-		shared/infostring.cpp \
-		\
-		common/binaryexpressionparser.cpp \
-		\
-		game/q_shared.cpp \
-		game/chr_shared.cpp \
-		game/inv_shared.cpp \
-		game/inventory.cpp \
-		\
-		$(cgame-campaign_SRCS)
+	$(TARGET)_SRCS   += $(call FILTER_OUT,cl_game_campaign,$(cgame-campaign_SRCS))
 else
 	$(TARGET)_IGNORE := yes
 endif

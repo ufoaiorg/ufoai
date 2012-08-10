@@ -8,10 +8,10 @@ endif
 
 $(TARGET)_LINKER   := $(CXX)
 $(TARGET)_FILE     := $(TARGET)$(EXE_EXT)
-$(TARGET)_CFLAGS   += -DCOMPILE_UFO -DHARD_LINKED_GAME -DCOMPILE_UNITTESTS $(BFD_CFLAGS) $(SDL_CFLAGS) $(CURL_CFLAGS) $(OGG_CFLAGS) $(MXML_CFLAGS) $(MUMBLE_CFLAGS)
+$(TARGET)_CFLAGS   += -DCOMPILE_UFO -DHARD_LINKED_GAME -DHARD_LINKED_CGAME -DCOMPILE_UNITTESTS $(BFD_CFLAGS) $(SDL_CFLAGS) $(CURL_CFLAGS) $(OGG_CFLAGS) $(MXML_CFLAGS) $(MUMBLE_CFLAGS)
 $(TARGET)_LDFLAGS  += -lcunit -lpng -ljpeg $(BFD_LIBS) $(INTL_LIBS) $(SDL_TTF_LIBS) $(SDL_MIXER_LIBS) $(OPENGL_LIBS) $(SDL_LIBS) $(CURL_LIBS) $(THEORA_LIBS) $(XVID_LIBS) $(VORBIS_LIBS) $(OGG_LIBS) $(MXML_LIBS) $(MUMBLE_LIBS) $(SO_LIBS) -lz
 
-$(TARGET)_SRCS      = \
+$(TARGET)_SRCS_TMP      = \
 	tests/test_all.cpp \
 	tests/test_routing.cpp \
 	tests/test_events.cpp \
@@ -263,6 +263,16 @@ $(TARGET)_SRCS      = \
 	shared/byte.cpp \
 	shared/mutex.cpp \
 	shared/images.cpp \
+	shared/mathlib.cpp \
+	shared/shared.cpp \
+	shared/utf8.cpp \
+	shared/parse.cpp \
+	shared/infostring.cpp \
+	\
+	game/q_shared.cpp \
+	game/chr_shared.cpp \
+	game/inv_shared.cpp \
+	game/inventory.cpp \
 	\
 	$(game_SRCS) \
 	\
@@ -271,45 +281,26 @@ $(TARGET)_SRCS      = \
 	$(MUMBLE_SRCS)
 
 ifeq ($(TARGET_OS),mingw32)
-	$(TARGET)_SRCS += \
+	$(TARGET)_SRCS_TMP += \
 		ports/windows/win_backtrace.cpp \
 		ports/windows/win_console.cpp \
 		ports/windows/win_shared.cpp \
 		ports/windows/ufo.rc
 else
-	$(TARGET)_SRCS += \
+	$(TARGET)_SRCS_TMP += \
 		ports/unix/unix_console.cpp \
 		ports/unix/unix_files.cpp \
 		ports/unix/unix_shared.cpp \
 		ports/unix/unix_main.cpp
 endif
 
-ifeq ($(HARD_LINKED_GAME),1)
-	$(TARGET)_SRCS     += shared/mathlib.cpp \
-		shared/shared.cpp \
-		shared/utf8.cpp \
-		shared/parse.cpp \
-		shared/infostring.cpp \
-		\
-		game/q_shared.cpp \
-		game/chr_shared.cpp \
-		game/inv_shared.cpp \
-		game/inventory.cpp
-endif
+$(TARGET)_SRCS_TMP     += \
+	$(cgame-campaign_SRCS) \
+	$(cgame-skirmish_SRCS) \
+	$(cgame-multiplayer_SRCS) \
+	$(cgame-staticcampaign_SRCS)
 
-ifeq ($(HARD_LINKED_CGAME),1)
-	$(TARGET)_SRCS     += \
-		$(cgame-campaign_SRCS) \
-		$(cgame-skirmish_SRCS) \
-		$(cgame-multiplayer_SRCS) \
-		$(cgame-staticcampaign_SRCS)
-else
-	$(TARGET)_DEPS     := \
-		cgame-campaign \
-		cgame-skirmish \
-		cgame-multiplayer \
-		cgame-staticcampaign
-endif
+$(TARGET)_SRCS = $(sort $($(TARGET)_SRCS_TMP))
 
 ifneq ($(HAVE_CUNIT_BASIC_H), 1)
 	$(TARGET)_IGNORE := yes

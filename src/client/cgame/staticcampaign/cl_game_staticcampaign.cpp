@@ -32,6 +32,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "scp_parse.h"
 #include "scp_shared.h"
 
+CGAME_HARD_LINKED_FUNCTIONS
+
 staticCampaignData_t* scd;
 
 static void GAME_SCP_InitStartup (void)
