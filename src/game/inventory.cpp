@@ -433,8 +433,9 @@ static inventory_action_t I_MoveInInventory (inventoryInterface_t* self, invento
 	if (INV_IsArmourDef(to)) {
 		assert(INV_IsArmour(self->cacheItem.item));
 		return IA_ARMOUR;
-	} else
-		return IA_MOVE;
+	}
+
+	return IA_MOVE;
 }
 
 /**
@@ -459,15 +460,12 @@ static bool I_TryAddToInventory (inventoryInterface_t* self, inventory_t* const 
 		const int checkedTo = INVSH_CheckToInventory(inv, item->item, container, x, y, NULL);
 		if (!checkedTo)
 			return false;
-		else {
-			item_t itemRotation = *item;
-			if (checkedTo == INV_FITS_ONLY_ROTATED)
-				itemRotation.rotated = true;
-			else
-				itemRotation.rotated = false;
 
-			return self->AddToInventory(self, inv, &itemRotation, container, x, y, 1) != NULL;
-		}
+		const bool rotated = checkedTo == INV_FITS_ONLY_ROTATED;
+		item_t itemRotation = *item;
+		itemRotation.rotated = rotated;
+
+		return self->AddToInventory(self, inv, &itemRotation, container, x, y, 1) != NULL;
 	}
 }
 
@@ -607,7 +605,6 @@ static int I_PackAmmoAndWeapon (inventoryInterface_t *self, inventory_t* const i
 		packed = self->TryAddToInventory(self, inv, &item, &self->csi->ids[self->csi->idHolster]);
 	if (!packed)
 		return 0;
-
 
 	/* pack some more ammo in the backpack */
 	if (ammo) {
