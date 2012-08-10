@@ -50,7 +50,7 @@ void uiAbstractBaseNode::onLoading (uiNode_t * node)
  */
 void uiAbstractBaseNode::onLoaded (uiNode_t * node)
 {
-	/* it do not make any sens to check it here */
+	/* it do not make any sense to check it here */
 #if 0
 	const int id = EXTRADATA(node).baseid;
 	if (B_GetBaseByIDX(id) == NULL)
@@ -62,9 +62,9 @@ base_t* uiAbstractBaseNode::getBase (const uiNode_t * node)
 {
 	if (EXTRADATACONST(node).baseid == -1) {
 		return B_GetCurrentSelectedBase();
-	} else {
-		return B_GetBaseByIDX(EXTRADATACONST(node).baseid);
 	}
+
+	return B_GetBaseByIDX(EXTRADATACONST(node).baseid);
 }
 
 /**
