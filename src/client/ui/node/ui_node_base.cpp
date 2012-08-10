@@ -46,16 +46,10 @@ void uiAbstractBaseNode::onLoading (uiNode_t * node)
 }
 
 /**
- * @brief Called after the end of the node load from script (all data and/or child are set)
+ * @brief Called after the node is completly loaded from the ufo-script (all data and/or children are set)
  */
 void uiAbstractBaseNode::onLoaded (uiNode_t * node)
 {
-	/* it do not make any sense to check it here */
-#if 0
-	const int id = EXTRADATA(node).baseid;
-	if (B_GetBaseByIDX(id) == NULL)
-		Com_Printf("UI_AbstractBaseNodeLoaded: Invalid baseid given %i", id);
-#endif
 }
 
 base_t* uiAbstractBaseNode::getBase (const uiNode_t * node)
