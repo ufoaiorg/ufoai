@@ -183,19 +183,15 @@ void uiBaseMapNode::draw (uiNode_t * node)
 				UI_DrawNormImageByName(false, pos[0], pos[1], width * (building ? building->size[0] : 1), height * (building ? building->size[1] : 1), 0, 0, 0, 0, image);
 			if (building) {
 				switch (building->buildingStatus) {
-				case B_STATUS_DOWN:
-				case B_STATUS_CONSTRUCTION_FINISHED:
+				case B_STATUS_UNDER_CONSTRUCTION: {
+					const float remaining = B_GetConstructionTimeRemain(building);
+					const float time = std::max(0.0f, remaining);
+					const char* text = va(ngettext("%3.1f day left", "%3.1f days left", time), time);
+					UI_DrawString("f_small", ALIGN_UL, pos[0] + 10, pos[1] + 10, pos[0] + 10, node->box.size[0], 0, text);
 					break;
-				case B_STATUS_UNDER_CONSTRUCTION:
-					{
-						const float remaining = B_GetConstructionTimeRemain(building);
-						const float time = std::max(0.0f, remaining);
-						const char* text = va(ngettext("%3.1f day left", "%3.1f days left", time), time);
-						UI_DrawString("f_small", ALIGN_UL, pos[0] + 10, pos[1] + 10, pos[0] + 10, node->box.size[0], 0, text);
-						break;
-					}
-					default:
-						break;
+				}
+				default:
+					break;
 				}
 			}
 		}
@@ -211,8 +207,6 @@ void uiBaseMapNode::draw (uiNode_t * node)
 	/* if we are building */
 	if (ccs.baseAction == BA_NEWBUILDING) {
 		int y, x;
-		int xCoord, yCoord, widthRect, heigthRect;
-		vec2_t pos;
 
 		assert(base->buildingCurrent);
 
@@ -223,11 +217,12 @@ void uiBaseMapNode::draw (uiNode_t * node)
 			}
 		}
 
+		vec2_t pos;
 		UI_GetNodeAbsPos(node, pos);
-		xCoord = pos[0] + col * width;
-		yCoord = pos[1] + row * (height - BASE_IMAGE_OVERLAY);
-		widthRect = base->buildingCurrent->size[0] * width;
-		heigthRect = base->buildingCurrent->size[1] * (height - BASE_IMAGE_OVERLAY);
+		const int xCoord = pos[0] + col * width;
+		const int yCoord = pos[1] + row * (height - BASE_IMAGE_OVERLAY);
+		const int widthRect = base->buildingCurrent->size[0] * width;
+		const int heigthRect = base->buildingCurrent->size[1] * (height - BASE_IMAGE_OVERLAY);
 		R_DrawRect(xCoord, yCoord, widthRect, heigthRect, white, 3, 1);
 	}
 }
