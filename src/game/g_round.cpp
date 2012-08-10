@@ -192,7 +192,7 @@ void G_ClientEndRound (player_t * player)
 	G_ReactionFireOnEndTurn();
 
 	/* let all the invisible players perish now */
-	G_CheckVisTeamAll(level.activeTeam, true, NULL);
+	G_CheckVisTeamAll(level.activeTeam, VIS_APPEAR, NULL);
 
 	G_GetNextActiveTeam();
 

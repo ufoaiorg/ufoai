@@ -457,7 +457,7 @@ static void G_ClientStateChangeUpdate (edict_t *ent)
 	G_CheckVis(ent, true);
 
 	/* Calc new vis for this player. */
-	G_CheckVisTeamAll(ent->team, false, ent);
+	G_CheckVisTeamAll(ent->team, 0, ent);
 
 	/* Send the new TUs. */
 	G_SendStats(ent);
