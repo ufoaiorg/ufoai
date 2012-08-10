@@ -217,7 +217,7 @@ public:
 	char id[MAX_TEXPATH];
 	char name[MAX_TEXPATH];
 	int penalties[MODIFIER_MAX];
-	int bodyArea;
+	vec4_t shape;
 	int bleedingFactor;
 	int woundThreshold;
 };
@@ -226,7 +226,7 @@ class BodyData {
 private:
 	char _id[MAX_TEXPATH];
 	BodyPartData _bodyParts[BODYPART_MAXTYPE];
-	int _totalBodyArea;
+	float _totalBodyArea;
 	short _numBodyParts;
 
 public:
@@ -241,6 +241,8 @@ public:
 	short numBodyParts (void) const;
 	void setId(const char *id);
 	void addBodyPart(const BodyPartData &bodyPart);
+	short getHitBodyPart(const byte direction, const float height) const;
+	float getArea(const short bodyPart) const;
 };
 
 typedef struct teamDef_s {

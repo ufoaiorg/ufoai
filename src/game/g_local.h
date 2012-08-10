@@ -559,7 +559,7 @@ void SP_func_door_sliding(edict_t *ent);
 void SP_func_breakable(edict_t *ent);
 
 /* g_health */
-void G_DamageActor(edict_t *target, const int damage);
+void G_DamageActor(edict_t *target, const int damage, const vec3_t impact);
 void G_TreatActor(edict_t *target, const fireDef_t *const fd, const int heal, const int healerTeam);
 void G_BleedWounds(const int team);
 void G_SendWoundStats(edict_t *const ent);

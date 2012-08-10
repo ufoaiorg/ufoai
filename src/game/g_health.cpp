@@ -24,26 +24,55 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "g_local.h"
 
+static byte G_GetImpactDirection(const edict_t *const target, const vec3_t impact)
+{
+	vec3_t vec1, vec2;
+
+	VectorSubtract(impact, target->origin, vec1);
+	vec1[2] = 0;
+	VectorNormalize(vec1);
+	VectorCopy(dvecs[target->dir], vec2);
+	VectorNormalize(vec2);
+
+	return AngleToDir(VectorAngleBetween(vec1, vec2) / torad);
+}
+
 /**
  * @brief Deals damage and causes wounds.
  * @param[in,out] target Pointer to the actor we want to damage.
  * @param[in] damage The value of the damage.
+ * @param[in] impact Impact location @c NULL for splash damage.
  */
-void G_DamageActor (edict_t *target, const int damage)
+void G_DamageActor (edict_t *target, const int damage, const vec3_t impact)
 {
 	assert(target->chr.teamDef);
-	int bodyPart = target->chr.teamDef->bodyTemplate->getRandomBodyPart();
 
 	G_TakeDamage(target, damage);
 	if (damage > 0 && target->HP > 0) {
-		target->chr.wounds.woundLevel[bodyPart] += damage;
+		short bodyPart;
+		const teamDef_t *const teamDef = target->chr.teamDef;
+		if (impact) {
+			/* Direct hit */
+			const byte impactDirection = G_GetImpactDirection(target, impact);
+			const float impactHeight = impact[2] / (target->absmin[2] + target->absmax[2]);
+			bodyPart = teamDef->bodyTemplate->getHitBodyPart(impactDirection, impactHeight);
+			target->chr.wounds.woundLevel[bodyPart] += damage;
+			if (target->chr.wounds.woundLevel[bodyPart] > target->chr.maxHP * teamDef->bodyTemplate->woundThreshold(bodyPart))
+				G_ClientPrintf(G_PLAYER_FROM_ENT(target), PRINT_HUD, _("%s has been wounded!"), target->chr.name);
+		} else {
+			/* No direct hit (splash damage) */
+			int bodyPart;
+			for (bodyPart = 0; bodyPart < teamDef->bodyTemplate->numBodyParts(); ++bodyPart) {
+				target->chr.wounds.woundLevel[bodyPart] += teamDef->bodyTemplate->getArea(bodyPart) * damage;
+				if (target->chr.wounds.woundLevel[bodyPart] > target->chr.maxHP * teamDef->bodyTemplate->woundThreshold(bodyPart))
+					G_ClientPrintf(G_PLAYER_FROM_ENT(target), PRINT_HUD, _("%s has been wounded!"), target->chr.name);
+			}
+		}
 #if 0
 		if (!CHRSH_IsTeamDefRobot(target->chr.teamDef))
 			/* Knockback -- currently disabled, not planned in the specs, also there's no way to tell stunned and dead actors apart */
 			target->STUN = std::min(255.0f, target->STUN + std::max(0.0f, damage * crand() * 0.25f));
 #endif
-		if (target->chr.wounds.woundLevel[bodyPart] > target->chr.maxHP * target->chr.teamDef->bodyTemplate->woundThreshold(bodyPart))
-			G_ClientPrintf(G_PLAYER_FROM_ENT(target), PRINT_HUD, _("%s has been wounded!"), target->chr.name);
 	}
 }
 

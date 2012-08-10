@@ -293,11 +293,12 @@ static void G_UpdateHitScore (edict_t * attacker, const edict_t * target, const 
  * @param[in] damage The value of the damage.
  * @param[in] attacker The attacker.
  * @param[in] mock pseudo shooting - only for calculating mock values - NULL for real shots
+ * @param[in] impact impact location - @c NULL for splash damage
  * @sa G_SplashDamage
  * @sa G_TakeDamage
  * @sa G_PrintActorStats
  */
-static void G_Damage (edict_t *target, const fireDef_t *fd, int damage, edict_t *attacker, shot_mock_t *mock)
+static void G_Damage (edict_t *target, const fireDef_t *fd, int damage, edict_t *attacker, shot_mock_t *mock, const vec3_t impact)
 {
 	const bool stunEl = (fd->obj->dmgtype == gi.csi->damStunElectro);
 	const bool stunGas = (fd->obj->dmgtype == gi.csi->damStunGas);
@@ -395,7 +396,7 @@ static void G_Damage (edict_t *target, const fireDef_t *fd, int damage, edict_t 
 				G_TreatActor(target, fd, damage, attacker->team);
 			} else {
 				/* Real damage was dealt. */
-				G_DamageActor(target, damage);
+				G_DamageActor(target, damage, impact);
 				/* Update overall splash damage for stats/score. */
 				if (!mock && damage > 0 && fd->splrad) /**< Check for >0 and splrad to not count this as direct hit. */
 					G_UpdateHitScore(attacker, target, fd, damage);
@@ -527,7 +528,7 @@ static void G_SplashDamage (edict_t *ent, const fireDef_t *fd, vec3_t impact, sh
 
 		if (mock)
 			mock->allow_self = true;
-		G_Damage(check, fd, damage, ent, mock);
+		G_Damage(check, fd, damage, ent, mock, NULL);
 		if (mock)
 			mock->allow_self = false;
 	}
@@ -948,7 +949,8 @@ static void G_ShootSingle (edict_t *ent, const fireDef_t *fd, const vec3_t from,
 
 		/* do damage if the trace hit an entity */
 		if (tr.ent && (G_IsActor(tr.ent) || (G_IsBreakable(tr.ent) && damage > 0))) {
-			G_Damage(tr.ent, fd, damage, ent, mock);
+			VectorCopy(tr.endpos, impact);
+			G_Damage(tr.ent, fd, damage, ent, mock, impact);
 
 			if (!mock) { /* check for firedHit is done in G_UpdateHitScore */
 				/* Count this as a hit of this firemode. */
