@@ -264,6 +264,7 @@ static void MAP_MultiSelectExecuteAction_f (void)
 	default:
 		Com_DPrintf(DEBUG_CLIENT, "MAP_MultiSelectExecuteAction: selection of an unknown element type %i\n",
 				multiSelect.selectType[selected]);
+		break;
 	}
 }
 
@@ -2268,7 +2269,8 @@ int MAP_GetCivilianNumberByPosition (const vec2_t pos)
 
 	if (MapIsWater(color))
 		Com_Error(ERR_DROP, "MAP_GetPopulationType: Trying to get number of civilian in a position on water");
-	else if (MapIsUrban(color))
+
+	if (MapIsUrban(color))
 		return 10;
 	else if (MapIsSuburban(color))
 		return 8;
@@ -2278,8 +2280,8 @@ int MAP_GetCivilianNumberByPosition (const vec2_t pos)
 		return 4;
 	else if (MapIsNopopulation(color))
 		return 2;
-	else
-		return 0;
+
+	return 0;
 }
 
 /**

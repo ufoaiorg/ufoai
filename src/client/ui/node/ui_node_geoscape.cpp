@@ -210,7 +210,7 @@ void uiGeoscapeNode::onCapturedMouseLost (uiNode_t *node)
 
 /**
  * Zoom on the node
- * @todo it shound use an int param for smooth zoom
+ * @todo it should use an int param for smooth zoom
  */
 void uiGeoscapeNode::zoom (uiNode_t *node, bool out)
 {
