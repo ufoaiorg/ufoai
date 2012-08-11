@@ -41,8 +41,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_node_abstractscrollable.h"
 
 #include "../../client.h"
-#include "../../renderer/r_draw.h"
-#include "../../renderer/r_mesh.h"
 #include "../../cgame/cl_game.h"
 #include "../../battlescape/cl_actor.h"
 #include "../../cl_inventory.h"
@@ -433,11 +431,11 @@ static void UI_BaseInventoryNodeDraw2 (uiNode_t *node, const objDef_t *highlight
 	vec2_t screenPos;
 
 	UI_GetNodeScreenPos(node, screenPos);
-	R_PushClipRect(screenPos[0], screenPos[1], node->box.size[0], node->box.size[1]);
+	UI_PushClipRect(screenPos[0], screenPos[1], node->box.size[0], node->box.size[1]);
 
 	needHeight = UI_BaseInventoryNodeDrawItems(node, highlightType);
 
-	R_PopClipRect();
+	UI_PopClipRect();
 	visibleHeight = node->box.size[1];
 
 #if 0

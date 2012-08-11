@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_behaviour.h"
 #include "../ui_actions.h"
 #include "../ui_draw.h"
+#include "../ui_render.h"
 #include "../../client.h"
 #include "../../renderer/r_misc.h"
 #include "../../renderer/r_draw.h"
@@ -54,12 +55,12 @@ void uiSequenceNode::draw (uiNode_t *node)
 
 		R_PushMatrix();
 		R_CleanupDepthBuffer(pos[0], pos[1], node->box.size[0], node->box.size[1]);
-		R_PushClipRect(screenPos[0], screenPos[1], node->box.size[0], node->box.size[1]);
+		UI_PushClipRect(screenPos[0], screenPos[1], node->box.size[0], node->box.size[1]);
 
 		SEQ_SetView(EXTRADATA(node).context, pos, node->box.size);
 		finished = !SEQ_Render(EXTRADATA(node).context);
 
-		R_PopClipRect();
+		UI_PopClipRect();
 		R_PopMatrix();
 
 		if (finished && EXTRADATA(node).onEnd) {

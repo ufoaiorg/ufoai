@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_parse.h"
 #include "../ui_behaviour.h"
 #include "../ui_actions.h"
+#include "../ui_render.h"
 #include "ui_node_geoscape.h"
 
 #include "../../client.h"
@@ -85,9 +86,9 @@ void uiGeoscapeNode::draw (uiNode_t *node)
 
 		/* Draw geoscape */
 		UI_GetNodeScreenPos(node, screenPos);
-		R_PushClipRect(screenPos[0], screenPos[1], node->box.size[0], node->box.size[1]);
+		UI_PushClipRect(screenPos[0], screenPos[1], node->box.size[0], node->box.size[1]);
 		MAP_DrawMap(node, ccs.curCampaign->map);
-		R_PopClipRect();
+		UI_PopClipRect();
 	}
 }
 

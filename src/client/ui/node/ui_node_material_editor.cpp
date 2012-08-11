@@ -36,7 +36,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_node_abstractscrollable.h"
 #include "../../cl_video.h"
 #include "../../renderer/r_image.h"
-#include "../../renderer/r_draw.h"
 #include "../../renderer/r_model.h"
 #include "ui_node_material_editor.h"
 
@@ -174,7 +173,7 @@ void uiMaterialEditorNode::draw (uiNode_t *node)
 
 		if (i == node->num) {
 #define MARGIN 3
-			R_DrawRect(imagepos[0] - MARGIN, imagepos[1] - MARGIN, IMAGE_WIDTH + MARGIN * 2, IMAGE_WIDTH + MARGIN * 2, node->selectedColor, 2, 0xFFFF);
+			UI_DrawRect(imagepos[0] - MARGIN, imagepos[1] - MARGIN, IMAGE_WIDTH + MARGIN * 2, IMAGE_WIDTH + MARGIN * 2, node->selectedColor, 2, 0xFFFF);
 #undef MARGIN
 		}
 

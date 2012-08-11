@@ -33,7 +33,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../input/cl_input.h"
 #include "../../sound/s_main.h"
 #include "../../cgame/campaign/cp_campaign.h"
-#include "../../renderer/r_draw.h"
 
 #define EXTRADATA_TYPE baseExtraData_t
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
@@ -224,7 +223,7 @@ void uiBaseMapNode::draw (uiNode_t * node)
 		const int yCoord = pos[1] + row * (height - BASE_IMAGE_OVERLAY);
 		const int widthRect = base->buildingCurrent->size[0] * width;
 		const int heigthRect = base->buildingCurrent->size[1] * (height - BASE_IMAGE_OVERLAY);
-		R_DrawRect(xCoord, yCoord, widthRect, heigthRect, white, 3, 1);
+		UI_DrawRect(xCoord, yCoord, widthRect, heigthRect, white, 3, 1);
 	}
 }
 
