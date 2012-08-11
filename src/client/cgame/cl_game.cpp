@@ -664,6 +664,20 @@ int GAME_GetCurrentTeam (void)
 	return cls.team;
 }
 
+void GAME_DrawMap (uiNode_t *node)
+{
+	const cgame_export_t *list = GAME_GetCurrentType();
+	if (list && list->MapDraw)
+		list->MapDraw(node);
+}
+
+void GAME_MapClick (uiNode_t *node, int x, int y)
+{
+	const cgame_export_t *list = GAME_GetCurrentType();
+	if (list && list->MapClick)
+		list->MapClick(node, x, y);
+}
+
 void GAME_SetMode (const cgame_export_t *gametype)
 {
 	const cgame_export_t *list;

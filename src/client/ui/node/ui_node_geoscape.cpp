@@ -31,10 +31,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_node_geoscape.h"
 
 #include "../../cl_shared.h"
+#include "../../cgame/cl_game.h"
 #include "../../input/cl_input.h"
 #include "../../input/cl_keys.h"
-#include "../../cgame/campaign/cp_campaign.h"
-#include "../../cgame/campaign/cp_map.h"
 
 #define EXTRADATA_TYPE mapExtraData_t
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
@@ -79,18 +78,40 @@ static int oldMousePosY = 0;
  * It is related to a captured node (only one at a time), that why it is global.
  */
 static mapDragMode_t mode = MODE_NULL;
+#define ROTATE_SPEED	0.5
+#define GLOBE_ROTATE -90
+
+static cvar_t *cl_3dmap;						/**< 3D geoscape or flat geoscape */
+static cvar_t *cl_3dmapAmbient;
+static cvar_t *cl_mapzoommax;
+static cvar_t *cl_mapzoommin;
+static cvar_t *cl_geoscape_overlay;
+
+// FIXME: don't make this static
+static uiNode_t *geoscapeNode;
 
 void uiGeoscapeNode::draw (uiNode_t *node)
 {
-	if (CP_IsRunning()) {
-		vec2_t screenPos;
+	vec2_t screenPos;
 
-		/* Draw geoscape */
-		UI_GetNodeScreenPos(node, screenPos);
-		UI_PushClipRect(screenPos[0], screenPos[1], node->box.size[0], node->box.size[1]);
-		MAP_DrawMap(node, ccs.curCampaign->map);
-		UI_PopClipRect();
+	geoscapeNode = node;
+	UI_MAPEXTRADATA(node).flatgeoscape = cl_3dmap->integer == 0;
+	UI_MAPEXTRADATA(node).ambientLightFactor = cl_3dmapAmbient->value;
+	UI_MAPEXTRADATA(node).mapzoommin = cl_mapzoommin->value;
+	UI_MAPEXTRADATA(node).mapzoommax = cl_mapzoommax->value;
+
+	UI_GetNodeAbsPos(node, UI_MAPEXTRADATA(node).mapPos);
+	Vector2Copy(node->box.size, UI_MAPEXTRADATA(node).mapSize);
+	if (!UI_MAPEXTRADATACONST(node).flatgeoscape) {
+		/* remove the left padding */
+		UI_MAPEXTRADATA(node).mapSize[0] -= UI_MAPEXTRADATACONST(node).paddingRight;
 	}
+
+	/* Draw geoscape */
+	UI_GetNodeScreenPos(node, screenPos);
+	UI_PushClipRect(screenPos[0], screenPos[1], node->box.size[0], node->box.size[1]);
+	GAME_DrawMap(node);
+	UI_PopClipRect();
 }
 
 void uiGeoscapeNode::onCapturedMouseMove (uiNode_t *node, int x, int y)
@@ -99,54 +120,54 @@ void uiGeoscapeNode::onCapturedMouseMove (uiNode_t *node, int x, int y)
 	case MODE_SHIFT2DMAP:
 	{
 		int i;
-		const float zoom = 0.5 / ccs.zoom;
+		const float zoom = 0.5 / UI_MAPEXTRADATACONST(node).zoom;
 		/* shift the map */
-		ccs.center[0] -= (float) (mousePosX - oldMousePosX) / (ccs.mapSize[0] * ccs.zoom);
-		ccs.center[1] -= (float) (mousePosY - oldMousePosY) / (ccs.mapSize[1] * ccs.zoom);
+		UI_MAPEXTRADATA(node).center[0] -= (float) (mousePosX - oldMousePosX) / (node->box.size[0] * UI_MAPEXTRADATACONST(node).zoom);
+		UI_MAPEXTRADATA(node).center[1] -= (float) (mousePosY - oldMousePosY) / (node->box.size[1] * UI_MAPEXTRADATACONST(node).zoom);
 		for (i = 0; i < 2; i++) {
 			/* clamp to min/max values */
-			while (ccs.center[i] < 0.0)
-				ccs.center[i] += 1.0;
-			while (ccs.center[i] > 1.0)
-				ccs.center[i] -= 1.0;
+			while (UI_MAPEXTRADATACONST(node).center[i] < 0.0)
+				UI_MAPEXTRADATA(node).center[i] += 1.0;
+			while (UI_MAPEXTRADATACONST(node).center[i] > 1.0)
+				UI_MAPEXTRADATA(node).center[i] -= 1.0;
 		}
-		if (ccs.center[1] < zoom)
-			ccs.center[1] = zoom;
-		if (ccs.center[1] > 1.0 - zoom)
-			ccs.center[1] = 1.0 - zoom;
+		if (UI_MAPEXTRADATACONST(node).center[1] < zoom)
+			UI_MAPEXTRADATA(node).center[1] = zoom;
+		if (UI_MAPEXTRADATACONST(node).center[1] > 1.0 - zoom)
+			UI_MAPEXTRADATA(node).center[1] = 1.0 - zoom;
 		break;
 	}
 
 	case MODE_SHIFT3DMAP:
 		/* rotate a model */
-		ccs.angles[PITCH] += ROTATE_SPEED * (mousePosX - oldMousePosX) / ccs.zoom;
-		ccs.angles[YAW] -= ROTATE_SPEED * (mousePosY - oldMousePosY) / ccs.zoom;
+		UI_MAPEXTRADATA(node).angles[PITCH] += ROTATE_SPEED * (mousePosX - oldMousePosX) / UI_MAPEXTRADATACONST(node).zoom;
+		UI_MAPEXTRADATA(node).angles[YAW] -= ROTATE_SPEED * (mousePosY - oldMousePosY) / UI_MAPEXTRADATACONST(node).zoom;
 
-		/* clamp the angles */
-		while (ccs.angles[YAW] > 0.0)
-			ccs.angles[YAW] = 0.0;
-		while (ccs.angles[YAW] < -180.0)
-			ccs.angles[YAW] = -180.0;
+		/* clamp the UI_MAPEXTRADATACONST(node).angles */
+		while (UI_MAPEXTRADATACONST(node).angles[YAW] > 0.0)
+			UI_MAPEXTRADATA(node).angles[YAW] = 0.0;
+		while (UI_MAPEXTRADATACONST(node).angles[YAW] < -180.0)
+			UI_MAPEXTRADATA(node).angles[YAW] = -180.0;
 
-		while (ccs.angles[PITCH] > 180.0)
-			ccs.angles[PITCH] -= 360.0;
-		while (ccs.angles[PITCH] < -180.0)
-			ccs.angles[PITCH] += 360.0;
+		while (UI_MAPEXTRADATACONST(node).angles[PITCH] > 180.0)
+			UI_MAPEXTRADATA(node).angles[PITCH] -= 360.0;
+		while (UI_MAPEXTRADATACONST(node).angles[PITCH] < -180.0)
+			UI_MAPEXTRADATA(node).angles[PITCH] += 360.0;
 		break;
 	case MODE_ZOOMMAP:
 	{
-		const float zoom = 0.5 / ccs.zoom;
+		const float zoom = 0.5 / UI_MAPEXTRADATACONST(node).zoom;
 		/* zoom the map */
-		ccs.zoom *= pow(0.995, mousePosY - oldMousePosY);
-		if (ccs.zoom < cl_mapzoommin->value)
-			ccs.zoom = cl_mapzoommin->value;
-		else if (ccs.zoom > cl_mapzoommax->value)
-			ccs.zoom = cl_mapzoommax->value;
+		UI_MAPEXTRADATA(node).zoom *= pow(0.995, mousePosY - oldMousePosY);
+		if (UI_MAPEXTRADATACONST(node).zoom < UI_MAPEXTRADATACONST(node).mapzoommin)
+			UI_MAPEXTRADATA(node).zoom = UI_MAPEXTRADATACONST(node).mapzoommin;
+		else if (UI_MAPEXTRADATACONST(node).zoom > UI_MAPEXTRADATACONST(node).mapzoommax)
+			UI_MAPEXTRADATA(node).zoom = UI_MAPEXTRADATACONST(node).mapzoommax;
 
-		if (ccs.center[1] < zoom)
-			ccs.center[1] = zoom;
-		if (ccs.center[1] > 1.0 - zoom)
-			ccs.center[1] = 1.0 - zoom;
+		if (UI_MAPEXTRADATACONST(node).center[1] < zoom)
+			UI_MAPEXTRADATA(node).center[1] = zoom;
+		if (UI_MAPEXTRADATACONST(node).center[1] > 1.0 - zoom)
+			UI_MAPEXTRADATA(node).center[1] = 1.0 - zoom;
 		break;
 	}
 	default:
@@ -160,11 +181,11 @@ void uiGeoscapeNode::onCapturedMouseMove (uiNode_t *node, int x, int y)
 void uiGeoscapeNode::startMouseShifting (uiNode_t *node, int x, int y)
 {
 	UI_SetMouseCapture(node);
-	if (!cl_3dmap->integer)
+	if (UI_MAPEXTRADATACONST(node).flatgeoscape)
 		mode = MODE_SHIFT2DMAP;
 	else
 		mode = MODE_SHIFT3DMAP;
-	MAP_StopSmoothMovement();
+	UI_MAPEXTRADATA(node).smoothRotation = false;
 	oldMousePosX = x;
 	oldMousePosY = y;
 }
@@ -173,7 +194,7 @@ void uiGeoscapeNode::onLeftClick (uiNode_t* node, int x, int y)
 {
 	if (mode != MODE_NULL)
 		return;
-	MAP_MapClick(node, x, y);
+	GAME_MapClick(node, x, y);
 }
 
 bool uiGeoscapeNode::onStartDragging (uiNode_t* node, int startX, int startY, int x, int y, int button)
@@ -216,19 +237,19 @@ void uiGeoscapeNode::onCapturedMouseLost (uiNode_t *node)
  */
 void uiGeoscapeNode::zoom (uiNode_t *node, bool out)
 {
-	ccs.zoom *= pow(0.995, (out ? 10: -10));
-	if (ccs.zoom < cl_mapzoommin->value)
-		ccs.zoom = cl_mapzoommin->value;
-	else if (ccs.zoom > cl_mapzoommax->value)
-		ccs.zoom = cl_mapzoommax->value;
+	UI_MAPEXTRADATA(node).zoom *= pow(0.995, (out ? 10: -10));
+	if (UI_MAPEXTRADATACONST(node).zoom < UI_MAPEXTRADATACONST(node).mapzoommin)
+		UI_MAPEXTRADATA(node).zoom = UI_MAPEXTRADATACONST(node).mapzoommin;
+	else if (UI_MAPEXTRADATACONST(node).zoom > UI_MAPEXTRADATACONST(node).mapzoommax)
+		UI_MAPEXTRADATA(node).zoom = UI_MAPEXTRADATACONST(node).mapzoommax;
 
-	if (!cl_3dmap->integer) {
-		if (ccs.center[1] < 0.5 / ccs.zoom)
-			ccs.center[1] = 0.5 / ccs.zoom;
-		if (ccs.center[1] > 1.0 - 0.5 / ccs.zoom)
-			ccs.center[1] = 1.0 - 0.5 / ccs.zoom;
+	if (UI_MAPEXTRADATACONST(node).flatgeoscape) {
+		if (UI_MAPEXTRADATACONST(node).center[1] < 0.5 / UI_MAPEXTRADATACONST(node).zoom)
+			UI_MAPEXTRADATA(node).center[1] = 0.5 / UI_MAPEXTRADATACONST(node).zoom;
+		if (UI_MAPEXTRADATACONST(node).center[1] > 1.0 - 0.5 / UI_MAPEXTRADATACONST(node).zoom)
+			UI_MAPEXTRADATA(node).center[1] = 1.0 - 0.5 / UI_MAPEXTRADATACONST(node).zoom;
 	}
-	MAP_StopSmoothMovement();
+	UI_MAPEXTRADATA(node).smoothRotation = false;
 }
 
 bool uiGeoscapeNode::onScroll (uiNode_t *node, int deltaX, int deltaY)
@@ -246,6 +267,13 @@ bool uiGeoscapeNode::onScroll (uiNode_t *node, int deltaX, int deltaY)
 void uiGeoscapeNode::onLoading (uiNode_t *node)
 {
 	Vector4Set(node->color, 1, 1, 1, 1);
+
+	OBJZERO(EXTRADATA(node));
+	EXTRADATA(node).angles[YAW] = GLOBE_ROTATE;
+	EXTRADATA(node).center[0] = EXTRADATA(node).center[1] = 0.5;
+	EXTRADATA(node).zoom = 1.0;
+	Vector2Set(EXTRADATA(node).smoothFinal2DGeoscapeCenter, 0.5, 0.5);
+	VectorSet(EXTRADATA(node).smoothFinalGlobeAngle, 0, GLOBE_ROTATE, 0);
 }
 
 static void UI_GeoscapeNodeZoomIn (uiNode_t *node, const uiCallContext_t *context)
@@ -260,6 +288,144 @@ static void UI_GeoscapeNodeZoomOut (uiNode_t *node, const uiCallContext_t *conte
 	m->zoom(node, true);
 }
 
+/**
+ * @brief Command binding for map zooming
+ * @todo convert into node method
+ */
+static void UI_GeoscapeNodeZoom_f (void)
+{
+	const char *cmd;
+	const float zoomAmount = 50.0f;
+
+	if (Cmd_Argc() != 2) {
+		Com_Printf("Usage: %s <in|out>\n", Cmd_Argv(0));
+		return;
+	}
+
+	cmd = Cmd_Argv(1);
+	uiNode_t *node = geoscapeNode;
+	if (!node)
+		return;
+
+	switch (cmd[0]) {
+	case 'i':
+		UI_MAPEXTRADATA(node).smoothFinalZoom = UI_MAPEXTRADATACONST(node).zoom * pow(0.995, -zoomAmount);
+		break;
+	case 'o':
+		UI_MAPEXTRADATA(node).smoothFinalZoom = UI_MAPEXTRADATACONST(node).zoom * pow(0.995, zoomAmount);
+		break;
+	default:
+		Com_Printf("UI_GeoscapeNodeZoom_f: Invalid parameter: %s\n", cmd);
+		return;
+	}
+
+	if (UI_MAPEXTRADATACONST(node).smoothFinalZoom < UI_MAPEXTRADATACONST(node).mapzoommin)
+		UI_MAPEXTRADATA(node).smoothFinalZoom = UI_MAPEXTRADATACONST(node).mapzoommin;
+	else if (UI_MAPEXTRADATACONST(node).smoothFinalZoom > UI_MAPEXTRADATACONST(node).mapzoommax)
+		UI_MAPEXTRADATA(node).smoothFinalZoom = UI_MAPEXTRADATACONST(node).mapzoommax;
+
+	if (UI_MAPEXTRADATACONST(node).flatgeoscape) {
+		UI_MAPEXTRADATA(node).zoom = UI_MAPEXTRADATACONST(node).smoothFinalZoom;
+		if (UI_MAPEXTRADATACONST(node).center[1] < 0.5 / UI_MAPEXTRADATACONST(node).zoom)
+			UI_MAPEXTRADATA(node).center[1] = 0.5 / UI_MAPEXTRADATACONST(node).zoom;
+		if (UI_MAPEXTRADATACONST(node).center[1] > 1.0 - 0.5 / UI_MAPEXTRADATACONST(node).zoom)
+			UI_MAPEXTRADATA(node).center[1] = 1.0 - 0.5 / UI_MAPEXTRADATACONST(node).zoom;
+	} else {
+		VectorCopy(UI_MAPEXTRADATACONST(node).angles, UI_MAPEXTRADATA(node).smoothFinalGlobeAngle);
+		UI_MAPEXTRADATA(node).smoothDeltaLength = 0;
+		UI_MAPEXTRADATA(node).smoothRotation = true;
+		UI_MAPEXTRADATA(node).smoothDeltaZoom = fabs(UI_MAPEXTRADATACONST(node).smoothFinalZoom - UI_MAPEXTRADATACONST(node).zoom);
+	}
+}
+
+/**
+ * @brief Command binding for map scrolling
+ * @todo convert into node method
+ */
+static void UI_GeoscapeNodeScroll_f (void)
+{
+	const char *cmd;
+	float scrollX = 0.0f, scrollY = 0.0f;
+	const float scrollAmount = 80.0f;
+
+	if (Cmd_Argc() != 2) {
+		Com_Printf("Usage: %s <up|down|left|right>\n", Cmd_Argv(0));
+		return;
+	}
+
+	cmd = Cmd_Argv(1);
+
+	uiNode_t *node = geoscapeNode;
+	if (!node)
+		return;
+
+	switch (cmd[0]) {
+	case 'l':
+		scrollX = scrollAmount;
+		break;
+	case 'r':
+		scrollX = -scrollAmount;
+		break;
+	case 'u':
+		scrollY = scrollAmount;
+		break;
+	case 'd':
+		scrollY = -scrollAmount;
+		break;
+	default:
+		Com_Printf("UI_GeoscapeNodeScroll_f: Invalid parameter\n");
+		return;
+	}
+
+	if (!UI_MAPEXTRADATACONST(node).flatgeoscape) {
+		/* case 3D geoscape */
+		vec3_t diff;
+
+		VectorCopy(UI_MAPEXTRADATACONST(node).angles, UI_MAPEXTRADATA(node).smoothFinalGlobeAngle);
+
+		/* rotate a model */
+		UI_MAPEXTRADATA(node).smoothFinalGlobeAngle[PITCH] += ROTATE_SPEED * (scrollX) / UI_MAPEXTRADATACONST(node).zoom;
+		UI_MAPEXTRADATA(node).smoothFinalGlobeAngle[YAW] -= ROTATE_SPEED * (scrollY) / UI_MAPEXTRADATACONST(node).zoom;
+
+		while (UI_MAPEXTRADATACONST(node).smoothFinalGlobeAngle[YAW] < -180.0) {
+			UI_MAPEXTRADATA(node).smoothFinalGlobeAngle[YAW] = -180.0;
+		}
+		while (UI_MAPEXTRADATACONST(node).smoothFinalGlobeAngle[YAW] > 0.0) {
+			UI_MAPEXTRADATA(node).smoothFinalGlobeAngle[YAW] = 0.0;
+		}
+
+		while (UI_MAPEXTRADATACONST(node).smoothFinalGlobeAngle[PITCH] > 180.0) {
+			UI_MAPEXTRADATA(node).smoothFinalGlobeAngle[PITCH] -= 360.0;
+			UI_MAPEXTRADATA(node).angles[PITCH] -= 360.0;
+		}
+		while (UI_MAPEXTRADATACONST(node).smoothFinalGlobeAngle[PITCH] < -180.0) {
+			UI_MAPEXTRADATA(node).smoothFinalGlobeAngle[PITCH] += 360.0;
+			UI_MAPEXTRADATA(node).angles[PITCH] += 360.0;
+		}
+		VectorSubtract(UI_MAPEXTRADATACONST(node).smoothFinalGlobeAngle, UI_MAPEXTRADATACONST(node).angles, diff);
+		UI_MAPEXTRADATA(node).smoothDeltaLength = VectorLength(diff);
+
+		UI_MAPEXTRADATA(node).smoothFinalZoom = UI_MAPEXTRADATACONST(node).zoom;
+		UI_MAPEXTRADATA(node).smoothDeltaZoom = 0.0f;
+		UI_MAPEXTRADATA(node).smoothRotation = true;
+	} else {
+		int i;
+		/* shift the map */
+		UI_MAPEXTRADATA(node).center[0] -= (float) (scrollX) / (UI_MAPEXTRADATACONST(node).mapSize[0] * UI_MAPEXTRADATACONST(node).zoom);
+		UI_MAPEXTRADATA(node).center[1] -= (float) (scrollY) / (UI_MAPEXTRADATACONST(node).mapSize[1] * UI_MAPEXTRADATACONST(node).zoom);
+		for (i = 0; i < 2; i++) {
+			while (UI_MAPEXTRADATACONST(node).center[i] < 0.0)
+				UI_MAPEXTRADATA(node).center[i] += 1.0;
+			while (UI_MAPEXTRADATACONST(node).center[i] > 1.0)
+				UI_MAPEXTRADATA(node).center[i] -= 1.0;
+		}
+		if (UI_MAPEXTRADATACONST(node).center[1] < 0.5 / UI_MAPEXTRADATACONST(node).zoom)
+			UI_MAPEXTRADATA(node).center[1] = 0.5 / UI_MAPEXTRADATACONST(node).zoom;
+		if (UI_MAPEXTRADATACONST(node).center[1] > 1.0 - 0.5 / UI_MAPEXTRADATACONST(node).zoom)
+			UI_MAPEXTRADATA(node).center[1] = 1.0 - 0.5 / UI_MAPEXTRADATACONST(node).zoom;
+	}
+}
+
 void UI_RegisterGeoscapeNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "geoscape";
@@ -272,4 +438,13 @@ void UI_RegisterGeoscapeNode (uiBehaviour_t *behaviour)
 	UI_RegisterNodeMethod(behaviour, "zoomin", UI_GeoscapeNodeZoomIn);
 	/* Call it to zoom into the map */
 	UI_RegisterNodeMethod(behaviour, "zoomout", UI_GeoscapeNodeZoomOut);
+
+	Cmd_AddCommand("map_zoom", UI_GeoscapeNodeZoom_f);
+	Cmd_AddCommand("map_scroll", UI_GeoscapeNodeScroll_f);
+
+	cl_3dmap = Cvar_Get("cl_3dmap", "1", CVAR_ARCHIVE, "3D geoscape or flat geoscape");
+	cl_3dmapAmbient = Cvar_Get("cl_3dmapAmbient", "0", CVAR_ARCHIVE, "3D geoscape ambient lighting factor");
+	cl_mapzoommax = Cvar_Get("cl_mapzoommax", "6.0", CVAR_ARCHIVE, "Maximum geoscape zooming value");
+	cl_mapzoommin = Cvar_Get("cl_mapzoommin", "1.0", CVAR_ARCHIVE, "Minimum geoscape zooming value");
+	cl_geoscape_overlay = Cvar_Get("cl_geoscape_overlay", "0", 0, "Geoscape overlays - Bitmask");
 }

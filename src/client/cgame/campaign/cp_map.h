@@ -26,14 +26,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_CL_MAP_H
 #define CLIENT_CL_MAP_H
 
-#define GLOBE_ROTATE -90
-#define ROTATE_SPEED	0.5
 #define KILOMETER_PER_DEGREE	111.2		/* this is the conversion between distance in game (in degree) and km */
 
 extern cvar_t *cl_geoscape_overlay;
-extern cvar_t *cl_mapzoommax;
-extern cvar_t *cl_mapzoommin;
-extern cvar_t *cl_3dmap;
 
 /* prototype */
 struct uiNode_t;
@@ -60,14 +55,11 @@ bool MAP_AllMapToScreen(uiNode_t const* node, const vec2_t pos, int *x, int *y, 
 void MAP_MapDrawEquidistantPoints(uiNode_t const* node, const vec2_t center, const float angle, const vec4_t color);
 float MAP_AngleOfPath(const vec3_t start, const vec2_t end, vec3_t direction, vec3_t ortVector);
 void MAP_MapCalcLine(const vec2_t start, const vec2_t end, mapline_t* line);
-void MAP_DrawMap(uiNode_t const* node, const char *map);
+void MAP_DrawMap(uiNode_t* node);
 void MAP_CenterOnPoint_f(void);
 void MAP_CenterPosition(const vec2_t pos);
-void MAP_StopSmoothMovement(void);
 base_t* MAP_PositionCloseToBase(const vec2_t pos);
 
-void MAP_Scroll_f(void);
-void MAP_Zoom_f(void);
 bool MAP_MapClick(uiNode_t* node, int x, int y);
 void MAP_ResetAction(void);
 void MAP_SelectAircraft(aircraft_t* aircraft);
@@ -92,7 +84,5 @@ void MAP_SetOverlay(const char *overlayID);
 void MAP_DeactivateOverlay(const char *overlayID);
 void MAP_UpdateGeoscapeDock(void);
 bool MAP_IsRadarOverlayActivated(void);
-bool MAP_IsXVIOverlayActivated(void);
-bool MAP_IsNationOverlayActivated(void);
 
 #endif /* CLIENT_CL_MAP_H */

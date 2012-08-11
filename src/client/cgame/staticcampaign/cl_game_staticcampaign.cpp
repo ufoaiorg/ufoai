@@ -32,6 +32,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "scp_parse.h"
 #include "scp_shared.h"
 
+extern void MAP_DrawMap(uiNode_t* node);
+extern void MAP_MapClick(uiNode_t* node, int x, int y);
+
 CGAME_HARD_LINKED_FUNCTIONS
 
 staticCampaignData_t* scd;
@@ -93,6 +96,8 @@ const cgame_export_t *GetCGameStaticCampaignAPI (const cgame_import_t *import)
 	e.InitializeBattlescape = GAME_CP_InitializeBattlescape;
 	e.RunFrame = GAME_SCP_Frame;
 	e.GetTeamDef = GAME_CP_GetTeamDef;
+	e.MapDraw = MAP_DrawMap;
+	e.MapClick = MAP_MapClick;
 
 	cgi = import;
 

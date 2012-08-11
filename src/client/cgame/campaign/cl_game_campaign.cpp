@@ -28,6 +28,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_cgame_callbacks.h"
 #include "cl_game_campaign.h"
 
+extern void MAP_DrawMap(uiNode_t* node);
+extern void MAP_MapClick(uiNode_t* node, int x, int y);
+
 CGAME_HARD_LINKED_FUNCTIONS
 
 #ifndef HARD_LINKED_CGAME
@@ -55,6 +58,8 @@ const cgame_export_t *GetCGameCampaignAPI (const cgame_import_t *import)
 	e.InitializeBattlescape = GAME_CP_InitializeBattlescape;
 	e.RunFrame = GAME_CP_Frame;
 	e.GetTeamDef = GAME_CP_GetTeamDef;
+	e.MapDraw = MAP_DrawMap;
+	e.MapClick = MAP_MapClick;
 
 	cgi = import;
 

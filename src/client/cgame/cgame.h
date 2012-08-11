@@ -66,6 +66,9 @@ typedef struct cgame_export_s {
 	void (EXPORT *NotifyEvent) (event_t eventType);
 	void (EXPORT *AddChatMessage) (const char *message);
 	bool (EXPORT *HandleServerCommand) (const char *command, dbuffer *msg);
+
+	void (EXPORT *MapDraw) (uiNode_t *node);
+	void (EXPORT *MapClick) (uiNode_t *node, int x, int y);
 } cgame_export_t;
 
 typedef struct cgameType_s {
