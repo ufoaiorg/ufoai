@@ -40,14 +40,17 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_node_abstractnode.h"
 #include "ui_node_abstractscrollable.h"
 
-#include "../../client.h"
+#include "../../cl_shared.h"
 #include "../../cgame/cl_game.h"
-#include "../../battlescape/cl_actor.h"
+#include "../../input/cl_keys.h"
 #include "../../cl_inventory.h"
 
 #define EXTRADATA_TYPE baseInventoryExtraData_t
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
 #define EXTRADATACONST(node) UI_EXTRADATACONST(node, EXTRADATA_TYPE)
+
+extern bool CL_BattlescapeRunning(void);
+extern cvar_t *cl_selected;
 
 /**
  * self cache for drag item
