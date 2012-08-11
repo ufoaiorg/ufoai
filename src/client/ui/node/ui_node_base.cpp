@@ -276,7 +276,7 @@ void uiBaseMapNode::onLeftClick (uiNode_t *node, int x, int y)
 		return;
 
 	if (ccs.baseAction == BA_NEWBUILDING) {
-		building_t *building = base->buildingCurrent;
+		const building_t *building = base->buildingCurrent;
 		int y, x;
 
 		assert(building);

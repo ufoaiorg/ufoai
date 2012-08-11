@@ -33,7 +33,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../client.h"
 #include "../../cgame/campaign/cp_campaign.h"
 #include "../../cgame/campaign/cp_map.h"
-#include "../../renderer/r_draw.h"
 
 #define EXTRADATA_TYPE mapExtraData_t
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
