@@ -464,13 +464,17 @@ void Scene_BrushSetClipPlane (scene::Graph& graph, const Plane3& plane)
 
 static bool Brush_merge (Brush& brush, const brush_vector_t& in, bool onlyshape)
 {
-	// gather potential outer faces
-
 	{
 		typedef std::vector<const Face*> Faces;
 		Faces faces;
-		for (brush_vector_t::const_iterator i(in.begin()); i != in.end(); ++i) {
+
+		/* rebuild brushes, if changed */
+		/** @todo what if we have a broken brush? Maybe remove empty faces first? */
+		for (brush_vector_t::const_iterator i(in.begin()); i != in.end(); ++i)
 			(*i)->evaluateBRep();
+
+		/* gather potential outer faces */
+		for (brush_vector_t::const_iterator i(in.begin()); i != in.end(); ++i) {
 			for (Brush::const_iterator j((*i)->begin()); j != (*i)->end(); ++j) {
 				if (!(*j)->contributes()) {
 					continue;
