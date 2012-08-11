@@ -207,11 +207,12 @@ void uiBaseMapNode::draw (uiNode_t * node)
 	/* if we are building */
 	if (ccs.baseAction == BA_NEWBUILDING) {
 		int y, x;
+		const building_t *building = base->buildingCurrent;
+		const vec2_t& size = building->size;
+		assert(building);
 
-		assert(base->buildingCurrent);
-
-		for (y = row; y < row + base->buildingCurrent->size[1]; y++) {
-			for (x = col; x < col + base->buildingCurrent->size[0]; x++) {
+		for (y = row; y < row + size[1]; y++) {
+			for (x = col; x < col + size[0]; x++) {
 				if (!B_MapIsCellFree(base, x, y))
 					return;
 			}
@@ -221,8 +222,8 @@ void uiBaseMapNode::draw (uiNode_t * node)
 		UI_GetNodeAbsPos(node, pos);
 		const int xCoord = pos[0] + col * width;
 		const int yCoord = pos[1] + row * (height - BASE_IMAGE_OVERLAY);
-		const int widthRect = base->buildingCurrent->size[0] * width;
-		const int heigthRect = base->buildingCurrent->size[1] * (height - BASE_IMAGE_OVERLAY);
+		const int widthRect = size[0] * width;
+		const int heigthRect = size[1] * (height - BASE_IMAGE_OVERLAY);
 		UI_DrawRect(xCoord, yCoord, widthRect, heigthRect, white, 3, 1);
 	}
 }
