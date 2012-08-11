@@ -28,9 +28,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_nodes.h"
 #include "../ui_render.h"
 #include "ui_node_base.h"
-#include "ui_node_abstractnode.h"
 
-#include "../../client.h"
+#include "../../cl_shared.h"
+#include "../../input/cl_input.h"
+#include "../../sound/s_main.h"
 #include "../../cgame/campaign/cp_campaign.h"
 #include "../../renderer/r_draw.h"
 
@@ -46,7 +47,7 @@ void uiAbstractBaseNode::onLoading (uiNode_t * node)
 }
 
 /**
- * @brief Called after the node is completly loaded from the ufo-script (all data and/or children are set)
+ * @brief Called after the node is completely loaded from the ufo-script (all data and/or children are set)
  */
 void uiAbstractBaseNode::onLoaded (uiNode_t * node)
 {
