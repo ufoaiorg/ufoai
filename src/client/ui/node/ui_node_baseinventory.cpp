@@ -553,9 +553,8 @@ static invList_t *UI_BaseInventoryNodeGetItem (const uiNode_t* const node, int m
 				*contX = icItem->x;
 				*contY = icItem->y;
 				return icItem;
-			} else {
-				return NULL;
 			}
+			return NULL;
 		}
 		pos[1] += obj->sy * C_UNIT;
 		cellHeight += obj->sy * C_UNIT;
@@ -767,7 +766,7 @@ void uiBaseInventoryNode::onLoading (uiNode_t *node)
  */
 bool uiBaseInventoryNode::onDndEnter (uiNode_t *target)
 {
-	/* The node is invalide */
+	/* The node is invalid */
 	if (EXTRADATA(target).super.container == NULL)
 		return false;
 	/* accept items only, if we have a container */

@@ -60,7 +60,7 @@ bool MAP_AllMapToScreen(uiNode_t const* node, const vec2_t pos, int *x, int *y, 
 void MAP_MapDrawEquidistantPoints(uiNode_t const* node, const vec2_t center, const float angle, const vec4_t color);
 float MAP_AngleOfPath(const vec3_t start, const vec2_t end, vec3_t direction, vec3_t ortVector);
 void MAP_MapCalcLine(const vec2_t start, const vec2_t end, mapline_t* line);
-void MAP_DrawMap(uiNode_t const* node, const campaign_t *campaign);
+void MAP_DrawMap(uiNode_t const* node, const char *map);
 void MAP_CenterOnPoint_f(void);
 void MAP_CenterPosition(const vec2_t pos);
 void MAP_StopSmoothMovement(void);

@@ -86,7 +86,7 @@ void uiGeoscapeNode::draw (uiNode_t *node)
 		/* Draw geoscape */
 		UI_GetNodeScreenPos(node, screenPos);
 		R_PushClipRect(screenPos[0], screenPos[1], node->box.size[0], node->box.size[1]);
-		MAP_DrawMap(node, ccs.curCampaign);
+		MAP_DrawMap(node, ccs.curCampaign->map);
 		R_PopClipRect();
 	}
 }
@@ -167,14 +167,14 @@ void uiGeoscapeNode::startMouseShifting (uiNode_t *node, int x, int y)
 	oldMousePosY = y;
 }
 
-void uiGeoscapeNode::onLeftClick(uiNode_t* node, int x, int y)
+void uiGeoscapeNode::onLeftClick (uiNode_t* node, int x, int y)
 {
 	if (mode != MODE_NULL)
 		return;
 	MAP_MapClick(node, x, y);
 }
 
-bool uiGeoscapeNode::onStartDragging(uiNode_t* node, int startX, int startY, int x, int y, int button)
+bool uiGeoscapeNode::onStartDragging (uiNode_t* node, int startX, int startY, int x, int y, int button)
 {
 	switch (button) {
 	case K_MOUSE1:

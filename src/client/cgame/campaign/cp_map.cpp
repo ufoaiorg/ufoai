@@ -1908,10 +1908,10 @@ static void MAP_DrawMapMarkers (const uiNode_t* node)
 /**
  * @brief Draw the geoscape
  * @param[in] node The map menu node
- * @param[in,out] campaign The campaign data structure
+ * @param[in] map the prefix of the map to use (image must be at base/pics/menu/\<map\>_[day|night])
  * @sa MAP_DrawMapMarkers
  */
-void MAP_DrawMap (const uiNode_t* node, const campaign_t *campaign)
+void MAP_DrawMap (const uiNode_t* node, const char *map)
 {
 	vec2_t pos;
 	mission_t *mission;
@@ -1942,7 +1942,7 @@ void MAP_DrawMap (const uiNode_t* node, const campaign_t *campaign)
 		if (ccs.smoothRotation)
 			MAP3D_SmoothRotate();
 		R_Draw3DGlobe(ccs.mapPos[0], ccs.mapPos[1], ccs.mapSize[0], ccs.mapSize[1],
-				ccs.date.day, ccs.date.sec, ccs.angles, ccs.zoom, campaign->map, disableSolarRender,
+				ccs.date.day, ccs.date.sec, ccs.angles, ccs.zoom, map, disableSolarRender,
 				cl_3dmapAmbient->value, MAP_IsNationOverlayActivated(), MAP_IsXVIOverlayActivated(),
 				MAP_IsRadarOverlayActivated(), r_xviTexture, r_radarTexture, cl_3dmap->integer != 2);
 
@@ -1963,7 +1963,7 @@ void MAP_DrawMap (const uiNode_t* node, const campaign_t *campaign)
 			lastQ = q;
 		}
 		R_DrawFlatGeoscape(ccs.mapPos[0], ccs.mapPos[1], ccs.mapSize[0], ccs.mapSize[1], (float) ccs.date.sec / SECONDS_PER_DAY,
-			ccs.center[0], ccs.center[1], 0.5 / ccs.zoom, campaign->map, MAP_IsNationOverlayActivated(),
+			ccs.center[0], ccs.center[1], 0.5 / ccs.zoom, map, MAP_IsNationOverlayActivated(),
 			MAP_IsXVIOverlayActivated(), MAP_IsRadarOverlayActivated(), r_dayandnightTexture, r_xviTexture, r_radarTexture);
 		MAP_DrawMapMarkers(node);
 	}
