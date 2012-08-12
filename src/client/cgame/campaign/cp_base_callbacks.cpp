@@ -830,8 +830,12 @@ static void BaseSummary_Init (const base_t *base)
 	Q_strcat(textInfoBuffer, _("^BAircraft\n"), sizeof(textInfoBuffer));
 	for (i = 0; i <= MAX_HUMAN_AIRCRAFT_TYPE; i++) {
 		const aircraftType_t airType = (aircraftType_t)i;
+		const int count = AIR_CountTypeInBase(base, airType);
+		if (count == 0)
+			continue;
+
 		Q_strcat(textInfoBuffer, va("\t%s:\t\t\t\t%i\n", AIR_GetAircraftString(airType),
-			AIR_CountTypeInBase(base, airType)), sizeof(textInfoBuffer));
+			count), sizeof(textInfoBuffer));
 	}
 
 	Q_strcat(textInfoBuffer, "\n", sizeof(textInfoBuffer));
@@ -840,6 +844,10 @@ static void BaseSummary_Init (const base_t *base)
 	for (i = 0; i < MAX_EMPL; i++) {
 		const employeeType_t emplType = (employeeType_t)i;
 		tmp = E_CountHired(base, emplType);
+
+		if (tmp == 0)
+			continue;
+
 		Q_strcat(textInfoBuffer, va("\t%s:\t\t\t\t%i\n", E_GetEmployeeString(emplType, tmp), tmp), sizeof(textInfoBuffer));
 	}
 
