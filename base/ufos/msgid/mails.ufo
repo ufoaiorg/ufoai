@@ -1,0 +1,57 @@
+msgid mail_from_un {
+text "_SecGen. Mahouf Serra, United Nations, New York City"
+}
+
+msgid mail_to_base_commander {
+text "_Base Commander, PHALANX, Atlantic Operations Command"
+}
+
+msgid mail_prolog {
+text "_Welcome to your new post, Commander. You now have full command over the PHALANX Extraterrestrial Response Unit. Your mission is to protect the citizens of Earth and stop the alien threat at all costs. How you accomplish this is up to you; our only requirement is that you succeed.
+
+Your first order of business is to set up a headquarters. The UN has access to military bases all over the world, so you may consider any region for your base of operations. Choose the location wisely, because it will have great influence on the success of the PHALANX project.
+
+A recent analysis of the attacks on Mumbai and Bonn reveal that UFO sightings and alien activity seems to focus on the most densely populated regions of Earth, including coastal North- and South-America, Europe, Eastasia, South and Mediterranean Africa, and Australia. You should consider including these territories in your field of operations.
+
+Once you've established your first base, you must prepare your soldiers. The recruits we have assigned to PHALANX must be stationed on your dropship, then equipped for battle.
+
+Take care of them, Commander. The rest of us are all counting on you, and praying for you.
+
+That is all. Good luck and good hunting."
+}
+
+msgid mail_from_paul_navarre {
+text "_Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+}
+
+msgid mail_from_dr_connor {
+text "_Dr. Connor, R&D: Bio & Containment Division, PHALANX, Atlantic Operations Command"
+}
+
+msgid mail_stunned_alien_died {
+text "_Commander,
+
+I'm afraid I have some bad news. Despite our best efforts, the alien specimens recovered from our last tactical mission have expired in Containment. We were ultimately unable to stabilise their medical condition enough to learn anything useful.
+
+Outward signals indicate the cause of death to be sudden and fatal asphyxiation. It seems the aliens can only live in our atmosphere for a limited time before they suffocate. We haven't performed a full examination on the body, not without your authorisation, but I strongly recommend that we move straight to autopsy at this point. We must find a way to keep them alive longer or we won't be able to conduct any meaningful research on them.
+
+My autopsy request should be waiting in the R&D queue for your approval. Thank you, Commander.
+
+Sincerely, Dr. Connor"
+}
+
+msgid mail_from_xo {
+text "_XO Abel S. Howard, Command & Control, PHALANX, Atlantic Operations Command"
+}
+
+msgid mail_alien_base_discovered {
+text "_Sir, our operatives have discovered the location of a large alien installation on Earth. This installation represents a serious threat to PHALANX and to humanity at large, we must take it out ASAP."
+}
+
+msgid mail_ufocarrier {
+text "_"
+}
+
+msgid mail_from_col_falkland {
+text "_Col. Ingrid Falkland, Intelligence Division, PHALANX, Atlantic Operations Command"
+}
