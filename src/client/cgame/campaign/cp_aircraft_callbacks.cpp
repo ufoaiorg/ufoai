@@ -246,7 +246,7 @@ static void AIR_AircraftUpdateList_f (void)
 	base_t *base = B_GetCurrentSelectedBase();
 
 	AIR_ForeachFromBase(aircraft, base) {
-		LIST_AddString(&list, aircraft->name);
+		LIST_AddString(&list, _(aircraft->name));
 	}
 
 	cgi->UI_RegisterLinkedListText(TEXT_AIRCRAFT_LIST, list);
