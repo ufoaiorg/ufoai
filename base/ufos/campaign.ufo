@@ -1,7 +1,7 @@
 campaign veryhard
 {
 	name				"_Very Hard Campaign"
-	text				"_veryhard_campaign_txt"
+	text				"*msgid:veryhard_campaign_txt"
 	team				"phalanx"
 	soldiers			8
 	scientists			6
@@ -32,7 +32,7 @@ campaign veryhard
 campaign hard
 {
 	name			"_Hard Campaign"
-	text			"_hard_campaign_txt"
+	text			"*msgid:hard_campaign_txt"
 	team			"phalanx"
 	soldiers		8
 	scientists		6
@@ -66,7 +66,7 @@ campaign hard
 campaign main
 {
 	name			"_Standard Campaign"
-	text			"_standard_campaign_txt"
+	text			"*msgid:standard_campaign_txt"
 	team			"phalanx"
 	soldiers		9
 	scientists		10
@@ -120,7 +120,7 @@ campaign main
 campaign easy
 {
 	name			"_Easy Campaign"
-	text			"_easy_campaign_txt"
+	text			"*msgid:easy_campaign_txt"
 	team			"phalanx"
 	soldiers		25
 	scientists		16
@@ -154,7 +154,7 @@ campaign easy
 campaign veryeasy
 {
 	name			"_Very Easy Campaign"
-	text			"_veryeasy_campaign_txt"
+	text			"*msgid:veryeasy_campaign_txt"
 	team			"phalanx"
 	soldiers		35
 	scientists		26
@@ -208,7 +208,7 @@ campaign veryeasy
 campaign aliencampaign
 {
 	name				"_Play the aliens"
-	text				"_alien_campaign_txt"
+	text				"*msgid:alien_campaign_txt"
 	team				alien
 	soldiers			15
 	scientists			12
