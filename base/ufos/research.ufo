@@ -29,7 +29,7 @@
 //		The first entry must always exist and it is used as default/fallback text.
 //		Example:
 //		description {
-//			default	"_gettext_text"
+//			default	"*msgid:gettext_text"
 //			extra (rs_tech_id "_gettext_text2")
 //		}
 //
@@ -130,25 +130,25 @@ tech rs_laser
 	up_chapter	tech
 
 	description {
-		default "_laser_txt"
+		default "*msgid:laser_txt"
 	}
 
 	pre_description {
-		default "_laser_pre_txt"
+		default "*msgid:laser_pre_txt"
 	}
 
 	mail_pre
 	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_tech"
 	}
 
 	mail
 	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_tech"
 	}
@@ -164,24 +164,24 @@ tech rs_baselaser
 	up_chapter	equipment
 
 	description {
-		default "_b_baselaser_txt"
+		default "*msgid:b_baselaser_txt"
 	}
 	pre_description {
-		default "_b_baselaser_pre_txt"
+		default "*msgid:b_baselaser_pre_txt"
 	}
 
 	mail_pre
 	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_tech"
 	}
 
 	mail
 	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_tech"
 	}
@@ -213,26 +213,26 @@ tech rs_antimatter
 	up_chapter	tech
 
 	description {
-		default "_antimatter_txt"
-		extra (rs_antimatter_extra "_antimatter_extra_txt")
+		default "*msgid:antimatter_txt"
+		extra (rs_antimatter_extra "*msgid:antimatter_extra_txt")
 	}
 	pre_description {
-		default "_antimatter_pre_txt"
-		extra (rs_antimatter_extra "_antimatter_extra_pre_txt")
+		default "*msgid:antimatter_pre_txt"
+		extra (rs_antimatter_extra "*msgid:antimatter_extra_pre_txt")
 	}
 
 	mail_pre
 	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_tech"
 	}
 
 	mail
 	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_tech"
 	}
@@ -251,7 +251,7 @@ tech rs_item_antimatter
 	type		"weapon"
 	name		"_Antimatter"
 	description {
-		default "_antimatter_txt"
+		default "*msgid:antimatter_txt"
 	}
 
 	require_AND
@@ -272,16 +272,16 @@ tech rs_alien_live
 	up_chapter	aliens
 
 	description {
-		default "_alien_live_txt"
+		default "*msgid:alien_live_txt"
 	}
 	pre_description {
-		default "_alien_live_pre_txt"
+		default "*msgid:alien_live_pre_txt"
 	}
 
 	mail_pre
 	{
-		from	"_mail_from_dr_connor"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_dr_connor"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		model	"characters/connor"
 		icon	"icons/mail_alien"
@@ -289,8 +289,8 @@ tech rs_alien_live
 
 	mail
 	{
-		from	"_mail_from_dr_connor"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_dr_connor"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		model	"characters/connor"
 		icon	"icons/mail_alien"
@@ -312,16 +312,16 @@ tech rs_alien_breathing
 	up_chapter	aliens
 
 	description {
-		default "_alien_breathing_txt"
+		default "*msgid:alien_breathing_txt"
 	}
 	pre_description {
-		default "_alien_breathing_pre_txt"
+		default "*msgid:alien_breathing_pre_txt"
 	}
 
 	mail_pre
 	{
-		from	"_mail_from_dr_connor"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_dr_connor"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		model	"characters/connor"
 		icon	"icons/mail_alien"
@@ -329,8 +329,8 @@ tech rs_alien_breathing
 
 	mail
 	{
-		from	"_mail_from_dr_connor"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_dr_connor"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		model	"characters/connor"
 		icon	"icons/mail_alien"
@@ -354,16 +354,16 @@ tech rs_alien_mind
 	up_chapter	threat
 
 	description {
-		default "_alien_mind_txt"
+		default "*msgid:alien_mind_txt"
 	}
 	pre_description {
-		default "_alien_mind_pre_txt"
+		default "*msgid:alien_mind_pre_txt"
 	}
 
 	mail_pre
 	{
-		from	"_mail_from_dr_connor"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_dr_connor"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		model	"characters/connor"
 		icon	"icons/mail_alien"
@@ -371,8 +371,8 @@ tech rs_alien_mind
 
 	mail
 	{
-		from	"_mail_from_dr_connor"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_dr_connor"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		model	"characters/connor"
 		icon	"icons/mail_alien"
@@ -394,16 +394,16 @@ tech rs_alien_oddbehaviour
 	up_chapter	threat
 
 	description {
-		default "_alien_odd_behaviour_txt"
+		default "*msgid:alien_odd_behaviour_txt"
 	}
 	pre_description {
-		default "_alien_odd_behaviour_pre_txt"
+		default "*msgid:alien_odd_behaviour_pre_txt"
 	}
 
 	mail_pre
 	{
-		from	"_mail_from_dr_connor"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_dr_connor"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		model	"characters/connor"
 		icon	"icons/mail_alien"
@@ -411,8 +411,8 @@ tech rs_alien_oddbehaviour
 
 	mail
 	{
-		from	"_mail_from_dr_connor"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_dr_connor"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		model	"characters/connor"
 		icon	"icons/mail_alien"
@@ -434,16 +434,16 @@ tech rs_alien_communication
 	up_chapter	threat
 
 	description {
-		default "_alien_communication_txt"
+		default "*msgid:alien_communication_txt"
 	}
 	pre_description {
-		default "_alien_communication_pre_txt"
+		default "*msgid:alien_communication_pre_txt"
 	}
 
 	mail_pre
 	{
-		from	"_mail_from_dr_connor"
-		to	"_mail_to_base_commander"
+		from	"*msgid:mail_from_dr_connor"
+		to	"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		model	"characters/connor"
 		icon	"icons/mail_alien"
@@ -451,8 +451,8 @@ tech rs_alien_communication
 
 	mail
 	{
-		from	"_mail_from_dr_connor"
-		to	"_mail_to_base_commander"
+		from	"*msgid:mail_from_dr_connor"
+		to	"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		model	"characters/connor"
 		icon	"icons/mail_alien"
@@ -472,7 +472,7 @@ tech rs_alien_base
 	up_chapter	threat
 	name		"_Alien base"
 	description {
-		default "_alien_base_txt"
+		default "*msgid:alien_base_txt"
 	}
 
 	require_AND
@@ -482,8 +482,8 @@ tech rs_alien_base
 
 	mail
 	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_tech"
 	}
@@ -499,16 +499,16 @@ tech rs_universal_serum
 	up_chapter	threat
 
 	description {
-		default "_universal_serum_txt"
+		default "*msgid:universal_serum_txt"
 	}
 	pre_description {
-		default "_universal_serum_pre_txt"
+		default "*msgid:universal_serum_pre_txt"
 	}
 
 	mail_pre
 	{
-		from	"_mail_from_dr_connor"
-		to	"_mail_to_base_commander"
+		from	"*msgid:mail_from_dr_connor"
+		to	"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		model	"characters/connor"
 		icon	"icons/mail_alien"
@@ -516,8 +516,8 @@ tech rs_universal_serum
 
 	mail
 	{
-		from	"_mail_from_dr_connor"
-		to	"_mail_to_base_commander"
+		from	"*msgid:mail_from_dr_connor"
+		to	"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		model	"characters/connor"
 		icon	"icons/mail_alien"
@@ -538,16 +538,16 @@ tech rs_alien_origins
 	up_chapter	threat
 
 	description {
-		default "_alien_origins_txt"
+		default "*msgid:alien_origins_txt"
 	}
 	pre_description {
-		default "_alien_origins_pre_txt"
+		default "*msgid:alien_origins_pre_txt"
 	}
 
 	mail_pre
 	{
-		from	"_mail_from_col_falkland"
-		to	"_mail_to_base_commander"
+		from	"*msgid:mail_from_col_falkland"
+		to	"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		model	"characters/falkland"
 		icon	"icons/mail_intelligence"
@@ -555,8 +555,8 @@ tech rs_alien_origins
 
 	mail
 	{
-		from	"_mail_from_col_falkland"
-		to	"_mail_to_base_commander"
+		from	"*msgid:mail_from_col_falkland"
+		to	"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		model	"characters/falkland"
 		icon	"icons/mail_intelligence"
@@ -573,24 +573,24 @@ tech rs_alien_ufo_theory
 	up_chapter	crafts
 
 	description {
-		default "_alien_theory_txt"
+		default "*msgid:alien_theory_txt"
 	}
 	pre_description {
-		default "_alien_theory_pre_txt"
+		default "*msgid:alien_theory_pre_txt"
 	}
 
 	mail_pre
 	{
-		from	"_mail_from_paul_navarre"
-		to	"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to	"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_tech"
 	}
 
 	mail
 	{
-		from	"_mail_from_paul_navarre"
-		to	"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to	"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_tech"
 	}
@@ -621,9 +621,9 @@ tech rs_weapon_pistol
 	type	"weapon"
 	up_chapter	equipment
 	description {
-		default "_pistol_txt"
+		default "*msgid:pistol_txt"
 	}
-	// pre_description	"_pistol_pre_txt"
+	// pre_description	"*msgid:pistol_pre_txt"
 
 	require_AND
 	{
@@ -640,9 +640,9 @@ tech rs_weapon_pistol_ammo
 	type	"weapon"
 	up_chapter	equipment
 	description {
-		default "_pistol_mag_txt"
+		default "*msgid:pistol_mag_txt"
 	}
-	// pre_description	"_pistol_mag_pre_txt"
+	// pre_description	"*msgid:pistol_mag_pre_txt"
 
 	require_AND
 	{
@@ -662,9 +662,9 @@ tech rs_weapon_pistol2
 	up_chapter	equipment
 
 	description {
-		default "_pistol2_txt"
+		default "*msgid:pistol2_txt"
 	}
-	// pre_description	"_pistol2_pre_txt"
+	// pre_description	"*msgid:pistol2_pre_txt"
 
 	require_AND
 	{
@@ -681,9 +681,9 @@ tech rs_weapon_pistol2_ammo
 	type	"weapon"
 	up_chapter	equipment
 	description {
-		default "_pistol2_mag_txt"
+		default "*msgid:pistol2_mag_txt"
 	}
-	// pre_description	"_pistol2_mag_pre_txt"
+	// pre_description	"*msgid:pistol2_mag_pre_txt"
 
 	require_AND
 	{
@@ -701,7 +701,7 @@ tech rs_weapon_vhs
 	type	"weapon"
 	up_chapter	equipment
 	description {
-		default "_vhs_assault_txt"
+		default "*msgid:vhs_assault_txt"
 	}
 
 	require_AND
@@ -718,9 +718,9 @@ tech rs_weapon_assault
 	type	"weapon"
 	up_chapter	equipment
 	description {
-		default "_assault_txt"
+		default "*msgid:assault_txt"
 	}
-	// pre_description	"_assault_pre_txt"
+	// pre_description	"*msgid:assault_pre_txt"
 
 	require_AND
 	{
@@ -736,9 +736,9 @@ tech rs_weapon_assault_ammo
 	type	"weapon"
 	up_chapter	equipment
 	description {
-		default "_assault_mag_txt"
+		default "*msgid:assault_mag_txt"
 	}
-	// pre_description	"_assault_mag_pre_txt"
+	// pre_description	"*msgid:assault_mag_pre_txt"
 
 	require_AND
 	{
@@ -755,9 +755,9 @@ tech rs_weapon_machinegun
 	type	"weapon"
 	up_chapter	equipment
 	description {
-		default "_machinegun_txt"
+		default "*msgid:machinegun_txt"
 	}
-	// pre_description	"_machinegun_pre_txt"
+	// pre_description	"*msgid:machinegun_pre_txt"
 
 	require_AND
 	{
@@ -773,9 +773,9 @@ tech rs_weapon_machinegun_ammo
 	type	"weapon"
 	up_chapter	equipment
 	description {
-		default "_machinegun_mag_txt"
+		default "*msgid:machinegun_mag_txt"
 	}
-	// pre_description	"_machinegun_mag_pre_txt"
+	// pre_description	"*msgid:machinegun_mag_pre_txt"
 
 	require_AND
 	{
@@ -792,9 +792,9 @@ tech rs_weapon_rpg
 	type	"weapon"
 	up_chapter	equipment
 	description {
-		default "_rpg_txt"
+		default "*msgid:rpg_txt"
 	}
-	// pre_description	"_rpg_pre_txt"
+	// pre_description	"*msgid:rpg_pre_txt"
 
 	require_AND
 	{
@@ -811,9 +811,9 @@ tech rs_weapon_rpg_ammo
 	type	"weapon"
 	up_chapter	equipment
 	description {
-		default "_rpg_ammo_txt"
+		default "*msgid:rpg_ammo_txt"
 	}
-	// pre_description	"_rpg_ammo_pre_txt"
+	// pre_description	"*msgid:rpg_ammo_pre_txt"
 
 	require_AND
 	{
@@ -831,9 +831,9 @@ tech rs_weapon_rpg_incendiary_ammo
 	type	"weapon"
 	up_chapter	equipment
 	description {
-		default "_rpg_incendiary_ammo_txt"
+		default "*msgid:rpg_incendiary_ammo_txt"
 	}
-	// pre_description	"_rpg_incendiary_ammo_pre_txt"
+	// pre_description	"*msgid:rpg_incendiary_ammo_pre_txt"
 
 	require_AND
 	{
@@ -852,10 +852,10 @@ tech rs_weapon_xaw95
 	type	"weapon"
 	up_chapter	equipment
 	description {
-		default "_xaw95_txt"
+		default "*msgid:xaw95_txt"
 	}
 	pre_description {
-		default "_xaw95_pre_txt"
+		default "*msgid:xaw95_pre_txt"
 	}
 
 	provides	xaw95
@@ -882,10 +882,10 @@ tech rs_weapon_bombkit1
 	type	"weapon"
 	up_chapter	equipment
 	description {
-		default "_bombkit1_txt"
+		default "*msgid:bombkit1_txt"
 	}
 	pre_description {
-		default "_bombkit1_pre_txt"
+		default "*msgid:bombkit1_pre_txt"
 	}
 
 	provides	bomb1
@@ -900,10 +900,10 @@ tech rs_weapon_bombkit2
 	type	"weapon"
 	up_chapter	equipment
 	description {
-		default "_bombkit2_txt"
+		default "*msgid:bombkit2_txt"
 	}
 	pre_description {
-		default "_bombkit2_pre_txt"
+		default "*msgid:bombkit2_pre_txt"
 	}
 
 	provides	bomb2
@@ -918,10 +918,10 @@ tech rs_weapon_chaingun
 	type	"weapon"
 	up_chapter	equipment
 	description {
-		default "_chaingun_txt"
+		default "*msgid:chaingun_txt"
 	}
 	pre_description {
-		default "_chaingun_pre_txt"
+		default "*msgid:chaingun_pre_txt"
 	}
 
 //	require_AND
@@ -953,9 +953,9 @@ tech rs_weapon_shotgun
 	type	"weapon"
 	up_chapter	equipment
 	description {
-		default "_shotgun_txt"
+		default "*msgid:shotgun_txt"
 	}
-	// pre_description	"_shotgun_pre_txt"
+	// pre_description	"*msgid:shotgun_pre_txt"
 
 // multiplayer only thus not needed at production menu
 //	require_AND
@@ -994,24 +994,24 @@ tech rs_weapon_bolterrifle
 	up_chapter	equipment
 
 	description {
-		default "_bolterrifle_txt"
+		default "*msgid:bolterrifle_txt"
 	}
 	pre_description {
-		default "_bolterrifle_pre_txt"
+		default "*msgid:bolterrifle_pre_txt"
 	}
 
 	mail_pre
 	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_tech"
 	}
 
 	mail
 	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_tech"
 	}
@@ -1050,9 +1050,9 @@ tech rs_weapon_combatknife
 	type	"weapon"
 	up_chapter	equipment
 	description {
-		default "_combatknife_txt"
+		default "*msgid:combatknife_txt"
 	}
-	// pre_description	"_combatknife_pre_txt"
+	// pre_description	"*msgid:combatknife_pre_txt"
 
 	require_AND
 	{
@@ -1071,24 +1071,24 @@ tech rs_weapon_monoknife
 	up_chapter	equipment
 
 	description {
-		default "_monoknife_txt"
+		default "*msgid:monoknife_txt"
 	}
 	pre_description {
-		default "_monoknife_pre_txt"
+		default "*msgid:monoknife_pre_txt"
 	}
 
 	mail_pre
 	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_tech"
 	}
 
 	mail
 	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_tech"
 	}
@@ -1116,9 +1116,9 @@ tech rs_weapon_flamer
 	type	"weapon"
 	up_chapter	equipment
 	description {
-		default "_flamer_txt"
+		default "*msgid:flamer_txt"
 	}
-	// pre_description	"_flamer_pre_txt"
+	// pre_description	"*msgid:flamer_pre_txt"
 
 
 	require_AND
@@ -1135,9 +1135,9 @@ tech rs_weapon_flamer_ammo
 	type	"weapon"
 	up_chapter	equipment
 	description {
-		default "_flamer_mag_txt"
+		default "*msgid:flamer_mag_txt"
 	}
-	// pre_description	"_flamer_mag_pre_txt"
+	// pre_description	"*msgid:flamer_mag_pre_txt"
 
 	require_AND
 	{
@@ -1154,9 +1154,9 @@ tech rs_weapon_flashbang
 	type	"weapon"
 	up_chapter	equipment
 	description {
-		default "_flashbang_txt"
+		default "*msgid:flashbang_txt"
 	}
-	// pre_description	"_flashbang_pre_txt"
+	// pre_description	"*msgid:flashbang_pre_txt"
 
 	require_AND
 	{
@@ -1173,9 +1173,9 @@ tech rs_weapon_fraggren
 	type	"weapon"
 	up_chapter	equipment
 	description {
-		default "_fraggren_txt"
+		default "*msgid:fraggren_txt"
 	}
-	// pre_description	"_fraggren_pre_txt"
+	// pre_description	"*msgid:fraggren_pre_txt"
 
 	require_AND
 	{
@@ -1192,9 +1192,9 @@ tech rs_weapon_incgren
 	type	"weapon"
 	up_chapter	equipment
 	description {
-		default "_incgren_txt"
+		default "*msgid:incgren_txt"
 	}
-	// pre_description	"_incgren_pre_txt"
+	// pre_description	"*msgid:incgren_pre_txt"
 
 	require_AND
 	{
@@ -1211,9 +1211,9 @@ tech rs_weapon_grenl
 	type	"weapon"
 	up_chapter	equipment
 	description {
-		default "_grenl_txt"
+		default "*msgid:grenl_txt"
 	}
-	// pre_description	"_grenl_pre_txt"
+	// pre_description	"*msgid:grenl_pre_txt"
 
 	require_AND
 	{
@@ -1229,9 +1229,9 @@ tech rs_weapon_grenl_ammo
 	type	"weapon"
 	up_chapter	equipment
 	description {
-		default "_grenl_ammo_txt"
+		default "*msgid:grenl_ammo_txt"
 	}
-	// pre_description	"_grenl_ammo_pre_txt"
+	// pre_description	"*msgid:grenl_ammo_pre_txt"
 
 	require_AND
 	{
@@ -1248,9 +1248,9 @@ tech rs_weapon_grenl_fle_ammo
 	type	"weapon"
 	up_chapter	equipment
 	description {
-		default "_grenl_fle_ammo_txt"
+		default "*msgid:grenl_fle_ammo_txt"
 	}
-	// pre_description	"_grenl_fle_ammo_pre_txt"
+	// pre_description	"*msgid:grenl_fle_ammo_pre_txt"
 
 	require_AND
 	{
@@ -1267,9 +1267,9 @@ tech rs_weapon_grenl_incendiary_ammo
 	type	"weapon"
 	up_chapter	equipment
 	description {
-		default "_grenl_incendiary_ammo_txt"
+		default "*msgid:grenl_incendiary_ammo_txt"
 	}
-	// pre_description	"_grenl_incendiary_ammo_pre_txt"
+	// pre_description	"*msgid:grenl_incendiary_ammo_pre_txt"
 
 	require_AND
 	{
@@ -1288,24 +1288,24 @@ tech rs_weapon_grenl_plasma_ammo
 	up_chapter	equipment
 
 	description {
-		default "_grenl_plasma_ammo_txt"
+		default "*msgid:grenl_plasma_ammo_txt"
 	}
 	pre_description {
-		default "_grenl_plasma_ammo_pre_txt"
+		default "*msgid:grenl_plasma_ammo_pre_txt"
 	}
 
 	mail_pre
 	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_tech"
 	}
 
 	mail
 	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_tech"
 	}
@@ -1327,9 +1327,9 @@ tech rs_irgoggles
 
 	up_chapter	equipment
 	description {
-		default "_irgoggles_txt"
+		default "*msgid:irgoggles_txt"
 	}
-	// pre_description	"_irgoggles_pre_txt"
+	// pre_description	"*msgid:irgoggles_pre_txt"
 
 	require_AND
 	{
@@ -1347,24 +1347,24 @@ tech rs_weapon_kerrblade
 	up_chapter	artifacts
 
 	description {
-		default "_kerrblade_txt"
+		default "*msgid:kerrblade_txt"
 	}
 	pre_description {
-		default "_kerrblade_pre_txt"
+		default "*msgid:kerrblade_pre_txt"
 	}
 
 	mail_pre
 	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_artifact"
 	}
 
 	mail
 	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_artifact"
 	}
@@ -1392,24 +1392,24 @@ tech rs_weapon_laserpistol
 	up_chapter	equipment
 
 	description {
-		default "_laserpistol_txt"
+		default "*msgid:laserpistol_txt"
 	}
 	pre_description {
-		default "_laserpistol_pre_txt"
+		default "*msgid:laserpistol_pre_txt"
 	}
 
 	mail_pre
 	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name" (which in turn is parsed from weapon*.ufo files)
 		icon	"icons/mail_tech"
 	}
 
 	mail
 	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_tech"
 	}
@@ -1430,24 +1430,24 @@ tech rs_weapon_laserrifle
 	up_chapter	equipment
 
 	description {
-		default "_laserrifle_txt"
+		default "*msgid:laserrifle_txt"
 	}
 	pre_description {
-		default "_laserrifle_pre_txt"
+		default "*msgid:laserrifle_pre_txt"
 	}
 
 	mail_pre
 	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name" (which in turn is parsed from weapon*.ufo files)
 		icon	"icons/mail_tech"
 	}
 
 	mail
 	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_tech"
 	}
@@ -1469,24 +1469,24 @@ tech rs_weapon_heavylaser
 	up_chapter	equipment
 
 	description {
-		default "_heavylaser_txt"
+		default "*msgid:heavylaser_txt"
 	}
 	pre_description {
-		default "_heavylaser_pre_txt"
+		default "*msgid:heavylaser_pre_txt"
 	}
 
 	mail_pre
 	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name" (which in turn is parsed from weapon*.ufo files)
 		icon	"icons/mail_tech"
 	}
 
 	mail
 	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_tech"
 	}
@@ -1508,24 +1508,24 @@ tech rs_weapon_electrolaser
 	up_chapter	equipment
 
 	description {
-		default "_electrolaser_txt"
+		default "*msgid:electrolaser_txt"
 	}
 	pre_description {
-		default "_electrolaser_pre_txt"
+		default "*msgid:electrolaser_pre_txt"
 	}
 
 	mail_pre
 	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name" (which in turn is parsed from weapon*.ufo files)
 		icon	"icons/mail_tech"
 	}
 
 	mail
 	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_tech"
 	}
@@ -1552,24 +1552,24 @@ tech rs_weapon_laserammo
 	up_chapter	equipment
 
 	description {
-		default "_laser_ammo_txt"
+		default "*msgid:laser_ammo_txt"
 	}
 	pre_description {
-		default "_laser_ammo_pre_txt"
+		default "*msgid:laser_ammo_pre_txt"
 	}
 
 	mail_pre
 	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name" (which in turn is parsed from weapon*.ufo files)
 		icon	"icons/mail_tech"
 	}
 
 	mail
 	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_tech"
 	}
@@ -1589,24 +1589,24 @@ tech rs_weapon_laserammo_stun
 	up_chapter	equipment
 
 	description {
-		default "_laser_ammo_txt"
+		default "*msgid:laser_ammo_txt"
 	}
 	pre_description {
-		default "_laser_ammo_pre_txt"
+		default "*msgid:laser_ammo_pre_txt"
 	}
 
 	mail_pre
 	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name" (which in turn is parsed from weapon*.ufo files)
 		icon	"icons/mail_tech"
 	}
 
 	mail
 	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_tech"
 	}
@@ -1625,9 +1625,9 @@ tech rs_medikit
 	type	"weapon"
 	up_chapter	equipment
 	description {
-		default "_medikit_txt"
+		default "*msgid:medikit_txt"
 	}
-	// pre_description	"_medikit_pre_txt"
+	// pre_description	"*msgid:medikit_pre_txt"
 
 	require_AND
 	{
@@ -1645,24 +1645,24 @@ tech rs_weapon_plasatomizer
 	up_chapter	artifacts
 
 	description {
-		default "_plasatomizer_txt"
+		default "*msgid:plasatomizer_txt"
 	}
 	pre_description {
-		default "_plasatomizer_pre_txt"
+		default "*msgid:plasatomizer_pre_txt"
 	}
 
 	mail_pre
 	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_artifact"
 	}
 
 	mail
 	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_artifact"
 	}
@@ -1716,24 +1716,24 @@ tech rs_weapon_plasblaster
 	up_chapter	artifacts
 
 	description {
-		default "_plasblaster_txt"
+		default "*msgid:plasblaster_txt"
 	}
 	pre_description {
-		default "_plasblaster_pre_txt"
+		default "*msgid:plasblaster_pre_txt"
 	}
 
 	mail_pre
 	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_artifact"
 	}
 
 	mail
 	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_artifact"
 	}
@@ -1786,24 +1786,24 @@ tech rs_weapon_plasblade
 	up_chapter	artifacts
 
 	description {
-		default "_plasblade_txt"
+		default "*msgid:plasblade_txt"
 	}
 	pre_description {
-		default "_plasblade_pre_txt"
+		default "*msgid:plasblade_pre_txt"
 	}
 
 	mail_pre
 	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_artifact"
 	}
 
 	mail
 	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_artifact"
 	}
@@ -1832,24 +1832,24 @@ tech rs_weapon_plasmagren
 	up_chapter	artifacts
 
 	description {
-		default "_plasmagren_txt"
+		default "*msgid:plasmagren_txt"
 	}
 	pre_description {
-		default "_plasmagren_pre_txt"
+		default "*msgid:plasmagren_pre_txt"
 	}
 
 	mail_pre
 	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_artifact"
 	}
 
 	mail
 	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_artifact"
 	}
@@ -1877,24 +1877,24 @@ tech rs_weapon_plasrifle
 	up_chapter	artifacts
 
 	description {
-		default "_plasrifle_txt"
+		default "*msgid:plasrifle_txt"
 	}
 	pre_description {
-		default "_plasrifle_pre_txt"
+		default "*msgid:plasrifle_pre_txt"
 	}
 
 	mail_pre
 	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_artifact"
 	}
 
 	mail
 	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_artifact"
 	}
@@ -1947,24 +1947,24 @@ tech rs_weapon_needlergun
 	up_chapter	equipment
 
 	description {
-		default "_needlergun_txt"
+		default "*msgid:needlergun_txt"
 	}
 	pre_description {
-		default "_needlergun_pre_txt"
+		default "*msgid:needlergun_pre_txt"
 	}
 
 	mail_pre
 	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_tech"
 	}
 
 	mail
 	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_tech"
 	}
@@ -1993,24 +1993,24 @@ tech rs_weapon_needlerheavy
 	up_chapter	equipment
 
 	description {
-		default "_needlerheavy_txt"
+		default "*msgid:needlerheavy_txt"
 	}
 	pre_description {
-		default "_needlerheavy_pre_txt"
+		default "*msgid:needlerheavy_pre_txt"
 	}
 
 	mail_pre
 	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_tech"
 	}
 
 	mail
 	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_tech"
 	}
@@ -2062,24 +2062,24 @@ tech rs_weapon_coilgun
 	type	"weapon"
 	up_chapter	equipment
 	description {
-		default "_coilgun_txt"
+		default "*msgid:coilgun_txt"
 	}
 	pre_description {
-		default "_coilgun_pre_txt"
+		default "*msgid:coilgun_pre_txt"
 	}
 
 	mail_pre
 	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
 		subject	"_Coilgun"
 		icon	"icons/mail_tech"
 	}
 
 	mail
 	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
 		subject	"_Coilgun"
 		icon	"icons/mail_tech"
 	}
@@ -2130,9 +2130,9 @@ tech rs_weapon_shotgun2
 	type		"weapon"
 	up_chapter	equipment
 	description {
-		default "_shotgun2_txt"
+		default "*msgid:shotgun2_txt"
 	}
-	// pre_description	"_shotgun2_pre_txt"
+	// pre_description	"*msgid:shotgun2_pre_txt"
 
 	require_AND
 	{
@@ -2149,9 +2149,9 @@ tech rs_weapon_shotgun2_slug_ammo
 	type		"weapon"
 	up_chapter	equipment
 	description {
-		default "_shotgun2_slug_ammo_txt"
+		default "*msgid:shotgun2_slug_ammo_txt"
 	}
-	// pre_description	"_shotgun2_slug_ammo_pre_txt"
+	// pre_description	"*msgid:shotgun2_slug_ammo_pre_txt"
 
 	require_AND
 	{
@@ -2170,9 +2170,9 @@ tech rs_weapon_shotgun_micro
 
 	up_chapter	equipment
 	description {
-		default "_shotgun_micro_txt"
+		default "*msgid:shotgun_micro_txt"
 	}
-	// pre_description	"_shotgun_micro_pre_txt"
+	// pre_description	"*msgid:shotgun_micro_pre_txt"
 
 	require_AND
 	{
@@ -2189,9 +2189,9 @@ tech rs_weapon_shotgun_micro_ammo
 	type		"weapon"
 	up_chapter	equipment
 	description {
-		default "_shotgun_micro_ammo_txt"
+		default "*msgid:shotgun_micro_ammo_txt"
 	}
-	// pre_description	"_shotgun_micro_ammo_pre_txt"
+	// pre_description	"*msgid:shotgun_micro_ammo_pre_txt"
 
 	require_AND
 	{
@@ -2209,9 +2209,9 @@ tech rs_weapon_smg
 	type	"weapon"
 	up_chapter	equipment
 	description {
-		default "_smg_txt"
+		default "*msgid:smg_txt"
 	}
-	// pre_description	"_smg_pre_txt"
+	// pre_description	"*msgid:smg_pre_txt"
 
 	require_AND
 	{
@@ -2228,9 +2228,9 @@ tech rs_weapon_smg_ammo
 	type		"weapon"
 	up_chapter	equipment
 	description {
-		default "_smg_mag_txt"
+		default "*msgid:smg_mag_txt"
 	}
-	// pre_description	"_smg_mag_pre_txt"
+	// pre_description	"*msgid:smg_mag_pre_txt"
 
 	require_AND
 	{
@@ -2248,9 +2248,9 @@ tech rs_weapon_smokegren
 	type		"weapon"
 	up_chapter	equipment
 	description {
-		default "_smokegren_txt"
+		default "*msgid:smokegren_txt"
 	}
-	// pre_description	"_smokegren_pre_txt"
+	// pre_description	"*msgid:smokegren_pre_txt"
 
 	require_AND
 	{
@@ -2267,9 +2267,9 @@ tech rs_weapon_sniper
 	type		"weapon"
 	up_chapter	equipment
 	description {
-		default "_sniper_txt"
+		default "*msgid:sniper_txt"
 	}
-	// pre_description	"_sniper_pre_txt"
+	// pre_description	"*msgid:sniper_pre_txt"
 
 	require_AND
 	{
@@ -2286,9 +2286,9 @@ tech rs_weapon_sniper_ammo
 	type		"weapon"
 	up_chapter	equipment
 	description {
-		default "_sniper_mag_txt"
+		default "*msgid:sniper_mag_txt"
 	}
-	// pre_description	"_sniper_mag_pre_txt"
+	// pre_description	"*msgid:sniper_mag_pre_txt"
 
 	require_AND
 	{
@@ -2309,24 +2309,24 @@ tech rs_weapon_stungren
 	up_chapter	equipment
 
 	description {
-		default "_stungren_txt"
+		default "*msgid:stungren_txt"
 	}
 	pre_description {
-		default "_stungren_pre_txt"
+		default "*msgid:stungren_pre_txt"
 	}
 
 	mail_pre
 	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_tech"
 	}
 
 	mail
 	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_tech"
 	}
@@ -2356,24 +2356,24 @@ tech rs_weapon_stungren_alien
 	up_chapter	artifacts
 
 	description {
-		default "_stungren_alien_txt"
+		default "*msgid:stungren_alien_txt"
 	}
 	pre_description {
-		default "_stungren_alien_pre_txt"
+		default "*msgid:stungren_alien_pre_txt"
 	}
 
 	mail_pre
 	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_tech"
 	}
 
 	mail
 	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_tech"
 	}
@@ -2398,16 +2398,16 @@ tech rs_weapon_stunrod
 	up_chapter	equipment
 
 	description {
-		default "_stunrod_txt"
+		default "*msgid:stunrod_txt"
 	}
 	pre_description {
-		default "_stunrod_pre_txt"
+		default "*msgid:stunrod_pre_txt"
 	}
 
 	mail_pre
 	{
-		from	"_mail_from_dr_connor"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_dr_connor"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name" (which in turn is parsed from weapon*.ufo files)
 		model	"characters/connor"
 		icon	"icons/mail_tech"
@@ -2415,8 +2415,8 @@ tech rs_weapon_stunrod
 
 	mail
 	{
-		from	"_mail_from_dr_connor"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_dr_connor"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		model	"characters/connor"
 		icon	"icons/mail_tech"
@@ -2441,24 +2441,24 @@ tech rs_weapon_pbeampistol
 	up_chapter	artifacts
 
 	description {
-		default "_pbeampistol_txt"
+		default "*msgid:pbeampistol_txt"
 	}
 	pre_description {
-		default "_pbeampistol_pre_txt"
+		default "*msgid:pbeampistol_pre_txt"
 	}
 
 	mail_pre
 	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_artifact"
 	}
 
 	mail
 	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_artifact"
 	}
@@ -2510,24 +2510,24 @@ tech rs_weapon_pbeamcannon
 	up_chapter	artifacts
 
 	description {
-		default "_pbeamcannon_txt"
+		default "*msgid:pbeamcannon_txt"
 	}
 	pre_description {
-		default "_pbeamcannon_pre_txt"
+		default "*msgid:pbeamcannon_pre_txt"
 	}
 
 	mail_pre
 	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_artifact"
 	}
 
 	mail
 	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_artifact"
 	}
@@ -2580,24 +2580,24 @@ tech rs_weapon_pbeamrifle
 	up_chapter	artifacts
 
 	description {
-		default "_pbeamrifle_txt"
+		default "*msgid:pbeamrifle_txt"
 	}
 	pre_description {
-		default "_pbeamrifle_pre_txt"
+		default "*msgid:pbeamrifle_pre_txt"
 	}
 
 	mail_pre
 	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_artifact"
 	}
 
 	mail
 	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_artifact"
 	}
@@ -2650,24 +2650,24 @@ tech rs_weapon_pbeam_ammo
 	up_chapter	artifacts
 
 	description {
-		default "_pbeamammo_txt"
+		default "*msgid:pbeamammo_txt"
 	}
 	pre_description {
-		default "_pbeamammo_pre_txt"
+		default "*msgid:pbeamammo_pre_txt"
 	}
 
 	mail_pre
 	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_tech"
 	}
 
 	mail
 	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_tech"
 	}
@@ -2697,9 +2697,9 @@ tech rs_combat_armour
 	type		"armour"
 	up_chapter	equipment
 	description {
-		default "_combat_armour_txt"
+		default "*msgid:combat_armour_txt"
 	}
-	// pre_description	"_combat_armour_pre_txt"
+	// pre_description	"*msgid:combat_armour_pre_txt"
 
 	provides	armour_light
 	time		0
@@ -2712,24 +2712,24 @@ tech rs_nano_armour
 	up_chapter	equipment
 
 	description {
-		default "_nano_armour_txt"
+		default "*msgid:nano_armour_txt"
 	}
 	pre_description {
-		default "_nano_armour_pre_txt"
+		default "*msgid:nano_armour_pre_txt"
 	}
 
 	mail_pre
 	{
-		from	"_mail_from_paul_navarre"
-		to	"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to	"*msgid:mail_to_base_commander"
 		// subject	defined by "name" (which in turn is parsed from armour*.ufo files)
 		icon	"icons/mail_tech"
 	}
 
 	mail
 	{
-		from	"_mail_from_paul_navarre"
-		to	"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to	"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_tech"
 	}
@@ -2750,24 +2750,24 @@ tech rs_power_armour
 	up_chapter	equipment
 
 	description {
-		default "_power_armour_txt"
+		default "*msgid:power_armour_txt"
 	}
 	pre_description {
-		default "_power_armour_pre_txt"
+		default "*msgid:power_armour_pre_txt"
 	}
 
 	mail_pre
 	{
-		from	"_mail_from_paul_navarre"
-		to	"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to	"*msgid:mail_to_base_commander"
 		// subject	defined by "name" (which in turn is parsed from armour*.ufo files)
 		icon	"icons/mail_tech"
 	}
 
 	mail
 	{
-		from	"_mail_from_paul_navarre"
-		to	"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to	"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_tech"
 	}
@@ -2789,24 +2789,24 @@ tech rs_alien_body_armour
 	up_chapter	artifacts
 
 	description {
-		default "_alien_body_armour_txt"
+		default "*msgid:alien_body_armour_txt"
 	}
 	pre_description {
-		default "_alien_body_armour_pre_txt"
+		default "*msgid:alien_body_armour_pre_txt"
 	}
 
 	mail_pre
 	{
-		from	"_mail_from_paul_navarre"
-		to	"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to	"*msgid:mail_to_base_commander"
 		// subject	defined by "name" (which in turn is parsed from armour*.ufo files)
 		icon	"icons/mail_tech"
 	}
 
 	mail
 	{
-		from	"_mail_from_paul_navarre"
-		to	"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to	"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_tech"
 	}
@@ -2826,24 +2826,24 @@ tech rs_alien_medium_armour
 	up_chapter	artifacts
 
 	description {
-		default "_alien_medium_armour_txt"
+		default "*msgid:alien_medium_armour_txt"
 	}
 	pre_description {
-		default "_alien_medium_armour_pre_txt"
+		default "*msgid:alien_medium_armour_pre_txt"
 	}
 
 	mail_pre
 	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name" (which in turn is parsed from armour*.ufo files)
 		icon	"icons/mail_tech"
 	}
 
 	mail
 	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_tech"
 	}
@@ -2867,7 +2867,7 @@ tech rs_damage_blast
 	name	"_Blast Damage Type"
 	up_chapter damage
 	description {
-		default "_none"
+		default "*msgid:none"
 	}
 
 	time	0
@@ -2880,7 +2880,7 @@ tech rs_damage_fire
 	name	"_Fire Damage Type"
 	up_chapter	damage
 	description {
-		default "_none"
+		default "*msgid:none"
 	}
 
 	time	0
@@ -2893,7 +2893,7 @@ tech rs_damage_laser
 	name	"_Laser Damage Type"
 	up_chapter	damage
 	description {
-		default "_none"
+		default "*msgid:none"
 	}
 
 	require_AND
@@ -2911,7 +2911,7 @@ tech rs_damage_normal
 	name	"_Impact Damage Type"
 	up_chapter	damage
 	description {
-		default "_none"
+		default "*msgid:none"
 	}
 
 	time	0
@@ -2924,7 +2924,7 @@ tech rs_damage_shock
 	name "_Shock Damage Type"
 	up_chapter	damage
 	description {
-		default "_none"
+		default "*msgid:none"
 	}
 
 	time	0
@@ -2937,7 +2937,7 @@ tech rs_damage_plasma
 	name		"_Plasma Damage Type"
 	up_chapter	damage
 	description {
-		default "_none"
+		default "*msgid:none"
 	}
 
 	require_OR
@@ -2958,7 +2958,7 @@ tech rs_damage_stun
 	name		"_Stun Damage Type"
 	up_chapter	damage
 	description {
-		default "_none"
+		default "*msgid:none"
 	}
 
 	time	0
@@ -2971,7 +2971,7 @@ tech rs_damage_pbeam
 	name		"_Particle Beam Damage Type"
 	up_chapter	damage
 	description {
-		default "_none"
+		default "*msgid:none"
 	}
 
 
@@ -2989,7 +2989,7 @@ tech rs_skill_accuracy
 	name		"_Accuracy Attribute"
 	up_chapter	skill
 	description {
-		default "_none"
+		default "*msgid:none"
 	}
 
 	time	0
@@ -3002,7 +3002,7 @@ tech rs_skill_assault
 	name		"_Assault Guns Proficiency"
 	up_chapter	skill
 	description {
-		default "_none"
+		default "*msgid:none"
 	}
 
 	time	0
@@ -3015,7 +3015,7 @@ tech rs_skill_close
 	name		"_Close Combat Proficiency"
 	up_chapter	skill
 	description {
-		default "_none"
+		default "*msgid:none"
 	}
 
 	time	0
@@ -3028,7 +3028,7 @@ tech rs_skill_explosive
 	name		"_High-Explosives Proficiency"
 	up_chapter	skill
 	description {
-		default "_none"
+		default "*msgid:none"
 	}
 
 	time	0
@@ -3041,7 +3041,7 @@ tech rs_skill_heavy
 	name		"_Heavy Weapons Proficiency"
 	up_chapter	skill
 	description {
-		default "_none"
+		default "*msgid:none"
 	}
 
 	time	0
@@ -3054,7 +3054,7 @@ tech rs_skill_mind
 	name		"_Mind Attribute"
 	up_chapter	skill
 	description {
-		default "_none"
+		default "*msgid:none"
 	}
 
 	time	0
@@ -3067,7 +3067,7 @@ tech rs_skill_power
 	name		"_Power Attribute"
 	up_chapter	skill
 	description {
-		default "_none"
+		default "*msgid:none"
 	}
 
 	time	0
@@ -3080,7 +3080,7 @@ tech rs_skill_sniper
 	name		"_Sniper Rifles Proficiency"
 	up_chapter	skill
 	description {
-		default "_none"
+		default "*msgid:none"
 	}
 
 	time	0
@@ -3093,7 +3093,7 @@ tech rs_skill_speed
 	name		"_Speed Attribute"
 	up_chapter	skill
 	description {
-		default "_none"
+		default "*msgid:none"
 	}
 
 	time	0
@@ -3108,9 +3108,9 @@ tech rs_building_aliencontainment
 {
 	type	"building"
 	description {
-		default "_b_aliencontainment_txt"
+		default "*msgid:b_aliencontainment_txt"
 	}
-	// pre_description	"_b_aliencontainment_pre_txt"
+	// pre_description	"*msgid:b_aliencontainment_pre_txt"
 	up_chapter	buildings
 
 	require_AND
@@ -3126,9 +3126,9 @@ tech rs_building_command
 {
 	type	"building"
 	description {
-		default "_b_command_txt"
+		default "*msgid:b_command_txt"
 	}
-	// pre_description	"_b_command_pre_txt"
+	// pre_description	"*msgid:b_command_pre_txt"
 	up_chapter	buildings
 
 	require_AND
@@ -3144,9 +3144,9 @@ tech rs_building_entrance
 {
 	type	"building"
 	description {
-		default "_b_entrance_txt"
+		default "*msgid:b_entrance_txt"
 	}
-	// pre_description	"_b_entrance_pre_txt"
+	// pre_description	"*msgid:b_entrance_pre_txt"
 	up_chapter	buildings
 
 	provides	building_entrance
@@ -3157,9 +3157,9 @@ tech rs_building_missile
 {
 	type	"building"
 	description {
-		default "_b_missile_txt"
+		default "*msgid:b_missile_txt"
 	}
-	// pre_description	"_b_missile_pre_txt"
+	// pre_description	"*msgid:b_missile_pre_txt"
 	up_chapter	buildings
 
 	require_AND
@@ -3175,9 +3175,9 @@ tech rs_building_laser
 {
 	type	"building"
 	description {
-		default "_b_baselaser_txt"
+		default "*msgid:b_baselaser_txt"
 	}
-	// pre_description	"_b_baselaser_pre_txt"
+	// pre_description	"*msgid:b_baselaser_pre_txt"
 	up_chapter	buildings
 
 	require_AND
@@ -3196,9 +3196,9 @@ tech rs_building_large_hangar
 {
 	type	"building"
 	description {
-		default "_b_large_hangar_txt"
+		default "*msgid:b_large_hangar_txt"
 	}
-	// pre_description	"_b_large_hangar_pre_txt"
+	// pre_description	"*msgid:b_large_hangar_pre_txt"
 	up_chapter	buildings
 
 	require_AND
@@ -3214,9 +3214,9 @@ tech rs_building_hospital
 {
 	type	"building"
 	description {
-		default "_b_hospital_txt"
+		default "*msgid:b_hospital_txt"
 	}
-	// pre_description	"_b_hospital_pre_txt"
+	// pre_description	"*msgid:b_hospital_pre_txt"
 	up_chapter	buildings
 
 	require_AND
@@ -3232,9 +3232,9 @@ tech rs_building_small_hangar
 {
 	type	"building"
 	description {
-		default "_b_small_hangar_txt"
+		default "*msgid:b_small_hangar_txt"
 	}
-	// pre_description	"_b_small_hangar_pre_txt"
+	// pre_description	"*msgid:b_small_hangar_pre_txt"
 	up_chapter	buildings
 
 	require_AND
@@ -3250,9 +3250,9 @@ tech rs_building_lab
 {
 	type	"building"
 	description {
-		default "_b_lab_txt"
+		default "*msgid:b_lab_txt"
 	}
-	// pre_description	"_b_lab_pre_txt"
+	// pre_description	"*msgid:b_lab_pre_txt"
 	up_chapter	buildings
 
 	require_AND
@@ -3268,9 +3268,9 @@ tech rs_building_powerplant
 {
 	type	"building"
 	description {
-		default "_b_powerplant_txt"
+		default "*msgid:b_powerplant_txt"
 	}
-	// pre_description	"_b_powerplant_pre_txt"
+	// pre_description	"*msgid:b_powerplant_pre_txt"
 	up_chapter	buildings
 
 	require_AND
@@ -3286,9 +3286,9 @@ tech rs_building_quarters
 {
 	type	"building"
 	description {
-		default "_b_quarters_txt"
+		default "*msgid:b_quarters_txt"
 	}
-	// pre_description	"_b_quarters_pre_txt"
+	// pre_description	"*msgid:b_quarters_pre_txt"
 	up_chapter	buildings
 
 	provides	building_quarters
@@ -3299,9 +3299,9 @@ tech rs_building_radar
 {
 	type	"building"
 	description {
-		default "_b_radar_txt"
+		default "*msgid:b_radar_txt"
 	}
-	// pre_description	"_b_radar_pre_txt"
+	// pre_description	"*msgid:b_radar_pre_txt"
 	up_chapter	buildings
 
 	require_AND
@@ -3317,9 +3317,9 @@ tech rs_building_radar_adv
 {
 	type	"building"
 	description {
-		default "_b_radar_adv_txt"
+		default "*msgid:b_radar_adv_txt"
 	}
-	// pre_description	"_b_radar_adv_pre_txt"
+	// pre_description	"*msgid:b_radar_adv_pre_txt"
 	up_chapter	buildings
 
 	require_AND
@@ -3336,9 +3336,9 @@ tech rs_building_storage
 {
 	type	"building"
 	description {
-		default "_b_storage_txt"
+		default "*msgid:b_storage_txt"
 	}
-	// pre_description	"_b_storage_pre_txt"
+	// pre_description	"*msgid:b_storage_pre_txt"
 	up_chapter	buildings
 
 	require_AND
@@ -3354,9 +3354,9 @@ tech rs_building_workshop
 {
 	type	"building"
 	description {
-		default "_b_workshop_txt"
+		default "*msgid:b_workshop_txt"
 	}
-	// pre_description	"_b_workshop_pre_txt"
+	// pre_description	"*msgid:b_workshop_pre_txt"
 	up_chapter	buildings
 
 	require_AND
@@ -3375,7 +3375,7 @@ tech rs_building_antimatter
 	up_chapter	buildings
 
 	description {
-		default "_b_antimatter_txt"
+		default "*msgid:b_antimatter_txt"
 	}
 
 	require_AND
@@ -3385,8 +3385,8 @@ tech rs_building_antimatter
 
 	mail
 	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_alien"
 	}
@@ -3402,9 +3402,9 @@ tech rs_craft_drop_firebird
 {
 	type	"craft"
 	description {
-		default "_drop_firebird_txt"
+		default "*msgid:drop_firebird_txt"
 	}
-	// pre_description	"_drop_firebird_pre_txt"
+	// pre_description	"*msgid:drop_firebird_pre_txt"
 	up_chapter	crafts
 
 	provides	craft_drop_firebird
@@ -3418,23 +3418,23 @@ tech rs_craft_drop_herakles
 {
 	type	"craft"
 	description {
-		default "_drop_herakles_txt"
+		default "*msgid:drop_herakles_txt"
 	}
 	pre_description	{
-		default "_drop_herakles_pre_txt"
+		default "*msgid:drop_herakles_pre_txt"
 	}
 	up_chapter	crafts
 
 	mail_pre	{
-		from	"_mail_from_paul_navarre"
-		to	"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to	"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_tech"
 	}
 	mail
 	{
-		from	"_mail_from_paul_navarre"
-		to	"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to	"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_tech"
 	}
@@ -3455,23 +3455,23 @@ tech rs_craft_drop_raptor
 {
 	type	"craft"
 	description {
-		default "_drop_raptor_txt"
+		default "*msgid:drop_raptor_txt"
 	}
 	pre_description	{
-		default "_drop_raptor_pre_txt"
+		default "*msgid:drop_raptor_pre_txt"
 	}
 	up_chapter	crafts
 
 	mail_pre	{
-		from	"_mail_from_paul_navarre"
-		to	"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to	"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_tech"
 	}
 	mail
 	{
-		from	"_mail_from_paul_navarre"
-		to	"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to	"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_tech"
 	}
@@ -3500,9 +3500,9 @@ tech rs_craft_inter_stiletto
 {
 	type	"craft"
 	description {
-		default "_inter_stiletto_txt"
+		default "*msgid:inter_stiletto_txt"
 	}
-	// pre_description	"_inter_stiletto_pre_txt"
+	// pre_description	"*msgid:inter_stiletto_pre_txt"
 	up_chapter	crafts
 
 	provides	craft_inter_stiletto
@@ -3516,9 +3516,9 @@ tech rs_craft_inter_saracen
 {
 	type	"craft"
 	description {
-		default "_inter_saracen_txt"
+		default "*msgid:inter_saracen_txt"
 	}
-	// pre_description	"_inter_saracen_pre_txt"
+	// pre_description	"*msgid:inter_saracen_pre_txt"
 	up_chapter	crafts
 
 	provides	craft_inter_saracen
@@ -3532,24 +3532,24 @@ tech rs_craft_inter_dragon
 {
 	type	"craft"
 	description {
-		default "_inter_dragon_txt"
+		default "*msgid:inter_dragon_txt"
 	}
 	pre_description	{
-		default "_inter_dragon_pre_txt"
+		default "*msgid:inter_dragon_pre_txt"
 	}
 	up_chapter	crafts
 
 	mail_pre
 	{
-		from	"_mail_from_paul_navarre"
-		to	"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to	"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_tech"
 	}
 	mail
 	{
-		from	"_mail_from_paul_navarre"
-		to	"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to	"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_tech"
 	}
@@ -3576,24 +3576,24 @@ tech rs_craft_inter_starchaser
 {
 	type	"craft"
 	description {
-		default "_inter_starchaser_txt"
+		default "*msgid:inter_starchaser_txt"
 	}
 	pre_description	{
-		default "_inter_starchaser_pre_txt"
+		default "*msgid:inter_starchaser_pre_txt"
 	}
 	up_chapter	crafts
 
 	mail_pre
 	{
-		from	"_mail_from_paul_navarre"
-		to	"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to	"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_tech"
 	}
 	mail
 	{
-		from	"_mail_from_paul_navarre"
-		to	"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to	"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_tech"
 	}
@@ -3620,24 +3620,24 @@ tech rs_craft_inter_stingray
 {
 	type	"craft"
 	description {
-		default "_inter_stingray_txt"
+		default "*msgid:inter_stingray_txt"
 	}
 	pre_description {
-		default "_inter_stingray_pre_txt"
+		default "*msgid:inter_stingray_pre_txt"
 	}
 	up_chapter	crafts
 
 	mail_pre
 	{
-		from	"_mail_from_paul_navarre"
-		to	"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to	"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_tech"
 	}
 	mail
 	{
-		from	"_mail_from_paul_navarre"
-		to	"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to	"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_tech"
 	}
@@ -3673,24 +3673,24 @@ tech rs_craft_ufo_scout
 	up_chapter	crafts
 
 	description {
-		default "_ufo_scout_txt"
+		default "*msgid:ufo_scout_txt"
 	}
 	pre_description {
-		default "_ufo_scout_pre_txt"
+		default "*msgid:ufo_scout_pre_txt"
 	}
 
 	mail_pre
 	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_tech"
 	}
 
 	mail
 	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_tech"
 	}
@@ -3715,24 +3715,24 @@ tech rs_craft_ufo_fighter
 	up_chapter	crafts
 
 	description {
-		default "_ufo_fighter_txt"
+		default "*msgid:ufo_fighter_txt"
 	}
 	pre_description {
-		default "_ufo_fighter_pre_txt"
+		default "*msgid:ufo_fighter_pre_txt"
 	}
 
 	mail_pre
 	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_tech"
 	}
 
 	mail
 	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_tech"
 	}
@@ -3758,24 +3758,24 @@ tech rs_craft_ufo_supply
 	up_chapter	crafts
 
 	description {
-		default "_ufo_supply_txt"
+		default "*msgid:ufo_supply_txt"
 	}
 	pre_description {
-		default "_ufo_supply_pre_txt"
+		default "*msgid:ufo_supply_pre_txt"
 	}
 
 	mail_pre
 	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_tech"
 	}
 
 	mail
 	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_tech"
 	}
@@ -3801,24 +3801,24 @@ tech rs_craft_ufo_carrier
 	up_chapter	crafts
 
 	description {
-		default "_ufo_carrier_txt"
+		default "*msgid:ufo_carrier_txt"
 	}
 	pre_description {
-		default "_ufo_carrier_pre_txt"
+		default "*msgid:ufo_carrier_pre_txt"
 	}
 
 	mail_pre
 	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_tech"
 	}
 
 	mail
 	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_tech"
 	}
@@ -3844,24 +3844,24 @@ tech rs_craft_ufo_bomber
 	up_chapter	crafts
 
 	description {
-		default "_ufo_bomber_txt"
+		default "*msgid:ufo_bomber_txt"
 	}
 	pre_description {
-		default "_ufo_bomber_pre_txt"
+		default "*msgid:ufo_bomber_pre_txt"
 	}
 
 	mail_pre
 	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_tech"
 	}
 
 	mail
 	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_tech"
 	}
@@ -3887,24 +3887,24 @@ tech rs_craft_ufo_corrupter
 	up_chapter	crafts
 
 	description {
-		default "_ufo_corrupter_txt"
+		default "*msgid:ufo_corrupter_txt"
 	}
 	pre_description {
-		default "_ufo_corrupter_pre_txt"
+		default "*msgid:ufo_corrupter_pre_txt"
 	}
 
 	mail_pre
 	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_tech"
 	}
 
 	mail
 	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_tech"
 	}
@@ -3930,24 +3930,24 @@ tech rs_craft_ufo_gunboat
 	up_chapter	crafts
 
 	description {
-		default "_ufo_gunboat_txt"
+		default "*msgid:ufo_gunboat_txt"
 	}
 	pre_description {
-		default "_ufo_gunboat_pre_txt"
+		default "*msgid:ufo_gunboat_pre_txt"
 	}
 
 	mail_pre
 	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_tech"
 	}
 
 	mail
 	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_tech"
 	}
@@ -3973,24 +3973,24 @@ tech rs_craft_ufo_ripper
 	up_chapter	crafts
 
 	description {
-		default "_ufo_ripper_txt"
+		default "*msgid:ufo_ripper_txt"
 	}
 	pre_description {
-		default "_ufo_ripper_pre_txt"
+		default "*msgid:ufo_ripper_pre_txt"
 	}
 
 	mail_pre
 	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_tech"
 	}
 
 	mail
 	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_tech"
 	}
@@ -4016,24 +4016,24 @@ tech rs_craft_ufo_harvester
 	up_chapter	crafts
 
 	description {
-		default "_ufo_harvester_txt"
+		default "*msgid:ufo_harvester_txt"
 	}
 	pre_description {
-		default "_ufo_harvester_pre_txt"
+		default "*msgid:ufo_harvester_pre_txt"
 	}
 
 	mail_pre
 	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_tech"
 	}
 
 	mail
 	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_tech"
 	}
@@ -4059,24 +4059,24 @@ tech rs_craft_ufo_mothership
 	up_chapter	crafts
 
 	description {
-		default "_ufo_mothership_txt"
+		default "*msgid:ufo_mothership_txt"
 	}
 	pre_description {
-		default "_ufo_mothership_pre_txt"
+		default "*msgid:ufo_mothership_pre_txt"
 	}
 
 	mail_pre
 	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_tech"
 	}
 
 	mail
 	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_tech"
 	}
@@ -4106,10 +4106,10 @@ tech rs_alien_bloodspider_live
 	type	"alien"
 	name	"_Live Specimen - Bloodspider"
 	description {
-		default "_bloodspider_notes_txt"
+		default "*msgid:bloodspider_notes_txt"
 	}
 	pre_description {
-		default "_bloodspider_notes_pre_txt"
+		default "*msgid:bloodspider_notes_pre_txt"
 	}
 	up_chapter	aliens
 
@@ -4130,16 +4130,16 @@ tech rs_alien_bloodspider_autopsy
 	up_chapter	aliens
 
 	description {
-		default "_bloodspider_autopsy_txt"
+		default "*msgid:bloodspider_autopsy_txt"
 	}
 	pre_description {
-		default "_bloodspider_autopsy_pre_txt"
+		default "*msgid:bloodspider_autopsy_pre_txt"
 	}
 
 	mail_pre
 	{
-		from	"_mail_from_dr_connor"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_dr_connor"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		model	"characters/connor"
 		icon	"icons/mail_alien"
@@ -4147,8 +4147,8 @@ tech rs_alien_bloodspider_autopsy
 
 	mail
 	{
-		from	"_mail_from_dr_connor"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_dr_connor"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		model	"characters/connor"
 		icon	"icons/mail_alien"
@@ -4184,16 +4184,16 @@ tech rs_alien_bloodspider_adv_autopsy
 	up_chapter	aliens
 
 	description {
-		default "_bloodspider_adv_autopsy_txt"
+		default "*msgid:bloodspider_adv_autopsy_txt"
 	}
 	pre_description {
-		default "_bloodspider_adv_autopsy_pre_txt"
+		default "*msgid:bloodspider_adv_autopsy_pre_txt"
 	}
 
 	mail_pre
 	{
-		from	"_mail_from_dr_connor"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_dr_connor"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		model	"characters/connor"
 		icon	"icons/mail_alien"
@@ -4201,8 +4201,8 @@ tech rs_alien_bloodspider_adv_autopsy
 
 	mail
 	{
-		from	"_mail_from_dr_connor"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_dr_connor"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		model	"characters/connor"
 		icon	"icons/mail_alien"
@@ -4240,18 +4240,18 @@ tech rs_alien_ortnok_autopsy
 	up_chapter	aliens
 
 	description {
-		default "_ortnok_autopsy_txt"
-		extra (rs_ortnok_extra "_ortnok_autopsy_extra_txt")
+		default "*msgid:ortnok_autopsy_txt"
+		extra (rs_ortnok_extra "*msgid:ortnok_autopsy_extra_txt")
 	}
 	pre_description {
-		default "_ortnok_autopsy_pre_txt"
-		extra (rs_ortnok_extra "_ortnok_autopsy_extra_pre_txt")
+		default "*msgid:ortnok_autopsy_pre_txt"
+		extra (rs_ortnok_extra "*msgid:ortnok_autopsy_extra_pre_txt")
 	}
 
 	mail_pre
 	{
-		from	"_mail_from_dr_connor"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_dr_connor"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		model	"characters/connor"
 		icon	"icons/mail_alien"
@@ -4259,8 +4259,8 @@ tech rs_alien_ortnok_autopsy
 
 	mail
 	{
-		from	"_mail_from_dr_connor"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_dr_connor"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		model	"characters/connor"
 		icon	"icons/mail_alien"
@@ -4284,18 +4284,18 @@ tech rs_alien_taman_autopsy
 	up_chapter	aliens
 
 	description {
-		default "_taman_autopsy_txt"
-		extra (rs_taman_extra "_taman_autopsy_extra_txt")
+		default "*msgid:taman_autopsy_txt"
+		extra (rs_taman_extra "*msgid:taman_autopsy_extra_txt")
 	}
 	pre_description {
-		default "_taman_autopsy_pre_txt"
-		extra (rs_taman_extra "_taman_autopsy_extra_pre_txt")
+		default "*msgid:taman_autopsy_pre_txt"
+		extra (rs_taman_extra "*msgid:taman_autopsy_extra_pre_txt")
 	}
 
 	mail_pre
 	{
-		from	"_mail_from_dr_connor"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_dr_connor"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		model	"characters/connor"
 		icon	"icons/mail_alien"
@@ -4303,8 +4303,8 @@ tech rs_alien_taman_autopsy
 
 	mail
 	{
-		from	"_mail_from_dr_connor"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_dr_connor"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		model	"characters/connor"
 		icon	"icons/mail_alien"
@@ -4328,18 +4328,18 @@ tech rs_alien_shevaar_autopsy
 	up_chapter	aliens
 
 	description {
-		default "_shevaar_autopsy_txt"
-		extra (rs_shevaar_extra "_shevaar_autopsy_extra_txt")
+		default "*msgid:shevaar_autopsy_txt"
+		extra (rs_shevaar_extra "*msgid:shevaar_autopsy_extra_txt")
 	}
 	pre_description {
-		default "_shevaar_autopsy_pre_txt"
-		extra (rs_shevaar_extra "_shevaar_autopsy_extra_pre_txt")
+		default "*msgid:shevaar_autopsy_pre_txt"
+		extra (rs_shevaar_extra "*msgid:shevaar_autopsy_extra_pre_txt")
 	}
 
 	mail_pre
 	{
-		from	"_mail_from_dr_connor"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_dr_connor"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		model	"characters/connor"
 		icon	"icons/mail_alien"
@@ -4347,8 +4347,8 @@ tech rs_alien_shevaar_autopsy
 
 	mail
 	{
-		from	"_mail_from_dr_connor"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_dr_connor"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		model	"characters/connor"
 		icon	"icons/mail_alien"
@@ -4372,16 +4372,16 @@ tech rs_alien_hovernet_autopsy
 	up_chapter	aliens
 
 	description {
-		default "_hovernet_autopsy_txt"
+		default "*msgid:hovernet_autopsy_txt"
 	}
 	pre_description {
-		default "_hovernet_autopsy_pre_txt"
+		default "*msgid:hovernet_autopsy_pre_txt"
 	}
 
 	mail_pre
 	{
-		from	"_mail_from_dr_connor"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_dr_connor"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		model	"characters/connor"
 		icon	"icons/mail_alien"
@@ -4389,8 +4389,8 @@ tech rs_alien_hovernet_autopsy
 
 	mail
 	{
-		from	"_mail_from_dr_connor"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_dr_connor"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		model	"characters/connor"
 		icon	"icons/mail_alien"
@@ -4445,16 +4445,16 @@ tech rs_alien_hovernet_adv_autopsy
 	up_chapter	aliens
 
 	description {
-		default "_hovernet_adv_autopsy_txt"
+		default "*msgid:hovernet_adv_autopsy_txt"
 	}
 	pre_description {
-		default "_hovernet_adv_autopsy_pre_txt"
+		default "*msgid:hovernet_adv_autopsy_pre_txt"
 	}
 
 	mail_pre
 	{
-		from	"_mail_from_dr_connor"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_dr_connor"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		model	"characters/connor"
 		icon	"icons/mail_alien"
@@ -4462,8 +4462,8 @@ tech rs_alien_hovernet_adv_autopsy
 
 	mail
 	{
-		from	"_mail_from_dr_connor"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_dr_connor"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		model	"characters/connor"
 		icon	"icons/mail_alien"
@@ -4515,8 +4515,8 @@ tech rs_weapon_hovernet_adv_plasma_ammo
 //{
 //	type	"alien"
 //	name	"_Alien Autopsy - Ortnok Cyborg"
-//	description	"_cyborg_ortnok_autopsy_txt"
-//	pre_description	"_cyborg_ortnok_autopsy_pre_txt"
+//	description	"*msgid:cyborg_ortnok_autopsy_txt"
+//	pre_description	"*msgid:cyborg_ortnok_autopsy_pre_txt"
 //	up_chapter	aliens
 //
 //	require_AND
@@ -4540,10 +4540,10 @@ tech rs_ugv_phoenix
 	up_chapter	equipment
 	name	"_Phoenix UGV"
 	description {
-		default "_ugv_phoenix_txt"
+		default "*msgid:ugv_phoenix_txt"
 	}
 	pre_description {
-		default "_ugv_phoenix_pre_txt"
+		default "*msgid:ugv_phoenix_pre_txt"
 	}
 
 	provides	ugv_phoenix
@@ -4560,10 +4560,10 @@ tech rs_ugv_ares_w
 	up_chapter	equipment
 	name	"_Ares W (UGV)"
 	description {
-		default "_ugv_ares_w_txt"
+		default "*msgid:ugv_ares_w_txt"
 	}
 	pre_description {
-		default "_ugv_ares_w_pre_txt"
+		default "*msgid:ugv_ares_w_pre_txt"
 	}
 
 	provides	ugv_ares_w
@@ -4579,10 +4579,10 @@ tech rs_ugv_chaingun
 	up_chapter	equipment
 /* @todo use-me
 	description {
-		default "_ugv_chaingun_txt"
+		default "*msgid:ugv_chaingun_txt"
 	}
 	pre_description {
-		default "_ugv_chaingun_pre_txt"
+		default "*msgid:ugv_chaingun_pre_txt"
 	}
 */
 	provides	ugv_chaingun
@@ -4598,10 +4598,10 @@ tech rs_ugv_chaingun_belt
 	up_chapter	equipment
 /* @todo use-me
 	description {
-		default "_ugv_chaingun_belt_txt"
+		default "*msgid:ugv_chaingun_belt_txt"
 	}
 	pre_description {
-		default "_ugv_chaingun_belt_pre_txt"
+		default "*msgid:ugv_chaingun_belt_pre_txt"
 	}
 */
 	provides	ugv_chaingun_belt
@@ -4616,10 +4616,10 @@ tech rs_ugv_weapon_autocannon
 
 	up_chapter	equipment
 	description {
-		default "_ugv_weapon_autocannon_txt"
+		default "*msgid:ugv_weapon_autocannon_txt"
 	}
 	pre_description {
-		default "_ugv_weapon_autocannon_pre_txt"
+		default "*msgid:ugv_weapon_autocannon_pre_txt"
 	}
 
 	provides	ugv_weapon_autocannon
@@ -4636,9 +4636,9 @@ tech rs_base_AA51_launcher
 	type		"tech"
 	up_chapter	equipment
 	name		"_AA51 missile launcher"
-	// pre_description	"_b_missile_pre_txt"
+	// pre_description	"*msgid:b_missile_pre_txt"
 	description {
-		default "_b_missile_txt"
+		default "*msgid:b_missile_txt"
 	}
 
 	provides	base_AA51_launcher
@@ -4667,9 +4667,9 @@ tech rs_craft_el_raven
 	type		"craftitem"
 	up_chapter	crafts
 	name		"_'Raven' ECM Unit"
-	// pre_description	"_craft_electronics_raven_pre_txt"
+	// pre_description	"*msgid:craft_electronics_raven_pre_txt"
 	description {
-		default "_craft_electronics_raven_txt"
+		default "*msgid:craft_electronics_raven_txt"
 	}
 
 	provides	craft_el_raven
@@ -4684,9 +4684,9 @@ tech rs_craft_shield_polymer
 	type		"craftitem"
 	up_chapter	crafts
 	name		"_Polymer Aircraft Armour"
-	// pre_description	"_craft_shield_light_pre_txt"
+	// pre_description	"*msgid:craft_shield_light_pre_txt"
 	description {
-		default "_craft_shield_light_txt"
+		default "*msgid:craft_shield_light_txt"
 	}
 
 	provides	craft_shield_polymer
@@ -4702,22 +4702,22 @@ tech rs_craft_shield_plating
 	up_chapter	crafts
 	name		"_Alien Aircraft Plating"
 	pre_description {
-		default	"_craft_shield_plating_pre_txt"
+		default	"*msgid:craft_shield_plating_pre_txt"
 	}
 	description {
-		default "_craft_shield_plating_txt"
+		default "*msgid:craft_shield_plating_txt"
 	}
 	mail_pre
 	{
-		from	"_mail_from_paul_navarre"
-		to	"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to	"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_tech"
 	}
 	mail
 	{
-		from	"_mail_from_paul_navarre"
-		to	"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to	"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_tech"
 	}
@@ -4745,22 +4745,22 @@ tech rs_craft_alien_astrogation
 	up_chapter	crafts
 
 	pre_description {
-		default	"_craft_alien_astrogation_pre_txt"
+		default	"*msgid:craft_alien_astrogation_pre_txt"
 	}
 	description {
-		default	"_craft_alien_astrogation_txt"
+		default	"*msgid:craft_alien_astrogation_txt"
 	}
 	mail_pre
 	{
-		from	"_mail_from_paul_navarre"
-		to	"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to	"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_tech"
 	}
 	mail
 	{
-		from	"_mail_from_paul_navarre"
-		to	"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to	"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_tech"
 	}
@@ -4783,22 +4783,22 @@ tech rs_craft_alien_propulsion
 	up_chapter	crafts
 
 	pre_description {
-		default "_craft_alien_propulsion_pre_txt"
+		default "*msgid:craft_alien_propulsion_pre_txt"
 	}
 	description {
-		default "_craft_alien_propulsion_txt"
+		default "*msgid:craft_alien_propulsion_txt"
 	}
 	mail_pre
 	{
-		from	"_mail_from_paul_navarre"
-		to	"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to	"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_tech"
 	}
 	mail
 	{
-		from	"_mail_from_paul_navarre"
-		to	"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to	"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_tech"
 	}
@@ -4821,22 +4821,22 @@ tech rs_craft_alien_detection
 	up_chapter	crafts
 
 	pre_description	{
-		default	"_craft_alien_detection_pre_txt"
+		default	"*msgid:craft_alien_detection_pre_txt"
 	}
 	description {
-		default	"_craft_alien_detection_txt"
+		default	"*msgid:craft_alien_detection_txt"
 	}
 	mail_pre
 	{
-		from	"_mail_from_paul_navarre"
-		to	"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to	"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_tech"
 	}
 	mail
 	{
-		from	"_mail_from_paul_navarre"
-		to	"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to	"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_tech"
 	}
@@ -4856,10 +4856,10 @@ tech rs_craft_weapon_alc
 	up_chapter	crafts
 	name		"_Aerial Laser Cannon"
 	pre_description	{
-		default "_craft_weapon_alc_pre_txt"
+		default "*msgid:craft_weapon_alc_pre_txt"
 	}
 	description {
-		default "_craft_weapon_alc_txt"
+		default "*msgid:craft_weapon_alc_txt"
 	}
 
 	require_AND {
@@ -4869,16 +4869,16 @@ tech rs_craft_weapon_alc
 
 	mail_pre
 	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_tech"
 	}
 
 	mail
 	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_tech"
 	}
@@ -4905,9 +4905,9 @@ tech rs_craft_weapon_shiva
 	type		"craftitem"
 	up_chapter	crafts
 	name		"_SHIVA Rotary Cannon"
-	// pre_description	"_craft_weapon_shiva_pre_txt"
+	// pre_description	"*msgid:craft_weapon_shiva_pre_txt"
 	description {
-		default "_craft_weapon_shiva_txt"
+		default "*msgid:craft_weapon_shiva_txt"
 	}
 
 	provides	craft_weapon_shiva
@@ -4922,9 +4922,9 @@ tech rs_craft_ammo_shiva_1
 	type		"craftitem"
 	up_chapter	crafts
 	name		"_SHIVA 20mm API Rounds"
-	// pre_description	"_craft_ammo_shiva_1_pre_txt"
+	// pre_description	"*msgid:craft_ammo_shiva_1_pre_txt"
 	description {
-		default "_craft_ammo_shiva_1_txt"
+		default "*msgid:craft_ammo_shiva_1_txt"
 	}
 
 	provides	craft_ammo_shiva_API
@@ -4943,9 +4943,9 @@ tech rs_craft_ammo_shiva_2
 	type		"craftitem"
 	up_chapter	crafts
 	name		"_SHIVA 20mm HEI Rounds"
-	// pre_description	"_craft_ammo_shiva_2_pre_txt"
+	// pre_description	"*msgid:craft_ammo_shiva_2_pre_txt"
 	description {
-		default "_craft_ammo_shiva_2_txt"
+		default "*msgid:craft_ammo_shiva_2_txt"
 	}
 
 	provides	craft_ammo_shiva_HEI
@@ -4964,9 +4964,9 @@ tech rs_craft_weapon_sparrowhawk
 	type		"craftitem"
 	up_chapter	crafts
 	name		"_'Sparrowhawk' AA Missile Rack"
-	// pre_description	"_craft_weapon_sparrowhawk_pre_txt"
+	// pre_description	"*msgid:craft_weapon_sparrowhawk_pre_txt"
 	description {
-		default "_craft_weapon_sparrowhawk_txt"
+		default "*msgid:craft_weapon_sparrowhawk_txt"
 	}
 
 	provides	craft_weapon_sparrowhawk
@@ -4981,9 +4981,9 @@ tech rs_craft_ammo_sparrowhawk
 	type		"craftitem"
 	up_chapter	crafts
 	name		"_'Sparrowhawk' Missile"
-	// pre_description	"_craft_ammo_sparrowhawk_pre_txt"
+	// pre_description	"*msgid:craft_ammo_sparrowhawk_pre_txt"
 	description {
-		default "_craft_ammo_sparrowhawk_txt"
+		default "*msgid:craft_ammo_sparrowhawk_txt"
 	}
 
 	provides	craft_ammo_sparrowhawk
@@ -5002,9 +5002,9 @@ tech rs_craft_weapon_tr20
 	type		"craftitem"
 	up_chapter	crafts
 	name		"_TR-20 Rocket Pod"
-	// pre_description	"_craft_weapon_tr20_pre_txt"
+	// pre_description	"*msgid:craft_weapon_tr20_pre_txt"
 	description {
-		default "_craft_weapon_tr20_txt"
+		default "*msgid:craft_weapon_tr20_txt"
 	}
 
 	provides	craft_weapon_tr20
@@ -5019,9 +5019,9 @@ tech rs_craft_ammo_tr20
 	type		"craftitem"
 	up_chapter	crafts
 	name		"_TR-20 Rocket"
-	// pre_description	"_craft_ammo_tr20_pre_txt"
+	// pre_description	"*msgid:craft_ammo_tr20_pre_txt"
 	description {
-		default "_craft_ammo_tr20_txt"
+		default "*msgid:craft_ammo_tr20_txt"
 	}
 
 	provides	craft_ammo_tr20
@@ -5042,26 +5042,26 @@ tech rs_craft_weapon_particle
 	up_chapter	crafts
 
 	pre_description {
-		default "_craft_weapon_particle_beam_pre_txt"
+		default "*msgid:craft_weapon_particle_beam_pre_txt"
 	}
 	description {
-		default "_craft_weapon_particle_beam_txt"
+		default "*msgid:craft_weapon_particle_beam_txt"
 	}
 
 	provides	craft_weapon_particle_beam
 
 	mail_pre
 	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_tech"
 	}
 
 	mail
 	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_tech"
 	}
@@ -5102,26 +5102,26 @@ tech rs_craft_weapon_alien_launcher
 	up_chapter	crafts
 
 	pre_description {
-		default "_craft_weapon_alien_launcher_pre_txt"
+		default "*msgid:craft_weapon_alien_launcher_pre_txt"
 	}
 	description {
-		default "_craft_weapon_alien_launcher_txt"
+		default "*msgid:craft_weapon_alien_launcher_txt"
 	}
 
 	provides	craft_weapon_alien_launcher
 
 	mail_pre
 	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_tech"
 	}
 
 	mail
 	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_tech"
 	}
@@ -5150,26 +5150,26 @@ tech rs_craft_ammo_am_missile
 	up_chapter	crafts
 
 	pre_description {
-		default "_alien_antimatter_missile_pre_txt"
+		default "*msgid:alien_antimatter_missile_pre_txt"
 	}
 	description {
-		default "_alien_antimatter_missile_txt"
+		default "*msgid:alien_antimatter_missile_txt"
 	}
 
 	provides	craft_ammo_am_missile
 
 	mail_pre
 	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_tech"
 	}
 
 	mail
 	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_tech"
 	}
@@ -5201,26 +5201,26 @@ tech rs_craft_ammo_hybrid_missile
 	up_chapter	crafts
 
 	pre_description {
-		default "_craft_ammo_hybrid_missile_pre_txt"
+		default "*msgid:craft_ammo_hybrid_missile_pre_txt"
 	}
 	description {
-		default "_craft_ammo_hybrid_missile_txt"
+		default "*msgid:craft_ammo_hybrid_missile_txt"
 	}
 
 	provides	craft_ammo_hybrid_missile
 
 	mail_pre
 	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_tech"
 	}
 
 	mail
 	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_tech"
 	}
@@ -5247,9 +5247,9 @@ tech rs_craft_el_targeting
 	type		"craftitem"
 	up_chapter	crafts
 	name		"_Targeting Computer"
-	// pre_description	"_craft_electronics_targeting_pre_txt"
+	// pre_description	"*msgid:craft_electronics_targeting_pre_txt"
 	description {
-		default "_craft_electronics_targeting_txt"
+		default "*msgid:craft_electronics_targeting_txt"
 	}
 
 	provides	craft_el_targeting
@@ -5264,9 +5264,9 @@ tech rs_craft_el_fuelpod
 	type		"craftitem"
 	up_chapter	crafts
 	name		"_Fuel Pod"
-	// pre_description	"_craft_electronics_fuelpod_pre_txt"
+	// pre_description	"*msgid:craft_electronics_fuelpod_pre_txt"
 	description {
-		default "_craft_electronics_fuelpod_txt"
+		default "*msgid:craft_electronics_fuelpod_txt"
 	}
 
 	provides	craft_el_fuelpod
@@ -5288,24 +5288,24 @@ tech rs_alien_materials
 	up_chapter	equipment
 
 	description {
-		default "_alien_materials_txt"
+		default "*msgid:alien_materials_txt"
 	}
 	pre_description {
-		default "_alien_materials_pre_txt"
+		default "*msgid:alien_materials_pre_txt"
 	}
 
 	mail_pre
 	{
-		from	"_mail_from_paul_navarre"
-		to	"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to	"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_tech"
 	}
 
 	mail
 	{
-		from	"_mail_from_paul_navarre"
-		to	"_mail_to_base_commander"
+		from	"*msgid:mail_from_paul_navarre"
+		to	"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_tech"
 	}
@@ -5324,7 +5324,7 @@ tech rs_item_alienmaterials
 	type	"weapon"
 	name	"_Alien Materials"
 	description {
-		default "_alien_materials_txt"
+		default "*msgid:alien_materials_txt"
 	}
 
 	require_AND
@@ -5346,7 +5346,7 @@ tech news_init_political_situation
 	type	"news"
 	name	"_Political Situation Before The Invasion"
 	description {
-		default "_news_initial_political_situation_txt"
+		default "*msgid:news_initial_political_situation_txt"
 	}
 	up_chapter	news
 
@@ -5359,7 +5359,7 @@ tech news_after_the_war
 	type	"news"
 	name	"_After The War"
 	description {
-		default "_news_after_the_war_txt"
+		default "*msgid:news_after_the_war_txt"
 	}
 	up_chapter	news
 
@@ -5372,7 +5372,7 @@ tech news_phalanx_mumbai_aftermath
 	type	"news"
 	name	"_PHALANX And The Mumbai Aftermath"
 	description {
-		default "_news_phalanx_and_mumbai_aftermath_txt"
+		default "*msgid:news_phalanx_and_mumbai_aftermath_txt"
 	}
 	up_chapter	news
 
@@ -5387,14 +5387,14 @@ tech news_new_twist
 	up_chapter	news
 
 	description {
-		default "_news_new_twist_txt"			// The Enemy On Earth has NOT been researched.
-		extra (rs_enemy_on_earth "_news_new_twist_alt_txt")	// The Enemy On Earth HAS been researched.
+		default "*msgid:news_new_twist_txt"			// The Enemy On Earth has NOT been researched.
+		extra (rs_enemy_on_earth "*msgid:news_new_twist_alt_txt")	// The Enemy On Earth HAS been researched.
 	}
 
 	mail
 	{
-		from	"_mail_from_dr_connor"
-		to		"_mail_to_base_commander"
+		from	"*msgid:mail_from_dr_connor"
+		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		model	"characters/connor"
 		icon	"icons/mail_intelligence"
@@ -5418,25 +5418,25 @@ tech rs_enemy_on_earth
 	up_chapter	news
 
 	description {
-		default "_enemy_on_earth_alt_txt"		// A New Twist has NOT occurred
-		extra (news_new_twist "_enemy_on_earth_txt")		// A New Twist HAS occurred
+		default "*msgid:enemy_on_earth_alt_txt"		// A New Twist has NOT occurred
+		extra (news_new_twist "*msgid:enemy_on_earth_txt")		// A New Twist HAS occurred
 	}
 	pre_description {
-		default "_enemy_on_earth_pre_txt"
+		default "*msgid:enemy_on_earth_pre_txt"
 	}
 
 	mail
 	{
-		from	"_mail_from_dr_connor"
-		to	"_mail_to_base_commander"
+		from	"*msgid:mail_from_dr_connor"
+		to	"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		model	"characters/connor"
 		icon	"icons/mail_intelligence"
 	}
 	mail_pre
 	{
-		from	"_mail_from_dr_connor"
-		to	"_mail_to_base_commander"
+		from	"*msgid:mail_from_dr_connor"
+		to	"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		model	"characters/connor"
 		icon	"icons/mail_intelligence"
@@ -5458,16 +5458,16 @@ tech rs_xvi_census
 	up_chapter	news
 
 	description {
-		default "_xvi_census_txt"
+		default "*msgid:xvi_census_txt"
 	}
 	pre_description {
-		default "_xvi_census_pre_txt"
+		default "*msgid:xvi_census_pre_txt"
 	}
 
 	mail_pre
 	{
-		from	"_mail_from_col_falkland"
-		to	"_mail_to_base_commander"
+		from	"*msgid:mail_from_col_falkland"
+		to	"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		model	"characters/falkland"
 		icon	"icons/mail_intelligence"
@@ -5475,8 +5475,8 @@ tech rs_xvi_census
 
 	mail
 	{
-		from	"_mail_from_col_falkland"
-		to	"_mail_to_base_commander"
+		from	"*msgid:mail_from_col_falkland"
+		to	"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		model	"characters/falkland"
 		icon	"icons/mail_intelligence"
@@ -5499,24 +5499,24 @@ tech rs_enemy_on_earth_revisited
 	up_chapter	news
 
 	description {
-		default "_enemy_on_earth_rev_txt"
+		default "*msgid:enemy_on_earth_rev_txt"
 	}
 	pre_description {
-		default "_enemy_on_earth_rev_pre_txt"
+		default "*msgid:enemy_on_earth_rev_pre_txt"
 	}
 
 	mail
 	{
-		from	"_mail_from_dr_connor"
-		to	"_mail_to_base_commander"
+		from	"*msgid:mail_from_dr_connor"
+		to	"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		model	"characters/connor"
 		icon	"icons/mail_intelligence"
 	}
 	mail_pre
 	{
-		from	"_mail_from_dr_connor"
-		to	"_mail_to_base_commander"
+		from	"*msgid:mail_from_dr_connor"
+		to	"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		model	"characters/connor"
 		icon	"icons/mail_intelligence"
@@ -5540,13 +5540,13 @@ tech rs_alien_strategy
 	up_chapter	news
 
 	description {
-		default "_alien_strategy_txt"
+		default "*msgid:alien_strategy_txt"
 	}
 
 	mail
 	{
-		from	"_mail_from_col_falkland"
-		to	"_mail_to_base_commander"
+		from	"*msgid:mail_from_col_falkland"
+		to	"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		model	"characters/falkland"
 		icon	"icons/mail_intelligence"
@@ -5568,13 +5568,13 @@ tech rs_orbital_ufo_activity
 	up_chapter	news
 
 	description {
-		default "_orbital_ufo_activity_txt"
+		default "*msgid:orbital_ufo_activity_txt"
 	}
 
 	mail
 	{
-		from	"_mail_from_col_falkland"
-		to	"_mail_to_base_commander"
+		from	"*msgid:mail_from_col_falkland"
+		to	"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		model	"characters/falkland"
 		icon	"icons/mail_intelligence"
@@ -5598,16 +5598,16 @@ tech rs_alien_psi_device
 	up_chapter	news
 
 	description {
-		default "_alien_psi_device_txt"
+		default "*msgid:alien_psi_device_txt"
 	}
 	pre_description {
-		default "_alien_psi_device_pre_txt"
+		default "*msgid:alien_psi_device_pre_txt"
 	}
 
 	mail
 	{
-		from	"_mail_from_col_falkland"
-		to	"_mail_to_base_commander"
+		from	"*msgid:mail_from_col_falkland"
+		to	"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		model	"characters/falkland"
 		icon	"icons/mail_intelligence"
@@ -5630,16 +5630,16 @@ tech rs_alien_infiltration
 	up_chapter	news
 
 	description {
-		default "_alien_infiltration_txt"
+		default "*msgid:alien_infiltration_txt"
 	}
 	pre_description {
-		default "_alien_infiltration_pre_txt"
+		default "*msgid:alien_infiltration_pre_txt"
 	}
 
 	mail
 	{
-		from	"_mail_from_col_falkland"
-		to	"_mail_to_base_commander"
+		from	"*msgid:mail_from_col_falkland"
+		to	"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		model	"characters/falkland"
 		icon	"icons/mail_intelligence"
@@ -5661,16 +5661,16 @@ tech rs_human_vaccine
 	up_chapter	news
 
 	description {
-		default "_human_vaccine_txt"
+		default "*msgid:human_vaccine_txt"
 	}
 	pre_description {
-		default "_human_vaccine_pre_txt"
+		default "*msgid:human_vaccine_pre_txt"
 	}
 
 	mail
 	{
-		from	"_mail_from_dr_connor"
-		to	"_mail_to_base_commander"
+		from	"*msgid:mail_from_dr_connor"
+		to	"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		model	"characters/connor"
 		icon	"icons/mail_intelligence"
