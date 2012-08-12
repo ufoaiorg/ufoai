@@ -43,10 +43,13 @@ static memPool_t* cl_msgidPool;
 typedef struct msgid_s {
 	char *id;	/**< the msgid id used for referencing via *msgid:<id> */
 	char *text;	/**< the pointer to the po file */
+	struct msgid_s *hash_next;			/**< hash map next pointer in case of collision */
 } msgid_t;
 
 static msgid_t msgIDs[MAX_MSGIDS];
 static int numMsgIDs;
+#define MAX_MSGIDHASH 256
+static msgid_t *msgIDHash[MAX_MSGIDHASH];
 
 static void CL_ParseMessageID (const char *name, const char **text)
 {
@@ -74,6 +77,9 @@ static void CL_ParseMessageID (const char *name, const char **text)
 
 		OBJZERO(*msgid);
 		msgid->id = Mem_PoolStrDup(name, cl_msgidPool, 0);
+		const unsigned int hash = Com_HashKey(msgid->id, MAX_MSGIDHASH);
+		HASH_Add(msgIDHash, msgid, hash);
+
 		do {
 			token = Com_EParse(text, errhead, name);
 			if (!*text)
@@ -100,16 +106,13 @@ static void CL_ParseMessageID (const char *name, const char **text)
 	}
 }
 
-/**
- * @todo add hashing
- */
 static const char* CL_GetMessageID (const char* id)
 {
-	int i;
-
-	for (i = 0; i < numMsgIDs; i++)
-		if (Q_streq(id, msgIDs[i].id))
-			return msgIDs[i].text;
+	const unsigned int hash = Com_HashKey(id, MAX_MSGIDHASH);
+	for (msgid_t** anchor = &msgIDHash[hash]; *anchor; anchor = &(*anchor)->hash_next) {
+		if (Q_streq(id, (*anchor)->id))
+			return (*anchor)->text;
+	}
 	return id;
 }
 
@@ -131,6 +134,7 @@ void CL_ParseMessageIDs (void)
 	const char *type, *name, *text;
 
 	numMsgIDs = 0;
+	OBJZERO(msgIDHash);
 
 	if (cl_msgidPool != NULL) {
 		Mem_FreePool(cl_msgidPool);
@@ -340,6 +344,7 @@ void CL_LanguageShutdown (void)
 	Mem_DeletePool(cl_msgidPool);
 	cl_msgidPool = NULL;
 	numMsgIDs = 0;
+	OBJZERO(msgIDHash);
 }
 
 /**
