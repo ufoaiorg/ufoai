@@ -121,6 +121,8 @@ typedef struct cgame_import_s {
 	void (IMPORT *UI_DisplayNotice) (const char *text, int time, const char* windowName);
 	const char* (IMPORT *UI_GetActiveWindowName) (void);
 
+	const char* (IMPORT *CL_Translate) (const char *t);
+
 	void (IMPORT *LIST_AddString) (linkedList_t** listDest, const char* data);
 	const linkedList_t* (IMPORT *LIST_ContainsString) (const linkedList_t* list, const char* string);
 

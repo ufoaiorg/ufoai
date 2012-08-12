@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "cl_game.h"
 #include "../client.h"
+#include "../cl_language.h"
 #include "cl_game_team.h"
 #include "../battlescape/cl_localentity.h"
 #include "../battlescape/cl_hud.h"
@@ -481,6 +482,8 @@ static const cgame_import_t* GAME_GetImportData (const cgameType_t *t)
 		cgi->UI_DisplayNotice = UI_DisplayNotice;
 		cgi->UI_GetActiveWindowName = UI_GetActiveWindowName;
 		cgi->UI_TextNodeSelectLine = UI_TextNodeSelectLine;
+
+		cgi->CL_Translate = CL_Translate;
 
 		cgi->NET_StreamSetCallback = NET_StreamSetCallback;
 		cgi->NET_Connect = NET_Connect;
