@@ -552,8 +552,8 @@ bool MAP_AllMapToScreen (const uiNode_t* node, const vec2_t pos, int *x, int *y,
 static void MAP_Draw3DMarkerIfVisible (const uiNode_t* node, const vec2_t pos, float theta, const char *model, int skin)
 {
 	if (!UI_MAPEXTRADATACONST(node).flatgeoscape) {
-		R_Draw3DMapMarkers(UI_MAPEXTRADATACONST(node).mapPos[0], UI_MAPEXTRADATACONST(node).mapPos[1], UI_MAPEXTRADATACONST(node).mapSize[0],
-				UI_MAPEXTRADATACONST(node).mapSize[1], UI_MAPEXTRADATACONST(node).angles, pos, theta, GLOBE_RADIUS, model, skin);
+		R_Draw3DMapMarkers(UI_MAPEXTRADATACONST(node).mapPos, UI_MAPEXTRADATACONST(node).mapSize, UI_MAPEXTRADATACONST(node).angles, pos, theta,
+				GLOBE_RADIUS, model, skin);
 	} else {
 		int x, y;
 		vec3_t screenPos;
@@ -1871,10 +1871,10 @@ void MAP_DrawMap (uiNode_t* node)
 			CP_CalcAndUploadDayAndNightTexture(q);
 			lastQ = q;
 		}
-		R_DrawFlatGeoscape(UI_MAPEXTRADATACONST(node).mapPos[0], UI_MAPEXTRADATACONST(node).mapPos[1], UI_MAPEXTRADATACONST(node).mapSize[0],
-				UI_MAPEXTRADATACONST(node).mapSize[1], (float) ccs.date.sec / SECONDS_PER_DAY, UI_MAPEXTRADATACONST(node).center[0],
-				UI_MAPEXTRADATACONST(node).center[1], 0.5 / UI_MAPEXTRADATACONST(node).zoom, map, MAP_IsNationOverlayActivated(),
-				MAP_IsXVIOverlayActivated(), MAP_IsRadarOverlayActivated(), r_dayandnightTexture, r_xviTexture, r_radarTexture);
+		R_DrawFlatGeoscape(UI_MAPEXTRADATACONST(node).mapPos, UI_MAPEXTRADATACONST(node).mapSize, (float) ccs.date.sec / SECONDS_PER_DAY,
+				UI_MAPEXTRADATACONST(node).center[0], UI_MAPEXTRADATACONST(node).center[1], 0.5 / UI_MAPEXTRADATACONST(node).zoom, map,
+				MAP_IsNationOverlayActivated(), MAP_IsXVIOverlayActivated(), MAP_IsRadarOverlayActivated(), r_dayandnightTexture, r_xviTexture,
+				r_radarTexture);
 
 		MAP_DrawMapMarkers(node);
 	} else {
@@ -1884,9 +1884,9 @@ void MAP_DrawMap (uiNode_t* node)
 
 		R_EnableRenderbuffer(true);
 
-		R_Draw3DGlobe(UI_MAPEXTRADATACONST(node).mapPos[0], UI_MAPEXTRADATACONST(node).mapPos[1], UI_MAPEXTRADATACONST(node).mapSize[0],
-				UI_MAPEXTRADATACONST(node).mapSize[1], ccs.date.day, ccs.date.sec, UI_MAPEXTRADATACONST(node).angles, UI_MAPEXTRADATACONST(node).zoom,
-				map, disableSolarRender, UI_MAPEXTRADATACONST(node).ambientLightFactor, UI_MAPEXTRADATA(node).overlayMask & OVERLAY_NATION,
+		R_Draw3DGlobe(UI_MAPEXTRADATACONST(node).mapPos, UI_MAPEXTRADATACONST(node).mapSize, ccs.date.day, ccs.date.sec,
+				UI_MAPEXTRADATACONST(node).angles, UI_MAPEXTRADATACONST(node).zoom, map, disableSolarRender,
+				UI_MAPEXTRADATACONST(node).ambientLightFactor, UI_MAPEXTRADATA(node).overlayMask & OVERLAY_NATION,
 				UI_MAPEXTRADATA(node).overlayMask & OVERLAY_XVI, UI_MAPEXTRADATA(node).overlayMask & OVERLAY_RADAR, r_xviTexture, r_radarTexture,
 				true);
 
