@@ -80,6 +80,7 @@ static int oldMousePosY = 0;
 static mapDragMode_t mode = MODE_NULL;
 #define ROTATE_SPEED	0.5
 #define GLOBE_ROTATE -90
+#define SMOOTHING_STEP_2D	0.02f
 
 static cvar_t *cl_3dmap;						/**< 3D geoscape or flat geoscape */
 static cvar_t *cl_3dmapAmbient;
@@ -89,6 +90,88 @@ static cvar_t *cl_geoscape_overlay;
 
 // FIXME: don't make this static
 static uiNode_t *geoscapeNode;
+static const float SMOOTHACCELERATION = 0.06f;		/**< the acceleration to use during a smooth motion (This affects the speed of the smooth motion) */
+
+/**
+ * @brief smooth rotation of the 3D geoscape
+ * @note updates slowly values of ccs.angles and ccs.zoom so that its value goes to smoothFinalGlobeAngle
+ * @sa MAP_DrawMap
+ * @sa MAP_CenterOnPoint
+ */
+void uiGeoscapeNode::smoothRotate (uiNode_t* node)
+{
+	vec3_t diff;
+	const float diffZoom = UI_MAPEXTRADATACONST(node).smoothFinalZoom - UI_MAPEXTRADATACONST(node).zoom;
+
+	VectorSubtract(UI_MAPEXTRADATACONST(node).smoothFinalGlobeAngle, UI_MAPEXTRADATACONST(node).angles, diff);
+
+	if (UI_MAPEXTRADATACONST(node).smoothDeltaLength > UI_MAPEXTRADATACONST(node).smoothDeltaZoom) {
+		/* when we rotate (and zoom) */
+		const float diffAngle = VectorLength(diff);
+		const float epsilon = 0.1f;
+		if (diffAngle > epsilon) {
+			float rotationSpeed;
+			/* Append the old speed to the new speed if this is the first half of a new rotation, but never exceed the max speed.
+			 * This allows the globe to rotate at maximum speed when the button is held down. */
+			rotationSpeed = sin(3.05f * diffAngle / UI_MAPEXTRADATACONST(node).smoothDeltaLength) * diffAngle;
+			if (diffAngle / UI_MAPEXTRADATACONST(node).smoothDeltaLength > 0.5)
+				rotationSpeed = std::min(diffAngle, UI_MAPEXTRADATACONST(node).curRotationSpeed + rotationSpeed * 0.5f);
+
+			UI_MAPEXTRADATA(node).curRotationSpeed = rotationSpeed;
+			VectorScale(diff, SMOOTHACCELERATION / diffAngle * rotationSpeed, diff);
+			VectorAdd(UI_MAPEXTRADATACONST(node).angles, diff, UI_MAPEXTRADATA(node).angles);
+			UI_MAPEXTRADATA(node).zoom = UI_MAPEXTRADATACONST(node).zoom + SMOOTHACCELERATION * diffZoom / diffAngle * rotationSpeed;
+			return;
+		}
+	} else {
+		const float epsilonZoom = 0.01f;
+		/* when we zoom only */
+		if (fabs(diffZoom) > epsilonZoom) {
+			float speed;
+			/* Append the old speed to the new speed if this is the first half of a new zoom operation, but never exceed the max speed.
+			 * This allows the globe to zoom at maximum speed when the button is held down. */
+			if (fabs(diffZoom) / UI_MAPEXTRADATACONST(node).smoothDeltaZoom > 0.5)
+				speed = std::min(SMOOTHACCELERATION * 2.0, UI_MAPEXTRADATACONST(node).curZoomSpeed + sin(3.05f * (fabs(diffZoom) / UI_MAPEXTRADATACONST(node).smoothDeltaZoom)) * SMOOTHACCELERATION);
+			else {
+				speed = sin(3.05f * (fabs(diffZoom) / UI_MAPEXTRADATACONST(node).smoothDeltaZoom)) * SMOOTHACCELERATION * 2.0;
+			}
+			UI_MAPEXTRADATA(node).curZoomSpeed = speed;
+			UI_MAPEXTRADATA(node).zoom = UI_MAPEXTRADATACONST(node).zoom + diffZoom * speed;
+			return;
+		}
+	}
+
+	/* if we reach this point, that means that movement is over */
+	VectorCopy(UI_MAPEXTRADATACONST(node).smoothFinalGlobeAngle, UI_MAPEXTRADATA(node).angles);
+	UI_MAPEXTRADATA(node).smoothRotation = false;
+	UI_MAPEXTRADATA(node).zoom = UI_MAPEXTRADATACONST(node).smoothFinalZoom;
+}
+
+/**
+ * @brief smooth translation of the 2D geoscape
+ * @note updates slowly values of ccs.center so that its value goes to smoothFinal2DGeoscapeCenter
+ * @note updates slowly values of ccs.zoom so that its value goes to ZOOM_LIMIT
+ * @sa MAP_DrawMap
+ * @sa MAP_CenterOnPoint
+ */
+void uiGeoscapeNode::smoothTranslate (uiNode_t *node)
+{
+	const float dist1 = UI_MAPEXTRADATACONST(node).smoothFinal2DGeoscapeCenter[0] - UI_MAPEXTRADATACONST(node).center[0];
+	const float dist2 = UI_MAPEXTRADATACONST(node).smoothFinal2DGeoscapeCenter[1] - UI_MAPEXTRADATACONST(node).center[1];
+	const float length = sqrt(dist1 * dist1 + dist2 * dist2);
+
+	if (length < SMOOTHING_STEP_2D) {
+		UI_MAPEXTRADATA(node).center[0] = UI_MAPEXTRADATACONST(node).smoothFinal2DGeoscapeCenter[0];
+		UI_MAPEXTRADATA(node).center[1] = UI_MAPEXTRADATACONST(node).smoothFinal2DGeoscapeCenter[1];
+		UI_MAPEXTRADATA(node).zoom = UI_MAPEXTRADATACONST(node).smoothFinalZoom;
+		UI_MAPEXTRADATA(node).smoothRotation = false;
+	} else {
+		const float diffZoom = UI_MAPEXTRADATACONST(node).smoothFinalZoom - UI_MAPEXTRADATACONST(node).zoom;
+		UI_MAPEXTRADATA(node).center[0] = UI_MAPEXTRADATACONST(node).center[0] + SMOOTHING_STEP_2D * dist1 / length;
+		UI_MAPEXTRADATA(node).center[1] = UI_MAPEXTRADATACONST(node).center[1] + SMOOTHING_STEP_2D * dist2 / length;
+		UI_MAPEXTRADATA(node).zoom = UI_MAPEXTRADATACONST(node).zoom + SMOOTHING_STEP_2D * diffZoom;
+	}
+}
 
 void uiGeoscapeNode::draw (uiNode_t *node)
 {
@@ -110,6 +193,14 @@ void uiGeoscapeNode::draw (uiNode_t *node)
 	/* Draw geoscape */
 	UI_GetNodeScreenPos(node, screenPos);
 	UI_PushClipRect(screenPos[0], screenPos[1], node->box.size[0], node->box.size[1]);
+
+	if (UI_MAPEXTRADATACONST(node).smoothRotation) {
+		if (UI_MAPEXTRADATACONST(node).flatgeoscape)
+			smoothTranslate(node);
+		else
+			smoothRotate(node);
+	}
+
 	GAME_DrawMap(node);
 	UI_PopClipRect();
 }

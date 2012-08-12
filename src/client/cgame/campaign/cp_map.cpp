@@ -129,7 +129,6 @@ static const vec4_t green = {0.0f, 1.0f, 0.0f, 0.8f};
 static const vec4_t yellow = {1.0f, 0.874f, 0.294f, 1.0f};
 static const vec4_t red = {1.0f, 0.0f, 0.0f, 0.8f};
 
-static const float smoothAcceleration = 0.06f;		/**< the acceleration to use during a smooth motion (This affects the speed of the smooth motion) */
 static const float defaultBaseAngle = -90.0f;	/**< Default angle value for 3D models like bases */
 
 static byte *terrainPic;				/**< this is the terrain mask for separating the climate
@@ -1273,88 +1272,6 @@ void MAP_CenterOnPoint_f (void)
 	MAP_StartCenter(node);
 }
 
-/**
- * @brief smooth rotation of the 3D geoscape
- * @note updates slowly values of ccs.angles and ccs.zoom so that its value goes to smoothFinalGlobeAngle
- * @sa MAP_DrawMap
- * @sa MAP_CenterOnPoint
- */
-static void MAP3D_SmoothRotate (uiNode_t* node)
-{
-	vec3_t diff;
-	const float diffZoom = UI_MAPEXTRADATACONST(node).smoothFinalZoom - UI_MAPEXTRADATACONST(node).zoom;
-
-	VectorSubtract(UI_MAPEXTRADATACONST(node).smoothFinalGlobeAngle, UI_MAPEXTRADATACONST(node).angles, diff);
-
-	if (UI_MAPEXTRADATACONST(node).smoothDeltaLength > UI_MAPEXTRADATACONST(node).smoothDeltaZoom) {
-		/* when we rotate (and zoom) */
-		const float diffAngle = VectorLength(diff);
-		const float epsilon = 0.1f;
-		if (diffAngle > epsilon) {
-			float rotationSpeed;
-			/* Append the old speed to the new speed if this is the first half of a new rotation, but never exceed the max speed.
-			 * This allows the globe to rotate at maximum speed when the button is held down. */
-			rotationSpeed = sin(3.05f * diffAngle / UI_MAPEXTRADATACONST(node).smoothDeltaLength) * diffAngle;
-			if (diffAngle / UI_MAPEXTRADATACONST(node).smoothDeltaLength > 0.5)
-				rotationSpeed = std::min(diffAngle, UI_MAPEXTRADATACONST(node).curRotationSpeed + rotationSpeed * 0.5f);
-
-			UI_MAPEXTRADATA(node).curRotationSpeed = rotationSpeed;
-			VectorScale(diff, smoothAcceleration / diffAngle * rotationSpeed, diff);
-			VectorAdd(UI_MAPEXTRADATACONST(node).angles, diff, UI_MAPEXTRADATA(node).angles);
-			UI_MAPEXTRADATA(node).zoom = UI_MAPEXTRADATACONST(node).zoom + smoothAcceleration * diffZoom / diffAngle * rotationSpeed;
-			return;
-		}
-	} else {
-		const float epsilonZoom = 0.01f;
-		/* when we zoom only */
-		if (fabs(diffZoom) > epsilonZoom) {
-			float speed;
-			/* Append the old speed to the new speed if this is the first half of a new zoom operation, but never exceed the max speed.
-			 * This allows the globe to zoom at maximum speed when the button is held down. */
-			if (fabs(diffZoom) / UI_MAPEXTRADATACONST(node).smoothDeltaZoom > 0.5)
-				speed = std::min(smoothAcceleration * 2.0, UI_MAPEXTRADATACONST(node).curZoomSpeed + sin(3.05f * (fabs(diffZoom) / UI_MAPEXTRADATACONST(node).smoothDeltaZoom)) * smoothAcceleration);
-			else {
-				speed = sin(3.05f * (fabs(diffZoom) / UI_MAPEXTRADATACONST(node).smoothDeltaZoom)) * smoothAcceleration * 2.0;
-			}
-			UI_MAPEXTRADATA(node).curZoomSpeed = speed;
-			UI_MAPEXTRADATA(node).zoom = UI_MAPEXTRADATACONST(node).zoom + diffZoom * speed;
-			return;
-		}
-	}
-
-	/* if we reach this point, that means that movement is over */
-	VectorCopy(UI_MAPEXTRADATACONST(node).smoothFinalGlobeAngle, UI_MAPEXTRADATA(node).angles);
-	UI_MAPEXTRADATA(node).smoothRotation = false;
-	UI_MAPEXTRADATA(node).zoom = UI_MAPEXTRADATACONST(node).smoothFinalZoom;
-}
-
-#define SMOOTHING_STEP_2D	0.02f
-/**
- * @brief smooth translation of the 2D geoscape
- * @note updates slowly values of ccs.center so that its value goes to smoothFinal2DGeoscapeCenter
- * @note updates slowly values of ccs.zoom so that its value goes to ZOOM_LIMIT
- * @sa MAP_DrawMap
- * @sa MAP_CenterOnPoint
- */
-static void MAP_SmoothTranslate (uiNode_t *node)
-{
-	const float dist1 = UI_MAPEXTRADATACONST(node).smoothFinal2DGeoscapeCenter[0] - UI_MAPEXTRADATACONST(node).center[0];
-	const float dist2 = UI_MAPEXTRADATACONST(node).smoothFinal2DGeoscapeCenter[1] - UI_MAPEXTRADATACONST(node).center[1];
-	const float length = sqrt(dist1 * dist1 + dist2 * dist2);
-
-	if (length < SMOOTHING_STEP_2D) {
-		UI_MAPEXTRADATA(node).center[0] = UI_MAPEXTRADATACONST(node).smoothFinal2DGeoscapeCenter[0];
-		UI_MAPEXTRADATA(node).center[1] = UI_MAPEXTRADATACONST(node).smoothFinal2DGeoscapeCenter[1];
-		UI_MAPEXTRADATA(node).zoom = UI_MAPEXTRADATACONST(node).smoothFinalZoom;
-		UI_MAPEXTRADATA(node).smoothRotation = false;
-	} else {
-		const float diffZoom = UI_MAPEXTRADATACONST(node).smoothFinalZoom - UI_MAPEXTRADATACONST(node).zoom;
-		UI_MAPEXTRADATA(node).center[0] = UI_MAPEXTRADATACONST(node).center[0] + SMOOTHING_STEP_2D * dist1 / length;
-		UI_MAPEXTRADATA(node).center[1] = UI_MAPEXTRADATACONST(node).center[1] + SMOOTHING_STEP_2D * dist2 / length;
-		UI_MAPEXTRADATA(node).zoom = UI_MAPEXTRADATACONST(node).zoom + SMOOTHING_STEP_2D * diffZoom;
-	}
-}
-
 #define BULLET_SIZE	1
 /**
  * @brief Draws a bunch of bullets on the geoscape map
@@ -1951,8 +1868,6 @@ void MAP_DrawMap (uiNode_t* node)
 
 		R_EnableRenderbuffer(true);
 
-		if (UI_MAPEXTRADATACONST(node).smoothRotation)
-			MAP3D_SmoothRotate(node);
 		R_Draw3DGlobe(UI_MAPEXTRADATACONST(node).mapPos[0], UI_MAPEXTRADATACONST(node).mapPos[1], UI_MAPEXTRADATACONST(node).mapSize[0],
 				UI_MAPEXTRADATACONST(node).mapSize[1], ccs.date.day, ccs.date.sec, UI_MAPEXTRADATACONST(node).angles, UI_MAPEXTRADATACONST(node).zoom,
 				map, disableSolarRender, UI_MAPEXTRADATACONST(node).ambientLightFactor, MAP_IsNationOverlayActivated(), MAP_IsXVIOverlayActivated(),
@@ -1968,8 +1883,6 @@ void MAP_DrawMap (uiNode_t* node)
 
 		/* the sun is not always in the plane of the equator on earth - calculate the angle the sun is at */
 		const float q = (ccs.date.day % DAYS_PER_YEAR + (float)(ccs.date.sec / (SECONDS_PER_HOUR * 6)) / 4) * 2 * M_PI / DAYS_PER_YEAR - M_PI;
-		if (UI_MAPEXTRADATACONST(node).smoothRotation)
-			MAP_SmoothTranslate(node);
 		if (lastQ != q) {
 			CP_CalcAndUploadDayAndNightTexture(q);
 			lastQ = q;

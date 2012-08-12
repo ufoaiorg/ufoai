@@ -29,6 +29,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_node_abstractnode.h"
 
 class uiGeoscapeNode : public uiLocatedNode {
+protected:
+	void smoothTranslate (uiNode_t* node);
+	void smoothRotate (uiNode_t* node);
 public:
 	void draw(uiNode_t* node) OVERRIDE;
 	void onMouseUp(uiNode_t* node, int x, int y, int button) OVERRIDE;
