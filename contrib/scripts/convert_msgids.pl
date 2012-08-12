@@ -9,7 +9,7 @@ open(FILE, $file) || die "Could not read $file";
 my $started = 0;
 foreach (<FILE>) {
 	$_ =~ s/\r?\n//g;
-	if ($_ =~ /^msgid\s\"(.*_txt)\"$/) {
+	if ($_ =~ /^msgid\s\"(.*_txt)\"$/ || $_ =~ /^msgid\s\"(mail_.*?)\"$/) {
 		if ($started) {
 			print "\"\n}\n";
 		}
