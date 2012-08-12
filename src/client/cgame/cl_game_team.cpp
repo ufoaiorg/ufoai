@@ -670,7 +670,7 @@ bool GAME_SaveCharacter (xmlNode_t *p, const character_t* chr)
 		if (chr->wounds.treatmentLevel[k]) {
 			xmlNode_t *sWound = XML_AddNode(sInjuries, SAVE_CHARACTER_WOUND);
 
-			XML_AddInt(sWound, SAVE_CHARACTER_WOUNDTYPE, k);
+			XML_AddString(sWound, SAVE_CHARACTER_WOUNDEDPART, chr->teamDef->bodyTemplate->id(k));
 			XML_AddInt(sWound, SAVE_CHARACTER_WOUNDSEVERITY, chr->wounds.treatmentLevel[k]);
 		}
 	}
@@ -761,13 +761,23 @@ bool GAME_LoadCharacter (xmlNode_t *p, character_t *chr)
 	sInjuries = XML_GetNode(p, SAVE_CHARACTER_INJURIES);
 	/* Load wounds */
 	for (sWound = XML_GetNode(sInjuries, SAVE_CHARACTER_WOUND); sWound; sWound = XML_GetNextNode(sWound, sInjuries, SAVE_CHARACTER_WOUND)) {
-		const int type = XML_GetInt(sWound, SAVE_CHARACTER_WOUNDTYPE, 0);
+		const char *bodyPartId = XML_GetString(sWound, SAVE_CHARACTER_WOUNDEDPART);
+		short bodyPart;
 
-		if (type < 0 || type >= chr->teamDef->bodyTemplate->numBodyParts()) {
-			Com_Printf("Invalid body part type '%i' for %s (ucn: %i)\n", type, chr->name, chr->ucn);
+		if (bodyPartId[0] != '\0') {
+			for (bodyPart = 0; bodyPart < chr->teamDef->bodyTemplate->numBodyParts(); ++bodyPart)
+				if (Q_streq(chr->teamDef->bodyTemplate->id(bodyPart), bodyPartId))
+					break;
+		} else {
+			/* @todo Fallback compatibility code for older saves */
+			Com_Printf("GAME_LoadCharacter: Body part id not found while loading character wounds, must be an old save\n");
+			bodyPart = XML_GetInt(sWound, SAVE_CHARACTER_WOUNDTYPE, NONE);
+		}
+		if (bodyPart < 0  || bodyPart >= chr->teamDef->bodyTemplate->numBodyParts()) {
+			Com_Printf("GAME_LoadCharacter: Invalid body part id '%s' for %s (ucn: %i)\n", bodyPartId, chr->name, chr->ucn);
 			return false;
 		}
-		chr->wounds.treatmentLevel[type] = XML_GetInt(sWound, SAVE_CHARACTER_WOUNDSEVERITY, 0);
+		chr->wounds.treatmentLevel[bodyPart] = XML_GetInt(sWound, SAVE_CHARACTER_WOUNDSEVERITY, 0);
 	}
 
 	Com_RegisterConstList(saveCharacterConstants);

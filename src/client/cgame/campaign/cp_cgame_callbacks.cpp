@@ -138,6 +138,7 @@ static void GAME_CP_CampaignDescription_f (void)
 	else
 		racetype = _("Aliens");
 
+	const char *text = cgi->CL_Translate(campaign->text);
 	Com_sprintf(campaignDesc, sizeof(campaignDesc), _("%s\n\nRace: %s\nRecruits: %i %s, %i %s, %i %s, %i %s\n"
 		"Credits: %ic\nDifficulty: %s\n"
 		"Min. happiness of nations: %i %%\n"
@@ -149,7 +150,7 @@ static void GAME_CP_CampaignDescription_f (void)
 		campaign->pilots, ngettext("pilot", "pilots", campaign->pilots),
 		campaign->credits, CP_ToDifficultyName(campaign->difficulty),
 		(int)(round(campaign->minhappiness * 100.0f)), campaign->negativeCreditsUntilLost,
-		_(campaign->text));
+		text);
 	cgi->UI_RegisterText(TEXT_STANDARD, campaignDesc);
 }
 

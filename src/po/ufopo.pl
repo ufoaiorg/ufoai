@@ -57,7 +57,7 @@ foreach my $file (@ARGV)
 			$str = $1 . "\n";
 		}
 		# end of multi-line
-		elsif (m/(.*?)\"(.*)/)
+		elsif (m/(.*?)[^\\]\"(.*)/)
 		{
 			die "end of string without a start in $file" if !defined $str;
 

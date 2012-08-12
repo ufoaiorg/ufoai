@@ -421,7 +421,7 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos
 				G_CheckVis(ent, true);
 
 				/* check for anything appearing, seen by "the moving one" */
-				status = G_CheckVisTeamAll(ent->team, false, ent);
+				status = G_CheckVisTeamAll(ent->team, 0, ent);
 
 				/* Set ent->TU because the reaction code relies on ent->TU being accurate. */
 				G_ActorSetTU(ent, initTU - usedTUs);

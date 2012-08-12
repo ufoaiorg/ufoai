@@ -66,6 +66,9 @@ typedef struct cgame_export_s {
 	void (EXPORT *NotifyEvent) (event_t eventType);
 	void (EXPORT *AddChatMessage) (const char *message);
 	bool (EXPORT *HandleServerCommand) (const char *command, dbuffer *msg);
+
+	void (EXPORT *MapDraw) (uiNode_t *node);
+	void (EXPORT *MapClick) (uiNode_t *node, int x, int y);
 } cgame_export_t;
 
 typedef struct cgameType_s {
@@ -117,6 +120,8 @@ typedef struct cgame_import_s {
 	uiNode_t* (IMPORT *UI_GetNodeByPath) (const char* path);
 	void (IMPORT *UI_DisplayNotice) (const char *text, int time, const char* windowName);
 	const char* (IMPORT *UI_GetActiveWindowName) (void);
+
+	const char* (IMPORT *CL_Translate) (const char *t);
 
 	void (IMPORT *LIST_AddString) (linkedList_t** listDest, const char* data);
 	const linkedList_t* (IMPORT *LIST_ContainsString) (const linkedList_t* list, const char* string);

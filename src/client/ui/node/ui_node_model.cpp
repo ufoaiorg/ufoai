@@ -32,6 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_nodes.h"
 #include "../ui_parse.h"
 #include "../ui_input.h"
+#include "../ui_render.h"
 #include "../ui_internal.h"
 #include "ui_node_model.h"
 #include "ui_node_abstractnode.h"
@@ -277,7 +278,7 @@ void UI_DrawModelNode (uiNode_t *node, const char *source)
 	UI_GetNodeAbsPos(node, nodeorigin);
 	R_CleanupDepthBuffer(nodeorigin[0], nodeorigin[1], node->box.size[0], node->box.size[1]);
 	if (EXTRADATA(node).clipOverflow) {
-		R_PushClipRect(screenPos[0], screenPos[1], node->box.size[0], node->box.size[1]);
+		UI_PushClipRect(screenPos[0], screenPos[1], node->box.size[0], node->box.size[1]);
 	}
 	nodeorigin[0] += node->box.size[0] / 2 + EXTRADATA(node).origin[0];
 	nodeorigin[1] += node->box.size[1] / 2 + EXTRADATA(node).origin[1];
@@ -295,14 +296,14 @@ void UI_DrawModelNode (uiNode_t *node, const char *source)
 	if (model) {
 		UI_DrawModelNodeWithUIModel(node, source, &mi, model);
 		if (EXTRADATA(node).clipOverflow)
-			R_PopClipRect();
+			UI_PopClipRect();
 		return;
 	}
 
 	/* if the node is linked to a parent, the parent will display it */
 	if (EXTRADATA(node).tag) {
 		if (EXTRADATA(node).clipOverflow)
-			R_PopClipRect();
+			UI_PopClipRect();
 		return;
 	}
 
@@ -406,7 +407,7 @@ void UI_DrawModelNode (uiNode_t *node, const char *source)
 	}
 
 	if (EXTRADATA(node).clipOverflow)
-		R_PopClipRect();
+		UI_PopClipRect();
 }
 
 static int oldMousePosX = 0;

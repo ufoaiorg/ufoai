@@ -181,16 +181,16 @@ const char *CHRSH_CharGetHead (const character_t * const chr)
 	return returnModel;
 }
 
-BodyData::BodyData (void)  : _totalBodyArea(0), _numBodyParts(0) { }
+BodyData::BodyData (void)  : _totalBodyArea(0.0f), _numBodyParts(0) { }
 
 short BodyData::getRandomBodyPart (void) const
 {
-	const int rnd = rand() % (_totalBodyArea + 1);
-	int  currentArea = 0;
+	const float rnd = frand() * _totalBodyArea;
+	float  currentArea = 0;
 	short bodyPart;
 
 	for (bodyPart = 0; bodyPart < _numBodyParts; ++bodyPart) {
-		currentArea += _bodyParts[bodyPart].bodyArea;
+		currentArea += getArea(bodyPart);
 		if (rnd <= currentArea)
 			break;
 	}
@@ -243,6 +243,32 @@ void BodyData::setId (const char *id)
 
 void BodyData::addBodyPart (const BodyPartData &bodyPart)
 {
-	_bodyParts[_numBodyParts++] = bodyPart;
-	_totalBodyArea += bodyPart.bodyArea;
+	_bodyParts[_numBodyParts] = bodyPart;
+	_totalBodyArea += getArea(_numBodyParts++);
+}
+
+short BodyData::getHitBodyPart (const byte direction, const float height) const
+{
+	const float rnd = frand();
+	short bodyPart;
+	float curRand = 0;
+	vec4_t shape;
+
+	for (bodyPart = 0; bodyPart < _numBodyParts; ++bodyPart) {
+		Vector4Copy(_bodyParts[bodyPart].shape, shape);
+		if (height <= shape[3] || height > shape[2] + shape[3])
+			continue;
+		curRand += (direction < 2 ? shape[0] : (direction < 4 ? shape[1] : (shape[0] + shape[1]) * 0.5));
+		if (rnd <= curRand)
+			break;
+	}
+	if (bodyPart >= _numBodyParts) {
+		bodyPart = 0;
+		Com_DPrintf(DEBUG_SHARED, "Warning: No bodypart hit, defaulting to %s!\n", name(bodyPart));
+	}
+	return bodyPart;
+}
+
+float BodyData::getArea(const short bodyPart) const {
+	return (_bodyParts[bodyPart].shape[0] + _bodyParts[bodyPart].shape[1]) * 0.5 * _bodyParts[bodyPart].shape[2];
 }

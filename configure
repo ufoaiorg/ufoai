@@ -200,6 +200,7 @@ usage() {
 	echo " --help                   show this help message"
 	echo " --enable-ccache          use ccache for building"
 	echo " --enable-hardlinkedgame  hard link the server game code"
+	echo " --enable-hardlinkedcgame hard link the client game code"
 	echo " --enable-paranoid        compile in paranoid mode with extra checks"
 	echo " --enable-profiling       activates profiling"
 	echo " --enable-release         build with optimizations"

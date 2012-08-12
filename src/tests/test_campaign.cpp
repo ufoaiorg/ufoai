@@ -115,7 +115,6 @@ static int UFO_InitSuiteCampaign (void)
 	Cmd_AddCommand("msgoptions_set", Cmd_Dummy_f);
 
 	cl_geoscape_overlay = Cvar_Get("cl_geoscape_overlay", "0");
-	cl_3dmap = Cvar_Get("cl_3dmap", "1");
 
 	CL_SetClientState(ca_disconnected);
 	cls.realtime = Sys_Milliseconds();

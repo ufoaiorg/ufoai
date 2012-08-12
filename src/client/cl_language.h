@@ -30,6 +30,6 @@ void CL_LanguageInit(void);
 void CL_LanguageShutdown(void);
 bool CL_LanguageTryToSet(const char *localeID);
 void CL_ParseMessageIDs(void);
-const char* CL_GetMessageID(const char* id);
+const char* CL_Translate(const char* t);
 
 #endif

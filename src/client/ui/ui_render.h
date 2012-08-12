@@ -39,5 +39,8 @@ void UI_DrawFill(int x, int y, int w, int h, const vec4_t color);
 int UI_DrawStringInBox(const char *fontID, align_t align, int x, int y, int width, int height, const char *text, longlines_t method = LONGLINES_PRETTYCHOP);
 int UI_DrawString(const char *fontID, align_t align, int x, int y, int absX, int maxWidth, const int lineHeight, const char *c, int box_height = 0, int scroll_pos = 0, int *cur_line = NULL, bool increaseLine = false, longlines_t method = LONGLINES_WRAP);
 void UI_Transform(const vec3_t transform, const vec3_t rotate, const vec3_t scale);
+void UI_DrawRect(int x, int y, int w, int h, const vec4_t color, float lineWidth, int pattern);
+void UI_PushClipRect(int x, int y, int width, int height);
+void UI_PopClipRect(void);
 
 #endif

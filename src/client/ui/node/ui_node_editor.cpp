@@ -39,7 +39,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../input/cl_keys.h"
 #include "../../input/cl_input.h"
-#include "../../renderer/r_draw.h"
 
 typedef enum {
 	ZONE_NONE = -1,
@@ -64,7 +63,7 @@ static void UI_EditorNodeHighlightNode (uiNode_t *node, const vec4_t color, bool
 	vec2_t pos;
 	UI_GetNodeAbsPos(node, pos);
 
-	R_DrawRect(pos[0] - 1, pos[1] - 1, node->box.size[0] + 2, node->box.size[1] + 2, color, 1.0, 0x3333);
+	UI_DrawRect(pos[0] - 1, pos[1] - 1, node->box.size[0] + 2, node->box.size[1] + 2, color, 1.0, 0x3333);
 
 	if (displayAnchor) {
 		UI_DrawFill(pos[0] - anchorSize, pos[1] - anchorSize, anchorSize, anchorSize, color);

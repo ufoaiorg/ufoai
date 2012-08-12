@@ -37,6 +37,21 @@ void UI_DrawFill (int x, int y, int w, int h, const vec4_t color)
 	R_DrawFill(x, y, w, h, color);
 }
 
+void UI_DrawRect (int x, int y, int w, int h, const vec4_t color, float lineWidth, int pattern)
+{
+	R_DrawRect(x, y, w, h, color, lineWidth, pattern);
+}
+
+void UI_PushClipRect (int x, int y, int width, int height)
+{
+	R_PushClipRect(x, y, width, height);
+}
+
+void UI_PopClipRect (void)
+{
+	R_PopClipRect();
+}
+
 /**
  * @brief Pushes a new matrix, normalize to current resolution and move, rotate and
  * scale the matrix to the given values.

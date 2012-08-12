@@ -536,7 +536,7 @@ void uiRadarNode::draw (uiNode_t *node)
 	R_CleanupDepthBuffer(pos[0], pos[1], node->box.size[0], node->box.size[1]);
 	UI_DrawFill(pos[0], pos[1], mapWidth * mapCoefX, mapHeight * mapCoefY, backgroundColor);
 #ifndef RADARSIZE_DEBUG
-	R_PushClipRect(screenPos[0], screenPos[1], node->box.size[0], node->box.size[1]);
+	UI_PushClipRect(screenPos[0], screenPos[1], node->box.size[0], node->box.size[1]);
 #endif
 
 	/* the cl struct is wiped with every new map */
@@ -620,7 +620,7 @@ void uiRadarNode::draw (uiNode_t *node)
 	}
 
 #ifndef RADARSIZE_DEBUG
-	R_PopClipRect();
+	UI_PopClipRect();
 #endif
 }
 

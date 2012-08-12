@@ -836,7 +836,7 @@ static float AI_PanicCalcActionScore (edict_t * ent, pos3_t to, aiAction_t * aia
 	G_EdictSetOrigin(ent, to);
 
 	move = G_ActorMoveLength(ent, level.pathingMap, to, true);
-	tu = ent->TU - move;
+	tu = G_ActorUsableTUs(ent) - move;
 
 	/* test for time */
 	if (tu < 0 || move == ROUTING_NOT_REACHABLE)
@@ -884,7 +884,7 @@ static float AI_PanicCalcActionScore (edict_t * ent, pos3_t to, aiAction_t * aia
 	}
 
 	/* add random effects */
-	bestActionScore += SCORE_PANIC_RANDOM  * frand();
+	bestActionScore += SCORE_PANIC_RANDOM * frand();
 
 	return bestActionScore;
 }
@@ -1068,7 +1068,7 @@ void AI_TurnIntoDirection (edict_t *ent, const pos3_t pos)
 	int dvec;
 	const byte crouchingState = G_IsCrouched(ent) ? 1 : 0;
 
-	G_MoveCalc(ent->team, ent, pos, crouchingState, ent->TU);
+	G_MoveCalc(ent->team, ent, pos, crouchingState, G_ActorUsableTUs(ent));
 
 	dvec = gi.MoveNext(level.pathingMap, pos, crouchingState);
 	if (dvec != ROUTING_UNREACHABLE) {
@@ -1368,6 +1368,7 @@ static edict_t* G_SpawnAIPlayer (const player_t * player, const equipDef_t *ed)
 
 	gi.DPrintf("Spawned ai player for team %i with entnum %i (%s)\n", ent->team, ent->number, ent->chr.name);
 	G_CheckVis(ent, VIS_PERISH | VIS_NEW);
+	G_CheckVisTeamAll(ent->team, 0, ent);
 
 	return ent;
 }
@@ -1417,8 +1418,9 @@ void AI_CheckRespawn (int team)
 		if (ent == NULL)
 			break;
 
-		G_AppearPerishEvent(G_VisToPM(ent->visflags), true, ent, NULL);
-		G_EventActorAdd(~G_VisToPM(ent->visflags), ent);
+		const unsigned int playerMask = G_VisToPM(ent->visflags);
+		G_AppearPerishEvent(playerMask, true, ent, NULL);
+		G_EventActorAdd(~playerMask, ent);
 
 		diff--;
 	}

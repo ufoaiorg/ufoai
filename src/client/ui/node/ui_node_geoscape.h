@@ -29,6 +29,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_node_abstractnode.h"
 
 class uiGeoscapeNode : public uiLocatedNode {
+protected:
+	void smoothTranslate (uiNode_t* node);
+	void smoothRotate (uiNode_t* node);
 public:
 	void draw(uiNode_t* node) OVERRIDE;
 	void onMouseUp(uiNode_t* node, int x, int y, int button) OVERRIDE;
@@ -47,7 +50,27 @@ public:
 #define UI_MAPEXTRADATACONST(node) UI_EXTRADATACONST(node, UI_MAPEXTRADATA_TYPE)
 
 typedef struct mapExtraData_s {
+	/* Smoothing variables */
+	bool smoothRotation; /**< @c true if the rotation of 3D geoscape must me smooth */
+	vec3_t smoothFinalGlobeAngle; /**< value of final angles for a smooth change of angle (see MAP_CenterOnPoint)*/
+	vec2_t smoothFinal2DGeoscapeCenter; /**< value of center for a smooth change of position (see MAP_CenterOnPoint) */
+	float smoothDeltaLength; /**< angle/position difference that we need to change when smoothing */
+	float smoothFinalZoom; /**< value of final zoom for a smooth change of angle (see MAP_CenterOnPoint)*/
+	float smoothDeltaZoom; /**< zoom difference that we need to change when smoothing */
+	float curZoomSpeed; /**< The current zooming speed. Used for smooth zooming. */
+	float curRotationSpeed; /**< The current rotation speed. Used for smooth rotating.*/
+
+	vec2_t mapSize;
+	vec2_t mapPos;
+	vec3_t angles; /**< 3d geoscape rotation */
+	vec2_t center; /**< latitude and longitude of the point we're looking at on earth */
+	float zoom; /**< zoom used when looking at earth */
+	bool flatgeoscape;
+	float ambientLightFactor;
+	float mapzoommin;
+	float mapzoommax;
 	float paddingRight;
+	int32_t overlayMask;
 } mapExtraData_t;
 
 void UI_RegisterGeoscapeNode(uiBehaviour_t *behaviour);

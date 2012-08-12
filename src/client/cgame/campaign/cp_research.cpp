@@ -1253,8 +1253,6 @@ void RS_ParseTechnologies (const char *name, const char **text)
 						/* skip translation marker */
 						if (description[0] == '_')
 							description++;
-						else
-							Com_Error(ERR_DROP, "RS_ParseTechnologies: '%s' No gettext string for description '%s'. Abort.\n", name, descTemp->tech[descTemp->numDescriptions]);
 
 						descTemp->text[descTemp->numDescriptions] = Mem_PoolStrDup(description, cp_campaignPool, 0);
 						descTemp->numDescriptions++;

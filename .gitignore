@@ -40,3 +40,4 @@ crashdump.txt
 /debian/*.log
 /debian/ufoai-uforadiant
 /stamps
+.autotools

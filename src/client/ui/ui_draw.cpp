@@ -119,7 +119,7 @@ static void UI_HighlightNode (const uiNode_t *node, const vec4_t color)
 	}
 
 	/* bounded box */
-	R_DrawRect(pos[0] - 1, pos[1] - 1, node->box.size[0] + 2, node->box.size[1] + 2, color, 2.0, 0x3333);
+	UI_DrawRect(pos[0] - 1, pos[1] - 1, node->box.size[0] + 2, node->box.size[1] + 2, color, 2.0, 0x3333);
 }
 
 /**
@@ -234,7 +234,7 @@ static void UI_DrawNode (uiNode_t *node)
 			UI_DrawFill(pos[0], pos[1], node->box.size[0], node->box.size[1], node->bgcolor);
 
 		if (node->border && node->bordercolor[3] != 0) {
-			R_DrawRect(pos[0], pos[1], node->box.size[0], node->box.size[1],
+			UI_DrawRect(pos[0], pos[1], node->box.size[0], node->box.size[1],
 				node->bordercolor, node->border, 0xFFFF);
 		}
 	}
@@ -253,7 +253,7 @@ static void UI_DrawNode (uiNode_t *node)
 			hasClient = true;
 		}
 
-		R_PushClipRect(pos[0] + globalTransX, pos[1] + globalTransY, node->box.size[0], node->box.size[1]);
+		UI_PushClipRect(pos[0] + globalTransX, pos[1] + globalTransY, node->box.size[0], node->box.size[1]);
 
 		/** @todo move it at the right position */
 		if (hasClient) {
@@ -281,7 +281,7 @@ static void UI_DrawNode (uiNode_t *node)
 			R_Transform(trans, NULL, NULL);
 		}
 
-		R_PopClipRect();
+		UI_PopClipRect();
 	}
 }
 

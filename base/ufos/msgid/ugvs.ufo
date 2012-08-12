@@ -1,0 +1,39 @@
+msgid ugv_phoenix_txt {
+text "_"
+}
+
+msgid ugv_phoenix_pre_txt {
+text "_No pre research info available"
+}
+
+msgid ugv_ares_w_txt {
+text "_"
+}
+
+msgid ugv_ares_w_pre_txt {
+text "_No pre research info available"
+}
+
+msgid ugv_chaingun_txt {
+text "_"
+}
+
+msgid ugv_chaingun_pre_txt {
+text "_No pre research info available"
+}
+
+msgid ugv_chaingun_belt_txt {
+text "_"
+}
+
+msgid ugv_chaingun_belt_pre_txt {
+text "_No pre research info available"
+}
+
+msgid ugv_weapon_autocannon_txt {
+text "_"
+}
+
+msgid ugv_weapon_autocannon_pre_txt {
+text "_"
+}

@@ -28,11 +28,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_nodes.h"
 #include "../ui_render.h"
 #include "ui_node_base.h"
-#include "ui_node_abstractnode.h"
 
-#include "../../client.h"
+#include "../../cl_shared.h"
+#include "../../input/cl_input.h"
+#include "../../sound/s_main.h"
 #include "../../cgame/campaign/cp_campaign.h"
-#include "../../renderer/r_draw.h"
 
 #define EXTRADATA_TYPE baseExtraData_t
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
@@ -46,25 +46,19 @@ void uiAbstractBaseNode::onLoading (uiNode_t * node)
 }
 
 /**
- * @brief Called after the end of the node load from script (all data and/or child are set)
+ * @brief Called after the node is completely loaded from the ufo-script (all data and/or children are set)
  */
 void uiAbstractBaseNode::onLoaded (uiNode_t * node)
 {
-	/* it do not make any sens to check it here */
-#if 0
-	const int id = EXTRADATA(node).baseid;
-	if (B_GetBaseByIDX(id) == NULL)
-		Com_Printf("UI_AbstractBaseNodeLoaded: Invalid baseid given %i", id);
-#endif
 }
 
 base_t* uiAbstractBaseNode::getBase (const uiNode_t * node)
 {
 	if (EXTRADATACONST(node).baseid == -1) {
 		return B_GetCurrentSelectedBase();
-	} else {
-		return B_GetBaseByIDX(EXTRADATACONST(node).baseid);
 	}
+
+	return B_GetBaseByIDX(EXTRADATACONST(node).baseid);
 }
 
 /**
@@ -189,19 +183,15 @@ void uiBaseMapNode::draw (uiNode_t * node)
 				UI_DrawNormImageByName(false, pos[0], pos[1], width * (building ? building->size[0] : 1), height * (building ? building->size[1] : 1), 0, 0, 0, 0, image);
 			if (building) {
 				switch (building->buildingStatus) {
-				case B_STATUS_DOWN:
-				case B_STATUS_CONSTRUCTION_FINISHED:
+				case B_STATUS_UNDER_CONSTRUCTION: {
+					const float remaining = B_GetConstructionTimeRemain(building);
+					const float time = std::max(0.0f, remaining);
+					const char* text = va(ngettext("%3.1f day left", "%3.1f days left", time), time);
+					UI_DrawString("f_small", ALIGN_UL, pos[0] + 10, pos[1] + 10, pos[0] + 10, node->box.size[0], 0, text);
 					break;
-				case B_STATUS_UNDER_CONSTRUCTION:
-					{
-						const float remaining = B_GetConstructionTimeRemain(building);
-						const float time = std::max(0.0f, remaining);
-						const char* text = va(ngettext("%3.1f day left", "%3.1f days left", time), time);
-						UI_DrawString("f_small", ALIGN_UL, pos[0] + 10, pos[1] + 10, pos[0] + 10, node->box.size[0], 0, text);
-						break;
-					}
-					default:
-						break;
+				}
+				default:
+					break;
 				}
 			}
 		}
@@ -217,24 +207,24 @@ void uiBaseMapNode::draw (uiNode_t * node)
 	/* if we are building */
 	if (ccs.baseAction == BA_NEWBUILDING) {
 		int y, x;
-		int xCoord, yCoord, widthRect, heigthRect;
-		vec2_t pos;
+		const building_t *building = base->buildingCurrent;
+		const vec2_t& size = building->size;
+		assert(building);
 
-		assert(base->buildingCurrent);
-
-		for (y = row; y < row + base->buildingCurrent->size[1]; y++) {
-			for (x = col; x < col + base->buildingCurrent->size[0]; x++) {
+		for (y = row; y < row + size[1]; y++) {
+			for (x = col; x < col + size[0]; x++) {
 				if (!B_MapIsCellFree(base, x, y))
 					return;
 			}
 		}
 
+		vec2_t pos;
 		UI_GetNodeAbsPos(node, pos);
-		xCoord = pos[0] + col * width;
-		yCoord = pos[1] + row * (height - BASE_IMAGE_OVERLAY);
-		widthRect = base->buildingCurrent->size[0] * width;
-		heigthRect = base->buildingCurrent->size[1] * (height - BASE_IMAGE_OVERLAY);
-		R_DrawRect(xCoord, yCoord, widthRect, heigthRect, white, 3, 1);
+		const int xCoord = pos[0] + col * width;
+		const int yCoord = pos[1] + row * (height - BASE_IMAGE_OVERLAY);
+		const int widthRect = size[0] * width;
+		const int heigthRect = size[1] * (height - BASE_IMAGE_OVERLAY);
+		UI_DrawRect(xCoord, yCoord, widthRect, heigthRect, white, 3, 1);
 	}
 }
 
@@ -286,7 +276,7 @@ void uiBaseMapNode::onLeftClick (uiNode_t *node, int x, int y)
 		return;
 
 	if (ccs.baseAction == BA_NEWBUILDING) {
-		building_t *building = base->buildingCurrent;
+		const building_t *building = base->buildingCurrent;
 		int y, x;
 
 		assert(building);

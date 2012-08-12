@@ -68,6 +68,8 @@ const mapDef_t* GAME_GetCurrentSelectedMap(void);
 void GAME_SwitchCurrentSelectedMap(int step);
 bool GAME_IsTeamEmpty(void);
 int GAME_GetCurrentTeam(void);
+void GAME_DrawMap(uiNode_t *node);
+void GAME_MapClick(uiNode_t *node, int x, int y);
 void GAME_SetServerInfo(const char *server, const char *serverport);
 
 #include "cgame.h"

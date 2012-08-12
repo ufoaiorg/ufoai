@@ -718,11 +718,6 @@ bool CP_LoadXML (xmlNode_t *parent)
 
 	/* read map view */
 	mapNode = XML_GetNode(campaignNode, SAVE_CAMPAIGN_MAP);
-	ccs.center[0] = XML_GetFloat(mapNode, SAVE_CAMPAIGN_CENTER0, 0.0);
-	ccs.center[1] = XML_GetFloat(mapNode, SAVE_CAMPAIGN_CENTER1, 0.0);
-	ccs.angles[0] = XML_GetFloat(mapNode, SAVE_CAMPAIGN_ANGLES0, 0.0);
-	ccs.angles[1] = XML_GetFloat(mapNode, SAVE_CAMPAIGN_ANGLES1, 0.0);
-	ccs.zoom = XML_GetFloat(mapNode, SAVE_CAMPAIGN_ZOOM, 0.0);
 	/* restore the overlay.
 	* do not use Cvar_SetValue, because this function check if value->string are equal to skip calculation
 	* and we never set r_geoscape_overlay->string in game: cl_geoscape_overlay won't be updated if the loaded
@@ -782,11 +777,6 @@ bool CP_SaveXML (xmlNode_t *parent)
 
 	/* Map and user interface */
 	map = XML_AddNode(campaign, SAVE_CAMPAIGN_MAP);
-	XML_AddFloat(map, SAVE_CAMPAIGN_CENTER0, ccs.center[0]);
-	XML_AddFloat(map, SAVE_CAMPAIGN_CENTER1, ccs.center[1]);
-	XML_AddFloat(map, SAVE_CAMPAIGN_ANGLES0, ccs.angles[0]);
-	XML_AddFloat(map, SAVE_CAMPAIGN_ANGLES1, ccs.angles[1]);
-	XML_AddFloat(map, SAVE_CAMPAIGN_ZOOM, ccs.zoom);
 	XML_AddShort(map, SAVE_CAMPAIGN_CL_GEOSCAPE_OVERLAY, cl_geoscape_overlay->integer);
 	XML_AddBool(map, SAVE_CAMPAIGN_RADAROVERLAYWASSET, radarOverlayWasSet);
 	XML_AddBool(map, SAVE_CAMPAIGN_XVISHOWMAP, ccs.XVIShowMap);
@@ -1014,8 +1004,6 @@ static const cmdList_t game_commands[] = {
 	{"game_timefast", CP_GameTimeFast, NULL},
 	{"game_settimeid", CP_SetGameTime_f, NULL},
 	{"map_center", MAP_CenterOnPoint_f, "Centers the geoscape view on items on the geoscape - and cycle through them"},
-	{"map_zoom", MAP_Zoom_f, NULL},
-	{"map_scroll", MAP_Scroll_f, NULL},
 	{"cp_start_xvi_spreading", CP_StartXVISpreading_f, "Start XVI spreading"},
 	{"cp_spawn_ufocarrier", CP_SpawnUFOCarrier_f, "Spawns a UFO-Carrier on the geoscape"},
 	{"cp_attack_ufocarrier", CP_AttackUFOCarrier_f, "Attack the UFO-Carrier"},
@@ -1128,17 +1116,9 @@ void CP_CampaignInit (campaign_t *campaign, bool load)
 
 	/* create initial employees */
 	E_InitialEmployees(campaign);
-	/* initialise view angle for 3D geoscape so that europe is seen */
-	ccs.angles[YAW] = GLOBE_ROTATE;
 
 	MAP_Reset(campaign->map);
 	PR_ProductionInit();
-
-	/* set map view */
-	ccs.center[0] = ccs.center[1] = 0.5;
-	ccs.zoom = 1.0;
-	Vector2Set(ccs.smoothFinal2DGeoscapeCenter, 0.5, 0.5);
-	VectorSet(ccs.smoothFinalGlobeAngle, 0, GLOBE_ROTATE, 0);
 
 	CP_UpdateCredits(campaign->credits);
 

@@ -2720,7 +2720,7 @@ static void Com_ParseCharacterTemplate (const char *name, const char **text)
 
 static const value_t bodyPartValues[] = {
 		{"name", V_TRANSLATION_STRING, offsetof(BodyPartData, name), 0},
-		{"area", V_INT, offsetof(BodyPartData, bodyArea), MEMBER_SIZEOF(BodyPartData, bodyArea)},
+		{"shape", V_COLOR, offsetof(BodyPartData, shape), MEMBER_SIZEOF(BodyPartData, shape)},
 		{"bleed", V_INT, offsetof(BodyPartData, bleedingFactor), MEMBER_SIZEOF(BodyPartData, bleedingFactor)},
 		{"threshold", V_INT, offsetof(BodyPartData, woundThreshold), MEMBER_SIZEOF(BodyPartData, woundThreshold)},
 

@@ -1,6 +1,20 @@
 /**
  * @file
  * @brief Main part of the game logic.
+ *
+ * @section Connection
+ *
+ * In case the connection is established (@c G_ClientConnect), the client
+ * state is @c cs_connected. The client will send "new", @c SV_New_f sets the
+ * state to @c cs_spawning, and asks the client to precache the data after
+ * sending the configstrings. After the client is done with it, it will send
+ * "begin" to the server. @c SV_Begin_f will now set the client state to @c cs_began
+ * and calls @c G_ClientBegin. The server will ask the client to execute
+ * "spawnsoldiers" now. The client is answering with @c clc_teaminfo and the server
+ * will call @c G_ClientTeamInfo. The client state is now @c cs_spawned. Last but not
+ * least the server informs the client that the match can now get started by
+ * asking to execute "startmatch". The client answers with "startmatch", too and
+ * @c G_ClientStartMatch is executed.
  */
 
 /*
@@ -443,7 +457,7 @@ static void G_ClientStateChangeUpdate (edict_t *ent)
 	G_CheckVis(ent, true);
 
 	/* Calc new vis for this player. */
-	G_CheckVisTeamAll(ent->team, false, ent);
+	G_CheckVisTeamAll(ent->team, 0, ent);
 
 	/* Send the new TUs. */
 	G_SendStats(ent);
@@ -1261,13 +1275,9 @@ void G_ClientTeamInfo (const player_t * player)
 				Com_DPrintf(DEBUG_GAME, "Player: %i - team %i - size: %i\n", player->num, ent->team, ent->fieldSize);
 
 				G_ClientReadCharacter(ent);
-
 				G_ClientReadInventory(ent);
-
 				G_ClientAssignDefaultActorValues(ent);
-
 				G_ActorGiveTimeUnits(ent);
-
 				G_TouchTriggers(ent);
 			} else {
 				gi.DPrintf("Not enough spawn points for team %i (actorsize: %i)\n", player->pers.team, actorFieldSize);
@@ -1348,7 +1358,6 @@ bool G_ClientBegin (player_t* player)
 
 /**
  * @brief Sets the team, init the TU and sends the player stats.
- * @return Returns true if player spawns, otherwise false.
  * @sa G_SendPlayerStats
  * @sa G_GetTeam
  * @sa G_GiveTimeUnits

@@ -23,6 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "../cl_shared.h"
+#include "../cl_language.h"
 #include "ui_main.h"
 #include "ui_internal.h"
 #include "ui_nodes.h"
@@ -165,7 +166,7 @@ const char *UI_GetText (int textId)
 {
 	if (ui_global.sharedData[textId].type != UI_SHARED_TEXT)
 		return NULL;
-	return ui_global.sharedData[textId].data.text;
+	return CL_Translate(ui_global.sharedData[textId].data.text);
 }
 
 const char *UI_GetTextFromList (int textId, int line)

@@ -187,8 +187,8 @@ chrtemplate soldier_mp {
 //	 defines a part of the body
 //		name
 //			Translatable name for the body part
-//		area
-//			Body area comprised by this body part (chance of this part getting wounded)
+//		shape
+//			Shape of this body part (front, side, tall, height)
 //		threshold
 //			Damage needed before this part is considered wounded (% of max HP)
 //		penalty
@@ -197,7 +197,7 @@ chrtemplate soldier_mp {
 //				accuracy: reduced accuracy (%)
 //				visibility: reduced detection range (%)
 //				shooting: increased shooting TU cost (%)
-//				reaction: increased shooting TU cost when using rection fire (%)
+//				reaction: increased TU cost for using reaction fire (%)
 //				movement: increased movement TU cost (absolute number per tile moved)
 //				max_tu: reduced max TU (%)
 //
@@ -206,7 +206,7 @@ chrtemplate soldier_mp {
 bodydef default_unipart {
 	bodypart default_body {
 		name "_Body"
-		area 100
+		shape "1 1 1 0"
 		threshold 10
 		penalty (max_tu 10)
 	}
@@ -215,21 +215,21 @@ bodydef default_unipart {
 bodydef humanoid_standard {
 	bodypart humanoid_torso {
 		name "_Torso"
-		area 37
+		shape "1 0.3 0.4 0.47"
 		bleed 10
 		threshold 10
 		penalty (reaction 25)
 	}
 	bodypart humanoid_legs {
 		name "_Legs"
-		area 36
+		shape "1 1 0.47 0"
 		bleed 10
 		threshold 10
 		penalty (movement 1)
 	}
 	bodypart humanoid_arms {
 		name "_Arms"
-		area 18
+		shape "0 0.7 0.4 0.47"
 		bleed 10
 		threshold 10
 		penalty (accuracy 50)
@@ -237,7 +237,7 @@ bodydef humanoid_standard {
 	}
 	bodypart humanoid_head {
 		name "_Head"
-		area 9
+		shape "1 1 0.13 0.87"
 		bleed 10
 		threshold 10
 		penalty (accuracy 50)

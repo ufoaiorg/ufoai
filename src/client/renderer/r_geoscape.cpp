@@ -36,27 +36,23 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @brief Draw the day and night images of a flat geoscape
  * multitexture feature is used to blend the images
  * @sa R_Draw3DGlobe
- * @param[in] x The x position of the geoscape node
- * @param[in] y The y position of the geoscape node
- * @param[in] w The width of the geoscape node
- * @param[in] h The height of the geoscape node
  * @param[in] p The horizontal shift of the night map
  * @param[in] cx The x texture coordinate
  * @param[in] cy The y texture coordinate
  * @param[in] iz The zoomlevel of the geoscape - see ccs.zoom
  * @param[in] map The geoscape map to draw (can be changed in the campaign definition)
  */
-void R_DrawFlatGeoscape (int x, int y, int w, int h, float p, float cx, float cy, float iz, const char *map, bool overlayNation, bool overlayXVI, bool overlayRadar, image_t *r_dayandnightTexture, image_t *r_xviTexture, image_t *r_radarTexture)
+void R_DrawFlatGeoscape (const vec2_t nodePos, const vec2_t nodeSize, float p, float cx, float cy, float iz, const char *map, bool overlayNation, bool overlayXVI, bool overlayRadar, image_t *r_dayandnightTexture, image_t *r_xviTexture, image_t *r_radarTexture)
 {
 	image_t *gl;
 	float geoscape_texcoords[4 * 2];
 	short geoscape_verts[4 * 2];
 
 	/* normalize */
-	const float nx = x * viddef.rx;
-	const float ny = y * viddef.ry;
-	const float nw = w * viddef.rx;
-	const float nh = h * viddef.ry;
+	const float nx = nodePos[0] * viddef.rx;
+	const float ny = nodePos[1] * viddef.ry;
+	const float nw = nodeSize[0] * viddef.rx;
+	const float nh = nodeSize[1] * viddef.ry;
 
 	/* load day image */
 	gl = R_FindImage(va("pics/geoscape/%s_day", map), it_wrappic);
@@ -222,22 +218,18 @@ void R_Draw2DMapMarkers (const vec2_t screenPos, float direction, const char *mo
 
 /**
  * @brief Draw 3D Marker on the 3D geoscape.
- * @param[in] x menu node x position
- * @param[in] y menu node y position
- * @param[in] w menu node widht
- * @param[in] h menu node height
  * @param[in] rotate vector giving the angles of earth rotation due to player view.
  * @param[in] pos longitude and latitude of the model to draw.
  * @param[in] direction angle giving the direction the model is heading toward.
  * @param[in] earthRadius Radius of earth on screen (this include zoom).
  */
-void R_Draw3DMapMarkers (int x, int y, int w, int h, const vec3_t rotate, const vec2_t pos, float direction, float earthRadius, const char *model, int skin)
+void R_Draw3DMapMarkers (const vec2_t nodePos, const vec2_t nodeSize, const vec3_t rotate, const vec2_t pos, float direction, float earthRadius, const char *model, int skin)
 {
 	/* normalize */
-	const float nx = x * viddef.rx;
-	const float ny = y * viddef.ry;
-	const float nw = w * viddef.rx;
-	const float nh = h * viddef.ry;
+	const float nx = nodePos[0] * viddef.rx;
+	const float ny = nodePos[1] * viddef.ry;
+	const float nw = nodeSize[0] * viddef.rx;
+	const float nh = nodeSize[1] * viddef.ry;
 
 	/* Earth center is in the middle of node.
 	 * Due to Orthographic view, this is also camera position */
@@ -411,17 +403,13 @@ static inline void R_RotateCelestialBody (const vec4_t v, vec4_t r, const vec3_t
 
 /**
  * @brief responsible for drawing the 3d globe on geoscape
- * @param[in] x menu node x position
- * @param[in] y menu node y position
- * @param[in] w menu node widht
- * @param[in] h menu node height
  * @param[in] rotate the rotate angle of the globe
  * @param[in] zoom the current globe zoon
  * @param[in] map the prefix of the map to use (image must be at base/pics/menu/\<map\>_[day|night])
  * @sa R_DrawFlatGeoscape
  * @sa R_SphereGenerate
  */
-void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_t rotate, float zoom, const char *map, bool disableSolarRender, float ambient, bool overlayNation, bool overlayXVI, bool overlayRadar, image_t *r_xviTexture, image_t *r_radarTexture, bool renderNationGlow)
+void R_Draw3DGlobe (const vec2_t pos, const vec2_t size, int day, int second, const vec3_t rotate, float zoom, const char *map, bool disableSolarRender, float ambient, bool overlayNation, bool overlayXVI, bool overlayRadar, image_t *r_xviTexture, image_t *r_radarTexture, bool renderNationGlow)
 {
 	/* globe scaling */
 	const float fullscale = zoom / STANDARD_3D_ZOOM;
@@ -449,10 +437,10 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_
 	vec4_t sunLoc;
 
 	/* normalize */
-	const float nx = x * viddef.rx;
-	const float ny = y * viddef.ry;
-	const float nw = w * viddef.rx;
-	const float nh = h * viddef.ry;
+	const float nx = pos[0] * viddef.rx;
+	const float ny = pos[1] * viddef.ry;
+	const float nw = size[0] * viddef.rx;
+	const float nh = size[1] * viddef.ry;
 
 	/* Earth center is in the middle of node.
 	 * Due to Orthographic view, this is also camera position */
