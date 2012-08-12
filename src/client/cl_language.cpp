@@ -35,7 +35,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static cvar_t *fs_i18ndir;
 static memPool_t* cl_msgidPool;
 
-#define MAX_MSGIDS 128
+#define MAX_MSGIDS 512
 /**
  * The msgids are reparsed each time that we change the language - we are only
  * pointing to the po file content to not waste memory for our long texts.
