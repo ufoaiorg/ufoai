@@ -179,6 +179,7 @@ void uiGeoscapeNode::draw (uiNode_t *node)
 
 	geoscapeNode = node;
 	UI_MAPEXTRADATA(node).flatgeoscape = cl_3dmap->integer == 0;
+	UI_MAPEXTRADATA(node).overlayMask = cl_geoscape_overlay->integer;
 	UI_MAPEXTRADATA(node).ambientLightFactor = cl_3dmapAmbient->value;
 	UI_MAPEXTRADATA(node).mapzoommin = cl_mapzoommin->value;
 	UI_MAPEXTRADATA(node).mapzoommax = cl_mapzoommax->value;

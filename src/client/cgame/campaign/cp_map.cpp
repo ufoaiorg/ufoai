@@ -1861,23 +1861,7 @@ void MAP_DrawMap (uiNode_t* node)
 	const char *map = ccs.curCampaign->map;
 
 	/* Draw the map and markers */
-	if (!UI_MAPEXTRADATACONST(node).flatgeoscape) {
-		bool disableSolarRender = false;
-		if (UI_MAPEXTRADATACONST(node).zoom > 3.3)
-			disableSolarRender = true;
-
-		R_EnableRenderbuffer(true);
-
-		R_Draw3DGlobe(UI_MAPEXTRADATACONST(node).mapPos[0], UI_MAPEXTRADATACONST(node).mapPos[1], UI_MAPEXTRADATACONST(node).mapSize[0],
-				UI_MAPEXTRADATACONST(node).mapSize[1], ccs.date.day, ccs.date.sec, UI_MAPEXTRADATACONST(node).angles, UI_MAPEXTRADATACONST(node).zoom,
-				map, disableSolarRender, UI_MAPEXTRADATACONST(node).ambientLightFactor, MAP_IsNationOverlayActivated(), MAP_IsXVIOverlayActivated(),
-				MAP_IsRadarOverlayActivated(), r_xviTexture, r_radarTexture, true);
-
-		MAP_DrawMapMarkers(node);
-
-		R_DrawBloom();
-		R_EnableRenderbuffer(false);
-	} else {
+	if (UI_MAPEXTRADATACONST(node).flatgeoscape) {
 		/* the last q value for the 2d geoscape night overlay */
 		static float lastQ = 0.0f;
 
@@ -1891,7 +1875,25 @@ void MAP_DrawMap (uiNode_t* node)
 				UI_MAPEXTRADATACONST(node).mapSize[1], (float) ccs.date.sec / SECONDS_PER_DAY, UI_MAPEXTRADATACONST(node).center[0],
 				UI_MAPEXTRADATACONST(node).center[1], 0.5 / UI_MAPEXTRADATACONST(node).zoom, map, MAP_IsNationOverlayActivated(),
 				MAP_IsXVIOverlayActivated(), MAP_IsRadarOverlayActivated(), r_dayandnightTexture, r_xviTexture, r_radarTexture);
+
 		MAP_DrawMapMarkers(node);
+	} else {
+		bool disableSolarRender = false;
+		if (UI_MAPEXTRADATACONST(node).zoom > 3.3)
+			disableSolarRender = true;
+
+		R_EnableRenderbuffer(true);
+
+		R_Draw3DGlobe(UI_MAPEXTRADATACONST(node).mapPos[0], UI_MAPEXTRADATACONST(node).mapPos[1], UI_MAPEXTRADATACONST(node).mapSize[0],
+				UI_MAPEXTRADATACONST(node).mapSize[1], ccs.date.day, ccs.date.sec, UI_MAPEXTRADATACONST(node).angles, UI_MAPEXTRADATACONST(node).zoom,
+				map, disableSolarRender, UI_MAPEXTRADATACONST(node).ambientLightFactor, UI_MAPEXTRADATA(node).overlayMask & OVERLAY_NATION,
+				UI_MAPEXTRADATA(node).overlayMask & OVERLAY_XVI, UI_MAPEXTRADATA(node).overlayMask & OVERLAY_RADAR, r_xviTexture, r_radarTexture,
+				true);
+
+		MAP_DrawMapMarkers(node);
+
+		R_DrawBloom();
+		R_EnableRenderbuffer(false);
 	}
 
 	mission_t *mission = MAP_GetSelectedMission();

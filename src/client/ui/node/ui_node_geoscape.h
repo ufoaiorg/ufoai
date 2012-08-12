@@ -70,6 +70,7 @@ typedef struct mapExtraData_s {
 	float mapzoommin;
 	float mapzoommax;
 	float paddingRight;
+	int32_t overlayMask;
 } mapExtraData_t;
 
 void UI_RegisterGeoscapeNode(uiBehaviour_t *behaviour);
