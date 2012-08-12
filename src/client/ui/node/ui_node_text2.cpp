@@ -66,13 +66,7 @@ static void UI_TextNodeGenerateLineSplit (uiNode_t *node)
 	} else
 		return;
 
-	if (data[0] == '_') {
-		data = _(++data);
-	} else {
-		const char* msgid = Q_strstart(data, "*msgid:");
-		if (msgid != NULL)
-			data = CL_GetMessageID(msgid);
-	}
+	data = CL_Translate(data);
 
 	while (data[0] != '\0') {
 		const char *next = strchr(data, '\n');
