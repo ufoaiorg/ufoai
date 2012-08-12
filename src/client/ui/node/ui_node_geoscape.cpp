@@ -78,9 +78,10 @@ static int oldMousePosY = 0;
  * It is related to a captured node (only one at a time), that why it is global.
  */
 static mapDragMode_t mode = MODE_NULL;
-#define ROTATE_SPEED	0.5
-#define GLOBE_ROTATE -90
-#define SMOOTHING_STEP_2D	0.02f
+static const float ROTATE_SPEED	= 0.5f;
+static const float GLOBE_ROTATE = -90.0f;
+static const float SMOOTHING_STEP_2D = 0.02f;
+static const float SMOOTHACCELERATION = 0.06f;		/**< the acceleration to use during a smooth motion (This affects the speed of the smooth motion) */
 
 static cvar_t *cl_3dmap;						/**< 3D geoscape or flat geoscape */
 static cvar_t *cl_3dmapAmbient;
@@ -90,13 +91,10 @@ static cvar_t *cl_geoscape_overlay;
 
 // FIXME: don't make this static
 static uiNode_t *geoscapeNode;
-static const float SMOOTHACCELERATION = 0.06f;		/**< the acceleration to use during a smooth motion (This affects the speed of the smooth motion) */
 
 /**
  * @brief smooth rotation of the 3D geoscape
- * @note updates slowly values of ccs.angles and ccs.zoom so that its value goes to smoothFinalGlobeAngle
- * @sa MAP_DrawMap
- * @sa MAP_CenterOnPoint
+ * @note updates slowly values of @c angles and @c zoom so that its value goes to @c smoothFinalGlobeAngle
  */
 void uiGeoscapeNode::smoothRotate (uiNode_t* node)
 {
@@ -149,10 +147,8 @@ void uiGeoscapeNode::smoothRotate (uiNode_t* node)
 
 /**
  * @brief smooth translation of the 2D geoscape
- * @note updates slowly values of ccs.center so that its value goes to smoothFinal2DGeoscapeCenter
- * @note updates slowly values of ccs.zoom so that its value goes to ZOOM_LIMIT
- * @sa MAP_DrawMap
- * @sa MAP_CenterOnPoint
+ * @note updates slowly values of @c center so that its value goes to @c smoothFinal2DGeoscapeCenter
+ * @note updates slowly values of @c zoom so that its value goes to @c ZOOM_LIMIT
  */
 void uiGeoscapeNode::smoothTranslate (uiNode_t *node)
 {
