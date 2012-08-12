@@ -31,17 +31,17 @@ events main
 
 mail prolog
 {
-	from "_mail_from_un"
-	to "_mail_to_base_commander"
+	from "*msgid:mail_from_un"
+	to "*msgid:mail_to_base_commander"
 	subject "_Good Luck"
-	body "_mail_prolog"
+	body "*msgid:mail_prolog"
 	icon "icons/mail_un"
 }
 
 mail tip_buildufoyard
 {
-	from "_mail_from_paul_navarre"
-	to "_mail_to_base_commander"
+	from "*msgid:mail_from_paul_navarre"
+	to "*msgid:mail_to_base_commander"
 	subject "_Memo: UFO Yard"
 	body "*msgid:tip_build_ufo_yard_txt"
 	model "characters/navarre"
@@ -50,8 +50,8 @@ mail tip_buildufoyard
 
 mail tip_capturelivealien
 {
-	from "_mail_from_dr_connor"
-	to "_mail_to_base_commander"
+	from "*msgid:mail_from_dr_connor"
+	to "*msgid:mail_to_base_commander"
 	subject "_Memo: Live Aliens"
 	body "*msgid:tip_capture_live_alien_txt"
 	model "characters/connor"
@@ -61,30 +61,30 @@ mail tip_capturelivealien
 // sent if a humanoid alien was captured alive and it died
 mail alienbreathing
 {
-	from "_mail_from_paul_navarre"
-	to "_mail_to_base_commander"
+	from "*msgid:mail_from_paul_navarre"
+	to "*msgid:mail_to_base_commander"
 	subject "_Alien died"
-	body "_mail_stunned_alien_died"
+	body "*msgid:mail_stunned_alien_died"
 	model "characters/navarre"
 	icon "icons/mail_tech"
 }
 
 mail alien_base_discovered
 {
-	from "_mail_from_xo"
-	to "_mail_to_base_commander"
+	from "*msgid:mail_from_xo"
+	to "*msgid:mail_to_base_commander"
 	subject "_Alien Base Discovered"
-	body "_mail_alien_base_discovered"
+	body "*msgid:mail_alien_base_discovered"
 	model "characters/howard"
 	icon "icons/mail_event"
 }
 
 mail ufocarrier
 {
-	from "_mail_from_paul_navarre"
-	to "_mail_to_base_commander"
+	from "*msgid:mail_from_paul_navarre"
+	to "*msgid:mail_to_base_commander"
 	subject "_UFO-Carrier"
-	body "_mail_ufocarrier"
+	body "*msgid:mail_ufocarrier"
 	model "characters/navarre"
 	icon "icons/mail_tech"
 }
