@@ -41,8 +41,8 @@ static memPool_t* cl_msgidPool;
  * pointing to the po file content to not waste memory for our long texts.
  */
 typedef struct msgid_s {
-	char *id;	/**< the msgid id used for referencing via *msgid:<id> */
-	char *text;	/**< the pointer to the po file */
+	const char *id;	/**< the msgid id used for referencing via *msgid:<id> */
+	const char *text;	/**< the pointer to the po file */
 	struct msgid_s *hash_next;			/**< hash map next pointer in case of collision */
 } msgid_t;
 
@@ -93,7 +93,10 @@ static void CL_ParseMessageID (const char *name, const char **text)
 					break;
 				if (token[0] == '_')
 					token++;
-				msgid->text = _(token);
+				if (token[0] != '\0')
+					msgid->text = _(token);
+				else
+					msgid->text = token;
 				if (msgid->text == token) {
 					msgid->text = Mem_PoolStrDup(token, cl_msgidPool, 0);
 					Com_Printf("no translation for %s\n", msgid->id);
