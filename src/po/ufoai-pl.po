@@ -95,7 +95,7 @@ msgstr "Lądowanie Obcych - strefa przemysłowa"
 #: ../base/maps/frozen.ump:372 ../base/maps/frozen.ump:394
 #, fuzzy
 msgid "A UFO crashed into the snow here."
-msgstr "Niewielkie UFO rozbiło się w zaśnieżonym terenie."
+msgstr "UFO rozbiło się w zaśnieżonym terenie."
 
 #: ../base/maps/frozen.ump:412
 msgid "Multiplayer Coop"
@@ -116,7 +116,7 @@ msgstr "Port"
 
 #: ../base/maps/harbour2.ump:520
 msgid "Pier"
-msgstr ""
+msgstr "Molo"
 
 #: ../base/maps/hills.ump:488 ../base/maps/hills.ump:519
 #: ../base/maps/hills.ump:572
@@ -433,7 +433,7 @@ msgstr "Antymateria"
 
 #: ../base/ufos/aircraftmanagement.ufo:964 ../base/ufos/research.ufo:5199
 msgid "Hybrid Missile"
-msgstr ""
+msgstr "Pocisk Hybrydowy"
 
 #: ../base/ufos/aircraftmanagement.ufo:981 ../base/ufos/research.ufo:5249
 msgid "Targeting Computer"
@@ -2816,7 +2816,7 @@ msgstr "UFO wylądowało w górzystym terenie."
 #: ../base/ufos/maps.ufo:1435 ../base/ufos/maps.ufo:1475
 #: ../base/ufos/maps.ufo:1516 ../base/ufos/maps.ufo:1555
 msgid "An icy environment."
-msgstr ""
+msgstr "Lodowe otoczenie."
 
 #: ../base/ufos/maps.ufo:1600 ../base/ufos/maps.ufo:1641
 msgid "Industrial theme."
@@ -2837,7 +2837,7 @@ msgstr "Rezydencja na wybrzeżu"
 
 #: ../base/ufos/maps.ufo:1895 ../base/ufos/maps.ufo:1943
 msgid "A mansion. An important and influential person lives here."
-msgstr ""
+msgstr "Rezydencja. Mieszka tu ważna i wpływowa osoba."
 
 #: ../base/ufos/maps.ufo:1996 ../base/ufos/maps.ufo:2036
 #: ../base/ufos/maps.ufo:2119
@@ -8439,6 +8439,14 @@ msgid ""
 "\n"
 "--Cdr. Navarr"
 msgstr ""
+"Dowódco, w ostatniek misji zabito załogę UFO lecz nie mamy możliwości przechować ten pojazd. UFO jest zbyt duże by umieścić je w warsztatach lub laboratoriach naszej bazy. Musisz wybudować tak szybko jak tylko możliwe Hangar UFO aby przechowywać pojazdy Obcych poza terenem baz. Nie możemy prowadzić prac nad tą technologią bez możliwości bezpiecznego jej składowania.\n"
+"\n"
+"Gdu UFO będa już zmagazynowane, nasi naukowcy będa mogli rozpocząć badania. Gdy zostana ukończone, nasi inżynierowie będą mogli zdemontować UFO aby odzyskać materiały i części.\n"
+"\n"
+"Prace nad UFO zmuszą naszych naukowców i inżynierów do przemieszczania się pomiędzy bazą a Hangarem UFO, więc warto miejsce wybudowania wybrać jak najbliżej bazy z której będą wyznaczane prace.\n"
+"\n"
+"\n"
+"--mjr. Navarre"
 
 #: ../base/ufos/msgid/tips.ufo:24
 msgid ""
@@ -8455,6 +8463,18 @@ msgid ""
 "\n"
 "Dr. Conno"
 msgstr ""
+"Dowódco,\n"
+"\n"
+"Potrzebujemy schwytać żywych Obcych jeśli chcemy zrozumieć wroga. Możemy wiele dowiedzieć się z przeprowadzonych autopsji zwłok, ale do obserwacji ich zachowań wymagane są żywe okazy tych kreatur.\n"
+"\n"
+"Jeśli zdołasz ogłuszyć Obcego w walce a następnie dostarczyć go do bazy z instalacja Kwarantanny, będziemy mieli o wiele więcej do powiedzenia. Lepiej poznamy jak funkcjonuje ich biologiczny organizm i posiądziemy wiedzę o ich słabościach. W miarę czasu moglibyśmy nawet rozwinąc metodę porozumiewania sie z nimi.\n"
+"\n"
+"Wiem że to wielkie ryzyko dla żołnierzy schwytać żywego przeciwnika, jednak jest to ryzyko którego będziemy musieli się podjąć jeśli chcemy wygrać tę wojnę. Wysyłaj swych ludzi wyposażonych w granaty ogłuszające i upewnij się że będą ich używali.\n"
+"\n"
+"\n"
+"Z poważaniem,\n"
+"\n"
+"Dr. Connor"
 
 #: ../base/ufos/msgid/weapons.ufo:18
 #, fuzzy
@@ -12361,7 +12381,7 @@ msgstr "Autopsja Obcego - Bloodspider"
 #: ../base/ufos/research.ufo:4182
 #, fuzzy
 msgid "Alien Autopsy - Combat Bloodspider"
-msgstr "Autopsja Obcego - Bloodspider"
+msgstr "Autopsja Obcego - Bojowy Bloodspider"
 
 #: ../base/ufos/research.ufo:4238
 msgid "Alien Autopsy - Ortnok"
