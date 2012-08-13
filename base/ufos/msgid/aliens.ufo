@@ -1,14 +1,5 @@
 msgid bloodspider_notes_txt {
-text "_TO: Base Commander, PHALANX, Atlantic Operations Command
-
-FROM: Dr. Connor, R&D: Bio & Containment Division, PHALANX, Atlantic Operations Command
-
-DATE: 01 June 2084
-
-SUB: Proposal: Alien Autopsy -- Bloodspider
-
-
-Commander,
+text "_Commander,
 
 We've recovered a new alien corpse from the battlefield. We should begin dissection and assessment as soon as possible.
 
@@ -126,7 +117,7 @@ text "_Commander,
 
 The autopsy and evaluation of the green alien specimen is complete. I'm hereby submitting my summary for your review.
 
-The first thing we noticed about this species, which has been named the 'Ortnok', is its size. Its appearence is like a brutish, hulking caricature of a man, something that can be quite disturbing to our agents in the field, but we've confirmed that the Ortnok is in no way genetically related to humanity.
+The first thing we noticed about this species, which has been named the 'Ortnok', is its size. Its appearance is like a brutish, hulking caricature of a man, something that can be quite disturbing to our agents in the field, but we've confirmed that the Ortnok is in no way genetically related to humanity.
 
 In proportion to its body weight, the Ortnok has more muscle than a professional body builder. At first we concluded this was solely the product of an extreme-heavy-gravity homeworld, but subsequent hormone and toxicology work on our specimen have revealed something interesting. The subject seems to have been raised from birth on a heavy diet of genetic tampering and anabolic steroids. This, combined with the incredible density of the muscle tissue, makes the Ortnok physically stronger than any biological entity on Earth.
 

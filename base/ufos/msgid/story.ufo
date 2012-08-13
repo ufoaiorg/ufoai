@@ -225,17 +225,7 @@ Dr. Connor"
 }
 
 msgid alien_base_txt {
-text "_Proposal
-
-TO: Base Commander, PHALANX, Atlantic Operations Command
-
-FROM: Col. Ingrid Falkland, Intelligence Division, PHALANX, Atlantic Operations Command
-
-DATE: %02i %s %i
-
-SUB: Alien Base
-
-Good morning, Sir.
+text "_Good morning, Sir.
 
 As you're aware, we are facing an increasingly worsening threat from the XVI virus. Over the past few weeks, DivIntel has been making a push into the areas in which the infection is most concentrated, in order to try and find some piece of intel that could help us understand how and why this infection spreads so fast from these focal points. I have been personally supervising the effort.
 
@@ -251,7 +241,9 @@ Satellite imagery and recon flyovers have indicated that infected humans appear 
 
 That's all the intel I've got for you on this one, Sir. Good luck and good hunting.
 
-With kind regards,Col. Falkland"
+With kind regards,
+
+Col. Falkland"
 }
 
 msgid universal_serum_txt {
@@ -281,7 +273,9 @@ There's also the larger hurdle of having to inject every single specimen of the 
 
 To this end, armed with our expanded knowledge of the alien mind and body, I propose a new research program to look into a universal set of sera that we can use to extract more reliable information, faster and more easily. There is obviously a great deal of information inside these specimens waiting to be seized, Commander; we just need the tools to properly crack the shell.
 
-Sincerely,Dr. Connor"
+Sincerely,
+
+Dr. Connor"
 }
 
 msgid alien_origins_txt {
@@ -385,17 +379,7 @@ Cdr. Navarre"
 }
 
 msgid enemy_on_earth_alt_txt {
-text "_Proposal
-
-TO: Base Commander, PHALANX, Atlantic Operations Command
-
-FROM: Dr. Connor, R&D: Bio & Containment Division, PHALANX, Atlantic Operations Command
-
-DATE: %02i %s %i
-
-SUB: Proposal: The Enemy On Earth
-
-Commander,
+text "_Commander,
 
 My team and I are deeply troubled by the recent reports of human hostility against PHALANX personnel, as I'm sure you are. We've all seen the battlefield footage. There's no doubt that the attackers were humans like you and me, but it's also clear they were using alien weaponry and equipment -- some of which even PHALANX has never seen before.
 
@@ -515,17 +499,7 @@ text "_No pre research info available"
 }
 
 msgid alien_strategy_txt {
-text "_Proposal
-
-TO: Base Commander, PHALANX, Atlantic Operations Command
-
-FROM: Col. Ingrid Falkland, Intelligence Division, PHALANX, Atlantic Operations Command
-
-DATE: %02i %s %i
-
-SUB: Proposal: The Alien Strategy
-
-Good morning, Sir.
+text "_Good morning, Sir.
 
 I'm afraid this isn't a social message; I'm writing you because of our pressing need for more information. We at DivIntel have been doing our part with tracking, logging and double-checking all reported alien activity on Earth, but we're increasingly being faced with our lack of data about the overarching goals of the alien invasion. We have no means of anticipating the aliens' next move because we have no clue as to what game plan they're following. That's why I am submitting a new project for your authorisation.
 
@@ -541,17 +515,7 @@ Col. Falkland"
 }
 
 msgid orbital_ufo_activity_txt {
-text "_Proposal
-
-TO: Base Commander, PHALANX, Atlantic Operations Command
-
-FROM: Col. Ingrid Falkland, Intelligence Division, PHALANX, Atlantic Operations Command
-
-DATE: %02i %s %i
-
-SUB: Proposal: Orbital UFO Activity
-
-Good morning, Sir.
+text "_Good morning, Sir.
 
 Let me begin by stating a few ugly realities.
 

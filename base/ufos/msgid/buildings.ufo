@@ -481,17 +481,7 @@ We should not consider the Radar facility to be an end-all solution to UFO detec
 }
 
 msgid b_radar_adv_txt {
-text "_Proposal
-
-TO: Base Commander, PHALANX, Atlantic Operations Command
-
-FROM: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command
-
-DATE: %02i %s %i
-
-SUB: Proposal: Advanced Radar Facility
-
-Commander, thanks to our recent capture and research into alien sensor equipment, I am now confident that we can drastically upgrade our radar capabilities using these new technologies. I'd like to submit a research proposal for a new detection facility, incorporating all the advances we've made so far.
+text "_Commander, thanks to our recent capture and research into alien sensor equipment, I am now confident that we can drastically upgrade our radar capabilities using these new technologies. I'd like to submit a research proposal for a new detection facility, incorporating all the advances we've made so far.
 
 The Advanced Radar Facility will use exclusively PHALANX-manufactured equipment rather than off-the-shelf components. Much of the technology is already in place. We just need additional time and funding to complete some of the designs and adapt our software into a coherent package.
 
