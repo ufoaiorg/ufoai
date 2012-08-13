@@ -3948,7 +3948,7 @@ msgstr ""
 "\n"
 "Proszę abyś podjął odpowiednie kroki kiedy tylko będziesz mógł, Dowódco. Najgorsze dać się zaskoczyć będąc nieprzygotowanym.\n"
 "\n"
-"--mjr Navarre\n"
+"--mjr. Navarre"
 
 #: ../base/ufos/msgid/aircraft.ufo:390
 #, fuzzy
