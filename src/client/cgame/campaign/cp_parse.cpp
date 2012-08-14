@@ -4,7 +4,7 @@
  */
 
 /*
-Copyright (C) 2002-2011 UFO: Alien Invasion.
+Copyright (C) 2002-2012 UFO: Alien Invasion.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -20,7 +20,6 @@ See the GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-
 */
 
 #include "../../cl_shared.h"
@@ -369,6 +368,7 @@ static void CP_ParseCampaign (const char *name, const char **text)
 	const char *token;
 	int i;
 	salary_t *s;
+	bool drop = false;
 
 	/* search for campaigns with same name */
 	for (i = 0; i < ccs.numCampaigns; i++)
@@ -410,28 +410,18 @@ static void CP_ParseCampaign (const char *name, const char **text)
 		return;
 	}
 
-	/* some default values */
+	/* set undefined markers */
 	s = &cp->salaries;
-	s->base[EMPL_SOLDIER] = 3000;
-	s->rankBonus[EMPL_SOLDIER] = 500;
-	s->base[EMPL_WORKER] = 3000;
-	s->rankBonus[EMPL_WORKER] = 500;
-	s->base[EMPL_SCIENTIST] = 3000;
-	s->rankBonus[EMPL_SCIENTIST] = 500;
-	s->base[EMPL_PILOT] = 3000;
-	s->rankBonus[EMPL_PILOT] = 500;
-	s->base[EMPL_ROBOT] = 7500;
-	s->rankBonus[EMPL_ROBOT] = 1500;
-	s->aircraftFactor = 1;
-	s->aircraftDivisor = 25;
-	s->baseUpkeep = 20000;
-	s->adminInitial = 1000;
-	s->admin[EMPL_SOLDIER] = 75;
-	s->admin[EMPL_WORKER] = 75;
-	s->admin[EMPL_SCIENTIST] = 75;
-	s->admin[EMPL_PILOT] = 75;
-	s->admin[EMPL_ROBOT] = 150;
-	s->debtInterest = 0.005;
+    for (i = 0; i < MAX_EMPL; i++) {
+		s->base[i] = -1;
+		s->rankBonus[i] = -1;
+		s->admin[i] = -1;
+	}
+	s->aircraftFactor = -1;
+	s->aircraftDivisor = -1;
+	s->baseUpkeep = -1;
+	s->adminInitial = -1;
+	s->debtInterest = -1;
 
 	do {
 		token = Com_EParse(text, errhead, name);
@@ -460,6 +450,20 @@ static void CP_ParseCampaign (const char *name, const char **text)
 		cp->difficulty = -4;
 	else if (cp->difficulty > 4)
 		cp->difficulty = 4;
+
+	/* checking for undefined values */
+	for (i = 0; i < MAX_EMPL; i++) {
+		if (s->base[i] == -1 || s->rankBonus[i] == -1 || s->admin[i] == -1) {
+			drop = true;
+			break;
+		}
+	}
+	if (drop || s->aircraftFactor == -1 || s->aircraftDivisor == -1 || s->baseUpkeep == -1
+	 || s->adminInitial == -1 || s->debtInterest == -1) {
+		Com_Printf("CP_ParseCampaign: check salary definition. Campaign def \"%s\" ignored\n", name);
+		ccs.numCampaigns--;
+		return;
+	}
 }
 
 /** components type parsing helper */

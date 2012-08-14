@@ -27,58 +27,10 @@ campaign veryhard
 
 	date		"2084 79 6"
 	basecost	100000
-}
 
-campaign hard
-{
-	name			"_Hard Campaign"
-	text			"*msgid:hard_campaign_txt"
-	team			"phalanx"
-	soldiers		8
-	scientists		6
-	workers			6
-	pilots			4
-	difficulty		2
-	minhappiness	0.35
-	maxdebts		100000
-	xvirate			50
 	salary {
-		soldier_base 4000
-	}
-	firstbase			balanced
-	researched			rslist_phalanx
-	equipment			campaign_player
-	soldierequipment	phalanx_initial
-	market				campaign_initial_market
-	asymptotic_market	campaign_asymptotic_market
-	credits				1300000
-	map					"map_earth"
-	visible				true
-	events				main
-	researchrate		0.8
-	uforeductionrate	0.65
-	healingrate			2
-
-	date		"2084 79 6"
-	basecost	100000
-}
-
-campaign main
-{
-	name			"_Standard Campaign"
-	text			"*msgid:standard_campaign_txt"
-	team			"phalanx"
-	soldiers		9
-	scientists		10
-	workers			10
-	pilots			6
-	difficulty		0
-	minhappiness	0.30
-	maxdebts		200000
-	xvirate			70
-	salary {
-	    soldier_base 1500
-		soldier_rankbonus 0
+		soldier_base 2500
+		soldier_rankbonus 500
 		worker_base 500
 		worker_rankbonus 0
 		scientist_base 1000
@@ -96,8 +48,77 @@ campaign main
 		admin_scientist 75
 		admin_pilot 75
 		admin_robot 150
-		debt_interest 0.005
+		debt_interest 0.01
 	}
+}
+
+campaign hard
+{
+	name			"_Hard Campaign"
+	text			"*msgid:hard_campaign_txt"
+	team			"phalanx"
+	soldiers		8
+	scientists		6
+	workers			6
+	pilots			4
+	difficulty		2
+	minhappiness	0.35
+	maxdebts		100000
+	xvirate			50
+	firstbase			balanced
+	researched			rslist_phalanx
+	equipment			campaign_player
+	soldierequipment	phalanx_initial
+	market				campaign_initial_market
+	asymptotic_market	campaign_asymptotic_market
+	credits				1300000
+	map					"map_earth"
+	visible				true
+	events				main
+	researchrate		0.8
+	uforeductionrate	0.65
+	healingrate			2
+
+	date		"2084 79 6"
+	basecost	100000
+
+	salary {
+		soldier_base 2000
+		soldier_rankbonus 250
+		worker_base 500
+		worker_rankbonus 0
+		scientist_base 1000
+		scientist_rankbonus 0
+		pilot_base 1500
+		pilot_rankbonus 0
+		robot_base 7500
+		robot_rankbonus 0
+		aircraft_factor 1
+		aircraft_divisor 25
+		base_upkeep 20000
+		admin_initial 1000
+		admin_soldier 75
+		admin_worker 75
+		admin_scientist 75
+		admin_pilot 75
+		admin_robot 150
+		debt_interest 0.0075
+	}
+}
+
+campaign main
+{
+	name			"_Standard Campaign"
+	text			"*msgid:standard_campaign_txt"
+	team			"phalanx"
+	soldiers		9
+	scientists		10
+	workers			10
+	pilots			6
+	difficulty		0
+	minhappiness	0.30
+	maxdebts		200000
+	xvirate			70
 	firstbase			balanced
 	researched			rslist_phalanx
 	ugvs				2
@@ -115,58 +136,10 @@ campaign main
 
 	date		"2084 79 6"
 	basecost	100000
-}
 
-campaign easy
-{
-	name			"_Easy Campaign"
-	text			"*msgid:easy_campaign_txt"
-	team			"phalanx"
-	soldiers		25
-	scientists		16
-	workers			10
-	pilots			8
-	difficulty		-2
-	minhappiness	0.2
-	maxdebts		350000
-	xvirate			80
 	salary {
-		soldier_base 3000
-	}
-	firstbase			balanced
-	researched			rslist_phalanx
-	equipment			campaign_player
-	soldierequipment	phalanx_initial
-	market				campaign_initial_market
-	asymptotic_market	campaign_asymptotic_market
-	credits				1300000
-	map					"map_earth"
-	visible				true
-	events				main
-	researchrate		0.8
-	uforeductionrate	0.65
-	healingrate			2
-
-	date		"2084 79 6"
-	basecost	100000
-}
-
-campaign veryeasy
-{
-	name			"_Very Easy Campaign"
-	text			"*msgid:veryeasy_campaign_txt"
-	team			"phalanx"
-	soldiers		35
-	scientists		26
-	workers			20
-	pilots			10
-	difficulty		-4
-	minhappiness	0.1
-	maxdebts		500000
-	xvirate			90
-	salary {
-	    soldier_base 1500
-		soldier_rankbonus 0
+		soldier_base 1500
+		soldier_rankbonus 150
 		worker_base 500
 		worker_rankbonus 0
 		scientist_base 1000
@@ -186,6 +159,21 @@ campaign veryeasy
 		admin_robot 150
 		debt_interest 0.005
 	}
+}
+
+campaign easy
+{
+	name			"_Easy Campaign"
+	text			"*msgid:easy_campaign_txt"
+	team			"phalanx"
+	soldiers		25
+	scientists		16
+	workers			10
+	pilots			8
+	difficulty		-2
+	minhappiness	0.2
+	maxdebts		350000
+	xvirate			80
 	firstbase			balanced
 	researched			rslist_phalanx
 	equipment			campaign_player
@@ -202,6 +190,83 @@ campaign veryeasy
 
 	date		"2084 79 6"
 	basecost	100000
+
+	salary {
+		soldier_base 1500
+		soldier_rankbonus 100
+		worker_base 500
+		worker_rankbonus 0
+		scientist_base 1000
+		scientist_rankbonus 0
+		pilot_base 1500
+		pilot_rankbonus 0
+		robot_base 7500
+		robot_rankbonus 0
+		aircraft_factor 1
+		aircraft_divisor 25
+		base_upkeep 20000
+		admin_initial 1000
+		admin_soldier 75
+		admin_worker 75
+		admin_scientist 75
+		admin_pilot 75
+		admin_robot 150
+		debt_interest 0.005
+	}
+}
+
+campaign veryeasy
+{
+	name			"_Very Easy Campaign"
+	text			"*msgid:veryeasy_campaign_txt"
+	team			"phalanx"
+	soldiers		35
+	scientists		26
+	workers			20
+	pilots			10
+	difficulty		-4
+	minhappiness	0.1
+	maxdebts		500000
+	xvirate			90
+	firstbase			balanced
+	researched			rslist_phalanx
+	equipment			campaign_player
+	soldierequipment	phalanx_initial
+	market				campaign_initial_market
+	asymptotic_market	campaign_asymptotic_market
+	credits				1300000
+	map					"map_earth"
+	visible				true
+	events				main
+	researchrate		0.8
+	uforeductionrate	0.65
+	healingrate			2
+
+	date		"2084 79 6"
+	basecost	100000
+
+	salary {
+		soldier_base 1500
+		soldier_rankbonus 100
+		worker_base 500
+		worker_rankbonus 0
+		scientist_base 1000
+		scientist_rankbonus 0
+		pilot_base 1500
+		pilot_rankbonus 0
+		robot_base 7500
+		robot_rankbonus 0
+		aircraft_factor 1
+		aircraft_divisor 25
+		base_upkeep 20000
+		admin_initial 1000
+		admin_soldier 75
+		admin_worker 75
+		admin_scientist 75
+		admin_pilot 75
+		admin_robot 150
+		debt_interest 0.005
+	}
 }
 
 /*
