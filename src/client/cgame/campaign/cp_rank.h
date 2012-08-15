@@ -3,7 +3,7 @@
  */
 
 /*
-Copyright (C) 2002-2011 UFO: Alien Invasion.
+Copyright (C) 2002-2012 UFO: Alien Invasion.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -19,7 +19,6 @@ See the GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-
 */
 
 #ifndef CL_RANK_H
@@ -39,6 +38,7 @@ typedef struct rank_s {
 	int killedOthers;		/**< needed amount of other actors killed */
 	float factor;		/**< a factor that is used to e.g. increase the win
 						 * probability for auto missions */
+	int level;			/**< rank level for given employee type */
 } rank_t;
 
 void CL_ParseRanks(const char *name, const char **text);

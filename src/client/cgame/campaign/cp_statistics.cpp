@@ -42,6 +42,7 @@ void CP_StatsUpdate_f (void)
 	base_t *base;
 	const campaign_t *campaign = ccs.curCampaign;
 	const salary_t *salary = &campaign->salaries;
+	const rank_t *rank;
 
 	/* delete buffer */
 	OBJZERO(statsBuffer);
@@ -83,7 +84,8 @@ void CP_StatsUpdate_f (void)
 			const employeeType_t type = (employeeType_t)i;
 			if (!E_IsHired(employee))
 				continue;
-			costs += CP_GetSalaryBaseEmployee(salary, type) + employee->chr.score.rank * CP_GetSalaryRankBonusEmployee(salary, type);
+			rank = CL_GetRankByIdx(employee->chr.score.rank);
+			costs += CP_GetSalaryBaseEmployee(salary, type) + rank->level * CP_GetSalaryRankBonusEmployee(salary, type);
 			hired[employee->type]++;
 		}
 	}

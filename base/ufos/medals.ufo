@@ -31,6 +31,7 @@ rank scientist
 	image		"ranks/rank_scientist"
 	type		EMPL_SCIENTIST
 	factor		0.2
+	level		0
 }
 
 rank pilot
@@ -39,6 +40,7 @@ rank pilot
 	image		"ranks/rank_01"
 	type		EMPL_PILOT
 	factor		0.2
+	level		0
 }
 
 rank ugv
@@ -47,6 +49,7 @@ rank ugv
 	image		"ranks/ugv"
 	type		EMPL_ROBOT
 	factor		0.6
+	level		0
 }
 
 rank worker
@@ -55,6 +58,7 @@ rank worker
 	image		"ranks/rank_worker"
 	type		EMPL_WORKER
 	factor		0.2
+	level		0
 }
 
 rank rifleman
@@ -64,6 +68,7 @@ rank rifleman
 	image		"ranks/rank_01"
 	type		EMPL_SOLDIER
 	factor		0.4
+	level		0
 }
 
 rank lancecorp
@@ -76,6 +81,7 @@ rank lancecorp
 	killed_others	7
 	type			EMPL_SOLDIER
 	factor			0.4
+	level			1
 }
 
 rank corporal
@@ -88,6 +94,7 @@ rank corporal
 	killed_others	5
 	type			EMPL_SOLDIER
 	factor			0.5
+	level			2
 }
 
 rank sergeant
@@ -100,6 +107,7 @@ rank sergeant
 	killed_others	3
 	type			EMPL_SOLDIER
 	factor			0.5
+	level			3
 }
 
 rank warrant
@@ -112,6 +120,7 @@ rank warrant
 	killed_others	2
 	type			EMPL_SOLDIER
 	factor			0.5
+	level			4
 }
 
 rank senwarrant
@@ -123,6 +132,7 @@ rank senwarrant
 	killed_enemies	24
 	type			EMPL_SOLDIER
 	factor			0.6
+	level			5
 }
 
 rank seclieut
@@ -134,6 +144,7 @@ rank seclieut
 	killed_enemies	30
 	type			EMPL_SOLDIER
 	factor			0.6
+	level			6
 }
 
 rank lieut
@@ -145,6 +156,7 @@ rank lieut
 	killed_enemies	36
 	type			EMPL_SOLDIER
 	factor			0.6
+	level			7
 }
 
 rank captain
@@ -156,6 +168,7 @@ rank captain
 	killed_enemies	42
 	type			EMPL_SOLDIER
 	factor			0.7
+	level			8
 }
 
 rank major
@@ -167,6 +180,7 @@ rank major
 	killed_enemies	48
 	type			EMPL_SOLDIER
 	factor			0.7
+	level			9
 }
 
 rank ltcol
@@ -178,6 +192,7 @@ rank ltcol
 	killed_enemies	54
 	type			EMPL_SOLDIER
 	factor			0.8
+	level			10
 }
 
 rank col
@@ -189,4 +204,5 @@ rank col
 	killed_enemies	60
 	type			EMPL_SOLDIER
 	factor			0.9
+	level			11
 }

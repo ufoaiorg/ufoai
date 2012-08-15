@@ -5,7 +5,7 @@
  */
 
 /*
-Copyright (C) 2002-2011 UFO: Alien Invasion.
+Copyright (C) 2002-2012 UFO: Alien Invasion.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -756,6 +756,7 @@ void NAT_HandleBudget (const campaign_t *campaign)
 	int initialCredits = ccs.credits;
 	base_t *base;
 	const salary_t *salary = &campaign->salaries;
+	const rank_t *rank;
 
 	/* Refreshes the pilot global list.  Pilots who are already hired are unchanged, but all other
 	 * pilots are replaced.  The new pilots is evenly distributed between the nations that are happy (happiness > 0). */
@@ -812,8 +813,9 @@ void NAT_HandleBudget (const campaign_t *campaign)
 		E_Foreach(i, employee) {
 			if (!E_IsHired(employee))
 				continue;
+			rank = CL_GetRankByIdx(employee->chr.score.rank);
 			cost += CP_GetSalaryBaseEmployee(salary, employee->type)
-					+ employee->chr.score.rank * CP_GetSalaryRankBonusEmployee(salary, employee->type);
+					+ rank->level * CP_GetSalaryRankBonusEmployee(salary, employee->type);
 		}
 		totalExpenditure += cost;
 

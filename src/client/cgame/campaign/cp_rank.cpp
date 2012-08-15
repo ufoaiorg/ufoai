@@ -3,7 +3,7 @@
  */
 
 /*
-Copyright (C) 2002-2011 UFO: Alien Invasion.
+Copyright (C) 2002-2012 UFO: Alien Invasion.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -19,7 +19,6 @@ See the GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-
 */
 
 #include "../../cl_shared.h"
@@ -66,6 +65,7 @@ static const value_t rankValues[] = {
 	{"killed_enemies", V_INT, offsetof(rank_t, killedEnemies), MEMBER_SIZEOF(rank_t, killedEnemies)},
 	{"killed_others", V_INT, offsetof(rank_t, killedOthers), MEMBER_SIZEOF(rank_t, killedOthers)},
 	{"factor", V_FLOAT, offsetof(rank_t, factor), MEMBER_SIZEOF(rank_t, factor)},
+	{"level", V_INT, offsetof(rank_t, level), MEMBER_SIZEOF(rank_t, level)},
 	{NULL, V_NULL, 0, 0}
 };
 
@@ -104,6 +104,7 @@ void CL_ParseRanks (const char *name, const char **text)
 	rank = &ccs.ranks[ccs.numRanks++];
 	OBJZERO(*rank);
 	rank->id = Mem_PoolStrDup(name, cp_campaignPool, 0);
+	rank->level = -1;
 
 	do {
 		/* get the name type */
@@ -134,4 +135,7 @@ void CL_ParseRanks (const char *name, const char **text)
 
 	if (rank->shortname == NULL || !strlen(rank->shortname))
 		rank->shortname = rank->name;
+
+	if (rank->level == -1)
+		Com_Error(ERR_DROP, "CL_ParseRanks: level is missing for rank %s", rank->id);
 }
