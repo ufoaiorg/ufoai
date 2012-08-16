@@ -76,6 +76,7 @@ foreach my $file (@ARGV)
 	close(FILE) or die "Closing: $!";
 
 
+	my $line = 0;
 	LINE: foreach (@ARRAY)
 	{
 		unless (defined $str) {
@@ -86,7 +87,7 @@ foreach my $file (@ARGV)
 		if (!defined $str and m/\\?\"_(.*?)\\?\"(.*)/)
 		{
 			# ie. translatable
-			push @{$messages{raw2postring($1)}}, "$file:$." if ($1 ne '');
+			push @{$messages{raw2postring($1)}}, "$file:$line" if ($1 ne '');
 
 			# process remaining of the line
 			$_ = $2 . "\n";
@@ -105,7 +106,7 @@ foreach my $file (@ARGV)
 
 			$str .= $1;
 
-			push @{$messages{"\"\"\n" . raw2postring($str)}}, "$file:$."
+			push @{$messages{"\"\"\n" . raw2postring($str)}}, "$file:$line"
 				if $translatable;
 			$str = undef;
 
@@ -119,6 +120,7 @@ foreach my $file (@ARGV)
 			if (m/(.*)\r/) { $_ = "$1\n"; }
 			$str .= $_;
 		}
+		$line++;
 	}
 	#print STDERR "Processed $file\n";
 }
