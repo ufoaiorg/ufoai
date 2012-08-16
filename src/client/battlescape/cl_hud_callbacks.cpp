@@ -83,17 +83,17 @@ static bool HUD_CheckShooting (const le_t* le, invList_t *weapon)
 
 	/* No item in hand. */
 	if (!weapon || !weapon->item.item) {
-		HUD_DisplayMessage(_("No item in hand."));
+		HUD_DisplayMessage(_("Can't perform action - no item in hand!"));
 		return false;
 	}
 	/* Cannot shoot because of lack of ammo. */
 	if (weapon->item.ammoLeft <= 0 && weapon->item.item->reload) {
-		HUD_DisplayMessage(_("Can't perform action:\nOut of ammo."));
+		HUD_DisplayMessage(_("Can't perform action - no ammo!"));
 		return false;
 	}
 	/* Cannot shoot because weapon is fireTwoHanded, yet both hands handle items. */
 	if (weapon->item.item->fireTwoHanded && LEFT(le)) {
-		HUD_DisplayMessage(_("This weapon cannot be fired\none handed."));
+		HUD_DisplayMessage(_("Can't perform action - weapon cannot be fired one handed!"));
 		return false;
 	}
 
@@ -145,9 +145,9 @@ static void HUD_FireWeapon_f (void)
 		/* Store firemode. */
 		actor->currentSelectedFiremode = firemode;
 	} else {
-		/* Cannot shoot because of not enough TUs - every other
+		/* Can not shoot because of not enough TUs - every other
 		 * case should be checked previously in this function. */
-		HUD_DisplayMessage(_("Can't perform action:\nNot enough TUs."));
+		HUD_DisplayMessage(_("Can't perform action - not enough TUs!"));
 	}
 }
 
@@ -255,25 +255,25 @@ static bool HUD_CheckReload (const le_t* le, const invList_t *weapon, containerI
 
 	/* No item in hand. */
 	if (!weapon || !weapon->item.item) {
-		HUD_DisplayMessage(_("No item in hand."));
+		HUD_DisplayMessage(_("Can't perform action - no item in hand!"));
 		return false;
 	}
 
 	/* Cannot reload because this item is not reloadable. */
 	if (!weapon->item.item->reload) {
-		HUD_DisplayMessage(_("Can't perform action:\nThis item is not reloadable."));
+		HUD_DisplayMessage(_("Can't perform action - this item is not reloadable!"));
 		return false;
 	}
 
 	tus = HUD_CalcReloadTime(le, weapon->item.item, container);
 	/* Cannot reload because of no ammo in inventory. */
 	if (tus == -1) {
-		HUD_DisplayMessage(_("Can't perform action:\nAmmo not available."));
+		HUD_DisplayMessage(_("Can't perform action - no ammo!"));
 		return false;
 	}
 	/* Cannot reload because of not enough TUs. */
 	if (le->TU < tus) {
-		HUD_DisplayMessage(_("Can't perform action:\nNot enough TUs."));
+		HUD_DisplayMessage(_("Can't perform action - not enough TUs!"));
 		return false;
 	}
 
