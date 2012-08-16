@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
 "POT-Creation-Date: 2012-08-13 07:09+0200\n"
-"PO-Revision-Date: 2012-08-16 16:11+0100\n"
-"Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
+"PO-Revision-Date: 2012-08-16 17:56+0100\n"
+"Last-Translator: Martin Gerhardy <tlh2000@users.sourceforge.net>\n"
 "Language-Team: \n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -2574,9 +2574,8 @@ msgid "media/DejaVuSans.ttf"
 msgstr "media/DejaVuSans.ttf"
 
 #: ../base/ufos/fonts.ufo:89
-#, fuzzy
 msgid "media/languages.ttf"
-msgstr "media/DejaVuSans.ttf"
+msgstr "media/languages.ttf"
 
 #: ../base/ufos/gamemodes.ufo:16
 #, fuzzy
@@ -2802,7 +2801,6 @@ msgid "Crashed UFO in an african suburban district."
 msgstr "UFO in orientalischem Vorort abgestürzt"
 
 #: ../base/ufos/maps.ufo:262
-#, fuzzy
 msgid "An UFO crashsite."
 msgstr "UFO Absturzstelle."
 
@@ -7751,7 +7749,6 @@ msgstr ""
 "Dr. Connor"
 
 #: ../base/ufos/msgid/story.ufo:246
-#, fuzzy
 msgid ""
 "Good morning, Sir.\n"
 "\n"
@@ -7773,16 +7770,6 @@ msgid ""
 "\n"
 "Col. Falklan"
 msgstr ""
-"Antrag\n"
-"\n"
-"TO: Basiskommandeur, PHALANX, Atlantisches Operationskommando\n"
-"\n"
-"FROM: Col. Ingrid Falkland, Abteilung für Aufklärung, PHALANX, Atlantisches Operationskommando\n"
-"\n"
-"DATE: %02i %s %i\n"
-"\n"
-"SUB: Außerirdische Basis\n"
-"\n"
 "Guten Morgen Herr Kommandant!\n"
 "\n"
 "Wie Sie wissen, stehen wir vor einer zunehmenden Bedrohung durch den XVI-Virus. In den letzten Wochen ist unsere Abteilung in Gebiete mit großer Infektionsrate vorgedrungen, um herauszubekommen, warum sich der Virus von dort so schnell ausbreiten kann. Ich habe die Bemühungen persönlich überwacht.\n"
@@ -8256,16 +8243,6 @@ msgid ""
 "\n"
 "Col. Falklan"
 msgstr ""
-"Ergebnis\n"
-"\n"
-"AN: Basiskommandeur, PHALANX, Atlantisches Operationskommando\n"
-"\n"
-"VON: Col. Ingrid Falkland, Abteilung für Aufklärung, PHALANX, Atlantisches Operationskommando\n"
-"\n"
-"DATUM: %02i %s %i\n"
-"\n"
-"BETREFF: Re: Die Strategie der Außerirdischen\n"
-"\n"
 "Guten Morgen Herr Kommandant,\n"
 "\n"
 "Ich habe einen umfassenden Bericht über unsere Arbeit bei der Entschlüsselung der Aktivitätsmuster der Außerirdischen und deren Gesamtstrategie zur Erde erstellt. Sie können das komplette Dokument in unseren Archiven nachlesen, doch ich habe im Folgenden eine kurze Zusammenfassung vorbereitet.\n"
@@ -8291,7 +8268,6 @@ msgstr ""
 "Col. Falkland"
 
 #: ../base/ufos/msgid/story.ufo:548
-#, fuzzy
 msgid ""
 "Good morning, Sir.\n"
 "\n"
@@ -8325,16 +8301,6 @@ msgid ""
 "\n"
 "Col. Falklan"
 msgstr ""
-"Antrag\n"
-"\n"
-"TO: Basiskommandeur, PHALANX, Atlantisches Operationskommando\n"
-"\n"
-"FROM: Col. Ingrid Falkland, Abteilung für Aufklärung, PHALANX, Atlantisches Operationskommando\n"
-"\n"
-"DATE: %02i %s %i\n"
-"\n"
-"SUB: UFO-Aktivitäten im Orbit\n"
-"\n"
 "Guten Morgen Herr Kommandant,\n"
 "\n"
 "Lassen Sie mich mit ein paar unangenehmen Tatsachen beginnen:\n"
@@ -11825,7 +11791,6 @@ msgid "stungren_alien_txt"
 msgstr "<TODO>"
 
 #: ../base/ufos/msgid/weapons.ufo:1870
-#, fuzzy
 msgid ""
 "Commander,\n"
 "\n"
@@ -11868,7 +11833,6 @@ msgstr ""
 "Dr. Connor"
 
 #: ../base/ufos/msgid/weapons.ufo:1888
-#, fuzzy
 msgid ""
 "Commander,\n"
 "\n"
@@ -11903,7 +11867,6 @@ msgstr ""
 "Dr. Connor"
 
 #: ../base/ufos/msgid/weapons.ufo:1906
-#, fuzzy
 msgid ""
 "Commander, I've got the specs of the new alien pistol for you, and they're not good.\n"
 "\n"
@@ -11935,7 +11898,7 @@ msgstr ""
 "\n"
 "Ich halte Sie über unsere Fortschritte mit den Magazinen auf dem Laufenden, Herr Kommandant.\n"
 "\n"
-"--Cdr. Navarre"
+"Cdr. Navarre"
 
 #: ../base/ufos/msgid/weapons.ufo:1914
 #, fuzzy
