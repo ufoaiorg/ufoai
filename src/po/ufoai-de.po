@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
 "POT-Creation-Date: 2012-08-13 07:09+0200\n"
-"PO-Revision-Date: 2012-08-13 07:37+0100\n"
-"Last-Translator: Martin Gerhardy <tlh2000@users.sourceforge.net>\n"
+"PO-Revision-Date: 2012-08-16 16:11+0100\n"
+"Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: \n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -3731,7 +3731,6 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/msgid/aircraft.ufo:256
-#, fuzzy
 msgid ""
 "Commander, we've recovered a new UFO type which is now waiting in our hangar for disassembly. Recovering a Fighter-class UFO has been one of the things we at DivEngine have been praying for. This is the first armed combat UFO that PHALANX has observed; it is vital that we study these alien craft and weapons and learn their weaknesses, if they have any.\n"
 "\n"
@@ -3743,10 +3742,9 @@ msgstr ""
 "\n"
 "Wir sind bereit, ihn zu studieren und auseinanderzunehmen, aber wir brauchen etwas Laborplatz und Geld, um eine genaue Einschätzung seiner Funktionen und Fähigkeiten zu machen.\n"
 "\n"
-"--Cdr. Navarre"
+"Cdr. Navarre"
 
 #: ../base/ufos/msgid/aircraft.ufo:274
-#, fuzzy
 msgid ""
 "Commander, my team and I have just finished another UFO report for you. Here is my summary for your review.\n"
 "\n"
@@ -3764,7 +3762,9 @@ msgid ""
 "\n"
 "Cdr. Navarr"
 msgstr ""
-"Herr Kommandant, mein Team hat soeben einen weiteren UFO-Bericht für Sie abgeschlossen. Hier ist meine Zusammenfassung zu Ihrer Kenntnisnahme: Soweit wir es bestimmen konnten, ist dieses Schiff in der Tat eine Art Transporter, der in seinem großen Laderaum Material und bis zu 12 Aliens in einer kleinen, hinter dem Cockpit gelegenen Kabine aufnehmen kann. Satellitenüberwachung hat diese Schiffe beobachtet, wie sie in von Aliens kontrollierten Gebieten landen und Material und Passagiere ausladen. Dies ist ein deutliches Indiz für die \"Versorgungsschiff-Theorie\" und wir sind uns sicher, dass dies korrekt ist.\n"
+"Herr Kommandant, mein Team hat soeben einen weiteren UFO-Bericht für Sie abgeschlossen. Hier ist meine Zusammenfassung zu Ihrer Kenntnisnahme:\n"
+"\n"
+"Soweit wir es bestimmen konnten, ist dieses Schiff in der Tat eine Art Transporter, der in seinem großen Laderaum Material und bis zu 12 Aliens in einer kleinen, hinter dem Cockpit gelegenen Kabine aufnehmen kann. Satellitenüberwachung hat diese Schiffe beobachtet, wie sie in von Aliens kontrollierten Gebieten landen und Material und Passagiere ausladen. Dies ist ein deutliches Indiz für die \"Versorgungsschiff-Theorie\" und wir sind uns sicher, dass dies korrekt ist.\n"
 "\n"
 "Wir können aus der Konstruktion des Schiffes und dem Inhalt des Lagerraums einige Rückschlüsse ziehen. Anders als die UFOs, die wir bisher geborgen haben, ist das Versorgungsschiff eher für das Transportieren schwerer Güter als für das Überleben im Kampf konstruiert. Es ist schlecht zu manövrieren, der Antrieb ist weniger stark und gröber eingestellt und das Leitwerk ist durch einen Treffer leicht außer Gefecht zu setzen. Aus diesem Grund werden Versorgungsschiffe meist von größeren Geschwadern kampftauglicher UFOs abgeschirmt, falls es abgefangen wird.\n"
 "\n"
@@ -3776,10 +3776,9 @@ msgstr ""
 "\n"
 "Da Versorgungsschiffe vermutlich mit starken Eskorten fliegen, empfehlen wir sie nur mit deutlicher Übermacht anzugreifen.Das ist alles, Kommandant.\n"
 "\n"
-"--Cdr. Navarre"
+"Cdr. Navarre"
 
 #: ../base/ufos/msgid/aircraft.ufo:282
-#, fuzzy
 msgid ""
 "Commander, we've recovered a new UFO type which is now waiting in our hangar for disassembly. Larger than any of the other UFOs we've seen so far, it seems to be unarmed, and its large cargo hold suggests that it may be a supply carrier of some sort, supporting alien assets on the surface of the Earth. These craft can be found at the centre of many alien formations and will drastically increase the alien presence on our planet if we allow them to complete their missions.\n"
 "\n"
@@ -3791,7 +3790,7 @@ msgstr ""
 "\n"
 "Wir sind bereit, das Schiff zu zerlegen und zu analysieren, sobald wir Ihr OK erhalten. Aber wir werden einige Laborzeit und ein Budget benötigen, um eine genaue Einschätzung seiner Funktion und Möglichkeiten bieten zu können.\n"
 "\n"
-"--Cdr. Navarre"
+"Cdr. Navarre"
 
 #: ../base/ufos/msgid/aircraft.ufo:316
 #, fuzzy
@@ -3856,7 +3855,6 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/msgid/aircraft.ufo:342
-#, fuzzy
 msgid ""
 "Commander, my team and I have just finished another UFO report for you. Here is my summary for your review.\n"
 "\n"
@@ -3884,10 +3882,9 @@ msgstr ""
 "\n"
 "Insgesamt ist das Kanonenboot schnell, wendig und absolut tödlich. Es scheint in allen Bereichen bisher den beobachteten UFOs weit überlegen zu sein; es ist schneller, flinker, widerstandsfähiger und besser bewaffnet. Der einzige Vorteil für uns ist, dass es drei bis vier mal so viel Material benötigt ein Kanonenboot zu bauen wie ein kleines Kampfschiff und es mindestens doppelt so viel Treibstoff verbraucht. Von daher werden wir wohl nicht mit einer größeren Zahl an Kanonenbooten zu rechnen haben. Zu bedenken ist dabei aber, dass die Außerirdischen vermutlich auch gar keine größere Zahl dieses Schifftyps benötigen werden um uns in Staub zu verwandeln. Extreme Vorsicht ist angeraten, Kommandant. Ich empfehle, dass wir - sobald wir können - Zeit und Geld darauf verwenden, unsere Luftflotte aufzubessern.\n"
 "\n"
-"--Cdr. Navarre"
+"Cdr. Navarre"
 
 #: ../base/ufos/msgid/aircraft.ufo:352
-#, fuzzy
 msgid ""
 "Commander, we've recovered a new UFO type which is now waiting in our hangar for disassembly. Going by the extremely heavy armament it seems to be some kind of heavy fighter or fire support model, its size class somewhere in between those of the UFOs we've observed so far.\n"
 "\n"
@@ -3903,10 +3900,9 @@ msgstr ""
 "\n"
 "Wir sind bereit das Schiff zu zerlegen und zu studieren wann immer Sie den Befehl dazu erteilen, aber wir benötigen einiges an Laborstunden und finanzieller Unterstützung um eine genauere Beurteilung über seinen Funktionen und Fähigkeiten zu erstellen.\n"
 "\n"
-"--Cdr. Navarre"
+"Cdr. Navarre"
 
 #: ../base/ufos/msgid/aircraft.ufo:382
-#, fuzzy
 msgid ""
 "Commander, my team and I have just finished another UFO report for you. Here is my summary for your review.\n"
 "\n"
@@ -3944,7 +3940,7 @@ msgstr ""
 "\n"
 "Bitte Herr Kommandant, machen Sie alles, was in ihrer Macht steht. Ich würde uns dafür hassen, wenn es uns unvorbereitet treffen würden.\n"
 "\n"
-"--Cdr. Navarre"
+"Cdr. Navarre"
 
 #: ../base/ufos/msgid/aircraft.ufo:390
 #, fuzzy
@@ -3968,7 +3964,6 @@ msgid "Technical Specifications: "
 msgstr ""
 
 #: ../base/ufos/msgid/aircraftitems.ufo:78
-#, fuzzy
 msgid ""
 "Technical Specifications: Polymer Aircraft Armour\n"
 "\n"
@@ -4051,7 +4046,6 @@ msgstr ""
 "Keiner."
 
 #: ../base/ufos/msgid/aircraftitems.ufo:90
-#, fuzzy
 msgid ""
 "Commander, now that we have the ability to produce and work the alien materials, a whole new range of options has opened up to us. These materials are so strong and flexible that they can be used for almost anything. Their most promising uses, however, have been in aircraft design -- specifically armour.\n"
 "\n"
@@ -4073,10 +4067,9 @@ msgstr ""
 "\n"
 "Dies ist eine vielversprechende Möglichkeit, Herr Kommandant, die fraglos eine Überprüfung verdient.\n"
 "\n"
-"--Cdr. Navarre"
+"Cdr. Navarre"
 
 #: ../base/ufos/msgid/aircraftitems.ufo:106
-#, fuzzy
 msgid ""
 "Commander, I've got some good news. My team and I have finished prototyping the alien aircraft plating project. Our new armour is now ready for full PHALANX production.\n"
 "\n"
@@ -4106,7 +4099,7 @@ msgstr ""
 "\n"
 "Die Verwendung dieser Panzerung wird nur mit außerirdischer Antriebstechnologie oder sonstig verbesserten Triebwerken praktikabel sein, aufgrund des erhöhten Gewichts und der reduzierten Geschwindigkeit und Reichweite. Aber selbst dann wird sie unabdingbar sein, um die Schlagkraft unserer Flotte gegen die wachsende außerirdische Bedrohung aufrecht zu erhalten. Sie kennen den Preis neuer Flugzeuge so gut wie ich, Herr Kommandant -- wir können es uns nicht leisten, unsere Flugzeuge veralten zu lassen.\n"
 "\n"
-"--Cdr. Navarre"
+"Cdr. Navarre"
 
 #: ../base/ufos/msgid/aircraftitems.ufo:114
 #, fuzzy
