@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO-AI\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
-"POT-Creation-Date: 2012-08-16 20:45+0200\n"
+"POT-Creation-Date: 2012-08-16 20:57+0200\n"
 "PO-Revision-Date: 2010-05-26 14:42+0600\n"
 "Last-Translator: Kostia (Kildor) Romanov <kostia@ngs.ru>\n"
 "Language-Team:  <at yahoo.com.br, daniel_a_miranda>\n"
@@ -17263,36 +17263,27 @@ msgstr "Entra em pânico!\n"
 #: client/battlescape/cl_hud_callbacks.cpp:86
 #: client/battlescape/cl_hud_callbacks.cpp:258
 #, fuzzy
-msgid "No item in hand."
-msgstr "Não há item na mão.\n"
+msgid "Can't perform action - no item in hand!"
+msgstr "A ação não é possível - não é um ator!\n"
 
 #: client/battlescape/cl_hud_callbacks.cpp:91
+#: client/battlescape/cl_hud_callbacks.cpp:271 game/g_combat.cpp:1129
 #, fuzzy
-msgid ""
-"Can't perform action:\n"
-"Out of ammo."
-msgstr ""
-"Não é possível realizar a ação:\n"
-"sem munição.\n"
+msgid "Can't perform action - no ammo!"
+msgstr "A ação não é possível - não é um ator!\n"
 
-#: client/battlescape/cl_hud_callbacks.cpp:96
+#: client/battlescape/cl_hud_callbacks.cpp:96 game/g_combat.cpp:1122
 #, fuzzy
-msgid ""
-"This weapon cannot be fired\n"
-"one handed."
+msgid "Can't perform action - weapon cannot be fired one handed!"
 msgstr ""
 "Esta arma não pode ser disparada\n"
 "com uma mão.\n"
 
 #: client/battlescape/cl_hud_callbacks.cpp:150
-#: client/battlescape/cl_hud_callbacks.cpp:276
+#: client/battlescape/cl_hud_callbacks.cpp:276 game/g_actor.cpp:658
 #, fuzzy
-msgid ""
-"Can't perform action:\n"
-"Not enough TUs."
-msgstr ""
-"Não é possível realizar a ação:\n"
-"UTs insuficientes.\n"
+msgid "Can't perform action - not enough TUs!"
+msgstr "A ação não é possível - UT insuficientes!\n"
 
 #: client/battlescape/cl_hud_callbacks.cpp:177
 #, fuzzy
@@ -17316,21 +17307,10 @@ msgstr "Desabilitar fogo de reação"
 
 #: client/battlescape/cl_hud_callbacks.cpp:264
 #, fuzzy
-msgid ""
-"Can't perform action:\n"
-"This item is not reloadable."
+msgid "Can't perform action - this item is not reloadable!"
 msgstr ""
 "Não é possível realizar a ação:\n"
 "este item não é recarregável.\n"
-
-#: client/battlescape/cl_hud_callbacks.cpp:271
-#, fuzzy
-msgid ""
-"Can't perform action:\n"
-"Ammo not available."
-msgstr ""
-"Não é possível realizar a ação:\n"
-"munição não disponível.\n"
 
 #: client/battlescape/cl_hud_callbacks.cpp:297
 #, fuzzy
@@ -21160,11 +21140,6 @@ msgstr "Selecionar esta zona"
 msgid "Soldier left the rescue zone."
 msgstr "Selecionar esta zona"
 
-#: game/g_actor.cpp:658
-#, fuzzy
-msgid "Can't perform action - not enough TUs!"
-msgstr "A ação não é possível - UT insuficientes!\n"
-
 #: game/g_actor.cpp:662
 #, fuzzy
 msgid "Can't perform action - weapon already fully loaded with the same ammunition!"
@@ -21235,18 +21210,6 @@ msgstr "A ação não é possível - não é um ator!\n"
 #, fuzzy
 msgid "Can't perform action - object not activatable!"
 msgstr "A ação não é possível - o objeto não está presente!\n"
-
-#: game/g_combat.cpp:1122
-#, fuzzy
-msgid "Can't perform action - weapon cannot be fired one handed!"
-msgstr ""
-"Esta arma não pode ser disparada\n"
-"com uma mão.\n"
-
-#: game/g_combat.cpp:1129
-#, fuzzy
-msgid "Can't perform action - no ammo!"
-msgstr "A ação não é possível - não é um ator!\n"
 
 #: game/g_combat.cpp:1137
 #, fuzzy
@@ -21366,6 +21329,42 @@ msgstr "alienígena"
 #: po/OTHER_STRINGS:6
 msgid "Take a screenshot"
 msgstr "Tirar uma foto"
+
+#, fuzzy
+#~ msgid "No item in hand."
+#~ msgstr "Não há item na mão.\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "Can't perform action:\n"
+#~ "Out of ammo."
+#~ msgstr ""
+#~ "Não é possível realizar a ação:\n"
+#~ "sem munição.\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "This weapon cannot be fired\n"
+#~ "one handed."
+#~ msgstr ""
+#~ "Esta arma não pode ser disparada\n"
+#~ "com uma mão.\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "Can't perform action:\n"
+#~ "Not enough TUs."
+#~ msgstr ""
+#~ "Não é possível realizar a ação:\n"
+#~ "UTs insuficientes.\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "Can't perform action:\n"
+#~ "Ammo not available."
+#~ msgstr ""
+#~ "Não é possível realizar a ação:\n"
+#~ "munição não disponível.\n"
 
 #, fuzzy
 #~ msgid "Little forest"

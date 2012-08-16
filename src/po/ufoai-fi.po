@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ufoai\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
-"POT-Creation-Date: 2012-08-16 20:45+0200\n"
+"POT-Creation-Date: 2012-08-16 20:57+0200\n"
 "PO-Revision-Date: 2010-08-31 04:53+0200\n"
 "Last-Translator: Tuomas Lähteenmäki <lahtis@gmail.com>\n"
 "Language-Team: Finnish\n"
@@ -16720,36 +16720,25 @@ msgstr "Tällä hetkellä panikoidaan!\n"
 #: client/battlescape/cl_hud_callbacks.cpp:86
 #: client/battlescape/cl_hud_callbacks.cpp:258
 #, fuzzy
-msgid "No item in hand."
-msgstr "Ei tarviketta kädessä.\n"
+msgid "Can't perform action - no item in hand!"
+msgstr "Ei voida suorittaa toimenpidettä - ei ole hahmosi!\n"
 
 #: client/battlescape/cl_hud_callbacks.cpp:91
+#: client/battlescape/cl_hud_callbacks.cpp:271 game/g_combat.cpp:1129
 #, fuzzy
-msgid ""
-"Can't perform action:\n"
-"Out of ammo."
-msgstr ""
-"Ei voida suorittaa tehtävää:\n"
-"ammukset ovat loppu.\n"
+msgid "Can't perform action - no ammo!"
+msgstr "Ei voi suorittaa toimintoa - ei ammuksia!\n"
 
-#: client/battlescape/cl_hud_callbacks.cpp:96
+#: client/battlescape/cl_hud_callbacks.cpp:96 game/g_combat.cpp:1122
 #, fuzzy
-msgid ""
-"This weapon cannot be fired\n"
-"one handed."
-msgstr ""
-"Tällä asella ei voi ampua\n"
-"yhdellä kädellä.\n"
+msgid "Can't perform action - weapon cannot be fired one handed!"
+msgstr "Ei voi suorittaa toimintoa - aseella ei voi ampua yhdellä kädellä!\n"
 
 #: client/battlescape/cl_hud_callbacks.cpp:150
-#: client/battlescape/cl_hud_callbacks.cpp:276
+#: client/battlescape/cl_hud_callbacks.cpp:276 game/g_actor.cpp:658
 #, fuzzy
-msgid ""
-"Can't perform action:\n"
-"Not enough TUs."
-msgstr ""
-"Ei voida suorittaa tehtävää:\n"
-"ei tapeeksi TU:ta.\n"
+msgid "Can't perform action - not enough TUs!"
+msgstr "Ei voida suorittaa toimenpidettä - TU ei riitä!\n"
 
 #: client/battlescape/cl_hud_callbacks.cpp:177
 #, fuzzy
@@ -16773,21 +16762,10 @@ msgstr "Ei reaktio laukauksia asetettu aseeseen.\n"
 
 #: client/battlescape/cl_hud_callbacks.cpp:264
 #, fuzzy
-msgid ""
-"Can't perform action:\n"
-"This item is not reloadable."
+msgid "Can't perform action - this item is not reloadable!"
 msgstr ""
 "Ei voida suorittaa tehtävää:\n"
 "tämä kohde ei ole ladattava.\n"
-
-#: client/battlescape/cl_hud_callbacks.cpp:271
-#, fuzzy
-msgid ""
-"Can't perform action:\n"
-"Ammo not available."
-msgstr ""
-"Ei voi tehdä tehtävää:\n"
-"ammuksia ei ole jäljellä.\n"
 
 #: client/battlescape/cl_hud_callbacks.cpp:297
 #, fuzzy
@@ -20426,11 +20404,6 @@ msgstr "Sotilas saapui pelastusalueelle\n"
 msgid "Soldier left the rescue zone."
 msgstr "Sotilas poistui pelastusalueelta\n"
 
-#: game/g_actor.cpp:658
-#, fuzzy
-msgid "Can't perform action - not enough TUs!"
-msgstr "Ei voida suorittaa toimenpidettä - TU ei riitä!\n"
-
 #: game/g_actor.cpp:662
 #, fuzzy
 msgid "Can't perform action - weapon already fully loaded with the same ammunition!"
@@ -20504,16 +20477,6 @@ msgstr "Ei voi suorittaa toimintoa - mahdotonta heittää!\n"
 #, fuzzy
 msgid "Can't perform action - object not activatable!"
 msgstr "Ei voida suorittaa toimintoa - objekti ei aktivoidu!\n"
-
-#: game/g_combat.cpp:1122
-#, fuzzy
-msgid "Can't perform action - weapon cannot be fired one handed!"
-msgstr "Ei voi suorittaa toimintoa - aseella ei voi ampua yhdellä kädellä!\n"
-
-#: game/g_combat.cpp:1129
-#, fuzzy
-msgid "Can't perform action - no ammo!"
-msgstr "Ei voi suorittaa toimintoa - ei ammuksia!\n"
 
 #: game/g_combat.cpp:1137
 #, fuzzy
@@ -20635,6 +20598,42 @@ msgstr "alien"
 #: po/OTHER_STRINGS:6
 msgid "Take a screenshot"
 msgstr "Ota kuvakaappaus"
+
+#, fuzzy
+#~ msgid "No item in hand."
+#~ msgstr "Ei tarviketta kädessä.\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "Can't perform action:\n"
+#~ "Out of ammo."
+#~ msgstr ""
+#~ "Ei voida suorittaa tehtävää:\n"
+#~ "ammukset ovat loppu.\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "This weapon cannot be fired\n"
+#~ "one handed."
+#~ msgstr ""
+#~ "Tällä asella ei voi ampua\n"
+#~ "yhdellä kädellä.\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "Can't perform action:\n"
+#~ "Not enough TUs."
+#~ msgstr ""
+#~ "Ei voida suorittaa tehtävää:\n"
+#~ "ei tapeeksi TU:ta.\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "Can't perform action:\n"
+#~ "Ammo not available."
+#~ msgstr ""
+#~ "Ei voi tehdä tehtävää:\n"
+#~ "ammuksia ei ole jäljellä.\n"
 
 #~ msgid "Little forest"
 #~ msgstr "Pieni metsä"

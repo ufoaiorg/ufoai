@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
-"POT-Creation-Date: 2012-08-16 20:45+0200\n"
+"POT-Creation-Date: 2012-08-16 20:57+0200\n"
 "PO-Revision-Date: 2010-05-26 14:41+0600\n"
 "Last-Translator: Kostia (Kildor) Romanov <kostia@ngs.ru>\n"
 "Language-Team: \n"
@@ -17132,34 +17132,25 @@ msgstr "处于惊恐状态!\n"
 #: client/battlescape/cl_hud_callbacks.cpp:86
 #: client/battlescape/cl_hud_callbacks.cpp:258
 #, fuzzy
-msgid "No item in hand."
-msgstr "手里没有东西。\n"
+msgid "Can't perform action - no item in hand!"
+msgstr "无法执行：不可以指挥！\n"
 
 #: client/battlescape/cl_hud_callbacks.cpp:91
+#: client/battlescape/cl_hud_callbacks.cpp:271 game/g_combat.cpp:1129
 #, fuzzy
-msgid ""
-"Can't perform action:\n"
-"Out of ammo."
-msgstr ""
-"无法攻击：\n"
-"弹药不足。\n"
+msgid "Can't perform action - no ammo!"
+msgstr "无法行动：没有弹药！\n"
 
-#: client/battlescape/cl_hud_callbacks.cpp:96
+#: client/battlescape/cl_hud_callbacks.cpp:96 game/g_combat.cpp:1122
 #, fuzzy
-msgid ""
-"This weapon cannot be fired\n"
-"one handed."
-msgstr "武器不能单手使用\n"
+msgid "Can't perform action - weapon cannot be fired one handed!"
+msgstr "无法行动：武器不能单手使用！\n"
 
 #: client/battlescape/cl_hud_callbacks.cpp:150
-#: client/battlescape/cl_hud_callbacks.cpp:276
+#: client/battlescape/cl_hud_callbacks.cpp:276 game/g_actor.cpp:658
 #, fuzzy
-msgid ""
-"Can't perform action:\n"
-"Not enough TUs."
-msgstr ""
-"无法执行命令：\n"
-"活动时间不足。\n"
+msgid "Can't perform action - not enough TUs!"
+msgstr "无法执行：活动时间不足！\n"
 
 #: client/battlescape/cl_hud_callbacks.cpp:177
 #, fuzzy
@@ -17183,21 +17174,10 @@ msgstr "无自动反应"
 
 #: client/battlescape/cl_hud_callbacks.cpp:264
 #, fuzzy
-msgid ""
-"Can't perform action:\n"
-"This item is not reloadable."
+msgid "Can't perform action - this item is not reloadable!"
 msgstr ""
 "无法执行命令：\n"
 "这个装备不能重装弹药。\n"
-
-#: client/battlescape/cl_hud_callbacks.cpp:271
-#, fuzzy
-msgid ""
-"Can't perform action:\n"
-"Ammo not available."
-msgstr ""
-"无法攻击：\n"
-"弹药不能用。\n"
 
 #: client/battlescape/cl_hud_callbacks.cpp:297
 #, fuzzy
@@ -20857,11 +20837,6 @@ msgstr "外星人进入目标区域\n"
 msgid "Soldier left the rescue zone."
 msgstr "选择此部位"
 
-#: game/g_actor.cpp:658
-#, fuzzy
-msgid "Can't perform action - not enough TUs!"
-msgstr "无法执行：活动时间不足！\n"
-
 #: game/g_actor.cpp:662
 #, fuzzy
 msgid "Can't perform action - weapon already fully loaded with the same ammunition!"
@@ -20935,16 +20910,6 @@ msgstr "无法行动：不能扔出！\n"
 #, fuzzy
 msgid "Can't perform action - object not activatable!"
 msgstr "无法行动：不能使用！\n"
-
-#: game/g_combat.cpp:1122
-#, fuzzy
-msgid "Can't perform action - weapon cannot be fired one handed!"
-msgstr "无法行动：武器不能单手使用！\n"
-
-#: game/g_combat.cpp:1129
-#, fuzzy
-msgid "Can't perform action - no ammo!"
-msgstr "无法行动：没有弹药！\n"
 
 #: game/g_combat.cpp:1137
 #, fuzzy
@@ -21066,6 +21031,40 @@ msgstr "外星人"
 #: po/OTHER_STRINGS:6
 msgid "Take a screenshot"
 msgstr "屏幕截图"
+
+#, fuzzy
+#~ msgid "No item in hand."
+#~ msgstr "手里没有东西。\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "Can't perform action:\n"
+#~ "Out of ammo."
+#~ msgstr ""
+#~ "无法攻击：\n"
+#~ "弹药不足。\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "This weapon cannot be fired\n"
+#~ "one handed."
+#~ msgstr "武器不能单手使用\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "Can't perform action:\n"
+#~ "Not enough TUs."
+#~ msgstr ""
+#~ "无法执行命令：\n"
+#~ "活动时间不足。\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "Can't perform action:\n"
+#~ "Ammo not available."
+#~ msgstr ""
+#~ "无法攻击：\n"
+#~ "弹药不能用。\n"
 
 #~ msgid "Little forest"
 #~ msgstr "小树林"

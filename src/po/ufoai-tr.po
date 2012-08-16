@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
-"POT-Creation-Date: 2012-08-16 20:45+0200\n"
+"POT-Creation-Date: 2012-08-16 20:57+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16471,26 +16471,21 @@ msgstr ""
 
 #: client/battlescape/cl_hud_callbacks.cpp:86
 #: client/battlescape/cl_hud_callbacks.cpp:258
-msgid "No item in hand."
+msgid "Can't perform action - no item in hand!"
 msgstr ""
 
 #: client/battlescape/cl_hud_callbacks.cpp:91
-msgid ""
-"Can't perform action:\n"
-"Out of ammo."
+#: client/battlescape/cl_hud_callbacks.cpp:271 game/g_combat.cpp:1129
+msgid "Can't perform action - no ammo!"
 msgstr ""
 
-#: client/battlescape/cl_hud_callbacks.cpp:96
-msgid ""
-"This weapon cannot be fired\n"
-"one handed."
+#: client/battlescape/cl_hud_callbacks.cpp:96 game/g_combat.cpp:1122
+msgid "Can't perform action - weapon cannot be fired one handed!"
 msgstr ""
 
 #: client/battlescape/cl_hud_callbacks.cpp:150
-#: client/battlescape/cl_hud_callbacks.cpp:276
-msgid ""
-"Can't perform action:\n"
-"Not enough TUs."
+#: client/battlescape/cl_hud_callbacks.cpp:276 game/g_actor.cpp:658
+msgid "Can't perform action - not enough TUs!"
 msgstr ""
 
 #: client/battlescape/cl_hud_callbacks.cpp:177
@@ -16511,15 +16506,7 @@ msgid "Reaction fire disabled."
 msgstr ""
 
 #: client/battlescape/cl_hud_callbacks.cpp:264
-msgid ""
-"Can't perform action:\n"
-"This item is not reloadable."
-msgstr ""
-
-#: client/battlescape/cl_hud_callbacks.cpp:271
-msgid ""
-"Can't perform action:\n"
-"Ammo not available."
+msgid "Can't perform action - this item is not reloadable!"
 msgstr ""
 
 #: client/battlescape/cl_hud_callbacks.cpp:297
@@ -19960,10 +19947,6 @@ msgstr ""
 msgid "Soldier left the rescue zone."
 msgstr ""
 
-#: game/g_actor.cpp:658
-msgid "Can't perform action - not enough TUs!"
-msgstr ""
-
 #: game/g_actor.cpp:662
 msgid "Can't perform action - weapon already fully loaded with the same ammunition!"
 msgstr ""
@@ -20022,14 +20005,6 @@ msgstr ""
 
 #: game/g_combat.cpp:1096
 msgid "Can't perform action - object not activatable!"
-msgstr ""
-
-#: game/g_combat.cpp:1122
-msgid "Can't perform action - weapon cannot be fired one handed!"
-msgstr ""
-
-#: game/g_combat.cpp:1129
-msgid "Can't perform action - no ammo!"
 msgstr ""
 
 #: game/g_combat.cpp:1137

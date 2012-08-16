@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
-"POT-Creation-Date: 2012-08-16 20:45+0200\n"
+"POT-Creation-Date: 2012-08-16 20:57+0200\n"
 "PO-Revision-Date: 2012-03-31 14:16+0200\n"
 "Last-Translator: Borislav Boyadzhiev <bboyadzhiev@gmail.com>\n"
 "Language-Team: \n"
@@ -17046,36 +17046,25 @@ msgstr "Изпада в паника!\n"
 #: client/battlescape/cl_hud_callbacks.cpp:86
 #: client/battlescape/cl_hud_callbacks.cpp:258
 #, fuzzy
-msgid "No item in hand."
-msgstr "Няма нищо в ръката.\n"
+msgid "Can't perform action - no item in hand!"
+msgstr "Действието невъзможно - това не е войник!\n"
 
 #: client/battlescape/cl_hud_callbacks.cpp:91
+#: client/battlescape/cl_hud_callbacks.cpp:271 game/g_combat.cpp:1129
 #, fuzzy
-msgid ""
-"Can't perform action:\n"
-"Out of ammo."
-msgstr ""
-"Действието невъзможно:\n"
-"недостатъчно амуниции.\n"
+msgid "Can't perform action - no ammo!"
+msgstr "Действието невъзможно - няма амуниции!\n"
 
-#: client/battlescape/cl_hud_callbacks.cpp:96
+#: client/battlescape/cl_hud_callbacks.cpp:96 game/g_combat.cpp:1122
 #, fuzzy
-msgid ""
-"This weapon cannot be fired\n"
-"one handed."
-msgstr ""
-"Това оръжие не може да бъде\n"
-"ползвано с една ръка.\n"
+msgid "Can't perform action - weapon cannot be fired one handed!"
+msgstr "Действието невъзможно - оръжието се използва с две ръце\n"
 
 #: client/battlescape/cl_hud_callbacks.cpp:150
-#: client/battlescape/cl_hud_callbacks.cpp:276
+#: client/battlescape/cl_hud_callbacks.cpp:276 game/g_actor.cpp:658
 #, fuzzy
-msgid ""
-"Can't perform action:\n"
-"Not enough TUs."
-msgstr ""
-"Действието невъзможно:\n"
-"недостатъчни TUs.\n"
+msgid "Can't perform action - not enough TUs!"
+msgstr "Действието невъзможно - недостатъчни TUs!\n"
 
 #: client/battlescape/cl_hud_callbacks.cpp:177
 #, fuzzy
@@ -17099,21 +17088,10 @@ msgstr "Няма оръжие с активиран ответен огън.\n"
 
 #: client/battlescape/cl_hud_callbacks.cpp:264
 #, fuzzy
-msgid ""
-"Can't perform action:\n"
-"This item is not reloadable."
+msgid "Can't perform action - this item is not reloadable!"
 msgstr ""
 "Действието невъзможно:\n"
 "устройството не е презареждаемо.\n"
-
-#: client/battlescape/cl_hud_callbacks.cpp:271
-#, fuzzy
-msgid ""
-"Can't perform action:\n"
-"Ammo not available."
-msgstr ""
-"Действието невъзможно:\n"
-"няма амуниции.\n"
 
 #: client/battlescape/cl_hud_callbacks.cpp:297
 #, fuzzy
@@ -20838,11 +20816,6 @@ msgstr "Войник навлезе в зоната за спасяване\n"
 msgid "Soldier left the rescue zone."
 msgstr "Войник напусна зоната за спасяване\n"
 
-#: game/g_actor.cpp:658
-#, fuzzy
-msgid "Can't perform action - not enough TUs!"
-msgstr "Действието невъзможно - недостатъчни TUs!\n"
-
 #: game/g_actor.cpp:662
 #, fuzzy
 msgid "Can't perform action - weapon already fully loaded with the same ammunition!"
@@ -20916,16 +20889,6 @@ msgstr "Действието невъзможно - неосъществимо �
 #, fuzzy
 msgid "Can't perform action - object not activatable!"
 msgstr "Действието невъзможно - обекта не може да се активира!\n"
-
-#: game/g_combat.cpp:1122
-#, fuzzy
-msgid "Can't perform action - weapon cannot be fired one handed!"
-msgstr "Действието невъзможно - оръжието се използва с две ръце\n"
-
-#: game/g_combat.cpp:1129
-#, fuzzy
-msgid "Can't perform action - no ammo!"
-msgstr "Действието невъзможно - няма амуниции!\n"
 
 #: game/g_combat.cpp:1137
 #, fuzzy
@@ -21046,6 +21009,42 @@ msgstr "извънземен"
 #: po/OTHER_STRINGS:6
 msgid "Take a screenshot"
 msgstr "Направи снимка"
+
+#, fuzzy
+#~ msgid "No item in hand."
+#~ msgstr "Няма нищо в ръката.\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "Can't perform action:\n"
+#~ "Out of ammo."
+#~ msgstr ""
+#~ "Действието невъзможно:\n"
+#~ "недостатъчно амуниции.\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "This weapon cannot be fired\n"
+#~ "one handed."
+#~ msgstr ""
+#~ "Това оръжие не може да бъде\n"
+#~ "ползвано с една ръка.\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "Can't perform action:\n"
+#~ "Not enough TUs."
+#~ msgstr ""
+#~ "Действието невъзможно:\n"
+#~ "недостатъчни TUs.\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "Can't perform action:\n"
+#~ "Ammo not available."
+#~ msgstr ""
+#~ "Действието невъзможно:\n"
+#~ "няма амуниции.\n"
 
 #~ msgid "Little forest"
 #~ msgstr "Малка гора"

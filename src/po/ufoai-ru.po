@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
-"POT-Creation-Date: 2012-08-16 20:45+0200\n"
+"POT-Creation-Date: 2012-08-16 20:57+0200\n"
 "PO-Revision-Date: 2012-06-21 22:27+0700\n"
 "Last-Translator: Kostia (Kildor) Romanov <kromanov@gmail.com>\n"
 "Language-Team: \n"
@@ -16760,36 +16760,25 @@ msgstr "Паникует!\n"
 #: client/battlescape/cl_hud_callbacks.cpp:86
 #: client/battlescape/cl_hud_callbacks.cpp:258
 #, fuzzy
-msgid "No item in hand."
-msgstr "В руках ничего нет.\n"
+msgid "Can't perform action - no item in hand!"
+msgstr "Невозможно выполнить действие — это не персонаж!\n"
 
 #: client/battlescape/cl_hud_callbacks.cpp:91
+#: client/battlescape/cl_hud_callbacks.cpp:271 game/g_combat.cpp:1129
 #, fuzzy
-msgid ""
-"Can't perform action:\n"
-"Out of ammo."
-msgstr ""
-"Невозможно выполнить действие:\n"
-"кончились боеприпасы.\n"
+msgid "Can't perform action - no ammo!"
+msgstr "Невозможно выполнить действие — нет боеприпасов!\n"
 
-#: client/battlescape/cl_hud_callbacks.cpp:96
+#: client/battlescape/cl_hud_callbacks.cpp:96 game/g_combat.cpp:1122
 #, fuzzy
-msgid ""
-"This weapon cannot be fired\n"
-"one handed."
-msgstr ""
-"Из этого оружия нельзя стрелять\n"
-"с одной руки.\n"
+msgid "Can't perform action - weapon cannot be fired one handed!"
+msgstr "Невозможно выполнить действие — из этого оружия нельзя стрелять с одной руки.\n"
 
 #: client/battlescape/cl_hud_callbacks.cpp:150
-#: client/battlescape/cl_hud_callbacks.cpp:276
+#: client/battlescape/cl_hud_callbacks.cpp:276 game/g_actor.cpp:658
 #, fuzzy
-msgid ""
-"Can't perform action:\n"
-"Not enough TUs."
-msgstr ""
-"Невозможно выполнить действие:\n"
-"не хватает времени.\n"
+msgid "Can't perform action - not enough TUs!"
+msgstr "Невозможно выполнить действие — не хватает времени!\n"
 
 #: client/battlescape/cl_hud_callbacks.cpp:177
 #, fuzzy
@@ -16813,21 +16802,10 @@ msgstr "Оружие не имеет режима ответного огня.\n
 
 #: client/battlescape/cl_hud_callbacks.cpp:264
 #, fuzzy
-msgid ""
-"Can't perform action:\n"
-"This item is not reloadable."
+msgid "Can't perform action - this item is not reloadable!"
 msgstr ""
 "Невозможно выполнить действие:\n"
 "этот предмет нельзя перезарядить.\n"
-
-#: client/battlescape/cl_hud_callbacks.cpp:271
-#, fuzzy
-msgid ""
-"Can't perform action:\n"
-"Ammo not available."
-msgstr ""
-"Невозможно выполнить действие:\n"
-"нет патронов.\n"
 
 #: client/battlescape/cl_hud_callbacks.cpp:297
 #, fuzzy
@@ -20450,11 +20428,6 @@ msgstr "Солдат вошёл в зону спасения\n"
 msgid "Soldier left the rescue zone."
 msgstr "Солдат покинул зону спасения\n"
 
-#: game/g_actor.cpp:658
-#, fuzzy
-msgid "Can't perform action - not enough TUs!"
-msgstr "Невозможно выполнить действие — не хватает времени!\n"
-
 #: game/g_actor.cpp:662
 #, fuzzy
 msgid "Can't perform action - weapon already fully loaded with the same ammunition!"
@@ -20528,16 +20501,6 @@ msgstr "Нельзя совершить действие — невозможн�
 #, fuzzy
 msgid "Can't perform action - object not activatable!"
 msgstr "Невозможно выполнить действие — объект не может быть активирован!\n"
-
-#: game/g_combat.cpp:1122
-#, fuzzy
-msgid "Can't perform action - weapon cannot be fired one handed!"
-msgstr "Невозможно выполнить действие — из этого оружия нельзя стрелять с одной руки.\n"
-
-#: game/g_combat.cpp:1129
-#, fuzzy
-msgid "Can't perform action - no ammo!"
-msgstr "Невозможно выполнить действие — нет боеприпасов!\n"
 
 #: game/g_combat.cpp:1137
 #, fuzzy
@@ -20659,6 +20622,42 @@ msgstr "пришелец"
 #: po/OTHER_STRINGS:6
 msgid "Take a screenshot"
 msgstr "Сделать скриншот"
+
+#, fuzzy
+#~ msgid "No item in hand."
+#~ msgstr "В руках ничего нет.\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "Can't perform action:\n"
+#~ "Out of ammo."
+#~ msgstr ""
+#~ "Невозможно выполнить действие:\n"
+#~ "кончились боеприпасы.\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "This weapon cannot be fired\n"
+#~ "one handed."
+#~ msgstr ""
+#~ "Из этого оружия нельзя стрелять\n"
+#~ "с одной руки.\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "Can't perform action:\n"
+#~ "Not enough TUs."
+#~ msgstr ""
+#~ "Невозможно выполнить действие:\n"
+#~ "не хватает времени.\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "Can't perform action:\n"
+#~ "Ammo not available."
+#~ msgstr ""
+#~ "Невозможно выполнить действие:\n"
+#~ "нет патронов.\n"
 
 #~ msgid "Little forest"
 #~ msgstr "Маленький лес"

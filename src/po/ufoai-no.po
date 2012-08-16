@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
-"POT-Creation-Date: 2012-08-16 20:45+0200\n"
+"POT-Creation-Date: 2012-08-16 20:57+0200\n"
 "PO-Revision-Date: 2012-02-06 01:25+0100\n"
 "Last-Translator: Johnny A. Solbu <johnny@solbu.net>\n"
 "Language-Team: \n"
@@ -16942,36 +16942,25 @@ msgstr "Er i panikk!\n"
 #: client/battlescape/cl_hud_callbacks.cpp:86
 #: client/battlescape/cl_hud_callbacks.cpp:258
 #, fuzzy
-msgid "No item in hand."
-msgstr "Intet utstyr i hånden.\n"
+msgid "Can't perform action - no item in hand!"
+msgstr "Kan ikke utføre aksjon - ikke en spiller!\n"
 
 #: client/battlescape/cl_hud_callbacks.cpp:91
+#: client/battlescape/cl_hud_callbacks.cpp:271 game/g_combat.cpp:1129
 #, fuzzy
-msgid ""
-"Can't perform action:\n"
-"Out of ammo."
-msgstr ""
-"Kan ikke utføre handling:\n"
-"Ingen ammunisjon.\n"
+msgid "Can't perform action - no ammo!"
+msgstr "Kan ikke utføre handling - ingen ammunisjon !\n"
 
-#: client/battlescape/cl_hud_callbacks.cpp:96
+#: client/battlescape/cl_hud_callbacks.cpp:96 game/g_combat.cpp:1122
 #, fuzzy
-msgid ""
-"This weapon cannot be fired\n"
-"one handed."
-msgstr ""
-"Dette våpen kan ikke avfyres\n"
-"med en hånd\n"
+msgid "Can't perform action - weapon cannot be fired one handed!"
+msgstr "Kan ikke utføre handlingen - våpen kan ikke avfyres én hånd!\n"
 
 #: client/battlescape/cl_hud_callbacks.cpp:150
-#: client/battlescape/cl_hud_callbacks.cpp:276
+#: client/battlescape/cl_hud_callbacks.cpp:276 game/g_actor.cpp:658
 #, fuzzy
-msgid ""
-"Can't perform action:\n"
-"Not enough TUs."
-msgstr ""
-"Kan ikke utføre aksjon:\n"
-"Ikke nok TU'er.\n"
+msgid "Can't perform action - not enough TUs!"
+msgstr "Kan ikke utføre handling - ikke nok TUs!\n"
 
 #: client/battlescape/cl_hud_callbacks.cpp:177
 #, fuzzy
@@ -16995,21 +16984,10 @@ msgstr "Ingen reaksjonsild aktivert for våpenet\n"
 
 #: client/battlescape/cl_hud_callbacks.cpp:264
 #, fuzzy
-msgid ""
-"Can't perform action:\n"
-"This item is not reloadable."
+msgid "Can't perform action - this item is not reloadable!"
 msgstr ""
 "Kan ikke utføre aksjon:\n"
 "dette objektet kan ikke lades.\n"
-
-#: client/battlescape/cl_hud_callbacks.cpp:271
-#, fuzzy
-msgid ""
-"Can't perform action:\n"
-"Ammo not available."
-msgstr ""
-"Kan ikke utføre aksjon:\n"
-"ammunisjon ikke tilgjengelig.\n"
 
 #: client/battlescape/cl_hud_callbacks.cpp:297
 #, fuzzy
@@ -20644,11 +20622,6 @@ msgstr "Soldaten inntrådte redningssonen\n"
 msgid "Soldier left the rescue zone."
 msgstr "Soldaten forlot redningssonen\n"
 
-#: game/g_actor.cpp:658
-#, fuzzy
-msgid "Can't perform action - not enough TUs!"
-msgstr "Kan ikke utføre handling - ikke nok TUs!\n"
-
 #: game/g_actor.cpp:662
 #, fuzzy
 msgid "Can't perform action - weapon already fully loaded with the same ammunition!"
@@ -20722,16 +20695,6 @@ msgstr "Kan ikke utføre handling - umulig kast!\n"
 #, fuzzy
 msgid "Can't perform action - object not activatable!"
 msgstr "Kan ikke utføre handling - objekt kan ikke aktiveres !\n"
-
-#: game/g_combat.cpp:1122
-#, fuzzy
-msgid "Can't perform action - weapon cannot be fired one handed!"
-msgstr "Kan ikke utføre handlingen - våpen kan ikke avfyres én hånd!\n"
-
-#: game/g_combat.cpp:1129
-#, fuzzy
-msgid "Can't perform action - no ammo!"
-msgstr "Kan ikke utføre handling - ingen ammunisjon !\n"
 
 #: game/g_combat.cpp:1137
 #, fuzzy
@@ -20854,6 +20817,42 @@ msgstr "romvesen"
 #: po/OTHER_STRINGS:6
 msgid "Take a screenshot"
 msgstr "Ta et skjermdump"
+
+#, fuzzy
+#~ msgid "No item in hand."
+#~ msgstr "Intet utstyr i hånden.\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "Can't perform action:\n"
+#~ "Out of ammo."
+#~ msgstr ""
+#~ "Kan ikke utføre handling:\n"
+#~ "Ingen ammunisjon.\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "This weapon cannot be fired\n"
+#~ "one handed."
+#~ msgstr ""
+#~ "Dette våpen kan ikke avfyres\n"
+#~ "med en hånd\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "Can't perform action:\n"
+#~ "Not enough TUs."
+#~ msgstr ""
+#~ "Kan ikke utføre aksjon:\n"
+#~ "Ikke nok TU'er.\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "Can't perform action:\n"
+#~ "Ammo not available."
+#~ msgstr ""
+#~ "Kan ikke utføre aksjon:\n"
+#~ "ammunisjon ikke tilgjengelig.\n"
 
 #~ msgid "Little forest"
 #~ msgstr "Liten skog"

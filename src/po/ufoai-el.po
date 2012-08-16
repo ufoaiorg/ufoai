@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
-"POT-Creation-Date: 2012-08-16 20:45+0200\n"
+"POT-Creation-Date: 2012-08-16 20:57+0200\n"
 "PO-Revision-Date: 2010-05-26 14:54+0600\n"
 "Last-Translator: Kostia (Kildor) Romanov <kostia@ngs.ru>\n"
 "Language-Team: \n"
@@ -17536,36 +17536,27 @@ msgstr "Currently panics!\n"
 #: client/battlescape/cl_hud_callbacks.cpp:86
 #: client/battlescape/cl_hud_callbacks.cpp:258
 #, fuzzy
-msgid "No item in hand."
-msgstr "Όχι αντικέιμενο στο χέρι.\n"
+msgid "Can't perform action - no item in hand!"
+msgstr "Αδυναμία εκτέλεσης - δεν υπάρχει στρατιώτης!\n"
 
 #: client/battlescape/cl_hud_callbacks.cpp:91
+#: client/battlescape/cl_hud_callbacks.cpp:271 game/g_combat.cpp:1129
 #, fuzzy
-msgid ""
-"Can't perform action:\n"
-"Out of ammo."
-msgstr ""
-"Αδυναμία εκτέλεσης εντολής:\n"
-"τέλος πυρομαχικών.\n"
+msgid "Can't perform action - no ammo!"
+msgstr "Αδυναμία εκτέλεσης - δεν υπάρχει στρατιώτης!\n"
 
-#: client/battlescape/cl_hud_callbacks.cpp:96
+#: client/battlescape/cl_hud_callbacks.cpp:96 game/g_combat.cpp:1122
 #, fuzzy
-msgid ""
-"This weapon cannot be fired\n"
-"one handed."
+msgid "Can't perform action - weapon cannot be fired one handed!"
 msgstr ""
 "Δε μπορεί να κάνει πύρ\n"
 "ενός χεριού.\n"
 
 #: client/battlescape/cl_hud_callbacks.cpp:150
-#: client/battlescape/cl_hud_callbacks.cpp:276
+#: client/battlescape/cl_hud_callbacks.cpp:276 game/g_actor.cpp:658
 #, fuzzy
-msgid ""
-"Can't perform action:\n"
-"Not enough TUs."
-msgstr ""
-"Αδυναμία εκτέλεσης εντολής:\n"
-"όχι αρκετά TUs.\n"
+msgid "Can't perform action - not enough TUs!"
+msgstr "Αδυναμία εκτέλεσης - όχι αρκετοί TUs!\n"
 
 #: client/battlescape/cl_hud_callbacks.cpp:177
 #, fuzzy
@@ -17589,21 +17580,10 @@ msgstr "Όχι απάντηση πυρών"
 
 #: client/battlescape/cl_hud_callbacks.cpp:264
 #, fuzzy
-msgid ""
-"Can't perform action:\n"
-"This item is not reloadable."
+msgid "Can't perform action - this item is not reloadable!"
 msgstr ""
 "Αδυναμία εκτέλεσης εντολής:\n"
 "αυτό το αντικέιμενο δεν επαναγεμίζει.\n"
-
-#: client/battlescape/cl_hud_callbacks.cpp:271
-#, fuzzy
-msgid ""
-"Can't perform action:\n"
-"Ammo not available."
-msgstr ""
-"Αδυναμία εκτέλεσης εντολής:\n"
-"μη διαθέσιμα πυρομαχικά.\n"
 
 #: client/battlescape/cl_hud_callbacks.cpp:297
 #, fuzzy
@@ -21440,11 +21420,6 @@ msgstr "Επιλογή ζώνης"
 msgid "Soldier left the rescue zone."
 msgstr "Επιλογή ζώνης"
 
-#: game/g_actor.cpp:658
-#, fuzzy
-msgid "Can't perform action - not enough TUs!"
-msgstr "Αδυναμία εκτέλεσης - όχι αρκετοί TUs!\n"
-
 #: game/g_actor.cpp:662
 #, fuzzy
 msgid "Can't perform action - weapon already fully loaded with the same ammunition!"
@@ -21515,18 +21490,6 @@ msgstr "Αδυναμία εκτέλεσης - δεν υπάρχει στρατι
 #, fuzzy
 msgid "Can't perform action - object not activatable!"
 msgstr "Αδυναμία εκτέλεσης - αντικέιμενο όχι παρών!\n"
-
-#: game/g_combat.cpp:1122
-#, fuzzy
-msgid "Can't perform action - weapon cannot be fired one handed!"
-msgstr ""
-"Δε μπορεί να κάνει πύρ\n"
-"ενός χεριού.\n"
-
-#: game/g_combat.cpp:1129
-#, fuzzy
-msgid "Can't perform action - no ammo!"
-msgstr "Αδυναμία εκτέλεσης - δεν υπάρχει στρατιώτης!\n"
 
 #: game/g_combat.cpp:1137
 #, fuzzy
@@ -21646,6 +21609,42 @@ msgstr "Εξωγήινος"
 #: po/OTHER_STRINGS:6
 msgid "Take a screenshot"
 msgstr "Πάρτε μία εκτύπωση οθόνης"
+
+#, fuzzy
+#~ msgid "No item in hand."
+#~ msgstr "Όχι αντικέιμενο στο χέρι.\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "Can't perform action:\n"
+#~ "Out of ammo."
+#~ msgstr ""
+#~ "Αδυναμία εκτέλεσης εντολής:\n"
+#~ "τέλος πυρομαχικών.\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "This weapon cannot be fired\n"
+#~ "one handed."
+#~ msgstr ""
+#~ "Δε μπορεί να κάνει πύρ\n"
+#~ "ενός χεριού.\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "Can't perform action:\n"
+#~ "Not enough TUs."
+#~ msgstr ""
+#~ "Αδυναμία εκτέλεσης εντολής:\n"
+#~ "όχι αρκετά TUs.\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "Can't perform action:\n"
+#~ "Ammo not available."
+#~ msgstr ""
+#~ "Αδυναμία εκτέλεσης εντολής:\n"
+#~ "μη διαθέσιμα πυρομαχικά.\n"
 
 #, fuzzy
 #~ msgid "Little forest"

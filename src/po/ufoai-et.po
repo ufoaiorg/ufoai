@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Trans.Estonia\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
-"POT-Creation-Date: 2012-08-16 20:45+0200\n"
+"POT-Creation-Date: 2012-08-16 20:57+0200\n"
 "PO-Revision-Date: 2010-05-26 14:53+0600\n"
 "Last-Translator: Kostia (Kildor) Romanov <kostia@ngs.ru>\n"
 "Language-Team: Northen Wolf <semukas@hot.ee>\n"
@@ -17040,29 +17040,24 @@ msgstr "Praegu paanitseb!\n"
 #: client/battlescape/cl_hud_callbacks.cpp:86
 #: client/battlescape/cl_hud_callbacks.cpp:258
 #, fuzzy
-msgid "No item in hand."
-msgstr "Pole ühtegi kilpi"
+msgid "Can't perform action - no item in hand!"
+msgstr "Sa ei saa seda teha - object ei ole tegelane\n"
 
 #: client/battlescape/cl_hud_callbacks.cpp:91
+#: client/battlescape/cl_hud_callbacks.cpp:271 game/g_combat.cpp:1129
 #, fuzzy
-msgid ""
-"Can't perform action:\n"
-"Out of ammo."
-msgstr "Sa ei saa seda teha - Pole kuule\n"
+msgid "Can't perform action - no ammo!"
+msgstr "Sa ei saa seda teha - pole moona\n"
 
-#: client/battlescape/cl_hud_callbacks.cpp:96
+#: client/battlescape/cl_hud_callbacks.cpp:96 game/g_combat.cpp:1122
 #, fuzzy
-msgid ""
-"This weapon cannot be fired\n"
-"one handed."
+msgid "Can't perform action - weapon cannot be fired one handed!"
 msgstr "Sa ei saa seda teha - relva ei saa lasta ühe käega!\n"
 
 #: client/battlescape/cl_hud_callbacks.cpp:150
-#: client/battlescape/cl_hud_callbacks.cpp:276
+#: client/battlescape/cl_hud_callbacks.cpp:276 game/g_actor.cpp:658
 #, fuzzy
-msgid ""
-"Can't perform action:\n"
-"Not enough TUs."
+msgid "Can't perform action - not enough TUs!"
 msgstr "Sa ei saa seda teha - pole piisavalt TUse\n"
 
 #: client/battlescape/cl_hud_callbacks.cpp:177
@@ -17087,17 +17082,8 @@ msgstr "Reaktsioon tulistamine Sees/väljas"
 
 #: client/battlescape/cl_hud_callbacks.cpp:264
 #, fuzzy
-msgid ""
-"Can't perform action:\n"
-"This item is not reloadable."
+msgid "Can't perform action - this item is not reloadable!"
 msgstr "Sa ei saa seda teha - see ei ole sinu käik\n"
-
-#: client/battlescape/cl_hud_callbacks.cpp:271
-#, fuzzy
-msgid ""
-"Can't perform action:\n"
-"Ammo not available."
-msgstr "Sa ei saa seda teha - object ei ole tegelane\n"
 
 #: client/battlescape/cl_hud_callbacks.cpp:297
 #, fuzzy
@@ -20797,11 +20783,6 @@ msgstr "Vali ese"
 msgid "Soldier left the rescue zone."
 msgstr "Vali ese"
 
-#: game/g_actor.cpp:658
-#, fuzzy
-msgid "Can't perform action - not enough TUs!"
-msgstr "Sa ei saa seda teha - pole piisavalt TUse\n"
-
 #: game/g_actor.cpp:662
 #, fuzzy
 msgid "Can't perform action - weapon already fully loaded with the same ammunition!"
@@ -20872,16 +20853,6 @@ msgstr "Sa ei saa seda teha - Seda on võimatu visata\n"
 #, fuzzy
 msgid "Can't perform action - object not activatable!"
 msgstr "Sa ei saa seda teha - objekt ei ole aktiveeritav\n"
-
-#: game/g_combat.cpp:1122
-#, fuzzy
-msgid "Can't perform action - weapon cannot be fired one handed!"
-msgstr "Sa ei saa seda teha - relva ei saa lasta ühe käega!\n"
-
-#: game/g_combat.cpp:1129
-#, fuzzy
-msgid "Can't perform action - no ammo!"
-msgstr "Sa ei saa seda teha - pole moona\n"
 
 #: game/g_combat.cpp:1137
 #, fuzzy
@@ -20995,6 +20966,34 @@ msgstr "Tulnukas"
 #: po/OTHER_STRINGS:6
 msgid "Take a screenshot"
 msgstr "Tee kuvapilt"
+
+#, fuzzy
+#~ msgid "No item in hand."
+#~ msgstr "Pole ühtegi kilpi"
+
+#, fuzzy
+#~ msgid ""
+#~ "Can't perform action:\n"
+#~ "Out of ammo."
+#~ msgstr "Sa ei saa seda teha - Pole kuule\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "This weapon cannot be fired\n"
+#~ "one handed."
+#~ msgstr "Sa ei saa seda teha - relva ei saa lasta ühe käega!\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "Can't perform action:\n"
+#~ "Not enough TUs."
+#~ msgstr "Sa ei saa seda teha - pole piisavalt TUse\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "Can't perform action:\n"
+#~ "Ammo not available."
+#~ msgstr "Sa ei saa seda teha - object ei ole tegelane\n"
 
 #~ msgid "Little forest"
 #~ msgstr "Väike mets"

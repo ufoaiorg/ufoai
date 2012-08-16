@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: it\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
-"POT-Creation-Date: 2012-08-16 20:45+0200\n"
+"POT-Creation-Date: 2012-08-16 20:57+0200\n"
 "PO-Revision-Date: 2012-03-23 15:25+0100\n"
 "Last-Translator: \n"
 "Language-Team: ITALIAN <it@li.org>\n"
@@ -17133,36 +17133,25 @@ msgstr "In preda al panico!\n"
 #: client/battlescape/cl_hud_callbacks.cpp:86
 #: client/battlescape/cl_hud_callbacks.cpp:258
 #, fuzzy
-msgid "No item in hand."
-msgstr "Nessun oggetto in mano.\n"
+msgid "Can't perform action - no item in hand!"
+msgstr "Impossibile eseguire - non è un unità!\n"
 
 #: client/battlescape/cl_hud_callbacks.cpp:91
+#: client/battlescape/cl_hud_callbacks.cpp:271 game/g_combat.cpp:1129
 #, fuzzy
-msgid ""
-"Can't perform action:\n"
-"Out of ammo."
-msgstr ""
-"Impossibile eseguire:\n"
-"munizioni esaurite.\n"
+msgid "Can't perform action - no ammo!"
+msgstr "Impossibile eseguire - munizioni insufficienti\n"
 
-#: client/battlescape/cl_hud_callbacks.cpp:96
+#: client/battlescape/cl_hud_callbacks.cpp:96 game/g_combat.cpp:1122
 #, fuzzy
-msgid ""
-"This weapon cannot be fired\n"
-"one handed."
-msgstr ""
-"Quest'arma non può essere usata\n"
-"con una sola mano\n"
+msgid "Can't perform action - weapon cannot be fired one handed!"
+msgstr "Impossibile eseguire - L'arma non può essere usata con una mano sola\n"
 
 #: client/battlescape/cl_hud_callbacks.cpp:150
-#: client/battlescape/cl_hud_callbacks.cpp:276
+#: client/battlescape/cl_hud_callbacks.cpp:276 game/g_actor.cpp:658
 #, fuzzy
-msgid ""
-"Can't perform action:\n"
-"Not enough TUs."
-msgstr ""
-"Impossibile eseguire:\n"
-"non ci sono abbastanza UT.\n"
+msgid "Can't perform action - not enough TUs!"
+msgstr "Impossibile eseguire - UT insufficenti!\n"
 
 #: client/battlescape/cl_hud_callbacks.cpp:177
 #, fuzzy
@@ -17186,21 +17175,10 @@ msgstr "Nessuna arma con fuoco di reazione abilitato.\n"
 
 #: client/battlescape/cl_hud_callbacks.cpp:264
 #, fuzzy
-msgid ""
-"Can't perform action:\n"
-"This item is not reloadable."
+msgid "Can't perform action - this item is not reloadable!"
 msgstr ""
 "Impossibile eseguire:\n"
 "quest'oggetto non è ricaricabile.\n"
-
-#: client/battlescape/cl_hud_callbacks.cpp:271
-#, fuzzy
-msgid ""
-"Can't perform action:\n"
-"Ammo not available."
-msgstr ""
-"Impossibile eseguire:\n"
-"munizioni non disponibili.\n"
 
 #: client/battlescape/cl_hud_callbacks.cpp:297
 #, fuzzy
@@ -20801,11 +20779,6 @@ msgstr "Il soldato è entrato nella Zona Recupero\n"
 msgid "Soldier left the rescue zone."
 msgstr "Il soldato è uscito dalla Zona Recupero\n"
 
-#: game/g_actor.cpp:658
-#, fuzzy
-msgid "Can't perform action - not enough TUs!"
-msgstr "Impossibile eseguire - UT insufficenti!\n"
-
 #: game/g_actor.cpp:662
 #, fuzzy
 msgid "Can't perform action - weapon already fully loaded with the same ammunition!"
@@ -20879,16 +20852,6 @@ msgstr "Impossibile eseguire - lancio impossibile!\n"
 #, fuzzy
 msgid "Can't perform action - object not activatable!"
 msgstr "Impossibile eseguire - oggetto non attivabile!\n"
-
-#: game/g_combat.cpp:1122
-#, fuzzy
-msgid "Can't perform action - weapon cannot be fired one handed!"
-msgstr "Impossibile eseguire - L'arma non può essere usata con una mano sola\n"
-
-#: game/g_combat.cpp:1129
-#, fuzzy
-msgid "Can't perform action - no ammo!"
-msgstr "Impossibile eseguire - munizioni insufficienti\n"
 
 #: game/g_combat.cpp:1137
 #, fuzzy
@@ -21011,6 +20974,42 @@ msgstr "alieno"
 #: po/OTHER_STRINGS:6
 msgid "Take a screenshot"
 msgstr "Cattura una schermata"
+
+#, fuzzy
+#~ msgid "No item in hand."
+#~ msgstr "Nessun oggetto in mano.\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "Can't perform action:\n"
+#~ "Out of ammo."
+#~ msgstr ""
+#~ "Impossibile eseguire:\n"
+#~ "munizioni esaurite.\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "This weapon cannot be fired\n"
+#~ "one handed."
+#~ msgstr ""
+#~ "Quest'arma non può essere usata\n"
+#~ "con una sola mano\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "Can't perform action:\n"
+#~ "Not enough TUs."
+#~ msgstr ""
+#~ "Impossibile eseguire:\n"
+#~ "non ci sono abbastanza UT.\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "Can't perform action:\n"
+#~ "Ammo not available."
+#~ msgstr ""
+#~ "Impossibile eseguire:\n"
+#~ "munizioni non disponibili.\n"
 
 #~ msgid "Little forest"
 #~ msgstr "Piccola foresta"

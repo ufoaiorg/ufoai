@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion Thai v1.0\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
-"POT-Creation-Date: 2012-08-16 20:45+0200\n"
+"POT-Creation-Date: 2012-08-16 20:57+0200\n"
 "PO-Revision-Date: 2010-12-08 21:32+0530\n"
 "Last-Translator: Phakphum Visetnut <shellingford47@gmail.com>\n"
 "Language-Team: Sophont <mickey@metawire.com>\n"
@@ -17460,36 +17460,25 @@ msgstr "ตกใจอยู่!\n"
 #: client/battlescape/cl_hud_callbacks.cpp:86
 #: client/battlescape/cl_hud_callbacks.cpp:258
 #, fuzzy
-msgid "No item in hand."
-msgstr "ไม่มีอุปกรณ์ในมือ\n"
+msgid "Can't perform action - no item in hand!"
+msgstr "ทำไม่ได้ - ไม่ใช่คนทำ!\n"
 
 #: client/battlescape/cl_hud_callbacks.cpp:91
+#: client/battlescape/cl_hud_callbacks.cpp:271 game/g_combat.cpp:1129
 #, fuzzy
-msgid ""
-"Can't perform action:\n"
-"Out of ammo."
-msgstr ""
-"ทำไม่ได้:\n"
-"กระสุนหมด\n"
+msgid "Can't perform action - no ammo!"
+msgstr "ทำไม่ได้ - ไม่มีกระสุน!\n"
 
-#: client/battlescape/cl_hud_callbacks.cpp:96
+#: client/battlescape/cl_hud_callbacks.cpp:96 game/g_combat.cpp:1122
 #, fuzzy
-msgid ""
-"This weapon cannot be fired\n"
-"one handed."
-msgstr ""
-"อาวุธนี้ยิงไม่ได้\n"
-"ด้วยมือเดียว\n"
+msgid "Can't perform action - weapon cannot be fired one handed!"
+msgstr "ทำไม่ได้ - อาวุธนี้ไม่สามารถยิงด้วยมือเดียว\n"
 
 #: client/battlescape/cl_hud_callbacks.cpp:150
-#: client/battlescape/cl_hud_callbacks.cpp:276
+#: client/battlescape/cl_hud_callbacks.cpp:276 game/g_actor.cpp:658
 #, fuzzy
-msgid ""
-"Can't perform action:\n"
-"Not enough TUs."
-msgstr ""
-"ทำไม่ได้:\n"
-"ค่าเวลาไม่พอ\n"
+msgid "Can't perform action - not enough TUs!"
+msgstr "ทำไม่ได้ - ค่าเวลาไม่พอ!\n"
 
 #: client/battlescape/cl_hud_callbacks.cpp:177
 #, fuzzy
@@ -17513,21 +17502,10 @@ msgstr "ไม่มีอาวุธไว้ยิงโต้ตอบ\n"
 
 #: client/battlescape/cl_hud_callbacks.cpp:264
 #, fuzzy
-msgid ""
-"Can't perform action:\n"
-"This item is not reloadable."
+msgid "Can't perform action - this item is not reloadable!"
 msgstr ""
 "ทำไม่ได้:\n"
 "ของนี้บรรจุกระสุนใหม่ไม่ได้\n"
-
-#: client/battlescape/cl_hud_callbacks.cpp:271
-#, fuzzy
-msgid ""
-"Can't perform action:\n"
-"Ammo not available."
-msgstr ""
-"ทำไม่ได้:\n"
-"ไม่มีกระสุน\n"
 
 #: client/battlescape/cl_hud_callbacks.cpp:297
 #, fuzzy
@@ -21291,11 +21269,6 @@ msgstr "เลือกอุปกรณ์"
 msgid "Soldier left the rescue zone."
 msgstr "เลือกอุปกรณ์"
 
-#: game/g_actor.cpp:658
-#, fuzzy
-msgid "Can't perform action - not enough TUs!"
-msgstr "ทำไม่ได้ - ค่าเวลาไม่พอ!\n"
-
 #: game/g_actor.cpp:662
 #, fuzzy
 msgid "Can't perform action - weapon already fully loaded with the same ammunition!"
@@ -21366,16 +21339,6 @@ msgstr "ทำไม่ได้ - ไม่สามารถโยนได้
 #, fuzzy
 msgid "Can't perform action - object not activatable!"
 msgstr "ทำไม่ได้ - ไม่มีวัตถุ!\n"
-
-#: game/g_combat.cpp:1122
-#, fuzzy
-msgid "Can't perform action - weapon cannot be fired one handed!"
-msgstr "ทำไม่ได้ - อาวุธนี้ไม่สามารถยิงด้วยมือเดียว\n"
-
-#: game/g_combat.cpp:1129
-#, fuzzy
-msgid "Can't perform action - no ammo!"
-msgstr "ทำไม่ได้ - ไม่มีกระสุน!\n"
 
 #: game/g_combat.cpp:1137
 #, fuzzy
@@ -21495,6 +21458,42 @@ msgstr "มนุษย์ต่างดาว"
 #: po/OTHER_STRINGS:6
 msgid "Take a screenshot"
 msgstr "จับภาพหน้าจอ"
+
+#, fuzzy
+#~ msgid "No item in hand."
+#~ msgstr "ไม่มีอุปกรณ์ในมือ\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "Can't perform action:\n"
+#~ "Out of ammo."
+#~ msgstr ""
+#~ "ทำไม่ได้:\n"
+#~ "กระสุนหมด\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "This weapon cannot be fired\n"
+#~ "one handed."
+#~ msgstr ""
+#~ "อาวุธนี้ยิงไม่ได้\n"
+#~ "ด้วยมือเดียว\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "Can't perform action:\n"
+#~ "Not enough TUs."
+#~ msgstr ""
+#~ "ทำไม่ได้:\n"
+#~ "ค่าเวลาไม่พอ\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "Can't perform action:\n"
+#~ "Ammo not available."
+#~ msgstr ""
+#~ "ทำไม่ได้:\n"
+#~ "ไม่มีกระสุน\n"
 
 #, fuzzy
 #~ msgid "Little forest"
