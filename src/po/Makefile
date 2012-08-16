@@ -69,7 +69,6 @@ $(DOMAIN).pot-update: $(POTFILES) $(srcdir)/POTFILES.in remove-potcdate.sed
 	  --files-from=$(srcdir)/POTFILES.in \
 	  --copyright-holder='$(COPYRIGHT_HOLDER)' \
 	  --msgid-bugs-address="$(PACKAGE_BUGREPORT)" \
-	  --no-wrap \
 	  --output=$(DOMAIN).c.po
 	$(Q)sed s/charset=CHARSET/charset=UTF-8/ $(DOMAIN).c.po > $(DOMAIN).c1.po
 	$(Q)${UFOPO} --directory=$(top_srcdir) `cd $(top_srcdir) && sh $(subdir)/FINDUFOS` > $(DOMAIN).ufo.po
@@ -103,7 +102,7 @@ update-po: Makefile $(DOMAIN).pot-update $(UPDATEPOFILES)
 	tmpdir=`pwd`; \
 	test "$(srcdir)" = . && cdcmd="" || cdcmd="cd $(srcdir) && "; \
 	cd $(srcdir); \
-	if $(MSGMERGE) $$lang.po $(DOMAIN).pot --no-wrap -q -o $$tmpdir/$$lang.new.po; then \
+	if $(MSGMERGE) $$lang.po $(DOMAIN).pot -q -o $$tmpdir/$$lang.new.po; then \
 	  if cmp $$lang.po $$tmpdir/$$lang.new.po >/dev/null 2>&1; then \
 	    rm -f $$tmpdir/$$lang.new.po; \
 	  else \
