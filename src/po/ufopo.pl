@@ -32,11 +32,53 @@ chdir $toplevel;
 foreach my $file (@ARGV)
 {
 	open ( FILE, "<$file" ) or die "cannot read from $file";
-	LINE: while (<FILE>)
+	my @INPUT_ARRAY = <FILE>;
+	my @ARRAY;
+	my ($i,$j);
+	my $line;
+
+	# Removes all kind of comments (single-line, multi-line, nested).
+	# Further parsing will be carried on the stripped lines (in @ARRAY) but
+	# the error messaging routine will reference the original @INPUT_ARRAY
+	# so line fragments may contain comments.
+	my $commentLevel = 0;
+
+	for ($i = 0; $i < @INPUT_ARRAY; $i++) {
+		my @explodedLine = split(//, $INPUT_ARRAY[$i]);
+		my $resultLine = "";
+
+		for ($j = 0; $j < @explodedLine; $j++)
+		{
+			if ($commentLevel > 0)
+			{
+				$resultLine .= " ";
+			}
+			if ($explodedLine[$j] eq "/" && $explodedLine[($j + 1)] eq "*")
+			{
+				$commentLevel++;
+				next;
+			}
+			if ($explodedLine[$j] eq "*" && $explodedLine[($j + 1)] eq "/")
+			{
+				$commentLevel--;
+				$j++;
+				next;
+			}
+			if (($commentLevel == 0) || ($explodedLine[$j] eq "\n"))
+			{
+				$resultLine .= $explodedLine[$j];
+			}
+		}
+
+		$ARRAY[$i]=join(" ",$resultLine);
+	}
+
+	close(FILE) or die "Closing: $!";
+
+
+	LINE: foreach (@ARRAY)
 	{
 		unless (defined $str) {
-			# skip comments //
-			next LINE if m/^\s*\/\//;
 			next LINE unless m/\"_/;
 		}
 
@@ -57,7 +99,7 @@ foreach my $file (@ARGV)
 			$str = $1 . "\n";
 		}
 		# end of multi-line
-		elsif (m/(.*?)[^\\]\"(.*)/)
+		elsif (m/(.*?[^\\])\"(.*)/)
 		{
 			die "end of string without a start in $file" if !defined $str;
 
@@ -78,7 +120,6 @@ foreach my $file (@ARGV)
 			$str .= $_;
 		}
 	}
-	close ( FILE );
 	#print STDERR "Processed $file\n";
 }
 
