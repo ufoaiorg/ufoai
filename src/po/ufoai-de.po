@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
 "POT-Creation-Date: 2012-08-16 20:57+0200\n"
-"PO-Revision-Date: 2012-08-16 21:10+0100\n"
+"PO-Revision-Date: 2012-08-16 21:23+0100\n"
 "Last-Translator: Martin Gerhardy <tlh2000@users.sourceforge.net>\n"
 "Language-Team: \n"
 "Language: de\n"
@@ -3127,7 +3127,6 @@ msgstr[0] "Arbeiter"
 msgstr[1] "Arbeiter"
 
 #: ../base/ufos/msgid/aircraft.ufo:40
-#, fuzzy
 msgid ""
 "Aircraft Evaluation -- Firebird-class Dropship\n"
 "\n"
@@ -3227,7 +3226,6 @@ msgid "No pre research info available"
 msgstr "Noch keine Informationen verfügbar. Bitte erst erforschen."
 
 #: ../base/ufos/msgid/aircraft.ufo:88
-#, fuzzy
 msgid ""
 "Aircraft Evaluation -- Stiletto-class Interceptor\n"
 "\n"
@@ -3328,7 +3326,6 @@ msgstr ""
 "Es ist aber auch aufgrund seiner innewohnenden Instabilität ein flugtechnischer Alptraum. Die Originalunterlagen spielen diese Sachen herunter. Unsere Piloten haben mich aber informiert, dass sie damit umgehen können. Was noch besser ist, wir haben einen vollständigen Prototyp geborgen und der wird derzeit für den Einsatz klargemacht. Ich habe Erlaubnis für eine vollständigen Überholung und Flugtests gegeben. Es ist einfach das beste Nahdistanzflugzeug, das ich je gesehen habe. Wir werden es brauchen."
 
 #: ../base/ufos/msgid/aircraft.ufo:126
-#, fuzzy
 msgid ""
 "Aircraft Evaluation -- Saracen-class Interceptor\n"
 "\n"
@@ -3411,7 +3408,6 @@ msgstr ""
 "Keiner."
 
 #: ../base/ufos/msgid/aircraft.ufo:136
-#, fuzzy
 msgid ""
 "Commander, I'm extremely proud to present you with the plans for our new interceptor, the Dragon. As you can see we've taken more than one page out of the aliens' book and the radical styling truly pays off.\n"
 "\n"
@@ -3435,10 +3431,9 @@ msgstr ""
 "\n"
 "Bitte beachten Sie, dass der Dragon zwar technisch in der Lage ist, aus eigener Kraft in den Orbit zu gelangen, er ist aber nicht weltraumfest und sollte daher unter keinen Umständen die Atmosphäre verlassen. Für manche Dinge ist es einfach noch zu früh. Wir sind Ingenieure, Herr Kommandant, keine Zauberer.\n"
 "\n"
-"--Cdr. Navarre"
+"Cdr. Navarre"
 
 #: ../base/ufos/msgid/aircraft.ufo:142
-#, fuzzy
 msgid ""
 "Commander, let me preface this by saying it's obvious that the aliens have been severely outperforming us in every way, but nowhere is this more evident than in the air. We were in a bad position at the start of the war and despite our efforts there has been little improvement.\n"
 "\n"
@@ -3454,10 +3449,9 @@ msgstr ""
 "\n"
 "Das Programm wird erhebliche Kosten in Laborzeit, Personal und Material verursachen, aber wie immer haben wir mehr zu gewinnen als zu verlieren. Es ist ein Projekt, das eine Menge Hoffnung für unsere Sache birgt, Kommandant. Bitte lassen Sie mich schnellstmöglich wissen, wann wir mit der Arbeit beginnen sollen.\n"
 "\n"
-"--Cdr. Navarre"
+"Cdr. Navarre"
 
 #: ../base/ufos/msgid/aircraft.ufo:148
-#, fuzzy
 msgid ""
 "Commander, excuse me if I sound a little incoherent, but I've been up all night finishing the final blueprints. It is with great pleasure that I present you the Starchaser Space Superiority Fighter. Yes, you read that right, space superiority. One of the most striking improvements over the Dragon - though it's certainly not the only one! - is the ability of sustained orbital flight and combat. We now have the ability of intercepting the enemy outside our own atmosphere, and while this seems a minor boon so long as we don't know where the enemy is coming from, I'm certain that we're going to need this capability sooner or later.\n"
 "\n"
@@ -3473,7 +3467,7 @@ msgstr ""
 "\n"
 "Der Strachaser ist wirklich die neue Generation des Luftkampfes. Er vereint oder übertrifft jeden anderen Jäger den wir besitzen. Deshalb empfehle ich, dass wir ihn sofort in unsere Produktion eingliedern. Aber achten sie auf die Finanzen. Der Starcaser ist ziemlich teuer, da wir über wenig Geld sowie Material und Zeit verfügen.\n"
 "\n"
-"--Cdr. Navarre"
+"Cdr. Navarre"
 
 #: ../base/ufos/msgid/aircraft.ufo:154
 msgid "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
@@ -3499,7 +3493,6 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/msgid/aircraft.ufo:170
-#, fuzzy
 msgid ""
 "This small UFO is the first type we've observed visually and on radar. Although they don't seem to take part in actual raids, they're no less a threat; so far they've paved the way for every instance of alien activity on Earth.\n"
 "\n"
@@ -3535,22 +3528,9 @@ msgstr ""
 "\n"
 "Wie ich bereits sagte, wird dieser UFO-Typ hauptsächlich als Aufklärungseinheit und als Vorhut für die größeren Schiffe verwendet. Obwohl unbewaffnet, sollten wir diese Dinger abschießen, soweit wir nicht anderweitig beschäftigt sind, da alles was die Außerirdischen vorhaben, sicherlich schlecht für uns ist.\n"
 "\n"
-"--Cdr. Navarre\n"
-"\n"
-"Geschätzte Scout Statistiken:\n"
-"\n"
-"Größe: Klein (6m x 14m x 3m)\n"
-"\n"
-"Reisegeschwindigkeit: +/- 1600 km/h\n"
-"\n"
-"Höchstgeschwindigkeit: +/- 3000km/h\n"
-"\n"
-"Besatzung: max. 3\n"
-"\n"
-"Waffenkapazität: Keine"
+"Cdr. Navarre"
 
 #: ../base/ufos/msgid/aircraft.ufo:172
-#, fuzzy
 msgid ""
 "Commander, we've recovered a new UFO type which is now waiting in our hangar for disassembly. We're ready to start studying and dismantling the craft whenever you say, but we will need some lab time and funding to make a proper assessment of its function and capabilities.\n"
 "\n"
@@ -3558,10 +3538,9 @@ msgid ""
 msgstr ""
 "Herr Kommandant, wir haben einen neuen UFO-Typ geborgen, welcher sich in unserem Hangar befindet und auf Zerlegung wartet. Wir sind bereit, ihn zu studieren und auseinanderzunehmen, aber wir brauchen etwas Laborplatz und Geld, um eine genaue Einschätzung seiner Funktionen und Fähigkeiten zu machen.\n"
 "\n"
-"--Cdr. Navarre"
+"Cdr. Navarre"
 
 #: ../base/ufos/msgid/aircraft.ufo:186
-#, fuzzy
 msgid ""
 "Commander, my team and I have just finished another UFO report for you. Here is my summary for your review.\n"
 "\n"
@@ -3593,10 +3572,9 @@ msgstr ""
 "\n"
 "Taktisch ist der Jäger eine echte Bedrohung für PHALANX-Flugzeuge. Sie operieren fast immer in Paaren, ein Führungs- und ein Begleitjäger und fliegen zum Schutz eines größeren und wertvolleren Schiffes mit diesem in einer kompakten und wirkungsvollen Formation. Jedoch sind ihre Möglichkeiten streng begrenzt, sind sie doch nicht dafür ausgerüstet mehr zu sein, als bewaffnete Aufklärer. Die wahre Bedrohung wird immer das sein, was die Jäger beschützen. Jäger sollten nie das Hauptziel sein, es sei denn, es gibt nichts anderes zum Abschießen.\n"
 "\n"
-"--Cdr. Navarre"
+"Cdr. Navarre"
 
 #: ../base/ufos/msgid/aircraft.ufo:190
-#, fuzzy
 msgid ""
 "Commander, we've recovered a new UFO type which is now waiting in our hangar for disassembly. Recovering a Fighter-class UFO has been one of the things we at DivEngine have been praying for. This is the first armed combat UFO that PHALANX has observed; it is vital that we study these alien craft and weapons and learn their weaknesses, if they have any.\n"
 "\n"
@@ -3611,7 +3589,6 @@ msgstr ""
 "Cdr. Navarre"
 
 #: ../base/ufos/msgid/aircraft.ufo:204
-#, fuzzy
 msgid ""
 "Commander, my team and I have just finished another UFO report for you. Here is my summary for your review.\n"
 "\n"
@@ -3646,7 +3623,6 @@ msgstr ""
 "Cdr. Navarre"
 
 #: ../base/ufos/msgid/aircraft.ufo:208
-#, fuzzy
 msgid ""
 "Commander, we've recovered a new UFO type which is now waiting in our hangar for disassembly. Larger than any of the other UFOs we've seen so far, it seems to be unarmed, and its large cargo hold suggests that it may be a supply carrier of some sort, supporting alien assets on the surface of the Earth. These craft can be found at the centre of many alien formations and will drastically increase the alien presence on our planet if we allow them to complete their missions.\n"
 "\n"
@@ -3723,7 +3699,6 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/msgid/aircraft.ufo:240
-#, fuzzy
 msgid ""
 "Commander, my team and I have just finished another UFO report for you. Here is my summary for your review.\n"
 "\n"
@@ -3754,7 +3729,6 @@ msgstr ""
 "Cdr. Navarre"
 
 #: ../base/ufos/msgid/aircraft.ufo:246
-#, fuzzy
 msgid ""
 "Commander, we've recovered a new UFO type which is now waiting in our hangar for disassembly. Going by the extremely heavy armament it seems to be some kind of heavy fighter or fire support model, its size class somewhere in between those of the UFOs we've observed so far.\n"
 "\n"
@@ -3773,7 +3747,6 @@ msgstr ""
 "Cdr. Navarre"
 
 #: ../base/ufos/msgid/aircraft.ufo:264
-#, fuzzy
 msgid ""
 "Commander, my team and I have just finished another UFO report for you. Here is my summary for your review.\n"
 "\n"
@@ -3814,7 +3787,6 @@ msgstr ""
 "Cdr. Navarre"
 
 #: ../base/ufos/msgid/aircraft.ufo:268
-#, fuzzy
 msgid ""
 "Commander, we've recovered a new UFO type which is now waiting in our hangar for disassembly. This one is significantly larger than previous UFOs we've observed and seems to be the centre of many alien formations, making it an especially important target for our research. Uncovering the craft's purpose and examining its special equipment may give us essential new insights into the aliens' mission here on Earth.\n"
 "\n"
@@ -3826,7 +3798,7 @@ msgstr ""
 "\n"
 "Wir sind bereit, das UFO zu studieren und zu zerlegen, brauchen aber Laborzeit und Mittel, um eine genaue Einschätzung seiner Fähigkeiten und Funktion zu erhalten.\n"
 "\n"
-"--Cdr. Navarre"
+"Cdr. Navarre"
 
 #: ../base/ufos/msgid/aircraftitems.ufo:0
 #: ../base/ufos/msgid/aircraftitems.ufo:248
@@ -3834,7 +3806,6 @@ msgid "Technical Specifications: "
 msgstr "Technische Spezifikationen: "
 
 #: ../base/ufos/msgid/aircraftitems.ufo:38
-#, fuzzy
 msgid ""
 "Technical Specifications: Polymer Aircraft Armour\n"
 "\n"
@@ -3917,7 +3888,6 @@ msgstr ""
 "Keiner."
 
 #: ../base/ufos/msgid/aircraftitems.ufo:46
-#, fuzzy
 msgid ""
 "Commander, now that we have the ability to produce and work the alien materials, a whole new range of options has opened up to us. These materials are so strong and flexible that they can be used for almost anything. Their most promising uses, however, have been in aircraft design -- specifically armour.\n"
 "\n"
@@ -3942,7 +3912,6 @@ msgstr ""
 "Cdr. Navarre"
 
 #: ../base/ufos/msgid/aircraftitems.ufo:58
-#, fuzzy
 msgid ""
 "Commander, I've got some good news. My team and I have finished prototyping the alien aircraft plating project. Our new armour is now ready for full PHALANX production.\n"
 "\n"
@@ -3975,7 +3944,6 @@ msgstr ""
 "Cdr. Navarre"
 
 #: ../base/ufos/msgid/aircraftitems.ufo:62
-#, fuzzy
 msgid ""
 "Commander, the recovery of an intact alien astrogation unit is an important milestone. Although this unit doesn't seem to contain a star chart, it will allow us to decipher alien astronomical notations and upgrade the power of our own astrogation systems by several orders of magnitude. Eventually the work we do here may help us backtrack the aliens to their home planet.\n"
 "\n"
@@ -3987,10 +3955,9 @@ msgstr ""
 "\n"
 "Neben dem außerirdischen Antrieb und der außerirdischen Ortung ist die außerirdische Navigation eine der drei Säulen des UFO-Designs. Diese zu verstehen wird uns der Fähigkeit, ein atmosphärentaugliches, interplanetares Verteidigungsraumschiff zu bauen ein großes Stück näherbringen.\n"
 "\n"
-"--Cdr. Navarre"
+"Cdr. Navarre"
 
 #: ../base/ufos/msgid/aircraftitems.ufo:76
-#, fuzzy
 msgid ""
 "Commander, we've finished work on the captured alien astrogation unit. Here is a summary of my report.\n"
 "\n"
@@ -4022,10 +3989,9 @@ msgstr ""
 "\n"
 "Und das ist etwas, das wir so schnell wie möglich tun sollten.\n"
 "\n"
-"--Cdr. Navarre"
+"Cdr. Navarre"
 
 #: ../base/ufos/msgid/aircraftitems.ufo:80
-#, fuzzy
 msgid ""
 "Commander, the alien antimatter engines we recovered have been fascinating my team ever since they arrived. With our new understanding of the alien materials, I think we can work out the details and duplication of this technology. Excitingly, it now seems to be within our capabilities to replicate these engines, if we can just figure out the function and creation of the different parts.\n"
 "\n"
@@ -4037,10 +4003,9 @@ msgstr ""
 "\n"
 "Neben dem außerirdischen Nagigations- und Ortungssystem ist der außerirdische Antrieb die dritte Säule des UFO-Designs. Ihn zu verstehen, wird uns dem Bau eines atmosphärentauglichen, interplanetaren Verteidigungsschiffs einen großen Schritt näherbringen.\n"
 "\n"
-"--Cdr. Navarre"
+"Cdr. Navarre"
 
 #: ../base/ufos/msgid/aircraftitems.ufo:98
-#, fuzzy
 msgid ""
 "Commander, I'm happy to report the success of our alien propulsion program. We've cracked the mysteries of the alien engine set-up and we finally understand the path of the antimatter from fuel tank to reaction chamber.\n"
 "\n"
@@ -4080,10 +4045,9 @@ msgstr ""
 "\n"
 "Trotzdem sollte es zu keinen Problemen kommen solange jeder -- Piloten wie Mechaniker -- extrem vorsichtig bei seinen zugeteilten Aufgaben ist. Wir haben unser Sicherheits- und Inspektionsprotokoll speziell für die Antimaterie-Flugzeuge erheblich gestrafft. Die Umschulung unserer Piloten ist die einzige verbleibende Hürde, bevor wir diese außerirdischen Antriebe nutzen können.\n"
 "\n"
-"--Cdr. Navarre"
+"Cdr. Navarre"
 
 #: ../base/ufos/msgid/aircraftitems.ufo:104
-#, fuzzy
 msgid ""
 "Commander, the alien sensor suite appears to be a very powerful set of passive and active scanning systems, including radar, lidar, magnetic and UV/infrared reception, and -- most interestingly -- a kind of detection unknown to us, but which seems to have far more success at detecting UFOs than anything we have.\n"
 "\n"
@@ -4099,10 +4063,9 @@ msgstr ""
 "\n"
 "Zusammen mit dem außerirdischen Antrieb und der außerirdischen Navigation ist die außerirdische Ortung einer der drei Grundpfeiler des UFO-Designs. Dieses zu verstehen wird uns der Fähigkeit, ein atmosphärentaugliches, interplanetares Verteidigungsraumschiff zu bauen, ein großes Stück näherbringen.\n"
 "\n"
-"--Cdr. Navarre"
+"Cdr. Navarre"
 
 #: ../base/ufos/msgid/aircraftitems.ufo:122
-#, fuzzy
 msgid ""
 "The project on alien detection is complete, Commander. We now have a full understanding of the machinery, its controls, and the modifications needed for human use.\n"
 "\n"
@@ -4142,11 +4105,10 @@ msgstr ""
 "\n"
 "Natürlich sind nicht die kurzfristigen Anwendungen die wichtigsten. Diese Detektoren sind unverzichtbar in zukünftigen PHALANX-Raumschiffen. Im Weltraum, wo es keine Unterstützung durch Bodenradar gibt, werden wir die zusätzliche Leistung dringend brauchen.\n"
 "\n"
-"--Cdr. Navarre"
+"Cdr. Navarre"
 
 #: ../base/ufos/msgid/aircraftitems.ufo:132
 #: ../base/ufos/msgid/aircraftitems.ufo:350
-#, fuzzy
 msgid ""
 "This is one of several proposals I'm submitting for the research and development of new laser weaponry. Each of these will have to be developed separately due to the size differences, power levels and complexity of the systems involved.\n"
 "\n"
@@ -4160,21 +4122,9 @@ msgid ""
 "\n"
 "Cdr. Navarre"
 msgstr ""
-"Kommandant, ich habe soeben meinen Bericht über unser neuestes Laser-Programm fertiggestellt. Wir konnten einen Prototypen des Flugzeug-Lasers bauen und sind nun bereit ihn in Serienproduktion zu geben.\n"
-"\n"
-"Wir haben unser Forschungsziel erreicht: Einen stabilen Dauerstrichlaser, betrieben mit Deuterium-Fluorid und im Megawatt Leistungsbereich zu entwickeln, welcher in der Lage ist, UFOs noch in 5 Kilometer Entfernung zu treffen. Die Genauigkeit ist unabhängig von der Zielentfernung ausgezeichnet. Sie wird nur durch gegnerische EGM (elektronische Gegenmaßnahmen) beeinträchtigt. Der Laserstrahl breitet sich geradlinig und mit Lichtgeschwindigkeit aus, so dass es tatsächlich schwer fallen dürfte, damit das Ziel zu verfehlen.\n"
-"\n"
-"Leider bereitet uns die atmosphärisch bedingte Streuung des Laserstrahles noch Probleme, d.h. die Intensität des Lasers fällt noch merklich mit der zurückgelegten Strecke ab. Bei der maximalen Reichweite von 5 Kilometern dauert es 32 Sekunden, bis der Laserstrahl ein Loch in die Hülle des UFOs gebrannt hat. Allerdings haben wir während des Gefechts selten soviel Zeit, um ein UFO abzuschießen. Die optimale Einsatzreichweite eines mit diesem Lasertyp ausgestattetem Abfangjägers liegt zwischen zwei und drei Kilometern und stellt einen Kompromiss zwischen Schadenspotential der Laserbewaffnung und dem von den UFOs ausgehendem Gefahrenpotential dar. Der durchschnittliche Schaden pro Sekunde bewegt sich leicht unter dem eines SHIVA Drehgeschützes, aber die Reichweite ist um 1,5 Kilometer höher. Mehr als jede andere unserer Waffen eignet sich der Laser dazu, eine für den Gegner undurchdringliche Feuerwand einzurichten.\n"
-"\n"
-"Der Flugzeuglaser besitzt ein integriertes Deuterium-Fluorid-Magazin, das es ihm erlaubt bis zu 30 Minuten durchgängig zu feuern. Da Deuterium und Fluorid zu gefährlich sind, um sie in unserer Basis zu lagern, und wir über große Bestände außerhalb verfügen, werden wir die Laser-Munition nicht in unserem Lagern aufbewahren.\n"
-"\n"
-"Natürlich liegt der Einsatz dieser Waffe in ihrem Zuständigkeitsbereich, aber ich empfehle die SHIVA-Drehgeschütze durch die neuen Laser zu ersetzen, solange es sich nicht um speziell für den Nahkampf konzipierten Flieger handelt. Alles was schwerfälliger als ein UFO ist, wird Probleme haben dieses mit SHIVAs unter Feuer zu nehmen. Laserbewaffnung sollte sich dazu deutlich geeigneter herausstellen, bei nur wenig geringerer Gesamtfeuerdauer.\n"
-"\n"
-"--Cdr. Navarre"
 
 #: ../base/ufos/msgid/aircraftitems.ufo:142
 #: ../base/ufos/msgid/aircraftitems.ufo:360
-#, fuzzy
 msgid ""
 "Commander, I've just finished my report on our latest laser program. We've successfully prototyped the new Aerial Laser Cannon and are ready to put it into production.\n"
 "\n"
@@ -4188,20 +4138,19 @@ msgid ""
 "\n"
 "Cdr. Navarre"
 msgstr ""
-"Commander, I've just finished my report on our latest laser program. We've successfully prototyped the new Aerial Laser Cannon and are ready to put it into production.\n"
+"Kommandant, ich habe soeben meinen Bericht über unser neuestes Laser-Programm fertiggestellt. Wir konnten einen Prototypen des Flugzeug-Lasers bauen und sind nun bereit ihn in Serienproduktion zu geben.\n"
 "\n"
-"We achieved what we set out to do: create a continuous wave, deuterium-fluoride-powered laser with megawatt-range output, capable of tracking and hitting UFOs at ranges of up to 5 kilometres. Accuracy is excellent, hampered only by enemy ECM (Electronic Countermeasures), and unlike in all our other weapons it is not affected by range. The laser proceeds in a straight line and crosses the distance between gun and target almost instantly. It's hard to miss with it.\n"
+"Wir haben unser Forschungsziel erreicht: Einen stabilen Dauerstrichlaser, betrieben mit Deuterium-Fluorid und im Megawatt Leistungsbereich zu entwickeln, welcher in der Lage ist, UFOs noch in 5 Kilometer Entfernung zu treffen. Die Genauigkeit ist unabhängig von der Zielentfernung ausgezeichnet. Sie wird nur durch gegnerische EGM (elektronische Gegenmaßnahmen) beeinträchtigt. Der Laserstrahl breitet sich geradlinig und mit Lichtgeschwindigkeit aus, so dass es tatsächlich schwer fallen dürfte, damit das Ziel zu verfehlen.\n"
 "\n"
-"Unfortunately atmospheric blooming is still a problem, and the laser rapidly loses power the further it has to travel to the target. At maximum range, 5 kilometres, it takes 32 seconds of continuous fire on the same spot to hole a UFO's hull. We're rarely going to have that much time to wait for a kill. The ideal range for this weapon is between 2 to 3 kilometres where it strikes a good balance between damage and distance. Average damage per second at these distances is slightly less than the SHIVA Rotary Cannon, but range is higher by up to 1.5 kilometres. More so than any of our previous weapons, the Aerial Laser Cannon is ideal for driving and pinning down the enemy behind a wall of laser fire.\n"
+"Leider bereitet uns die atmosphärisch bedingte Streuung des Laserstrahles noch Probleme, d.h. die Intensität des Lasers fällt noch merklich mit der zurückgelegten Strecke ab. Bei der maximalen Reichweite von 5 Kilometern dauert es 32 Sekunden, bis der Laserstrahl ein Loch in die Hülle des UFOs gebrannt hat. Allerdings haben wir während des Gefechts selten soviel Zeit, um ein UFO abzuschießen. Die optimale Einsatzreichweite eines mit diesem Lasertyp ausgestattetem Abfangjägers liegt zwischen zwei und drei Kilometern und stellt einen Kompromiss zwischen Schadenspotential der Laserbewaffnung und dem von den UFOs ausgehendem Gefahrenpotential dar. Der durchschnittliche Schaden pro Sekunde bewegt sich leicht unter dem eines SHIVA Drehgeschützes, aber die Reichweite ist um 1,5 Kilometer höher. Mehr als jede andere unserer Waffen eignet sich der Laser dazu, eine für den Gegner undurchdringliche Feuerwand einzurichten.\n"
 "\n"
-"The cannon carries an integrated magazine of deuterium-fluoride allowing up to thirty minutes of continuous fire. Since deuterium and fluoride are both too potentially hazardous to store on-base, and we have access to large off-base stockpiles of all the necessary compounds, we will not need to keep laser cannon ammunition in inventory.\n"
+"Der Flugzeuglaser besitzt ein integriertes Deuterium-Fluorid-Magazin, das es ihm erlaubt bis zu 30 Minuten durchgängig zu feuern. Da Deuterium und Fluorid zu gefährlich sind, um sie in unserer Basis zu lagern, und wir über große Bestände außerhalb verfügen, werden wir die Laser-Munition nicht in unserem Lagern aufbewahren.\n"
 "\n"
-"Deployment of the weapon is at your discretion, Commander, but I'd like to recommend we use the new cannons to replace SHIVA guns across our airfleet except for craft specifically equipped for close-in fighting. Anything that's much less manoeuvrable than a UFO will have difficulty keeping hold of the target with SHIVAs, so the laser offers a far better solution with nearly as much staying power.\n"
+"Natürlich liegt der Einsatz dieser Waffe in ihrem Zuständigkeitsbereich, aber ich empfehle die SHIVA-Drehgeschütze durch die neuen Laser zu ersetzen, solange es sich nicht um speziell für den Nahkampf konzipierten Flieger handelt. Alles was schwerfälliger als ein UFO ist, wird Probleme haben dieses mit SHIVAs unter Feuer zu nehmen. Laserbewaffnung sollte sich dazu deutlich geeigneter herausstellen, bei nur wenig geringerer Gesamtfeuerdauer.\n"
 "\n"
-"--Cdr. Navarre"
+"Cdr. Navarre"
 
 #: ../base/ufos/msgid/aircraftitems.ufo:180
-#, fuzzy
 msgid ""
 "Technical Specifications: SHIVA Rotary Cannon\n"
 "\n"
@@ -4286,7 +4235,6 @@ msgstr ""
 #: ../base/ufos/msgid/aircraftitems.ufo:214
 #: ../base/ufos/msgid/aircraftitems.ufo:410
 #: ../base/ufos/msgid/aircraftitems.ufo:444
-#, fuzzy
 msgid ""
 "Technical Specifications: SHIVA 20mm API Rounds\n"
 "\n"
@@ -4361,7 +4309,6 @@ msgstr ""
 "Keiner."
 
 #: ../base/ufos/msgid/aircraftitems.ufo:248
-#, fuzzy
 msgid ""
 "Technical Specifications: SHIVA 20mm HEI Rounds\n"
 "\n"
@@ -4436,7 +4383,6 @@ msgstr ""
 "Keiner."
 
 #: ../base/ufos/msgid/aircraftitems.ufo:286
-#, fuzzy
 msgid ""
 "Technical Specifications: TR-20 Rocket Pod\n"
 "\n"
@@ -4519,7 +4465,6 @@ msgstr ""
 "Keiner."
 
 #: ../base/ufos/msgid/aircraftitems.ufo:324
-#, fuzzy
 msgid ""
 "Technical Specifications: TR-20 Rocket\n"
 "\n"
@@ -4602,7 +4547,6 @@ msgstr ""
 "Keiner."
 
 #: ../base/ufos/msgid/aircraftitems.ufo:326
-#, fuzzy
 msgid ""
 "Commander, the UFO we recovered was equipped with a very interesting type of weapon that we'd like to research right away. It seems to fire some kind of high-velocity particle beam; if we can master this technology, or at least adapt it for use on our own aircraft, we could make air engagements with armed alien craft significantly more survivable for our craft and pilots.\n"
 "\n"
@@ -4610,10 +4554,9 @@ msgid ""
 msgstr ""
 "Herr Kommandant, das geborgene UFO war mit einer uns unbekannten Waffe ausgerüstet, deren Erforschung wir gerne schnellstmöglich einleiten würden. Sie scheint eine Art Hochgeschwindigkeitspartikelstrahl abzufeuern. Wenn wir diese Technologie meistern, oder sie wenigstens für unsere Zwecke anpassen können, könnten wir die Überlebenschance unserer Piloten in Luftkämpfen gegen die Außerirdischen deutlich erhöhen.\n"
 "\n"
-"--Cdr. Navarre"
+"Cdr. Navarre"
 
 #: ../base/ufos/msgid/aircraftitems.ufo:340
-#, fuzzy
 msgid ""
 "Our report on the alien PBW (Particle Beam Weapon) is ready for your review, Commander.\n"
 "\n"
@@ -4645,11 +4588,10 @@ msgstr ""
 "\n"
 "Auf der positiven Seite haben wir herausgefunden, dass alle Komponenten der Waffe von uns reproduzierbar sind und ihre Baupläne wurden der Werkstatt übergeben. Wir sollten in der Lage sein, die Produktion sofort zu beginnen.\n"
 "\n"
-"--Cdr. Navarre"
+"Cdr. Navarre"
 
 #: ../base/ufos/msgid/aircraftitems.ufo:364
 #: ../base/ufos/msgid/story.ufo:288
-#, fuzzy
 msgid ""
 "Commander, as I mentioned in my previous report, the UFO we recovered was plated with a highly interesting alloy which blends plastic and metal together into a single material. These materials seem to be used almost universally throughout the alien technology base. It's advanced stuff, massively versatile and with a thousand possible uses.\n"
 "\n"
@@ -4657,15 +4599,14 @@ msgid ""
 "\n"
 "Cdr. Navarre"
 msgstr ""
-"Herr Kommandant, wie ich in meinem vorherigen Bericht erwähnte, war der UFO-Aufklärer mit einer höchst interessanten Legierung beschichtet, die Metall und Kunststoff zu einem einzigen Material verbindet. Diese Materialien scheinen als Basis aller außerirdischen Technologien benutzt zu werden. Das ist hochentwickeltes Material, extrem vielseitig und mit tausenden möglichen Verwendungszwecken.\n"
+"Herr Kommandant, wie ich in meinem vorherigen Bericht erwähnte, war das UFO mit einer höchst interessanten Legierung beschichtet, die Metall und Kunststoff zu einem einzigen Material verbindet. Diese Materialien scheinen als Basis aller außerirdischen Technologien benutzt zu werden. Das ist hochentwickeltes Material, extrem vielseitig und mit tausenden möglichen Verwendungszwecken.\n"
 "\n"
 "Ich denke, dass sich Forschungen zur Reproduzierbarkeit des Materials in unseren Werkstätten lohnen. Selbst wenn sich diese als nicht möglich herausstellen sollte, bekämen wir wohl mit jedem geborgenen UFO große Mengen davon in die Hände. Wir werden auf jeden Fall neue, menschliche Anwendungen dafür finden, die unsere Möglichkeiten im Kampf erweitern und verbessern.\n"
 "\n"
-"--Cdr. Navarre"
+"Cdr. Navarre"
 
 #: ../base/ufos/msgid/aircraftitems.ufo:376
 #: ../base/ufos/msgid/story.ufo:284
-#, fuzzy
 msgid ""
 "Commander, I think we've uncovered the secret to the alien materials. After some modifications to our Workshop equipment, we should now be able to use the stuff and 'program' it into advanced new shapes.\n"
 "\n"
@@ -4693,10 +4634,9 @@ msgstr ""
 "\n"
 "Außerirdische Werkstoffe sollten nun zur Produktion verfügbar sein. Unglücklicherweise benötigen diese etliche seltene und wertvolle Bauelemente, von denen einige auf der Erde bloß in Spuren vorkommen. Es gibt keine Möglichkeit, genug von den benötigten Materialien zu besorgen, um die Herstellung nichttrivialer Gegenstände zu ermöglichen. Wir müssen sämtliches benötigtes Material von den Außerirdischen bergen, da wir in vorhersehbarer Zukunft wohl nicht in der Lage sein werden, etwas davon herzustellen.\n"
 "\n"
-"--Cdr. Navarre"
+"Cdr. Navarre"
 
 #: ../base/ufos/msgid/aircraftitems.ufo:478
-#, fuzzy
 msgid ""
 "Technical Specifications: Targeting Computer\n"
 "\n"
@@ -4771,7 +4711,6 @@ msgstr ""
 "Mit all den Möglichkeiten und verschiedenen Szenarien, die uns in der Zukunft erwarten, gibt es keine goldene Regel, die uns sagt, wann wir den Zielcomputer einsetzen sollten. Er ist bereit zur Nutzung, wenn sie es möchten."
 
 #: ../base/ufos/msgid/aircraftitems.ufo:508
-#, fuzzy
 msgid ""
 "Technical Specifications: Fuel Pod\n"
 "\n"
@@ -11681,7 +11620,6 @@ msgid "stungren_alien_txt"
 msgstr "<TODO>"
 
 #: ../base/ufos/msgid/weapons.ufo:1540
-#, fuzzy
 msgid ""
 "Commander,\n"
 "\n"
@@ -11724,7 +11662,6 @@ msgstr ""
 "Dr. Connor"
 
 #: ../base/ufos/msgid/weapons.ufo:1554
-#, fuzzy
 msgid ""
 "Commander,\n"
 "\n"
@@ -11759,7 +11696,6 @@ msgstr ""
 "Dr. Connor"
 
 #: ../base/ufos/msgid/weapons.ufo:1568
-#, fuzzy
 msgid ""
 "Commander, I've got the specs of the new alien pistol for you, and they're not good.\n"
 "\n"
@@ -11794,7 +11730,6 @@ msgstr ""
 "Cdr. Navarre"
 
 #: ../base/ufos/msgid/weapons.ufo:1572
-#, fuzzy
 msgid ""
 "Commander, we've recovered a dangerous new alien pistol that seems to fire high-energy particle beams -- more deadly than lasers, more accurate than plasma weapons, and an extremely nasty new threat to our troops on the battlefield. Preliminary tests against our armour have produced distressing results. We need to perform more research on these weapons immediately.\n"
 "\n"
@@ -11806,10 +11741,9 @@ msgstr ""
 "\n"
 "Bitte autorisieren Sie dieses Programm so bald wie möglich.\n"
 "\n"
-"--Cdr. Navarre"
+"Cdr. Navarre"
 
 #: ../base/ufos/msgid/weapons.ufo:1586
-#, fuzzy
 msgid ""
 "Commander, we've finished work on this big damned cannon we brought back.\n"
 "\n"
@@ -11841,10 +11775,9 @@ msgstr ""
 "\n"
 "Das ist bis jetzt alles, Herr Kommandant. Ich werde sie über unsere Fortschritte mit den Magazinen auf dem Laufenden halten.\n"
 "\n"
-"--Cdr. Navarre"
+"Cdr. Navarre"
 
 #: ../base/ufos/msgid/weapons.ufo:1590
-#, fuzzy
 msgid ""
 "Commander, we've recovered a large alien cannon that fires high-energy particle beams. It is extremely deadly and has frightening effects on our armour during preliminary testing. We need to perform more research on these weapons immediately.\n"
 "\n"
@@ -11856,10 +11789,9 @@ msgstr ""
 "\n"
 "Bitte autorisieren sie dieses Programm sobald wie möglich.\n"
 "\n"
-"--Cdr. Navarre"
+"Cdr. Navarre"
 
 #: ../base/ufos/msgid/weapons.ufo:1606
-#, fuzzy
 msgid ""
 "Commander, we've gotten all the info we can from this new alien rifle. It's more bad news, I'm afraid.\n"
 "\n"
@@ -11895,10 +11827,9 @@ msgstr ""
 "\n"
 "Ich werde sie über unseren Fortschritt mit den Magazinen auf dem Laufenden halten, Herr Kommandant.\n"
 "\n"
-"--Cdr. Navarre"
+"Cdr. Navarre"
 
 #: ../base/ufos/msgid/weapons.ufo:1610
-#, fuzzy
 msgid ""
 "Commander, we've recovered an alien rifle that fires high-energy particle beams. It's more deadly than lasers, more accurate than plasma weapons, and an extremely nasty new threat to our troops on the battlefield. Preliminary tests against our armour confirm that the aliens have seriously upgunned their troops. We need to perform more research on these weapons immediately.\n"
 "\n"
@@ -11910,10 +11841,9 @@ msgstr ""
 "\n"
 "Bitte autorisieren sie dieses Programm sobald wie möglich.\n"
 "\n"
-"--Cdr. Navarre"
+"Cdr. Navarre"
 
 #: ../base/ufos/msgid/weapons.ufo:1624
-#, fuzzy
 msgid ""
 "Commander, my method worked. I think we've managed to crack the secrets of the mysterious particle beam weaponry. Here are my conclusions.\n"
 "\n"
@@ -11945,10 +11875,9 @@ msgstr ""
 "\n"
 "Wir müssen alles was wir haben, verbessern, Herr Kommandant. Alles. Das bedeutet Soldaten, Waffen, Rüstungen etc. Wir müssen bereit sein, wenn die Außerirdischen anfangen, diesen Krieg ernst zu nehmen.\n"
 "\n"
-"--Cdr. Navarre"
+"Cdr. Navarre"
 
 #: ../base/ufos/msgid/weapons.ufo:1632
-#, fuzzy
 msgid ""
 "Commander, we've decided that more research is badly needed on the particle beam weaponry, especially their mysterious power source, the magazines which we've been utterly unable to examine. No amount of finesse or ingenuity has been able to open them. That's why I'm hereby proposing extreme measures.\n"
 "\n"
@@ -11968,7 +11897,7 @@ msgstr ""
 "\n"
 "Wenn wir einmal wissen, wie ein Magazin funktioniert, können wir die Waffen neu bewerten und sind dann hoffentlich in der Lage, ihnen zusagen, wie alles zusammenpasst, Herr Kommandant.\n"
 "\n"
-"--Cdr. Navarre"
+"Cdr. Navarre"
 
 #: ../base/ufos/msgoptions.ufo:0
 msgid "install_equipment"
