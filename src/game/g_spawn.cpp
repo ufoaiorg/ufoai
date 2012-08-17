@@ -420,9 +420,12 @@ edict_t *G_Spawn (void)
 static void Think_SmokeAndFire (edict_t *self)
 {
 	if (self->time + self->count <= level.actualRound) {
+		bool checkVis = self->type == ET_SMOKE;
 		G_EventEdictPerish(G_VisToPM(self->particleLink->visflags), self->particleLink);
 		G_FreeEdict(self->particleLink);
 		G_FreeEdict(self);
+		if (checkVis)
+			G_CheckVis(NULL);
 	}
 }
 
@@ -973,6 +976,7 @@ static void G_SpawnField (edict_t *ent, const char *classname, entity_type_t typ
 static void SP_misc_smoke (edict_t *ent)
 {
 	G_SpawnField(ent, "smoke", ET_SMOKE, SOLID_NOT);
+	G_CheckVis(NULL);
 }
 
 static void SP_misc_fire (edict_t *ent)
