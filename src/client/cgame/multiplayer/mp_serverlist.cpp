@@ -112,6 +112,10 @@ static inline bool CL_ShowServer (const serverList_t *server)
 static void CL_PingServerCallback (struct net_stream *s)
 {
 	dbuffer *buf = cgi->NET_ReadMsg(s);
+	if (!buf) {
+		cgi->NET_StreamFree(s);
+		return;
+	}
 	serverList_t *server = (serverList_t *)cgi->NET_StreamGetData(s);
 	const int cmd = cgi->NET_ReadByte(buf);
 	char str[512];
