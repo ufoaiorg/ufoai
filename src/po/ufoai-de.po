@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
 "POT-Creation-Date: 2012-08-16 20:57+0200\n"
-"PO-Revision-Date: 2012-08-16 22:25+0100\n"
-"Last-Translator: Martin Gerhardy <tlh2000@users.sourceforge.net>\n"
+"PO-Revision-Date: 2012-08-17 08:36+0100\n"
+"Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: \n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -3935,7 +3935,6 @@ msgstr ""
 "Operations Command"
 
 #: ../base/ufos/msgid/aircraft.ufo:154
-#, fuzzy
 msgid ""
 "Commander, as you will be well aware, our enemies have been fielding "
 "increasingly heavier craft and weaponry in our skies, perhaps in a response "
@@ -3954,35 +3953,6 @@ msgid ""
 "\n"
 "Cdr. Navarre"
 msgstr ""
-"Herr Kommandant, bitte verzeihen sie mir wenn meine folgenden Sätze nicht im "
-"Zusammenhang stehen, aber ich war die ganze Nacht wach um die letzten "
-"Blaupausen fertig zu stellen. Es ist mir ein großes Vergnügen ihnen den "
-"Starcaser Raum-Überlegenheitsjäger präsentieren zu können. Ja, sie lesen "
-"richtig. Raum-Überlegenheit! Eine der hervorstechensten Verbesserungen des "
-"Dragon - auch wenn es sicherlich nicht die Einzige ist! - ist die Fähigkeit "
-"anhaltende Flüge und Kämpfe im Orbit durchzustehen. Wir haben nun die "
-"Möglichkeit den Feind außerhalb unserer Atmosphäre abzufangen. Auch wenn "
-"dies momentan wenig nützlich erscheint, da wir momentan noch nicht wissen "
-"woher der Feind kommt, bin ich zuversichtlich, dass wir früher oder später "
-"die Möglichkeit dazu haben werden, dies zu erkennen.\n"
-"\n"
-"Bis diese Zeit kommt, konzentrieren wir uns lieber auf die Probleme hier auf "
-"der Erde. Der Dragon ist mit einem, auf außerirdischer Technologie "
-"basierendem Antriebssystem ausgestattet. Dieser Antrieb erlaubt, neben "
-"seiner Laufruhe und seines aerodynamischen Designs, Geschwindigkeit und "
-"Manövrierfähigkeit. Die Hülle an sich besteht aus dichten Schichten die aus "
-"außerirdischem Material bestehen. Diese haben ein beispiellose "
-"Beständigkeit. Schlussendlich, trotz der Tatsache, dass uns das kompakte "
-"Design nur wenig Platz für Waffen- und Unterstützungssystema läßt, konnten "
-"wir die Feuerkraft der Dragonklasse verbessern.\n"
-"\n"
-"Der Strachaser ist wirklich die neue Generation des Luftkampfes. Er vereint "
-"oder übertrifft jeden anderen Jäger den wir besitzen. Deshalb empfehle ich, "
-"dass wir ihn sofort in unsere Produktion eingliedern. Aber achten sie auf "
-"die Finanzen. Der Starcaser ist ziemlich teuer, da wir über wenig Geld sowie "
-"Material und Zeit verfügen.\n"
-"\n"
-"--Cdr. Navarre"
 
 #: ../base/ufos/msgid/aircraft.ufo:170
 msgid ""
@@ -6938,7 +6908,6 @@ msgstr ""
 
 #: ../base/ufos/msgid/aliens.ufo:86 ../base/ufos/msgid/aliens.ufo:312
 #: ../base/ufos/msgid/aliens.ufo:350
-#, fuzzy
 msgid ""
 "Commander,\n"
 "\n"
@@ -7108,7 +7077,9 @@ msgstr ""
 "Das ist alles für den Moment, Herr Kommandant. Ich werde sie wieder "
 "kontaktieren, sobald sich etwas neues ergibt.\n"
 "\n"
-"Mit freundlichen Grüßen,Dr. Connor"
+"Mit freundlichen Grüßen,\n"
+"\n"
+"Dr. Connor"
 
 #: ../base/ufos/msgid/aliens.ufo:116
 msgid ""
@@ -7277,7 +7248,6 @@ msgstr ""
 "Dr. Connor"
 
 #: ../base/ufos/msgid/aliens.ufo:162
-#, fuzzy
 msgid ""
 "Commander,\n"
 "\n"
@@ -7656,7 +7626,6 @@ msgstr ""
 "Dr. Connor"
 
 #: ../base/ufos/msgid/aliens.ufo:238
-#, fuzzy
 msgid ""
 "Commander,\n"
 "\n"
@@ -7783,12 +7752,12 @@ msgstr ""
 "den Knochenwirbeln liegen drei Organe, die anscheinend infrarote Strahlung "
 "erfassen können. Diese scheint der Shevaar anstelle von Augen zu benutzen. "
 "Wir schätzen, dass die Empfindlichkeit dieser Organe vergleichbar mit der "
-"eines Menschen bei tragen einer PHALANX-standart Infrarotbrille ist.Aus der "
+"eines Menschen bei tragen einer PHALANX-standard Infrarotbrille ist.Aus der "
 "Autopsie und unserer Analyse der Schlachtfeldaufnahmen schließen wir das "
 "folgende:\n"
 "\n"
 "- Der Shevaar sieht im Infrarotbereich. Das macht es schwer, sich zu "
-"verstecken oder sich ihnen unendeckt zu nähern.\n"
+"verstecken oder sich ihnen unentdeckt zu nähern.\n"
 "\n"
 "- Sie tragen meistens leichte Ausrüstung, um ihre natürliche Beweglichkeit "
 "zu erhalten. Das erlaubt ihnen, effektive Zuschlagen-und-Verschwinden-"
@@ -7816,7 +7785,7 @@ msgstr ""
 "detailliertere Analyse zusammen mit einem Forschungsantrag schicken.\n"
 "\n"
 "Wir sollten vorsichtig sein, wenn wir diesen Außerirdischen im Feld "
-"begegnen. Sie sind schnelle und gefährliche Pänkler, die es vorziehen, aus "
+"begegnen. Sie sind schnelle und gefährliche Plänkler, die es vorziehen, aus "
 "Deckung heraus zu kämpfen, und sollten bei Sichtung verfolgt und beschossen "
 "werden, solange es nicht unsere Position gefährdet. Das Entblößen unserer "
 "Flanken oder Rücken gegen eine Einheit Shevaar könnte katastrophale "
@@ -12258,7 +12227,6 @@ msgstr ""
 "Cdr. Navarre"
 
 #: ../base/ufos/msgid/story.ufo:30
-#, fuzzy
 msgid ""
 "Our study on antimatter is complete, Commander, and we're ready to present "
 "our results. I'm afraid the news is mostly bad.\n"
@@ -12379,7 +12347,7 @@ msgstr ""
 "Technologie sobald wie möglich adaptieren, wenn wir eine Chance haben "
 "wollen, diese Invasion zu stoppen.\n"
 "\n"
-"--Cdr. Navarre"
+"Cdr. Navarre"
 
 #: ../base/ufos/msgid/story.ufo:34
 msgid ""
@@ -12416,7 +12384,6 @@ msgstr ""
 "Cdr. Navarre"
 
 #: ../base/ufos/msgid/story.ufo:38
-#, fuzzy
 msgid ""
 "Commander, based on the extremely interesting findings we've made during our "
 "examination of alien UFO technology, I'd like your permission to use some "
@@ -12448,7 +12415,7 @@ msgstr ""
 "würde unsere Technologie um Jahrhunderte in die Zukunft katapultieren. Wir "
 "müssen diese Forschung sobald wie möglich beginnen!\n"
 "\n"
-"--Cdr. Navarre"
+"Cdr. Navarre"
 
 #: ../base/ufos/msgid/story.ufo:48 ../base/ufos/msgid/story.ufo:432
 msgid ""
@@ -14189,7 +14156,6 @@ msgstr ""
 "Dr. Connor"
 
 #: ../base/ufos/msgid/story.ufo:350
-#, fuzzy
 msgid ""
 "Commander,\n"
 "\n"
@@ -14568,7 +14534,6 @@ msgstr ""
 "Col. Falkland"
 
 #: ../base/ufos/msgid/story.ufo:422
-#, fuzzy
 msgid ""
 "Good morning, Sir.\n"
 "\n"
@@ -15922,7 +15887,6 @@ msgstr ""
 "Keiner."
 
 #: ../base/ufos/msgid/weapons.ufo:304
-#, fuzzy
 msgid ""
 "Technical Specifications: Machine Gun Drum\n"
 "\n"
@@ -16008,7 +15972,6 @@ msgstr ""
 "Keiner."
 
 #: ../base/ufos/msgid/weapons.ufo:346
-#, fuzzy
 msgid ""
 "Technical Specifications: HPML Rocket Launcher\n"
 "\n"
@@ -16204,7 +16167,6 @@ msgstr ""
 "hat."
 
 #: ../base/ufos/msgid/weapons.ufo:376
-#, fuzzy
 msgid ""
 "Technical Specifications: HE Rocket\n"
 "\n"
@@ -16280,7 +16242,7 @@ msgstr ""
 "\n"
 "Da sie keine eigene Elektronik hat, ist die Rakete unempfindlich gegen EMP "
 "und elektronische Störung. Das gesamte Zielen wird vom Werfer selbst "
-"erledigt. Daher wird eine gutgezielte Rakete ihr Ziel immer erreichen, egal "
+"erledigt. Daher wird eine gut gezielte Rakete ihr Ziel immer erreichen, egal "
 "was während des Fluges passiert.\n"
 "\n"
 "Die Rakete wird in einen HPML Raketenwerfer geladen.\n"
@@ -16299,7 +16261,6 @@ msgstr ""
 "Keiner."
 
 #: ../base/ufos/msgid/weapons.ufo:408
-#, fuzzy
 msgid ""
 "Technical Specifications: IC Rocket\n"
 "\n"
@@ -16382,7 +16343,7 @@ msgstr ""
 "\n"
 "Da sie keine eigene Elektronik hat, ist die Rakete unempfindlich gegen EMP "
 "und elektronische Störung. Das gesamte Zielen wird vom Werfer selbst "
-"erledigt. Daher wird eine gutgezielte Rakete ihr Ziel immer erreichen, egal "
+"erledigt. Daher wird eine gut gezielte Rakete ihr Ziel immer erreichen, egal "
 "was während des Fluges passiert.\n"
 "\n"
 "Die Rakete wird in einen HPML Raketenwerfer geladen.\n"
@@ -16401,7 +16362,6 @@ msgstr ""
 "Keiner."
 
 #: ../base/ufos/msgid/weapons.ufo:448 ../base/ufos/msgid/weapons.ufo:1220
-#, fuzzy
 msgid ""
 "Technical Specifications: CRC-212 Riot Shotgun\n"
 "\n"
@@ -16488,7 +16448,7 @@ msgid ""
 "\n"
 "None."
 msgstr ""
-"Technische Spezifikation: Schrotflinte\n"
+"Technische Spezifikation: CRC-212 Schrotflinte\n"
 "\n"
 "KLASSIFIZIERUNGSSTUFE GELB\n"
 "\n"
@@ -16505,28 +16465,29 @@ msgstr ""
 "\n"
 "Überblick\n"
 "\n"
-"Der Alienangriff auf Mumbai hat uns unsere Situation schmerzhaft vor Augen "
+"Der Angriff auf Mumbai hat uns unsere Situation schmerzhaft vor Augen "
 "geführt. Ihre Technologie ist weit fortgeschrittener als unsere. Die totale "
 "Unfähigkeit der Commonwealth Truppen, auch nur einen kleinen Erfolg in der "
 "Mumbai Offensive zu erzielen zeigte kritische Schwächen in der derzeitigen "
 "Ausbildung und Ausrüstung. Sie verloren drei Bataillone, nur um den "
-"Alienvormarsch zu einem Stillstand zu bringen ohne ihnen signifikante "
-"Verluste beizubringen. PHALANX muss diese Ungleichheit überwinden und um das "
-"zu tun brauchen wir das beste, was menschliche Technologie zu bieten hat.\n"
+"Vormarsch der Außerirdischen zu einem Stillstand zu bringen ohne ihnen "
+"signifikante Verluste beizubringen. PHALANX muss diese Ungleichheit "
+"überwinden und um das zu tun brauchen wir das beste, was menschliche "
+"Technologie zu bieten hat.\n"
 "\n"
 "Das Excalibur Programm wurde nicht nur gestartet, um die richtigen Waffen "
-"zur Bekämpfung der Alienbedrohung zu finden, sondern auch die richtige "
-"Rüstung und die richtigen Ausrüstungsgegenstände mit Gefechtsnutzen, um "
-"unseren Soldaten zu ermöglichen, ihre Missionen erfolgreich abzuschließen "
-"und anschließend lebend zur Basis zurückzukehren. Diese "
-"Ausrüstungsgegenstände wurden entwickelt, um die Effektivität oder "
+"zur Bekämpfung der Bedrohung durch die Außerirdischen zu finden, sondern "
+"auch die richtige Rüstung und die richtigen Ausrüstungsgegenstände mit "
+"Gefechtsnutzen, um unseren Soldaten zu ermöglichen, ihre Missionen "
+"erfolgreich abzuschließen und anschließend lebend zur Basis zurückzukehren. "
+"Diese Ausrüstungsgegenstände wurden entwickelt, um die Effektivität oder "
 "Überlebensfähigkeit der Soldaten zu steigern.\n"
 "\n"
 "Aus unseren Erfahrungen in Mumbai und anderen umkämpften Städten folgern "
-"wir, dass die Aliens ihre Bemühungen vor allem auf dichtbevölkerte Gebiete "
-"konzentrieren. Die Mehrzahl der Scharmützel fand auf Messerreichweite statt. "
-"Für das Excalibur Programm haben wir einige leistungsstarke Waffen für unser "
-"Nahkampfpaket ausgewählt.\n"
+"wir, dass die Außerirdischen ihre Bemühungen vor allem auf dicht bevölkerte "
+"Gebiete konzentrieren. Die Mehrzahl der Scharmützel fand auf "
+"Messerreichweite statt. Für das Excalibur Programm haben wir einige "
+"leistungsstarke Waffen für unser Nahkampfpaket ausgewählt.\n"
 "\n"
 "Viele großartige Schrotflinten der letzten zwei Jahrhunderte sind aus "
 "Italien gekommen; die letzte war die Rossi AAA, eine halbautomatische "
@@ -16565,7 +16526,7 @@ msgstr ""
 "\n"
 "Die CRC-212 ist sehr gut bei kurzer Reichweite aber verliert schnell ihre "
 "Wirkung je höher die Reichweite wird. Pfeilgeschosse haben die Angewohnheit, "
-"sich bei hoher Reichweit zu weit zu verteilen, um effektiv zu sein (aber "
+"sich bei hoher Reichweite zu weit zu verteilen, um effektiv zu sein (aber "
 "immer noch weniger als Schrot), während gezogene Geschosse einen "
 "ausgeprägten Geschossabfall haben und anfällig bei Wind sind. Die "
 "Schrotflinte kann auf mittlerer Reichweite treffen, aber erwarten sie keine "
@@ -16583,7 +16544,6 @@ msgstr ""
 "Keiner."
 
 #: ../base/ufos/msgid/weapons.ufo:462
-#, fuzzy
 msgid ""
 "The EM rifle project has been a resounding success! For the first time in "
 "human history, we've created a viable man-portable electromagnetic weapon. "
@@ -16710,7 +16670,6 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/msgid/weapons.ufo:470
-#, fuzzy
 msgid ""
 "Commander, we've received a number of research files from several UN nations "
 "concerning research and development for man-portable electromagnetic "
@@ -16765,10 +16724,9 @@ msgstr ""
 "ihre Erlaubnis für Laborzeit und Mittel, damit wir elektromagnetische Waffen "
 "endlich wahr machen können.\n"
 "\n"
-"--Cdr. Navarre"
+"Cdr. Navarre"
 
 #: ../base/ufos/msgid/weapons.ufo:506
-#, fuzzy
 msgid ""
 "Technical Specifications: Combat Knife\n"
 "\n"
@@ -16914,7 +16872,6 @@ msgstr ""
 "Keiner."
 
 #: ../base/ufos/msgid/weapons.ufo:516
-#, fuzzy
 msgid ""
 "Commander, I'm hereby reporting our success in the creation of alien blade "
 "materials. We've loaded the production specs into our Workshop machinery and "
@@ -16998,10 +16955,9 @@ msgstr ""
 "Verbesserung in unseren Nahkampffähigkeiten und ich bin sehr erfreut über "
 "das Ergebnis.\n"
 "\n"
-"--Cdr. Navarre"
+"Cdr. Navarre"
 
 #: ../base/ufos/msgid/weapons.ufo:526
-#, fuzzy
 msgid ""
 "Commander, now that we've had a good look at the alien blade technology from "
 "several sources -- the Bloodspider's 'fangs' and the Kerrblade -- we're "
@@ -17063,10 +17019,9 @@ msgstr ""
 "Pistolen, Granaten, Medikits oder andere nützliche oder lebensrettende Dinge "
 "-- einsetzen könnten.\n"
 "\n"
-"--Cdr. Navarre"
+"Cdr. Navarre"
 
 #: ../base/ufos/msgid/weapons.ufo:568
-#, fuzzy
 msgid ""
 "Technical Specifications: CRC-FL Flamethrower\n"
 "\n"
@@ -17151,7 +17106,7 @@ msgid ""
 "This weapon should not be fired if there are civilians in or near the target "
 "zone."
 msgstr ""
-"Technische Spezifikationen: Flammenwerfer\n"
+"Technische Spezifikationen: CRC-FL Flammenwerfer\n"
 "\n"
 "KLASSIFIZIERUNGSSTUFE GELB\n"
 "\n"
@@ -17251,7 +17206,6 @@ msgstr ""
 "Zieles sind."
 
 #: ../base/ufos/msgid/weapons.ufo:596
-#, fuzzy
 msgid ""
 "Technical Specifications: C90 Canister\n"
 "\n"
@@ -17338,7 +17292,6 @@ msgstr ""
 "Keiner."
 
 #: ../base/ufos/msgid/weapons.ufo:634
-#, fuzzy
 msgid ""
 "Technical Specifications: Flashbang\n"
 "\n"
@@ -17459,7 +17412,7 @@ msgstr ""
 "Diese Ausrüstungsgegenstände wurden entwickelt, um die Effektivität oder "
 "Überlebensfähigkeit der Soldaten zu steigern.\n"
 "\n"
-"Die Blendgranate ist eine nichttödliche Granate, die einen blendenden Blitz "
+"Die Blendgranate ist eine nicht tödliche Granate, die einen blendenden Blitz "
 "und einen ohrenbetäubenden Knall ausstößt, um ein oder mehrere Ziele in "
 "ihrem Wirkungsbereich zu verwirren oder zu desorientieren. Die Granate "
 "explodiert oder zersplittert nicht bei der Detonation. Wenn die Granathülle "
@@ -17472,7 +17425,7 @@ msgstr ""
 "verteidigten Stellungen abzulenken oder für kurze Zeit auszuschalten. Aus "
 "Kampfberichten schließen wir, dass die Blendgranate bei den Außerirdischen "
 "eine ähnliche Wirkung erzielt wie bei Menschen; Außerirdische sind nach dem "
-"Einsatz einer Blendgrante für eine kurze Zeit blind und taub, und somit "
+"Einsatz einer Blendgranate für eine kurze Zeit blind und taub, und somit "
 "meist komplett hilflos. Wir können nicht genau vorhersagen, wie lange dieser "
 "Zustand andauert, und es wird ohne Zweifel auch zwischen den verschiedenen "
 "Außerirdischen variieren, aber es sollte in einem Schusswechsel für einen "
@@ -17520,7 +17473,6 @@ msgstr ""
 "und Ohren."
 
 #: ../base/ufos/msgid/weapons.ufo:670
-#, fuzzy
 msgid ""
 "Technical Specifications: Fragmentation Grenade\n"
 "\n"
@@ -17684,7 +17636,6 @@ msgstr ""
 "Keiner."
 
 #: ../base/ufos/msgid/weapons.ufo:708
-#, fuzzy
 msgid ""
 "Technical Specifications: Incendiary Grenade\n"
 "\n"
@@ -17841,7 +17792,6 @@ msgstr ""
 "Keiner."
 
 #: ../base/ufos/msgid/weapons.ufo:754
-#, fuzzy
 msgid ""
 "Technical Specifications: HPGL Grenade Launcher\n"
 "\n"
@@ -17948,7 +17898,7 @@ msgid ""
 "Along with sniper rifles and rocket launchers, this is one of the few "
 "standard-issue human weapons that are fully effective against robotic aliens."
 msgstr ""
-"Technische Spezifikationen: Granatwerfer\n"
+"Technische Spezifikationen: HPGL Granatwerfer\n"
 "\n"
 "KLASSIFIZIERUNGSSTUFE GELB\n"
 "\n"
@@ -17993,10 +17943,10 @@ msgstr ""
 "Der RA6 enthält bis zu 9 Granaten, welche einzeln in einem einfachen, "
 "rotierenden Zylinder geladen sind. Der Zylinder ist an der Spitze "
 "aufklappbar, damit er nachgeladen werden kann. Die Granaten einzeln "
-"nachzuladen ist ein langsamer und quälender Prozess, hat sich aber als "
-"verwendbarste Art des Nachladens erwiesen; es gibt Schnell-Lader und diese "
-"sind bei einem RA6 auch verwendbar, allerdings sind diese zu klobig und "
-"schwer für eine Verwendung auf dem Schlachtfeld.\n"
+"nachzuladen ist ein langsamer und quälender Prozess, hat sich aber als beste "
+"Art des Nachladens erwiesen; es gibt Schnell-Lader und diese sind bei einem "
+"RA6 auch verwendbar, allerdings sind diese zu klobig und schwer für eine "
+"Verwendung auf dem Schlachtfeld.\n"
 "\n"
 "Die Waffe hat zwei Feuermodi; der Zeitschuss lässt die Granaten zu einer "
 "festgesetzten Zeit nach dem Verlassen des Laufes detonieren und die "
@@ -18024,12 +17974,13 @@ msgstr ""
 "\n"
 "Empfohlener Einsatz\n"
 "\n"
-"Der HPGL ist der wahrgewordene Traum jeden Taktikers. Er hat eine exzellente "
-"Reichweite, großes Schadenspotential, kann mehrere zusammenstehende Ziele "
-"mit einem Schuss treffen und kann für spezielle Aufgaben verwendet werden, "
-"zum Beispiel dem Gegner Gebiete mit Brandbomben verwehren. Er kann genauso "
-"effektiv in geschlossenen wie in offenen Bereichen verwendet werden; "
-"allerdings müssen andere Taktiken angewendet werden.\n"
+"Der HPGL ist der wahr gewordene Traum jeden Taktikers. Er hat eine "
+"exzellente Reichweite, großes Schadenspotential, kann mehrere "
+"zusammenstehende Ziele mit einem Schuss treffen und kann für spezielle "
+"Aufgaben verwendet werden, zum Beispiel dem Gegner Gebiete mit Brandbomben "
+"verwehren. Er kann genauso effektiv in geschlossenen wie in offenen "
+"Bereichen verwendet werden; allerdings müssen andere Taktiken angewendet "
+"werden.\n"
 "\n"
 "Der Luftexplosionsmodus ist vorzugsweise in offenem Gebiet einzusetzen; es "
 "opfert etwas an Reichweite, indem es den 'Sprung'faktor wegnimmt, aber dies "
@@ -18065,7 +18016,6 @@ msgstr ""
 "wenigen, die auch gegen robotische Außerirdische effektiv ist."
 
 #: ../base/ufos/msgid/weapons.ufo:782
-#, fuzzy
 msgid ""
 "Technical Specifications: 25mm HIT Grenades\n"
 "\n"
@@ -18146,7 +18096,6 @@ msgstr ""
 "Keiner."
 
 #: ../base/ufos/msgid/weapons.ufo:810
-#, fuzzy
 msgid ""
 "Technical Specifications: 25mm Flechette Grenades\n"
 "\n"
@@ -18231,7 +18180,6 @@ msgstr ""
 "Keiner."
 
 #: ../base/ufos/msgid/weapons.ufo:838
-#, fuzzy
 msgid ""
 "Technical Specifications: 25mm IC Grenades\n"
 "\n"
@@ -18312,7 +18260,6 @@ msgstr ""
 "Keiner."
 
 #: ../base/ufos/msgid/weapons.ufo:846
-#, fuzzy
 msgid ""
 "Commander, we've finished the testing and prototype phase of our new 25mm "
 "plasma grenades. We're ready to move it to mass-production and full field "
@@ -18365,10 +18312,9 @@ msgstr ""
 "und das Einzige, was übrig bleibt, ist Asche. Sie werden ein wertvoller "
 "Zusatz für unser Arsenal sein.\n"
 "\n"
-"--Cdr. Navarre"
+"Cdr. Navarre"
 
 #: ../base/ufos/msgid/weapons.ufo:854
-#, fuzzy
 msgid ""
 "Commander, my team and I have drawn up a research proposal for a new tac "
 "weapon based on our plasma grenade research.\n"
@@ -18405,10 +18351,9 @@ msgstr ""
 "\n"
 "Das Projekt wartet auf ihre Erlaubnis, Herr Kommandant.\n"
 "\n"
-"--Cdr. Navarre"
+"Cdr. Navarre"
 
 #: ../base/ufos/msgid/weapons.ufo:896
-#, fuzzy
 msgid ""
 "Technical Specifications: IR Goggles\n"
 "\n"
@@ -18593,7 +18538,6 @@ msgstr ""
 "Keiner."
 
 #: ../base/ufos/msgid/weapons.ufo:910
-#, fuzzy
 msgid ""
 "Our analysis of the Kerrblade is complete, Commander. Here is my summary for "
 "your review.\n"
@@ -18646,7 +18590,7 @@ msgstr ""
 "Unsere Analyse der Kerrklinge ist fertig, Herr Kommandant. Hier ist eine "
 "Zusammenfassung.\n"
 "\n"
-"Die Kerrklinge scheint auf den ersten Blick das außerirdische Equivalent "
+"Die Kerrklinge scheint auf den ersten Blick das außerirdische Äquivalent "
 "unseres Kampfmessers zu sein. Die Realität wäre ein besserer Ort, wenn das "
 "wahr wäre. Wir haben herausgefunden, dass die Klinge viel mehr als das ist "
 "und die Wahrheit ist nicht gerade beruhigend.\n"
@@ -18697,7 +18641,6 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/msgid/weapons.ufo:916
-#, fuzzy
 msgid ""
 "Commander, we've recovered an interesting alien weapon from the battlefield. "
 "It looks to be some kind of knife or sword with an edge sharper than "
@@ -18732,10 +18675,9 @@ msgstr ""
 "Natürlich wird diese Forschung ihre Zustimmung für Laborzeit und "
 "Finanzierung brauchen.\n"
 "\n"
-"--Cdr. Navarre"
+"Cdr. Navarre"
 
 #: ../base/ufos/msgid/weapons.ufo:930
-#, fuzzy
 msgid ""
 "Commander, I apologise in advance if my typing isn't up to standard in this "
 "message. We've had a lot of sleepless nights down here in DivEngine working "
@@ -18836,10 +18778,9 @@ msgstr ""
 "Wir brauchen immer mindestens eine D-F-Patrone, um die Laserpistole zu laden "
 "und zu benutzen.\n"
 "\n"
-"--Cdr. Navarre"
+"Cdr. Navarre"
 
 #: ../base/ufos/msgid/weapons.ufo:940
-#, fuzzy
 msgid ""
 "This is one of several proposals I'm submitting for the research and "
 "development of new laser weaponry. Each of these will have to be developed "
@@ -18881,10 +18822,9 @@ msgstr ""
 "mit genug Arbeit können wir eine funktionierende Laserpistole bauen. Wir "
 "warten nur auf ihre Erlaubnis, Herr Kommandant.\n"
 "\n"
-"--Cdr. Navarre"
+"Cdr. Navarre"
 
 #: ../base/ufos/msgid/weapons.ufo:952
-#, fuzzy
 msgid ""
 "It's done, Commander. We are now the proud owners of a working laser rifle, "
 "with full production plans loaded into our computers. We've eliminated "
@@ -18970,10 +18910,9 @@ msgstr ""
 "Wir brauchen mindestens eine D-F-Patrone, um das Lasergewehr zu laden und zu "
 "benutzen.\n"
 "\n"
-"--Cdr. Navarre"
+"Cdr. Navarre"
 
 #: ../base/ufos/msgid/weapons.ufo:960
-#, fuzzy
 msgid ""
 "This is one of several proposals I'm submitting for the research and "
 "development of new laser weaponry. Each of these will have to be developed "
@@ -19027,10 +18966,9 @@ msgstr ""
 "Wie immer werden wir unsere Arbeit beginnen, sobald sie uns ihre Erlaubnis "
 "gegeben haben, Herr Kommandant.\n"
 "\n"
-"--Cdr. Navarre"
+"Cdr. Navarre"
 
 #: ../base/ufos/msgid/weapons.ufo:974
-#, fuzzy
 msgid ""
 "Commander, our heavy laser program has been a success. We've got it "
 "prototyped and ready to go into production at your say-so.\n"
@@ -19118,13 +19056,12 @@ msgstr ""
 "auszunutzen. Ein gemischtes Arsenal ist ein gesundes Arsenal und man kann "
 "sich dagegen nicht leicht verteidigen.\n"
 "\n"
-"Ein Soldat sollte immer mindestens eine D-F-Patrone dabeihaben, um den "
+"Ein Soldat sollte immer mindestens eine D-F-Patrone dabei haben, um den "
 "schweren Laser nachzuladen.\n"
 "\n"
-"--Cdr. Navarre"
+"Cdr. Navarre"
 
 #: ../base/ufos/msgid/weapons.ufo:982
-#, fuzzy
 msgid ""
 "This is one of several proposals I'm submitting for the research and "
 "development of new laser weaponry. Each of these will have to be developed "
@@ -19150,7 +19087,7 @@ msgid ""
 "\n"
 "Cdr. Navarre"
 msgstr ""
-"Dies ist einer von mehreren Anträgen, den ich Ihnen zur Erorschung und "
+"Dies ist einer von mehreren Anträgen, den ich Ihnen zur Erforschung und "
 "Entwicklung neuer Laserwaffen zuschicke. Jede davon muss aufgrund der "
 "Größenunterschiede, Energiemengen und Komplexitäten der involvierten Systeme "
 "separat erforscht werden.\n"
@@ -19175,10 +19112,9 @@ msgstr ""
 "Es wäre sinnvoll, sich mit diesem Thema auseinanderzusetzen, Herr "
 "Kommandant.\n"
 "\n"
-"--Cdr. Navarre"
+"Cdr. Navarre"
 
 #: ../base/ufos/msgid/weapons.ufo:998
-#, fuzzy
 msgid ""
 "Commander, I'd like to report that we've successfully prototyped the new "
 "electrolaser design and have approved final plans for a production model. We "
@@ -19290,10 +19226,9 @@ msgstr ""
 "so schnell wie nur irgend möglich durch Elektrolaser zu ersetzen. Zumindest "
 "zum Wohle unserer Truppen.\n"
 "\n"
-"--Cdr. Navarre"
+"Cdr. Navarre"
 
 #: ../base/ufos/msgid/weapons.ufo:1006
-#, fuzzy
 msgid ""
 "Commander, I have a new research proposal for you, something you might find "
 "interesting. Please hear me out.\n"
@@ -19336,10 +19271,9 @@ msgstr ""
 "Kommandant. Das würde die Chancen unserer Truppen um einiges verbessern, "
 "wenn es darum geht, Gefangene zu machen anstatt zu töten.\n"
 "\n"
-"-- Cdr. Navarre"
+"Cdr. Navarre"
 
 #: ../base/ufos/msgid/weapons.ufo:1014
-#, fuzzy
 msgid ""
 "Commander, we've finalised the design of the Deuterium-Fluoride Cartridges "
 "and they're now ready for mass production. They'll be expensive to make and "
@@ -19388,10 +19322,9 @@ msgstr ""
 "Chemiereinigungsteams entsorgt werden und wir müssen neue herstellen. Sie "
 "können aufgrund der Deuteriumverschmutzung nicht nochmal benutzt werden.\n"
 "\n"
-"--Cdr. Navarre"
+"Cdr. Navarre"
 
 #: ../base/ufos/msgid/weapons.ufo:1022
-#, fuzzy
 msgid ""
 "This is one of several proposals I'm submitting for the research and "
 "development of new laser weaponry. Each of these will have to be developed "
@@ -19441,10 +19374,9 @@ msgstr ""
 "\n"
 "Bitte erlauben sie dieses Programm sobald wie möglich, Herr Kommandant.\n"
 "\n"
-"--Cdr. Navarre"
+"Cdr. Navarre"
 
 #: ../base/ufos/msgid/weapons.ufo:1060
-#, fuzzy
 msgid ""
 "Technical Specifications: Medikit\n"
 "\n"
@@ -21502,7 +21434,6 @@ msgstr ""
 "Keiner."
 
 #: ../base/ufos/msgid/weapons.ufo:1510
-#, fuzzy
 msgid ""
 "Commander,\n"
 "\n"
@@ -21604,7 +21535,6 @@ msgstr ""
 "Dr. Connor"
 
 #: ../base/ufos/msgid/weapons.ufo:1522
-#, fuzzy
 msgid ""
 "Commander,\n"
 "\n"
@@ -25834,9 +25764,8 @@ msgid "Default is to play the intro video just once at the first game start."
 msgstr ""
 
 #: ../base/ufos/ui/options.ufo:0
-#, fuzzy
 msgid "Disabled"
-msgstr "Demontage"
+msgstr "Deaktiviert"
 
 #: ../base/ufos/ui/options.ufo:0
 msgid "Display only resolutions using this screen ratio."
@@ -25965,9 +25894,8 @@ msgid "High"
 msgstr "Hoch"
 
 #: ../base/ufos/ui/options.ufo:0
-#, fuzzy
 msgid "High quality"
-msgstr "JPEG-Qualität:"
+msgstr "Hohe Qualität"
 
 #: ../base/ufos/ui/options.ufo:0
 msgid "Hint: Press CTRL+G to grab/release the mousepointer."
@@ -26063,9 +25991,8 @@ msgid "Medium"
 msgstr "Mittel"
 
 #: ../base/ufos/ui/options.ufo:0
-#, fuzzy
 msgid "Medium quality"
-msgstr "Mittleres Gewicht"
+msgstr "Mittlere Qualität"
 
 #: ../base/ufos/ui/options.ufo:0
 msgid "Menu Options"
@@ -26523,9 +26450,8 @@ msgid "Build the base"
 msgstr "Basis bauen"
 
 #: ../base/ufos/ui/popup_installations.ufo:0
-#, fuzzy
 msgid "Capacity:"
-msgstr "Basiskapazität:"
+msgstr "Kapazität:"
 
 #: ../base/ufos/ui/popup_installations.ufo:0
 msgid "Condition:"
@@ -26537,18 +26463,16 @@ msgid "Confirm destroying"
 msgstr "Aktionen bestätigen:"
 
 #: ../base/ufos/ui/popup_installations.ufo:0
-#, fuzzy
 msgid "Destroy UFO"
-msgstr "Abreißen"
+msgstr "UFO zerstören"
 
 #: ../base/ufos/ui/popup_installations.ufo:0
 msgid "Free Space:"
 msgstr "Freier Platz:"
 
 #: ../base/ufos/ui/popup_installations.ufo:0
-#, fuzzy
 msgid "Location:"
-msgstr "Nation:"
+msgstr "Ort:"
 
 #: ../base/ufos/ui/popup_installations.ufo:0
 msgid "New base"
@@ -26559,9 +26483,8 @@ msgid "Rename Installation"
 msgstr "Externe Einrichtung umbenennen"
 
 #: ../base/ufos/ui/popup_installations.ufo:0
-#, fuzzy
 msgid "Transfer UFO"
-msgstr "Transfer"
+msgstr "UFO transferieren"
 
 #: ../base/ufos/ui/popup_installations.ufo:0
 msgid "UFO Yards"
@@ -27447,9 +27370,8 @@ msgid "It is not your turn!"
 msgstr "Dies ist nicht Ihre Runde!"
 
 #: client/battlescape/cl_actor.cpp:1016
-#, fuzzy
 msgid "You cannot reload this unknown item."
-msgstr "Dieser unbekannte Gegenstand kann nicht nachgeladen werden.\n"
+msgstr "Dieser unbekannte Gegenstand kann nicht nachgeladen werden."
 
 #: client/battlescape/cl_actor.cpp:1855
 msgid "Unknown alien race"
@@ -27654,7 +27576,7 @@ msgid "Morale  %i"
 msgstr "Moral  %i"
 
 #: client/battlescape/cl_hud.cpp:1199
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Morale  %i | Reserved TUs: %i\n"
 "%s %i (%i|%i TUs left)\n"
@@ -27663,7 +27585,7 @@ msgstr ""
 "%s %i (%i|%i übrige ZE)\n"
 
 #: client/battlescape/cl_hud.cpp:1203
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Morale  %i\n"
 "%s %i (%i TUs left)\n"
@@ -27756,23 +27678,20 @@ msgid "Set selected actor to move mode (it cancels the fire mode)."
 msgstr ""
 
 #: client/battlescape/cl_hud_callbacks.cpp:352
-#, fuzzy
 msgid "Reload the weapon in the soldiers left hand."
-msgstr "Lade die Waffe in der linken Hand nach"
+msgstr "Lade die Waffe in der linken Hand nach."
 
 #: client/battlescape/cl_hud_callbacks.cpp:353
-#, fuzzy
 msgid "Reload the weapon in the soldiers right hand."
-msgstr "Lade die Waffe in der rechten Hand nach"
+msgstr "Lade die Waffe in der rechten Hand nach."
 
 #: client/battlescape/cl_hud_callbacks.cpp:354
 msgid "Toggle reservation for crouching."
 msgstr "Zeitreservierung für Ducken umschalten."
 
 #: client/battlescape/cl_hud_callbacks.cpp:355
-#, fuzzy
 msgid "Toggle reaction fire."
-msgstr "Reaktionsfeuer umschalten"
+msgstr "Reaktionsfeuer umschalten."
 
 #: client/battlescape/cl_hud_callbacks.cpp:356
 #, fuzzy
@@ -27853,14 +27772,14 @@ msgid "A soldier was killed."
 msgstr "Ein Soldat wurde getötet."
 
 #: client/battlescape/events/event/actor/e_event_actordie.cpp:124
-#, fuzzy, c-format
+#, c-format
 msgid "A member of team %i was stunned."
-msgstr "Ein Mitglied des Teams %i wurde betäubt.\n"
+msgstr "Ein Mitglied des Teams %i wurde betäubt."
 
 #: client/battlescape/events/event/actor/e_event_actordie.cpp:126
-#, fuzzy, c-format
+#, c-format
 msgid "A member of team %i was killed."
-msgstr "Ein Mitglied des Teams %i wurde getötet.\n"
+msgstr "Ein Mitglied des Teams %i wurde getötet."
 
 #: client/battlescape/events/event/actor/e_event_actorrevitalised.cpp:69
 #, fuzzy, c-format
@@ -30183,14 +30102,12 @@ msgid "No more employee can be assigned to this aircraft"
 msgstr "Diesem Gefährt können keine weiteren Soldaten zugewiesen werden"
 
 #: client/cgame/campaign/cp_team_callbacks.cpp:216
-#, fuzzy
 msgid "Employee is assigned to another aircraft"
-msgstr "Pilot ist bereits einem anderen Flugzeug zugewiesen"
+msgstr "Der Angestellte ist bereits einem anderen Flugzeug zugewiesen"
 
 #: client/cgame/campaign/cp_team_callbacks.cpp:286
-#, fuzzy
 msgid "Employee is away from base"
-msgstr "Angestellter ist nicht verfügbar"
+msgstr "Angestellter ist nicht in der Basis"
 
 #: client/cgame/campaign/cp_team_callbacks.cpp:288
 #, fuzzy
@@ -30808,9 +30725,8 @@ msgid "UFO Recovered"
 msgstr "UFO Bergung abgeschlossen"
 
 #: client/cgame/campaign/cp_uforecovery.cpp:62
-#, fuzzy
 msgid "UFO Transfered"
-msgstr "Transfer"
+msgstr "UFO wurde transferiert"
 
 #: client/cgame/campaign/cp_uforecovery.cpp:261
 #, fuzzy, c-format
@@ -30818,9 +30734,8 @@ msgid "UFO transport started, cargo is being transported to %s"
 msgstr "Transportmission gestartet, Ladungsziel: %s."
 
 #: client/cgame/campaign/cp_uforecovery.cpp:262
-#, fuzzy
 msgid "UFO transport"
-msgstr "Transport"
+msgstr "UFO Transport"
 
 #: client/cgame/campaign/cp_uforecovery_callbacks.cpp:113
 #, c-format
@@ -31493,9 +31408,8 @@ msgid "Can't perform action - it is not your turn!"
 msgstr "Aktion nicht ausführbar - Sie sind nicht dran!"
 
 #: game/g_client.cpp:499
-#, fuzzy
 msgid "Currently shaken, won't let their guard down."
-msgstr "Unter Schock, nimmt keine Befehle entgegen.\n"
+msgstr "Unter Schock, nimmt keine Befehle entgegen."
 
 #: game/g_cmds.cpp:68
 #, c-format
