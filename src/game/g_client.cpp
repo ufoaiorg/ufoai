@@ -454,7 +454,7 @@ static void G_ClientStateChangeUpdate (edict_t *ent)
 	G_EventSendState(G_VisToPM(ent->visflags), ent);
 
 	/* Check if the player appears/perishes, seen from other teams. */
-	G_CheckVis(ent, true);
+	G_CheckVis(ent);
 
 	/* Calc new vis for this player. */
 	G_CheckVisTeamAll(ent->team, 0, ent);

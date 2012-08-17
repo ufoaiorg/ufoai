@@ -287,7 +287,7 @@ void G_InventoryToFloor (edict_t *ent)
 	FLOOR(ent) = FLOOR(floor);
 
 	/* send item info to the clients */
-	G_CheckVis(floor, true);
+	G_CheckVis(floor);
 }
 
 /**

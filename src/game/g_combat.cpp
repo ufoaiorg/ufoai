@@ -324,7 +324,7 @@ static void G_Damage (edict_t *target, const fireDef_t *fd, int damage, edict_t 
 			G_CheckVisTeamAll(attacker->team, 0, attacker);
 
 			/* check if attacker appears/perishes for any other team */
-			G_CheckVis(attacker, true);
+			G_CheckVis(attacker);
 		} else {
 			G_TakeDamage(target, damage);
 		}
@@ -560,7 +560,7 @@ static void G_SpawnItemOnFloor (const pos3_t pos, const item_t *item)
 			edict_t *actor = G_GetLivingActorFromPos(pos);
 
 			/* send the inventory */
-			G_CheckVis(floor, true);
+			G_CheckVis(floor);
 
 			if (actor != NULL)
 				G_GetFloorItems(actor);

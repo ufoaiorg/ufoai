@@ -1391,7 +1391,7 @@ static void G_SpawnAIPlayers (const player_t * player, int numSpawn)
 
 	/* show visible actors */
 	G_VisFlagsClear(player->pers.team);
-	G_CheckVis(NULL, false);
+	G_CheckVis(NULL, 0);
 }
 
 /**

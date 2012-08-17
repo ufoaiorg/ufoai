@@ -245,7 +245,7 @@ static bool Door_Use (edict_t *door, edict_t *activator)
 
 	if (activator && G_IsLivingActor(activator)) {
 		/* Check if the player appears/perishes, seen from other teams. */
-		G_CheckVis(activator, true);
+		G_CheckVis(activator);
 
 		/* Calc new vis for the activator. */
 		G_CheckVisTeamAll(activator->team, false, activator);

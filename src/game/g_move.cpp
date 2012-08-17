@@ -137,7 +137,7 @@ void G_ActorFall (edict_t *ent)
 	G_EdictCalcOrigin(ent);
 	gi.LinkEdict(ent);
 
-	G_CheckVis(ent, true);
+	G_CheckVis(ent);
 
 	G_EventActorFall(ent);
 
@@ -418,7 +418,7 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos
 				G_WriteStep(ent, &stepAmount, dvec, contentFlags);
 
 				/* check if player appears/perishes, seen from other teams */
-				G_CheckVis(ent, true);
+				G_CheckVis(ent);
 
 				/* check for anything appearing, seen by "the moving one" */
 				status = G_CheckVisTeamAll(ent->team, 0, ent);

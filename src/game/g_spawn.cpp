@@ -558,7 +558,7 @@ edict_t *G_SpawnParticle (const vec3_t origin, int spawnflags, const char *parti
 	ent->particle = particle;
 	ent->spawnflags = spawnflags;
 
-	G_CheckVis(ent, true);
+	G_CheckVis(ent);
 
 	return ent;
 }
