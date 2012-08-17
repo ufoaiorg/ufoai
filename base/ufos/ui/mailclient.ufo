@@ -565,7 +565,7 @@ window mailclient
 
 	func update
 	{
-		cmd "ufopedia_openmail 0;"
+		cmd "ufopedia_openmail <node:root.mailclient@viewpos>;"
 	}
 
 	func onWindowOpened
