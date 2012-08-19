@@ -539,37 +539,25 @@ Cdr. Navarre"
 }
 
 msgid craft_weapon_alien_launcher_pre_txt {
-text "_This is one of several proposals I'm submitting for the research and development of new laser weaponry. Each of these will have to be developed separately due to the size differences, power levels and complexity of the systems involved.
+text "_Commander, we made an extremely interesting find on the UFO we disassembled. It carried an advanced and highly dangerous onboard missile launcher, using powerful magnetic rails to accelerate its missiles to hypersonic speeds before they even leave the launch tube.
 
-The Aerial Laser Cannon is the largest and most powerful iteration of our new laser designs. Like our infantry weapons it'll be powered by deuterium-fluoride reaction, but on a much larger scale and amplified by the aircraft's on-board electrical systems. Several exciting ideas are being considered.
+We want to investigate this launcher and determine whether or not it can be adapted to fit on PHALANX aircraft, or even if it can be applied to other purposes. This launcher system would be far more effective in bringing down UFOs than our Sparrowhawks, possibly even more effective than our current SAM systems. If we can adapt it we stand to gain a substantial boost to the firepower of our whole airfleet as well as ground-based missile systems.
 
-As well as being the biggest, this may well be our most challenging laser to create. Any aircraft cannon will have to reach across several kilometres of atmosphere -- and therefore loads of atmospheric blooming -- with enough punch at the endpoint to cut into a UFO's fuselage. Those sorts of power levels have been achieved before with massive arrays mounted on jumbo jets, but never in a package small enough to make a jet fighter cannon.
-
-The finished product should be able to engage UFOs with bullseye accuracy at ranges well beyond that of the SHIVA cannon, and although damage may be low, we expect that the ability to keep continuous fire and pressure on enemy craft will be valuable in the days to come.
-
-Please approve lab time and funding for this program when you're ready, Commander.
+Please approve this program whenever you can, Commander.
 
 Cdr. Navarre"
 }
 
 msgid craft_weapon_alien_launcher_txt {
-text "_Commander, I've just finished my report on our latest laser program. We've successfully prototyped the new Aerial Laser Cannon and are ready to put it into production.
+text "_Commander, we've finished work on the alien missile launcher. It's a fairly simple affair. Firing is computer-driven, fed directly from the UFO's targeting computer. Powerful electromagnetic coils around the launch tube accelerate the missile to extreme speeds, reaching up to Mach 4 at the point where the missile leaves the tube. Only once the missile is fully free of the tube do its onboard rockets kick in.
 
-We achieved what we set out to do: create a continuous wave, deuterium-fluoride-powered laser with megawatt-range output, capable of tracking and hitting UFOs at ranges of up to 5 kilometres. Accuracy is excellent, hampered only by enemy ECM (Electronic Countermeasures), and unlike in all our other weapons it is not affected by range. The laser proceeds in a straight line and crosses the distance between gun and target almost instantly. It's hard to miss with it.
+The good news is that we've managed to succesfully adapt fittings, controls and power feeds to allow the Alien Launcher to be safely mounted to our aircraft. The bad news is that we've had to drastically reduce its magazine size in order to meet weight and size restrictions on our aircraft.
 
-Unfortunately atmospheric blooming is still a problem, and the laser rapidly loses power the further it has to travel to the target. At maximum range, 5 kilometres, it takes 32 seconds of continuous fire on the same spot to hole a UFO's hull. We're rarely going to have that much time to wait for a kill. The ideal range for this weapon is between 2 to 3 kilometres where it strikes a good balance between damage and distance. Average damage per second at these distances is slightly less than the SHIVA Rotary Cannon, but range is higher by up to 1.5 kilometres. More so than any of our previous weapons, the Aerial Laser Cannon is ideal for driving and pinning down the enemy behind a wall of laser fire.
+Our aircraft are too small and light to be able to carry so many, and most of our craft aren't laid out with internal missile magazines. We've had to custom-build a magazine mounted with the launcher, the capacity of which falls behind the stores found on UFOs.
 
-The cannon carries an integrated magazine of deuterium-fluoride allowing up to thirty minutes of continuous fire. Since deuterium and fluoride are both too potentially hazardous to store on-base, and we have access to large off-base stockpiles of all the necessary compounds, we will not need to keep laser cannon ammunition in inventory.
+It's not all doom and gloom, though. We believe that we can modify the launch tube to be able to fire human missiles as well as the alien type. We'd have to develop the missile ourselves, of course -- no current human missile is capable of withstanding the stress of being fired from this launcher. However, we're confident we can design a missile that will survive launch and incorporates new UFO-tracking technologies to improve homing and ECM capability.
 
-Deployment of the weapon is at your discretion, Commander, but I'd like to recommend we use the new cannons to replace SHIVA guns across our airfleet except for craft specifically equipped for close-in fighting. Anything that's much less manoeuvrable than a UFO will have difficulty keeping hold of the target with SHIVAs, so the laser offers a far better solution with nearly as much staying power.
-
-Cdr. Navarre"
-}
-
-msgid alien_antimatter_missile_pre_txt {
-text "_Commander, as I mentioned in my previous report, the UFO we recovered was plated with a highly interesting alloy which blends plastic and metal together into a single material. These materials seem to be used almost universally throughout the alien technology base. It's advanced stuff, massively versatile and with a thousand possible uses.
-
-I think it warrants the research to see if we can reproduce this stuff in our Workshops, but even if we can't, it seems likely we'll be getting our hands on large quantities of it with every UFO we salvage. We'll definitely be able to find new, human applications for it that will extend and expand our combat capabilities.
+I'll send you a design proposal as soon as I can, Commander.
 
 Cdr. Navarre"
 }
