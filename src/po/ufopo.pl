@@ -32,52 +32,7 @@ chdir $toplevel;
 foreach my $file (@ARGV)
 {
 	open ( FILE, "<$file" ) or die "cannot read from $file";
-	my @INPUT_ARRAY = <FILE>;
-	my @ARRAY;
-	my ($i,$j);
-	my $line;
-
-	# Removes all kind of comments (single-line, multi-line, nested).
-	# Further parsing will be carried on the stripped lines (in @ARRAY) but
-	# the error messaging routine will reference the original @INPUT_ARRAY
-	# so line fragments may contain comments.
-	my $commentLevel = 0;
-
-	for ($i = 0; $i < @INPUT_ARRAY; $i++) {
-		my @explodedLine = split(//, $INPUT_ARRAY[$i]);
-		my $resultLine = "";
-
-		for ($j = 0; $j < @explodedLine; $j++)
-		{
-			if ($commentLevel > 0)
-			{
-				$resultLine .= " ";
-			}
-			if ($explodedLine[$j] eq "/" && $explodedLine[($j + 1)] eq "*")
-			{
-				$commentLevel++;
-				next;
-			}
-			if ($explodedLine[$j] eq "*" && $explodedLine[($j + 1)] eq "/")
-			{
-				$commentLevel--;
-				$j++;
-				next;
-			}
-			if (($commentLevel == 0) || ($explodedLine[$j] eq "\n"))
-			{
-				$resultLine .= $explodedLine[$j];
-			}
-		}
-
-		$ARRAY[$i]=join(" ",$resultLine);
-	}
-
-	close(FILE) or die "Closing: $!";
-
-
-	my $line = 0;
-	LINE: foreach (@ARRAY)
+	LINE: while (<FILE>)
 	{
 		unless (defined $str) {
 			next LINE unless m/\"_/;
@@ -87,7 +42,7 @@ foreach my $file (@ARGV)
 		if (!defined $str and m/\\?\"_(.*?)\\?\"(.*)/)
 		{
 			# ie. translatable
-			push @{$messages{raw2postring($1)}}, "$file:$line" if ($1 ne '');
+			push @{$messages{raw2postring($1)}}, "$file:$." if ($1 ne '');
 
 			# process remaining of the line
 			$_ = $2 . "\n";
@@ -106,7 +61,7 @@ foreach my $file (@ARGV)
 
 			$str .= $1;
 
-			push @{$messages{"\"\"\n" . raw2postring($str)}}, "$file:$line"
+			push @{$messages{"\"\"\n" . raw2postring($str)}}, "$file:$."
 				if $translatable;
 			$str = undef;
 
@@ -120,9 +75,9 @@ foreach my $file (@ARGV)
 			if (m/(.*)\r/) { $_ = "$1\n"; }
 			$str .= $_;
 		}
-		$line++;
 	}
 	#print STDERR "Processed $file\n";
+	close(FILE) or die "Closing: $!";
 }
 
 ## index strings by their location in the source so we can sort them
