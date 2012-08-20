@@ -138,12 +138,15 @@ static void R_StageLighting (const mBspSurface_t *surf, const materialStage_t *s
 		R_BindLightmapTexture(surf->lightmap_texnum);
 
 		/* hardware lighting */
-		if ((stage->flags & STAGE_LIGHTING)) {
-			R_EnableLighting(r_state.world_program, true);
-			R_SetSurfaceBumpMappingParameters(surf, stage->image->normalmap, stage->image->specularmap);
-		} else {
-			R_SetSurfaceBumpMappingParameters(surf, NULL, NULL);
-			R_EnableLighting(NULL, false);
+		/** @todo fix it and enable it back for r_materials 1 */
+		if (r_materials->integer > 1) {
+			if ((stage->flags & STAGE_LIGHTING)) {
+				R_EnableLighting(r_state.world_program, true);
+				R_SetSurfaceBumpMappingParameters(surf, stage->image->normalmap, stage->image->specularmap);
+			} else {
+				R_SetSurfaceBumpMappingParameters(surf, NULL, NULL);
+				R_EnableLighting(NULL, false);
+			}
 		}
 	} else {
 		if (!r_state.lighting_enabled)
