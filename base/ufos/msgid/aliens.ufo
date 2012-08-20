@@ -49,17 +49,9 @@ text "_Commander,
 
 My team has analysed the remains of the arachnid machine our operatives brought back, and we have prepared a summary for your review.
 
-Autopsy reveals that the creature is a complex robot without any organic components. Its body is reminiscent of the terrestrial spider; a central body housing the artificial brain and power cells, and eight legs driven by powerful servomotors that allow it to move across the battlefield at frightening speeds. It is equipped with razor-sharp mandibles which can dissect human victims on the spot and store tissue or whole organs in a large cavity located in front of the power cells. These machines have been recorded cutting apart live humans during a terror mission and storing their biomass for retrieval. The process is gruesome and very, very short.
+This creature is similar in many ways to the Bloodspider we have faced before on the battlefield, but it has undergone upgrades to make it much more deadly. It's razor-sharp blades are longer and its armour plating has undergone significant revisions. These creatures are terrifying on the battlefield if they get close, and this new variant is much more likely to survive a few rounds from our soldiers and keep coming. We will need to hunt the Combat Bloodspider in packs.
 
-Our soldiers have dubbed the creature 'Bloodspider', and the name has stuck.
-
-Ballistics testing on samples of the Bloodspider's armour plating reveal that it is very tough and has excellent insulating properties, making it effective against a wide variety of weapons.
-
--- The armour is highly resistant to lasers, electricity and incendiary ammunition, but it can be penetrated by high-velocity armour-piercing rounds.
-
--- High explosives also achieve good results, as they tend to damage the vulnerable leg joints. This may be the most effective way to take these creatures out.
-
-The existence of this creature raises some frightening questions. It suggests that the aliens are taking a very personal interest in us, and they're not asking questions. Commander, these machines pose a dire threat to any human that comes close. If encountered, they should be destroyed immediately and at all costs.
+We can't be certain, but we fear that the armour upgrades may have been designed in response to battlefield experience with us. If that's true, it means the aliens may be upgrading other combat systems as well.
 
 Sincerely,
 
@@ -69,7 +61,7 @@ Dr. Connor"
 msgid bloodspider_adv_autopsy_pre_txt {
 text "_Commander,
 
-We've recovered a new alien corpse from the battlefield. We should begin dissection and assessment as soon as possible.
+We've recovered a new alien corpse from the battlefield. It appears to be a more deadly variant of the Bloodspider with which we are familiar. Dissection and assessment could give us insights into the alien's new capabilities.
 
 Sincerely,
 
@@ -353,33 +345,13 @@ Dr. Connor"
 msgid hovernet_autopsy_txt {
 text "_Commander,
 
-The autopsy and evaluation of the green alien specimen is complete. I'm hereby submitting my summary for your review.
+My team and I have completed the disassembly and autopsy of the alien creature we discovered. Here is my summary of our findings.
 
-The first thing we noticed about this species, which has been named the 'Ortnok', is its size. Its appearence is like a brutish, hulking caricature of a man, something that can be quite disturbing to our agents in the field, but we've confirmed that the Ortnok is in no way genetically related to humanity.
+We first assumed the object was a robot, but upon investigation we found a small biomass at its core. This biological alien core is encased in a shell of sensors which we believe interpret its signals to operate the electrical machinery. For all intents and purposes, this alien is little more than a "brain" in charge of a complex device. Calling it a brain may be too generous. We don't believe it is large enough to undertake mental processes more complex than basic motor skills, but troops report seeing it coordinate closely with other aliens on the battlefield.
 
-In proportion to its body weight, the Ortnok has more muscle than a professional body builder. At first we concluded this was solely the product of an extreme-heavy-gravity homeworld, but subsequent hormone and toxicology work on our specimen have revealed something interesting. The subject seems to have been raised from birth on a heavy diet of genetic tampering and anabolic steroids. This, combined with the incredible density of the muscle tissue, makes the Ortnok physically stronger than any biological entity on Earth.
+The device itself is a small, but heavy, mobile disk, able to hover above the ground. Because of its aerial movement, it is able to cross the battlefield rapidly. Our soldiers will need to take it down before it gets in range, which is no small feet considering its size and movement capabilities.
 
-During our first incisions, we were surprised to find the Ortnok to be without blood. It has lungs, viscera and something akin to digestive organs, but no liver or heart that we can identify. Instead of veins there is a very well-developed system of nerve tubes, filled with a kind of electrically conductive gel, that seems to power and control the muscles by direct electrical stimulation. The needed electricity is generated through digestion of organic matter and stored in a set of large eel-like organs underneath the lungs. The nervous system itself is nourished by the leftover products of the digestion process by way of veins filled with pressurised air. The whole chest cavity has been richly furnished with armour plating inserted just underneath the leathery green skin.
-
-The eyes are covered with surgically-implanted lenses that improve the Ortnok's already excellent vision, stretching it into the infrared spectrum. The ears consist of a series of small cavities, three on either side of the head, which are surprisingly large and well-developed. Given the evidence we must conclude that Ortnoks have acute hearing, though the nose and olfactory organs are quite small, atrophied almost to the point of being vestigial.
-
-From the autopsy and our analysis of battlefield footage, we can conclude the following:
-
-- The brain is fairly small for a hominid of such size, no larger than that of Homo erectus, but it is perhaps sufficient for the role of foot soldier. Ortnoks certainly don't display any tactical sluggishness on the battlefield.
-
-- The three-fingered hand is able to carry and use a wide variety of equipment. However, Ortnoks are most often equipped with heavy weapons to match their size.
-
-- Ortnoks are strong, tough and dangerous. Their internal armour enhances their natural endurance even further, making them difficult to take down. Armour-piercing rounds or incendiary weapons are recommended. Lasers, explosives and cutting weapons will not be very effective due to the extensive armouring.
-
-- All Ortnok specimens we've seen so far were not equipped with reproductive organs. From surgical scarring around the groin area, we believe they may have been neutered for some reason.
-
-In combat, specimens seem to be used most often in the role of heavy infantry and fire support. They are not particularly accurate with their somewhat cumbersome weapons, but when working in numbers they usually lay down enough fire to suppress and then annihilate a PHALANX squad. Ortnoks do not seem to serve in many specialist capacities; they are never used as technicians according to our camera observations, and usually busy themselves handling perimeter security for the Tamans when not engaged in combat.
-
-There is a complex set of implants in the subject's throat that will require further research to be fully understood. I will send you a more detailed analysis along with a research proposal.
-
-We have no idea quite where the name 'Ortnok' came from. The troops don't seem to know, and neither do we. Still, it's as good a name as any, and it seems to have stuck.
-
-That's all I have for you right now, Commander. I'll contact you again as soon as something new develops.
+The models we discovered are equipped with a mounted plasma weapon which is able to fire single rounds. Anyone caught within range will be very sorry. Given its brain size and limited functionality, we believe this alien is engineered for light combat missions -- perhaps it plays a reconnaissance role.
 
 Sincerely,
 
@@ -435,7 +407,7 @@ Dr. Connor"
 msgid hovernet_adv_autopsy_pre_txt {
 text "_Commander,
 
-We've recovered a new alien corpse from the battlefield. We should begin dissection and assessment as soon as possible.
+We've recovered a new alien corpse from the battlefield. It appears to be a more deadly variant of the Hovernet with which we are familiar. Dissection and assessment could give us insights into the alien's new capabilities.
 
 Sincerely,
 
