@@ -982,6 +982,7 @@ static void SP_misc_smoke (edict_t *ent)
 static void SP_misc_fire (edict_t *ent)
 {
 	G_SpawnField(ent, "fire", ET_FIRE, SOLID_BBOX);
+	/** @todo Fix the erratic behaviour due to the different meaning of spawnflags for trigger_hurt and misc_fire */
 	ent->touch = Touch_HurtTrigger;
 }
 
