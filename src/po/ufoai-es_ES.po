@@ -31859,7 +31859,7 @@ msgid ""
 "Funding this month:\t%d"
 msgstr ""
 "\n"
-"Ingresos de este mes:\f%d"
+"Ingresos de este mes:\t%d"
 
 #: client/cgame/campaign/cp_statistics.cpp:98
 #: client/cl_inventory_callbacks.cpp:138
