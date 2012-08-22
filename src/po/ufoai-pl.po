@@ -11673,7 +11673,6 @@ msgid "Base Commander, PHALANX, Atlantic Operations Command"
 msgstr "Dowódca Bazy, PHALANX, Dowództwo Operacji Atlantyckich"
 
 #: ../base/ufos/msgid/mails.ufo:20
-#, fuzzy
 msgid ""
 "Welcome to your new post, Commander. You now have full command over the "
 "PHALANX Extraterrestrial Response Unit. Your mission is to protect the "
@@ -11701,8 +11700,8 @@ msgid ""
 "That is all. Good luck and good hunting."
 msgstr ""
 "Pragniemy Cię powitać, Dowódco. Od teraz masz pełną kontrolę nad PHALANX - "
-"Pozaziemską Jednostką Reagowania. Twoją misją jest ochronić obywateli Ziemi "
-"i powstrzymać za wszelką cenę zagrożenie ze strony Obcych. Jedynie od Ciebie "
+"Pozaziemską Jednostką Reagowania. Twoją misją jest chronić obywateli Ziemi i "
+"powstrzymać za wszelką cenę zagrożenie ze strony Obcych. Jedynie od Ciebie "
 "zależy jak tego dokonasz; nasz warunek to odniesienia sukcesu.\n"
 "\n"
 "Twoje piewsze posunięcie to ustanowienie Kwatery Głównej. UN ma dostęp do "
@@ -11720,8 +11719,8 @@ msgstr ""
 "Rekruci, których wyznaczono do PHALANX mają być przydzieleni do "
 "transportowców, oraz wyposażeni do walki.\n"
 "\n"
-"Troszcz się o nich, Dowódco. Wszyscy pokładamy spore nadzieje i modlimy sie "
-"za Ciebie.\n"
+"Troszcz się o nich, Dowódco. Wszyscy pokładamy w Tobie spore nadzieje i "
+"modlimy sie za Ciebie.\n"
 "\n"
 "To wszystko. Powodzenia i udanych łowów."
 
@@ -32532,7 +32531,7 @@ msgstr ""
 
 #: po/OTHER_STRINGS:2
 msgid "human"
-msgstr "Ludzie"
+msgstr "Człowiek"
 
 #: po/OTHER_STRINGS:3
 msgid "alien"
