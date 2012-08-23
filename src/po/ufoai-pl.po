@@ -2758,7 +2758,7 @@ msgstr "Brak języka"
 
 #: ../base/ufos/maps.ufo:66
 msgid "A suburb that has received a visit from a UFO."
-msgstr "Przedmieście, które zaszczycił wizytą UFO."
+msgstr "Przedmieście, które swą wizytą zaszczyciło UFO."
 
 #: ../base/ufos/maps.ufo:109
 msgid "A UFO crashed here."
@@ -2766,7 +2766,7 @@ msgstr "Tu rozbiło się UFO."
 
 #: ../base/ufos/maps.ufo:170
 msgid "A suburb that has been visited by an UFO."
-msgstr "Przedmieście które odwiedził UFO."
+msgstr "Przedmieście które odwiedziło UFO."
 
 #: ../base/ufos/maps.ufo:217
 #, fuzzy
