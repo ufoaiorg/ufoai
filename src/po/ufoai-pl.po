@@ -24346,7 +24346,7 @@ msgstr "Wybierz stronę, którą chcesz grać"
 
 #: ../base/ufos/ui/_menu.ufo:588
 msgid "Keyinfo and General Help"
-msgstr ""
+msgstr "Skróty klawiszowe i Główne Porady"
 
 #: ../base/ufos/ui/_menu.ufo:612
 msgid ""
@@ -24934,7 +24934,7 @@ msgstr ""
 
 #: ../base/ufos/ui/campaign.ufo:780 ../base/ufos/ui/singleplayer.ufo:168
 msgid "You will lose all your campaign progress."
-msgstr ""
+msgstr "Utracisz cały postęp w kampanii."
 
 #: ../base/ufos/ui/campaign.ufo:786 ../base/ufos/ui/singleplayer.ufo:174
 msgid "Exit current campaign and return to main menu."
@@ -25423,7 +25423,7 @@ msgstr "PR zarezerwowane"
 
 #: ../base/ufos/ui/hud_alt.ufo:1192 ../base/ufos/ui/hud_default.ufo:827
 msgid "Keyinfo/General Help window"
-msgstr ""
+msgstr "Skróty klawiszowe/Główne Porady"
 
 #: ../base/ufos/ui/hud_alt.ufo:1245 ../base/ufos/ui/hud_default.ufo:695
 msgid "Use headgear"
@@ -25678,6 +25678,8 @@ msgid ""
 "LMB:Show/RMB:Hide Keyinfo/General Help\n"
 "Key:F4"
 msgstr ""
+"LPM:Pokaż/PPM:Ukryj Skróty klawiszowe/Główne Porady\n"
+"Klawisz:F4"
 
 #: ../base/ufos/ui/hud_mini.ufo:1623
 msgid "LMB:Show/RMB:Hide Top Panel"
@@ -27213,7 +27215,7 @@ msgstr "Próg:"
 
 #: ../base/ufos/ui/options.ufo:1894
 msgid "Show Keys"
-msgstr ""
+msgstr "Pokaż klawisze"
 
 #: ../base/ufos/ui/options.ufo:1928
 #, fuzzy
@@ -27412,7 +27414,7 @@ msgstr "Cofnij do menu głównego"
 
 #: ../base/ufos/ui/singleplayer.ufo:109
 msgid "Go back to the battlescape."
-msgstr "Wróć do widoku pola walki"
+msgstr "Wróć do widoku pola walki."
 
 #: ../base/ufos/ui/singleplayer.ufo:116
 msgid "Abort"
@@ -27420,7 +27422,7 @@ msgstr "Anuluj"
 
 #: ../base/ufos/ui/singleplayer.ufo:117
 msgid "Abort this battlescape mission."
-msgstr ""
+msgstr "Przerwij misję taktyczną."
 
 #: ../base/ufos/ui/singleplayer.ufo:125
 msgid "Retry this battlescape mission."
@@ -27428,11 +27430,11 @@ msgstr "Ponów misję taktyczną."
 
 #: ../base/ufos/ui/singleplayer.ufo:133
 msgid "Enter the game options menu."
-msgstr ""
+msgstr "Wejdź do menu opcji gry."
 
 #: ../base/ufos/ui/singleplayer.ufo:141
 msgid "You will lose all your progress."
-msgstr ""
+msgstr "Utracisz cały postęp."
 
 #: ../base/ufos/ui/singleplayer.ufo:175
 msgid "Quit"
