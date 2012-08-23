@@ -25525,9 +25525,8 @@ msgid "Hide rescue zone"
 msgstr "Ukryj strefę ewakuacji"
 
 #: ../base/ufos/ui/hud_default.ufo:1182
-#, fuzzy
 msgid "Original HUD"
-msgstr "HUD podstawowy"
+msgstr "HUD Podstawowy"
 
 #: ../base/ufos/ui/hud_genradar.ufo:53
 msgid "Reinit"
@@ -25732,7 +25731,7 @@ msgstr ""
 
 #: ../base/ufos/ui/hud_phone.ufo:795
 msgid "Phone HUD"
-msgstr ""
+msgstr "HUD Telefoniczny"
 
 #: ../base/ufos/ui/inventory.ufo:156 ../base/ufos/ui/inventory.ufo:164
 msgid "Floor"
@@ -26521,11 +26520,11 @@ msgstr "Rozdzielczość:"
 
 #: ../base/ufos/ui/options.ufo:342
 msgid "Display only resolutions using this screen ratio."
-msgstr "Tylko rozdzielczości dla obecnych proporcji ekranu."
+msgstr "Filtr rozdzielczości dla proporcji ekranu."
 
 #: ../base/ufos/ui/options.ufo:350
 msgid "All ratios"
-msgstr "Wszystkie wskaźniki"
+msgstr "Wszystkie"
 
 #: ../base/ufos/ui/options.ufo:380
 msgid "Others"
