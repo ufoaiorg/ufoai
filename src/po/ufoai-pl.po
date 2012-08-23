@@ -29059,7 +29059,7 @@ msgstr ""
 
 #: client/cgame/campaign/cp_aliencont.cpp:186
 msgid "You can't hold live aliens yet. Aliens died."
-msgstr "Aktualnie nie można przetrzymywać Obcych. Obcy zostali zlikwidowani."
+msgstr "Obcy zmarli. Jeszcze nie możemy trzymać ich żywych."
 
 #: client/cgame/campaign/cp_aliencont.cpp:206
 msgid ""
@@ -30111,11 +30111,11 @@ msgstr "Ukończono instalację"
 
 #: client/cgame/campaign/cp_messageoptions.cpp:36
 msgid "installation_removed"
-msgstr "Instalację usunięto"
+msgstr "Usunięto instalację"
 
 #: client/cgame/campaign/cp_messageoptions.cpp:37
 msgid "installation_replaced"
-msgstr "Instalację przeniesiono"
+msgstr "Zastąpiono instalację"
 
 #: client/cgame/campaign/cp_messageoptions.cpp:38
 msgid "aircraft_refueled"
@@ -30143,7 +30143,7 @@ msgstr "Zakończono budowę instalacji"
 
 #: client/cgame/campaign/cp_messageoptions.cpp:43
 msgid "installation_destroyed"
-msgstr "Instalację zniszczono"
+msgstr "Zniszczono instalację"
 
 #: client/cgame/campaign/cp_messageoptions.cpp:44
 msgid "research_new_proposed"
