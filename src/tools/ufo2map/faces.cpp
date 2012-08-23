@@ -28,7 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "bsp.h"
 
 #define	INTEGRAL_EPSILON	0.01
-#define	POINT_EPSILON		0.5
+#define	POINT_EPSILON		0.0625
 #define	OFF_EPSILON			0.5
 
 static int c_merge, c_subdivide, c_totalverts, c_uniqueverts, c_degenerate, c_tjunctions, c_faceoverflows, c_facecollapse, c_badstartverts, c_faces;
