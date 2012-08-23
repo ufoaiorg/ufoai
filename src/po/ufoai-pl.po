@@ -23886,7 +23886,7 @@ msgid ""
 msgstr ""
 "Użycie granatu ogłuszającego uniemożliwi wrogowi oddanie automatycznego "
 "strzału. Jeśli ogłuszenie się powiedzie, to żołnierz przeciwnika zostanie "
-"pozbawiony punktów ruchu w kolejnej rundzie."
+"pozbawiony Punktów Ruchu (PR) w kolejnej rundzie."
 
 #: ../base/ufos/tips.ufo:14
 msgid ""
@@ -23904,8 +23904,8 @@ msgid ""
 "you Time Units (TUs)."
 msgstr ""
 "Aby obrócić żołnierza w określonym kierunku wskaż kierunek kursorm i kliknij "
-"prawym przyciskiem lub użyj klawisza [Ctrl]. Każdy obrót kosztuje punkty "
-"ruchu (PR)."
+"prawym przyciskiem lub użyj klawisza [Ctrl]. Każdy obrót kosztuje Punkty "
+"Ruchu (PR)."
 
 #: ../base/ufos/tips.ufo:16
 msgid "Use [Backspace] key to open doors."
@@ -23972,8 +23972,8 @@ msgid ""
 "while crouched costs more TUs than walking normally."
 msgstr ""
 "Możesz kazać żołnierzom kucnąć, aby stanowili trudniejszy cel dla "
-"przeciwnika. Pamiętaj jednak, że kucanie i wstawanie kosztuje punkty ruchu.  "
-"Przemieszczanie się w kuckach kosztuje więcej niż chodzenie."
+"przeciwnika. Pamiętaj jednak, że kucanie i wstawanie kosztuje Punkty Ruchu "
+"(PR).  Przemieszczanie się w kuckach kosztuje więcej niż chodzenie."
 
 #: ../base/ufos/tips.ufo:25
 msgid ""
@@ -24033,7 +24033,7 @@ msgid ""
 "the end of your turn, so that they can't be killed with a single grenade."
 msgstr ""
 "Trzymaj żołnierzy w parach tak, aby mogli wspierać się wzajemnie (leczyć, "
-"strzelać gdy jednemu skończą się punkty ruchu (PR)). Na koniec tury "
+"strzelać gdy jednemu skończą się Punkty Ruchu (PR)). Na koniec tury "
 "najlepiej umiejscowić żołnierzy po przeciwnych stronach ściany tak, aby obaj "
 "nie mogli zginąć od jednego granatu."
 
@@ -25378,9 +25378,8 @@ msgid "Check to use this firemode for reaction fire"
 msgstr "Zaznacz by użyć tego trybu ognia automatycznego"
 
 #: ../base/ufos/ui/hud_.ufo:175
-#, fuzzy
 msgid "TU:"
-msgstr "PR"
+msgstr "PR:"
 
 #: ../base/ufos/ui/hud_.ufo:191 ../base/ufos/ui/hud_phone.ufo:100
 #, fuzzy
@@ -28413,7 +28412,7 @@ msgid "Morale  %i"
 msgstr "Morale  %i"
 
 #: client/battlescape/cl_hud.cpp:1199
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Morale  %i | Reserved TUs: %i\n"
 "%s %i (%i|%i TUs left)\n"
@@ -28422,7 +28421,7 @@ msgstr ""
 "%s %i (%i|%i PR pozostało)\n"
 
 #: client/battlescape/cl_hud.cpp:1203
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Morale  %i\n"
 "%s %i (%i TUs left)\n"
@@ -28438,7 +28437,7 @@ msgid ""
 "- Reserved:  %i\n"
 "- Remaining: %i\n"
 msgstr ""
-"Jednostki czasu (TU)\n"
+"Punkty Ruchu\n"
 "- Dostępne: %i (z %i)\n"
 "- Zarezerwowane:  %i\n"
 "- Pozostało: %i\n"
@@ -28476,9 +28475,8 @@ msgstr "Nie można wykonać - broń nie może być używana jedną ręką!\n"
 
 #: client/battlescape/cl_hud_callbacks.cpp:150
 #: client/battlescape/cl_hud_callbacks.cpp:276 game/g_actor.cpp:658
-#, fuzzy
 msgid "Can't perform action - not enough TUs!"
-msgstr "Nie można wykonać - za mało jednostek czasu!\n"
+msgstr "Nie można wykonać - za mało PR!"
 
 #: client/battlescape/cl_hud_callbacks.cpp:177
 #, fuzzy
@@ -32364,9 +32362,8 @@ msgid "No fire mode selected for reaction fire."
 msgstr "Typ strzału niewybrany. Nie można włączyć RF.\n"
 
 #: game/g_reaction.cpp:425
-#, fuzzy
 msgid "Not enough TUs left for activating reaction fire."
-msgstr "Brak TU uniemożliwa włączenie RF.\n"
+msgstr "Brak PR na załączenie ognia automatycznego."
 
 #: game/g_round.cpp:49
 #, fuzzy
