@@ -23792,19 +23792,19 @@ msgstr "Ares W"
 
 #: ../base/ufos/team_templates.ufo:208
 msgid "Body"
-msgstr ""
+msgstr "Ciało"
 
 #: ../base/ufos/team_templates.ufo:217
 msgid "Torso"
-msgstr ""
+msgstr "Tułów"
 
 #: ../base/ufos/team_templates.ufo:224
 msgid "Legs"
-msgstr ""
+msgstr "Nogi"
 
 #: ../base/ufos/team_templates.ufo:231
 msgid "Arms"
-msgstr ""
+msgstr "Ręce"
 
 #: ../base/ufos/team_templates.ufo:239
 msgid "Head"
@@ -24177,6 +24177,8 @@ msgid ""
 "Don't forget to install missiles launchers and missiles in your missile "
 "batteries."
 msgstr ""
+"Nie zapomnij zainstalować wyrzutnie rakiet i załadować Twoje baterie "
+"rakietami."
 
 #: ../base/ufos/tips.ufo:53
 msgid ""
@@ -25397,7 +25399,6 @@ msgid "Say:"
 msgstr "Powiedz:"
 
 #: ../base/ufos/ui/hud_.ufo:769
-#, fuzzy
 msgid "Team chat"
 msgstr "Czat drużynowy"
 
@@ -25708,7 +25709,7 @@ msgstr "Muzyka Stop"
 
 #: ../base/ufos/ui/hud_mini.ufo:1986
 msgid "Play Next Random Track"
-msgstr ""
+msgstr "Odtwórz Następny Losowy Utwór"
 
 #: ../base/ufos/ui/hud_mini.ufo:2150
 msgid "Minimal HUD"
@@ -25721,7 +25722,7 @@ msgstr "Nie potrzebna amunicja"
 
 #: ../base/ufos/ui/hud_phone.ufo:190
 msgid "No more ammo"
-msgstr ""
+msgstr "Zabrakło amunicji"
 
 #: ../base/ufos/ui/hud_phone.ufo:795
 msgid "Phone HUD"
@@ -25976,7 +25977,6 @@ msgid "Name"
 msgstr "Nazwa"
 
 #: ../base/ufos/ui/market.ufo:181
-#, fuzzy
 msgid "Store"
 msgstr "Magazyn"
 
@@ -25994,7 +25994,6 @@ msgid "Number of such items on the market"
 msgstr ""
 
 #: ../base/ufos/ui/market.ufo:197
-#, fuzzy
 msgid "Price"
 msgstr "Cena"
 
@@ -26491,14 +26490,12 @@ msgid "Video Settings"
 msgstr "Ustawienia wideo"
 
 #: ../base/ufos/ui/options.ufo:293
-#, fuzzy
 msgid "General"
-msgstr "Genewa"
+msgstr "Główny"
 
 #: ../base/ufos/ui/options.ufo:297
-#, fuzzy
 msgid "Advanced"
-msgstr "Zaawansowany Radar"
+msgstr "Zaawansowany"
 
 #: ../base/ufos/ui/options.ufo:320
 msgid "Resolution and Display Settings"
@@ -26526,7 +26523,7 @@ msgstr "Inne"
 
 #: ../base/ufos/ui/options.ufo:389
 msgid "Select your desired screen resolution."
-msgstr ""
+msgstr "Wybór wyznaczonej przez Ciebie rozdzielczości."
 
 #: ../base/ufos/ui/options.ufo:400
 msgid "Fullscreen:"
@@ -26562,12 +26559,11 @@ msgstr "Gamma:"
 
 #: ../base/ufos/ui/options.ufo:477
 msgid "The default key to make screenshots is F12."
-msgstr ""
+msgstr "F12 to standardowo klawisz aby wykonanać 'screenshot'."
 
 #: ../base/ufos/ui/options.ufo:478
-#, fuzzy
 msgid "Screenshot Settings"
-msgstr "Ustawienia wideo"
+msgstr "Ustawienia dla 'Screenshot'"
 
 #: ../base/ufos/ui/options.ufo:488
 msgid "The file format used for compressing and saving your screenshots."
@@ -26582,9 +26578,8 @@ msgid "jpeg Quality:"
 msgstr "Jakość jpeg:"
 
 #: ../base/ufos/ui/options.ufo:557
-#, fuzzy
 msgid "Other Display Settings"
-msgstr "Ustawienia ogólne"
+msgstr "Pozostałe Ustawienia Wyświetlania"
 
 #: ../base/ufos/ui/options.ufo:568
 msgid "Show FPS:"
@@ -26596,7 +26591,7 @@ msgstr ""
 
 #: ../base/ufos/ui/options.ufo:585
 msgid "Do not play the intro movie when starting the game."
-msgstr ""
+msgstr "Nie odtwarzaj intro przy starcie gry."
 
 #: ../base/ufos/ui/options.ufo:586
 msgid "Hold Back Intro Video:"
@@ -26607,9 +26602,8 @@ msgid "Default is to play the intro video just once at the first game start."
 msgstr ""
 
 #: ../base/ufos/ui/options.ufo:616
-#, fuzzy
 msgid "Texture Settings"
-msgstr "Ustawienia wideo"
+msgstr "Ustawienia Tekstur"
 
 #: ../base/ufos/ui/options.ufo:624
 msgid ""
@@ -27148,7 +27142,7 @@ msgstr ""
 
 #: ../base/ufos/ui/options.ufo:1736
 msgid "1.00"
-msgstr ""
+msgstr "1.00"
 
 #: ../base/ufos/ui/options.ufo:1743
 msgid "Maximum zoom level of the geoscape camera"
@@ -27156,28 +27150,27 @@ msgstr ""
 
 #: ../base/ufos/ui/options.ufo:1750
 msgid "2.0"
-msgstr ""
+msgstr "2.00"
 
 #: ../base/ufos/ui/options.ufo:1755
 msgid "4.00"
-msgstr ""
+msgstr "4.00"
 
 #: ../base/ufos/ui/options.ufo:1761
 msgid "6.00"
-msgstr ""
+msgstr "6.00"
 
 #: ../base/ufos/ui/options.ufo:1766
 msgid "8.00"
-msgstr ""
+msgstr "8.00"
 
 #: ../base/ufos/ui/options.ufo:1771
-#, fuzzy
 msgid "10.00"
-msgstr "100000 c"
+msgstr "10.00"
 
 #: ../base/ufos/ui/options.ufo:1776
 msgid "12.00"
-msgstr ""
+msgstr "12.00"
 
 #: ../base/ufos/ui/options.ufo:1785
 msgid "Joystick Settings"
@@ -27286,7 +27279,7 @@ msgstr "Pojemność:"
 
 #: ../base/ufos/ui/popup_installations.ufo:408
 msgid "Free Space:"
-msgstr ""
+msgstr "Wolna Przestrzeń:"
 
 #: ../base/ufos/ui/popup_installations.ufo:420
 #: ../base/ufos/ui/popup_installations.ufo:520
@@ -28918,9 +28911,8 @@ msgid "Pilot ejected from craft"
 msgstr "Pilot w statku powietrznym"
 
 #: client/cgame/campaign/cp_airfight.cpp:531
-#, fuzzy
 msgid "Pilot killed in action"
-msgstr "Pilot w statku powietrznym"
+msgstr "Pilot zabity w akcji"
 
 #: client/cgame/campaign/cp_airfight.cpp:538
 #: client/cgame/campaign/cp_auto_mission.cpp:771
@@ -31658,7 +31650,7 @@ msgstr ""
 
 #: client/cgame/campaign/missions/cp_mission_ufocarrier.cpp:63
 msgid "Don't attack the UFO-Carrier"
-msgstr ""
+msgstr "Nie atakuj na UFO - Krążownik"
 
 #: client/cgame/campaign/missions/cp_mission_ufocarrier.cpp:64
 msgid "Attack"
@@ -31871,7 +31863,7 @@ msgstr "Przegrałeś grę!"
 
 #: client/cl_console.cpp:298
 msgid "Show/hide ufoconsole."
-msgstr ""
+msgstr "Pokaż/ukryj ufoconsole."
 
 #: client/cl_inventory_callbacks.cpp:44
 msgid "skill_close"
@@ -32360,7 +32352,7 @@ msgstr "Zmiana mapy!"
 
 #: game/g_trigger.cpp:171
 msgid "You are now ready to switch the map."
-msgstr ""
+msgstr "Jesteś gotowy aby zmienić mapę."
 
 #: po/OTHER_STRINGS:2
 msgid "human"
