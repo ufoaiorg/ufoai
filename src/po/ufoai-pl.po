@@ -215,7 +215,7 @@ msgstr "Rozbite UFO"
 
 #: ../base/maps/village.ump:392 ../base/maps/village.ump:420
 msgid "Village residential"
-msgstr "Wioska mieszkalna"
+msgstr "Wiejskie rezydencje"
 
 #: ../base/maps/village.ump:452
 msgid "Village commercial"
@@ -414,14 +414,12 @@ msgid "Particle Beam Weapon"
 msgstr "Działo cząsteczkowe"
 
 #: ../base/ufos/aircraftmanagement.ufo:937 ../base/ufos/research.ufo:5100
-#, fuzzy
 msgid "Alien Launcher"
-msgstr "Granatnik ręczny"
+msgstr "Wyrzutnia Obcych"
 
 #: ../base/ufos/aircraftmanagement.ufo:947 ../base/ufos/research.ufo:5148
-#, fuzzy
 msgid "Antimatter Missile"
-msgstr "Antymateria"
+msgstr "Pocisk Antymaterii"
 
 #: ../base/ufos/aircraftmanagement.ufo:964 ../base/ufos/research.ufo:5199
 msgid "Hybrid Missile"
@@ -2441,9 +2439,8 @@ msgid "Multiplayer"
 msgstr "Wieloosobowa"
 
 #: ../base/ufos/equipment.ufo:81
-#, fuzzy
 msgid "Alien Skirmish"
-msgstr "Potyczka"
+msgstr "Potyczka Obcymi"
 
 #: ../base/ufos/equipment.ufo:108
 msgid "Multiplayer Phalanx"
@@ -2640,9 +2637,8 @@ msgstr ""
 "automatyczie z naszych baz."
 
 #: ../base/ufos/installation.ufo:52
-#, fuzzy
 msgid "Orbital Rocket Launcher"
-msgstr "Ręczna wyrzutnia rakiet"
+msgstr "Orbitalna Wyrzutnia Rakiet"
 
 #: ../base/ufos/language.ufo:2
 msgid "English"
@@ -2778,7 +2774,6 @@ msgid "Crashed UFO in an african suburban district."
 msgstr "Rozbite UFO w orientalnej dzielnicy."
 
 #: ../base/ufos/maps.ufo:262
-#, fuzzy
 msgid "An UFO crashsite."
 msgstr "Rozbite UFO."
 
@@ -3006,9 +3001,8 @@ msgid "A hydroelectricity dam that is threatened by the alien invaders."
 msgstr "Elektrownia wodla zagrożona przez najazd Obcych."
 
 #: ../base/ufos/maps.ufo:3966
-#, fuzzy
 msgid "A small village."
-msgstr "Małe miasteczko w Angli."
+msgstr "Mała wioska."
 
 #: ../base/ufos/maps.ufo:4015
 msgid "An estate owned by rich and influential people."
@@ -30192,9 +30186,8 @@ msgid ""
 msgstr ""
 
 #: client/cgame/campaign/cp_missions.cpp:446
-#, fuzzy
 msgid "Crashed aircraft"
-msgstr "Zmień nazwę statku powietrznego"
+msgstr "Rozbity statek powietrzny"
 
 #: client/cgame/campaign/cp_missions.cpp:451
 msgid "Landed UFO"
@@ -30240,9 +30233,8 @@ msgid "No nation"
 msgstr "Żaden naród"
 
 #: client/cgame/campaign/cp_missions.cpp:1314
-#, fuzzy
 msgid "Crashed"
-msgstr "Rozbite UFO"
+msgstr "Rozbity"
 
 #: client/cgame/campaign/cp_nation.cpp:139
 msgid "Giving up"
@@ -31341,14 +31333,12 @@ msgid "Employee"
 msgstr "Personel"
 
 #: client/cgame/campaign/cp_transfer_callbacks.cpp:1555
-#, fuzzy
 msgid "alive"
-msgstr "Obcy"
+msgstr "Żywych"
 
 #: client/cgame/campaign/cp_transfer_callbacks.cpp:1559
-#, fuzzy
 msgid "dead"
-msgstr "Martwych:"
+msgstr "Martwych"
 
 #: client/cgame/campaign/cp_ufo.cpp:406 client/cgame/campaign/cp_ufo.cpp:840
 #, c-format
@@ -31636,14 +31626,12 @@ msgstr ""
 
 #: client/cgame/campaign/cp_uforecovery_callbacks.cpp:580
 #: client/cgame/campaign/cp_uforecovery_callbacks.cpp:581
-#, fuzzy
 msgid "Destroy stored UFO"
-msgstr "Zniszcz zabezpieczony pojazd UFO"
+msgstr "Zniszcz zmagazynowane UFO"
 
 #: client/cgame/campaign/cp_uforecovery_callbacks.cpp:580
-#, fuzzy
 msgid "Do you really want to destroy this stored UFO?"
-msgstr "Czy na pewno chcesz usunąć tą instalację?"
+msgstr "Czy na pewno chcesz zniszczyć to zmagazynowane UFO?"
 
 #: client/cgame/campaign/missions/cp_mission_baseattack.cpp:121
 #, c-format
@@ -31655,12 +31643,12 @@ msgstr ""
 "jest stracona."
 
 #: client/cgame/campaign/missions/cp_mission_baseattack.cpp:164
-#, fuzzy, c-format
+#, c-format
 msgid "Base '%s' is under attack!"
-msgstr "Baza jest atakowana"
+msgstr "Baza '%s' jest atakowana!"
 
 #: client/cgame/campaign/missions/cp_mission_baseattack.cpp:206
-#, fuzzy, c-format
+#, c-format
 msgid "Base '%s' is under attack! What to do?"
 msgstr "Baza '%s' jest atakowana! Jakie rozkazy?"
 
@@ -31693,14 +31681,13 @@ msgid "Error saving team. Check free disk space!"
 msgstr "Błąd podczas zapisu drużyny. Sprawdź wolne miejsce na dysku!"
 
 #: client/cgame/multiplayer/cl_game_multiplayer.cpp:55
-#, fuzzy
 msgid "You've ended your turn.\n"
-msgstr "Zakończyłeś rundę\n"
+msgstr "Zakończyłeś swoją rundę.\n"
 
 #: client/cgame/multiplayer/cl_game_multiplayer.cpp:58
-#, fuzzy, c-format
+#, c-format
 msgid "%s ended his turn (team %i).\n"
-msgstr "Gracz %s zakończył rundę (drużyna %i)\n"
+msgstr "Gracz %s zakończył rundę (drużyna %i).\n"
 
 #: client/cgame/multiplayer/cl_game_multiplayer.cpp:78
 msgid "Set soldiers per player lower than soldiers per team"
@@ -31711,9 +31698,9 @@ msgid "Settings doesn't make sense"
 msgstr "Ustawienia nie mają sensu"
 
 #: client/cgame/multiplayer/cl_game_multiplayer.cpp:224
-#, fuzzy, c-format
+#, c-format
 msgid "Enemies killed:\t%i"
-msgstr "Zabitych wrogów\t%i\n"
+msgstr "Zabitych wrogów\t%i"
 
 #: client/cgame/multiplayer/cl_game_multiplayer.cpp:225
 #, fuzzy, c-format
@@ -31996,7 +31983,7 @@ msgid "..."
 msgstr "..."
 
 #: client/cl_main.cpp:535
-#, fuzzy, c-format
+#, c-format
 msgid "Local game version (%s) differs from the server version (%s)"
 msgstr "Wersja gry (%s) inna niż wersja serwera (%s)"
 
@@ -32013,14 +32000,12 @@ msgid "Target your shot to the ground"
 msgstr "Celuj w ziemię"
 
 #: client/cl_main.cpp:1152
-#, fuzzy
 msgid "This change requires a restart!"
-msgstr "Ta zmiana wymaga ponownego uruchomienia"
+msgstr "Ta zmiana wymaga ponownego uruchomienia!"
 
 #: client/cl_main.cpp:1157
-#, fuzzy
 msgid "This change might require a restart."
-msgstr "Ta zmiana może wymagać ponownego uruchomienia"
+msgstr "Ta zmiana może wymagać ponownego uruchomienia."
 
 #: client/cl_menu.cpp:76
 msgid "^BGlobal bindings"
@@ -32124,12 +32109,11 @@ msgstr "Prawy przycisk myszy (menu)"
 
 #: client/input/cl_input.cpp:1038
 msgid "Mouse wheel up"
-msgstr ""
+msgstr "Kółko myszki w górę"
 
 #: client/input/cl_input.cpp:1039
-#, fuzzy
 msgid "Mouse wheel down"
-msgstr "Zamknij to okno"
+msgstr "Kółko myszki w dół"
 
 #: client/input/cl_input.cpp:1040
 msgid "Select objects/Walk to a square/In fire mode, fire etc"
@@ -32215,55 +32199,45 @@ msgid "Key: %s"
 msgstr "Klawisz: %s"
 
 #: game/g_actor.cpp:88
-#, fuzzy
 msgid "Soldier entered the rescue zone."
-msgstr "Obcy wkroczyli do wyznaczonej strefy\n"
+msgstr "Żołnierz wkroczył do strefy ewakuacji."
 
 #: game/g_actor.cpp:90
-#, fuzzy
 msgid "Soldier left the rescue zone."
-msgstr "Wybierz tą strefę"
+msgstr "Żołnierz opuścił strefę ewakuacji."
 
 #: game/g_actor.cpp:662
-#, fuzzy
 msgid ""
 "Can't perform action - weapon already fully loaded with the same ammunition!"
-msgstr "Nie można wykonać - broń jest już w pełni załadowana!\n"
+msgstr "Nie można wykonać - broń jest już w pełni załadowana tą amunicją!"
 
 #: game/g_client.cpp:340
-#, fuzzy
 msgid "Can't perform action - object not present!"
-msgstr "Nie można wykonać - brak obiektu!\n"
+msgstr "Nie można wykonać - brak obiektu!"
 
 #: game/g_client.cpp:345
-#, fuzzy
 msgid "Can't perform action - not an actor!"
-msgstr "Nie można wykonać - to nie jest postać!\n"
+msgstr "Nie można wykonać - to nie jest postać!"
 
 #: game/g_client.cpp:350
-#, fuzzy
 msgid "Can't perform action - actor is stunned!"
-msgstr "Nie można wykonać - postać nieprzytomna!\n"
+msgstr "Nie można wykonać - postać nieprzytomna!"
 
 #: game/g_client.cpp:355
-#, fuzzy
 msgid "Can't perform action - actor is dead!"
-msgstr "Nie można wykonać - postać nie żyje!\n"
+msgstr "Nie można wykonać - postać nie żyje!"
 
 #: game/g_client.cpp:360
-#, fuzzy
 msgid "Can't perform action - not on same team!"
-msgstr "Nie można wykonać - nie w tej samej drużynie!\n"
+msgstr "Nie można wykonać - nie w tej samej drużynie!"
 
 #: game/g_client.cpp:365
-#, fuzzy
 msgid "Can't perform action - no control over allied actors!"
-msgstr "Nie można wykonać - brak kontroli nad sprzymierzonymi!\n"
+msgstr "Nie można wykonać - brak kontroli nad sprzymierzonymi postaciami!"
 
 #: game/g_client.cpp:388
-#, fuzzy
 msgid "Can't perform action - it is not your turn!"
-msgstr "Nie można wykonać - to nie jest Twoja tura!\n"
+msgstr "Nie można wykonać - to nie jest Twoja tura!"
 
 #: game/g_client.cpp:499
 msgid "Currently shaken, won't let their guard down."
@@ -32280,73 +32254,65 @@ msgid "Flood protection: You can't talk for %d seconds.\n"
 msgstr "Ochrona czatu: Nie możesz pisać przez %d s\n"
 
 #: game/g_combat.cpp:390
-#, fuzzy
 msgid ""
 "Soldier is dazed!\n"
 "Enemy used flashbang!"
 msgstr ""
 "Żołnierz jest ogłuszony!\n"
-"Przeciwnik użył granatów ogłuszających!\n"
+"Przeciwnik użył granatów ogłuszających!"
 
 #: game/g_combat.cpp:624
-#, fuzzy
 msgid "Can't perform action - impossible throw!"
-msgstr "Nie można wykonać - rzut niemożliwy!\n"
+msgstr "Nie można wykonać - rzut niemożliwy!"
 
 #: game/g_combat.cpp:1096
-#, fuzzy
 msgid "Can't perform action - object not activatable!"
-msgstr "Nie można wykonać - tego obiektu nie można aktywować!\n"
+msgstr "Nie można wykonać - tego obiektu nie można aktywować!"
 
 #: game/g_combat.cpp:1137
-#, fuzzy
 msgid "Can't perform action - target out of range!"
-msgstr "Nie można wykonać - cel poza zasięgiem!\n"
+msgstr "Nie można wykonać - cel poza zasięgiem!"
 
 #: game/g_combat.cpp:1183
-#, fuzzy
 msgid "Can't perform action - not enough ammo!"
-msgstr "Nie można wykonać - zbyt mało amunicji!\n"
+msgstr "Nie można wykonać - zbyt mało amunicji!"
 
 #: game/g_health.cpp:61 game/g_health.cpp:68
-#, fuzzy, c-format
+#, c-format
 msgid "%s has been wounded!"
-msgstr "%s uzyskał(a) promocję do stopnia %s.\n"
+msgstr "%s został ranny!"
 
 #: game/g_mission.cpp:48
-#, fuzzy
 msgid "Aliens entered target zone!"
-msgstr "Obcy wkroczyli do wyznaczonej strefy\n"
+msgstr "Obcy wkroczyli do wyznaczonej strefy!"
 
 #: game/g_mission.cpp:79
-#, fuzzy
 msgid "Item was placed."
-msgstr "Obiekt został umieszczony\n"
+msgstr "Obiekt został umieszczony."
 
 #: game/g_mission.cpp:86
-#, fuzzy
 msgid "Target zone is occupied!"
-msgstr "Wyznaczona strefa jest okupowana\n"
+msgstr "Wyznaczona strefa jest okupowana!"
 
 #: game/g_morale.cpp:36
-#, fuzzy, c-format
+#, c-format
 msgid "%s panics!"
-msgstr "%s panikuje!\n"
+msgstr "%s panikuje!"
 
 #: game/g_morale.cpp:94
-#, fuzzy, c-format
+#, c-format
 msgid "%s is on a rampage!"
-msgstr "%s wpadł w szał.\n"
+msgstr "%s wpadł w szał!"
 
 #: game/g_morale.cpp:98
-#, fuzzy, c-format
+#, c-format
 msgid "%s is consumed by mad rage!"
-msgstr "%s wpada w szał!\n"
+msgstr "%s jest wściekły!"
 
 #: game/g_morale.cpp:177
-#, fuzzy, c-format
+#, c-format
 msgid "%s is currently shaken."
-msgstr "%s jest w szoku.\n"
+msgstr "%s jest w szoku."
 
 #: game/g_reaction.cpp:415
 msgid "No reaction fire enabled weapon."
