@@ -109,7 +109,6 @@ msgid "Gasstation"
 msgstr "Stacja paliw"
 
 #: ../base/maps/harbour2.ump:475
-#, fuzzy
 msgid "Harbour"
 msgstr "Port"
 
@@ -173,12 +172,10 @@ msgid "Oriental medium"
 msgstr "Orientalna średnia"
 
 #: ../base/maps/oriental.ump:551
-#, fuzzy
 msgid "Oriental large"
 msgstr "Orientalna duża"
 
 #: ../base/maps/rescue.ump:85
-#, fuzzy
 msgid "Rescue mission"
 msgstr "Misja ratunkowa"
 
@@ -191,7 +188,6 @@ msgid "Stadium"
 msgstr "Stadion"
 
 #: ../base/maps/tower.ump:62
-#, fuzzy
 msgid "Tower"
 msgstr "Wieża"
 
@@ -230,7 +226,6 @@ msgid "Village recreational"
 msgstr "Wioska rekreacyjna"
 
 #: ../base/maps/village.ump:512
-#, fuzzy
 msgid "Village large"
 msgstr "Duża wioska"
 
@@ -514,17 +509,15 @@ msgstr "Pancerz nanokompozytowy"
 
 #: ../base/ufos/armour.ufo:187
 msgid "Power Armour"
-msgstr "Pancerz wzmocniony"
+msgstr "Pancerz Wzmocniony"
 
 #: ../base/ufos/armour.ufo:251
-#, fuzzy
 msgid "Advanced Nanocomposite Armour"
-msgstr "Pancerz nanokompozytowy"
+msgstr "Zaawansowany Pancerz Nanokompozytowy"
 
 #: ../base/ufos/armour.ufo:312
-#, fuzzy
 msgid "Advanced Power Armour"
-msgstr "Zaawansowany pancerz bojowy"
+msgstr "Zaawansowany Pancerz Wzmocniony"
 
 #: ../base/ufos/armour.ufo:373
 msgid "Jumpsuit"
@@ -2453,17 +2446,14 @@ msgid "Alien Skirmish"
 msgstr "Potyczka"
 
 #: ../base/ufos/equipment.ufo:108
-#, fuzzy
 msgid "Multiplayer Phalanx"
 msgstr "Wieloosobowa Phalanx"
 
 #: ../base/ufos/equipment.ufo:189
-#, fuzzy
 msgid "Assault Rifles Only"
 msgstr "Tylko karabin szturmowy"
 
 #: ../base/ufos/equipment.ufo:196
-#, fuzzy
 msgid "No IR Goggles"
 msgstr "Bez termowizora"
 
@@ -2472,9 +2462,8 @@ msgid "Flamers/Rifles/Grenades"
 msgstr "Miotacz/Karabin/Granaty"
 
 #: ../base/ufos/equipment.ufo:273
-#, fuzzy
 msgid "Campaign Start"
-msgstr "Kampania"
+msgstr "Start Kampanii"
 
 #: ../base/ufos/equipment.ufo:316
 msgid "Campaign Start (Market)"
@@ -2517,7 +2506,6 @@ msgstr "Odkryto bazę Obcych -- %s"
 
 #: ../base/ufos/events.ufo:86
 #: client/cgame/campaign/missions/cp_mission_ufocarrier.cpp:62
-#, fuzzy
 msgid "UFO-Carrier"
 msgstr "UFO - Krążownik"
 
@@ -2673,9 +2661,8 @@ msgid "Spanish"
 msgstr "Hiszpański"
 
 #: ../base/ufos/language.ufo:110
-#, fuzzy
 msgid "Spanish (Spain)"
-msgstr "Hiszpański"
+msgstr "Hiszpański (Hiszpania)"
 
 #: ../base/ufos/language.ufo:119
 msgid "Czech"
@@ -2754,7 +2741,6 @@ msgid "Chinese"
 msgstr "Chiński"
 
 #: ../base/ufos/language.ufo:336
-#, fuzzy
 msgid "Traditional Chinese"
 msgstr "Chiński Tradycyjny"
 
@@ -2767,7 +2753,6 @@ msgid "Norwegian"
 msgstr "Norweski"
 
 #: ../base/ufos/language.ufo:363
-#, fuzzy
 msgid "Turkish"
 msgstr "Turecki"
 
@@ -2776,19 +2761,16 @@ msgid "No language"
 msgstr "Brak języka"
 
 #: ../base/ufos/maps.ufo:66
-#, fuzzy
 msgid "A suburb that has received a visit from a UFO."
-msgstr "Przedmieście, które odwiedził Żniwiarz."
+msgstr "Przedmieście, które zaszczycił wizytą UFO."
 
 #: ../base/ufos/maps.ufo:109
-#, fuzzy
 msgid "A UFO crashed here."
-msgstr "Niewielkie UFO rozbiło się w zaśnieżonym terenie."
+msgstr "Tu rozbiło się UFO."
 
 #: ../base/ufos/maps.ufo:170
-#, fuzzy
 msgid "A suburb that has been visited by an UFO."
-msgstr "Przedmieście zostało odwiedzone przez UFO."
+msgstr "Przedmieście które odwiedził UFO."
 
 #: ../base/ufos/maps.ufo:217
 #, fuzzy
@@ -2810,9 +2792,8 @@ msgid "A small UFO has crashed in this mining region."
 msgstr "Niewielkie UFO rozbiło się w okolicy kopalni."
 
 #: ../base/ufos/maps.ufo:456 ../base/ufos/maps.ufo:498
-#, fuzzy
 msgid "Some houses in the desert."
-msgstr "Kilka zabudowań na pustyni"
+msgstr "Kilka zabudowań na pustyni."
 
 #: ../base/ufos/maps.ufo:551
 msgid "An alien Harvester has crashed in the wastelands."
@@ -2899,9 +2880,8 @@ msgid "Crashed UFO in oriental suburban district."
 msgstr "Rozbite UFO w orientalnej dzielnicy."
 
 #: ../base/ufos/maps.ufo:2171
-#, fuzzy
 msgid "A crashed Scout UFO."
-msgstr "Rozbite UFO typu Zwiadowca"
+msgstr "Rozbite UFO Zwiadowca."
 
 #: ../base/ufos/maps.ufo:2212 ../base/ufos/maps.ufo:2252
 #: ../base/ufos/maps.ufo:2293
@@ -2935,9 +2915,8 @@ msgid "A city high rise."
 msgstr "Wysoko rozwinięte miasto"
 
 #: ../base/ufos/maps.ufo:2782
-#, fuzzy
 msgid "A hospital in the outskirts of a city."
-msgstr "Kompleks biurowy na obrzeżach miasteczka."
+msgstr "Szpital na obrzeżach miasteczka."
 
 #: ../base/ufos/maps.ufo:2824 ../base/ufos/maps.ufo:3824
 msgid "A small neighbourhood in a warm urban region."
@@ -2957,7 +2936,6 @@ msgid ""
 msgstr "Kryjówka kryminalistów w terenie tropikalnym."
 
 #: ../base/ufos/maps.ufo:3038
-#, fuzzy
 msgid "A small estate in the mountains."
 msgstr "Mała posiadłość w górach."
 
@@ -3016,14 +2994,12 @@ msgid "A bunker used in a previous conflict."
 msgstr "Bunkier pozostały po poprzednim konflikcie."
 
 #: ../base/ufos/maps.ufo:3779
-#, fuzzy
 msgid "A small industry city area."
 msgstr "Niewielka strefa przemysłowa."
 
 #: ../base/ufos/maps.ufo:3872
-#, fuzzy
 msgid "A crashed UFO-Corrupter."
-msgstr "UFO - Koruptor"
+msgstr "Rozbite UFO - Koruptor."
 
 #: ../base/ufos/maps.ufo:3918
 msgid "A hydroelectricity dam that is threatened by the alien invaders."
@@ -3104,7 +3080,6 @@ msgid "An alien base."
 msgstr "Baza Obcych."
 
 #: ../base/ufos/maps.ufo:5084
-#, fuzzy
 msgid "Rescue mission."
 msgstr "Misja ratunkowa"
 
@@ -23077,9 +23052,8 @@ msgid "Speed Attribute"
 msgstr "Atrybut szybkości"
 
 #: ../base/ufos/research.ufo:4107
-#, fuzzy
 msgid "Live Specimen - Bloodspider"
-msgstr "Autopsja Obcego - Bloodspider"
+msgstr "Żywy okaz - Bloodspider"
 
 #: ../base/ufos/research.ufo:4128
 msgid "Alien Autopsy - Bloodspider"
@@ -23102,19 +23076,16 @@ msgid "Alien Autopsy - Shevaar"
 msgstr "Autopsja Obcego - Shevaar"
 
 #: ../base/ufos/research.ufo:4370
-#, fuzzy
 msgid "Alien Autopsy - Hovernet"
-msgstr "Autopsja Obcego - Ortnok"
+msgstr "Autopsja Obcego - Hovernet"
 
 #: ../base/ufos/research.ufo:4443
-#, fuzzy
 msgid "Alien Autopsy - Combat Hovernet"
-msgstr "Autopsja Obcego - Tamanin"
+msgstr "Autopsja Obcego - Bojowy Hovernet"
 
 #: ../base/ufos/research.ufo:4517
-#, fuzzy
 msgid "Alien Autopsy - Ortnok Cyborg"
-msgstr "Autopsja Obcego - Ortnok"
+msgstr "Autopsja Obcego - Cyborg Ortnok"
 
 #: ../base/ufos/research.ufo:4541 ../base/ufos/team_humans.ufo:2072
 msgid "Phoenix UGV"
@@ -23806,19 +23777,16 @@ msgid "Bloodspider"
 msgstr "Bloodspider"
 
 #: ../base/ufos/team_aliens.ufo:456
-#, fuzzy
 msgid "Combat Bloodspider"
-msgstr "Bloodspider"
+msgstr "Bojowy Bloodspider"
 
 #: ../base/ufos/team_aliens.ufo:558
-#, fuzzy
 msgid "Hovernet"
-msgstr "Hanover"
+msgstr "Hovernet"
 
 #: ../base/ufos/team_aliens.ufo:658
-#, fuzzy
 msgid "Combat Hovernet"
-msgstr "Nóż bojowy"
+msgstr "Bojowy Hovernet"
 
 #: ../base/ufos/team_humans.ufo:60
 msgid "Phalanx"
@@ -23845,9 +23813,8 @@ msgid "Arms"
 msgstr ""
 
 #: ../base/ufos/team_templates.ufo:239
-#, fuzzy
 msgid "Head"
-msgstr "Wyp. nagłowne"
+msgstr "Wyposażenie nagłowne"
 
 #: ../base/ufos/tips.ufo:4
 msgid ""
@@ -24331,14 +24298,12 @@ msgid "Preview:"
 msgstr "Podgląd:"
 
 #: ../base/ufos/ui/_menu.ufo:271
-#, fuzzy
 msgid "Map Name:"
 msgstr "Mapa:"
 
 #: ../base/ufos/ui/_menu.ufo:287
-#, fuzzy
 msgid "Daytime Version:"
-msgstr "Tryb dzienny:"
+msgstr "Tryb pory dnia:"
 
 #: ../base/ufos/ui/_menu.ufo:295
 #, fuzzy
@@ -24404,7 +24369,6 @@ msgid "Note: Campaign-specific keybindings visible in Campaign mode only."
 msgstr ""
 
 #: ../base/ufos/ui/aircraft.ufo:24 ../base/ufos/ui/popup_baseattack.ufo:20
-#, fuzzy
 msgid "Add/remove soldier to the team"
 msgstr "Dodaj/usuń tego żołnierza"
 
@@ -24688,7 +24652,7 @@ msgstr "Obrona laserowa"
 
 #: ../base/ufos/ui/basedefence.ufo:109
 msgid "Weapon slots"
-msgstr ""
+msgstr "Slot na broń"
 
 #: ../base/ufos/ui/basedefence.ufo:160
 msgid "Add"
@@ -24696,7 +24660,7 @@ msgstr "Dodaj"
 
 #: ../base/ufos/ui/basedefence.ufo:161
 msgid "Equip the selected slot with this weapon"
-msgstr ""
+msgstr "Załaduj wskazaną broń do wybranego slotu"
 
 #: ../base/ufos/ui/basedefence.ufo:172
 msgid "Remove"
@@ -24896,12 +24860,11 @@ msgstr "Kampanie"
 
 #: ../base/ufos/ui/campaign.ufo:33
 msgid "Start campaign"
-msgstr "Rozpocznij"
+msgstr "Start kampanii"
 
 #: ../base/ufos/ui/campaign.ufo:34
-#, fuzzy
 msgid "Start a new singleplayer campaign."
-msgstr "Teraz, po zakończeniu dostępnej gry jednoosobowej"
+msgstr "Start nowej kampanii w trybie jednoosobowym."
 
 #: ../base/ufos/ui/campaign.ufo:42 ../base/ufos/ui/campaign.ufo:180
 #: ../base/ufos/ui/campaign.ufo:238 ../base/ufos/ui/campaign.ufo:271
@@ -24917,7 +24880,6 @@ msgid "Continue"
 msgstr "Kontynuuj"
 
 #: ../base/ufos/ui/campaign.ufo:51
-#, fuzzy
 msgid "Load last saved game or continue playing."
 msgstr "Wczytaj ostatnio zapisaną grę lub kontynuuj."
 
@@ -24929,9 +24891,8 @@ msgid "Back"
 msgstr "Powrót"
 
 #: ../base/ufos/ui/campaign.ufo:173
-#, fuzzy
 msgid "Leave this menu and continue playing."
-msgstr "Wczytaj ostatnio zapisaną grę lub kontynuuj."
+msgstr "Opuść to menu i kontynuuj grę."
 
 #: ../base/ufos/ui/campaign.ufo:194 ../base/ufos/ui/hud_default.ufo:993
 #: ../base/ufos/ui/main.ufo:53 ../base/ufos/ui/multiplayer.ufo:568
@@ -24985,7 +24946,7 @@ msgstr "Potwierdź"
 
 #: ../base/ufos/ui/campaign.ufo:796 ../base/ufos/ui/singleplayer.ufo:181
 msgid "Do not quit."
-msgstr ""
+msgstr "Nie kończ."
 
 #: ../base/ufos/ui/equipment.ufo:42 ../base/ufos/ui/inventory.ufo:37
 #: ../base/ufos/ui/inventory.ufo:45 ../base/ufos/ui/team.ufo:29
@@ -25244,7 +25205,7 @@ msgstr "Przechwycenie statku powietrznego"
 
 #: ../base/ufos/ui/geoscape.ufo:1089
 msgid "SAM defence"
-msgstr ""
+msgstr "Obrona rakietowa"
 
 #: ../base/ufos/ui/geoscape.ufo:1103
 msgid "Aircraft:"
@@ -25256,7 +25217,7 @@ msgstr "Baza:"
 
 #: ../base/ufos/ui/geoscape.ufo:1165
 msgid "Surface-to-air missile site:"
-msgstr ""
+msgstr "Stanowisko wyrzutni ziemia-powietrze:"
 
 #: ../base/ufos/ui/geoscape.ufo:1240
 msgid "Select aircraft"
@@ -25306,14 +25267,12 @@ msgid "Employee is away"
 msgstr "Personel"
 
 #: ../base/ufos/ui/hire.ufo:72
-#, fuzzy
 msgid "Unhire - Right click to remove"
-msgstr "Zatrudnij/Zwolnij - PPM aby usunąć"
+msgstr "Zwolnij - PPM aby usunąć"
 
 #: ../base/ufos/ui/hire.ufo:84
-#, fuzzy
 msgid "Hire - Right click to remove"
-msgstr "Zatrudnij/Zwolnij - PPM aby usunąć"
+msgstr "Najmij - PPM aby usunąć"
 
 #: ../base/ufos/ui/hire.ufo:255
 #, fuzzy
@@ -25518,7 +25477,6 @@ msgid "Reserve TUs for shooting."
 msgstr "Zarezerwuj PR na strzelanie."
 
 #: ../base/ufos/ui/hud_alt.ufo:1659
-#, fuzzy
 msgid "Alternative HUD"
 msgstr "HUD alternatywny"
 
@@ -25556,18 +25514,16 @@ msgstr "Poziom 8"
 
 #: ../base/ufos/ui/hud_default.ufo:608 ../base/ufos/ui/hud_default.ufo:1121
 #: ../base/ufos/ui/hud_mini.ufo:1947
-#, fuzzy
 msgid "Show rescue zone"
-msgstr "Wybierz tą strefę"
+msgstr "Pokaż strefę ewakuacji"
 
 #: ../base/ufos/ui/hud_default.ufo:659
 msgid "Primary fire mode"
 msgstr "Podstawowy tryb użycia"
 
 #: ../base/ufos/ui/hud_default.ufo:1118
-#, fuzzy
 msgid "Hide rescue zone"
-msgstr "Obcy wkroczyli do wyznaczonej strefy\n"
+msgstr "Ukryj strefę ewakuacji"
 
 #: ../base/ufos/ui/hud_default.ufo:1182
 #, fuzzy
@@ -25704,14 +25660,12 @@ msgid ""
 msgstr ""
 
 #: ../base/ufos/ui/hud_mini.ufo:1557
-#, fuzzy
 msgid "End turn"
 msgstr "Koniec rundy"
 
 #: ../base/ufos/ui/hud_mini.ufo:1570
-#, fuzzy
 msgid "LMB:Show/Hide Physical Data"
-msgstr "Atrybuty fizyczne"
+msgstr "LPM: Pokaż/Ukryj Atrybuty fizyczne"
 
 #: ../base/ufos/ui/hud_mini.ufo:1579
 msgid "LMB:Show/Hide Inventory"
@@ -25740,14 +25694,12 @@ msgid "LMB:Show/RMB:Hide Decoration"
 msgstr ""
 
 #: ../base/ufos/ui/hud_mini.ufo:1766
-#, fuzzy
 msgid "Use Headgear"
 msgstr "Użyj wyposażenia nagłownego"
 
 #: ../base/ufos/ui/hud_mini.ufo:1901
-#, fuzzy
 msgid "Chat Messages"
-msgstr "Wiadomości z czata"
+msgstr "Wiadomości Czatu"
 
 #: ../base/ufos/ui/hud_mini.ufo:1957
 #, fuzzy
@@ -25755,23 +25707,20 @@ msgid "Message Log"
 msgstr "Ustawienia komunikatów"
 
 #: ../base/ufos/ui/hud_mini.ufo:1966
-#, fuzzy
 msgid "Menu"
-msgstr "Medan"
+msgstr "Menu"
 
 #: ../base/ufos/ui/hud_mini.ufo:1976
-#, fuzzy
 msgid "Stop Music"
-msgstr "Muzyka"
+msgstr "Muzyka Stop"
 
 #: ../base/ufos/ui/hud_mini.ufo:1986
 msgid "Play Next Random Track"
 msgstr ""
 
 #: ../base/ufos/ui/hud_mini.ufo:2150
-#, fuzzy
 msgid "Minimal HUD"
-msgstr "HUD podstawowy"
+msgstr "HUD minimalny"
 
 #: ../base/ufos/ui/hud_phone.ufo:185
 #, fuzzy
@@ -25861,7 +25810,7 @@ msgstr "Ponów misję"
 
 #: ../base/ufos/ui/lostwon.ufo:178
 msgid "UFO recovery"
-msgstr ""
+msgstr "Odzyskano UFO"
 
 #: ../base/ufos/ui/lostwon.ufo:191
 msgid "Store UFO"
@@ -25941,7 +25890,7 @@ msgstr "Jednoosobowa"
 
 #: ../base/ufos/ui/main.ufo:41
 msgid "Choose between Campaign or Skirmish mode."
-msgstr ""
+msgstr "Wybierz pomiędzy Kampanią a Potyczką."
 
 #: ../base/ufos/ui/main.ufo:59 ../base/ufos/ui/tutorials.ufo:21
 msgid "Tutorials"
@@ -26055,7 +26004,7 @@ msgstr ""
 #: ../base/ufos/ui/market.ufo:197
 #, fuzzy
 msgid "Price"
-msgstr "Cena:"
+msgstr "Cena"
 
 #: ../base/ufos/ui/market.ufo:314
 msgid "Storage (used/all):"
@@ -26461,31 +26410,28 @@ msgid "Abort Game"
 msgstr "Przerwij grę"
 
 #: ../base/ufos/ui/options.ufo:41
-#, fuzzy
 msgid "Overall game settings"
-msgstr "Ustawienia ogólne"
+msgstr "Ustawienia ogólne gry"
 
 #: ../base/ufos/ui/options.ufo:42
 msgid "Overall"
 msgstr "Przegląd"
 
 #: ../base/ufos/ui/options.ufo:52
-#, fuzzy
 msgid "Video settings"
-msgstr "Ustawienia wideo."
+msgstr "Ustawienia wideo"
 
 #: ../base/ufos/ui/options.ufo:53
 msgid "Video"
 msgstr "Video"
 
 #: ../base/ufos/ui/options.ufo:63
-#, fuzzy
 msgid "Sound settings"
-msgstr "Ustawienia dźwięku."
+msgstr "Ustawienia dźwięku"
 
 #: ../base/ufos/ui/options.ufo:64
 msgid "Audio"
-msgstr ""
+msgstr "Dźwięk"
 
 #: ../base/ufos/ui/options.ufo:74
 #, fuzzy
@@ -26493,9 +26439,8 @@ msgid "Battlescape camera, gameplay and input settings"
 msgstr "Zmień ustawienia powiadomień i pauzy"
 
 #: ../base/ufos/ui/options.ufo:85
-#, fuzzy
 msgid "Leave the options menu"
-msgstr "Zmień rozmiar produkcji"
+msgstr "Opuść to menu opcji"
 
 #: ../base/ufos/ui/options.ufo:103
 msgid "Overall Game Settings"
@@ -26506,9 +26451,8 @@ msgid "Language Settings"
 msgstr "Ustawienia językowe"
 
 #: ../base/ufos/ui/options.ufo:142
-#, fuzzy
 msgid "Available languages"
-msgstr "Dostępne systemy obrony:"
+msgstr "Dostępne języki"
 
 #: ../base/ufos/ui/options.ufo:175
 msgid "Several Tips"
@@ -26538,7 +26482,6 @@ msgid "Show 'Tip of the Day':"
 msgstr "Pokazuj \"Porady dnia\":"
 
 #: ../base/ufos/ui/options.ufo:234
-#, fuzzy
 msgid "Menu Options"
 msgstr "Opcje menu"
 
@@ -26567,7 +26510,7 @@ msgstr "Zaawansowany Radar"
 
 #: ../base/ufos/ui/options.ufo:320
 msgid "Resolution and Display Settings"
-msgstr ""
+msgstr "Ustawienia Rozdzielczości i Wyświetlania"
 
 #: ../base/ufos/ui/options.ufo:331
 msgid "The resolution (x*y) in pixel which UFO:AI should use."
@@ -26579,7 +26522,7 @@ msgstr "Rozdzielczość:"
 
 #: ../base/ufos/ui/options.ufo:342
 msgid "Display only resolutions using this screen ratio."
-msgstr ""
+msgstr "Tylko rozdzielczości dla obecnych proporcji ekranu."
 
 #: ../base/ufos/ui/options.ufo:350
 msgid "All ratios"
@@ -26603,7 +26546,7 @@ msgstr "Tryb pełnoekranowy."
 
 #: ../base/ufos/ui/options.ufo:416
 msgid "Stretch the Screen with a 4:3 Ratio:"
-msgstr ""
+msgstr "Ustaw proporcje ekranu na 4:3"
 
 #: ../base/ufos/ui/options.ufo:431
 msgid "Prevent the mousepointer from leaving the game window."
@@ -26615,7 +26558,7 @@ msgstr ""
 
 #: ../base/ufos/ui/options.ufo:443
 msgid "Calibrate your display here."
-msgstr ""
+msgstr "Tu możesz kalibrować wyświetlacz."
 
 #: ../base/ufos/ui/options.ufo:444
 msgid "Monitor Calibration Controls"
@@ -26644,7 +26587,7 @@ msgstr ""
 
 #: ../base/ufos/ui/options.ufo:536
 msgid "jpeg Quality:"
-msgstr ""
+msgstr "Jakość jpeg:"
 
 #: ../base/ufos/ui/options.ufo:557
 #, fuzzy
@@ -26683,7 +26626,6 @@ msgid ""
 msgstr ""
 
 #: ../base/ufos/ui/options.ufo:625
-#, fuzzy
 msgid "Resolution Cap:"
 msgstr "Rozdzielczość:"
 
@@ -26794,9 +26736,8 @@ msgid ""
 msgstr ""
 
 #: ../base/ufos/ui/options.ufo:771
-#, fuzzy
 msgid "OpenGL Settings"
-msgstr "Ustawienia wideo"
+msgstr "Ustawienia OpenGL"
 
 #: ../base/ufos/ui/options.ufo:781
 msgid ""
@@ -26823,9 +26764,8 @@ msgid "Low quality"
 msgstr ""
 
 #: ../base/ufos/ui/options.ufo:809
-#, fuzzy
 msgid "Medium quality"
-msgstr "średnia"
+msgstr "Średnia jakość"
 
 #: ../base/ufos/ui/options.ufo:814
 msgid "High quality"
@@ -27292,7 +27232,6 @@ msgid "Assemble Team"
 msgstr "Najpierw przydziel drużynę"
 
 #: ../base/ufos/ui/popup_baseattack.ufo:302
-#, fuzzy
 msgid "Equip"
 msgstr "Ekwipunek"
 
@@ -27336,12 +27275,10 @@ msgid "free"
 msgstr ""
 
 #: ../base/ufos/ui/popup_installations.ufo:205
-#, fuzzy
 msgid "UFO Yards"
 msgstr "Hangar UFO"
 
 #: ../base/ufos/ui/popup_installations.ufo:359
-#, fuzzy
 msgid "Rename Installation"
 msgstr "Zmień nazwę instalacji"
 
@@ -27352,9 +27289,8 @@ msgid "Location:"
 msgstr "Państwo:"
 
 #: ../base/ufos/ui/popup_installations.ufo:396
-#, fuzzy
 msgid "Capacity:"
-msgstr "Pojemność"
+msgstr "Pojemność:"
 
 #: ../base/ufos/ui/popup_installations.ufo:408
 msgid "Free Space:"
@@ -27362,19 +27298,16 @@ msgstr ""
 
 #: ../base/ufos/ui/popup_installations.ufo:420
 #: ../base/ufos/ui/popup_installations.ufo:520
-#, fuzzy
 msgid "Confirm destroying"
-msgstr "Potwierdzaj akcje:"
+msgstr "Potwierdź zniszczenie"
 
 #: ../base/ufos/ui/popup_installations.ufo:460
-#, fuzzy
 msgid "Condition:"
-msgstr "Potwierdzaj akcje:"
+msgstr "Kondycja:"
 
 #: ../base/ufos/ui/popup_installations.ufo:509
-#, fuzzy
 msgid "Transfer UFO"
-msgstr "Przesyłka"
+msgstr "Przesyłka UFO"
 
 #: ../base/ufos/ui/popup_installations.ufo:527
 msgid "Destroy UFO"
@@ -27386,7 +27319,6 @@ msgid "disassembling"
 msgstr "Rozmontowywanie obiektów"
 
 #: ../base/ufos/ui/popup_installations.ufo:697
-#, fuzzy
 msgid "transfering"
 msgstr "Przesyłka"
 
@@ -27477,14 +27409,12 @@ msgid "Show research proposal"
 msgstr "Pokaż propozycje badań"
 
 #: ../base/ufos/ui/singleplayer.ufo:71
-#, fuzzy
 msgid "Back to the main menu."
-msgstr "Wyjście do menu głównego"
+msgstr "Cofnij do menu głównego"
 
 #: ../base/ufos/ui/singleplayer.ufo:109
-#, fuzzy
 msgid "Go back to the battlescape."
-msgstr "Wróć do widoku planety"
+msgstr "Wróć do widoku pola walki"
 
 #: ../base/ufos/ui/singleplayer.ufo:116
 msgid "Abort"
@@ -27495,9 +27425,8 @@ msgid "Abort this battlescape mission."
 msgstr ""
 
 #: ../base/ufos/ui/singleplayer.ufo:125
-#, fuzzy
 msgid "Retry this battlescape mission."
-msgstr "Ponów misję"
+msgstr "Ponów misję taktyczną."
 
 #: ../base/ufos/ui/singleplayer.ufo:133
 msgid "Enter the game options menu."
@@ -27508,28 +27437,24 @@ msgid "You will lose all your progress."
 msgstr ""
 
 #: ../base/ufos/ui/singleplayer.ufo:175
-#, fuzzy
 msgid "Quit"
-msgstr "Quito"
+msgstr "Zakończ"
 
 #: ../base/ufos/ui/skirmish.ufo:44
 msgid "<1>"
 msgstr ""
 
 #: ../base/ufos/ui/skirmish.ufo:121
-#, fuzzy
 msgid "Start Game"
-msgstr "Rozpocznij grę"
+msgstr "Rozpocznij Grę"
 
 #: ../base/ufos/ui/skirmish.ufo:136
-#, fuzzy
 msgid "Return to the main menu."
-msgstr "Wyjście do menu głównego"
+msgstr "Powrót do menu głównego"
 
 #: ../base/ufos/ui/skirmish.ufo:150
-#, fuzzy
 msgid "Skirmish Game Settings"
-msgstr "Ustawienia potyczki"
+msgstr "Ustawienia Potyczki"
 
 #: ../base/ufos/ui/skirmish.ufo:203
 msgid "UFO:"
@@ -27555,29 +27480,24 @@ msgid ""
 msgstr "Wybierz desantowca, który powinien być użyty"
 
 #: ../base/ufos/ui/skirmish.ufo:249
-#, fuzzy
 msgid "Equipment of your team."
-msgstr "Wybierz drużynę"
+msgstr "Wyposarz swoją drużynę"
 
 #: ../base/ufos/ui/skirmish.ufo:289
-#, fuzzy
 msgid "Equipment AI Team."
-msgstr "Ekwipunek"
+msgstr "Wyposarz drużynę AI"
 
 #: ../base/ufos/ui/skirmish.ufo:334
-#, fuzzy
 msgid "The maximum of AI actors for this game."
 msgstr "Max. liczba postaci AI w grze drużynowej"
 
 #: ../base/ufos/ui/skirmish.ufo:356
-#, fuzzy
 msgid "Max. Soldiers:"
 msgstr "Max. liczba żołnierzy:"
 
 #: ../base/ufos/ui/skirmish.ufo:357
-#, fuzzy
 msgid "Sets the maximum amount of soldiers."
-msgstr "Ustaw liczbę żołnierzy"
+msgstr "Ustaw maksymalną liczbę żołnierzy."
 
 #: ../base/ufos/ui/skirmish.ufo:381
 msgid "UGVs:"
@@ -27700,14 +27620,12 @@ msgid "Destination base"
 msgstr "Baza docelowa"
 
 #: ../base/ufos/ui/transfer.ufo:455
-#, fuzzy
 msgid "List"
-msgstr "por."
+msgstr "Lista"
 
 #: ../base/ufos/ui/transfer.ufo:456
-#, fuzzy
 msgid "List active transfers"
-msgstr "Rozpocznij przesyłanie"
+msgstr "Lista bierzących przesyłek"
 
 #: ../base/ufos/ui/transfer.ufo:469
 msgid "Start the transfer"
@@ -27726,30 +27644,26 @@ msgid "Choose a base to host alien bodies:"
 msgstr "Wybierz bazę do przechowania ciał Obcych:"
 
 #: ../base/ufos/ui/transfer.ufo:574
-#, fuzzy
 msgid "From:"
-msgstr "Fargo"
+msgstr "Od:"
 
 #: ../base/ufos/ui/transfer.ufo:588
 msgid "To:"
-msgstr ""
+msgstr "Do:"
 
 #: ../base/ufos/ui/transfer.ufo:662
-#, fuzzy
 msgid "Actual transfers"
-msgstr "przesyłka"
+msgstr "Bierząca przesyłka"
 
 #: ../base/ufos/ui/ufopedia.ufo:90
-#, fuzzy
 msgid "Pre-Research Report"
-msgstr "Informacje badawcze"
+msgstr "Wstępny Raport Badawczy"
 
 #: ../base/ufos/ui/ufopedia.ufo:108
 msgid "The Big Picture"
 msgstr ""
 
 #: ../base/ufos/ui/ufopedia.ufo:294
-#, fuzzy
 msgid "Requirement(s):"
 msgstr "Wymaga:"
 
@@ -28302,18 +28216,16 @@ msgid "Unknown alien race"
 msgstr "Nieznana rasa Obcych"
 
 #: client/battlescape/cl_actor.cpp:2550
-#, fuzzy
 msgid "Toggle to next living actor"
-msgstr "Przełącz na kolejnego żołnierza"
+msgstr "Przełącza na następną żywą postać"
 
 #: client/battlescape/cl_actor.cpp:2551
-#, fuzzy
 msgid "Toggle to previous living actor"
-msgstr "Przełącz na kolejnego żołnierza"
+msgstr "Przełącza na poprzednią żywą postać"
 
 #: client/battlescape/cl_actor.cpp:2552
 msgid "Select an actor from list"
-msgstr "Wybierz żołnierza z listy."
+msgstr "Wybierz postać z listy."
 
 #: client/battlescape/cl_actor.cpp:2553
 msgid "Update an actor"
@@ -28329,28 +28241,24 @@ msgid "Toggle the headgear"
 msgstr "Zmień wyp. nagłowne"
 
 #: client/battlescape/cl_actor.cpp:2556
-#, fuzzy
 msgid "Use"
-msgstr "Użytkownicy"
+msgstr "Użyj"
 
 #: client/battlescape/cl_actor.cpp:2557
 msgid "Confirm the current action"
 msgstr "Potwierdź bieżącą akcję"
 
 #: client/battlescape/cl_actor.cpp:2558
-#, fuzzy
 msgid "Toggle to the next alien in sight of the selected actor."
-msgstr "Pokaż następnego Obcego w zasięgu wzroku żołnierza."
+msgstr "Pokaż następnego Obcego w zasięgu wzroku postaci."
 
 #: client/battlescape/cl_actor.cpp:2560
-#, fuzzy
 msgid "Toggle camera to the next visible alien."
-msgstr "Przełącza widok na następnego Obcego"
+msgstr "Przełącza widok na następnego Obcego."
 
 #: client/battlescape/cl_actor.cpp:2561
-#, fuzzy
 msgid "Toggle camera to the previous visible alien."
-msgstr "Przełącza widok na następnego Obcego"
+msgstr "Przełącza widok na poprzedniego Obcego"
 
 #: client/battlescape/cl_hud.cpp:94 client/battlescape/cl_hud.cpp:97
 msgid "Crouch walk"
@@ -28478,13 +28386,12 @@ msgid "Reload weapon (%i TU)."
 msgstr "Przeładuj broń (%i PR)."
 
 #: client/battlescape/cl_hud.cpp:1149
-#, fuzzy
 msgid ""
 "You cannot use this unknown item.\n"
 "You need to research it first."
 msgstr ""
 "Nie możesz używać tego nieznanego przedmiotu.\n"
-"Musisz najpierw odkryć jego działanie.\n"
+"Musisz najpierw odkryć jego działanie."
 
 #: client/battlescape/cl_hud.cpp:1170
 #, c-format
@@ -28584,14 +28491,12 @@ msgid "Reserved %i TUs for crouching/standing up."
 msgstr "Zarezerwuj %i PR na kucanie/powstanie."
 
 #: client/battlescape/cl_hud_callbacks.cpp:198
-#, fuzzy
 msgid "Reaction fire enabled."
-msgstr "Broń nie może być wykorzystana do RF.\n"
+msgstr "Ogień automatyczny załączono."
 
 #: client/battlescape/cl_hud_callbacks.cpp:201
-#, fuzzy
 msgid "Reaction fire disabled."
-msgstr "Broń nie może być wykorzystana do RF.\n"
+msgstr "Ogień automatyczny wyłączono."
 
 #: client/battlescape/cl_hud_callbacks.cpp:264
 #, fuzzy
@@ -28601,42 +28506,36 @@ msgstr ""
 "nie da się przeładować.\n"
 
 #: client/battlescape/cl_hud_callbacks.cpp:297
-#, fuzzy
 msgid "Left hand weapon reloaded."
-msgstr "Broń nie może zostać przeładowana."
+msgstr "Przeładowano broń w lewej ręce."
 
 #: client/battlescape/cl_hud_callbacks.cpp:310
-#, fuzzy
 msgid "Right hand weapon reloaded."
-msgstr "Przeładuj broń w prawej ręce"
+msgstr "Przeładowano broń w prawej ręce."
 
 #: client/battlescape/cl_hud_callbacks.cpp:351
 msgid "Set selected actor to move mode (it cancels the fire mode)."
 msgstr ""
 
 #: client/battlescape/cl_hud_callbacks.cpp:352
-#, fuzzy
 msgid "Reload the weapon in the soldiers left hand."
-msgstr "Przeładuj broń w lewej ręce"
+msgstr "Przeładuj broń w lewej ręce żołnierza."
 
 #: client/battlescape/cl_hud_callbacks.cpp:353
-#, fuzzy
 msgid "Reload the weapon in the soldiers right hand."
-msgstr "Przeładuj broń w prawej ręce"
+msgstr "Przeładuj broń w prawej ręce żołnierza."
 
 #: client/battlescape/cl_hud_callbacks.cpp:354
 msgid "Toggle reservation for crouching."
 msgstr "Przełącza rezerwację PR na kucanie."
 
 #: client/battlescape/cl_hud_callbacks.cpp:355
-#, fuzzy
 msgid "Toggle reaction fire."
 msgstr "Przełącza tryb automatycznego ognia"
 
 #: client/battlescape/cl_hud_callbacks.cpp:356
-#, fuzzy
 msgid "Start aiming the weapon."
-msgstr "Załadowana amunicja"
+msgstr "Rozpoczyna celowanie bronią."
 
 #: client/battlescape/cl_hud_callbacks.cpp:357
 #, fuzzy
@@ -28657,9 +28556,8 @@ msgid "Awaiting game start"
 msgstr "Oczekiwanie startu gry"
 
 #: client/battlescape/events/e_server.cpp:53
-#, fuzzy
 msgid "End current turn."
-msgstr "Zakończ bieżącą rundę"
+msgstr "Zakończ bieżącą rundę."
 
 #: client/battlescape/events/event/actor/e_event_actorappear.cpp:167
 #, c-format
@@ -28667,19 +28565,17 @@ msgid "Enemy spotted: %s!"
 msgstr "Zauważono wroga: %s!"
 
 #: client/battlescape/events/event/actor/e_event_actorappear.cpp:170
-#, fuzzy
 msgid "Unknown enemy spotted!"
-msgstr "Zauważono wroga!\n"
+msgstr "Zauważono nieznanego wroga!"
 
 #: client/battlescape/events/event/actor/e_event_actorappear.cpp:172
-#, fuzzy
 msgid "Civilian spotted."
-msgstr "Zauważono cywila!\n"
+msgstr "Zauważono cywila."
 
 #: client/battlescape/events/event/actor/e_event_actordie.cpp:88
-#, fuzzy, c-format
+#, c-format
 msgid "%s lost a soldier\n"
-msgstr "%s załadowane\n"
+msgstr "%s stracono zołnierza\n"
 
 #: client/battlescape/events/event/actor/e_event_actordie.cpp:95
 #, c-format
@@ -28692,74 +28588,64 @@ msgid "%s was killed\n"
 msgstr "%s został zabity\n"
 
 #: client/battlescape/events/event/actor/e_event_actordie.cpp:106
-#, fuzzy
 msgid "A civilian was stunned."
-msgstr "Ogłuszono cywila.\n"
+msgstr "Ogłuszono cywila."
 
 #: client/battlescape/events/event/actor/e_event_actordie.cpp:108
-#, fuzzy
 msgid "A civilian was killed."
-msgstr "Zabito cywila.\n"
+msgstr "Zabito cywila."
 
 #: client/battlescape/events/event/actor/e_event_actordie.cpp:112
-#, fuzzy
 msgid "An alien was stunned."
-msgstr "Ogłuszono Obcego.\n"
+msgstr "Ogłuszono Obcego."
 
 #: client/battlescape/events/event/actor/e_event_actordie.cpp:114
-#, fuzzy
 msgid "An alien was killed."
-msgstr "Zabito Obcego.\n"
+msgstr "Zabito Obcego."
 
 #: client/battlescape/events/event/actor/e_event_actordie.cpp:118
-#, fuzzy
 msgid "A soldier was stunned."
-msgstr "Ogłuszono żołnierza.\n"
+msgstr "Ogłuszono żołnierza."
 
 #: client/battlescape/events/event/actor/e_event_actordie.cpp:120
-#, fuzzy
 msgid "A soldier was killed."
-msgstr "Zabito żołnierza.\n"
+msgstr "Zabito żołnierza."
 
 #: client/battlescape/events/event/actor/e_event_actordie.cpp:124
-#, fuzzy, c-format
+#, c-format
 msgid "A member of team %i was stunned."
-msgstr "Ogłuszono członka drużyny %i.\n"
+msgstr "Ogłuszono członka drużyny %i."
 
 #: client/battlescape/events/event/actor/e_event_actordie.cpp:126
-#, fuzzy, c-format
+#, c-format
 msgid "A member of team %i was killed."
-msgstr "Zabito członka drużyny %i.\n"
+msgstr "Zabito członka drużyny %i."
 
 #: client/battlescape/events/event/actor/e_event_actorrevitalised.cpp:69
-#, fuzzy, c-format
+#, c-format
 msgid "%s was revitalised\n"
-msgstr "%s został zabity\n"
+msgstr "%s został ożywiony\n"
 
 #: client/battlescape/events/event/actor/e_event_actorrevitalised.cpp:75
-#, fuzzy
 msgid "A civilian was revitalised."
-msgstr "Zabito cywila.\n"
+msgstr "Ożywiono cywila."
 
 #: client/battlescape/events/event/actor/e_event_actorrevitalised.cpp:78
-#, fuzzy
 msgid "An alien was revitalised."
-msgstr "Zabito Obcego.\n"
+msgstr "Ożywiono Obcego."
 
 #: client/battlescape/events/event/actor/e_event_actorrevitalised.cpp:81
-#, fuzzy
 msgid "A soldier was revitalised."
-msgstr "Zabito żołnierza.\n"
+msgstr "Ożywiono żołnierza."
 
 #: client/battlescape/events/event/actor/e_event_actorrevitalised.cpp:84
-#, fuzzy, c-format
+#, c-format
 msgid "A member of team %i was revitalised."
-msgstr "Zabito członka drużyny %i.\n"
+msgstr "Ożywiono członka drużyny %i."
 
 #: client/battlescape/events/event/player/e_event_doendround.cpp:57
-#, fuzzy
 msgid "Your round started!"
-msgstr "Rozpoczęła się Twoja runda!\n"
+msgstr "Rozpoczęła się Twoja runda!"
 
 #: client/cgame/campaign/cp_aircraft.cpp:417
 msgid "ON RED ALERT"
@@ -28924,9 +28810,9 @@ msgid "That base is beyond this aircraft's range."
 msgstr "Baza jest poza zasięgiem statku powietrznego."
 
 #: client/cgame/campaign/cp_aircraft.cpp:1157
-#, fuzzy, c-format
+#, c-format
 msgid "Craft %s has returned to %s."
-msgstr "Statek %s został zatankowany w %s"
+msgstr "Statek %s powrócił do %s."
 
 #: client/cgame/campaign/cp_aircraft.cpp:1198
 #, c-format
@@ -29001,12 +28887,12 @@ msgid "Operational range:\t%i km\n"
 msgstr "Zasięg:\t%i km\n"
 
 #: client/cgame/campaign/cp_aircraft_callbacks.cpp:218
-#, fuzzy, c-format
+#, c-format
 msgid "Weapons:\t%i of %i\n"
 msgstr "Uzbrojenie:\t%i z %i\n"
 
 #: client/cgame/campaign/cp_aircraft_callbacks.cpp:219
-#, fuzzy, c-format
+#, c-format
 msgid "Armour:\t%i of 1\n"
 msgstr "Pancerz:\t%i z 1\n"
 
@@ -30068,9 +29954,8 @@ msgstr ""
 
 #: client/cgame/campaign/cp_market_callbacks.cpp:219
 #: client/cgame/campaign/cp_market_callbacks.cpp:260
-#, fuzzy
 msgid "Not enough money"
-msgstr "Zbyt mało techników"
+msgstr "Zbyt mało pieniędzy"
 
 #: client/cgame/campaign/cp_market_callbacks.cpp:219
 #: client/cgame/campaign/cp_market_callbacks.cpp:260
