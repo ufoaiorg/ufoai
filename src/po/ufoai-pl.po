@@ -3144,12 +3144,11 @@ msgstr[2] "Pilot"
 
 #: ../base/ufos/medals.ufo:48 ../base/ufos/team_humans.ufo:2083
 #: ../base/ufos/team_humans.ufo:2148 client/cgame/campaign/cp_employee.cpp:208
-#, fuzzy
 msgid "UGV"
 msgid_plural "UGVs"
-msgstr[0] "UPN"
-msgstr[1] "UPN"
-msgstr[2] "UPN"
+msgstr[0] "BPN"
+msgstr[1] "BPN"
+msgstr[2] "BPN"
 
 #: ../base/ufos/medals.ufo:57 ../base/ufos/team_humans.ufo:1662
 #: client/cgame/campaign/cp_employee.cpp:204
@@ -4030,7 +4029,7 @@ msgid ""
 msgstr ""
 "Dowódco, wybacz jeśli będę mówił trochę niespójnie, ale całą noc pracowałem "
 "nad ostatnimi fotokopiami i jestem przemęczony. Z wielką przyjemnością chcę "
-"przedstawic Ci Myśliwiec Ponadprzestrzenny Starchasere. Tak, to jest prawda, "
+"przedstawic Ci Myśliwiec Ponadprzestrzenny Starchaser. Tak, to jest prawda, "
 "ponadprzestrzenny. Zasadniczą modyfikacją i zmianami w stosunku do myśliwca "
 "Dragon - ale nie jedynymi istotnymi! - jest zdolność do lotów orbitalnych i "
 "walki. Od tertaz będziemy mogli przejmować pojazdy wroga poza nasza "
@@ -23039,7 +23038,7 @@ msgstr "Obrażenia ogłuszające"
 
 #: ../base/ufos/research.ufo:2971
 msgid "Particle Beam Damage Type"
-msgstr "Obrażenia strumienia cząstek"
+msgstr "Obrażenia od strumienia cząstek"
 
 #: ../base/ufos/research.ufo:2989
 msgid "Accuracy Attribute"
@@ -23119,7 +23118,7 @@ msgstr "Autopsja Obcego - Ortnok"
 
 #: ../base/ufos/research.ufo:4541 ../base/ufos/team_humans.ufo:2072
 msgid "Phoenix UGV"
-msgstr "UPN Phoenix"
+msgstr "BPN Phoenix"
 
 #: ../base/ufos/research.ufo:4561 ../base/ufos/team_humans.ufo:2137
 msgid "Ares W (UGV)"
@@ -23659,7 +23658,7 @@ msgstr "Pozostało strzałów"
 
 #: ../base/ufos/seq_tutorials.ufo:600 ../base/ufos/ui/hud_phone.ufo:180
 msgid "Reload"
-msgstr "Wczytaj ponownie"
+msgstr "Załaduj ponownie"
 
 #: ../base/ufos/seq_tutorials.ufo:601
 msgid "Reload weapon"
@@ -23683,7 +23682,7 @@ msgstr "Przyklęknij lub powstań"
 
 #: ../base/ufos/seq_tutorials.ufo:728
 msgid "Cycle through visible enemies"
-msgstr "Przełącza widok między kolejnymi wrogami w polu widzenia"
+msgstr "Przełącza widok pomiędzy przeciwnikami w polu widzenia"
 
 #: ../base/ufos/seq_tutorials.ufo:750
 msgid "End round"
@@ -23703,7 +23702,7 @@ msgstr "Potyczka to rodzaj szybkiej gry."
 
 #: ../base/ufos/seq_tutorials.ufo:838
 msgid "Equipment selection"
-msgstr "ybór wyposażenia"
+msgstr "Wybór wyposażenia"
 
 #: ../base/ufos/seq_tutorials.ufo:859
 msgid "Day or night version of map to play"
@@ -23823,7 +23822,7 @@ msgstr "Nóż bojowy"
 
 #: ../base/ufos/team_humans.ufo:60
 msgid "Phalanx"
-msgstr "Falanga"
+msgstr "Phalanx"
 
 #: ../base/ufos/team_humans.ufo:2151
 msgid "Ares W"
@@ -27581,9 +27580,8 @@ msgid "Sets the maximum amount of soldiers."
 msgstr "Ustaw liczbę żołnierzy"
 
 #: ../base/ufos/ui/skirmish.ufo:381
-#, fuzzy
 msgid "UGVs:"
-msgstr "UPN"
+msgstr "BPN"
 
 #: ../base/ufos/ui/skirmish.ufo:384
 msgid ""
@@ -30100,7 +30098,7 @@ msgstr ""
 
 #: client/cgame/campaign/cp_market_callbacks.cpp:393
 msgid "UGV is away from home"
-msgstr "UGV jest poza domem"
+msgstr "BPN jest poza domem"
 
 #: client/cgame/campaign/cp_market_callbacks.cpp:435
 #, fuzzy
