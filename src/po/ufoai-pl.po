@@ -23884,8 +23884,8 @@ msgid ""
 "You can use a flashbang to deactivate your opponents' Reaction Fire mode or "
 "to take all of his remaining Time Units (TUs) from his next round."
 msgstr ""
-"Użycie granatu ogłuszającego uniemożliwi wrogowi oddanie automatycznego "
-"strzału. Jeśli ogłuszenie się powiedzie, to żołnierz przeciwnika zostanie "
+"Użycie granatu ogłuszającego uniemożliwi wrogowi odpowiedź ogniem "
+"reakcyjnym. Jeśli ogłuszenie się powiedzie, to żołnierz przeciwnika zostanie "
 "pozbawiony Punktów Ruchu (PR) w kolejnej rundzie."
 
 #: ../base/ufos/tips.ufo:14
@@ -25375,7 +25375,7 @@ msgstr ""
 
 #: ../base/ufos/ui/hud_.ufo:136 ../base/ufos/ui/hud_phone.ufo:38
 msgid "Check to use this firemode for reaction fire"
-msgstr "Zaznacz by użyć tego trybu ognia automatycznego"
+msgstr "Zaznacz by użyć trybu ognia reakcyjnego"
 
 #: ../base/ufos/ui/hud_.ufo:175
 msgid "TU:"
@@ -25455,20 +25455,18 @@ msgstr "Zakończ rundę"
 
 #: ../base/ufos/ui/hud_alt.ufo:1606 ../base/ufos/ui/hud_default.ufo:1148
 #: ../base/ufos/ui/hud_mini.ufo:2067
-#, fuzzy
 msgid "Reaction fire"
-msgstr "Brak automatycznego ognia"
+msgstr "Ogień reakcyjny"
 
 #: ../base/ufos/ui/hud_alt.ufo:1611 ../base/ufos/ui/hud_default.ufo:1154
 #: ../base/ufos/ui/hud_mini.ufo:2072
-#, fuzzy
 msgid "Reaction fire (not possible)"
-msgstr "Jednostrzałowy ogień reakcyjny (niedostępny)"
+msgstr "Ogień reakcyjny (niedostępny)"
 
 #: ../base/ufos/ui/hud_alt.ufo:1617 ../base/ufos/ui/hud_default.ufo:1160
 #: ../base/ufos/ui/hud_mini.ufo:2078
 msgid "No reaction fire"
-msgstr "Brak automatycznego ognia"
+msgstr "Brak ognia reakcyjnego"
 
 #: ../base/ufos/ui/hud_alt.ufo:1626 ../base/ufos/ui/hud_default.ufo:1128
 #: ../base/ufos/ui/hud_mini.ufo:2087 client/battlescape/cl_hud.cpp:891
@@ -28491,11 +28489,11 @@ msgstr "Zarezerwuj %i PR na kucanie/powstanie."
 
 #: client/battlescape/cl_hud_callbacks.cpp:198
 msgid "Reaction fire enabled."
-msgstr "Ogień automatyczny załączono."
+msgstr "Ogień reakcyjny załączono."
 
 #: client/battlescape/cl_hud_callbacks.cpp:201
 msgid "Reaction fire disabled."
-msgstr "Ogień automatyczny wyłączono."
+msgstr "Ogień reakcyjny wyłączono."
 
 #: client/battlescape/cl_hud_callbacks.cpp:264
 #, fuzzy
@@ -28530,7 +28528,7 @@ msgstr "Przełącza rezerwację PR na kucanie."
 
 #: client/battlescape/cl_hud_callbacks.cpp:355
 msgid "Toggle reaction fire."
-msgstr "Przełącza tryb automatycznego ognia"
+msgstr "Przełącza tryb ognia reakcyjnego."
 
 #: client/battlescape/cl_hud_callbacks.cpp:356
 msgid "Start aiming the weapon."
@@ -32352,15 +32350,15 @@ msgstr "%s jest w szoku.\n"
 
 #: game/g_reaction.cpp:415
 msgid "No reaction fire enabled weapon."
-msgstr "Brak broni dla ognia automatycznego."
+msgstr "Brak broni dla ognia reakcyjnego."
 
 #: game/g_reaction.cpp:420
 msgid "No fire mode selected for reaction fire."
-msgstr "Nie wybrano typu strzału dla ognia automatycznego."
+msgstr "Nie wybrano typu strzału dla ognia reakcyjnego."
 
 #: game/g_reaction.cpp:425
 msgid "Not enough TUs left for activating reaction fire."
-msgstr "Brak PR na załączenie ognia automatycznego."
+msgstr "Brak PR na załączenie trybu ognia reakcyjnego."
 
 #: game/g_round.cpp:49
 msgid "4 minutes left until forced turn end."
