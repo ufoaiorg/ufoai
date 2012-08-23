@@ -24971,7 +24971,7 @@ msgstr "Rozszerzenie"
 #: ../base/ufos/ui/equipment.ufo:78 ../base/ufos/ui/inventory.ufo:105
 #: ../base/ufos/ui/inventory.ufo:113 ../base/ufos/ui/team.ufo:65
 msgid "Headgear"
-msgstr "Wyp. nagłowne"
+msgstr "Głowa"
 
 #: ../base/ufos/ui/equipment.ufo:87 ../base/ufos/ui/inventory.ufo:122
 #: ../base/ufos/ui/inventory.ufo:130 ../base/ufos/ui/team.ufo:74
@@ -31675,14 +31675,12 @@ msgid "Don't attack the UFO-Carrier"
 msgstr ""
 
 #: client/cgame/campaign/missions/cp_mission_ufocarrier.cpp:64
-#, fuzzy
 msgid "Attack"
-msgstr "Atak terrorystyczny"
+msgstr "Atak"
 
 #: client/cgame/campaign/missions/cp_mission_ufocarrier.cpp:64
-#, fuzzy
 msgid "Attack the UFO-Carrier"
-msgstr "UFO - Krążownik"
+msgstr "Atak na UFO - Krążownik"
 
 #: client/cgame/cl_game_team.cpp:263
 msgid "Error saving team. Nothing to save yet."
@@ -32353,58 +32351,48 @@ msgid "%s is currently shaken."
 msgstr "%s jest w szoku.\n"
 
 #: game/g_reaction.cpp:415
-#, fuzzy
 msgid "No reaction fire enabled weapon."
-msgstr "Broń nie może być wykorzystana do RF.\n"
+msgstr "Brak broni dla ognia automatycznego."
 
 #: game/g_reaction.cpp:420
-#, fuzzy
 msgid "No fire mode selected for reaction fire."
-msgstr "Typ strzału niewybrany. Nie można włączyć RF.\n"
+msgstr "Nie wybrano typu strzału dla ognia automatycznego."
 
 #: game/g_reaction.cpp:425
 msgid "Not enough TUs left for activating reaction fire."
 msgstr "Brak PR na załączenie ognia automatycznego."
 
 #: game/g_round.cpp:49
-#, fuzzy
 msgid "4 minutes left until forced turn end."
-msgstr "4 minuty do zakończenia tury.\n"
+msgstr "4 minuty do zakończenia tury."
 
 #: game/g_round.cpp:52
-#, fuzzy
 msgid "3 minutes left until forced turn end."
-msgstr "3 minuty do zakończenia tury.\n"
+msgstr "3 minuty do zakończenia tury."
 
 #: game/g_round.cpp:55
-#, fuzzy
 msgid "2 minutes left until forced turn end."
-msgstr "2 minuty do zakończenia tury.\n"
+msgstr "2 minuty do zakończenia tury."
 
 #: game/g_round.cpp:58
-#, fuzzy
 msgid "1 minute left until forced turn end."
-msgstr "1 minuta do zakończenia tury.\n"
+msgstr "1 minuta do zakończenia tury."
 
 #: game/g_round.cpp:61
-#, fuzzy
 msgid "30 seconds left until forced turn end."
-msgstr "30 sekund do zakończenia tury.\n"
+msgstr "30 sekund do zakończenia tury."
 
 #: game/g_round.cpp:64
-#, fuzzy
 msgid "15 seconds left until forced turn end."
-msgstr "15 sekund do zakończenia tury.\n"
+msgstr "15 sekund do zakończenia tury."
 
 #: game/g_round.cpp:72
-#, fuzzy
 msgid "Current active team hit the max round time."
-msgstr "Limit czasowy dla aktywnej drużyny został przekroczony.\n"
+msgstr "Limit czasowy dla aktywnej drużyny został przekroczony."
 
 #: game/g_trigger.cpp:142
-#, fuzzy
 msgid "Switching map!"
-msgstr "Rozpocznij sekcję zwłok"
+msgstr "Zmiana mapy!"
 
 #: game/g_trigger.cpp:171
 msgid "You are now ready to switch the map."
