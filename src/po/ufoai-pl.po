@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
 "POT-Creation-Date: 2012-08-19 14:21+0200\n"
-"PO-Revision-Date: 2012-08-24 09:35+0100\n"
+"PO-Revision-Date: 2012-08-24 09:50+0100\n"
 "Last-Translator: Maciej Wierzbicki <voovoos@killfile.pl>\n"
 "Language-Team:  <radius75@interia.pl>\n"
 "Language: pl_PL\n"
@@ -28429,12 +28429,12 @@ msgstr ""
 #: client/battlescape/cl_hud.cpp:1334
 #, c-format
 msgid "Damaged %s (deterioration: %i)"
-msgstr ""
+msgstr "Uszkodzony %s (niesprawność: %i)"
 
 #: client/battlescape/cl_hud.cpp:1334
 #, c-format
 msgid "Wounded %s (bleeding: %i)"
-msgstr ""
+msgstr "Ranny %s (krwawienie: %i)"
 
 #: client/battlescape/cl_hud.cpp:1356
 msgid "Currently panics!\n"
@@ -28635,7 +28635,7 @@ msgstr "ALARM CZERWONY"
 
 #: client/cgame/campaign/cp_aircraft.cpp:421
 msgid "Nothing - should not be displayed"
-msgstr ""
+msgstr "Nic - nie mozna wyświetlić"
 
 #: client/cgame/campaign/cp_aircraft.cpp:423
 msgid "at home base"
@@ -29155,7 +29155,7 @@ msgstr "Ta baza nie ma działającego %s."
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:312
 msgid "Transfer equipment, vehicles, aliens and employees to other bases"
-msgstr ""
+msgstr "Transfer wyposażenia, pojazdów, Obcych i pracowników do innej bazy"
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:314
 msgid "Build at least a second base to transfer equipment or personnel"
@@ -29178,7 +29178,7 @@ msgstr "Nie można zniszczyć wejście do bazy!"
 msgid ""
 "You can't destroy this building! It is the only connection to other "
 "buildings!"
-msgstr ""
+msgstr "Nie możesz zniszczyć ten budynek! Stanowi jedyne połączenie z innymi!"
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:603
 msgid "Destroy Hangar"
@@ -29674,12 +29674,12 @@ msgstr "Ok"
 #: client/cgame/campaign/cp_hospital_callbacks.cpp:56
 #, c-format
 msgid "Damaged %s (damage: %i)"
-msgstr ""
+msgstr "Uszkodzony %s (uszkodzenia: %i)"
 
 #: client/cgame/campaign/cp_hospital_callbacks.cpp:57
 #, c-format
 msgid "Wounded %s (damage: %i)"
-msgstr ""
+msgstr "Ranny %s (uszkodzenia: %i)"
 
 #: client/cgame/campaign/cp_installation.cpp:155
 #, c-format
@@ -31467,7 +31467,7 @@ msgstr "%s:\t%i\n"
 #: client/cgame/campaign/cp_ufopedia.cpp:355
 #, c-format
 msgid "Required Hangar:\t%s\n"
-msgstr ""
+msgstr "Wymaga Hangaru:\t%s\n"
 
 #: client/cgame/campaign/cp_ufopedia.cpp:359
 #, c-format
@@ -31644,7 +31644,7 @@ msgstr "Baza '%s' jest atakowana! Jakie rozkazy?"
 
 #: client/cgame/campaign/missions/cp_mission_ufocarrier.cpp:62
 msgid "The Carrier UFO is in range. Should we launch the missiles?"
-msgstr ""
+msgstr "Krążownik UFO jest w zasięgu. Czy mamy wystrzelić pociski?"
 
 #: client/cgame/campaign/missions/cp_mission_ufocarrier.cpp:63
 msgid "Don't attack the UFO-Carrier"
@@ -32231,7 +32231,7 @@ msgstr "Nie można wykonać - to nie jest Twoja tura!"
 
 #: game/g_client.cpp:499
 msgid "Currently shaken, won't let their guard down."
-msgstr ""
+msgstr "Aktualnie wstrząśnięty, lecz zdolny do obrony."
 
 #: game/g_cmds.cpp:68
 #, c-format
