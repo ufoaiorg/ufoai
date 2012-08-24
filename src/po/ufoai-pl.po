@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
 "POT-Creation-Date: 2012-08-19 14:21+0200\n"
-"PO-Revision-Date: 2012-08-24 19:03+0100\n"
+"PO-Revision-Date: 2012-08-24 19:26+0100\n"
 "Last-Translator: Maciej Wierzbicki <voovoos@killfile.pl>\n"
 "Language-Team:  <radius75@interia.pl>\n"
 "Language: pl_PL\n"
@@ -23820,6 +23820,8 @@ msgid ""
 "Use [F1] key to quick save the game. Use [F2] key to quick load the game. "
 "Also, the game saves your state to the quick save before each mission."
 msgstr ""
+"Klawisz [F1] to szybki zapis gry. Klawisz [F2] to szybkie wczytanie gry. "
+"Ponadto gra zapisuje Twój postęp szybkim zapisem przed każdą misją."
 
 #: ../base/ufos/tips.ufo:6
 msgid ""
@@ -24620,9 +24622,8 @@ msgid "Alive:"
 msgstr "Żywych:"
 
 #: ../base/ufos/ui/aliencont.ufo:241 ../base/ufos/ui/aliencont.ufo:263
-#, fuzzy
 msgid "amount on this base (all)"
-msgstr "Nazwa tej bazy"
+msgstr "ilość w tej bazie (całkowita)"
 
 #: ../base/ufos/ui/aliencont.ufo:254
 msgid "Dead:"
@@ -24808,6 +24809,7 @@ msgstr "Zarządzaj pojmanymi Obcymi"
 #: client/cgame/campaign/cp_base_callbacks.cpp:337
 msgid "Treat wounded soldiers and perform implant surgery"
 msgstr ""
+"Zajmij się rannymi żołnierzami i przeprowadź zabieg chirurgii implantowej"
 
 #: ../base/ufos/ui/bases.ufo:181
 msgid "Base Summary"
@@ -25386,7 +25388,7 @@ msgstr "Czat"
 
 #: ../base/ufos/ui/hud_.ufo:613
 msgid "Party chat"
-msgstr "Czat rozgrywki"
+msgstr "Czat drużyny"
 
 #: ../base/ufos/ui/hud_.ufo:617
 msgid "Global lobby (IRC)"
@@ -25394,7 +25396,7 @@ msgstr "Globalny czat (IRC)"
 
 #: ../base/ufos/ui/hud_.ufo:698 ../base/ufos/ui/hud_.ufo:761
 msgid "Say:"
-msgstr "Powiedz:"
+msgstr "Mów:"
 
 #: ../base/ufos/ui/hud_.ufo:769
 msgid "Team chat"
@@ -26991,7 +26993,7 @@ msgstr "Ustawienia Rozgrywki"
 
 #: ../base/ufos/ui/options.ufo:1439
 msgid "Battlescape Camera Settings"
-msgstr ""
+msgstr "Ustawienia Kamery Taktycznej"
 
 #: ../base/ufos/ui/options.ufo:1449
 msgid "Scroll Speed:"
@@ -27035,7 +27037,7 @@ msgstr "Centruj widok:"
 
 #: ../base/ufos/ui/options.ufo:1554
 msgid "Battlescape Gameplay Settings"
-msgstr ""
+msgstr "Ustawienia Rozgrywki Taktycznej"
 
 #: ../base/ufos/ui/options.ufo:1564
 msgid "Select the Head-Up-Display for the battlescape."
