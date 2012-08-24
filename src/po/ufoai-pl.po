@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
 "POT-Creation-Date: 2012-08-19 14:21+0200\n"
-"PO-Revision-Date: 2012-08-24 12:29+0100\n"
+"PO-Revision-Date: 2012-08-24 14:03+0100\n"
 "Last-Translator: Maciej Wierzbicki <voovoos@killfile.pl>\n"
 "Language-Team:  <radius75@interia.pl>\n"
 "Language: pl_PL\n"
@@ -28164,7 +28164,7 @@ msgstr "B. Dobry"
 
 #: client/battlescape/cl_actor.cpp:117
 msgid "Highly Proficient"
-msgstr "Nieprzeciętny"
+msgstr "Świetny"
 
 #: client/battlescape/cl_actor.cpp:121
 msgid "Outstanding"
@@ -31831,6 +31831,10 @@ msgid ""
 "%i of %i team members survived, %i enemy kills, %i friendly fire kills.\n"
 "%i of %i civilians saved, %i enemy kills, %i friendly fire kills."
 msgstr ""
+"\n"
+"%i z %i wrogów zabito, %i ogłuszono, %i uratował się.\n"
+"%i z %i członków drużyny przeżyło, %i zabił wróg, %i ogień własny.\n"
+"%i z %i cywili uratowano, %i zabił wróg, %i ogień własny."
 
 #: client/cgame/skirmish/cl_game_skirmish.cpp:209
 msgid "Congratulations"
