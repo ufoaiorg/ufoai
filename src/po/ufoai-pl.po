@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
 "POT-Creation-Date: 2012-08-19 14:21+0200\n"
-"PO-Revision-Date: 2012-08-24 16:00+0100\n"
+"PO-Revision-Date: 2012-08-24 16:49+0100\n"
 "Last-Translator: Maciej Wierzbicki <voovoos@killfile.pl>\n"
 "Language-Team:  <radius75@interia.pl>\n"
 "Language: pl_PL\n"
@@ -23302,9 +23302,8 @@ msgid "Kracken"
 msgstr "Kracken"
 
 #: ../base/ufos/seq_credits.ufo:381
-#, fuzzy
 msgid "Tamas Fehervari (geever)"
-msgstr "Fehervari Tamas (geever)"
+msgstr "Tamas Fehervari (geever)"
 
 #: ../base/ufos/seq_credits.ufo:392
 msgid "Edgar Simo (bobbens)"
@@ -23986,6 +23985,8 @@ msgid ""
 "Press [esc] twice if you want to change the music track playing on the "
 "battlescape. This will fade-out one track and fade-in another."
 msgstr ""
+"Naciśnij [esc] dwukrotnie jeżeli chcesz zmienić utwór odgrywany w trakcie "
+"misji taktycznej. Wycisza się jeden a pogłaśnia kolejny utwór."
 
 #: ../base/ufos/tips.ufo:28
 msgid ""
@@ -24188,12 +24189,14 @@ msgstr ""
 
 #: ../base/ufos/tips.ufo:54
 msgid "To catch fast UFOs send interceptors in from several directions."
-msgstr ""
+msgstr "By szybko dopaść UFO wyślij myśliwce z kilku kierunków."
 
 #: ../base/ufos/tips.ufo:55
 msgid ""
 "To quickly buy or sell items, hover over the arrows and roll your mousewheel."
 msgstr ""
+"By szybko kupić lub sprzedać przedmioty ustaw kursor na strzałce i obróć "
+"kółko myszy."
 
 #: ../base/ufos/tips.ufo:56
 msgid ""
@@ -24302,9 +24305,8 @@ msgid "Daytime Version:"
 msgstr "Tryb pory dnia:"
 
 #: ../base/ufos/ui/_menu.ufo:295
-#, fuzzy
 msgid "Select whether you want to play at day- or nighttime."
-msgstr "Wybierz stronę, którą chcesz grać"
+msgstr "Wybierz czy chcesz zagrać w dzień lub w nocy."
 
 #: ../base/ufos/ui/_menu.ufo:302 client/cgame/campaign/cp_map.cpp:1325
 msgid "Night"
@@ -24602,9 +24604,8 @@ msgid "Start autopsy"
 msgstr "Rozpocznij sekcję zwłok"
 
 #: ../base/ufos/ui/aliencont.ufo:143
-#, fuzzy
 msgid "Live Alien Containment Info"
-msgstr "Moduł kwarantanny"
+msgstr "Dane Modułu Kwarantanny"
 
 #: ../base/ufos/ui/aliencont.ufo:156
 msgid "Base capacity:"
@@ -24629,7 +24630,7 @@ msgstr "Martwych:"
 
 #: ../base/ufos/ui/basedefence.ufo:10
 msgid "Equip Defence Weapons"
-msgstr ""
+msgstr "Wybierz Broń Defensywną"
 
 #: ../base/ufos/ui/basedefence.ufo:30
 #: ../base/ufos/ui/popup_installations.ufo:310
@@ -24817,6 +24818,8 @@ msgid ""
 "Information about this base (available storage space, production, research, "
 "etc.)"
 msgstr ""
+"Informacje o tej bazie (dostępne miejsce w magazynach, produkcja, badania, "
+"itd.)"
 
 #: ../base/ufos/ui/bases.ufo:242 ../base/ufos/ui/bases.ufo:249
 #: ../base/ufos/ui/hire.ufo:659
@@ -24925,7 +24928,7 @@ msgstr "Dziękujemy za skorzystanie z UFO:Alien Invasion"
 
 #: ../base/ufos/ui/campaign.ufo:771 ../base/ufos/ui/singleplayer.ufo:159
 msgid "Exit Campaign Confirmation"
-msgstr ""
+msgstr "Potwierdzenie Zakończenia Kampanii"
 
 #: ../base/ufos/ui/campaign.ufo:780 ../base/ufos/ui/singleplayer.ufo:168
 msgid "You will lose all your campaign progress."
@@ -24933,7 +24936,7 @@ msgstr "Utracisz cały postęp w kampanii."
 
 #: ../base/ufos/ui/campaign.ufo:786 ../base/ufos/ui/singleplayer.ufo:174
 msgid "Exit current campaign and return to main menu."
-msgstr ""
+msgstr "Wyjście z aktualnej kampanii i powrót do głównego menu."
 
 #: ../base/ufos/ui/campaign.ufo:787
 msgid "Quit anyway"
@@ -25019,9 +25022,8 @@ msgid "Next firemode"
 msgstr "Następny tryb użycia"
 
 #: ../base/ufos/ui/equipment.ufo:534 ../base/ufos/ui/team.ufo:608
-#, fuzzy
 msgid "Soldier Abilities"
-msgstr "Właściwości postaci"
+msgstr "Zdolności Żołnierza"
 
 #: ../base/ufos/ui/equipment.ufo:538 ../base/ufos/ui/team.ufo:612
 msgid "Object Info"
@@ -25152,7 +25154,7 @@ msgstr "Wykonaj misję automatycznie"
 
 #: ../base/ufos/ui/geoscape.ufo:795
 msgid "This kind of mission cannot be done automatically"
-msgstr ""
+msgstr "Ten rodzaj misji nie moze być zakończony automatycznie"
 
 #: ../base/ufos/ui/geoscape.ufo:816
 msgid "New installation"
@@ -25291,9 +25293,8 @@ msgid "Piloting:"
 msgstr "Multiteksturing:"
 
 #: ../base/ufos/ui/hire.ufo:480
-#, fuzzy
 msgid "Targeting:"
-msgstr "Komputerowy system namierzania"
+msgstr "Namierzenie:"
 
 #: ../base/ufos/ui/hire.ufo:489
 msgid "Evading:"
@@ -25692,9 +25693,8 @@ msgid "Chat Messages"
 msgstr "Wiadomości Czatu"
 
 #: ../base/ufos/ui/hud_mini.ufo:1957
-#, fuzzy
 msgid "Message Log"
-msgstr "Ustawienia komunikatów"
+msgstr "Rejestr Wiadomości"
 
 #: ../base/ufos/ui/hud_mini.ufo:1966
 msgid "Menu"
@@ -26451,18 +26451,16 @@ msgid "Show cursor tooltips in menus."
 msgstr "Włącz podpowiedzi kursora"
 
 #: ../base/ufos/ui/options.ufo:186
-#, fuzzy
 msgid "Tooltips (menu):"
-msgstr "Podpowiedzi:"
+msgstr "Podpowiedzi (menu):"
 
 #: ../base/ufos/ui/options.ufo:202
 msgid "Show cursor tooltips in tactical mode."
 msgstr ""
 
 #: ../base/ufos/ui/options.ufo:203
-#, fuzzy
 msgid "Tooltips (battlescape):"
-msgstr "Przechyl kamerę w górę"
+msgstr "Podpowiedzi (misja taktyczna):"
 
 #: ../base/ufos/ui/options.ufo:218
 msgid "Show 'Tip of the Day':"
@@ -26934,19 +26932,16 @@ msgid "Material System:"
 msgstr ""
 
 #: ../base/ufos/ui/options.ufo:1192
-#, fuzzy
 msgid "Switch to low video settings"
-msgstr "Przełącz na poprzednią bazę"
+msgstr "Przełącz na niską jakość grafiki"
 
 #: ../base/ufos/ui/options.ufo:1206
-#, fuzzy
 msgid "Switch to medium video settings"
-msgstr "Przełącz na poprzednią bazę"
+msgstr "Przełącz na średnią jakość grafiki"
 
 #: ../base/ufos/ui/options.ufo:1220
-#, fuzzy
 msgid "Switch to very high video settings"
-msgstr "Przełącz na broń w prawej ręce"
+msgstr "Przełącz na wysoką jakość grafiki"
 
 #: ../base/ufos/ui/options.ufo:1249
 msgid "Audio Settings"
@@ -26965,18 +26960,16 @@ msgid "Sound Effects:"
 msgstr "Efekty dźwiękowe:"
 
 #: ../base/ufos/ui/options.ufo:1348
-#, fuzzy
 msgid "Menu Sounds:"
-msgstr "Ranny"
+msgstr "Menu Dźwięku:"
 
 #: ../base/ufos/ui/options.ufo:1354
-#, fuzzy
 msgid "Turn the menu sounds on or off."
-msgstr "Włącza lub wyłącza ogień reakcyjny"
+msgstr "Załącza lub wyłącza dźwięk w menu."
 
 #: ../base/ufos/ui/options.ufo:1364
 msgid "Advanced Audio Options"
-msgstr ""
+msgstr "Zaawansowane Opcje Dźwięku"
 
 #: ../base/ufos/ui/options.ufo:1374
 msgid ""
@@ -26986,16 +26979,15 @@ msgstr ""
 
 #: ../base/ufos/ui/options.ufo:1375
 msgid "Audio Sample Rate:"
-msgstr ""
+msgstr "Próbkowanie Audio:"
 
 #: ../base/ufos/ui/options.ufo:1409
 msgid "Restart the sound-engine and apply your settings."
 msgstr "Uruchom ponownie system dźwięku aby zmienić ustawienia."
 
 #: ../base/ufos/ui/options.ufo:1432
-#, fuzzy
 msgid "Gameplay Settings"
-msgstr "Ustawienia ogólne"
+msgstr "Ustawienia Rozgrywki"
 
 #: ../base/ufos/ui/options.ufo:1439
 msgid "Battlescape Camera Settings"
@@ -27112,9 +27104,8 @@ msgid ""
 msgstr "Glob 3D lub 2D. Aktywacja tej opcji wymaga rozpoczęcia nowej kampanii."
 
 #: ../base/ufos/ui/options.ufo:1663
-#, fuzzy
 msgid "3D Geoscape:"
-msgstr "Widok 3D planety:"
+msgstr "Widok 3D globu:"
 
 #: ../base/ufos/ui/options.ufo:1678
 msgid "Show/Hide the panel decoration on the geoscape."
@@ -27355,9 +27346,8 @@ msgid "Decrease priority"
 msgstr "Zmniejsz priorytet"
 
 #: ../base/ufos/ui/production.ufo:512
-#, fuzzy
 msgid "Requirements"
-msgstr "Wymaga:"
+msgstr "Wymagania"
 
 #: ../base/ufos/ui/research.ufo:17
 #, fuzzy
