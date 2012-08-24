@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
 "POT-Creation-Date: 2012-08-19 14:21+0200\n"
-"PO-Revision-Date: 2012-08-24 23:20+0100\n"
+"PO-Revision-Date: 2012-08-24 23:43+0100\n"
 "Last-Translator: Maciej Wierzbicki <voovoos@killfile.pl>\n"
 "Language-Team:  <radius75@interia.pl>\n"
 "Language: pl_PL\n"
@@ -30268,9 +30268,9 @@ msgid "Nation changed happiness"
 msgstr "Kraj zmienił nastawienie"
 
 #: client/cgame/campaign/cp_nation.cpp:801
-#, fuzzy, c-format
+#, c-format
 msgid "Gained %i %s, %i %s, %i %s, %i %s, and %i %s from nation %s (%s)"
-msgstr "Uzyskano %i %s, %i %s, %i %s, oraz %i %s od kraju %s (%s)"
+msgstr "Otrzymano %i %s, %i %s, %i %s, %i %s, oraz %i %s od kraju %s (%s)"
 
 #: client/cgame/campaign/cp_nation.cpp:802
 msgid "credit"
@@ -30280,9 +30280,9 @@ msgstr[1] "kredytów"
 msgstr[2] "kredyty"
 
 #: client/cgame/campaign/cp_nation.cpp:825
-#, fuzzy, c-format
+#, c-format
 msgid "Paid %i credits to: %s"
-msgstr "Zapłacono %i kredytów za medyków"
+msgstr "Wypłacono %i kredytów dla: %s"
 
 #: client/cgame/campaign/cp_nation.cpp:838
 #, c-format
