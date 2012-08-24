@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
 "POT-Creation-Date: 2012-08-19 14:21+0200\n"
-"PO-Revision-Date: 2012-08-24 11:02+0100\n"
+"PO-Revision-Date: 2012-08-24 11:52+0100\n"
 "Last-Translator: Maciej Wierzbicki <voovoos@killfile.pl>\n"
 "Language-Team:  <radius75@interia.pl>\n"
 "Language: pl_PL\n"
@@ -25256,7 +25256,7 @@ msgstr "3D"
 
 #: ../base/ufos/ui/hire.ufo:60
 msgid "Employee is away"
-msgstr "Pracownika nie ma w bazie"
+msgstr "Tej osoby nie ma w bazie"
 
 #: ../base/ufos/ui/hire.ufo:72
 msgid "Unhire - Right click to remove"
@@ -25268,7 +25268,7 @@ msgstr "Najmij - PPM aby usunąć"
 
 #: ../base/ufos/ui/hire.ufo:255
 msgid "Rename employee"
-msgstr "Przemianuj imię pracownika"
+msgstr "Zmień imię tej osoby"
 
 #: ../base/ufos/ui/hire.ufo:440
 #, fuzzy
@@ -25976,9 +25976,8 @@ msgid "Store"
 msgstr "Magazyn"
 
 #: ../base/ufos/ui/market.ufo:182
-#, fuzzy
 msgid "Number of such items in base"
-msgstr "Nazwa tej bazy"
+msgstr "Ilość tych przedmoitów w bazie"
 
 #: ../base/ufos/ui/market.ufo:189
 msgid "Market"
@@ -28141,35 +28140,35 @@ msgstr "Moduł Działka Automatycznego"
 
 #: client/battlescape/cl_actor.cpp:105
 msgid "Poor"
-msgstr "Kiepsko"
+msgstr "Kiepski"
 
 #: client/battlescape/cl_actor.cpp:107
 msgid "Mediocre"
-msgstr "Słabo"
+msgstr "Słaby"
 
 #: client/battlescape/cl_actor.cpp:109
 msgid "Average"
-msgstr "Średnio"
+msgstr "Średni"
 
 #: client/battlescape/cl_actor.cpp:111
 msgid "Competent"
-msgstr "Zadowalająco"
+msgstr "Niezły"
 
 #: client/battlescape/cl_actor.cpp:113
 msgid "Proficient"
-msgstr "Dobrze"
+msgstr "Dobry"
 
 #: client/battlescape/cl_actor.cpp:115
 msgid "Very Good"
-msgstr "Bardzo dobrze"
+msgstr "B. Dobry"
 
 #: client/battlescape/cl_actor.cpp:117
 msgid "Highly Proficient"
-msgstr "Ponadprzeciętnie"
+msgstr "Nieprzeciętny"
 
 #: client/battlescape/cl_actor.cpp:121
 msgid "Outstanding"
-msgstr "Rewelacyjnie"
+msgstr "Rewelacyjny"
 
 #: client/battlescape/cl_actor.cpp:123
 #, fuzzy
@@ -30913,11 +30912,11 @@ msgstr "%i z %i"
 
 #: client/cgame/campaign/cp_team_callbacks.cpp:205
 msgid "No more employee can be assigned to this aircraft"
-msgstr "Nie możesz przypisać większej liczby personelu do tego statku"
+msgstr "Nie możesz przypisać większej liczby osób do tego statku"
 
 #: client/cgame/campaign/cp_team_callbacks.cpp:216
 msgid "Employee is assigned to another aircraft"
-msgstr "Osoba jest przydzielony do innego statku"
+msgstr "Osoba jest przydzielona do innego statku"
 
 #: client/cgame/campaign/cp_team_callbacks.cpp:286
 msgid "Employee is away from base"
@@ -30925,7 +30924,7 @@ msgstr "Osoba jest poza bazą"
 
 #: client/cgame/campaign/cp_team_callbacks.cpp:288
 msgid "No more employee can be assigned to this team"
-msgstr "Nie możesz przypisać większej liczby personelu do tej drużyny"
+msgstr "Nie możesz przypisać większej liczby osób do tej drużyny"
 
 #: client/cgame/campaign/cp_time.cpp:40
 msgid "stopped"
@@ -32089,11 +32088,11 @@ msgstr "Prawy przycisk myszy (menu)"
 
 #: client/input/cl_input.cpp:1038
 msgid "Mouse wheel up"
-msgstr "Kółko myszki w górę"
+msgstr "Przybliż widok"
 
 #: client/input/cl_input.cpp:1039
 msgid "Mouse wheel down"
-msgstr "Kółko myszki w dół"
+msgstr "Oddal widok"
 
 #: client/input/cl_input.cpp:1040
 msgid "Select objects/Walk to a square/In fire mode, fire etc"
