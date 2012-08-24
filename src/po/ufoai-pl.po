@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
 "POT-Creation-Date: 2012-08-19 14:21+0200\n"
-"PO-Revision-Date: 2012-08-24 10:19+0100\n"
+"PO-Revision-Date: 2012-08-24 10:52+0100\n"
 "Last-Translator: Maciej Wierzbicki <voovoos@killfile.pl>\n"
 "Language-Team:  <radius75@interia.pl>\n"
 "Language: pl_PL\n"
@@ -23117,7 +23117,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:5385
 msgid "A New Twist"
-msgstr ""
+msgstr "Nowy Kierunek"
 
 #: ../base/ufos/research.ufo:5416
 msgid "The Enemy On Earth"
@@ -24334,9 +24334,8 @@ msgid "Team:"
 msgstr "Drużyna:"
 
 #: ../base/ufos/ui/_menu.ufo:567 ../base/ufos/ui/skirmish.ufo:425
-#, fuzzy
 msgid "Select which side you want to play with."
-msgstr "Wybierz stronę, którą chcesz grać"
+msgstr "Wybierz stronę, którą chcesz zagrać."
 
 #: ../base/ufos/ui/_menu.ufo:588
 msgid "Keyinfo and General Help"
@@ -24666,7 +24665,7 @@ msgstr "Usuń broń z zaznaczonego slotu"
 
 #: ../base/ufos/ui/basedefence.ufo:190
 msgid "Stores"
-msgstr ""
+msgstr "Magazyny"
 
 #: ../base/ufos/ui/basedefence.ufo:243
 msgid "Selected Item"
@@ -24762,7 +24761,7 @@ msgstr "Przesyłka"
 
 #: ../base/ufos/ui/bases.ufo:140
 msgid "Transfer equipment, aircraft, UGV, aliens and employees to other bases"
-msgstr ""
+msgstr "Transfer wyposażenia, statków, BPN, Obcych i personelu do innej bazy"
 
 #: ../base/ufos/ui/bases.ufo:146
 msgid "Research"
@@ -25256,9 +25255,8 @@ msgid "3D"
 msgstr "3D"
 
 #: ../base/ufos/ui/hire.ufo:60
-#, fuzzy
 msgid "Employee is away"
-msgstr "Personel"
+msgstr "Pracownika nie ma w bazie"
 
 #: ../base/ufos/ui/hire.ufo:72
 msgid "Unhire - Right click to remove"
@@ -25269,9 +25267,8 @@ msgid "Hire - Right click to remove"
 msgstr "Najmij - PPM aby usunąć"
 
 #: ../base/ufos/ui/hire.ufo:255
-#, fuzzy
 msgid "Rename employee"
-msgstr "Zmień nazwisko pracownika"
+msgstr "Przemianuj imię pracownika"
 
 #: ../base/ufos/ui/hire.ufo:440
 #, fuzzy
@@ -25342,7 +25339,7 @@ msgstr "Nie wprowadzony"
 
 #: ../base/ufos/ui/hud_.ufo:28
 msgid "Wheel:Select Next/Prev"
-msgstr ""
+msgstr "Kółko Myszy:Wybór Następny/Poprzedni"
 
 #: ../base/ufos/ui/hud_.ufo:75 ../base/ufos/ui/hud_alt.ufo:1163
 #: ../base/ufos/ui/hud_mini.ufo:1300 ../base/ufos/ui/physdat.ufo:293
@@ -25521,7 +25518,7 @@ msgstr "HUD Oryginalny"
 
 #: ../base/ufos/ui/hud_genradar.ufo:53
 msgid "Reinit"
-msgstr ""
+msgstr "Reaktywuj"
 
 #: ../base/ufos/ui/hud_genradar.ufo:68
 msgid "Preview"
@@ -25813,7 +25810,7 @@ msgstr "Sprzedaj UFO"
 
 #: ../base/ufos/ui/lostwon.ufo:234
 msgid "Capacity (free/all)"
-msgstr ""
+msgstr "Pojemność (wolne/wszystkie)"
 
 #: ../base/ufos/ui/lostwon.ufo:297
 msgid "Recover"
@@ -25985,11 +25982,11 @@ msgstr "Nazwa tej bazy"
 
 #: ../base/ufos/ui/market.ufo:189
 msgid "Market"
-msgstr ""
+msgstr "Sklep"
 
 #: ../base/ufos/ui/market.ufo:190
 msgid "Number of such items on the market"
-msgstr ""
+msgstr "Ilość tych przedmiotów w sklepie"
 
 #: ../base/ufos/ui/market.ufo:197
 msgid "Price"
@@ -26206,7 +26203,7 @@ msgstr "Grają"
 
 #: ../base/ufos/ui/multiplayer.ufo:307
 msgid "Invalid"
-msgstr ""
+msgstr "Niewłaściwy"
 
 #: ../base/ufos/ui/multiplayer.ufo:319
 msgid "Serverfilter:"
@@ -26565,11 +26562,11 @@ msgstr "Ustawienia dla 'Screenshot'"
 
 #: ../base/ufos/ui/options.ufo:488
 msgid "The file format used for compressing and saving your screenshots."
-msgstr ""
+msgstr "Format pliku użyty do kompresji i zapisu Twojego 'screenshot'."
 
 #: ../base/ufos/ui/options.ufo:489
 msgid "Screenshot Format:"
-msgstr ""
+msgstr "Format dla 'Screenshot':"
 
 #: ../base/ufos/ui/options.ufo:536
 msgid "jpeg Quality:"
@@ -26593,7 +26590,7 @@ msgstr "Nie odtwarzaj intro przy starcie gry."
 
 #: ../base/ufos/ui/options.ufo:586
 msgid "Hold Back Intro Video:"
-msgstr ""
+msgstr "Wstrzymaj Intro Video:"
 
 #: ../base/ufos/ui/options.ufo:592
 msgid "Default is to play the intro video just once at the first game start."
@@ -29155,7 +29152,7 @@ msgstr "Ta baza nie ma działającego %s."
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:312
 msgid "Transfer equipment, vehicles, aliens and employees to other bases"
-msgstr "Transfer wyposażenia, pojazdów, Obcych i pracowników do innej bazy"
+msgstr "Transfer wyposażenia, pojazdów, Obcych i personelu do innej bazy"
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:314
 msgid "Build at least a second base to transfer equipment or personnel"
@@ -29223,7 +29220,7 @@ msgid ""
 "If you destroy this Quarters, every employee inside will be killed.\n"
 "Are you sure you want to destroy this building?"
 msgstr ""
-"Jeśli zniszczysz te Kwatery, przebywający w nich pracownicy zginą.\n"
+"Jeśli zniszczysz te Kwatery, przebywający w nich personel zginie.\n"
 "Czy na pewno chcesz zniszczyć ten moduł?"
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:614
@@ -29567,11 +29564,11 @@ msgstr ""
 #: client/cgame/campaign/cp_employee_callbacks.cpp:277
 #: client/cgame/campaign/cp_employee_callbacks.cpp:331
 msgid "Could not fire employee"
-msgstr "Nie można zwolnić"
+msgstr "Nie można zwolnić tej osoby"
 
 #: client/cgame/campaign/cp_employee_callbacks.cpp:338
 msgid "Could not hire employee"
-msgstr "Nie można zatrudnić"
+msgstr "Nie można zatrudnić tej osoby"
 
 #: client/cgame/campaign/cp_event.cpp:472
 #: client/cgame/campaign/cp_messages.cpp:262
@@ -30862,7 +30859,7 @@ msgstr "%s\t%i\n"
 #: client/cgame/campaign/cp_statistics.cpp:104
 #, c-format
 msgid "Employees:\t%i c\n"
-msgstr "Pracownicy:\t%i c\n"
+msgstr "Personel:\t%i c\n"
 
 #: client/cgame/campaign/cp_statistics.cpp:113
 #, c-format
@@ -30915,24 +30912,20 @@ msgid "%i of %i"
 msgstr "%i z %i"
 
 #: client/cgame/campaign/cp_team_callbacks.cpp:205
-#, fuzzy
 msgid "No more employee can be assigned to this aircraft"
-msgstr "Nie możesz przypisać większej liczby żołnierzy do tego statku"
+msgstr "Nie możesz przypisać większej liczby personelu do tego statku"
 
 #: client/cgame/campaign/cp_team_callbacks.cpp:216
-#, fuzzy
 msgid "Employee is assigned to another aircraft"
-msgstr "Pilot jest przydzielony do innego statku"
+msgstr "Osoba jest przydzielony do innego statku"
 
 #: client/cgame/campaign/cp_team_callbacks.cpp:286
-#, fuzzy
 msgid "Employee is away from base"
-msgstr "Personel"
+msgstr "Osoba jest poza bazą"
 
 #: client/cgame/campaign/cp_team_callbacks.cpp:288
-#, fuzzy
 msgid "No more employee can be assigned to this team"
-msgstr "Nie możesz przypisać większej liczby żołnierzy do tego statku"
+msgstr "Nie możesz przypisać większej liczby personelu do tej drużyny"
 
 #: client/cgame/campaign/cp_time.cpp:40
 msgid "stopped"
@@ -31318,9 +31311,8 @@ msgid "No power supplies in this base.\n"
 msgstr "Brak zasilania w tej bazie.\n"
 
 #: client/cgame/campaign/cp_transfer_callbacks.cpp:1534
-#, fuzzy
 msgid "Employee"
-msgstr "Personel"
+msgstr "Pracownik"
 
 #: client/cgame/campaign/cp_transfer_callbacks.cpp:1555
 msgid "alive"
@@ -31629,8 +31621,8 @@ msgid ""
 "Your base: %s has been destroyed! All employees killed and all equipment "
 "destroyed."
 msgstr ""
-"Baza %s została zniszczona! Giną wszyscy pracownicy; zawartość magazynów "
-"jest stracona."
+"Baza %s została zniszczona! Ginie cały personel; zawartość magazynów jest "
+"stracona."
 
 #: client/cgame/campaign/missions/cp_mission_baseattack.cpp:164
 #, c-format
@@ -31693,11 +31685,9 @@ msgid "Enemies killed:\t%i"
 msgstr "Zabitych wrogów\t%i"
 
 #: client/cgame/multiplayer/cl_game_multiplayer.cpp:225
-#, fuzzy, c-format
+#, c-format
 msgid "Team survivors:\t%i"
-msgstr ""
-"Członków drużyny, którzy przetrwali\t%i\n"
-"\n"
+msgstr "W drużynie przetrwali:\t%i"
 
 #: client/cgame/multiplayer/cl_game_multiplayer.cpp:255
 msgid "all"
