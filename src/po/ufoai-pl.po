@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
 "POT-Creation-Date: 2012-08-19 14:21+0200\n"
-"PO-Revision-Date: 2012-08-24 17:25+0100\n"
+"PO-Revision-Date: 2012-08-24 19:03+0100\n"
 "Last-Translator: Maciej Wierzbicki <voovoos@killfile.pl>\n"
 "Language-Team:  <radius75@interia.pl>\n"
 "Language: pl_PL\n"
@@ -24728,7 +24728,7 @@ msgstr "Zamknij"
 
 #: ../base/ufos/ui/bases.ufo:90
 msgid "Back to geoscape"
-msgstr "Wróć do widoku planety"
+msgstr "Wróć do widoku globu"
 
 #: ../base/ufos/ui/bases.ufo:118
 msgid "Buildings"
@@ -28858,7 +28858,7 @@ msgid "Armour:\t%i of 1\n"
 msgstr "Pancerz:\t%i z 1\n"
 
 #: client/cgame/campaign/cp_aircraft_callbacks.cpp:220
-#, fuzzy, c-format
+#, c-format
 msgid "Electronics:\t%i of %i"
 msgstr "Elektronika:\t%i z %i"
 
@@ -29004,7 +29004,7 @@ msgstr[2] "%i dni do ukończenia\n"
 #: client/cgame/campaign/cp_ufopedia.cpp:232
 #, c-format
 msgid "Running costs:\t%i c\n"
-msgstr "Koszta użytkowania:\t%i c\n"
+msgstr "Opłaty:\t%i c\n"
 
 #: client/cgame/campaign/cp_base.cpp:1467
 #: client/cgame/campaign/cp_ufopedia.cpp:229
@@ -31815,8 +31815,8 @@ msgid ""
 "%i of %i civilians saved, %i enemy kills, %i friendly fire kills."
 msgstr ""
 "\n"
-"%i z %i wrogów zabito, %i ogłuszono, %i przy życiu.\n"
-"%i z %i członków drużyny przeżyło, %i zabił wróg, %i ogień własny.\n"
+"%i z %i wrogów zabito, %i ogłuszono, %i uratowało się.\n"
+"%i z %i członków drużyny żyje, %i zabił wróg, %i ogień własny.\n"
 "%i z %i cywili uratowano, %i zabił wróg, %i ogień własny."
 
 #: client/cgame/skirmish/cl_game_skirmish.cpp:209
