@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
 "POT-Creation-Date: 2012-08-19 14:21+0200\n"
-"PO-Revision-Date: 2012-08-24 19:26+0100\n"
+"PO-Revision-Date: 2012-08-24 20:57+0100\n"
 "Last-Translator: Maciej Wierzbicki <voovoos@killfile.pl>\n"
 "Language-Team:  <radius75@interia.pl>\n"
 "Language: pl_PL\n"
@@ -3093,21 +3093,19 @@ msgstr "Moneta"
 
 #: ../base/ufos/medals.ufo:30 ../base/ufos/team_humans.ufo:654
 #: client/cgame/campaign/cp_employee.cpp:202
-#, fuzzy
 msgid "Scientist"
 msgid_plural "Scientists"
 msgstr[0] "Naukowiec"
-msgstr[1] "Naukowiec"
-msgstr[2] "Naukowiec"
+msgstr[1] "Naukowców"
+msgstr[2] "Naukowców"
 
 #: ../base/ufos/medals.ufo:39 ../base/ufos/team_humans.ufo:1242
 #: client/cgame/campaign/cp_employee.cpp:206
-#, fuzzy
 msgid "Pilot"
 msgid_plural "Pilots"
 msgstr[0] "Pilot"
-msgstr[1] "Pilot"
-msgstr[2] "Pilot"
+msgstr[1] "Pilotów"
+msgstr[2] "Pilotów"
 
 #: ../base/ufos/medals.ufo:48 ../base/ufos/team_humans.ufo:2083
 #: ../base/ufos/team_humans.ufo:2148 client/cgame/campaign/cp_employee.cpp:208
@@ -3119,12 +3117,11 @@ msgstr[2] "BPN"
 
 #: ../base/ufos/medals.ufo:57 ../base/ufos/team_humans.ufo:1662
 #: client/cgame/campaign/cp_employee.cpp:204
-#, fuzzy
 msgid "Worker"
 msgid_plural "Workers"
 msgstr[0] "Technik"
-msgstr[1] "Technik"
-msgstr[2] "Technik"
+msgstr[1] "Techników"
+msgstr[2] "Techników"
 
 #: ../base/ufos/medals.ufo:66
 msgid "Rifleman"
@@ -24585,7 +24582,7 @@ msgstr "Czołgi"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:391
 msgid "Assign soldiers"
-msgstr "Żołnierze"
+msgstr "Przydział żołnierzy"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:419
 msgid "No soldiers assigned"
@@ -28885,9 +28882,8 @@ msgid "UFO interception successful -- UFO lost to sea."
 msgstr "UFO zestrzelone, wrak ginie w morzu."
 
 #: client/cgame/campaign/cp_airfight.cpp:529
-#, fuzzy
 msgid "Pilot ejected from craft"
-msgstr "Pilot w statku powietrznym"
+msgstr "Pilot katapultował się"
 
 #: client/cgame/campaign/cp_airfight.cpp:531
 msgid "Pilot killed in action"
@@ -29465,7 +29461,7 @@ msgid "Human"
 msgstr "Ludzie"
 
 #: client/cgame/campaign/cp_cgame_callbacks.cpp:142
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s\n"
 "\n"
@@ -29480,11 +29476,11 @@ msgstr ""
 "%s\n"
 "\n"
 "Rasa: %s\n"
-"Rekruci: %i %s, %i %s, %i %s\n"
+"Załoga: %i %s, %i %s, %i %s, %i %s\n"
 "Kredyty: %ic\n"
-"Poziom trudności: %s\n"
+"Poziom: %s\n"
 "Min. zadowolenie krajów: %i %%\n"
-"Dopuszczalny dług: %ic\n"
+"Maks. dopuszczalny debet: %ic\n"
 "%s\n"
 
 #: client/cgame/campaign/cp_cgame_callbacks.cpp:147
@@ -29513,12 +29509,11 @@ msgstr[2] "techników"
 
 #: client/cgame/campaign/cp_cgame_callbacks.cpp:150
 #: client/cgame/campaign/cp_nation.cpp:805
-#, fuzzy
 msgid "pilot"
 msgid_plural "pilots"
-msgstr[0] "Pilot"
-msgstr[1] "Pilot"
-msgstr[2] "Pilot"
+msgstr[0] "pilot"
+msgstr[1] "pilotów"
+msgstr[2] "pilotów"
 
 #: client/cgame/campaign/cp_cgame_callbacks.cpp:411
 #, c-format
@@ -29526,12 +29521,11 @@ msgid "Rank: %s"
 msgstr "Stopień: %s"
 
 #: client/cgame/campaign/cp_employee.cpp:200
-#, fuzzy
 msgid "Soldier"
 msgid_plural "Soldiers"
 msgstr[0] "Żołnierz"
-msgstr[1] "Żołnierz"
-msgstr[2] "Żołnierz"
+msgstr[1] "Żołnierzy"
+msgstr[2] "Żołnierzy"
 
 #: client/cgame/campaign/cp_employee.cpp:410
 msgid "Not enough quarters"
