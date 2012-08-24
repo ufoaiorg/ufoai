@@ -29487,7 +29487,7 @@ msgstr ""
 #: client/cgame/campaign/cp_nation.cpp:804
 msgid "soldier"
 msgid_plural "soldiers"
-msgstr[0] "żołnierza"
+msgstr[0] "żołnierz"
 msgstr[1] "żołnierzy"
 msgstr[2] "żołnierzy"
 
@@ -29495,7 +29495,7 @@ msgstr[2] "żołnierzy"
 #: client/cgame/campaign/cp_nation.cpp:803
 msgid "scientist"
 msgid_plural "scientists"
-msgstr[0] "naukowca"
+msgstr[0] "naukowiec"
 msgstr[1] "naukowców"
 msgstr[2] "naukowców"
 
@@ -29503,7 +29503,7 @@ msgstr[2] "naukowców"
 #: client/cgame/campaign/cp_nation.cpp:806
 msgid "worker"
 msgid_plural "workers"
-msgstr[0] "technika"
+msgstr[0] "technik"
 msgstr[1] "techników"
 msgstr[2] "techników"
 
