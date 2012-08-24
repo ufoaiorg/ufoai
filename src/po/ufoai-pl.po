@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
 "POT-Creation-Date: 2012-08-19 14:21+0200\n"
-"PO-Revision-Date: 2012-08-24 14:03+0100\n"
+"PO-Revision-Date: 2012-08-24 16:00+0100\n"
 "Last-Translator: Maciej Wierzbicki <voovoos@killfile.pl>\n"
 "Language-Team:  <radius75@interia.pl>\n"
 "Language: pl_PL\n"
@@ -23956,6 +23956,8 @@ msgid ""
 "Building a workshop and off-base installations UFO yards allows you to "
 "disassemble UFOs."
 msgstr ""
+"Budowa warsztatów i zewnętrznej instalacji Hangar, umożliwia Ci demontaż "
+"UFO. "
 
 #: ../base/ufos/tips.ufo:24
 msgid ""
@@ -23977,7 +23979,7 @@ msgstr ""
 
 #: ../base/ufos/tips.ufo:26
 msgid "Press [e] to end your turn on the battlescape."
-msgstr ""
+msgstr "Klawisz [e] zakańcza Twoją turę w trybie taktycznym."
 
 #: ../base/ufos/tips.ufo:27
 msgid ""
@@ -25190,7 +25192,7 @@ msgstr "Zarządzaj instalacją"
 
 #: ../base/ufos/ui/geoscape.ufo:1072
 msgid "Anti-UFO defence"
-msgstr ""
+msgstr "Obrona Anty-UFO"
 
 #: ../base/ufos/ui/geoscape.ufo:1085
 msgid "Aircraft interception"
@@ -25610,7 +25612,7 @@ msgstr ""
 
 #: ../base/ufos/ui/hud_mini.ufo:679
 msgid "Wheel:Select Next/Previous"
-msgstr ""
+msgstr "Kółko Myszy:Wybór Następny/Poprzedni"
 
 #: ../base/ufos/ui/hud_mini.ufo:1118
 msgid ""
@@ -26545,7 +26547,7 @@ msgstr "Tu możesz kalibrować wyświetlacz."
 
 #: ../base/ufos/ui/options.ufo:444
 msgid "Monitor Calibration Controls"
-msgstr ""
+msgstr "Narzędzia Kalibracji Monitora"
 
 #: ../base/ufos/ui/options.ufo:454
 msgid "Gamma:"
@@ -26741,7 +26743,7 @@ msgstr "Automatyczna sprzedaż wyłączona."
 
 #: ../base/ufos/ui/options.ufo:804
 msgid "Low quality"
-msgstr ""
+msgstr "Niska jakość"
 
 #: ../base/ufos/ui/options.ufo:809
 msgid "Medium quality"
@@ -26749,7 +26751,7 @@ msgstr "Średnia jakość"
 
 #: ../base/ufos/ui/options.ufo:814
 msgid "High quality"
-msgstr ""
+msgstr "Wysoka jakość"
 
 #: ../base/ufos/ui/options.ufo:837
 msgid ""
@@ -26913,7 +26915,7 @@ msgstr "Mgła:"
 
 #: ../base/ufos/ui/options.ufo:1162
 msgid "Weather effects like rain or snow."
-msgstr ""
+msgstr "Efekty pogodowe jak deszcz lub śnieg."
 
 #: ../base/ufos/ui/options.ufo:1163
 msgid "Weather Effects:"
@@ -26980,6 +26982,7 @@ msgstr ""
 msgid ""
 "The sample rate frequency in kHz. Use higher values for better sound quality."
 msgstr ""
+"Częstotliwość próbkowania w kHz. Wyskoka wartość to lepsza jakość dźwięku."
 
 #: ../base/ufos/ui/options.ufo:1375
 msgid "Audio Sample Rate:"
@@ -27106,7 +27109,7 @@ msgstr "Opcje Widoku Globu"
 msgid ""
 "3D or 2D geoscape. To enable this option you have to start a new campaign "
 "first."
-msgstr ""
+msgstr "Glob 3D lub 2D. Aktywacja tej opcji wymaga rozpoczęcia nowej kampanii."
 
 #: ../base/ufos/ui/options.ufo:1663
 #, fuzzy
@@ -31832,7 +31835,7 @@ msgid ""
 "%i of %i civilians saved, %i enemy kills, %i friendly fire kills."
 msgstr ""
 "\n"
-"%i z %i wrogów zabito, %i ogłuszono, %i uratował się.\n"
+"%i z %i wrogów zabito, %i ogłuszono, %i przy życiu.\n"
 "%i z %i członków drużyny przeżyło, %i zabił wróg, %i ogień własny.\n"
 "%i z %i cywili uratowano, %i zabił wróg, %i ogień własny."
 
