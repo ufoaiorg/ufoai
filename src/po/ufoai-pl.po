@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
 "POT-Creation-Date: 2012-08-19 14:21+0200\n"
-"PO-Revision-Date: 2012-08-24 11:52+0100\n"
+"PO-Revision-Date: 2012-08-24 12:29+0100\n"
 "Last-Translator: Maciej Wierzbicki <voovoos@killfile.pl>\n"
 "Language-Team:  <radius75@interia.pl>\n"
 "Language: pl_PL\n"
@@ -26581,19 +26581,19 @@ msgstr "Pokazuj FPS:"
 
 #: ../base/ufos/ui/options.ufo:574
 msgid "Display the number of rendered frames per second."
-msgstr ""
+msgstr "Wyświetlaj ilość klatek generowanych na sekundę."
 
 #: ../base/ufos/ui/options.ufo:585
 msgid "Do not play the intro movie when starting the game."
-msgstr "Nie odtwarzaj intro przy starcie gry."
+msgstr "Nie odtwarzaj Intro przy starcie gry."
 
 #: ../base/ufos/ui/options.ufo:586
 msgid "Hold Back Intro Video:"
-msgstr "Wstrzymaj Intro Video:"
+msgstr "Pomiń Intro:"
 
 #: ../base/ufos/ui/options.ufo:592
 msgid "Default is to play the intro video just once at the first game start."
-msgstr ""
+msgstr "Standardowo odtwarza Intro tylko przy pierwszym uruchomieniu gry."
 
 #: ../base/ufos/ui/options.ufo:616
 msgid "Texture Settings"
