@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
 "POT-Creation-Date: 2012-08-19 14:21+0200\n"
-"PO-Revision-Date: 2012-08-24 09:50+0100\n"
+"PO-Revision-Date: 2012-08-24 10:19+0100\n"
 "Last-Translator: Maciej Wierzbicki <voovoos@killfile.pl>\n"
 "Language-Team:  <radius75@interia.pl>\n"
 "Language: pl_PL\n"
@@ -26264,39 +26264,39 @@ msgstr "Zabitych wrogów:"
 
 #: ../base/ufos/ui/multiplayer.ufo:734
 msgid "Max. clients:"
-msgstr "Max. klientów:"
+msgstr "Maks. klientów:"
 
 #: ../base/ufos/ui/multiplayer.ufo:735
 msgid "Sets the max allowed clients to connect"
-msgstr "Ustawia max. liczbę klientów, którzy mogą się połączyć"
+msgstr "Ustawia maks. liczbę klientów, którzy mogą się połączyć"
 
 #: ../base/ufos/ui/multiplayer.ufo:760
 msgid "Max. soldiers per team:"
-msgstr "Max. liczba żołnierzy w drużynie:"
+msgstr "Maks. liczba żołnierzy na drużynę:"
 
 #: ../base/ufos/ui/multiplayer.ufo:761
 msgid "Sets the max allowed soldiers per team"
-msgstr "Ustawia max. liczbę żołnierzy w drużynie"
+msgstr "Ustawia maks. liczbę żołnierzy na drużynę"
 
 #: ../base/ufos/ui/multiplayer.ufo:786
 msgid "Max. soldiers per player:"
-msgstr "Max. liczba żołnierzy gracza:"
+msgstr "Maks. liczba żołnierzy gracza:"
 
 #: ../base/ufos/ui/multiplayer.ufo:787
 msgid "Sets the max allowed soldiers per player when in teamplay"
-msgstr "Ustawia max. liczbę żołnierzy gracza, gdy gra drużynowa"
+msgstr "Ustawia maks. liczbę żołnierzy gracza, gdy gra drużynowa"
 
 #: ../base/ufos/ui/multiplayer.ufo:813
 msgid "Max. human players per team:"
-msgstr "Max. liczba graczy na drużynę:"
+msgstr "Maks. liczba graczy-ludzi na drużynę:"
 
 #: ../base/ufos/ui/multiplayer.ufo:838 ../base/ufos/ui/skirmish.ufo:331
 msgid "Max. AI actors:"
-msgstr "Max. liczba postaci AI:"
+msgstr "Maks. liczba postaci AI:"
 
 #: ../base/ufos/ui/multiplayer.ufo:839
 msgid "Max AI actors for teamplay mode"
-msgstr "Max. liczba postaci AI w grze drużynowej"
+msgstr "Maks. liczba postaci AI w grze drużynowej"
 
 #: ../base/ufos/ui/multiplayer.ufo:865
 msgid "Round time limit in seconds:"
@@ -26913,7 +26913,7 @@ msgstr ""
 
 #: ../base/ufos/ui/options.ufo:1147
 msgid "Fog:"
-msgstr ""
+msgstr "Mgła:"
 
 #: ../base/ufos/ui/options.ufo:1162
 msgid "Weather effects like rain or snow."
@@ -27104,7 +27104,7 @@ msgstr ""
 
 #: ../base/ufos/ui/options.ufo:1652
 msgid "Geoscape Options"
-msgstr "Opcje widoku planety"
+msgstr "Opcje Widoku Globu"
 
 #: ../base/ufos/ui/options.ufo:1662
 msgid ""
@@ -27128,15 +27128,15 @@ msgstr "Rezerwuj na strzał"
 
 #: ../base/ufos/ui/options.ufo:1694
 msgid "The minimum/maximum zoom of the geoscape camera"
-msgstr ""
+msgstr "Minimalna/maksymalna odległość kamery w widoku globu"
 
 #: ../base/ufos/ui/options.ufo:1695
 msgid "Min/Max Geo-Cam Zoom:"
-msgstr ""
+msgstr "Min/Maks odległość Glob-Kam:"
 
 #: ../base/ufos/ui/options.ufo:1702
 msgid "Minimum zoom level of the geoscape camera"
-msgstr ""
+msgstr "Minimalna odległość ustawienia kamery w widoku globu."
 
 #: ../base/ufos/ui/options.ufo:1736
 msgid "1.00"
@@ -27144,7 +27144,7 @@ msgstr "1.00"
 
 #: ../base/ufos/ui/options.ufo:1743
 msgid "Maximum zoom level of the geoscape camera"
-msgstr ""
+msgstr "Maksymalna odległość ustawienia kamery w widoku globu"
 
 #: ../base/ufos/ui/options.ufo:1750
 msgid "2.0"
@@ -27184,7 +27184,7 @@ msgstr "Joystick:"
 
 #: ../base/ufos/ui/options.ufo:1833
 msgid "Available game controllers."
-msgstr ""
+msgstr "Dostępne kontrolery gry."
 
 #: ../base/ufos/ui/options.ufo:1844
 msgid ""
@@ -27464,19 +27464,19 @@ msgstr "Wybierz desantowca, który powinien być użyty"
 
 #: ../base/ufos/ui/skirmish.ufo:249
 msgid "Equipment of your team."
-msgstr "Wyposarz swoją drużynę"
+msgstr "Wyposarz swoją drużynę."
 
 #: ../base/ufos/ui/skirmish.ufo:289
 msgid "Equipment AI Team."
-msgstr "Wyposarz drużynę AI"
+msgstr "Wyposarz drużynę AI."
 
 #: ../base/ufos/ui/skirmish.ufo:334
 msgid "The maximum of AI actors for this game."
-msgstr "Max. liczba postaci AI w grze drużynowej"
+msgstr "Maks. liczba postaci AI dla tej gry."
 
 #: ../base/ufos/ui/skirmish.ufo:356
 msgid "Max. Soldiers:"
-msgstr "Max. liczba żołnierzy:"
+msgstr "Maks. Liczba Żołnierzy:"
 
 #: ../base/ufos/ui/skirmish.ufo:357
 msgid "Sets the maximum amount of soldiers."
@@ -27541,7 +27541,7 @@ msgstr "Budżet"
 
 #: ../base/ufos/ui/stats.ufo:464
 msgid "max"
-msgstr "max"
+msgstr "maks."
 
 #: ../base/ufos/ui/sys_editor.ufo:12
 msgid "Node editor"
@@ -27644,7 +27644,7 @@ msgstr "Wstępny Raport Badawczy"
 
 #: ../base/ufos/ui/ufopedia.ufo:108
 msgid "The Big Picture"
-msgstr ""
+msgstr "Duży Obraz"
 
 #: ../base/ufos/ui/ufopedia.ufo:294
 msgid "Requirement(s):"
@@ -27998,7 +27998,7 @@ msgstr "Podwójny atak"
 
 #: ../base/ufos/weapons_melee.ufo:190
 msgid "Bludgeon"
-msgstr ""
+msgstr "Pałka"
 
 #: ../base/ufos/weapons_melee.ufo:213
 msgid "Kerrblade"
@@ -28085,7 +28085,7 @@ msgstr "Seria 3 pocisków"
 
 #: ../base/ufos/weapons_particle.ufo:283
 msgid "Unrestricted Blast"
-msgstr ""
+msgstr "Niekontrolowany Wybuch"
 
 #: ../base/ufos/weapons_plasma.ufo:6
 msgid "Plasma Pistol"
@@ -28140,7 +28140,7 @@ msgstr "Seria 5 pocisków"
 
 #: ../base/ufos/weapons_ugv.ufo:159
 msgid "Autocannon Module"
-msgstr ""
+msgstr "Moduł Działka Automatycznego"
 
 #: client/battlescape/cl_actor.cpp:105
 msgid "Poor"
@@ -28212,7 +28212,7 @@ msgstr "Wybierz postać z listy."
 
 #: client/battlescape/cl_actor.cpp:2553
 msgid "Update an actor"
-msgstr ""
+msgstr "Uaktualnij postać"
 
 #: client/battlescape/cl_actor.cpp:2554
 #, fuzzy
@@ -28497,7 +28497,7 @@ msgstr "Przeładowano broń w prawej ręce."
 
 #: client/battlescape/cl_hud_callbacks.cpp:351
 msgid "Set selected actor to move mode (it cancels the fire mode)."
-msgstr ""
+msgstr "Przełącz wybraną postać w tryb ruchu (anuluje tryb ognia)."
 
 #: client/battlescape/cl_hud_callbacks.cpp:352
 msgid "Reload the weapon in the soldiers left hand."
@@ -29057,7 +29057,7 @@ msgstr "Brak statku powietrznego w bazie - musisz najpierw jakiś zamówić.\n"
 
 #: client/cgame/campaign/cp_base.cpp:2080
 msgid "Antimatter (current/max):"
-msgstr "Antymateria (aktualnie/max):"
+msgstr "Antymateria (aktualnie/maks.):"
 
 #: client/cgame/campaign/cp_base.cpp:2250
 #, c-format
@@ -31472,7 +31472,7 @@ msgstr "Wymaga Hangaru:\t%s\n"
 #: client/cgame/campaign/cp_ufopedia.cpp:359
 #, c-format
 msgid "Max. soldiers:\t%i\n"
-msgstr "Max. liczba żołnierzy:\t%i\n"
+msgstr "Maks. liczba żołnierzy:\t%i\n"
 
 #: client/cgame/campaign/cp_ufopedia.cpp:397
 #, c-format
@@ -31787,27 +31787,27 @@ msgstr "Gra drużynowa:\t%s\n"
 #: client/cgame/multiplayer/mp_serverlist.cpp:334
 #, c-format
 msgid "Max. players per team:\t%s\n"
-msgstr "Max. liczba graczy w drużynie:\t%s\n"
+msgstr "Maks. liczba graczy na drużynę:\t%s\n"
 
 #: client/cgame/multiplayer/mp_serverlist.cpp:335
 #, c-format
 msgid "Max. teams allowed in this map:\t%s\n"
-msgstr "Max. liczba drużyn na tej mapie:\t%s\n"
+msgstr "Maks. liczba drużyn na tej mapie:\t%s\n"
 
 #: client/cgame/multiplayer/mp_serverlist.cpp:336
 #, c-format
 msgid "Max. clients:\t%s\n"
-msgstr "Max. liczba klientów:\t%s\n"
+msgstr "Maks. liczba klientów:\t%s\n"
 
 #: client/cgame/multiplayer/mp_serverlist.cpp:337
 #, c-format
 msgid "Max. soldiers per player:\t%s\n"
-msgstr "Max. liczba żołnierzy gracza:\t%s\n"
+msgstr "Maks. liczba żołnierzy na gracza:\t%s\n"
 
 #: client/cgame/multiplayer/mp_serverlist.cpp:338
 #, c-format
 msgid "Max. soldiers per team:\t%s\n"
-msgstr "Max. liczba żołnierzy w drużynie:\t%s\n"
+msgstr "Maks. liczba żołnierzy na drużynę:\t%s\n"
 
 #: client/cgame/multiplayer/mp_serverlist.cpp:339
 #, c-format
@@ -31910,7 +31910,7 @@ msgstr "Oburęczna"
 #: client/cl_inventory_callbacks.cpp:148
 #, c-format
 msgid "Max ammo:\t%i\n"
-msgstr "Amunicja:\t%i\n"
+msgstr "Maks. amunicji:\t%i\n"
 
 #: client/cl_inventory_callbacks.cpp:175
 #, c-format
