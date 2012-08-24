@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
 "POT-Creation-Date: 2012-08-19 14:21+0200\n"
-"PO-Revision-Date: 2012-08-24 10:52+0100\n"
+"PO-Revision-Date: 2012-08-24 11:02+0100\n"
 "Last-Translator: Maciej Wierzbicki <voovoos@killfile.pl>\n"
 "Language-Team:  <radius75@interia.pl>\n"
 "Language: pl_PL\n"
@@ -24,7 +24,7 @@ msgstr "Afryka"
 #: ../base/maps/baseattack.ump:225
 #: client/cgame/campaign/cp_base_callbacks.cpp:195
 msgid "Home"
-msgstr "Kwatera główna"
+msgstr "Kwatera Główna"
 
 #: ../base/maps/bomber_city.ump:68
 msgid "Bomber_city"
@@ -88,7 +88,7 @@ msgstr "Strefa przemysłowa"
 
 #: ../base/maps/frozen.ump:350
 msgid "Alien landing - Industrial"
-msgstr "Lądowanie Obcych - strefa przemysłowa"
+msgstr "Lądowanie Obcych - Strefa przemysłowa"
 
 #: ../base/maps/frozen.ump:372 ../base/maps/frozen.ump:394
 msgid "A UFO crashed into the snow here."
@@ -273,7 +273,7 @@ msgstr "Myśliwiec Dragon"
 
 #: ../base/ufos/aircraftmanagement.ufo:303
 msgid "Dragon"
-msgstr "Dragon I"
+msgstr "Dragon"
 
 #: ../base/ufos/aircraftmanagement.ufo:343
 msgid "Starchaser-class Interceptor"
@@ -425,7 +425,7 @@ msgstr "Pocisk Hybrydowy"
 
 #: ../base/ufos/aircraftmanagement.ufo:981 ../base/ufos/research.ufo:5249
 msgid "Targeting Computer"
-msgstr "Komputerowy system namierzania"
+msgstr "Komputerowy System Namierzania"
 
 #: ../base/ufos/aircraftmanagement.ufo:993 ../base/ufos/research.ufo:5266
 msgid "Fuel Pod"
@@ -433,11 +433,11 @@ msgstr "Zbiornik paliwa"
 
 #: ../base/ufos/aircraftmanagement.ufo:1007 ../base/ufos/research.ufo:4686
 msgid "Polymer Aircraft Armour"
-msgstr "Pancerz polimerowy"
+msgstr "Pancerz Polimerowy"
 
 #: ../base/ufos/aircraftmanagement.ufo:1021 ../base/ufos/research.ufo:4703
 msgid "Alien Aircraft Plating"
-msgstr "Pancerz kształtkowy"
+msgstr "Pancerz Kształtkowy"
 
 #: ../base/ufos/aircraftmanagement.ufo:1035 ../base/ufos/research.ufo:4743
 msgid "Alien Astrogation"
