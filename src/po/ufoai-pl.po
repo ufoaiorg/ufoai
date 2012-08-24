@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
 "POT-Creation-Date: 2012-08-19 14:21+0200\n"
-"PO-Revision-Date: 2012-08-24 16:49+0100\n"
+"PO-Revision-Date: 2012-08-24 17:25+0100\n"
 "Last-Translator: Maciej Wierzbicki <voovoos@killfile.pl>\n"
 "Language-Team:  <radius75@interia.pl>\n"
 "Language: pl_PL\n"
@@ -24056,9 +24056,9 @@ msgid ""
 "specific place. Very useful when targetting something near the edge of the "
 "map, or on a ledge."
 msgstr ""
-"Bezpośredni strzał z granatnika pozwala precyzyjnie wyznaczyć miejsce "
-"eksplozji ładunku. Jest to bardzo przydatne przy ostrzale celów znajdujących "
-"się na krawędzi mapy lub zbocza."
+"Seria strzałów górą z Granatnika pozwala na wybuch granatów w specyficznych "
+"miejscach. Jest to bardzo przydatne przy ostrzale celów znajdujących się za "
+"krawędzią lub na półce skalnej."
 
 #: ../base/ufos/tips.ufo:36
 msgid ""
@@ -27350,23 +27350,20 @@ msgid "Requirements"
 msgstr "Wymagania"
 
 #: ../base/ufos/ui/research.ufo:17
-#, fuzzy
 msgid "Open UFOPaedia"
 msgstr "Otwórz UFOpedię"
 
 #: ../base/ufos/ui/research.ufo:43
-#, fuzzy
 msgid "Add/Remove scientist"
-msgstr "Dodaj/usuń naukowca"
+msgstr "Dodaj/Usuń naukowca"
 
 #: ../base/ufos/ui/research.ufo:209
 msgid "Switch to another base"
 msgstr "Przełącz na inną bazę"
 
 #: ../base/ufos/ui/research.ufo:346
-#, fuzzy
 msgid "Base Research Info"
-msgstr "Informacje"
+msgstr "Informacje Badawcze"
 
 #: ../base/ufos/ui/research.ufo:499
 msgid "Start research"
@@ -27445,11 +27442,11 @@ msgid "Dropship:"
 msgstr "Destantowiec:"
 
 #: ../base/ufos/ui/skirmish.ufo:224
-#, fuzzy
 msgid ""
 "Select the dropship that should be used (only possible if available for that "
 "map)."
-msgstr "Wybierz desantowca, który powinien być użyty"
+msgstr ""
+"Wybierz desantowiec który chcesz użyć (możliwe jeśli dostępny na tej mapie)."
 
 #: ../base/ufos/ui/skirmish.ufo:249
 msgid "Equipment of your team."
@@ -27573,9 +27570,9 @@ msgid "Save your team"
 msgstr "Zapisz drużynę"
 
 #: ../base/ufos/ui/transfer.ufo:7
-#, fuzzy
 msgid "Add/Remove item to transfer cargo, hold SHIFT for speed increase."
-msgstr "Dodaj/Usuń przedmioty z ładunku do przesłania"
+msgstr ""
+"Dodaj/Usuń przedmioty do przesłania, przytrzymaj SHIFT dla przyśpieszenia."
 
 #: ../base/ufos/ui/transfer.ufo:55 ../base/ufos/ui/transfer.ufo:72
 #: client/cgame/campaign/cp_cgame_callbacks.cpp:139
@@ -27720,9 +27717,8 @@ msgid "Needler Gun Magazine"
 msgstr "Magazynek Igłowca"
 
 #: ../base/ufos/weapons_aliens.ufo:65 ../base/ufos/weapons_aliens.ufo:140
-#, fuzzy
 msgid "Short Burst"
-msgstr "Seria 5 pocisków"
+msgstr "Krótka Seria"
 
 #: ../base/ufos/weapons_aliens.ufo:89 ../base/ufos/weapons_aliens.ufo:164
 msgid "Cannonade"
@@ -27786,7 +27782,7 @@ msgstr "Mag. do kar. maszynowego"
 
 #: ../base/ufos/weapons_human.ufo:265
 msgid "5-Shot Burst"
-msgstr "Seria 5 pocisków"
+msgstr "Seria 5 strzałów"
 
 #: ../base/ufos/weapons_human.ufo:311 ../base/ufos/weapons_multiplayer.ufo:97
 #: ../base/ufos/weapons_multiplayer.ufo:328 ../base/ufos/weapons_ugv.ufo:133
@@ -27836,7 +27832,7 @@ msgstr "Seria 5 pocisków"
 
 #: ../base/ufos/weapons_human.ufo:802
 msgid "Riot Shotgun"
-msgstr "Strzelba"
+msgstr "Krótka Strzelba"
 
 #: ../base/ufos/weapons_human.ufo:823
 msgid "Saboted Slugs"
@@ -27892,27 +27888,23 @@ msgstr "Granaty odłamkowe kal. 25 mm"
 
 #: ../base/ufos/weapons_human.ufo:1224 ../base/ufos/weapons_human.ufo:1354
 #: ../base/ufos/weapons_human.ufo:1531
-#, fuzzy
 msgid "Snap Shot (Impact)"
-msgstr "Z biodra"
+msgstr "Z biodra (Uderzenie)"
 
 #: ../base/ufos/weapons_human.ufo:1250 ../base/ufos/weapons_human.ufo:1381
 #: ../base/ufos/weapons_human.ufo:1557
-#, fuzzy
 msgid "Aimed Shot (Impact)"
-msgstr "Celowany"
+msgstr "Celowany (Uderzenie)"
 
 #: ../base/ufos/weapons_human.ufo:1276 ../base/ufos/weapons_human.ufo:1408
 #: ../base/ufos/weapons_human.ufo:1582
-#, fuzzy
 msgid "Snap Shot (Timer)"
-msgstr "Z biodra - opóźniony"
+msgstr "Z biodra (Opóźniony)"
 
 #: ../base/ufos/weapons_human.ufo:1305 ../base/ufos/weapons_human.ufo:1438
 #: ../base/ufos/weapons_human.ufo:1610
-#, fuzzy
 msgid "Aimed Shot (Timer)"
-msgstr "Celowany - opóźniony"
+msgstr "Celowany (Opóźniony)"
 
 #: ../base/ufos/weapons_human.ufo:1336
 msgid "25mm IC Grenades"
@@ -27963,7 +27955,7 @@ msgstr "Pakiet FD"
 
 #: ../base/ufos/weapons_laser.ufo:276
 msgid "Stun Shot"
-msgstr "Strzał ogłuszający"
+msgstr "Strzał Ogłuszający"
 
 #: ../base/ufos/weapons_melee.ufo:6
 msgid "Combat Knife"
@@ -28068,9 +28060,8 @@ msgid "Cannon Particle Accelerator"
 msgstr "Ładunek do dz. cząst."
 
 #: ../base/ufos/weapons_particle.ufo:261
-#, fuzzy
 msgid "4-Round Burst"
-msgstr "Seria 3 pocisków"
+msgstr "Seria 4 pocisków"
 
 #: ../base/ufos/weapons_particle.ufo:283
 msgid "Unrestricted Blast"
@@ -28123,9 +28114,8 @@ msgid "Chaingun Belt"
 msgstr ""
 
 #: ../base/ufos/weapons_ugv.ufo:82
-#, fuzzy
 msgid "25-Round Burst"
-msgstr "Seria 5 pocisków"
+msgstr "Seria 25 pocisków"
 
 #: ../base/ufos/weapons_ugv.ufo:159
 msgid "Autocannon Module"
@@ -31973,7 +31963,7 @@ msgstr "Twoja wersja mapy różni się od tej na serwerze"
 
 #: client/cl_main.cpp:903
 msgid "Target your shot to the ground"
-msgstr "Celuj w ziemię"
+msgstr "Strzał mierzony w ziemię"
 
 #: client/cl_main.cpp:1152
 msgid "This change requires a restart!"
