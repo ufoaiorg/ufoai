@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
 "POT-Creation-Date: 2012-08-19 14:21+0200\n"
-"PO-Revision-Date: 2012-08-25 14:41+0100\n"
+"PO-Revision-Date: 2012-08-25 14:53+0100\n"
 "Last-Translator: Maciej Wierzbicki <voovoos@killfile.pl>\n"
 "Language-Team:  <radius75@interia.pl>\n"
 "Language: pl_PL\n"
@@ -24213,6 +24213,8 @@ msgid ""
 "Remember to check your research and production queues often! A good arsenal "
 "is an active arsenal!"
 msgstr ""
+"Pamietaj aby często sprawdzać swoje badania i kolejkę produkcji! Dobry "
+"arsenał to modernizowany arsenał!"
 
 #: ../base/ufos/tips.ufo:58
 msgid ""
@@ -24245,6 +24247,8 @@ msgid ""
 "Never risk your soldier's life just to capture an alien alive. There will be "
 "other occasions."
 msgstr ""
+"Nigdy nie ryzykuj życiem Twoich żołnierzy tylko po to by schwytać Żywego "
+"Obcego. Będą inne okazje."
 
 #: ../base/ufos/tips.ufo:63
 msgid ""
@@ -24252,6 +24256,9 @@ msgid ""
 "attacked with a stun rod or electrolaser, normally lethal weapons may just "
 "knock it unconscious"
 msgstr ""
+"Łatwiej ogłyszyć rannych Obcych. Również jeśli Obcy był już zaatakowany "
+"Paralizatorem lub Elektrolaserem, wtedy zwykłe śmiecionośne bronie mogą go "
+"obezwładnić."
 
 #: ../base/ufos/ui/_menu.ufo:122 ../base/ufos/ui/geoscape.ufo:192
 msgid "CREDITS"
@@ -27950,7 +27957,7 @@ msgstr "Ogień impulsowy"
 
 #: ../base/ufos/weapons_laser.ufo:238
 msgid "Electro Laser"
-msgstr ""
+msgstr "Elektrolaser"
 
 #: ../base/ufos/weapons_laser.ufo:259
 #, fuzzy
