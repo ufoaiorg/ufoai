@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
 "POT-Creation-Date: 2012-08-19 14:21+0200\n"
-"PO-Revision-Date: 2012-08-25 15:18+0100\n"
+"PO-Revision-Date: 2012-08-25 16:39+0100\n"
 "Last-Translator: Maciej Wierzbicki <voovoos@killfile.pl>\n"
 "Language-Team:  <radius75@interia.pl>\n"
 "Language: pl_PL\n"
@@ -401,7 +401,7 @@ msgstr "Rakieta Sparrowhawk"
 
 #: ../base/ufos/aircraftmanagement.ufo:875 ../base/ufos/research.ufo:5004
 msgid "TR-20 Rocket Pod"
-msgstr "Zasobnik rakietowy TR-20"
+msgstr "Zasobnik Rakietowy TR-20"
 
 #: ../base/ufos/aircraftmanagement.ufo:888 ../base/ufos/research.ufo:5021
 msgid "TR-20 Rocket"
@@ -2446,15 +2446,15 @@ msgstr "Wieloosobowa Phalanx"
 
 #: ../base/ufos/equipment.ufo:189
 msgid "Assault Rifles Only"
-msgstr "Tylko karabin szturmowy"
+msgstr "Tylko Karabin Szturmowy"
 
 #: ../base/ufos/equipment.ufo:196
 msgid "No IR Goggles"
-msgstr "Bez termowizora"
+msgstr "Bez Termowizora"
 
 #: ../base/ufos/equipment.ufo:255
 msgid "Flamers/Rifles/Grenades"
-msgstr "Miotacz/Karabin/Granaty"
+msgstr "Miotacze/Karabiny/Granaty"
 
 #: ../base/ufos/equipment.ufo:273
 msgid "Campaign Start"
@@ -2870,7 +2870,7 @@ msgstr "Rozbite UFO w orientalnej dzielnicy."
 
 #: ../base/ufos/maps.ufo:2171
 msgid "A crashed Scout UFO."
-msgstr "Rozbite UFO Zwiadowca."
+msgstr "Rozbite UFO - Zwiadowca."
 
 #: ../base/ufos/maps.ufo:2212 ../base/ufos/maps.ufo:2252
 #: ../base/ufos/maps.ufo:2293
@@ -22903,7 +22903,7 @@ msgstr "Ostrza monomolekularne"
 
 #: ../base/ufos/research.ufo:1286
 msgid "Plasma And The Grenade Launcher"
-msgstr "Wyrzutnia gratanów i plazmy"
+msgstr "Wyrzutnia Gratanów i Plazmy"
 
 #: ../base/ufos/research.ufo:1345
 msgid "Alien Artifact - Kerrblade"
@@ -22923,7 +22923,7 @@ msgstr "Artefakt Obcych - Żagiew plazmowa"
 
 #: ../base/ufos/research.ufo:1830
 msgid "Alien Artifact - Plasma Grenade"
-msgstr "Artefakt Obcych - Granat plazmowy"
+msgstr "Artefakt Obcych - Granat Plazmowy"
 
 #: ../base/ufos/research.ufo:1875 ../base/ufos/research.ufo:1921
 msgid "Alien Artifact - Plasma Rifle"
@@ -23037,7 +23037,7 @@ msgstr "Atrybut szybkości"
 
 #: ../base/ufos/research.ufo:4107
 msgid "Live Specimen - Bloodspider"
-msgstr "Żywy okaz - Bloodspider"
+msgstr "Żywy Okaz - Bloodspider"
 
 #: ../base/ufos/research.ufo:4128
 msgid "Alien Autopsy - Bloodspider"
@@ -23950,7 +23950,7 @@ msgid ""
 "Building a workshop and off-base installations UFO yards allows you to "
 "disassemble UFOs."
 msgstr ""
-"Budowa warsztatów i zewnętrznej instalacji Hangar, umożliwia Ci demontaż "
+"Budowa warsztatów i zewnętrznej instalacji Hangar UFO, umożliwia Ci demontaż "
 "UFO. "
 
 #: ../base/ufos/tips.ufo:24
@@ -24007,7 +24007,7 @@ msgid ""
 "Building a hospital allows you to heal your soldiers faster for their next "
 "mission."
 msgstr ""
-"Budowa szpitalia pozwala Ci szybciej wyleczyć żołnierzy przed kolejną misją."
+"Budowa szpitala pozwala Ci szybciej wyleczyć żołnierzy przed kolejną misją."
 
 #: ../base/ufos/tips.ufo:31
 msgid ""
@@ -24650,7 +24650,7 @@ msgstr "Informacja"
 
 #: ../base/ufos/ui/basedefence.ufo:35
 msgid "Missile Defences"
-msgstr "Obrona rakietowa"
+msgstr "Obrona Rakietowa"
 
 #: ../base/ufos/ui/basedefence.ufo:40
 msgid "Laser Defences"
@@ -24924,7 +24924,7 @@ msgid ""
 "Are you sure that you really want to reload the last automatically saved "
 "campaign state?"
 msgstr ""
-"Czy na pewno chcesz załadować ostatni zapis automatyczny stanu kampanii?"
+"Czy na pewno chcesz załadować ostatni automatyczny zapi stanu kampanii?"
 
 #: ../base/ufos/ui/campaign.ufo:623
 msgid "You've lost the game"
@@ -24944,7 +24944,7 @@ msgstr "Potwierdzenie Zakończenia Kampanii"
 
 #: ../base/ufos/ui/campaign.ufo:780 ../base/ufos/ui/singleplayer.ufo:168
 msgid "You will lose all your campaign progress."
-msgstr "Utracisz cały postęp w kampanii."
+msgstr "Utracisz cały swój postęp w kampanii."
 
 #: ../base/ufos/ui/campaign.ufo:786 ../base/ufos/ui/singleplayer.ufo:174
 msgid "Exit current campaign and return to main menu."
@@ -25214,7 +25214,7 @@ msgstr "Przechwycenie statku powietrznego"
 
 #: ../base/ufos/ui/geoscape.ufo:1089
 msgid "SAM defence"
-msgstr "Obrona rakietowa"
+msgstr "Bateria obronna"
 
 #: ../base/ufos/ui/geoscape.ufo:1103
 msgid "Aircraft:"
@@ -26491,7 +26491,7 @@ msgstr ""
 
 #: ../base/ufos/ui/options.ufo:268
 msgid "Video Settings"
-msgstr "Ustawienia wideo"
+msgstr "Ustawienia Wideo"
 
 #: ../base/ufos/ui/options.ufo:293
 msgid "General"
@@ -26954,7 +26954,7 @@ msgstr "Przełącz na wysoką jakość grafiki"
 
 #: ../base/ufos/ui/options.ufo:1249
 msgid "Audio Settings"
-msgstr "Ustawienia dźwięku"
+msgstr "Ustawienia Dźwięku"
 
 #: ../base/ufos/ui/options.ufo:1266
 msgid "Enable or disable sound."
@@ -26962,11 +26962,11 @@ msgstr "Włącz lub wyłącz dźwięk."
 
 #: ../base/ufos/ui/options.ufo:1267
 msgid "Enable Audio:"
-msgstr "Włącz dźwięk:"
+msgstr "Włącz Dźwięk:"
 
 #: ../base/ufos/ui/options.ufo:1323
 msgid "Sound Effects:"
-msgstr "Efekty dźwiękowe:"
+msgstr "Efekty Dźwiękowe:"
 
 #: ../base/ufos/ui/options.ufo:1348
 msgid "Menu Sounds:"
@@ -26992,7 +26992,7 @@ msgstr "Próbkowanie Audio:"
 
 #: ../base/ufos/ui/options.ufo:1409
 msgid "Restart the sound-engine and apply your settings."
-msgstr "Uruchom ponownie system dźwięku aby zmienić ustawienia."
+msgstr "Uruchom ponownie system dźwięku i zartwierdź swoje ustawienia."
 
 #: ../base/ufos/ui/options.ufo:1432
 msgid "Gameplay Settings"
@@ -27306,7 +27306,7 @@ msgstr "Przesyłka"
 
 #: ../base/ufos/ui/popup_installations.ufo:703
 msgid "stored"
-msgstr ""
+msgstr "zmagazynowane"
 
 #: ../base/ufos/ui/popup_installations.ufo:709
 #, fuzzy
@@ -27461,7 +27461,7 @@ msgstr "Wyposarz swoją drużynę."
 
 #: ../base/ufos/ui/skirmish.ufo:289
 msgid "Equipment AI Team."
-msgstr "Wyposarz drużynę AI."
+msgstr "Wyposarz Drużynę AI."
 
 #: ../base/ufos/ui/skirmish.ufo:334
 msgid "The maximum of AI actors for this game."
@@ -27676,7 +27676,7 @@ msgstr "Rzuć"
 
 #: ../base/ufos/weapons.ufo:135
 msgid "Frag Grenade"
-msgstr "Granat odłamkowy"
+msgstr "Granat Odłamkowy"
 
 #: ../base/ufos/weapons.ufo:154 ../base/ufos/weapons.ufo:231
 #: ../base/ufos/weapons.ufo:309 ../base/ufos/weapons.ufo:385
@@ -27694,27 +27694,27 @@ msgstr "Potocz"
 
 #: ../base/ufos/weapons.ufo:212
 msgid "Flashbang"
-msgstr "Granat ogłuszający"
+msgstr "Granat Ogłuszający"
 
 #: ../base/ufos/weapons.ufo:290
 msgid "Smoke Grenade"
-msgstr "Granat dymny"
+msgstr "Granat Dymny"
 
 #: ../base/ufos/weapons.ufo:366
 msgid "Gas Grenade"
-msgstr "Granat gazowy"
+msgstr "Granat Gazowy"
 
 #: ../base/ufos/weapons.ufo:445
 msgid "Alien Gas Grenade"
-msgstr "Granat gazowy Obcych"
+msgstr "Granat Gazowy Obcych"
 
 #: ../base/ufos/weapons.ufo:523
 msgid "Incendiary grenade"
-msgstr "Granat zapalający"
+msgstr "Granat Zapalający"
 
 #: ../base/ufos/weapons.ufo:605
 msgid "Plasma Grenade"
-msgstr "Granat plazmowy"
+msgstr "Granat Plazmowy"
 
 #: ../base/ufos/weapons.ufo:683 ../base/ufos/weapons.ufo:704
 msgid "Bomb"
@@ -27738,7 +27738,7 @@ msgstr "Lawina Igieł"
 
 #: ../base/ufos/weapons_human.ufo:6
 msgid "Assault Rifle"
-msgstr "Karabin szturmowy"
+msgstr "Karabin Szturmowy"
 
 #: ../base/ufos/weapons_human.ufo:27
 msgid "Assault Rifle Magazine"
@@ -27875,23 +27875,23 @@ msgstr "Pełna Moc (Łuk)"
 
 #: ../base/ufos/weapons_human.ufo:1072
 msgid "Rocket Launcher"
-msgstr "Ręczna wyrzutnia rakiet"
+msgstr "Ręczna Wyrzutnia Rakiet"
 
 #: ../base/ufos/weapons_human.ufo:1094
 msgid "HE Rocket"
-msgstr "Rakieta burząca"
+msgstr "Rakieta Burząca"
 
 #: ../base/ufos/weapons_human.ufo:1137
 msgid "IC Rocket"
-msgstr "Rakieta zapalająca"
+msgstr "Rakieta Zapalająca"
 
 #: ../base/ufos/weapons_human.ufo:1184
 msgid "Grenade Launcher"
-msgstr "Granatnik ręczny"
+msgstr "Granatnik Ręczny"
 
 #: ../base/ufos/weapons_human.ufo:1206
 msgid "25mm HIT Grenades"
-msgstr "Granaty odłamkowe kal. 25 mm"
+msgstr "Granaty Odłamkowe kal. 25 mm"
 
 #: ../base/ufos/weapons_human.ufo:1224 ../base/ufos/weapons_human.ufo:1354
 #: ../base/ufos/weapons_human.ufo:1531
@@ -27915,15 +27915,15 @@ msgstr "Celowany (Opóźniony)"
 
 #: ../base/ufos/weapons_human.ufo:1336
 msgid "25mm IC Grenades"
-msgstr "Granaty zapalające kal. 25 mm"
+msgstr "Granaty Zapalające kal. 25 mm"
 
 #: ../base/ufos/weapons_human.ufo:1473
 msgid "25mm Flechette Grenades"
-msgstr "Granaty fleszetkowe kal. 25 mm"
+msgstr "Granaty Fleszetkowe kal. 25 mm"
 
 #: ../base/ufos/weapons_human.ufo:1513
 msgid "25mm PB Grenades"
-msgstr "Granaty plazmowe kal. 25 mm"
+msgstr "Granaty Plazmowe kal. 25 mm"
 
 #: ../base/ufos/weapons_laser.ufo:6
 msgid "Laser Pistol"
@@ -27982,7 +27982,7 @@ msgstr "Ogłusz"
 
 #: ../base/ufos/weapons_melee.ufo:172
 msgid "Double Charge"
-msgstr "Podwójny atak"
+msgstr "Podwójny Ładunek"
 
 #: ../base/ufos/weapons_melee.ufo:190
 msgid "Bludgeon"
@@ -28542,7 +28542,7 @@ msgstr "Zauważono cywila."
 #: client/battlescape/events/event/actor/e_event_actordie.cpp:88
 #, c-format
 msgid "%s lost a soldier\n"
-msgstr "%s stracono zołnierza\n"
+msgstr "%s stracił żołnierza\n"
 
 #: client/battlescape/events/event/actor/e_event_actordie.cpp:95
 #, c-format
@@ -29146,7 +29146,7 @@ msgstr "Wybuduj co najmniej jedną bazę aby przesyłać wyposażenie lub person
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:578
 msgid "Base is under attack, you can't destroy buildings!"
-msgstr "Baza jest atakowana, nie możesz nisczyć modułów!"
+msgstr "Baza jest atakowana, nie możesz niszczyć modułów!"
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:588
 msgid "Destroy Entrance"
@@ -30182,8 +30182,8 @@ msgid ""
 "Go on a rescue mission at %s to save your soldiers, some of whom may still "
 "be alive."
 msgstr ""
-"Rozpocznij misję ratunkową na %s, by odzyskać twoich żołnierzy, część z nich "
-"może być nadal żywa"
+"Rozpocznij misję ratunkową w pobliżu %s, by odzyskać swoich żołnierzy, część "
+"z nich może być nadal żywa"
 
 #: client/cgame/campaign/cp_missions.cpp:673
 #, c-format
@@ -31835,7 +31835,7 @@ msgstr "Przegrałeś grę!"
 
 #: client/cl_console.cpp:298
 msgid "Show/hide ufoconsole."
-msgstr "Pokaż/ukryj ufoconsole."
+msgstr "Pokaż/ukryj 'ufoconsole'."
 
 #: client/cl_inventory_callbacks.cpp:44
 msgid "skill_close"
