@@ -56,6 +56,17 @@ tile +powercore
 	0		a		a		a		x		0
 }
 
+// Antimatter storage
+tile +antimatter
+{
+	6 4
+
+	0		a		x		a		a		0
+	a		+a		+x		+a		+x		x
+	a		+a		+x		+a		+a		a
+	0		a		x		a		a		0
+}
+
 // Vent (right side)
 // used for closing up a hub/hangar on the right side
 tile +ventr
@@ -263,4 +274,38 @@ assembly small1
 	fix +hall_h1 "2 8"
 	fix +entrance "4 8"
 	fix +hall_csw1 "8 8"
+}
+
+assembly small2
+{
+	size "14 12"
+
+	fix +hall_cse1 "2 10"
+	fix +hall_h1 "4 10"
+	fix +hall_h1 "6 10"
+	fix +hall_h1 "8 10"
+	fix +hall_h1 "10 10"
+	fix +hall_csw1 "12 10"
+
+	fix +antimatter "2 8"
+	fix +entrance "6 8"
+	fix +powercore "10 8"
+
+	fix +ventl "0 4"
+	fix +hangar	"2 4"
+	fix +hub "6 4"
+	fix +ventr "10 4"
+	fix +hall_v2 "12 4"
+	fix +hall_v1 "12 6"
+
+	fix +hall_cse1 "2 2"
+	fix +hall_tbtm1 "4 2"
+	fix +hall_cnw1 "6 2"
+	fix +antimatter "8 2"
+	fix +hall_cnw1 "12 2"
+
+	fix +hall_cne1 "2 0"
+	fix +wormhole "4 0"
+	fix +hall_h1 "6 0"
+	fix +hall_cnw1 "8 0"
 }
