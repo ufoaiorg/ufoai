@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
 "POT-Creation-Date: 2012-08-19 14:21+0200\n"
-"PO-Revision-Date: 2012-08-24 23:43+0100\n"
+"PO-Revision-Date: 2012-08-25 11:02+0100\n"
 "Last-Translator: Maciej Wierzbicki <voovoos@killfile.pl>\n"
 "Language-Team:  <radius75@interia.pl>\n"
 "Language: pl_PL\n"
@@ -501,7 +501,7 @@ msgstr "Pancerz bojowy"
 
 #: ../base/ufos/armour.ufo:124
 msgid "Nanocomposite Armour"
-msgstr "Pancerz nanokompozytowy"
+msgstr "Pancerz Nanokompozytowy"
 
 #: ../base/ufos/armour.ufo:187
 msgid "Power Armour"
@@ -2495,9 +2495,8 @@ msgid "Alien died"
 msgstr "Obcy zginął"
 
 #: ../base/ufos/events.ufo:76
-#, fuzzy
 msgid "Alien Base Discovered"
-msgstr "Odkryto bazę Obcych -- %s"
+msgstr "Odkryto Bazę Obcych"
 
 #: ../base/ufos/events.ufo:86
 #: client/cgame/campaign/missions/cp_mission_ufocarrier.cpp:62
@@ -2514,9 +2513,8 @@ msgid "media/DejaVuSans.ttf"
 msgstr "media/DejaVuSans.ttf"
 
 #: ../base/ufos/fonts.ufo:89
-#, fuzzy
 msgid "media/languages.ttf"
-msgstr "media/DejaVuSans.ttf"
+msgstr "media/languages.ttf"
 
 #: ../base/ufos/gamemodes.ufo:16
 msgid "Full Campaign"
@@ -2614,7 +2612,7 @@ msgstr ""
 
 #: ../base/ufos/installation.ufo:37
 msgid "SAM Site"
-msgstr "Bateria rakiet"
+msgstr "Bateria Rakiet"
 
 #: ../base/ufos/installation.ufo:47
 msgid ""
@@ -23422,9 +23420,8 @@ msgid "http://ufoai.sf.net"
 msgstr "http://ufoai.sf.net"
 
 #: ../base/ufos/seq_credits.ufo:738
-#, fuzzy
 msgid "Copyright 2004-2011 by UFO: AI Team"
-msgstr "Copyright 2004-2009 by UFO: AI Team"
+msgstr "Copyright 2004-2011 by UFO: AI Team"
 
 #: ../base/ufos/seq_intro.ufo:36
 msgid "intro_sentence1"
@@ -23600,7 +23597,7 @@ msgstr "Atrybuty fizyczne"
 
 #: ../base/ufos/seq_tutorials.ufo:497
 msgid "Stats bars: movement, health and morale"
-msgstr "Statystyki: Punktów Ruchu, zdrowia i morali"
+msgstr "Statystyki: Punktów Ruchu, zdrowia i morale"
 
 #: ../base/ufos/seq_tutorials.ufo:519 ../base/ufos/ui/hud_default.ufo:1016
 msgid "Inventory"
@@ -24391,7 +24388,7 @@ msgstr "Wyposażenie żołnierza"
 
 #: ../base/ufos/ui/aircraft.ufo:172
 msgid "Rename aircraft"
-msgstr "Zmień nazwę statku powietrznego"
+msgstr "Zmień nazwę statku"
 
 #: ../base/ufos/ui/aircraft_equip.ufo:88
 msgid "Selected item:"
@@ -24692,7 +24689,7 @@ msgstr "Wybrane UFO:"
 #: ../base/ufos/ui/geoscape.ufo:1007
 #: ../base/ufos/ui/popup_installations.ufo:382
 msgid "Time to build:"
-msgstr "Czas do końca budowy:"
+msgstr "Czas budowy:"
 
 #: ../base/ufos/ui/basedefence.ufo:357
 msgid "Autofire"
@@ -25160,7 +25157,7 @@ msgstr "Nowa instalacja"
 
 #: ../base/ufos/ui/geoscape.ufo:821
 msgid "Type"
-msgstr "Typ:"
+msgstr "Typ"
 
 #: ../base/ufos/ui/geoscape.ufo:827
 msgid "Build Time"
@@ -25168,7 +25165,7 @@ msgstr "Czas budowy"
 
 #: ../base/ufos/ui/geoscape.ufo:833
 msgid "Cost"
-msgstr "Koszt:"
+msgstr "Koszt"
 
 #: ../base/ufos/ui/geoscape.ufo:908 ../base/ufos/ui/popup_installations.ufo:41
 msgid "Cost:"
@@ -26444,9 +26441,8 @@ msgid "Several Tips"
 msgstr "Kilka podpowiedzi"
 
 #: ../base/ufos/ui/options.ufo:185
-#, fuzzy
 msgid "Show cursor tooltips in menus."
-msgstr "Włącz podpowiedzi kursora"
+msgstr "Pokazuj wskazówki kursora w menu."
 
 #: ../base/ufos/ui/options.ufo:186
 msgid "Tooltips (menu):"
@@ -26454,7 +26450,7 @@ msgstr "Podpowiedzi (menu):"
 
 #: ../base/ufos/ui/options.ufo:202
 msgid "Show cursor tooltips in tactical mode."
-msgstr ""
+msgstr "Pokazuj wskazówki kursora w trybie taktycznym."
 
 #: ../base/ufos/ui/options.ufo:203
 msgid "Tooltips (battlescape):"
