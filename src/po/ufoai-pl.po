@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
 "POT-Creation-Date: 2012-08-19 14:21+0200\n"
-"PO-Revision-Date: 2012-08-25 14:53+0100\n"
+"PO-Revision-Date: 2012-08-25 15:18+0100\n"
 "Last-Translator: Maciej Wierzbicki <voovoos@killfile.pl>\n"
 "Language-Team:  <radius75@interia.pl>\n"
 "Language: pl_PL\n"
@@ -2481,14 +2481,12 @@ msgid "Good Luck"
 msgstr "Powodzenia"
 
 #: ../base/ufos/events.ufo:45
-#, fuzzy
 msgid "Memo: UFO Yard"
-msgstr "Hangar UFO"
+msgstr "Notatka: Hangar UFO"
 
 #: ../base/ufos/events.ufo:55
-#, fuzzy
 msgid "Memo: Live Aliens"
-msgstr "Żywy Obcy"
+msgstr "Notatka: Żywi Obcy"
 
 #: ../base/ufos/events.ufo:66
 msgid "Alien died"
@@ -23139,9 +23137,8 @@ msgid "Alien Psi Device"
 msgstr "Zabitych Obcych\t%i\n"
 
 #: ../base/ufos/research.ufo:5628
-#, fuzzy
 msgid "Alien Infiltration"
-msgstr "Astronawigacja Obcych"
+msgstr "Infiltracja Obcych"
 
 #: ../base/ufos/research.ufo:5659
 #, fuzzy
@@ -24009,7 +24006,8 @@ msgstr ""
 msgid ""
 "Building a hospital allows you to heal your soldiers faster for their next "
 "mission."
-msgstr "Zbuduj szpital aby szybciej wyleczyć żołnierzy przed kolejną misją."
+msgstr ""
+"Budowa szpitalia pozwala Ci szybciej wyleczyć żołnierzy przed kolejną misją."
 
 #: ../base/ufos/tips.ufo:31
 msgid ""
@@ -24247,7 +24245,7 @@ msgid ""
 "Never risk your soldier's life just to capture an alien alive. There will be "
 "other occasions."
 msgstr ""
-"Nigdy nie ryzykuj życiem Twoich żołnierzy tylko po to by schwytać Żywego "
+"Nigdy nie ryzykuj życiem Twoich żołnierzy tylko po to by schwytać żywego "
 "Obcego. Będą inne okazje."
 
 #: ../base/ufos/tips.ufo:63
@@ -24626,7 +24624,7 @@ msgstr "Limit bazy:"
 
 #: ../base/ufos/ui/aliencont.ufo:194
 msgid "Kill all aliens in this base"
-msgstr "Zlikwiduj żywych Obcych w tej bazie"
+msgstr "Zlikwiduj wszystkich Obcych w tej bazie"
 
 #: ../base/ufos/ui/aliencont.ufo:232
 msgid "Alive:"
@@ -25784,7 +25782,7 @@ msgstr "Ponów"
 
 #: ../base/ufos/ui/irc.ufo:223
 msgid "Retry with your changed name"
-msgstr ""
+msgstr "Powtórz po zmianie nazwy"
 
 #: ../base/ufos/ui/irc.ufo:245
 msgid "Not connected"
@@ -27441,12 +27439,10 @@ msgid "UFO:"
 msgstr "UFO:"
 
 #: ../base/ufos/ui/skirmish.ufo:206
-#, fuzzy
 msgid ""
 "Select the UFO that should be used (only possible if available for that map)."
 msgstr ""
-"Wybierz UFO \n"
-"(o ile to możliwe przy aktualnej mapie)"
+"Wybierz UFO które ma być użyte (o ile to możliwe przy aktualnej mapie)."
 
 #: ../base/ufos/ui/skirmish.ufo:221
 msgid "Dropship:"
@@ -28453,12 +28449,11 @@ msgid "Can't perform action - not enough TUs!"
 msgstr "Nie można wykonać - za mało PR!"
 
 #: client/battlescape/cl_hud_callbacks.cpp:177
-#, fuzzy
 msgid "Disabled automatic crouching/standing up."
-msgstr "Zarezerwuj %i PR na kucanie/powstanie."
+msgstr "Wyłączenie automatycznego kucania/powstania."
 
 #: client/battlescape/cl_hud_callbacks.cpp:181
-#, fuzzy, c-format
+#, c-format
 msgid "Reserved %i TUs for crouching/standing up."
 msgstr "Zarezerwuj %i PR na kucanie/powstanie."
 
@@ -29546,7 +29541,7 @@ msgid ""
 "You don't have enough quarters for your employees.\n"
 "Build more quarters."
 msgstr ""
-"Zbyt mało Kwater dla personelu.\n"
+"Zbyt mało Kwater dla Twojego personelu.\n"
 "Zbuduj więcej Kwater."
 
 #: client/cgame/campaign/cp_employee_callbacks.cpp:277
@@ -30673,9 +30668,8 @@ msgid "Status: research paused"
 msgstr "Status: badania wstrzymane"
 
 #: client/cgame/campaign/cp_research_callbacks.cpp:143
-#, fuzzy
 msgid "Status: research topic currently paused"
-msgstr "Status: badania na zadany temat są obecnie wstrzymane."
+msgstr "Status: ten temat badań jest obecnie wstrzymany."
 
 #: client/cgame/campaign/cp_research_callbacks.cpp:146
 #: client/cgame/campaign/cp_research_callbacks.cpp:147
@@ -30684,16 +30678,15 @@ msgstr "Status: badania ukończone"
 
 #: client/cgame/campaign/cp_research_callbacks.cpp:152
 msgid "Status: not possible to research"
-msgstr "Status: nie ma możliwości odkrycia"
+msgstr "Status: nie ma możliwości zbadania"
 
 #: client/cgame/campaign/cp_research_callbacks.cpp:153
-#, fuzzy
 msgid ""
 "Status: the materials or background knowledge needed to research this topic "
 "are not available yet"
 msgstr ""
-"Status: W chwili obecnej nie mamy wszystkich materiałów lub technologii "
-"potrzebnych do przeprowadzenia badań."
+"Status: w chwili obecnej nie mamy materiałów lub technologii potrzebnych w "
+"temacie tych badań."
 
 #: client/cgame/campaign/cp_research_callbacks.cpp:155
 #: client/cgame/campaign/cp_research_callbacks.cpp:156
@@ -31548,9 +31541,8 @@ msgstr ""
 "Misja transportowa rozpoczęta, ładunek zostanie przetransportowany do %s"
 
 #: client/cgame/campaign/cp_uforecovery.cpp:262
-#, fuzzy
 msgid "UFO transport"
-msgstr "Transport"
+msgstr "Transport UFO"
 
 #: client/cgame/campaign/cp_uforecovery_callbacks.cpp:113
 #, c-format
