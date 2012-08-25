@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
 "POT-Creation-Date: 2012-08-19 14:21+0200\n"
-"PO-Revision-Date: 2012-08-25 11:02+0100\n"
+"PO-Revision-Date: 2012-08-25 13:06+0100\n"
 "Last-Translator: Maciej Wierzbicki <voovoos@killfile.pl>\n"
 "Language-Team:  <radius75@interia.pl>\n"
 "Language: pl_PL\n"
@@ -2994,7 +2994,7 @@ msgstr "Rozbite UFO - Koruptor."
 
 #: ../base/ufos/maps.ufo:3918
 msgid "A hydroelectricity dam that is threatened by the alien invaders."
-msgstr "Elektrownia wodla zagrożona przez najazd Obcych."
+msgstr "Elektrownia wodna zagrożona przez najazd Obcych."
 
 #: ../base/ufos/maps.ufo:3966
 msgid "A small village."
@@ -25371,9 +25371,8 @@ msgid "TU:"
 msgstr "PR:"
 
 #: ../base/ufos/ui/hud_.ufo:191 ../base/ufos/ui/hud_phone.ufo:100
-#, fuzzy
 msgid "Shots:"
-msgstr "Liczba strzałów: %i"
+msgstr "Strzały:"
 
 #: ../base/ufos/ui/hud_.ufo:581
 msgid "Chat"
