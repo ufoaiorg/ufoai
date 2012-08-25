@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
 "POT-Creation-Date: 2012-08-19 14:21+0200\n"
-"PO-Revision-Date: 2012-08-25 16:39+0100\n"
+"PO-Revision-Date: 2012-08-25 20:21+0100\n"
 "Last-Translator: Maciej Wierzbicki <voovoos@killfile.pl>\n"
 "Language-Team:  <radius75@interia.pl>\n"
 "Language: pl_PL\n"
@@ -30078,65 +30078,48 @@ msgid "Your dropship is not near the landing zone"
 msgstr "Twój desantowiec nie znajduje się w pobliżu strefy lądowania"
 
 #: client/cgame/campaign/cp_mission_callbacks.cpp:117
-#, fuzzy
 msgid "Aliens killed"
-msgstr "Zabitych Obcych\t%i\n"
+msgstr "Zabici Obcy"
 
 #: client/cgame/campaign/cp_mission_callbacks.cpp:118
-#, fuzzy
 msgid "Aliens captured"
-msgstr "Schwytanych Obcych\t%i\n"
+msgstr "Schwytani Obcy"
 
 #: client/cgame/campaign/cp_mission_callbacks.cpp:119
-#, fuzzy
 msgid "Alien survivors"
-msgstr ""
-"Obcych, którzy przetrwali\t%i\n"
-"\n"
+msgstr "Obcy którzy przetrwali"
 
 #: client/cgame/campaign/cp_mission_callbacks.cpp:122
-#, fuzzy
 msgid "PHALANX soldiers killed by Aliens"
-msgstr "Żołnierzy PHALANX zabitych przez Obcych\t%i\n"
+msgstr "Żołnierze PHALANX zabici przez Obcych"
 
 #: client/cgame/campaign/cp_mission_callbacks.cpp:123
-#, fuzzy
 msgid "PHALANX soldiers missing in action"
-msgstr "Żołnierzy PHALANX zaginionych w akcji\t%i\n"
+msgstr "Żołnierze PHALANX zaginieni w akcji"
 
 #: client/cgame/campaign/cp_mission_callbacks.cpp:124
-#, fuzzy
 msgid "PHALANX friendly fire losses"
-msgstr "Straty od ognia własnej drużyny\t%i\n"
+msgstr "Żołnierze PHALANX zabici od własnego ostrzału"
 
 #: client/cgame/campaign/cp_mission_callbacks.cpp:125
-#, fuzzy
 msgid "PHALANX survivors"
-msgstr ""
-"Żołnierzy PHALANX, którzy przeżyli\t%i\n"
-"\n"
+msgstr "Żołnierze PHALANX którzy przetrwali"
 
 #: client/cgame/campaign/cp_mission_callbacks.cpp:128
-#, fuzzy
 msgid "Civilians killed by Aliens"
-msgstr "Cywili zabitych przez Obcych\t%i\n"
+msgstr "Cywile zabici przez Obcych"
 
 #: client/cgame/campaign/cp_mission_callbacks.cpp:129
-#, fuzzy
 msgid "Civilians killed by friendly fire"
-msgstr "Cywili zabitych w ogniu własnej drużyny\t%i\n"
+msgstr "Cywile zabici od własnego ostrzału"
 
 #: client/cgame/campaign/cp_mission_callbacks.cpp:130
-#, fuzzy
 msgid "Civilians saved"
-msgstr ""
-"Cywili uratowanych\t%i\n"
-"\n"
+msgstr "Cywile ocaleni"
 
 #: client/cgame/campaign/cp_mission_callbacks.cpp:134
-#, fuzzy
 msgid "Gathered items (types/all)"
-msgstr "Zebranych przedmiotów (rodzaje/ilość)\t%i/%i\n"
+msgstr "Zebrane przedmioty (rodzaje/wszystkich)"
 
 #: client/cgame/campaign/cp_mission_triggers.cpp:124
 msgid ""
