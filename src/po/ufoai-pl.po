@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
 "POT-Creation-Date: 2012-08-19 14:21+0200\n"
-"PO-Revision-Date: 2012-08-25 13:58+0100\n"
+"PO-Revision-Date: 2012-08-25 14:41+0100\n"
 "Last-Translator: Maciej Wierzbicki <voovoos@killfile.pl>\n"
 "Language-Team:  <radius75@interia.pl>\n"
 "Language: pl_PL\n"
@@ -23107,7 +23107,7 @@ msgstr "Po Wojnie"
 
 #: ../base/ufos/research.ufo:5373
 msgid "PHALANX And The Mumbai Aftermath"
-msgstr ""
+msgstr "PHALANX i Następstwa Wydarzeń w Bombaju"
 
 #: ../base/ufos/research.ufo:5385
 msgid "A New Twist"
@@ -23813,7 +23813,7 @@ msgid ""
 "Use [F1] key to quick save the game. Use [F2] key to quick load the game. "
 "Also, the game saves your state to the quick save before each mission."
 msgstr ""
-"Klawisz [F1] to szybki zapis gry. Klawisz [F2] to szybkie wczytanie gry. "
+"Klawisz [F5] to szybki zapis gry. Klawisz [F9] to szybkie wczytanie gry. "
 "Ponadto gra zapisuje Twój postęp szybkim zapisem przed każdą misją."
 
 #: ../base/ufos/tips.ufo:6
@@ -23832,6 +23832,9 @@ msgid ""
 "team list. When the soldier limit is lower than the amount of soldiers in "
 "your team, the soldiers at the top of the list will be used for the game."
 msgstr ""
+"Upewnij się że w drużynie trybu wieloosobowego, Twoi najlepsi żołnierze są "
+"na początku listy. Kiedy limit żołnierzy jest niższy od  twojej drużyny, do "
+"rozgrywki zostają włączeni żołnierze od początku listy."
 
 #: ../base/ufos/tips.ufo:8
 msgid ""
@@ -24153,6 +24156,8 @@ msgid ""
 "You should never kill civilians. Soldiers who killed civilians will not be "
 "promoted to high ranks."
 msgstr ""
+"Nigdy nie zabijaj cywili. Żołnierze którzy zabili cywila nie dostaną "
+"promocji na wyższą rangę."
 
 #: ../base/ufos/tips.ufo:50
 msgid ""
@@ -24181,6 +24186,8 @@ msgid ""
 "Can't remember who has the medikit in their backpack? Press [i] for "
 "inventory and then [1] to [8] to cycle through your troops."
 msgstr ""
+"Nie pamiętasz kto nosi apteczkę w plecaku? Naciśnij [i] by otworzyć menu "
+"przedmiotów a następnie [1] do [8] by przełączać postacie."
 
 #: ../base/ufos/tips.ufo:54
 msgid "To catch fast UFOs send interceptors in from several directions."
@@ -24341,14 +24348,18 @@ msgid "Keyinfo and General Help"
 msgstr "Skróty klawiszowe i Główne Porady"
 
 #: ../base/ufos/ui/_menu.ufo:612
+#, fuzzy
 msgid ""
 "Visit our forums and join the community at http://ufoai.org.\n"
 "Hint: Press CTRL+G to grab/release the mousepointer."
 msgstr ""
+"Odwiedź nasze forum i przyłącz się do społeczności na  http://ufoai.org.\n"
+"Hint: Press CTRL+G to grab/release the mousepointer."
 
 #: ../base/ufos/ui/_menu.ufo:614
 msgid "Visit our forums and join the community at http://ufoai.org."
 msgstr ""
+"Odwiedź nasze forum i przyłącz się do społeczności na  http://ufoai.org."
 
 #: ../base/ufos/ui/_menu.ufo:619
 msgid ""
@@ -26729,9 +26740,8 @@ msgid "Set the OpenGL shader quality - or disable them."
 msgstr ""
 
 #: ../base/ufos/ui/options.ufo:799
-#, fuzzy
 msgid "Disabled"
-msgstr "Automatyczna sprzedaż wyłączona."
+msgstr "Wyłączone"
 
 #: ../base/ufos/ui/options.ufo:804
 msgid "Low quality"
@@ -27085,7 +27095,7 @@ msgstr "Szybkość postaci:"
 
 #: ../base/ufos/ui/options.ufo:1639
 msgid "Choose between 0-9, higher values mean higher actor speed."
-msgstr ""
+msgstr "Wybierz pomiędzy 0-9, wyższa wartość oznacza większą prędkość postaci."
 
 #: ../base/ufos/ui/options.ufo:1652
 msgid "Geoscape Options"
@@ -27470,6 +27480,7 @@ msgstr "BPN"
 msgid ""
 "UGVs for this game - only valid if enough free soldier slots are available."
 msgstr ""
+"BPN dla tej gry - tylko jeśli jest wystarczająca ilość slotów dla żołnierzy."
 
 #: ../base/ufos/ui/stats.ufo:39
 msgid "Missions"
@@ -28910,7 +28921,6 @@ msgid "You've captured new aliens."
 msgstr "Pojmałeś Obcych."
 
 #: client/cgame/campaign/cp_aliencont_callbacks.cpp:202
-#, fuzzy
 msgid "Researched"
 msgstr "Badania"
 
@@ -29133,7 +29143,6 @@ msgid "Build at least a second base to transfer equipment or personnel"
 msgstr "Wybuduj co najmniej jedną bazę aby przesyłać wyposażenie lub personel"
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:578
-#, fuzzy
 msgid "Base is under attack, you can't destroy buildings!"
 msgstr "Baza jest atakowana, nie możesz nisczyć modułów!"
 
@@ -29724,9 +29733,9 @@ msgid "%s\t%i\t%i c"
 msgstr "%s\t%i / %i\n"
 
 #: client/cgame/campaign/cp_installation_callbacks.cpp:285
-#, fuzzy, c-format
+#, c-format
 msgid "Base\t-\t%i c"
-msgstr "Baza (%s):\t%i c\n"
+msgstr "Baza\t-\t%i c"
 
 #: client/cgame/campaign/cp_map.cpp:357
 msgid "Base"
@@ -30426,19 +30435,19 @@ msgid "Not enough credits to finish production in %s."
 msgstr "Nie ma wystarczającej ilości kredytów do dokończenia produkcji w %s.\n"
 
 #: client/cgame/campaign/cp_produce.cpp:504
-#, fuzzy, c-format
+#, c-format
 msgid "Not enough free storage space in %s. Production postponed."
-msgstr "Brak miejsca w magazynie bazy %s. Produkcja wstrzymana.\n"
+msgstr "Brak miejsca w magazynie bazy %s. Produkcja wstrzymana."
 
 #: client/cgame/campaign/cp_produce.cpp:524
-#, fuzzy, c-format
+#, c-format
 msgid "Not enough free hangar space in %s. Production postponed."
-msgstr "Brak miejsca w hangarach bazy %s. Produkcja wstrzymana.\n"
+msgstr "Brak miejsca w hangarach bazy %s. Produkcja wstrzymana."
 
 #: client/cgame/campaign/cp_produce.cpp:535
-#, fuzzy, c-format
+#, c-format
 msgid "Not enough free storage space in %s. Disassembling postponed."
-msgstr "Brak miejsca w magazynie bazy %s. Demontaż wstrzymany.\n"
+msgstr "Brak miejsca w magazynie bazy %s. Demontaż wstrzymany."
 
 #: client/cgame/campaign/cp_produce.cpp:580
 #, c-format
@@ -30626,9 +30635,9 @@ msgid "Not researched in any base."
 msgstr "Nie badana w żadnej bazie."
 
 #: client/cgame/campaign/cp_research_callbacks.cpp:116
-#, fuzzy, c-format
+#, c-format
 msgid "Researched in %s."
-msgstr "Badana w %s"
+msgstr "Badania w %s"
 
 #: client/cgame/campaign/cp_research_callbacks.cpp:118
 msgid "Researched in this base."
