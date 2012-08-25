@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
 "POT-Creation-Date: 2012-08-19 14:21+0200\n"
-"PO-Revision-Date: 2012-08-25 13:06+0100\n"
+"PO-Revision-Date: 2012-08-25 13:58+0100\n"
 "Last-Translator: Maciej Wierzbicki <voovoos@killfile.pl>\n"
 "Language-Team:  <radius75@interia.pl>\n"
 "Language: pl_PL\n"
@@ -24693,7 +24693,7 @@ msgstr "Czas budowy:"
 
 #: ../base/ufos/ui/basedefence.ufo:357
 msgid "Autofire"
-msgstr "Ogień automatyczny"
+msgstr "Ogień Automatyczny"
 
 #: ../base/ufos/ui/basedefence.ufo:372 ../base/ufos/ui/geoscape.ufo:1035
 #: ../base/ufos/ui/popup_installations.ufo:426
@@ -24907,7 +24907,8 @@ msgstr "Załaduj ponownie kampanie"
 msgid ""
 "Are you sure that you really want to reload the last automatically saved "
 "campaign state?"
-msgstr "Czy na pewno chcesz "
+msgstr ""
+"Czy na pewno chcesz załadować ostatni zapis automatyczny stanu kampanii?"
 
 #: ../base/ufos/ui/campaign.ufo:623
 msgid "You've lost the game"
@@ -27718,9 +27719,8 @@ msgid "Cannonade"
 msgstr "Kanonada"
 
 #: ../base/ufos/weapons_aliens.ufo:112 ../base/ufos/weapons_aliens.ufo:187
-#, fuzzy
 msgid "Needle Stream"
-msgstr "Następna wolna drużyna"
+msgstr "Lawina Igieł"
 
 #: ../base/ufos/weapons_human.ufo:6
 msgid "Assault Rifle"
@@ -27754,7 +27754,7 @@ msgstr "Seria 3 pocisków"
 #: ../base/ufos/weapons_multiplayer.ufo:305
 #: ../base/ufos/weapons_plasma.ufo:196 ../base/ufos/weapons_ugv.ufo:107
 msgid "Full-Auto"
-msgstr "Ogień automatyczny"
+msgstr "Ogień Automatyczny"
 
 #: ../base/ufos/weapons_human.ufo:110 ../base/ufos/weapons_human.ufo:199
 #: ../base/ufos/weapons_human.ufo:400 ../base/ufos/weapons_human.ufo:489
@@ -27780,7 +27780,7 @@ msgstr "Seria 5 strzałów"
 #: ../base/ufos/weapons_human.ufo:311 ../base/ufos/weapons_multiplayer.ufo:97
 #: ../base/ufos/weapons_multiplayer.ufo:328 ../base/ufos/weapons_ugv.ufo:133
 msgid "Full-Auto Sweep"
-msgstr "Ogień automatyczny (łuk)"
+msgstr "Ogień Automatyczny (Łuk)"
 
 #: ../base/ufos/weapons_human.ufo:340
 msgid "Sniper Rifle"
@@ -27853,11 +27853,11 @@ msgstr "Mały płomień"
 
 #: ../base/ufos/weapons_human.ufo:1023
 msgid "Inferno"
-msgstr "Pełna moc"
+msgstr "Pełna Moc"
 
 #: ../base/ufos/weapons_human.ufo:1044
 msgid "Inferno Sweep"
-msgstr "Pełna moc (łuk)"
+msgstr "Pełna Moc (Łuk)"
 
 #: ../base/ufos/weapons_human.ufo:1072
 msgid "Rocket Launcher"
