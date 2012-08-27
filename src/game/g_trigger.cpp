@@ -225,9 +225,9 @@ bool Touch_HurtTrigger (edict_t *self, edict_t *activator)
 	if (G_IsStunned(activator))
 		return false;
 
-	if (self->spawnflags & 2) {
+	if (self->spawnflags & (1 << 8)) {
 		activator->STUN += damage;
-	} else if (self->spawnflags & 4) {
+	} else if (self->spawnflags & (1 << 9)) {
 		/** @todo Handle dazed via trigger_hurt */
 	} else {
 		G_TakeDamage(activator, damage);
