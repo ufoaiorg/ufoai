@@ -295,8 +295,8 @@ assembly small2
 	fix +hangar	"2 4"
 	fix +hub "6 4"
 	fix +ventr "10 4"
-	fix +hall_v2 "12 4"
-	fix +hall_v1 "12 6"
+	fix +lab "12 4"
+	fix +storage_v "12 6"
 
 	fix +hall_cse1 "2 2"
 	fix +hall_tbtm1 "4 2"
