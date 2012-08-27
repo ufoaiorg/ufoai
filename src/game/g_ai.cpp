@@ -298,6 +298,30 @@ int AI_GetHidingTeam (const edict_t *ent)
 }
 
 /**
+ * @brief Checks if the  actor's position is safe to stand on.
+ * @return @c true if the actor's position is deemed safe.
+ */
+static bool AI_CheckPosition(const edict_t *const ent)
+{
+	if (G_IsInsane(ent))
+		return true;
+
+	/* Don't stand on trigger_hurt or misc_fire */
+	if (G_GetEdictFromPos(ent->pos, ET_TRIGGER_HURT) || G_GetEdictFromPos(ent->pos, ET_FIRE))
+		return false;
+
+	/* Don't stand next to misc_fire */
+	pos3_t pos;
+	for (int i = 0; i < DIRECTIONS; ++i) {
+		VectorSet(pos, ent->pos[0] + dvecs[i][0], ent->pos[1] + dvecs[i][1], ent->pos[2]);
+		if (G_GetEdictFromPos(pos, ET_FIRE))
+			return false;
+	}
+
+	return true;
+}
+
+/**
  * @brief Tries to search a hiding spot
  * @param[out] ent The actor edict. The position of the actor is updated here to perform visibility checks
  * @param[in] from The grid position the actor is (theoretically) standing at and searching a hiding location from
@@ -333,6 +357,10 @@ bool AI_FindHidingLocation (int team, edict_t *ent, const pos3_t from, int *tuLe
 			/* If enemies see this position, it doesn't qualify as hiding spot */
 			G_EdictCalcOrigin(ent);
 			if (G_IsVisibleForTeam(ent, team))
+				continue;
+
+			/* Don't stand on dangerous terrain! */
+			if (!AI_CheckPosition(ent))
 				continue;
 
 			*tuLeft -= delta;
@@ -392,6 +420,10 @@ bool AI_FindHerdLocation (edict_t *ent, const pos3_t from, const vec3_t target, 
 			/* time */
 			const pos_t delta = G_ActorMoveLength(ent, herdPathingTable, ent->pos, false);
 			if (delta > tu || delta == ROUTING_NOT_REACHABLE)
+				continue;
+
+			/* Don't stand on dangerous terrain! */
+			if (!AI_CheckPosition(ent))
 				continue;
 
 			G_EdictCalcOrigin(ent);
@@ -539,7 +571,7 @@ static void AI_SearchBestTarget (aiAction_t *aia, const edict_t *ent, edict_t *c
 				aia->shots = shots;
 				aia->target = check;
 				aia->fd = fd;
-				if (G_IsStunned(check))
+				if (fd->splrad > 0.0 || G_IsStunned(check))
 					aia->z_align = GROUND_DELTA;
 				else
 					aia->z_align = 0;
@@ -639,6 +671,10 @@ static float AI_FighterCalcActionScore (edict_t * ent, pos3_t to, aiAction_t * a
 		assert(bestTime > 0);
 		tu -= bestTime;
 	}
+
+	/* Try not to stand in dangerous terrain */
+	if (!AI_CheckPosition(ent))
+		bestActionScore -= SCORE_NOSAFE_POSITION_PENALTY;
 
 	if (!G_IsRaged(ent)) {
 		const int hidingTeam = AI_GetHidingTeam(ent);
@@ -804,6 +840,10 @@ static float AI_CivilianCalcActionScore (edict_t * ent, pos3_t to, aiAction_t * 
 	delta -= reactionTrap;
 	bestActionScore += delta;
 
+	/* Try not to stand in dangerous terrain */
+	if (!AI_CheckPosition(ent))
+		bestActionScore -= SCORE_NOSAFE_POSITION_PENALTY;
+
 	/* add laziness */
 	if (ent->TU)
 		bestActionScore += SCORE_CIV_LAZINESS * tu / ent->TU;
@@ -882,6 +922,10 @@ static float AI_PanicCalcActionScore (edict_t * ent, pos3_t to, aiAction_t * aia
 		if (G_ActorVis(check->origin, check, ent, true) > 0.25)
 			bestActionScore -= SCORE_NONHIDING_PLACE_PENALTY;
 	}
+
+	/* Try not to stand in dangerous terrain */
+	if (!AI_CheckPosition(ent))
+		bestActionScore -= SCORE_NOSAFE_POSITION_PENALTY;
 
 	/* add random effects */
 	bestActionScore += SCORE_PANIC_RANDOM * frand();
@@ -968,7 +1012,7 @@ static aiAction_t AI_PrepBestAction (const player_t *player, edict_t * ent)
 	int xl, yl, xh, yh;
 	int dist;
 	float bestActionScore, best;
-	/* The actor will be forced to stand before doing the move, so calculations her might be a little off */
+	/* The actor will be forced to stand before doing the move, so calculations here might be a little off */
 	const byte crouchingState = G_IsCrouched(ent) ? 1 : 0;
 
 	/* calculate move table */
