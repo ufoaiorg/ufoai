@@ -554,11 +554,11 @@ aircraft craft_ufo_corrupter
 aircraft craft_ufo_supply
 {
 	param {
-		speed		8
-		maxspeed	16
+		speed		5
+		maxspeed	8
 		shield		0
-		ecm			80
-		damage		250
+		ecm			100
+		damage		120
 		accuracy	100
 		range		208
 	}
