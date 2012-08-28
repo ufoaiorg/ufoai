@@ -88,7 +88,7 @@ void R_ModLoadAnims (mAliasModel_t *mod, const char *animname)
 			break;
 		anim->to = atoi(token);
 		if (anim->to < 0)
-			Com_Error(ERR_FATAL, "R_ModLoadAnims: negative start frame for %s", animname);
+			Com_Error(ERR_FATAL, "R_ModLoadAnims: negative end frame for %s", animname);
 		else if (anim->to > mod->num_frames)
 			Com_Error(ERR_FATAL, "R_ModLoadAnims: end frame is higher than models frame count (%i) (model: %s)",
 					mod->num_frames, animname);
