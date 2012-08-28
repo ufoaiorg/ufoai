@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
-"POT-Creation-Date: 2012-08-19 14:21+0200\n"
-"PO-Revision-Date: 2012-03-25 19:23+0200\n"
-"Last-Translator: DarkRainX <darkrainx@users.sourceforge.net>\n"
+"POT-Creation-Date: 2012-08-27 19:27-0500\n"
+"PO-Revision-Date: 2012-08-27 20:18-0600\n"
+"Last-Translator: DarkRain <darkrain@users.sourceforge.net>\n"
 "Language-Team: \n"
 "Language: es_ES\n"
 "MIME-Version: 1.0\n"
@@ -92,9 +92,8 @@ msgid "Alien landing - Industrial"
 msgstr "OVNI aterrizado - Industrial"
 
 #: ../base/maps/frozen.ump:372 ../base/maps/frozen.ump:394
-#, fuzzy
 msgid "A UFO crashed into the snow here."
-msgstr "Un OVNI pequeño se ha chocado en esta región minera."
+msgstr "Un OVNI pequeño se ha chocado en esta región."
 
 #: ../base/maps/frozen.ump:412
 msgid "Multiplayer Coop"
@@ -122,9 +121,8 @@ msgid "UFO landed in hills area"
 msgstr "Aterrizaje OVNI en un área montañosa"
 
 #: ../base/maps/ice.ump:331 ../base/maps/ice.ump:354
-#, fuzzy
 msgid "Ice"
-msgstr "Incheon"
+msgstr "Hielo"
 
 #: ../base/maps/industrial.ump:257 ../base/maps/industrial.ump:281
 msgid "UFO Landed"
@@ -513,7 +511,6 @@ msgid "Power Armour"
 msgstr "Armadura Servo-asistida"
 
 #: ../base/ufos/armour.ufo:251
-#, fuzzy
 msgid "Advanced Nanocomposite Armour"
 msgstr "Armadura de Nanocompuesto"
 
@@ -619,7 +616,6 @@ msgid "Very Easy Campaign"
 msgstr "Campaña Muy Fácil"
 
 #: ../base/ufos/campaign.ufo:275
-#, fuzzy
 msgid "Play the aliens"
 msgstr "Jugar con los aliens"
 
@@ -2509,7 +2505,6 @@ msgstr "Base Alienígena Descubierta"
 
 #: ../base/ufos/events.ufo:86
 #: client/cgame/campaign/missions/cp_mission_ufocarrier.cpp:62
-#, fuzzy
 msgid "UFO-Carrier"
 msgstr "OVNI - Transportador"
 
@@ -2587,7 +2582,6 @@ msgid "Radar Tower"
 msgstr "Torre de Radar"
 
 #: ../base/ufos/installation.ufo:17
-#, fuzzy
 msgid ""
 "The radar tower is an unmanned installation that can be placed anywhere in "
 "the world to boost our detection range. It is cheap to build and highly "
@@ -2628,7 +2622,6 @@ msgid "SAM Site"
 msgstr "Batería SAM"
 
 #: ../base/ufos/installation.ufo:47
-#, fuzzy
 msgid ""
 "The SAM site is an unmanned installation that can be placed anywhere in the "
 "world to automatically engage detected UFOs with surface-to-air missiles. It "
@@ -2769,14 +2762,12 @@ msgid "No language"
 msgstr "Sin idioma"
 
 #: ../base/ufos/maps.ufo:66
-#, fuzzy
 msgid "A suburb that has received a visit from a UFO."
-msgstr "Un suburbio que ha recibido la visita de un Recolector."
+msgstr "Un suburbio que ha recibido la visita de un OVNI."
 
 #: ../base/ufos/maps.ufo:109
-#, fuzzy
 msgid "A UFO crashed here."
-msgstr "Un OVNI pequeño se ha chocado en esta región minera."
+msgstr "Un OVNI se ha chocado en esta región."
 
 #: ../base/ufos/maps.ufo:170
 msgid "A suburb that has been visited by an UFO."
@@ -3131,7 +3122,6 @@ msgstr[1] "Pilotos"
 
 #: ../base/ufos/medals.ufo:48 ../base/ufos/team_humans.ufo:2083
 #: ../base/ufos/team_humans.ufo:2148 client/cgame/campaign/cp_employee.cpp:208
-#, fuzzy
 msgid "UGV"
 msgid_plural "UGVs"
 msgstr[0] "VTD"
@@ -3241,7 +3231,6 @@ msgid "Col"
 msgstr "Cnel"
 
 #: ../base/ufos/msgid/aircraft.ufo:42
-#, fuzzy
 msgid ""
 "Aircraft Evaluation -- Firebird-class Dropship\n"
 "\n"
@@ -3451,7 +3440,6 @@ msgid "No pre research info available"
 msgstr "No existe información disponible previa a la investigación."
 
 #: ../base/ufos/msgid/aircraft.ufo:110
-#, fuzzy
 msgid ""
 "Aircraft Evaluation -- Stiletto-class Interceptor\n"
 "\n"
@@ -3674,7 +3662,6 @@ msgstr ""
 "ojos. Lo vamos a necesitar."
 
 #: ../base/ufos/msgid/aircraft.ufo:152
-#, fuzzy
 msgid ""
 "Aircraft Evaluation -- Saracen-class Interceptor\n"
 "\n"
@@ -4082,7 +4069,6 @@ msgstr ""
 "Operations Command"
 
 #: ../base/ufos/msgid/aircraft.ufo:224
-#, fuzzy
 msgid ""
 "This small UFO is the first type we've observed visually and on radar. "
 "Although they don't seem to take part in actual raids, they're no less a "
@@ -4167,7 +4153,6 @@ msgstr ""
 "Armamento: Ninguno"
 
 #: ../base/ufos/msgid/aircraft.ufo:230
-#, fuzzy
 msgid ""
 "Commander, we've recovered a new UFO type which is now waiting in our hangar "
 "for disassembly. We're ready to start studying and dismantling the craft "
@@ -4935,7 +4920,6 @@ msgstr ""
 "Operaciones Atlánticas"
 
 #: ../base/ufos/msgid/aircraftitems.ufo:78
-#, fuzzy
 msgid ""
 "Technical Specifications: Polymer Aircraft Armour\n"
 "\n"
@@ -5177,7 +5161,6 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/msgid/aircraftitems.ufo:114
-#, fuzzy
 msgid ""
 "Commander, the recovery of an intact alien astrogation unit is an important "
 "milestone. Although this unit doesn't seem to contain a star chart, it will "
@@ -5208,7 +5191,6 @@ msgstr ""
 "--Cmte. Navarre"
 
 #: ../base/ufos/msgid/aircraftitems.ufo:132
-#, fuzzy
 msgid ""
 "Commander, we've finished work on the captured alien astrogation unit. Here "
 "is a summary of my report.\n"
@@ -5317,7 +5299,6 @@ msgstr ""
 "--Cmte. Navarre"
 
 #: ../base/ufos/msgid/aircraftitems.ufo:140
-#, fuzzy
 msgid ""
 "Commander, the alien antimatter engines we recovered have been fascinating "
 "my team ever since they arrived. With our new understanding of the alien "
@@ -5348,7 +5329,6 @@ msgstr ""
 "--Cmte. Navarre"
 
 #: ../base/ufos/msgid/aircraftitems.ufo:162
-#, fuzzy
 msgid ""
 "Commander, I'm happy to report the success of our alien propulsion program. "
 "We've cracked the mysteries of the alien engine set-up and we finally "
@@ -5474,7 +5454,6 @@ msgstr ""
 "--Cmte. Navarre"
 
 #: ../base/ufos/msgid/aircraftitems.ufo:172
-#, fuzzy
 msgid ""
 "Commander, the alien sensor suite appears to be a very powerful set of "
 "passive and active scanning systems, including radar, lidar, magnetic and UV/"
@@ -5519,7 +5498,6 @@ msgstr ""
 "--Cmte. Navarre"
 
 #: ../base/ufos/msgid/aircraftitems.ufo:194
-#, fuzzy
 msgid ""
 "The project on alien detection is complete, Commander. We now have a full "
 "understanding of the machinery, its controls, and the modifications needed "
@@ -5630,7 +5608,6 @@ msgstr ""
 "--Cmte. Navarre"
 
 #: ../base/ufos/msgid/aircraftitems.ufo:208
-#: ../base/ufos/msgid/aircraftitems.ufo:552
 #, fuzzy
 msgid ""
 "This is one of several proposals I'm submitting for the research and "
@@ -5690,7 +5667,6 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/msgid/aircraftitems.ufo:222
-#: ../base/ufos/msgid/aircraftitems.ufo:566
 #, fuzzy
 msgid ""
 "Commander, I've just finished my report on our latest laser program. We've "
@@ -5770,7 +5746,6 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/msgid/aircraftitems.ufo:264
-#, fuzzy
 msgid ""
 "Technical Specifications: SHIVA Rotary Cannon\n"
 "\n"
@@ -5937,9 +5912,8 @@ msgstr ""
 "Ninguno."
 
 #: ../base/ufos/msgid/aircraftitems.ufo:302
-#: ../base/ufos/msgid/aircraftitems.ufo:628
-#: ../base/ufos/msgid/aircraftitems.ufo:666
-#, fuzzy
+#: ../base/ufos/msgid/aircraftitems.ufo:616
+#: ../base/ufos/msgid/aircraftitems.ufo:654
 msgid ""
 "Technical Specifications: SHIVA 20mm API Rounds\n"
 "\n"
@@ -6056,7 +6030,6 @@ msgstr ""
 "Ninguno."
 
 #: ../base/ufos/msgid/aircraftitems.ufo:340
-#, fuzzy
 msgid ""
 "Technical Specifications: SHIVA 20mm HEI Rounds\n"
 "\n"
@@ -6515,7 +6488,6 @@ msgstr ""
 "Ninguno."
 
 #: ../base/ufos/msgid/aircraftitems.ufo:472
-#, fuzzy
 msgid ""
 "Technical Specifications: TR-20 Rocket Pod\n"
 "\n"
@@ -6611,7 +6583,6 @@ msgstr ""
 "Operaciones Atlánticas"
 
 #: ../base/ufos/msgid/aircraftitems.ufo:514
-#, fuzzy
 msgid ""
 "Technical Specifications: TR-20 Rocket\n"
 "\n"
@@ -6757,7 +6728,6 @@ msgstr ""
 "Ninguno."
 
 #: ../base/ufos/msgid/aircraftitems.ufo:520
-#, fuzzy
 msgid ""
 "Commander, the UFO we recovered was equipped with a very interesting type of "
 "weapon that we'd like to research right away. It seems to fire some kind of "
@@ -6777,7 +6747,6 @@ msgstr ""
 "--Cmdt. Navarre"
 
 #: ../base/ufos/msgid/aircraftitems.ufo:538
-#, fuzzy
 msgid ""
 "Our report on the alien PBW (Particle Beam Weapon) is ready for your review, "
 "Commander.\n"
@@ -6882,39 +6851,124 @@ msgstr ""
 "\n"
 "--Cmdt. Navarre"
 
-#: ../base/ufos/msgid/aircraftitems.ufo:574 ../base/ufos/msgid/story.ufo:378
+#: ../base/ufos/msgid/aircraftitems.ufo:548
 #, fuzzy
 msgid ""
-"Commander, as I mentioned in my previous report, the UFO we recovered was "
-"plated with a highly interesting alloy which blends plastic and metal "
-"together into a single material. These materials seem to be used almost "
-"universally throughout the alien technology base. It's advanced stuff, "
-"massively versatile and with a thousand possible uses.\n"
+"Commander, we made an extremely interesting find on the UFO we disassembled. "
+"It carried an advanced and highly dangerous onboard missile launcher, using "
+"powerful magnetic rails to accelerate its missiles to hypersonic speeds "
+"before they even leave the launch tube.\n"
 "\n"
-"I think it warrants the research to see if we can reproduce this stuff in "
-"our Workshops, but even if we can't, it seems likely we'll be getting our "
-"hands on large quantities of it with every UFO we salvage. We'll definitely "
-"be able to find new, human applications for it that will extend and expand "
-"our combat capabilities.\n"
+"We want to investigate this launcher and determine whether or not it can be "
+"adapted to fit on PHALANX aircraft, or even if it can be applied to other "
+"purposes. This launcher system would be far more effective in bringing down "
+"UFOs than our Sparrowhawks, possibly even more effective than our current "
+"SAM systems. If we can adapt it we stand to gain a substantial boost to the "
+"firepower of our whole airfleet as well as ground-based missile systems.\n"
+"\n"
+"Please approve this program whenever you can, Commander.\n"
 "\n"
 "Cdr. Navarre"
 msgstr ""
-"Comandante, como dije en mi informe anterior, el OVNI que se recuperó está "
-"recubierto con una aleación muy interesante que combina metal y plástico en "
-"un único material. Esta aleación parece ser utilizada casi universalmente en "
-"toda la base tecnológica alienígena. Es un material avanzado, enormemente "
-"versátil y con miles de usos posibles.\n"
+"This is one of several proposals I'm submitting for the research and "
+"development of new laser weaponry. Each of these will have to be developed "
+"separately due to the size differences, power levels and complexity of the "
+"systems involved.\n"
 "\n"
-"Creo que esto merece una investigación para ver si podemos reproducir este "
-"material en nuestros Talleres, pero incluso si no podemos, es muy probable "
-"que podamos conseguirlo en grandes cantidades con cada OVNI que rescatemos. "
-"Sin duda, seremos capaces de encontrarle nuevas aplicaciones para el ser "
-"humano, que extenderán y expandirán nuestras capacidades de combate.\n"
+"The Aerial Laser Cannon is the largest and most powerful iteration of our "
+"new laser designs. Like our infantry weapons it'll be powered by deuterium-"
+"fluoride reaction, but on a much larger scale and amplified by the "
+"aircraft's on-board electrical systems. Several exciting ideas are being "
+"considered.\n"
 "\n"
-"--Cmte. Navarre"
+"As well as being the biggest, this may well be our most challenging laser to "
+"create. Any aircraft cannon will have to reach across several kilometres of "
+"atmosphere -- and therefore loads of atmospheric blooming -- with enough "
+"punch at the endpoint to cut into a UFO's fuselage. Those sorts of power "
+"levels have been achieved before with massive arrays mounted on jumbo jets, "
+"but never in a package small enough to make a jet fighter cannon.\n"
+"\n"
+"The finished product should be able to engage UFOs with bullseye accuracy at "
+"ranges well beyond that of the SHIVA cannon, and although damage may be low, "
+"we expect that the ability to keep continuous fire and pressure on enemy "
+"craft will be valuable in the days to come.\n"
+"\n"
+"Please approve lab time and funding for this program when you're ready, "
+"Commander.\n"
+"\n"
+"--Cdr. Navarre"
 
-#: ../base/ufos/msgid/aircraftitems.ufo:590 ../base/ufos/msgid/story.ufo:370
+#: ../base/ufos/msgid/aircraftitems.ufo:562
 #, fuzzy
+msgid ""
+"Commander, we've finished work on the alien missile launcher. It's a fairly "
+"simple affair. Firing is computer-driven, fed directly from the UFO's "
+"targeting computer. Powerful electromagnetic coils around the launch tube "
+"accelerate the missile to extreme speeds, reaching up to Mach 4 at the point "
+"where the missile leaves the tube. Only once the missile is fully free of "
+"the tube do its onboard rockets kick in.\n"
+"\n"
+"The good news is that we've managed to succesfully adapt fittings, controls "
+"and power feeds to allow the Alien Launcher to be safely mounted to our "
+"aircraft. The bad news is that we've had to drastically reduce its magazine "
+"size in order to meet weight and size restrictions on our aircraft.\n"
+"\n"
+"Our aircraft are too small and light to be able to carry so many, and most "
+"of our craft aren't laid out with internal missile magazines. We've had to "
+"custom-build a magazine mounted with the launcher, the capacity of which "
+"falls behind the stores found on UFOs.\n"
+"\n"
+"It's not all doom and gloom, though. We believe that we can modify the "
+"launch tube to be able to fire human missiles as well as the alien type. "
+"We'd have to develop the missile ourselves, of course -- no current human "
+"missile is capable of withstanding the stress of being fired from this "
+"launcher. However, we're confident we can design a missile that will survive "
+"launch and incorporates new UFO-tracking technologies to improve homing and "
+"ECM capability.\n"
+"\n"
+"I'll send you a design proposal as soon as I can, Commander.\n"
+"\n"
+"Cdr. Navarre"
+msgstr ""
+"Commander, I've just finished my report on our latest laser program. We've "
+"successfully prototyped the new Aerial Laser Cannon and are ready to put it "
+"into production.\n"
+"\n"
+"We achieved what we set out to do: create a continuous wave, deuterium-"
+"fluoride-powered laser with megawatt-range output, capable of tracking and "
+"hitting UFOs at ranges of up to 5 kilometres. Accuracy is excellent, "
+"hampered only by enemy ECM (Electronic Countermeasures), and unlike in all "
+"our other weapons it is not affected by range. The laser proceeds in a "
+"straight line and crosses the distance between gun and target almost "
+"instantly. It's hard to miss with it.\n"
+"\n"
+"Unfortunately atmospheric blooming is still a problem, and the laser rapidly "
+"loses power the further it has to travel to the target. At maximum range, 5 "
+"kilometres, it takes 32 seconds of continuous fire on the same spot to hole "
+"a UFO's hull. We're rarely going to have that much time to wait for a kill. "
+"The ideal range for this weapon is between 2 to 3 kilometres where it "
+"strikes a good balance between damage and distance. Average damage per "
+"second at these distances is slightly less than the SHIVA Rotary Cannon, but "
+"range is higher by up to 1.5 kilometres. More so than any of our previous "
+"weapons, the Aerial Laser Cannon is ideal for driving and pinning down the "
+"enemy behind a wall of laser fire.\n"
+"\n"
+"The cannon carries an integrated magazine of deuterium-fluoride allowing up "
+"to thirty minutes of continuous fire. Since deuterium and fluoride are both "
+"too potentially hazardous to store on-base, and we have access to large off-"
+"base stockpiles of all the necessary compounds, we will not need to keep "
+"laser cannon ammunition in inventory.\n"
+"\n"
+"Deployment of the weapon is at your discretion, Commander, but I'd like to "
+"recommend we use the new cannons to replace SHIVA guns across our airfleet "
+"except for craft specifically equipped for close-in fighting. Anything "
+"that's much less manoeuvrable than a UFO will have difficulty keeping hold "
+"of the target with SHIVAs, so the laser offers a far better solution with "
+"nearly as much staying power.\n"
+"\n"
+"--Cdr. Navarre"
+
+#: ../base/ufos/msgid/aircraftitems.ufo:578 ../base/ufos/msgid/story.ufo:370
 msgid ""
 "Commander, I think we've uncovered the secret to the alien materials. After "
 "some modifications to our Workshop equipment, we should now be able to use "
@@ -6996,8 +7050,7 @@ msgstr ""
 "\n"
 "--Cmte. Navarre"
 
-#: ../base/ufos/msgid/aircraftitems.ufo:704
-#, fuzzy
+#: ../base/ufos/msgid/aircraftitems.ufo:692
 msgid ""
 "Technical Specifications: Targeting Computer\n"
 "\n"
@@ -7075,8 +7128,7 @@ msgstr ""
 "Por: Cmdt. Paul Navarre, I+D: División de Ingeniería, PHALANX, Centro de "
 "Operaciones Atlánticas"
 
-#: ../base/ufos/msgid/aircraftitems.ufo:738
-#, fuzzy
+#: ../base/ufos/msgid/aircraftitems.ufo:726
 msgid ""
 "Technical Specifications: Fuel Pod\n"
 "\n"
@@ -7146,12 +7198,10 @@ msgstr ""
 "Operaciones Atlánticas"
 
 #: ../base/ufos/msgid/aliens.ufo:8 ../base/ufos/msgid/aliens.ufo:44
-#: ../base/ufos/msgid/aliens.ufo:76 ../base/ufos/msgid/aliens.ufo:156
-#: ../base/ufos/msgid/aliens.ufo:166 ../base/ufos/msgid/aliens.ufo:250
-#: ../base/ufos/msgid/aliens.ufo:260 ../base/ufos/msgid/aliens.ufo:340
-#: ../base/ufos/msgid/aliens.ufo:350 ../base/ufos/msgid/aliens.ufo:396
-#: ../base/ufos/msgid/aliens.ufo:442
-#, fuzzy
+#: ../base/ufos/msgid/aliens.ufo:148 ../base/ufos/msgid/aliens.ufo:158
+#: ../base/ufos/msgid/aliens.ufo:242 ../base/ufos/msgid/aliens.ufo:252
+#: ../base/ufos/msgid/aliens.ufo:332 ../base/ufos/msgid/aliens.ufo:342
+#: ../base/ufos/msgid/aliens.ufo:368
 msgid ""
 "Commander,\n"
 "\n"
@@ -7171,8 +7221,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/msgid/aliens.ufo:34 ../base/ufos/msgid/aliens.ufo:66
-#, fuzzy
+#: ../base/ufos/msgid/aliens.ufo:34
 msgid ""
 "Commander,\n"
 "\n"
@@ -7255,9 +7304,94 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/msgid/aliens.ufo:112 ../base/ufos/msgid/aliens.ufo:386
-#: ../base/ufos/msgid/aliens.ufo:432
+#: ../base/ufos/msgid/aliens.ufo:58
+msgid ""
+"Commander,\n"
+"\n"
+"My team has analysed the remains of the arachnid machine our operatives "
+"brought back, and we have prepared a summary for your review.\n"
+"\n"
+"This creature is similar in many ways to the Bloodspider we have faced "
+"before on the battlefield, but it has undergone upgrades to make it much "
+"more deadly. It's razor-sharp blades are longer and its armour plating has "
+"undergone significant revisions. These creatures are terrifying on the "
+"battlefield if they get close, and this new variant is much more likely to "
+"survive a few rounds from our soldiers and keep coming. We will need to hunt "
+"the Combat Bloodspider in packs.\n"
+"\n"
+"We can't be certain, but we fear that the armour upgrades may have been "
+"designed in response to battlefield experience with us. If that's true, it "
+"means the aliens may be upgrading other combat systems as well.\n"
+"\n"
+"Sincerely,\n"
+"\n"
+"Dr. Connor"
+msgstr ""
+"Comandante,\n"
+"\n"
+"Mi equipo ha analizado los restos de la máquina aracnomorfa recuperada por "
+"nuestros agentes, y hemos preparado un informe para su supervisión.\n"
+"\n"
+"La autopsia ha revelado que la criatura es un complejo robot sin ningún "
+"componente orgánico. Su cuerpo recuerda al de la araña terrestre: un cuerpo "
+"central - que abriga un cerebro artificial y baterías - y ocho patas movidas "
+"por poderosos servomotores, que le permiten atravesar el campo de batalla a "
+"velocidades inquietantes. Está equipada con mandíbulas afiladísimas que "
+"pueden trocear rápidamente un cuerpo humano y almacenar tejidos u órganos "
+"enteros en una gran cavidad localizada delante de sus baterías. Existen "
+"grabaciones de estas máquinas en acción, desmembrando a humanos vivos "
+"durante una misión de terror y guardando su biomasa para su posterior "
+"recuperación. El proceso es macabro y muy, muy rápido.\n"
+"\n"
+"Nuestros soldados han apodado a esta criatura como la \"Araña Sanguinaria\", "
+"y el nombre se ha mantenido.\n"
+"\n"
+"Las pruebas de balística realizadas sobre el blindaje de la Araña "
+"Sanguinaria revelaron que es muy resistente y tiene una excelente capacidad "
+"de aislamiento, siendo efectivo contra una amplia variedad de armas.\n"
+"\n"
+"-- El blindaje es muy resistente a los láseres, la electricidad y la "
+"munición incendiaria, pero puede ser traspasada por balas perforantes de "
+"alta velocidad.\n"
+"\n"
+"-- Los explosivos potentes también resultan efectivos, ya que dañan las "
+"vulnerables articulaciones de las patas. Este podría ser el método más "
+"eficaz para derribar a estas criaturas.\n"
+"\n"
+"La existencia de esta criatura suscita cuestiones inquietantes. Sugiere que "
+"los alienígenas tienen un interés muy particular por la raza humana y no "
+"tienen ninguna clase de escrúpulos. Comandante, estas máquinas representan "
+"una enorme amenaza para cualquier ser humano que se aproxime. En cuanto de "
+"encontrarlas, deberían ser destruidas inmediatamente a cualquier precio.\n"
+"\n"
+"Atentamente,\n"
+"\n"
+"Dr. Connor"
+
+#: ../base/ufos/msgid/aliens.ufo:68
 #, fuzzy
+msgid ""
+"Commander,\n"
+"\n"
+"We've recovered a new alien corpse from the battlefield. It appears to be a "
+"more deadly variant of the Bloodspider with which we are familiar. "
+"Dissection and assessment could give us insights into the alien's new "
+"capabilities.\n"
+"\n"
+"Sincerely,\n"
+"\n"
+"Dr. Connor"
+msgstr ""
+"Comandante,\n"
+"\n"
+"Hemos recuperado un nuevo cuerpo alienígena del campo de batalla. Deberíamos "
+"empezar su disección y análisis lo antes posible.\n"
+"\n"
+"Atentamente,\n"
+"\n"
+"Dr. Connor"
+
+#: ../base/ufos/msgid/aliens.ufo:104 ../base/ufos/msgid/aliens.ufo:404
 msgid ""
 "Commander,\n"
 "\n"
@@ -7431,8 +7565,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/msgid/aliens.ufo:146
-#, fuzzy
+#: ../base/ufos/msgid/aliens.ufo:138
 msgid ""
 "Commander,\n"
 "\n"
@@ -7596,8 +7729,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/msgid/aliens.ufo:204
-#, fuzzy
+#: ../base/ufos/msgid/aliens.ufo:196
 msgid ""
 "Commander,\n"
 "\n"
@@ -7796,8 +7928,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/msgid/aliens.ufo:240
-#, fuzzy
+#: ../base/ufos/msgid/aliens.ufo:232
 msgid ""
 "Commander,\n"
 "\n"
@@ -7975,8 +8106,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/msgid/aliens.ufo:296
-#, fuzzy
+#: ../base/ufos/msgid/aliens.ufo:288
 msgid ""
 "Commander,\n"
 "\n"
@@ -8151,8 +8281,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/msgid/aliens.ufo:330
-#, fuzzy
+#: ../base/ufos/msgid/aliens.ufo:322
 msgid ""
 "Commander,\n"
 "\n"
@@ -8314,8 +8443,66 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/msgid/armour.ufo:38
+#: ../base/ufos/msgid/aliens.ufo:358
 #, fuzzy
+msgid ""
+"Commander,\n"
+"\n"
+"My team and I have completed the disassembly and autopsy of the alien "
+"creature we discovered. Here is my summary of our findings.\n"
+"\n"
+"We first assumed the object was a robot, but upon investigation we found a "
+"small biomass at its core. This biological alien core is encased in a shell "
+"of sensors which we believe interpret its signals to operate the electrical "
+"machinery. For all intents and purposes, this alien is little more than a "
+"\"brain\" in charge of a complex device. Calling it a brain may be too "
+"generous. We don't believe it is large enough to undertake mental processes "
+"more complex than basic motor skills, but troops report seeing it coordinate "
+"closely with other aliens on the battlefield.\n"
+"\n"
+"The device itself is a small, but heavy, mobile disk, able to hover above "
+"the ground. Because of its aerial movement, it is able to cross the "
+"battlefield rapidly. Our soldiers will need to take it down before it gets "
+"in range, which is no small feet considering its size and movement "
+"capabilities.\n"
+"\n"
+"The models we discovered are equipped with a mounted plasma weapon which is "
+"able to fire single rounds. Anyone caught within range will be very sorry. "
+"Given its brain size and limited functionality, we believe this alien is "
+"engineered for light combat missions -- perhaps it plays a reconnaissance "
+"role.\n"
+"\n"
+"Sincerely,\n"
+"\n"
+"Dr. Connor"
+msgstr ""
+"Untangling the network of loose, fibrous material that forms at least 90% of "
+"the hovernet reveals a solid disc of unknown construction. Mounting points "
+"for weaponry are clearly visible, though the markings alongside them have "
+"yet to be deciphered and would be our first breakthrough in understanding "
+"the alien language.No joints can be seen between the disc and the dozens of "
+"fibres that protrude from it, even under an electron microscope. It is "
+"possible that the fibres are extruded from the disc itself, which must "
+"provide the most efficient distribution of the hovernet's energy and "
+"propulsive force.The loose arrangement of the fibres suggests that a "
+"successful hit with a projectile or directed energy weapon is unlikely, and "
+"blast or incendiary weapons would have greater effect."
+
+#: ../base/ufos/msgid/aliens.ufo:414
+#, fuzzy
+msgid ""
+"Commander,\n"
+"\n"
+"We've recovered a new alien corpse from the battlefield. It appears to be a "
+"more deadly variant of the Hovernet with which we are familiar. Dissection "
+"and assessment could give us insights into the alien's new capabilities.\n"
+"\n"
+"Sincerely,\n"
+"\n"
+"Dr. Connor"
+msgstr "No hay información previa a la investigación diponible."
+
+#: ../base/ufos/msgid/armour.ufo:38
 msgid ""
 "Technical Specifications: Combat Armour\n"
 "\n"
@@ -8507,7 +8694,6 @@ msgstr ""
 "Ninguno."
 
 #: ../base/ufos/msgid/armour.ufo:56 ../base/ufos/msgid/armour.ufo:86
-#, fuzzy
 msgid ""
 "Commander, I would like to report the success of our nanocomposite "
 "production research!\n"
@@ -8606,7 +8792,6 @@ msgstr ""
 "--Cdte. Navarre"
 
 #: ../base/ufos/msgid/armour.ufo:68 ../base/ufos/msgid/armour.ufo:98
-#, fuzzy
 msgid ""
 "Our examination of the alien body armour has led us to many interesting "
 "realisations. Obviously, the key to creating more effective mobile armour "
@@ -8658,7 +8843,6 @@ msgstr ""
 "--Cdte. Navarre"
 
 #: ../base/ufos/msgid/armour.ufo:114
-#, fuzzy
 msgid ""
 "Commander, we've got a full report on the alien armour for you.\n"
 "\n"
@@ -8751,7 +8935,6 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/msgid/armour.ufo:122
-#, fuzzy
 msgid ""
 "Commander, we've recovered a suit of alien body armour from the battlefield. "
 "This armour has been a plague to our soldiers due to its very high "
@@ -8783,7 +8966,6 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/msgid/armour.ufo:138
-#, fuzzy
 msgid ""
 "Where armour is concerned, the aliens' design philosophy seems to be, \"If "
 "it works, let's use more of it.\" This new armour is similar in design to "
@@ -8881,7 +9063,6 @@ msgstr ""
 "--Cdte. Navarre"
 
 #: ../base/ufos/msgid/armour.ufo:146
-#, fuzzy
 msgid ""
 "Commander, we've salvaged a new suit of alien armour from the field. It's "
 "much heavier than the alien armour we've encountered previously, and it "
@@ -8915,7 +9096,6 @@ msgstr ""
 "--Cdte. Navarre"
 
 #: ../base/ufos/msgid/buildings.ufo:14
-#, fuzzy
 msgid ""
 "Commander, my team and I are happy to report our test weapons are living up "
 "to all our expectations, and I'm submitting a new set of blueprints to your "
@@ -9037,7 +9217,6 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/msgid/buildings.ufo:64
-#, fuzzy
 msgid ""
 "Blueprints -- Alien Containment Facility\n"
 "\n"
@@ -9197,7 +9376,6 @@ msgstr ""
 "ajustes para que funcione según sus especificaciones de diseño."
 
 #: ../base/ufos/msgid/buildings.ufo:104
-#, fuzzy
 msgid ""
 "Blueprints -- Command Centre\n"
 "\n"
@@ -9336,7 +9514,6 @@ msgstr ""
 "Los demás componentes continúan siendo útiles y eficaces."
 
 #: ../base/ufos/msgid/buildings.ufo:136
-#, fuzzy
 msgid ""
 "Blueprints -- Entrance\n"
 "\n"
@@ -9430,7 +9607,6 @@ msgstr ""
 "Ninguno."
 
 #: ../base/ufos/msgid/buildings.ufo:180
-#, fuzzy
 msgid ""
 "Blueprints -- Missile Battery\n"
 "\n"
@@ -9609,7 +9785,6 @@ msgstr ""
 "Ninguno."
 
 #: ../base/ufos/msgid/buildings.ufo:224
-#, fuzzy
 msgid ""
 "Blueprints -- Large Hangar\n"
 "\n"
@@ -9773,7 +9948,6 @@ msgstr ""
 "Ninguno."
 
 #: ../base/ufos/msgid/buildings.ufo:266
-#, fuzzy
 msgid ""
 "Blueprints -- Hospital\n"
 "\n"
@@ -9941,7 +10115,6 @@ msgstr ""
 "Ninguno."
 
 #: ../base/ufos/msgid/buildings.ufo:310
-#, fuzzy
 msgid ""
 "Blueprints -- Small Hangar\n"
 "\n"
@@ -10102,7 +10275,6 @@ msgstr ""
 "Ninguno."
 
 #: ../base/ufos/msgid/buildings.ufo:354
-#, fuzzy
 msgid ""
 "Blueprints -- Laboratory\n"
 "\n"
@@ -10273,7 +10445,6 @@ msgstr ""
 "requiriéndose únicamente algunas pequeñas actualizaciones de equipos."
 
 #: ../base/ufos/msgid/buildings.ufo:394
-#, fuzzy
 msgid ""
 "Blueprints -- Power Plant\n"
 "\n"
@@ -10451,7 +10622,6 @@ msgstr ""
 "Ninguno."
 
 #: ../base/ufos/msgid/buildings.ufo:434
-#, fuzzy
 msgid ""
 "Blueprints -- Living Quarters\n"
 "\n"
@@ -10588,7 +10758,6 @@ msgstr ""
 "Ninguno."
 
 #: ../base/ufos/msgid/buildings.ufo:480
-#, fuzzy
 msgid ""
 "Blueprints -- Radar\n"
 "\n"
@@ -10808,7 +10977,6 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/msgid/buildings.ufo:532
-#, fuzzy
 msgid ""
 "Blueprints -- Storage\n"
 "\n"
@@ -10960,7 +11128,6 @@ msgstr ""
 "Ninguno."
 
 #: ../base/ufos/msgid/buildings.ufo:570
-#, fuzzy
 msgid ""
 "Blueprints -- Workshop\n"
 "\n"
@@ -11231,7 +11398,6 @@ msgstr ""
 "None."
 
 #: ../base/ufos/msgid/campaigns.ufo:4
-#, fuzzy
 msgid ""
 "This is an extremely difficult version of the Standard Campaign. In this "
 "scenario, all the odds will be stacked against you, you will receive few "
@@ -11251,7 +11417,6 @@ msgstr ""
 "necesidad de castigarse a sí mismos."
 
 #: ../base/ufos/msgid/campaigns.ufo:10
-#, fuzzy
 msgid ""
 "This is a more difficult version of the Standard Campaign. You will receive "
 "fewer soldiers, engineers and scientists, nations will be more difficult to "
@@ -11270,7 +11435,6 @@ msgstr ""
 "los jugadores expertos."
 
 #: ../base/ufos/msgid/campaigns.ufo:16
-#, fuzzy
 msgid ""
 "This is a single-player, military-themed invasion scenario. The player "
 "assumes command of Project PHALANX, Earth's response to the alien threat, "
@@ -11291,7 +11455,6 @@ msgstr ""
 "novatos que busquen un desafío."
 
 #: ../base/ufos/msgid/campaigns.ufo:22
-#, fuzzy
 msgid ""
 "This is a more forgiving version of the Standard Campaign. The aliens will "
 "be less tough, UFO incursions will be less frequent, and you will receive "
@@ -11310,7 +11473,6 @@ msgstr ""
 "Campaña Normal puede ofrecer."
 
 #: ../base/ufos/msgid/campaigns.ufo:28
-#, fuzzy
 msgid ""
 "This is a very forgiving version of the Standard Campaign. Your forces will "
 "be more powerful, the aliens less dangerous, and you will experience few "
@@ -11342,7 +11504,6 @@ msgid "Base Commander, PHALANX, Atlantic Operations Command"
 msgstr "Comandante de la Base, PHALANX, Centro de Operaciones Atlánticas"
 
 #: ../base/ufos/msgid/mails.ufo:20
-#, fuzzy
 msgid ""
 "Welcome to your new post, Commander. You now have full command over the "
 "PHALANX Extraterrestrial Response Unit. Your mission is to protect the "
@@ -11413,7 +11574,6 @@ msgstr ""
 "Operaciones Atlánticas"
 
 #: ../base/ufos/msgid/mails.ufo:40
-#, fuzzy
 msgid ""
 "Commander,\n"
 "\n"
@@ -11481,7 +11641,6 @@ msgstr ""
 "Operaciones Atlánticas"
 
 #: ../base/ufos/msgid/news.ufo:16
-#, fuzzy
 msgid ""
 "In the year 2084, Earth is in better shape than it has been for more than a "
 "century. Perhaps for the first time, peace and cooperation are the norm "
@@ -11554,7 +11713,7 @@ msgstr ""
 "XXI.\n"
 "\n"
 "En la primera década del XXI oriente medio era la gran preocupación de todas "
-"las naciones del globo. La tension crecií cuando Iran, Siria, Jordania y "
+"las naciones del globo. La tension creció cuando Iran, Siria, Jordania y "
 "Afganistán formaron la Alianza de Oriente Medio, un cuerpo político para "
 "unir al mundo islámico. Poco después, las elecciones democráticas en Iraq "
 "hicieron que los Estados Unidos perdieran el control del país, causando "
@@ -11618,7 +11777,6 @@ msgstr ""
 "Índico. Este fue el final oficial de la Segunda Guerra Fría."
 
 #: ../base/ufos/msgid/news.ufo:128
-#, fuzzy
 msgid ""
 "The Asian Republic:\n"
 "\n"
@@ -13552,7 +13710,6 @@ msgstr ""
 "de cualquier otra nación."
 
 #: ../base/ufos/msgid/story.ufo:16
-#, fuzzy
 msgid ""
 "Our study on antimatter is complete, Commander, and we're ready to present "
 "our results. I'm afraid the news is mostly bad.\n"
@@ -13666,7 +13823,6 @@ msgstr ""
 "--Cmte. Navarre"
 
 #: ../base/ufos/msgid/story.ufo:36
-#, fuzzy
 msgid ""
 "Our study on antimatter is complete, Commander, and we're ready to present "
 "our results. I'm afraid the news is mostly bad.\n"
@@ -13787,7 +13943,6 @@ msgstr ""
 "--Cmte. Navarre"
 
 #: ../base/ufos/msgid/story.ufo:44
-#, fuzzy
 msgid ""
 "Commander, based on the extremely interesting findings we've made during our "
 "examination of the UFO we dismantled, I'd like your permission to use some "
@@ -13822,7 +13977,6 @@ msgstr ""
 "--Cmte. Navarre"
 
 #: ../base/ufos/msgid/story.ufo:52
-#, fuzzy
 msgid ""
 "Commander, based on the extremely interesting findings we've made during our "
 "examination of alien UFO technology, I'd like your permission to use some "
@@ -13857,7 +14011,6 @@ msgstr ""
 "--Cmte. Navarre"
 
 #: ../base/ufos/msgid/story.ufo:66 ../base/ufos/msgid/story.ufo:562
-#, fuzzy
 msgid ""
 "Commander,\n"
 "\n"
@@ -13921,7 +14074,6 @@ msgstr ""
 "Dr. Connor"
 
 #: ../base/ufos/msgid/story.ufo:80 ../base/ufos/msgid/story.ufo:576
-#, fuzzy
 msgid ""
 "Commander,\n"
 "\n"
@@ -13968,7 +14120,6 @@ msgstr ""
 "Dr. Connor"
 
 #: ../base/ufos/msgid/story.ufo:104
-#, fuzzy
 msgid ""
 "Commander,\n"
 "\n"
@@ -14093,7 +14244,6 @@ msgstr ""
 "Dr. Connor"
 
 #: ../base/ufos/msgid/story.ufo:118
-#, fuzzy
 msgid ""
 "Commander,\n"
 "\n"
@@ -14148,7 +14298,6 @@ msgstr ""
 "Dr. Connor"
 
 #: ../base/ufos/msgid/story.ufo:136
-#, fuzzy
 msgid ""
 "Commander,\n"
 "\n"
@@ -14249,7 +14398,6 @@ msgstr ""
 "Dr. Connor"
 
 #: ../base/ufos/msgid/story.ufo:150
-#, fuzzy
 msgid ""
 "Commander,\n"
 "\n"
@@ -14298,7 +14446,6 @@ msgstr ""
 "Dr. Connor"
 
 #: ../base/ufos/msgid/story.ufo:174
-#, fuzzy
 msgid ""
 "Commander,\n"
 "\n"
@@ -14446,7 +14593,6 @@ msgstr ""
 "Dr. Connor"
 
 #: ../base/ufos/msgid/story.ufo:188
-#, fuzzy
 msgid ""
 "Commander,\n"
 "\n"
@@ -14498,7 +14644,6 @@ msgstr ""
 "Dr. Connor"
 
 #: ../base/ufos/msgid/story.ufo:206 ../base/ufos/msgid/story.ufo:594
-#, fuzzy
 msgid ""
 "Commander,\n"
 "\n"
@@ -14616,7 +14761,6 @@ msgstr ""
 "Dr. Connor"
 
 #: ../base/ufos/msgid/story.ufo:224 ../base/ufos/msgid/story.ufo:612
-#, fuzzy
 msgid ""
 "Commander,\n"
 "\n"
@@ -14688,7 +14832,6 @@ msgstr ""
 "Dr. Connor"
 
 #: ../base/ufos/msgid/story.ufo:246
-#, fuzzy
 msgid ""
 "Good morning, Sir.\n"
 "\n"
@@ -14737,17 +14880,6 @@ msgid ""
 "\n"
 "Col. Falkland"
 msgstr ""
-"Propuesta\n"
-"\n"
-"PARA: Comandante de la Base, PHALANX, Centro de Operaciones Atlánticas\n"
-"\n"
-"DE: Col. Ingrid Falkland, División de Inteligencia, PHALANX, Centro de "
-"Operaciones Atlánticas\n"
-"\n"
-"FECHA: %02i %s %i\n"
-"\n"
-"ASUNTO: Base Alienígena\n"
-"\n"
 "Buenos días, Señor.\n"
 "\n"
 "Como usted sabe, nos enfrentamos a la creciente amenaza del virus XVI. "
@@ -14800,7 +14932,6 @@ msgstr ""
 "Coronel Falkland"
 
 #: ../base/ufos/msgid/story.ufo:264
-#, fuzzy
 msgid ""
 "Commander,\n"
 "\n"
@@ -14882,7 +15013,6 @@ msgstr ""
 "Dr. Connor"
 
 #: ../base/ufos/msgid/story.ufo:278
-#, fuzzy
 msgid ""
 "Commander,\n"
 "\n"
@@ -14944,7 +15074,6 @@ msgstr ""
 "Dr. Connor"
 
 #: ../base/ufos/msgid/story.ufo:308
-#, fuzzy
 msgid ""
 "Good morning, Sir.\n"
 "\n"
@@ -15095,7 +15224,6 @@ msgstr ""
 "Cnl. Falkland"
 
 #: ../base/ufos/msgid/story.ufo:324
-#, fuzzy
 msgid ""
 "Good morning, Sir.\n"
 "\n"
@@ -15172,7 +15300,6 @@ msgstr ""
 "Cnl. Falkland"
 
 #: ../base/ufos/msgid/story.ufo:346
-#, fuzzy
 msgid ""
 "Commander, my team and I have finished our analysis of the UFO we captured. "
 "It's a real miracle of engineering, and we're all looking forward to getting "
@@ -15313,7 +15440,6 @@ msgstr ""
 "--Cte. Navarre"
 
 #: ../base/ufos/msgid/story.ufo:354
-#, fuzzy
 msgid ""
 "Commander, we've captured our first UFO of the war. I don't have to tell you "
 "that this is a unique research opportunity. However, before we can begin to "
@@ -15342,6 +15468,36 @@ msgstr ""
 "de esta asombrosa tecnología.\n"
 "\n"
 "--Cte. Navarre"
+
+#: ../base/ufos/msgid/story.ufo:378
+msgid ""
+"Commander, as I mentioned in my previous report, the UFO we recovered was "
+"plated with a highly interesting alloy which blends plastic and metal "
+"together into a single material. These materials seem to be used almost "
+"universally throughout the alien technology base. It's advanced stuff, "
+"massively versatile and with a thousand possible uses.\n"
+"\n"
+"I think it warrants the research to see if we can reproduce this stuff in "
+"our Workshops, but even if we can't, it seems likely we'll be getting our "
+"hands on large quantities of it with every UFO we salvage. We'll definitely "
+"be able to find new, human applications for it that will extend and expand "
+"our combat capabilities.\n"
+"\n"
+"Cdr. Navarre"
+msgstr ""
+"Comandante, como dije en mi informe anterior, el OVNI que se recuperó está "
+"recubierto con una aleación muy interesante que combina metal y plástico en "
+"un único material. Esta aleación parece ser utilizada casi universalmente en "
+"toda la base tecnológica alienígena. Es un material avanzado, enormemente "
+"versátil y con miles de usos posibles.\n"
+"\n"
+"Creo que esto merece una investigación para ver si podemos reproducir este "
+"material en nuestros Talleres, pero incluso si no podemos, es muy probable "
+"que podamos conseguirlo en grandes cantidades con cada OVNI que rescatemos. "
+"Sin duda, seremos capaces de encontrarle nuevas aplicaciones para el ser "
+"humano, que extenderán y expandirán nuestras capacidades de combate.\n"
+"\n"
+"--Cmte. Navarre"
 
 #: ../base/ufos/msgid/story.ufo:400
 #, fuzzy
@@ -15673,7 +15829,6 @@ msgstr ""
 "Dr. Connor"
 
 #: ../base/ufos/msgid/story.ufo:474
-#, fuzzy
 msgid ""
 "Good morning, Sir.\n"
 "\n"
@@ -15775,7 +15930,6 @@ msgstr ""
 "Cnl. Falkland"
 
 #: ../base/ufos/msgid/story.ufo:490 ../base/ufos/msgid/story.ufo:674
-#, fuzzy
 msgid ""
 "Good morning, Sir.\n"
 "\n"
@@ -15840,7 +15994,6 @@ msgstr ""
 "Cnl. Falkland"
 
 #: ../base/ufos/msgid/story.ufo:514
-#, fuzzy
 msgid ""
 "Good morning, Sir.\n"
 "\n"
@@ -15876,17 +16029,6 @@ msgid ""
 "\n"
 "Col. Falkland"
 msgstr ""
-"Propuesta\n"
-"\n"
-"PARA: Comandante de la Base, PHALANX, Comando de Operaciones Atlánticas\n"
-"\n"
-"DE: Cnel. Ingrid Falkland, División de Inteligencia, PHALANX, Comando de "
-"Operaciones Atlánticas\n"
-"\n"
-"FECHA: %02i %s %i\n"
-"\n"
-"ASUNTO: Propuesta: La Estrategia Alienígena\n"
-"\n"
 "Buenos días, Señor.\n"
 "\n"
 "Temo que este no es un mensaje social; le escribo a causa de nuestra urgente "
@@ -15924,7 +16066,6 @@ msgstr ""
 "Cnel. Falkland"
 
 #: ../base/ufos/msgid/story.ufo:548
-#, fuzzy
 msgid ""
 "Good morning, Sir.\n"
 "\n"
@@ -16005,17 +16146,6 @@ msgid ""
 "\n"
 "Col. Falkland"
 msgstr ""
-"Propuesta\n"
-"\n"
-"PARA: Comandante de la Base, PHALANX, Comando de Operaciones Atlánticas\n"
-"\n"
-"DE: Cnel. Ingrid Malvinas, División de Inteligencia, PHALANX, Comando de "
-"Operaciones Atlánticas\n"
-"\n"
-"FECHA: %02i %s %i\n"
-"\n"
-"ASUNTO: Propuesta: Actividad OVNI en Órbita\n"
-"\n"
 "Buenos días, Señor.\n"
 "\n"
 "Permítame comenzar mencionando algunos hechos amenazadores.\n"
@@ -16271,7 +16401,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/msgid/tips.ufo:9
+#: ../base/ufos/msgid/tips.ufo:8
 msgid ""
 "Commander, our last mission killed the UFO's crew but we have nowhere to "
 "store the craft. The UFO is too large to house within our own base's "
@@ -16288,11 +16418,10 @@ msgid ""
 "forth between the base and the UFO yard, so build the site as close as "
 "possible to the base where the work is being conducted.\n"
 "\n"
-"\n"
-"--Cdr. Navarre"
+"Cdr. Navarre"
 msgstr ""
 
-#: ../base/ufos/msgid/tips.ufo:24
+#: ../base/ufos/msgid/tips.ufo:22
 msgid ""
 "Commander,\n"
 "\n"
@@ -16310,14 +16439,12 @@ msgid ""
 "it's a risk we'll have to take if we're ever going to win this war. Send "
 "your men out with some stun grenades and make sure they use them.\n"
 "\n"
-"\n"
 "Sincerely,\n"
 "\n"
 "Dr. Connor"
 msgstr ""
 
 #: ../base/ufos/msgid/weapons.ufo:18
-#, fuzzy
 msgid ""
 "Commander, I'm extremely pleased to report that our project has been "
 "succesful. I've included images of our prototype laser weapon, which "
@@ -16429,7 +16556,6 @@ msgstr ""
 "--Cte. Navarre"
 
 #: ../base/ufos/msgid/weapons.ufo:30
-#, fuzzy
 msgid ""
 "Our collected UN research files have yielded a lot of valuable information "
 "about weapon development done on Earth since the beginning of this century. "
@@ -16488,7 +16614,6 @@ msgstr ""
 "--Cte. Navarre"
 
 #: ../base/ufos/msgid/weapons.ufo:78
-#, fuzzy
 msgid ""
 "Technical Specifications: P-12 Pistol\n"
 "\n"
@@ -16682,7 +16807,6 @@ msgstr ""
 "este arma no se comporta bien contra enemigos robóticos."
 
 #: ../base/ufos/msgid/weapons.ufo:110
-#, fuzzy
 msgid ""
 "Technical Specifications: 7.62mm Pistol Magazine\n"
 "\n"
@@ -16767,7 +16891,6 @@ msgstr ""
 "Ninguno."
 
 #: ../base/ufos/msgid/weapons.ufo:156
-#, fuzzy
 msgid ""
 "Technical Specifications: MP-699 Machine Pistol\n"
 "\n"
@@ -16955,7 +17078,6 @@ msgstr ""
 "Ninguno."
 
 #: ../base/ufos/msgid/weapons.ufo:188
-#, fuzzy
 msgid ""
 "Technical Specifications: 4.2mm MP Magazine\n"
 "\n"
@@ -17034,7 +17156,6 @@ msgstr ""
 "Ninguno."
 
 #: ../base/ufos/msgid/weapons.ufo:234
-#, fuzzy
 msgid ""
 "Technical Specifications: AR-80 Assault Rifle\n"
 "\n"
@@ -17360,7 +17481,6 @@ msgstr ""
 "None."
 
 #: ../base/ufos/msgid/weapons.ufo:392
-#, fuzzy
 msgid ""
 "Technical Specifications: HPML Rocket Launcher\n"
 "\n"
@@ -17551,7 +17671,6 @@ msgstr ""
 "armas humanas estñandar que son efectivas contra enemigos robotizados."
 
 #: ../base/ufos/msgid/weapons.ufo:426
-#, fuzzy
 msgid ""
 "Technical Specifications: HE Rocket\n"
 "\n"
@@ -17645,7 +17764,6 @@ msgstr ""
 "Ninguno."
 
 #: ../base/ufos/msgid/weapons.ufo:462
-#, fuzzy
 msgid ""
 "Technical Specifications: IC Rocket\n"
 "\n"
@@ -17918,7 +18036,6 @@ msgstr ""
 "None."
 
 #: ../base/ufos/msgid/weapons.ufo:556
-#, fuzzy
 msgid ""
 "The EM rifle project has been a resounding success! For the first time in "
 "human history, we've created a viable man-portable electromagnetic weapon. "
@@ -18040,7 +18157,6 @@ msgstr ""
 "--Cte. Navarre"
 
 #: ../base/ufos/msgid/weapons.ufo:568
-#, fuzzy
 msgid ""
 "Commander, we've received a number of research files from several UN nations "
 "concerning research and development for man-portable electromagnetic "
@@ -18098,7 +18214,6 @@ msgstr ""
 "--Cte. Navarre"
 
 #: ../base/ufos/msgid/weapons.ufo:608
-#, fuzzy
 msgid ""
 "Technical Specifications: Combat Knife\n"
 "\n"
@@ -18381,7 +18496,6 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/msgid/weapons.ufo:682
-#, fuzzy
 msgid ""
 "Technical Specifications: CRC-FL Flamethrower\n"
 "\n"
@@ -18549,7 +18663,6 @@ msgstr ""
 "Esta arma no debe ser disparada si hay civiles cerca del area del objetivo."
 
 #: ../base/ufos/msgid/weapons.ufo:714
-#, fuzzy
 msgid ""
 "Technical Specifications: C90 Canister\n"
 "\n"
@@ -18639,7 +18752,6 @@ msgstr ""
 "Ninguno."
 
 #: ../base/ufos/msgid/weapons.ufo:756
-#, fuzzy
 msgid ""
 "Technical Specifications: Flashbang\n"
 "\n"
@@ -18810,7 +18922,6 @@ msgstr ""
 "orgánicos con ojos y oidos."
 
 #: ../base/ufos/msgid/weapons.ufo:796
-#, fuzzy
 msgid ""
 "Technical Specifications: Fragmentation Grenade\n"
 "\n"
@@ -18966,7 +19077,6 @@ msgstr ""
 "Ninguno."
 
 #: ../base/ufos/msgid/weapons.ufo:838
-#, fuzzy
 msgid ""
 "Technical Specifications: Incendiary Grenade\n"
 "\n"
@@ -19116,7 +19226,6 @@ msgstr ""
 "Ninguno."
 
 #: ../base/ufos/msgid/weapons.ufo:888
-#, fuzzy
 msgid ""
 "Technical Specifications: HPGL Grenade Launcher\n"
 "\n"
@@ -19328,7 +19437,6 @@ msgstr ""
 "pocas armas humanas totalmente efectivas contra alienígenas roboticos."
 
 #: ../base/ufos/msgid/weapons.ufo:920
-#, fuzzy
 msgid ""
 "Technical Specifications: 25mm HIT Grenades\n"
 "\n"
@@ -19407,7 +19515,6 @@ msgstr ""
 "Ninguno."
 
 #: ../base/ufos/msgid/weapons.ufo:952
-#, fuzzy
 msgid ""
 "Technical Specifications: 25mm Flechette Grenades\n"
 "\n"
@@ -19491,7 +19598,6 @@ msgstr ""
 "Ninguno."
 
 #: ../base/ufos/msgid/weapons.ufo:984
-#, fuzzy
 msgid ""
 "Technical Specifications: 25mm IC Grenades\n"
 "\n"
@@ -19666,7 +19772,6 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/msgid/weapons.ufo:1054
-#, fuzzy
 msgid ""
 "Technical Specifications: IR Goggles\n"
 "\n"
@@ -23880,7 +23985,6 @@ msgid "Alien Autopsy - Bloodspider"
 msgstr "Autopsia Alienígena - Araña Sanguinaria"
 
 #: ../base/ufos/research.ufo:4182
-#, fuzzy
 msgid "Alien Autopsy - Combat Bloodspider"
 msgstr "Autopsia Alienígena - Araña Sanguinaria"
 
@@ -25462,7 +25566,6 @@ msgid "Assign tanks"
 msgstr "Tanques asignados"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:391
-#, fuzzy
 msgid "Assign soldiers"
 msgstr "Selecciona soldados"
 
@@ -26300,11 +26403,8 @@ msgid "TUs reserved"
 msgstr "UsT reservadas"
 
 #: ../base/ufos/ui/hud_alt.ufo:1192 ../base/ufos/ui/hud_default.ufo:827
-#, fuzzy
 msgid "Keyinfo/General Help window"
-msgstr ""
-"Botón Izquierdo: Mostrar/Botón Derecho: Ocultar - Ventana de Atajos del "
-"Teclado y Ayuda General"
+msgstr "Ventana de Atajos del Teclado y Ayuda General"
 
 #: ../base/ufos/ui/hud_alt.ufo:1245 ../base/ufos/ui/hud_default.ufo:695
 msgid "Use headgear"
@@ -26504,7 +26604,6 @@ msgstr ""
 "Tecla: 8"
 
 #: ../base/ufos/ui/hud_mini.ufo:419
-#, fuzzy
 msgid ""
 "LMB/RMB:Select\n"
 "Wheel:Select Next/Prev\n"
@@ -26512,10 +26611,9 @@ msgid ""
 msgstr ""
 "Botón Izquierdo/Botón Derecho: Seleccionar\n"
 "Rueda: Seleccionar Siguiente/Anterior\n"
-"Tecla: 1"
+"Tecla: 9"
 
 #: ../base/ufos/ui/hud_mini.ufo:438
-#, fuzzy
 msgid ""
 "LMB/RMB:Select\n"
 "Wheel:Select Next/Prev\n"
@@ -26523,17 +26621,15 @@ msgid ""
 msgstr ""
 "Botón Izquierdo/Botón Derecho: Seleccionar\n"
 "Rueda: Seleccionar Siguiente/Anterior\n"
-"Tecla: 1"
+"Tecla: 0"
 
 #: ../base/ufos/ui/hud_mini.ufo:457 ../base/ufos/ui/hud_mini.ufo:476
-#, fuzzy
 msgid ""
 "LMB/RMB:Select\n"
 "Wheel:Select Next/Prev"
 msgstr ""
 "Botón Izquierdo/Botón Derecho: Seleccionar\n"
-"Rueda: Seleccionar Siguiente/Anterior\n"
-"Tecla: 1"
+"Rueda: Seleccionar Siguiente/Anterior"
 
 #: ../base/ufos/ui/hud_mini.ufo:679
 msgid "Wheel:Select Next/Previous"
@@ -26586,19 +26682,16 @@ msgstr ""
 "Rueda Arriba: Mano Derecha"
 
 #: ../base/ufos/ui/hud_mini.ufo:1557
-#, fuzzy
 msgid "End turn"
 msgstr "Terminar turno"
 
 #: ../base/ufos/ui/hud_mini.ufo:1570
-#, fuzzy
 msgid "LMB:Show/Hide Physical Data"
-msgstr "Botón Izquierdo: Mostrar/Botón Derecho: Ocultar - Estado Físico"
+msgstr "Estado Físico"
 
 #: ../base/ufos/ui/hud_mini.ufo:1579
-#, fuzzy
 msgid "LMB:Show/Hide Inventory"
-msgstr "Botón Izquierdo: Mostrar/Botón Derecho: Ocultar - Inventario"
+msgstr "Inventario"
 
 #: ../base/ufos/ui/hud_mini.ufo:1588
 msgid "LMB:Show/RMB:Hide Radar"
@@ -26916,7 +27009,6 @@ msgid "Name"
 msgstr "Nombre"
 
 #: ../base/ufos/ui/market.ufo:181
-#, fuzzy
 msgid "Store"
 msgstr "Almacenes"
 
@@ -26934,9 +27026,8 @@ msgid "Number of such items on the market"
 msgstr ""
 
 #: ../base/ufos/ui/market.ufo:197
-#, fuzzy
 msgid "Price"
-msgstr "Precio:"
+msgstr "Precio"
 
 #: ../base/ufos/ui/market.ufo:314
 msgid "Storage (used/all):"
@@ -27694,7 +27785,6 @@ msgid "GLSL Shaders:"
 msgstr "Sombreados GLSL:"
 
 #: ../base/ufos/ui/options.ufo:789
-#, fuzzy
 msgid "Set the OpenGL shader quality - or disable them."
 msgstr "Configura la calidad del sombreado OpenGL o lo desactiva"
 
@@ -27759,20 +27849,18 @@ msgstr ""
 "1 o más para activar la sincronía vertical (mejor calidad)."
 
 #: ../base/ufos/ui/options.ufo:893
-#, fuzzy
 msgid "Post-processing shader effects like glowing textures."
 msgstr ""
 "Efectos de sombreado del post-procesador gráfico tales como texturas "
-"brillantes (solo disponible si el sombreado GLSL está activado)."
+"brillantes."
 
 #: ../base/ufos/ui/options.ufo:894
 msgid "Post-Processing Shader Effects:"
 msgstr "Activar el post-proceso de efecto de sombreado:"
 
 #: ../base/ufos/ui/options.ufo:900
-#, fuzzy
 msgid "Enable post processing shader effects."
-msgstr "Activar el post-proceso de efecto de sombreado:"
+msgstr "Activar el post-proceso de efecto de sombreado."
 
 #: ../base/ufos/ui/options.ufo:910
 msgid ""
@@ -27787,11 +27875,8 @@ msgid "Realtime Lighting / Max Dynamic Lights:"
 msgstr "Luz en Tiempo Real/Luces Dinámicas:"
 
 #: ../base/ufos/ui/options.ufo:923
-#, fuzzy
 msgid "Change the number of allowed hardware accelerated dynamic lights."
-msgstr ""
-"Cambiar el número de dinámicas luces aceleradas por hardware. ATENCIÓN: La "
-"iluminación en tiempo real debe estar activa para que esto funcione."
+msgstr "Cambiar el número de dinámicas luces aceleradas por hardware."
 
 #: ../base/ufos/ui/options.ufo:952
 msgid "Also known as bumpmapping."
@@ -29068,9 +29153,8 @@ msgid "Cannon Particle Accelerator"
 msgstr "Cañón acelerador de partículas"
 
 #: ../base/ufos/weapons_particle.ufo:261
-#, fuzzy
 msgid "4-Round Burst"
-msgstr "Ráfaga de 3 Disparos"
+msgstr "Ráfaga de 4 Disparos"
 
 #: ../base/ufos/weapons_particle.ufo:283
 msgid "Unrestricted Blast"
@@ -29123,9 +29207,8 @@ msgid "Chaingun Belt"
 msgstr "Cinturón para cañón automático"
 
 #: ../base/ufos/weapons_ugv.ufo:82
-#, fuzzy
 msgid "25-Round Burst"
-msgstr "Ráfaga de 5 Disparos"
+msgstr "Ráfaga de 25 Disparos"
 
 #: ../base/ufos/weapons_ugv.ufo:159
 msgid "Autocannon Module"
@@ -29356,13 +29439,12 @@ msgid "Reload weapon (%i TU)."
 msgstr "Recarga el arma (%i UT)"
 
 #: client/battlescape/cl_hud.cpp:1149
-#, fuzzy
 msgid ""
 "You cannot use this unknown item.\n"
 "You need to research it first."
 msgstr ""
-"No puedes recargar un objeto desconocido.\n"
-"Tienes que investigar el objeto primero.\n"
+"No puedes usar un objeto desconocido.\n"
+"Tienes que investigar el objeto primero."
 
 #: client/battlescape/cl_hud.cpp:1170
 #, c-format
@@ -29384,7 +29466,7 @@ msgid "Morale  %i"
 msgstr "Estado moral  %i"
 
 #: client/battlescape/cl_hud.cpp:1199
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Morale  %i | Reserved TUs: %i\n"
 "%s %i (%i|%i TUs left)\n"
@@ -29393,7 +29475,7 @@ msgstr ""
 "%s %i (%i|%i UT restantes)\n"
 
 #: client/battlescape/cl_hud.cpp:1203
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Morale  %i\n"
 "%s %i (%i TUs left)\n"
@@ -29436,22 +29518,19 @@ msgstr "No puedes hacerlo - no es un personaje!\n"
 
 #: client/battlescape/cl_hud_callbacks.cpp:91
 #: client/battlescape/cl_hud_callbacks.cpp:271 game/g_combat.cpp:1129
-#, fuzzy
 msgid "Can't perform action - no ammo!"
-msgstr "No se puede efectuar la acción - ¡No hay municiones!\n"
+msgstr "No se puede efectuar la acción - ¡No hay municiones!"
 
 #: client/battlescape/cl_hud_callbacks.cpp:96 game/g_combat.cpp:1122
-#, fuzzy
 msgid "Can't perform action - weapon cannot be fired one handed!"
 msgstr ""
 "No se puede efectuar la acción - ¡El arma no se puede disparar con una sola "
-"mano!\n"
+"mano!"
 
 #: client/battlescape/cl_hud_callbacks.cpp:150
 #: client/battlescape/cl_hud_callbacks.cpp:276 game/g_actor.cpp:658
-#, fuzzy
 msgid "Can't perform action - not enough TUs!"
-msgstr "No puedes hacerlo - no tienes suficientes UT!\n"
+msgstr "No puedes hacerlo - no tienes suficientes UT!"
 
 #: client/battlescape/cl_hud_callbacks.cpp:177
 #, fuzzy
@@ -29459,9 +29538,9 @@ msgid "Disabled automatic crouching/standing up."
 msgstr "Reservar %i UTs para agacharse o levantarse."
 
 #: client/battlescape/cl_hud_callbacks.cpp:181
-#, fuzzy, c-format
+#, c-format
 msgid "Reserved %i TUs for crouching/standing up."
-msgstr "Reservar %i UTs para agacharse o levantarse."
+msgstr "Reservando %i UTs para agacharse o levantarse."
 
 #: client/battlescape/cl_hud_callbacks.cpp:198
 #, fuzzy
@@ -29474,36 +29553,28 @@ msgid "Reaction fire disabled."
 msgstr "Reacción de disparo"
 
 #: client/battlescape/cl_hud_callbacks.cpp:264
-#, fuzzy
 msgid "Can't perform action - this item is not reloadable!"
-msgstr ""
-"No se puede efectuar la acción:\n"
-"Este objeto no se puede recargar.\n"
+msgstr "No se puede efectuar la acción - Este objeto no se puede recargar."
 
 #: client/battlescape/cl_hud_callbacks.cpp:297
-#, fuzzy
 msgid "Left hand weapon reloaded."
-msgstr "El arma no puede recargarse."
+msgstr "Recargando el arma izquierda."
 
 #: client/battlescape/cl_hud_callbacks.cpp:310
-#, fuzzy
 msgid "Right hand weapon reloaded."
-msgstr "Recargar arma derecha"
+msgstr "Recargando el arma derecha."
 
 #: client/battlescape/cl_hud_callbacks.cpp:351
-#, fuzzy
 msgid "Set selected actor to move mode (it cancels the fire mode)."
 msgstr ""
 "Activar el modo de movimiento para el actor seleccionado (cancelara el modo "
 "de disparo)."
 
 #: client/battlescape/cl_hud_callbacks.cpp:352
-#, fuzzy
 msgid "Reload the weapon in the soldiers left hand."
 msgstr "Recargar el arma de la mano izquierda del soldado"
 
 #: client/battlescape/cl_hud_callbacks.cpp:353
-#, fuzzy
 msgid "Reload the weapon in the soldiers right hand."
 msgstr "Recargar el arma de la mano derecha del soldado"
 
@@ -29512,7 +29583,6 @@ msgid "Toggle reservation for crouching."
 msgstr "Activa o desactiva la reserva para agacharse"
 
 #: client/battlescape/cl_hud_callbacks.cpp:355
-#, fuzzy
 msgid "Toggle reaction fire."
 msgstr "Cambiar reacción de fuego"
 
@@ -29552,9 +29622,8 @@ msgid "Unknown enemy spotted!"
 msgstr "Enemigo avistado!\n"
 
 #: client/battlescape/events/event/actor/e_event_actorappear.cpp:172
-#, fuzzy
 msgid "Civilian spotted."
-msgstr "Civil avistado!\n"
+msgstr "¡Civil avistado!"
 
 #: client/battlescape/events/event/actor/e_event_actordie.cpp:88
 #, c-format
@@ -29572,44 +29641,38 @@ msgid "%s was killed\n"
 msgstr "%s fue asesinado\n"
 
 #: client/battlescape/events/event/actor/e_event_actordie.cpp:106
-#, fuzzy
 msgid "A civilian was stunned."
-msgstr "Un civil fue paralizado.\n"
+msgstr "Un civil fue paralizado."
 
 #: client/battlescape/events/event/actor/e_event_actordie.cpp:108
-#, fuzzy
 msgid "A civilian was killed."
-msgstr "Un civil ha sido asesinado!\n"
+msgstr "¡Un civil ha sido asesinado!"
 
 #: client/battlescape/events/event/actor/e_event_actordie.cpp:112
-#, fuzzy
 msgid "An alien was stunned."
-msgstr "Un alienígena fue paralizado.\n"
+msgstr "Un alienígena fue paralizado."
 
 #: client/battlescape/events/event/actor/e_event_actordie.cpp:114
-#, fuzzy
 msgid "An alien was killed."
-msgstr "Un alienígena ha muerto!\n"
+msgstr "¡Un alienígena ha muerto!"
 
 #: client/battlescape/events/event/actor/e_event_actordie.cpp:118
-#, fuzzy
 msgid "A soldier was stunned."
-msgstr "Un soldado fue paralizado.\n"
+msgstr "Un soldado fue paralizado."
 
 #: client/battlescape/events/event/actor/e_event_actordie.cpp:120
-#, fuzzy
 msgid "A soldier was killed."
-msgstr "Un soldado ha sido asesinado!\n"
+msgstr "¡Un soldado ha sido asesinado!"
 
 #: client/battlescape/events/event/actor/e_event_actordie.cpp:124
-#, fuzzy, c-format
+#, c-format
 msgid "A member of team %i was stunned."
-msgstr "Un miembro del equipo %i fue paralizado.\n"
+msgstr "Un miembro del equipo %i fue paralizado."
 
 #: client/battlescape/events/event/actor/e_event_actordie.cpp:126
-#, fuzzy, c-format
+#, c-format
 msgid "A member of team %i was killed."
-msgstr "Un miembro del equipo %i ha muerto!\n"
+msgstr "Un miembro del equipo %i ha muerto!"
 
 #: client/battlescape/events/event/actor/e_event_actorrevitalised.cpp:69
 #, c-format
@@ -29617,29 +29680,25 @@ msgid "%s was revitalised\n"
 msgstr "%s fue reanimado\n"
 
 #: client/battlescape/events/event/actor/e_event_actorrevitalised.cpp:75
-#, fuzzy
 msgid "A civilian was revitalised."
-msgstr "Un civil fue reanimado.\n"
+msgstr "Un civil fue reanimado."
 
 #: client/battlescape/events/event/actor/e_event_actorrevitalised.cpp:78
-#, fuzzy
 msgid "An alien was revitalised."
-msgstr "Un alienígena fue reanimado.\n"
+msgstr "Un alienígena fue reanimado."
 
 #: client/battlescape/events/event/actor/e_event_actorrevitalised.cpp:81
-#, fuzzy
 msgid "A soldier was revitalised."
-msgstr "Un soldado fue reanimado.\n"
+msgstr "Un soldado fue reanimado."
 
 #: client/battlescape/events/event/actor/e_event_actorrevitalised.cpp:84
-#, fuzzy, c-format
+#, c-format
 msgid "A member of team %i was revitalised."
-msgstr "Un miembro del equipo %i fue reanimado.\n"
+msgstr "Un miembro del equipo %i fue reanimado."
 
 #: client/battlescape/events/event/player/e_event_doendround.cpp:57
-#, fuzzy
 msgid "Your round started!"
-msgstr "Tu turno ha comenzado!\n"
+msgstr "¡Tu turno ha comenzado!"
 
 #: client/cgame/campaign/cp_aircraft.cpp:417
 msgid "ON RED ALERT"
@@ -29804,9 +29863,9 @@ msgid "That base is beyond this aircraft's range."
 msgstr "Esa base esta fuera del alcance de la aeronave."
 
 #: client/cgame/campaign/cp_aircraft.cpp:1157
-#, fuzzy, c-format
+#, c-format
 msgid "Craft %s has returned to %s."
-msgstr "La aeronave %s ha recargado combustible en %s."
+msgstr "La aeronave %s ha regresado a %s."
 
 #: client/cgame/campaign/cp_aircraft.cpp:1198
 #, c-format
@@ -29884,19 +29943,19 @@ msgid "Operational range:\t%i km\n"
 msgstr "Alcance operativo:\t%i km\n"
 
 #: client/cgame/campaign/cp_aircraft_callbacks.cpp:218
-#, fuzzy, c-format
+#, c-format
 msgid "Weapons:\t%i of %i\n"
-msgstr "Armas:\t%i en %i\n"
+msgstr "Armas:\t%i de %i\n"
 
 #: client/cgame/campaign/cp_aircraft_callbacks.cpp:219
-#, fuzzy, c-format
+#, c-format
 msgid "Armour:\t%i of 1\n"
-msgstr "Blindaje:\t%i en 1\n"
+msgstr "Blindaje:\t%i de 1\n"
 
 #: client/cgame/campaign/cp_aircraft_callbacks.cpp:220
-#, fuzzy, c-format
+#, c-format
 msgid "Electronics:\t%i of %i"
-msgstr "Electrónicas:\t%i en %i"
+msgstr "Electrónicas:\t%i de %i"
 
 #: client/cgame/campaign/cp_airfight.cpp:388
 #, c-format
@@ -29981,7 +30040,6 @@ msgid "You've won the battle"
 msgstr "Has ganado la batalla"
 
 #: client/cgame/campaign/cp_auto_mission.cpp:768
-#, fuzzy
 msgid ""
 "You've defeated the enemy, but did poorly, and many civilians were killed"
 msgstr ""
@@ -30763,14 +30821,14 @@ msgid "Condition: %3.0f%%"
 msgstr "Condición: %3.0f%%"
 
 #: client/cgame/campaign/cp_installation_callbacks.cpp:279
-#, fuzzy, c-format
+#, c-format
 msgid "%s\t%i\t%i c"
-msgstr "Name:\t%s (%i/%i)\n"
+msgstr "%s\t%i\t%i c"
 
 #: client/cgame/campaign/cp_installation_callbacks.cpp:285
-#, fuzzy, c-format
+#, c-format
 msgid "Base\t-\t%i c"
-msgstr "Base (%s):\t%i c\n"
+msgstr "Base\t-\t%i c"
 
 #: client/cgame/campaign/cp_map.cpp:357
 msgid "Base"
@@ -30977,7 +31035,6 @@ msgid "UGV is away from home"
 msgstr ""
 
 #: client/cgame/campaign/cp_market_callbacks.cpp:435
-#, fuzzy
 msgid "Aircraft is away from home"
 msgstr "Nave fuera de la base"
 
@@ -31933,7 +31990,6 @@ msgid "Employee is assigned to another aircraft"
 msgstr "El piloto está asignado a otra aeronave"
 
 #: client/cgame/campaign/cp_team_callbacks.cpp:286
-#, fuzzy
 msgid "Employee is away from base"
 msgstr "El empleado está fuera"
 
@@ -32088,7 +32144,6 @@ msgstr ""
 "La misión de traslado a empezado, la carga se esta transportando a la base %s"
 
 #: client/cgame/campaign/cp_transfer.cpp:251
-#, fuzzy
 msgid ""
 "The destination base no longer exists! Transfer cargo was lost, personnel "
 "has been discharged."
@@ -32663,7 +32718,7 @@ msgid "Base '%s' is under attack!"
 msgstr "¡La base '%s' esta bajo ataque!"
 
 #: client/cgame/campaign/missions/cp_mission_baseattack.cpp:206
-#, fuzzy, c-format
+#, c-format
 msgid "Base '%s' is under attack! What to do?"
 msgstr "¡Tu base, %s, está siendo atacada! ¿Qué quieres hacer?"
 
@@ -33019,12 +33074,10 @@ msgid "Target your shot to the ground"
 msgstr "Ajusta tu disparo al suelo"
 
 #: client/cl_main.cpp:1152
-#, fuzzy
 msgid "This change requires a restart!"
 msgstr "Este cambio requiere un reinicio"
 
 #: client/cl_main.cpp:1157
-#, fuzzy
 msgid "This change might require a restart."
 msgstr "Este cambio podría necesitar un reinicio"
 
@@ -33217,61 +33270,50 @@ msgid "Key: %s"
 msgstr "Tecla: %s"
 
 #: game/g_actor.cpp:88
-#, fuzzy
 msgid "Soldier entered the rescue zone."
-msgstr "El soldado entró en la zona de rescate\n"
+msgstr "El soldado entró en la zona de rescate."
 
 #: game/g_actor.cpp:90
-#, fuzzy
 msgid "Soldier left the rescue zone."
-msgstr "El soldado ha dejado la zona de rescate\n"
+msgstr "El soldado ha dejado la zona de rescate."
 
 #: game/g_actor.cpp:662
-#, fuzzy
 msgid ""
 "Can't perform action - weapon already fully loaded with the same ammunition!"
 msgstr ""
-"No puedes hacerlo - el arma ya está completamente cargada con esa munición\n"
+"No puedes hacerlo - el arma ya está completamente cargada con esa munición"
 
 #: game/g_client.cpp:340
-#, fuzzy
 msgid "Can't perform action - object not present!"
-msgstr "No puedes hacerlo - objeto no presente!\n"
+msgstr "No puedes hacerlo - ¡objeto no presente!"
 
 #: game/g_client.cpp:345
-#, fuzzy
 msgid "Can't perform action - not an actor!"
-msgstr "No puedes hacerlo - no es un personaje!\n"
+msgstr "No puedes hacerlo - ¡no es un personaje!"
 
 #: game/g_client.cpp:350
-#, fuzzy
 msgid "Can't perform action - actor is stunned!"
-msgstr "No puedes hacerlo - el personaje está aturdido!\n"
+msgstr "No puedes hacerlo - ¡el personaje está aturdido!"
 
 #: game/g_client.cpp:355
-#, fuzzy
 msgid "Can't perform action - actor is dead!"
-msgstr "No puedes hacerlo - el personaje está muerto!\n"
+msgstr "No puedes hacerlo - ¡el personaje está muerto!"
 
 #: game/g_client.cpp:360
-#, fuzzy
 msgid "Can't perform action - not on same team!"
-msgstr "No puedes hacerlo - no en el mismo equipo!\n"
+msgstr "No puedes hacerlo - ¡no en el mismo equipo!"
 
 #: game/g_client.cpp:365
-#, fuzzy
 msgid "Can't perform action - no control over allied actors!"
-msgstr "No puedes hacerlo - no tienes control sobre personajes aliados!\n"
+msgstr "No puedes hacerlo - ¡no tienes control sobre personajes aliados!"
 
 #: game/g_client.cpp:388
-#, fuzzy
 msgid "Can't perform action - it is not your turn!"
-msgstr "No puedes hacerlo - no es tu turno!\n"
+msgstr "No puedes hacerlo - ¡no es tu turno!"
 
 #: game/g_client.cpp:499
-#, fuzzy
 msgid "Currently shaken, won't let their guard down."
-msgstr "Actualmente conmocionado, no va a bajar su guardia.\n"
+msgstr "Actualmente conmocionado, no va a bajar su guardia."
 
 #: game/g_cmds.cpp:68
 #, c-format
@@ -33285,33 +33327,28 @@ msgstr ""
 "Protección contra desbordamiento: No podrás conversar por %d segundos.\n"
 
 #: game/g_combat.cpp:390
-#, fuzzy
 msgid ""
 "Soldier is dazed!\n"
 "Enemy used flashbang!"
 msgstr ""
 "¡El soldado esta aturdido!\n"
-"¡El enemigo uso una granada flash!\n"
+"¡El enemigo uso una granada flash!"
 
 #: game/g_combat.cpp:624
-#, fuzzy
 msgid "Can't perform action - impossible throw!"
-msgstr "No se puede efectuar la acción - ¡Lanzamiento imposible!\n"
+msgstr "No puedes hacerlo - ¡Lanzamiento imposible!"
 
 #: game/g_combat.cpp:1096
-#, fuzzy
 msgid "Can't perform action - object not activatable!"
-msgstr "No se puede efectuar la acción - ¡El objeto no puede ser activado!\n"
+msgstr "No puedes hacerlo - ¡El objeto no puede ser activado!"
 
 #: game/g_combat.cpp:1137
-#, fuzzy
 msgid "Can't perform action - target out of range!"
-msgstr "No se puede efectuar la acción - ¡El blanco esta fuera de alcance!\n"
+msgstr "No puedes hacerlo - ¡El blanco esta fuera de alcance!"
 
 #: game/g_combat.cpp:1183
-#, fuzzy
 msgid "Can't perform action - not enough ammo!"
-msgstr "No se puede efectuar la acción - ¡No hay municiones suficientes!\n"
+msgstr "No puedes hacerlo - ¡No hay municiones suficientes!"
 
 #: game/g_health.cpp:61 game/g_health.cpp:68
 #, fuzzy, c-format
@@ -33319,99 +33356,84 @@ msgid "%s has been wounded!"
 msgstr "%s Ha sido ascendido a %s.\n"
 
 #: game/g_mission.cpp:48
-#, fuzzy
 msgid "Aliens entered target zone!"
-msgstr "Los alienígenas han entrado en la zona objetivo\n"
+msgstr "Los alienígenas han entrado en la zona objetivo"
 
 #: game/g_mission.cpp:79
-#, fuzzy
 msgid "Item was placed."
-msgstr "El objeto fue colocado.\n"
+msgstr "El objeto fue colocado."
 
 #: game/g_mission.cpp:86
-#, fuzzy
 msgid "Target zone is occupied!"
-msgstr "La zona objetivo esta ocupada\n"
+msgstr "La zona objetivo esta ocupada"
 
 #: game/g_morale.cpp:36
-#, fuzzy, c-format
+#, c-format
 msgid "%s panics!"
-msgstr "¡%s entró en pánico!\n"
+msgstr "¡%s entró en pánico!"
 
 #: game/g_morale.cpp:94
-#, fuzzy, c-format
+#, c-format
 msgid "%s is on a rampage!"
-msgstr "%s esta agitado.\n"
+msgstr "%s esta agitado."
 
 #: game/g_morale.cpp:98
-#, fuzzy, c-format
+#, c-format
 msgid "%s is consumed by mad rage!"
-msgstr "%s esta loco de rabia!\n"
+msgstr "%s esta loco de rabia!"
 
 #: game/g_morale.cpp:177
-#, fuzzy, c-format
+#, c-format
 msgid "%s is currently shaken."
-msgstr "%s Esta actualmente conmocionado.\n"
+msgstr "%s esta actualmente conmocionado."
 
 #: game/g_reaction.cpp:415
-#, fuzzy
 msgid "No reaction fire enabled weapon."
-msgstr "No hay un arma que pueda ser usada para reacción de disparo.\n"
+msgstr "No hay un arma que pueda ser usada para reacción de disparo."
 
 #: game/g_reaction.cpp:420
-#, fuzzy
 msgid "No fire mode selected for reaction fire."
-msgstr "No hay modo de fuego para el fuego de reacción.\n"
+msgstr "No hay modo de fuego para el fuego de reacción."
 
 #: game/g_reaction.cpp:425
-#, fuzzy
 msgid "Not enough TUs left for activating reaction fire."
-msgstr "No hay suficientes UTs para activar la reacción de disparo.\n"
+msgstr "No hay suficientes UTs para activar la reacción de disparo."
 
 #: game/g_round.cpp:49
-#, fuzzy
 msgid "4 minutes left until forced turn end."
-msgstr "4 Minutos para el final forzado de la ronda\n"
+msgstr "4 Minutos para el final forzado de la ronda"
 
 #: game/g_round.cpp:52
-#, fuzzy
 msgid "3 minutes left until forced turn end."
-msgstr "3 Minutos para el final forzado de la ronda\n"
+msgstr "3 Minutos para el final forzado de la ronda"
 
 #: game/g_round.cpp:55
-#, fuzzy
 msgid "2 minutes left until forced turn end."
-msgstr "2 Minutos para el final forzado de la ronda\n"
+msgstr "2 Minutos para el final forzado de la ronda"
 
 #: game/g_round.cpp:58
-#, fuzzy
 msgid "1 minute left until forced turn end."
-msgstr "1 Minuto para el final forzado de la ronda\n"
+msgstr "1 Minuto para el final forzado de la ronda"
 
 #: game/g_round.cpp:61
-#, fuzzy
 msgid "30 seconds left until forced turn end."
-msgstr "Faltan 30 segundos para el final de la ronda forzado\n"
+msgstr "Faltan 30 segundos para el final de la ronda forzado"
 
 #: game/g_round.cpp:64
-#, fuzzy
 msgid "15 seconds left until forced turn end."
-msgstr "Faltan 15 segundos para el final de la ronda\n"
+msgstr "Faltan 15 segundos para el final de la ronda"
 
 #: game/g_round.cpp:72
-#, fuzzy
 msgid "Current active team hit the max round time."
-msgstr "El equipo activo actual, a alcanzado el máximo de tiempo de ronda\n"
+msgstr "El equipo activo actual, a alcanzado el máximo de tiempo de ronda"
 
 #: game/g_trigger.cpp:142
-#, fuzzy
 msgid "Switching map!"
-msgstr "¡Cambiando de mapa!\n"
+msgstr "¡Cambiando de mapa!"
 
 #: game/g_trigger.cpp:171
-#, fuzzy
 msgid "You are now ready to switch the map."
-msgstr "Ahora estas listo para cambiar el mapa\n"
+msgstr "Ahora estas listo para cambiar el mapa"
 
 #: po/OTHER_STRINGS:2
 msgid "human"
@@ -34660,94 +34682,6 @@ msgstr "Tomar captura de pantalla"
 #~ msgid "bloodspider_notes_pre_txt"
 #~ msgstr "No existe información disponible previa a la investigación."
 
-#, fuzzy
-#~ msgid ""
-#~ "Commander,\n"
-#~ "\n"
-#~ "My team has analysed the remains of the arachnid machine our operatives "
-#~ "brought back, and we have prepared a summary for your review.\n"
-#~ "\n"
-#~ "This creature is similar in many ways to the Bloodspider we have faced "
-#~ "before on the battlefield, but it has undergone upgrades to make it much "
-#~ "more deadly. It's razor-sharp blades are longer and its armour plating "
-#~ "has undergone significant revisions. These creatures are terrifying on "
-#~ "the battlefield if they get close, and this new variant is much more "
-#~ "likely to survive a few rounds from our soldiers and keep coming. We will "
-#~ "need to hunt the Combat Bloodspider in packs.\n"
-#~ "\n"
-#~ "We can't be certain, but we fear that the armour upgrades may have been "
-#~ "designed in response to battlefield experience with us. If that's true, "
-#~ "it means the aliens may be upgrading other combat systems as well.\n"
-#~ "\n"
-#~ "Sincerely,\n"
-#~ "\n"
-#~ "Dr. Connor"
-#~ msgstr ""
-#~ "Comandante,\n"
-#~ "\n"
-#~ "Mi equipo ha analizado los restos de la máquina aracnomorfa recuperada "
-#~ "por nuestros agentes, y hemos preparado un informe para su supervisión.\n"
-#~ "\n"
-#~ "La autopsia ha revelado que la criatura es un complejo robot sin ningún "
-#~ "componente orgánico. Su cuerpo recuerda al de la araña terrestre: un "
-#~ "cuerpo central - que abriga un cerebro artificial y baterías - y ocho "
-#~ "patas movidas por poderosos servomotores, que le permiten atravesar el "
-#~ "campo de batalla a velocidades inquietantes. Está equipada con mandíbulas "
-#~ "afiladísimas que pueden trocear rápidamente un cuerpo humano y almacenar "
-#~ "tejidos u órganos enteros en una gran cavidad localizada delante de sus "
-#~ "baterías. Existen grabaciones de estas máquinas en acción, desmembrando a "
-#~ "humanos vivos durante una misión de terror y guardando su biomasa para su "
-#~ "posterior recuperación. El proceso es macabro y muy, muy rápido.\n"
-#~ "\n"
-#~ "Nuestros soldados han apodado a esta criatura como la \"Araña Sanguinaria"
-#~ "\", y el nombre se ha mantenido.\n"
-#~ "\n"
-#~ "Las pruebas de balística realizadas sobre el blindaje de la Araña "
-#~ "Sanguinaria revelaron que es muy resistente y tiene una excelente "
-#~ "capacidad de aislamiento, siendo efectivo contra una amplia variedad de "
-#~ "armas.\n"
-#~ "\n"
-#~ "-- El blindaje es muy resistente a los láseres, la electricidad y la "
-#~ "munición incendiaria, pero puede ser traspasada por balas perforantes de "
-#~ "alta velocidad.\n"
-#~ "\n"
-#~ "-- Los explosivos potentes también resultan efectivos, ya que dañan las "
-#~ "vulnerables articulaciones de las patas. Este podría ser el método más "
-#~ "eficaz para derribar a estas criaturas.\n"
-#~ "\n"
-#~ "La existencia de esta criatura suscita cuestiones inquietantes. Sugiere "
-#~ "que los alienígenas tienen un interés muy particular por la raza humana y "
-#~ "no tienen ninguna clase de escrúpulos. Comandante, estas máquinas "
-#~ "representan una enorme amenaza para cualquier ser humano que se aproxime. "
-#~ "En cuanto de encontrarlas, deberían ser destruidas inmediatamente a "
-#~ "cualquier precio.\n"
-#~ "\n"
-#~ "Atentamente,\n"
-#~ "\n"
-#~ "Dr. Connor"
-
-#, fuzzy
-#~ msgid ""
-#~ "Commander,\n"
-#~ "\n"
-#~ "We've recovered a new alien corpse from the battlefield. It appears to be "
-#~ "a more deadly variant of the Bloodspider with which we are familiar. "
-#~ "Dissection and assessment could give us insights into the alien's new "
-#~ "capabilities.\n"
-#~ "\n"
-#~ "Sincerely,\n"
-#~ "\n"
-#~ "Dr. Connor"
-#~ msgstr ""
-#~ "Comandante,\n"
-#~ "\n"
-#~ "Hemos recuperado un nuevo cuerpo alienígena del campo de batalla. "
-#~ "Deberíamos empezar su disección y análisis lo antes posible.\n"
-#~ "\n"
-#~ "Atentamente,\n"
-#~ "\n"
-#~ "Dr. Connor"
-
 #~ msgid "ortnok_autopsy_pre_txt"
 #~ msgstr ""
 #~ "Comandante,\n"
@@ -34909,51 +34843,6 @@ msgstr "Tomar captura de pantalla"
 #~ "\n"
 #~ "Dr. Connor"
 
-#, fuzzy
-#~ msgid ""
-#~ "Commander,\n"
-#~ "\n"
-#~ "My team and I have completed the disassembly and autopsy of the alien "
-#~ "creature we discovered. Here is my summary of our findings.\n"
-#~ "\n"
-#~ "We first assumed the object was a robot, but upon investigation we found "
-#~ "a small biomass at its core. This biological alien core is encased in a "
-#~ "shell of sensors which we believe interpret its signals to operate the "
-#~ "electrical machinery. For all intents and purposes, this alien is little "
-#~ "more than a \"brain\" in charge of a complex device. Calling it a brain "
-#~ "may be too generous. We don't believe it is large enough to undertake "
-#~ "mental processes more complex than basic motor skills, but troops report "
-#~ "seeing it coordinate closely with other aliens on the battlefield.\n"
-#~ "\n"
-#~ "The device itself is a small, but heavy, mobile disk, able to hover above "
-#~ "the ground. Because of its aerial movement, it is able to cross the "
-#~ "battlefield rapidly. Our soldiers will need to take it down before it "
-#~ "gets in range, which is no small feet considering its size and movement "
-#~ "capabilities.\n"
-#~ "\n"
-#~ "The models we discovered are equipped with a mounted plasma weapon which "
-#~ "is able to fire single rounds. Anyone caught within range will be very "
-#~ "sorry. Given its brain size and limited functionality, we believe this "
-#~ "alien is engineered for light combat missions -- perhaps it plays a "
-#~ "reconnaissance role.\n"
-#~ "\n"
-#~ "Sincerely,\n"
-#~ "\n"
-#~ "Dr. Connor"
-#~ msgstr ""
-#~ "Untangling the network of loose, fibrous material that forms at least 90% "
-#~ "of the hovernet reveals a solid disc of unknown construction. Mounting "
-#~ "points for weaponry are clearly visible, though the markings alongside "
-#~ "them have yet to be deciphered and would be our first breakthrough in "
-#~ "understanding the alien language.No joints can be seen between the disc "
-#~ "and the dozens of fibres that protrude from it, even under an electron "
-#~ "microscope. It is possible that the fibres are extruded from the disc "
-#~ "itself, which must provide the most efficient distribution of the "
-#~ "hovernet's energy and propulsive force.The loose arrangement of the "
-#~ "fibres suggests that a successful hit with a projectile or directed "
-#~ "energy weapon is unlikely, and blast or incendiary weapons would have "
-#~ "greater effect."
-
 #~ msgid "hovernet_autopsy_pre_txt"
 #~ msgstr "No hay información previa a la investigación diponible."
 
@@ -34982,20 +34871,6 @@ msgstr "Tomar captura de pantalla"
 #~ "fibres suggests that a successful hit with a projectile or directed "
 #~ "energy weapon is unlikely, and blast or incendiary weapons would have "
 #~ "greater effect."
-
-#, fuzzy
-#~ msgid ""
-#~ "Commander,\n"
-#~ "\n"
-#~ "We've recovered a new alien corpse from the battlefield. It appears to be "
-#~ "a more deadly variant of the Hovernet with which we are familiar. "
-#~ "Dissection and assessment could give us insights into the alien's new "
-#~ "capabilities.\n"
-#~ "\n"
-#~ "Sincerely,\n"
-#~ "\n"
-#~ "Dr. Connor"
-#~ msgstr "No hay información previa a la investigación diponible."
 
 #, fuzzy
 #~ msgid "ugv_phoenix_txt"
@@ -35076,124 +34951,6 @@ msgstr "Tomar captura de pantalla"
 #~ msgstr ""
 #~ "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic "
 #~ "Operations Command"
-
-#, fuzzy
-#~ msgid ""
-#~ "Commander, we made an extremely interesting find on the UFO we "
-#~ "disassembled. It carried an advanced and highly dangerous onboard missile "
-#~ "launcher, using powerful magnetic rails to accelerate its missiles to "
-#~ "hypersonic speeds before they even leave the launch tube.\n"
-#~ "\n"
-#~ "We want to investigate this launcher and determine whether or not it can "
-#~ "be adapted to fit on PHALANX aircraft, or even if it can be applied to "
-#~ "other purposes. This launcher system would be far more effective in "
-#~ "bringing down UFOs than our Sparrowhawks, possibly even more effective "
-#~ "than our current SAM systems. If we can adapt it we stand to gain a "
-#~ "substantial boost to the firepower of our whole airfleet as well as "
-#~ "ground-based missile systems.\n"
-#~ "\n"
-#~ "Please approve this program whenever you can, Commander.\n"
-#~ "\n"
-#~ "--Cdr. Navarre"
-#~ msgstr ""
-#~ "This is one of several proposals I'm submitting for the research and "
-#~ "development of new laser weaponry. Each of these will have to be "
-#~ "developed separately due to the size differences, power levels and "
-#~ "complexity of the systems involved.\n"
-#~ "\n"
-#~ "The Aerial Laser Cannon is the largest and most powerful iteration of our "
-#~ "new laser designs. Like our infantry weapons it'll be powered by "
-#~ "deuterium-fluoride reaction, but on a much larger scale and amplified by "
-#~ "the aircraft's on-board electrical systems. Several exciting ideas are "
-#~ "being considered.\n"
-#~ "\n"
-#~ "As well as being the biggest, this may well be our most challenging laser "
-#~ "to create. Any aircraft cannon will have to reach across several "
-#~ "kilometres of atmosphere -- and therefore loads of atmospheric blooming "
-#~ "-- with enough punch at the endpoint to cut into a UFO's fuselage. Those "
-#~ "sorts of power levels have been achieved before with massive arrays "
-#~ "mounted on jumbo jets, but never in a package small enough to make a jet "
-#~ "fighter cannon.\n"
-#~ "\n"
-#~ "The finished product should be able to engage UFOs with bullseye accuracy "
-#~ "at ranges well beyond that of the SHIVA cannon, and although damage may "
-#~ "be low, we expect that the ability to keep continuous fire and pressure "
-#~ "on enemy craft will be valuable in the days to come.\n"
-#~ "\n"
-#~ "Please approve lab time and funding for this program when you're ready, "
-#~ "Commander.\n"
-#~ "\n"
-#~ "--Cdr. Navarre"
-
-#, fuzzy
-#~ msgid ""
-#~ "Commander, we've finished work on the alien missile launcher. It's a "
-#~ "fairly simple affair. Firing is computer-driven, fed directly from the "
-#~ "UFO's targeting computer. Powerful electromagnetic coils around the "
-#~ "launch tube accelerate the missile to extreme speeds, reaching up to Mach "
-#~ "4 at the point where the missile leaves the tube. Only once the missile "
-#~ "is fully free of the tube do its onboard rockets kick in.\n"
-#~ "\n"
-#~ "The good news is that we've managed to succesfully adapt fittings, "
-#~ "controls and power feeds to allow the Alien Launcher to be safely mounted "
-#~ "to our aircraft. The bad news is that we've had to drastically reduce its "
-#~ "magazine size in order to meet weight and size restrictions on our "
-#~ "aircraft.\n"
-#~ "\n"
-#~ "Our aircraft are too small and light to be able to carry so many, and "
-#~ "most of our craft aren't laid out with internal missile magazines. We've "
-#~ "had to custom-build a magazine mounted with the launcher, the capacity of "
-#~ "which falls behind the stores found on UFOs.\n"
-#~ "\n"
-#~ "It's not all doom and gloom, though. We believe that we can modify the "
-#~ "launch tube to be able to fire human missiles as well as the alien type. "
-#~ "We'd have to develop the missile ourselves, of course -- no current human "
-#~ "missile is capable of withstanding the stress of being fired from this "
-#~ "launcher. However, we're confident we can design a missile that will "
-#~ "survive launch and incorporates new UFO-tracking technologies to improve "
-#~ "homing and ECM capability.\n"
-#~ "\n"
-#~ "I'll send you a design proposal as soon as I can, Commander.\n"
-#~ "\n"
-#~ "--Cdr. Navarre"
-#~ msgstr ""
-#~ "Commander, I've just finished my report on our latest laser program. "
-#~ "We've successfully prototyped the new Aerial Laser Cannon and are ready "
-#~ "to put it into production.\n"
-#~ "\n"
-#~ "We achieved what we set out to do: create a continuous wave, deuterium-"
-#~ "fluoride-powered laser with megawatt-range output, capable of tracking "
-#~ "and hitting UFOs at ranges of up to 5 kilometres. Accuracy is excellent, "
-#~ "hampered only by enemy ECM (Electronic Countermeasures), and unlike in "
-#~ "all our other weapons it is not affected by range. The laser proceeds in "
-#~ "a straight line and crosses the distance between gun and target almost "
-#~ "instantly. It's hard to miss with it.\n"
-#~ "\n"
-#~ "Unfortunately atmospheric blooming is still a problem, and the laser "
-#~ "rapidly loses power the further it has to travel to the target. At "
-#~ "maximum range, 5 kilometres, it takes 32 seconds of continuous fire on "
-#~ "the same spot to hole a UFO's hull. We're rarely going to have that much "
-#~ "time to wait for a kill. The ideal range for this weapon is between 2 to "
-#~ "3 kilometres where it strikes a good balance between damage and distance. "
-#~ "Average damage per second at these distances is slightly less than the "
-#~ "SHIVA Rotary Cannon, but range is higher by up to 1.5 kilometres. More so "
-#~ "than any of our previous weapons, the Aerial Laser Cannon is ideal for "
-#~ "driving and pinning down the enemy behind a wall of laser fire.\n"
-#~ "\n"
-#~ "The cannon carries an integrated magazine of deuterium-fluoride allowing "
-#~ "up to thirty minutes of continuous fire. Since deuterium and fluoride are "
-#~ "both too potentially hazardous to store on-base, and we have access to "
-#~ "large off-base stockpiles of all the necessary compounds, we will not "
-#~ "need to keep laser cannon ammunition in inventory.\n"
-#~ "\n"
-#~ "Deployment of the weapon is at your discretion, Commander, but I'd like "
-#~ "to recommend we use the new cannons to replace SHIVA guns across our "
-#~ "airfleet except for craft specifically equipped for close-in fighting. "
-#~ "Anything that's much less manoeuvrable than a UFO will have difficulty "
-#~ "keeping hold of the target with SHIVAs, so the laser offers a far better "
-#~ "solution with nearly as much staying power.\n"
-#~ "\n"
-#~ "--Cdr. Navarre"
 
 #, fuzzy
 #~ msgid ""
