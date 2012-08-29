@@ -1266,11 +1266,11 @@ bool G_ClientShoot (const player_t * player, edict_t* ent, const pos3_t at, shoo
 	if (!mock) {
 		if (fd->obj->dmgtype == gi.csi->damSmoke) {
 			const int rounds = std::max(2, fd->rounds);
-			G_SpawnSmokeField(impact, "smokefield", rounds);
+			G_SpawnSmokeField(impact, "smokefield", rounds, fd->splrad);
 		} else if (fd->obj->dmgtype == gi.csi->damIncendiary) {
 			const int damage = std::max(0.0f, fd->damage[0] + fd->spldmg[0] + ((fd->damage[1] + fd->spldmg[1]) * crand()));
 			const int rounds = std::max(2, fd->rounds);
-			G_SpawnFireField(impact, "firefield", rounds, damage);
+			G_SpawnFireField(impact, "firefield", rounds, damage, fd->splrad);
 		}
 
 		/* send TUs if ent still alive */
