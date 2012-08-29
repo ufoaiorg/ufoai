@@ -4,7 +4,7 @@
  */
 
 /*
-Copyright (C) 2002-2011 UFO: Alien Invasion.
+Copyright (C) 2002-2012 UFO: Alien Invasion.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -114,6 +114,7 @@ int INS_GetCount(void);
 
 /* Installation template */
 void INS_ParseInstallations(const char *name, const char **text);
+const installationTemplate_t *INS_GetInstallationTemplateByID(const char *id);
 const installationTemplate_t *INS_GetInstallationTemplateByType(installationType_t type);
 void INS_LinkTechnologies(void);
 

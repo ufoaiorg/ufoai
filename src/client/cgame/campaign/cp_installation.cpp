@@ -5,7 +5,7 @@
  */
 
 /*
-Copyright (C) 2002-2011 UFO: Alien Invasion.
+Copyright (C) 2002-2012 UFO: Alien Invasion.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -87,6 +87,24 @@ installation_t* INS_GetByIDX (int idx)
 /**
  * @brief Returns the installation Template for a given installation ID.
  * @param[in] id ID of the installation template to find.
+ * @return corresponding installation Template, @c NULL if not found.
+ */
+const installationTemplate_t* INS_GetInstallationTemplateByID (const char *id)
+{
+	int idx;
+
+	for (idx = 0; idx < ccs.numInstallationTemplates; idx++) {
+		const installationTemplate_t *t = &ccs.installationTemplates[idx];
+		if (Q_streq(t->id, id))
+			return t;
+	}
+
+	return NULL;
+}
+
+/**
+ * @brief Returns the installation Template for a given installation type.
+ * @param[in] type Type of the installation template to find.
  * @return corresponding installation Template, @c NULL if not found.
  */
 const installationTemplate_t* INS_GetInstallationTemplateByType (installationType_t type)
