@@ -1312,12 +1312,32 @@ static void HUD_ActorGetCvarData_f (void)
 	}
 }
 
+static const char *HUD_GetPenaltyString (const int type)
+{
+	switch (type) {
+	case MODIFIER_ACCURACY:
+		return _("accuracy");
+	case MODIFIER_SHOOTING:
+		return _("shooting speed");
+	case MODIFIER_MOVEMENT:
+		return _("movement speed");
+	case MODIFIER_SIGHT:
+		return _("sight range");
+	case MODIFIER_REACTION:
+		return _("reaction speed");
+	case MODIFIER_TU:
+		return _("TU");
+	default:
+		return "";
+	}
+}
+
 static void HUD_ActorWoundData_f (void)
 {
 	if (!CL_BattlescapeRunning())
 		return;
 
-		/* check if actor exists */
+	/* check if actor exists */
 	if (selActor) {
 		int bodyPart;
 		woundInfo_t *wounds = &selActor->wounds;
@@ -1326,12 +1346,18 @@ static void HUD_ActorWoundData_f (void)
 
 		for (bodyPart = 0; bodyPart < bodyData->numBodyParts(); ++bodyPart) {
 			const int woundThreshold = selActor->maxHP * bodyData->woundThreshold(bodyPart);
+
 			if (wounds->woundLevel[bodyPart] + wounds->treatmentLevel[bodyPart] * 0.5 > woundThreshold) {
 				const int bleeding = wounds->woundLevel[bodyPart] * (wounds->woundLevel[bodyPart] > woundThreshold
 									 ? bodyData->bleedingFactor(bodyPart) : 0);
-				char text[MAX_VAR];
+				char text[256];
+				int penalty;
+
 				Com_sprintf(text, lengthof(text), CHRSH_IsTeamDefRobot(chr->teamDef) ?
-						_("Damaged %s (deterioration: %i)") : _("Wounded %s (bleeding: %i)"), _(bodyData->name(bodyPart)), bleeding);
+						_("Damaged %s (deterioration: %i)\n") : _("Wounded %s (bleeding: %i)\n"), _(bodyData->name(bodyPart)), bleeding);
+				for (penalty = MODIFIER_ACCURACY; penalty < MODIFIER_MAX; penalty++)
+					if (bodyData->penalty(bodyPart, static_cast<modifier_types_t>(penalty)) != 0)
+						Q_strcat(text, va(_("· Reduced %s\n"), HUD_GetPenaltyString(penalty)), lengthof(text));
 				UI_ExecuteConfunc("actor_wounds %s %i \"%s\"", bodyData->id(bodyPart), bleeding, text);
 			}
 		}
