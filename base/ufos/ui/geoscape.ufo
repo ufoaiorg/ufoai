@@ -740,7 +740,6 @@ window geoscape
 // ======================
 // POPUP INTERCEPT READY
 // ======================
-
 window popup_intercept_ready
 {
 	{
@@ -805,69 +804,6 @@ window popup_intercept_ready
 // ==================
 // POPUP NEW INSTALLATION
 // ==================
-window popup_newinstallation_type
-{
-	{
-		pos			"264 262"
-		size		"496 287"
-		dragbutton	true
-		closebutton	true
-		background		"ui/popup_alpha_tile"
-		string		"_New installation"
-	}
-
-	string type_label
-	{
-		string		"_Type"
-		pos			"46 50"
-		font		"f_normal"
-	}
-	string buildtime_label
-	{
-		string		"_Build Time"
-		pos			"206 50"
-		font		"f_normal"
-	}
-	string cost_label
-	{
-		string		"_Cost"
-		pos			"366 50"
-		font		"f_normal"
-	}
-
-	text installations
-	{
-		dataid		TEXT_LIST
-		pos			"46 78"
-		width		"400"
-		tabwidth	160
-		lineheight	30
-		color		"0 .78 0 1"
-		selectcolor	"1 1 1 1"
-		rows		"5"
-		mousefx		true
-		longlines	LONGLINES_PRETTYCHOP
-		onClick		{
-			cmd "ui_pop;mn_installation_click <lineselected>;"
-		}
-	}
-
-	//
-	// Interaction
-	//
-
-	cmpPopupButton bt_close
-	{
-		string		"_Close"
-		pos			"297 228"
-		onClick		{ cmd "ui_pop;" }
-	}
-
-	func onWindowOpened {
-		cmd "mn_installation_init;"
-	}
-}
-
 window popup_newinstallation
 {
 	{

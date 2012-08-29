@@ -1,3 +1,145 @@
+// Create Installation: Select Type
+component cmp_installation_type extends panel {
+	{
+		size		"410 20"
+		border		0
+		bordercolor	"1 1 1 1"
+		padding		4
+
+		onClick {
+			if ( *node:this.id@string eq "base" ) {
+				cmd "ui_pop; mn_base_select -1;"
+			} else {
+				cmd "ui_pop; ui_build_installationtype <node:this.id@string>;"
+			}
+		}
+		onMouseEnter {
+			*node:this@border = 2
+		}
+		onMouseLeave {
+			*node:this@border = 0
+		}
+	}
+
+	data id {
+		integer		0
+		string		""
+	}
+
+	string name {
+		pos			"0 0"
+		size		"210 20"
+		font		"f_small"
+		contentalign	ALIGN_CL
+		ghost		true
+	}
+	string buildtime {
+		pos			"210 2"
+		size		"100 15"
+		font		"f_small"
+		contentalign	ALIGN_CR
+		ghost		true
+	}
+	string cost {
+		pos			"310 2"
+		size		"100 15"
+		font		"f_small"
+		contentalign	ALIGN_CR
+		ghost		true
+	}
+}
+
+window popup_newinstallation_type
+{
+	{
+		pos			"264 262"
+		size		"485 247"
+		dragbutton	true
+		closebutton	true
+		background		"ui/popup_alpha_tile"
+		string		"_New installation"
+	}
+
+	string type_label
+	{
+		string		"_Type"
+		pos			"30 55"
+		size		"210 20"
+		font		"f_small_bold"
+	}
+	string buildtime_label
+	{
+		string		"_Build Time"
+		pos			"245 55"
+		size		"100 20"
+		contentalign	ALIGN_CC
+		font		"f_small_bold"
+	}
+	string cost_label
+	{
+		string		"_Cost"
+		pos			"347 55"
+		size		"100 20"
+		contentalign	ALIGN_CC
+		font		"f_small_bold"
+	}
+
+	panel list {
+		pos			"30 75"
+		size		"410 100"
+		layout		LAYOUT_TOP_DOWN_FLOW
+		wheelscrollable	true
+
+		onViewChange {
+			*node:parent.list_scroll@fullsize = <fullsize>
+			*node:parent.list_scroll@current = <viewpos>
+			*node:parent.list_scroll@viewsize = <viewsize>
+		}
+	}
+	vscrollbar list_scroll {
+		image		"ui/scrollbar_v_green"
+		pos			"445 75"
+		height		"100"
+		current		0
+		viewsize	5
+		fullsize	5
+		hidewhenunused	true
+
+		onChange {
+			*node:parent.list@viewpos = <current>
+		}
+	}
+
+	confunc installationtype_clear {
+		call *node:parent.list@removeAllChild
+	}
+	confunc installationtype_add {
+		call *node:parent.list@createChild("inst_<1>", "cmp_installation_type")
+		*node:parent.list.inst_<1>.id@string = "<1>"
+		*node:parent.list.inst_<1>.name@string = "<2>"
+		*node:parent.list.inst_<1>.buildtime@string = "<3>"
+		*node:parent.list.inst_<1>.cost@string = "<4>"
+
+		if ( *node:parent.list.inst_<1>.buildtime@string eq "-" ) {
+			*node:parent.list.inst_<1>.buildtime@invis = true
+		}
+
+	}
+
+	cmpPopupButton bt_close {
+		string		"_Close"
+		pos			"287 188"
+		onClick		{
+			cmd "ui_pop;"
+		}
+	}
+
+	func onWindowOpened {
+		cmd "ui_fill_installationtypes;"
+	}
+}
+
+
 // Popup new base
 window popup_newbase {
 	{

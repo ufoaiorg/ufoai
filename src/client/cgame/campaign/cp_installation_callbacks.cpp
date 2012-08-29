@@ -248,9 +248,12 @@ static void INS_FillUFOYardData_f (void)
 	}
 }
 
-static void INS_Init_f (void)
+/**
+ * @brief Fills create installation / installation type selection popup
+ */
+static void INS_FillTypes_f (void)
 {
-	linkedList_t *list = NULL;
+	cgi->UI_ExecuteConfunc("installationtype_clear");
 	if (INS_GetCount() < B_GetInstallationLimit()) {
 		int i;
 		for (i = 0; i < ccs.numInstallationTemplates; i++) {
@@ -258,60 +261,61 @@ static void INS_Init_f (void)
 			if (tpl->once && INS_HasType(tpl->type, INSTALLATION_NOT_USED))
 				continue;
 			if (tpl->tech == NULL || RS_IsResearched_ptr(tpl->tech)) {
-				LIST_AddString(&list, va(_("%s\t%i\t%i c"), tpl->name, tpl->buildTime, tpl->cost));
+				cgi->UI_ExecuteConfunc("installationtype_add \"%s\" \"%s\" \"%s\" \"%d c\"", tpl->id, _(tpl->name),
+					(tpl->buildTime > 0) ? va("%d %s", tpl->buildTime, ngettext("day", "days", tpl->buildTime)) : "-", tpl->cost);
 			}
 		}
 	}
 
+	/** @TODO Move this out from installations code */
 	if (B_GetCount() < MAX_BASES)
-		LIST_AddString(&list, va(_("Base\t-\t%i c"), ccs.curCampaign->basecost));
-
-	if (LIST_IsEmpty(list))
-		cgi->UI_PopWindow(false);
-	else
-		cgi->UI_RegisterLinkedListText(TEXT_LIST, list);
+		cgi->UI_ExecuteConfunc("installationtype_add base \"%s\" - \"%d c\"", _("Base"), ccs.curCampaign->basecost);
 }
 
-static void INS_Click_f (void)
+/**
+ * @brief Selects installation type to build
+ */
+static void INS_SelectType_f (void)
 {
 	if (Cmd_Argc() < 2)
 		return;
 
-	int index = atoi(Cmd_Argv(1));
+	const char *id = Cmd_Argv(1);
 
-	if (INS_GetCount() < B_GetInstallationLimit()) {
-		for (int i = 0; i < ccs.numInstallationTemplates; i++) {
-			const installationTemplate_t *tpl = &ccs.installationTemplates[i];
-			if (tpl->tech == NULL || RS_IsResearched_ptr(tpl->tech)) {
-				if (tpl->once && INS_HasType(tpl->type, INSTALLATION_NOT_USED))
-					continue;
-				if (index-- == 0) {
-					/* if player hit the "create installation" button while creating installation mode is enabled
-					 * that means that player wants to quit this mode */
-					if (ccs.mapAction == MA_NEWINSTALLATION) {
-						MAP_ResetAction();
-					} else {
-						ccs.mapAction = MA_NEWINSTALLATION;
-
-						/* show radar overlay (if not already displayed) */
-						if (tpl->type == INSTALLATION_RADAR && !MAP_IsRadarOverlayActivated())
-							MAP_SetOverlay("radar");
-
-						INS_SetInstallationTitle(tpl->type);
-						Cvar_Set("mn_installation_type", tpl->id);
-					}
-					/* select the installation type */
-					return;
-				}
-			}
-		}
-	}
-
-	if (index == 0) {
-		/* base is the last */
-		B_SelectBase(NULL);
+	if (ccs.mapAction == MA_NEWINSTALLATION) {
+		MAP_ResetAction();
 		return;
 	}
+
+	const installationTemplate_t *tpl = INS_GetInstallationTemplateByID(id);
+	if (!tpl) {
+		Com_Printf("Invalid installation template\n");
+		return;
+	}
+
+	if (INS_GetCount() >= B_GetInstallationLimit()) {
+		Com_Printf("Maximum number of installations reached\n");
+		return;
+	}
+
+	if (tpl->tech != NULL && !RS_IsResearched_ptr(tpl->tech)) {
+		Com_Printf("This type of installation is not yet researched\n");
+		return;
+	}
+
+	if (tpl->once && INS_HasType(tpl->type, INSTALLATION_NOT_USED)) {
+		Com_Printf("Cannot build more of this installation\n");
+		return;
+	}
+
+	ccs.mapAction = MA_NEWINSTALLATION;
+
+	/* show radar overlay (if not already displayed) */
+	if (tpl->type == INSTALLATION_RADAR && !MAP_IsRadarOverlayActivated())
+		MAP_SetOverlay("radar");
+
+	INS_SetInstallationTitle(tpl->type);
+	Cvar_Set("mn_installation_type", tpl->id);
 }
 
 void INS_InitCallbacks (void)
@@ -321,9 +325,9 @@ void INS_InitCallbacks (void)
 	Cmd_AddCommand("mn_installation_changename", INS_ChangeInstallationName_f, "Called after editing the cvar installation name");
 	Cmd_AddCommand("mn_installation_destroy", INS_DestroyInstallation_f, "Destroys an installation");
 	Cmd_AddCommand("mn_installation_update_max_count", INS_UpdateInstallationLimit_f, "Updates the installation count limit");
-	Cmd_AddCommand("mn_installation_init", INS_Init_f, "Initializes the installation menu");
-	Cmd_AddCommand("mn_installation_click", INS_Click_f, "Select the installation type to build");
 
+	Cmd_AddCommand("ui_fill_installationtypes", INS_FillTypes_f, "Fills create installation / installation type selection popup");
+	Cmd_AddCommand("ui_build_installationtype", INS_SelectType_f, "Selects installation type to build");
 	Cmd_AddCommand("ui_fillufoyards", INS_FillUFOYardData_f, "Fills UFOYard UI with data");
 
 	Cvar_SetValue("mn_installation_count", INS_GetCount());
@@ -334,6 +338,8 @@ void INS_InitCallbacks (void)
 
 void INS_ShutdownCallbacks (void)
 {
+	Cmd_RemoveCommand("ui_select_installationtype");
+	Cmd_RemoveCommand("ui_fill_installationtypes");
 	Cmd_RemoveCommand("ui_fillufoyards");
 
 	Cmd_RemoveCommand("mn_installation_select");
