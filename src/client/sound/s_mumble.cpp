@@ -6,6 +6,7 @@
 
 #include "../client.h"
 #include "s_mumble.h"
+#include "s_local.h"
 #include <libmumblelink.h>
 
 static cvar_t *snd_mumble;
@@ -21,6 +22,9 @@ void S_MumbleInit (void)
 
 void S_MumbleLink (void)
 {
+	if (!s_env.initialized)
+		return;
+
 	if (!snd_mumble->integer)
 		return;
 
@@ -32,6 +36,9 @@ void S_MumbleLink (void)
 
 void S_MumbleUnlink (void)
 {
+	if (!s_env.initialized)
+		return;
+
 	if (!snd_mumble->integer)
 		return;
 
@@ -43,11 +50,13 @@ void S_MumbleUnlink (void)
 
 void S_MumbleUpdate (const vec3_t origin, const vec3_t forward, const vec3_t right, const vec3_t up)
 {
-	vec3_t mp, mf, mt;
+	if (!s_env.initialized)
+		return;
 
 	if (!snd_mumble->integer)
 		return;
 
+	vec3_t mp, mf, mt;
 	VectorScale(origin, snd_mumble_scale->value, mp);
 	VectorSet(mf, forward[0], forward[2], forward[1]);
 	VectorSet(mt, up[0], up[2], up[1]);
