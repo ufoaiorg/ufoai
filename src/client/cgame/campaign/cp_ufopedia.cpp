@@ -540,7 +540,7 @@ static void UP_SetMailHeader (technology_t* tech, techMailType_t type, eventMail
 	Com_sprintf(mailHeader, sizeof(mailHeader), _("FROM: %s\nTO: %s\nDATE: %s"), from, to, dateBuf);
 	Cvar_Set("mn_mail_sender_head", model ? model : "");
 	Cvar_Set("mn_mail_from", from);
-	Cvar_Set("mn_mail_subject", va("%s%s", subjectType, subject));
+	Cvar_Set("mn_mail_subject", va("%s%s", subjectType, _(subject)));
 	Cvar_Set("mn_mail_to", to);
 	Cvar_Set("mn_mail_date", dateBuf);
 	cgi->UI_RegisterText(TEXT_UFOPEDIA_MAILHEADER, mailHeader);
