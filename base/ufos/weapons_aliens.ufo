@@ -152,7 +152,7 @@ item needlergun_ammo
 			range		250
 			shots		30
 			delaybetweenshots	40
-			ammo		50
+			ammo		30
 			time		14
 			damage		"8 2"
 			dmgweight	"normal_needle"
@@ -176,7 +176,7 @@ item needlergun_ammo
 			range		250
 			shots		90
 			delaybetweenshots	40
-			ammo		120
+			ammo		90
 			time		20
 			damage		"8 2"
 			dmgweight	"normal_needle"
@@ -199,7 +199,7 @@ item needlergun_ammo
 			range		250
 			shots		120
 			delaybetweenshots	40
-			ammo		200
+			ammo		120
 			time		26
 			damage		"8 2"
 			dmgweight	"normal_needle"
