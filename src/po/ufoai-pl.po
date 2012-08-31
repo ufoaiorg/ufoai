@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
 "POT-Creation-Date: 2012-08-19 14:21+0200\n"
-"PO-Revision-Date: 2012-08-28 19:30+0100\n"
+"PO-Revision-Date: 2012-08-31 11:41+0100\n"
 "Last-Translator: Maciej Wierzbicki <voovoos@killfile.pl>\n"
 "Language-Team:  <radius75@interia.pl>\n"
 "Language: pl_PL\n"
@@ -27039,7 +27039,7 @@ msgstr "Ustawienia Rozgrywki Taktycznej"
 
 #: ../base/ufos/ui/options.ufo:1564
 msgid "Select the Head-Up-Display for the battlescape."
-msgstr ""
+msgstr "Wybór rodzaju 'HUD' w trybie taktycznym. "
 
 #: ../base/ufos/ui/options.ufo:1565
 msgid "HUD Design:"
@@ -27062,6 +27062,10 @@ msgid ""
 "soldier begins to execute them. 'Only for moving' means the path will be "
 "displayed before you confirm a soldier's move."
 msgstr ""
+"'Nie' jeśli wszystkie Twoje rozkazy mają być wykonywane bez dodatkowego "
+"potwierdzania. 'Tak' jeśli wszystkie Twoje rozkazy mają być wykonywane z "
+"dodatkowym potwierdzaniem. 'Tylko ruch' wyświetla jedynie trasę marszu nim "
+"potwierdzisz ruch żołnierza."
 
 #: ../base/ufos/ui/options.ufo:1595 po/OTHER_STRINGS:4
 msgid "Yes"
