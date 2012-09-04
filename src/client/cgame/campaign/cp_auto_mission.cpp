@@ -741,11 +741,11 @@ static void AM_DoFight (autoMissionBattle_t *battle)
 
 	/* Set results */
 	if (battle->actUnits[AUTOMISSION_TEAM_TYPE_PLAYER] <= 0) {
-		battle->results->won = false;
+		battle->results->state = LOST;
 		battle->winningTeam = AUTOMISSION_TEAM_TYPE_ALIEN;
 	} else {
 		battle->winningTeam = AUTOMISSION_TEAM_TYPE_PLAYER;
-		battle->results->won = true;
+		battle->results->state = WON;
 	}
 }
 
@@ -760,7 +760,7 @@ static void AM_DisplayResults (const autoMissionBattle_t *battle)
 	assert(battle);
 
 	Cvar_SetValue("cp_mission_tryagain", 0);
-	if (battle->results->won) {
+	if (battle->results->state == WON) {
 		cgi->UI_PushWindow("won");
 		if (battle->teamAccomplishment[AUTOMISSION_TEAM_TYPE_PLAYER] > battle->teamAccomplishment[AUTOMISSION_TEAM_TYPE_ALIEN])
 			MS_AddNewMessage(_("Notice"), _("You've won the battle"));
@@ -860,7 +860,7 @@ static void AM_UpdateSurivorsAfterBattle (const autoMissionBattle_t *battle, str
 
 		/* dead soldiers are removed in CP_MissionEnd, just move their inventory to itemCargo */
 		if (chr->HP <= 0) {
-			if (battle->results->won)
+			if (battle->results->state == WON)
 				AM_MoveCharacterInventoryIntoItemCargo(aircraft, &soldier->chr);
 			E_RemoveInventoryFromStorage(soldier);
 		}
@@ -942,7 +942,7 @@ void AM_Go (mission_t *mission, aircraft_t *aircraft, const campaign_t *campaign
 	AM_DoFight(&autoBattle);
 
 	AM_UpdateSurivorsAfterBattle(&autoBattle, aircraft);
-	if (results->won)
+	if (results->state == WON)
 		AM_AlienCollect(aircraft, &autoBattle);
 
 	MIS_InitResultScreen(results);

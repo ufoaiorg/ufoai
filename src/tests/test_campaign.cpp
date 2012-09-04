@@ -394,7 +394,7 @@ static void testAutoMissions (void)
 	CP_CreateBattleParameters(mission, &battleParameters, aircraft);
 	AM_Go(mission, aircraft, campaign, &battleParameters, &result);
 
-	CU_ASSERT_TRUE(result.won);
+	CU_ASSERT_TRUE(result.state == WON);
 }
 
 static void testTransferItem (void)

@@ -1056,7 +1056,7 @@ bool GAME_ItemIsUseable (const objDef_t *od)
 /**
  * @brief After a mission was finished this function is called
  * @param msg The network message buffer
- * @param winner The winning team
+ * @param winner The winning team or -1 if it was a draw
  * @param numSpawned The amounts of all spawned actors per team
  * @param numAlive The amount of survivors per team
  * @param numKilled The amount of killed actors for all teams. The first dimension contains

@@ -184,6 +184,11 @@ static void GAME_SK_Results (dbuffer *msg, int winner, int *numSpawned, int *num
 
 	cgi->CL_Drop();
 
+	if (winner == -1) {
+		cgi->UI_Popup(_("Game Drawn!"), "%s\n", _("The game was a draw!\n\nEnemies escaped."));
+		return;
+	}
+
 	if (winner == 0) {
 		cgi->UI_Popup(_("Game Drawn!"), "%s\n", _("The game was a draw!\n\nNo survivors left on any side."));
 		return;

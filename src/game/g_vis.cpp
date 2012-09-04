@@ -279,8 +279,9 @@ static int G_DoTestVis (const int team, edict_t * check, int visFlags, int playe
 			status |= VIS_PERISH;
 		}
 	} else if (vis == 0 && (visFlags & VIS_NEW)) {
-		if (G_IsActor(check))
+		if (G_IsActor(check)) {
 			G_EventActorAdd(playerMask, check);
+		}
 	}
 	return status;
 }

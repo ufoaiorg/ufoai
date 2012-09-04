@@ -235,12 +235,31 @@ void G_ClientEndRound (player_t * player)
 
 	/* reset ready flag for every player on the current team (even ai players) */
 	p = NULL;
-	while ((p = G_PlayerGetNextActiveHuman(p)))
-		if (p->pers.team == level.activeTeam)
+	while ((p = G_PlayerGetNextActiveHuman(p))) {
+		if (p->pers.team == level.activeTeam) {
 			p->roundDone = false;
+			if (g_lastseen->integer > 0) {
+				edict_t *ent = NULL;
+				while ((ent = G_EdictsGetNextActor(ent))) {
+					if (G_IsAI(ent) && G_IsVisibleForTeam(ent, level.activeTeam)) {
+						p->lastSeen = level.actualRound;
+						break;
+					}
+				}
+				if (level.actualRound - p->lastSeen > g_lastseen->integer) {
+					Com_Printf("round end triggered by g_lastseen (player %i (team %i) last seen in round %i of %i rounds)\n",
+							p->num, level.activeTeam, p->lastSeen, level.actualRound);
+					G_MatchEndTrigger(-1, 0);
+					break;
+				}
+			}
+		}
+	}
 
 	p = NULL;
-	while ((p = G_PlayerGetNextActiveAI(p)))
-		if (p->pers.team == level.activeTeam)
+	while ((p = G_PlayerGetNextActiveAI(p))) {
+		if (p->pers.team == level.activeTeam) {
 			p->roundDone = false;
+		}
+	}
 }

@@ -284,10 +284,14 @@ typedef struct battleParam_s {
 	struct nation_s *nation;		/**< nation where the mission takes place */
 } battleParam_t;
 
+typedef enum {
+	WON, DRAW, LOST
+} missionState_t;
+
 /** @brief Structure with mission info needed to create results summary at menu won. */
 typedef struct missionResults_s {
 	const mission_t *mission;
-	bool won;
+	missionState_t state;
 	bool recovery;		/**< @c true if player secured a UFO (landed or crashed). */
 	bool crashsite;		/**< @c true if secured UFO was crashed one. */
 	ufoType_t ufotype;		/**< Type of UFO secured during the mission. */

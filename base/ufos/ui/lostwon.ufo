@@ -74,11 +74,9 @@ window won
 
 window lost
 {
-
 	{
 		preventtypingescape	true
 	}
-
 
 	// ==================
 	// background
@@ -158,6 +156,34 @@ window lost
 	func onWindowClosed
 	{
 		if ( *cvar:sv_maxclients == 1 ) {
+			cmd "cp_results 0;"
+		}
+	}
+}
+
+// ==================
+// DRAW MENU
+// ==================
+
+window draw extends lost
+{
+	{
+		preventtypingescape	true
+	}
+
+	// ==================
+	// background
+	// ==================
+
+	image background
+	{
+		src	"background/lost_bg"
+	}
+
+	func onWindowClosed
+	{
+		if ( *cvar:sv_maxclients == 1 ) {
+			// a draw counts as lost
 			cmd "cp_results 0;"
 		}
 	}

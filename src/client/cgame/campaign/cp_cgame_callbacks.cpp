@@ -202,6 +202,7 @@ void GAME_CP_Results (dbuffer *msg, int winner, int *numSpawned, int *numAlive, 
 	int civiliansSurvived, civiliansKilled, civiliansStunned;
 	const int currentTeam = cgi->GAME_GetCurrentTeam();
 	const bool won = (winner == currentTeam);
+	const bool draw = (winner == -1 || winner == 0);
 	missionResults_t *results;
 	aircraft_t *aircraft = MAP_GetMissionAircraft();
 	const battleParam_t *bp = &ccs.battleParameters;
@@ -235,9 +236,10 @@ void GAME_CP_Results (dbuffer *msg, int winner, int *numSpawned, int *numAlive, 
 	if (won) {
 		ownSurvived += ownStunned;
 		ownStunned = 0;
-	} else
+	} else {
 		/* if we lost, they revive stunned */
 		aliensStunned = 0;
+	}
 
 	/* we won, and we're not the dirty aliens */
 	if (won)
@@ -257,7 +259,7 @@ void GAME_CP_Results (dbuffer *msg, int winner, int *numSpawned, int *numAlive, 
 	results->mission = bp->mission;
 
 	if (nextmap) {
-		assert(won);
+		assert(won || draw);
 		results->aliensKilled += aliensKilled;
 		results->aliensStunned += aliensStunned;
 		results->aliensSurvived += aliensSurvived;
@@ -271,7 +273,12 @@ void GAME_CP_Results (dbuffer *msg, int winner, int *numSpawned, int *numAlive, 
 		return;
 	}
 
-	results->won = won;
+	if (won)
+		results->state = WON;
+	else if (draw)
+		results->state = DRAW;
+	else
+		results->state = LOST;
 	results->aliensKilled = aliensKilled;
 	results->aliensStunned = aliensStunned;
 	results->aliensSurvived = aliensSurvived;
@@ -292,6 +299,8 @@ void GAME_CP_Results (dbuffer *msg, int winner, int *numSpawned, int *numAlive, 
 
 	if (won)
 		cgi->UI_PushWindow("won");
+	else if (draw)
+		cgi->UI_PushWindow("draw");
 	else
 		cgi->UI_PushWindow("lost");
 

@@ -73,7 +73,7 @@ static void AM_Go_f (void)
 	/* start the map */
 	CP_CreateBattleParameters(mission, battleParam, MAP_GetMissionAircraft());
 
-	results->won = false;
+	results->state = LOST;
 	AM_Go(mission, MAP_GetInterceptorAircraft(), ccs.curCampaign, battleParam, results);
 }
 

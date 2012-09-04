@@ -305,6 +305,7 @@ extern cvar_t *g_nodamage;
 extern cvar_t *g_notu;
 extern cvar_t *g_nospawn;
 extern cvar_t *g_actorspeed;
+extern cvar_t *g_lastseen;
 
 extern cvar_t *flood_msgs;
 extern cvar_t *flood_persecond;
@@ -637,6 +638,8 @@ struct player_s {
 	bool spawned;			/**< already spawned? */
 	bool began;				/**< the player sent his 'begin' already */
 	bool roundDone;			/**< ready to end his turn */
+
+	int lastSeen;			/**< the round the player has last seen an ai controlled enemy */
 
 	int reactionLeftover;		/**< Minimum TU left over by reaction fire */
 	bool autostand;			/**< autostand for long walks */

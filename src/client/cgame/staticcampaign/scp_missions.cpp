@@ -288,7 +288,7 @@ void SCP_CampaignProgress (const missionResults_t *results)
 	}
 
 	/* campaign effects */
-	if (results->won)
+	if (results->state == WON)
 		mission->cause->done++;
 	mission->def->count++;
 	Com_Printf("finished map '%s'\n", mission->def->id);
