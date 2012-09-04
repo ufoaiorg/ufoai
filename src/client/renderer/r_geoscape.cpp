@@ -561,6 +561,7 @@ void R_Draw3DGlobe (const vec2_t pos, const vec2_t size, int day, int second, co
 
 	/* draw the earth */
 	R_DrawBuffers(2);
+#if 0 /* old rendering code which doesn't render city lights in FFP */
 	if (r_programs->integer == 0) /* ignore alpha channel, since the city-light map is stored there */
 		glBlendFunc(GL_ONE, GL_ZERO);
 
@@ -568,6 +569,35 @@ void R_Draw3DGlobe (const vec2_t pos, const vec2_t size, int day, int second, co
 
 	if (r_programs->integer == 0) /* restore default blend function */
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+#else /* new which does render city lights in FFP */
+	if (r_programs->integer == 0) {
+		/* set up rendering of city lights map, which is stored in alpha channel; OpenGL 1.3 required */
+		R_SelectTexture(&texunit_diffuse); /* select texture to edit texture environment for */
+		glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_COMBINE); /* enable color combiner */
+		/* setup texture combiner to blend between daylight diffuse map stored in the RGB channels of the diffuse texture
+		 * and the monochomatic emission map (which simulates city lights) stored in the alpha channel;
+		 * incoming color value is the blend factor.
+		 */
+		glTexEnvi(GL_TEXTURE_ENV, GL_SOURCE0_RGB, GL_TEXTURE); /* set day color as blending target*/
+		glTexEnvi(GL_TEXTURE_ENV, GL_OPERAND0_RGB, GL_SRC_COLOR);
+		glTexEnvi(GL_TEXTURE_ENV, GL_SOURCE1_RGB, GL_TEXTURE); /* set night color as blending source */
+		glTexEnvi(GL_TEXTURE_ENV, GL_OPERAND1_RGB, GL_SRC_ALPHA);
+		glTexEnvi(GL_TEXTURE_ENV, GL_SOURCE2_RGB, GL_PREVIOUS); /* set incoming color as blending factor */
+		glTexEnvi(GL_TEXTURE_ENV, GL_OPERAND2_RGB, GL_SRC_COLOR);
+		glTexEnvi(GL_TEXTURE_ENV, GL_COMBINE_RGB, GL_INTERPOLATE); /* set blending mode to interpolation from src1 to src0 */
+		/* copy alpha from incoming color, bypassing the value read from texture, which is not a "real" alpha anyway */
+		glTexEnvi(GL_TEXTURE_ENV, GL_COMBINE_ALPHA, GL_REPLACE);
+		glTexEnvi(GL_TEXTURE_ENV, GL_SOURCE0_ALPHA, GL_PREVIOUS);
+		glTexEnvi(GL_TEXTURE_ENV, GL_OPERAND0_ALPHA, GL_SRC_ALPHA);
+	}
+
+	R_SphereRender(&r_globeEarth, earthPos, rotate, fullscale, sunPos);
+
+	if (r_programs->integer == 0) { /* disable combiner */
+		R_SelectTexture(&texunit_diffuse);
+		glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+	}
+#endif
 
 	r_globeEarthAtmosphere.texture = R_FindImage(va("pics/geoscape/%s_atmosphere", map), it_wrappic);
 
