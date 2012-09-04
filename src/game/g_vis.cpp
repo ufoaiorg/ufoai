@@ -249,6 +249,12 @@ static bool G_VisShouldStop (const edict_t *ent)
 	return G_IsLivingActor(ent) && !G_IsCivilian(ent);
 }
 
+/**
+ * @param[in] check The edict to check the visibility for
+ * @param[in] playerMask The mask for the players to send the appear/perish events to. If this is @c 0 the events
+ * are not sent - we only update the visflags of the edict
+ * @param[in] visFlags The flags for the vis check
+ */
 static int G_DoTestVis (const int team, edict_t * check, int visFlags, int playerMask, const edict_t *ent)
 {
 	int status = 0;
@@ -269,8 +275,9 @@ static int G_DoTestVis (const int team, edict_t * check, int visFlags, int playe
 			status |= VIS_APPEAR;
 			if (G_VisShouldStop(check))
 				status |= VIS_STOP;
-		} else
+		} else {
 			status |= VIS_PERISH;
+		}
 	} else if (vis == 0 && (visFlags & VIS_NEW)) {
 		if (G_IsActor(check))
 			G_EventActorAdd(playerMask, check);
