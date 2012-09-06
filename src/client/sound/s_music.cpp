@@ -60,7 +60,6 @@ typedef struct music_s {
 static char *musicArrays[MUSIC_MAX][MUSIC_MAX_ENTRIES];
 static int musicArrayLength[MUSIC_MAX];
 static music_t music;
-static int musicTrackCount;
 static cvar_t *snd_music;
 static cvar_t *snd_music_volume;
 
@@ -213,22 +212,18 @@ static void M_Play_f (void)
  */
 static void M_RandomTrack_f (void)
 {
-	const char *filename;
-	char findname[MAX_OSPATH];
-	const char *musicTrack;
-
 	if (!s_env.initialized)
 		return;
 
-	musicTrackCount = FS_BuildFileList("music/*.ogg");
+	const int musicTrackCount = FS_BuildFileList("music/*.ogg");
 	if (musicTrackCount) {
 		int randomID = rand() % musicTrackCount;
 		Com_DPrintf(DEBUG_SOUND, "M_RandomTrack_f: random track id: %i/%i\n", randomID, musicTrackCount);
 
+		const char *filename;
 		while ((filename = FS_NextFileFromFileList("music/*.ogg")) != NULL) {
 			if (!randomID) {
-				Com_sprintf(findname, sizeof(findname), "%s", filename);
-				musicTrack = Com_SkipPath(findname);
+				const char *musicTrack = Com_SkipPath(filename);
 				Com_Printf("..playing next music track: '%s'\n", musicTrack);
 				Cvar_Set("snd_music", musicTrack);
 			}
@@ -344,6 +339,8 @@ void M_Init (void)
 	snd_music_volume = Cvar_Get("snd_music_volume", "128", CVAR_ARCHIVE, "Music volume - default is 128.");
 	snd_music_volume->modified = true;
 
+	OBJZERO(musicArrays);
+	OBJZERO(musicArrayLength);
 	OBJZERO(music);
 }
 
@@ -354,7 +351,6 @@ void M_Shutdown (void)
 	OBJZERO(musicArrays);
 	OBJZERO(musicArrayLength);
 	OBJZERO(music);
-	musicTrackCount = 0;
 
 	Cmd_RemoveCommand("music_play");
 	Cmd_RemoveCommand("music_change");
