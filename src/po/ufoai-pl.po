@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
 "POT-Creation-Date: 2012-08-19 14:21+0200\n"
-"PO-Revision-Date: 2012-08-31 11:41+0100\n"
+"PO-Revision-Date: 2012-09-06 08:38+0100\n"
 "Last-Translator: Maciej Wierzbicki <voovoos@killfile.pl>\n"
 "Language-Team:  <radius75@interia.pl>\n"
 "Language: pl_PL\n"
@@ -24486,7 +24486,7 @@ msgstr "Umysł:"
 #: ../base/ufos/ui/physdat.ufo:189 ../base/ufos/ui/popup_baseattack.ufo:212
 #: ../base/ufos/ui/team.ufo:529
 msgid "Close Combat:"
-msgstr "Walka wręcz:"
+msgstr "Walka z bliska:"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:301 ../base/ufos/ui/equipment.ufo:450
 #: ../base/ufos/ui/hire.ufo:398 ../base/ufos/ui/hospital.ufo:540
@@ -24500,14 +24500,14 @@ msgstr "Broń Ciężka:"
 #: ../base/ufos/ui/physdat.ufo:217 ../base/ufos/ui/popup_baseattack.ufo:232
 #: ../base/ufos/ui/team.ufo:547
 msgid "Assault Weapons:"
-msgstr "Szturmowe:"
+msgstr "Broń Szturmowa:"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:321 ../base/ufos/ui/equipment.ufo:478
 #: ../base/ufos/ui/hire.ufo:426 ../base/ufos/ui/hospital.ufo:558
 #: ../base/ufos/ui/physdat.ufo:231 ../base/ufos/ui/popup_baseattack.ufo:242
 #: ../base/ufos/ui/team.ufo:556
 msgid "Sniper Rifles:"
-msgstr "Snajperskie:"
+msgstr "Broń Snajperska:"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:331 ../base/ufos/ui/equipment.ufo:492
 #: ../base/ufos/ui/hospital.ufo:567 ../base/ufos/ui/physdat.ufo:245
@@ -24533,7 +24533,7 @@ msgstr "Zabitych cywili:"
 #: ../base/ufos/ui/aircraft_soldiers.ufo:375
 #: ../base/ufos/ui/popup_baseattack.ufo:296
 msgid "Our team killed:"
-msgstr "Zabitych żołnierzy własnej drużyny:"
+msgstr "Zabitych swojej drużyny:"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:387
 msgid "Assign tanks"
@@ -26260,7 +26260,7 @@ msgstr "Morale włączone:"
 
 #: ../base/ufos/ui/multiplayer.ufo:717 ../base/ufos/ui/skirmish.ufo:406
 msgid "Alien rush:"
-msgstr "Odradzanie się Obcych:"
+msgstr "Fala Obcych:"
 
 #: ../base/ufos/ui/multiplayer.ufo:720 ../base/ufos/ui/skirmish.ufo:409
 msgid "Enemies respawn when killed."
@@ -31288,7 +31288,7 @@ msgstr "Zasięg broni"
 #: client/cgame/campaign/cp_ufopedia.cpp:158
 #: client/cl_inventory_callbacks.cpp:54
 msgid "Unknown weapon skill"
-msgstr "Właściwość nieznana"
+msgstr "Nieznana właściwość broni"
 
 #: client/cgame/campaign/cp_ufopedia.cpp:170
 msgid "Small"
@@ -31779,23 +31779,23 @@ msgstr "Pokaż/ukryj 'ufoconsole'."
 
 #: client/cl_inventory_callbacks.cpp:44
 msgid "skill_close"
-msgstr ""
+msgstr "Walka z bliska"
 
 #: client/cl_inventory_callbacks.cpp:46
 msgid "skill_heavy"
-msgstr ""
+msgstr "Broń ciężka"
 
 #: client/cl_inventory_callbacks.cpp:48
 msgid "skill_assault"
-msgstr ""
+msgstr "Broń szturmowa"
 
 #: client/cl_inventory_callbacks.cpp:50
 msgid "skill_sniper"
-msgstr ""
+msgstr "Broń snajperska"
 
 #: client/cl_inventory_callbacks.cpp:52
 msgid "skill_explosive"
-msgstr ""
+msgstr "Mat. wybuchowe"
 
 #: client/cl_inventory_callbacks.cpp:131
 #, c-format
