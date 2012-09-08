@@ -251,7 +251,7 @@ void R_UploadTexture (unsigned *data, int width, int height, image_t* image)
 {
 	unsigned *scaled;
 	int scaledWidth, scaledHeight;
-	int samples = r_config.gl_compressed_solid_format ? r_config.gl_compressed_solid_format : r_config.gl_solid_format;
+	int texFormat = r_config.gl_compressed_solid_format ? r_config.gl_compressed_solid_format : r_config.gl_solid_format;
 	int i, c;
 	byte *scan;
 	const bool mipmap = (image->type != it_pic && image->type != it_worldrelated && image->type != it_chars);
@@ -262,14 +262,14 @@ void R_UploadTexture (unsigned *data, int width, int height, image_t* image)
 	/* set scan to the first alpha byte */
 	for (i = 0, scan = ((byte *) data) + 3; i < c; i++, scan += 4) {
 		if (*scan != 255) {
-			samples = r_config.gl_compressed_alpha_format ? r_config.gl_compressed_alpha_format : r_config.gl_alpha_format;
+			texFormat = r_config.gl_compressed_alpha_format ? r_config.gl_compressed_alpha_format : r_config.gl_alpha_format;
+			image->has_alpha = true;
 			break;
 		}
 	}
 
 	R_GetScaledTextureSize(width, height, &scaledWidth, &scaledHeight);
 
-	image->has_alpha = (samples == r_config.gl_alpha_format || samples == r_config.gl_compressed_alpha_format);
 	image->upload_width = scaledWidth;	/* after power of 2 and scales */
 	image->upload_height = scaledHeight;
 
@@ -284,7 +284,7 @@ void R_UploadTexture (unsigned *data, int width, int height, image_t* image)
 			glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 			R_CheckError();
 		}
-		glTexImage2D(GL_TEXTURE_2D, 0, samples, scaledWidth, scaledHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+		glTexImage2D(GL_TEXTURE_2D, 0, texFormat, scaledWidth, scaledHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
 		return;
 	}
 
@@ -325,7 +325,7 @@ void R_UploadTexture (unsigned *data, int width, int height, image_t* image)
 		R_CheckError();
 	}
 
-	glTexImage2D(GL_TEXTURE_2D, 0, samples, scaledWidth, scaledHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, scaled);
+	glTexImage2D(GL_TEXTURE_2D, 0, texFormat, scaledWidth, scaledHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, scaled);
 	R_CheckError();
 
 	if (scaled != data)
