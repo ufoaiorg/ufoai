@@ -34,7 +34,7 @@ vec3 LightContribution(in vec4 lightParams, in vec3 lightDir, in vec3 N, in vec3
 	float NdotL = clamp(dot(N, L), 0.0, 1.0);
 
 	/* Compute the final color contribution of the light */
-	vec3 diffuseColor = diffuse.rgb * diffuse.a * lightParams.rgb * NdotL;
+	vec3 diffuseColor = diffuse.rgb * lightParams.rgb * NdotL;
 	vec3 specularColor = lightParams.rgb;
 
 	/* Cook-Torrance shading */
@@ -81,7 +81,7 @@ vec4 IlluminateFragment(void) {
 #if r_bumpmap
 	if (BUMPMAP > 0) {
 		vec4 normalMap = texture2D(SAMPLER_NORMALMAP, coords);
-		N = vec3((normalize(normalMap.xyz) * 2.0 - vec3(1.0)));
+		N = normalize(normalMap.xyz * 2.0 - 1.0);
 		N.xy *= BUMP;
 		if (PARALLAX > 0.0) {
 			offset = BumpTexcoord(normalMap.a);
@@ -114,7 +114,7 @@ vec4 IlluminateFragment(void) {
 	}
 
 	/* add ambient light */
-	totalColor += diffuse.rgb * diffuse.a * AMBIENT; /* FIXME: why it should depend on diffuse alpha? */
+	totalColor += diffuse.rgb * AMBIENT;
 
 	/* fake light for the sunlight */
 	vec4 sunColor;

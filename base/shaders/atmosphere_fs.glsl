@@ -65,9 +65,9 @@ void fresnelRefract(vec3 L, vec3 N, float n1, float n2,
 
 void main() {
 	vec3 diffuseColor = texture2D(SAMPLER_DIFFUSE, tex).rgb;
-	vec3 V = vec3(normalize(eyeVec).rgb);
-	vec3 L = vec3(normalize(lightVec).rgb);
-	vec3 N = vec3(normalize(texture2D(SAMPLER_NORMALMAP, tex).rgb * 2.0 - 1.0).rgb);
+	vec3 V = normalize(eyeVec).rgb;
+	vec3 L = normalize(lightVec).rgb;
+	vec3 N = normalize(texture2D(SAMPLER_NORMALMAP, tex).rgb * 2.0 - 1.0);
 	/* calculate reflections/refractions */
 	vec3 Rvec;
 	vec3 Tvec;

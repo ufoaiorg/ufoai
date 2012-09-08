@@ -28,9 +28,6 @@ uniform sampler2D SAMPLER_DELUXEMAP;
 /** Normalmap.*/
 uniform sampler2D SAMPLER_NORMALMAP;
 
-const vec3 two = vec3(2.0);
-const vec3 negHalf = vec3(-0.5);
-
 #define R_DYNAMIC_LIGHTS #replace r_dynamic_lights
 #if r_dynamic_lights
 in_qualifier vec3 lightDirs[R_DYNAMIC_LIGHTS];
@@ -66,11 +63,11 @@ void main(void) {
 	if (BUMPMAP > 0) {
 		/* Sample deluxemap and normalmap.*/
 		normalmap = texture2D(SAMPLER_NORMALMAP, gl_TexCoord[0].st);
-		normalmap.rgb = normalize(two * (normalmap.rgb + negHalf));
+		normalmap.rgb = normalize(normalmap.rgb * 2.0 - 1.0);
 
 		/* deluxemap contains pre-computed incoming light vectors in object tangent space */
 		deluxemap = texture2D(SAMPLER_DELUXEMAP, gl_TexCoord[1].st).rgb;
-		deluxemap = normalize(two * (deluxemap + negHalf));
+		deluxemap = normalize(deluxemap * 2.0 - 1.0);
 
 		/* Resolve parallax offset */
 		offset = BumpTexcoord(normalmap.a);

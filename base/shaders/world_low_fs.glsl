@@ -29,9 +29,6 @@ in_qualifier vec3 lightDirs[R_DYNAMIC_LIGHTS];
 uniform vec4 LIGHTPARAMS[R_DYNAMIC_LIGHTS];
 #endif
 
-const vec3 two = vec3(2.0);
-const vec3 negHalf = vec3(-0.5);
-
 #include "light_fs.glsl"
 #include "fog_fs.glsl"
 #include "world_devtools_fs.glsl"
@@ -56,11 +53,11 @@ void main(void) {
 	if (BUMPMAP > 0) {
 		/* Sample deluxemap and normalmap.*/
 		normalmap = texture2D(SAMPLER_NORMALMAP, gl_TexCoord[0].st);
-		normalmap.rgb = normalize(two * (normalmap.rgb + negHalf));
+		normalmap.rgb = normalize(normalmap.rgb * 2.0 - 1.0);
 
 		/* deluxemap contains pre-computed incoming light vectors in object tangent space */
 		deluxemap = texture2D(SAMPLER_DELUXEMAP, gl_TexCoord[1].st).rgb;
-		deluxemap = normalize(two * (deluxemap + negHalf));
+		deluxemap = normalize(deluxemap * 2.0 - 1.0);
 
 		/* Bump mapping.*/
 		light *= clamp(dot(deluxemap, vec3(normalmap.x * BUMP, normalmap.y * BUMP, normalmap.z)), 0.0, 1.0);

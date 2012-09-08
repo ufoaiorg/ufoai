@@ -29,9 +29,6 @@ uniform sampler2D SAMPLER_ROUGHMAP;
 /** Normalmap.*/
 uniform sampler2D SAMPLER_NORMALMAP;
 
-const vec3 two = vec3(2.0);
-const vec3 negHalf = vec3(-0.5);
-
 #define R_DYNAMIC_LIGHTS #replace r_dynamic_lights
 #if r_dynamic_lights
 in_qualifier vec3 lightDirs[R_DYNAMIC_LIGHTS];

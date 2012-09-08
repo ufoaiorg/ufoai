@@ -51,7 +51,7 @@ void main(void) {
 
 	if (BUMPMAP > 0) {
 		vec4 normalmap = texture2D(SAMPLER_NORMALMAP, gl_TexCoord[0].st);
-		normal = (normalmap.rgb - 0.5) * 2.0; /** < Expanded normal */
+		normal = normalmap.rgb * 2.0 - 1.0; /** < Expanded normal */
 		normal.xy *= BUMP;
 		normal = normalize(normal);
 
