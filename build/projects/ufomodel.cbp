@@ -83,7 +83,6 @@
 		</Linker>
 		<Unit filename="..\..\src\client\renderer\r_model.cpp" />
 		<Unit filename="..\..\src\client\renderer\r_model_alias.cpp" />
-		<Unit filename="..\..\src\client\renderer\r_model_dpm.cpp" />
 		<Unit filename="..\..\src\client\renderer\r_model_md2.cpp" />
 		<Unit filename="..\..\src\client\renderer\r_model_md3.cpp" />
 		<Unit filename="..\..\src\client\renderer\r_model_obj.cpp" />

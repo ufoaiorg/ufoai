@@ -322,7 +322,6 @@ void R_DrawMeshEntities (entity_t *ents)
 
 	while (e) {
 		switch (e->model->type) {
-		case mod_alias_dpm:
 		case mod_alias_md2:
 		case mod_alias_md3:
 		case mod_obj:
@@ -655,7 +654,6 @@ void R_GetEntityLists (void)
 			case mod_bsp_submodel:
 				R_AddBspRRef(&(e->model->bsp), e->origin, e->angles, true);
 				continue;
-			case mod_alias_dpm:
 			case mod_alias_md2:
 			case mod_alias_md3:
 			case mod_obj:

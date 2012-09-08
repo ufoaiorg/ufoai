@@ -215,10 +215,6 @@ static model_t *LoadModel (const char *name)
 		R_ModLoadAliasMD2Model(mod, buf, modfilelen, false);
 		break;
 
-	case DPMHEADER:
-		R_ModLoadAliasDPMModel(mod, buf, modfilelen);
-		break;
-
 	case IDMD3HEADER:
 		/* MD3 header */
 		R_ModLoadAliasMD3Model(mod, buf, modfilelen);
@@ -453,7 +449,6 @@ static void ModelWorker (modelWorker_t worker, const char *fileName, void *userD
 
 	switch (LittleLong(*(unsigned *) buf)) {
 	case IDALIASHEADER:
-	case DPMHEADER:
 	case IDMD3HEADER:
 	case IDBSPHEADER:
 		worker(buf, fileName, modfilelen, userData);
@@ -701,7 +696,6 @@ int main (int argc, char **argv)
 		if (config.inputName[0] == '\0') {
 			PrecalcNormalsAndTangentsBatch("**.md2");
 			PrecalcNormalsAndTangentsBatch("**.md3");
-			PrecalcNormalsAndTangentsBatch("**.dpm");
 			/** @todo see https://sourceforge.net/tracker/?func=detail&aid=2993773&group_id=157793&atid=805242 */
 			/*PrecalcNormalsAndTangentsBatch("**.obj");*/
 		} else {

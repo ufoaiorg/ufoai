@@ -226,7 +226,6 @@ $(TARGET)_SRCS      = \
 	client/renderer/r_model.cpp \
 	client/renderer/r_model_alias.cpp \
 	client/renderer/r_model_brush.cpp \
-	client/renderer/r_model_dpm.cpp \
 	client/renderer/r_model_md2.cpp \
 	client/renderer/r_model_md3.cpp \
 	client/renderer/r_model_obj.cpp \

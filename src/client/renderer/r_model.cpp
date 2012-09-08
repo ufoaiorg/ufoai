@@ -44,7 +44,7 @@ static int r_numActorSkinName;
  * @sa modtype_t
  */
 static char const* const mod_extensions[] = {
-	"md2", "md3", "dpm", "obj", NULL
+	"md2", "md3", "obj", NULL
 };
 
 /**
@@ -68,9 +68,6 @@ void R_ModModellist_f (void)
 			break;
 		case mod_alias_md2:
 			Com_Printf("MD2 ");
-			break;
-		case mod_alias_dpm:
-			Com_Printf("DPM ");
 			break;
 		case mod_bsp:
 			Com_Printf("BSP ");
@@ -137,10 +134,6 @@ static bool R_LoadModel (model_t *mod, const char *filename)
 	case IDALIASHEADER:
 		/* MD2 header */
 		R_ModLoadAliasMD2Model(mod, buf, modfilelen, true);
-		break;
-
-	case DPMHEADER:
-		R_ModLoadAliasDPMModel(mod, buf, modfilelen);
 		break;
 
 	case IDMD3HEADER:

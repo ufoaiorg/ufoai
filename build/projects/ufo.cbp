@@ -534,8 +534,6 @@
 		<Unit filename="..\..\src\client\renderer\r_model_alias.h" />
 		<Unit filename="..\..\src\client\renderer\r_model_brush.cpp" />
 		<Unit filename="..\..\src\client\renderer\r_model_brush.h" />
-		<Unit filename="..\..\src\client\renderer\r_model_dpm.cpp" />
-		<Unit filename="..\..\src\client\renderer\r_model_dpm.h" />
 		<Unit filename="..\..\src\client\renderer\r_model_md2.cpp" />
 		<Unit filename="..\..\src\client\renderer\r_model_md2.h" />
 		<Unit filename="..\..\src\client\renderer\r_model_md3.cpp" />

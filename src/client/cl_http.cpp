@@ -427,7 +427,6 @@ static void CL_CheckAndQueueDownload (char *path)
 			!Q_streq(ext, "tga") &&
 			!Q_streq(ext, "png") &&
 			!Q_streq(ext, "jpg") &&
-			!Q_streq(ext, "dpm") &&
 			!Q_streq(ext, "obj") &&
 			!Q_streq(ext, "mat") &&
 			!Q_streq(ext, "ump")) {

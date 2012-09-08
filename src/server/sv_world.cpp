@@ -617,31 +617,6 @@ static void SV_ModLoadAliasMD3Model (sv_model_t* mod, const byte *buffer)
 }
 
 /**
- * @brief Loads the mins/maxs for a dpm mesh model
- * @param[in,out] mod The server side model struct to store the results in
- * @param[in] buffer The mesh model buffer
- */
-static void SV_ModLoadAliasDPMModel (sv_model_t* mod, const byte *buffer)
-{
-	const dpmheader_t *dpm = (const dpmheader_t *)buffer;
-	const int num_frames = BigLong(dpm->num_frames);
-	const int ofs_frames = BigLong(dpm->ofs_frames);
-	const dpmframe_t *frame = (const dpmframe_t *)((const byte *)dpm + ofs_frames);
-
-	if (mod->frame > num_frames)
-		return;
-
-	frame += mod->frame;
-
-	mod->mins[0] = BigFloat(frame->mins[0]);
-	mod->mins[1] = BigFloat(frame->mins[1]);
-	mod->mins[2] = BigFloat(frame->mins[2]);
-	mod->maxs[0] = BigFloat(frame->maxs[0]);
-	mod->maxs[1] = BigFloat(frame->maxs[1]);
-	mod->maxs[2] = BigFloat(frame->maxs[2]);
-}
-
-/**
  * @brief Loads the mins/maxs for a obj mesh model
  * @param[in,out] mod The server side model struct to store the results in
  * @param[in] buffer The mesh model buffer
@@ -708,10 +683,6 @@ bool SV_LoadModelMinsMaxs (const char *model, int frame, vec3_t mins, vec3_t max
 	switch (LittleLong(*(unsigned *) buf)) {
 	case IDALIASHEADER:
 		SV_ModLoadAliasMD2Model(mod, buf);
-		break;
-
-	case DPMHEADER:
-		SV_ModLoadAliasDPMModel(mod, buf);
 		break;
 
 	case IDMD3HEADER:

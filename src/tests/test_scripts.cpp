@@ -82,7 +82,7 @@ static bool TEST_CheckImage (const char *path)
 
 static bool TEST_CheckModel (const char *path)
 {
-	const char *extensions[] = {"md2", "md3", "dpm", "obj", NULL};
+	const char *extensions[] = {"md2", "md3", "obj", NULL};
 	int i = 0;
 	if (Q_strnull(path))
 		return true;
