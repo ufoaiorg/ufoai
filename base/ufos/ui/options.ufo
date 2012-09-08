@@ -167,6 +167,53 @@ window options
 				*node:root.options_overall.select_language@viewpos = <current>
 			}
 		}
+		// =================
+		// MODS SUBMENU
+		// =================
+		string settings_mods
+		{
+			string		"_Mods"
+			pos			"62 170"
+			size		"200 20"
+			color		"1.0 0.75 0 1"
+		}
+		optionlist select_mods
+		{
+			tooltip		"_Available game modifications"
+			pos			"72 195"
+			cvar		*cvar:fs_gamedir
+			background	"ui/panel_green_slim"
+			size		"175 185"
+			color		"0 .78 0 1"
+			selectcolor	"1 1 1 1"
+			padding		6
+			contentalign	ALIGN_CC
+			onViewchange	{
+				*node:root.options_overall.select_mods_scroll@current = <viewpos>
+				*node:root.options_overall.select_mods_scroll@fullsize = <fullsize>
+				*node:root.options_overall.select_mods_scroll@viewsize = <viewsize>
+			}
+		}
+		vscrollbar select_mods_scroll {
+			image		"ui/scrollbar_v_green"
+			pos			"248 195"
+			height		"185"
+			current		0
+			viewsize	8
+			fullsize	22
+			onChange		{
+				*node:root.options_overall.select_mods@viewpos = <current>
+			}
+		}
+		cmpPopupButton mod_load
+		{
+			pos			"72 385"
+			string		"_Activate mod"
+			font		"f_small"
+			size		"200 36"
+			onClick		{ cmd "fs_restart *cvar:fs_gamedir;" }
+		}
+
 		// =====================
 		// SEVERAL TIPS SUBMENU
 		// =====================
@@ -1963,11 +2010,23 @@ window options
 			onChange	{ *node:root.options_keys.keylist@viewpos = <current> }
 		}
 	}
+
+	game_mod_listener listener {
+		confunc mn_mods_result {
+			call *node:root.options_overall.select_mods@createchild("option<1>", "option")
+			*node:root.options_overall.select_mods.option<1>@value = <1>
+			*node:root.options_overall.select_mods.option<1>@label = <1>
+		}
+	}
+
 	func onWindowOpened
 	{
 		*cvar:mn_vidratio = "all"
 		cmd "cl_setratiofilter <cvar:mn_vidratio>"
 		call *node:root.hidepanels
+
+		call *node:root.options_overall.select_mods@removeallchild
+		cmd "mn_mods;"
 
 		*cvar:mn_videotab = "general"
 		*node:root.options_video.options_advanced_video@invis = true
