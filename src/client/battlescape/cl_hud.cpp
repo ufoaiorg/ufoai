@@ -1307,8 +1307,6 @@ static void HUD_ActorGetCvarData_f (void)
 
 		/* override some cvar with HUD data */
 		HUD_UpdateActorCvar(le, cvarPrefix);
-
-		return;
 	}
 }
 

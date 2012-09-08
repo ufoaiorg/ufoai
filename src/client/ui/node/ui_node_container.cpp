@@ -631,7 +631,7 @@ void uiContainerNode::draw (uiNode_t *node)
  * @param[out] contY Y location in the container (row).
  * @sa UI_ContainerNodeSearchInScrollableContainer
  */
-static invList_t *UI_ContainerNodeGetItemAtPosition (const uiNode_t* const node, int mouseX, int mouseY, int* contX, int* contY)
+static invList_t *UI_ContainerNodeGetItemAtPosition (const uiNode_t* const node, int mouseX, int mouseY, int* contX = NULL, int* contY = NULL)
 {
 	invList_t *result = NULL;
 
@@ -674,7 +674,7 @@ void uiContainerNode::drawTooltip (uiNode_t *node, int x, int y)
 	UI_GetNodeAbsPos(node, nodepos);
 
 	/* Find out where the mouse is. */
-	itemHover = UI_ContainerNodeGetItemAtPosition(node, x, y, NULL, NULL);
+	itemHover = UI_ContainerNodeGetItemAtPosition(node, x, y);
 
 	if (itemHover) {
 		const int itemToolTipWidth = 250;
@@ -791,10 +791,6 @@ void UI_ContainerNodeAutoPlaceItem (uiNode_t* node, invList_t *ic)
  */
 static void UI_ContainerNodeAutoPlace (uiNode_t* node, int mouseX, int mouseY)
 {
-	int sel;
-	invList_t *ic;
-	int fromX, fromY;
-
 	if (!ui_inventory)
 		return;
 
@@ -802,14 +798,13 @@ static void UI_ContainerNodeAutoPlace (uiNode_t* node, int mouseX, int mouseY)
 	if (CL_BattlescapeRunning())
 		return;
 
-	sel = cl_selected->integer;
+	const int sel = cl_selected->integer;
 	if (sel < 0)
 		return;
 
 	assert(EXTRADATA(node).container);
 
-	ic = UI_ContainerNodeGetItemAtPosition(node, mouseX, mouseY, &fromX, &fromY);
-	Com_DPrintf(DEBUG_CLIENT, "UI_ContainerNodeAutoPlace: item %i/%i selected from scrollable container.\n", fromX, fromY);
+	invList_t *ic = UI_ContainerNodeGetItemAtPosition(node, mouseX, mouseY);
 	if (!ic)
 		return;
 	UI_ContainerNodeAutoPlaceItem(node, ic);

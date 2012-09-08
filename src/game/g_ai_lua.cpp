@@ -298,14 +298,13 @@ static int actorL_shoot (lua_State *L)
 {
 	int tu, shots;
 	shoot_types_t shootType;
-	aiActor_t *target;
 	const item_t *item;
 	const fireDef_t *fdArray;
 
 	assert(lua_isactor(L, 1));
 
 	/* Target */
-	target = lua_toactor(L, 1);
+	aiActor_t *target = lua_toactor(L, 1);
 
 	/* Number of TU to spend shooting, fire mode will adjust to that. */
 	if (lua_gettop(L) > 1) {
@@ -313,7 +312,7 @@ static int actorL_shoot (lua_State *L)
 
 		tu = (int) lua_tonumber(L, 2);
 	} else {
-		tu =  G_ActorUsableTUs(AIL_ent);
+		tu = G_ActorUsableTUs(AIL_ent);
 	}
 
 	shootType = ST_RIGHT;

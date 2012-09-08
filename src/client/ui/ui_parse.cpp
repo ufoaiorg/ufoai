@@ -1143,8 +1143,10 @@ bool UI_ParseUIModel (const char *name, const char **text)
 			break;
 
 		v = UI_FindPropertyByName(uiModelProperties, token);
-		if (!v)
+		if (!v) {
 			Com_Printf("UI_ParseUIModel: unknown token \"%s\" ignored (UI model %s)\n", token, name);
+			return false;
+		}
 
 		if (v->type == V_NULL) {
 			if (Q_streq(v->string, "need")) {

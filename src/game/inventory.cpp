@@ -24,7 +24,8 @@ static void I_RemoveInvList (inventoryInterface_t* self, invList_t *invList)
 		invList_t* prev = NULL;
 		while (ic) {
 			if (ic == invList) {
-				prev->next = ic->next;
+				if (prev)
+					prev->next = ic->next;
 				I_Free(self, ic);
 				break;
 			}
