@@ -120,7 +120,7 @@ event capturelivealien
 event samsitearm
 {
 	type	"new_day"
-	// after 30 days and if no alive aliens were captured yet
+	// if there is a samite that is not yet armed
 	require "!samsitearmed"
 	once	true // remove this event after it triggers
 	command	"addeventmail tip_samsitearm"
