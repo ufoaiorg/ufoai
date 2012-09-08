@@ -49,8 +49,8 @@ void main(void) {
 	vec4 finalColor = vec4(0.0);
 	vec3 light = vec3(0.0);
 	vec3 specular;
-	/* These two should be declared in this scope for developer tools to work */
-	vec3 deluxemap = vec3(0.0, 0.0, 1.0);
+	vec3 deluxemap;
+	/* normalmap should be declared in this scope for developer tools to work */
 	vec4 normalmap = vec4(0.0, 0.0, 1.0, 0.5);
 	vec4 specularmap = vec4(HARDNESS, HARDNESS, HARDNESS, SPECULAR);
 
@@ -59,23 +59,23 @@ void main(void) {
 	/* lightmap contains pre-computed incoming light color */
 	light = texture2D(SAMPLER_LIGHTMAP, gl_TexCoord[1].st).rgb;
 
+	/* deluxemap contains pre-computed incoming light vectors in object tangent space */
+	deluxemap = texture2D(SAMPLER_DELUXEMAP, gl_TexCoord[1].st).rgb;
+	deluxemap = normalize(deluxemap * 2.0 - 1.0);
+
 #if r_bumpmap
 	if (BUMPMAP > 0) {
-		/* Sample deluxemap and normalmap.*/
+		/* Sample normalmap.*/
 		normalmap = texture2D(SAMPLER_NORMALMAP, gl_TexCoord[0].st);
 		normalmap.rgb = normalize(normalmap.rgb * 2.0 - 1.0);
 
-		/* deluxemap contains pre-computed incoming light vectors in object tangent space */
-		deluxemap = texture2D(SAMPLER_DELUXEMAP, gl_TexCoord[1].st).rgb;
-		deluxemap = normalize(deluxemap * 2.0 - 1.0);
-
 		/* Resolve parallax offset */
 		offset = BumpTexcoord(normalmap.a);
-
-		/* Bump mapping.*/
-		light *= clamp(dot(deluxemap, vec3(normalmap.x * BUMP, normalmap.y * BUMP, normalmap.z)), 0.0, 1.0);
 	}
 #endif
+
+	/* Modulate incoming light by cos(angle_of_incidence); should be done even bump mapping is disabled, to avoid having flat shading as a result.*/
+	light *= clamp(dot(deluxemap, vec3(normalmap.x * BUMP, normalmap.y * BUMP, normalmap.z)), 0.0, 1.0);
 
 	/* Sample the diffuse texture, honoring the parallax offset.*/
 	vec4 diffusemap = texture2D(SAMPLER_DIFFUSE, gl_TexCoord[0].st + offset);
