@@ -58,6 +58,16 @@ mail tip_capturelivealien
 	icon "icons/mail_alien"
 }
 
+mail tip_samsitearm
+{
+	from "*msgid:mail_from_paul_navarre"
+	to "*msgid:mail_to_base_commander"
+	subject "_Memo: Sam Sites"
+	body "*msgid:tip_samsitearm_txt"
+	model "characters/navarre"
+	icon "icons/mail_tech"
+}
+
 // sent if a humanoid alien was captured alive and it died
 mail alienbreathing
 {
@@ -107,6 +117,14 @@ event capturelivealien
 	command	"addeventmail tip_capturelivealien"
 }
 
+event samsitearm
+{
+	type	"new_day"
+	// after 30 days and if no alive aliens were captured yet
+	require "!samsitearmed"
+	once	true // remove this event after it triggers
+	command	"addeventmail tip_samsitearm"
+}
 /*
 event detect_harvester
 {

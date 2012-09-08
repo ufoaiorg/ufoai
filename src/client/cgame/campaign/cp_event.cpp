@@ -254,6 +254,24 @@ static int CP_CheckTriggerEvent (const char *expression, const void* userdata)
 		return 0;
 	}
 
+	type = Q_strstart(expression, "samsitearmed");
+	if (type != 0) {
+		if (!INS_HasType(INSTALLATION_DEFENCE))
+			return 1;
+
+		INS_ForeachOfType(installation, INSTALLATION_DEFENCE) {
+			if (installation->installationStatus == INSTALLATION_WORKING) {
+				for (int i = 0; i < installation->installationTemplate->maxBatteries; i++) {
+					const aircraftSlot_t *slot = &installation->batteries[i].slot;
+					if (slot->ammoLeft > 0)
+						return 1;
+				}
+			}
+		}
+
+		return 0;
+	}
+
 	return -1;
 }
 
