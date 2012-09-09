@@ -66,27 +66,21 @@ base_t* uiAbstractBaseNode::getBase (const uiNode_t * node)
  */
 void uiBaseLayoutNode::draw (uiNode_t * node)
 {
-	const base_t *base;
-	int height, width, y;
-	int row, col;
-	vec2_t nodepos;
-	int totalMarge;
-
 	if (EXTRADATA(node).baseid >= MAX_BASES || EXTRADATA(node).baseid < 0)
 		return;
 
-	totalMarge = node->padding * (BASE_SIZE + 1);
-	width = (node->box.size[0] - totalMarge) / BASE_SIZE;
-	height = (node->box.size[1] - totalMarge) / BASE_SIZE;
+	const int totalMarge = node->padding * (BASE_SIZE + 1);
+	const int width = (node->box.size[0] - totalMarge) / BASE_SIZE;
+	const int height = (node->box.size[1] - totalMarge) / BASE_SIZE;
 
+	vec2_t nodepos;
 	UI_GetNodeAbsPos(node, nodepos);
 
-	base = getBase(node);
-
-	y = nodepos[1] + node->padding;
-	for (row = 0; row < BASE_SIZE; row++) {
+	const base_t *base = getBase(node);
+	int y = nodepos[1] + node->padding;
+	for (int row = 0; row < BASE_SIZE; row++) {
 		int x = nodepos[0] + node->padding;
-		for (col = 0; col < BASE_SIZE; col++) {
+		for (int col = 0; col < BASE_SIZE; col++) {
 			if (B_IsTileBlocked(base, col, row)) {
 				UI_DrawFill(x, y, width, height, node->bgcolor);
 			} else if (B_GetBuildingAt(base, col, row) != NULL) {
@@ -132,30 +126,28 @@ void uiBaseMapNode::getCellAtPos (const uiNode_t *node, int x, int y, int *col, 
  */
 void uiBaseMapNode::draw (uiNode_t * node)
 {
-	int width, height, row, col;
-	const building_t *building;
 	const base_t *base = getBase(node);
-	bool used[MAX_BUILDINGS];
-
 	if (!base) {
 		UI_PopWindow(false);
 		return;
 	}
 
+	bool used[MAX_BUILDINGS];
 	/* reset the used flag */
 	OBJZERO(used);
 
-	width = node->box.size[0] / BASE_SIZE;
-	height = node->box.size[1] / BASE_SIZE + BASE_IMAGE_OVERLAY;
+	const int width = node->box.size[0] / BASE_SIZE;
+	const int height = node->box.size[1] / BASE_SIZE + BASE_IMAGE_OVERLAY;
 
+	vec2_t nodePos;
+	UI_GetNodeAbsPos(node, nodePos);
+
+	int row, col;
 	for (row = 0; row < BASE_SIZE; row++) {
 		const char *image = NULL;
 		for (col = 0; col < BASE_SIZE; col++) {
-			vec2_t pos;
-			UI_GetNodeAbsPos(node, pos);
-			pos[0] += col * width;
-			pos[1] += row * (height - BASE_IMAGE_OVERLAY);
-
+			const vec2_t pos = { nodePos[0] + col * width, nodePos[1] + row * (height - BASE_IMAGE_OVERLAY) };
+			const building_t *building;
 			/* base tile */
 			if (B_IsTileBlocked(base, col, row)) {
 				building = NULL;
@@ -237,21 +229,20 @@ void uiBaseMapNode::draw (uiNode_t * node)
 void uiBaseMapNode::drawTooltip (uiNode_t *node, int x, int y)
 {
 	int col, row;
-	building_t *building;
-	const int itemToolTipWidth = 250;
-	const base_t *base = getBase(node);
 
 	getCellAtPos(node, x, y, &col, &row);
 	if (col == -1)
 		return;
 
-	building = base->map[row][col].building;
+	const base_t *base = getBase(node);
+	building_t *building = base->map[row][col].building;
 	if (!building)
 		return;
 
 	char const* tooltipText = _(building->name);
 	if (!B_CheckBuildingDependencesStatus(building))
 		tooltipText = va("%s\n%s %s", tooltipText, _("not operational, depends on"), _(building->dependsBuilding->name));
+	const int itemToolTipWidth = 250;
 	UI_DrawTooltip(tooltipText, x, y, itemToolTipWidth);
 }
 
@@ -264,20 +255,19 @@ void uiBaseMapNode::drawTooltip (uiNode_t *node, int x, int y)
  */
 void uiBaseMapNode::onLeftClick (uiNode_t *node, int x, int y)
 {
-	int row, col;
-	base_t *base = getBase(node);
-
-	assert(base);
 	assert(node);
 	assert(node->root);
 
+	int row, col;
 	getCellAtPos(node, x, y, &col, &row);
 	if (col == -1)
 		return;
 
+	base_t *base = getBase(node);
+	assert(base);
+
 	if (ccs.baseAction == BA_NEWBUILDING) {
 		const building_t *building = base->buildingCurrent;
-		int y, x;
 
 		assert(building);
 
@@ -285,8 +275,8 @@ void uiBaseMapNode::onLeftClick (uiNode_t *node, int x, int y)
 			return;
 		if (row + building->size[1] > BASE_SIZE)
 			return;
-		for (y = row; y < row + building->size[1]; y++)
-			for (x = col; x < col + building->size[0]; x++)
+		for (int y = row; y < row + building->size[1]; y++)
+			for (int x = col; x < col + building->size[0]; x++)
 				if (B_GetBuildingAt(base, x, y) != NULL || B_IsTileBlocked(base, x, y))
 					return;
 		B_SetBuildingByClick(base, building, row, col);
@@ -294,9 +284,8 @@ void uiBaseMapNode::onLeftClick (uiNode_t *node, int x, int y)
 		return;
 	}
 
-	if (B_GetBuildingAt(base, col, row) != NULL) {
-		const building_t *entry = B_GetBuildingAt(base, col, row);
-
+	const building_t *entry = B_GetBuildingAt(base, col, row);
+	if (entry != NULL) {
 		if (B_IsTileBlocked(base, col, row))
 			Com_Error(ERR_DROP, "tile with building is not blocked");
 
@@ -316,15 +305,15 @@ void uiBaseMapNode::onLeftClick (uiNode_t *node, int x, int y)
 void uiBaseMapNode::onRightClick (uiNode_t *node, int x, int y)
 {
 	int row, col;
-	const base_t *base = getBase(node);
-
-	assert(base);
 	assert(node);
 	assert(node->root);
 
 	getCellAtPos(node, x, y, &col, &row);
 	if (col == -1)
 		return;
+
+	const base_t *base = getBase(node);
+	assert(base);
 	if (!base->map[row][col].building)
 		return;
 
@@ -341,20 +330,19 @@ void uiBaseMapNode::onRightClick (uiNode_t *node, int x, int y)
  */
 void uiBaseMapNode::onMiddleClick (uiNode_t *node, int x, int y)
 {
-	int row, col;
-	const base_t *base = getBase(node);
-	const building_t *entry;
-	if (base == NULL)
-		return;
-
 	assert(node);
 	assert(node->root);
 
+	int row, col;
 	getCellAtPos(node, x, y, &col, &row);
 	if (col == -1)
 		return;
 
-	entry = base->map[row][col].building;
+	const base_t *base = getBase(node);
+	if (base == NULL)
+		return;
+
+	const building_t *entry = base->map[row][col].building;
 	if (entry) {
 		assert(!B_IsTileBlocked(base, col, row));
 		B_DrawBuilding(entry);
