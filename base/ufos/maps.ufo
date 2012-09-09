@@ -131,6 +131,7 @@ mapdef africa_medium_crash
 	ufos
 	(
 		craft_crash_gunboat
+		craft_crash_harvester
 	)
 
 	terrains

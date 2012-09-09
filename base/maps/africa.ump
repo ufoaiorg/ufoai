@@ -86,6 +86,17 @@ a		a		a		+b		+b		+b		0
 0		0		0		a		a		a		0
 }
 
+tile +craft_crash_harvester
+{
+7 6
+0		a		a		a		a		a		0
+a		+b		+b		+b		+b		+b		a
+a		+b		+b		+b		+b		+b		a
+a		+b		+b		+b		+b		+b		a
+a		+b		+b		+b		+b		+b		a
+0		a		a		a		a		a		0
+}
+
 // dropships --------------------------------------------------------
 
 tile +craft_drop_firebird
