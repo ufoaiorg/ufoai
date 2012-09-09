@@ -1205,7 +1205,7 @@ void CP_ResetCampaignData (void)
 	int i;
 	mapDef_t *md;
 
-	cp_messageStack = NULL;
+	cgi->UI_MessageResetStack();
 
 	/* cleanup dynamic mails */
 	CP_FreeDynamicEventMail();

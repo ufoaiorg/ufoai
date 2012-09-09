@@ -495,7 +495,7 @@ void CL_EventAddMail (const char *eventMailId)
 	eventMail->sent = true;
 
 	if (!eventMail->skipMessage) {
-		message_t *m = MS_AddNewMessage("", va(_("You've got a new mail: %s"), _(eventMail->subject)), MSG_EVENT);
+		uiMessageListNodeMessage_t *m = MS_AddNewMessage("", va(_("You've got a new mail: %s"), _(eventMail->subject)), MSG_EVENT);
 		if (m)
 			m->eventMail = eventMail;
 		else

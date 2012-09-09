@@ -39,6 +39,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui/ui_sprite.h"
 #include "../ui/ui_font.h"
 #include "../ui/node/ui_node_container.h"
+#include "../ui/node/ui_node_messagelist.h"
 #include "../ui/node/ui_node_model.h"
 #include "../cl_team.h"
 #include "../battlescape/events/e_main.h"
@@ -464,6 +465,9 @@ static const cgame_import_t* GAME_GetImportData (const cgameType_t *t)
 		cgi->UI_PopWindow = UI_PopWindow;
 		cgi->UI_PushWindow = UI_PushWindow_;
 		cgi->UI_RegisterLinkedListText = UI_RegisterLinkedListText;
+		cgi->UI_MessageGetStack = UI_MessageGetStack;
+		cgi->UI_MessageAddStack = UI_MessageAddStack;
+		cgi->UI_MessageResetStack = UI_MessageResetStack;
 		cgi->UI_TextScrollEnd = UI_TextScrollEnd;
 		cgi->UI_RegisterOption = UI_RegisterOption;
 		cgi->UI_RegisterText = UI_RegisterText;

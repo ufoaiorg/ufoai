@@ -37,9 +37,13 @@ class uiMessageListNode : public uiAbstractScrollableNode {
 	int getCellHeight (uiNode_t *node) OVERRIDE;
 };
 
+struct uiMessageListNodeMessage_s;
 struct uiBehaviour_t;
 struct uiAction_s;
 
 void UI_RegisterMessageListNode(uiBehaviour_t *behaviour);
+struct uiMessageListNodeMessage_s* UI_MessageGetStack (void);
+void UI_MessageAddStack(struct uiMessageListNodeMessage_s* message);
+void UI_MessageResetStack(void);
 
 #endif

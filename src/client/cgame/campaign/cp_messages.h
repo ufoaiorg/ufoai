@@ -54,22 +54,26 @@ typedef enum {
 
 /* Russian timestamp (with UTF-8) is 23 bytes long */
 #define TIMESTAMP_TEXT 24
-typedef struct message_s {
+struct uiMessageListNodeMessage_s {
 	char title[MAX_VAR];
 	char timestamp[TIMESTAMP_TEXT];
 	char *text;
+	date_t date;
+	const char *iconName;
+	int lineUsed;		/**< used by the node to cache the number of lines need (often =1) */
+	struct uiMessageListNodeMessage_s *next;
+
+	/** override some campaign specific stuff */
 	messageType_t type;
 	struct technology_s *pedia;		/**< link to UFOpaedia if a research has finished. */
 	struct eventMail_s *eventMail;
-	struct message_s *next;
-	date_t date;
-	int lineUsed;		/**< used my the node to cache the number of lines need (often =1) */
-} message_t;
+};
 
-message_t *MS_AddNewMessage(const char *title, const char *text, messageType_t type = MSG_STANDARD, struct technology_s *pedia = NULL, bool popup = false, bool playSound = true);
+typedef struct uiMessageListNodeMessage_s uiMessageListNodeMessage_t;
+
+uiMessageListNodeMessage_t *MS_AddNewMessage(const char *title, const char *text, messageType_t type = MSG_STANDARD, struct technology_s *pedia = NULL, bool popup = false, bool playSound = true);
 void MS_MessageInit(void);
 
 extern char cp_messageBuffer[MAX_MESSAGE_TEXT];
-extern message_t *cp_messageStack;
 
 #endif /* CLIENT_CP_MESSAGES_H */

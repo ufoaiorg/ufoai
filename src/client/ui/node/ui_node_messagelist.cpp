@@ -35,7 +35,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_node_abstractnode.h"
 
 #include "../../client.h"
-#include "../../cgame/campaign/cp_messages.h" /**< message_t */
 #include "../../../shared/parse.h"
 
 #define EXTRADATA(node) UI_EXTRADATA(node, abstractScrollableExtraData_t)
@@ -50,10 +49,41 @@ static const int DATETIME_COLUUI_SIZE = 180;
 static int mouseScrollX;
 static int mouseScrollY;
 
+/* Russian timestamp (with UTF-8) is 23 bytes long */
+#define TIMESTAMP_TEXT 24
+typedef struct uiMessageListNodeMessage_s {
+	char title[MAX_VAR];
+	char timestamp[TIMESTAMP_TEXT];
+	char *text;
+	date_t date;
+	const char *iconName;
+	int lineUsed;		/**< used by the node to cache the number of lines need (often =1) */
+	struct uiMessageListNodeMessage_s *next;
+} uiMessageListNodeMessage_t;
+
+/** @todo implement this on a per-node basis */
+static uiMessageListNodeMessage_t *messageStack;
+
+struct uiMessageListNodeMessage_s* UI_MessageGetStack (void)
+{
+	return messageStack;
+}
+
+void UI_MessageResetStack (void)
+{
+	messageStack = NULL;
+}
+
+void UI_MessageAddStack (struct uiMessageListNodeMessage_s* message)
+{
+	message->next = messageStack;
+	messageStack = message;
+}
+
 /**
  * @return Number of lines need to display this message
  */
-static int UI_MessageGetLines (const uiNode_t *node, message_t *message, const char *fontID, int width)
+static int UI_MessageGetLines (const uiNode_t *node, uiMessageListNodeMessage_t *message, const char *fontID, int width)
 {
 	const int column1 = DATETIME_COLUUI_SIZE;
 	const int column2 = width - DATETIME_COLUUI_SIZE - node->padding;
@@ -70,71 +100,16 @@ static char *lastDate;
  * @todo do not hard code icons
  * @todo cache icon result
  */
-static uiSprite_t *UI_MessageGetIcon (const message_t *message)
+static uiSprite_t *UI_MessageGetIcon (const uiMessageListNodeMessage_t *message)
 {
-	const char* iconName;
+	const char *iconName = message->iconName;
+	if (Q_strnull(iconName))
+		iconName = "icons/message_info";
 
-	switch (message->type) {
-	case MSG_DEBUG:			/**< only save them in debug mode */
-		iconName = "icons/message_debug";
-		break;
-	case MSG_INFO:			/**< don't save these messages */
-		iconName = "icons/message_info";
-		break;
-	case MSG_STANDARD:
-		iconName = "icons/message_info";
-		break;
-	case MSG_RESEARCH_PROPOSAL:
-		iconName = "icons/message_research";
-		break;
-	case MSG_RESEARCH_HALTED:
-		iconName = "icons/message_research";
-		break;
-	case MSG_RESEARCH_FINISHED:
-		iconName = "icons/message_research";
-		break;
-	case MSG_CONSTRUCTION:
-		iconName = "icons/message_construction";
-		break;
-	case MSG_UFOSPOTTED:
-		iconName = "icons/message_ufo";
-		break;
-	case MSG_TERRORSITE:
-		iconName = "icons/message_ufo";
-		break;
-	case MSG_BASEATTACK:
-		iconName = "icons/message_ufo";
-		break;
-	case MSG_TRANSFERFINISHED:
-		iconName = "icons/message_transfer";
-		break;
-	case MSG_PROMOTION:
-		iconName = "icons/message_promotion";
-		break;
-	case MSG_PRODUCTION:
-		iconName = "icons/message_production";
-		break;
-	case MSG_NEWS:
-		iconName = "icons/message_info";
-		break;
-	case MSG_DEATH:
-		iconName = "icons/message_death";
-		break;
-	case MSG_CRASHSITE:
-		iconName = "icons/message_ufo";
-		break;
-	case MSG_EVENT:
-		iconName = "icons/message_info";
-		break;
-	default:
-		iconName = "icons/message_info";
-		break;
-	}
-
-	return UI_GetSpriteByName(iconName);
+	return UI_GetSpriteByName(message->iconName);
 }
 
-static void UI_MessageDraw (const uiNode_t *node, message_t *message, const char *fontID, int x, int y, int width, int *screenLines)
+static void UI_MessageDraw (const uiNode_t *node, uiMessageListNodeMessage_t *message, const char *fontID, int x, int y, int width, int *screenLines)
 {
 	const int column1 = DATETIME_COLUUI_SIZE;
 	const int column2 = width - DATETIME_COLUUI_SIZE - node->padding;
@@ -175,7 +150,7 @@ static void UI_MessageDraw (const uiNode_t *node, message_t *message, const char
  */
 void uiMessageListNode::draw (uiNode_t *node)
 {
-	message_t *message;
+	uiMessageListNodeMessage_t *message;
 	int screenLines;
 	const char *font = UI_GetFontFromNode(node);
 	vec2_t pos;
@@ -205,7 +180,7 @@ void uiMessageListNode::draw (uiNode_t *node)
 	/* update message cache */
 	if (isSizeChange(node)) {
 		/* recompute all line size */
-		message = cp_messageStack;
+		message = messageStack;
 		while (message) {
 			message->lineUsed = UI_MessageGetLines(node, message, font, width);
 			lineNumber += message->lineUsed;
@@ -213,7 +188,7 @@ void uiMessageListNode::draw (uiNode_t *node)
 		}
 	} else {
 		/* only check unvalidated messages */
-		message = cp_messageStack;
+		message = messageStack;
 		while (message) {
 			if (message->lineUsed == 0)
 				message->lineUsed = UI_MessageGetLines(node, message, font, width);
@@ -233,7 +208,7 @@ void uiMessageListNode::draw (uiNode_t *node)
 #endif
 
 	/* found the first message we must display */
-	message = cp_messageStack;
+	message = messageStack;
 	posY = EXTRADATA(node).scrollY.viewPos;
 	while (message && posY > 0) {
 		posY -= message->lineUsed;
@@ -276,21 +251,6 @@ bool uiMessageListNode::onScroll (uiNode_t *node, int deltaX, int deltaY)
 	}
 	return updated;
 }
-
-#ifdef DEBUG
-static void UI_MessageDebugUseAllIcons_f (void)
-{
-	message_t *message;
-	int i = 0;
-	message = cp_messageStack;
-	while (message) {
-		message->type = (messageType_t)(i % MSG_MAX);
-		message = message->next;
-		i++;
-	}
-
-}
-#endif
 
 void uiMessageListNode::onLoading (uiNode_t *node)
 {
@@ -346,8 +306,4 @@ void UI_RegisterMessageListNode (uiBehaviour_t *behaviour)
 	behaviour->name = "messagelist";
 	behaviour->extends = "abstractscrollable";
 	behaviour->manager = new uiMessageListNode();
-
-#ifdef DEBUG
-	Cmd_AddCommand("debug_ui_message_useallicons", UI_MessageDebugUseAllIcons_f, "Update message to use all icons");
-#endif
 }

@@ -29,7 +29,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "save/save_messages.h"
 
 char cp_messageBuffer[MAX_MESSAGE_TEXT];
-message_t *cp_messageStack;
 
 /**
  * @brief Returns formatted text of a message timestamp
@@ -37,7 +36,7 @@ message_t *cp_messageStack;
  * @param[in] message The message to convert into text
  * @param[in] textsize The maximum length for text
  */
-static void MS_TimestampedText (char *text, message_t *message, size_t textsize)
+static void MS_TimestampedText (char *text, uiMessageListNodeMessage_t *message, size_t textsize)
 {
 	dateLong_t date;
 	CP_DateConvertLong(&message->date, &date);
@@ -58,16 +57,69 @@ static void MS_TimestampedText (char *text, message_t *message, size_t textsize)
  * @sa CL_EventAddMail_f
  * @note this method forwards to @c MS_AddNewMessageSound with @code playSound = true @endcode
  */
-message_t *MS_AddNewMessage (const char *title, const char *text, messageType_t type, technology_t *pedia, bool popup, bool playSound)
+uiMessageListNodeMessage_t *MS_AddNewMessage (const char *title, const char *text, messageType_t type, technology_t *pedia, bool popup, bool playSound)
 {
 	assert(type < MSG_MAX);
 
 	/* allocate memory for new message - delete this with every new game */
-	message_t* const mess = Mem_PoolAllocType(message_t, cp_campaignPool);
+	uiMessageListNodeMessage_t* const mess = Mem_PoolAllocType(uiMessageListNodeMessage_t, cp_campaignPool);
+
+	switch (type) {
+	case MSG_DEBUG: /**< only save them in debug mode */
+		mess->iconName = "icons/message_debug";
+		break;
+	case MSG_INFO: /**< don't save these messages */
+		mess->iconName = "icons/message_info";
+		break;
+	case MSG_STANDARD:
+		mess->iconName = "icons/message_info";
+		break;
+	case MSG_RESEARCH_PROPOSAL:
+		mess->iconName = "icons/message_research";
+		break;
+	case MSG_RESEARCH_HALTED:
+		mess->iconName = "icons/message_research";
+		break;
+	case MSG_RESEARCH_FINISHED:
+		mess->iconName = "icons/message_research";
+		break;
+	case MSG_CONSTRUCTION:
+		mess->iconName = "icons/message_construction";
+		break;
+	case MSG_UFOSPOTTED:
+		mess->iconName = "icons/message_ufo";
+		break;
+	case MSG_TERRORSITE:
+		mess->iconName = "icons/message_ufo";
+		break;
+	case MSG_BASEATTACK:
+		mess->iconName = "icons/message_ufo";
+		break;
+	case MSG_TRANSFERFINISHED:
+		mess->iconName = "icons/message_transfer";
+		break;
+	case MSG_PROMOTION:
+		mess->iconName = "icons/message_promotion";
+		break;
+	case MSG_PRODUCTION:
+		mess->iconName = "icons/message_production";
+		break;
+	case MSG_DEATH:
+		mess->iconName = "icons/message_death";
+		break;
+	case MSG_CRASHSITE:
+		mess->iconName = "icons/message_ufo";
+		break;
+	case MSG_EVENT:
+		mess->iconName = "icons/message_info";
+		break;
+	default:
+		mess->iconName = "icons/message_info";
+		break;
+	}
 
 	/* push the new message at the beginning of the stack */
-	mess->next = cp_messageStack;
-	cp_messageStack = mess;
+	cgi->UI_MessageAddStack(mess);
 
 	mess->type = type;
 	mess->pedia = pedia;		/* pointer to UFOpaedia entry */
@@ -143,7 +195,7 @@ message_t *MS_AddNewMessage (const char *title, const char *text, messageType_t 
  * @param[in] message The first message to save
  * @note this saves messages in reversed order
  */
-static void MS_MessageSaveXML (xmlNode_t *p, message_t *message)
+static void MS_MessageSaveXML (xmlNode_t *p, uiMessageListNodeMessage_t *message)
 {
 	xmlNode_t *n;
 
@@ -183,7 +235,7 @@ bool MS_SaveXML (xmlNode_t *p)
 	xmlNode_t *n = XML_AddNode(p, SAVE_MESSAGES_MESSAGES);
 
 	/* store message system items */
-	MS_MessageSaveXML(n, cp_messageStack);
+	MS_MessageSaveXML(n, cgi->UI_MessageGetStack());
 	return true;
 }
 
@@ -216,7 +268,7 @@ bool MS_LoadXML (xmlNode_t *p)
 		char text[MAX_MESSAGE_TEXT];
 		char id[MAX_VAR];
 		technology_t *tech = NULL;
-		message_t *mess;
+		uiMessageListNodeMessage_t *mess;
 
 		if (!Com_GetConstIntFromNamespace(SAVE_MESSAGETYPE_NAMESPACE, type, (int*) &mtype)) {
 			Com_Printf("Invalid message type '%s'\n", type);

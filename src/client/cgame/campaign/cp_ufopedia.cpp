@@ -412,7 +412,7 @@ void UP_UGVDescription (const ugv_t *ugvType)
  */
 int UP_GetUnreadMails (void)
 {
-	const message_t *m = cp_messageStack;
+	const uiMessageListNodeMessage_t *m = cgi->UI_MessageGetStack();
 
 	if (ccs.numUnreadMails != -1)
 		return ccs.numUnreadMails;
@@ -933,7 +933,7 @@ static void UP_Update_f (void)
  */
 static void UP_MailClientClick_f (void)
 {
-	message_t *m = cp_messageStack;
+	uiMessageListNodeMessage_t *m = cgi->UI_MessageGetStack();
 	int num;
 	int cnt = -1;
 
@@ -1022,7 +1022,7 @@ static void UP_ResearchedLinkClick_f (void)
 static void UP_SetMailButtons_f (void)
 {
 	int i = 0, num;
-	const message_t *m = cp_messageStack;
+	const uiMessageListNodeMessage_t *m = cgi->UI_MessageGetStack();
 
 	if (Cmd_Argc() != 2) {
 		Com_Printf("Usage: %s <pos>\n", Cmd_Argv(0));
@@ -1101,7 +1101,7 @@ static void UP_SetMailButtons_f (void)
 static void UP_OpenMail_f (void)
 {
 	char tempBuf[MAIL_LENGTH] = "";
-	const message_t *m = cp_messageStack;
+	const uiMessageListNodeMessage_t *m = cgi->UI_MessageGetStack();
 	dateLong_t date;
 
 	mailBuffer[0] = '\0';
@@ -1193,7 +1193,7 @@ static void UP_OpenMail_f (void)
  */
 static void UP_SetAllMailsRead_f (void)
 {
-	const message_t *m = cp_messageStack;
+	const uiMessageListNodeMessage_t *m = cgi->UI_MessageGetStack();
 
 	while (m) {
 		switch (m->type) {

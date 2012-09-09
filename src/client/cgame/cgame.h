@@ -101,6 +101,9 @@ typedef struct cgame_import_s {
 	void (IMPORT *UI_RegisterText) (int textId, const char *text);
 	void (IMPORT *UI_ResetData) (int dataId);
 	void (IMPORT *UI_RegisterLinkedListText) (int textId, linkedList_t *text);
+	struct uiMessageListNodeMessage_s* (IMPORT *UI_MessageGetStack) (void);
+	void (IMPORT *UI_MessageAddStack) (struct uiMessageListNodeMessage_s*);
+	void (IMPORT *UI_MessageResetStack) (void);
 	void (IMPORT *UI_TextScrollEnd) (const char* nodePath);
 	void (IMPORT *UI_TextNodeSelectLine) (uiNode_t* node, int num);
 	uiNode_t* (IMPORT *UI_PopupList) (const char *title, const char *headline, linkedList_t* entries, const char *clickAction);

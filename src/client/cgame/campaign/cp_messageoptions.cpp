@@ -205,9 +205,9 @@ static void MSO_SetAll_f(void)
  * @return message_t pointer if message was added
  * @sa MS_AddNewMessageSound
  */
-message_t *MSO_CheckAddNewMessage (const notify_t messagecategory, const char *title, const char *text, messageType_t type, technology_t *pedia, bool popup)
+uiMessageListNodeMessage_t *MSO_CheckAddNewMessage (const notify_t messagecategory, const char *title, const char *text, messageType_t type, technology_t *pedia, bool popup)
 {
-	message_t *result = NULL;
+	uiMessageListNodeMessage_t *result = NULL;
 	const messageSettings_t *settings = &messageSettings[messagecategory];
 
 	if (settings->doNotify)
