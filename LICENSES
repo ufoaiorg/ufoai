@@ -833,6 +833,8 @@ base/models/aircraft/ufo_fighter/ufo_fighter_upper_gm.png | GNU General Public L
 base/models/aircraft/ufo_fighter/ufo_fighter_wings.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aircraft/ufo_fighter/ufo_fighter_wings.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aircraft/ufo_fighter/ufo_fighter_wings_gm.png | GNU General Public License 2.0 or later | MCR
+base/models/aircraft/ufo_gunboat/ufo_gunboat.md2 | GNU General Public License 2.0 | Lord Drake, Nate Wright
+base/models/aircraft/ufo_gunboat/ufo_gunboat.png | GNU General Public License 2.0 | Lord Drake, Nate Wright
 base/models/aircraft/ufo_harvester/ufo_harvester.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer) | Model based on the harvester05.map made by SparX Beyler, see base/maps/harvester05.map
 base/models/aircraft/ufo_harvester/ufo_harvester.md2 | GNU General Public License 2.0 | Werner Höhrer (hoehrer) | Model based on the harvester05.map made by SparX Beyler, see base/maps/harvester05.map
 base/models/aircraft/ufo_scout/ufo_scout_engines.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
@@ -1191,6 +1193,8 @@ base/models/geoscape/ufo_corrupter.md2 | GNU General Public License 2.0 or later
 base/models/geoscape/ufo_corrupter.png | GNU General Public License 2.0 or later |  | Based on original model created by Werner Hoehrer (hoehrer), which was based on SparX Beyeler's map, see base/models/aircrafts/
 base/models/geoscape/ufo_fighter.md2 | GNU General Public License 2.0 or later | Willem Sitters | Based on original model created by Lukas Beyeler (Rasta), see base/models/aircrafts/
 base/models/geoscape/ufo_fighter.png | GNU General Public License 2.0 or later | Willem Sitters | Based on original model created by Lukas Beyeler (Rasta), see base/models/aircrafts/
+base/models/geoscape/ufo_gunboat.md2 | GNU General Public License 2.0 or later | Lord Drake, Nate Wright
+base/models/geoscape/ufo_gunboat.png | GNU General Public License 2.0 or later | Lord Drake, Nate Wright
 base/models/geoscape/ufo_harvester.md2 | GNU General Public License 2.0 or later | Willem Sitters | Based on original model created by Lukas Beyeler (Rasta), see base/models/aircrafts/
 base/models/geoscape/ufo_harvester.png | GNU General Public License 2.0 or later | Willem Sitters | Based on original model created by Lukas Beyeler (Rasta), see base/models/aircrafts/
 base/models/geoscape/ufo_scout.md2 | GNU General Public License 2.0 or later | Willem Sitters | Based on original model created by Lukas Beyeler (Rasta), see base/models/aircrafts/
