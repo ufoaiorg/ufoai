@@ -338,7 +338,7 @@ void INS_InitCallbacks (void)
 
 void INS_ShutdownCallbacks (void)
 {
-	Cmd_RemoveCommand("ui_select_installationtype");
+	Cmd_RemoveCommand("ui_build_installationtype");
 	Cmd_RemoveCommand("ui_fill_installationtypes");
 	Cmd_RemoveCommand("ui_fillufoyards");
 
