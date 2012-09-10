@@ -180,7 +180,14 @@ skipwhite:
 					com_token[len] = c;
 					len++;
 				}
+			} else {
+				/* exceeded com_token size */
+				break;
 			}
+		}
+
+		if (len == sizeof(com_token)) {
+			len = 0;
 		}
 
 		// TODO here the token is wrongly formed
@@ -206,6 +213,9 @@ skipwhite:
 		if (len < sizeof(com_token)) {
 			com_token[len] = c;
 			len++;
+		} else {
+			/* exceeded com_token size */
+			break;
 		}
 		data++;
 		c = *data;
