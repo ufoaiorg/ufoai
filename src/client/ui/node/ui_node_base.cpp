@@ -42,6 +42,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // TODO: remove me - duplicated in cp_base.h
 #define BASE_SIZE		5
 
+/** 20 is the height of the part where the images overlap */
+#define BASE_IMAGE_OVERLAY 20
+
 void uiAbstractBaseNode::onLoading (uiNode_t * node)
 {
 	EXTRADATA(node).baseid = -1;
@@ -68,9 +71,6 @@ void uiBaseLayoutNode::draw (uiNode_t * node)
 
 	GAME_DrawBaseLayout(EXTRADATA(node).baseid, nodepos[0], nodepos[1], totalMarge, width, height, node->padding, node->bgcolor, node->color);
 }
-
-/** 20 is the height of the part where the images overlap */
-#define BASE_IMAGE_OVERLAY 20
 
 /**
  * @brief Return col and row of a cell, at an absolute position
