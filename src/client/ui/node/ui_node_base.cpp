@@ -241,7 +241,7 @@ void uiBaseMapNode::drawTooltip (uiNode_t *node, int x, int y)
 
 	char const* tooltipText = _(building->name);
 	if (!B_CheckBuildingDependencesStatus(building))
-		tooltipText = va("%s\n%s %s", tooltipText, _("not operational, depends on"), _(building->dependsBuilding->name));
+		tooltipText = va(_("%s\nnot operational, depends on %s"), _(building->name), _(building->dependsBuilding->name));
 	const int itemToolTipWidth = 250;
 	UI_DrawTooltip(tooltipText, x, y, itemToolTipWidth);
 }
