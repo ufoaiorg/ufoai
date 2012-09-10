@@ -249,7 +249,7 @@ void Com_RegisterConstList(const constListEntry_t constList[]);
 bool Com_UnregisterConstList(const constListEntry_t constList[]);
 
 void Com_ParseScripts(bool onlyServer);
-const char *Com_EParse(const char **text, const char *errhead, const char *errinfo);
+const char *Com_EParse(const char **text, const char *errhead, const char *errinfo, char *target = 0, size_t size = 0);
 const char *Com_GetRandomMapAssemblyNameForCraft(const char *craftID);
 const char *Com_GetRandomMapAssemblyNameForCrashedCraft(const char *craftID);
 ufoType_t Com_UFOShortNameToID(const char *token);

@@ -51,6 +51,9 @@ static int numMsgIDs;
 #define MAX_MSGIDHASH 256
 static msgid_t *msgIDHash[MAX_MSGIDHASH];
 
+#define MSGIDSIZE 65536
+static char *msgIDText;
+
 static void CL_ParseMessageID (const char *name, const char **text)
 {
 	const char *errhead = "CL_ParseMessageID: unexpected end of file (msgid ";
@@ -88,7 +91,7 @@ static void CL_ParseMessageID (const char *name, const char **text)
 				break;
 			if (Q_streq(token, "text")) {
 				/* found a definition */
-				token = Com_EParse(text, errhead, name);
+				token = Com_EParse(text, errhead, name, msgIDText, MSGIDSIZE);
 				if (!*text)
 					break;
 				if (token[0] == '_')
@@ -144,6 +147,7 @@ void CL_ParseMessageIDs (void)
 	} else {
 		cl_msgidPool = Mem_CreatePool("msgids");
 	}
+	msgIDText = Mem_PoolAllocTypeN(char, MSGIDSIZE, cl_msgidPool);
 
 	Com_Printf("\n----------- parse msgids -----------\n");
 
@@ -346,6 +350,7 @@ void CL_LanguageShutdown (void)
 	languageList = NULL;
 	Mem_DeletePool(cl_msgidPool);
 	cl_msgidPool = NULL;
+	msgIDText = NULL;
 	numMsgIDs = 0;
 	OBJZERO(msgIDHash);
 }

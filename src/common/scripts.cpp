@@ -284,11 +284,11 @@ static int Com_FindNameType (const char* nameType)
  * @brief Parsing function that prints an error message when there is no text in the buffer
  * @sa Com_Parse
  */
-const char *Com_EParse (const char **text, const char *errhead, const char *errinfo)
+const char *Com_EParse (const char **text, const char *errhead, const char *errinfo, char *target, size_t size)
 {
 	const char *token;
 
-	token = Com_Parse(text);
+	token = Com_Parse(text, target, size);
 	if (!*text) {
 		if (errinfo)
 			Com_Printf("%s \"%s\")\n", errhead, errinfo);

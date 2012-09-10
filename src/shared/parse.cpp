@@ -101,20 +101,25 @@ int Com_CountTokensInBuffer (const char *buffer)
  * the next call.
  * @sa Com_EParse
  */
-const char *Com_Parse (const char *data_p[])
+const char *Com_Parse (const char *data_p[], char *target, size_t size)
 {
 	char c;
 	size_t len;
 	const char *data;
 
+	if (!target) {
+		target = com_token;
+		size = sizeof(com_token);
+	}
+
 	if (isUnparsedToken) {
 		isUnparsedToken = false;
-		return com_token;
+		return target;
 	}
 
 	data = *data_p;
 	len = 0;
-	com_token[0] = 0;
+	target[0] = 0;
 
 	if (!data) {
 		*data_p = NULL;
@@ -166,18 +171,18 @@ skipwhite:
 				c = '\"';
 				data++;
 			} else if (c == '\"' || !c) {
-				com_token[len] = '\0';
+				target[len] = '\0';
 				*data_p = data;
 				type = TT_QUOTED_WORD;
-				return com_token;
+				return target;
 			} else if (c == '\0') {
 				// TODO here the token is wrongly formed
 				break;
 			}
 
-			if (len < sizeof(com_token)) {
+			if (len < size) {
 				if (c != '\r') {
-					com_token[len] = c;
+					target[len] = c;
 					len++;
 				}
 			} else {
@@ -186,32 +191,32 @@ skipwhite:
 			}
 		}
 
-		if (len == sizeof(com_token)) {
+		if (len == size) {
 			len = 0;
 		}
 
 		// TODO here the token is wrongly formed
-		com_token[len] = '\0';
+		target[len] = '\0';
 		*data_p = data;
 		type = TT_QUOTED_WORD;
-		return com_token;
+		return target;
 	}
 
 	if (c == '{' || c == '}' || c == '(' || c == ')' || c == ',') {
 		data++;
-		com_token[len] = c;
-		com_token[len + 1] = '\0';
+		target[len] = c;
+		target[len + 1] = '\0';
 		// Com_TokenType_t contains expected values for this set of characters
 		type = (Com_TokenType_t) c;
 		len++;
 		*data_p = data;
-		return com_token;
+		return target;
 	}
 
 	/* parse a regular word */
 	do {
-		if (len < sizeof(com_token)) {
-			com_token[len] = c;
+		if (len < size) {
+			target[len] = c;
 			len++;
 		} else {
 			/* exceeded com_token size */
@@ -223,12 +228,12 @@ skipwhite:
 			break;
 	} while (c > 32);
 
-	if (len == sizeof(com_token)) {
+	if (len == size) {
 		len = 0;
 	}
-	com_token[len] = '\0';
+	target[len] = '\0';
 
 	*data_p = data;
 	type = TT_WORD;
-	return com_token;
+	return target;
 }
