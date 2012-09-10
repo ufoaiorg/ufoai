@@ -60,6 +60,7 @@ typedef struct cgame_export_s {
 	dbuffer *(EXPORT *InitializeBattlescape) (const chrList_t *team);
 	/** callback that is executed every frame */
 	void (EXPORT *RunFrame) (float secondsSinceLastFrame);
+	void (EXPORT *HandleBaseClick) (int baseIdx, int key, int col, int row);
 	void (EXPORT *EndRoundAnnounce) (int playerNum, int team);
 	void (EXPORT *StartBattlescape) (bool isTeamPlay);
 	const char* (EXPORT *GetTeamDef) (void);

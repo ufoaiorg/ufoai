@@ -41,5 +41,6 @@ void GAME_CP_Drop(void);
 dbuffer *GAME_CP_InitializeBattlescape(const chrList_t *team);
 void GAME_CP_Frame(float secondsSinceLastFrame);
 const char* GAME_CP_GetTeamDef(void);
+void GAME_CP_HandleBaseClick(int baseIdx, int key, int col, int row);
 
 #endif

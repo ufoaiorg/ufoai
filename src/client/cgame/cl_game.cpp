@@ -1409,6 +1409,13 @@ void GAME_Frame (void)
 		list->RunFrame(cls.frametime);
 }
 
+void GAME_HandleBaseClick (int baseIdx, int key, int col, int row)
+{
+	const cgame_export_t *list = GAME_GetCurrentType();
+	if (list && list->HandleBaseClick != NULL)
+		list->HandleBaseClick(baseIdx, key, col, row);
+}
+
 /**
  * @brief Get a model for an item.
  * @param[in] od The object definition to get the model from.

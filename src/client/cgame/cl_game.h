@@ -63,6 +63,7 @@ void GAME_NofityEvent(event_t eventType);
 const char* GAME_GetTeamDef(void);
 void GAME_Drop(void);
 void GAME_Frame(void);
+void GAME_HandleBaseClick(int baseIdx, int key, int row, int col);
 const char* GAME_GetModelForItem(const objDef_t *od, struct uiModel_s** menuModel);
 const mapDef_t* GAME_GetCurrentSelectedMap(void);
 void GAME_SwitchCurrentSelectedMap(int step);

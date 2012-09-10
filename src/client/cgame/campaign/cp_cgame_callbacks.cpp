@@ -22,6 +22,7 @@
  */
 
 #include "../../cl_shared.h"
+#include "../../input/cl_keys.h"
 #include "../../ui/ui_dataids.h"
 #include "cp_cgame_callbacks.h"
 #include "cp_campaign.h"
@@ -374,6 +375,54 @@ void GAME_CP_Frame (float secondsSinceLastFrame)
 
 	/* advance time */
 	CP_CampaignRun(ccs.curCampaign, secondsSinceLastFrame);
+}
+
+void GAME_CP_HandleBaseClick (int baseIdx, int key, int col, int row)
+{
+	base_t *base = B_GetBaseByIDX(baseIdx);
+	if (base == NULL)
+		base = B_GetCurrentSelectedBase();
+	if (base == NULL)
+		return;
+	const building_t *entry = base->map[row][col].building;
+	if (key == K_MOUSE3) {
+		if (entry) {
+			assert(!B_IsTileBlocked(base, col, row));
+			B_DrawBuilding(entry);
+		}
+	} else if (key == K_MOUSE2) {
+		if (entry) {
+			cgi->Cmd_ExecuteString(va("building_destroy %i %i", base->idx, entry->idx));
+		}
+	} else if (key == K_MOUSE1) {
+		if (ccs.baseAction == BA_NEWBUILDING) {
+			const building_t *building = base->buildingCurrent;
+
+			assert(building);
+
+			if (col + building->size[0] > BASE_SIZE)
+				return;
+			if (row + building->size[1] > BASE_SIZE)
+				return;
+			for (int y = row; y < row + building->size[1]; y++)
+				for (int x = col; x < col + building->size[0]; x++)
+					if (B_GetBuildingAt(base, x, y) != NULL || B_IsTileBlocked(base, x, y))
+						return;
+			B_SetBuildingByClick(base, building, row, col);
+			cgi->S_StartLocalSample("geoscape/build-place", 1.0f);
+			return;
+		}
+
+		const building_t *entry = B_GetBuildingAt(base, col, row);
+		if (entry != NULL) {
+			if (B_IsTileBlocked(base, col, row))
+				cgi->Com_Error(ERR_DROP, "tile with building is not blocked");
+
+			B_BuildingOpenAfterClick(entry);
+			ccs.baseAction = BA_NONE;
+			return;
+		}
+	}
 }
 
 const char* GAME_CP_GetTeamDef (void)

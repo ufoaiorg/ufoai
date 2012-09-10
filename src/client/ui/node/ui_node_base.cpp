@@ -31,6 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../cl_shared.h"
 #include "../../input/cl_input.h"
+#include "../../input/cl_keys.h"
 #include "../../sound/s_main.h"
 #include "../../cgame/campaign/cp_campaign.h"
 
@@ -263,36 +264,7 @@ void uiBaseMapNode::onLeftClick (uiNode_t *node, int x, int y)
 	if (col == -1)
 		return;
 
-	base_t *base = getBase(node);
-	assert(base);
-
-	if (ccs.baseAction == BA_NEWBUILDING) {
-		const building_t *building = base->buildingCurrent;
-
-		assert(building);
-
-		if (col + building->size[0] > BASE_SIZE)
-			return;
-		if (row + building->size[1] > BASE_SIZE)
-			return;
-		for (int y = row; y < row + building->size[1]; y++)
-			for (int x = col; x < col + building->size[0]; x++)
-				if (B_GetBuildingAt(base, x, y) != NULL || B_IsTileBlocked(base, x, y))
-					return;
-		B_SetBuildingByClick(base, building, row, col);
-		S_StartLocalSample("geoscape/build-place", 1.0f);
-		return;
-	}
-
-	const building_t *entry = B_GetBuildingAt(base, col, row);
-	if (entry != NULL) {
-		if (B_IsTileBlocked(base, col, row))
-			Com_Error(ERR_DROP, "tile with building is not blocked");
-
-		B_BuildingOpenAfterClick(entry);
-		ccs.baseAction = BA_NONE;
-		return;
-	}
+	GAME_HandleBaseClick(EXTRADATACONST(node).baseid, K_MOUSE1, col, row);
 }
 
 /**
@@ -312,12 +284,7 @@ void uiBaseMapNode::onRightClick (uiNode_t *node, int x, int y)
 	if (col == -1)
 		return;
 
-	const base_t *base = getBase(node);
-	assert(base);
-	if (!base->map[row][col].building)
-		return;
-
-	Cmd_ExecuteString(va("building_destroy %i %i", base->idx, base->map[row][col].building->idx));
+	GAME_HandleBaseClick(EXTRADATACONST(node).baseid, K_MOUSE2, col, row);
 }
 
 /**
@@ -338,15 +305,7 @@ void uiBaseMapNode::onMiddleClick (uiNode_t *node, int x, int y)
 	if (col == -1)
 		return;
 
-	const base_t *base = getBase(node);
-	if (base == NULL)
-		return;
-
-	const building_t *entry = base->map[row][col].building;
-	if (entry) {
-		assert(!B_IsTileBlocked(base, col, row));
-		B_DrawBuilding(entry);
-	}
+	GAME_HandleBaseClick(EXTRADATACONST(node).baseid, K_MOUSE3, col, row);
 }
 
 /**
