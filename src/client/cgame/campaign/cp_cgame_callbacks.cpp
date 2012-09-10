@@ -377,6 +377,127 @@ void GAME_CP_Frame (float secondsSinceLastFrame)
 	CP_CampaignRun(ccs.curCampaign, secondsSinceLastFrame);
 }
 
+void GAME_CP_DrawBaseLayout (int baseIdx, int x1, int y1, int totalMarge, int w, int h, int padding, const vec4_t bgcolor, const vec4_t color)
+{
+	const base_t *base = B_GetBaseByIDX(baseIdx);
+	if (base == NULL)
+		base = B_GetCurrentSelectedBase();
+	int y = y1 + padding;
+	for (int row = 0; row < BASE_SIZE; row++) {
+		int x = x1 + padding;
+		for (int col = 0; col < BASE_SIZE; col++) {
+			if (B_IsTileBlocked(base, col, row)) {
+				cgi->UI_DrawFill(x, y, w, h, bgcolor);
+			} else if (B_GetBuildingAt(base, col, row) != NULL) {
+				/* maybe destroyed in the meantime */
+				if (base->founded)
+					cgi->UI_DrawFill(x, y, w, h, color);
+			}
+			x += w + padding;
+		}
+		y += h + padding;
+	}
+}
+
+void GAME_CP_DrawBaseTooltip (int baseIdx, int x, int y, int col, int row)
+{
+	const base_t *base = B_GetBaseByIDX(baseIdx);
+	if (base == NULL)
+		base = B_GetCurrentSelectedBase();
+	building_t *building = base->map[row][col].building;
+	if (!building)
+		return;
+
+	char const* tooltipText = _(building->name);
+	if (!B_CheckBuildingDependencesStatus(building))
+		tooltipText = va(_("%s\nnot operational, depends on %s"), _(building->name), _(building->dependsBuilding->name));
+	const int itemToolTipWidth = 250;
+	cgi->UI_DrawTooltip(tooltipText, x, y, itemToolTipWidth);
+}
+
+void GAME_CP_DrawBase (int baseIdx, int x, int y, int w, int h, int col, int row, bool hover, int overlap)
+{
+	const base_t *base = B_GetBaseByIDX(baseIdx);
+	if (base == NULL)
+		base = B_GetCurrentSelectedBase();
+	if (!base) {
+		cgi->UI_PopWindow(false);
+		return;
+	}
+
+	bool used[MAX_BUILDINGS];
+	/* reset the used flag */
+	OBJZERO(used);
+
+	for (row = 0; row < BASE_SIZE; row++) {
+		const char *image = NULL;
+		for (col = 0; col < BASE_SIZE; col++) {
+			const vec2_t pos = { x + col * w, y + row * (h - overlap) };
+			const building_t *building;
+			/* base tile */
+			if (B_IsTileBlocked(base, col, row)) {
+				building = NULL;
+				image = "base/invalid";
+			} else if (B_GetBuildingAt(base, col, row) == NULL) {
+				building = NULL;
+				image = "base/grid";
+			} else {
+				building = B_GetBuildingAt(base, col, row);
+				assert(building);
+
+				if (building->image)
+					image = building->image;
+
+				/* some buildings are drawn with two tiles - e.g. the hangar is no square map tile.
+				 * These buildings have the needs parameter set to the second building part which has
+				 * its own image set, too. We are searching for this second building part here. */
+				if (B_BuildingGetUsed(used, building->idx))
+					continue;
+				B_BuildingSetUsed(used, building->idx);
+			}
+
+			/* draw tile */
+			if (image != NULL)
+				cgi->UI_DrawNormImageByName(false, pos[0], pos[1], w * (building ? building->size[0] : 1), h * (building ? building->size[1] : 1), 0, 0, 0, 0, image);
+			if (building) {
+				switch (building->buildingStatus) {
+				case B_STATUS_UNDER_CONSTRUCTION: {
+					const float remaining = B_GetConstructionTimeRemain(building);
+					const float time = std::max(0.0f, remaining);
+					const char* text = va(ngettext("%3.1f day left", "%3.1f days left", time), time);
+					cgi->UI_DrawString("f_small", ALIGN_UL, pos[0] + 10, pos[1] + 10, text);
+					break;
+				}
+				default:
+					break;
+				}
+			}
+		}
+	}
+
+	/* if we are building */
+	if (hover && ccs.baseAction == BA_NEWBUILDING) {
+		static const vec4_t white = {1.0f, 1.0f, 1.0f, 0.8f};
+		int y, x;
+		const building_t *building = base->buildingCurrent;
+		const vec2_t& size = building->size;
+		assert(building);
+
+		for (y = row; y < row + size[1]; y++) {
+			for (x = col; x < col + size[0]; x++) {
+				if (!B_MapIsCellFree(base, x, y))
+					return;
+			}
+		}
+
+		const int xCoord = x + col * w;
+		const int yCoord = y + row * (h - overlap);
+		const int widthRect = size[0] * w;
+		const int heigthRect = size[1] * (h - overlap);
+		cgi->UI_DrawRect(xCoord, yCoord, widthRect, heigthRect, white, 3, 1);
+	}
+}
+
 void GAME_CP_HandleBaseClick (int baseIdx, int key, int col, int row)
 {
 	base_t *base = B_GetBaseByIDX(baseIdx);

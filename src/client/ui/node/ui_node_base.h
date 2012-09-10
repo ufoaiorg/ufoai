@@ -25,14 +25,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_UI_UI_NODE_BASE_H
 #define CLIENT_UI_UI_NODE_BASE_H
 
-struct base_s;
-
 class uiAbstractBaseNode : public uiLocatedNode {
 public:
 	void onLoaded(uiNode_t* node) OVERRIDE;
 	void onLoading(uiNode_t* node) OVERRIDE;
-protected:
-	base_s* getBase(const uiNode_t *node);
 };
 
 class uiBaseMapNode : public uiAbstractBaseNode {

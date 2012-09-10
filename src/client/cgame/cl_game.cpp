@@ -38,6 +38,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui/ui_windows.h"
 #include "../ui/ui_sprite.h"
 #include "../ui/ui_font.h"
+#include "../ui/ui_tooltip.h"
 #include "../ui/node/ui_node_container.h"
 #include "../ui/node/ui_node_messagelist.h"
 #include "../ui/node/ui_node_model.h"
@@ -413,6 +414,11 @@ static void UI_PushWindow_ (const char *name)
 	UI_PushWindow(name);
 }
 
+static void UI_DrawNormImageByName_ (bool flip, float x, float y, float w, float h, float sh, float th, float sl, float tl, const char *name)
+{
+	UI_DrawNormImageByName(flip, x, y, w, h, sh, th, sl, tl, name);
+}
+
 static const cgame_import_t* GAME_GetImportData (const cgameType_t *t)
 {
 	static cgame_import_t gameImport;
@@ -477,6 +483,10 @@ static const cgame_import_t* GAME_GetImportData (const cgameType_t *t)
 		cgi->UI_SortOptions = UI_SortOptions;
 		cgi->UI_DrawString = UI_DrawString_;
 		cgi->UI_GetFontFromNode = UI_GetFontFromNode;
+		cgi->UI_DrawNormImageByName = UI_DrawNormImageByName_;
+		cgi->UI_DrawRect = UI_DrawRect;
+		cgi->UI_DrawFill = UI_DrawFill;
+		cgi->UI_DrawTooltip = UI_DrawTooltip;
 		cgi->UI_GetNodeAbsPos = UI_GetNodeAbsPos;
 		cgi->UI_PopupButton = UI_PopupButton;
 		cgi->UI_GetSpriteByName = UI_GetSpriteByName;
@@ -1407,6 +1417,27 @@ void GAME_Frame (void)
 	list = GAME_GetCurrentType();
 	if (list && list->RunFrame != NULL)
 		list->RunFrame(cls.frametime);
+}
+
+void GAME_DrawBase (int baseIdx, int x, int y, int w, int h, int col, int row, bool hover, int overlap)
+{
+	const cgame_export_t *list = GAME_GetCurrentType();
+	if (list && list->DrawBase != NULL)
+		list->DrawBase(baseIdx, x, y, w, h, col, row, hover, overlap);
+}
+
+void GAME_DrawBaseTooltip (int baseIdx, int x, int y, int col, int row)
+{
+	const cgame_export_t *list = GAME_GetCurrentType();
+	if (list && list->DrawBaseTooltip != NULL)
+		list->DrawBaseTooltip(baseIdx, x, y, col, row);
+}
+
+void GAME_DrawBaseLayout (int baseIdx, int x, int y, int totalMarge, int w, int h, int padding, const vec4_t bgcolor, const vec4_t color)
+{
+	const cgame_export_t *list = GAME_GetCurrentType();
+	if (list && list->DrawBaseLayout != NULL)
+		list->DrawBaseLayout(baseIdx, x, y, totalMarge, w, h, padding, bgcolor, color);
 }
 
 void GAME_HandleBaseClick (int baseIdx, int key, int col, int row)

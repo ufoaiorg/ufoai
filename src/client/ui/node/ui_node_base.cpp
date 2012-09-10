@@ -30,16 +30,17 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_node_base.h"
 
 #include "../../cl_shared.h"
+#include "../../cgame/cl_game.h"
 #include "../../input/cl_input.h"
 #include "../../input/cl_keys.h"
 #include "../../sound/s_main.h"
-#include "../../cgame/campaign/cp_campaign.h"
 
 #define EXTRADATA_TYPE baseExtraData_t
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
 #define EXTRADATACONST(node) UI_EXTRADATACONST(node, EXTRADATA_TYPE)
 
-static const vec4_t white = {1.0f, 1.0f, 1.0f, 0.8f};
+// TODO: remove me - duplicated in cp_base.h
+#define BASE_SIZE		5
 
 void uiAbstractBaseNode::onLoading (uiNode_t * node)
 {
@@ -53,23 +54,11 @@ void uiAbstractBaseNode::onLoaded (uiNode_t * node)
 {
 }
 
-base_t* uiAbstractBaseNode::getBase (const uiNode_t * node)
-{
-	if (EXTRADATACONST(node).baseid == -1) {
-		return B_GetCurrentSelectedBase();
-	}
-
-	return B_GetBaseByIDX(EXTRADATACONST(node).baseid);
-}
-
 /**
  * @brief Draw a small square with the layout of the given base
  */
 void uiBaseLayoutNode::draw (uiNode_t * node)
 {
-	if (EXTRADATA(node).baseid >= MAX_BASES || EXTRADATA(node).baseid < 0)
-		return;
-
 	const int totalMarge = node->padding * (BASE_SIZE + 1);
 	const int width = (node->box.size[0] - totalMarge) / BASE_SIZE;
 	const int height = (node->box.size[1] - totalMarge) / BASE_SIZE;
@@ -77,22 +66,7 @@ void uiBaseLayoutNode::draw (uiNode_t * node)
 	vec2_t nodepos;
 	UI_GetNodeAbsPos(node, nodepos);
 
-	const base_t *base = getBase(node);
-	int y = nodepos[1] + node->padding;
-	for (int row = 0; row < BASE_SIZE; row++) {
-		int x = nodepos[0] + node->padding;
-		for (int col = 0; col < BASE_SIZE; col++) {
-			if (B_IsTileBlocked(base, col, row)) {
-				UI_DrawFill(x, y, width, height, node->bgcolor);
-			} else if (B_GetBuildingAt(base, col, row) != NULL) {
-				/* maybe destroyed in the meantime */
-				if (base->founded)
-					UI_DrawFill(x, y, width, height, node->color);
-			}
-			x += width + node->padding;
-		}
-		y += height + node->padding;
-	}
+	GAME_DrawBaseLayout(EXTRADATA(node).baseid, nodepos[0], nodepos[1], totalMarge, width, height, node->padding, node->bgcolor, node->color);
 }
 
 /** 20 is the height of the part where the images overlap */
@@ -127,15 +101,11 @@ void uiBaseMapNode::getCellAtPos (const uiNode_t *node, int x, int y, int *col, 
  */
 void uiBaseMapNode::draw (uiNode_t * node)
 {
-	const base_t *base = getBase(node);
-	if (!base) {
-		UI_PopWindow(false);
-		return;
-	}
-
-	bool used[MAX_BUILDINGS];
-	/* reset the used flag */
-	OBJZERO(used);
+	int col, row;
+	bool hover = node->state;
+	getCellAtPos(node, mousePosX, mousePosY, &col, &row);
+	if (col == -1)
+		hover = false;
 
 	const int width = node->box.size[0] / BASE_SIZE;
 	const int height = node->box.size[1] / BASE_SIZE + BASE_IMAGE_OVERLAY;
@@ -143,82 +113,7 @@ void uiBaseMapNode::draw (uiNode_t * node)
 	vec2_t nodePos;
 	UI_GetNodeAbsPos(node, nodePos);
 
-	int row, col;
-	for (row = 0; row < BASE_SIZE; row++) {
-		const char *image = NULL;
-		for (col = 0; col < BASE_SIZE; col++) {
-			const vec2_t pos = { nodePos[0] + col * width, nodePos[1] + row * (height - BASE_IMAGE_OVERLAY) };
-			const building_t *building;
-			/* base tile */
-			if (B_IsTileBlocked(base, col, row)) {
-				building = NULL;
-				image = "base/invalid";
-			} else if (B_GetBuildingAt(base, col, row) == NULL) {
-				building = NULL;
-				image = "base/grid";
-			} else {
-				building = B_GetBuildingAt(base, col, row);
-				assert(building);
-
-				if (building->image)
-					image = building->image;
-
-				/* some buildings are drawn with two tiles - e.g. the hangar is no square map tile.
-				 * These buildings have the needs parameter set to the second building part which has
-				 * its own image set, too. We are searching for this second building part here. */
-				if (B_BuildingGetUsed(used, building->idx))
-					continue;
-				B_BuildingSetUsed(used, building->idx);
-			}
-
-			/* draw tile */
-			if (image != NULL)
-				UI_DrawNormImageByName(false, pos[0], pos[1], width * (building ? building->size[0] : 1), height * (building ? building->size[1] : 1), 0, 0, 0, 0, image);
-			if (building) {
-				switch (building->buildingStatus) {
-				case B_STATUS_UNDER_CONSTRUCTION: {
-					const float remaining = B_GetConstructionTimeRemain(building);
-					const float time = std::max(0.0f, remaining);
-					const char* text = va(ngettext("%3.1f day left", "%3.1f days left", time), time);
-					UI_DrawString("f_small", ALIGN_UL, pos[0] + 10, pos[1] + 10, pos[0] + 10, node->box.size[0], 0, text);
-					break;
-				}
-				default:
-					break;
-				}
-			}
-		}
-	}
-
-	if (!node->state)
-		return;
-
-	getCellAtPos(node, mousePosX, mousePosY, &col, &row);
-	if (col == -1)
-		return;
-
-	/* if we are building */
-	if (ccs.baseAction == BA_NEWBUILDING) {
-		int y, x;
-		const building_t *building = base->buildingCurrent;
-		const vec2_t& size = building->size;
-		assert(building);
-
-		for (y = row; y < row + size[1]; y++) {
-			for (x = col; x < col + size[0]; x++) {
-				if (!B_MapIsCellFree(base, x, y))
-					return;
-			}
-		}
-
-		vec2_t pos;
-		UI_GetNodeAbsPos(node, pos);
-		const int xCoord = pos[0] + col * width;
-		const int yCoord = pos[1] + row * (height - BASE_IMAGE_OVERLAY);
-		const int widthRect = size[0] * width;
-		const int heigthRect = size[1] * (height - BASE_IMAGE_OVERLAY);
-		UI_DrawRect(xCoord, yCoord, widthRect, heigthRect, white, 3, 1);
-	}
+	GAME_DrawBase(EXTRADATA(node).baseid, nodePos[0], nodePos[1], width, height, col, row, hover, BASE_IMAGE_OVERLAY);
 }
 
 /**
@@ -235,16 +130,7 @@ void uiBaseMapNode::drawTooltip (uiNode_t *node, int x, int y)
 	if (col == -1)
 		return;
 
-	const base_t *base = getBase(node);
-	building_t *building = base->map[row][col].building;
-	if (!building)
-		return;
-
-	char const* tooltipText = _(building->name);
-	if (!B_CheckBuildingDependencesStatus(building))
-		tooltipText = va(_("%s\nnot operational, depends on %s"), _(building->name), _(building->dependsBuilding->name));
-	const int itemToolTipWidth = 250;
-	UI_DrawTooltip(tooltipText, x, y, itemToolTipWidth);
+	GAME_DrawBaseTooltip(EXTRADATACONST(node).baseid, x, y, col, row);
 }
 
 /**

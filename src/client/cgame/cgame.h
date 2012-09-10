@@ -61,6 +61,9 @@ typedef struct cgame_export_s {
 	/** callback that is executed every frame */
 	void (EXPORT *RunFrame) (float secondsSinceLastFrame);
 	void (EXPORT *HandleBaseClick) (int baseIdx, int key, int col, int row);
+	void (EXPORT *DrawBase) (int baseIdx, int x, int y, int w, int h, int col, int row, bool hover, int overlap);
+	void (EXPORT *DrawBaseLayout) (int baseIdx, int x, int y, int totalMarge, int w, int h, int padding, const vec4_t bgcolor, const vec4_t color);
+	void (EXPORT *DrawBaseTooltip) (int baseIdx, int x, int y, int col, int row);
 	void (EXPORT *EndRoundAnnounce) (int playerNum, int team);
 	void (EXPORT *StartBattlescape) (bool isTeamPlay);
 	const char* (EXPORT *GetTeamDef) (void);
@@ -115,6 +118,10 @@ typedef struct cgame_import_s {
 	void (IMPORT *UI_SortOptions) (uiNode_t** first);
 	int (IMPORT *UI_DrawString) (const char *fontID, align_t align, int x, int y, const char *c);
 	const char * (IMPORT *UI_GetFontFromNode) (const uiNode_t * const node);
+	void (IMPORT *UI_DrawNormImageByName) (bool flip, float x, float y, float w, float h, float sh, float th, float sl, float tl, const char *name);
+	void (IMPORT *UI_DrawRect) (int x, int y, int w, int h, const vec4_t color, float lineWidth, int pattern);
+	void (IMPORT *UI_DrawFill) (int x, int y, int w, int h, const vec4_t color);
+	int (IMPORT *UI_DrawTooltip) (const char *string, int x, int y, int maxWidth);
 	void (IMPORT *UI_GetNodeAbsPos) (const uiNode_t* node, vec2_t pos);
 	void (IMPORT *UI_PopupButton) (const char *title, const char *text, const char *clickAction1, const char *clickText1, const char *tooltip1,
 		const char *clickAction2, const char *clickText2, const char *tooltip2, const char *clickAction3, const char *clickText3, const char *tooltip3);
