@@ -1942,8 +1942,12 @@ base/models/objects/vegi/tropic/trop_leaves.png | GNU General Public License 2.0
 base/models/objects/vegi/tropic/tropic01.md2 | Creative Commons Attribution-Share Alike 3.0 | kOba
 base/models/objects/vegi/tropic/tropic02.md2 | Creative Commons Attribution-Share Alike 3.0 | kOba
 base/models/objects/vegi/tropic/tropic03.md2 | Creative Commons Attribution-Share Alike 3.0 | kOba
-base/models/objects/vegi/tropical1/tropical1.png | GNU General Public License 2.0 | MCR
-base/models/objects/vegi/tropical1/tropical2.png | GNU General Public License 2.0 | based on Titus Tscharnke's work (http://www.burningwell.org/gallery2/v/textures/plants/leavesAndBranches/) | MCR
+base/models/objects/vegi/tropical1/tropical1.md2 | GNU General Public License 2.0 or later | kOba (minor modifications by DarkRain)
+base/models/objects/vegi/tropical1/tropical1.png | Creative Commons Attribution-Share Alike 3.0 | kOba
+base/models/objects/vegi/tropical1/tropical2.md2 | Creative Commons Attribution-Share Alike 3.0 | kOba
+base/models/objects/vegi/tropical1/tropical2.png | Creative Commons Attribution-Share Alike 3.0 | kOba
+base/models/objects/vegi/tropical1/tropical3.md2 | Creative Commons Attribution-Share Alike 3.0 | kOba
+base/models/objects/vegi/tropical1/tropical3.png | Creative Commons Attribution-Share Alike 3.0 | kOba
 base/models/objects/vegi/tropical2/tropical_plant.md2 | Public Domain | Nobiax/yughues | Open Game Art (http://opengameart.org/)
 base/models/objects/vegi/tropical2/tropical_plant.png | Public Domain | Nobiax/yughues | Open Game Art (http://opengameart.org/)
 base/models/objects/vegi/water_lily/lily_bloom.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
