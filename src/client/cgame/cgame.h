@@ -172,6 +172,7 @@ typedef struct cgame_import_s {
 	void (IMPORT *R_LoadImage) (const char *name, byte **pic, int *width, int *height);
 	bool (IMPORT *R_ImageExists) (const char *pname, ...) __attribute__((format(printf, 1, 2)));
 	void (IMPORT *R_Color) (const vec4_t rgba);
+	void (IMPORT *R_DrawLineStrip) (int points, int *verts);
 
 	dbuffer *(IMPORT *NET_ReadMsg)  (struct net_stream *s);
 	int (IMPORT *NET_ReadByte)  (dbuffer *buf);
