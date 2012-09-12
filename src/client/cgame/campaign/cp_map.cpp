@@ -1235,25 +1235,25 @@ static inline void MAP_RenderImage (int x, int y, const image_t *image)
  * @param[in] node The menu node which will be used for drawing markers.
  * @param[in] ms Pointer to the mission to draw.
  */
-static void MAP_DrawMapOneMission (const uiNode_t* node, const mission_t *ms)
+static void MAP_DrawMapOneMission (const uiNode_t* node, const mission_t *mission)
 {
 	int x, y;
-	const bool isCurrentSelectedMission = MAP_IsMissionSelected(ms);
+	const bool isCurrentSelectedMission = MAP_IsMissionSelected(mission);
 
 	if (isCurrentSelectedMission)
-		Cvar_Set("mn_mapdaytime", MAP_IsNight(ms->pos) ? _("Night") : _("Day"));
+		Cvar_Set("mn_mapdaytime", MAP_IsNight(mission->pos) ? _("Night") : _("Day"));
 
-	if (!MAP_AllMapToScreen(node, ms->pos, &x, &y, NULL))
+	if (!MAP_AllMapToScreen(node, mission->pos, &x, &y, NULL))
 		return;
 
 	if (isCurrentSelectedMission) {
 		/* Draw circle around the mission */
 		if (!UI_MAPEXTRADATACONST(node).flatgeoscape) {
-			if (!ms->active)
-				MAP_MapDrawEquidistantPoints(node, ms->pos, SELECT_CIRCLE_RADIUS, yellow);
+			if (!mission->active)
+				MAP_MapDrawEquidistantPoints(node, mission->pos, SELECT_CIRCLE_RADIUS, yellow);
 		} else {
 			const image_t *image;
-			if (ms->active) {
+			if (mission->active) {
 				image = geoscapeImages[GEOSCAPE_IMAGE_MISSION_ACTIVE];
 			} else {
 				image = geoscapeImages[GEOSCAPE_IMAGE_MISSION_SELECTED];
@@ -1264,13 +1264,13 @@ static void MAP_DrawMapOneMission (const uiNode_t* node, const mission_t *ms)
 
 	/* Draw mission model (this must be called after drawing the selection circle so that the model is rendered on top of it)*/
 	if (!UI_MAPEXTRADATACONST(node).flatgeoscape) {
-		MAP_Draw3DMarkerIfVisible(node, ms->pos, defaultBaseAngle, MAP_GetMissionModel(ms), 0);
+		MAP_Draw3DMarkerIfVisible(node, mission->pos, defaultBaseAngle, MAP_GetMissionModel(mission), 0);
 	} else {
 		const image_t *image = geoscapeImages[GEOSCAPE_IMAGE_MISSION];
 		MAP_RenderImage(x, y, image);
 	}
 
-	cgi->UI_DrawString("f_verysmall", ALIGN_UL, x + 10, y, _(ms->location));
+	cgi->UI_DrawString("f_verysmall", ALIGN_UL, x + 10, y, _(mission->location));
 }
 
 /**
