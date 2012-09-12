@@ -926,30 +926,30 @@ float MAP_AngleOfPath (const vec3_t start, const vec2_t end, vec3_t direction, v
  * @param[out] vector The output vector. A two-dim vector for the flat geoscape, and a three-dim vector for the 3d geoscape
  * @param[in] objectPos The position vector of the object to transform.
  */
-static void MAP_ConvertObjectPositionToGeoscapePosition (const uiNode_t *node, float* vector, const vec2_t objectPos)
+static void MAP_ConvertObjectPositionToGeoscapePosition (bool flatgeoscape, float* vector, const vec2_t objectPos)
 {
-	if (!UI_MAPEXTRADATACONST(node).flatgeoscape)
-		VectorSet(vector, objectPos[0], -objectPos[1], 0);
-	else
+	if (flatgeoscape)
 		Vector2Set(vector, objectPos[0], objectPos[1]);
+	else
+		VectorSet(vector, objectPos[0], -objectPos[1], 0);
 }
 
 /**
  * @brief center to a mission
  */
-static void MAP_GetMissionAngle (const uiNode_t *node, float *vector, int id)
+static void MAP_GetMissionAngle (bool flatgeoscape, float *vector, int id)
 {
 	mission_t *mission = MAP_GetMissionByIDX(id);
 	if (mission == NULL)
 		return;
-	MAP_ConvertObjectPositionToGeoscapePosition(node, vector, mission->pos);
+	MAP_ConvertObjectPositionToGeoscapePosition(flatgeoscape, vector, mission->pos);
 	MAP_SelectMission(mission);
 }
 
 /**
  * @brief center to a ufo
  */
-static void MAP_GetUFOAngle (const uiNode_t *node, float *vector, int idx)
+static void MAP_GetUFOAngle (bool flatgeoscape, float *vector, int idx)
 {
 	aircraft_t *ufo;
 
@@ -958,7 +958,7 @@ static void MAP_GetUFOAngle (const uiNode_t *node, float *vector, int idx)
 	while ((ufo = UFO_GetNextOnGeoscape(ufo)) != NULL) {
 		if (ufo->idx != idx)
 			continue;
-		MAP_ConvertObjectPositionToGeoscapePosition(node, vector, ufo->pos);
+		MAP_ConvertObjectPositionToGeoscapePosition(flatgeoscape, vector, ufo->pos);
 		MAP_SelectUFO(ufo);
 		return;
 	}
@@ -1010,10 +1010,14 @@ void MAP_CenterPosition (const vec2_t pos)
 	uiNode_t *node = geoscapeNode;
 	if (!node)
 		return;
-	if (!UI_MAPEXTRADATACONST(node).flatgeoscape)
-		MAP_ConvertObjectPositionToGeoscapePosition(node, UI_MAPEXTRADATA(node).smoothFinalGlobeAngle, pos);
+	const bool flatgeoscape = UI_MAPEXTRADATACONST(node).flatgeoscape;
+	float *vector;
+	if (flatgeoscape)
+		vector = UI_MAPEXTRADATA(node).smoothFinal2DGeoscapeCenter;
 	else
-		MAP_ConvertObjectPositionToGeoscapePosition(node, UI_MAPEXTRADATA(node).smoothFinal2DGeoscapeCenter, pos);
+		vector = UI_MAPEXTRADATA(node).smoothFinalGlobeAngle;
+
+	MAP_ConvertObjectPositionToGeoscapePosition(flatgeoscape, vector, pos);
 	MAP_StartCenter(node);
 }
 
@@ -1033,24 +1037,21 @@ static void MAP_SelectObject_f (void)
 
 	const char *type = Cmd_Argv(1);
 	const int idx = atoi(Cmd_Argv(2));
-	if (!UI_MAPEXTRADATACONST(node).flatgeoscape) {
-		if (Q_streq(type, "mission"))
-			MAP_GetMissionAngle(node, UI_MAPEXTRADATA(node).smoothFinalGlobeAngle, idx);
-		else if (Q_streq(type, "ufo"))
-			MAP_GetUFOAngle(node, UI_MAPEXTRADATA(node).smoothFinalGlobeAngle, idx);
-		else {
-			Com_Printf("MAP_SelectObject_f: type %s unsupported.", type);
-			return;
-		}
-	} else {
-		if (Q_streq(type, "mission"))
-			MAP_GetMissionAngle(node, UI_MAPEXTRADATA(node).smoothFinal2DGeoscapeCenter, idx);
-		else if (Q_streq(type, "ufo"))
-			MAP_GetUFOAngle(node, UI_MAPEXTRADATA(node).smoothFinal2DGeoscapeCenter, idx);
-		else {
-			Com_Printf("MAP_SelectObject_f: type %s unsupported.", type);
-			return;
-		}
+	const bool flatgeoscape = UI_MAPEXTRADATACONST(node).flatgeoscape;
+
+	float *vector;
+	if (flatgeoscape)
+		vector = UI_MAPEXTRADATA(node).smoothFinal2DGeoscapeCenter;
+	else
+		vector = UI_MAPEXTRADATA(node).smoothFinalGlobeAngle;
+
+	if (Q_streq(type, "mission"))
+		MAP_GetMissionAngle(flatgeoscape, vector, idx);
+	else if (Q_streq(type, "ufo"))
+		MAP_GetUFOAngle(flatgeoscape, vector, idx);
+	else {
+		Com_Printf("MAP_SelectObject_f: type %s unsupported.", type);
+		return;
 	}
 	MAP_StartCenter(node);
 }
