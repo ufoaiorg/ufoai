@@ -24,10 +24,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../cl_shared.h"
 #include "../../renderer/r_image.h"
-#include "../../renderer/r_framebuffer.h"
 #include "../../renderer/r_draw.h"
 #include "../../renderer/r_geoscape.h"
-#include "../../ui/ui_main.h"
+#include "../../ui/ui_dataids.h"
 #include "../../ui/node/ui_node_geoscape.h" /* paddingRight */
 #include "cp_overlay.h"
 #include "cp_campaign.h"
@@ -542,7 +541,7 @@ bool MAP_AllMapToScreen (const uiNode_t* node, const vec2_t pos, int *x, int *y,
 static void MAP_Draw3DMarkerIfVisible (const uiNode_t* node, const vec2_t pos, float theta, const char *model, int skin)
 {
 	if (!UI_MAPEXTRADATACONST(node).flatgeoscape) {
-		R_Draw3DMapMarkers(UI_MAPEXTRADATACONST(node).mapPos, UI_MAPEXTRADATACONST(node).mapSize, UI_MAPEXTRADATACONST(node).angles, pos, theta,
+		cgi->R_Draw3DMapMarkers(UI_MAPEXTRADATACONST(node).mapPos, UI_MAPEXTRADATACONST(node).mapSize, UI_MAPEXTRADATACONST(node).angles, pos, theta,
 				GLOBE_RADIUS, model, skin);
 	} else {
 		int x, y;
@@ -551,7 +550,7 @@ static void MAP_Draw3DMarkerIfVisible (const uiNode_t* node, const vec2_t pos, f
 		MAP_AllMapToScreen(node, pos, &x, &y, NULL);
 		VectorSet(screenPos, x, y, 0);
 		/* models are used on 2D geoscape for aircraft */
-		R_Draw2DMapMarkers(screenPos, theta, model, skin);
+		cgi->R_Draw2DMapMarkers(screenPos, theta, model, skin);
 	}
 }
 
@@ -674,7 +673,7 @@ static void MAP_MapDrawLine (const uiNode_t* node, const mapline_t* line)
 			p->x += diff;
 
 			/* wrap around screen border */
-			R_DrawLineStrip(i - start, (int*)(&pts));
+			cgi->R_DrawLineStrip(i - start, (int*)(&pts));
 
 			/* first path of the path is drawn, now we begin the second part of the path */
 			/* shift first point, continue drawing */
@@ -686,7 +685,7 @@ static void MAP_MapDrawLine (const uiNode_t* node, const mapline_t* line)
 		old = p->x;
 	}
 
-	R_DrawLineStrip(i - start, (int*)(&pts));
+	cgi->R_DrawLineStrip(i - start, (int*)(&pts));
 	cgi->R_Color(NULL);
 }
 
@@ -715,7 +714,7 @@ static void MAP_3DMapDrawLine (const uiNode_t* node, const mapline_t* line)
 			start++;
 	}
 
-	R_DrawLineStrip(numPoints, (int*)(&pts[start]));
+	cgi->R_DrawLineStrip(numPoints, (int*)(&pts[start]));
 	cgi->R_Color(NULL);
 }
 
@@ -762,7 +761,7 @@ void MAP_MapDrawEquidistantPoints (const uiNode_t* node, const vec2_t center, co
 		/* if moving from a point of the screen to a distant one, draw the path we already calculated, and begin a new path
 		 * (to avoid unwanted lines) */
 		if (draw != oldDraw && i != 0) {
-			R_DrawLineStrip(numPoints, (int*)(&pts));
+			cgi->R_DrawLineStrip(numPoints, (int*)(&pts));
 			numPoints = 0;
 		}
 		/* if the current point is to be drawn, add it to the path */
@@ -776,7 +775,7 @@ void MAP_MapDrawEquidistantPoints (const uiNode_t* node, const vec2_t center, co
 	}
 
 	/* Draw the last path */
-	R_DrawLineStrip(numPoints, (int*)(&pts));
+	cgi->R_DrawLineStrip(numPoints, (int*)(&pts));
 	cgi->R_Color(NULL);
 }
 
@@ -1199,7 +1198,7 @@ static void MAP_DrawBullets (const uiNode_t* node, const vec3_t pos)
 	int x, y;
 
 	if (MAP_AllMapToScreen(node, pos, &x, &y, NULL))
-		R_DrawFill(x, y, BULLET_SIZE, BULLET_SIZE, yellow);
+		cgi->R_DrawFill(x, y, BULLET_SIZE, BULLET_SIZE, yellow);
 }
 
 /**
@@ -1220,8 +1219,13 @@ static void MAP_DrawBeam (const uiNode_t* node, const vec3_t start, const vec3_t
 		return;
 
 	cgi->R_Color(color);
-	R_DrawLine(points, 2.0);
+	cgi->R_DrawLine(points, 2.0);
 	cgi->R_Color(NULL);
+}
+
+static inline void MAP_RenderImage (int x, int y, const image_t *image)
+{
+	R_DrawImage(x - image->width / 2, y - image->height / 2, image);
 }
 
 #define SELECT_CIRCLE_RADIUS	1.5f + 3.0f / UI_MAPEXTRADATACONST(node).zoom
@@ -1254,7 +1258,7 @@ static void MAP_DrawMapOneMission (const uiNode_t* node, const mission_t *ms)
 			} else {
 				image = geoscapeImages[GEOSCAPE_IMAGE_MISSION_SELECTED];
 			}
-			R_DrawImage(x - image->width / 2, y - image->height / 2, image);
+			MAP_RenderImage(x, y, image);
 		}
 	}
 
@@ -1263,7 +1267,7 @@ static void MAP_DrawMapOneMission (const uiNode_t* node, const mission_t *ms)
 		MAP_Draw3DMarkerIfVisible(node, ms->pos, defaultBaseAngle, MAP_GetMissionModel(ms), 0);
 	} else {
 		const image_t *image = geoscapeImages[GEOSCAPE_IMAGE_MISSION];
-		R_DrawImage(x - image->width / 2, y - image->height / 2, image);
+		MAP_RenderImage(x, y, image);
 	}
 
 	cgi->UI_DrawString("f_verysmall", ALIGN_UL, x + 10, y, _(ms->location));
@@ -1305,7 +1309,7 @@ static void MAP_DrawMapOneInstallation (const uiNode_t* node, const installation
 	} else if (MAP_MapToScreen(node, installation->pos, &x, &y)) {
 		const image_t *image = R_FindImage(tpl->image, it_pic);
 		if (image)
-			R_DrawImage(x - image->width / 2, y - image->height / 2, image);
+			MAP_RenderImage(x, y, image);
 	}
 
 	/* Draw installation names */
@@ -1362,7 +1366,7 @@ static void MAP_DrawMapOneBase (const uiNode_t* node, const base_t *base,
 		else
 			image = geoscapeImages[GEOSCAPE_IMAGE_BASE];
 
-		R_DrawImage(x - image->width / 2, y - image->height / 2, image);
+		MAP_RenderImage(x, y, image);
 	}
 
 	/* Draw base names */
@@ -1405,8 +1409,8 @@ static void MAP_DrawAircraftHealthBar (const uiNode_t* node, const aircraft_t *a
 		visible = MAP_AllMapToScreen(node, aircraft->pos, &centerX, &centerY, NULL);
 
 	if (visible) {
-		R_DrawFill(centerX - width / 2 , centerY - 5 * UI_MAPEXTRADATACONST(node).zoom, round(width * ((float)aircraft->damage / aircraft->stats[AIR_STATS_DAMAGE])), height, color);
-		R_DrawRect(centerX - width / 2, centerY - 5 * UI_MAPEXTRADATACONST(node).zoom, width, height, bordercolor, 1.0, 1);
+		cgi->R_DrawFill(centerX - width / 2 , centerY - 5 * UI_MAPEXTRADATACONST(node).zoom, round(width * ((float)aircraft->damage / aircraft->stats[AIR_STATS_DAMAGE])), height, color);
+		cgi->R_DrawRect(centerX - width / 2, centerY - 5 * UI_MAPEXTRADATACONST(node).zoom, width, height, bordercolor, 1.0, 1);
 	}
 }
 
@@ -1459,7 +1463,7 @@ static void MAP_DrawMapOnePhalanxAircraft (const uiNode_t* node, aircraft_t *air
 			MAP_MapDrawEquidistantPoints(node, aircraft->pos, SELECT_CIRCLE_RADIUS, yellow);
 		else {
 			MAP_AllMapToScreen(node, aircraft->pos, &x, &y, NULL);
-			R_DrawImage(x - image->width / 2, y - image->height / 2, image);
+			MAP_RenderImage(x, y, image);
 		}
 
 		/* Draw a circle around the ufo pursued by selected aircraft */
@@ -1467,7 +1471,7 @@ static void MAP_DrawMapOnePhalanxAircraft (const uiNode_t* node, aircraft_t *air
 			if (!UI_MAPEXTRADATACONST(node).flatgeoscape)
 				MAP_MapDrawEquidistantPoints(node, aircraft->aircraftTarget->pos, SELECT_CIRCLE_RADIUS, yellow);
 			else
-				R_DrawImage(x - image->width / 2, y - image->height / 2, image);
+				MAP_RenderImage(x, y, image);
 		}
 	}
 
@@ -1677,7 +1681,7 @@ static void MAP_DrawMapMarkers (const uiNode_t* node)
 				else {
 					const image_t *image = geoscapeImages[GEOSCAPE_IMAGE_MISSION_SELECTED];
 					MAP_AllMapToScreen(node, ufo->pos, &x, &y, NULL);
-					R_DrawImage(x - image->width / 2, y - image->height / 2, image);
+					MAP_RenderImage(x, y, image);
 				}
 			}
 			MAP_Draw3DMarkerIfVisible(node, ufo->pos, angle, ufo->model, 0);
@@ -1797,7 +1801,7 @@ void MAP_DrawMap (uiNode_t* node)
 		if (UI_MAPEXTRADATACONST(node).zoom > 3.3)
 			disableSolarRender = true;
 
-		R_EnableRenderbuffer(true);
+		cgi->R_EnableRenderbuffer(true);
 
 		R_Draw3DGlobe(UI_MAPEXTRADATACONST(node).mapPos, UI_MAPEXTRADATACONST(node).mapSize, ccs.date.day, ccs.date.sec,
 				UI_MAPEXTRADATACONST(node).angles, UI_MAPEXTRADATACONST(node).zoom, map, disableSolarRender,
@@ -1807,8 +1811,8 @@ void MAP_DrawMap (uiNode_t* node)
 
 		MAP_DrawMapMarkers(node);
 
-		R_DrawBloom();
-		R_EnableRenderbuffer(false);
+		cgi->R_DrawBloom();
+		cgi->R_EnableRenderbuffer(false);
 	}
 
 	mission_t *mission = MAP_GetSelectedMission();

@@ -47,7 +47,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../cl_inventory.h"
 #include "../../shared/parse.h"
 #include "../../common/filesys.h"
-#include "../renderer/r_draw.h" /* R_DrawLineStrip */
+#include "../renderer/r_draw.h"
+#include "../renderer/r_framebuffer.h"
+#include "../renderer/r_geoscape.h"
 
 #define MAX_CGAMETYPES 16
 static cgameType_t cgameTypes[MAX_CGAMETYPES];
@@ -563,6 +565,13 @@ static const cgame_import_t* GAME_GetImportData (const cgameType_t *t)
 		cgi->R_ImageExists = R_ImageExists;
 		cgi->R_Color = R_Color;
 		cgi->R_DrawLineStrip = R_DrawLineStrip;
+		cgi->R_DrawLine = R_DrawLine;
+		cgi->R_DrawFill = R_DrawFill;
+		cgi->R_DrawRect = R_DrawRect;
+		cgi->R_DrawBloom = R_DrawBloom;
+		cgi->R_EnableRenderbuffer = R_EnableRenderbuffer;
+		cgi->R_Draw2DMapMarkers = R_Draw2DMapMarkers;
+		cgi->R_Draw3DMapMarkers = R_Draw3DMapMarkers;
 
 		cgi->S_SetSampleRepeatRate = S_SetSampleRepeatRate;
 		cgi->S_StartLocalSample = S_StartLocalSample;

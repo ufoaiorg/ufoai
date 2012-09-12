@@ -173,6 +173,13 @@ typedef struct cgame_import_s {
 	bool (IMPORT *R_ImageExists) (const char *pname, ...) __attribute__((format(printf, 1, 2)));
 	void (IMPORT *R_Color) (const vec4_t rgba);
 	void (IMPORT *R_DrawLineStrip) (int points, int *verts);
+	void (IMPORT *R_DrawLine) (int *verts, float thickness);
+	void (IMPORT *R_DrawRect) (int x, int y, int w, int h, const vec4_t color, float lineWidth, int pattern);
+	void (IMPORT *R_DrawFill) (int x, int y, int w, int h, const vec4_t color);
+	void (IMPORT *R_Draw2DMapMarkers) (const vec2_t screenPos, float direction, const char *model, int skin);
+	void (IMPORT *R_Draw3DMapMarkers) (const vec2_t nodePos, const vec2_t nodeSize, const vec3_t rotate, const vec2_t pos, float direction, float earthRadius, const char *model, int skin);
+	void (IMPORT *R_DrawBloom) (void);
+	bool (IMPORT *R_EnableRenderbuffer) (bool enable);
 
 	dbuffer *(IMPORT *NET_ReadMsg)  (struct net_stream *s);
 	int (IMPORT *NET_ReadByte)  (dbuffer *buf);
