@@ -1181,11 +1181,7 @@ void MAP_CenterOnPoint_f (void)
 
 	vec2_t pos;
 	MAP_GetGeoscapeAngle(pos);
-	if (UI_MAPEXTRADATACONST(node).flatgeoscape)
-		MAP_ConvertObjectPositionToGeoscapePosition(node, UI_MAPEXTRADATA(node).smoothFinal2DGeoscapeCenter, pos);
-	else
-		MAP_ConvertObjectPositionToGeoscapePosition(node, UI_MAPEXTRADATA(node).smoothFinalGlobeAngle, pos);
-	MAP_StartCenter(node);
+	MAP_CenterPosition(pos);
 }
 
 #define BULLET_SIZE	1
