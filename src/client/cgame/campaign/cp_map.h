@@ -60,7 +60,7 @@ void MAP_CenterOnPoint_f(void);
 void MAP_CenterPosition(const vec2_t pos);
 base_t* MAP_PositionCloseToBase(const vec2_t pos);
 
-bool MAP_MapClick(uiNode_t* node, int x, int y);
+bool MAP_MapClick(uiNode_t* node, int x, int y, const vec2_t pos);
 void MAP_ResetAction(void);
 void MAP_SelectAircraft(aircraft_t* aircraft);
 void MAP_SelectUFO(aircraft_t* ufo);

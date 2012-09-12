@@ -72,7 +72,7 @@ typedef struct cgame_export_s {
 	bool (EXPORT *HandleServerCommand) (const char *command, dbuffer *msg);
 
 	void (EXPORT *MapDraw) (uiNode_t *node);
-	void (EXPORT *MapClick) (uiNode_t *node, int x, int y);
+	void (EXPORT *MapClick) (uiNode_t *node, int x, int y, const vec2_t pos);
 } cgame_export_t;
 
 typedef struct cgameType_s {

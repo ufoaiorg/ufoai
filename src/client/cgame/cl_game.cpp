@@ -690,11 +690,11 @@ void GAME_DrawMap (uiNode_t *node)
 		list->MapDraw(node);
 }
 
-void GAME_MapClick (uiNode_t *node, int x, int y)
+void GAME_MapClick (uiNode_t *node, int x, int y, const vec2_t pos)
 {
 	const cgame_export_t *list = GAME_GetCurrentType();
 	if (list && list->MapClick)
-		list->MapClick(node, x, y);
+		list->MapClick(node, x, y, pos);
 }
 
 void GAME_SetMode (const cgame_export_t *gametype)

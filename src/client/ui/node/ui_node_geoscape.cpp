@@ -29,6 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_actions.h"
 #include "../ui_render.h"
 #include "ui_node_geoscape.h"
+#include "../../renderer/r_geoscape.h"
 
 #include "../../cl_shared.h"
 #include "../../cgame/cl_game.h"
@@ -91,6 +92,9 @@ static cvar_t *cl_geoscape_overlay;
 
 // FIXME: don't make this static
 static uiNode_t *geoscapeNode;
+
+/** @brief radius of the globe in screen coordinates */
+#define GLOBE_RADIUS EARTH_RADIUS * (UI_MAPEXTRADATACONST(node).zoom / STANDARD_3D_ZOOM)
 
 /**
  * @brief smooth rotation of the 3D geoscape
@@ -278,11 +282,95 @@ void uiGeoscapeNode::startMouseShifting (uiNode_t *node, int x, int y)
 	oldMousePosY = y;
 }
 
+/**
+ * @brief Return longitude and latitude of a point of the screen for 2D geoscape
+ * @param[in] node The current menuNode we have clicked on (3dmap or map)
+ * @param[in] x X coordinate on the screen that was clicked on
+ * @param[in] y Y coordinate on the screen that was clicked on
+ * @param[out] pos vec2_t was filled with longitude and latitude
+ */
+static void MAP_ScreenToMap (const uiNode_t* node, int x, int y, vec2_t pos)
+{
+	pos[0] = (((UI_MAPEXTRADATACONST(node).mapPos[0] - x) / UI_MAPEXTRADATACONST(node).mapSize[0] + 0.5) / UI_MAPEXTRADATACONST(node).zoom
+			- (UI_MAPEXTRADATACONST(node).center[0] - 0.5)) * 360.0;
+	pos[1] = (((UI_MAPEXTRADATACONST(node).mapPos[1] - y) / UI_MAPEXTRADATACONST(node).mapSize[1] + 0.5) / UI_MAPEXTRADATACONST(node).zoom
+			- (UI_MAPEXTRADATACONST(node).center[1] - 0.5)) * 180.0;
+
+	while (pos[0] > 180.0)
+		pos[0] -= 360.0;
+	while (pos[0] < -180.0)
+		pos[0] += 360.0;
+}
+
+/**
+ * @brief Return longitude and latitude of a point of the screen for 3D geoscape (globe)
+ * @param[in] node The current menuNode we have clicked on (3dmap or map)
+ * @param[in] x X coordinate on the screen that was clicked on
+ * @param[in] y Y coordinate on the screen that was clicked on
+ * @param[out] pos vec2_t was filled with longitude and latitude
+ * @sa MAP_3DMapToScreen
+ */
+static void MAP3D_ScreenToMap (const uiNode_t* node, int x, int y, vec2_t pos)
+{
+	vec2_t mid;
+	vec3_t v, v1, rotationAxis;
+	float dist;
+	const float radius = GLOBE_RADIUS;
+
+	/* set mid to the coordinates of the center of the globe */
+	Vector2Set(mid, UI_MAPEXTRADATACONST(node).mapPos[0] + UI_MAPEXTRADATACONST(node).mapSize[0] / 2.0f,
+			UI_MAPEXTRADATACONST(node).mapPos[1] + UI_MAPEXTRADATACONST(node).mapSize[1] / 2.0f);
+
+	/* stop if we click outside the globe (distance is the distance of the point to the center of the globe) */
+	dist = sqrt((x - mid[0]) * (x - mid[0]) + (y - mid[1]) * (y - mid[1]));
+	if (dist > radius) {
+		Vector2Set(pos, -1.0, -1.0);
+		return;
+	}
+
+	/* calculate the coordinates in the local frame
+	 * this frame is the frame of the screen.
+	 * v[0] is the vertical axis of the screen
+	 * v[1] is the horizontal axis of the screen
+	 * v[2] is the axis perpendicular to the screen - we get its value knowing that norm of v is egal to radius
+	 *  (because the point is on the globe) */
+	v[0] = - (y - mid[1]);
+	v[1] = - (x - mid[0]);
+	v[2] = - sqrt(radius * radius - (x - mid[0]) * (x - mid[0]) - (y - mid[1]) * (y - mid[1]));
+	VectorNormalize(v);
+
+	/* rotate the vector to switch of reference frame
+	 * note the ccs.angles[ROLL] is always 0, so there is only 2 rotations and not 3
+	 * and that GLOBE_ROTATE is already included in ccs.angles[YAW]
+	 * first rotation is along the horizontal axis of the screen, to put north-south axis of the earth
+	 * perpendicular to the screen */
+	VectorSet(rotationAxis, 0, 1, 0);
+	RotatePointAroundVector(v1, rotationAxis, v, UI_MAPEXTRADATACONST(node).angles[YAW]);
+
+	/* second rotation is to rotate the earth around its north-south axis
+	 * so that Greenwich meridian is along the vertical axis of the screen */
+	VectorSet(rotationAxis, 0, 0, 1);
+	RotatePointAroundVector(v, rotationAxis, v1, UI_MAPEXTRADATACONST(node).angles[PITCH]);
+
+	/* we therefore got in v the coordinates of the point in the static frame of the earth
+	 * that we can convert in polar coordinates to get its latitude and longitude */
+	VecToPolar(v, pos);
+}
+
 void uiGeoscapeNode::onLeftClick (uiNode_t* node, int x, int y)
 {
 	if (mode != MODE_NULL)
 		return;
-	GAME_MapClick(node, x, y);
+
+	vec2_t pos;
+
+	/* get map position */
+	if (!UI_MAPEXTRADATACONST(node).flatgeoscape)
+		MAP3D_ScreenToMap(node, x, y, pos);
+	else
+		MAP_ScreenToMap(node, x, y, pos);
+
+	GAME_MapClick(node, x, y, pos);
 }
 
 bool uiGeoscapeNode::onStartDragging (uiNode_t* node, int startX, int startY, int x, int y, int button)

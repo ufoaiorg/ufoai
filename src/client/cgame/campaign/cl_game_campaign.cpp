@@ -29,7 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_game_campaign.h"
 
 extern void MAP_DrawMap(uiNode_t* node);
-extern void MAP_MapClick(uiNode_t* node, int x, int y);
+extern void MAP_MapClick(uiNode_t* node, int x, int y, const vec2_t pos);
 
 CGAME_HARD_LINKED_FUNCTIONS
 
