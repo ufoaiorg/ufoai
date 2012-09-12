@@ -474,7 +474,7 @@ void CP_AddRadarCoverage (const vec2_t pos, float innerRadius, float outerRadius
  */
 void CP_UploadRadarCoverage (void)
 {
-	R_SoftenTexture(r_radarPic, RADAR_WIDTH, RADAR_HEIGHT, 1);
+	cgi->R_SoftenTexture(r_radarPic, RADAR_WIDTH, RADAR_HEIGHT, 1);
 
 	R_UploadAlpha(r_radarTexture, r_radarPic);
 }
