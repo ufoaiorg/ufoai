@@ -2096,8 +2096,7 @@ const char* MAP_GetTerrainType (const byte* const color)
 		return "cold";
 	else if (MapIsWasted(color))
 		return "wasted";
-	else
-		return "grass";
+	return "grass";
 }
 
 /**
@@ -2119,8 +2118,7 @@ static const char* MAP_GetCultureType (const byte* color)
 		return "oriental";
 	else if (MapIsAfrican(color))
 		return "african";
-	else
-		return "western";
+	return "western";
 }
 
 /**
@@ -2142,10 +2140,7 @@ static const char* MAP_GetPopulationType (const byte* color)
 		return "village";
 	else if (MapIsRural(color))
 		return "rural";
-	else if (MapIsNopopulation(color))
-		return "nopopulation";
-	else
-		return "nopopulation";
+	return "nopopulation";
 }
 
 /**
