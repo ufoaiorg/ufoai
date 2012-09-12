@@ -1057,11 +1057,10 @@ static void MAP_SelectObject_f (void)
 
 /**
  * @brief Returns position of the model corresponding to centerOnEventIdx.
- * @param[out] vector Latitude and longitude of the model (finalAngle[2] is always 0).
- * @note Vector is a vec3_t if cl_3dmap is true, and a vec2_t if cl_3dmap is false.
+ * @param[out] pos the position of the object
  * @sa MAP_CenterOnPoint
  */
-static void MAP_GetGeoscapeAngle (const uiNode_t *node, float *vector)
+static void MAP_GetGeoscapeAngle (vec2_t pos)
 {
 	int counter = 0;
 	int maxEventIdx;
@@ -1085,7 +1084,7 @@ static void MAP_GetGeoscapeAngle (const uiNode_t *node, float *vector)
 
 	/* if there's nothing to center the view on, just go to 0,0 pos */
 	if (maxEventIdx < 0) {
-		MAP_ConvertObjectPositionToGeoscapePosition(node, vector, vec2_origin);
+		Vector2Copy(vec2_origin, pos);
 		return;
 	}
 
@@ -1101,7 +1100,7 @@ static void MAP_GetGeoscapeAngle (const uiNode_t *node, float *vector)
 			if (!mission->onGeoscape)
 				continue;
 			if (counter == centerOnEventIdx) {
-				MAP_ConvertObjectPositionToGeoscapePosition(node, vector, mission->pos);
+				Vector2Copy(mission->pos, pos);
 				MAP_SelectMission(mission);
 				return;
 			}
@@ -1115,7 +1114,7 @@ static void MAP_GetGeoscapeAngle (const uiNode_t *node, float *vector)
 		base = NULL;
 		while ((base = B_GetNext(base)) != NULL) {
 			if (counter == centerOnEventIdx) {
-				MAP_ConvertObjectPositionToGeoscapePosition(node, vector, base->pos);
+				Vector2Copy(base->pos, pos);
 				return;
 			}
 			counter++;
@@ -1127,7 +1126,7 @@ static void MAP_GetGeoscapeAngle (const uiNode_t *node, float *vector)
 	if (centerOnEventIdx < INS_GetCount() + counter) {
 		INS_Foreach(inst) {
 			if (counter == centerOnEventIdx) {
-				MAP_ConvertObjectPositionToGeoscapePosition(node, vector, inst->pos);
+				Vector2Copy(inst->pos, pos);
 				return;
 			}
 			counter++;
@@ -1139,7 +1138,7 @@ static void MAP_GetGeoscapeAngle (const uiNode_t *node, float *vector)
 	AIR_Foreach(aircraft) {
 		if (AIR_IsAircraftOnGeoscape(aircraft)) {
 			if (centerOnEventIdx == counter) {
-				MAP_ConvertObjectPositionToGeoscapePosition(node, vector, aircraft->pos);
+				Vector2Copy(aircraft->pos, pos);
 				MAP_SelectAircraft(aircraft);
 				return;
 			}
@@ -1151,7 +1150,7 @@ static void MAP_GetGeoscapeAngle (const uiNode_t *node, float *vector)
 	ufo = NULL;
 	while ((ufo = UFO_GetNextOnGeoscape(ufo)) != NULL) {
 		if (centerOnEventIdx == counter) {
-			MAP_ConvertObjectPositionToGeoscapePosition(node, vector, ufo->pos);
+			Vector2Copy(ufo->pos, pos);
 			MAP_SelectUFO(ufo);
 			return;
 		}
@@ -1179,10 +1178,13 @@ void MAP_CenterOnPoint_f (void)
 	uiNode_t *node = geoscapeNode;
 	if (!node)
 		return;
-	if (!UI_MAPEXTRADATACONST(node).flatgeoscape)
-		MAP_GetGeoscapeAngle(node, UI_MAPEXTRADATA(node).smoothFinalGlobeAngle);
+
+	vec2_t pos;
+	MAP_GetGeoscapeAngle(pos);
+	if (UI_MAPEXTRADATACONST(node).flatgeoscape)
+		MAP_ConvertObjectPositionToGeoscapePosition(node, UI_MAPEXTRADATA(node).smoothFinal2DGeoscapeCenter, pos);
 	else
-		MAP_GetGeoscapeAngle(node, UI_MAPEXTRADATA(node).smoothFinal2DGeoscapeCenter);
+		MAP_ConvertObjectPositionToGeoscapePosition(node, UI_MAPEXTRADATA(node).smoothFinalGlobeAngle, pos);
 	MAP_StartCenter(node);
 }
 
