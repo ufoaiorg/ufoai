@@ -373,7 +373,6 @@ void R_UploadAlpha (const image_t *image, const byte *alphaData)
 {
 	R_BindTexture(image->texnum);
 
-	/* upload alpha map into the r_dayandnighttexture */
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, image->width, image->height, 0, GL_ALPHA, GL_UNSIGNED_BYTE, alphaData);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, r_config.gl_filter_max);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, r_config.gl_filter_max);

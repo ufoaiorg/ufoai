@@ -722,7 +722,7 @@ bool CP_LoadXML (xmlNode_t *parent)
 	* do not use Cvar_SetValue, because this function check if value->string are equal to skip calculation
 	* and we never set r_geoscape_overlay->string in game: cl_geoscape_overlay won't be updated if the loaded
 	* value is 0 (and that's a problem if you're loading a game when cl_geoscape_overlay is set to another value */
-	cl_geoscape_overlay->integer = XML_GetInt(mapNode, SAVE_CAMPAIGN_CL_GEOSCAPE_OVERLAY, 0);
+	Cvar_SetValue("cl_geoscape_overlay", XML_GetInt(mapNode, SAVE_CAMPAIGN_CL_GEOSCAPE_OVERLAY, 0));
 	radarOverlayWasSet = XML_GetBool(mapNode, SAVE_CAMPAIGN_RADAROVERLAYWASSET, false);
 	ccs.XVIShowMap = XML_GetBool(mapNode, SAVE_CAMPAIGN_XVISHOWMAP, false);
 	CP_UpdateXVIMapButton();
@@ -777,7 +777,7 @@ bool CP_SaveXML (xmlNode_t *parent)
 
 	/* Map and user interface */
 	map = XML_AddNode(campaign, SAVE_CAMPAIGN_MAP);
-	XML_AddShort(map, SAVE_CAMPAIGN_CL_GEOSCAPE_OVERLAY, cl_geoscape_overlay->integer);
+	XML_AddShort(map, SAVE_CAMPAIGN_CL_GEOSCAPE_OVERLAY, Cvar_GetInteger("cl_geoscape_overlay"));
 	XML_AddBool(map, SAVE_CAMPAIGN_RADAROVERLAYWASSET, radarOverlayWasSet);
 	XML_AddBool(map, SAVE_CAMPAIGN_XVISHOWMAP, ccs.XVIShowMap);
 
@@ -1099,8 +1099,6 @@ void CP_CampaignInit (campaign_t *campaign, bool load)
 	/* Init popup and map/geoscape */
 	CL_PopupInit();
 
-	CP_InitOverlay();
-
 	CP_XVIInit();
 
 	cgi->UI_InitStack("geoscape", "campaign_main", true, true);
@@ -1127,7 +1125,7 @@ void CP_CampaignInit (campaign_t *campaign, bool load)
 
 	/* Initialize XVI overlay */
 	Cvar_SetValue("mn_xvimap", ccs.XVIShowMap);
-	CP_InitializeXVIOverlay(NULL);
+	CP_InitializeXVIOverlay();
 
 	/* create a base as first step */
 	B_SelectBase(NULL);
@@ -1164,14 +1162,13 @@ void CP_Shutdown (void)
 			LIST_Delete(&alienCat->equipment);
 		}
 
-		cl_geoscape_overlay->integer = 0;
+		Cvar_SetValue("cl_geoscape_overlay", 0);
 		/* singleplayer commands are no longer available */
 		Com_DPrintf(DEBUG_CLIENT, "Remove game commands\n");
 		CP_RemoveCampaignCommands();
 	}
 
 	MAP_Shutdown();
-	CP_ShutdownOverlay();
 }
 
 /**

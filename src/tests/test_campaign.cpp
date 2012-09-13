@@ -114,8 +114,6 @@ static int UFO_InitSuiteCampaign (void)
 
 	Cmd_AddCommand("msgoptions_set", Cmd_Dummy_f);
 
-	cl_geoscape_overlay = Cvar_Get("cl_geoscape_overlay", "0");
-
 	CL_SetClientState(ca_disconnected);
 	cls.realtime = Sys_Milliseconds();
 
@@ -781,8 +779,6 @@ static void testAirFight (void)
 
 	ResetCampaignData();
 
-	CP_InitOverlay();
-
 	campaign = GetCampaign();
 
 	base = CreateBase("unittestairfight", destination);
@@ -1011,8 +1007,6 @@ static void testLoad (void)
 
 	ResetCampaignData();
 
-	CP_InitOverlay();
-
 	ccs.curCampaign = NULL;
 	CU_ASSERT_TRUE(SAV_GameLoad("unittest1", &error));
 	CU_ASSERT_PTR_NOT_NULL(ccs.curCampaign);
@@ -1237,8 +1231,6 @@ static void test3090011 (void)
 	bool success;
 
 	ResetCampaignData();
-
-	CP_InitOverlay();
 
 	success = SAV_GameLoad("3090011", &error);
 	UFO_CU_ASSERT_TRUE_MSG(success, error);

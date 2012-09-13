@@ -25,7 +25,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "../../cl_shared.h"
-#include "../../renderer/r_image.h"
 #include "cp_campaign.h"
 #include "cp_overlay.h"
 
@@ -33,71 +32,21 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static const int MAX_ALPHA_VALUE = 200;
 static const int INITIAL_ALPHA_VALUE = 60;
 
-#define XVI_WIDTH		512
-#define XVI_HEIGHT		256
-#define RADAR_WIDTH		512
-#define RADAR_HEIGHT	256
-#define DAN_WIDTH		2048
-#define DAN_HEIGHT		1024
-
-#define DAWN		0.03
-
-/** this is the mask that is used to display day/night on (2d-)geoscape */
-image_t *r_dayandnightTexture;
-image_t *r_radarTexture;				/**< radar texture */
-image_t *r_xviTexture;					/**< XVI alpha mask texture */
-
-/** this is the data that is used with r_xviTexture */
-static byte r_xviAlpha[XVI_WIDTH * XVI_HEIGHT];
-
-/** this is the data that is used with r_radarTexture */
-static byte r_radarPic[RADAR_WIDTH * RADAR_HEIGHT];
-
-/** this is the data that is used with r_radarTexture */
-static byte r_radarSourcePic[RADAR_WIDTH * RADAR_HEIGHT];
-
-/** this is the data that is used with r_dayandnightTexture */
-static byte r_dayandnightAlpha[DAN_WIDTH * DAN_HEIGHT];
-
-/**
- * @brief Applies alpha values to the night overlay image for 2d geoscape
- * @param[in] q The angle the sun is standing against the equator on earth
- */
-void CP_CalcAndUploadDayAndNightTexture (float q)
+static inline byte* CP_XVIGetAlpha (int x, int y)
 {
-	int x, y;
-	const float dphi = (float) 2 * M_PI / DAN_WIDTH;
-	const float da = M_PI / 2 * (HIGH_LAT - LOW_LAT) / DAN_HEIGHT;
-	const float sin_q = sin(q);
-	const float cos_q = cos(q);
-	float sin_phi[DAN_WIDTH], cos_phi[DAN_WIDTH];
-	byte *px;
+	return &cgi->r_xviAlpha[y * XVI_WIDTH + x];
+}
 
-	for (x = 0; x < DAN_WIDTH; x++) {
-		const float phi = x * dphi - q;
-		sin_phi[x] = sin(phi);
-		cos_phi[x] = cos(phi);
-	}
+static inline byte *CP_RadarGet (int x, int y, bool source)
+{
+	if (source)
+		return &cgi->r_radarSourcePic[y * RADAR_WIDTH + x];
+	return &cgi->r_radarPic[y * RADAR_WIDTH + x];
+}
 
-	/* calculate */
-	px = r_dayandnightAlpha;
-	for (y = 0; y < DAN_HEIGHT; y++) {
-		const float a = sin(M_PI / 2 * HIGH_LAT - y * da);
-		const float root = sqrt(1 - a * a);
-		for (x = 0; x < DAN_WIDTH; x++) {
-			const float pos = sin_phi[x] * root * sin_q - (a * SIN_ALPHA + cos_phi[x] * root * COS_ALPHA) * cos_q;
-
-			if (pos >= DAWN)
-				*px++ = 255;
-			else if (pos <= -DAWN)
-				*px++ = 0;
-			else
-				*px++ = (byte) (128.0 * (pos / DAWN + 1));
-		}
-	}
-
-	/* upload alpha map into the r_dayandnighttexture */
-	R_UploadAlpha(r_dayandnightTexture, r_dayandnightAlpha);
+static inline void CP_UploadXVI (void)
+{
+	cgi->R_UploadAlpha("***r_xvitexture***", cgi->r_xviAlpha);
 }
 
 void CP_GetXVIMapDimensions (int *width, int *height)
@@ -114,9 +63,9 @@ void CP_SetXVILevel (int x, int y, int value)
 	assert(y < XVI_HEIGHT);
 
 	if (!value)
-		r_xviAlpha[y * XVI_WIDTH + x] = 0;
+		*CP_XVIGetAlpha(x, y) = 0;
 	else
-		r_xviAlpha[y * XVI_WIDTH + x] = std::min(MAX_ALPHA_VALUE, value + INITIAL_ALPHA_VALUE);
+		*CP_XVIGetAlpha(x, y) = std::min(MAX_ALPHA_VALUE, value + INITIAL_ALPHA_VALUE);
 }
 
 int CP_GetXVILevel (int x, int y)
@@ -126,7 +75,7 @@ int CP_GetXVILevel (int x, int y)
 	assert(y >= 0);
 	assert(y < XVI_HEIGHT);
 
-	return std::max(0, r_xviAlpha[y * XVI_WIDTH + x] - INITIAL_ALPHA_VALUE);
+	return std::max(0, *CP_XVIGetAlpha(x, y) - INITIAL_ALPHA_VALUE);
 }
 
 /**
@@ -280,7 +229,7 @@ static void CP_IncreaseXVILevel (const vec2_t pos, int xCenter, int yCenter, flo
 		CP_DrawXVIOverlayRow(-pos[0] - deltaLong, -pos[0] + deltaLong, pos, y, yLat, xviLevel, radius);
 	}
 
-	R_UploadAlpha(r_xviTexture, r_xviAlpha);
+	CP_UploadXVI();
 }
 
 /**
@@ -298,7 +247,7 @@ void CP_DecreaseXVILevelEverywhere (void)
 		}
 	}
 
-	R_UploadAlpha(r_xviTexture, r_xviAlpha);
+	CP_UploadXVI();
 }
 
 void CP_ChangeXVILevel (const vec2_t pos, float factor)
@@ -315,19 +264,13 @@ void CP_ChangeXVILevel (const vec2_t pos, float factor)
  * This is only the alpha channel of the xvi map
  * @note xvi rate is null when alpha = 0, max when alpha = maxAlpha
  */
-void CP_InitializeXVIOverlay (const byte *data)
+void CP_InitializeXVIOverlay (void)
 {
-	assert(r_xviTexture);
-
-	if (!data)
-		OBJZERO(r_xviAlpha);
-	else
-		memcpy(r_xviAlpha, data, sizeof(r_xviAlpha));
-
-	R_UploadAlpha(r_xviTexture, r_xviAlpha);
+	memset(cgi->r_xviAlpha, 0, XVI_WIDTH * XVI_HEIGHT);
+	CP_UploadXVI();
 }
 
-/**
+/*
  * @brief Radar overlay code description
  * The radar overlay is handled 2 times: bases radar range and aircraft radar range.
  * Bases radar range needs to be updated only when a radar facility is built or destroyed.
@@ -346,9 +289,9 @@ void CP_InitializeRadarOverlay (bool source)
 {
 	/* Initialize Radar */
 	if (source)
-		OBJSET(r_radarSourcePic, INITIAL_ALPHA_VALUE);
+		memset(cgi->r_radarSourcePic, INITIAL_ALPHA_VALUE, RADAR_WIDTH * RADAR_HEIGHT);
 	else
-		memcpy(r_radarPic, r_radarSourcePic, sizeof(r_radarPic));
+		memcpy(cgi->r_radarPic, cgi->r_radarSourcePic, RADAR_WIDTH * RADAR_HEIGHT);
 }
 
 /**
@@ -372,14 +315,14 @@ static void CP_DrawRadarOverlayRow (float latMin, float latMax, int y, byte alph
 		int xMin = 0;
 		int xMax = ceil((latMax + 180.0f) * radarWidthPerDegree);
 		for (x = xMin; x < xMax; x++) {
-			byte *dest = source ? &r_radarSourcePic[y * RADAR_WIDTH + x] : &r_radarPic[y * RADAR_WIDTH + x];
+			byte *dest = CP_RadarGet(x, y, source);
 			if (alpha < dest[3])
 				dest[3] = alpha;
 		}
 		xMin = floor((latMin + 540.0f) * radarWidthPerDegree);
 		xMax = RADAR_WIDTH;
 		for (x = xMin; x < xMax; x++) {
-			byte *dest = source ? &r_radarSourcePic[y * RADAR_WIDTH + x] : &r_radarPic[y * RADAR_WIDTH + x];
+			byte *dest = CP_RadarGet(x, y, source);
 			if (alpha < dest[3])
 				dest[3] = alpha;
 		}
@@ -387,14 +330,14 @@ static void CP_DrawRadarOverlayRow (float latMin, float latMax, int y, byte alph
 		int xMin = 0;
 		int xMax = ceil((latMax - 180.0f) * radarWidthPerDegree);
 		for (x = xMin; x < xMax; x++) {
-			byte *dest = source ? &r_radarSourcePic[y * RADAR_WIDTH + x] : &r_radarPic[y * RADAR_WIDTH + x];
+			byte *dest = CP_RadarGet(x, y, source);
 			if (alpha < dest[3])
 				dest[3] = alpha;
 		}
 		xMin = floor((latMin + 180.0f) * radarWidthPerDegree);
 		xMax = RADAR_WIDTH;
 		for (x = xMin; x < xMax; x++) {
-			byte *dest = source ? &r_radarSourcePic[y * RADAR_WIDTH + x] : &r_radarPic[y * RADAR_WIDTH + x];
+			byte *dest = CP_RadarGet(x, y, source);
 			if (alpha < dest[3])
 				dest[3] = alpha;
 		}
@@ -402,7 +345,7 @@ static void CP_DrawRadarOverlayRow (float latMin, float latMax, int y, byte alph
 		const int xMin = floor((latMin + 180.0f) * radarWidthPerDegree);
 		const int xMax = ceil((latMax + 180.0f) * radarWidthPerDegree);
 		for (x = xMin; x < xMax; x++) {
-			byte *dest = source ? &r_radarSourcePic[y * RADAR_WIDTH + x] : &r_radarPic[y * RADAR_WIDTH + x];
+			byte *dest = CP_RadarGet(x, y, source);
 			if (alpha < dest[3])
 				dest[3] = alpha;
 		}
@@ -474,20 +417,6 @@ void CP_AddRadarCoverage (const vec2_t pos, float innerRadius, float outerRadius
  */
 void CP_UploadRadarCoverage (void)
 {
-	cgi->R_SoftenTexture(r_radarPic, RADAR_WIDTH, RADAR_HEIGHT, 1);
-
-	R_UploadAlpha(r_radarTexture, r_radarPic);
-}
-
-void CP_ShutdownOverlay (void)
-{
-	r_radarTexture = NULL;
-	r_xviTexture = NULL;
-}
-
-void CP_InitOverlay (void)
-{
-	r_radarTexture = R_LoadImageData("***r_radarTexture***", NULL, RADAR_WIDTH, RADAR_HEIGHT, it_effect);
-	r_xviTexture = R_LoadImageData("***r_xvitexture***", NULL, XVI_WIDTH, XVI_HEIGHT, it_effect);
-	r_dayandnightTexture = R_LoadImageData("***r_dayandnighttexture***", NULL, DAN_WIDTH, DAN_HEIGHT, it_effect);
+	cgi->R_SoftenTexture(cgi->r_radarPic, RADAR_WIDTH, RADAR_HEIGHT, 1);
+	cgi->R_UploadAlpha("***r_radarTexture***", cgi->r_radarPic);
 }

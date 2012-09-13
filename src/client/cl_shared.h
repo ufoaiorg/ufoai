@@ -56,6 +56,33 @@ typedef struct chr_list_s {
 	int num;	/* Number of entries */
 } chrList_t;
 
+#define OVERLAY_NATION		(1<<0)
+#define OVERLAY_XVI			(1<<1)
+#define OVERLAY_RADAR		(1<<2)
+
+#define XVI_WIDTH		512
+#define XVI_HEIGHT		256
+#define RADAR_WIDTH		512
+#define RADAR_HEIGHT	256
+
+typedef struct {
+	bool active;
+	bool nationOverlay;
+	bool xviOverlay;
+	bool radarOverlay;
+	const char *map;
+	date_t date;
+
+	/** this is the data that is used with r_xviTexture */
+	byte r_xviAlpha[XVI_WIDTH * XVI_HEIGHT];
+
+	/** this is the data that is used with r_radarTexture */
+	byte r_radarPic[RADAR_WIDTH * RADAR_HEIGHT];
+
+	/** this is the data that is used with r_radarTexture */
+	byte r_radarSourcePic[RADAR_WIDTH * RADAR_HEIGHT];
+} geoscapeData_t;
+
 typedef enum {
 	ca_uninitialized,
 	ca_disconnected,			/**< not talking to a server */

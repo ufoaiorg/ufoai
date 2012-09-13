@@ -38,12 +38,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_time.h"
 #include "cp_xvi.h"
 
-cvar_t *cl_geoscape_overlay;
-
-extern image_t *r_dayandnightTexture;
-extern image_t *r_radarTexture;
-extern image_t *r_xviTexture;
-
 static uiNode_t *geoscapeNode;
 
 #ifdef DEBUG
@@ -265,17 +259,17 @@ static void MAP_MultiSelectExecuteAction_f (void)
 
 bool MAP_IsRadarOverlayActivated (void)
 {
-	return cl_geoscape_overlay->integer & OVERLAY_RADAR;
+	return Cvar_GetInteger("cl_geoscape_overlay") & OVERLAY_RADAR;
 }
 
 static inline bool MAP_IsNationOverlayActivated (void)
 {
-	return cl_geoscape_overlay->integer & OVERLAY_NATION;
+	return Cvar_GetInteger("cl_geoscape_overlay") & OVERLAY_NATION;
 }
 
 static inline bool MAP_IsXVIOverlayActivated (void)
 {
-	return cl_geoscape_overlay->integer & OVERLAY_XVI;
+	return Cvar_GetInteger("cl_geoscape_overlay") & OVERLAY_XVI;
 }
 
 /**
@@ -285,7 +279,7 @@ static inline bool MAP_IsXVIOverlayActivated (void)
  * @param[in] y Mouse click Y coordinate
  * @return True if the event is used for something
  */
-bool MAP_MapClick (uiNode_t* node, int x, int y, const vec2_t pos)
+bool MAP_MapClick (const uiNode_t* node, int x, int y, const vec2_t pos)
 {
 	aircraft_t *ufo;
 	base_t *base;
@@ -1609,7 +1603,7 @@ void MAP_UpdateGeoscapeDock (void)
  * going to change when you rotate the earth around itself and the time is stopped eg.).
  * @sa MAP_DrawMap
  */
-static void MAP_DrawMapMarkers (const uiNode_t* node)
+void MAP_DrawMapMarkers (const uiNode_t* node)
 {
 	int x, y, i, idx;
 	const char* font;
@@ -1633,7 +1627,6 @@ static void MAP_DrawMapMarkers (const uiNode_t* node)
 	oneUFOVisible = UFO_GetNextOnGeoscape(NULL) != NULL;
 
 	/* draw mission pics */
-	Cvar_Set("mn_mapdaytime", "");
 	MIS_Foreach(mission) {
 		if (!mission->onGeoscape)
 			continue;
@@ -1768,51 +1761,19 @@ static void MAP_DrawMapMarkers (const uiNode_t* node)
  * @param[in] map the prefix of the map to use (image must be at base/pics/menu/\<map\>_[day|night])
  * @sa MAP_DrawMapMarkers
  */
-void MAP_DrawMap (uiNode_t* node)
+void MAP_DrawMap (geoscapeData_t* data)
 {
-	geoscapeNode = node;
-
 	if (!CP_IsRunning()) {
+		data->active = false;
 		return;
 	}
 
-	const char *map = ccs.curCampaign->map;
-
-	/* Draw the map and markers */
-	if (UI_MAPEXTRADATACONST(node).flatgeoscape) {
-		/* the last q value for the 2d geoscape night overlay */
-		static float lastQ = 0.0f;
-
-		/* the sun is not always in the plane of the equator on earth - calculate the angle the sun is at */
-		const float q = (ccs.date.day % DAYS_PER_YEAR + (float)(ccs.date.sec / (SECONDS_PER_HOUR * 6)) / 4) * 2 * M_PI / DAYS_PER_YEAR - M_PI;
-		if (lastQ != q) {
-			CP_CalcAndUploadDayAndNightTexture(q);
-			lastQ = q;
-		}
-		R_DrawFlatGeoscape(UI_MAPEXTRADATACONST(node).mapPos, UI_MAPEXTRADATACONST(node).mapSize, (float) ccs.date.sec / SECONDS_PER_DAY,
-				UI_MAPEXTRADATACONST(node).center[0], UI_MAPEXTRADATACONST(node).center[1], 0.5 / UI_MAPEXTRADATACONST(node).zoom, map,
-				MAP_IsNationOverlayActivated(), MAP_IsXVIOverlayActivated(), MAP_IsRadarOverlayActivated(), r_dayandnightTexture, r_xviTexture,
-				r_radarTexture);
-
-		MAP_DrawMapMarkers(node);
-	} else {
-		bool disableSolarRender = false;
-		if (UI_MAPEXTRADATACONST(node).zoom > 3.3)
-			disableSolarRender = true;
-
-		cgi->R_EnableRenderbuffer(true);
-
-		R_Draw3DGlobe(UI_MAPEXTRADATACONST(node).mapPos, UI_MAPEXTRADATACONST(node).mapSize, ccs.date.day, ccs.date.sec,
-				UI_MAPEXTRADATACONST(node).angles, UI_MAPEXTRADATACONST(node).zoom, map, disableSolarRender,
-				UI_MAPEXTRADATACONST(node).ambientLightFactor, UI_MAPEXTRADATA(node).overlayMask & OVERLAY_NATION,
-				UI_MAPEXTRADATA(node).overlayMask & OVERLAY_XVI, UI_MAPEXTRADATA(node).overlayMask & OVERLAY_RADAR, r_xviTexture, r_radarTexture,
-				true);
-
-		MAP_DrawMapMarkers(node);
-
-		cgi->R_DrawBloom();
-		cgi->R_EnableRenderbuffer(false);
-	}
+	data->active = true;
+	data->map = ccs.curCampaign->map;
+	data->nationOverlay = MAP_IsNationOverlayActivated();
+	data->xviOverlay = MAP_IsXVIOverlayActivated();
+	data->radarOverlay = MAP_IsRadarOverlayActivated();
+	data->date = ccs.date;
 
 	mission_t *mission = MAP_GetSelectedMission();
 	/* display text */
@@ -2397,11 +2358,10 @@ void MAP_NotifyUFODisappear (const aircraft_t* ufo)
  */
 void MAP_SetOverlay (const char *overlayID)
 {
+	const int value = Cvar_GetInteger("cl_geoscape_overlay");;
 	if (Q_streq(overlayID, "nations")) {
-		if (MAP_IsNationOverlayActivated())
-			cl_geoscape_overlay->integer ^= OVERLAY_NATION;
-		else
-			cl_geoscape_overlay->integer |= OVERLAY_NATION;
+		Cvar_SetValue("cl_geoscape_overlay", value ^ OVERLAY_NATION);
+		return;
 	}
 
 	/* do nothing while the first base is not build */
@@ -2409,17 +2369,11 @@ void MAP_SetOverlay (const char *overlayID)
 		return;
 
 	if (Q_streq(overlayID, "xvi")) {
-		if (cl_geoscape_overlay->integer & OVERLAY_XVI)
-			cl_geoscape_overlay->integer ^= OVERLAY_XVI;
-		else
-			cl_geoscape_overlay->integer |= OVERLAY_XVI;
+		Cvar_SetValue("cl_geoscape_overlay", value ^ OVERLAY_XVI);
 	} else if (Q_streq(overlayID, "radar")) {
+		Cvar_SetValue("cl_geoscape_overlay", value ^ OVERLAY_RADAR);
 		if (MAP_IsRadarOverlayActivated())
-			cl_geoscape_overlay->integer ^= OVERLAY_RADAR;
-		else {
-			cl_geoscape_overlay->integer |= OVERLAY_RADAR;
 			RADAR_UpdateWholeRadarOverlay();
-		}
 	}
 }
 
@@ -2490,7 +2444,6 @@ void MAP_InitStartup (void)
 	Cmd_AddCommand("map_selectobject", MAP_SelectObject_f, "Select an object and center on it");
 	Cmd_AddCommand("mn_mapaction_reset", MAP_ResetAction);
 
-	cl_geoscape_overlay = Cvar_FindVar("cl_geoscape_overlay");
 #ifdef DEBUG
 	debug_showInterest = Cvar_Get("debug_showinterest", "0", CVAR_DEVELOPER, "Shows the global interest value on geoscape");
 #endif

@@ -55,6 +55,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static cgameType_t cgameTypes[MAX_CGAMETYPES];
 static int numCGameTypes;
 
+/* @todo: remove me - this should be per geoscape node data */
+geoscapeData_t geoscapeData;
+
 #ifdef HARD_LINKED_CGAME
 #include "campaign/cl_game_campaign.h"
 #include "staticcampaign/cl_game_staticcampaign.h"
@@ -422,6 +425,16 @@ static void UI_DrawNormImageByName_ (bool flip, float x, float y, float w, float
 	UI_DrawNormImageByName(flip, x, y, w, h, sh, th, sl, tl, name);
 }
 
+static void R_UploadAlpha_ (const char *name, const byte* alphaData)
+{
+	image_t *image = R_GetImage(name);
+	if (!image) {
+		Com_Printf("Could not find image '%s'\n", name);
+		return;
+	}
+	R_UploadAlpha(image, alphaData);
+}
+
 static const cgame_import_t* GAME_GetImportData (const cgameType_t *t)
 {
 	static cgame_import_t gameImport;
@@ -431,6 +444,10 @@ static const cgame_import_t* GAME_GetImportData (const cgameType_t *t)
 		cgi = &gameImport;
 
 		cgi->csi = &csi;
+
+		cgi->r_xviAlpha = geoscapeData.r_xviAlpha;
+		cgi->r_radarPic = geoscapeData.r_radarPic;
+		cgi->r_radarSourcePic = geoscapeData.r_radarSourcePic;
 
 		/** @todo add a wrapper here that stores the cgame command and removes them on shutdown automatically */
 		cgi->Cmd_AddCommand = Cmd_AddCommand;
@@ -569,9 +586,9 @@ static const cgame_import_t* GAME_GetImportData (const cgameType_t *t)
 		cgi->R_DrawFill = R_DrawFill;
 		cgi->R_DrawRect = R_DrawRect;
 		cgi->R_DrawBloom = R_DrawBloom;
-		cgi->R_EnableRenderbuffer = R_EnableRenderbuffer;
 		cgi->R_Draw2DMapMarkers = R_Draw2DMapMarkers;
 		cgi->R_Draw3DMapMarkers = R_Draw3DMapMarkers;
+		cgi->R_UploadAlpha = R_UploadAlpha_;
 
 		cgi->S_SetSampleRepeatRate = S_SetSampleRepeatRate;
 		cgi->S_StartLocalSample = S_StartLocalSample;
@@ -692,11 +709,18 @@ int GAME_GetCurrentTeam (void)
 	return cls.team;
 }
 
-void GAME_DrawMap (uiNode_t *node)
+void GAME_DrawMap (geoscapeData_t *data)
 {
 	const cgame_export_t *list = GAME_GetCurrentType();
 	if (list && list->MapDraw)
-		list->MapDraw(node);
+		list->MapDraw(data);
+}
+
+void GAME_DrawMapMarkers (uiNode_t *node)
+{
+	const cgame_export_t *list = GAME_GetCurrentType();
+	if (list && list->MapDrawMarkers)
+		list->MapDrawMarkers(node);
 }
 
 void GAME_MapClick (uiNode_t *node, int x, int y, const vec2_t pos)

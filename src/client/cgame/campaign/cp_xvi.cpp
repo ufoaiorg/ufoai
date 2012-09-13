@@ -265,7 +265,7 @@ bool XVI_LoadXML (xmlNode_t *p)
 	xmlNode_t *n = XML_GetNode(p, SAVE_XVI_XVI);
 	/* If there is no XVI, it will not be loaded */
 	if (!n) {
-		CP_InitializeXVIOverlay(NULL);
+		CP_InitializeXVIOverlay();
 		return true;
 	}
 

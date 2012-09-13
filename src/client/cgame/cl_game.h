@@ -29,6 +29,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../cl_shared.h"
 #include "../ui/ui_nodes.h"
 
+#include "cgame.h"
+
+extern geoscapeData_t geoscapeData;
 struct cgame_export_s;
 
 #define GAME_IsSingleplayer()	(!GAME_IsMultiplayer())
@@ -72,11 +75,10 @@ const mapDef_t* GAME_GetCurrentSelectedMap(void);
 void GAME_SwitchCurrentSelectedMap(int step);
 bool GAME_IsTeamEmpty(void);
 int GAME_GetCurrentTeam(void);
-void GAME_DrawMap(uiNode_t *node);
+void GAME_DrawMap(geoscapeData_t *data);
+void GAME_DrawMapMarkers(uiNode_t *node);
 void GAME_MapClick(uiNode_t *node, int x, int y, const vec2_t pos);
 void GAME_SetServerInfo(const char *server, const char *serverport);
-
-#include "cgame.h"
 
 const equipDef_t *GAME_ChangeEquip(const linkedList_t *equipmentList, changeEquipType_t changeType, const char *equipID);
 

@@ -29,8 +29,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_actions.h"
 #include "../ui_render.h"
 #include "ui_node_geoscape.h"
+#include "../../renderer/r_framebuffer.h"
 #include "../../renderer/r_geoscape.h"
-
 #include "../../cl_shared.h"
 #include "../../cgame/cl_game.h"
 #include "../../input/cl_input.h"
@@ -93,8 +93,15 @@ static cvar_t *cl_geoscape_overlay;
 // FIXME: don't make this static
 static uiNode_t *geoscapeNode;
 
+/** this is the mask that is used to display day/night on (2d-)geoscape */
+image_t *r_dayandnightTexture;
+
+image_t *r_radarTexture;				/**< radar texture */
+image_t *r_xviTexture;					/**< XVI alpha mask texture */
+
 /** @brief radius of the globe in screen coordinates */
 #define GLOBE_RADIUS EARTH_RADIUS * (UI_MAPEXTRADATACONST(node).zoom / STANDARD_3D_ZOOM)
+#define DAWN		0.03
 
 /**
  * @brief smooth rotation of the 3D geoscape
@@ -173,6 +180,47 @@ void uiGeoscapeNode::smoothTranslate (uiNode_t *node)
 	}
 }
 
+/**
+ * @brief Applies alpha values to the night overlay image for 2d geoscape
+ * @param[in] q The angle the sun is standing against the equator on earth
+ */
+void uiGeoscapeNode::calcAndUploadDayAndNightTexture (uiNode_t *node, float q)
+{
+	int x, y;
+	const float dphi = (float) 2 * M_PI / DAN_WIDTH;
+	const float da = M_PI / 2 * (HIGH_LAT - LOW_LAT) / DAN_HEIGHT;
+	const float sin_q = sin(q);
+	const float cos_q = cos(q);
+	float sin_phi[DAN_WIDTH], cos_phi[DAN_WIDTH];
+	byte *px;
+
+	for (x = 0; x < DAN_WIDTH; x++) {
+		const float phi = x * dphi - q;
+		sin_phi[x] = sin(phi);
+		cos_phi[x] = cos(phi);
+	}
+
+	/* calculate */
+	px = UI_MAPEXTRADATA(node).r_dayandnightAlpha;
+	for (y = 0; y < DAN_HEIGHT; y++) {
+		const float a = sin(M_PI / 2 * HIGH_LAT - y * da);
+		const float root = sqrt(1 - a * a);
+		for (x = 0; x < DAN_WIDTH; x++) {
+			const float pos = sin_phi[x] * root * sin_q - (a * SIN_ALPHA + cos_phi[x] * root * COS_ALPHA) * cos_q;
+
+			if (pos >= DAWN)
+				*px++ = 255;
+			else if (pos <= -DAWN)
+				*px++ = 0;
+			else
+				*px++ = (byte) (128.0 * (pos / DAWN + 1));
+		}
+	}
+
+	/* upload alpha map into the r_dayandnighttexture */
+	R_UploadAlpha(r_dayandnightTexture, UI_MAPEXTRADATA(node).r_dayandnightAlpha);
+}
+
 void uiGeoscapeNode::draw (uiNode_t *node)
 {
 	vec2_t screenPos;
@@ -202,7 +250,49 @@ void uiGeoscapeNode::draw (uiNode_t *node)
 			smoothRotate(node);
 	}
 
-	GAME_DrawMap(node);
+	geoscapeData_t& data = *UI_MAPEXTRADATA(node).geoscapeData;
+	GAME_DrawMap(&data);
+	if (!data.active)
+		return;
+
+	const char *map = data.map;
+	date_t& date = data.date;
+
+	/* Draw the map and markers */
+	if (UI_MAPEXTRADATACONST(node).flatgeoscape) {
+		/* the last q value for the 2d geoscape night overlay */
+		static float lastQ = 0.0f;
+
+		/* the sun is not always in the plane of the equator on earth - calculate the angle the sun is at */
+		const float q = (date.day % DAYS_PER_YEAR + (float)(date.sec / (SECONDS_PER_HOUR * 6)) / 4) * 2 * M_PI / DAYS_PER_YEAR - M_PI;
+		if (lastQ != q) {
+			calcAndUploadDayAndNightTexture(node, q);
+			lastQ = q;
+		}
+		R_DrawFlatGeoscape(UI_MAPEXTRADATACONST(node).mapPos, UI_MAPEXTRADATACONST(node).mapSize, (float) date.sec / SECONDS_PER_DAY,
+				UI_MAPEXTRADATACONST(node).center[0], UI_MAPEXTRADATACONST(node).center[1], 0.5 / UI_MAPEXTRADATACONST(node).zoom, map,
+				data.nationOverlay, data.xviOverlay, data.radarOverlay, r_dayandnightTexture, r_xviTexture, r_radarTexture);
+
+		GAME_DrawMapMarkers(node);
+	} else {
+		bool disableSolarRender = false;
+		if (UI_MAPEXTRADATACONST(node).zoom > 3.3)
+			disableSolarRender = true;
+
+		R_EnableRenderbuffer(true);
+
+		R_Draw3DGlobe(UI_MAPEXTRADATACONST(node).mapPos, UI_MAPEXTRADATACONST(node).mapSize, date.day, date.sec,
+				UI_MAPEXTRADATACONST(node).angles, UI_MAPEXTRADATACONST(node).zoom, map, disableSolarRender,
+				UI_MAPEXTRADATACONST(node).ambientLightFactor, UI_MAPEXTRADATA(node).overlayMask & OVERLAY_NATION,
+				UI_MAPEXTRADATA(node).overlayMask & OVERLAY_XVI, UI_MAPEXTRADATA(node).overlayMask & OVERLAY_RADAR, r_xviTexture, r_radarTexture,
+				true);
+
+		GAME_DrawMapMarkers(node);
+
+		R_DrawBloom();
+		R_EnableRenderbuffer(false);
+	}
+
 	UI_PopClipRect();
 }
 
@@ -289,7 +379,7 @@ void uiGeoscapeNode::startMouseShifting (uiNode_t *node, int x, int y)
  * @param[in] y Y coordinate on the screen that was clicked on
  * @param[out] pos vec2_t was filled with longitude and latitude
  */
-static void MAP_ScreenToMap (const uiNode_t* node, int x, int y, vec2_t pos)
+void uiGeoscapeNode::screenToMap (const uiNode_t* node, int x, int y, vec2_t pos)
 {
 	pos[0] = (((UI_MAPEXTRADATACONST(node).mapPos[0] - x) / UI_MAPEXTRADATACONST(node).mapSize[0] + 0.5) / UI_MAPEXTRADATACONST(node).zoom
 			- (UI_MAPEXTRADATACONST(node).center[0] - 0.5)) * 360.0;
@@ -310,7 +400,7 @@ static void MAP_ScreenToMap (const uiNode_t* node, int x, int y, vec2_t pos)
  * @param[out] pos vec2_t was filled with longitude and latitude
  * @sa MAP_3DMapToScreen
  */
-static void MAP3D_ScreenToMap (const uiNode_t* node, int x, int y, vec2_t pos)
+void uiGeoscapeNode::screenTo3DMap (const uiNode_t* node, int x, int y, vec2_t pos)
 {
 	vec2_t mid;
 	vec3_t v, v1, rotationAxis;
@@ -366,9 +456,9 @@ void uiGeoscapeNode::onLeftClick (uiNode_t* node, int x, int y)
 
 	/* get map position */
 	if (!UI_MAPEXTRADATACONST(node).flatgeoscape)
-		MAP3D_ScreenToMap(node, x, y, pos);
+		screenTo3DMap(node, x, y, pos);
 	else
-		MAP_ScreenToMap(node, x, y, pos);
+		screenToMap(node, x, y, pos);
 
 	GAME_MapClick(node, x, y, pos);
 }
@@ -450,6 +540,17 @@ void uiGeoscapeNode::onLoading (uiNode_t *node)
 	EXTRADATA(node).zoom = 1.0;
 	Vector2Set(EXTRADATA(node).smoothFinal2DGeoscapeCenter, 0.5, 0.5);
 	VectorSet(EXTRADATA(node).smoothFinalGlobeAngle, 0, GLOBE_ROTATE, 0);
+
+	/* @todo: allocate this on a per node basis - and remove the global variable geoscapeData */
+	EXTRADATA(node).geoscapeData = &geoscapeData;
+	/* EXTRADATA(node).geoscapeData = Mem_AllocType(geoscapeData_t); */
+
+	/** this is the data that is used with r_dayandnightTexture */
+	EXTRADATA(node).r_dayandnightAlpha = Mem_AllocTypeN(byte, DAN_WIDTH * DAN_HEIGHT);
+
+	r_dayandnightTexture = R_LoadImageData("***r_dayandnighttexture***", NULL, DAN_WIDTH, DAN_HEIGHT, it_effect);
+	r_radarTexture = R_LoadImageData("***r_radarTexture***", NULL, RADAR_WIDTH, RADAR_HEIGHT, it_effect);
+	r_xviTexture = R_LoadImageData("***r_xvitexture***", NULL, XVI_WIDTH, XVI_HEIGHT, it_effect);
 }
 
 static void UI_GeoscapeNodeZoomIn (uiNode_t *node, const uiCallContext_t *context)

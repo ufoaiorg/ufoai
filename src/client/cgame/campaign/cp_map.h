@@ -28,11 +28,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define KILOMETER_PER_DEGREE	111.2		/* this is the conversion between distance in game (in degree) and km */
 
-extern cvar_t *cl_geoscape_overlay;
-
-/* prototype */
-struct uiNode_t;
-
 #define MAP_IsAircraftSelected(aircraft) ((aircraft) == ccs.geoscape.selectedAircraft)
 #define MAP_IsInterceptorSelected(aircraft) ((aircraft) == ccs.geoscape.interceptAircraft)
 #define MAP_IsUFOSelected(ufo) ((ufo) == ccs.geoscape.selectedUFO)
@@ -50,17 +45,22 @@ struct uiNode_t;
 #define MAP_SetSelectedMission(mission) (ccs.geoscape.selectedMission = (mission))
 #define MAP_SetMissionAircraft(aircraft) (ccs.geoscape.missionAircraft = (aircraft))
 
+/* prototype */
+struct uiNode_t;
+
+bool MAP_AllMapToScreen(const uiNode_t* node, const vec2_t pos, int *x, int *y, int *z);
+void MAP_MapDrawEquidistantPoints(const uiNode_t* node, const vec2_t center, const float angle, const vec4_t color);
+void MAP_DrawMapMarkers(const uiNode_t* node);
+bool MAP_MapClick(const uiNode_t* node, int x, int y, const vec2_t pos);
+
 nation_t* MAP_GetNation(const vec2_t pos);
-bool MAP_AllMapToScreen(uiNode_t const* node, const vec2_t pos, int *x, int *y, int *z);
-void MAP_MapDrawEquidistantPoints(uiNode_t const* node, const vec2_t center, const float angle, const vec4_t color);
 float MAP_AngleOfPath(const vec3_t start, const vec2_t end, vec3_t direction, vec3_t ortVector);
 void MAP_MapCalcLine(const vec2_t start, const vec2_t end, mapline_t* line);
-void MAP_DrawMap(uiNode_t* node);
+void MAP_DrawMap(geoscapeData_t* data);
 void MAP_CenterOnPoint_f(void);
 void MAP_CenterPosition(const vec2_t pos);
 base_t* MAP_PositionCloseToBase(const vec2_t pos);
 
-bool MAP_MapClick(uiNode_t* node, int x, int y, const vec2_t pos);
 void MAP_ResetAction(void);
 void MAP_SelectAircraft(aircraft_t* aircraft);
 void MAP_SelectUFO(aircraft_t* ufo);

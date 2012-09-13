@@ -71,8 +71,9 @@ typedef struct cgame_export_s {
 	void (EXPORT *AddChatMessage) (const char *message);
 	bool (EXPORT *HandleServerCommand) (const char *command, dbuffer *msg);
 
-	void (EXPORT *MapDraw) (uiNode_t *node);
-	void (EXPORT *MapClick) (uiNode_t *node, int x, int y, const vec2_t pos);
+	void (EXPORT *MapDraw) (geoscapeData_t *data);
+	void (EXPORT *MapDrawMarkers) (const uiNode_t* node);
+	void (EXPORT *MapClick) (const uiNode_t *node, int x, int y, const vec2_t pos);
 } cgame_export_t;
 
 typedef struct cgameType_s {
@@ -179,7 +180,7 @@ typedef struct cgame_import_s {
 	void (IMPORT *R_Draw2DMapMarkers) (const vec2_t screenPos, float direction, const char *model, int skin);
 	void (IMPORT *R_Draw3DMapMarkers) (const vec2_t nodePos, const vec2_t nodeSize, const vec3_t rotate, const vec2_t pos, float direction, float earthRadius, const char *model, int skin);
 	void (IMPORT *R_DrawBloom) (void);
-	bool (IMPORT *R_EnableRenderbuffer) (bool enable);
+	void (IMPORT *R_UploadAlpha) (const char *name, const byte *alphaData);
 
 	dbuffer *(IMPORT *NET_ReadMsg)  (struct net_stream *s);
 	int (IMPORT *NET_ReadByte)  (dbuffer *buf);
@@ -299,6 +300,11 @@ typedef struct cgame_import_s {
 	bool (IMPORT *INV_RemoveFromInventory) (inventory_t* const i, const invDef_t * container, invList_t *fItem);
 
 	void (IMPORT *INV_ItemDescription) (const objDef_t *od);
+
+	/** @todo: remove me */
+	byte *r_xviAlpha;
+	byte *r_radarPic;
+	byte *r_radarSourcePic;
 } cgame_import_t;
 
 extern "C" const cgame_export_t *GetCGameAPI(const cgame_import_t *import);

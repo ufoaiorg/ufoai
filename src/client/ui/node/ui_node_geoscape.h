@@ -27,11 +27,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../ui_nodes.h"
 #include "ui_node_abstractnode.h"
+#include "../../cl_shared.h"
 
 class uiGeoscapeNode : public uiLocatedNode {
 protected:
 	void smoothTranslate (uiNode_t* node);
 	void smoothRotate (uiNode_t* node);
+	void screenTo3DMap (const uiNode_t* node, int x, int y, vec2_t pos);
+	void screenToMap (const uiNode_t* node, int x, int y, vec2_t pos);
+	void calcAndUploadDayAndNightTexture (uiNode_t *node, float q);
 public:
 	void draw(uiNode_t* node) OVERRIDE;
 	void onMouseUp(uiNode_t* node, int x, int y, int button) OVERRIDE;
@@ -48,6 +52,9 @@ public:
 #define UI_MAPEXTRADATA_TYPE mapExtraData_t
 #define UI_MAPEXTRADATA(node) UI_EXTRADATA(node, UI_MAPEXTRADATA_TYPE)
 #define UI_MAPEXTRADATACONST(node) UI_EXTRADATACONST(node, UI_MAPEXTRADATA_TYPE)
+
+#define DAN_WIDTH		2048
+#define DAN_HEIGHT		1024
 
 typedef struct mapExtraData_s {
 	/* Smoothing variables */
@@ -71,6 +78,8 @@ typedef struct mapExtraData_s {
 	float mapzoommax;
 	float paddingRight;
 	int32_t overlayMask;
+	geoscapeData_t *geoscapeData;
+	byte *r_dayandnightAlpha;
 } mapExtraData_t;
 
 void UI_RegisterGeoscapeNode(uiBehaviour_t *behaviour);
