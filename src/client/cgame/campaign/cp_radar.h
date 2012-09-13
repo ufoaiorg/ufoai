@@ -25,8 +25,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_CL_RADAR_H
 #define CLIENT_CL_RADAR_H
 
-struct uiNode_t;
-
 #define MAX_UFOONGEOSCAPE	8
 
 extern bool radarOverlayWasSet;
@@ -52,7 +50,6 @@ typedef struct radar_s {
 
 void RADAR_UpdateStaticRadarCoverage(void);
 void RADAR_UpdateWholeRadarOverlay(void);
-void RADAR_DrawInMap(uiNode_t const* node, const radar_t* radar, const vec2_t pos);
 void RADAR_DeactivateRadarOverlay(void);
 void RADAR_NotifyUFORemoved(const struct aircraft_s* ufo, bool destroyed);
 void RADAR_Initialise(radar_t* radar, float range, float trackingRange, float level, bool updateSourceRadarMap);

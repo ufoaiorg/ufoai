@@ -101,64 +101,6 @@ void RADAR_UpdateWholeRadarOverlay (void)
 }
 
 /**
- * @brief Draw only the "wire" Radar coverage.
- * @param[in] node The menu node where radar coverage will be drawn.
- * @param[in] radar Pointer to the radar that will be drawn.
- * @param[in] pos Position of the radar.
- * @sa MAP_MapDrawEquidistantPoints
- */
-static void RADAR_DrawLineCoverage (const uiNode_t* node, const radar_t* radar, const vec2_t pos)
-{
-	const vec4_t color = {1., 1., 1., .4};
-	MAP_MapDrawEquidistantPoints(node, pos, radar->range, color);
-	MAP_MapDrawEquidistantPoints(node, pos, radar->trackingRange, color);
-}
-
-/**
- * @brief Draw only the "wire" part of the radar coverage in geoscape
- * @param[in] node The menu node where radar coverage will be drawn.
- * @param[in] radar Pointer to the radar that will be drawn.
- * @param[in] pos Position of the radar.
- */
-void RADAR_DrawInMap (const uiNode_t *node, const radar_t *radar, const vec2_t pos)
-{
-	int x, y;
-	const vec4_t color = {1., 1., 1., .3};
-	bool display;
-
-	/* Show radar range zones */
-	RADAR_DrawLineCoverage(node, radar, pos);
-
-	/* everything below is drawn only if there is at least one detected UFO */
-	if (!radar->numUFOs)
-		return;
-
-	/* Set color */
-	cgi->R_Color(color);
-
-	/* Draw lines from radar to ufos sensored */
-	display = MAP_AllMapToScreen(node, pos, &x, &y, NULL);
-	if (display) {
-		int i;
-		screenPoint_t pts[2];
-
-		pts[0].x = x;
-		pts[0].y = y;
-
-		for (i = 0; i < radar->numUFOs; i++) {
-			const aircraft_t *ufo = radar->ufos[i];
-			if (UFO_IsUFOSeenOnGeoscape(ufo) && MAP_AllMapToScreen(node, ufo->pos, &x, &y, NULL)) {
-				pts[1].x = x;
-				pts[1].y = y;
-				cgi->R_DrawLineStrip(2, (int*)pts);
-			}
-		}
-	}
-
-	cgi->R_Color(NULL);
-}
-
-/**
  * @brief Deactivate Radar overlay if there is no more UFO on geoscape
  */
 void RADAR_DeactivateRadarOverlay (void)

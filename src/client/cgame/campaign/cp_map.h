@@ -48,8 +48,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /* prototype */
 struct uiNode_t;
 
-bool MAP_AllMapToScreen(const uiNode_t* node, const vec2_t pos, int *x, int *y, int *z);
-void MAP_MapDrawEquidistantPoints(const uiNode_t* node, const vec2_t center, const float angle, const vec4_t color);
 void MAP_DrawMapMarkers(const uiNode_t* node);
 bool MAP_MapClick(const uiNode_t* node, int x, int y, const vec2_t pos);
 

@@ -24,8 +24,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../cl_shared.h"
 #include "../../renderer/r_image.h"
-#include "../../renderer/r_draw.h"
-#include "../../renderer/r_geoscape.h"
+#include "../../renderer/r_draw.h" /* R_DrawImage */
+#include "../../renderer/r_geoscape.h" /* EARTH_RADIUS, STANDARD_3D_ZOOM */
 #include "../../ui/ui_dataids.h"
 #include "../../ui/node/ui_node_geoscape.h" /* paddingRight */
 #include "cp_overlay.h"
@@ -392,25 +392,6 @@ bool MAP_MapClick (const uiNode_t* node, int x, int y, const vec2_t pos)
 GEOSCAPE DRAWING AND COORDINATES
 ==============================================================
 */
-/**
- * @brief maximum distance (in pixel) to get a valid mouse click
- * @note this is for a 1024 * 768 screen
- */
-#define UI_MAP_DIST_SELECTION 15
-/**
- * @brief Tell if the specified position is considered clicked
- */
-static bool MAP_IsMapPositionSelected (const uiNode_t* node, const vec2_t pos, int x, int y)
-{
-	int msx, msy;
-
-	if (MAP_AllMapToScreen(node, pos, &msx, &msy, NULL))
-		if (x >= msx - UI_MAP_DIST_SELECTION && x <= msx + UI_MAP_DIST_SELECTION
-		 && y >= msy - UI_MAP_DIST_SELECTION && y <= msy + UI_MAP_DIST_SELECTION)
-			return true;
-
-	return false;
-}
 
 /** @brief radius of the globe in screen coordinates */
 #define GLOBE_RADIUS EARTH_RADIUS * (UI_MAPEXTRADATACONST(node).zoom / STANDARD_3D_ZOOM)
@@ -514,7 +495,7 @@ static bool MAP_MapToScreen (const uiNode_t* node, const vec2_t pos, int *x, int
  * @sa MAP_MapToScreen
  * @sa MAP_3DMapToScreen
  */
-bool MAP_AllMapToScreen (const uiNode_t* node, const vec2_t pos, int *x, int *y, int *z)
+static bool MAP_AllMapToScreen (const uiNode_t* node, const vec2_t pos, int *x, int *y, int *z)
 {
 	if (!UI_MAPEXTRADATACONST(node).flatgeoscape)
 		return MAP_3DMapToScreen(node, pos, x, y, z);
@@ -522,6 +503,26 @@ bool MAP_AllMapToScreen (const uiNode_t* node, const vec2_t pos, int *x, int *y,
 	if (z)
 		*z = -10;
 	return MAP_MapToScreen(node, pos, x, y);
+}
+
+/**
+ * @brief maximum distance (in pixel) to get a valid mouse click
+ * @note this is for a 1024 * 768 screen
+ */
+#define UI_MAP_DIST_SELECTION 15
+/**
+ * @brief Tell if the specified position is considered clicked
+ */
+static bool MAP_IsMapPositionSelected (const uiNode_t* node, const vec2_t pos, int x, int y)
+{
+	int msx, msy;
+
+	if (MAP_AllMapToScreen(node, pos, &msx, &msy, NULL))
+		if (x >= msx - UI_MAP_DIST_SELECTION && x <= msx + UI_MAP_DIST_SELECTION
+		 && y >= msy - UI_MAP_DIST_SELECTION && y <= msy + UI_MAP_DIST_SELECTION)
+			return true;
+
+	return false;
 }
 
 /**
@@ -722,7 +723,7 @@ static void MAP_3DMapDrawLine (const uiNode_t* node, const mapline_t* line)
  * @param[in] color The color for drawing
  * @sa RADAR_DrawCoverage
  */
-void MAP_MapDrawEquidistantPoints (const uiNode_t* node, const vec2_t center, const float angle, const vec4_t color)
+static void MAP_MapDrawEquidistantPoints (const uiNode_t* node, const vec2_t center, const float angle, const vec4_t color)
 {
 	int i, xCircle, yCircle;
 	screenPoint_t pts[CIRCLE_DRAW_POINTS + 1];
@@ -1267,6 +1268,64 @@ static void MAP_DrawMapOneMission (const uiNode_t* node, const mission_t *missio
 }
 
 /**
+ * @brief Draw only the "wire" Radar coverage.
+ * @param[in] node The menu node where radar coverage will be drawn.
+ * @param[in] radar Pointer to the radar that will be drawn.
+ * @param[in] pos Position of the radar.
+ * @sa MAP_MapDrawEquidistantPoints
+ */
+static void MAP_DrawRadarLineCoverage (const uiNode_t* node, const radar_t* radar, const vec2_t pos)
+{
+	const vec4_t color = {1., 1., 1., .4};
+	MAP_MapDrawEquidistantPoints(node, pos, radar->range, color);
+	MAP_MapDrawEquidistantPoints(node, pos, radar->trackingRange, color);
+}
+
+/**
+ * @brief Draw only the "wire" part of the radar coverage in geoscape
+ * @param[in] node The menu node where radar coverage will be drawn.
+ * @param[in] radar Pointer to the radar that will be drawn.
+ * @param[in] pos Position of the radar.
+ */
+static void MAP_DrawRadarInMap (const uiNode_t *node, const radar_t *radar, const vec2_t pos)
+{
+	int x, y;
+	const vec4_t color = {1., 1., 1., .3};
+	bool display;
+
+	/* Show radar range zones */
+	MAP_DrawRadarLineCoverage(node, radar, pos);
+
+	/* everything below is drawn only if there is at least one detected UFO */
+	if (!radar->numUFOs)
+		return;
+
+	/* Set color */
+	cgi->R_Color(color);
+
+	/* Draw lines from radar to ufos sensored */
+	display = MAP_AllMapToScreen(node, pos, &x, &y, NULL);
+	if (display) {
+		int i;
+		screenPoint_t pts[2];
+
+		pts[0].x = x;
+		pts[0].y = y;
+
+		for (i = 0; i < radar->numUFOs; i++) {
+			const aircraft_t *ufo = radar->ufos[i];
+			if (UFO_IsUFOSeenOnGeoscape(ufo) && MAP_AllMapToScreen(node, ufo->pos, &x, &y, NULL)) {
+				pts[1].x = x;
+				pts[1].y = y;
+				cgi->R_DrawLineStrip(2, (int*)pts);
+			}
+		}
+	}
+
+	cgi->R_Color(NULL);
+}
+
+/**
  * @brief Draws one installation on the geoscape map (2D and 3D)
  * @param[in] node The menu node which will be used for drawing markers.
  * @param[in] installation Pointer to the installation to draw.
@@ -1294,7 +1353,7 @@ static void MAP_DrawMapOneInstallation (const uiNode_t* node, const installation
 
 	/* Draw installation radar (only the "wire" style part) */
 	if (MAP_IsRadarOverlayActivated())
-		RADAR_DrawInMap(node, &installation->radar, installation->pos);
+		MAP_DrawRadarInMap(node, &installation->radar, installation->pos);
 
 	/* Draw installation */
 	if (!UI_MAPEXTRADATACONST(node).flatgeoscape) {
@@ -1343,7 +1402,7 @@ static void MAP_DrawMapOneBase (const uiNode_t* node, const base_t *base,
 
 	/* Draw base radar (only the "wire" style part) */
 	if (MAP_IsRadarOverlayActivated())
-		RADAR_DrawInMap(node, &base->radar, base->pos);
+		MAP_DrawRadarInMap(node, &base->radar, base->pos);
 
 	/* Draw base */
 	if (!UI_MAPEXTRADATACONST(node).flatgeoscape) {
@@ -1419,7 +1478,7 @@ static void MAP_DrawMapOnePhalanxAircraft (const uiNode_t* node, aircraft_t *air
 
 	/* Draw aircraft radar (only the "wire" style part) */
 	if (MAP_IsRadarOverlayActivated())
-		RADAR_DrawInMap(node, &aircraft->radar, aircraft->pos);
+		MAP_DrawRadarInMap(node, &aircraft->radar, aircraft->pos);
 
 	/* Draw only the bigger weapon range on geoscape: more detail will be given on airfight map */
 	if (oneUFOVisible)
