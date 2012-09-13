@@ -699,7 +699,7 @@ static bool CP_ItemsSanityCheck (void)
 	int i;
 	bool result = true;
 
-	for (i = 0; i < csi.numODs; i++) {
+	for (i = 0; i < cgi->csi->numODs; i++) {
 		const objDef_t *item = INVSH_GetItemByIDX(i);
 
 		/* Warn if item has no size set. */
@@ -795,8 +795,8 @@ void CP_ParseCampaignData (void)
 		CP_ParseScriptSecond(type, name, &text);
 	INS_LinkTechnologies();
 
-	for (i = 0; i < csi.numTeamDefs; i++) {
-		const teamDef_t *teamDef = &csi.teamDef[i];
+	for (i = 0; i < cgi->csi->numTeamDefs; i++) {
+		const teamDef_t *teamDef = &cgi->csi->teamDef[i];
 		if (!CHRSH_IsTeamDefAlien(teamDef))
 			continue;
 

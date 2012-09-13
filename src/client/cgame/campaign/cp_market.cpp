@@ -454,7 +454,7 @@ bool BS_SaveXML (xmlNode_t *parent)
 
 	/* store market */
 	node = XML_AddNode(parent, SAVE_MARKET_MARKET);
-	for (i = 0; i < csi.numODs; i++) {
+	for (i = 0; i < cgi->csi->numODs; i++) {
 		const objDef_t *od = INVSH_GetItemByIDX(i);
 		if (BS_IsOnMarket(od)) {
 			xmlNode_t * snode = XML_AddNode(node, SAVE_MARKET_ITEM);
@@ -534,7 +534,7 @@ void BS_InitMarket (const campaign_t *campaign)
 	int i;
 	market_t *market = BS_GetMarket();
 
-	for (i = 0; i < csi.numODs; i++) {
+	for (i = 0; i < cgi->csi->numODs; i++) {
 		const objDef_t *od = INVSH_GetItemByIDX(i);
 		if (market->askItems[i] == 0) {
 			market->askItems[i] = od->price;
@@ -592,7 +592,7 @@ void CP_CampaignRunMarket (campaign_t *campaign)
 	assert(campaign->marketDef);
 	assert(campaign->asymptoticMarketDef);
 
-	for (i = 0; i < csi.numODs; i++) {
+	for (i = 0; i < cgi->csi->numODs; i++) {
 		const objDef_t *od = INVSH_GetItemByIDX(i);
 		const technology_t *tech = RS_GetTechForItem(od);
 		int asymptoticNumber;

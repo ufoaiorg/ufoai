@@ -112,9 +112,9 @@ static void CP_TEAM_SelectActorByUCN_f (void)
 
 	/* update menu inventory */
 	if (ui_inventory && ui_inventory != &chr->i) {
-		CONTAINER(chr, csi.idEquip) = ui_inventory->c[csi.idEquip];
+		CONTAINER(chr, cgi->csi->idEquip) = ui_inventory->c[cgi->csi->idEquip];
 		/* set 'old' idEquip to NULL */
-		ui_inventory->c[csi.idEquip] = NULL;
+		ui_inventory->c[cgi->csi->idEquip] = NULL;
 	}
 	ui_inventory = &chr->i;
 

@@ -393,8 +393,8 @@ static void BS_FillMarket_f (void)
 			cgi->UI_ExecuteConfunc("ui_market_add \"ugv-%d\" \"%s\" 1 0 0 %d - \"%s\"", robot->chr.ucn, _(tech->name), ugv->price, E_IsAwayFromBase(robot) ? _("UGV is away from home") : "-");
 		}
 		/* show buyable UGV */
-		for (int i = 0; i < csi.numUGV; i++) {
-			const ugv_t *ugv = &csi.ugvs[i];
+		for (int i = 0; i < cgi->csi->numUGV; i++) {
+			const ugv_t *ugv = &cgi->csi->ugvs[i];
 			const technology_t* tech = RS_GetTechByProvided(ugv->id);
 			const objDef_t *ugvWeapon = INVSH_GetItemByID(ugv->weapon);
 			const int buyable = std::min(E_CountUnhiredRobotsByType(ugv), BS_GetItemOnMarket(ugvWeapon));
@@ -416,8 +416,8 @@ static void BS_FillMarket_f (void)
 	case FILTER_DUMMY:
 	case FILTER_CRAFTITEM:
 	case MAX_FILTERTYPES: {
-		for (int i = 0; i < csi.numODs; i++) {
-			const objDef_t *od = &csi.ods[i];
+		for (int i = 0; i < cgi->csi->numODs; i++) {
+			const objDef_t *od = &cgi->csi->ods[i];
 			const technology_t *tech = RS_GetTechForItem(od);
 
 			if (!BS_IsOnMarket(od))

@@ -226,7 +226,7 @@ static int TR_CheckItem (const objDef_t *od, const base_t *destbase, int amount)
 	assert(destbase);
 
 	/* Count size of all items already on the transfer list. */
-	for (i = 0; i < csi.numODs; i++) {
+	for (i = 0; i < cgi->csi->numODs; i++) {
 		const objDef_t *object = INVSH_GetItemByIDX(i);
 		const int itemCargoAmount = td.trItemsTmp[i];
 		if (itemCargoAmount > 0) {
@@ -399,7 +399,7 @@ static void TR_CargoList (void)
 	OBJZERO(td.cargo);
 
 	/* Show items. */
-	for (i = 0; i < csi.numODs; i++) {
+	for (i = 0; i < cgi->csi->numODs; i++) {
 		const objDef_t *od = INVSH_GetItemByIDX(i);
 		const int itemCargoAmount = td.trItemsTmp[i];
 		if (itemCargoAmount > 0) {
@@ -538,7 +538,7 @@ static int TR_FillItems (const base_t *srcbase, const base_t *destbase, linkedLi
 	if (B_GetBuildingStatus(destbase, B_STORAGE)) {
 		int i;
 
-		for (i = 0; i < csi.numODs; i++) {
+		for (i = 0; i < cgi->csi->numODs; i++) {
 			const objDef_t *od = INVSH_GetItemByIDX(i);
 			const int itemCargoAmount = td.trItemsTmp[od->idx];
 			if (!B_ItemIsStoredInBaseStorage(od))
@@ -779,7 +779,7 @@ static void TR_TransferListClear_f (void)
 	if (!base)
 		return;
 
-	for (i = 0; i < csi.numODs; i++) {	/* Return items. */
+	for (i = 0; i < cgi->csi->numODs; i++) {	/* Return items. */
 		const objDef_t *od = INVSH_GetItemByIDX(i);
 		const int itemCargoAmount = td.trItemsTmp[od->idx];
 		if (itemCargoAmount > 0) {
@@ -873,7 +873,7 @@ static void TR_AddItemToTransferList (base_t *base, transferData_t *td, int num,
 			cnt++;
 		}
 	}
-	for (i = 0; i < csi.numODs; i++) {
+	for (i = 0; i < cgi->csi->numODs; i++) {
 		const objDef_t *od = INVSH_GetItemByIDX(i);
 		const int itemCargoAmount = td->trItemsTmp[i];
 		if (!B_ItemIsStoredInBaseStorage(od))
@@ -1050,7 +1050,7 @@ static void TR_TransferListSelect_f (void)
 
 	/* the index in the list that was clicked */
 	num = atoi(Cmd_Argv(1));
-	if (num < 0 || num >= csi.numODs)
+	if (num < 0 || num >= cgi->csi->numODs)
 		return;
 
 	if (Cmd_Argc() == 3)
@@ -1171,7 +1171,7 @@ static void TR_RemoveItemFromCargoList (base_t *base, transferData_t *transferDa
 {
 	int i, cnt = 0;
 
-	for (i = 0; i < csi.numODs; i++) {
+	for (i = 0; i < cgi->csi->numODs; i++) {
 		const objDef_t *od = INVSH_GetItemByIDX(i);
 		const int itemCargoAmount = transferData->trItemsTmp[od->idx];
 		if (itemCargoAmount > 0) {
@@ -1484,7 +1484,7 @@ static void TR_TransferList_Scroll_f (void)
 					antimatterCargo, 0, B_AntimatterInBase(srcBase) + antimatterCargo);
 		cnt++;
 	}
-	for (i = 0; i < csi.numODs; i++) {
+	for (i = 0; i < cgi->csi->numODs; i++) {
 		const objDef_t *od = INVSH_GetItemByIDX(i);
 		const int itemCargoAmount = td.trItemsTmp[od->idx];
 		if (!B_ItemIsStoredInBaseStorage(od))
@@ -1519,7 +1519,7 @@ static void TR_List_f (void)
 			int j;
 
 			cgi->UI_ExecuteConfunc("tr_listaddcargo %d \"%s\" \"%s\" \"%s\"", i, "tr_cargo", "items", _("Items"));
-			for (j = 0; j < csi.numODs; j++) {
+			for (j = 0; j < cgi->csi->numODs; j++) {
 				const objDef_t *od = INVSH_GetItemByIDX(j);
 
 				if (transfer->itemAmount[od->idx] <= 0)
@@ -1548,8 +1548,8 @@ static void TR_List_f (void)
 			int j;
 
 			cgi->UI_ExecuteConfunc("tr_listaddcargo %d \"%s\" \"%s\" \"%s\"", i, "tr_cargo", "aliens", _("Aliens"));
-			for (j = 0; j < csi.numTeamDefs; j++) {
-				const teamDef_t *team = &csi.teamDef[j];
+			for (j = 0; j < cgi->csi->numTeamDefs; j++) {
+				const teamDef_t *team = &cgi->csi->teamDef[j];
 
 				if (transfer->alienAmount[j][TRANS_ALIEN_ALIVE]) {
 					cgi->UI_ExecuteConfunc("tr_listaddcargo %d \"%s\" \"%s\" \"%s\"", i, "tr_cargo.aliens", va("%s_alive", team->id), va("%i %s %s", transfer->alienAmount[j][TRANS_ALIEN_ALIVE], _("alive"), _(team->name)));

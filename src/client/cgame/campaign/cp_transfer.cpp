@@ -58,7 +58,7 @@ static void TR_EmptyTransferCargo (base_t *destination, transfer_t *transfer, bo
 			}
 		}
 		/* items */
-		for (i = 0; i < csi.numODs; i++) {
+		for (i = 0; i < cgi->csi->numODs; i++) {
 			od = INVSH_GetItemByIDX(i);
 
 			if (transfer->itemAmount[od->idx] <= 0)
@@ -205,7 +205,7 @@ void TR_TransferAlienAfterMissionStart (const base_t *base, aircraft_t *transfer
 		}
 		if (cargo->amountAlive > 0) {
 			for (j = 0; j < ccs.numAliensTD; j++) {
-				if (!CHRSH_IsTeamDefAlien(&csi.teamDef[j]))
+				if (!CHRSH_IsTeamDefAlien(&cgi->csi->teamDef[j]))
 					continue;
 				if (base->alienscont[j].teamDef == cargo->teamDef) {
 					transfer.hasAliens = true;
@@ -217,7 +217,7 @@ void TR_TransferAlienAfterMissionStart (const base_t *base, aircraft_t *transfer
 		}
 		if (cargo->amountDead > 0) {
 			for (j = 0; j < ccs.numAliensTD; j++) {
-				if (!CHRSH_IsTeamDefAlien(&csi.teamDef[j]))
+				if (!CHRSH_IsTeamDefAlien(&cgi->csi->teamDef[j]))
 					continue;
 				if (base->alienscont[j].teamDef == cargo->teamDef) {
 					transfer.hasAliens = true;
@@ -307,7 +307,7 @@ transfer_t* TR_TransferStart (base_t *srcBase, transferData_t *transData)
 	assert(transfer.destBase);
 	transfer.srcBase = srcBase;	/* Source base. */
 
-	for (i = 0; i < csi.numODs; i++) {	/* Items. */
+	for (i = 0; i < cgi->csi->numODs; i++) {	/* Items. */
 		if (transData->trItemsTmp[i] > 0) {
 			transfer.hasItems = true;
 			transfer.itemAmount[i] = transData->trItemsTmp[i];
@@ -423,7 +423,7 @@ static void TR_ListTransfers_f (void)
 		if (transfer->hasItems) {
 			int j;
 			Com_Printf("...ItemCargo:\n");
-			for (j = 0; j < csi.numODs; j++) {
+			for (j = 0; j < cgi->csi->numODs; j++) {
 				const objDef_t *od = INVSH_GetItemByIDX(j);
 				if (transfer->itemAmount[od->idx])
 					Com_Printf("......%s: %i\n", od->id, transfer->itemAmount[od->idx]);
@@ -457,9 +457,9 @@ static void TR_ListTransfers_f (void)
 		if (transfer->hasAliens) {
 			int j;
 			Com_Printf("...AlienCargo:\n");
-			for (j = 0; j < csi.numTeamDefs; j++) {
+			for (j = 0; j < cgi->csi->numTeamDefs; j++) {
 				if (transfer->alienAmount[j][TRANS_ALIEN_ALIVE] + transfer->alienAmount[j][TRANS_ALIEN_DEAD])
-					Com_Printf("......%s alive: %i dead: %i\n", csi.teamDef[j].id, transfer->alienAmount[j][TRANS_ALIEN_ALIVE], transfer->alienAmount[j][TRANS_ALIEN_DEAD]);
+					Com_Printf("......%s alive: %i dead: %i\n", cgi->csi->teamDef[j].id, transfer->alienAmount[j][TRANS_ALIEN_ALIVE], transfer->alienAmount[j][TRANS_ALIEN_DEAD]);
 			}
 		}
 		/* Transfered Aircraft */

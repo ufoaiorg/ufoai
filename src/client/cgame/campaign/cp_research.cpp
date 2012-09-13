@@ -479,7 +479,7 @@ void RS_InitTree (const campaign_t *campaign, bool load)
 	const objDef_t *od;
 
 	/* Add links to technologies. */
-	for (i = 0, od = csi.ods; i < csi.numODs; i++, od++) {
+	for (i = 0, od = cgi->csi->ods; i < cgi->csi->numODs; i++, od++) {
 		ccs.objDefTechs[od->idx] = RS_GetTechByProvided(od->id);
 		if (!ccs.objDefTechs[od->idx])
 			Com_Error(ERR_DROP, "RS_InitTree: Could not find a valid tech for item %s", od->id);
@@ -516,7 +516,7 @@ void RS_InitTree (const campaign_t *campaign, bool load)
 		case RS_WEAPON:
 		case RS_ARMOUR:
 			found = false;
-			for (j = 0; j < csi.numODs; j++) {	/* j = item index */
+			for (j = 0; j < cgi->csi->numODs; j++) {	/* j = item index */
 				const objDef_t *item = INVSH_GetItemByIDX(j);
 
 				/* This item has been 'provided' -> get the correct data. */
@@ -531,7 +531,7 @@ void RS_InitTree (const campaign_t *campaign, bool load)
 					break;
 				}
 			}
-			/* No id found in csi.ods */
+			/* No id found in cgi->csi->ods */
 			if (!found) {
 				tech->name = Mem_PoolStrDup(tech->id, cp_campaignPool, 0);
 				Com_Printf("RS_InitTree: \"%s\" - Linked weapon or armour (provided=\"%s\") not found. Tech-id used as name.\n",

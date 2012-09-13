@@ -69,13 +69,13 @@ void CP_SetMissionVars (const mission_t *mission, const battleParam_t *battlePar
 	Cvar_Set("ai_civilian", battleParameters->civTeam);
 	Cvar_Set("ai_equipment", battleParameters->alienEquipment);
 
-	/* now store the alien teams in the shared csi struct to let the game dll
+	/* now store the alien teams in the shared cgi->csi->struct to let the game dll
 	 * have access to this data, too */
-	csi.numAlienTeams = 0;
+	cgi->csi->numAlienTeams = 0;
 	for (i = 0; i < battleParameters->alienTeamGroup->numAlienTeams; i++) {
-		csi.alienTeams[i] = battleParameters->alienTeamGroup->alienTeams[i];
-		csi.numAlienTeams++;
-		if (csi.numAlienTeams >= MAX_TEAMS_PER_MISSION)
+		cgi->csi->alienTeams[i] = battleParameters->alienTeamGroup->alienTeams[i];
+		cgi->csi->numAlienTeams++;
+		if (cgi->csi->numAlienTeams >= MAX_TEAMS_PER_MISSION)
 			break;
 	}
 }
@@ -229,8 +229,8 @@ static void CP_SetAlienEquipmentByInterest (const mission_t *mission, linkedList
 	/* look for all available fitting alien equipment definitions
 	 * use mission->initialOverallInterest and not ccs.overallInterest: the alien equipment should not change depending on
 	 * when you encounter it */
-	for (i = 0; i < csi.numEDs; i++) {
-		const equipDef_t *ed = &csi.eds[i];
+	for (i = 0; i < cgi->csi->numEDs; i++) {
+		const equipDef_t *ed = &cgi->csi->eds[i];
 		if (CP_IsAlienEquipmentSelectable(mission, ed, equipPack))
 			availableEquipDef++;
 	}
@@ -244,8 +244,8 @@ static void CP_SetAlienEquipmentByInterest (const mission_t *mission, linkedList
 	randomNum = rand() % availableEquipDef;
 
 	availableEquipDef = 0;
-	for (i = 0; i < csi.numEDs; i++) {
-		const equipDef_t *ed = &csi.eds[i];
+	for (i = 0; i < cgi->csi->numEDs; i++) {
+		const equipDef_t *ed = &cgi->csi->eds[i];
 		if (CP_IsAlienEquipmentSelectable(mission, ed, equipPack)) {
 			if (availableEquipDef == randomNum) {
 				Com_sprintf(battleParameters->alienEquipment, sizeof(battleParameters->alienEquipment), "%s", ed->id);

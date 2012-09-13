@@ -316,7 +316,7 @@ static void AII_CarriedItems (const inventory_t *soldierInventory)
 	invList_t *invList;
 	equipDef_t *ed = &ccs.eMission;
 
-	for (container = 0; container < csi.numIDs; container++) {
+	for (container = 0; container < cgi->csi->numIDs; container++) {
 		/* Items on the ground are collected as ET_ITEM */
 		if (INVDEF(container)->temp)
 			continue;
@@ -843,7 +843,7 @@ static int AIR_GetStorageRoom (const aircraft_t *aircraft)
 
 	LIST_Foreach(aircraft->acTeam, employee_t, employee) {
 		containerIndex_t container;
-		for (container = 0; container < csi.numIDs; container++) {
+		for (container = 0; container < cgi->csi->numIDs; container++) {
 			invList_t *ic;
 #if 0
 			/* ignore items linked from any temp container */
@@ -897,7 +897,7 @@ static void AIR_TransferItemsCarriedByCharacterToBase (character_t *chr, base_t 
 	const invList_t *ic;
 	containerIndex_t container;
 
-	for (container = 0; container < csi.numIDs; container++) {
+	for (container = 0; container < cgi->csi->numIDs; container++) {
 #if 0
 		/* ignore items linked from any temp container */
 		if (INVDEF(container)->temp)
@@ -3058,7 +3058,7 @@ void AIR_MoveEmployeeInventoryIntoStorage (const aircraft_t *aircraft, equipDef_
 		return;
 	}
 
-	for (container = 0; container < csi.numIDs; container++) {
+	for (container = 0; container < cgi->csi->numIDs; container++) {
 		LIST_Foreach(aircraft->acTeam, employee_t, employee) {
 			character_t *chr = &employee->chr;
 			invList_t *ic = CONTAINER(chr, container);

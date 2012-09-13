@@ -161,7 +161,7 @@ static void PR_UpdateProductionList (const base_t* base)
 		}
 	} else {
 		objDef_t *od;
-		for (i = 0, od = csi.ods; i < csi.numODs; i++, od++) {
+		for (i = 0, od = cgi->csi->ods; i < cgi->csi->numODs; i++, od++) {
 			const technology_t *tech;
 			if (od->isVirtual)
 				continue;

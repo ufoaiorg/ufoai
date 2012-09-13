@@ -1170,7 +1170,7 @@ void E_RemoveInventoryFromStorage (employee_t *employee)
 
 	assert(employee->baseHired);
 
-	for (container = 0; container < csi.numIDs; container++) {
+	for (container = 0; container < cgi->csi->numIDs; container++) {
 		const invList_t *invList = CONTAINER(chr, container);
 
 		if (INVDEF(container)->temp)

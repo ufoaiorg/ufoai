@@ -86,7 +86,7 @@ static item_t CP_AddWeaponAmmo (equipDef_t * ed, item_t item)
 
 	/* Search for any complete clips. */
 	/** @todo We may want to change this to use the type->ammo[] info. */
-	for (i = 0; i < csi.numODs; i++) {
+	for (i = 0; i < cgi->csi->numODs; i++) {
 		const objDef_t *od = INVSH_GetItemByIDX(i);
 		if (INVSH_LoadableInWeapon(od, type)) {
 			if (ed->numItems[i] > 0) {
@@ -115,7 +115,7 @@ static item_t CP_AddWeaponAmmo (equipDef_t * ed, item_t item)
 	/* See if there's any loose ammo */
 	/** @todo We may want to change this to use the type->ammo[] info. */
 	item.ammoLeft = NONE_AMMO;
-	for (i = 0; i < csi.numODs; i++) {
+	for (i = 0; i < cgi->csi->numODs; i++) {
 		const objDef_t *od = INVSH_GetItemByIDX(i);
 		if (INVSH_LoadableInWeapon(od, type) && ed->numItemsLoose[i] > item.ammoLeft) {
 			if (item.ammoLeft > 0) {
@@ -169,7 +169,7 @@ void CP_CleanupAircraftCrew (aircraft_t *aircraft, equipDef_t * ed)
 		}
 	}
 
-	for (container = 0; container < csi.numIDs; container++) {
+	for (container = 0; container < cgi->csi->numIDs; container++) {
 		LIST_Foreach(aircraft->acTeam, employee_t, employee) {
 			invList_t *ic, *next;
 			character_t *chr = &employee->chr;
@@ -201,7 +201,7 @@ void CP_CleanTempInventory (base_t* base)
 {
 	E_Foreach(EMPL_SOLDIER, employee) {
 		int k;
-		for (k = 0; k < csi.numIDs; k++) {
+		for (k = 0; k < cgi->csi->numIDs; k++) {
 			/* idFloor and idEquip are temp */
 			if (INVDEF(k)->temp)
 				employee->chr.i.c[k] = NULL;
@@ -210,7 +210,7 @@ void CP_CleanTempInventory (base_t* base)
 
 	E_Foreach(EMPL_ROBOT, employee) {
 		int k;
-		for (k = 0; k < csi.numIDs; k++) {
+		for (k = 0; k < cgi->csi->numIDs; k++) {
 			/* idFloor and idEquip are temp */
 			if (INVDEF(k)->temp)
 				employee->chr.i.c[k] = NULL;

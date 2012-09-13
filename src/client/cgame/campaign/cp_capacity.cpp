@@ -129,7 +129,7 @@ void CAP_RemoveItemsExceedingCapacity (base_t *base)
 	if (CAP_GetFreeCapacity(base, CAP_ITEMS) >= 0)
 		return;
 
-	for (i = 0, num = 0; i < csi.numODs; i++) {
+	for (i = 0, num = 0; i < cgi->csi->numODs; i++) {
 		const objDef_t *obj = INVSH_GetItemByIDX(i);
 
 		if (!B_ItemIsStoredInBaseStorage(obj))
@@ -185,7 +185,7 @@ void CAP_UpdateStorageCap (base_t *base)
 
 	CAP_SetCurrent(base, CAP_ITEMS, 0);
 
-	for (i = 0; i < csi.numODs; i++) {
+	for (i = 0; i < cgi->csi->numODs; i++) {
 		const objDef_t *obj = INVSH_GetItemByIDX(i);
 
 		if (!B_ItemIsStoredInBaseStorage(obj))

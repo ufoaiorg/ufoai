@@ -106,8 +106,8 @@ void AL_FillInContainment (base_t *base)
 	assert(base);
 	containment = base->alienscont;
 
-	for (i = 0; i < csi.numTeamDefs; i++) {
-		const teamDef_t *td = &csi.teamDef[i];
+	for (i = 0; i < cgi->csi->numTeamDefs; i++) {
+		const teamDef_t *td = &cgi->csi->teamDef[i];
 		if (!CHRSH_IsTeamDefAlien(td))
 			continue;
 		if (counter >= MAX_ALIENCONT_CAP)
@@ -377,7 +377,7 @@ static void AL_AddAliens2 (base_t *base, const teamDef_t *alienType, const bool 
  * @brief Get index of alien.
  * @param[in] alienType Pointer to alien type.
  * @return Index of alien in alien containment (so less than @c ccs.numAliensTD)
- * @note It does NOT return the global team index from @c csi.teamDef array.
+ * @note It does NOT return the global team index from @c cgi->csi->teamDef array.
  * That would be @c alienType->idx
  * @sa RS_AssignTechLinks
  * @sa AL_GetAlienGlobalIDX
@@ -387,8 +387,8 @@ static int AL_GetAlienIDX (const teamDef_t *alienType)
 	int i, index;
 
 	index = 0;
-	for (i = 0; i < csi.numTeamDefs; i++) {
-		const teamDef_t *td = &csi.teamDef[i];
+	for (i = 0; i < cgi->csi->numTeamDefs; i++) {
+		const teamDef_t *td = &cgi->csi->teamDef[i];
 		if (alienType == td)
 			return index;
 		if (CHRSH_IsTeamDefAlien(td))
@@ -408,8 +408,8 @@ const teamDef_t* AL_GetAlienTeamDef (int alienTeamDefIdx)
 {
 	int i, counter = 0;
 
-	for (i = 0; i < csi.numTeamDefs; i++) {
-		const teamDef_t *td = &csi.teamDef[i];
+	for (i = 0; i < cgi->csi->numTeamDefs; i++) {
+		const teamDef_t *td = &cgi->csi->teamDef[i];
 		if (CHRSH_IsTeamDefAlien(td)) {
 			if (counter == alienTeamDefIdx)
 				return td;

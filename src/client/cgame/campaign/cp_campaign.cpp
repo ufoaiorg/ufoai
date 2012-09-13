@@ -943,7 +943,7 @@ static void CP_DebugAllItems_f (void)
 	}
 	base = B_GetBaseByIDX(i);
 
-	for (i = 0; i < csi.numODs; i++) {
+	for (i = 0; i < cgi->csi->numODs; i++) {
 		const objDef_t *obj = INVSH_GetItemByIDX(i);
 		if (!obj->weapon && !obj->numWeapons)
 			continue;
@@ -976,7 +976,7 @@ static void CP_DebugShowItems_f (void)
 	}
 	base = B_GetBaseByIDX(i);
 
-	for (i = 0; i < csi.numODs; i++) {
+	for (i = 0; i < cgi->csi->numODs; i++) {
 		const objDef_t *obj = INVSH_GetItemByIDX(i);
 		Com_Printf("%i. %s: %i\n", i, obj->id, B_ItemInBase(obj, base));
 	}
@@ -1219,8 +1219,8 @@ void CP_ResetCampaignData (void)
 	ccs.missionSpawnCallback = CP_SpawnNewMissions;
 
 	/* Collect and count Alien team definitions. */
-	for (i = 0; i < csi.numTeamDefs; i++) {
-		teamDef_t *td = &csi.teamDef[i];
+	for (i = 0; i < cgi->csi->numTeamDefs; i++) {
+		teamDef_t *td = &cgi->csi->teamDef[i];
 		if (CHRSH_IsTeamDefAlien(td))
 			ccs.alienTeams[ccs.numAliensTD++] = td;
 	}

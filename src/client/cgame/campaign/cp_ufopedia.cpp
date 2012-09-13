@@ -632,7 +632,7 @@ static void UP_Article (technology_t* tech, eventMail_t *mail)
 			switch (tech->type) {
 			case RS_ARMOUR:
 			case RS_WEAPON:
-				for (i = 0; i < csi.numODs; i++) {
+				for (i = 0; i < cgi->csi->numODs; i++) {
 					const objDef_t *od = INVSH_GetItemByIDX(i);
 					if (Q_streq(tech->provides, od->id)) {
 						INV_ItemDescription(od);

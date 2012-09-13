@@ -785,7 +785,7 @@ static void AM_MoveCharacterInventoryIntoItemCargo (aircraft_t *aircraft, charac
 	assert(chr != NULL);
 
 	/* add items to itemcargo */
-	for (container = 0; container < csi.numIDs; container++) {
+	for (container = 0; container < cgi->csi->numIDs; container++) {
 		const invList_t *ic = CONTAINER(chr, container);
 
 		while (ic) {

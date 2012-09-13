@@ -45,7 +45,7 @@ technology_t **AII_GetCraftitemTechsByType (aircraftItemType_t type)
 	static technology_t *techList[MAX_TECHNOLOGIES];
 	int i, j = 0;
 
-	for (i = 0; i < csi.numODs; i++) {
+	for (i = 0; i < cgi->csi->numODs; i++) {
 		const objDef_t *aircraftitem = INVSH_GetItemByIDX(i);
 		if (aircraftitem->craftitem.type == type) {
 			technology_t *tech = RS_GetTechForItem(aircraftitem);
