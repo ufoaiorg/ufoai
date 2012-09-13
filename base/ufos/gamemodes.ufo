@@ -11,13 +11,13 @@ cgame multiplayer {
 	)
 }
 
-cgame campaigns {
-	window	"campaigns"
+cgame campaign {
+	window	"campaign"
 	name "_Full Campaign"
 }
 
-cgame staticcampaigns {
-	window	"staticcampaigns"
+cgame staticcampaign {
+	window	"staticcampaign"
 	name "_Simple Campaign"
 }
 

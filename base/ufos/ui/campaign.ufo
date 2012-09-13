@@ -2,7 +2,7 @@
 // CAMPAIGN MENU
 // ==================
 
-window campaigns {
+window campaign {
 	/** @todo Remove me */
 	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
 
@@ -136,7 +136,7 @@ window campaigns {
 	}
 }
 
-window staticcampaigns extends campaigns
+window staticcampaign extends campaign
 {
 	/** @todo Remove me */
 	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)

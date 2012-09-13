@@ -83,7 +83,7 @@ const cgame_export_t *GetCGameStaticCampaignAPI (const cgame_import_t *import)
 	OBJZERO(e);
 
 	e.name = "Static Campaign mode";
-	e.menu = "staticcampaigns";
+	e.menu = "staticcampaign";
 	e.Init = GAME_SCP_InitStartup;
 	e.Shutdown = GAME_SCP_Shutdown;
 	e.Spawn = GAME_CP_Spawn;

@@ -9,7 +9,7 @@
 // - Several campaign windows not yet changed (end game, save game, etc.)
 
 
-window campaigns
+window campaign
 {
 	/** @todo Remove me */
 	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)

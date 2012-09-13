@@ -45,7 +45,7 @@ const cgame_export_t *GetCGameCampaignAPI (const cgame_import_t *import)
 	OBJZERO(e);
 
 	e.name = "Campaign mode";
-	e.menu = "campaigns";
+	e.menu = "campaign";
 	e.Init = GAME_CP_InitStartup;
 	e.Shutdown = GAME_CP_Shutdown;
 	e.Spawn = GAME_CP_Spawn;
