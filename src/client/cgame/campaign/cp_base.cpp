@@ -593,7 +593,7 @@ bool B_AssembleMap (const base_t *base)
 				B_BuildingSetUsed(used, entry->idx);
 
 				if (!entry->mapPart)
-					Com_Error(ERR_DROP, "MapPart for building '%s' is missing'", entry->id);
+					cgi->Com_Error(ERR_DROP, "MapPart for building '%s' is missing'", entry->id);
 
 				Q_strcat(maps, va("b/%s ", entry->mapPart), sizeof(maps));
 			} else if (entry) {
@@ -608,7 +608,7 @@ bool B_AssembleMap (const base_t *base)
 
 	SAV_QuickSave();
 
-	Cbuf_AddText(va("map %s \"%s\" \"%s\"\n", (MAP_IsNight(base->pos) ? "night" : "day"), maps, coords));
+	cgi->Cbuf_AddText(va("map %s \"%s\" \"%s\"\n", (MAP_IsNight(base->pos) ? "night" : "day"), maps, coords));
 
 	return true;
 }
@@ -806,7 +806,7 @@ bool B_BuildingDestroy (building_t* building)
 		return false;
 
 	if (base->map[(int)building->pos[1]][(int)building->pos[0]].building != building) {
-		Com_Error(ERR_DROP, "B_BuildingDestroy: building mismatch at base %i pos %i,%i.",
+		cgi->Com_Error(ERR_DROP, "B_BuildingDestroy: building mismatch at base %i pos %i,%i.",
 			base->idx, (int)building->pos[0], (int)building->pos[1]);
 	}
 
@@ -880,7 +880,7 @@ bool B_BuildingDestroy (building_t* building)
 
 	CAP_CheckOverflow();
 
-	Cmd_ExecuteString("base_init");
+	cgi->Cmd_ExecuteString("base_init");
 
 	return true;
 }
@@ -958,12 +958,12 @@ static void B_Destroy_f (void)
 	int baseIdx;
 	base_t *base;
 
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <baseIdx>\n", Cmd_Argv(0));
+	if (cgi->Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <baseIdx>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
-	baseIdx = atoi(Cmd_Argv(1));
+	baseIdx = atoi(cgi->Cmd_Argv(1));
 
 	if (baseIdx < 0 || baseIdx >= MAX_BASES) {
 		Com_Printf("B_Destroy_f: baseIdx %i is outside bounds\n", baseIdx);
@@ -992,31 +992,31 @@ void B_BuildingStatus (const building_t* building)
 
 	assert(building);
 
-	Cvar_Set("mn_building_status", _("Not set"));
+	cgi->Cvar_Set("mn_building_status", _("Not set"));
 
 	switch (building->buildingStatus) {
 	case B_STATUS_NOT_SET:
 		numberOfBuildings = B_GetNumberOfBuildingsInBaseByTemplate(B_GetCurrentSelectedBase(), building->tpl);
 		if (numberOfBuildings >= 0)
-			Cvar_Set("mn_building_status", va(_("Already %i in base"), numberOfBuildings));
+			cgi->Cvar_Set("mn_building_status", va(_("Already %i in base"), numberOfBuildings));
 		break;
 	case B_STATUS_UNDER_CONSTRUCTION:
-		Cvar_Set("mn_building_status", "");
+		cgi->Cvar_Set("mn_building_status", "");
 		break;
 	case B_STATUS_CONSTRUCTION_FINISHED:
-		Cvar_Set("mn_building_status", _("Construction finished"));
+		cgi->Cvar_Set("mn_building_status", _("Construction finished"));
 		break;
 	case B_STATUS_WORKING:
 		if (B_CheckBuildingDependencesStatus(building)) {
-			Cvar_Set("mn_building_status", _("Working 100%"));
+			cgi->Cvar_Set("mn_building_status", _("Working 100%"));
 		} else {
 			assert (building->dependsBuilding);
 			/** @todo shorten text or provide more space in overview popup */
-			Cvar_Set("mn_building_status", va("%s %s", _("Not operational, depends on"), _(building->dependsBuilding->name)));
+			cgi->Cvar_Set("mn_building_status", va("%s %s", _("Not operational, depends on"), _(building->dependsBuilding->name)));
 		}
 		break;
 	case B_STATUS_DOWN:
-		Cvar_Set("mn_building_status", _("Down"));
+		cgi->Cvar_Set("mn_building_status", _("Down"));
 		break;
 	default:
 		break;
@@ -1149,7 +1149,7 @@ static void B_BuildFromTemplate (base_t *base, const char *templateName, bool hi
 		/** @todo if there is no more space for mandatory building, remove a non mandatory one
 		 * or build mandatory ones first */
 		if (!B_GetBuildingStatus(base, building->buildingType))
-			Com_Error(ERR_DROP, "B_BuildFromTemplate: Cannot build base. No space for it's buildings!");
+			cgi->Com_Error(ERR_DROP, "B_BuildFromTemplate: Cannot build base. No space for it's buildings!");
 	}
 
 	/* set building tile positions */
@@ -1195,7 +1195,7 @@ void B_SetUpFirstBase (const campaign_t *campaign, base_t* base)
 		aircraft_t *aircraft = AIR_NewAircraft(base, firebirdAircraft);
 		CP_UpdateCredits(ccs.credits - firebirdAircraft->price);
 		if (!E_HireEmployeeByType(base, EMPL_PILOT))
-			Com_Error(ERR_DROP, "B_SetUpFirstBase: Hiring pilot failed.");
+			cgi->Com_Error(ERR_DROP, "B_SetUpFirstBase: Hiring pilot failed.");
 		/* Assign and equip soldiers on Dropships */
 		AIR_AssignInitial(aircraft);
 		B_InitialEquipment(aircraft, equipDef);
@@ -1206,7 +1206,7 @@ void B_SetUpFirstBase (const campaign_t *campaign, base_t* base)
 		aircraft_t *aircraft = AIR_NewAircraft(base, stilettoAircraft);
 		CP_UpdateCredits(ccs.credits - stilettoAircraft->price);
 		if (!E_HireEmployeeByType(base, EMPL_PILOT))
-			Com_Error(ERR_DROP, "B_SetUpFirstBase: Hiring pilot failed.");
+			cgi->Com_Error(ERR_DROP, "B_SetUpFirstBase: Hiring pilot failed.");
 		AIM_AutoEquipAircraft(aircraft);
 	}
 }
@@ -1252,10 +1252,10 @@ base_t *B_Build (const campaign_t *campaign, const vec2_t pos, const char *name)
 	float level;
 
 	if (!campaign)
-		Com_Error(ERR_DROP, "You can only build a base in an active campaign");
+		cgi->Com_Error(ERR_DROP, "You can only build a base in an active campaign");
 
 	if (!base)
-		Com_Error(ERR_DROP, "Cannot build more bases");
+		cgi->Com_Error(ERR_DROP, "Cannot build more bases");
 
 	B_SetName(base, name);
 	Vector2Copy(pos, base->pos);
@@ -1276,7 +1276,7 @@ base_t *B_Build (const campaign_t *campaign, const vec2_t pos, const char *name)
 	/* setup for first base */
 	if (ccs.campaignStats.basesBuilt == 0) {
 		if (campaign->firstBaseTemplate[0] == '\0')
-			Com_Error(ERR_DROP, "No base template for setting up the first base given");
+			cgi->Com_Error(ERR_DROP, "No base template for setting up the first base given");
 		B_BuildFromTemplate(base, campaign->firstBaseTemplate, true);
 	} else {
 		B_BuildFromTemplate(base, NULL, true);
@@ -1346,9 +1346,9 @@ building_t* B_SetBuildingByClick (base_t *base, const building_t *buildingTempla
 {
 #ifdef DEBUG
 	if (!base)
-		Com_Error(ERR_DROP, "no current base\n");
+		cgi->Com_Error(ERR_DROP, "no current base\n");
 	if (!buildingTemplate)
-		Com_Error(ERR_DROP, "no current building\n");
+		cgi->Com_Error(ERR_DROP, "no current building\n");
 #endif
 	if (!CP_CheckCredits(buildingTemplate->fixCosts)) {
 		CP_Popup(_("Notice"), _("Not enough credits to build this\n"));
@@ -1424,8 +1424,8 @@ building_t* B_SetBuildingByClick (base_t *base, const building_t *buildingTempla
 
 			B_BuildingStatus(buildingNew);
 			B_ResetBuildingCurrent(base);
-			Cmd_ExecuteString("base_init");
-			Cmd_ExecuteString("building_init");
+			cgi->Cmd_ExecuteString("base_init");
+			cgi->Cmd_ExecuteString("building_init");
 			B_FireEvent(buildingNew, base, B_ONCONSTRUCT);
 
 			return buildingNew;
@@ -1467,12 +1467,12 @@ void B_DrawBuilding (const building_t* building)
 		Q_strcat(buildingText, va(_("Needs:\t%s\n"), _(building->dependsBuilding->name)), sizeof(buildingText));
 
 	if (building->name)
-		Cvar_Set("mn_building_name", _(building->name));
+		cgi->Cvar_Set("mn_building_name", _(building->name));
 
 	if (building->image)
-		Cvar_Set("mn_building_image", building->image);
+		cgi->Cvar_Set("mn_building_image", building->image);
 	else
-		Cvar_Set("mn_building_image", "base/empty");
+		cgi->Cvar_Set("mn_building_image", "base/empty");
 
 	/* link into menu text array */
 	cgi->UI_RegisterText(TEXT_BUILDING_INFO, buildingText);
@@ -1589,7 +1589,7 @@ void B_ParseBaseTemplate (const char *name, const char **text)
 	}
 
 	if (ccs.numBaseTemplates >= MAX_BASETEMPLATES)
-		Com_Error(ERR_DROP, "B_ParseBaseTemplate: too many base templates");
+		cgi->Com_Error(ERR_DROP, "B_ParseBaseTemplate: too many base templates");
 
 	/* create new Template */
 	baseTemplate = &ccs.baseTemplates[ccs.numBaseTemplates];
@@ -1611,23 +1611,23 @@ void B_ParseBaseTemplate (const char *name, const char **text)
 
 
 		if (!Q_streq(token, "building")) {
-			Com_Error(ERR_DROP, "B_ParseBaseTemplate: \"building\" token expected but \"%s\" found", token);
+			cgi->Com_Error(ERR_DROP, "B_ParseBaseTemplate: \"building\" token expected but \"%s\" found", token);
 		}
 
 		linkedList_t *list;
 		if (!Com_ParseList(text, &list)) {
-			Com_Error(ERR_DROP, "B_ParseBaseTemplate: error while reading building tuple");
+			cgi->Com_Error(ERR_DROP, "B_ParseBaseTemplate: error while reading building tuple");
 		}
 
 		if (LIST_Count(list) != 2) {
-			Com_Error(ERR_DROP, "B_ParseBaseTemplate: building tuple must contains 2 elements (id pos)");
+			cgi->Com_Error(ERR_DROP, "B_ParseBaseTemplate: building tuple must contains 2 elements (id pos)");
 		}
 
 		const char* buildingToken = (char*)list->data;
 		const char* positionToken = (char*)list->next->data;
 
 		if (baseTemplate->numBuildings >= MAX_BASEBUILDINGS)
-			Com_Error(ERR_DROP, "B_ParseBaseTemplate: too many buildings");
+			cgi->Com_Error(ERR_DROP, "B_ParseBaseTemplate: too many buildings");
 
 		/* check if building type is known */
 		tile = &baseTemplate->buildings[baseTemplate->numBuildings];
@@ -1637,25 +1637,25 @@ void B_ParseBaseTemplate (const char *name, const char **text)
 			if (Q_streq(ccs.buildingTemplates[i].id, buildingToken)) {
 				tile->building = &ccs.buildingTemplates[i];
 				if (tile->building->maxCount >= 0 && tile->building->maxCount <= buildingNums[i])
-					Com_Error(ERR_DROP, "B_ParseBaseTemplate: Found more %s than allowed in template %s (%d))", buildingToken, baseTemplate->id, tile->building->maxCount);
+					cgi->Com_Error(ERR_DROP, "B_ParseBaseTemplate: Found more %s than allowed in template %s (%d))", buildingToken, baseTemplate->id, tile->building->maxCount);
 				buildingNums[i]++;
 				break;
 			}
 
 		if (!tile->building)
-			Com_Error(ERR_DROP, "B_ParseBaseTemplate: Could not find building with id %s\n", baseTemplate->id);
+			cgi->Com_Error(ERR_DROP, "B_ParseBaseTemplate: Could not find building with id %s\n", baseTemplate->id);
 
 		/* get the position */
 		Com_EParseValue(pos, positionToken, V_POS, 0, sizeof(vec2_t));
 		tile->posX = pos[0];
 		tile->posY = pos[1];
 		if (tile->posX < 0 || tile->posX >= BASE_SIZE || tile->posY < 0 || tile->posY >= BASE_SIZE)
-			Com_Error(ERR_DROP, "Invalid template coordinates for building %s in template %s given",
+			cgi->Com_Error(ERR_DROP, "Invalid template coordinates for building %s in template %s given",
 					tile->building->id, baseTemplate->id);
 
 		/* check for buildings on same position */
 		if (map[tile->posY][tile->posX])
-			Com_Error(ERR_DROP, "Base template '%s' has ambiguous positions for buildings set.", baseTemplate->id);
+			cgi->Com_Error(ERR_DROP, "Base template '%s' has ambiguous positions for buildings set.", baseTemplate->id);
 		map[tile->posY][tile->posX] = true;
 
 		LIST_Delete(&list);
@@ -1665,7 +1665,7 @@ void B_ParseBaseTemplate (const char *name, const char **text)
 	for (i = 0; i < ccs.numBuildingTemplates; i++) {
 		const building_t *building = &ccs.buildingTemplates[i];
 		if (building && building->mandatory && !buildingNums[i]) {
-			Com_Error(ERR_DROP, "Every base template needs one '%s'! '%s' has none.", building->id, baseTemplate->id);
+			cgi->Com_Error(ERR_DROP, "Every base template needs one '%s'! '%s' has none.", building->id, baseTemplate->id);
 		}
 	}
 }
@@ -1706,11 +1706,11 @@ void B_SetCurrentSelectedBase (const base_t *base)
 
 	if (base) {
 		INS_SetCurrentSelectedInstallation(NULL);
-		Cvar_Set("mn_base_title", base->name);
-		Cvar_SetValue("mn_base_status_id", base->baseStatus);
+		cgi->Cvar_Set("mn_base_title", base->name);
+		cgi->Cvar_SetValue("mn_base_status_id", base->baseStatus);
 	} else {
-		Cvar_Set("mn_base_title", "");
-		Cvar_Set("mn_base_status_id", "");
+		cgi->Cvar_Set("mn_base_title", "");
+		cgi->Cvar_Set("mn_base_status_id", "");
 	}
 }
 
@@ -1806,7 +1806,7 @@ static void CL_DoSwapSkills (character_t *cp1, character_t *cp2, const abilitysk
 			CL_SwapSkill(cp1, cp2, ABILITY_MIND);
 		break;
 	default:
-		Com_Error(ERR_DROP, "CL_SwapSkills: illegal skill %i.\n", skill);
+		cgi->Com_Error(ERR_DROP, "CL_SwapSkills: illegal skill %i.\n", skill);
 	}
 }
 
@@ -1989,7 +1989,7 @@ static void B_BaseList_f (void)
 		Com_Printf("Base numSensoredAircraft %i\n", base->radar.numUFOs);
 		Com_Printf("Base Alien interest %f\n", base->alienInterest);
 		Com_Printf("Base hasBuilding[]:\n");
-		Com_Printf("Misc  Lab Quar Stor Work Hosp Hang Cont SHgr UHgr SUHg Powr  Cmd AMtr Entr Miss Lasr  Rdr Team\n");
+		Com_Printf("Misc  Lab Quar Stor Work Hosp Hang Cont SHgr UHgr SUHg Powr  cgi->Cmd AMtr Entr Miss Lasr  Rdr Team\n");
 		for (j = 0; j < MAX_BUILDING_TYPE; j++) {
 			const buildingType_t type = (buildingType_t)j;
 			Com_Printf("  %i  ", B_GetBuildingStatus(base, type));
@@ -2096,14 +2096,14 @@ static void B_PrintCapacities_f (void)
 	int i, j;
 	base_t *base;
 
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <baseID>\n", Cmd_Argv(0));
+	if (cgi->Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <baseID>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
-	i = atoi(Cmd_Argv(1));
+	i = atoi(cgi->Cmd_Argv(1));
 	if (i >= B_GetCount()) {
-		Com_Printf("invalid baseID (%s)\n", Cmd_Argv(1));
+		Com_Printf("invalid baseID (%s)\n", cgi->Cmd_Argv(1));
 		return;
 	}
 	base = B_GetBaseByIDX(i);
@@ -2171,11 +2171,11 @@ static void B_CheckCoherency_f (void)
 {
 	base_t *base;
 
-	if (Cmd_Argc() >= 2) {
-		int i = atoi(Cmd_Argv(1));
+	if (cgi->Cmd_Argc() >= 2) {
+		int i = atoi(cgi->Cmd_Argv(1));
 
 		if (i < 0 || i >= B_GetCount()) {
-			Com_Printf("Usage: %s [baseIdx]\nWithout baseIdx the current base is selected.\n", Cmd_Argv(0));
+			Com_Printf("Usage: %s [baseIdx]\nWithout baseIdx the current base is selected.\n", cgi->Cmd_Argv(0));
 			return;
 		}
 		base = B_GetFoundedBaseByIDX(i);
@@ -2196,13 +2196,13 @@ static void B_CheckCoherency_f (void)
 void B_InitStartup (void)
 {
 #ifdef DEBUG
-	Cmd_AddCommand("debug_listbase", B_BaseList_f, "Print base information to the game console");
-	Cmd_AddCommand("debug_listbuilding", B_BuildingList_f, "Print building information to the game console");
-	Cmd_AddCommand("debug_listcapacities", B_PrintCapacities_f, "Debug function to show all capacities in given base");
-	Cmd_AddCommand("debug_basereset", B_ResetAllStatusAndCapacities_f, "Reset building status and capacities of all bases");
-	Cmd_AddCommand("debug_destroybase", B_Destroy_f, "Destroy a base");
-	Cmd_AddCommand("debug_buildingfinished", B_BuildingConstructionFinished_f, "Finish construction for every building in the current base");
-	Cmd_AddCommand("debug_baseiscoherent", B_CheckCoherency_f, "Checks if all buildings are connected on a base");
+	cgi->Cmd_AddCommand("debug_listbase", B_BaseList_f, "Print base information to the game console");
+	cgi->Cmd_AddCommand("debug_listbuilding", B_BuildingList_f, "Print building information to the game console");
+	cgi->Cmd_AddCommand("debug_listcapacities", B_PrintCapacities_f, "Debug function to show all capacities in given base");
+	cgi->Cmd_AddCommand("debug_basereset", B_ResetAllStatusAndCapacities_f, "Reset building status and capacities of all bases");
+	cgi->Cmd_AddCommand("debug_destroybase", B_Destroy_f, "Destroy a base");
+	cgi->Cmd_AddCommand("debug_buildingfinished", B_BuildingConstructionFinished_f, "Finish construction for every building in the current base");
+	cgi->Cmd_AddCommand("debug_baseiscoherent", B_CheckCoherency_f, "Checks if all buildings are connected on a base");
 #endif
 }
 
@@ -2228,7 +2228,7 @@ static int B_CheckBuildingConstruction (building_t *building)
 	}
 
 	if (newBuilding)
-		Cmd_ExecuteString("building_init");
+		cgi->Cmd_ExecuteString("building_init");
 
 	return newBuilding;
 }
@@ -2466,7 +2466,7 @@ void B_UpdateBaseCapacities (baseCapacities_t cap, base_t *base)
 		}
 		break;
 	default:
-		Com_Error(ERR_DROP, "Unknown capacity limit for this base: %i \n", cap);
+		cgi->Com_Error(ERR_DROP, "Unknown capacity limit for this base: %i \n", cap);
 	}
 }
 
@@ -2481,11 +2481,11 @@ void B_SaveBaseSlotsXML (const baseWeapon_t *weapons, const int numWeapons, xmlN
 	int i;
 
 	for (i = 0; i < numWeapons; i++) {
-		xmlNode_t *sub = XML_AddNode(node, SAVE_BASES_WEAPON);
+		xmlNode_t *sub = cgi->XML_AddNode(node, SAVE_BASES_WEAPON);
 		AII_SaveOneSlotXML(sub, &weapons[i].slot, true);
-		XML_AddBool(sub, SAVE_BASES_AUTOFIRE, weapons[i].autofire);
+		cgi->XML_AddBool(sub, SAVE_BASES_AUTOFIRE, weapons[i].autofire);
 		if (weapons[i].target)
-			XML_AddInt(sub, SAVE_BASES_TARGET, weapons[i].target->idx);
+			cgi->XML_AddInt(sub, SAVE_BASES_TARGET, weapons[i].target->idx);
 	}
 }
 
@@ -2500,11 +2500,11 @@ bool B_SaveStorageXML (xmlNode_t *parent, const equipDef_t equip)
 	for (k = 0; k < cgi->csi->numODs; k++) {
 		const objDef_t *od = INVSH_GetItemByIDX(k);
 		if (equip.numItems[k] || equip.numItemsLoose[k]) {
-			xmlNode_t *node = XML_AddNode(parent, SAVE_BASES_ITEM);
+			xmlNode_t *node = cgi->XML_AddNode(parent, SAVE_BASES_ITEM);
 
-			XML_AddString(node, SAVE_BASES_ODS_ID, od->id);
-			XML_AddIntValue(node, SAVE_BASES_NUM, equip.numItems[k]);
-			XML_AddByteValue(node, SAVE_BASES_NUMLOOSE, equip.numItemsLoose[k]);
+			cgi->XML_AddString(node, SAVE_BASES_ODS_ID, od->id);
+			cgi->XML_AddIntValue(node, SAVE_BASES_NUM, equip.numItems[k]);
+			cgi->XML_AddByteValue(node, SAVE_BASES_NUMLOOSE, equip.numItemsLoose[k]);
 		}
 	}
 	return true;
@@ -2519,7 +2519,7 @@ bool B_SaveXML (xmlNode_t *parent)
 	xmlNode_t *bases;
 	base_t *b;
 
-	bases = XML_AddNode(parent, SAVE_BASES_BASES);
+	bases = cgi->XML_AddNode(parent, SAVE_BASES_BASES);
 	b = NULL;
 	while ((b = B_GetNext(b)) != NULL) {
 		int row;
@@ -2534,29 +2534,29 @@ bool B_SaveXML (xmlNode_t *parent)
 
 		Com_RegisterConstList(saveBaseConstants);
 
-		act_base = XML_AddNode(bases, SAVE_BASES_BASE);
-		XML_AddInt(act_base, SAVE_BASES_IDX, b->idx);
-		XML_AddString(act_base, SAVE_BASES_NAME, b->name);
-		XML_AddPos3(act_base, SAVE_BASES_POS, b->pos);
-		XML_AddString(act_base, SAVE_BASES_BASESTATUS, Com_GetConstVariable(SAVE_BASESTATUS_NAMESPACE, b->baseStatus));
-		XML_AddFloat(act_base, SAVE_BASES_ALIENINTEREST, b->alienInterest);
+		act_base = cgi->XML_AddNode(bases, SAVE_BASES_BASE);
+		cgi->XML_AddInt(act_base, SAVE_BASES_IDX, b->idx);
+		cgi->XML_AddString(act_base, SAVE_BASES_NAME, b->name);
+		cgi->XML_AddPos3(act_base, SAVE_BASES_POS, b->pos);
+		cgi->XML_AddString(act_base, SAVE_BASES_BASESTATUS, Com_GetConstVariable(SAVE_BASESTATUS_NAMESPACE, b->baseStatus));
+		cgi->XML_AddFloat(act_base, SAVE_BASES_ALIENINTEREST, b->alienInterest);
 
 		/* building space */
-		node = XML_AddNode(act_base, SAVE_BASES_BUILDINGSPACE);
+		node = cgi->XML_AddNode(act_base, SAVE_BASES_BUILDINGSPACE);
 		for (row = 0; row < BASE_SIZE; row++) {
 			int column;
 			for (column = 0; column < BASE_SIZE; column++) {
-				xmlNode_t * snode = XML_AddNode(node, SAVE_BASES_BUILDING);
+				xmlNode_t * snode = cgi->XML_AddNode(node, SAVE_BASES_BUILDING);
 				/** @todo save it as vec2t if needed, also it's opposite */
-				XML_AddInt(snode, SAVE_BASES_X, row);
-				XML_AddInt(snode, SAVE_BASES_Y, column);
+				cgi->XML_AddInt(snode, SAVE_BASES_X, row);
+				cgi->XML_AddInt(snode, SAVE_BASES_Y, column);
 				if (B_GetBuildingAt(b, column, row))
-					XML_AddInt(snode, SAVE_BASES_BUILDINGINDEX, B_GetBuildingAt(b, column, row)->idx);
-				XML_AddBoolValue(snode, SAVE_BASES_BLOCKED, B_IsTileBlocked(b, column, row));
+					cgi->XML_AddInt(snode, SAVE_BASES_BUILDINGINDEX, B_GetBuildingAt(b, column, row)->idx);
+				cgi->XML_AddBoolValue(snode, SAVE_BASES_BLOCKED, B_IsTileBlocked(b, column, row));
 			}
 		}
 		/* buildings */
-		node = XML_AddNode(act_base, SAVE_BASES_BUILDINGS);
+		node = cgi->XML_AddNode(act_base, SAVE_BASES_BUILDINGS);
 		building = NULL;
 		while ((building = B_GetNextBuilding(b, building))) {
 			xmlNode_t * snode;
@@ -2564,26 +2564,26 @@ bool B_SaveXML (xmlNode_t *parent)
 			if (!building->tpl)
 				continue;
 
-			snode = XML_AddNode(node, SAVE_BASES_BUILDING);
-			XML_AddString(snode, SAVE_BASES_BUILDINGTYPE, building->tpl->id);
-			XML_AddInt(snode, SAVE_BASES_BUILDING_PLACE, building->idx);
-			XML_AddString(snode, SAVE_BASES_BUILDINGSTATUS, Com_GetConstVariable(SAVE_BUILDINGSTATUS_NAMESPACE, building->buildingStatus));
-			XML_AddDate(snode, SAVE_BASES_BUILDINGTIMESTART, building->timeStart.day, building->timeStart.sec);
-			XML_AddInt(snode, SAVE_BASES_BUILDINGBUILDTIME, building->buildTime);
-			XML_AddFloatValue(snode, SAVE_BASES_BUILDINGLEVEL, building->level);
-			XML_AddPos2(snode, SAVE_BASES_POS, building->pos);
+			snode = cgi->XML_AddNode(node, SAVE_BASES_BUILDING);
+			cgi->XML_AddString(snode, SAVE_BASES_BUILDINGTYPE, building->tpl->id);
+			cgi->XML_AddInt(snode, SAVE_BASES_BUILDING_PLACE, building->idx);
+			cgi->XML_AddString(snode, SAVE_BASES_BUILDINGSTATUS, Com_GetConstVariable(SAVE_BUILDINGSTATUS_NAMESPACE, building->buildingStatus));
+			cgi->XML_AddDate(snode, SAVE_BASES_BUILDINGTIMESTART, building->timeStart.day, building->timeStart.sec);
+			cgi->XML_AddInt(snode, SAVE_BASES_BUILDINGBUILDTIME, building->buildTime);
+			cgi->XML_AddFloatValue(snode, SAVE_BASES_BUILDINGLEVEL, building->level);
+			cgi->XML_AddPos2(snode, SAVE_BASES_POS, building->pos);
 		}
 		/* base defences */
-		node = XML_AddNode(act_base, SAVE_BASES_BATTERIES);
+		node = cgi->XML_AddNode(act_base, SAVE_BASES_BATTERIES);
 		B_SaveBaseSlotsXML(b->batteries, b->numBatteries, node);
-		node = XML_AddNode(act_base, SAVE_BASES_LASERS);
+		node = cgi->XML_AddNode(act_base, SAVE_BASES_LASERS);
 		B_SaveBaseSlotsXML(b->lasers, b->numLasers, node);
 		/* store equipment */
-		node = XML_AddNode(act_base, SAVE_BASES_STORAGE);
+		node = cgi->XML_AddNode(act_base, SAVE_BASES_STORAGE);
 		B_SaveStorageXML(node, b->storage);
 		/* radar */
-		XML_AddIntValue(act_base, SAVE_BASES_RADARRANGE, b->radar.range);
-		XML_AddIntValue(act_base, SAVE_BASES_TRACKINGRANGE, b->radar.trackingRange);
+		cgi->XML_AddIntValue(act_base, SAVE_BASES_RADARRANGE, b->radar.range);
+		cgi->XML_AddIntValue(act_base, SAVE_BASES_TRACKINGRANGE, b->radar.trackingRange);
 
 		Com_UnregisterConstList(saveBaseConstants);
 	}
@@ -2602,10 +2602,10 @@ int B_LoadBaseSlotsXML (baseWeapon_t* weapons, int max, xmlNode_t *p)
 {
 	int i;
 	xmlNode_t *s;
-	for (i = 0, s = XML_GetNode(p, SAVE_BASES_WEAPON); s && i < max; i++, s = XML_GetNextNode(s, p, SAVE_BASES_WEAPON)) {
-		const int target = XML_GetInt(s, SAVE_BASES_TARGET, -1);
+	for (i = 0, s = cgi->XML_GetNode(p, SAVE_BASES_WEAPON); s && i < max; i++, s = cgi->XML_GetNextNode(s, p, SAVE_BASES_WEAPON)) {
+		const int target = cgi->XML_GetInt(s, SAVE_BASES_TARGET, -1);
 		AII_LoadOneSlotXML(s, &weapons[i].slot, true);
-		weapons[i].autofire = XML_GetBool(s, SAVE_BASES_AUTOFIRE, true);
+		weapons[i].autofire = cgi->XML_GetBool(s, SAVE_BASES_AUTOFIRE, true);
 		weapons[i].target = (target >= 0) ? UFO_GetByIDX(target) : NULL;
 	}
 	return i;
@@ -2641,15 +2641,15 @@ bool  B_PostLoadInit (void)
 bool B_LoadStorageXML (xmlNode_t *parent, equipDef_t *equip)
 {
 	xmlNode_t *node;
-	for (node = XML_GetNode(parent, SAVE_BASES_ITEM); node; node = XML_GetNextNode(node, parent, SAVE_BASES_ITEM)) {
-		const char *s = XML_GetString(node, SAVE_BASES_ODS_ID);
+	for (node = cgi->XML_GetNode(parent, SAVE_BASES_ITEM); node; node = cgi->XML_GetNextNode(node, parent, SAVE_BASES_ITEM)) {
+		const char *s = cgi->XML_GetString(node, SAVE_BASES_ODS_ID);
 		const objDef_t *od = INVSH_GetItemByID(s);
 
 		if (!od) {
 			Com_Printf("B_Load: Could not find item '%s'\n", s);
 		} else {
-			equip->numItems[od->idx] = XML_GetInt(node, SAVE_BASES_NUM, 0);
-			equip->numItemsLoose[od->idx] = XML_GetInt(node, SAVE_BASES_NUMLOOSE, 0);
+			equip->numItems[od->idx] = cgi->XML_GetInt(node, SAVE_BASES_NUM, 0);
+			equip->numItemsLoose[od->idx] = cgi->XML_GetInt(node, SAVE_BASES_NUMLOOSE, 0);
 		}
 	}
 	return true;
@@ -2665,7 +2665,7 @@ bool B_LoadXML (xmlNode_t *parent)
 	int buildingIdx;
 	xmlNode_t *bases, *base;
 
-	bases = XML_GetNode(parent, "bases");
+	bases = cgi->XML_GetNode(parent, "bases");
 	if (!bases) {
 		Com_Printf("Error: Node 'bases' wasn't found in savegame\n");
 		return false;
@@ -2674,15 +2674,15 @@ bool B_LoadXML (xmlNode_t *parent)
 	ccs.numBases = 0;
 
 	Com_RegisterConstList(saveBaseConstants);
-	for (base = XML_GetNode(bases, SAVE_BASES_BASE), i = 0; i < MAX_BASES && base; i++, base = XML_GetNextNode(base, bases, SAVE_BASES_BASE)) {
+	for (base = cgi->XML_GetNode(bases, SAVE_BASES_BASE), i = 0; i < MAX_BASES && base; i++, base = cgi->XML_GetNextNode(base, bases, SAVE_BASES_BASE)) {
 		xmlNode_t * node, * snode;
 		base_t *const b = B_GetBaseByIDX(i);
-		const char *str = XML_GetString(base, SAVE_BASES_BASESTATUS);
+		const char *str = cgi->XML_GetString(base, SAVE_BASES_BASESTATUS);
 		int j;
 
 		ccs.numBases++;
 
-		b->idx = XML_GetInt(base, SAVE_BASES_IDX, -1);
+		b->idx = cgi->XML_GetInt(base, SAVE_BASES_IDX, -1);
 		if (b->idx < 0) {
 			Com_Printf("Invalid base index %i\n", b->idx);
 			Com_UnregisterConstList(saveBaseConstants);
@@ -2695,19 +2695,19 @@ bool B_LoadXML (xmlNode_t *parent)
 			return false;
 		}
 
-		Q_strncpyz(b->name, XML_GetString(base, SAVE_BASES_NAME), sizeof(b->name));
-		XML_GetPos3(base, SAVE_BASES_POS, b->pos);
-		b->alienInterest = XML_GetFloat(base, SAVE_BASES_ALIENINTEREST, 0.0);
+		Q_strncpyz(b->name, cgi->XML_GetString(base, SAVE_BASES_NAME), sizeof(b->name));
+		cgi->XML_GetPos3(base, SAVE_BASES_POS, b->pos);
+		b->alienInterest = cgi->XML_GetFloat(base, SAVE_BASES_ALIENINTEREST, 0.0);
 		b->aircraftCurrent = NULL;
 
 		/* building space*/
-		node = XML_GetNode(base, SAVE_BASES_BUILDINGSPACE);
-		for (snode = XML_GetNode(node, SAVE_BASES_BUILDING); snode; snode = XML_GetNextNode(snode, node, SAVE_BASES_BUILDING)) {
+		node = cgi->XML_GetNode(base, SAVE_BASES_BUILDINGSPACE);
+		for (snode = cgi->XML_GetNode(node, SAVE_BASES_BUILDING); snode; snode = cgi->XML_GetNextNode(snode, node, SAVE_BASES_BUILDING)) {
 			/** @todo save it as vec2t if needed, also it's opposite */
-			const int k = XML_GetInt(snode, SAVE_BASES_X, 0);
-			const int l = XML_GetInt(snode, SAVE_BASES_Y, 0);
+			const int k = cgi->XML_GetInt(snode, SAVE_BASES_X, 0);
+			const int l = cgi->XML_GetInt(snode, SAVE_BASES_Y, 0);
 			baseBuildingTile_t* tile = &b->map[k][l];
-			buildingIdx = XML_GetInt(snode, SAVE_BASES_BUILDINGINDEX, -1);
+			buildingIdx = cgi->XML_GetInt(snode, SAVE_BASES_BUILDINGINDEX, -1);
 
 			tile->posX = l;
 			tile->posY = k;
@@ -2716,7 +2716,7 @@ bool B_LoadXML (xmlNode_t *parent)
 				tile->building = B_GetBuildingByIDX(i, buildingIdx);
 			else
 				tile->building = NULL;
-			tile->blocked = XML_GetBool(snode, SAVE_BASES_BLOCKED, false);
+			tile->blocked = cgi->XML_GetBool(snode, SAVE_BASES_BLOCKED, false);
 			if (tile->blocked && tile->building != NULL) {
 				Com_Printf("inconstent base layout found\n");
 				Com_UnregisterConstList(saveBaseConstants);
@@ -2724,9 +2724,9 @@ bool B_LoadXML (xmlNode_t *parent)
 			}
 		}
 		/* buildings */
-		node = XML_GetNode(base, SAVE_BASES_BUILDINGS);
-		for (j = 0, snode = XML_GetNode(node, SAVE_BASES_BUILDING); snode; snode = XML_GetNextNode(snode, node, SAVE_BASES_BUILDING), j++) {
-			const int buildId = XML_GetInt(snode, SAVE_BASES_BUILDING_PLACE, MAX_BUILDINGS);
+		node = cgi->XML_GetNode(base, SAVE_BASES_BUILDINGS);
+		for (j = 0, snode = cgi->XML_GetNode(node, SAVE_BASES_BUILDING); snode; snode = cgi->XML_GetNextNode(snode, node, SAVE_BASES_BUILDING), j++) {
+			const int buildId = cgi->XML_GetInt(snode, SAVE_BASES_BUILDING_PLACE, MAX_BUILDINGS);
 			building_t *building;
 			const building_t *buildingTemplate;
 			char buildingType[MAX_VAR];
@@ -2737,7 +2737,7 @@ bool B_LoadXML (xmlNode_t *parent)
 				return false;
 			}
 
-			Q_strncpyz(buildingType, XML_GetString(snode, SAVE_BASES_BUILDINGTYPE), sizeof(buildingType));
+			Q_strncpyz(buildingType, cgi->XML_GetString(snode, SAVE_BASES_BUILDINGTYPE), sizeof(buildingType));
 			if (buildingType[0] == '\0') {
 				Com_Printf("No buildingtype set\n");
 				Com_UnregisterConstList(saveBaseConstants);
@@ -2758,43 +2758,43 @@ bool B_LoadXML (xmlNode_t *parent)
 			}
 			building->base = b;
 
-			str = XML_GetString(snode, SAVE_BASES_BUILDINGSTATUS);
+			str = cgi->XML_GetString(snode, SAVE_BASES_BUILDINGSTATUS);
 			if (!Com_GetConstIntFromNamespace(SAVE_BUILDINGSTATUS_NAMESPACE, str, (int*) &building->buildingStatus)) {
 				Com_Printf("Invalid building status '%s'\n", str);
 				Com_UnregisterConstList(saveBaseConstants);
 				return false;
 			}
 
-			XML_GetDate(snode, SAVE_BASES_BUILDINGTIMESTART, &building->timeStart.day, &building->timeStart.sec);
+			cgi->XML_GetDate(snode, SAVE_BASES_BUILDINGTIMESTART, &building->timeStart.day, &building->timeStart.sec);
 
-			building->buildTime = XML_GetInt(snode, SAVE_BASES_BUILDINGBUILDTIME, 0);
-			building->level = XML_GetFloat(snode, SAVE_BASES_BUILDINGLEVEL, 0);
-			XML_GetPos2(snode, SAVE_BASES_POS, building->pos);
+			building->buildTime = cgi->XML_GetInt(snode, SAVE_BASES_BUILDINGBUILDTIME, 0);
+			building->level = cgi->XML_GetFloat(snode, SAVE_BASES_BUILDINGLEVEL, 0);
+			cgi->XML_GetPos2(snode, SAVE_BASES_POS, building->pos);
 		}
 		ccs.numBuildings[i] = j;
 
 		BDEF_InitialiseBaseSlots(b);
 		/* read missile battery slots */
-		node = XML_GetNode(base, SAVE_BASES_BATTERIES);
+		node = cgi->XML_GetNode(base, SAVE_BASES_BATTERIES);
 		if (node)
 			b->numBatteries = B_LoadBaseSlotsXML(b->batteries, MAX_BASE_SLOT, node);
 		/* read laser battery slots */
-		node = XML_GetNode(base, SAVE_BASES_LASERS);
+		node = cgi->XML_GetNode(base, SAVE_BASES_LASERS);
 		if (node)
 			b->numLasers = B_LoadBaseSlotsXML(b->lasers, MAX_BASE_SLOT, node);
 		/* read equipment */
-		node = XML_GetNode(base, SAVE_BASES_STORAGE);
+		node = cgi->XML_GetNode(base, SAVE_BASES_STORAGE);
 		B_LoadStorageXML(node, &(b->storage));
 		/* read radar info */
 		RADAR_InitialiseUFOs(&b->radar);
-		RADAR_Initialise(&b->radar, XML_GetInt(base, SAVE_BASES_RADARRANGE, 0), XML_GetInt(base, SAVE_BASES_TRACKINGRANGE, 0), B_GetMaxBuildingLevel(b, B_RADAR), true);
+		RADAR_Initialise(&b->radar, cgi->XML_GetInt(base, SAVE_BASES_RADARRANGE, 0), cgi->XML_GetInt(base, SAVE_BASES_TRACKINGRANGE, 0), B_GetMaxBuildingLevel(b, B_RADAR), true);
 
 		/** @todo can't we use something like I_DestroyInventory here? */
 		/* clear the mess of stray loaded pointers */
 		OBJZERO(b->bEquipment);
 	}
 	Com_UnregisterConstList(saveBaseConstants);
-	Cvar_SetValue("mn_base_count", B_GetCount());
+	cgi->Cvar_SetValue("mn_base_count", B_GetCount());
 	return true;
 }
 
@@ -2919,7 +2919,7 @@ int B_AntimatterInBase (const base_t *base)
 
 	od = INVSH_GetItemByID(ANTIMATTER_TECH_ID);
 	if (od == NULL)
-		Com_Error(ERR_DROP, "Could not find " ANTIMATTER_TECH_ID " object definition");
+		cgi->Com_Error(ERR_DROP, "Could not find " ANTIMATTER_TECH_ID " object definition");
 
 	assert(base);
 	assert(B_ItemInBase(od, base) == CAP_GetCurrent(base, CAP_ANTIMATTER));
@@ -2953,7 +2953,7 @@ void B_ManageAntimatter (base_t *base, int amount, bool add)
 
 	od = INVSH_GetItemByIDSilent(ANTIMATTER_TECH_ID);
 	if (od == NULL)
-		Com_Error(ERR_DROP, "Could not find " ANTIMATTER_TECH_ID " object definition");
+		cgi->Com_Error(ERR_DROP, "Could not find " ANTIMATTER_TECH_ID " object definition");
 
 	cap = CAP_Get(base, CAP_ANTIMATTER);
 	if (add) {	/* Adding. */

@@ -64,10 +64,10 @@ void CP_SetMissionVars (const mission_t *mission, const battleParam_t *battlePar
 	assert(mission->mapDef);
 
 	/* start the map */
-	Cvar_SetValue("ai_numaliens", battleParameters->aliens);
-	Cvar_SetValue("ai_numcivilians", battleParameters->civilians);
-	Cvar_Set("ai_civilian", battleParameters->civTeam);
-	Cvar_Set("ai_equipment", battleParameters->alienEquipment);
+	cgi->Cvar_SetValue("ai_numaliens", battleParameters->aliens);
+	cgi->Cvar_SetValue("ai_numcivilians", battleParameters->civilians);
+	cgi->Cvar_Set("ai_civilian", battleParameters->civTeam);
+	cgi->Cvar_Set("ai_equipment", battleParameters->alienEquipment);
 
 	/* now store the alien teams in the shared cgi->csi->struct to let the game dll
 	 * have access to this data, too */
@@ -105,7 +105,7 @@ void CP_StartMissionMap (mission_t* mission, const battleParam_t *battleParamete
 			Com_Printf("Baseattack map on non-baseattack mission! (id=%s, category=%d)\n", mission->id, mission->category);
 		/* assemble a random base */
 		if (!base)
-			Com_Error(ERR_DROP, "Baseattack map without base!\n");
+			cgi->Com_Error(ERR_DROP, "Baseattack map without base!\n");
 		/* base must be under attack and might not have been destroyed in the meantime. */
 		B_AssembleMap(base);
 
@@ -123,14 +123,14 @@ void CP_StartMissionMap (mission_t* mission, const battleParam_t *battleParamete
 	 * with the suitable terrain texture - just use tex_terrain/dummy for the
 	 * brushes you want the terrain textures on
 	 * @sa R_ModLoadTexinfo */
-	Cvar_Set("sv_mapzone", battleParameters->zoneType);
+	cgi->Cvar_Set("sv_mapzone", battleParameters->zoneType);
 
 	if (mission->mapDef->hurtAliens)
-		Cvar_Set("sv_hurtaliens", "1");
+		cgi->Cvar_Set("sv_hurtaliens", "1");
 	else
-		Cvar_Set("sv_hurtaliens", "0");
+		cgi->Cvar_Set("sv_hurtaliens", "0");
 
-	Cbuf_AddText(va("map %s %s %s\n", (MAP_IsNight(mission->pos) ? "night" : "day"),
+	cgi->Cbuf_AddText(va("map %s %s %s\n", (MAP_IsNight(mission->pos) ? "night" : "day"),
 		mission->mapDef->map, param ? param : ""));
 }
 
@@ -184,7 +184,7 @@ static void CP_SetAlienTeamByInterest (mission_t *mission, battleParam_t *battle
 
 	if (!numAvailableGroup) {
 		CP_MissionRemove(mission);
-		Com_Error(ERR_DROP, "CP_SetAlienTeamByInterest: no available alien team for mission '%s': interest = %i -- category = %i",
+		cgi->Com_Error(ERR_DROP, "CP_SetAlienTeamByInterest: no available alien team for mission '%s': interest = %i -- category = %i",
 			mission->id, mission->initialOverallInterest, mission->category);
 	}
 
@@ -238,7 +238,7 @@ static void CP_SetAlienEquipmentByInterest (const mission_t *mission, linkedList
 	Com_DPrintf(DEBUG_CLIENT, "CP_SetAlienEquipmentByInterest: %i available equipment packs for mission %s\n", availableEquipDef, mission->id);
 
 	if (!availableEquipDef)
-		Com_Error(ERR_DROP, "CP_SetAlienEquipmentByInterest: no available alien equipment for mission '%s'", mission->id);
+		cgi->Com_Error(ERR_DROP, "CP_SetAlienEquipmentByInterest: no available alien equipment for mission '%s'", mission->id);
 
 	/* Choose an alien equipment definition -- between 0 and availableStage - 1 */
 	randomNum = rand() % availableEquipDef;
@@ -329,9 +329,9 @@ void CP_CreateBattleParameters (mission_t *mission, battleParam_t *param, const 
 	Mem_Free(param->param);
 	param->param = NULL;
 
-	Cvar_Set("rm_ufo", "");
-	Cvar_Set("rm_drop", "");
-	Cvar_Set("rm_crashed", "");
+	cgi->Cvar_Set("rm_ufo", "");
+	cgi->Cvar_Set("rm_drop", "");
+	cgi->Cvar_Set("rm_crashed", "");
 
 	param->mission = mission;
 	color = MAP_GetColor(mission->pos, MAPTYPE_TERRAIN, NULL);
@@ -361,17 +361,17 @@ void CP_CreateBattleParameters (mission_t *mission, battleParam_t *param, const 
 		/* Set random map UFO if this is a random map */
 		if (mission->mapDef->map[0] == '+' && !LIST_IsEmpty(mission->mapDef->ufos)) {
 			/* set rm_ufo to the ufo type used */
-			Cvar_Set("rm_ufo", Com_GetRandomMapAssemblyNameForCraft(shortUFOType));
+			cgi->Cvar_Set("rm_ufo", Com_GetRandomMapAssemblyNameForCraft(shortUFOType));
 		}
 	}
 
 	/* Set random map aircraft if this is a random map */
 	if (mission->mapDef->map[0] == '+') {
 		if (mission->category == INTERESTCATEGORY_RESCUE) {
-			Cvar_Set("rm_crashed", Com_GetRandomMapAssemblyNameForCrashedCraft(mission->data.aircraft->id));
+			cgi->Cvar_Set("rm_crashed", Com_GetRandomMapAssemblyNameForCrashedCraft(mission->data.aircraft->id));
 		}
 		if (!LIST_IsEmpty(mission->mapDef->aircraft))
-			Cvar_Set("rm_drop", Com_GetRandomMapAssemblyNameForCraft(aircraft->id));
+			cgi->Cvar_Set("rm_drop", Com_GetRandomMapAssemblyNameForCraft(aircraft->id));
 	}
 }
 
@@ -575,7 +575,7 @@ const char* MAP_GetMissionModel (const mission_t *mission)
 	case INTERESTCATEGORY_MAX:
 		break;
 	}
-	Com_Error(ERR_DROP, "Unknown mission interest category");
+	cgi->Com_Error(ERR_DROP, "Unknown mission interest category");
 }
 
 /**
@@ -829,7 +829,7 @@ void CP_MissionRemove (mission_t *mission)
 	CP_MissionRemoveFromGeoscape(mission);
 
 	if (!LIST_Remove(&ccs.missions, mission))
-		Com_Error(ERR_DROP, "CP_MissionRemove: Could not find mission '%s' to remove.\n", mission->id);
+		cgi->Com_Error(ERR_DROP, "CP_MissionRemove: Could not find mission '%s' to remove.\n", mission->id);
 }
 
 /**
@@ -1126,7 +1126,7 @@ void CP_MissionEnd (const campaign_t *campaign, mission_t* mission, const battle
 	if (CP_TransferOfAliensToOtherBaseNeeded(base, &ccs.missionResults)) {
 		/* We have captured/killed aliens, but the homebase of this aircraft does not have free alien containment space.
 		 * Popup aircraft transfer dialog to choose a better base. */
-		Cmd_ExecuteString(va("trans_aliens %i", aircraft->idx));
+		cgi->Cmd_ExecuteString(va("trans_aliens %i", aircraft->idx));
 	} else {
 		/* The aircraft can be safely sent to its homebase without losing aliens */
 	}
@@ -1204,7 +1204,7 @@ void CP_SpawnCrashSiteMission (aircraft_t *ufo)
 
 	mission = ufo->mission;
 	if (!mission)
-		Com_Error(ERR_DROP, "CP_SpawnCrashSiteMission: No mission correspond to ufo '%s'", ufo->id);
+		cgi->Com_Error(ERR_DROP, "CP_SpawnCrashSiteMission: No mission correspond to ufo '%s'", ufo->id);
 
 	mission->crashed = true;
 
@@ -1300,7 +1300,7 @@ void CP_SpawnRescueMission (aircraft_t *aircraft, aircraft_t *ufo)
 	/* create the mission */
 	mission = CP_CreateNewMission(INTERESTCATEGORY_RESCUE, true);
 	if (!mission)
-		Com_Error(ERR_DROP, "CP_SpawnRescueMission: mission could not be created");
+		cgi->Com_Error(ERR_DROP, "CP_SpawnRescueMission: mission could not be created");
 
 	/* Reset mapDef. CP_ChooseMap don't overwrite if set */
 	mission->mapDef = NULL;
@@ -1418,11 +1418,11 @@ ufoType_t CP_MissionChooseUFO (const mission_t *mission)
 	case INTERESTCATEGORY_RESCUE:
 	case INTERESTCATEGORY_NONE:
 	case INTERESTCATEGORY_MAX:
-		Com_Error(ERR_DROP, "CP_MissionChooseUFO: Wrong mission category %i", mission->category);
+		cgi->Com_Error(ERR_DROP, "CP_MissionChooseUFO: Wrong mission category %i", mission->category);
 	}
 
 	if (numTypes > UFO_MAX)
-		Com_Error(ERR_DROP, "CP_MissionChooseUFO: Too many values UFOs (%i/%i)", numTypes, UFO_MAX);
+		cgi->Com_Error(ERR_DROP, "CP_MissionChooseUFO: Too many values UFOs (%i/%i)", numTypes, UFO_MAX);
 
 	/* Roll the random number */
 	randNumber = frand();
@@ -1616,9 +1616,9 @@ static void MIS_SpawnNewMissions_f (void)
 	int type = 0;
 	mission_t *mission;
 
-	if (Cmd_Argc() < 2) {
+	if (cgi->Cmd_Argc() < 2) {
 		int i;
-		Com_Printf("Usage: %s <category> [<type>]\n", Cmd_Argv(0));
+		Com_Printf("Usage: %s <category> [<type>]\n", cgi->Cmd_Argv(0));
 		for (i = INTERESTCATEGORY_RECON; i < INTERESTCATEGORY_MAX; i++) {
 			category = (interestCategory_t)i;
 			Com_Printf("...%i: %s", category, INT_InterestCategoryToName(category));
@@ -1633,10 +1633,10 @@ static void MIS_SpawnNewMissions_f (void)
 		return;
 	}
 
-	if (Cmd_Argc() >= 3)
-		type = atoi(Cmd_Argv(2));
+	if (cgi->Cmd_Argc() >= 3)
+		type = atoi(cgi->Cmd_Argv(2));
 
-	category = (interestCategory_t)atoi(Cmd_Argv(1));
+	category = (interestCategory_t)atoi(cgi->Cmd_Argv(1));
 
 	if (category == INTERESTCATEGORY_MAX)
 		return;
@@ -1718,14 +1718,14 @@ static void MIS_MissionSetMap_f (void)
 {
 	mapDef_t *mapDef;
 	mission_t *mission;
-	if (Cmd_Argc() < 3) {
-		Com_Printf("Usage: %s <missionid> <mapdef>\n", Cmd_Argv(0));
+	if (cgi->Cmd_Argc() < 3) {
+		Com_Printf("Usage: %s <missionid> <mapdef>\n", cgi->Cmd_Argv(0));
 		return;
 	}
-	mission = CP_GetMissionByID(Cmd_Argv(1));
-	mapDef = Com_GetMapDefinitionByID(Cmd_Argv(2));
+	mission = CP_GetMissionByID(cgi->Cmd_Argv(1));
+	mapDef = Com_GetMapDefinitionByID(cgi->Cmd_Argv(2));
 	if (mapDef == NULL) {
-		Com_Printf("Could not find mapdef for %s\n", Cmd_Argv(2));
+		Com_Printf("Could not find mapdef for %s\n", cgi->Cmd_Argv(2));
 		return;
 	}
 	mission->mapDef = mapDef;
@@ -1783,11 +1783,11 @@ static void MIS_DeleteMission_f (void)
 {
 	mission_t *mission;
 
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <missionid>\n", Cmd_Argv(0));
+	if (cgi->Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <missionid>\n", cgi->Cmd_Argv(0));
 		return;
 	}
-	mission = CP_GetMissionByID(Cmd_Argv(1));
+	mission = CP_GetMissionByID(cgi->Cmd_Argv(1));
 
 	if (!mission)
 		return;
@@ -1802,43 +1802,43 @@ static void MIS_DeleteMission_f (void)
  */
 bool MIS_SaveXML (xmlNode_t *parent)
 {
-	xmlNode_t *missionsNode = XML_AddNode(parent, SAVE_MISSIONS);
+	xmlNode_t *missionsNode = cgi->XML_AddNode(parent, SAVE_MISSIONS);
 
 	Com_RegisterConstList(saveInterestConstants);
 	Com_RegisterConstList(saveMissionConstants);
 	MIS_Foreach(mission) {
-		xmlNode_t *missionNode = XML_AddNode(missionsNode, SAVE_MISSIONS_MISSION);
+		xmlNode_t *missionNode = cgi->XML_AddNode(missionsNode, SAVE_MISSIONS_MISSION);
 
-		XML_AddInt(missionNode, SAVE_MISSIONS_MISSION_IDX, mission->idx);
-		XML_AddString(missionNode, SAVE_MISSIONS_ID, mission->id);
+		cgi->XML_AddInt(missionNode, SAVE_MISSIONS_MISSION_IDX, mission->idx);
+		cgi->XML_AddString(missionNode, SAVE_MISSIONS_ID, mission->id);
 		if (mission->mapDef)
-			XML_AddString(missionNode, SAVE_MISSIONS_MAPDEF_ID, mission->mapDef->id);
-		XML_AddBool(missionNode, SAVE_MISSIONS_ACTIVE, mission->active);
-		XML_AddBool(missionNode, SAVE_MISSIONS_POSASSIGNED, mission->posAssigned);
-		XML_AddBool(missionNode, SAVE_MISSIONS_CRASHED, mission->crashed);
-		XML_AddString(missionNode, SAVE_MISSIONS_ONWIN, mission->onwin);
-		XML_AddString(missionNode, SAVE_MISSIONS_ONLOSE, mission->onlose);
-		XML_AddString(missionNode, SAVE_MISSIONS_CATEGORY, Com_GetConstVariable(SAVE_INTERESTCAT_NAMESPACE, mission->category));
-		XML_AddString(missionNode, SAVE_MISSIONS_STAGE, Com_GetConstVariable(SAVE_MISSIONSTAGE_NAMESPACE, mission->stage));
+			cgi->XML_AddString(missionNode, SAVE_MISSIONS_MAPDEF_ID, mission->mapDef->id);
+		cgi->XML_AddBool(missionNode, SAVE_MISSIONS_ACTIVE, mission->active);
+		cgi->XML_AddBool(missionNode, SAVE_MISSIONS_POSASSIGNED, mission->posAssigned);
+		cgi->XML_AddBool(missionNode, SAVE_MISSIONS_CRASHED, mission->crashed);
+		cgi->XML_AddString(missionNode, SAVE_MISSIONS_ONWIN, mission->onwin);
+		cgi->XML_AddString(missionNode, SAVE_MISSIONS_ONLOSE, mission->onlose);
+		cgi->XML_AddString(missionNode, SAVE_MISSIONS_CATEGORY, Com_GetConstVariable(SAVE_INTERESTCAT_NAMESPACE, mission->category));
+		cgi->XML_AddString(missionNode, SAVE_MISSIONS_STAGE, Com_GetConstVariable(SAVE_MISSIONSTAGE_NAMESPACE, mission->stage));
 		switch (mission->category) {
 		case INTERESTCATEGORY_BASE_ATTACK:
 			if (mission->stage == STAGE_MISSION_GOTO || mission->stage == STAGE_BASE_ATTACK) {
 				const base_t *base = mission->data.base;
 				/* save IDX of base under attack if required */
-				XML_AddShort(missionNode, SAVE_MISSIONS_BASEINDEX, base->idx);
+				cgi->XML_AddShort(missionNode, SAVE_MISSIONS_BASEINDEX, base->idx);
 			}
 			break;
 		case INTERESTCATEGORY_INTERCEPT:
 			if (mission->stage == STAGE_MISSION_GOTO || mission->stage == STAGE_INTERCEPT) {
 				const installation_t *installation = mission->data.installation;
 				if (installation)
-					XML_AddShort(missionNode, SAVE_MISSIONS_INSTALLATIONINDEX, installation->idx);
+					cgi->XML_AddShort(missionNode, SAVE_MISSIONS_INSTALLATIONINDEX, installation->idx);
 			}
 			break;
 		case INTERESTCATEGORY_RESCUE:
 			{
 				const aircraft_t *aircraft = mission->data.aircraft;
-				XML_AddShort(missionNode, SAVE_MISSIONS_CRASHED_AIRCRAFT, aircraft->idx);
+				cgi->XML_AddShort(missionNode, SAVE_MISSIONS_CRASHED_AIRCRAFT, aircraft->idx);
 			}
 			break;
 		case INTERESTCATEGORY_ALIENBASE:
@@ -1849,19 +1849,19 @@ bool MIS_SaveXML (xmlNode_t *parent)
 				const alienBase_t *base = mission->data.alienBase;
 				/* there may be no base is the mission is a subverting government */
 				if (base)
-					XML_AddShort(missionNode, SAVE_MISSIONS_ALIENBASEINDEX, base->idx);
+					cgi->XML_AddShort(missionNode, SAVE_MISSIONS_ALIENBASEINDEX, base->idx);
 			}
 			break;
 		default:
 			break;
 		}
-		XML_AddString(missionNode, SAVE_MISSIONS_LOCATION, mission->location);
-		XML_AddShort(missionNode, SAVE_MISSIONS_INITIALOVERALLINTEREST, mission->initialOverallInterest);
-		XML_AddShort(missionNode, SAVE_MISSIONS_INITIALINDIVIDUALINTEREST, mission->initialIndividualInterest);
-		XML_AddDate(missionNode, SAVE_MISSIONS_STARTDATE, mission->startDate.day, mission->startDate.sec);
-		XML_AddDate(missionNode, SAVE_MISSIONS_FINALDATE, mission->finalDate.day, mission->finalDate.sec);
-		XML_AddPos2(missionNode, SAVE_MISSIONS_POS, mission->pos);
-		XML_AddBoolValue(missionNode, SAVE_MISSIONS_ONGEOSCAPE, mission->onGeoscape);
+		cgi->XML_AddString(missionNode, SAVE_MISSIONS_LOCATION, mission->location);
+		cgi->XML_AddShort(missionNode, SAVE_MISSIONS_INITIALOVERALLINTEREST, mission->initialOverallInterest);
+		cgi->XML_AddShort(missionNode, SAVE_MISSIONS_INITIALINDIVIDUALINTEREST, mission->initialIndividualInterest);
+		cgi->XML_AddDate(missionNode, SAVE_MISSIONS_STARTDATE, mission->startDate.day, mission->startDate.sec);
+		cgi->XML_AddDate(missionNode, SAVE_MISSIONS_FINALDATE, mission->finalDate.day, mission->finalDate.sec);
+		cgi->XML_AddPos2(missionNode, SAVE_MISSIONS_POS, mission->pos);
+		cgi->XML_AddBoolValue(missionNode, SAVE_MISSIONS_ONGEOSCAPE, mission->onGeoscape);
 	}
 	Com_UnregisterConstList(saveInterestConstants);
 	Com_UnregisterConstList(saveMissionConstants);
@@ -1880,25 +1880,25 @@ bool MIS_LoadXML (xmlNode_t *parent)
 
 	Com_RegisterConstList(saveInterestConstants);
 	Com_RegisterConstList(saveMissionConstants);
-	missionNode = XML_GetNode(parent, SAVE_MISSIONS);
-	for (node = XML_GetNode(missionNode, SAVE_MISSIONS_MISSION); node;
-			node = XML_GetNextNode(node, missionNode, SAVE_MISSIONS_MISSION)) {
+	missionNode = cgi->XML_GetNode(parent, SAVE_MISSIONS);
+	for (node = cgi->XML_GetNode(missionNode, SAVE_MISSIONS_MISSION); node;
+			node = cgi->XML_GetNextNode(node, missionNode, SAVE_MISSIONS_MISSION)) {
 		const char *name;
 		mission_t mission;
 		bool defaultAssigned = false;
-		const char *categoryId = XML_GetString(node, SAVE_MISSIONS_CATEGORY);
-		const char *stageId = XML_GetString(node, SAVE_MISSIONS_STAGE);
+		const char *categoryId = cgi->XML_GetString(node, SAVE_MISSIONS_CATEGORY);
+		const char *stageId = cgi->XML_GetString(node, SAVE_MISSIONS_STAGE);
 
 		OBJZERO(mission);
 
-		Q_strncpyz(mission.id, XML_GetString(node, SAVE_MISSIONS_ID), sizeof(mission.id));
-		mission.idx = XML_GetInt(node, SAVE_MISSIONS_MISSION_IDX, 0);
+		Q_strncpyz(mission.id, cgi->XML_GetString(node, SAVE_MISSIONS_ID), sizeof(mission.id));
+		mission.idx = cgi->XML_GetInt(node, SAVE_MISSIONS_MISSION_IDX, 0);
 		if (mission.idx <= 0) {
 			Com_Printf("mission has invalid or no index\n");
 			continue;
 		}
 
-		name = XML_GetString(node, SAVE_MISSIONS_MAPDEF_ID);
+		name = cgi->XML_GetString(node, SAVE_MISSIONS_MAPDEF_ID);
 		if (name && name[0] != '\0') {
 			mission.mapDef = Com_GetMapDefinitionByID(name);
 			if (!mission.mapDef) {
@@ -1919,18 +1919,18 @@ bool MIS_LoadXML (xmlNode_t *parent)
 			continue;
 		}
 
-		mission.active = XML_GetBool(node, SAVE_MISSIONS_ACTIVE, false);
-		Q_strncpyz(mission.onwin, XML_GetString(node, SAVE_MISSIONS_ONWIN), sizeof(mission.onwin));
-		Q_strncpyz(mission.onlose, XML_GetString(node, SAVE_MISSIONS_ONLOSE), sizeof(mission.onlose));
+		mission.active = cgi->XML_GetBool(node, SAVE_MISSIONS_ACTIVE, false);
+		Q_strncpyz(mission.onwin, cgi->XML_GetString(node, SAVE_MISSIONS_ONWIN), sizeof(mission.onwin));
+		Q_strncpyz(mission.onlose, cgi->XML_GetString(node, SAVE_MISSIONS_ONLOSE), sizeof(mission.onlose));
 
-		mission.initialOverallInterest = XML_GetInt(node, SAVE_MISSIONS_INITIALOVERALLINTEREST, 0);
-		mission.initialIndividualInterest = XML_GetInt(node, SAVE_MISSIONS_INITIALINDIVIDUALINTEREST, 0);
+		mission.initialOverallInterest = cgi->XML_GetInt(node, SAVE_MISSIONS_INITIALOVERALLINTEREST, 0);
+		mission.initialIndividualInterest = cgi->XML_GetInt(node, SAVE_MISSIONS_INITIALINDIVIDUALINTEREST, 0);
 
 		switch (mission.category) {
 		case INTERESTCATEGORY_BASE_ATTACK:
 			if (mission.stage == STAGE_MISSION_GOTO || mission.stage == STAGE_BASE_ATTACK) {
 				/* Load IDX of base under attack */
-				const int baseidx = XML_GetInt(node, SAVE_MISSIONS_BASEINDEX, BYTES_NONE);
+				const int baseidx = cgi->XML_GetInt(node, SAVE_MISSIONS_BASEINDEX, BYTES_NONE);
 				if (baseidx != BYTES_NONE) {
 					base_t *base = B_GetBaseByIDX(baseidx);
 					assert(base);
@@ -1943,7 +1943,7 @@ bool MIS_LoadXML (xmlNode_t *parent)
 			break;
 		case INTERESTCATEGORY_INTERCEPT:
 			if (mission.stage == STAGE_MISSION_GOTO || mission.stage == STAGE_INTERCEPT) {
-				const int installationIdx = XML_GetInt(node, SAVE_MISSIONS_INSTALLATIONINDEX, BYTES_NONE);
+				const int installationIdx = cgi->XML_GetInt(node, SAVE_MISSIONS_INSTALLATIONINDEX, BYTES_NONE);
 				if (installationIdx != BYTES_NONE) {
 					installation_t *installation = INS_GetByIDX(installationIdx);
 					if (installation)
@@ -1957,7 +1957,7 @@ bool MIS_LoadXML (xmlNode_t *parent)
 			break;
 		case INTERESTCATEGORY_RESCUE:
 			{
-				const int aircraftIdx = XML_GetInt(node, SAVE_MISSIONS_CRASHED_AIRCRAFT, -1);
+				const int aircraftIdx = cgi->XML_GetInt(node, SAVE_MISSIONS_CRASHED_AIRCRAFT, -1);
 				mission.data.aircraft = AIR_AircraftGetFromIDX(aircraftIdx);
 				if (mission.data.aircraft == NULL) {
 					Com_Printf("Error while loading rescue mission (missionidx %i, aircraftidx: %i, category: %i, stage: %i)\n",
@@ -1970,7 +1970,7 @@ bool MIS_LoadXML (xmlNode_t *parent)
 		case INTERESTCATEGORY_BUILDING:
 		case INTERESTCATEGORY_SUPPLY:
 			{
-				int baseIDX = XML_GetInt(node, SAVE_MISSIONS_ALIENBASEINDEX, BYTES_NONE);
+				int baseIDX = cgi->XML_GetInt(node, SAVE_MISSIONS_ALIENBASEINDEX, BYTES_NONE);
 				if (baseIDX != BYTES_NONE) {
 					alienBase_t *alienBase = AB_GetByIDX(baseIDX);
 					mission.data.alienBase = alienBase;
@@ -1986,18 +1986,18 @@ bool MIS_LoadXML (xmlNode_t *parent)
 			break;
 		}
 
-		Q_strncpyz(mission.location, XML_GetString(node, SAVE_MISSIONS_LOCATION), sizeof(mission.location));
+		Q_strncpyz(mission.location, cgi->XML_GetString(node, SAVE_MISSIONS_LOCATION), sizeof(mission.location));
 
-		XML_GetDate(node, SAVE_MISSIONS_STARTDATE, &mission.startDate.day, &mission.startDate.sec);
-		XML_GetDate(node, SAVE_MISSIONS_FINALDATE, &mission.finalDate.day, &mission.finalDate.sec);
-		XML_GetPos2(node, SAVE_MISSIONS_POS, mission.pos);
+		cgi->XML_GetDate(node, SAVE_MISSIONS_STARTDATE, &mission.startDate.day, &mission.startDate.sec);
+		cgi->XML_GetDate(node, SAVE_MISSIONS_FINALDATE, &mission.finalDate.day, &mission.finalDate.sec);
+		cgi->XML_GetPos2(node, SAVE_MISSIONS_POS, mission.pos);
 
-		mission.crashed = XML_GetBool(node, SAVE_MISSIONS_CRASHED, false);
-		mission.onGeoscape = XML_GetBool(node, SAVE_MISSIONS_ONGEOSCAPE, false);
+		mission.crashed = cgi->XML_GetBool(node, SAVE_MISSIONS_CRASHED, false);
+		mission.onGeoscape = cgi->XML_GetBool(node, SAVE_MISSIONS_ONGEOSCAPE, false);
 
 		if (mission.pos[0] > 0.001 || mission.pos[1] > 0.001)
 			defaultAssigned = true;
-		mission.posAssigned = XML_GetBool(node, SAVE_MISSIONS_POSASSIGNED, defaultAssigned);
+		mission.posAssigned = cgi->XML_GetBool(node, SAVE_MISSIONS_POSASSIGNED, defaultAssigned);
 		/* Add mission to global array */
 		LIST_Add(&ccs.missions, mission);
 	}
@@ -2015,11 +2015,11 @@ void MIS_InitStartup (void)
 {
 	MIS_InitCallbacks();
 #ifdef DEBUG
-	Cmd_AddCommand("debug_missionsetmap", MIS_MissionSetMap_f, "Changes the map for a spawned mission");
-	Cmd_AddCommand("debug_missionadd", MIS_SpawnNewMissions_f, "Add a new mission");
-	Cmd_AddCommand("debug_missiondeleteall", MIS_DeleteMissions_f, "Remove all missions from global array");
-	Cmd_AddCommand("debug_missiondelete", MIS_DeleteMission_f, "Remove mission by a given name");
-	Cmd_AddCommand("debug_missionlist", MIS_MissionList_f, "Debug function to show all missions");
+	cgi->Cmd_AddCommand("debug_missionsetmap", MIS_MissionSetMap_f, "Changes the map for a spawned mission");
+	cgi->Cmd_AddCommand("debug_missionadd", MIS_SpawnNewMissions_f, "Add a new mission");
+	cgi->Cmd_AddCommand("debug_missiondeleteall", MIS_DeleteMissions_f, "Remove all missions from global array");
+	cgi->Cmd_AddCommand("debug_missiondelete", MIS_DeleteMission_f, "Remove mission by a given name");
+	cgi->Cmd_AddCommand("debug_missionlist", MIS_MissionList_f, "Debug function to show all missions");
 #endif
 }
 
@@ -2032,10 +2032,10 @@ void MIS_Shutdown (void)
 
 	MIS_ShutdownCallbacks();
 #ifdef DEBUG
-	Cmd_RemoveCommand("debug_missionsetmap");
-	Cmd_RemoveCommand("debug_missionadd");
-	Cmd_RemoveCommand("debug_missiondeleteall");
-	Cmd_RemoveCommand("debug_missiondelete");
-	Cmd_RemoveCommand("debug_missionlist");
+	cgi->Cmd_RemoveCommand("debug_missionsetmap");
+	cgi->Cmd_RemoveCommand("debug_missionadd");
+	cgi->Cmd_RemoveCommand("debug_missiondeleteall");
+	cgi->Cmd_RemoveCommand("debug_missiondelete");
+	cgi->Cmd_RemoveCommand("debug_missionlist");
 #endif
 }

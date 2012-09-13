@@ -62,11 +62,11 @@ static void AIM_SelectAircraft_f (void)
 	if (!base)
 		return;
 
-	if (Cmd_Argc() < 2) {
+	if (cgi->Cmd_Argc() < 2) {
 		if (base->aircraftCurrent)
 			AIR_AircraftSelect(base->aircraftCurrent);
 	} else {
-		const int i = atoi(Cmd_Argv(1));
+		const int i = atoi(cgi->Cmd_Argv(1));
 		aircraft_t *aircraft = AIR_GetAircraftFromBaseByIDXSafe(base, i);
 		if (aircraft != NULL)
 			AIR_AircraftSelect(aircraft);
@@ -200,14 +200,14 @@ void AIR_AircraftSelect (aircraft_t* aircraft)
 	assert(aircraft->homebase == base);
 	CP_UpdateActorAircraftVar(aircraft, EMPL_SOLDIER);
 
-	Cvar_SetValue("mn_equipsoldierstate", CL_EquipSoldierState(aircraft));
-	Cvar_Set("mn_aircraftstatus", AIR_AircraftStatusToName(aircraft));
-	Cvar_Set("mn_aircraftinbase", AIR_IsAircraftInBase(aircraft) ? "1" : "0");
-	Cvar_Set("mn_aircraftname", aircraft->name);
+	cgi->Cvar_SetValue("mn_equipsoldierstate", CL_EquipSoldierState(aircraft));
+	cgi->Cvar_Set("mn_aircraftstatus", AIR_AircraftStatusToName(aircraft));
+	cgi->Cvar_Set("mn_aircraftinbase", AIR_IsAircraftInBase(aircraft) ? "1" : "0");
+	cgi->Cvar_Set("mn_aircraftname", aircraft->name);
 	if (!aircraft->tech)
-		Com_Error(ERR_DROP, "No technology assigned to aircraft '%s'", aircraft->id);
-	Cvar_Set("mn_aircraft_model", aircraft->tech->mdl);
-	Cvar_Set("mn_aircraft_health", va("%3.0f" , aircraft->stats[AIR_STATS_DAMAGE] > 0 ? (double)aircraft->damage * 100 / aircraft->stats[AIR_STATS_DAMAGE] : 0));
+		cgi->Com_Error(ERR_DROP, "No technology assigned to aircraft '%s'", aircraft->id);
+	cgi->Cvar_Set("mn_aircraft_model", aircraft->tech->mdl);
+	cgi->Cvar_Set("mn_aircraft_health", va("%3.0f" , aircraft->stats[AIR_STATS_DAMAGE] > 0 ? (double)aircraft->damage * 100 / aircraft->stats[AIR_STATS_DAMAGE] : 0));
 
 	/* generate aircraft info text */
 	Com_sprintf(aircraftInfo, sizeof(aircraftInfo), _("Speed:\t%i km/h\n"),
@@ -231,7 +231,7 @@ void AIR_AircraftSelect (aircraft_t* aircraft)
 	}
 
 	base->aircraftCurrent = aircraft;
-	Cvar_SetValue("mn_aircraft_id", id);
+	cgi->Cvar_SetValue("mn_aircraft_id", id);
 
 	/* ...update the GUI */
 	cgi->UI_ExecuteConfunc("aircraft_change %i", id);
@@ -263,7 +263,7 @@ static void AIR_AircraftUpdateList_f (void)
 static void AIR_ChangeAircraftName_f (void)
 {
 	const base_t *base = B_GetCurrentSelectedBase();
-	const char *newName = Cvar_GetString("mn_aircraftname");
+	const char *newName = cgi->Cvar_GetString("mn_aircraftname");
 	aircraft_t *aircraft;
 
 	if (!base)
@@ -294,21 +294,21 @@ static void AIR_ChangeAircraftName_f (void)
 void AIR_InitCallbacks (void)
 {
 	/* menu aircraft */
-	Cmd_AddCommand("aircraft_start", AIM_AircraftStart_f);
+	cgi->Cmd_AddCommand("aircraft_start", AIM_AircraftStart_f, NULL);
 	/* menu aircraft_equip, aircraft */
-	Cmd_AddCommand("mn_select_aircraft", AIM_SelectAircraft_f);
+	cgi->Cmd_AddCommand("mn_select_aircraft", AIM_SelectAircraft_f, NULL);
 	/* menu aircraft, popup_transferbaselist */
-	Cmd_AddCommand("aircraft_return", AIM_AircraftReturnToBase_f, "Sends the current aircraft back to homebase.");
+	cgi->Cmd_AddCommand("aircraft_return", AIM_AircraftReturnToBase_f, "Sends the current aircraft back to homebase.");
 	/* menu aircraft, aircraft_equip, aircraft_soldier */
-	Cmd_AddCommand("aircraft_update_list", AIR_AircraftUpdateList_f);
-	Cmd_AddCommand("aircraft_namechange", AIR_ChangeAircraftName_f, "Callback to change the name of the aircraft.");
+	cgi->Cmd_AddCommand("aircraft_update_list", AIR_AircraftUpdateList_f, NULL);
+	cgi->Cmd_AddCommand("aircraft_namechange", AIR_ChangeAircraftName_f, "Callback to change the name of the aircraft.");
 }
 
 void AIR_ShutdownCallbacks (void)
 {
-	Cmd_RemoveCommand("aircraft_namechange");
-	Cmd_RemoveCommand("aircraft_start");
-	Cmd_RemoveCommand("mn_select_aircraft");
-	Cmd_RemoveCommand("aircraft_return");
-	Cmd_RemoveCommand("aircraft_update_list");
+	cgi->Cmd_RemoveCommand("aircraft_namechange");
+	cgi->Cmd_RemoveCommand("aircraft_start");
+	cgi->Cmd_RemoveCommand("mn_select_aircraft");
+	cgi->Cmd_RemoveCommand("aircraft_return");
+	cgi->Cmd_RemoveCommand("aircraft_update_list");
 }

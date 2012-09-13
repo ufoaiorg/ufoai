@@ -65,7 +65,7 @@ static void AM_Go_f (void)
 		} else if (mission->mapDef->storyRelated) {
 			Com_DPrintf(DEBUG_CLIENT, "You have to play this mission, because it's story related\n");
 			/* ensure, that the automatic button is no longer visible */
-			Cvar_Set("cp_mission_autogo_available", "0");
+			cgi->Cvar_Set("cp_mission_autogo_available", "0");
 			return;
 		}
 	}
@@ -95,10 +95,10 @@ static void AM_Check_f (void)
 
 	if (mission->mapDef->storyRelated) {
 		Com_DPrintf(DEBUG_CLIENT, "GAME_CP_MissionAutoCheck_f: story related - auto mission is disabled\n");
-		Cvar_Set("cp_mission_autogo_available", "0");
+		cgi->Cvar_Set("cp_mission_autogo_available", "0");
 	} else {
 		Com_DPrintf(DEBUG_CLIENT, "GAME_CP_MissionAutoCheck_f: auto mission is enabled\n");
-		Cvar_Set("cp_mission_autogo_available", "1");
+		cgi->Cvar_Set("cp_mission_autogo_available", "1");
 	}
 }
 
@@ -141,8 +141,8 @@ void MIS_InitResultScreen (const missionResults_t *results)
  */
 void MIS_InitCallbacks (void)
 {
-	Cmd_AddCommand("cp_missionauto_check", AM_Check_f, "Checks whether this mission can be done automatically");
-	Cmd_AddCommand("cp_mission_autogo", AM_Go_f, "Let the current selection mission be done automatically");
+	cgi->Cmd_AddCommand("cp_missionauto_check", AM_Check_f, "Checks whether this mission can be done automatically");
+	cgi->Cmd_AddCommand("cp_mission_autogo", AM_Go_f, "Let the current selection mission be done automatically");
 }
 
 /**
@@ -150,6 +150,6 @@ void MIS_InitCallbacks (void)
  */
 void MIS_ShutdownCallbacks (void)
 {
-	Cmd_RemoveCommand("cp_missionauto_check");
-	Cmd_RemoveCommand("cp_mission_autogo");
+	cgi->Cmd_RemoveCommand("cp_missionauto_check");
+	cgi->Cmd_RemoveCommand("cp_mission_autogo");
 }

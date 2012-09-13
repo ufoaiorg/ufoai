@@ -103,7 +103,7 @@ static void AC_ResearchAlien_f (void)
 
 	tech = aliencontCurrent->tech;
 	if (!tech)
-		Com_Error(ERR_DROP, "aliencontCurrent without tech pointer");
+		cgi->Com_Error(ERR_DROP, "aliencontCurrent without tech pointer");
 
 	if (!RS_IsResearched_ptr(tech))
 		cgi->UI_PushWindow("research");
@@ -137,11 +137,11 @@ static void AC_AlienClick (const base_t *base, int num)
 
 		aliencontCurrent = &base->alienscont[num];
 		assert(aliencontCurrent->tech);
-		Cvar_Set("mn_al_alienimage", aliencontCurrent->tech->image);
+		cgi->Cvar_Set("mn_al_alienimage", aliencontCurrent->tech->image);
 		assert(aliencontCurrent->teamDef);
-		Cvar_Set("mn_al_alientype", _(aliencontCurrent->teamDef->name));
-		Cvar_Set("mn_al_alive", va("%i (%i)", aliencontCurrent->amountAlive, AL_CountForMenu(aliencontCurrent->teamDef->idx, true)));
-		Cvar_Set("mn_al_dead",  va("%i (%i)", aliencontCurrent->amountDead, AL_CountForMenu(aliencontCurrent->teamDef->idx, false)));
+		cgi->Cvar_Set("mn_al_alientype", _(aliencontCurrent->teamDef->name));
+		cgi->Cvar_Set("mn_al_alive", va("%i (%i)", aliencontCurrent->amountAlive, AL_CountForMenu(aliencontCurrent->teamDef->idx, true)));
+		cgi->Cvar_Set("mn_al_dead",  va("%i (%i)", aliencontCurrent->amountDead, AL_CountForMenu(aliencontCurrent->teamDef->idx, false)));
 	}
 }
 
@@ -154,13 +154,13 @@ static void AC_AlienClick_f (void)
 	int num;
 	base_t *base = B_GetCurrentSelectedBase();
 
-	if (Cmd_Argc() < 2 || !base) {
-		Com_Printf("Usage: %s <alien list index>\n", Cmd_Argv(0));
+	if (cgi->Cmd_Argc() < 2 || !base) {
+		Com_Printf("Usage: %s <alien list index>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
 	/* which item from the list? */
-	num = atoi(Cmd_Argv(1));
+	num = atoi(cgi->Cmd_Argv(1));
 
 	Com_DPrintf(DEBUG_CLIENT, "AC_AlienClick_f: listnumber %i\n", num);
 	AC_AlienClick(base, num);
@@ -172,12 +172,12 @@ static void AC_AlienClick_f (void)
 static void AC_UpdateMenu (const base_t *base)
 {
 
-	Cvar_Set("mn_al_alientype", "");
-	Cvar_Set("mn_al_alienimage", "");
-	Cvar_SetValue("mn_al_dead", 0);
-	Cvar_SetValue("mn_al_alive", 0);
-	Cvar_SetValue("mn_al_capacity", CAP_GetCurrent(base, CAP_ALIENS));
-	Cvar_SetValue("mn_al_capacity_max", CAP_GetMax(base, CAP_ALIENS));
+	cgi->Cvar_Set("mn_al_alientype", "");
+	cgi->Cvar_Set("mn_al_alienimage", "");
+	cgi->Cvar_SetValue("mn_al_dead", 0);
+	cgi->Cvar_SetValue("mn_al_alive", 0);
+	cgi->Cvar_SetValue("mn_al_capacity", CAP_GetCurrent(base, CAP_ALIENS));
+	cgi->Cvar_SetValue("mn_al_capacity_max", CAP_GetMax(base, CAP_ALIENS));
 
 	/* Reset list. */
 	cgi->UI_ExecuteConfunc("aliencont_clear");
@@ -199,22 +199,22 @@ static void AC_UpdateMenu (const base_t *base)
 					if (containment[i].amountAlive > 0 || containment[i].amountDead > 0) {
 						/* Generate a list entry. */
 						if (RS_IsResearched_ptr(tech)) {
-							Cvar_Set(va("mn_ac_statusstr%i", j), _("Researched"));
+							cgi->Cvar_Set(va("mn_ac_statusstr%i", j), _("Researched"));
 						} else {
-							Cvar_Set(va("mn_ac_statusstr%i", j), _("Awaiting autopsy"));
+							cgi->Cvar_Set(va("mn_ac_statusstr%i", j), _("Awaiting autopsy"));
 							if (!containment[i].amountDead) {
 								cgi->UI_ExecuteConfunc("aliencontkill %i", j);
 							} else {
 								cgi->UI_ExecuteConfunc("aliencontneedautopsy %i", j);
 							}
 						}
-						Cvar_SetValue(va("mn_ac_progress%i", j), (1 - tech->time / tech->overallTime) * 100);
+						cgi->Cvar_SetValue(va("mn_ac_progress%i", j), (1 - tech->time / tech->overallTime) * 100);
 						/* Display name in the correct list-entry. */
-						Cvar_Set(va("mn_ac_name%i", j), _(containment[i].teamDef->name));
+						cgi->Cvar_Set(va("mn_ac_name%i", j), _(containment[i].teamDef->name));
 						/* Display amount of dead aliens in the correct list-entry. */
-						Cvar_SetValue(va("mn_ac_dead%i", j), containment[i].amountDead);
+						cgi->Cvar_SetValue(va("mn_ac_dead%i", j), containment[i].amountDead);
 						/* Display number of live aliens in the correct list-entry. */
-						Cvar_SetValue(va("mn_ac_alive%i", j), containment[i].amountAlive);
+						cgi->Cvar_SetValue(va("mn_ac_alive%i", j), containment[i].amountAlive);
 						j++;
 					}
 				}
@@ -224,11 +224,11 @@ static void AC_UpdateMenu (const base_t *base)
 		numAliensOnList = j;
 
 		for (; j < MAX_AC_MENU_ENTRIES; j++) {
-			Cvar_Set(va("mn_ac_statusstr%i", j), _("Free slot"));
-			Cvar_Set(va("mn_ac_name%i", j), _("None"));
-			Cvar_Set(va("mn_ac_dead%i", j), "");
-			Cvar_Set(va("mn_ac_alive%i", j), "");
-			Cvar_SetValue(va("mn_ac_progress%i", j), 0);
+			cgi->Cvar_Set(va("mn_ac_statusstr%i", j), _("Free slot"));
+			cgi->Cvar_Set(va("mn_ac_name%i", j), _("None"));
+			cgi->Cvar_Set(va("mn_ac_dead%i", j), "");
+			cgi->Cvar_Set(va("mn_ac_alive%i", j), "");
+			cgi->Cvar_SetValue(va("mn_ac_progress%i", j), 0);
 		}
 	}
 
@@ -265,10 +265,10 @@ static void AC_KillAll_f (void)
 {
 	base_t *base;
 
-	if (Cmd_Argc() < 2) {
+	if (cgi->Cmd_Argc() < 2) {
 		base = B_GetCurrentSelectedBase();
 	} else {
-		base = B_GetFoundedBaseByIDX(atoi(Cmd_Argv(1)));
+		base = B_GetFoundedBaseByIDX(atoi(cgi->Cmd_Argv(1)));
 	}
 
 	/* Can be called from everywhere. */
@@ -292,13 +292,13 @@ static void AC_KillOne_f (void)
 	if (!base)
 		return;
 
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <alien list index>\n", Cmd_Argv(0));
+	if (cgi->Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <alien list index>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
 	/* which item from the list? */
-	num = atoi(Cmd_Argv(1));
+	num = atoi(cgi->Cmd_Argv(1));
 	if (num >= numAliensOnList || num < 0) {
 		Com_DPrintf(DEBUG_CLIENT, "AC_KillOne_f: max exceeded %i/%i\n", num, numAliensOnList);
 		return;
@@ -324,21 +324,21 @@ static void AC_KillOne_f (void)
 
 void AC_InitCallbacks (void)
 {
-	Cmd_AddCommand("aliencont_init", AC_Init_f, "Init function for alien containment menu");
-	Cmd_AddCommand("aliencont_killall", AC_KillAll_f, "Kills all aliens in current base");
-	Cmd_AddCommand("aliencont_killone", AC_KillOne_f, "Kills one alien of a given type");
-	Cmd_AddCommand("aliencont_research", AC_ResearchAlien_f, "Opens research menu");
-	Cmd_AddCommand("aliencont_pedia", AC_OpenUFOpedia_f, "Opens UFOpedia entry for selected alien");
-	Cmd_AddCommand("aliencont_click", AC_AlienClick_f, "Click function for aliencont list");
+	cgi->Cmd_AddCommand("aliencont_init", AC_Init_f, "Init function for alien containment menu");
+	cgi->Cmd_AddCommand("aliencont_killall", AC_KillAll_f, "Kills all aliens in current base");
+	cgi->Cmd_AddCommand("aliencont_killone", AC_KillOne_f, "Kills one alien of a given type");
+	cgi->Cmd_AddCommand("aliencont_research", AC_ResearchAlien_f, "Opens research menu");
+	cgi->Cmd_AddCommand("aliencont_pedia", AC_OpenUFOpedia_f, "Opens UFOpedia entry for selected alien");
+	cgi->Cmd_AddCommand("aliencont_click", AC_AlienClick_f, "Click function for aliencont list");
 	aliencontCurrent = NULL;
 }
 
 void AC_ShutdownCallbacks (void)
 {
-	Cmd_RemoveCommand("aliencont_init");
-	Cmd_RemoveCommand("aliencont_killall");
-	Cmd_RemoveCommand("aliencont_killone");
-	Cmd_RemoveCommand("aliencont_research");
-	Cmd_RemoveCommand("aliencont_pedia");
-	Cmd_RemoveCommand("aliencont_click");
+	cgi->Cmd_RemoveCommand("aliencont_init");
+	cgi->Cmd_RemoveCommand("aliencont_killall");
+	cgi->Cmd_RemoveCommand("aliencont_killone");
+	cgi->Cmd_RemoveCommand("aliencont_research");
+	cgi->Cmd_RemoveCommand("aliencont_pedia");
+	cgi->Cmd_RemoveCommand("aliencont_click");
 }

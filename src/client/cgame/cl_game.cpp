@@ -469,6 +469,7 @@ static const cgame_import_t* GAME_GetImportData (const cgameType_t *t)
 		cgi->Com_GetMapDefinitionByID = Com_GetMapDefinitionByID;
 
 		cgi->Cbuf_AddText = Cbuf_AddText;
+		cgi->Cbuf_Execute = Cbuf_Execute;
 
 		cgi->LIST_AddString = LIST_AddString;
 		cgi->LIST_ContainsString = LIST_ContainsString;
@@ -653,6 +654,7 @@ static const cgame_import_t* GAME_GetImportData (const cgameType_t *t)
 		cgi->XML_GetString = XML_GetString;
 		cgi->XML_GetFloat = XML_GetFloat;
 		cgi->XML_GetDouble = XML_GetDouble;
+		cgi->XML_Parse = XML_Parse;
 		cgi->XML_GetPos2 = XML_GetPos2;
 		cgi->XML_GetNextPos2 = XML_GetNextPos2;
 		cgi->XML_GetPos3 = XML_GetPos3;
@@ -1002,7 +1004,7 @@ static bool GAME_LoadGame (const char *path, const char *name)
 		return true;
 	} else {
 		Com_Printf("not found at '%s'\n", path);
-		Com_DPrintf(DEBUG_SYSTEM, "%s\n", SDL_GetError());
+		Com_Printf("%s\n", SDL_GetError());
 		return false;
 	}
 }

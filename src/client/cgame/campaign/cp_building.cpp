@@ -159,7 +159,7 @@ void B_ParseBuildings (const char *name, const char **text, bool link)
 	}
 
 	if (ccs.numBuildingTemplates >= MAX_BUILDINGS)
-		Com_Error(ERR_DROP, "B_ParseBuildings: too many buildings");
+		cgi->Com_Error(ERR_DROP, "B_ParseBuildings: too many buildings");
 
 	if (!link) {
 		int i;
@@ -224,7 +224,7 @@ void B_ParseBuildings (const char *name, const char **text, bool link)
 	} else {
 		building = B_GetBuildingTemplate(name);
 		if (!building)
-			Com_Error(ERR_DROP, "B_ParseBuildings: Could not find building with id %s\n", name);
+			cgi->Com_Error(ERR_DROP, "B_ParseBuildings: Could not find building with id %s\n", name);
 
 		techLink = RS_GetTechByProvided(name);
 		if (techLink)
@@ -241,7 +241,7 @@ void B_ParseBuildings (const char *name, const char **text, bool link)
 			if (Q_streq(token, "depends")) {
 				const building_t *dependsBuilding = B_GetBuildingTemplate(Com_EParse(text, errhead, name));
 				if (!dependsBuilding)
-					Com_Error(ERR_DROP, "Could not find building depend of %s\n", building->id);
+					cgi->Com_Error(ERR_DROP, "Could not find building depend of %s\n", building->id);
 				building->dependsBuilding = dependsBuilding;
 				if (!*text)
 					return;
@@ -365,11 +365,11 @@ bool B_FireEvent (const building_t * buildingTemplate, const base_t * base, buil
 			command = buildingTemplate->onDestroy;
 			break;
 		default:
-			Com_Error(ERR_DROP, "B_FireEvent: Invalid Event\n");
+			cgi->Com_Error(ERR_DROP, "B_FireEvent: Invalid Event\n");
 	}
 
 	if (command && command[0] != '\0') {
-		Cmd_ExecuteString(va("%s %i %i", command, base->idx, buildingTemplate->buildingType));
+		cgi->Cmd_ExecuteString(va("%s %i %i", command, base->idx, buildingTemplate->buildingType));
 		return true;
 	}
 

@@ -148,7 +148,7 @@ void CP_SpawnAlienBaseMission (alienBase_t *alienBase)
 
 	mission->mapDef = Com_GetMapDefinitionByID(MAPDEF_ALIENBASE);
 	if (!mission->mapDef)
-		Com_Error(ERR_FATAL, "Could not find mapdef " MAPDEF_ALIENBASE);
+		cgi->Com_Error(ERR_FATAL, "Could not find mapdef " MAPDEF_ALIENBASE);
 
 	Vector2Copy(alienBase->pos, mission->pos);
 	mission->posAssigned = true;
@@ -163,7 +163,7 @@ void CP_SpawnAlienBaseMission (alienBase_t *alienBase)
 	if (!RS_MarkStoryLineEventResearched(ALIENBASE_DISCOVERED_TECH))
 		Com_DPrintf(DEBUG_CLIENT, ALIENBASE_DISCOVERED_TECH" is not marked as researched\n");
 	else
-		Cmd_ExecuteString("addeventmail alien_base_discovered");
+		cgi->Cmd_ExecuteString("addeventmail alien_base_discovered");
 }
 
 /**
@@ -361,24 +361,24 @@ bool AB_LoadXML (xmlNode_t *p)
 	int i; /**< @todo this is for old saves now only */
 	xmlNode_t *n, *s;
 
-	n = XML_GetNode(p, SAVE_ALIENBASE_ALIENBASES);
+	n = cgi->XML_GetNode(p, SAVE_ALIENBASE_ALIENBASES);
 	if (!n)
 		return false;
 
-	for (i = 0, s = XML_GetNode(n, SAVE_ALIENBASE_BASE); s; i++, s = XML_GetNextNode(s, n, SAVE_ALIENBASE_BASE)) {
+	for (i = 0, s = cgi->XML_GetNode(n, SAVE_ALIENBASE_BASE); s; i++, s = cgi->XML_GetNextNode(s, n, SAVE_ALIENBASE_BASE)) {
 		alienBase_t base;
 
-		base.idx = XML_GetInt(s, SAVE_ALIENBASE_IDX, -1);
+		base.idx = cgi->XML_GetInt(s, SAVE_ALIENBASE_IDX, -1);
 		if (base.idx < 0) {
 			Com_Printf("Invalid or no IDX defined for Alienbase %d.\n", i);
 			return false;
 		}
-		if (!XML_GetPos2(s, SAVE_ALIENBASE_POS, base.pos)) {
+		if (!cgi->XML_GetPos2(s, SAVE_ALIENBASE_POS, base.pos)) {
 			Com_Printf("Position is invalid for Alienbase (idx %d)\n", base.idx);
 			return false;
 		}
-		base.supply = XML_GetInt(s, SAVE_ALIENBASE_SUPPLY, 0);
-		base.stealth = XML_GetFloat(s, SAVE_ALIENBASE_STEALTH, 0.0);
+		base.supply = cgi->XML_GetInt(s, SAVE_ALIENBASE_SUPPLY, 0);
+		base.stealth = cgi->XML_GetFloat(s, SAVE_ALIENBASE_STEALTH, 0.0);
 		LIST_Add(&ccs.alienBases, base);
 	}
 
@@ -392,14 +392,14 @@ bool AB_LoadXML (xmlNode_t *p)
  */
 bool AB_SaveXML (xmlNode_t *p)
 {
-	xmlNode_t *n = XML_AddNode(p, SAVE_ALIENBASE_ALIENBASES);
+	xmlNode_t *n = cgi->XML_AddNode(p, SAVE_ALIENBASE_ALIENBASES);
 
 	AB_Foreach(base) {
-		xmlNode_t *s = XML_AddNode(n, SAVE_ALIENBASE_BASE);
-		XML_AddInt(s, SAVE_ALIENBASE_IDX, base->idx);
-		XML_AddPos2(s, SAVE_ALIENBASE_POS, base->pos);
-		XML_AddIntValue(s, SAVE_ALIENBASE_SUPPLY, base->supply);
-		XML_AddFloatValue(s, SAVE_ALIENBASE_STEALTH, base->stealth);
+		xmlNode_t *s = cgi->XML_AddNode(n, SAVE_ALIENBASE_BASE);
+		cgi->XML_AddInt(s, SAVE_ALIENBASE_IDX, base->idx);
+		cgi->XML_AddPos2(s, SAVE_ALIENBASE_POS, base->pos);
+		cgi->XML_AddIntValue(s, SAVE_ALIENBASE_SUPPLY, base->supply);
+		cgi->XML_AddFloatValue(s, SAVE_ALIENBASE_STEALTH, base->stealth);
 	}
 
 	return true;
@@ -412,8 +412,8 @@ bool AB_SaveXML (xmlNode_t *p)
 void AB_InitStartup (void)
 {
 #ifdef DEBUG
-	Cmd_AddCommand("debug_listalienbase", AB_AlienBaseList_f, "Print Alien Bases information to game console");
-	Cmd_AddCommand("debug_alienbasevisible", AB_AlienBaseDiscovered_f, "Set all alien bases to discovered");
+	cgi->Cmd_AddCommand("debug_listalienbase", AB_AlienBaseList_f, "Print Alien Bases information to game console");
+	cgi->Cmd_AddCommand("debug_alienbasevisible", AB_AlienBaseDiscovered_f, "Set all alien bases to discovered");
 #endif
 }
 
@@ -425,7 +425,7 @@ void AB_Shutdown (void)
 	LIST_Delete(&ccs.alienBases);
 
 #ifdef DEBUG
-	Cmd_RemoveCommand("debug_listalienbase");
-	Cmd_RemoveCommand("debug_alienbasevisible");
+	cgi->Cmd_RemoveCommand("debug_listalienbase");
+	cgi->Cmd_RemoveCommand("debug_alienbasevisible");
 #endif
 }

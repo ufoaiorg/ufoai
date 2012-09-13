@@ -76,12 +76,12 @@ static void TR_TransferBaseListClick_f (void)
 
 	assert(td.transferStartAircraft);
 
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <base index>\n", Cmd_Argv(0));
+	if (cgi->Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <base index>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
-	num = atoi(Cmd_Argv(1));
+	num = atoi(cgi->Cmd_Argv(1));
 	base = B_GetFoundedBaseByIDX(num);
 	if (!base) {
 		Com_Printf("TR_TransferBaseListClick_f: baseIdx %i doesn't exist.\n", num);
@@ -106,12 +106,12 @@ static void TR_TransferAliensFromMission_f (void)
 	uiNode_t *baseList = NULL;
 	base_t *base;
 
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <aircraft index>\n", Cmd_Argv(0));
+	if (cgi->Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <aircraft index>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
-	i = atoi(Cmd_Argv(1));
+	i = atoi(cgi->Cmd_Argv(1));
 	aircraft = AIR_AircraftGetFromIDX(i);
 	if (!aircraft) {
 		Com_Printf("Usage: No aircraft with index %i\n", i);
@@ -452,7 +452,7 @@ static void TR_CargoList (void)
 			break;
 		}
 		default:
-			Com_Error(ERR_DROP, "TR_CargoList: Invalid employeetype in cargo");
+			cgi->Com_Error(ERR_DROP, "TR_CargoList: Invalid employeetype in cargo");
 		}
 		if (td.trCargoCountTmp >= MAX_CARGO) {
 			Com_DPrintf(DEBUG_CLIENT, "TR_CargoList: Cargo is full\n");
@@ -610,7 +610,7 @@ static int TR_FillEmployees (const base_t *srcbase, const base_t *destbase, link
 				break;
 			}
 			default:
-				Com_Error(ERR_DROP, "TR_CargoList: Invalid employeetype in cargo");
+				cgi->Com_Error(ERR_DROP, "TR_CargoList: Invalid employeetype in cargo");
 			}
 		}
 		if (!cnt) {
@@ -731,7 +731,7 @@ static void TR_TransferSelect (const base_t *srcbase, const base_t *destbase, tr
 		cgi->UI_ExecuteConfunc("trans_display_spinners 0");
 		break;
 	default:
-		Com_Error(ERR_DROP, "invalid transfertype given: %i", transferType);
+		cgi->Com_Error(ERR_DROP, "invalid transfertype given: %i", transferType);
 	}
 
 	/* Update cargo list. */
@@ -756,10 +756,10 @@ static void TR_TransferSelect_f (void)
 	if (!td.transferBase || !base)
 		return;
 
-	if (Cmd_Argc() < 2)
+	if (cgi->Cmd_Argc() < 2)
 		type = td.currentTransferType;
 	else
-		type = TR_GetTransferType(Cmd_Argv(1));
+		type = TR_GetTransferType(cgi->Cmd_Argv(1));
 
 	if (type < TRANS_TYPE_ITEM || type >= TRANS_TYPE_MAX)
 		return;
@@ -944,7 +944,7 @@ static void TR_AddEmployeeToTransferList (base_t *base, transferData_t *transfer
 			cnt++;
 			break;
 		default:
-			Com_Error(ERR_DROP, "TR_CargoList: Invalid employeetype in cargo");
+			cgi->Com_Error(ERR_DROP, "TR_CargoList: Invalid employeetype in cargo");
 		}
 	}
 }
@@ -1037,7 +1037,7 @@ static void TR_TransferListSelect_f (void)
 	int amount;
 	base_t *base = B_GetCurrentSelectedBase();
 
-	if (Cmd_Argc() < 2)
+	if (cgi->Cmd_Argc() < 2)
 		return;
 
 	if (!base)
@@ -1049,12 +1049,12 @@ static void TR_TransferListSelect_f (void)
 	}
 
 	/* the index in the list that was clicked */
-	num = atoi(Cmd_Argv(1));
+	num = atoi(cgi->Cmd_Argv(1));
 	if (num < 0 || num >= cgi->csi->numODs)
 		return;
 
-	if (Cmd_Argc() == 3)
-		amount = atoi(Cmd_Argv(2));
+	if (cgi->Cmd_Argc() == 3)
+		amount = atoi(cgi->Cmd_Argv(2));
 	else
 		amount = TR_GetTransferFactor();
 
@@ -1121,8 +1121,8 @@ static void TR_TransferBaseSelect (base_t *srcbase, base_t *destbase)
 
 	/* Set global pointer to current selected base. */
 	td.transferBase = destbase;
-	Cvar_Set("mn_trans_base_name", destbase->name);
-	Cvar_SetValue("mn_trans_base_id", destbase->idx);
+	cgi->Cvar_Set("mn_trans_base_name", destbase->name);
+	cgi->Cvar_SetValue("mn_trans_base_id", destbase->idx);
 
 	/* Update stuff-in-base list. */
 	TR_TransferSelect(srcbase, destbase, td.currentTransferType);
@@ -1156,12 +1156,12 @@ static void TR_SelectBase_f (void)
 	base_t *base = B_GetCurrentSelectedBase();
 	base_t *destbase;
 
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <baseIdx>\n", Cmd_Argv(0));
+	if (cgi->Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <baseIdx>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
-	baseIdx = atoi(Cmd_Argv(1));
+	baseIdx = atoi(cgi->Cmd_Argv(1));
 	destbase = B_GetFoundedBaseByIDX(baseIdx);
 
 	TR_TransferBaseSelect(base, destbase);
@@ -1238,7 +1238,7 @@ static void TR_RemoveEmployeeFromCargoList (base_t *base, transferData_t *transf
 			}
 			break;
 		default:
-			Com_Error(ERR_DROP, "TR_CargoList: Invalid employeetype in cargo");
+			cgi->Com_Error(ERR_DROP, "TR_CargoList: Invalid employeetype in cargo");
 		}
 		if (removed)
 			break;
@@ -1365,13 +1365,13 @@ static void TR_CargoListSelect_f (void)
 	int num;
 	base_t *base = B_GetCurrentSelectedBase();
 
-	if (Cmd_Argc() < 2)
+	if (cgi->Cmd_Argc() < 2)
 		return;
 
 	if (!base)
 		return;
 
-	num = atoi(Cmd_Argv(1));
+	num = atoi(cgi->Cmd_Argv(1));
 	if (num < 0 || num >= MAX_CARGO)
 		return;
 
@@ -1407,20 +1407,20 @@ static void TR_Init_f (void)
 	if (!td.transferBase)
 		td.transferBase = B_GetNext(NULL);
 	if (!td.transferBase)
-		Com_Error(ERR_DROP, "No bases! Transfer needs at least two...");
+		cgi->Com_Error(ERR_DROP, "No bases! Transfer needs at least two...");
 	TR_TransferBaseSelect(base, td.transferBase);
 	/* Set up cvar used to display transferBase. */
 	if (td.transferBase) {
-		Cvar_Set("mn_trans_base_name", td.transferBase->name);
-		Cvar_SetValue("mn_trans_base_id", td.transferBase->idx);
+		cgi->Cvar_Set("mn_trans_base_name", td.transferBase->name);
+		cgi->Cvar_SetValue("mn_trans_base_id", td.transferBase->idx);
 	} else {
-		Cvar_Set("mn_trans_base_id", "");
+		cgi->Cvar_Set("mn_trans_base_id", "");
 	}
 
 	/* Set up cvar used with tabset */
-	Cvar_Set("mn_itemtype", transferTypeIDs[0]);
+	cgi->Cvar_Set("mn_itemtype", transferTypeIDs[0]);
 	/* Select first available item */
-	Cmd_ExecuteString(va("trans_type %s", transferTypeIDs[0]));
+	cgi->Cmd_ExecuteString(va("trans_type %s", transferTypeIDs[0]));
 
 	/* Reset scrolling for item-in-base list */
 	cgi->UI_ExecuteConfunc("trans_resetscroll");
@@ -1466,13 +1466,13 @@ static void TR_TransferList_Scroll_f (void)
 	if (!srcBase)
 		return;
 
-	if (Cmd_Argc() < 3) {
-		Com_Printf("Usage: %s <transferType> <viewPos>\n", Cmd_Argv(0));
+	if (cgi->Cmd_Argc() < 3) {
+		Com_Printf("Usage: %s <transferType> <viewPos>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
-	transferType = TR_GetTransferType(Cmd_Argv(1));
-	viewPos = atoi(Cmd_Argv(2));
+	transferType = TR_GetTransferType(cgi->Cmd_Argv(1));
+	viewPos = atoi(cgi->Cmd_Argv(2));
 
 	/* spinners are only on items screen */
 	if (transferType != TRANS_TYPE_ITEM)
@@ -1575,18 +1575,18 @@ void TR_InitCallbacks (void)
 {
 	OBJZERO(td);
 
-	Cmd_AddCommand("trans_list", TR_List_f, "Assembles the transferlist");
-	Cmd_AddCommand("trans_init", TR_Init_f, "Init function for Transfer menu");
-	Cmd_AddCommand("trans_list_scroll", TR_TransferList_Scroll_f, "Scrolls the transferlist");
-	Cmd_AddCommand("trans_close", TR_TransferClose_f, "Callback for closing Transfer Menu");
-	Cmd_AddCommand("trans_start", TR_TransferStart_f, "Starts the transfer");
-	Cmd_AddCommand("trans_type", TR_TransferSelect_f, "Switch between transfer types (employees, techs, items)");
-	Cmd_AddCommand("trans_emptyairstorage", TR_TransferListClear_f, "Unload everything from transfer cargo back to base");
-	Cmd_AddCommand("trans_list_click", TR_TransferListSelect_f, "Callback for transfer list node click");
-	Cmd_AddCommand("trans_cargolist_click", TR_CargoListSelect_f, "Callback for cargo list node click");
-	Cmd_AddCommand("trans_selectbase", TR_SelectBase_f, "Callback for selecting a base");
-	Cmd_AddCommand("trans_baselist_click", TR_TransferBaseListClick_f, "Callback for choosing base while recovering alien after mission");
-	Cmd_AddCommand("trans_aliens", TR_TransferAliensFromMission_f, "Transfer aliens collected at missions");
+	cgi->Cmd_AddCommand("trans_list", TR_List_f, "Assembles the transferlist");
+	cgi->Cmd_AddCommand("trans_init", TR_Init_f, "Init function for Transfer menu");
+	cgi->Cmd_AddCommand("trans_list_scroll", TR_TransferList_Scroll_f, "Scrolls the transferlist");
+	cgi->Cmd_AddCommand("trans_close", TR_TransferClose_f, "Callback for closing Transfer Menu");
+	cgi->Cmd_AddCommand("trans_start", TR_TransferStart_f, "Starts the transfer");
+	cgi->Cmd_AddCommand("trans_type", TR_TransferSelect_f, "Switch between transfer types (employees, techs, items)");
+	cgi->Cmd_AddCommand("trans_emptyairstorage", TR_TransferListClear_f, "Unload everything from transfer cargo back to base");
+	cgi->Cmd_AddCommand("trans_list_click", TR_TransferListSelect_f, "Callback for transfer list node click");
+	cgi->Cmd_AddCommand("trans_cargolist_click", TR_CargoListSelect_f, "Callback for cargo list node click");
+	cgi->Cmd_AddCommand("trans_selectbase", TR_SelectBase_f, "Callback for selecting a base");
+	cgi->Cmd_AddCommand("trans_baselist_click", TR_TransferBaseListClick_f, "Callback for choosing base while recovering alien after mission");
+	cgi->Cmd_AddCommand("trans_aliens", TR_TransferAliensFromMission_f, "Transfer aliens collected at missions");
 }
 
 void TR_ShutdownCallbacks (void)
@@ -1599,16 +1599,16 @@ void TR_ShutdownCallbacks (void)
 		LIST_Delete(&td.trEmployeesTmp[i]);
 	}
 
-	Cmd_RemoveCommand("trans_list");
-	Cmd_RemoveCommand("trans_init");
-	Cmd_RemoveCommand("trans_list_scroll");
-	Cmd_RemoveCommand("trans_close");
-	Cmd_RemoveCommand("trans_start");
-	Cmd_RemoveCommand("trans_type");
-	Cmd_RemoveCommand("trans_emptyairstorage");
-	Cmd_RemoveCommand("trans_list_click");
-	Cmd_RemoveCommand("trans_cargolist_click");
-	Cmd_RemoveCommand("trans_selectbase");
-	Cmd_RemoveCommand("trans_baselist_click");
-	Cmd_RemoveCommand("trans_aliens");
+	cgi->Cmd_RemoveCommand("trans_list");
+	cgi->Cmd_RemoveCommand("trans_init");
+	cgi->Cmd_RemoveCommand("trans_list_scroll");
+	cgi->Cmd_RemoveCommand("trans_close");
+	cgi->Cmd_RemoveCommand("trans_start");
+	cgi->Cmd_RemoveCommand("trans_type");
+	cgi->Cmd_RemoveCommand("trans_emptyairstorage");
+	cgi->Cmd_RemoveCommand("trans_list_click");
+	cgi->Cmd_RemoveCommand("trans_cargolist_click");
+	cgi->Cmd_RemoveCommand("trans_selectbase");
+	cgi->Cmd_RemoveCommand("trans_baselist_click");
+	cgi->Cmd_RemoveCommand("trans_aliens");
 }

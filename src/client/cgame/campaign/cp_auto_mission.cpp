@@ -382,16 +382,16 @@ static void AM_CalculateTeamScores (autoMissionBattle_t *battle)
 
 	/* sanity checks */
 	if (unitTotal == 0)
-		Com_Error(ERR_DROP, "Grand total of ZERO units are fighting in auto battle, something is wrong.");
+		cgi->Com_Error(ERR_DROP, "Grand total of ZERO units are fighting in auto battle, something is wrong.");
 
 	if (unitTotal < 0)
-		Com_Error(ERR_DROP, "Negative number of total units are fighting in auto battle, something is VERY wrong!");
+		cgi->Com_Error(ERR_DROP, "Negative number of total units are fighting in auto battle, something is VERY wrong!");
 
 	if (isHostileTotal <= 0)
-		Com_Error(ERR_DROP, "No team has any other team hostile toward it, no battle is possible!");
+		cgi->Com_Error(ERR_DROP, "No team has any other team hostile toward it, no battle is possible!");
 
 	if (totalActiveTeams <= 0)
-		Com_Error(ERR_DROP, "No Active teams detected in Auto Battle!");
+		cgi->Com_Error(ERR_DROP, "No Active teams detected in Auto Battle!");
 
 	if (totalActiveTeams == 1) {
 		Com_DPrintf(DEBUG_CLIENT, "Note: Only one active team detected, this team will win the auto mission battle by default.\n");
@@ -759,7 +759,7 @@ static void AM_DisplayResults (const autoMissionBattle_t *battle)
 {
 	assert(battle);
 
-	Cvar_SetValue("cp_mission_tryagain", 0);
+	cgi->Cvar_SetValue("cp_mission_tryagain", 0);
 	if (battle->results->state == WON) {
 		cgi->UI_PushWindow("won");
 		if (battle->teamAccomplishment[AUTOMISSION_TEAM_TYPE_PLAYER] > battle->teamAccomplishment[AUTOMISSION_TEAM_TYPE_ALIEN])

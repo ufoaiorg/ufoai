@@ -40,12 +40,12 @@ static void CP_AddTechAsResearchable_f (void)
 	const char *techID;
 	technology_t *tech;
 
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <tech>\n", Cmd_Argv(0));
+	if (cgi->Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <tech>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
-	techID = Cmd_Argv(1);
+	techID = cgi->Cmd_Argv(1);
 	tech = RS_GetTechByID(techID);
 	RS_MarkOneResearchable(tech);
 }
@@ -64,13 +64,13 @@ static void CP_AddItemAsCollected_f (void)
 	base_t *base;
 	const objDef_t *item;
 
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <item>\n", Cmd_Argv(0));
+	if (cgi->Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <item>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
-	id = Cmd_Argv(1);
-	baseID = atoi(Cmd_Argv(2));
+	id = cgi->Cmd_Argv(1);
+	baseID = atoi(cgi->Cmd_Argv(2));
 	base = B_GetBaseByIDX(baseID);
 	if (base == NULL)
 		return;
@@ -96,11 +96,11 @@ static void CP_ChangeNationHappiness_f (void)
 	const nationInfo_t *stats;
 	const mission_t *mission = MAP_GetSelectedMission();
 
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <absolute change value>\n", Cmd_Argv(0));
+	if (cgi->Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <absolute change value>\n", cgi->Cmd_Argv(0));
 		return;
 	}
-	change = atof(Cmd_Argv(1));
+	change = atof(cgi->Cmd_Argv(1));
 
 	if (!mission) {
 		Com_Printf("No mission selected - could not determine nation to use\n");
@@ -154,9 +154,9 @@ static void CP_MissionTriggerFunctions (bool add)
 
 	for (commands = cp_commands; commands->name; commands++)
 		if (add)
-			Cmd_AddCommand(commands->name, commands->function, commands->description);
+			cgi->Cmd_AddCommand(commands->name, commands->function, commands->description);
 		else
-			Cmd_RemoveCommand(commands->name);
+			cgi->Cmd_RemoveCommand(commands->name);
 }
 
 /**
@@ -180,20 +180,20 @@ void CP_ExecuteMissionTrigger (const mission_t *mission, bool won)
 	if (won) {
 		if (mission->onwin[0] != '\0') {
 			Com_DPrintf(DEBUG_CLIENT, "...won - executing '%s'\n", mission->onwin);
-			Cmd_ExecuteString(mission->onwin);
+			cgi->Cmd_ExecuteString(mission->onwin);
 		}
 		if (mission->mapDef && mission->mapDef->onwin != NULL) {
 			Com_DPrintf(DEBUG_CLIENT, "...won - executing '%s'\n", mission->mapDef->onwin);
-			Cmd_ExecuteString(mission->mapDef->onwin);
+			cgi->Cmd_ExecuteString(mission->mapDef->onwin);
 		}
 	} else {
 		if (mission->onlose[0] != '\0') {
 			Com_DPrintf(DEBUG_CLIENT, "...lost - executing '%s'\n", mission->onlose);
-			Cmd_ExecuteString(mission->onlose);
+			cgi->Cmd_ExecuteString(mission->onlose);
 		}
 		if (mission->mapDef && mission->mapDef->onlose != NULL) {
 			Com_DPrintf(DEBUG_CLIENT, "...lost - executing '%s'\n", mission->mapDef->onlose);
-			Cmd_ExecuteString(mission->mapDef->onlose);
+			cgi->Cmd_ExecuteString(mission->mapDef->onlose);
 		}
 	}
 

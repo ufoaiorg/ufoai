@@ -209,7 +209,7 @@ void US_RemoveUFOsExceedingCapacity (installation_t *installation)
 	const capacities_t *ufoCap;
 
 	if (!installation)
-		Com_Error(ERR_DROP, "US_RemoveUFOsExceedingCapacity: No installation given!\n");
+		cgi->Com_Error(ERR_DROP, "US_RemoveUFOsExceedingCapacity: No installation given!\n");
 
 	ufoCap = &installation->ufoCapacity;
 
@@ -234,9 +234,9 @@ bool US_TransferUFO (storedUFO_t *ufo, installation_t *ufoyard)
 	date_t date;
 
 	if (!ufo)
-		Com_Error(ERR_DROP, "No UFO cannot be transfered!");
+		cgi->Com_Error(ERR_DROP, "No UFO cannot be transfered!");
 	if (!ufoyard)
-		Com_Error(ERR_DROP, "UFO cannot be transfered to void!");
+		cgi->Com_Error(ERR_DROP, "UFO cannot be transfered to void!");
 	/* only stored ufo can be transfered */
 	if (ufo->status != SUFO_STORED)
 		return false;
@@ -310,20 +310,20 @@ int US_StoredUFOCount (void)
  */
 bool US_SaveXML (xmlNode_t *p)
 {
-	xmlNode_t *node = XML_AddNode(p, SAVE_UFORECOVERY_STOREDUFOS);
+	xmlNode_t *node = cgi->XML_AddNode(p, SAVE_UFORECOVERY_STOREDUFOS);
 
 	Com_RegisterConstList(saveStoredUFOConstants);
 	US_Foreach(ufo) {
-		xmlNode_t * snode = XML_AddNode(node, SAVE_UFORECOVERY_UFO);
+		xmlNode_t * snode = cgi->XML_AddNode(node, SAVE_UFORECOVERY_UFO);
 
-		XML_AddInt(snode, SAVE_UFORECOVERY_UFOIDX, ufo->idx);
-		XML_AddString(snode, SAVE_UFORECOVERY_UFOID, ufo->id);
-		XML_AddDate(snode, SAVE_UFORECOVERY_DATE, ufo->arrive.day, ufo->arrive.sec);
-		XML_AddString(snode, SAVE_UFORECOVERY_STATUS, Com_GetConstVariable(SAVE_STOREDUFOSTATUS_NAMESPACE, ufo->status));
-		XML_AddFloat(snode, SAVE_UFORECOVERY_CONDITION, ufo->condition);
+		cgi->XML_AddInt(snode, SAVE_UFORECOVERY_UFOIDX, ufo->idx);
+		cgi->XML_AddString(snode, SAVE_UFORECOVERY_UFOID, ufo->id);
+		cgi->XML_AddDate(snode, SAVE_UFORECOVERY_DATE, ufo->arrive.day, ufo->arrive.sec);
+		cgi->XML_AddString(snode, SAVE_UFORECOVERY_STATUS, Com_GetConstVariable(SAVE_STOREDUFOSTATUS_NAMESPACE, ufo->status));
+		cgi->XML_AddFloat(snode, SAVE_UFORECOVERY_CONDITION, ufo->condition);
 
 		if (ufo->installation)
-			XML_AddInt(snode, SAVE_UFORECOVERY_INSTALLATIONIDX, ufo->installation->idx);
+			cgi->XML_AddInt(snode, SAVE_UFORECOVERY_INSTALLATIONIDX, ufo->installation->idx);
 	}
 	Com_UnregisterConstList(saveStoredUFOConstants);
 	return true;
@@ -339,17 +339,17 @@ bool US_LoadXML (xmlNode_t *p)
 {
 	xmlNode_t *node, *snode;
 
-	node = XML_GetNode(p, SAVE_UFORECOVERY_STOREDUFOS);
+	node = cgi->XML_GetNode(p, SAVE_UFORECOVERY_STOREDUFOS);
 
 	Com_RegisterConstList(saveStoredUFOConstants);
-	for (snode = XML_GetNode(node, SAVE_UFORECOVERY_UFO); snode;
-			snode = XML_GetNextNode(snode, node, SAVE_UFORECOVERY_UFO)) {
-		const char *id = XML_GetString(snode, SAVE_UFORECOVERY_STATUS);
+	for (snode = cgi->XML_GetNode(node, SAVE_UFORECOVERY_UFO); snode;
+			snode = cgi->XML_GetNextNode(snode, node, SAVE_UFORECOVERY_UFO)) {
+		const char *id = cgi->XML_GetString(snode, SAVE_UFORECOVERY_STATUS);
 		storedUFO_t ufo;
 		int statusIDX;
 
 		/* ufo->idx */
-		ufo.idx = XML_GetInt(snode, SAVE_UFORECOVERY_UFOIDX, -1);
+		ufo.idx = cgi->XML_GetInt(snode, SAVE_UFORECOVERY_UFOIDX, -1);
 		if (ufo.idx < 0) {
 			Com_Printf("Invalid or no IDX defined for stored UFO.\n");
 			continue;
@@ -361,7 +361,7 @@ bool US_LoadXML (xmlNode_t *p)
 		}
 		ufo.status = (storedUFOStatus_t)statusIDX;
 		/* ufo->installation */
-		ufo.installation = INS_GetByIDX(XML_GetInt(snode, SAVE_UFORECOVERY_INSTALLATIONIDX, -1));
+		ufo.installation = INS_GetByIDX(cgi->XML_GetInt(snode, SAVE_UFORECOVERY_INSTALLATIONIDX, -1));
 		if (!ufo.installation) {
 			Com_Printf("UFO has no/invalid installation assigned\n");
 			continue;
@@ -372,7 +372,7 @@ bool US_LoadXML (xmlNode_t *p)
 		}
 		ufo.installation->ufoCapacity.cur++;
 		/* ufo->id */
-		Q_strncpyz(ufo.id, XML_GetString(snode, SAVE_UFORECOVERY_UFOID), sizeof(ufo.id));
+		Q_strncpyz(ufo.id, cgi->XML_GetString(snode, SAVE_UFORECOVERY_UFOID), sizeof(ufo.id));
 		/* ufo->ufoTemplate */
 		ufo.ufoTemplate = AIR_GetAircraft(ufo.id);
 		if (!ufo.ufoTemplate) {
@@ -384,8 +384,8 @@ bool US_LoadXML (xmlNode_t *p)
 			Com_Printf("UFO has no/invalid components set\n");
 			continue;
 		}
-		XML_GetDate(snode, SAVE_UFORECOVERY_DATE, &ufo.arrive.day, &ufo.arrive.sec);
-		ufo.condition = XML_GetFloat(snode, SAVE_UFORECOVERY_CONDITION, 1.0f);
+		cgi->XML_GetDate(snode, SAVE_UFORECOVERY_DATE, &ufo.arrive.day, &ufo.arrive.sec);
+		ufo.condition = cgi->XML_GetFloat(snode, SAVE_UFORECOVERY_CONDITION, 1.0f);
 		/* disassembly is set by production savesystem later but only for UFOs that are being disassembled */
 		ufo.disassembly = NULL;
 		LIST_Add(&ccs.storedUFOs, ufo);
@@ -430,13 +430,13 @@ static void US_StoreUFO_f (void)
 	aircraft_t *ufoType = NULL;
 	int i;
 
-	if (Cmd_Argc() <= 2) {
-		Com_Printf("Usage: %s <ufoType> <installationIdx>\n", Cmd_Argv(0));
+	if (cgi->Cmd_Argc() <= 2) {
+		Com_Printf("Usage: %s <ufoType> <installationIdx>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
-	Q_strncpyz(ufoId, Cmd_Argv(1), sizeof(ufoId));
-	installationIDX = atoi(Cmd_Argv(2));
+	Q_strncpyz(ufoId, cgi->Cmd_Argv(1), sizeof(ufoId));
+	installationIDX = atoi(cgi->Cmd_Argv(2));
 
 	/* Get The UFO Yard */
 	if (installationIDX < 0) {
@@ -469,11 +469,11 @@ static void US_StoreUFO_f (void)
  */
 static void US_RemoveStoredUFO_f (void)
 {
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <idx>\n", Cmd_Argv(0));
+	if (cgi->Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <idx>\n", cgi->Cmd_Argv(0));
 		return;
 	} else {
-		const int idx = atoi(Cmd_Argv(1));
+		const int idx = atoi(cgi->Cmd_Argv(1));
 		storedUFO_t *storedUFO = US_GetStoredUFOByIDX(idx);
 		if (!storedUFO) {
 			Com_Printf("US_RemoveStoredUFO_f: No such ufo index.\n");
@@ -492,9 +492,9 @@ void UR_InitStartup (void)
 {
 	UR_InitCallbacks();
 #ifdef DEBUG
-	Cmd_AddCommand("debug_liststoredufos", US_ListStoredUFOs_f, "Debug function to list UFOs in Hangars.");
-	Cmd_AddCommand("debug_storeufo", US_StoreUFO_f, "Debug function to Add UFO to Hangars.");
-	Cmd_AddCommand("debug_removestoredufo", US_RemoveStoredUFO_f, "Debug function to Remove UFO from Hangars.");
+	cgi->Cmd_AddCommand("debug_liststoredufos", US_ListStoredUFOs_f, "Debug function to list UFOs in Hangars.");
+	cgi->Cmd_AddCommand("debug_storeufo", US_StoreUFO_f, "Debug function to Add UFO to Hangars.");
+	cgi->Cmd_AddCommand("debug_removestoredufo", US_RemoveStoredUFO_f, "Debug function to Remove UFO from Hangars.");
 #endif
 }
 
@@ -507,8 +507,8 @@ void UR_Shutdown (void)
 
 	UR_ShutdownCallbacks();
 #ifdef DEBUG
-	Cmd_RemoveCommand("debug_liststoredufos");
-	Cmd_RemoveCommand("debug_storeufo");
-	Cmd_RemoveCommand("debug_removestoredufo");
+	cgi->Cmd_RemoveCommand("debug_liststoredufos");
+	cgi->Cmd_RemoveCommand("debug_storeufo");
+	cgi->Cmd_RemoveCommand("debug_removestoredufo");
 #endif
 }

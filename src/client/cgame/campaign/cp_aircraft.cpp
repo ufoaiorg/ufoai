@@ -145,8 +145,8 @@ void AIR_ListAircraft_f (void)
 {
 	base_t *base = NULL;
 
-	if (Cmd_Argc() == 2) {
-		int baseIdx = atoi(Cmd_Argv(1));
+	if (cgi->Cmd_Argc() == 2) {
+		int baseIdx = atoi(cgi->Cmd_Argv(1));
 		base = B_GetFoundedBaseByIDX(baseIdx);
 	}
 
@@ -440,7 +440,7 @@ const char *AIR_AircraftStatusToName (const aircraft_t * aircraft)
 	case AIR_RETURNING:
 		return _("returning to base");
 	case AIR_CRASHED:
-		Com_Error(ERR_DROP, "AIR_CRASHED should not be visible anywhere");
+		cgi->Com_Error(ERR_DROP, "AIR_CRASHED should not be visible anywhere");
 	}
 	return NULL;
 }
@@ -484,7 +484,7 @@ bool AIR_IsAircraftOnGeoscape (const aircraft_t *aircraft)
 		return false;
 	}
 
-	Com_Error(ERR_FATAL, "Unknown aircraft status %i", aircraft->status);
+	cgi->Com_Error(ERR_FATAL, "Unknown aircraft status %i", aircraft->status);
 }
 
 /**
@@ -717,9 +717,9 @@ const aircraft_t *AIR_GetAircraft (const char *name)
 {
 	const aircraft_t *aircraft = AIR_GetAircraftSilent(name);
 	if (name == NULL || name[0] == '\0')
-		Com_Error(ERR_DROP, "AIR_GetAircraft called with NULL name!");
+		cgi->Com_Error(ERR_DROP, "AIR_GetAircraft called with NULL name!");
 	else if (aircraft == NULL)
-		Com_Error(ERR_DROP, "Aircraft '%s' not found", name);
+		cgi->Com_Error(ERR_DROP, "Aircraft '%s' not found", name);
 
 	return aircraft;
 }
@@ -813,7 +813,7 @@ aircraft_t* AIR_NewAircraft (base_t *base, const aircraft_t *aircraftTemplate)
 	if (aircraft->hangar == AIRCRAFT_HANGAR_ERROR)
 		Com_Printf("AIR_NewAircraft: ERROR, new aircraft but no free space in hangars!\n");
 	/* also update the base menu buttons */
-	Cmd_ExecuteString("base_init");
+	cgi->Cmd_ExecuteString("base_init");
 	return aircraft;
 }
 
@@ -830,7 +830,7 @@ baseCapacities_t AIR_GetCapacityByAircraftWeight (const aircraft_t *aircraft)
 	case AIRCRAFT_LARGE:
 		return CAP_AIRCRAFT_BIG;
 	}
-	Com_Error(ERR_DROP, "AIR_GetCapacityByAircraftWeight: Unknown weight of aircraft '%i'\n", aircraft->size);
+	cgi->Com_Error(ERR_DROP, "AIR_GetCapacityByAircraftWeight: Unknown weight of aircraft '%i'\n", aircraft->size);
 }
 
 /**
@@ -1019,17 +1019,17 @@ void AIR_DeleteAircraft (aircraft_t *aircraft)
 	AIR_Delete(base, aircraft);
 
 	if (!AIR_BaseHasAircraft(base)) {
-		Cvar_SetValue("mn_equipsoldierstate", 0);
-		Cvar_Set("mn_aircraftstatus", "");
-		Cvar_Set("mn_aircraftinbase", "0");
-		Cvar_Set("mn_aircraftname", "");
-		Cvar_Set("mn_aircraft_model", "");
+		cgi->Cvar_SetValue("mn_equipsoldierstate", 0);
+		cgi->Cvar_Set("mn_aircraftstatus", "");
+		cgi->Cvar_Set("mn_aircraftinbase", "0");
+		cgi->Cvar_Set("mn_aircraftname", "");
+		cgi->Cvar_Set("mn_aircraft_model", "");
 	} else if (base->aircraftCurrent == NULL) {
 		base->aircraftCurrent = AIR_GetFirstFromBase(base);
 	}
 
 	/* also update the base menu buttons */
-	Cmd_ExecuteString("base_init");
+	cgi->Cmd_ExecuteString("base_init");
 
 	/* update hangar capacities */
 	AIR_UpdateHangarCapForAll(base);
@@ -1064,14 +1064,14 @@ void AIR_DestroyAircraft (aircraft_t *aircraft, bool killPilot)
 			if (E_DeleteEmployee(pilot))
 				AIR_SetPilot(aircraft, NULL);
 			else
-				Com_Error(ERR_DROP, "AIR_DestroyAircraft: Could not remove pilot from game: %s (ucn: %i)\n",
+				cgi->Com_Error(ERR_DROP, "AIR_DestroyAircraft: Could not remove pilot from game: %s (ucn: %i)\n",
 						pilot->chr.name, pilot->chr.ucn);
 		} else {
 			AIR_SetPilot(aircraft, NULL);
 		}
 	} else {
 		if (aircraft->status != AIR_CRASHED)
-			Com_Error(ERR_DROP, "AIR_DestroyAircraft: aircraft id %s had no pilot\n", aircraft->id);
+			cgi->Com_Error(ERR_DROP, "AIR_DestroyAircraft: aircraft id %s had no pilot\n", aircraft->id);
 	}
 
 	AIR_DeleteAircraft(aircraft);
@@ -1551,7 +1551,7 @@ void AIR_ParseAircraft (const char *name, const char **text, bool assignAircraft
 							}
 						}
 						if (i == MAX_ACITEMS)
-							Com_Error(ERR_DROP, "Unknown value '%s' for slot type\n", token);
+							cgi->Com_Error(ERR_DROP, "Unknown value '%s' for slot type\n", token);
 					} else if (Q_streq(token, "position")) {
 						token = Com_EParse(text, errhead, name);
 						if (!*text)
@@ -1573,7 +1573,7 @@ void AIR_ParseAircraft (const char *name, const char **text, bool assignAircraft
 							}
 						}
 						if (i == AIR_POSITIONS_MAX)
-							Com_Error(ERR_DROP, "Unknown value '%s' for slot position\n", token);
+							cgi->Com_Error(ERR_DROP, "Unknown value '%s' for slot position\n", token);
 					} else if (Q_streq(token, "contains")) {
 						token = Com_EParse(text, errhead, name);
 						if (!*text)
@@ -1673,7 +1673,7 @@ void AIR_ParseAircraft (const char *name, const char **text, bool assignAircraft
 							return;
 						Com_EParseValue(aircraftTemplate, token, V_INT, offsetof(aircraft_t, stats[AIR_STATS_FUELSIZE]), MEMBER_SIZEOF(aircraft_t, stats[0]));
 						if (aircraftTemplate->stats[AIR_STATS_SPEED] == 0)
-							Com_Error(ERR_DROP, "AIR_ParseAircraft: speed value must be entered before range value");
+							cgi->Com_Error(ERR_DROP, "AIR_ParseAircraft: speed value must be entered before range value");
 						aircraftTemplate->stats[AIR_STATS_FUELSIZE] = (int) (2.0f * (float)SECONDS_PER_HOUR * aircraftTemplate->stats[AIR_STATS_FUELSIZE]) /
 							((float) aircraftTemplate->stats[AIR_STATS_SPEED]);
 					} else {
@@ -1713,8 +1713,8 @@ void AIR_ListAircraftSamples_f (void)
 	const value_t *vp;
 
 	Com_Printf("%i aircraft\n", max);
-	if (Cmd_Argc() == 2) {
-		max = atoi(Cmd_Argv(1));
+	if (cgi->Cmd_Argc() == 2) {
+		max = atoi(cgi->Cmd_Argv(1));
 		if (max >= ccs.numAircraftTemplates || max < 0)
 			return;
 		i = max - 1;
@@ -1895,7 +1895,7 @@ static float AIR_GetDestinationFindRoot (const float c, const float B, const flo
 					fEnd = fMiddle;
 					fdEnd = fdMiddle;
 				} else {
-					Com_Error(ERR_DROP, "AIR_GetDestinationFindRoot: Error in calculation, can't find root");
+					cgi->Com_Error(ERR_DROP, "AIR_GetDestinationFindRoot: Error in calculation, can't find root");
 				}
 				middle = (begin + end) / 2.;
 				fMiddle = AIR_GetDestinationFunction(c, B, speedRatio, middle);
@@ -2294,10 +2294,10 @@ static void AIR_SaveRouteXML (xmlNode_t *node, const mapline_t *route)
 	int j;
 	xmlNode_t *subnode;
 
-	subnode = XML_AddNode(node, SAVE_AIRCRAFT_ROUTE);
-	XML_AddFloatValue(subnode, SAVE_AIRCRAFT_ROUTE_DISTANCE, route->distance);
+	subnode = cgi->XML_AddNode(node, SAVE_AIRCRAFT_ROUTE);
+	cgi->XML_AddFloatValue(subnode, SAVE_AIRCRAFT_ROUTE_DISTANCE, route->distance);
 	for (j = 0; j < route->numPoints; j++) {
-		XML_AddPos2(subnode, SAVE_AIRCRAFT_ROUTE_POINT, route->point[j]);
+		cgi->XML_AddPos2(subnode, SAVE_AIRCRAFT_ROUTE_POINT, route->point[j]);
 	}
 }
 
@@ -2316,7 +2316,7 @@ static void AIR_SaveAircraftSlotsXML (const aircraftSlot_t* slot, const int num,
 	int i;
 
 	for (i = 0; i < num; i++) {
-		xmlNode_t *sub = XML_AddNode(p, SAVE_AIRCRAFT_SLOT);
+		xmlNode_t *sub = cgi->XML_AddNode(p, SAVE_AIRCRAFT_SLOT);
 		AII_SaveOneSlotXML(sub, &slot[i], weapon);
 	}
 }
@@ -2336,25 +2336,25 @@ static bool AIR_SaveAircraftXML (xmlNode_t *p, const aircraft_t* const aircraft,
 
 	Com_RegisterConstList(saveAircraftConstants);
 
-	node = XML_AddNode(p, SAVE_AIRCRAFT_AIRCRAFT);
+	node = cgi->XML_AddNode(p, SAVE_AIRCRAFT_AIRCRAFT);
 
-	XML_AddInt(node, SAVE_AIRCRAFT_IDX, aircraft->idx);
-	XML_AddString(node, SAVE_AIRCRAFT_ID, aircraft->id);
-	XML_AddString(node, SAVE_AIRCRAFT_NAME, aircraft->name);
+	cgi->XML_AddInt(node, SAVE_AIRCRAFT_IDX, aircraft->idx);
+	cgi->XML_AddString(node, SAVE_AIRCRAFT_ID, aircraft->id);
+	cgi->XML_AddString(node, SAVE_AIRCRAFT_NAME, aircraft->name);
 
-	XML_AddString(node, SAVE_AIRCRAFT_STATUS, Com_GetConstVariable(SAVE_AIRCRAFTSTATUS_NAMESPACE, aircraft->status));
-	XML_AddInt(node, SAVE_AIRCRAFT_FUEL, aircraft->fuel);
-	XML_AddInt(node, SAVE_AIRCRAFT_DAMAGE, aircraft->damage);
-	XML_AddPos3(node, SAVE_AIRCRAFT_POS, aircraft->pos);
-	XML_AddPos3(node, SAVE_AIRCRAFT_DIRECTION, aircraft->direction);
-	XML_AddInt(node, SAVE_AIRCRAFT_POINT, aircraft->point);
-	XML_AddInt(node, SAVE_AIRCRAFT_TIME, aircraft->time);
+	cgi->XML_AddString(node, SAVE_AIRCRAFT_STATUS, Com_GetConstVariable(SAVE_AIRCRAFTSTATUS_NAMESPACE, aircraft->status));
+	cgi->XML_AddInt(node, SAVE_AIRCRAFT_FUEL, aircraft->fuel);
+	cgi->XML_AddInt(node, SAVE_AIRCRAFT_DAMAGE, aircraft->damage);
+	cgi->XML_AddPos3(node, SAVE_AIRCRAFT_POS, aircraft->pos);
+	cgi->XML_AddPos3(node, SAVE_AIRCRAFT_DIRECTION, aircraft->direction);
+	cgi->XML_AddInt(node, SAVE_AIRCRAFT_POINT, aircraft->point);
+	cgi->XML_AddInt(node, SAVE_AIRCRAFT_TIME, aircraft->time);
 
-	subnode = XML_AddNode(node, SAVE_AIRCRAFT_WEAPONS);
+	subnode = cgi->XML_AddNode(node, SAVE_AIRCRAFT_WEAPONS);
 	AIR_SaveAircraftSlotsXML(aircraft->weapons, aircraft->maxWeapons, subnode, true);
-	subnode = XML_AddNode(node, SAVE_AIRCRAFT_SHIELDS);
+	subnode = cgi->XML_AddNode(node, SAVE_AIRCRAFT_SHIELDS);
 	AIR_SaveAircraftSlotsXML(&aircraft->shield, 1, subnode, false);
-	subnode = XML_AddNode(node, SAVE_AIRCRAFT_ELECTRONICS);
+	subnode = cgi->XML_AddNode(node, SAVE_AIRCRAFT_ELECTRONICS);
 	AIR_SaveAircraftSlotsXML(aircraft->electronics, aircraft->maxElectronics, subnode, false);
 
 	AIR_SaveRouteXML(node, &aircraft->route);
@@ -2364,28 +2364,28 @@ static bool AIR_SaveAircraftXML (xmlNode_t *p, const aircraft_t* const aircraft,
 		if (!aircraft->mission)
 			Com_Printf("Error: UFO '%s'is not linked to any mission\n", aircraft->id);
 #endif
-		XML_AddString(node, SAVE_AIRCRAFT_MISSIONID, aircraft->mission->id);
+		cgi->XML_AddString(node, SAVE_AIRCRAFT_MISSIONID, aircraft->mission->id);
 		/** detection id and time */
-		XML_AddInt(node, SAVE_AIRCRAFT_DETECTIONIDX, aircraft->detectionIdx);
-		XML_AddDate(node, SAVE_AIRCRAFT_LASTSPOTTED_DATE, aircraft->lastSpotted.day, aircraft->lastSpotted.sec);
+		cgi->XML_AddInt(node, SAVE_AIRCRAFT_DETECTIONIDX, aircraft->detectionIdx);
+		cgi->XML_AddDate(node, SAVE_AIRCRAFT_LASTSPOTTED_DATE, aircraft->lastSpotted.day, aircraft->lastSpotted.sec);
 	} else {
 		if (aircraft->status == AIR_MISSION) {
 			assert(aircraft->mission);
-			XML_AddString(node, SAVE_AIRCRAFT_MISSIONID, aircraft->mission->id);
+			cgi->XML_AddString(node, SAVE_AIRCRAFT_MISSIONID, aircraft->mission->id);
 		}
 		if (aircraft->homebase) {
-			XML_AddInt(node, SAVE_AIRCRAFT_HOMEBASE, aircraft->homebase->idx);
+			cgi->XML_AddInt(node, SAVE_AIRCRAFT_HOMEBASE, aircraft->homebase->idx);
 		}
 	}
 
 	if (aircraft->aircraftTarget) {
 		if (isUfo)
-			XML_AddInt(node, SAVE_AIRCRAFT_AIRCRAFTTARGET, aircraft->aircraftTarget->idx);
+			cgi->XML_AddInt(node, SAVE_AIRCRAFT_AIRCRAFTTARGET, aircraft->aircraftTarget->idx);
 		else
-			XML_AddInt(node, SAVE_AIRCRAFT_AIRCRAFTTARGET, UFO_GetGeoscapeIDX(aircraft->aircraftTarget));
+			cgi->XML_AddInt(node, SAVE_AIRCRAFT_AIRCRAFTTARGET, UFO_GetGeoscapeIDX(aircraft->aircraftTarget));
 	}
 
-	subnode = XML_AddNode(node, SAVE_AIRCRAFT_AIRSTATS);
+	subnode = cgi->XML_AddNode(node, SAVE_AIRCRAFT_AIRSTATS);
 	for (l = 0; l < AIR_STATS_MAX; l++) {
 		xmlNode_t *statNode;
 #ifdef DEBUG
@@ -2394,14 +2394,14 @@ static bool AIR_SaveAircraftXML (xmlNode_t *p, const aircraft_t* const aircraft,
 			Com_Printf("Warning: ufo '%s' stats %i: %i is smaller than 0\n", aircraft->id, l, aircraft->stats[l]);
 #endif
 		if (aircraft->stats[l] != 0) {
-			statNode = XML_AddNode(subnode, SAVE_AIRCRAFT_AIRSTAT);
-			XML_AddString(statNode, SAVE_AIRCRAFT_AIRSTATID, Com_GetConstVariable(SAVE_AIRCRAFTSTAT_NAMESPACE, l));
-			XML_AddLong(statNode, SAVE_AIRCRAFT_VAL, aircraft->stats[l]);
+			statNode = cgi->XML_AddNode(subnode, SAVE_AIRCRAFT_AIRSTAT);
+			cgi->XML_AddString(statNode, SAVE_AIRCRAFT_AIRSTATID, Com_GetConstVariable(SAVE_AIRCRAFTSTAT_NAMESPACE, l));
+			cgi->XML_AddLong(statNode, SAVE_AIRCRAFT_VAL, aircraft->stats[l]);
 		}
 	}
 
-	XML_AddBoolValue(node, SAVE_AIRCRAFT_DETECTED, aircraft->detected);
-	XML_AddBoolValue(node, SAVE_AIRCRAFT_LANDED, aircraft->landed);
+	cgi->XML_AddBoolValue(node, SAVE_AIRCRAFT_DETECTED, aircraft->detected);
+	cgi->XML_AddBoolValue(node, SAVE_AIRCRAFT_LANDED, aircraft->landed);
 
 	Com_UnregisterConstList(saveAircraftConstants);
 
@@ -2409,38 +2409,38 @@ static bool AIR_SaveAircraftXML (xmlNode_t *p, const aircraft_t* const aircraft,
 	if (isUfo)
 		return true;
 
-	XML_AddInt(node, SAVE_AIRCRAFT_HANGAR, aircraft->hangar);
+	cgi->XML_AddInt(node, SAVE_AIRCRAFT_HANGAR, aircraft->hangar);
 
-	subnode = XML_AddNode(node, SAVE_AIRCRAFT_AIRCRAFTTEAM);
+	subnode = cgi->XML_AddNode(node, SAVE_AIRCRAFT_AIRCRAFTTEAM);
 	LIST_Foreach(aircraft->acTeam, employee_t, employee) {
-		xmlNode_t *ssnode = XML_AddNode(subnode, SAVE_AIRCRAFT_MEMBER);
-		XML_AddInt(ssnode, SAVE_AIRCRAFT_TEAM_UCN, employee->chr.ucn);
+		xmlNode_t *ssnode = cgi->XML_AddNode(subnode, SAVE_AIRCRAFT_MEMBER);
+		cgi->XML_AddInt(ssnode, SAVE_AIRCRAFT_TEAM_UCN, employee->chr.ucn);
 	}
 
 	pilot = AIR_GetPilot(aircraft);
 	if (pilot)
-		XML_AddInt(node, SAVE_AIRCRAFT_PILOTUCN, pilot->chr.ucn);
+		cgi->XML_AddInt(node, SAVE_AIRCRAFT_PILOTUCN, pilot->chr.ucn);
 
 	/* itemcargo */
-	subnode = XML_AddNode(node, SAVE_AIRCRAFT_CARGO);
+	subnode = cgi->XML_AddNode(node, SAVE_AIRCRAFT_CARGO);
 	for (l = 0; l < aircraft->itemTypes; l++) {
-		xmlNode_t *ssnode = XML_AddNode(subnode, SAVE_AIRCRAFT_ITEM);
+		xmlNode_t *ssnode = cgi->XML_AddNode(subnode, SAVE_AIRCRAFT_ITEM);
 		assert(aircraft->itemcargo[l].item);
-		XML_AddString(ssnode, SAVE_AIRCRAFT_ITEMID, aircraft->itemcargo[l].item->id);
-		XML_AddInt(ssnode, SAVE_AIRCRAFT_AMOUNT, aircraft->itemcargo[l].amount);
+		cgi->XML_AddString(ssnode, SAVE_AIRCRAFT_ITEMID, aircraft->itemcargo[l].item->id);
+		cgi->XML_AddInt(ssnode, SAVE_AIRCRAFT_AMOUNT, aircraft->itemcargo[l].amount);
 	}
 
 	/* aliencargo */
 	{
 		const int alienCargoTypes = AL_GetAircraftAlienCargoTypes(aircraft);
 		const aliensTmp_t *cargo  = AL_GetAircraftAlienCargo(aircraft);
-		subnode = XML_AddNode(node, SAVE_AIRCRAFT_ALIENCARGO);
+		subnode = cgi->XML_AddNode(node, SAVE_AIRCRAFT_ALIENCARGO);
 		for (l = 0; l < alienCargoTypes; l++) {
-			xmlNode_t *ssnode = XML_AddNode(subnode, SAVE_AIRCRAFT_CARGO);
+			xmlNode_t *ssnode = cgi->XML_AddNode(subnode, SAVE_AIRCRAFT_CARGO);
 			assert(cargo[l].teamDef);
-			XML_AddString(ssnode, SAVE_AIRCRAFT_TEAMDEFID, cargo[l].teamDef->id);
-			XML_AddIntValue(ssnode, SAVE_AIRCRAFT_ALIVE, cargo[l].amountAlive);
-			XML_AddIntValue(ssnode, SAVE_AIRCRAFT_DEAD, cargo[l].amountDead);
+			cgi->XML_AddString(ssnode, SAVE_AIRCRAFT_TEAMDEFID, cargo[l].teamDef->id);
+			cgi->XML_AddIntValue(ssnode, SAVE_AIRCRAFT_ALIVE, cargo[l].amountAlive);
+			cgi->XML_AddIntValue(ssnode, SAVE_AIRCRAFT_DEAD, cargo[l].amountDead);
 		}
 	}
 
@@ -2459,13 +2459,13 @@ bool AIR_SaveXML (xmlNode_t *parent)
 	xmlNode_t * node, *snode;
 
 	/* save phalanx aircraft */
-	snode = XML_AddNode(parent, SAVE_AIRCRAFT_PHALANX);
+	snode = cgi->XML_AddNode(parent, SAVE_AIRCRAFT_PHALANX);
 	AIR_Foreach(aircraft) {
 		AIR_SaveAircraftXML(snode, aircraft, false);
 	}
 
 	/* save the ufos on geoscape */
-	snode = XML_AddNode(parent, SAVE_AIRCRAFT_UFOS);
+	snode = cgi->XML_AddNode(parent, SAVE_AIRCRAFT_UFOS);
 	for (i = 0; i < MAX_UFOONGEOSCAPE; i++) {
 		const aircraft_t *ufo = UFO_GetByIDX(i);
 		if (!ufo || (ufo->id == NULL))
@@ -2474,7 +2474,7 @@ bool AIR_SaveXML (xmlNode_t *parent)
 	}
 
 	/* Save projectiles. */
-	node = XML_AddNode(parent, SAVE_AIRCRAFT_PROJECTILES);
+	node = cgi->XML_AddNode(parent, SAVE_AIRCRAFT_PROJECTILES);
 	if (!AIRFIGHT_SaveXML(node))
 		return false;
 
@@ -2495,7 +2495,7 @@ static void AIR_LoadAircraftSlotsXML (aircraft_t *aircraft, aircraftSlot_t* slot
 {
 	xmlNode_t *act;
 	int i;
-	for (i = 0, act = XML_GetNode(p, SAVE_AIRCRAFT_SLOT); act && i <= max; act = XML_GetNextNode(act, p, SAVE_AIRCRAFT_SLOT), i++) {
+	for (i = 0, act = cgi->XML_GetNode(p, SAVE_AIRCRAFT_SLOT); act && i <= max; act = cgi->XML_GetNextNode(act, p, SAVE_AIRCRAFT_SLOT), i++) {
 		slot[i].aircraft = aircraft;
 		AII_LoadOneSlotXML(act, &slot[i], weapon);
 	}
@@ -2515,19 +2515,19 @@ static bool AIR_LoadRouteXML (xmlNode_t *p, mapline_t *route)
 	xmlNode_t *snode;
 	int count = 0;
 
-	snode = XML_GetNode(p, SAVE_AIRCRAFT_ROUTE);
+	snode = cgi->XML_GetNode(p, SAVE_AIRCRAFT_ROUTE);
 	if (!snode)
 		return false;
 
-	for (actual = XML_GetPos2(snode, SAVE_AIRCRAFT_ROUTE_POINT, route->point[count]); actual && count <= LINE_MAXPTS;
-			actual = XML_GetNextPos2(actual, snode, SAVE_AIRCRAFT_ROUTE_POINT, route->point[++count]))
+	for (actual = cgi->XML_GetPos2(snode, SAVE_AIRCRAFT_ROUTE_POINT, route->point[count]); actual && count <= LINE_MAXPTS;
+			actual = cgi->XML_GetNextPos2(actual, snode, SAVE_AIRCRAFT_ROUTE_POINT, route->point[++count]))
 		;
 	if (count > LINE_MAXPTS) {
 		Com_Printf("AIR_Load: number of points (%i) for UFO route exceed maximum value (%i)\n", count, LINE_MAXPTS);
 		return false;
 	}
 	route->numPoints = count;
-	route->distance = XML_GetFloat(snode, SAVE_AIRCRAFT_ROUTE_DISTANCE, 0.0);
+	route->distance = cgi->XML_GetFloat(snode, SAVE_AIRCRAFT_ROUTE_DISTANCE, 0.0);
 	return true;
 }
 
@@ -2544,16 +2544,16 @@ static bool AIR_LoadAircraftXML (xmlNode_t *p, aircraft_t *craft)
 	/* vars, if aircraft wasn't found */
 	int tmpInt;
 	int l, status;
-	const char *s = XML_GetString(p, SAVE_AIRCRAFT_ID);
+	const char *s = cgi->XML_GetString(p, SAVE_AIRCRAFT_ID);
 	const aircraft_t *crafttype = AIR_GetAircraft(s);
 
 	/* Copy all datas that don't need to be saved (tpl, hangar,...) */
 	*craft = *crafttype;
 
-	tmpInt = XML_GetInt(p, SAVE_AIRCRAFT_HOMEBASE, MAX_BASES);
+	tmpInt = cgi->XML_GetInt(p, SAVE_AIRCRAFT_HOMEBASE, MAX_BASES);
 	craft->homebase = (tmpInt != MAX_BASES) ? B_GetBaseByIDX(tmpInt) : NULL;
 
-	craft->idx = XML_GetInt(p, SAVE_AIRCRAFT_IDX, -1);
+	craft->idx = cgi->XML_GetInt(p, SAVE_AIRCRAFT_IDX, -1);
 	if (craft->idx < 0) {
 		Com_Printf("Invalid (or no) aircraft index %i\n", craft->idx);
 		Com_UnregisterConstList(saveAircraftConstants);
@@ -2562,7 +2562,7 @@ static bool AIR_LoadAircraftXML (xmlNode_t *p, aircraft_t *craft)
 
 	Com_RegisterConstList(saveAircraftConstants);
 
-	statusId = XML_GetString(p, SAVE_AIRCRAFT_STATUS);
+	statusId = cgi->XML_GetString(p, SAVE_AIRCRAFT_STATUS);
 	if (!Com_GetConstIntFromNamespace(SAVE_AIRCRAFTSTATUS_NAMESPACE, statusId, &status)) {
 		Com_Printf("Invalid aircraft status '%s'\n", statusId);
 		Com_UnregisterConstList(saveAircraftConstants);
@@ -2570,36 +2570,36 @@ static bool AIR_LoadAircraftXML (xmlNode_t *p, aircraft_t *craft)
 	}
 
 	craft->status = (aircraftStatus_t)status;
-	craft->fuel = XML_GetInt(p, SAVE_AIRCRAFT_FUEL, 0);
-	craft->damage = XML_GetInt(p, SAVE_AIRCRAFT_DAMAGE, 0);
-	XML_GetPos3(p, SAVE_AIRCRAFT_POS, craft->pos);
+	craft->fuel = cgi->XML_GetInt(p, SAVE_AIRCRAFT_FUEL, 0);
+	craft->damage = cgi->XML_GetInt(p, SAVE_AIRCRAFT_DAMAGE, 0);
+	cgi->XML_GetPos3(p, SAVE_AIRCRAFT_POS, craft->pos);
 
-	XML_GetPos3(p, SAVE_AIRCRAFT_DIRECTION, craft->direction);
-	craft->point = XML_GetInt(p, SAVE_AIRCRAFT_POINT, 0);
-	craft->time = XML_GetInt(p, SAVE_AIRCRAFT_TIME, 0);
+	cgi->XML_GetPos3(p, SAVE_AIRCRAFT_DIRECTION, craft->direction);
+	craft->point = cgi->XML_GetInt(p, SAVE_AIRCRAFT_POINT, 0);
+	craft->time = cgi->XML_GetInt(p, SAVE_AIRCRAFT_TIME, 0);
 
 	if (!AIR_LoadRouteXML(p, &craft->route)) {
 		Com_UnregisterConstList(saveAircraftConstants);
 		return false;
 	}
 
-	s = XML_GetString(p, SAVE_AIRCRAFT_NAME);
+	s = cgi->XML_GetString(p, SAVE_AIRCRAFT_NAME);
 	if (s[0] == '\0')
 		s = _(craft->defaultName);
 	Q_strncpyz(craft->name, s, sizeof(craft->name));
 
-	s = XML_GetString(p, SAVE_AIRCRAFT_MISSIONID);
+	s = cgi->XML_GetString(p, SAVE_AIRCRAFT_MISSIONID);
 	craft->missionID = Mem_PoolStrDup(s, cp_campaignPool, 0);
 
 	if (!craft->homebase) {
 		/* detection id and time */
-		craft->detectionIdx = XML_GetInt(p, SAVE_AIRCRAFT_DETECTIONIDX, 0);
-		XML_GetDate(p, SAVE_AIRCRAFT_LASTSPOTTED_DATE, &craft->lastSpotted.day, &craft->lastSpotted.sec);
+		craft->detectionIdx = cgi->XML_GetInt(p, SAVE_AIRCRAFT_DETECTIONIDX, 0);
+		cgi->XML_GetDate(p, SAVE_AIRCRAFT_LASTSPOTTED_DATE, &craft->lastSpotted.day, &craft->lastSpotted.sec);
 	}
 
-	snode = XML_GetNode(p, SAVE_AIRCRAFT_AIRSTATS);
-	for (ssnode = XML_GetNode(snode, SAVE_AIRCRAFT_AIRSTAT); ssnode; ssnode = XML_GetNextNode(ssnode, snode, SAVE_AIRCRAFT_AIRSTAT)) {
-		const char *statId =  XML_GetString(ssnode, SAVE_AIRCRAFT_AIRSTATID);
+	snode = cgi->XML_GetNode(p, SAVE_AIRCRAFT_AIRSTATS);
+	for (ssnode = cgi->XML_GetNode(snode, SAVE_AIRCRAFT_AIRSTAT); ssnode; ssnode = cgi->XML_GetNextNode(ssnode, snode, SAVE_AIRCRAFT_AIRSTAT)) {
+		const char *statId =  cgi->XML_GetString(ssnode, SAVE_AIRCRAFT_AIRSTATID);
 		int idx;
 
 		if (!Com_GetConstIntFromNamespace(SAVE_AIRCRAFTSTAT_NAMESPACE, statId, &idx)) {
@@ -2607,7 +2607,7 @@ static bool AIR_LoadAircraftXML (xmlNode_t *p, aircraft_t *craft)
 			Com_UnregisterConstList(saveAircraftConstants);
 			return false;
 		}
-		craft->stats[idx] = XML_GetLong(ssnode, SAVE_AIRCRAFT_VAL, 0);
+		craft->stats[idx] = cgi->XML_GetLong(ssnode, SAVE_AIRCRAFT_VAL, 0);
 #ifdef DEBUG
 		/* UFO HP can be < 0 if the UFO has been destroyed */
 		if (!(!craft->homebase && idx == AIR_STATS_DAMAGE) && craft->stats[idx] < 0)
@@ -2615,10 +2615,10 @@ static bool AIR_LoadAircraftXML (xmlNode_t *p, aircraft_t *craft)
 #endif
 	}
 
-	craft->detected = XML_GetBool(p, SAVE_AIRCRAFT_DETECTED, false);
-	craft->landed = XML_GetBool(p, SAVE_AIRCRAFT_LANDED, false);
+	craft->detected = cgi->XML_GetBool(p, SAVE_AIRCRAFT_DETECTED, false);
+	craft->landed = cgi->XML_GetBool(p, SAVE_AIRCRAFT_LANDED, false);
 
-	tmpInt = XML_GetInt(p, SAVE_AIRCRAFT_AIRCRAFTTARGET, -1);
+	tmpInt = cgi->XML_GetInt(p, SAVE_AIRCRAFT_AIRCRAFTTARGET, -1);
 	if (tmpInt == -1)
 		craft->aircraftTarget = NULL;
 	else if (!craft->homebase)
@@ -2627,11 +2627,11 @@ static bool AIR_LoadAircraftXML (xmlNode_t *p, aircraft_t *craft)
 		craft->aircraftTarget = ccs.ufos + tmpInt;
 
 	/* read equipment slots */
-	snode = XML_GetNode(p, SAVE_AIRCRAFT_WEAPONS);
+	snode = cgi->XML_GetNode(p, SAVE_AIRCRAFT_WEAPONS);
 	AIR_LoadAircraftSlotsXML(craft, craft->weapons, snode, true, craft->maxWeapons);
-	snode = XML_GetNode(p, SAVE_AIRCRAFT_SHIELDS);
+	snode = cgi->XML_GetNode(p, SAVE_AIRCRAFT_SHIELDS);
 	AIR_LoadAircraftSlotsXML(craft, &craft->shield, snode, false, 1);
-	snode = XML_GetNode(p, SAVE_AIRCRAFT_ELECTRONICS);
+	snode = cgi->XML_GetNode(p, SAVE_AIRCRAFT_ELECTRONICS);
 	AIR_LoadAircraftSlotsXML(craft, craft->electronics, snode, false, craft->maxElectronics);
 
 	Com_UnregisterConstList(saveAircraftConstants);
@@ -2640,17 +2640,17 @@ static bool AIR_LoadAircraftXML (xmlNode_t *p, aircraft_t *craft)
 	if (!craft->homebase)
 		return true;
 
-	craft->hangar = XML_GetInt(p, SAVE_AIRCRAFT_HANGAR, 0);
+	craft->hangar = cgi->XML_GetInt(p, SAVE_AIRCRAFT_HANGAR, 0);
 
-	snode = XML_GetNode(p, SAVE_AIRCRAFT_AIRCRAFTTEAM);
-	for (ssnode = XML_GetNode(snode, SAVE_AIRCRAFT_MEMBER); AIR_GetTeamSize(craft) < craft->maxTeamSize && ssnode;
-			ssnode = XML_GetNextNode(ssnode, snode, SAVE_AIRCRAFT_MEMBER)) {
-		const int ucn = XML_GetInt(ssnode, SAVE_AIRCRAFT_TEAM_UCN, -1);
+	snode = cgi->XML_GetNode(p, SAVE_AIRCRAFT_AIRCRAFTTEAM);
+	for (ssnode = cgi->XML_GetNode(snode, SAVE_AIRCRAFT_MEMBER); AIR_GetTeamSize(craft) < craft->maxTeamSize && ssnode;
+			ssnode = cgi->XML_GetNextNode(ssnode, snode, SAVE_AIRCRAFT_MEMBER)) {
+		const int ucn = cgi->XML_GetInt(ssnode, SAVE_AIRCRAFT_TEAM_UCN, -1);
 		if (ucn != -1)
 			LIST_AddPointer(&craft->acTeam, E_GetEmployeeFromChrUCN(ucn));
 	}
 
-	tmpInt = XML_GetInt(p, SAVE_AIRCRAFT_PILOTUCN, -1);
+	tmpInt = cgi->XML_GetInt(p, SAVE_AIRCRAFT_PILOTUCN, -1);
 	/* the employee subsystem is loaded after the base subsystem
 	 * this means, that the pilot pointer is not (really) valid until
 	 * E_Load was called, too */
@@ -2664,10 +2664,10 @@ static bool AIR_LoadAircraftXML (xmlNode_t *p, aircraft_t *craft)
 	craft->radar.ufoDetectionProbability = 1;
 
 	/* itemcargo */
-	snode = XML_GetNode(p, SAVE_AIRCRAFT_CARGO);
-	for (l = 0, ssnode = XML_GetNode(snode, SAVE_AIRCRAFT_ITEM); l < MAX_CARGO && ssnode;
-			l++, ssnode = XML_GetNextNode(ssnode, snode, SAVE_AIRCRAFT_ITEM)) {
-		const char *const str = XML_GetString(ssnode, SAVE_AIRCRAFT_ITEMID);
+	snode = cgi->XML_GetNode(p, SAVE_AIRCRAFT_CARGO);
+	for (l = 0, ssnode = cgi->XML_GetNode(snode, SAVE_AIRCRAFT_ITEM); l < MAX_CARGO && ssnode;
+			l++, ssnode = cgi->XML_GetNextNode(ssnode, snode, SAVE_AIRCRAFT_ITEM)) {
+		const char *const str = cgi->XML_GetString(ssnode, SAVE_AIRCRAFT_ITEMID);
 		const objDef_t *od = INVSH_GetItemByID(str);
 
 		if (!od) {
@@ -2677,16 +2677,16 @@ static bool AIR_LoadAircraftXML (xmlNode_t *p, aircraft_t *craft)
 		}
 
 		craft->itemcargo[l].item = od;
-		craft->itemcargo[l].amount = XML_GetInt(ssnode, SAVE_AIRCRAFT_AMOUNT, 0);
+		craft->itemcargo[l].amount = cgi->XML_GetInt(ssnode, SAVE_AIRCRAFT_AMOUNT, 0);
 	}
 	craft->itemTypes = l;
 
 	/* aliencargo */
-	snode = XML_GetNode(p, SAVE_AIRCRAFT_ALIENCARGO);
-	for (l = 0, ssnode = XML_GetNode(snode, SAVE_AIRCRAFT_CARGO); l < MAX_CARGO && ssnode;
-			l++, ssnode = XML_GetNextNode(ssnode, snode, SAVE_AIRCRAFT_CARGO)) {
+	snode = cgi->XML_GetNode(p, SAVE_AIRCRAFT_ALIENCARGO);
+	for (l = 0, ssnode = cgi->XML_GetNode(snode, SAVE_AIRCRAFT_CARGO); l < MAX_CARGO && ssnode;
+			l++, ssnode = cgi->XML_GetNextNode(ssnode, snode, SAVE_AIRCRAFT_CARGO)) {
 		aliensTmp_t *cargo = AL_GetAircraftAlienCargo(craft);
-		const char *const str = XML_GetString(ssnode, SAVE_AIRCRAFT_TEAMDEFID);
+		const char *const str = cgi->XML_GetString(ssnode, SAVE_AIRCRAFT_TEAMDEFID);
 
 		cargo[l].teamDef = Com_GetTeamDefinitionByID(str);
 		if (!cargo[l].teamDef) {
@@ -2695,8 +2695,8 @@ static bool AIR_LoadAircraftXML (xmlNode_t *p, aircraft_t *craft)
 			continue;
 		}
 
-		cargo[l].amountAlive = XML_GetInt(ssnode, SAVE_AIRCRAFT_ALIVE, 0);
-		cargo[l].amountDead  =	XML_GetInt(ssnode, SAVE_AIRCRAFT_DEAD, 0);
+		cargo[l].amountAlive = cgi->XML_GetInt(ssnode, SAVE_AIRCRAFT_ALIVE, 0);
+		cargo[l].amountDead  =	cgi->XML_GetInt(ssnode, SAVE_AIRCRAFT_DEAD, 0);
 	}
 	AL_SetAircraftAlienCargoTypes(craft, l);
 
@@ -2735,9 +2735,9 @@ bool AIR_LoadXML (xmlNode_t *parent)
 	int i;
 
 	/* load phalanx aircraft */
-	snode = XML_GetNode(parent, SAVE_AIRCRAFT_PHALANX);
-	for (ssnode = XML_GetNode(snode, SAVE_AIRCRAFT_AIRCRAFT); ssnode;
-			ssnode = XML_GetNextNode(ssnode, snode, SAVE_AIRCRAFT_AIRCRAFT)) {
+	snode = cgi->XML_GetNode(parent, SAVE_AIRCRAFT_PHALANX);
+	for (ssnode = cgi->XML_GetNode(snode, SAVE_AIRCRAFT_AIRCRAFT); ssnode;
+			ssnode = cgi->XML_GetNextNode(ssnode, snode, SAVE_AIRCRAFT_AIRCRAFT)) {
 		aircraft_t craft;
 		if (!AIR_LoadAircraftXML(ssnode, &craft))
 			return false;
@@ -2746,17 +2746,17 @@ bool AIR_LoadXML (xmlNode_t *parent)
 	}
 
 	/* load the ufos on geoscape */
-	snode = XML_GetNode(parent, SAVE_AIRCRAFT_UFOS);
+	snode = cgi->XML_GetNode(parent, SAVE_AIRCRAFT_UFOS);
 
-	for (i = 0, ssnode = XML_GetNode(snode, SAVE_AIRCRAFT_AIRCRAFT); i < MAX_UFOONGEOSCAPE && ssnode;
-			ssnode = XML_GetNextNode(ssnode, snode, SAVE_AIRCRAFT_AIRCRAFT), i++) {
+	for (i = 0, ssnode = cgi->XML_GetNode(snode, SAVE_AIRCRAFT_AIRCRAFT); i < MAX_UFOONGEOSCAPE && ssnode;
+			ssnode = cgi->XML_GetNextNode(ssnode, snode, SAVE_AIRCRAFT_AIRCRAFT), i++) {
 		if (!AIR_LoadAircraftXML(ssnode, UFO_GetByIDX(i)))
 			return false;
 		ccs.numUFOs++;
 	}
 
 	/* Load projectiles. */
-	projectiles = XML_GetNode(parent, SAVE_AIRCRAFT_PROJECTILES);
+	projectiles = cgi->XML_GetNode(parent, SAVE_AIRCRAFT_PROJECTILES);
 	if (!AIRFIGHT_LoadXML(projectiles))
 		return false;
 
@@ -3031,7 +3031,7 @@ void AIR_RemoveEmployees (aircraft_t *aircraft)
 	AIR_SetPilot(aircraft, NULL);
 
 	if (AIR_GetTeamSize(aircraft) > 0)
-		Com_Error(ERR_DROP, "AIR_RemoveEmployees: Error, there went something wrong with soldier-removing from aircraft.");
+		cgi->Com_Error(ERR_DROP, "AIR_RemoveEmployees: Error, there went something wrong with soldier-removing from aircraft.");
 }
 
 
@@ -3146,9 +3146,9 @@ void AIR_InitStartup (void)
 {
 	AIR_InitCallbacks();
 #ifdef DEBUG
-	Cmd_AddCommand("debug_listaircraftsample", AIR_ListAircraftSamples_f, "Show aircraft parameter on game console");
-	Cmd_AddCommand("debug_listaircraft", AIR_ListAircraft_f, "Debug function to list all aircraft in all bases");
-	Cmd_AddCommand("debug_listaircraftidx", AIR_ListCraftIndexes_f, "Debug function to list local/global aircraft indexes");
+	cgi->Cmd_AddCommand("debug_listaircraftsample", AIR_ListAircraftSamples_f, "Show aircraft parameter on game console");
+	cgi->Cmd_AddCommand("debug_listaircraft", AIR_ListAircraft_f, "Debug function to list all aircraft in all bases");
+	cgi->Cmd_AddCommand("debug_listaircraftidx", AIR_ListCraftIndexes_f, "Debug function to list local/global aircraft indexes");
 #endif
 }
 
@@ -3164,8 +3164,8 @@ void AIR_Shutdown (void)
 
 	AIR_ShutdownCallbacks();
 #ifdef DEBUG
-	Cmd_RemoveCommand("debug_listaircraftsample");
-	Cmd_RemoveCommand("debug_listaircraft");
-	Cmd_RemoveCommand("debug_listaircraftidx");
+	cgi->Cmd_RemoveCommand("debug_listaircraftsample");
+	cgi->Cmd_RemoveCommand("debug_listaircraft");
+	cgi->Cmd_RemoveCommand("debug_listaircraftidx");
 #endif
 }

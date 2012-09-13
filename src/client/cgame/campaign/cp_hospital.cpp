@@ -162,8 +162,8 @@ static void HOS_HurtAll_f (void)
 	if (!base)
 		return;
 
-	if (Cmd_Argc() == 2)
-		amount = atoi(Cmd_Argv(1));
+	if (cgi->Cmd_Argc() == 2)
+		amount = atoi(cgi->Cmd_Argv(1));
 	else
 		amount = 1;
 
@@ -187,8 +187,8 @@ static void HOS_HurtAll_f (void)
 void HOS_InitStartup (void)
 {
 #ifdef DEBUG
-	Cmd_AddCommand("debug_hosp_hurt_all", HOS_HurtAll_f, "Debug function to hurt all employees in the current base by one");
-	Cmd_AddCommand("debug_hosp_heal_all", HOS_HealAll_f, "Debug function to heal all employees in the current base completely");
+	cgi->Cmd_AddCommand("debug_hosp_hurt_all", HOS_HurtAll_f, "Debug function to hurt all employees in the current base by one");
+	cgi->Cmd_AddCommand("debug_hosp_heal_all", HOS_HealAll_f, "Debug function to heal all employees in the current base completely");
 #endif
 }
 

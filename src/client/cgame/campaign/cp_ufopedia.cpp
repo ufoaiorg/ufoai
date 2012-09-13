@@ -99,7 +99,7 @@ static void UP_ChangeDisplay (int newDisplay)
 	else
 		Com_Printf("Error in UP_ChangeDisplay (%i)\n", newDisplay);
 
-	Cvar_SetValue("mn_uppreavailable", 0);
+	cgi->Cvar_SetValue("mn_uppreavailable", 0);
 
 	/* make sure, that we leave the mail header space */
 	cgi->UI_ResetData(TEXT_UFOPEDIA_MAILHEADER);
@@ -112,22 +112,22 @@ static void UP_ChangeDisplay (int newDisplay)
 	case UFOPEDIA_CHAPTERS:
 		currentChapter = NULL;
 		upCurrentTech = NULL;
-		Cvar_Set("mn_upmodel_top", "");
-		Cvar_Set("mn_upmodel_bottom", "");
-		Cvar_Set("mn_upimage_top", "base/empty");
+		cgi->Cvar_Set("mn_upmodel_top", "");
+		cgi->Cvar_Set("mn_upmodel_bottom", "");
+		cgi->Cvar_Set("mn_upimage_top", "base/empty");
 		cgi->UI_ExecuteConfunc("mn_up_empty");
-		Cvar_Set("mn_uptitle", _("UFOpaedia"));
+		cgi->Cvar_Set("mn_uptitle", _("UFOpaedia"));
 		break;
 	case UFOPEDIA_INDEX:
-		Cvar_Set("mn_upmodel_top", "");
-		Cvar_Set("mn_upmodel_bottom", "");
-		Cvar_Set("mn_upimage_top", "base/empty");
+		cgi->Cvar_Set("mn_upmodel_top", "");
+		cgi->Cvar_Set("mn_upmodel_bottom", "");
+		cgi->Cvar_Set("mn_upimage_top", "base/empty");
 		/* no break here */
 	case UFOPEDIA_ARTICLE:
 		cgi->UI_ExecuteConfunc("mn_up_article");
 		break;
 	}
-	Cvar_SetValue("mn_updisplay", upDisplay);
+	cgi->Cvar_SetValue("mn_updisplay", upDisplay);
 }
 
 /**
@@ -198,7 +198,7 @@ static void UP_DisplayTechTree (const technology_t* t)
 			if (req->type == RS_LINK_TECH) {
 				const technology_t *techRequired = req->link.tech;
 				if (!techRequired)
-					Com_Error(ERR_DROP, "Could not find the tech for '%s'", req->id);
+					cgi->Com_Error(ERR_DROP, "Could not find the tech for '%s'", req->id);
 
 				/** Only display tech if it is ok to do so.
 				 * @todo If it is one (a logic tech) we may want to re-iterate from its requirements? */
@@ -211,7 +211,7 @@ static void UP_DisplayTechTree (const technology_t* t)
 	}
 
 	/* and now register the buffer */
-	Cvar_Set("mn_uprequirement", "1");
+	cgi->Cvar_Set("mn_uprequirement", "1");
 	cgi->UI_RegisterLinkedListText(TEXT_UFOPEDIA_REQUIREMENT, upTechtree);
 }
 
@@ -232,7 +232,7 @@ static void UP_BuildingDescription (const technology_t* t)
 		Q_strcat(upBuffer, va(_("Running costs:\t%i c\n"), b->varCosts), sizeof(upBuffer));
 	}
 
-	Cvar_Set("mn_upmetadata", "1");
+	cgi->Cvar_Set("mn_upmetadata", "1");
 	cgi->UI_RegisterText(TEXT_ITEMDESCRIPTION, upBuffer);
 	UP_DisplayTechTree(t);
 }
@@ -256,21 +256,21 @@ void UP_AircraftItemDescription (const objDef_t *item)
 
 	/* no valid item id given */
 	if (!item) {
-		Cvar_Set("mn_item", "");
-		Cvar_Set("mn_itemname", "");
-		Cvar_Set("mn_upmodel_top", "");
+		cgi->Cvar_Set("mn_item", "");
+		cgi->Cvar_Set("mn_itemname", "");
+		cgi->Cvar_Set("mn_upmodel_top", "");
 		cgi->UI_ResetData(TEXT_ITEMDESCRIPTION);
 		return;
 	}
 
 	tech = RS_GetTechForItem(item);
 	/* select item */
-	Cvar_Set("mn_item", item->id);
-	Cvar_Set("mn_itemname", _(tech->name));
+	cgi->Cvar_Set("mn_item", item->id);
+	cgi->Cvar_Set("mn_itemname", _(tech->name));
 	if (tech->mdl)
-		Cvar_Set("mn_upmodel_top", tech->mdl);
+		cgi->Cvar_Set("mn_upmodel_top", tech->mdl);
 	else
-		Cvar_Set("mn_upmodel_top", "");
+		cgi->Cvar_Set("mn_upmodel_top", "");
 
 	/* set description text */
 	if (RS_IsResearched_ptr(tech)) {
@@ -309,7 +309,7 @@ void UP_AircraftItemDescription (const objDef_t *item)
 		Q_strcat(itemText, _("Unknown - need to research this"), sizeof(itemText));
 	}
 
-	Cvar_Set("mn_upmetadata", "1");
+	cgi->Cvar_Set("mn_upmetadata", "1");
 	cgi->UI_RegisterText(TEXT_ITEMDESCRIPTION, itemText);
 }
 
@@ -364,7 +364,7 @@ void UP_AircraftDescription (const technology_t* tech)
 		Com_sprintf(upBuffer, sizeof(upBuffer), _("Unknown - need to research this"));
 	}
 
-	Cvar_Set("mn_upmetadata", "1");
+	cgi->Cvar_Set("mn_upmetadata", "1");
 	cgi->UI_RegisterText(TEXT_ITEMDESCRIPTION, upBuffer);
 	UP_DisplayTechTree(tech);
 }
@@ -388,10 +388,10 @@ void UP_UGVDescription (const ugv_t *ugvType)
 	INV_ItemDescription(NULL);
 
 	/* Set name of ugv/robot */
-	Cvar_Set("mn_itemname", _(tech->name));
-	Cvar_Set("mn_item", tech->provides);
+	cgi->Cvar_Set("mn_itemname", _(tech->name));
+	cgi->Cvar_Set("mn_item", tech->provides);
 
-	Cvar_Set("mn_upmetadata", "1");
+	cgi->Cvar_Set("mn_upmetadata", "1");
 	if (RS_IsResearched_ptr(tech)) {
 		/** @todo make me shiny */
 		Com_sprintf(itemText, sizeof(itemText), _("%s\n%s"), _(tech->name), ugvType->weapon);
@@ -450,7 +450,7 @@ int UP_GetUnreadMails (void)
 	}
 
 	/* use strings here */
-	Cvar_Set("mn_upunreadmail", va("%i", ccs.numUnreadMails));
+	cgi->Cvar_Set("mn_upunreadmail", va("%i", ccs.numUnreadMails));
 	return ccs.numUnreadMails;
 }
 
@@ -507,7 +507,7 @@ static void UP_SetMailHeader (technology_t* tech, techMailType_t type, eventMail
 					date.year, Date_GetMonthName(date.month - 1), date.day);
 				break;
 			default:
-				Com_Error(ERR_DROP, "UP_SetMailHeader: unhandled techMailType_t %i for date.", type);
+				cgi->Com_Error(ERR_DROP, "UP_SetMailHeader: unhandled techMailType_t %i for date.", type);
 			}
 		}
 		if (from != NULL) {
@@ -526,7 +526,7 @@ static void UP_SetMailHeader (technology_t* tech, techMailType_t type, eventMail
 					subjectType = _("Re: ");
 					break;
 				default:
-					Com_Error(ERR_DROP, "UP_SetMailHeader: unhandled techMailType_t %i for subject.", type);
+					cgi->Com_Error(ERR_DROP, "UP_SetMailHeader: unhandled techMailType_t %i for subject.", type);
 				}
 			}
 		} else {
@@ -538,11 +538,11 @@ static void UP_SetMailHeader (technology_t* tech, techMailType_t type, eventMail
 	to = cgi->CL_Translate(to);
 	subject = cgi->CL_Translate(subject);
 	Com_sprintf(mailHeader, sizeof(mailHeader), _("FROM: %s\nTO: %s\nDATE: %s"), from, to, dateBuf);
-	Cvar_Set("mn_mail_sender_head", model ? model : "");
-	Cvar_Set("mn_mail_from", from);
-	Cvar_Set("mn_mail_subject", va("%s%s", subjectType, _(subject)));
-	Cvar_Set("mn_mail_to", to);
-	Cvar_Set("mn_mail_date", dateBuf);
+	cgi->Cvar_Set("mn_mail_sender_head", model ? model : "");
+	cgi->Cvar_Set("mn_mail_from", from);
+	cgi->Cvar_Set("mn_mail_subject", va("%s%s", subjectType, _(subject)));
+	cgi->Cvar_Set("mn_mail_to", to);
+	cgi->Cvar_Set("mn_mail_date", dateBuf);
 	cgi->UI_RegisterText(TEXT_UFOPEDIA_MAILHEADER, mailHeader);
 }
 
@@ -557,7 +557,7 @@ static void UP_DrawAssociatedAmmo (const technology_t* tech)
 	/* If this is a weapon, we display the model of the associated ammunition in the lower right */
 	if (od->numAmmos > 0) {
 		const technology_t *associated = RS_GetTechForItem(od->ammos[0]);
-		Cvar_Set("mn_upmodel_bottom", associated->mdl);
+		cgi->Cvar_Set("mn_upmodel_bottom", associated->mdl);
 	}
 }
 
@@ -573,21 +573,21 @@ static void UP_Article (technology_t* tech, eventMail_t *mail)
 
 	if (tech) {
 		if (tech->mdl)
-			Cvar_Set("mn_upmodel_top", tech->mdl);
+			cgi->Cvar_Set("mn_upmodel_top", tech->mdl);
 		else
-			Cvar_Set("mn_upmodel_top", "");
+			cgi->Cvar_Set("mn_upmodel_top", "");
 
 		if (tech->image)
-			Cvar_Set("mn_upimage_top", tech->image);
+			cgi->Cvar_Set("mn_upimage_top", tech->image);
 		else
-			Cvar_Set("mn_upimage_top", "");
+			cgi->Cvar_Set("mn_upimage_top", "");
 
-		Cvar_Set("mn_upmodel_bottom", "");
+		cgi->Cvar_Set("mn_upmodel_bottom", "");
 
 		if (tech->type == RS_WEAPON)
 			UP_DrawAssociatedAmmo(tech);
-		Cvar_Set("mn_uprequirement", "");
-		Cvar_Set("mn_upmetadata", "");
+		cgi->Cvar_Set("mn_uprequirement", "");
+		cgi->Cvar_Set("mn_upmetadata", "");
 	}
 
 	cgi->UI_ResetData(TEXT_UFOPEDIA);
@@ -595,8 +595,8 @@ static void UP_Article (technology_t* tech, eventMail_t *mail)
 
 	if (mail) {
 		/* event mail */
-		Cvar_SetValue("mn_uppreavailable", 0);
-		Cvar_SetValue("mn_updisplay", UFOPEDIA_CHAPTERS);
+		cgi->Cvar_SetValue("mn_uppreavailable", 0);
+		cgi->Cvar_SetValue("mn_updisplay", UFOPEDIA_CHAPTERS);
 		UP_SetMailHeader(NULL, TECHMAIL_PRE, mail);
 		cgi->UI_RegisterText(TEXT_UFOPEDIA, _(mail->body));
 		/* This allows us to use the index button in the UFOpaedia,
@@ -610,7 +610,7 @@ static void UP_Article (technology_t* tech, eventMail_t *mail)
 		cgi->UI_ExecuteConfunc("itemdesc_view 0 0;");
 		if (RS_IsResearched_ptr(tech)) {
 			int i;
-			Cvar_Set("mn_uptitle", va("%s: %s %s", _("UFOpaedia"), _(tech->name), _("(complete)")));
+			cgi->Cvar_Set("mn_uptitle", va("%s: %s %s", _("UFOpaedia"), _(tech->name), _("(complete)")));
 			/* If researched -> display research text */
 			cgi->UI_RegisterText(TEXT_UFOPEDIA, _(RS_GetDescription(&tech->description)));
 			if (tech->preDescription.numDescriptions > 0) {
@@ -621,11 +621,11 @@ static void UP_Article (technology_t* tech, eventMail_t *mail)
 				} else {
 					UP_SetMailHeader(tech, TECHMAIL_RESEARCHED, NULL);
 				}
-				Cvar_SetValue("mn_uppreavailable", 1);
+				cgi->Cvar_SetValue("mn_uppreavailable", 1);
 			} else {
 				/* Do not display the pre-research-text button if none is available (no need to even bother clicking there). */
-				Cvar_SetValue("mn_uppreavailable", 0);
-				Cvar_SetValue("mn_updisplay", UFOPEDIA_CHAPTERS);
+				cgi->Cvar_SetValue("mn_uppreavailable", 0);
+				cgi->Cvar_SetValue("mn_updisplay", UFOPEDIA_CHAPTERS);
 				UP_SetMailHeader(tech, TECHMAIL_RESEARCHED, NULL);
 			}
 
@@ -637,7 +637,7 @@ static void UP_Article (technology_t* tech, eventMail_t *mail)
 					if (Q_streq(tech->provides, od->id)) {
 						INV_ItemDescription(od);
 						UP_DisplayTechTree(tech);
-						Cvar_Set("mn_upmetadata", "1");
+						cgi->Cvar_Set("mn_upmetadata", "1");
 						break;
 					}
 				}
@@ -663,7 +663,7 @@ static void UP_Article (technology_t* tech, eventMail_t *mail)
 		/* see also UP_TechGetsDisplayed */
 		} else if (RS_Collected_(tech) || (tech->statusResearchable && tech->preDescription.numDescriptions > 0)) {
 			/* This tech has something collected or has a research proposal. (i.e. pre-research text) */
-			Cvar_Set("mn_uptitle", va("%s: %s", _("UFOpaedia"), _(tech->name)));
+			cgi->Cvar_Set("mn_uptitle", va("%s: %s", _("UFOpaedia"), _(tech->name)));
 			/* Not researched but some items collected -> display pre-research text if available. */
 			if (tech->preDescription.numDescriptions > 0) {
 				cgi->UI_RegisterText(TEXT_UFOPEDIA, _(RS_GetDescription(&tech->preDescription)));
@@ -672,11 +672,11 @@ static void UP_Article (technology_t* tech, eventMail_t *mail)
 				cgi->UI_RegisterText(TEXT_UFOPEDIA, _("No pre-research description available."));
 			}
 		} else {
-			Cvar_Set("mn_uptitle", va("%s: %s", _("UFOpaedia"), _(tech->name)));
+			cgi->Cvar_Set("mn_uptitle", va("%s: %s", _("UFOpaedia"), _(tech->name)));
 			cgi->UI_ResetData(TEXT_UFOPEDIA);
 		}
 	} else {
-		Com_Error(ERR_DROP, "UP_Article: No mail or tech given");
+		cgi->Com_Error(ERR_DROP, "UP_Article: No mail or tech given");
 	}
 }
 
@@ -705,7 +705,7 @@ static void UP_OpenMailWith (const char *techID)
 		return;
 
 	cgi->UI_PushWindow("mail");
-	Cbuf_AddText(va("ufopedia %s\n", techID));
+	cgi->Cbuf_AddText(va("ufopedia %s\n", techID));
 }
 
 /**
@@ -719,7 +719,7 @@ void UP_OpenWith (const char *techID)
 		return;
 
 	cgi->UI_PushWindow("ufopedia");
-	Cbuf_AddText(va("ufopedia %s; update_ufopedia_layout;\n", techID));
+	cgi->Cbuf_AddText(va("ufopedia %s; update_ufopedia_layout;\n", techID));
 }
 
 /**
@@ -729,8 +729,8 @@ void UP_OpenWith (const char *techID)
  */
 void UP_OpenCopyWith (const char *techID)
 {
-	Cmd_ExecuteString("ui_push ufopedia");
-	Cbuf_AddText(va("ufopedia %s\n", techID));
+	cgi->Cmd_ExecuteString("ui_push ufopedia");
+	cgi->Cbuf_AddText(va("ufopedia %s\n", techID));
 }
 
 
@@ -742,13 +742,13 @@ static void UP_FindEntry_f (void)
 	const char *id;
 	technology_t *tech;
 
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <id>\n", Cmd_Argv(0));
+	if (cgi->Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <id>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
 	/* what are we searching for? */
-	id = Cmd_Argv(1);
+	id = cgi->Cmd_Argv(1);
 
 	/* maybe we get a call like 'ufopedia ""' */
 	if (id[0] == '\0') {
@@ -824,7 +824,7 @@ static void UP_GenerateSummary (void)
 		if (researchedEntries) {
 			uiNode_t *chapterOption;
 			if (numChaptersDisplayList >= sizeof(upChaptersDisplayList))
-				Com_Error(ERR_DROP, "MAX_PEDIACHAPTERS hit");
+				cgi->Com_Error(ERR_DROP, "MAX_PEDIACHAPTERS hit");
 			upChaptersDisplayList[numChaptersDisplayList++] = chapter;
 
 			/* chapter section*/
@@ -838,7 +838,7 @@ static void UP_GenerateSummary (void)
 	}
 
 	cgi->UI_RegisterOption(OPTION_UFOPEDIA, chapters);
-	Cvar_Set("mn_uptitle", _("UFOpaedia"));
+	cgi->Cvar_Set("mn_uptitle", _("UFOpaedia"));
 }
 
 /**
@@ -857,12 +857,12 @@ static void UP_Content_f (void)
  */
 static void UP_Click_f (void)
 {
-	if (Cmd_Argc() < 2)
+	if (cgi->Cmd_Argc() < 2)
 		return;
 
 	/* article index starts with a @ */
-	if (Cmd_Argv(1)[0] == '@') {
-		const int techId = atoi(Cmd_Argv(1) + 1);
+	if (cgi->Cmd_Argv(1)[0] == '@') {
+		const int techId = atoi(cgi->Cmd_Argv(1) + 1);
 		technology_t* tech;
 		assert(techId >= 0);
 		assert(techId < ccs.numTechnologies);
@@ -889,9 +889,9 @@ static void UP_TechTreeClick_f (void)
 	const requirements_t *required_AND;
 	const technology_t *techRequired;
 
-	if (Cmd_Argc() < 2)
+	if (cgi->Cmd_Argc() < 2)
 		return;
-	num = atoi(Cmd_Argv(1));
+	num = atoi(cgi->Cmd_Argv(1));
 
 	if (!upCurrentTech)
 		return;
@@ -909,7 +909,7 @@ static void UP_TechTreeClick_f (void)
 
 	techRequired = required_AND->links[num].link.tech;
 	if (!techRequired)
-		Com_Error(ERR_DROP, "Could not find the tech for '%s'", required_AND->links[num].id);
+		cgi->Com_Error(ERR_DROP, "Could not find the tech for '%s'", required_AND->links[num].id);
 
 	/* maybe there is no UFOpaedia chapter assigned - this tech should not be opened at all */
 	if (!techRequired->upChapter)
@@ -937,10 +937,10 @@ static void UP_MailClientClick_f (void)
 	int num;
 	int cnt = -1;
 
-	if (Cmd_Argc() < 2)
+	if (cgi->Cmd_Argc() < 2)
 		return;
 
-	num = atoi(Cmd_Argv(1));
+	num = atoi(cgi->Cmd_Argv(1));
 
 	while (m) {
 		switch (m->type) {
@@ -949,7 +949,7 @@ static void UP_MailClientClick_f (void)
 				break;
 			cnt++;
 			if (cnt == num) {
-				Cvar_SetValue("mn_uppretext", 1);
+				cgi->Cvar_SetValue("mn_uppretext", 1);
 				UP_OpenMailWith(m->pedia->id);
 				return;
 			}
@@ -959,7 +959,7 @@ static void UP_MailClientClick_f (void)
 				break;
 			cnt++;
 			if (cnt == num) {
-				Cvar_SetValue("mn_uppretext", 0);
+				cgi->Cvar_SetValue("mn_uppretext", 0);
 				UP_OpenMailWith(m->pedia->id);
 				return;
 			}
@@ -1024,12 +1024,12 @@ static void UP_SetMailButtons_f (void)
 	int i = 0, num;
 	const uiMessageListNodeMessage_t *m = cgi->UI_MessageGetStack();
 
-	if (Cmd_Argc() != 2) {
-		Com_Printf("Usage: %s <pos>\n", Cmd_Argv(0));
+	if (cgi->Cmd_Argc() != 2) {
+		Com_Printf("Usage: %s <pos>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
-	num = atoi(Cmd_Argv(1));
+	num = atoi(cgi->Cmd_Argv(1));
 
 	while (m && (i < MAIL_CLIENT_LINES)) {
 		switch (m->type) {
@@ -1039,8 +1039,8 @@ static void UP_SetMailButtons_f (void)
 			if (num) {
 				num--;
 			} else {
-				Cvar_Set(va("mn_mail_read%i", i), m->pedia->mail[TECHMAIL_PRE].read ? "1": "0");
-				Cvar_Set(va("mn_mail_icon%i", i++), m->pedia->mail[TECHMAIL_PRE].icon);
+				cgi->Cvar_Set(va("mn_mail_read%i", i), m->pedia->mail[TECHMAIL_PRE].read ? "1": "0");
+				cgi->Cvar_Set(va("mn_mail_icon%i", i++), m->pedia->mail[TECHMAIL_PRE].icon);
 			}
 			break;
 		case MSG_RESEARCH_FINISHED:
@@ -1049,8 +1049,8 @@ static void UP_SetMailButtons_f (void)
 			if (num) {
 				num--;
 			} else {
-				Cvar_Set(va("mn_mail_read%i", i), m->pedia->mail[TECHMAIL_RESEARCHED].read ? "1": "0");
-				Cvar_Set(va("mn_mail_icon%i", i++), m->pedia->mail[TECHMAIL_RESEARCHED].icon);
+				cgi->Cvar_Set(va("mn_mail_read%i", i), m->pedia->mail[TECHMAIL_RESEARCHED].read ? "1": "0");
+				cgi->Cvar_Set(va("mn_mail_icon%i", i++), m->pedia->mail[TECHMAIL_RESEARCHED].icon);
 			}
 			break;
 		case MSG_NEWS:
@@ -1058,15 +1058,15 @@ static void UP_SetMailButtons_f (void)
 				if (num) {
 					num--;
 				} else {
-					Cvar_Set(va("mn_mail_read%i", i), m->pedia->mail[TECHMAIL_PRE].read ? "1": "0");
-					Cvar_Set(va("mn_mail_icon%i", i++), m->pedia->mail[TECHMAIL_PRE].icon);
+					cgi->Cvar_Set(va("mn_mail_read%i", i), m->pedia->mail[TECHMAIL_PRE].read ? "1": "0");
+					cgi->Cvar_Set(va("mn_mail_icon%i", i++), m->pedia->mail[TECHMAIL_PRE].icon);
 				}
 			} else if (m->pedia->mail[TECHMAIL_RESEARCHED].from) {
 				if (num) {
 					num--;
 				} else {
-					Cvar_Set(va("mn_mail_read%i", i), m->pedia->mail[TECHMAIL_RESEARCHED].read ? "1": "0");
-					Cvar_Set(va("mn_mail_icon%i", i++), m->pedia->mail[TECHMAIL_RESEARCHED].icon);
+					cgi->Cvar_Set(va("mn_mail_read%i", i), m->pedia->mail[TECHMAIL_RESEARCHED].read ? "1": "0");
+					cgi->Cvar_Set(va("mn_mail_icon%i", i++), m->pedia->mail[TECHMAIL_RESEARCHED].icon);
 				}
 			}
 			break;
@@ -1075,8 +1075,8 @@ static void UP_SetMailButtons_f (void)
 				if (num) {
 					num--;
 				} else {
-					Cvar_Set(va("mn_mail_read%i", i), m->eventMail->read ? "1": "0");
-					Cvar_Set(va("mn_mail_icon%i", i++), m->eventMail->icon ? m->eventMail->icon : "");
+					cgi->Cvar_Set(va("mn_mail_read%i", i), m->eventMail->read ? "1": "0");
+					cgi->Cvar_Set(va("mn_mail_icon%i", i++), m->eventMail->icon ? m->eventMail->icon : "");
 				}
 			}
 			break;
@@ -1086,8 +1086,8 @@ static void UP_SetMailButtons_f (void)
 		m = m->next;
 	}
 	while (i < MAIL_CLIENT_LINES) {
-		Cvar_Set(va("mn_mail_read%i", i), "-1");
-		Cvar_Set(va("mn_mail_icon%i", i++), "");
+		cgi->Cvar_Set(va("mn_mail_read%i", i), "-1");
+		cgi->Cvar_Set(va("mn_mail_icon%i", i++), "");
 	}
 }
 
@@ -1221,7 +1221,7 @@ static void UP_SetAllMailsRead_f (void)
 	}
 
 	ccs.numUnreadMails = 0;
-	Cvar_Set("mn_upunreadmail", va("%i", ccs.numUnreadMails));
+	cgi->Cvar_Set("mn_upunreadmail", va("%i", ccs.numUnreadMails));
 	UP_OpenMail_f();
 }
 
@@ -1231,21 +1231,21 @@ static void UP_SetAllMailsRead_f (void)
 void UP_InitStartup (void)
 {
 	/* add commands and cvars */
-	Cmd_AddCommand("mn_upcontent", UP_Content_f, "Shows the UFOpaedia chapters");
-	Cmd_AddCommand("mn_upupdate", UP_Update_f, "Redraw the current UFOpaedia article");
-	Cmd_AddCommand("ufopedia", UP_FindEntry_f, "Open the UFOpaedia with the given article");
-	Cmd_AddCommand("ufopedia_click", UP_Click_f);
-	Cmd_AddCommand("mailclient_click", UP_MailClientClick_f);
-	Cmd_AddCommand("mn_mail_readall", UP_SetAllMailsRead_f, "Mark all mails read");
-	Cmd_AddCommand("ufopedia_openmail", UP_OpenMail_f, "Start the mailclient");
-	Cmd_AddCommand("ufopedia_scrollmail", UP_SetMailButtons_f);
-	Cmd_AddCommand("techtree_click", UP_TechTreeClick_f);
-	Cmd_AddCommand("mn_upgotoresearchedlink", UP_ResearchedLinkClick_f);
+	cgi->Cmd_AddCommand("mn_upcontent", UP_Content_f, "Shows the UFOpaedia chapters");
+	cgi->Cmd_AddCommand("mn_upupdate", UP_Update_f, "Redraw the current UFOpaedia article");
+	cgi->Cmd_AddCommand("ufopedia", UP_FindEntry_f, "Open the UFOpaedia with the given article");
+	cgi->Cmd_AddCommand("ufopedia_click", UP_Click_f, NULL);
+	cgi->Cmd_AddCommand("mailclient_click", UP_MailClientClick_f, NULL);
+	cgi->Cmd_AddCommand("mn_mail_readall", UP_SetAllMailsRead_f, "Mark all mails read");
+	cgi->Cmd_AddCommand("ufopedia_openmail", UP_OpenMail_f, "Start the mailclient");
+	cgi->Cmd_AddCommand("ufopedia_scrollmail", UP_SetMailButtons_f, NULL);
+	cgi->Cmd_AddCommand("techtree_click", UP_TechTreeClick_f, NULL);
+	cgi->Cmd_AddCommand("mn_upgotoresearchedlink", UP_ResearchedLinkClick_f, NULL);
 
-	mn_uppretext = Cvar_Get("mn_uppretext", "0", 0, "Show the pre-research text in the UFOpaedia");
-	mn_uppreavailable = Cvar_Get("mn_uppreavailable", "0", 0, "True if there is a pre-research text available");
-	Cvar_Set("mn_uprequirement", "");
-	Cvar_Set("mn_upmetadata", "");
+	mn_uppretext = cgi->Cvar_Get("mn_uppretext", "0", 0, "Show the pre-research text in the UFOpaedia");
+	mn_uppreavailable = cgi->Cvar_Get("mn_uppreavailable", "0", 0, "True if there is a pre-research text available");
+	cgi->Cvar_Set("mn_uprequirement", "");
+	cgi->Cvar_Set("mn_upmetadata", "");
 }
 
 /**
@@ -1254,21 +1254,21 @@ void UP_InitStartup (void)
 void UP_Shutdown (void)
 {
 	/* add commands and cvars */
-	Cmd_RemoveCommand("mn_upcontent");
-	Cmd_RemoveCommand("mn_upupdate");
-	Cmd_RemoveCommand("ufopedia");
-	Cmd_RemoveCommand("ufopedia_click");
-	Cmd_RemoveCommand("mailclient_click");
-	Cmd_RemoveCommand("mn_mail_readall");
-	Cmd_RemoveCommand("ufopedia_openmail");
-	Cmd_RemoveCommand("ufopedia_scrollmail");
-	Cmd_RemoveCommand("techtree_click");
-	Cmd_RemoveCommand("mn_upgotoresearchedlink");
+	cgi->Cmd_RemoveCommand("mn_upcontent");
+	cgi->Cmd_RemoveCommand("mn_upupdate");
+	cgi->Cmd_RemoveCommand("ufopedia");
+	cgi->Cmd_RemoveCommand("ufopedia_click");
+	cgi->Cmd_RemoveCommand("mailclient_click");
+	cgi->Cmd_RemoveCommand("mn_mail_readall");
+	cgi->Cmd_RemoveCommand("ufopedia_openmail");
+	cgi->Cmd_RemoveCommand("ufopedia_scrollmail");
+	cgi->Cmd_RemoveCommand("techtree_click");
+	cgi->Cmd_RemoveCommand("mn_upgotoresearchedlink");
 
-	Cvar_Delete("mn_uppretext");
-	Cvar_Delete("mn_uppreavailable");
-	Cvar_Delete("mn_uprequirement");
-	Cvar_Delete("mn_upmetadata");
+	cgi->Cvar_Delete("mn_uppretext");
+	cgi->Cvar_Delete("mn_uppreavailable");
+	cgi->Cvar_Delete("mn_uprequirement");
+	cgi->Cvar_Delete("mn_upmetadata");
 }
 
 /**
@@ -1283,7 +1283,7 @@ void UP_ParseChapter (const char *name, const char **text)
 	const char *token;
 
 	if (ccs.numChapters >= MAX_PEDIACHAPTERS) {
-		Com_Error(ERR_DROP, "UP_ParseChapter: chapter def \"%s\": Too many chapter defs.\n", name);
+		cgi->Com_Error(ERR_DROP, "UP_ParseChapter: chapter def \"%s\": Too many chapter defs.\n", name);
 	}
 
 	pediaChapter_t chapter;
@@ -1294,13 +1294,13 @@ void UP_ParseChapter (const char *name, const char **text)
 	/* get begin block */
 	token = Com_Parse(text);
 	if (!*text || *token !='{') {
-		Com_Error(ERR_DROP, "UP_ParseChapter: chapter def \"%s\": '{' token expected.\n", name);
+		cgi->Com_Error(ERR_DROP, "UP_ParseChapter: chapter def \"%s\": '{' token expected.\n", name);
 	}
 
 	do {
 		token = Com_Parse(text);
 		if (!*text)
-			Com_Error(ERR_DROP, "UP_ParseChapter: end of file not expected \"%s\": '{' token expected.\n", name);
+			cgi->Com_Error(ERR_DROP, "UP_ParseChapter: end of file not expected \"%s\": '{' token expected.\n", name);
 		if (token[0] == '}')
 			break;
 
@@ -1308,13 +1308,13 @@ void UP_ParseChapter (const char *name, const char **text)
 			/* get the name */
 			token = Com_EParse(text, errhead, name);
 			if (!*text || *token == '}') {
-				Com_Error(ERR_DROP, "UP_ParseChapter: chapter def \"%s\": Name token expected.\n", name);
+				cgi->Com_Error(ERR_DROP, "UP_ParseChapter: chapter def \"%s\": Name token expected.\n", name);
 			}
 			if (*token == '_')
 				token++;
 			chapter.name = Mem_PoolStrDup(token, cp_campaignPool, 0);
 		} else {
-			Com_Error(ERR_DROP, "UP_ParseChapter: chapter def \"%s\": token \"%s\" not expected.\n", name, token);
+			cgi->Com_Error(ERR_DROP, "UP_ParseChapter: chapter def \"%s\": token \"%s\" not expected.\n", name, token);
 		}
 	} while (*text);
 

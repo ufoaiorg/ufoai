@@ -234,9 +234,9 @@ bool BS_BuyAircraft (const aircraft_t *aircraftTemplate, base_t *base)
 	int price;
 
 	if (!base)
-		Com_Error(ERR_DROP, "BS_BuyAircraft: No base given.");
+		cgi->Com_Error(ERR_DROP, "BS_BuyAircraft: No base given.");
 	if (!aircraftTemplate)
-		Com_Error(ERR_DROP, "BS_BuyAircraft: No aircraft template given.");
+		cgi->Com_Error(ERR_DROP, "BS_BuyAircraft: No aircraft template given.");
 
 	if (!B_GetBuildingStatus(base, B_COMMAND))
 		return false;
@@ -317,12 +317,12 @@ bool BS_BuyUGV (const ugv_t *ugv, base_t *base)
 	const objDef_t *ugvWeapon;
 
 	if (!ugv)
-		Com_Error(ERR_DROP, "BS_BuyUGV: Called on NULL UGV!");
+		cgi->Com_Error(ERR_DROP, "BS_BuyUGV: Called on NULL UGV!");
 	if (!base)
-		Com_Error(ERR_DROP, "BS_BuyUGV: Called on NULL base!");
+		cgi->Com_Error(ERR_DROP, "BS_BuyUGV: Called on NULL base!");
 	ugvWeapon = INVSH_GetItemByID(ugv->weapon);
 	if (!ugvWeapon)
-		Com_Error(ERR_DROP, "BS_BuyItem_f: Could not get weapon '%s' for ugv/tank '%s'.", ugv->weapon, ugv->id);
+		cgi->Com_Error(ERR_DROP, "BS_BuyItem_f: Could not get weapon '%s' for ugv/tank '%s'.", ugv->weapon, ugv->id);
 
 	if (ccs.credits < ugv->price)
 		return false;
@@ -355,16 +355,16 @@ bool BS_SellUGV (employee_t *robot)
 	base_t *base;
 
 	if (!robot)
-		Com_Error(ERR_DROP, "Selling NULL UGV!");
+		cgi->Com_Error(ERR_DROP, "Selling NULL UGV!");
 	if (!robot->ugv)
-		Com_Error(ERR_DROP, "Selling invalid UGV with UCN: %i", robot->chr.ucn);
+		cgi->Com_Error(ERR_DROP, "Selling invalid UGV with UCN: %i", robot->chr.ucn);
 	ugv = robot->ugv;
 	base = robot->baseHired;
 
 	/* Check if we have a weapon for this ugv in the market to sell it. */
 	ugvWeapon = INVSH_GetItemByID(ugv->weapon);
 	if (!ugvWeapon)
-		Com_Error(ERR_DROP, "BS_BuyItem_f: Could not get wepaon '%s' for ugv/tank '%s'.", ugv->weapon, ugv->id);
+		cgi->Com_Error(ERR_DROP, "BS_BuyItem_f: Could not get wepaon '%s' for ugv/tank '%s'.", ugv->weapon, ugv->id);
 
 	if (!E_UnhireEmployee(robot)) {
 		/** @todo message - Couldn't fire employee. */
@@ -389,9 +389,9 @@ bool BS_SellUGV (employee_t *robot)
 bool BS_BuyItem (const objDef_t *od, base_t *base, int count)
 {
 	if (!od)
-		Com_Error(ERR_DROP, "BS_BuyItem: Called on NULL objDef!");
+		cgi->Com_Error(ERR_DROP, "BS_BuyItem: Called on NULL objDef!");
 	if (!base)
-		Com_Error(ERR_DROP, "BS_BuyItem: Called on NULL base!");
+		cgi->Com_Error(ERR_DROP, "BS_BuyItem: Called on NULL base!");
 
 	if (count <= 0)
 		return false;
@@ -421,7 +421,7 @@ bool BS_BuyItem (const objDef_t *od, base_t *base, int count)
 bool BS_SellItem (const objDef_t *od, base_t *base, int count)
 {
 	if (!od)
-		Com_Error(ERR_DROP, "BS_SellItem: Called on NULL objDef!");
+		cgi->Com_Error(ERR_DROP, "BS_SellItem: Called on NULL objDef!");
 
 	if (count <= 0)
 		return false;
@@ -453,28 +453,28 @@ bool BS_SaveXML (xmlNode_t *parent)
 	const market_t *market = BS_GetMarket();
 
 	/* store market */
-	node = XML_AddNode(parent, SAVE_MARKET_MARKET);
+	node = cgi->XML_AddNode(parent, SAVE_MARKET_MARKET);
 	for (i = 0; i < cgi->csi->numODs; i++) {
 		const objDef_t *od = INVSH_GetItemByIDX(i);
 		if (BS_IsOnMarket(od)) {
-			xmlNode_t * snode = XML_AddNode(node, SAVE_MARKET_ITEM);
-			XML_AddString(snode, SAVE_MARKET_ID, od->id);
-			XML_AddIntValue(snode, SAVE_MARKET_NUM, market->numItems[i]);
-			XML_AddIntValue(snode, SAVE_MARKET_BID, market->bidItems[i]);
-			XML_AddIntValue(snode, SAVE_MARKET_ASK, market->askItems[i]);
-			XML_AddDoubleValue(snode, SAVE_MARKET_EVO, market->currentEvolutionItems[i]);
-			XML_AddBoolValue(snode, SAVE_MARKET_AUTOSELL, market->autosell[i]);
+			xmlNode_t * snode = cgi->XML_AddNode(node, SAVE_MARKET_ITEM);
+			cgi->XML_AddString(snode, SAVE_MARKET_ID, od->id);
+			cgi->XML_AddIntValue(snode, SAVE_MARKET_NUM, market->numItems[i]);
+			cgi->XML_AddIntValue(snode, SAVE_MARKET_BID, market->bidItems[i]);
+			cgi->XML_AddIntValue(snode, SAVE_MARKET_ASK, market->askItems[i]);
+			cgi->XML_AddDoubleValue(snode, SAVE_MARKET_EVO, market->currentEvolutionItems[i]);
+			cgi->XML_AddBoolValue(snode, SAVE_MARKET_AUTOSELL, market->autosell[i]);
 		}
 	}
 	for (i = 0; i < AIRCRAFTTYPE_MAX; i++) {
 		if (market->bidAircraft[i] > 0 || market->askAircraft[i] > 0) {
-			xmlNode_t * snode = XML_AddNode(node, SAVE_MARKET_AIRCRAFT);
+			xmlNode_t * snode = cgi->XML_AddNode(node, SAVE_MARKET_AIRCRAFT);
 			const char *shortName = Com_DropShipTypeToShortName((humanAircraftType_t)i);
-			XML_AddString(snode, SAVE_MARKET_ID, shortName);
-			XML_AddIntValue(snode, SAVE_MARKET_NUM, market->numAircraft[i]);
-			XML_AddIntValue(snode, SAVE_MARKET_BID, market->bidAircraft[i]);
-			XML_AddIntValue(snode, SAVE_MARKET_ASK, market->askAircraft[i]);
-			XML_AddDoubleValue(snode, SAVE_MARKET_EVO, market->currentEvolutionAircraft[i]);
+			cgi->XML_AddString(snode, SAVE_MARKET_ID, shortName);
+			cgi->XML_AddIntValue(snode, SAVE_MARKET_NUM, market->numAircraft[i]);
+			cgi->XML_AddIntValue(snode, SAVE_MARKET_BID, market->bidAircraft[i]);
+			cgi->XML_AddIntValue(snode, SAVE_MARKET_ASK, market->askAircraft[i]);
+			cgi->XML_AddDoubleValue(snode, SAVE_MARKET_EVO, market->currentEvolutionAircraft[i]);
 		}
 	}
 	return true;
@@ -491,12 +491,12 @@ bool BS_LoadXML (xmlNode_t *parent)
 	xmlNode_t *node, *snode;
 	market_t *market = BS_GetMarket();
 
-	node = XML_GetNode(parent, SAVE_MARKET_MARKET);
+	node = cgi->XML_GetNode(parent, SAVE_MARKET_MARKET);
 	if (!node)
 		return false;
 
-	for (snode = XML_GetNode(node, SAVE_MARKET_ITEM); snode; snode = XML_GetNextNode(snode, node, SAVE_MARKET_ITEM)) {
-		const char *s = XML_GetString(snode, SAVE_MARKET_ID);
+	for (snode = cgi->XML_GetNode(node, SAVE_MARKET_ITEM); snode; snode = cgi->XML_GetNextNode(snode, node, SAVE_MARKET_ITEM)) {
+		const char *s = cgi->XML_GetString(snode, SAVE_MARKET_ID);
 		const objDef_t *od = INVSH_GetItemByID(s);
 
 		if (!od) {
@@ -504,20 +504,20 @@ bool BS_LoadXML (xmlNode_t *parent)
 			continue;
 		}
 
-		market->numItems[od->idx] = XML_GetInt(snode, SAVE_MARKET_NUM, 0);
-		market->bidItems[od->idx] = XML_GetInt(snode, SAVE_MARKET_BID, 0);
-		market->askItems[od->idx] = XML_GetInt(snode, SAVE_MARKET_ASK, 0);
-		market->currentEvolutionItems[od->idx] = XML_GetDouble(snode, SAVE_MARKET_EVO, 0.0);
-		market->autosell[od->idx] = XML_GetBool(snode, SAVE_MARKET_AUTOSELL, false);
+		market->numItems[od->idx] = cgi->XML_GetInt(snode, SAVE_MARKET_NUM, 0);
+		market->bidItems[od->idx] = cgi->XML_GetInt(snode, SAVE_MARKET_BID, 0);
+		market->askItems[od->idx] = cgi->XML_GetInt(snode, SAVE_MARKET_ASK, 0);
+		market->currentEvolutionItems[od->idx] = cgi->XML_GetDouble(snode, SAVE_MARKET_EVO, 0.0);
+		market->autosell[od->idx] = cgi->XML_GetBool(snode, SAVE_MARKET_AUTOSELL, false);
 	}
-	for (snode = XML_GetNode(node, SAVE_MARKET_AIRCRAFT); snode; snode = XML_GetNextNode(snode, node, SAVE_MARKET_AIRCRAFT)) {
-		const char *s = XML_GetString(snode, SAVE_MARKET_ID);
+	for (snode = cgi->XML_GetNode(node, SAVE_MARKET_AIRCRAFT); snode; snode = cgi->XML_GetNextNode(snode, node, SAVE_MARKET_AIRCRAFT)) {
+		const char *s = cgi->XML_GetString(snode, SAVE_MARKET_ID);
 		const humanAircraftType_t type = Com_DropShipShortNameToID(s);
 
-		market->numAircraft[type] = XML_GetInt(snode, SAVE_MARKET_NUM, 0);
-		market->bidAircraft[type] = XML_GetInt(snode, SAVE_MARKET_BID, 0);
-		market->askAircraft[type] = XML_GetInt(snode, SAVE_MARKET_ASK, 0);
-		market->currentEvolutionAircraft[type] = XML_GetDouble(snode, SAVE_MARKET_EVO, 0.0);
+		market->numAircraft[type] = cgi->XML_GetInt(snode, SAVE_MARKET_NUM, 0);
+		market->bidAircraft[type] = cgi->XML_GetInt(snode, SAVE_MARKET_BID, 0);
+		market->askAircraft[type] = cgi->XML_GetInt(snode, SAVE_MARKET_ASK, 0);
+		market->currentEvolutionAircraft[type] = cgi->XML_GetDouble(snode, SAVE_MARKET_EVO, 0.0);
 	}
 
 	return true;

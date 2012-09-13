@@ -239,7 +239,7 @@ static void AIM_DrawAircraftSlots (const aircraft_t *aircraft)
 
 	/* initialise model cvars */
 	for (i = 0; i < AIR_POSITIONS_MAX; i++)
-		Cvar_Set(va("mn_aircraft_item_model_slot%i", i), "");
+		cgi->Cvar_Set(va("mn_aircraft_item_model_slot%i", i), "");
 
 	for (i = 0; i < AIR_POSITIONS_MAX; i++) {
 		const aircraftSlot_t *slot;
@@ -273,9 +273,9 @@ static void AIM_DrawAircraftSlots (const aircraft_t *aircraft)
 					cgi->UI_ExecuteConfunc("airequip_display_slot %i 1", i);
 				}
 				if (slot->item) {
-					Cvar_Set(va("mn_aircraft_item_model_slot%i", i), RS_GetTechForItem(slot->item)->mdl);
+					cgi->Cvar_Set(va("mn_aircraft_item_model_slot%i", i), RS_GetTechForItem(slot->item)->mdl);
 				} else
-					Cvar_Set(va("mn_aircraft_item_model_slot%i", i), "");
+					cgi->Cvar_Set(va("mn_aircraft_item_model_slot%i", i), "");
 			}
 		}
 	}
@@ -335,7 +335,7 @@ static void AIM_AircraftEquipMenuUpdate (void)
 	/* Fill the list of item you can equip your aircraft with */
 	AIM_UpdateAircraftItemList(slot);
 
-	Cvar_Set("mn_equip_itemtype_name", AIM_AircraftItemtypeName(airequipID));
+	cgi->Cvar_Set("mn_equip_itemtype_name", AIM_AircraftItemtypeName(airequipID));
 	switch (airequipID) {
 	case AC_ITEM_ELECTRONICS:
 		typeName = "item";
@@ -353,7 +353,7 @@ static void AIM_AircraftEquipMenuUpdate (void)
 		typeName = "unknown";
 		break;
 	}
-	Cvar_Set("mn_equip_itemtype", typeName);
+	cgi->Cvar_Set("mn_equip_itemtype", typeName);
 
 	/* First slot: item currently assigned */
 	if (!slot->item) {
@@ -521,35 +521,35 @@ static void AIM_UpdateItemDescription (bool fromList, bool fromSlot)
 	status = AIM_CheckTechnologyIntoSlot(slot, aimSelectedTechnology);
 	switch (status) {
 	case AIM_LOADING_NOSLOTSELECTED:
-		Cvar_Set("mn_aircraft_item_warning", _("No slot selected."));
+		cgi->Cvar_Set("mn_aircraft_item_warning", _("No slot selected."));
 		break;
 	case AIM_LOADING_NOTECHNOLOGYSELECTED:
-		Cvar_Set("mn_aircraft_item_warning", _("No item selected."));
+		cgi->Cvar_Set("mn_aircraft_item_warning", _("No item selected."));
 		break;
 	case AIM_LOADING_ALIENTECH:
-		Cvar_Set("mn_aircraft_item_warning", _("You can't equip an alien technology."));
+		cgi->Cvar_Set("mn_aircraft_item_warning", _("You can't equip an alien technology."));
 		break;
 	case AIM_LOADING_TECHNOLOGYNOTRESEARCHED:
-		Cvar_Set("mn_aircraft_item_warning", _("Technology requested is not yet completed."));
+		cgi->Cvar_Set("mn_aircraft_item_warning", _("Technology requested is not yet completed."));
 		break;
 	case AIM_LOADING_TOOHEAVY:
-		Cvar_Set("mn_aircraft_item_warning", _("This item is too heavy for the selected slot."));
+		cgi->Cvar_Set("mn_aircraft_item_warning", _("This item is too heavy for the selected slot."));
 		break;
 	case AIM_LOADING_NOWEAPON:
-		Cvar_Set("mn_aircraft_item_warning", _("Equip a weapon first."));
+		cgi->Cvar_Set("mn_aircraft_item_warning", _("Equip a weapon first."));
 		break;
 	case AIM_LOADING_NOTUSABLEWITHWEAPON:
-		Cvar_Set("mn_aircraft_item_warning", _("Ammo not usable with current weapon."));
+		cgi->Cvar_Set("mn_aircraft_item_warning", _("Ammo not usable with current weapon."));
 		break;
 	case AIM_LOADING_UNKNOWNPROBLEM:
-		Cvar_Set("mn_aircraft_item_warning", _("Unknown problem."));
+		cgi->Cvar_Set("mn_aircraft_item_warning", _("Unknown problem."));
 		break;
 	case AIM_LOADING_OK:
-		Cvar_Set("mn_aircraft_item_warning", _("Ok"));
+		cgi->Cvar_Set("mn_aircraft_item_warning", _("Ok"));
 		break;
 	}
 
-	if (*Cvar_GetString("mn_item") == '\0') {
+	if (*cgi->Cvar_GetString("mn_item") == '\0') {
 		cgi->UI_ExecuteConfunc("airequip_no_item");
 	} else {
 		if (fromSlot) {
@@ -569,14 +569,14 @@ static void AIM_UpdateItemDescription (bool fromList, bool fromSlot)
  */
 static void AIM_AircraftEquipMenuUpdate_f (void)
 {
-	if (Cmd_Argc() != 2) {
+	if (cgi->Cmd_Argc() != 2) {
 		if (airequipID == MAX_ACITEMS) {
-			Com_Printf("Usage: %s <num>\n", Cmd_Argv(0));
+			Com_Printf("Usage: %s <num>\n", cgi->Cmd_Argv(0));
 			return;
 		}
 		AIM_CheckAirequipID();
 	} else {
-		const aircraftItemType_t type = (aircraftItemType_t)atoi(Cmd_Argv(1));
+		const aircraftItemType_t type = (aircraftItemType_t)atoi(cgi->Cmd_Argv(1));
 		switch (type) {
 		case AC_ITEM_ELECTRONICS:
 		case AC_ITEM_SHIELD:
@@ -612,21 +612,21 @@ static void AIM_AircraftEquipSlotSelect_f (void)
 	if (!base)
 		return;
 
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <arg> <zone1|zone2|item>\n", Cmd_Argv(0));
+	if (cgi->Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <arg> <zone1|zone2|item>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
 	aircraft = base->aircraftCurrent;
 	assert(aircraft);
 
-	i = atoi(Cmd_Argv(1));
+	i = atoi(cgi->Cmd_Argv(1));
 	pos = (itemPos_t)i;
 
-	if (Cmd_Argc() == 3) {
-		if (Q_streq(Cmd_Argv(2), "zone1")) {
+	if (cgi->Cmd_Argc() == 3) {
+		if (Q_streq(cgi->Cmd_Argv(2), "zone1")) {
 			updateZone = 1;
-		} else if (Q_streq(Cmd_Argv(2), "zone2")) {
+		} else if (Q_streq(cgi->Cmd_Argv(2), "zone2")) {
 			updateZone = 2;
 		}
 	}
@@ -686,12 +686,12 @@ static void AIM_AircraftEquipZoneSelect_f (void)
 	if (!base)
 		return;
 
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <arg>\n", Cmd_Argv(0));
+	if (cgi->Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <arg>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
-	zone = atoi(Cmd_Argv(1));
+	zone = atoi(cgi->Cmd_Argv(1));
 
 	aircraft = base->aircraftCurrent;
 	assert(aircraft);
@@ -888,13 +888,13 @@ static void AIM_AircraftEquipMenuClick_f (void)
 {
 	int techIdx;
 
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <num>\n", Cmd_Argv(0));
+	if (cgi->Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <num>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
 	/* Which tech? */
-	techIdx = atoi(Cmd_Argv(1));
+	techIdx = atoi(cgi->Cmd_Argv(1));
 	aimSelectedTechnology = RS_GetTechByIDX(techIdx);
 	AIM_UpdateItemDescription(true, false);
 }
@@ -907,12 +907,12 @@ static void AIM_AircraftItemtypeByName_f (void)
 	aircraftItemType_t i;
 	const char *name;
 
-	if (Cmd_Argc() != 2) {
-		Com_Printf("Usage: %s <weapon|ammo|armour|item>\n", Cmd_Argv(0));
+	if (cgi->Cmd_Argc() != 2) {
+		Com_Printf("Usage: %s <weapon|ammo|armour|item>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
-	name = Cmd_Argv(1);
+	name = cgi->Cmd_Argv(1);
 
 	if (Q_streq(name, "weapon"))
 		i = AC_ITEM_WEAPON;
@@ -928,27 +928,27 @@ static void AIM_AircraftItemtypeByName_f (void)
 	}
 
 	airequipID = i;
-	Cmd_ExecuteString(va("airequip_updatemenu %d", airequipID));
+	cgi->Cmd_ExecuteString(va("airequip_updatemenu %d", airequipID));
 }
 
 void AIM_InitCallbacks (void)
 {
-	Cmd_AddCommand("airequip_updatemenu", AIM_AircraftEquipMenuUpdate_f, "Init function for the aircraft equip menu");
-	Cmd_AddCommand("airequip_selectcategory", AIM_AircraftItemtypeByName_f, "Select an item category and update the GUI");
-	Cmd_AddCommand("airequip_list_click", AIM_AircraftEquipMenuClick_f);
-	Cmd_AddCommand("airequip_slot_select", AIM_AircraftEquipSlotSelect_f);
-	Cmd_AddCommand("airequip_add_item", AIM_AircraftEquipAddItem_f, "Add item to slot");
-	Cmd_AddCommand("airequip_remove_item", AIM_AircraftEquipRemoveItem_f, "Remove item from slot");
-	Cmd_AddCommand("airequip_zone_select", AIM_AircraftEquipZoneSelect_f);
+	cgi->Cmd_AddCommand("airequip_updatemenu", AIM_AircraftEquipMenuUpdate_f, "Init function for the aircraft equip menu");
+	cgi->Cmd_AddCommand("airequip_selectcategory", AIM_AircraftItemtypeByName_f, "Select an item category and update the GUI");
+	cgi->Cmd_AddCommand("airequip_list_click", AIM_AircraftEquipMenuClick_f, NULL);
+	cgi->Cmd_AddCommand("airequip_slot_select", AIM_AircraftEquipSlotSelect_f, NULL);
+	cgi->Cmd_AddCommand("airequip_add_item", AIM_AircraftEquipAddItem_f, "Add item to slot");
+	cgi->Cmd_AddCommand("airequip_remove_item", AIM_AircraftEquipRemoveItem_f, "Remove item from slot");
+	cgi->Cmd_AddCommand("airequip_zone_select", AIM_AircraftEquipZoneSelect_f, NULL);
 }
 
 void AIM_ShutdownCallbacks (void)
 {
-	Cmd_RemoveCommand("airequip_updatemenu");
-	Cmd_RemoveCommand("airequip_selectcategory");
-	Cmd_RemoveCommand("airequip_list_click");
-	Cmd_RemoveCommand("airequip_slot_select");
-	Cmd_RemoveCommand("airequip_add_item");
-	Cmd_RemoveCommand("airequip_remove_item");
-	Cmd_RemoveCommand("airequip_zone_select");
+	cgi->Cmd_RemoveCommand("airequip_updatemenu");
+	cgi->Cmd_RemoveCommand("airequip_selectcategory");
+	cgi->Cmd_RemoveCommand("airequip_list_click");
+	cgi->Cmd_RemoveCommand("airequip_slot_select");
+	cgi->Cmd_RemoveCommand("airequip_add_item");
+	cgi->Cmd_RemoveCommand("airequip_remove_item");
+	cgi->Cmd_RemoveCommand("airequip_zone_select");
 }

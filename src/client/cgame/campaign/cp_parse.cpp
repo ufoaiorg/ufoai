@@ -114,12 +114,12 @@ static void CP_ParseAlienTeam (const char *name, const char **text)
 		if (Q_streq(token, "equipment")) {
 			linkedList_t **list = &alienCategory->equipment;
 			if (!Com_ParseList(text, list)) {
-				Com_Error(ERR_DROP, "CL_ParseAlienTeam: \"%s\" Error while parsing equipment list", name);
+				cgi->Com_Error(ERR_DROP, "CL_ParseAlienTeam: \"%s\" Error while parsing equipment list", name);
 			}
 		} else if (Q_streq(token, "category")) {
 			linkedList_t *list;
 			if (!Com_ParseList(text, &list)) {
-				Com_Error(ERR_DROP, "CL_ParseAlienTeam: \"%s\" Error while parsing category list", name);
+				cgi->Com_Error(ERR_DROP, "CL_ParseAlienTeam: \"%s\" Error while parsing category list", name);
 			}
 			for (linkedList_t *element = list; element != NULL; element = element->next) {
 				alienCategory->missionCategories[alienCategory->numMissionCategories] = CP_GetAlienMissionTypeByID((char*)element->data);
@@ -158,18 +158,18 @@ static void CP_ParseAlienTeam (const char *name, const char **text)
 					if (Q_streq(token, "team")) {
 						linkedList_t *list;
 						if (!Com_ParseList(text, &list)) {
-							Com_Error(ERR_DROP, "CL_ParseAlienTeam: \"%s\" Error while parsing team list", name);
+							cgi->Com_Error(ERR_DROP, "CL_ParseAlienTeam: \"%s\" Error while parsing team list", name);
 						}
 						for (linkedList_t *element = list; element != NULL; element = element->next) {
 							if (group->numAlienTeams >= MAX_TEAMS_PER_MISSION)
-								Com_Error(ERR_DROP, "CL_ParseAlienTeam: MAX_TEAMS_PER_MISSION hit");
+								cgi->Com_Error(ERR_DROP, "CL_ParseAlienTeam: MAX_TEAMS_PER_MISSION hit");
 							teamDef = Com_GetTeamDefinitionByID((char*)element->data);
 							if (teamDef)
 								group->alienTeams[group->numAlienTeams++] = teamDef;
 						}
 						LIST_Delete(&list);
 					} else {
-						Com_Error(ERR_DROP, "CL_ParseAlienTeam: Unknown token \"%s\"\n", token);
+						cgi->Com_Error(ERR_DROP, "CL_ParseAlienTeam: Unknown token \"%s\"\n", token);
 					}
 				}
 			} while (*text);
@@ -538,11 +538,11 @@ static void CP_ParseComponents (const char *name, const char **text)
 				OBJZERO(itemTokens);
 				if (Com_ParseBlock ("item", text, &itemTokens, components_type_vals, NULL)) {
 					if (itemTokens.id[0] == '\0')
-						Com_Error(ERR_DROP, "CP_ParseComponents: \"item\" token id is missing.\n");
+						cgi->Com_Error(ERR_DROP, "CP_ParseComponents: \"item\" token id is missing.\n");
 					if (itemTokens.amount[0] == '\0')
-						Com_Error(ERR_DROP, "CP_ParseComponents: \"amount\" token id is missing.\n");
+						cgi->Com_Error(ERR_DROP, "CP_ParseComponents: \"amount\" token id is missing.\n");
 					if (itemTokens.numbercrash[0] == '\0')
-						Com_Error(ERR_DROP, "CP_ParseComponents: \"numbercrash\" token id is missing.\n");
+						cgi->Com_Error(ERR_DROP, "CP_ParseComponents: \"numbercrash\" token id is missing.\n");
 
 					comp->items[comp->numItemtypes] = INVSH_GetItemByID(itemTokens.id);	/* item id -> item pointer */
 
@@ -572,7 +572,7 @@ static void CP_ParseComponents (const char *name, const char **text)
 	} while (*text);
 
 	if (comp->assemblyId[0] == '\0') {
-		Com_Error(ERR_DROP, "CP_ParseComponents: component \"%s\" is not applied to any aircraft.\n", name);
+		cgi->Com_Error(ERR_DROP, "CP_ParseComponents: component \"%s\" is not applied to any aircraft.\n", name);
 	}
 }
 
@@ -592,7 +592,7 @@ components_t *CP_GetComponentsByItem (const objDef_t *item)
 			return comp;
 		}
 	}
-	Com_Error(ERR_DROP, "CP_GetComponentsByItem: could not find components id for: %s", item->id);
+	cgi->Com_Error(ERR_DROP, "CP_GetComponentsByItem: could not find components id for: %s", item->id);
 }
 
 /**
@@ -610,7 +610,7 @@ components_t *CP_GetComponentsByID (const char *id)
 			return comp;
 		}
 	}
-	Com_Error(ERR_DROP, "CP_GetComponentsByID: could not find components id for: %s", id);
+	cgi->Com_Error(ERR_DROP, "CP_GetComponentsByID: could not find components id for: %s", id);
 }
 
 /**
@@ -802,7 +802,7 @@ void CP_ParseCampaignData (void)
 
 		ccs.teamDefTechs[teamDef->idx] = RS_GetTechByID(teamDef->tech);
 		if (ccs.teamDefTechs[teamDef->idx] == NULL)
-			Com_Error(ERR_DROP, "Could not find a tech for teamdef %s", teamDef->id);
+			cgi->Com_Error(ERR_DROP, "Could not find a tech for teamdef %s", teamDef->id);
 	}
 
 	for (i = 0, campaign = ccs.campaigns; i < ccs.numCampaigns; i++, campaign++) {

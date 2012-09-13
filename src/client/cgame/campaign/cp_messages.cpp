@@ -210,18 +210,18 @@ static void MS_MessageSaveXML (xmlNode_t *p, uiMessageListNodeMessage_t *message
 		return;
 
 	Com_RegisterConstList(saveMessageConstants);
-	n = XML_AddNode(p, SAVE_MESSAGES_MESSAGE);
-	XML_AddString(n, SAVE_MESSAGES_TYPE, Com_GetConstVariable(SAVE_MESSAGETYPE_NAMESPACE, message->type));
-	XML_AddStringValue(n, SAVE_MESSAGES_TITLE, message->title);
-	XML_AddStringValue(n, SAVE_MESSAGES_TEXT, message->text);
+	n = cgi->XML_AddNode(p, SAVE_MESSAGES_MESSAGE);
+	cgi->XML_AddString(n, SAVE_MESSAGES_TYPE, Com_GetConstVariable(SAVE_MESSAGETYPE_NAMESPACE, message->type));
+	cgi->XML_AddStringValue(n, SAVE_MESSAGES_TITLE, message->title);
+	cgi->XML_AddStringValue(n, SAVE_MESSAGES_TEXT, message->text);
 	/* store script id of event mail */
 	if (message->type == MSG_EVENT) {
-		XML_AddString(n, SAVE_MESSAGES_EVENTMAILID, message->eventMail->id);
-		XML_AddBoolValue(n, SAVE_MESSAGES_EVENTMAILREAD, message->eventMail->read);
+		cgi->XML_AddString(n, SAVE_MESSAGES_EVENTMAILID, message->eventMail->id);
+		cgi->XML_AddBoolValue(n, SAVE_MESSAGES_EVENTMAILREAD, message->eventMail->read);
 	}
 	if (message->pedia)
-		XML_AddString(n, SAVE_MESSAGES_PEDIAID, message->pedia->id);
-	XML_AddDate(n, SAVE_MESSAGES_DATE, message->date.day, message->date.sec);
+		cgi->XML_AddString(n, SAVE_MESSAGES_PEDIAID, message->pedia->id);
+	cgi->XML_AddDate(n, SAVE_MESSAGES_DATE, message->date.day, message->date.sec);
 	Com_UnregisterConstList(saveMessageConstants);
 }
 
@@ -232,7 +232,7 @@ static void MS_MessageSaveXML (xmlNode_t *p, uiMessageListNodeMessage_t *message
  */
 bool MS_SaveXML (xmlNode_t *p)
 {
-	xmlNode_t *n = XML_AddNode(p, SAVE_MESSAGES_MESSAGES);
+	xmlNode_t *n = cgi->XML_AddNode(p, SAVE_MESSAGES_MESSAGES);
 
 	/* store message system items */
 	MS_MessageSaveXML(n, cgi->UI_MessageGetStack());
@@ -249,7 +249,7 @@ bool MS_LoadXML (xmlNode_t *p)
 {
 	int i;
 	xmlNode_t *n, *sn;
-	n = XML_GetNode(p, SAVE_MESSAGES_MESSAGES);
+	n = cgi->XML_GetNode(p, SAVE_MESSAGES_MESSAGES);
 
 	if (!n)
 		return false;
@@ -260,9 +260,9 @@ bool MS_LoadXML (xmlNode_t *p)
 	cgi->S_SetSampleRepeatRate(500);
 
 	Com_RegisterConstList(saveMessageConstants);
-	for (sn = XML_GetNode(n, SAVE_MESSAGES_MESSAGE), i = 0; sn; sn = XML_GetNextNode(sn, n, SAVE_MESSAGES_MESSAGE), i++) {
+	for (sn = cgi->XML_GetNode(n, SAVE_MESSAGES_MESSAGE), i = 0; sn; sn = cgi->XML_GetNextNode(sn, n, SAVE_MESSAGES_MESSAGE), i++) {
 		eventMail_t *mail;
-		const char *type = XML_GetString(sn, SAVE_MESSAGES_TYPE);
+		const char *type = cgi->XML_GetString(sn, SAVE_MESSAGES_TYPE);
 		int mtype;
 		char title[MAX_VAR];
 		char text[MAX_MESSAGE_TEXT];
@@ -276,13 +276,13 @@ bool MS_LoadXML (xmlNode_t *p)
 		}
 
 		/* can contain high bits due to utf8 */
-		Q_strncpyz(title, XML_GetString(sn, SAVE_MESSAGES_TITLE), sizeof(title));
-		Q_strncpyz(text,  XML_GetString(sn, SAVE_MESSAGES_TEXT),  sizeof(text));
+		Q_strncpyz(title, cgi->XML_GetString(sn, SAVE_MESSAGES_TITLE), sizeof(title));
+		Q_strncpyz(text,  cgi->XML_GetString(sn, SAVE_MESSAGES_TEXT),  sizeof(text));
 
 		if (mtype == MSG_EVENT) {
-			mail = CL_GetEventMail(XML_GetString(sn, SAVE_MESSAGES_EVENTMAILID));
+			mail = CL_GetEventMail(cgi->XML_GetString(sn, SAVE_MESSAGES_EVENTMAILID));
 			if (mail)
-				mail->read = XML_GetBool(sn, SAVE_MESSAGES_EVENTMAILREAD, false);
+				mail->read = cgi->XML_GetBool(sn, SAVE_MESSAGES_EVENTMAILREAD, false);
 		} else
 			mail = NULL;
 
@@ -293,7 +293,7 @@ bool MS_LoadXML (xmlNode_t *p)
 		if (mtype == MSG_DEBUG && developer->integer != 1)
 			continue;
 
-		Q_strncpyz(id, XML_GetString(sn, SAVE_MESSAGES_PEDIAID), sizeof(id));
+		Q_strncpyz(id, cgi->XML_GetString(sn, SAVE_MESSAGES_PEDIAID), sizeof(id));
 		if (id[0] != '\0')
 			tech = RS_GetTechByID(id);
 		if (!tech && (mtype == MSG_RESEARCH_PROPOSAL || mtype == MSG_RESEARCH_FINISHED)) {
@@ -302,7 +302,7 @@ bool MS_LoadXML (xmlNode_t *p)
 		}
 		mess = MS_AddNewMessage(title, text, (messageType_t)mtype, tech);
 		mess->eventMail = mail;
-		XML_GetDate(sn, SAVE_MESSAGES_DATE, &mess->date.day, &mess->date.sec);
+		cgi->XML_GetDate(sn, SAVE_MESSAGES_DATE, &mess->date.day, &mess->date.sec);
 		/* redo timestamp text after setting date */
 		MS_TimestampedText(mess->timestamp, mess, sizeof(mess->timestamp));
 

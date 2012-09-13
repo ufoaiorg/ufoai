@@ -145,12 +145,12 @@ static int MSO_ParseOptionType(const char* type)
  */
 static void MSO_Set_f (void)
 {
-	if (Cmd_Argc() != 4)
-		Com_Printf("Usage: %s <messagetypename> <pause|notify|sound> <0|1>\n", Cmd_Argv(0));
+	if (cgi->Cmd_Argc() != 4)
+		Com_Printf("Usage: %s <messagetypename> <pause|notify|sound> <0|1>\n", cgi->Cmd_Argv(0));
 	else {
 		int type;
-		const char *messagetype = Cmd_Argv(1);
-		const int optionsType = MSO_ParseOptionType(Cmd_Argv(1));
+		const char *messagetype = cgi->Cmd_Argv(1);
+		const int optionsType = MSO_ParseOptionType(cgi->Cmd_Argv(1));
 		if (optionsType == 0) {
 			return;
 		}
@@ -164,7 +164,7 @@ static void MSO_Set_f (void)
 			return;
 		}
 
-		MSO_Set(0, (notify_t)type, optionsType, atoi(Cmd_Argv(3)), false);
+		MSO_Set(0, (notify_t)type, optionsType, atoi(cgi->Cmd_Argv(3)), false);
 	}
 }
 
@@ -175,12 +175,12 @@ static void MSO_Set_f (void)
  */
 static void MSO_SetAll_f(void)
 {
-	if (Cmd_Argc() != 3)
-		Com_Printf("Usage: %s <pause|notify|sound> <0|1>\n", Cmd_Argv(0));
+	if (cgi->Cmd_Argc() != 3)
+		Com_Printf("Usage: %s <pause|notify|sound> <0|1>\n", cgi->Cmd_Argv(0));
 	else {
 		int type;
-		bool activate = atoi(Cmd_Argv(2));
-		const int optionsType = MSO_ParseOptionType(Cmd_Argv(1));
+		bool activate = atoi(cgi->Cmd_Argv(2));
+		const int optionsType = MSO_ParseOptionType(cgi->Cmd_Argv(1));
 		if (optionsType == 0) {
 			return;
 		}
@@ -224,17 +224,17 @@ uiMessageListNodeMessage_t *MSO_CheckAddNewMessage (const notify_t messagecatego
 bool MSO_SaveXML (xmlNode_t *p)
 {
 	int type;
-	xmlNode_t *n = XML_AddNode(p, SAVE_MESSAGEOPTIONS_MESSAGEOPTIONS);
+	xmlNode_t *n = cgi->XML_AddNode(p, SAVE_MESSAGEOPTIONS_MESSAGEOPTIONS);
 
 	/* save positive values */
 	for (type = 0; type < NT_NUM_NOTIFYTYPE; type++) {
 		messageSettings_t actualSetting = messageSettings[type];
-		xmlNode_t *s = XML_AddNode(n, SAVE_MESSAGEOPTIONS_TYPE);
+		xmlNode_t *s = cgi->XML_AddNode(n, SAVE_MESSAGEOPTIONS_TYPE);
 
-		XML_AddString(s, SAVE_MESSAGEOPTIONS_NAME, nt_strings[type]);
-		XML_AddBoolValue(s, SAVE_MESSAGEOPTIONS_NOTIFY, actualSetting.doNotify);
-		XML_AddBoolValue(s, SAVE_MESSAGEOPTIONS_PAUSE, actualSetting.doPause);
-		XML_AddBoolValue(s, SAVE_MESSAGEOPTIONS_SOUND, actualSetting.doSound);
+		cgi->XML_AddString(s, SAVE_MESSAGEOPTIONS_NAME, nt_strings[type]);
+		cgi->XML_AddBoolValue(s, SAVE_MESSAGEOPTIONS_NOTIFY, actualSetting.doNotify);
+		cgi->XML_AddBoolValue(s, SAVE_MESSAGEOPTIONS_PAUSE, actualSetting.doPause);
+		cgi->XML_AddBoolValue(s, SAVE_MESSAGEOPTIONS_SOUND, actualSetting.doSound);
 	}
 
 	return true;
@@ -248,12 +248,12 @@ bool MSO_LoadXML (xmlNode_t *p)
 {
 	xmlNode_t *n, *s;
 
-	n = XML_GetNode(p, SAVE_MESSAGEOPTIONS_MESSAGEOPTIONS);
+	n = cgi->XML_GetNode(p, SAVE_MESSAGEOPTIONS_MESSAGEOPTIONS);
 	if (!n)
 		return false;
 
-	for (s = XML_GetNode(n, SAVE_MESSAGEOPTIONS_TYPE); s; s = XML_GetNextNode(s,n, SAVE_MESSAGEOPTIONS_TYPE)) {
-		const char *messagetype = XML_GetString(s, SAVE_MESSAGEOPTIONS_NAME);
+	for (s = cgi->XML_GetNode(n, SAVE_MESSAGEOPTIONS_TYPE); s; s = cgi->XML_GetNextNode(s,n, SAVE_MESSAGEOPTIONS_TYPE)) {
+		const char *messagetype = cgi->XML_GetString(s, SAVE_MESSAGEOPTIONS_NAME);
 		int type;
 
 		for (type = 0; type < NT_NUM_NOTIFYTYPE; type++) {
@@ -266,9 +266,9 @@ bool MSO_LoadXML (xmlNode_t *p)
 			Com_Printf("Unrecognized messagetype '%s' ignored while loading\n", messagetype);
 			continue;
 		}
-		MSO_Set(0, (notify_t)type, MSO_NOTIFY, XML_GetBool(s, SAVE_MESSAGEOPTIONS_NOTIFY, false), false);
-		MSO_Set(0, (notify_t)type, MSO_PAUSE, XML_GetBool(s, SAVE_MESSAGEOPTIONS_PAUSE, false), false);
-		MSO_Set(0, (notify_t)type, MSO_SOUND, XML_GetBool(s, SAVE_MESSAGEOPTIONS_SOUND, false), false);
+		MSO_Set(0, (notify_t)type, MSO_NOTIFY, cgi->XML_GetBool(s, SAVE_MESSAGEOPTIONS_NOTIFY, false), false);
+		MSO_Set(0, (notify_t)type, MSO_PAUSE, cgi->XML_GetBool(s, SAVE_MESSAGEOPTIONS_PAUSE, false), false);
+		MSO_Set(0, (notify_t)type, MSO_SOUND, cgi->XML_GetBool(s, SAVE_MESSAGEOPTIONS_SOUND, false), false);
 	}
 
 	MSO_SetMenuState(MSO_MSTATE_REINIT,false, false);
@@ -399,7 +399,7 @@ static bool MSO_ParseCategory (const char *blockName, const char **text)
 		if (Q_streq(token, "option")) {
 			int optionId = MSO_ParseOption(blockName, text);
 			if (optionId == -1) {
-				Com_Error(ERR_DROP, "MSO_ParseMessageSettings: error while parsing option from \"%s\".\n", blockName);
+				cgi->Com_Error(ERR_DROP, "MSO_ParseMessageSettings: error while parsing option from \"%s\".\n", blockName);
 			}
 			/* prepare a new msgcategory entry */
 			msgCategoryEntry_t *previous = ccs.messageCategories[ccs.numMsgCategories].last;
@@ -427,7 +427,7 @@ static bool MSO_ParseCategory (const char *blockName, const char **text)
 			category->name = Mem_PoolStrDup(token, cp_campaignPool, 0);
 			categoryEntry->notifyType = category->name;
 		} else {
-			Com_Error(ERR_DROP, "MSO_ParseMessageSettings: token \"%s\" in \"%s\" not expected.\n", token, blockName);
+			cgi->Com_Error(ERR_DROP, "MSO_ParseMessageSettings: token \"%s\" in \"%s\" not expected.\n", token, blockName);
 		}
 	} while (*text);
 
@@ -456,7 +456,7 @@ void MSO_ParseMessageSettings (const char *name, const char **text)
 	token = Com_Parse(text);
 
 	if (!*text || token[0] != '{') {
-		Com_Error(ERR_DROP, "MSO_ParseMessageSettings: msgoptions \"%s\" without body.\n", name);
+		cgi->Com_Error(ERR_DROP, "MSO_ParseMessageSettings: msgoptions \"%s\" without body.\n", name);
 		return;
 	}
 
@@ -464,16 +464,16 @@ void MSO_ParseMessageSettings (const char *name, const char **text)
 		/* get entries and add them to category */
 		token = Com_EParse(text, errhead, name);
 		if (!*text)
-			Com_Error(ERR_DROP, "MSO_ParseMessageSettings: end of file not expected \"%s\".\n", name);
+			cgi->Com_Error(ERR_DROP, "MSO_ParseMessageSettings: end of file not expected \"%s\".\n", name);
 		if (token[0] == '}')
 			break;
 
 		if (Q_streq(token, "category")) {
 			if (!MSO_ParseCategory(name, text)) {
-				Com_Error(ERR_DROP, "MSO_ParseMessageSettings: error while parsing category from \"%s\".\n", name);
+				cgi->Com_Error(ERR_DROP, "MSO_ParseMessageSettings: error while parsing category from \"%s\".\n", name);
 			}
 		} else {
-			Com_Error(ERR_DROP, "MSO_ParseMessageSettings: token \"%s\" in \"%s\" not expected.\n", token, name);
+			cgi->Com_Error(ERR_DROP, "MSO_ParseMessageSettings: token \"%s\" in \"%s\" not expected.\n", token, name);
 		}
 	}
 
@@ -481,14 +481,14 @@ void MSO_ParseMessageSettings (const char *name, const char **text)
 
 void MSO_Init (void)
 {
-	Cmd_AddCommand("msgoptions_setall", MSO_SetAll_f, "Sets pause, notification or sound setting for all message categories");
-	Cmd_AddCommand("msgoptions_set", MSO_Set_f, "Sets pause, notification or sound setting for a message category");
+	cgi->Cmd_AddCommand("msgoptions_setall", MSO_SetAll_f, "Sets pause, notification or sound setting for all message categories");
+	cgi->Cmd_AddCommand("msgoptions_set", MSO_Set_f, "Sets pause, notification or sound setting for a message category");
 	MSO_InitCallbacks();
 }
 
 void MSO_Shutdown (void)
 {
-	Cmd_RemoveCommand("msgoptions_setall");
-	Cmd_RemoveCommand("msgoptions_set");
+	cgi->Cmd_RemoveCommand("msgoptions_setall");
+	cgi->Cmd_RemoveCommand("msgoptions_set");
 	MSO_ShutdownCallbacks();
 }

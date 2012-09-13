@@ -90,15 +90,15 @@ static void UR_DialogInit_f (void)
 	const aircraft_t *ufoCraft;
 	float cond = 1.0f;
 
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <ufoID> [UFO-Condition]\n", Cmd_Argv(0));
+	if (cgi->Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <ufoID> [UFO-Condition]\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
-	Q_strncpyz(ufoID, Cmd_Argv(1), sizeof(ufoID));
+	Q_strncpyz(ufoID, cgi->Cmd_Argv(1), sizeof(ufoID));
 
-	if (Cmd_Argc() >= 3)
-		cond = atof(Cmd_Argv(2));
+	if (cgi->Cmd_Argc() >= 3)
+		cond = atof(cgi->Cmd_Argv(2));
 
 	ufoCraft = AIR_GetAircraft(ufoID);
 
@@ -110,9 +110,9 @@ static void UR_DialogInit_f (void)
 
 	if (ufoCraft) {
 		if (cond < 1.0)
-			Cvar_Set("mn_uforecovery_actualufo", va(_("\nSecured crashed %s (%.0f%%)\n"), UFO_AircraftToIDOnGeoscape(ufoCraft), cond * 100));
+			cgi->Cvar_Set("mn_uforecovery_actualufo", va(_("\nSecured crashed %s (%.0f%%)\n"), UFO_AircraftToIDOnGeoscape(ufoCraft), cond * 100));
 		else
-			Cvar_Set("mn_uforecovery_actualufo", va(_("\nSecured landed %s\n"), UFO_AircraftToIDOnGeoscape(ufoCraft)));
+			cgi->Cvar_Set("mn_uforecovery_actualufo", va(_("\nSecured landed %s\n"), UFO_AircraftToIDOnGeoscape(ufoCraft)));
 
 		cgi->UI_PushWindow("uforecovery");
 	}
@@ -171,12 +171,12 @@ static void UR_DialogStartStore_f (void)
 	int count = 0;
 	date_t date;
 
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <installationIDX>\n", Cmd_Argv(0));
+	if (cgi->Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <installationIDX>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
-	idx = atoi(Cmd_Argv(1));
+	idx = atoi(cgi->Cmd_Argv(1));
 
 	INS_Foreach(i) {
 		if (i->ufoCapacity.max <= 0 || i->ufoCapacity.max <= i->ufoCapacity.cur)
@@ -399,12 +399,12 @@ static void UR_DialogSortByColumn_f (void)
 	COMP_FUNCTION comp = 0;
 	ufoRecoveryNationOrder_t column;
 
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <nation|price|happiness>\n", Cmd_Argv(0));
+	if (cgi->Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <nation|price|happiness>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
-	column = UR_GetOrderTypeByID(Cmd_Argv(1));
+	column = UR_GetOrderTypeByID(cgi->Cmd_Argv(1));
 	if (ufoRecovery.sortedColumn != column) {
 		ufoRecovery.sortDescending = false;
 		ufoRecovery.sortedColumn = column;
@@ -436,12 +436,12 @@ static void UR_DialogSelectSellNation_f (void)
 	int num;
 	const nation_t *nation;
 
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <nationid>\n", Cmd_Argv(0));
+	if (cgi->Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <nationid>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
-	num = atoi(Cmd_Argv(1));
+	num = atoi(cgi->Cmd_Argv(1));
 
 	/* don't do anything if index is higher than visible nations */
 	if (0 > num || num >= ccs.numNations)
@@ -452,7 +452,7 @@ static void UR_DialogSelectSellNation_f (void)
 	ufoRecovery.nation = nation;
 	Com_DPrintf(DEBUG_CLIENT, "CP_UFORecoveryNationSelectPopup_f: picked nation: %s\n", nation->name);
 
-	Cvar_Set("mission_recoverynation", _(nation->name));
+	cgi->Cvar_Set("mission_recoverynation", _(nation->name));
 	cgi->UI_ExecuteConfunc("btnatsel enable");
 }
 
@@ -537,7 +537,7 @@ static void US_SelectStoredUfo_f (void)
 {
 	const storedUFO_t *ufo;
 
-	if (Cmd_Argc() < 2 || (ufo = US_GetStoredUFOByIDX(atoi(Cmd_Argv(1)))) == NULL) {
+	if (cgi->Cmd_Argc() < 2 || (ufo = US_GetStoredUFOByIDX(atoi(cgi->Cmd_Argv(1)))) == NULL) {
 		cgi->UI_ExecuteConfunc("show_storedufo -");
 	} else {
 		const char *ufoName = UFO_AircraftToIDOnGeoscape(ufo->ufoTemplate);
@@ -562,18 +562,18 @@ static void US_SelectStoredUfo_f (void)
  */
 static void US_DestroySoredUFO_f (void)
 {
-	if (Cmd_Argc() < 2) {
-		Com_DPrintf(DEBUG_CLIENT, "Usage: %s <idx> [0|1]\nWhere the second, optional parameter is the confirmation.\n", Cmd_Argv(0));
+	if (cgi->Cmd_Argc() < 2) {
+		Com_DPrintf(DEBUG_CLIENT, "Usage: %s <idx> [0|1]\nWhere the second, optional parameter is the confirmation.\n", cgi->Cmd_Argv(0));
 		return;
 	}
-	storedUFO_t *ufo = US_GetStoredUFOByIDX(atoi(Cmd_Argv(1)));
+	storedUFO_t *ufo = US_GetStoredUFOByIDX(atoi(cgi->Cmd_Argv(1)));
 	if (!ufo) {
-		Com_DPrintf(DEBUG_CLIENT, "Stored UFO with idx: %i does not exist\n", atoi(Cmd_Argv(1)));
+		Com_DPrintf(DEBUG_CLIENT, "Stored UFO with idx: %i does not exist\n", atoi(cgi->Cmd_Argv(1)));
 		return;
 	}
 
 	/* Ask 'Are you sure?' by default */
-	if (Cmd_Argc() < 3 || !atoi(Cmd_Argv(2))) {
+	if (cgi->Cmd_Argc() < 3 || !atoi(cgi->Cmd_Argv(2))) {
 		char command[128];
 
 		Com_sprintf(command, sizeof(command), "ui_destroystoredufo %d 1;ui_pop; mn_installation_select %d;", ufo->idx, ufo->installation->idx);
@@ -584,7 +584,7 @@ static void US_DestroySoredUFO_f (void)
 		return;
 	}
 	US_RemoveStoredUFO(ufo);
-	Cmd_ExecuteString(va("mn_installation_select %d", ufo->installation->idx));
+	cgi->Cmd_ExecuteString(va("mn_installation_select %d", ufo->installation->idx));
 }
 
 /**
@@ -592,14 +592,14 @@ static void US_DestroySoredUFO_f (void)
  */
 static void US_FillUFOTransfer_f (void)
 {
-	if (Cmd_Argc() < 2) {
-		Com_DPrintf(DEBUG_CLIENT, "Usage: %s <idx>\n", Cmd_Argv(0));
+	if (cgi->Cmd_Argc() < 2) {
+		Com_DPrintf(DEBUG_CLIENT, "Usage: %s <idx>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
-	storedUFO_t *ufo = US_GetStoredUFOByIDX(atoi(Cmd_Argv(1)));
+	storedUFO_t *ufo = US_GetStoredUFOByIDX(atoi(cgi->Cmd_Argv(1)));
 	if (!ufo) {
-		Com_DPrintf(DEBUG_CLIENT, "Stored UFO with idx: %i does not exist\n", atoi(Cmd_Argv(1)));
+		Com_DPrintf(DEBUG_CLIENT, "Stored UFO with idx: %i does not exist\n", atoi(cgi->Cmd_Argv(1)));
 		return;
 	}
 
@@ -619,14 +619,14 @@ static void US_FillUFOTransfer_f (void)
  */
 static void US_FillUFOTransferUFOs_f (void)
 {
-	if (Cmd_Argc() < 2) {
-		Com_DPrintf(DEBUG_CLIENT, "Usage: %s <idx>\n", Cmd_Argv(0));
+	if (cgi->Cmd_Argc() < 2) {
+		Com_DPrintf(DEBUG_CLIENT, "Usage: %s <idx>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
-	installation_t *ins = INS_GetByIDX(atoi(Cmd_Argv(1)));
+	installation_t *ins = INS_GetByIDX(atoi(cgi->Cmd_Argv(1)));
 	if (!ins) {
-		Com_DPrintf(DEBUG_CLIENT, "Installation with idx: %i does not exist\n", atoi(Cmd_Argv(1)));
+		Com_DPrintf(DEBUG_CLIENT, "Installation with idx: %i does not exist\n", atoi(cgi->Cmd_Argv(1)));
 		return;
 	}
 
@@ -646,18 +646,18 @@ static void US_TransferUFO_f (void)
 	storedUFO_t *ufo;
 	installation_t *ins = NULL;
 
-	if (Cmd_Argc() < 3) {
-		Com_Printf("Usage: %s <stored-ufo-idx>  <ufoyard-idx>\n", Cmd_Argv(0));
+	if (cgi->Cmd_Argc() < 3) {
+		Com_Printf("Usage: %s <stored-ufo-idx>  <ufoyard-idx>\n", cgi->Cmd_Argv(0));
 		return;
 	}
-	ufo = US_GetStoredUFOByIDX(atoi(Cmd_Argv(1)));
+	ufo = US_GetStoredUFOByIDX(atoi(cgi->Cmd_Argv(1)));
 	if (ufo == NULL) {
-		Com_Printf("Stored ufo with idx %i not found.\n", atoi(Cmd_Argv(1)));
+		Com_Printf("Stored ufo with idx %i not found.\n", atoi(cgi->Cmd_Argv(1)));
 		return;
 	}
-	ins = INS_GetByIDX(atoi(Cmd_Argv(2)));
+	ins = INS_GetByIDX(atoi(cgi->Cmd_Argv(2)));
 	if (!ins) {
-		Com_Printf("Installation with idx: %i does not exist\n", atoi(Cmd_Argv(2)));
+		Com_Printf("Installation with idx: %i does not exist\n", atoi(cgi->Cmd_Argv(2)));
 		return;
 	}
 	US_TransferUFO(ufo, ins);
@@ -665,34 +665,34 @@ static void US_TransferUFO_f (void)
 
 void UR_InitCallbacks (void)
 {
-	Cmd_AddCommand("cp_uforecovery_init", UR_DialogInit_f, "Function to trigger UFO Recovered event");
-	Cmd_AddCommand("cp_uforecovery_sell_init", UR_DialogInitSell_f, "Function to initialize sell recovered UFO to desired nation.");
-	Cmd_AddCommand("cp_uforecovery_store_init", UR_DialogInitStore_f, "Function to initialize store recovered UFO in desired base.");
-	Cmd_AddCommand("cp_uforecovery_nationlist_click", UR_DialogSelectSellNation_f, "Callback for recovery sell to nation list.");
-	Cmd_AddCommand("cp_uforecovery_store_start", UR_DialogStartStore_f, "Function to start UFO recovery processing.");
-	Cmd_AddCommand("cp_uforecovery_sell_start", UR_DialogStartSell_f, "Function to start UFO selling processing.");
-	Cmd_AddCommand("cp_uforecovery_sort", UR_DialogSortByColumn_f, "Sorts nations and update ui state.");
+	cgi->Cmd_AddCommand("cp_uforecovery_init", UR_DialogInit_f, "Function to trigger UFO Recovered event");
+	cgi->Cmd_AddCommand("cp_uforecovery_sell_init", UR_DialogInitSell_f, "Function to initialize sell recovered UFO to desired nation.");
+	cgi->Cmd_AddCommand("cp_uforecovery_store_init", UR_DialogInitStore_f, "Function to initialize store recovered UFO in desired base.");
+	cgi->Cmd_AddCommand("cp_uforecovery_nationlist_click", UR_DialogSelectSellNation_f, "Callback for recovery sell to nation list.");
+	cgi->Cmd_AddCommand("cp_uforecovery_store_start", UR_DialogStartStore_f, "Function to start UFO recovery processing.");
+	cgi->Cmd_AddCommand("cp_uforecovery_sell_start", UR_DialogStartSell_f, "Function to start UFO selling processing.");
+	cgi->Cmd_AddCommand("cp_uforecovery_sort", UR_DialogSortByColumn_f, "Sorts nations and update ui state.");
 
-	Cmd_AddCommand("ui_selectstoredufo", US_SelectStoredUfo_f, "Send Stored UFO data to the UI");
-	Cmd_AddCommand("ui_destroystoredufo", US_DestroySoredUFO_f, "Destroy stored UFO");
-	Cmd_AddCommand("ui_fill_ufotransfer", US_FillUFOTransfer_f, "Fills UFO Yard UI with transfer destinations");
-	Cmd_AddCommand("ui_selecttransferyard", US_FillUFOTransferUFOs_f, "Send Stored UFOs of the destination UFO Yard");
-	Cmd_AddCommand("ui_transferufo", US_TransferUFO_f, "Transfer stored UFO to another UFO Yard");
+	cgi->Cmd_AddCommand("ui_selectstoredufo", US_SelectStoredUfo_f, "Send Stored UFO data to the UI");
+	cgi->Cmd_AddCommand("ui_destroystoredufo", US_DestroySoredUFO_f, "Destroy stored UFO");
+	cgi->Cmd_AddCommand("ui_fill_ufotransfer", US_FillUFOTransfer_f, "Fills UFO Yard UI with transfer destinations");
+	cgi->Cmd_AddCommand("ui_selecttransferyard", US_FillUFOTransferUFOs_f, "Send Stored UFOs of the destination UFO Yard");
+	cgi->Cmd_AddCommand("ui_transferufo", US_TransferUFO_f, "Transfer stored UFO to another UFO Yard");
 }
 
 void UR_ShutdownCallbacks (void)
 {
-	Cmd_RemoveCommand("ui_transferufo");
-	Cmd_RemoveCommand("ui_selecttransferyard");
-	Cmd_RemoveCommand("ui_fill_ufotransfer");
-	Cmd_RemoveCommand("ui_destroystoredufo");
-	Cmd_RemoveCommand("ui_selectstoredufo");
+	cgi->Cmd_RemoveCommand("ui_transferufo");
+	cgi->Cmd_RemoveCommand("ui_selecttransferyard");
+	cgi->Cmd_RemoveCommand("ui_fill_ufotransfer");
+	cgi->Cmd_RemoveCommand("ui_destroystoredufo");
+	cgi->Cmd_RemoveCommand("ui_selectstoredufo");
 
-	Cmd_RemoveCommand("cp_uforecovery_init");
-	Cmd_RemoveCommand("cp_uforecovery_sell_init");
-	Cmd_RemoveCommand("cp_uforecovery_store_init");
-	Cmd_RemoveCommand("cp_uforecovery_nationlist_click");
-	Cmd_RemoveCommand("cp_uforecovery_store_start");
-	Cmd_RemoveCommand("cp_uforecovery_sell_start");
-	Cmd_RemoveCommand("cp_uforecovery_sort");
+	cgi->Cmd_RemoveCommand("cp_uforecovery_init");
+	cgi->Cmd_RemoveCommand("cp_uforecovery_sell_init");
+	cgi->Cmd_RemoveCommand("cp_uforecovery_store_init");
+	cgi->Cmd_RemoveCommand("cp_uforecovery_nationlist_click");
+	cgi->Cmd_RemoveCommand("cp_uforecovery_store_start");
+	cgi->Cmd_RemoveCommand("cp_uforecovery_sell_start");
+	cgi->Cmd_RemoveCommand("cp_uforecovery_sort");
 }

@@ -172,13 +172,13 @@ static void CL_PopupChangeHomebase_f (void)
 		return;
 	}
 
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <popupIndex>\tpopupIndex=num in base list\n", Cmd_Argv(0));
+	if (cgi->Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <popupIndex>\tpopupIndex=num in base list\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
 	/* read and range check */
-	selectedPopupIndex = atoi(Cmd_Argv(1));
+	selectedPopupIndex = atoi(cgi->Cmd_Argv(1));
 	Com_DPrintf(DEBUG_CLIENT, "CL_PopupHomebaseClick_f (popupNum %i, selectedPopupIndex %i)\n", popupNum, selectedPopupIndex);
 	if (selectedPopupIndex < 0 || selectedPopupIndex >= popupNum)
 		return;
@@ -259,10 +259,10 @@ static void CL_PopupAircraftClick_f (void)
 	Com_DPrintf(DEBUG_CLIENT, "CL_PopupAircraftClick\n");
 
 	/* Get num of item selected in list */
-	if (Cmd_Argc() < 2)
+	if (cgi->Cmd_Argc() < 2)
 		return;
 
-	num = atoi(Cmd_Argv(1));
+	num = atoi(cgi->Cmd_Argv(1));
 	if (num < 0 || num >= popupAircraft.numItems)
 		return;
 
@@ -452,11 +452,11 @@ static aircraft_t* CL_PopupInterceptGetAircraft (void)
 {
 	int num;
 
-	if (Cmd_Argc() < 2)
+	if (cgi->Cmd_Argc() < 2)
 		return NULL;
 
 	/* Get the selected aircraft */
-	num = atoi(Cmd_Argv(1));
+	num = atoi(cgi->Cmd_Argv(1));
 	if (num < 0 || num >= popupIntercept.numAircraft)
 		return NULL;
 
@@ -526,8 +526,8 @@ static void CL_PopupInterceptBaseClick_f (void)
 	installation_t *installation;
 	bool atLeastOneBase = false;
 
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <num>\tnum=num in base list\n", Cmd_Argv(0));
+	if (cgi->Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <num>\tnum=num in base list\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
@@ -535,7 +535,7 @@ static void CL_PopupInterceptBaseClick_f (void)
 	if (MAP_GetSelectedUFO() == NULL)
 		return;
 
-	num = atoi(Cmd_Argv(1));
+	num = atoi(cgi->Cmd_Argv(1));
 
 	base = NULL;
 	while ((base = B_GetNext(base)) != NULL) {
@@ -593,15 +593,15 @@ static void CL_PopupInterceptBaseClick_f (void)
 void CL_PopupInit (void)
 {
 	/* popup_aircraft commands */
-	Cmd_AddCommand("popup_aircraft_action_click", CL_PopupAircraftClick_f);
+	cgi->Cmd_AddCommand("popup_aircraft_action_click", CL_PopupAircraftClick_f, NULL);
 
 	/* popup_intercept commands */
-	Cmd_AddCommand("ships_click", CL_PopupInterceptClick_f);
-	Cmd_AddCommand("ships_rclick", CL_PopupInterceptRClick_f);
-	Cmd_AddCommand("bases_click", CL_PopupInterceptBaseClick_f);
+	cgi->Cmd_AddCommand("ships_click", CL_PopupInterceptClick_f, NULL);
+	cgi->Cmd_AddCommand("ships_rclick", CL_PopupInterceptRClick_f, NULL);
+	cgi->Cmd_AddCommand("bases_click", CL_PopupInterceptBaseClick_f, NULL);
 
 	/* popup_homebase commands */
-	Cmd_AddCommand("change_homebase", CL_PopupChangeHomebase_f);
+	cgi->Cmd_AddCommand("change_homebase", CL_PopupChangeHomebase_f, NULL);
 
 	OBJZERO(popupIntercept);
 	OBJZERO(popupAircraft);

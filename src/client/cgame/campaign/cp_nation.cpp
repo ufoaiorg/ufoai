@@ -207,7 +207,7 @@ void NAT_SetHappiness (const float minhappiness, nation_t *nation, const float h
 bool NAT_SaveXML (xmlNode_t *p)
 {
 	int i;
-	xmlNode_t *n = XML_AddNode(p, SAVE_NATION_NATIONS);
+	xmlNode_t *n = cgi->XML_AddNode(p, SAVE_NATION_NATIONS);
 
 	for (i = 0; i < ccs.numNations; i++) {
 		nation_t *nation = NAT_GetNationByIDX(i);
@@ -217,8 +217,8 @@ bool NAT_SaveXML (xmlNode_t *p)
 		if (!nation)
 			continue;
 
-		s = XML_AddNode(n, SAVE_NATION_NATION);
-		XML_AddString(s, SAVE_NATION_ID, nation->id);
+		s = cgi->XML_AddNode(n, SAVE_NATION_NATION);
+		cgi->XML_AddString(s, SAVE_NATION_ID, nation->id);
 		for (j = 0; j < MONTHS_PER_YEAR; j++) {
 			const nationInfo_t *stats = &nation->stats[j];
 			xmlNode_t *ss;
@@ -226,10 +226,10 @@ bool NAT_SaveXML (xmlNode_t *p)
 			if (!stats->inuse)
 				continue;
 
-			ss = XML_AddNode(s, SAVE_NATION_MONTH);
-			XML_AddInt(ss, SAVE_NATION_MONTH_IDX, j);
-			XML_AddFloat(ss, SAVE_NATION_HAPPINESS, stats->happiness);
-			XML_AddInt(ss, SAVE_NATION_XVI, stats->xviInfection);
+			ss = cgi->XML_AddNode(s, SAVE_NATION_MONTH);
+			cgi->XML_AddInt(ss, SAVE_NATION_MONTH_IDX, j);
+			cgi->XML_AddFloat(ss, SAVE_NATION_HAPPINESS, stats->happiness);
+			cgi->XML_AddInt(ss, SAVE_NATION_XVI, stats->xviInfection);
 		}
 	}
 	return true;
@@ -244,29 +244,29 @@ bool NAT_LoadXML (xmlNode_t * p)
 	xmlNode_t *n;
 	xmlNode_t *s;
 
-	n = XML_GetNode(p, SAVE_NATION_NATIONS);
+	n = cgi->XML_GetNode(p, SAVE_NATION_NATIONS);
 	if (!n)
 		return false;
 
 	/* nations loop */
-	for (s = XML_GetNode(n, SAVE_NATION_NATION); s; s = XML_GetNextNode(s, n, SAVE_NATION_NATION)) {
+	for (s = cgi->XML_GetNode(n, SAVE_NATION_NATION); s; s = cgi->XML_GetNextNode(s, n, SAVE_NATION_NATION)) {
 		xmlNode_t *ss;
-		nation_t *nation = NAT_GetNationByID(XML_GetString(s, SAVE_NATION_ID));
+		nation_t *nation = NAT_GetNationByID(cgi->XML_GetString(s, SAVE_NATION_ID));
 
 		if (!nation)
 			return false;
 
 		/* month loop */
-		for (ss = XML_GetNode(s, SAVE_NATION_MONTH); ss; ss = XML_GetNextNode(ss, s, SAVE_NATION_MONTH)) {
-			int monthIDX = XML_GetInt(ss, SAVE_NATION_MONTH_IDX, MONTHS_PER_YEAR);
+		for (ss = cgi->XML_GetNode(s, SAVE_NATION_MONTH); ss; ss = cgi->XML_GetNextNode(ss, s, SAVE_NATION_MONTH)) {
+			int monthIDX = cgi->XML_GetInt(ss, SAVE_NATION_MONTH_IDX, MONTHS_PER_YEAR);
 			nationInfo_t *stats = &nation->stats[monthIDX];
 
 			if (monthIDX < 0 || monthIDX >= MONTHS_PER_YEAR)
 				return false;
 
 			stats->inuse = true;
-			stats->happiness = XML_GetFloat(ss, SAVE_NATION_HAPPINESS, 0.0);
-			stats->xviInfection = XML_GetInt(ss, SAVE_NATION_XVI, 0);
+			stats->happiness = cgi->XML_GetFloat(ss, SAVE_NATION_HAPPINESS, 0.0);
+			stats->xviInfection = cgi->XML_GetInt(ss, SAVE_NATION_XVI, 0);
 		}
 	}
 	return true;
@@ -454,18 +454,18 @@ static void CP_NationStatsClick_f (void)
 {
 	int num;
 
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <num>\n", Cmd_Argv(0));
+	if (cgi->Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <num>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
 	/* Which entry in the list? */
-	num = atoi(Cmd_Argv(1));
+	num = atoi(cgi->Cmd_Argv(1));
 	if (num < 0 || num >= ccs.numNations)
 		return;
 
 	cgi->UI_PushWindow("nations");
-	Cbuf_AddText(va("nation_select %i;", num));
+	cgi->Cbuf_AddText(va("nation_select %i;", num));
 }
 
 /** Space for month-lines with 12 points for each nation. */
@@ -575,7 +575,7 @@ static void CL_NationDrawStats (const nation_t *nation, uiNode_t *node, lineStri
 	funding->numPoints = ptsNumber;
 	if (color < 0) {
 		const nation_t *nation = NAT_GetNationByIDX(selectedNation);
-		Cvar_Set("mn_nat_symbol", va("nations/%s", nation->id));
+		cgi->Cvar_Set("mn_nat_symbol", va("nations/%s", nation->id));
 		Vector4Copy(graphColorSelected, funding->color);
 	} else {
 		Vector4Copy(graphColors[color], funding->color);
@@ -619,8 +619,8 @@ static void CL_NationStatsUpdate_f (void)
 		} else {
 			cgi->UI_ExecuteConfunc("nation_markdesel %i", i);
 		}
-		Cvar_Set(va("mn_nat_name%i",i), _(nation->name));
-		Cvar_Set(va("mn_nat_fund%i",i), va("%i", funding));
+		cgi->Cvar_Set(va("mn_nat_name%i",i), _(nation->name));
+		cgi->Cvar_Set(va("mn_nat_fund%i",i), va("%i", funding));
 
 		if (colorNode) {
 			colorLinePts[usedColPtslists][0].x = 0;
@@ -683,12 +683,12 @@ static void CL_NationSelect_f (void)
 {
 	int nat;
 
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <nat_idx>\n", Cmd_Argv(0));
+	if (cgi->Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <nat_idx>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
-	nat = atoi(Cmd_Argv(1));
+	nat = atoi(cgi->Cmd_Argv(1));
 	if (nat < 0 || nat >= ccs.numNations) {
 		Com_Printf("Invalid nation index: %is\n",nat);
 		return;
@@ -893,12 +893,12 @@ void NAT_BackupMonthlyData (void)
  */
 void NAT_InitStartup (void)
 {
-	Cmd_AddCommand("nation_stats_click", CP_NationStatsClick_f);
-	Cmd_AddCommand("nation_update", CL_NationStatsUpdate_f, "Shows the current nation list + statistics.");
-	Cmd_AddCommand("nation_select", CL_NationSelect_f, "Select nation and display all relevant information for it.");
+	cgi->Cmd_AddCommand("nation_stats_click", CP_NationStatsClick_f, NULL);
+	cgi->Cmd_AddCommand("nation_update", CL_NationStatsUpdate_f, "Shows the current nation list + statistics.");
+	cgi->Cmd_AddCommand("nation_select", CL_NationSelect_f, "Select nation and display all relevant information for it.");
 #ifdef DEBUG
-	Cmd_AddCommand("debug_listcities", NAT_ListCities_f, "Debug function to list all cities in game.");
-	Cmd_AddCommand("debug_listnations", NAT_NationList_f, "List all nations on the game console");
+	cgi->Cmd_AddCommand("debug_listcities", NAT_ListCities_f, "Debug function to list all cities in game.");
+	cgi->Cmd_AddCommand("debug_listnations", NAT_NationList_f, "List all nations on the game console");
 #endif
 }
 
@@ -909,11 +909,11 @@ void NAT_Shutdown (void)
 {
 	LIST_Delete(&ccs.cities);
 
-	Cmd_RemoveCommand("nation_stats_click");
-	Cmd_RemoveCommand("nation_update");
-	Cmd_RemoveCommand("nation_select");
+	cgi->Cmd_RemoveCommand("nation_stats_click");
+	cgi->Cmd_RemoveCommand("nation_update");
+	cgi->Cmd_RemoveCommand("nation_select");
 #ifdef DEBUG
-	Cmd_RemoveCommand("debug_listcities");
-	Cmd_RemoveCommand("debug_listnations");
+	cgi->Cmd_RemoveCommand("debug_listcities");
+	cgi->Cmd_RemoveCommand("debug_listnations");
 #endif
 }

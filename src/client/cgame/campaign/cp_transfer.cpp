@@ -177,7 +177,7 @@ void TR_TransferAlienAfterMissionStart (const base_t *base, aircraft_t *transfer
 
 	breathingTech = RS_GetTechByID(BREATHINGAPPARATUS_TECH);
 	if (!breathingTech)
-		Com_Error(ERR_DROP, "AL_AddAliens: Could not get breathing apparatus tech definition");
+		cgi->Com_Error(ERR_DROP, "AL_AddAliens: Could not get breathing apparatus tech definition");
 	alienBreathing = RS_IsResearched_ptr(breathingTech);
 
 	OBJZERO(transfer);
@@ -393,10 +393,10 @@ static void TR_ListTransfers_f (void)
 	int transIdx = -1;
 	int i = 0;
 
-	if (Cmd_Argc() == 2) {
-		transIdx = atoi(Cmd_Argv(1));
+	if (cgi->Cmd_Argc() == 2) {
+		transIdx = atoi(cgi->Cmd_Argv(1));
 		if (transIdx < 0 || transIdx > LIST_Count(ccs.transfers)) {
-			Com_Printf("Usage: %s [transferIDX]\nWithout parameter it lists all.\n", Cmd_Argv(0));
+			Com_Printf("Usage: %s [transferIDX]\nWithout parameter it lists all.\n", cgi->Cmd_Argv(0));
 			return;
 		}
 	}
@@ -481,34 +481,34 @@ static void TR_ListTransfers_f (void)
  */
 bool TR_SaveXML (xmlNode_t *p)
 {
-	xmlNode_t *n = XML_AddNode(p, SAVE_TRANSFER_TRANSFERS);
+	xmlNode_t *n = cgi->XML_AddNode(p, SAVE_TRANSFER_TRANSFERS);
 
 	TR_Foreach(transfer) {
 		int j;
 		xmlNode_t *s;
 
-		s = XML_AddNode(n, SAVE_TRANSFER_TRANSFER);
-		XML_AddInt(s, SAVE_TRANSFER_DAY, transfer->event.day);
-		XML_AddInt(s, SAVE_TRANSFER_SEC, transfer->event.sec);
+		s = cgi->XML_AddNode(n, SAVE_TRANSFER_TRANSFER);
+		cgi->XML_AddInt(s, SAVE_TRANSFER_DAY, transfer->event.day);
+		cgi->XML_AddInt(s, SAVE_TRANSFER_SEC, transfer->event.sec);
 		if (!transfer->destBase) {
 			Com_Printf("Could not save transfer, no destBase is set\n");
 			return false;
 		}
-		XML_AddInt(s, SAVE_TRANSFER_DESTBASE, transfer->destBase->idx);
+		cgi->XML_AddInt(s, SAVE_TRANSFER_DESTBASE, transfer->destBase->idx);
 		/* scrBase can be NULL if this is alien (mission->base) transport
 		 * @sa TR_TransferAlienAfterMissionStart */
 		if (transfer->srcBase)
-			XML_AddInt(s, SAVE_TRANSFER_SRCBASE, transfer->srcBase->idx);
+			cgi->XML_AddInt(s, SAVE_TRANSFER_SRCBASE, transfer->srcBase->idx);
 		/* save items */
 		if (transfer->hasItems) {
 			for (j = 0; j < MAX_OBJDEFS; j++) {
 				if (transfer->itemAmount[j] > 0) {
 					const objDef_t *od = INVSH_GetItemByIDX(j);
-					xmlNode_t *ss = XML_AddNode(s, SAVE_TRANSFER_ITEM);
+					xmlNode_t *ss = cgi->XML_AddNode(s, SAVE_TRANSFER_ITEM);
 
 					assert(od);
-					XML_AddString(ss, SAVE_TRANSFER_ITEMID, od->id);
-					XML_AddInt(ss, SAVE_TRANSFER_AMOUNT, transfer->itemAmount[j]);
+					cgi->XML_AddString(ss, SAVE_TRANSFER_ITEMID, od->id);
+					cgi->XML_AddInt(ss, SAVE_TRANSFER_AMOUNT, transfer->itemAmount[j]);
 				}
 			}
 		}
@@ -519,12 +519,12 @@ bool TR_SaveXML (xmlNode_t *p)
 				 || transfer->alienAmount[j][TRANS_ALIEN_DEAD] > 0)
 				{
 					teamDef_t *team = ccs.alienTeams[j];
-					xmlNode_t *ss = XML_AddNode(s, SAVE_TRANSFER_ALIEN);
+					xmlNode_t *ss = cgi->XML_AddNode(s, SAVE_TRANSFER_ALIEN);
 
 					assert(team);
-					XML_AddString(ss, SAVE_TRANSFER_ALIENID, team->id);
-					XML_AddIntValue(ss, SAVE_TRANSFER_ALIVEAMOUNT, transfer->alienAmount[j][TRANS_ALIEN_ALIVE]);
-					XML_AddIntValue(ss, SAVE_TRANSFER_DEADAMOUNT, transfer->alienAmount[j][TRANS_ALIEN_DEAD]);
+					cgi->XML_AddString(ss, SAVE_TRANSFER_ALIENID, team->id);
+					cgi->XML_AddIntValue(ss, SAVE_TRANSFER_ALIVEAMOUNT, transfer->alienAmount[j][TRANS_ALIEN_ALIVE]);
+					cgi->XML_AddIntValue(ss, SAVE_TRANSFER_DEADAMOUNT, transfer->alienAmount[j][TRANS_ALIEN_DEAD]);
 				}
 			}
 		}
@@ -532,16 +532,16 @@ bool TR_SaveXML (xmlNode_t *p)
 		if (transfer->hasEmployees) {
 			for (j = 0; j < MAX_EMPL; j++) {
 				TR_ForeachEmployee(employee, transfer, j) {
-					xmlNode_t *ss = XML_AddNode(s, SAVE_TRANSFER_EMPLOYEE);
-					XML_AddInt(ss, SAVE_TRANSFER_UCN, employee->chr.ucn);
+					xmlNode_t *ss = cgi->XML_AddNode(s, SAVE_TRANSFER_EMPLOYEE);
+					cgi->XML_AddInt(ss, SAVE_TRANSFER_UCN, employee->chr.ucn);
 				}
 			}
 		}
 		/* save aircraft */
 		if (transfer->hasAircraft) {
 			TR_ForeachAircraft(aircraft, transfer) {
-				xmlNode_t *ss = XML_AddNode(s, SAVE_TRANSFER_AIRCRAFT);
-				XML_AddInt(ss, SAVE_TRANSFER_ID, aircraft->idx);
+				xmlNode_t *ss = cgi->XML_AddNode(s, SAVE_TRANSFER_AIRCRAFT);
+				cgi->XML_AddInt(ss, SAVE_TRANSFER_ID, aircraft->idx);
 			}
 		}
 	}
@@ -558,27 +558,27 @@ bool TR_LoadXML (xmlNode_t *p)
 {
 	xmlNode_t *n, *s;
 
-	n = XML_GetNode(p, SAVE_TRANSFER_TRANSFERS);
+	n = cgi->XML_GetNode(p, SAVE_TRANSFER_TRANSFERS);
 	if (!n)
 		return false;
 
 	assert(B_AtLeastOneExists());
 
-	for (s = XML_GetNode(n, SAVE_TRANSFER_TRANSFER); s; s = XML_GetNextNode(s, n, SAVE_TRANSFER_TRANSFER)) {
+	for (s = cgi->XML_GetNode(n, SAVE_TRANSFER_TRANSFER); s; s = cgi->XML_GetNextNode(s, n, SAVE_TRANSFER_TRANSFER)) {
 		xmlNode_t *ss;
 		transfer_t transfer;
 
 		OBJZERO(transfer);
 
-		transfer.destBase = B_GetBaseByIDX(XML_GetInt(s, SAVE_TRANSFER_DESTBASE, BYTES_NONE));
+		transfer.destBase = B_GetBaseByIDX(cgi->XML_GetInt(s, SAVE_TRANSFER_DESTBASE, BYTES_NONE));
 		if (!transfer.destBase) {
 			Com_Printf("Error: Transfer has no destBase set\n");
 			return false;
 		}
-		transfer.srcBase = B_GetBaseByIDX(XML_GetInt(s, SAVE_TRANSFER_SRCBASE, BYTES_NONE));
+		transfer.srcBase = B_GetBaseByIDX(cgi->XML_GetInt(s, SAVE_TRANSFER_SRCBASE, BYTES_NONE));
 
-		transfer.event.day = XML_GetInt(s, SAVE_TRANSFER_DAY, 0);
-		transfer.event.sec = XML_GetInt(s, SAVE_TRANSFER_SEC, 0);
+		transfer.event.day = cgi->XML_GetInt(s, SAVE_TRANSFER_DAY, 0);
+		transfer.event.sec = cgi->XML_GetInt(s, SAVE_TRANSFER_SEC, 0);
 
 		/* Initializing some variables */
 		transfer.hasItems = false;
@@ -588,25 +588,25 @@ bool TR_LoadXML (xmlNode_t *p)
 
 		/* load items */
 		/* If there is at last one element, hasItems is true */
-		ss = XML_GetNode(s, SAVE_TRANSFER_ITEM);
+		ss = cgi->XML_GetNode(s, SAVE_TRANSFER_ITEM);
 		if (ss) {
 			transfer.hasItems = true;
-			for (; ss; ss = XML_GetNextNode(ss, s, SAVE_TRANSFER_ITEM)) {
-				const char *itemId = XML_GetString(ss, SAVE_TRANSFER_ITEMID);
+			for (; ss; ss = cgi->XML_GetNextNode(ss, s, SAVE_TRANSFER_ITEM)) {
+				const char *itemId = cgi->XML_GetString(ss, SAVE_TRANSFER_ITEMID);
 				const objDef_t *od = INVSH_GetItemByID(itemId);
 
 				if (od)
-					transfer.itemAmount[od->idx] = XML_GetInt(ss, SAVE_TRANSFER_AMOUNT, 1);
+					transfer.itemAmount[od->idx] = cgi->XML_GetInt(ss, SAVE_TRANSFER_AMOUNT, 1);
 			}
 		}
 		/* load aliens */
-		ss = XML_GetNode(s, SAVE_TRANSFER_ALIEN);
+		ss = cgi->XML_GetNode(s, SAVE_TRANSFER_ALIEN);
 		if (ss) {
 			transfer.hasAliens = true;
-			for (; ss; ss = XML_GetNextNode(ss, s, SAVE_TRANSFER_ALIEN)) {
-				const int alive = XML_GetInt(ss, SAVE_TRANSFER_ALIVEAMOUNT, 0);
-				const int dead  = XML_GetInt(ss, SAVE_TRANSFER_DEADAMOUNT, 0);
-				const char *id = XML_GetString(ss, SAVE_TRANSFER_ALIENID);
+			for (; ss; ss = cgi->XML_GetNextNode(ss, s, SAVE_TRANSFER_ALIEN)) {
+				const int alive = cgi->XML_GetInt(ss, SAVE_TRANSFER_ALIVEAMOUNT, 0);
+				const int dead  = cgi->XML_GetInt(ss, SAVE_TRANSFER_DEADAMOUNT, 0);
+				const char *id = cgi->XML_GetString(ss, SAVE_TRANSFER_ALIENID);
 				int j;
 
 				/* look for alien teamDef */
@@ -624,11 +624,11 @@ bool TR_LoadXML (xmlNode_t *p)
 			}
 		}
 		/* load employee */
-		ss = XML_GetNode(s, SAVE_TRANSFER_EMPLOYEE);
+		ss = cgi->XML_GetNode(s, SAVE_TRANSFER_EMPLOYEE);
 		if (ss) {
 			transfer.hasEmployees = true;
-			for (; ss; ss = XML_GetNextNode(ss, s, SAVE_TRANSFER_EMPLOYEE)) {
-				const int ucn = XML_GetInt(ss, SAVE_TRANSFER_UCN, -1);
+			for (; ss; ss = cgi->XML_GetNextNode(ss, s, SAVE_TRANSFER_EMPLOYEE)) {
+				const int ucn = cgi->XML_GetInt(ss, SAVE_TRANSFER_UCN, -1);
 				employee_t *empl = E_GetEmployeeFromChrUCN(ucn);
 
 				if (!empl) {
@@ -641,11 +641,11 @@ bool TR_LoadXML (xmlNode_t *p)
 			}
 		}
 		/* load aircraft */
-		ss = XML_GetNode(s, SAVE_TRANSFER_AIRCRAFT);
+		ss = cgi->XML_GetNode(s, SAVE_TRANSFER_AIRCRAFT);
 		if (ss) {
 			transfer.hasAircraft = true;
-			for (; ss; ss = XML_GetNextNode(ss, s, SAVE_TRANSFER_AIRCRAFT)) {
-				const int j = XML_GetInt(ss, SAVE_TRANSFER_ID, -1);
+			for (; ss; ss = cgi->XML_GetNextNode(ss, s, SAVE_TRANSFER_AIRCRAFT)) {
+				const int j = cgi->XML_GetInt(ss, SAVE_TRANSFER_ID, -1);
 				aircraft_t *aircraft = AIR_AircraftGetFromIDX(j);
 
 				if (aircraft)
@@ -666,7 +666,7 @@ void TR_InitStartup (void)
 {
 	TR_InitCallbacks();
 #ifdef DEBUG
-	Cmd_AddCommand("debug_listtransfers", TR_ListTransfers_f, "Lists an/all active transfer(s)");
+	cgi->Cmd_AddCommand("debug_listtransfers", TR_ListTransfers_f, "Lists an/all active transfer(s)");
 #endif
 }
 
@@ -687,6 +687,6 @@ void TR_Shutdown (void)
 
 	TR_ShutdownCallbacks();
 #ifdef DEBUG
-	Cmd_RemoveCommand("debug_listtransfers");
+	cgi->Cmd_RemoveCommand("debug_listtransfers");
 #endif
 }

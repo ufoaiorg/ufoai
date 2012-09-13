@@ -43,7 +43,7 @@ static void INS_SetInstallationTitle (installationType_t type)
 	char insName[MAX_VAR];
 
 	Com_sprintf(insName, lengthof(insName), "%s #%i", (insTemp) ? _(insTemp->name) : _("Installation"), ccs.campaignStats.installationsBuilt + 1);
-	Cvar_Set("mn_installation_title", insName);
+	cgi->Cvar_Set("mn_installation_title", insName);
 	if (!insTemp || !Q_strvalid(insTemp->description))
 		cgi->UI_ResetData(TEXT_BUILDING_INFO);
 	else
@@ -63,9 +63,9 @@ void INS_SelectInstallation (installation_t *installation)
 	Com_DPrintf(DEBUG_CLIENT, "INS_SelectInstallation: select installation with id %i\n", installation->idx);
 	ccs.mapAction = MA_NONE;
 	if (installation->installationStatus == INSTALLATION_WORKING) {
-		Cvar_Set("mn_installation_timetobuild", "-");
+		cgi->Cvar_Set("mn_installation_timetobuild", "-");
 	} else {
-		Cvar_Set("mn_installation_timetobuild", va(ngettext("%d day", "%d days", timetobuild), timetobuild));
+		cgi->Cvar_Set("mn_installation_timetobuild", va(ngettext("%d day", "%d days", timetobuild), timetobuild));
 	}
 	INS_SetCurrentSelectedInstallation(installation);
 
@@ -89,8 +89,8 @@ static void INS_BuildInstallation_f (void)
 {
 	const installationTemplate_t *installationTemplate;
 
-	if (Cmd_Argc() < 1) {
-		Com_Printf("Usage: %s <installationType>\n", Cmd_Argv(0));
+	if (cgi->Cmd_Argc() < 1) {
+		Com_Printf("Usage: %s <installationType>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
@@ -98,9 +98,9 @@ static void INS_BuildInstallation_f (void)
 	if (B_GetInstallationLimit() <= INS_GetCount())
 		return;
 
-	installationTemplate = INS_GetInstallationTemplateByID(Cmd_Argv(1));
+	installationTemplate = INS_GetInstallationTemplateByID(cgi->Cmd_Argv(1));
 	if (!installationTemplate) {
-		Com_Printf("The installation type %s passed for %s is not valid.\n", Cmd_Argv(1), Cmd_Argv(0));
+		Com_Printf("The installation type %s passed for %s is not valid.\n", cgi->Cmd_Argv(1), cgi->Cmd_Argv(0));
 		return;
 	}
 
@@ -108,11 +108,11 @@ static void INS_BuildInstallation_f (void)
 
 	if (ccs.credits - installationTemplate->cost > 0) {
 		/* set up the installation */
-		installation_t *installation = INS_Build(installationTemplate, ccs.newBasePos, Cvar_GetString("mn_installation_title"));
+		installation_t *installation = INS_Build(installationTemplate, ccs.newBasePos, cgi->Cvar_GetString("mn_installation_title"));
 
 		CP_UpdateCredits(ccs.credits - installationTemplate->cost);
 		/* this cvar is used for disabling the installation build button on geoscape if MAX_INSTALLATIONS was reached */
-		Cvar_SetValue("mn_installation_count", INS_GetCount());
+		cgi->Cvar_SetValue("mn_installation_count", INS_GetCount());
 
 		const nation_t *nation = MAP_GetNation(installation->pos);
 		if (nation)
@@ -142,11 +142,11 @@ static void INS_SelectInstallation_f (void)
 	int installationID;
 	installation_t *installation;
 
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <installationID>\n", Cmd_Argv(0));
+	if (cgi->Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <installationID>\n", cgi->Cmd_Argv(0));
 		return;
 	}
-	installationID = atoi(Cmd_Argv(1));
+	installationID = atoi(cgi->Cmd_Argv(1));
 
 	installation = INS_GetByIDX(installationID);
 	if (installation != NULL)
@@ -166,7 +166,7 @@ static void INS_ChangeInstallationName_f (void)
 	if (!installation)
 		return;
 
-	Q_strncpyz(installation->name, Cvar_GetString("mn_installation_title"), sizeof(installation->name));
+	Q_strncpyz(installation->name, cgi->Cvar_GetString("mn_installation_title"), sizeof(installation->name));
 }
 
 /**
@@ -177,18 +177,18 @@ static void INS_DestroyInstallation_f (void)
 {
 	installation_t *installation;
 
-	if (Cmd_Argc() < 2 || atoi(Cmd_Argv(1)) < 0) {
+	if (cgi->Cmd_Argc() < 2 || atoi(cgi->Cmd_Argv(1)) < 0) {
 		installation = INS_GetCurrentSelectedInstallation();
 	} else {
-		installation = INS_GetByIDX(atoi(Cmd_Argv(1)));
+		installation = INS_GetByIDX(atoi(cgi->Cmd_Argv(1)));
 		if (!installation) {
-			Com_DPrintf(DEBUG_CLIENT, "Installation not founded (idx %i)\n", atoi(Cmd_Argv(1)));
+			Com_DPrintf(DEBUG_CLIENT, "Installation not founded (idx %i)\n", atoi(cgi->Cmd_Argv(1)));
 			return;
 		}
 	}
 
 	/* Ask 'Are you sure?' by default */
-	if (Cmd_Argc() < 3 || !atoi(Cmd_Argv(2))) {
+	if (cgi->Cmd_Argc() < 3 || !atoi(cgi->Cmd_Argv(2))) {
 		char command[MAX_VAR];
 
 		Com_sprintf(command, sizeof(command), "mn_installation_destroy %d 1; ui_pop;", installation->idx);
@@ -206,7 +206,7 @@ static void INS_DestroyInstallation_f (void)
  */
 static void INS_UpdateInstallationLimit_f (void)
 {
-	Cvar_SetValue("mn_installation_max", B_GetInstallationLimit());
+	cgi->Cvar_SetValue("mn_installation_max", B_GetInstallationLimit());
 }
 
 /**
@@ -217,14 +217,14 @@ static void INS_FillUFOYardData_f (void)
 	installation_t *ins;
 
 	cgi->UI_ExecuteConfunc("ufolist_clear");
-	if (Cmd_Argc() < 2 || atoi(Cmd_Argv(1)) < 0) {
+	if (cgi->Cmd_Argc() < 2 || atoi(cgi->Cmd_Argv(1)) < 0) {
 		ins = INS_GetCurrentSelectedInstallation();
 		if (!ins || ins->installationTemplate->type != INSTALLATION_UFOYARD)
 			ins = INS_GetFirstUFOYard(false);
 	} else {
-		ins = INS_GetByIDX(atoi(Cmd_Argv(1)));
+		ins = INS_GetByIDX(atoi(cgi->Cmd_Argv(1)));
 		if (!ins)
-			Com_DPrintf(DEBUG_CLIENT, "Installation not founded (idx %i)\n", atoi(Cmd_Argv(1)));
+			Com_DPrintf(DEBUG_CLIENT, "Installation not founded (idx %i)\n", atoi(cgi->Cmd_Argv(1)));
 	}
 
 	if (ins) {
@@ -277,10 +277,10 @@ static void INS_FillTypes_f (void)
  */
 static void INS_SelectType_f (void)
 {
-	if (Cmd_Argc() < 2)
+	if (cgi->Cmd_Argc() < 2)
 		return;
 
-	const char *id = Cmd_Argv(1);
+	const char *id = cgi->Cmd_Argv(1);
 
 	if (ccs.mapAction == MA_NEWINSTALLATION) {
 		MAP_ResetAction();
@@ -315,40 +315,40 @@ static void INS_SelectType_f (void)
 		MAP_SetOverlay("radar");
 
 	INS_SetInstallationTitle(tpl->type);
-	Cvar_Set("mn_installation_type", tpl->id);
+	cgi->Cvar_Set("mn_installation_type", tpl->id);
 }
 
 void INS_InitCallbacks (void)
 {
-	Cmd_AddCommand("mn_installation_select", INS_SelectInstallation_f, "Parameter is the installation index. -1 will build a new one.");
-	Cmd_AddCommand("mn_installation_build", INS_BuildInstallation_f);
-	Cmd_AddCommand("mn_installation_changename", INS_ChangeInstallationName_f, "Called after editing the cvar installation name");
-	Cmd_AddCommand("mn_installation_destroy", INS_DestroyInstallation_f, "Destroys an installation");
-	Cmd_AddCommand("mn_installation_update_max_count", INS_UpdateInstallationLimit_f, "Updates the installation count limit");
+	cgi->Cmd_AddCommand("mn_installation_select", INS_SelectInstallation_f, "Parameter is the installation index. -1 will build a new one.");
+	cgi->Cmd_AddCommand("mn_installation_build", INS_BuildInstallation_f, NULL);
+	cgi->Cmd_AddCommand("mn_installation_changename", INS_ChangeInstallationName_f, "Called after editing the cvar installation name");
+	cgi->Cmd_AddCommand("mn_installation_destroy", INS_DestroyInstallation_f, "Destroys an installation");
+	cgi->Cmd_AddCommand("mn_installation_update_max_count", INS_UpdateInstallationLimit_f, "Updates the installation count limit");
 
-	Cmd_AddCommand("ui_fill_installationtypes", INS_FillTypes_f, "Fills create installation / installation type selection popup");
-	Cmd_AddCommand("ui_build_installationtype", INS_SelectType_f, "Selects installation type to build");
-	Cmd_AddCommand("ui_fillufoyards", INS_FillUFOYardData_f, "Fills UFOYard UI with data");
+	cgi->Cmd_AddCommand("ui_fill_installationtypes", INS_FillTypes_f, "Fills create installation / installation type selection popup");
+	cgi->Cmd_AddCommand("ui_build_installationtype", INS_SelectType_f, "Selects installation type to build");
+	cgi->Cmd_AddCommand("ui_fillufoyards", INS_FillUFOYardData_f, "Fills UFOYard UI with data");
 
-	Cvar_SetValue("mn_installation_count", INS_GetCount());
-	Cvar_Set("mn_installation_title", "");
-	Cvar_Set("mn_installation_type", "");
-	Cvar_Set("mn_installation_max", "");
+	cgi->Cvar_SetValue("mn_installation_count", INS_GetCount());
+	cgi->Cvar_Set("mn_installation_title", "");
+	cgi->Cvar_Set("mn_installation_type", "");
+	cgi->Cvar_Set("mn_installation_max", "");
 }
 
 void INS_ShutdownCallbacks (void)
 {
-	Cmd_RemoveCommand("ui_build_installationtype");
-	Cmd_RemoveCommand("ui_fill_installationtypes");
-	Cmd_RemoveCommand("ui_fillufoyards");
+	cgi->Cmd_RemoveCommand("ui_build_installationtype");
+	cgi->Cmd_RemoveCommand("ui_fill_installationtypes");
+	cgi->Cmd_RemoveCommand("ui_fillufoyards");
 
-	Cmd_RemoveCommand("mn_installation_select");
-	Cmd_RemoveCommand("mn_installation_build");
-	Cmd_RemoveCommand("mn_installation_changename");
-	Cmd_RemoveCommand("mn_installation_destroy");
-	Cmd_RemoveCommand("mn_installation_update_max_count");
-	Cvar_Delete("mn_installation_count");
-	Cvar_Delete("mn_installation_title");
-	Cvar_Delete("mn_installation_max");
-	Cvar_Delete("mn_installation_type");
+	cgi->Cmd_RemoveCommand("mn_installation_select");
+	cgi->Cmd_RemoveCommand("mn_installation_build");
+	cgi->Cmd_RemoveCommand("mn_installation_changename");
+	cgi->Cmd_RemoveCommand("mn_installation_destroy");
+	cgi->Cmd_RemoveCommand("mn_installation_update_max_count");
+	cgi->Cvar_Delete("mn_installation_count");
+	cgi->Cvar_Delete("mn_installation_title");
+	cgi->Cvar_Delete("mn_installation_max");
+	cgi->Cvar_Delete("mn_installation_type");
 }

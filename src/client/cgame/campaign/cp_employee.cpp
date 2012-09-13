@@ -207,7 +207,7 @@ const char* E_GetEmployeeString (employeeType_t type, int n)
 	case EMPL_ROBOT:
 		return ngettext("UGV", "UGVs", n);
 	default:
-		Com_Error(ERR_DROP, "Unknown employee type '%i'\n", type);
+		cgi->Com_Error(ERR_DROP, "Unknown employee type '%i'\n", type);
 	}
 }
 
@@ -353,7 +353,7 @@ employee_t* E_GetHiredRobot (const base_t* const base, const ugv_t *ugvType)
 static inline bool E_EmployeeIsUnassigned (const employee_t * employee)
 {
 	if (!employee)
-		Com_Error(ERR_DROP, "E_EmployeeIsUnassigned: Employee is NULL.\n");
+		cgi->Com_Error(ERR_DROP, "E_EmployeeIsUnassigned: Employee is NULL.\n");
 
 	return !employee->assigned;
 }
@@ -590,14 +590,14 @@ employee_t* E_CreateEmployee (employeeType_t type, const nation_t *nation, const
 		break;
 	case EMPL_ROBOT:
 		if (!ugvType)
-			Com_Error(ERR_DROP, "E_CreateEmployee: no type given for generation of EMPL_ROBOT employee.");
+			cgi->Com_Error(ERR_DROP, "E_CreateEmployee: no type given for generation of EMPL_ROBOT employee.");
 
 		rank = "ugv";
 
 		Com_sprintf(teamDefName, sizeof(teamDefName), "%s%s", teamID, ugvType->actors);
 		break;
 	default:
-		Com_Error(ERR_DROP, "E_CreateEmployee: Unknown employee type\n");
+		cgi->Com_Error(ERR_DROP, "E_CreateEmployee: Unknown employee type\n");
 	}
 
 	cgi->CL_GenerateCharacter(&employee.chr, teamDefName);
@@ -774,7 +774,7 @@ bool E_RemoveEmployeeFromBuildingOrAircraft (employee_t *employee)
 	/* get the base where the employee is hired in */
 	base = employee->baseHired;
 	if (!base)
-		Com_Error(ERR_DROP, "Employee (type: %i) is not hired", employee->type);
+		cgi->Com_Error(ERR_DROP, "Employee (type: %i) is not hired", employee->type);
 
 	switch (employee->type) {
 	case EMPL_SCIENTIST:
@@ -1052,26 +1052,26 @@ bool E_SaveXML (xmlNode_t *p)
 	Com_RegisterConstList(saveEmployeeConstants);
 	for (i = 0; i < MAX_EMPL; i++) {
 		const employeeType_t emplType = (employeeType_t)i;
-		xmlNode_t *snode = XML_AddNode(p, SAVE_EMPLOYEE_EMPLOYEES);
+		xmlNode_t *snode = cgi->XML_AddNode(p, SAVE_EMPLOYEE_EMPLOYEES);
 
-		XML_AddString(snode, SAVE_EMPLOYEE_TYPE, Com_GetConstVariable(SAVE_EMPLOYEETYPE_NAMESPACE, emplType));
+		cgi->XML_AddString(snode, SAVE_EMPLOYEE_TYPE, Com_GetConstVariable(SAVE_EMPLOYEETYPE_NAMESPACE, emplType));
 		E_Foreach(emplType, employee) {
 			xmlNode_t * chrNode;
-			xmlNode_t *ssnode = XML_AddNode(snode, SAVE_EMPLOYEE_EMPLOYEE);
+			xmlNode_t *ssnode = cgi->XML_AddNode(snode, SAVE_EMPLOYEE_EMPLOYEE);
 
 			/** @note e->transfer is not saved here because it'll be restored via TR_Load. */
 			if (employee->baseHired)
-				XML_AddInt(ssnode, SAVE_EMPLOYEE_BASEHIRED, employee->baseHired->idx);
+				cgi->XML_AddInt(ssnode, SAVE_EMPLOYEE_BASEHIRED, employee->baseHired->idx);
 			if (employee->assigned)
-				XML_AddBool(ssnode, SAVE_EMPLOYEE_ASSIGNED, employee->assigned);
+				cgi->XML_AddBool(ssnode, SAVE_EMPLOYEE_ASSIGNED, employee->assigned);
 			/* Store the nations identifier string. */
 			assert(employee->nation);
-			XML_AddString(ssnode, SAVE_EMPLOYEE_NATION, employee->nation->id);
+			cgi->XML_AddString(ssnode, SAVE_EMPLOYEE_NATION, employee->nation->id);
 			/* Store the ugv-type identifier string. (Only exists for EMPL_ROBOT). */
 			if (employee->ugv)
-				XML_AddString(ssnode, SAVE_EMPLOYEE_UGV, employee->ugv->id);
+				cgi->XML_AddString(ssnode, SAVE_EMPLOYEE_UGV, employee->ugv->id);
 			/* Character Data */
-			chrNode = XML_AddNode(ssnode, SAVE_EMPLOYEE_CHR);
+			chrNode = cgi->XML_AddNode(ssnode, SAVE_EMPLOYEE_CHR);
 			GAME_SaveCharacter(chrNode, &employee->chr);
 		}
 	}
@@ -1090,11 +1090,11 @@ bool E_LoadXML (xmlNode_t *p)
 	bool success = true;
 
 	Com_RegisterConstList(saveEmployeeConstants);
-	for (snode = XML_GetNode(p, SAVE_EMPLOYEE_EMPLOYEES); snode;
-			snode = XML_GetNextNode(snode, p , SAVE_EMPLOYEE_EMPLOYEES)) {
+	for (snode = cgi->XML_GetNode(p, SAVE_EMPLOYEE_EMPLOYEES); snode;
+			snode = cgi->XML_GetNextNode(snode, p , SAVE_EMPLOYEE_EMPLOYEES)) {
 		xmlNode_t * ssnode;
 		employeeType_t emplType;
-		const char *type = XML_GetString(snode, SAVE_EMPLOYEE_TYPE);
+		const char *type = cgi->XML_GetString(snode, SAVE_EMPLOYEE_TYPE);
 
 		if (!Com_GetConstIntFromNamespace(SAVE_EMPLOYEETYPE_NAMESPACE, type, (int*) &emplType)) {
 			Com_Printf("Invalid employee type '%s'\n", type);
@@ -1102,8 +1102,8 @@ bool E_LoadXML (xmlNode_t *p)
 			break;
 		}
 
-		for (ssnode = XML_GetNode(snode, SAVE_EMPLOYEE_EMPLOYEE); ssnode;
-				ssnode = XML_GetNextNode(ssnode, snode, SAVE_EMPLOYEE_EMPLOYEE)) {
+		for (ssnode = cgi->XML_GetNode(snode, SAVE_EMPLOYEE_EMPLOYEE); ssnode;
+				ssnode = cgi->XML_GetNextNode(ssnode, snode, SAVE_EMPLOYEE_EMPLOYEE)) {
 			int baseIDX;
 			xmlNode_t * chrNode;
 			employee_t e;
@@ -1113,21 +1113,21 @@ bool E_LoadXML (xmlNode_t *p)
 			e.type = emplType;
 			/* base */
 			assert(B_AtLeastOneExists());	/* Just in case the order is ever changed. */
-			baseIDX = XML_GetInt(ssnode, SAVE_EMPLOYEE_BASEHIRED, -1);
+			baseIDX = cgi->XML_GetInt(ssnode, SAVE_EMPLOYEE_BASEHIRED, -1);
 			e.baseHired = B_GetBaseByIDX(baseIDX);
 			/* assigned to a building? */
-			e.assigned = XML_GetBool(ssnode, SAVE_EMPLOYEE_ASSIGNED, false);
+			e.assigned = cgi->XML_GetBool(ssnode, SAVE_EMPLOYEE_ASSIGNED, false);
 			/* nation */
-			e.nation = NAT_GetNationByID(XML_GetString(ssnode, SAVE_EMPLOYEE_NATION));
+			e.nation = NAT_GetNationByID(cgi->XML_GetString(ssnode, SAVE_EMPLOYEE_NATION));
 			if (!e.nation) {
 				Com_Printf("No nation defined for employee\n");
 				success = false;
 				break;
 			}
 			/* UGV-Type */
-			e.ugv = Com_GetUGVByIDSilent(XML_GetString(ssnode, SAVE_EMPLOYEE_UGV));
+			e.ugv = Com_GetUGVByIDSilent(cgi->XML_GetString(ssnode, SAVE_EMPLOYEE_UGV));
 			/* Character Data */
-			chrNode = XML_GetNode(ssnode, SAVE_EMPLOYEE_CHR);
+			chrNode = cgi->XML_GetNode(ssnode, SAVE_EMPLOYEE_CHR);
 			if (!chrNode) {
 				Com_Printf("No character definition found for employee\n");
 				success = false;
@@ -1197,8 +1197,8 @@ void E_InitStartup (void)
 {
 	E_InitCallbacks();
 #ifdef DEBUG
-	Cmd_AddCommand("debug_listhired", E_ListHired_f, "Debug command to list all hired employee");
-	Cmd_AddCommand("debug_addemployees", CL_DebugNewEmployees_f, "Debug function to add 5 new unhired employees of each type");
+	cgi->Cmd_AddCommand("debug_listhired", E_ListHired_f, "Debug command to list all hired employee");
+	cgi->Cmd_AddCommand("debug_addemployees", CL_DebugNewEmployees_f, "Debug function to add 5 new unhired employees of each type");
 #endif
 }
 
@@ -1216,7 +1216,7 @@ void E_Shutdown (void)
 
 	E_ShutdownCallbacks();
 #ifdef DEBUG
-	Cmd_RemoveCommand("debug_listhired");
-	Cmd_RemoveCommand("debug_addemployees");
+	cgi->Cmd_RemoveCommand("debug_listhired");
+	cgi->Cmd_RemoveCommand("debug_addemployees");
 #endif
 }

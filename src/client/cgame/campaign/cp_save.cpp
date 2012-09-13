@@ -183,7 +183,7 @@ bool SAV_GameLoad (const char *file, const char **error)
 			Com_Printf("Error decompressing data in '%s'.\n", filename);
 			return false;
 		}
-		topNode = XML_Parse((const char*)buf);
+		topNode = cgi->XML_Parse((const char*)buf);
 		if (!topNode) {
 			Mem_Free(buf);
 			Com_Printf("Error: Failure in loading the xml data!\n");
@@ -192,7 +192,7 @@ bool SAV_GameLoad (const char *file, const char **error)
 		}
 		Mem_Free(buf);
 	} else {
-		topNode = XML_Parse((const char*)(cbuf + sizeof(header)));
+		topNode = cgi->XML_Parse((const char*)(cbuf + sizeof(header)));
 		Mem_Free(cbuf);
 		if (!topNode) {
 			Com_Printf("Error: Failure in loading the xml data!\n");
@@ -203,7 +203,7 @@ bool SAV_GameLoad (const char *file, const char **error)
 
 	/* doing a subsystem run */
 	GAME_ReloadMode();
-	node = XML_GetNode(topNode, SAVE_ROOTNODE);
+	node = cgi->XML_GetNode(topNode, SAVE_ROOTNODE);
 	if (!node) {
 		Com_Printf("Error: Failure in loading the xml data! (savegame node not found)\n");
 		mxmlDelete(topNode);
@@ -273,16 +273,16 @@ static bool SAV_GameSave (const char *filename, const char *comment, char **erro
 	Com_MakeTimestamp(timeStampBuffer, sizeof(timeStampBuffer));
 	Com_sprintf(savegame, sizeof(savegame), "save/%s.%s", filename, SAVEGAME_EXTENSION);
 	topNode = mxmlNewXML("1.0");
-	node = XML_AddNode(topNode, SAVE_ROOTNODE);
+	node = cgi->XML_AddNode(topNode, SAVE_ROOTNODE);
 	/* writing  Header */
-	XML_AddInt(node, SAVE_SAVEVERSION, SAVE_FILE_VERSION);
-	XML_AddString(node, SAVE_COMMENT, comment);
-	XML_AddString(node, SAVE_UFOVERSION, UFO_VERSION);
-	XML_AddString(node, SAVE_REALDATE, timeStampBuffer);
+	cgi->XML_AddInt(node, SAVE_SAVEVERSION, SAVE_FILE_VERSION);
+	cgi->XML_AddString(node, SAVE_COMMENT, comment);
+	cgi->XML_AddString(node, SAVE_UFOVERSION, UFO_VERSION);
+	cgi->XML_AddString(node, SAVE_REALDATE, timeStampBuffer);
 	CP_DateConvertLong(&ccs.date, &date);
 	Com_sprintf(message, sizeof(message), _("%i %s %02i"),
 		date.year, Date_GetMonthName(date.month - 1), date.day);
-	XML_AddString(node, SAVE_GAMEDATE, message);
+	cgi->XML_AddString(node, SAVE_GAMEDATE, message);
 	/* working through all subsystems. perhaps we should redesign it, order is not important anymore */
 	Com_Printf("Calling subsystems\n");
 	for (i = 0; i < saveSubsystemsAmount; i++) {
@@ -360,8 +360,8 @@ static void SAV_GameSave_f (void)
 	bool result;
 
 	/* get argument */
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <filename> <comment|*cvar>\n", Cmd_Argv(0));
+	if (cgi->Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <filename> <comment|*cvar>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
@@ -371,12 +371,12 @@ static void SAV_GameSave_f (void)
 	}
 
 	/* get comment */
-	if (Cmd_Argc() > 2) {
-		const char *arg = Cmd_Argv(2);
+	if (cgi->Cmd_Argc() > 2) {
+		const char *arg = cgi->Cmd_Argv(2);
 		Q_strncpyz(comment, arg, sizeof(comment));
 	}
 
-	result = SAV_GameSave(Cmd_Argv(1), comment, &error);
+	result = SAV_GameSave(cgi->Cmd_Argv(1), comment, &error);
 	if (!result) {
 		if (error)
 			CP_Popup(_("Note"), "%s\n%s", _("Error saving game."), error);
@@ -425,8 +425,8 @@ static void SAV_GameReadGameComment (const int idx)
  */
 static void SAV_GameReadGameComments_f (void)
 {
-	if (Cmd_Argc() == 2) {
-		int idx = atoi(Cmd_Argv(1));
+	if (cgi->Cmd_Argc() == 2) {
+		int idx = atoi(cgi->Cmd_Argv(1));
 		SAV_GameReadGameComment(idx);
 	} else {
 		int i;
@@ -446,24 +446,24 @@ static void SAV_GameLoad_f (void)
 	const char *error = NULL;
 
 	/* get argument */
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <filename>\n", Cmd_Argv(0));
+	if (cgi->Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <filename>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
 	/* Check if savegame exists */
-	if (FS_CheckFile("save/%s.%s", Cmd_Argv(1), SAVEGAME_EXTENSION) <= 0) {
-		Com_Printf("savegame file '%s' doesn't exist or an empty file\n", Cmd_Argv(1));
+	if (FS_CheckFile("save/%s.%s", cgi->Cmd_Argv(1), SAVEGAME_EXTENSION) <= 0) {
+		Com_Printf("savegame file '%s' doesn't exist or an empty file\n", cgi->Cmd_Argv(1));
 		return;
 	}
 
-	Com_DPrintf(DEBUG_CLIENT, "load file '%s'\n", Cmd_Argv(1));
+	Com_DPrintf(DEBUG_CLIENT, "load file '%s'\n", cgi->Cmd_Argv(1));
 
 	/* load and go to map */
-	if (!SAV_GameLoad(Cmd_Argv(1), &error)) {
-		Cbuf_Execute(); /* wipe outstanding campaign commands */
+	if (!SAV_GameLoad(cgi->Cmd_Argv(1), &error)) {
+		cgi->Cbuf_Execute(); /* wipe outstanding campaign commands */
 		cgi->UI_Popup(_("Error"), "%s\n%s", _("Error loading game."), error ? error : "");
-		Cmd_ExecuteString("game_exit");
+		cgi->Cmd_ExecuteString("game_exit");
 	}
 }
 
@@ -484,9 +484,9 @@ static void SAV_GameContinue_f (void)
 	if (!CP_IsRunning()) {
 		/* try to load the last saved campaign */
 		if (!SAV_GameLoad(cl_lastsave->string, &error)) {
-			Cbuf_Execute(); /* wipe outstanding campaign commands */
+			cgi->Cbuf_Execute(); /* wipe outstanding campaign commands */
 			cgi->UI_Popup(_("Error"), "%s\n%s", _("Error loading game."), error ? error : "");
-			Cmd_ExecuteString("game_exit");
+			cgi->Cmd_ExecuteString("game_exit");
 		}
 	} else {
 		/* just continue the current running game */
@@ -526,12 +526,12 @@ static void SAV_GameSaveNameCleanup_f (void)
 	saveFileHeader_t header;
 
 	/* get argument */
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <[0-7]>\n", Cmd_Argv(0));
+	if (cgi->Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <[0-7]>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
-	slotID = atoi(Cmd_Argv(1));
+	slotID = atoi(cgi->Cmd_Argv(1));
 	if (slotID < 0 || slotID > 7)
 		return;
 
@@ -545,9 +545,9 @@ static void SAV_GameSaveNameCleanup_f (void)
 
 	Com_sprintf(cvar, sizeof(cvar), "mn_slot%i", slotID);
 	if (SAV_VerifyHeader(&header))
-		Cvar_Set(cvar, header.name);
+		cgi->Cvar_Set(cvar, header.name);
 	else
-		Cvar_Set(cvar, "");
+		cgi->Cvar_Set(cvar, "");
 	FS_CloseFile(&f);
 }
 
@@ -618,7 +618,7 @@ static void SAV_GameQuickLoad_f (void)
 	}
 
 	if (!SAV_GameLoad("slotquick", &error)) {
-		Cbuf_Execute(); /* wipe outstanding campaign commands */
+		cgi->Cbuf_Execute(); /* wipe outstanding campaign commands */
 		CP_Popup(_("Error"), "%s\n%s", _("Error loading game."), error ? error : "");
 	} else {
 		MS_AddNewMessage(_("Campaign loaded"), _("Quicksave campaign was successfully loaded."), MSG_INFO);
@@ -684,14 +684,14 @@ void SAV_Init (void)
 	SAV_AddSubsystem(&event_subsystemXML);
 
 	/* Check whether there is a quicksave at all */
-	Cmd_AddCommand("game_quickloadinit", SAV_GameQuickLoadInit_f, "Load the game from the quick save slot.");
-	Cmd_AddCommand("game_quicksave", SAV_GameQuickSave_f, "Save to the quick save slot.");
-	Cmd_AddCommand("game_quickload", SAV_GameQuickLoad_f, "Load the game from the quick save slot.");
-	Cmd_AddCommand("game_save", SAV_GameSave_f, "Saves to a given filename");
-	Cmd_AddCommand("game_load", SAV_GameLoad_f, "Loads a given filename");
-	Cmd_AddCommand("game_comments", SAV_GameReadGameComments_f, "Loads the savegame names");
-	Cmd_AddCommand("game_continue", SAV_GameContinue_f, "Continue with the last saved game");
-	Cmd_AddCommand("game_savenamecleanup", SAV_GameSaveNameCleanup_f, "Remove the date string from mn_slotX cvars");
-	save_compressed = Cvar_Get("save_compressed", "1", CVAR_ARCHIVE, "Save the savefiles compressed if set to 1");
-	cl_lastsave = Cvar_Get("cl_lastsave", "", CVAR_ARCHIVE, "Last saved slot - use for the continue-campaign function");
+	cgi->Cmd_AddCommand("game_quickloadinit", SAV_GameQuickLoadInit_f, "Load the game from the quick save slot.");
+	cgi->Cmd_AddCommand("game_quicksave", SAV_GameQuickSave_f, "Save to the quick save slot.");
+	cgi->Cmd_AddCommand("game_quickload", SAV_GameQuickLoad_f, "Load the game from the quick save slot.");
+	cgi->Cmd_AddCommand("game_save", SAV_GameSave_f, "Saves to a given filename");
+	cgi->Cmd_AddCommand("game_load", SAV_GameLoad_f, "Loads a given filename");
+	cgi->Cmd_AddCommand("game_comments", SAV_GameReadGameComments_f, "Loads the savegame names");
+	cgi->Cmd_AddCommand("game_continue", SAV_GameContinue_f, "Continue with the last saved game");
+	cgi->Cmd_AddCommand("game_savenamecleanup", SAV_GameSaveNameCleanup_f, "Remove the date string from mn_slotX cvars");
+	save_compressed = cgi->Cvar_Get("save_compressed", "1", CVAR_ARCHIVE, "Save the savefiles compressed if set to 1");
+	cl_lastsave = cgi->Cvar_Get("cl_lastsave", "", CVAR_ARCHIVE, "Last saved slot - use for the continue-campaign function");
 }

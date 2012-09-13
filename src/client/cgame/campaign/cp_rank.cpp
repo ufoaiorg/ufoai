@@ -128,14 +128,14 @@ void CL_ParseRanks (const char *name, const char **text)
 	} while (*text);
 
 	if (rank->image == NULL || !strlen(rank->image))
-		Com_Error(ERR_DROP, "CL_ParseRanks: image is missing for rank %s", rank->id);
+		cgi->Com_Error(ERR_DROP, "CL_ParseRanks: image is missing for rank %s", rank->id);
 
 	if (rank->name == NULL || !strlen(rank->name))
-		Com_Error(ERR_DROP, "CL_ParseRanks: name is missing for rank %s", rank->id);
+		cgi->Com_Error(ERR_DROP, "CL_ParseRanks: name is missing for rank %s", rank->id);
 
 	if (rank->shortname == NULL || !strlen(rank->shortname))
 		rank->shortname = rank->name;
 
 	if (rank->level == -1)
-		Com_Error(ERR_DROP, "CL_ParseRanks: level is missing for rank %s", rank->id);
+		cgi->Com_Error(ERR_DROP, "CL_ParseRanks: level is missing for rank %s", rank->id);
 }

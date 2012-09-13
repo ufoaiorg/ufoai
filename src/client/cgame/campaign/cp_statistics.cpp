@@ -157,29 +157,29 @@ bool STATS_SaveXML (xmlNode_t *parent)
 {
 	xmlNode_t * stats;
 
-	stats = XML_AddNode(parent, SAVE_STATS_STATS);
+	stats = cgi->XML_AddNode(parent, SAVE_STATS_STATS);
 
-	XML_AddIntValue(stats, SAVE_STATS_MISSIONS, ccs.campaignStats.missions);
-	XML_AddIntValue(stats, SAVE_STATS_MISSIONSWON, ccs.campaignStats.missionsWon);
-	XML_AddIntValue(stats, SAVE_STATS_MISSIONSLOST, ccs.campaignStats.missionsLost);
-	XML_AddIntValue(stats, SAVE_STATS_BASESBUILT, ccs.campaignStats.basesBuilt);
-	XML_AddIntValue(stats, SAVE_STATS_BASESATTACKED, ccs.campaignStats.basesAttacked);
-	XML_AddIntValue(stats, SAVE_STATS_INSTALLATIONSBUILT, ccs.campaignStats.installationsBuilt);
-	XML_AddIntValue(stats, SAVE_STATS_INTERCEPTIONS, ccs.campaignStats.interceptions);
-	XML_AddIntValue(stats, SAVE_STATS_SOLDIERSLOST, ccs.campaignStats.soldiersLost);
-	XML_AddIntValue(stats, SAVE_STATS_SOLDIERSNEW, ccs.campaignStats.soldiersNew);
-	XML_AddIntValue(stats, SAVE_STATS_KILLEDALIENS, ccs.campaignStats.killedAliens);
-	XML_AddIntValue(stats, SAVE_STATS_CAPTUREDALIENS, ccs.campaignStats.capturedAliens);
-	XML_AddIntValue(stats, SAVE_STATS_RESCUEDCIVILIANS, ccs.campaignStats.rescuedCivilians);
-	XML_AddIntValue(stats, SAVE_STATS_RESEARCHEDTECHNOLOGIES, ccs.campaignStats.researchedTechnologies);
-	XML_AddIntValue(stats, SAVE_STATS_MONEYINTERCEPTIONS, ccs.campaignStats.moneyInterceptions);
-	XML_AddIntValue(stats, SAVE_STATS_MONEYBASES, ccs.campaignStats.moneyBases);
-	XML_AddIntValue(stats, SAVE_STATS_MONEYRESEARCH, ccs.campaignStats.moneyResearch);
-	XML_AddIntValue(stats, SAVE_STATS_MONEYWEAPONS, ccs.campaignStats.moneyWeapons);
-	XML_AddIntValue(stats, SAVE_STATS_UFOSDETECTED, ccs.campaignStats.ufosDetected);
-	XML_AddIntValue(stats, SAVE_STATS_ALIENBASESBUILT, ccs.campaignStats.alienBasesBuilt);
-	XML_AddIntValue(stats, SAVE_STATS_UFOSSTORED, ccs.campaignStats.ufosStored);
-	XML_AddIntValue(stats, SAVE_STATS_AIRCRAFTHAD, ccs.campaignStats.aircraftHad);
+	cgi->XML_AddIntValue(stats, SAVE_STATS_MISSIONS, ccs.campaignStats.missions);
+	cgi->XML_AddIntValue(stats, SAVE_STATS_MISSIONSWON, ccs.campaignStats.missionsWon);
+	cgi->XML_AddIntValue(stats, SAVE_STATS_MISSIONSLOST, ccs.campaignStats.missionsLost);
+	cgi->XML_AddIntValue(stats, SAVE_STATS_BASESBUILT, ccs.campaignStats.basesBuilt);
+	cgi->XML_AddIntValue(stats, SAVE_STATS_BASESATTACKED, ccs.campaignStats.basesAttacked);
+	cgi->XML_AddIntValue(stats, SAVE_STATS_INSTALLATIONSBUILT, ccs.campaignStats.installationsBuilt);
+	cgi->XML_AddIntValue(stats, SAVE_STATS_INTERCEPTIONS, ccs.campaignStats.interceptions);
+	cgi->XML_AddIntValue(stats, SAVE_STATS_SOLDIERSLOST, ccs.campaignStats.soldiersLost);
+	cgi->XML_AddIntValue(stats, SAVE_STATS_SOLDIERSNEW, ccs.campaignStats.soldiersNew);
+	cgi->XML_AddIntValue(stats, SAVE_STATS_KILLEDALIENS, ccs.campaignStats.killedAliens);
+	cgi->XML_AddIntValue(stats, SAVE_STATS_CAPTUREDALIENS, ccs.campaignStats.capturedAliens);
+	cgi->XML_AddIntValue(stats, SAVE_STATS_RESCUEDCIVILIANS, ccs.campaignStats.rescuedCivilians);
+	cgi->XML_AddIntValue(stats, SAVE_STATS_RESEARCHEDTECHNOLOGIES, ccs.campaignStats.researchedTechnologies);
+	cgi->XML_AddIntValue(stats, SAVE_STATS_MONEYINTERCEPTIONS, ccs.campaignStats.moneyInterceptions);
+	cgi->XML_AddIntValue(stats, SAVE_STATS_MONEYBASES, ccs.campaignStats.moneyBases);
+	cgi->XML_AddIntValue(stats, SAVE_STATS_MONEYRESEARCH, ccs.campaignStats.moneyResearch);
+	cgi->XML_AddIntValue(stats, SAVE_STATS_MONEYWEAPONS, ccs.campaignStats.moneyWeapons);
+	cgi->XML_AddIntValue(stats, SAVE_STATS_UFOSDETECTED, ccs.campaignStats.ufosDetected);
+	cgi->XML_AddIntValue(stats, SAVE_STATS_ALIENBASESBUILT, ccs.campaignStats.alienBasesBuilt);
+	cgi->XML_AddIntValue(stats, SAVE_STATS_UFOSSTORED, ccs.campaignStats.ufosStored);
+	cgi->XML_AddIntValue(stats, SAVE_STATS_AIRCRAFTHAD, ccs.campaignStats.aircraftHad);
 
 	return true;
 }
@@ -193,32 +193,32 @@ bool STATS_LoadXML (xmlNode_t *parent)
 	xmlNode_t * stats;
 	bool success = true;
 
-	stats = XML_GetNode(parent, SAVE_STATS_STATS);
+	stats = cgi->XML_GetNode(parent, SAVE_STATS_STATS);
 	if (!stats) {
 		Com_Printf("Did not find stats entry in xml!\n");
 		return false;
 	}
-	ccs.campaignStats.missions = XML_GetInt(stats, SAVE_STATS_MISSIONS, 0);
-	ccs.campaignStats.missionsWon = XML_GetInt(stats, SAVE_STATS_MISSIONSWON, 0);
-	ccs.campaignStats.missionsLost = XML_GetInt(stats, SAVE_STATS_MISSIONSLOST, 0);
-	ccs.campaignStats.basesBuilt = XML_GetInt(stats, SAVE_STATS_BASESBUILT, 0);
-	ccs.campaignStats.basesAttacked = XML_GetInt(stats, SAVE_STATS_BASESATTACKED, 0);
-	ccs.campaignStats.installationsBuilt = XML_GetInt(stats, SAVE_STATS_INSTALLATIONSBUILT, 0);
-	ccs.campaignStats.interceptions = XML_GetInt(stats, SAVE_STATS_INTERCEPTIONS, 0);
-	ccs.campaignStats.soldiersLost = XML_GetInt(stats, SAVE_STATS_SOLDIERSLOST, 0);
-	ccs.campaignStats.soldiersNew = XML_GetInt(stats, SAVE_STATS_SOLDIERSNEW, 0);
-	ccs.campaignStats.killedAliens = XML_GetInt(stats, SAVE_STATS_KILLEDALIENS, 0);
-	ccs.campaignStats.capturedAliens = XML_GetInt(stats, SAVE_STATS_CAPTUREDALIENS, 0);
-	ccs.campaignStats.rescuedCivilians = XML_GetInt(stats, SAVE_STATS_RESCUEDCIVILIANS, 0);
-	ccs.campaignStats.researchedTechnologies = XML_GetInt(stats, SAVE_STATS_RESEARCHEDTECHNOLOGIES, 0);
-	ccs.campaignStats.moneyInterceptions = XML_GetInt(stats, SAVE_STATS_MONEYINTERCEPTIONS, 0);
-	ccs.campaignStats.moneyBases = XML_GetInt(stats, SAVE_STATS_MONEYBASES, 0);
-	ccs.campaignStats.moneyResearch = XML_GetInt(stats, SAVE_STATS_MONEYRESEARCH, 0);
-	ccs.campaignStats.moneyWeapons = XML_GetInt(stats, SAVE_STATS_MONEYWEAPONS, 0);
-	ccs.campaignStats.ufosDetected = XML_GetInt(stats, SAVE_STATS_UFOSDETECTED, 0);
-	ccs.campaignStats.alienBasesBuilt = XML_GetInt(stats, SAVE_STATS_ALIENBASESBUILT, 0);
-	ccs.campaignStats.ufosStored = XML_GetInt(stats, SAVE_STATS_UFOSSTORED, 0);
-	ccs.campaignStats.aircraftHad = XML_GetInt(stats, SAVE_STATS_AIRCRAFTHAD, 0);
+	ccs.campaignStats.missions = cgi->XML_GetInt(stats, SAVE_STATS_MISSIONS, 0);
+	ccs.campaignStats.missionsWon = cgi->XML_GetInt(stats, SAVE_STATS_MISSIONSWON, 0);
+	ccs.campaignStats.missionsLost = cgi->XML_GetInt(stats, SAVE_STATS_MISSIONSLOST, 0);
+	ccs.campaignStats.basesBuilt = cgi->XML_GetInt(stats, SAVE_STATS_BASESBUILT, 0);
+	ccs.campaignStats.basesAttacked = cgi->XML_GetInt(stats, SAVE_STATS_BASESATTACKED, 0);
+	ccs.campaignStats.installationsBuilt = cgi->XML_GetInt(stats, SAVE_STATS_INSTALLATIONSBUILT, 0);
+	ccs.campaignStats.interceptions = cgi->XML_GetInt(stats, SAVE_STATS_INTERCEPTIONS, 0);
+	ccs.campaignStats.soldiersLost = cgi->XML_GetInt(stats, SAVE_STATS_SOLDIERSLOST, 0);
+	ccs.campaignStats.soldiersNew = cgi->XML_GetInt(stats, SAVE_STATS_SOLDIERSNEW, 0);
+	ccs.campaignStats.killedAliens = cgi->XML_GetInt(stats, SAVE_STATS_KILLEDALIENS, 0);
+	ccs.campaignStats.capturedAliens = cgi->XML_GetInt(stats, SAVE_STATS_CAPTUREDALIENS, 0);
+	ccs.campaignStats.rescuedCivilians = cgi->XML_GetInt(stats, SAVE_STATS_RESCUEDCIVILIANS, 0);
+	ccs.campaignStats.researchedTechnologies = cgi->XML_GetInt(stats, SAVE_STATS_RESEARCHEDTECHNOLOGIES, 0);
+	ccs.campaignStats.moneyInterceptions = cgi->XML_GetInt(stats, SAVE_STATS_MONEYINTERCEPTIONS, 0);
+	ccs.campaignStats.moneyBases = cgi->XML_GetInt(stats, SAVE_STATS_MONEYBASES, 0);
+	ccs.campaignStats.moneyResearch = cgi->XML_GetInt(stats, SAVE_STATS_MONEYRESEARCH, 0);
+	ccs.campaignStats.moneyWeapons = cgi->XML_GetInt(stats, SAVE_STATS_MONEYWEAPONS, 0);
+	ccs.campaignStats.ufosDetected = cgi->XML_GetInt(stats, SAVE_STATS_UFOSDETECTED, 0);
+	ccs.campaignStats.alienBasesBuilt = cgi->XML_GetInt(stats, SAVE_STATS_ALIENBASESBUILT, 0);
+	ccs.campaignStats.ufosStored = cgi->XML_GetInt(stats, SAVE_STATS_UFOSSTORED, 0);
+	ccs.campaignStats.aircraftHad = cgi->XML_GetInt(stats, SAVE_STATS_AIRCRAFTHAD, 0);
 
 	/* freeing the memory below this node */
 	mxmlDelete(stats);
@@ -274,6 +274,6 @@ static void CP_CampaignStats_f (void)
 void STATS_InitStartup (void)
 {
 #ifdef DEBUG
-	Cmd_AddCommand("debug_listcampaign", CP_CampaignStats_f, "Print campaign stats to game console");
+	cgi->Cmd_AddCommand("debug_listcampaign", CP_CampaignStats_f, "Print campaign stats to game console");
 #endif
 }

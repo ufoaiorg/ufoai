@@ -284,12 +284,12 @@ void RADAR_UpdateBaseRadarCoverage_f (void)
 	base_t *base;
 	float level;
 
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <baseIdx> <buildingType>\n", Cmd_Argv(0));
+	if (cgi->Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <baseIdx> <buildingType>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
-	baseIdx = atoi(Cmd_Argv(1));
+	baseIdx = atoi(cgi->Cmd_Argv(1));
 
 	if (baseIdx < 0 || baseIdx >= MAX_BASES) {
 		Com_Printf("RADAR_UpdateBaseRadarCoverage_f: %i is outside bounds\n", baseIdx);
@@ -316,7 +316,7 @@ void RADAR_UpdateInstallationRadarCoverage (installation_t *installation, const 
 {
 	/* Sanity check */
 	if (!installation || !installation->installationTemplate)
-		Com_Error(ERR_DROP, "RADAR_UpdateInstallationRadarCoverage: No installation or no template!\n");
+		cgi->Com_Error(ERR_DROP, "RADAR_UpdateInstallationRadarCoverage: No installation or no template!\n");
 
 	/* Do nothing if installation not finished */
 	if (installation->installationStatus != INSTALLATION_WORKING)

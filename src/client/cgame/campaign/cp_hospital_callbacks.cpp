@@ -121,12 +121,12 @@ static void HOS_UpdateMenu (void)
 					cgi->UI_ExecuteConfunc("hospitallight %i", entry);
 
 				/* Display name in the correct list-entry. */
-				Cvar_Set(va("mn_hos_item%i", entry), name);
+				cgi->Cvar_Set(va("mn_hos_item%i", entry), name);
 				/* Display rank in the correct list-entry. */
-				Cvar_Set(va("mn_hos_rank%i", entry), rank);
+				cgi->Cvar_Set(va("mn_hos_rank%i", entry), rank);
 				/* Prepare the health bar */
-				Cvar_Set(va("mn_hos_hp%i", entry), va("%i", employee->chr.HP));
-				Cvar_Set(va("mn_hos_hpmax%i", entry), va("%i", employee->chr.maxHP));
+				cgi->Cvar_Set(va("mn_hos_hp%i", entry), va("%i", employee->chr.HP));
+				cgi->Cvar_Set(va("mn_hos_hpmax%i", entry), va("%i", employee->chr.maxHP));
 
 				/* Send wound info */
 				HOS_EntryWoundData(&employee->chr, entry);
@@ -141,10 +141,10 @@ static void HOS_UpdateMenu (void)
 
 	/* Set rest of the list-entries to have no text at all. */
 	for (; entry < HOS_MENU_MAX_ENTRIES; entry++) {
-		Cvar_Set(va("mn_hos_item%i", entry), "");
-		Cvar_Set(va("mn_hos_rank%i", entry), "");
-		Cvar_Set(va("mn_hos_hp%i", entry), "0");
-		Cvar_Set(va("mn_hos_hpmax%i", entry), "1");
+		cgi->Cvar_Set(va("mn_hos_item%i", entry), "");
+		cgi->Cvar_Set(va("mn_hos_rank%i", entry), "");
+		cgi->Cvar_Set(va("mn_hos_hp%i", entry), "0");
+		cgi->Cvar_Set(va("mn_hos_hpmax%i", entry), "1");
 		cgi->UI_ExecuteConfunc("hospitalunused %i", entry);
 	}
 }
@@ -205,13 +205,13 @@ static void HOS_ListClick_f (void)
 		return;
 	}
 
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <arg>\n", Cmd_Argv(0));
+	if (cgi->Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <arg>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
 	/* which employee? */
-	num = atoi(Cmd_Argv(1)) + hospitalFirstEntry;
+	num = atoi(cgi->Cmd_Argv(1)) + hospitalFirstEntry;
 
 	for (type = 0; type < MAX_EMPL; type++) {
 		E_Foreach(type, employee) {
@@ -256,25 +256,25 @@ static void HOS_EmployeeInit_f (void)
 	c = &currentEmployeeInHospital->chr;
 	CL_UpdateCharacterValues(c, "mn_");
 
-	Cvar_SetValue("mn_hp", c->HP);
-	Cvar_SetValue("mn_hpmax", c->maxHP);
+	cgi->Cvar_SetValue("mn_hp", c->HP);
+	cgi->Cvar_SetValue("mn_hpmax", c->maxHP);
 }
 
 
 void HOS_InitCallbacks(void)
 {
-	Cmd_AddCommand("hosp_empl_init", HOS_EmployeeInit_f, "Init function for hospital employee menu");
-	Cmd_AddCommand("hosp_init", HOS_Init_f, "Init function for hospital menu");
-	Cmd_AddCommand("hosp_list_click", HOS_ListClick_f, "Click function for hospital employee list");
-	Cmd_AddCommand("hosp_list_up", HOS_ListUp_f, "Scroll up function for hospital employee list");
-	Cmd_AddCommand("hosp_list_down", HOS_ListDown_f, "Scroll down function for hospital employee list");
+	cgi->Cmd_AddCommand("hosp_empl_init", HOS_EmployeeInit_f, "Init function for hospital employee menu");
+	cgi->Cmd_AddCommand("hosp_init", HOS_Init_f, "Init function for hospital menu");
+	cgi->Cmd_AddCommand("hosp_list_click", HOS_ListClick_f, "Click function for hospital employee list");
+	cgi->Cmd_AddCommand("hosp_list_up", HOS_ListUp_f, "Scroll up function for hospital employee list");
+	cgi->Cmd_AddCommand("hosp_list_down", HOS_ListDown_f, "Scroll down function for hospital employee list");
 }
 
 void HOS_ShutdownCallbacks(void)
 {
-	Cmd_RemoveCommand("hosp_empl_init");
-	Cmd_RemoveCommand("hosp_init");
-	Cmd_RemoveCommand("hosp_list_click");
-	Cmd_RemoveCommand("hosp_list_up");
-	Cmd_RemoveCommand("hosp_list_down");
+	cgi->Cmd_RemoveCommand("hosp_empl_init");
+	cgi->Cmd_RemoveCommand("hosp_init");
+	cgi->Cmd_RemoveCommand("hosp_list_click");
+	cgi->Cmd_RemoveCommand("hosp_list_up");
+	cgi->Cmd_RemoveCommand("hosp_list_down");
 }

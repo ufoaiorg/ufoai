@@ -62,7 +62,7 @@ void RS_ResearchFinish (technology_t* tech)
 
 	/* execute the trigger only if the tech is not yet researched */
 	if (tech->finishedResearchEvent && tech->statusResearch != RS_FINISH)
-		Cmd_ExecuteString(tech->finishedResearchEvent);
+		cgi->Cmd_ExecuteString(tech->finishedResearchEvent);
 
 	tech->statusResearch = RS_FINISH;
 	tech->researchedDate = ccs.date;
@@ -388,19 +388,19 @@ static void RS_AssignTechLinks (requirements_t *reqs)
 			/* Get the index in the techtree. */
 			req->link.tech = RS_GetTechByID(req->id);
 			if (!req->link.tech)
-				Com_Error(ERR_DROP, "RS_AssignTechLinks: Could not get tech definition for '%s'", req->id);
+				cgi->Com_Error(ERR_DROP, "RS_AssignTechLinks: Could not get tech definition for '%s'", req->id);
 			break;
 		case RS_LINK_ITEM:
 			/* Get index in item-list. */
 			req->link.od = INVSH_GetItemByID(req->id);
 			if (!req->link.od)
-				Com_Error(ERR_DROP, "RS_AssignTechLinks: Could not get item definition for '%s'", req->id);
+				cgi->Com_Error(ERR_DROP, "RS_AssignTechLinks: Could not get item definition for '%s'", req->id);
 			break;
 		case RS_LINK_ALIEN:
 		case RS_LINK_ALIEN_DEAD:
 			req->link.td = Com_GetTeamDefinitionByID(req->id);
 			if (!req->link.td)
-				Com_Error(ERR_DROP, "RS_AssignTechLinks: Could not get alien type (alien or alien_dead) definition for '%s'", req->id);
+				cgi->Com_Error(ERR_DROP, "RS_AssignTechLinks: Could not get alien type (alien or alien_dead) definition for '%s'", req->id);
 			break;
 		case RS_LINK_UFO:
 			req->link.aircraft = AIR_GetAircraft(req->id);
@@ -454,11 +454,11 @@ void RS_RequiredLinksAssign (void)
 technology_t* RS_GetTechForItem (const objDef_t *item)
 {
 	if (item == NULL)
-		Com_Error(ERR_DROP, "RS_GetTechForItem: No item given");
+		cgi->Com_Error(ERR_DROP, "RS_GetTechForItem: No item given");
 	if (item->idx < 0 || item->idx > lengthof(ccs.objDefTechs))
-		Com_Error(ERR_DROP, "RS_GetTechForItem: Buffer overflow");
+		cgi->Com_Error(ERR_DROP, "RS_GetTechForItem: Buffer overflow");
 	if (ccs.objDefTechs[item->idx] == NULL)
-		Com_Error(ERR_DROP, "RS_GetTechForItem: No technology for item %s", item->id);
+		cgi->Com_Error(ERR_DROP, "RS_GetTechForItem: No technology for item %s", item->id);
 	return ccs.objDefTechs[item->idx];
 }
 
@@ -482,7 +482,7 @@ void RS_InitTree (const campaign_t *campaign, bool load)
 	for (i = 0, od = cgi->csi->ods; i < cgi->csi->numODs; i++, od++) {
 		ccs.objDefTechs[od->idx] = RS_GetTechByProvided(od->id);
 		if (!ccs.objDefTechs[od->idx])
-			Com_Error(ERR_DROP, "RS_InitTree: Could not find a valid tech for item %s", od->id);
+			cgi->Com_Error(ERR_DROP, "RS_InitTree: Could not find a valid tech for item %s", od->id);
 	}
 
 	for (i = 0, tech = ccs.technologies; i < ccs.numTechnologies; i++, tech++) {
@@ -564,7 +564,7 @@ void RS_InitTree (const campaign_t *campaign, bool load)
 				aircraft_t *aircraftTemplate = &ccs.aircraftTemplates[j];
 				/* This aircraft has been 'provided'  -> get the correct data. */
 				if (!tech->provides)
-					Com_Error(ERR_FATAL, "RS_InitTree: \"%s\" - No linked aircraft or craft-upgrade.\n", tech->id);
+					cgi->Com_Error(ERR_FATAL, "RS_InitTree: \"%s\" - No linked aircraft or craft-upgrade.\n", tech->id);
 				if (Q_streq(tech->provides, aircraftTemplate->id)) {
 					found = true;
 					if (!tech->name)
@@ -594,7 +594,7 @@ void RS_InitTree (const campaign_t *campaign, bool load)
 		/* Check if we finally have a name for the tech. */
 		if (!tech->name) {
 			if (tech->type != RS_LOGIC)
-				Com_Error(ERR_DROP, "RS_InitTree: \"%s\" - no name found!", tech->id);
+				cgi->Com_Error(ERR_DROP, "RS_InitTree: \"%s\" - no name found!", tech->id);
 		} else {
 			/* Fill in subject lines of tech-mails.
 			 * The tech-name is copied if nothing is defined. */
@@ -696,7 +696,7 @@ void RS_RemoveScientist (technology_t* tech, employee_t *employee)
 		CAP_AddCurrent(tech->base, CAP_LABSPACE, -1);
 		employee->assigned = false;
 	} else {
-		Com_Error(ERR_DROP, "No assigned scientists found - serious inconsistency.");
+		cgi->Com_Error(ERR_DROP, "No assigned scientists found - serious inconsistency.");
 	}
 
 	assert(tech->scientists >= 0);
@@ -977,10 +977,10 @@ static void RS_DebugMarkResearchedAll (void)
  */
 static void RS_DebugResearchAll_f (void)
 {
-	if (Cmd_Argc() != 2) {
+	if (cgi->Cmd_Argc() != 2) {
 		RS_DebugMarkResearchedAll();
 	} else {
-		technology_t *tech = RS_GetTechByID(Cmd_Argv(1));
+		technology_t *tech = RS_GetTechByID(cgi->Cmd_Argv(1));
 		if (!tech)
 			return;
 		Com_DPrintf(DEBUG_CLIENT, "...mark %s as researched\n", tech->id);
@@ -997,7 +997,7 @@ static void RS_DebugResearchableAll_f (void)
 {
 	int i;
 
-	if (Cmd_Argc() != 2) {
+	if (cgi->Cmd_Argc() != 2) {
 		for (i = 0; i < ccs.numTechnologies; i++) {
 			technology_t *tech = RS_GetTechByIDX(i);
 			Com_Printf("...mark %s as researchable\n", tech->id);
@@ -1005,7 +1005,7 @@ static void RS_DebugResearchableAll_f (void)
 			RS_MarkCollected(tech);
 		}
 	} else {
-		technology_t *tech = RS_GetTechByID(Cmd_Argv(1));
+		technology_t *tech = RS_GetTechByID(cgi->Cmd_Argv(1));
 		if (tech) {
 			Com_Printf("...mark %s as researchable\n", tech->id);
 			RS_MarkOneResearchable(tech);
@@ -1039,10 +1039,10 @@ void RS_InitStartup (void)
 {
 	/* add commands and cvars */
 #ifdef DEBUG
-	Cmd_AddCommand("debug_listtech", RS_TechnologyList_f, "Print the current parsed technologies to the game console");
-	Cmd_AddCommand("debug_researchall", RS_DebugResearchAll_f, "Mark all techs as researched");
-	Cmd_AddCommand("debug_researchableall", RS_DebugResearchableAll_f, "Mark all techs as researchable");
-	Cmd_AddCommand("debug_finishresearches", RS_DebugFinishResearches_f, "Mark all running researches as finished");
+	cgi->Cmd_AddCommand("debug_listtech", RS_TechnologyList_f, "Print the current parsed technologies to the game console");
+	cgi->Cmd_AddCommand("debug_researchall", RS_DebugResearchAll_f, "Mark all techs as researched");
+	cgi->Cmd_AddCommand("debug_researchableall", RS_DebugResearchableAll_f, "Mark all techs as researchable");
+	cgi->Cmd_AddCommand("debug_finishresearches", RS_DebugFinishResearches_f, "Mark all running researches as finished");
 #endif
 }
 
@@ -1233,14 +1233,14 @@ void RS_ParseTechnologies (const char *name, const char **text)
 						LIST_AddString(&list, token);
 					} else if (Q_streq(token, "extra")) {
 						if (!Com_ParseList(text, &list)) {
-							Com_Error(ERR_DROP, "RS_ParseTechnologies: error while reading extra description tuple");
+							cgi->Com_Error(ERR_DROP, "RS_ParseTechnologies: error while reading extra description tuple");
 						}
 						if (LIST_Count(list) != 2) {
 							LIST_Delete(&list);
-							Com_Error(ERR_DROP, "RS_ParseTechnologies: extra description tuple must contains 2 elements (id string)");
+							cgi->Com_Error(ERR_DROP, "RS_ParseTechnologies: extra description tuple must contains 2 elements (id string)");
 						}
 					} else {
-						Com_Error(ERR_DROP, "RS_ParseTechnologies: error while reading description: token \"%s\" not expected", token);
+						cgi->Com_Error(ERR_DROP, "RS_ParseTechnologies: error while reading description: token \"%s\" not expected", token);
 					}
 
 					if (descTemp->numDescriptions < MAX_DESCRIPTIONS) {
@@ -1313,11 +1313,11 @@ void RS_ParseTechnologies (const char *name, const char **text)
 						if (requiredTemp->numLinks < MAX_TECHLINKS) {
 							linkedList_t *list;
 							if (!Com_ParseList(text, &list)) {
-								Com_Error(ERR_DROP, "RS_ParseTechnologies: error while reading required item tuple");
+								cgi->Com_Error(ERR_DROP, "RS_ParseTechnologies: error while reading required item tuple");
 							}
 
 							if (LIST_Count(list) != 2) {
-								Com_Error(ERR_DROP, "RS_ParseTechnologies: required item tuple must contains 2 elements (id pos)");
+								cgi->Com_Error(ERR_DROP, "RS_ParseTechnologies: required item tuple must contains 2 elements (id pos)");
 							}
 
 							const char* idToken = (char*)list->data;
@@ -1362,11 +1362,11 @@ void RS_ParseTechnologies (const char *name, const char **text)
 
 							linkedList_t *list;
 							if (!Com_ParseList(text, &list)) {
-								Com_Error(ERR_DROP, "RS_ParseTechnologies: error while reading required alien tuple");
+								cgi->Com_Error(ERR_DROP, "RS_ParseTechnologies: error while reading required alien tuple");
 							}
 
 							if (LIST_Count(list) != 2) {
-								Com_Error(ERR_DROP, "RS_ParseTechnologies: required alien tuple must contains 2 elements (id pos)");
+								cgi->Com_Error(ERR_DROP, "RS_ParseTechnologies: required alien tuple must contains 2 elements (id pos)");
 							}
 
 							const char* idToken = (char*)list->data;
@@ -1386,11 +1386,11 @@ void RS_ParseTechnologies (const char *name, const char **text)
 						if (requiredTemp->numLinks < MAX_TECHLINKS) {
 							linkedList_t *list;
 							if (!Com_ParseList(text, &list)) {
-								Com_Error(ERR_DROP, "RS_ParseTechnologies: error while reading required item tuple");
+								cgi->Com_Error(ERR_DROP, "RS_ParseTechnologies: error while reading required item tuple");
 							}
 
 							if (LIST_Count(list) != 2) {
-								Com_Error(ERR_DROP, "RS_ParseTechnologies: required item tuple must contains 2 elements (id pos)");
+								cgi->Com_Error(ERR_DROP, "RS_ParseTechnologies: required item tuple must contains 2 elements (id pos)");
 							}
 
 							const char* idToken = (char*)list->data;
@@ -1711,30 +1711,30 @@ bool RS_SaveXML (xmlNode_t *parent)
 	xmlNode_t *node;
 
 	Com_RegisterConstList(saveResearchConstants);
-	node = XML_AddNode(parent, SAVE_RESEARCH_RESEARCH);
+	node = cgi->XML_AddNode(parent, SAVE_RESEARCH_RESEARCH);
 	for (i = 0; i < ccs.numTechnologies; i++) {
 		int j;
 		const technology_t *t = RS_GetTechByIDX(i);
 
-		xmlNode_t * snode = XML_AddNode(node, SAVE_RESEARCH_TECH);
-		XML_AddString(snode, SAVE_RESEARCH_ID, t->id);
-		XML_AddBoolValue(snode, SAVE_RESEARCH_STATUSCOLLECTED, t->statusCollected);
-		XML_AddFloatValue(snode, SAVE_RESEARCH_TIME, t->time);
-		XML_AddString(snode, SAVE_RESEARCH_STATUSRESEARCH, Com_GetConstVariable(SAVE_RESEARCHSTATUS_NAMESPACE, t->statusResearch));
+		xmlNode_t * snode = cgi->XML_AddNode(node, SAVE_RESEARCH_TECH);
+		cgi->XML_AddString(snode, SAVE_RESEARCH_ID, t->id);
+		cgi->XML_AddBoolValue(snode, SAVE_RESEARCH_STATUSCOLLECTED, t->statusCollected);
+		cgi->XML_AddFloatValue(snode, SAVE_RESEARCH_TIME, t->time);
+		cgi->XML_AddString(snode, SAVE_RESEARCH_STATUSRESEARCH, Com_GetConstVariable(SAVE_RESEARCHSTATUS_NAMESPACE, t->statusResearch));
 		if (t->base)
-			XML_AddInt(snode, SAVE_RESEARCH_BASE, t->base->idx);
-		XML_AddIntValue(snode, SAVE_RESEARCH_SCIENTISTS, t->scientists);
-		XML_AddBool(snode, SAVE_RESEARCH_STATUSRESEARCHABLE, t->statusResearchable);
-		XML_AddDate(snode, SAVE_RESEARCH_PREDATE, t->preResearchedDate.day, t->preResearchedDate.sec);
-		XML_AddDate(snode, SAVE_RESEARCH_DATE, t->researchedDate.day, t->researchedDate.sec);
-		XML_AddInt(snode, SAVE_RESEARCH_MAILSENT, t->mailSent);
+			cgi->XML_AddInt(snode, SAVE_RESEARCH_BASE, t->base->idx);
+		cgi->XML_AddIntValue(snode, SAVE_RESEARCH_SCIENTISTS, t->scientists);
+		cgi->XML_AddBool(snode, SAVE_RESEARCH_STATUSRESEARCHABLE, t->statusResearchable);
+		cgi->XML_AddDate(snode, SAVE_RESEARCH_PREDATE, t->preResearchedDate.day, t->preResearchedDate.sec);
+		cgi->XML_AddDate(snode, SAVE_RESEARCH_DATE, t->researchedDate.day, t->researchedDate.sec);
+		cgi->XML_AddInt(snode, SAVE_RESEARCH_MAILSENT, t->mailSent);
 
 		/* save which techMails were read */
 		/** @todo this should be handled by the mail system */
 		for (j = 0; j < TECHMAIL_MAX; j++) {
 			if (t->mail[j].read) {
-				xmlNode_t * ssnode = XML_AddNode(snode, SAVE_RESEARCH_MAIL);
-				XML_AddInt(ssnode, SAVE_RESEARCH_MAIL_ID, j);
+				xmlNode_t * ssnode = cgi->XML_AddNode(snode, SAVE_RESEARCH_MAIL);
+				cgi->XML_AddInt(ssnode, SAVE_RESEARCH_MAIL_ID, j);
 			}
 		}
 	}
@@ -1754,17 +1754,17 @@ bool RS_LoadXML (xmlNode_t *parent)
 	xmlNode_t *snode;
 	bool success = true;
 
-	topnode = XML_GetNode(parent, SAVE_RESEARCH_RESEARCH);
+	topnode = cgi->XML_GetNode(parent, SAVE_RESEARCH_RESEARCH);
 	if (!topnode)
 		return false;
 
 	Com_RegisterConstList(saveResearchConstants);
-	for (snode = XML_GetNode(topnode, SAVE_RESEARCH_TECH); snode; snode = XML_GetNextNode(snode, topnode, "tech")) {
-		const char *techString = XML_GetString(snode, SAVE_RESEARCH_ID);
+	for (snode = cgi->XML_GetNode(topnode, SAVE_RESEARCH_TECH); snode; snode = cgi->XML_GetNextNode(snode, topnode, "tech")) {
+		const char *techString = cgi->XML_GetString(snode, SAVE_RESEARCH_ID);
 		xmlNode_t * ssnode;
 		int baseIdx;
 		technology_t *t = RS_GetTechByID(techString);
-		const char *type = XML_GetString(snode, SAVE_RESEARCH_STATUSRESEARCH);
+		const char *type = cgi->XML_GetString(snode, SAVE_RESEARCH_STATUSRESEARCH);
 
 		if (!t) {
 			Com_Printf("......your game doesn't know anything about tech '%s'\n", techString);
@@ -1777,23 +1777,23 @@ bool RS_LoadXML (xmlNode_t *parent)
 			break;
 		}
 
-		t->statusCollected = XML_GetBool(snode, SAVE_RESEARCH_STATUSCOLLECTED, false);
-		t->time = XML_GetFloat(snode, SAVE_RESEARCH_TIME, 0.0);
+		t->statusCollected = cgi->XML_GetBool(snode, SAVE_RESEARCH_STATUSCOLLECTED, false);
+		t->time = cgi->XML_GetFloat(snode, SAVE_RESEARCH_TIME, 0.0);
 		/* Prepare base-index for later pointer-restoration in RS_PostLoadInit. */
-		baseIdx = XML_GetInt(snode, SAVE_RESEARCH_BASE, -1);
+		baseIdx = cgi->XML_GetInt(snode, SAVE_RESEARCH_BASE, -1);
 		if (baseIdx >= 0)
 			/* even if the base is not yet loaded we can set the pointer already */
 			t->base = B_GetBaseByIDX(baseIdx);
-		t->scientists = XML_GetInt(snode, SAVE_RESEARCH_SCIENTISTS, 0);
-		t->statusResearchable = XML_GetBool(snode, SAVE_RESEARCH_STATUSRESEARCHABLE, false);
-		XML_GetDate(snode, SAVE_RESEARCH_PREDATE, &t->preResearchedDate.day, &t->preResearchedDate.sec);
-		XML_GetDate(snode, SAVE_RESEARCH_DATE, &t->researchedDate.day, &t->researchedDate.sec);
-		t->mailSent = (mailSentType_t)XML_GetInt(snode, SAVE_RESEARCH_MAILSENT, 0);
+		t->scientists = cgi->XML_GetInt(snode, SAVE_RESEARCH_SCIENTISTS, 0);
+		t->statusResearchable = cgi->XML_GetBool(snode, SAVE_RESEARCH_STATUSRESEARCHABLE, false);
+		cgi->XML_GetDate(snode, SAVE_RESEARCH_PREDATE, &t->preResearchedDate.day, &t->preResearchedDate.sec);
+		cgi->XML_GetDate(snode, SAVE_RESEARCH_DATE, &t->researchedDate.day, &t->researchedDate.sec);
+		t->mailSent = (mailSentType_t)cgi->XML_GetInt(snode, SAVE_RESEARCH_MAILSENT, 0);
 
 		/* load which techMails were read */
 		/** @todo this should be handled by the mail system */
-		for (ssnode = XML_GetNode(snode, SAVE_RESEARCH_MAIL); ssnode; ssnode = XML_GetNextNode(ssnode, snode, SAVE_RESEARCH_MAIL)) {
-			const int j= XML_GetInt(ssnode, SAVE_RESEARCH_MAIL_ID, TECHMAIL_MAX);
+		for (ssnode = cgi->XML_GetNode(snode, SAVE_RESEARCH_MAIL); ssnode; ssnode = cgi->XML_GetNextNode(ssnode, snode, SAVE_RESEARCH_MAIL)) {
+			const int j= cgi->XML_GetInt(ssnode, SAVE_RESEARCH_MAIL_ID, TECHMAIL_MAX);
 			if (j < TECHMAIL_MAX)
 				t->mail[j].read = true;
 			else

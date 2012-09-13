@@ -230,6 +230,7 @@ typedef struct cgame_import_s {
 	const char * (IMPORT *XML_GetString) (xmlNode_t *parent, const char *name);
 	float (IMPORT *XML_GetFloat) (xmlNode_t *parent, const char *name, const float defaultval);
 	double (IMPORT *XML_GetDouble) (xmlNode_t *parent, const char *name, const double defaultval);
+	xmlNode_t *(IMPORT *XML_Parse) (const char *buffer);
 	xmlNode_t * (IMPORT *XML_GetPos2) (xmlNode_t *parent, const char *name, vec2_t pos);
 	xmlNode_t * (IMPORT *XML_GetNextPos2) (xmlNode_t *actual, xmlNode_t *parent, const char *name, vec2_t pos);
 	xmlNode_t * (IMPORT *XML_GetPos3) (xmlNode_t *parent, const char *name, vec3_t pos);
@@ -269,6 +270,7 @@ typedef struct cgame_import_s {
 	mapDef_t* (IMPORT *Com_GetMapDefinitionByID) (const char *mapDefID);
 
 	void (IMPORT *Cbuf_AddText) (const char *text);
+	void (IMPORT *Cbuf_Execute) (void);
 
 	void (IMPORT *Sys_Error) (const char *error, ...) __attribute__((noreturn, format(printf, 1, 2)));
 	int (IMPORT *Com_ServerState) (void);

@@ -56,11 +56,11 @@ static void E_UpdateGUICount_f (void)
 		return;
 
 	max = CAP_GetMax(base, CAP_EMPLOYEES);
-	Cvar_SetValue("mn_hiresoldiers", E_CountHired(base, EMPL_SOLDIER));
-	Cvar_SetValue("mn_hireworkers", E_CountHired(base, EMPL_WORKER));
-	Cvar_SetValue("mn_hirescientists", E_CountHired(base, EMPL_SCIENTIST));
-	Cvar_SetValue("mn_hirepilots", E_CountHired(base, EMPL_PILOT));
-	Cvar_Set("mn_hirepeople", va("%d/%d", E_CountAllHired(base), max));
+	cgi->Cvar_SetValue("mn_hiresoldiers", E_CountHired(base, EMPL_SOLDIER));
+	cgi->Cvar_SetValue("mn_hireworkers", E_CountHired(base, EMPL_WORKER));
+	cgi->Cvar_SetValue("mn_hirescientists", E_CountHired(base, EMPL_SCIENTIST));
+	cgi->Cvar_SetValue("mn_hirepilots", E_CountHired(base, EMPL_PILOT));
+	cgi->Cvar_Set("mn_hirepeople", va("%d/%d", E_CountAllHired(base), max));
 }
 
 static void E_EmployeeSelect (employee_t *employee)
@@ -73,8 +73,8 @@ static void E_EmployeeSelect (employee_t *employee)
 	if (selectedEmployee) {
 		const character_t *chr = &selectedEmployee->chr;
 		/* mn_employee_hired is needed to allow renaming */
-		Cvar_SetValue("mn_employee_hired", E_IsHired(selectedEmployee) ? 1 : 0);
-		Cvar_SetValue("mn_ucn", chr->ucn);
+		cgi->Cvar_SetValue("mn_employee_hired", E_IsHired(selectedEmployee) ? 1 : 0);
+		cgi->Cvar_SetValue("mn_ucn", chr->ucn);
 
 		/* set info cvars */
 		CL_UpdateCharacterValues(chr, "mn_");
@@ -93,10 +93,10 @@ static void E_EmployeeListScroll_f (void)
 	if (!base)
 		return;
 
-	if (Cmd_Argc() < 2)
+	if (cgi->Cmd_Argc() < 2)
 		return;
 
-	employeeScrollPos = atoi(Cmd_Argv(1));
+	employeeScrollPos = atoi(cgi->Cmd_Argv(1));
 	j = employeeScrollPos;
 
 	E_Foreach(employeeCategory, employee) {
@@ -130,7 +130,7 @@ static void E_EmployeeListScroll_f (void)
 	}
 
 	for (;cnt < maxEmployeesPerPage; cnt++) {
-		Cvar_Set(va("mn_name%i", cnt), "");
+		cgi->Cvar_Set(va("mn_name%i", cnt), "");
 		cgi->UI_ExecuteConfunc("employeehide %i", cnt);
 	}
 
@@ -151,17 +151,17 @@ static void E_EmployeeList_f (void)
 	if (!base)
 		return;
 
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <category> <employeeid>\n", Cmd_Argv(0));
+	if (cgi->Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <category> <employeeid>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
-	employeeCategory = atoi(Cmd_Argv(1));
+	employeeCategory = atoi(cgi->Cmd_Argv(1));
 	if (employeeCategory >= MAX_EMPL || employeeCategory < 0)
 		employeeCategory = EMPL_SOLDIER;
 
-	if (Cmd_Argc() == 3)
-		hiredEmployeeIdx = atoi(Cmd_Argv(2));
+	if (cgi->Cmd_Argc() == 3)
+		hiredEmployeeIdx = atoi(cgi->Cmd_Argv(2));
 	else
 		hiredEmployeeIdx = -1;
 
@@ -194,14 +194,14 @@ static void E_EmployeeList_f (void)
 	 */
 	/** @todo replace magic numbers - use confuncs */
 	if (employeesInCurrentList == 0) {
-		Cvar_Set("mn_show_employee", "0");
+		cgi->Cvar_Set("mn_show_employee", "0");
 	} else {
 		if (employeeCategory == EMPL_SCIENTIST || employeeCategory == EMPL_WORKER)
-			Cvar_Set("mn_show_employee", "3");
+			cgi->Cvar_Set("mn_show_employee", "3");
 		else if (employeeCategory == EMPL_PILOT)
-			Cvar_Set("mn_show_employee", "2");
+			cgi->Cvar_Set("mn_show_employee", "2");
 		else
-			Cvar_Set("mn_show_employee", "1");
+			cgi->Cvar_Set("mn_show_employee", "1");
 	}
 	/* Select the current employee if name was changed or first one. Use the direct string
 	 * execution here - otherwise the employeeCategory might be out of sync */
@@ -224,9 +224,9 @@ static void E_EmployeeList_f (void)
  */
 static void E_ChangeName_f (void)
 {
-	employee_t *employee = E_GetEmployeeFromChrUCN(Cvar_GetInteger("mn_ucn"));
+	employee_t *employee = E_GetEmployeeFromChrUCN(cgi->Cvar_GetInteger("mn_ucn"));
 	if (employee)
-		Q_strncpyz(employee->chr.name, Cvar_GetString("mn_name"), sizeof(employee->chr.name));
+		Q_strncpyz(employee->chr.name, cgi->Cvar_GetString("mn_name"), sizeof(employee->chr.name));
 }
 
 /**
@@ -260,12 +260,12 @@ static void E_EmployeeDelete_f (void)
 	employee_t* employee;
 
 	/* Check syntax. */
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <num>\n", Cmd_Argv(0));
+	if (cgi->Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <num>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
-	num = employeeScrollPos + atoi(Cmd_Argv(1));
+	num = employeeScrollPos + atoi(cgi->Cmd_Argv(1));
 
 	employee = E_GetEmployeeByMenuIndex(num);
 	/* empty slot selected */
@@ -280,7 +280,7 @@ static void E_EmployeeDelete_f (void)
 		}
 	}
 	E_DeleteEmployee(employee);
-	Cbuf_AddText(va("employee_init %i\n", employeeCategory));
+	cgi->Cbuf_AddText(va("employee_init %i\n", employeeCategory));
 }
 
 /**
@@ -300,12 +300,12 @@ static void E_EmployeeHire_f (void)
 		return;
 
 	/* Check syntax. */
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <+num>\n", Cmd_Argv(0));
+	if (cgi->Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <+num>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
-	arg = Cmd_Argv(1);
+	arg = cgi->Cmd_Argv(1);
 
 	/* check whether this is called with the text node click function
 	 * with values from 0 - #available employees (bigger values than
@@ -316,7 +316,7 @@ static void E_EmployeeHire_f (void)
 	/* ... or with the hire pictures that are using only values from
 	 * 0 - maxEmployeesPerPage */
 	} else {
-		button = atoi(Cmd_Argv(1));
+		button = atoi(cgi->Cmd_Argv(1));
 		num = button + employeeScrollPos;
 	}
 
@@ -354,12 +354,12 @@ static void E_EmployeeSelect_f (void)
 	int num;
 
 	/* Check syntax. */
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <num>\n", Cmd_Argv(0));
+	if (cgi->Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <num>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
-	num = atoi(Cmd_Argv(1));
+	num = atoi(cgi->Cmd_Argv(1));
 	if (num < 0 || num >= employeesInCurrentList)
 		return;
 
@@ -368,22 +368,22 @@ static void E_EmployeeSelect_f (void)
 
 void E_InitCallbacks (void)
 {
-	Cmd_AddCommand("employee_update_count", E_UpdateGUICount_f, "Callback to update the employee count of the current GUI");
-	Cmd_AddCommand("employee_init", E_EmployeeList_f, "Init function for employee hire menu");
-	Cmd_AddCommand("employee_delete", E_EmployeeDelete_f, "Removed an employee from the global employee list");
-	Cmd_AddCommand("employee_hire", E_EmployeeHire_f);
-	Cmd_AddCommand("employee_select", E_EmployeeSelect_f);
-	Cmd_AddCommand("employee_changename", E_ChangeName_f, "Change the name of an employee");
-	Cmd_AddCommand("employee_scroll", E_EmployeeListScroll_f, "Scroll callback for employee list");
+	cgi->Cmd_AddCommand("employee_update_count", E_UpdateGUICount_f, "Callback to update the employee count of the current GUI");
+	cgi->Cmd_AddCommand("employee_init", E_EmployeeList_f, "Init function for employee hire menu");
+	cgi->Cmd_AddCommand("employee_delete", E_EmployeeDelete_f, "Removed an employee from the global employee list");
+	cgi->Cmd_AddCommand("employee_hire", E_EmployeeHire_f, NULL);
+	cgi->Cmd_AddCommand("employee_select", E_EmployeeSelect_f, NULL);
+	cgi->Cmd_AddCommand("employee_changename", E_ChangeName_f, "Change the name of an employee");
+	cgi->Cmd_AddCommand("employee_scroll", E_EmployeeListScroll_f, "Scroll callback for employee list");
 }
 
 void E_ShutdownCallbacks (void)
 {
-	Cmd_RemoveCommand("employee_update_count");
-	Cmd_RemoveCommand("employee_init");
-	Cmd_RemoveCommand("employee_delete");
-	Cmd_RemoveCommand("employee_hire");
-	Cmd_RemoveCommand("employee_select");
-	Cmd_RemoveCommand("employee_changename");
-	Cmd_RemoveCommand("employee_scroll");
+	cgi->Cmd_RemoveCommand("employee_update_count");
+	cgi->Cmd_RemoveCommand("employee_init");
+	cgi->Cmd_RemoveCommand("employee_delete");
+	cgi->Cmd_RemoveCommand("employee_hire");
+	cgi->Cmd_RemoveCommand("employee_select");
+	cgi->Cmd_RemoveCommand("employee_changename");
+	cgi->Cmd_RemoveCommand("employee_scroll");
 }

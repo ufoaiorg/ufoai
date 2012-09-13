@@ -292,7 +292,7 @@ void CP_TriggerEvent (campaignTriggerEventType_t type, const void* userdata)
 		if (event->active) {
 			if (BEP_Evaluate(event->require, CP_CheckTriggerEvent, userdata)) {
 				if (Q_strvalid(event->command))
-					Cmd_ExecuteString(event->command);
+					cgi->Cmd_ExecuteString(event->command);
 
 				if (event->once) {
 					event->active = false;
@@ -361,17 +361,17 @@ void CP_ParseEventTrigger (const char *name, const char **text)
 
 bool CP_TriggerEventSaveXML (xmlNode_t *p)
 {
-	xmlNode_t *n = XML_AddNode(p, SAVE_TRIGGEREVENTS_TRIGGEREVENTS);
+	xmlNode_t *n = cgi->XML_AddNode(p, SAVE_TRIGGEREVENTS_TRIGGEREVENTS);
 	int i;
 
 	for (i = 0; i < ccs.numCampaignTriggerEvents; i++) {
 		const campaignTriggerEvent_t *event = &ccs.campaignTriggerEvents[i];
 		if (event->active)
 			continue;
-		xmlNode_t *s = XML_AddNode(n, SAVE_TRIGGEREVENTS_TRIGGEREVENT);
+		xmlNode_t *s = cgi->XML_AddNode(n, SAVE_TRIGGEREVENTS_TRIGGEREVENT);
 
-		XML_AddString(s, SAVE_TRIGGEREVENTS_NAME, event->id);
-		XML_AddBool(s, SAVE_TRIGGEREVENTS_STATE, event->active);
+		cgi->XML_AddString(s, SAVE_TRIGGEREVENTS_NAME, event->id);
+		cgi->XML_AddBool(s, SAVE_TRIGGEREVENTS_STATE, event->active);
 	}
 
 	return true;
@@ -381,13 +381,13 @@ bool CP_TriggerEventLoadXML (xmlNode_t *p)
 {
 	xmlNode_t *n, *s;
 
-	n = XML_GetNode(p, SAVE_TRIGGEREVENTS_TRIGGEREVENTS);
+	n = cgi->XML_GetNode(p, SAVE_TRIGGEREVENTS_TRIGGEREVENTS);
 	if (!n)
 		return true;
 
-	for (s = XML_GetNode(n, SAVE_TRIGGEREVENTS_TRIGGEREVENT); s; s = XML_GetNextNode(s,n, SAVE_TRIGGEREVENTS_TRIGGEREVENT)) {
-		const char *id = XML_GetString(s, SAVE_TRIGGEREVENTS_NAME);
-		const bool state = XML_GetBool(s, SAVE_TRIGGEREVENTS_STATE, true);
+	for (s = cgi->XML_GetNode(n, SAVE_TRIGGEREVENTS_TRIGGEREVENT); s; s = cgi->XML_GetNextNode(s,n, SAVE_TRIGGEREVENTS_TRIGGEREVENT)) {
+		const char *id = cgi->XML_GetString(s, SAVE_TRIGGEREVENTS_NAME);
+		const bool state = cgi->XML_GetBool(s, SAVE_TRIGGEREVENTS_STATE, true);
 
 		int i;
 		for (i = 0; i < ccs.numCampaignTriggerEvents; i++) {
@@ -513,10 +513,10 @@ void CL_EventAddMail (const char *eventMailId)
  */
 void CL_EventAddMail_f (void)
 {
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <event_mail_id>\n", Cmd_Argv(0));
+	if (cgi->Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <event_mail_id>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
-	CL_EventAddMail(Cmd_Argv(1));
+	CL_EventAddMail(cgi->Cmd_Argv(1));
 }

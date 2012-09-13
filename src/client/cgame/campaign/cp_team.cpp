@@ -185,7 +185,7 @@ void CP_CleanupAircraftCrew (aircraft_t *aircraft, equipDef_t * ed)
 				} else {
 					/* Drop ammo used for reloading and sold carried weapons. */
 					if (!cgi->INV_RemoveFromInventory(&chr->i, INVDEF(container), ic))
-						Com_Error(ERR_DROP, "Could not remove item from inventory");
+						cgi->Com_Error(ERR_DROP, "Could not remove item from inventory");
 				}
 			}
 		}
@@ -238,23 +238,23 @@ void CP_UpdateActorAircraftVar (aircraft_t *aircraft, employeeType_t employeeTyp
 	assert(aircraft);
 
 	numOnAircraft = AIR_GetTeamSize(aircraft);
-	Cvar_Set("mn_hired", va(_("%i of %i"), numOnAircraft, aircraft->maxTeamSize));
-	Cvar_Set("mn_hirable_count", va("%i", aircraft->maxTeamSize - numOnAircraft));
-	Cvar_Set("mn_hired_count", va("%i", numOnAircraft));
+	cgi->Cvar_Set("mn_hired", va(_("%i of %i"), numOnAircraft, aircraft->maxTeamSize));
+	cgi->Cvar_Set("mn_hirable_count", va("%i", aircraft->maxTeamSize - numOnAircraft));
+	cgi->Cvar_Set("mn_hired_count", va("%i", numOnAircraft));
 
 	if (pilot) {
-		Cvar_Set("mn_pilotassigned", "1");
-		Cvar_Set("mn_pilot_name", pilot->chr.name);
-		Cvar_Set("mn_pilot_body", CHRSH_CharGetBody(&pilot->chr));
-		Cvar_Set("mn_pilot_head", CHRSH_CharGetHead(&pilot->chr));
-		Cvar_Set("mn_pilot_body_skin", va("%i", pilot->chr.bodySkin));
-		Cvar_Set("mn_pilot_head_skin", va("%i", pilot->chr.headSkin));
+		cgi->Cvar_Set("mn_pilotassigned", "1");
+		cgi->Cvar_Set("mn_pilot_name", pilot->chr.name);
+		cgi->Cvar_Set("mn_pilot_body", CHRSH_CharGetBody(&pilot->chr));
+		cgi->Cvar_Set("mn_pilot_head", CHRSH_CharGetHead(&pilot->chr));
+		cgi->Cvar_Set("mn_pilot_body_skin", va("%i", pilot->chr.bodySkin));
+		cgi->Cvar_Set("mn_pilot_head_skin", va("%i", pilot->chr.headSkin));
 	} else {
-		Cvar_Set("mn_pilotassigned", "0");
-		Cvar_Set("mn_pilot_name", "");
-		Cvar_Set("mn_pilot_body", "");
-		Cvar_Set("mn_pilot_head", "");
-		Cvar_Set("mn_pilot_body_skin", "");
-		Cvar_Set("mn_pilot_head_skin", "");
+		cgi->Cvar_Set("mn_pilotassigned", "0");
+		cgi->Cvar_Set("mn_pilot_name", "");
+		cgi->Cvar_Set("mn_pilot_body", "");
+		cgi->Cvar_Set("mn_pilot_head", "");
+		cgi->Cvar_Set("mn_pilot_body_skin", "");
+		cgi->Cvar_Set("mn_pilot_head_skin", "");
 	}
 }

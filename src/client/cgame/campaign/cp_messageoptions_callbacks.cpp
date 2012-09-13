@@ -134,12 +134,12 @@ static void MSOCB_Init (void)
 
 /**
  * @brief initializes message options menu by showing as much button lines as needed.
- * @note First facultative param (from Cmd_Arg) init messageList_size (the number of rows of button)
+ * @note First facultative param (from cgi->Cmd_Arg) init messageList_size (the number of rows of button)
  */
 static void MSO_Init_f (void)
 {
-	if (Cmd_Argc() == 2) {
-		messageList_size = atoi(Cmd_Argv(1));
+	if (cgi->Cmd_Argc() == 2) {
+		messageList_size = atoi(cgi->Cmd_Argv(1));
 	}
 
 	MSOCB_Init();
@@ -152,11 +152,11 @@ static void MSO_Init_f (void)
  */
 static void MSO_Toggle_f (void)
 {
-	if (Cmd_Argc() != 3)
-		Com_Printf("Usage: %s <listId> <pause|notify|sound>\n", Cmd_Argv(0));
+	if (cgi->Cmd_Argc() != 3)
+		Com_Printf("Usage: %s <listId> <pause|notify|sound>\n", cgi->Cmd_Argv(0));
 	else {
 		uiOptionIterator_t iterator;
-		const int listIndex = atoi(Cmd_Argv(1));
+		const int listIndex = atoi(cgi->Cmd_Argv(1));
 		int idx;
 		const msgCategoryEntry_t *selectedEntry;
 		int optionType;
@@ -185,10 +185,10 @@ static void MSO_Toggle_f (void)
 			return;
 		}
 
-		if (Q_streq(Cmd_Argv(2), "pause")) {
+		if (Q_streq(cgi->Cmd_Argv(2), "pause")) {
 			optionType = MSO_PAUSE;
 			activate = !selectedEntry->settings->doPause;
-		} else if (Q_streq(Cmd_Argv(2), "notify")) {
+		} else if (Q_streq(cgi->Cmd_Argv(2), "notify")) {
 			optionType = MSO_NOTIFY;
 			activate = !selectedEntry->settings->doNotify;
 		} else {
@@ -205,11 +205,11 @@ static void MSO_Toggle_f (void)
  */
 static void MSO_Scroll_f (void)
 {
-	if (Cmd_Argc() < 2)
+	if (cgi->Cmd_Argc() < 2)
 		return;
 
 	/* no scrolling if visible entry count is less than max on page (due to folding) */
-	messageList_scroll = atoi(Cmd_Argv(1));
+	messageList_scroll = atoi(cgi->Cmd_Argv(1));
 
 	MSO_UpdateVisibleButtons();
 }
@@ -247,20 +247,20 @@ void MSO_SetMenuState (const msoMenuState_t newState, const bool callInit, const
 void MSO_InitCallbacks (void)
 {
 	OBJSET(backupMessageSettings, 1);
-	Cmd_AddCommand("msgoptions_toggle", MSO_Toggle_f, "Toggles pause, notification or sound setting for a message category");
-	Cmd_AddCommand("msgoptions_scroll", MSO_Scroll_f, "Scroll callback function for message options menu text");
-	Cmd_AddCommand("msgoptions_init", MSO_Init_f, "Initializes message options menu");
-	Cmd_AddCommand("msgoptions_backup", MSO_BackupSettings_f, "Backup message settings");
-	Cmd_AddCommand("msgoptions_restore",MSO_RestoreSettings_f, "Restore message settings from backup");
+	cgi->Cmd_AddCommand("msgoptions_toggle", MSO_Toggle_f, "Toggles pause, notification or sound setting for a message category");
+	cgi->Cmd_AddCommand("msgoptions_scroll", MSO_Scroll_f, "Scroll callback function for message options menu text");
+	cgi->Cmd_AddCommand("msgoptions_init", MSO_Init_f, "Initializes message options menu");
+	cgi->Cmd_AddCommand("msgoptions_backup", MSO_BackupSettings_f, "Backup message settings");
+	cgi->Cmd_AddCommand("msgoptions_restore",MSO_RestoreSettings_f, "Restore message settings from backup");
 
 }
 
 void MSO_ShutdownCallbacks (void)
 {
-	Cmd_RemoveCommand("msgoptions_toggle");
-	Cmd_RemoveCommand("msgoptions_scroll");
-	Cmd_RemoveCommand("msgoptions_init");
-	Cmd_RemoveCommand("msgoptions_backup");
-	Cmd_RemoveCommand("msgoptions_restore");
+	cgi->Cmd_RemoveCommand("msgoptions_toggle");
+	cgi->Cmd_RemoveCommand("msgoptions_scroll");
+	cgi->Cmd_RemoveCommand("msgoptions_init");
+	cgi->Cmd_RemoveCommand("msgoptions_backup");
+	cgi->Cmd_RemoveCommand("msgoptions_restore");
 	cgi->UI_ResetData(TEXT_MESSAGEOPTIONS);
 }

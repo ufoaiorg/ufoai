@@ -49,12 +49,12 @@ static void B_Destroy_AntimaterStorage_f (void)
 	base_t *base;
 	const float prob = frand();
 
-	if (Cmd_Argc() < 4) {	/** note: third parameter not used but we must be sure we have probability parameter */
-		Com_Printf("Usage: %s <probability> <baseID> <buildingType>\n", Cmd_Argv(0));
+	if (cgi->Cmd_Argc() < 4) {	/** note: third parameter not used but we must be sure we have probability parameter */
+		Com_Printf("Usage: %s <probability> <baseID> <buildingType>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
-	base = B_GetFoundedBaseByIDX(atoi(Cmd_Argv(2)));
+	base = B_GetFoundedBaseByIDX(atoi(cgi->Cmd_Argv(2)));
 	if (!base)
 		return;
 	if (CAP_GetCurrent(base, CAP_ANTIMATTER) <= 0)
@@ -65,7 +65,7 @@ static void B_Destroy_AntimaterStorage_f (void)
 	if (base->baseStatus != BASE_WORKING)
 		return;
 
-	if (prob < atof(Cmd_Argv(1))) {
+	if (prob < atof(cgi->Cmd_Argv(1))) {
 		MS_AddNewMessage(_("Notice"), va(_("%s has been destroyed by an antimatter storage breach."), base->name));
 		cgi->UI_PopWindow(false);
 		B_Destroy(base);
@@ -99,11 +99,11 @@ static void B_SelectBase_f (void)
 {
 	int baseID;
 
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <baseID>\n", Cmd_Argv(0));
+	if (cgi->Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <baseID>\n", cgi->Cmd_Argv(0));
 		return;
 	}
-	baseID = atoi(Cmd_Argv(1));
+	baseID = atoi(cgi->Cmd_Argv(1));
 	/* check against MAX_BASES here! - only -1 will create a new base
 	 * if we would check against ccs.numBases here, a click on the base summary
 	 * base nodes would try to select unfounded bases */
@@ -195,7 +195,7 @@ static void B_SetBaseTitle_f (void)
 			Q_strncpyz(baseName, _("Home"), lengthof(baseName));
 		}
 
-		Cvar_Set("mn_base_title", baseName);
+		cgi->Cvar_Set("mn_base_title", baseName);
 	} else {
 		MS_AddNewMessage(_("Notice"), _("You've reached the base limit."));
 		cgi->UI_PopWindow(false);		/* remove the new base popup */
@@ -222,7 +222,7 @@ static void B_BuildBase_f (void)
 
 		base = B_Build(campaign, ccs.newBasePos, baseName);
 		if (!base)
-			Com_Error(ERR_DROP, "Cannot build base");
+			cgi->Com_Error(ERR_DROP, "Cannot build base");
 
 		CP_UpdateCredits(ccs.credits - campaign->basecost);
 		nation = MAP_GetNation(base->pos);
@@ -236,7 +236,7 @@ static void B_BuildBase_f (void)
 		if (ccs.campaignStats.basesBuilt == 1)
 			B_SetUpFirstBase(campaign, base);
 
-		Cvar_SetValue("mn_base_count", B_GetCount());
+		cgi->Cvar_SetValue("mn_base_count", B_GetCount());
 		B_SelectBase(base);
 	} else {
 		if (MAP_IsRadarOverlayActivated())
@@ -259,7 +259,7 @@ static void B_ChangeBaseName_f (void)
 	if (!base)
 		return;
 
-	Q_strncpyz(base->name, Cvar_GetString("mn_base_title"), sizeof(base->name));
+	Q_strncpyz(base->name, cgi->Cvar_GetString("mn_base_title"), sizeof(base->name));
 }
 
 /**
@@ -291,7 +291,7 @@ static void B_BaseInit_f (void)
 	/* make sure the credits cvar is up-to-date */
 	CP_UpdateCredits(ccs.credits);
 
-	Cvar_SetValue("mn_base_num_aircraft", AIR_BaseCountAircraft(base));
+	cgi->Cvar_SetValue("mn_base_num_aircraft", AIR_BaseCountAircraft(base));
 
 	/* activate or deactivate the aircraft button */
 	if (AIR_AircraftAllowed(base)) {
@@ -542,15 +542,15 @@ static void B_BuildingClick_f (void)
 	if (!base)
 		return;
 
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <building_id|building list index>\n", Cmd_Argv(0));
+	if (cgi->Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <building_id|building list index>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
 	/* which building? */
-	building = B_GetBuildingTemplateSilent(Cmd_Argv(1));
+	building = B_GetBuildingTemplateSilent(cgi->Cmd_Argv(1));
 	if (!building) {
-		int num = atoi(Cmd_Argv(1));
+		int num = atoi(cgi->Cmd_Argv(1));
 		if (num > buildingNumber || num < 0) {
 			Com_DPrintf(DEBUG_CLIENT, "B_BuildingClick_f: max exceeded %i/%i\n", num, buildingNumber);
 			return;
@@ -649,12 +649,12 @@ static void B_BuildingDestroy_f (void)
 	base_t *base;
 	building_t *building;
 
-	if (Cmd_Argc() < 3) {
-		Com_DPrintf(DEBUG_CLIENT, "Usage: %s <baseID> <buildingID> [confirmed]\n", Cmd_Argv(0));
+	if (cgi->Cmd_Argc() < 3) {
+		Com_DPrintf(DEBUG_CLIENT, "Usage: %s <baseID> <buildingID> [confirmed]\n", cgi->Cmd_Argv(0));
 		return;
 	} else {
-		const int baseID = atoi(Cmd_Argv(1));
-		const int buildingID = atoi(Cmd_Argv(2));
+		const int baseID = atoi(cgi->Cmd_Argv(1));
+		const int buildingID = atoi(cgi->Cmd_Argv(2));
 		base = B_GetBaseByIDX(baseID);
 		assert(base);
 		building = &ccs.buildings[baseID][buildingID];
@@ -663,7 +663,7 @@ static void B_BuildingDestroy_f (void)
 	if (!base || !building)
 		return;
 
-	if (Cmd_Argc() == 4 && Q_streq(Cmd_Argv(3), "confirmed")) {
+	if (cgi->Cmd_Argc() == 4 && Q_streq(cgi->Cmd_Argv(3), "confirmed")) {
 		/** @todo why not use the local building pointer here - we should
 		 * reduce the access to these 'current' pointers */
 		B_BuildingDestroy(base->buildingCurrent);
@@ -699,11 +699,11 @@ static void B_AssembleMap_f (void)
 {
 	const base_t* base;
 
-	if (Cmd_Argc() < 2) {
-		Com_DPrintf(DEBUG_CLIENT, "Usage: %s <baseID>\n", Cmd_Argv(0));
+	if (cgi->Cmd_Argc() < 2) {
+		Com_DPrintf(DEBUG_CLIENT, "Usage: %s <baseID>\n", cgi->Cmd_Argv(0));
 		base = B_GetCurrentSelectedBase();
 	} else {
-		const int baseID = atoi(Cmd_Argv(1));
+		const int baseID = atoi(cgi->Cmd_Argv(1));
 		base = B_GetBaseByIDX(baseID);
 	}
 
@@ -720,12 +720,12 @@ static void B_CheckBuildingStatusForMenu_f (void)
 	const building_t *building;
 	const base_t *base = B_GetCurrentSelectedBase();
 
-	if (Cmd_Argc() != 2) {
-		Com_Printf("Usage: %s <buildingID>\n", Cmd_Argv(0));
+	if (cgi->Cmd_Argc() != 2) {
+		Com_Printf("Usage: %s <buildingID>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
-	buildingID = Cmd_Argv(1);
+	buildingID = cgi->Cmd_Argv(1);
 	building = B_GetBuildingTemplate(buildingID);
 
 	if (!building || !base)
@@ -938,8 +938,8 @@ static void BaseSummary_SelectBase_f (void)
 {
 	const base_t *base;
 
-	if (Cmd_Argc() >= 2) {
-		const int i = atoi(Cmd_Argv(1));
+	if (cgi->Cmd_Argc() >= 2) {
+		const int i = atoi(cgi->Cmd_Argv(1));
 		base = B_GetFoundedBaseByIDX(i);
 		if (base == NULL) {
 			Com_Printf("Invalid base index given (%i).\n", i);
@@ -966,14 +966,14 @@ static void B_MakeBaseMapShot_f (void)
 		return;
 	}
 
-	Cmd_ExecuteString(va("camsetangles %i %i", 60, 90));
-	Cvar_SetValue("r_isometric", 1);
+	cgi->Cmd_ExecuteString(va("camsetangles %i %i", 60, 90));
+	cgi->Cvar_SetValue("r_isometric", 1);
 	/* we are interested in the second level only */
-	Cvar_SetValue("cl_worldlevel", 1);
+	cgi->Cvar_SetValue("cl_worldlevel", 1);
 	cgi->UI_PushWindow("hud_nohud");
 	/* hide any active console */
-	Cmd_ExecuteString("toggleconsole");
-	Cmd_ExecuteString("r_screenshot tga");
+	cgi->Cmd_ExecuteString("toggleconsole");
+	cgi->Cmd_ExecuteString("r_screenshot tga");
 }
 
 /** Init/Shutdown functions */
@@ -981,56 +981,56 @@ static void B_MakeBaseMapShot_f (void)
 /** @todo unify the names into mn_base_* */
 void B_InitCallbacks (void)
 {
-	mn_base_title = Cvar_Get("mn_base_title");
-	cl_start_buildings = Cvar_Get("cl_start_buildings", "1", CVAR_ARCHIVE, "Start with initial buildings in your first base");
-	Cvar_Set("mn_base_cost", va(_("%i c"), ccs.curCampaign->basecost));
-	Cvar_SetValue("mn_base_count", B_GetCount());
-	Cvar_SetValue("mn_base_max", MAX_BASES);
+	mn_base_title = cgi->Cvar_Get("mn_base_title", "", 0, "The title of the current base");
+	cl_start_buildings = cgi->Cvar_Get("cl_start_buildings", "1", CVAR_ARCHIVE, "Start with initial buildings in your first base");
+	cgi->Cvar_Set("mn_base_cost", va(_("%i c"), ccs.curCampaign->basecost));
+	cgi->Cvar_SetValue("mn_base_count", B_GetCount());
+	cgi->Cvar_SetValue("mn_base_max", MAX_BASES);
 
-	Cmd_AddCommand("basemapshot", B_MakeBaseMapShot_f, "Command to make a screenshot for the baseview with the correct angles");
-	Cmd_AddCommand("mn_base_prev", B_PrevBase_f, "Go to the previous base");
-	Cmd_AddCommand("mn_base_next", B_NextBase_f, "Go to the next base");
-	Cmd_AddCommand("mn_base_select", B_SelectBase_f, "Select a founded base by index");
-	Cmd_AddCommand("mn_base_build", B_BuildBase_f);
-	Cmd_AddCommand("mn_set_base_title", B_SetBaseTitle_f);
-	Cmd_AddCommand("base_changename", B_ChangeBaseName_f, "Called after editing the cvar base name");
-	Cmd_AddCommand("base_init", B_BaseInit_f);
-	Cmd_AddCommand("base_assemble", B_AssembleMap_f, "Called to assemble the current selected base");
-	Cmd_AddCommand("base_building_space", B_BuildingSpace_f, "Called to display building capacity in current selected base");
-	Cmd_AddCommand("building_init", B_BuildingInit_f);
-	Cmd_AddCommand("building_status", B_BuildingStatus_f);
-	Cmd_AddCommand("building_destroy", B_BuildingDestroy_f, "Function to destroy a building (select via right click in baseview first)");
-	Cmd_AddCommand("building_amdestroy", B_Destroy_AntimaterStorage_f, "Function called if antimatter storage destroyed");
-	Cmd_AddCommand("building_ufopedia", B_BuildingInfoClick_f, "Opens the UFOpedia for the current selected building");
-	Cmd_AddCommand("check_building_status", B_CheckBuildingStatusForMenu_f, "Create a popup to inform player why he can't use a button");
-	Cmd_AddCommand("buildings_click", B_BuildingClick_f, "Opens the building information window in construction mode");
-	Cmd_AddCommand("reset_building_current", B_ResetBuildingCurrent_f);
-	Cmd_AddCommand("basesummary_selectbase", BaseSummary_SelectBase_f, "Opens Base Statistics menu in base");
+	cgi->Cmd_AddCommand("basemapshot", B_MakeBaseMapShot_f, "Command to make a screenshot for the baseview with the correct angles");
+	cgi->Cmd_AddCommand("mn_base_prev", B_PrevBase_f, "Go to the previous base");
+	cgi->Cmd_AddCommand("mn_base_next", B_NextBase_f, "Go to the next base");
+	cgi->Cmd_AddCommand("mn_base_select", B_SelectBase_f, "Select a founded base by index");
+	cgi->Cmd_AddCommand("mn_base_build", B_BuildBase_f, NULL);
+	cgi->Cmd_AddCommand("mn_set_base_title", B_SetBaseTitle_f, NULL);
+	cgi->Cmd_AddCommand("base_changename", B_ChangeBaseName_f, "Called after editing the cvar base name");
+	cgi->Cmd_AddCommand("base_init", B_BaseInit_f, NULL);
+	cgi->Cmd_AddCommand("base_assemble", B_AssembleMap_f, "Called to assemble the current selected base");
+	cgi->Cmd_AddCommand("base_building_space", B_BuildingSpace_f, "Called to display building capacity in current selected base");
+	cgi->Cmd_AddCommand("building_init", B_BuildingInit_f, NULL);
+	cgi->Cmd_AddCommand("building_status", B_BuildingStatus_f, NULL);
+	cgi->Cmd_AddCommand("building_destroy", B_BuildingDestroy_f, "Function to destroy a building (select via right click in baseview first)");
+	cgi->Cmd_AddCommand("building_amdestroy", B_Destroy_AntimaterStorage_f, "Function called if antimatter storage destroyed");
+	cgi->Cmd_AddCommand("building_ufopedia", B_BuildingInfoClick_f, "Opens the UFOpedia for the current selected building");
+	cgi->Cmd_AddCommand("check_building_status", B_CheckBuildingStatusForMenu_f, "Create a popup to inform player why he can't use a button");
+	cgi->Cmd_AddCommand("buildings_click", B_BuildingClick_f, "Opens the building information window in construction mode");
+	cgi->Cmd_AddCommand("reset_building_current", B_ResetBuildingCurrent_f, NULL);
+	cgi->Cmd_AddCommand("basesummary_selectbase", BaseSummary_SelectBase_f, "Opens Base Statistics menu in base");
 }
 
 /** @todo unify the names into mn_base_* */
 void B_ShutdownCallbacks (void)
 {
-	Cmd_RemoveCommand("basemapshot");
-	Cmd_RemoveCommand("basesummary_selectbase");
-	Cmd_RemoveCommand("mn_base_prev");
-	Cmd_RemoveCommand("mn_base_next");
-	Cmd_RemoveCommand("mn_base_select");
-	Cmd_RemoveCommand("mn_base_build");
-	Cmd_RemoveCommand("base_changename");
-	Cmd_RemoveCommand("mn_set_base_title");
-	Cmd_RemoveCommand("base_init");
-	Cmd_RemoveCommand("base_assemble");
-	Cmd_RemoveCommand("base_building_space");
-	Cmd_RemoveCommand("building_init");
-	Cmd_RemoveCommand("building_status");
-	Cmd_RemoveCommand("building_destroy");
-	Cmd_RemoveCommand("building_ufopedia");
-	Cmd_RemoveCommand("check_building_status");
-	Cmd_RemoveCommand("buildings_click");
-	Cmd_RemoveCommand("reset_building_current");
-	Cvar_Delete("mn_base_max");
-	Cvar_Delete("mn_base_cost");
-	Cvar_Delete("mn_base_title");
-	Cvar_Delete("mn_base_count");
+	cgi->Cmd_RemoveCommand("basemapshot");
+	cgi->Cmd_RemoveCommand("basesummary_selectbase");
+	cgi->Cmd_RemoveCommand("mn_base_prev");
+	cgi->Cmd_RemoveCommand("mn_base_next");
+	cgi->Cmd_RemoveCommand("mn_base_select");
+	cgi->Cmd_RemoveCommand("mn_base_build");
+	cgi->Cmd_RemoveCommand("base_changename");
+	cgi->Cmd_RemoveCommand("mn_set_base_title");
+	cgi->Cmd_RemoveCommand("base_init");
+	cgi->Cmd_RemoveCommand("base_assemble");
+	cgi->Cmd_RemoveCommand("base_building_space");
+	cgi->Cmd_RemoveCommand("building_init");
+	cgi->Cmd_RemoveCommand("building_status");
+	cgi->Cmd_RemoveCommand("building_destroy");
+	cgi->Cmd_RemoveCommand("building_ufopedia");
+	cgi->Cmd_RemoveCommand("check_building_status");
+	cgi->Cmd_RemoveCommand("buildings_click");
+	cgi->Cmd_RemoveCommand("reset_building_current");
+	cgi->Cvar_Delete("mn_base_max");
+	cgi->Cvar_Delete("mn_base_cost");
+	cgi->Cvar_Delete("mn_base_title");
+	cgi->Cvar_Delete("mn_base_count");
 }

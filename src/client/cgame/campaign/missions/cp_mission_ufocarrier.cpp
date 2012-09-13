@@ -95,8 +95,8 @@ void CP_SpawnUFOCarrier_f (void)
 	if (!installationTemplate)
 		return;
 
-	if (Cmd_Argc() == 3) {
-		const vec2_t pos = { atof(Cmd_Argv(1)), atof(Cmd_Argv(2)) };
+	if (cgi->Cmd_Argc() == 3) {
+		const vec2_t pos = { atof(cgi->Cmd_Argv(1)), atof(cgi->Cmd_Argv(2)) };
 		if (!MapIsWater(MAP_GetColor(pos, MAPTYPE_TERRAIN, NULL))) {
 			INS_Build(installationTemplate, pos, _(installationTemplate->name));
 			MAP_CenterPosition(pos);
@@ -127,7 +127,7 @@ void CP_AttackUFOCarrier_f (void)
 	const aircraft_t* ufoTemplate = UFO_GetTemplate(UFO_CARRIER);
 	aircraft_t *ufo = UFO_CreateFromTemplate(ufoTemplate);
 	if (ufo == NULL) {
-		Com_Error(ERR_DROP, "Could not add UFO-Carrier to geoscape");
+		cgi->Com_Error(ERR_DROP, "Could not add UFO-Carrier to geoscape");
 		return;
 	}
 	ufo->mission = mission;

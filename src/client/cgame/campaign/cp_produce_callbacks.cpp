@@ -262,7 +262,7 @@ static void PR_ItemProductionInfo (const base_t *base, const objDef_t *od, int r
 	/* Don't try to display an item which is not producible. */
 	if (!PR_ItemIsProduceable(od)) {
 		Com_sprintf(productionInfo, sizeof(productionInfo), _("No item selected"));
-		Cvar_Set("mn_item", "");
+		cgi->Cvar_Set("mn_item", "");
 	} else {
 		const technology_t *tech = RS_GetTechForItem(od);
 
@@ -270,10 +270,10 @@ static void PR_ItemProductionInfo (const base_t *base, const objDef_t *od, int r
 		Q_strcat(productionInfo, va(_("Costs per item\t%i c\n"), PR_GetPrice(od)), sizeof(productionInfo));
 		Q_strcat(productionInfo, va(_("Production time\t%ih\n"), remainingHours), sizeof(productionInfo));
 		Q_strcat(productionInfo, va(_("Item size\t%i\n"), od->size), sizeof(productionInfo));
-		Cvar_Set("mn_item", od->id);
+		cgi->Cvar_Set("mn_item", od->id);
 
 		PR_RequirementsInfo(base, &tech->requireForProduction);
-		Cmd_ExecuteString(va("show_requirements %i", tech->requireForProduction.numLinks));
+		cgi->Cmd_ExecuteString(va("show_requirements %i", tech->requireForProduction.numLinks));
 	}
 	cgi->UI_RegisterText(TEXT_PRODUCTION_INFO, productionInfo);
 }
@@ -308,8 +308,8 @@ static void PR_DisassemblyInfo (const storedUFO_t *ufo, int remainingHours)
 		Q_strcat(productionInfo, va("  %s (%i)\n", _(compOd->name), amount), sizeof(productionInfo));
 	}
 	cgi->UI_RegisterText(TEXT_PRODUCTION_INFO, productionInfo);
-	Cvar_Set("mn_item", ufo->id);
-	Cmd_ExecuteString("show_requirements 0");
+	cgi->Cvar_Set("mn_item", ufo->id);
+	cgi->Cmd_ExecuteString("show_requirements 0");
 }
 
 /**
@@ -328,9 +328,9 @@ static void PR_AircraftInfo (const base_t *base, const aircraft_t *aircraftTempl
 		sizeof(productionInfo));
 	Q_strcat(productionInfo, va(_("Production time\t%ih\n"), remainingHours), sizeof(productionInfo));
 	cgi->UI_RegisterText(TEXT_PRODUCTION_INFO, productionInfo);
-	Cvar_Set("mn_item", aircraftTemplate->id);
+	cgi->Cvar_Set("mn_item", aircraftTemplate->id);
 	PR_RequirementsInfo(base, &aircraftTemplate->tech->requireForProduction);
-	Cmd_ExecuteString(va("show_requirements %i", aircraftTemplate->tech->requireForProduction.numLinks));
+	cgi->Cmd_ExecuteString(va("show_requirements %i", aircraftTemplate->tech->requireForProduction.numLinks));
 }
 
 /**
@@ -357,9 +357,9 @@ static void PR_ProductionInfo (const base_t *base)
 			PR_DisassemblyInfo(prod->data.data.ufo, time);
 			cgi->UI_ExecuteConfunc("amountsetter disable");
 		} else {
-			Com_Error(ERR_DROP, "PR_ProductionInfo: Selected production is not item nor aircraft nor ufo.\n");
+			cgi->Com_Error(ERR_DROP, "PR_ProductionInfo: Selected production is not item nor aircraft nor ufo.\n");
 		}
-		Cvar_SetValue("mn_production_amount", selectedProduction->amount);
+		cgi->Cvar_SetValue("mn_production_amount", selectedProduction->amount);
 	} else {
 		if (!PR_IsDataValid(&selectedData)) {
 			cgi->UI_ExecuteConfunc("prod_nothingselected");
@@ -367,7 +367,7 @@ static void PR_ProductionInfo (const base_t *base)
 				cgi->UI_RegisterText(TEXT_PRODUCTION_INFO, _("No aircraft selected."));
 			else
 				cgi->UI_RegisterText(TEXT_PRODUCTION_INFO, _("No item selected"));
-			Cvar_Set("mn_item", "");
+			cgi->Cvar_Set("mn_item", "");
 		} else {
 			cgi->UI_ExecuteConfunc("prod_availableselected");
 			if (PR_IsAircraftData(&selectedData)) {
@@ -398,13 +398,13 @@ static void PR_ProductionListRightClick_f (void)
 	queue = PR_GetProductionForBase(base);
 
 	/* not enough parameters */
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <arg>\n", Cmd_Argv(0));
+	if (cgi->Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <arg>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
 	/* clicked which item? */
-	num = atoi(Cmd_Argv(1));
+	num = atoi(cgi->Cmd_Argv(1));
 
 	/* Clicked the production queue or the item list? */
 	if (num < queue->numItems && num >= 0) {
@@ -465,13 +465,13 @@ static void PR_ProductionListClick_f (void)
 	queue = PR_GetProductionForBase(base);
 
 	/* Break if there are not enough parameters. */
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <arg>\n", Cmd_Argv(0));
+	if (cgi->Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <arg>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
 	/* Clicked which item? */
-	num = atoi(Cmd_Argv(1));
+	num = atoi(cgi->Cmd_Argv(1));
 
 	/* Clicked the production queue or the item list? */
 	if (num < queue->numItems && num >= 0) {
@@ -525,12 +525,12 @@ static void PR_ProductionType_f (void)
 	itemFilterTypes_t cat;
 	base_t *base = B_GetCurrentSelectedBase();
 
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <category>\n", Cmd_Argv(0));
+	if (cgi->Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <category>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
-	cat = INV_GetFilterTypeID(Cmd_Argv(1));
+	cat = INV_GetFilterTypeID(cgi->Cmd_Argv(1));
 
 	/* Check if the given category index is valid. */
 	if (cat == MAX_FILTERTYPES)
@@ -541,7 +541,7 @@ static void PR_ProductionType_f (void)
 		return;
 
 	produceCategory = cat;
-	Cvar_Set("mn_itemtype", INV_GetFilterType(produceCategory));
+	cgi->Cvar_Set("mn_itemtype", INV_GetFilterType(produceCategory));
 
 	/* Update list of entries for current production tab. */
 	PR_UpdateProductionList(base);
@@ -588,19 +588,19 @@ static void PR_ProductionList_f (void)
 
 	numWorkshops = std::max(0, B_GetNumberOfBuildingsInBaseByBuildingType(base, B_WORKSHOP));
 
-	Cvar_SetValue("mn_production_limit", MAX_PRODUCTIONS_PER_WORKSHOP * numWorkshops);
-	Cvar_SetValue("mn_production_basecap", CAP_GetMax(base, CAP_WORKSPACE));
+	cgi->Cvar_SetValue("mn_production_limit", MAX_PRODUCTIONS_PER_WORKSHOP * numWorkshops);
+	cgi->Cvar_SetValue("mn_production_basecap", CAP_GetMax(base, CAP_WORKSPACE));
 
 	/* Set amount of workers - all/ready to work (determined by base capacity. */
 	PR_UpdateProductionCap(base);
 
 	Com_sprintf(tmpbuf, sizeof(tmpbuf), "%i/%i",
 		CAP_GetCurrent(base, CAP_WORKSPACE), E_CountHired(base, EMPL_WORKER));
-	Cvar_Set("mn_production_workers", tmpbuf);
+	cgi->Cvar_Set("mn_production_workers", tmpbuf);
 
 	Com_sprintf(tmpbuf, sizeof(tmpbuf), "%i/%i",
 		CAP_GetCurrent(base, CAP_ITEMS), CAP_GetMax(base, CAP_ITEMS));
-	Cvar_Set("mn_production_storage", tmpbuf);
+	cgi->Cvar_Set("mn_production_storage", tmpbuf);
 
 	PR_ClearSelected();
 }
@@ -622,8 +622,8 @@ static void PR_ProductionIncrease_f (void)
 	if (!PR_IsDataValid(&selectedData))
 		return;
 
-	if (Cmd_Argc() == 2)
-		amount = atoi(Cmd_Argv(1));
+	if (cgi->Cmd_Argc() == 2)
+		amount = atoi(cgi->Cmd_Argv(1));
 
 	if (selectedProduction) {
 		prod = selectedProduction;
@@ -636,7 +636,7 @@ static void PR_ProductionIncrease_f (void)
 			/* Don't allow to queue more aircraft if there is no free space. */
 			if (AIR_CalculateHangarStorage(prod->data.data.aircraft, base, 0) <= 0) {
 				CP_Popup(_("Hangars not ready"), _("You cannot queue aircraft.\nNo free space in hangars.\n"));
-				Cvar_SetValue("mn_production_amount", prod->amount);
+				cgi->Cvar_SetValue("mn_production_amount", prod->amount);
 				return;
 			}
 		}
@@ -646,7 +646,7 @@ static void PR_ProductionIncrease_f (void)
 			amount = std::max(0, MAX_PRODUCTION_AMOUNT - prod->amount);
 		}
 		if (amount == 0) {
-			Cvar_SetValue("mn_production_amount", prod->amount);
+			cgi->Cvar_SetValue("mn_production_amount", prod->amount);
 			return;
 		}
 
@@ -656,14 +656,14 @@ static void PR_ProductionIncrease_f (void)
 		producibleAmount = PR_RequirementsMet(amount, &tech->requireForProduction, base);
 		if (producibleAmount == 0) {
 			CP_Popup(_("Not enough materials"), _("You don't have the materials needed for producing more of this item.\n"));
-			Cvar_SetValue("mn_production_amount", prod->amount);
+			cgi->Cvar_SetValue("mn_production_amount", prod->amount);
 			return;
 		} else if (amount != producibleAmount) {
 			CP_Popup(_("Not enough material!"), _("You don't have enough material to produce all (%i) additional items. Only %i could be added."), amount, producibleAmount);
 		}
 
 		PR_IncreaseProduction(prod, producibleAmount);
-		Cvar_SetValue("mn_production_amount", prod->amount);
+		cgi->Cvar_SetValue("mn_production_amount", prod->amount);
 	} else {
 		const char *name = NULL;
 
@@ -751,8 +751,8 @@ static void PR_ProductionDecrease_f (void)
 	const base_t *base = B_GetCurrentSelectedBase();
 	production_t *prod = selectedProduction;
 
-	if (Cmd_Argc() == 2)
-		amount = atoi(Cmd_Argv(1));
+	if (cgi->Cmd_Argc() == 2)
+		amount = atoi(cgi->Cmd_Argv(1));
 
 	if (!prod)
 		return;
@@ -784,16 +784,16 @@ static void PR_ProductionChange_f (void)
 	if (!PR_IsDataValid(&selectedData))
 		return;
 
-	if (Cmd_Argc() != 2) {
-		Com_Printf("Usage: %s <diff> : change the production amount\n", Cmd_Argv(0));
+	if (cgi->Cmd_Argc() != 2) {
+		Com_Printf("Usage: %s <diff> : change the production amount\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
-	amount = atoi(Cmd_Argv(1));
+	amount = atoi(cgi->Cmd_Argv(1));
 	if (amount > 0) {
-		Cbuf_AddText(va("prod_inc %i\n", amount));
+		cgi->Cbuf_AddText(va("prod_inc %i\n", amount));
 	} else {
-		Cbuf_AddText(va("prod_dec %i\n", -amount));
+		cgi->Cbuf_AddText(va("prod_dec %i\n", -amount));
 	}
 }
 
@@ -845,28 +845,28 @@ static void PR_ProductionDown_f (void)
 
 void PR_InitCallbacks (void)
 {
-	Cmd_AddCommand("prod_init", PR_ProductionList_f);
-	Cmd_AddCommand("prod_type", PR_ProductionType_f);
-	Cmd_AddCommand("prod_up", PR_ProductionUp_f, "Move production item up in the queue");
-	Cmd_AddCommand("prod_down", PR_ProductionDown_f, "Move production item down in the queue");
-	Cmd_AddCommand("prod_change", PR_ProductionChange_f, "Change production amount");
-	Cmd_AddCommand("prod_inc", PR_ProductionIncrease_f, "Increase production amount");
-	Cmd_AddCommand("prod_dec", PR_ProductionDecrease_f, "Decrease production amount");
-	Cmd_AddCommand("prod_stop", PR_ProductionStop_f, "Stop production");
-	Cmd_AddCommand("prodlist_rclick", PR_ProductionListRightClick_f);
-	Cmd_AddCommand("prodlist_click", PR_ProductionListClick_f);
+	cgi->Cmd_AddCommand("prod_init", PR_ProductionList_f, NULL);
+	cgi->Cmd_AddCommand("prod_type", PR_ProductionType_f, NULL);
+	cgi->Cmd_AddCommand("prod_up", PR_ProductionUp_f, "Move production item up in the queue");
+	cgi->Cmd_AddCommand("prod_down", PR_ProductionDown_f, "Move production item down in the queue");
+	cgi->Cmd_AddCommand("prod_change", PR_ProductionChange_f, "Change production amount");
+	cgi->Cmd_AddCommand("prod_inc", PR_ProductionIncrease_f, "Increase production amount");
+	cgi->Cmd_AddCommand("prod_dec", PR_ProductionDecrease_f, "Decrease production amount");
+	cgi->Cmd_AddCommand("prod_stop", PR_ProductionStop_f, "Stop production");
+	cgi->Cmd_AddCommand("prodlist_rclick", PR_ProductionListRightClick_f, NULL);
+	cgi->Cmd_AddCommand("prodlist_click", PR_ProductionListClick_f, NULL);
 }
 
 void PR_ShutdownCallbacks (void)
 {
-	Cmd_RemoveCommand("prod_init");
-	Cmd_RemoveCommand("prod_type");
-	Cmd_RemoveCommand("prod_up");
-	Cmd_RemoveCommand("prod_down");
-	Cmd_RemoveCommand("prod_change");
-	Cmd_RemoveCommand("prod_inc");
-	Cmd_RemoveCommand("prod_dec");
-	Cmd_RemoveCommand("prod_stop");
-	Cmd_RemoveCommand("prodlist_rclick");
-	Cmd_RemoveCommand("prodlist_click");
+	cgi->Cmd_RemoveCommand("prod_init");
+	cgi->Cmd_RemoveCommand("prod_type");
+	cgi->Cmd_RemoveCommand("prod_up");
+	cgi->Cmd_RemoveCommand("prod_down");
+	cgi->Cmd_RemoveCommand("prod_change");
+	cgi->Cmd_RemoveCommand("prod_inc");
+	cgi->Cmd_RemoveCommand("prod_dec");
+	cgi->Cmd_RemoveCommand("prod_stop");
+	cgi->Cmd_RemoveCommand("prodlist_rclick");
+	cgi->Cmd_RemoveCommand("prodlist_click");
 }

@@ -46,8 +46,8 @@ static void BS_MarketAircraftDescription (const aircraft_t *aircraftTemplate)
 	tech = aircraftTemplate->tech;
 	assert(tech);
 	UP_AircraftDescription(tech);
-	Cvar_Set("mn_aircraftname", _(aircraftTemplate->name));
-	Cvar_Set("mn_item", aircraftTemplate->id);
+	cgi->Cvar_Set("mn_aircraftname", _(aircraftTemplate->name));
+	cgi->Cvar_Set("mn_item", aircraftTemplate->id);
 }
 
 /**
@@ -56,7 +56,7 @@ static void BS_MarketAircraftDescription (const aircraft_t *aircraftTemplate)
  */
 static void BS_MarketInfoClick_f (void)
 {
-	const char *item = Cvar_GetString("mn_item");
+	const char *item = cgi->Cvar_GetString("mn_item");
 	const technology_t *tech = RS_GetTechByProvided(item);
 
 	if (tech)
@@ -71,18 +71,18 @@ static void BS_SetAutosell_f (void)
 	const objDef_t *od;
 	const technology_t *tech;
 
-	if (Cmd_Argc() < 2) {
+	if (cgi->Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <item-id> [0|1]\nWhere second parameter is the state (off/on), if omitted the autosell property will be flipped.\n",
-				Cmd_Argv(0));
+				cgi->Cmd_Argv(0));
 		return;
 	}
 	/* aircraft check */
-	if (AIR_GetAircraftSilent(Cmd_Argv(1)) != NULL) {
+	if (AIR_GetAircraftSilent(cgi->Cmd_Argv(1)) != NULL) {
 		Com_Printf("Aircraft can't be autosold!\n");
 		return;
 	}
 	/* items */
-	od = INVSH_GetItemByID(Cmd_Argv(1));
+	od = INVSH_GetItemByID(cgi->Cmd_Argv(1));
 	if (!od) {
 		/* no printf, INVSH_GetItemByID gave warning already */
 		return;
@@ -101,8 +101,8 @@ static void BS_SetAutosell_f (void)
 		Com_Printf("Item %s is not researched, can't be autosold!\n", od->id);
 		return;
 	}
-	if (Cmd_Argc() >= 3)
-		ccs.eMarket.autosell[od->idx] = atoi(Cmd_Argv(2));
+	if (cgi->Cmd_Argc() >= 3)
+		ccs.eMarket.autosell[od->idx] = atoi(cgi->Cmd_Argv(2));
 	else
 		ccs.eMarket.autosell[od->idx] = ! ccs.eMarket.autosell[od->idx];
 }
@@ -119,17 +119,17 @@ static void BS_Buy_f (void)
 	const ugv_t *ugv;
 	const objDef_t *od;
 
-	if (Cmd_Argc() < 2) {
+	if (cgi->Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <item-id> <count> [base-idx] \nNegative count means selling. If base index is omitted buys on the currently selected base.\n",
-				Cmd_Argv(0));
+				cgi->Cmd_Argv(0));
 		return;
 	}
 
-	itemid = Cmd_Argv(1);
-	count = atoi(Cmd_Argv(2));
+	itemid = cgi->Cmd_Argv(1);
+	count = atoi(cgi->Cmd_Argv(2));
 
-	if (Cmd_Argc() >= 4)
-		base = B_GetFoundedBaseByIDX(atoi(Cmd_Argv(3)));
+	if (cgi->Cmd_Argc() >= 4)
+		base = B_GetFoundedBaseByIDX(atoi(cgi->Cmd_Argv(3)));
 
 	if (char const* const rest = Q_strstart(itemid, "aircraft-")) {
 		/* aircraft sell - with aircraft golbal idx */
@@ -208,7 +208,7 @@ static void BS_Buy_f (void)
 	if (ugv) {
 		const objDef_t *ugvWeapon = INVSH_GetItemByID(ugv->weapon);
 		if (!ugvWeapon)
-			Com_Error(ERR_DROP, "BS_BuyItem_f: Could not get weapon '%s' for ugv/tank '%s'.", ugv->weapon, ugv->id);
+			cgi->Com_Error(ERR_DROP, "BS_BuyItem_f: Could not get weapon '%s' for ugv/tank '%s'.", ugv->weapon, ugv->id);
 
 		if (E_CountUnhiredRobotsByType(ugv) < 1)
 			return;
@@ -230,12 +230,12 @@ static void BS_Buy_f (void)
 	}
 
 	if (count == 0) {
-		Com_Printf("Invalid number of items to buy/sell: %s\n", Cmd_Argv(2));
+		Com_Printf("Invalid number of items to buy/sell: %s\n", cgi->Cmd_Argv(2));
 		return;
 	}
 
 	/* item */
-	od = INVSH_GetItemByID(Cmd_Argv(1));
+	od = INVSH_GetItemByID(cgi->Cmd_Argv(1));
 	if (od) {
 		if (!BS_IsOnMarket(od))
 			return;
@@ -296,12 +296,12 @@ static void BS_ShowInfo_f (void)
 	const ugv_t *ugv;
 	const objDef_t *od;
 
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <item-id>\n", Cmd_Argv(0));
+	if (cgi->Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <item-id>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
-	itemid = Cmd_Argv(1);
+	itemid = cgi->Cmd_Argv(1);
 
 	if (char const* const rest = Q_strstart(itemid, "aircraft-")) {
 		/* PHALANX aircraft - with aircraft golbal idx */
@@ -345,7 +345,7 @@ static void BS_ShowInfo_f (void)
 	}
 
 	/* item */
-	od = INVSH_GetItemByID(Cmd_Argv(1));
+	od = INVSH_GetItemByID(cgi->Cmd_Argv(1));
 	if (od) {
 		if (!BS_IsOnMarket(od))
 			return;
@@ -367,18 +367,18 @@ static void BS_FillMarket_f (void)
 	const base_t *base = B_GetCurrentSelectedBase();
 	itemFilterTypes_t type;
 
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <category>\n", Cmd_Argv(0));
+	if (cgi->Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <category>\n", cgi->Cmd_Argv(0));
 		return;
 	}
-	if (Cmd_Argc() >= 3)
-		base = B_GetFoundedBaseByIDX(atoi(Cmd_Argv(2)));
+	if (cgi->Cmd_Argc() >= 3)
+		base = B_GetFoundedBaseByIDX(atoi(cgi->Cmd_Argv(2)));
 	if (!base) {
 		Com_Printf("No/invalid base selected.\n");
 		return;
 	}
 
-	type = INV_GetFilterTypeID(Cmd_Argv(1));
+	type = INV_GetFilterTypeID(cgi->Cmd_Argv(1));
 	cgi->UI_ExecuteConfunc("ui_market_clear");
 	switch (type) {
 	case FILTER_UGVITEM:
@@ -454,12 +454,12 @@ static void BS_FillMarket_f (void)
  */
 void BS_InitCallbacks(void)
 {
-	Cmd_AddCommand("market_openpedia", BS_MarketInfoClick_f, "Open UFOPedia entry for selected item");
+	cgi->Cmd_AddCommand("market_openpedia", BS_MarketInfoClick_f, "Open UFOPedia entry for selected item");
 
-	Cmd_AddCommand("ui_market_setautosell", BS_SetAutosell_f, "Sets/unsets or flips the autosell property of an item on the market");
-	Cmd_AddCommand("ui_market_buy", BS_Buy_f, "Buy/Sell item/aircraft/ugv on the market");
-	Cmd_AddCommand("ui_market_showinfo", BS_ShowInfo_f, "Show informations about item/aircaft/ugv in the market");
-	Cmd_AddCommand("ui_market_fill", BS_FillMarket_f, "Fill market item list");
+	cgi->Cmd_AddCommand("ui_market_setautosell", BS_SetAutosell_f, "Sets/unsets or flips the autosell property of an item on the market");
+	cgi->Cmd_AddCommand("ui_market_buy", BS_Buy_f, "Buy/Sell item/aircraft/ugv on the market");
+	cgi->Cmd_AddCommand("ui_market_showinfo", BS_ShowInfo_f, "Show informations about item/aircaft/ugv in the market");
+	cgi->Cmd_AddCommand("ui_market_fill", BS_FillMarket_f, "Fill market item list");
 }
 
 /**
@@ -467,10 +467,10 @@ void BS_InitCallbacks(void)
  */
 void BS_ShutdownCallbacks(void)
 {
-	Cmd_RemoveCommand("ui_market_fill");
-	Cmd_RemoveCommand("ui_market_showinfo");
-	Cmd_RemoveCommand("ui_market_buy");
-	Cmd_RemoveCommand("ui_market_setautosell");
+	cgi->Cmd_RemoveCommand("ui_market_fill");
+	cgi->Cmd_RemoveCommand("ui_market_showinfo");
+	cgi->Cmd_RemoveCommand("ui_market_buy");
+	cgi->Cmd_RemoveCommand("ui_market_setautosell");
 
-	Cmd_RemoveCommand("market_openpedia");
+	cgi->Cmd_RemoveCommand("market_openpedia");
 }

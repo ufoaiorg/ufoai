@@ -110,17 +110,17 @@ void INT_IncreaseAlienInterest (const campaign_t *campaign)
  */
 bool INT_SaveXML (xmlNode_t *parent)
 {
-	xmlNode_t *interestsNode = XML_AddNode(parent, SAVE_INTERESTS);
+	xmlNode_t *interestsNode = cgi->XML_AddNode(parent, SAVE_INTERESTS);
 	int i;
 
-	XML_AddShortValue(interestsNode, SAVE_INTERESTS_LASTINCREASEDELAY, ccs.lastInterestIncreaseDelay);
-	XML_AddShortValue(interestsNode, SAVE_INTERESTS_LASTMISSIONSPAWNEDDELAY, ccs.lastMissionSpawnedDelay);
-	XML_AddShortValue(interestsNode, SAVE_INTERESTS_OVERALL, ccs.overallInterest);
+	cgi->XML_AddShortValue(interestsNode, SAVE_INTERESTS_LASTINCREASEDELAY, ccs.lastInterestIncreaseDelay);
+	cgi->XML_AddShortValue(interestsNode, SAVE_INTERESTS_LASTMISSIONSPAWNEDDELAY, ccs.lastMissionSpawnedDelay);
+	cgi->XML_AddShortValue(interestsNode, SAVE_INTERESTS_OVERALL, ccs.overallInterest);
 	Com_RegisterConstList(saveInterestConstants);
 	for (i = 0; i < INTERESTCATEGORY_MAX; i++) {
-		xmlNode_t * interestNode = XML_AddNode(interestsNode, SAVE_INTERESTS_INTEREST);
-		XML_AddString(interestNode, SAVE_INTERESTS_ID, Com_GetConstVariable(SAVE_INTERESTCAT_NAMESPACE, i));
-		XML_AddShort(interestNode, SAVE_INTERESTS_VAL, ccs.interest[i]);
+		xmlNode_t * interestNode = cgi->XML_AddNode(interestsNode, SAVE_INTERESTS_INTEREST);
+		cgi->XML_AddString(interestNode, SAVE_INTERESTS_ID, Com_GetConstVariable(SAVE_INTERESTCAT_NAMESPACE, i));
+		cgi->XML_AddShort(interestNode, SAVE_INTERESTS_VAL, ccs.interest[i]);
 	}
 	Com_UnregisterConstList(saveInterestConstants);
 	return true;
@@ -133,16 +133,16 @@ bool INT_SaveXML (xmlNode_t *parent)
 bool INT_LoadXML (xmlNode_t *parent)
 {
 	xmlNode_t *node;
-	xmlNode_t *interestsNode = XML_GetNode(parent, SAVE_INTERESTS);
+	xmlNode_t *interestsNode = cgi->XML_GetNode(parent, SAVE_INTERESTS);
 	bool success = true;
 
-	ccs.lastInterestIncreaseDelay = XML_GetInt(interestsNode, SAVE_INTERESTS_LASTINCREASEDELAY, 0);
-	ccs.lastMissionSpawnedDelay = XML_GetInt(interestsNode, SAVE_INTERESTS_LASTMISSIONSPAWNEDDELAY, 0);
-	ccs.overallInterest = XML_GetInt(interestsNode, SAVE_INTERESTS_OVERALL, 0);
+	ccs.lastInterestIncreaseDelay = cgi->XML_GetInt(interestsNode, SAVE_INTERESTS_LASTINCREASEDELAY, 0);
+	ccs.lastMissionSpawnedDelay = cgi->XML_GetInt(interestsNode, SAVE_INTERESTS_LASTMISSIONSPAWNEDDELAY, 0);
+	ccs.overallInterest = cgi->XML_GetInt(interestsNode, SAVE_INTERESTS_OVERALL, 0);
 	Com_RegisterConstList(saveInterestConstants);
-	for (node = XML_GetNode(interestsNode, SAVE_INTERESTS_INTEREST); node;
-			node = XML_GetNextNode(node, interestsNode, SAVE_INTERESTS_INTEREST)) {
-		const char *categoryId = XML_GetString(node, SAVE_INTERESTS_ID);
+	for (node = cgi->XML_GetNode(interestsNode, SAVE_INTERESTS_INTEREST); node;
+			node = cgi->XML_GetNextNode(node, interestsNode, SAVE_INTERESTS_INTEREST)) {
+		const char *categoryId = cgi->XML_GetString(node, SAVE_INTERESTS_ID);
 		int cat;
 
 		if (!Com_GetConstInt(categoryId, (int*) &cat)) {
@@ -150,7 +150,7 @@ bool INT_LoadXML (xmlNode_t *parent)
 			success = false;
 			break;
 		}
-		ccs.interest[cat]= XML_GetInt(node, SAVE_INTERESTS_VAL, 0);
+		ccs.interest[cat]= cgi->XML_GetInt(node, SAVE_INTERESTS_VAL, 0);
 	}
 	Com_UnregisterConstList(saveInterestConstants);
 	return success;
@@ -215,12 +215,12 @@ static void INT_AlienInterestList_f (void)
  */
 static void INT_SetAlienInterest_f (void)
 {
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <interestlevel>\n", Cmd_Argv(0));
+	if (cgi->Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <interestlevel>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
-	const int interest = atoi(Cmd_Argv(1));
+	const int interest = atoi(cgi->Cmd_Argv(1));
 	ccs.overallInterest = std::max(0, interest);
 }
 #endif
@@ -231,8 +231,8 @@ static void INT_SetAlienInterest_f (void)
 void INT_InitStartup (void)
 {
 #ifdef DEBUG
-	Cmd_AddCommand("debug_interestlist", INT_AlienInterestList_f, "Debug function to show alien interest values");
-	Cmd_AddCommand("debug_interestset", INT_SetAlienInterest_f, "Set overall interest level.");
+	cgi->Cmd_AddCommand("debug_interestlist", INT_AlienInterestList_f, "Debug function to show alien interest values");
+	cgi->Cmd_AddCommand("debug_interestset", INT_SetAlienInterest_f, "Set overall interest level.");
 #endif
 }
 
@@ -242,7 +242,7 @@ void INT_InitStartup (void)
 void INT_Shutdown (void)
 {
 #ifdef DEBUG
-	Cmd_RemoveCommand("debug_interestlist");
-	Cmd_RemoveCommand("debug_interestset");
+	cgi->Cmd_RemoveCommand("debug_interestlist");
+	cgi->Cmd_RemoveCommand("debug_interestset");
 #endif
 }

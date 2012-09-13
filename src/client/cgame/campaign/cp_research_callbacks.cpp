@@ -69,10 +69,10 @@ static void RS_UpdateInfo (const base_t* base)
 	int type;
 
 	/* reset cvars */
-	Cvar_Set("mn_research_image", "");
-	Cvar_Set("mn_research_model", "");
-	Cvar_Set("mn_researchitemname", "");
-	Cvar_Set("mn_researchitem", "");
+	cgi->Cvar_Set("mn_research_image", "");
+	cgi->Cvar_Set("mn_research_model", "");
+	cgi->Cvar_Set("mn_researchitemname", "");
+	cgi->Cvar_Set("mn_researchitem", "");
 	cgi->UI_ResetData(TEXT_STANDARD);
 
 	if (researchListLength <= 0 || researchListPos >= researchListLength)
@@ -91,34 +91,34 @@ static void RS_UpdateInfo (const base_t* base)
 	/* Display laboratories limits. */
 	Com_sprintf(tmpbuf, sizeof(tmpbuf), _("Laboratory space (used/all): %i/%i"),
 		CAP_GetCurrent(base, CAP_LABSPACE), CAP_GetMax(base, CAP_LABSPACE));
-	Cvar_Set("mn_research_labs", tmpbuf);
+	cgi->Cvar_Set("mn_research_labs", tmpbuf);
 
 	/* Store laboratory limits cvars */
-	Cvar_SetValue("mn_max_labspace", CAP_GetMax(base, CAP_LABSPACE));
-	Cvar_SetValue("mn_current_labspace", CAP_GetCurrent(base, CAP_LABSPACE));
+	cgi->Cvar_SetValue("mn_max_labspace", CAP_GetMax(base, CAP_LABSPACE));
+	cgi->Cvar_SetValue("mn_current_labspace", CAP_GetCurrent(base, CAP_LABSPACE));
 
 	/* Display scientists amounts. */
 	Com_sprintf(tmpbuf, sizeof(tmpbuf), _("Scientists (available/all): %i/%i"),
 		E_CountUnassigned(base, EMPL_SCIENTIST),
 		E_CountHired(base, EMPL_SCIENTIST));
-	Cvar_Set("mn_research_scis", tmpbuf);
+	cgi->Cvar_Set("mn_research_scis", tmpbuf);
 
 	/* Store scientist limits cvars */
-	Cvar_SetValue("mn_scientists_hired", E_CountHired(base, EMPL_SCIENTIST));
-	Cvar_SetValue("mn_scientists_available", E_CountUnassigned(base, EMPL_SCIENTIST));
+	cgi->Cvar_SetValue("mn_scientists_hired", E_CountHired(base, EMPL_SCIENTIST));
+	cgi->Cvar_SetValue("mn_scientists_available", E_CountUnassigned(base, EMPL_SCIENTIST));
 
-	Cvar_Set("mn_research_selbase", _("Not researched in any base."));
+	cgi->Cvar_Set("mn_research_selbase", _("Not researched in any base."));
 
 	/* Display the base this tech is researched in. */
 	if (tech->scientists > 0) {
 		assert(tech->base);
 		if (tech->base != base)
-			Cvar_Set("mn_research_selbase", va(_("Researched in %s."), tech->base->name));
+			cgi->Cvar_Set("mn_research_selbase", va(_("Researched in %s."), tech->base->name));
 		else
-			Cvar_Set("mn_research_selbase", _("Researched in this base."));
+			cgi->Cvar_Set("mn_research_selbase", _("Researched in this base."));
 	}
 
-	Cvar_Set("mn_research_selname", _(tech->name));
+	cgi->Cvar_Set("mn_research_selname", _(tech->name));
 	if (tech->overallTime > 0.0) {
 		if (tech->time > tech->overallTime) {
 			Com_Printf("RS_UpdateInfo: \"%s\" - 'time' (%f) was larger than 'overall-time' (%f). Fixed. Please report this.\n", tech->id, tech->time,
@@ -126,34 +126,34 @@ static void RS_UpdateInfo (const base_t* base)
 			/* just in case the values got messed up */
 			tech->time = tech->overallTime;
 		}
-		Cvar_SetValue("mn_research_seltimebar", 100 - (tech->time * 100 / tech->overallTime));
-		Cvar_Set("mn_research_seltime", va(_("Progress: %.1f%%"), 100 - (tech->time * 100 / tech->overallTime)));
+		cgi->Cvar_SetValue("mn_research_seltimebar", 100 - (tech->time * 100 / tech->overallTime));
+		cgi->Cvar_Set("mn_research_seltime", va(_("Progress: %.1f%%"), 100 - (tech->time * 100 / tech->overallTime)));
 	} else {
-		Cvar_SetValue("mn_research_seltimebar", 0);
-		Cvar_Set("mn_research_seltime", _("Progress: not available."));
+		cgi->Cvar_SetValue("mn_research_seltimebar", 0);
+		cgi->Cvar_Set("mn_research_seltime", _("Progress: not available."));
 	}
 
 	switch (tech->statusResearch) {
 	case RS_RUNNING:
-		Cvar_Set("mn_research_selstatus", _("Status: under research"));
-		Cvar_Set("mn_research_selstatus_long", _("Status: this research topic is currently being processed in laboratories"));
+		cgi->Cvar_Set("mn_research_selstatus", _("Status: under research"));
+		cgi->Cvar_Set("mn_research_selstatus_long", _("Status: this research topic is currently being processed in laboratories"));
 		break;
 	case RS_PAUSED:
-		Cvar_Set("mn_research_selstatus", _("Status: research paused"));
-		Cvar_Set("mn_research_selstatus_long", _("Status: research topic currently paused"));
+		cgi->Cvar_Set("mn_research_selstatus", _("Status: research paused"));
+		cgi->Cvar_Set("mn_research_selstatus_long", _("Status: research topic currently paused"));
 		break;
 	case RS_FINISH:
-		Cvar_Set("mn_research_selstatus", _("Status: research finished"));
-		Cvar_Set("mn_research_selstatus_long", _("Status: research finished"));
+		cgi->Cvar_Set("mn_research_selstatus", _("Status: research finished"));
+		cgi->Cvar_Set("mn_research_selstatus_long", _("Status: research finished"));
 		break;
 	case RS_NONE:
 		if (tech->statusCollected && !tech->statusResearchable) {
 			/** @sa RS_UpdateData -> "--" */
-			Cvar_Set("mn_research_selstatus", _("Status: not possible to research"));
-			Cvar_Set("mn_research_selstatus_long", _("Status: the materials or background knowledge needed to research this topic are not available yet"));
+			cgi->Cvar_Set("mn_research_selstatus", _("Status: not possible to research"));
+			cgi->Cvar_Set("mn_research_selstatus_long", _("Status: the materials or background knowledge needed to research this topic are not available yet"));
 		} else {
-			Cvar_Set("mn_research_selstatus", _("Status: unknown technology"));
-			Cvar_Set("mn_research_selstatus_long", _("Status: unknown technology"));
+			cgi->Cvar_Set("mn_research_selstatus", _("Status: unknown technology"));
+			cgi->Cvar_Set("mn_research_selstatus_long", _("Status: unknown technology"));
 		}
 		break;
 	default:
@@ -162,11 +162,11 @@ static void RS_UpdateInfo (const base_t* base)
 
 	/* Set image cvar. */
 	if (tech->image)
-		Cvar_Set("mn_research_image", tech->image);
+		cgi->Cvar_Set("mn_research_image", tech->image);
 
 	/* Set model cvar. */
 	if (tech->mdl)
-		Cvar_Set("mn_research_model", tech->mdl);
+		cgi->Cvar_Set("mn_research_model", tech->mdl);
 }
 
 /**
@@ -227,8 +227,8 @@ static void RS_InitGUI (base_t* base, bool update)
 		switch (element->type) {
 		case RSGUI_NOTHING:
 			cgi->UI_ExecuteConfunc("research_hide %i", i);
-			Cvar_Set(va("mn_researchitem%i", i), "");
-			Cvar_Set(va("mn_rsstatus%i", i), "");
+			cgi->Cvar_Set(va("mn_researchitem%i", i), "");
+			cgi->Cvar_Set(va("mn_rsstatus%i", i), "");
 			break;
 		case RSGUI_RESEARCH:
 			{
@@ -236,11 +236,11 @@ static void RS_InitGUI (base_t* base, bool update)
 				const int max = available[element->base->idx] + element->tech->scientists;
 				cgi->UI_ExecuteConfunc("research_research %i", i);
 				if (!update) {
-					Cvar_Set(va("mn_researchitem%i", i), _(element->tech->name));
+					cgi->Cvar_Set(va("mn_researchitem%i", i), _(element->tech->name));
 				}
 				cgi->UI_ExecuteConfunc("research_updateitem %i %i %i", i, value, max);
 				/* How many scis are assigned to this tech. */
-				Cvar_SetValue(va("mn_researchassigned%i", i), element->tech->scientists);
+				cgi->Cvar_SetValue(va("mn_researchassigned%i", i), element->tech->scientists);
 				if (element->tech->overallTime > 0.0) {
 					float percentage;
 					if (element->tech->time > element->tech->overallTime) {
@@ -251,33 +251,33 @@ static void RS_InitGUI (base_t* base, bool update)
 					}
 					percentage = 100 - (element->tech->time * 100 / element->tech->overallTime);
 					if (percentage > 0) {
-						Cvar_Set(va("mn_rsstatus%i", i), va("%.1f%%", percentage));
+						cgi->Cvar_Set(va("mn_rsstatus%i", i), va("%.1f%%", percentage));
 					} else {
-						Cvar_Set(va("mn_rsstatus%i", i), "");
+						cgi->Cvar_Set(va("mn_rsstatus%i", i), "");
 					}
 				} else {
-					Cvar_Set(va("mn_rsstatus%i", i), "");
+					cgi->Cvar_Set(va("mn_rsstatus%i", i), "");
 				}
 				RS_UpdateResearchStatus(i);
 			}
 			break;
 		case RSGUI_BASETITLE:
 			cgi->UI_ExecuteConfunc("research_basetitle %i", i);
-			Cvar_Set(va("mn_researchitem%i", i), element->base->name);
-			Cvar_Set(va("mn_rsstatus%i", i), "");
+			cgi->Cvar_Set(va("mn_researchitem%i", i), element->base->name);
+			cgi->Cvar_Set(va("mn_rsstatus%i", i), "");
 			break;
 		case RSGUI_BASEINFO:
 			cgi->UI_ExecuteConfunc("research_baseinfo %i", i);
-			Cvar_Set(va("mn_researchitem%i", i), _("Unassigned scientists"));
+			cgi->Cvar_Set(va("mn_researchitem%i", i), _("Unassigned scientists"));
 			/* How many scis are unassigned */
-			Cvar_SetValue(va("mn_researchassigned%i", i), available[element->base->idx]);
-			Cvar_Set(va("mn_rsstatus%i", i), "");
+			cgi->Cvar_SetValue(va("mn_researchassigned%i", i), available[element->base->idx]);
+			cgi->Cvar_Set(va("mn_rsstatus%i", i), "");
 			break;
 		case RSGUI_RESEARCHOUT:
 			cgi->UI_ExecuteConfunc("research_outterresearch %i", i);
-			Cvar_Set(va("mn_researchitem%i", i), _(element->tech->name));
+			cgi->Cvar_Set(va("mn_researchitem%i", i), _(element->tech->name));
 			/* How many scis are assigned to this tech. */
-			Cvar_SetValue(va("mn_researchassigned%i", i), element->tech->scientists);
+			cgi->Cvar_SetValue(va("mn_researchassigned%i", i), element->tech->scientists);
 			if (element->tech->overallTime > 0.0) {
 				float percentage;
 				if (element->tech->time > element->tech->overallTime) {
@@ -288,34 +288,34 @@ static void RS_InitGUI (base_t* base, bool update)
 				}
 				percentage = 100 - (element->tech->time * 100 / element->tech->overallTime);
 				if (percentage > 0) {
-					Cvar_Set(va("mn_rsstatus%i", i), va("%.1f%%", percentage));
+					cgi->Cvar_Set(va("mn_rsstatus%i", i), va("%.1f%%", percentage));
 				} else {
-					Cvar_Set(va("mn_rsstatus%i", i), "");
+					cgi->Cvar_Set(va("mn_rsstatus%i", i), "");
 				}
 			} else {
-				Cvar_Set(va("mn_rsstatus%i", i), "");
+				cgi->Cvar_Set(va("mn_rsstatus%i", i), "");
 			}
 			RS_UpdateResearchStatus(i);
 			break;
 		case RSGUI_MISSINGITEM:
 			cgi->UI_ExecuteConfunc("research_missingitem %i", i);
-			Cvar_Set(va("mn_researchitem%i", i), _(element->tech->name));
-			Cvar_Set(va("mn_rsstatus%i", i), "");
+			cgi->Cvar_Set(va("mn_researchitem%i", i), _(element->tech->name));
+			cgi->Cvar_Set(va("mn_rsstatus%i", i), "");
 			break;
 		case RSGUI_MISSINGITEMTITLE:
 			cgi->UI_ExecuteConfunc("research_missingitemtitle %i", i);
-			Cvar_Set(va("mn_researchitem%i", i), _("Missing an artifact"));
-			Cvar_Set(va("mn_rsstatus%i", i), "");
+			cgi->Cvar_Set(va("mn_researchitem%i", i), _("Missing an artifact"));
+			cgi->Cvar_Set(va("mn_rsstatus%i", i), "");
 			break;
 		case RSGUI_UNRESEARCHABLEITEM:
 			cgi->UI_ExecuteConfunc("research_unresearchableitem %i", i);
-			Cvar_Set(va("mn_researchitem%i", i), _(element->tech->name));
-			Cvar_Set(va("mn_rsstatus%i", i), "");
+			cgi->Cvar_Set(va("mn_researchitem%i", i), _(element->tech->name));
+			cgi->Cvar_Set(va("mn_rsstatus%i", i), "");
 			break;
 		case RSGUI_UNRESEARCHABLEITEMTITLE:
 			cgi->UI_ExecuteConfunc("research_unresearchableitemtitle %i", i);
-			Cvar_Set(va("mn_researchitem%i", i), _("Unresearchable collected items"));
-			Cvar_Set(va("mn_rsstatus%i", i), "");
+			cgi->Cvar_Set(va("mn_researchitem%i", i), _("Unresearchable collected items"));
+			cgi->Cvar_Set(va("mn_rsstatus%i", i), "");
 			break;
 		default:
 			assert(false);
@@ -358,12 +358,12 @@ static void CL_ResearchSelect_f (void)
 	if (!base)
 		return;
 
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <num>\n", Cmd_Argv(0));
+	if (cgi->Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <num>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
-	num = atoi(Cmd_Argv(1));
+	num = atoi(cgi->Cmd_Argv(1));
 	if (num < 0 || num >= researchListLength) {
 		cgi->UI_ResetData(TEXT_STANDARD);
 		return;
@@ -407,16 +407,16 @@ static void RS_ChangeScientist_f (void)
 	if (!base)
 		return;
 
-	if (Cmd_Argc() < 3) {
-		Com_Printf("Usage: %s <num_in_list> <diff>\n", Cmd_Argv(0));
+	if (cgi->Cmd_Argc() < 3) {
+		Com_Printf("Usage: %s <num_in_list> <diff>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
-	num = atoi(Cmd_Argv(1));
+	num = atoi(cgi->Cmd_Argv(1));
 	if (num < 0 || num >= researchListLength)
 		return;
 
-	diff = atoi(Cmd_Argv(2));
+	diff = atoi(cgi->Cmd_Argv(2));
 	if (diff == 0)
 		return;
 
@@ -466,12 +466,12 @@ static void RS_AssignScientist_f (void)
 	if (!base)
 		return;
 
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <num_in_list>\n", Cmd_Argv(0));
+	if (cgi->Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <num_in_list>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
-	num = atoi(Cmd_Argv(1));
+	num = atoi(cgi->Cmd_Argv(1));
 	if (num < 0 || num >= researchListLength)
 		return;
 
@@ -495,12 +495,12 @@ static void RS_RemoveScientist_f (void)
 	if (!base)
 		return;
 
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <num_in_list>\n", Cmd_Argv(0));
+	if (cgi->Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <num_in_list>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
-	num = atoi(Cmd_Argv(1));
+	num = atoi(cgi->Cmd_Argv(1));
 	if (num < 0 || num >= researchListLength)
 		return;
 
@@ -843,16 +843,16 @@ static void UI_ResearchInit_f (void)
 
 void RS_InitCallbacks (void)
 {
-	Cmd_AddCommand("research_init", UI_ResearchInit_f, "Research menu init function binding");
-	Cmd_AddCommand("research_select", CL_ResearchSelect_f, "Update current selection with the one that has been clicked");
-	Cmd_AddCommand("research_update", RS_UpdateData_f);
-	Cmd_AddCommand("research_type", CL_ResearchType_f, "Switch between different research types");
-	Cmd_AddCommand("mn_rs_add", RS_AssignScientist_f, "Assign one scientist to this entry");
-	Cmd_AddCommand("mn_rs_change", RS_ChangeScientist_f, "Assign or remove scientist from this entry");
-	Cmd_AddCommand("mn_rs_remove", RS_RemoveScientist_f, "Remove one scientist from this entry");
-	Cmd_AddCommand("mn_start_research", RS_ResearchStart_f, "Start the research of the selected entry");
-	Cmd_AddCommand("mn_stop_research", RS_ResearchStop_f, "Pause the research of the selected entry");
-	Cmd_AddCommand("mn_show_ufopedia", RS_ShowPedia_f, "Show the entry in the UFOpaedia for the selected research topic");
+	cgi->Cmd_AddCommand("research_init", UI_ResearchInit_f, "Research menu init function binding");
+	cgi->Cmd_AddCommand("research_select", CL_ResearchSelect_f, "Update current selection with the one that has been clicked");
+	cgi->Cmd_AddCommand("research_update", RS_UpdateData_f, NULL);
+	cgi->Cmd_AddCommand("research_type", CL_ResearchType_f, "Switch between different research types");
+	cgi->Cmd_AddCommand("mn_rs_add", RS_AssignScientist_f, "Assign one scientist to this entry");
+	cgi->Cmd_AddCommand("mn_rs_change", RS_ChangeScientist_f, "Assign or remove scientist from this entry");
+	cgi->Cmd_AddCommand("mn_rs_remove", RS_RemoveScientist_f, "Remove one scientist from this entry");
+	cgi->Cmd_AddCommand("mn_start_research", RS_ResearchStart_f, "Start the research of the selected entry");
+	cgi->Cmd_AddCommand("mn_stop_research", RS_ResearchStop_f, "Pause the research of the selected entry");
+	cgi->Cmd_AddCommand("mn_show_ufopedia", RS_ShowPedia_f, "Show the entry in the UFOpaedia for the selected research topic");
 
 	/* reset some static data - this is needed because we can start several
 	 * campaign games without restarting ufo. */
@@ -863,14 +863,14 @@ void RS_InitCallbacks (void)
 
 void RS_ShutdownCallbacks (void)
 {
-	Cmd_RemoveCommand("research_init");
-	Cmd_RemoveCommand("research_select");
-	Cmd_RemoveCommand("research_update");
-	Cmd_RemoveCommand("research_type");
-	Cmd_RemoveCommand("mn_rs_add");
-	Cmd_RemoveCommand("mn_rs_change");
-	Cmd_RemoveCommand("mn_rs_remove");
-	Cmd_RemoveCommand("mn_start_research");
-	Cmd_RemoveCommand("mn_stop_research");
-	Cmd_RemoveCommand("mn_show_ufopedia");
+	cgi->Cmd_RemoveCommand("research_init");
+	cgi->Cmd_RemoveCommand("research_select");
+	cgi->Cmd_RemoveCommand("research_update");
+	cgi->Cmd_RemoveCommand("research_type");
+	cgi->Cmd_RemoveCommand("mn_rs_add");
+	cgi->Cmd_RemoveCommand("mn_rs_change");
+	cgi->Cmd_RemoveCommand("mn_rs_remove");
+	cgi->Cmd_RemoveCommand("mn_start_research");
+	cgi->Cmd_RemoveCommand("mn_stop_research");
+	cgi->Cmd_RemoveCommand("mn_show_ufopedia");
 }

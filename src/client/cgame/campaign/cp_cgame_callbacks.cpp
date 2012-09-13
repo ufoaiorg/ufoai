@@ -48,18 +48,18 @@ static void GAME_CP_Results_f (void)
 		return;
 
 	/* check for replay */
-	if (Cvar_GetInteger("cp_mission_tryagain")) {
+	if (cgi->Cvar_GetInteger("cp_mission_tryagain")) {
 		/* don't collect things and update stats --- we retry the mission */
 		CP_StartSelectedMission();
 		return;
 	}
 	/* check for win */
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <won:true|false>\n", Cmd_Argv(0));
+	if (cgi->Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <won:true|false>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
-	CP_MissionEnd(ccs.curCampaign, mission, &ccs.battleParameters, Com_ParseBoolean(Cmd_Argv(1)));
+	CP_MissionEnd(ccs.curCampaign, mission, &ccs.battleParameters, Com_ParseBoolean(cgi->Cmd_Argv(1)));
 }
 
 /**
@@ -86,7 +86,7 @@ static inline const char* CP_ToDifficultyName (const int difficulty)
 	case 4:
 		return _("Insane");
 	default:
-		Com_Error(ERR_DROP, "Unknown difficulty id %i", difficulty);
+		cgi->Com_Error(ERR_DROP, "Unknown difficulty id %i", difficulty);
 	}
 }
 
@@ -117,22 +117,22 @@ static void GAME_CP_CampaignDescription_f (void)
 	const char *racetype;
 	const campaign_t *campaign;
 
-	if (Cmd_Argc() < 2 || Q_streq(Cmd_Argv(1), "")) {
+	if (cgi->Cmd_Argc() < 2 || Q_streq(cgi->Cmd_Argv(1), "")) {
 		if (ccs.numCampaigns > 0)
 			campaign = &ccs.campaigns[0];
 		else
 			campaign = NULL;
 	} else {
-		campaign = CP_GetCampaign(Cmd_Argv(1));
+		campaign = CP_GetCampaign(cgi->Cmd_Argv(1));
 	}
 
 	if (!campaign) {
-		Com_Printf("Invalid Campaign id: %s\n", Cmd_Argv(1));
+		Com_Printf("Invalid Campaign id: %s\n", cgi->Cmd_Argv(1));
 		return;
 	}
 
 	/* Make sure that this campaign is selected */
-	Cvar_Set("cp_campaign", campaign->id);
+	cgi->Cvar_Set("cp_campaign", campaign->id);
 
 	if (campaign->team == TEAM_PHALANX)
 		racetype = _("Human");
@@ -164,19 +164,19 @@ static void GAME_CP_Start_f (void)
 {
 	campaign_t *campaign;
 
-	campaign = CP_GetCampaign(Cmd_Argv(1));
+	campaign = CP_GetCampaign(cgi->Cmd_Argv(1));
 	if (!campaign) {
-		Com_Printf("Invalid Campaign id: %s\n", Cmd_Argv(1));
+		Com_Printf("Invalid Campaign id: %s\n", cgi->Cmd_Argv(1));
 		return;
 	}
 
 	/* Make sure that this campaign is selected */
-	Cvar_Set("cp_campaign", campaign->id);
+	cgi->Cvar_Set("cp_campaign", campaign->id);
 
 	CP_CampaignInit(campaign, false);
 
 	/* Intro sentences */
-	Cbuf_AddText("seq_start intro\n");
+	cgi->Cbuf_AddText("seq_start intro\n");
 }
 
 static inline void AL_AddAlienTypeToAircraftCargo_ (void *data, const teamDef_t *teamDef, int amount, bool dead)
@@ -351,7 +351,7 @@ bool GAME_CP_TeamIsKnown (const teamDef_t *teamDef)
 		return true;
 
 	if (!ccs.teamDefTechs[teamDef->idx])
-		Com_Error(ERR_DROP, "Could not find tech for teamdef '%s'", teamDef->id);
+		cgi->Com_Error(ERR_DROP, "Could not find tech for teamdef '%s'", teamDef->id);
 
 	return RS_IsResearched_ptr(ccs.teamDefTechs[teamDef->idx]);
 }
@@ -588,20 +588,20 @@ void GAME_CP_CharacterCvars (const character_t *chr)
 		char buf[MAX_VAR];
 		const rank_t *rank = CL_GetRankByIdx(chr->score.rank);
 		Com_sprintf(buf, sizeof(buf), _("Rank: %s"), _(rank->name));
-		Cvar_Set("mn_chrrank", buf);
-		Cvar_Set("mn_chrrank_img", rank->image);
+		cgi->Cvar_Set("mn_chrrank", buf);
+		cgi->Cvar_Set("mn_chrrank_img", rank->image);
 		Com_sprintf(buf, sizeof(buf), "%s ", _(rank->shortname));
-		Cvar_Set("mn_chrrankprefix", buf);
+		cgi->Cvar_Set("mn_chrrankprefix", buf);
 	} else {
-		Cvar_Set("mn_chrrank_img", "");
-		Cvar_Set("mn_chrrank", "");
-		Cvar_Set("mn_chrrankprefix", "");
+		cgi->Cvar_Set("mn_chrrank_img", "");
+		cgi->Cvar_Set("mn_chrrank", "");
+		cgi->Cvar_Set("mn_chrrankprefix", "");
 	}
 
-	Cvar_Set("mn_chrmis", va("%i", chr->score.assignedMissions));
-	Cvar_Set("mn_chrkillalien", va("%i", chr->score.kills[KILLED_ENEMIES]));
-	Cvar_Set("mn_chrkillcivilian", va("%i", chr->score.kills[KILLED_CIVILIANS]));
-	Cvar_Set("mn_chrkillteam", va("%i", chr->score.kills[KILLED_TEAM]));
+	cgi->Cvar_Set("mn_chrmis", va("%i", chr->score.assignedMissions));
+	cgi->Cvar_Set("mn_chrkillalien", va("%i", chr->score.kills[KILLED_ENEMIES]));
+	cgi->Cvar_Set("mn_chrkillcivilian", va("%i", chr->score.kills[KILLED_CIVILIANS]));
+	cgi->Cvar_Set("mn_chrkillteam", va("%i", chr->score.kills[KILLED_TEAM]));
 }
 
 const char* GAME_CP_GetItemModel (const char *string)
@@ -620,17 +620,17 @@ const char* GAME_CP_GetItemModel (const char *string)
 
 void GAME_CP_InitStartup (void)
 {
-	Cmd_AddCommand("cp_results", GAME_CP_Results_f, "Parses and shows the game results");
-	Cmd_AddCommand("cp_getdescription", GAME_CP_CampaignDescription_f);
-	Cmd_AddCommand("cp_getcampaigns", GAME_CP_GetCampaigns_f, "Fill the campaign list with available campaigns");
-	Cmd_AddCommand("cp_start", GAME_CP_Start_f, "Start the new campaign");
+	cgi->Cmd_AddCommand("cp_results", GAME_CP_Results_f, "Parses and shows the game results");
+	cgi->Cmd_AddCommand("cp_getdescription", GAME_CP_CampaignDescription_f, NULL);
+	cgi->Cmd_AddCommand("cp_getcampaigns", GAME_CP_GetCampaigns_f, "Fill the campaign list with available campaigns");
+	cgi->Cmd_AddCommand("cp_start", GAME_CP_Start_f, "Start the new campaign");
 
 	CP_InitStartup();
 
-	cp_start_employees = Cvar_Get("cp_start_employees", "1", CVAR_ARCHIVE, "Start with hired employees");
+	cp_start_employees = cgi->Cvar_Get("cp_start_employees", "1", CVAR_ARCHIVE, "Start with hired employees");
 	/* cvars might have been changed by other gametypes */
-	Cvar_ForceSet("sv_maxclients", "1");
-	Cvar_ForceSet("sv_ai", "1");
+	cgi->Cvar_ForceSet("sv_maxclients", "1");
+	cgi->Cvar_ForceSet("sv_ai", "1");
 
 	/* reset campaign data */
 	CP_ResetCampaignData();
@@ -639,10 +639,10 @@ void GAME_CP_InitStartup (void)
 
 void GAME_CP_Shutdown (void)
 {
-	Cmd_RemoveCommand("cp_results");
-	Cmd_RemoveCommand("cp_getdescription");
-	Cmd_RemoveCommand("cp_getcampaigns");
-	Cmd_RemoveCommand("cp_start");
+	cgi->Cmd_RemoveCommand("cp_results");
+	cgi->Cmd_RemoveCommand("cp_getdescription");
+	cgi->Cmd_RemoveCommand("cp_getcampaigns");
+	cgi->Cmd_RemoveCommand("cp_start");
 
 	CP_Shutdown();
 

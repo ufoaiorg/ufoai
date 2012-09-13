@@ -44,7 +44,7 @@ static void CP_BeginRescueMission (mission_t *mission)
 	mission->mapDef = Com_GetMapDefinitionByID("rescue");
 	if (!mission->mapDef) {
 		CP_MissionRemove(mission);
-		Com_Error(ERR_DROP, "Could not find mapdef rescue");
+		cgi->Com_Error(ERR_DROP, "Could not find mapdef rescue");
 		return;
 	}
 

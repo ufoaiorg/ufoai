@@ -111,14 +111,14 @@ void AL_FillInContainment (base_t *base)
 		if (!CHRSH_IsTeamDefAlien(td))
 			continue;
 		if (counter >= MAX_ALIENCONT_CAP)
-			Com_Error(ERR_DROP, "Overflow in AL_FillInContainment");
+			cgi->Com_Error(ERR_DROP, "Overflow in AL_FillInContainment");
 		containment->teamDef = td;	/* Link to global race index. */
 		containment->amountAlive = 0;
 		containment->amountDead = 0;
 		/* for sanity checking */
 		containment->tech = ccs.teamDefTechs[td->idx];
 		if (!containment->tech)
-			Com_Error(ERR_DROP, "Could not find a valid tech for '%s'\n", td->name);
+			cgi->Com_Error(ERR_DROP, "Could not find a valid tech for '%s'\n", td->name);
 		Com_DPrintf(DEBUG_CLIENT, "AL_FillInContainment: type: %s tech-index: %i\n", td->name, containment->tech->idx);
 		containment++;
 		counter++;
@@ -162,7 +162,7 @@ void AL_AddAliens (aircraft_t *aircraft)
 
 	breathingTech = RS_GetTechByID(BREATHINGAPPARATUS_TECH);
 	if (!breathingTech)
-		Com_Error(ERR_DROP, "AL_AddAliens: Could not get breathing apparatus tech definition");
+		cgi->Com_Error(ERR_DROP, "AL_AddAliens: Could not get breathing apparatus tech definition");
 	alienBreathing = RS_IsResearched_ptr(breathingTech);
 
 	for (i = 0; i < alienCargoTypes; i++) {
@@ -488,7 +488,7 @@ void AL_ChangeAliveAlienNumber (base_t *base, aliensCont_t *containment, int num
 
 	/* Just a sanity check -- should never be reached */
 	if (!AL_CheckAliveFreeSpace(base, containment, num))
-		Com_Error(ERR_DROP, "AL_ChangeAliveAlienNumber: Can't add/remove %i live aliens, (capacity: %i/%i, Alien Containment Status: %i)\n",
+		cgi->Com_Error(ERR_DROP, "AL_ChangeAliveAlienNumber: Can't add/remove %i live aliens, (capacity: %i/%i, Alien Containment Status: %i)\n",
 			num, CAP_GetCurrent(base, CAP_ALIENS), CAP_GetMax(base, CAP_ALIENS),
 			B_GetBuildingStatus(base, B_ALIEN_CONTAINMENT));
 
@@ -640,12 +640,12 @@ static void AC_AddOne_f (void)
 		return;
 
 	/* arg parsing */
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <alientype> [dead:true|false]\n", Cmd_Argv(0));
+	if (cgi->Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <alientype> [dead:true|false]\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
-	alienName = Cmd_Argv(1);
+	alienName = cgi->Cmd_Argv(1);
 	alienType = Com_GetTeamDefinitionByID(alienName);
 
 	if (!alienType) {
@@ -668,7 +668,7 @@ static void AC_AddOne_f (void)
 		return;
 	}
 
-	if (Cmd_Argc() == 3)
+	if (cgi->Cmd_Argc() == 3)
 		updateAlive = Com_ParseBoolean(Com_Argv(2));
 
 	if (!B_GetBuildingStatus(base, B_ALIEN_CONTAINMENT)) {
@@ -688,7 +688,7 @@ void AC_InitStartup (void)
 {
 	/* add commands */
 #ifdef DEBUG
-	Cmd_AddCommand("debug_addalientocont", AC_AddOne_f, "Add one alien of a given type");
+	cgi->Cmd_AddCommand("debug_addalientocont", AC_AddOne_f, "Add one alien of a given type");
 #endif
 	AC_InitCallbacks();
 }
@@ -704,8 +704,8 @@ bool AC_SaveXML (xmlNode_t * parent)
 	xmlNode_t *aliencont;
 	base_t *base;
 
-	aliencont = XML_AddNode(parent, SAVE_ALIENCONT_ALIENCONT);
-	XML_AddBoolValue(aliencont, SAVE_ALIENCONT_BREATHINGMAILSENT, ccs.breathingMailSent);
+	aliencont = cgi->XML_AddNode(parent, SAVE_ALIENCONT_ALIENCONT);
+	cgi->XML_AddBoolValue(aliencont, SAVE_ALIENCONT_BREATHINGMAILSENT, ccs.breathingMailSent);
 
 	base = NULL;
 	while ((base = B_GetNext(base)) != NULL) {
@@ -715,18 +715,18 @@ bool AC_SaveXML (xmlNode_t * parent)
 		if (!AC_ContainmentAllowed(base))
 			continue;
 
-		node = XML_AddNode(aliencont, SAVE_ALIENCONT_CONT);
-		XML_AddInt(node, SAVE_ALIENCONT_BASEIDX, base->idx);
+		node = cgi->XML_AddNode(aliencont, SAVE_ALIENCONT_CONT);
+		cgi->XML_AddInt(node, SAVE_ALIENCONT_BASEIDX, base->idx);
 		for (k = 0; k < MAX_ALIENCONT_CAP && k < ccs.numAliensTD; k++) {
-			xmlNode_t * snode = XML_AddNode(node, SAVE_ALIENCONT_ALIEN);
+			xmlNode_t * snode = cgi->XML_AddNode(node, SAVE_ALIENCONT_ALIEN);
 
 			assert(base->alienscont);
 			assert(base->alienscont[k].teamDef);
 			assert(base->alienscont[k].teamDef->id);
 
-			XML_AddString(snode, SAVE_ALIENCONT_TEAMID, base->alienscont[k].teamDef->id);
-			XML_AddIntValue(snode, SAVE_ALIENCONT_AMOUNTALIVE, base->alienscont[k].amountAlive);
-			XML_AddIntValue(snode, SAVE_ALIENCONT_AMOUNTDEAD, base->alienscont[k].amountDead);
+			cgi->XML_AddString(snode, SAVE_ALIENCONT_TEAMID, base->alienscont[k].teamDef->id);
+			cgi->XML_AddIntValue(snode, SAVE_ALIENCONT_AMOUNTALIVE, base->alienscont[k].amountAlive);
+			cgi->XML_AddIntValue(snode, SAVE_ALIENCONT_AMOUNTDEAD, base->alienscont[k].amountDead);
 		}
 	}
 
@@ -745,8 +745,8 @@ bool AC_LoadXML (xmlNode_t * parent)
 	xmlNode_t *contNode;
 	int i;
 
-	aliencont = XML_GetNode(parent, SAVE_ALIENCONT_ALIENCONT);
-	ccs.breathingMailSent = XML_GetBool(aliencont, SAVE_ALIENCONT_BREATHINGMAILSENT, false);
+	aliencont = cgi->XML_GetNode(parent, SAVE_ALIENCONT_ALIENCONT);
+	ccs.breathingMailSent = cgi->XML_GetBool(aliencont, SAVE_ALIENCONT_BREATHINGMAILSENT, false);
 
 	/* Init alienContainers */
 	for (i = 0; i < MAX_BASES; i++) {
@@ -755,9 +755,9 @@ bool AC_LoadXML (xmlNode_t * parent)
 		AL_FillInContainment(base);
 	}
 	/* Load data */
-	for (contNode = XML_GetNode(aliencont, SAVE_ALIENCONT_CONT); contNode;
-			contNode = XML_GetNextNode(contNode, aliencont, SAVE_ALIENCONT_CONT)) {
-		int j = XML_GetInt(contNode, SAVE_ALIENCONT_BASEIDX, MAX_BASES);
+	for (contNode = cgi->XML_GetNode(aliencont, SAVE_ALIENCONT_CONT); contNode;
+			contNode = cgi->XML_GetNextNode(contNode, aliencont, SAVE_ALIENCONT_CONT)) {
+		int j = cgi->XML_GetInt(contNode, SAVE_ALIENCONT_BASEIDX, MAX_BASES);
 		base_t *base = B_GetFoundedBaseByIDX(j);
 		int k;
 		xmlNode_t *alienNode;
@@ -767,13 +767,13 @@ bool AC_LoadXML (xmlNode_t * parent)
 			continue;
 		}
 
-		for (k = 0, alienNode = XML_GetNode(contNode, SAVE_ALIENCONT_ALIEN); alienNode && k < MAX_ALIENCONT_CAP; alienNode = XML_GetNextNode(alienNode, contNode, SAVE_ALIENCONT_ALIEN), k++) {
-			const char *const s = XML_GetString(alienNode, SAVE_ALIENCONT_TEAMID);
+		for (k = 0, alienNode = cgi->XML_GetNode(contNode, SAVE_ALIENCONT_ALIEN); alienNode && k < MAX_ALIENCONT_CAP; alienNode = cgi->XML_GetNextNode(alienNode, contNode, SAVE_ALIENCONT_ALIEN), k++) {
+			const char *const s = cgi->XML_GetString(alienNode, SAVE_ALIENCONT_TEAMID);
 			/* Fill Alien Containment with default values like the tech pointer. */
 			base->alienscont[k].teamDef = Com_GetTeamDefinitionByID(s);
 			if (base->alienscont[k].teamDef) {
-				base->alienscont[k].amountAlive = XML_GetInt(alienNode, SAVE_ALIENCONT_AMOUNTALIVE, 0);
-				base->alienscont[k].amountDead = XML_GetInt(alienNode, SAVE_ALIENCONT_AMOUNTDEAD, 0);
+				base->alienscont[k].amountAlive = cgi->XML_GetInt(alienNode, SAVE_ALIENCONT_AMOUNTALIVE, 0);
+				base->alienscont[k].amountDead = cgi->XML_GetInt(alienNode, SAVE_ALIENCONT_AMOUNTDEAD, 0);
 			}
 		}
 	}

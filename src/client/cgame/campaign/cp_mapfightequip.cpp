@@ -622,7 +622,7 @@ bool AII_ReloadWeapon (aircraftSlot_t *slot)
 		slot->ammoLeft = slot->ammo->ammo;
 		slot->delayNextShot = slot->ammo->craftitem.weaponDelay * INSTALLATION_RELOAD_DELAY_MULTIPLIER;
 	} else {
-		Com_Error(ERR_DROP, "AII_ReloadWeapon: AircraftSlot not linked anywhere (aircraft/base/installation)!\n");
+		cgi->Com_Error(ERR_DROP, "AII_ReloadWeapon: AircraftSlot not linked anywhere (aircraft/base/installation)!\n");
 	}
 	return true;
 }
@@ -653,9 +653,9 @@ void BDEF_ReloadBaseWeapons (base_t *base, installation_t *installation)
 	int i;
 
 	if (base && installation)
-		Com_Error(ERR_DROP, "BDEF_ReloadBattery: Both base and Installation pointer set!\n");
+		cgi->Com_Error(ERR_DROP, "BDEF_ReloadBattery: Both base and Installation pointer set!\n");
 	if (!(base || installation))
-		Com_Error(ERR_DROP, "BDEF_ReloadBattery: Neither base nor Installation pointer set!\n");
+		cgi->Com_Error(ERR_DROP, "BDEF_ReloadBattery: Neither base nor Installation pointer set!\n");
 
 	if (base) {
 		for (i = 0; i < base->numBatteries; i++) {
@@ -827,7 +827,7 @@ void AIM_AutoEquipAircraft (aircraft_t *aircraft)
 	const technology_t *tech = RS_GetTechByID("rs_craft_weapon_sparrowhawk");
 
 	if (!tech)
-		Com_Error(ERR_DROP, "Could not get tech rs_craft_weapon_sparrowhawk");
+		cgi->Com_Error(ERR_DROP, "Could not get tech rs_craft_weapon_sparrowhawk");
 
 	assert(aircraft);
 	assert(aircraft->homebase);
@@ -851,7 +851,7 @@ void AIM_AutoEquipAircraft (aircraft_t *aircraft)
 	tech = RS_GetTechByID("rs_craft_weapon_shiva");
 
 	if (!tech)
-		Com_Error(ERR_DROP, "Could not get tech rs_craft_weapon_shiva");
+		cgi->Com_Error(ERR_DROP, "Could not get tech rs_craft_weapon_shiva");
 
 	item = INVSH_GetItemByID(tech->provides);
 
@@ -1255,7 +1255,7 @@ static void BDEF_AutoTarget (baseWeapon_t *weapons, int maxWeapons)
 		base = slot->base;
 		inst = NULL;
 	} else
-		Com_Error(ERR_DROP, "BDEF_AutoSelectTarget: slot doesn't belong to any base or installation");
+		cgi->Com_Error(ERR_DROP, "BDEF_AutoSelectTarget: slot doesn't belong to any base or installation");
 
 	/* Get closest UFO(s) */
 	ufo = NULL;
@@ -1355,18 +1355,18 @@ const char* AII_WeightToName (itemWeight_t weight)
  */
 void AII_SaveOneSlotXML (xmlNode_t *p, const aircraftSlot_t* slot, bool weapon)
 {
-	XML_AddStringValue(p, SAVE_SLOT_ITEMID, slot->item ? slot->item->id : "");
-	XML_AddStringValue(p, SAVE_SLOT_NEXTITEMID, slot->nextItem ? slot->nextItem->id : "");
-	XML_AddIntValue(p, SAVE_SLOT_INSTALLATIONTIME, slot->installationTime);
+	cgi->XML_AddStringValue(p, SAVE_SLOT_ITEMID, slot->item ? slot->item->id : "");
+	cgi->XML_AddStringValue(p, SAVE_SLOT_NEXTITEMID, slot->nextItem ? slot->nextItem->id : "");
+	cgi->XML_AddIntValue(p, SAVE_SLOT_INSTALLATIONTIME, slot->installationTime);
 
 	/* everything below is only for weapon */
 	if (!weapon)
 		return;
 
-	XML_AddIntValue(p, SAVE_SLOT_AMMOLEFT, slot->ammoLeft);
-	XML_AddStringValue(p, SAVE_SLOT_AMMOID, slot->ammo ? slot->ammo->id : "");
-	XML_AddStringValue(p, SAVE_SLOT_NEXTAMMOID, slot->nextAmmo ? slot->nextAmmo->id : "");
-	XML_AddIntValue(p, SAVE_SLOT_DELAYNEXTSHOT, slot->delayNextShot);
+	cgi->XML_AddIntValue(p, SAVE_SLOT_AMMOLEFT, slot->ammoLeft);
+	cgi->XML_AddStringValue(p, SAVE_SLOT_AMMOID, slot->ammo ? slot->ammo->id : "");
+	cgi->XML_AddStringValue(p, SAVE_SLOT_NEXTAMMOID, slot->nextAmmo ? slot->nextAmmo->id : "");
+	cgi->XML_AddIntValue(p, SAVE_SLOT_DELAYNEXTSHOT, slot->delayNextShot);
 }
 
 /**
@@ -1380,7 +1380,7 @@ void AII_SaveOneSlotXML (xmlNode_t *p, const aircraftSlot_t* slot, bool weapon)
 void AII_LoadOneSlotXML (xmlNode_t *node, aircraftSlot_t* slot, bool weapon)
 {
 	const char *name;
-	name = XML_GetString(node, SAVE_SLOT_ITEMID);
+	name = cgi->XML_GetString(node, SAVE_SLOT_ITEMID);
 	if (name[0] != '\0') {
 		const technology_t *tech = RS_GetTechByProvided(name);
 		/* base is NULL here to not check against the storage amounts - they
@@ -1393,14 +1393,14 @@ void AII_LoadOneSlotXML (xmlNode_t *node, aircraftSlot_t* slot, bool weapon)
 	}
 
 	/* item to install after current one is removed */
-	name = XML_GetString(node, SAVE_SLOT_NEXTITEMID);
+	name = cgi->XML_GetString(node, SAVE_SLOT_NEXTITEMID);
 	if (name && name[0] != '\0') {
 		const technology_t *tech = RS_GetTechByProvided(name);
 		if (tech)
 			AII_AddItemToSlot(NULL, tech, slot, true);
 	}
 
-	slot->installationTime = XML_GetInt(node, SAVE_SLOT_INSTALLATIONTIME, 0);
+	slot->installationTime = cgi->XML_GetInt(node, SAVE_SLOT_INSTALLATIONTIME, 0);
 
 	/* everything below is weapon specific */
 	if (!weapon)
@@ -1408,8 +1408,8 @@ void AII_LoadOneSlotXML (xmlNode_t *node, aircraftSlot_t* slot, bool weapon)
 
 	/* current ammo */
 	/* load ammoLeft before adding ammo to avoid unnecessary auto-reloading */
-	slot->ammoLeft = XML_GetInt(node, SAVE_SLOT_AMMOLEFT, 0);
-	name = XML_GetString(node, SAVE_SLOT_AMMOID);
+	slot->ammoLeft = cgi->XML_GetInt(node, SAVE_SLOT_AMMOLEFT, 0);
+	name = cgi->XML_GetString(node, SAVE_SLOT_AMMOID);
 	if (name && name[0] != '\0') {
 		const technology_t *tech = RS_GetTechByProvided(name);
 		/* next Item must not be loaded yet in order to install ammo properly */
@@ -1417,11 +1417,11 @@ void AII_LoadOneSlotXML (xmlNode_t *node, aircraftSlot_t* slot, bool weapon)
 			AII_AddAmmoToSlot(NULL, tech, slot);
 	}
 	/* ammo to install after current one is removed */
-	name = XML_GetString(node, SAVE_SLOT_NEXTAMMOID);
+	name = cgi->XML_GetString(node, SAVE_SLOT_NEXTAMMOID);
 	if (name && name[0] != '\0') {
 		const technology_t *tech = RS_GetTechByProvided(name);
 		if (tech)
 			AII_AddAmmoToSlot(NULL, tech, slot);
 	}
-	slot->delayNextShot = XML_GetInt(node, SAVE_SLOT_DELAYNEXTSHOT, 0);
+	slot->delayNextShot = cgi->XML_GetInt(node, SAVE_SLOT_DELAYNEXTSHOT, 0);
 }

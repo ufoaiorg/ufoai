@@ -115,7 +115,7 @@ void CP_ParseCharacterData (dbuffer *msg)
 		const int num = NET_ReadByte(msg);
 
 		if (num < 0)
-			Com_Error(ERR_DROP, "CP_ParseCharacterData: NET_ReadShort error (%i)\n", num);
+			cgi->Com_Error(ERR_DROP, "CP_ParseCharacterData: NET_ReadShort error (%i)\n", num);
 
 		LIST_Delete(&updateCharacters);
 
@@ -225,7 +225,7 @@ bool CP_ChooseMap (mission_t *mission, const vec2_t pos)
 			/* default map for rescue mission is the rescue random map assembly */
 			mission->mapDef = Com_GetMapDefinitionByID("rescue");
 			if (!mission->mapDef)
-				Com_Error(ERR_DROP, "Could not find mapdef: rescue");
+				cgi->Com_Error(ERR_DROP, "Could not find mapdef: rescue");
 			mission->mapDef->timesAlreadyUsed++;
 			return true;
 		}
@@ -233,7 +233,7 @@ bool CP_ChooseMap (mission_t *mission, const vec2_t pos)
 			/* default map for crashsite mission is the crashsite random map assembly */
 			mission->mapDef = Com_GetMapDefinitionByID("ufocrash");
 			if (!mission->mapDef)
-				Com_Error(ERR_DROP, "Could not find mapdef: ufocrash");
+				cgi->Com_Error(ERR_DROP, "Could not find mapdef: ufocrash");
 			mission->mapDef->timesAlreadyUsed++;
 			return true;
 		}
@@ -284,7 +284,7 @@ bool CP_ChooseMap (mission_t *mission, const vec2_t pos)
  */
 void CP_EndCampaign (bool won)
 {
-	Cmd_ExecuteString("game_exit");
+	cgi->Cmd_ExecuteString("game_exit");
 
 	if (won)
 		cgi->UI_InitStack("endgame", NULL, true, true);
@@ -640,7 +640,7 @@ void CP_UpdateCredits (int credits)
 	if (credits > MAX_CREDITS)
 		credits = MAX_CREDITS;
 	ccs.credits = credits;
-	Cvar_Set("mn_credits", va(_("%i c"), ccs.credits));
+	cgi->Cvar_Set("mn_credits", va(_("%i c"), ccs.credits));
 }
 
 /**
@@ -651,8 +651,8 @@ static bool CP_LoadMapDefStatXML (xmlNode_t *parent)
 {
 	xmlNode_t *node;
 
-	for (node = XML_GetNode(parent, SAVE_CAMPAIGN_MAPDEF); node; node = XML_GetNextNode(node, parent, SAVE_CAMPAIGN_MAPDEF)) {
-		const char *s = XML_GetString(node, SAVE_CAMPAIGN_MAPDEF_ID);
+	for (node = cgi->XML_GetNode(parent, SAVE_CAMPAIGN_MAPDEF); node; node = cgi->XML_GetNextNode(node, parent, SAVE_CAMPAIGN_MAPDEF)) {
+		const char *s = cgi->XML_GetString(node, SAVE_CAMPAIGN_MAPDEF_ID);
 		mapDef_t *map;
 
 		if (s[0] == '\0') {
@@ -664,7 +664,7 @@ static bool CP_LoadMapDefStatXML (xmlNode_t *parent)
 			Com_Printf("Warning: No MapDef with id '%s'!\n", s);
 			continue;
 		}
-		map->timesAlreadyUsed = XML_GetInt(node, SAVE_CAMPAIGN_MAPDEF_COUNT, 0);
+		map->timesAlreadyUsed = cgi->XML_GetInt(node, SAVE_CAMPAIGN_MAPDEF_COUNT, 0);
 	}
 
 	return true;
@@ -682,12 +682,12 @@ bool CP_LoadXML (xmlNode_t *parent)
 	campaign_t *campaign;
 	xmlNode_t *mapDefStat;
 
-	campaignNode = XML_GetNode(parent, SAVE_CAMPAIGN_CAMPAIGN);
+	campaignNode = cgi->XML_GetNode(parent, SAVE_CAMPAIGN_CAMPAIGN);
 	if (!campaignNode) {
 		Com_Printf("Did not find campaign entry in xml!\n");
 		return false;
 	}
-	if (!(name = XML_GetString(campaignNode, SAVE_CAMPAIGN_ID))) {
+	if (!(name = cgi->XML_GetString(campaignNode, SAVE_CAMPAIGN_ID))) {
 		Com_Printf("couldn't locate campaign name in savegame\n");
 		return false;
 	}
@@ -703,31 +703,31 @@ bool CP_LoadXML (xmlNode_t *parent)
 	MAP_Reset(campaign->map);
 
 	/* read credits */
-	CP_UpdateCredits(XML_GetLong(campaignNode, SAVE_CAMPAIGN_CREDITS, 0));
-	ccs.paid = XML_GetBool(campaignNode, SAVE_CAMPAIGN_PAID, false);
+	CP_UpdateCredits(cgi->XML_GetLong(campaignNode, SAVE_CAMPAIGN_CREDITS, 0));
+	ccs.paid = cgi->XML_GetBool(campaignNode, SAVE_CAMPAIGN_PAID, false);
 
-	cgi->SetNextUniqueCharacterNumber(XML_GetInt(campaignNode, SAVE_CAMPAIGN_NEXTUNIQUECHARACTERNUMBER, 0));
+	cgi->SetNextUniqueCharacterNumber(cgi->XML_GetInt(campaignNode, SAVE_CAMPAIGN_NEXTUNIQUECHARACTERNUMBER, 0));
 
-	XML_GetDate(campaignNode, SAVE_CAMPAIGN_DATE, &ccs.date.day, &ccs.date.sec);
+	cgi->XML_GetDate(campaignNode, SAVE_CAMPAIGN_DATE, &ccs.date.day, &ccs.date.sec);
 
 	/* read other campaign data */
-	ccs.civiliansKilled = XML_GetInt(campaignNode, SAVE_CAMPAIGN_CIVILIANSKILLED, 0);
-	ccs.aliensKilled = XML_GetInt(campaignNode, SAVE_CAMPAIGN_ALIENSKILLED, 0);
+	ccs.civiliansKilled = cgi->XML_GetInt(campaignNode, SAVE_CAMPAIGN_CIVILIANSKILLED, 0);
+	ccs.aliensKilled = cgi->XML_GetInt(campaignNode, SAVE_CAMPAIGN_ALIENSKILLED, 0);
 
 	Com_DPrintf(DEBUG_CLIENT, "CP_LoadXML: Getting position\n");
 
 	/* read map view */
-	mapNode = XML_GetNode(campaignNode, SAVE_CAMPAIGN_MAP);
+	mapNode = cgi->XML_GetNode(campaignNode, SAVE_CAMPAIGN_MAP);
 	/* restore the overlay.
-	* do not use Cvar_SetValue, because this function check if value->string are equal to skip calculation
+	* do not use cgi->Cvar_SetValue, because this function check if value->string are equal to skip calculation
 	* and we never set r_geoscape_overlay->string in game: cl_geoscape_overlay won't be updated if the loaded
 	* value is 0 (and that's a problem if you're loading a game when cl_geoscape_overlay is set to another value */
-	Cvar_SetValue("cl_geoscape_overlay", XML_GetInt(mapNode, SAVE_CAMPAIGN_CL_GEOSCAPE_OVERLAY, 0));
-	radarOverlayWasSet = XML_GetBool(mapNode, SAVE_CAMPAIGN_RADAROVERLAYWASSET, false);
-	ccs.XVIShowMap = XML_GetBool(mapNode, SAVE_CAMPAIGN_XVISHOWMAP, false);
+	cgi->Cvar_SetValue("cl_geoscape_overlay", cgi->XML_GetInt(mapNode, SAVE_CAMPAIGN_CL_GEOSCAPE_OVERLAY, 0));
+	radarOverlayWasSet = cgi->XML_GetBool(mapNode, SAVE_CAMPAIGN_RADAROVERLAYWASSET, false);
+	ccs.XVIShowMap = cgi->XML_GetBool(mapNode, SAVE_CAMPAIGN_XVISHOWMAP, false);
 	CP_UpdateXVIMapButton();
 
-	mapDefStat = XML_GetNode(campaignNode, SAVE_CAMPAIGN_MAPDEFSTAT);
+	mapDefStat = cgi->XML_GetNode(campaignNode, SAVE_CAMPAIGN_MAPDEFSTAT);
 	if (mapDefStat && !CP_LoadMapDefStatXML(mapDefStat))
 		return false;
 
@@ -745,9 +745,9 @@ static bool CP_SaveMapDefStatXML (xmlNode_t *parent)
 
 	MapDef_ForeachSingleplayerCampaign(md) {
 		if (md->timesAlreadyUsed > 0) {
-			xmlNode_t *node = XML_AddNode(parent, SAVE_CAMPAIGN_MAPDEF);
-			XML_AddString(node, SAVE_CAMPAIGN_MAPDEF_ID, md->id);
-			XML_AddInt(node, SAVE_CAMPAIGN_MAPDEF_COUNT, md->timesAlreadyUsed);
+			xmlNode_t *node = cgi->XML_AddNode(parent, SAVE_CAMPAIGN_MAPDEF);
+			cgi->XML_AddString(node, SAVE_CAMPAIGN_MAPDEF_ID, md->id);
+			cgi->XML_AddInt(node, SAVE_CAMPAIGN_MAPDEF_COUNT, md->timesAlreadyUsed);
 		}
 	}
 
@@ -764,24 +764,24 @@ bool CP_SaveXML (xmlNode_t *parent)
 	xmlNode_t *map;
 	xmlNode_t *mapDefStat;
 
-	campaign = XML_AddNode(parent, SAVE_CAMPAIGN_CAMPAIGN);
+	campaign = cgi->XML_AddNode(parent, SAVE_CAMPAIGN_CAMPAIGN);
 
-	XML_AddString(campaign, SAVE_CAMPAIGN_ID, ccs.curCampaign->id);
-	XML_AddDate(campaign, SAVE_CAMPAIGN_DATE, ccs.date.day, ccs.date.sec);
-	XML_AddLong(campaign, SAVE_CAMPAIGN_CREDITS, ccs.credits);
-	XML_AddShort(campaign, SAVE_CAMPAIGN_PAID, ccs.paid);
-	XML_AddShortValue(campaign, SAVE_CAMPAIGN_NEXTUNIQUECHARACTERNUMBER, cgi->GetNextUniqueCharacterNumber());
+	cgi->XML_AddString(campaign, SAVE_CAMPAIGN_ID, ccs.curCampaign->id);
+	cgi->XML_AddDate(campaign, SAVE_CAMPAIGN_DATE, ccs.date.day, ccs.date.sec);
+	cgi->XML_AddLong(campaign, SAVE_CAMPAIGN_CREDITS, ccs.credits);
+	cgi->XML_AddShort(campaign, SAVE_CAMPAIGN_PAID, ccs.paid);
+	cgi->XML_AddShortValue(campaign, SAVE_CAMPAIGN_NEXTUNIQUECHARACTERNUMBER, cgi->GetNextUniqueCharacterNumber());
 
-	XML_AddIntValue(campaign, SAVE_CAMPAIGN_CIVILIANSKILLED, ccs.civiliansKilled);
-	XML_AddIntValue(campaign, SAVE_CAMPAIGN_ALIENSKILLED, ccs.aliensKilled);
+	cgi->XML_AddIntValue(campaign, SAVE_CAMPAIGN_CIVILIANSKILLED, ccs.civiliansKilled);
+	cgi->XML_AddIntValue(campaign, SAVE_CAMPAIGN_ALIENSKILLED, ccs.aliensKilled);
 
 	/* Map and user interface */
-	map = XML_AddNode(campaign, SAVE_CAMPAIGN_MAP);
-	XML_AddShort(map, SAVE_CAMPAIGN_CL_GEOSCAPE_OVERLAY, Cvar_GetInteger("cl_geoscape_overlay"));
-	XML_AddBool(map, SAVE_CAMPAIGN_RADAROVERLAYWASSET, radarOverlayWasSet);
-	XML_AddBool(map, SAVE_CAMPAIGN_XVISHOWMAP, ccs.XVIShowMap);
+	map = cgi->XML_AddNode(campaign, SAVE_CAMPAIGN_MAP);
+	cgi->XML_AddShort(map, SAVE_CAMPAIGN_CL_GEOSCAPE_OVERLAY, cgi->Cvar_GetInteger("cl_geoscape_overlay"));
+	cgi->XML_AddBool(map, SAVE_CAMPAIGN_RADAROVERLAYWASSET, radarOverlayWasSet);
+	cgi->XML_AddBool(map, SAVE_CAMPAIGN_XVISHOWMAP, ccs.XVIShowMap);
 
-	mapDefStat = XML_AddNode(campaign, SAVE_CAMPAIGN_MAPDEFSTAT);
+	mapDefStat = cgi->XML_AddNode(campaign, SAVE_CAMPAIGN_MAPDEFSTAT);
 	if (!CP_SaveMapDefStatXML(mapDefStat))
 		return false;
 
@@ -931,14 +931,14 @@ static void CP_DebugAllItems_f (void)
 	int i;
 	base_t *base;
 
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <baseID>\n", Cmd_Argv(0));
+	if (cgi->Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <baseID>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
-	i = atoi(Cmd_Argv(1));
+	i = atoi(cgi->Cmd_Argv(1));
 	if (i >= B_GetCount()) {
-		Com_Printf("invalid baseID (%s)\n", Cmd_Argv(1));
+		Com_Printf("invalid baseID (%s)\n", cgi->Cmd_Argv(1));
 		return;
 	}
 	base = B_GetBaseByIDX(i);
@@ -964,14 +964,14 @@ static void CP_DebugShowItems_f (void)
 	int i;
 	base_t *base;
 
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <baseID>\n", Cmd_Argv(0));
+	if (cgi->Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <baseID>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
-	i = atoi(Cmd_Argv(1));
+	i = atoi(cgi->Cmd_Argv(1));
 	if (i >= B_GetCount()) {
-		Com_Printf("invalid baseID (%s)\n", Cmd_Argv(1));
+		Com_Printf("invalid baseID (%s)\n", cgi->Cmd_Argv(1));
 		return;
 	}
 	base = B_GetBaseByIDX(i);
@@ -1040,7 +1040,7 @@ static void CP_AddCampaignCommands (void)
 	const cmdList_t *commands;
 
 	for (commands = game_commands; commands->name; commands++)
-		Cmd_AddCommand(commands->name, commands->function, commands->description);
+		cgi->Cmd_AddCommand(commands->name, commands->function, commands->description);
 
 	CP_AddCampaignCallbackCommands();
 }
@@ -1072,7 +1072,7 @@ static void CP_RemoveCampaignCommands (void)
 	const cmdList_t *commands;
 
 	for (commands = game_commands; commands->name; commands++)
-		Cmd_RemoveCommand(commands->name);
+		cgi->Cmd_RemoveCommand(commands->name);
 
 	CP_RemoveCampaignCallbackCommands();
 }
@@ -1124,7 +1124,7 @@ void CP_CampaignInit (campaign_t *campaign, bool load)
 	INT_ResetAlienInterest();
 
 	/* Initialize XVI overlay */
-	Cvar_SetValue("mn_xvimap", ccs.XVIShowMap);
+	cgi->Cvar_SetValue("mn_xvimap", ccs.XVIShowMap);
 	CP_InitializeXVIOverlay();
 
 	/* create a base as first step */
@@ -1162,7 +1162,7 @@ void CP_Shutdown (void)
 			LIST_Delete(&alienCat->equipment);
 		}
 
-		Cvar_SetValue("cl_geoscape_overlay", 0);
+		cgi->Cvar_SetValue("cl_geoscape_overlay", 0);
 		/* singleplayer commands are no longer available */
 		Com_DPrintf(DEBUG_CLIENT, "Remove game commands\n");
 		CP_RemoveCampaignCommands();
@@ -1428,10 +1428,10 @@ void CP_InitStartup (void)
 
 	/* commands */
 #ifdef DEBUG
-	Cmd_AddCommand("debug_statsupdate", CP_DebugChangeCharacterStats_f, "Debug function to increase the kills and test the ranks");
+	cgi->Cmd_AddCommand("debug_statsupdate", CP_DebugChangeCharacterStats_f, "Debug function to increase the kills and test the ranks");
 #endif
 
-	cp_missiontest = Cvar_Get("cp_missiontest", "0", CVAR_DEVELOPER, "This will never stop the time on geoscape and print information about spawned missions");
+	cp_missiontest = cgi->Cvar_Get("cp_missiontest", "0", CVAR_DEVELOPER, "This will never stop the time on geoscape and print information about spawned missions");
 
 	/* init subsystems */
 	MS_MessageInit();

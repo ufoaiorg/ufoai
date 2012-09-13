@@ -174,7 +174,7 @@ void INS_DestroyInstallation (installation_t *installation)
 	MSO_CheckAddNewMessage(NT_INSTALLATION_DESTROY, _("Installation destroyed"), cp_messageBuffer, MSG_CONSTRUCTION);
 
 	LIST_Remove(&ccs.installations, installation);
-	Cvar_Set("mn_installation_count", va("%i", INS_GetCount()));
+	cgi->Cvar_Set("mn_installation_count", va("%i", INS_GetCount()));
 }
 
 /**
@@ -202,11 +202,11 @@ void INS_SetCurrentSelectedInstallation (const installation_t *installation)
 
 	if (installation) {
 		B_SetCurrentSelectedBase(NULL);
-		Cvar_Set("mn_installation_title", installation->name);
-		Cvar_Set("mn_installation_type", installation->installationTemplate->id);
+		cgi->Cvar_Set("mn_installation_title", installation->name);
+		cgi->Cvar_Set("mn_installation_type", installation->installationTemplate->id);
 	} else {
-		Cvar_Set("mn_installation_title", "");
-		Cvar_Set("mn_installation_type", "");
+		cgi->Cvar_Set("mn_installation_title", "");
+		cgi->Cvar_Set("mn_installation_type", "");
 	}
 }
 
@@ -219,9 +219,9 @@ void INS_SetCurrentSelectedInstallation (const installation_t *installation)
 static void INS_FinishInstallation (installation_t *installation)
 {
 	if (!installation)
-		Com_Error(ERR_DROP, "INS_FinishInstallation: No Installation.\n");
+		cgi->Com_Error(ERR_DROP, "INS_FinishInstallation: No Installation.\n");
 	if (!installation->installationTemplate)
-		Com_Error(ERR_DROP, "INS_FinishInstallation: No Installation template.\n");
+		cgi->Com_Error(ERR_DROP, "INS_FinishInstallation: No Installation template.\n");
 	if (installation->installationStatus != INSTALLATION_UNDER_CONSTRUCTION) {
 		Com_DPrintf(DEBUG_CLIENT, "INS_FinishInstallation: Installation is not being built.\n");
 		return;
@@ -273,10 +273,10 @@ static void INS_ConstructionFinished_f (void)
 {
 	int idx = -1;
 
-	if (Cmd_Argc() == 2) {
-		idx = atoi(Cmd_Argv(1));
+	if (cgi->Cmd_Argc() == 2) {
+		idx = atoi(cgi->Cmd_Argv(1));
 		if (idx < 0) {
-			Com_Printf("Usage: %s [installationIDX]\nWithout parameter it builds up all.\n", Cmd_Argv(0));
+			Com_Printf("Usage: %s [installationIDX]\nWithout parameter it builds up all.\n", cgi->Cmd_Argv(0));
 			return;
 		}
 	}
@@ -313,8 +313,8 @@ installation_t *INS_GetFirstUFOYard (bool free)
 void INS_InitStartup (void)
 {
 #ifdef DEBUG
-	Cmd_AddCommand("debug_listinstallation", INS_InstallationList_f, "Print installation information to the game console");
-	Cmd_AddCommand("debug_finishinstallation", INS_ConstructionFinished_f, "Finish construction of a specified or every installation");
+	cgi->Cmd_AddCommand("debug_listinstallation", INS_InstallationList_f, "Print installation information to the game console");
+	cgi->Cmd_AddCommand("debug_finishinstallation", INS_ConstructionFinished_f, "Finish construction of a specified or every installation");
 #endif
 }
 
@@ -325,8 +325,8 @@ void INS_Shutdown (void)
 {
 	LIST_Delete(&ccs.installations);
 #ifdef DEBUG
-	Cmd_RemoveCommand("debug_listinstallation");
-	Cmd_RemoveCommand("debug_finishinstallation");
+	cgi->Cmd_RemoveCommand("debug_listinstallation");
+	cgi->Cmd_RemoveCommand("debug_finishinstallation");
 #endif
 }
 
@@ -457,23 +457,23 @@ bool INS_SaveXML (xmlNode_t *p)
 {
 	xmlNode_t *n;
 
-	n = XML_AddNode(p, SAVE_INSTALLATION_INSTALLATIONS);
+	n = cgi->XML_AddNode(p, SAVE_INSTALLATION_INSTALLATIONS);
 	Com_RegisterConstList(saveInstallationConstants);
 	INS_Foreach(inst) {
 		xmlNode_t *s, *ss;
 
-		s = XML_AddNode(n, SAVE_INSTALLATION_INSTALLATION);
-		XML_AddString(s, SAVE_INSTALLATION_TEMPLATEID, inst->installationTemplate->id);
-		XML_AddInt(s, SAVE_INSTALLATION_IDX, inst->idx);
-		XML_AddString(s, SAVE_INSTALLATION_NAME, inst->name);
-		XML_AddPos3(s, SAVE_INSTALLATION_POS, inst->pos);
-		XML_AddString(s, SAVE_INSTALLATION_STATUS, Com_GetConstVariable(SAVE_INSTALLATIONSTATUS_NAMESPACE, inst->installationStatus));
-		XML_AddInt(s, SAVE_INSTALLATION_DAMAGE, inst->installationDamage);
-		XML_AddFloat(s, SAVE_INSTALLATION_ALIENINTEREST, inst->alienInterest);
-		XML_AddInt(s, SAVE_INSTALLATION_BUILDSTART, inst->buildStart);
+		s = cgi->XML_AddNode(n, SAVE_INSTALLATION_INSTALLATION);
+		cgi->XML_AddString(s, SAVE_INSTALLATION_TEMPLATEID, inst->installationTemplate->id);
+		cgi->XML_AddInt(s, SAVE_INSTALLATION_IDX, inst->idx);
+		cgi->XML_AddString(s, SAVE_INSTALLATION_NAME, inst->name);
+		cgi->XML_AddPos3(s, SAVE_INSTALLATION_POS, inst->pos);
+		cgi->XML_AddString(s, SAVE_INSTALLATION_STATUS, Com_GetConstVariable(SAVE_INSTALLATIONSTATUS_NAMESPACE, inst->installationStatus));
+		cgi->XML_AddInt(s, SAVE_INSTALLATION_DAMAGE, inst->installationDamage);
+		cgi->XML_AddFloat(s, SAVE_INSTALLATION_ALIENINTEREST, inst->alienInterest);
+		cgi->XML_AddInt(s, SAVE_INSTALLATION_BUILDSTART, inst->buildStart);
 
-		ss = XML_AddNode(s, SAVE_INSTALLATION_BATTERIES);
-		XML_AddIntValue(ss, SAVE_INSTALLATION_NUM, inst->numBatteries);
+		ss = cgi->XML_AddNode(s, SAVE_INSTALLATION_BATTERIES);
+		cgi->XML_AddIntValue(ss, SAVE_INSTALLATION_NUM, inst->numBatteries);
 		B_SaveBaseSlotsXML(inst->batteries, inst->numBatteries, ss);
 	}
 	Com_UnregisterConstList(saveInstallationConstants);
@@ -489,7 +489,7 @@ bool INS_SaveXML (xmlNode_t *p)
  */
 bool INS_LoadXML (xmlNode_t *p)
 {
-	xmlNode_t *n = XML_GetNode(p, SAVE_INSTALLATION_INSTALLATIONS);
+	xmlNode_t *n = cgi->XML_GetNode(p, SAVE_INSTALLATION_INSTALLATIONS);
 	xmlNode_t *s;
 	bool success = true;
 
@@ -497,13 +497,13 @@ bool INS_LoadXML (xmlNode_t *p)
 		return false;
 
 	Com_RegisterConstList(saveInstallationConstants);
-	for (s = XML_GetNode(n, SAVE_INSTALLATION_INSTALLATION); s; s = XML_GetNextNode(s,n, SAVE_INSTALLATION_INSTALLATION)) {
+	for (s = cgi->XML_GetNode(n, SAVE_INSTALLATION_INSTALLATION); s; s = cgi->XML_GetNextNode(s,n, SAVE_INSTALLATION_INSTALLATION)) {
 		xmlNode_t *ss;
 		installation_t inst;
-		const char *instID = XML_GetString(s, SAVE_INSTALLATION_TEMPLATEID);
-		const char *instStat = XML_GetString(s, SAVE_INSTALLATION_STATUS);
+		const char *instID = cgi->XML_GetString(s, SAVE_INSTALLATION_TEMPLATEID);
+		const char *instStat = cgi->XML_GetString(s, SAVE_INSTALLATION_STATUS);
 
-		inst.idx = XML_GetInt(s, SAVE_INSTALLATION_IDX, -1);
+		inst.idx = cgi->XML_GetInt(s, SAVE_INSTALLATION_IDX, -1);
 		if (inst.idx < 0) {
 			Com_Printf("Invalid installation index %i\n", inst.idx);
 			success = false;
@@ -523,12 +523,12 @@ bool INS_LoadXML (xmlNode_t *p)
 			break;
 		}
 
-		Q_strncpyz(inst.name, XML_GetString(s, SAVE_INSTALLATION_NAME), sizeof(inst.name));
-		XML_GetPos3(s, SAVE_INSTALLATION_POS, inst.pos);
+		Q_strncpyz(inst.name, cgi->XML_GetString(s, SAVE_INSTALLATION_NAME), sizeof(inst.name));
+		cgi->XML_GetPos3(s, SAVE_INSTALLATION_POS, inst.pos);
 
-		inst.installationDamage = XML_GetInt(s, SAVE_INSTALLATION_DAMAGE, 0);
-		inst.alienInterest = XML_GetFloat(s, SAVE_INSTALLATION_ALIENINTEREST, 0.0);
-		inst.buildStart = XML_GetInt(s, SAVE_INSTALLATION_BUILDSTART, 0);
+		inst.installationDamage = cgi->XML_GetInt(s, SAVE_INSTALLATION_DAMAGE, 0);
+		inst.alienInterest = cgi->XML_GetFloat(s, SAVE_INSTALLATION_ALIENINTEREST, 0.0);
+		inst.buildStart = cgi->XML_GetInt(s, SAVE_INSTALLATION_BUILDSTART, 0);
 
 		/* Radar */
 		RADAR_InitialiseUFOs(&inst.radar);
@@ -543,13 +543,13 @@ bool INS_LoadXML (xmlNode_t *p)
 		inst.ufoCapacity.cur = 0;
 
 		/* read battery slots */
-		ss = XML_GetNode(s, SAVE_INSTALLATION_BATTERIES);
+		ss = cgi->XML_GetNode(s, SAVE_INSTALLATION_BATTERIES);
 		if (!ss) {
 			Com_Printf("INS_LoadXML: Batteries not defined!\n");
 			success = false;
 			break;
 		}
-		inst.numBatteries = XML_GetInt(ss, SAVE_INSTALLATION_NUM, 0);
+		inst.numBatteries = cgi->XML_GetInt(ss, SAVE_INSTALLATION_NUM, 0);
 		if (inst.numBatteries > inst.installationTemplate->maxBatteries) {
 			Com_Printf("Installation has more batteries than possible, using upper bound\n");
 			inst.numBatteries = inst.installationTemplate->maxBatteries;
@@ -560,7 +560,7 @@ bool INS_LoadXML (xmlNode_t *p)
 		B_LoadBaseSlotsXML(instp.batteries, instp.numBatteries, ss);
 	}
 	Com_UnregisterConstList(saveInstallationConstants);
-	Cvar_Set("mn_installation_count", va("%i", INS_GetCount()));
+	cgi->Cvar_Set("mn_installation_count", va("%i", INS_GetCount()));
 
 	return success;
 }

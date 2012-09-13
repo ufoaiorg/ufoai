@@ -98,14 +98,14 @@ static void BDEF_SelectItem_f (void)
 	int slotIDX;
 	int itemIDX;
 
-	if (Cmd_Argc() < 4) {
-		Com_Printf("Usage: %s <type> <slotIDX> <itemIDX>\n", Cmd_Argv(0));
+	if (cgi->Cmd_Argc() < 4) {
+		Com_Printf("Usage: %s <type> <slotIDX> <itemIDX>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
-	bdefType = BDEF_GetItemTypeFromID(Cmd_Argv(1));
-	slotIDX = atoi(Cmd_Argv(2));
-	itemIDX = atoi(Cmd_Argv(3));
+	bdefType = BDEF_GetItemTypeFromID(cgi->Cmd_Argv(1));
+	slotIDX = atoi(cgi->Cmd_Argv(2));
+	itemIDX = atoi(cgi->Cmd_Argv(3));
 
 	if (bdefType == MAX_ACITEMS) {
 		Com_Printf("BDEF_AddItem_f: Invalid defence type.\n");
@@ -193,10 +193,10 @@ static void BDEF_BaseDefenceMenuUpdate_f (void)
 	const bool missileResearched = RS_IsResearched_ptr(RS_GetTechByID("rs_building_missile"));
 	const bool laserResearched = RS_IsResearched_ptr(RS_GetTechByID("rs_building_laser"));
 
-	if (Cmd_Argc() != 2)
+	if (cgi->Cmd_Argc() != 2)
 		type[0] = '\0';
 	else
-		Q_strncpyz(type, Cmd_Argv(1), sizeof(type));
+		Q_strncpyz(type, cgi->Cmd_Argv(1), sizeof(type));
 
 	/* don't let old links appear on this menu */
 	cgi->UI_ResetData(TEXT_BASEDEFENCE_LIST);
@@ -213,15 +213,15 @@ static void BDEF_BaseDefenceMenuUpdate_f (void)
 		return;
 	}
 
-	Cvar_Set("mn_target", _("None"));
-	Cmd_ExecuteString("setautofire disable");
+	cgi->Cvar_Set("mn_target", _("None"));
+	cgi->Cmd_ExecuteString("setautofire disable");
 	if (installation) {
 		/* Every slot aims the same target */
 		if (installation->numBatteries) {
-			Cmd_ExecuteString(va("setautofire %i", installation->batteries[0].autofire));
+			cgi->Cmd_ExecuteString(va("setautofire %i", installation->batteries[0].autofire));
 
 			if (installation->batteries[0].target)
-				Cvar_Set("mn_target", UFO_AircraftToIDOnGeoscape(installation->batteries[0].target));
+				cgi->Cvar_Set("mn_target", UFO_AircraftToIDOnGeoscape(installation->batteries[0].target));
 		}
 	} else if (base) {
 		bool autofire = false;
@@ -229,15 +229,15 @@ static void BDEF_BaseDefenceMenuUpdate_f (void)
 		if (base->numBatteries) {
 			autofire |= base->batteries[0].autofire;
 			if (base->batteries[0].target)
-				Cvar_Set("mn_target", UFO_AircraftToIDOnGeoscape(base->batteries[0].target));
+				cgi->Cvar_Set("mn_target", UFO_AircraftToIDOnGeoscape(base->batteries[0].target));
 		}
 		if (base->numLasers) {
 			autofire |= base->lasers[0].autofire;
 			if (base->lasers[0].target && !base->batteries[0].target)
-				Cvar_Set("mn_target", UFO_AircraftToIDOnGeoscape(base->lasers[0].target));
+				cgi->Cvar_Set("mn_target", UFO_AircraftToIDOnGeoscape(base->lasers[0].target));
 		}
 		if (base->numBatteries || base->numLasers)
-			Cmd_ExecuteString(va("setautofire %i", autofire));
+			cgi->Cmd_ExecuteString(va("setautofire %i", autofire));
 	}
 
 	/* Check if we can change to laser or missile */
@@ -320,13 +320,13 @@ static void BDEF_AddItem_f (void)
 		return;
 	}
 
-	if (Cmd_Argc() < 3) {
-		Com_Printf("Usage: %s <type> <slotIDX>\n", Cmd_Argv(0));
+	if (cgi->Cmd_Argc() < 3) {
+		Com_Printf("Usage: %s <type> <slotIDX>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
-	bdefType = BDEF_GetItemTypeFromID(Cmd_Argv(1));
-	slotIDX = atoi(Cmd_Argv(2));
+	bdefType = BDEF_GetItemTypeFromID(cgi->Cmd_Argv(1));
+	slotIDX = atoi(cgi->Cmd_Argv(2));
 
 	if (bdefType == MAX_ACITEMS) {
 		Com_Printf("BDEF_AddItem_f: Invalid defence type.\n");
@@ -393,7 +393,7 @@ static void BDEF_AddItem_f (void)
 	}
 
 	/* Reinit menu */
-	Cmd_ExecuteString(va("basedef_updatemenu %s", BDEF_GetIDFromItemType(slot->type)));
+	cgi->Cmd_ExecuteString(va("basedef_updatemenu %s", BDEF_GetIDFromItemType(slot->type)));
 }
 
 /**
@@ -412,13 +412,13 @@ static void BDEF_RemoveItem_f (void)
 		return;
 	}
 
-	if (Cmd_Argc() < 3) {
-		Com_Printf("Usage: %s <type> <slotIDX>\n", Cmd_Argv(0));
+	if (cgi->Cmd_Argc() < 3) {
+		Com_Printf("Usage: %s <type> <slotIDX>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
-	bdefType = BDEF_GetItemTypeFromID(Cmd_Argv(1));
-	slotIDX = atoi(Cmd_Argv(2));
+	bdefType = BDEF_GetItemTypeFromID(cgi->Cmd_Argv(1));
+	slotIDX = atoi(cgi->Cmd_Argv(2));
 
 	if (bdefType == MAX_ACITEMS) {
 		Com_Printf("BDEF_AddItem_f: Invalid defence type.\n");
@@ -465,7 +465,7 @@ static void BDEF_RemoveItem_f (void)
 			slot->installationTime = 0;
 		}
 	}
-	Cmd_ExecuteString(va("basedef_updatemenu %s", BDEF_GetIDFromItemType(slot->type)));
+	cgi->Cmd_ExecuteString(va("basedef_updatemenu %s", BDEF_GetIDFromItemType(slot->type)));
 }
 
 /**
@@ -481,13 +481,13 @@ static void BDEF_RemoveBattery_f (void)
 	int baseIdx;
 	base_t *base;
 
-	if (Cmd_Argc() < 3) {
-		Com_Printf("Usage: %s <basedefType> <baseIdx>", Cmd_Argv(0));
+	if (cgi->Cmd_Argc() < 3) {
+		Com_Printf("Usage: %s <basedefType> <baseIdx>", cgi->Cmd_Argv(0));
 		return;
 	} else {
 		char type[MAX_VAR];
 
-		Q_strncpyz(type, Cmd_Argv(1), sizeof(type));
+		Q_strncpyz(type, cgi->Cmd_Argv(1), sizeof(type));
 		if (Q_streq(type, "missile"))
 			basedefType = BASEDEF_MISSILE;
 		else if (Q_streq(type, "laser"))
@@ -496,7 +496,7 @@ static void BDEF_RemoveBattery_f (void)
 			basedefType = BASEDEF_RANDOM;
 		else
 			return;
-		baseIdx = atoi(Cmd_Argv(2));
+		baseIdx = atoi(cgi->Cmd_Argv(2));
 	}
 
 	/* Check that the baseIdx exists */
@@ -578,12 +578,12 @@ static void BDEF_AddBattery_f (void)
 	base_t *base;
 	const char* type;
 
-	if (Cmd_Argc() < 3) {
-		Com_Printf("Usage: %s <basedefType> <baseIdx>", Cmd_Argv(0));
+	if (cgi->Cmd_Argc() < 3) {
+		Com_Printf("Usage: %s <basedefType> <baseIdx>", cgi->Cmd_Argv(0));
 		return;
 	}
 
-	type = Cmd_Argv(1);
+	type = cgi->Cmd_Argv(1);
 	if (Q_streq(type, "missile"))
 		basedefType = BASEDEF_MISSILE;
 	else if (Q_streq(type, "laser"))
@@ -595,7 +595,7 @@ static void BDEF_AddBattery_f (void)
 		return;
 	}
 
-	base = B_GetBaseByIDX(atoi(Cmd_Argv(2)));
+	base = B_GetBaseByIDX(atoi(cgi->Cmd_Argv(2)));
 	if (base == NULL) {
 		Com_Printf("BDEF_AddBattery_f: Invalid base index given\n");
 		return;
@@ -616,7 +616,7 @@ static void BDEF_SetAutoFire (baseWeapon_t *weapon, bool state)
 	weapon->autofire = state;
 	if (!weapon->autofire) {
 		weapon->target = NULL;
-		Cvar_Set("mn_target", _("None"));
+		cgi->Cvar_Set("mn_target", _("None"));
 	}
 }
 
@@ -629,18 +629,18 @@ static void BDEF_UpdateActiveBattery_f (void)
 	const char* type;
 	int count;
 
-	if (Cmd_Argc() < 3) {
-		Com_Printf("Usage: %s <basedefType> <baseIdx>", Cmd_Argv(0));
+	if (cgi->Cmd_Argc() < 3) {
+		Com_Printf("Usage: %s <basedefType> <baseIdx>", cgi->Cmd_Argv(0));
 		return;
 	}
 
-	base = B_GetBaseByIDX(atoi(Cmd_Argv(2)));
+	base = B_GetBaseByIDX(atoi(cgi->Cmd_Argv(2)));
 	if (base == NULL) {
 		Com_Printf("BDEF_UpdateActiveBattery_f: Invalid base index given\n");
 		return;
 	}
 
-	type = Cmd_Argv(1);
+	type = cgi->Cmd_Argv(1);
 	if (Q_streq(type, "missile")) {
 		B_CheckBuildingTypeStatus(base, B_DEFENCE_MISSILE, B_STATUS_WORKING, &count);
 		base->numActiveBatteries = std::min(count, base->numBatteries);
@@ -667,40 +667,40 @@ static void BDEF_ChangeAutoFire (void)
 		return;
 	if (base && installation)
 		return;
-	if (Cmd_Argc() < 2)
+	if (cgi->Cmd_Argc() < 2)
 		return;
 
 	if (base) {
 		for (i = 0; i < base->numBatteries; i++)
-			BDEF_SetAutoFire(&base->batteries[i], atoi(Cmd_Argv(1)));
+			BDEF_SetAutoFire(&base->batteries[i], atoi(cgi->Cmd_Argv(1)));
 		for (i = 0; i < base->numLasers; i++)
-			BDEF_SetAutoFire(&base->lasers[i], atoi(Cmd_Argv(1)));
+			BDEF_SetAutoFire(&base->lasers[i], atoi(cgi->Cmd_Argv(1)));
 	} else if (installation) {
 		for (i = 0; i < installation->numBatteries; i++)
-			BDEF_SetAutoFire(&installation->batteries[i], atoi(Cmd_Argv(1)));
+			BDEF_SetAutoFire(&installation->batteries[i], atoi(cgi->Cmd_Argv(1)));
 	}
 }
 
 void BDEF_InitCallbacks (void)
 {
-	Cmd_AddCommand("add_battery", BDEF_AddBattery_f, "Add a new battery to base");
-	Cmd_AddCommand("remove_battery", BDEF_RemoveBattery_f, "Remove a battery from base");
-	Cmd_AddCommand("basedef_updatemenu", BDEF_BaseDefenceMenuUpdate_f, "Inits base defence menu");
-	Cmd_AddCommand("basedef_selectitem", BDEF_SelectItem_f);
-	Cmd_AddCommand("basedef_additem", BDEF_AddItem_f, "Add item to slot");
-	Cmd_AddCommand("basedef_removeitem", BDEF_RemoveItem_f, "Remove item from slot");
-	Cmd_AddCommand("basedef_autofire", BDEF_ChangeAutoFire, "Change autofire option for selected defence system");
-	Cmd_AddCommand("basedef_updatebatteries", BDEF_UpdateActiveBattery_f, "Updates the active defence systems counters");
+	cgi->Cmd_AddCommand("add_battery", BDEF_AddBattery_f, "Add a new battery to base");
+	cgi->Cmd_AddCommand("remove_battery", BDEF_RemoveBattery_f, "Remove a battery from base");
+	cgi->Cmd_AddCommand("basedef_updatemenu", BDEF_BaseDefenceMenuUpdate_f, "Inits base defence menu");
+	cgi->Cmd_AddCommand("basedef_selectitem", BDEF_SelectItem_f, NULL);
+	cgi->Cmd_AddCommand("basedef_additem", BDEF_AddItem_f, "Add item to slot");
+	cgi->Cmd_AddCommand("basedef_removeitem", BDEF_RemoveItem_f, "Remove item from slot");
+	cgi->Cmd_AddCommand("basedef_autofire", BDEF_ChangeAutoFire, "Change autofire option for selected defence system");
+	cgi->Cmd_AddCommand("basedef_updatebatteries", BDEF_UpdateActiveBattery_f, "Updates the active defence systems counters");
 }
 
 void BDEF_ShutdownCallbacks (void)
 {
-	Cmd_RemoveCommand("add_battery");
-	Cmd_RemoveCommand("remove_battery");
-	Cmd_RemoveCommand("basedef_updatebatteries");
-	Cmd_RemoveCommand("basedef_updatemenu");
-	Cmd_RemoveCommand("basedef_selectitem");
-	Cmd_RemoveCommand("basedef_additem");
-	Cmd_RemoveCommand("basedef_removeitem");
-	Cmd_RemoveCommand("basedef_autofire");
+	cgi->Cmd_RemoveCommand("add_battery");
+	cgi->Cmd_RemoveCommand("remove_battery");
+	cgi->Cmd_RemoveCommand("basedef_updatebatteries");
+	cgi->Cmd_RemoveCommand("basedef_updatemenu");
+	cgi->Cmd_RemoveCommand("basedef_selectitem");
+	cgi->Cmd_RemoveCommand("basedef_additem");
+	cgi->Cmd_RemoveCommand("basedef_removeitem");
+	cgi->Cmd_RemoveCommand("basedef_autofire");
 }

@@ -110,18 +110,18 @@ void CP_UpdateTime (void)
 
 	/* Update the timelapse text */
 	if (ccs.gameLapse >= 0 && ccs.gameLapse < NUM_TIMELAPSE) {
-		Cvar_Set("mn_timelapse", _(lapse[ccs.gameLapse].name));
+		cgi->Cvar_Set("mn_timelapse", _(lapse[ccs.gameLapse].name));
 		ccs.gameTimeScale = lapse[ccs.gameLapse].scale;
-		Cvar_SetValue("mn_timelapse_id", ccs.gameLapse);
+		cgi->Cvar_SetValue("mn_timelapse_id", ccs.gameLapse);
 	}
 
 	/* Update the date */
 	Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("%i %s %02i"), date.year, Date_GetMonthName(date.month - 1), date.day);
-	Cvar_Set("mn_mapdate", cp_messageBuffer);
+	cgi->Cvar_Set("mn_mapdate", cp_messageBuffer);
 
 	/* Update the time. */
 	Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("%02i:%02i"), date.hour, date.min);
-	Cvar_Set("mn_maptime", cp_messageBuffer);
+	cgi->Cvar_Set("mn_maptime", cp_messageBuffer);
 }
 
 /**
@@ -217,11 +217,11 @@ static void CP_SetGameTime (int gameLapseValue)
  */
 void CP_SetGameTime_f (void)
 {
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <timeid>\n", Cmd_Argv(0));
+	if (cgi->Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <timeid>\n", cgi->Cmd_Argv(0));
 		return;
 	}
-	CP_SetGameTime(atoi(Cmd_Argv(1)));
+	CP_SetGameTime(atoi(cgi->Cmd_Argv(1)));
 }
 
 /**

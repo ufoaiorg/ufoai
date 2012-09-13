@@ -150,7 +150,7 @@ void PR_UpdateRequiredItemsInBasestorage (base_t *base, int amount, const requir
 		case RS_LINK_TECH_NOT:
 			break;
 		default:
-			Com_Error(ERR_DROP, "Invalid requirement for production!\n");
+			cgi->Com_Error(ERR_DROP, "Invalid requirement for production!\n");
 		}
 	}
 }
@@ -226,7 +226,7 @@ const char* PR_GetName (const productionData_t *data)
 	case PRODUCTION_TYPE_DISASSEMBLY:
 		return UFO_TypeToName(data->data.ufo->ufoTemplate->ufotype);
 	default:
-		Com_Error(ERR_DROP, "Invalid production type given: %i", data->type);
+		cgi->Com_Error(ERR_DROP, "Invalid production type given: %i", data->type);
 	}
 }
 
@@ -335,7 +335,7 @@ void PR_QueueDelete (base_t *base, production_queue_t *queue, int index)
 
 	tech = PR_GetTech(&prod->data);
 	if (tech == NULL)
-		Com_Error(ERR_DROP, "No tech pointer for production");
+		cgi->Com_Error(ERR_DROP, "No tech pointer for production");
 
 	if (PR_IsDisassembly(prod))
 		prod->data.data.ufo->disassembly = NULL;
@@ -672,7 +672,7 @@ int PR_DecreaseProduction (production_t *prod, int amount)
 
 	tech = PR_GetTech(&prod->data);
 	if (tech == NULL)
-		Com_Error(ERR_DROP, "No tech pointer for production");
+		cgi->Com_Error(ERR_DROP, "No tech pointer for production");
 
 	prod->amount += -amount;
 	PR_UpdateRequiredItemsInBasestorage(base, amount, &tech->requireForProduction);
@@ -733,9 +733,9 @@ bool PR_ProductionAllowed (const base_t* base)
 
 void PR_ProductionInit (void)
 {
-	mn_production_limit = Cvar_Get("mn_production_limit", "0");
-	mn_production_workers = Cvar_Get("mn_production_workers", "0");
-	mn_production_amount = Cvar_Get("mn_production_amount", "0");
+	mn_production_limit = cgi->Cvar_Get("mn_production_limit", "0", 0, NULL);
+	mn_production_workers = cgi->Cvar_Get("mn_production_workers", "0", 0, NULL);
+	mn_production_amount = cgi->Cvar_Get("mn_production_amount", "0", 0, NULL);
 }
 
 /**
@@ -808,28 +808,28 @@ base_t *PR_ProductionBase (const production_t *production)
 bool PR_SaveXML (xmlNode_t *p)
 {
 	base_t *base;
-	xmlNode_t *node = XML_AddNode(p, SAVE_PRODUCE_PRODUCTION);
+	xmlNode_t *node = cgi->XML_AddNode(p, SAVE_PRODUCE_PRODUCTION);
 
 	base = NULL;
 	while ((base = B_GetNext(base)) != NULL) {
 		const production_queue_t *pq = PR_GetProductionForBase(base);
 		int j;
 
-		xmlNode_t *snode = XML_AddNode(node, SAVE_PRODUCE_QUEUE);
+		xmlNode_t *snode = cgi->XML_AddNode(node, SAVE_PRODUCE_QUEUE);
 		/** @todo this should not be the base index */
-		XML_AddInt(snode, SAVE_PRODUCE_QUEUEIDX, base->idx);
+		cgi->XML_AddInt(snode, SAVE_PRODUCE_QUEUEIDX, base->idx);
 
 		for (j = 0; j < pq->numItems; j++) {
 			const production_t *prod = &pq->items[j];
-			xmlNode_t * ssnode = XML_AddNode(snode, SAVE_PRODUCE_ITEM);
+			xmlNode_t * ssnode = cgi->XML_AddNode(snode, SAVE_PRODUCE_ITEM);
 			if (PR_IsItem(prod))
-				XML_AddString(ssnode, SAVE_PRODUCE_ITEMID, prod->data.data.item->id);
+				cgi->XML_AddString(ssnode, SAVE_PRODUCE_ITEMID, prod->data.data.item->id);
 			else if (PR_IsAircraft(prod))
-				XML_AddString(ssnode, SAVE_PRODUCE_AIRCRAFTID, prod->data.data.aircraft->id);
+				cgi->XML_AddString(ssnode, SAVE_PRODUCE_AIRCRAFTID, prod->data.data.aircraft->id);
 			else if (PR_IsDisassembly(prod))
-				XML_AddInt(ssnode, SAVE_PRODUCE_UFOIDX, prod->data.data.ufo->idx);
-			XML_AddInt(ssnode, SAVE_PRODUCE_AMOUNT, prod->amount);
-			XML_AddInt(ssnode, SAVE_PRODUCE_PROGRESS, prod->frame);
+				cgi->XML_AddInt(ssnode, SAVE_PRODUCE_UFOIDX, prod->data.data.ufo->idx);
+			cgi->XML_AddInt(ssnode, SAVE_PRODUCE_AMOUNT, prod->amount);
+			cgi->XML_AddInt(ssnode, SAVE_PRODUCE_PROGRESS, prod->frame);
 		}
 	}
 	return true;
@@ -845,12 +845,12 @@ bool PR_LoadXML (xmlNode_t *p)
 {
 	xmlNode_t *node, *snode;
 
-	node = XML_GetNode(p, SAVE_PRODUCE_PRODUCTION);
+	node = cgi->XML_GetNode(p, SAVE_PRODUCE_PRODUCTION);
 
-	for (snode = XML_GetNode(node, SAVE_PRODUCE_QUEUE); snode;
-			snode = XML_GetNextNode(snode, node, SAVE_PRODUCE_QUEUE)) {
+	for (snode = cgi->XML_GetNode(node, SAVE_PRODUCE_QUEUE); snode;
+			snode = cgi->XML_GetNextNode(snode, node, SAVE_PRODUCE_QUEUE)) {
 		xmlNode_t *ssnode;
-		const int baseIDX = XML_GetInt(snode, SAVE_PRODUCE_QUEUEIDX, MAX_BASES);
+		const int baseIDX = cgi->XML_GetInt(snode, SAVE_PRODUCE_QUEUEIDX, MAX_BASES);
 		base_t *base = B_GetBaseByIDX(baseIDX);
 		production_queue_t *pq;
 
@@ -861,16 +861,16 @@ bool PR_LoadXML (xmlNode_t *p)
 
 		pq = PR_GetProductionForBase(base);
 
-		for (ssnode = XML_GetNode(snode, SAVE_PRODUCE_ITEM); pq->numItems < MAX_PRODUCTIONS && ssnode;
-				ssnode = XML_GetNextNode(ssnode, snode, SAVE_PRODUCE_ITEM)) {
-			const char *s1 = XML_GetString(ssnode, SAVE_PRODUCE_ITEMID);
+		for (ssnode = cgi->XML_GetNode(snode, SAVE_PRODUCE_ITEM); pq->numItems < MAX_PRODUCTIONS && ssnode;
+				ssnode = cgi->XML_GetNextNode(ssnode, snode, SAVE_PRODUCE_ITEM)) {
+			const char *s1 = cgi->XML_GetString(ssnode, SAVE_PRODUCE_ITEMID);
 			const char *s2;
 			int ufoIDX;
 			production_t *prod = &pq->items[pq->numItems];
 
 			prod->idx = pq->numItems;
-			prod->amount = XML_GetInt(ssnode, SAVE_PRODUCE_AMOUNT, 0);
-			prod->frame = XML_GetInt(ssnode, SAVE_PRODUCE_PROGRESS, 0);
+			prod->amount = cgi->XML_GetInt(ssnode, SAVE_PRODUCE_AMOUNT, 0);
+			prod->frame = cgi->XML_GetInt(ssnode, SAVE_PRODUCE_PROGRESS, 0);
 
 			/* amount */
 			if (prod->amount <= 0) {
@@ -882,7 +882,7 @@ bool PR_LoadXML (xmlNode_t *p)
 			if (s1[0] != '\0')
 				PR_SetData(&prod->data, PRODUCTION_TYPE_ITEM, INVSH_GetItemByID(s1));
 			/* UFO */
-			ufoIDX = XML_GetInt(ssnode, SAVE_PRODUCE_UFOIDX, -1);
+			ufoIDX = cgi->XML_GetInt(ssnode, SAVE_PRODUCE_UFOIDX, -1);
 			if (ufoIDX != -1) {
 				storedUFO_t *ufo = US_GetStoredUFOByIDX(ufoIDX);
 
@@ -895,7 +895,7 @@ bool PR_LoadXML (xmlNode_t *p)
 				prod->data.data.ufo->disassembly = prod;
 			}
 			/* aircraft */
-			s2 = XML_GetString(ssnode, SAVE_PRODUCE_AIRCRAFTID);
+			s2 = cgi->XML_GetString(ssnode, SAVE_PRODUCE_AIRCRAFTID);
 			if (s2[0] != '\0')
 				PR_SetData(&prod->data, PRODUCTION_TYPE_AIRCRAFT, AIR_GetAircraft(s2));
 

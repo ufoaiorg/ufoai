@@ -67,7 +67,7 @@ aircraft_t *UFO_GetNextOnGeoscape (aircraft_t *lastUFO)
 	while ((ufo = UFO_GetNext(ufo)) != NULL) {
 		if (UFO_IsUFOSeenOnGeoscape(ufo)
 #ifdef DEBUG
-		|| Cvar_GetInteger("debug_showufos")
+		|| cgi->Cvar_GetInteger("debug_showufos")
 #endif
 		)
 			return ufo;
@@ -114,7 +114,7 @@ const aircraft_t* UFO_GetByType (const ufoType_t type)
 			return ufo;
 	}
 
-	Com_Error(ERR_DROP, "No ufo with type %i found", type);
+	cgi->Com_Error(ERR_DROP, "No ufo with type %i found", type);
 }
 
 /**
@@ -141,7 +141,7 @@ const char* UFO_TypeToName (ufoType_t type)
 	const technology_t *tech = UFO_GetTechnologyFromType(type);
 	if (tech)
 		return _(tech->name);
-	Com_Error(ERR_DROP, "UFO_TypeToName(): Unknown UFO type %i\n", type);
+	cgi->Com_Error(ERR_DROP, "UFO_TypeToName(): Unknown UFO type %i\n", type);
 }
 /**
  * @brief Returns names of the UFO is UFO has been researched.
@@ -889,7 +889,7 @@ bool UFO_IsUFOSeenOnGeoscape (const aircraft_t *ufo)
 	bool seen = !ufo->landed && ufo->detected;
 #ifdef DEBUG
 	if (seen && ufo->notOnGeoscape)
-		Com_Error(ERR_DROP, "UFO_IsUFOSeenOnGeoscape: ufo %s can't be used on geoscape", ufo->id);
+		cgi->Com_Error(ERR_DROP, "UFO_IsUFOSeenOnGeoscape: ufo %s can't be used on geoscape", ufo->id);
 #endif
 	return seen;
 }
@@ -900,9 +900,9 @@ bool UFO_IsUFOSeenOnGeoscape (const aircraft_t *ufo)
 void UFO_InitStartup (void)
 {
 #ifdef DEBUG
-	Cmd_AddCommand("debug_destroyufos", UFO_DestroyUFOs_f, "Destroys all UFOs on the geoscape");
-	Cmd_AddCommand("debug_listufo", UFO_ListOnGeoscape_f, "Print UFO information to game console");
-	Cmd_AddCommand("removeufo", UFO_RemoveFromGeoscape_f, "Remove a UFO from geoscape");
-	Cvar_Get("debug_showufos", "0", CVAR_DEVELOPER, "Show all UFOs on geoscape");
+	cgi->Cmd_AddCommand("debug_destroyufos", UFO_DestroyUFOs_f, "Destroys all UFOs on the geoscape");
+	cgi->Cmd_AddCommand("debug_listufo", UFO_ListOnGeoscape_f, "Print UFO information to game console");
+	cgi->Cmd_AddCommand("removeufo", UFO_RemoveFromGeoscape_f, "Remove a UFO from geoscape");
+	cgi->Cvar_Get("debug_showufos", "0", CVAR_DEVELOPER, "Show all UFOs on geoscape");
 #endif
 }

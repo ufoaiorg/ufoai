@@ -46,12 +46,12 @@ static void CP_TEAM_AssignSoldierByUCN_f (void)
 	employee_t *employee;
 
 	/* check syntax */
-	if (Cmd_Argc() < 1 ) {
-		Com_Printf("Usage: %s <ucn>\n", Cmd_Argv(0));
+	if (cgi->Cmd_Argc() < 1 ) {
+		Com_Printf("Usage: %s <ucn>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
-	ucn = atoi(Cmd_Argv(1));
+	ucn = atoi(cgi->Cmd_Argv(1));
 	if (ucn < 0)
 		return;
 
@@ -61,7 +61,7 @@ static void CP_TEAM_AssignSoldierByUCN_f (void)
 
 	employee = E_GetEmployeeFromChrUCN(ucn);
 	if (!employee)
-		Com_Error(ERR_DROP, "CP_TEAM_SelectActorByUCN_f: No employee with UCN %i", ucn);
+		cgi->Com_Error(ERR_DROP, "CP_TEAM_SelectActorByUCN_f: No employee with UCN %i", ucn);
 
 	if (AIR_IsEmployeeInAircraft(employee, aircraft)) {
 		AIR_RemoveEmployee(employee, aircraft);
@@ -73,7 +73,7 @@ static void CP_TEAM_AssignSoldierByUCN_f (void)
 	}
 
 	CP_UpdateActorAircraftVar(aircraft, employeeType);
-	Cvar_SetValue("cpteam_size", AIR_GetTeamSize(aircraft));
+	cgi->Cvar_SetValue("cpteam_size", AIR_GetTeamSize(aircraft));
 	cgi->UI_ExecuteConfunc("aircraft_status_change");
 }
 
@@ -91,12 +91,12 @@ static void CP_TEAM_SelectActorByUCN_f (void)
 		return;
 
 	/* check syntax */
-	if (Cmd_Argc() < 1) {
-		Com_Printf("Usage: %s <ucn>\n", Cmd_Argv(0));
+	if (cgi->Cmd_Argc() < 1) {
+		Com_Printf("Usage: %s <ucn>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
-	ucn = atoi(Cmd_Argv(1));
+	ucn = atoi(cgi->Cmd_Argv(1));
 	if (ucn < 0) {
 		cgi->UI_ExecuteConfunc("reset_character_cvars");
 		return;
@@ -104,7 +104,7 @@ static void CP_TEAM_SelectActorByUCN_f (void)
 
 	employee = E_GetEmployeeFromChrUCN(ucn);
 	if (!employee)
-		Com_Error(ERR_DROP, "CP_TEAM_SelectActorByUCN_f: No employee with UCN %i", ucn);
+		cgi->Com_Error(ERR_DROP, "CP_TEAM_SelectActorByUCN_f: No employee with UCN %i", ucn);
 
 	chr = &employee->chr;
 
@@ -160,11 +160,11 @@ static void CP_TEAM_FillEmployeeList_f (void)
 	employeeType_t employeeType;
 	char typeId[MAX_VAR];
 
-	if (Cmd_Argc() <= 1 ) {
-		Com_Printf("Usage: %s <soldier|pilot> [aircraftIDX]\n", Cmd_Argv(0));
+	if (cgi->Cmd_Argc() <= 1 ) {
+		Com_Printf("Usage: %s <soldier|pilot> [aircraftIDX]\n", cgi->Cmd_Argv(0));
 		return;
 	}
-	Q_strncpyz(typeId, Cmd_Argv(1), lengthof(typeId));
+	Q_strncpyz(typeId, cgi->Cmd_Argv(1), lengthof(typeId));
 	employeeType = E_GetEmployeeType(typeId);
 
 	if (employeeType == MAX_EMPL) {
@@ -172,10 +172,10 @@ static void CP_TEAM_FillEmployeeList_f (void)
 		return;
 	}
 
-	if (Cmd_Argc() > 2 ) {
-		aircraft = AIR_AircraftGetFromIDX(atoi(Cmd_Argv(2)));
+	if (cgi->Cmd_Argc() > 2 ) {
+		aircraft = AIR_AircraftGetFromIDX(atoi(cgi->Cmd_Argv(2)));
 		if (!aircraft) {
-			Com_Printf("No aircraft exist with global idx %i\n", atoi(Cmd_Argv(2)));
+			Com_Printf("No aircraft exist with global idx %i\n", atoi(cgi->Cmd_Argv(2)));
 			return;
 		}
 		base = aircraft->homebase;
@@ -227,10 +227,10 @@ static void CP_TEAM_FillEquipSoldierList_f (void)
 	aircraft_t *aircraft = base->aircraftCurrent;
 	equipDef_t unused;
 
-	if (Cmd_Argc() > 1 ) {
-		aircraft = AIR_AircraftGetFromIDX(atoi(Cmd_Argv(1)));
+	if (cgi->Cmd_Argc() > 1 ) {
+		aircraft = AIR_AircraftGetFromIDX(atoi(cgi->Cmd_Argv(1)));
 		if (!aircraft) {
-			Com_Printf("No aircraft exist with global idx %i\n", atoi(Cmd_Argv(2)));
+			Com_Printf("No aircraft exist with global idx %i\n", atoi(cgi->Cmd_Argv(2)));
 			return;
 		}
 		base = aircraft->homebase;
@@ -296,12 +296,12 @@ static void CP_TEAM_FillBDEFEmployeeList_f (void)
  */
 static void CP_TEAM_ChangeSkin_f (void)
 {
-	if (Cmd_Argc() < 3 ) {
-		Com_Printf("Usage: %s <ucn> <bodyskinidx>\n", Cmd_Argv(0));
+	if (cgi->Cmd_Argc() < 3 ) {
+		Com_Printf("Usage: %s <ucn> <bodyskinidx>\n", cgi->Cmd_Argv(0));
 		return;
 	}
-	int ucn = atoi(Cmd_Argv(1));
-	int bodySkinIdx = atoi(Cmd_Argv(2));
+	int ucn = atoi(cgi->Cmd_Argv(1));
+	int bodySkinIdx = atoi(cgi->Cmd_Argv(2));
 
 	employee_t *soldier = E_GetEmployeeFromChrUCN(ucn);
 	if (soldier == NULL|| soldier->type != EMPL_SOLDIER) {
@@ -309,7 +309,7 @@ static void CP_TEAM_ChangeSkin_f (void)
 		return;
 	}
 
-	Cvar_SetValue("mn_body_skin", bodySkinIdx);
+	cgi->Cvar_SetValue("mn_body_skin", bodySkinIdx);
 	soldier->chr.bodySkin = bodySkinIdx;
 }
 
@@ -318,14 +318,14 @@ static void CP_TEAM_ChangeSkin_f (void)
  */
 void CP_TEAM_InitCallbacks (void)
 {
-	Cmd_AddCommand("ui_team_select_ucn", CP_TEAM_SelectActorByUCN_f, "Select a soldier in the team menu by his/her UCN");
-	Cmd_AddCommand("ui_team_assign_ucn", CP_TEAM_AssignSoldierByUCN_f, "Add/remove soldier to the aircraft");
-	Cmd_AddCommand("ui_team_fill", CP_TEAM_FillEmployeeList_f, "Fill the Team assignment UI with employee");
-	Cmd_AddCommand("ui_team_fillbdef", CP_TEAM_FillBDEFEmployeeList_f, "Fill the Team assignment UI with employee for base defence");
-	Cmd_AddCommand("ui_team_fillequip", CP_TEAM_FillEquipSoldierList_f, "Fill the employee list for the in-base soldier equip screen and initialize the inventory");
-	Cmd_AddCommand("ui_team_changeskin", CP_TEAM_ChangeSkin_f, "Change the skin of a soldier");
+	cgi->Cmd_AddCommand("ui_team_select_ucn", CP_TEAM_SelectActorByUCN_f, "Select a soldier in the team menu by his/her UCN");
+	cgi->Cmd_AddCommand("ui_team_assign_ucn", CP_TEAM_AssignSoldierByUCN_f, "Add/remove soldier to the aircraft");
+	cgi->Cmd_AddCommand("ui_team_fill", CP_TEAM_FillEmployeeList_f, "Fill the Team assignment UI with employee");
+	cgi->Cmd_AddCommand("ui_team_fillbdef", CP_TEAM_FillBDEFEmployeeList_f, "Fill the Team assignment UI with employee for base defence");
+	cgi->Cmd_AddCommand("ui_team_fillequip", CP_TEAM_FillEquipSoldierList_f, "Fill the employee list for the in-base soldier equip screen and initialize the inventory");
+	cgi->Cmd_AddCommand("ui_team_changeskin", CP_TEAM_ChangeSkin_f, "Change the skin of a soldier");
 #ifdef DEBUG
-	Cmd_AddCommand("debug_teamlist", CP_TeamListDebug_f, "Debug function to show all hired and assigned teammembers");
+	cgi->Cmd_AddCommand("debug_teamlist", CP_TeamListDebug_f, "Debug function to show all hired and assigned teammembers");
 #endif
 }
 
@@ -334,13 +334,13 @@ void CP_TEAM_InitCallbacks (void)
  */
 void CP_TEAM_ShutdownCallbacks (void)
 {
-	Cmd_RemoveCommand("ui_team_changeskin");
-	Cmd_RemoveCommand("ui_team_fillequip");
-	Cmd_RemoveCommand("ui_team_fillbdef");
-	Cmd_RemoveCommand("ui_team_fill");
-	Cmd_RemoveCommand("ui_team_assign_ucn");
-	Cmd_RemoveCommand("ui_team_select_ucn");
+	cgi->Cmd_RemoveCommand("ui_team_changeskin");
+	cgi->Cmd_RemoveCommand("ui_team_fillequip");
+	cgi->Cmd_RemoveCommand("ui_team_fillbdef");
+	cgi->Cmd_RemoveCommand("ui_team_fill");
+	cgi->Cmd_RemoveCommand("ui_team_assign_ucn");
+	cgi->Cmd_RemoveCommand("ui_team_select_ucn");
 #ifdef DEBUG
-	Cmd_RemoveCommand("debug_teamlist");
+	cgi->Cmd_RemoveCommand("debug_teamlist");
 #endif
 }

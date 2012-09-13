@@ -213,7 +213,7 @@ void CP_XVIInit (void)
 {
 	rsAlienXVI = RS_GetTechByID(XVI_EVENT_NAME);
 	if (!rsAlienXVI)
-		Com_Error(ERR_DROP, "CP_XVIInit: Could not find tech definition for " XVI_EVENT_NAME);
+		cgi->Com_Error(ERR_DROP, "CP_XVIInit: Could not find tech definition for " XVI_EVENT_NAME);
 }
 
 /**
@@ -232,9 +232,9 @@ bool XVI_SaveXML (xmlNode_t *p)
 
 	CP_GetXVIMapDimensions(&width, &height);
 
-	n = XML_AddNode(p, SAVE_XVI_XVI);
-	XML_AddInt(n, SAVE_XVI_WIDTH, width);
-	XML_AddInt(n, SAVE_XVI_HEIGHT, height);
+	n = cgi->XML_AddNode(p, SAVE_XVI_XVI);
+	cgi->XML_AddInt(n, SAVE_XVI_WIDTH, width);
+	cgi->XML_AddInt(n, SAVE_XVI_HEIGHT, height);
 
 	for (y = 0; y < height; y++) {
 		int x;
@@ -242,10 +242,10 @@ bool XVI_SaveXML (xmlNode_t *p)
 			const int xviLevel = CP_GetXVILevel(x, y);
 			/* That saves many bytes in the savegame */
 			if (xviLevel > 0) {
-				xmlNode_t *s = XML_AddNode(n, SAVE_XVI_ENTRY);
-				XML_AddInt(s, SAVE_XVI_X, x);
-				XML_AddInt(s, SAVE_XVI_Y, y);
-				XML_AddInt(s, SAVE_XVI_LEVEL, xviLevel);
+				xmlNode_t *s = cgi->XML_AddNode(n, SAVE_XVI_ENTRY);
+				cgi->XML_AddInt(s, SAVE_XVI_X, x);
+				cgi->XML_AddInt(s, SAVE_XVI_Y, y);
+				cgi->XML_AddInt(s, SAVE_XVI_LEVEL, xviLevel);
 			}
 		}
 	}
@@ -262,20 +262,20 @@ bool XVI_LoadXML (xmlNode_t *p)
 {
 	int width, height;
 	xmlNode_t *s;
-	xmlNode_t *n = XML_GetNode(p, SAVE_XVI_XVI);
+	xmlNode_t *n = cgi->XML_GetNode(p, SAVE_XVI_XVI);
 	/* If there is no XVI, it will not be loaded */
 	if (!n) {
 		CP_InitializeXVIOverlay();
 		return true;
 	}
 
-	width = XML_GetInt(n, SAVE_XVI_WIDTH, 0);
-	height = XML_GetInt(n, SAVE_XVI_HEIGHT, 0);
+	width = cgi->XML_GetInt(n, SAVE_XVI_WIDTH, 0);
+	height = cgi->XML_GetInt(n, SAVE_XVI_HEIGHT, 0);
 
-	for (s = XML_GetNode(n, SAVE_XVI_ENTRY); s; s = XML_GetNextNode(s, n, SAVE_XVI_ENTRY)) {
-		const int x = XML_GetInt(s, SAVE_XVI_X, 0);
-		const int y = XML_GetInt(s, SAVE_XVI_Y, 0);
-		const int level = XML_GetInt(s, SAVE_XVI_LEVEL, 0);
+	for (s = cgi->XML_GetNode(n, SAVE_XVI_ENTRY); s; s = cgi->XML_GetNextNode(s, n, SAVE_XVI_ENTRY)) {
+		const int x = cgi->XML_GetInt(s, SAVE_XVI_X, 0);
+		const int y = cgi->XML_GetInt(s, SAVE_XVI_Y, 0);
+		const int level = cgi->XML_GetInt(s, SAVE_XVI_LEVEL, 0);
 
 		if (x >= 0 && x < width && y >= 0 && y <= height)
 			CP_SetXVILevel(x, y, level);
@@ -315,5 +315,5 @@ void CP_StartXVISpreading_f (void)
  */
 void CP_UpdateXVIMapButton (void)
 {
-	Cvar_SetValue("mn_xvimap", ccs.XVIShowMap);
+	cgi->Cvar_SetValue("mn_xvimap", ccs.XVIShowMap);
 }

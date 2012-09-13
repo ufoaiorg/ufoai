@@ -135,7 +135,7 @@ static void MAP_MultiSelectListAddItem (multiSelectType_t itemType, int itemID,
 
 /**
  * @brief Execute action for 1 element of the multi selection
- * Param Cmd_Argv(1) is the element selected in the popup_multi_selection menu
+ * Param cgi->Cmd_Argv(1) is the element selected in the popup_multi_selection menu
  */
 static void MAP_MultiSelectExecuteAction_f (void)
 {
@@ -143,13 +143,13 @@ static void MAP_MultiSelectExecuteAction_f (void)
 	aircraft_t* aircraft;
 	bool multiSelection = false;
 
-	if (Cmd_Argc() < 2) {
+	if (cgi->Cmd_Argc() < 2) {
 		/* Direct call from code, not from a popup menu */
 		selected = 0;
 	} else {
 		/* Call from a geoscape popup menu (popup_multi_selection) */
 		cgi->UI_PopWindow(false);
-		selected = atoi(Cmd_Argv(1));
+		selected = atoi(cgi->Cmd_Argv(1));
 		multiSelection = true;
 	}
 
@@ -235,17 +235,17 @@ static void MAP_MultiSelectExecuteAction_f (void)
 
 bool MAP_IsRadarOverlayActivated (void)
 {
-	return Cvar_GetInteger("cl_geoscape_overlay") & OVERLAY_RADAR;
+	return cgi->Cvar_GetInteger("cl_geoscape_overlay") & OVERLAY_RADAR;
 }
 
 static inline bool MAP_IsNationOverlayActivated (void)
 {
-	return Cvar_GetInteger("cl_geoscape_overlay") & OVERLAY_NATION;
+	return cgi->Cvar_GetInteger("cl_geoscape_overlay") & OVERLAY_NATION;
 }
 
 static inline bool MAP_IsXVIOverlayActivated (void)
 {
-	return Cvar_GetInteger("cl_geoscape_overlay") & OVERLAY_XVI;
+	return cgi->Cvar_GetInteger("cl_geoscape_overlay") & OVERLAY_XVI;
 }
 
 /**
@@ -268,7 +268,7 @@ bool MAP_MapClick (const uiNode_t* node, int x, int y, const vec2_t pos)
 			if (B_GetCount() < MAX_BASES) {
 				Vector2Copy(pos, ccs.newBasePos);
 				CP_GameTimeStop();
-				Cmd_ExecuteString("mn_set_base_title");
+				cgi->Cmd_ExecuteString("mn_set_base_title");
 				cgi->UI_PushWindow("popup_newbase");
 				return true;
 			}
@@ -333,7 +333,7 @@ bool MAP_MapClick (const uiNode_t* node, int x, int y, const vec2_t pos)
 
 	if (multiSelect.nbSelect == 1) {
 		/* Execute directly action for the only one element selected */
-		Cmd_ExecuteString("multi_select_click");
+		cgi->Cmd_ExecuteString("multi_select_click");
 		return true;
 	} else if (multiSelect.nbSelect > 1) {
 		/* Display popup for multi selection */
@@ -998,13 +998,13 @@ static void MAP_SelectObject_f (void)
 	if (!node)
 		return;
 
-	if (Cmd_Argc() != 3) {
-		Com_Printf("Usage: %s <mission|ufo> <id>\n", Cmd_Argv(0));
+	if (cgi->Cmd_Argc() != 3) {
+		Com_Printf("Usage: %s <mission|ufo> <id>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
-	const char *type = Cmd_Argv(1);
-	const int idx = atoi(Cmd_Argv(2));
+	const char *type = cgi->Cmd_Argv(1);
+	const int idx = atoi(cgi->Cmd_Argv(2));
 	const bool flatgeoscape = UI_MAPEXTRADATACONST(node).flatgeoscape;
 
 	float *vector;
@@ -1208,7 +1208,7 @@ static void MAP_DrawMapOneMission (const uiNode_t* node, const mission_t *missio
 	const bool isCurrentSelectedMission = MAP_IsMissionSelected(mission);
 
 	if (isCurrentSelectedMission)
-		Cvar_Set("mn_mapdaytime", MAP_IsNight(mission->pos) ? _("Night") : _("Day"));
+		cgi->Cvar_Set("mn_mapdaytime", MAP_IsNight(mission->pos) ? _("Night") : _("Day"));
 
 	if (!MAP_AllMapToScreen(node, mission->pos, &x, &y, NULL))
 		return;
@@ -1495,7 +1495,7 @@ static void MAP_DrawMapOnePhalanxAircraft (const uiNode_t* node, aircraft_t *air
 	MAP_Draw3DMarkerIfVisible(node, aircraft->pos, angle, aircraft->model, 0);
 
 	/** @todo we should only show healthbar if the aircraft is fighting but it's a slow algo */
-	if (oneUFOVisible || Cvar_GetInteger("debug_showcrafthealth") >= 1)
+	if (oneUFOVisible || cgi->Cvar_GetInteger("debug_showcrafthealth") >= 1)
 		MAP_DrawAircraftHealthBar(node, aircraft);
 }
 
@@ -1677,7 +1677,7 @@ void MAP_DrawMapMarkers (const uiNode_t* node)
 	while ((ufo = UFO_GetNextOnGeoscape(ufo)) != NULL) {
 #ifdef DEBUG
 		/* in debug mode you execute set showufos 1 to see the ufos on geoscape */
-		if (Cvar_GetInteger("debug_showufos")) {
+		if (cgi->Cvar_GetInteger("debug_showufos")) {
 			/* Draw ufo route */
 			if (!UI_MAPEXTRADATACONST(node).flatgeoscape)
 				MAP_3DMapDrawLine(node, &ufo->route);
@@ -1702,7 +1702,7 @@ void MAP_DrawMapMarkers (const uiNode_t* node)
 
 			/** @todo we should only show healthbar if aircraft is fighting but it's a slow algo */
 			if (RS_IsResearched_ptr(ufo->tech)
-			 || Cvar_GetInteger("debug_showcrafthealth") >= 1)
+			 || cgi->Cvar_GetInteger("debug_showcrafthealth") >= 1)
 				MAP_DrawAircraftHealthBar(node, ufo);
 		}
 	}
@@ -2091,7 +2091,7 @@ int MAP_GetCivilianNumberByPosition (const vec2_t pos)
 	const byte* color = MAP_GetColor(pos, MAPTYPE_POPULATION, NULL);
 
 	if (MapIsWater(color))
-		Com_Error(ERR_DROP, "MAP_GetPopulationType: Trying to get number of civilian in a position on water");
+		cgi->Com_Error(ERR_DROP, "MAP_GetPopulationType: Trying to get number of civilian in a position on water");
 
 	if (MapIsUrban(color))
 		return 10;
@@ -2204,7 +2204,7 @@ const byte *MAP_GetColor (const vec2_t pos, mapType_t type, bool *coast)
 		height = nationsHeight;
 		break;
 	default:
-		Com_Error(ERR_DROP, "Unknown maptype %i\n", type);
+		cgi->Com_Error(ERR_DROP, "Unknown maptype %i\n", type);
 	}
 
 	assert(mask);
@@ -2336,22 +2336,22 @@ void MAP_Init (const char *map)
 	/* load terrain mask */
 	cgi->R_LoadImage(va("pics/geoscape/%s_terrain", map), &terrainPic, &terrainWidth, &terrainHeight);
 	if (!terrainPic || !terrainWidth || !terrainHeight)
-		Com_Error(ERR_DROP, "Couldn't load map mask %s_terrain in pics/geoscape", map);
+		cgi->Com_Error(ERR_DROP, "Couldn't load map mask %s_terrain in pics/geoscape", map);
 
 	/* load culture mask */
 	cgi->R_LoadImage(va("pics/geoscape/%s_culture", map), &culturePic, &cultureWidth, &cultureHeight);
 	if (!culturePic || !cultureWidth || !cultureHeight)
-		Com_Error(ERR_DROP, "Couldn't load map mask %s_culture in pics/geoscape", map);
+		cgi->Com_Error(ERR_DROP, "Couldn't load map mask %s_culture in pics/geoscape", map);
 
 	/* load population mask */
 	cgi->R_LoadImage(va("pics/geoscape/%s_population", map), &populationPic, &populationWidth, &populationHeight);
 	if (!populationPic || !populationWidth || !populationHeight)
-		Com_Error(ERR_DROP, "Couldn't load map mask %s_population in pics/geoscape", map);
+		cgi->Com_Error(ERR_DROP, "Couldn't load map mask %s_population in pics/geoscape", map);
 
 	/* load nations mask */
 	cgi->R_LoadImage(va("pics/geoscape/%s_nations", map), &nationsPic, &nationsWidth, &nationsHeight);
 	if (!nationsPic || !nationsWidth || !nationsHeight)
-		Com_Error(ERR_DROP, "Couldn't load map mask %s_nations in pics/geoscape", map);
+		cgi->Com_Error(ERR_DROP, "Couldn't load map mask %s_nations in pics/geoscape", map);
 }
 
 void MAP_Reset (const char *map)
@@ -2380,9 +2380,9 @@ void MAP_NotifyUFODisappear (const aircraft_t* ufo)
  */
 void MAP_SetOverlay (const char *overlayID)
 {
-	const int value = Cvar_GetInteger("cl_geoscape_overlay");;
+	const int value = cgi->Cvar_GetInteger("cl_geoscape_overlay");;
 	if (Q_streq(overlayID, "nations")) {
-		Cvar_SetValue("cl_geoscape_overlay", value ^ OVERLAY_NATION);
+		cgi->Cvar_SetValue("cl_geoscape_overlay", value ^ OVERLAY_NATION);
 		return;
 	}
 
@@ -2391,9 +2391,9 @@ void MAP_SetOverlay (const char *overlayID)
 		return;
 
 	if (Q_streq(overlayID, "xvi")) {
-		Cvar_SetValue("cl_geoscape_overlay", value ^ OVERLAY_XVI);
+		cgi->Cvar_SetValue("cl_geoscape_overlay", value ^ OVERLAY_XVI);
 	} else if (Q_streq(overlayID, "radar")) {
-		Cvar_SetValue("cl_geoscape_overlay", value ^ OVERLAY_RADAR);
+		cgi->Cvar_SetValue("cl_geoscape_overlay", value ^ OVERLAY_RADAR);
 		if (MAP_IsRadarOverlayActivated())
 			RADAR_UpdateWholeRadarOverlay();
 	}
@@ -2406,12 +2406,12 @@ static void MAP_SetOverlay_f (void)
 {
 	const char *arg;
 
-	if (Cmd_Argc() != 2) {
-		Com_Printf("Usage: %s <nations|xvi|radar>\n", Cmd_Argv(0));
+	if (cgi->Cmd_Argc() != 2) {
+		Com_Printf("Usage: %s <nations|xvi|radar>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
-	arg = Cmd_Argv(1);
+	arg = cgi->Cmd_Argv(1);
 	MAP_SetOverlay(arg);
 
 	/* save last decision player took on radar display, in order to be able to restore it later */
@@ -2444,12 +2444,12 @@ static void MAP_DeactivateOverlay_f (void)
 {
 	const char *arg;
 
-	if (Cmd_Argc() != 2) {
-		Com_Printf("Usage: %s <nations|xvi|radar>\n", Cmd_Argv(0));
+	if (cgi->Cmd_Argc() != 2) {
+		Com_Printf("Usage: %s <nations|xvi|radar>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
-	arg = Cmd_Argv(1);
+	arg = cgi->Cmd_Argv(1);
 	MAP_DeactivateOverlay(arg);
 }
 
@@ -2458,13 +2458,13 @@ static void MAP_DeactivateOverlay_f (void)
  */
 void MAP_InitStartup (void)
 {
-	Cmd_AddCommand("multi_select_click", MAP_MultiSelectExecuteAction_f);
-	Cmd_AddCommand("map_overlay", MAP_SetOverlay_f, "Set the geoscape overlay");
-	Cmd_AddCommand("map_deactivateoverlay", MAP_DeactivateOverlay_f, "Deactivate overlay");
-	Cmd_AddCommand("map_selectobject", MAP_SelectObject_f, "Select an object and center on it");
-	Cmd_AddCommand("mn_mapaction_reset", MAP_ResetAction);
+	cgi->Cmd_AddCommand("multi_select_click", MAP_MultiSelectExecuteAction_f, NULL);
+	cgi->Cmd_AddCommand("map_overlay", MAP_SetOverlay_f, "Set the geoscape overlay");
+	cgi->Cmd_AddCommand("map_deactivateoverlay", MAP_DeactivateOverlay_f, "Deactivate overlay");
+	cgi->Cmd_AddCommand("map_selectobject", MAP_SelectObject_f, "Select an object and center on it");
+	cgi->Cmd_AddCommand("mn_mapaction_reset", MAP_ResetAction, NULL);
 
 #ifdef DEBUG
-	debug_showInterest = Cvar_Get("debug_showinterest", "0", CVAR_DEVELOPER, "Shows the global interest value on geoscape");
+	debug_showInterest = cgi->Cvar_Get("debug_showinterest", "0", CVAR_DEVELOPER, "Shows the global interest value on geoscape");
 #endif
 }
