@@ -56,6 +56,19 @@ public:
 #define DAN_WIDTH		2048
 #define DAN_HEIGHT		1024
 
+/**
+ * @brief Typical zoom to use on the 3D geoscape to use same zoom values for both 2D and 3D geoscape
+ * @note Used to convert openGL coordinates of the sphere into screen coordinates
+ * @sa GLOBE_RADIUS */
+#define STANDARD_3D_ZOOM 40.0f
+
+#define EARTH_RADIUS 8192.0f
+#define MOON_RADIUS 1024.0f
+#define SUN_RADIUS 1024.0f
+
+/** @brief radius of the globe in screen coordinates */
+#define GLOBE_RADIUS EARTH_RADIUS * (UI_MAPEXTRADATACONST(node).zoom / STANDARD_3D_ZOOM)
+
 typedef struct mapExtraData_s {
 	/* Smoothing variables */
 	bool smoothRotation; /**< @c true if the rotation of 3D geoscape must me smooth */

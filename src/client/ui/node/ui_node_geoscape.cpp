@@ -99,8 +99,6 @@ image_t *r_dayandnightTexture;
 image_t *r_radarTexture;				/**< radar texture */
 image_t *r_xviTexture;					/**< XVI alpha mask texture */
 
-/** @brief radius of the globe in screen coordinates */
-#define GLOBE_RADIUS EARTH_RADIUS * (UI_MAPEXTRADATACONST(node).zoom / STANDARD_3D_ZOOM)
 #define DAWN		0.03
 
 /**

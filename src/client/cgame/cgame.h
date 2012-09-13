@@ -181,6 +181,7 @@ typedef struct cgame_import_s {
 	void (IMPORT *R_Draw3DMapMarkers) (const vec2_t nodePos, const vec2_t nodeSize, const vec3_t rotate, const vec2_t pos, float direction, float earthRadius, const char *model, int skin);
 	void (IMPORT *R_DrawBloom) (void);
 	void (IMPORT *R_UploadAlpha) (const char *name, const byte *alphaData);
+	void (IMPORT *R_DrawImageCentered) (int x, int y, const char *name);
 
 	dbuffer *(IMPORT *NET_ReadMsg)  (struct net_stream *s);
 	int (IMPORT *NET_ReadByte)  (dbuffer *buf);

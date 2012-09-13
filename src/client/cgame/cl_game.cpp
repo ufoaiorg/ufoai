@@ -435,6 +435,13 @@ static void R_UploadAlpha_ (const char *name, const byte* alphaData)
 	R_UploadAlpha(image, alphaData);
 }
 
+static void R_DrawImageCentered (int x, int y, const char *name)
+{
+	image_t *image = R_FindImage(name, it_pic);
+	if (image)
+		R_DrawImage(x - image->width / 2, y - image->height / 2, image);
+}
+
 static const cgame_import_t* GAME_GetImportData (const cgameType_t *t)
 {
 	static cgame_import_t gameImport;
@@ -589,6 +596,7 @@ static const cgame_import_t* GAME_GetImportData (const cgameType_t *t)
 		cgi->R_Draw2DMapMarkers = R_Draw2DMapMarkers;
 		cgi->R_Draw3DMapMarkers = R_Draw3DMapMarkers;
 		cgi->R_UploadAlpha = R_UploadAlpha_;
+		cgi->R_DrawImageCentered = R_DrawImageCentered;
 
 		cgi->S_SetSampleRepeatRate = S_SetSampleRepeatRate;
 		cgi->S_StartLocalSample = S_StartLocalSample;

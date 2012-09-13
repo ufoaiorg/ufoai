@@ -400,7 +400,6 @@ static inline void R_RotateCelestialBody (const vec4_t v, vec4_t r, const vec3_t
 	Vector4Set(r, earthPos[0] + celestialDist * v2[1], earthPos[1] + celestialDist * v2[0], -celestialDist * v2[2], 0);
 }
 
-
 /**
  * @brief responsible for drawing the 3d globe on geoscape
  * @param[in] rotate the rotate angle of the globe

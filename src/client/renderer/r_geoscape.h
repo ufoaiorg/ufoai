@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef R_GEOSCAPE_H
 #define R_GEOSCAPE_H
 
+/** @todo these are currently duplicated - remove this defines here */
 /**
  * @brief Typical zoom to use on the 3D geoscape to use same zoom values for both 2D and 3D geoscape
  * @note Used to convert openGL coordinates of the sphere into screen coordinates

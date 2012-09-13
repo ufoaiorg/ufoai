@@ -23,11 +23,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "../../cl_shared.h"
-#include "../../renderer/r_image.h"
-#include "../../renderer/r_draw.h" /* R_DrawImage */
-#include "../../renderer/r_geoscape.h" /* EARTH_RADIUS, STANDARD_3D_ZOOM */
 #include "../../ui/ui_dataids.h"
-#include "../../ui/node/ui_node_geoscape.h" /* paddingRight */
+#include "../../ui/node/ui_node_geoscape.h"
 #include "cp_overlay.h"
 #include "cp_campaign.h"
 #include "cp_popup.h"
@@ -46,27 +43,6 @@ static cvar_t *debug_showInterest;
 
 #define GLOBE_ROTATE -90
 #define ZOOM_LIMIT	2.5f
-
-enum {
-	GEOSCAPE_IMAGE_MISSION,
-	GEOSCAPE_IMAGE_MISSION_SELECTED,
-	GEOSCAPE_IMAGE_MISSION_ACTIVE,
-	GEOSCAPE_IMAGE_BASE,
-	GEOSCAPE_IMAGE_BASE_ATTACK,
-
-	GEOSCAPE_IMAGE_MAX
-};
-
-static char const* const geoscapeImageNames[] = {
-	"pics/geoscape/mission",
-	"pics/geoscape/circle",
-	"pics/geoscape/circleactive",
-	"pics/geoscape/base",
-	"pics/geoscape/baseattack"
-};
-CASSERT(lengthof(geoscapeImageNames) == GEOSCAPE_IMAGE_MAX);
-
-static image_t *geoscapeImages[GEOSCAPE_IMAGE_MAX];
 
 /*
 ==============================================================
@@ -392,9 +368,6 @@ bool MAP_MapClick (const uiNode_t* node, int x, int y, const vec2_t pos)
 GEOSCAPE DRAWING AND COORDINATES
 ==============================================================
 */
-
-/** @brief radius of the globe in screen coordinates */
-#define GLOBE_RADIUS EARTH_RADIUS * (UI_MAPEXTRADATACONST(node).zoom / STANDARD_3D_ZOOM)
 
 /**
  * @brief Transform a 2D position on the map to screen coordinates.
@@ -1217,9 +1190,9 @@ static void MAP_DrawBeam (const uiNode_t* node, const vec3_t start, const vec3_t
 	cgi->R_Color(NULL);
 }
 
-static inline void MAP_RenderImage (int x, int y, const image_t *image)
+static inline void MAP_RenderImage (int x, int y, const char *image)
 {
-	R_DrawImage(x - image->width / 2, y - image->height / 2, image);
+	cgi->R_DrawImageCentered(x, y, image);
 }
 
 #define SELECT_CIRCLE_RADIUS	1.5f + 3.0f / UI_MAPEXTRADATACONST(node).zoom
@@ -1246,13 +1219,11 @@ static void MAP_DrawMapOneMission (const uiNode_t* node, const mission_t *missio
 			if (!mission->active)
 				MAP_MapDrawEquidistantPoints(node, mission->pos, SELECT_CIRCLE_RADIUS, yellow);
 		} else {
-			const image_t *image;
 			if (mission->active) {
-				image = geoscapeImages[GEOSCAPE_IMAGE_MISSION_ACTIVE];
+				MAP_RenderImage(x, y, "pics/geoscape/circleactive");
 			} else {
-				image = geoscapeImages[GEOSCAPE_IMAGE_MISSION_SELECTED];
+				MAP_RenderImage(x, y, "pics/geoscape/circle");
 			}
-			MAP_RenderImage(x, y, image);
 		}
 	}
 
@@ -1260,8 +1231,7 @@ static void MAP_DrawMapOneMission (const uiNode_t* node, const mission_t *missio
 	if (!UI_MAPEXTRADATACONST(node).flatgeoscape) {
 		MAP_Draw3DMarkerIfVisible(node, mission->pos, defaultBaseAngle, MAP_GetMissionModel(mission), 0);
 	} else {
-		const image_t *image = geoscapeImages[GEOSCAPE_IMAGE_MISSION];
-		MAP_RenderImage(x, y, image);
+		MAP_RenderImage(x, y, "pics/geoscape/mission");
 	}
 
 	cgi->UI_DrawString("f_verysmall", ALIGN_UL, x + 10, y, _(mission->location));
@@ -1359,9 +1329,7 @@ static void MAP_DrawMapOneInstallation (const uiNode_t* node, const installation
 	if (!UI_MAPEXTRADATACONST(node).flatgeoscape) {
 		MAP_Draw3DMarkerIfVisible(node, installation->pos, defaultBaseAngle, tpl->model, 0);
 	} else if (MAP_MapToScreen(node, installation->pos, &x, &y)) {
-		const image_t *image = R_FindImage(tpl->image, it_pic);
-		if (image)
-			MAP_RenderImage(x, y, image);
+		MAP_RenderImage(x, y, tpl->image);
 	}
 
 	/* Draw installation names */
@@ -1412,13 +1380,10 @@ static void MAP_DrawMapOneBase (const uiNode_t* node, const base_t *base,
 		else
 			MAP_Draw3DMarkerIfVisible(node, base->pos, defaultBaseAngle, "geoscape/base", 0);
 	} else if (MAP_MapToScreen(node, base->pos, &x, &y)) {
-		const image_t *image;
 		if (B_IsUnderAttack(base))
-			image = geoscapeImages[GEOSCAPE_IMAGE_BASE_ATTACK];
+			MAP_RenderImage(x, y, "pics/geoscape/baseattack");
 		else
-			image = geoscapeImages[GEOSCAPE_IMAGE_BASE];
-
-		MAP_RenderImage(x, y, image);
+			MAP_RenderImage(x, y, "pics/geoscape/base");
 	}
 
 	/* Draw base names */
@@ -1507,7 +1472,6 @@ static void MAP_DrawMapOnePhalanxAircraft (const uiNode_t* node, aircraft_t *air
 
 	/* Draw a circle around selected aircraft */
 	if (MAP_IsAircraftSelected(aircraft)) {
-		const image_t *image = geoscapeImages[GEOSCAPE_IMAGE_MISSION_SELECTED];
 		int x;
 		int y;
 
@@ -1515,7 +1479,7 @@ static void MAP_DrawMapOnePhalanxAircraft (const uiNode_t* node, aircraft_t *air
 			MAP_MapDrawEquidistantPoints(node, aircraft->pos, SELECT_CIRCLE_RADIUS, yellow);
 		else {
 			MAP_AllMapToScreen(node, aircraft->pos, &x, &y, NULL);
-			MAP_RenderImage(x, y, image);
+			MAP_RenderImage(x, y, "pics/geoscape/circleactive");
 		}
 
 		/* Draw a circle around the ufo pursued by selected aircraft */
@@ -1523,7 +1487,7 @@ static void MAP_DrawMapOnePhalanxAircraft (const uiNode_t* node, aircraft_t *air
 			if (!UI_MAPEXTRADATACONST(node).flatgeoscape)
 				MAP_MapDrawEquidistantPoints(node, aircraft->aircraftTarget->pos, SELECT_CIRCLE_RADIUS, yellow);
 			else
-				MAP_RenderImage(x, y, image);
+				MAP_RenderImage(x, y, "pics/geoscape/circleactive");
 		}
 	}
 
@@ -1730,9 +1694,8 @@ void MAP_DrawMapMarkers (const uiNode_t* node)
 				if (!UI_MAPEXTRADATACONST(node).flatgeoscape)
 					MAP_MapDrawEquidistantPoints(node, ufo->pos, SELECT_CIRCLE_RADIUS, yellow);
 				else {
-					const image_t *image = geoscapeImages[GEOSCAPE_IMAGE_MISSION_SELECTED];
 					MAP_AllMapToScreen(node, ufo->pos, &x, &y, NULL);
-					MAP_RenderImage(x, y, image);
+					MAP_RenderImage(x, y, "pics/geoscape/circleactive");
 				}
 			}
 			MAP_Draw3DMarkerIfVisible(node, ufo->pos, angle, ufo->model, 0);
@@ -2495,8 +2458,6 @@ static void MAP_DeactivateOverlay_f (void)
  */
 void MAP_InitStartup (void)
 {
-	int i;
-
 	Cmd_AddCommand("multi_select_click", MAP_MultiSelectExecuteAction_f);
 	Cmd_AddCommand("map_overlay", MAP_SetOverlay_f, "Set the geoscape overlay");
 	Cmd_AddCommand("map_deactivateoverlay", MAP_DeactivateOverlay_f, "Deactivate overlay");
@@ -2506,10 +2467,4 @@ void MAP_InitStartup (void)
 #ifdef DEBUG
 	debug_showInterest = Cvar_Get("debug_showinterest", "0", CVAR_DEVELOPER, "Shows the global interest value on geoscape");
 #endif
-
-	for (i = 0; i < GEOSCAPE_IMAGE_MAX; i++) {
-		geoscapeImages[i] = R_FindImage(geoscapeImageNames[i], it_pic);
-		if (geoscapeImages[i] == r_noTexture)
-			Com_Error(ERR_DROP, "Could not find image: %s", geoscapeImageNames[i]);
-	}
 }
