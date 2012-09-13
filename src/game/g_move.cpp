@@ -278,6 +278,7 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos
 	float div;
 	int oldState;
 	int oldHP;
+	int oldSTUN;
 	bool autoCrouchRequired = false;
 	byte crouchingState;
 
@@ -289,7 +290,7 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos
 		return;
 
 	crouchingState = G_IsCrouched(ent) ? 1 : 0;
-	oldState = oldHP = 0;
+	oldState = oldHP = oldSTUN = 0;
 
 	/* calculate move table */
 	G_MoveCalc(visTeam, ent, ent->pos, crouchingState, ent->TU);
@@ -429,6 +430,7 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos
 				clientAction = ent->clientAction;
 				oldState = ent->state;
 				oldHP = ent->HP;
+				oldSTUN = ent->STUN;
 				/* check triggers at new position */
 				if (G_TouchTriggers(ent)) {
 					if (!clientAction)
@@ -438,9 +440,7 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos
 				G_TouchSolids(ent, 10.0f);
 
 				/* state has changed - maybe we walked on a trigger_hurt */
-				if (oldState != ent->state)
-					status |= VIS_STOP;
-				else if (oldHP != ent->HP)
+				if (oldState != ent->state || oldHP != ent->HP || oldSTUN != ent->STUN)
 					status |= VIS_STOP;
 			} else if (crouchFlag == 1) {
 				/* Actor is standing */
@@ -458,11 +458,11 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos
 			}
 
 			/* check for death */
-			if (((oldHP != 0 && oldHP != ent->HP) || (oldState != ent->state)) && !G_IsDazed(ent)) {
+			if (((oldHP != 0 && (oldHP != ent->HP || oldSTUN != ent->STUN)) || (oldState != ent->state)) && !G_IsDazed(ent)) {
 				/** @todo Handle dazed via trigger_hurt */
 				/* maybe this was due to rf - then the G_ActorDie was already called */
 				if (!G_IsDead(ent)) {
-					G_CheckDeathOrKnockout(ent, NULL, NULL, oldHP - ent->HP);
+					G_CheckDeathOrKnockout(ent, NULL, NULL, (oldHP - ent->HP) + (ent->STUN - oldSTUN));
 				}
 				return;
 			}

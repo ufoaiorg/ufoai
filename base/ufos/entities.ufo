@@ -749,3 +749,34 @@ entity misc_fire {
 		spawnflags	"255"
 	}
 }
+
+entity misc_smokestun {
+	description	"A smoke field that stuns touching actors."
+	color		"1.0 .5 .0"
+	spawnflags	"level1 level2 level3 level4 level5 level6 level7 level8"
+	size		"-16 -16 -32 16 16 32"
+
+	optional {
+		targetname	"The id of this entity"
+	}
+
+	mandatory {
+		origin		"Position"
+		count		"The amount of rounds the field will stay on the battlefield"
+		spawnflags	"level flags"
+		particle	"The particle for the stun field"
+		dmg			"Damage per step (whole numbers only)"
+	}
+
+	type {
+		count	"UNSIGNED V_INT"
+		origin	"V_FLOAT 3"
+	}
+
+	default {
+		count	"2"
+		particle	"green_smoke"
+		dmg	"5"
+		spawnflags	"255"
+	}
+}

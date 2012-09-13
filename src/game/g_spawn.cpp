@@ -47,6 +47,7 @@ static void SP_misc_mission_aliens(edict_t *ent);
 static void SP_misc_message(edict_t *ent);
 static void SP_misc_smoke(edict_t *ent);
 static void SP_misc_fire(edict_t *ent);
+static void SP_misc_smokestun(edict_t *ent);
 
 typedef struct {
 	const char *name;
@@ -533,6 +534,57 @@ void G_SpawnFireField (const vec3_t vec, const char *particle, int rounds, int d
 	}
 }
 
+static void G_SpawnStunSmoke (const vec3_t vec, const char *particle, int rounds, int damage)
+{
+	pos3_t pos;
+	edict_t *ent;
+
+	VecToPos(vec, pos);
+
+	ent = G_GetEdictFromPos(pos, ET_SMOKESTUN);
+	if (ent == NULL) {
+		pos_t z = gi.GridFall(gi.routingMap, ACTOR_SIZE_NORMAL, pos);
+		if (z != pos[2])
+			return;
+
+		ent = G_Spawn();
+		VectorCopy(pos, ent->pos);
+		VectorCopy(vec, ent->origin);
+		ent->dmg = damage;
+		ent->particle = particle;
+		ent->spawnflags = G_GetLevelFlagsFromPos(pos);
+		SP_misc_smokestun(ent);
+	}
+
+	ent->count = rounds;
+}
+
+void G_SpawnStunSmokeField (const vec3_t vec, const char *particle, int rounds, int damage, vec_t radius)
+{
+	vec_t x, y;
+
+	G_SpawnStunSmoke(vec, particle, rounds, damage);
+
+	for (x = vec[0] - radius; x <= vec[0] + radius; x += UNIT_SIZE) {
+		for (y = vec[1] - radius; y <= vec[1] + radius; y += UNIT_SIZE) {
+			vec3_t end;
+			trace_t tr;
+
+			VectorSet(end, x, y, vec[2]);
+
+			if (VectorDist(end, vec) > radius)
+				continue;
+			tr = G_Trace(vec, end, NULL, MASK_SMOKE_AND_FIRE);
+			/* trace didn't reach the target - something was hit before */
+			if (tr.fraction < 1.0 || (tr.contentFlags & CONTENTS_WATER)) {
+				continue;
+			}
+
+			G_SpawnStunSmoke(end, particle, rounds, damage);
+		}
+	}
+}
+
 /**
  * @brief Spawns a new entity at the floor
  * @note This is e.g. used to place dropped weapons/items at the floor
@@ -990,6 +1042,13 @@ static void SP_misc_smoke (edict_t *ent)
 static void SP_misc_fire (edict_t *ent)
 {
 	G_SpawnField(ent, "fire", ET_FIRE, SOLID_BBOX);
+	ent->touch = Touch_HurtTrigger;
+}
+
+static void SP_misc_smokestun (edict_t *ent)
+{
+	G_SpawnField(ent, "stunsmoke", ET_SMOKESTUN, SOLID_TRIGGER);
+	ent->spawnflags |= (1 << 8);
 	ent->touch = Touch_HurtTrigger;
 }
 

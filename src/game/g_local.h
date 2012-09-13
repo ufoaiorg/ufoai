@@ -368,6 +368,7 @@ void G_TouchEdicts(edict_t *ent, float extend);
 edict_t *G_Spawn(void);
 void G_SpawnSmokeField(const vec3_t vec, const char *particle, int rounds, vec_t radius);
 void G_SpawnFireField(const vec3_t vec, const char *particle, int rounds, int damage, vec_t radius);
+void G_SpawnStunSmokeField(const vec3_t vec, const char *particle, int rounds, int damage, vec_t radius);
 edict_t *G_SpawnParticle(const vec3_t origin, int spawnflags, const char *particle);
 void G_FreeEdict(edict_t *e);
 bool G_UseEdict(edict_t *ent, edict_t* activator);

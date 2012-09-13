@@ -402,9 +402,11 @@ item stungrenade
 			ammo	1
 			delaybetweenshots		1
 			time	8
+			damage	"28 5"	//Gas field damage
 			spldmg	"140 10"
 			splrad	4
 			dmgweight "stun_gas"
+			rounds	3
 		}
 		firedef
 		{
@@ -429,9 +431,11 @@ item stungrenade
 			ammo	1
 			delaybetweenshots		1
 			time	8
+			damage	"28 5"	//Gas field damage
 			spldmg	"140 10"
 			splrad	4
 			dmgweight "stun_gas"
+			rounds	3
 		}
 	}
 }
@@ -481,9 +485,11 @@ item stungrenade_alien
 			ammo	1
 			delaybetweenshots		1
 			time	8
+			damage	"36 10"	//Gas field damage
 			spldmg	"180 20"
 			splrad	4
 			dmgweight "stun_gas"
+			rounds	3
 		}
 		firedef
 		{
@@ -508,9 +514,11 @@ item stungrenade_alien
 			ammo	1
 			delaybetweenshots		1
 			time	8
+			damage	"36 10"	//Gas field damage
 			spldmg	"180 20"
 			splrad	4
 			dmgweight "stun_gas"
+			rounds	3
 		}
 	}
 }
@@ -560,6 +568,7 @@ item incgrenade
 			delaybetweenshots		1
 			time	8
 			damage	"0 0"
+			damage	"14 5"	//Fire field damage
 			spldmg	"70 10"
 			splrad	3
 			dmgweight "incendiary"
@@ -589,6 +598,7 @@ item incgrenade
 			delaybetweenshots		1
 			time	8
 			damage	"0 0"
+			damage	"14 5"	//Fire field damage
 			spldmg	"70 10"
 			splrad	3
 			dmgweight "incendiary"

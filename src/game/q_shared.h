@@ -161,6 +161,7 @@ typedef enum {
 	ET_MESSAGE,
 	ET_SMOKE,
 	ET_FIRE,
+	ET_SMOKESTUN,
 
 	ET_MAX,
 
