@@ -34,8 +34,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_map.h" /* MAP_GetSelectedAircraft */
 #endif
 
-extern inventory_t *ui_inventory;
-
 /**
  * @brief Adds or removes a soldier to/from an aircraft using his/her UCN as reference.
  */
@@ -111,12 +109,12 @@ static void CP_TEAM_SelectActorByUCN_f (void)
 	chr = &employee->chr;
 
 	/* update menu inventory */
-	if (ui_inventory && ui_inventory != &chr->i) {
-		CONTAINER(chr, cgi->csi->idEquip) = ui_inventory->c[cgi->csi->idEquip];
+	if (*cgi->ui_inventory && *cgi->ui_inventory != &chr->i) {
+		CONTAINER(chr, cgi->csi->idEquip) = (*cgi->ui_inventory)->c[cgi->csi->idEquip];
 		/* set 'old' idEquip to NULL */
-		ui_inventory->c[cgi->csi->idEquip] = NULL;
+		(*cgi->ui_inventory)->c[cgi->csi->idEquip] = NULL;
 	}
-	ui_inventory = &chr->i;
+	*cgi->ui_inventory = &chr->i;
 
 	/* set info cvars */
 	CL_UpdateCharacterValues(chr, "mn_");

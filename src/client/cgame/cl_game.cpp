@@ -450,6 +450,7 @@ static const cgame_import_t* GAME_GetImportData (const cgameType_t *t)
 	if (cgi == NULL) {
 		cgi = &gameImport;
 
+		cgi->ui_inventory = &ui_inventory;
 		cgi->csi = &csi;
 
 		cgi->r_xviAlpha = geoscapeData.r_xviAlpha;

@@ -93,6 +93,7 @@ typedef enum {
 /** @todo define the import interface */
 typedef struct cgame_import_s {
 	csi_t *csi;
+	inventory_t **ui_inventory;
 	const cgameType_t *cgameType;
 
 	/* UI functions */
