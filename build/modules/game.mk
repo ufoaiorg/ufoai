@@ -8,7 +8,7 @@ endif
 
 $(TARGET)_LINKER   := $(CXX)
 $(TARGET)_CFLAGS   += -DCOMPILE_UFO $(SO_CFLAGS)
-$(TARGET)_LDFLAGS  += $(SO_LDFLAGS) -lm
+$(TARGET)_LDFLAGS  += $(SO_LDFLAGS) -lm $(SO_LIBS)
 $(TARGET)_FILE     := base/$(TARGET).$(SO_EXT)
 
 # Lua apicheck adds asserts to make sure stack is sane
