@@ -105,7 +105,7 @@ static void CP_ParseAlienTeam (const char *name, const char **text)
 	Q_strncpyz(alienCategory->id, name, sizeof(alienCategory->id));
 
 	do {
-		token = Com_EParse(text, errhead, name);
+		token = cgi->Com_EParse(text, errhead, name);
 		if (!*text)
 			break;
 		if (*token == '}')
@@ -131,7 +131,7 @@ static void CP_ParseAlienTeam (const char *name, const char **text)
 		} else if (Q_streq(token, "teaminterest")) {
 			alienTeamGroup_t *group;
 
-			token = Com_EParse(text, errhead, name);
+			token = cgi->Com_EParse(text, errhead, name);
 			if (!*text || *token != '{') {
 				Com_Printf("CP_ParseAlienTeam: alien team \"%s\" has team with no opening brace\n", name);
 				break;
@@ -148,7 +148,7 @@ static void CP_ParseAlienTeam (const char *name, const char **text)
 			alienCategory->numAlienTeamGroups++;
 
 			do {
-				token = Com_EParse(text, errhead, name);
+				token = cgi->Com_EParse(text, errhead, name);
 
 				if (!Com_ParseBlockToken(name, text, group, alien_group_vals, cp_campaignPool, token)) {
 					const teamDef_t *teamDef;
@@ -163,7 +163,7 @@ static void CP_ParseAlienTeam (const char *name, const char **text)
 						for (linkedList_t *element = list; element != NULL; element = element->next) {
 							if (group->numAlienTeams >= MAX_TEAMS_PER_MISSION)
 								cgi->Com_Error(ERR_DROP, "CL_ParseAlienTeam: MAX_TEAMS_PER_MISSION hit");
-							teamDef = Com_GetTeamDefinitionByID((char*)element->data);
+							teamDef = cgi->Com_GetTeamDefinitionByID((char*)element->data);
 							if (teamDef)
 								group->alienTeams[group->numAlienTeams++] = teamDef;
 						}
@@ -207,7 +207,7 @@ static void CP_ParseResearchedCampaignItems (const campaign_t *campaign, const c
 
 	Com_DPrintf(DEBUG_CLIENT, "..campaign research list '%s'\n", name);
 	do {
-		token = Com_EParse(text, errhead, name);
+		token = cgi->Com_EParse(text, errhead, name);
 		if (!*text || *token == '}')
 			return;
 
@@ -259,7 +259,7 @@ static void CP_ParseResearchableCampaignStates (const campaign_t *campaign, cons
 
 	Com_DPrintf(DEBUG_CLIENT, "..campaign researchable list '%s'\n", name);
 	do {
-		token = Com_EParse(text, errhead, name);
+		token = cgi->Com_EParse(text, errhead, name);
 		if (!*text || *token == '}')
 			return;
 
@@ -424,7 +424,7 @@ static void CP_ParseCampaign (const char *name, const char **text)
 	s->debtInterest = -1;
 
 	do {
-		token = Com_EParse(text, errhead, name);
+		token = cgi->Com_EParse(text, errhead, name);
 		if (!*text)
 			break;
 		if (*token == '}')
@@ -436,13 +436,13 @@ static void CP_ParseCampaign (const char *name, const char **text)
 		} else if (Q_streq(token, "salary")) {
 			CP_ParseSalary(token, text, s);
 		} else if (Q_streq(token, "events")) {
-			token = Com_EParse(text, errhead, name);
+			token = cgi->Com_EParse(text, errhead, name);
 			if (!*text)
 				return;
 			cp->events = CP_GetEventsByID(token);
 		} else {
 			Com_Printf("CP_ParseCampaign: unknown token \"%s\" ignored (campaign %s)\n", token, name);
-			Com_EParse(text, errhead, name);
+			cgi->Com_EParse(text, errhead, name);
 		}
 	} while (*text);
 
@@ -513,7 +513,7 @@ static void CP_ParseComponents (const char *name, const char **text)
 
 	do {
 		/* get the name type */
-		token = Com_EParse(text, errhead, name);
+		token = cgi->Com_EParse(text, errhead, name);
 		if (!*text)
 			break;
 		if (*token == '}')
@@ -521,7 +521,7 @@ static void CP_ParseComponents (const char *name, const char **text)
 
 		/* get values */
 		if (Q_streq(token, "aircraft")) {
-			token = Com_EParse(text, errhead, name);
+			token = cgi->Com_EParse(text, errhead, name);
 			if (!*text)
 				break;
 

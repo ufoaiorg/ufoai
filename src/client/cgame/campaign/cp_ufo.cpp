@@ -94,7 +94,7 @@ aircraft_t* UFO_GetByIDX (const int idx)
  */
 const technology_t* UFO_GetTechnologyFromType (const ufoType_t type)
 {
-	const char *id = Com_UFOTypeToShortName(type);
+	const char *id = cgi->Com_UFOTypeToShortName(type);
 	const technology_t *tech = RS_GetTechByProvided(id);
 	return tech;
 }
@@ -133,8 +133,8 @@ bool UFO_ShouldAppearOnGeoscape (const ufoType_t type)
  * @brief Translate UFO type to name.
  * @param[in] type UFO type in ufoType_t.
  * @return Translated UFO name.
- * @sa Com_UFOTypeToShortName
- * @sa Com_UFOShortNameToID
+ * @sa cgi->Com_UFOTypeToShortName
+ * @sa cgi->Com_UFOShortNameToID
  */
 const char* UFO_TypeToName (ufoType_t type)
 {
@@ -751,7 +751,7 @@ void UFO_DetectNewUFO (aircraft_t *ufocraft)
 	if (!MAP_IsRadarOverlayActivated())
 		MAP_SetOverlay("radar");
 
-	CP_TriggerEvent(UFO_DETECTION, Com_UFOTypeToShortName(ufocraft->ufotype));
+	CP_TriggerEvent(UFO_DETECTION, cgi->Com_UFOTypeToShortName(ufocraft->ufotype));
 
 	MAP_UpdateGeoscapeDock();
 }

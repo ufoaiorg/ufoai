@@ -1488,14 +1488,14 @@ void AIR_ParseAircraft (const char *name, const char **text, bool assignAircraft
 	}
 
 	do {
-		token = Com_EParse(text, errhead, name);
+		token = cgi->Com_EParse(text, errhead, name);
 		if (!*text)
 			break;
 		if (*token == '}')
 			break;
 
 		if (Q_streq(token, "name")) {
-			token = Com_EParse(text, errhead, name);
+			token = cgi->Com_EParse(text, errhead, name);
 			if (!*text)
 				return;
 			if (token[0] == '_')
@@ -1509,7 +1509,7 @@ void AIR_ParseAircraft (const char *name, const char **text, bool assignAircraft
 			if (*token == '{') {
 				FS_SkipBlock(text);
 			} else if (Q_streq(token, "shield")) {
-				token = Com_EParse(text, errhead, name);
+				token = cgi->Com_EParse(text, errhead, name);
 				if (!*text)
 					return;
 				Com_DPrintf(DEBUG_CLIENT, "use shield %s for aircraft %s\n", token, aircraftTemplate->id);
@@ -1517,20 +1517,20 @@ void AIR_ParseAircraft (const char *name, const char **text, bool assignAircraft
 				if (tech)
 					aircraftTemplate->shield.item = INVSH_GetItemByID(tech->provides);
 			} else if (Q_streq(token, "slot")) {
-				token = Com_EParse(text, errhead, name);
+				token = cgi->Com_EParse(text, errhead, name);
 				if (!*text || *token != '{') {
 					Com_Printf("AIR_ParseAircraft: Invalid slot value for aircraft: %s\n", name);
 					return;
 				}
 				do {
-					token = Com_EParse(text, errhead, name);
+					token = cgi->Com_EParse(text, errhead, name);
 					if (!*text)
 						break;
 					if (*token == '}')
 						break;
 
 					if (Q_streq(token, "type")) {
-						token = Com_EParse(text, errhead, name);
+						token = cgi->Com_EParse(text, errhead, name);
 						if (!*text)
 							return;
 						for (i = 0; i < MAX_ACITEMS; i++) {
@@ -1553,7 +1553,7 @@ void AIR_ParseAircraft (const char *name, const char **text, bool assignAircraft
 						if (i == MAX_ACITEMS)
 							cgi->Com_Error(ERR_DROP, "Unknown value '%s' for slot type\n", token);
 					} else if (Q_streq(token, "position")) {
-						token = Com_EParse(text, errhead, name);
+						token = cgi->Com_EParse(text, errhead, name);
 						if (!*text)
 							return;
 						for (i = 0; i < AIR_POSITIONS_MAX; i++) {
@@ -1575,7 +1575,7 @@ void AIR_ParseAircraft (const char *name, const char **text, bool assignAircraft
 						if (i == AIR_POSITIONS_MAX)
 							cgi->Com_Error(ERR_DROP, "Unknown value '%s' for slot position\n", token);
 					} else if (Q_streq(token, "contains")) {
-						token = Com_EParse(text, errhead, name);
+						token = cgi->Com_EParse(text, errhead, name);
 						if (!*text)
 							return;
 						tech = RS_GetTechByID(token);
@@ -1595,7 +1595,7 @@ void AIR_ParseAircraft (const char *name, const char **text, bool assignAircraft
 							}
 						}
 					} else if (Q_streq(token, "ammo")) {
-						token = Com_EParse(text, errhead, name);
+						token = cgi->Com_EParse(text, errhead, name);
 						if (!*text)
 							return;
 						tech = RS_GetTechByID(token);
@@ -1607,7 +1607,7 @@ void AIR_ParseAircraft (const char *name, const char **text, bool assignAircraft
 								Com_Printf("Ignoring ammo value '%s' due to unknown slot type\n", token);
 						}
 					} else if (Q_streq(token, "size")) {
-						token = Com_EParse(text, errhead, name);
+						token = cgi->Com_EParse(text, errhead, name);
 						if (!*text)
 							return;
 						if (itemType == AC_ITEM_WEAPON) {
@@ -1627,7 +1627,7 @@ void AIR_ParseAircraft (const char *name, const char **text, bool assignAircraft
 			}
 		} else {
 			if (Q_streq(token, "shield")) {
-				Com_EParse(text, errhead, name);
+				cgi->Com_EParse(text, errhead, name);
 				continue;
 			}
 			/* check for some standard values */
@@ -1635,7 +1635,7 @@ void AIR_ParseAircraft (const char *name, const char **text, bool assignAircraft
 				continue;
 
 			if (Q_streq(token, "type")) {
-				token = Com_EParse(text, errhead, name);
+				token = cgi->Com_EParse(text, errhead, name);
 				if (!*text)
 					return;
 				if (Q_streq(token, "transporter"))
@@ -1644,23 +1644,23 @@ void AIR_ParseAircraft (const char *name, const char **text, bool assignAircraft
 					aircraftTemplate->type = AIRCRAFT_INTERCEPTOR;
 				else if (Q_streq(token, "ufo")) {
 					aircraftTemplate->type = AIRCRAFT_UFO;
-					aircraftTemplate->ufotype = Com_UFOShortNameToID(aircraftTemplate->id);
+					aircraftTemplate->ufotype = cgi->Com_UFOShortNameToID(aircraftTemplate->id);
 				}
 			} else if (Q_streq(token, "slot")) {
-				token = Com_EParse(text, errhead, name);
+				token = cgi->Com_EParse(text, errhead, name);
 				if (!*text || *token != '{') {
 					Com_Printf("AIR_ParseAircraft: Invalid slot value for aircraft: %s\n", name);
 					return;
 				}
 				FS_SkipBlock(text);
 			} else if (Q_streq(token, "param")) {
-				token = Com_EParse(text, errhead, name);
+				token = cgi->Com_EParse(text, errhead, name);
 				if (!*text || *token != '{') {
 					Com_Printf("AIR_ParseAircraft: Invalid param value for aircraft: %s\n", name);
 					return;
 				}
 				do {
-					token = Com_EParse(text, errhead, name);
+					token = cgi->Com_EParse(text, errhead, name);
 					if (!*text)
 						break;
 					if (*token == '}')
@@ -1668,10 +1668,10 @@ void AIR_ParseAircraft (const char *name, const char **text, bool assignAircraft
 
 					if (Q_streq(token, "range")) {
 						/* this is the range of aircraft, must be translated into fuel */
-						token = Com_EParse(text, errhead, name);
+						token = cgi->Com_EParse(text, errhead, name);
 						if (!*text)
 							return;
-						Com_EParseValue(aircraftTemplate, token, V_INT, offsetof(aircraft_t, stats[AIR_STATS_FUELSIZE]), MEMBER_SIZEOF(aircraft_t, stats[0]));
+						cgi->Com_EParseValue(aircraftTemplate, token, V_INT, offsetof(aircraft_t, stats[AIR_STATS_FUELSIZE]), MEMBER_SIZEOF(aircraft_t, stats[0]));
 						if (aircraftTemplate->stats[AIR_STATS_SPEED] == 0)
 							cgi->Com_Error(ERR_DROP, "AIR_ParseAircraft: speed value must be entered before range value");
 						aircraftTemplate->stats[AIR_STATS_FUELSIZE] = (int) (2.0f * (float)SECONDS_PER_HOUR * aircraftTemplate->stats[AIR_STATS_FUELSIZE]) /
@@ -1683,7 +1683,7 @@ void AIR_ParseAircraft (const char *name, const char **text, bool assignAircraft
 				} while (*text); /* dummy condition */
 			} else {
 				Com_Printf("AIR_ParseAircraft: unknown token \"%s\" ignored (aircraft %s)\n", token, name);
-				Com_EParse(text, errhead, name);
+				cgi->Com_EParse(text, errhead, name);
 			}
 		} /* assignAircraftItems */
 	} while (*text);
@@ -1723,10 +1723,10 @@ void AIR_ListAircraftSamples_f (void)
 		aircraft_t *aircraftTemplate = &ccs.aircraftTemplates[i];
 		Com_Printf("aircraft: '%s'\n", aircraftTemplate->id);
 		for (vp = aircraft_vals; vp->string; vp++) {
-			Com_Printf("..%s: %s\n", vp->string, Com_ValueToStr(aircraftTemplate, vp->type, vp->ofs));
+			Com_Printf("..%s: %s\n", vp->string, cgi->Com_ValueToStr(aircraftTemplate, vp->type, vp->ofs));
 		}
 		for (vp = aircraft_param_vals; vp->string; vp++) {
-			Com_Printf("..%s: %s\n", vp->string, Com_ValueToStr(aircraftTemplate, vp->type, vp->ofs));
+			Com_Printf("..%s: %s\n", vp->string, cgi->Com_ValueToStr(aircraftTemplate, vp->type, vp->ofs));
 		}
 	}
 }
@@ -2334,7 +2334,7 @@ static bool AIR_SaveAircraftXML (xmlNode_t *p, const aircraft_t* const aircraft,
 	int l;
 	const employee_t *pilot;
 
-	Com_RegisterConstList(saveAircraftConstants);
+	cgi->Com_RegisterConstList(saveAircraftConstants);
 
 	node = cgi->XML_AddNode(p, SAVE_AIRCRAFT_AIRCRAFT);
 
@@ -2342,7 +2342,7 @@ static bool AIR_SaveAircraftXML (xmlNode_t *p, const aircraft_t* const aircraft,
 	cgi->XML_AddString(node, SAVE_AIRCRAFT_ID, aircraft->id);
 	cgi->XML_AddString(node, SAVE_AIRCRAFT_NAME, aircraft->name);
 
-	cgi->XML_AddString(node, SAVE_AIRCRAFT_STATUS, Com_GetConstVariable(SAVE_AIRCRAFTSTATUS_NAMESPACE, aircraft->status));
+	cgi->XML_AddString(node, SAVE_AIRCRAFT_STATUS, cgi->Com_GetConstVariable(SAVE_AIRCRAFTSTATUS_NAMESPACE, aircraft->status));
 	cgi->XML_AddInt(node, SAVE_AIRCRAFT_FUEL, aircraft->fuel);
 	cgi->XML_AddInt(node, SAVE_AIRCRAFT_DAMAGE, aircraft->damage);
 	cgi->XML_AddPos3(node, SAVE_AIRCRAFT_POS, aircraft->pos);
@@ -2395,7 +2395,7 @@ static bool AIR_SaveAircraftXML (xmlNode_t *p, const aircraft_t* const aircraft,
 #endif
 		if (aircraft->stats[l] != 0) {
 			statNode = cgi->XML_AddNode(subnode, SAVE_AIRCRAFT_AIRSTAT);
-			cgi->XML_AddString(statNode, SAVE_AIRCRAFT_AIRSTATID, Com_GetConstVariable(SAVE_AIRCRAFTSTAT_NAMESPACE, l));
+			cgi->XML_AddString(statNode, SAVE_AIRCRAFT_AIRSTATID, cgi->Com_GetConstVariable(SAVE_AIRCRAFTSTAT_NAMESPACE, l));
 			cgi->XML_AddLong(statNode, SAVE_AIRCRAFT_VAL, aircraft->stats[l]);
 		}
 	}
@@ -2403,7 +2403,7 @@ static bool AIR_SaveAircraftXML (xmlNode_t *p, const aircraft_t* const aircraft,
 	cgi->XML_AddBoolValue(node, SAVE_AIRCRAFT_DETECTED, aircraft->detected);
 	cgi->XML_AddBoolValue(node, SAVE_AIRCRAFT_LANDED, aircraft->landed);
 
-	Com_UnregisterConstList(saveAircraftConstants);
+	cgi->Com_UnregisterConstList(saveAircraftConstants);
 
 	/* All other informations are not needed for ufos */
 	if (isUfo)
@@ -2556,16 +2556,16 @@ static bool AIR_LoadAircraftXML (xmlNode_t *p, aircraft_t *craft)
 	craft->idx = cgi->XML_GetInt(p, SAVE_AIRCRAFT_IDX, -1);
 	if (craft->idx < 0) {
 		Com_Printf("Invalid (or no) aircraft index %i\n", craft->idx);
-		Com_UnregisterConstList(saveAircraftConstants);
+		cgi->Com_UnregisterConstList(saveAircraftConstants);
 		return false;
 	}
 
-	Com_RegisterConstList(saveAircraftConstants);
+	cgi->Com_RegisterConstList(saveAircraftConstants);
 
 	statusId = cgi->XML_GetString(p, SAVE_AIRCRAFT_STATUS);
-	if (!Com_GetConstIntFromNamespace(SAVE_AIRCRAFTSTATUS_NAMESPACE, statusId, &status)) {
+	if (!cgi->Com_GetConstIntFromNamespace(SAVE_AIRCRAFTSTATUS_NAMESPACE, statusId, &status)) {
 		Com_Printf("Invalid aircraft status '%s'\n", statusId);
-		Com_UnregisterConstList(saveAircraftConstants);
+		cgi->Com_UnregisterConstList(saveAircraftConstants);
 		return false;
 	}
 
@@ -2579,7 +2579,7 @@ static bool AIR_LoadAircraftXML (xmlNode_t *p, aircraft_t *craft)
 	craft->time = cgi->XML_GetInt(p, SAVE_AIRCRAFT_TIME, 0);
 
 	if (!AIR_LoadRouteXML(p, &craft->route)) {
-		Com_UnregisterConstList(saveAircraftConstants);
+		cgi->Com_UnregisterConstList(saveAircraftConstants);
 		return false;
 	}
 
@@ -2602,9 +2602,9 @@ static bool AIR_LoadAircraftXML (xmlNode_t *p, aircraft_t *craft)
 		const char *statId =  cgi->XML_GetString(ssnode, SAVE_AIRCRAFT_AIRSTATID);
 		int idx;
 
-		if (!Com_GetConstIntFromNamespace(SAVE_AIRCRAFTSTAT_NAMESPACE, statId, &idx)) {
+		if (!cgi->Com_GetConstIntFromNamespace(SAVE_AIRCRAFTSTAT_NAMESPACE, statId, &idx)) {
 			Com_Printf("Invalid aircraft stat '%s'\n", statId);
-			Com_UnregisterConstList(saveAircraftConstants);
+			cgi->Com_UnregisterConstList(saveAircraftConstants);
 			return false;
 		}
 		craft->stats[idx] = cgi->XML_GetLong(ssnode, SAVE_AIRCRAFT_VAL, 0);
@@ -2634,7 +2634,7 @@ static bool AIR_LoadAircraftXML (xmlNode_t *p, aircraft_t *craft)
 	snode = cgi->XML_GetNode(p, SAVE_AIRCRAFT_ELECTRONICS);
 	AIR_LoadAircraftSlotsXML(craft, craft->electronics, snode, false, craft->maxElectronics);
 
-	Com_UnregisterConstList(saveAircraftConstants);
+	cgi->Com_UnregisterConstList(saveAircraftConstants);
 
 	/* All other informations are not needed for ufos */
 	if (!craft->homebase)
@@ -2688,7 +2688,7 @@ static bool AIR_LoadAircraftXML (xmlNode_t *p, aircraft_t *craft)
 		aliensTmp_t *cargo = AL_GetAircraftAlienCargo(craft);
 		const char *const str = cgi->XML_GetString(ssnode, SAVE_AIRCRAFT_TEAMDEFID);
 
-		cargo[l].teamDef = Com_GetTeamDefinitionByID(str);
+		cargo[l].teamDef = cgi->Com_GetTeamDefinitionByID(str);
 		if (!cargo[l].teamDef) {
 			Com_Printf("AIR_LoadAircraftXML: Could not find teamDef '%s'\n", str);
 			l--;

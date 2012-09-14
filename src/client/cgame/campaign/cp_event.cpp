@@ -325,7 +325,7 @@ void CP_ParseEventTrigger (const char *name, const char **text)
 		return;
 	}
 
-	token = Com_EParse(text, errhead, name);
+	token = cgi->Com_EParse(text, errhead, name);
 	if (!*text)
 		return;
 
@@ -334,8 +334,8 @@ void CP_ParseEventTrigger (const char *name, const char **text)
 		return;
 	}
 
-	Com_RegisterConstInt("new_day", NEW_DAY);
-	Com_RegisterConstInt("ufo_detection", UFO_DETECTION);
+	cgi->Com_RegisterConstInt("new_day", NEW_DAY);
+	cgi->Com_RegisterConstInt("ufo_detection", UFO_DETECTION);
 
 	campaignTriggerEvent_t *event = &ccs.campaignTriggerEvents[ccs.numCampaignTriggerEvents];
 	OBJZERO(*event);
@@ -345,7 +345,7 @@ void CP_ParseEventTrigger (const char *name, const char **text)
 	event->id = Mem_PoolStrDup(name, cp_campaignPool, 0);
 
 	do {
-		token = Com_EParse(text, errhead, name);
+		token = cgi->Com_EParse(text, errhead, name);
 		if (!*text)
 			break;
 		if (*token == '}')
@@ -355,8 +355,8 @@ void CP_ParseEventTrigger (const char *name, const char **text)
 		}
 	} while (*text);
 
-	Com_UnregisterConstVariable("new_day");
-	Com_UnregisterConstVariable("ufo_detection");
+	cgi->Com_UnregisterConstVariable("new_day");
+	cgi->Com_UnregisterConstVariable("ufo_detection");
 }
 
 bool CP_TriggerEventSaveXML (xmlNode_t *p)
@@ -417,7 +417,7 @@ void CL_ParseCampaignEvents (const char *name, const char **text)
 		return;
 	}
 
-	token = Com_EParse(text, errhead, name);
+	token = cgi->Com_EParse(text, errhead, name);
 	if (!*text)
 		return;
 
@@ -434,7 +434,7 @@ void CL_ParseCampaignEvents (const char *name, const char **text)
 
 	do {
 		campaignEvent_t *event;
-		token = Com_EParse(text, errhead, name);
+		token = cgi->Com_EParse(text, errhead, name);
 		if (!*text)
 			break;
 		if (*token == '}')
@@ -451,11 +451,11 @@ void CL_ParseCampaignEvents (const char *name, const char **text)
 
 		Mem_PoolStrDupTo(token, (char**) ((char*)event + (int)offsetof(campaignEvent_t, tech)), cp_campaignPool, 0);
 
-		token = Com_EParse(text, errhead, name);
+		token = cgi->Com_EParse(text, errhead, name);
 		if (!*text)
 			return;
 
-		Com_EParseValue(event, token, V_INT, offsetof(campaignEvent_t, interest), sizeof(int));
+		cgi->Com_EParseValue(event, token, V_INT, offsetof(campaignEvent_t, interest), sizeof(int));
 
 		if (event->interest < 0)
 			Sys_Error("Illegal interest value in events definition '%s' for tech '%s'", events->id, event->tech);

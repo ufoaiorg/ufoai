@@ -41,7 +41,7 @@ static void CP_BeginRescueMission (mission_t *mission)
 	assert(mission->ufo);
 	mission->posAssigned = true;
 
-	mission->mapDef = Com_GetMapDefinitionByID("rescue");
+	mission->mapDef = cgi->Com_GetMapDefinitionByID("rescue");
 	if (!mission->mapDef) {
 		CP_MissionRemove(mission);
 		cgi->Com_Error(ERR_DROP, "Could not find mapdef rescue");

@@ -280,7 +280,7 @@ static void AM_FillTeamFromBattleParams (autoMissionBattle_t *battle, const batt
 	battle->nUnits[AUTOMISSION_TEAM_TYPE_CIVILIAN] = missionParams->civilians;
 	battle->actUnits[AUTOMISSION_TEAM_TYPE_CIVILIAN] = missionParams->civilians;
 	if (missionParams->civilians > 0) {
-		const teamDef_t *teamDef = Com_GetTeamDefinitionByID(missionParams->civTeam);
+		const teamDef_t *teamDef = cgi->Com_GetTeamDefinitionByID(missionParams->civTeam);
 		int unitIDX;
 		for (unitIDX = 0; unitIDX < missionParams->civilians; unitIDX++) {
 			autoUnit_t *unit = AM_GetUnit(battle, AUTOMISSION_TEAM_TYPE_CIVILIAN, unitIDX);

@@ -415,7 +415,7 @@ void INS_ParseInstallations (const char *name, const char **text)
 	ccs.numInstallationTemplates++;
 	do {
 		/* get the name type */
-		token = Com_EParse(text, errhead, name);
+		token = cgi->Com_EParse(text, errhead, name);
 		if (!*text)
 			break;
 		if (*token == '}')
@@ -425,7 +425,7 @@ void INS_ParseInstallations (const char *name, const char **text)
 		if (!Com_ParseBlockToken(name, text, installation, installation_vals, cp_campaignPool, token)) {
 			/* other values */
 			if (Q_streq(token, "type")) {
-				token = Com_EParse(text, errhead, name);
+				token = cgi->Com_EParse(text, errhead, name);
 				if (!*text)
 					return;
 
@@ -458,7 +458,7 @@ bool INS_SaveXML (xmlNode_t *p)
 	xmlNode_t *n;
 
 	n = cgi->XML_AddNode(p, SAVE_INSTALLATION_INSTALLATIONS);
-	Com_RegisterConstList(saveInstallationConstants);
+	cgi->Com_RegisterConstList(saveInstallationConstants);
 	INS_Foreach(inst) {
 		xmlNode_t *s, *ss;
 
@@ -467,7 +467,7 @@ bool INS_SaveXML (xmlNode_t *p)
 		cgi->XML_AddInt(s, SAVE_INSTALLATION_IDX, inst->idx);
 		cgi->XML_AddString(s, SAVE_INSTALLATION_NAME, inst->name);
 		cgi->XML_AddPos3(s, SAVE_INSTALLATION_POS, inst->pos);
-		cgi->XML_AddString(s, SAVE_INSTALLATION_STATUS, Com_GetConstVariable(SAVE_INSTALLATIONSTATUS_NAMESPACE, inst->installationStatus));
+		cgi->XML_AddString(s, SAVE_INSTALLATION_STATUS, cgi->Com_GetConstVariable(SAVE_INSTALLATIONSTATUS_NAMESPACE, inst->installationStatus));
 		cgi->XML_AddInt(s, SAVE_INSTALLATION_DAMAGE, inst->installationDamage);
 		cgi->XML_AddFloat(s, SAVE_INSTALLATION_ALIENINTEREST, inst->alienInterest);
 		cgi->XML_AddInt(s, SAVE_INSTALLATION_BUILDSTART, inst->buildStart);
@@ -476,7 +476,7 @@ bool INS_SaveXML (xmlNode_t *p)
 		cgi->XML_AddIntValue(ss, SAVE_INSTALLATION_NUM, inst->numBatteries);
 		B_SaveBaseSlotsXML(inst->batteries, inst->numBatteries, ss);
 	}
-	Com_UnregisterConstList(saveInstallationConstants);
+	cgi->Com_UnregisterConstList(saveInstallationConstants);
 	return true;
 }
 
@@ -496,7 +496,7 @@ bool INS_LoadXML (xmlNode_t *p)
 	if (!n)
 		return false;
 
-	Com_RegisterConstList(saveInstallationConstants);
+	cgi->Com_RegisterConstList(saveInstallationConstants);
 	for (s = cgi->XML_GetNode(n, SAVE_INSTALLATION_INSTALLATION); s; s = cgi->XML_GetNextNode(s,n, SAVE_INSTALLATION_INSTALLATION)) {
 		xmlNode_t *ss;
 		installation_t inst;
@@ -517,7 +517,7 @@ bool INS_LoadXML (xmlNode_t *p)
 			break;
 		}
 
-		if (!Com_GetConstIntFromNamespace(SAVE_INSTALLATIONSTATUS_NAMESPACE, instStat, (int*) &inst.installationStatus)) {
+		if (!cgi->Com_GetConstIntFromNamespace(SAVE_INSTALLATIONSTATUS_NAMESPACE, instStat, (int*) &inst.installationStatus)) {
 			Com_Printf("Invalid installation status '%s'\n", instStat);
 			success = false;
 			break;
@@ -559,7 +559,7 @@ bool INS_LoadXML (xmlNode_t *p)
 		BDEF_InitialiseInstallationSlots(&instp);
 		B_LoadBaseSlotsXML(instp.batteries, instp.numBatteries, ss);
 	}
-	Com_UnregisterConstList(saveInstallationConstants);
+	cgi->Com_UnregisterConstList(saveInstallationConstants);
 	cgi->Cvar_Set("mn_installation_count", va("%i", INS_GetCount()));
 
 	return success;

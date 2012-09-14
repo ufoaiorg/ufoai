@@ -961,7 +961,7 @@ static void BaseSummary_SelectBase_f (void)
  */
 static void B_MakeBaseMapShot_f (void)
 {
-	if (!Com_ServerState()) {
+	if (!cgi->Com_ServerState()) {
 		Com_Printf("Load the base map before you try to use this function\n");
 		return;
 	}

@@ -275,7 +275,7 @@ static void CP_BaseAttackGoToBase (mission_t *mission)
 	}
 	mission->data.base = base;
 
-	mission->mapDef = Com_GetMapDefinitionByID("baseattack");
+	mission->mapDef = cgi->Com_GetMapDefinitionByID("baseattack");
 	if (!mission->mapDef) {
 		CP_MissionRemove(mission);
 		cgi->Com_Error(ERR_DROP, "Could not find mapdef baseattack");

@@ -549,7 +549,7 @@ void GAME_CP_HandleBaseClick (int baseIdx, int key, int col, int row)
 const char* GAME_CP_GetTeamDef (void)
 {
 	const int team = ccs.curCampaign->team;
-	return Com_ValueToStr(&team, V_TEAM, 0);
+	return cgi->Com_ValueToStr(&team, V_TEAM, 0);
 }
 
 /**

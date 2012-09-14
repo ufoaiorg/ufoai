@@ -116,13 +116,13 @@ bool INT_SaveXML (xmlNode_t *parent)
 	cgi->XML_AddShortValue(interestsNode, SAVE_INTERESTS_LASTINCREASEDELAY, ccs.lastInterestIncreaseDelay);
 	cgi->XML_AddShortValue(interestsNode, SAVE_INTERESTS_LASTMISSIONSPAWNEDDELAY, ccs.lastMissionSpawnedDelay);
 	cgi->XML_AddShortValue(interestsNode, SAVE_INTERESTS_OVERALL, ccs.overallInterest);
-	Com_RegisterConstList(saveInterestConstants);
+	cgi->Com_RegisterConstList(saveInterestConstants);
 	for (i = 0; i < INTERESTCATEGORY_MAX; i++) {
 		xmlNode_t * interestNode = cgi->XML_AddNode(interestsNode, SAVE_INTERESTS_INTEREST);
-		cgi->XML_AddString(interestNode, SAVE_INTERESTS_ID, Com_GetConstVariable(SAVE_INTERESTCAT_NAMESPACE, i));
+		cgi->XML_AddString(interestNode, SAVE_INTERESTS_ID, cgi->Com_GetConstVariable(SAVE_INTERESTCAT_NAMESPACE, i));
 		cgi->XML_AddShort(interestNode, SAVE_INTERESTS_VAL, ccs.interest[i]);
 	}
-	Com_UnregisterConstList(saveInterestConstants);
+	cgi->Com_UnregisterConstList(saveInterestConstants);
 	return true;
 }
 
@@ -139,20 +139,20 @@ bool INT_LoadXML (xmlNode_t *parent)
 	ccs.lastInterestIncreaseDelay = cgi->XML_GetInt(interestsNode, SAVE_INTERESTS_LASTINCREASEDELAY, 0);
 	ccs.lastMissionSpawnedDelay = cgi->XML_GetInt(interestsNode, SAVE_INTERESTS_LASTMISSIONSPAWNEDDELAY, 0);
 	ccs.overallInterest = cgi->XML_GetInt(interestsNode, SAVE_INTERESTS_OVERALL, 0);
-	Com_RegisterConstList(saveInterestConstants);
+	cgi->Com_RegisterConstList(saveInterestConstants);
 	for (node = cgi->XML_GetNode(interestsNode, SAVE_INTERESTS_INTEREST); node;
 			node = cgi->XML_GetNextNode(node, interestsNode, SAVE_INTERESTS_INTEREST)) {
 		const char *categoryId = cgi->XML_GetString(node, SAVE_INTERESTS_ID);
 		int cat;
 
-		if (!Com_GetConstInt(categoryId, (int*) &cat)) {
+		if (!cgi->Com_GetConstInt(categoryId, (int*) &cat)) {
 			Com_Printf("Invalid interest category '%s'\n", categoryId);
 			success = false;
 			break;
 		}
 		ccs.interest[cat]= cgi->XML_GetInt(node, SAVE_INTERESTS_VAL, 0);
 	}
-	Com_UnregisterConstList(saveInterestConstants);
+	cgi->Com_UnregisterConstList(saveInterestConstants);
 	return success;
 }
 

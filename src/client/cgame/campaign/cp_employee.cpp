@@ -215,7 +215,7 @@ const char* E_GetEmployeeString (employeeType_t type, int n)
  * @brief Convert string to employeeType_t
  * @param type Pointer to employee type string
  * @return employeeType_t
- * @todo use Com_ConstInt*
+ * @todo use cgi->Com_ConstInt*
  */
 employeeType_t E_GetEmployeeType (const char* type)
 {
@@ -950,9 +950,9 @@ void E_InitialEmployees (const campaign_t *campaign)
 	for (i = 0; i < campaign->ugvs; i++) {
 		/** @todo don't use hardcoded UGV ids */
 		if (frand() > 0.5)
-			E_CreateEmployee(EMPL_ROBOT, E_RandomNation(), Com_GetUGVByID("ugv_ares_w"));
+			E_CreateEmployee(EMPL_ROBOT, E_RandomNation(), cgi->Com_GetUGVByID("ugv_ares_w"));
 		else
-			E_CreateEmployee(EMPL_ROBOT, E_RandomNation(), Com_GetUGVByID("ugv_phoenix"));
+			E_CreateEmployee(EMPL_ROBOT, E_RandomNation(), cgi->Com_GetUGVByID("ugv_phoenix"));
 	}
 }
 
@@ -1049,12 +1049,12 @@ bool E_SaveXML (xmlNode_t *p)
 {
 	int i;
 
-	Com_RegisterConstList(saveEmployeeConstants);
+	cgi->Com_RegisterConstList(saveEmployeeConstants);
 	for (i = 0; i < MAX_EMPL; i++) {
 		const employeeType_t emplType = (employeeType_t)i;
 		xmlNode_t *snode = cgi->XML_AddNode(p, SAVE_EMPLOYEE_EMPLOYEES);
 
-		cgi->XML_AddString(snode, SAVE_EMPLOYEE_TYPE, Com_GetConstVariable(SAVE_EMPLOYEETYPE_NAMESPACE, emplType));
+		cgi->XML_AddString(snode, SAVE_EMPLOYEE_TYPE, cgi->Com_GetConstVariable(SAVE_EMPLOYEETYPE_NAMESPACE, emplType));
 		E_Foreach(emplType, employee) {
 			xmlNode_t * chrNode;
 			xmlNode_t *ssnode = cgi->XML_AddNode(snode, SAVE_EMPLOYEE_EMPLOYEE);
@@ -1075,7 +1075,7 @@ bool E_SaveXML (xmlNode_t *p)
 			GAME_SaveCharacter(chrNode, &employee->chr);
 		}
 	}
-	Com_UnregisterConstList(saveEmployeeConstants);
+	cgi->Com_UnregisterConstList(saveEmployeeConstants);
 
 	return true;
 }
@@ -1089,14 +1089,14 @@ bool E_LoadXML (xmlNode_t *p)
 	xmlNode_t * snode;
 	bool success = true;
 
-	Com_RegisterConstList(saveEmployeeConstants);
+	cgi->Com_RegisterConstList(saveEmployeeConstants);
 	for (snode = cgi->XML_GetNode(p, SAVE_EMPLOYEE_EMPLOYEES); snode;
 			snode = cgi->XML_GetNextNode(snode, p , SAVE_EMPLOYEE_EMPLOYEES)) {
 		xmlNode_t * ssnode;
 		employeeType_t emplType;
 		const char *type = cgi->XML_GetString(snode, SAVE_EMPLOYEE_TYPE);
 
-		if (!Com_GetConstIntFromNamespace(SAVE_EMPLOYEETYPE_NAMESPACE, type, (int*) &emplType)) {
+		if (!cgi->Com_GetConstIntFromNamespace(SAVE_EMPLOYEETYPE_NAMESPACE, type, (int*) &emplType)) {
 			Com_Printf("Invalid employee type '%s'\n", type);
 			success = false;
 			break;
@@ -1125,7 +1125,7 @@ bool E_LoadXML (xmlNode_t *p)
 				break;
 			}
 			/* UGV-Type */
-			e.ugv = Com_GetUGVByIDSilent(cgi->XML_GetString(ssnode, SAVE_EMPLOYEE_UGV));
+			e.ugv = cgi->Com_GetUGVByIDSilent(cgi->XML_GetString(ssnode, SAVE_EMPLOYEE_UGV));
 			/* Character Data */
 			chrNode = cgi->XML_GetNode(ssnode, SAVE_EMPLOYEE_CHR);
 			if (!chrNode) {
@@ -1143,7 +1143,7 @@ bool E_LoadXML (xmlNode_t *p)
 		if (!success)
 			break;
 	}
-	Com_UnregisterConstList(saveEmployeeConstants);
+	cgi->Com_UnregisterConstList(saveEmployeeConstants);
 
 	return success;
 }

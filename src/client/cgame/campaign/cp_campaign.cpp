@@ -176,9 +176,9 @@ static bool CP_MapIsSelectable (const mission_t *mission, const mapDef_t *md, co
 		const char *ufoID;
 
 		if (mission->crashed)
-			ufoID = Com_UFOCrashedTypeToShortName(type);
+			ufoID = cgi->Com_UFOCrashedTypeToShortName(type);
 		else
-			ufoID = Com_UFOTypeToShortName(type);
+			ufoID = cgi->Com_UFOTypeToShortName(type);
 
 		if (!LIST_ContainsString(md->ufos, ufoID))
 			return false;
@@ -223,7 +223,7 @@ bool CP_ChooseMap (mission_t *mission, const vec2_t pos)
 		/* no map fulfill the conditions */
 		if (mission->category == INTERESTCATEGORY_RESCUE) {
 			/* default map for rescue mission is the rescue random map assembly */
-			mission->mapDef = Com_GetMapDefinitionByID("rescue");
+			mission->mapDef = cgi->Com_GetMapDefinitionByID("rescue");
 			if (!mission->mapDef)
 				cgi->Com_Error(ERR_DROP, "Could not find mapdef: rescue");
 			mission->mapDef->timesAlreadyUsed++;
@@ -231,7 +231,7 @@ bool CP_ChooseMap (mission_t *mission, const vec2_t pos)
 		}
 		if (mission->crashed) {
 			/* default map for crashsite mission is the crashsite random map assembly */
-			mission->mapDef = Com_GetMapDefinitionByID("ufocrash");
+			mission->mapDef = cgi->Com_GetMapDefinitionByID("ufocrash");
 			if (!mission->mapDef)
 				cgi->Com_Error(ERR_DROP, "Could not find mapdef: ufocrash");
 			mission->mapDef->timesAlreadyUsed++;
@@ -239,7 +239,7 @@ bool CP_ChooseMap (mission_t *mission, const vec2_t pos)
 		}
 
 		Com_Printf("CP_ChooseMap: Could not find map with required conditions:\n");
-		Com_Printf("  ufo: %s -- pos: ", mission->ufo ? Com_UFOTypeToShortName(mission->ufo->ufotype) : "none");
+		Com_Printf("  ufo: %s -- pos: ", mission->ufo ? cgi->Com_UFOTypeToShortName(mission->ufo->ufotype) : "none");
 		if (pos)
 			Com_Printf("%s", MapIsWater(MAP_GetColor(pos, MAPTYPE_TERRAIN, NULL)) ? " (in water) " : "");
 		if (pos)
@@ -291,7 +291,7 @@ void CP_EndCampaign (bool won)
 	else
 		cgi->UI_InitStack("lostgame", NULL, true, true);
 
-	Com_Drop();
+	cgi->Com_Drop();
 }
 
 /**
@@ -659,7 +659,7 @@ static bool CP_LoadMapDefStatXML (xmlNode_t *parent)
 			Com_Printf("Warning: MapDef with no id in xml!\n");
 			continue;
 		}
-		map = Com_GetMapDefinitionByID(s);
+		map = cgi->Com_GetMapDefinitionByID(s);
 		if (!map) {
 			Com_Printf("Warning: No MapDef with id '%s'!\n", s);
 			continue;

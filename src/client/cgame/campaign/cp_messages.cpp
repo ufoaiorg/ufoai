@@ -209,9 +209,9 @@ static void MS_MessageSaveXML (xmlNode_t *p, uiMessageListNodeMessage_t *message
 	if (message->type == MSG_INFO)
 		return;
 
-	Com_RegisterConstList(saveMessageConstants);
+	cgi->Com_RegisterConstList(saveMessageConstants);
 	n = cgi->XML_AddNode(p, SAVE_MESSAGES_MESSAGE);
-	cgi->XML_AddString(n, SAVE_MESSAGES_TYPE, Com_GetConstVariable(SAVE_MESSAGETYPE_NAMESPACE, message->type));
+	cgi->XML_AddString(n, SAVE_MESSAGES_TYPE, cgi->Com_GetConstVariable(SAVE_MESSAGETYPE_NAMESPACE, message->type));
 	cgi->XML_AddStringValue(n, SAVE_MESSAGES_TITLE, message->title);
 	cgi->XML_AddStringValue(n, SAVE_MESSAGES_TEXT, message->text);
 	/* store script id of event mail */
@@ -222,7 +222,7 @@ static void MS_MessageSaveXML (xmlNode_t *p, uiMessageListNodeMessage_t *message
 	if (message->pedia)
 		cgi->XML_AddString(n, SAVE_MESSAGES_PEDIAID, message->pedia->id);
 	cgi->XML_AddDate(n, SAVE_MESSAGES_DATE, message->date.day, message->date.sec);
-	Com_UnregisterConstList(saveMessageConstants);
+	cgi->Com_UnregisterConstList(saveMessageConstants);
 }
 
 /**
@@ -259,7 +259,7 @@ bool MS_LoadXML (xmlNode_t *p)
 	 * nice */
 	cgi->S_SetSampleRepeatRate(500);
 
-	Com_RegisterConstList(saveMessageConstants);
+	cgi->Com_RegisterConstList(saveMessageConstants);
 	for (sn = cgi->XML_GetNode(n, SAVE_MESSAGES_MESSAGE), i = 0; sn; sn = cgi->XML_GetNextNode(sn, n, SAVE_MESSAGES_MESSAGE), i++) {
 		eventMail_t *mail;
 		const char *type = cgi->XML_GetString(sn, SAVE_MESSAGES_TYPE);
@@ -270,7 +270,7 @@ bool MS_LoadXML (xmlNode_t *p)
 		technology_t *tech = NULL;
 		uiMessageListNodeMessage_t *mess;
 
-		if (!Com_GetConstIntFromNamespace(SAVE_MESSAGETYPE_NAMESPACE, type, (int*) &mtype)) {
+		if (!cgi->Com_GetConstIntFromNamespace(SAVE_MESSAGETYPE_NAMESPACE, type, (int*) &mtype)) {
 			Com_Printf("Invalid message type '%s'\n", type);
 			continue;
 		}
@@ -316,7 +316,7 @@ bool MS_LoadXML (xmlNode_t *p)
 			mail->date = Mem_PoolStrDup(dateBuf, cp_campaignPool, 0);
 		}
 	}
-	Com_UnregisterConstList(saveMessageConstants);
+	cgi->Com_UnregisterConstList(saveMessageConstants);
 
 	/* reset the sample repeat rate */
 	cgi->S_SetSampleRepeatRate(0);

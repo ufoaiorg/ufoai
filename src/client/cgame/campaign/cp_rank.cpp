@@ -108,7 +108,7 @@ void CL_ParseRanks (const char *name, const char **text)
 
 	do {
 		/* get the name type */
-		token = Com_EParse(text, errhead, name);
+		token = cgi->Com_EParse(text, errhead, name);
 		if (!*text)
 			break;
 		if (*token == '}')
@@ -118,7 +118,7 @@ void CL_ParseRanks (const char *name, const char **text)
 			continue;
 		} else if (Q_streq(token, "type")) {
 			/* employeeType_t */
-			token = Com_EParse(text, errhead, name);
+			token = cgi->Com_EParse(text, errhead, name);
 			if (!*text)
 				return;
 			/* error check is performed in E_GetEmployeeType function */

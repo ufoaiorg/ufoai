@@ -417,7 +417,7 @@ bool NAT_ScriptSanityCheck (void)
 
 				/* loop must be backward, as we remove items */
 				for (i = numTypes - 1 ; i >= 0; i--) {
-					if (LIST_ContainsString(md->ufos, Com_UFOTypeToShortName(ufoTypes[i]))) {
+					if (LIST_ContainsString(md->ufos, cgi->Com_UFOTypeToShortName(ufoTypes[i]))) {
 						REMOVE_ELEM(ufoTypes, i, numTypes);
 					}
 				}
@@ -435,7 +435,7 @@ bool NAT_ScriptSanityCheck (void)
 				int i;
 				Com_Printf("      (No map fitting");
 				for (i = 0 ; i < numTypes; i++)
-					Com_Printf(" %s", Com_UFOTypeToShortName(ufoTypes[i]));
+					Com_Printf(" %s", cgi->Com_UFOTypeToShortName(ufoTypes[i]));
 				Com_Printf(")\n");
 			}
 			MAP_PrintParameterStringByPos(city->pos);

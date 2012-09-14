@@ -646,7 +646,7 @@ static void AC_AddOne_f (void)
 	}
 
 	alienName = cgi->Cmd_Argv(1);
-	alienType = Com_GetTeamDefinitionByID(alienName);
+	alienType = cgi->Com_GetTeamDefinitionByID(alienName);
 
 	if (!alienType) {
 		Com_Printf("AC_AddOne_f: Team definition '%s' does not exist.\n", alienName);
@@ -669,7 +669,7 @@ static void AC_AddOne_f (void)
 	}
 
 	if (cgi->Cmd_Argc() == 3)
-		updateAlive = Com_ParseBoolean(Com_Argv(2));
+		updateAlive = Com_ParseBoolean(cgi->Cmd_Argv(2));
 
 	if (!B_GetBuildingStatus(base, B_ALIEN_CONTAINMENT)) {
 		return;
@@ -770,7 +770,7 @@ bool AC_LoadXML (xmlNode_t * parent)
 		for (k = 0, alienNode = cgi->XML_GetNode(contNode, SAVE_ALIENCONT_ALIEN); alienNode && k < MAX_ALIENCONT_CAP; alienNode = cgi->XML_GetNextNode(alienNode, contNode, SAVE_ALIENCONT_ALIEN), k++) {
 			const char *const s = cgi->XML_GetString(alienNode, SAVE_ALIENCONT_TEAMID);
 			/* Fill Alien Containment with default values like the tech pointer. */
-			base->alienscont[k].teamDef = Com_GetTeamDefinitionByID(s);
+			base->alienscont[k].teamDef = cgi->Com_GetTeamDefinitionByID(s);
 			if (base->alienscont[k].teamDef) {
 				base->alienscont[k].amountAlive = cgi->XML_GetInt(alienNode, SAVE_ALIENCONT_AMOUNTALIVE, 0);
 				base->alienscont[k].amountDead = cgi->XML_GetInt(alienNode, SAVE_ALIENCONT_AMOUNTDEAD, 0);

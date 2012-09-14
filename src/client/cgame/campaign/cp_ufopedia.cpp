@@ -655,7 +655,7 @@ static void UP_Article (technology_t* tech, eventMail_t *mail)
 				UP_BuildingDescription(tech);
 				break;
 			case RS_UGV:
-				UP_UGVDescription(Com_GetUGVByIDSilent(tech->provides));
+				UP_UGVDescription(cgi->Com_GetUGVByIDSilent(tech->provides));
 				break;
 			default:
 				break;
@@ -1306,7 +1306,7 @@ void UP_ParseChapter (const char *name, const char **text)
 
 		if (Q_streq(token, "name")) {
 			/* get the name */
-			token = Com_EParse(text, errhead, name);
+			token = cgi->Com_EParse(text, errhead, name);
 			if (!*text || *token == '}') {
 				cgi->Com_Error(ERR_DROP, "UP_ParseChapter: chapter def \"%s\": Name token expected.\n", name);
 			}

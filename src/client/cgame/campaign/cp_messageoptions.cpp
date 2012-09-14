@@ -296,7 +296,7 @@ static int MSO_ParseOption (const char *blockName, const char **text)
 
 	do {
 		/* get the msg type*/
-		token = Com_EParse(text, errhead, blockName);
+		token = cgi->Com_EParse(text, errhead, blockName);
 		if (!*text) {
 			Com_Printf("MSO_ParseOption: end of file not expected \"%s\"\n", blockName);
 			return -1;
@@ -305,7 +305,7 @@ static int MSO_ParseOption (const char *blockName, const char **text)
 			break;
 
 		if (Q_streq(token, "type")) {
-			token = Com_EParse(text, errhead, blockName);
+			token = cgi->Com_EParse(text, errhead, blockName);
 			messageType = MSO_ParseNotifyType(token);
 		} else if (Q_streq(token, "status")) {
 			if (status != NULL) {
@@ -388,7 +388,7 @@ static bool MSO_ParseCategory (const char *blockName, const char **text)
 
 	do {
 		/* get entries and add them to category */
-		token = Com_EParse(text, errhead, blockName);
+		token = cgi->Com_EParse(text, errhead, blockName);
 		if (!*text) {
 			Com_Printf("MSO_ParseMessageSettings: end of file not expected\n");
 			return false;
@@ -415,7 +415,7 @@ static bool MSO_ParseCategory (const char *blockName, const char **text)
 			entry->settings = &messageSettings[optionId];
 			ccs.numMsgCategoryEntries++;
 		} else if (Q_streq(token, "name")) {
-			token = Com_EParse(text, errhead, blockName);
+			token = cgi->Com_EParse(text, errhead, blockName);
 			if (!*text) {
 				Com_Printf("MSO_ParseMessageSettings: end of file not expected\n");
 				return false;
@@ -462,7 +462,7 @@ void MSO_ParseMessageSettings (const char *name, const char **text)
 
 	while (*text) {
 		/* get entries and add them to category */
-		token = Com_EParse(text, errhead, name);
+		token = cgi->Com_EParse(text, errhead, name);
 		if (!*text)
 			cgi->Com_Error(ERR_DROP, "MSO_ParseMessageSettings: end of file not expected \"%s\".\n", name);
 		if (token[0] == '}')

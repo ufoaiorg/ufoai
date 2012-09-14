@@ -312,20 +312,20 @@ bool US_SaveXML (xmlNode_t *p)
 {
 	xmlNode_t *node = cgi->XML_AddNode(p, SAVE_UFORECOVERY_STOREDUFOS);
 
-	Com_RegisterConstList(saveStoredUFOConstants);
+	cgi->Com_RegisterConstList(saveStoredUFOConstants);
 	US_Foreach(ufo) {
 		xmlNode_t * snode = cgi->XML_AddNode(node, SAVE_UFORECOVERY_UFO);
 
 		cgi->XML_AddInt(snode, SAVE_UFORECOVERY_UFOIDX, ufo->idx);
 		cgi->XML_AddString(snode, SAVE_UFORECOVERY_UFOID, ufo->id);
 		cgi->XML_AddDate(snode, SAVE_UFORECOVERY_DATE, ufo->arrive.day, ufo->arrive.sec);
-		cgi->XML_AddString(snode, SAVE_UFORECOVERY_STATUS, Com_GetConstVariable(SAVE_STOREDUFOSTATUS_NAMESPACE, ufo->status));
+		cgi->XML_AddString(snode, SAVE_UFORECOVERY_STATUS, cgi->Com_GetConstVariable(SAVE_STOREDUFOSTATUS_NAMESPACE, ufo->status));
 		cgi->XML_AddFloat(snode, SAVE_UFORECOVERY_CONDITION, ufo->condition);
 
 		if (ufo->installation)
 			cgi->XML_AddInt(snode, SAVE_UFORECOVERY_INSTALLATIONIDX, ufo->installation->idx);
 	}
-	Com_UnregisterConstList(saveStoredUFOConstants);
+	cgi->Com_UnregisterConstList(saveStoredUFOConstants);
 	return true;
 }
 
@@ -341,7 +341,7 @@ bool US_LoadXML (xmlNode_t *p)
 
 	node = cgi->XML_GetNode(p, SAVE_UFORECOVERY_STOREDUFOS);
 
-	Com_RegisterConstList(saveStoredUFOConstants);
+	cgi->Com_RegisterConstList(saveStoredUFOConstants);
 	for (snode = cgi->XML_GetNode(node, SAVE_UFORECOVERY_UFO); snode;
 			snode = cgi->XML_GetNextNode(snode, node, SAVE_UFORECOVERY_UFO)) {
 		const char *id = cgi->XML_GetString(snode, SAVE_UFORECOVERY_STATUS);
@@ -355,7 +355,7 @@ bool US_LoadXML (xmlNode_t *p)
 			continue;
 		}
 		/* ufo->status */
-		if (!Com_GetConstIntFromNamespace(SAVE_STOREDUFOSTATUS_NAMESPACE, id, &statusIDX)) {
+		if (!cgi->Com_GetConstIntFromNamespace(SAVE_STOREDUFOSTATUS_NAMESPACE, id, &statusIDX)) {
 			Com_Printf("Invalid storedUFOStatus '%s'\n", id);
 			continue;
 		}
@@ -390,7 +390,7 @@ bool US_LoadXML (xmlNode_t *p)
 		ufo.disassembly = NULL;
 		LIST_Add(&ccs.storedUFOs, ufo);
 	}
-	Com_UnregisterConstList(saveStoredUFOConstants);
+	cgi->Com_UnregisterConstList(saveStoredUFOConstants);
 	return true;
 }
 

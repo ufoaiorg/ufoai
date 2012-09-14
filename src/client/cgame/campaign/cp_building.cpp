@@ -190,7 +190,7 @@ void B_ParseBuildings (const char *name, const char **text, bool link)
 		ccs.numBuildingTemplates++;
 		do {
 			/* get the name type */
-			token = Com_EParse(text, errhead, name);
+			token = cgi->Com_EParse(text, errhead, name);
 			if (!*text)
 				break;
 			if (*token == '}')
@@ -198,7 +198,7 @@ void B_ParseBuildings (const char *name, const char **text, bool link)
 
 			/* get values */
 			if (Q_streq(token, "type")) {
-				token = Com_EParse(text, errhead, name);
+				token = cgi->Com_EParse(text, errhead, name);
 				if (!*text)
 					return;
 
@@ -208,7 +208,7 @@ void B_ParseBuildings (const char *name, const char **text, bool link)
 			} else {
 				/* no linking yet */
 				if (Q_streq(token, "depends")) {
-					Com_EParse(text, errhead, name);
+					cgi->Com_EParse(text, errhead, name);
 					if (!*text)
 						return;
 				} else {
@@ -232,14 +232,14 @@ void B_ParseBuildings (const char *name, const char **text, bool link)
 
 		do {
 			/* get the name type */
-			token = Com_EParse(text, errhead, name);
+			token = cgi->Com_EParse(text, errhead, name);
 			if (!*text)
 				break;
 			if (*token == '}')
 				break;
 			/* get values */
 			if (Q_streq(token, "depends")) {
-				const building_t *dependsBuilding = B_GetBuildingTemplate(Com_EParse(text, errhead, name));
+				const building_t *dependsBuilding = B_GetBuildingTemplate(cgi->Com_EParse(text, errhead, name));
 				if (!dependsBuilding)
 					cgi->Com_Error(ERR_DROP, "Could not find building depend of %s\n", building->id);
 				building->dependsBuilding = dependsBuilding;

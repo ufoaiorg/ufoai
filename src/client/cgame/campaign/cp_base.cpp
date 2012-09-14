@@ -1190,7 +1190,7 @@ void B_SetUpFirstBase (const campaign_t *campaign, base_t* base)
 	/* buy two first aircraft and hire pilots for them. */
 	if (B_GetBuildingStatus(base, B_HANGAR)) {
 		const equipDef_t *equipDef = INV_GetEquipmentDefinitionByID(campaign->soldierEquipment);
-		const char *firebird = Com_DropShipTypeToShortName(DROPSHIP_FIREBIRD);
+		const char *firebird = cgi->Com_DropShipTypeToShortName(DROPSHIP_FIREBIRD);
 		const aircraft_t *firebirdAircraft = AIR_GetAircraft(firebird);
 		aircraft_t *aircraft = AIR_NewAircraft(base, firebirdAircraft);
 		CP_UpdateCredits(ccs.credits - firebirdAircraft->price);
@@ -1201,7 +1201,7 @@ void B_SetUpFirstBase (const campaign_t *campaign, base_t* base)
 		B_InitialEquipment(aircraft, equipDef);
 	}
 	if (B_GetBuildingStatus(base, B_SMALL_HANGAR)) {
-		const char *stiletto = Com_DropShipTypeToShortName(INTERCEPTOR_STILETTO);
+		const char *stiletto = cgi->Com_DropShipTypeToShortName(INTERCEPTOR_STILETTO);
 		const aircraft_t *stilettoAircraft = AIR_GetAircraft(stiletto);
 		aircraft_t *aircraft = AIR_NewAircraft(base, stilettoAircraft);
 		CP_UpdateCredits(ccs.credits - stilettoAircraft->price);
@@ -1603,7 +1603,7 @@ void B_ParseBaseTemplate (const char *name, const char **text)
 
 	do {
 		/* get the building */
-		token = Com_EParse(text, errhead, baseTemplate->id);
+		token = cgi->Com_EParse(text, errhead, baseTemplate->id);
 		if (!*text)
 			break;
 		if (*token == '}')
@@ -1646,7 +1646,7 @@ void B_ParseBaseTemplate (const char *name, const char **text)
 			cgi->Com_Error(ERR_DROP, "B_ParseBaseTemplate: Could not find building with id %s\n", baseTemplate->id);
 
 		/* get the position */
-		Com_EParseValue(pos, positionToken, V_POS, 0, sizeof(vec2_t));
+		cgi->Com_EParseValue(pos, positionToken, V_POS, 0, sizeof(vec2_t));
 		tile->posX = pos[0];
 		tile->posY = pos[1];
 		if (tile->posX < 0 || tile->posX >= BASE_SIZE || tile->posY < 0 || tile->posY >= BASE_SIZE)
@@ -2532,13 +2532,13 @@ bool B_SaveXML (xmlNode_t *parent)
 			return false;
 		}
 
-		Com_RegisterConstList(saveBaseConstants);
+		cgi->Com_RegisterConstList(saveBaseConstants);
 
 		act_base = cgi->XML_AddNode(bases, SAVE_BASES_BASE);
 		cgi->XML_AddInt(act_base, SAVE_BASES_IDX, b->idx);
 		cgi->XML_AddString(act_base, SAVE_BASES_NAME, b->name);
 		cgi->XML_AddPos3(act_base, SAVE_BASES_POS, b->pos);
-		cgi->XML_AddString(act_base, SAVE_BASES_BASESTATUS, Com_GetConstVariable(SAVE_BASESTATUS_NAMESPACE, b->baseStatus));
+		cgi->XML_AddString(act_base, SAVE_BASES_BASESTATUS, cgi->Com_GetConstVariable(SAVE_BASESTATUS_NAMESPACE, b->baseStatus));
 		cgi->XML_AddFloat(act_base, SAVE_BASES_ALIENINTEREST, b->alienInterest);
 
 		/* building space */
@@ -2567,7 +2567,7 @@ bool B_SaveXML (xmlNode_t *parent)
 			snode = cgi->XML_AddNode(node, SAVE_BASES_BUILDING);
 			cgi->XML_AddString(snode, SAVE_BASES_BUILDINGTYPE, building->tpl->id);
 			cgi->XML_AddInt(snode, SAVE_BASES_BUILDING_PLACE, building->idx);
-			cgi->XML_AddString(snode, SAVE_BASES_BUILDINGSTATUS, Com_GetConstVariable(SAVE_BUILDINGSTATUS_NAMESPACE, building->buildingStatus));
+			cgi->XML_AddString(snode, SAVE_BASES_BUILDINGSTATUS, cgi->Com_GetConstVariable(SAVE_BUILDINGSTATUS_NAMESPACE, building->buildingStatus));
 			cgi->XML_AddDate(snode, SAVE_BASES_BUILDINGTIMESTART, building->timeStart.day, building->timeStart.sec);
 			cgi->XML_AddInt(snode, SAVE_BASES_BUILDINGBUILDTIME, building->buildTime);
 			cgi->XML_AddFloatValue(snode, SAVE_BASES_BUILDINGLEVEL, building->level);
@@ -2585,7 +2585,7 @@ bool B_SaveXML (xmlNode_t *parent)
 		cgi->XML_AddIntValue(act_base, SAVE_BASES_RADARRANGE, b->radar.range);
 		cgi->XML_AddIntValue(act_base, SAVE_BASES_TRACKINGRANGE, b->radar.trackingRange);
 
-		Com_UnregisterConstList(saveBaseConstants);
+		cgi->Com_UnregisterConstList(saveBaseConstants);
 	}
 	return true;
 }
@@ -2673,7 +2673,7 @@ bool B_LoadXML (xmlNode_t *parent)
 
 	ccs.numBases = 0;
 
-	Com_RegisterConstList(saveBaseConstants);
+	cgi->Com_RegisterConstList(saveBaseConstants);
 	for (base = cgi->XML_GetNode(bases, SAVE_BASES_BASE), i = 0; i < MAX_BASES && base; i++, base = cgi->XML_GetNextNode(base, bases, SAVE_BASES_BASE)) {
 		xmlNode_t * node, * snode;
 		base_t *const b = B_GetBaseByIDX(i);
@@ -2685,13 +2685,13 @@ bool B_LoadXML (xmlNode_t *parent)
 		b->idx = cgi->XML_GetInt(base, SAVE_BASES_IDX, -1);
 		if (b->idx < 0) {
 			Com_Printf("Invalid base index %i\n", b->idx);
-			Com_UnregisterConstList(saveBaseConstants);
+			cgi->Com_UnregisterConstList(saveBaseConstants);
 			return false;
 		}
 		b->founded = true;
-		if (!Com_GetConstIntFromNamespace(SAVE_BASESTATUS_NAMESPACE, str, (int*) &b->baseStatus)) {
+		if (!cgi->Com_GetConstIntFromNamespace(SAVE_BASESTATUS_NAMESPACE, str, (int*) &b->baseStatus)) {
 			Com_Printf("Invalid base status '%s'\n", str);
-			Com_UnregisterConstList(saveBaseConstants);
+			cgi->Com_UnregisterConstList(saveBaseConstants);
 			return false;
 		}
 
@@ -2719,7 +2719,7 @@ bool B_LoadXML (xmlNode_t *parent)
 			tile->blocked = cgi->XML_GetBool(snode, SAVE_BASES_BLOCKED, false);
 			if (tile->blocked && tile->building != NULL) {
 				Com_Printf("inconstent base layout found\n");
-				Com_UnregisterConstList(saveBaseConstants);
+				cgi->Com_UnregisterConstList(saveBaseConstants);
 				return false;
 			}
 		}
@@ -2733,14 +2733,14 @@ bool B_LoadXML (xmlNode_t *parent)
 
 			if (buildId >= MAX_BUILDINGS) {
 				Com_Printf("building ID is greater than MAX buildings\n");
-				Com_UnregisterConstList(saveBaseConstants);
+				cgi->Com_UnregisterConstList(saveBaseConstants);
 				return false;
 			}
 
 			Q_strncpyz(buildingType, cgi->XML_GetString(snode, SAVE_BASES_BUILDINGTYPE), sizeof(buildingType));
 			if (buildingType[0] == '\0') {
 				Com_Printf("No buildingtype set\n");
-				Com_UnregisterConstList(saveBaseConstants);
+				cgi->Com_UnregisterConstList(saveBaseConstants);
 				return false;
 			}
 
@@ -2753,15 +2753,15 @@ bool B_LoadXML (xmlNode_t *parent)
 			building->idx = B_GetBuildingIDX(b, building);
 			if (building->idx != buildId) {
 				Com_Printf("building ID doesn't match\n");
-				Com_UnregisterConstList(saveBaseConstants);
+				cgi->Com_UnregisterConstList(saveBaseConstants);
 				return false;
 			}
 			building->base = b;
 
 			str = cgi->XML_GetString(snode, SAVE_BASES_BUILDINGSTATUS);
-			if (!Com_GetConstIntFromNamespace(SAVE_BUILDINGSTATUS_NAMESPACE, str, (int*) &building->buildingStatus)) {
+			if (!cgi->Com_GetConstIntFromNamespace(SAVE_BUILDINGSTATUS_NAMESPACE, str, (int*) &building->buildingStatus)) {
 				Com_Printf("Invalid building status '%s'\n", str);
-				Com_UnregisterConstList(saveBaseConstants);
+				cgi->Com_UnregisterConstList(saveBaseConstants);
 				return false;
 			}
 
@@ -2793,7 +2793,7 @@ bool B_LoadXML (xmlNode_t *parent)
 		/* clear the mess of stray loaded pointers */
 		OBJZERO(b->bEquipment);
 	}
-	Com_UnregisterConstList(saveBaseConstants);
+	cgi->Com_UnregisterConstList(saveBaseConstants);
 	cgi->Cvar_SetValue("mn_base_count", B_GetCount());
 	return true;
 }

@@ -344,7 +344,7 @@ void CP_CreateBattleParameters (mission_t *mission, battleParam_t *param, const 
 		float ufoCondition;
 
 		if (mission->crashed) {
-			shortUFOType = Com_UFOCrashedTypeToShortName(ufo->ufotype);
+			shortUFOType = cgi->Com_UFOCrashedTypeToShortName(ufo->ufotype);
 			/* Set random map UFO if this is a random map */
 			if (mission->mapDef->map[0] == '+') {
 				/* set battleParameters.param to the ufo type: used for ufocrash random map */
@@ -353,7 +353,7 @@ void CP_CreateBattleParameters (mission_t *mission, battleParam_t *param, const 
 			}
 			ufoCondition = frand() * (MAX_CRASHEDUFO_CONDITION - MIN_CRASHEDUFO_CONDITION) + MIN_CRASHEDUFO_CONDITION;
 		} else {
-			shortUFOType = Com_UFOTypeToShortName(ufo->ufotype);
+			shortUFOType = cgi->Com_UFOTypeToShortName(ufo->ufotype);
 			ufoCondition = 1.0f;
 		}
 
@@ -361,17 +361,17 @@ void CP_CreateBattleParameters (mission_t *mission, battleParam_t *param, const 
 		/* Set random map UFO if this is a random map */
 		if (mission->mapDef->map[0] == '+' && !LIST_IsEmpty(mission->mapDef->ufos)) {
 			/* set rm_ufo to the ufo type used */
-			cgi->Cvar_Set("rm_ufo", Com_GetRandomMapAssemblyNameForCraft(shortUFOType));
+			cgi->Cvar_Set("rm_ufo", cgi->Com_GetRandomMapAssemblyNameForCraft(shortUFOType));
 		}
 	}
 
 	/* Set random map aircraft if this is a random map */
 	if (mission->mapDef->map[0] == '+') {
 		if (mission->category == INTERESTCATEGORY_RESCUE) {
-			cgi->Cvar_Set("rm_crashed", Com_GetRandomMapAssemblyNameForCrashedCraft(mission->data.aircraft->id));
+			cgi->Cvar_Set("rm_crashed", cgi->Com_GetRandomMapAssemblyNameForCrashedCraft(mission->data.aircraft->id));
 		}
 		if (!LIST_IsEmpty(mission->mapDef->aircraft))
-			cgi->Cvar_Set("rm_drop", Com_GetRandomMapAssemblyNameForCraft(aircraft->id));
+			cgi->Cvar_Set("rm_drop", cgi->Com_GetRandomMapAssemblyNameForCraft(aircraft->id));
 	}
 }
 
@@ -1355,7 +1355,7 @@ bool CP_MissionBegin (mission_t *mission)
 		mission->ufo = UFO_AddToGeoscape(ufoType, NULL, mission);
 		if (!mission->ufo) {
 			Com_Printf("CP_MissionBegin: Could not add UFO '%s', remove mission %s\n",
-					Com_UFOTypeToShortName(ufoType), mission->id);
+					cgi->Com_UFOTypeToShortName(ufoType), mission->id);
 			CP_MissionRemove(mission);
 			return false;
 		}
@@ -1723,7 +1723,7 @@ static void MIS_MissionSetMap_f (void)
 		return;
 	}
 	mission = CP_GetMissionByID(cgi->Cmd_Argv(1));
-	mapDef = Com_GetMapDefinitionByID(cgi->Cmd_Argv(2));
+	mapDef = cgi->Com_GetMapDefinitionByID(cgi->Cmd_Argv(2));
 	if (mapDef == NULL) {
 		Com_Printf("Could not find mapdef for %s\n", cgi->Cmd_Argv(2));
 		return;
@@ -1804,8 +1804,8 @@ bool MIS_SaveXML (xmlNode_t *parent)
 {
 	xmlNode_t *missionsNode = cgi->XML_AddNode(parent, SAVE_MISSIONS);
 
-	Com_RegisterConstList(saveInterestConstants);
-	Com_RegisterConstList(saveMissionConstants);
+	cgi->Com_RegisterConstList(saveInterestConstants);
+	cgi->Com_RegisterConstList(saveMissionConstants);
 	MIS_Foreach(mission) {
 		xmlNode_t *missionNode = cgi->XML_AddNode(missionsNode, SAVE_MISSIONS_MISSION);
 
@@ -1818,8 +1818,8 @@ bool MIS_SaveXML (xmlNode_t *parent)
 		cgi->XML_AddBool(missionNode, SAVE_MISSIONS_CRASHED, mission->crashed);
 		cgi->XML_AddString(missionNode, SAVE_MISSIONS_ONWIN, mission->onwin);
 		cgi->XML_AddString(missionNode, SAVE_MISSIONS_ONLOSE, mission->onlose);
-		cgi->XML_AddString(missionNode, SAVE_MISSIONS_CATEGORY, Com_GetConstVariable(SAVE_INTERESTCAT_NAMESPACE, mission->category));
-		cgi->XML_AddString(missionNode, SAVE_MISSIONS_STAGE, Com_GetConstVariable(SAVE_MISSIONSTAGE_NAMESPACE, mission->stage));
+		cgi->XML_AddString(missionNode, SAVE_MISSIONS_CATEGORY, cgi->Com_GetConstVariable(SAVE_INTERESTCAT_NAMESPACE, mission->category));
+		cgi->XML_AddString(missionNode, SAVE_MISSIONS_STAGE, cgi->Com_GetConstVariable(SAVE_MISSIONSTAGE_NAMESPACE, mission->stage));
 		switch (mission->category) {
 		case INTERESTCATEGORY_BASE_ATTACK:
 			if (mission->stage == STAGE_MISSION_GOTO || mission->stage == STAGE_BASE_ATTACK) {
@@ -1863,8 +1863,8 @@ bool MIS_SaveXML (xmlNode_t *parent)
 		cgi->XML_AddPos2(missionNode, SAVE_MISSIONS_POS, mission->pos);
 		cgi->XML_AddBoolValue(missionNode, SAVE_MISSIONS_ONGEOSCAPE, mission->onGeoscape);
 	}
-	Com_UnregisterConstList(saveInterestConstants);
-	Com_UnregisterConstList(saveMissionConstants);
+	cgi->Com_UnregisterConstList(saveInterestConstants);
+	cgi->Com_UnregisterConstList(saveMissionConstants);
 
 	return true;
 }
@@ -1878,8 +1878,8 @@ bool MIS_LoadXML (xmlNode_t *parent)
 	xmlNode_t *missionNode;
 	xmlNode_t *node;
 
-	Com_RegisterConstList(saveInterestConstants);
-	Com_RegisterConstList(saveMissionConstants);
+	cgi->Com_RegisterConstList(saveInterestConstants);
+	cgi->Com_RegisterConstList(saveMissionConstants);
 	missionNode = cgi->XML_GetNode(parent, SAVE_MISSIONS);
 	for (node = cgi->XML_GetNode(missionNode, SAVE_MISSIONS_MISSION); node;
 			node = cgi->XML_GetNextNode(node, missionNode, SAVE_MISSIONS_MISSION)) {
@@ -1900,7 +1900,7 @@ bool MIS_LoadXML (xmlNode_t *parent)
 
 		name = cgi->XML_GetString(node, SAVE_MISSIONS_MAPDEF_ID);
 		if (name && name[0] != '\0') {
-			mission.mapDef = Com_GetMapDefinitionByID(name);
+			mission.mapDef = cgi->Com_GetMapDefinitionByID(name);
 			if (!mission.mapDef) {
 				Com_Printf("Warning: mapdef \"%s\" for mission \"%s\" doesn't exist. Removing mission!\n", name, mission.id);
 				continue;
@@ -1909,12 +1909,12 @@ bool MIS_LoadXML (xmlNode_t *parent)
 			mission.mapDef = NULL;
 		}
 
-		if (!Com_GetConstIntFromNamespace(SAVE_INTERESTCAT_NAMESPACE, categoryId, (int*) &mission.category)) {
+		if (!cgi->Com_GetConstIntFromNamespace(SAVE_INTERESTCAT_NAMESPACE, categoryId, (int*) &mission.category)) {
 			Com_Printf("Invalid mission category '%s'\n", categoryId);
 			continue;
 		}
 
-		if (!Com_GetConstIntFromNamespace(SAVE_MISSIONSTAGE_NAMESPACE, stageId, (int*) &mission.stage)) {
+		if (!cgi->Com_GetConstIntFromNamespace(SAVE_MISSIONSTAGE_NAMESPACE, stageId, (int*) &mission.stage)) {
 			Com_Printf("Invalid mission stage '%s'\n", stageId);
 			continue;
 		}
@@ -2001,8 +2001,8 @@ bool MIS_LoadXML (xmlNode_t *parent)
 		/* Add mission to global array */
 		LIST_Add(&ccs.missions, mission);
 	}
-	Com_UnregisterConstList(saveInterestConstants);
-	Com_UnregisterConstList(saveMissionConstants);
+	cgi->Com_UnregisterConstList(saveInterestConstants);
+	cgi->Com_UnregisterConstList(saveMissionConstants);
 
 	return true;
 }

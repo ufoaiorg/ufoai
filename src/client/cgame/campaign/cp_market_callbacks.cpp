@@ -204,7 +204,7 @@ static void BS_Buy_f (void)
 		return;
 	}
 
-	ugv = Com_GetUGVByIDSilent(itemid);
+	ugv = cgi->Com_GetUGVByIDSilent(itemid);
 	if (ugv) {
 		const objDef_t *ugvWeapon = INVSH_GetItemByID(ugv->weapon);
 		if (!ugvWeapon)
@@ -338,7 +338,7 @@ static void BS_ShowInfo_f (void)
 		return;
 	}
 
-	ugv = Com_GetUGVByIDSilent(itemid);
+	ugv = cgi->Com_GetUGVByIDSilent(itemid);
 	if (ugv) {
 		UP_UGVDescription(ugv);
 		return;

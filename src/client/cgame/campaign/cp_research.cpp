@@ -398,7 +398,7 @@ static void RS_AssignTechLinks (requirements_t *reqs)
 			break;
 		case RS_LINK_ALIEN:
 		case RS_LINK_ALIEN_DEAD:
-			req->link.td = Com_GetTeamDefinitionByID(req->id);
+			req->link.td = cgi->Com_GetTeamDefinitionByID(req->id);
 			if (!req->link.td)
 				cgi->Com_Error(ERR_DROP, "RS_AssignTechLinks: Could not get alien type (alien or alien_dead) definition for '%s'", req->id);
 			break;
@@ -813,7 +813,7 @@ int RS_ResearchRun (void)
 }
 
 #ifdef DEBUG
-/** @todo use Com_RegisterConstInt(); */
+/** @todo use cgi->Com_RegisterConstInt(); */
 static const char *RS_TechTypeToName (researchType_t type)
 {
 	switch(type) {
@@ -866,7 +866,7 @@ static const char *RS_TechReqToName (requirement_t *req)
 	}
 }
 
-/** @todo use Com_RegisterConstInt(); */
+/** @todo use cgi->Com_RegisterConstInt(); */
 static const char *RS_TechLinkTypeToName (requirementType_t type)
 {
 	switch(type) {
@@ -1165,7 +1165,7 @@ void RS_ParseTechnologies (const char *name, const char **text)
 
 	do {
 		/* get the name type */
-		token = Com_EParse(text, errhead, name);
+		token = cgi->Com_EParse(text, errhead, name);
 		if (!*text)
 			break;
 		if (*token == '}')
@@ -1173,10 +1173,10 @@ void RS_ParseTechnologies (const char *name, const char **text)
 		/* get values */
 		if (Q_streq(token, "type")) {
 			/* what type of tech this is */
-			token = Com_EParse(text, errhead, name);
+			token = cgi->Com_EParse(text, errhead, name);
 			if (!*text)
 				return;
-			/** @todo use Com_RegisterConstInt(); */
+			/** @todo use cgi->Com_RegisterConstInt(); */
 			/* redundant, but oh well. */
 			if (Q_streq(token, "tech"))
 				tech->type = RS_TECH;
@@ -1211,14 +1211,14 @@ void RS_ParseTechnologies (const char *name, const char **text)
 					descTemp = &tech->description;
 				}
 
-				token = Com_EParse(text, errhead, name);
+				token = cgi->Com_EParse(text, errhead, name);
 				if (!*text)
 					break;
 				if (*token != '{')
 					break;
 
 				do {	/* Loop through all descriptions in the list.*/
-					token = Com_EParse(text, errhead, name);
+					token = cgi->Com_EParse(text, errhead, name);
 					if (!*text)
 						return;
 					if (*token == '}')
@@ -1229,7 +1229,7 @@ void RS_ParseTechnologies (const char *name, const char **text)
 					if (Q_streq(token, "default")) {
 						list = NULL;
 						LIST_AddString(&list, token);
-						token = Com_EParse(text, errhead, name);
+						token = cgi->Com_EParse(text, errhead, name);
 						LIST_AddString(&list, token);
 					} else if (Q_streq(token, "extra")) {
 						if (!Com_ParseList(text, &list)) {
@@ -1263,7 +1263,7 @@ void RS_ParseTechnologies (const char *name, const char **text)
 				} while (*text);
 
 			} else if (Q_streq(token, "redirect")) {
-				token = Com_EParse(text, errhead, name);
+				token = cgi->Com_EParse(text, errhead, name);
 				/* Store this tech and the parsed tech-id of the target of the redirection for later linking. */
 				LIST_AddPointer(&redirectedTechs, tech);
 				LIST_AddString(&redirectedTechs, token);
@@ -1277,14 +1277,14 @@ void RS_ParseTechnologies (const char *name, const char **text)
 					requiredTemp = &tech->requireForProduction;
 				}
 
-				token = Com_EParse(text, errhead, name);
+				token = cgi->Com_EParse(text, errhead, name);
 				if (!*text)
 					break;
 				if (*token != '{')
 					break;
 
 				do {	/* Loop through all 'require' entries.*/
-					token = Com_EParse(text, errhead, name);
+					token = cgi->Com_EParse(text, errhead, name);
 					if (!*text)
 						return;
 					if (*token == '}')
@@ -1422,7 +1422,7 @@ void RS_ParseTechnologies (const char *name, const char **text)
 				} while (*text);
 			} else if (Q_streq(token, "up_chapter")) {
 				/* UFOpaedia chapter */
-				token = Com_EParse(text, errhead, name);
+				token = cgi->Com_EParse(text, errhead, name);
 				if (!*text)
 					return;
 
@@ -1466,19 +1466,19 @@ void RS_ParseTechnologies (const char *name, const char **text)
 				} else {
 					mail = &tech->mail[TECHMAIL_RESEARCHED];
 				}
-				token = Com_EParse(text, errhead, name);
+				token = cgi->Com_EParse(text, errhead, name);
 				if (!*text || *token != '{')
 					return;
 
 				/* grab the initial mail entry */
-				token = Com_EParse(text, errhead, name);
+				token = cgi->Com_EParse(text, errhead, name);
 				if (!*text || *token == '}')
 					return;
 				do {
 					Com_ParseBlockToken(name, text, mail, valid_techmail_vars, cp_campaignPool, token);
 
 					/* grab the next entry */
-					token = Com_EParse(text, errhead, name);
+					token = cgi->Com_EParse(text, errhead, name);
 					if (!*text)
 						return;
 				} while (*text && *token != '}');
@@ -1710,7 +1710,7 @@ bool RS_SaveXML (xmlNode_t *parent)
 	int i;
 	xmlNode_t *node;
 
-	Com_RegisterConstList(saveResearchConstants);
+	cgi->Com_RegisterConstList(saveResearchConstants);
 	node = cgi->XML_AddNode(parent, SAVE_RESEARCH_RESEARCH);
 	for (i = 0; i < ccs.numTechnologies; i++) {
 		int j;
@@ -1720,7 +1720,7 @@ bool RS_SaveXML (xmlNode_t *parent)
 		cgi->XML_AddString(snode, SAVE_RESEARCH_ID, t->id);
 		cgi->XML_AddBoolValue(snode, SAVE_RESEARCH_STATUSCOLLECTED, t->statusCollected);
 		cgi->XML_AddFloatValue(snode, SAVE_RESEARCH_TIME, t->time);
-		cgi->XML_AddString(snode, SAVE_RESEARCH_STATUSRESEARCH, Com_GetConstVariable(SAVE_RESEARCHSTATUS_NAMESPACE, t->statusResearch));
+		cgi->XML_AddString(snode, SAVE_RESEARCH_STATUSRESEARCH, cgi->Com_GetConstVariable(SAVE_RESEARCHSTATUS_NAMESPACE, t->statusResearch));
 		if (t->base)
 			cgi->XML_AddInt(snode, SAVE_RESEARCH_BASE, t->base->idx);
 		cgi->XML_AddIntValue(snode, SAVE_RESEARCH_SCIENTISTS, t->scientists);
@@ -1738,7 +1738,7 @@ bool RS_SaveXML (xmlNode_t *parent)
 			}
 		}
 	}
-	Com_UnregisterConstList(saveResearchConstants);
+	cgi->Com_UnregisterConstList(saveResearchConstants);
 
 	return true;
 }
@@ -1758,7 +1758,7 @@ bool RS_LoadXML (xmlNode_t *parent)
 	if (!topnode)
 		return false;
 
-	Com_RegisterConstList(saveResearchConstants);
+	cgi->Com_RegisterConstList(saveResearchConstants);
 	for (snode = cgi->XML_GetNode(topnode, SAVE_RESEARCH_TECH); snode; snode = cgi->XML_GetNextNode(snode, topnode, "tech")) {
 		const char *techString = cgi->XML_GetString(snode, SAVE_RESEARCH_ID);
 		xmlNode_t * ssnode;
@@ -1771,7 +1771,7 @@ bool RS_LoadXML (xmlNode_t *parent)
 			continue;
 		}
 
-		if (!Com_GetConstIntFromNamespace(SAVE_RESEARCHSTATUS_NAMESPACE, type, (int*) &t->statusResearch)) {
+		if (!cgi->Com_GetConstIntFromNamespace(SAVE_RESEARCHSTATUS_NAMESPACE, type, (int*) &t->statusResearch)) {
 			Com_Printf("Invalid research status '%s'\n", type);
 			success = false;
 			break;
@@ -1810,7 +1810,7 @@ bool RS_LoadXML (xmlNode_t *parent)
 		}
 #endif
 	}
-	Com_UnregisterConstList(saveResearchConstants);
+	cgi->Com_UnregisterConstList(saveResearchConstants);
 
 	return success;
 }

@@ -146,7 +146,7 @@ void CP_SpawnAlienBaseMission (alienBase_t *alienBase)
 	mission->stage = STAGE_BASE_DISCOVERED;
 	mission->data.alienBase = alienBase;
 
-	mission->mapDef = Com_GetMapDefinitionByID(MAPDEF_ALIENBASE);
+	mission->mapDef = cgi->Com_GetMapDefinitionByID(MAPDEF_ALIENBASE);
 	if (!mission->mapDef)
 		cgi->Com_Error(ERR_FATAL, "Could not find mapdef " MAPDEF_ALIENBASE);
 

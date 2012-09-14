@@ -123,7 +123,7 @@ bool BS_AircraftIsOnMarket (const aircraft_t *aircraft)
  */
 int BS_GetAircraftOnMarket (const aircraft_t *aircraft)
 {
-	const humanAircraftType_t type = Com_DropShipShortNameToID(aircraft->id);
+	const humanAircraftType_t type = cgi->Com_DropShipShortNameToID(aircraft->id);
 	const market_t *market = BS_GetMarket();
 
 	return BS_AircraftIsOnMarket(aircraft) ? market->numAircraft[type] : 0;
@@ -136,7 +136,7 @@ int BS_GetAircraftOnMarket (const aircraft_t *aircraft)
  */
 static void BS_AddAircraftToMarket (const aircraft_t *aircraft, int amount)
 {
-	const humanAircraftType_t type = Com_DropShipShortNameToID(aircraft->id);
+	const humanAircraftType_t type = cgi->Com_DropShipShortNameToID(aircraft->id);
 	market_t *market = BS_GetMarket();
 	assert(amount >= 0);
 	assert(aircraft->type != AIRCRAFT_UFO);
@@ -150,7 +150,7 @@ static void BS_AddAircraftToMarket (const aircraft_t *aircraft, int amount)
  */
 static void BS_RemoveAircraftFromMarket (const aircraft_t *aircraft, int amount)
 {
-	const humanAircraftType_t type = Com_DropShipShortNameToID(aircraft->id);
+	const humanAircraftType_t type = cgi->Com_DropShipShortNameToID(aircraft->id);
 	market_t *market = BS_GetMarket();
 
 	assert(amount >= 0);
@@ -166,7 +166,7 @@ static void BS_RemoveAircraftFromMarket (const aircraft_t *aircraft, int amount)
  */
 int BS_GetAircraftSellingPrice (const aircraft_t *aircraft)
 {
-	const humanAircraftType_t type = Com_DropShipShortNameToID(aircraft->id);
+	const humanAircraftType_t type = cgi->Com_DropShipShortNameToID(aircraft->id);
 	const market_t *market = BS_GetMarket();
 	int sellPrice = market->bidAircraft[type];
 
@@ -204,7 +204,7 @@ int BS_GetAircraftSellingPrice (const aircraft_t *aircraft)
  */
 int BS_GetAircraftBuyingPrice (const aircraft_t *aircraft)
 {
-	const humanAircraftType_t type = Com_DropShipShortNameToID(aircraft->id);
+	const humanAircraftType_t type = cgi->Com_DropShipShortNameToID(aircraft->id);
 	const market_t *market = BS_GetMarket();
 	assert(aircraft->type != AIRCRAFT_UFO);
 	return market->askAircraft[type];
@@ -469,7 +469,7 @@ bool BS_SaveXML (xmlNode_t *parent)
 	for (i = 0; i < AIRCRAFTTYPE_MAX; i++) {
 		if (market->bidAircraft[i] > 0 || market->askAircraft[i] > 0) {
 			xmlNode_t * snode = cgi->XML_AddNode(node, SAVE_MARKET_AIRCRAFT);
-			const char *shortName = Com_DropShipTypeToShortName((humanAircraftType_t)i);
+			const char *shortName = cgi->Com_DropShipTypeToShortName((humanAircraftType_t)i);
 			cgi->XML_AddString(snode, SAVE_MARKET_ID, shortName);
 			cgi->XML_AddIntValue(snode, SAVE_MARKET_NUM, market->numAircraft[i]);
 			cgi->XML_AddIntValue(snode, SAVE_MARKET_BID, market->bidAircraft[i]);
@@ -512,7 +512,7 @@ bool BS_LoadXML (xmlNode_t *parent)
 	}
 	for (snode = cgi->XML_GetNode(node, SAVE_MARKET_AIRCRAFT); snode; snode = cgi->XML_GetNextNode(snode, node, SAVE_MARKET_AIRCRAFT)) {
 		const char *s = cgi->XML_GetString(snode, SAVE_MARKET_ID);
-		const humanAircraftType_t type = Com_DropShipShortNameToID(s);
+		const humanAircraftType_t type = cgi->Com_DropShipShortNameToID(s);
 
 		market->numAircraft[type] = cgi->XML_GetInt(snode, SAVE_MARKET_NUM, 0);
 		market->bidAircraft[type] = cgi->XML_GetInt(snode, SAVE_MARKET_BID, 0);
@@ -554,7 +554,7 @@ void BS_InitMarket (const campaign_t *campaign)
 	}
 
 	for (i = 0; i < AIRCRAFTTYPE_MAX; i++) {
-		const char* name = Com_DropShipTypeToShortName((humanAircraftType_t)i);
+		const char* name = cgi->Com_DropShipTypeToShortName((humanAircraftType_t)i);
 		const aircraft_t *aircraft = AIR_GetAircraft(name);
 		if (market->askAircraft[i] == 0) {
 			market->askAircraft[i] = aircraft->price;
@@ -623,7 +623,7 @@ void CP_CampaignRunMarket (campaign_t *campaign)
 
 	for (i = 0; i < AIRCRAFTTYPE_MAX; i++) {
 		const humanAircraftType_t type = (humanAircraftType_t)i;
-		const char *aircraftID = Com_DropShipTypeToShortName(type);
+		const char *aircraftID = cgi->Com_DropShipTypeToShortName(type);
 		const aircraft_t* aircraft = AIR_GetAircraft(aircraftID);
 		const technology_t *tech = aircraft->tech;
 		int asymptoticNumber;
