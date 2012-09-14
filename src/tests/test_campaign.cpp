@@ -110,7 +110,7 @@ static int UFO_InitSuiteCampaign (void)
 	OBJZERO(cls);
 	Com_ParseScripts(false);
 
-	Cmd_ExecuteString("game_setmode campaigns");
+	Cmd_ExecuteString("game_setmode campaign");
 
 	Cmd_AddCommand("msgoptions_set", Cmd_Dummy_f);
 
