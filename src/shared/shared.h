@@ -102,6 +102,8 @@ const char *va(const char *format, ...) __attribute__((format(printf, 1, 2)));
 int Q_FloatSort(const void *float1, const void *float2);
 int Q_StringSort(const void *string1, const void *string2) __attribute__((nonnull));
 
+unsigned int Com_HashKey(const char *name, int hashsize);
+void Com_MakeTimestamp(char* ts, const size_t tslen);
 bool Com_sprintf(char *dest, size_t size, const char *fmt, ...) __attribute__((format(printf, 3, 4)));
 
 /** @todo is this still the case in most recent mingw versions? */

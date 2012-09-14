@@ -219,7 +219,6 @@ MISC
 
 void Com_BeginRedirect(struct net_stream *stream, char *buffer, int buffersize);
 void Com_EndRedirect(void);
-void Com_MakeTimestamp(char* ts, const size_t tslen);
 void Com_vPrintf(const char *fmt, va_list);
 
 typedef void (*exceptionCallback_t)(void);
@@ -363,7 +362,6 @@ extern memPool_t *com_networkPool;
 int Com_Argc(void);
 const char *Com_Argv(int arg);		/* range and null checked */
 void Com_ClearArgv(int arg);
-unsigned int Com_HashKey(const char *name, int hashsize);
 const char* Com_MacroExpandString(const char *text);
 void Com_UploadCrashDump(const char *crashDumpFile);
 

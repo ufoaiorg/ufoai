@@ -331,6 +331,40 @@ void Com_FilePath (const char *in, char *out, size_t size)
 }
 
 /**
+ * @brief returns hash key for a string
+ */
+unsigned int Com_HashKey (const char *name, int hashsize)
+{
+	int i;
+	unsigned int v;
+
+	v = 0;
+	for (i = 0; name[i]; i++) {
+		const unsigned int c = name[i];
+		v = (v + i) * 37 + tolower(c);	/* case insensitivity */
+	}
+
+	return v % hashsize;
+}
+
+/**
+ * @brief Creates a timestamp with date and time at the specified location
+ * @param ts ptr to the resulting string
+ * @param tslen length of target buffer
+ */
+void Com_MakeTimestamp (char* ts, const size_t tslen)
+{
+	struct tm *t;
+	time_t aclock;
+
+	time(&aclock);
+	t = localtime(&aclock);
+
+	Com_sprintf(ts, tslen, "%4i/%02i/%02i %02i:%02i:%02i", t->tm_year + 1900,
+			t->tm_mon + 1, t->tm_mday, t->tm_hour, t->tm_min, t->tm_sec);
+}
+
+/**
  * @brief Compare two floats
  * @param[in] float1 The first float
  * @param[in] float2 The second float
