@@ -282,10 +282,23 @@ typedef struct cgame_import_s {
 	const char* (IMPORT *Com_UFOCrashedTypeToShortName) (ufoType_t type);
 	const char* (IMPORT *Com_UFOTypeToShortName) (ufoType_t type);
 	const char* (IMPORT *Com_GetRandomMapAssemblyNameForCraft) (const char *craftID);
+	void (IMPORT *Com_RegisterConstInt) (const char *name, int value);
+	bool (IMPORT *Com_UnregisterConstVariable) (const char *name);
 	void (IMPORT *Com_RegisterConstList) (const constListEntry_t constList[]);
 	bool (IMPORT *Com_UnregisterConstList) (const constListEntry_t constList[]);
 	const char* (IMPORT *Com_GetConstVariable) (const char *space, int value);
 	bool (IMPORT *Com_GetConstIntFromNamespace) (const char *space, const char *variable, int *value);
+	bool (IMPORT *Com_GetConstInt) (const char *name, int *value);
+	const char *(IMPORT *Com_EParse) (const char **text, const char *errhead, const char *errinfo);
+	int (IMPORT *Com_EParseValue) (void *base, const char *token, valueTypes_t type, int ofs, size_t size);
+	const char *(IMPORT *Com_ValueToStr) (const void *base, const valueTypes_t type, const int ofs);
+	const teamDef_t* (IMPORT *Com_GetTeamDefinitionByID) (const char *team);
+	ufoType_t (IMPORT *Com_UFOShortNameToID) (const char *token);
+	const char *(IMPORT *Com_GetRandomMapAssemblyNameForCrashedCraft) (const char *craftID);
+	void (IMPORT *Com_Drop) (void);
+	const ugv_t *(IMPORT *Com_GetUGVByID) (const char *ugvID);
+	const ugv_t *(IMPORT *Com_GetUGVByIDSilent) (const char *ugvID);
+	humanAircraftType_t (IMPORT *Com_DropShipShortNameToID) (const char *token);
 
 	void (IMPORT *CL_GenerateCharacter) (character_t *chr, const char *teamDefName);
 	bool (IMPORT *CL_OnBattlescape) (void);

@@ -442,6 +442,11 @@ static void R_DrawImageCentered (int x, int y, const char *name)
 		R_DrawImage(x - image->width / 2, y - image->height / 2, image);
 }
 
+static const char *Com_EParse_ (const char **text, const char *errhead, const char *errinfo)
+{
+	return Com_EParse(text, errhead, errinfo);
+}
+
 static const cgame_import_t* GAME_GetImportData (const cgameType_t *t)
 {
 	static cgame_import_t gameImport;
@@ -557,7 +562,20 @@ static const cgame_import_t* GAME_GetImportData (const cgameType_t *t)
 		cgi->Com_UnregisterConstList = Com_UnregisterConstList;
 		cgi->Com_GetConstVariable = Com_GetConstVariable;
 		cgi->Com_GetConstIntFromNamespace = Com_GetConstIntFromNamespace;
+		cgi->Com_GetConstInt = Com_GetConstInt;
+		cgi->Com_EParse = Com_EParse_;
+		cgi->Com_EParseValue = Com_EParseValue;
+		cgi->Com_ValueToStr = Com_ValueToStr;
+		cgi->Com_GetTeamDefinitionByID = Com_GetTeamDefinitionByID;
+		cgi->Com_UFOShortNameToID = Com_UFOShortNameToID;
+		cgi->Com_GetRandomMapAssemblyNameForCrashedCraft = Com_GetRandomMapAssemblyNameForCrashedCraft;
 		cgi->Com_SetGameType = Com_SetGameType;
+		cgi->Com_RegisterConstInt = Com_RegisterConstInt;
+		cgi->Com_UnregisterConstVariable = Com_UnregisterConstVariable;
+		cgi->Com_Drop = Com_Drop;
+		cgi->Com_GetUGVByID = Com_GetUGVByID;
+		cgi->Com_GetUGVByIDSilent = Com_GetUGVByIDSilent;
+		cgi->Com_DropShipShortNameToID = Com_DropShipShortNameToID;
 
 		cgi->SV_ShutdownWhenEmpty = SV_ShutdownWhenEmpty;
 		cgi->SV_Shutdown = SV_Shutdown;
