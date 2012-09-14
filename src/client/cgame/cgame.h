@@ -136,8 +136,21 @@ typedef struct cgame_import_s {
 
 	const char* (IMPORT *CL_Translate) (const char *t);
 
-	void (IMPORT *LIST_AddString) (linkedList_t** listDest, const char* data);
+	void (IMPORT *LIST_PrependString) (linkedList_t** listDest, const char* data);
+	void (IMPORT *LIST_AddString) (linkedList_t** list, const char* data);
+	void (IMPORT *LIST_AddStringSorted) (linkedList_t** listDest, const char* data);
+	void (IMPORT *LIST_AddPointer) (linkedList_t** listDest, void* data);
+	linkedList_t* (IMPORT *LIST_Add) (linkedList_t** list, void const* data, size_t length);
 	const linkedList_t* (IMPORT *LIST_ContainsString) (const linkedList_t* list, const char* string);
+	linkedList_t* (IMPORT *LIST_GetPointer) (linkedList_t* list, const void* data);
+	void (IMPORT *LIST_Delete) (linkedList_t **list);
+	bool (IMPORT *LIST_RemoveEntry) (linkedList_t **list, linkedList_t *entry);
+	bool (IMPORT *LIST_IsEmpty) (const linkedList_t *list);
+	int (IMPORT *LIST_Count) (const linkedList_t *list);
+	linkedList_t *(IMPORT *LIST_CopyStructure) (linkedList_t* src);
+	void *(IMPORT *LIST_GetByIdx) (linkedList_t *list, int index);
+	bool (IMPORT *LIST_Remove) (linkedList_t **list, const void *data);
+	void (IMPORT *LIST_Sort) (linkedList_t **list, linkedListSort_t sorter, const void* userData);
 
 	void (IMPORT *SV_ShutdownWhenEmpty) (void);
 	void (IMPORT *SV_Shutdown) (const char *finalmsg, bool reconnect);

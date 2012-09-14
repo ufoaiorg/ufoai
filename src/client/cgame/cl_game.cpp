@@ -476,8 +476,21 @@ static const cgame_import_t* GAME_GetImportData (const cgameType_t *t)
 		cgi->Cbuf_AddText = Cbuf_AddText;
 		cgi->Cbuf_Execute = Cbuf_Execute;
 
+		cgi->LIST_PrependString = LIST_PrependString;
 		cgi->LIST_AddString = LIST_AddString;
+		cgi->LIST_AddStringSorted = LIST_AddStringSorted;
+		cgi->LIST_AddPointer = LIST_AddPointer;
+		cgi->LIST_Add = LIST_Add;
 		cgi->LIST_ContainsString = LIST_ContainsString;
+		cgi->LIST_GetPointer = LIST_GetPointer;
+		cgi->LIST_Delete = LIST_Delete;
+		cgi->LIST_RemoveEntry = LIST_RemoveEntry;
+		cgi->LIST_IsEmpty = LIST_IsEmpty;
+		cgi->LIST_Count = LIST_Count;
+		cgi->LIST_CopyStructure = LIST_CopyStructure;
+		cgi->LIST_GetByIdx = LIST_GetByIdx;
+		cgi->LIST_Remove = LIST_Remove;
+		cgi->LIST_Sort = LIST_Sort;
 
 		cgi->Cvar_Delete = Cvar_Delete;
 		/** @todo add a wrapper here that stores the cgame cvars and removes them on shutdown automatically */
