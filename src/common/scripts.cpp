@@ -837,28 +837,16 @@ resultStatus_t Com_ParseValue (void *base, const char *token, valueTypes_t type,
  * }
  * @endcode
  */
-#ifdef DEBUG
-int Com_EParseValueDebug (void *base, const char *token, valueTypes_t type, int ofs, size_t size, const char *file, int line)
-#else
 int Com_EParseValue (void *base, const char *token, valueTypes_t type, int ofs, size_t size)
-#endif
 {
 	size_t writtenBytes;
 	const resultStatus_t result = Com_ParseValue(base, token, type, ofs, size, &writtenBytes);
 	switch (result) {
 	case RESULT_ERROR:
-#ifdef DEBUG
-		Sys_Error("Com_EParseValue: %s (file: '%s', line: %i)\n", parseErrorMessage, file, line);
-#else
 		Sys_Error("Com_EParseValue: %s\n", parseErrorMessage);
-#endif
 		break;
 	case RESULT_WARNING:
-#ifdef DEBUG
-		Com_Printf("Com_EParseValue: %s (file: '%s', line: %i)\n", parseErrorMessage, file, line);
-#else
 		Com_Printf("Com_EParseValue: %s\n", parseErrorMessage);
-#endif
 		break;
 	case RESULT_OK:
 		break;
