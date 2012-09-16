@@ -516,15 +516,16 @@ void CP_CampaignRun (campaign_t *campaign, float secondsSinceLastFrame)
 		int currentsecond = ccs.date.sec;
 		int currentday = ccs.date.day;
 		int i;
-		const int currentinterval = (int)floor(currentsecond) % DETECTION_INTERVAL;
+		const int currentinterval = currentsecond % DETECTION_INTERVAL;
 		int dt = DETECTION_INTERVAL - currentinterval;
 		dateLong_t date, oldDate;
-		const int checks = (currentinterval + (int)floor(ccs.timer)) / DETECTION_INTERVAL;
+		const int timer = (int)floor(ccs.timer);
+		const int checks = (currentinterval + timer) / DETECTION_INTERVAL;
 
 		CP_DateConvertLong(&ccs.date, &oldDate);
 
-		currenthour = (int)floor(currentsecond / SECONDS_PER_HOUR);
-		currentmin = (int)floor(currentsecond / SECONDS_PER_MINUTE);
+		currenthour = currentsecond / SECONDS_PER_HOUR;
+		currentmin = currentsecond / SECONDS_PER_MINUTE;
 
 		/* Execute every actions that needs to be independent of time speed : every DETECTION_INTERVAL
 		 *	- Run UFOs and craft at least every DETECTION_INTERVAL. If detection occurred, break.
@@ -544,7 +545,7 @@ void CP_CampaignRun (campaign_t *campaign, float secondsSinceLastFrame)
 			dt = DETECTION_INTERVAL;
 		}
 
-		dt = (int)floor(ccs.timer);
+		dt = timer;
 
 		CP_AdvanceTimeBySeconds(dt);
 		currentsecond += dt;
@@ -552,7 +553,8 @@ void CP_CampaignRun (campaign_t *campaign, float secondsSinceLastFrame)
 
 		/* compute minutely events  */
 		/* (this may run multiple times if the time stepping is > 1 minute at a time) */
-		while (currentmin < (int)floor(currentsecond / SECONDS_PER_MINUTE)) {
+		const int newmin = currentsecond / SECONDS_PER_MINUTE;
+		while (currentmin < newmin) {
 			currentmin++;
 			PR_ProductionRun();
 			B_UpdateBaseData();
@@ -560,7 +562,8 @@ void CP_CampaignRun (campaign_t *campaign, float secondsSinceLastFrame)
 
 		/* compute hourly events  */
 		/* (this may run multiple times if the time stepping is > 1 hour at a time) */
-		while (currenthour < (int)floor(currentsecond / SECONDS_PER_HOUR)) {
+		const int newhour = currentsecond / SECONDS_PER_HOUR;
+		while (currenthour < newhour) {
 			currenthour++;
 			RS_ResearchRun();
 			UR_ProcessActive();
