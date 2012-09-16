@@ -770,6 +770,7 @@ struct edict_s {
 	int time;		/**< general purpose 'rounds' variable - set via mapeditor often */
 	int sounds;		/**< type of sounds to play - e.g. doors */
 	int dmg;		/**< damage done by entity */
+	byte dmgtype;	/**< damage type done by the entity */
 	/** @sa memcpy in Grid_CheckForbidden */
 	actorSizeEnum_t fieldSize;	/* ACTOR_SIZE_* */
 	bool hiding;		/**< for ai actors - when they try to hide after the performed their action */

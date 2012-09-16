@@ -217,7 +217,11 @@ void SP_trigger_nextmap (edict_t *ent)
  */
 bool Touch_HurtTrigger (edict_t *self, edict_t *activator)
 {
-	const int damage = self->dmg;
+	const int damage = G_ApplyProtection(activator, self->dmgtype, self->dmg);
+	const bool stunEl = (self->dmgtype == gi.csi->damStunElectro);
+	const bool stunGas = (self->dmgtype == gi.csi->damStunGas);
+	const bool shock = (self->dmgtype == gi.csi->damShock);
+	const bool isRobot = activator->chr.teamDef->robot;
 
 	/* these actors should really not be able to trigger this - they don't move anymore */
 	if (G_IsDead(activator))
@@ -225,9 +229,9 @@ bool Touch_HurtTrigger (edict_t *self, edict_t *activator)
 	if (G_IsStunned(activator))
 		return false;
 
-	if (self->spawnflags & (1 << 8)) {
+	if (stunEl || (stunGas && !isRobot)) {
 		activator->STUN += damage;
-	} else if (self->spawnflags & (1 << 9)) {
+	} else if (shock) {
 		/** @todo Handle dazed via trigger_hurt */
 	} else {
 		G_TakeDamage(activator, damage);
@@ -248,6 +252,7 @@ void SP_trigger_hurt (edict_t *ent)
 
 	if (!ent->dmg)
 		ent->dmg = 5;
+	ent->dmgtype = gi.csi->damFire;
 
 	ent->solid = SOLID_TRIGGER;
 	gi.SetModel(ent, ent->model);
