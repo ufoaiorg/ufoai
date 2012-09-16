@@ -88,7 +88,7 @@ typedef struct {
 	char *reactivate;		/**< the binary expression to reactivate this event */
 	char *command;			/**< the command to execute if the @c require field evaluated to @c true */
 	bool once;				/**< if this is @c true, the event will only be triggered once */
-	bool active;			/**< if this event is inactive, and has a @c reactive binary expression, it can get reactivated */
+	bool active;			/**< if this event is inactive, and has a @c reactivate binary expression, it can get reactivated */
 } campaignTriggerEvent_t;
 
 #define MAX_CAMPAIGN_TRIGGER_EVENTS 32
