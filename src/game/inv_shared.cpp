@@ -397,7 +397,7 @@ invList_t *INVSH_FindInInventory (const inventory_t* const inv, const invDef_t *
  * @note This is done by checking whether it's a craftitem and not
  * marked as a dummy item - the combination of both means, that it's a
  * basedefence item.
- * @param[in] obj pointer to item definition to check whether it's an aircraftiem item
+ * @param[in] obj pointer to item definition to check whether it's an aircraftitem item
  * @return true if the given item is an aircraftitem item
  * @sa INV_IsBaseDefenceItem
  */

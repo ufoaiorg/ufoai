@@ -73,6 +73,9 @@ typedef struct campaignEvents_s {
 	char *id;				/**< script id */
 } campaignEvents_t;
 
+/**
+ * @brief events that are triggered by the campaign
+ */
 typedef enum {
 	NEW_DAY,
 	UFO_DETECTION
@@ -80,12 +83,12 @@ typedef enum {
 
 typedef struct {
 	campaignTriggerEventType_t type;
-	char *id;
-	char *require;
-	char *reactivate;
-	char *command;
-	bool once;
-	bool active;
+	char *id;				/**< the script id */
+	char *require;			/**< the binary expression to evaluate for this event */
+	char *reactivate;		/**< the binary expression to reactivate this event */
+	char *command;			/**< the command to execute if the @c require field evaluated to @c true */
+	bool once;				/**< if this is @c true, the event will only be triggered once */
+	bool active;			/**< if this event is inactive, and has a @c reactive binary expression, it can get reactivated */
 } campaignTriggerEvent_t;
 
 #define MAX_CAMPAIGN_TRIGGER_EVENTS 32
