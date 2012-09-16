@@ -287,6 +287,26 @@ static void G_UpdateHitScore (edict_t * attacker, const edict_t * target, const 
 }
 
 /**
+ * @brief Reduces damage by armour and natural protection.
+ * @param[in] target What we want to damage.
+ * @param[in] dmgWeight The type of damage is dealt.
+ * @param[in] damage The value of the damage.
+ * @return The new amount of damage after applying armour and resistance.
+ */
+int G_ApplyProtection (const edict_t *target, const byte dmgWeight, int damage)
+{
+	const int naturalProtection = target->chr.teamDef->resistance[dmgWeight];
+	if (CONTAINER(target, gi.csi->idArmour)) {
+		const objDef_t *armourDef = CONTAINER(target, gi.csi->idArmour)->item.item;
+		const short armourProtection = armourDef->protection[dmgWeight];
+		const short totalProtection = armourProtection + naturalProtection;
+		damage = std::min(std::max(0, damage - armourProtection), std::max(1, damage - totalProtection));
+	} else {
+		damage = std::max(1, damage - naturalProtection);
+	}
+	return damage;
+}
+/**
  * @brief Deals damage of a give type and amount to a target.
  * @param[in,out] target What we want to damage.
  * @param[in] fd The fire definition that defines what type of damage is dealt.
@@ -341,14 +361,8 @@ static void G_Damage (edict_t *target, const fireDef_t *fd, int damage, edict_t 
 
 	/* Apply armour effects. */
 	if (damage > 0) {
-		const int nd = target->chr.teamDef->resistance[fd->dmgweight];
-		if (CONTAINER(target, gi.csi->idArmour)) {
-			const objDef_t *ad = CONTAINER(target, gi.csi->idArmour)->item.item;
-			damage = std::max(1, damage - ad->protection[fd->dmgweight] - nd);
-		} else {
-			damage = std::max(1, damage - nd);
-		}
-	} else if (damage < 0){
+		damage = G_ApplyProtection(target, fd->dmgweight, damage);
+	} else if (damage < 0) {
 		/* Robots can't be healed. */
 		if (isRobot)
 			return;
