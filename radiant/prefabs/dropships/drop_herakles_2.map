@@ -2725,3 +2725,87 @@
 ( 363 36 40 ) ( 369 50 -88 ) ( 363 36 -88 ) tex_common/lightclip 0 0 0 0.5 0.5 524288 0 0
 }
 }
+// entity 45
+{
+"classname" "info_player_start"
+"team" "1"
+"origin" "432 304 60"
+}
+// entity 46
+{
+"classname" "info_player_start"
+"team" "1"
+"origin" "432 368 60"
+}
+// entity 47
+{
+"classname" "info_player_start"
+"team" "1"
+"origin" "400 304 60"
+}
+// entity 48
+{
+"classname" "info_player_start"
+"team" "1"
+"origin" "400 368 60"
+}
+// entity 49
+{
+"classname" "info_player_start"
+"team" "1"
+"origin" "368 304 60"
+}
+// entity 50
+{
+"classname" "info_player_start"
+"team" "1"
+"origin" "368 368 60"
+}
+// entity 51
+{
+"classname" "info_player_start"
+"team" "1"
+"origin" "336 304 60"
+}
+// entity 52
+{
+"classname" "info_player_start"
+"team" "1"
+"origin" "336 368 60"
+}
+// entity 53
+{
+"classname" "info_player_start"
+"team" "1"
+"origin" "304 304 60"
+}
+// entity 54
+{
+"classname" "info_player_start"
+"team" "1"
+"origin" "304 368 60"
+}
+// entity 55
+{
+"classname" "info_player_start"
+"team" "1"
+"origin" "272 304 60"
+}
+// entity 56
+{
+"classname" "info_player_start"
+"team" "1"
+"origin" "272 368 60"
+}
+// entity 57
+{
+"classname" "info_player_start"
+"team" "1"
+"origin" "240 304 60"
+}
+// entity 58
+{
+"classname" "info_player_start"
+"team" "1"
+"origin" "240 368 60"
+}

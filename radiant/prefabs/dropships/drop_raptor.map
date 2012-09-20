@@ -1152,10 +1152,162 @@
 // brush 0
 {
 ( 528 320 64 ) ( 528 192 64 ) ( 368 320 64 ) tex_common/trigger 0 0 0 0.25 0.25
-( 240 336 96 ) ( 80 336 96 ) ( 240 336 0 ) tex_common/trigger 0 0 0 0.25 0.25
-( 528 320 64 ) ( 528 320 -32 ) ( 528 192 64 ) tex_common/trigger 0 0 0 0.25 0.25
+( 240 496 96 ) ( 80 496 96 ) ( 240 496 0 ) tex_common/trigger 0 0 0 0.25 0.25
+( 448 320 64 ) ( 448 320 -32 ) ( 448 192 64 ) tex_common/trigger 0 0 0 0.25 0.25
 ( 368 192 0 ) ( 528 192 0 ) ( 368 320 0 ) tex_common/trigger 0 0 0 0.25 0.25
-( 368 160 0 ) ( 368 160 96 ) ( 528 160 0 ) tex_common/trigger 0 0 0 0.25 0.25
-( 80 176 0 ) ( 80 304 0 ) ( 80 176 96 ) tex_common/trigger 0 0 0 0.25 0.25
+( 432 16 0 ) ( 432 16 96 ) ( 592 16 0 ) tex_common/trigger 0 0 0 0.25 0.25
+( 48 176 0 ) ( 48 304 0 ) ( 48 176 96 ) tex_common/trigger 0 0 0 0.25 0.25
 }
+}
+// entity 8
+{
+"classname" "info_human_start"
+"origin" "48 176 28"
+"angle" "180"
+}
+// entity 9
+{
+"classname" "info_human_start"
+"origin" "48 80 28"
+"angle" "225"
+}
+// entity 10
+{
+"classname" "info_human_start"
+"origin" "144 80 28"
+"angle" "270"
+}
+// entity 11
+{
+"classname" "info_human_start"
+"origin" "240 80 28"
+"angle" "315"
+}
+// entity 12
+{
+"classname" "info_human_start"
+"origin" "48 336 28"
+"angle" "180"
+}
+// entity 13
+{
+"classname" "info_human_start"
+"origin" "48 432 28"
+"angle" "135"
+}
+// entity 14
+{
+"classname" "info_human_start"
+"origin" "144 432 28"
+"angle" "90"
+}
+// entity 15
+{
+"classname" "info_human_start"
+"origin" "240 432 28"
+"angle" "45"
+}
+// entity 16
+{
+"classname" "info_human_start"
+"origin" "144 176 28"
+}
+// entity 17
+{
+"classname" "info_human_start"
+"origin" "144 336 28"
+}
+// entity 18
+{
+"classname" "info_2x2_start"
+"origin" "576 128 28"
+"team" "1"
+}
+// entity 19
+{
+"classname" "info_2x2_start"
+"origin" "576 384 28"
+"team" "1"
+}
+// entity 20
+{
+"classname" "info_2x2_start"
+"origin" "96 512 28"
+"team" "1"
+"angle" "180"
+}
+// entity 21
+{
+"classname" "info_2x2_start"
+"origin" "192 0 28"
+"team" "1"
+"angle" "270"
+}
+// entity 22
+{
+"classname" "info_player_start"
+"team" "1"
+"origin" "144 176 28"
+}
+// entity 23
+{
+"classname" "info_player_start"
+"team" "1"
+"origin" "48 432 28"
+"angle" "135"
+}
+// entity 24
+{
+"classname" "info_player_start"
+"team" "1"
+"origin" "48 80 28"
+"angle" "-135"
+}
+// entity 25
+{
+"classname" "info_player_start"
+"team" "1"
+"origin" "144 432 28"
+"angle" "90"
+}
+// entity 26
+{
+"classname" "info_player_start"
+"team" "1"
+"origin" "144 80 28"
+"angle" "-90"
+}
+// entity 27
+{
+"classname" "info_player_start"
+"team" "1"
+"origin" "144 336 28"
+}
+// entity 28
+{
+"classname" "info_player_start"
+"team" "1"
+"origin" "240 80 28"
+"angle" "-45"
+}
+// entity 29
+{
+"classname" "info_player_start"
+"team" "1"
+"origin" "240 432 28"
+"angle" "45"
+}
+// entity 30
+{
+"classname" "info_player_start"
+"team" "1"
+"origin" "48 176 28"
+"angle" "180"
+}
+// entity 31
+{
+"classname" "info_player_start"
+"team" "1"
+"origin" "48 336 28"
+"angle" "180"
 }
