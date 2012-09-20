@@ -60,3 +60,16 @@ help:
 	@echo " * clean-maps   - Removes compiled maps (bsp files)"
 	@echo " * clean-pk3    - Removes the pk3 archives"
 	@echo " * clean-docs   - Removes the doxygen docs and manual"
+
+ISSUE_FILES=$$(find . -type f '(' -name '*.cpp' -or -name '*.h' -or -name '*.m' -or -name '*.mm' -or -name '*.c' ')' )
+ISSUE_TYPES=deprecated todo xxx fixme
+
+local-issues: $(addprefix local-,${ISSUE_TYPES})
+$(addprefix local-,${ISSUE_TYPES}):
+	@itype="$@" ; \
+	itype="$${itype#local-}" ; \
+	git diff | grep --color=auto -in -e "$${itype}:" -e "@$${itype}" -e "$${itype} "- || true
+
+issues: ${ISSUE_TYPES}
+${ISSUE_TYPES}:
+	@grep --color=auto -in -e '$@:' -e '@$@' -e '$@ ' ${ISSUE_FILES} || true
