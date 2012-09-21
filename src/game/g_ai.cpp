@@ -307,7 +307,7 @@ static bool AI_CheckPosition(const edict_t *const ent)
 		return true;
 
 	/* Don't stand on trigger_hurt or misc_fire */
-	if (G_GetEdictFromPos(ent->pos, ET_TRIGGER_HURT) || G_GetEdictFromPos(ent->pos, ET_FIRE))
+	if (G_GetEdictFromPos(ent->pos, ET_TRIGGER_HURT) || G_GetEdictFromPos(ent->pos, ET_SMOKESTUN))
 		return false;
 
 	/* Don't stand next to misc_fire */
