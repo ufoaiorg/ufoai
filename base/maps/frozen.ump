@@ -289,17 +289,24 @@ a      +a     +a     +a     +a     +a     a
 
 // *********************************
 
+tileset aliens
+{
++h01
++h02
+}
+
+// *********************************
+
 assembly small
 {
 size "4 5"
 title "_Snow"
 multiplayer +mp_team2
+tileset aliens	"1 1"
 +n01 "0 4"
 +n02 "0 4"
 +n03 "0 4"
 +n04 "0 4"
-+h01 "0 1"
-+h02 "0 1"
 +h03 "0 2"
 +h04 "0 2"
 +h05 "0 1"

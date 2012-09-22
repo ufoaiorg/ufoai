@@ -1086,10 +1086,10 @@ mapdef frozen_industrial
 
 mapdef frozen_small
 {
-	map			"+frozen"
-	param		"small"
-	description	"_An underpopulated area in a cold region."
-	maxaliens	8 //TODO: This is an arbitrary value right now.
+	map				"+frozen"
+	param			"small"
+	description		"_An underpopulated area in a cold region."
+	maxaliens		3
 	multiplayer		true
 	teams			2
 	gametypes
@@ -1128,7 +1128,6 @@ mapdef frozen_small
 
 	populations
 	(
-		"nopopulation"
 		"rural"
 		"village"
 		"suburban"

@@ -918,3 +918,9 @@
 "particle" "weather_snow"
 "spawnflags" "255"
 }
+// entity 24
+{
+"classname" "info_alien_start"
+"origin" "80 432 28"
+"angle" "-135"
+}
