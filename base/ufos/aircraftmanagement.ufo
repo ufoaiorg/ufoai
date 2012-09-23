@@ -659,6 +659,52 @@ aircraft craft_ufo_bomber
 	interestlevel	310
 }
 
+aircraft craft_ufo_ripper
+{
+	param {
+		speed		10
+		maxspeed	14
+		shield		0
+		ecm			100
+		damage		600
+		accuracy	100
+		range		500
+	}
+	name		"_UFO - Ripper"
+	defaultname	"_Ripper U"
+	type		"ufo"
+	model		"geoscape/ufo_ripper"
+	size		2
+	numteam		18
+	price		30000
+	image		"geoscape/air_ufo"
+	slot {
+		type		"weapon"
+		size		"heavy"
+		contains	rs_craft_weapon_particle
+		ammo		rs_craft_ammo_particle
+	}
+	slot {
+		type		"weapon"
+		size		"heavy"
+		contains	rs_craft_weapon_particle
+		ammo		rs_craft_ammo_particle
+	}
+	slot {
+		type		"weapon"
+		size		"heavy"
+		contains	rs_craft_weapon_particle
+		ammo		rs_craft_ammo_particle
+	}
+	slot {
+		type		"weapon"
+		size		"heavy"
+		contains	rs_craft_weapon_particle
+		ammo		rs_craft_ammo_particle
+	}
+}
+
+// TODO: Battleship goes here
 
 // The carrier UFO does not normally appear on the geoscape. It's used to carry
 // other UFOs to and from the mothership.
