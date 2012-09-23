@@ -180,6 +180,18 @@ audc      +a        +a         +a   audc
 0      audbh     audbh      audbh      0
 }
 
+// ---------------------------------
+// empty
+// ---------------------------------
+tile +e01
+{
+3 3
+
+0		0		0
+0		+a		0
+0		0		0
+}
+
 // *********************************
 // UFO Tiles
 // *********************************
@@ -189,13 +201,18 @@ audc      +a        +a         +a   audc
 // ---------------------------------
 tile +craft_crash_bomber
 {
-7 5
+6 10
 
-0      0      0     ab    ab    ab    0
-0      ab     a     +u    +u    +u    adc
-ac     +u     +u    +u    +u    +u    adc
-ac     +u     +u    +u    ad    adb   0
-0      ab     ab    ab    0     0     0
+0      ad     ad    ad    ad    0
+x      +u     +u    +u    +u    ad
+x      +u     +u    +u    +u    ad
+x      +u     +u    +u    +u    ad
+x      +u     +u    +u    +u    ad
+x      +u     +u    +u    +u    ad
+x      +u     +u    +u    +u    ad
+x      +u     +u    +u    +u    ad
+x      +u     +u    +u    +u    ad
+0      ad     ad    ad    ad    0
 }
 
 // ---------------------------------
@@ -430,5 +447,23 @@ size "7 7"
 +d03 "0 2"
 +d02_harvester "1 1"
 *rm_ufo +craft_crash_harvester "1 1"
+*rm_drop +craft_drop_firebird "1 1"
+}
+
+assembly craft_crash_bomber
+{
+title "_Crashed UFO"
+size "8 8"
++h01 "0 3"
++h02 "0 3"
++h03 "0 3"
++h04 "0 1"
++h05 "0 2"
++h06 "0 2"
++h07 "0 2"
++d01 "0 2"
++d03 "0 2"
++e01 "0 9"
+*rm_ufo +craft_crash_bomber "1 1"
 *rm_drop +craft_drop_firebird "1 1"
 }
