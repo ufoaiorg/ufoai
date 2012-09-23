@@ -1355,7 +1355,7 @@ static void HUD_ActorWoundData_f (void)
 						_("Damaged %s (deterioration: %i)\n") : _("Wounded %s (bleeding: %i)\n"), _(bodyData->name(bodyPart)), bleeding);
 				for (penalty = MODIFIER_ACCURACY; penalty < MODIFIER_MAX; penalty++)
 					if (bodyData->penalty(bodyPart, static_cast<modifier_types_t>(penalty)) != 0)
-						Q_strcat(text, va(_("· Reduced %s\n"), HUD_GetPenaltyString(penalty)), lengthof(text));
+						Q_strcat(text, va(_("- Reduced %s\n"), HUD_GetPenaltyString(penalty)), lengthof(text));
 				UI_ExecuteConfunc("actor_wounds %s %i \"%s\"", bodyData->id(bodyPart), bleeding, text);
 			}
 		}
