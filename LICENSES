@@ -639,6 +639,7 @@ base/maps/ufocrash.ump | GNU General Public License 2.0 or later
 base/maps/ufocrash/uc_craft_crash_bomber.map | GNU General Public License 2.0 or later
 base/maps/ufocrash/uc_craft_crash_corrupter.map | GNU General Public License 2.0 or later
 base/maps/ufocrash/uc_craft_crash_fighter.map | GNU General Public License 2.0 or later | Martin Gerhardy
+base/maps/ufocrash/uc_craft_crash_gunboat.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | af_craft_crash_gunboat.map
 base/maps/ufocrash/uc_craft_crash_harvester.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/ufocrash/uc_craft_crash_scout.map | GNU General Public License 2.0 or later | Martin Gerhardy | prefab_ufo_scout
 base/maps/ufocrash/uc_craft_crash_supply.map | GNU General Public License 2.0 or later | Martin Gerhardy | prefab_ufo_supply and terrain08

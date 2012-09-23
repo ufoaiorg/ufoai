@@ -2430,6 +2430,7 @@ mapdef ufocrash
 		craft_crash_supply
 		craft_crash_bomber
 		craft_crash_carrier
+		craft_crash_gunboat
 	)
 
 	aircraft

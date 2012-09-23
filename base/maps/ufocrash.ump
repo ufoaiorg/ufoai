@@ -329,21 +329,19 @@ ac     +u     +u     +u     ad    0
 0      ab     ab     ab     0     0
 }
 
-// TODO:
 // ---------------------------------
 // gunboat
 // ---------------------------------
 tile +craft_crash_gunboat
 {
-6 7
+7 6
 
-0      ab     ab     0      0     0
-ac     +u     +u     ad     0     0
-ac     +u     +u     +u     adc   0
-ac     +u     +u     +u     ad    0
-ac     +u     +u     +u     +u    adc
-ac     +u     +u     +u     ad    0
-0      ab     ab     ab     0     0
+0      0      ad    ad    ad    0     0
+0      ad     +u    +u    +u    ad    0
+ad     +u     +u    +u    +u    +u    ad
+ad     +u     +u    +u    +u    +u    ad
+0      ad     +u    +u    +u    ad    0
+0      0      ad    ad    ad    0     0
 }
 
 // TODO:
@@ -484,5 +482,25 @@ size "8 8"
 +d03 "0 2"
 +e01 "0 9"
 *rm_ufo +craft_crash_bomber "1 1"
+*rm_drop +craft_drop_firebird "1 1"
+}
+
+assembly craft_crash_gunboat
+{
+title "_Crashed UFO"
+size "7 6"
++h01 "0 3"
++h02 "0 3"
++h03 "0 3"
++h04 "0 1"
++h05 "0 2"
++h06 "0 2"
++h07 "0 2"
++h08 "0 1"
++h09 "0 1"
++d01 "0 2"
++d03 "0 2"
++e01 "0 9"
+*rm_ufo +craft_crash_gunboat "1 1"
 *rm_drop +craft_drop_firebird "1 1"
 }
