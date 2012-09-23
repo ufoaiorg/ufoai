@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
-"POT-Creation-Date: 2012-09-21 13:52-0500\n"
+"POT-Creation-Date: 2012-09-23 17:36+0200\n"
 "PO-Revision-Date: 2012-09-21 14:46-0600\n"
 "Last-Translator: DarkRain <darkrainx@users.sourceforge.net>\n"
 "Language-Team: \n"
@@ -74,31 +74,31 @@ msgstr "Bosque pequeño"
 msgid "Little bungalo in forest"
 msgstr "Pequeña cabaña en el bosque"
 
-#: ../base/maps/frozen.ump:295
+#: ../base/maps/frozen.ump:303
 msgid "Snow"
 msgstr "Nieve"
 
-#: ../base/maps/frozen.ump:312
+#: ../base/maps/frozen.ump:319
 msgid "Alien landing - Snow"
 msgstr "Aterrizaje OVNI - Nieve"
 
-#: ../base/maps/frozen.ump:330
+#: ../base/maps/frozen.ump:337
 msgid "Industrial"
 msgstr "Industrial"
 
-#: ../base/maps/frozen.ump:350
+#: ../base/maps/frozen.ump:357
 msgid "Alien landing - Industrial"
 msgstr "Aterrizaje OVNI - Industrial"
 
-#: ../base/maps/frozen.ump:372 ../base/maps/frozen.ump:394
+#: ../base/maps/frozen.ump:379 ../base/maps/frozen.ump:401
 msgid "A UFO crashed into the snow here."
 msgstr "Un OVNI se ha estrellado en la nieve en este lugar."
 
-#: ../base/maps/frozen.ump:412
+#: ../base/maps/frozen.ump:419
 msgid "Multiplayer Coop"
 msgstr "Multijugador Cooperativo"
 
-#: ../base/maps/frozen.ump:433
+#: ../base/maps/frozen.ump:440
 msgid "Multiplayer Deathmatch"
 msgstr "Partida a Muerte Multijugador"
 
@@ -347,115 +347,107 @@ msgstr "OVNI - Bombardero"
 msgid "Bomber U"
 msgstr "Bombardero O"
 
-#: ../base/ufos/aircraftmanagement.ufo:673 ../base/ufos/research.ufo:3971
-msgid "UFO - Ripper"
-msgstr "OVNI - Destructor"
-
-#: ../base/ufos/aircraftmanagement.ufo:674
-msgid "Ripper U"
-msgstr "Destructor O"
-
-#: ../base/ufos/aircraftmanagement.ufo:724 ../base/ufos/research.ufo:3799
+#: ../base/ufos/aircraftmanagement.ufo:678 ../base/ufos/research.ufo:3799
 msgid "UFO - Carrier"
 msgstr "OVNI - Transportador de Naves"
 
-#: ../base/ufos/aircraftmanagement.ufo:725
+#: ../base/ufos/aircraftmanagement.ufo:679
 msgid "Carrier U"
 msgstr "Transportador de Naves O"
 
-#: ../base/ufos/aircraftmanagement.ufo:746 ../base/ufos/research.ufo:4057
+#: ../base/ufos/aircraftmanagement.ufo:700 ../base/ufos/research.ufo:4057
 msgid "UFO - Mothership"
 msgstr "OVNI - Nave Nodriza"
 
-#: ../base/ufos/aircraftmanagement.ufo:747
+#: ../base/ufos/aircraftmanagement.ufo:701
 msgid "Mothership U"
 msgstr "Nave Nodriza O"
 
-#: ../base/ufos/aircraftmanagement.ufo:762 ../base/ufos/research.ufo:4857
+#: ../base/ufos/aircraftmanagement.ufo:716 ../base/ufos/research.ufo:4857
 msgid "Aerial Laser Cannon"
 msgstr "Cañón Láser"
 
-#: ../base/ufos/aircraftmanagement.ufo:793
+#: ../base/ufos/aircraftmanagement.ufo:747
 msgid "Shiva Rotary Cannon"
 msgstr "Cañón Giratorio SHIVA"
 
-#: ../base/ufos/aircraftmanagement.ufo:804 ../base/ufos/research.ufo:4924
+#: ../base/ufos/aircraftmanagement.ufo:758 ../base/ufos/research.ufo:4924
 msgid "SHIVA 20mm API Rounds"
 msgstr "Municiones PBI SHIVA de 20mm"
 
-#: ../base/ufos/aircraftmanagement.ufo:820 ../base/ufos/research.ufo:4945
+#: ../base/ufos/aircraftmanagement.ufo:774 ../base/ufos/research.ufo:4945
 msgid "SHIVA 20mm HEI Rounds"
 msgstr "Municiones AEI SHIVA de 20mm"
 
-#: ../base/ufos/aircraftmanagement.ufo:836
+#: ../base/ufos/aircraftmanagement.ufo:790
 msgid "Raven ECM Unit"
 msgstr "Unidad CME 'Raven'"
 
-#: ../base/ufos/aircraftmanagement.ufo:848
+#: ../base/ufos/aircraftmanagement.ufo:802
 msgid "Sparrowhawk AA Missile Rack"
 msgstr "Lanzamisiles AA 'Sparrowhawk'"
 
-#: ../base/ufos/aircraftmanagement.ufo:858
+#: ../base/ufos/aircraftmanagement.ufo:812
 msgid "Sparrowhawk Missile"
 msgstr "Misil 'Sparrowhawk'"
 
-#: ../base/ufos/aircraftmanagement.ufo:875 ../base/ufos/research.ufo:5004
+#: ../base/ufos/aircraftmanagement.ufo:829 ../base/ufos/research.ufo:5004
 msgid "TR-20 Rocket Pod"
 msgstr "Lanzamisiles TR-20"
 
-#: ../base/ufos/aircraftmanagement.ufo:888 ../base/ufos/research.ufo:5021
+#: ../base/ufos/aircraftmanagement.ufo:842 ../base/ufos/research.ufo:5021
 msgid "TR-20 Rocket"
 msgstr "Misil TR-20"
 
-#: ../base/ufos/aircraftmanagement.ufo:907 ../base/ufos/research.ufo:5040
+#: ../base/ufos/aircraftmanagement.ufo:861 ../base/ufos/research.ufo:5040
 msgid "Particle Beam Weapon"
 msgstr "Arma de Flujo de Partículas"
 
-#: ../base/ufos/aircraftmanagement.ufo:937 ../base/ufos/research.ufo:5100
+#: ../base/ufos/aircraftmanagement.ufo:891 ../base/ufos/research.ufo:5100
 msgid "Alien Launcher"
 msgstr "Lanzamisiles Alienígena"
 
-#: ../base/ufos/aircraftmanagement.ufo:947 ../base/ufos/research.ufo:5148
+#: ../base/ufos/aircraftmanagement.ufo:901 ../base/ufos/research.ufo:5148
 msgid "Antimatter Missile"
 msgstr "Misil de Antimateria"
 
-#: ../base/ufos/aircraftmanagement.ufo:964 ../base/ufos/research.ufo:5199
+#: ../base/ufos/aircraftmanagement.ufo:918 ../base/ufos/research.ufo:5199
 msgid "Hybrid Missile"
 msgstr "Misil Híbrido"
 
-#: ../base/ufos/aircraftmanagement.ufo:981 ../base/ufos/research.ufo:5249
+#: ../base/ufos/aircraftmanagement.ufo:935 ../base/ufos/research.ufo:5249
 msgid "Targeting Computer"
 msgstr "Computadora de Objetivo"
 
-#: ../base/ufos/aircraftmanagement.ufo:993 ../base/ufos/research.ufo:5266
+#: ../base/ufos/aircraftmanagement.ufo:947 ../base/ufos/research.ufo:5266
 msgid "Fuel Pod"
 msgstr "Tanque de Combustible"
 
-#: ../base/ufos/aircraftmanagement.ufo:1007 ../base/ufos/research.ufo:4686
+#: ../base/ufos/aircraftmanagement.ufo:961 ../base/ufos/research.ufo:4686
 msgid "Polymer Aircraft Armour"
 msgstr "Blindaje de Polímero para Aeronaves"
 
-#: ../base/ufos/aircraftmanagement.ufo:1021 ../base/ufos/research.ufo:4703
+#: ../base/ufos/aircraftmanagement.ufo:975 ../base/ufos/research.ufo:4703
 msgid "Alien Aircraft Plating"
 msgstr "Recubrimiento Alienígena para Aeronaves"
 
-#: ../base/ufos/aircraftmanagement.ufo:1035 ../base/ufos/research.ufo:4743
+#: ../base/ufos/aircraftmanagement.ufo:989 ../base/ufos/research.ufo:4743
 msgid "Alien Astrogation"
 msgstr "Astronavegación Alienígena"
 
-#: ../base/ufos/aircraftmanagement.ufo:1044 ../base/ufos/research.ufo:4781
+#: ../base/ufos/aircraftmanagement.ufo:998 ../base/ufos/research.ufo:4781
 msgid "Alien Propulsion"
 msgstr "Propulsión Alienígena"
 
-#: ../base/ufos/aircraftmanagement.ufo:1053 ../base/ufos/research.ufo:4819
+#: ../base/ufos/aircraftmanagement.ufo:1007 ../base/ufos/research.ufo:4819
 msgid "Alien Detection"
 msgstr "Detección Alienígena"
 
-#: ../base/ufos/aircraftmanagement.ufo:1066 ../base/ufos/research.ufo:4638
+#: ../base/ufos/aircraftmanagement.ufo:1020 ../base/ufos/research.ufo:4638
 msgid "AA51 missile launcher"
 msgstr "Lanzamisiles AA51"
 
-#: ../base/ufos/aircraftmanagement.ufo:1096 ../base/ufos/research.ufo:162
+#: ../base/ufos/aircraftmanagement.ufo:1050 ../base/ufos/research.ufo:162
 msgid "Base-Defence Laser Turret"
 msgstr "Sistema de Defensa - Torreta Láser"
 
@@ -2782,7 +2774,7 @@ msgid "A Bomber has landed in the middle of a city."
 msgstr "Un Bombardero ha aterrizado en medio de una ciudad."
 
 #: ../base/ufos/maps.ufo:362 ../base/ufos/maps.ufo:404
-#: ../base/ufos/maps.ufo:4161
+#: ../base/ufos/maps.ufo:4160
 msgid "A small UFO has crashed in this mining region."
 msgstr "Un pequeño OVNI se ha estrellado en esta región minera."
 
@@ -2827,140 +2819,140 @@ msgstr "Un OVNI caído en una región casi despoblada del bosque."
 msgid "An industrial area in a cold region."
 msgstr "Una zona industrial en una región helada."
 
-#: ../base/ufos/maps.ufo:1091 ../base/ufos/maps.ufo:1142
-#: ../base/ufos/maps.ufo:1193 ../base/ufos/maps.ufo:5008
-#: ../base/ufos/maps.ufo:5026
+#: ../base/ufos/maps.ufo:1091 ../base/ufos/maps.ufo:1141
+#: ../base/ufos/maps.ufo:1192 ../base/ufos/maps.ufo:5007
+#: ../base/ufos/maps.ufo:5025
 msgid "An underpopulated area in a cold region."
 msgstr "Zona de baja población en una región helada."
 
-#: ../base/ufos/maps.ufo:1248
+#: ../base/ufos/maps.ufo:1247
 msgid "An important container harbour is attacked by alien invaders."
 msgstr "Un importante puerto de carga es atacado por invasores alienígenas."
 
-#: ../base/ufos/maps.ufo:1303 ../base/ufos/maps.ufo:1348
-#: ../base/ufos/maps.ufo:1390
+#: ../base/ufos/maps.ufo:1302 ../base/ufos/maps.ufo:1347
+#: ../base/ufos/maps.ufo:1389
 msgid "UFO landed in hills area."
 msgstr "Aterrizaje OVNI en una zona montañosa."
 
-#: ../base/ufos/maps.ufo:1436 ../base/ufos/maps.ufo:1476
-#: ../base/ufos/maps.ufo:1517 ../base/ufos/maps.ufo:1556
+#: ../base/ufos/maps.ufo:1435 ../base/ufos/maps.ufo:1475
+#: ../base/ufos/maps.ufo:1516 ../base/ufos/maps.ufo:1555
 msgid "An icy environment."
 msgstr "Un ambiente helado"
 
-#: ../base/ufos/maps.ufo:1601 ../base/ufos/maps.ufo:1642
+#: ../base/ufos/maps.ufo:1600 ../base/ufos/maps.ufo:1641
 msgid "Industrial theme."
 msgstr "Sitio industrial"
 
-#: ../base/ufos/maps.ufo:1687 ../base/ufos/maps.ufo:1735
-#: ../base/ufos/maps.ufo:3178
+#: ../base/ufos/maps.ufo:1686 ../base/ufos/maps.ufo:1734
+#: ../base/ufos/maps.ufo:3177
 msgid "A classic eastern suburban area."
 msgstr "Una típica área suburbana occidental."
 
-#: ../base/ufos/maps.ufo:1786
+#: ../base/ufos/maps.ufo:1785
 msgid "A laboratory where they examined found UFO wreck tiles."
 msgstr "Un laboratorio donde se examinaban algunos restos OVNI."
 
-#: ../base/ufos/maps.ufo:1842
+#: ../base/ufos/maps.ufo:1841
 msgid "A mansion near the coast."
 msgstr "Una mansión cerca de la costa."
 
-#: ../base/ufos/maps.ufo:1896 ../base/ufos/maps.ufo:1944
+#: ../base/ufos/maps.ufo:1895 ../base/ufos/maps.ufo:1943
 msgid "A mansion. An important and influential person lives here."
 msgstr "Una mansión. Una persona rica e influyente vive aquí."
 
-#: ../base/ufos/maps.ufo:1997 ../base/ufos/maps.ufo:2037
-#: ../base/ufos/maps.ufo:2120
+#: ../base/ufos/maps.ufo:1996 ../base/ufos/maps.ufo:2036
+#: ../base/ufos/maps.ufo:2119
 msgid "A suburban district of an oriental area."
 msgstr "Un distrito suburbano de una región oriental."
 
-#: ../base/ufos/maps.ufo:2079
+#: ../base/ufos/maps.ufo:2078
 msgid "Crashed UFO in oriental suburban district."
 msgstr "OVNI caído en un distrito suburbano de una región oriental."
 
-#: ../base/ufos/maps.ufo:2172
+#: ../base/ufos/maps.ufo:2171
 msgid "A crashed Scout UFO."
 msgstr "Un OVNI explorador caído"
 
-#: ../base/ufos/maps.ufo:2213 ../base/ufos/maps.ufo:2253
-#: ../base/ufos/maps.ufo:2294
+#: ../base/ufos/maps.ufo:2212 ../base/ufos/maps.ufo:2252
+#: ../base/ufos/maps.ufo:2293
 msgid "A cleared stretch of land in the middle of the jungle."
 msgstr "Un claro a la mitad de la selva."
 
-#: ../base/ufos/maps.ufo:2335 ../base/ufos/maps.ufo:2375
+#: ../base/ufos/maps.ufo:2334 ../base/ufos/maps.ufo:2374
 msgid "A river runs through this piece of jungle."
 msgstr "Hay un río que corre a travez de esta parte de la selva."
 
-#: ../base/ufos/maps.ufo:2421
+#: ../base/ufos/maps.ufo:2420
 msgid "UFO Crashsite."
 msgstr "Lugar del choque OVNI"
 
-#: ../base/ufos/maps.ufo:2454 ../base/ufos/maps.ufo:2496
-#: ../base/ufos/maps.ufo:2537 ../base/ufos/maps.ufo:2580
+#: ../base/ufos/maps.ufo:2453 ../base/ufos/maps.ufo:2495
+#: ../base/ufos/maps.ufo:2536 ../base/ufos/maps.ufo:2579
 msgid "A peaceful neighbourhood on the outskirts of a centre of population."
 msgstr "Un barrio pacifico a las afueras de un centro de población."
 
-#: ../base/ufos/maps.ufo:2627 ../base/ufos/maps.ufo:2662
-#: ../base/ufos/maps.ufo:5073
+#: ../base/ufos/maps.ufo:2626 ../base/ufos/maps.ufo:2661
+#: ../base/ufos/maps.ufo:5072
 msgid "Base is under attack."
 msgstr "Base bajo ataque"
 
-#: ../base/ufos/maps.ufo:2701
+#: ../base/ufos/maps.ufo:2700
 msgid "Cemetery terror mission."
 msgstr "Misión de terror en un cementerio"
 
-#: ../base/ufos/maps.ufo:2742 ../base/ufos/maps.ufo:4981
+#: ../base/ufos/maps.ufo:2741 ../base/ufos/maps.ufo:4980
 msgid "A city high rise."
 msgstr "Un rascacielos en la ciudad."
 
-#: ../base/ufos/maps.ufo:2783
+#: ../base/ufos/maps.ufo:2782
 msgid "A hospital in the outskirts of a city."
 msgstr "Un complejo de oficinas a las afueras de una ciudad."
 
-#: ../base/ufos/maps.ufo:2825 ../base/ufos/maps.ufo:3825
+#: ../base/ufos/maps.ufo:2824 ../base/ufos/maps.ufo:3824
 msgid "A small neighbourhood in a warm urban region."
 msgstr "Un pequeño vecindario urbano en una región templada."
 
-#: ../base/ufos/maps.ufo:2874
+#: ../base/ufos/maps.ufo:2873
 msgid "A place where people come to relax and mingle."
 msgstr "Un lugar a donde la gente viene a relajarse y convivir."
 
-#: ../base/ufos/maps.ufo:2926
+#: ../base/ufos/maps.ufo:2925
 msgid "An office complex under construction."
 msgstr "Un complejo de oficinas en construcción."
 
-#: ../base/ufos/maps.ufo:2980
+#: ../base/ufos/maps.ufo:2979
 msgid ""
 "A tropical area where several suspected criminals have made their homes."
 msgstr ""
 "Una región tropical donde varios presuntos criminales han hecho sus hogares."
 
-#: ../base/ufos/maps.ufo:3039
+#: ../base/ufos/maps.ufo:3038
 msgid "A small estate in the mountains."
 msgstr "Una pequeña finca en las montañas."
 
-#: ../base/ufos/maps.ufo:3080
+#: ../base/ufos/maps.ufo:3079
 msgid "A place where citizens come to replenish their vehicles' fuel supply."
 msgstr "Una estación de gasolina."
 
-#: ../base/ufos/maps.ufo:3128
+#: ../base/ufos/maps.ufo:3127
 msgid "A small office in a mountainous region."
 msgstr "Una pequeña oficina en una región montañosa."
 
-#: ../base/ufos/maps.ufo:3230
+#: ../base/ufos/maps.ufo:3229
 msgid ""
 "A kind of communal gathering centre annex foraging facility, known as a "
 "supermarket."
 msgstr "Un supermercado."
 
-#: ../base/ufos/maps.ufo:3282
+#: ../base/ufos/maps.ufo:3281
 msgid "A military convoy has caught the eye of the aliens."
 msgstr "Un convoy militar ha llamado la atención de los alienígenas."
 
-#: ../base/ufos/maps.ufo:3330 ../base/ufos/maps.ufo:4581
+#: ../base/ufos/maps.ufo:3329 ../base/ufos/maps.ufo:4580
 msgid "An urban district in an oriental region."
 msgstr "Zona urbana de una región oriental."
 
-#: ../base/ufos/maps.ufo:3381
+#: ../base/ufos/maps.ufo:3380
 msgid ""
 "A shelter that was built to house people in times of major disasters. Some "
 "internal blast doors may have been closed."
@@ -2968,123 +2960,123 @@ msgstr ""
 "Un refugio construido para situaciones de emergencia. Algunas puertas pueden "
 "estar bloqueadas."
 
-#: ../base/ufos/maps.ufo:3438
+#: ../base/ufos/maps.ufo:3437
 msgid "A small industrial area."
 msgstr "Una pequeña zona industrial."
 
-#: ../base/ufos/maps.ufo:3488
+#: ../base/ufos/maps.ufo:3487
 msgid "A stadium used for various recreational events."
 msgstr "Un estadio utilizado para eventos recreativos."
 
-#: ../base/ufos/maps.ufo:3539
+#: ../base/ufos/maps.ufo:3538
 msgid "An office complex in the centre of town."
 msgstr "Un complejo de oficinas en el centro de la ciudad."
 
-#: ../base/ufos/maps.ufo:3593
+#: ../base/ufos/maps.ufo:3592
 msgid "An industrial area, used for loading and unloading goods."
 msgstr "Una zona industrial, usada para carga y descarga de bienes."
 
-#: ../base/ufos/maps.ufo:3641 ../base/ufos/maps.ufo:3685
+#: ../base/ufos/maps.ufo:3640 ../base/ufos/maps.ufo:3684
 msgid "A small bungalow."
 msgstr "Una pequeña cabaña."
 
-#: ../base/ufos/maps.ufo:3731
+#: ../base/ufos/maps.ufo:3730
 msgid "A bunker used in a previous conflict."
 msgstr "Un refugio subterráneo usado en un conflicto anterior."
 
-#: ../base/ufos/maps.ufo:3780
+#: ../base/ufos/maps.ufo:3779
 msgid "A small industry city area."
 msgstr "Una pequeña zona industrial."
 
-#: ../base/ufos/maps.ufo:3873
+#: ../base/ufos/maps.ufo:3872
 msgid "A crashed UFO-Corrupter."
 msgstr "Un OVNI - Corruptor caído."
 
-#: ../base/ufos/maps.ufo:3919
+#: ../base/ufos/maps.ufo:3918
 msgid "A hydroelectricity dam that is threatened by the alien invaders."
 msgstr "Una central hidroeléctrica amenazada por los invasores alienígenas."
 
-#: ../base/ufos/maps.ufo:3967
+#: ../base/ufos/maps.ufo:3966
 msgid "A small village."
 msgstr "Una pequeña villa."
 
-#: ../base/ufos/maps.ufo:4016
+#: ../base/ufos/maps.ufo:4015
 msgid "An estate owned by rich and influential people."
 msgstr "Una finca de gente rica e influyente."
 
-#: ../base/ufos/maps.ufo:4061
+#: ../base/ufos/maps.ufo:4060
 msgid "An excavation site that has fallen under alien attack."
 msgstr "Un sitio de excavación que ha sido atacado por los alienígenas."
 
-#: ../base/ufos/maps.ufo:4111
+#: ../base/ufos/maps.ufo:4110
 msgid "A ferry."
 msgstr "Un transbordador."
 
-#: ../base/ufos/maps.ufo:4209
+#: ../base/ufos/maps.ufo:4208
 msgid "A fuel depot the aliens try to destroy."
 msgstr "Un almacén de combustible que los alienígenas intentan destruir."
 
-#: ../base/ufos/maps.ufo:4249
+#: ../base/ufos/maps.ufo:4248
 msgid "A depot with the name 'The Gate' where secret technology is stored."
 msgstr "Un almacén llamado 'The Gate' donde se resguarda tecnología secreta"
 
-#: ../base/ufos/maps.ufo:4297
+#: ../base/ufos/maps.ufo:4296
 msgid "A local harbour."
 msgstr "Un puerto local."
 
-#: ../base/ufos/maps.ufo:4352 ../base/ufos/maps.ufo:4389
+#: ../base/ufos/maps.ufo:4351 ../base/ufos/maps.ufo:4388
 msgid "A small settlement in winter."
 msgstr "Un pequeño asentamiento invernal."
 
-#: ../base/ufos/maps.ufo:4438
+#: ../base/ufos/maps.ufo:4437
 msgid "An old mine."
 msgstr "Una vieja mina."
 
-#: ../base/ufos/maps.ufo:4491
+#: ../base/ufos/maps.ufo:4490
 msgid "Neighbourhood."
 msgstr "Vecindario."
 
-#: ../base/ufos/maps.ufo:4535
+#: ../base/ufos/maps.ufo:4534
 msgid "An office complex on the outskirts of town."
 msgstr "Un complejo de oficinas a las afueras de la ciudad."
 
-#: ../base/ufos/maps.ufo:4628
+#: ../base/ufos/maps.ufo:4627
 msgid "Underground pipe construction site."
 msgstr "Zona de construcción de una tubería subterránea."
 
-#: ../base/ufos/maps.ufo:4675
+#: ../base/ufos/maps.ufo:4674
 msgid "A luxurious vacation resort."
 msgstr "Un lujoso sitio vacacional."
 
-#: ../base/ufos/maps.ufo:4721
+#: ../base/ufos/maps.ufo:4720
 msgid "A rather old-fashioned suburban district."
 msgstr "Un antiguo distrito suburbano."
 
-#: ../base/ufos/maps.ufo:4839
+#: ../base/ufos/maps.ufo:4838
 msgid "A subway station in a suburban part of town."
 msgstr "Una estación del metro en una zona suburbana de la ciudad."
 
-#: ../base/ufos/maps.ufo:4886
+#: ../base/ufos/maps.ufo:4885
 msgid "A suburban district."
 msgstr "Un distrito suburbano."
 
-#: ../base/ufos/maps.ufo:4932
+#: ../base/ufos/maps.ufo:4931
 msgid "Wilderness terror mission."
 msgstr "Misión de terror en el desierto"
 
-#: ../base/ufos/maps.ufo:5053
+#: ../base/ufos/maps.ufo:5052
 msgid "An alien base."
 msgstr "Una base alienígena"
 
-#: ../base/ufos/maps.ufo:5085
+#: ../base/ufos/maps.ufo:5084
 msgid "Rescue mission."
 msgstr "Misión de rescate"
 
-#: ../base/ufos/maps.ufo:5115
+#: ../base/ufos/maps.ufo:5114
 msgid "Training Zone: Alpha"
 msgstr "Zona de Entrenamiento: Alfa"
 
-#: ../base/ufos/maps.ufo:5132
+#: ../base/ufos/maps.ufo:5131
 msgid "Training Zone: Bravo"
 msgstr "Zona de Entrenamiento: Bravo"
 
@@ -17160,6 +17152,7 @@ msgstr ""
 "Ninguno."
 
 #: ../base/ufos/msgid/weapons.ufo:392
+#, fuzzy
 msgid ""
 "Technical Specifications: HPML Rocket Launcher\n"
 "\n"
@@ -17193,12 +17186,12 @@ msgid ""
 "\n"
 "The South-African MPMDS (Multi-Purpose Missile Delivery System) has a "
 "classic, almost surgically clean name that completely belies its purpose. It "
-"is the heaviest infantry missile launcher on the market, able to fire anti-"
-"tank shells as easily as high-explosive rockets that turn infantry into "
-"hamburger. Originally intended as light field artillery, this weapon is "
-"fairly new; its only combat experience has been in Mumbai in the hands of "
-"Commonwealth troops. It was one of the handful of weapons that eventually "
-"turned the tide in the fighting -- and there is a good reason why.\n"
+"is the heaviest infantry missile launcher on the market, able to fire high-"
+"explosive rockets that turn infantry into hamburger. Originally intended as "
+"light field artillery, this weapon is fairly new; its only combat experience "
+"has been in Mumbai in the hands of Commonwealth troops. It was one of the "
+"handful of weapons that eventually turned the tide in the fighting -- and "
+"there is a good reason why.\n"
 "\n"
 "Alien craft on the ground emit fantastic amounts of jamming and other EW "
 "(Electronic Warfare) activity. In fact, they emit so much of it that "
@@ -17210,22 +17203,18 @@ msgid ""
 "because its rockets carry no onboard guidance.\n"
 "\n"
 "The rockets are 120mm monsters the size of artillery shells. They are fired "
-"out of a smoothbore barrel, fin-stabilised in flight, and have a maximum "
-"effective range of 70 metres. Surprisingly they are made up of only three "
-"parts: a rocket booster, a warhead and an impact trigger. This simplicity "
-"allows them to remain effective and reliable in the most hazardous "
-"situations. Though the rockets are not very accurate, they will devastate "
-"anything in their path, even aliens. It takes only one good hit from an "
-"MPMDS rocket to send the enemy flying.\n"
+"out of a smoothbore barrel and are fin-stabilised in flight. Surprisingly "
+"they are made up of only three parts: a rocket booster, a warhead and an "
+"impact trigger. This simplicity allows them to remain effective and reliable "
+"in the most hazardous situations. Though the rockets are not very accurate, "
+"they will devastate anything in their path, even aliens. It takes only one "
+"good hit from an MPMDS rocket to send the enemy flying.\n"
 "\n"
-"Standard ammunition for this launcher includes: HE (High-Explosive) rockets, "
-"AA (Anti-Armour) rockets, and IC (Incendiary) rockets. New types of MPMDS "
-"ammo were being researched by Commonwealth manufacturers before the start of "
-"the war. We have all their data on file and could use it to create "
-"revolutionary new rocket types.\n"
+"Standard ammunition for this launcher includes: HE (High-Explosive) rockets "
+"and IC (Incendiary) rockets.\n"
 "\n"
 "Along with the HPGL Grenade Launcher, this weapon will provide our troops "
-"the artillery support they need to survive and win through.\n"
+"with the artillery support they need to survive and win.\n"
 "\n"
 "For PHALANX use, we have given this rocket launcher the classification "
 "HPML.\n"
@@ -17238,13 +17227,11 @@ msgid ""
 "should be taken that friendly fire incidents do not occur, as this could "
 "have disastrous effects in a combat mission.\n"
 "\n"
-"Friendly troops should be kept away from the rear of the launcher during "
-"firing; the hot exhaust gases are extremely dangerous to nearby humans. The "
-"HPML should not be fired at targets closer than 8 metres from the shooter. "
-"Violating these safety guidelines could result in serious injury or death to "
-"the shooter and other members of the team. If a target is closer than 8 "
-"metres, any shooter should immediately resort to his sidearm or a combat "
-"knife. Anything else would be suicide.\n"
+"The HPML should not be fired at targets closer than 8 metres from the "
+"shooter. Violating this safety guideline could result in serious injury or "
+"death to the shooter and other members of the team. If a target is closer "
+"than 8 metres, any shooter should immediately resort to his sidearm or a "
+"combat knife. Anything else would be suicide.\n"
 "\n"
 "\n"
 "Addenda\n"
@@ -17446,6 +17433,7 @@ msgstr ""
 "Ninguno."
 
 #: ../base/ufos/msgid/weapons.ufo:462
+#, fuzzy
 msgid ""
 "Technical Specifications: IC Rocket\n"
 "\n"
@@ -17471,10 +17459,10 @@ msgid ""
 "warhead itself can spill its contents if damaged, but the thermite mix will "
 "not ignite unless exposed to a very high-temperature flame.\n"
 "\n"
-"Incendiary rockets are area-denial weapons, covering a large stretch of "
-"ground with very hot flames that are almost impossible to extinguish. The "
-"compound itself is a modification of a mixture that has been in use since "
-"World War II; thermite, barium nitrate, sulphur and binding agent.\n"
+"Incendiary rockets are area-denial weapons, covering a patch of ground with "
+"very hot flames that are almost impossible to extinguish. The compound "
+"itself is a modification of a mixture that has been in use since World War "
+"II; thermite, barium nitrate, sulphur and binding agent.\n"
 "\n"
 "Because it carries no onboard electronics, the rocket is impervious to EMP "
 "and electronic jamming. All high-tech aiming is done at the launcher. "
@@ -23746,6 +23734,10 @@ msgstr "Habilidad para Francotirador"
 msgid "Speed Attribute"
 msgstr "Atributos de Velocidad"
 
+#: ../base/ufos/research.ufo:3971
+msgid "UFO - Ripper"
+msgstr "OVNI - Destructor"
+
 #: ../base/ufos/research.ufo:4107
 msgid "Live Specimen - Bloodspider"
 msgstr "Espécimen Vivo - Araña Sanguinaria"
@@ -29222,8 +29214,8 @@ msgid "Wounded %s (bleeding: %i)\n"
 msgstr "Heridas en %s (sangrado: %i)\n"
 
 #: client/battlescape/cl_hud.cpp:1358
-#, c-format
-msgid "* Reduced %s\n"
+#, fuzzy, c-format
+msgid "- Reduced %s\n"
 msgstr "* Reducción en: %s\n"
 
 #: client/battlescape/cl_hud.cpp:1380
@@ -33155,6 +33147,9 @@ msgstr "alienígena"
 #: po/OTHER_STRINGS:6
 msgid "Take a screenshot"
 msgstr "Tomar una captura de pantalla"
+
+#~ msgid "Ripper U"
+#~ msgstr "Destructor O"
 
 #~ msgid "%s\t%i\t%i c"
 #~ msgstr "%s\t%i\t%i c"

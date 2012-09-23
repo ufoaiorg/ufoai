@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
-"POT-Creation-Date: 2012-08-19 14:21+0200\n"
+"POT-Creation-Date: 2012-09-23 17:36+0200\n"
 "PO-Revision-Date: 2010-05-26 14:41+0600\n"
 "Last-Translator: Kostia (Kildor) Romanov <kostia@ngs.ru>\n"
 "Language-Team: \n"
@@ -17,8 +17,8 @@ msgstr ""
 "X-Poedit-Bookmarks: -1,1435,-1,-1,-1,-1,-1,-1,-1,-1\n"
 "X-Poedit-Basepath: ../\n"
 
-#: ../base/maps/africa.ump:541 ../base/maps/africa.ump:573
-#: ../base/maps/africa.ump:604
+#: ../base/maps/africa.ump:552 ../base/maps/africa.ump:584
+#: ../base/maps/africa.ump:615
 msgid "Africa"
 msgstr "非洲"
 
@@ -77,32 +77,32 @@ msgstr "小树林"
 msgid "Little bungalo in forest"
 msgstr "森林独屋"
 
-#: ../base/maps/frozen.ump:295
+#: ../base/maps/frozen.ump:303
 msgid "Snow"
 msgstr "雪地"
 
-#: ../base/maps/frozen.ump:312
+#: ../base/maps/frozen.ump:319
 msgid "Alien landing - Snow"
 msgstr "外星人着陆中 - 雪地"
 
-#: ../base/maps/frozen.ump:330
+#: ../base/maps/frozen.ump:337
 msgid "Industrial"
 msgstr "工业区"
 
-#: ../base/maps/frozen.ump:350
+#: ../base/maps/frozen.ump:357
 msgid "Alien landing - Industrial"
 msgstr "外星人着陆中 - 工业区"
 
-#: ../base/maps/frozen.ump:372 ../base/maps/frozen.ump:394
+#: ../base/maps/frozen.ump:379 ../base/maps/frozen.ump:401
 #, fuzzy
 msgid "A UFO crashed into the snow here."
 msgstr "小型UFO坠落点。"
 
-#: ../base/maps/frozen.ump:412
+#: ../base/maps/frozen.ump:419
 msgid "Multiplayer Coop"
 msgstr "联机协作模式"
 
-#: ../base/maps/frozen.ump:433
+#: ../base/maps/frozen.ump:440
 msgid "Multiplayer Deathmatch"
 msgstr "联机死亡竞赛模式"
 
@@ -358,117 +358,109 @@ msgstr "UFO－轰炸机"
 msgid "Bomber U"
 msgstr "UFO轰炸机"
 
-#: ../base/ufos/aircraftmanagement.ufo:673 ../base/ufos/research.ufo:3971
-msgid "UFO - Ripper"
-msgstr "UFO－飞鹰级"
-
-#: ../base/ufos/aircraftmanagement.ufo:674
-msgid "Ripper U"
-msgstr "飞鹰级UFO"
-
-#: ../base/ufos/aircraftmanagement.ufo:724 ../base/ufos/research.ufo:3799
+#: ../base/ufos/aircraftmanagement.ufo:678 ../base/ufos/research.ufo:3799
 msgid "UFO - Carrier"
 msgstr "UFO－小母舰"
 
-#: ../base/ufos/aircraftmanagement.ufo:725
+#: ../base/ufos/aircraftmanagement.ufo:679
 msgid "Carrier U"
 msgstr "UFO小母舰"
 
-#: ../base/ufos/aircraftmanagement.ufo:746 ../base/ufos/research.ufo:4057
+#: ../base/ufos/aircraftmanagement.ufo:700 ../base/ufos/research.ufo:4057
 msgid "UFO - Mothership"
 msgstr "UFO－空母舰"
 
-#: ../base/ufos/aircraftmanagement.ufo:747
+#: ../base/ufos/aircraftmanagement.ufo:701
 msgid "Mothership U"
 msgstr "UFO空母舰"
 
-#: ../base/ufos/aircraftmanagement.ufo:762 ../base/ufos/research.ufo:4857
+#: ../base/ufos/aircraftmanagement.ufo:716 ../base/ufos/research.ufo:4857
 msgid "Aerial Laser Cannon"
 msgstr "机载激光炮"
 
-#: ../base/ufos/aircraftmanagement.ufo:793
+#: ../base/ufos/aircraftmanagement.ufo:747
 msgid "Shiva Rotary Cannon"
 msgstr "旋转加农炮"
 
-#: ../base/ufos/aircraftmanagement.ufo:804 ../base/ufos/research.ufo:4924
+#: ../base/ufos/aircraftmanagement.ufo:758 ../base/ufos/research.ufo:4924
 msgid "SHIVA 20mm API Rounds"
 msgstr "SHIVA 20mm API 穿甲弹"
 
-#: ../base/ufos/aircraftmanagement.ufo:820 ../base/ufos/research.ufo:4945
+#: ../base/ufos/aircraftmanagement.ufo:774 ../base/ufos/research.ufo:4945
 msgid "SHIVA 20mm HEI Rounds"
 msgstr "SHIVA 20mm HEI 爆破弹"
 
-#: ../base/ufos/aircraftmanagement.ufo:836
+#: ../base/ufos/aircraftmanagement.ufo:790
 msgid "Raven ECM Unit"
 msgstr "乌鸦型ECM"
 
-#: ../base/ufos/aircraftmanagement.ufo:848
+#: ../base/ufos/aircraftmanagement.ufo:802
 msgid "Sparrowhawk AA Missile Rack"
 msgstr "麻雀式飞弹发射器"
 
-#: ../base/ufos/aircraftmanagement.ufo:858
+#: ../base/ufos/aircraftmanagement.ufo:812
 msgid "Sparrowhawk Missile"
 msgstr "麻雀式飞弹"
 
-#: ../base/ufos/aircraftmanagement.ufo:875 ../base/ufos/research.ufo:5004
+#: ../base/ufos/aircraftmanagement.ufo:829 ../base/ufos/research.ufo:5004
 msgid "TR-20 Rocket Pod"
 msgstr "TR-20 火箭发射器"
 
-#: ../base/ufos/aircraftmanagement.ufo:888 ../base/ufos/research.ufo:5021
+#: ../base/ufos/aircraftmanagement.ufo:842 ../base/ufos/research.ufo:5021
 msgid "TR-20 Rocket"
 msgstr "TR-20 火箭"
 
-#: ../base/ufos/aircraftmanagement.ufo:907 ../base/ufos/research.ufo:5040
+#: ../base/ufos/aircraftmanagement.ufo:861 ../base/ufos/research.ufo:5040
 msgid "Particle Beam Weapon"
 msgstr "粒子束发射器"
 
-#: ../base/ufos/aircraftmanagement.ufo:937 ../base/ufos/research.ufo:5100
+#: ../base/ufos/aircraftmanagement.ufo:891 ../base/ufos/research.ufo:5100
 #, fuzzy
 msgid "Alien Launcher"
 msgstr "榴弹发射器"
 
-#: ../base/ufos/aircraftmanagement.ufo:947 ../base/ufos/research.ufo:5148
+#: ../base/ufos/aircraftmanagement.ufo:901 ../base/ufos/research.ufo:5148
 #, fuzzy
 msgid "Antimatter Missile"
 msgstr "反物质"
 
-#: ../base/ufos/aircraftmanagement.ufo:964 ../base/ufos/research.ufo:5199
+#: ../base/ufos/aircraftmanagement.ufo:918 ../base/ufos/research.ufo:5199
 msgid "Hybrid Missile"
 msgstr ""
 
-#: ../base/ufos/aircraftmanagement.ufo:981 ../base/ufos/research.ufo:5249
+#: ../base/ufos/aircraftmanagement.ufo:935 ../base/ufos/research.ufo:5249
 msgid "Targeting Computer"
 msgstr "计算机辅助系统"
 
-#: ../base/ufos/aircraftmanagement.ufo:993 ../base/ufos/research.ufo:5266
+#: ../base/ufos/aircraftmanagement.ufo:947 ../base/ufos/research.ufo:5266
 msgid "Fuel Pod"
 msgstr "燃料箱"
 
-#: ../base/ufos/aircraftmanagement.ufo:1007 ../base/ufos/research.ufo:4686
+#: ../base/ufos/aircraftmanagement.ufo:961 ../base/ufos/research.ufo:4686
 msgid "Polymer Aircraft Armour"
 msgstr "航空机组合装甲"
 
-#: ../base/ufos/aircraftmanagement.ufo:1021 ../base/ufos/research.ufo:4703
+#: ../base/ufos/aircraftmanagement.ufo:975 ../base/ufos/research.ufo:4703
 msgid "Alien Aircraft Plating"
 msgstr "外星飞船装甲"
 
-#: ../base/ufos/aircraftmanagement.ufo:1035 ../base/ufos/research.ufo:4743
+#: ../base/ufos/aircraftmanagement.ufo:989 ../base/ufos/research.ufo:4743
 msgid "Alien Astrogation"
 msgstr "外星导航"
 
-#: ../base/ufos/aircraftmanagement.ufo:1044 ../base/ufos/research.ufo:4781
+#: ../base/ufos/aircraftmanagement.ufo:998 ../base/ufos/research.ufo:4781
 msgid "Alien Propulsion"
 msgstr "外星动力"
 
-#: ../base/ufos/aircraftmanagement.ufo:1053 ../base/ufos/research.ufo:4819
+#: ../base/ufos/aircraftmanagement.ufo:1007 ../base/ufos/research.ufo:4819
 msgid "Alien Detection"
 msgstr "外星遥感"
 
-#: ../base/ufos/aircraftmanagement.ufo:1066 ../base/ufos/research.ufo:4638
+#: ../base/ufos/aircraftmanagement.ufo:1020 ../base/ufos/research.ufo:4638
 msgid "AA51 missile launcher"
 msgstr "AA51 飞弹发射器"
 
-#: ../base/ufos/aircraftmanagement.ufo:1096 ../base/ufos/research.ufo:162
+#: ../base/ufos/aircraftmanagement.ufo:1050 ../base/ufos/research.ufo:162
 msgid "Base-Defence Laser Turret"
 msgstr "激光防御塔"
 
@@ -2510,16 +2502,21 @@ msgstr "UFO停机场"
 msgid "Memo: Live Aliens"
 msgstr "活标本"
 
-#: ../base/ufos/events.ufo:66
+#: ../base/ufos/events.ufo:65
+#, fuzzy
+msgid "Memo: Sam Sites"
+msgstr "活标本"
+
+#: ../base/ufos/events.ufo:76
 msgid "Alien died"
 msgstr "外星人死了"
 
-#: ../base/ufos/events.ufo:76
+#: ../base/ufos/events.ufo:86
 #, fuzzy
 msgid "Alien Base Discovered"
 msgstr "发现外星人基地 -- %s"
 
-#: ../base/ufos/events.ufo:86
+#: ../base/ufos/events.ufo:96
 #: client/cgame/campaign/missions/cp_mission_ufocarrier.cpp:62
 #, fuzzy
 msgid "UFO-Carrier"
@@ -2614,7 +2611,7 @@ msgstr ""
 "低，不过伪装效果很差。外星人的主动扫描技术很容易就能发现并摧毁它，建议在附近"
 "提供火力掩护。"
 
-#: ../base/ufos/installation.ufo:22 ../base/ufos/ui/lostwon.ufo:227
+#: ../base/ufos/installation.ufo:22 ../base/ufos/ui/lostwon.ufo:253
 msgid "UFO Yard"
 msgstr "UFO停机场"
 
@@ -2785,67 +2782,67 @@ msgstr "大型UFO坠落土著据点。"
 msgid "A UFO crashed here."
 msgstr "小型UFO坠落点。"
 
-#: ../base/ufos/maps.ufo:170
+#: ../base/ufos/maps.ufo:171
 #, fuzzy
 msgid "A suburb that has been visited by an UFO."
 msgstr "土著据点。"
 
-#: ../base/ufos/maps.ufo:217
+#: ../base/ufos/maps.ufo:218
 #, fuzzy
 msgid "Crashed UFO in an african suburban district."
 msgstr "UFO坠落老式郊区。"
 
-#: ../base/ufos/maps.ufo:262
+#: ../base/ufos/maps.ufo:263
 #, fuzzy
 msgid "An UFO crashsite."
 msgstr "UFO坠落现场。"
 
-#: ../base/ufos/maps.ufo:303
+#: ../base/ufos/maps.ufo:304
 msgid "A Bomber has landed in the middle of a city."
 msgstr "城市里的UFO降落点。"
 
-#: ../base/ufos/maps.ufo:361 ../base/ufos/maps.ufo:403
+#: ../base/ufos/maps.ufo:362 ../base/ufos/maps.ufo:404
 #: ../base/ufos/maps.ufo:4160
 msgid "A small UFO has crashed in this mining region."
 msgstr "小型UFO坠落点。"
 
-#: ../base/ufos/maps.ufo:456 ../base/ufos/maps.ufo:498
+#: ../base/ufos/maps.ufo:457 ../base/ufos/maps.ufo:499
 #, fuzzy
 msgid "Some houses in the desert."
 msgstr "沙漠平房"
 
-#: ../base/ufos/maps.ufo:551
+#: ../base/ufos/maps.ufo:552
 msgid "An alien Harvester has crashed in the wastelands."
 msgstr "大型UFO坠落荒地。"
 
-#: ../base/ufos/maps.ufo:591 ../base/ufos/maps.ufo:633
-#: ../base/ufos/maps.ufo:672
+#: ../base/ufos/maps.ufo:592 ../base/ufos/maps.ufo:634
+#: ../base/ufos/maps.ufo:673
 msgid ""
 "A farm in a rural area. Lots of land to cover, but few obstacles to impair "
 "line of sight."
 msgstr "农田。障碍少，视线开阔。"
 
-#: ../base/ufos/maps.ufo:715
+#: ../base/ufos/maps.ufo:716
 msgid ""
 "A farmhouse surrounded by fields and sheds. A UFO has landed in one of the "
 "fields."
 msgstr "有架UFO降落这里"
 
-#: ../base/ufos/maps.ufo:768 ../base/ufos/maps.ufo:808
-#: ../base/ufos/maps.ufo:849
+#: ../base/ufos/maps.ufo:769 ../base/ufos/maps.ufo:809
+#: ../base/ufos/maps.ufo:850
 msgid "Aliens are up to no good in this sparsely populated forest region."
 msgstr "无人林区。"
 
-#: ../base/ufos/maps.ufo:890
+#: ../base/ufos/maps.ufo:891
 msgid "UFO crashed in this sparsely populated forest region."
 msgstr "UFO坠落无人林区。"
 
-#: ../base/ufos/maps.ufo:933 ../base/ufos/maps.ufo:986
-#: ../base/ufos/maps.ufo:1039
+#: ../base/ufos/maps.ufo:934 ../base/ufos/maps.ufo:987
+#: ../base/ufos/maps.ufo:1040
 msgid "An industrial area in a cold region."
 msgstr "寒冷地带的工业区。"
 
-#: ../base/ufos/maps.ufo:1090 ../base/ufos/maps.ufo:1141
+#: ../base/ufos/maps.ufo:1091 ../base/ufos/maps.ufo:1141
 #: ../base/ufos/maps.ufo:1192 ../base/ufos/maps.ufo:5007
 #: ../base/ufos/maps.ufo:5025
 msgid "An underpopulated area in a cold region."
@@ -5416,7 +5413,6 @@ msgstr ""
 "---司令官纳瓦拉"
 
 #: ../base/ufos/msgid/aircraftitems.ufo:208
-#: ../base/ufos/msgid/aircraftitems.ufo:552
 #, fuzzy
 msgid ""
 "This is one of several proposals I'm submitting for the research and "
@@ -5464,7 +5460,6 @@ msgstr ""
 "---司令官纳瓦拉"
 
 #: ../base/ufos/msgid/aircraftitems.ufo:222
-#: ../base/ufos/msgid/aircraftitems.ufo:566
 #, fuzzy
 msgid ""
 "Commander, I've just finished my report on our latest laser program. We've "
@@ -5661,8 +5656,8 @@ msgstr ""
 "无。"
 
 #: ../base/ufos/msgid/aircraftitems.ufo:302
-#: ../base/ufos/msgid/aircraftitems.ufo:628
-#: ../base/ufos/msgid/aircraftitems.ufo:666
+#: ../base/ufos/msgid/aircraftitems.ufo:616
+#: ../base/ufos/msgid/aircraftitems.ufo:654
 #, fuzzy
 msgid ""
 "Technical Specifications: SHIVA 20mm API Rounds\n"
@@ -6517,34 +6512,93 @@ msgstr ""
 "\n"
 "--司令官纳瓦拉"
 
-#: ../base/ufos/msgid/aircraftitems.ufo:574 ../base/ufos/msgid/story.ufo:378
+#: ../base/ufos/msgid/aircraftitems.ufo:548
 #, fuzzy
 msgid ""
-"Commander, as I mentioned in my previous report, the UFO we recovered was "
-"plated with a highly interesting alloy which blends plastic and metal "
-"together into a single material. These materials seem to be used almost "
-"universally throughout the alien technology base. It's advanced stuff, "
-"massively versatile and with a thousand possible uses.\n"
+"Commander, we made an extremely interesting find on the UFO we disassembled. "
+"It carried an advanced and highly dangerous onboard missile launcher, using "
+"powerful magnetic rails to accelerate its missiles to hypersonic speeds "
+"before they even leave the launch tube.\n"
 "\n"
-"I think it warrants the research to see if we can reproduce this stuff in "
-"our Workshops, but even if we can't, it seems likely we'll be getting our "
-"hands on large quantities of it with every UFO we salvage. We'll definitely "
-"be able to find new, human applications for it that will extend and expand "
-"our combat capabilities.\n"
+"We want to investigate this launcher and determine whether or not it can be "
+"adapted to fit on PHALANX aircraft, or even if it can be applied to other "
+"purposes. This launcher system would be far more effective in bringing down "
+"UFOs than our Sparrowhawks, possibly even more effective than our current "
+"SAM systems. If we can adapt it we stand to gain a substantial boost to the "
+"firepower of our whole airfleet as well as ground-based missile systems.\n"
+"\n"
+"Please approve this program whenever you can, Commander.\n"
 "\n"
 "Cdr. Navarre"
 msgstr ""
-"长官， 正如我上次报告中提到的， UFO的表面是一种非常独特的材料制作的， 是一种"
-"塑料和金属混合的合金材料。 这些材料似乎是异形科技中用的非常普及的一种材料。 "
-"它是一种很高级的原材料， 功能用途极为广泛。\n"
+"这里是开发新式激光武器的研究草案。\n"
 "\n"
-"我觉得这很值得研究看看我们是否能够在我们的车间里制造这种材料， 就算不能制造也"
-"没关系， 每次清理UFO我们都会得到大量这种材料。 我肯定这种材料对人类工艺也很有"
-"用， 它会提高和扩展我们的战斗力。\n"
+"在我的设计里激光炮是大型激光发射设备，和我们的步兵武器一样将采用氘氟反应，但"
+"是规模更大电子系统更复杂。\n"
+"\n"
+"这很可能是我们的最具有挑战性的激光研究。激光炮必须要在远距离将光束聚焦到目标"
+"身上，由于大气干扰的存在，必须要有足够的初始能量才能抵消中间的衰减。到目前为"
+"止还没有哪一套大型激光设备可以安装在飞机上。\n"
+"\n"
+"激光炮比SHIVA射程更远准确度更高，可能威力没有SHIVA大。我希望激光炮能够持续打"
+"击目标来弥补这一缺陷。\n"
+"\n"
+"请批准这个项目，长官。\n"
 "\n"
 "---司令官纳瓦拉"
 
-#: ../base/ufos/msgid/aircraftitems.ufo:590 ../base/ufos/msgid/story.ufo:370
+#: ../base/ufos/msgid/aircraftitems.ufo:562
+#, fuzzy
+msgid ""
+"Commander, we've finished work on the alien missile launcher. It's a fairly "
+"simple affair. Firing is computer-driven, fed directly from the UFO's "
+"targeting computer. Powerful electromagnetic coils around the launch tube "
+"accelerate the missile to extreme speeds, reaching up to Mach 4 at the point "
+"where the missile leaves the tube. Only once the missile is fully free of "
+"the tube do its onboard rockets kick in.\n"
+"\n"
+"The good news is that we've managed to succesfully adapt fittings, controls "
+"and power feeds to allow the Alien Launcher to be safely mounted to our "
+"aircraft. The bad news is that we've had to drastically reduce its magazine "
+"size in order to meet weight and size restrictions on our aircraft.\n"
+"\n"
+"Our aircraft are too small and light to be able to carry so many, and most "
+"of our craft aren't laid out with internal missile magazines. We've had to "
+"custom-build a magazine mounted with the launcher, the capacity of which "
+"falls behind the stores found on UFOs.\n"
+"\n"
+"It's not all doom and gloom, though. We believe that we can modify the "
+"launch tube to be able to fire human missiles as well as the alien type. "
+"We'd have to develop the missile ourselves, of course -- no current human "
+"missile is capable of withstanding the stress of being fired from this "
+"launcher. However, we're confident we can design a missile that will survive "
+"launch and incorporates new UFO-tracking technologies to improve homing and "
+"ECM capability.\n"
+"\n"
+"I'll send you a design proposal as soon as I can, Commander.\n"
+"\n"
+"Cdr. Navarre"
+msgstr ""
+"长官，最新的激光发射系统已经研究完毕。我们成功地制造了空战激光炮，并准备把它"
+"投入生产。\n"
+"\n"
+"我们实现了激光远距离聚焦，能够跟踪并击中5公里以外的目标。精度非常出色，而且和"
+"其它我们的武器不一样的是，激光炮完全不受外星ECM影响。一旦瞄准，敌人就很难躲过"
+"激光炮的攻击。\n"
+"\n"
+"不幸的是大气干扰仍然是一个麻烦。对于在距离5公里的UFO目标，需要32秒的连续射击"
+"才能打穿船体。理想的距离是2至3公里，这样的距离有很好的伤害威力。平均伤害略低"
+"于SHIVA，但射程多出了1.5公里。激光炮比较适合在敌人背后进行攻击。\n"
+"\n"
+"激光炮携带有大量氘氟元素，可以运行长达30分钟的连续射击。氘和氟化物都是危险物"
+"品，和其他危险化合物一样都储存在基地以外的一个安全位置，我们不需要在库存中保"
+"存激光炮所需的弹药。\n"
+"\n"
+"如何部署这个武器由长官您自行裁决，但我想推荐用这新的激光炮来代替SHIVA。\n"
+"\n"
+"---司令官纳瓦拉"
+
+#: ../base/ufos/msgid/aircraftitems.ufo:578 ../base/ufos/msgid/story.ufo:370
 #, fuzzy
 msgid ""
 "Commander, I think we've uncovered the secret to the alien materials. After "
@@ -6609,7 +6663,7 @@ msgstr ""
 "\n"
 "---司令官纳瓦拉"
 
-#: ../base/ufos/msgid/aircraftitems.ufo:704
+#: ../base/ufos/msgid/aircraftitems.ufo:692
 #, fuzzy
 msgid ""
 "Technical Specifications: Targeting Computer\n"
@@ -6717,7 +6771,7 @@ msgstr ""
 "变化的战场是没有金科玉律的，何时部署这套系统应该根据不同情况来决定。这全看指"
 "挥官的意愿。"
 
-#: ../base/ufos/msgid/aircraftitems.ufo:738
+#: ../base/ufos/msgid/aircraftitems.ufo:726
 #, fuzzy
 msgid ""
 "Technical Specifications: Fuel Pod\n"
@@ -6816,11 +6870,10 @@ msgstr ""
 "战航空机随时待命来应付距离遥远的突发事件。"
 
 #: ../base/ufos/msgid/aliens.ufo:8 ../base/ufos/msgid/aliens.ufo:44
-#: ../base/ufos/msgid/aliens.ufo:76 ../base/ufos/msgid/aliens.ufo:156
-#: ../base/ufos/msgid/aliens.ufo:166 ../base/ufos/msgid/aliens.ufo:250
-#: ../base/ufos/msgid/aliens.ufo:260 ../base/ufos/msgid/aliens.ufo:340
-#: ../base/ufos/msgid/aliens.ufo:350 ../base/ufos/msgid/aliens.ufo:396
-#: ../base/ufos/msgid/aliens.ufo:442
+#: ../base/ufos/msgid/aliens.ufo:148 ../base/ufos/msgid/aliens.ufo:158
+#: ../base/ufos/msgid/aliens.ufo:242 ../base/ufos/msgid/aliens.ufo:252
+#: ../base/ufos/msgid/aliens.ufo:332 ../base/ufos/msgid/aliens.ufo:342
+#: ../base/ufos/msgid/aliens.ufo:368
 #, fuzzy
 msgid ""
 "Commander,\n"
@@ -6840,7 +6893,7 @@ msgstr ""
 "\n"
 "康纳博士"
 
-#: ../base/ufos/msgid/aliens.ufo:34 ../base/ufos/msgid/aliens.ufo:66
+#: ../base/ufos/msgid/aliens.ufo:34
 #, fuzzy
 msgid ""
 "Commander,\n"
@@ -6911,8 +6964,81 @@ msgstr ""
 "\n"
 "康纳博士"
 
-#: ../base/ufos/msgid/aliens.ufo:112 ../base/ufos/msgid/aliens.ufo:386
-#: ../base/ufos/msgid/aliens.ufo:432
+#: ../base/ufos/msgid/aliens.ufo:58
+#, fuzzy
+msgid ""
+"Commander,\n"
+"\n"
+"My team has analysed the remains of the arachnid machine our operatives "
+"brought back, and we have prepared a summary for your review.\n"
+"\n"
+"This creature is similar in many ways to the Bloodspider we have faced "
+"before on the battlefield, but it has undergone upgrades to make it much "
+"more deadly. It's razor-sharp blades are longer and its armour plating has "
+"undergone significant revisions. These creatures are terrifying on the "
+"battlefield if they get close, and this new variant is much more likely to "
+"survive a few rounds from our soldiers and keep coming. We will need to hunt "
+"the Combat Bloodspider in packs.\n"
+"\n"
+"We can't be certain, but we fear that the armour upgrades may have been "
+"designed in response to battlefield experience with us. If that's true, it "
+"means the aliens may be upgrading other combat systems as well.\n"
+"\n"
+"Sincerely,\n"
+"\n"
+"Dr. Connor"
+msgstr ""
+"长官,\n"
+"\n"
+"我的小组分析了这个蜘蛛状的机器遗骸，这里是结论简报供您检阅。\n"
+"\n"
+"解剖表明，这是个没有任何有机成分的复杂机器人。它的结构和蜘蛛相似，中间躯干有"
+"人工脑细胞和电池，8条腿由强大的电力发动机驱动，在战场上移动可以达到很可怕的速"
+"度。它装备有锐利颌骨，可以现场解剖人类受害者，还可以把人类身体组织或器官储存"
+"位于在电池前面的腹部空腔里。这些机器会保留在战斗中切割活人的记录并记忆生命活"
+"动的信息。这个可怕的过程用时非常短。\n"
+"\n"
+"我们的士兵坚持称这个东西为“血蜘蛛”。\n"
+"\n"
+"要对血蜘蛛的装甲作实弹测试非常困难，它的装甲具有良好的绝缘性，可以防护各种各"
+"样的武器。\n"
+"\n"
+"-装甲对激光、电子和燃烧武器有非常高的防护能力，不过高速穿甲弹可以打穿装甲。\n"
+"\n"
+"-高爆炸弹也能有很好的效果，因为它们可以损害它的腿关节。这可能是对付这些东西最"
+"有效的方式。\n"
+"\n"
+"这种东西的存在说明有一些可怕的麻烦。这表明，异形对人类产生了非常的兴趣，但是"
+"他们从来不会向人问问题。长官，这些机器威胁到人类安全。如果遇到了，一定要不惜"
+"一切代价立即消灭。\n"
+"\n"
+"真诚的，\n"
+"\n"
+"康纳博士"
+
+#: ../base/ufos/msgid/aliens.ufo:68
+#, fuzzy
+msgid ""
+"Commander,\n"
+"\n"
+"We've recovered a new alien corpse from the battlefield. It appears to be a "
+"more deadly variant of the Bloodspider with which we are familiar. "
+"Dissection and assessment could give us insights into the alien's new "
+"capabilities.\n"
+"\n"
+"Sincerely,\n"
+"\n"
+"Dr. Connor"
+msgstr ""
+"长官，\n"
+"\n"
+"我们从战场获得了一具新的异形尸体，需要尽快开始解剖和研究。\n"
+"\n"
+"真诚的，\n"
+"\n"
+"康纳博士"
+
+#: ../base/ufos/msgid/aliens.ufo:104
 #, fuzzy
 msgid ""
 "Commander,\n"
@@ -7052,7 +7178,7 @@ msgstr ""
 "\n"
 "康纳博士"
 
-#: ../base/ufos/msgid/aliens.ufo:146
+#: ../base/ufos/msgid/aliens.ufo:138
 #, fuzzy
 msgid ""
 "Commander,\n"
@@ -7185,7 +7311,7 @@ msgstr ""
 "\n"
 "康纳博士"
 
-#: ../base/ufos/msgid/aliens.ufo:204
+#: ../base/ufos/msgid/aliens.ufo:196
 #, fuzzy
 msgid ""
 "Commander,\n"
@@ -7341,7 +7467,7 @@ msgstr ""
 "\n"
 "康纳博士"
 
-#: ../base/ufos/msgid/aliens.ufo:240
+#: ../base/ufos/msgid/aliens.ufo:232
 #, fuzzy
 msgid ""
 "Commander,\n"
@@ -7490,7 +7616,7 @@ msgstr ""
 "\n"
 "康纳博士"
 
-#: ../base/ufos/msgid/aliens.ufo:296
+#: ../base/ufos/msgid/aliens.ufo:288
 #, fuzzy
 msgid ""
 "Commander,\n"
@@ -7634,7 +7760,7 @@ msgstr ""
 "\n"
 "康纳博士"
 
-#: ../base/ufos/msgid/aliens.ufo:330
+#: ../base/ufos/msgid/aliens.ufo:322
 #, fuzzy
 msgid ""
 "Commander,\n"
@@ -7766,6 +7892,140 @@ msgstr ""
 "\n"
 "另外，虽然Shevaar是失明的，但还是可能会受到闪光雷的影响，因为它和人类一样也是"
 "有一个受声音影响的平衡器官。\n"
+"\n"
+"真诚的，\n"
+"\n"
+"康纳博士"
+
+#: ../base/ufos/msgid/aliens.ufo:358
+#, fuzzy
+msgid ""
+"Commander,\n"
+"\n"
+"My team and I have completed the disassembly and autopsy of the alien "
+"creature we discovered. Here is my summary of our findings.\n"
+"\n"
+"We first assumed the object was a robot, but upon investigation we found a "
+"small biomass at its core. This biological alien core is encased in a shell "
+"of sensors which we believe interpret its signals to operate the electrical "
+"machinery. For all intents and purposes, this alien is little more than a "
+"\"brain\" in charge of a complex device. Calling it a brain may be too "
+"generous. We don't believe it is large enough to undertake mental processes "
+"more complex than basic motor skills, but troops report seeing it coordinate "
+"closely with other aliens on the battlefield.\n"
+"\n"
+"The device itself is a small, but heavy, mobile disk, able to hover above "
+"the ground. Because of its aerial movement, it is able to cross the "
+"battlefield rapidly. Our soldiers will need to take it down before it gets "
+"in range, which is no small feet considering its size and movement "
+"capabilities.\n"
+"\n"
+"The models we discovered are equipped with a mounted plasma weapon which is "
+"able to fire single rounds. Anyone caught within range will be very sorry. "
+"Given its brain size and limited functionality, we believe this alien is "
+"engineered for light combat missions -- perhaps it plays a reconnaissance "
+"role.\n"
+"\n"
+"Sincerely,\n"
+"\n"
+"Dr. Connor"
+msgstr ""
+"长官,\n"
+"\n"
+"绿皮肤异形的尸体解剖研究已经完成。这里是我的总结报告。\n"
+"\n"
+"这种异形人们称呼它为“Ortnok”，其外观如同漫画里笨重的野蛮人，这让我的助手感到"
+"有点不安。我们已经证实Ortnok绝不是什么人类的远亲。\n"
+"\n"
+"正如这家伙的体型一样，它的肌肉比建筑工人多得多。我们首先认为这是由于超大重力"
+"影响造成的，但随后的激素和毒理学研究又有了新的发现。可能的情况是遗传基因的突"
+"变使食量大增从而产生了合成类固醇。再加上令人难以置信的高密集肌肉，恐怕地球上"
+"的任何生物都没有Ortnok身体强壮。\n"
+"\n"
+"我们第一次开刀就惊讶地发现Ortnok没有血液。它有肺、胰脏和消化器官，但没有心"
+"脏。代替静脉位置的是一套非常发达的神经管道，里面充满了导电胶，似乎肌肉运动的"
+"能量和控制都是直接来自于电刺激。所需要的电力由消化有机物产生的，并储存在位于"
+"肺部下面的一个有点像鳗鱼状的器官里。整个胸腔有丰富的骨架来保护内脏，骨架外就"
+"是绿色皮革。\n"
+"\n"
+"它的眼睛里布满了手术植入的镜片，用来加强Ortnok本身就已经很好的视觉系统，使其"
+"能看到红外光线。在头部的两边有三个小孔洞，是它的听觉系统，也非常发达。它的鼻"
+"子很小，在讨论会上我们认为它的嗅觉器官基本已经退化。\n"
+"\n"
+"根据我们的分析，我们得出的结论有以下几点：\n"
+"\n"
+"-大脑和原始人差不多，不会比直立人强，不过作为一个听从命令的士兵这就已经足够"
+"了。Ortnok在战场上不会有什么战术可言。\n"
+"\n"
+"-三指手可以携带和使用各种各样的武器设备。Ortnok往往会配备大型武器，这样才比较"
+"符合他们的身材。\n"
+"\n"
+"-Ortnok很强状很危险。身体结构增强了他们的自然耐力，使他们很难被打倒。建议是用"
+"穿甲弹或燃烧类武器。用白刃、激光或爆炸类武器来对付它，效果会有所降低。\n"
+"\n"
+"-所有Ortnok的尸体我们都没发现有繁殖器官。从腹股沟周围的手术疤痕推测，我们认为"
+"他们可能因为某些理由作了绝育手术。\n"
+"\n"
+"在战斗中，Ortnok似乎是一种用于火力支援的重型步兵。他们对复杂的武器不是特别的"
+"精确，他们通常采用密集火力来压制对手，对PHALANX小队来说危险性很高。Ortnok似乎"
+"没有其他专业能力，在我们的现场摄像记录里他们从未使用过复杂机械，在没有战斗的"
+"时候，也不像Taman一样时刻注意自己周围的安全。\n"
+"\n"
+"在喉咙还有一套复杂的植入装置，这还需要进一步研究才能了解其作用。关于这个我会"
+"寄给您更详细的研究草案。\n"
+"\n"
+"我们不知道“Ortnok”这个名字从何而来。部队似乎也不知道。\n"
+"\n"
+"长官，这就是所有的结论。如果有新的研究，我会再次与您联系。\n"
+"\n"
+"真诚的，\n"
+"\n"
+"康纳博士"
+
+#: ../base/ufos/msgid/aliens.ufo:386
+msgid ""
+"Commander,\n"
+"\n"
+"My team has completed its analysis of the alien creature we recovered.\n"
+"\n"
+"As we suspected, this is a more advanced and deadly version of the Hovernet. "
+"The plasma weaponry has been upgraded considerably. The Combat Hovernet can "
+"fire three-round bursts with an accuracy we're not accustomed to from the "
+"erratic ammunition.\n"
+"\n"
+"The entire creature has been wrapped in advanced armour plating and the "
+"stabilisers which keep it afloat and on-target are much more powerful. These "
+"guys won't be so easy to knock down and, until they're destroyed, they'll "
+"prove to be a serious threat to our troops.\n"
+"\n"
+"Because they're wrapped in the alien armour worn by other units they're "
+"resistant to normal and plasma weaponry. But they also share the alien "
+"armour's vulnerabilities to laser and strong fire-based weapons.\n"
+"\n"
+"You'll want to take these guys down as soon as you see them. If you wait "
+"until they close range, it may be too late.\n"
+"\n"
+"Sincerely,\n"
+"\n"
+"Dr. Connor"
+msgstr ""
+
+#: ../base/ufos/msgid/aliens.ufo:396
+#, fuzzy
+msgid ""
+"Commander,\n"
+"\n"
+"We've recovered a new alien corpse from the battlefield. It appears to be a "
+"more deadly variant of the Hovernet with which we are familiar. Dissection "
+"and assessment could give us insights into the alien's new capabilities.\n"
+"\n"
+"Sincerely,\n"
+"\n"
+"Dr. Connor"
+msgstr ""
+"长官，\n"
+"\n"
+"我们从战场获得了一具新的异形尸体，需要尽快开始解剖和研究。\n"
 "\n"
 "真诚的，\n"
 "\n"
@@ -12948,6 +13208,33 @@ msgstr ""
 "\n"
 "---司令官纳瓦拉"
 
+#: ../base/ufos/msgid/story.ufo:378
+#, fuzzy
+msgid ""
+"Commander, as I mentioned in my previous report, the UFO we recovered was "
+"plated with a highly interesting alloy which blends plastic and metal "
+"together into a single material. These materials seem to be used almost "
+"universally throughout the alien technology base. It's advanced stuff, "
+"massively versatile and with a thousand possible uses.\n"
+"\n"
+"I think it warrants the research to see if we can reproduce this stuff in "
+"our Workshops, but even if we can't, it seems likely we'll be getting our "
+"hands on large quantities of it with every UFO we salvage. We'll definitely "
+"be able to find new, human applications for it that will extend and expand "
+"our combat capabilities.\n"
+"\n"
+"Cdr. Navarre"
+msgstr ""
+"长官， 正如我上次报告中提到的， UFO的表面是一种非常独特的材料制作的， 是一种"
+"塑料和金属混合的合金材料。 这些材料似乎是异形科技中用的非常普及的一种材料。 "
+"它是一种很高级的原材料， 功能用途极为广泛。\n"
+"\n"
+"我觉得这很值得研究看看我们是否能够在我们的车间里制造这种材料， 就算不能制造也"
+"没关系， 每次清理UFO我们都会得到大量这种材料。 我肯定这种材料对人类工艺也很有"
+"用， 它会提高和扩展我们的战斗力。\n"
+"\n"
+"---司令官纳瓦拉"
+
 #: ../base/ufos/msgid/story.ufo:400
 #, fuzzy
 msgid ""
@@ -13735,7 +14022,7 @@ msgstr ""
 "\n"
 "无。"
 
-#: ../base/ufos/msgid/tips.ufo:9
+#: ../base/ufos/msgid/tips.ufo:8
 msgid ""
 "Commander, our last mission killed the UFO's crew but we have nowhere to "
 "store the craft. The UFO is too large to house within our own base's "
@@ -13752,11 +14039,10 @@ msgid ""
 "forth between the base and the UFO yard, so build the site as close as "
 "possible to the base where the work is being conducted.\n"
 "\n"
-"\n"
-"--Cdr. Navarre"
+"Cdr. Navarre"
 msgstr ""
 
-#: ../base/ufos/msgid/tips.ufo:24
+#: ../base/ufos/msgid/tips.ufo:22
 msgid ""
 "Commander,\n"
 "\n"
@@ -13774,10 +14060,20 @@ msgid ""
 "it's a risk we'll have to take if we're ever going to win this war. Send "
 "your men out with some stun grenades and make sure they use them.\n"
 "\n"
-"\n"
 "Sincerely,\n"
 "\n"
 "Dr. Connor"
+msgstr ""
+
+#: ../base/ufos/msgid/tips.ufo:30
+msgid ""
+"Commander,\n"
+"\n"
+"The SAM site is up and running but you haven't allocated any ammunition for "
+"it. Equip a missile launcher as soon as possible so that we can shoot these "
+"aliens out of the sky.\n"
+"\n"
+"Cdr. Navarre"
 msgstr ""
 
 #: ../base/ufos/msgid/weapons.ufo:18
@@ -14698,12 +14994,12 @@ msgid ""
 "\n"
 "The South-African MPMDS (Multi-Purpose Missile Delivery System) has a "
 "classic, almost surgically clean name that completely belies its purpose. It "
-"is the heaviest infantry missile launcher on the market, able to fire anti-"
-"tank shells as easily as high-explosive rockets that turn infantry into "
-"hamburger. Originally intended as light field artillery, this weapon is "
-"fairly new; its only combat experience has been in Mumbai in the hands of "
-"Commonwealth troops. It was one of the handful of weapons that eventually "
-"turned the tide in the fighting -- and there is a good reason why.\n"
+"is the heaviest infantry missile launcher on the market, able to fire high-"
+"explosive rockets that turn infantry into hamburger. Originally intended as "
+"light field artillery, this weapon is fairly new; its only combat experience "
+"has been in Mumbai in the hands of Commonwealth troops. It was one of the "
+"handful of weapons that eventually turned the tide in the fighting -- and "
+"there is a good reason why.\n"
 "\n"
 "Alien craft on the ground emit fantastic amounts of jamming and other EW "
 "(Electronic Warfare) activity. In fact, they emit so much of it that "
@@ -14715,22 +15011,18 @@ msgid ""
 "because its rockets carry no onboard guidance.\n"
 "\n"
 "The rockets are 120mm monsters the size of artillery shells. They are fired "
-"out of a smoothbore barrel, fin-stabilised in flight, and have a maximum "
-"effective range of 70 metres. Surprisingly they are made up of only three "
-"parts: a rocket booster, a warhead and an impact trigger. This simplicity "
-"allows them to remain effective and reliable in the most hazardous "
-"situations. Though the rockets are not very accurate, they will devastate "
-"anything in their path, even aliens. It takes only one good hit from an "
-"MPMDS rocket to send the enemy flying.\n"
+"out of a smoothbore barrel and are fin-stabilised in flight. Surprisingly "
+"they are made up of only three parts: a rocket booster, a warhead and an "
+"impact trigger. This simplicity allows them to remain effective and reliable "
+"in the most hazardous situations. Though the rockets are not very accurate, "
+"they will devastate anything in their path, even aliens. It takes only one "
+"good hit from an MPMDS rocket to send the enemy flying.\n"
 "\n"
-"Standard ammunition for this launcher includes: HE (High-Explosive) rockets, "
-"AA (Anti-Armour) rockets, and IC (Incendiary) rockets. New types of MPMDS "
-"ammo were being researched by Commonwealth manufacturers before the start of "
-"the war. We have all their data on file and could use it to create "
-"revolutionary new rocket types.\n"
+"Standard ammunition for this launcher includes: HE (High-Explosive) rockets "
+"and IC (Incendiary) rockets.\n"
 "\n"
 "Along with the HPGL Grenade Launcher, this weapon will provide our troops "
-"the artillery support they need to survive and win through.\n"
+"with the artillery support they need to survive and win.\n"
 "\n"
 "For PHALANX use, we have given this rocket launcher the classification "
 "HPML.\n"
@@ -14743,13 +15035,11 @@ msgid ""
 "should be taken that friendly fire incidents do not occur, as this could "
 "have disastrous effects in a combat mission.\n"
 "\n"
-"Friendly troops should be kept away from the rear of the launcher during "
-"firing; the hot exhaust gases are extremely dangerous to nearby humans. The "
-"HPML should not be fired at targets closer than 8 metres from the shooter. "
-"Violating these safety guidelines could result in serious injury or death to "
-"the shooter and other members of the team. If a target is closer than 8 "
-"metres, any shooter should immediately resort to his sidearm or a combat "
-"knife. Anything else would be suicide.\n"
+"The HPML should not be fired at targets closer than 8 metres from the "
+"shooter. Violating this safety guideline could result in serious injury or "
+"death to the shooter and other members of the team. If a target is closer "
+"than 8 metres, any shooter should immediately resort to his sidearm or a "
+"combat knife. Anything else would be suicide.\n"
 "\n"
 "\n"
 "Addenda\n"
@@ -14929,10 +15219,10 @@ msgid ""
 "warhead itself can spill its contents if damaged, but the thermite mix will "
 "not ignite unless exposed to a very high-temperature flame.\n"
 "\n"
-"Incendiary rockets are area-denial weapons, covering a large stretch of "
-"ground with very hot flames that are almost impossible to extinguish. The "
-"compound itself is a modification of a mixture that has been in use since "
-"World War II; thermite, barium nitrate, sulphur and binding agent.\n"
+"Incendiary rockets are area-denial weapons, covering a patch of ground with "
+"very hot flames that are almost impossible to extinguish. The compound "
+"itself is a modification of a mixture that has been in use since World War "
+"II; thermite, barium nitrate, sulphur and binding agent.\n"
 "\n"
 "Because it carries no onboard electronics, the rocket is impervious to EMP "
 "and electronic jamming. All high-tech aiming is done at the launcher. "
@@ -20071,9 +20361,9 @@ msgid "Background"
 msgstr "背景"
 
 #: ../base/ufos/research.ufo:110 ../base/ufos/ui/bases.ufo:125
-#: ../base/ufos/ui/geoscape.ufo:1371 ../base/ufos/ui/market.ufo:138
+#: ../base/ufos/ui/geoscape.ufo:1307 ../base/ufos/ui/market.ufo:138
 #: ../base/ufos/ui/production.ufo:80 ../base/ufos/ui/transfer.ufo:57
-#: ../base/ufos/ui/transfer.ufo:77 client/cgame/campaign/cp_map.cpp:350
+#: ../base/ufos/ui/transfer.ufo:77 client/cgame/campaign/cp_map.cpp:310
 #: client/cgame/campaign/cp_transfer_callbacks.cpp:1565
 msgid "Aircraft"
 msgstr "航空机"
@@ -20290,6 +20580,10 @@ msgstr "狙击武器能力"
 #: ../base/ufos/research.ufo:3093
 msgid "Speed Attribute"
 msgstr "速度属性"
+
+#: ../base/ufos/research.ufo:3971
+msgid "UFO - Ripper"
+msgstr "UFO－飞鹰级"
 
 #: ../base/ufos/research.ufo:4107
 msgid "Live Specimen - Bloodspider"
@@ -21410,7 +21704,7 @@ msgstr "返回基地浏览窗口"
 msgid "Name of this base"
 msgstr "本基地名称"
 
-#: ../base/ufos/ui/_menu.ufo:179 ../base/ufos/ui/popup_installations.ufo:30
+#: ../base/ufos/ui/_menu.ufo:179 ../base/ufos/ui/popup_installations.ufo:172
 msgid "Rename your base"
 msgstr "基地名称更改"
 
@@ -21424,7 +21718,7 @@ msgstr "后一个基地"
 
 #: ../base/ufos/ui/_menu.ufo:231 ../base/ufos/ui/hud_phone.ufo:157
 #: ../base/ufos/ui/transfer.ufo:481
-#: client/cgame/campaign/cp_installation_callbacks.cpp:215
+#: client/cgame/campaign/cp_installation_callbacks.cpp:197
 #: client/cgame/campaign/cp_uforecovery_callbacks.cpp:582
 #: client/cgame/campaign/missions/cp_mission_ufocarrier.cpp:63
 msgid "Cancel"
@@ -21454,11 +21748,11 @@ msgstr "是否是白天："
 msgid "Select whether you want to play at day- or nighttime."
 msgstr "选择你要扮演的阵营"
 
-#: ../base/ufos/ui/_menu.ufo:302 client/cgame/campaign/cp_map.cpp:1325
+#: ../base/ufos/ui/_menu.ufo:302 client/cgame/campaign/cp_map.cpp:1211
 msgid "Night"
 msgstr "夜晚"
 
-#: ../base/ufos/ui/_menu.ufo:307 client/cgame/campaign/cp_map.cpp:1325
+#: ../base/ufos/ui/_menu.ufo:307 client/cgame/campaign/cp_map.cpp:1211
 msgid "Day"
 msgstr "白天"
 
@@ -21607,9 +21901,9 @@ msgstr "装备中的弹药"
 msgid "Select this slot"
 msgstr "选择此部位"
 
-#: ../base/ufos/ui/aircraft_info.ufo:42 ../base/ufos/ui/geoscape.ufo:1110
-#: ../base/ufos/ui/geoscape.ufo:1252
-#: ../base/ufos/ui/popup_installations.ufo:472
+#: ../base/ufos/ui/aircraft_info.ufo:42 ../base/ufos/ui/geoscape.ufo:1046
+#: ../base/ufos/ui/geoscape.ufo:1188
+#: ../base/ufos/ui/popup_installations.ufo:614
 msgid "Status:"
 msgstr "状态："
 
@@ -21653,7 +21947,7 @@ msgstr "体力："
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:264 ../base/ufos/ui/equipment.ufo:394
 #: ../base/ufos/ui/hire.ufo:342 ../base/ufos/ui/hospital.ufo:504
-#: ../base/ufos/ui/options.ufo:1869 ../base/ufos/ui/physdat.ufo:147
+#: ../base/ufos/ui/options.ufo:1916 ../base/ufos/ui/physdat.ufo:147
 #: ../base/ufos/ui/popup_baseattack.ufo:185 ../base/ufos/ui/team.ufo:502
 msgid "Speed:"
 msgstr "速度："
@@ -21787,7 +22081,7 @@ msgid "Equip Defence Weapons"
 msgstr "装备防御武器"
 
 #: ../base/ufos/ui/basedefence.ufo:30
-#: ../base/ufos/ui/popup_installations.ufo:310
+#: ../base/ufos/ui/popup_installations.ufo:452
 #: client/cgame/campaign/cp_base.cpp:2080
 msgid "Information"
 msgstr "基站信息"
@@ -21832,12 +22126,12 @@ msgstr "选择："
 msgid "Surface to Air defences"
 msgstr "对空防御基站"
 
-#: ../base/ufos/ui/basedefence.ufo:309 ../base/ufos/ui/geoscape.ufo:891
-#: ../base/ufos/ui/geoscape.ufo:989 ../base/ufos/ui/geoscape.ufo:1245
-#: ../base/ufos/ui/geoscape.ufo:1317 ../base/ufos/ui/irc.ufo:202
+#: ../base/ufos/ui/basedefence.ufo:309 ../base/ufos/ui/geoscape.ufo:827
+#: ../base/ufos/ui/geoscape.ufo:925 ../base/ufos/ui/geoscape.ufo:1181
+#: ../base/ufos/ui/geoscape.ufo:1253 ../base/ufos/ui/irc.ufo:202
 #: ../base/ufos/ui/main.ufo:117 ../base/ufos/ui/multiplayer.ufo:412
-#: ../base/ufos/ui/popup_installations.ufo:13
-#: ../base/ufos/ui/popup_installations.ufo:340
+#: ../base/ufos/ui/popup_installations.ufo:155
+#: ../base/ufos/ui/popup_installations.ufo:482
 msgid "Name:"
 msgstr "名称："
 
@@ -21845,9 +22139,9 @@ msgstr "名称："
 msgid "Targetted UFO:"
 msgstr "目标UFO:"
 
-#: ../base/ufos/ui/basedefence.ufo:344 ../base/ufos/ui/geoscape.ufo:920
-#: ../base/ufos/ui/geoscape.ufo:1007
-#: ../base/ufos/ui/popup_installations.ufo:382
+#: ../base/ufos/ui/basedefence.ufo:344 ../base/ufos/ui/geoscape.ufo:856
+#: ../base/ufos/ui/geoscape.ufo:943
+#: ../base/ufos/ui/popup_installations.ufo:524
 msgid "Time to build:"
 msgstr "离完工还有："
 
@@ -21855,28 +22149,29 @@ msgstr "离完工还有："
 msgid "Autofire"
 msgstr "自动开火"
 
-#: ../base/ufos/ui/basedefence.ufo:372 ../base/ufos/ui/geoscape.ufo:1035
-#: ../base/ufos/ui/popup_installations.ufo:426
-#: ../base/ufos/ui/popup_installations.ufo:526
+#: ../base/ufos/ui/basedefence.ufo:372 ../base/ufos/ui/geoscape.ufo:971
+#: ../base/ufos/ui/popup_installations.ufo:568
+#: ../base/ufos/ui/popup_installations.ufo:668
 #: client/cgame/campaign/cp_base_callbacks.cpp:605
 #: client/cgame/campaign/cp_base_callbacks.cpp:615
 #: client/cgame/campaign/cp_base_callbacks.cpp:625
 #: client/cgame/campaign/cp_base_callbacks.cpp:638
-#: client/cgame/campaign/cp_installation_callbacks.cpp:214
+#: client/cgame/campaign/cp_installation_callbacks.cpp:196
 #: client/cgame/campaign/cp_uforecovery_callbacks.cpp:581
 msgid "Destroy"
 msgstr "摧毁"
 
-#: ../base/ufos/ui/basedefence.ufo:373 ../base/ufos/ui/geoscape.ufo:1036
-#: ../base/ufos/ui/popup_installations.ufo:427
-#: client/cgame/campaign/cp_installation_callbacks.cpp:214
+#: ../base/ufos/ui/basedefence.ufo:373 ../base/ufos/ui/geoscape.ufo:972
+#: ../base/ufos/ui/popup_installations.ufo:569
+#: client/cgame/campaign/cp_installation_callbacks.cpp:196
 msgid "Destroy installation"
 msgstr "拆除基站"
 
-#: ../base/ufos/ui/basedefence.ufo:383 ../base/ufos/ui/geoscape.ufo:861
-#: ../base/ufos/ui/geoscape.ufo:1020 ../base/ufos/ui/inventory.ufo:241
-#: ../base/ufos/ui/main.ufo:322 ../base/ufos/ui/physdat.ufo:349
-#: ../base/ufos/ui/popup_baseattack.ufo:312 ../base/ufos/ui/transfer.ufo:690
+#: ../base/ufos/ui/basedefence.ufo:383 ../base/ufos/ui/geoscape.ufo:956
+#: ../base/ufos/ui/inventory.ufo:241 ../base/ufos/ui/main.ufo:322
+#: ../base/ufos/ui/physdat.ufo:349 ../base/ufos/ui/popup_baseattack.ufo:312
+#: ../base/ufos/ui/popup_installations.ufo:130
+#: ../base/ufos/ui/transfer.ufo:690
 msgid "Close"
 msgstr "关闭"
 
@@ -21909,9 +22204,9 @@ msgstr "出售"
 msgid "Buy/Sell equipment, aircraft and UGV"
 msgstr "装备武器物资交易"
 
-#: ../base/ufos/ui/bases.ufo:139 ../base/ufos/ui/popup_installations.ufo:164
-#: ../base/ufos/ui/popup_installations.ufo:314
-#: ../base/ufos/ui/popup_installations.ufo:508
+#: ../base/ufos/ui/bases.ufo:139 ../base/ufos/ui/popup_installations.ufo:306
+#: ../base/ufos/ui/popup_installations.ufo:456
+#: ../base/ufos/ui/popup_installations.ufo:650
 #: ../base/ufos/ui/transfer.ufo:468
 #: client/cgame/campaign/cp_base_callbacks.cpp:606
 #: client/cgame/campaign/cp_base_callbacks.cpp:616
@@ -22025,12 +22320,11 @@ msgstr "现在你已经完成了单人模式"
 
 #: ../base/ufos/ui/campaign.ufo:42 ../base/ufos/ui/campaign.ufo:180
 #: ../base/ufos/ui/campaign.ufo:238 ../base/ufos/ui/campaign.ufo:271
-#: ../base/ufos/ui/mods.ufo:51
 msgid "Load"
 msgstr "取    档"
 
 #: ../base/ufos/ui/campaign.ufo:50 ../base/ufos/ui/campaign.ufo:172
-#: ../base/ufos/ui/lostwon.ufo:40 ../base/ufos/ui/lostwon.ufo:129
+#: ../base/ufos/ui/lostwon.ufo:40 ../base/ufos/ui/lostwon.ufo:127
 #: ../base/ufos/ui/multiplayeringame.ufo:33
 #: ../base/ufos/ui/singleplayer.ufo:108
 msgid "Continue"
@@ -22269,15 +22563,15 @@ msgstr "统计资料"
 msgid "Create installation"
 msgstr "建立新基站"
 
-#: ../base/ufos/ui/geoscape.ufo:590 ../base/ufos/ui/geoscape.ufo:1485
+#: ../base/ufos/ui/geoscape.ufo:590 ../base/ufos/ui/geoscape.ufo:1421
 msgid "Highlight nation borders"
 msgstr "显示国际组织边界"
 
-#: ../base/ufos/ui/geoscape.ufo:600 ../base/ufos/ui/geoscape.ufo:1509
+#: ../base/ufos/ui/geoscape.ufo:600 ../base/ufos/ui/geoscape.ufo:1445
 msgid "Show radar range"
 msgstr "显示雷达范围"
 
-#: ../base/ufos/ui/geoscape.ufo:611 ../base/ufos/ui/geoscape.ufo:1529
+#: ../base/ufos/ui/geoscape.ufo:611 ../base/ufos/ui/geoscape.ufo:1465
 msgid "Show XVI map"
 msgstr "显示XVI地图"
 
@@ -22289,134 +22583,120 @@ msgstr "以建筑为地图中心"
 msgid "Go to Options"
 msgstr "系统配置"
 
-#: ../base/ufos/ui/geoscape.ufo:751
+#: ../base/ufos/ui/geoscape.ufo:750
 msgid "Ready"
 msgstr "准备"
 
-#: ../base/ufos/ui/geoscape.ufo:757
+#: ../base/ufos/ui/geoscape.ufo:756
 msgid "Aircraft reached desired location - what to do?"
 msgstr "航空机抵达预定地点，有何指示？"
 
-#: ../base/ufos/ui/geoscape.ufo:774 ../base/ufos/ui/popup_baseattack.ufo:440
+#: ../base/ufos/ui/geoscape.ufo:773 ../base/ufos/ui/popup_baseattack.ufo:440
 msgid "Enter"
 msgstr "进入"
 
-#: ../base/ufos/ui/geoscape.ufo:775 ../base/ufos/ui/popup_baseattack.ufo:441
+#: ../base/ufos/ui/geoscape.ufo:774 ../base/ufos/ui/popup_baseattack.ufo:441
 #: ../base/ufos/ui/popup_baseattack.ufo:462
 msgid "Enter the battlefield"
 msgstr "进入战场"
 
-#: ../base/ufos/ui/geoscape.ufo:782
+#: ../base/ufos/ui/geoscape.ufo:781
 msgid "Auto mission"
 msgstr "自动"
 
-#: ../base/ufos/ui/geoscape.ufo:783 ../base/ufos/ui/geoscape.ufo:792
+#: ../base/ufos/ui/geoscape.ufo:782 ../base/ufos/ui/geoscape.ufo:791
 msgid "Automatically finish mission"
 msgstr "自动战斗"
 
-#: ../base/ufos/ui/geoscape.ufo:795
+#: ../base/ufos/ui/geoscape.ufo:794
 msgid "This kind of mission cannot be done automatically"
 msgstr ""
 
-#: ../base/ufos/ui/geoscape.ufo:816
-msgid "New installation"
-msgstr "新基站"
-
-#: ../base/ufos/ui/geoscape.ufo:821
-msgid "Type"
-msgstr "种类"
-
-#: ../base/ufos/ui/geoscape.ufo:827
-msgid "Build Time"
-msgstr "建造耗时"
-
-#: ../base/ufos/ui/geoscape.ufo:833
-msgid "Cost"
-msgstr "费用"
-
-#: ../base/ufos/ui/geoscape.ufo:908 ../base/ufos/ui/popup_installations.ufo:41
+#: ../base/ufos/ui/geoscape.ufo:844
+#: ../base/ufos/ui/popup_installations.ufo:183
 msgid "Cost:"
 msgstr "费用："
 
-#: ../base/ufos/ui/geoscape.ufo:962 ../base/ufos/ui/popup_installations.ufo:53
+#: ../base/ufos/ui/geoscape.ufo:898
+#: ../base/ufos/ui/popup_installations.ufo:195
 msgid "Build"
 msgstr "建造"
 
-#: ../base/ufos/ui/geoscape.ufo:984
+#: ../base/ufos/ui/geoscape.ufo:920
 msgid "Installation Status"
 msgstr "基站状态"
 
-#: ../base/ufos/ui/geoscape.ufo:1026
+#: ../base/ufos/ui/geoscape.ufo:962
 msgid "Manage"
 msgstr "管理"
 
-#: ../base/ufos/ui/geoscape.ufo:1027
+#: ../base/ufos/ui/geoscape.ufo:963
 msgid "Manage installation"
 msgstr "基站管理"
 
-#: ../base/ufos/ui/geoscape.ufo:1072
+#: ../base/ufos/ui/geoscape.ufo:1008
 msgid "Anti-UFO defence"
 msgstr "对UFO防御设施"
 
-#: ../base/ufos/ui/geoscape.ufo:1085
+#: ../base/ufos/ui/geoscape.ufo:1021
 msgid "Aircraft interception"
 msgstr "飞行器拦截"
 
-#: ../base/ufos/ui/geoscape.ufo:1089
+#: ../base/ufos/ui/geoscape.ufo:1025
 msgid "SAM defence"
 msgstr "SAM选择防御"
 
-#: ../base/ufos/ui/geoscape.ufo:1103
+#: ../base/ufos/ui/geoscape.ufo:1039
 msgid "Aircraft:"
 msgstr "航空机："
 
-#: ../base/ufos/ui/geoscape.ufo:1117 ../base/ufos/ui/geoscape.ufo:1259
+#: ../base/ufos/ui/geoscape.ufo:1053 ../base/ufos/ui/geoscape.ufo:1195
 msgid "Base:"
 msgstr "基地："
 
-#: ../base/ufos/ui/geoscape.ufo:1165
+#: ../base/ufos/ui/geoscape.ufo:1101
 msgid "Surface-to-air missile site:"
 msgstr "地对空导弹发射场："
 
-#: ../base/ufos/ui/geoscape.ufo:1240
+#: ../base/ufos/ui/geoscape.ufo:1176
 msgid "Select aircraft"
 msgstr "选择航空机"
 
-#: ../base/ufos/ui/geoscape.ufo:1266
-#: ../base/ufos/ui/popup_installations.ufo:496
+#: ../base/ufos/ui/geoscape.ufo:1202
+#: ../base/ufos/ui/popup_installations.ufo:638
 #: ../base/ufos/ui/transfer.ufo:602
 msgid "ETA:"
 msgstr "估计到达时间："
 
-#: ../base/ufos/ui/geoscape.ufo:1304
+#: ../base/ufos/ui/geoscape.ufo:1240
 msgid "Select item"
 msgstr "选择"
 
-#: ../base/ufos/ui/geoscape.ufo:1309
+#: ../base/ufos/ui/geoscape.ufo:1245
 msgid "Type:"
 msgstr "种类："
 
-#: ../base/ufos/ui/geoscape.ufo:1376
+#: ../base/ufos/ui/geoscape.ufo:1312
 msgid "Action:"
 msgstr "行动："
 
-#: ../base/ufos/ui/geoscape.ufo:1384
+#: ../base/ufos/ui/geoscape.ufo:1320
 msgid "Description:"
 msgstr "目的地："
 
-#: ../base/ufos/ui/geoscape.ufo:1439
+#: ../base/ufos/ui/geoscape.ufo:1375
 msgid "Geoscape options"
 msgstr "选项"
 
-#: ../base/ufos/ui/geoscape.ufo:1451
+#: ../base/ufos/ui/geoscape.ufo:1387
 msgid "Geoscape projection mode:"
 msgstr "投影模式："
 
-#: ../base/ufos/ui/geoscape.ufo:1461
+#: ../base/ufos/ui/geoscape.ufo:1397
 msgid "2D"
 msgstr "2D"
 
-#: ../base/ufos/ui/geoscape.ufo:1465
+#: ../base/ufos/ui/geoscape.ufo:1401
 msgid "3D"
 msgstr "3D"
 
@@ -22971,71 +23251,71 @@ msgstr "连接"
 msgid "Connect to the lobby"
 msgstr "连接到大厅"
 
-#: ../base/ufos/ui/lostwon.ufo:112
+#: ../base/ufos/ui/lostwon.ufo:110
 msgid "Try again"
 msgstr "再试一次"
 
-#: ../base/ufos/ui/lostwon.ufo:113
+#: ../base/ufos/ui/lostwon.ufo:111
 msgid "Retry this mission"
 msgstr "重新这场战斗"
 
-#: ../base/ufos/ui/lostwon.ufo:178
+#: ../base/ufos/ui/lostwon.ufo:204
 msgid "UFO recovery"
 msgstr "回收UFO"
 
-#: ../base/ufos/ui/lostwon.ufo:191
+#: ../base/ufos/ui/lostwon.ufo:217
 msgid "Store UFO"
 msgstr "收存UFO"
 
-#: ../base/ufos/ui/lostwon.ufo:195
+#: ../base/ufos/ui/lostwon.ufo:221
 msgid "Sell UFO"
 msgstr "卖UFO"
 
-#: ../base/ufos/ui/lostwon.ufo:234
+#: ../base/ufos/ui/lostwon.ufo:260
 msgid "Capacity (free/all)"
 msgstr "容量 (free/all)"
 
-#: ../base/ufos/ui/lostwon.ufo:297
+#: ../base/ufos/ui/lostwon.ufo:323
 msgid "Recover"
 msgstr "接收"
 
-#: ../base/ufos/ui/lostwon.ufo:298
+#: ../base/ufos/ui/lostwon.ufo:324
 msgid "Begin UFO recovery process"
 msgstr "开始接收UFO"
 
-#: ../base/ufos/ui/lostwon.ufo:316
+#: ../base/ufos/ui/lostwon.ufo:342
 msgid "Nation:"
 msgstr "国际组织："
 
-#: ../base/ufos/ui/lostwon.ufo:317
+#: ../base/ufos/ui/lostwon.ufo:343
 msgid "Sort nations by name"
 msgstr "按名称排序"
 
-#: ../base/ufos/ui/lostwon.ufo:327
+#: ../base/ufos/ui/lostwon.ufo:353
 msgid "Price:"
 msgstr "价格："
 
-#: ../base/ufos/ui/lostwon.ufo:328
+#: ../base/ufos/ui/lostwon.ufo:354
 msgid "Sort nations by price"
 msgstr "按价格排序"
 
-#: ../base/ufos/ui/lostwon.ufo:338
+#: ../base/ufos/ui/lostwon.ufo:364
 msgid "Relations:"
 msgstr "关系："
 
-#: ../base/ufos/ui/lostwon.ufo:339
+#: ../base/ufos/ui/lostwon.ufo:365
 msgid "Sort nations by relation"
 msgstr "按友好度排序"
 
-#: ../base/ufos/ui/lostwon.ufo:388
+#: ../base/ufos/ui/lostwon.ufo:414
 msgid "Selected nation:"
 msgstr "选择组织："
 
-#: ../base/ufos/ui/lostwon.ufo:402 ../base/ufos/ui/popup_installations.ufo:319
+#: ../base/ufos/ui/lostwon.ufo:428 ../base/ufos/ui/popup_installations.ufo:461
 msgid "Sell"
 msgstr "出售"
 
-#: ../base/ufos/ui/lostwon.ufo:403
+#: ../base/ufos/ui/lostwon.ufo:429
 msgid "Begin UFO sell process"
 msgstr "开始出售UFO"
 
@@ -23079,7 +23359,7 @@ msgstr "初始化"
 msgid "User Information"
 msgstr "玩家信息"
 
-#: ../base/ufos/ui/main.ufo:140 ../base/ufos/ui/options.ufo:1256
+#: ../base/ufos/ui/main.ufo:140 ../base/ufos/ui/options.ufo:1303
 msgid "Volume Control"
 msgstr "音量"
 
@@ -23087,7 +23367,7 @@ msgstr "音量"
 msgid "Effects:"
 msgstr "效果："
 
-#: ../base/ufos/ui/main.ufo:166 ../base/ufos/ui/options.ufo:1299
+#: ../base/ufos/ui/main.ufo:166 ../base/ufos/ui/options.ufo:1346
 msgid "Music:"
 msgstr "音乐："
 
@@ -23140,8 +23420,8 @@ msgstr "买卖"
 msgid "Craft items"
 msgstr "机载物"
 
-#: ../base/ufos/ui/market.ufo:142 ../base/ufos/ui/options.ufo:301
-#: ../base/ufos/ui/options.ufo:1104 ../base/ufos/ui/production.ufo:88
+#: ../base/ufos/ui/market.ufo:142 ../base/ufos/ui/options.ufo:348
+#: ../base/ufos/ui/options.ufo:1151 ../base/ufos/ui/production.ufo:88
 msgid "Other"
 msgstr "其它"
 
@@ -23332,10 +23612,6 @@ msgid ""
 msgstr ""
 "切换全部的声音提示.\n"
 "左键设定全部都有声音提示,右键取消声音提示。"
-
-#: ../base/ufos/ui/mods.ufo:13
-msgid "Mods"
-msgstr ""
 
 #: ../base/ufos/ui/multiplayer.ufo:9
 msgid "Connect to this server"
@@ -23642,346 +23918,360 @@ msgid "Available languages"
 msgstr "可用防御："
 
 #: ../base/ufos/ui/options.ufo:175
+msgid "Mods"
+msgstr ""
+
+#: ../base/ufos/ui/options.ufo:182
+#, fuzzy
+msgid "Available game modifications"
+msgstr "开启通告"
+
+#: ../base/ufos/ui/options.ufo:211
+#, fuzzy
+msgid "Activate mod"
+msgstr "激活聊天"
+
+#: ../base/ufos/ui/options.ufo:222
 #, fuzzy
 msgid "Several Tips"
 msgstr "服务器信息"
 
-#: ../base/ufos/ui/options.ufo:185
+#: ../base/ufos/ui/options.ufo:232
 #, fuzzy
 msgid "Show cursor tooltips in menus."
 msgstr "激活动态提示"
 
-#: ../base/ufos/ui/options.ufo:186
+#: ../base/ufos/ui/options.ufo:233
 #, fuzzy
 msgid "Tooltips (menu):"
 msgstr "提示："
 
-#: ../base/ufos/ui/options.ufo:202
+#: ../base/ufos/ui/options.ufo:249
 msgid "Show cursor tooltips in tactical mode."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:203
+#: ../base/ufos/ui/options.ufo:250
 #, fuzzy
 msgid "Tooltips (battlescape):"
 msgstr "调高战斗视角"
 
-#: ../base/ufos/ui/options.ufo:218
+#: ../base/ufos/ui/options.ufo:265
 #, fuzzy
 msgid "Show 'Tip of the Day':"
 msgstr "显示每日技巧："
 
-#: ../base/ufos/ui/options.ufo:234
+#: ../base/ufos/ui/options.ufo:281
 #, fuzzy
 msgid "Menu Options"
 msgstr "系统设置"
 
-#: ../base/ufos/ui/options.ufo:244
+#: ../base/ufos/ui/options.ufo:291
 #, fuzzy
 msgid "Precache Models:"
 msgstr "缓冲模式："
 
-#: ../base/ufos/ui/options.ufo:250
+#: ../base/ufos/ui/options.ufo:297
 #, fuzzy
 msgid "Precaching of models means having faster menus."
 msgstr "缓冲模式（快速菜单）"
 
-#: ../base/ufos/ui/options.ufo:268
+#: ../base/ufos/ui/options.ufo:315
 #, fuzzy
 msgid "Video Settings"
 msgstr "视频设置"
 
-#: ../base/ufos/ui/options.ufo:293
+#: ../base/ufos/ui/options.ufo:340
 #, fuzzy
 msgid "General"
 msgstr "日内瓦"
 
-#: ../base/ufos/ui/options.ufo:297
+#: ../base/ufos/ui/options.ufo:344
 #, fuzzy
 msgid "Advanced"
 msgstr "超级雷达室"
 
-#: ../base/ufos/ui/options.ufo:320
+#: ../base/ufos/ui/options.ufo:367
 msgid "Resolution and Display Settings"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:331
+#: ../base/ufos/ui/options.ufo:378
 msgid "The resolution (x*y) in pixel which UFO:AI should use."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:332
+#: ../base/ufos/ui/options.ufo:379
 msgid "Resolution:"
 msgstr "解析度："
 
-#: ../base/ufos/ui/options.ufo:342
+#: ../base/ufos/ui/options.ufo:389
 msgid "Display only resolutions using this screen ratio."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:350
+#: ../base/ufos/ui/options.ufo:397
 #, fuzzy
 msgid "All ratios"
 msgstr "基站"
 
-#: ../base/ufos/ui/options.ufo:380
+#: ../base/ufos/ui/options.ufo:427
 #, fuzzy
 msgid "Others"
 msgstr "其它"
 
-#: ../base/ufos/ui/options.ufo:389
+#: ../base/ufos/ui/options.ufo:436
 msgid "Select your desired screen resolution."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:400
+#: ../base/ufos/ui/options.ufo:447
 msgid "Fullscreen:"
 msgstr "全屏："
 
-#: ../base/ufos/ui/options.ufo:406
+#: ../base/ufos/ui/options.ufo:453
 msgid "Play UFO:AI in fullscreen."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:416
+#: ../base/ufos/ui/options.ufo:463
 #, fuzzy
 msgid "Stretch the Screen with a 4:3 Ratio:"
 msgstr "用4:3比例扩展屏幕"
 
-#: ../base/ufos/ui/options.ufo:431
+#: ../base/ufos/ui/options.ufo:478
 msgid "Prevent the mousepointer from leaving the game window."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:432
+#: ../base/ufos/ui/options.ufo:479
 msgid "Hint: Press CTRL+G to grab/release the mousepointer."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:443
+#: ../base/ufos/ui/options.ufo:490
 msgid "Calibrate your display here."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:444
+#: ../base/ufos/ui/options.ufo:491
 msgid "Monitor Calibration Controls"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:454
+#: ../base/ufos/ui/options.ufo:501
 msgid "Gamma:"
 msgstr "灰度系数："
 
-#: ../base/ufos/ui/options.ufo:477
+#: ../base/ufos/ui/options.ufo:524
 msgid "The default key to make screenshots is F12."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:478
+#: ../base/ufos/ui/options.ufo:525
 #, fuzzy
 msgid "Screenshot Settings"
 msgstr "视频设置"
 
-#: ../base/ufos/ui/options.ufo:488
+#: ../base/ufos/ui/options.ufo:535
 msgid "The file format used for compressing and saving your screenshots."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:489
+#: ../base/ufos/ui/options.ufo:536
 msgid "Screenshot Format:"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:536
+#: ../base/ufos/ui/options.ufo:583
 msgid "jpeg Quality:"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:557
+#: ../base/ufos/ui/options.ufo:604
 #, fuzzy
 msgid "Other Display Settings"
 msgstr "游戏设定"
 
-#: ../base/ufos/ui/options.ufo:568
+#: ../base/ufos/ui/options.ufo:615
 msgid "Show FPS:"
 msgstr "显示FPS："
 
-#: ../base/ufos/ui/options.ufo:574
+#: ../base/ufos/ui/options.ufo:621
 msgid "Display the number of rendered frames per second."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:585
+#: ../base/ufos/ui/options.ufo:632
 msgid "Do not play the intro movie when starting the game."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:586
+#: ../base/ufos/ui/options.ufo:633
 msgid "Hold Back Intro Video:"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:592
+#: ../base/ufos/ui/options.ufo:639
 msgid "Default is to play the intro video just once at the first game start."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:616
+#: ../base/ufos/ui/options.ufo:663
 #, fuzzy
 msgid "Texture Settings"
 msgstr "视频设置"
 
-#: ../base/ufos/ui/options.ufo:624
+#: ../base/ufos/ui/options.ufo:671
 msgid ""
 "Sets the maximum size for textures and caps resolutions higher than that "
 "value."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:625
+#: ../base/ufos/ui/options.ufo:672
 #, fuzzy
 msgid "Resolution Cap:"
 msgstr "解析度："
 
-#: ../base/ufos/ui/options.ufo:632
+#: ../base/ufos/ui/options.ufo:679
 msgid ""
 "Low means a maximum of 256x256 pixel texture resolution. Extreme means up to "
 "8192x8192 pixel."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:638 ../base/ufos/ui/options.ufo:1039
-#: ../base/ufos/ui/options.ufo:1195
+#: ../base/ufos/ui/options.ufo:685 ../base/ufos/ui/options.ufo:1086
+#: ../base/ufos/ui/options.ufo:1242
 msgid "Low"
 msgstr "低"
 
-#: ../base/ufos/ui/options.ufo:642 ../base/ufos/ui/options.ufo:1043
-#: ../base/ufos/ui/options.ufo:1209
+#: ../base/ufos/ui/options.ufo:689 ../base/ufos/ui/options.ufo:1090
+#: ../base/ufos/ui/options.ufo:1256
 msgid "Medium"
 msgstr "中"
 
-#: ../base/ufos/ui/options.ufo:646 ../base/ufos/ui/options.ufo:1047
-#: client/cgame/campaign/cp_cgame_callbacks.cpp:79
+#: ../base/ufos/ui/options.ufo:693 ../base/ufos/ui/options.ufo:1094
+#: client/cgame/campaign/cp_cgame_callbacks.cpp:80
 msgid "Normal"
 msgstr "一般"
 
-#: ../base/ufos/ui/options.ufo:650 ../base/ufos/ui/options.ufo:1051
-#: ../base/ufos/ui/options.ufo:1223
+#: ../base/ufos/ui/options.ufo:697 ../base/ufos/ui/options.ufo:1098
+#: ../base/ufos/ui/options.ufo:1270
 msgid "High"
 msgstr "高"
 
-#: ../base/ufos/ui/options.ufo:654 client/battlescape/cl_actor.cpp:119
+#: ../base/ufos/ui/options.ufo:701 client/battlescape/cl_actor.cpp:119
 msgid "Excellent"
 msgstr "优秀"
 
-#: ../base/ufos/ui/options.ufo:658
+#: ../base/ufos/ui/options.ufo:705
 msgid "Extreme"
 msgstr "极致"
 
-#: ../base/ufos/ui/options.ufo:668
+#: ../base/ufos/ui/options.ufo:715
 msgid "Sets the texture filtering and mipmapping method."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:669
+#: ../base/ufos/ui/options.ufo:716
 #, fuzzy
 msgid "Filtering:"
 msgstr "多层渲染："
 
-#: ../base/ufos/ui/options.ufo:682
+#: ../base/ufos/ui/options.ufo:729
 msgid "No filtering, no mipmaps"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:686
+#: ../base/ufos/ui/options.ufo:733
 msgid "Bilinear filtering, no mipmaps"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:690
+#: ../base/ufos/ui/options.ufo:737
 msgid "No filtering, mipmaps"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:694
+#: ../base/ufos/ui/options.ufo:741
 msgid "Bilinear filtering, mipmaps"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:698
+#: ../base/ufos/ui/options.ufo:745
 msgid "Trilinear filtering, mipmaps"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:702
+#: ../base/ufos/ui/options.ufo:749
 msgid "Bilinear filtering, trilinear filtering, mipmaps"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:712
+#: ../base/ufos/ui/options.ufo:759
 msgid ""
 "Enable texture compression for better memory performance, disable for better "
 "rendering quality."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:713
+#: ../base/ufos/ui/options.ufo:760
 #, fuzzy
 msgid "Compression:"
 msgstr "纹理压缩："
 
-#: ../base/ufos/ui/options.ufo:728
+#: ../base/ufos/ui/options.ufo:775
 msgid ""
 "Texture Level-of-Detail. Enabling this might result in some blurry textures "
 "if you zoom out a little bit."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:729
+#: ../base/ufos/ui/options.ufo:776
 msgid "LoD:"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:744
+#: ../base/ufos/ui/options.ufo:791
 msgid ""
 "The degree or ratio of anisotropic filtering. High ratios will make distant "
 "textures appear more sharp. Very high ratios are only recommended when "
 "playing in high resolutions."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:745
+#: ../base/ufos/ui/options.ufo:792
 #, fuzzy
 msgid "Anisotropy Level:"
 msgstr "各向异性纹理级别："
 
-#: ../base/ufos/ui/options.ufo:758
+#: ../base/ufos/ui/options.ufo:805
 msgid ""
 "Very high values are only recommended when playing in very high screen "
 "resolutions."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:771
+#: ../base/ufos/ui/options.ufo:818
 #, fuzzy
 msgid "OpenGL Settings"
 msgstr "视频设置"
 
-#: ../base/ufos/ui/options.ufo:781
+#: ../base/ufos/ui/options.ufo:828
 msgid ""
 "OpenGL GLSL Shaders are available only if your graphics-card driver fully "
 "supports OpenGL 2.0+ and will enhance UFO:AI using advanced shading "
 "techniques."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:782
+#: ../base/ufos/ui/options.ufo:829
 #, fuzzy
 msgid "GLSL Shaders:"
 msgstr "GLSL着色："
 
-#: ../base/ufos/ui/options.ufo:789
+#: ../base/ufos/ui/options.ufo:836
 msgid "Set the OpenGL shader quality - or disable them."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:799
+#: ../base/ufos/ui/options.ufo:846
 #, fuzzy
 msgid "Disabled"
 msgstr "关闭暂停"
 
-#: ../base/ufos/ui/options.ufo:804
+#: ../base/ufos/ui/options.ufo:851
 msgid "Low quality"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:809
+#: ../base/ufos/ui/options.ufo:856
 #, fuzzy
 msgid "Medium quality"
 msgstr "中型"
 
-#: ../base/ufos/ui/options.ufo:814
+#: ../base/ufos/ui/options.ufo:861
 msgid "High quality"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:837
+#: ../base/ufos/ui/options.ufo:884
 msgid ""
 "Vertex Buffers are submitting extensible arrays of vertex attributes to be "
 "mapped into the GPU for fast drawing."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:838
+#: ../base/ufos/ui/options.ufo:885
 #, fuzzy
 msgid "Vertex Buffers:"
 msgstr "顶点缓冲："
 
-#: ../base/ufos/ui/options.ufo:853
+#: ../base/ufos/ui/options.ufo:900
 msgid ""
 "OpenGL multisample buffers provide a mechanism to antialias all GL "
 "primitives. / The Swap Interval selects when a buffer swap will occur. The "
@@ -23989,163 +24279,163 @@ msgid ""
 "off')."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:854
+#: ../base/ufos/ui/options.ufo:901
 #, fuzzy
 msgid "Multisample Buffers / Swap Interval:"
 msgstr "多重采样缓冲："
 
-#: ../base/ufos/ui/options.ufo:860
+#: ../base/ufos/ui/options.ufo:907
 msgid ""
 "Choose between 0-4 Multisample Buffers. Higher values will provide better "
 "antialiasing and will enhance picture quality."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:875
+#: ../base/ufos/ui/options.ufo:922
 msgid ""
 "Set to '0' to turn v-sync off (faster). Set to '1' or higher to turn v-sync "
 "on (better quality)."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:893
+#: ../base/ufos/ui/options.ufo:940
 msgid "Post-processing shader effects like glowing textures."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:894
+#: ../base/ufos/ui/options.ufo:941
 msgid "Post-Processing Shader Effects:"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:900
+#: ../base/ufos/ui/options.ufo:947
 #, fuzzy
 msgid "Enable post processing shader effects."
 msgstr "天气效果："
 
-#: ../base/ufos/ui/options.ufo:910
+#: ../base/ufos/ui/options.ufo:957
 msgid ""
 "Realtime lighting of the 3D world in UFO:AI. / Maximum number of dynamic "
 "hardware accelerated lights allowed."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:911
+#: ../base/ufos/ui/options.ufo:958
 #, fuzzy
 msgid "Realtime Lighting / Max Dynamic Lights:"
 msgstr "实时光线："
 
-#: ../base/ufos/ui/options.ufo:923
+#: ../base/ufos/ui/options.ufo:970
 msgid "Change the number of allowed hardware accelerated dynamic lights."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:952
+#: ../base/ufos/ui/options.ufo:999
 msgid "Also known as bumpmapping."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:953
+#: ../base/ufos/ui/options.ufo:1000
 #, fuzzy
 msgid "Texture Normalmapping:"
 msgstr "纹理压缩："
 
-#: ../base/ufos/ui/options.ufo:959
+#: ../base/ufos/ui/options.ufo:1006
 #, fuzzy
 msgid "Enable normal-/bumpmapping."
 msgstr "实时光线："
 
-#: ../base/ufos/ui/options.ufo:970
+#: ../base/ufos/ui/options.ufo:1017
 msgid "Amount of light emitting from the sun and shining on the earth."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:971
+#: ../base/ufos/ui/options.ufo:1018
 #, fuzzy
 msgid "Geo Ambient Lighting:"
 msgstr "实时光线："
 
-#: ../base/ufos/ui/options.ufo:996
+#: ../base/ufos/ui/options.ufo:1043
 msgid "At the moment these are just drop-shadows."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:997
+#: ../base/ufos/ui/options.ufo:1044
 msgid "Shadows:"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:1003
+#: ../base/ufos/ui/options.ufo:1050
 #, fuzzy
 msgid "Enable shadows."
 msgstr "开启音效："
 
-#: ../base/ufos/ui/options.ufo:1015
+#: ../base/ufos/ui/options.ufo:1062
 #, fuzzy
 msgid "Light and Shadow"
 msgstr "右手"
 
-#: ../base/ufos/ui/options.ufo:1025
+#: ../base/ufos/ui/options.ufo:1072
 msgid ""
 "The lightmap block size defines the resolution of the lightmap. Higher block "
 "size means using more detailed lightmaps."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:1026
+#: ../base/ufos/ui/options.ufo:1073
 #, fuzzy
 msgid "Lightmap Block Size:"
 msgstr "灯光贴图块状大小："
 
-#: ../base/ufos/ui/options.ufo:1033
+#: ../base/ufos/ui/options.ufo:1080
 msgid ""
 "Low means a maximum lightmap resolution of 512x512 pixel. High means up to "
 "2048x2048 pixel."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:1074
+#: ../base/ufos/ui/options.ufo:1121
 msgid "Enabled by default for compatibility reasons."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:1075
+#: ../base/ufos/ui/options.ufo:1122
 msgid "Intel Graphics Hardware Hack:"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:1081
+#: ../base/ufos/ui/options.ufo:1128
 msgid ""
 "This hack activates texture compression and deactivates GLSL shaders on "
 "Intel chips. Disable it to be able to turn on advanced rendering features."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:1114
+#: ../base/ufos/ui/options.ufo:1161
 msgid ""
 "Flares are used to display light reflection effects. Flare visibility is "
 "calculated according to the angle of the surface emitting the light."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:1115
+#: ../base/ufos/ui/options.ufo:1162
 #, fuzzy
 msgid "Flares:"
 msgstr "困难"
 
-#: ../base/ufos/ui/options.ufo:1130
+#: ../base/ufos/ui/options.ufo:1177
 msgid "Coronas are soft, alpha-blended, rounded polygons."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:1131
+#: ../base/ufos/ui/options.ufo:1178
 #, fuzzy
 msgid "Coronas:"
 msgstr "对比度："
 
-#: ../base/ufos/ui/options.ufo:1146
+#: ../base/ufos/ui/options.ufo:1193
 msgid ""
 "Fog does not relate to any weather effect here, but when enabled distant "
 "textures on the battlescape are faded out."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:1147
+#: ../base/ufos/ui/options.ufo:1194
 msgid "Fog:"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:1162
+#: ../base/ufos/ui/options.ufo:1209
 msgid "Weather effects like rain or snow."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:1163
+#: ../base/ufos/ui/options.ufo:1210
 #, fuzzy
 msgid "Weather Effects:"
 msgstr "天气效果："
 
-#: ../base/ufos/ui/options.ufo:1178
+#: ../base/ufos/ui/options.ufo:1225
 msgid ""
 "The material system is used to display texture animations, effects like "
 "rotating or stretching or scrolling textures and manipulate rendering "
@@ -24153,149 +24443,149 @@ msgid ""
 "defined textures."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:1179
+#: ../base/ufos/ui/options.ufo:1226
 msgid "Material System:"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:1192
+#: ../base/ufos/ui/options.ufo:1239
 #, fuzzy
 msgid "Switch to low video settings"
 msgstr "前一个基地"
 
-#: ../base/ufos/ui/options.ufo:1206
+#: ../base/ufos/ui/options.ufo:1253
 #, fuzzy
 msgid "Switch to medium video settings"
 msgstr "前一个基地"
 
-#: ../base/ufos/ui/options.ufo:1220
+#: ../base/ufos/ui/options.ufo:1267
 #, fuzzy
 msgid "Switch to very high video settings"
 msgstr "切换至右手武器"
 
-#: ../base/ufos/ui/options.ufo:1249
+#: ../base/ufos/ui/options.ufo:1296
 #, fuzzy
 msgid "Audio Settings"
 msgstr "视频设置"
 
-#: ../base/ufos/ui/options.ufo:1266
+#: ../base/ufos/ui/options.ufo:1313
 #, fuzzy
 msgid "Enable or disable sound."
 msgstr "切换声音提示设定"
 
-#: ../base/ufos/ui/options.ufo:1267
+#: ../base/ufos/ui/options.ufo:1314
 #, fuzzy
 msgid "Enable Audio:"
 msgstr "开启音效："
 
-#: ../base/ufos/ui/options.ufo:1323
+#: ../base/ufos/ui/options.ufo:1370
 #, fuzzy
 msgid "Sound Effects:"
 msgstr "效果："
 
-#: ../base/ufos/ui/options.ufo:1348
+#: ../base/ufos/ui/options.ufo:1395
 #, fuzzy
 msgid "Menu Sounds:"
 msgstr "受伤"
 
-#: ../base/ufos/ui/options.ufo:1354
+#: ../base/ufos/ui/options.ufo:1401
 #, fuzzy
 msgid "Turn the menu sounds on or off."
 msgstr "切换是否自动反应攻击"
 
-#: ../base/ufos/ui/options.ufo:1364
+#: ../base/ufos/ui/options.ufo:1411
 msgid "Advanced Audio Options"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:1374
+#: ../base/ufos/ui/options.ufo:1421
 msgid ""
 "The sample rate frequency in kHz. Use higher values for better sound quality."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:1375
+#: ../base/ufos/ui/options.ufo:1422
 #, fuzzy
 msgid "Audio Sample Rate:"
 msgstr "声效频率："
 
-#: ../base/ufos/ui/options.ufo:1409
+#: ../base/ufos/ui/options.ufo:1456
 #, fuzzy
 msgid "Restart the sound-engine and apply your settings."
 msgstr "应用声音设定"
 
-#: ../base/ufos/ui/options.ufo:1432
+#: ../base/ufos/ui/options.ufo:1479
 #, fuzzy
 msgid "Gameplay Settings"
 msgstr "左移战斗视角"
 
-#: ../base/ufos/ui/options.ufo:1439
+#: ../base/ufos/ui/options.ufo:1486
 #, fuzzy
 msgid "Battlescape Camera Settings"
 msgstr "左移战斗视角"
 
-#: ../base/ufos/ui/options.ufo:1449
+#: ../base/ufos/ui/options.ufo:1496
 msgid "Scroll Speed:"
 msgstr "卷动速度："
 
-#: ../base/ufos/ui/options.ufo:1473
+#: ../base/ufos/ui/options.ufo:1520
 msgid "Rotation Speed:"
 msgstr "旋转速度："
 
-#: ../base/ufos/ui/options.ufo:1497
+#: ../base/ufos/ui/options.ufo:1544
 msgid ""
 "The move deceleration of the battlescape camera. Lower this value if you "
 "want smoother camera movement, increase it if you want cameramovement to "
 "decelerate faster or stop immediately."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:1498
+#: ../base/ufos/ui/options.ufo:1545
 #, fuzzy
 msgid "Move Deceleration:"
 msgstr "移动速度："
 
-#: ../base/ufos/ui/options.ufo:1522
+#: ../base/ufos/ui/options.ufo:1569
 msgid ""
 "Isometric Mode means the 3D world will be rendered without perspective "
 "correction."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:1523
+#: ../base/ufos/ui/options.ufo:1570
 msgid "Isometric Mode:"
 msgstr "等角模式："
 
-#: ../base/ufos/ui/options.ufo:1538
+#: ../base/ufos/ui/options.ufo:1585
 msgid ""
 "Center the camera view automatically at the soldier when selecting it, or at "
 "the enemy when he is shooting or appearing."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:1539
+#: ../base/ufos/ui/options.ufo:1586
 #, fuzzy
 msgid "Center View:"
 msgstr "中心视角："
 
-#: ../base/ufos/ui/options.ufo:1554
+#: ../base/ufos/ui/options.ufo:1601
 #, fuzzy
 msgid "Battlescape Gameplay Settings"
 msgstr "左移战斗视角"
 
-#: ../base/ufos/ui/options.ufo:1564
+#: ../base/ufos/ui/options.ufo:1611
 msgid "Select the Head-Up-Display for the battlescape."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:1565
+#: ../base/ufos/ui/options.ufo:1612
 msgid "HUD Design:"
 msgstr "战斗界面："
 
-#: ../base/ufos/ui/options.ufo:1581
+#: ../base/ufos/ui/options.ufo:1628
 msgid ""
 "Enabling this will give you a preview of your actions on the battlescape "
 "which you then have to confirm."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:1582
+#: ../base/ufos/ui/options.ufo:1629
 msgid "Confirm Actions:"
 msgstr "操作确认："
 
-#: ../base/ufos/ui/options.ufo:1589
+#: ../base/ufos/ui/options.ufo:1636
 msgid ""
 "'No' means all your orders on the battlescape will be executed immediately. "
 "'Yes' means you will be prompted to confirm all of your orders before the "
@@ -24303,145 +24593,145 @@ msgid ""
 "displayed before you confirm a soldier's move."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:1595 po/OTHER_STRINGS:4
+#: ../base/ufos/ui/options.ufo:1642 po/OTHER_STRINGS:4
 msgid "Yes"
 msgstr "是"
 
-#: ../base/ufos/ui/options.ufo:1599 po/OTHER_STRINGS:5
+#: ../base/ufos/ui/options.ufo:1646 po/OTHER_STRINGS:5
 msgid "No"
 msgstr "否"
 
-#: ../base/ufos/ui/options.ufo:1603
+#: ../base/ufos/ui/options.ufo:1650
 #, fuzzy
 msgid "Moving only"
 msgstr "移动到目的地"
 
-#: ../base/ufos/ui/options.ufo:1612
+#: ../base/ufos/ui/options.ufo:1659
 msgid ""
 "Autostand regulates if your soldier should automatically stand up when he is "
 "getting the order to move while being crouched."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:1613
+#: ../base/ufos/ui/options.ufo:1660
 #, fuzzy
 msgid "Autostand:"
 msgstr "自动站立"
 
-#: ../base/ufos/ui/options.ufo:1628
+#: ../base/ufos/ui/options.ufo:1675
 #, fuzzy
 msgid "Actor Speed:"
 msgstr "人物移动速度："
 
-#: ../base/ufos/ui/options.ufo:1639
+#: ../base/ufos/ui/options.ufo:1686
 msgid "Choose between 0-9, higher values mean higher actor speed."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:1652
+#: ../base/ufos/ui/options.ufo:1699
 #, fuzzy
 msgid "Geoscape Options"
 msgstr "选项"
 
-#: ../base/ufos/ui/options.ufo:1662
+#: ../base/ufos/ui/options.ufo:1709
 msgid ""
 "3D or 2D geoscape. To enable this option you have to start a new campaign "
 "first."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:1663
+#: ../base/ufos/ui/options.ufo:1710
 #, fuzzy
 msgid "3D Geoscape:"
 msgstr "3D 地球："
 
-#: ../base/ufos/ui/options.ufo:1678
+#: ../base/ufos/ui/options.ufo:1725
 msgid "Show/Hide the panel decoration on the geoscape."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:1679
+#: ../base/ufos/ui/options.ufo:1726
 #, fuzzy
 msgid "Show decoration:"
 msgstr "保留射击时间"
 
-#: ../base/ufos/ui/options.ufo:1694
+#: ../base/ufos/ui/options.ufo:1741
 #, fuzzy
 msgid "The minimum/maximum zoom of the geoscape camera"
 msgstr "调高战斗视角"
 
-#: ../base/ufos/ui/options.ufo:1695
+#: ../base/ufos/ui/options.ufo:1742
 msgid "Min/Max Geo-Cam Zoom:"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:1702
+#: ../base/ufos/ui/options.ufo:1749
 #, fuzzy
 msgid "Minimum zoom level of the geoscape camera"
 msgstr "调高战斗视角"
 
-#: ../base/ufos/ui/options.ufo:1736
+#: ../base/ufos/ui/options.ufo:1783
 msgid "1.00"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:1743
+#: ../base/ufos/ui/options.ufo:1790
 #, fuzzy
 msgid "Maximum zoom level of the geoscape camera"
 msgstr "调高战斗视角"
 
-#: ../base/ufos/ui/options.ufo:1750
+#: ../base/ufos/ui/options.ufo:1797
 msgid "2.0"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:1755
+#: ../base/ufos/ui/options.ufo:1802
 msgid "4.00"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:1761
+#: ../base/ufos/ui/options.ufo:1808
 msgid "6.00"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:1766
+#: ../base/ufos/ui/options.ufo:1813
 msgid "8.00"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:1771
+#: ../base/ufos/ui/options.ufo:1818
 msgid "10.00"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:1776
+#: ../base/ufos/ui/options.ufo:1823
 msgid "12.00"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:1785
+#: ../base/ufos/ui/options.ufo:1832
 #, fuzzy
 msgid "Joystick Settings"
 msgstr "游戏杆设定："
 
-#: ../base/ufos/ui/options.ufo:1795
+#: ../base/ufos/ui/options.ufo:1842
 msgid "Enable:"
 msgstr "启用："
 
-#: ../base/ufos/ui/options.ufo:1827
+#: ../base/ufos/ui/options.ufo:1874
 #, fuzzy
 msgid "Joystick or Joypad:"
 msgstr "游戏杆："
 
-#: ../base/ufos/ui/options.ufo:1833
+#: ../base/ufos/ui/options.ufo:1880
 msgid "Available game controllers."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:1844
+#: ../base/ufos/ui/options.ufo:1891
 msgid ""
 "Adjust the joystick threshold to a high enough value, so movement of the "
 "analogue stick will be recognized."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:1845
+#: ../base/ufos/ui/options.ufo:1892
 msgid "Threshold:"
 msgstr "阈值："
 
-#: ../base/ufos/ui/options.ufo:1894
+#: ../base/ufos/ui/options.ufo:1941
 #, fuzzy
 msgid "Show Keys"
 msgstr "显示快捷键设定"
 
-#: ../base/ufos/ui/options.ufo:1928
+#: ../base/ufos/ui/options.ufo:1975
 #, fuzzy
 msgid "Key Bindings"
 msgstr "显示快捷键设定"
@@ -24486,80 +24776,96 @@ msgstr "装载或分配队伍"
 msgid "Assemble a team first"
 msgstr "先分配队伍"
 
-#: ../base/ufos/ui/popup_installations.ufo:9
+#: ../base/ufos/ui/popup_installations.ufo:60
+msgid "New installation"
+msgstr "新基站"
+
+#: ../base/ufos/ui/popup_installations.ufo:65
+msgid "Type"
+msgstr "种类"
+
+#: ../base/ufos/ui/popup_installations.ufo:72
+msgid "Build Time"
+msgstr "建造耗时"
+
+#: ../base/ufos/ui/popup_installations.ufo:80
+msgid "Cost"
+msgstr "费用"
+
+#: ../base/ufos/ui/popup_installations.ufo:151
 msgid "New base"
 msgstr "新基地"
 
-#: ../base/ufos/ui/popup_installations.ufo:54
+#: ../base/ufos/ui/popup_installations.ufo:196
 msgid "Build the base"
 msgstr "建立此基地"
 
-#: ../base/ufos/ui/popup_installations.ufo:145
-#: ../base/ufos/ui/popup_installations.ufo:746
+#: ../base/ufos/ui/popup_installations.ufo:287
+#: ../base/ufos/ui/popup_installations.ufo:888
 msgid "free"
 msgstr ""
 
-#: ../base/ufos/ui/popup_installations.ufo:205
+#: ../base/ufos/ui/popup_installations.ufo:347
 #, fuzzy
 msgid "UFO Yards"
 msgstr "UFO停机场"
 
-#: ../base/ufos/ui/popup_installations.ufo:359
+#: ../base/ufos/ui/popup_installations.ufo:501
 #, fuzzy
 msgid "Rename Installation"
 msgstr "基站重新命名"
 
-#: ../base/ufos/ui/popup_installations.ufo:370
-#: ../base/ufos/ui/popup_installations.ufo:484
+#: ../base/ufos/ui/popup_installations.ufo:512
+#: ../base/ufos/ui/popup_installations.ufo:626
 #, fuzzy
 msgid "Location:"
 msgstr "国际组织："
 
-#: ../base/ufos/ui/popup_installations.ufo:396
+#: ../base/ufos/ui/popup_installations.ufo:538
 #, fuzzy
 msgid "Capacity:"
 msgstr "床位"
 
-#: ../base/ufos/ui/popup_installations.ufo:408
+#: ../base/ufos/ui/popup_installations.ufo:550
 msgid "Free Space:"
 msgstr ""
 
-#: ../base/ufos/ui/popup_installations.ufo:420
-#: ../base/ufos/ui/popup_installations.ufo:520
+#: ../base/ufos/ui/popup_installations.ufo:562
+#: ../base/ufos/ui/popup_installations.ufo:662
 #, fuzzy
 msgid "Confirm destroying"
 msgstr "操作确认："
 
-#: ../base/ufos/ui/popup_installations.ufo:460
+#: ../base/ufos/ui/popup_installations.ufo:602
 #, fuzzy
 msgid "Condition:"
 msgstr "操作确认："
 
-#: ../base/ufos/ui/popup_installations.ufo:509
+#: ../base/ufos/ui/popup_installations.ufo:651
 #, fuzzy
 msgid "Transfer UFO"
 msgstr "运输"
 
-#: ../base/ufos/ui/popup_installations.ufo:527
+#: ../base/ufos/ui/popup_installations.ufo:669
 msgid "Destroy UFO"
 msgstr "销毁UFO"
 
-#: ../base/ufos/ui/popup_installations.ufo:691
+#: ../base/ufos/ui/popup_installations.ufo:833
 #, fuzzy
 msgid "disassembling"
 msgstr "分解获取材料"
 
-#: ../base/ufos/ui/popup_installations.ufo:697
+#: ../base/ufos/ui/popup_installations.ufo:839
 #, fuzzy
 msgid "transfering"
 msgstr "运输"
 
-#: ../base/ufos/ui/popup_installations.ufo:703
+#: ../base/ufos/ui/popup_installations.ufo:845
 #, fuzzy
 msgid "stored"
 msgstr "库存"
 
-#: ../base/ufos/ui/popup_installations.ufo:709
+#: ../base/ufos/ui/popup_installations.ufo:851
 #, fuzzy
 msgid "unknown"
 msgstr "未知"
@@ -24860,7 +25166,7 @@ msgid "Add/Remove item to transfer cargo, hold SHIFT for speed increase."
 msgstr "选择一个基地运输"
 
 #: ../base/ufos/ui/transfer.ufo:55 ../base/ufos/ui/transfer.ufo:72
-#: client/cgame/campaign/cp_cgame_callbacks.cpp:139
+#: client/cgame/campaign/cp_cgame_callbacks.cpp:140
 #: client/cgame/campaign/cp_transfer_callbacks.cpp:1550
 msgid "Aliens"
 msgstr "外星人"
@@ -24964,15 +25270,15 @@ msgstr "碎片手雷"
 
 #: ../base/ufos/weapons.ufo:154 ../base/ufos/weapons.ufo:231
 #: ../base/ufos/weapons.ufo:309 ../base/ufos/weapons.ufo:385
-#: ../base/ufos/weapons.ufo:464 ../base/ufos/weapons.ufo:542
-#: ../base/ufos/weapons.ufo:624
+#: ../base/ufos/weapons.ufo:468 ../base/ufos/weapons.ufo:550
+#: ../base/ufos/weapons.ufo:634
 msgid "Lob"
 msgstr "投掷"
 
 #: ../base/ufos/weapons.ufo:179 ../base/ufos/weapons.ufo:257
-#: ../base/ufos/weapons.ufo:334 ../base/ufos/weapons.ufo:411
-#: ../base/ufos/weapons.ufo:490 ../base/ufos/weapons.ufo:570
-#: ../base/ufos/weapons.ufo:649
+#: ../base/ufos/weapons.ufo:334 ../base/ufos/weapons.ufo:413
+#: ../base/ufos/weapons.ufo:496 ../base/ufos/weapons.ufo:579
+#: ../base/ufos/weapons.ufo:659
 msgid "Roll"
 msgstr "滚动"
 
@@ -24988,19 +25294,19 @@ msgstr "烟雾手雷"
 msgid "Gas Grenade"
 msgstr "毒气手雷"
 
-#: ../base/ufos/weapons.ufo:445
+#: ../base/ufos/weapons.ufo:449
 msgid "Alien Gas Grenade"
 msgstr "外星气态手雷"
 
-#: ../base/ufos/weapons.ufo:523
+#: ../base/ufos/weapons.ufo:531
 msgid "Incendiary grenade"
 msgstr "燃烧手雷"
 
-#: ../base/ufos/weapons.ufo:605
+#: ../base/ufos/weapons.ufo:615
 msgid "Plasma Grenade"
 msgstr "等离子手雷"
 
-#: ../base/ufos/weapons.ufo:683 ../base/ufos/weapons.ufo:704
+#: ../base/ufos/weapons.ufo:693 ../base/ufos/weapons.ufo:714
 msgid "Bomb"
 msgstr "炸弹"
 
@@ -25713,17 +26019,51 @@ msgstr ""
 "-预留：%i\n"
 "-剩余：%i\n"
 
-#: client/battlescape/cl_hud.cpp:1334
-#, c-format
-msgid "Damaged %s (deterioration: %i)"
+#: client/battlescape/cl_hud.cpp:1317
+#, fuzzy
+msgid "accuracy"
+msgstr "精确度"
+
+#: client/battlescape/cl_hud.cpp:1319
+#, fuzzy
+msgid "shooting speed"
+msgstr "巡航速度"
+
+#: client/battlescape/cl_hud.cpp:1321
+msgid "movement speed"
 msgstr ""
 
-#: client/battlescape/cl_hud.cpp:1334
+#: client/battlescape/cl_hud.cpp:1323
+#, fuzzy
+msgid "sight range"
+msgstr "右手"
+
+#: client/battlescape/cl_hud.cpp:1325
+#, fuzzy
+msgid "reaction speed"
+msgstr "旋转速度："
+
+#: client/battlescape/cl_hud.cpp:1327
+#, fuzzy
+msgid "TU"
+msgstr "活动时间"
+
+#: client/battlescape/cl_hud.cpp:1355
 #, c-format
-msgid "Wounded %s (bleeding: %i)"
+msgid "Damaged %s (deterioration: %i)\n"
 msgstr ""
 
-#: client/battlescape/cl_hud.cpp:1356
+#: client/battlescape/cl_hud.cpp:1355
+#, c-format
+msgid "Wounded %s (bleeding: %i)\n"
+msgstr ""
+
+#: client/battlescape/cl_hud.cpp:1358
+#, c-format
+msgid "- Reduced %s\n"
+msgstr ""
+
+#: client/battlescape/cl_hud.cpp:1380
 msgid "Currently panics!\n"
 msgstr "处于惊恐状态!\n"
 
@@ -25734,12 +26074,12 @@ msgid "Can't perform action - no item in hand!"
 msgstr "无法执行：不可以指挥！\n"
 
 #: client/battlescape/cl_hud_callbacks.cpp:91
-#: client/battlescape/cl_hud_callbacks.cpp:271 game/g_combat.cpp:1129
+#: client/battlescape/cl_hud_callbacks.cpp:271 game/g_combat.cpp:1143
 #, fuzzy
 msgid "Can't perform action - no ammo!"
 msgstr "无法行动：没有弹药！\n"
 
-#: client/battlescape/cl_hud_callbacks.cpp:96 game/g_combat.cpp:1122
+#: client/battlescape/cl_hud_callbacks.cpp:96 game/g_combat.cpp:1136
 #, fuzzy
 msgid "Can't perform action - weapon cannot be fired one handed!"
 msgstr "无法行动：武器不能单手使用！\n"
@@ -26044,7 +26384,7 @@ msgstr "一个新的%s已经开始在%s待命"
 #: client/cgame/campaign/cp_base_callbacks.cpp:795
 #: client/cgame/campaign/cp_base_callbacks.cpp:799
 #: client/cgame/campaign/cp_base_callbacks.cpp:804
-#: client/cgame/campaign/cp_installation_callbacks.cpp:149
+#: client/cgame/campaign/cp_installation_callbacks.cpp:131
 #: client/cgame/campaign/cp_mapfightequip.cpp:349
 #: client/cgame/campaign/cp_mapfightequip.cpp:370
 #: client/cgame/campaign/cp_mapfightequip.cpp:375
@@ -26158,13 +26498,13 @@ msgid "Aircraft started"
 msgstr "航空机起飞"
 
 #: client/cgame/campaign/cp_aircraft_callbacks.cpp:213
-#: client/cgame/campaign/cp_map.cpp:1621 client/cgame/campaign/cp_map.cpp:1630
+#: client/cgame/campaign/cp_map.cpp:1556 client/cgame/campaign/cp_map.cpp:1565
 #, c-format
 msgid "Speed:\t%i km/h\n"
 msgstr "速度：\t%i 公里/小时\n"
 
 #: client/cgame/campaign/cp_aircraft_callbacks.cpp:215
-#: client/cgame/campaign/cp_map.cpp:1622 client/cgame/campaign/cp_map.cpp:1631
+#: client/cgame/campaign/cp_map.cpp:1557 client/cgame/campaign/cp_map.cpp:1566
 #, c-format
 msgid "Fuel:\t%i/%i\n"
 msgstr "燃料：\t%i/%i\n"
@@ -26631,6 +26971,7 @@ msgid "^BBuildings\t\t\t\t\t\tCapacity\t\t\t\tAmount\n"
 msgstr "^B设施\t\t\t\t\t\t容量\t\t\t\t合计\n"
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:891
+#: client/cgame/campaign/cp_installation_callbacks.cpp:265
 msgid "day"
 msgid_plural "days"
 msgstr[0] "天"
@@ -26660,7 +27001,7 @@ msgid "%s\t\t\t\t\t\t%d\t\t\t\t%1.2f%%\n"
 msgstr "%s\t\t\t\t\t\t%d\t\t\t\t%1.2f%%\n"
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:986
-#: client/cgame/campaign/cp_campaign.cpp:643
+#: client/cgame/campaign/cp_campaign.cpp:646
 #, c-format
 msgid "%i c"
 msgstr "%i c"
@@ -26732,12 +27073,12 @@ msgstr ""
 "了。解散后的PHALANX分散到各地继续战斗。但是没有了全球联合行动，各个国家各自在"
 "为自己奋战，被强大的外星力量一一打败。"
 
-#: client/cgame/campaign/cp_campaign.cpp:911
+#: client/cgame/campaign/cp_campaign.cpp:914
 #, c-format
 msgid "%s has been promoted to %s.\n"
 msgstr "%s 已经升级到 %s。\n"
 
-#: client/cgame/campaign/cp_campaign.cpp:913
+#: client/cgame/campaign/cp_campaign.cpp:916
 #, c-format
 msgid ""
 "%s has been awarded the posthumous rank of %s\n"
@@ -26746,39 +27087,39 @@ msgstr ""
 "%s 在战斗中光荣牺牲，被追封%s。\n"
 "以表彰其精神。\n"
 
-#: client/cgame/campaign/cp_campaign.cpp:914
+#: client/cgame/campaign/cp_campaign.cpp:917
 msgid "Soldier promoted"
 msgstr "士兵晋升"
 
-#: client/cgame/campaign/cp_cgame_callbacks.cpp:72
+#: client/cgame/campaign/cp_cgame_callbacks.cpp:73
 msgid "Chicken-hearted"
 msgstr "幼稚"
 
-#: client/cgame/campaign/cp_cgame_callbacks.cpp:74
+#: client/cgame/campaign/cp_cgame_callbacks.cpp:75
 msgid "Very Easy"
 msgstr "超级简单"
 
-#: client/cgame/campaign/cp_cgame_callbacks.cpp:77
+#: client/cgame/campaign/cp_cgame_callbacks.cpp:78
 msgid "Easy"
 msgstr "简单"
 
-#: client/cgame/campaign/cp_cgame_callbacks.cpp:82
+#: client/cgame/campaign/cp_cgame_callbacks.cpp:83
 msgid "Hard"
 msgstr "困难"
 
-#: client/cgame/campaign/cp_cgame_callbacks.cpp:84
+#: client/cgame/campaign/cp_cgame_callbacks.cpp:85
 msgid "Very Hard"
 msgstr "很困难"
 
-#: client/cgame/campaign/cp_cgame_callbacks.cpp:86
+#: client/cgame/campaign/cp_cgame_callbacks.cpp:87
 msgid "Insane"
 msgstr "极难"
 
-#: client/cgame/campaign/cp_cgame_callbacks.cpp:137
+#: client/cgame/campaign/cp_cgame_callbacks.cpp:138
 msgid "Human"
 msgstr "人类"
 
-#: client/cgame/campaign/cp_cgame_callbacks.cpp:142
+#: client/cgame/campaign/cp_cgame_callbacks.cpp:143
 #, fuzzy, c-format
 msgid ""
 "%s\n"
@@ -26801,28 +27142,28 @@ msgstr ""
 "最大允许借款额： %ic\n"
 "%s\n"
 
-#: client/cgame/campaign/cp_cgame_callbacks.cpp:147
+#: client/cgame/campaign/cp_cgame_callbacks.cpp:148
 #: client/cgame/campaign/cp_nation.cpp:804
 msgid "soldier"
 msgid_plural "soldiers"
 msgstr[0] "士兵"
 msgstr[1] "士兵"
 
-#: client/cgame/campaign/cp_cgame_callbacks.cpp:148
+#: client/cgame/campaign/cp_cgame_callbacks.cpp:149
 #: client/cgame/campaign/cp_nation.cpp:803
 msgid "scientist"
 msgid_plural "scientists"
 msgstr[0] "研究员"
 msgstr[1] "研究员"
 
-#: client/cgame/campaign/cp_cgame_callbacks.cpp:149
+#: client/cgame/campaign/cp_cgame_callbacks.cpp:150
 #: client/cgame/campaign/cp_nation.cpp:806
 msgid "worker"
 msgid_plural "workers"
 msgstr[0] "工人"
 msgstr[1] "工人"
 
-#: client/cgame/campaign/cp_cgame_callbacks.cpp:150
+#: client/cgame/campaign/cp_cgame_callbacks.cpp:151
 #: client/cgame/campaign/cp_nation.cpp:805
 #, fuzzy
 msgid "pilot"
@@ -26830,7 +27171,21 @@ msgid_plural "pilots"
 msgstr[0] "飞行员"
 msgstr[1] "飞行员"
 
-#: client/cgame/campaign/cp_cgame_callbacks.cpp:411
+#: client/cgame/campaign/cp_cgame_callbacks.cpp:413
+#, c-format
+msgid ""
+"%s\n"
+"not operational, depends on %s"
+msgstr ""
+
+#: client/cgame/campaign/cp_cgame_callbacks.cpp:467
+#, fuzzy, c-format
+msgid "%3.1f day left"
+msgid_plural "%3.1f days left"
+msgstr[0] "还差 %i 天"
+msgstr[1] "还差 %i 天"
+
+#: client/cgame/campaign/cp_cgame_callbacks.cpp:590
 #, c-format
 msgid "Rank: %s"
 msgstr "等级： %s"
@@ -26863,8 +27218,8 @@ msgstr "不能解雇员工"
 msgid "Could not hire employee"
 msgstr "不能雇用员工"
 
-#: client/cgame/campaign/cp_event.cpp:472
-#: client/cgame/campaign/cp_messages.cpp:262
+#: client/cgame/campaign/cp_event.cpp:490
+#: client/cgame/campaign/cp_messages.cpp:314
 #: client/cgame/campaign/cp_save.cpp:283 client/cgame/campaign/cp_save.cpp:303
 #: client/cgame/campaign/cp_time.cpp:119
 #: client/cgame/campaign/cp_ufopedia.cpp:501
@@ -26873,13 +27228,13 @@ msgstr "不能雇用员工"
 msgid "%i %s %02i"
 msgstr "%i %s %02i"
 
-#: client/cgame/campaign/cp_event.cpp:480
+#: client/cgame/campaign/cp_event.cpp:498
 #, c-format
 msgid "You've got a new mail: %s"
 msgstr "你收到新邮件： %s"
 
 #: client/cgame/campaign/cp_fightequip_callbacks.cpp:147
-#: client/cgame/campaign/cp_map.cpp:1580 client/cgame/campaign/cp_map.cpp:1599
+#: client/cgame/campaign/cp_map.cpp:1515 client/cgame/campaign/cp_map.cpp:1534
 msgid "Unknown"
 msgstr "未知"
 
@@ -26976,92 +27331,83 @@ msgstr ""
 msgid "Wounded %s (damage: %i)"
 msgstr ""
 
-#: client/cgame/campaign/cp_installation.cpp:155
+#: client/cgame/campaign/cp_installation.cpp:173
 #, c-format
 msgid "Installation %s was destroyed."
 msgstr "%s被拆除。"
 
-#: client/cgame/campaign/cp_installation.cpp:156
+#: client/cgame/campaign/cp_installation.cpp:174
 msgid "Installation destroyed"
 msgstr "基站拆除"
 
-#: client/cgame/campaign/cp_installation.cpp:327
+#: client/cgame/campaign/cp_installation.cpp:345
 #, c-format
 msgid "Construction of installation %s finished."
 msgstr "基站%s建设完毕。"
 
-#: client/cgame/campaign/cp_installation.cpp:328
+#: client/cgame/campaign/cp_installation.cpp:346
 msgid "Installation finished"
 msgstr "安装完毕"
 
 #: client/cgame/campaign/cp_installation_callbacks.cpp:45
-#: client/cgame/campaign/cp_map.cpp:365
+#: client/cgame/campaign/cp_map.cpp:325
 msgid "Installation"
 msgstr "基站"
 
 #: client/cgame/campaign/cp_installation_callbacks.cpp:68
-#: client/cgame/campaign/cp_installation_callbacks.cpp:251
+#: client/cgame/campaign/cp_installation_callbacks.cpp:233
 #, c-format
 msgid "%d day"
 msgid_plural "%d days"
 msgstr[0] "%d天"
 msgstr[1] "%d天"
 
-#: client/cgame/campaign/cp_installation_callbacks.cpp:137
+#: client/cgame/campaign/cp_installation_callbacks.cpp:119
 #, c-format
 msgid "A new installation has been built: %s (nation: %s)"
 msgstr "新基站已经建造： %s （国际组织： %s）"
 
-#: client/cgame/campaign/cp_installation_callbacks.cpp:139
+#: client/cgame/campaign/cp_installation_callbacks.cpp:121
 #, c-format
 msgid "A new installation has been built: %s"
 msgstr "新的基站建造： %s"
 
-#: client/cgame/campaign/cp_installation_callbacks.cpp:140
+#: client/cgame/campaign/cp_installation_callbacks.cpp:122
 msgid "Installation building"
 msgstr "基站建造"
 
-#: client/cgame/campaign/cp_installation_callbacks.cpp:149
+#: client/cgame/campaign/cp_installation_callbacks.cpp:131
 msgid "Not enough credits to set up a new installation."
 msgstr "资金不足以建新基站。"
 
-#: client/cgame/campaign/cp_installation_callbacks.cpp:213
+#: client/cgame/campaign/cp_installation_callbacks.cpp:195
 msgid "Destroy Installation"
 msgstr "拆除基站"
 
-#: client/cgame/campaign/cp_installation_callbacks.cpp:213
+#: client/cgame/campaign/cp_installation_callbacks.cpp:195
 msgid "Do you really want to destroy this installation?"
 msgstr "确定要拆除这个基站吗？"
 
-#: client/cgame/campaign/cp_installation_callbacks.cpp:215
+#: client/cgame/campaign/cp_installation_callbacks.cpp:197
 #: client/cgame/campaign/cp_uforecovery_callbacks.cpp:582
 msgid "Forget it"
 msgstr "别管它"
 
-#: client/cgame/campaign/cp_installation_callbacks.cpp:262
+#: client/cgame/campaign/cp_installation_callbacks.cpp:244
 #, c-format
 msgid "Condition: %3.0f%%"
 msgstr ""
 
-#: client/cgame/campaign/cp_installation_callbacks.cpp:279
-#, fuzzy, c-format
-msgid "%s\t%i\t%i c"
-msgstr "%s\t%i / %i\n"
-
-#: client/cgame/campaign/cp_installation_callbacks.cpp:285
-#, fuzzy, c-format
-msgid "Base\t-\t%i c"
-msgstr "基地维护 （%s）费：\t%i c\n"
-
-#: client/cgame/campaign/cp_map.cpp:357
+#: client/cgame/campaign/cp_installation_callbacks.cpp:272
+#: client/cgame/campaign/cp_map.cpp:317
 msgid "Base"
 msgstr "基地"
 
-#: client/cgame/campaign/cp_map.cpp:372
+#: client/cgame/campaign/cp_map.cpp:332
 msgid "UFO Sighting"
 msgstr "视野中有UFO"
 
-#: client/cgame/campaign/cp_map.cpp:1579
+#: client/cgame/campaign/cp_map.cpp:1514
 #, c-format
 msgid ""
 "Location: %s\n"
@@ -27072,7 +27418,7 @@ msgstr ""
 "类型： %s\n"
 "环境： %s"
 
-#: client/cgame/campaign/cp_map.cpp:1596
+#: client/cgame/campaign/cp_map.cpp:1531
 #, c-format
 msgid ""
 "%s (%s)\n"
@@ -27081,58 +27427,58 @@ msgstr ""
 "%s (%s)\n"
 "%s"
 
-#: client/cgame/campaign/cp_map.cpp:1616 client/cgame/campaign/cp_map.cpp:1626
+#: client/cgame/campaign/cp_map.cpp:1551 client/cgame/campaign/cp_map.cpp:1561
 #, c-format
 msgid "Name:\t%s (%i/%i)\n"
 msgstr "名称：\t%s (%i/%i)\n"
 
-#: client/cgame/campaign/cp_map.cpp:1617 client/cgame/campaign/cp_map.cpp:1627
+#: client/cgame/campaign/cp_map.cpp:1552 client/cgame/campaign/cp_map.cpp:1562
 #, c-format
 msgid "Status:\t%s\n"
 msgstr "状态：\t%s\n"
 
-#: client/cgame/campaign/cp_map.cpp:1619 client/cgame/campaign/cp_map.cpp:1629
+#: client/cgame/campaign/cp_map.cpp:1554 client/cgame/campaign/cp_map.cpp:1564
 #, fuzzy, c-format
 msgid "Health:\t%3.0f%%\n"
 msgstr "生命力："
 
-#: client/cgame/campaign/cp_map.cpp:1620
+#: client/cgame/campaign/cp_map.cpp:1555
 #, c-format
 msgid "Distance to target:\t\t%.0f\n"
 msgstr "与目标距离：\t\t%.0f\n"
 
-#: client/cgame/campaign/cp_map.cpp:1624 client/cgame/campaign/cp_map.cpp:1636
+#: client/cgame/campaign/cp_map.cpp:1559 client/cgame/campaign/cp_map.cpp:1571
 #, c-format
 msgid "ETA:\t%sh\n"
 msgstr "估计用时：\t%s小时\n"
 
-#: client/cgame/campaign/cp_map.cpp:1654
+#: client/cgame/campaign/cp_map.cpp:1589
 #, c-format
 msgid "Speed: %i km/h\n"
 msgstr "速度： %i 公里/小时\n"
 
-#: client/cgame/campaign/cp_map.cpp:1836
+#: client/cgame/campaign/cp_map.cpp:1769
 #, c-format
 msgid "%s\t%i%%\n"
 msgstr "%s\t%i%%\n"
 
-#: client/cgame/campaign/cp_map.cpp:1904
+#: client/cgame/campaign/cp_map.cpp:1805
 msgid "Select the desired location of the new base on the map.\n"
 msgstr "在地图上选择新基地位置。\n"
 
-#: client/cgame/campaign/cp_map.cpp:1907
+#: client/cgame/campaign/cp_map.cpp:1808
 msgid "Select the desired location of the new installation on the map.\n"
 msgstr "在地图上选择新基站的建造位置。\n"
 
-#: client/cgame/campaign/cp_map.cpp:1912
+#: client/cgame/campaign/cp_map.cpp:1813
 msgid "Aliens are attacking our base at this very moment.\n"
 msgstr "外星人马上要攻击我们的基地。\n"
 
-#: client/cgame/campaign/cp_map.cpp:1917
+#: client/cgame/campaign/cp_map.cpp:1818
 msgid "Select ufo or mission on map\n"
 msgstr "在地图上选择UFO或任务\n"
 
-#: client/cgame/campaign/cp_map.cpp:1922
+#: client/cgame/campaign/cp_map.cpp:1823
 msgid "UFO in radar range\n"
 msgstr "UFO在雷达范围\n"
 
@@ -27379,7 +27725,7 @@ msgstr "UFO攻击"
 msgid "base_attack"
 msgstr "基地攻击"
 
-#: client/cgame/campaign/cp_messages.cpp:44
+#: client/cgame/campaign/cp_messages.cpp:43
 #, c-format
 msgid "%i %s %02i, %02i:%02i: "
 msgstr "%i %s %02i, %02i:%02i: "
@@ -28200,22 +28546,22 @@ msgstr ""
 msgid "%i of %i"
 msgstr "%i 的 %i"
 
-#: client/cgame/campaign/cp_team_callbacks.cpp:205
+#: client/cgame/campaign/cp_team_callbacks.cpp:203
 #, fuzzy
 msgid "No more employee can be assigned to this aircraft"
 msgstr "航空机已满员无法搭载更多的人了。"
 
-#: client/cgame/campaign/cp_team_callbacks.cpp:216
+#: client/cgame/campaign/cp_team_callbacks.cpp:214
 #, fuzzy
 msgid "Employee is assigned to another aircraft"
 msgstr "飞行员已指派给另一架航空机"
 
-#: client/cgame/campaign/cp_team_callbacks.cpp:286
+#: client/cgame/campaign/cp_team_callbacks.cpp:284
 #, fuzzy
 msgid "Employee is away from base"
 msgstr "员工"
 
-#: client/cgame/campaign/cp_team_callbacks.cpp:288
+#: client/cgame/campaign/cp_team_callbacks.cpp:286
 #, fuzzy
 msgid "No more employee can be assigned to this team"
 msgstr "航空机已满员无法搭载更多的人了。"
@@ -29102,10 +29448,22 @@ msgid ""
 msgstr "所有标签格都用上了 ── 请除去不用的条目再进行此步骤"
 
 #: client/cgame/skirmish/cl_game_skirmish.cpp:188
+#: client/cgame/skirmish/cl_game_skirmish.cpp:193
 msgid "Game Drawn!"
 msgstr "平手！"
 
 #: client/cgame/skirmish/cl_game_skirmish.cpp:188
+#, fuzzy
+msgid ""
+"The game was a draw!\n"
+"\n"
+"Enemies escaped."
+msgstr ""
+"游戏平局！\n"
+"\n"
+"都没有幸存者。"
+
+#: client/cgame/skirmish/cl_game_skirmish.cpp:193
 msgid ""
 "The game was a draw!\n"
 "\n"
@@ -29115,7 +29473,7 @@ msgstr ""
 "\n"
 "都没有幸存者。"
 
-#: client/cgame/skirmish/cl_game_skirmish.cpp:201
+#: client/cgame/skirmish/cl_game_skirmish.cpp:206
 #, c-format
 msgid ""
 "\n"
@@ -29124,19 +29482,19 @@ msgid ""
 "%i of %i civilians saved, %i enemy kills, %i friendly fire kills."
 msgstr ""
 
-#: client/cgame/skirmish/cl_game_skirmish.cpp:209
+#: client/cgame/skirmish/cl_game_skirmish.cpp:214
 msgid "Congratulations"
 msgstr "恭喜"
 
-#: client/cgame/skirmish/cl_game_skirmish.cpp:209
+#: client/cgame/skirmish/cl_game_skirmish.cpp:214
 msgid "You won the game!"
 msgstr "游戏胜利！"
 
-#: client/cgame/skirmish/cl_game_skirmish.cpp:211
+#: client/cgame/skirmish/cl_game_skirmish.cpp:216
 msgid "Better luck next time"
 msgstr "下次好运"
 
-#: client/cgame/skirmish/cl_game_skirmish.cpp:211
+#: client/cgame/skirmish/cl_game_skirmish.cpp:216
 msgid "You've lost the game!"
 msgstr "游戏失败！"
 
@@ -29250,7 +29608,7 @@ msgstr "未知科技可以研究"
 msgid "Server closed connection"
 msgstr "服务器关闭"
 
-#: client/cl_language.cpp:413
+#: client/cl_language.cpp:418
 msgid "..."
 msgstr "..."
 
@@ -29416,17 +29774,6 @@ msgstr "调整视角高度到上一层"
 msgid "Slice through terrain at a lower level"
 msgstr "调整视角高度到下一层"
 
-#: client/ui/node/ui_node_base.cpp:189
-#, fuzzy, c-format
-msgid "%3.1f day left"
-msgid_plural "%3.1f days left"
-msgstr[0] "还差 %i 天"
-msgstr[1] "还差 %i 天"
-
-#: client/ui/node/ui_node_base.cpp:254
-msgid "not operational, depends on"
-msgstr ""
-
 #: client/ui/node/ui_node_baseinventory.cpp:234
 #: client/ui/node/ui_node_baseinventory.cpp:239
 #: client/ui/node/ui_node_container.cpp:279
@@ -29539,7 +29886,7 @@ msgstr ""
 msgid "Flood protection: You can't talk for %d seconds.\n"
 msgstr ""
 
-#: game/g_combat.cpp:390
+#: game/g_combat.cpp:404
 #, fuzzy
 msgid ""
 "Soldier is dazed!\n"
@@ -29548,22 +29895,22 @@ msgstr ""
 "士兵昏迷了！\n"
 "敌人使用了闪光雷！\n"
 
-#: game/g_combat.cpp:624
+#: game/g_combat.cpp:638
 #, fuzzy
 msgid "Can't perform action - impossible throw!"
 msgstr "无法行动：不能扔出！\n"
 
-#: game/g_combat.cpp:1096
+#: game/g_combat.cpp:1110
 #, fuzzy
 msgid "Can't perform action - object not activatable!"
 msgstr "无法行动：不能使用！\n"
 
-#: game/g_combat.cpp:1137
+#: game/g_combat.cpp:1151
 #, fuzzy
 msgid "Can't perform action - target out of range!"
 msgstr "无法行动：目标太远！\n"
 
-#: game/g_combat.cpp:1183
+#: game/g_combat.cpp:1197
 #, fuzzy
 msgid "Can't perform action - not enough ammo!"
 msgstr "无法行动：弹药不足！\n"
@@ -29678,6 +30025,17 @@ msgstr "外星人"
 #: po/OTHER_STRINGS:6
 msgid "Take a screenshot"
 msgstr "屏幕截图"
+
+#~ msgid "Ripper U"
+#~ msgstr "飞鹰级UFO"
+
+#, fuzzy
+#~ msgid "%s\t%i\t%i c"
+#~ msgstr "%s\t%i / %i\n"
+
+#, fuzzy
+#~ msgid "Base\t-\t%i c"
+#~ msgstr "基地维护 （%s）费：\t%i c\n"
 
 #, fuzzy
 #~ msgid "No item in hand."
@@ -30393,79 +30751,6 @@ msgstr "屏幕截图"
 #~ msgid "bloodspider_notes_pre_txt"
 #~ msgstr "没有可用的资料。"
 
-#, fuzzy
-#~ msgid ""
-#~ "Commander,\n"
-#~ "\n"
-#~ "My team has analysed the remains of the arachnid machine our operatives "
-#~ "brought back, and we have prepared a summary for your review.\n"
-#~ "\n"
-#~ "This creature is similar in many ways to the Bloodspider we have faced "
-#~ "before on the battlefield, but it has undergone upgrades to make it much "
-#~ "more deadly. It's razor-sharp blades are longer and its armour plating "
-#~ "has undergone significant revisions. These creatures are terrifying on "
-#~ "the battlefield if they get close, and this new variant is much more "
-#~ "likely to survive a few rounds from our soldiers and keep coming. We will "
-#~ "need to hunt the Combat Bloodspider in packs.\n"
-#~ "\n"
-#~ "We can't be certain, but we fear that the armour upgrades may have been "
-#~ "designed in response to battlefield experience with us. If that's true, "
-#~ "it means the aliens may be upgrading other combat systems as well.\n"
-#~ "\n"
-#~ "Sincerely,\n"
-#~ "\n"
-#~ "Dr. Connor"
-#~ msgstr ""
-#~ "长官,\n"
-#~ "\n"
-#~ "我的小组分析了这个蜘蛛状的机器遗骸，这里是结论简报供您检阅。\n"
-#~ "\n"
-#~ "解剖表明，这是个没有任何有机成分的复杂机器人。它的结构和蜘蛛相似，中间躯干"
-#~ "有人工脑细胞和电池，8条腿由强大的电力发动机驱动，在战场上移动可以达到很可"
-#~ "怕的速度。它装备有锐利颌骨，可以现场解剖人类受害者，还可以把人类身体组织或"
-#~ "器官储存位于在电池前面的腹部空腔里。这些机器会保留在战斗中切割活人的记录并"
-#~ "记忆生命活动的信息。这个可怕的过程用时非常短。\n"
-#~ "\n"
-#~ "我们的士兵坚持称这个东西为“血蜘蛛”。\n"
-#~ "\n"
-#~ "要对血蜘蛛的装甲作实弹测试非常困难，它的装甲具有良好的绝缘性，可以防护各种"
-#~ "各样的武器。\n"
-#~ "\n"
-#~ "-装甲对激光、电子和燃烧武器有非常高的防护能力，不过高速穿甲弹可以打穿装"
-#~ "甲。\n"
-#~ "\n"
-#~ "-高爆炸弹也能有很好的效果，因为它们可以损害它的腿关节。这可能是对付这些东"
-#~ "西最有效的方式。\n"
-#~ "\n"
-#~ "这种东西的存在说明有一些可怕的麻烦。这表明，异形对人类产生了非常的兴趣，但"
-#~ "是他们从来不会向人问问题。长官，这些机器威胁到人类安全。如果遇到了，一定要"
-#~ "不惜一切代价立即消灭。\n"
-#~ "\n"
-#~ "真诚的，\n"
-#~ "\n"
-#~ "康纳博士"
-
-#, fuzzy
-#~ msgid ""
-#~ "Commander,\n"
-#~ "\n"
-#~ "We've recovered a new alien corpse from the battlefield. It appears to be "
-#~ "a more deadly variant of the Bloodspider with which we are familiar. "
-#~ "Dissection and assessment could give us insights into the alien's new "
-#~ "capabilities.\n"
-#~ "\n"
-#~ "Sincerely,\n"
-#~ "\n"
-#~ "Dr. Connor"
-#~ msgstr ""
-#~ "长官，\n"
-#~ "\n"
-#~ "我们从战场获得了一具新的异形尸体，需要尽快开始解剖和研究。\n"
-#~ "\n"
-#~ "真诚的，\n"
-#~ "\n"
-#~ "康纳博士"
-
 #~ msgid "ortnok_autopsy_pre_txt"
 #~ msgstr ""
 #~ "长官，\n"
@@ -30521,91 +30806,6 @@ msgstr "屏幕截图"
 #~ "长官，\n"
 #~ "\n"
 #~ "我们从战场获得了一具新的异形尸体，需要尽快开始解剖和研究。\n"
-#~ "\n"
-#~ "真诚的，\n"
-#~ "\n"
-#~ "康纳博士"
-
-#, fuzzy
-#~ msgid ""
-#~ "Commander,\n"
-#~ "\n"
-#~ "My team and I have completed the disassembly and autopsy of the alien "
-#~ "creature we discovered. Here is my summary of our findings.\n"
-#~ "\n"
-#~ "We first assumed the object was a robot, but upon investigation we found "
-#~ "a small biomass at its core. This biological alien core is encased in a "
-#~ "shell of sensors which we believe interpret its signals to operate the "
-#~ "electrical machinery. For all intents and purposes, this alien is little "
-#~ "more than a \"brain\" in charge of a complex device. Calling it a brain "
-#~ "may be too generous. We don't believe it is large enough to undertake "
-#~ "mental processes more complex than basic motor skills, but troops report "
-#~ "seeing it coordinate closely with other aliens on the battlefield.\n"
-#~ "\n"
-#~ "The device itself is a small, but heavy, mobile disk, able to hover above "
-#~ "the ground. Because of its aerial movement, it is able to cross the "
-#~ "battlefield rapidly. Our soldiers will need to take it down before it "
-#~ "gets in range, which is no small feet considering its size and movement "
-#~ "capabilities.\n"
-#~ "\n"
-#~ "The models we discovered are equipped with a mounted plasma weapon which "
-#~ "is able to fire single rounds. Anyone caught within range will be very "
-#~ "sorry. Given its brain size and limited functionality, we believe this "
-#~ "alien is engineered for light combat missions -- perhaps it plays a "
-#~ "reconnaissance role.\n"
-#~ "\n"
-#~ "Sincerely,\n"
-#~ "\n"
-#~ "Dr. Connor"
-#~ msgstr ""
-#~ "长官,\n"
-#~ "\n"
-#~ "绿皮肤异形的尸体解剖研究已经完成。这里是我的总结报告。\n"
-#~ "\n"
-#~ "这种异形人们称呼它为“Ortnok”，其外观如同漫画里笨重的野蛮人，这让我的助手感"
-#~ "到有点不安。我们已经证实Ortnok绝不是什么人类的远亲。\n"
-#~ "\n"
-#~ "正如这家伙的体型一样，它的肌肉比建筑工人多得多。我们首先认为这是由于超大重"
-#~ "力影响造成的，但随后的激素和毒理学研究又有了新的发现。可能的情况是遗传基因"
-#~ "的突变使食量大增从而产生了合成类固醇。再加上令人难以置信的高密集肌肉，恐怕"
-#~ "地球上的任何生物都没有Ortnok身体强壮。\n"
-#~ "\n"
-#~ "我们第一次开刀就惊讶地发现Ortnok没有血液。它有肺、胰脏和消化器官，但没有心"
-#~ "脏。代替静脉位置的是一套非常发达的神经管道，里面充满了导电胶，似乎肌肉运动"
-#~ "的能量和控制都是直接来自于电刺激。所需要的电力由消化有机物产生的，并储存在"
-#~ "位于肺部下面的一个有点像鳗鱼状的器官里。整个胸腔有丰富的骨架来保护内脏，骨"
-#~ "架外就是绿色皮革。\n"
-#~ "\n"
-#~ "它的眼睛里布满了手术植入的镜片，用来加强Ortnok本身就已经很好的视觉系统，使"
-#~ "其能看到红外光线。在头部的两边有三个小孔洞，是它的听觉系统，也非常发达。它"
-#~ "的鼻子很小，在讨论会上我们认为它的嗅觉器官基本已经退化。\n"
-#~ "\n"
-#~ "根据我们的分析，我们得出的结论有以下几点：\n"
-#~ "\n"
-#~ "-大脑和原始人差不多，不会比直立人强，不过作为一个听从命令的士兵这就已经足"
-#~ "够了。Ortnok在战场上不会有什么战术可言。\n"
-#~ "\n"
-#~ "-三指手可以携带和使用各种各样的武器设备。Ortnok往往会配备大型武器，这样才"
-#~ "比较符合他们的身材。\n"
-#~ "\n"
-#~ "-Ortnok很强状很危险。身体结构增强了他们的自然耐力，使他们很难被打倒。建议"
-#~ "是用穿甲弹或燃烧类武器。用白刃、激光或爆炸类武器来对付它，效果会有所降"
-#~ "低。\n"
-#~ "\n"
-#~ "-所有Ortnok的尸体我们都没发现有繁殖器官。从腹股沟周围的手术疤痕推测，我们"
-#~ "认为他们可能因为某些理由作了绝育手术。\n"
-#~ "\n"
-#~ "在战斗中，Ortnok似乎是一种用于火力支援的重型步兵。他们对复杂的武器不是特别"
-#~ "的精确，他们通常采用密集火力来压制对手，对PHALANX小队来说危险性很高。"
-#~ "Ortnok似乎没有其他专业能力，在我们的现场摄像记录里他们从未使用过复杂机械，"
-#~ "在没有战斗的时候，也不像Taman一样时刻注意自己周围的安全。\n"
-#~ "\n"
-#~ "在喉咙还有一套复杂的植入装置，这还需要进一步研究才能了解其作用。关于这个我"
-#~ "会寄给您更详细的研究草案。\n"
-#~ "\n"
-#~ "我们不知道“Ortnok”这个名字从何而来。部队似乎也不知道。\n"
-#~ "\n"
-#~ "长官，这就是所有的结论。如果有新的研究，我会再次与您联系。\n"
 #~ "\n"
 #~ "真诚的，\n"
 #~ "\n"
@@ -30688,27 +30888,6 @@ msgstr "屏幕截图"
 #~ "\n"
 #~ "康纳博士"
 
-#, fuzzy
-#~ msgid ""
-#~ "Commander,\n"
-#~ "\n"
-#~ "We've recovered a new alien corpse from the battlefield. It appears to be "
-#~ "a more deadly variant of the Hovernet with which we are familiar. "
-#~ "Dissection and assessment could give us insights into the alien's new "
-#~ "capabilities.\n"
-#~ "\n"
-#~ "Sincerely,\n"
-#~ "\n"
-#~ "Dr. Connor"
-#~ msgstr ""
-#~ "长官，\n"
-#~ "\n"
-#~ "我们从战场获得了一具新的异形尸体，需要尽快开始解剖和研究。\n"
-#~ "\n"
-#~ "真诚的，\n"
-#~ "\n"
-#~ "康纳博士"
-
 #~ msgid "ugv_phoenix_txt"
 #~ msgstr "ugv_phoenix_txt"
 
@@ -30782,92 +30961,6 @@ msgstr "屏幕截图"
 #~ msgstr ""
 #~ "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic "
 #~ "Operations Command"
-
-#, fuzzy
-#~ msgid ""
-#~ "Commander, we made an extremely interesting find on the UFO we "
-#~ "disassembled. It carried an advanced and highly dangerous onboard missile "
-#~ "launcher, using powerful magnetic rails to accelerate its missiles to "
-#~ "hypersonic speeds before they even leave the launch tube.\n"
-#~ "\n"
-#~ "We want to investigate this launcher and determine whether or not it can "
-#~ "be adapted to fit on PHALANX aircraft, or even if it can be applied to "
-#~ "other purposes. This launcher system would be far more effective in "
-#~ "bringing down UFOs than our Sparrowhawks, possibly even more effective "
-#~ "than our current SAM systems. If we can adapt it we stand to gain a "
-#~ "substantial boost to the firepower of our whole airfleet as well as "
-#~ "ground-based missile systems.\n"
-#~ "\n"
-#~ "Please approve this program whenever you can, Commander.\n"
-#~ "\n"
-#~ "--Cdr. Navarre"
-#~ msgstr ""
-#~ "这里是开发新式激光武器的研究草案。\n"
-#~ "\n"
-#~ "在我的设计里激光炮是大型激光发射设备，和我们的步兵武器一样将采用氘氟反应，"
-#~ "但是规模更大电子系统更复杂。\n"
-#~ "\n"
-#~ "这很可能是我们的最具有挑战性的激光研究。激光炮必须要在远距离将光束聚焦到目"
-#~ "标身上，由于大气干扰的存在，必须要有足够的初始能量才能抵消中间的衰减。到目"
-#~ "前为止还没有哪一套大型激光设备可以安装在飞机上。\n"
-#~ "\n"
-#~ "激光炮比SHIVA射程更远准确度更高，可能威力没有SHIVA大。我希望激光炮能够持续"
-#~ "打击目标来弥补这一缺陷。\n"
-#~ "\n"
-#~ "请批准这个项目，长官。\n"
-#~ "\n"
-#~ "---司令官纳瓦拉"
-
-#, fuzzy
-#~ msgid ""
-#~ "Commander, we've finished work on the alien missile launcher. It's a "
-#~ "fairly simple affair. Firing is computer-driven, fed directly from the "
-#~ "UFO's targeting computer. Powerful electromagnetic coils around the "
-#~ "launch tube accelerate the missile to extreme speeds, reaching up to Mach "
-#~ "4 at the point where the missile leaves the tube. Only once the missile "
-#~ "is fully free of the tube do its onboard rockets kick in.\n"
-#~ "\n"
-#~ "The good news is that we've managed to succesfully adapt fittings, "
-#~ "controls and power feeds to allow the Alien Launcher to be safely mounted "
-#~ "to our aircraft. The bad news is that we've had to drastically reduce its "
-#~ "magazine size in order to meet weight and size restrictions on our "
-#~ "aircraft.\n"
-#~ "\n"
-#~ "Our aircraft are too small and light to be able to carry so many, and "
-#~ "most of our craft aren't laid out with internal missile magazines. We've "
-#~ "had to custom-build a magazine mounted with the launcher, the capacity of "
-#~ "which falls behind the stores found on UFOs.\n"
-#~ "\n"
-#~ "It's not all doom and gloom, though. We believe that we can modify the "
-#~ "launch tube to be able to fire human missiles as well as the alien type. "
-#~ "We'd have to develop the missile ourselves, of course -- no current human "
-#~ "missile is capable of withstanding the stress of being fired from this "
-#~ "launcher. However, we're confident we can design a missile that will "
-#~ "survive launch and incorporates new UFO-tracking technologies to improve "
-#~ "homing and ECM capability.\n"
-#~ "\n"
-#~ "I'll send you a design proposal as soon as I can, Commander.\n"
-#~ "\n"
-#~ "--Cdr. Navarre"
-#~ msgstr ""
-#~ "长官，最新的激光发射系统已经研究完毕。我们成功地制造了空战激光炮，并准备把"
-#~ "它投入生产。\n"
-#~ "\n"
-#~ "我们实现了激光远距离聚焦，能够跟踪并击中5公里以外的目标。精度非常出色，而"
-#~ "且和其它我们的武器不一样的是，激光炮完全不受外星ECM影响。一旦瞄准，敌人就"
-#~ "很难躲过激光炮的攻击。\n"
-#~ "\n"
-#~ "不幸的是大气干扰仍然是一个麻烦。对于在距离5公里的UFO目标，需要32秒的连续射"
-#~ "击才能打穿船体。理想的距离是2至3公里，这样的距离有很好的伤害威力。平均伤害"
-#~ "略低于SHIVA，但射程多出了1.5公里。激光炮比较适合在敌人背后进行攻击。\n"
-#~ "\n"
-#~ "激光炮携带有大量氘氟元素，可以运行长达30分钟的连续射击。氘和氟化物都是危险"
-#~ "物品，和其他危险化合物一样都储存在基地以外的一个安全位置，我们不需要在库存"
-#~ "中保存激光炮所需的弹药。\n"
-#~ "\n"
-#~ "如何部署这个武器由长官您自行裁决，但我想推荐用这新的激光炮来代替SHIVA。\n"
-#~ "\n"
-#~ "---司令官纳瓦拉"
 
 #, fuzzy
 #~ msgid ""
@@ -32772,10 +32865,6 @@ msgstr "屏幕截图"
 #~ msgid "Replace stored UFO with actual recovered one"
 #~ msgstr "用恢复的UFO代替储存的那个"
 
-#, fuzzy
-#~ msgid "Activate Sound"
-#~ msgstr "激活聊天"
-
 #~ msgid "Select previous base for transfer"
 #~ msgstr "选择上一个基地运输"
 
@@ -33469,10 +33558,6 @@ msgstr "屏幕截图"
 
 #, fuzzy
 #~ msgid "Enable all notification messages"
-#~ msgstr "开启通告"
-
-#, fuzzy
-#~ msgid "Disable all notification messages"
 #~ msgstr "开启通告"
 
 #, fuzzy
