@@ -926,39 +926,6 @@ void CP_UpdateCharacterStats (const base_t *base, const aircraft_t *aircraft)
 
 #ifdef DEBUG
 /**
- * @brief Debug function to add one item of every type to base storage and mark them collected.
- * @note Command to call this: debug_additems
- */
-static void CP_DebugAllItems_f (void)
-{
-	int i;
-	base_t *base;
-
-	if (cgi->Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <baseID>\n", cgi->Cmd_Argv(0));
-		return;
-	}
-
-	i = atoi(cgi->Cmd_Argv(1));
-	if (i >= B_GetCount()) {
-		Com_Printf("invalid baseID (%s)\n", cgi->Cmd_Argv(1));
-		return;
-	}
-	base = B_GetBaseByIDX(i);
-
-	for (i = 0; i < cgi->csi->numODs; i++) {
-		const objDef_t *obj = INVSH_GetItemByIDX(i);
-		if (!obj->weapon && !obj->numWeapons)
-			continue;
-		B_UpdateStorageAndCapacity(base, obj, 1, true);
-		if (B_ItemInBase(obj, base) > 0) {
-			technology_t *tech = RS_GetTechForItem(obj);
-			RS_MarkCollected(tech);
-		}
-	}
-}
-
-/**
  * @brief Debug function to show items in base storage.
  * @note Command to call this: debug_listitem
  */
@@ -983,6 +950,63 @@ static void CP_DebugShowItems_f (void)
 		const objDef_t *obj = INVSH_GetItemByIDX(i);
 		Com_Printf("%i. %s: %i\n", i, obj->id, B_ItemInBase(obj, base));
 	}
+}
+
+/**
+ * @brief Debug function to add certain items to base storage
+ * @note Call this with debug_itemadd <baseIDX> <itemID> <count>
+ * @note This function is not for antimatter
+ * @sa CP_DebugAddAntimatter_f
+ */
+static void CP_DebugAddItem_f (void)
+{
+	if (cgi->Cmd_Argc() < 4) {
+		Com_Printf("Usage: %s <baseID> <itemid> <count>\n", cgi->Cmd_Argv(0));
+		return;
+	}
+
+	base_t *base = B_GetFoundedBaseByIDX(atoi(cgi->Cmd_Argv(1)));
+	const objDef_t *obj = INVSH_GetItemByID(cgi->Cmd_Argv(2));
+	int count = atoi(cgi->Cmd_Argv(3));
+
+	if (!base) {
+		Com_Printf("Invalid base index given\n");
+		return;
+	}
+	if (!obj) {
+		/* INVSH_GetItemByIDX prints warning already */
+		return;
+	}
+Com_Printf("%s %s %d\n", base->name, obj->id, count);
+	B_UpdateStorageAndCapacity(base, obj, count, true);
+	if (B_ItemInBase(obj, base) > 0) {
+		technology_t *tech = RS_GetTechForItem(obj);
+		RS_MarkCollected(tech);
+	}
+}
+
+/**
+ * @brief Debug function to add some antimatter to base container
+ * @note Call this with debug_antimatteradd <baseIDX> <amount>
+ * @note 0 amount will reset the container
+ * @sa CP_DebugAddItem_f
+ */
+static void CP_DebugAddAntimatter_f (void)
+{
+	if (cgi->Cmd_Argc() < 3) {
+		Com_Printf("Usage: %s <baseID> <amount>\n", cgi->Cmd_Argv(0));
+		return;
+	}
+
+	base_t *base = B_GetFoundedBaseByIDX(atoi(cgi->Cmd_Argv(1)));
+	int amount = atoi(cgi->Cmd_Argv(2));
+
+	if (!base) {
+		Com_Printf("Invalid base index given\n");
+		return;
+	}
+
+	B_ManageAntimatter(base, amount, amount >= 0);
 }
 
 /**
@@ -1012,7 +1036,8 @@ static const cmdList_t game_commands[] = {
 	{"cp_attack_ufocarrier", CP_AttackUFOCarrier_f, "Attack the UFO-Carrier"},
 #ifdef DEBUG
 	{"debug_fullcredits", CP_DebugFullCredits_f, "Debug function to give the player full credits"},
-	{"debug_additems", CP_DebugAllItems_f, "Debug function to add one item of every type to base storage and mark related tech collected"},
+	{"debug_itemadd", CP_DebugAddItem_f, "Debug function to add certain items to base storage"},
+	{"debug_antimatteradd", CP_DebugAddAntimatter_f, "Debug function to add some antimatter to base container"},
 	{"debug_listitem", CP_DebugShowItems_f, "Debug function to show all items in base storage"},
 #endif
 	{NULL, NULL, NULL}
