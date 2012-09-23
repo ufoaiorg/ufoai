@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
 "POT-Creation-Date: 2012-09-23 17:36+0200\n"
-"PO-Revision-Date: 2012-09-06 08:38+0100\n"
+"PO-Revision-Date: 2012-09-23 21:00+0100\n"
 "Last-Translator: Maciej Wierzbicki <voovoos@killfile.pl>\n"
 "Language-Team:  <radius75@interia.pl>\n"
 "Language: pl_PL\n"
@@ -2481,9 +2481,8 @@ msgid "Memo: Live Aliens"
 msgstr "Notatka: Żywi Obcy"
 
 #: ../base/ufos/events.ufo:65
-#, fuzzy
 msgid "Memo: Sam Sites"
-msgstr "Notatka: Żywi Obcy"
+msgstr "Notatka: Baterie Rakiet"
 
 #: ../base/ufos/events.ufo:76
 msgid "Alien died"
@@ -4047,7 +4046,7 @@ msgid ""
 "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic "
 "Operations Command"
 msgstr ""
-"Przez: Mjr Paul Navarre, JBR: Dział Inżynieryjny, PHALANX, Dowództwo "
+"Przez: Mjr. Paul Navarre, JBR: Dział Inżynieryjny, PHALANX, Dowództwo "
 "Operacji Atlantyckich"
 
 #: ../base/ufos/msgid/aircraft.ufo:224
@@ -5365,7 +5364,7 @@ msgstr ""
 "wrogim jednostkom Obcych.Oboje wiemy jakie są koszta nowej maszyny, Dowódco "
 "-- nie możemy pozwolić, by nasze samoloty stały się przestarzałe.\n"
 "\n"
-"--mjr. Navarre"
+"mjr. Navarre"
 
 #: ../base/ufos/msgid/aircraftitems.ufo:114
 #, fuzzy
@@ -15991,6 +15990,21 @@ msgid ""
 "\n"
 "Cdr. Navarre"
 msgstr ""
+"Dowódco, podczas ostatniej misji zabito załogę UFO lecz nie mamy gdzie "
+"zmagazynować pojazd. UFO jest zbyt wielkie jak na pomieszczenia warsztatowe "
+"i laboratoryjne. Musisz zbudować jak najszybciej Hangar UFO aby móc trzymać "
+"pojazdy Obcych w tej zewnętrznej instalacji. Nie będziemy w stanie prowadzić "
+"żadnych badań nad pojazdami bez bezpiecznego ich magazynowania.\n"
+"\n"
+"Gdy tylko będziemy mieli UFO w magazynie, nasi naukowcy będą mogli "
+"przystąpić do przeprowadzenia badań. Po ich zrobieniu, nasi technicy będą w "
+"stanie rozmontować UFO by zebrać materiały i części.\n"
+"\n"
+"Praca nad UFO zmusza naszych naukowców i techników do przemieszczania się "
+"pomiędzy bazą i Hangarem UFO, więc wybuduj go tak blisko jak tylko możliwe "
+"od bazy skąd prace będą prowadzone.\n"
+"\n"
+"Mjr. Navarre"
 
 #: ../base/ufos/msgid/tips.ufo:22
 #, fuzzy
@@ -26924,7 +26938,7 @@ msgstr "Ustaw proporcje ekranu na 4:3"
 
 #: ../base/ufos/ui/options.ufo:478
 msgid "Prevent the mousepointer from leaving the game window."
-msgstr ""
+msgstr "Zapobiega temu by wskaźnik myszy opuszczał okno gry."
 
 #: ../base/ufos/ui/options.ufo:479
 #, fuzzy
@@ -27983,7 +27997,7 @@ msgstr "Obcy"
 
 #: ../base/ufos/ui/transfer.ufo:111
 msgid "Amount/Transfer"
-msgstr ""
+msgstr "Ilość/Transfer"
 
 #: ../base/ufos/ui/transfer.ufo:389
 msgid "Destination base"
@@ -29929,11 +29943,13 @@ msgstr[1] "pilotów"
 msgstr[2] "pilotów"
 
 #: client/cgame/campaign/cp_cgame_callbacks.cpp:413
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s\n"
 "not operational, depends on %s"
-msgstr "nie działa, zależne od"
+msgstr ""
+"%s\n"
+"nie działa, zależne od %s"
 
 #: client/cgame/campaign/cp_cgame_callbacks.cpp:467
 #, c-format
@@ -32180,7 +32196,6 @@ msgid "Game Drawn!"
 msgstr "Remis!"
 
 #: client/cgame/skirmish/cl_game_skirmish.cpp:188
-#, fuzzy
 msgid ""
 "The game was a draw!\n"
 "\n"
@@ -32188,7 +32203,7 @@ msgid ""
 msgstr ""
 "Gra zakończona remisem!\n"
 "\n"
-"Żaden żołnierz nie przeżył."
+"Wrogowie uciekli."
 
 #: client/cgame/skirmish/cl_game_skirmish.cpp:193
 msgid ""
