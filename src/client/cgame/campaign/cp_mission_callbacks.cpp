@@ -6,7 +6,7 @@
  */
 
 /*
-Copyright (C) 2002-2011 UFO: Alien Invasion.
+Copyright (C) 2002-2012 UFO: Alien Invasion.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -72,6 +72,7 @@ static void AM_Go_f (void)
 
 	/* start the map */
 	CP_CreateBattleParameters(mission, battleParam, MAP_GetMissionAircraft());
+	battleParam->retriable = false;
 
 	results->state = LOST;
 	AM_Go(mission, MAP_GetInterceptorAircraft(), ccs.curCampaign, battleParam, results);

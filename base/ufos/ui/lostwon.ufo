@@ -2,8 +2,7 @@
 // WON MENU
 // ==================
 
-window won
-{
+window won {
 	{
 		preventtypingescape	true
 	}
@@ -12,8 +11,7 @@ window won
 	// background
 	// ==================
 
-	image background
-	{
+	image background {
 		src	"background/won_bg"
 	}
 
@@ -21,8 +19,7 @@ window won
 	// text
 	// ==================
 
-	text results
-	{
+	text results {
 		pos			"500 150"
 		size		"480 460"
 		lineheight	20
@@ -35,8 +32,7 @@ window won
 	// buttons
 	// ==================
 
-	button bt_continue
-	{
+	button bt_continue {
 		string		"_Continue"
 		background		"ui/button_blue"
 		invis		true
@@ -46,13 +42,11 @@ window won
 		selectcolor "1 1 1 1"
 		font		"f_big"
 		onClick		{
-			*cvar:cp_mission_tryagain = 0
 			cmd "ui_pop;"
 		}
 	}
 
-	func onWindowOpened
-	{
+	func onWindowOpened {
 		if ( *cvar:sv_maxclients == 1 ) {
 			*node:root.bt_continue@invis = false
 		} else {
@@ -60,8 +54,7 @@ window won
 		}
 	}
 
-	func onWindowClosed
-	{
+	func onWindowClosed {
 		if ( *cvar:sv_maxclients == 1 ) {
 			cmd "cp_results 1;"
 		}
@@ -72,8 +65,7 @@ window won
 // LOST MENU
 // ==================
 
-window lost
-{
+window lost {
 	{
 		preventtypingescape	true
 	}
@@ -82,17 +74,19 @@ window lost
 	// background
 	// ==================
 
-	image background
-	{
+	image background {
 		src	"background/lost_bg"
+	}
+
+	data tryagain {
+		integer		0
 	}
 
 	// ==================
 	// text
 	// ==================
 
-	text results
-	{
+	text results {
 		pos			"500 150"
 		size		"480 460"
 		lineheight	20
@@ -105,58 +99,55 @@ window lost
 	// buttons
 	// ==================
 
-	button bt_tryagain
-	{
+	button bt_tryagain {
 		string		"_Try again"
 		tooltip		"_Retry this mission"
 		invis		true
-		background		"ui/button_blue"
+		background	"ui/button_blue"
 		pos			"480 700"
 		size		"128 53"
 		color		"1 1 1 0.8"
 		selectcolor "1 1 1 1"
 		font		"f_big"
 		onClick		{
-			*cvar:cp_mission_tryagain = 1
+			*node:root.tryagain@integer = 1
 			cmd "ui_pop;"
 		}
 	}
 
-	button bt_continue
-	{
+	button bt_continue {
 		string		"_Continue"
 		invis		true
-		background		"ui/button_blue"
+		background	"ui/button_blue"
 		pos			"865 700"
 		size		"128 53"
 		color		"1 1 1 0.8"
 		selectcolor "1 1 1 1"
 		font		"f_big"
 		onClick		{
-			*cvar:cp_mission_tryagain = 0
 			cmd "ui_pop;"
 		}
 	}
 
+	confunc enable_retry {
+		*node:root.bt_tryagain@invis = false
+	}
+
 	func onWindowOpened
 	{
+		*node:root.tryagain@integer = 0
+		*node:root.bt_tryagain@invis = true
 		if ( *cvar:sv_maxclients == 1 ) {
 			*node:root.bt_continue@invis = false
-			if ( *cvar:cp_mission_tryagain == 1 ) {
-				*node:root.bt_tryagain@invis = true
-			} else {
-				*node:root.bt_tryagain@invis = false
-			}
 		} else {
 			*node:root.bt_continue@invis = true
-			*node:root.bt_tryagain@invis = true
 		}
 	}
 
 	func onWindowClosed
 	{
 		if ( *cvar:sv_maxclients == 1 ) {
-			cmd "cp_results 0;"
+			cmd "cp_results 0 <node:root.tryagain@integer>;"
 		}
 	}
 }

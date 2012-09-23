@@ -328,6 +328,7 @@ void CP_CreateBattleParameters (mission_t *mission, battleParam_t *param, const 
 	/* Reset parameters */
 	Mem_Free(param->param);
 	param->param = NULL;
+	param->retriable = true;
 
 	cgi->Cvar_Set("rm_ufo", "");
 	cgi->Cvar_Set("rm_drop", "");

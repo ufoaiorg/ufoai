@@ -4,7 +4,7 @@
  */
 
 /*
-Copyright (C) 2002-2011 UFO: Alien Invasion.
+Copyright (C) 2002-2012 UFO: Alien Invasion.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -282,6 +282,7 @@ typedef struct battleParam_s {
 	const char *zoneType;							/**< Terrain type (used for texture replacement in some missions (base, ufocrash)) */
 	int aliens, civilians;			/**< number of aliens and civilians in that particular mission */
 	struct nation_s *nation;		/**< nation where the mission takes place */
+	bool retriable;					/**< if the battle can be retried */
 } battleParam_t;
 
 typedef enum {

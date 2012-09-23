@@ -43,23 +43,28 @@ const cgame_import_t *cgi;
 static void GAME_CP_Results_f (void)
 {
 	mission_t *mission = MAP_GetSelectedMission();
+	battleParam_t *bp = &ccs.battleParameters;
 
 	if (!mission)
 		return;
 
-	/* check for replay */
-	if (cgi->Cvar_GetInteger("cp_mission_tryagain")) {
-		/* don't collect things and update stats --- we retry the mission */
-		CP_StartSelectedMission();
-		return;
-	}
-	/* check for win */
 	if (cgi->Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <won:true|false>\n", cgi->Cmd_Argv(0));
+		Com_Printf("Usage: %s <won:true|false> [retry:true|false]\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
-	CP_MissionEnd(ccs.curCampaign, mission, &ccs.battleParameters, Com_ParseBoolean(cgi->Cmd_Argv(1)));
+	/* check for retry */
+	if (cgi->Cmd_Argc() >= 3 && Com_ParseBoolean(cgi->Cmd_Argv(2))) {
+		if (bp->retriable) {
+			/* don't collect things and update stats --- we retry the mission */
+			CP_StartSelectedMission();
+			return;
+		} else {
+			Com_Printf("Battle cannot be retried!\n");
+		}
+	}
+
+	CP_MissionEnd(ccs.curCampaign, mission, bp, Com_ParseBoolean(cgi->Cmd_Argv(1)));
 }
 
 /**
@@ -206,7 +211,7 @@ void GAME_CP_Results (dbuffer *msg, int winner, int *numSpawned, int *numAlive, 
 	const bool draw = (winner == -1 || winner == 0);
 	missionResults_t *results;
 	aircraft_t *aircraft = MAP_GetMissionAircraft();
-	const battleParam_t *bp = &ccs.battleParameters;
+	battleParam_t *bp = &ccs.battleParameters;
 
 	CP_ParseCharacterData(msg);
 
@@ -274,6 +279,10 @@ void GAME_CP_Results (dbuffer *msg, int winner, int *numSpawned, int *numAlive, 
 		return;
 	}
 
+	/* won mission cannot be retried */
+	if (won)
+		bp->retriable = false;
+
 	if (won)
 		results->state = WON;
 	else if (draw)
@@ -304,6 +313,9 @@ void GAME_CP_Results (dbuffer *msg, int winner, int *numSpawned, int *numAlive, 
 		cgi->UI_PushWindow("draw");
 	else
 		cgi->UI_PushWindow("lost");
+
+	if (bp->retriable)
+		cgi->UI_ExecuteConfunc("enable_retry");
 
 	cgi->CL_Disconnect();
 	SV_Shutdown("Mission end", false);
