@@ -551,7 +551,7 @@ The concept of pre-loading all of a weapon's ammunition into the barrel has been
 
 The projectiles are specially-developed 3.2x40mm finned flechettes, stamped from large sheets of tungsten alloy. They are razor-sharp, with excellent armour-piercing qualities, and they tumble like demons inside the target. The holes that these flechettes cause are many times larger than their actual size.
 
-This choice of loading system makes the Bolter slow and clumsy to reload, with expensive, oversized magazines (a new barrel and battery pack for each reload) and a small ammo capacity of 4 shots per barrel. On the other hand, the Bolter's stopping power is far greater than any chemical firearm in our arsenal. It can be used both as a sniper rifle and a powerful assault weapon, depending on whether it is fired on semi-automatic or 4-round burst mode. It is a highly versatile weapon with many possible applications; its tactical value will certainly become apparent once we get some real combat experience with it.
+This choice of loading system makes the Bolter slow and clumsy to reload, with expensive, oversized magazines (a new barrel and battery pack for each reload) and a small ammo capacity. On the other hand, the Bolter's stopping power is far greater than any chemical firearm in our arsenal. It is one of the heaviest and most cumbersome rifles one might legitimately call a rifle, but in the hands of a trained specialist it is extraordinarily accurate.
 
 Cdr. Navarre"
 }
@@ -1427,13 +1427,9 @@ Combining an alien-inspired power pack and coil arrangement with some of our Bol
 
 In order to get better acceleration out of the coils, we've created a new kind of ammunition, based on the aliens' needle alloy. In shape it's a fairly standard fin-stabilised penetrator inside a discarding sabot, but it's made from materials never before seen on Earth. Discarding sabot rounds are normally used for much larger calibres -- we've effectively scaled down an anti-tank round -- but the armour-piercing potential is phenomenal, higher than any other weapon we have. In fact, the Coilgun is now the highest-calibre infantry weapon on the planet.
 
-We've also incorporated a Needler-style holographic sight, making the Coilgun extremely accurate and comfortable to fire.
+Of course we've had to make some sacrifices -- high weight due to the coils and electrical equipment contained in the barrel, low ammunition capacity due to the high calibre, large and heavy magazines/power packs. Despite this, I believe the Coilgun should replace most of our sniper rifles, as it's proving difficult for our conventional weapons to compete with new enemy armour designs.
 
-The advantages of a coilgun as a sniper rifle are obvious. There's no rush of propellant to make noise, no muzzle flash spitting out light and heat. Unlike even our Bolter, nothing comes out the barrel except the bullet -- there's no spray of hot metal from the rails to light up the sniper on infrared. With nothing to reveal the sniper's position except the noise of the bullet itself breaking the sound barrier, it's possible to fire and stay undetected, even against alien technology. Best of all, ballistics tests confirm that it should be able to bring down most aliens in a single shot.
-
-Of course we've had to make some sacrifices -- high weight due to the coils and electrical equipment contained in the barrel, low ammunition capacity due to the high calibre, large and heavy magazines/power packs. Despite this, I believe the Coilgun should replace most of our SR-1 Sniper Rifles, as it's proving difficult for our conventional weapons to compete with new enemy armour designs.
-
-Keep the SR-1 in light sniper and anti-infantry roles and move the Coilgun forward as our main long-range threat. The aliens will come to fear it.
+Move the Coilgun forward as our main long-range threat. The aliens will come to fear it.
 
 Cdr. Navarre"
 }
@@ -1443,7 +1439,7 @@ text "_Commander, our brainstorms down at DivEngine have come up with an interes
 
 The Needler is a terrific weapon, but there are undeniable advantages to delivering one large slug compared to a number of smaller flechettes; greater stability in flight, better armour-piercing ability, and above all superior stopping power. There's a reason why our sniper doctrine calls for one shot to a kill, that the target should be dead before he even knows the sniper is there.
 
-To this end we plan to adapt the electromagnetic equipment and power source from the Needler to a larger barrel and a more human-friendly shape, as well as developing a new slug to maximise damage potential. The whole package together would be a significant upgrade from our old S-1 Sniper Rifle, more accurate than the Bolter and with far more kick than the Needler.
+To this end we plan to adapt the electromagnetic equipment and power source from the Needler to a larger barrel and a more human-friendly shape, as well as developing a new slug to maximise damage potential. The whole package together would be a significant upgrade from our old S-1 Sniper Rifle and more accurate than the Bolter.
 
 Please let me know when you want us to start, Commander.
 
@@ -1745,20 +1741,20 @@ The alien attack on Mumbai made our situation painfully clear. Their technology 
 
 The Excalibur Program was created to find the most effective weapons on Earth by reviewing their manufacturing standards, durability, operational record, and their combat performance in the situations where we've managed to bring the aliens to battle.
 
-Originally an anti-materiel rifle, the Canada-built Forrester LRWS (Long Range Weapon System) has since been adopted by many countries as their principal sniper rifle. It is one of the bare handful of sniper rifles developed after 2040 that do not feature a bullpup configuration ('bullpup' meaning the magazine and action of the weapon are located behind the grip to reduce overall weapon length). It fires the massive 20mm HMG (Heavy Machine Gun) cartridge, fed by 5-round magazines which can weigh as much as one kilogramme apiece. The piston-retarded floating breech is equipped with an intricate gas dispersal system which decreases felt recoil to the level of an ordinary hunting rifle. This allows quick repeated shots on semi-automatic without any loss of accuracy.
+Originally an anti-materiel rifle, the Canada-built Forrester LRWS (Long Range Weapon System) has since been adopted by many countries as their principal sniper rifle. It is one of the bare handful of sniper rifles developed after 2040 that do not feature a bullpup configuration ('bullpup' meaning the magazine and action of the weapon are located behind the grip to reduce overall weapon length). It fires the massive 20mm HMG (Heavy Machine Gun) cartridge, fed by 5-round magazines which can weigh as much as one kilogramme apiece. The piston-retarded floating breech is equipped with an intricate gas dispersal system which decreases felt recoil to the level of an ordinary hunting rifle. This allows repeated shots without losing control.
 
-The greatest advantages of the LRWS over other modern sniper rifles are its incredibly short barrel and light weight, the only rifle in its size class that can fire the 20mm HMG round. This is made possible by a uniquely-reinforced breech and barrel made almost entirely of tungsten and titanium alloys, able to withstand the force of the round's super-high-velocity powder. Due to its short barrel, designed for tactical urban situations, the LRWS is only effective out to approximately 1 kilometre -- barely a third of the range of a standard anti-materiel rifle -- but we estimate that PHALANX should never face a situation where this might become a problem. Its reduced accuracy is amended by a highly-advanced scope that will calculate and display intelligent bullet trajectories wherever the rifle is pointing.
+The greatest advantages of the LRWS over other modern sniper rifles are its incredibly short barrel and light weight, the only rifle in its size class that can fire the 20mm HMG round. This is made possible by a uniquely-reinforced breech and barrel made almost entirely of tungsten and titanium alloys, able to withstand the force of the round's super-high-velocity powder. Due to its short barrel, designed for tactical urban situations, the LRWS is not as effective at very great distance, but we for a PHALANX squad's typical short-range skirmishing, this should not become a problem.
 
-The integral 'smart' bipod features a pneumatic suspension system that keeps the barrel perfectly horizontal to allow accurate fire even on broken ground. The buttstock and grip automatically mould themselves to fit any shooter. Most importantly, this rifle has racked up more alien kills in Mumbai than any other weapon deployed in the fighting.
+The buttstock and grip automatically mould themselves to fit any shooter. Most importantly, this rifle has racked up more alien kills in Mumbai than any other weapon deployed in the fighting.
 
-At half the weight of other sniper rifles and twice the manoeuvrability, the LRWS offers the power and flexibility that our agents require. This weapon will not disappoint.
+At half the weight of other sniper rifles and twice the manoeuvrability, the LRWS offers the power and flexibility that our agents require.
 
 For PHALANX use, we have given this rifle the classification S-1.
 
 
 Recommended Doctrine
 
-Soldiers equipped with the S-1should keep their distance, fire from cover, and try to use aimed shots whenever possible. This is not an automatic weapon; a missed shot wastes time, ammunition and possibly life.
+Soldiers equipped with the S-1 should keep their distance, fire from cover, and try to use aimed shots whenever possible. This is not an automatic weapon; it is too unwieldy to fire off quick snap shots with any accuracy. Marksmen should assume a crouched firing position for extra stability whenever possible.
 
 All our snipers should carry at least one backup sidearm such as the P-12 or the CRC-8 SMG, or a combat knife at the very least. Should aliens threaten a sniper at close range, he should immediately draw his sidearm. Under no circumstances should he try to use an S-1 to fend off attackers at close range. The S-1 is too slow-firing to stop an advancing alien and will quickly deplete its magazine if this is attempted. If the soldier tries to shoot his magazine dry before drawing his sidearm, it will be too late.
 
@@ -1785,7 +1781,7 @@ By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations C
 
 Overview
 
-This magazine contains 5 rounds of 20x140mm HMG (Heavy Machine Gun) ammunition. It is a conventional single-column box design, and can be extremely heavy due to the weight of the rounds inside. One magazine can weigh up to 1 kilogramme depending on the type of ammo used. The rounds in this magazine are high-quality match grade ammunition meant for heavy sniper rifles; they are more accurate and expensive than ordinary HMG rounds.
+This magazine contains 8 rounds of 20x140mm HMG (Heavy Machine Gun) ammunition. It is a conventional single-column box design, and can be extremely heavy due to the weight of the rounds inside. The rounds in this magazine are high-quality match grade ammunition meant for heavy sniper rifles; they are more accurate and expensive than ordinary HMG rounds.
 
 The magazine is meant to be loaded into an S-1 Sniper Rifle.
 
