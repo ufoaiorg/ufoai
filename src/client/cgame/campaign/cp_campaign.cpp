@@ -967,7 +967,7 @@ static void CP_DebugAddItem_f (void)
 
 	base_t *base = B_GetFoundedBaseByIDX(atoi(cgi->Cmd_Argv(1)));
 	const objDef_t *obj = INVSH_GetItemByID(cgi->Cmd_Argv(2));
-	int count = atoi(cgi->Cmd_Argv(3));
+	const int count = atoi(cgi->Cmd_Argv(3));
 
 	if (!base) {
 		Com_Printf("Invalid base index given\n");
@@ -977,7 +977,8 @@ static void CP_DebugAddItem_f (void)
 		/* INVSH_GetItemByIDX prints warning already */
 		return;
 	}
-Com_Printf("%s %s %d\n", base->name, obj->id, count);
+
+	Com_Printf("%s %s %d\n", base->name, obj->id, count);
 	B_UpdateStorageAndCapacity(base, obj, count, true);
 	if (B_ItemInBase(obj, base) > 0) {
 		technology_t *tech = RS_GetTechForItem(obj);
@@ -999,7 +1000,7 @@ static void CP_DebugAddAntimatter_f (void)
 	}
 
 	base_t *base = B_GetFoundedBaseByIDX(atoi(cgi->Cmd_Argv(1)));
-	int amount = atoi(cgi->Cmd_Argv(2));
+	const int amount = atoi(cgi->Cmd_Argv(2));
 
 	if (!base) {
 		Com_Printf("Invalid base index given\n");
