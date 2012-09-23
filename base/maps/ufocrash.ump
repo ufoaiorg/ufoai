@@ -307,23 +307,6 @@ ac     +u     +u     +u     ad    0
 
 // TODO:
 // ---------------------------------
-// ripper
-// ---------------------------------
-tile +craft_crash_ripper
-{
-6 7
-
-0      ab     ab     0      0     0
-ac     +u     +u     ad     0     0
-ac     +u     +u     +u     adc   0
-ac     +u     +u     +u     ad    0
-ac     +u     +u     +u     +u    adc
-ac     +u     +u     +u     ad    0
-0      ab     ab     ab     0     0
-}
-
-// TODO:
-// ---------------------------------
 // gunboat
 // ---------------------------------
 tile +craft_crash_gunboat
