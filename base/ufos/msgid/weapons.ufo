@@ -1889,9 +1889,7 @@ Particle-beam weaponry is designed to hit a target object with a stream of accel
 
 The pistol itself is quite simple in build, just a shell covering a set of magnets and electrostatic lenses for focusing and constricting the particle beam. This is all stuff we can duplicate easily with enough money and effort. However, we've yet to figure out the weapon's ammo supply. The energy readings we've taken from the magazines are extreme, and despite our efforts, we haven't managed to disable or disarm one in order to safely open it up. Even shooting it dry doesn't completely deactivate one of these magazines. More research will be required before we can try and understand them, much less reproduce them.
 
-Certainly this pistol is the nastiest handgun I've ever seen in my career, with impressive armour-piercing capabilities and extreme damage potential. The high-speed particle beam can kill a lightly-armoured human in one shot at ranges of up to 40 metres. Just one shot. With regards to lethality at range, it outperforms even our laser pistol. The only good news is that the PB pistol is significantly less accurate than our lasers and produce too much of a kick to make repeated accurate shots.
-
-In fact, firing the pistol may be difficult for troops with less than the required physical strength. The particles leaving the barrel move at a fraction of the speed of light, so they generate an unholy amount of recoil against the shooter. It would be an extreme challenge for weaker troops to keep the weapon on-target. If these pistols are deployed, we recommend they only be issued to the stronger troops on our squad.
+Certainly this pistol is the nastiest handgun I've ever seen in my career, with impressive armour-piercing capabilities and extreme damage potential. It's not as accurate as the laser pistol, but it packs an extraordinary punch for a sidearm.
 
 I'll keep you posted on our progress with the magazines, Commander.
 
@@ -1909,13 +1907,13 @@ Cdr. Navarre"
 msgid pbeamcannon_txt {
 text "_Commander, we've finished work on this big damned cannon we brought back.
 
-We've always suspected that a real alien army would field more than just plasma weapons and Kerrblades. Now they've gone and proved us right. This particle beam weaponry is extremely advanced, a quantum leap above the plasma weapons, miniaturised far beyond our ability to duplicate.
+This particle beam weaponry is extremely advanced, a quantum leap above the plasma weapons, miniaturised far beyond our ability to duplicate.
 
 Particle-beam weaponry is designed to hit a target object with a stream of accelerated particles moving at near-light velocities, therefore carrying tremendous kinetic energy. Until now we've only seen the aliens use this technology in large UFO weapons. Now, however, they're using it on the ground in the worst way.
 
-This cannon has got to be the most powerful infantry particle beam the aliens can field, because I can't imagine them getting much bigger. Though smaller and lighter than the Plasma Blaster, the PB cannon's recoil is out of this world. It can blast a full grown man clean off his feet in one shot. No normal human will be able to use this weapon. We can adapt it for mounting on our UGVs, and we may be able to enhance our soldiers with cybernetic implants or powered armour, but that's all.
+This cannon has got to be the most powerful infantry particle beam the aliens can field, because I can't imagine them getting much bigger. The Particle Beam cannon's recoil is out of this world. It can blast a full grown man clean off his feet in one shot.
 
-As bad as the recoil is, the target will have it worse. A single fleeting hit -- a heartbeat of exposure -- will buckle three inches of homogenous steel and blow the target back by several metres. This is usually all that's necessary. A second hit will turn the buckle into a fist-sized hole, clean through. Our infantry armour will perform only slightly better, but deflection will help somewhat.
+As bad as the recoil is, the target will have it worse. A single fleeting hit -- a heartbeat of exposure -- will buckle three inches of homogenous steel. This is usually all that's necessary. A second hit will turn the buckle into a fist-sized hole, clean through. Our infantry armour will perform only slightly better, but deflection will help somewhat.
 
 The cannon's mechanics are quite simple, nothing that we can't duplicate easily with enough money and effort. The only thing we have yet to figure out is the ammo supply. The energy readings we've taken from the magazines are extreme, and despite our efforts, we haven't managed to disable or disarm one in order to safely open it up. Even shooting it dry doesn't completely deactivate one of these magazines. More research will be required before we can try and understand them, much less reproduce them.
 
@@ -1943,9 +1941,7 @@ The rifle seems to follow a very basic, modular design, quite unlike the plasma 
 
 What first alarmed me about this weapon is its performance against our infantry armour. The high-energy particles in a particle beam travel so fast that the beam can easily punch a hole through our standard vehicle armour. When fired at a suit of Combat Armour, the results are gruesome. It penetrates the front of the armour without even slowing down, and still has enough power to punch out the back and continue for several metres before dispersing.
 
-Much heavier protection will be required for our troops to be able to stand up to this kind of fire. In addition to the development of entirely new armours, we should look into upgrading our current suits as soon as possible. We may suffer significant troop losses to alien PB weapons if we don't.
-
-Lastly, the rifle's shape is not at all suited to the human body, and even with adaptations it will be poorly balanced for human shooters. If deployed with our squads, our accuracy won't be as good as the aliens.
+Our troops will need the heaviest protection we can muster to be able to stand up to this kind of fire. We may suffer significant troop losses to alien Particle Beam weapons if we don't.
 
 I'll keep you updated on our progress with the magazines, Commander.
 
