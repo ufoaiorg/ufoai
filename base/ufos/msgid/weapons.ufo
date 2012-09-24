@@ -863,9 +863,9 @@ First released on the open market in 2047, the Brazilian RA6 has received numero
 
 The RA6 carries up to 6 grenades individually loaded into a simple rotary cylinder. The cylinder is hinged at the front and breaks open to accept reloads. Reloading individual grenades can be a slow and agonising process, but this is often the best way of going about it; while 25mm speedloaders do exist and will work on the RA6, they are bulky and hard to carry around.
 
-The weapon has two fire modes; timed shot, which will detonate grenades at a set time after leaving the barrel, and airburst, which will detonate grenades in the air after they have travelled a certain distance. The RA6's maximum rate of fire is one round per second on semi-automatic, or it can rapidly cycle through its cylinder on burst mode, firing quick three-round bursts that can devastate whole areas.
+The weapon has two fire modes. When fired in Impact mode, the grenades will explode as soon as they hit something -- a wall or the target. They'll also explode the moment they reach their target destination, a nice way to ensure the grenade will explode near to where the soldier is aiming it.
 
-Standard ammunition for the RA6 is the 25mm HIT (High Impulse Thermobaric) grenade, which is a 'fuel-air munition' that uses atmospheric oxygen to generate an explosion instead of carrying along an oxidising agent. Thermobaric weapons produce a far more powerful explosive force than would be possible with conventional explosives of the same size. They rely on explosive energy, concussion and heat for their lethality rather than on fragmentation like most conventional explosives.
+But it also has a Timer mode. When fired this way, the grenades will detonate several seconds after leaving the barrel regardless of what happens in those seconds. This is great for bouncing a grenade around a corner or firing a long shot, but it is harder to be precise.
 
 This is one of the most versatile and effective weapons on our roster. While not as powerful as the rocket launcher, it is a reliable support weapon and infantry artillery piece.
 
@@ -876,11 +876,7 @@ Recommended Doctrine
 
 The HPGL is a tactician's dream come true. It has excellent damage and range, can hit several clustered targets with one blast, and can be used for special tasks such as area denial with incendiary grenades. It can be as effective in close situations as it is in large open spaces; however, different tactics are required.
 
-The airburst mode is preferable for use in open ground; it sacrifices some range by taking away the 'bounce' factor, but this also has its benefits. The bounce factor can seriously foul accuracy if the grenade lands on an uneven surface and can allow the enemy to run away or take cover before detonation. Airburst fire also allows the operator to place his grenades exactly where he wants them. Unless there is a catastrophic detonator failure, any airburst fired from the HPGL will go off at the intended spot with little chance for mechanical error.
-
-In close situations, timed grenades can be bounced off walls and around corners to reach dangerous or inconvenient places that other weapons have trouble getting a bead on. However, care should be taken that the operator doesn't fire shots that leave himself or any friendly troops inside the blast radius. This would make the operator very unpopular with what's left of the team. Due to the bounce factor on timed grenades, they can also be a severe hazard to nearby civilians. Use of the grenade launcher in situations where civilians might become victim to collateral damage is strongly discouraged.
-
-For close-range emergency work -- for example if the operator has no sidearm -- the launcher can also be loaded with special 25mm flechette shells similar to our shotgun shells. These have less damage potential than shotgun shells due to their lower muzzle velocity, but they can still be deadly in close quarters and, unlike explosive grenades, are not a risk to the operator at short ranges.
+For close-range emergency work -- for example if the operator has no sidearm -- the launcher can also be loaded with special 25mm flechette shells similar to our shotgun shells.
 
 
 Addenda
@@ -937,7 +933,7 @@ By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations C
 
 Overview
 
-This is a box of 6 25mm flechette grenades. They are fired electronically by a spark igniter inside the launcher's barrel. While still classified as grenades due to their calibre and delivery system, they have more in common with shotgun shells. Each grenade contains 24 solid steel needles packed into a sabot shell that breaks away immediately after leaving the muzzle. This creates a buckshot-like effect that can shred unarmoured or lightly-armoured enemies, but their lower muzzle velocity compared to shotgun shells makes them significantly less effective against heavy armour.
+This is a box of 6 25mm flechette grenades. They are fired electronically by a spark igniter inside the launcher's barrel. While still classified as grenades due to their calibre and delivery system, they have more in common with shotgun shells.
 
 These grenades are meant to be loaded into an HPGL Grenade Launcher.
 
@@ -969,7 +965,7 @@ By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations C
 
 Overview
 
-This is a box of 6 25mm incendiary grenades. They are fired electronically by a spark igniter inside the launcher's barrel. These grenades are area-denial weapons, covering a large stretch of ground with very hot flames that are almost impossible to extinguish. The compound itself is a modification of a mixture that has been in use since World War II; thermite, barium nitrate, sulphur and binding agent. And thanks to modern miniaturisation technology, it will all fit into a handy, lightweight 25mm shell.
+This is a box of 6 25mm incendiary grenades. They are fired electronically by a spark igniter inside the launcher's barrel. These grenades are area-denial weapons, covering a patch of ground with very hot flames that are almost impossible to extinguish. The compound itself is a modification of a mixture that has been in use since World War II; thermite, barium nitrate, sulphur and binding agent. And thanks to modern miniaturisation technology, it will all fit into a handy, lightweight 25mm shell.
 
 These grenades are meant to be loaded into an HPGL Grenade Launcher.
 
@@ -991,7 +987,7 @@ For this project, we already had ready access to all the required technology. We
 
 We've dubbed our creation the 25mm PB ('Plasma Burst') Grenade. We can manufacture them by the box or by the speedloader, both of which will be extremely expensive to produce. One full load of 25mm PB is essentially an entire magazine of miniature plasma grenades, miniatures which are even more difficult to create than the original.
 
-The amount of firepower we've added to our team grenadier(s) is frightening to behold. Launch a cylinder of these grenades into a crowded street, and the only thing left will be ash. They'll become a highly valuable addition to our arsenal.
+The amount of firepower we've added to our grenadiers is frightening to behold. Launch a cylinder of these grenades into a crowded street, and the only thing left will be ash. They'll become a highly valuable addition to our arsenal.
 
 Cdr. Navarre"
 }
@@ -1329,7 +1325,7 @@ It's shaped like a knife handle with no blade. In place of the blade it has a sm
 
 The plastic ring around the nozzle ejects a charge of sticky foam which hardens almost instantly to the strength of concrete. At this point the weapon is locked firmly to the target and an airtight seal is created. There is only vacuum between the nozzle and the target. All the while, a jet of plasma has been heating up inside the handle, which is now let loose and shot into the target at a fraction of the speed of light. Plasma and hot shrapnel begin bouncing around inside the armour, tearing up circuits or flesh.
 
-There is no armour that can withstand this weapon. If a proper seal is achieved, the target has no hope of survival. The plasma blade's only saving grace is that it's not very accurate, and while it can be thrown, its chances of achieving a seal when thrown are very slim. Planting one by hand has a much higher chance of success. If an alien manages to rush our troops while wielding a plasma blade, anything in the immediate area will be in danger. All available fire should be brought to bear to neutralise the target before it has the chance to hit anyone.
+There is no armour that can withstand this weapon. If a proper seal is achieved, the target has no hope of survival. The plasma blade's only saving grace is that it's not very accurate. It can't be thrown effectively because its chances of achieving a seal are very low. Planting one by hand has a much higher chance of success. If an alien manages to rush our troops while wielding a plasma blade, anything in the immediate area will be in danger. All available fire should be brought to bear to neutralise the target before it has the chance to hit anyone.
 
 This weapon frightens me, Commander. Its very existence implies a lot of things. Combined with the aliens' usual pragmatism with regards to their own lives, it says to me that they may be prepared to employ kamikaze tactics, sacrificing their own lives just to kill one of us. 1 human for 1 alien is a ratio that neither PHALANX nor humanity can possibly afford. Even if it was closer to 10: 1 I still wouldn't fancy our chances. After all, how many of them are there?
 

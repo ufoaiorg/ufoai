@@ -181,6 +181,30 @@ audc      +a        +a         +a   audc
 }
 
 // ---------------------------------
+// house #8 (house, plants)
+// ---------------------------------
+tile +h08
+{
+4 3
+
+0      audbh     audbh      0
+audc      +a        +a   audc
+0      audbh     audbh      0
+}
+
+// ---------------------------------
+// house #9 (two small houses)
+// ---------------------------------
+tile +h09
+{
+4 3
+
+0      audbh     audbh      0
+audc      +a        +a   audc
+0      audbh     audbh      0
+}
+
+// ---------------------------------
 // empty
 // ---------------------------------
 tile +e01
@@ -305,38 +329,19 @@ ac     +u     +u     +u     ad    0
 0      ab     ab     ab     0     0
 }
 
-// TODO:
-// ---------------------------------
-// ripper
-// ---------------------------------
-tile +craft_crash_ripper
-{
-6 7
-
-0      ab     ab     0      0     0
-ac     +u     +u     ad     0     0
-ac     +u     +u     +u     adc   0
-ac     +u     +u     +u     ad    0
-ac     +u     +u     +u     +u    adc
-ac     +u     +u     +u     ad    0
-0      ab     ab     ab     0     0
-}
-
-// TODO:
 // ---------------------------------
 // gunboat
 // ---------------------------------
 tile +craft_crash_gunboat
 {
-6 7
+7 6
 
-0      ab     ab     0      0     0
-ac     +u     +u     ad     0     0
-ac     +u     +u     +u     adc   0
-ac     +u     +u     +u     ad    0
-ac     +u     +u     +u     +u    adc
-ac     +u     +u     +u     ad    0
-0      ab     ab     ab     0     0
+0      0      ad    ad    ad    0     0
+0      ad     +u    +u    +u    ad    0
+ad     +u     +u    +u    +u    +u    ad
+ad     +u     +u    +u    +u    +u    ad
+0      ad     +u    +u    +u    ad    0
+0      0      ad    ad    ad    0     0
 }
 
 // TODO:
@@ -375,6 +380,8 @@ size "7 5"
 +h05 "0 2"
 +h06 "0 2"
 +h07 "0 2"
++h08 "0 1"
++h09 "0 1"
 +d01 "0 2"
 +d03 "0 2"
 *rm_ufo +craft_crash_scout "1 1"
@@ -392,6 +399,8 @@ size "7 5"
 +h05 "0 2"
 +h06 "0 2"
 +h07 "0 2"
++h08 "0 1"
++h09 "0 1"
 +d01 "0 2"
 +d03 "0 2"
 *rm_ufo +craft_crash_fighter "1 1"
@@ -409,6 +418,8 @@ size "7 5"
 +h05 "0 2"
 +h06 "0 2"
 +h07 "0 2"
++h08 "0 1"
++h09 "0 1"
 +d01 "0 2"
 +d03 "0 2"
 *rm_ufo +craft_crash_supply "1 1"
@@ -426,6 +437,8 @@ size "8 8"
 +h05 "0 2"
 +h06 "0 2"
 +h07 "0 2"
++h08 "0 1"
++h09 "0 1"
 +d01 "0 2"
 +d03 "0 2"
 *rm_ufo +craft_crash_corrupter "1 1"
@@ -443,6 +456,8 @@ size "7 7"
 +h05 "0 2"
 +h06 "0 2"
 +h07 "0 2"
++h08 "0 1"
++h09 "0 1"
 +d01 "0 2"
 +d03 "0 2"
 +d02_harvester "1 1"
@@ -461,9 +476,31 @@ size "8 8"
 +h05 "0 2"
 +h06 "0 2"
 +h07 "0 2"
++h08 "0 1"
++h09 "0 1"
 +d01 "0 2"
 +d03 "0 2"
 +e01 "0 9"
 *rm_ufo +craft_crash_bomber "1 1"
+*rm_drop +craft_drop_firebird "1 1"
+}
+
+assembly craft_crash_gunboat
+{
+title "_Crashed UFO"
+size "7 6"
++h01 "0 3"
++h02 "0 3"
++h03 "0 3"
++h04 "0 1"
++h05 "0 2"
++h06 "0 2"
++h07 "0 2"
++h08 "0 1"
++h09 "0 1"
++d01 "0 2"
++d03 "0 2"
++e01 "0 9"
+*rm_ufo +craft_crash_gunboat "1 1"
 *rm_drop +craft_drop_firebird "1 1"
 }

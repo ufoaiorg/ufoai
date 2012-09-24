@@ -2416,6 +2416,7 @@ mapdef tropic_river_crash
 mapdef ufocrash
 {
 	map				"+ufocrash"
+	singleplayer	false
 	multiplayer		false
 	description		"_UFO Crashsite."
 	storyrelated	true
@@ -2430,13 +2431,13 @@ mapdef ufocrash
 		craft_crash_supply
 		craft_crash_bomber
 		craft_crash_carrier
+		craft_crash_gunboat
 	)
 
 	aircraft
 	(
 		craft_drop_firebird
 		craft_drop_herakles
-//		craft_drop_dragon
 		craft_drop_raptor
 	)
 }
