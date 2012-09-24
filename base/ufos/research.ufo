@@ -5277,6 +5277,29 @@ tech rs_craft_el_fuelpod
 	//image	"techs/craft_electronics_fuelpod"
 }
 
+tech rs_craft_el_alien_ew
+{
+	type		"craftitem"
+	up_chapter	crafts
+	name		"_Alien Electronic Warfare Suite"
+	// pre_description	"*msgid:craft_electronics_raven_pre_txt"
+	description {
+		default "*msgid:craft_electronics_raven_txt"
+	}
+
+	// Require itself to make this not appear in normal gameplay
+	require_AND
+	{
+		tech rs_craft_el_alien_ew
+	}
+
+	provides	craft_el_alien_ew
+	time		0
+	producetime	100
+
+	model	"aircraft/craft_item_raven_ecm/ecm"
+}
+
 //========================
 // Alien Technologies retrieved from craft
 //========================

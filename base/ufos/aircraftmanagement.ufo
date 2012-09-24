@@ -1026,8 +1026,20 @@ craftitem craft_shield_plating
 	model				"aircraft/craft_arm_plate/plating"
 
 	shield		+8
-	speed		0.8
-	maxspeed	0.8
+	speed		0.9
+	maxspeed	0.9
+}
+
+craftitem craft_el_alien_ew
+{
+	name				"_Alien Electronic Warfare Suite"
+	crafttype			"electronics"
+	size				20 // "light"
+	installationTime	1
+	price				8000
+	model				"aircraft/craft_item_raven_ecm/ecm"
+
+	ecm		1.5
 }
 
 craftitem craft_alien_astrogation
