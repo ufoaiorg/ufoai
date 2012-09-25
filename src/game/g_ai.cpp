@@ -719,12 +719,10 @@ static float AI_FighterCalcActionScore (edict_t * ent, pos3_t to, aiAction_t * a
 
 	/* penalize herding */
 	check = NULL;
-	while ((check = G_EdictsGetNextLivingActor(check))) {
-		if (check->team == ent->team) {
-			const float dist = VectorDist(ent->origin, check->origin);
-			if (dist < HERD_THRESHOLD)
-				bestActionScore -= SCORE_HERDING_PENALTY;
-		}
+	while ((check = G_EdictsGetNextLivingActorOfTeam(check, ent->team))) {
+		const float dist = VectorDist(ent->origin, check->origin);
+		if (dist < HERD_THRESHOLD)
+			bestActionScore -= SCORE_HERDING_PENALTY;
 	}
 
 	return bestActionScore;
