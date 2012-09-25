@@ -543,9 +543,10 @@ trace_t SV_Trace (const vec3_t start, const vec3_t mins, const vec3_t maxs, cons
 }
 
 /**
- * @brief
+ * @brief Query the footstep sound for the given surface texture
  * @sa Com_GetTerrainType
  * @sa GenerateFootstepList
+ * @return either @c NULL or the footstep sound filename if there is one assigned in the scripts
  */
 const char *SV_GetFootstepSound (const char *texture)
 {
