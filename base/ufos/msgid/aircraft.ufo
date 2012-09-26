@@ -177,17 +177,17 @@ Cdr. Navarre"
 }
 
 msgid inter_starchaser_txt {
-text "_Commander, excuse me if I sound a little incoherent, but I've been up all night finishing the final blueprints. It is with great pleasure that I present you the Starchaser Space Superiority Fighter. Yes, you read that right, space superiority. One of the most striking improvements over the Dragon - though it's certainly not the only one! - is the ability of sustained orbital flight and combat. We now have the ability of intercepting the enemy outside our own atmosphere, and while this seems a minor boon so long as we don't know where the enemy is coming from, I'm certain that we're going to need this capability sooner or later.
+text "_Commander, excuse me if I sound a little incoherent, but I've been up all night finishing the final blueprints. It is with great pleasure that I present you the Starchaser Superiority Fighter.
 
-Until that time comes, let's focus on more down-to-Earth matters. The Starchaser is equipped with an alien-tech propulsion system that, along with its sleek, aerodynamic design, bestows it with both speed and manoeuvrability. The hull itself is made out of dense layers of alien materials, providing an unprecedented level of durability. Finally, despite the fact that the compact design leaves us with only limited options for modular weapon and support systems, we've managed to improve firepower over the Dragon design.
+The Starchaser is equipped with an alien-tech propulsion system that, along with its sleek, aerodynamic design, bestows it with both speed and manoeuvrability. The hull itself is made out of dense layers of alien materials, providing an unprecedented level of durability. Finally, despite the fact that the compact design prevented us from expanding the modular weapon and support systems as much as we would have liked, we have managed to add an additional light weapon hardpoint on top of the two heavy weapon hardpoints available on the Dragon. This should help for those close-up dogfights.
 
-The Starchaser is truly the next generation in aerial combat, commander. It matches or outperforms any other fighter design we have, so I recommend we begin phasing it in immediately. Be advised, however, that the Starchaser is rather costly to produce, in terms of credits, raw materials and time alike.
+The Starchaser is truly the next generation in aerial combat, commander. It matches or outperforms any other fighter design we have, so I recommend we begin phasing it in immediately. Be advised, however, that the Starchaser is more costly to produce.
 
 Cdr. Navarre"
 }
 
 msgid inter_starchaser_pre_txt {
-text "_Commander, as you will be well aware, our enemies have been fielding increasingly heavier craft and weaponry in our skies, perhaps in a response to our leveling the playing field with the new Dragon interceptors. Once again, we're feeling the pressure. My team and I have believe it is time for the next evolution in our air combat arsenal.
+text "_Commander, as you will be well aware, our enemies have been fielding increasingly heavier craft and weaponry in our skies, perhaps in a response to our leveling the playing field with the new Dragon interceptors. Once again, we're feeling the pressure. My team and I believe it is time for the next evolution in our air combat arsenal.
 
 As our understanding of the UFO workings and alien doctrine grows, we are better able to incorporate that understanding into our designs. I've already got a rough draft of what I think will constitute a high-power air superiority fighter, but I need time and funding to come up with something definitive.
 
