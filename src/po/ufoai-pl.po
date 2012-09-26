@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
 "POT-Creation-Date: 2012-09-23 17:36+0200\n"
-"PO-Revision-Date: 2012-09-23 21:00+0100\n"
+"PO-Revision-Date: 2012-09-26 09:25+0100\n"
 "Last-Translator: Maciej Wierzbicki <voovoos@killfile.pl>\n"
 "Language-Team:  <radius75@interia.pl>\n"
 "Language: pl_PL\n"
@@ -3136,7 +3136,7 @@ msgstr "Starszy Kapral"
 
 #: ../base/ufos/medals.ufo:90
 msgid "Cpl"
-msgstr "st kpr."
+msgstr "st. kpr."
 
 #: ../base/ufos/medals.ufo:102
 msgid "Sergeant"
@@ -3152,7 +3152,7 @@ msgstr "Młodszy chorąży"
 
 #: ../base/ufos/medals.ufo:116
 msgid "WO"
-msgstr "mł. chr."
+msgstr "mł. chor."
 
 #: ../base/ufos/medals.ufo:128
 msgid "Senior Warrant Officer"
@@ -3160,7 +3160,7 @@ msgstr "Chorąży"
 
 #: ../base/ufos/medals.ufo:129
 msgid "SWO"
-msgstr "chr."
+msgstr "chor."
 
 #: ../base/ufos/medals.ufo:140
 msgid "Second Lieutenant"
@@ -3192,7 +3192,7 @@ msgstr "Major"
 
 #: ../base/ufos/medals.ufo:177
 msgid "Maj"
-msgstr "mjr."
+msgstr "mjr"
 
 #: ../base/ufos/medals.ufo:188
 msgid "Lieutenant-Colonel"
@@ -3200,7 +3200,7 @@ msgstr "Podpułkownik"
 
 #: ../base/ufos/medals.ufo:189
 msgid "Lt Col"
-msgstr "ppłk."
+msgstr "ppłk"
 
 #: ../base/ufos/medals.ufo:200
 msgid "Colonel"
@@ -3208,7 +3208,7 @@ msgstr "Pułkownik"
 
 #: ../base/ufos/medals.ufo:201
 msgid "Col"
-msgstr "płk."
+msgstr "płk"
 
 #: ../base/ufos/msgid/aircraft.ufo:42
 #, fuzzy
@@ -4004,7 +4004,7 @@ msgstr ""
 "wykonaliśmy, zalecam więc natychmiastowe wdrożenie. Jednak Starchaser jest "
 "zdecydowanie bardzo kosztowny pod względem  finansów, materiału i czasu.\n"
 "\n"
-"--mjr. Navarre"
+"--mjr Navarre"
 
 #: ../base/ufos/msgid/aircraft.ufo:196
 msgid ""
@@ -4039,14 +4039,14 @@ msgstr ""
 "Sugeruję Dowódco aby dać temu projektowi priorytet. Nasi piloci w powietrzu "
 "ryzykują życiem codziennie a z każdym dniem to ryzyko rośnie.\n"
 "\n"
-"--mjr. Navarre"
+"--mjr Navarre"
 
 #: ../base/ufos/msgid/aircraft.ufo:204
 msgid ""
 "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic "
 "Operations Command"
 msgstr ""
-"Przez: Mjr. Paul Navarre, JBR: Dział Inżynieryjny, PHALANX, Dowództwo "
+"Przez: mjr Paul Navarre, JBR: Dział Inżynieryjny, PHALANX, Dowództwo "
 "Operacji Atlantyckich"
 
 #: ../base/ufos/msgid/aircraft.ufo:224
@@ -4117,7 +4117,7 @@ msgstr ""
 "nieuzbrojone, musimy strącać je jak tylko zostaną wykryte gdyż wszelkie "
 "zamiary Obcych związane z ruchami tych pojazdów są dla nas zagrożeniem.\n"
 "\n"
-"--mjr. Navarre"
+"--mjr Navarre"
 
 #: ../base/ufos/msgid/aircraft.ufo:230
 #, fuzzy
@@ -4874,7 +4874,7 @@ msgstr ""
 "Proszę abyś podjął odpowiednie kroki kiedy tylko będziesz mógł, Dowódco. "
 "Najgorsze dać się zaskoczyć będąc nieprzygotowanym.\n"
 "\n"
-"--mjr. Navarre"
+"--mjr Navarre"
 
 #: ../base/ufos/msgid/aircraft.ufo:390
 msgid ""
@@ -4901,7 +4901,7 @@ msgstr ""
 "będziemy potrzebować miejsca w laboratorium i finansowania, by skutecznie "
 "ocenić jego funkcjie i możliwości.\n"
 "\n"
-"--mjr. Navarre"
+"--mjr Navarre"
 
 #: ../base/ufos/msgid/aircraftitems.ufo:36
 msgid ""
@@ -4984,7 +4984,7 @@ msgstr ""
 "\n"
 "Sporządzony: 19 Marca 2084\n"
 "\n"
-"Przez: Mjr Paul Navarre, JBR: Dział Inżynieryjny, PHALANX, Dowództwo "
+"Przez: mjr Paul Navarre, JBR: Dział Inżynieryjny, PHALANX, Dowództwo "
 "Operacji Atlantyckich\n"
 "\n"
 "\n"
@@ -5209,7 +5209,6 @@ msgstr ""
 "Brak."
 
 #: ../base/ufos/msgid/aircraftitems.ufo:90
-#, fuzzy
 msgid ""
 "Commander, now that we have the ability to produce and work the alien "
 "materials, a whole new range of options has opened up to us. These materials "
@@ -5275,7 +5274,7 @@ msgstr ""
 "efektywnie walczyć z Obcymi. Obaj wiemy, jaka jest cena nowego statku – nie "
 "możemy sobie jednak pozwolić na porzucenie tych planów.\n"
 "\n"
-"-- mjr Paul Navarre"
+"--mjr Paul Navarre"
 
 #: ../base/ufos/msgid/aircraftitems.ufo:106
 msgid ""
@@ -5364,7 +5363,7 @@ msgstr ""
 "wrogim jednostkom Obcych.Oboje wiemy jakie są koszta nowej maszyny, Dowódco "
 "-- nie możemy pozwolić, by nasze samoloty stały się przestarzałe.\n"
 "\n"
-"mjr. Navarre"
+"--mjr Navarre"
 
 #: ../base/ufos/msgid/aircraftitems.ufo:114
 #, fuzzy
@@ -6107,7 +6106,7 @@ msgstr ""
 "\n"
 "Sporządzony: 19 Marca 2084\n"
 "\n"
-"Przez: Mjr Paul Navarre, JBR: Dział Inżynieryjny, PHALANX, Dowództwo "
+"Przez: mjr Paul Navarre, JBR: Dział Inżynieryjny, PHALANX, Dowództwo "
 "Operacji Atlantyckich\n"
 "\n"
 "\n"
@@ -6255,7 +6254,7 @@ msgstr ""
 "\n"
 "Sporządzony: 19 Marca 2084\n"
 "\n"
-"Przez: Mjr Paul Navarre, JBR: Dział Inżynieryjny, PHALANX, Dowództwo "
+"Przez: mjr Paul Navarre, JBR: Dział Inżynieryjny, PHALANX, Dowództwo "
 "Operacji Atlantyckich\n"
 "\n"
 "\n"
@@ -6377,7 +6376,7 @@ msgstr ""
 "\n"
 "Sporządzony: 19 Marca 2084\n"
 "\n"
-"Przez: Mjr Paul Navarre, JBR: Dział Inżynieryjny, PHALANX, Dowództwo "
+"Przez: mjr Paul Navarre, JBR: Dział Inżynieryjny, PHALANX, Dowództwo "
 "Operacji Atlantyckich\n"
 "\n"
 "\n"
@@ -6856,7 +6855,7 @@ msgstr ""
 "\n"
 "Sporządzony: 19 Marca 2084\n"
 "\n"
-"Przez: Mjr Paul Navarre, JBR: Dział Inżynieryjny, PHALANX, Dowództwo "
+"Przez: mjr Paul Navarre, JBR: Dział Inżynieryjny, PHALANX, Dowództwo "
 "Operacji Atlantyckich\n"
 "\n"
 "\n"
@@ -7000,7 +6999,7 @@ msgstr ""
 "\n"
 "Sporządzony: 19 Marca 2084\n"
 "\n"
-"Przez: Mjr Paul Navarre, JBR: Dział Inżynieryjny, PHALANX, Dowództwo "
+"Przez: mjr Paul Navarre, JBR: Dział Inżynieryjny, PHALANX, Dowództwo "
 "Operacji Atlantyckich\n"
 "\n"
 "\n"
@@ -9843,7 +9842,7 @@ msgstr ""
 "\n"
 "Sporządzony: 16 Lutego 1958\n"
 "\n"
-"Przez: Płk Marcel LeClerc, Dowódca bazy, PHALANX, Dowództwo Operacji "
+"Przez: płk Marcel LeClerc, Dowódca bazy, PHALANX, Dowództwo Operacji "
 "Pacyfiku\n"
 "\n"
 "\n"
@@ -13882,7 +13881,7 @@ msgstr ""
 "żywe osobniki Obcych, musimy poznać ich procesy fizjologiczne (głównie "
 "oddychanie).\n"
 "\n"
-"Mjr Navarre i jego zespół zadeklarowali nam pełne wsparcie od strony "
+"mjr Navarre i jego zespół zadeklarowali nam pełne wsparcie od strony "
 "technicznej.\n"
 "\n"
 "Z poważaniem,\n"
@@ -14501,7 +14500,7 @@ msgstr ""
 "\n"
 "Z poważaniem,\n"
 "\n"
-"płk Ingrid Falkland"
+"--płk Ingrid Falkland"
 
 #: ../base/ufos/msgid/story.ufo:264
 #, fuzzy
@@ -15477,7 +15476,7 @@ msgstr ""
 "\n"
 "Z poważaniem,\n"
 "\n"
-"płk Falkland"
+"--płk Falkland"
 
 #: ../base/ufos/msgid/story.ufo:490 ../base/ufos/msgid/story.ufo:674
 #, fuzzy
@@ -15547,7 +15546,7 @@ msgstr ""
 "\n"
 "Z poważaniem,\n"
 "\n"
-"płk Falkland"
+"--płk Falkland"
 
 #: ../base/ufos/msgid/story.ufo:514
 #, fuzzy
@@ -15621,7 +15620,7 @@ msgstr ""
 "\n"
 "Z poważaniem,\n"
 "\n"
-"płk Ingrid Falkland"
+"--płk Ingrid Falkland"
 
 #: ../base/ufos/msgid/story.ufo:548
 #, fuzzy
@@ -15797,7 +15796,7 @@ msgstr ""
 "\n"
 "Z poważaniem,\n"
 "\n"
-"płk Ingrid Falkland"
+"--płk Ingrid Falkland"
 
 #: ../base/ufos/msgid/story.ufo:658 ../base/ufos/msgid/weapons.ufo:312
 #, fuzzy
@@ -16004,7 +16003,7 @@ msgstr ""
 "pomiędzy bazą i Hangarem UFO, więc wybuduj go tak blisko jak tylko możliwe "
 "od bazy skąd prace będą prowadzone.\n"
 "\n"
-"Mjr. Navarre"
+"--mjr Navarre"
 
 #: ../base/ufos/msgid/tips.ufo:22
 #, fuzzy
@@ -26835,17 +26834,15 @@ msgstr "Dostępne języki"
 
 #: ../base/ufos/ui/options.ufo:175
 msgid "Mods"
-msgstr ""
+msgstr "Mody"
 
 #: ../base/ufos/ui/options.ufo:182
-#, fuzzy
 msgid "Available game modifications"
-msgstr "Dostępne kontrolery gry."
+msgstr "Dostępne modyfikacje gry"
 
 #: ../base/ufos/ui/options.ufo:211
-#, fuzzy
 msgid "Activate mod"
-msgstr "Czat"
+msgstr "Aktywuj mod"
 
 #: ../base/ufos/ui/options.ufo:222
 msgid "Several Tips"
@@ -27086,6 +27083,8 @@ msgid ""
 "Enable texture compression for better memory performance, disable for better "
 "rendering quality."
 msgstr ""
+"Włącz kompresję tekstur dla lepszej wydajności pamięci, wyłącz dla lepszej "
+"jakości renderowania."
 
 #: ../base/ufos/ui/options.ufo:760
 #, fuzzy
@@ -27097,6 +27096,8 @@ msgid ""
 "Texture Level-of-Detail. Enabling this might result in some blurry textures "
 "if you zoom out a little bit."
 msgstr ""
+"Poziom szczegółów tekstur 'LoD'. Włączenie może skutkować rozmyciem tekstur "
+"w niewielkim zbliżeniu."
 
 #: ../base/ufos/ui/options.ufo:776
 msgid "LoD:"
@@ -28810,48 +28811,43 @@ msgstr ""
 "- Pozostało: %i\n"
 
 #: client/battlescape/cl_hud.cpp:1317
-#, fuzzy
 msgid "accuracy"
-msgstr "Celność"
+msgstr "precyzja"
 
 #: client/battlescape/cl_hud.cpp:1319
-#, fuzzy
 msgid "shooting speed"
-msgstr "Prędkość przelotowa"
+msgstr "szybkostrzelność"
 
 #: client/battlescape/cl_hud.cpp:1321
 msgid "movement speed"
-msgstr ""
+msgstr "prędkość ruchu"
 
 #: client/battlescape/cl_hud.cpp:1323
-#, fuzzy
 msgid "sight range"
-msgstr "Prawa ręka"
+msgstr "zasięg"
 
 #: client/battlescape/cl_hud.cpp:1325
-#, fuzzy
 msgid "reaction speed"
-msgstr "Szybk. obrotu:"
+msgstr "szybkość reakcji"
 
 #: client/battlescape/cl_hud.cpp:1327
-#, fuzzy
 msgid "TU"
 msgstr "PR"
 
 #: client/battlescape/cl_hud.cpp:1355
-#, fuzzy, c-format
+#, c-format
 msgid "Damaged %s (deterioration: %i)\n"
-msgstr "Uszkodzony %s (niesprawność: %i)"
+msgstr "Uszkodzony %s (niesprawność: %i)\n"
 
 #: client/battlescape/cl_hud.cpp:1355
-#, fuzzy, c-format
+#, c-format
 msgid "Wounded %s (bleeding: %i)\n"
-msgstr "Ranny %s (krwawienie: %i)"
+msgstr "Ranny %s (krwawienie: %i)\n"
 
 #: client/battlescape/cl_hud.cpp:1358
 #, c-format
 msgid "- Reduced %s\n"
-msgstr ""
+msgstr "- Zmniejszone %s\n"
 
 #: client/battlescape/cl_hud.cpp:1380
 msgid "Currently panics!\n"
@@ -33279,7 +33275,7 @@ msgstr "Screenshot"
 
 #~ msgid "ugv_weapon_autocannon_pre_txt"
 #~ msgstr ""
-#~ "Przez: Mjr Paul Navarre, JBR: Dział Inżynieryjny, PHALANX, Dowództwo "
+#~ "Przez: mjr Paul Navarre, JBR: Dział Inżynieryjny, PHALANX, Dowództwo "
 #~ "Operacji Atlantyckich"
 
 #, fuzzy
@@ -33403,7 +33399,7 @@ msgstr "Screenshot"
 #~ "\n"
 #~ "Sporządzony: 19 Marca 2084\n"
 #~ "\n"
-#~ "Przez: Mjr Paul Navarre, JBR: Dział Inżynieryjny, PHALANX, Dowództwo "
+#~ "Przez: mjr Paul Navarre, JBR: Dział Inżynieryjny, PHALANX, Dowództwo "
 #~ "Operacji Atlantyckich\n"
 #~ "\n"
 #~ "\n"
@@ -33467,7 +33463,7 @@ msgstr "Screenshot"
 #~ "\n"
 #~ "Sporządzony: 19 Marca 2084\n"
 #~ "\n"
-#~ "Przez: Mjr Paul Navarre, JBR: Dział Inżynieryjny, PHALANX, Dowództwo "
+#~ "Przez: mjr Paul Navarre, JBR: Dział Inżynieryjny, PHALANX, Dowództwo "
 #~ "Operacji Atlantyckich\n"
 #~ "\n"
 #~ "\n"
@@ -33847,7 +33843,7 @@ msgstr "Screenshot"
 #~ "Zespół inżynierów zakończył produkcję {item} w {location}. Całe "
 #~ "wyposażenie jest przetestowane i gotowe do użycia.\n"
 #~ "\n"
-#~ "--mjr. Navarre"
+#~ "--mjr Navarre"
 
 #~ msgid "Monthly Report -- %s"
 #~ msgstr "Bilans miesięczny -- %s"
@@ -33897,7 +33893,7 @@ msgstr "Screenshot"
 #~ "\n"
 #~ "Z wyrazami szacunku,\n"
 #~ "\n"
-#~ "płk. Falkland"
+#~ "--płk Falkland"
 
 #~ msgid "mail_from_air_cdr"
 #~ msgstr ""
