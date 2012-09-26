@@ -539,14 +539,14 @@ aircraft craft_ufo_corrupter
 	slot {
 		type		"weapon"
 		size		"heavy"
-		contains	rs_craft_weapon_particle
-		ammo		rs_craft_ammo_particle
+		contains	rs_craft_weapon_alien_launcher
+		ammo		rs_craft_ammo_am_missile
 	}
 	slot {
 		type		"weapon"
 		size		"heavy"
-		contains	rs_craft_weapon_particle
-		ammo		rs_craft_ammo_particle
+		contains	rs_craft_weapon_alien_launcher
+		ammo		rs_craft_ammo_am_missile
 	}
 	interestlevel	200
 }
@@ -951,12 +951,12 @@ craftitem craft_ammo_am_missile
 	size		60 // "medium"
 	model		"geoscape/missile_antimatter"
 
-	ammo		3
-	wdamage		100
-	accuracy	0.4
-	wrange		2.5
+	ammo		6
+	wdamage		150
+	accuracy	0.6
+	wrange		3
 	wspeed		35
-	delay		800
+	delay		200
 }
 
 craftitem craft_ammo_hybrid_missile
@@ -968,11 +968,11 @@ craftitem craft_ammo_hybrid_missile
 	size		50 // "light"
 	model		"geoscape/missile" // @todo fixme!!!
 	ammo		6
-	wdamage		80
-	accuracy	0.4
-	wrange		2.5
+	wdamage		130
+	accuracy	0.7
+	wrange		3
 	wspeed		35
-	delay		800
+	delay		200
 }
 
 
