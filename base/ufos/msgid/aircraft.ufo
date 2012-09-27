@@ -197,11 +197,25 @@ Cdr. Navarre"
 }
 
 msgid inter_stingray_txt {
-text "_"
+text "_Commander, we've done it. Let me present to you the crowning achievement of my career: the Stingray Heavy-payload Fighter.
+
+The first thing you'll notice is its distinctive shape and armour plating. I know some of the pilots who had a look at the early drawings were a little wary of flying something that looks so alien, but I assure you every inch of this aircraft's design is there for a reason. We chucked out all of our assumptions and set about rethinking what we were doing. I'm happy to say the result is an aircraft that is lighter, faster and more heavily weaponised than anything in our arsenal.
+
+The Stingray's swept wings provide excellent stability at the extraordinary speeds it reaches. Because of the way we shape the alien materials for maximum cohesion, we were able to build the durability of the aircraft into its outer casing and gut the interior mechanisms which would typically reinforce the aircraft's armour. As a result, we can mount heavier weapon emplacements than we could on a comparable craft built with a more traditional design.
+
+This should give us something to deal with the frightening new UFOs we're facing in the sky. I recommend you get the Stingray into action as soon as possible.
+
+Cdr. Navarre"
 }
 
 msgid inter_stingray_pre_txt {
-text "_By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+text "_Commander, following our investigation of the Gunboat UFO it has become painfully clear that we need a more powerful interceptor. The last interceptors we designed really helped us level the playing field and we think we can do it again.
+
+The Gunboat's armour represents a significant advance in technology, allowing them to pack more protection into a much lighter package. That's why the Gunboat is so fast and agile. I want a shot at replicating this in our own designs. If we can pull it off, we'll have an extraordinarily fast interceptor capable of mounting a heavier weapon load than any of our previous interceptors.
+
+Give me sufficient lab time and I am confident I can bring you the best damn fighter our pilots will ever fly. We're going to need it to stay airborne if they keep sending those Gunboats against us.
+
+Cdr. Navarre"
 }
 
 msgid ufo_scout_txt {
