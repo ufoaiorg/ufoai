@@ -402,7 +402,11 @@ static void SV_AddEvent (unsigned int mask, int eType, int entnum)
 {
 	pending_event_t *p = &sv->pendingEvent;
 	const int rawType = eType &~ EVENT_INSTANTLY;
-	const char *eventName = eType >= 0 ? eventNames[rawType].name : "-";
+
+	if (rawType >= EV_NUM_EVENTS || rawType < 0)
+		Com_Error(ERR_DROP, "SV_AddEvent: invalid event %i", rawType);
+
+	const char *eventName = eventNames[rawType].name;
 	Com_DPrintf(DEBUG_EVENTSYS, "Event type: %s (%i - %i) (mask %s) (entnum: %i)\n", eventName,
 			rawType, eType, Com_UnsignedIntToBinary(mask), entnum);
 
