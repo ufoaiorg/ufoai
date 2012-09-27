@@ -397,7 +397,12 @@ aircraft craft_inter_stingray
 	image		"geoscape/air_interceptor"
 	slot {
 		type		"weapon"
-		position	"nose_center"
+		position	"rear_left"
+		size		"medium"
+	}
+	slot {
+		type		"weapon"
+		position	"rear_right"
 		size		"medium"
 	}
 	slot {
@@ -960,7 +965,7 @@ craftitem craft_weapon_alien_launcher
 {
 	name "_Alien Launcher"
 	crafttype "weapon"
-	size 90
+	size 110
 	installationTime 5
 	price 12000
 	model "aircraft/craft_weapon_antim/launcher_a"
