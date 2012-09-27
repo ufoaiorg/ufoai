@@ -68,8 +68,12 @@ void CL_EntPerish (const eventRegister_t *self, dbuffer *msg)
 		return;
 #endif
 	case ET_PARTICLE:
-		CL_ParticleFree(le->ptl);
-		le->ptl = NULL;
+		if (le->ptl) {
+			CL_ParticleFree(le->ptl);
+			le->ptl = NULL;
+		} else {
+			Com_Printf("CL_EntPerish: Particle is NULL for entnum %i!\n", entnum);
+		}
 		break;
 	case ET_BREAKABLE:
 	case ET_DOOR:
