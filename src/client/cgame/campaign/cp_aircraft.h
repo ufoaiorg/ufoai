@@ -113,7 +113,7 @@ typedef struct aliensTmp_s {
 	int amountDead;		/**< Amount of alien corpses. */
 } aliensTmp_t;
 
-#define MAX_AIRCRAFTSLOT 4
+#define MAX_AIRCRAFTSLOT 8
 
 /** @brief slot of aircraft */
 typedef struct aircraftSlot_s {
