@@ -119,7 +119,7 @@ item irgoggles
 			spread	"4 7"
 			shots	1
 			ammo	1
-			time	10
+			time	12
 			damage	"1 2"
 			dmgweight "normal_medium"
 		}
