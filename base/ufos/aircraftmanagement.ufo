@@ -331,11 +331,11 @@ aircraft craft_inter_dragon
 aircraft craft_inter_starchaser
 {
 	param {
-		speed		19
-		maxspeed	28
+		speed		22
+		maxspeed	33
 		shield		0
 		ecm			100
-		damage		700
+		damage		800
 		accuracy	100
 		range		150
 		antimatter	130
@@ -576,11 +576,11 @@ aircraft craft_ufo_supply
 aircraft craft_ufo_gunboat
 {
 	param {
-		speed		13
-		maxspeed	17
+		speed		18
+		maxspeed	25
 		shield		0
 		ecm			120
-		damage		350
+		damage		500
 		accuracy	100
 		range		347
 	}
@@ -593,6 +593,12 @@ aircraft craft_ufo_gunboat
 	price		23000
 	image		"geoscape/air_ufo"
 	interestlevel 310
+	slot {
+		type		"weapon"
+		size		"heavy"
+		contains	rs_craft_weapon_particle
+		ammo		rs_craft_ammo_particle
+	}
 	slot {
 		type		"weapon"
 		size		"heavy"
