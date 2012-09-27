@@ -628,11 +628,11 @@ aircraft craft_ufo_gunboat
 aircraft craft_ufo_bomber
 {
 	param {
-		speed		18
-		maxspeed	27
-		shield		0
+		speed		13
+		maxspeed	17
+		shield		5
 		ecm			100
-		damage		900
+		damage		1200
 		accuracy	100
 		range		347
 	}
@@ -647,20 +647,38 @@ aircraft craft_ufo_bomber
 	slot {
 		type		"weapon"
 		size		"heavy"
-		contains	rs_craft_weapon_particle
-		ammo		rs_craft_ammo_particle
+		contains	rs_craft_weapon_alien_launcher
+		ammo		rs_craft_ammo_am_missile
 	}
 	slot {
 		type		"weapon"
 		size		"heavy"
-		contains	rs_craft_weapon_particle
-		ammo		rs_craft_ammo_particle
+		contains	rs_craft_weapon_alien_launcher
+		ammo		rs_craft_ammo_am_missile
 	}
 	slot {
 		type		"weapon"
 		size		"heavy"
-		contains	rs_craft_weapon_particle
-		ammo		rs_craft_ammo_particle
+		contains	rs_craft_weapon_alien_launcher
+		ammo		rs_craft_ammo_am_missile
+	}
+	slot {
+		type		"weapon"
+		size		"heavy"
+		contains	rs_craft_weapon_alien_launcher
+		ammo		rs_craft_ammo_am_missile
+	}
+	slot {
+		type		"weapon"
+		size		"heavy"
+		contains	rs_craft_weapon_alien_launcher
+		ammo		rs_craft_ammo_am_missile
+	}
+	slot {
+		type		"weapon"
+		size		"heavy"
+		contains	rs_craft_weapon_alien_launcher
+		ammo		rs_craft_ammo_am_missile
 	}
 	interestlevel	310
 }
