@@ -291,11 +291,27 @@ text "_No pre research info available"
 }
 
 msgid ufo_bomber_txt {
-text "_"
+text "_Commander, we have just finished our investigation into the new UFO, which we have called the Bomber.
+
+We went over and over this craft looking for the tell-tale signs we usually use to figure out a UFO's purpose, but they're just not there. No lab equipment. No medical facilities. The Bomber is equipped with the thickest armour we've seen and more onboard technology and weaponry than any other UFO. But if it is meant to be a heavy fighter craft they could have fit this onto a much smaller and faster vehicle.
+
+Eventually, it was the size and emptiness that led us to the only conclusion we can fathom: this UFO's purpose is to deliver troops to combat. And by our estimates, it can comfortably and safely deliver to the battlefield more than twice as many well-armed aliens as any other UFO we've seen. This is a flying box of destruction. We can discern no other conceivable purpose for it.
+
+This is a worrying development. It was terrifying when we learned the aliens were trying to infect us with XVI, but it did mean that a large living human population was an asset to them. If they've decided they want to be rid of us, we may now be in a fight to the death.
+
+We can't be certain of their thinking then or whether it has changed now, but the need to discover where they're coming from and how we can hit them where it hurts is more urgent now than it has ever been.
+
+Cdr. Navarre"
 }
 
 msgid ufo_bomber_pre_txt {
-text "_No pre research info available"
+text "_Commander, we've recovered a new UFO type which is now waiting in our hangar for disassembly.
+
+This is the largest UFO we have recovered yet. Early assessments don't give us any hints about its particular use. It's so large it must be intended for ground incursions but, as you've no doubt heard from the after-action reports, it is a punishing foe in the air as well.
+
+Let us investigate this craft as soon as possible.
+
+Cdr. Navarre"
 }
 
 msgid ufo_corrupter_txt {
