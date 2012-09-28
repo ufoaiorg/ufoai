@@ -578,14 +578,12 @@ The powerful hardware installation involved in this upgrade will take up one com
 
 Recommended Doctrine
 
-This upgrade has several effective purposes. It can help to improve the effectiveness of low-accuracy weapons systems on a single aircraft, it can be used in a fire support role assisting barrages of long-range missile fire, or it can be used en masse by whole flights of interceptors to bring overwhelming fire to bear on our enemies at all ranges.
-
-Its only downside is that it takes up a whole modular slot that could be used for defensive electronics or other equipment. This may leave our interceptors weak in other areas.
+This upgrade will improve the effectiveness of our pilot's targeting. We recommend it is installed in all aircraft with a free electronics bay.
 
 
 Addenda
 
-With all the possibilities and different scenarios waiting in our future, there is no golden rule that will help decide when to deploy the Targeting Computer. It is ready for use at the Commander's discretion."
+None."
 }
 
 msgid craft_electronics_fuelpod_txt {
@@ -605,14 +603,14 @@ By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations C
 
 Overview
 
-We've determined that the modular equipment bays on our aircraft can be used to accept extra fuel reserves. By installing these special but very simple fuel pods, we can greatly increase the range of an aircraft by loading more fuel on board, and improve the craft's speed by allowing the engines enough juice to run on maximum all the way. It also lets pilots make far more liberal use of the afterburner, further upping the speed, allowing us to better compete with hostile UFOs.
+We've determined that the modular equipment bays on our aircraft can be used to accept extra fuel reserves. By installing these special but very simple fuel pods, we can greatly increase the range of an aircraft by loading more fuel on board.
 
-Take note, however, that installing a fuel pod will add a significant amount of weight to the craft. Care must be taken not to overload our airframes. If an aircraft is too heavy to safely launch, our Command Centre computers will automatically deny it launch clearance.
+Take note, however, that installing a fuel pod will add a significant amount of weight to the craft, slowing it down.
 
 
 Recommended Doctrine
 
-We should make use of these pods in any situation where our aircraft are unable to reach their destinations, or where they end up with too little fuel to continue engaging a UFO, or where a large section of ground is left uncovered by our network of bases. They will help to extend our reach and provide more protection to Earth and our people.
+We should make use of these pods in any situation where our aircraft are unable to reach their destinations or where a large section of ground is left uncovered by our network of bases. They will help to extend our reach and provide more protection to Earth and our people.
 
 
 Addenda
