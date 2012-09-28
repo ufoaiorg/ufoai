@@ -534,96 +534,20 @@ I'll send you a design proposal as soon as I can, Commander.
 Cdr. Navarre"
 }
 
+msgid alien_antimatter_missile_pre_txt {
+text "_No text exists for this item."
+}
+
 msgid alien_antimatter_missile_txt {
-text "_Commander, I think we've uncovered the secret to the alien materials. After some modifications to our Workshop equipment, we should now be able to use the stuff and 'program' it into advanced new shapes.
-
-As I've mentioned before, the alien materials form a 'memory alloy', remembering several shapes that it can change into if the materials are given the right stimulus. Amazingly, the alien alloy can be stimulated by two different things: heat and electricity. Heat is an obvious choice to make the UFO fuselage splay out during atmospheric flight, to provide better lift. Electricity, though, is a new one.
-
-When applying electricity, the alloy responds only to a constant, low-voltage current at a very specific amperage. The material's shape will deform and stay deformed for as long as that current is maintained. Once the current is switched off, the alloy will revert to its normal 'at rest' shape or a heat-induced shape if enough heat is present. The electricity-induced shape takes precedence over the heat-induced shape.
-
-This means that the shape of a UFO fuselage (and anything else made with these materials) can be changed at will, either by a command from the operator or by automated electronics.
-
-This has given us a lot of amazing new ideas. We'll only be able to develop a few of these ideas in time for use in the war, as some of them would take years of research time, but they should nevertheless allow us to build things we could never have attempted before.
-
-Alien Materials should now be available for use in production. Unfortunately, they require a lot of rare and expensive components, some of which can only be found on Earth in trace quantities. There's no way we could obtain the materials needed in quantities that would make non-trivial production possible. We'll have to salvage what we need off the aliens, because we won't be able to produce any of it for the forseeable future.
-
-Cdr. Navarre"
+text "_No text exists for this item."
 }
 
 msgid craft_ammo_hybrid_missile_pre_txt {
-text "_Technical Specifications: SHIVA 20mm API Rounds
-
-CLASSIFIED LEVEL BLACK
-
-PHALANX Extraterrestrial Response Unit
-
-Technical Document, Sigma Clearance -- Commander's Eyes Only
-
-Filed: 19 March 2084
-
-By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command
-
-
-
-Overview
-
-This is a pallet of 20mm API (Armour-Piercing Incendiary) ammunition for the SHIVA Rotary Cannon. It can contain up to 10,000 rounds.
-
-This high-powered anti-aircraft munition consists of a hard titanium-steel shell, tipped with depleted uranium, and filled with a core of explosive incendiary compound. Once the shell penetrates the outer skin of an aircraft, the core detonates, blowing the shell apart like a fragmentation grenade and spreading incendiary compound over the target area. Critical systems may be damaged before the incendiary compound can be quenched or compartmentalised.
-
-The advantage of the API round over the HEI (High-Explosive Incendiary) is its improved penetration, giving each round a better chance of causing some damage if a hit is scored. Penetrating API hits do not cause nearly as much damage as penetrating HEI hits, however.
-
-Each SHIVA cannon is loaded standard with a full pallet of 10,000 rounds, unless there are not enough rounds available in base storage.
-
-
-Recommended Doctrine
-
-It's a tough choice between API and HEI ammo in most situations. If we're expecting to engaging thickly-armoured enemies or have only limited aircraft available to intercept, API is the round of choice. If we're engaging heavily-armed, highly dangerous craft, then massed HEI fire may be one of the quickest ways to take it down.
-
-We can switch out a gun's ammunition in a matter of minutes, but we can't load both types into the same gun. The variable pressure of firing different ammunition can cause misfires and may result in extreme damage to the gun and the aircraft. Both UN safety procedures and the manufacturer's manual absolutely forbid it, and I can't help but agree.
-
-
-Addenda
-
-None."
+text "_No text exists for this item."
 }
 
 msgid craft_ammo_hybrid_missile_txt {
-text "_Technical Specifications: SHIVA 20mm API Rounds
-
-CLASSIFIED LEVEL BLACK
-
-PHALANX Extraterrestrial Response Unit
-
-Technical Document, Sigma Clearance -- Commander's Eyes Only
-
-Filed: 19 March 2084
-
-By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command
-
-
-
-Overview
-
-This is a pallet of 20mm API (Armour-Piercing Incendiary) ammunition for the SHIVA Rotary Cannon. It can contain up to 10,000 rounds.
-
-This high-powered anti-aircraft munition consists of a hard titanium-steel shell, tipped with depleted uranium, and filled with a core of explosive incendiary compound. Once the shell penetrates the outer skin of an aircraft, the core detonates, blowing the shell apart like a fragmentation grenade and spreading incendiary compound over the target area. Critical systems may be damaged before the incendiary compound can be quenched or compartmentalised.
-
-The advantage of the API round over the HEI (High-Explosive Incendiary) is its improved penetration, giving each round a better chance of causing some damage if a hit is scored. Penetrating API hits do not cause nearly as much damage as penetrating HEI hits, however.
-
-Each SHIVA cannon is loaded standard with a full pallet of 10,000 rounds, unless there are not enough rounds available in base storage.
-
-
-Recommended Doctrine
-
-It's a tough choice between API and HEI ammo in most situations. If we're expecting to engaging thickly-armoured enemies or have only limited aircraft available to intercept, API is the round of choice. If we're engaging heavily-armed, highly dangerous craft, then massed HEI fire may be one of the quickest ways to take it down.
-
-We can switch out a gun's ammunition in a matter of minutes, but we can't load both types into the same gun. The variable pressure of firing different ammunition can cause misfires and may result in extreme damage to the gun and the aircraft. Both UN safety procedures and the manufacturer's manual absolutely forbid it, and I can't help but agree.
-
-
-Addenda
-
-None."
+text "_No text exists for this item."
 }
 
 msgid craft_electronics_targeting_txt {
