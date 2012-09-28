@@ -419,11 +419,11 @@ The Harvester seems to bear out our theories about fuel capacity being the main 
 
 The Harvester's fuel tank can take up to 0.6 grammes of antimatter and possesses a potential explosive force of approximately 25 kilotons when full.
 
-There are three front-facing weapon mounts arranged in a triangle around the craft's cockpit. Two of these are equipped with the particle beam weapon we've observed in other UFOs, but the remaining mount features an interesting kind of alien missile launcher. The missiles have highly sophisticated homing systems and are propelled by matter-antimatter reaction rockets similar to UFO engines. These missiles are insanely fast, so fast that they don't need explosive warheads to kill their prey, relying solely on kinetic impact and the sympathetic detonation of any remaining fuel. More research into this weapon will be a high priority.
+There are three front-facing weapon mounts arranged in a triangle around the craft's cockpit, each equipped with the particle beam weapon we've observed in other UFOs.
 
-In the air, the Harvester is extremely dangerous and should be a high-priority target. Between the twin particle beams and the alien launcher, its firepower is more than a match for anything we can currently field. Its only obvious drawback is low manoeuvrability compared to smaller UFO types. Our interceptors are significantly more agile and we have far more combat experience in Earth atmosphere than the aliens do. This is one of the few advantages we'll have over the Harvester, and it would be wise to upgrade our equipment in order to mitigate some of the aliens' tech superiority.
+In the air, the Harvester is extremely dangerous and should be a high-priority target. Its firepower is more than a match for anything we can currently field. Its only obvious drawback is low manoeuvrability compared to smaller UFO types. Our interceptors are significantly more agile and we have far more combat experience in Earth atmosphere than the aliens do. This is one of the few advantages we'll have over the Harvester, but in most cases it won't be sufficient unless we upgrade our aerial capabilities.
 
-When encountered, we should concentrate our best pilots and craft on any Harvesters in the area and take them out as fast as possible. Only then should we concern ourselves with shooting down any escorts.
+When encountered, we should concentrate our best pilots on a Harvester to take it out as fast as possible.
 
 Our estimates of the Harvester's increased capabilities raise some frightening points. It seems that alien craft will actually grow faster as they become larger and more powerful, and there's no doubt that, if they can build these Harvesters, they can build bigger and nastier UFOs. Without upgrades to our airfleet, we may not be able to stand up to more dangerous threats in the future.
 
@@ -433,7 +433,7 @@ Cdr. Navarre"
 }
 
 msgid ufo_harvester_pre_txt {
-text "_Commander, we've recovered a new UFO type which is now waiting in our hangar for disassembly. This one is significantly larger than previous UFOs we've observed and seems to be the centre of many alien formations, making it an especially important target for our research. Uncovering the craft's purpose and examining its special equipment may give us essential new insights into the aliens' mission here on Earth.
+text "_Commander, we've recovered a new UFO type which is now waiting in our hangar for disassembly. This one is significantly larger than previous UFOs we've observed, making it an especially important target for our research. Uncovering the craft's purpose and examining its special equipment may give us essential new insights into the aliens' mission here on Earth.
 
 We're ready to start studying and dismantling the craft whenever you say, but we will need some lab time and funding to make a proper assessment of its function and capabilities.
 
