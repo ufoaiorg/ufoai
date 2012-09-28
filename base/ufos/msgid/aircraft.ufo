@@ -65,11 +65,25 @@ Cdr. Navarre"
 }
 
 msgid drop_raptor_txt {
-text "_"
+text "_Commander, I've attached the drawings for our new Raptor-class Combat Transport.
+
+This craft takes advantage of everything we've learned adapting alien technology to our fighter craft as well as our analysis of how the Gunboat packed a large alien squad into a UFO designed for air superiority. We've covered the aircraft in layers of alien materials for impressive resistance to explosives. It won't stand up to the kinds of assaults our interceptors face from the most powerful UFOs, but it can chase down and destroy light UFOs. To assist it in these battles, we've designated a medium weapon hardpoint for each wing and a light weapon hardpoint for the nose.
+
+The Raptor fits up to 10 soldiers safely in its hull, but they have to be strapped in to withstand the pressures of air combat. Soldiers exit below the aircraft, which is raised on unusually tall landing gear, so they will be unable to use the craft as a defensive position once landed.
+
+This is the first dropship to use the aliens' antimatter engines, so be sure you've got spare antimatter in storage to refuel this craft. Have our workers build one of these in our most crowded bases. It will free up other aircraft to focus on more dangerous threats.
+
+Cdr. Navarre"
 }
 
 msgid drop_raptor_pre_txt {
-text "_No pre research info available"
+text "_Commander, please consider this proposal for the research and development of a new armed dropship.
+
+Most of our efforts to adapt alien technology have gone into our fighter aircraft. This has left our dropships slow and vulnerable. I'd like to address this with the development of a new hybrid dropship, capable of chasing down and destroying small UFOs then immediately delivering a combat squad to the ground.
+
+It's an ambitious goal, given the vast differences between fighter craft and troop transports, but I'm confident we can come up with a valuable addition to our air fleet.
+
+Cdr. Navarre"
 }
 
 msgid inter_stiletto_txt {
