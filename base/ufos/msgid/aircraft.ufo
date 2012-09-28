@@ -387,7 +387,7 @@ The UFO is armed with two particle beam weapons as well as -- very interestingly
 
 The fuselage design of the Gunboat is still ostensibly that of a spacecraft, but it has certain adaptations that make it much easier to handle in atmosphere. It has actual wing surface generating lift, unlike the small claw-winged designs which relied on brute engine power to stay airborne. Furthermore, mobile flaps on the wings and stabilisers -- much like on human aircraft -- allow the Gunboat to use the airflow over its surfaces, giving it a much tighter turning circle, a far higher angle of attack and a tremendous rate of climb compared to a UFO moving on engine power alone.
 
-Overall the Gunboat is fast, manoeuvrable and utterly deadly. It seems to outperform previously-observed UFOs on every level; faster, tougher, better-armed and more nimble. The only positive is that it would take three or four times as much material to build a Gunboat compared to a small attack craft and twice as much fuel to keep it flying, so it's unlikely we'll see Gunboats in large numbers. My only worry is that they won't need very many of these to pound us into dust. Extreme caution is advised, Commander, and I recommend we spend some time and money upgrading our airfleet as soon as we can.
+Overall the Gunboat is fast, maneuverable and utterly deadly. It seems to outperform previously-observed UFOs on every level; faster, tougher, better-armed and more nimble. The only positive is that it would take three or four times as much material to build a Gunboat compared to a small attack craft and twice as much fuel to keep it flying, so it's unlikely we'll see Gunboats in large numbers. My only worry is that they won't need very many of these to pound us into dust. Extreme caution is advised, Commander, and I recommend we spend some time and money upgrading our airfleet as soon as we can.
 
 Cdr. Navarre"
 }
@@ -395,7 +395,7 @@ Cdr. Navarre"
 msgid ufo_gunboat_pre_txt {
 text "_Commander, we've recovered a new UFO type which is now waiting in our hangar for disassembly. Going by the extremely heavy armament it seems to be some kind of heavy fighter or fire support model, its size class somewhere in between those of the UFOs we've observed so far.
 
-This is the first alien craft we've seen that is unmistakably purpose-built for combat. What's even more disturbing is that it has certain features, innovations, which we theorise make the craft more suited for atmospheric flight. I think we need to have a look at this right away as it may represent a significant shift in alien goals and tactics.
+This is the first new alien craft we've seen since discovering the Fighter that is unmistakably purpose-built for combat. What's even more disturbing is that it has certain features, innovations, which we theorise make the craft more suited for atmospheric flight. I think we need to have a look at this right away as it may represent a significant shift in alien goals and tactics.
 
 We're ready to start studying and dismantling the craft whenever you say, but we will need some lab time and funding to make a proper assessment of its function and capabilities.
 
