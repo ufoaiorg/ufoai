@@ -256,7 +256,7 @@ aircraft craft_inter_saracen
 		ecm			80
 		damage		125
 		accuracy	100
-		range		110
+		range		150
 	}
 	name		"_Saracen-class Interceptor"
 	defaultname	"_Saracen I"
