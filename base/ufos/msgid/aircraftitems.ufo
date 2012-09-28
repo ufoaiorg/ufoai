@@ -193,9 +193,9 @@ text "_This is one of several proposals I'm submitting for the research and deve
 
 The Aerial Laser Cannon is the largest and most powerful iteration of our new laser designs. Like our infantry weapons it'll be powered by deuterium-fluoride reaction, but on a much larger scale and amplified by the aircraft's on-board electrical systems. Several exciting ideas are being considered.
 
-As well as being the biggest, this may well be our most challenging laser to create. Any aircraft cannon will have to reach across several kilometres of atmosphere -- and therefore loads of atmospheric blooming -- with enough punch at the endpoint to cut into a UFO's fuselage. Those sorts of power levels have been achieved before with massive arrays mounted on jumbo jets, but never in a package small enough to make a jet fighter cannon.
+As well as being the biggest, this may well be our most challenging laser to create. The sorts of power levels we need have been achieved before with massive arrays mounted on jumbo jets, but never in a package small enough to make a jet fighter cannon.
 
-The finished product should be able to engage UFOs with bullseye accuracy at ranges well beyond that of the SHIVA cannon, and although damage may be low, we expect that the ability to keep continuous fire and pressure on enemy craft will be valuable in the days to come.
+The finished product should be able to engage UFOs with bullseye accuracy to provide a more effective direct-fire aircraft weapon. We expect that the ability to keep continuous fire and pressure on enemy craft will be valuable in the days to come.
 
 Please approve lab time and funding for this program when you're ready, Commander.
 
@@ -205,13 +205,13 @@ Cdr. Navarre"
 msgid craft_weapon_alc_txt {
 text "_Commander, I've just finished my report on our latest laser program. We've successfully prototyped the new Aerial Laser Cannon and are ready to put it into production.
 
-We achieved what we set out to do: create a continuous wave, deuterium-fluoride-powered laser with megawatt-range output, capable of tracking and hitting UFOs at ranges of up to 5 kilometres. Accuracy is excellent, hampered only by enemy ECM (Electronic Countermeasures), and unlike in all our other weapons it is not affected by range. The laser proceeds in a straight line and crosses the distance between gun and target almost instantly. It's hard to miss with it.
+We achieved what we set out to do: create a continuous wave, deuterium-fluoride-powered laser with megawatt-range output. Accuracy is excellent, hampered only by enemy ECM (Electronic Countermeasures). The laser proceeds in a straight line and crosses the distance between gun and target almost instantly. It's hard to miss with it.
 
-Unfortunately atmospheric blooming is still a problem, and the laser rapidly loses power the further it has to travel to the target. At maximum range, 5 kilometres, it takes 32 seconds of continuous fire on the same spot to hole a UFO's hull. We're rarely going to have that much time to wait for a kill. The ideal range for this weapon is between 2 to 3 kilometres where it strikes a good balance between damage and distance. Average damage per second at these distances is slightly less than the SHIVA Rotary Cannon, but range is higher by up to 1.5 kilometres. More so than any of our previous weapons, the Aerial Laser Cannon is ideal for driving and pinning down the enemy behind a wall of laser fire.
+Unfortunately atmospheric blooming is still a problem, and the laser rapidly loses power the further it has to travel to the target. The Aerial Laser Cannon is ideal for driving and pinning down the enemy behind a wall of laser fire if the pilot can close within a devastating range.
 
 The cannon carries an integrated magazine of deuterium-fluoride allowing up to thirty minutes of continuous fire. Since deuterium and fluoride are both too potentially hazardous to store on-base, and we have access to large off-base stockpiles of all the necessary compounds, we will not need to keep laser cannon ammunition in inventory.
 
-Deployment of the weapon is at your discretion, Commander, but I'd like to recommend we use the new cannons to replace SHIVA guns across our airfleet except for craft specifically equipped for close-in fighting. Anything that's much less manoeuvrable than a UFO will have difficulty keeping hold of the target with SHIVAs, so the laser offers a far better solution with nearly as much staying power.
+Deployment of the weapon is at your discretion, Commander, but I'd like to recommend we use the new cannons to replace SHIVA guns across our airfleet.
 
 Cdr. Navarre"
 }
