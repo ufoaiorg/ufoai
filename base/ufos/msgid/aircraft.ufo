@@ -41,11 +41,27 @@ None."
 }
 
 msgid drop_herakles_txt {
-text "_"
+text "_Commander, I'm pleased to present the schematics for the Herakles-class Heavy Lifter.
+
+To speed the development of this dropship, we adapted the design from an existing airborne lifter vehicle that is used in the civilian sector for the movement of extremely heavy goods. The craft consists of a lifting vehicle and a dead pod -- an inert cargo container that we have converted to house up to 12 troops.
+
+The craft has VTOL capabilities, but we've upgraded the propulsion systems to achieve faster cruising speeds. We've also encased both the vehicle and the pod in advanced armour plating that relies on human-sourced materials to keep costs down. The Herakles should get our soldiers on-site faster and safer than the firebird.
+
+Like the Firebird, we have incorporated a single light weapon hardpoint in the nose, but this is only for last-ditch defensive efforts. The Herakles is a troop transport and should be kept safe from any armed UFOs.
+
+We should get at least one of these built as soon as possible. We won't need the larger ground assault force for every mission, but if we're going to take down an alien installation we'll want the extra firepower.
+
+Cdr. Navarre"
 }
 
 msgid drop_herakles_pre_txt {
-text "_No pre research info available"
+text "_Commander, I'm submitting this proposal for the research and development of a new dropship after we learned the purpose of the Supply UFO.
+
+If the aliens are stockpiling assets and personnel on earth's surface, we'll need to be able to deploy larger assault teams. We have preliminary design ideas for a new heavy-class troop transport vehicle that could allow us to expand the size of the squads we are putting into battle.
+
+Give me the brainpower and the time to make this a reality. Your soldiers will need the extra support on the ground.
+
+Cdr. Navarre"
 }
 
 msgid drop_raptor_txt {
