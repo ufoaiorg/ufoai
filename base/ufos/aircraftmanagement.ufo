@@ -572,7 +572,7 @@ aircraft craft_ufo_supply
 	type		"ufo"
 	model		"geoscape/ufo_supply"
 	size		2
-	numteam		7
+	numteam		12
 	price		20000
 	image		"geoscape/air_ufo"
 	interestlevel	200

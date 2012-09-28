@@ -303,21 +303,17 @@ text "_Commander, my team and I have just finished another UFO report for you. H
 
 As far as we can determine, this type of UFO is indeed a transporter of some kind, carrying materials in its large cargo hold and up to 12 aliens in a small passenger compartment behind the cockpit. Satellite surveillance has observed these ships landing at alien-held positions and unloading material and passengers. This is strong evidence in support of the 'supply ship' theory, and we're confident that it's correct.
 
-We can make several conclusions from the UFO's construction and the cargo we've recovered from the hold. Unlike other UFOs we've seen, the Supply Ship is built for carrying heavy loads rather than surviving combat. It doesn't manoeuver very well, its engines are weak by comparison, and its airframe will break up easily when hit. This is why a Supply Ship will often be protected by a large screen of Fighter UFOs, in case of interception.
+We can make several conclusions from the UFO's construction and the cargo we've recovered from the hold. Unlike other UFOs we've seen, the Supply Ship is built for carrying heavy loads rather than surviving combat. It doesn't manoeuver very well, its engines are weak by comparison, and its airframe will break up easily when hit.
 
 There isn't much that an alien cargo ship could be doing on Earth except reinforcement and resupply. It will be bringing in weapons, spare parts and other supplies from the alien homeworld to Earth in support of alien operations on the surface. This should be prevented at all costs -- permanent alien installations on Earth would place the civilian population in the area in extreme danger. A strong alien presence also hampers our operations in many ways, some too subtle to observe directly. The regular operation of Supply Ships in an area may indicate an alien installation under construction or, worse, one that's already operational.
 
-On the other hand, if we can prevent any Supply Ships from reaching an existing alien strongpoint, we may be able to starve it out for a while before sending in troops. This may give us a crucial tactical advantage.
-
 In conclusion, although it may seem of lesser importance than the other UFOs we've encountered, the Supply Ship should be engaged whenever possible. The long-term benefits of interrupting alien supplies may not be immediately apparent, but it will show over time.
-
-Because Supply Ships are likely to have escorts, it's recommended that we only engage them with overwhelming force. That's all, Commander.
 
 Cdr. Navarre"
 }
 
 msgid ufo_supply_pre_txt {
-text "_Commander, we've recovered a new UFO type which is now waiting in our hangar for disassembly. Larger than any of the other UFOs we've seen so far, it seems to be unarmed, and its large cargo hold suggests that it may be a supply carrier of some sort, supporting alien assets on the surface of the Earth. These craft can be found at the centre of many alien formations and will drastically increase the alien presence on our planet if we allow them to complete their missions.
+text "_Commander, we've recovered a new UFO type which is now waiting in our hangar for disassembly. It seems to be unarmed and its large cargo hold suggests that it may be a supply carrier of some sort, supporting alien assets on the surface of the Earth.
 
 We're ready to start studying and dismantling the craft whenever you say, but we will need some lab time and funding to make a proper assessment of its function and capabilities.
 
