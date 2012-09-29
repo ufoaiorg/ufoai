@@ -249,6 +249,7 @@ void uiGeoscapeNode::draw (uiNode_t *node)
 	}
 
 	geoscapeData_t& data = *UI_MAPEXTRADATA(node).geoscapeData;
+	data.geoscapeNode = node;
 	GAME_DrawMap(&data);
 	if (!data.active)
 		return;

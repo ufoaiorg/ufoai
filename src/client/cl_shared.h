@@ -81,6 +81,8 @@ typedef struct {
 
 	/** this is the data that is used with r_radarTexture */
 	byte r_radarSourcePic[RADAR_WIDTH * RADAR_HEIGHT];
+
+	void *geoscapeNode;
 } geoscapeData_t;
 
 typedef enum {

@@ -1797,6 +1797,8 @@ void MAP_DrawMap (geoscapeData_t* data)
 	data->radarOverlay = MAP_IsRadarOverlayActivated();
 	data->date = ccs.date;
 
+	geoscapeNode = static_cast<uiNode_t *>(data->geoscapeNode);
+
 	mission_t *mission = MAP_GetSelectedMission();
 	/* display text */
 	cgi->UI_ResetData(TEXT_STANDARD);
