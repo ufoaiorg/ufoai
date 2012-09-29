@@ -441,20 +441,21 @@ void GAME_CP_DrawBase (int baseIdx, int x, int y, int w, int h, int col, int row
 	/* reset the used flag */
 	OBJZERO(used);
 
-	for (row = 0; row < BASE_SIZE; row++) {
+	int baseRow, baseCol;
+	for (baseRow = 0; baseRow < BASE_SIZE; baseRow++) {
 		const char *image = NULL;
-		for (col = 0; col < BASE_SIZE; col++) {
-			const vec2_t pos = { x + col * w, y + row * (h - overlap) };
+		for (baseCol = 0; baseCol < BASE_SIZE; baseCol++) {
+			const vec2_t pos = { x + baseCol * w, y + baseRow * (h - overlap) };
 			const building_t *building;
 			/* base tile */
-			if (B_IsTileBlocked(base, col, row)) {
+			if (B_IsTileBlocked(base, baseCol, baseRow)) {
 				building = NULL;
 				image = "base/invalid";
-			} else if (B_GetBuildingAt(base, col, row) == NULL) {
+			} else if (B_GetBuildingAt(base, baseCol, baseRow) == NULL) {
 				building = NULL;
 				image = "base/grid";
 			} else {
-				building = B_GetBuildingAt(base, col, row);
+				building = B_GetBuildingAt(base, baseCol, baseRow);
 				assert(building);
 
 				if (building->image)
@@ -490,14 +491,13 @@ void GAME_CP_DrawBase (int baseIdx, int x, int y, int w, int h, int col, int row
 	/* if we are building */
 	if (hover && ccs.baseAction == BA_NEWBUILDING) {
 		static const vec4_t white = {1.0f, 1.0f, 1.0f, 0.8f};
-		int y, x;
 		const building_t *building = base->buildingCurrent;
 		const vec2_t& size = building->size;
 		assert(building);
 
-		for (y = row; y < row + size[1]; y++) {
-			for (x = col; x < col + size[0]; x++) {
-				if (!B_MapIsCellFree(base, x, y))
+		for (int i = row; i < row + size[1]; i++) {
+			for (int j = col; j < col + size[0]; j++) {
+				if (!B_MapIsCellFree(base, j, i))
 					return;
 			}
 		}
