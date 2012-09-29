@@ -329,7 +329,7 @@ int G_ActorGetArmourTUPenalty (const edict_t *ent)
 int G_ActorCalculateMaxTU (const edict_t *ent)
 {
 	const int currentMaxTU = (MIN_TU + (ent->chr.score.skills[ABILITY_SPEED]) * 20 / MAX_SKILL) * G_ActorGetInjuryPenalty(ent, MODIFIER_TU) - G_ActorGetArmourTUPenalty(ent);
-	return std::min(currentMaxTU, 255);
+	return std::min(currentMaxTU, MAX_TU);
 }
 
 static inline int G_ActorGetTU (const edict_t *ent)
