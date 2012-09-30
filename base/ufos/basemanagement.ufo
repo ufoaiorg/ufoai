@@ -32,7 +32,7 @@
 
 building building_aliencontainment
 {
-	name			"_Alien Containment Facility"
+	name			"_Alien Containment"
 	image			"base/aliencont"
 	fixcosts		92000
 	depends			building_powerplant
