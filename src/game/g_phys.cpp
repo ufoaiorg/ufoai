@@ -42,30 +42,31 @@ void G_PhysicsStep (edict_t *ent)
 		const int playerMask = ~G_VisToPM(visflags);
 		/* Send the sound effect to everyone how's not seeing the actor */
 		if (!G_IsCrouched(ent)) {
+			const char *snd = NULL;
 			if (contentFlags & CONTENTS_WATER) {
 				if (ent->moveinfo.contentFlags[ent->moveinfo.currentStep] & CONTENTS_WATER) {
 					/* looks like we already are in the water */
 					/* send water moving sound */
-					G_EventSpawnSound(playerMask, true, ent, ent->origin, "footsteps/water_under");
+					snd = "footsteps/water_under";
 				} else {
 					/* send water entering sound */
-					G_EventSpawnSound(playerMask, true, ent, ent->origin, "footsteps/water_in");
+					snd = "footsteps/water_in";
 				}
 			} else if (ent->contentFlags & CONTENTS_WATER) {
 				/* send water leaving sound */
-				G_EventSpawnSound(playerMask, true, ent, ent->origin, "footsteps/water_out");
+				snd = "footsteps/water_out";
 			} else if (Q_strvalid(ent->chr.teamDef->footstepSound)) {
-				G_EventSpawnSound(playerMask, true, ent, ent->origin, ent->chr.teamDef->footstepSound);
+				snd = ent->chr.teamDef->footstepSound;
 			} else {
 				/* we should really hit the ground with this */
 				const vec3_t to = {ent->origin[0], ent->origin[1], ent->origin[2] - UNIT_HEIGHT};
 				const trace_t trace = G_Trace(ent->origin, to, NULL, MASK_SOLID);
 				if (trace.surface) {
-					const char *snd = gi.GetFootstepSound(trace.surface->name);
-					if (snd)
-						G_EventSpawnSound(playerMask, true, ent, ent->origin, snd);
+					snd = gi.GetFootstepSound(trace.surface->name);
 				}
 			}
+			if (snd)
+				G_EventSpawnSound(playerMask, true, ent, ent->origin, snd);
 		}
 
 		/* and now save the new contents */
