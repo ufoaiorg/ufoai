@@ -1465,9 +1465,7 @@ static void TR_DestinationCapacityList_f (void)
 		if (cap.max <= 0 && currentCap[capType] <= 0)
 			continue;
 
-		/* Update capacity list of destination base */
-		if (td.transferBase)
-			cgi->Cmd_ExecuteString(va("ui_trans_caplist %d", td.transferBase->idx));
+		cgi->UI_ExecuteConfunc(va("ui_t_capacities_add \"%s\" \"%s\" %d %d", b->id, _(b->name), currentCap[capType], cap.max));
 	}
 }
 
