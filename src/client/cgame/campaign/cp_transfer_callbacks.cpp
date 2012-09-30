@@ -631,7 +631,8 @@ static void TR_TransferListClear_f (void)
 	cgi->UI_ExecuteConfunc("trans_resetscroll");
 
 	/* Update capacity list of destination base */
-	cgi->Cmd_ExecuteString(va("ui_trans_caplist %d", td.transferBase->idx));
+	if (td.transferBase)
+		cgi->Cmd_ExecuteString(va("ui_trans_caplist %d", td.transferBase->idx));
 }
 
 /**
@@ -834,7 +835,8 @@ static void TR_AddToTransferList (base_t *base, transferData_t *transfer, int nu
 	}
 
 	/* Update capacity list of destination base */
-	cgi->Cmd_ExecuteString(va("ui_trans_caplist %d", transfer->transferBase->idx));
+	if (td.transferBase)
+		cgi->Cmd_ExecuteString(va("ui_trans_caplist %d", td.transferBase->idx));
 }
 
 /**
@@ -894,7 +896,8 @@ static void TR_TransferBaseSelect (base_t *srcbase, base_t *destbase)
 	TR_TransferSelect(srcbase, destbase, td.currentTransferType);
 
 	/* Update capacity list of destination base */
-	cgi->Cmd_ExecuteString(va("ui_trans_caplist %d", destbase->idx));
+	if (td.transferBase)
+		cgi->Cmd_ExecuteString(va("ui_trans_caplist %d", td.transferBase->idx));
 }
 
 /**
@@ -1126,7 +1129,8 @@ static void TR_RemoveFromCargoList (base_t *base, transferData_t *transferData, 
 	}
 
 	/* Update capacity list of destination base */
-	cgi->Cmd_ExecuteString(va("ui_trans_caplist %d", transferData->transferBase->idx));
+	if (td.transferBase)
+		cgi->Cmd_ExecuteString(va("ui_trans_caplist %d", td.transferBase->idx));
 }
 
 /**
@@ -1461,7 +1465,9 @@ static void TR_DestinationCapacityList_f (void)
 		if (cap.max <= 0 && currentCap[capType] <= 0)
 			continue;
 
-		cgi->UI_ExecuteConfunc("ui_t_capacities_add \"%s\" \"%s\" %i %i", b->id, _(b->name), currentCap[capType], cap.max);
+		/* Update capacity list of destination base */
+		if (td.transferBase)
+			cgi->Cmd_ExecuteString(va("ui_trans_caplist %d", td.transferBase->idx));
 	}
 }
 
