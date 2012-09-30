@@ -39,22 +39,23 @@ void G_PhysicsStep (edict_t *ent)
 	if (ent->moveinfo.currentStep < ent->moveinfo.steps) {
 		const int contentFlags = ent->contentFlags;
 		const vismask_t visflags = ent->moveinfo.visflags[ent->moveinfo.currentStep];
+		const int playerMask = ~G_VisToPM(visflags);
 		/* Send the sound effect to everyone how's not seeing the actor */
 		if (!G_IsCrouched(ent)) {
 			if (contentFlags & CONTENTS_WATER) {
 				if (ent->moveinfo.contentFlags[ent->moveinfo.currentStep] & CONTENTS_WATER) {
 					/* looks like we already are in the water */
 					/* send water moving sound */
-					G_EventSpawnSound(~G_VisToPM(visflags), true, ent, ent->origin, "footsteps/water_under");
+					G_EventSpawnSound(playerMask, true, ent, ent->origin, "footsteps/water_under");
 				} else {
 					/* send water entering sound */
-					G_EventSpawnSound(~G_VisToPM(visflags), true, ent, ent->origin, "footsteps/water_in");
+					G_EventSpawnSound(playerMask, true, ent, ent->origin, "footsteps/water_in");
 				}
 			} else if (ent->contentFlags & CONTENTS_WATER) {
 				/* send water leaving sound */
-				G_EventSpawnSound(~G_VisToPM(visflags), true, ent, ent->origin, "footsteps/water_out");
+				G_EventSpawnSound(playerMask, true, ent, ent->origin, "footsteps/water_out");
 			} else if (Q_strvalid(ent->chr.teamDef->footstepSound)) {
-				G_EventSpawnSound(~G_VisToPM(visflags), true, ent, ent->origin, ent->chr.teamDef->footstepSound);
+				G_EventSpawnSound(playerMask, true, ent, ent->origin, ent->chr.teamDef->footstepSound);
 			} else {
 				/* we should really hit the ground with this */
 				const vec3_t to = {ent->origin[0], ent->origin[1], ent->origin[2] - UNIT_HEIGHT};
@@ -62,7 +63,7 @@ void G_PhysicsStep (edict_t *ent)
 				if (trace.surface) {
 					const char *snd = gi.GetFootstepSound(trace.surface->name);
 					if (snd)
-						G_EventSpawnSound(~G_VisToPM(visflags), true, ent, ent->origin, snd);
+						G_EventSpawnSound(playerMask, true, ent, ent->origin, snd);
 				}
 			}
 		}
@@ -104,8 +105,6 @@ static bool G_PhysicsThink (edict_t *ent)
  */
 void G_PhysicsRun (void)
 {
-	edict_t *ent = NULL;
-
 	/* not all teams are spawned or game has already ended */
 	if (!G_MatchIsRunning())
 		return;
@@ -118,6 +117,7 @@ void G_PhysicsRun (void)
 
 	/* treat each object in turn */
 	/* even the world gets a chance to think */
+	edict_t *ent = NULL;
 	while ((ent = G_EdictsGetNextInUse(ent))) {
 		if (ent->think)
 			G_PhysicsThink(ent);
