@@ -1465,7 +1465,7 @@ static void TR_DestinationCapacityList_f (void)
 		if (cap.max <= 0 && currentCap[capType] <= 0)
 			continue;
 
-		cgi->UI_ExecuteConfunc(va("ui_t_capacities_add \"%s\" \"%s\" %d %d", b->id, _(b->name), currentCap[capType], cap.max));
+		cgi->UI_ExecuteConfunc("ui_t_capacities_add \"%s\" \"%s\" %d %d", b->id, b->name, currentCap[capType], cap.max);
 	}
 }
 

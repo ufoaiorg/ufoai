@@ -217,7 +217,8 @@ static void B_BuildBase_f (void)
 	if (ccs.credits - campaign->basecost > 0) {
 		const char *baseName = mn_base_title->string;
 		base_t *base;
-		if (baseName[0] == '\0')
+		/* there may be no " in the base name */
+		if (baseName[0] == '\0' || strchr(baseName, '"') != NULL)
 			baseName = "Base";
 
 		base = B_Build(campaign, ccs.newBasePos, baseName);
