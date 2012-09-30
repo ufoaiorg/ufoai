@@ -552,8 +552,8 @@ void Grid_MoveCalc (const routing_t *map, const actorSizeEnum_t actorSize, pathi
 	path->fblist = fb_list;
 	path->fblength = fb_length;
 
-	if (distance > MAX_ROUTE + 3)	/* +3 is added to calc at least one square (diagonal) more */
-		distance = MAX_ROUTE + 3;	/* and later show one step beyond the walkable path in red */
+	if (distance > MAX_ROUTE + TU_MOVE_DIAGONAL)	/* +TU_MOVE_DIAGONAL is added to calc at least one square (diagonal) more */
+		distance = MAX_ROUTE + TU_MOVE_DIAGONAL;	/* and later show one step beyond the walkable path in red */
 
 	/* Prepare exclusion of starting-location (i.e. this should be ent-pos or le-pos) in Grid_CheckForbidden */
 	VectorCopy(from, excludeFromForbiddenList);
