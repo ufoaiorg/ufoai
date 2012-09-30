@@ -467,7 +467,7 @@ static void LE_PlaySoundFileForContents (le_t* le, int contents)
 {
 	/* only play those water sounds when an actor jumps into the water - but not
 	 * if he enters carefully in crouched mode */
-	if (le->state & ~STATE_CROUCHED) {
+	if (!LE_IsCrouched(le)) {
 		if (contents & CONTENTS_WATER) {
 			/* were we already in the water? */
 			if (le->positionContents & CONTENTS_WATER) {
