@@ -255,7 +255,7 @@ Dr. Connor"
 msgid shevaar_autopsy_txt {
 text "_Commander,
 
-Our autopsy of this new alien -- the Shevaar -- has been very interesting. It's a significant departure from the more humanoid Tamans and Ortnoks, possessing digitigrade legs and a small tail that seems to be a remnant of this species's continuing evolution. The creature also appears to be completely blind. It lacks eyes and any other kind of organ that could be used to process visual light. However, it seems to have other interesting organs to make up for this deficiency.
+Our autopsy of this new alien -- the Shevaar -- has been very interesting. It's a significant departure from the more humanoid Tamans, possessing digitigrade legs and a small tail that seems to be a remnant of this species's continuing evolution. The creature also appears to be completely blind. It lacks eyes and any other kind of organ that could be used to process visual light. However, it seems to have other interesting organs to make up for this deficiency.
 
 First off, the Shevaar looks like the unholy merger of a man and a lizard. Unlike most Earth lizards, however, the alien is warm-blooded and its brain is similar in size to our own -- probably slightly larger. Its massive feet are surprisingly springy, and it can cover large amounts of ground in a long, leaping gait. The large hands seem to have no problem wielding the many varieties of alien weaponry.
 
@@ -269,11 +269,11 @@ From the autopsy and our analysis of battlefield footage, we can conclude the fo
 
 - The Shevaar see in infrared. This will make it difficult to hide from them or approach them undetected.
 
-- They carry mostly light equipment to preserve their natural mobility. This allows them to employ effective hit-and-run tactics.
+- They seem to wear no armour to preserve their natural mobility. This allows them to employ effective hit-and-run tactics.
 
 - Shevaar bodies are highly resistant to impact and cutting damage, and their compact internals are not easily damaged by concussion or explosives. However, their scaly hides provide little protection from fire, lasers or electricity.
 
-Shevaar are most often used as fast, armoured scouts. They're extremely effective in this role, combining high mobility with extended vision capabilities, and the aliens seem to have no shortage of these creatures. The Shevaar seem to be located between Tamans and Ortnoks in the nebulous alien hierarchy, in that they sometimes fill specialist or command roles, unlike Ortnoks, but these tasks are still usually taken by Tamans whenever the two races are deployed together.
+Shevaar are most often used as fast, armoured scouts. They're extremely effective in this role, combining high mobility with extended vision capabilities, and the aliens seem to have no shortage of these creatures. They sometimes fill specialist or command roles, unlike Ortnoks, but these tasks are still usually taken by Tamans whenever the two races are deployed together.
 
 When not engaged in combat, Shevaar spend most of their time as scouts or skirmishers, or as herders for captured humans.
 
@@ -291,7 +291,7 @@ Dr. Connor"
 msgid shevaar_autopsy_extra_txt {
 text "_Commander,
 
-Our autopsy of this new alien -- the Shevaar -- has been very interesting. It's a significant departure from the more humanoid Tamans and Ortnoks, possessing digitigrade legs and a small tail that seems to be a remnant of this species's continuing evolution. The creature also appears to be completely blind. It lacks eyes and any other kind of organ that could be used to process visual light. However, it seems to have other interesting organs to make up for this deficiency.
+Our autopsy of this new alien -- the Shevaar -- has been very interesting. It's a significant departure from the more humanoid Tamans, possessing digitigrade legs and a small tail that seems to be a remnant of this species's continuing evolution. The creature also appears to be completely blind. It lacks eyes and any other kind of organ that could be used to process visual light. However, it seems to have other interesting organs to make up for this deficiency.
 
 First off, the Shevaar looks like the unholy merger of a man and a lizard. Unlike most Earth lizards, however, the alien is warm-blooded and its brain is similar in size to our own -- probably slightly larger. Its massive feet are surprisingly springy, and it can cover large amounts of ground in a long, leaping gait. The large hands seem to have no problem wielding the many varieties of alien weaponry.
 
@@ -305,11 +305,11 @@ From the autopsy and our analysis of battlefield footage, we can conclude the fo
 
 - The Shevaar see in infrared. This will make it difficult to hide from them or approach them undetected.
 
-- They carry mostly light equipment to preserve their natural mobility. This allows them to employ effective hit-and-run tactics.
+- They seem to wear no armour to preserve their natural mobility. This allows them to employ effective hit-and-run tactics.
 
 - Shevaar bodies are highly resistant to impact and cutting damage, and their compact internals are not easily damaged by concussion or explosives. However, their scaly hides provide little protection from fire, lasers or electricity.
 
-Shevaar are most often used as fast, armoured scouts. They're extremely effective in this role, combining high mobility with extended vision capabilities, and the aliens seem to have no shortage of these creatures. The Shevaar seem to be located between Tamans and Ortnoks in the nebulous alien hierarchy, in that they sometimes fill specialist or command roles, unlike Ortnoks, but these tasks are still usually taken by Tamans whenever the two races are deployed together.
+Shevaar are most often used as fast scouts. They're extremely effective in this role, combining high mobility with extended vision capabilities, and the aliens seem to have no shortage of these creatures. They sometimes fill specialist or command roles, but these tasks are still usually taken by Tamans whenever the two races are deployed together.
 
 When not engaged in combat, Shevaar spend most of their time as scouts or skirmishers, or as herders for captured humans.
 
