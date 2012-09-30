@@ -528,7 +528,7 @@ static void Grid_MoveMark (const routing_t *map, const pos3_t exclude, const act
  * The plan is to have the 'origin' in 2x2 units in the bottom-left (towards the lower coordinates) corner of the 2x2 square.
  * @param[in,out] path Pointer to client or server side pathing table (clMap, svMap)
  * @param[in] from The position to start the calculation from.
- * @param[in] distance The maximum TUs away from 'from' to calculate move-information for
+ * @param[in] maxTUs The maximum TUs away from 'from' to calculate move-information for
  * @param[in] crouchingState Whether the actor is currently crouching, 1 is yes, 0 is no.
  * @param[in] fb_list Forbidden list (entities are standing at those points)
  * @param[in] fb_length Length of forbidden list
@@ -536,7 +536,7 @@ static void Grid_MoveMark (const routing_t *map, const pos3_t exclude, const act
  * @sa G_MoveCalc
  * @sa CL_ConditionalMoveCalc
  */
-void Grid_MoveCalc (const routing_t *map, const actorSizeEnum_t actorSize, pathing_t *path, const pos3_t from, byte crouchingState, int distance, byte ** fb_list, int fb_length)
+void Grid_MoveCalc (const routing_t *map, const actorSizeEnum_t actorSize, pathing_t *path, const pos3_t from, byte crouchingState, int maxTUs, byte ** fb_list, int fb_length)
 {
 	int dir;
 	int count;
@@ -552,8 +552,7 @@ void Grid_MoveCalc (const routing_t *map, const actorSizeEnum_t actorSize, pathi
 	path->fblist = fb_list;
 	path->fblength = fb_length;
 
-	if (distance > MAX_ROUTE + TU_MOVE_DIAGONAL)	/* +TU_MOVE_DIAGONAL is added to calc at least one square (diagonal) more */
-		distance = MAX_ROUTE + TU_MOVE_DIAGONAL;	/* and later show one step beyond the walkable path in red */
+	maxTUs = std::min(maxTUs, MAX_ROUTE_TUS);
 
 	/* Prepare exclusion of starting-location (i.e. this should be ent-pos or le-pos) in Grid_CheckForbidden */
 	VectorCopy(from, excludeFromForbiddenList);
@@ -573,15 +572,14 @@ void Grid_MoveCalc (const routing_t *map, const actorSizeEnum_t actorSize, pathi
 
 	count = 0;
 	while (!PQueueIsEmpty(&pqueue)) {
-		byte TUsSoFar;
 		PQueuePop(&pqueue, epos);
 		VectorCopy(epos, pos);
 		count++;
 
 		/* if reaching that square already took too many TUs,
 		 * don't bother to reach new squares *from* there. */
-		TUsSoFar = RT_AREA_POS(path, pos, crouchingState);
-		if (TUsSoFar >= distance)
+		const byte usedTUs = RT_AREA_POS(path, pos, crouchingState);
+		if (usedTUs >= maxTUs)
 			continue;
 
 		for (dir = 0; dir < PATHFINDING_DIRECTIONS; dir++) {

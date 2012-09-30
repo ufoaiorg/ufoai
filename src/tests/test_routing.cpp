@@ -98,7 +98,7 @@ static void testMove (void)
 
 	{
 		const byte crouchingState = 0;
-		const int distance = MAX_ROUTE;
+		const int maxTUs = MAX_ROUTE_TUS;
 		int lengthStored;
 		pos3_t to;
 		pathing_t *path = Mem_AllocType(pathing_t);
@@ -106,7 +106,7 @@ static void testMove (void)
 		VectorSet(vec, 80, 80, 32);
 		VecToPos(vec, pos);
 
-		Grid_MoveCalc(routing, ACTOR_SIZE_NORMAL, path, pos, crouchingState, distance, NULL, 0);
+		Grid_MoveCalc(routing, ACTOR_SIZE_NORMAL, path, pos, crouchingState, maxTUs, NULL, 0);
 		Grid_MoveStore(path);
 
 		/* move downwards */
@@ -220,7 +220,7 @@ static void testMoveEntities (void)
 	pos_t *forbiddenList[MAX_FORBIDDENLIST];
 	int forbiddenListLength = 0;
 	const byte crouchingState = 0;
-	const int distance = MAX_ROUTE;
+	const int maxTUs = MAX_ROUTE_TUS;
 
 	SV_Map(true, mapName, NULL);
 
@@ -250,7 +250,7 @@ static void testMoveEntities (void)
 		int lengthStored;
 		pos3_t to;
 
-		Grid_MoveCalc(routing, ACTOR_SIZE_NORMAL, path, pos, crouchingState, distance, forbiddenList, forbiddenListLength);
+		Grid_MoveCalc(routing, ACTOR_SIZE_NORMAL, path, pos, crouchingState, maxTUs, forbiddenList, forbiddenListLength);
 		Grid_MoveStore(path);
 
 		/* walk onto the func_breakable */
@@ -287,7 +287,7 @@ static void testMoveEntities (void)
 		int lengthStored;
 		pos3_t to;
 
-		Grid_MoveCalc(routing, ACTOR_SIZE_NORMAL, path, pos, crouchingState, distance, forbiddenList, forbiddenListLength);
+		Grid_MoveCalc(routing, ACTOR_SIZE_NORMAL, path, pos, crouchingState, maxTUs, forbiddenList, forbiddenListLength);
 		Grid_MoveStore(path);
 
 		/* walk through the opened door */

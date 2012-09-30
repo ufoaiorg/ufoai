@@ -70,9 +70,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define	NONE		-1
 #define	NONE_AMMO	0
 
-/* Move/Routing values */
-#define	MAX_ROUTE		33
-
 /* Timeunits for the various actions. */
 #define	TU_CROUCH			3	/**< Time units for crouching and standing up */
 #define	TU_TURN				1	/**< Time units for turning (no matter how far). */
@@ -85,6 +82,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define	TU_FLYING_MOVING_FACTOR	2	/**< The factor the normal movement is multiplied when flying */
 
 #define TU_GET_RELOAD(containerOut, containerIn, weapon) (csi.ids[(containerOut)].out + (weapon)->reload + csi.ids[(containerIn)].in)
+
+/* Move/Routing values */
+#define MAX_ROUTE			32
+#define	MAX_ROUTE_TUS		33
 
 /* door states */
 #define	STATE_OPENED		0
