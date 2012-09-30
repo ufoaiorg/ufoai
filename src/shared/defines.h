@@ -72,7 +72,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /* Move/Routing values */
 #define	MAX_ROUTE		33
-#define	MAX_MOVELENGTH	60
 
 /* Timeunits for the various actions. */
 #define	TU_CROUCH			3	/**< Time units for crouching and standing up */
