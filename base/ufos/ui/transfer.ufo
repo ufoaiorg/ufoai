@@ -13,6 +13,33 @@ component cmp_t_spinner extends spinner_blue
 	}
 }
 
+component cmp_t_capacity extends panel {
+	{
+		size		"340 20"
+	}
+	string name {
+		pos			"0 0"
+		size		"180 20"
+		contentalign	ALIGN_CL
+	}
+	string free {
+		pos			"180 0"
+		size		"70 20"
+		contentalign	ALIGN_CR
+	}
+	string separator {
+		string		"/"
+		pos			"250 0"
+		size		"20 20"
+		contentalign	ALIGN_CC
+	}
+	string max {
+		pos			"270 0"
+		size		"70 20"
+		contentalign	ALIGN_CR
+	}
+}
+
 window transfer
 {
 	/** @todo Remove me */
@@ -371,12 +398,6 @@ window transfer
 	// ==================
 	// change target base
 	// ==================
-
-
-	// ==================
-	// transfer info panel
-	// ==================
-
 	panel infopanel {
 		{
 			pos		"580 160"
@@ -384,20 +405,18 @@ window transfer
 			background	"ui/panel_grey_green_large"
 		}
 
-		string s_current_base
-		{
+		string s_current_base {
 			string		"_Destination base"
-			pos			"64 22"
-			size		"288 20"
+			pos			"20 22"
+			size		"380 20"
 			contentalign	ALIGN_UC
 			color		"0.7 0.7 0.7 1"
 			font		"f_small"
 		}
 
-		selectbox destination_base
-		{
+		selectbox destination_base 	{
 			cvar		*cvar:mn_trans_base_id
-			pos			"64 50"
+			pos			"64 45"
 			size		"288 20"
 			dataid		OPTION_BASELIST
 			onChange {
@@ -406,33 +425,100 @@ window transfer
 			}
 		}
 
-		text t_baseinfo
-		{
-			dataid		TEXT_BASE_INFO
-			pos			"18 80"
-			size		"360 160"
-			lineheight	"20"
-			onViewChange	{
-				*node:root.infopanel.t_baseinfo_scroll@fullsize = <fullsize>
-				*node:root.infopanel.t_baseinfo_scroll@current = <viewpos>
-				*node:root.infopanel.t_baseinfo_scroll@viewsize = <viewsize>
+		string s_cap_building {
+			string		"_Building"
+			pos			"40 90"
+			size		"180 20"
+			contentalign	ALIGN_UL
+			color		"0.7 0.7 0.7 1"
+			font		"f_small"
+		}
+		string s_cap_freespace {
+			string		"_free"
+			pos			"220 90"
+			size		"70 20"
+			contentalign	ALIGN_UR
+			color		"0.7 0.7 0.7 1"
+			font		"f_small"
+		}
+		string s_cap_per {
+			string		"/"
+			pos			"290 90"
+			size		"20 20"
+			contentalign	ALIGN_UC
+			color		"0.7 0.7 0.7 1"
+			font		"f_small"
+		}
+		string s_cap_allspace {
+			string		"_all space"
+			pos			"310 90"
+			size		"70 20"
+			contentalign	ALIGN_UR
+			color		"0.7 0.7 0.7 1"
+			font		"f_small"
+		}
+		panel capacities {
+			pos			"40 115"
+			size		"340 125"
+			layout		LAYOUT_TOP_DOWN_FLOW
+			onViewChange {
+				*node:parent.t_baseinfo_scroll@fullsize = <fullsize>
+				*node:parent.t_baseinfo_scroll@current = <viewpos>
+				*node:parent.t_baseinfo_scroll@viewsize = <viewsize>
 			}
 		}
 
 		vscrollbar t_baseinfo_scroll {
 			image		"ui/scrollbar_v_green"
-			pos			"380 80"
-			height		"160"
+			pos			"383 115"
+			height		"125"
 			hidewhenunused	true
 			onChange	{
-				*node:root.infopanel.t_baseinfo@viewpos = <current>
+				*node:parent.capacities@viewpos = <current>
 			}
 		}
+
+		confunc ui_t_capacities_clear {
+			call *node:parent.capacities@removeAllchild
+			cmd "trans_disable enable;"
+		}
+		confunc ui_t_capacities_add {
+			call *node:parent.capacities@createChild("cap_<1>", "cmp_t_capacity")
+
+			*node:parent.capacities.cap_<1>.name@string = <2>
+			*node:parent.capacities.cap_<1>.free@string = ( <4> - <3> )
+			*node:parent.capacities.cap_<1>.max@string = <4>
+
+			if ( <3> > <4>) {
+				*node:parent.capacities.cap_<1>.name@color = "1 0 0 1"
+				*node:parent.capacities.cap_<1>.free@color = "1 0 0 1"
+				*node:parent.capacities.cap_<1>.max@color = "1 0 0 1"
+				cmd "trans_disable disable \"_Capacity overload\";"
+			} else {
+				*node:parent.capacities.cap_<1>.name@color = "1 1 1 1"
+				*node:parent.capacities.cap_<1>.free@color = "1 1 1 1"
+				*node:parent.capacities.cap_<1>.max@color = "1 1 1 1"
+			}
+		}
+
 	}
 
-	todo splitwarns {
-		pos			"70 150"
-		string		"split warning message outside of the textlist"
+	data transfer_denied {
+		integer 		0
+	}
+
+	confunc trans_disable {
+		if ( <1> eq "enable" ) {
+			*node:root.transfer_denied@integer = 0
+			*node:root.bt_starttrans@color = "1 1 1 0.6"
+			*node:root.bt_starttrans@selectcolor = "1 1 1 0.6"
+			*node:root.bt_starttrans@tooltip = "_Start the transfer"
+		} elif ( <1> eq "disable" ) {
+			*node:root.transfer_denied@integer = 1
+			*node:root.bt_starttrans@color = "1 0 0 0.6"
+			*node:root.bt_starttrans@selectcolor = "1 0 0 0.6"
+			*node:root.bt_starttrans@tooltip = "<2>"
+		}
 	}
 
 	confunc trans_resetscroll {
@@ -473,7 +559,11 @@ window transfer
 		color		"1 1 1 0.6"
 		selectcolor	"1 1 1 0.6"
 		font		"f_normal"
-		onClick		{ cmd "trans_start;" }
+		onClick	{
+			if ( *node:root.transfer_denied@integer == 0 ) {
+				cmd "trans_start;"
+			}
+		}
 	}
 
 	button bt_emptycraftstorage
