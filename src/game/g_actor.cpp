@@ -563,6 +563,20 @@ bool G_ActorDieOrStun (edict_t * ent, edict_t *attacker)
 }
 
 /**
+ * @brief Get the content flags from where the actor is currently standing
+ */
+void G_ActorGetContentFlags (edict_t *ent)
+{
+	vec3_t pointTrace;
+
+	G_EdictCalcOrigin(ent);
+	VectorCopy(ent->origin, pointTrace);
+	pointTrace[2] += PLAYER_MIN;
+
+	ent->contentFlags = gi.PointContents(pointTrace);
+}
+
+/**
  * @brief Moves an item inside an inventory. Floors are handled special.
  * @param[in] ent The pointer to the selected/used edict/soldier.
  * @param[in] from The container (-id) the item should be moved from.
