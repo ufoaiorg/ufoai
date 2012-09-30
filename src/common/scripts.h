@@ -219,10 +219,10 @@ extern const char *const name_strings[];
 /** @brief Different terrain definitions for footsteps and particles */
 typedef struct terrainType_s {
 	const char *texture;			/**< script id is the texture name/path */
-	const char *footStepSound;		/**< sound to play when walking on this terrain type */
+	const char *footstepSound;		/**< sound to play when walking on this terrain type */
 	const char *particle;			/**< particle to spawn when walking on this type of terrain */
 	float bounceFraction;			/**< the impact on the bounce fraction given in the weapon definition */
-	float footStepVolume;			/**< footstep sound volume */
+	float footstepVolume;			/**< footstep sound volume */
 	struct terrainType_s *hash_next;	/**< next entry in the hash list */
 } terrainType_t;
 

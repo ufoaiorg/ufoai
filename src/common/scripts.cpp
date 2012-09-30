@@ -2458,7 +2458,7 @@ static const BodyData* Com_GetBodyTemplateByID (const char *id)
 /** @brief possible teamdesc values (ufo-scriptfiles) */
 static const value_t teamDefValues[] = {
 	{"tech", V_STRING, offsetof(teamDef_t, tech), 0}, /**< tech id from research.ufo */
-	{"footstepsound", V_STRING, offsetof(teamDef_t, footstepSound), 0}, /**< tech id from research.ufo */
+	{"footstepsound", V_STRING, offsetof(teamDef_t, footstepSound), 0}, /**< play this sound for footsteps - overrides the terrain definitions */
 	{"name", V_TRANSLATION_STRING, offsetof(teamDef_t, name), 0}, /**< internal team name */
 	{"armour", V_BOOL, offsetof(teamDef_t, armour), MEMBER_SIZEOF(teamDef_t, armour)}, /**< are these team members able to wear armour? */
 	{"weapons", V_BOOL, offsetof(teamDef_t, weapons), MEMBER_SIZEOF(teamDef_t, weapons)}, /**< are these team members able to use weapons? */
@@ -2842,9 +2842,9 @@ TERRAIN PARSERS
 static terrainType_t *terrainTypesHash[TERRAIN_HASH_SIZE];
 
 static const value_t terrainTypeValues[] = {
-	{"footstepsound", V_HUNK_STRING, offsetof(terrainType_t, footStepSound), 0},
+	{"footstepsound", V_HUNK_STRING, offsetof(terrainType_t, footstepSound), 0},
 	{"particle", V_HUNK_STRING, offsetof(terrainType_t, particle), 0},
-	{"footstepvolume", V_FLOAT, offsetof(terrainType_t, footStepVolume), 0},
+	{"footstepvolume", V_FLOAT, offsetof(terrainType_t, footstepVolume), 0},
 	{"bouncefraction", V_FLOAT, offsetof(terrainType_t, bounceFraction), 0},
 
 	{NULL, V_NULL, 0, 0}
@@ -2885,7 +2885,7 @@ static void Com_ParseTerrain (const char *name, const char **text)
 	}
 
 	terrainType_t* const t = Mem_PoolAllocType(terrainType_t, com_genericPool);
-	t->footStepVolume = SND_VOLUME_FOOTSTEPS;
+	t->footstepVolume = SND_VOLUME_FOOTSTEPS;
 	t->bounceFraction = 1.0f;
 
 	if (Com_ParseBlock(name, text, t, terrainTypeValues, com_genericPool)) {

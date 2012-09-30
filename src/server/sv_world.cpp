@@ -551,7 +551,7 @@ trace_t SV_Trace (const vec3_t start, const vec3_t mins, const vec3_t maxs, cons
 const char *SV_GetFootstepSound (const char *texture)
 {
 	const terrainType_t *t = Com_GetTerrainType(texture);
-	return t ? t->footStepSound : NULL;
+	return t ? t->footstepSound : NULL;
 }
 
 /**

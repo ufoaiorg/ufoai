@@ -53,6 +53,8 @@ void G_PhysicsStep (edict_t *ent)
 			} else if (ent->contentFlags & CONTENTS_WATER) {
 				/* send water leaving sound */
 				G_EventSpawnSound(~G_VisToPM(visflags), true, ent, ent->origin, "footsteps/water_out");
+			} else if (Q_strvalid(ent->chr.teamDef->footstepSound)) {
+				G_EventSpawnSound(~G_VisToPM(visflags), true, ent, ent->origin, ent->chr.teamDef->footstepSound);
 			} else {
 				trace_t trace;
 				vec3_t from, to;
