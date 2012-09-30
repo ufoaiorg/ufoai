@@ -193,7 +193,7 @@ static void G_WriteStep (edict_t* ent, byte** stepAmount, const int dvec, const 
 	}
 
 	/* the moveinfo stuff is used inside the G_PhysicsStep think function */
-	if (ent->moveinfo.steps >= MAX_DVTAB) {
+	if (ent->moveinfo.steps >= MAX_ROUTE) {
 		ent->moveinfo.steps = 0;
 		ent->moveinfo.currentStep = 0;
 	}
@@ -271,7 +271,7 @@ byte G_ActorMoveLength (const edict_t *ent, const pathing_t *path, const pos3_t 
 void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos3_t to)
 {
 	int status, initTU;
-	dvec_t dvtab[MAX_DVTAB];
+	dvec_t dvtab[MAX_ROUTE];
 	int dir;
 	byte numdv, length;
 	pos3_t pos;

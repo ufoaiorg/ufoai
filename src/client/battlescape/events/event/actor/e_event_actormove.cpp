@@ -119,7 +119,7 @@ void CL_ActorDoMove (const eventRegister_t *self, dbuffer *msg)
 	}
 	le->pathLength = i;
 
-	if (le->pathLength >= MAX_LE_PATHLENGTH)
+	if (le->pathLength >= MAX_ROUTE)
 		Com_Error(ERR_DROP, "Overflow in pathLength (entnum: %i)", number);
 
 	/* skip the end of move marker */

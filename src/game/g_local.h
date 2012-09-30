@@ -426,8 +426,6 @@ typedef unsigned int vismask_t;
 
 #define MORALE_RANDOM( mod )	( (mod) * (1.0 + 0.3*crand()) )
 
-#define MAX_DVTAB 32
-
 edict_t* G_ClientGetFreeSpawnPointForActorSize(const player_t *player, const actorSizeEnum_t actorSize);
 bool G_ClientUseEdict(const player_t *player, edict_t *actor, edict_t *door);
 bool G_ActionCheckForCurrentTeam(const player_t *player, edict_t *ent, int TU);
@@ -604,8 +602,8 @@ typedef enum {
 
 /** @brief actor movement */
 typedef struct {
-	int			contentFlags[MAX_DVTAB];
-	vismask_t	visflags[MAX_DVTAB];
+	int			contentFlags[MAX_ROUTE];
+	vismask_t	visflags[MAX_ROUTE];
 	byte		steps;
 	int			currentStep;
 } moveinfo_t;

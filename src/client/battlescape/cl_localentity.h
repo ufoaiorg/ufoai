@@ -27,8 +27,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../renderer/r_entity.h"
 
-#define MAX_LE_PATHLENGTH 32
-
 /** @brief Actor actions */
 typedef enum {
 	M_MOVE,		/**< We are currently in move-mode (destination selection). */
@@ -111,12 +109,12 @@ typedef struct le_s {
 	int thinkDelay;
 
 	/** various think function vars */
-	dvec_t dvtab[MAX_LE_PATHLENGTH];
-	int pathContents[MAX_LE_PATHLENGTH];	/**< content flags of the brushes the actor is walking in */
+	dvec_t dvtab[MAX_ROUTE];
+	int pathContents[MAX_ROUTE];	/**< content flags of the brushes the actor is walking in */
 	int positionContents;					/**< content flags for the current brush the actor is standing in */
 	int pathLength, pathPos;
 	int startTime, endTime;
-	int speed[MAX_LE_PATHLENGTH];			/**< the speed the le is moving with */
+	int speed[MAX_ROUTE];			/**< the speed the le is moving with */
 	float rotationSpeed;
 	int slidingSpeed;
 
