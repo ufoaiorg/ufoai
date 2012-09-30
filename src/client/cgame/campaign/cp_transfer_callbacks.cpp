@@ -1450,14 +1450,14 @@ static void TR_DestinationCapacityList_f (void)
 
 	cgi->UI_ExecuteConfunc("ui_t_capacities_clear");
 	for (int i = 0; i < ccs.numBuildingTemplates; i++) {
-		const building_t* b = &ccs.buildingTemplates[i];
-		const baseCapacities_t capType = B_GetCapacityFromBuildingType(b->buildingType);
+		const building_t* building = &ccs.buildingTemplates[i];
+		const baseCapacities_t capType = B_GetCapacityFromBuildingType(building->buildingType);
 
 		/* skip not transferable capacities */
 		if (capType == MAX_CAP || capType == CAP_LABSPACE || capType == CAP_WORKSPACE)
 			continue;
 		/* show only researched buildings' */
-		if (!RS_IsResearched_ptr(b->tech))
+		if (!RS_IsResearched_ptr(building->tech))
 			continue;
 
 		capacities_t cap = *CAP_Get(base, capType);
@@ -1465,7 +1465,7 @@ static void TR_DestinationCapacityList_f (void)
 		if (cap.max <= 0 && currentCap[capType] <= 0)
 			continue;
 
-		cgi->UI_ExecuteConfunc("ui_t_capacities_add \"%s\" \"%s\" %d %d", b->id, b->name, currentCap[capType], cap.max);
+		cgi->UI_ExecuteConfunc("ui_t_capacities_add \"%s\" \"%s\" %d %d", building->id, _(building->name), currentCap[capType], cap.max);
 	}
 }
 
