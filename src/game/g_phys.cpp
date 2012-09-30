@@ -37,14 +37,17 @@ void G_PhysicsStep (edict_t *ent)
 	 * @todo don't play foot step sounds for flying units.
 	 */
 	if (ent->moveinfo.currentStep < ent->moveinfo.steps) {
+		/* current content flags */
 		const int contentFlags = ent->contentFlags;
+		/* new content flags */
+		const int stepContentFlags = ent->moveinfo.contentFlags[ent->moveinfo.currentStep];
 		const vismask_t visflags = ent->moveinfo.visflags[ent->moveinfo.currentStep];
 		const int playerMask = ~G_VisToPM(visflags);
 		/* Send the sound effect to everyone how's not seeing the actor */
 		if (!G_IsCrouched(ent)) {
 			const char *snd = NULL;
-			if (contentFlags & CONTENTS_WATER) {
-				if (ent->moveinfo.contentFlags[ent->moveinfo.currentStep] & CONTENTS_WATER) {
+			if (stepContentFlags & CONTENTS_WATER) {
+				if (contentFlags & CONTENTS_WATER) {
 					/* looks like we already are in the water */
 					/* send water moving sound */
 					snd = "footsteps/water_under";
@@ -52,7 +55,7 @@ void G_PhysicsStep (edict_t *ent)
 					/* send water entering sound */
 					snd = "footsteps/water_in";
 				}
-			} else if (ent->contentFlags & CONTENTS_WATER) {
+			} else if (contentFlags & CONTENTS_WATER) {
 				/* send water leaving sound */
 				snd = "footsteps/water_out";
 			} else if (Q_strvalid(ent->chr.teamDef->footstepSound)) {
