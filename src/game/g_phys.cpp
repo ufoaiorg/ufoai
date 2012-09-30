@@ -56,15 +56,9 @@ void G_PhysicsStep (edict_t *ent)
 			} else if (Q_strvalid(ent->chr.teamDef->footstepSound)) {
 				G_EventSpawnSound(~G_VisToPM(visflags), true, ent, ent->origin, ent->chr.teamDef->footstepSound);
 			} else {
-				trace_t trace;
-				vec3_t from, to;
-
-				VectorCopy(ent->origin, to);
-				VectorCopy(ent->origin, from);
 				/* we should really hit the ground with this */
-				to[2] -= UNIT_HEIGHT;
-
-				trace = G_Trace(from, to, NULL, MASK_SOLID);
+				const vec3_t to = {ent->origin[0], ent->origin[1], ent->origin[2] - UNIT_HEIGHT};
+				const trace_t trace = G_Trace(ent->origin, to, NULL, MASK_SOLID);
 				if (trace.surface) {
 					const char *snd = gi.GetFootstepSound(trace.surface->name);
 					if (snd)
