@@ -565,15 +565,14 @@ bool G_ActorDieOrStun (edict_t * ent, edict_t *attacker)
 /**
  * @brief Get the content flags from where the actor is currently standing
  */
-void G_ActorGetContentFlags (edict_t *ent)
+int G_ActorGetContentFlags (const vec3_t origin)
 {
 	vec3_t pointTrace;
 
-	G_EdictCalcOrigin(ent);
-	VectorCopy(ent->origin, pointTrace);
+	VectorCopy(origin, pointTrace);
 	pointTrace[2] += PLAYER_MIN;
 
-	ent->contentFlags = gi.PointContents(pointTrace);
+	return gi.PointContents(pointTrace);
 }
 
 /**

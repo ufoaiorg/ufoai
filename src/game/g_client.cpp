@@ -1279,7 +1279,7 @@ void G_ClientTeamInfo (const player_t * player)
 				G_ClientAssignDefaultActorValues(ent);
 				G_ActorGiveTimeUnits(ent);
 				G_TouchTriggers(ent);
-				G_ActorGetContentFlags(ent);
+				ent->contentFlags = G_ActorGetContentFlags(ent->origin);
 			} else {
 				gi.DPrintf("Not enough spawn points for team %i (actorsize: %i)\n", player->pers.team, actorFieldSize);
 

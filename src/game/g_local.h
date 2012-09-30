@@ -445,7 +445,7 @@ bool G_IsLivingActor(const edict_t *ent) __attribute__((nonnull));
 void G_ActorSetClientAction(edict_t *actor, edict_t *ent);
 edict_t *G_ActorGetByUCN(const int ucn, const int team);
 void G_CheckForceEndRound(void);
-void G_ActorGetContentFlags(edict_t *ent);
+int G_ActorGetContentFlags(const vec3_t origin);
 bool G_ActorDieOrStun(edict_t *ent, edict_t *attacker);
 int G_ActorCountAlive(int team);
 void G_ActorSetMaxs(edict_t* ent);

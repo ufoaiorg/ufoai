@@ -393,15 +393,9 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos
 			ent->speed *= g_actorspeed->value;
 
 			if (crouchFlag == 0) { /* No change in crouch */
-				edict_t* clientAction;
-				int contentFlags;
-				vec3_t pointTrace;
-
 				G_EdictCalcOrigin(ent);
-				VectorCopy(ent->origin, pointTrace);
-				pointTrace[2] += PLAYER_MIN;
 
-				contentFlags = gi.PointContents(pointTrace);
+				const int contentFlags = G_ActorGetContentFlags(ent->origin);
 
 				/* link it at new position - this must be done for every edict
 				 * movement - to let the server know about it. */
@@ -427,7 +421,7 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos
 				/* Set ent->TU because the reaction code relies on ent->TU being accurate. */
 				G_ActorSetTU(ent, initTU - usedTUs);
 
-				clientAction = ent->clientAction;
+				edict_t* clientAction = ent->clientAction;
 				oldState = ent->state;
 				oldHP = ent->HP;
 				oldSTUN = ent->STUN;
