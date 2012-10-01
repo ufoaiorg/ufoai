@@ -647,6 +647,7 @@ aircraft craft_ufo_bomber
 	model		"geoscape/ufo_bomber"
 	size		2
 	numteam		25
+	leader		true
 	price		45000
 	image		"geoscape/air_ufo"
 	slot {

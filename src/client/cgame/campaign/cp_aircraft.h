@@ -213,6 +213,7 @@ typedef struct aircraft_s {
 	char *missionID;			/**< aircraft loaded before missions, we need this temporary as reference
 								 * AIR_PostLoadInitMissions resolves the pointers after game loaded and frees this */
 	struct aircraft_s *aircraftTarget;		/**< Target of the aircraft (ufo or phalanx) */
+	bool leader;				/**< try to follow this aircraft */
 	struct radar_s radar;				/**< Radar to track ufos */
 	int stats[AIR_STATS_MAX];	/**< aircraft parameters for speed, damage and so on
 								 * @note As this is an int, wrange is multiplied by 1000 */

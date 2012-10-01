@@ -1402,6 +1402,7 @@ static const value_t aircraft_vals[] = {
 	{"nogeoscape", V_BOOL, offsetof(aircraft_t, notOnGeoscape), MEMBER_SIZEOF(aircraft_t, notOnGeoscape)},
 	{"interestlevel", V_INT, offsetof(aircraft_t, ufoInterestOnGeoscape), MEMBER_SIZEOF(aircraft_t, ufoInterestOnGeoscape)},
 
+	{"leader", V_BOOL, offsetof(aircraft_t, leader), MEMBER_SIZEOF(aircraft_t, leader)},
 	{"image", V_HUNK_STRING, offsetof(aircraft_t, image), 0},
 	{"model", V_HUNK_STRING, offsetof(aircraft_t, model), 0},
 	/* price for selling/buying */
