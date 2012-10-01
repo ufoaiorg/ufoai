@@ -406,6 +406,7 @@ static void UFO_SearchAircraftTarget (const campaign_t* campaign, aircraft_t *uf
 					/* stop time and notify */
 					MSO_CheckAddNewMessage(NT_UFO_ATTACKING, _("Notice"), va(_("A UFO is flying toward %s"), phalanxAircraft->name));
 					/** @todo present a popup with possible orders like: return to base, attack the ufo, try to flee the rockets */
+					return;
 				}
 			}
 		}
