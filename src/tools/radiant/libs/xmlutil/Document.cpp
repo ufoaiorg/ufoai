@@ -78,15 +78,23 @@ void Document::importDocument(Document& other, Node& importNode) {
 
 	xmlNodePtr targetNode = importNode.getNodePtr();
 
-	if (targetNode->children == NULL || targetNode->name == NULL) {
+	if (targetNode->name == NULL) {
 		// invalid importnode
 		return;
 	}
 
+	// greebo: Not all target nodes already have a valid child node, use a modified algorithm
+	// to handle that situation as suggested by malex984
+
 	// Add each of the imported nodes to the target importNode
-	for (std::size_t i = 0; i < topLevelNodes.size(); i++) {
-		xmlAddPrevSibling(targetNode->children,
-						  topLevelNodes[i].getNodePtr());
+	for (std::size_t i = 0; i < topLevelNodes.size(); ++i) {
+		if (targetNode->children == NULL) {
+			xmlUnlinkNode(topLevelNodes[i].getNodePtr());
+			xmlAddChild(targetNode, topLevelNodes[i].getNodePtr());
+		} else {
+			xmlAddPrevSibling(targetNode->children,
+					topLevelNodes[i].getNodePtr());
+		}
 	}
 }
 
