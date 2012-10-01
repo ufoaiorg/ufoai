@@ -1683,7 +1683,7 @@ static void MIS_SpawnNewMissions_f (void)
 			/* Start mission */
 			if (!CP_MissionBegin(mission))
 				return;
-			if (type == 1 && CP_ReconMissionChoose(mission))
+			if (type == 1 && mission->ufo)
 				/* Aerial mission */
 				CP_ReconMissionAerial(mission);
 			else
