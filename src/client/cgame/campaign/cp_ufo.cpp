@@ -136,13 +136,14 @@ bool UFO_ShouldAppearOnGeoscape (const ufoType_t type)
  * @sa cgi->Com_UFOTypeToShortName
  * @sa cgi->Com_UFOShortNameToID
  */
-const char* UFO_TypeToName (ufoType_t type)
+const char* UFO_TypeToName (const ufoType_t type)
 {
 	const technology_t *tech = UFO_GetTechnologyFromType(type);
 	if (tech)
 		return _(tech->name);
 	cgi->Com_Error(ERR_DROP, "UFO_TypeToName(): Unknown UFO type %i\n", type);
 }
+
 /**
  * @brief Returns names of the UFO is UFO has been researched.
  * @param[in] ufocraft Pointer to the UFO.

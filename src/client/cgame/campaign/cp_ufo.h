@@ -33,7 +33,7 @@ enum {
 
 #define UFO_GetGeoscapeIDX(ufo) ((ufo) - ccs.ufos)
 
-const char* UFO_TypeToName(ufoType_t type);
+const char* UFO_TypeToName(const ufoType_t type);
 const technology_t* UFO_GetTechnologyFromType(const ufoType_t type);
 const aircraft_t* UFO_GetByType(const ufoType_t type);
 bool UFO_ShouldAppearOnGeoscape(const ufoType_t type);
