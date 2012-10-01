@@ -366,7 +366,7 @@ void UFO_UpdateAlienInterestForAllBasesAndInstallations (void)
 }
 
 /**
- * @brief Check if the ufo can shoot at a PHALANX aircraft
+ * @brief Check if the ufo can shoot at a PHALANX aircraft and whether it should follow another ufo
  */
 static void UFO_SearchAircraftTarget (const campaign_t* campaign, aircraft_t *ufo, float maxDetectionRange = MAX_DETECTING_RANGE)
 {
@@ -413,6 +413,23 @@ static void UFO_SearchAircraftTarget (const campaign_t* campaign, aircraft_t *uf
 					return;
 				}
 			}
+		}
+	}
+
+	aircraft_t *otherUFO = NULL;
+	const float polarCoordinatesOffset = 1.0f;
+	while ((otherUFO = UFO_GetNextOnGeoscape(otherUFO)) != NULL) {
+		if (otherUFO == ufo)
+			continue;
+		if (otherUFO->leader) {
+			vec2_t dest;
+			AIR_GetDestinationWhilePursuing(ufo, otherUFO, dest);
+			dest[0] += polarCoordinatesOffset;
+			dest[1] += polarCoordinatesOffset;
+			MAP_MapCalcLine(ufo->pos, dest, &ufo->route);
+			ufo->time = 0;
+			ufo->point = 0;
+			break;
 		}
 	}
 }
