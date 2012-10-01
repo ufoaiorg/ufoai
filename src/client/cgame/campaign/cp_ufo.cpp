@@ -425,20 +425,18 @@ static void UFO_SearchAircraftTarget (const campaign_t* campaign, aircraft_t *uf
  */
 bool UFO_SendPursuingAircraft (aircraft_t* ufo, aircraft_t* aircraft)
 {
-	int slotIdx;
-	vec2_t dest;
-
 	assert(ufo);
 	assert(aircraft);
 
 	/* check whether the ufo can shoot the aircraft - if not, don't try it even */
-	slotIdx = AIRFIGHT_ChooseWeapon(ufo->weapons, ufo->maxWeapons, ufo->pos, aircraft->pos);
+	const int slotIdx = AIRFIGHT_ChooseWeapon(ufo->weapons, ufo->maxWeapons, ufo->pos, aircraft->pos);
 	if (slotIdx == AIRFIGHT_WEAPON_CAN_NEVER_SHOOT) {
 		/* no ammo left: stop attack */
 		ufo->status = AIR_TRANSIT;
 		return false;
 	}
 
+	vec2_t dest;
 	AIR_GetDestinationWhilePursuing(ufo, aircraft, dest);
 	MAP_MapCalcLine(ufo->pos, dest, &ufo->route);
 	ufo->status = AIR_UFO;
