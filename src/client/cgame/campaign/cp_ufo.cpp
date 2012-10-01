@@ -368,7 +368,7 @@ void UFO_UpdateAlienInterestForAllBasesAndInstallations (void)
 /**
  * @brief Check if the ufo can shoot at a PHALANX aircraft
  */
-static void UFO_SearchAircraftTarget (const campaign_t* campaign, aircraft_t *ufo)
+static void UFO_SearchAircraftTarget (const campaign_t* campaign, aircraft_t *ufo, float maxDetectionRange = MAX_DETECTING_RANGE)
 {
 	float distance = 999999.;
 
@@ -397,7 +397,7 @@ static void UFO_SearchAircraftTarget (const campaign_t* campaign, aircraft_t *uf
 			/* get the distance from ufo to aircraft */
 			const float dist = GetDistanceOnGlobe(ufo->pos, phalanxAircraft->pos);
 			/* check out of reach */
-			if (dist > MAX_DETECTING_RANGE)
+			if (dist > maxDetectionRange)
 				continue;
 			/* choose the nearest target */
 			if (dist < distance) {
