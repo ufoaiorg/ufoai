@@ -391,6 +391,10 @@ static void UFO_SearchAircraftTarget (const campaign_t* campaign, aircraft_t *uf
 	}
 
 	ufo->status = AIR_TRANSIT;
+	if (!UFO_IsUFOSeenOnGeoscape(ufo)) {
+		return;
+	}
+
 	AIR_Foreach(phalanxAircraft) {
 		/* check that aircraft is flying */
 		if (AIR_IsAircraftOnGeoscape(phalanxAircraft)) {
@@ -402,7 +406,7 @@ static void UFO_SearchAircraftTarget (const campaign_t* campaign, aircraft_t *uf
 			/* choose the nearest target */
 			if (dist < distance) {
 				distance = dist;
-				if (UFO_SendPursuingAircraft(ufo, phalanxAircraft) && UFO_IsUFOSeenOnGeoscape(ufo)) {
+				if (UFO_SendPursuingAircraft(ufo, phalanxAircraft)) {
 					/* stop time and notify */
 					MSO_CheckAddNewMessage(NT_UFO_ATTACKING, _("Notice"), va(_("A UFO is flying toward %s"), phalanxAircraft->name));
 					/** @todo present a popup with possible orders like: return to base, attack the ufo, try to flee the rockets */
