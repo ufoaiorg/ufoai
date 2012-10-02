@@ -146,6 +146,11 @@ window lost {
 
 	func onWindowClosed
 	{
+		call *node:root.executeClose
+	}
+
+	func executeClose
+	{
 		if ( *cvar:sv_maxclients == 1 ) {
 			cmd "cp_results 0 <node:root.tryagain@integer>;"
 		}
@@ -171,7 +176,7 @@ window draw extends lost
 		src	"background/lost_bg"
 	}
 
-	func onWindowClosed
+	func executeClose
 	{
 		if ( *cvar:sv_maxclients == 1 ) {
 			// a draw counts as lost
