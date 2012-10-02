@@ -412,6 +412,9 @@ static void UFO_SearchAircraftTarget (const campaign_t* campaign, aircraft_t *uf
 		}
 	}
 
+	/* if this ufo is a leader, it does not try to search another one */
+	if (ufo->leader)
+		return;
 	aircraft_t *otherUFO = NULL;
 	const float polarCoordinatesOffset = 1.0f;
 	while ((otherUFO = UFO_GetNextOnGeoscape(otherUFO)) != NULL) {
