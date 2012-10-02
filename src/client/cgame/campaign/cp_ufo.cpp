@@ -921,7 +921,7 @@ void UFO_InitStartup (void)
 #ifdef DEBUG
 	cgi->Cmd_AddCommand("debug_destroyufos", UFO_DestroyUFOs_f, "Destroys all UFOs on the geoscape");
 	cgi->Cmd_AddCommand("debug_listufo", UFO_ListOnGeoscape_f, "Print UFO information to game console");
-	cgi->Cmd_AddCommand("removeufo", UFO_RemoveFromGeoscape_f, "Remove a UFO from geoscape");
+	cgi->Cmd_AddCommand("debug_removeufo", UFO_RemoveFromGeoscape_f, "Remove a UFO from geoscape");
 	cgi->Cvar_Get("debug_showufos", "0", CVAR_DEVELOPER, "Show all UFOs on geoscape");
 #endif
 }
