@@ -156,7 +156,7 @@ void G_MoraleBehaviour (int team)
 	edict_t *ent = NULL;
 	while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, team)) != NULL) {
 		/* this only applies to ET_ACTOR but not to ET_ACTOR2x2 */
-		if (ent->type != ET_ACTOR || ent->chr.teamDef->robot)
+		if (ent->type != ET_ACTOR || CHRSH_IsTeamDefRobot(ent->chr.teamDef))
 			continue;
 
 		/* if panic, determine what kind of panic happens: */
