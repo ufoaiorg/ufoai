@@ -1401,6 +1401,8 @@ base/models/objects/boat/canoe.md2 | GNU General Public License 2.0 or later | W
 base/models/objects/boat/canoe.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/boat/engine.jpg | GNU General Public License 2.0 | Daniel Holden (Yoshiboy)
 base/models/objects/boat/engine.md2 | GNU General Public License 2.0
+base/models/objects/cameras/camera1.md2 | Creative Commons Attribution 3.0 Unported | Lewis W. Veasey | http://opengameart.org/content/security-camera
+base/models/objects/cameras/camera1.png | Creative Commons Attribution 3.0 Unported | Lewis W. Veasey | http://opengameart.org/content/security-camera
 base/models/objects/cars/4x4/4x4.jpg | GNU General Public License 2.0 or later | Olivier "Kracken" Alloschery
 base/models/objects/cars/4x4/4x4.md2 | GNU General Public License 2.0 or later | Olivier "Kracken" Alloschery
 base/models/objects/cars/4x4/4x4_t.md2 | GNU General Public License 2.0 or later | Olivier "Kracken" Alloschery
