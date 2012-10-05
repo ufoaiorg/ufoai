@@ -104,7 +104,7 @@ bool INV_LoadWeapon (const invList_t *weaponList, inventory_t *inv, const invDef
 			ic->item.ammo = weapon;
 			return true;
 		}
-	} else {
+	} else if (weapon->reload) {
 		const itemFilterTypes_t equipType = INV_GetFilterFromItem(weapon);
 		int i = 0;
 		/* search an ammo */
