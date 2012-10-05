@@ -30,6 +30,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 bool G_FrustumVis (const edict_t *from, const vec3_t point)
 {
+	/* cameras have a 360 degree view angle */
+	if (G_IsCamera(from))
+		return true;
 	return FrustumVis(from->origin, from->dir, point);
 }
 
@@ -141,6 +144,9 @@ float G_ActorVis (const vec3_t from, const edict_t *ent, const edict_t *check, b
 
 int G_ActorSpotDist (const edict_t *const ent)
 {
+	if (G_IsCamera(ent))
+		return MAX_SPOT_DIST_CAMERA;
+
 	return MAX_SPOT_DIST * G_ActorGetInjuryPenalty(ent, MODIFIER_SIGHT);
 }
 
@@ -162,7 +168,7 @@ bool G_Vis (const int team, const edict_t *from, const edict_t *check, int flags
 		return false;
 
 	/* only actors and 2x2 units can see anything */
-	if (!G_IsLivingActor(from))
+	if (!G_IsLivingActor(from) && !G_IsCamera(from))
 		return false;
 
 	/* living team members are always visible */
@@ -202,6 +208,7 @@ bool G_Vis (const int team, const edict_t *from, const edict_t *check, int flags
 	case ET_ACTOR2x2:
 		return G_ActorVis(eye, from, check, false) > ACTOR_VIS_0;
 	case ET_ITEM:
+	case ET_CAMERA:
 	case ET_PARTICLE:
 		return !G_LineVis(eye, check->origin);
 	default:

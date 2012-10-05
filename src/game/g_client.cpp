@@ -262,6 +262,10 @@ void G_AppearPerishEvent (unsigned int playerMask, bool appear, edict_t *check, 
 			G_EventActorAppear(playerMask, check, ent);
 			break;
 
+		case ET_CAMERA:
+			G_EventCameraAppear(playerMask, check);
+			break;
+
 		case ET_ITEM:
 			G_EventEdictAppear(playerMask, check);
 			G_SendInventory(playerMask, check);

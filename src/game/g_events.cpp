@@ -457,6 +457,22 @@ void G_EventSendParticle (unsigned int playerMask, const edict_t *ent)
 /**
  * @brief Send an appear event to the client.
  * @param playerMask The players to send the event to
+ * @param ent The camera that should appear to the players included in the given mask.
+ */
+void G_EventCameraAppear (unsigned int playerMask, const edict_t *ent)
+{
+	G_EventAdd(playerMask, EV_CAMERA_APPEAR, ent->number);
+	gi.WritePos(ent->origin);
+	gi.WriteByte(ent->cameraType);
+	gi.WriteByte(ent->team);
+	/* strip the higher bits - only send levelflags */
+	gi.WriteByte(ent->spawnflags & 0xFF);
+	G_EventEnd();
+}
+
+/**
+ * @brief Send an appear event to the client.
+ * @param playerMask The players to send the event to
  * @param ent The edict that should appear to the players included in the given mask.
  * @note Each following event that is relying on the fact that this edict must already
  * be known in the client, must also adopt the client side parsing of the event times.

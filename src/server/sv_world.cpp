@@ -629,6 +629,14 @@ static void SV_ModLoadObjModel (sv_model_t* mod, const byte *buffer, int bufferL
 }
 
 /**
+ * @brief all supported model formats
+ * @sa modtype_t
+ */
+static char const* const mod_extensions[] = {
+	"md2", "md3", "obj", NULL
+};
+
+/**
  * @brief Load the mins, maxs for the model on the serverside for pathfinding and clipping
  * @param[in] model The relative model path to load the mins, maxs for
  * @param[in] frame The frame to load the mins and maxs vectors for
@@ -638,9 +646,9 @@ static void SV_ModLoadObjModel (sv_model_t* mod, const byte *buffer, int bufferL
 bool SV_LoadModelMinsMaxs (const char *model, int frame, vec3_t mins, vec3_t maxs)
 {
 	sv_model_t *mod;
-	byte *buf;
+	byte *buf = NULL;
 	unsigned int i;
-	int modfilelen;
+	int modfilelen = 0;
 
 	if (model[0] == '\0')
 		Com_Error(ERR_DROP, "SV_LoadModelMinsMaxs: NULL model");
@@ -669,7 +677,20 @@ bool SV_LoadModelMinsMaxs (const char *model, int frame, vec3_t mins, vec3_t max
 	VectorCopy(vec3_origin, maxs);
 
 	/* load the file */
-	modfilelen = FS_LoadFile(model, &buf);
+	if (Com_GetExtension(model) == NULL) {
+		char filename[MAX_QPATH];
+
+		for (i = 0; mod_extensions[i] != NULL; i++) {
+			Com_sprintf(filename, sizeof(filename), "%s.%s", model, mod_extensions[i]);
+			modfilelen = FS_LoadFile(filename, &buf);
+			if (buf) {
+				break;
+			}
+		}
+	} else {
+		modfilelen = FS_LoadFile(model, &buf);
+	}
+
 	if (!buf) {
 		sv->numSVModels--;
 		return false;

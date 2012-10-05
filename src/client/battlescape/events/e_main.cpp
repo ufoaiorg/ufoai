@@ -52,6 +52,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "event/player/e_event_endroundannounce.h"
 #include "event/player/e_event_results.h"
 #include "event/player/e_event_centerview.h"
+#include "event/world/e_event_cameraappear.h"
 #include "event/world/e_event_entappear.h"
 #include "event/world/e_event_entperish.h"
 #include "event/world/e_event_entdestroy.h"
@@ -137,6 +138,7 @@ const eventRegister_t events[] = {
 	{E(EV_DOOR_CLOSE), "s", CL_DoorClose, NULL, NULL},
 	{E(EV_CLIENT_ACTION), "ss", CL_ActorClientAction, NULL, NULL},
 	{E(EV_RESET_CLIENT_ACTION), "s", CL_ActorResetClientAction, NULL, NULL},
+	{E(EV_CAMERA_APPEAR), "spbbb", CL_CameraAppear, NULL, NULL},
 #undef E
 };
 CASSERT(lengthof(events) == EV_NUM_EVENTS);

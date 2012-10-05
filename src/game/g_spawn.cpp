@@ -47,6 +47,7 @@ static void SP_misc_mission_aliens(edict_t *ent);
 static void SP_misc_message(edict_t *ent);
 static void SP_misc_smoke(edict_t *ent);
 static void SP_misc_fire(edict_t *ent);
+static void SP_misc_camera(edict_t *ent);
 static void SP_misc_smokestun(edict_t *ent);
 
 typedef struct {
@@ -81,6 +82,7 @@ static const spawn_t spawns[] = {
 	{"misc_message", SP_misc_message},
 	{"misc_smoke", SP_misc_smoke},
 	{"misc_fire", SP_misc_fire},
+	{"misc_camera", SP_misc_camera},
 
 	{NULL, NULL}
 };
@@ -953,14 +955,14 @@ static void SP_misc_model (edict_t *ent)
 			vec3_t modelMins, modelMaxs;
 			if (gi.LoadModelMinsMaxs(ent->model, ent->frame, modelMins, modelMaxs)) {
 				ent->classname = "model";
-				VectorCopy(modelMaxs, ent->absmax);
-				VectorCopy(modelMins, ent->absmin);
+				VectorCopy(modelMaxs, ent->maxs);
+				VectorCopy(modelMins, ent->mins);
 				ent->type = ET_SOLID;
 				ent->solid = SOLID_BBOX;
 				/** @todo is fieldsize and forbidden list update really needed here? */
 				ent->fieldSize = ACTOR_SIZE_NORMAL;
-				G_BuildForbiddenListForEntity(ent);
 				gi.LinkEdict(ent);
+				G_BuildForbiddenListForEntity(ent);
 			} else {
 				gi.DPrintf("Could not get mins/maxs for model '%s'\n", ent->model);
 				G_FreeEdict(ent);
@@ -1066,6 +1068,74 @@ static void SP_misc_message (edict_t *ent)
 	ent->classname = "misc_message";
 	ent->type = ET_MESSAGE;
 	ent->solid = SOLID_NOT;
+}
+
+static bool Destroy_Camera (edict_t *self)
+{
+	G_SpawnParticle(self->origin, self->spawnflags, self->particle);
+	G_FreeEdict(self);
+	return true;
+}
+
+#define CAMERAMODEL(X, IDX) case X: ent->model = "models/objects/cameras/camera" STRINGIFY(IDX); break
+
+static inline void G_InitCamera (edict_t *ent, camera_type_t cameraType)
+{
+	switch (cameraType) {
+	CAMERAMODEL(CAMERA_MOBILE, 0);
+	CAMERAMODEL(CAMERA_STATIONARY, 1);
+	default:
+		gi.DPrintf("unknown camera type given: %i\n", cameraType);
+		G_FreeEdict(ent);
+		return;
+	}
+
+	vec3_t modelMins, modelMaxs;
+	if (gi.LoadModelMinsMaxs(ent->model, 0, modelMins, modelMaxs)) {
+		VectorCopy(modelMaxs, ent->maxs);
+		VectorCopy(modelMins, ent->mins);
+
+		ent->cameraType = cameraType;
+		ent->classname = "misc_camera";
+		ent->type = ET_CAMERA;
+		ent->solid = SOLID_BBOX;
+		ent->flags |= FL_DESTROYABLE;
+		ent->material = MAT_ELECTRICAL;
+		ent->destroy = Destroy_Camera;
+		ent->fieldSize = ACTOR_SIZE_NORMAL;
+
+		/* Set the position of the entity */
+		VecToPos(ent->origin, ent->pos);
+
+		gi.LinkEdict(ent);
+	} else {
+		gi.DPrintf("Could not get mins/maxs for model '%s'\n", ent->model);
+		G_FreeEdict(ent);
+	}
+}
+
+edict_t *G_SpawnCamera (const vec3_t origin, int team, camera_type_t cameraType)
+{
+	edict_t* ent = G_Spawn();
+	VectorCopy(origin, ent->origin);
+	ent->team = team;
+
+	G_InitCamera(ent, cameraType);
+
+	G_CheckVis(ent);
+
+	return ent;
+}
+
+static void SP_misc_camera (edict_t *ent)
+{
+	/* only used in single player */
+	if (sv_maxclients->integer != 1) {
+		G_FreeEdict(ent);
+		return;
+	}
+
+	G_InitCamera(ent, CAMERA_STATIONARY);
 }
 
 /**

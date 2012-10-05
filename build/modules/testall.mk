@@ -98,6 +98,7 @@ $(TARGET)_SRCS_TMP      = \
 	client/battlescape/events/event/player/e_event_startgame.cpp \
 	client/battlescape/events/event/world/e_event_addbrushmodel.cpp \
 	client/battlescape/events/event/world/e_event_addedict.cpp \
+	client/battlescape/events/event/world/e_event_cameraappear.cpp \
 	client/battlescape/events/event/world/e_event_doorclose.cpp \
 	client/battlescape/events/event/world/e_event_dooropen.cpp \
 	client/battlescape/events/event/world/e_event_entappear.cpp \

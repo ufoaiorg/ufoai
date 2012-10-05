@@ -203,6 +203,7 @@ int LE_ActorGetStepTime(const le_t *le, const pos3_t pos, const pos3_t oldPos, c
 #define LE_IsCrouched(le)	((le)->state & STATE_CROUCHED)
 
 #define LE_IsItem(le)		((le)->type == ET_ITEM)
+#define LE_IsCamera(le)		((le)->type == ET_CAMERA)
 #define LE_IsCivilian(le)	((le)->team == TEAM_CIVILIAN)
 #define LE_IsAlien(le)		((le)->team == TEAM_ALIEN)
 #define LE_IsPhalanx(le)	((le)->team == TEAM_PHALANX)

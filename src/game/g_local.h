@@ -47,7 +47,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /** the "gameversion" client command will print this plus compile date */
 #define	GAMEVERSION	"baseufo"
 
-#define MAX_SPOT_DIST	4096 /* 768 */
+#define MAX_SPOT_DIST_CAMERA	768
+#define MAX_SPOT_DIST	4096
 
 /**
  * Bitmask for all players
@@ -187,6 +188,7 @@ extern game_export_t globals;
 /** @note This check also includes the IsStunned check - see the STATE_* bitmasks */
 #define G_IsDead(ent)			G_IsState(ent, STATE_DEAD)
 #define G_IsActor(ent)			((ent)->type == ET_ACTOR || (ent)->type == ET_ACTOR2x2)
+#define G_IsCamera(ent)			((ent)->type == ET_CAMERA)
 #define G_IsSmoke(ent)			((ent)->type == ET_SMOKE)
 #define G_IsFire(ent)			((ent)->type == ET_FIRE)
 #define G_IsTriggerNextMap(ent)	((ent)->type == ET_TRIGGER_NEXTMAP)
@@ -196,7 +198,7 @@ extern game_export_t globals;
 #define G_IsBreakable(ent)		((ent)->flags & FL_DESTROYABLE)
 #define G_IsBrushModel(ent)		((ent)->type == ET_BREAKABLE || G_IsDoor(ent) || (ent)->type == ET_ROTATING)
 /** @note Every none solid (none-bmodel) edict that is visible for the client */
-#define G_IsVisibleOnBattlefield(ent)	(G_IsActor((ent)) || (ent)->type == ET_ITEM || (ent)->type == ET_PARTICLE)
+#define G_IsVisibleOnBattlefield(ent)	(G_IsActor((ent)) || G_IsItem(ent) || G_IsCamera(ent) || (ent)->type == ET_PARTICLE)
 #define G_IsAI(ent)				(G_PLAYER_FROM_ENT((ent))->pers.ai)
 #define G_IsAIPlayer(player)	((player)->pers.ai)
 #define G_TeamToVisMask(team)	(1 << (team))
@@ -371,6 +373,7 @@ void G_SpawnSmokeField(const vec3_t vec, const char *particle, int rounds, vec_t
 void G_SpawnFireField(const vec3_t vec, const char *particle, int rounds, int damage, vec_t radius);
 void G_SpawnStunSmokeField(const vec3_t vec, const char *particle, int rounds, int damage, vec_t radius);
 edict_t *G_SpawnParticle(const vec3_t origin, int spawnflags, const char *particle);
+edict_t *G_SpawnCamera(const vec3_t origin, int team, camera_type_t cameraType);
 void G_FreeEdict(edict_t *e);
 bool G_UseEdict(edict_t *ent, edict_t* activator);
 edict_t *G_GetEdictFromPos(const pos3_t pos, const entity_type_t type);
@@ -766,6 +769,7 @@ struct edict_s {
 	const char *message;		/**< misc_message */
 	const char *noise;			/**< sounds - e.g. for func_door */
 	edictMaterial_t material;	/**< material value (e.g. for func_breakable) */
+	camera_type_t cameraType;
 	int count;		/**< general purpose 'amount' variable - set via mapeditor often */
 	int time;		/**< general purpose 'rounds' variable - set via mapeditor often */
 	int sounds;		/**< type of sounds to play - e.g. doors */

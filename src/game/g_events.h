@@ -46,6 +46,7 @@ void G_EventDoorOpen(const edict_t *door);
 void G_EventDestroyEdict(const edict_t* ent);
 void G_EventEdictAppear(unsigned int playerMask, const edict_t *ent);
 void G_EventEdictPerish(unsigned int playerMask, const edict_t *ent);
+void G_EventCameraAppear(unsigned int playerMask, const edict_t *ent);
 void G_EventEndRound(void);
 void G_EventEndRoundAnnounce(const player_t *player);
 void G_EventInventoryAdd(const edict_t* ent, int playerMask, int itemAmount);

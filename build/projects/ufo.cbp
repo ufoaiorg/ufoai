@@ -287,6 +287,7 @@
 		<Unit filename="..\..\src\client\battlescape\events\event\player\e_event_startgame.h" />
 		<Unit filename="..\..\src\client\battlescape\events\event\world\e_event_addbrushmodel.cpp" />
 		<Unit filename="..\..\src\client\battlescape\events\event\world\e_event_addbrushmodel.h" />
+		<Unit filename="..\..\src\client\battlescape\events\event\world\e_event_cameraappear.cpp" />
 		<Unit filename="..\..\src\client\battlescape\events\event\world\e_event_addedict.cpp" />
 		<Unit filename="..\..\src\client\battlescape\events\event\world\e_event_addedict.h" />
 		<Unit filename="..\..\src\client\battlescape\events\event\world\e_event_doorclose.cpp" />

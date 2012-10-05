@@ -133,6 +133,8 @@ typedef enum {
 	EV_CLIENT_ACTION,
 	EV_RESET_CLIENT_ACTION,
 
+	EV_CAMERA_APPEAR,
+
 	EV_NUM_EVENTS
 } event_t;
 
@@ -162,11 +164,21 @@ typedef enum {
 	ET_SMOKE,
 	ET_FIRE,
 	ET_SMOKESTUN,
+	ET_CAMERA,
 
 	ET_MAX,
 
 	ENTITY_TYPE_ENSURE_32BIT = 0x7FFFFFFF
 } entity_type_t;
+
+typedef enum {
+	CAMERA_MOBILE,
+	CAMERA_STATIONARY,
+
+	CAMERA_MAX,
+
+	CAMERA_ENSURE_32BIT = 0x7FFFFFFF
+} camera_type_t;
 
 #define DOOR_ROTATION_ANGLE 90
 
