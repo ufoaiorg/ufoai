@@ -1,5 +1,6 @@
 #!/usr/bin/perl -W
 use strict;
+use warnings;
 use File::stat;
 use Fcntl ':mode';
 
@@ -83,9 +84,38 @@ sub addtoall {
 sub installnametool {
 	my ($libname, $newpath) = @_;
 
+	my $fs = stat( $newpath );
+	my $oldperms = $fs->mode;
+	my $writable = ($oldperms & S_IWUSR) >> 7;
+	if ( !$writable ) {
+		my $newperms = (S_IWUSR | $oldperms);
+		chmod $newperms,$newpath;
+		print "[fix permissions] ";
+	}
 	# change my id
-	#print "install_name_tool -id \@executable_path/../Libraries/$libname $newpath\n";
 	`install_name_tool -id \@executable_path/../Libraries/$libname $newpath` && die "failed\n";
+	if ( !$writable ) {
+		chmod $oldperms,$newpath;
+		print "[restore permissions] ";
+	}
+}
+
+sub installnametoolchange {
+	my ($ni, $libname, $newpath) = @_;
+
+	my $fs = stat( $newpath );
+	my $oldperms = $fs->mode;
+	my $writable = ($oldperms & S_IWUSR) >> 7;
+	if ( !$writable ) {
+		my $newperms = (S_IWUSR | $oldperms);
+		chmod $newperms,$newpath;
+		print "[fix permissions] ";
+	}
+	`install_name_tool -change $ni \@executable_path/../Libraries/$libname $newpath` && die "failed\n";
+	if ( !$writable ) {
+		chmod $oldperms,$newpath;
+		print "[restore permissions] ";
+	}
 }
 
 sub installlib {
@@ -95,8 +125,6 @@ sub installlib {
 	my $libname;
 	my $newpath;
 	my $fworlib;
-	my $writable = 1;
-	my $oldperms;
 
 	if($lib =~ /.*\/([^\/]+)$/) {
 		$libname = $1;
@@ -104,27 +132,17 @@ sub installlib {
 		die "wtf?\n";
 	}
 
-	print "Installing $libdir/$libname...";
+	print "Installing $libdir/$libname ... ";
 	my $nlib = fixframeworkpath $lib;
 
 	if($lib =~ /\.dylib$/) {
-		# && instead of || because error is reported as 'true'
-		my $fs = stat( $lib );
-		$oldperms = $fs->mode;
-		$writable = ($oldperms & S_IWUSR) >> 7;
-
 		if ($libname =~ /libiconv/) {
 			$libname = "libiconv.dylib";
 		} elsif ($libname =~ /libintl/) {
 			$libname = "libintl.dylib";
 		}
 		$newpath = "$libdir/$libname";
-		if ( !$writable ) {
-			my $newperms = (S_IWUSR | $oldperms);
-			chmod $newperms, $newpath;
-		}
 		`cp -L -f $lib $newpath` && die "failed\n";
-
 		installnametool $libname,$newpath;
 	} else {
 		my $framedir = frameworkdir $lib;
@@ -155,16 +173,10 @@ sub installlib {
 		}
 
 		my $ni = fixframeworkpath $i;
-
-		#print "install_name_tool -change $i \@executable_path/../Libraries/$libname2 $newpath\n";
-		`install_name_tool -change $ni \@executable_path/../Libraries/$libname2 $newpath\n` && die "failed\n";
+		installnametoolchange $ni,$libname2,$newpath;
 	}
 
-	if ( !$writable ) {
-		chmod $oldperms, $newpath;
-	}
-
-	print "done\n";
+	print "[done]\n";
 }
 
 sub main {
@@ -200,9 +212,7 @@ sub main {
 			installnametool $libname2,$newpath;
 
 			my $ni = fixframeworkpath $i;
-
-			#print "install_name_tool -change $i \@executable_path/../Libraries/$libname2 $newpath\n";
-			`install_name_tool -change $ni \@executable_path/../Libraries/$libname2 "$libdir/$lib"\n` && die "failed\n";
+			installnametoolchange $ni,$libname2,"$libdir/$lib";
 		}
 	}
 	closedir(DIR);
