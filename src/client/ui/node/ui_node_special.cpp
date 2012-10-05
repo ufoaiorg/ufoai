@@ -37,14 +37,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 void uiFuncNode::onLoaded (uiNode_t *node)
 {
-	/** @todo move this code into the parser (it should not create a node) */
 	const value_t *prop = UI_GetPropertyFromBehaviour(node->parent->behaviour, node->name);
 	if (prop && prop->type == V_UI_ACTION) {
-		if (uiAction_t*& value = Com_GetValue<uiAction_t*>(node->parent, prop)) {
-			Com_Printf("UI_FuncNodeLoaded: '%s' already defined. Second function ignored (\"%s\")\n", prop->string, UI_GetPath(node));
-		} else {
-			value = node->onClick;
+		/** @todo move this code into the parser (cause property should not create a func node) */
+		uiAction_t*& value = Com_GetValue<uiAction_t*>(node->parent, prop);
+		if (value != NULL && node->super == NULL) {
+			Com_Printf("UI_FuncNodeLoaded: '%s' already defined. Previous function ignored (\"%s\")\n", prop->string, UI_GetPath(node));
 		}
+		value = node->onClick;
 	}
 }
 

@@ -44,6 +44,32 @@ window test_event_test_3
 	}
 }
 
+window test_event_test_extended
+{
+	func onWindowOpened {
+		*cvar:test_4_open = (*cvar:test_4_open + 10)
+		*cvar:test_4_open = (*cvar:test_4_open + 10)
+		cmd "ui_close <path:root>"
+	}
+	func onWindowClosed {
+		*cvar:test_4_close = (*cvar:test_4_close + 10)
+		*cvar:test_4_close = (*cvar:test_4_close + 10)
+	}
+}
+
+window test_event_test_4 extends test_event_test_extended
+{
+	func onWindowOpened {
+		*cvar:test_4_open = (*cvar:test_4_open + 1)
+		*cvar:test_4_open = (*cvar:test_4_open + 1)
+		cmd "ui_close <path:root>"
+	}
+	func onWindowClosed {
+		*cvar:test_4_close = (*cvar:test_4_close + 1)
+		*cvar:test_4_close = (*cvar:test_4_close + 1)
+	}
+}
+
 window test_event
 {
 	{
@@ -55,9 +81,38 @@ window test_event
 		bgcolor		"0 0 0 1"
 	}
 
+	string testOpen41 {
+		pos		"20 60"
+		string	"t41"
+	}
+
+	string testOpen42 {
+		pos		"20 90"
+		string	"t42"
+	}
+
+	confunc test_check_test_4_waitclose {
+		if ( *cvar:test_4_open == 2 ) { *node:root.testOpen41@color = "0 1 0 1" }
+		else { *node:root.testOpen41@color = "1 0 0 1" }
+		if ( *cvar:test_4_close == 2 ) { *node:root.testOpen42@color = "0 1 0 1" }
+		else { *node:root.testOpen42@color = "1 0 0 1" }
+		cmd "echo <cvar:test_4_open> <cvar:test_4_close>"
+		delete *cvar:test_4_open
+		delete *cvar:test_4_close
+	}
+
+	confunc test_check_test_4 {
+		cmd "test_check_test_4_waitclose"
+	}
+
 	func onWindowOpened {
 		cmd "ui_push test_event_test_1 1"
 		cmd "ui_push test_event_test_2 aaaa bbbb"
 		cmd "ui_push test_event_test_3 1.1 aaaa 4 bbbb"
+
+		*cvar:test_4_open = 0
+		*cvar:test_4_close = 0
+		cmd "ui_push test_event_test_4"
+		cmd "test_check_test_4"
 	}
 }
