@@ -1335,6 +1335,48 @@ void CP_SpawnRescueMission (aircraft_t *aircraft, aircraft_t *ufo)
 ====================================*/
 
 /**
+ * @brief Decides if the mission should be spawned from the ground (without UFO)
+ * @param[in] mission Pointer to the mission
+ */
+static bool MIS_IsSpawnedFromGround (const mission_t *mission)
+{
+	assert(mission);
+
+	switch (mission->category) {
+	/* missions can't be spawned from ground */
+	case INTERESTCATEGORY_BUILDING:
+	case INTERESTCATEGORY_SUPPLY:
+	case INTERESTCATEGORY_INTERCEPT:
+	case INTERESTCATEGORY_HARVEST:
+		return false;
+	/* missions can be spawned from ground */
+	case INTERESTCATEGORY_RECON:
+	case INTERESTCATEGORY_TERROR_ATTACK:
+	case INTERESTCATEGORY_BASE_ATTACK:
+	case INTERESTCATEGORY_XVI:
+		break;
+	/* missions not spawned this way */
+	case INTERESTCATEGORY_ALIENBASE:
+	case INTERESTCATEGORY_UFOCARRIER:
+	case INTERESTCATEGORY_RESCUE:
+	case INTERESTCATEGORY_NONE:
+	case INTERESTCATEGORY_MAX:
+		cgi->Com_Error(ERR_DROP, "MIS_IsSpawnedFromGround: Wrong mission category %i", mission->category);
+	}
+
+	/* Roll the random number */
+	const int XVI_PARAM = 10;		/**< Typical XVI average value for spreading mission from earth */
+	float groundProbability;
+	float randNumber = frand();
+
+	/* The higher the XVI rate, the higher the probability to have a mission spawned from ground */
+	groundProbability = 1.0f - exp(-CP_GetAverageXVIRate() / XVI_PARAM);
+	groundProbability = std::max(0.1f, groundProbability);
+
+	return randNumber < groundProbability;
+}
+
+/**
  * @brief mission begins: UFO arrive on earth.
  * @param[in] mission The mission to change the state for
  * @note Stage 0 -- This function is common to several mission category.
@@ -1343,20 +1385,22 @@ void CP_SpawnRescueMission (aircraft_t *aircraft, aircraft_t *ufo)
  */
 bool CP_MissionBegin (mission_t *mission)
 {
-	ufoType_t ufoType;
-
 	mission->stage = STAGE_COME_FROM_ORBIT;
 
-	ufoType = CP_MissionChooseUFO(mission);
-	if (ufoType == UFO_MAX) {
+	if (MIS_IsSpawnedFromGround(mission)) {
 		mission->ufo = NULL;
 		/* Mission starts from ground: no UFO. Go to next stage on next frame (skip UFO arrives on earth) */
 		mission->finalDate = ccs.date;
 	} else {
+		ufoType_t ufoType = CP_MissionChooseUFO(mission);
+		if (ufoType == UFO_MAX) {
+			CP_MissionRemove(mission);
+			return false;
+		}
 		mission->ufo = UFO_AddToGeoscape(ufoType, NULL, mission);
 		if (!mission->ufo) {
 			Com_Printf("CP_MissionBegin: Could not add UFO '%s', remove mission %s\n",
-					cgi->Com_UFOTypeToShortName(ufoType), mission->id);
+				cgi->Com_UFOTypeToShortName(ufoType), mission->id);
 			CP_MissionRemove(mission);
 			return false;
 		}
@@ -1380,22 +1424,17 @@ ufoType_t CP_MissionChooseUFO (const mission_t *mission)
 	ufoType_t ufoTypes[UFO_MAX];
 	int numTypes = 0;
 	int idx;
-	bool canBeSpawnedFromGround = false;
-	float groundProbability = 0.0f;	/**< Probability to start a mission from earth (without UFO) */
 	float randNumber;
 
 	switch (mission->category) {
 	case INTERESTCATEGORY_RECON:
 		numTypes = CP_ReconMissionAvailableUFOs(mission, ufoTypes);
-		canBeSpawnedFromGround = true;
 		break;
 	case INTERESTCATEGORY_TERROR_ATTACK:
 		numTypes = CP_TerrorMissionAvailableUFOs(mission, ufoTypes);
-		canBeSpawnedFromGround = true;
 		break;
 	case INTERESTCATEGORY_BASE_ATTACK:
 		numTypes = CP_BaseAttackMissionAvailableUFOs(mission, ufoTypes);
-		canBeSpawnedFromGround = true;
 		break;
 	case INTERESTCATEGORY_BUILDING:
 		numTypes = CP_BuildBaseMissionAvailableUFOs(mission, ufoTypes);
@@ -1405,7 +1444,6 @@ ufoType_t CP_MissionChooseUFO (const mission_t *mission)
 		break;
 	case INTERESTCATEGORY_XVI:
 		numTypes = CP_XVIMissionAvailableUFOs(mission, ufoTypes);
-		canBeSpawnedFromGround = true;
 		break;
 	case INTERESTCATEGORY_INTERCEPT:
 		numTypes = CP_InterceptMissionAvailableUFOs(mission, ufoTypes);
@@ -1425,27 +1463,17 @@ ufoType_t CP_MissionChooseUFO (const mission_t *mission)
 	if (numTypes > UFO_MAX)
 		cgi->Com_Error(ERR_DROP, "CP_MissionChooseUFO: Too many values UFOs (%i/%i)", numTypes, UFO_MAX);
 
+	if (numTypes <= 0)
+		return UFO_MAX;
+
 	/* Roll the random number */
 	randNumber = frand();
 
-	/* Check if the mission is spawned without UFO */
-	if (canBeSpawnedFromGround) {
-		const int XVI_PARAM = 10;		/**< Typical XVI average value for spreading mission from earth */
-		/* The higher the XVI rate, the higher the probability to have a mission spawned from ground */
-		groundProbability = 1.0f - exp(-CP_GetAverageXVIRate() / XVI_PARAM);
-		groundProbability = std::max(0.1f, groundProbability);
-
-		/* Mission spawned from ground */
-		if (randNumber < groundProbability)
-			return UFO_MAX;
-	}
-
 	/* If we reached this point, then mission will be spawned from space: choose UFO */
-	assert(numTypes);
 	idx = (int) ((numTypes - 1) * randNumber);
 	if (idx >= numTypes)
-		Sys_Error("CP_MissionChooseUFO: idx exceeded: %i (randNumber: %f, groundProbability: %f, numTypes: %i)",
-				idx, randNumber, groundProbability, numTypes);
+		Sys_Error("CP_MissionChooseUFO: idx exceeded: %i (randNumber: %f, numTypes: %i)",
+				idx, randNumber, numTypes);
 
 	return ufoTypes[idx];
 }
