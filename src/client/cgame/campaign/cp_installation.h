@@ -118,6 +118,7 @@ const installationTemplate_t *INS_GetInstallationTemplateByID(const char *id);
 const installationTemplate_t *INS_GetInstallationTemplateByType(installationType_t type);
 void INS_LinkTechnologies(void);
 
+bool INS_HasAny(installationStatus_t status = INSTALLATION_WORKING);
 bool INS_HasType(installationType_t type, installationStatus_t status = INSTALLATION_WORKING);
 installationType_t INS_GetType(const char *type);
 

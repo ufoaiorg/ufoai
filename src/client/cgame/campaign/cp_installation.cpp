@@ -57,7 +57,23 @@ installationType_t INS_GetType (const char *type)
 }
 
 /**
+ * @brief Checks whether any installation is available
+ * @param[in] status Status of installation to search for
+ */
+bool INS_HasAny (installationStatus_t status)
+{
+	INS_Foreach(installation) {
+		if (status == INSTALLATION_NOT_USED || installation->installationStatus == status)
+			return true;
+	}
+
+	return false;
+}
+
+/**
  * @brief Checks whether the given installation type is available
+ * @param[in] type Installation type to search for
+ * @param[in] status Status of installation to search for
  */
 bool INS_HasType (installationType_t type, installationStatus_t status)
 {
