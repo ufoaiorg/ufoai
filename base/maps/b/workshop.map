@@ -4901,3 +4901,19 @@
 ( 1336 512 4 ) ( 1272 512 4 ) ( 1336 512 132 ) tex_common/lightclip 24 0 0 -1 1 589568 0 0
 }
 }
+// entity 72
+{
+"classname" "misc_camera"
+"origin" "592 304 176"
+"spawnflags" "252"
+"team" "1"
+"angle" "90"
+}
+// entity 73
+{
+"classname" "misc_camera"
+"origin" "816 48 176"
+"spawnflags" "252"
+"team" "1"
+"angle" "-90"
+}
