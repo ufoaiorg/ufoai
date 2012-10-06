@@ -689,12 +689,12 @@ void uiContainerNode::drawTooltip (uiNode_t *node, int x, int y)
 	}
 }
 
-static bool UI_ContainerNodeAddItem (const invDef_t *container, invList_t *ic, containerIndex_t containerID)
+static bool UI_ContainerNodeAddItem (const invDef_t *container, invList_t *ic, containerIndex_t containerID, invList_t **icp)
 {
 	int px, py;
 	const invDef_t *target = INVDEF(containerID);
 	INVSH_FindSpace(ui_inventory, &ic->item, target, &px, &py, NULL);
-	return INV_MoveItem(ui_inventory, target, px, py, container, ic);
+	return INV_MoveItem(ui_inventory, target, px, py, container, ic, icp);
 }
 
 /**
@@ -719,7 +719,7 @@ void UI_ContainerNodeAutoPlaceItem (uiNode_t* node, invList_t *ic)
 		} else {
 			/* Move back to idEquip (ground, floor) container. */
 			target = csi.idEquip;
-			INV_MoveItem(ui_inventory, INVDEF(target), NONE, NONE, container, ic);
+			INV_MoveItem(ui_inventory, INVDEF(target), NONE, NONE, container, ic, NULL);
 		}
 	} else {
 		bool packed = false;
@@ -727,7 +727,7 @@ void UI_ContainerNodeAutoPlaceItem (uiNode_t* node, invList_t *ic)
 		/* armour can only have one target */
 		if (INV_IsArmour(ic->item.item)) {
 			target = csi.idArmour;
-			packed = INV_MoveItem(ui_inventory, INVDEF(target), 0, 0, container, ic);
+			packed = INV_MoveItem(ui_inventory, INVDEF(target), 0, 0, container, ic, NULL);
 		/* ammo or item */
 		} else if (INV_IsAmmo(ic->item.item)) {
 			/* Finally try left and right hand. There is no other place to put it now. */
@@ -736,26 +736,27 @@ void UI_ContainerNodeAutoPlaceItem (uiNode_t* node, invList_t *ic)
 			unsigned int i;
 			for (i = 0; i < size; i++) {
 				target = idxArray[i];
-				packed = UI_ContainerNodeAddItem(container, ic, target);
+				packed = UI_ContainerNodeAddItem(container, ic, target, NULL);
 				if (packed)
 					break;
 			}
 		} else {
 			if (ic->item.item->headgear) {
 				target = csi.idHeadgear;
-				packed = UI_ContainerNodeAddItem(container, ic, target);
+				packed = UI_ContainerNodeAddItem(container, ic, target, NULL);
 			} else {
 				/* left and right are single containers, but this might change - it's cleaner to check
 				 * for available space here, too */
 				const containerIndex_t idxArray[] = { csi.idRight, csi.idBelt, csi.idHolster, csi.idBackpack, csi.idLeft };
 				const size_t size = lengthof(idxArray);
+				invList_t *tItem = NULL;
 				unsigned int i;
 				for (i = 0; i < size; i++) {
 					target = idxArray[i];
-					packed = UI_ContainerNodeAddItem(container, ic, target);
+					packed = UI_ContainerNodeAddItem(container, ic, target, &tItem);
 					if (packed) {
 						if ((ic->item.item->weapon && !ic->item.ammoLeft) || ic->item.item->oneshot)
-							ammoChanged = INV_LoadWeapon(ic, ui_inventory, container, INVDEF(target));
+							ammoChanged = INV_LoadWeapon(tItem, ui_inventory, container, INVDEF(target));
 						break;
 					}
 				}
@@ -996,6 +997,7 @@ bool uiContainerNode::onDndFinished (uiNode_t *source, bool isDropped)
 		uiNode_t *target = UI_DNDGetTargetNode();
 		if (target) {
 			invList_t *fItem;
+			invList_t *tItem;
 			const invDef_t *targetContainer = EXTRADATACONST(target).container;
 			assert(targetContainer);
 			if (UI_IsScrollContainerNode(source)) {
@@ -1010,11 +1012,11 @@ bool uiContainerNode::onDndFinished (uiNode_t *source, bool isDropped)
 				INV_UnloadWeapon(fItem, ui_inventory, targetContainer);
 
 			/* move the item */
-			INV_MoveItem(ui_inventory, targetContainer, dragInfoToX, dragInfoToY, sourceContainer, fItem);
+			INV_MoveItem(ui_inventory, targetContainer, dragInfoToX, dragInfoToY, sourceContainer, fItem, &tItem);
 
 			/* Add ammo on adding weapon to a soldier  */
 			if (UI_IsScrollContainerNode(source) && ((fItem->item.item->weapon && !fItem->item.ammoLeft) || fItem->item.item->oneshot))
-				INV_LoadWeapon(fItem, ui_inventory, sourceContainer, targetContainer);
+				INV_LoadWeapon(tItem, ui_inventory, sourceContainer, targetContainer);
 
 			/* Run onChange events */
 			if (source->onChange)

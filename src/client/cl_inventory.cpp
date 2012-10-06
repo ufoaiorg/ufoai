@@ -60,7 +60,7 @@ const equipDef_t *INV_GetEquipmentDefinitionByID (const char *name)
  * @return true if the move was successful.
  */
 bool INV_MoveItem (inventory_t* inv, const invDef_t * toContainer, int px, int py,
-	const invDef_t * fromContainer, invList_t *fItem)
+	const invDef_t * fromContainer, invList_t *fItem, invList_t **tItem)
 {
 	int moved;
 
@@ -71,7 +71,7 @@ bool INV_MoveItem (inventory_t* inv, const invDef_t * toContainer, int px, int p
 		return false;
 
 	/* move the item */
-	moved = cls.i.MoveInInventory(&cls.i, inv, fromContainer, fItem, toContainer, px, py, NULL, NULL);
+	moved = cls.i.MoveInInventory(&cls.i, inv, fromContainer, fItem, toContainer, px, py, NULL, tItem);
 
 	switch (moved) {
 	case IA_MOVE:
@@ -93,12 +93,16 @@ bool INV_LoadWeapon (const invList_t *weaponList, inventory_t *inv, const invDef
 {
 	invList_t *ic = NULL;
 	const objDef_t *weapon;
+	int x, y;
 
 	assert(weaponList);
 
 	weapon = weaponList->item.item;
+	INVSH_GetFirstShapePosition(weaponList, &x, &y);
+	x += weaponList->x;
+	y += weaponList->y;
 	if (weapon->oneshot) {
-		ic = INVSH_FindInInventory(inv, destContainer, &weaponList->item);
+		ic = INVSH_SearchInInventory(inv, destContainer, x, y);
 		if (ic) {
 			ic->item.ammoLeft = weapon->ammo;
 			ic->item.ammo = weapon;
@@ -113,8 +117,9 @@ bool INV_LoadWeapon (const invList_t *weaponList, inventory_t *inv, const invDef
 			ic = INV_SearchInInventoryWithFilter(inv, srcContainer, ammo, equipType);
 			i++;
 		}
-		if (ic)
-			return INV_MoveItem(inv, destContainer, weaponList->x, weaponList->y, srcContainer, ic);
+		if (ic) {
+			return INV_MoveItem(inv, destContainer, x, y, srcContainer, ic, NULL);
+		}
 	}
 
 	return false;
