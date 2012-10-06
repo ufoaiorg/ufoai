@@ -120,7 +120,7 @@ building building_quarters
 
 building building_hangar
 {
-	name				"_Large Hangar"
+	name				"_Dropship Hangar"
 	image				"base/drop"
 	fixcosts			68000
 	depends				building_powerplant // slow dropship operations can be coordinated from another base, so no Command Center needed
@@ -136,7 +136,7 @@ building building_hangar
 
 building building_intercept
 {
-	name			"_Small Hangar"
+	name			"_Interceptor Hangar"
 	image			"base/intercept"
 	fixcosts		60000
 	depends			building_command
