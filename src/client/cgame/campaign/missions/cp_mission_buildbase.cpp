@@ -245,10 +245,16 @@ int CP_BuildBaseMissionAvailableUFOs (const mission_t *mission, ufoType_t *ufoTy
 
 	if (CP_BasemissionIsSubvertingGovernmentMission(mission)) {
 		/* This is a subverting government mission */
-		ufoTypes[num++] = UFO_SCOUT;
+		if (UFO_ShouldAppearOnGeoscape(UFO_SCOUT))
+			ufoTypes[num++] = UFO_SCOUT;
+		if (UFO_ShouldAppearOnGeoscape(UFO_HARVESTER))
+			ufoTypes[num++] = UFO_HARVESTER;
+		if (UFO_ShouldAppearOnGeoscape(UFO_CORRUPTER))
+			ufoTypes[num++] = UFO_CORRUPTER;
 	} else {
 		/* This is a Building base mission */
-		ufoTypes[num++] = UFO_SUPPLY;
+		if (UFO_ShouldAppearOnGeoscape(UFO_SUPPLY))
+			ufoTypes[num++] = UFO_SUPPLY;
 	}
 
 	return num;

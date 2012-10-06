@@ -190,7 +190,8 @@ int CP_HarvestMissionAvailableUFOs (const mission_t *mission, ufoType_t *ufoType
 {
 	int num = 0;
 
-	ufoTypes[num++] = UFO_HARVESTER;
+	if (UFO_ShouldAppearOnGeoscape(UFO_HARVESTER))
+		ufoTypes[num++] = UFO_HARVESTER;
 
 	return num;
 }

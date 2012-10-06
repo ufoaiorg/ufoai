@@ -235,8 +235,10 @@ int CP_ReconMissionAvailableUFOs (const mission_t *mission, ufoType_t *ufoTypes)
 {
 	int num = 0;
 
-	ufoTypes[num++] = UFO_SCOUT;
-	ufoTypes[num++] = UFO_FIGHTER;
+	if (UFO_ShouldAppearOnGeoscape(UFO_SCOUT))
+		ufoTypes[num++] = UFO_SCOUT;
+	if (UFO_ShouldAppearOnGeoscape(UFO_FIGHTER))
+		ufoTypes[num++] = UFO_FIGHTER;
 
 	return num;
 }

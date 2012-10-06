@@ -181,7 +181,8 @@ int CP_SupplyMissionAvailableUFOs (const mission_t *mission, ufoType_t *ufoTypes
 {
 	int num = 0;
 
-	ufoTypes[num++] = UFO_SUPPLY;
+	if (UFO_ShouldAppearOnGeoscape(UFO_SUPPLY))
+		ufoTypes[num++] = UFO_SUPPLY;
 
 	return num;
 }

@@ -91,8 +91,6 @@ int CP_XVIMissionAvailableUFOs (const mission_t *mission, ufoType_t *ufoTypes)
 {
 	int num = 0;
 
-	ufoTypes[num++] = UFO_SCOUT;
-	ufoTypes[num++] = UFO_FIGHTER;
 	if (UFO_ShouldAppearOnGeoscape(UFO_CORRUPTER))
 		ufoTypes[num++] = UFO_CORRUPTER;
 

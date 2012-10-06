@@ -198,9 +198,12 @@ static void CP_InterceptMissionSet (mission_t *mission)
 {
 	assert(mission->ufo);
 
-	/* Only harvesters can attack installations -- if there are installations to attack */
-	if (mission->ufo->ufotype == UFO_HARVESTER && INS_GetCount()) {
-		CP_InterceptGoToInstallation(mission);
+	/* Only large UFOs can attack installations -- if there are installations to attack */
+	switch (mission->ufo->ufotype) {
+	case UFO_HARVESTER:
+	case UFO_CORRUPTER:
+		if (INS_HasAny())
+			CP_InterceptGoToInstallation(mission);
 	}
 
 	CP_InterceptAircraftMissionSet(mission);
@@ -216,16 +219,23 @@ static void CP_InterceptMissionSet (mission_t *mission)
 int CP_InterceptMissionAvailableUFOs (const mission_t *mission, ufoType_t *ufoTypes)
 {
 	int num = 0;
-	/* Probability to get a harvester. Note that the probability
-	 * to get a corrupter among all possible UFO is this number
-	 * divided by the number of possible UFO */
-	const float HARVESTER_PROBABILITY = 0.25;
+	/* Probability to get a UFO that targets installations. Note
+	 * the probability is this number divided by the number of
+	 * possible UFOs. */
+	const float TARGET_INS_PROBABILITY = 0.25;
 
-	ufoTypes[num++] = UFO_FIGHTER;
+	if (UFO_ShouldAppearOnGeoscape(UFO_FIGHTER))
+		ufoTypes[num++] = UFO_FIGHTER;
+	if (UFO_ShouldAppearOnGeoscape(UFO_GUNBOAT))
+		ufoTypes[num++] = UFO_GUNBOAT;
 
 	/* don't make attack on installation happens too often */
-	if (frand() < HARVESTER_PROBABILITY)
-		ufoTypes[num++] = UFO_HARVESTER;
+	if (frand() < TARGET_INS_PROBABILITY) {
+		if (UFO_ShouldAppearOnGeoscape(UFO_HARVESTER))
+			ufoTypes[num++] = UFO_HARVESTER;
+		if (UFO_ShouldAppearOnGeoscape(UFO_CORRUPTER))
+			ufoTypes[num++] = UFO_CORRUPTER;
+	}
 
 	return num;
 }
