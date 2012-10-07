@@ -1,17 +1,15 @@
 msgid laser_txt {
-text "_Commander, I'm extremely pleased to report that our project has been succesful. I've included images of our prototype laser weapon, which achieves continuous wave output in a man-portable package.
+text "_Commander, I'm extremely pleased to report that our project has been succesful. I've included images of our prototype laser weapon, which achieves continuous wave output at a smaller scale than has ever been achieved before.
 
-The practical solution did not lie in futilely trying to create bigger battery packs, but rather in using radical miniaturisation technologies to lighten and scale down existing chemical-powered laser components. Chemical lasers have been in use for a very long time, and have been part of experimental weapons programs since the late 20th century, but they have always suffered many problems. The only types of chemical lasers with real military promise have been much too large and cumbersome for an infantryman to carry into battle. Until now their combat applications were limited to those of tank-mounted laser cannons or ship-based anti-missile batteries.
+The practical solution did not lie in futilely trying to create bigger battery packs, but rather in using radical miniaturisation technologies to lighten and scale down existing chemical-powered laser components. Chemical lasers have been in use for a very long time, and have been part of experimental weapons programs since the late 20th century, but they have always suffered many problems. The only types of chemical lasers with real military promise were limited to those of tank-mounted laser cannons or ship-based anti-missile batteries.
 
 Now, however, we at PHALANX have built a conventional laser cannon in miniature. Despite its small size it is fully capable of handling the deuterium-fluoride reaction and containing the toxic waste products without danger of contamination. Let me give you a brief description of the inner workings.
 
-Inside the combustion chamber, ethylene is burned in nitrogen trifluoride. This reaction produces excited fluorine radicals, which are then brought into contact with a mixture of helium and deuterium gas. The deuterium reacts with the fluorine, producing excited molecules of deuterium fluoride. These undergo stimulated emission in the weapon's optical resonator, generating the beam. A series of intelligent lenses then focuses and directs the beam to the shooter's aiming point and even corrects for minor movement by the shooter or the target. The deuterium waste gas is rammed through our custom-designed high-pressure filtering system, which catches all toxic or radioactive molecules before expelling the remaining harmless vapour back into the atmosphere.
+Inside the combustion chamber, ethylene is burned in nitrogen trifluoride. This reaction produces excited fluorine radicals, which are then brought into contact with a mixture of helium and deuterium gas. The deuterium reacts with the fluorine, producing excited molecules of deuterium fluoride. These undergo stimulated emission in the weapon's optical resonator, generating the beam. A series of intelligent lenses then focuses and directs the beam to the aiming point and even corrects for minor movement by the shooter or the target. The deuterium waste gas is rammed through our custom-designed high-pressure filtering system, which catches all toxic or radioactive molecules before expelling the remaining harmless vapour back into the atmosphere.
 
-The filter needs to be replaced after every mission, but we've designed the system to make this easy and painless. If the filter system is somehow damaged during the course of an operation, the weapon will immediately stop functioning in order to prevent contamination.
+The filter needs to be replaced regularly, but we've designed the system to make this easy and painless. If the filter system is somehow damaged during the course of an operation, the weapon will immediately stop functioning in order to prevent contamination.
 
-The laser operates on mid-infrared wavelengths, so it produces no visible beam except to those wearing IR goggles.
-
-The prototype we built is unfortunately not yet ready for full-scale production as an infantry weapon, since more refining and balancing is required for human use, but the innovations we've made can also be applied to vehicle weapons -- perhaps even aircraft guns. I've submitted several new proposals to your inbox for the principal ideas we've drawn up.
+The prototype we built is unfortunately not yet ready for full-scale production, since more refining and balancing is required for real-world combat. I've submitted new proposals to your inbox for the principal ideas we've drawn up.
 
 Let me know when you want us to start working on them, Commander.
 
@@ -21,9 +19,9 @@ Cdr. Navarre"
 msgid laser_pre_txt {
 text "_Our collected UN research files have yielded a lot of valuable information about weapon development done on Earth since the beginning of this century. One of the most interesting topics has been the production of DEWs (Directed Energy Weapons), weapons that transfer energy to a target by means other than a projectile. We are particularly interested in the files on Continuous Wave Lasers.
 
-Many countries and companies have attempted to create weapons-grade lasers over the years, but no one has ever been able to create a laser that's man-portable and has a power output high enough to compete with ordinary firearms. Now, however, we've been given access to all this combined research, as well as whole libraries filled with the highest technology on Earth. I believe that not only can we make an effective man-portable laser weapon, we can make it into sizes previously unheard-of for a DEW.
+Many countries and companies have attempted to create weapons-grade lasers over the years, but no one has ever been able to create a laser that's man-portable and has a power output high enough to compete with ordinary firearms. Now, however, we've been given access to all this combined research. I believe that we can make an effective laser weapon at sizes previously unheard-of for a DEW.
 
-Commander, we should pursue this research as soon as possible. Varying our arsenal will make it much more difficult to defend against, and our experience may lead us to develop viable aircraft lasers that could more effectively target high-speed UFOs than conventional firearms.
+This will be a preliminary research report. I can't promise we'll return immediately with a powerful man-portable laser weapon. The only mobile laser weaponry we've been able to get close to in the past has been mounted on heavy vehicles. But I am optimistic we can miniaturize it enough to mount on light interceptor craft and may even be able to leverage the inherit accuracy and speed of laser weaponry to deliver a powerful ground-to-air threat that could help us knock these things out of the sky.
 
 As far as I'm concerned, we at PHALANX are going to do the impossible, and we can start doing it as soon as you approve this proposal.
 
@@ -1079,31 +1077,27 @@ Cdr. Navarre"
 }
 
 msgid laserpistol_txt {
-text "_Commander, I apologise in advance if my typing isn't up to standard in this message. We've had a lot of sleepless nights down here in DivEngine working on the laser pistol project. It's been a gruelling amount of work, but I'm very proud to say that we've pulled it off. We have prototyped a working laser pistol.
+text "_Commander, I apologise in advance if my typing isn't up to standard in this message. We've had a lot of sleepless nights down here in DivEngine working on the laser pistol project. It's been a gruelling amount of work, but I'm very proud to say that we've pulled it off. We have prototyped a working laser pistol that won't be rendered completely ineffective by alien armour.
 
 The system is essentially the same as the one I've outlined for you in my report on Continuous Wave Laser Operation. Excited molecules of deuterium fluoride are lased and focused through a series of intelligent lenses. Waste gases are put through our custom filtering system, which we've scaled down even further. However, the reduced capacity of the filtering system and the smaller optical resonator have demanded some tradeoffs.
 
-The laser pistol can only lase deuterium-fluoride at about half the rate as our old Continuous Wave Laser prototype. Naturally this produces only a half-strength beam, doing half the damage of a larger weapon. It requires a period of continuous exposure -- several seconds at least -- for the beam to inflict enough damage to kill an unarmoured target. Armour will complicate the issue even further, and it's impossible for lasers to shoot through clouds of smoke, gas or fire. Still, as long as the target isn't obscured or immune to highly-focused light or heat, the laser will burn through anything given enough time.
+The laser pistol can only lase deuterium-fluoride at about half the rate as our old Continuous Wave Laser prototype. Naturally this produces only a half-strength beam, doing half the damage of a larger weapon. It requires a period of continuous exposure -- several seconds at least -- for the beam to inflict enough damage to kill an unarmoured target. Still, the laser will burn through anything given enough time.
 
-All the usual advantages of laser weaponry are present in the pistol. It's very quick to fire, and if the soldier misses his target at first, he can adjust his aim without letting go of the trigger. And there's another bonus particular to our pistol design. Thanks to the extremely high accuracy inherent in laser weaponry, it will be easy for ambidextrous soldiers to use two laser pistols at once.
+All the usual advantages of laser weaponry are present in the pistol. It's very quick to fire, and if the soldier misses his target at first, he can adjust his aim without letting go of the trigger.
 
 We've designed the pistol to use the standard deuterium-fluoride cartridges which we've drawn up to power all of our laser weaponry. This means it uses the same amount of D-F as the larger designs, but uses it up at a much lower rate, effectively giving the laser pistol more ammunition than any of our other laser weapons.
 
-As with all handguns, the laser pistol is strictly a backup weapon. It isn't powerful enough to compete with rifles of any kind. On the other hand, the laser pistol completely eliminates the problems regarding range and accuracy that plague conventional handguns. Its range is quite impressive indeed for a handgun. It can shoot out to 60 metres with pinpoint accuracy thanks to the aim-correcting lenses, and it can fire continuously for minutes without reloading. This will make it particularly valuable in wide open terrain.
+As with all handguns, the laser pistol is strictly a backup weapon. It isn't powerful enough to compete with rifles of any kind. On the other hand, its range is quite impressive indeed for a handgun and it can fire continuously for minutes without reloading.
 
-We will need to have at least one D-F Cartridge on hand at all times in order to be able to load and use a laser pistol.
+We will need to have at least one D-F Cartridge on hand at all times in order to be able to load and use a laser pistol.  The blueprints for the pistol and the ammo are sitting with the engineers in the workshop, so you can begin production immediately.
 
 Cdr. Navarre"
 }
 
 msgid laserpistol_pre_txt {
-text "_This is one of several proposals I'm submitting for the research and development of new laser weaponry. Each of these will have to be developed separately due to the size differences, power levels and complexity of the systems involved.
+text "_Our notes have produced a lot of designs, and this is possibly the most difficult one to bring into reality: a deuterium-fluoride laser weapon the size of an ordinary pistol.
 
-Our notes on Continuous Wave Laser Operation have produced a lot of designs, and this is possibly the most difficult one to bring into reality: a deuterium-fluoride laser weapon the size of an ordinary pistol.
-
-The difficulty in making this a reality will be to get the parts small enough and light enough so that they will:
-
-1) Fit into a pistol-sized package, and2) Be light enough to aim and fire one-handed.
+The difficulty in making this a reality will be to get the parts small enough and light enough so that they will fit into a pistol-sized package that is light enough to aim and fire one-handed.
 
 As always, it's going to be a tradeoff between size and power, but with enough work I believe we can indeed build a functioning laser pistol. We're just waiting for your authorisation, Commander.
 
@@ -1111,25 +1105,21 @@ Cdr. Navarre"
 }
 
 msgid laserrifle_txt {
-text "_It's done, Commander. We are now the proud owners of a working laser rifle, with full production plans loaded into our computers. We've eliminated several moving parts and refined the electronics to bring production and maintenance costs down into our budget range. I believe you'll find the weapon's specs to your satisfaction.
+text "_It's done, Commander. We are now the proud owners of a working laser rifle, with full production plans loaded into our computers. We've eliminated several moving parts and refined the electronics to bring production and maintenance costs down into our budget range. We've finally got an assault rifle that can punch through alien armour.
 
-This rifle is possibly the most accurate weapon ever designed. It's light, rests easily in the shooter's hands, and the focusing lenses automatically correct the user's aim to help bring the beam on target -- and keep it there. It may inflict less damage per shot than its conventional projectile-firing counterparts, but it can do more over time if the shooter keeps the target in his sights. Eight troops with conventional assault rifles firing away at full-auto can easily miss a moving target. With laser rifles, that becomes a near-impossibility.
+This rifle is possibly the most accurate weapon ever designed. It's light, rests easily in the shooter's hands, and the focusing lenses are surprisingly effective at correcting the user's aim to help bring the beam on target -- and keep it there. Eight troops with conventional assault rifles firing away at full-auto can easily miss a moving target. With laser rifles, that becomes a near-impossibility, although we expect the accuracy in battle to be lower than those achievable in a lab.
 
 It is quick to fire, has a good magazine capacity, no recoil, a respectable range and does away with many other issues that plague conventional firearms. It will never misfire or suffer a jammed mechanism. It will never blow up due to a fouled or bent barrel. It will never have problems with incompatible or faulty ammunition. It can suffer cracked lenses if subjected to severe mistreatment, but those are thoroughly shielded, set into shock-resistant foam and protected from the outside by a metal iris that only opens when the weapon is ready to fire.
 
-The laser rifle's biggest weakness is its inability to shoot through clouds of smoke, gas or fire. All our lasers have this problem; clouds of material will quickly refract the beam into harmless light, so we'll have to be careful about our application of smoke and incendiary weapons.
-
 We've designed the rifle to use the standard deuterium-fluoride cartridges which we've drawn up to power all of our laser weaponry. This gives it approximately two minutes of continuous wave fire before a new cartridge must be inserted. The cartridges can be popped out and left on the ground without risk of contaminating the area, but they will require special hazard disposal once the mission is completed.
 
-We'll need to have at least one D-F Cartridge on hand at all times in order to be able to load and use a laser rifle.
+We'll need to have at least one D-F Cartridge on hand at all times in order to be able to load and use a laser rifle. The blueprints for the rifle and the ammo are sitting with the engineers in the workshop, so you can begin production immediately.
 
 Cdr. Navarre"
 }
 
 msgid laserrifle_pre_txt {
-text "_This is one of several proposals I'm submitting for the research and development of new laser weaponry. Each of these will have to be developed separately due to the size differences, power levels and complexity of the systems involved.
-
-The laser rifle is the flagship design of our new deuterium-fluoride laser family. It will be a perfect marriage of power, accuracy, range, manoeuvrability and ammo capacity. Even on paper the laser rifle's specs can compete with any conventional assault rifle. The only problem will be actually building it.
+text "_The laser rifle is the flagship design of our proposed deuterium-fluoride laser family, our best theory for punching through alien armour effective against conventional and plasma weaponry. It will be a perfect marriage of power, accuracy, range, manoeuvrability and ammo capacity. If our theories hold, the laser rifle's damage potential against an armoured alien will outstrip that of any conventional assault rifle and its accuracy will far exceed them. The only problem will be actually building it.
 
 The components we've been using in our Continuous Wave Laser prototypes have been cumbersome, fragile and very expensive. Our soldiers need ruggedness in a rifle, something that will last through the bumps and bashes of combat, and we badly need to bring down production costs to make the program worthwhile. As it is, the price of a squad of working laser rifles would be on par with your average main battle tank. We need funding and lab time to bring costs down, fix or replace the most sensitive components to make the weapon more reliable, and reduce its form factor to something that can be comfortably fired by a human soldier.
 
@@ -1139,31 +1129,21 @@ Cdr. Navarre"
 }
 
 msgid heavylaser_txt {
-text "_Commander, our heavy laser program has been a success. We've got it prototyped and ready to go into production at your say-so.
-
-As promised, the heavy laser is a revolution in our heavy weapons arsenal. In the hands of a qualified soldier, it can provide long-range continuous wave fire that is both far more accurate than conventional heavy weapons and far more powerful than our other infantry laser designs. We in DivEngine have no doubt that it will serve a vital role throughout the war.
+text "_Commander, our heavy laser program has been a success. We've got it prototyped and ready to go into production at your say-so. As promised, the heavy laser is a powerful addition to our arsenal and we expect it to be a key asset against armoured units who can withstand conventional and plasma weaponry.
 
 This is not to say the heavy laser doesn't have its downsides. For one, it's very bulky and very heavy, requiring a strong troop to shoot it effectively. It doesn't sacrifice accuracy despite its size, but it's less quick to fire or respond than we would like, and its ammo consumption is staggering. It can chew through a full deuterium-fluoride cartridge in only 30 seconds of continuous fire. This requires a large number of magazines to be kept on hand, and the heavy laser is not particularly quick to reload.
 
-Another weakness is the fact that the heavy laser cannot shoot through clouds of smoke, gas or fire. All our lasers have this problem; clouds of material will quickly refract the beam into harmless light, so we'll have to be careful about our application of smoke and incendiary weapons. Great care will also have to be taken that no bystanders or PHALANX troops get into the path of the invisible beam. Even momentary exposure to an unobstructed beam will char bone and liquefy flesh. A hit to the eyes will result in permanent, irreparable blindness. We've talked to our training and field officers about this and have underlined safety in our field manual at every turn, but it won't hurt the troops to hear it again from you, Commander.
+Great care will also have to be taken that no bystanders or PHALANX troops get into the path of the invisible beam. Even momentary exposure to an unobstructed beam will char bone and liquefy flesh. A hit to the eyes will result in permanent, irreparable blindness. We've talked to our training and field officers about this and have underlined safety in our field manual at every turn, but it won't hurt the troops to hear it again from you, Commander.
 
-Robotic or armoured aliens may be able to survive a beam for some time, even from a heavy laser, before their armour fails. It's recommended to engage these with several soldiers at once and concentrate fire in order to bring them down as quickly as possible.
-
-It's also recommended that you not replace all our conventional heavy weapons with heavy lasers, Commander. We need a good balance of weapons to play to the strengths of our troops and to the weaknesses of the aliens. A varied arsenal is a healthy arsenal, and can't be easily defended against.
-
-We'll need to have at least one D-F Cartridge on hand at all times in order to be able to load and use a heavy laser.
+We'll need to have at least one D-F Cartridge on hand at all times in order to be able to load and use a heavy laser.  The blueprints for the gun and the ammo are sitting with the engineers in the workshop, so you can begin production immediately.
 
 Cdr. Navarre"
 }
 
 msgid heavylaser_pre_txt {
-text "_This is one of several proposals I'm submitting for the research and development of new laser weaponry. Each of these will have to be developed separately due to the size differences, power levels and complexity of the systems involved.
+text "_Laser weaponry is always a trade-off between size and power. For that reason, I'm submitting this proposal for a heavy laser infantry weapon. It would not be as mobile and flexible as we have expected from our assault specialists, but it could pack a powerful punch for those soldiers strong enough to use it effectively in combat.
 
-Thanks to the experience we've gained from our Continuous Wave Laser research, my team and I have figured out one or two possible ways to further amplify the damage output of our infantry lasers. However, this will require significant research and refining of our prototype, as well as enlarging several of the components. The result will be a strictly heavy-infantry weapon of about the same size and weight as our HPML Rocket Launcher.
-
-We estimate that this weapon could be invaluable in a fire support role or as a direct-fire blockade breaker, capable of dissolving enemy strongpoints with powerful, pinpoint accurate fire. It would have attributes and capabilities which may be lacking in our current heavy weapons arsenal. Accuracy at range is generally abysmal in Earth-built heavy weapons, and they can be difficult to employ in situations where we need to avoid collateral damage. The heavy laser would avoid these issues altogether.
-
-It's certainly worth looking into, Commander.
+Given the weakness of alien armour against laser weaponry, it's certainly worth looking into, Commander.
 
 Cdr. Navarre"
 }

@@ -105,17 +105,25 @@ It was something of a surprise to learn that the alien armour is made of a compo
 
 The alien armour uses CNTs as its penetration layer, i.e. the layer that stops bullets and other incoming ordnance from penetrating into the body. The nanotubes are woven into long latticework patterns and recessed into a bed of hard polymer, backed by a layer of semi-liquid gel that very effectively dampens the energy of a blow and spreads the remaining force across a very large area. The final layer -- woven from flexible aramid fibre -- serves to contain the gel and doubles as a spall liner, catching any fragments that may be blown loose from the inside of the armour.
 
-Thanks to the conductive properties of carbon nanotubes, the armour performs very well against plasma as well as against ordinary bullets, lasers and explosives. However ironically, it's not very effective against incendiary devices or flamethrowers, since these weapons also raise the atmospheric temperature around the wearer. In this scenario the armour is left with no place to effectively dump its heat and will not protect the wearer as he roasts inside his suit.
+Thanks to the conductive properties of carbon nanotubes, the armour performs very well against plasma. This makes sense. It is their weapon of choice and we would expect them to know how to protect against it. Because plasma weaponry appears to have limited penetration capabilities, the armour is able to disperse the heat before it can melt through the protective layers.
+
+The armour also performs pretty well against ordinary bullets and explosives, although it's not very effective against incendiary devices or flamethrowers. These weapons raise the atmospheric temperature around the wearer so that there is no place to dump the heat, effectively roasting the wearer inside his suit.
 
 Other features of the armour include servo-assisted movement in the boots, allowing the wearer to move more quickly, and a curious system built into the bracers that automatically assists the wearer's aim by selectively applying pressure to parts of the forearm. We are looking into many new uses for this technology.
 
-Adapting this armour to a human body would be impossible due to the differences in physique and the difficulty of working with the materials involved. However, I've written up a separate research proposal to investigate the possibility of designing and mass-producing our own armour using the alien suit as a template. It will be in your inbox presently, Commander.
+Adapting this armour to a human body would be impossible due to the differences in physique and the difficulty of working with the materials involved. However, I've written up a separate research proposal to investigate the possibility of designing and mass-producing our own armour using the alien suit as a template. It will be in your inbox presently.
+
+If you'll permit me, I'd like to raise a final issue with you, Commander. One of my researchers has toyed with a personal laser project over the last couple of months. While we were testing the alien armour, we allowed him to experiment with it in his downtime and we were astonished by the results. The relatively weak laser beam was hardly reduced as it passed through the armor.
+
+I know that we've long believed that effective man-portable laser weaponry is just a myth, but these suprise findings have reinvigorated my team. I'm hearing all sorts of interesting proposals. This armour will seriously dent our ability to use the aliens' plasma weaponry against them on the battlefield. If we could pack a reasonable punch into a hand-held rifle, it could be the best response to their armor.
+
+Please give some thought to the laser weaponry ideas in your queue.
 
 Cdr. Navarre"
 }
 
 msgid alien_body_armour_pre_txt {
-text "_Commander, we've recovered a suit of alien body armour from the battlefield. This armour has been a plague to our soldiers due to its very high resistance to various types of damage; aliens wearing it have shrugged off shots that would have torn their unarmoured friends apart. It's not surprising that we still haven't managed to cut it open to perform an initial survey of its composition. We should investigate the armour's weaknesses as soon as we can, and perhaps ascertain a way to adapt it for our own uses.
+text "_Commander, we've recovered a suit of alien body armour from the battlefield. This armour has been a plague to our soldiers; aliens wearing it have shrugged off shots that would have torn their unarmoured friends apart. It's not surprising that we still haven't managed to cut it open to perform an initial survey of its composition. We should investigate the armour's weaknesses as soon as we can, and perhaps ascertain a way to adapt it for our own uses.
 
 This project will require a moderate amount of lab time and funding. Work will start as soon as we have your authorisation, Commander.
 

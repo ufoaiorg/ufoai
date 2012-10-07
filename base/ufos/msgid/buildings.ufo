@@ -15,9 +15,7 @@ Cdr. Navarre"
 }
 
 msgid b_baselaser_pre_txt {
-text "_This is one of several proposals I'm submitting for the research and development of new laser weaponry. Each of these will have to be developed separately due to the size differences, power levels and complexity of the systems involved.
-
-Our CW laser program has been successful in miniaturising and lightening the necessary components for a powerful deuterium-fluoride reaction. However, the advances we've made aren't just useful for infantry weapons and small cannon. We want to prototype some of our upgrades in existing surface-to-air laser arrays, allowing us to track and fire continuous high-powered beams at a power level that our plants can comfortably handle.
+text "_Our CW laser program has been successful in miniaturising and lightening the necessary components for a powerful deuterium-fluoride reaction. However, the advances we've made aren't just useful for mobile weaponry. We want to prototype some of our upgrades in existing surface-to-air laser arrays, allowing us to track and fire continuous high-powered beams at a power level that our plants can comfortably handle.
 
 Given the various shortcomings of our SAMs (Surface-to-Air Missiles) against alien technology, I don't need to tell you all the advantages of having a direct-fire laser defence system. It won't be a full replacement for our missile installations, but it's definitely an avenue worth exploring in order to help defend our bases from alien incursions.
 

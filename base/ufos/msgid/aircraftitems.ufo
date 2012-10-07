@@ -189,11 +189,7 @@ Cdr. Navarre"
 }
 
 msgid craft_weapon_alc_pre_txt {
-text "_This is one of several proposals I'm submitting for the research and development of new laser weaponry. Each of these will have to be developed separately due to the size differences, power levels and complexity of the systems involved.
-
-The Aerial Laser Cannon is the largest and most powerful iteration of our new laser designs. Like our infantry weapons it'll be powered by deuterium-fluoride reaction, but on a much larger scale and amplified by the aircraft's on-board electrical systems. Several exciting ideas are being considered.
-
-As well as being the biggest, this may well be our most challenging laser to create. The sorts of power levels we need have been achieved before with massive arrays mounted on jumbo jets, but never in a package small enough to make a jet fighter cannon.
+text "_The Aerial Laser Cannon may well be our most challenging laser to create. The sorts of power levels we need have been achieved before with massive arrays mounted on jumbo jets, but never in a package small enough to make a jet fighter cannon.
 
 The finished product should be able to engage UFOs with bullseye accuracy to provide a more effective direct-fire aircraft weapon. We expect that the ability to keep continuous fire and pressure on enemy craft will be valuable in the days to come.
 
