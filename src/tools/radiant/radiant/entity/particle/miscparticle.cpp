@@ -53,45 +53,8 @@
 
 #include "miscparticle.h"
 
-/**
- * @brief Render class for the grid windows
- */
-class RenderableParticleID: public OpenGLRenderable
-{
-		const IParticleDefinition* m_particle;
-		const Vector3 &m_origin;
-	public:
-		RenderableParticleID (const IParticleDefinition* particle, const Vector3 &origin) :
-			m_particle(particle), m_origin(origin)
-		{
-		}
-
-		void render (RenderStateFlags state) const
-		{
-			if (m_particle != 0) {
-				glRasterPos3fv(m_origin);
-				GlobalOpenGL().drawString(m_particle->getName());
-			}
-		}
-};
-
-/**
- * @brief Render class for the 3d view
- */
-class RenderableParticle: public OpenGLRenderable
-{
-		const IParticleDefinition* m_particle;
-	public:
-		RenderableParticle (const IParticleDefinition* particle) :
-			m_particle(particle)
-		{
-		}
-
-		void render (RenderStateFlags state) const
-		{
-			/** @todo render the image and/or model */
-		}
-};
+#include "RenderableParticleID.h"
+#include "RenderableParticle.h"
 
 inline void read_aabb (AABB& aabb, const EntityClass& eclass)
 {
