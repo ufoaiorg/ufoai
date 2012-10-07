@@ -462,7 +462,7 @@ item armour_light_alien
 		fire_heavy		10
 		fire_flamer		1
 
-		incendiary		25
+		incendiary		0
 
 		shock			0
 
