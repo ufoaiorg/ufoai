@@ -35,7 +35,7 @@
 #include "NameKeys.h"
 #include "stream/stringstream.h"
 
-#include "model/miscmodel.h"
+#include "model/MiscModelNode.h"
 #include "light/LightNode.h"
 #include "group/group.h"
 #include "eclassmodel.h"
@@ -46,7 +46,7 @@
 inline scene::Node& entity_for_eclass (EntityClass* eclass)
 {
 	if (eclass->name() == "misc_model") {
-		return New_MiscModel(eclass);
+		return *(new MiscModelNode(eclass));
 	} else if (eclass->name() == "misc_sound") {
 		return New_MiscSound(eclass);
 	} else if (eclass->name() == "misc_particle") {
