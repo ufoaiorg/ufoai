@@ -223,11 +223,6 @@ class RenderLightRadiiBox: public OpenGLRenderable
 		}
 };
 
-inline void default_extents (Vector3& extents)
-{
-	extents = Vector3(8, 8, 8);
-}
-
 class ShaderRef
 {
 		std::string m_name;
@@ -326,7 +321,7 @@ class Light: public OpenGLRenderable, public Cullable, public Bounded, public Ed
 		void construct ()
 		{
 			m_aabb_light.origin = Vector3(0, 0, 0);
-			default_extents(m_aabb_light.extents);
+			m_aabb_light.extents = Vector3(8, 8, 8);
 
 			m_keyObservers.insert("targetname", NamedEntity::IdentifierChangedCaller(m_named));
 			m_keyObservers.insert("_color", ColourKey::ColourChangedCaller(m_colour));
