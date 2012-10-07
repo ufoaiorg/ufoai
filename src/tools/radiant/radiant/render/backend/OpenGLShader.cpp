@@ -289,7 +289,7 @@ void OpenGLShader::construct (const std::string& name)
 		} else if (name == "$DEBUG_CLIPPED") {
 			state.m_state = RENDER_COLOURARRAY | RENDER_COLOURWRITE | RENDER_DEPTHWRITE;
 			state.m_sort = OpenGLState::eSortLast;
-		} else if (name == "$Q3MAP2_LIGHT_SPHERE") {
+		} else if (name == "$SPHERE") {
 			state.m_colour =  Vector4(.05f, .05f, .05f, 1);
 			state.m_state = RENDER_CULLFACE | RENDER_DEPTHTEST | RENDER_BLEND | RENDER_FILL;
 			state.m_blend_src = GL_ONE;
