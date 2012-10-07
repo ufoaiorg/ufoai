@@ -467,8 +467,10 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\entity\angles.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\entity\arrow.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\entity\colour.h" />
-		<Unit filename="..\..\src\tools\radiant\radiant\entity\eclassmodel\eclassmodel.cpp" />
-		<Unit filename="..\..\src\tools\radiant\radiant\entity\eclassmodel\eclassmodel.h" />
+		<Unit filename="..\..\src\tools\radiant\radiant\entity\eclassmodel\EClassModel.cpp" />
+		<Unit filename="..\..\src\tools\radiant\radiant\entity\eclassmodel\EClassModel.h" />
+		<Unit filename="..\..\src\tools\radiant\radiant\entity\eclassmodel\EClassModelInstance.cpp" />
+		<Unit filename="..\..\src\tools\radiant\radiant\entity\eclassmodel\EClassModelNode.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\entity\entity.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\entity\entity.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\entity\entitydef\EntityClassManager.cpp" />

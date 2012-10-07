@@ -40,7 +40,7 @@
 #include "particle/MiscParticleNode.h"
 #include "sound/MiscSoundNode.h"
 #include "group/GroupNode.h"
-#include "eclassmodel/eclassmodel.h"
+#include "eclassmodel/EClassModelNode.h"
 #include "generic/GenericEntityNode.h"
 
 inline scene::Node& entity_for_eclass (EntityClass* eclass)
@@ -56,7 +56,7 @@ inline scene::Node& entity_for_eclass (EntityClass* eclass)
 	} else if (!eclass->fixedsize) {
 		return *(new GroupNode(eclass));
 	} else if (!eclass->modelpath().empty()) {
-		return New_EclassModel(eclass);
+		return *(new EClassModelNode(eclass));
 	}
 
 	return *(new GenericEntityNode(eclass));
