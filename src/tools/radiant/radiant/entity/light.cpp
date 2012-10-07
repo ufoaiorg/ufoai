@@ -194,20 +194,16 @@ static void light_draw_box_lines (const Vector3& origin, const Vector3 points[8]
 	glEnd();
 }
 
-static void light_draw_radius_wire (const Vector3& origin, const float envelope[2])
+static void light_draw_radius_wire (const Vector3& origin, const float radius)
 {
-	if (envelope[0] > 0)
-		sphere_draw_wire(origin, envelope[0], 24);
-	if (envelope[1] > 0)
-		sphere_draw_wire(origin, envelope[1], 24);
+	sphere_draw_wire(origin, radius, 24);
+	sphere_draw_wire(origin, radius * 2.0f, 24);
 }
 
-static void light_draw_radius_fill (const Vector3& origin, const float envelope[2])
+static void light_draw_radius_fill (const Vector3& origin, const float radius)
 {
-	if (envelope[0] > 0)
-		sphere_draw_fill(origin, envelope[0], 16);
-	if (envelope[1] > 0)
-		sphere_draw_fill(origin, envelope[1], 16);
+	sphere_draw_fill(origin, radius, 16);
+	sphere_draw_fill(origin, radius * 2.0f, 16);
 }
 
 static void light_vertices (const AABB& aabb_light, Vector3 points[6])
@@ -288,64 +284,54 @@ static void light_draw (const AABB& aabb_light, RenderStateFlags state)
 	}
 }
 
-class LightRadii
+class LightRadius
 {
 	public:
-		float m_radii[2];
-
-	private:
-		int m_intensity;
-
-		void calculateRadii ()
-		{
-			m_radii[0] = m_intensity * 1.0f;
-			m_radii[1] = m_intensity * 2.0f;
-		}
+		float _radius;
 
 	public:
-		LightRadii () :
-			m_intensity(0)
+		LightRadius () :
+			_radius(0)
 		{
 		}
 
-		void primaryIntensityChanged (const std::string& value)
+		void valueChanged (const std::string& value)
 		{
-			m_intensity = string::toInt(value);
-			calculateRadii();
+			_radius = string::toInt(value);
 		}
-		typedef MemberCaller1<LightRadii, const std::string&, &LightRadii::primaryIntensityChanged>
+		typedef MemberCaller1<LightRadius, const std::string&, &LightRadius::valueChanged>
 				IntensityChangedCaller;
 };
 
 class RenderLightRadiiWire: public OpenGLRenderable
 {
-		LightRadii& m_radii;
+		LightRadius& m_radii;
 		const Vector3& m_origin;
 	public:
-		RenderLightRadiiWire (LightRadii& radii, const Vector3& origin) :
+		RenderLightRadiiWire (LightRadius& radii, const Vector3& origin) :
 			m_radii(radii), m_origin(origin)
 		{
 		}
 		void render (RenderStateFlags state) const
 		{
-			light_draw_radius_wire(m_origin, m_radii.m_radii);
+			light_draw_radius_wire(m_origin, m_radii._radius);
 		}
 };
 
 class RenderLightRadiiFill: public OpenGLRenderable
 {
-		LightRadii& m_radii;
+		LightRadius& m_radii;
 		const Vector3& m_origin;
 	public:
 		static Shader* m_state;
 
-		RenderLightRadiiFill (LightRadii& radii, const Vector3& origin) :
+		RenderLightRadiiFill (LightRadius& radii, const Vector3& origin) :
 			m_radii(radii), m_origin(origin)
 		{
 		}
 		void render (RenderStateFlags state) const
 		{
-			light_draw_radius_fill(m_origin, m_radii.m_radii);
+			light_draw_radius_fill(m_origin, m_radii._radius);
 		}
 };
 
@@ -458,7 +444,7 @@ class Light: public OpenGLRenderable, public Cullable, public Bounded, public Ed
 		NameKeys m_nameKeys;
 		TraversableObserverPairRelay m_traverseObservers;
 
-		LightRadii m_radii;
+		LightRadius m_radii;
 
 		RenderLightRadiiWire m_radii_wire;
 		RenderLightRadiiFill m_radii_fill;
@@ -486,7 +472,7 @@ class Light: public OpenGLRenderable, public Cullable, public Bounded, public Ed
 			m_keyObservers.insert("targetname", NamedEntity::IdentifierChangedCaller(m_named));
 			m_keyObservers.insert("_color", ColourKey::ColourChangedCaller(m_colour));
 			m_keyObservers.insert("origin", OriginKey::OriginChangedCaller(m_originKey));
-			m_keyObservers.insert("light", LightRadii::IntensityChangedCaller(m_radii));
+			m_keyObservers.insert("light", LightRadius::IntensityChangedCaller(m_radii));
 		}
 		void destroy ()
 		{
