@@ -153,8 +153,6 @@ public:
 
 class RenderLightRadiiFill: public SphereRenderable {
 public:
-	static Shader* m_state;
-
 	RenderLightRadiiFill (const Vector3& origin) :
 		SphereRenderable(false, origin)
 	{
@@ -166,8 +164,6 @@ public:
 		drawFill(_origin, _radius * 2.0f, 16);
 	}
 };
-
-Shader* RenderLightRadiiFill::m_state = 0;
 
 class RenderLightRadiiBox: public OpenGLRenderable
 {
@@ -448,7 +444,6 @@ class Light: public OpenGLRenderable, public Cullable, public Bounded, public Ed
 
 		void render (RenderStateFlags state) const
 		{
-			//aabb_draw(m_aabb_light, state);
 			light_draw(m_aabb_light, state);
 		}
 
@@ -475,7 +470,7 @@ class Light: public OpenGLRenderable, public Cullable, public Bounded, public Ed
 					&& entity::EntitySettings::Instance().showSelectedLightRadii()))
 					&& m_entity.getKeyValue("target").empty()) {
 				if (renderer.getStyle() == Renderer::eFullMaterials) {
-					renderer.SetState(RenderLightRadiiFill::m_state, Renderer::eFullMaterials);
+					renderer.SetState(m_radii_fill, Renderer::eFullMaterials);
 					renderer.Highlight(Renderer::ePrimitive, false);
 					renderer.addRenderable(m_radii_fill, localToWorld);
 				} else {
@@ -775,15 +770,6 @@ class LightNode: public scene::Node,
 			m_contained.getNameable().detach(callback);
 		}
 };
-
-void Light_Construct ()
-{
-	RenderLightRadiiFill::m_state = GlobalShaderCache().capture("$Q3MAP2_LIGHT_SPHERE");
-}
-void Light_Destroy ()
-{
-	GlobalShaderCache().release("$Q3MAP2_LIGHT_SPHERE");
-}
 
 scene::Node& New_Light (EntityClass* eclass)
 {

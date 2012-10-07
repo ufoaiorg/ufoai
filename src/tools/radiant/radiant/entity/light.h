@@ -31,7 +31,4 @@ class EntityClass;
 
 scene::Node& New_Light (EntityClass* eclass);
 
-void Light_Construct ();
-void Light_Destroy ();
-
 #endif

@@ -169,8 +169,6 @@ EntityCreator& GetEntityCreator ()
 
 void P_Entity_Construct ()
 {
-	Light_Construct();
-
 	RenderablePivot::StaticShader::instance() = GlobalShaderCache().capture("$PIVOT");
 
 	GlobalShaderCache().attachRenderable(StaticRenderableConnectionLines::instance());
@@ -181,6 +179,4 @@ void P_Entity_Destroy ()
 	GlobalShaderCache().detachRenderable(StaticRenderableConnectionLines::instance());
 
 	GlobalShaderCache().release("$PIVOT");
-
-	Light_Destroy();
 }

@@ -4,10 +4,18 @@
 SphereRenderable::SphereRenderable (bool wire, const Vector3& origin) :
 		_origin(origin), _wire(wire), _radius(0)
 {
+	if (!_wire) {
+		_shader = GlobalShaderCache().capture("$Q3MAP2_LIGHT_SPHERE");
+	} else {
+		_shader = NULL;
+	}
 }
 
 SphereRenderable::~SphereRenderable ()
 {
+	if (!_wire) {
+		GlobalShaderCache().release("$Q3MAP2_LIGHT_SPHERE");
+	}
 }
 
 void SphereRenderable::render (RenderStateFlags state) const
