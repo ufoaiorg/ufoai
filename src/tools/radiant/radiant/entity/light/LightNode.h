@@ -29,6 +29,10 @@ private:
 	Light m_contained;
 
 public:
+	LightNode (EntityClass* eclass);
+	LightNode (const LightNode& other);
+	~LightNode ();
+
 	// Editable implementation
 	const Matrix4& getLocalPivot () const;
 
@@ -44,26 +48,27 @@ public:
 	void traverse (const Walker& walker);
 	bool empty () const;
 
+	// Traversable observer implementation
+	void insertChild (scene::Node& child);
+	void eraseChild (scene::Node& child);
+
 	// EntityNode implementation
 	Entity& getEntity ();
 
 	// Namespaced implementation
 	void setNamespace (INamespace& space);
 
-	LightNode (EntityClass* eclass);
-	LightNode (const LightNode& other);
-	~LightNode ();
+	// Cloneable implementation
 	scene::Node& clone () const;
 
-	void insertChild (scene::Node& child);
-	void eraseChild (scene::Node& child);
-
+	// Instantiable implementation
 	scene::Instance* create (const scene::Path& path, scene::Instance* parent);
 	void forEachInstance (const scene::Instantiable::Visitor& visitor);
 	void insert (scene::Instantiable::Observer* observer, const scene::Path& path, scene::Instance* instance);
 	scene::Instance* erase (scene::Instantiable::Observer* observer, const scene::Path& path);
-	std::string name () const;
 
+	// Nameable implementation
+	std::string name () const;
 	void attach (const NameCallback& callback);
 	void detach (const NameCallback& callback);
 };

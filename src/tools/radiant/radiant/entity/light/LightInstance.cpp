@@ -36,11 +36,6 @@ void LightInstance::testSelect (Selector& selector, SelectionTest& test)
 	m_contained.testSelect(selector, test, Instance::localToWorld());
 }
 
-void LightInstance::testSelect (Selector& selector, SelectionTest& test, const Matrix4& localToWorld)
-{
-	m_contained.testSelect(selector, test, localToWorld);
-}
-
 void LightInstance::evaluateTransform ()
 {
 	if (getType() == TRANSFORM_PRIMITIVE) {
@@ -48,6 +43,7 @@ void LightInstance::evaluateTransform ()
 		m_contained.rotate(getRotation());
 	}
 }
+
 void LightInstance::applyTransform ()
 {
 	m_contained.revertTransform();
