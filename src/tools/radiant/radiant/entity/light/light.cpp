@@ -45,7 +45,6 @@
 #include "entitylib.h"
 #include "render.h"
 #include "eclasslib.h"
-#include "render.h"
 #include "stringio.h"
 #include "traverselib.h"
 
@@ -57,8 +56,10 @@
 #include "../NameKeys.h"
 
 #include "../EntitySettings.h"
-#include "../../render/frontend/SphereRenderable.h"
 #include "../EntityCreator.h"
+#include "RenderLightRadiusBox.h"
+#include "RenderLightRadiusFill.h"
+#include "RenderLightRadiusWire.h"
 
 static void light_vertices (const AABB& aabb_light, Vector3 points[6])
 {
@@ -138,91 +139,6 @@ static void light_draw (const AABB& aabb_light, RenderStateFlags state)
 	}
 }
 
-class RenderLightRadiusWire: public SphereRenderable {
-public:
-	RenderLightRadiusWire (const Vector3& origin) :
-		SphereRenderable(true, origin)
-	{
-	}
-	void render (RenderStateFlags state) const
-	{
-		drawWire(_origin, _radius, 24);
-		drawWire(_origin, _radius * 2.0f, 24);
-	}
-};
-
-class RenderLightRadiusFill: public SphereRenderable {
-public:
-	RenderLightRadiusFill (const Vector3& origin) :
-		SphereRenderable(false, origin)
-	{
-	}
-
-	void render (RenderStateFlags state) const
-	{
-		drawFill(_origin, _radius, 16);
-		drawFill(_origin, _radius * 2.0f, 16);
-	}
-};
-
-class RenderLightRadiiBox: public OpenGLRenderable
-{
-	private:
-		const Vector3& m_origin;
-
-		void light_draw_box_lines (const Vector3& origin, const Vector3 points[8]) const
-		{
-			//draw lines from the center of the bbox to the corners
-			glBegin(GL_LINES);
-
-			glVertex3fv(origin);
-			glVertex3fv(points[1]);
-
-			glVertex3fv(origin);
-			glVertex3fv(points[5]);
-
-			glVertex3fv(origin);
-			glVertex3fv(points[2]);
-
-			glVertex3fv(origin);
-			glVertex3fv(points[6]);
-
-			glVertex3fv(origin);
-			glVertex3fv(points[0]);
-
-			glVertex3fv(origin);
-			glVertex3fv(points[4]);
-
-			glVertex3fv(origin);
-			glVertex3fv(points[3]);
-
-			glVertex3fv(origin);
-			glVertex3fv(points[7]);
-
-			glEnd();
-		}
-
-	public:
-		mutable Vector3 m_points[8];
-
-		RenderLightRadiiBox (const Vector3& origin) :
-			m_origin(origin)
-		{
-		}
-		void render (RenderStateFlags state) const
-		{
-			//draw the bounding box of light based on light_radius key
-			if ((state & RENDER_FILL) != 0) {
-				aabb_draw_flatshade(m_points);
-			} else {
-				aabb_draw_wire(m_points);
-			}
-
-			//disable if you dont want lines going from the center of the light bbox to the corners
-			light_draw_box_lines(m_origin, m_points);
-		}
-};
-
 class Light: public OpenGLRenderable, public Cullable, public Bounded, public Editable, public Snappable
 {
 		EntityKeyValues m_entity;
@@ -239,7 +155,7 @@ class Light: public OpenGLRenderable, public Cullable, public Bounded, public Ed
 
 		RenderLightRadiusWire m_radii_wire;
 		RenderLightRadiusFill m_radii_fill;
-		RenderLightRadiiBox m_radii_box;
+		RenderLightRadiusBox m_radii_box;
 		RenderableNamedEntity m_renderName;
 
 		Vector3 m_lightOrigin;
