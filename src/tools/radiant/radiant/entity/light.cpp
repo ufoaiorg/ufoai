@@ -295,7 +295,6 @@ class LightRadii
 
 	private:
 		int m_intensity;
-		int m_flags;
 
 		void calculateRadii ()
 		{
@@ -305,7 +304,7 @@ class LightRadii
 
 	public:
 		LightRadii () :
-			m_intensity(0), m_flags(0)
+			m_intensity(0)
 		{
 		}
 
@@ -316,12 +315,6 @@ class LightRadii
 		}
 		typedef MemberCaller1<LightRadii, const std::string&, &LightRadii::primaryIntensityChanged>
 				IntensityChangedCaller;
-		void flagsChanged (const std::string& value)
-		{
-			m_flags = string::toInt(value);
-			calculateRadii();
-		}
-		typedef MemberCaller1<LightRadii, const std::string&, &LightRadii::flagsChanged> FlagsChangedCaller;
 };
 
 class RenderLightRadiiWire: public OpenGLRenderable
@@ -494,7 +487,6 @@ class Light: public OpenGLRenderable, public Cullable, public Bounded, public Ed
 			m_keyObservers.insert("_color", ColourKey::ColourChangedCaller(m_colour));
 			m_keyObservers.insert("origin", OriginKey::OriginChangedCaller(m_originKey));
 			m_keyObservers.insert("light", LightRadii::IntensityChangedCaller(m_radii));
-			m_keyObservers.insert("spawnflags", LightRadii::FlagsChangedCaller(m_radii));
 		}
 		void destroy ()
 		{
