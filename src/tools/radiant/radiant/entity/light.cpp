@@ -56,155 +56,9 @@
 #include "keys/KeyObserverMap.h"
 #include "NameKeys.h"
 
-#include "../../radiant/entity/EntitySettings.h"
+#include "EntitySettings.h"
+#include "../render/frontend/SphereRenderable.h"
 #include "EntityCreator.h"
-
-static void sphere_draw_fill (const Vector3& origin, float radius, int sides)
-{
-	if (radius <= 0)
-		return;
-
-	const double dt = c_2pi / static_cast<double> (sides);
-	const double dp = c_pi / static_cast<double> (sides);
-
-	glBegin(GL_TRIANGLES);
-	for (int i = 0; i <= sides - 1; ++i) {
-		for (int j = 0; j <= sides - 2; ++j) {
-			const double t = i * dt;
-			const double p = (j * dp) - (c_pi / 2.0);
-
-			{
-				Vector3 v(origin + vector3_for_spherical(t, p) * radius);
-				glVertex3fv(v);
-			}
-
-			{
-				Vector3 v(origin + vector3_for_spherical(t, p + dp) * radius);
-				glVertex3fv(v);
-			}
-
-			{
-				Vector3 v(origin + vector3_for_spherical(t + dt, p + dp) * radius);
-				glVertex3fv(v);
-			}
-
-			{
-				Vector3 v(origin + vector3_for_spherical(t, p) * radius);
-				glVertex3fv(v);
-			}
-
-			{
-				Vector3 v(origin + vector3_for_spherical(t + dt, p + dp) * radius);
-				glVertex3fv(v);
-			}
-
-			{
-				Vector3 v(origin + vector3_for_spherical(t + dt, p) * radius);
-				glVertex3fv(v);
-			}
-		}
-	}
-
-	{
-		const double p = (sides - 1) * dp - (c_pi / 2.0);
-		for (int i = 0; i <= sides - 1; ++i) {
-			const double t = i * dt;
-
-			{
-				Vector3 v(origin + vector3_for_spherical(t, p) * radius);
-				glVertex3fv(v);
-			}
-
-			{
-				Vector3 v(origin + vector3_for_spherical(t + dt, p + dp) * radius);
-				glVertex3fv(v);
-			}
-
-			{
-				Vector3 v(origin + vector3_for_spherical(t + dt, p) * radius);
-				glVertex3fv(v);
-			}
-		}
-	}
-	glEnd();
-}
-
-static void sphere_draw_wire (const Vector3& origin, float radius, int sides)
-{
-	glBegin(GL_LINE_LOOP);
-	for (int i = 0; i <= sides; i++) {
-		const double ds = sin((i * 2 * c_pi) / sides);
-		const double dc = cos((i * 2 * c_pi) / sides);
-
-		glVertex3f(static_cast<float> (origin[0] + radius * dc), static_cast<float> (origin[1] + radius * ds),
-				origin[2]);
-	}
-	glEnd();
-
-	glBegin(GL_LINE_LOOP);
-	for (int i = 0; i <= sides; i++) {
-		const double ds = sin((i * 2 * c_pi) / sides);
-		const double dc = cos((i * 2 * c_pi) / sides);
-
-		glVertex3f(static_cast<float> (origin[0] + radius * dc), origin[1],
-				static_cast<float> (origin[2] + radius * ds));
-	}
-	glEnd();
-
-	glBegin(GL_LINE_LOOP);
-	for (int i = 0; i <= sides; i++) {
-		const double ds = sin((i * 2 * c_pi) / sides);
-		const double dc = cos((i * 2 * c_pi) / sides);
-
-		glVertex3f(origin[0], static_cast<float> (origin[1] + radius * dc),
-				static_cast<float> (origin[2] + radius * ds));
-	}
-	glEnd();
-}
-
-static void light_draw_box_lines (const Vector3& origin, const Vector3 points[8])
-{
-	//draw lines from the center of the bbox to the corners
-	glBegin(GL_LINES);
-
-	glVertex3fv(origin);
-	glVertex3fv(points[1]);
-
-	glVertex3fv(origin);
-	glVertex3fv(points[5]);
-
-	glVertex3fv(origin);
-	glVertex3fv(points[2]);
-
-	glVertex3fv(origin);
-	glVertex3fv(points[6]);
-
-	glVertex3fv(origin);
-	glVertex3fv(points[0]);
-
-	glVertex3fv(origin);
-	glVertex3fv(points[4]);
-
-	glVertex3fv(origin);
-	glVertex3fv(points[3]);
-
-	glVertex3fv(origin);
-	glVertex3fv(points[7]);
-
-	glEnd();
-}
-
-static void light_draw_radius_wire (const Vector3& origin, const float radius)
-{
-	sphere_draw_wire(origin, radius, 24);
-	sphere_draw_wire(origin, radius * 2.0f, 24);
-}
-
-static void light_draw_radius_fill (const Vector3& origin, const float radius)
-{
-	sphere_draw_fill(origin, radius, 16);
-	sphere_draw_fill(origin, radius * 2.0f, 16);
-}
 
 static void light_vertices (const AABB& aabb_light, Vector3 points[6])
 {
@@ -284,63 +138,76 @@ static void light_draw (const AABB& aabb_light, RenderStateFlags state)
 	}
 }
 
-class LightRadius
-{
-	public:
-		float _radius;
-
-	public:
-		LightRadius () :
-			_radius(0)
-		{
-		}
-
-		void valueChanged (const std::string& value)
-		{
-			_radius = string::toInt(value);
-		}
-		typedef MemberCaller1<LightRadius, const std::string&, &LightRadius::valueChanged>
-				IntensityChangedCaller;
+class RenderLightRadiiWire: public SphereRenderable {
+public:
+	RenderLightRadiiWire (const Vector3& origin) :
+		SphereRenderable(true, origin)
+	{
+	}
+	void render (RenderStateFlags state) const
+	{
+		drawWire(_origin, _radius, 24);
+		drawWire(_origin, _radius * 2.0f, 24);
+	}
 };
 
-class RenderLightRadiiWire: public OpenGLRenderable
-{
-		LightRadius& m_radii;
-		const Vector3& m_origin;
-	public:
-		RenderLightRadiiWire (LightRadius& radii, const Vector3& origin) :
-			m_radii(radii), m_origin(origin)
-		{
-		}
-		void render (RenderStateFlags state) const
-		{
-			light_draw_radius_wire(m_origin, m_radii._radius);
-		}
+class RenderLightRadiiFill: public SphereRenderable {
+public:
+	static Shader* m_state;
+
+	RenderLightRadiiFill (const Vector3& origin) :
+		SphereRenderable(false, origin)
+	{
+	}
+
+	void render (RenderStateFlags state) const
+	{
+		drawFill(_origin, _radius, 16);
+		drawFill(_origin, _radius * 2.0f, 16);
+	}
 };
 
-class RenderLightRadiiFill: public OpenGLRenderable
-{
-		LightRadius& m_radii;
-		const Vector3& m_origin;
-	public:
-		static Shader* m_state;
-
-		RenderLightRadiiFill (LightRadius& radii, const Vector3& origin) :
-			m_radii(radii), m_origin(origin)
-		{
-		}
-		void render (RenderStateFlags state) const
-		{
-			light_draw_radius_fill(m_origin, m_radii._radius);
-		}
-};
+Shader* RenderLightRadiiFill::m_state = 0;
 
 class RenderLightRadiiBox: public OpenGLRenderable
 {
+	private:
 		const Vector3& m_origin;
+
+		void light_draw_box_lines (const Vector3& origin, const Vector3 points[8]) const
+		{
+			//draw lines from the center of the bbox to the corners
+			glBegin(GL_LINES);
+
+			glVertex3fv(origin);
+			glVertex3fv(points[1]);
+
+			glVertex3fv(origin);
+			glVertex3fv(points[5]);
+
+			glVertex3fv(origin);
+			glVertex3fv(points[2]);
+
+			glVertex3fv(origin);
+			glVertex3fv(points[6]);
+
+			glVertex3fv(origin);
+			glVertex3fv(points[0]);
+
+			glVertex3fv(origin);
+			glVertex3fv(points[4]);
+
+			glVertex3fv(origin);
+			glVertex3fv(points[3]);
+
+			glVertex3fv(origin);
+			glVertex3fv(points[7]);
+
+			glEnd();
+		}
+
 	public:
 		mutable Vector3 m_points[8];
-		static Shader* m_state;
 
 		RenderLightRadiiBox (const Vector3& origin) :
 			m_origin(origin)
@@ -359,8 +226,6 @@ class RenderLightRadiiBox: public OpenGLRenderable
 			light_draw_box_lines(m_origin, m_points);
 		}
 };
-
-Shader* RenderLightRadiiFill::m_state = 0;
 
 inline void default_extents (Vector3& extents)
 {
@@ -444,8 +309,6 @@ class Light: public OpenGLRenderable, public Cullable, public Bounded, public Ed
 		NameKeys m_nameKeys;
 		TraversableObserverPairRelay m_traverseObservers;
 
-		LightRadius m_radii;
-
 		RenderLightRadiiWire m_radii_wire;
 		RenderLightRadiiFill m_radii_fill;
 		RenderLightRadiiBox m_radii_box;
@@ -472,7 +335,8 @@ class Light: public OpenGLRenderable, public Cullable, public Bounded, public Ed
 			m_keyObservers.insert("targetname", NamedEntity::IdentifierChangedCaller(m_named));
 			m_keyObservers.insert("_color", ColourKey::ColourChangedCaller(m_colour));
 			m_keyObservers.insert("origin", OriginKey::OriginChangedCaller(m_originKey));
-			m_keyObservers.insert("light", LightRadius::IntensityChangedCaller(m_radii));
+			m_keyObservers.insert("light", SphereRenderable::RadiusChangedCaller(m_radii_wire));
+			m_keyObservers.insert("light", SphereRenderable::RadiusChangedCaller(m_radii_fill));
 		}
 		void destroy ()
 		{
@@ -497,8 +361,8 @@ class Light: public OpenGLRenderable, public Cullable, public Bounded, public Ed
 		Light (EntityClass* eclass, scene::Node& node, const Callback& transformChanged, const Callback& boundsChanged,
 				const Callback& evaluateTransform) :
 			m_entity(eclass), m_originKey(OriginChangedCaller(*this)), m_colour(Callback()),
-					m_named(m_entity), m_nameKeys(m_entity), m_radii_wire(m_radii, m_aabb_light.origin), m_radii_fill(
-							m_radii, m_aabb_light.origin), m_radii_box(m_aabb_light.origin), m_renderName(m_named,
+					m_named(m_entity), m_nameKeys(m_entity), m_radii_wire(m_aabb_light.origin), m_radii_fill(
+							m_aabb_light.origin), m_radii_box(m_aabb_light.origin), m_renderName(m_named,
 							m_aabb_light.origin), m_transformChanged(transformChanged), m_boundsChanged(boundsChanged),
 					m_evaluateTransform(evaluateTransform)
 		{
@@ -507,8 +371,8 @@ class Light: public OpenGLRenderable, public Cullable, public Bounded, public Ed
 		Light (const Light& other, scene::Node& node, const Callback& transformChanged, const Callback& boundsChanged,
 				const Callback& evaluateTransform) :
 			m_entity(other.m_entity), m_originKey(OriginChangedCaller(*this)), m_colour(Callback()),
-					m_named(m_entity), m_nameKeys(m_entity), m_radii_wire(m_radii, m_aabb_light.origin),
-					m_radii_fill(m_radii, m_aabb_light.origin), m_radii_box(m_aabb_light.origin), m_renderName(m_named,
+					m_named(m_entity), m_nameKeys(m_entity), m_radii_wire(m_aabb_light.origin),
+					m_radii_fill(m_aabb_light.origin), m_radii_box(m_aabb_light.origin), m_renderName(m_named,
 							m_aabb_light.origin), m_transformChanged(transformChanged), m_boundsChanged(boundsChanged),
 					m_evaluateTransform(evaluateTransform)
 		{
