@@ -107,7 +107,7 @@ item laser_ammo
 			shots		1
 			ammo		1
 			time		4
-			damage		"20 5"
+			damage		"25 5"
 			dmgweight	"laser_light"
 			reaction	true
 		}
@@ -129,7 +129,7 @@ item laser_ammo
 			shots				3
 			ammo				3
 			time				8
-			damage				"20 5"
+			damage				"25 5"
 			dmgweight			"laser_light"
 			reaction			true
 		}
@@ -155,7 +155,7 @@ item laser_ammo
 			shots		1
 			ammo		2
 			time		8
-			damage		"42 10"
+			damage		"62 10"
 			dmgweight	"laser_medium"
 			reaction	true
 		}
@@ -177,7 +177,7 @@ item laser_ammo
 			shots				3
 			ammo				6
 			time				12
-			damage				"42 10"
+			damage				"62 10"
 			dmgweight			"laser_medium"
 			reaction			true
 		}
@@ -201,7 +201,7 @@ item laser_ammo
 			shots		1
 			ammo		3
 			time		12
-			damage		"60 10"
+			damage		"80 10"
 			dmgweight	"laser_heavy"
 			reaction	true
 		}
@@ -223,7 +223,7 @@ item laser_ammo
 			shots				3
 			ammo				12
 			time				18
-			damage				"60 10"
+			damage				"80 10"
 			dmgweight			"laser_heavy"
 			reaction			true
 		}

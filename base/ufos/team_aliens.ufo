@@ -106,9 +106,9 @@ team taman
 
 		shock -10
 
-		laser_light 10
-		laser_medium 15
-		laser_heavy 20
+		laser_light 0
+		laser_medium 0
+		laser_heavy 0
 
 		plasma_light 5
 		plasma_medium 5
@@ -228,9 +228,9 @@ team ortnok
 
 		shock 10
 
-		laser_light 30
-		laser_medium 30
-		laser_heavy 30
+		laser_light 0
+		laser_medium 0
+		laser_heavy 0
 
 		plasma_light 0
 		plasma_medium 0
@@ -431,13 +431,13 @@ team bloodspider
 
 		shock 999
 
-		laser_light 10
-		laser_medium 20
-		laser_heavy 30
+		laser_light 0
+		laser_medium 0
+		laser_heavy 0
 
-		plasma_light 0
-		plasma_medium -20
-		plasma_heavy -40
+		plasma_light 30
+		plasma_medium 20
+		plasma_heavy 5
 
 		particlebeam_light 10
 		particlebeam_medium 20
@@ -633,13 +633,13 @@ team hovernet
 
 		shock 999
 
-		laser_light 10
-		laser_medium 20
-		laser_heavy 30
+		laser_light 0
+		laser_medium 0
+		laser_heavy 0
 
-		plasma_light 0
-		plasma_medium -20
-		plasma_heavy -40
+		plasma_light 30
+		plasma_medium 20
+		plasma_heavy 5
 
 		particlebeam_light 10
 		particlebeam_medium 20
