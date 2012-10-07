@@ -322,6 +322,6 @@
 // entity 4
 {
 "classname" "info_alien_start"
-"origin" "176.131 207.869 35.9957"
+"origin" "176 208 28"
 "angle" "135"
 }
