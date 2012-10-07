@@ -3034,7 +3034,7 @@ mapdef eaglenest
 		coop3
 		coop4
 	)
-	maxaliens		18
+	maxaliens		5
 
 	description		"_A small estate in the mountains."
 
