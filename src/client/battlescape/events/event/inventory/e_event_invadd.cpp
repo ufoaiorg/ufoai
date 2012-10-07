@@ -79,7 +79,7 @@ void CL_InvAdd (const eventRegister_t *self, dbuffer *msg)
 	if (!le)
 		LE_NotFoundError(number);
 
-	le->removeNextFrame = false;
+	le->flags &= ~LE_REMOVE_NEXT_FRAME;
 
 	for (; nr-- > 0;) {
 		item_t item;

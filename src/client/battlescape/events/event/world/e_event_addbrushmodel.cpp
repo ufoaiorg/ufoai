@@ -92,6 +92,7 @@ void CL_AddBrushModel (const eventRegister_t *self, dbuffer *msg)
 		CM_SetInlineModelOrientation(cl.mapTiles, le->inlineModelName, le->origin, le->angles);
 
 		le->contents = CONTENTS_SOLID;
+		le->flags |= LE_CHECK_LEVELFLAGS;
 
 		CL_RecalcRouting(le);
 	}

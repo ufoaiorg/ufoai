@@ -66,7 +66,7 @@ typedef struct eventRegister_s {
 
 	/**
 	 * @brief Called to determine if this event is ok to run at this point. Should check any
-	 * conflicts with other ongoing events (see @c le_t->locked ).
+	 * conflicts with other ongoing events (see @c LE_LOCKED ).
 	 * @return @c true if OK to run, @c false if not.
 	 */
 	bool (*eventCheck)(const struct eventRegister_s *self, const dbuffer *msg);

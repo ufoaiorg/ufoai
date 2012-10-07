@@ -46,10 +46,15 @@ typedef enum {
 typedef bool (*localEntitiyAddFunc_t) (struct le_s * le, entity_t * ent);
 typedef void (*localEntityThinkFunc_t) (struct le_s * le);
 
+#define LE_CHECK_LEVELFLAGS		0x0001
+#define LE_ALWAYS_VISIBLE		0x0002
+#define LE_LOCKED				0x0004 /**< if there is an event going on involving
+			 * this le_t.  Used to limit to one event per le_t struct at any time. */
+#define LE_REMOVE_NEXT_FRAME	0x0008 /**< will set the inuse value to false in the next frame */
+
 /** @brief a local entity */
 typedef struct le_s {
 	bool inuse;
-	bool removeNextFrame;	/**< will set the inuse value to false in the next frame */
 	bool invis;
 	bool selected;		/**< used for actors - for the current selected actor this is true */
 	entity_type_t type;				/**< the local entity type */
@@ -75,6 +80,8 @@ typedef struct le_s {
 	int team;		/**< the team number this local entity belongs to */
 	int pnum;		/**< the player number this local entity belongs to */
 	int ucn;		/**< the unique character number to match between server and client characters */
+
+	int flags;
 
 	fireDefIndex_t currentSelectedFiremode;
 
@@ -143,9 +150,6 @@ typedef struct le_s {
 
 	/** is called before adding a le to scene */
 	localEntitiyAddFunc_t addFunc;
-
-	bool locked;	/**< true if there is an event going on involving
-						 * this le_t.  Used to limit to one event per le_t struct at any time. */
 } le_t;
 
 #define MAX_LOCALMODELS		1024

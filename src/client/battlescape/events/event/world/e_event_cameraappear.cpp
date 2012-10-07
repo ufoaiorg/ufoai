@@ -51,6 +51,7 @@ void CL_CameraAppear (const eventRegister_t *self, dbuffer * msg)
 	VectorCopy(origin, le->origin);
 	le->type = ET_CAMERA;
 	le->team = team;
+	le->flags |= LE_CHECK_LEVELFLAGS;
 	le->levelflags = levelflags;
 	le->model1 = R_FindModel(va("objects/cameras/camera%i", cameraType));
 	R_AnimChange(&le->as, le->model1, "rotate");

@@ -869,7 +869,7 @@ void LE_PlaceItem (le_t *le)
 	} else {
 		/* If no items in floor inventory, don't draw this le - the container is
 		 * maybe empty because an actor picked up the last items here */
-		le->removeNextFrame = true;
+		le->flags |= LE_REMOVE_NEXT_FRAME;
 	}
 }
 
@@ -1232,7 +1232,7 @@ le_t *LE_Get (int entnum)
 bool LE_IsLocked (int entnum)
 {
 	le_t *le = LE_Get(entnum);
-	return (le != NULL && le->locked);
+	return (le != NULL && (le->flags & LE_LOCKED));
 }
 
 /**
@@ -1244,10 +1244,10 @@ bool LE_IsLocked (int entnum)
  */
 void LE_Lock (le_t *le)
 {
-	if (le->locked)
+	if (le->flags & LE_LOCKED)
 		Com_Error(ERR_DROP, "LE_Lock: Trying to lock %i which is already locked\n", le->entnum);
 
-	le->locked = true;
+	le->flags |= LE_LOCKED;
 }
 
 /**
@@ -1263,10 +1263,10 @@ void LE_Lock (le_t *le)
  */
 void LE_Unlock (le_t *le)
 {
-	if (!le->locked)
+	if (!(le->flags & LE_LOCKED))
 		Com_Error(ERR_DROP, "LE_Unlock: Trying to unlock %i which is already unlocked\n", le->entnum);
 
-	le->locked = false;
+	le->flags &= ~LE_LOCKED;
 }
 
 /**
@@ -1420,15 +1420,15 @@ void LE_AddToScene (void)
 	int i;
 
 	for (i = 0, le = cl.LEs; i < cl.numLEs; i++, le++) {
-		if (le->removeNextFrame) {
+		if (le->flags & LE_REMOVE_NEXT_FRAME) {
 			le->inuse = false;
-			le->removeNextFrame = false;
+			le->flags &= ~LE_REMOVE_NEXT_FRAME;
 		}
 		if (le->inuse && !le->invis) {
-			if (le->contents & CONTENTS_SOLID) {
+			if (le->flags & LE_CHECK_LEVELFLAGS) {
 				if (!((1 << cl_worldlevel->integer) & le->levelflags))
 					continue;
-			} else if (le->contents & CONTENTS_DETAIL) {
+			} else if (le->flags & LE_ALWAYS_VISIBLE) {
 				/* show them always */
 			} else if (le->pos[2] > cl_worldlevel->integer)
 				continue;
