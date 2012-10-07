@@ -1418,6 +1418,7 @@ tech rs_weapon_laserpistol
 	{
 		tech rs_laser
 		tech rs_skill_close
+		tech rs_alien_body_armour
 	}
 	provides	laserpistol
 	time	2500
@@ -1455,8 +1456,8 @@ tech rs_weapon_laserrifle
 	require_AND
 	{
 		tech rs_laser
-	//	tech rs_skill_sniper
 		tech rs_skill_assault
+		tech rs_alien_body_armour
 	}
 	provides	laserrifle
 	time	3000
@@ -1496,6 +1497,7 @@ tech rs_weapon_heavylaser
 		tech rs_laser
 	//	tech rs_skill_sniper
 		tech rs_skill_heavy
+		tech rs_alien_body_armour
 	}
 	provides	heavylaser
 	time	3400
@@ -1577,6 +1579,7 @@ tech rs_weapon_laserammo
 	{
 		tech rs_laser
 		tech rs_damage_laser
+		tech rs_alien_body_armour
 	}
 	provides	laser_ammo
 	time		3000
