@@ -208,7 +208,7 @@ static void R_ModLoadTexinfo (const lump_t *l)
 		out->flags = LittleLong(in->surfaceFlags);
 
 		/* exchange the textures with the ones that are needed for base assembly */
-		if (mapZone && strstr(in->texture, "tex_terrain/dummy"))
+		if (Q_strvalid(mapZone) && strstr(in->texture, "tex_terrain/dummy"))
 			Com_sprintf(name, sizeof(name), "textures/tex_terrain/%s", mapZone);
 		else
 			Com_sprintf(name, sizeof(name), "textures/%s", in->texture);
