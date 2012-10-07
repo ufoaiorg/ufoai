@@ -378,6 +378,10 @@ static int UI_BaseInventoryNodeDrawItems (uiNode_t *node, const objDef_t *highli
 			for (ammoIdx = 0; ammoIdx < obj->numAmmos; ammoIdx++) {
 				tempItem.item = obj->ammos[ammoIdx];
 
+				/* skip weapos that are their own ammo -- oneshot and such */
+				if (obj == tempItem.item)
+					continue;
+
 				/* skip unusable ammo */
 				if (!GAME_ItemIsUseable(tempItem.item))
 					continue;
