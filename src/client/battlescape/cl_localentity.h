@@ -57,14 +57,14 @@ typedef void (*localEntityThinkFunc_t) (struct le_s * le);
 /** @brief a local entity */
 typedef struct le_s {
 	bool inuse;
-	entity_type_t type;				/**< the local entity type */
-	int entnum;				/**< the server side edict num this le belongs to */
+	entity_type_t type;			/**< the local entity type */
+	int entnum;					/**< the server side edict num this le belongs to */
 
 	vec3_t origin, oldOrigin;	/**< position given via world coordinates */
-	pos3_t pos, oldPos, newPos;		/**< position on the grid */
-	int angle;				/**< the current dir the le is facing into. Beware, this can either
-							 * be an index in the bytedirs array or an index for the angles
-							 * array of the le */
+	pos3_t pos, oldPos, newPos;	/**< position on the grid */
+	int angle;					/**< the current dir the le is facing into. Beware, this can either
+								* be an index in the bytedirs array or an index for the angles
+								* array of the le */
 	int dir;
 
 	int TU, maxTU;				/**< time units */
