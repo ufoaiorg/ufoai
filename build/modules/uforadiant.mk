@@ -311,8 +311,11 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/entity/entitymodule.cpp \
 	$(RADIANT_BASE)/radiant/entity/EntityCreator.cpp \
 	$(RADIANT_BASE)/radiant/entity/eclassmodel.cpp \
-	$(RADIANT_BASE)/radiant/entity/generic.cpp \
 	$(RADIANT_BASE)/radiant/entity/targetable.cpp \
+	\
+	$(RADIANT_BASE)/radiant/entity/generic/GenericEntity.cpp \
+	$(RADIANT_BASE)/radiant/entity/generic/GenericEntityInstance.cpp \
+	$(RADIANT_BASE)/radiant/entity/generic/GenericEntityNode.cpp \
 	\
 	$(RADIANT_BASE)/radiant/entity/group/Group.cpp \
 	$(RADIANT_BASE)/radiant/entity/group/GroupInstance.cpp \

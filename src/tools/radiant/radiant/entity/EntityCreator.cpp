@@ -41,7 +41,7 @@
 #include "sound/MiscSoundNode.h"
 #include "group/GroupNode.h"
 #include "eclassmodel.h"
-#include "generic.h"
+#include "generic/GenericEntityNode.h"
 
 inline scene::Node& entity_for_eclass (EntityClass* eclass)
 {
@@ -57,9 +57,9 @@ inline scene::Node& entity_for_eclass (EntityClass* eclass)
 		return *(new GroupNode(eclass));
 	} else if (!eclass->modelpath().empty()) {
 		return New_EclassModel(eclass);
-	} else {
-		return New_GenericEntity(eclass);
 	}
+
+	return *(new GenericEntityNode(eclass));
 }
 
 inline Namespaced* Node_getNamespaced (scene::Node& node)
@@ -83,21 +83,20 @@ inline scene::Node& node_for_eclass (EntityClass* eclass)
 EntityCreator::KeyValueChangedFunc EntityKeyValues::m_entityKeyValueChanged = 0;
 EntityCreator::KeyValueChangedFunc KeyValue::m_entityKeyValueChanged = 0;
 
-class ConnectEntities
-{
-	public:
-		Entity* m_e1;
-		Entity* m_e2;
-		ConnectEntities (Entity* e1, Entity* e2) :
+class ConnectEntities {
+public:
+	Entity* m_e1;
+	Entity* m_e2;
+	ConnectEntities (Entity* e1, Entity* e2) :
 			m_e1(e1), m_e2(e2)
-		{
-		}
-		void connect (const std::string& name)
-		{
-			m_e1->setKeyValue("target", name);
-			m_e2->setKeyValue("targetname", name);
-		}
-		typedef MemberCaller1<ConnectEntities, const std::string&, &ConnectEntities::connect> ConnectCaller;
+	{
+	}
+	void connect (const std::string& name)
+	{
+		m_e1->setKeyValue("target", name);
+		m_e2->setKeyValue("targetname", name);
+	}
+	typedef MemberCaller1<ConnectEntities, const std::string&, &ConnectEntities::connect> ConnectCaller;
 };
 
 inline Entity* ScenePath_getEntity (const scene::Path& path)
@@ -109,53 +108,52 @@ inline Entity* ScenePath_getEntity (const scene::Path& path)
 	return entity;
 }
 
-class UFOEntityCreator: public EntityCreator
-{
-	public:
-		scene::Node& createEntity (EntityClass* eclass)
-		{
-			return node_for_eclass(eclass);
+class UFOEntityCreator: public EntityCreator {
+public:
+	scene::Node& createEntity (EntityClass* eclass)
+	{
+		return node_for_eclass(eclass);
+	}
+	void setKeyValueChangedFunc (KeyValueChangedFunc func)
+	{
+		EntityKeyValues::setKeyValueChangedFunc(func);
+	}
+	void connectEntities (const scene::Path& path, const scene::Path& targetPath)
+	{
+		Entity* e1 = ScenePath_getEntity(path);
+		Entity* e2 = ScenePath_getEntity(targetPath);
+
+		if (e1 == 0 || e2 == 0) {
+			globalErrorStream() << "entityConnectSelected: both of the selected instances must be an entity\n";
+			return;
 		}
-		void setKeyValueChangedFunc (KeyValueChangedFunc func)
-		{
-			EntityKeyValues::setKeyValueChangedFunc(func);
+
+		if (e1 == e2) {
+			globalErrorStream()
+					<< "entityConnectSelected: the selected instances must not both be from the same entity\n";
+			return;
 		}
-		void connectEntities (const scene::Path& path, const scene::Path& targetPath)
-		{
-			Entity* e1 = ScenePath_getEntity(path);
-			Entity* e2 = ScenePath_getEntity(targetPath);
 
-			if (e1 == 0 || e2 == 0) {
-				globalErrorStream() << "entityConnectSelected: both of the selected instances must be an entity\n";
-				return;
-			}
+		UndoableCommand undo("entityConnectSelected");
 
-			if (e1 == e2) {
-				globalErrorStream()
-						<< "entityConnectSelected: the selected instances must not both be from the same entity\n";
-				return;
-			}
-
-			UndoableCommand undo("entityConnectSelected");
-
-			ConnectEntities connector(e1, e2);
-			std::string value = e2->getKeyValue("targetname");
-			if (value.empty()) {
-				value = e1->getKeyValue("target");
-			}
-			if (!value.empty()) {
-				connector.connect(value);
-			} else {
-				std::string type = e2->getKeyValue("classname");
-				if (type.empty()) {
-					type = "t";
-				}
-				std::string key = type + "1";
-				GlobalNamespace().makeUnique(key, ConnectEntities::ConnectCaller(connector));
-			}
-
-			SceneChangeNotify();
+		ConnectEntities connector(e1, e2);
+		std::string value = e2->getKeyValue("targetname");
+		if (value.empty()) {
+			value = e1->getKeyValue("target");
 		}
+		if (!value.empty()) {
+			connector.connect(value);
+		} else {
+			std::string type = e2->getKeyValue("classname");
+			if (type.empty()) {
+				type = "t";
+			}
+			std::string key = type + "1";
+			GlobalNamespace().makeUnique(key, ConnectEntities::ConnectCaller(connector));
+		}
+
+		SceneChangeNotify();
+	}
 };
 
 UFOEntityCreator g_UFOEntityCreator;

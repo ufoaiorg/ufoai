@@ -476,8 +476,10 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\entity\entitydef\EntityClassScanner.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\entity\entitydef\EntityDefinitionModule.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\entity\entitymodule.cpp" />
-		<Unit filename="..\..\src\tools\radiant\radiant\entity\generic.cpp" />
-		<Unit filename="..\..\src\tools\radiant\radiant\entity\generic.h" />
+		<Unit filename="..\..\src\tools\radiant\radiant\entity\generic\GenericEntity.cpp" />
+		<Unit filename="..\..\src\tools\radiant\radiant\entity\generic\GenericEntity.h" />
+		<Unit filename="..\..\src\tools\radiant\radiant\entity\generic\GenericEntityInstance.cpp" />
+		<Unit filename="..\..\src\tools\radiant\radiant\entity\generic\GenericEntityNode.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\entity\group\Group.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\entity\group\Group.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\entity\group\GroupInstance.cpp" />
