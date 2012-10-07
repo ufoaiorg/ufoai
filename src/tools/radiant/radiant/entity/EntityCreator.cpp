@@ -36,7 +36,7 @@
 #include "stream/stringstream.h"
 
 #include "miscmodel.h"
-#include "light.h"
+#include "light/light.h"
 #include "group.h"
 #include "eclassmodel.h"
 #include "generic.h"

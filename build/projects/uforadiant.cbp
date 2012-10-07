@@ -481,8 +481,8 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\entity\group.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\entity\group.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\entity\keyobservers.h" />
-		<Unit filename="..\..\src\tools\radiant\radiant\entity\light.cpp" />
-		<Unit filename="..\..\src\tools\radiant\radiant\entity\light.h" />
+		<Unit filename="..\..\src\tools\radiant\radiant\entity\light\light.cpp" />
+		<Unit filename="..\..\src\tools\radiant\radiant\entity\light\light.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\entity\miscmodel.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\entity\miscmodel.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\entity\miscparticle.cpp" />

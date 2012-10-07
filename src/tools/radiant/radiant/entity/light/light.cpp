@@ -49,16 +49,16 @@
 #include "stringio.h"
 #include "traverselib.h"
 
-#include "targetable.h"
-#include "keys/OriginKey.h"
-#include "keys/ColourKey.h"
-#include "namedentity.h"
-#include "keys/KeyObserverMap.h"
-#include "NameKeys.h"
+#include "../targetable.h"
+#include "../keys/OriginKey.h"
+#include "../keys/ColourKey.h"
+#include "../namedentity.h"
+#include "../keys/KeyObserverMap.h"
+#include "../NameKeys.h"
 
-#include "EntitySettings.h"
-#include "../render/frontend/SphereRenderable.h"
-#include "EntityCreator.h"
+#include "../EntitySettings.h"
+#include "../../render/frontend/SphereRenderable.h"
+#include "../EntityCreator.h"
 
 static void light_vertices (const AABB& aabb_light, Vector3 points[6])
 {
