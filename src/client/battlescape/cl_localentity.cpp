@@ -231,7 +231,7 @@ bool LE_IsLivingActor (const le_t *le)
 bool LE_IsLivingAndVisibleActor (const le_t *le)
 {
 	assert(le);
-	if (le->invis)
+	if (LE_IsInvisible(le))
 		return false;
 
 	assert(le->type != ET_ACTORHIDDEN);
@@ -601,7 +601,7 @@ void LE_DoEndPathMove (le_t *le)
 	CL_ActorConditionalMoveCalc(le);
 	/* if the moving actor was not the selected one, */
 	/* recalc the pathing table for the selected one, too. */
-	if (!le->selected) {
+	if (!LE_IsSelected(le)) {
 		CL_ActorConditionalMoveCalc(selActor);
 	}
 
@@ -734,7 +734,7 @@ void LE_AddProjectile (const fireDef_t *fd, int flags, const vec3_t muzzle, cons
 	le = LE_Add(0);
 	if (!le)
 		return;
-	le->invis = !cl_leshowinvis->integer;
+	LE_SetInvisible(le);
 	/* bind particle */
 	le->ptl = CL_ParticleSpawn(fd->projectile, 0, muzzle);
 	if (!le->ptl) {
@@ -890,7 +890,7 @@ void LE_AddGrenade (const fireDef_t *fd, int flags, const vec3_t muzzle, const v
 	le = LE_Add(0);
 	if (!le)
 		return;
-	le->invis = !cl_leshowinvis->integer;
+	LE_SetInvisible(le);
 
 	/* bind particle */
 	VectorSet(accel, 0, 0, -GRAVITY);
@@ -1120,7 +1120,7 @@ void LE_AddAmbientSound (const char *sound, const vec3_t origin, int levelflags,
 	le->type = ET_SOUND;
 	le->sampleIdx = sampleIdx;
 	VectorCopy(origin, le->origin);
-	le->invis = !cl_leshowinvis->integer;
+	LE_SetInvisible(le);
 	le->levelflags = levelflags;
 	le->attenuation = attenuation;
 
@@ -1424,7 +1424,7 @@ void LE_AddToScene (void)
 			le->inuse = false;
 			le->flags &= ~LE_REMOVE_NEXT_FRAME;
 		}
-		if (le->inuse && !le->invis) {
+		if (le->inuse && !LE_IsInvisible(le)) {
 			if (le->flags & LE_CHECK_LEVELFLAGS) {
 				if (!((1 << cl_worldlevel->integer) & le->levelflags))
 					continue;
@@ -1475,7 +1475,7 @@ void LE_AddToScene (void)
 				break;
 			}
 
-			if (le->selected && le->clientAction != NULL) {
+			if (LE_IsSelected(le) && le->clientAction != NULL) {
 				const le_t *action = le->clientAction;
 				LE_AddEdictHighlight(action);
 			}
@@ -1529,7 +1529,7 @@ void LE_List_f (void)
 	Com_Printf("number | entnum | type | inuse | invis | pnum | team | size |  HP | state | level | model/ptl\n");
 	for (i = 0, le = cl.LEs; i < cl.numLEs; i++, le++) {
 		Com_Printf("#%5i | #%5i | %4i | %5i | %5i | %4i | %4i | %4i | %3i | %5i | %5i | ",
-			i, le->entnum, le->type, le->inuse, le->invis, le->pnum, le->team,
+			i, le->entnum, le->type, le->inuse, LE_IsInvisible(le), le->pnum, le->team,
 			le->fieldSize, le->HP, le->state, le->levelflags);
 		if (le->type == ET_PARTICLE) {
 			if (le->ptl)

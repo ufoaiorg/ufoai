@@ -52,7 +52,7 @@ void CL_ActorStats (const eventRegister_t *self, dbuffer *msg)
 		return;
 	}
 
-	if (le->selected)
+	if (LE_IsSelected(le))
 		oldTUs = le->TU;
 
 	NET_ReadFormat(msg, self->formatString, &le->TU, &le->HP, &le->STUN, &le->morale);
@@ -65,6 +65,6 @@ void CL_ActorStats (const eventRegister_t *self, dbuffer *msg)
 		le->maxMorale = le->morale;
 
 	/* if selActor's timeunits have changed, update movelength */
-	if (le->TU != oldTUs && le->selected)
+	if (le->TU != oldTUs && LE_IsSelected(le))
 		CL_ActorResetMoveLength(le);
 }

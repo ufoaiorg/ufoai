@@ -51,12 +51,12 @@ typedef void (*localEntityThinkFunc_t) (struct le_s * le);
 #define LE_LOCKED				0x0004 /**< if there is an event going on involving
 			 * this le_t.  Used to limit to one event per le_t struct at any time. */
 #define LE_REMOVE_NEXT_FRAME	0x0008 /**< will set the inuse value to false in the next frame */
+#define LE_INVISIBLE			0x0010
+#define LE_SELECTED				0x0020 /**< used for actors - for the current selected actor this is true */
 
 /** @brief a local entity */
 typedef struct le_s {
 	bool inuse;
-	bool invis;
-	bool selected;		/**< used for actors - for the current selected actor this is true */
 	entity_type_t type;				/**< the local entity type */
 	int entnum;				/**< the server side edict num this le belongs to */
 
@@ -205,6 +205,11 @@ int LE_ActorGetStepTime(const le_t *le, const pos3_t pos, const pos3_t oldPos, c
 #define LE_IsDead(le)		((le)->state & STATE_DEAD)
 #define LE_IsPaniced(le)	((le)->state & STATE_PANIC)
 #define LE_IsCrouched(le)	((le)->state & STATE_CROUCHED)
+
+#define LE_IsInvisible(le)	((le)->flags & LE_INVISIBLE)
+#define LE_IsSelected(le)	((le)->flags & LE_SELECTED)
+
+#define LE_SetInvisible(le) do { if (!cl_leshowinvis->integer) le->flags &= ~LE_INVISIBLE; else le->flags |= LE_INVISIBLE; } while (0)
 
 #define LE_IsItem(le)		((le)->type == ET_ITEM)
 #define LE_IsCamera(le)		((le)->type == ET_CAMERA)

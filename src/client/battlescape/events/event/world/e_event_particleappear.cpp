@@ -61,7 +61,7 @@ void CL_ParticleAppear (const eventRegister_t *self, dbuffer *msg)
 
 	/* particles don't have a model to add to the scene - we mark them as invisible and
 	 * only render the particle */
-	le->invis = !cl_leshowinvis->integer;
+	LE_SetInvisible(le);
 	le->levelflags = levelflags;
 	le->particleID = Mem_PoolStrDup(particle, cl_genericPool, 0);
 	le->ptl = CL_ParticleSpawn(le->particleID, le->levelflags, origin);

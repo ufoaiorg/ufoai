@@ -208,7 +208,7 @@ void CL_ActorDoShoot (const eventRegister_t *self, dbuffer *msg)
 	} else if (IS_SHOT_HEADGEAR(shootType)) {
 		if (fd->irgoggles) {
 			leShooter->state |= RF_IRGOGGLESSHOT;
-			if (leShooter->selected)
+			if (LE_IsSelected(leShooter))
 				refdef.rendererFlags |= RDF_IRGOGGLES;
 		}
 	} else {

@@ -793,7 +793,7 @@ static bool HUD_DisplayImpossibleReaction (const le_t * actor)
 		return false;
 
 	/* Given actor does not equal the currently selected actor. */
-	if (!actor->selected)
+	if (!LE_IsSelected(actor))
 		return false;
 
 	/* Display 'impossible" (red) reaction buttons */
@@ -815,7 +815,7 @@ static void HUD_DisplayPossibleReaction (const le_t * actor)
 		return;
 
 	/* Given actor does not equal the currently selected actor. This normally only happens on game-start. */
-	if (!actor->selected)
+	if (!LE_IsSelected(actor))
 		return;
 
 	/* Display 'usable" (blue) reaction buttons */

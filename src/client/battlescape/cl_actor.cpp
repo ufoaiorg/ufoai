@@ -445,7 +445,7 @@ void CL_ActorRemoveFromTeamList (le_t * le)
 	}
 
 	/* check selection */
-	if (le->selected) {
+	if (LE_IsSelected(le)) {
 		for (i = 0; i < cl.numTeamList; i++) {
 			le_t *tl = cl.teamList[i];
 			if (tl && CL_ActorSelect(tl))
@@ -471,7 +471,7 @@ bool CL_ActorSelect (le_t * le)
 	/* test team */
 	if (!le) {
 		if (selActor)
-			selActor->selected = false;
+			selActor->flags &= ~LE_SELECTED;
 		selActor = NULL;
 		ui_inventory = NULL;
 		return false;
@@ -480,17 +480,17 @@ bool CL_ActorSelect (le_t * le)
 	if (le->pnum != cl.pnum || LE_IsDead(le) || !le->inuse)
 		return false;
 
-	if (le->selected) {
+	if (LE_IsSelected(le)) {
 		mousePosTargettingAlign = 0;
 		return true;
 	}
 
 	if (selActor)
-		selActor->selected = false;
+		selActor->flags &= ~LE_SELECTED;
 
 	mousePosTargettingAlign = 0;
 	selActor = le;
-	selActor->selected = true;
+	selActor->flags |= LE_SELECTED;
 	ui_inventory = &selActor->i;
 
 	if (le->state & RF_IRGOGGLESSHOT)
@@ -564,7 +564,7 @@ bool CL_ActorSelectNext (void)
 	/* find index of currently selected actor */
 	for (i = 0; i < num; i++) {
 		const le_t *le = cl.teamList[i];
-		if (le && le->selected && le->inuse && !LE_IsDead(le)) {
+		if (le && le->inuse && LE_IsSelected(le) && !LE_IsDead(le)) {
 			selIndex = i;
 			break;
 		}
@@ -596,7 +596,7 @@ bool CL_ActorSelectPrev (void)
 	/* find index of currently selected actor */
 	for (i = 0; i < num; i++) {
 		const le_t *le = cl.teamList[i];
-		if (le && le->selected && le->inuse && !LE_IsDead(le)) {
+		if (le && le->inuse && LE_IsSelected(le) && !LE_IsDead(le)) {
 			selIndex = i;
 			break;
 		}
@@ -652,7 +652,7 @@ static void CL_BuildForbiddenList (void)
 	forbiddenListLength = 0;
 
 	while ((le = LE_GetNextInUse(le))) {
-		if (le->invis)
+		if (LE_IsInvisible(le))
 			continue;
 		/* Dead ugv will stop walking, too. */
 		if (le->type == ET_ACTOR2x2 || (!LE_IsStunned(le) && LE_IsLivingAndVisibleActor(le))) {
@@ -727,7 +727,7 @@ static void CL_DisplayBlockedPaths_f (void)
 void CL_ActorConditionalMoveCalc (le_t *le)
 {
 	CL_BuildForbiddenList();
-	if (le && le->selected) {
+	if (le && LE_IsSelected(le)) {
 		const byte crouchingState = LE_IsCrouched(le) ? 1 : 0;
 		Grid_MoveCalc(cl.mapData->map, le->fieldSize, &cl.pathMap, le->pos, crouchingState, MAX_ROUTE_TUS, forbiddenList, forbiddenListLength);
 		CL_ActorResetMoveLength(le);
@@ -1234,7 +1234,7 @@ void CL_ActorSelectMouse (void)
 	case M_MOVE:
 	case M_PEND_MOVE:
 		/* Try and select another team member */
-		if (mouseActor && !mouseActor->selected && CL_ActorSelect(mouseActor)) {
+		if (mouseActor && !LE_IsSelected(mouseActor) && CL_ActorSelect(mouseActor)) {
 			/* Succeeded so go back into move mode. */
 			CL_ActorSetMode(selActor, M_MOVE);
 		} else if (interactEntity) {
@@ -1260,7 +1260,7 @@ void CL_ActorSelectMouse (void)
 		}
 		break;
 	case M_FIRE_R:
-		if (mouseActor && mouseActor->selected)
+		if (mouseActor && LE_IsSelected(mouseActor))
 			break;
 
 		/* We either switch to "pending" fire-mode or fire the gun. */
@@ -1272,7 +1272,7 @@ void CL_ActorSelectMouse (void)
 		}
 		break;
 	case M_FIRE_L:
-		if (mouseActor && mouseActor->selected)
+		if (mouseActor && LE_IsSelected(mouseActor))
 			break;
 
 		/* We either switch to "pending" fire-mode or fire the gun. */
@@ -1584,7 +1584,7 @@ bool CL_AddActor (le_t * le, entity_t * ent)
 		ent->flags |= RF_IRGOGGLES;
 
 	if (!LE_IsDead(le) && !LE_IsStunned(le)) {
-		if (le->selected)
+		if (LE_IsSelected(le))
 			ent->flags |= RF_SELECTED;
 		if (le->team == cls.team) {
 			if (le->pnum == cl.pnum)
@@ -1837,7 +1837,7 @@ static void CL_AddTargetingBox (pos3_t pos, bool pendBox)
 	VectorAdd(ent.origin, boxSize, ent.oldorigin);
 
 	/* color */
-	if (mouseActor && !mouseActor->selected) {
+	if (mouseActor && !LE_IsSelected(mouseActor)) {
 		ent.alpha = 0.6 + 0.2 * sin((float) cl.time / 80);
 		/* Paint the box red if the soldiers under the cursor is
 		 * not in our team and no civilian either. */

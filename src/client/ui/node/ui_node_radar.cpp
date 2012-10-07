@@ -434,7 +434,7 @@ static void UI_RadarNodeDrawActor (const le_t *le, const vec3_t pos)
 		return;
 
 	/* draw FOV */
-	if (le->selected) {
+	if (LE_IsSelected(le)) {
 		vertices[0][0] = - size * 4;
 		vertices[0][1] = + 0;
 		vertices[1][0] = + size * 4;
@@ -467,7 +467,7 @@ static void UI_RadarNodeDrawActor (const le_t *le, const vec3_t pos)
 
 	if (LE_IsDead(le))
 		tilePos = 4;
-	else if (le->selected)
+	else if (LE_IsSelected(le))
 		tilePos = 66;
 	else
 		tilePos = 36;
@@ -594,7 +594,7 @@ void uiRadarNode::draw (uiNode_t *node)
 	le = NULL;
 	while ((le = LE_GetNextInUse(le))) {
 		vec3_t itempos;
-		if (le->invis)
+		if (LE_IsInvisible(le))
 			continue;
 
 		/* convert to radar area coordinates */

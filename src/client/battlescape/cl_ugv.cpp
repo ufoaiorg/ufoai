@@ -81,7 +81,7 @@ bool CL_AddUGV (le_t * le, entity_t * ent)
 	ent->flags |= RF_ACTOR;
 
 	if (!LE_IsDead(le)) {
-		if (le->selected)
+		if (LE_IsSelected(le))
 			ent->flags |= RF_SELECTED;
 		if (le->team == cls.team) {
 			if (le->pnum == cl.pnum)

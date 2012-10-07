@@ -197,7 +197,7 @@ int CL_GetHitProbability (const le_t* actor)
 		return 0;
 
 	/* or suicide attempted */
-	if (le->selected && !FIRESH_IsMedikit(le->fd))
+	if (LE_IsSelected(le) && !FIRESH_IsMedikit(le->fd))
 		return 0;
 
 	VectorCopy(actor->origin, shooter);

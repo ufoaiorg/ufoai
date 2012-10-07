@@ -67,7 +67,7 @@ void CL_EntAppear (const eventRegister_t *self, dbuffer *msg)
 	/* the default is invisible - another event will follow which spawns not
 	 * only the le, but also the particle. The visibility is set there, too */
 	if (le->type == ET_PARTICLE)
-		le->invis = !cl_leshowinvis->integer;
+		LE_SetInvisible(le);
 
 	VectorCopy(pos, le->pos);
 	Grid_PosToVec(cl.mapData->map, le->fieldSize, le->pos, le->origin);
