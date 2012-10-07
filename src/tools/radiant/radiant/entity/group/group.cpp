@@ -29,6 +29,7 @@
 #include "group.h"
 #include "renderable.h"
 #include "editable.h"
+#include "nameable.h"
 
 #include "iregistry.h"
 
@@ -40,16 +41,15 @@
 #include "render.h"
 #include "eclasslib.h"
 
-#include "targetable.h"
-#include "keys/OriginKey.h"
-#include "keys/AnglesKey.h"
-#include "keys/ScaleKey.h"
-#include "namedentity.h"
-#include "keys/KeyObserverMap.h"
-#include "NameKeys.h"
-#include "nameable.h"
+#include "../targetable.h"
+#include "../keys/OriginKey.h"
+#include "../keys/AnglesKey.h"
+#include "../keys/ScaleKey.h"
+#include "../namedentity.h"
+#include "../keys/KeyObserverMap.h"
+#include "../NameKeys.h"
 
-#include "EntityCreator.h"
+#include "../EntityCreator.h"
 
 class Group
 {

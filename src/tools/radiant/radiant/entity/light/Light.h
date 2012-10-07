@@ -102,8 +102,5 @@ public:
 
 	const Matrix4& getLocalPivot () const;
 
-	const Vector3& colour () const;
-
-	void projectionChanged ();
 	const AABB& aabb () const;
 };

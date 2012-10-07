@@ -312,11 +312,15 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/entity/EntityCreator.cpp \
 	$(RADIANT_BASE)/radiant/entity/eclassmodel.cpp \
 	$(RADIANT_BASE)/radiant/entity/generic.cpp \
-	$(RADIANT_BASE)/radiant/entity/group.cpp \
-	$(RADIANT_BASE)/radiant/entity/miscmodel.cpp \
-	$(RADIANT_BASE)/radiant/entity/miscparticle.cpp \
-	$(RADIANT_BASE)/radiant/entity/miscsound.cpp \
 	$(RADIANT_BASE)/radiant/entity/targetable.cpp \
+	\
+	$(RADIANT_BASE)/radiant/entity/group/group.cpp \
+	\
+	$(RADIANT_BASE)/radiant/entity/model/miscmodel.cpp \
+	\
+	$(RADIANT_BASE)/radiant/entity/particle/miscparticle.cpp \
+	\
+	$(RADIANT_BASE)/radiant/entity/sound/miscsound.cpp \
 	\
 	$(RADIANT_BASE)/radiant/entity/light/Light.cpp \
 	$(RADIANT_BASE)/radiant/entity/light/LightInstance.cpp \

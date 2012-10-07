@@ -35,13 +35,13 @@
 #include "NameKeys.h"
 #include "stream/stringstream.h"
 
-#include "miscmodel.h"
+#include "model/miscmodel.h"
 #include "light/LightNode.h"
-#include "group.h"
+#include "group/group.h"
 #include "eclassmodel.h"
 #include "generic.h"
-#include "miscparticle.h"
-#include "miscsound.h"
+#include "particle/miscparticle.h"
+#include "sound/miscsound.h"
 
 inline scene::Node& entity_for_eclass (EntityClass* eclass)
 {

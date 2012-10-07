@@ -228,16 +228,6 @@ const Matrix4& Light::getLocalPivot () const
 	return m_localPivot;
 }
 
-const Vector3& Light::colour () const
-{
-	return m_colour.m_colour;
-}
-
-void Light::projectionChanged ()
-{
-	SceneChangeNotify();
-}
-
 const AABB& Light::aabb () const
 {
 	return m_aabb_light;

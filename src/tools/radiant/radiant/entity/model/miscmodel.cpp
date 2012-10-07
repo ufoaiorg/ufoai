@@ -41,16 +41,16 @@
 #include "render.h"
 #include "pivot.h"
 
-#include "targetable.h"
-#include "keys/OriginKey.h"
-#include "keys/AnglesKey.h"
-#include "keys/ScaleKey.h"
-#include "model.h"
-#include "namedentity.h"
-#include "keys/KeyObserverMap.h"
-#include "NameKeys.h"
+#include "../targetable.h"
+#include "../keys/OriginKey.h"
+#include "../keys/AnglesKey.h"
+#include "../keys/ScaleKey.h"
+#include "../model.h"
+#include "../namedentity.h"
+#include "../keys/KeyObserverMap.h"
+#include "../NameKeys.h"
 
-#include "EntityCreator.h"
+#include "../EntityCreator.h"
 #include "miscmodel.h"
 
 class MiscModel: public Snappable
