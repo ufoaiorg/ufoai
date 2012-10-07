@@ -42,13 +42,7 @@
 #include "../keys/KeyObserverMap.h"
 #include "../NameKeys.h"
 
-#include "../EntityCreator.h"
 #include "../RenderableArrow.h"
-
-inline void read_aabb (AABB& aabb, const EntityClass& eclass)
-{
-	aabb = AABB::createFromMinMax(eclass.mins, eclass.maxs);
-}
 
 class MiscSound: public Cullable, public Bounded, public Snappable
 {
@@ -77,7 +71,7 @@ class MiscSound: public Cullable, public Bounded, public Snappable
 
 		void construct ()
 		{
-			read_aabb(m_aabb_local, m_entity.getEntityClass());
+			m_aabb_local = AABB::createFromMinMax(m_entity.getEntityClass().mins, m_entity.getEntityClass().maxs);
 			m_ray.origin = m_aabb_local.origin;
 			m_ray.direction[0] = 1;
 			m_ray.direction[1] = 0;

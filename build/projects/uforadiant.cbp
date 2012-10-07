@@ -489,8 +489,12 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\entity\model\MiscModel.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\entity\model\MiscModelNode.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\entity\model\MiscModelInstance.cpp" />
-		<Unit filename="..\..\src\tools\radiant\radiant\entity\particle\miscparticle.cpp" />
-		<Unit filename="..\..\src\tools\radiant\radiant\entity\particle\miscparticle.h" />
+		<Unit filename="..\..\src\tools\radiant\radiant\entity\particle\MiscParticle.cpp" />
+		<Unit filename="..\..\src\tools\radiant\radiant\entity\particle\MiscParticle.h" />
+		<Unit filename="..\..\src\tools\radiant\radiant\entity\particle\MiscParticleNode.cpp" />
+		<Unit filename="..\..\src\tools\radiant\radiant\entity\particle\MiscParticleNode.h" />
+		<Unit filename="..\..\src\tools\radiant\radiant\entity\particle\MiscParticleInstance.cpp" />
+		<Unit filename="..\..\src\tools\radiant\radiant\entity\particle\MiscParticleInstance.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\entity\sound\miscsound.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\entity\sound\miscsound.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\entity\model.h" />

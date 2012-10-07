@@ -37,10 +37,10 @@
 
 #include "model/MiscModelNode.h"
 #include "light/LightNode.h"
+#include "particle/MiscParticleNode.h"
 #include "group/group.h"
 #include "eclassmodel.h"
 #include "generic.h"
-#include "particle/miscparticle.h"
 #include "sound/miscsound.h"
 
 inline scene::Node& entity_for_eclass (EntityClass* eclass)
@@ -50,7 +50,7 @@ inline scene::Node& entity_for_eclass (EntityClass* eclass)
 	} else if (eclass->name() == "misc_sound") {
 		return New_MiscSound(eclass);
 	} else if (eclass->name() == "misc_particle") {
-		return New_MiscParticle(eclass);
+		return *(new MiscParticleNode(eclass));
 	} else if (eclass->name() == "light") {
 		return *(new LightNode(eclass));
 	} else if (!eclass->fixedsize) {

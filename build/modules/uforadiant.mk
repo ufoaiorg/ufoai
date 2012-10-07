@@ -320,7 +320,9 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/entity/model/MiscModelInstance.cpp \
 	$(RADIANT_BASE)/radiant/entity/model/MiscModelNode.cpp \
 	\
-	$(RADIANT_BASE)/radiant/entity/particle/miscparticle.cpp \
+	$(RADIANT_BASE)/radiant/entity/particle/MiscParticle.cpp \
+	$(RADIANT_BASE)/radiant/entity/particle/MiscParticleInstance.cpp \
+	$(RADIANT_BASE)/radiant/entity/particle/MiscParticleNode.cpp \
 	\
 	$(RADIANT_BASE)/radiant/entity/sound/miscsound.cpp \
 	\
