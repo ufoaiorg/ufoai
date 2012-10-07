@@ -36,17 +36,16 @@ private:
 
 	Vector3 m_lightOrigin;
 
-	Vector3 m_lightTarget;
-	bool m_useLightTarget;
-
 	AABB m_aabb_light;
 
 	Callback m_transformChanged;
 	Callback m_boundsChanged;
 	Callback m_evaluateTransform;
 
+	InstanceCounter m_instanceCounter;
+	mutable Matrix4 m_localPivot;
+
 	void construct ();
-	void destroy ();
 
 	void updateOrigin ();
 	void originChanged ();
@@ -62,7 +61,6 @@ public:
 			const Callback& evaluateTransform);
 	~Light ();
 
-	InstanceCounter m_instanceCounter;
 	void instanceAttach (const scene::Path& path);
 	void instanceDetach (const scene::Path& path);
 
@@ -86,8 +84,6 @@ public:
 	// cache
 	const AABB& localAABB () const;
 
-	mutable Matrix4 m_projectionOrientation;
-
 	void renderSolid (Renderer& renderer, const VolumeTest& volume, const Matrix4& localToWorld, bool selected) const;
 	void renderWireframe (Renderer& renderer, const VolumeTest& volume, const Matrix4& localToWorld,
 			bool selected) const;
@@ -104,7 +100,6 @@ public:
 	void transformChanged ();
 	typedef MemberCaller<Light, &Light::transformChanged> TransformChangedCaller;
 
-	mutable Matrix4 m_localPivot;
 	const Matrix4& getLocalPivot () const;
 
 	const Vector3& colour () const;

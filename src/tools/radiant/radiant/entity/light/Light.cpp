@@ -24,7 +24,6 @@ Light::Light (const Light& other, scene::Node& node, const Callback& transformCh
 
 Light::~Light ()
 {
-	destroy();
 }
 
 void Light::construct ()
@@ -37,10 +36,6 @@ void Light::construct ()
 	m_keyObservers.insert("origin", OriginKey::OriginChangedCaller(m_originKey));
 	m_keyObservers.insert("light", SphereRenderable::RadiusChangedCaller(m_radii_wire));
 	m_keyObservers.insert("light", SphereRenderable::RadiusChangedCaller(m_radii_fill));
-}
-
-void Light::destroy ()
-{
 }
 
 void Light::updateOrigin ()

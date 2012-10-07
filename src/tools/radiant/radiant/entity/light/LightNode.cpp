@@ -6,7 +6,6 @@ LightNode::LightNode (EntityClass* eclass) :
 				InstanceSet::BoundsChangedCaller(m_instances),
 				InstanceSetEvaluateTransform<LightInstance>::Caller(m_instances))
 {
-	construct();
 }
 
 LightNode::LightNode (const LightNode& other) :
@@ -16,12 +15,10 @@ LightNode::LightNode (const LightNode& other) :
 				InstanceSet::TransformChangedCaller(m_instances), InstanceSet::BoundsChangedCaller(m_instances),
 				InstanceSetEvaluateTransform<LightInstance>::Caller(m_instances))
 {
-	construct();
 }
 
 LightNode::~LightNode ()
 {
-	destroy();
 }
 
 scene::Node& LightNode::clone () const
@@ -74,33 +71,21 @@ void LightNode::detach (const NameCallback& callback)
 	m_contained.getNameable().detach(callback);
 }
 
-void LightNode::construct ()
-{
-}
-
-void LightNode::destroy ()
-{
-}
-
-// Editable implementation
 const Matrix4& LightNode::getLocalPivot () const
 {
 	return m_contained.getLocalPivot();
 }
 
-// Snappable implementation
 void LightNode::snapto (float snap)
 {
 	m_contained.snapto(snap);
 }
 
-// TransformNode implementation
 const Matrix4& LightNode::localToParent () const
 {
 	return m_contained.getTransformNode().localToParent();
 }
 
-// Traversable implementation
 void LightNode::insert (Node& node)
 {
 	m_contained.getTraversable().insert(node);
@@ -121,15 +106,12 @@ bool LightNode::empty () const
 	return m_contained.getTraversable().empty();
 }
 
-// EntityNode implementation
 Entity& LightNode::getEntity ()
 {
 	return m_contained.getEntity();
 }
 
-// Namespaced implementation
 void LightNode::setNamespace (INamespace& space)
 {
 	m_contained.getNamespaced().setNamespace(space);
 }
-

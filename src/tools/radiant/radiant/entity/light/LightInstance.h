@@ -7,6 +7,7 @@ class LightInstance: public TargetableInstance,
 		public Renderable,
 		public SelectionTestable,
 		public Bounded {
+private:
 	Light& m_contained;
 public:
 	const AABB& localAABB () const;
@@ -24,6 +25,4 @@ public:
 	void evaluateTransform ();
 	void applyTransform ();
 	typedef MemberCaller<LightInstance, &LightInstance::applyTransform> ApplyTransformCaller;
-
-	const Vector3& colour () const;
 };

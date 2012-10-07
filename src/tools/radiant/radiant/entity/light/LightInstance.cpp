@@ -54,8 +54,3 @@ void LightInstance::applyTransform ()
 	evaluateTransform();
 	m_contained.freezeTransform();
 }
-
-const Vector3& LightInstance::colour () const
-{
-	return m_contained.colour();
-}

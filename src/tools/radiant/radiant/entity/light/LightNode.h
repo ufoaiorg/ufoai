@@ -28,10 +28,7 @@ private:
 	InstanceSet m_instances;
 	Light m_contained;
 
-	void construct ();
-	void destroy ();
 public:
-
 	// Editable implementation
 	const Matrix4& getLocalPivot () const;
 
@@ -43,11 +40,8 @@ public:
 
 	// Traversable implementation
 	void insert (Node& node);
-
 	void erase (Node& node);
-
 	void traverse (const Walker& walker);
-
 	bool empty () const;
 
 	// EntityNode implementation
