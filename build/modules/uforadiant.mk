@@ -324,7 +324,9 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/entity/particle/MiscParticleInstance.cpp \
 	$(RADIANT_BASE)/radiant/entity/particle/MiscParticleNode.cpp \
 	\
-	$(RADIANT_BASE)/radiant/entity/sound/miscsound.cpp \
+	$(RADIANT_BASE)/radiant/entity/sound/MiscSound.cpp \
+	$(RADIANT_BASE)/radiant/entity/sound/MiscSoundInstance.cpp \
+	$(RADIANT_BASE)/radiant/entity/sound/MiscSoundNode.cpp \
 	\
 	$(RADIANT_BASE)/radiant/entity/light/Light.cpp \
 	$(RADIANT_BASE)/radiant/entity/light/LightInstance.cpp \

@@ -38,17 +38,17 @@
 #include "model/MiscModelNode.h"
 #include "light/LightNode.h"
 #include "particle/MiscParticleNode.h"
+#include "sound/MiscSoundNode.h"
 #include "group/group.h"
 #include "eclassmodel.h"
 #include "generic.h"
-#include "sound/miscsound.h"
 
 inline scene::Node& entity_for_eclass (EntityClass* eclass)
 {
 	if (eclass->name() == "misc_model") {
 		return *(new MiscModelNode(eclass));
 	} else if (eclass->name() == "misc_sound") {
-		return New_MiscSound(eclass);
+		return *(new MiscSoundNode(eclass));
 	} else if (eclass->name() == "misc_particle") {
 		return *(new MiscParticleNode(eclass));
 	} else if (eclass->name() == "light") {
