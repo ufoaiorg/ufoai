@@ -252,7 +252,7 @@ extern renderer_threadstate_t r_threadstate;
 
 void R_Color(const vec4_t rgba);
 
-void R_ModBeginLoading(const char *tiles, bool day, const char *pos, const char *mapName);
+void R_ModBeginLoading(const char *tiles, bool day, const char *pos, const char *mapName, const char *mapZone);
 void R_SwitchModelMemPoolTag(void);
 
 void R_LoadImage(const char *name, byte **pic, int *width, int *height);

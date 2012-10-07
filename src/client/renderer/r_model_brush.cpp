@@ -180,7 +180,7 @@ static void R_ModLoadEdges (const lump_t *l)
 /**
  * @sa CP_StartMissionMap
  */
-static void R_ModLoadTexinfo (const lump_t *l)
+static void R_ModLoadTexinfo (const char *mapZone, const lump_t *l)
 {
 	const dBspTexinfo_t *in;
 	int i, j, count;
@@ -196,7 +196,6 @@ static void R_ModLoadTexinfo (const lump_t *l)
 	r_worldmodel->bsp.texinfo = out;
 	r_worldmodel->bsp.numtexinfo = count;
 
-	const char *mapZone = Cvar_GetString("sv_mapzone");
 	for (i = 0; i < count; i++, in++, out++) {
 		for (j = 0; j < 3; j++) {
 			out->uv[j] = LittleFloat(in->vecs[0][j]);
@@ -1030,7 +1029,7 @@ static void R_SetupWorldModel (void)
  * @param[in] sZ Shift z grid units
  * @sa UNIT_SIZE
  */
-static void R_ModAddMapTile (const char *name, bool day, int sX, int sY, int sZ)
+static void R_ModAddMapTile (const char *name, const char *mapZone, bool day, int sX, int sY, int sZ)
 {
 	int i;
 	byte *buffer;
@@ -1076,7 +1075,7 @@ static void R_ModAddMapTile (const char *name, bool day, int sX, int sY, int sZ)
 	R_ModLoadSurfedges(&header->lumps[LUMP_SURFEDGES]);
 	R_ModLoadLighting(&header->lumps[lightingLump]);
 	R_ModLoadPlanes(&header->lumps[LUMP_PLANES]);
-	R_ModLoadTexinfo(&header->lumps[LUMP_TEXINFO]);
+	R_ModLoadTexinfo(mapZone, &header->lumps[LUMP_TEXINFO]);
 	R_ModLoadSurfaces(day, &header->lumps[LUMP_FACES]);
 	R_ModLoadLeafs(&header->lumps[LUMP_LEAFS]);
 	R_ModLoadNodes(&header->lumps[LUMP_NODES]);
@@ -1121,7 +1120,7 @@ static void R_ModEndLoading (const char *mapName)
  * and pathfinding stuff.
  * @sa UI_BuildRadarImageList
  */
-void R_ModBeginLoading (const char *tiles, bool day, const char *pos, const char *mapName)
+void R_ModBeginLoading (const char *tiles, bool day, const char *pos, const char *mapName, const char *mapZone)
 {
 	char name[MAX_VAR];
 	char base[MAX_QPATH];
@@ -1174,10 +1173,10 @@ void R_ModBeginLoading (const char *tiles, bool day, const char *pos, const char
 				Com_Error(ERR_DROP, "R_ModBeginLoading: invalid y position given: %i\n", sh[1]);
 			if (sh[2] >= PATHFINDING_HEIGHT)
 				Com_Error(ERR_DROP, "R_ModBeginLoading: invalid z position given: %i\n", sh[2]);
-			R_ModAddMapTile(name, day, sh[0], sh[1], sh[2]);
+			R_ModAddMapTile(name, mapZone, day, sh[0], sh[1], sh[2]);
 		} else {
 			/* load only a single tile, if no positions are specified */
-			R_ModAddMapTile(name, day, 0, 0, 0);
+			R_ModAddMapTile(name, mapZone, day, 0, 0, 0);
 			R_ModEndLoading(mapName);
 			return;
 		}

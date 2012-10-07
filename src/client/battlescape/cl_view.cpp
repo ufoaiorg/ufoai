@@ -61,7 +61,8 @@ void CL_ViewLoadMedia (void)
 
 	/* register models, pics, and skins */
 	SCR_DrawLoading(loadingPercent, loadingMessages);
-	R_ModBeginLoading(CL_GetConfigString(CS_TILES), CL_GetConfigStringInteger(CS_LIGHTMAP), CL_GetConfigString(CS_POSITIONS), CL_GetConfigString(CS_NAME));
+	R_ModBeginLoading(CL_GetConfigString(CS_TILES), CL_GetConfigStringInteger(CS_LIGHTMAP),
+			CL_GetConfigString(CS_POSITIONS), CL_GetConfigString(CS_NAME), CL_GetConfigString(CS_MAPZONE));
 	CL_SpawnParseEntitystring();
 
 	Com_sprintf(loadingMessages, sizeof(loadingMessages), _("loading models..."));

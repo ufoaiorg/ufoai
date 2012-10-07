@@ -137,6 +137,7 @@ void SV_Map (bool day, const char *levelstring, const char *assembly)
 	/* save name for levels that don't set message */
 	SV_SetConfigString(CS_NAME, levelstring);
 	SV_SetConfigString(CS_LIGHTMAP, day);
+	SV_SetConfigString(CS_MAPZONE, Cvar_GetString("sv_mapzone"));
 
 	Q_strncpyz(sv->name, levelstring, sizeof(sv->name));
 
