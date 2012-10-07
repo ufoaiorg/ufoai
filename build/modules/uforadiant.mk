@@ -314,7 +314,9 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/entity/generic.cpp \
 	$(RADIANT_BASE)/radiant/entity/targetable.cpp \
 	\
-	$(RADIANT_BASE)/radiant/entity/group/group.cpp \
+	$(RADIANT_BASE)/radiant/entity/group/Group.cpp \
+	$(RADIANT_BASE)/radiant/entity/group/GroupInstance.cpp \
+	$(RADIANT_BASE)/radiant/entity/group/GroupNode.cpp \
 	\
 	$(RADIANT_BASE)/radiant/entity/model/MiscModel.cpp \
 	$(RADIANT_BASE)/radiant/entity/model/MiscModelInstance.cpp \

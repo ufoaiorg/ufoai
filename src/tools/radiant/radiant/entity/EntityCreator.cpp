@@ -39,7 +39,7 @@
 #include "light/LightNode.h"
 #include "particle/MiscParticleNode.h"
 #include "sound/MiscSoundNode.h"
-#include "group/group.h"
+#include "group/GroupNode.h"
 #include "eclassmodel.h"
 #include "generic.h"
 
@@ -54,7 +54,7 @@ inline scene::Node& entity_for_eclass (EntityClass* eclass)
 	} else if (eclass->name() == "light") {
 		return *(new LightNode(eclass));
 	} else if (!eclass->fixedsize) {
-		return New_Group(eclass);
+		return *(new GroupNode(eclass));
 	} else if (!eclass->modelpath().empty()) {
 		return New_EclassModel(eclass);
 	} else {
