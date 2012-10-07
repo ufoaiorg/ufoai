@@ -20,24 +20,24 @@ typedef ipos_t ipos3_t[3];
 typedef struct cBspPlane_s {
 	vec3_t normal;
 	float dist;
-	byte type;					/**< for fast side tests */
+	byte type;						/**< for fast side tests */
 } cBspPlane_t;
 
 typedef struct cBspModel_s {
 	vec3_t mins, maxs;				/**< the absolute mins and maxs values of the bmodel */
-	vec3_t origin, angles, shift;		/**< used to orient doors and rotating entities */
+	vec3_t origin, angles, shift;	/**< used to orient doors and rotating entities */
 	int32_t headnode;
 	/** @note Not used by ufo2map */
-	int tile;					/**< which tile in assembly */
+	int tile;						/**< which tile in assembly */
 	/** @note Used only by ufo2map */
-	int firstface, numfaces;	/**< submodels just draw faces without walking the bsp tree */
+	int firstface, numfaces;		/**< submodels just draw faces without walking the bsp tree */
 } cBspModel_t;
 
 /** @sa dBspTexinfo_t */
 typedef struct cBspSurface_s {
 	char name[MAX_QPATH];	/**< the texture name */
 	uint32_t surfaceFlags;	/**< surface flags SURF_* */
-	uint32_t value;				/**< currently not used except in loading CMod_LoadSurfaces */
+	uint32_t value;			/**< currently not used except in loading CMod_LoadSurfaces */
 	byte *lightmap;			/**< lightmap samples for server side visibility lookup */
 } cBspSurface_t;
 
