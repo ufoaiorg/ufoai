@@ -795,6 +795,11 @@ static void testAirFight (void)
 	aircraft->status = AIR_IDLE;
 	CU_ASSERT_TRUE(AIR_IsAircraftOnGeoscape(aircraft));
 
+	/* ensure that a FIGHTER can spawn */
+	const aircraft_t *ufoTemplate = UFO_GetByType(UFO_FIGHTER);
+	CU_ASSERT_PTR_NOT_NULL_FATAL(ufoTemplate);
+	ccs.overallInterest = ufoTemplate->ufoInterestOnGeoscape + 1;
+
 	/* prepare the mission */
 	mission = CP_CreateNewMission(INTERESTCATEGORY_INTERCEPT, true);
 	CU_ASSERT_PTR_NOT_NULL_FATAL(mission);
