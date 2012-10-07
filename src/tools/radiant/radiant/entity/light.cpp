@@ -223,69 +223,6 @@ class RenderLightRadiiBox: public OpenGLRenderable
 		}
 };
 
-class ShaderRef
-{
-		std::string m_name;
-		Shader* m_shader;
-		void capture ()
-		{
-			m_shader = GlobalShaderCache().capture(m_name);
-		}
-		void release ()
-		{
-			GlobalShaderCache().release(m_name);
-		}
-	public:
-		ShaderRef ()
-		{
-			capture();
-		}
-		~ShaderRef ()
-		{
-			release();
-		}
-		void setName (const std::string& name)
-		{
-			release();
-			m_name = name;
-			capture();
-		}
-		Shader* get () const
-		{
-			return m_shader;
-		}
-};
-
-class LightShader
-{
-		ShaderRef m_shader;
-		void setDefault ()
-		{
-			m_shader.setName("");
-		}
-	public:
-
-		LightShader ()
-		{
-			setDefault();
-		}
-		void valueChanged (const std::string& value)
-		{
-			if (value.empty()) {
-				setDefault();
-			} else {
-				m_shader.setName(value);
-			}
-			SceneChangeNotify();
-		}
-		typedef MemberCaller1<LightShader, const std::string&, &LightShader::valueChanged> ValueChangedCaller;
-
-		Shader* get () const
-		{
-			return m_shader.get();
-		}
-};
-
 class Light: public OpenGLRenderable, public Cullable, public Bounded, public Editable, public Snappable
 {
 		EntityKeyValues m_entity;
@@ -309,8 +246,6 @@ class Light: public OpenGLRenderable, public Cullable, public Bounded, public Ed
 
 		Vector3 m_lightTarget;
 		bool m_useLightTarget;
-
-		LightShader m_shader;
 
 		AABB m_aabb_light;
 
@@ -552,11 +487,6 @@ class Light: public OpenGLRenderable, public Cullable, public Bounded, public Ed
 		{
 			return m_aabb_light;
 		}
-
-		Shader* getShader () const
-		{
-			return m_shader.get();
-		}
 };
 
 class LightInstance: public TargetableInstance,
@@ -622,10 +552,6 @@ class LightInstance: public TargetableInstance,
 		}
 		typedef MemberCaller<LightInstance, &LightInstance::applyTransform> ApplyTransformCaller;
 
-		Shader* getShader () const
-		{
-			return m_contained.getShader();
-		}
 		const Vector3& colour () const
 		{
 			return m_contained.colour();
