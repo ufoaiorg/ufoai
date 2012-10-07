@@ -40,7 +40,7 @@
 #include "particle/MiscParticleNode.h"
 #include "sound/MiscSoundNode.h"
 #include "group/GroupNode.h"
-#include "eclassmodel.h"
+#include "eclassmodel/eclassmodel.h"
 #include "generic/GenericEntityNode.h"
 
 inline scene::Node& entity_for_eclass (EntityClass* eclass)

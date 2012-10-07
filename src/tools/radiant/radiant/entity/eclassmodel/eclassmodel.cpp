@@ -43,15 +43,13 @@
 #include "eclasslib.h"
 #include "pivot.h"
 
-#include "targetable.h"
-#include "keys/OriginKey.h"
-#include "keys/AngleKey.h"
-#include "model.h"
-#include "namedentity.h"
-#include "keys/KeyObserverMap.h"
-#include "NameKeys.h"
-
-#include "EntityCreator.h"
+#include "../targetable.h"
+#include "../keys/OriginKey.h"
+#include "../keys/AngleKey.h"
+#include "../model.h"
+#include "../namedentity.h"
+#include "../keys/KeyObserverMap.h"
+#include "../NameKeys.h"
 
 class EclassModel: public Snappable
 {
