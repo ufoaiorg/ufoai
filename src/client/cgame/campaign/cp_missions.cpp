@@ -97,6 +97,12 @@ void CP_StartMissionMap (mission_t* mission, const battleParam_t *battleParamete
 
 	assert(mission->mapDef->map);
 
+	/* set the mapZone - this allows us to replace the ground texture
+	 * with the suitable terrain texture - just use tex_terrain/dummy for the
+	 * brushes you want the terrain textures on
+	 * @sa R_ModLoadTexinfo */
+	cgi->Cvar_Set("sv_mapzone", battleParameters->zoneType);
+
 	/* base attack maps starts with a dot */
 	if (mission->mapDef->map[0] == '.') {
 		const base_t *base = mission->data.base;
@@ -118,12 +124,6 @@ void CP_StartMissionMap (mission_t* mission, const battleParam_t *battleParamete
 		param = battleParameters->param;
 	else
 		param = mission->mapDef->param;
-
-	/* set the mapZone - this allows us to replace the ground texture
-	 * with the suitable terrain texture - just use tex_terrain/dummy for the
-	 * brushes you want the terrain textures on
-	 * @sa R_ModLoadTexinfo */
-	cgi->Cvar_Set("sv_mapzone", battleParameters->zoneType);
 
 	if (mission->mapDef->hurtAliens)
 		cgi->Cvar_Set("sv_hurtaliens", "1");
