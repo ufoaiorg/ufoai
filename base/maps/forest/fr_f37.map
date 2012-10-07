@@ -308,7 +308,7 @@
 // entity 5
 {
 "classname" "info_alien_start"
-"origin" "96 64 42"
+"origin" "112 48 42"
 }
 // entity 6
 {
