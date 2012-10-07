@@ -318,7 +318,9 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/entity/miscsound.cpp \
 	$(RADIANT_BASE)/radiant/entity/targetable.cpp \
 	\
-	$(RADIANT_BASE)/radiant/entity/light/light.cpp \
+	$(RADIANT_BASE)/radiant/entity/light/Light.cpp \
+	$(RADIANT_BASE)/radiant/entity/light/LightInstance.cpp \
+	$(RADIANT_BASE)/radiant/entity/light/LightNode.cpp \
 	\
 	$(RADIANT_BASE)/libs/gtkutil/button.cpp \
 	$(RADIANT_BASE)/libs/gtkutil/clipboard.cpp \

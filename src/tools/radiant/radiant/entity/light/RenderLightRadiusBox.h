@@ -1,6 +1,7 @@
 #pragma once
 
 #include "render.h"
+#include "entitylib.h"
 
 class RenderLightRadiusBox: public OpenGLRenderable {
 private:

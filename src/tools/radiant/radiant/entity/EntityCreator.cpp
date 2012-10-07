@@ -36,7 +36,7 @@
 #include "stream/stringstream.h"
 
 #include "miscmodel.h"
-#include "light/light.h"
+#include "light/LightNode.h"
 #include "group.h"
 #include "eclassmodel.h"
 #include "generic.h"
@@ -52,7 +52,7 @@ inline scene::Node& entity_for_eclass (EntityClass* eclass)
 	} else if (eclass->name() == "misc_particle") {
 		return New_MiscParticle(eclass);
 	} else if (eclass->name() == "light") {
-		return New_Light(eclass);
+		return *(new LightNode(eclass));
 	} else if (!eclass->fixedsize) {
 		return New_Group(eclass);
 	} else if (!eclass->modelpath().empty()) {
