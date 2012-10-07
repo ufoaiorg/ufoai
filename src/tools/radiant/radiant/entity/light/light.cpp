@@ -138,9 +138,9 @@ static void light_draw (const AABB& aabb_light, RenderStateFlags state)
 	}
 }
 
-class RenderLightRadiiWire: public SphereRenderable {
+class RenderLightRadiusWire: public SphereRenderable {
 public:
-	RenderLightRadiiWire (const Vector3& origin) :
+	RenderLightRadiusWire (const Vector3& origin) :
 		SphereRenderable(true, origin)
 	{
 	}
@@ -151,9 +151,9 @@ public:
 	}
 };
 
-class RenderLightRadiiFill: public SphereRenderable {
+class RenderLightRadiusFill: public SphereRenderable {
 public:
-	RenderLightRadiiFill (const Vector3& origin) :
+	RenderLightRadiusFill (const Vector3& origin) :
 		SphereRenderable(false, origin)
 	{
 	}
@@ -237,8 +237,8 @@ class Light: public OpenGLRenderable, public Cullable, public Bounded, public Ed
 		NameKeys m_nameKeys;
 		TraversableObserverPairRelay m_traverseObservers;
 
-		RenderLightRadiiWire m_radii_wire;
-		RenderLightRadiiFill m_radii_fill;
+		RenderLightRadiusWire m_radii_wire;
+		RenderLightRadiusFill m_radii_fill;
 		RenderLightRadiiBox m_radii_box;
 		RenderableNamedEntity m_renderName;
 
