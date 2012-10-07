@@ -204,6 +204,9 @@ static void CP_InterceptMissionSet (mission_t *mission)
 	case UFO_CORRUPTER:
 		if (INS_HasAny())
 			CP_InterceptGoToInstallation(mission);
+		break;
+	default:
+		break;
 	}
 
 	CP_InterceptAircraftMissionSet(mission);
