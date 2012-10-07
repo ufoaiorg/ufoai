@@ -304,13 +304,13 @@ static void INV_UpdateObject_f (void)
 	bool changeTab;
 
 	/* check syntax */
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <objectid> [mustwechangetab]\n", Cmd_Argv(0));
+	if (Cmd_Argc() < 3) {
+		Com_Printf("Usage: %s <objectid> <confunc> [mustwechangetab]\n", Cmd_Argv(0));
 		return;
 	}
 
-	if (Cmd_Argc() == 3)
-		changeTab = atoi(Cmd_Argv(2)) >= 1;
+	if (Cmd_Argc() == 4)
+		changeTab = atoi(Cmd_Argv(3)) >= 1;
 	else
 		changeTab = true;
 
@@ -321,18 +321,18 @@ static void INV_UpdateObject_f (void)
 	}
 	obj = INVSH_GetItemByIDX(num);
 
-	/* update item description */
-	INV_ItemDescription(obj);
-
 	/* update tab */
 	if (changeTab) {
 		const cvar_t *var = Cvar_FindVar("mn_equiptype");
 		const int filter = INV_GetFilterFromItem(obj);
 		if (var && var->integer != filter) {
 			Cvar_SetValue("mn_equiptype", filter);
-			UI_ExecuteConfunc("update_item_list");
+			UI_ExecuteConfunc("%s", Cmd_Argv(2));
 		}
 	}
+
+	/* update item description */
+	INV_ItemDescription(obj);
 }
 
 void INV_InitCallbacks (void)
