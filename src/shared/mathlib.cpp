@@ -100,8 +100,21 @@ const float dvecsn[CORE_DIRECTIONS][2] = { {1, 0}, {-1, 0}, {0, 1}, {0, -1}, {RT
 /*                                     0:E 1: W    2:N    3:S     4:NE   5:SW    6:NW    7:SE  */
 const float directionAngles[CORE_DIRECTIONS] = { 0, 180.0f, 90.0f, 270.0f, 45.0f, 225.0f, 135.0f, 315.0f };
 
-const byte dvright[CORE_DIRECTIONS] = { 7, 6, 4, 5, 0, 1, 2, 3 };
-const byte dvleft[CORE_DIRECTIONS] = { 4, 5, 6, 7, 2, 3, 1, 0 };
+#define DIRECTION_EAST 0
+#define DIRECTION_WEST 1
+#define DIRECTION_NORTH 2
+#define DIRECTION_SOUTH 3
+#define DIRECTION_NORTHEAST 4
+#define DIRECTION_SOUTHWEST 5
+#define DIRECTION_NORTHWEST 6
+#define DIRECTION_SOUTHEAST 7
+
+const byte dvright[CORE_DIRECTIONS] = { DIRECTION_SOUTHEAST,
+		DIRECTION_NORTHWEST, DIRECTION_NORTHEAST, DIRECTION_SOUTHWEST,
+		DIRECTION_EAST, DIRECTION_WEST, DIRECTION_NORTH, DIRECTION_SOUTH };
+const byte dvleft[CORE_DIRECTIONS] = { DIRECTION_NORTHEAST, DIRECTION_SOUTHWEST,
+		DIRECTION_NORTHWEST, DIRECTION_SOUTHEAST, DIRECTION_NORTH,
+		DIRECTION_SOUTH, DIRECTION_WEST, DIRECTION_EAST };
 
 
 /**
@@ -668,8 +681,8 @@ bool FrustumVis (const vec3_t origin, int dir, const vec3_t point)
 	/* test 120 frustum (cos 60 = 0.5) */
 	if ((delta[0] * dvecsn[dv][0] + delta[1] * dvecsn[dv][1]) < 0.5)
 		return false;
-	else
-		return true;
+
+	return true;
 }
 
 /**

@@ -121,7 +121,7 @@ PROTOCOL
 
 /* protocol.h -- communications protocols */
 
-#define	PROTOCOL_VERSION	15
+#define	PROTOCOL_VERSION	16
 
 #define	PORT_CLIENT	27901
 #define	PORT_SERVER	27910

@@ -188,7 +188,9 @@ extern game_export_t globals;
 /** @note This check also includes the IsStunned check - see the STATE_* bitmasks */
 #define G_IsDead(ent)			G_IsState(ent, STATE_DEAD)
 #define G_IsActor(ent)			((ent)->type == ET_ACTOR || (ent)->type == ET_ACTOR2x2)
+#define G_IsActive(ent)			((ent)->active)
 #define G_IsCamera(ent)			((ent)->type == ET_CAMERA)
+#define G_IsActiveCamera(ent)	(G_IsCamera(ent) && G_IsActive(ent))
 #define G_IsSmoke(ent)			((ent)->type == ET_SMOKE)
 #define G_IsFire(ent)			((ent)->type == ET_FIRE)
 #define G_IsTriggerNextMap(ent)	((ent)->type == ET_TRIGGER_NEXTMAP)
@@ -384,7 +386,11 @@ trace_t G_Trace(const vec3_t start, const vec3_t end, const edict_t * passent, i
 bool G_TestLineWithEnts(const vec3_t start, const vec3_t end);
 bool G_TestLine(const vec3_t start, const vec3_t end);
 
-/* g_combat.c */
+/* g_camera */
+void G_InitCamera(edict_t *ent, camera_type_t cameraType);
+edict_t *G_SpawnCamera(const vec3_t origin, int team, camera_type_t cameraType);
+
+/* g_combat */
 int G_ApplyProtection(const edict_t *target, const byte dmgWeight, int damage);
 void G_GetShotOrigin(const edict_t *shooter, const fireDef_t *fd, const vec3_t dir, vec3_t shotOrigin);
 
@@ -811,6 +817,8 @@ struct edict_s {
 	pos3_t *forbiddenListPos;	/**< this is used for e.g. misc_models with the solid flag set - this will
 								 * hold a list of grid positions that are blocked by the aabb of the model */
 	int forbiddenListSize;		/**< amount of entries in the forbiddenListPos */
+
+	bool active;
 };
 
 #endif /* GAME_G_LOCAL_H */

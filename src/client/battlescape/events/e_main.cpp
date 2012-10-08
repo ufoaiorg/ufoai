@@ -138,7 +138,7 @@ const eventRegister_t events[] = {
 	{E(EV_DOOR_CLOSE), "s", CL_DoorClose, NULL, NULL},
 	{E(EV_CLIENT_ACTION), "ss", CL_ActorClientAction, NULL, NULL},
 	{E(EV_RESET_CLIENT_ACTION), "s", CL_ActorResetClientAction, NULL, NULL},
-	{E(EV_CAMERA_APPEAR), "spbbb", CL_CameraAppear, NULL, NULL},
+	{E(EV_CAMERA_APPEAR), "spbbbb", CL_CameraAppear, NULL, NULL},
 #undef E
 };
 CASSERT(lengthof(events) == EV_NUM_EVENTS);

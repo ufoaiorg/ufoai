@@ -20,6 +20,7 @@ $(TARGET)_SRCS      = \
 	game/g_actor.cpp \
 	game/g_ai.cpp \
 	game/g_ai_lua.cpp \
+	game/g_camera.cpp \
 	game/g_client.cpp \
 	game/g_combat.cpp \
 	game/g_cmds.cpp \

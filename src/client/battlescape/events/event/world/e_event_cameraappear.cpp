@@ -36,10 +36,11 @@ void CL_CameraAppear (const eventRegister_t *self, dbuffer * msg)
 	int entnum;
 	int team;
 	int levelflags;
+	int dir;
 	vec3_t origin;
 	camera_type_t cameraType;
 
-	NET_ReadFormat(msg, self->formatString, &entnum, &origin, &team, &cameraType, &levelflags);
+	NET_ReadFormat(msg, self->formatString, &entnum, &origin, &team, &dir, &cameraType, &levelflags);
 
 	le_t *le = LE_Get(entnum);
 	if (!le) {
@@ -51,6 +52,7 @@ void CL_CameraAppear (const eventRegister_t *self, dbuffer * msg)
 	VectorCopy(origin, le->origin);
 	le->type = ET_CAMERA;
 	le->team = team;
+	le->angles[YAW] = directionAngles[le->angle];
 	le->flags |= LE_CHECK_LEVELFLAGS;
 	le->levelflags = levelflags;
 	le->model1 = R_FindModel(va("objects/cameras/camera%i", cameraType));
