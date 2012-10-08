@@ -525,7 +525,7 @@ int G_CheckVis(edict_t *check, int visFlags = VT_PERISH);
 int G_CheckVisPlayer(player_t* player, int visFlags);
 int G_TestVis(const int team, edict_t * check, int flags);
 bool G_Vis(const int team, const edict_t * from, const edict_t * check, int flags);
-int G_ActorSpotDist(const edict_t *const ent);
+int G_VisCheckDist(const edict_t *const ent);
 
 /* g_combat.c */
 bool G_ClientShoot(const player_t *player, edict_t* ent, const pos3_t at, shoot_types_t shootType, fireDefIndex_t firemode, shot_mock_t *mock, bool allowReaction, int z_align);

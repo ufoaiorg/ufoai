@@ -139,12 +139,15 @@ float G_ActorVis (const vec3_t from, const edict_t *ent, const edict_t *check, b
 	}
 }
 
-int G_ActorSpotDist (const edict_t *const ent)
+int G_VisCheckDist (const edict_t *const ent)
 {
 	if (G_IsActiveCamera(ent))
 		return MAX_SPOT_DIST_CAMERA;
 
-	return MAX_SPOT_DIST * G_ActorGetInjuryPenalty(ent, MODIFIER_SIGHT);
+	if (G_IsActor(ent))
+		return MAX_SPOT_DIST * G_ActorGetInjuryPenalty(ent, MODIFIER_SIGHT);
+
+	return MAX_SPOT_DIST;
 }
 
 /**
@@ -188,7 +191,7 @@ bool G_Vis (const int team, const edict_t *from, const edict_t *check, int flags
 		return false;
 
 	/* view distance check */
-	const int spotDist = G_ActorSpotDist(from);
+	const int spotDist = G_VisCheckDist(from);
 	if (VectorDistSqr(from->origin, check->origin) > spotDist * spotDist)
 		return false;
 

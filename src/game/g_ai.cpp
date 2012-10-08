@@ -141,7 +141,7 @@ bool AI_CheckUsingDoor (const edict_t *ent, const edict_t *door)
 			if (!G_FrustumVis(check, ent->origin))
 				continue;
 			/* check whether the enemy is close enough to change the state */
-			if (VectorDist(check->origin, ent->origin) > G_ActorSpotDist(ent))
+			if (VectorDist(check->origin, ent->origin) > G_VisCheckDist(ent))
 				continue;
 			actorVis = G_ActorVis(check->origin, check, ent, true);
 			/* there is a visible enemy, don't use that door */
@@ -182,7 +182,7 @@ static bool AI_CheckCrouch (const edict_t *ent)
 		if (!G_FrustumVis(check, ent->origin))
 			continue;
 		/* check whether the enemy is close enough to change the state */
-		if (VectorDist(check->origin, ent->origin) > G_ActorSpotDist(ent))
+		if (VectorDist(check->origin, ent->origin) > G_VisCheckDist(ent))
 			continue;
 		actorVis = G_ActorVis(check->origin, check, ent, true);
 		if (actorVis >= ACTOR_VIS_50)
