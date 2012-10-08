@@ -47,7 +47,7 @@ void CL_ActorClientAction (const eventRegister_t *self, dbuffer *msg)
 	if (!le)
 		LE_NotFoundError(number);
 
-	/* set client action entity number */
+	/* set client action entity */
 	le->clientAction = LE_Get(actionEntityNumber);
 	if (!le->clientAction)
 		LE_NotFoundError(actionEntityNumber);

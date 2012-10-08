@@ -320,10 +320,10 @@ extern cvar_t *g_difficulty;
 #define FFL_SPAWNTEMP		1
 #define FFL_NOSPAWN			2
 
-/* g_stats.c */
+/* g_stats */
 void G_SendPlayerStats(const player_t *player);
 
-/* g_inventory.c */
+/* g_inventory */
 void G_WriteItem(const item_t *item, const invDef_t *container, int x, int y);
 void G_ReadItem(item_t *item, const invDef_t **container, int *x, int *y);
 void G_InventoryToFloor(edict_t *ent);
@@ -334,11 +334,11 @@ const equipDef_t *G_GetEquipDefByID(const char *equipID);
 /* g_morale */
 void G_MoraleBehaviour(int team);
 
-/* g_phys.c */
+/* g_phys */
 void G_PhysicsRun(void);
 void G_PhysicsStep(edict_t *ent);
 
-/* g_actor.c */
+/* g_actor */
 void G_ActorReserveTUs(edict_t *ent, int resReaction, int resShot, int resCrouch);
 int G_ActorGetTUForReactionFire(const edict_t *ent);
 int G_ActorUsableTUs(const edict_t *ent);
@@ -348,13 +348,13 @@ int G_ActorCalculateMaxTU(const edict_t *ent);
 int G_ActorGetArmourTUPenalty(const edict_t *ent);
 int G_GetActorTimeForFiredef(const edict_t *ent, const fireDef_t *const fd, bool reaction);
 
-/* g_mission.c */
+/* g_mission */
 bool G_MissionTouch(edict_t *self, edict_t *activator);
 bool G_MissionUse(edict_t *self, edict_t *activator);
 bool G_MissionDestroy(edict_t *self);
 void G_MissionThink(edict_t *self);
 
-/* g_utils.c */
+/* g_utils */
 uint32_t G_GetLevelFlagsFromPos(const pos3_t pos);
 edict_t *G_Find(edict_t *from, int fieldofs, char *match);
 edict_t *G_FindRadius(edict_t *from, const vec3_t org, float rad, entity_type_t type);
@@ -388,7 +388,7 @@ bool G_TestLine(const vec3_t start, const vec3_t end);
 int G_ApplyProtection(const edict_t *target, const byte dmgWeight, int damage);
 void G_GetShotOrigin(const edict_t *shooter, const fireDef_t *fd, const vec3_t dir, vec3_t shotOrigin);
 
-/* g_reaction.c */
+/* g_reaction */
 void G_ReactionFirePreShot(const edict_t *target, const int fdTime);
 void G_ReactionFirePostShot(edict_t *target);
 void G_ReactionFireReset(int team);
