@@ -50,6 +50,18 @@ extern const vec4_t color_white;
 
 bool Q_IsPowerOfTwo(int i);
 
+class GridBox
+{
+protected:
+	pos3_t mins;
+	pos3_t maxs;
+
+public:
+	inline void setMins(const pos3_t mini) {mins[0] = mini[0]; mins[1] = mini[1]; mins[2] = mini[2];}
+	inline void setMaxs(const pos3_t maxi) {maxs[0] = maxi[0]; maxs[1] = maxi[1]; maxs[2] = maxi[2];}
+	inline void set(const pos3_t mini, const pos3_t maxi) {setMins(mini); setMaxs(maxi);}
+};
+
 /* Used to compare floats when rounding errors could occur  */
 #ifndef EQUAL
 #define EQUAL(a,b) (fabs((a)-(b))<0.0000000001)

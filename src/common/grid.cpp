@@ -920,6 +920,7 @@ void Grid_RecalcRouting (mapTiles_t *mapTiles, routing_t *map, const char *name,
 	pos3_t min, max;
 	unsigned int i;
 	double start, end;
+	GridBox rerouteBox;
 
 	start = time(NULL);
 
@@ -982,6 +983,8 @@ void Grid_RecalcRouting (mapTiles_t *mapTiles, routing_t *map, const char *name,
 		min[i] = std::max(min[i], (pos_t)0);
 
 	/* We now have the dimensions, call the generic rerouting function. */
+	rerouteBox.setMins(min);
+	rerouteBox.setMaxs(max);
 	Grid_RecalcBoxRouting(mapTiles, map, min, max, list);
 
 	end = time(NULL);
