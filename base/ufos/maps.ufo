@@ -3445,7 +3445,7 @@ mapdef spedition
 		coop3
 		coop4
 	)
-	maxaliens		28
+	maxaliens		8
 
 	civilianteam	worker
 
