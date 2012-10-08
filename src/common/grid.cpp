@@ -831,27 +831,26 @@ void Grid_PosToVec (const routing_t *map, const actorSizeEnum_t actorSize, const
  * @sa Grid_RecalcRouting
  * @param[in] mapTiles List of tiles the current (RMA-)map is composed of
  * @param[in] map The routing map (either server or client map)
- * @param[in] min The lower extents of the box to recalc routing for
- * @param[in] max The upper extents of the box to recalc routing for
+ * @param[in] box The box to recalc routing for
  * @param[in] list The local models list (a local model has a name starting with * followed by the model number)
  */
-void Grid_RecalcBoxRouting (mapTiles_t *mapTiles, routing_t *map, const pos3_t min, const pos3_t max, const char **list)
+void Grid_RecalcBoxRouting (mapTiles_t *mapTiles, routing_t *map, const GridBox box, const char **list)
 {
 	int x, y, z, actorSize, dir;
 
 	Com_DPrintf(DEBUG_PATHING, "rerouting (%i %i %i) (%i %i %i)\n",
-		(int)min[0], (int)min[1], (int)min[2],
-		(int)max[0], (int)max[1], (int)max[2]);
+		(int)box.mins[0], (int)box.mins[1], (int)box.mins[2],
+		(int)box.maxs[0], (int)box.maxs[1], (int)box.maxs[2]);
 
 	/* check unit heights */
 	for (actorSize = 1; actorSize <= ACTOR_MAX_SIZE; actorSize++) {
-		const int maxY = max[1] + actorSize;
-		const int maxX = max[0] + actorSize;
+		const int maxY = box.maxs[1] + actorSize;
+		const int maxX = box.maxs[0] + actorSize;
 		/* Offset the initial X and Y to compensate for larger actors when needed. */
-		for (y = std::max(min[1] - actorSize + 1, 0); y < maxY; y++) {
-			for (x = std::max(min[0] - actorSize + 1, 0); x < maxX; x++) {
+		for (y = std::max(box.mins[1] - actorSize + 1, 0); y < maxY; y++) {
+			for (x = std::max(box.mins[0] - actorSize + 1, 0); x < maxX; x++) {
 				/** @note RT_CheckCell goes from top (7) to bottom (0) */
-				for (z = max[2]; z >= 0; z--) {
+				for (z = box.maxs[2]; z >= 0; z--) {
 					const int newZ = RT_CheckCell(mapTiles, map, actorSize, x, y, z, list);
 					assert(newZ <= z);
 					z = newZ;
@@ -862,10 +861,10 @@ void Grid_RecalcBoxRouting (mapTiles_t *mapTiles, routing_t *map, const pos3_t m
 
 	/* check connections */
 	for (actorSize = 1; actorSize <= ACTOR_MAX_SIZE; actorSize++) {
-		const int minX = std::max(min[0] - actorSize, 0);
-		const int minY = std::max(min[1] - actorSize, 0);
-		const int maxX = std::min(max[0] + actorSize, PATHFINDING_WIDTH - 1);
-		const int maxY = std::min(max[1] + actorSize, PATHFINDING_WIDTH - 1);
+		const int minX = std::max(box.mins[0] - actorSize, 0);
+		const int minY = std::max(box.mins[1] - actorSize, 0);
+		const int maxX = std::min(box.maxs[0] + actorSize, PATHFINDING_WIDTH - 1);
+		const int maxY = std::min(box.maxs[1] + actorSize, PATHFINDING_WIDTH - 1);
 		/* Offset the initial X and Y to compensate for larger actors when needed.
 		 * Also sweep further out to catch the walls back into our box. */
 		for (y = minY; y <= maxY; y++) {
@@ -878,20 +877,20 @@ void Grid_RecalcBoxRouting (mapTiles_t *mapTiles, routing_t *map, const pos3_t m
 						continue;
 #endif
 					/* for places outside the model box, skip dirs that can not be affected by the model */
-					if (x > max[0] && dir != 1 && dir != 5 && dir != 6)
+					if (x > box.maxs[0] && dir != 1 && dir != 5 && dir != 6)
 						continue;
-					if (y > max[1] && dir != 3 && dir != 5 && dir != 7)
+					if (y > box.maxs[1] && dir != 3 && dir != 5 && dir != 7)
 						continue;
 					if (actorSize == ACTOR_SIZE_NORMAL) {
-						if (x < min[0] && dir != 0 && dir != 4 && dir != 7)
+						if (x < box.mins[0] && dir != 0 && dir != 4 && dir != 7)
 							continue;
-						if (y < min[1] && dir != 2 && dir != 4 && dir != 6)
+						if (y < box.mins[1] && dir != 2 && dir != 4 && dir != 6)
 							continue;
 					} else {
 						/* the position of 2x2 actors is their lower left cell */
-						if (x < min[0] - 1 && dir != 0 && dir != 4 && dir != 7)
+						if (x < box.mins[0] - 1 && dir != 0 && dir != 4 && dir != 7)
 							continue;
-						if (y < min[1] - 1 && dir != 2 && dir != 4 && dir != 6)
+						if (y < box.mins[1] - 1 && dir != 2 && dir != 4 && dir != 6)
 							continue;
 					}
 					RT_UpdateConnectionColumn(mapTiles, map, actorSize, x, y, dir, list);
@@ -985,7 +984,7 @@ void Grid_RecalcRouting (mapTiles_t *mapTiles, routing_t *map, const char *name,
 	/* We now have the dimensions, call the generic rerouting function. */
 	rerouteBox.setMins(min);
 	rerouteBox.setMaxs(max);
-	Grid_RecalcBoxRouting(mapTiles, map, min, max, list);
+	Grid_RecalcBoxRouting(mapTiles, map, rerouteBox, list);
 
 	end = time(NULL);
 	Com_DPrintf(DEBUG_ROUTING, "Retracing for model %s between (%i, %i, %i) and (%i, %i %i) in %5.1fs\n",

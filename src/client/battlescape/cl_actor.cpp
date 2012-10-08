@@ -2280,7 +2280,10 @@ static void CL_DebugPath_f (void)
 	{
 	pos3_t boxmin = {134,128,0};
 	pos3_t boxmax = {136,130,1};
-	Grid_RecalcBoxRouting(cl.mapTiles, cl.mapData->map, boxmin, boxmax, cl.leInlineModelList);
+	GridBox myBox;
+	myBox.setMins(boxmin);
+	myBox.setMaxs(boxmax);
+	Grid_RecalcBoxRouting(cl.mapTiles, cl.mapData->map, myBox, cl.leInlineModelList);
 	}
 #endif
 

@@ -31,7 +31,7 @@ GRID ORIENTED MOVEMENT AND SCANNING
 ==========================================================*/
 
 void Grid_RecalcRouting(mapTiles_t *mapTiles, routing_t *map, const char *name, const char **list);
-void Grid_RecalcBoxRouting (mapTiles_t *mapTiles, routing_t *map, const pos3_t min, const pos3_t max, const char **list);
+void Grid_RecalcBoxRouting (mapTiles_t *mapTiles, routing_t *map, const GridBox box, const char **list);
 void Grid_MoveCalc(const routing_t *map, const actorSizeEnum_t actorSize, pathing_t *path, const pos3_t from, byte crouchingSstate, int distance, byte ** fb_list, int fb_length);
 void Grid_MoveStore(pathing_t *path);
 pos_t Grid_MoveLength(const pathing_t *path, const pos3_t to, byte crouchingState, bool stored);
