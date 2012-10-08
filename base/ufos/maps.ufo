@@ -3600,7 +3600,7 @@ mapdef transport
 		coop3
 		coop4
 	)
-	maxaliens	19 //TODO: This is an arbitrary value right now.
+	maxaliens	8
 
 	aircraft
 	(
