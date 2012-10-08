@@ -998,6 +998,7 @@ bool uiContainerNode::onDndFinished (uiNode_t *source, bool isDropped)
 		if (target) {
 			invList_t *fItem;
 			invList_t *tItem;
+			bool moved = false;
 			const invDef_t *targetContainer = EXTRADATACONST(target).container;
 			assert(targetContainer);
 			if (UI_IsScrollContainerNode(source)) {
@@ -1012,7 +1013,11 @@ bool uiContainerNode::onDndFinished (uiNode_t *source, bool isDropped)
 				INV_UnloadWeapon(fItem, ui_inventory, targetContainer);
 
 			/* move the item */
-			INV_MoveItem(ui_inventory, targetContainer, dragInfoToX, dragInfoToY, sourceContainer, fItem, &tItem);
+			moved = INV_MoveItem(ui_inventory, targetContainer, dragInfoToX, dragInfoToY, sourceContainer, fItem, &tItem);
+
+			/* No need to continue move wasn't successful */
+			if (!moved)
+				return false;
 
 			/* Add ammo on adding weapon to a soldier  */
 			if (UI_IsScrollContainerNode(source) && ((fItem->item.item->weapon && !fItem->item.ammoLeft) || fItem->item.item->oneshot))
