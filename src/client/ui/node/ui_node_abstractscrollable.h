@@ -64,7 +64,7 @@ struct uiScroll_t {
 };
 
 typedef struct {
-	vec2_t cacheSize;		/**< check the size change while we dont have a realy event from property setter */
+	vec2_t cacheSize;		/**< check the size change while we don't have a real event from property setter */
 
 	/** not yet implemented */
 	uiScroll_t scrollX;
