@@ -208,7 +208,7 @@ int LE_ActorGetStepTime(const le_t *le, const pos3_t pos, const pos3_t oldPos, c
 #define LE_IsInvisible(le)	((le)->flags & LE_INVISIBLE)
 #define LE_IsSelected(le)	((le)->flags & LE_SELECTED)
 
-#define LE_SetInvisible(le) do { if (!cl_leshowinvis->integer) le->flags &= ~LE_INVISIBLE; else le->flags |= LE_INVISIBLE; } while (0)
+#define LE_SetInvisible(le) do { if (cl_leshowinvis->integer) le->flags &= ~LE_INVISIBLE; else le->flags |= LE_INVISIBLE; } while (0)
 
 #define LE_IsItem(le)		((le)->type == ET_ITEM)
 #define LE_IsCamera(le)		((le)->type == ET_CAMERA)
