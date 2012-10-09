@@ -43,8 +43,6 @@ bool G_IsLivingActor (const edict_t *ent)
  */
 void G_ActorUseDoor (edict_t *actor, edict_t *door)
 {
-	edict_t *closeActor = NULL;
-
 	/* check whether it's part of an edict group but not the master */
 	if (door->flags & FL_GROUPSLAVE)
 		door = door->groupMaster;
@@ -57,7 +55,8 @@ void G_ActorUseDoor (edict_t *actor, edict_t *door)
 	if (G_IsAI(actor))
 		return;
 
-	while ((closeActor = G_FindRadius(closeActor, door->origin, UNIT_SIZE * 3, ET_NULL))) {
+	edict_t *closeActor = NULL;
+	while ((closeActor = G_FindRadius(closeActor, door->origin, UNIT_SIZE * 3))) {
 		/* check whether the door is still reachable (this might have
 		 * changed due to the rotation) or whether an actor can reach it now */
 		G_TouchTriggers(closeActor);
