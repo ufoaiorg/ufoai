@@ -132,7 +132,7 @@ void UI_RegisterOptionNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "option";
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
-	behaviour->manager = new uiOptionNode();
+	behaviour->manager = UINodePtr(new uiOptionNode());
 
 	/**
 	 * Displayed text

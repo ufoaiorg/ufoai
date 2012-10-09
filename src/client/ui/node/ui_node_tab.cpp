@@ -345,6 +345,6 @@ void UI_RegisterTabNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "tab";
 	behaviour->extends = "abstractoption";
-	behaviour->manager = new uiTabNode();
+	behaviour->manager = UINodePtr(new uiTabNode());
 	behaviour->drawItselfChild = true;
 }

@@ -193,7 +193,7 @@ void uiAbstractValueNode::clone (const uiNode_t *source, uiNode_t *clone)
 void UI_RegisterAbstractValueNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "abstractvalue";
-	behaviour->manager = new uiAbstractValueNode();
+	behaviour->manager = UINodePtr(new uiAbstractValueNode());
 	behaviour->isAbstract = true;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 

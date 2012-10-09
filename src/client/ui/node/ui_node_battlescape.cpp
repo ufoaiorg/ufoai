@@ -97,5 +97,5 @@ bool uiBattleScapeNode::onScroll (uiNode_t *node, int deltaX, int deltaY)
 void UI_RegisterBattlescapeNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "battlescape";
-	behaviour->manager = new uiBattleScapeNode();
+	behaviour->manager = UINodePtr(new uiBattleScapeNode());
 }

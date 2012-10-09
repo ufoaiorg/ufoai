@@ -70,7 +70,7 @@ void uiTextureNode::draw (uiNode_t *node)
 void UI_RegisterTextureNode (uiBehaviour_t* behaviour)
 {
 	behaviour->name = "texture";
-	behaviour->manager = new uiTextureNode();
+	behaviour->manager = UINodePtr(new uiTextureNode());
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 
 	/* Source of the texture */

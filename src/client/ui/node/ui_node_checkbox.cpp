@@ -130,7 +130,7 @@ void UI_RegisterCheckBoxNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "checkbox";
 	behaviour->extends = "abstractvalue";
-	behaviour->manager = new uiCheckBoxNode();
+	behaviour->manager = UINodePtr(new uiCheckBoxNode());
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 
 	/** Sprite used as an icon for checked state */

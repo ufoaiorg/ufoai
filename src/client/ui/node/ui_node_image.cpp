@@ -196,7 +196,7 @@ void UI_RegisterImageNode (uiBehaviour_t* behaviour)
 {
 	/** @todo rename it according to the function name when its possible */
 	behaviour->name = "image";
-	behaviour->manager = new uiImageNode();
+	behaviour->manager = UINodePtr(new uiImageNode());
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 
 	/* Do not change the image ratio. The image will be proportionally stretched. */

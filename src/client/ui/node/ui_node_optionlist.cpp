@@ -319,7 +319,7 @@ void UI_RegisterOptionListNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "optionlist";
 	behaviour->extends = "abstractoption";
-	behaviour->manager = new uiOptionListNode();
+	behaviour->manager = UINodePtr(new uiOptionListNode());
 	behaviour->drawItselfChild = true;
 
 	/* Sprite used to display the background */

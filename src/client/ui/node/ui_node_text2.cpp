@@ -366,6 +366,6 @@ void UI_RegisterText2Node (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "text2";
 	behaviour->extends = "text";
-	behaviour->manager = new uiText2Node();
+	behaviour->manager = UINodePtr(new uiText2Node());
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 }

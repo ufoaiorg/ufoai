@@ -84,7 +84,7 @@ void uiLineChartNode::draw (uiNode_t *node)
 void UI_RegisterLineChartNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "linechart";
-	behaviour->manager = new uiLineChartNode();
+	behaviour->manager = UINodePtr(new uiLineChartNode());
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 
 	/* Identity the shared data the node use. It must be a LINESTRIP data. */

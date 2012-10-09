@@ -76,7 +76,7 @@ void UI_RegisterTBarNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "tbar";
 	behaviour->extends = "abstractvalue";
-	behaviour->manager = new uiTBarNode();
+	behaviour->manager = UINodePtr(new uiTBarNode());
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 
 	/* Image to use. Each behaviour use it like they want.

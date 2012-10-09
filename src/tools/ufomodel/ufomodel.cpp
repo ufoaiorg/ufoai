@@ -42,15 +42,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define VERSION "0.2"
 
-/**
- * We have to ensure that our new/delete overrides can take place before main is going to get executed
- */
-void really_init () __attribute__ ((constructor));
-void really_init ()
-{
-	com_genericPool = Mem_CreatePool("Generic");
-}
-
 rstate_t r_state;
 image_t *r_noTexture;
 

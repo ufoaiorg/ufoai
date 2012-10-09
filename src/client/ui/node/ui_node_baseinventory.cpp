@@ -805,7 +805,7 @@ void UI_RegisterBaseInventoryNode (uiBehaviour_t* behaviour)
 {
 	behaviour->name = "baseinventory";
 	behaviour->extends = "container";
-	behaviour->manager = new uiBaseInventoryNode();
+	behaviour->manager = UINodePtr(new uiBaseInventoryNode());
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 
 	/* Display/hide weapons. */

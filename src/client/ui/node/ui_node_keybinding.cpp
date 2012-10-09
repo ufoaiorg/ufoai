@@ -174,7 +174,7 @@ void uiKeyBindingNode::onLoading (uiNode_t *node)
 void UI_RegisterKeyBindingNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "keybinding";
-	behaviour->manager = new uiKeyBindingNode();
+	behaviour->manager = UINodePtr(new uiKeyBindingNode());
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 
 	UI_RegisterExtradataNodeProperty(behaviour, "keyspace", V_INT, keyBindingExtraData_t, keySpace);

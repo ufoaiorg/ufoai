@@ -316,10 +316,11 @@ struct scheduleEvent_t {
 	event_check_func *check;
 	event_clean_func *clean;
 	void *data;
-	scheduleEvent_t *next;
 };
 
-scheduleEvent_t *Schedule_Event(int when, event_func *func, event_check_func *check, event_clean_func *clean, void *data);
+typedef SharedPtr<scheduleEvent_t> ScheduleEventPtr;
+
+ScheduleEventPtr Schedule_Event(int when, event_func *func, event_check_func *check, event_clean_func *clean, void *data);
 int CL_FilterEventQueue(event_filter *filter);
 
 /*

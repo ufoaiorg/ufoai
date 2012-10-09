@@ -95,7 +95,7 @@ void UI_TextScrollEnd (const char* nodePath)
 		return;
 	}
 
-	uiTextNode *b = dynamic_cast<uiTextNode*>(node->behaviour->manager);
+	uiTextNode *b = dynamic_cast<uiTextNode*>(node->behaviour->manager.get());
 	b->validateCache(node);
 
 	if (EXTRADATA(node).super.scrollY.fullSize > EXTRADATA(node).super.scrollY.viewSize) {
@@ -564,7 +564,7 @@ void UI_RegisterTextNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "text";
 	behaviour->extends = "abstractscrollable";
-	behaviour->manager = new uiTextNode();
+	behaviour->manager = UINodePtr(new uiTextNode());
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 
 	/* Current selected line  */

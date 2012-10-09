@@ -554,13 +554,13 @@ void uiGeoscapeNode::onLoading (uiNode_t *node)
 
 static void UI_GeoscapeNodeZoomIn (uiNode_t *node, const uiCallContext_t *context)
 {
-	uiGeoscapeNode* m = static_cast<uiGeoscapeNode*>(node->behaviour->manager);
+	uiGeoscapeNode* m = static_cast<uiGeoscapeNode*>(node->behaviour->manager.get());
 	m->zoom(node, false);
 }
 
 static void UI_GeoscapeNodeZoomOut (uiNode_t *node, const uiCallContext_t *context)
 {
-	uiGeoscapeNode* m = static_cast<uiGeoscapeNode*>(node->behaviour->manager);
+	uiGeoscapeNode* m = static_cast<uiGeoscapeNode*>(node->behaviour->manager.get());
 	m->zoom(node, true);
 }
 
@@ -705,7 +705,7 @@ static void UI_GeoscapeNodeScroll_f (void)
 void UI_RegisterGeoscapeNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "geoscape";
-	behaviour->manager = new uiGeoscapeNode();
+	behaviour->manager = UINodePtr(new uiGeoscapeNode());
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 
 	/* Use a right padding. */

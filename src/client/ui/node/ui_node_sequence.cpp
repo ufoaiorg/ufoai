@@ -113,7 +113,7 @@ void UI_RegisterSequenceNode (uiBehaviour_t* behaviour)
 {
 	localBehaviour = behaviour;
 	behaviour->name = "sequence";
-	behaviour->manager = new uiSequenceNode();
+	behaviour->manager = UINodePtr(new uiSequenceNode());
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 
 	/** Source of the video. File name without prefix ./base/videos and without extension */

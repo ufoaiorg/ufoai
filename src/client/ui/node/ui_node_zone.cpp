@@ -91,7 +91,7 @@ void uiZoneNode::onLoading (uiNode_t *node)
 void UI_RegisterZoneNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "zone";
-	behaviour->manager = new uiZoneNode();
+	behaviour->manager = UINodePtr(new uiZoneNode());
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 
 	/* If true, the <code>onclick</code> call back is called more than one time if the user do not release the button. */

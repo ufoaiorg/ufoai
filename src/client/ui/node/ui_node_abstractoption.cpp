@@ -144,7 +144,7 @@ void UI_RegisterAbstractOptionNode (uiBehaviour_t *behaviour)
 	behaviour->isAbstract = true;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 	behaviour->drawItselfChild = true;
-	behaviour->manager = new uiAbstractOptionNode();
+	behaviour->manager = UINodePtr(new uiAbstractOptionNode());
 
 	/** Optional. Data ID we want to use. It must be an option list. It substitute to the inline options */
 	UI_RegisterExtradataNodeProperty(behaviour, "dataid", V_UI_DATAID, EXTRADATA_TYPE, dataId);

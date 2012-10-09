@@ -309,7 +309,7 @@ void UI_RegisterAbstractNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "abstractnode";
 	behaviour->isAbstract = true;
-	behaviour->manager = new uiLocatedNode();
+	behaviour->manager = UINodePtr(new uiLocatedNode());
 
 	/* Top-left position of the node */
 	UI_RegisterNodeProperty(behaviour, "pos", V_POS, uiNode_t, box.pos);

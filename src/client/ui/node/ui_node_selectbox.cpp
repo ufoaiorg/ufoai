@@ -313,6 +313,6 @@ void UI_RegisterSelectBoxNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "selectbox";
 	behaviour->extends = "abstractoption";
-	behaviour->manager = new uiSelectBoxNode();
+	behaviour->manager = UINodePtr(new uiSelectBoxNode());
 	behaviour->drawItselfChild = true;
 }

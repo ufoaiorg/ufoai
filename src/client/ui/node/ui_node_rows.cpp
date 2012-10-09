@@ -67,7 +67,7 @@ void uiRowsNode::onLoaded (uiNode_t *node)
 void UI_RegisterRowsNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "rows";
-	behaviour->manager = new uiRowsNode();
+	behaviour->manager = UINodePtr(new uiRowsNode());
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 
 	/* Background color for odd elements */

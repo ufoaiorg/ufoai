@@ -65,7 +65,7 @@ void uiTimerNode::draw (uiNode_t *node)
 void UI_RegisterTimerNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "timer";
-	behaviour->manager = new uiTimerNode();
+	behaviour->manager = UINodePtr(new uiTimerNode());
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 
 	/* This property control milliseconds between each calls of <code>onEvent</code>.

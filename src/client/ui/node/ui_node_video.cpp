@@ -101,7 +101,7 @@ void UI_RegisterVideoNode (uiBehaviour_t* behaviour)
 {
 	behaviour->name = "video";
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
-	behaviour->manager = new uiVideoNode();
+	behaviour->manager = UINodePtr(new uiVideoNode());
 
 	/** Source of the video. File name without prefix ./base/videos and without extension */
 	UI_RegisterExtradataNodeProperty(behaviour, "src", V_CVAR_OR_STRING, EXTRADATA_TYPE, source);

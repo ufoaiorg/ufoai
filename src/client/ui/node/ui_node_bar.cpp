@@ -159,7 +159,7 @@ void UI_RegisterBarNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "bar";
 	behaviour->extends = "abstractvalue";
-	behaviour->manager = new uiBarNode();
+	behaviour->manager = UINodePtr(new uiBarNode());
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 
 	/**

@@ -40,7 +40,7 @@ struct uiBehaviour_t {
 	/* behaviour attributes */
 	const char* name;				/**< name of the behaviour: string type of a node */
 	const char* extends;			/**< name of the extends behaviour */
-	uiNode* manager;				/**< manager of the behaviour */
+	UINodePtr manager;				/**< manager of the behaviour */
 	bool registration;			/**< True if we can define the behavior with registration function */
 	bool isVirtual;				/**< true, if the node doesn't have any position on the screen */
 	bool isFunction;			/**< true, if the node is a function */

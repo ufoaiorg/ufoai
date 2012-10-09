@@ -353,7 +353,7 @@ uiKeyBinding_t *UI_WindowNodeGetKeyBinding (uiNode_t const* const node, unsigned
 void UI_RegisterWindowNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "window";
-	behaviour->manager = new uiWindowNode();
+	behaviour->manager = UINodePtr(new uiWindowNode());
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 
 	/* In windows where notify messages appear (like e.g. the video options window when you have to restart the game until

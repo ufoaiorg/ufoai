@@ -154,7 +154,7 @@ void uiRadioButtonNode::onLeftClick (uiNode_t * node, int x, int y)
 void UI_RegisterRadioButtonNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "radiobutton";
-	behaviour->manager = new uiRadioButtonNode();
+	behaviour->manager = UINodePtr(new uiRadioButtonNode());
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 
 	/* Numerical value defining the radiobutton. Cvar is updated with this value when the radio button is selected. */

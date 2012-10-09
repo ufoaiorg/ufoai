@@ -229,5 +229,5 @@ void UI_RegisterTextListNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "textlist";
 	behaviour->extends = "text";
-	behaviour->manager = new uiTextListNode();
+	behaviour->manager = UINodePtr(new uiTextListNode());
 }

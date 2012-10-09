@@ -52,15 +52,6 @@ static char mapFilename[MAX_OSPATH];
 memPool_t *com_genericPool;
 memPool_t *com_fileSysPool;
 
-/**
- * We have to ensure that our new/delete overrides can take place before main is going to get executed
- */
-void really_init () __attribute__ ((constructor));
-void really_init ()
-{
-	com_genericPool = Mem_CreatePool("Generic");
-}
-
 char baseFilename[MAX_OSPATH]; /**< This is used for extra file output functions */
 
 typedef struct usagePair_s {

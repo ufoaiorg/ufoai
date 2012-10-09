@@ -60,6 +60,8 @@ public:
 	virtual ~uiNode() {}
 };
 
+typedef SharedPtr<uiNode> UINodePtr;
+
 class uiLocatedNode : public uiNode {
 public:
 	/** How to draw a node */

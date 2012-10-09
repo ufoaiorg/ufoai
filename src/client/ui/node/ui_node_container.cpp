@@ -1039,7 +1039,7 @@ bool uiContainerNode::onDndFinished (uiNode_t *source, bool isDropped)
 void UI_RegisterContainerNode (uiBehaviour_t* behaviour)
 {
 	behaviour->name = "container";
-	behaviour->manager = new uiContainerNode();
+	behaviour->manager = UINodePtr(new uiContainerNode());
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 
 	/* Callback value set before calling onSelect. It is used to know the item selected */

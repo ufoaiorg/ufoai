@@ -53,7 +53,7 @@ void UI_RegisterFuncNode (uiBehaviour_t *behaviour)
 	behaviour->name = "func";
 	behaviour->isVirtual = true;
 	behaviour->isFunction = true;
-	behaviour->manager = new uiFuncNode();
+	behaviour->manager = UINodePtr(new uiFuncNode());
 }
 
 void UI_RegisterNullNode (uiBehaviour_t *behaviour)
@@ -150,7 +150,7 @@ void UI_RegisterConFuncNode (uiBehaviour_t *behaviour)
 	behaviour->name = "confunc";
 	behaviour->isVirtual = true;
 	behaviour->isFunction = true;
-	behaviour->manager = new uiConFuncNode();
+	behaviour->manager = UINodePtr(new uiConFuncNode());
 }
 
 static void UI_CvarListenerNodeCallback (const char *cvarName, const char *oldValue, const char *newValue, void *data)
@@ -232,7 +232,7 @@ void UI_RegisterCvarFuncNode (uiBehaviour_t *behaviour)
 	behaviour->name = "cvarlistener";
 	behaviour->isVirtual = true;
 	behaviour->isFunction = true;
-	behaviour->manager = new uiCvarNode();
+	behaviour->manager = UINodePtr(new uiCvarNode());
 	/* Force to bind the node to the cvar */
 	UI_RegisterNodeMethod(behaviour, "forceBind", UI_CvarListenerNodeForceBind);
 }

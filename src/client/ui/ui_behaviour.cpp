@@ -135,7 +135,7 @@ void UI_InitializeNodeBehaviour (uiBehaviour_t* behaviour)
 		behaviour->extends = "abstractnode";
 	}
 
-	if (behaviour->manager == NULL && behaviour->name[0] != '\0') {
+	if (!behaviour->manager && Q_strvalid(behaviour->name)) {
 		Com_Error(ERR_FATAL, "UI_InitializeNodeBehaviour: Behaviour '%s' expect a manager class", behaviour->name);
 	}
 

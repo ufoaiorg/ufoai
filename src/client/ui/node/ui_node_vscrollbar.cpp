@@ -428,7 +428,7 @@ void UI_RegisterVScrollbarNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "vscrollbar";
 	behaviour->extends = "abstractscrollbar";
-	behaviour->manager = new uiVScrollbarNode();
+	behaviour->manager = UINodePtr(new uiVScrollbarNode());
 
 	/* Image to use. Each behaviour use it like they want.
 	 * @todo use V_REF_OF_STRING when its possible ('image' is never a cvar)

@@ -417,7 +417,7 @@ void UI_RegisterOptionTreeNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "optiontree";
 	behaviour->extends = "abstractoption";
-	behaviour->manager = new uiOptionTreeNode();
+	behaviour->manager = UINodePtr(new uiOptionTreeNode());
 	behaviour->drawItselfChild = true;
 
 	/* Call it to toggle the node status. */

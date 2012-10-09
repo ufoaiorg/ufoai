@@ -292,7 +292,7 @@ void uiTextEntryNode::onLoading (uiNode_t *node)
 void UI_RegisterTextEntryNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "textentry";
-	behaviour->manager = new uiTextEntryNode();
+	behaviour->manager = UINodePtr(new uiTextEntryNode());
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 
 	/* Call back event called when we click on the node. If the click select the node,

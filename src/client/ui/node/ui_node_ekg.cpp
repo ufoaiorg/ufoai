@@ -113,7 +113,7 @@ void UI_RegisterEKGNode (uiBehaviour_t* behaviour)
 {
 	behaviour->name = "ekg";
 	behaviour->extends = "image";
-	behaviour->manager = new uiEkgNode();
+	behaviour->manager = UINodePtr(new uiEkgNode());
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 
 	/* @todo Need documentation */

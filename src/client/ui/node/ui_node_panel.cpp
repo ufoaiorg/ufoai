@@ -577,7 +577,7 @@ void UI_RegisterPanelNode (uiBehaviour_t *behaviour)
 	behaviour->extends = "abstractscrollable";
 	behaviour->name = "panel";
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
-	behaviour->manager = new uiPanelNode();
+	behaviour->manager = UINodePtr(new uiPanelNode());
 
 	/**
 	 * Select a layout manager to set position and size of child. Most of layout manager

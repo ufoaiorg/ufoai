@@ -89,5 +89,5 @@ void UI_RegisterTodoNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "todo";
 	behaviour->extends = "string";
-	behaviour->manager = new uiTodoNode();
+	behaviour->manager = UINodePtr(new uiTodoNode());
 }

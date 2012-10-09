@@ -87,7 +87,7 @@ void uiSpinnerNode::repeat (uiNode_t *node, uiTimer_t *timer)
 
 static void UI_SpinnerNodeRepeat (uiNode_t *node, uiTimer_t *timer)
 {
-	uiSpinnerNode* b = dynamic_cast<uiSpinnerNode*>(node->behaviour->manager);
+	uiSpinnerNode* b = dynamic_cast<uiSpinnerNode*>(node->behaviour->manager.get());
 	b->repeat(node, timer);
 }
 
@@ -222,7 +222,7 @@ void UI_RegisterSpinnerNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "spinner";
 	behaviour->extends = "abstractvalue";
-	behaviour->manager = new uiSpinnerNode();
+	behaviour->manager = UINodePtr(new uiSpinnerNode());
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 
 	/**

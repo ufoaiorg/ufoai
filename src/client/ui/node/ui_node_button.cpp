@@ -171,7 +171,7 @@ void uiButtonNode::onLoaded (uiNode_t *node)
 void UI_RegisterButtonNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "button";
-	behaviour->manager = new uiButtonNode();
+	behaviour->manager = UINodePtr(new uiButtonNode());
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 
 	/* Icon used to display the node

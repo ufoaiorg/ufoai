@@ -84,5 +84,5 @@ void UI_RegisterControlsNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "controls";
 	behaviour->extends = "image";
-	behaviour->manager = new uiControlNode();
+	behaviour->manager = UINodePtr(new uiControlNode());
 }

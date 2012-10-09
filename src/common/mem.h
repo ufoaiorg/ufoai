@@ -26,11 +26,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef _COMMON_MEM_H
 #define _COMMON_MEM_H
 
-#include <new>
-
-void* operator new (std::size_t size) throw (std::bad_alloc);
-void operator delete (void *p) throw ();
-
 struct memPool_t;
 
 /* constants */

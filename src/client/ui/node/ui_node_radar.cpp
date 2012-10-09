@@ -674,5 +674,5 @@ void uiRadarNode::onWindowOpened (uiNode_t *node, linkedList_t *params)
 void UI_RegisterRadarNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "radar";
-	behaviour->manager = new uiRadarNode();
+	behaviour->manager = UINodePtr(new uiRadarNode());
 }

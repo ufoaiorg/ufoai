@@ -114,7 +114,7 @@ void uiStringNode::onLoading (uiNode_t *node)
 void UI_RegisterStringNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "string";
-	behaviour->manager = new uiStringNode();
+	behaviour->manager = UINodePtr(new uiStringNode());
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 
 	/* What to do with text lines longer than node width. Default is to wordwrap them to make multiple lines.

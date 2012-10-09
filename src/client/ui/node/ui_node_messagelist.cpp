@@ -305,5 +305,5 @@ void UI_RegisterMessageListNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "messagelist";
 	behaviour->extends = "abstractscrollable";
-	behaviour->manager = new uiMessageListNode();
+	behaviour->manager = UINodePtr(new uiMessageListNode());
 }

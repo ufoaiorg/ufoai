@@ -47,7 +47,7 @@ void UI_RegisterDataNode (uiBehaviour_t* behaviour)
 	behaviour->name = "data";
 	behaviour->isVirtual = true;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
-	behaviour->manager = new uiDataNode();
+	behaviour->manager = UINodePtr(new uiDataNode());
 
 	/* Store a string into the node.
 	 * @note you should note store a cvar ref

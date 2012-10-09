@@ -351,7 +351,7 @@ static void UI_EditorNodeExtract_f (void)
 void UI_RegisterEditorNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "editor";
-	behaviour->manager = new uiEditorNode();
+	behaviour->manager = UINodePtr(new uiEditorNode());
 
 	/* start edition mode */
 	UI_RegisterNodeMethod(behaviour, "start", UI_EditorNodeStart);

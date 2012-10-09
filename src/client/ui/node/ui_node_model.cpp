@@ -510,7 +510,7 @@ void UI_RegisterModelNode (uiBehaviour_t *behaviour)
 	localBehaviour = behaviour;
 	behaviour->name = "model";
 	behaviour->drawItselfChild = true;
-	behaviour->manager = new uiModelNode();
+	behaviour->manager = UINodePtr(new uiModelNode());
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 
 	/* Both. Name of the animation for the model */

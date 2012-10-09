@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../common/common.h"
 #include "../client/battlescape/events/e_parse.h"
 #include "../client/cl_shared.h"
+#include <string>
 
 /**
  * The suite initialization function.
@@ -68,7 +69,29 @@ static void testEvents (void)
 	CU_ASSERT_EQUAL(CL_ClearBattlescapeEvents(), lengthof(events));
 }
 
-scheduleEvent_t* Dequeue_Event(int now);
+ScheduleEventPtr Dequeue_Event(int now);
+
+static void testScheduler (void)
+{
+	std::string s_one("one");
+	std::string s_two("two");
+	std::string s_three("three");
+	std::string s_four("four");
+	std::string s_five("five");
+
+	ScheduleEventPtr one = Schedule_Event(3, NULL, NULL, NULL, static_cast<void*>(&s_one));
+	ScheduleEventPtr two = Schedule_Event(3, NULL, NULL, NULL, static_cast<void*>(&s_two));
+	ScheduleEventPtr three = Schedule_Event(4, NULL, NULL, NULL, static_cast<void*>(&s_three));
+	ScheduleEventPtr four = Schedule_Event(4, NULL, NULL, NULL, static_cast<void*>(&s_four));
+	ScheduleEventPtr five = Schedule_Event(5, NULL, NULL, NULL, static_cast<void*>(&s_five));
+
+	CU_ASSERT_EQUAL(Dequeue_Event(1000), one);
+	CU_ASSERT_EQUAL(Dequeue_Event(1000), two);
+	CU_ASSERT_EQUAL(Dequeue_Event(1000), three);
+	CU_ASSERT_EQUAL(Dequeue_Event(1000), four);
+	CU_ASSERT_EQUAL(Dequeue_Event(1000), five);
+	CU_ASSERT_FALSE(Dequeue_Event(1000));
+}
 
 static bool delayCheck (int now, void *data)
 {
@@ -82,39 +105,24 @@ static bool delayCheck (int now, void *data)
 	return ret;
 }
 
-static void testScheduler (void)
+static void testSchedulerCheck (void)
 {
-	scheduleEvent_t *one, *two, *three, *four, *five, *e;
+	std::string s_one("one");
+	std::string s_two("two");
+	std::string s_three("three");
+	std::string s_four("four");
+	std::string s_five("five");
 
-	three = Schedule_Event(4, NULL, NULL, NULL, NULL);
-	CU_ASSERT_EQUAL_FATAL(three->next, NULL);
+	ScheduleEventPtr three = Schedule_Event(4, NULL, NULL, NULL, static_cast<void*>(&s_three));
+	ScheduleEventPtr four = Schedule_Event(4, NULL, NULL, NULL, static_cast<void*>(&s_four));
+	ScheduleEventPtr five = Schedule_Event(4, NULL, NULL, NULL, static_cast<void*>(&s_five));
+	ScheduleEventPtr one = Schedule_Event(3, NULL, delayCheck, NULL, static_cast<void*>(&s_one));
+	ScheduleEventPtr two = Schedule_Event(3, NULL, NULL, NULL, static_cast<void*>(&s_two));
 
-	four = Schedule_Event(4, NULL, NULL, NULL, NULL);
-	CU_ASSERT_EQUAL_FATAL(three->next, four);
-	CU_ASSERT_EQUAL_FATAL(four->next, NULL);
-
-	five = Schedule_Event(4, NULL, NULL, NULL, NULL);
-	CU_ASSERT_EQUAL_FATAL(three->next, four);
-	CU_ASSERT_EQUAL_FATAL(four->next, five);
-	CU_ASSERT_EQUAL_FATAL(five->next, NULL);
-
-	one = Schedule_Event(3, NULL, delayCheck, NULL, NULL);
-	CU_ASSERT_EQUAL_FATAL(one->next, three);
-	CU_ASSERT_EQUAL_FATAL(three->next, four);
-	CU_ASSERT_EQUAL_FATAL(four->next, five);
-	CU_ASSERT_EQUAL_FATAL(five->next, NULL);
-
-	two = Schedule_Event(3, NULL, NULL, NULL, NULL);
-	CU_ASSERT_EQUAL_FATAL(one->next, two);
-	CU_ASSERT_EQUAL_FATAL(two->next, three);
-	CU_ASSERT_EQUAL_FATAL(three->next, four);
-	CU_ASSERT_EQUAL_FATAL(four->next, five);
-	CU_ASSERT_EQUAL_FATAL(five->next, NULL);
-
-	e = Dequeue_Event(1);
-	CU_ASSERT_EQUAL(e, NULL);
+	ScheduleEventPtr e = Dequeue_Event(1);
+	CU_ASSERT_FALSE(e);
 	e = Dequeue_Event(2);
-	CU_ASSERT_EQUAL(e, NULL);
+	CU_ASSERT_FALSE(e);
 	/* one is delayed via check function - so we get the 2nd event at the first dequeue here */
 	e = Dequeue_Event(3);
 	CU_ASSERT_EQUAL_FATAL(e, two);
@@ -145,6 +153,9 @@ int UFO_AddEventsTests (void)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(EventsSuite, testScheduler) == NULL)
+		return CU_get_error();
+
+	if (CU_ADD_TEST(EventsSuite, testSchedulerCheck) == NULL)
 		return CU_get_error();
 
 	return CUE_SUCCESS;

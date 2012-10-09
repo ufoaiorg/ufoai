@@ -29,6 +29,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../server/server.h"
 #include "../shared/parse.h"
 #include "../ports/system.h"
+#include <set>
+#include <vector>
 
 #define	MAXPRINTMSG	4096
 #define MAX_NUM_ARGVS	50
@@ -68,8 +70,6 @@ memPool_t* com_fileSysPool;
 memPool_t* com_genericPool;
 memPool_t* com_networkPool;
 
-static scheduleEvent_t *event_queue = NULL;
-
 #define TIMER_CHECK_INTERVAL 100
 #define TIMER_CHECK_LAG 3
 #define TIMER_LATENESS_HIGH 200
@@ -89,6 +89,16 @@ struct timer {
 	event_func *func;
 	void *data;
 };
+
+class CompareScheduleEvent {
+public:
+	bool operator()(const ScheduleEventPtr& e1, const ScheduleEventPtr& e2) const {
+		return e1->when < e2->when;
+	}
+};
+
+typedef std::multiset<ScheduleEventPtr, CompareScheduleEvent> EventPriorityQueue;
+static EventPriorityQueue eventQueue;
 
 static void Schedule_Timer(cvar_t *freq, event_func *func, event_check_func *check, void *data);
 
@@ -1043,7 +1053,6 @@ vPrintfPtr_t Qcommon_GetPrintFunction (void)
  */
 void Qcommon_Init (int argc, char **argv)
 {
-	event_queue = NULL;
 	logfile_active = NULL;
 	developer = NULL;
 
@@ -1313,50 +1322,39 @@ static void Schedule_Timer (cvar_t *freq, event_func *func, event_check_func *ch
  *  function or func will be called, but never both.
  * @param data Arbitrary data to be passed to the check and event functions.
  */
-scheduleEvent_t *Schedule_Event (int when, event_func *func, event_check_func *check, event_clean_func *clean, void *data)
+ScheduleEventPtr Schedule_Event (int when, event_func *func, event_check_func *check, event_clean_func *clean, void *data)
 {
-	scheduleEvent_t* const event = new scheduleEvent_t();
+	ScheduleEventPtr event = ScheduleEventPtr(new scheduleEvent_t());
 	event->when = when;
 	event->func = func;
 	event->check = check;
 	event->clean = clean;
 	event->data = data;
 
-	scheduleEvent_t** anchor = &event_queue;
-	while (*anchor && (*anchor)->when <= when)
-		anchor = &(*anchor)->next;
-	event->next = *anchor;
-	*anchor     = event;
-
-#ifdef DEBUG
-	for (scheduleEvent_t* i = event_queue; i->next; i = i->next) {
-		if (i->when > i->next->when)
-			abort();
-	}
-#endif
+	eventQueue.insert(event);
 
 	return event;
 }
 
-scheduleEvent_t* Dequeue_Event(int now);
+ScheduleEventPtr Dequeue_Event(int now);
 /**
  * @brief Finds and returns the first event in the event_queue that is due.
  *  If the event has a check function, we check to see if the event can be run now, and skip it if not (even if it is due).
  * @return Returns a pointer to the event, NULL if none found.
  */
-scheduleEvent_t* Dequeue_Event (int now)
+ScheduleEventPtr Dequeue_Event (int now)
 {
-	for (scheduleEvent_t **anchor = &event_queue; *anchor; anchor = &(*anchor)->next) {
-		scheduleEvent_t *const event = *anchor;
+	for (EventPriorityQueue::iterator i = eventQueue.begin(); i != eventQueue.end(); ++i) {
+		ScheduleEventPtr event = *i;
 		if (event->when > now)
 			break;
 
 		if (event->check == NULL || event->check(now, event->data)) {
-			*anchor = event->next;
+			eventQueue.erase(i);
 			return event;
 		}
 	}
-	return NULL;
+	return ScheduleEventPtr();
 }
 
 /**
@@ -1367,31 +1365,23 @@ scheduleEvent_t* Dequeue_Event (int now)
  */
 int CL_FilterEventQueue (event_filter *filter)
 {
-	scheduleEvent_t *event = event_queue;
-	scheduleEvent_t *prev = NULL;
 	int filtered = 0;
 
 	assert(filter);
 
-	while (event) {
-		bool keep = filter(event->when, event->func, event->check, event->data);
-		scheduleEvent_t *freeme = event;
-
+	for (EventPriorityQueue::iterator i = eventQueue.begin(); i != eventQueue.end();) {
+		ScheduleEventPtr event = *i;
+		const bool keep = filter(event->when, event->func, event->check, event->data);
 		if (keep) {
-			prev = event;
-			event = event->next;
+			++i;
 			continue;
 		}
 
-		/* keep == false */
-		if (prev) {
-			event = prev->next = event->next;
-		} else {
-			event = event_queue = event->next;
-		}
-		if (freeme->clean != NULL)
-			freeme->clean(freeme->data);
-		Mem_Free(freeme);
+		if (event->clean != NULL)
+			event->clean(event->data);
+
+		EventPriorityQueue::iterator removeIter = i++;
+		eventQueue.erase(removeIter);
 		filtered++;
 	}
 
@@ -1408,11 +1398,9 @@ int CL_FilterEventQueue (event_filter *filter)
  */
 void Qcommon_Frame (void)
 {
-	int time_to_next;
-
 	try {
 		/* If the next event is due... */
-		AutoPtr<scheduleEvent_t> const event(Dequeue_Event(Sys_Milliseconds()));
+		ScheduleEventPtr event = Dequeue_Event(Sys_Milliseconds());
 		if (event) {
 			/* Dispatch the event */
 			event->func(event->when, event->data);
@@ -1434,8 +1422,9 @@ void Qcommon_Frame (void)
 	/* Now we spend time_to_next milliseconds working on whatever
 	 * IO is ready (but always try at least once, to make sure IO
 	 * doesn't stall) */
+	int time_to_next;
 	do {
-		time_to_next = event_queue ? (event_queue->when - Sys_Milliseconds()) : 1000;
+		time_to_next = !eventQueue.empty() ? (eventQueue.begin()->get()->when - Sys_Milliseconds()) : 1000;
 		if (time_to_next < 0)
 			time_to_next = 0;
 

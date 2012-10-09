@@ -209,7 +209,7 @@ void UI_RegisterAbstractBaseNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "abstractbase";
 	behaviour->isAbstract = true;
-	behaviour->manager = new uiAbstractBaseNode();
+	behaviour->manager = UINodePtr(new uiAbstractBaseNode());
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 
 	/* Identify the base, from a base ID, the node use. */
@@ -220,12 +220,12 @@ void UI_RegisterBaseMapNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "basemap";
 	behaviour->extends = "abstractbase";
-	behaviour->manager = new uiBaseMapNode();
+	behaviour->manager = UINodePtr(new uiBaseMapNode());
 }
 
 void UI_RegisterBaseLayoutNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "baselayout";
 	behaviour->extends = "abstractbase";
-	behaviour->manager = new uiBaseLayoutNode();
+	behaviour->manager = UINodePtr(new uiBaseLayoutNode());
 }

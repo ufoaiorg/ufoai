@@ -650,13 +650,3 @@ void Mem_Shutdown (void)
 	TH_MutexDestroy(z_lock);
 	z_lock = NULL;
 }
-
-void* operator new (std::size_t size) throw (std::bad_alloc)
-{
-	return Mem_PoolAlloc(size, com_genericPool, 0);
-}
-
-void operator delete (void *p) throw ()
-{
-	Mem_Free(p);
-}
