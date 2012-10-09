@@ -356,7 +356,7 @@ void UI_RegisterAbstractNode (uiBehaviour_t *behaviour)
 	UI_RegisterNodeProperty(behaviour, "align", V_INT, uiNode_t, align);
 
 	/*
-	 * Used share an int, only used by 1 behavour
+	 * Used share an int, only used by 1 behaviour
 	 * @todo move it to the right behaviour, delete it
 	 */
 	UI_RegisterNodeProperty(behaviour, "num", V_INT, uiNode_t, num);

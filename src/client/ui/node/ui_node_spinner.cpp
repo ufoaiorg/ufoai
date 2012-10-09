@@ -224,7 +224,7 @@ void UI_RegisterSpinnerNode (uiBehaviour_t *behaviour)
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 
 	/**
-	 * @brief Backround used to display the spinner. It is displayed in the center of the node.
+	 * @brief Background used to display the spinner. It is displayed in the center of the node.
 	 */
 	UI_RegisterExtradataNodeProperty(behaviour, "background", V_UI_SPRITEREF, EXTRADATA_TYPE, background);
 

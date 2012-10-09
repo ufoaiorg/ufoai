@@ -420,7 +420,7 @@ void UI_RegisterOptionTreeNode (uiBehaviour_t *behaviour)
 	behaviour->manager = UINodePtr(new uiOptionTreeNode());
 	behaviour->drawItselfChild = true;
 
-	/* Call it to toggle the node status. */
+	/* Call this to toggle the node status. */
 	UI_RegisterNodeMethod(behaviour, "setselectedvalue", UI_OptionTreeSetSelectedValue);
 	/* Sprite used to display the background */
 	UI_RegisterExtradataNodeProperty(behaviour, "background", V_UI_SPRITEREF, EXTRADATA_TYPE, background);

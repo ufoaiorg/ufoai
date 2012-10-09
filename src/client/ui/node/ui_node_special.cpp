@@ -102,15 +102,13 @@ void uiConFuncNode::onLoaded (uiNode_t *node)
 			Com_Printf("UI_ParseNodeBody: Command name for confunc '%s' already registered\n", UI_GetPath(node));
 		}
 	} else {
-		uiNode_t *dummy;
-
 		/* convert a confunc to an "inherited" confunc if it is possible */
 		if (Cmd_Exists(node->name)) {
 			if (UI_ConFuncIsVirtual(node))
 				return;
 		}
 
-		dummy = UI_AllocNode(node->name, "confunc", false);
+		uiNode_t *dummy = UI_AllocNode(node->name, "confunc", false);
 		Cmd_AddCommand(node->name, UI_ConfuncCommand_f, "Inherited confunc callback");
 		Cmd_AddUserdata(dummy->name, dummy);
 	}

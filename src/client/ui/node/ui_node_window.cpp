@@ -359,9 +359,9 @@ void UI_RegisterWindowNode (uiBehaviour_t *behaviour)
 	/* In windows where notify messages appear (like e.g. the video options window when you have to restart the game until
 	 * the settings take effects) you can define the position of those messages with this option. */
 	UI_RegisterExtradataNodeProperty(behaviour, "noticepos", V_POS, windowExtraData_t, noticePos);
-	/* Create subnode allowing to move the window when we click on the header. Updating this attribute at the runtime will change nothing. */
+	/* Create subnode allowing to move the window when we click on the header. Updating this attribute at runtime will change nothing. */
 	UI_RegisterExtradataNodeProperty(behaviour, "dragbutton", V_BOOL, windowExtraData_t, dragButton);
-	/* Add a button on the top right the window to close it. Updating this attribute at the runtime will change nothing. */
+	/* Add a button on the top right the window to close it. Updating this attribute at runtime will change nothing. */
 	UI_RegisterExtradataNodeProperty(behaviour, "closebutton", V_BOOL, windowExtraData_t, closeButton);
 	/* If true, the user can't select something outside the modal window. He must first close the window. */
 	UI_RegisterExtradataNodeProperty(behaviour, "modal", V_BOOL, windowExtraData_t, modal);

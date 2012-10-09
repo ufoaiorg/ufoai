@@ -119,7 +119,7 @@ uiNode_t* UI_AbstractOptionGetFirstOption (uiNode_t * node)
 }
 
 /**
- * @brief Return size of the cell, which is the size (in virtual "pixel") which represente 1 in the scroll values.
+ * @brief Return size of the cell, which is the size (in virtual "pixel") which represents 1 in the scroll values.
  * Here expect the widget can scroll pixel per pixel.
  * @return Size in pixel.
  */
@@ -129,7 +129,7 @@ int uiAbstractOptionNode::getCellWidth (uiNode_t *node)
 }
 
 /**
- * @brief Return size of the cell, which is the size (in virtual "pixel") which represent 1 in the scroll values.
+ * @brief Return size of the cell, which is the size (in virtual "pixel") which represents 1 in the scroll values.
  * Here we guess the widget can scroll pixel per pixel.
  * @return Size in pixel.
  */
