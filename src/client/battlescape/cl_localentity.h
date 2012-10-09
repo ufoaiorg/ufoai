@@ -95,20 +95,20 @@ typedef struct le_s {
 	 */
 	byte actorMoveLength;
 
-	struct le_s *clientAction;		/**< entity from server that is currently triggered and wait for client action */
+	struct le_s *clientAction;	/**< entity from server that is currently triggered and wait for client action */
 
-	int contents;			/**< content flags for this LE - used for tracing */
+	int contents;				/**< content flags for this LE - used for tracing */
 	vec3_t mins, maxs;
 	vec3_t size;
 
 	char inlineModelName[8];	/**< for bmodels */
-	unsigned int modelnum1;	/**< the number of the body model in the cl.model_draw array */
-	unsigned int modelnum2;	/**< the number of the head model in the cl.model_draw array */
-	unsigned int bodySkin;	/**< the skin number of the body */
-	unsigned int headSkin;	/**< the skin number of the head */
+	unsigned int modelnum1;		/**< the number of the body model in the cl.model_draw array */
+	unsigned int modelnum2;		/**< the number of the head model in the cl.model_draw array */
+	unsigned int bodySkin;		/**< the skin number of the body */
+	unsigned int headSkin;		/**< the skin number of the head */
 	model_t *model1, *model2;	/**< pointers to the cl.model_draw array
-					 * that holds the models for body and head - model1 is body,
-					 * model2 is head */
+								* that holds the models for body and head - model1 is body,
+								* model2 is head */
 
 	/** is called every frame */
 	localEntityThinkFunc_t think;
@@ -118,7 +118,7 @@ typedef struct le_s {
 	/** various think function vars */
 	dvec_t dvtab[MAX_ROUTE];
 	int pathContents[MAX_ROUTE];	/**< content flags of the brushes the actor is walking in */
-	int positionContents;					/**< content flags for the current brush the actor is standing in */
+	int positionContents;			/**< content flags for the current brush the actor is standing in */
 	int pathLength, pathPos;
 	int startTime, endTime;
 	int speed[MAX_ROUTE];			/**< the speed the le is moving with */
@@ -131,14 +131,14 @@ typedef struct le_s {
 	float volume;			/**< loop sound volume - 0.0f-1.0f */
 
 	/** gfx */
-	animState_t as;	/**< holds things like the current active frame and so on */
+	animState_t as;			/**< holds things like the current active frame and so on */
 	const char *particleID;
-	int levelflags;	/**< the levels this local entity should be visible at */
+	int levelflags;			/**< the levels this local entity should be visible at */
 	ptl_t *ptl;				/**< particle pointer to display */
 	const char *ref1, *ref2;
 	const struct le_s *ref3;
 	inventory_t i;
-	int left, right, extension, headgear; /**< item indices that the actor holds in his hands */
+	int left, right, extension, headgear;	/**< item indices that the actor holds in his hands */
 	actorSizeEnum_t fieldSize;				/**< ACTOR_SIZE_* */
 
 	lighting_t lighting;
