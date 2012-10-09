@@ -172,7 +172,7 @@ public:
 		VectorCopy(mini, mins);
 		VectorCopy(maxi, maxs);
 	}
-	inline bool isZero() const {return VectorEmpty(mins) && VectorEmpty(maxs);}
+	inline bool isZero() const {return !mins[0] && !mins[1] && !mins[2] && !maxs[0] && !maxs[1] && !maxs[2];}
 
 	pos3_t mins;
 	pos3_t maxs;
