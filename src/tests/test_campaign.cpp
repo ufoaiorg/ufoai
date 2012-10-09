@@ -531,27 +531,20 @@ static void testUFORecovery (void)
 
 static void testResearch (void)
 {
-	int n;
-	int i;
-	const vec2_t pos = {0, 0};
-	technology_t *laserTech;
-	technology_t *heavyLaserTech;
-	base_t *base;
-	employee_t *employee;
-
 	ResetCampaignData();
 	RS_MarkResearchable(NULL, true);
 
-	laserTech = RS_GetTechByID("rs_laser");
+	technology_t *laserTech = RS_GetTechByID("rs_laser");
 	CU_ASSERT_PTR_NOT_NULL_FATAL(laserTech);
-	heavyLaserTech = RS_GetTechByID("rs_weapon_heavylaser");
+	technology_t *heavyLaserTech = RS_GetTechByID("rs_weapon_heavylaser");
 	CU_ASSERT_PTR_NOT_NULL_FATAL(heavyLaserTech);
 
-	base = CreateBase("unittestbase", pos);
+	const vec2_t pos = {0, 0};
+	base_t *base = CreateBase("unittestbase", pos);
 
 	CU_ASSERT_TRUE(laserTech->statusResearchable);
 
-	employee = E_GetUnassignedEmployee(base, EMPL_SCIENTIST);
+	employee_t *employee = E_GetUnassignedEmployee(base, EMPL_SCIENTIST);
 	CU_ASSERT_PTR_NOT_NULL(employee);
 	RS_AssignScientist(laserTech, base, employee);
 
@@ -559,10 +552,10 @@ static void testResearch (void)
 	CU_ASSERT_EQUAL(laserTech->scientists, 1);
 	CU_ASSERT_EQUAL(laserTech->statusResearch, RS_RUNNING);
 
-	CU_ASSERT_EQUAL(heavyLaserTech->statusResearchable, false);
+	CU_ASSERT_FALSE(heavyLaserTech->statusResearchable);
 
-	n = laserTech->time * 1.25;
-	for (i = 0; i < n; i++) {
+	const int n = laserTech->time * 1.25;
+	for (int i = 0; i < n; i++) {
 		RS_ResearchRun();
 	}
 
@@ -570,7 +563,7 @@ static void testResearch (void)
 	CU_ASSERT_EQUAL(RS_ResearchRun(), 1);
 	CU_ASSERT_EQUAL(laserTech->statusResearch, RS_FINISH);
 
-	CU_ASSERT_EQUAL(heavyLaserTech->statusResearchable, true);
+	CU_ASSERT_TRUE(heavyLaserTech->statusResearchable);
 
 	/* cleanup for the following tests */
 	E_DeleteAllEmployees(NULL);
