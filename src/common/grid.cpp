@@ -923,67 +923,71 @@ void Grid_RecalcRouting (mapTiles_t *mapTiles, routing_t *map, const char *name,
 
 	start = time(NULL);
 
-	/* get inline model, if it is one */
-	if (*name != '*') {
-		Com_Printf("Called Grid_RecalcRouting with no inline model\n");
-		return;
-	}
-	model = CM_InlineModel(mapTiles, name);
-	if (!model) {
-		Com_Printf("Called Grid_RecalcRouting with invalid inline model name '%s'\n", name);
-		return;
-	}
+	if (box.isZero()) {
+		/* get inline model, if it is one */
+		if (*name != '*') {
+			Com_Printf("Called Grid_RecalcRouting with no inline model\n");
+			return;
+		}
+		model = CM_InlineModel(mapTiles, name);
+		if (!model) {
+			Com_Printf("Called Grid_RecalcRouting with invalid inline model name '%s'\n", name);
+			return;
+		}
 
-	Com_DPrintf(DEBUG_PATHING, "Model:%s origin(%f,%f,%f) angles(%f,%f,%f) mins(%f,%f,%f) maxs(%f,%f,%f)\n", name,
-		model->origin[0], model->origin[1], model->origin[2],
-		model->angles[0], model->angles[1], model->angles[2],
-		model->mins[0], model->mins[1], model->mins[2],
-		model->maxs[0], model->maxs[1], model->maxs[2]);
+		Com_DPrintf(DEBUG_PATHING, "Model:%s origin(%f,%f,%f) angles(%f,%f,%f) mins(%f,%f,%f) maxs(%f,%f,%f)\n", name,
+			model->origin[0], model->origin[1], model->origin[2],
+			model->angles[0], model->angles[1], model->angles[2],
+			model->mins[0], model->mins[1], model->mins[2],
+			model->maxs[0], model->maxs[1], model->maxs[2]);
 
-	/* get the target model's dimensions */
-	if (VectorNotEmpty(model->angles)) {
-		vec3_t minVec, maxVec;
-		vec3_t centerVec, halfVec, newCenterVec;
-		vec3_t m[3];
+		/* get the target model's dimensions */
+		if (VectorNotEmpty(model->angles)) {
+			vec3_t minVec, maxVec;
+			vec3_t centerVec, halfVec, newCenterVec;
+			vec3_t m[3];
 
-		/* Find the center of the extents. */
-		VectorCenterFromMinsMaxs(model->mins, model->maxs, centerVec);
+			/* Find the center of the extents. */
+			VectorCenterFromMinsMaxs(model->mins, model->maxs, centerVec);
 
-		/* Find the half height and half width of the extents. */
-		VectorSubtract(model->maxs, centerVec, halfVec);
+			/* Find the half height and half width of the extents. */
+			VectorSubtract(model->maxs, centerVec, halfVec);
 
-		/* Rotate the center about the origin. */
-		VectorCreateRotationMatrix(model->angles, m);
-		VectorRotate(m, centerVec, newCenterVec);
+			/* Rotate the center about the origin. */
+			VectorCreateRotationMatrix(model->angles, m);
+			VectorRotate(m, centerVec, newCenterVec);
 
-		/* Set minVec and maxVec to bound around newCenterVec at halfVec size. */
-		VectorSubtract(newCenterVec, halfVec, minVec);
-		VectorAdd(newCenterVec, halfVec, maxVec);
+			/* Set minVec and maxVec to bound around newCenterVec at halfVec size. */
+			VectorSubtract(newCenterVec, halfVec, minVec);
+			VectorAdd(newCenterVec, halfVec, maxVec);
 
-		/* Now offset by origin then convert to position (Doors do not have 0 origins) */
-		VectorAdd(minVec, model->origin, minVec);
-		VecToPos(minVec, min);
-		VectorAdd(maxVec, model->origin, maxVec);
-		VecToPos(maxVec, max);
-	} else {  /* normal */
-		vec3_t temp;
-		/* Now offset by origin then convert to position (Doors do not have 0 origins) */
-		VectorAdd(model->mins, model->origin, temp);
-		VecToPos(temp, min);
-		VectorAdd(model->maxs, model->origin, temp);
-		VecToPos(temp, max);
-	}
+			/* Now offset by origin then convert to position (Doors do not have 0 origins) */
+			VectorAdd(minVec, model->origin, minVec);
+			VecToPos(minVec, min);
+			VectorAdd(maxVec, model->origin, maxVec);
+			VecToPos(maxVec, max);
+		} else {  /* normal */
+			vec3_t temp;
+			/* Now offset by origin then convert to position (Doors do not have 0 origins) */
+			VectorAdd(model->mins, model->origin, temp);
+			VecToPos(temp, min);
+			VectorAdd(model->maxs, model->origin, temp);
+			VecToPos(temp, max);
+		}
 
-	/* fit min/max into the world size */
-	max[0] = std::min(max[0], (pos_t)(PATHFINDING_WIDTH - 1));
-	max[1] = std::min(max[1], (pos_t)(PATHFINDING_WIDTH - 1));
-	max[2] = std::min(max[2], (pos_t)(PATHFINDING_HEIGHT - 1));
-	for (i = 0; i < 3; i++)
-		min[i] = std::max(min[i], (pos_t)0);
+		/* fit min/max into the world size */
+		max[0] = std::min(max[0], (pos_t)(PATHFINDING_WIDTH - 1));
+		max[1] = std::min(max[1], (pos_t)(PATHFINDING_WIDTH - 1));
+		max[2] = std::min(max[2], (pos_t)(PATHFINDING_HEIGHT - 1));
+		for (i = 0; i < 3; i++)
+			min[i] = std::max(min[i], (pos_t)0);
 
-	/* We now have the dimensions, call the generic rerouting function. */
-	GridBox rerouteBox(min, max);
-	Grid_RecalcBoxRouting(mapTiles, map, rerouteBox, list);
+		/* We now have the dimensions, call the generic rerouting function. */
+		GridBox rerouteBox(min, max);
+		Grid_RecalcBoxRouting(mapTiles, map, rerouteBox, list);
+	} else
+		/* use the passed box */
+		Grid_RecalcBoxRouting(mapTiles, map, box, list);
 
 	end = time(NULL);
 	Com_DPrintf(DEBUG_ROUTING, "Retracing for model %s between (%i, %i, %i) and (%i, %i %i) in %5.1fs\n",
