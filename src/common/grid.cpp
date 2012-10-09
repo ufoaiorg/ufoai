@@ -834,7 +834,7 @@ void Grid_PosToVec (const routing_t *map, const actorSizeEnum_t actorSize, const
  * @param[in] box The box to recalc routing for
  * @param[in] list The local models list (a local model has a name starting with * followed by the model number)
  */
-void Grid_RecalcBoxRouting (mapTiles_t *mapTiles, routing_t *map, const GridBox box, const char **list)
+void Grid_RecalcBoxRouting (mapTiles_t *mapTiles, routing_t *map, const GridBox &box, const char **list)
 {
 	int x, y, z, actorSize, dir;
 
