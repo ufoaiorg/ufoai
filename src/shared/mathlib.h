@@ -50,18 +50,6 @@ extern const vec4_t color_white;
 
 bool Q_IsPowerOfTwo(int i);
 
-class GridBox
-{
-protected:
-
-public:
-	pos3_t mins;
-	pos3_t maxs;
-	inline void setMins(const pos3_t mini) {mins[0] = mini[0]; mins[1] = mini[1]; mins[2] = mini[2];}
-	inline void setMaxs(const pos3_t maxi) {maxs[0] = maxi[0]; maxs[1] = maxi[1]; maxs[2] = maxi[2];}
-	inline void set(const pos3_t mini, const pos3_t maxi) {setMins(mini); setMaxs(maxi);}
-};
-
 /* Used to compare floats when rounding errors could occur  */
 #ifndef EQUAL
 #define EQUAL(a,b) (fabs((a)-(b))<0.0000000001)
@@ -176,6 +164,17 @@ extern const byte dvleft[CORE_DIRECTIONS];
 #define LinearInterpolation(a, b, x, y)   ((y)=(a)[1] + ((((x) - (a)[0]) * ((b)[1] - (a)[1])) / ((b)[0] - (a)[0])))
 #define VectorScale(in,scale,out) ((out)[0] = (in)[0] * (scale),(out)[1] = (in)[1] * (scale),(out)[2] = (in)[2] * (scale))
 #define VectorInterpolation(p1,p2,frac,mid)	((mid)[0]=(p1)[0]+(frac)*((p2)[0]-(p1)[0]),(mid)[1]=(p1)[1]+(frac)*((p2)[1]-(p1)[1]),(mid)[2]=(p1)[2]+(frac)*((p2)[2]-(p1)[2]))
+
+class GridBox {
+public:
+	GridBox(const pos3_t mini, const pos3_t maxi) {
+		VectorCopy(mini, mins);
+		VectorCopy(maxi, maxs);
+	}
+
+	pos3_t mins;
+	pos3_t maxs;
+};
 
 /** @brief  The direction vector tells us where the actor came from (in his previous step).
  * The pathing table holds about a million of these dvecs, so we save quite some memory by squeezing
