@@ -69,8 +69,8 @@ void UI_RegisterTimerNode (uiBehaviour_t *behaviour)
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 
 	/* This property control milliseconds between each calls of <code>onEvent</code>.
-	 * If value is 0 (the default value) nothing is called. We can change the
-	 * value at the runtime.
+	 * If the value is 0 (the default value) nothing is called. We can change the
+	 * value at runtime.
 	 */
 	UI_RegisterExtradataNodeProperty(behaviour, "timeout", V_INT, EXTRADATA_TYPE, timeOut);
 

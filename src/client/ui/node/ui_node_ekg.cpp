@@ -116,7 +116,7 @@ void UI_RegisterEKGNode (uiBehaviour_t* behaviour)
 	behaviour->manager = UINodePtr(new uiEkgNode());
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 
-	/* @todo Need documentation */
+	/* The speed that the wrap texture is scrollend with */
 	UI_RegisterExtradataNodeProperty(behaviour, "scrollspeed", V_FLOAT, ekgExtraData_t, scrollSpeed);
 	/* @todo Need documentation */
 	UI_RegisterExtradataNodeProperty(behaviour, "scale", V_FLOAT, ekgExtraData_t, scaleCvarValue);

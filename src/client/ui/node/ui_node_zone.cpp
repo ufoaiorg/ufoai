@@ -94,8 +94,8 @@ void UI_RegisterZoneNode (uiBehaviour_t *behaviour)
 	behaviour->manager = UINodePtr(new uiZoneNode());
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 
-	/* If true, the <code>onclick</code> call back is called more than one time if the user do not release the button. */
+	/* If true, the <code>onclick</code> call back is called more than one time if the user does not release the button. */
 	UI_RegisterExtradataNodeProperty(behaviour, "repeat", V_BOOL, zoneExtraData_t, repeat);
-	/* Delay it is used between 2 calls of <code>onclick</code>. */
+	/* Delay is used between 2 calls of <code>onclick</code>. */
 	UI_RegisterExtradataNodeProperty(behaviour, "clickdelay", V_INT, zoneExtraData_t, clickDelay);
 }

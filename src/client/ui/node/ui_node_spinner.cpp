@@ -68,11 +68,9 @@ static uiTimer_t *capturedTimer = NULL;
  */
 bool uiSpinnerNode::step (uiNode_t *node, bool down)
 {
-	if (!down) {
+	if (!down)
 		return incValue(node);
-	} else {
-		return decValue(node);
-	}
+	return decValue(node);
 }
 
 void uiSpinnerNode::repeat (uiNode_t *node, uiTimer_t *timer)

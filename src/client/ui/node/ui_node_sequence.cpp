@@ -116,7 +116,7 @@ void UI_RegisterSequenceNode (uiBehaviour_t* behaviour)
 	behaviour->manager = UINodePtr(new uiSequenceNode());
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 
-	/** Source of the video. File name without prefix ./base/videos and without extension */
+	/** sequence script id */
 	propertySource = UI_RegisterExtradataNodeProperty(behaviour, "src", V_CVAR_OR_STRING, EXTRADATA_TYPE, source);
 
 	/** Called when the sequence end */

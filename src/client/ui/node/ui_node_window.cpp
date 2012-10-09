@@ -365,13 +365,13 @@ void UI_RegisterWindowNode (uiBehaviour_t *behaviour)
 	UI_RegisterExtradataNodeProperty(behaviour, "closebutton", V_BOOL, windowExtraData_t, closeButton);
 	/* If true, the user can't select something outside the modal window. He must first close the window. */
 	UI_RegisterExtradataNodeProperty(behaviour, "modal", V_BOOL, windowExtraData_t, modal);
-	/* If true, if the user click outside the window, it will close it. */
+	/* If true, the window will be closed if the user clicks outside of the window. */
 	UI_RegisterExtradataNodeProperty(behaviour, "dropdown", V_BOOL, windowExtraData_t, dropdown);
 	/* If true, the user can't use ''ESC'' key to close the window. */
 	UI_RegisterExtradataNodeProperty(behaviour, "preventtypingescape", V_BOOL, windowExtraData_t, preventTypingEscape);
 	/* If true, the window is filled according to the widescreen. */
 	UI_RegisterExtradataNodeProperty(behaviour, "fill", V_BOOL, windowExtraData_t, fill);
-	/* If true, when the window size change, the window content position is updated according to the "star" layout.
+	/* If true, the window content position is updated according to the "star" layout when the window size change.
 	 * @todo Need more documentation.
 	 */
 	UI_RegisterExtradataNodeProperty(behaviour, "starlayout", V_BOOL, windowExtraData_t, starLayout);
