@@ -106,7 +106,6 @@ static void UI_VScrollbarNodeSet (uiNode_t *node, int value)
 		return;
 
 	/* update status */
-	EXTRADATA(node).lastdiff = pos - EXTRADATA(node).pos;
 	EXTRADATA(node).pos = pos;
 
 	/* fire change event */

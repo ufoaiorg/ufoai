@@ -46,9 +46,4 @@ void UI_RegisterAbstractScrollbarNode (uiBehaviour_t *behaviour)
 
 	/* If true, hide the scroll when the position is 0 and can't change (when <code>viewsize</code> >= <code>fullsize</code>). */
 	UI_RegisterExtradataNodeProperty(behaviour, "hidewhenunused", V_BOOL, EXTRADATA_TYPE, hideWhenUnused);
-
-	/* Callback value set when before calling onChange. It is used to know the change apply by the user
-	 * @Deprecated
-	 */
-	UI_RegisterExtradataNodeProperty(behaviour, "lastdiff", V_INT, EXTRADATA_TYPE, lastdiff);
 }
