@@ -72,6 +72,13 @@ typedef struct gltexunit_s {
 #define texunit_specularmap		texunit_5
 #define texunit_roughnessmap	texunit_2
 
+#define COMPONENTS_VERTEX_ARRAY3D	3
+#define COMPONENTS_VERTEX_ARRAY2D	2
+#define COMPONENTS_COLOR_ARRAY		3
+#define COMPONENTS_INDEX_ARRAY		1
+#define COMPONENTS_NORMAL_ARRAY		3
+#define COMPONENTS_TANGENT_ARRAY	4
+#define COMPONENTS_TEXCOORD_ARRAY	2
 
 #define DOWNSAMPLE_PASSES	5
 #define DOWNSAMPLE_SCALE	2
