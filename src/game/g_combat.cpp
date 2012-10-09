@@ -1291,6 +1291,12 @@ bool G_ClientShoot (const player_t * player, edict_t* ent, const pos3_t at, shoo
 			G_SpawnStunSmokeField(impact, "green_smoke", rounds, damage, fd->splrad);
 		}
 
+		/* check whether this caused a touch event for closed actors */
+		edict_t *closeActor = NULL;
+		while ((closeActor = G_FindRadius(closeActor, impact, fd->splrad))) {
+			G_TouchTriggers(closeActor);
+		}
+
 		/* send TUs if ent still alive */
 		if (ent->inuse && !G_IsDead(ent)) {
 			G_ActorSetTU(ent, ent->TU - time);
