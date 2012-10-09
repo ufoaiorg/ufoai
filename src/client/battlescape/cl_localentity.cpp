@@ -68,7 +68,8 @@ static void CL_GridRecalcRouting (const le_t *le)
 
 	Com_DPrintf(DEBUG_ROUTING, "Rerouting le %i client side\n", le->entnum);
 
-	Grid_RecalcRouting(cl.mapTiles, cl.mapData->map, le->inlineModelName, cl.leInlineModelList);
+	GridBox box(pos3_origin, pos3_origin);	/* empty box to please the interface */
+	Grid_RecalcRouting(cl.mapTiles, cl.mapData->map, le->inlineModelName, box, cl.leInlineModelList);
 }
 
 /**

@@ -47,6 +47,7 @@ extern const vec2_t vec2_origin;
 extern const vec3_t vec3_origin;
 extern const vec4_t vec4_origin;
 extern const vec4_t color_white;
+extern const pos3_t pos3_origin;
 
 bool Q_IsPowerOfTwo(int i);
 

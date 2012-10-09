@@ -494,7 +494,8 @@ static bool SV_TestLineWithEnt (const vec3_t start, const vec3_t stop, const int
 
 static void SV_RecalcRouting (routing_t *map, const char *name, const char **list)
 {
-	Grid_RecalcRouting(&sv->mapTiles, map, name, list);
+	GridBox box(pos3_origin, pos3_origin);	/* empty box to please the interface */
+	Grid_RecalcRouting(&sv->mapTiles, map, name, box, list);
 }
 
 static void SV_SetInlineModelOrientation (const char *name, const vec3_t origin, const vec3_t angles)

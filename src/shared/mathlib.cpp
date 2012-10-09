@@ -33,6 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 const vec2_t vec2_origin = { 0, 0 };
 const vec3_t vec3_origin = { 0, 0, 0 };
 const vec4_t vec4_origin = { 0, 0, 0, 0 };
+const pos3_t pos3_origin = { 0, 0, 0 };
 
 /** @brief cos 45 degree */
 #define RT2 0.70710678118654752440084436210485
