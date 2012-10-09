@@ -1044,7 +1044,7 @@ static void SP_misc_smoke (edict_t *ent)
 
 static void SP_misc_fire (edict_t *ent)
 {
-	G_SpawnField(ent, "fire", ET_FIRE, SOLID_BBOX);
+	G_SpawnField(ent, "fire", ET_FIRE, SOLID_TRIGGER);
 	ent->dmgtype = gi.csi->damIncendiary;
 	ent->touch = Touch_HurtTrigger;
 }
