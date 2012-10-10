@@ -1130,8 +1130,14 @@ bool G_ClientShoot (const player_t * player, edict_t* ent, const pos3_t at, shoo
 	if (!fd->irgoggles && G_EdictPosIsSameAs(ent, at))
 		return false;
 
+	if (FIRESH_IsMedikit(fd)) {
+		const edict_t *target = G_GetLivingActorFromPos(at);
+		if (!target)
+			return false;
+	}
+
 	/* check that we're not firing a twohanded weapon with one hand! */
-	if (weapon->item->fireTwoHanded &&	LEFT(ent)) {
+	if (weapon->item->fireTwoHanded && LEFT(ent)) {
 		if (!quiet)
 			G_ClientPrintf(player, PRINT_HUD, _("Can't perform action - weapon cannot be fired one handed!"));
 		return false;
