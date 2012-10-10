@@ -1422,11 +1422,11 @@ enum {
 
 static const value_t od_vals[] = {
 	{"name", V_TRANSLATION_STRING, offsetof(objDef_t, name), 0},
-	{"armourpath", V_STRING, offsetof(objDef_t, armourPath), 0},
-	{"model", V_STRING, offsetof(objDef_t, model), 0},
-	{"image", V_STRING, offsetof(objDef_t, image), 0},
-	{"type", V_STRING, offsetof(objDef_t, type), 0},
-	{"reloadsound", V_STRING, offsetof(objDef_t, reloadSound), 0},
+	{"armourpath", V_HUNK_STRING, offsetof(objDef_t, armourPath), 0},
+	{"model", V_HUNK_STRING, offsetof(objDef_t, model), 0},
+	{"image", V_HUNK_STRING, offsetof(objDef_t, image), 0},
+	{"type", V_HUNK_STRING, offsetof(objDef_t, type), 0},
+	{"reloadsound", V_HUNK_STRING, offsetof(objDef_t, reloadSound), 0},
 	{"animationindex", V_CHAR, offsetof(objDef_t, animationIndex), MEMBER_SIZEOF(objDef_t, animationIndex)},
 	{"shape", V_SHAPE_SMALL, offsetof(objDef_t, shape), MEMBER_SIZEOF(objDef_t, shape)},
 	{"scale", V_FLOAT, offsetof(objDef_t, scale), MEMBER_SIZEOF(objDef_t, scale)},
@@ -1754,10 +1754,11 @@ static void Com_ParseItem (const char *name, const char **text)
 	/* default is no craftitem */
 	od->craftitem.type = MAX_ACITEMS;
 	od->reloadAttenuation = SOUND_ATTN_IDLE;
-	Q_strncpyz(od->reloadSound, "weapons/reload-pistol", sizeof(od->reloadSound));
+	od->reloadSound = "weapons/reload-pistol";
+	od->armourPath = od->image = od->type = od->model = od->name = "";
 
-	Q_strncpyz(od->id, name, sizeof(od->id));
-	if (od->id[0] == '\0')
+	od->id = Mem_StrDup(name);
+	if (Q_strnull(od->id))
 		Sys_Error("Com_ParseItem: no id given\n");
 
 	od->idx = csi.numODs - 1;
@@ -1778,7 +1779,7 @@ static void Com_ParseItem (const char *name, const char **text)
 		if (*token == '}')
 			break;
 
-		if (!Com_ParseBlockToken(name, text, od, od_vals, NULL, token)) {
+		if (!Com_ParseBlockToken(name, text, od, od_vals, com_genericPool, token)) {
 			if (Q_streq(token, "craftweapon")) {
 				/* parse a value */
 				token = Com_EParse(text, errhead, name);

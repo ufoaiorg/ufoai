@@ -100,8 +100,9 @@ typedef struct fireDef_s {
 	bool launched;		/**< used for calculating parabolas in Com_GrenadeTarget() */
 	bool rolled;		/**< Can it be rolled - e.g. grenades - used in "Roll" firemodes, see Com_GrenadeTarget() */
 	bool reaction;		/**< This firemode can be used/selected for reaction fire.*/
-	int throughWall;	/**< allow the shooting through a wall */
+	bool irgoggles;		/**< Is this an irgoggle? */
 	byte dmgweight;		/**< used in G_Damage() to apply damagetype effects - redundant with obj->dmgtype */
+	int throughWall;	/**< allow the shooting through a wall */
 	float speed;		/**< projectile-related; zero value means unlimited speed (most of the cases).
 							 for that unlimited speed we use special particle (which cannot work with speed non-zero valued. */
 	vec2_t shotOrg;		/**< This can shift a muzzle vertically (first value) and horizontally (second value) for the trace that is done on the server side. */
@@ -122,7 +123,6 @@ typedef struct fireDef_s {
 	vec2_t spldmg;		/**< G_SplashDamage(), currently we use only first value (spldmg[0]) for apply splashdamage effect */
 	float splrad;		/**< splash damage radius */
 	int weaponSkill;	/**< What weapon skill is needed to fire this weapon. */
-	bool irgoggles;		/**< Is this an irgoggle? */
 	int rounds;			/**< e.g. for incendiary grenades */
 } fireDef_t;
 
@@ -225,12 +225,12 @@ typedef struct craftitem_s {
 typedef struct objDef_s {
 	/* Common */
 	int idx;	/**< Index of the objDef in the global item list (ods). */
-	char name[MAX_VAR];		/**< Item name taken from scriptfile. */
-	char id[MAX_VAR];		/**< Identifier of the item being item definition in scriptfile. */
-	char model[MAX_VAR];		/**< Model name - relative to game dir. */
-	char image[MAX_VAR];		/**< Object image file - relative to game dir. */
-	char type[MAX_VAR];		/**< melee, rifle, ammo, armour. e.g. used in the ufopedia */
-	char armourPath[MAX_VAR];
+	const char *name;		/**< Item name taken from scriptfile. */
+	const char *id;		/**< Identifier of the item being item definition in scriptfile. */
+	const char *model;		/**< Model name - relative to game dir. */
+	const char *image;		/**< Object image file - relative to game dir. */
+	const char *type;		/**< melee, rifle, ammo, armour. e.g. used in the ufopedia */
+	const char *armourPath;
 	uint32_t shape;			/**< The shape in inventory. */
 
 	float scale;			/**< scale value for images? and models */
@@ -254,7 +254,7 @@ typedef struct objDef_s {
 					     have, if that clip would be full. In other words, max bullets for this type of
 					     weapon with currently loaded type of ammo. */
 	int reload;			/**< Time units (TUs) for reloading the weapon. */
-	char reloadSound[MAX_VAR];	/**< Sound played when weapon is reloaded */
+	const char *reloadSound;	/**< Sound played when weapon is reloaded */
 	float reloadAttenuation;		/**< Attenuation of reload sound - less louder over distance - */
 	bool oneshot;	/**< This weapon contains its own ammo (it is loaded in the base).
 						 * "int ammo" of objDef_s defines the amount of ammo used in oneshoot weapons. */
@@ -320,11 +320,10 @@ typedef struct invDef_s {
 	bool headgear;	/**< Only headgear items can be stored in this container. */
 	bool all;		/**< Every item type can be stored in this container. */
 	bool temp;		/**< This is only a pointer to another inventory definitions. */
-	uint32_t shape[SHAPE_BIG_MAX_HEIGHT];	/**< The inventory form/shape. */
-	int in, out;	/**< parsed: TU costs for moving items in and out. */
-
 	/** Scroll information. @sa inventory_t */
 	bool scroll;	/**< Set if the container is scrollable */
+	uint32_t shape[SHAPE_BIG_MAX_HEIGHT];	/**< The inventory form/shape. */
+	int in, out;	/**< parsed: TU costs for moving items in and out. */
 } invDef_t;
 
 #define MAX_CONTAINERS	MAX_INVDEFS
