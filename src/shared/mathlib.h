@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define __MATHLIB__
 
 #include "ufotypes.h"
+#include "defines.h"
 
 #ifndef M_PI
 #define M_PI 3.14159265358979323846  /* matches value in gcc v2 math.h */
@@ -174,6 +175,11 @@ public:
 	GridBox(const pos3_t mini, const pos3_t maxi) {
 		VectorCopy(mini, mins);
 		VectorCopy(maxi, maxs);
+	}
+
+	GridBox(const vec3_t mini, const vec3_t maxi) {
+		VecToPos(mini, mins);
+		VecToPos(maxi, maxs);
 	}
 
 	inline bool isZero() const {

@@ -59,7 +59,6 @@ static void CL_GridRecalcRouting (const le_t *le)
 {
 	const cBspModel_t *model;
 	vec3_t minVec, maxVec;
-	pos3_t posMin, posMax;
 
 	/* We ALWAYS check against a model, even if it isn't in use.
 	 * An unused model is NOT included in the inline list, so it doesn't get
@@ -75,10 +74,8 @@ static void CL_GridRecalcRouting (const le_t *le)
 		return;
 	}
 	VectorAdd(model->mins, model->origin, minVec);
-	VecToPos(minVec, posMin);
 	VectorAdd(model->maxs, model->origin, maxVec);
-	VecToPos(maxVec, posMax);
-	GridBox reroute(posMin, posMax);
+	GridBox reroute(minVec, maxVec);
 
 	Com_DPrintf(DEBUG_ROUTING, "Rerouting le %i client side\n", le->entnum);
 
