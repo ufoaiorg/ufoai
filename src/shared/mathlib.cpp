@@ -38,6 +38,8 @@ const pos3_t pos3_origin = { 0, 0, 0 };
 /** @brief cos 45 degree */
 #define RT2 0.70710678118654752440084436210485
 
+const GridBox GridBox::EMPTY(pos3_origin, pos3_origin);
+
 /**
  * @note DIRECTIONS
  *  straight
@@ -155,7 +157,6 @@ vec_t Q_rint (const vec_t in)
 	/* round x down to the nearest integer */
 	return floor(in + 0.5);
 }
-
 
 /**
  * @brief Calculate distance on the geoscape.

@@ -169,6 +169,8 @@ extern const byte dvleft[CORE_DIRECTIONS];
 
 class GridBox {
 public:
+	static const GridBox EMPTY;
+
 	GridBox(const pos3_t mini, const pos3_t maxi) {
 		VectorCopy(mini, mins);
 		VectorCopy(maxi, maxs);
