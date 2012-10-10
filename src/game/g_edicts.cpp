@@ -257,7 +257,7 @@ void G_EdictSetOrigin (edict_t* ent, const pos3_t newPos)
 }
 
 /**
- * @brief Set the edict's pos and origin vector to the given grid position
+ * @brief Check whether the edict is on the given position
  * @param ent The entity
  * @param cmpPos The grid position to compare to
  * @return true if positions are equal
