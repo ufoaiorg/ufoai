@@ -42,8 +42,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 static cvar_t *cl_hud_message_timeout;
 static cvar_t *cl_show_cursor_tooltips;
+static cvar_t *cl_hud;
 cvar_t *cl_worldlevel;
-cvar_t *cl_hud;
 
 enum {
 	REMAINING_TU_RELOAD_RIGHT,
