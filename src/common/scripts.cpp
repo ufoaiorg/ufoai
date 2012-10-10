@@ -1899,40 +1899,30 @@ static void Com_ParseInventory (const char *name, const char **text)
 	if (!Com_ParseBlock(name, text, id, idps, NULL))
 		return;
 
-	csi.numIDs++;
 	Q_strncpyz(id->name, name, sizeof(id->name));
+	id->id = csi.numIDs;
 
 	/* Special IDs for container. These are also used elsewhere, so be careful. */
 	if (Q_streq(name, "right")) {
-		csi.idRight = id - csi.ids;
-		id->id = csi.idRight;
+		csi.idRight = csi.numIDs;
 	} else if (Q_streq(name, "left")) {
-		csi.idLeft = id - csi.ids;
-		id->id = csi.idLeft;
+		csi.idLeft = csi.numIDs;
 	} else if (Q_streq(name, "extension")) {
-		csi.idExtension = id - csi.ids;
-		id->id = csi.idExtension;
+		csi.idExtension = csi.numIDs;
 	} else if (Q_streq(name, "belt")) {
-		csi.idBelt = id - csi.ids;
-		id->id = csi.idBelt;
+		csi.idBelt = csi.numIDs;
 	} else if (Q_streq(name, "holster")) {
-		csi.idHolster = id - csi.ids;
-		id->id = csi.idHolster;
+		csi.idHolster = csi.numIDs;
 	} else if (Q_streq(name, "backpack")) {
-		csi.idBackpack = id - csi.ids;
-		id->id = csi.idBackpack;
+		csi.idBackpack = csi.numIDs;
 	} else if (Q_streq(name, "armour")) {
-		csi.idArmour = id - csi.ids;
-		id->id = csi.idArmour;
+		csi.idArmour = csi.numIDs;
 	} else if (Q_streq(name, "floor")) {
-		csi.idFloor = id - csi.ids;
-		id->id = csi.idFloor;
+		csi.idFloor = csi.numIDs;
 	} else if (Q_streq(name, "equip")) {
-		csi.idEquip = id - csi.ids;
-		id->id = csi.idEquip;
+		csi.idEquip = csi.numIDs;;
 	} else if (Q_streq(name, "headgear")) {
-		csi.idHeadgear = id - csi.ids;
-		id->id = csi.idHeadgear;
+		csi.idHeadgear = csi.numIDs;;
 	} else {
 		id->id = -1;
 	}
@@ -1940,6 +1930,8 @@ static void Com_ParseInventory (const char *name, const char **text)
 	if (id->id != -1) {
 		Com_Printf("...%3i: %s\n", id->id, name);
 	}
+
+	csi.numIDs++;
 }
 
 
