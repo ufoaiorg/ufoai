@@ -29,10 +29,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 void G_CheckForceEndRound (void)
 {
-	player_t *p;
-	int diff;
-	int activeTeam;
-
 	/* check for roundlimits in multiplayer only */
 	if (!sv_roundtimelimit->integer || sv_maxclients->integer == 1)
 		return;
@@ -43,7 +39,7 @@ void G_CheckForceEndRound (void)
 	if (level.time != ceil(level.time))
 		return;
 
-	diff = level.roundstartTime + sv_roundtimelimit->integer - level.time;
+	const int diff = level.roundstartTime + sv_roundtimelimit->integer - level.time;
 	switch (diff) {
 	case 240:
 		gi.BroadcastPrintf(PRINT_HUD, _("4 minutes left until forced turn end."));
@@ -72,9 +68,9 @@ void G_CheckForceEndRound (void)
 	gi.BroadcastPrintf(PRINT_HUD, _("Current active team hit the max round time."));
 
 	/* store this in a local variable, as the global variable is changed in G_ClientEndRound */
-	activeTeam = level.activeTeam;
+	const int activeTeam = level.activeTeam;
 	/* set all team members to ready (only human players) */
-	p = NULL;
+	player_t *p = NULL;
 	while ((p = G_PlayerGetNextActiveHuman(p))) {
 		if (p->pers.team == activeTeam) {
 			G_ClientEndRound(p);

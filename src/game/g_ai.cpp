@@ -132,7 +132,6 @@ bool AI_CheckUsingDoor (const edict_t *ent, const edict_t *door)
 
 		/* see if there are enemies */
 		while ((check = G_EdictsGetNextLivingActor(check))) {
-			float actorVis;
 			/* don't check for aliens */
 			if (check->team == ent->team)
 				continue;
@@ -143,7 +142,7 @@ bool AI_CheckUsingDoor (const edict_t *ent, const edict_t *door)
 			/* check whether the enemy is close enough to change the state */
 			if (VectorDist(check->origin, ent->origin) > G_VisCheckDist(ent))
 				continue;
-			actorVis = G_ActorVis(check->origin, check, ent, true);
+			const float actorVis = G_ActorVis(check->origin, check, ent, true);
 			/* there is a visible enemy, don't use that door */
 			if (actorVis > ACTOR_VIS_0)
 				return false;
@@ -173,7 +172,6 @@ static bool AI_CheckCrouch (const edict_t *ent)
 
 	/* see if we are very well visible by an enemy */
 	while ((check = G_EdictsGetNextLivingActor(check))) {
-		float actorVis;
 		/* don't check for civilians or aliens */
 		if (check->team == ent->team || G_IsCivilian(check))
 			continue;
@@ -184,7 +182,7 @@ static bool AI_CheckCrouch (const edict_t *ent)
 		/* check whether the enemy is close enough to change the state */
 		if (VectorDist(check->origin, ent->origin) > G_VisCheckDist(ent))
 			continue;
-		actorVis = G_ActorVis(check->origin, check, ent, true);
+		const float actorVis = G_ActorVis(check->origin, check, ent, true);
 		if (actorVis >= ACTOR_VIS_50)
 			return true;
 	}
@@ -301,7 +299,7 @@ int AI_GetHidingTeam (const edict_t *ent)
  * @brief Checks if the  actor's position is safe to stand on.
  * @return @c true if the actor's position is deemed safe.
  */
-static bool AI_CheckPosition(const edict_t *const ent)
+static bool AI_CheckPosition (const edict_t *const ent)
 {
 	if (G_IsInsane(ent))
 		return true;
@@ -332,7 +330,6 @@ static bool AI_CheckPosition(const edict_t *const ent)
  */
 bool AI_FindHidingLocation (int team, edict_t *ent, const pos3_t from, int *tuLeft)
 {
-	byte minX, maxX, minY, maxY;
 	const byte crouchingState = G_IsCrouched(ent) ? 1 : 0;
 	const int distance = std::min(*tuLeft, HIDE_DIST * 2);
 
@@ -342,10 +339,10 @@ bool AI_FindHidingLocation (int team, edict_t *ent, const pos3_t from, int *tuLe
 	/* search hiding spot */
 	G_MoveCalcLocal(hidePathingTable, 0, ent, from, crouchingState, distance);
 	ent->pos[2] = from[2];
-	minX = std::max(from[0] - HIDE_DIST, 0);
-	minY = std::max(from[1] - HIDE_DIST, 0);
-	maxX = std::min(from[0] + HIDE_DIST, PATHFINDING_WIDTH - 1);
-	maxY = std::min(from[1] + HIDE_DIST, PATHFINDING_WIDTH - 1);
+	const byte minX = std::max(from[0] - HIDE_DIST, 0);
+	const byte minY = std::max(from[1] - HIDE_DIST, 0);
+	const byte maxX = std::min(from[0] + HIDE_DIST, PATHFINDING_WIDTH - 1);
+	const byte maxY = std::min(from[1] + HIDE_DIST, PATHFINDING_WIDTH - 1);
 
 	for (ent->pos[1] = minY; ent->pos[1] <= maxY; ent->pos[1]++) {
 		for (ent->pos[0] = minX; ent->pos[0] <= maxX; ent->pos[0]++) {
@@ -382,21 +379,18 @@ bool AI_FindHidingLocation (int team, edict_t *ent, const pos3_t from, int *tuLe
  */
 bool AI_FindHerdLocation (edict_t *ent, const pos3_t from, const vec3_t target, int tu)
 {
-	byte minX, maxX, minY, maxY;
 	const byte crouchingState = G_IsCrouched(ent) ? 1 : 0;
 	const int distance = std::min(tu, HERD_DIST * 2);
-	vec_t length;
 	vec_t bestlength = 0.0f;
 	pos3_t bestpos;
 	edict_t* next = NULL;
 	edict_t* enemy = NULL;
-	vec3_t vfriend, venemy;
 
 	if (!herdPathingTable)
 		herdPathingTable = (pathing_t *) G_TagMalloc(sizeof(*herdPathingTable), TAG_LEVEL);
 	/* find the nearest enemy actor to the target*/
 	while ((next = G_EdictsGetNextLivingActorOfTeam(next, AI_GetHidingTeam(ent)))) {
-		length = VectorDistSqr(target, next->origin);
+		const vec_t length = VectorDistSqr(target, next->origin);
 		if (!bestlength || length < bestlength) {
 			enemy = next;
 			bestlength = length;
@@ -407,10 +401,10 @@ bool AI_FindHerdLocation (edict_t *ent, const pos3_t from, const vec3_t target, 
 	/* calculate move table */
 	G_MoveCalcLocal(herdPathingTable, 0, ent, from, crouchingState, distance);
 	ent->pos[2] = from[2];
-	minX = std::max(from[0] - HERD_DIST, 0);
-	minY = std::max(from[1] - HERD_DIST, 0);
-	maxX = std::min(from[0] + HERD_DIST, PATHFINDING_WIDTH - 1);
-	maxY = std::min(from[1] + HERD_DIST, PATHFINDING_WIDTH - 1);
+	const byte minX = std::max(from[0] - HERD_DIST, 0);
+	const byte minY = std::max(from[1] - HERD_DIST, 0);
+	const byte maxX = std::min(from[0] + HERD_DIST, PATHFINDING_WIDTH - 1);
+	const byte maxY = std::min(from[1] + HERD_DIST, PATHFINDING_WIDTH - 1);
 
 	/* search the location */
 	VectorCopy(from, bestpos);
@@ -427,8 +421,9 @@ bool AI_FindHerdLocation (edict_t *ent, const pos3_t from, const vec3_t target, 
 				continue;
 
 			G_EdictCalcOrigin(ent);
-			length = VectorDistSqr(ent->origin, target);
+			const vec_t length = VectorDistSqr(ent->origin, target);
 			if (length < bestlength) {
+				vec3_t vfriend, venemy;
 				/* check this position to locate behind target from enemy */
 				VectorSubtract(target, ent->origin, vfriend);
 				VectorNormalizeFast(vfriend);
@@ -465,13 +460,11 @@ static edict_t *AI_SearchDestroyableObject (const edict_t *ent, const fireDef_t 
 
 	while ((check = G_EdictsGetNextInUse(check))) {
 		if (G_IsBreakable(check)) {
-			float vis;
-
 			if (!AI_FighterCheckShoot(ent, check, fd, &dist))
 				continue;
 
 			/* check whether target is visible enough */
-			vis = G_ActorVis(ent->origin, check, true);
+			const float vis = G_ActorVis(ent->origin, check, true);
 			if (vis < ACTOR_VIS_0)
 				continue;
 
@@ -651,14 +644,11 @@ static float AI_FighterCalcActionScore (edict_t * ent, pos3_t to, aiAction_t * a
 		/* shooting */
 		maxDmg = 0.0;
 		for (shootType = ST_RIGHT; shootType < ST_NUM_SHOOT_TYPES; shootType++) {
-			const item_t *item;
-			const fireDef_t *fdArray;
-
-			item = AI_GetItemForShootType(shootType, ent);
+			const item_t *item = AI_GetItemForShootType(shootType, ent);
 			if (!item)
 				continue;
 
-			fdArray = FIRESH_FiredefForWeapon(item);
+			const fireDef_t *fdArray = FIRESH_FiredefForWeapon(item);
 			if (fdArray == NULL)
 				continue;
 
@@ -739,12 +729,11 @@ static float AI_FighterCalcActionScore (edict_t * ent, pos3_t to, aiAction_t * a
 static float AI_CivilianCalcActionScore (edict_t * ent, pos3_t to, aiAction_t * aia)
 {
 	edict_t *check = NULL;
-	int tu;
 	pos_t move;
 	float minDist, minDistCivilian, minDistFighter;
 	float bestActionScore;
 	float reactionTrap = 0.0;
-	float delta = 0.0;
+	float delta;
 
 	/* set basic parameters */
 	bestActionScore = 0.0;
@@ -754,7 +743,7 @@ static float AI_CivilianCalcActionScore (edict_t * ent, pos3_t to, aiAction_t * 
 	G_EdictSetOrigin(ent, to);
 
 	move = G_ActorMoveLength(ent, level.pathingMap, to, true);
-	tu = G_ActorUsableTUs(ent) - move;
+	const int tu = G_ActorUsableTUs(ent) - move;
 
 	/* test for time */
 	if (tu < 0 || move == ROUTING_NOT_REACHABLE)
@@ -862,8 +851,6 @@ static float AI_CivilianCalcActionScore (edict_t * ent, pos3_t to, aiAction_t * 
 static float AI_PanicCalcActionScore (edict_t * ent, pos3_t to, aiAction_t * aia)
 {
 	edict_t *check = NULL;
-	int tu;
-	pos_t move;
 	float minDistFriendly, minDistOthers;
 	float bestActionScore = 0.0;
 
@@ -873,8 +860,8 @@ static float AI_PanicCalcActionScore (edict_t * ent, pos3_t to, aiAction_t * aia
 	VectorCopy(to, aia->stop);
 	G_EdictSetOrigin(ent, to);
 
-	move = G_ActorMoveLength(ent, level.pathingMap, to, true);
-	tu = G_ActorUsableTUs(ent) - move;
+	const pos_t move = G_ActorMoveLength(ent, level.pathingMap, to, true);
+	const int tu = G_ActorUsableTUs(ent) - move;
 
 	/* test for time */
 	if (tu < 0 || move == ROUTING_NOT_REACHABLE)
@@ -1007,8 +994,6 @@ static aiAction_t AI_PrepBestAction (const player_t *player, edict_t * ent)
 	aiAction_t aia, bestAia;
 	pos3_t oldPos, to;
 	vec3_t oldOrigin;
-	int xl, yl, xh, yh;
-	int dist;
 	float bestActionScore, best;
 	/* The actor will be forced to stand before doing the move, so calculations here might be a little off */
 	const byte crouchingState = G_IsCrouched(ent) ? 1 : 0;
@@ -1019,11 +1004,11 @@ static aiAction_t AI_PrepBestAction (const player_t *player, edict_t * ent)
 	gi.MoveStore(level.pathingMap);
 
 	/* set borders */
-	dist = (G_ActorUsableTUs(ent) + 1) / 2;
-	xl = std::max((int) ent->pos[0] - dist, 0);
-	yl = std::max((int) ent->pos[1] - dist, 0);
-	xh = std::min((int) ent->pos[0] + dist, PATHFINDING_WIDTH);
-	yh = std::min((int) ent->pos[1] + dist, PATHFINDING_WIDTH);
+	const int dist = (G_ActorUsableTUs(ent) + 1) / 2;
+	const int xl = std::max((int) ent->pos[0] - dist, 0);
+	const int yl = std::max((int) ent->pos[1] - dist, 0);
+	const int xh = std::min((int) ent->pos[0] + dist, PATHFINDING_WIDTH);
+	const int yh = std::min((int) ent->pos[1] + dist, PATHFINDING_WIDTH);
 
 	/* search best action */
 	best = AI_ACTION_NOTHING_FOUND;
@@ -1107,12 +1092,10 @@ void G_AddToWayPointList (edict_t *ent)
  */
 void AI_TurnIntoDirection (edict_t *ent, const pos3_t pos)
 {
-	int dvec;
 	const byte crouchingState = G_IsCrouched(ent) ? 1 : 0;
-
 	G_MoveCalc(ent->team, ent, pos, crouchingState, G_ActorUsableTUs(ent));
 
-	dvec = gi.MoveNext(level.pathingMap, pos, crouchingState);
+	const int dvec = gi.MoveNext(level.pathingMap, pos, crouchingState);
 	if (dvec != ROUTING_UNREACHABLE) {
 		const byte dir = getDVdir(dvec);
 		/* Only attempt to turn if the direction is not a vertical only action */
@@ -1382,17 +1365,15 @@ static void AI_InitPlayer (const player_t * player, edict_t * ent, const equipDe
 
 static const equipDef_t* G_GetEquipmentForAISpawn (int team)
 {
-	const equipDef_t *ed;
 	/* prepare equipment */
 	if (team != TEAM_CIVILIAN) {
 		const char *equipID = gi.Cvar_String("ai_equipment");
-		ed = G_GetEquipDefByID(equipID);
+		const equipDef_t *ed = G_GetEquipDefByID(equipID);
 		if (ed == NULL)
 			ed = &gi.csi->eds[0];
-	} else {
-		ed = NULL;
+		return ed;
 	}
-	return ed;
+	return NULL;
 }
 
 static edict_t* G_SpawnAIPlayer (const player_t * player, const equipDef_t *ed)

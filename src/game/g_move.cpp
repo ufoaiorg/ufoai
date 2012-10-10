@@ -272,7 +272,6 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos
 {
 	int status, initTU;
 	dvec_t dvtab[MAX_ROUTE];
-	int dir;
 	byte numdv, length;
 	pos3_t pos;
 	float div;
@@ -343,13 +342,12 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos
 			/* A flag to see if we needed to change crouch state */
 			int crouchFlag;
 			const byte oldDir = ent->dir;
-			int dvec;
 
 			/* get next dvec */
 			numdv--;
-			dvec = dvtab[numdv];
+			const int dvec = dvtab[numdv];
 			/* This is the direction to make the step into */
-			dir = getDVdir(dvec);
+			const int dir = getDVdir(dvec);
 
 			/* turn around first */
 			status = G_ActorDoTurn(ent, dir);

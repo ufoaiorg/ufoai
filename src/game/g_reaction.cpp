@@ -292,17 +292,14 @@ static bool G_ActorHasReactionFireEnabledWeapon (const edict_t *ent)
  */
 static bool G_ActorHasWorkingFireModeSet (const edict_t *actor)
 {
-	const fireDef_t *fd;
 	const chrFiremodeSettings_t *fmSettings = &actor->chr.RFmode;
-	const invList_t* invList;
-
 	if (!SANE_FIREMODE(fmSettings))
 		return false;
 
-	invList = ACTOR_GET_INV(actor, fmSettings->hand);
+	const invList_t* invList = ACTOR_GET_INV(actor, fmSettings->hand);
 	if (!invList)
 		return false;
-	fd = FIRESH_FiredefForWeapon(&invList->item);
+	const fireDef_t *fd = FIRESH_FiredefForWeapon(&invList->item);
 	if (fd == NULL)
 		return false;
 
@@ -362,20 +359,17 @@ static bool G_ActorHasEnoughTUsReactionFire (const edict_t *ent)
  */
 static bool G_ReactionFireSetDefault (edict_t *ent)
 {
-	const objDef_t *weapon;
-	const invList_t *invList;
-	actorHands_t hand = ACTOR_HAND_RIGHT;
-
 	if (G_ActorHasWorkingFireModeSet(ent))
 		return true;
 
-	invList = ACTOR_GET_INV(ent, hand);
+	actorHands_t hand = ACTOR_HAND_RIGHT;
+	const invList_t *invList = ACTOR_GET_INV(ent, hand);
 	if (!invList) {
 		hand = ACTOR_HAND_LEFT;
 		invList = ACTOR_GET_INV(ent, hand);
 	}
 
-	weapon = INVSH_HasReactionFireEnabledWeapon(invList);
+	const objDef_t *weapon = INVSH_HasReactionFireEnabledWeapon(invList);
 	if (!weapon)
 		return false;
 
@@ -456,10 +450,6 @@ bool G_ReactionFireSettingsReserveTUs (edict_t *ent)
  */
 static bool G_ReactionFireIsPossible (edict_t *ent, const edict_t *target)
 {
-	float actorVis;
-	bool frustum;
-	const int spotDist = G_VisCheckDist(ent);
-
 	/* an entity can't reaction fire at itself */
 	if (ent == target)
 		return false;
@@ -499,14 +489,15 @@ static bool G_ReactionFireIsPossible (edict_t *ent, const edict_t *target)
 			return false;
 
 	/* check in range and visible */
+	const int spotDist = G_VisCheckDist(ent);
 	if (VectorDistSqr(ent->origin, target->origin) > spotDist * spotDist)
 		return false;
 
-	frustum = G_FrustumVis(ent, target->origin);
+	const bool frustum = G_FrustumVis(ent, target->origin);
 	if (!frustum)
 		return false;
 
-	actorVis = G_ActorVis(ent->origin, ent, target, true);
+	const float actorVis = G_ActorVis(ent->origin, ent, target, true);
 	if (actorVis <= 0.2)
 		return false;
 
@@ -550,7 +541,7 @@ static bool G_ReactionFireShoot (const player_t *player, edict_t *shooter, const
 {
 	const int minhit = 30;
 	shot_mock_t mock;
-	int ff, i;
+	int i;
 	/* this is the max amount of friendly units that were hit during the mock calculation */
 	int maxff;
 
@@ -572,7 +563,7 @@ static bool G_ReactionFireShoot (const player_t *player, edict_t *shooter, const
 		if (!G_ClientShoot(player, shooter, at, type, firemode, &mock, false, 0))
 			break;
 
-	ff = mock.friendCount + (G_IsAlien(shooter) ? 0 : mock.civilian);
+	const int ff = mock.friendCount + (G_IsAlien(shooter) ? 0 : mock.civilian);
 	if (ff <= maxff && mock.enemyCount >= minhit)
 		return G_ClientShoot(player, shooter, at, type, firemode, NULL, false, 0);
 
@@ -587,8 +578,6 @@ static bool G_ReactionFireShoot (const player_t *player, edict_t *shooter, const
  */
 static bool G_ReactionFireTryToShoot (edict_t *shooter, const edict_t *target)
 {
-	bool tookShot;
-
 	/* check for valid target */
 	assert(target);
 
@@ -600,7 +589,7 @@ static bool G_ReactionFireTryToShoot (edict_t *shooter, const edict_t *target)
 	}
 
 	/* take the shot */
-	tookShot = G_ReactionFireShoot(G_PLAYER_FROM_ENT(shooter), shooter, target->pos, ST_RIGHT_REACTION, shooter->chr.RFmode.fmIdx);
+	const bool tookShot = G_ReactionFireShoot(G_PLAYER_FROM_ENT(shooter), shooter, target->pos, ST_RIGHT_REACTION, shooter->chr.RFmode.fmIdx);
 
 	if (tookShot) {
 		/* clear any shakenness */
@@ -662,7 +651,6 @@ bool G_ReactionFireOnMovement (edict_t *target)
  */
 void G_ReactionFirePreShot (const edict_t *target, const int fdTime)
 {
-	edict_t *shooter = NULL;
 	bool repeat = true;
 
 	/* Check to see whether this triggers any reaction fire */
@@ -671,6 +659,7 @@ void G_ReactionFirePreShot (const edict_t *target, const int fdTime)
 	/* if any reaction fire occurs, we have to loop through all entities again to allow
 	 * multiple (fast) RF snap shots before a (slow) aimed shot from the target occurs. */
 	while (repeat) {
+		edict_t *shooter = NULL;
 		repeat = false;
 		/* check all ents to see who wins and who loses a draw */
 		while ((shooter = G_EdictsGetNextLivingActor(shooter))) {
