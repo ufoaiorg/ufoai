@@ -162,6 +162,7 @@ extern const byte dvleft[CORE_DIRECTIONS];
 #define Vector2Empty(a)			 (Vector2Equal((a), vec2_origin))
 #define Vector2NotEmpty(a)		    (!Vector2Empty((a)))
 #define Vector4NotEmpty(a)          (VectorNotEmpty(a) || !EQUAL((a)[3],0.0))
+#define VectorIntZero(a)          ((a)[0] == 0 && (a)[1] == 0 && (a)[2] == 0)
 #define LinearInterpolation(a, b, x, y)   ((y)=(a)[1] + ((((x) - (a)[0]) * ((b)[1] - (a)[1])) / ((b)[0] - (a)[0])))
 #define VectorScale(in,scale,out) ((out)[0] = (in)[0] * (scale),(out)[1] = (in)[1] * (scale),(out)[2] = (in)[2] * (scale))
 #define VectorInterpolation(p1,p2,frac,mid)	((mid)[0]=(p1)[0]+(frac)*((p2)[0]-(p1)[0]),(mid)[1]=(p1)[1]+(frac)*((p2)[1]-(p1)[1]),(mid)[2]=(p1)[2]+(frac)*((p2)[2]-(p1)[2]))
@@ -172,7 +173,10 @@ public:
 		VectorCopy(mini, mins);
 		VectorCopy(maxi, maxs);
 	}
-	inline bool isZero() const {return !mins[0] && !mins[1] && !mins[2] && !maxs[0] && !maxs[1] && !maxs[2];}
+
+	inline bool isZero() const {
+		return VectorIntZero(mins) && VectorIntZero(maxs);
+	}
 
 	pos3_t mins;
 	pos3_t maxs;
