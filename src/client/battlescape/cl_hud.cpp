@@ -185,9 +185,9 @@ static int HUD_UsableReactionTUs (const le_t * le)
 	if (le->state & STATE_REACTION)
 		/* CL_ActorUsableTUs DOES NOT return the stored value for "reaction" here. */
 		return CL_ActorUsableTUs(le) + CL_ActorReservedTUs(le, RES_REACTION);
-	else
-		/* CL_ActorUsableTUs DOES return the stored value for "reaction" here. */
-		return CL_ActorUsableTUs(le);
+
+	/* CL_ActorUsableTUs DOES return the stored value for "reaction" here. */
+	return CL_ActorUsableTUs(le);
 }
 
 /**
@@ -198,16 +198,14 @@ static int HUD_UsableReactionTUs (const le_t * le)
  */
 static bool HUD_CheckFiremodeReservation (void)
 {
-	actorHands_t hand = ACTOR_HAND_RIGHT;
-
 	if (!selActor)
 		return false;
 
 	do {	/* Loop for the 2 hands (l/r) to avoid unnecessary code-duplication and abstraction. */
-		const fireDef_t *fireDef;
+		actorHands_t hand = ACTOR_HAND_RIGHT;
 
 		/* Get weapon (and its ammo) from the hand. */
-		fireDef = HUD_GetFireDefinitionForHand(selActor, hand);
+		const fireDef_t *fireDef = HUD_GetFireDefinitionForHand(selActor, hand);
 		if (fireDef) {
 			int i;
 			const objDef_t *ammo = fireDef->obj;
@@ -359,9 +357,6 @@ static void HUD_PopupFiremodeReservation_f (void)
  */
 static void HUD_ShotReserve_f (void)
 {
-	int selectedPopupIndex;
-	const reserveShot_t* reserveShotData;
-
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <popupindex>\n", Cmd_Argv(0));
 		return;
@@ -371,11 +366,11 @@ static void HUD_ShotReserve_f (void)
 		return;
 
 	/* read and range check */
-	selectedPopupIndex = atoi(Cmd_Argv(1));
+	const int selectedPopupIndex = atoi(Cmd_Argv(1));
 	if (selectedPopupIndex < 0 || selectedPopupIndex >= LIST_Count(popupListData))
 		return;
 
-	reserveShotData = (const reserveShot_t *)LIST_GetByIdx(popupListData, selectedPopupIndex);
+	const reserveShot_t* reserveShotData = (const reserveShot_t *)LIST_GetByIdx(popupListData, selectedPopupIndex);
 	if (!reserveShotData)
 		return;
 
@@ -402,9 +397,8 @@ static void HUD_ShotReserve_f (void)
  */
 static void HUD_DisplayFiremodeEntry (const char* callback, const le_t* actor, const objDef_t* ammo, const weaponFireDefIndex_t weapFdsIdx, const actorHands_t hand, int index)
 {
-	int usableTusForRF, time;
+	int time;
 	char tuString[MAX_VAR];
-	bool status;
 	const fireDef_t *fd;
 	const char *tooltip;
 	char id[32];
@@ -420,8 +414,8 @@ static void HUD_DisplayFiremodeEntry (const char* callback, const le_t* actor, c
 	assert(actor);
 	assert(hand == ACTOR_HAND_RIGHT || hand == ACTOR_HAND_LEFT);
 
-	status = time <= CL_ActorUsableTUs(actor);
-	usableTusForRF = HUD_UsableReactionTUs(actor);
+	const bool status = time <= CL_ActorUsableTUs(actor);
+	const int usableTusForRF = HUD_UsableReactionTUs(actor);
 
 	if (usableTusForRF > time) {
 		Com_sprintf(tuString, sizeof(tuString), _("Remaining TUs: %i"), usableTusForRF - time);
@@ -457,8 +451,6 @@ static void HUD_DisplayFiremodeEntry (const char* callback, const le_t* actor, c
  */
 static void HUD_DisplayActions (const char* callback, const le_t* actor, bool right, bool left, bool reloadRight, bool reloadLeft)
 {
-	const objDef_t *ammo;
-	const fireDef_t *fd;
 	int i;
 
 	if (!actor)
@@ -472,11 +464,11 @@ static void HUD_DisplayActions (const char* callback, const le_t* actor, bool ri
 
 	if (right) {
 		const actorHands_t hand = ACTOR_HAND_RIGHT;
-		fd = HUD_GetFireDefinitionForHand(actor, hand);
+		const fireDef_t *fd = HUD_GetFireDefinitionForHand(actor, hand);
 		if (fd == NULL)
 			return;
 
-		ammo = fd->obj;
+		const objDef_t *ammo = fd->obj;
 		if (!ammo) {
 			Com_DPrintf(DEBUG_CLIENT, "HUD_DisplayFiremodes: no weapon or ammo found.\n");
 			return;
@@ -508,11 +500,11 @@ static void HUD_DisplayActions (const char* callback, const le_t* actor, bool ri
 
 	if (left) {
 		const actorHands_t hand = ACTOR_HAND_LEFT;
-		fd = HUD_GetFireDefinitionForHand(actor, hand);
+		const fireDef_t *fd = HUD_GetFireDefinitionForHand(actor, hand);
 		if (fd == NULL)
 			return;
 
-		ammo = fd->obj;
+		const objDef_t *ammo = fd->obj;
 		if (!ammo) {
 			Com_DPrintf(DEBUG_CLIENT, "HUD_DisplayFiremodes: no weapon or ammo found.\n");
 			return;
@@ -530,15 +522,11 @@ static void HUD_DisplayActions (const char* callback, const le_t* actor, bool ri
 
 		/* Reloeadable item in hand. */
 		if (weapon && weapon->item.item && weapon->item.item->reload) {
-			int tus;
 			containerIndex_t container = csi.idLeft;
-			bool noAmmo;
-			bool noTU;
 			const char *actionId = "reload_handl";
-
-			tus = HUD_CalcReloadTime(actor, weapon->item.item, container);
-			noAmmo = tus == -1;
-			noTU = actor->TU < tus;
+			const int tus = HUD_CalcReloadTime(actor, weapon->item.item, container);
+			const bool noAmmo = tus == -1;
+			const bool noTU = actor->TU < tus;
 			UI_ExecuteConfunc("%s reload %s %c %i %i %i", callback, actionId, 'l', tus, !noAmmo, !noTU);
 		}
 	}
@@ -551,20 +539,15 @@ static void HUD_DisplayActions (const char* callback, const le_t* actor, bool ri
  */
 static void HUD_DisplayActions_f (void)
 {
-	char callback[32];
-	bool right;
-	bool left;
-	bool rightReload;
-	bool leftReload;
-
 	if (!selActor)
 		return;
 
-	right = strchr(Cmd_Argv(2), 'r') != NULL;
-	left = strchr(Cmd_Argv(2), 'l') != NULL;
-	rightReload = strchr(Cmd_Argv(2), 'R') != NULL;
-	leftReload = strchr(Cmd_Argv(2), 'L') != NULL;
+	const bool right = strchr(Cmd_Argv(2), 'r') != NULL;
+	const bool left = strchr(Cmd_Argv(2), 'l') != NULL;
+	const bool rightReload = strchr(Cmd_Argv(2), 'R') != NULL;
+	const bool leftReload = strchr(Cmd_Argv(2), 'L') != NULL;
 
+	char callback[32];
 	Q_strncpyz(callback, Cmd_Argv(1), sizeof(callback));
 	HUD_DisplayActions(callback, selActor, right, left, rightReload, leftReload);
 }

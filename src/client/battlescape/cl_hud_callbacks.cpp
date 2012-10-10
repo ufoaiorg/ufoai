@@ -107,10 +107,6 @@ static bool HUD_CheckShooting (const le_t* le, invList_t *weapon)
  */
 static void HUD_FireWeapon_f (void)
 {
-	actorHands_t hand;
-	fireDefIndex_t firemode;
-	const objDef_t *ammo;
-	const fireDef_t *fd;
 	le_t *actor = selActor;
 
 	if (Cmd_Argc() < 3) { /* no argument given */
@@ -121,16 +117,16 @@ static void HUD_FireWeapon_f (void)
 	if (actor == NULL)
 		return;
 
-	hand = ACTOR_GET_HAND_INDEX(Cmd_Argv(1)[0]);
-	firemode = atoi(Cmd_Argv(2));
+	const actorHands_t hand = ACTOR_GET_HAND_INDEX(Cmd_Argv(1)[0]);
+	const fireDefIndex_t firemode = atoi(Cmd_Argv(2));
 	if (firemode >= MAX_FIREDEFS_PER_WEAPON || firemode < 0)
 		return;
 
-	fd = HUD_GetFireDefinitionForHand(actor, hand);
+	const fireDef_t *fd = HUD_GetFireDefinitionForHand(actor, hand);
 	if (fd == NULL)
 		return;
 
-	ammo = fd->obj;
+	const objDef_t *ammo = fd->obj;
 
 	/* Let's check if shooting is possible. */
 	if (!HUD_CheckShooting(actor, ACTOR_GET_INV(actor, hand)))
@@ -219,16 +215,14 @@ static void HUD_ToggleReaction_f (void)
  */
 int HUD_CalcReloadTime (const le_t *le, const objDef_t *weapon, containerIndex_t toContainer)
 {
-	containerIndex_t container;
-	invList_t *ic;
-
 	if (toContainer == NONE)
 		return -1;
 
 	assert(le);
 	assert(weapon);
 
-	container = CL_ActorGetContainerForReload(&ic, &le->i, weapon);
+	invList_t *ic;
+	const containerIndex_t container = CL_ActorGetContainerForReload(&ic, &le->i, weapon);
 	if (container == NONE)
 		return -1;
 
@@ -248,8 +242,6 @@ int HUD_CalcReloadTime (const le_t *le, const objDef_t *weapon, containerIndex_t
  */
 static bool HUD_CheckReload (const le_t* le, const invList_t *weapon, containerIndex_t container)
 {
-	int tus;
-
 	if (!le)
 		return false;
 
@@ -265,7 +257,7 @@ static bool HUD_CheckReload (const le_t* le, const invList_t *weapon, containerI
 		return false;
 	}
 
-	tus = HUD_CalcReloadTime(le, weapon->item.item, container);
+	const int tus = HUD_CalcReloadTime(le, weapon->item.item, container);
 	/* Cannot reload because of no ammo in inventory. */
 	if (tus == -1) {
 		HUD_DisplayMessage(_("Can't perform action - no ammo!"));
@@ -285,12 +277,12 @@ static bool HUD_CheckReload (const le_t* le, const invList_t *weapon, containerI
  */
 static void HUD_ReloadLeft_f (void)
 {
-	containerIndex_t container = csi.idLeft;
 	le_t *actor = selActor;
 
 	if (actor == NULL)
 		return;
 
+	containerIndex_t container = csi.idLeft;
 	if (!HUD_CheckReload(actor, HUD_GetLeftHandWeapon(actor, &container), container))
 		return;
 	CL_ActorReload(actor, container);
