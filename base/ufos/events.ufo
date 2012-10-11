@@ -103,7 +103,7 @@ event buildufoyard
 {
 	type	"new_day"
 	// after 30 days and if no installation ufoyard was built yet
-	require "days[30] & !installation[ufoyard]"
+	require "days[25] & !installation[ufoyard]"
 	once	true // remove this event after it triggers
 	command	"addeventmail tip_buildufoyard"
 }
