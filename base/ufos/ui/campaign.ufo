@@ -696,7 +696,7 @@ window endgame
 
 	string title
 	{
-		string		"_Thank you for playing UFO:Alien Invasion"
+		string		"_Thank you for playing UFO: Alien Invasion"
 		pos			"12 20"
 		size		"1000 35"
 		font		"f_menubig"
