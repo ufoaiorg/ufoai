@@ -24,6 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "../../../cl_shared.h"
+#include "../../../ui/ui_dataids.h"
 #include "../cp_campaign.h"
 #include "../cp_map.h"
 #include "../cp_ufo.h"
@@ -120,6 +121,11 @@ void CP_AttackUFOCarrier_f (void)
 	if (!INS_HasType(INSTALLATION_ORBIT))
 		return;
 
+#if 1
+	/** @todo until we have the carrier mission fully implemented, this is the campaign end */
+	cgi->UI_RegisterText(TEXT_STANDARD, _("TODO"));
+	CP_EndCampaign(true);
+#else
 	/* check max amount - we can't win if we can't add the ufo */
 	if (ccs.numUFOs >= MAX_UFOONGEOSCAPE)
 		return;
@@ -137,4 +143,5 @@ void CP_AttackUFOCarrier_f (void)
 	if (mission->mapDef != NULL) {
 		Com_Printf("spawned mapdef: %s\n", mission->mapDef->id);
 	}
+#endif
 }
