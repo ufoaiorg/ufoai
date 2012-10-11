@@ -5596,6 +5596,9 @@ tech rs_orbital_ufo_activity
 	description {
 		default "*msgid:orbital_ufo_activity_txt"
 	}
+	pre_description {
+		default "*msgid:orbital_ufo_activity_pre_txt"
+	}
 
 	mail
 	{

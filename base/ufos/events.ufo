@@ -91,11 +91,11 @@ mail alien_base_discovered
 
 mail ufocarrier
 {
-	from "*msgid:mail_from_paul_navarre"
+	from "*msgid:mail_from_col_falkland"
 	to "*msgid:mail_to_base_commander"
 	subject "_UFO-Carrier"
-	body "*msgid:mail_ufocarrier"
-	model "characters/navarre"
+	body "*msgid:orbital_ufo_activity_txt"
+	model "characters/falkland"
 	icon "icons/mail_tech"
 }
 

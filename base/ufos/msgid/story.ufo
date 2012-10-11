@@ -515,6 +515,24 @@ Col. Falkland"
 }
 
 msgid orbital_ufo_activity_txt {
+text "_We've done it sir!
+
+We've finally managed to track down and identify the UFO that is orbiting earth and now we're ready to take the fight to the enemy. We call it the Carrier UFO, a giant alien craft capable of launching and refueling more than a dozen UFOs.
+
+We've completed the schematics for a guided payload capable of taking down an orbiting UFO. To launch this thing, the UN has requisitioned a massive facility built into the Rocky Mountains that was used to send supplies to the Tranquility Base colony on the moon.
+
+The payload can guide itself to the target but the Carrier UFO still needs to enter within range. If the Carrier holds its current position -- and so far we haven't detected much movement -- we anticipate we'll have a clear shot at this thing once every 24 hours.
+
+We don't know much about this UFO. It's way up in the sky and we're all the way down here. It has escaped detection for so long because of what must be extraordinarily sophisticated electronic cloaking technology. Even now that we've been able to get a lock on it, we can't tell you very much about what it is other than that it appears to be very large.
+
+I'll let you know when the Carrier is in range, sir, and you can give the order to bring this thing down.
+
+With kind regards,
+
+Col. Falkland"
+}
+
+msgid orbital_ufo_activity_pre_txt {
 text "_Good morning, Sir.
 
 Let me begin by stating a few ugly realities.
