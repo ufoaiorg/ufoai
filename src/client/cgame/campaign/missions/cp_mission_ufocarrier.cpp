@@ -59,9 +59,9 @@ static void CP_UFOCarrierMissionUpdate (mission_t *mission)
 	mission->finalDate = Date_Add(ccs.date, delay);
 
 	if (INS_HasType(INSTALLATION_ORBIT)) {
-		cgi->UI_PopupButton(_("UFO-Carrier"), _("The Carrier UFO is in range. Should we launch the missiles?"),
-			"ui_pop;", _("Cancel"), _("Don't attack the UFO-Carrier"),
-			"cp_attack_ufocarrier;ui_pop;", _("Attack"), _("Attack the UFO-Carrier"),
+		cgi->UI_PopupButton(_("UFO-Carrier"), _("The Carrier UFO is in range. Should we launch the payload?"),
+			"ui_pop;", _("Wait"), _("Don't attack the UFO-Carrier yet"),
+			"cp_attack_ufocarrier;ui_pop;", _("Launch"), _("Attack the UFO-Carrier now"),
 			NULL, NULL, NULL);
 	}
 }
