@@ -201,27 +201,20 @@ static bool HUD_CheckFiremodeReservation (void)
 	if (!selActor)
 		return false;
 
-	actorHands_t hand = ACTOR_HAND_RIGHT;
-	do {	/* Loop for the 2 hands (l/r) to avoid unnecessary code-duplication and abstraction. */
-
+	actorHands_t hand;
+	foreachhand(hand) {
 		/* Get weapon (and its ammo) from the hand. */
 		const fireDef_t *fireDef = HUD_GetFireDefinitionForHand(selActor, hand);
-		if (fireDef) {
-			int i;
-			const objDef_t *ammo = fireDef->obj;
-			for (i = 0; i < ammo->numFiredefs[fireDef->weapFdsIdx]; i++) {
-				/* Check if at least one firemode is available for reservation. */
-				if (CL_ActorUsableTUs(selActor) + CL_ActorReservedTUs(selActor, RES_SHOT) >= CL_ActorTimeForFireDef(selActor, &ammo->fd[fireDef->weapFdsIdx][i]))
-					return true;
-			}
-		}
+		if (!fireDef)
+			continue;
 
-		/* Prepare for next run or for end of loop. */
-		if (hand == ACTOR_HAND_RIGHT)
-			hand = ACTOR_HAND_LEFT;
-		else
-			break;
-	} while (true);
+		const objDef_t *ammo = fireDef->obj;
+		for (int i = 0; i < ammo->numFiredefs[fireDef->weapFdsIdx]; i++) {
+			/* Check if at least one firemode is available for reservation. */
+			if (CL_ActorUsableTUs(selActor) + CL_ActorReservedTUs(selActor, RES_SHOT) >= CL_ActorTimeForFireDef(selActor, &ammo->fd[fireDef->weapFdsIdx][i]))
+				return true;
+		}
+	}
 
 	/* No reservation possible */
 	return false;
@@ -259,7 +252,6 @@ static uiNode_t* popupListNode;
  */
 static void HUD_PopupFiremodeReservation (const le_t *le, bool popupReload)
 {
-	actorHands_t hand = ACTOR_HAND_RIGHT;
 	int i;
 	static char text[MAX_VAR];
 	int selectedEntry;
@@ -280,47 +272,40 @@ static void HUD_PopupFiremodeReservation (const le_t *le, bool popupReload)
 	LIST_Add(&popupListData, reserveShotData);
 	selectedEntry = 0;
 
-	do {	/* Loop for the 2 hands (l/r) to avoid unnecessary code-duplication and abstraction. */
+	actorHands_t hand;
+	foreachhand(hand) {
 		const fireDef_t *fd = HUD_GetFireDefinitionForHand(le, hand);
+		if (!fd)
+			continue;
 		character_t* chr = CL_ActorGetChr(le);
 		assert(chr);
 
-		if (fd) {
-			const objDef_t *ammo = fd->obj;
+		const objDef_t *ammo = fd->obj;
+		for (i = 0; i < ammo->numFiredefs[fd->weapFdsIdx]; i++) {
+			const fireDef_t* ammoFD = &ammo->fd[fd->weapFdsIdx][i];
+			const int time = CL_ActorTimeForFireDef(le, ammoFD);
+			if (CL_ActorUsableTUs(le) + CL_ActorReservedTUs(le, RES_SHOT) >= time) {
+				/* Get firemode name and TUs. */
+				Com_sprintf(text, lengthof(text), _("[%i TU] %s"), time, _(ammoFD->name));
 
-			for (i = 0; i < ammo->numFiredefs[fd->weapFdsIdx]; i++) {
-				const fireDef_t* ammoFD = &ammo->fd[fd->weapFdsIdx][i];
-				const int time = CL_ActorTimeForFireDef(le, ammoFD);
-				if (CL_ActorUsableTUs(le) + CL_ActorReservedTUs(le, RES_SHOT) >= time) {
-					/* Get firemode name and TUs. */
-					Com_sprintf(text, lengthof(text), _("[%i TU] %s"), time, _(ammoFD->name));
+				/* Store text for popup */
+				LIST_AddString(&popupListText, text);
 
-					/* Store text for popup */
-					LIST_AddString(&popupListText, text);
+				/* Store Data for popup-callback. */
+				reserveShotData.hand = hand;
+				reserveShotData.fireModeIndex = i;
+				reserveShotData.weaponIndex = ammo->weapons[fd->weapFdsIdx]->idx;
+				reserveShotData.TUs = time;
+				LIST_Add(&popupListData, reserveShotData);
 
-					/* Store Data for popup-callback. */
-					reserveShotData.hand = hand;
-					reserveShotData.fireModeIndex = i;
-					reserveShotData.weaponIndex = ammo->weapons[fd->weapFdsIdx]->idx;
-					reserveShotData.TUs = time;
-					LIST_Add(&popupListData, reserveShotData);
-
-					/* Remember the line that is currently selected (if any). */
-					if (chr->reservedTus.shotSettings.hand == hand
-					 && chr->reservedTus.shotSettings.fmIdx == i
-					 && chr->reservedTus.shotSettings.weapon == ammo->weapons[fd->weapFdsIdx])
-						selectedEntry = LIST_Count(popupListData) - 1;
-				}
+				/* Remember the line that is currently selected (if any). */
+				if (chr->reservedTus.shotSettings.hand == hand
+				 && chr->reservedTus.shotSettings.fmIdx == i
+				 && chr->reservedTus.shotSettings.weapon == ammo->weapons[fd->weapFdsIdx])
+					selectedEntry = LIST_Count(popupListData) - 1;
 			}
 		}
-
-		/* Prepare for next run or for end of loop. */
-		if (hand == ACTOR_HAND_RIGHT)
-			/* First run. Set hand for second run of the loop (other hand) */
-			hand = ACTOR_HAND_LEFT;
-		else
-			break;
-	} while (true);
+	}
 
 	if (LIST_Count(popupListData) > 1 || popupReload) {
 		/* We have more entries than the "0 TUs" one
