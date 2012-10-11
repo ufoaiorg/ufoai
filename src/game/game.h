@@ -121,6 +121,7 @@ typedef struct {
 
 	/** This updates the inline model's orientation */
 	void (IMPORT *SetInlineModelOrientation) (const char *name, const vec3_t origin, const vec3_t angles);
+	void (IMPORT *GetInlineModelBox) (const char *name, WorldBox& box);
 
 	void (IMPORT *SetModel) (edict_t * ent, const char *name);
 
