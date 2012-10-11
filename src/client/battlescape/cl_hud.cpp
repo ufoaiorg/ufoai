@@ -201,8 +201,8 @@ static bool HUD_CheckFiremodeReservation (void)
 	if (!selActor)
 		return false;
 
+	actorHands_t hand = ACTOR_HAND_RIGHT;
 	do {	/* Loop for the 2 hands (l/r) to avoid unnecessary code-duplication and abstraction. */
-		actorHands_t hand = ACTOR_HAND_RIGHT;
 
 		/* Get weapon (and its ammo) from the hand. */
 		const fireDef_t *fireDef = HUD_GetFireDefinitionForHand(selActor, hand);
