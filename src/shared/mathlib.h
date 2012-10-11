@@ -169,6 +169,23 @@ extern const byte dvleft[CORE_DIRECTIONS];
 #define VectorScale(in,scale,out) ((out)[0] = (in)[0] * (scale),(out)[1] = (in)[1] * (scale),(out)[2] = (in)[2] * (scale))
 #define VectorInterpolation(p1,p2,frac,mid)	((mid)[0]=(p1)[0]+(frac)*((p2)[0]-(p1)[0]),(mid)[1]=(p1)[1]+(frac)*((p2)[1]-(p1)[1]),(mid)[2]=(p1)[2]+(frac)*((p2)[2]-(p1)[2]))
 
+class WorldBox {
+public:
+	static const WorldBox EMPTY;
+
+	WorldBox(const vec3_t mini, const vec3_t maxi) {
+		VecToPos(mini, mins);
+		VecToPos(maxi, maxs);
+	}
+
+	inline bool isZero() const {
+		return VectorEmpty(mins) && VectorEmpty(maxs);
+	}
+
+	vec3_t mins;
+	vec3_t maxs;
+};
+
 class GridBox {
 public:
 	static const GridBox EMPTY;
