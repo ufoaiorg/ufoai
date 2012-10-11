@@ -1060,6 +1060,20 @@ cBspModel_t * CM_SetInlineModelOrientation (mapTiles_t *mapTiles, const char *na
 }
 
 /**
+ * @brief This function calculates a model's aabb in world coordinates
+ * @param[in] mapTiles List of tiles the current (RMA-)map is composed of
+ * @param[in] name The name of the model, must include the '*'
+ * @param[out] box The box to be filled
+ */
+void CM_GetInlineModelBox (mapTiles_t *mapTiles, const char *name, WorldBox& box)
+{
+	cBspModel_t *model = CM_InlineModel(mapTiles, name);
+	assert(model);
+	VectorAdd(model->mins, model->origin, box.mins);
+	VectorAdd(model->maxs, model->origin, box.maxs);
+}
+
+/**
  * @brief Checks how well a position is visible
  * @return a visibility factor. @c 1.0 means fully visible, @c 0.0 means hardly visible because the
  * given position is in the darkness
