@@ -206,16 +206,20 @@ static int CP_CheckTriggerEvent (const char *expression, const void* userdata)
 	/* check for nation happiness - also see the lost conditions in the campaign */
 	type = Q_strstart(expression, "nationhappiness");
 	if (type != 0) {
+		int nationAmount;
+
+		if (sscanf(type, "[%i]", &nationAmount) != 1)
+			return -1;
+
 		int j, nationBelowLimit = 0;
 		for (j = 0; j < ccs.numNations; j++) {
 			const nation_t *nation = NAT_GetNationByIDX(j);
 			const nationInfo_t *stats = NAT_GetCurrentMonthInfo(nation);
 			if (stats->happiness < ccs.curCampaign->minhappiness) {
 				nationBelowLimit++;
+				if (nationBelowLimit >= nationAmount)
+					return 1;
 			}
-		}
-		if (nationBelowLimit / 2 >= NATIONBELOWLIMITPERCENTAGE * ccs.numNations) {
-			return 1;
 		}
 		return 0;
 	}
@@ -232,6 +236,14 @@ static int CP_CheckTriggerEvent (const char *expression, const void* userdata)
 		if (xvi > ccs.curCampaign->maxAllowedXVIRateUntilLost * xvipercent / 100)
 			return 1;
 		return 0;
+	}
+
+	type = Q_strstart(expression, "difficulty");
+	if (type != 0) {
+		int difficulty;
+		if (sscanf(type, "[%i]", &difficulty) != 1)
+			return -1;
+		return ccs.curCampaign->difficulty == difficulty;
 	}
 
 	/* check that these days have passed in the campaign */
