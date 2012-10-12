@@ -176,7 +176,7 @@ static void Door_SlidingUse (edict_t *door)
 	gi.GetInlineModelBox(door->model, oldBox);
 	GridBox rerouteOldBox(oldBox.mins, oldBox.maxs);
 	/* Update path finding table */
-	G_RecalcRouting(door->model, GridBox::EMPTY);
+	G_RecalcRouting(door->model, rerouteOldBox);
 
 	/** @todo this is not yet working for tracing and pathfinding - check what must be done to
 	 * allow shooting and walking through the opened door */
