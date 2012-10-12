@@ -63,17 +63,6 @@ tech rs_any_needler
 
 //========================================================
 
-tech rs_antimatter_extra
-{
-	type    "logic"
-	name    "LOGIC:Antimatter"
-	require_AND
-	{
-		tech rs_craft_ufo_harvester
-	}
-	time 0
-}
-
 tech rs_taman_extra
 {
 	type	"logic"

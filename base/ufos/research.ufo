@@ -214,11 +214,9 @@ tech rs_antimatter
 
 	description {
 		default "*msgid:antimatter_txt"
-		extra (rs_antimatter_extra "*msgid:antimatter_extra_txt")
 	}
 	pre_description {
 		default "*msgid:antimatter_pre_txt"
-		extra (rs_antimatter_extra "*msgid:antimatter_extra_pre_txt")
 	}
 
 	mail_pre

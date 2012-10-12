@@ -9,27 +9,7 @@ In fact, the biggest obstacle to our adaptation of the alien fuel is the availab
 
 Humanity is a long, long way off from being able to create antiprotons in the amounts necessary to fuel these matter-antimatter rockets. The bottom line is, we cannot duplicate this alien technology. We don't know how they create their antimatter or how they manage to generate enough electricity to do so. Unless and until we can get our hands on this equipment, our efforts will be fruitless.
 
-Our only major successes have come from studying how the aliens store their antimatter. We're confident we can employ the same magnetic storage techniques, creating special facilities for safely storing up to ten grammes of antimatter. I've sent you a set of blueprints in a separate message to peruse at your convenience. We've also designed antimatter fuel tanks that should fit in our interceptors given some major overhaul. Of course we'll need a full understanding of the alien engines before we can begin incorporating it.
-
-For all intents and purposes, we are unable to replicate the alien fuel. If we use antimatter in our own technology we will be dependent upon recovering it from alien sources. This seems a dangerous course of action, but we may have no choice; we need to adapt this technology as soon as possible if we are to have any chance of truly stopping the invasion.
-
-Cdr. Navarre"
-}
-
-msgid antimatter_extra_txt {
-text "_Our study on antimatter is complete, Commander, and we're ready to present our results. I'm afraid the news is mostly bad.
-
-There are a lot of things the aliens know that we don't. Nowhere is this more clear in their widespread use of antimatter. It seems to be plentiful for them, at least plentiful enough to send out UFO after UFO to Earth, burning tanks full of antiprotons. Human experiments into antimatter, on the other hand . . .
-
-The first artificially produced antimatter on Earth consisted of 9 atoms of anti-hydrogen created at the CERN particle physics laboratory, situated near Geneva on the border between France and Switzerland. Not long after, another lab produced approximately 100 atoms. We've come slowly forward over the years in tiny, tiny steps, but even though we can now produce antiprotons by the millions, it's easy to forget just how little that really is.
-
-In fact, the biggest obstacle to our adaptation of the alien fuel is the availability of antiprotons. We've come a long way since 1995, but even with every particle physics laboratory in the world churning out as many antiprotons as possible, it would take eighty million years to produce 1 gramme's worth of antiprotons. By comparison, the amount contained in any single UFO's tank exceeds that of all the antimatter produced on Earth over the past hundred years.
-
-Another worrying point is that the aliens also seem to be using antimatter as part of their weapons systems. Antimatter-fuelled alien missiles are one thing; what if they begin using antimatter itself as an explosive? My staff has come up with more than one disconcerting idea along these lines. For myself, I think we should try to head the aliens off at the pass in this regard. A special program regarding antimatter-based weapons may be a highly interesting option to pursue -- it may be a more economical prospect than trying to adapt alien rockets to our interceptor craft.
-
-Humanity is a long, long way off from being able to create antiprotons in the amounts necessary to fuel these matter-antimatter rockets. The bottom line is, we cannot duplicate this alien technology. We don't know how they create their antimatter or how they manage to generate enough electricity to do so. Unless and until we can get our hands on this equipment, our efforts will be fruitless.
-
-Our only major successes have come from studying how the aliens store their antimatter. We're confident we can employ the same magnetic storage techniques, creating special facilities for safely storing antimatter. I've sent you a set of blueprints in a separate message to peruse at your convenience. Of course we'll need a full understanding of the alien engines before we can begin incorporating them.
+Our only major successes have come from studying how the aliens store their antimatter. We're confident we can employ the same magnetic storage techniques, creating special facilities for safely storing antimatter. I've sent you a set of blueprints in a separate message to peruse at your convenience. We've also designed antimatter fuel tanks that should fit in our interceptors given some major overhaul. Of course we'll need a full understanding of the alien engines before we can begin designing a new aircraft propulsion system.
 
 For all intents and purposes, we are unable to replicate the alien fuel. If we use antimatter in our own technology we will be dependent upon recovering it from alien sources. This seems a dangerous course of action, but we may have no choice; we need to adapt this technology as soon as possible if we are to have any chance of truly stopping the invasion.
 
@@ -39,15 +19,7 @@ Cdr. Navarre"
 msgid antimatter_pre_txt {
 text "_Commander, based on the extremely interesting findings we've made during our examination of the UFO we dismantled, I'd like your permission to use some lab time in order to more closely analyse the aliens' extensive use of antimatter and its implications on this war.
 
-Particularly I would like to see if we can find some way to replicate antimatter for our own purposes. Matter-antimatter annihilation has astonishing potential as a fuel. In terms of energy generation, it has probably the best size-to-weight ratio of any material in the universe; the ability to use it like the aliens use it would catapult our technology base centuries into the future. We must research this at the earliest opportunity!
-
-Cdr. Navarre"
-}
-
-msgid antimatter_extra_pre_txt {
-text "_Commander, based on the extremely interesting findings we've made during our examination of alien UFO technology, I'd like your permission to use some lab time in order to more closely analyse the aliens' extensive use of antimatter and its implications on this war.
-
-Particularly I would like to see if we can find some way to replicate antimatter for our own purposes. Matter-antimatter annihilation has astonishing potential as a fuel. In terms of energy generation, it has probably the best size-to-mass ratio of any material in the universe; the ability to use it like the aliens use it would catapult our entire technology base centuries into the future. We must research this at the earliest opportunity!
+Particularly I would like to see if we can find some way to replicate antimatter for our own purposes. Matter-antimatter annihilation has astonishing potential as a fuel. In terms of energy generation, it has probably the best energy density of any material in the known universe; the ability to use it like the aliens use it would catapult our technology base centuries into the future. We must research this at the earliest opportunity!
 
 Cdr. Navarre"
 }
