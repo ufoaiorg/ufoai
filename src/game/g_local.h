@@ -406,7 +406,7 @@ void G_ReactionFireTargetsInit (void);
 void G_ReactionFireTargetsCreate (const edict_t *shooter);
 
 void G_CompleteRecalcRouting(void);
-void G_RecalcRouting(const char *model);
+void G_RecalcRouting(const char *model, const GridBox& box);
 void G_GenerateEntList(const char *entList[MAX_EDICTS]);
 
 /** @todo make this a byte */

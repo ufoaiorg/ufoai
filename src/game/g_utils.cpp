@@ -498,13 +498,13 @@ void G_GenerateEntList (const char *entList[MAX_EDICTS])
  * @sa G_CompleteRecalcRouting
  * @sa Grid_RecalcRouting
  */
-void G_RecalcRouting (const char* model)
+void G_RecalcRouting (const char* model, const GridBox& box)
 {
 	const char *entList[MAX_EDICTS];
 	/* generate entity list */
 	G_GenerateEntList(entList);
 	/* recalculate routing */
-	gi.GridRecalcRouting(gi.routingMap, model, entList);
+	gi.GridRecalcRouting(gi.routingMap, model, GridBox::EMPTY, entList);
 }
 
 /**
@@ -516,7 +516,7 @@ void G_CompleteRecalcRouting (void)
 
 	while ((ent = G_EdictsGetNextInUse(ent)))
 		if (IS_BMODEL(ent))
-			G_RecalcRouting(ent->model);
+			G_RecalcRouting(ent->model, GridBox::EMPTY);
 }
 
 /**

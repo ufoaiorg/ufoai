@@ -93,7 +93,7 @@ static bool Destroy_Breakable (edict_t *self)
 	/* now we can destroy the edict completely */
 	G_FreeEdict(self);
 
-	G_RecalcRouting(model);
+	G_RecalcRouting(model, GridBox::EMPTY);
 
 	return true;
 }
@@ -172,6 +172,12 @@ static void Door_SlidingUse (edict_t *door)
 	 * world coordinates in the map we have to translate the position by the above
 	 * calculated movement vector */
 #if 0
+	WorldBox oldBox(vec3_origin, vec3_origin);
+	gi.GetInlineModelBox(door->model, oldBox);
+	GridBox rerouteOldBox(oldBox.mins, oldBox.maxs);
+	/* Update path finding table */
+	G_RecalcRouting(door->model, GridBox::EMPTY);
+
 	/** @todo this is not yet working for tracing and pathfinding - check what must be done to
 	 * allow shooting and walking through the opened door */
 	VectorAdd(door->origin, distanceVec, door->origin);
@@ -241,7 +247,7 @@ static bool Door_Use (edict_t *door, edict_t *activator)
 	Com_DPrintf(DEBUG_GAME, "Server processed door movement.\n");
 
 	/* Update path finding table */
-	G_RecalcRouting(door->model);
+	G_RecalcRouting(door->model, GridBox::EMPTY);
 
 	if (activator && G_IsLivingActor(activator)) {
 		/* Check if the player appears/perishes, seen from other teams. */
