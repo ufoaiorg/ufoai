@@ -504,7 +504,7 @@ void G_RecalcRouting (const char* model, const GridBox& box)
 	/* generate entity list */
 	G_GenerateEntList(entList);
 	/* recalculate routing */
-	gi.GridRecalcRouting(gi.routingMap, model, GridBox::EMPTY, entList);
+	gi.GridRecalcRouting(gi.routingMap, model, box, entList);
 }
 
 /**
