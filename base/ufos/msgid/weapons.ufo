@@ -476,14 +476,6 @@ msgid bombkit1_pre_txt {
 text "_No pre research info available"
 }
 
-msgid bombkit2_txt {
-text "_"
-}
-
-msgid bombkit2_pre_txt {
-text "_No pre research info available"
-}
-
 msgid chaingun_txt {
 text "_"
 }

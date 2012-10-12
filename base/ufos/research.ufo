@@ -891,25 +891,6 @@ tech rs_weapon_bombkit1
 	producetime	-1
 }
 
-/*
-// only for in-mission spawning, not produceable or buyable
-tech rs_weapon_bombkit2
-{
-	type	"weapon"
-	up_chapter	equipment
-	description {
-		default "*msgid:bombkit2_txt"
-	}
-	pre_description {
-		default "*msgid:bombkit2_pre_txt"
-	}
-
-	provides	bomb2
-	time	0
-	producetime	-1
-}
-*/
-
 tech rs_weapon_chaingun
 {
 	// Note: Multiplayer only
