@@ -1079,7 +1079,7 @@ static void SP_misc_camera (edict_t *ent)
 		return;
 	}
 
-	G_InitCamera(ent, CAMERA_STATIONARY);
+	G_InitCamera(ent, CAMERA_STATIONARY, ent->angle);
 }
 
 /**

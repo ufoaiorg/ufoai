@@ -20,7 +20,7 @@ static bool Destroy_Camera (edict_t *self)
 
 #define CAMERAMODEL(X, IDX) case X: ent->model = "models/objects/cameras/camera" STRINGIFY(IDX); break
 
-void G_InitCamera (edict_t *ent, camera_type_t cameraType)
+void G_InitCamera (edict_t *ent, camera_type_t cameraType, float angle)
 {
 	switch (cameraType) {
 	CAMERAMODEL(CAMERA_MOBILE, 0);
@@ -45,6 +45,7 @@ void G_InitCamera (edict_t *ent, camera_type_t cameraType)
 		ent->fieldSize = ACTOR_SIZE_NORMAL;
 		ent->destroy = Destroy_Camera;
 		ent->use = G_CameraUse;
+		ent->dir = AngleToDir(angle);
 
 		/* Set the position of the entity */
 		VecToPos(ent->origin, ent->pos);
@@ -62,7 +63,7 @@ edict_t *G_SpawnCamera (const vec3_t origin, int team, camera_type_t cameraType)
 	VectorCopy(origin, ent->origin);
 	ent->team = team;
 
-	G_InitCamera(ent, cameraType);
+	G_InitCamera(ent, cameraType, 0);
 
 	G_CheckVis(ent);
 

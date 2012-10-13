@@ -387,7 +387,7 @@ bool G_TestLineWithEnts(const vec3_t start, const vec3_t end);
 bool G_TestLine(const vec3_t start, const vec3_t end);
 
 /* g_camera */
-void G_InitCamera(edict_t *ent, camera_type_t cameraType);
+void G_InitCamera(edict_t *ent, camera_type_t cameraType, float angle);
 edict_t *G_SpawnCamera(const vec3_t origin, int team, camera_type_t cameraType);
 
 /* g_combat */
