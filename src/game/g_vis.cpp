@@ -30,6 +30,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 bool G_FrustumVis (const edict_t *from, const vec3_t point)
 {
+	if (G_IsActiveCamera(from)) {
+		/* it's a 360 degree camera */
+		if (from->camera.rotate)
+			return true;
+	}
 	return FrustumVis(from->origin, from->dir, point);
 }
 

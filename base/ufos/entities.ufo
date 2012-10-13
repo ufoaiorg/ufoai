@@ -784,7 +784,7 @@ entity misc_smokestun {
 entity misc_camera {
 	description	"A camera that makes opponents visible."
 	color		"1.0 .5 .0"
-	spawnflags	"level1 level2 level3 level4 level5 level6 level7 level8"
+	spawnflags	"level1 level2 level3 level4 level5 level6 level7 level8 rotate"
 	size		"-16 -16 -16 16 16 16"
 	model		"models/objects/cameras/camera1.md2"
 

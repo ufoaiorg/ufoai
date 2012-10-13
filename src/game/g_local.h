@@ -387,7 +387,7 @@ bool G_TestLineWithEnts(const vec3_t start, const vec3_t end);
 bool G_TestLine(const vec3_t start, const vec3_t end);
 
 /* g_camera */
-void G_InitCamera(edict_t *ent, camera_type_t cameraType, float angle);
+void G_InitCamera(edict_t *ent, camera_type_t cameraType, float angle, bool rotate);
 edict_t *G_SpawnCamera(const vec3_t origin, int team, camera_type_t cameraType);
 
 /* g_combat */
@@ -686,6 +686,11 @@ typedef struct AI_s {
 	lua_State* L;			/**< The lua state used by the AI. */
 } AI_t;
 
+typedef struct camera_edict_data_s {
+	camera_type_t cameraType;
+	bool rotate;
+} camera_edict_data_t;
+
 /**
  * @brief Everything that is not in the bsp tree is an edict, the spawnpoints,
  * the actors, the misc_models, the weapons and so on.
@@ -775,7 +780,7 @@ struct edict_s {
 	const char *message;		/**< misc_message */
 	const char *noise;			/**< sounds - e.g. for func_door */
 	edictMaterial_t material;	/**< material value (e.g. for func_breakable) */
-	camera_type_t cameraType;
+	camera_edict_data_t camera;
 	int count;		/**< general purpose 'amount' variable - set via mapeditor often */
 	int time;		/**< general purpose 'rounds' variable - set via mapeditor often */
 	int sounds;		/**< type of sounds to play - e.g. doors */

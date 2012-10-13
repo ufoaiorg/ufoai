@@ -37,10 +37,11 @@ void CL_CameraAppear (const eventRegister_t *self, dbuffer * msg)
 	int team;
 	int levelflags;
 	int dir;
+	int rotate;
 	vec3_t origin;
 	camera_type_t cameraType;
 
-	NET_ReadFormat(msg, self->formatString, &entnum, &origin, &team, &dir, &cameraType, &levelflags);
+	NET_ReadFormat(msg, self->formatString, &entnum, &origin, &team, &dir, &cameraType, &levelflags, &rotate);
 
 	le_t *le = LE_Get(entnum);
 	if (!le) {
@@ -56,7 +57,9 @@ void CL_CameraAppear (const eventRegister_t *self, dbuffer * msg)
 	le->flags |= LE_CHECK_LEVELFLAGS;
 	le->levelflags = levelflags;
 	le->model1 = R_FindModel(va("objects/cameras/camera%i", cameraType));
-	R_AnimChange(&le->as, le->model1, "rotate");
+	const char *rotateAnim = "rotate";
+	if (rotate)
+		R_AnimChange(&le->as, le->model1, rotateAnim);
 
 	Com_DPrintf(DEBUG_CLIENT, "CL_CameraAppear: entnum: %i\n", entnum);
 }

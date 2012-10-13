@@ -1076,6 +1076,8 @@ static void SP_misc_message (edict_t *ent)
 	ent->solid = SOLID_NOT;
 }
 
+#define CAMERA_ROTATE (1 << 8)
+
 static void SP_misc_camera (edict_t *ent)
 {
 	/* only used in single player */
@@ -1084,7 +1086,8 @@ static void SP_misc_camera (edict_t *ent)
 		return;
 	}
 
-	G_InitCamera(ent, CAMERA_STATIONARY, ent->angle);
+	const bool rotate = ent->spawnflags & CAMERA_ROTATE;
+	G_InitCamera(ent, CAMERA_STATIONARY, ent->angle, rotate);
 }
 
 /**

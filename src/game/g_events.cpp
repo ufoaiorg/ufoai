@@ -463,11 +463,12 @@ void G_EventCameraAppear (unsigned int playerMask, const edict_t *ent)
 {
 	G_EventAdd(playerMask, EV_CAMERA_APPEAR, ent->number);
 	gi.WritePos(ent->origin);
-	gi.WriteByte(ent->cameraType);
 	gi.WriteByte(ent->team);
 	gi.WriteByte(ent->dir);
+	gi.WriteByte(ent->camera.cameraType);
 	/* strip the higher bits - only send levelflags */
 	gi.WriteByte(ent->spawnflags & 0xFF);
+	gi.WriteByte(ent->camera.rotate);
 	G_EventEnd();
 }
 
