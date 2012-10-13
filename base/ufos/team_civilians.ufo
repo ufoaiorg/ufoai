@@ -35,10 +35,8 @@ team africa
 
 	actorsounds {
 		female {
-			hurtsound	"civilians/femalehurt01"
 			hurtsound	"civilians/civfemscream01a"
 			hurtsound	"civilians/civfemscream02a"
-			deathsound	"civilians/femaledeath01"
 			deathsound	"civilians/civfemdeath01a"
 			deathsound	"civilians/civfemdeath02a"
 		}
@@ -83,10 +81,8 @@ team asia
 
 	actorsounds {
 		female {
-			hurtsound	"civilians/femalehurt01"
 			hurtsound	"civilians/civfemscream01a"
 			hurtsound	"civilians/civfemscream02a"
-			deathsound	"civilians/femaledeath01"
 			deathsound	"civilians/civfemdeath01a"
 			deathsound	"civilians/civfemdeath02a"
 		}
@@ -173,10 +169,8 @@ team europe
 
 	actorsounds {
 		female {
-			hurtsound	"civilians/femalehurt01"
 			hurtsound	"civilians/civfemscream01a"
 			hurtsound	"civilians/civfemscream02a"
-			deathsound	"civilians/femaledeath01"
 			deathsound	"civilians/civfemdeath01a"
 			deathsound	"civilians/civfemdeath02a"
 		}
@@ -224,10 +218,8 @@ team latin
 
 	actorsounds {
 		female {
-			hurtsound	"civilians/femalehurt01"
 			hurtsound	"civilians/civfemscream01a"
 			hurtsound	"civilians/civfemscream02a"
-			deathsound	"civilians/femaledeath01"
 			deathsound	"civilians/civfemdeath01a"
 			deathsound	"civilians/civfemdeath02a"
 		}
@@ -275,10 +267,8 @@ team middle
 
 	actorsounds {
 		female {
-			hurtsound	"civilians/femalehurt01"
 			hurtsound	"civilians/civfemscream01a"
 			hurtsound	"civilians/civfemscream02a"
-			deathsound	"civilians/femaledeath01"
 			deathsound	"civilians/civfemdeath01a"
 			deathsound	"civilians/civfemdeath02a"
 		}
@@ -365,10 +355,8 @@ team states
 
 	actorsounds {
 		female {
-			hurtsound	"civilians/femalehurt01"
 			hurtsound	"civilians/civfemscream01a"
 			hurtsound	"civilians/civfemscream02a"
-			deathsound	"civilians/femaledeath01"
 			deathsound	"civilians/civfemdeath01a"
 			deathsound	"civilians/civfemdeath02a"
 		}
@@ -415,10 +403,8 @@ team oceania
 
 	actorsounds {
 		female {
-			hurtsound	"civilians/femalehurt01"
 			hurtsound	"civilians/civfemscream01a"
 			hurtsound	"civilians/civfemscream02a"
-			deathsound	"civilians/femaledeath01"
 			deathsound	"civilians/civfemdeath01a"
 			deathsound	"civilians/civfemdeath02a"
 		}
@@ -491,10 +477,8 @@ team russia
 
 	actorsounds {
 		female {
-			hurtsound	"civilians/femalehurt01"
 			hurtsound	"civilians/civfemscream01a"
 			hurtsound	"civilians/civfemscream02a"
-			deathsound	"civilians/femaledeath01"
 			deathsound	"civilians/civfemdeath01a"
 			deathsound	"civilians/civfemdeath02a"
 		}
@@ -619,10 +603,8 @@ team scientist
 
 	actorsounds {
 		female {
-			hurtsound	"civilians/femalehurt01"
 			hurtsound	"civilians/civfemscream01a"
 			hurtsound	"civilians/civfemscream02a"
-			deathsound	"civilians/femaledeath01"
 			deathsound	"civilians/civfemdeath01a"
 			deathsound	"civilians/civfemdeath02a"
 		}
