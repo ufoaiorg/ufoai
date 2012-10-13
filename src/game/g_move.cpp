@@ -410,11 +410,7 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos
 				/* write the step to the net */
 				G_WriteStep(ent, &stepAmount, dvec, contentFlags);
 
-				/* check if player appears/perishes, seen from other teams */
-				G_CheckVis(ent);
-
-				/* check for anything appearing, seen by "the moving one" */
-				status = G_CheckVisTeamAll(ent->team, 0, ent);
+				status = 0;
 
 				/* Set ent->TU because the reaction code relies on ent->TU being accurate. */
 				G_ActorSetTU(ent, initTU - usedTUs);
@@ -428,6 +424,12 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos
 					if (!clientAction)
 						status |= VIS_STOP;
 				}
+
+				/* check if player appears/perishes, seen from other teams */
+				G_CheckVis(ent);
+
+				/* check for anything appearing, seen by "the moving one" */
+				status |= G_CheckVisTeamAll(ent->team, 0, ent);
 
 				G_TouchSolids(ent, 10.0f);
 
