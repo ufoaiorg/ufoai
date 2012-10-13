@@ -43,7 +43,6 @@ void G_InitCamera (edict_t *ent, camera_type_t cameraType)
 		ent->flags |= FL_DESTROYABLE;
 		ent->material = MAT_ELECTRICAL;
 		ent->fieldSize = ACTOR_SIZE_NORMAL;
-		ent->active = true;
 		ent->destroy = Destroy_Camera;
 		ent->use = G_CameraUse;
 
