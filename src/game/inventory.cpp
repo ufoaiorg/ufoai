@@ -405,12 +405,22 @@ static inventory_action_t I_MoveInInventory (inventoryInterface_t* self, invento
 	if (fItem->item.item->fireTwoHanded && INV_IsLeftDef(to))
 		to = &self->csi->ids[self->csi->idRight];
 
-	if (checkedTo == INV_FITS_ONLY_ROTATED) {
-		/* Set rotated tag */
-		fItem->item.rotated = true;
-	} else if (fItem->item.rotated) {
+	switch (checkedTo) {
+	case INV_DOES_NOT_FIT:
+		/* Impossible move - should be handled above, but add an abort just in case */
+		Com_Printf("I_MoveInInventory: Item doesn't fit into container.");
+		return IA_NONE;
+	case INV_FITS:
 		/* Remove rotated tag */
 		fItem->item.rotated = false;
+		break;
+	case INV_FITS_ONLY_ROTATED:
+		/* Set rotated tag */
+		fItem->item.rotated = true;
+		break;
+	case INV_FITS_BOTH:
+		/* Leave rotated tag as-is */
+		break;
 	}
 
 	/* Actually remove the item from the 'from' container (if it wasn't already removed). */

@@ -550,12 +550,18 @@ static void UI_ContainerNodeDrawDropPreview (uiNode_t *target)
 	previewItem = *UI_DNDGetItem();
 	previewItem.rotated = false;
 	checkedTo = INVSH_CheckToInventory(ui_inventory, previewItem.item, EXTRADATA(target).container, dragInfoToX, dragInfoToY, dragInfoIC);
-	if (checkedTo == INV_FITS_ONLY_ROTATED)
-		previewItem.rotated = true;
-
-	/* no place found */
-	if (!checkedTo)
+	switch (checkedTo) {
+	case INV_DOES_NOT_FIT:
 		return;
+	case INV_FITS:
+		break;
+	case INV_FITS_BOTH:
+		/** @TODO enable Shift-rotate for battlescape too when issues are solved */
+		if (!Key_IsDown(K_SHIFT) ||  CL_BattlescapeRunning())
+			break;
+	case INV_FITS_ONLY_ROTATED:
+		previewItem.rotated = true;
+	}
 
 	/* Hack, no preview for armour, we don't want it out of the armour container (and armour container is not visible) */
 	if (INV_IsArmour(previewItem.item))
@@ -1011,6 +1017,10 @@ bool uiContainerNode::onDndFinished (uiNode_t *source, bool isDropped)
 			/* Remove ammo on removing weapon from a soldier */
 			if (UI_IsScrollContainerNode(target) && fItem->item.ammo && fItem->item.ammo != fItem->item.item && fItem->item.ammoLeft)
 				INV_UnloadWeapon(fItem, ui_inventory, targetContainer);
+
+			/* rotate on Shift */
+			/** @TODO enable Shift-rotate for battlescape too when issues are solved */
+			fItem->item.rotated = Key_IsDown(K_SHIFT) && !CL_BattlescapeRunning();
 
 			/* move the item */
 			moved = INV_MoveItem(ui_inventory, targetContainer, dragInfoToX, dragInfoToY, sourceContainer, fItem, &tItem);
