@@ -142,6 +142,8 @@ static int ED_Type2Constant (const char *strType)
 		return ED_TYPE_FLOAT;
 	else if (Q_streq(strType, "V_INT"))
 		return ED_TYPE_INT;
+	else if (Q_streq(strType, "V_BOOL"))
+		return ED_TYPE_BOOL;
 	else if (Q_streq(strType, "V_STRING"))
 		return ED_TYPE_STRING;
 
@@ -158,6 +160,8 @@ static const char *ED_Constant2Type (int constInt)
 	switch (constInt) {
 	case ED_TYPE_FLOAT:
 		return "V_FLOAT";
+	case ED_TYPE_BOOL:
+		return "V_BOOL";
 	case ED_TYPE_INT:
 		return "V_INT";
 	case ED_TYPE_STRING:
@@ -295,6 +299,10 @@ static int ED_CheckNumber (const char *value, const int floatOrInt, const int in
 		parsedNumber->f = strtof(value, &end_p);
 		ED_TEST_RETURN_ERROR(insistPositive && parsedNumber->f < 0.0f, "ED_CheckNumber: not positive %s", value);
 		break;
+	case ED_TYPE_BOOL:
+		parsedNumber->i = (int)strtol(value, &end_p, 10);
+		ED_TEST_RETURN_ERROR(parsedNumber->i < 0 || parsedNumber->i > 1, "ED_CheckNumber: no boolean %s", value);
+		break;
 	case ED_TYPE_INT:
 		parsedNumber->i = (int)strtol(value, &end_p, 10);
 		ED_TEST_RETURN_ERROR(insistPositive && parsedNumber->i < 0, "ED_CheckNumber: not positive %s", value);
@@ -311,12 +319,12 @@ static int ED_CheckNumber (const char *value, const int floatOrInt, const int in
 
 /**
  * @brief check a value against the range for the key
- * @param floatOrInt either ED_TYPE_FLOAT or ED_TYPE_INT
+ * @param type either ED_TYPE_FLOAT, ED_TYPE_INT or ED_TYPE_BOOL
  * @param index the index of the number being checked in the value. eg angles "90 180", 90 is at 0, 180 is at 1.
  * @note checks lastCheckedInt or lastCheckedFloat against the range in the supplied keyDef.
  * @return ED_ERROR or ED_OK
  */
-static int ED_CheckRange (const entityKeyDef_t *keyDef, const int floatOrInt, const int index, int_float_tu parsedNumber)
+static int ED_CheckRange (const entityKeyDef_t *keyDef, const int type, const int index, int_float_tu parsedNumber)
 {
 	/* there may be a range for each element of the value, or there may only be one */
 	const int useRangeIndex = (keyDef->numRanges == 1) ? 0 : index;
@@ -326,7 +334,9 @@ static int ED_CheckRange (const entityKeyDef_t *keyDef, const int floatOrInt, co
 		return ED_OK; /* if no range defined, that is OK */
 	assert(useRangeIndex < keyDef->numRanges);
 	kr = keyDef->ranges[useRangeIndex];
-	switch (floatOrInt) {
+	switch (type) {
+	case ED_TYPE_BOOL:
+		return ED_OK;
 	case ED_TYPE_FLOAT:
 		if (kr->continuous) {
 			ED_TEST_RETURN_ERROR(parsedNumber.f < kr->fArr[0] || parsedNumber.f > kr->fArr[1],
@@ -363,27 +373,27 @@ static int ED_CheckRange (const entityKeyDef_t *keyDef, const int floatOrInt, co
 /**
  * @brief tests if a value string matches the type for this key. this includes
  * each element of a numeric array. Also checks value against range def, if one exists.
- * @param floatOrInt one of ED_TYPE_FLOAT or ED_TYPE_INT
+ * @param type one of ED_TYPE_FLOAT, ED_TYPE_INT or ED_TYPE_BOOL
  * @return ED_OK or ED_ERROR (call ED_GetLastError)
  */
-static int ED_CheckNumericType (const entityKeyDef_t *keyDef, const char *value, const int floatOrInt)
+static int ED_CheckNumericType (const entityKeyDef_t *keyDef, const char *value, const int type)
 {
 	int i = 0;
 	static char tokBuf[64];
 	const char *buf_p = tokBuf;
 
 	strncpy(tokBuf, value, sizeof(tokBuf));
-	assert(!(floatOrInt & ED_TYPE_INT) != !(floatOrInt & ED_TYPE_FLOAT));/* logical exclusive or */
+	assert(type == ED_TYPE_INT || type == ED_TYPE_FLOAT || type == ED_TYPE_BOOL);
 	while (buf_p) {
 		const char *tok = Com_Parse(&buf_p);
 		int_float_tu parsedNumber;
 		if (tok[0] == '\0')
 			break; /* previous tok was the last real one, don't waste time */
 
-		ED_PASS_ERROR_EXTRAMSG(ED_CheckNumber(tok, floatOrInt, keyDef->flags & ED_INSIST_POSITIVE, &parsedNumber),
+		ED_PASS_ERROR_EXTRAMSG(ED_CheckNumber(tok, type, keyDef->flags & ED_INSIST_POSITIVE, &parsedNumber),
 			" in key \"%s\"", keyDef->name);
 
-		ED_PASS_ERROR(ED_CheckRange(keyDef, floatOrInt, i, parsedNumber));
+		ED_PASS_ERROR(ED_CheckRange(keyDef, type, i, parsedNumber));
 
 		i++;
 	}
@@ -425,6 +435,8 @@ int ED_CheckKey (const entityKeyDef_t *kd, const char *value)
 		return ED_CheckNumericType(kd, value, ED_TYPE_FLOAT);
 	case ED_TYPE_INT:
 		return ED_CheckNumericType(kd, value, ED_TYPE_INT);
+	case ED_TYPE_BOOL:
+		return ED_CheckNumericType(kd, value, ED_TYPE_BOOL);
 	case ED_TYPE_STRING:
 	case 0: /* string is the default */
 		return ED_OK; /* all strings are good */
@@ -756,6 +768,7 @@ static int ED_ProcessRanges (void)
 					}
 					ED_PASS_ERROR(ED_CheckNumber(tok, keyType, kd->flags & ED_INSIST_POSITIVE, &parsedNumber));
 					switch (keyType) {
+					case ED_TYPE_BOOL:
 					case ED_TYPE_INT:
 						ibuf[numElements++] = atoi(tok);
 						break;
@@ -770,7 +783,7 @@ static int ED_ProcessRanges (void)
 				ED_TEST_RETURN_ERROR(kr->continuous && numElements != 2,
 					"ED_ProcessRanges: continuous range should only have 2 elements, upper and lower bounds, \"%s\" in %s in %s",
 					kr->str, kd->name, ed->classname);
-				if (ED_TYPE_INT == keyType) {
+				if (ED_TYPE_INT == keyType || ED_TYPE_BOOL == keyType) {
 					const size_t size = numElements * sizeof(int);
 					kr->iArr = (int *)malloc(size);
 					ED_TEST_RETURN_ERROR(!kr->iArr, "ED_ProcessRanges: out of memory");

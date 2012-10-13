@@ -796,15 +796,18 @@ entity misc_camera {
 		origin		"Position"
 		spawnflags	"level flags"
 		team		"The team this camera belongs to"
+		active		"Is the camera active"
 	}
 
 	type {
 		team	"UNSIGNED V_INT"
 		origin	"V_FLOAT 3"
+		active	"V_BOOL"
 	}
 
 	default {
 		team	"1"
 		spawnflags	"255"
+		active		"1"
 	}
 }

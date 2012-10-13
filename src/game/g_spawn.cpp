@@ -92,6 +92,7 @@ typedef enum {
 	F_FLOAT,
 	F_LSTRING,					/* string on disk, pointer in memory, TAG_LEVEL */
 	F_VECTOR,
+	F_BOOL,
 	F_IGNORE
 } fieldtype_t;
 
@@ -108,6 +109,7 @@ static const field_t fields[] = {
 	{"spawnflags", offsetof(edict_t, spawnflags), F_INT, 0},
 	{"speed", offsetof(edict_t, speed), F_INT, 0},
 	{"dir", offsetof(edict_t, dir), F_INT, 0},
+	{"active", offsetof(edict_t, active), F_BOOL, 0},
 	{"target", offsetof(edict_t, target), F_LSTRING, 0},
 	{"targetname", offsetof(edict_t, targetname), F_LSTRING, 0},
 	{"item", offsetof(edict_t, item), F_LSTRING, 0},
@@ -221,6 +223,9 @@ static void ED_ParseField (const char *key, const char *value, edict_t * ent)
 				break;
 			case F_INT:
 				*(int *) (b + f->ofs) = atoi(value);
+				break;
+			case F_BOOL:
+				*(bool *) (b + f->ofs) = atoi(value);
 				break;
 			case F_FLOAT:
 				*(float *) (b + f->ofs) = atof(value);
