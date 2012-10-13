@@ -428,7 +428,7 @@ bool UI_KeyPressed (unsigned int key, unsigned short unicode)
 	if (UI_DNDIsDragging()) {
 		if (key == K_ESCAPE)
 			UI_DNDAbort();
-		return true;
+		return false;
 	}
 
 	/* translate event into the node with focus */
