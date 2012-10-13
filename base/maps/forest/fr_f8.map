@@ -2112,7 +2112,7 @@
 {
 "classname" "misc_model"
 "spawnflags" "255"
-"model" "models/objects/vegi/tropic/tropic04.md2"
+"model" "models/objects/vegi/tropic/tropic03.md2"
 "origin" "104 248 6"
 }
 // entity 39

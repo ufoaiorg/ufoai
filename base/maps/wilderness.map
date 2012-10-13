@@ -6775,7 +6775,7 @@
 {
 "classname" "misc_model"
 "spawnflags" "255"
-"model" "models/objects/vegi/tropic/tropic04.md2"
+"model" "models/objects/vegi/tropic/tropic03.md2"
 "angles" "18.7823 -47.6377 -15.3331"
 "origin" "1395.89 758.464 141.212"
 }
@@ -6827,7 +6827,7 @@
 {
 "classname" "misc_model"
 "spawnflags" "255"
-"model" "models/objects/vegi/tropic/tropic04.md2"
+"model" "models/objects/vegi/tropic/tropic03.md2"
 "origin" "1720 1490 76"
 }
 // entity 62
@@ -6867,7 +6867,7 @@
 {
 "classname" "misc_model"
 "spawnflags" "255"
-"model" "models/objects/vegi/tropic/tropic04.md2"
+"model" "models/objects/vegi/tropic/tropic03.md2"
 "angles" "8.34033 -1.69317 -11.5187"
 "origin" "276 1218 236"
 }

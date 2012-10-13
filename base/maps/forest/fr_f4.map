@@ -1582,7 +1582,7 @@
 {
 "classname" "misc_model"
 "spawnflags" "255"
-"model" "models/objects/vegi/tropic/tropic04.md2"
+"model" "models/objects/vegi/tropic/tropic03.md2"
 "angles" "0 -15.503 0"
 "origin" "194 240 6"
 }
