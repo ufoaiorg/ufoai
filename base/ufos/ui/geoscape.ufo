@@ -751,12 +751,27 @@ window popup_intercept_ready
 		modal		true
 	}
 
-	string name_label
-	{
-		string		"_Aircraft reached desired location - what to do?"
+	string craftname_label {
+		string		"_Aircraft:"
 		pos			"26 58"
+		size		"75 20"
+		font		"f_small_bold"
+	}
+
+	string craftname {
+		pos			"101 58"
+		size		"350 20"
+	}
+
+	string message {
+		string		"_Aircraft reached desired location - what to do?"
+		pos			"26 78"
 		size		"450 40"
 		longlines	LONGLINES_WRAP
+	}
+
+	confunc pop_intready_aircraft {
+		*node:parent.craftname@string = <1>
 	}
 
 	cmpCancelButton bt_cancel

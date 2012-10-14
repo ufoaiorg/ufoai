@@ -1121,6 +1121,7 @@ static void AIR_Move (aircraft_t* aircraft, int deltaTime)
 			MAP_SetInterceptorAircraft(aircraft);
 			CP_GameTimeStop();
 			cgi->UI_PushWindow("popup_intercept_ready");
+			cgi->UI_ExecuteConfunc("pop_intready_aircraft \"%s\"", aircraft->name);
 			break;
 		case AIR_RETURNING:
 			/* aircraft entered in homebase */
