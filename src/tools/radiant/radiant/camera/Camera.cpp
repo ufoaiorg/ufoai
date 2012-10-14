@@ -172,32 +172,6 @@ void Camera::freeMove (int dx, int dy)
 	freemoveUpdateAxes();
 }
 
-void Camera::mouseControl (int x, int y)
-{
-	int angleSpeed = getCameraSettings()->angleSpeed();
-	int movementSpeed = getCameraSettings()->movementSpeed();
-	float xf, yf;
-
-	xf = (float) (x - width / 2) / (width / 2);
-	yf = (float) (y - height / 2) / (height / 2);
-
-	xf *= 1.0f - fabsf(yf);
-	if (xf < 0) {
-		xf += 0.1f;
-		if (xf > 0)
-			xf = 0;
-	} else {
-		xf -= 0.1f;
-		if (xf < 0)
-			xf = 0;
-	}
-
-	origin += forward * (yf * 0.1f * movementSpeed);
-	angles[CAMERA_YAW] += xf * -0.1f * angleSpeed;
-
-	updateModelview();
-}
-
 void Camera::setAngles (const Vector3& newAngles)
 {
 	angles = newAngles;

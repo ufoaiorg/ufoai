@@ -84,7 +84,6 @@ class Camera
 		void mouseMove (int x, int y);
 		void freeMove (int dx, int dy);
 
-		void mouseControl (int x, int y);
 		void setAngles (const Vector3& newAngles);
 		const Vector3& getAngles () const;
 
