@@ -43,6 +43,12 @@ class Camera
 
 		static void motionDelta (int x, int y, void* data);
 		static gboolean camera_keymove (gpointer data);
+
+		void moveUpdateAxes ();
+		void keyControl (float dtime);
+		void keyMove ();
+		// Returns true if cubic clipping is "on"
+		bool farClipEnabled () const;
 	public:
 		int width, height;
 
@@ -62,21 +68,16 @@ class Camera
 
 		Camera (View* view, const Callback& update);
 
-		void keyControl (float dtime);
 		void setMovementFlags (unsigned int mask);
 		void clearMovementFlags (unsigned int mask);
-		void keyMove ();
 
 		void updateVectors ();
 		void updateModelview ();
 		void updateProjection ();
 
 		float getFarClipPlane () const;
-		// Returns true if cubic clipping is "on"
-		bool farClipEnabled () const;
 
 		void freemoveUpdateAxes ();
-		void moveUpdateAxes ();
 
 		const Vector3& getOrigin () const;
 		void setOrigin (const Vector3& newOrigin);
