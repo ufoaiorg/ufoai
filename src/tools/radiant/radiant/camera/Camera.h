@@ -32,15 +32,22 @@ class Camera
 		Vector3 origin;
 		Vector3 angles;
 
+		bool timing;
+		Vector3 color; // background
+		Vector3 vup, vright; // view matrix (taken from the modelview matrix)
+		unsigned int movementflags; // movement flags
+		float fieldOfView;
+
+		View* m_view;
+		Callback m_update;
+
+		static void motionDelta (int x, int y, void* data);
+		static gboolean camera_keymove (gpointer data);
 	public:
 		int width, height;
 
-		bool timing;
-
-		Vector3 color; // background
-
 		Vector3 forward, right; // move matrix (TTimo: used to have up but it was not updated)
-		Vector3 vup, vpn, vright; // view matrix (taken from the modelview matrix)
+		Vector3 vpn; // view matrix (taken from the modelview matrix)
 
 		Matrix4 projection;
 		Matrix4 modelview;
@@ -48,19 +55,10 @@ class Camera
 		bool m_strafe; // true when in strafemode toggled by the ctrl-key
 		bool m_strafe_forward; // true when in strafemode by ctrl-key and shift is pressed for forward strafing
 
-		unsigned int movementflags; // movement flags
 		Timer m_keycontrol_timer;
 		guint m_keymove_handler;
 
-		float fieldOfView;
-
 		DeferredMotionDelta m_mouseMove;
-
-		static void motionDelta (int x, int y, void* data);
-		static gboolean camera_keymove (gpointer data);
-
-		View* m_view;
-		Callback m_update;
 
 		Camera (View* view, const Callback& update);
 

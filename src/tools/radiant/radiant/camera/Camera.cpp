@@ -5,9 +5,10 @@
 #include "CameraSettings.h"
 
 Camera::Camera (View* view, const Callback& update) :
-	origin(0, 0, 0), angles(0, 0, 0), width(0), height(0), timing(false), color(0, 0, 0), movementflags(0),
-			m_keymove_handler(0), fieldOfView(75.0f), m_mouseMove(motionDelta, this), m_view(view), m_update(update)
+		origin(0, 0, 0), angles(0, 0, 0), timing(false), color(0, 0, 0), movementflags(0), fieldOfView(75.0f), m_view(
+				view), m_update(update), width(0), height(0), m_keymove_handler(0), m_mouseMove(motionDelta, this)
 {
+	projection = Matrix4::getIdentity();
 }
 
 void Camera::keyControl (float dtime)
@@ -53,7 +54,7 @@ void Camera::keyControl (float dtime)
 
 gboolean Camera::camera_keymove (gpointer data)
 {
-	Camera* self = reinterpret_cast<Camera*> (data);
+	Camera* self = reinterpret_cast<Camera*>(data);
 	self->keyMove();
 	return TRUE;
 }
@@ -80,7 +81,7 @@ void Camera::keyMove ()
 	m_mouseMove.flush();
 
 	//globalOutputStream() << "keymove... ";
-	float time_seconds = m_keycontrol_timer.elapsed_msec() / static_cast<float> (msec_per_sec);
+	float time_seconds = m_keycontrol_timer.elapsed_msec() / static_cast<float>(msec_per_sec);
 	m_keycontrol_timer.start();
 	if (time_seconds > 0.05f) {
 		time_seconds = 0.05f; // 20fps
@@ -228,8 +229,8 @@ void Camera::moveUpdateAxes ()
 	double ya = degrees_to_radians(angles[CAMERA_YAW]);
 
 	// the movement matrix is kept 2d
-	forward[0] = static_cast<float> (cos(ya));
-	forward[1] = static_cast<float> (sin(ya));
+	forward[0] = static_cast<float>(cos(ya));
+	forward[1] = static_cast<float>(sin(ya));
 	forward[2] = 0;
 	right[0] = forward[1];
 	right[1] = -forward[0];
@@ -255,7 +256,7 @@ void Camera::updateProjection ()
 
 void Camera::motionDelta (int x, int y, void* data)
 {
-	Camera* self = reinterpret_cast<Camera*> (data);
+	Camera* self = reinterpret_cast<Camera*>(data);
 	self->mouseMove(x, y);
 }
 

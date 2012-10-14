@@ -25,43 +25,12 @@
 #include "cullable.h"
 #include "math/frustum.h"
 
-char const* Cull_GetStats();
+char const* Cull_GetStats ();
 
-void Cull_ResetStats();
-
-extern int g_count_dots;
-extern int g_count_planes;
-extern int g_count_oriented_planes;
-extern int g_count_bboxs;
-extern int g_count_oriented_bboxs;
-
-static inline void debug_count_dot ()
-{
-	++g_count_dots;
-}
-
-static inline void debug_count_plane ()
-{
-	++g_count_planes;
-}
-
-static inline void debug_count_oriented_plane ()
-{
-	++g_count_oriented_planes;
-}
-
-static inline void debug_count_bbox ()
-{
-	++g_count_bboxs;
-}
-
-static inline void debug_count_oriented_bbox ()
-{
-	++g_count_oriented_bboxs;
-}
+void Cull_ResetStats ();
 
 /// \brief View-volume culling and transformations.
-class View : public VolumeTest {
+class View: public VolumeTest {
 	/// modelview matrix
 	Matrix4 m_modelview;
 	/// projection matrix
@@ -80,95 +49,39 @@ class View : public VolumeTest {
 
 	bool m_fill;
 
-	void construct() {
-		m_viewproj = matrix4_multiplied_by_matrix4(matrix4_multiplied_by_matrix4(m_scissor, m_projection), m_modelview);
+	void construct ();
+public:
+	View (bool fill = false);
 
-		m_frustum = frustum_from_viewproj(m_viewproj);
-		m_viewer = viewer_from_viewproj(m_viewproj);
-	}
-	public:
-	View(bool fill = false) :
-	m_modelview(Matrix4::getIdentity()),
-	m_projection(Matrix4::getIdentity()),
-	m_scissor(Matrix4::getIdentity()),
-	m_fill(fill) {
-	}
-	void Construct(const Matrix4& projection, const Matrix4& modelview, std::size_t width, std::size_t height) {
-		// modelview
-		m_modelview = modelview;
+	void Construct (const Matrix4& projection, const Matrix4& modelview, std::size_t width, std::size_t height);
 
-		// projection
-		m_projection = projection;
+	void EnableScissor (float min_x, float max_x, float min_y, float max_y);
 
-		// viewport
-		m_viewport = Matrix4::getIdentity();
-		m_viewport[0] = float(width / 2);
-		m_viewport[5] = float(height / 2);
-		if (fabs(m_projection[11])> 0.0000001)
-		m_viewport[10] = m_projection[0] * m_viewport[0];
-		else
-		m_viewport[10] = 1 / m_projection[10];
+	void DisableScissor ();
 
-		construct();
-	}
-	void EnableScissor(float min_x, float max_x, float min_y, float max_y) {
-		m_scissor = Matrix4::getIdentity();
-		m_scissor[0] = static_cast<float>((max_x - min_x) * 0.5);
-		m_scissor[5] = static_cast<float>((max_y - min_y) * 0.5);
-		m_scissor[12] = static_cast<float>((min_x + max_x) * 0.5);
-		m_scissor[13] = static_cast<float>((min_y + max_y) * 0.5);
-		matrix4_full_invert(m_scissor);
+	bool TestPoint (const Vector3& point) const;
 
-		construct();
-	}
-	void DisableScissor() {
-		m_scissor = Matrix4::getIdentity();
+	bool TestLine (const Segment& segment) const;
 
-		construct();
-	}
+	bool TestPlane (const Plane3& plane) const;
 
-	bool TestPoint(const Vector3& point) const {
-		return viewproj_test_point(m_viewproj, point);
-	}
-	bool TestLine(const Segment& segment) const {
-		return frustum_test_line(m_frustum, segment);
-	}
-	bool TestPlane(const Plane3& plane) const {
-		debug_count_plane();
-		return viewer_test_plane(m_viewer, plane);
-	}
-	bool TestPlane(const Plane3& plane, const Matrix4& localToWorld) const {
-		debug_count_oriented_plane();
-		return viewer_test_transformed_plane(m_viewer, plane, localToWorld);
-	}
-	VolumeIntersectionValue TestAABB(const AABB& aabb) const {
-		debug_count_bbox();
-		return frustum_test_aabb(m_frustum, aabb);
-	}
-	VolumeIntersectionValue TestAABB(const AABB& aabb, const Matrix4& localToWorld) const {
-		debug_count_oriented_bbox();
-		return frustum_intersects_transformed_aabb(m_frustum, aabb, localToWorld);
-	}
+	bool TestPlane (const Plane3& plane, const Matrix4& localToWorld) const;
 
-	const Matrix4& GetViewMatrix() const {
-		return m_viewproj;
-	}
-	const Matrix4& GetViewport() const {
-		return m_viewport;
-	}
-	const Matrix4& GetModelview() const {
-		return m_modelview;
-	}
-	const Matrix4& GetProjection() const {
-		return m_projection;
-	}
+	VolumeIntersectionValue TestAABB (const AABB& aabb) const;
 
-	bool fill() const {
-		return m_fill;
-	}
-	const Vector3& getViewer() const {
-		return m_viewer.getVector3();
-	}
+	VolumeIntersectionValue TestAABB (const AABB& aabb, const Matrix4& localToWorld) const;
+
+	const Matrix4& GetViewMatrix () const;
+
+	const Matrix4& GetViewport () const;
+
+	const Matrix4& GetModelview () const;
+
+	const Matrix4& GetProjection () const;
+
+	bool fill () const;
+
+	const Vector3& getViewer () const;
 };
 
 #endif
