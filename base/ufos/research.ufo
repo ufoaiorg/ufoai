@@ -3423,7 +3423,7 @@ tech rs_craft_drop_herakles
 
 	// FIXME
 	require_AND {
-		tech rs_alien_base
+		tech rs_craft_ufo_supply
 	}
 
 	provides	craft_drop_herakles
