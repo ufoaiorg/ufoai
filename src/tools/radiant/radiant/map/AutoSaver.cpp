@@ -163,11 +163,12 @@ void AutoMapSaver::checkSave() {
 	}
 
 	// Check, if changes have been made since the last autosave
-	if (_changes == Node_getMapFile(GlobalSceneGraph().root())->changes()) {
+	const bool changes = Node_getMapFile(GlobalSceneGraph().root())->changes();
+	if (_changes == changes) {
 		return;
 	}
 
-	_changes = Node_getMapFile(GlobalSceneGraph().root())->changes();
+	_changes = changes;
 
 	// Stop the timer before saving
 	stopTimer();
