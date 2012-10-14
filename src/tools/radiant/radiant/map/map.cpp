@@ -1012,8 +1012,7 @@ bool Map::askForSave (const std::string& title)
 	if (result == eIDYES) {
 		if (isUnnamed())
 			return saveAsDialog();
-		else
-			return save();
+		return save();
 	}
 	return true;
 }
