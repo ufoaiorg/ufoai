@@ -281,7 +281,7 @@ static void UI_GetItemTooltip (item_t item, char *tooltipText, size_t stringMaxL
 			} else if (item.ammo) {
 				/* Search for used ammo and display name + ammo count */
 				Q_strcat(tooltipText, va(_("%s loaded\n"), _(item.ammo->name)), stringMaxLength);
-				Q_strcat(tooltipText, va(_("Ammo: %i\n"),  item.ammoLeft), stringMaxLength);
+				Q_strcat(tooltipText, va(_("Ammo: %i\n"), item.ammoLeft), stringMaxLength);
 			}
 		} else if (item.item->numWeapons) {
 			/* Check if this is a non-weapon and non-ammo item */
@@ -557,7 +557,7 @@ static void UI_ContainerNodeDrawDropPreview (uiNode_t *target)
 		break;
 	case INV_FITS_BOTH:
 		/** @TODO enable Shift-rotate for battlescape too when issues are solved */
-		if (!Key_IsDown(K_SHIFT) ||  CL_BattlescapeRunning())
+		if (!Key_IsDown(K_SHIFT) || CL_BattlescapeRunning())
 			break;
 	case INV_FITS_ONLY_ROTATED:
 		previewItem.rotated = true;
@@ -887,7 +887,7 @@ void uiContainerNode::onLoading (uiNode_t *node)
 bool uiContainerNode::onDndEnter (uiNode_t *target)
 {
 	/* accept items only, if we have a container */
-	return UI_DNDGetType() == DND_ITEM && EXTRADATA(target).container && (!UI_IsScrollContainerNode(target) || UI_DNDGetSourceNode() !=  target);
+	return UI_DNDGetType() == DND_ITEM && EXTRADATA(target).container && (!UI_IsScrollContainerNode(target) || UI_DNDGetSourceNode() != target);
 }
 
 /**
@@ -1029,7 +1029,7 @@ bool uiContainerNode::onDndFinished (uiNode_t *source, bool isDropped)
 			if (!moved)
 				return false;
 
-			/* Add ammo on adding weapon to a soldier  */
+			/* Add ammo on adding weapon to a soldier */
 			if (UI_IsScrollContainerNode(source) && ((fItem->item.item->weapon && !fItem->item.ammoLeft) || fItem->item.item->oneshot))
 				INV_LoadWeapon(tItem, ui_inventory, sourceContainer, targetContainer);
 

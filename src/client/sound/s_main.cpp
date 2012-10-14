@@ -300,7 +300,7 @@ void S_Shutdown (void)
  * @param attenuation how to reduce volume by distance
  * @param volume well, the volume
  */
-bool S_LoadAndPlaySample(const char *s, const vec3_t origin, float attenuation, float volume)
+bool S_LoadAndPlaySample (const char *s, const vec3_t origin, float attenuation, float volume)
 {
 	s_sample_t *sample = S_LoadSample(s);
 	if (!sample)
@@ -316,7 +316,7 @@ bool S_LoadAndPlaySample(const char *s, const vec3_t origin, float attenuation, 
  * @param attenuation how to reduce volume by distance
  * @param volume well, the volume
  */
-void S_PlayStdSample(const stdsound_t sId, const vec3_t origin, float attenuation, float volume)
+void S_PlayStdSample (const stdsound_t sId, const vec3_t origin, float attenuation, float volume)
 {
 	S_PlaySample(origin, stdSoundPool[sId], attenuation, volume);
 }
