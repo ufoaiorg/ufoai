@@ -3628,6 +3628,7 @@ tech rs_craft_inter_stingray
 	provides	craft_inter_stingray
 	require_OR {
 		tech rs_craft_inter_starchaser
+		tech rs_craft_ufo_gunboat
 	}
 
 	require_for_production
