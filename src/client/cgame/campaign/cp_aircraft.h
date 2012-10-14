@@ -258,7 +258,6 @@ aircraft_t* AIR_GetFirstFromBase(const struct base_s *base);
 
 bool AIR_BaseHasAircraft(const struct base_s *base);
 int AIR_BaseCountAircraft(const struct base_s *base);
-int AIR_GetAircraftIDXInBase(const aircraft_t* aircraft);
 aircraft_t *AIR_GetAircraftFromBaseByIDXSafe(const struct base_s *base, int index);
 const char *AIR_AircraftStatusToName(const aircraft_t *aircraft);
 bool AIR_IsAircraftInBase(const aircraft_t *aircraft);

@@ -642,33 +642,6 @@ void AIR_AircraftReturnToBase (aircraft_t *aircraft)
 }
 
 /**
- * @brief Returns the index of the aircraft in the base->aircraft array.
- * @param[in] aircraft The aircraft to get the index for.
- * @return The array index or AIRCRAFT_INBASE_INVALID on error.
- * @todo Remove this! Aircraft no longer have local index per base
- */
-int AIR_GetAircraftIDXInBase (const aircraft_t* aircraft)
-{
-	int i;
-	const base_t *base;
-
-	if (!aircraft || !aircraft->homebase)
-		return AIRCRAFT_INBASE_INVALID;
-
-	base = aircraft->homebase;
-
-	i = 0;
-	AIR_ForeachFromBase(aircraftInBase, base) {
-		if (aircraftInBase == aircraft)
-			return i;
-		i++;
-	}
-
-	/* Aircraft not found in base */
-	return AIRCRAFT_INBASE_INVALID;
-}
-
-/**
  * @param base The base to get the aircraft from
  * @param index The index of the aircraft in the given base
  * @return @c NULL if there is no such aircraft in the given base, or the aircraft pointer that belongs to the given index.
