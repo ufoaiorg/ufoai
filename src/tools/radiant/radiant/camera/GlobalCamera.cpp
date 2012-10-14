@@ -112,8 +112,7 @@ void GlobalCameraManager::setCamWnd (CamWnd* camWnd)
 void GlobalCameraManager::resetCameraAngles ()
 {
 	if (_camWnd != NULL) {
-		Vector3 angles;
-		angles[CAMERA_ROLL] = angles[CAMERA_PITCH] = 0;
+		Vector3 angles(0.0f, 0.0f, 0.0f);
 		angles[CAMERA_YAW] = static_cast<float> (22.5 * floor((_camWnd->getCameraAngles()[CAMERA_YAW] + 11) / 22.5));
 		_camWnd->setCameraAngles(angles);
 	}

@@ -1279,13 +1279,12 @@ inline void draw_cube (const float radius, PointVertex* cube)
 inline void ArbitraryMeshTriangle_calcTangents (const ArbitraryMeshVertex& a, const ArbitraryMeshVertex& b,
 		const ArbitraryMeshVertex& c, Vector3& s, Vector3& t)
 {
-	s = Vector3(0, 0, 0);
-	t = Vector3(0, 0, 0);
-	Vector3 aVec, bVec, cVec;
+	s.set(0, 0, 0);
+	t.set(0, 0, 0);
 	{
-		aVec = Vector3(a.vertex.x(), a.texcoord.s(), a.texcoord.t());
-		bVec = Vector3(b.vertex.x(), b.texcoord.s(), b.texcoord.t());
-		cVec = Vector3(c.vertex.x(), c.texcoord.s(), c.texcoord.t());
+		Vector3 aVec(a.vertex.x(), a.texcoord.s(), a.texcoord.t());
+		Vector3 bVec(b.vertex.x(), b.texcoord.s(), b.texcoord.t());
+		Vector3 cVec(c.vertex.x(), c.texcoord.s(), c.texcoord.t());
 		Vector3 cross((bVec - aVec).crossProduct(cVec - aVec));
 
 		if (fabs(cross.x()) > 0.000001f) {
@@ -1298,9 +1297,9 @@ inline void ArbitraryMeshTriangle_calcTangents (const ArbitraryMeshVertex& a, co
 	}
 
 	{
-		aVec = Vector3(a.vertex.y(), a.texcoord.s(), a.texcoord.t());
-		bVec = Vector3(b.vertex.y(), b.texcoord.s(), b.texcoord.t());
-		cVec = Vector3(c.vertex.y(), c.texcoord.s(), c.texcoord.t());
+		Vector3 aVec(a.vertex.y(), a.texcoord.s(), a.texcoord.t());
+		Vector3 bVec(b.vertex.y(), b.texcoord.s(), b.texcoord.t());
+		Vector3 cVec(c.vertex.y(), c.texcoord.s(), c.texcoord.t());
 		Vector3 cross((bVec - aVec).crossProduct(cVec - aVec));
 
 		if (fabs(cross.x()) > 0.000001f) {
@@ -1313,9 +1312,9 @@ inline void ArbitraryMeshTriangle_calcTangents (const ArbitraryMeshVertex& a, co
 	}
 
 	{
-		aVec = Vector3(a.vertex.z(), a.texcoord.s(), a.texcoord.t());
-		bVec = Vector3(b.vertex.z(), b.texcoord.s(), b.texcoord.t());
-		cVec = Vector3(c.vertex.z(), c.texcoord.s(), c.texcoord.t());
+		Vector3 aVec(a.vertex.z(), a.texcoord.s(), a.texcoord.t());
+		Vector3 bVec(b.vertex.z(), b.texcoord.s(), b.texcoord.t());
+		Vector3 cVec(c.vertex.z(), c.texcoord.s(), c.texcoord.t());
 		Vector3 cross((bVec - aVec).crossProduct(cVec - aVec));
 
 		if (fabs(cross.x()) > 0.000001f) {
