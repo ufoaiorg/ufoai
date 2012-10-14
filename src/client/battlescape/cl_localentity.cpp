@@ -549,10 +549,7 @@ int LE_ActorGetStepTime (const le_t *le, const pos3_t pos, const pos3_t oldPos, 
 static void LE_PlayFootStepSound (le_t *le)
 {
 	if (Q_strvalid(le->teamDef->footstepSound)) {
-		s_sample_t *sample = S_LoadSample(le->teamDef->footstepSound);
-		if (!sample)
-			return;
-		S_PlaySample(le->origin, sample, SOUND_ATTN_NORM, SND_VOLUME_FOOTSTEPS);
+		S_LoadAndPlaySample(le->teamDef->footstepSound, le->origin, SOUND_ATTN_NORM, SND_VOLUME_FOOTSTEPS);
 		return;
 	}
 	/* walking in water will not play the normal footstep sounds */
