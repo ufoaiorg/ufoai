@@ -508,7 +508,9 @@ struct ModelResource: public Resource
 		{
 			MapFile* map = Node_getMapFile(m_model);
 			if (map != 0) {
-				return m_modified == modified() && map->saved();
+				const bool timeMatch = m_modified == modified();
+				const bool saved = map->saved();
+				return timeMatch && saved;
 			}
 			return true;
 		}
