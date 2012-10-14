@@ -3583,6 +3583,7 @@ tech rs_craft_inter_starchaser
 	provides	craft_inter_starchaser
 	require_AND {
 		tech rs_craft_inter_dragon
+		tech rs_craft_ufo_supply
 	}
 	time	15000
 	producetime	600
