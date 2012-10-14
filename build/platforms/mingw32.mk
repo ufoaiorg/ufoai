@@ -30,4 +30,5 @@ endif
 ufo2map_LDFLAGS          += -lwinmm
 ufomodel_LDFLAGS         += -lwinmm
 uforadiant_LDFLAGS       += -lglib-2.0 -lgtk-win32-2.0 -lgobject-2.0 -mwindows -static-libgcc -static-libstdc++
+ufoslicer_LDFLAGS        += -lwinmm
 memory_LDFLAGS           += $(INTL_LIBS)
