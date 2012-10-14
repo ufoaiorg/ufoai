@@ -45,6 +45,9 @@ void ParticlePropertyEditor::_onBrowseButton (GtkWidget* w, ParticlePropertyEdit
 	ParticleSelector chooser;
 	std::string selection = chooser.chooseParticle();
 	if (!selection.empty()) {
+		// greebo: Instantiate a scoped object to make this operation undoable
+		UndoableCommand command("entitySetProperty");
+
 		// Apply the change to the entity
 		self->_entity->setKeyValue(self->_key, selection);
 	}

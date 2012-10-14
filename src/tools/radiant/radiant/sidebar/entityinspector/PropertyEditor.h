@@ -1,6 +1,8 @@
 #ifndef PROPERTYEDITOR_H_
 #define PROPERTYEDITOR_H_
 
+#include "iundo.h"
+
 #include <gtk/gtkwidget.h>
 #include <string>
 

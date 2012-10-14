@@ -88,6 +88,9 @@ void Vector3PropertyEditor::_onApply (GtkWidget* w, Vector3PropertyEditor* self)
 			+ string::toString(gtk_spin_button_get_value(GTK_SPIN_BUTTON(self->_yValue))) + " " + string::toString(
 			gtk_spin_button_get_value(GTK_SPIN_BUTTON(self->_zValue)));
 
+	// greebo: Instantiate a scoped object to make this operation undoable
+	UndoableCommand command("entitySetProperty");
+
 	// Set the key on the entity
 	self->_entity->setKeyValue(self->_key, value);
 }

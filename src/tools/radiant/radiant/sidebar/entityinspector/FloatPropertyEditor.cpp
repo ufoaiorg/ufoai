@@ -48,6 +48,9 @@ FloatPropertyEditor::FloatPropertyEditor (Entity* entity, const std::string& key
 
 void FloatPropertyEditor::_onApply (GtkWidget* w, FloatPropertyEditor* self)
 {
+	// greebo: Instantiate a scoped object to make this operation undoable
+	UndoableCommand command("entitySetProperty");
+
 	float value = gtk_range_get_value(GTK_RANGE(self->_scale));
 	self->_entity->setKeyValue(self->_key, string::toString(value));
 }

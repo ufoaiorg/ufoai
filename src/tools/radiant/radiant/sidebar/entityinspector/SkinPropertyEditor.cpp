@@ -46,6 +46,9 @@ void SkinPropertyEditor::_onBrowseButton (GtkWidget* w, SkinPropertyEditor* self
 	std::string prevSkin = self->_entity->getKeyValue(self->_key);
 	std::string skin = SkinChooser::chooseSkin(modelName, prevSkin);
 
+	// greebo: Instantiate a scoped object to make this operation undoable
+	UndoableCommand command("entitySetProperty");
+
 	// Apply the key to the entity
 	self->_entity->setKeyValue(self->_key, skin);
 }

@@ -57,6 +57,9 @@ void SpawnflagsPropertyEditor::_onToggle (GtkWidget* w, SpawnflagsPropertyEditor
 			const std::string oldVal = self->_entity->getKeyValue(self->_key);
 			const int oldInt = string::toInt(oldVal);
 			const int newVal = oldInt ^ (1 << i->first);
+			// greebo: Instantiate a scoped object to make this operation undoable
+			UndoableCommand command("entitySetProperty");
+
 			self->_entity->setKeyValue(self->_key, string::toString(newVal));
 			return;
 		}

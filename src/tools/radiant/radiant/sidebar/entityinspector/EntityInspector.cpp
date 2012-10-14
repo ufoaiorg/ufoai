@@ -423,10 +423,6 @@ void EntityInspector::keyValueChanged ()
 {
 	// Redraw the entity inspector GUI
 	Instance().requestIdleCallback();
-
-	// Set the map modified flag
-	if (Instance()._selectedEntity != NULL)
-		GlobalMap().setModified(true);
 }
 
 // Selection changed callback

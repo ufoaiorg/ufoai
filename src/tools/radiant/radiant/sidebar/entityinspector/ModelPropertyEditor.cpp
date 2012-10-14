@@ -42,8 +42,12 @@ void ModelPropertyEditor::_onBrowseButton (GtkWidget* w, ModelPropertyEditor* se
 {
 	// Use the ModelSelector to choose a model
 	ModelAndSkin model = ModelSelector::chooseModel();
-	if (!model.model.empty())
+	if (!model.model.empty()) {
+		// greebo: Instantiate a scoped object to make this operation undoable
+		UndoableCommand command("entitySetProperty");
+
 		self->_entity->setKeyValue(self->_key, model.model);
+	}
 }
 
 }

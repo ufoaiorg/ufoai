@@ -45,6 +45,9 @@ void SoundPropertyEditor::_onBrowseButton (GtkWidget* w, SoundPropertyEditor* se
 	SoundChooser chooser;
 	std::string selection = chooser.chooseSound();
 	if (!selection.empty()) {
+		// greebo: Instantiate a scoped object to make this operation undoable
+		UndoableCommand command("entitySetProperty");
+
 		// Apply the change to the entity
 		self->_entity->setKeyValue(self->_key, selection);
 	}

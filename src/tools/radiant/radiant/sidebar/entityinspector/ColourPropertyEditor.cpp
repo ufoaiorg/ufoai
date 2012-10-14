@@ -62,6 +62,9 @@ std::string ColourPropertyEditor::getSelectedColour ()
 
 void ColourPropertyEditor::_onColorSet (GtkWidget* w, ColourPropertyEditor* self)
 {
+	// greebo: Instantiate a scoped object to make this operation undoable
+	UndoableCommand command("entitySetProperty");
+
 	// Set the new keyvalue on the entity
 	self->_entity->setKeyValue(self->_key, self->getSelectedColour());
 }
