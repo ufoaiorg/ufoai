@@ -337,7 +337,7 @@ const MapFormat& Map::getFormat ()
 	return MapFormat_forFile(getName());
 }
 
-bool Map::isModified ()
+bool Map::isModified () const
 {
 	return m_modified;
 }

@@ -168,7 +168,7 @@ class Map: public ModuleObserver
 
 		void FocusViews (const Vector3& point, float angle);
 
-		bool isModified ();
+		bool isModified () const;
 		void setModified (bool modified);
 };
 
