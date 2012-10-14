@@ -256,7 +256,7 @@ void TransformDialog::onClickLarger(GtkWidget* button, EntryRow* row) {
 	// Determine the action
 	if (row->isRotator) {
 		// Do a rotation
-		Vector3 eulerXYZ;
+		Vector3 eulerXYZ(0.0f, 0.0f, 0.0f);
 
 		// Store the value into the right axis
 		eulerXYZ[row->axis] = step;
@@ -278,12 +278,12 @@ void TransformDialog::onClickLarger(GtkWidget* button, EntryRow* row) {
 
 void TransformDialog::onClickSmaller(GtkWidget* button, EntryRow* row) {
 	// Get the current value and the step increment
-	float step = string::toFloat(gtk_entry_get_text(GTK_ENTRY(row->step)));
+	const float step = string::toFloat(gtk_entry_get_text(GTK_ENTRY(row->step)));
 
 	// Determine the action
 	if (row->isRotator) {
 		// Do a rotation
-		Vector3 eulerXYZ;
+		Vector3 eulerXYZ(0.0f, 0.0f, 0.0f);
 
 		// Store the value into the right axis
 		eulerXYZ[row->axis] = -step;
