@@ -45,9 +45,9 @@
 
 		<transformDialog>
 			<window xPosition="150" yPosition="200" width="280" height="242" />
-			<rotXStep value="0" />
-			<rotYStep value="0" />
-			<rotZStep value="0" />
+			<rotXStep value="90" />
+			<rotYStep value="90" />
+			<rotZStep value="90" />
 			<scaleXStep value="1.0" />
 			<scaleYStep value="1.0" />
 			<scaleZStep value="1.0" />
