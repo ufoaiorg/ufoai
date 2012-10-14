@@ -260,6 +260,12 @@ static void B_ChangeBaseName_f (void)
 	if (!base)
 		return;
 
+	/* basename should not contain " */
+	if (strchr(cgi->Cvar_GetString("mn_base_title"), '"') != NULL) {
+		cgi->Cvar_Set("mn_base_title", base->name);
+		return;
+	}
+
 	Q_strncpyz(base->name, cgi->Cvar_GetString("mn_base_title"), sizeof(base->name));
 }
 

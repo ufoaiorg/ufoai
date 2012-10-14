@@ -225,8 +225,16 @@ static void E_EmployeeList_f (void)
 static void E_ChangeName_f (void)
 {
 	employee_t *employee = E_GetEmployeeFromChrUCN(cgi->Cvar_GetInteger("mn_ucn"));
-	if (employee)
-		Q_strncpyz(employee->chr.name, cgi->Cvar_GetString("mn_name"), sizeof(employee->chr.name));
+	if (!employee)
+		return;
+
+	/* employee name should not contain " */
+	if (strchr(cgi->Cvar_GetString("mn_name"), '"') != NULL) {
+		cgi->Cvar_ForceSet("mn_name", employee->chr.name);
+		return;
+	}
+
+	Q_strncpyz(employee->chr.name, cgi->Cvar_GetString("mn_name"), sizeof(employee->chr.name));
 }
 
 /**
