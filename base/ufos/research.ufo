@@ -5090,7 +5090,6 @@ tech rs_craft_weapon_alien_launcher
 
 	require_AND
 	{
-		tech rs_fighter_OR_harvester	// LOGIC tech - see there for more
 		item (craft_weapon_alien_launcher 1)
 	}
 
@@ -5138,8 +5137,6 @@ tech rs_craft_ammo_am_missile
 
 	require_AND
 	{
-//		tech rs_craft_ufo_fighter
-//		tech rs_craft_ufo_harvester
 		tech rs_antimatter
 		item (craft_ammo_am_missile 1)
 	}
