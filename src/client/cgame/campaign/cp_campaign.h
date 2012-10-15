@@ -119,7 +119,7 @@ struct campaign_s;
  * @brief Determines the interest interval for a single campaign
  */
 #define INITIAL_OVERALL_INTEREST 			20
-#define FINAL_OVERALL_INTEREST 				1000
+#define FINAL_OVERALL_INTEREST 				400
 
 /**
  * @brief The length of a single mission spawn cycle
@@ -131,12 +131,12 @@ struct campaign_s;
  * @note some of the missions can be non-occurrence missions.
  */
 #define MINIMUM_MISSIONS_PER_CYCLE 			5
-#define MAXIMUM_MISSIONS_PER_CYCLE 			25
+#define MAXIMUM_MISSIONS_PER_CYCLE 			17
 
 /**
  * @brief The probability that any new alien mission will be a non-occurrence mission.
  */
-#define NON_OCCURRENCE_PROBABILITY 			0.65
+#define NON_OCCURRENCE_PROBABILITY 			0.75
 
 /** possible map types */
 typedef enum mapType_s {
