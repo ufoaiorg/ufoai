@@ -5562,7 +5562,7 @@ tech rs_orbital_ufo_activity
 	}
 	require_AND
 	{
-		tech	rs_alien_strategy
+		tech	rs_craft_ufo_bomber
 	}
 
 	provides	orbit
