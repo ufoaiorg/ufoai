@@ -5206,7 +5206,6 @@ tech rs_craft_el_targeting
 	type		"craftitem"
 	up_chapter	crafts
 	name		"_Targeting Computer"
-	// pre_description	"*msgid:craft_electronics_targeting_pre_txt"
 	description {
 		default "*msgid:craft_electronics_targeting_txt"
 	}
@@ -5223,7 +5222,6 @@ tech rs_craft_el_fuelpod
 	type		"craftitem"
 	up_chapter	crafts
 	name		"_Fuel Pod"
-	// pre_description	"*msgid:craft_electronics_fuelpod_pre_txt"
 	description {
 		default "*msgid:craft_electronics_fuelpod_txt"
 	}
@@ -5233,7 +5231,6 @@ tech rs_craft_el_fuelpod
 	producetime	80
 
 	model		"aircraft/craft_item_fuel/fuel"
-	//image	"techs/craft_electronics_fuelpod"
 }
 
 tech rs_craft_el_alien_ew
@@ -5241,7 +5238,6 @@ tech rs_craft_el_alien_ew
 	type		"craftitem"
 	up_chapter	crafts
 	name		"_Alien Electronic Warfare Suite"
-	// pre_description	"*msgid:craft_electronics_raven_pre_txt"
 	description {
 		default "*msgid:craft_electronics_raven_txt"
 	}
