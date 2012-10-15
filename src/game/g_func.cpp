@@ -171,18 +171,19 @@ static void Door_SlidingUse (edict_t *door)
 	 * shifted when the door state changes. As the mins and maxs of the aabb are absolute
 	 * world coordinates in the map we have to translate the position by the above
 	 * calculated movement vector */
-#if 0
+#if 1
 	WorldBox oldBox(vec3_origin, vec3_origin);
 	gi.GetInlineModelBox(door->model, oldBox);
-	GridBox rerouteOldBox(oldBox.mins, oldBox.maxs);
-	/* Update path finding table */
-	G_RecalcRouting(door->model, rerouteOldBox);
-
-	/** @todo this is not yet working for tracing and pathfinding - check what must be done to
-	 * allow shooting and walking through the opened door */
-	VectorAdd(door->origin, distanceVec, door->origin);
-	gi.SetInlineModelOrientation(door->model, door->origin, door->angles);
+	GridBox rerouteOldBox(oldBox.mins, oldBox.maxs);						/* remember the old location */
+	VectorAdd(door->origin, distanceVec, door->origin);						/* calc new model position */
+	gi.SetInlineModelOrientation(door->model, door->origin, door->angles);	/* move the model out of the way */
+	G_RecalcRouting(door->model, rerouteOldBox);							/* Update path finding table */
+	/** @todo once we get sliding doors that do not simply vanish inside some wall when opened,
+	 * but instead block some other place that was walkable before, we must repeat the above process
+	 * for the new position. For now that would only be a waste of cpu (Duke, 15.10.2012) */
 #else
+	/** @todo we have now updated the InlineModel - check what must be done to
+	 * upddate the entity */
 	VectorAdd(door->mins, distanceVec, door->mins);
 	VectorAdd(door->maxs, distanceVec, door->maxs);
 #endif
