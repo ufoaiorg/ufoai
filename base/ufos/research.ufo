@@ -5033,9 +5033,6 @@ tech rs_craft_weapon_particle
 
 	require_AND
 	{
-//		tech rs_craft_ufo_fighter
-//		tech rs_craft_ufo_harvester
-		tech rs_fighter_OR_harvester	// LOGIC tech - see there for more
 		item (craft_weapon_particle_beam 1)
 	}
 
