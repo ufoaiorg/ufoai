@@ -177,8 +177,28 @@ check_headers() {
 }
 
 check_compiler() {
-	# TODO Implement compiler check
-	CC=${CC:-cc}
+	# TODO improve compiler check
+	if [ ! "${CC}" = "" ]; then
+		${CC} --help > /dev/null 2>&1
+		if [ $? -ne 0 ]; then
+			error "Could not find specified compiler: ${CC}"
+		fi
+	fi
+	if [ "${CC}" = "" ]; then
+		for i in cc gcc; do
+			if [ "${CC}" = "" ]; then
+				$i --help > /dev/null 2>&1
+				if [ $? -eq 0 ]; then
+					CC=$i
+				fi
+			fi
+		done
+	fi
+	if [ "${CC}" = "" ]; then
+		error "Could not find a compiler in your path"
+	fi
+
+	# TODO implement compiler check
 	CXX=${CXX:-c++}
 
 	if [ "${TARGET_OS}" = "android" ]; then
