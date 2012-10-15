@@ -4493,25 +4493,6 @@ tech rs_weapon_hovernet_adv_plasma_ammo
 	producetime	-1
 }
 
-// CYBORG ORTNOK
-
-//tech rs_alien_cyborg_ortnok_autopsy
-//{
-//	type	"alien"
-//	name	"_Alien Autopsy - Ortnok Cyborg"
-//	description	"*msgid:cyborg_ortnok_autopsy_txt"
-//	pre_description	"*msgid:cyborg_ortnok_autopsy_pre_txt"
-//	up_chapter	aliens
-//
-//	require_AND
-//	{
-//		tech TODO
-//	}
-//	time	1500
-//
-//	model	alien_cyborg_ortnok
-//}
-
 //========================
 // UGVs
 //========================
