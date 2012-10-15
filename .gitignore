@@ -10,6 +10,7 @@
 /debug-*/
 /Makefile.local
 /memory
+/memory.exe
 /release-*/
 /ufoslicer
 /ufoslicer.exe
