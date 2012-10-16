@@ -448,7 +448,7 @@ aircraft craft_ufo_scout
 	type		"ufo"
 	model		"geoscape/ufo_scout"
 	size		1
-	numteam		3
+	numteam		4
 	price		8000
 	image		"geoscape/air_ufo"
 	interestlevel 0
@@ -470,7 +470,7 @@ aircraft craft_ufo_fighter
 	type		"ufo"
 	model		"geoscape/ufo_fighter"
 	size		1
-	numteam		5
+	numteam		8
 	price		12000
 	image		"geoscape/air_ufo"
 	interestlevel 50
@@ -498,7 +498,7 @@ aircraft craft_ufo_harvester
 	type		"ufo"
 	model		"geoscape/ufo_harvester"
 	size		2
-	numteam		12
+	numteam		14
 	price		18000
 	image		"geoscape/air_ufo"
 	interestlevel 80
@@ -538,7 +538,7 @@ aircraft craft_ufo_corrupter
 	type		"ufo"
 	model		"geoscape/ufo_corrupter"
 	size		2
-	numteam		15
+	numteam		18
 	price		27000
 	image		"geoscape/air_ufo"
 	slot {
@@ -594,7 +594,7 @@ aircraft craft_ufo_gunboat
 	type		"ufo"
 	model		"geoscape/ufo_gunboat"
 	size		2
-	numteam		8
+	numteam		12
 	price		23000
 	image		"geoscape/air_ufo"
 	interestlevel 310
@@ -646,7 +646,7 @@ aircraft craft_ufo_bomber
 	type		"ufo"
 	model		"geoscape/ufo_bomber"
 	size		2
-	numteam		25
+	numteam		24
 	leader		true
 	price		45000
 	image		"geoscape/air_ufo"
