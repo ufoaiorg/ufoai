@@ -24,6 +24,7 @@ campaign veryhard
 	researchrate		0.8
 	uforeductionrate	0.75
 	healingrate			2
+	employeerate		0.8
 
 	date		"2084 79 6"
 	basecost	100000
@@ -78,6 +79,7 @@ campaign hard
 	researchrate		0.8
 	uforeductionrate	0.75
 	healingrate			2
+	employeerate		0.9
 
 	date		"2084 79 6"
 	basecost	100000
@@ -133,6 +135,7 @@ campaign main
 	researchrate		0.8
 	uforeductionrate	0.75
 	healingrate			2
+	employeerate		1.0
 
 	date		"2084 79 6"
 	basecost	100000
@@ -187,6 +190,7 @@ campaign easy
 	researchrate		0.8
 	uforeductionrate	0.75
 	healingrate			2
+	employeerate		1.5
 
 	date		"2084 79 6"
 	basecost	100000
@@ -241,6 +245,7 @@ campaign veryeasy
 	researchrate		0.8
 	uforeductionrate	0.75
 	healingrate			2
+	employeerate		2
 
 	date		"2084 79 6"
 	basecost	100000
