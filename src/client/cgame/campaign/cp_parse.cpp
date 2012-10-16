@@ -355,6 +355,7 @@ static const value_t campaign_vals[] = {
 	{"healingrate", V_FLOAT, offsetof(campaign_t, healingRate), MEMBER_SIZEOF(campaign_t, healingRate)},
 	{"uforeductionrate", V_FLOAT, offsetof(campaign_t, ufoReductionRate), MEMBER_SIZEOF(campaign_t, ufoReductionRate)},
 	{"initialinterest", V_INT, offsetof(campaign_t, initialInterest), MEMBER_SIZEOF(campaign_t, initialInterest)},
+	{"employeerate", V_FLOAT, offsetof(campaign_t, employeeRate), MEMBER_SIZEOF(campaign_t, employeeRate)},
 	{NULL, V_NULL, 0, 0}
 };
 
@@ -400,6 +401,7 @@ static void CP_ParseCampaign (const char *name, const char **text)
 	cp->healingRate = 1.0f;
 	cp->ufoReductionRate = NON_OCCURRENCE_PROBABILITY;
 	cp->initialInterest = INITIAL_OVERALL_INTEREST;
+	cp->employeeRate = 1.0f;
 
 	/* get it's body */
 	token = Com_Parse(text);
