@@ -29,9 +29,9 @@ nation latin
 	color "0 1 0.5 1"
 	funding	90000
 	happiness 0.5
-	soldiers 4
-	scientists 1
-	workers 4
+	soldiers 5
+	scientists 2
+	workers 5
 	pilots	1
 	pos "60 -13"
 }
@@ -42,9 +42,9 @@ nation states
 	color "0 0.5 0 1"
 	funding	130000
 	happiness 0.5
-	soldiers 4
-	scientists 2
-	workers 4
+	soldiers 5
+	scientists 3
+	workers 3
 	pilots	2
 	pos "103 48"
 }
@@ -58,7 +58,7 @@ nation europe
 	happiness 0.5
 	soldiers 3
 	scientists 3
-	workers 3
+	workers 2
 	pilots	2
 }
 
@@ -70,7 +70,7 @@ nation asia
 	happiness 0.5
 	soldiers 5
 	scientists 1
-	workers 5
+	workers 3
 	pilots	1
 	pos "-100 33"
 }
@@ -96,7 +96,7 @@ nation africa
 	happiness 0.5
 	soldiers 5
 	scientists 1
-	workers 5
+	workers 3
 	pilots	1
 	pos "-20 5"
 }
@@ -107,9 +107,9 @@ nation russia
 	color "0.5 0 0 1"
 	funding	90000
 	happiness 0.5
-	soldiers 5
-	scientists 5
-	workers 5
+	soldiers 3
+	scientists 3
+	workers 2
 	pilots	2
 	pos "-80 63"
 }
@@ -120,9 +120,9 @@ nation oceania
 	color "0.5 0 0.5 1"
 	funding	120000
 	happiness 0.5
-	soldiers 4
-	scientists 2
-	workers 4
+	soldiers 5
+	scientists 3
+	workers 2
 	pilots	1
 	pos "-130 -25"
 }
