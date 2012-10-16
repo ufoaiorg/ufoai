@@ -58,10 +58,10 @@ campaign hard
 	name			"_Hard Campaign"
 	text			"*msgid:hard_campaign_txt"
 	team			"phalanx"
-	soldiers		8
-	scientists		6
-	workers			6
-	pilots			4
+	soldiers		12
+	scientists		10
+	workers			10
+	pilots			6
 	difficulty		2
 	minhappiness	0.35
 	maxdebts		100000
@@ -113,10 +113,10 @@ campaign main
 	name			"_Standard Campaign"
 	text			"*msgid:standard_campaign_txt"
 	team			"phalanx"
-	soldiers		9
-	scientists		10
-	workers			10
-	pilots			6
+	soldiers		16
+	scientists		15
+	workers			15
+	pilots			8
 	difficulty		0
 	minhappiness	0.30
 	maxdebts		200000
@@ -169,10 +169,10 @@ campaign easy
 	name			"_Easy Campaign"
 	text			"*msgid:easy_campaign_txt"
 	team			"phalanx"
-	soldiers		25
-	scientists		16
-	workers			10
-	pilots			8
+	soldiers		32
+	scientists		20
+	workers			20
+	pilots			12
 	difficulty		-2
 	minhappiness	0.2
 	maxdebts		350000
@@ -224,10 +224,10 @@ campaign veryeasy
 	name			"_Very Easy Campaign"
 	text			"*msgid:veryeasy_campaign_txt"
 	team			"phalanx"
-	soldiers		35
-	scientists		26
+	soldiers		32
+	scientists		20
 	workers			20
-	pilots			10
+	pilots			12
 	difficulty		-4
 	minhappiness	0.1
 	maxdebts		500000
