@@ -183,7 +183,7 @@ campaign easy
 	soldierequipment	phalanx_initial
 	market				campaign_initial_market
 	asymptotic_market	campaign_asymptotic_market
-	credits				1300000
+	credits				1500000
 	map					"map_earth"
 	visible				true
 	events				main
@@ -238,7 +238,7 @@ campaign veryeasy
 	soldierequipment	phalanx_initial
 	market				campaign_initial_market
 	asymptotic_market	campaign_asymptotic_market
-	credits				1300000
+	credits				2000000
 	map					"map_earth"
 	visible				true
 	events				main
