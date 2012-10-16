@@ -9,7 +9,7 @@ import java.io.File;
 public class UfoResources {
 
 	private static String[] supportedImageExtensions = { ".png", ".jpg" };
-	private static String[] supportedModelExtensions = { ".md2", ".md3", ".obj", ".dpm" };
+	private static String[] supportedModelExtensions = { ".md2", ".obj" };
 	private static String[] supportedSoundExtensions = { ".ogg", ".wav" };
 
 	/**
