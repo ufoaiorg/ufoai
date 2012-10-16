@@ -27,7 +27,7 @@ nation latin
 {
 	name "_The Revolutionary Countries"
 	color "0 1 0.5 1"
-	funding	90000
+	funding	140000
 	happiness 0.5
 	soldiers 5
 	scientists 2
@@ -40,7 +40,7 @@ nation states
 {
 	name "_United America"
 	color "0 0.5 0 1"
-	funding	130000
+	funding	160000
 	happiness 0.5
 	soldiers 5
 	scientists 3
@@ -66,7 +66,7 @@ nation asia
 {
 	name "_The Asian Republic"
 	color "0.5 0.5 0 1"
-	funding	180000
+	funding	125000
 	happiness 0.5
 	soldiers 5
 	scientists 1
@@ -79,7 +79,7 @@ nation middle
 {
 	name "_The Middle-Eastern Alliance"
 	color "1 1 0 1"
-	funding	66000
+	funding 80000
 	happiness 0.5
 	soldiers 1
 	scientists 3
@@ -105,7 +105,7 @@ nation russia
 {
 	name "_Russia"
 	color "0.5 0 0 1"
-	funding	90000
+	funding	100000
 	happiness 0.5
 	soldiers 3
 	scientists 3
