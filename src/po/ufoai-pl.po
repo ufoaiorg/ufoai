@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
 "POT-Creation-Date: 2012-10-16 10:46+0700\n"
-"PO-Revision-Date: 2012-09-06 08:38+0100\n"
+"PO-Revision-Date: 2012-10-16 11:16+0100\n"
 "Last-Translator: Maciej Wierzbicki <voovoos@killfile.pl>\n"
 "Language-Team:  <radius75@interia.pl>\n"
 "Language: pl_PL\n"
@@ -442,7 +442,7 @@ msgstr "Pancerz Kształtkowy"
 
 #: ../base/ufos/aircraftmanagement.ufo:1065 ../base/ufos/research.ufo:5240
 msgid "Alien Electronic Warfare Suite"
-msgstr ""
+msgstr "Elektroniczny System Zagłuszania Obcych"
 
 #: ../base/ufos/aircraftmanagement.ufo:1077 ../base/ufos/research.ufo:4708
 msgid "Alien Astrogation"
@@ -533,9 +533,8 @@ msgid "Medium Alien Armour"
 msgstr "Średni pancerz Obcych"
 
 #: ../base/ufos/basemanagement.ufo:35
-#, fuzzy
 msgid "Alien Containment"
-msgstr "Pomieszczenie Kwarantanny"
+msgstr "Kwarantanna Obcych"
 
 #: ../base/ufos/basemanagement.ufo:51
 msgid "Entrance"
@@ -560,14 +559,12 @@ msgid "Living Quarters"
 msgstr "Kwatery"
 
 #: ../base/ufos/basemanagement.ufo:123
-#, fuzzy
 msgid "Dropship Hangar"
-msgstr "Zniszcz Hangar"
+msgstr "Hangar dla Desantowca"
 
 #: ../base/ufos/basemanagement.ufo:139
-#, fuzzy
 msgid "Interceptor Hangar"
-msgstr "Myśliwiec"
+msgstr "Hangar dla Myśliwca"
 
 #: ../base/ufos/basemanagement.ufo:153
 #: client/cgame/campaign/cp_base_callbacks.cpp:331
@@ -2497,9 +2494,8 @@ msgid "Memo: Live Aliens"
 msgstr "Notatka: Żywi Obcy"
 
 #: ../base/ufos/events.ufo:65
-#, fuzzy
 msgid "Memo: Sam Sites"
-msgstr "Notatka: Żywi Obcy"
+msgstr "Notatka: Baterie Rakiet"
 
 #: ../base/ufos/events.ufo:76
 msgid "Alien died"
@@ -2653,6 +2649,9 @@ msgid ""
 "which is capable of launching a heavy payload beyond earth's atmosphere to "
 "knock down an orbiting UFO."
 msgstr ""
+"Orbitalna Wyrzutnia Rakiet jest wielką instalacją osadzoną w ziemi która "
+"potrafi wystrzelic ciężki ładunek poza ziemską atmosferę i zestrzelić w ten "
+"sposób orbitujące UFO."
 
 #: ../base/ufos/language.ufo:2
 msgid "English"
@@ -3160,7 +3159,7 @@ msgstr "Starszy Kapral"
 
 #: ../base/ufos/medals.ufo:90
 msgid "Cpl"
-msgstr "st kpr."
+msgstr "st. kpr."
 
 #: ../base/ufos/medals.ufo:102
 msgid "Sergeant"
@@ -3176,7 +3175,7 @@ msgstr "Młodszy chorąży"
 
 #: ../base/ufos/medals.ufo:116
 msgid "WO"
-msgstr "mł. chr."
+msgstr "mł. chor."
 
 #: ../base/ufos/medals.ufo:128
 msgid "Senior Warrant Officer"
@@ -3184,7 +3183,7 @@ msgstr "Chorąży"
 
 #: ../base/ufos/medals.ufo:129
 msgid "SWO"
-msgstr "chr."
+msgstr "chor."
 
 #: ../base/ufos/medals.ufo:140
 msgid "Second Lieutenant"
@@ -3216,7 +3215,7 @@ msgstr "Major"
 
 #: ../base/ufos/medals.ufo:177
 msgid "Maj"
-msgstr "mjr."
+msgstr "mjr"
 
 #: ../base/ufos/medals.ufo:188
 msgid "Lieutenant-Colonel"
@@ -3224,7 +3223,7 @@ msgstr "Podpułkownik"
 
 #: ../base/ufos/medals.ufo:189
 msgid "Lt Col"
-msgstr "ppłk."
+msgstr "ppłk"
 
 #: ../base/ufos/medals.ufo:200
 msgid "Colonel"
@@ -3232,7 +3231,7 @@ msgstr "Pułkownik"
 
 #: ../base/ufos/medals.ufo:201
 msgid "Col"
-msgstr "płk."
+msgstr "płk"
 
 #: ../base/ufos/msgid/aircraft.ufo:40
 #, fuzzy
@@ -4087,7 +4086,7 @@ msgstr ""
 "wykonaliśmy, zalecam więc natychmiastowe wdrożenie. Jednak Starchaser jest "
 "zdecydowanie bardzo kosztowny pod względem  finansów, materiału i czasu.\n"
 "\n"
-"--mjr. Navarre"
+"--mjr Navarre"
 
 #: ../base/ufos/msgid/aircraft.ufo:224
 #, fuzzy
@@ -4123,7 +4122,7 @@ msgstr ""
 "Sugeruję Dowódco aby dać temu projektowi priorytet. Nasi piloci w powietrzu "
 "ryzykują życiem codziennie a z każdym dniem to ryzyko rośnie.\n"
 "\n"
-"--mjr. Navarre"
+"--mjr Navarre"
 
 #: ../base/ufos/msgid/aircraft.ufo:236
 msgid ""
@@ -4242,7 +4241,7 @@ msgstr ""
 "nieuzbrojone, musimy strącać je jak tylko zostaną wykryte gdyż wszelkie "
 "zamiary Obcych związane z ruchami tych pojazdów są dla nas zagrożeniem.\n"
 "\n"
-"--mjr. Navarre"
+"--mjr Navarre"
 
 #: ../base/ufos/msgid/aircraft.ufo:272
 #, fuzzy
@@ -5019,7 +5018,7 @@ msgstr ""
 "Proszę abyś podjął odpowiednie kroki kiedy tylko będziesz mógł, Dowódco. "
 "Najgorsze dać się zaskoczyć będąc nieprzygotowanym.\n"
 "\n"
-"--mjr. Navarre"
+"--mjr Navarre"
 
 #: ../base/ufos/msgid/aircraft.ufo:440
 #, fuzzy
@@ -5046,7 +5045,7 @@ msgstr ""
 "będziemy potrzebować miejsca w laboratorium i finansowania, by skutecznie "
 "ocenić jego funkcjie i możliwości.\n"
 "\n"
-"--mjr. Navarre"
+"--mjr Navarre"
 
 #: ../base/ufos/msgid/aircraftitems.ufo:36
 msgid ""
@@ -5129,7 +5128,7 @@ msgstr ""
 "\n"
 "Sporządzony: 19 Marca 2084\n"
 "\n"
-"Przez: Mjr Paul Navarre, JBR: Dział Inżynieryjny, PHALANX, Dowództwo "
+"Przez: mjr Paul Navarre, JBR: Dział Inżynieryjny, PHALANX, Dowództwo "
 "Operacji Atlantyckich\n"
 "\n"
 "\n"
@@ -5478,7 +5477,7 @@ msgstr ""
 "wrogim jednostkom Obcych.Oboje wiemy jakie są koszta nowej maszyny, Dowódco "
 "-- nie możemy pozwolić, by nasze samoloty stały się przestarzałe.\n"
 "\n"
-"--mjr. Navarre"
+"--mjr Navarre"
 
 #: ../base/ufos/msgid/aircraftitems.ufo:110
 #, fuzzy
@@ -6150,7 +6149,7 @@ msgstr ""
 "\n"
 "Sporządzony: 19 Marca 2084\n"
 "\n"
-"Przez: Mjr Paul Navarre, JBR: Dział Inżynieryjny, PHALANX, Dowództwo "
+"Przez: mjr Paul Navarre, JBR: Dział Inżynieryjny, PHALANX, Dowództwo "
 "Operacji Atlantyckich\n"
 "\n"
 "\n"
@@ -6291,7 +6290,7 @@ msgstr ""
 "\n"
 "Sporządzony: 19 Marca 2084\n"
 "\n"
-"Przez: Mjr Paul Navarre, JBR: Dział Inżynieryjny, PHALANX, Dowództwo "
+"Przez: mjr Paul Navarre, JBR: Dział Inżynieryjny, PHALANX, Dowództwo "
 "Operacji Atlantyckich\n"
 "\n"
 "\n"
@@ -6408,7 +6407,7 @@ msgstr ""
 "\n"
 "Sporządzony: 19 Marca 2084\n"
 "\n"
-"Przez: Mjr Paul Navarre, JBR: Dział Inżynieryjny, PHALANX, Dowództwo "
+"Przez: mjr Paul Navarre, JBR: Dział Inżynieryjny, PHALANX, Dowództwo "
 "Operacji Atlantyckich\n"
 "\n"
 "\n"
@@ -6851,7 +6850,7 @@ msgstr ""
 "\n"
 "Sporządzony: 19 Marca 2084\n"
 "\n"
-"Przez: Mjr Paul Navarre, JBR: Dział Inżynieryjny, PHALANX, Dowództwo "
+"Przez: mjr Paul Navarre, JBR: Dział Inżynieryjny, PHALANX, Dowództwo "
 "Operacji Atlantyckich\n"
 "\n"
 "\n"
@@ -6983,7 +6982,7 @@ msgstr ""
 "\n"
 "Sporządzony: 19 Marca 2084\n"
 "\n"
-"Przez: Mjr Paul Navarre, JBR: Dział Inżynieryjny, PHALANX, Dowództwo "
+"Przez: mjr Paul Navarre, JBR: Dział Inżynieryjny, PHALANX, Dowództwo "
 "Operacji Atlantyckich\n"
 "\n"
 "\n"
@@ -13727,7 +13726,7 @@ msgstr ""
 "żywe osobniki Obcych, musimy poznać ich procesy fizjologiczne (głównie "
 "oddychanie).\n"
 "\n"
-"Mjr Navarre i jego zespół zadeklarowali nam pełne wsparcie od strony "
+"mjr Navarre i jego zespół zadeklarowali nam pełne wsparcie od strony "
 "technicznej.\n"
 "\n"
 "Z poważaniem,\n"
@@ -14346,7 +14345,7 @@ msgstr ""
 "\n"
 "Z poważaniem,\n"
 "\n"
-"płk Ingrid Falkland"
+"--płk Falkland"
 
 #: ../base/ufos/msgid/story.ufo:236
 #, fuzzy
@@ -15398,7 +15397,7 @@ msgstr ""
 "\n"
 "Z poważaniem,\n"
 "\n"
-"płk Falkland"
+"--płk Falkland"
 
 #: ../base/ufos/msgid/story.ufo:462 ../base/ufos/msgid/story.ufo:664
 #, fuzzy
@@ -15468,7 +15467,7 @@ msgstr ""
 "\n"
 "Z poważaniem,\n"
 "\n"
-"płk Falkland"
+"--płk Falkland"
 
 #: ../base/ufos/msgid/story.ufo:486
 #, fuzzy
@@ -15542,7 +15541,7 @@ msgstr ""
 "\n"
 "Z poważaniem,\n"
 "\n"
-"płk Ingrid Falkland"
+"--płk Falkland"
 
 #: ../base/ufos/msgid/story.ufo:504
 msgid ""
@@ -15751,7 +15750,7 @@ msgstr ""
 "\n"
 "Z poważaniem,\n"
 "\n"
-"płk Ingrid Falkland"
+"--płk Falkland"
 
 #: ../base/ufos/msgid/story.ufo:648 ../base/ufos/msgid/weapons.ufo:310
 #, fuzzy
@@ -15944,6 +15943,21 @@ msgid ""
 "\n"
 "Cdr. Navarre"
 msgstr ""
+"Dowódco, podczas ostatniej misji zabito załogę UFO lecz nie mamy gdzie "
+"zmagazynować pojazd. UFO jest zbyt wielkie jak na pomieszczenia warsztatowe "
+"i laboratoryjne. Musisz zbudować jak najszybciej Hangar UFO aby móc trzymać "
+"pojazdy Obcych w tej zewnętrznej instalacji. Nie będziemy w stanie prowadzić "
+"żadnych badań nad pojazdami bez bezpiecznego ich magazynowania.\n"
+"\n"
+"Gdy tylko będziemy mieli UFO w magazynie, nasi naukowcy będą mogli "
+"przystąpić do przeprowadzenia badań. Po ich zrobieniu, nasi technicy będą w "
+"stanie rozmontować UFO by zebrać materiały i części.\n"
+"\n"
+"Praca nad UFO zmusza naszych naukowców i techników do przemieszczania się "
+"pomiędzy bazą i Hangarem UFO, więc wybuduj go tak blisko jak tylko możliwe "
+"od bazy skąd prace będą prowadzone.\n"
+"\n"
+"--mjr Navarre"
 
 #: ../base/ufos/msgid/tips.ufo:22
 #, fuzzy
@@ -25028,9 +25042,8 @@ msgid "Click to continue"
 msgstr "Kliknij aby kontynuować"
 
 #: ../base/ufos/ui/campaign.ufo:699
-#, fuzzy
 msgid "Thank you for playing UFO: Alien Invasion"
-msgstr "Dziękujemy za skorzystanie z UFO:Alien Invasion"
+msgstr "Dziękujemy ci za grę w UFO: Alien Invasion"
 
 #: ../base/ufos/ui/campaign.ufo:771 ../base/ufos/ui/singleplayer.ufo:159
 msgid "Exit Campaign Confirmation"
@@ -26575,17 +26588,15 @@ msgstr "Dostępne języki"
 
 #: ../base/ufos/ui/options.ufo:175
 msgid "Mods"
-msgstr ""
+msgstr "Mody"
 
 #: ../base/ufos/ui/options.ufo:182
-#, fuzzy
 msgid "Available game modifications"
-msgstr "Dostępne kontrolery gry."
+msgstr "Dostępne modyfikacje gry"
 
 #: ../base/ufos/ui/options.ufo:211
-#, fuzzy
 msgid "Activate mod"
-msgstr "Czat"
+msgstr "Aktywuj mod"
 
 #: ../base/ufos/ui/options.ufo:222
 msgid "Several Tips"
@@ -26678,7 +26689,7 @@ msgstr "Ustaw proporcje ekranu na 4:3"
 
 #: ../base/ufos/ui/options.ufo:478
 msgid "Prevent the mousepointer from leaving the game window."
-msgstr ""
+msgstr "Zapobiega temu by wskaźnik myszy opuszczał okno gry."
 
 #: ../base/ufos/ui/options.ufo:479
 #, fuzzy
@@ -26826,6 +26837,8 @@ msgid ""
 "Enable texture compression for better memory performance, disable for better "
 "rendering quality."
 msgstr ""
+"Włącz kompresję tekstur dla lepszej wydajności pamięci, wyłącz dla lepszej "
+"jakości renderowania."
 
 #: ../base/ufos/ui/options.ufo:760
 #, fuzzy
@@ -26837,6 +26850,8 @@ msgid ""
 "Texture Level-of-Detail. Enabling this might result in some blurry textures "
 "if you zoom out a little bit."
 msgstr ""
+"Poziom szczegółów tekstur 'LoD'. Włączenie może skutkować rozmyciem tekstur "
+"w niewielkim zbliżeniu."
 
 #: ../base/ufos/ui/options.ufo:776
 msgid "LoD:"
@@ -27738,25 +27753,23 @@ msgstr "Obcy"
 
 #: ../base/ufos/ui/transfer.ufo:138
 msgid "Amount/Transfer"
-msgstr ""
+msgstr "Ilość/Transfer"
 
 #: ../base/ufos/ui/transfer.ufo:409
 msgid "Destination base"
 msgstr "Baza docelowa"
 
 #: ../base/ufos/ui/transfer.ufo:429
-#, fuzzy
 msgid "Building"
-msgstr "Budynki"
+msgstr "Budynek"
 
 #: ../base/ufos/ui/transfer.ufo:453
-#, fuzzy
 msgid "all space"
-msgstr "Odwołaj"
+msgstr "cała przestrzeń"
 
 #: ../base/ufos/ui/transfer.ufo:496
 msgid "Capacity overload\";"
-msgstr ""
+msgstr "Przeładowano\";"
 
 #: ../base/ufos/ui/transfer.ufo:515 ../base/ufos/ui/transfer.ufo:555
 msgid "Start the transfer"
@@ -28565,48 +28578,43 @@ msgstr ""
 "- Pozostało: %i\n"
 
 #: client/battlescape/cl_hud.cpp:1285
-#, fuzzy
 msgid "accuracy"
-msgstr "Celność"
+msgstr "precyzja"
 
 #: client/battlescape/cl_hud.cpp:1287
-#, fuzzy
 msgid "shooting speed"
-msgstr "Prędkość przelotowa"
+msgstr "szybkostrzelność"
 
 #: client/battlescape/cl_hud.cpp:1289
 msgid "movement speed"
-msgstr ""
+msgstr "prędkość ruchu"
 
 #: client/battlescape/cl_hud.cpp:1291
-#, fuzzy
 msgid "sight range"
-msgstr "Prawa ręka"
+msgstr "zasięg"
 
 #: client/battlescape/cl_hud.cpp:1293
-#, fuzzy
 msgid "reaction speed"
-msgstr "Szybk. obrotu:"
+msgstr "szybkość reakcji"
 
 #: client/battlescape/cl_hud.cpp:1295
-#, fuzzy
 msgid "TU"
 msgstr "PR"
 
 #: client/battlescape/cl_hud.cpp:1323
-#, fuzzy, c-format
+#, c-format
 msgid "Damaged %s (deterioration: %i)\n"
-msgstr "Uszkodzony %s (niesprawność: %i)"
+msgstr "Uszkodzony %s (niesprawność: %i)\n"
 
 #: client/battlescape/cl_hud.cpp:1323
-#, fuzzy, c-format
+#, c-format
 msgid "Wounded %s (bleeding: %i)\n"
-msgstr "Ranny %s (krwawienie: %i)"
+msgstr "Ranny %s (krwawienie: %i)\n"
 
 #: client/battlescape/cl_hud.cpp:1326
 #, c-format
 msgid "- Reduced %s\n"
-msgstr ""
+msgstr "- Zredukowane %s\n"
 
 #: client/battlescape/cl_hud.cpp:1348
 msgid "Currently panics!\n"
@@ -29698,11 +29706,13 @@ msgstr[1] "pilotów"
 msgstr[2] "pilotów"
 
 #: client/cgame/campaign/cp_cgame_callbacks.cpp:425
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s\n"
 "not operational, depends on %s"
-msgstr "nie działa, zależne od"
+msgstr ""
+"%s\n"
+"nie działa, zależne od %s"
 
 #: client/cgame/campaign/cp_cgame_callbacks.cpp:480
 #, c-format
@@ -31604,28 +31614,24 @@ msgid "Base '%s' is under attack! What to do?"
 msgstr "Baza '%s' jest atakowana! Jakie rozkazy?"
 
 #: client/cgame/campaign/missions/cp_mission_ufocarrier.cpp:63
-#, fuzzy
 msgid "The Carrier UFO is in range. Should we launch the payload?"
-msgstr "Krążownik UFO jest w zasięgu. Czy mamy wystrzelić pociski?"
+msgstr "Krążownik UFO jest w zasięgu. Czy mamy wystrzelić ładunek?"
 
 #: client/cgame/campaign/missions/cp_mission_ufocarrier.cpp:64
-#, fuzzy
 msgid "Don't attack the UFO-Carrier yet"
-msgstr "Nie atakuj na UFO - Krążownik"
+msgstr "Nie atakuj jeszcze na UFO - Krążownik"
 
 #: client/cgame/campaign/missions/cp_mission_ufocarrier.cpp:64
 msgid "Wait"
-msgstr ""
+msgstr "Czekaj"
 
 #: client/cgame/campaign/missions/cp_mission_ufocarrier.cpp:65
-#, fuzzy
 msgid "Attack the UFO-Carrier now"
-msgstr "Atak na UFO - Krążownik"
+msgstr "Zaatakuj teraz UFO - Krążownik"
 
 #: client/cgame/campaign/missions/cp_mission_ufocarrier.cpp:65
-#, fuzzy
 msgid "Launch"
-msgstr "Wyrzutnia Obcych"
+msgstr "Odpalenie"
 
 #: client/cgame/campaign/missions/cp_mission_ufocarrier.cpp:126
 msgid ""
@@ -31816,7 +31822,6 @@ msgid "Game Drawn!"
 msgstr "Remis!"
 
 #: client/cgame/skirmish/cl_game_skirmish.cpp:188
-#, fuzzy
 msgid ""
 "The game was a draw!\n"
 "\n"
@@ -31824,7 +31829,7 @@ msgid ""
 msgstr ""
 "Gra zakończona remisem!\n"
 "\n"
-"Żaden żołnierz nie przeżył."
+"Wrogowie uciekli."
 
 #: client/cgame/skirmish/cl_game_skirmish.cpp:193
 msgid ""
