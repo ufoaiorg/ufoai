@@ -22,7 +22,7 @@ campaign veryhard
 	visible				true
 	events				main
 	researchrate		0.8
-	uforeductionrate	0.65
+	uforeductionrate	0.75
 	healingrate			2
 
 	date		"2084 79 6"
@@ -76,7 +76,7 @@ campaign hard
 	visible				true
 	events				main
 	researchrate		0.8
-	uforeductionrate	0.65
+	uforeductionrate	0.75
 	healingrate			2
 
 	date		"2084 79 6"
@@ -131,7 +131,7 @@ campaign main
 	visible				true
 	events				main
 	researchrate		0.8
-	uforeductionrate	0.65
+	uforeductionrate	0.75
 	healingrate			2
 
 	date		"2084 79 6"
@@ -185,7 +185,7 @@ campaign easy
 	visible				true
 	events				main
 	researchrate		0.8
-	uforeductionrate	0.65
+	uforeductionrate	0.75
 	healingrate			2
 
 	date		"2084 79 6"
@@ -239,7 +239,7 @@ campaign veryeasy
 	visible				true
 	events				main
 	researchrate		0.8
-	uforeductionrate	0.65
+	uforeductionrate	0.75
 	healingrate			2
 
 	date		"2084 79 6"
