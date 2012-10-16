@@ -174,7 +174,7 @@ static void Door_SlidingUse (edict_t *door)
 #if 1
 	WorldBox oldBox(vec3_origin, vec3_origin);
 	gi.GetInlineModelBox(door->model, oldBox);
-	GridBox rerouteOldBox(oldBox.mins, oldBox.maxs);						/* remember the old location */
+	GridBox rerouteOldBox(oldBox);											/* remember the old location */
 	VectorAdd(door->origin, distanceVec, door->origin);						/* calc new model position */
 	gi.SetInlineModelOrientation(door->model, door->origin, door->angles);	/* move the model out of the way */
 	G_RecalcRouting(door->model, rerouteOldBox);							/* Update path finding table */

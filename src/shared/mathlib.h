@@ -201,6 +201,11 @@ public:
 		VecToPos(maxi, maxs);
 	}
 
+	GridBox(const WorldBox& box) {
+		VecToPos(box.mins, mins);
+		VecToPos(box.maxs, maxs);
+	}
+
 	inline bool isZero() const {
 		return VectorIntZero(mins) && VectorIntZero(maxs);
 	}
