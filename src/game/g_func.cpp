@@ -93,7 +93,10 @@ static bool Destroy_Breakable (edict_t *self)
 	/* now we can destroy the edict completely */
 	G_FreeEdict(self);
 
-	G_RecalcRouting(model, GridBox::EMPTY);
+	WorldBox oldBox(vec3_origin, vec3_origin);
+	gi.GetInlineModelBox(model, oldBox);
+	GridBox rerouteOldBox(oldBox);
+	G_RecalcRouting(model, rerouteOldBox);
 
 	return true;
 }
