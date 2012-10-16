@@ -143,8 +143,8 @@ public class UFOScriptJavaValidator extends AbstractUFOScriptJavaValidator {
 				error("Quoted string expected", UfoScriptPackage.Literals.UFO_NODE__VALUE);
 			} else {
 				ValueString vs = (ValueString) value;
-				if (!vs.getValue().startsWith("_")) {
-					warning("String should be prefixed by '_' to became translatable.",
+				if (!vs.getValue().startsWith("_") && !vs.getValue().startsWith("*msgid:")) {
+					warning("String should be prefixed by '_' to became translatable or should have a msgid reference with *msgid:ID.",
 							UfoScriptPackage.Literals.UFO_NODE__VALUE);
 				}
 			}
