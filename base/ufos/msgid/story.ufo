@@ -539,31 +539,27 @@ Col. Falkland"
 }
 
 msgid alien_psi_device_txt {
-text "_Commander,
+text "_Good morning, Sir. I've got a report for you on the alien psi device wreckage, but you're not going to like it.
 
-We have finished our first survey of a live alien specimen. The project has produced mixed results.
+To be honest we're stumped. We don't yet have a reliable theory about what this object is actually doing. Our sample may have been damaged in the assault on the alien base but that seems unlikely. It is definitely doing something. We just can't figure out what.
 
-The subject is certainly alive, and we have put it through an extensive array of toxicology experiments which have provided vital data about its vulnerabilities to various chemicals and bio-agents. However, we have been completely unable to produce a behavioural analysis of the alien mind. This is because the specimen has showed virtually no signs of intelligence since its capture. It has done little more than eat, sleep, and stare at the walls of its containment unit. It responds to physical stimuli with reflex actions, aggression and/or submission, but we could not coax any information out of it. Even simple hand signals seem to be beyond the creature's comprehension. EEG monitoring reveals that the seemingly highly-developed brain registers virtually no brainwave activity at all.
+The theories we've floated range from the ordinary to the ridiculous, but I think I think there is only one worth considering seriously at this stage. The most simple explanation is that the machine is some kind of communication device. Given that we have been unsuccessful at identifying how aliens communicate with each other in our lab tests, it seems plausible that we would be unable to detect the communication methods used by this device.
 
-It is hard to believe this same specimen could have fired advanced alien weaponry at our troops during a tactical mission. There is no physical trauma that might explain the regression. Perhaps its capture has activated some manner of alien counter-interrogation mechanism; we don't know. None of my team have managed to produce a viable hypothesis as to the reason why. Certainly more research is required. We will keep monitoring the specimen, and will notify you immediately if the situation changes.
+However, we have no data to back up this claim and other, more ridiculous theories, are still bouncing around the lab. They include everything from mind-control to instantaneous travel.
 
-Sincerely,
+I said these theories were ridiculous, sir, but given our lack of solid information we're not discounting anything. Hopefully further research will allow us to learn more.
 
-Dr. Connor"
+With kind regards, Col. Falkland"
 }
 
 msgid alien_psi_device_pre_txt {
-text "_Commander,
+text "_Sir, our troops just got back from our raid on the alien base. They brought back the wreckage of that strange device we encountered. I need this wreckage turned over to DivIntel immediately, as well as some funding and lab time, so that we can find out its purpose and try to unravel the mystery of the powerful psionic attacks which emanated from it during the attack.
 
-We have captured a live alien in the field! The creature has been recovered from our last tactical mission and is being held in our new Containment unit, which I'm pleased to report seems to be working up to spec.
+The device has to be of extreme importance for the entire base to be built around it. But is it a weapon, a computer, a communication device, or something more mysterious? If more alien bases are found, we may have to defend ourselves from other such devices, although I sincerely hope that's not the case.
 
-I don't need to explain why we should start research on this specimen right away. The information that could be gleaned from it supercedes all other considerations. Up until now we've had no chance to study the alien mind, their thoughts and motivations, except through their continued attacks upon our world. This is our first chance to discover the aliens' purpose for humanity, perhaps even an explanation. Who are they? Why are they here? What can we do against them? We can know nothing without interrogating this specimen.
+Cdr. Navarre and Dr. Connor have already committed their support for the project, and both have agreed to assist us with the technical side of research. All we need now is your approval, Commander.
 
-Please send your approval for this program at your earliest convenience.
-
-Sincerely,
-
-Dr. Connor"
+With kind regards, Col. Falkland"
 }
 
 msgid alien_infiltration_txt {
