@@ -1,11 +1,15 @@
 /* cooling system powerplant, antimatter, laser, quarters  */
 {
-	material tex_base/vent_round
+	material tex_base/vent_round2
+	bump 1.0
+	parallax 1.0
+	specular 1.0
+	hardness 1.0
 	{
-		texture tex_base/fan
-		blend GL_SRC_ALPHA GL_ONE
-		rotate 3.0
-		lightmap
+		texture tex_base/vent_round2_a0
+		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+		anim 6 48
+		glowmaplink
 	}
 }
 
