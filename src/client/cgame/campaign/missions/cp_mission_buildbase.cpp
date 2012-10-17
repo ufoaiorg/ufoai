@@ -61,7 +61,8 @@ void CP_BuildBaseMissionIsSuccess (mission_t *mission)
 		assert(base);
 		CP_SpreadXVIAtPos(base->pos);
 
-		INT_ChangeIndividualInterest(0.4f, INTERESTCATEGORY_XVI);
+		if (CP_IsXVIResearched())
+			INT_ChangeIndividualInterest(0.4f, INTERESTCATEGORY_XVI);
 		INT_ChangeIndividualInterest(0.4f, INTERESTCATEGORY_SUPPLY);
 		INT_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_HARVEST);
 	}
