@@ -25,6 +25,7 @@ campaign veryhard
 	uforeductionrate	0.75
 	healingrate			2
 	employeerate		0.8
+	initialinterest		50
 	alienbaseinterest	200
 
 	date		"2084 79 6"
@@ -81,6 +82,7 @@ campaign hard
 	uforeductionrate	0.75
 	healingrate			2
 	employeerate		0.9
+	initialinterest		50
 	alienbaseinterest	200
 
 	date		"2084 79 6"
