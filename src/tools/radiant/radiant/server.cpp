@@ -78,9 +78,9 @@ class RadiantModuleServer: public ModuleServer
 		{
 			ASSERT_NOTNULL(&module);
 			if (!m_modules.insert(Modules_::value_type(ModuleKey(ModuleType(type, version), name), &module)).second) {
-				g_warning("module already registered: type='%s' name='%s'\n", type.c_str(), name.c_str());
+				g_warning("Module already registered: type='%s' name='%s'\n", type.c_str(), name.c_str());
 			} else {
-				g_message("Module Registered: type='%s' version='%i' name='%s'\n", type.c_str(), version, name.c_str());
+				g_message("Module registered: type='%s' version='%i' name='%s'\n", type.c_str(), version, name.c_str());
 			}
 		}
 
