@@ -37,16 +37,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 static void CP_AddTechAsResearchable_f (void)
 {
-	const char *techID;
-	technology_t *tech;
-
 	if (cgi->Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <tech>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
-	techID = cgi->Cmd_Argv(1);
-	tech = RS_GetTechByID(techID);
+	const char *techID = cgi->Cmd_Argv(1);
+	technology_t *tech = RS_GetTechByID(techID);
 	RS_MarkOneResearchable(tech);
 }
 

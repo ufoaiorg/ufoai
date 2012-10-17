@@ -529,6 +529,16 @@ static void testUFORecovery (void)
 	E_DeleteAllEmployees(NULL);
 }
 
+static void testAlienPSIDevice (void)
+{
+	ResetCampaignData();
+	RS_MarkResearchable(NULL, true);
+
+	technology_t *alienPsiDevice = RS_GetTechByID("rs_alien_psi_device");
+	RS_MarkOneResearchable(alienPsiDevice);
+	CU_ASSERT_TRUE(alienPsiDevice->statusResearchable);
+}
+
 static void testResearch (void)
 {
 	ResetCampaignData();
@@ -1436,6 +1446,9 @@ int UFO_AddCampaignTests (void)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(campaignSuite, test3090011) == NULL)
+		return CU_get_error();
+
+	if (CU_ADD_TEST(campaignSuite, testAlienPSIDevice) == NULL)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(campaignSuite, testTerrorMissions) == NULL)
