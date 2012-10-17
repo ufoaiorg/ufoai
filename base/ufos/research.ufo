@@ -5600,7 +5600,7 @@ tech rs_alien_psi_device
 	}
 
 	time		14000
-	model		"objects/alien/wormhole/wormhole"
+	model			wormhole_device
 }
 
 // http://ufoai.org/wiki/index.php/Proposals/Alien_Infiltration
