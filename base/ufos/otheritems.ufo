@@ -103,27 +103,13 @@ item hovernet_plasma
 	animationindex	1
 	holdtwohanded	false
 	firetwohanded	true
-	shape			"0 0 5 2"
-	center			"9.3 0 1.5"
 	scale			1.25
+	size			40
+	dmgtype			"plasma"
 	ammo			200
 	reload			12
 	reloadsound		"weapons/reload-rifle"
-	size			40
 	virtual			true
-}
-
-item hovernet_plasma_ammo
-{
-	name			"_Hovernet Plasma Ammo"
-	model			"weapons/plaspistol/plaspistol_clip"
-	type			"ammo"
-	animationindex	0
-	shape			"0 0 1 1"
-	center			"0 0 -0.2"
-	scale			1.1
-	size			3
-	dmgtype			"plasma"
 
 	weapon_mod
 	{
@@ -162,27 +148,13 @@ item hovernet_adv_plasma
 	animationindex	1
 	holdtwohanded	false
 	firetwohanded	true
-	shape			"0 0 5 2"
-	center			"9.3 0 1.5"
 	scale			1.25
+	size			40
+	dmgtype			"normal"
 	ammo			200
 	reload			12
 	reloadsound		"weapons/reload-rifle"
-	size			40
 	virtual			true
-}
-
-item hovernet_adv_plasma_ammo
-{
-	name			"_Combat Hovernet Plasma Ammo"
-	model			"weapons/plaspistol/plaspistol_clip"
-	type			"ammo"
-	animationindex	0
-	shape			"0 0 1 1"
-	center			"0 0 -0.2"
-	scale			1.1
-	size			3
-	dmgtype			"plasma"
 
 	weapon_mod
 	{

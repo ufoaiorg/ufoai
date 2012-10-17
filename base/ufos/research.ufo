@@ -4403,23 +4403,6 @@ tech rs_weapon_hovernet_plasma
 	producetime	-1
 }
 
-tech rs_weapon_hovernet_plasma_ammo
-{
-	type	"weapon"
-	up_chapter	artifacts
-
-	redirect	rs_weapon_hovernet_plasma
-
-	require_AND
-	{
-		tech rs_weapon_hovernet_plasma_ammo
-	}
-
-	provides	hovernet_plasma_ammo
-	time	0
-	producetime	-1
-}
-
 // COMBAT HOVERNET
 
 tech rs_alien_hovernet_adv_autopsy
@@ -4473,23 +4456,6 @@ tech rs_weapon_hovernet_adv_plasma
 	}
 	provides	hovernet_adv_plasma
 	time		0
-	producetime	-1
-}
-
-tech rs_weapon_hovernet_adv_plasma_ammo
-{
-	type	"weapon"
-	up_chapter	artifacts
-
-	redirect	rs_weapon_hovernet_adv_plasma
-
-	require_AND
-	{
-		tech rs_weapon_hovernet_adv_plasma_ammo
-	}
-
-	provides	hovernet_adv_plasma_ammo
-	time	0
 	producetime	-1
 }
 
