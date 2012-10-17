@@ -403,6 +403,7 @@ static void CP_ParseCampaign (const char *name, const char **text)
 	cp->ufoReductionRate = NON_OCCURRENCE_PROBABILITY;
 	cp->initialInterest = INITIAL_OVERALL_INTEREST;
 	cp->employeeRate = 1.0f;
+	cp->alienBaseInterest = 200;
 
 	/* get it's body */
 	token = Com_Parse(text);

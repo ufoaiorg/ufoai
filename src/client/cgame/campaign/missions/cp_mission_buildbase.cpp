@@ -33,9 +33,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../cp_xvi.h"
 #include "../cp_alien_interest.h"
 
-/** Overall alien interest value for starting constructing alien bases. */
-const int STARTING_BASEBUILD_INTEREST = 300;
-
 /**
  * This mission type has no alienbase set
  * @param mission The mission to check
@@ -43,7 +40,7 @@ const int STARTING_BASEBUILD_INTEREST = 300;
  */
 bool CP_BasemissionIsSubvertingGovernmentMission (const mission_t *mission)
 {
-	return mission->initialOverallInterest < STARTING_BASEBUILD_INTEREST;
+	return mission->initialOverallInterest < ccs.curCampaign->alienBaseInterest;
 }
 
 /**

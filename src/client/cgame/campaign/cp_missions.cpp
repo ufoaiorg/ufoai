@@ -1720,7 +1720,7 @@ static void MIS_SpawnNewMissions_f (void)
 			break;
 		case INTERESTCATEGORY_BUILDING:
 			if (type == 1)
-				mission->initialOverallInterest = STARTING_BASEBUILD_INTEREST + 1;
+				mission->initialOverallInterest = ccs.curCampaign->alienBaseInterest + 1;
 			break;
 		case INTERESTCATEGORY_INTERCEPT:
 			/* Start mission */
