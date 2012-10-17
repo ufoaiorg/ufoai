@@ -33,5 +33,3 @@ targetables_t* getTargetables (const std::string& targetname)
 		return 0;
 	return &g_targetnames[targetname];
 }
-
-Shader* RenderableTargetingEntity::m_state;
