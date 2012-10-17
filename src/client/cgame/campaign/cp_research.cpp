@@ -327,12 +327,6 @@ void RS_MarkResearchable (const base_t* base, bool init)
 	int i;
 	const base_t *thisBase = base;
 
-	/* Set all entries to initial value. */
-	for (i = 0; i < ccs.numTechnologies; i++) {
-		technology_t *tech = RS_GetTechByIDX(i);
-		tech->statusResearchable = false;
-	}
-
 	for (i = 0; i < ccs.numTechnologies; i++) {	/* i = tech-index */
 		technology_t *tech = RS_GetTechByIDX(i);
 		if (!tech->statusResearchable) { /* In case we loopback we need to check for already marked techs. */
