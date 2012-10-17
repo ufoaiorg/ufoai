@@ -364,6 +364,7 @@ typedef struct campaign_s {
 								 * If the number is higher than ufoReductionRate, it is spawned. Otherwise it is not. So higher numbers lead to fewer UFOs. */
 	float employeeRate;			/**< Easier difficulties could offer more monthly recruits and harder difficulties less */
 	int initialInterest;
+	int alienBaseInterest;		/**< the alien interest level at which aliens begin trying to build bases. */
 } campaign_t;
 
 int CP_GetSalaryBaseEmployee(const salary_t *salary, employeeType_t type);

@@ -356,6 +356,7 @@ static const value_t campaign_vals[] = {
 	{"uforeductionrate", V_FLOAT, offsetof(campaign_t, ufoReductionRate), MEMBER_SIZEOF(campaign_t, ufoReductionRate)},
 	{"initialinterest", V_INT, offsetof(campaign_t, initialInterest), MEMBER_SIZEOF(campaign_t, initialInterest)},
 	{"employeerate", V_FLOAT, offsetof(campaign_t, employeeRate), MEMBER_SIZEOF(campaign_t, employeeRate)},
+	{"alienbaseinterest", V_INT, offsetof(campaign_t, alienBaseInterest), MEMBER_SIZEOF(campaign_t, alienBaseInterest)},
 	{NULL, V_NULL, 0, 0}
 };
 

@@ -25,6 +25,7 @@ campaign veryhard
 	uforeductionrate	0.75
 	healingrate			2
 	employeerate		0.8
+	alienbaseinterest	200
 
 	date		"2084 79 6"
 	basecost	100000
@@ -80,6 +81,7 @@ campaign hard
 	uforeductionrate	0.75
 	healingrate			2
 	employeerate		0.9
+	alienbaseinterest	200
 
 	date		"2084 79 6"
 	basecost	100000
@@ -136,6 +138,7 @@ campaign main
 	uforeductionrate	0.75
 	healingrate			2
 	employeerate		1.0
+	alienbaseinterest	200
 
 	date		"2084 79 6"
 	basecost	100000
@@ -191,6 +194,7 @@ campaign easy
 	uforeductionrate	0.75
 	healingrate			2
 	employeerate		1.5
+	alienbaseinterest	200
 
 	date		"2084 79 6"
 	basecost	100000
@@ -246,6 +250,7 @@ campaign veryeasy
 	uforeductionrate	0.75
 	healingrate			2
 	employeerate		2
+	alienbaseinterest	200
 
 	date		"2084 79 6"
 	basecost	100000
