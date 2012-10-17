@@ -53,6 +53,8 @@ class EclassModel: public Snappable {
 	void angleChanged ();
 	typedef MemberCaller<EclassModel, &EclassModel::angleChanged> AngleChangedCaller;
 
+	InstanceCounter m_instanceCounter;
+
 public:
 
 	EclassModel (EntityClass* eclass, scene::Node& node, const Callback& transformChanged,
@@ -60,7 +62,6 @@ public:
 	EclassModel (const EclassModel& other, scene::Node& node, const Callback& transformChanged,
 			const Callback& evaluateTransform);
 
-	InstanceCounter m_instanceCounter;
 	void instanceAttach (const scene::Path& path);
 	void instanceDetach (const scene::Path& path);
 
