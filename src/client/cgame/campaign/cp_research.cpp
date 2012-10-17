@@ -327,39 +327,41 @@ void RS_MarkResearchable (const base_t* base, bool init)
 	int i;
 	const base_t *thisBase = base;
 
-	for (i = 0; i < ccs.numTechnologies; i++) {	/* i = tech-index */
+	for (i = 0; i < ccs.numTechnologies; i++) {
 		technology_t *tech = RS_GetTechByIDX(i);
-		if (!tech->statusResearchable) { /* In case we loopback we need to check for already marked techs. */
-			/* Check for collected items/aliens/etc... */
-			if (tech->statusResearch != RS_FINISH) {
-				Com_DPrintf(DEBUG_CLIENT, "RS_MarkResearchable: handling \"%s\".\n", tech->id);
-				/* If required techs are all researched and all other requirements are met, mark this as researchable. */
+		/* In case we loopback we need to check for already marked techs. */
+		if (tech->statusResearchable)
+			continue;
+		/* Check for collected items/aliens/etc... */
+		if (tech->statusResearch == RS_FINISH)
+			continue;
 
-				if (tech->base)
-					base = tech->base;
-				else
-					base = thisBase;
+		Com_DPrintf(DEBUG_CLIENT, "RS_MarkResearchable: handling \"%s\".\n", tech->id);
 
-				/* All requirements are met. */
-				if (RS_RequirementsMet(&tech->requireAND, &tech->requireOR, base)) {
-					Com_DPrintf(DEBUG_CLIENT, "RS_MarkResearchable: \"%s\" marked researchable. reason:requirements.\n", tech->id);
-					if (init && tech->time == 0)
-						tech->mailSent = MAILSENT_PROPOSAL;
-					RS_MarkOneResearchable(tech);
-				}
+		if (tech->base)
+			base = tech->base;
+		else
+			base = thisBase;
 
-				/* If the tech is a 'free' one (such as ammo for a weapon),
-				 * mark it as researched and loop back to see if it unlocks
-				 * any other techs */
-				if (tech->statusResearchable && tech->time == 0) {
-					if (init)
-						tech->mailSent = MAILSENT_FINISHED;
-					RS_ResearchFinish(tech);
-					Com_DPrintf(DEBUG_CLIENT, "RS_MarkResearchable: automatically researched \"%s\"\n", tech->id);
-					/* Restart the loop as this may have unlocked new possibilities. */
-					i = -1;
-				}
-			}
+		/* If required techs are all researched and all other requirements are met, mark this as researchable. */
+		/* All requirements are met. */
+		if (RS_RequirementsMet(&tech->requireAND, &tech->requireOR, base)) {
+			Com_DPrintf(DEBUG_CLIENT, "RS_MarkResearchable: \"%s\" marked researchable. reason:requirements.\n", tech->id);
+			if (init && tech->time == 0)
+				tech->mailSent = MAILSENT_PROPOSAL;
+			RS_MarkOneResearchable(tech);
+		}
+
+		/* If the tech is a 'free' one (such as ammo for a weapon),
+		 * mark it as researched and loop back to see if it unlocks
+		 * any other techs */
+		if (tech->statusResearchable && tech->time == 0) {
+			if (init)
+				tech->mailSent = MAILSENT_FINISHED;
+			RS_ResearchFinish(tech);
+			Com_DPrintf(DEBUG_CLIENT, "RS_MarkResearchable: automatically researched \"%s\"\n", tech->id);
+			/* Restart the loop as this may have unlocked new possibilities. */
+			i = -1;
 		}
 	}
 	Com_DPrintf(DEBUG_CLIENT, "RS_MarkResearchable: Done.\n");
