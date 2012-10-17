@@ -7,7 +7,7 @@
 // and this is not scriptable right now.
 events main
 {
-	rs_alien_xvi_event	400
+	rs_alien_xvi_event	200
 	rs_enemy_on_earth_event	450
 }
 
