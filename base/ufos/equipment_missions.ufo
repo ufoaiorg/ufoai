@@ -124,7 +124,6 @@ equipment alien_workers2
 
 	// Misc
 	item (kerrblade	100)
-	item (stungrenade_alien	100)
 }
 
 equipment alien_workers3
@@ -140,7 +139,6 @@ equipment alien_workers3
 
 	// Misc
 	item (kerrblade	100)
-	item (stungrenade_alien	100)
 
 	// Armour
 	item (armour_light_alien	100)
@@ -159,7 +157,6 @@ equipment alien_workers4
 	item (plasblade			50)
 
 	// Misc
-	item (stungrenade_alien	100)
 	item (kerrblade	100)
 
 	// Armour
@@ -181,7 +178,6 @@ equipment alien_workers5
 	item (needlergun_ammo	1)
 
 	// Misc
-	item (stungrenade_alien	100)
 	item (kerrblade	100)
 
 	// Armour
@@ -236,9 +232,6 @@ equipment alien_soldiers2
 	item (plasrifle_ammo	1)
 	item (plasblaster		50)
 	item (plasblaster_ammo	1)
-
-	// Misc
-	item (stungrenade_alien	100)
 }
 
 equipment alien_soldiers3
@@ -253,7 +246,6 @@ equipment alien_soldiers3
 	item (plasblaster_ammo	1)
 
 	// Misc
-	item (stungrenade_alien	100)
 	item (plasmagrenade		100)
 
 	// Armour
@@ -294,7 +286,6 @@ equipment alien_soldiers5
 	item (needlergun_ammo	1)
 
 	// Misc
-	item (stungrenade_alien	100)
 	item (plasmagrenade		100)
 
 	// Armour
