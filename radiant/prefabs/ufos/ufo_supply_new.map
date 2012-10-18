@@ -1,0 +1,33 @@
+
+// entity 0
+{
+"classname" "misc_model"
+"model" "models/aircraft/ufo_supply/container0.md2"
+"origin" "-208 79 0"
+"spawnflags" "1"
+"skin" "0"
+}
+// entity 1
+{
+"classname" "misc_model"
+"model" "models/aircraft/ufo_supply/container1.md2"
+"origin" "-208 80 0"
+"spawnflags" "254"
+"skin" "0"
+}
+// entity 2
+{
+"classname" "misc_model"
+"model" "models/aircraft/ufo_supply/hull0.md2"
+"origin" "-208 80 1"
+"spawnflags" "255"
+"skin" "0"
+}
+// entity 3
+{
+"classname" "misc_model"
+"model" "models/aircraft/ufo_supply/hull1.md2"
+"origin" "-208 80 0"
+"spawnflags" "254"
+"skin" "0"
+}
