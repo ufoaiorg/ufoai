@@ -52,7 +52,7 @@ item bloodspider_weapon
 			range		2
 			shots		1 //FIXME
 			time		12 //FIXME
-			damage		"40 20" //FIXME
+			damage		"55 10" //FIXME
 			reaction	true
 			dmgweight	"normal_monomolecularblade"
 		}
