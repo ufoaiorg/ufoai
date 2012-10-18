@@ -413,35 +413,36 @@ team bloodspider
 
 	//TODO: Balance values
 	resistance {
-		normal_spray 5
-		normal_light 20
-		normal_medium 0
-		normal_heavy -20
+		normal_spray	8
+		normal_light	15
+		normal_medium	20
+		normal_heavy	5
 
-		normal_steelblade 50
-		normal_monomolecularblade 20
-		normal_needle 4
+		normal_steelblade			30
+		normal_monomolecularblade	0
+		normal_needle		1
 
-		blast -30
+		blast			20
 
-		fire_light 10
-		fire_medium 20
-		fire_heavy 30
-		fire_flamer 2
+		fire_medium		25
+		fire_heavy		10
+		fire_flamer		1
 
-		shock 999
+		incendiary		0
 
-		laser_light 0
-		laser_medium 0
-		laser_heavy 0
+		shock			0
 
-		plasma_light 30
-		plasma_medium 20
-		plasma_heavy 5
+		laser_light		5
+		laser_medium	5
+		laser_heavy		5
 
-		particlebeam_light 10
-		particlebeam_medium 20
-		particlebeam_heavy 30
+		plasma_light	30
+		plasma_medium	30
+		plasma_heavy	25
+
+		particlebeam_light	-5
+		particlebeam_medium	-10
+		particlebeam_heavy	-15
 
 		stun_electro 999
 		stun_gas 999
@@ -615,35 +616,36 @@ team hovernet
 
 	//TODO: Balance values
 	resistance {
-		normal_spray 5
-		normal_light 20
-		normal_medium 0
-		normal_heavy -20
+		normal_spray	8
+		normal_light	15
+		normal_medium	20
+		normal_heavy	5
 
-		normal_steelblade 50
-		normal_monomolecularblade 20
-		normal_needle 4
+		normal_steelblade			30
+		normal_monomolecularblade	0
+		normal_needle		1
 
-		blast -30
+		blast			20
 
-		fire_light 10
-		fire_medium 20
-		fire_heavy 30
-		fire_flamer 2
+		fire_medium		25
+		fire_heavy		10
+		fire_flamer		1
 
-		shock 999
+		incendiary		0
 
-		laser_light 0
-		laser_medium 0
-		laser_heavy 0
+		shock			0
 
-		plasma_light 30
-		plasma_medium 20
-		plasma_heavy 5
+		laser_light		5
+		laser_medium	5
+		laser_heavy		5
 
-		particlebeam_light 10
-		particlebeam_medium 20
-		particlebeam_heavy 30
+		plasma_light	30
+		plasma_medium	30
+		plasma_heavy	25
+
+		particlebeam_light	-5
+		particlebeam_medium	-10
+		particlebeam_heavy	-15
 
 		stun_electro 999
 		stun_gas 999
