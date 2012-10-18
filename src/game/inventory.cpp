@@ -333,6 +333,7 @@ static inventory_action_t I_MoveInInventory (inventoryInterface_t* self, invento
 
 		/* Reset the cached item (source) (It'll be move to container emptied by destination item later.) */
 		self->cacheItem = cacheItem2;
+		checkedTo = INVSH_CheckToInventory(inv, self->cacheItem.item, to, 0, 0, fItem);
 	} else if (!checkedTo) {
 		/* Get the target-invlist (e.g. a weapon). We don't need to check for
 		 * scroll because checkedTo is always true here. */
