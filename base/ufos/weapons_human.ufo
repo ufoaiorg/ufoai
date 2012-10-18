@@ -896,7 +896,7 @@ item shotgun_micro_ammo
 	price			35
 	size			4
 	is_primary		true
-	dmgtype			"blast"
+	dmgtype			"normal"
 
 	weapon_mod // weap_fds_idx=0
 	{
