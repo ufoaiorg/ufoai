@@ -210,7 +210,7 @@ team ortnok
 
 	//TODO: Balance values
 	resistance {
-		normal_spray 10
+		normal_spray 8
 		normal_light 20
 		normal_medium 20
 		normal_heavy 0
@@ -313,7 +313,7 @@ team shevaar
 
 	//TODO: Balance values
 	resistance {
-		normal_spray 10
+		normal_spray 8
 		normal_light 30
 		normal_medium 20
 		normal_heavy 20

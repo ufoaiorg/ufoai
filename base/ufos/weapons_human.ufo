@@ -764,7 +764,7 @@ item smg_ammo
 			ammo				5
 			delaybetweenshots	14
 			time				8
-			damage				"12 3"
+			damage				"15 3"
 			dmgweight			"normal_spray"
 			reaction			true
 		}
@@ -780,14 +780,14 @@ item smg_ammo
 			bodysnd 			"impact/bullet-bodyimpact"
 			sndonce				true
 			speed				3000
-			spread				"3 3"
+			spread				"2.5 2.5"
 			crouch				0.8
 			range				50
 			shots				15
 			ammo				15
 			delaybetweenshots	14
-			time				20
-			damage				"12 3"
+			time				16
+			damage				"15 3"
 			dmgweight			"normal_spray"
 			reaction			true
 		}

@@ -74,7 +74,7 @@ item armour_light
 		normal_light		20
 		normal_medium		18
 		normal_heavy		12
-		normal_spray            9
+		normal_spray		8
 
 		normal_steelblade			10
 		normal_monomolecularblade	5
@@ -264,7 +264,7 @@ item armour_light_alien
 	armourpath	"light"
 
 	protection {
-		normal_spray	10
+		normal_spray	8
 		normal_light	15
 		normal_medium	20
 		normal_heavy	5
