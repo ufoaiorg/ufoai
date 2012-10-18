@@ -229,7 +229,7 @@ item armour_power
 		particlebeam_heavy	-50
 
 		stun_electro		30
-		stun_gas			30
+		stun_gas			999
 	}
 
 	rating {
