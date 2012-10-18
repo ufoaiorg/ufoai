@@ -72,8 +72,8 @@ item armour_light
 
 	protection {
 		normal_light		20
-		normal_medium		18
-		normal_heavy		12
+		normal_medium		15
+		normal_heavy		10
 		normal_spray		8
 
 		normal_steelblade			10
@@ -83,39 +83,39 @@ item armour_light
 		blast				25
 
 		fire_medium			15
-		fire_heavy			15
+		fire_heavy			5
 		fire_flamer         1
 
-		incendiary			15
+		incendiary			0
 
 		shock				0
 
-		plasma_light		7
-		plasma_medium		6
-		plasma_heavy		5
+		plasma_light		15
+		plasma_medium		15
+		plasma_heavy		10
 
-		laser_light			18
-		laser_medium		16
-		laser_heavy			12
+		laser_light			5
+		laser_medium		5
+		laser_heavy			5
 
-		particlebeam_light	7
-		particlebeam_medium	6
-		particlebeam_heavy	5
+		particlebeam_light	0
+		particlebeam_medium	0
+		particlebeam_heavy	0
 
 		stun_electro		0
 		stun_gas			0
 	}
 
 	rating {
-		normal				30
-		blast				30
-		fire				20
-		shock				10
-		plasma				10
-		laser				20
-		particlebeam		10
-		stun_electro		10
-		stun_gas			10
+		normal				20
+		blast				20
+		fire				10
+		shock				0
+		plasma				15
+		laser				5
+		particlebeam		0
+		stun_electro		0
+		stun_gas			0
 	}
 }
 
@@ -134,51 +134,51 @@ item armour_medium
 	armourpath	"medium"
 
 	protection {
-		normal_light		31
-		normal_medium		26
-		normal_heavy		20
-		normal_spray            11
+		normal_light		40
+		normal_medium		30
+		normal_heavy		30
+		normal_spray        12
 
-		normal_steelblade		20
-		normal_monomolecularblade	12
-		normal_needle		7
+		normal_steelblade		30
+		normal_monomolecularblade	20
+		normal_needle		3
 
-		blast				38
+		blast				50
 
-		fire_medium			22
-		fire_heavy			22
+		fire_medium			30
+		fire_heavy			15
 		fire_flamer         3
 
-		incendiary			22
+		incendiary			0
 
-		shock				10
+		shock				0
 
-		plasma_light		26
-		plasma_medium		25
-		plasma_heavy		20
+		plasma_light		25
+		plasma_medium		30
+		plasma_heavy		40
 
-		laser_light			29
-		laser_medium		26
-		laser_heavy			22
+		laser_light			10
+		laser_medium		10
+		laser_heavy			10
 
-		particlebeam_light	21
-		particlebeam_medium	17
-		particlebeam_heavy	14
+		particlebeam_light	-5
+		particlebeam_medium	-10
+		particlebeam_heavy	-15
 
-		stun_electro		10
-		stun_gas			10
+		stun_electro		15
+		stun_gas			30
 	}
 
 	rating {
-		normal				50
-		blast				50
-		fire				40
-		shock				30
-		plasma				40
-		laser				50
-		particlebeam		30
-		stun_electro		30
-		stun_gas			30
+		normal				40
+		blast				40
+		fire				25
+		shock				0
+		plasma				45
+		laser				10
+		particlebeam		0
+		stun_electro		10
+		stun_gas			25
 	}
 }
 
@@ -197,51 +197,51 @@ item armour_power
 	armourpath	"power"
 
 	protection {
-		normal_light		41
-		normal_medium		41
-		normal_heavy		41
-		normal_spray        19
+		normal_light		50
+		normal_medium		50
+		normal_heavy		50
+		normal_spray        20
 
-		normal_steelblade			25
-		normal_monomolecularblade	19
-		normal_needle		10
+		normal_steelblade			50
+		normal_monomolecularblade	50
+		normal_needle		5
 
-		blast				49
+		blast				70
 
-		fire_medium			35
-		fire_heavy			35
-		fire_flamer         4
+		fire_medium			50
+		fire_heavy			50
+		fire_flamer         5
 
-		incendiary			35
+		incendiary			30
 
-		shock				20
+		shock				999
 
-		plasma_light		32
-		plasma_medium		35
-		plasma_heavy		40
+		plasma_light		35
+		plasma_medium		50
+		plasma_heavy		60
 
-		laser_light			22
-		laser_medium		21
+		laser_light			15
+		laser_medium		15
 		laser_heavy			15
 
-		particlebeam_light	40
-		particlebeam_medium	50
-		particlebeam_heavy	50
+		particlebeam_light	-30
+		particlebeam_medium	-40
+		particlebeam_heavy	-50
 
-		stun_electro		20
-		stun_gas			20
+		stun_electro		30
+		stun_gas			30
 	}
 
 	rating {
-		normal				80
-		blast				60
+		normal				60
+		blast				70
 		fire				50
-		shock				40
-		plasma				60
-		laser				40
-		particlebeam		70
-		stun_electro		50
-		stun_gas			50
+		shock				100
+		plasma				65
+		laser				15
+		particlebeam		0
+		stun_electro		20
+		stun_gas			20
 	}
 }
 
