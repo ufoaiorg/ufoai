@@ -624,7 +624,7 @@ item plasmagrenade
 	size		10
 	is_misc	true
 	thrown		true
-	dmgtype "blast"
+	dmgtype "plasma"
 
 	weapon_mod
 	{
