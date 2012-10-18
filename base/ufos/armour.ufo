@@ -346,9 +346,9 @@ item armour_medium_alien
 
 		shock			0
 
-		laser_light		10
-		laser_medium	10
-		laser_heavy		10
+		laser_light		30
+		laser_medium	30
+		laser_heavy		30
 
 		plasma_light	50
 		plasma_medium	40
