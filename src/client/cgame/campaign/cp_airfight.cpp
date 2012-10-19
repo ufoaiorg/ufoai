@@ -918,6 +918,7 @@ bool AIRFIGHT_SaveXML (xmlNode_t *parent)
 			else
 				cgi->XML_AddInt(attacking, SAVE_AIRFIGHT_AIRCRAFTIDX, projectile->attackingAircraft->idx);
 		}
+		cgi->XML_AddPos3(node, SAVE_AIRFIGHT_ATTACKERPOS, projectile->attackerPos);
 
 		if (projectile->aimedAircraft) {
 			xmlNode_t *aimed =  cgi->XML_AddNode(node, SAVE_AIRFIGHT_AIMEDAIRCRAFT);
@@ -978,6 +979,8 @@ bool AIRFIGHT_LoadXML (xmlNode_t *parent)
 		} else {
 			projectile->attackingAircraft = NULL;
 		}
+		cgi->XML_GetPos3(node, SAVE_AIRFIGHT_ATTACKERPOS, projectile->attackerPos);
+
 		if ((aimedAircraft = cgi->XML_GetNode(node, SAVE_AIRFIGHT_AIMEDAIRCRAFT))) {
 			if (cgi->XML_GetBool(aimedAircraft, SAVE_AIRFIGHT_ISUFO, false))
 				/** @todo 0 as default might be incorrect */

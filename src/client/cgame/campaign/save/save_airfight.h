@@ -4,7 +4,7 @@
  */
 
 /*
-Copyright (C) 2002-2011 UFO: Alien Invasion.
+Copyright (C) 2002-2012 UFO: Alien Invasion.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -35,6 +35,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SAVE_AIRFIGHT_BULLET "bullet"
 #define SAVE_AIRFIGHT_BEAM "beam"
 
+#define SAVE_AIRFIGHT_ATTACKERPOS "attackerPos"
+
 #define SAVE_AIRFIGHT_ATTACKINGAIRCRAFT "attackingAircraft"
 #define SAVE_AIRFIGHT_AIMEDAIRCRAFT "aimedAircraft"
 
@@ -46,7 +48,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /*
 DTD:
 
-<!ELEMENT projectile (pos* idleTarget attackingAircraft? aimedAircraft?)>
+<!ELEMENT projectile (pos* idleTarget attackingAircraft? aimedAircraft? attackerPos?)>
 <!ATTLIST projectile
 	itemid			CDATA	#REQUIRED
 	time			CDATA	'0'
@@ -66,6 +68,13 @@ DTD:
 	isUFO			CDATA	'false'
 >
 
+<!ELEMENT attackerPos EMPTY>
+<!ATTLIST attackerPos
+	x				CDATA	'0'
+	y				CDATA	'0'
+	z				CDATA	'0'
+>
+
 <!ELEMENT pos EMPTY>
 <!ATTLIST pos
 	x				CDATA	'0'
@@ -78,5 +87,4 @@ DTD:
 	y				CDATA	'0'
 	z				CDATA	'0'
 >
-
 */
