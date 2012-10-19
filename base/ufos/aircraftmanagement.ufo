@@ -996,7 +996,7 @@ craftitem craft_ammo_hybrid_missile
 	craftweapon	craft_weapon_alien_launcher
 	price		2700
 	size		50 // "light"
-	model		"geoscape/missile" // @todo fixme!!!
+	model		"aircraft/craft_weapon_hybrid/hybrid"
 	ammo		6
 	wdamage		130
 	accuracy	0.7

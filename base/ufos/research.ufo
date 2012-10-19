@@ -5164,7 +5164,7 @@ tech rs_craft_ammo_hybrid_missile
 	time		4500
 	producetime	75
 
-	model		"aircraft/craft_weapon_launcher/hybrid" // @todo add the model
+	model		"aircraft/craft_weapon_hybrid/hybrid"
 }
 
 tech rs_craft_el_targeting

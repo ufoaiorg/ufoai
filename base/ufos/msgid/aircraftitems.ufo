@@ -553,11 +553,23 @@ Cdr. Navarre"
 }
 
 msgid craft_ammo_hybrid_missile_pre_txt {
-text "_No text exists for this item."
+text "_Commander, our research on the alien launcher and the antimatter missile has exposed just how weak our current missile systems are. As we face ever stronger and better equipped UFOs, we're falling behind in the battle to keep them out of our skies.
+
+The new alien launcher we're encountering is capable of projecting its missiles at such a high velocity that our pilots have very little time to take evasive action. But the antimatter in the alien missiles is precious and we can't afford to equip every interceptor with them. I urge you to greenlight research into a new missile system designed to work in the alien launcher. I'm confident we can achieve greater speeds and kinetic impact than any missile system currently in use.
+
+Cdr. Navarre"
 }
 
 msgid craft_ammo_hybrid_missile_txt {
-text "_No text exists for this item."
+text "_Commander, we've completed the designs for a new hybrid missile.
+
+Like the aliens' antimatter missile, we've made the shell out of a sturdy hybrid of alien materials nearly as strong as the outer casing we've seen on UFO hulls. When the shell fragments on impact the shards of shrapnel moving at high speed will tear through the armour plating of every UFO we've seen. Even a glancing blow will set off an explosion with high potential of tearing a hole in the UFO's hull.
+
+We've lost a bit of speed and sheer kinetic force by foregoing the antimatter propulsion used in the aliens' missile. This projectile will not be quite as powerful but we should be able to produce them in larger quantities. And make no mistake, this is the most powerful air-to-air combat weapon we have in our arsenal next to the antimatter missiles.
+
+Let's get these missiles into production, sir, and take back the initiative.
+
+Cdr. Navarre"
 }
 
 msgid craft_electronics_targeting_txt {
