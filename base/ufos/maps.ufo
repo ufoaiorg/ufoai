@@ -317,7 +317,7 @@ mapdef bomber_city
 		coop3
 		coop4
 	)
-	maxaliens		16
+	maxaliens		25
 
 	aircraft
 	(
