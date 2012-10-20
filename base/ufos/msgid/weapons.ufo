@@ -1269,19 +1269,17 @@ Cdr. Navarre"
 msgid plasblaster_txt {
 text "_Commander, here's my report on our alien plasma blaster research.
 
-This is by far the heaviest member we've observed out of the plasma weapon family, and it seems unlikely that they will get any larger. The blaster requires at least two people and a heavy-duty cart to get it in and out of secure storage. It's barely man-portable, requiring a troop with great strength to carry it into battle. It is so large that, if it were a vehicle-mounted piece, it wouldn't even fit on most of our UGVs. The magazines weigh nearly a kilogramme apiece and the plasma generated is hot enough to melt through conventional armoured vehicles.
+This is by far the heaviest member we've observed out of the plasma weapon family, and it seems unlikely that they will get any larger. The plasma blaster is made up of a thick containment plastic housing a heavy duty plasma chamber capable of spitting out extremely thick bolts.
 
-One of the notable improvements over the plasma rifle is the blaster's increased range, made possible by thicker containment plastic and higher bolt speeds. Ballistic testing has confirmed that blaster shots can reach distances of up to 400m before dispersing. The accuracy may be poor, but the blaster also has a far higher rate of fire. A heavy-duty plasma chamber and upgraded plastic spinnerets can produce up to 250 rounds per minute. Unfortunately for us, despite the containment plastic's increased thickness, the bolts will still burst and deploy their plasma properly even at extreme close range. This makes the blaster highly dangerous at all ranges at which PHALANX troops may encounter it. We recommend that any enemies found carrying one be neutralised ASAP, as they are an extreme threat to everyone and everything in the line of fire.
+It's capable of firing plasma bolts in single and burst modes but it seems especially designed to fire what we're calling around the office the Ball of Pain. A thick container of plasma that sprays especially widely on impact, this special firing mode will be incredibly deadly in close quarters, where accuracy can be sacrificed for sheer killing power.
 
-The aliens seem to use the blaster mostly in the role of heavy machine gun and anti-vehicle weapon. Another interesting fact is that their use is almost completely exclusive to the Ortnok species. Most Tamans -- like most humans -- would have extreme difficulty trying to lift and aim one and require mechanical assistance to do so. Cybernetic enhancements and/or the development of powered armour would certainly rectify many of the blaster's inherent weaknesses from a human point of view.
-
-Lastly, we've mapped out the weapon's full control scheme for you, which is documented in the attached field manual. Our troops should now be able to train with and use the plasma blaster in combat as any other weapon, provided they're able to lift it.
+Lastly, we've mapped out the weapon's full control scheme for you, which is documented in the attached field manual. This could be a significant upgrade in power for our close weapons specialists. I recommend you deploy it immediately.
 
 Cdr. Navarre"
 }
 
 msgid plasblaster_pre_txt {
-text "_Commander, we've recovered an alien plasma blaster from the field. This is an extremely powerful new plasma weapon that warrants immediate research. Preliminary testing confirms that blaster shots tear right through our Combat Armour and have a far longer range than the other plasma weapons we've recovered.
+text "_Commander, we've recovered an alien plasma blaster from the field. This is an extremely powerful new plasma weapon that warrants immediate research.
 
 Please authorise this research program at your earliest convenience.
 
