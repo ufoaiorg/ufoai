@@ -1343,7 +1343,10 @@ base/models/objects/alien/ufo_crashed/ufo_scout_hull.md2 | GNU General Public Li
 base/models/objects/alien/ufo_scout_crashed/back01.md2 | GNU General Public License 2.0 | Paweł Michałkiewicz
 base/models/objects/alien/ufo_scout_crashed/back02.md2 | GNU General Public License 2.0 | Paweł Michałkiewicz
 base/models/objects/alien/ufo_scout_crashed/back03.md2 | GNU General Public License 2.0 | Paweł Michałkiewicz
+base/models/objects/alien/ufo_scout_crashed/debris01.md2 | GNU General Public License 2.0 | Paweł Michałkiewicz
+base/models/objects/alien/ufo_scout_crashed/debris02.md2 | GNU General Public License 2.0 | Paweł Michałkiewicz
 base/models/objects/alien/ufo_scout_crashed/doors.md2 | GNU General Public License 2.0 | Paweł Michałkiewicz
+base/models/objects/alien/ufo_scout_crashed/doors2.md2 | GNU General Public License 2.0 | Paweł Michałkiewicz
 base/models/objects/alien/ufo_scout_crashed/engine.jpg | GNU General Public License 2.0 | Paweł Michałkiewicz
 base/models/objects/alien/ufo_scout_crashed/engine01.md2 | GNU General Public License 2.0 | Paweł Michałkiewicz
 base/models/objects/alien/ufo_scout_crashed/engine02.md2 | GNU General Public License 2.0 | Paweł Michałkiewicz
@@ -1354,6 +1357,11 @@ base/models/objects/alien/ufo_scout_crashed/front02.md2 | GNU General Public Lic
 base/models/objects/alien/ufo_scout_crashed/front03.md2 | GNU General Public License 2.0 | Paweł Michałkiewicz
 base/models/objects/alien/ufo_scout_crashed/front04.md2 | GNU General Public License 2.0 | Paweł Michałkiewicz
 base/models/objects/alien/ufo_scout_crashed/hull.jpg | GNU General Public License 2.0 | Paweł Michałkiewicz
+base/models/objects/alien/ufo_scout_crashed/spike01.md2 | GNU General Public License 2.0 | Paweł Michałkiewicz
+base/models/objects/alien/ufo_scout_crashed/spike02.md2 | GNU General Public License 2.0 | Paweł Michałkiewicz
+base/models/objects/alien/ufo_scout_crashed/spike03.md2 | GNU General Public License 2.0 | Paweł Michałkiewicz
+base/models/objects/alien/ufo_scout_crashed/spike04.md2 | GNU General Public License 2.0 | Paweł Michałkiewicz
+base/models/objects/alien/ufo_scout_crashed/spike05.md2 | GNU General Public License 2.0 | Paweł Michałkiewicz
 base/models/objects/alien/ufo_scout_crashed/upper.jpg | GNU General Public License 2.0 | Paweł Michałkiewicz
 base/models/objects/alien/wormhole/cable.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/alien/wormhole/cable.png | GNU General Public License 2.0 or later | Willem Sitters
