@@ -62,13 +62,27 @@ void CP_BaseAttackMissionIsFailure (mission_t *mission)
 {
 	base_t *base = mission->data.base;
 
-	if (base)
+	if (base) {
 		base->baseStatus = BASE_WORKING;
+
+		/* clean up the fakeAircraft */
+		LIST_Foreach(baseAttackFakeAircraft.acTeam, employee_t, employee) {
+			bool found = false;
+			AIR_ForeachFromBase(aircraft, base) {
+				if (AIR_IsInAircraftTeam(aircraft, employee)) {
+					found = true;
+					break;
+				}
+			}
+			if (!found)
+				cgi->INV_DestroyInventory(&employee->chr.i);
+		}
+		LIST_Delete(&baseAttackFakeAircraft.acTeam);
+
+		base->aircraftCurrent = AIR_GetFirstFromBase(base);
+	}
 	ccs.mapAction = MA_NONE;
 
-	/* we really don't want to use the fake aircraft anywhere */
-	if (base)
-		base->aircraftCurrent = AIR_GetFirstFromBase(base);
 	MAP_SetMissionAircraft(NULL);
 
 	INT_ChangeIndividualInterest(0.05f, INTERESTCATEGORY_BUILDING);
@@ -120,6 +134,8 @@ void CP_BaseAttackMissionDestroyBase (mission_t *mission)
 	/* Base attack is over, alien won */
 	Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Your base: %s has been destroyed! All employees killed and all equipment destroyed."), base->name);
 	MS_AddNewMessage(_("Notice"), cp_messageBuffer);
+
+	LIST_Delete(&baseAttackFakeAircraft.acTeam);
 	B_Destroy(base);
 	CP_GameTimeStop();
 
@@ -172,7 +188,6 @@ void CP_BaseAttackStartMission (mission_t *mission)
 	Com_DPrintf(DEBUG_CLIENT, "Base attack: %s at %.0f:%.0f\n", mission->id, mission->pos[0], mission->pos[1]);
 
 	/* Fill the fake aircraft */
-	LIST_Delete(&baseAttackFakeAircraft.acTeam);
 	OBJZERO(baseAttackFakeAircraft);
 	baseAttackFakeAircraft.homebase = base;
 	/* needed for transfer of alien corpses */
