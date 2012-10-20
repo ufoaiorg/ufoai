@@ -560,42 +560,6 @@ Cdr. Navarre and Dr. Connor have already committed their support for the project
 With kind regards, Col. Falkland"
 }
 
-msgid alien_infiltration_txt {
-text "_Commander,
-
-I'm happy to report that we've received the first good results in our ongoing efforts to question captive aliens in our Containment unit. Dr. Yamamura's approach has gradually begun to bear fruit. The aliens have learned to convey messages in both binary code and human-readable sign language, and they appear to comprehend a wide range of questions and instructions. Yamamura and his staff are still working to refine the sign language we've been using, while the rest of my team has concentrated on trying to extract useful information from the hive mind. This hasn't been easy. The aliens are very reticent and require a great deal of chemical encouragement in order to put them into a more helpful frame of mind. The casualty rate has been high.
-
-However, what we have is significant. For instance, the hive mind seems to have no identity. It seems unable to grasp concepts like \"I\" or \"We\", or even \"You\" and \"Them\". It only accepts these words as numerical differentiations -- one specimen or several, one human or a group. This indicates a severe disconnect between human and alien thinking. The shared consciousness doesn't even think of itself as a single enclosed entity; it merely is. This, along with various other answers we've pieced together from our continued sessions, leads us to believe that all aliens do indeed share one single mind. And I mean all of them, Commander. It's not simply a means of increasing team efficiency or encouraging esprit de corps; it's an indispensible component of alien society. Every alien that lives and breathes is an equal and identical part of the greater hive mind, even specimens of completely different species. The only diversity the aliens will acknowledge is in the different substances required to keep the various species alive.
-
-Also, the hive mind has expressed puzzlement at our attempts to communicate with individual aliens, let alone through something as crude as sign language. A human-understandable analogy might be trying to have a deep conversation with someone's toenail, or talking to a single cell in your own body. Of course, that raises the question of where the alien ears and brain really are.
-
-Certainly the handful of aliens currently in our Containment unit are not part of the greater hive mind that we hypothesize exists on the alien homeworld. They seem to be cut off from it for the duration of their mission to Earth, only to rejoin it when they return later. Whether this is due to distance or some kind of atmospheric effect, we've not yet been able to tell. The aliens' answers are hazy on this subject.
-
-That is all I have to report, Commander. However, as a final note, I would like to request your permission to look into methods we could use to more effectively persuade our captives. I must also stress that we require a healthy influx of new alien specimens in order to replace losses. We have to maintain the isolated hive mind we have in Containment. Losing it now would be a significant setback to our research.
-
-Sincerely,
-
-Dr. Connor"
-}
-
-msgid alien_infiltration_pre_txt {
-text "_Commander,
-
-The increasing intellect of the captive aliens in our Containment unit leads me to conclude that we can finally begin to get a real handle on alien communication and, more importantly, getting some useable information out of them. Quoting from my report:
-
-(Odd Behaviour)\"There are several species of alien, all of which meet the physiological requirements for a sentient species, but they show little to no brainwave activity of their own. This implies the presence of some kind of shared or distributed thought between them, a hive mind that grows more intelligent as it grows in numbers.\"
-
-\"With several specimens on hand, their intelligence now seems to be approaching the human level. If we can create a suitable translation device or common language, we believe we may finally be able to establish communications with aliens in PHALANX captivity. Perhaps some of our linguists or psychology experts could form a dialogue. This is an avenue of inquiry that we cannot afford to ignore.\"
-
-Dr. Yamamura is beginning to make real progress on this front, teaching the aliens several new words of sign language every day, but we require lab time and funding for a proper study of what these aliens know and how it can help us. The ability to interrogate aliens about their own technology could be of incomparable value to our soldiers and engineers. Cdr. Navarre was so excited at the prospect, he almost argued in favour of DivBio on this one.
-
-Thank you for your time, Commander. Please approve this program as soon as feasible.
-
-Sincerely,
-
-Dr. Connor"
-}
-
 msgid human_vaccine_txt {
 text "_Technical Specifications: MG12 Machine Gun
 

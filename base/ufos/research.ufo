@@ -5569,37 +5569,6 @@ tech rs_alien_psi_device
 	model			wormhole_device
 }
 
-// http://ufoai.org/wiki/index.php/Proposals/Alien_Infiltration
-tech rs_alien_infiltration
-{
-	name		"_Alien Infiltration"
-	type		"tech"
-	up_chapter	news
-
-	description {
-		default "*msgid:alien_infiltration_txt"
-	}
-	pre_description {
-		default "*msgid:alien_infiltration_pre_txt"
-	}
-
-	mail
-	{
-		from	"*msgid:mail_from_col_falkland"
-		to	"*msgid:mail_to_base_commander"
-		// subject	defined by "name"
-		model	"characters/falkland"
-		icon	"icons/mail_intelligence"
-	}
-	require_AND
-	{
-		tech	rs_enemy_on_earth_revisited
-	}
-
-	time		7000
-	image		"techs/alien_infiltration"
-}
-
 // http://ufoai.org/wiki/index.php/Proposals/Human_Vaccine
 tech rs_human_vaccine
 {
