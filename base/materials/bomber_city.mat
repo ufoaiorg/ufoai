@@ -7,21 +7,21 @@
 	}
 }
 
-/* ufo2: (Harvester, Corrupter, Bomber) */
+/* Textures for Bomber UFO */
 
-/* ufo2_01: Outside Hull clean */
+/* ufo2_01: main texture, flat, clean */
 {
 	material tex_ufo/ufo2_01
 	bump 1.0
 	hardness 1.0
 	parallax 1.0
-	specular 1.0
+	specular 5.0
 	{
 		lightmap
 	}
 }
 
-/* ufo2_02: Inside Wall like ufo2_03 without reliefs */
+/* ufo2_02: the horizontal borders are profiled */
 {
 	material tex_ufo/ufo2_02
 	bump 1.0
@@ -42,5 +42,100 @@
 	specular 5.0
 	{
 		lightmap
+	}
+}
+
+{
+	material tex_ufo/ufo2_04
+	bump 1.0
+	hardness 1.0
+	parallax 1.0
+	specular 5.0
+	{
+		lightmap
+	}
+}
+
+{
+	material tex_ufo/ufo2_05
+	bump 1.0
+	hardness 1.0
+	parallax 1.0
+	specular 5.0
+	{
+		lightmap
+	}
+}
+
+{
+	material tex_ufo/ufo2_06
+	bump 1.0
+	hardness 1.0
+	parallax 1.0
+	specular 5.0
+	{
+		lightmap
+	}
+}
+{
+	material tex_ufo/ufo2_07
+	bump 1.0
+	hardness 1.0
+	parallax 1.0
+	specular 5.0
+	{
+		lightmap
+	}
+}
+
+{
+	material tex_ufo/ufo2_08
+	bump 1.0
+	hardness 1.0
+	parallax 1.0
+	specular 5.0
+	{
+		lightmap
+	}
+}
+{
+	material tex_ufo/ufo2_09
+	bump 1.0
+	hardness 1.0
+	parallax 1.0
+	specular 5.0
+	{
+		lightmap
+	}
+}
+{
+	material tex_ufo/ufo2_10
+	bump 1.0
+	hardness 1.0
+	parallax 1.0
+	specular 5.0
+	{
+		lightmap
+	}
+}
+
+{
+	material tex_ufo/ufo2_17
+	bump 1.0
+	hardness 1.0
+	parallax 1.0
+	specular 5.0
+	{
+		lightmap
+	}
+}
+
+// engines
+{
+	material tex_ufo/ufo2_12
+	{
+		texture tex_ufo/ufo2_12
+		blend GL_SRC_COLOR GL_SRC_ALPHA
+		pulse 0.5
 	}
 }
