@@ -161,7 +161,7 @@ All it lacked was a leader."
 msgid news_new_twist_txt {
 text "_Commander,
 
-New information has come to light during the last batch of autopsies you requested. Our reports stand, but we've discovered a commonality that may give us some new insight into the aliens' diversity.
+New information has come to light that you need to see. We've discovered a commonality that may give us some new insight into the aliens' diversity.
 
 During our first analyses of the aliens' cellular structure, we encountered some anomalies where our DNA replication tests would fail due to unexplained sample contamination. We initially discarded this as human error, but the problem has continued to appear with surprising regularity. The same result, again and again; every time we run a sample that hasn't been cryofrozen for storage, we have difficulty extracting a single uncontaminated sequence. I spent some of my off hours studying the problem, and I believe I've found the cause.
 
@@ -176,30 +176,6 @@ The infection's purpose remains nebulous at this point, but it is the only thing
 There is no indication that this organism is contagious to humans. When injecting cultures of human tissue with fresh alien blood, we have observed the alien blood being completely rejected, as expected. Unexpectedly, however, any trace of the infection was subsequently annihilated by standard human T cells. The organism was unable to take root in the face of our immune system.
 
 We currently do not believe the XVI organism poses a threat to our soldiers on the battlefield. However, we will continue research and keep you updated about any developments. A thorough blood screening of all our personnel is in progress, just in case, and strict quarantine procedures will be maintained throughout the lab.
-
-Sincerely,
-
-Dr. Connor"
-}
-
-msgid news_new_twist_alt_txt {
-text "_Commander,
-
-This is an extremely urgent report, please believe me when I say it cannot wait for anything.
-
-I've found some disturbing new information during our continued research into the XVI organism. I have reason to believe that XVI may be an even larger part of the alien plan than we first suspected.
-
-First, some background. During our initial analyses of the aliens' cellular structure, we encountered some anomalies where our DNA replication tests would fail due to unexplained sample contamination. We initially discarded this as human error, but the problem has continued to appear with unerring regularity. The same result, again and again; every time we run a sample that hasn't been cryofrozen for storage, we have difficulty extracting a single uncontaminated sequence. It didn't make any sense until our recent discovery of the XVI infection in civilian people. I immediately suspected a correlation but wanted to wait until I could prove it, and since then I've spent most of my off hours studying the problem. Now I believe I've found the cause -- XVI itself.
-
-I've determined that all the aliens carry their own versions of this same micro-organic infection. There are differences to account for the different bodies and blood types -- some of these varieties don't appear to live in blood at all -- but it is unmistakably the same thing. We can only assume that the different strands of the infection were engineered to suit each species.
-
-Since all the alien species carry a unique strand of the infection, I've decided to modify our naming conventions slightly, giving individual XVI strands alphabetical designations after the source in which the strand can be found. Humans have XVI-H, Tamans have XVI-T, and so forth.
-
-The organism's function is not readily apparent in these aliens since we have no uninfected control specimens against which we can measure the effect. However, given this information, we have to conclude that XVI is more than simply a bio-weapon against humanity. It may even be used in a similar way -- an enslavement device suppressing individual thought and linking the subject into the group mind, whether there is a group or not. Perhaps the aliens that are sent to Earth are all members of some sort of slave soldier caste, or even prisoners forced to fight, like the Red Army's convict battalions in World War 2. At this point we can barely begin to speculate.
-
-Commander, I think we should pursue aggressive investigation into XVI so that we can find the truth behind some of these mysteries. We have to determine the true purpose of this organism, what it means to the war and to us as a species. XVI-H is possibly the biggest threat we've ever faced.
-
-We cannot let these things enslave our planet.
 
 Sincerely,
 

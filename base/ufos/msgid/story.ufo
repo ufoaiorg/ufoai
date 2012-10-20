@@ -348,32 +348,10 @@ I think it warrants the research to see if we can reproduce this stuff in our Wo
 Cdr. Navarre"
 }
 
-msgid enemy_on_earth_alt_txt {
-text "_Commander,
-
-My team and I are deeply troubled by the recent reports of human hostility against PHALANX personnel, as I'm sure you are. We've all seen the battlefield footage. There's no doubt that the attackers were humans like you and me, but it's also clear they were using alien weaponry and equipment -- some of which even PHALANX has never seen before.
-
-The worrying questions seem to mount up. First, however, we need to review the facts we have.
-
-Do the aliens have active sympathisers on Earth? Yes.
-
-Are the aliens supplying these human servants? Most likely, it's the only reasonable explanation for their advanced alien equipment.
-
-Do the servants present a threat? Absolutely. Perhaps a greater one than the alien menace itself.
-
-We need to delve deeper into what makes these people tick. If we can find out the most common causes for alien infiltration, our Information Division should be able to devise a far more successful propaganda strategy, which could increase our number of volunteers as well as decrease the alien infiltration rate across the globe. DivBio also has a stake; we'd like to examine at least one live human prisoner in our Containment unit so we can run a full physical examination. If the aliens have bodily altered these people in addition to training and supplying them, we'd like to find out about it.
-
-Director Wong (DivInfo) also asked me to mention that, if we hold off on implementing a new info strategy for too long, we could soon face recruitment shortfalls and increased human resistance as the sympathisers begin getting their word out. I tend to agree. We need to keep this planet together if we are to have any chance against the alien threat.
-
-Sincerely,
-
-Dr. Connor"
-}
-
 msgid enemy_on_earth_txt {
 text "_Commander,
 
-You need to read this right away. With your authorisation, we've performed several autopsies and done our best to examine the live prisoners taken on our mission against the alien sympathisers. The results are alarming.
+You need to read this right away. With your authorisation, we've performed several autopsies and done our best to examine the live prisoners among the alien sympathisers. The results are alarming.
 
 Do you remember the report I sent you about the first live alien specimen we captured? As you may remember, it lost all its intellect and became largely unresponsive without fellows to empower the hive mind. Prepare yourself, Commander: The human prisoners in our Containment unit exhibit the very same symptoms. They do not think for themselves. Their thought processes are firmly suppressed and supplanted by the alien hive mind through a process we currently fail to understand.
 
@@ -387,13 +365,9 @@ Things are a bit hectic right now. Dr. Eisenhower's infection implies that other
 
 Interestingly, our attempts to infect other terrestrial life -- even intelligent vertebrates such as bottlenose dolphins and elephants -- have failed completely. This organism must have been engineered wholly or in part to specifically infect the human species.
 
-We've dubbed the organism the 'EXtraterrestrial Viral Infection', or XVI. This may be somewhat of a misnomer in microbiological terms; XVI is a complex multi-celled organism far larger than any terrestrial virus, but it acts and replicates exactly like one.
+We've named the organism the XVI-H. Really, what we're looking at here is a bio-weapon of unprecedented proportions. Instead of killing its victims it takes control of them with no option of resistance and -- at the moment -- no available cure or defence. The most humble and harmless civilian can be infected and, with the instant shared expertise of the larger hive mind, become an effective warrior for the aliens while reducing our numbers. When the aliens also supply them with weapons, we can see the true face of horror.
 
-Really, what we're looking at here is a bio-weapon of unprecedented proportions. Instead of killing its victims it takes control of them with no option of resistance and -- at the moment -- no available cure or defence. The most humble and harmless civilian can be infected and, with the instant shared expertise of the larger hive mind, become an effective warrior for the aliens while reducing our numbers. When the aliens also supply them with weapons, we can see the true face of horror.
-
-I couldn't imagine a more nightmarish scenario for us. Our troops will undoubtedly be coming up against more and more human opponents during alien attacks on Earth. We may even find people crewing UFOs for the aliens. It's madness.
-
-Commander, we must develop a vaccine against XVI as soon as possible. The danger of our soldiers and salvage technicians falling victim to the infection in the field is too great to ignore even for a moment, let alone allowing the general population to fall prey to this abomination. I hereby request your permission to start work on a vaccine immediately. Please, please respond at your earliest convenience.
+I couldn't imagine a more nightmarish scenario for us. We may even find people crewing UFOs for the aliens. It's madness.
 
 Sincerely,
 
@@ -403,19 +377,15 @@ Dr. Connor"
 msgid enemy_on_earth_pre_txt {
 text "_Commander,
 
-My team and I are deeply troubled by the recent reports of human hostility against PHALANX personnel, as I'm sure you are. We've all seen the battlefield footage. There's no doubt that the attackers were humans like you and me, but it's also clear they were using alien weaponry and equipment -- some of which even PHALANX has never seen before.
-
-The worrying questions seem to mount up. First, however, we need to review the facts we have.
+My team and I are deeply troubled by the recent reports of human support for the aliens, as I'm sure you are. The worrying questions seem to mount up. First, however, we need to review the facts we have.
 
 Do the aliens have active sympathisers on Earth? Yes.
 
-Are the aliens supplying these human servants? Most likely, it's the only reasonable explanation for their advanced alien equipment.
+Are the aliens supplying these human servants? Possibly.
 
 Do the servants present a threat? Absolutely. Perhaps a greater one than the alien menace itself.
 
-We need to delve deeper into what makes these people tick. If we can find out the most common causes for alien infiltration, our Information Division should be able to devise a far more successful propaganda strategy, which could increase our number of volunteers as well as decrease the alien infiltration rate across the globe. DivBio also has a stake; we'd like to examine at least one live human prisoner in our Containment unit so we can run a full physical examination. If the aliens have bodily altered these people in addition to training and supplying them, we'd like to find out about it.
-
-Director Wong (DivInfo) reports that if we hold off too long on implementing a new info strategy, we could soon face recruitment shortfalls and increased human resistance as the sympathisers begin to grow. I tend to agree. We need to keep this planet together if we are to have any chance against the alien threat.
+We need to delve deeper into what makes these people tick.  We'd like to examine at least one live human prisoner collected by the national security sweeps which have been taking place as panic over the human threat mounts. If the aliens have bodily altered these people in addition to training and supplying them, we'd like to find out about it.
 
 Sincerely,
 
@@ -458,14 +428,6 @@ All we need is your signature on the dotted line, Sir.
 With kind regards,
 
 Col. Falkland"
-}
-
-msgid enemy_on_earth_rev_txt {
-text "_"
-}
-
-msgid enemy_on_earth_rev_pre_txt {
-text "_No pre research info available"
 }
 
 msgid alien_strategy_txt {

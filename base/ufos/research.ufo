@@ -5331,8 +5331,7 @@ tech news_new_twist
 	up_chapter	news
 
 	description {
-		default "*msgid:news_new_twist_txt"			// The Enemy On Earth has NOT been researched.
-		extra (rs_enemy_on_earth "*msgid:news_new_twist_alt_txt")	// The Enemy On Earth HAS been researched.
+		default "*msgid:news_new_twist_txt"
 	}
 
 	mail
@@ -5346,7 +5345,6 @@ tech news_new_twist
 
 	require_AND
 	{
-		tech rs_any_2_autopsies
 		tech rs_alien_xvi_event
 	}
 
@@ -5362,8 +5360,7 @@ tech rs_enemy_on_earth
 	up_chapter	news
 
 	description {
-		default "*msgid:enemy_on_earth_alt_txt"		// A New Twist has NOT occurred
-		extra (news_new_twist "*msgid:enemy_on_earth_txt")		// A New Twist HAS occurred
+		default "*msgid:enemy_on_earth_txt"
 	}
 	pre_description {
 		default "*msgid:enemy_on_earth_pre_txt"
@@ -5387,7 +5384,7 @@ tech rs_enemy_on_earth
 	}
 	require_AND
 	{
-		tech rs_enemy_on_earth_event
+		tech rs_craft_ufo_corrupter
 	}
 
 	time		6000
@@ -5435,47 +5432,6 @@ tech rs_xvi_census
 	image		"techs/xvi"
 }
 
-// http://ufoai.org/wiki/index.php/Aliens/The_Enemy_On_Earth_(late)
-tech rs_enemy_on_earth_revisited
-{
-	name		"_The Enemy On Earth - Revisited"
-	type		"tech"
-	up_chapter	news
-
-	description {
-		default "*msgid:enemy_on_earth_rev_txt"
-	}
-	pre_description {
-		default "*msgid:enemy_on_earth_rev_pre_txt"
-	}
-
-	mail
-	{
-		from	"*msgid:mail_from_dr_connor"
-		to	"*msgid:mail_to_base_commander"
-		// subject	defined by "name"
-		model	"characters/connor"
-		icon	"icons/mail_intelligence"
-	}
-	mail_pre
-	{
-		from	"*msgid:mail_from_dr_connor"
-		to	"*msgid:mail_to_base_commander"
-		// subject	defined by "name"
-		model	"characters/connor"
-		icon	"icons/mail_intelligence"
-	}
-	require_AND
-	{
-		tech	rs_enemy_on_earth
-		tech	news_new_twist
-		tech	rs_alien_psi_device
-	}
-
-	time		7000
-	image		"techs/enemy_on_earth"
-}
-
 // http://ufoai.org/wiki/index.php/Research/The_Alien_Strategy
 tech rs_alien_strategy
 {
@@ -5497,7 +5453,7 @@ tech rs_alien_strategy
 	}
 	require_OR
 	{
-		tech	news_new_twist
+		tech	rs_craft_ufo_harvester
 	}
 
 	time		7000
@@ -5591,10 +5547,10 @@ tech rs_human_vaccine
 		model	"characters/connor"
 		icon	"icons/mail_intelligence"
 	}
-	require_OR
+	require_AND
 	{
-		tech	rs_enemy_on_earth_revisited
-		tech	rs_enemy_on_earth
+		// Make the tech not researchable yet because vaccine has no effect.
+		tech	rs_human_vaccine
 	}
 
 	time		7000
