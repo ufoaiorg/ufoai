@@ -5438,9 +5438,11 @@ tech rs_alien_strategy
 	name		"_The Alien Strategy"
 	type		"tech"
 	up_chapter	news
-
 	description {
 		default "*msgid:alien_strategy_txt"
+	}
+	pre_description {
+		default "*msgid:alien_strategy_pre_txt"
 	}
 
 	mail
