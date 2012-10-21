@@ -78,7 +78,9 @@ typedef struct campaignEvents_s {
  */
 typedef enum {
 	NEW_DAY,
-	UFO_DETECTION
+	UFO_DETECTION,
+	CAPTURED_ALIENS_DIED,
+	CAPTURED_ALIENS
 } campaignTriggerEventType_t;
 
 typedef struct {

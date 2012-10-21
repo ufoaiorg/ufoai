@@ -26,7 +26,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SAVE_ALIENCONT_H
 
 #define SAVE_ALIENCONT_ALIENCONT "alienCont"
-#define SAVE_ALIENCONT_BREATHINGMAILSENT "breathingMailSent"
 
 #define SAVE_ALIENCONT_CONT "cont"
 #define SAVE_ALIENCONT_BASEIDX "baseIDX"
@@ -42,9 +41,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 DTD:
 
 <!ELEMENT alienCont cont>
-<!ATTLIST alienCont
-	breathingMailSent		CDATA		'false'
->
 
 <!ELEMENT cont alien*>
 <!ATTLIST cont

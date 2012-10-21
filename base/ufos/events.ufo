@@ -125,6 +125,14 @@ event samsitearm
 	once	true // remove this event after it triggers
 	command	"addeventmail tip_samsitearm"
 }
+
+event alienbreathingmissing
+{
+	type	"captured_aliens_died"
+	once	true // remove this event after it triggers
+	command	"addeventmail alienbreathing"
+}
+
 /*
 event detect_harvester
 {

@@ -408,7 +408,6 @@ typedef struct ccs_s {
 	int aliensKilled;		/**< how many aliens were killed already */
 	date_t date;			/**< current date */
 	bool XVIShowMap;			/**< means that PHALANX has a map of XVI - @see CP_IsXVIResearched */
-	bool breathingMailSent;		/**< status flag indicating that mail about died aliens due to missing breathing tech was sent */
 	float timer;
 	float frametime;
 

@@ -181,14 +181,11 @@ void AL_AddAliens (aircraft_t *aircraft)
 					/* We can not store living (i.e. no robots or dead bodies) aliens without rs_alien_breathing tech */
 					ac->amountDead += cargo[i].amountAlive;
 					ccs.campaignStats.killedAliens += cargo[i].amountAlive;
+					CP_TriggerEvent(CAPTURED_ALIENS_DIED, NULL);
 					/* only once */
 					if (!messageAlreadySet) {
 						MS_AddNewMessage(_("Notice"), _("You can't hold live aliens yet. Aliens died."), MSG_DEATH);
 						messageAlreadySet = true;
-					}
-					if (!ccs.breathingMailSent) {
-						CL_EventAddMail("alienbreathing");
-						ccs.breathingMailSent = true;
 					}
 				} else {
 					int k;
@@ -211,6 +208,7 @@ void AL_AddAliens (aircraft_t *aircraft)
 							ccs.campaignStats.killedAliens++;
 						}
 					}
+					CP_TriggerEvent(CAPTURED_ALIENS, NULL);
 					/* only once */
 					if (!messageAlreadySet) {
 						MS_AddNewMessage(_("Notice"), _("You've captured new aliens."));
@@ -705,7 +703,6 @@ bool AC_SaveXML (xmlNode_t * parent)
 	base_t *base;
 
 	aliencont = cgi->XML_AddNode(parent, SAVE_ALIENCONT_ALIENCONT);
-	cgi->XML_AddBoolValue(aliencont, SAVE_ALIENCONT_BREATHINGMAILSENT, ccs.breathingMailSent);
 
 	base = NULL;
 	while ((base = B_GetNext(base)) != NULL) {
@@ -746,7 +743,6 @@ bool AC_LoadXML (xmlNode_t * parent)
 	int i;
 
 	aliencont = cgi->XML_GetNode(parent, SAVE_ALIENCONT_ALIENCONT);
-	ccs.breathingMailSent = cgi->XML_GetBool(aliencont, SAVE_ALIENCONT_BREATHINGMAILSENT, false);
 
 	/* Init alienContainers */
 	for (i = 0; i < MAX_BASES; i++) {

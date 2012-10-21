@@ -348,6 +348,8 @@ void CP_ParseEventTrigger (const char *name, const char **text)
 
 	cgi->Com_RegisterConstInt("new_day", NEW_DAY);
 	cgi->Com_RegisterConstInt("ufo_detection", UFO_DETECTION);
+	cgi->Com_RegisterConstInt("captured_aliens_died", CAPTURED_ALIENS_DIED);
+	cgi->Com_RegisterConstInt("captured_aliens", CAPTURED_ALIENS);
 
 	campaignTriggerEvent_t *event = &ccs.campaignTriggerEvents[ccs.numCampaignTriggerEvents];
 	OBJZERO(*event);
@@ -369,6 +371,8 @@ void CP_ParseEventTrigger (const char *name, const char **text)
 
 	cgi->Com_UnregisterConstVariable("new_day");
 	cgi->Com_UnregisterConstVariable("ufo_detection");
+	cgi->Com_UnregisterConstVariable("captured_aliens_died");
+	cgi->Com_UnregisterConstVariable("captured_aliens");
 }
 
 bool CP_TriggerEventSaveXML (xmlNode_t *p)
