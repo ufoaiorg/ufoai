@@ -101,13 +101,13 @@ char *Com_Chop(char *s);
 #define endof(x)    ((x) + lengthof((x)))
 #define CASSERT(x) extern int ASSERT_COMPILE[((x) != 0) * 2 - 1]
 
-const char *va(const char *format, ...) __attribute__((format(printf, 1, 2)));
+const char *va(const char *format, ...) __attribute__((format(__printf__, 1, 2)));
 int Q_FloatSort(const void *float1, const void *float2);
 int Q_StringSort(const void *string1, const void *string2) __attribute__((nonnull));
 
 unsigned int Com_HashKey(const char *name, int hashsize);
 void Com_MakeTimestamp(char* ts, const size_t tslen);
-bool Com_sprintf(char *dest, size_t size, const char *fmt, ...) __attribute__((format(printf, 3, 4)));
+bool Com_sprintf(char *dest, size_t size, const char *fmt, ...) __attribute__((format(__printf__, 3, 4)));
 
 /** @todo is this still the case in most recent mingw versions? */
 #if defined(__MINGW32_VERSION) && defined(__STRICT_ANSI__)
@@ -162,9 +162,9 @@ bool Q_strreplace(const char *source, const char *pattern, const char *replace, 
  * otherwise a null pointer is returned */
 char const* Q_strstart(char const* str, char const* start) __attribute__((nonnull));
 
-void Com_Printf(const char *fmt, ...) __attribute__((format(printf, 1, 2)));
-void Com_DPrintf(int level, const char *msg, ...) __attribute__((format(printf, 2, 3)));
-void Com_Error(int code, const char *fmt, ...) __attribute__((noreturn, format(printf, 2, 3)));
+void Com_Printf(const char *fmt, ...) __attribute__((format(__printf__, 1, 2)));
+void Com_DPrintf(int level, const char *msg, ...) __attribute__((format(__printf__, 2, 3)));
+void Com_Error(int code, const char *fmt, ...) __attribute__((noreturn, format(__printf__, 2, 3)));
 
 #define OBJSET(obj, val) (memset(&(obj), (val), sizeof(obj)))
 #define OBJZERO(obj)     OBJSET((obj), 0)

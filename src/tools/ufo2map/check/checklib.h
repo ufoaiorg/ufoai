@@ -34,7 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define NUM_DIFF -2
 #define NUM_SAME -3
 
-void Check_Printf(const verbosityLevel_t msgVerbLevel, bool change, int entnum, int brushnum, const char *format, ...) __attribute__((format(printf, 5, 6)));
+void Check_Printf(const verbosityLevel_t msgVerbLevel, bool change, int entnum, int brushnum, const char *format, ...) __attribute__((format(__printf__, 5, 6)));
 void Check_InitEntityDefs(void);
 void Check_Free(void);
 

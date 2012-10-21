@@ -55,9 +55,9 @@ SYSTEM SPECIFIC
 */
 
 /* this is only here so the functions in q_shared.c can link */
-void Sys_Error(const char *error, ...) __attribute__((noreturn, format(printf, 1, 2)));
-void Com_Printf(const char *msg, ...) __attribute__((format(printf, 1, 2)));
-void Com_DPrintf(int level, const char *msg, ...) __attribute__((format(printf, 2, 3)));
+void Sys_Error(const char *error, ...) __attribute__((noreturn, format(__printf__, 1, 2)));
+void Com_Printf(const char *msg, ...) __attribute__((format(__printf__, 1, 2)));
+void Com_DPrintf(int level, const char *msg, ...) __attribute__((format(__printf__, 2, 3)));
 
 #define TEAM_NO_ACTIVE -1
 #define TEAM_CIVILIAN   0

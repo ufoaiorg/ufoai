@@ -161,7 +161,7 @@ int FS_Read(void *buffer, int len, qFILE * f);
 
 void FS_FreeFile(void *buffer);
 
-int FS_CheckFile(const char *fmt, ...) __attribute__((format(printf, 1, 2)));
+int FS_CheckFile(const char *fmt, ...) __attribute__((format(__printf__, 1, 2)));
 
 int FS_BuildFileList(const char *files);
 const char* FS_NextFileFromFileList(const char *files);

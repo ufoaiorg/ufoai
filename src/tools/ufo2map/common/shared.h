@@ -49,7 +49,7 @@ typedef enum {
 } verbosityLevel_t;
 
 bool AbortPrint(const verbosityLevel_t importance);
-void Verb_Printf(const verbosityLevel_t importance, const char *format, ...) __attribute__((format(printf, 2, 3)));
+void Verb_Printf(const verbosityLevel_t importance, const char *format, ...) __attribute__((format(__printf__, 2, 3)));
 
 typedef struct mapConfig_s {
 	float subdivideSize;
@@ -147,7 +147,7 @@ void RunSingleThreadOn(void (*func)(unsigned int), unsigned int workcount, bool 
 #define SYS_WRN 2 /* warnings */
 #define SYS_ERR 3 /* error */
 
-void Sys_Error(const char *error, ...) __attribute__((noreturn, format(printf, 1, 2)));
-void Com_Printf(const char *format, ...) __attribute__((format(printf, 1, 2)));
+void Sys_Error(const char *error, ...) __attribute__((noreturn, format(__printf__, 1, 2)));
+void Com_Printf(const char *format, ...) __attribute__((format(__printf__, 1, 2)));
 
 #endif /* _SHARED_H */

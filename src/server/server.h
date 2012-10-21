@@ -200,9 +200,9 @@ void SV_MapcycleClear(void);
 void SV_Map(bool day, const char *levelstring, const char *assembly);
 
 void SV_Multicast(int mask, dbuffer *msg);
-void SV_ClientCommand(client_t *client, const char *fmt, ...) __attribute__((format(printf,2,3)));
-void SV_ClientPrintf(client_t * cl, int level, const char *fmt, ...) __attribute__((format(printf,3,4)));
-void SV_BroadcastPrintf(int level, const char *fmt, ...) __attribute__((format(printf,2,3)));
+void SV_ClientCommand(client_t *client, const char *fmt, ...) __attribute__((format(__printf__,2,3)));
+void SV_ClientPrintf(client_t * cl, int level, const char *fmt, ...) __attribute__((format(__printf__,3,4)));
+void SV_BroadcastPrintf(int level, const char *fmt, ...) __attribute__((format(__printf__,2,3)));
 
 /* sv_user.c */
 void SV_ExecuteClientMessage(client_t * cl, int cmd, dbuffer *msg);

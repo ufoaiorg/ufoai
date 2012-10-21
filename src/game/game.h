@@ -102,19 +102,19 @@ typedef struct {
 	/* special messages */
 
 	/** sends message to all players */
-	void (IMPORT *BroadcastPrintf) (int printlevel, const char *fmt, ...) __attribute__((format(printf, 2, 3)));
+	void (IMPORT *BroadcastPrintf) (int printlevel, const char *fmt, ...) __attribute__((format(__printf__, 2, 3)));
 	/** print output to server console */
-	void (IMPORT *DPrintf) (const char *fmt, ...) __attribute__((format(printf, 1, 2)));
+	void (IMPORT *DPrintf) (const char *fmt, ...) __attribute__((format(__printf__, 1, 2)));
 	/** sends message to only one player (don't use this to send messages to an AI player struct) */
 	void (IMPORT *PlayerPrintf) (const player_t * player, int printlevel, const char *fmt, va_list ap);
 
 	/** configstrings hold all the index strings.
 	 * All of the current configstrings are sent to clients when
 	 * they connect, and changes are sent to all connected clients. */
-	void (IMPORT *ConfigString) (int num, const char *fmt, ...) __attribute__((format(printf, 2, 3)));
+	void (IMPORT *ConfigString) (int num, const char *fmt, ...) __attribute__((format(__printf__, 2, 3)));
 
 	/** @note The error message should not have a newline - it's added inside of this function */
-	void (IMPORT *Error) (const char *fmt, ...) __attribute__((noreturn, format(printf, 1, 2)));
+	void (IMPORT *Error) (const char *fmt, ...) __attribute__((noreturn, format(__printf__, 1, 2)));
 
 	/** the *index functions create configstrings and some internal server state */
 	unsigned int (IMPORT *ModelIndex) (const char *name);

@@ -97,7 +97,7 @@ typedef struct cgame_import_s {
 	const cgameType_t *cgameType;
 
 	/* UI functions */
-	void (IMPORT *UI_ExecuteConfunc) (const char *fmt, ...) __attribute__((format(printf, 1, 2)));
+	void (IMPORT *UI_ExecuteConfunc) (const char *fmt, ...) __attribute__((format(__printf__, 1, 2)));
 	void (IMPORT *UI_PopWindow) (bool all);
 	void (IMPORT *UI_PushWindow) (const char *name);
 	void (IMPORT *UI_InitStack) (const char* activeMenu, const char* mainMenu, bool popAll, bool pushActive);
@@ -185,7 +185,7 @@ typedef struct cgame_import_s {
 	/* renderer functions */
 	void (IMPORT *R_SoftenTexture) (byte *in, int width, int height, int bpp);
 	void (IMPORT *R_LoadImage) (const char *name, byte **pic, int *width, int *height);
-	bool (IMPORT *R_ImageExists) (const char *pname, ...) __attribute__((format(printf, 1, 2)));
+	bool (IMPORT *R_ImageExists) (const char *pname, ...) __attribute__((format(__printf__, 1, 2)));
 	void (IMPORT *R_Color) (const vec4_t rgba);
 	void (IMPORT *R_DrawLineStrip) (int points, int *verts);
 	void (IMPORT *R_DrawLine) (int *verts, float thickness);
@@ -203,8 +203,8 @@ typedef struct cgame_import_s {
 	int (IMPORT *NET_ReadString)  (dbuffer *buf, char *string, size_t length);
 	struct net_stream *(IMPORT *NET_Connect)  (const char *node, const char *service, stream_onclose_func *onclose);
 	void (IMPORT *NET_StreamSetCallback)  (struct net_stream *s, stream_callback_func *func);
-	void (IMPORT *NET_OOB_Printf) (struct net_stream *s, const char *format, ...) __attribute__((format(printf,2,3)));
-	void (IMPORT *NET_OOB_Printf2) (const char *format, ...) __attribute__((format(printf,1,2)));
+	void (IMPORT *NET_OOB_Printf) (struct net_stream *s, const char *format, ...) __attribute__((format(__printf__,2,3)));
+	void (IMPORT *NET_OOB_Printf2) (const char *format, ...) __attribute__((format(__printf__,1,2)));
 	void *(IMPORT *NET_StreamGetData) (struct net_stream *s);
 	void (IMPORT *NET_StreamSetData) (struct net_stream *s, void *data);
 	void (IMPORT *NET_StreamFree) (struct net_stream *s);
@@ -255,7 +255,7 @@ typedef struct cgame_import_s {
 	/* filesystem functions */
 	int (IMPORT *FS_LoadFile) (const char *path, byte **buffer);
 	void (IMPORT *FS_FreeFile) (void *buffer);
-	int (IMPORT *FS_CheckFile) (const char *fmt, ...) __attribute__((format(printf, 1, 2)));
+	int (IMPORT *FS_CheckFile) (const char *fmt, ...) __attribute__((format(__printf__, 1, 2)));
 	int (IMPORT *FS_BuildFileList) (const char *files);
 	const char* (IMPORT *FS_NextFileFromFileList) (const char *files);
 	char *(IMPORT *FS_NextScriptHeader) (const char *files, const char **name, const char **text);
@@ -285,12 +285,12 @@ typedef struct cgame_import_s {
 	void (IMPORT *Cbuf_AddText) (const char *text);
 	void (IMPORT *Cbuf_Execute) (void);
 
-	void (IMPORT *Sys_Error) (const char *error, ...) __attribute__((noreturn, format(printf, 1, 2)));
+	void (IMPORT *Sys_Error) (const char *error, ...) __attribute__((noreturn, format(__printf__, 1, 2)));
 	int (IMPORT *Com_ServerState) (void);
 	void (IMPORT *Com_SetGameType) (void);
-	void (IMPORT *Com_Error) (int code, const char *fmt, ...) __attribute__((noreturn, format(printf, 2, 3)));
-	void (IMPORT *Com_Printf) (const char *msg, ...) __attribute__((format(printf, 1, 2)));
-	void (IMPORT *Com_DPrintf) (int level, const char *msg, ...) __attribute__((format(printf, 2, 3)));
+	void (IMPORT *Com_Error) (int code, const char *fmt, ...) __attribute__((noreturn, format(__printf__, 2, 3)));
+	void (IMPORT *Com_Printf) (const char *msg, ...) __attribute__((format(__printf__, 1, 2)));
+	void (IMPORT *Com_DPrintf) (int level, const char *msg, ...) __attribute__((format(__printf__, 2, 3)));
 	const char* (IMPORT *Com_DropShipTypeToShortName) (humanAircraftType_t type);
 	const char* (IMPORT *Com_UFOCrashedTypeToShortName) (ufoType_t type);
 	const char* (IMPORT *Com_UFOTypeToShortName) (ufoType_t type);

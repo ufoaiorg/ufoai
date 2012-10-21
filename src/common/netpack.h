@@ -54,7 +54,7 @@ void NET_WriteMsg(struct net_stream *s, dbuffer *buf);
 /* This keeps buf intact */
 void NET_WriteConstMsg(struct net_stream *s, const dbuffer *buf);
 
-void NET_OOB_Printf(struct net_stream *s, const char *format, ...) __attribute__((format(printf,2,3)));
+void NET_OOB_Printf(struct net_stream *s, const char *format, ...) __attribute__((format(__printf__,2,3)));
 
 int NET_ReadChar(dbuffer *buf);
 int NET_ReadByte(dbuffer *buf);

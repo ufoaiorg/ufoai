@@ -104,7 +104,7 @@ image_t *R_GetImage(const char *name);
 image_t *R_FindImage(const char *pname, imagetype_t type);
 const image_t *R_FindPics(const char *name);
 
-bool R_ImageExists(const char *pname, ...) __attribute__((format(printf, 1, 2)));
+bool R_ImageExists(const char *pname, ...) __attribute__((format(__printf__, 1, 2)));
 image_t *R_GetImageAtIndex(int i);
 int R_GetImageIndex(image_t *image);
 

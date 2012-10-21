@@ -366,7 +366,7 @@ player_t* G_GetPlayerForTeam(int team);
 int G_GetActiveTeam(void);
 const char* G_GetWeaponNameForFiredef(const fireDef_t *fd);
 void G_PrintActorStats(const edict_t *victim, const edict_t *attacker, const fireDef_t *fd);
-void G_PrintStats(const char *format, ...) __attribute__((format(printf, 1, 2)));
+void G_PrintStats(const char *format, ...) __attribute__((format(__printf__, 1, 2)));
 int G_TouchTriggers(edict_t *ent);
 int G_TouchSolids(edict_t *ent, float extend);
 void G_TouchEdicts(edict_t *ent, float extend);
@@ -470,7 +470,7 @@ void G_ClientInitActorStates(const player_t * player);
 int G_ClientGetTeamNum(const player_t * player);
 int G_ClientGetTeamNumPref(const player_t * player);
 bool G_ClientIsReady(const player_t * player);
-void G_ClientPrintf(const player_t * player, int printlevel, const char *fmt, ...) __attribute__((format(printf, 3, 4)));
+void G_ClientPrintf(const player_t * player, int printlevel, const char *fmt, ...) __attribute__((format(__printf__, 3, 4)));
 void G_ResetClientData(void);
 
 void G_ClientCommand(player_t * player);
