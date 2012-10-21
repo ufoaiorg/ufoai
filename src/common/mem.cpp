@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "common.h"
-#include "../shared/mutex.h"
+#include <SDL_thread.h>
 
 #define MEM_MAX_POOLNAME 64
 #define MEM_HASH         11
@@ -69,7 +69,7 @@ struct memPool_t {
 #define MEM_HEAD_SENTINEL_BOT	0xD0BAF0FF
 #define MEM_FOOT_SENTINEL		0xF00DF00D
 
-static threads_mutex_t *z_lock;
+static SDL_mutex *z_lock;
 
 #define MEM_MAX_POOLCOUNT	32
 
@@ -214,7 +214,7 @@ void _Mem_Free (void *ptr, const char *fileName, const int fileLine)
 	memBlock_t* const mem = Mem_PtrToBlock(ptr);
 	_Mem_CheckSentinels(mem, fileName, fileLine);
 
-	TH_MutexLock(z_lock);
+	SDL_LockMutex(z_lock);
 
 	/* Decrement counters */
 	mem->pool->blockCount--;
@@ -234,7 +234,7 @@ void _Mem_Free (void *ptr, const char *fileName, const int fileLine)
 		prev = &search->next;
 	}
 
-	TH_MutexUnlock(z_lock);
+	SDL_UnlockMutex(z_lock);
 
 	/* Free it */
 	free(mem);
@@ -326,7 +326,7 @@ void *_Mem_Alloc (size_t size, bool zeroFill, memPool_t *pool, const int tagNum,
 	/* Fill in the footer */
 	Mem_BlockToFooter(mem)->sentinel = MEM_FOOT_SENTINEL;
 
-	TH_MutexLock(z_lock);
+	SDL_LockMutex(z_lock);
 
 	/* For integrity checking and stats */
 	pool->blockCount++;
@@ -336,7 +336,7 @@ void *_Mem_Alloc (size_t size, bool zeroFill, memPool_t *pool, const int tagNum,
 	mem->next = pool->blocks[(uintptr_t)mem % MEM_HASH];
 	pool->blocks[(uintptr_t)mem % MEM_HASH] = mem;
 
-	TH_MutexUnlock(z_lock);
+	SDL_UnlockMutex(z_lock);
 
 	return Mem_BlockToPtr(mem);
 }
@@ -626,7 +626,7 @@ void Mem_Init (void)
 	Cmd_AddCommand("mem_check", Mem_Check_f, "Checks global memory integrity");
 #endif
 
-	z_lock = TH_MutexCreate("memory");
+	z_lock = SDL_CreateMutex();
 }
 
 /**
@@ -647,6 +647,6 @@ void Mem_Shutdown (void)
 		Mem_DeletePool(pool);
 	}
 
-	TH_MutexDestroy(z_lock);
+	SDL_DestroyMutex(z_lock);
 	z_lock = NULL;
 }

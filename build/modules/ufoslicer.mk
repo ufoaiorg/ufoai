@@ -25,7 +25,6 @@ $(TARGET)_SRCS      = \
 	tools/ufo2map/common/scriplib.cpp \
 	\
 	shared/mathlib.cpp \
-	shared/mutex.cpp \
 	shared/byte.cpp \
 	shared/images.cpp \
 	shared/parse.cpp \

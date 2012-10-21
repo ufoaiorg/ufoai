@@ -85,7 +85,7 @@ static void SV_error (const char *fmt, ...)
 	va_end(argptr);
 
 	/* unlock the game thread loop */
-	TH_MutexUnlock(svs.serverMutex);
+	SDL_UnlockMutex(svs.serverMutex);
 
 	Com_Error(ERR_DROP, "Game Error: %s", msg);
 }
@@ -628,10 +628,10 @@ void SV_ShutdownGameProgs (void)
 int SV_RunGameFrameThread (void *data)
 {
 	do {
-		TH_MutexLock(svs.serverMutex);
-		TH_MutexCondWait(svs.serverMutex, svs.gameFrameCond);
+		SDL_LockMutex(svs.serverMutex);
+		SDL_CondWait(svs.gameFrameCond, svs.serverMutex);
 		SV_RunGameFrame();
-		TH_MutexUnlock(svs.serverMutex);
+		SDL_UnlockMutex(svs.serverMutex);
 	} while (!sv->endgame);
 
 	return 0;

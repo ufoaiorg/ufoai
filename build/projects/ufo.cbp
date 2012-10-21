@@ -824,8 +824,6 @@
 		<Unit filename="..\..\src\shared\mathlib.h" />
 		<Unit filename="..\..\src\shared\mathlib_extra.cpp" />
 		<Unit filename="..\..\src\shared\mathlib_extra.h" />
-		<Unit filename="..\..\src\shared\mutex.cpp" />
-		<Unit filename="..\..\src\shared\mutex.h" />
 		<Unit filename="..\..\src\shared\parse.cpp" />
 		<Unit filename="..\..\src\shared\parse.h" />
 		<Unit filename="..\..\src\shared\shared.cpp" />

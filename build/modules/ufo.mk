@@ -242,7 +242,6 @@ $(TARGET)_SRCS      = \
 	shared/byte.cpp \
 	shared/mathlib.cpp \
 	shared/mathlib_extra.cpp \
-	shared/mutex.cpp \
 	shared/utf8.cpp \
 	shared/images.cpp \
 	shared/stringhunk.cpp \

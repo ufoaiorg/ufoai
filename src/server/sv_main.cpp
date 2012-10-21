@@ -148,9 +148,9 @@ void SV_DropClient (client_t * drop, const char *message)
 	if (drop->state == cs_spawned || drop->state == cs_spawning) {
 		/* call the prog function for removing a client */
 		/* this will remove the body, among other things */
-		TH_MutexLock(svs.serverMutex);
+		SDL_LockMutex(svs.serverMutex);
 		svs.ge->ClientDisconnect(drop->player);
-		TH_MutexUnlock(svs.serverMutex);
+		SDL_UnlockMutex(svs.serverMutex);
 	}
 
 	NET_StreamFinished(drop->stream);
@@ -361,9 +361,9 @@ static void SVC_DirectConnect (struct net_stream *stream)
 	cl->player = player;
 	cl->player->num = playernum;
 
-	TH_MutexLock(svs.serverMutex);
+	SDL_LockMutex(svs.serverMutex);
 	connected = svs.ge->ClientConnect(player, userinfo, sizeof(userinfo));
-	TH_MutexUnlock(svs.serverMutex);
+	SDL_UnlockMutex(svs.serverMutex);
 
 	/* get the game a chance to reject this connection or modify the userinfo */
 	if (!connected) {
@@ -750,9 +750,9 @@ void SV_UserinfoChanged (client_t * cl)
 	unsigned int i;
 
 	/* call prog code to allow overrides */
-	TH_MutexLock(svs.serverMutex);
+	SDL_LockMutex(svs.serverMutex);
 	svs.ge->ClientUserinfoChanged(cl->player, cl->userinfo);
-	TH_MutexUnlock(svs.serverMutex);
+	SDL_UnlockMutex(svs.serverMutex);
 
 	/* name of the player */
 	Q_strncpyz(cl->name, Info_ValueForKey(cl->userinfo, "cl_name"), sizeof(cl->name));
@@ -899,7 +899,7 @@ void SV_Shutdown (const char *finalmsg, bool reconnect)
 	Mem_Free(svs.clients);
 
 	if (svs.serverMutex != NULL)
-		TH_MutexDestroy(svs.serverMutex);
+		SDL_DestroyMutex(svs.serverMutex);
 
 	OBJZERO(svs);
 

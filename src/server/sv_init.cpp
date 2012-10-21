@@ -85,7 +85,7 @@ static void SV_InitGame (void)
 		Sys_Error("There is still a server running");
 
 	svs.clients     = Mem_PoolAllocTypeN(client_t, sv_maxclients->integer, sv_genericPool);
-	svs.serverMutex = TH_MutexCreate("server");
+	svs.serverMutex = SDL_CreateMutex();
 
 	/* init network stuff */
 	if (sv_maxclients->integer > 1) {
@@ -205,9 +205,9 @@ void SV_Map (bool day, const char *levelstring, const char *assembly)
 	Com_SetServerState(ss_loading);
 
 	/* load and spawn all other entities */
-	TH_MutexLock(svs.serverMutex);
+	SDL_LockMutex(svs.serverMutex);
 	svs.ge->SpawnEntities(sv->name, SV_GetConfigStringInteger(CS_LIGHTMAP), sv->mapData.mapEntityString);
-	TH_MutexUnlock(svs.serverMutex);
+	SDL_UnlockMutex(svs.serverMutex);
 
 	/* all precaches are complete */
 	Com_SetServerState(ss_game);

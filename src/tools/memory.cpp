@@ -5,9 +5,9 @@
 
 #include <SDL_opengl.h>
 #include <SDL_main.h>
+#include <SDL_thread.h>
 #include "../common/common.h"
 #include "../shared/shared.h"
-#include "../shared/mutex.h"
 #include "../server/server.h"
 #include "../client/client.h"
 #include "../client/renderer/r_state.h" /* r_state */

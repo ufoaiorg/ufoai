@@ -32,7 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "server.h"
 #include "sv_rma.h"
 #include "../shared/parse.h"
-#include "../shared/mutex.h"
+#include <SDL_thread.h>
 
 #define ASSEMBLE_THREADS 2
 /** @brief print some debugging info */
@@ -65,7 +65,7 @@ static short posTileList[RMA2_MAX_REC][RMA2_MAX_TILEPOS];
 static short gapList[MAX_RANDOM_MAP_HEIGHT][MAX_RANDOM_MAP_HEIGHT][GAPS + 1];
 static SDL_sem *mapSem;
 static SDL_cond *mapCond;
-static threads_mutex_t *mapLock;
+static SDL_mutex *mapLock;
 static Uint32 threadID;
 
 /**
@@ -1735,14 +1735,14 @@ static int SV_AssemblyThread (void* data)
 	/* the first thread to reach this point, gets the semaphore */
 	if (SDL_SemTryWait(mapSem) != 0)
 		return -1;
-	TH_MutexLock(mapLock);
+	SDL_LockMutex(mapLock);
 
 	assert(threadID == 0);
 	threadID = SDL_ThreadID();
 
 	/* tell main we're done */
 	SDL_CondSignal(mapCond);
-	TH_MutexUnlock(mapLock);
+	SDL_UnlockMutex(mapLock);
 
 	return 0;
 }
@@ -1780,7 +1780,7 @@ static int SV_ParallelSearch (MapInfo *map)
 	const int threadno = std::min(sv_threads->integer, ASSEMBLE_THREADS);
 
 	assert(mapLock == NULL);
-	mapLock = TH_MutexCreate("rma");
+	mapLock = SDL_CreateMutex();
 
 	assert(mapCond == NULL);
 	mapCond = SDL_CreateCond();
@@ -1789,7 +1789,7 @@ static int SV_ParallelSearch (MapInfo *map)
 	assert(mapSem == NULL);
 	mapSem = SDL_CreateSemaphore(1);
 
-	TH_MutexLock(mapLock);
+	SDL_LockMutex(mapLock);
 	for (i = 0; i < threadno; i++) {
 		maps[i] = Mem_AllocType(MapInfo);
 		memcpy(maps[i], map, sizeof(*map));
@@ -1797,7 +1797,7 @@ static int SV_ParallelSearch (MapInfo *map)
 	}
 	while (threadID == 0) {
 		/* if nobody is done after 5 sec, restart, double the timeout. */
-		if (TH_MutexCondWaitTimeout(mapLock, mapCond, timeout) != 0) {
+		if (SDL_CondWaitTimeout(mapCond, mapLock, timeout) != 0) {
 			Com_Printf("SV_ParallelSearch: timeout at %i ms, restarting\n", timeout);
 			timeout += timeout;
 			/* tell them all to die */
@@ -1821,7 +1821,7 @@ static int SV_ParallelSearch (MapInfo *map)
 			assert(threadID != 0);
 		}
 	}
-	TH_MutexUnlock(mapLock);
+	SDL_UnlockMutex(mapLock);
 	for (i = 0; i < threadno; i++) {
 		if (SDL_GetThreadID(threads[i]) == threadID) {
 			memcpy(map, maps[i], sizeof(*map));
@@ -1834,7 +1834,7 @@ static int SV_ParallelSearch (MapInfo *map)
 	/* cleanup, for possible next time */
 	SDL_DestroySemaphore(mapSem);
 	SDL_DestroyCond(mapCond);
-	TH_MutexDestroy(mapLock);
+	SDL_DestroyMutex(mapLock);
 	mapLock = NULL;
 	mapSem = NULL;
 	mapCond = NULL;

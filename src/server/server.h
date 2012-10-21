@@ -32,8 +32,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../common/common.h"
 #include "../common/http.h"
 #include "../shared/infostring.h"
-#include "../shared/mutex.h"
 #include "../game/game.h"
+#include <SDL_thread.h>
 
 extern memPool_t *sv_genericPool;
 
@@ -84,7 +84,7 @@ typedef struct {
 	int lastPing;
 	bool abandon;			/**< shutdown server when all clients disconnect and don't accept new connections */
 	bool killserver;		/**< will initiate shutdown once abandon is set */
-	threads_mutex_t *serverMutex;
+	SDL_mutex *serverMutex;
 	SDL_cond *gameFrameCond;	/**< the signal that the game frame threads waits for */
 	SDL_Thread *gameThread;
 #ifndef HARD_LINKED_GAME

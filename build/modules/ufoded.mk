@@ -52,7 +52,6 @@ $(TARGET)_SRCS      = \
 	shared/stringhunk.cpp \
 	shared/infostring.cpp \
 	shared/mathlib.cpp \
-	shared/mutex.cpp \
 	shared/parse.cpp \
 	shared/shared.cpp \
 	shared/utf8.cpp \

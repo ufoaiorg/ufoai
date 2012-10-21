@@ -20,7 +20,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "http.h"
 #include "../shared/shared.h"
-#include "../shared/mutex.h"
+#include <SDL_thread.h>
 
 /**
  * @brief Extract the servername, the port and the path part of the given url

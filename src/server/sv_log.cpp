@@ -27,10 +27,10 @@
 
 #include "server.h"
 #include "sv_log.h"
-#include "../shared/mutex.h"
 #include "../shared/stringhunk.h"
+#include <SDL_thread.h>
 
-static threads_mutex_t *svLogMutex;
+static SDL_mutex *svLogMutex;
 static stringHunk_t *svLogHunk;
 
 static void SV_LogPrintOutput (const char *string)
@@ -44,10 +44,10 @@ static void SV_LogPrintOutput (const char *string)
  */
 void SV_LogHandleOutput (void)
 {
-	TH_MutexLock(svLogMutex);
+	SDL_LockMutex(svLogMutex);
 	STRHUNK_Visit(svLogHunk, SV_LogPrintOutput);
 	STRHUNK_Reset(svLogHunk);
-	TH_MutexUnlock(svLogMutex);
+	SDL_UnlockMutex(svLogMutex);
 }
 
 /**
@@ -64,21 +64,21 @@ void SV_LogAdd (const char *format, va_list ap)
 
 	Q_vsnprintf(msg, sizeof(msg), format, ap);
 
-	TH_MutexLock(svLogMutex);
+	SDL_LockMutex(svLogMutex);
 	STRHUNK_Add(svLogHunk, msg);
-	TH_MutexUnlock(svLogMutex);
+	SDL_UnlockMutex(svLogMutex);
 }
 
 void SV_LogInit (void)
 {
 	const size_t svHunkSize = 32768;
-	svLogMutex = TH_MutexCreate("sv_log");
+	svLogMutex = SDL_CreateMutex();
 	svLogHunk = STRHUNK_Create(svHunkSize);
 }
 
 void SV_LogShutdown (void)
 {
-	TH_MutexDestroy(svLogMutex);
+	SDL_DestroyMutex(svLogMutex);
 	svLogMutex = NULL;
 	STRHUNK_Delete(&svLogHunk);
 }

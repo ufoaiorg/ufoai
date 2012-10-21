@@ -261,7 +261,6 @@ $(TARGET)_SRCS_TMP      = \
 	shared/entitiesdef.cpp \
 	shared/stringhunk.cpp \
 	shared/byte.cpp \
-	shared/mutex.cpp \
 	shared/images.cpp \
 	shared/mathlib.cpp \
 	shared/shared.cpp \

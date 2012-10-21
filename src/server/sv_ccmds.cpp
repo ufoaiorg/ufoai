@@ -372,9 +372,9 @@ static void SV_ServerCommand_f (void)
 
 	Com_DPrintf(DEBUG_SERVER, "Execute game command '%s'\n", Cmd_Args());
 
-	TH_MutexLock(svs.serverMutex);
+	SDL_LockMutex(svs.serverMutex);
 	svs.ge->ServerCommand();
-	TH_MutexUnlock(svs.serverMutex);
+	SDL_UnlockMutex(svs.serverMutex);
 }
 
 /*=========================================================== */
