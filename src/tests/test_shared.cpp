@@ -32,6 +32,7 @@ void TEST_Shutdown (void)
 	SV_Shutdown("test shutdown", false);
 	FS_Shutdown();
 	Cmd_Shutdown();
+	developer = NULL;
 	Cvar_Shutdown();
 	Mem_Shutdown();
 	Com_Shutdown();
