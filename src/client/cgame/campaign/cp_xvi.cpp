@@ -159,7 +159,7 @@ void CP_UpdateNationXVIInfection (void)
  */
 int CP_GetAverageXVIRate (void)
 {
-	int XVIRate = 0;
+	int xviRate = 0;
 	int i;
 
 	assert(ccs.numNations);
@@ -168,10 +168,10 @@ int CP_GetAverageXVIRate (void)
 	for (i = 0; i < ccs.numNations; i++) {
 		const nation_t *nation = NAT_GetNationByIDX(i);
 		const nationInfo_t *stats = NAT_GetCurrentMonthInfo(nation);
-		XVIRate += stats->xviInfection;
+		xviRate += stats->xviInfection;
 	}
-	XVIRate /= ccs.numNations;
-	return XVIRate;
+	xviRate /= ccs.numNations;
+	return xviRate;
 }
 
 /**
