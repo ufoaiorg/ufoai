@@ -41,6 +41,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static technology_t *techHash[TECH_HASH_SIZE];
 static technology_t *techHashProvided[TECH_HASH_SIZE];
 
+static linkedList_t *redirectedTechs;
+
 /**
  * @brief Sets a technology status to researched and updates the date.
  * @param[in] tech The technology that was researched.
@@ -406,8 +408,6 @@ static void RS_AssignTechLinks (requirements_t *reqs)
 		}
 	}
 }
-
-static linkedList_t *redirectedTechs;
 
 /**
  * @brief Assign Link pointers to all required techs/items/etc...
@@ -1522,7 +1522,7 @@ static inline bool RS_IsValidTechIndex (int techIdx)
 /**
  * @brief Checks if the technology (tech-index) has been researched.
  * @param[in] techIdx index of the technology.
- * @return bool Returns true if the technology has been researched, otherwise (or on error) false;
+ * @return @c true if the technology has been researched, otherwise (or on error) false;
  * @sa RS_IsResearched_ptr
  */
 bool RS_IsResearched_idx (int techIdx)
@@ -1558,8 +1558,7 @@ technology_t* RS_GetTechByIDX (int techIdx)
 {
 	if (!RS_IsValidTechIndex(techIdx))
 		return NULL;
-	else
-		return &ccs.technologies[techIdx];
+	return &ccs.technologies[techIdx];
 }
 
 
@@ -1846,6 +1845,7 @@ bool RS_ScriptSanityCheck (void)
 			default:
 				error++;
 				Com_Printf("...... technology '%s' doesn't provide anything\n", t->id);
+				break;
 			}
 		}
 
@@ -1860,6 +1860,7 @@ bool RS_ScriptSanityCheck (void)
 			default:
 				/** @todo error++; Crafts still give errors - are there any definitions missing? */
 				Com_Printf("...... technology '%s' has zero (0) produceTime, is this on purpose?\n", t->id);
+				break;
 			}
 		}
 
@@ -1871,8 +1872,5 @@ bool RS_ScriptSanityCheck (void)
 		}
 	}
 
-	if (!error)
-		return true;
-
-	return false;
+	return !error;
 }

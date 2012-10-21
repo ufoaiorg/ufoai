@@ -892,33 +892,34 @@ void CP_UpdateCharacterStats (const base_t *base, const aircraft_t *aircraft)
 	E_Foreach(EMPL_SOLDIER, employee) {
 		if (!E_IsInBase(employee, aircraft->homebase))
 			continue;
-		if (AIR_IsEmployeeInAircraft(employee, aircraft)) {
-			character_t *chr = &employee->chr;
+		if (!AIR_IsEmployeeInAircraft(employee, aircraft))
+			continue;
+		character_t *chr = &employee->chr;
 
-			/* Remember the number of assigned mission for this character. */
-			chr->score.assignedMissions++;
+		/* Remember the number of assigned mission for this character. */
+		chr->score.assignedMissions++;
 
-			/** @todo use chrScore_t to determine negative influence on soldier here,
-			 * like killing too many civilians and teammates can lead to unhire and disband
-			 * such soldier, or maybe rank degradation. */
+		/** @todo use chrScore_t to determine negative influence on soldier here,
+		 * like killing too many civilians and teammates can lead to unhire and disband
+		 * such soldier, or maybe rank degradation. */
 
-			/* Check if the soldier meets the requirements for a higher rank
-			 * and do a promotion. */
-			if (ccs.numRanks >= 2) {
-				int j;
-				for (j = ccs.numRanks - 1; j > chr->score.rank; j--) {
-					const rank_t *rank = CL_GetRankByIdx(j);
-					if (CP_ShouldUpdateSoldierRank(rank, chr)) {
-						chr->score.rank = j;
-						if (chr->HP > 0)
-							Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("%s has been promoted to %s.\n"), chr->name, _(rank->name));
-						else
-							Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("%s has been awarded the posthumous rank of %s\nfor inspirational gallantry in the face of overwhelming odds.\n"), chr->name, _(rank->name));
-						MS_AddNewMessage(_("Soldier promoted"), cp_messageBuffer, MSG_PROMOTION);
-						break;
-					}
-				}
-			}
+		/* Check if the soldier meets the requirements for a higher rank
+		 * and do a promotion. */
+		if (ccs.numRanks < 2)
+			continue;
+
+		for (int j = ccs.numRanks - 1; j > chr->score.rank; j--) {
+			const rank_t *rank = CL_GetRankByIdx(j);
+			if (!CP_ShouldUpdateSoldierRank(rank, chr))
+				continue;
+
+			chr->score.rank = j;
+			if (chr->HP > 0)
+				Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("%s has been promoted to %s.\n"), chr->name, _(rank->name));
+			else
+				Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("%s has been awarded the posthumous rank of %s\nfor inspirational gallantry in the face of overwhelming odds.\n"), chr->name, _(rank->name));
+			MS_AddNewMessage(_("Soldier promoted"), cp_messageBuffer, MSG_PROMOTION);
+			break;
 		}
 	}
 	Com_DPrintf(DEBUG_CLIENT, "CP_UpdateCharacterStats: Done\n");
