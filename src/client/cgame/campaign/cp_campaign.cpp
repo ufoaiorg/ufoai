@@ -1163,8 +1163,7 @@ void CP_CampaignInit (campaign_t *campaign, bool load)
 	CP_InitializeSpawningDelay();
 
 	/* now check the parsed values for errors that are not caught at parsing stage */
-	if (!load)
-		CP_ScriptSanityCheck();
+	CP_ScriptSanityCheck();
 }
 
 /**
