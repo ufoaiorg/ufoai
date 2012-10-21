@@ -525,9 +525,12 @@ static SDL_Thread *masterServerHeartBeatThread;
  */
 static int Master_HeartbeatThread (void * data)
 {
+	char url[512];
+	Com_sprintf(url, sizeof(url), "%s/ufo/masterserver.php?heartbeat&port=%s", masterserver_url->string, port->string);
+
 	/* send to master */
 	Com_Printf("sending heartbeat\n");
-	HTTP_GetURL(va("%s/ufo/masterserver.php?heartbeat&port=%s", masterserver_url->string, port->string), NULL);
+	HTTP_GetURL(url, NULL);
 
 	masterServerHeartBeatThread = NULL;
 	return 0;
