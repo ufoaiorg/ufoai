@@ -101,6 +101,11 @@ static bool Destroy_Breakable (edict_t *self)
 	return true;
 }
 
+static bool Use_Breakable (edict_t *self, edict_t *activator)
+{
+	return Destroy_Breakable(self);
+}
+
 /**
  * @brief func_breakable (0.3 0.3 0.3) ?
  * Used for breakable objects.
@@ -130,6 +135,7 @@ void SP_func_breakable (edict_t *ent)
 			(int)ent->origin[0], (int)ent->origin[1], (int)ent->origin[2]);
 
 	ent->destroy = Destroy_Breakable;
+	ent->use = Use_Breakable;
 	ent->touch = Touch_Breakable;
 }
 
