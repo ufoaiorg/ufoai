@@ -106,9 +106,9 @@ void CP_StatsUpdate_f (void)
 
 	costs = 0;
 	AIR_Foreach(aircraft) {
-			if (aircraft->status == AIR_CRASHED)
-				continue;
-			costs += aircraft->price * salary->aircraftFactor / salary->aircraftDivisor;
+		if (aircraft->status == AIR_CRASHED)
+			continue;
+		costs += aircraft->price * salary->aircraftFactor / salary->aircraftDivisor;
 	}
 	Q_strcat(pos, va(_("Aircraft:\t%i c\n"), costs), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
 	sum += costs;

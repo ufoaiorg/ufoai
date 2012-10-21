@@ -1768,6 +1768,7 @@ void MAP_DrawMapMarkers (const uiNode_t* node)
 			Q_strcat(buffer, va(_("%s\t%i%%\n"), _(nation->name), stats->xviInfection), sizeof(buffer));
 		}
 	}
+
 	if (showXVI)
 		cgi->UI_RegisterText(TEXT_XVI, buffer);
 	else
