@@ -1782,14 +1782,13 @@ mapdef japan_small
 mapdef laboratory
 {
 	map				"+laboratory"
+	param			"default"
 	description		"_A laboratory where they examined found UFO wreck tiles."
 	multiplayer		true
-	teams			3
+	teams			2
 	gametypes (
 		fight1on1
-		fight1on1on1
 		fight2on2
-		fight2on2on2
 		coop2
 		coop3
 		coop4
@@ -1809,6 +1808,56 @@ mapdef laboratory
 	(
 		craft_ufo_fighter
 		craft_ufo_scout
+	)
+
+	terrains
+	(
+		"cold"
+		"grass"
+		"tropical"
+	)
+
+	cultures
+	(
+		//any
+	)
+
+	populations
+	(
+		"urban"
+		"suburban"
+		"village"
+	)
+}
+
+mapdef laboratory_noufo
+{
+	map				"+laboratory"
+	param			"noufo"
+	description		"_A laboratory where they examined found UFO wreck tiles."
+	multiplayer		true
+	teams			2
+	gametypes (
+		fight1on1
+		fight2on2
+		coop2
+		coop3
+		coop4
+	)
+	maxaliens		24
+
+	civilianteam	scientist
+
+	aircraft
+	(
+		craft_drop_firebird
+		craft_drop_herakles
+		craft_drop_raptor
+	)
+
+	ufos
+	(
+		// any
 	)
 
 	terrains

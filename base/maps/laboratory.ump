@@ -75,6 +75,17 @@ tile +craft_ufo_scout
 0      a      a      a
 }
 
+tile +parking
+	// this is used to fill the empty space in case we do not want to show a UFO on the map
+{
+4 4
+
+0      a      a      a
+0     +u     +u      a
+0     +u     +u      a
+0      a      a      a
+}
+
 // ########################################
 // ########### Maps for the game ##########
 
@@ -85,4 +96,13 @@ title "_Laboratory"
 +main "1 1"
 *rm_drop +craft_drop_firebird "1 1"
 *rm_ufo +craft_ufo_fighter "1 1"
+}
+
+assembly noufo
+{
+size "9 6"
+title "_Laboratory"
++main "1 1"
++parking "1 1"
+*rm_drop +craft_drop_firebird "1 1"
 }
