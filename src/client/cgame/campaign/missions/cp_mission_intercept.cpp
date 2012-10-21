@@ -39,7 +39,7 @@ void CP_InterceptMissionIsSuccess (mission_t *mission)
 	INT_ChangeIndividualInterest(0.3f, INTERESTCATEGORY_RECON);
 	INT_ChangeIndividualInterest(-0.3f, INTERESTCATEGORY_INTERCEPT);
 	INT_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_HARVEST);
-	if (CP_IsXVIResearched())
+	if (CP_IsXVIStarted())
 		INT_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_XVI);
 
 	CP_MissionRemove(mission);

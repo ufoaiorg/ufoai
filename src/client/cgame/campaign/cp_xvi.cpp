@@ -54,7 +54,7 @@ static const int XVI_DECREASE_DAYS = 7;
  */
 void CP_SpreadXVIAtPos (const vec2_t pos)
 {
-	if (!CP_IsXVIResearched())
+	if (!CP_IsXVIStarted())
 		return;
 
 	CP_ChangeXVILevel(pos, XVI_FACTOR);
@@ -68,7 +68,7 @@ void CP_SpreadXVIAtPos (const vec2_t pos)
  */
 void CP_ReduceXVIEverywhere (void)
 {
-	if (!CP_IsXVIResearched())
+	if (!CP_IsXVIStarted())
 		return;
 
 	/* Only decrease XVI if given days has passed */
@@ -188,7 +188,7 @@ int CP_GetAverageXVIRate (void)
 void CP_SpreadXVI (void)
 {
 	/* don't check if XVI spreading didn't start yet */
-	if (!CP_IsXVIResearched())
+	if (!CP_IsXVIStarted())
 		return;
 
 	MIS_Foreach(mission) {
@@ -198,13 +198,9 @@ void CP_SpreadXVI (void)
 }
 
 /**
- * @brief Returns @c true if the tech for the xvi event is already researched.
- * If this tech is already researched the aliens will spread their XVI - but it
- * does not mean that the Phalanx can also do anything against it or is even
- * able to the map of XVI
- * @see css.XVIShowMap
+ * @brief Returns @c true if the XVI effect should be visible to the player
  */
-bool CP_IsXVIResearched (void)
+bool CP_IsXVIVisible (void)
 {
 	return RS_IsResearched_ptr(rsAlienXVI);
 }
@@ -292,11 +288,7 @@ void CP_StartXVISpreading_f (void)
 	int i, numAlienBases;
 	const campaign_t *campaign = ccs.curCampaign;
 
-	/** @todo ccs.XVIShowMap should not be enabled at the same time than
-	 * CP_IsXVIResearched(): ccs.XVIShowMap means that PHALANX has a map of
-	 * XVI, whereas CP_IsXVIResearched() means that aliens started
-	 * spreading XVI */
-	ccs.showXVIMap = true;
+	ccs.startXVI = true;
 
 	/* Spawn a few alien bases depending on difficulty level */
 	if (campaign->difficulty > 0)
@@ -315,5 +307,5 @@ void CP_StartXVISpreading_f (void)
  */
 void CP_UpdateXVIMapButton (void)
 {
-	cgi->Cvar_SetValue("mn_xvimap", ccs.showXVIMap);
+	cgi->Cvar_SetValue("mn_xvimap", CP_IsXVIVisible());
 }

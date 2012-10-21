@@ -140,7 +140,7 @@ void CP_StatsUpdate_f (void)
 		(ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
 
 	/* only show the xvi spread data when it's available */
-	if (CP_IsXVIResearched()) {
+	if (CP_IsXVIVisible()) {
 		Q_strcat(pos, va(_("Max. allowed eXtraterrestial Viral Infection: %i%%\n"
 			"Current eXtraterrestial Viral Infection: %i%%"),
 			campaign->maxAllowedXVIRateUntilLost,

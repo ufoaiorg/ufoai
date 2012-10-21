@@ -407,7 +407,7 @@ typedef struct ccs_s {
 	int civiliansKilled;	/**< how many civilians were killed already */
 	int aliensKilled;		/**< how many aliens were killed already */
 	date_t date;			/**< current date */
-	bool showXVIMap;			/**< means that PHALANX has a map of XVI - @see CP_IsXVIResearched */
+	bool startXVI;			/**< the aliens are starting to spread XVI */
 	float timer;
 	float frametime;
 

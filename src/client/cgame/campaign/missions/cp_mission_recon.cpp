@@ -43,7 +43,7 @@ static void CP_ReconMissionIsSuccess (mission_t *mission)
 	INT_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_HARVEST);
 	if (AB_GetAlienBaseNumber())
 		INT_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_SUPPLY);
-	if (CP_IsXVIResearched())
+	if (CP_IsXVIStarted())
 		INT_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_XVI);
 
 	CP_MissionRemove(mission);

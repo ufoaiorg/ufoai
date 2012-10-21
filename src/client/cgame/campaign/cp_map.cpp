@@ -1755,6 +1755,7 @@ void MAP_DrawMapMarkers (const uiNode_t* node)
 		}
 	}
 
+	const bool showXVI = CP_IsXVIVisible();
 	static char buffer[512] = "";
 
 	/* Draw nation names */
@@ -1763,13 +1764,13 @@ void MAP_DrawMapMarkers (const uiNode_t* node)
 		int x, y;
 		if (MAP_AllMapToScreen(node, nation->pos, &x, &y, NULL))
 			cgi->UI_DrawString("f_verysmall", ALIGN_UC, x , y, _(nation->name));
-		if (ccs.showXVIMap) {
+		if (showXVI) {
 			const nationInfo_t *stats = NAT_GetCurrentMonthInfo(nation);
 			Q_strcat(buffer, va(_("%s\t%i%%\n"), _(nation->name), stats->xviInfection), sizeof(buffer));
 		}
 	}
 
-	if (ccs.showXVIMap)
+	if (showXVI)
 		cgi->UI_RegisterText(TEXT_XVI, buffer);
 	else
 		cgi->UI_ResetData(TEXT_XVI);
