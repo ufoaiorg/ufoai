@@ -86,39 +86,32 @@ void CP_ReduceXVIEverywhere (void)
  */
 void CP_UpdateNationXVIInfection (void)
 {
-	/* temporary array to store the XVI levels */
-	float xviInfection[MAX_NATIONS];
-	int y;
-	int nationIdx;
+	/* No need to update XVI levels if the overlay didn't change */
+	if (!xviNationInfectionNeedsUpdate)
+		return;
+
 	/* width in pixel of the XVI overlay */
 	int width;
 	/* height in pixel of the XVI overlay */
 	int height;
-	float heightPerDegree;
-	float widthPerDegree;
+	CP_GetXVIMapDimensions(&width, &height);
+
+	const float heightPerDegree = height / 180.0f;
+	const float widthPerDegree = width / 360.0f;
 	/* parameter used to normalize nation XVI level.
 	 * decrease this factor to increase XVI level per nation */
 	const float AREA_FACTOR = 650.0f;
 	/* area used to normalized XVI infection level for each nation.
 	 * depend on overlay size so that if we change resolution of
 	 * overlay it doesn't impact nation XIInfection */
-	float normalizingArea;
+	const float normalizingArea = width * height / AREA_FACTOR;
 
-	/* No need to update XVI levels if the overlay didn't change */
-	if (!xviNationInfectionNeedsUpdate)
-		return;
-
+	/* temporary array to store the XVI levels */
+	float xviInfection[MAX_NATIONS];
 	/* Initialize array */
-	for (nationIdx = 0; nationIdx < ccs.numNations; nationIdx++)
-		xviInfection[nationIdx] = 0;
+	OBJZERO(xviInfection);
 
-	CP_GetXVIMapDimensions(&width, &height);
-	heightPerDegree = height / 180.0f;
-	widthPerDegree = width / 360.0f;
-	normalizingArea = width * height / AREA_FACTOR;
-
-	for (y = 0; y < height; y++) {
-		int x;
+	for (int y = 0; y < height; y++) {
 		int sum[MAX_NATIONS];
 		const byte* previousNationColor;
 		const nation_t* nation;
@@ -131,7 +124,7 @@ void CP_UpdateNationXVIInfection (void)
 		previousNationColor = MAP_GetColor(currentPos, MAPTYPE_NATIONS, NULL);
 		nation = MAP_GetNation(currentPos);
 
-		for (x = 0; x < width; x++) {
+		for (int x = 0; x < width; x++) {
 			const byte* nationColor;
 			currentPos[0] = 180.0f - x / widthPerDegree;
 			nationColor = MAP_GetColor(currentPos, MAPTYPE_NATIONS, NULL);
@@ -147,12 +140,12 @@ void CP_UpdateNationXVIInfection (void)
 		}
 		/* divide the total XVI infection by the area of a pixel
 		 * because pixel are smaller as you go closer from the pole */
-		for (nationIdx = 0; nationIdx < ccs.numNations; nationIdx++)
+		for (int nationIdx = 0; nationIdx < ccs.numNations; nationIdx++)
 			xviInfection[nationIdx] += ((float) sum[nationIdx]) / (cos(torad * currentPos[1]) * normalizingArea);
 	}
 
 	/* copy the new values of XVI infection level into nation array */
-	for (nationIdx = 0; nationIdx < ccs.numNations; nationIdx++) {
+	for (int nationIdx = 0; nationIdx < ccs.numNations; nationIdx++) {
 		nation_t* nation = NAT_GetNationByIDX(nationIdx);
 		nation->stats[0].xviInfection = ceil(xviInfection[nation->idx]);
 	}
