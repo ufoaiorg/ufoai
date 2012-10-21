@@ -296,7 +296,7 @@ void CP_StartXVISpreading_f (void)
 	 * CP_IsXVIResearched(): ccs.XVIShowMap means that PHALANX has a map of
 	 * XVI, whereas CP_IsXVIResearched() means that aliens started
 	 * spreading XVI */
-	ccs.XVIShowMap = true;
+	ccs.showXVIMap = true;
 
 	/* Spawn a few alien bases depending on difficulty level */
 	if (campaign->difficulty > 0)
@@ -315,5 +315,5 @@ void CP_StartXVISpreading_f (void)
  */
 void CP_UpdateXVIMapButton (void)
 {
-	cgi->Cvar_SetValue("mn_xvimap", ccs.XVIShowMap);
+	cgi->Cvar_SetValue("mn_xvimap", ccs.showXVIMap);
 }

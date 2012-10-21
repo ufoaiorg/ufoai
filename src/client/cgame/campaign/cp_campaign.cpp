@@ -727,7 +727,7 @@ bool CP_LoadXML (xmlNode_t *parent)
 	* value is 0 (and that's a problem if you're loading a game when cl_geoscape_overlay is set to another value */
 	cgi->Cvar_SetValue("cl_geoscape_overlay", cgi->XML_GetInt(mapNode, SAVE_CAMPAIGN_CL_GEOSCAPE_OVERLAY, 0));
 	radarOverlayWasSet = cgi->XML_GetBool(mapNode, SAVE_CAMPAIGN_RADAROVERLAYWASSET, false);
-	ccs.XVIShowMap = cgi->XML_GetBool(mapNode, SAVE_CAMPAIGN_XVISHOWMAP, false);
+	ccs.showXVIMap = cgi->XML_GetBool(mapNode, SAVE_CAMPAIGN_XVISHOWMAP, false);
 	CP_UpdateXVIMapButton();
 
 	mapDefStat = cgi->XML_GetNode(campaignNode, SAVE_CAMPAIGN_MAPDEFSTAT);
@@ -782,7 +782,7 @@ bool CP_SaveXML (xmlNode_t *parent)
 	map = cgi->XML_AddNode(campaign, SAVE_CAMPAIGN_MAP);
 	cgi->XML_AddShort(map, SAVE_CAMPAIGN_CL_GEOSCAPE_OVERLAY, cgi->Cvar_GetInteger("cl_geoscape_overlay"));
 	cgi->XML_AddBool(map, SAVE_CAMPAIGN_RADAROVERLAYWASSET, radarOverlayWasSet);
-	cgi->XML_AddBool(map, SAVE_CAMPAIGN_XVISHOWMAP, ccs.XVIShowMap);
+	cgi->XML_AddBool(map, SAVE_CAMPAIGN_XVISHOWMAP, ccs.showXVIMap);
 
 	mapDefStat = cgi->XML_AddNode(campaign, SAVE_CAMPAIGN_MAPDEFSTAT);
 	if (!CP_SaveMapDefStatXML(mapDefStat))
@@ -1153,7 +1153,7 @@ void CP_CampaignInit (campaign_t *campaign, bool load)
 	INT_ResetAlienInterest();
 
 	/* Initialize XVI overlay */
-	cgi->Cvar_SetValue("mn_xvimap", ccs.XVIShowMap);
+	cgi->Cvar_SetValue("mn_xvimap", ccs.showXVIMap);
 	CP_InitializeXVIOverlay();
 
 	/* create a base as first step */
