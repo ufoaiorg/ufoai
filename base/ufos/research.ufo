@@ -487,6 +487,7 @@ tech rs_alien_base
 		icon	"icons/mail_tech"
 	}
 
+	announce	true
 	time 0
 	image	"techs/alien_base"
 }
