@@ -1628,13 +1628,12 @@ void MAP_UpdateGeoscapeDock (void)
  */
 void MAP_DrawMapMarkers (const uiNode_t* node)
 {
-	int x, y, i, idx;
+	int i;
 	const char* font;
 	aircraft_t *ufo;
 	base_t *base;
 
 	const vec4_t white = {1.f, 1.f, 1.f, 0.7f};
-	bool oneUFOVisible = false;
 	int maxInterpolationPoints;
 
 	assert(node);
@@ -1645,7 +1644,7 @@ void MAP_DrawMapMarkers (const uiNode_t* node)
 	font = cgi->UI_GetFontFromNode(node);
 
 	/* check if at least 1 UFO is visible */
-	oneUFOVisible = UFO_GetNextOnGeoscape(NULL) != NULL;
+	const bool oneUFOVisible = UFO_GetNextOnGeoscape(NULL) != NULL;
 
 	/* draw mission pics */
 	MIS_Foreach(mission) {
@@ -1692,6 +1691,7 @@ void MAP_DrawMapMarkers (const uiNode_t* node)
 				if (!UI_MAPEXTRADATACONST(node).flatgeoscape)
 					MAP_MapDrawEquidistantPoints(node, ufo->pos, SELECT_CIRCLE_RADIUS, yellow);
 				else {
+					int x, y;
 					MAP_AllMapToScreen(node, ufo->pos, &x, &y, NULL);
 					MAP_RenderImage(x, y, "pics/geoscape/circleactive");
 				}
@@ -1711,8 +1711,8 @@ void MAP_DrawMapMarkers (const uiNode_t* node)
 		maxInterpolationPoints = 0;
 
 	/* draws projectiles */
-	for (idx = 0; idx < ccs.numProjectiles; idx++) {
-		aircraftProjectile_t *projectile = &ccs.projectiles[idx];
+	for (i = 0; i < ccs.numProjectiles; i++) {
+		aircraftProjectile_t *projectile = &ccs.projectiles[i];
 		vec3_t drawPos = {0, 0, 0};
 
 		if (projectile->hasMoved) {
@@ -1761,6 +1761,7 @@ void MAP_DrawMapMarkers (const uiNode_t* node)
 	/* Draw nation names */
 	for (i = 0; i < ccs.numNations; i++) {
 		const nation_t *nation = NAT_GetNationByIDX(i);
+		int x, y;
 		if (MAP_AllMapToScreen(node, nation->pos, &x, &y, NULL))
 			cgi->UI_DrawString("f_verysmall", ALIGN_UC, x , y, _(nation->name));
 		if (showXVI) {
