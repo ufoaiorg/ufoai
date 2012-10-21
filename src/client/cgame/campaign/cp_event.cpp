@@ -29,6 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_campaign.h"
 #include "cp_time.h"
 #include "cp_xvi.h"
+#include "cp_event_callbacks.h"
 #include "save/save_triggerevents.h"
 
 static linkedList_t *eventMails = NULL;
@@ -303,8 +304,12 @@ void CP_TriggerEvent (campaignTriggerEventType_t type, const void* userdata)
 
 		if (event->active) {
 			if (BEP_Evaluate(event->require, CP_CheckTriggerEvent, userdata)) {
-				if (Q_strvalid(event->command))
-					cgi->Cmd_ExecuteString(event->command);
+				if (Q_strvalid(event->command)) {
+					CP_CampaignTriggerFunctions(true);
+					cgi->Cbuf_AddText(event->command);
+					cgi->Cbuf_Execute();
+					CP_CampaignTriggerFunctions(false);
+				}
 
 				if (event->once) {
 					event->active = false;
@@ -350,6 +355,7 @@ void CP_ParseEventTrigger (const char *name, const char **text)
 	cgi->Com_RegisterConstInt("ufo_detection", UFO_DETECTION);
 	cgi->Com_RegisterConstInt("captured_aliens_died", CAPTURED_ALIENS_DIED);
 	cgi->Com_RegisterConstInt("captured_aliens", CAPTURED_ALIENS);
+	cgi->Com_RegisterConstInt("alienbase_discovered", ALIENBASE_DISCOVERED);
 
 	campaignTriggerEvent_t *event = &ccs.campaignTriggerEvents[ccs.numCampaignTriggerEvents];
 	OBJZERO(*event);
@@ -373,6 +379,7 @@ void CP_ParseEventTrigger (const char *name, const char **text)
 	cgi->Com_UnregisterConstVariable("ufo_detection");
 	cgi->Com_UnregisterConstVariable("captured_aliens_died");
 	cgi->Com_UnregisterConstVariable("captured_aliens");
+	cgi->Com_UnregisterConstVariable("alienbase_discovered");
 }
 
 bool CP_TriggerEventSaveXML (xmlNode_t *p)

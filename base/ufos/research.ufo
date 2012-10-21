@@ -475,7 +475,8 @@ tech rs_alien_base
 
 	require_AND
 	{
-		tech rs_alien_base_discovered_event
+		// marked researchable from event trigger
+		tech rs_alien_base
 	}
 
 	mail

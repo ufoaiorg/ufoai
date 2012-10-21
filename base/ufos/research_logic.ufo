@@ -130,20 +130,6 @@ tech rs_enemy_on_earth_event
 	}
 }
 
-// "first alien base discovered"
-tech rs_alien_base_discovered_event
-{
-	type	"logic"
-	name	"LOGIC:Alien base discovered event"
-	require_AND
-	{
-		// Not marked "researchable" in a normal way
-		// We self-link here to not make this researchable at all.
-		tech rs_alien_base_discovered_event
-	}
-}
-
-
 // Logic techs for "Any 2 autopsies"
 tech rs_autopsy_O_T
 {

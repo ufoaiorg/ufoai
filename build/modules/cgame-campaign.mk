@@ -41,6 +41,7 @@ $(TARGET)_SRCS      = \
 	client/cgame/campaign/cp_airfight.cpp \
 	client/cgame/campaign/cp_campaign.cpp \
 	client/cgame/campaign/cp_event.cpp \
+	client/cgame/campaign/cp_event_callbacks.cpp \
 	client/cgame/campaign/cp_employee.cpp \
 	client/cgame/campaign/cp_employee_callbacks.cpp \
 	client/cgame/campaign/cp_installation.cpp \

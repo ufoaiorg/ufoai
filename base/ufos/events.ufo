@@ -3,8 +3,6 @@
 // these mails can get send with 'addeventmail' console command
 // ==============================================
 
-// rs_alien_base_discovered_event is trigger from code as it relies on an alienbase being discovered
-// and this is not scriptable right now.
 events main
 {
 	rs_alien_xvi_event	200
@@ -131,6 +129,13 @@ event alienbreathingmissing
 	type	"captured_aliens_died"
 	once	true // remove this event after it triggers
 	command	"addeventmail alienbreathing"
+}
+
+event alienbasediscovered
+{
+	type	"alienbase_discovered"
+	once	true // remove this event after it triggers
+	command	"cp_add_researchable rs_alien_base;addeventmail alien_base_discovered"
 }
 
 /*

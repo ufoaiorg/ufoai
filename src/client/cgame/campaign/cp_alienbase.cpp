@@ -30,7 +30,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "save/save_alienbase.h"
 
 #define MAPDEF_ALIENBASE "alienbase"
-#define ALIENBASE_DISCOVERED_TECH "rs_alien_base_discovered_event"
 
 /**
  * @brief Set new base position
@@ -157,13 +156,10 @@ void CP_SpawnAlienBaseMission (alienBase_t *alienBase)
 
 	/* Alien base stay until it's destroyed */
 	CP_MissionDisableTimeLimit(mission);
-	/* mission appear on geoscape, player can go there */
+	/* mission appears on geoscape, player can go there */
 	CP_MissionAddToGeoscape(mission, false);
 
-	if (!RS_MarkStoryLineEventResearched(ALIENBASE_DISCOVERED_TECH))
-		Com_DPrintf(DEBUG_CLIENT, ALIENBASE_DISCOVERED_TECH" is not marked as researched\n");
-	else
-		cgi->Cmd_ExecuteString("addeventmail alien_base_discovered");
+	CP_TriggerEvent(ALIENBASE_DISCOVERED, NULL);
 }
 
 /**

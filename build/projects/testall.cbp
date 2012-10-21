@@ -193,6 +193,8 @@
 		<Unit filename="..\..\src\client\cgame\campaign\cp_employee.cpp" />
 		<Unit filename="..\..\src\client\cgame\campaign\cp_employee_callbacks.cpp" />
 		<Unit filename="..\..\src\client\cgame\campaign\cp_event.cpp" />
+		<Unit filename="..\..\src\client\cgame\campaign\cp_event_callbacks.cpp" />
+		<Unit filename="..\..\src\client\cgame\campaign\cp_event_callbacks.h" />
 		<Unit filename="..\..\src\client\cgame\campaign\cp_fightequip_callbacks.cpp" />
 		<Unit filename="..\..\src\client\cgame\campaign\cp_hospital.cpp" />
 		<Unit filename="..\..\src\client\cgame\campaign\cp_hospital_callbacks.cpp" />
