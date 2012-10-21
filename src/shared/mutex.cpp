@@ -8,8 +8,6 @@
 
 /** @brief mutex wrapper */
 struct threads_mutex_s {
-	int line;				/**< line it was last locked */
-	const char *file;		/**< filename it was last locked */
 	const char *name;		/**< name of the mutex */
 	SDL_mutex *mutex;		/**< the real sdl mutex */
 };
@@ -18,14 +16,12 @@ struct threads_mutex_s {
  * @brief Lock the mutex
  * @return @c -1 on error, @c 0 on success
  */
-int _TH_MutexLock (threads_mutex_t *mutex, const char *file, int line)
+int TH_MutexLock (threads_mutex_t *mutex)
 {
 	if (mutex != NULL) {
 		const int ret = SDL_LockMutex(mutex->mutex);
 		if (ret == -1)
-			Sys_Error("Error locking mutex '%s' from %s:%i (%s)", mutex->name, file, line, SDL_GetError());
-		mutex->file = file;
-		mutex->line = line;
+			Sys_Error("Error locking mutex '%s' (%s)", mutex->name, SDL_GetError());
 		return ret;
 	}
 	return -1;
@@ -35,14 +31,12 @@ int _TH_MutexLock (threads_mutex_t *mutex, const char *file, int line)
  * @brief Unlock the mutex
  * @return @c -1 on error, @c 0 on success
  */
-int _TH_MutexUnlock (threads_mutex_t *mutex, const char *file, int line)
+int TH_MutexUnlock (threads_mutex_t *mutex)
 {
 	if (mutex != NULL) {
 		const int ret = SDL_UnlockMutex(mutex->mutex);
 		if (ret == -1)
-			Sys_Error("Error unlocking mutex '%s' from %s:%i (%s)", mutex->name, file, line, SDL_GetError());
-		mutex->file = NULL;
-		mutex->line = -1;
+			Sys_Error("Error unlocking mutex '%s' (%s)", mutex->name, SDL_GetError());
 		return ret;
 	}
 	return -1;
