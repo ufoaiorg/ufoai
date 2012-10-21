@@ -1634,9 +1634,7 @@ void MAP_DrawMapMarkers (const uiNode_t* node)
 	base_t *base;
 
 	const vec4_t white = {1.f, 1.f, 1.f, 0.7f};
-	bool showXVI = false;
 	bool oneUFOVisible = false;
-	static char buffer[512] = "";
 	int maxInterpolationPoints;
 
 	assert(node);
@@ -1757,7 +1755,8 @@ void MAP_DrawMapMarkers (const uiNode_t* node)
 		}
 	}
 
-	showXVI = CP_IsXVIResearched();
+	const bool showXVI = CP_IsXVIResearched();
+	static char buffer[512] = "";
 
 	/* Draw nation names */
 	for (i = 0; i < ccs.numNations; i++) {
