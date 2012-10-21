@@ -1508,6 +1508,7 @@ static void PTL_DebugList_f (void)
 #endif
 
 /**
+ * @brief Clears particle data
  * @sa CL_InitLocal
  */
 void PTL_InitStartup (void)
@@ -1517,6 +1518,10 @@ void PTL_InitStartup (void)
 	numPtlDefs = 0;
 
 	r_numParticlesArt = 0;
+
+	OBJZERO(ptlDef);
+	OBJZERO(ptlCmd);
+	OBJZERO(r_particlesArt);
 
 	cl_particleweather = Cvar_Get("cl_particleweather", "1", CVAR_ARCHIVE, "Switch the weather particles on or off");
 #ifdef DEBUG
