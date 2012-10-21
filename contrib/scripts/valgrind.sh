@@ -98,14 +98,14 @@ then
 		$VALGRIND_OPTIONS \
 		$APP $PARAMS
 else
+	if [ -z "$NO_LOG" ]
+	then
+		LOG=${PATH_ONLY}/valgrind.log
+		VALGRIND_OPTIONS="--log-file=$LOG $VALGRIND_OPTIONS"
+		echo "Log file will be created at ${LOG}"
+	fi
 	if [ $TOOL = "memcheck" ]
 	then
-		if [ -z "$NO_LOG" ]
-		then
-			LOG=${PATH_ONLY}/valgrind.log
-			VALGRIND_OPTIONS="--log-file=$LOG $VALGRIND_OPTIONS"
-			echo "Log file will be created at ${LOG}"
-		fi
 		VALGRIND_OPTIONS="--show-reachable=yes $VALGRIND_OPTIONS"
 		VALGRIND_OPTIONS="--leak-check=no $VALGRIND_OPTIONS"
 		VALGRIND_OPTIONS="--track-fds=yes $VALGRIND_OPTIONS"
