@@ -252,6 +252,38 @@ static void CP_TEAM_FillEquipSoldierList_f (void)
 		if (aircraftInBase->homebase == base)
 			CP_CleanupAircraftCrew(aircraftInBase, &unused);
 	}
+
+	/** @HACK for handling equipment of soldiers assigned only on baseAttackFakeAircraft */
+	if (LIST_GetPointer(ccs.aircraft, (const void*)base->aircraftCurrent) == NULL) {
+		containerIndex_t container;
+
+		for (container = 0; container < cgi->csi->numIDs; container++) {
+			LIST_Foreach(base->aircraftCurrent->acTeam, employee_t, employee) {
+
+				if (AIR_IsEmployeeInAircraft(employee, NULL))
+					continue;
+
+				invList_t *ic, *next;
+				character_t *chr = &employee->chr;
+#if 0
+				/* ignore items linked from any temp container */
+				if (INVDEF(container)->temp)
+					continue;
+#endif
+				for (ic = CONTAINER(chr, container); ic; ic = next) {
+					next = ic->next;
+					if (unused.numItems[ic->item.item->idx] > 0) {
+						ic->item = CP_AddWeaponAmmo(&unused, ic->item);
+					} else {
+						/* Drop ammo used for reloading and sold carried weapons. */
+						if (!cgi->INV_RemoveFromInventory(&chr->i, INVDEF(container), ic))
+							cgi->Com_Error(ERR_DROP, "Could not remove item from inventory");
+					}
+				}
+			}
+		}
+	}
+
 	cgi->UI_ContainerNodeUpdateEquipment(&aircraft->homebase->bEquipment, &unused);
 }
 

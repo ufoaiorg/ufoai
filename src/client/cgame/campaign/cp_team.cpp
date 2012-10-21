@@ -36,7 +36,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @sa CP_CleanupAircraftCrew
  * @todo remove return value and make item a pointer
  */
-static item_t CP_AddWeaponAmmo (equipDef_t * ed, item_t item)
+item_t CP_AddWeaponAmmo (equipDef_t * ed, item_t item)
 {
 	int i;
 	const objDef_t *type = item.item;
