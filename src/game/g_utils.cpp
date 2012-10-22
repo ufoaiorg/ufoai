@@ -559,19 +559,19 @@ static void G_ResetTriggers (edict_t *ent, edict_t **touched, int num)
 int G_TouchTriggers (edict_t *ent)
 {
 	int i, num, usedNum = 0;
-	edict_t *touch[MAX_EDICTS];
+	edict_t *touched[MAX_EDICTS];
 
 	if (!G_IsLivingActor(ent))
 		return 0;
 
-	num = gi.GetTouchingEdicts(ent->absmin, ent->absmax, touch, lengthof(touch), ent);
+	num = gi.GetTouchingEdicts(ent->absmin, ent->absmax, touched, lengthof(touched), ent);
 
-	G_ResetTriggers(ent, touch, num);
+	G_ResetTriggers(ent, touched, num);
 
 	/* be careful, it is possible to have an entity in this
 	 * list removed before we get to it (killtriggered) */
 	for (i = 0; i < num; i++) {
-		edict_t *hit = touch[i];
+		edict_t *hit = touched[i];
 		if (hit->solid != SOLID_TRIGGER)
 			continue;
 		if (!hit->touch)
