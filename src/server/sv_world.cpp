@@ -203,10 +203,10 @@ void SV_LinkEdict (edict_t * ent)
  * @param ent The edict to check the intersection for
  * @return @c true if intersect, @c false otherwise
  */
-static bool SV_BoundingBoxesIntersect (const vec3_t mins, const vec3_t maxs, const edict_t *ent)
+static bool SV_BoundingBoxesIntersect (const WorldBox& box, const edict_t *ent)
 {
-	const bool outsideMaxs = ent->absmin[0] > maxs[0] || ent->absmin[1] > maxs[1] || ent->absmin[2] > maxs[2];
-	const bool outsideMins = ent->absmax[0] < mins[0] || ent->absmax[1] < mins[1] || ent->absmax[2] < mins[2];
+	const bool outsideMaxs = ent->absmin[0] > box.maxs[0] || ent->absmin[1] > box.maxs[1] || ent->absmin[2] > box.maxs[2];
+	const bool outsideMins = ent->absmax[0] < box.mins[0] || ent->absmax[1] < box.mins[1] || ent->absmax[2] < box.mins[2];
 	if (outsideMaxs || outsideMins)
 		return false; /* not touching */
 	return true;
@@ -238,7 +238,7 @@ static void SV_AreaEdicts_r (worldSector_t * node, areaParms_t *ap)
 		if (!check->ent->inuse)
 			continue;
 
-		if (!SV_BoundingBoxesIntersect(ap->areaMins, ap->areaMaxs, check->ent))
+		if (!SV_BoundingBoxesIntersect(WorldBox(ap->areaMins, ap->areaMaxs), check->ent))
 			continue;			/* not touching */
 
 		if (ap->areaEdictListCount == ap->areaEdictListMaxCount) {
@@ -306,7 +306,7 @@ int SV_TouchEdicts (const vec3_t mins, const vec3_t maxs, edict_t **list, int ma
 			continue;
 		if (e == skip)
 			continue;
-		if (SV_BoundingBoxesIntersect(mins, maxs, e))
+		if (SV_BoundingBoxesIntersect(WorldBox(mins, maxs), e))
 			list[num++] = e;
 	}
 
