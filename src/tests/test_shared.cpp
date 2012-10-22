@@ -24,6 +24,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "test_shared.h"
+#include "../client/cl_renderer.h"
+#include "../client/battlescape/cl_particle.h"
 #include <stdio.h>
 #include <stdarg.h>
 
@@ -38,6 +40,7 @@ void TEST_Shutdown (void)
 	Com_Shutdown();
 	Cbuf_Shutdown();
 	NET_Shutdown();
+	PTL_InitStartup();
 
 	com_aliasSysPool = NULL;
 	com_cmdSysPool = NULL;
