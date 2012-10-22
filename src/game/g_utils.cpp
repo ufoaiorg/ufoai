@@ -635,7 +635,7 @@ int G_TouchSolids (edict_t *ent, float extend)
 void G_TouchEdicts (edict_t *ent, float extend)
 {
 	int i, num;
-	edict_t *touch[MAX_EDICTS];
+	edict_t *touched[MAX_EDICTS];
 	vec3_t absmin, absmax;
 	const char *entName = (ent->model) ? ent->model : ent->chr.name;
 
@@ -644,13 +644,13 @@ void G_TouchEdicts (edict_t *ent, float extend)
 		absmax[i] = ent->absmax[i] + extend;
 	}
 
-	num = gi.GetTouchingEdicts(WorldBox(absmin, absmax), touch, lengthof(touch), ent);
+	num = gi.GetTouchingEdicts(WorldBox(absmin, absmax), touched, lengthof(touched), ent);
 	Com_DPrintf(DEBUG_GAME, "G_TouchEdicts: Entities touching %s: %i (%f extent).\n", entName, num, extend);
 
 	/* be careful, it is possible to have an entity in this
 	 * list removed before we get to it (killtriggered) */
 	for (i = 0; i < num; i++) {
-		edict_t* hit = touch[i];
+		edict_t* hit = touched[i];
 		if (!hit->inuse)
 			continue;
 		if (ent->touch)
