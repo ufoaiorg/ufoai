@@ -1350,7 +1350,7 @@ static void CL_ParsePtlCmds (const char *name, const char **text)
 					return;
 
 				/* translate set to a push and pop */
-				if (numPtlCmds >= MAX_PTLCMDS)
+				if (numPtlCmds >= MAX_PTLCMDS - 1)
 					Com_Error(ERR_DROP, "CL_ParsePtlCmds: MAX_PTLCMDS exceeded");
 				pc = &ptlCmd[numPtlCmds++];
 				pc->cmd = PC_PUSH;
