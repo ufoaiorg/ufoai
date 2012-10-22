@@ -32,11 +32,8 @@ void CL_ParticleFree(ptl_t *p);
 void CL_ParticleRegisterArt(void);
 void PTL_InitStartup(void);
 void CL_ParticleRun(void);
-void CL_RunMapParticles(void);
 void CL_ParseParticle(const char *name, const char **text);
-void CL_InitParticles(void);
 ptl_t *CL_ParticleSpawn(const char *name, int levelFlags, const vec3_t s, const vec3_t v = NULL, const vec3_t a = NULL);
 ptlDef_t *CL_ParticleGet(const char *particleID);
-void CL_ParticleVisible(ptl_t *p, bool hide);
 
 #endif

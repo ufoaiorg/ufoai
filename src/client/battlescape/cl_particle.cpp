@@ -375,18 +375,6 @@ static ptlArt_t *CL_ParticleGetArt (const char *name, int frame, artType_t type)
 }
 
 /**
- * @sa CL_InitLocal
- */
-void PTL_InitStartup (void)
-{
-	r_numParticles = 0;
-	numPtlCmds = 0;
-	numPtlDefs = 0;
-
-	r_numParticlesArt = 0;
-}
-
-/**
  * @brief Determine the memory location where the command accesses and stores its data.
  * @param p The particle that is used to get local command data locations.
  * @param cmd The command to get the data location for.
@@ -795,22 +783,6 @@ ptl_t *CL_ParticleSpawn (const char *name, int levelFlags, const vec3_t s, const
 }
 
 /**
- * @brief Mark a particle an all its children as invisible or visible
- * @param[in] p Particle to set the invis flags for
- * @param[in] hide Boolean value for hiding the particle
- */
-void CL_ParticleVisible (ptl_t *p, bool hide)
-{
-	ptl_t *c;
-
-	p->invis = hide;
-
-	for (c = p->children; c; c = c->next) {
-		CL_ParticleVisible(c, hide);
-	}
-}
-
-/**
  * @brief Free a particle and all it's children
  * @param[in] p the particle to free
  * @sa CL_ParticleSpawn
@@ -1108,25 +1080,6 @@ static void CL_ParticleRunTimed (void)
 }
 
 /**
- * @brief General system for particle running during the game.
- * @sa CL_Frame
- */
-void CL_ParticleRun (void)
-{
-	ptl_t *p;
-	int i;
-
-	if (cls.state != ca_active)
-		return;
-
-	CL_ParticleRunTimed();
-
-	for (i = 0, p = r_particleArray; i < r_numParticles; i++, p++)
-		if (p->inuse)
-			CL_ParticleRun2(p);
-}
-
-/**
  * @brief Parses particle used on maps.
  * @param[in,out] ptl Pointer to particle being parsed and updated.
  * @param[in] es Entity string to parse the particle from
@@ -1187,15 +1140,11 @@ static void CL_ParseMapParticle (ptl_t * ptl, const char *es, bool afterwards)
 	} while (token);
 }
 
-
-void CL_RunMapParticles (void)
+static void CL_RunMapParticles (void)
 {
 	mapParticle_t *mp;
 	ptl_t *ptl;
 	int i;
-
-	if (cls.state != ca_active)
-		return;
 
 	for (i = 0, mp = mapParticles; i < cl.numMapParticles; i++, mp++)
 		if (mp->nextTime && cl.time >= mp->nextTime) {
@@ -1220,6 +1169,26 @@ void CL_RunMapParticles (void)
 		}
 }
 
+/**
+ * @brief General system for particle running during the game.
+ * @sa CL_Frame
+ */
+void CL_ParticleRun (void)
+{
+	ptl_t *p;
+	int i;
+
+	if (cls.state != ca_active)
+		return;
+
+	CL_RunMapParticles();
+
+	CL_ParticleRunTimed();
+
+	for (i = 0, p = r_particleArray; i < r_numParticles; i++, p++)
+		if (p->inuse)
+			CL_ParticleRun2(p);
+}
 
 static void CL_ParsePtlCmds (const char *name, const char **text)
 {
@@ -1488,6 +1457,7 @@ void CL_ParseParticle (const char *name, const char **text)
 	}
 }
 
+#ifdef DEBUG
 /**
  * @brief Spawns a debug marker particle in the world
  */
@@ -1535,13 +1505,22 @@ static void PTL_DebugList_f (void)
 		}
 	}
 }
+#endif
 
 /**
- * @brief Initializes cvars and commands
+ * @sa CL_InitLocal
  */
-void CL_InitParticles (void)
+void PTL_InitStartup (void)
 {
+	r_numParticles = 0;
+	numPtlCmds = 0;
+	numPtlDefs = 0;
+
+	r_numParticlesArt = 0;
+
 	cl_particleweather = Cvar_Get("cl_particleweather", "1", CVAR_ARCHIVE, "Switch the weather particles on or off");
+#ifdef DEBUG
 	Cmd_AddCommand("debug_spawnmarker", PTL_DebugSpawnMarker_f, "Spawn a marker particle in the world at a given location");
 	Cmd_AddCommand("debug_particlelist", PTL_DebugList_f);
+#endif
 }

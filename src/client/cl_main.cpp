@@ -1105,8 +1105,6 @@ void CL_Frame (int now, void *data)
 	/* update camera position */
 	CL_CameraMove();
 
-	/* end the rounds when no soldier is alive */
-	CL_RunMapParticles();
 	CL_ParticleRun();
 
 	/* update the screen */
@@ -1211,8 +1209,6 @@ void CL_Init (void)
 
 	Irc_Init();
 	CL_ViewInit();
-
-	CL_InitParticles();
 
 	CL_ClearState();
 
