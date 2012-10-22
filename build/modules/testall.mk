@@ -27,6 +27,7 @@ $(TARGET)_SRCS_TMP      = \
 	tests/test_ui.cpp \
 	tests/test_ui_level2.cpp \
 	tests/test_campaign.cpp \
+	tests/test_particles.cpp \
 	tests/test_parser.cpp \
 	tests/test_dbuffer.cpp \
 	\

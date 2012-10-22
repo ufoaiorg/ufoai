@@ -574,6 +574,7 @@
 		<Unit filename="..\..\src\tests\test_routing.cpp" />
 		<Unit filename="..\..\src\tests\test_routing.h" />
 		<Unit filename="..\..\src\tests\test_scripts.cpp" />
+		<Unit filename="..\..\src\tests\test_particles.cpp" />
 		<Unit filename="..\..\src\tests\test_shared.cpp" />
 		<Unit filename="..\..\src\tests\test_shared.h" />
 		<Unit filename="..\..\src\tests\test_ui.cpp" />
