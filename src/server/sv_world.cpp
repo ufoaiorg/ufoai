@@ -292,7 +292,7 @@ int SV_AreaEdicts (const vec3_t mins, const vec3_t maxs, edict_t **list, int max
  * @param[in] skip An edict to skip (e.g. pointer to the calling edict)
  * @return the number of pointers filled in
  */
-int SV_TouchEdicts (const vec3_t mins, const vec3_t maxs, edict_t **list, int maxCount, edict_t *skip)
+int SV_GetTouchingEdicts (const vec3_t mins, const vec3_t maxs, edict_t **list, int maxCount, edict_t *skip)
 {
 	int num = 0;
 	const int max = std::min(maxCount, svs.ge->num_edicts);
