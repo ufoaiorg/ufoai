@@ -31,6 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /**
  * @brief Marks the edict as free
+ * @param ent The edict to free.
  * @sa G_Spawn
  */
 void G_FreeEdict (edict_t *ent)
