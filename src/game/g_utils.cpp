@@ -564,7 +564,7 @@ int G_TouchTriggers (edict_t *ent)
 	if (!G_IsLivingActor(ent))
 		return 0;
 
-	num = gi.GetTouchingEdicts(ent->absmin, ent->absmax, touched, lengthof(touched), ent);
+	num = gi.GetTouchingEdicts(WorldBox(ent->absmin, ent->absmax), touched, lengthof(touched), ent);
 
 	G_ResetTriggers(ent, touched, num);
 
@@ -608,7 +608,7 @@ int G_TouchSolids (edict_t *ent, float extend)
 		absmax[i] = ent->absmax[i] + extend;
 	}
 
-	num = gi.GetTouchingEdicts(absmin, absmax, touch, lengthof(touch), ent);
+	num = gi.GetTouchingEdicts(WorldBox(absmin, absmax), touch, lengthof(touch), ent);
 
 	/* be careful, it is possible to have an entity in this
 	 * list removed before we get to it (killtriggered) */
@@ -644,7 +644,7 @@ void G_TouchEdicts (edict_t *ent, float extend)
 		absmax[i] = ent->absmax[i] + extend;
 	}
 
-	num = gi.GetTouchingEdicts(absmin, absmax, touch, lengthof(touch), ent);
+	num = gi.GetTouchingEdicts(WorldBox(absmin, absmax), touch, lengthof(touch), ent);
 	Com_DPrintf(DEBUG_GAME, "G_TouchEdicts: Entities touching %s: %i (%f extent).\n", entName, num, extend);
 
 	/* be careful, it is possible to have an entity in this

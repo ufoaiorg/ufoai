@@ -285,14 +285,13 @@ int SV_AreaEdicts (const vec3_t mins, const vec3_t maxs, edict_t **list, int max
 
 /**
  * @brief Fills a list with edicts that are in use and are touching the given bounding box
- * @param[in] mins The mins of the bounding box
- * @param[in] maxs The maxs of the bounding box
+ * @param[in] bbox The bounding box
  * @param[out] list The edict list that this trace is hitting
  * @param[in] maxCount The size of the given @c list
  * @param[in] skip An edict to skip (e.g. pointer to the calling edict)
  * @return the number of pointers filled in
  */
-int SV_GetTouchingEdicts (const vec3_t mins, const vec3_t maxs, edict_t **list, int maxCount, edict_t *skip)
+int SV_GetTouchingEdicts (const WorldBox& bbox, edict_t **list, int maxCount, edict_t *skip)
 {
 	int num = 0;
 	const int max = std::min(maxCount, svs.ge->num_edicts);
@@ -306,7 +305,7 @@ int SV_GetTouchingEdicts (const vec3_t mins, const vec3_t maxs, edict_t **list, 
 			continue;
 		if (e == skip)
 			continue;
-		if (SV_BoundingBoxesIntersect(WorldBox(mins, maxs), e))
+		if (SV_BoundingBoxesIntersect(bbox, e))
 			list[num++] = e;
 	}
 
