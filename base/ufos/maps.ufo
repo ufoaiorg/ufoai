@@ -3881,7 +3881,7 @@ mapdef city_train
 		coop3
 		coop4
 	)
-	maxaliens		7
+	maxaliens		8
 
 	aircraft
 	(
@@ -3892,7 +3892,7 @@ mapdef city_train
 
 	ufos
 	(
-		craft_ufo_fighter
+		// any
 	)
 
 	terrains
@@ -3904,7 +3904,7 @@ mapdef city_train
 
 	cultures
 	(
-		//any
+		// any
 	)
 
 	populations
