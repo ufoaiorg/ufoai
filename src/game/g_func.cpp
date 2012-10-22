@@ -375,7 +375,8 @@ void SP_func_door_sliding (edict_t *ent)
 		ent->flags |= FL_DESTROYABLE;
 
 	ent->doorState = STATE_CLOSED;
-	ent->speed = 10;
+	if (!ent->speed)
+		ent->speed = 10;
 	ent->use = Door_Use;
 
 	ent->destroy = Destroy_Breakable;
