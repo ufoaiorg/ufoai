@@ -143,7 +143,7 @@ typedef struct {
 	/** call before removing an interactive edict */
 	void (IMPORT *UnlinkEdict) (edict_t * ent);
 	int (IMPORT *BoxEdicts) (const vec3_t mins, const vec3_t maxs, edict_t **list, int maxcount);
-	int (IMPORT *TouchEdicts) (const vec3_t mins, const vec3_t maxs, edict_t **list, int maxcount, edict_t *skip);
+	int (IMPORT *GetTouchingEdicts) (const vec3_t mins, const vec3_t maxs, edict_t **list, int maxcount, edict_t *skip);
 
 	/** @brief fast version of a line trace but without including entities */
 	bool (IMPORT *TestLine) (const vec3_t start, const vec3_t stop, const int levelmask);
