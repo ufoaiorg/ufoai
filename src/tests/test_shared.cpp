@@ -31,6 +31,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 void TEST_Shutdown (void)
 {
+	PTL_InitStartup();
+	R_ShutdownImages();
 	SV_Shutdown("test shutdown", false);
 	FS_Shutdown();
 	Cmd_Shutdown();
@@ -40,7 +42,6 @@ void TEST_Shutdown (void)
 	Com_Shutdown();
 	Cbuf_Shutdown();
 	NET_Shutdown();
-	PTL_InitStartup();
 
 	com_aliasSysPool = NULL;
 	com_cmdSysPool = NULL;
