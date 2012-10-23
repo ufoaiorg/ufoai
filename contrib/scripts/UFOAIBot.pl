@@ -19,18 +19,14 @@ my %options = (
 sub said {
 	my ($self, $message) = @_;
 
-	if ($message->{'body'} =~ /^\!bug\s*#?(\d+)/i) {
-		return "https://sourceforge.net/tracker/index.php?func=detail&aid=$1&group_id=157793&atid=805242";
-	} elsif ($message->{'body'} =~ /^\!fr\s*#?(\d+)/i) {
-		return "https://sourceforge.net/tracker/index.php?func=detail&aid=$1&group_id=157793&atid=805245";
+	if ($message->{'body'} =~ /^\!bug\s*#?(\d{1,5})/i) {
+		return "http://sourceforge.net/p/ufoai/bugs/$1/";
+	} elsif ($message->{'body'} =~ /^\!fr\s*#?(\d{1,5})/i) {
+		return "http://sourceforge.net/p/ufoai/feature-requests/$1/";
 	} elsif ($message->{'body'} =~ /^\!patch\s*#?(\d+)/i) {
-		return "https://sourceforge.net/tracker/index.php?func=detail&aid=$1&group_id=157793&atid=805244";
+		return "http://sourceforge.net/p/ufoai/patches/$1/";
 	} elsif ($message->{'body'} =~ /^\!r(?:ev)?\s*#?([0-9a-f]{6,40})/i) {
-		return "http://ufoai.git.sourceforge.net/git/gitweb.cgi?p=ufoai/ufoai;a=commitdiff;h=$1";
-	} elsif ($message->{'body'} =~ /^\!r(?:ev)?\s*#?(\d{1,5})/i) {
-		return "http://sourceforge.net/apps/trac/ufoai/changeset/$1";
-	} elsif ($message->{'body'} =~ /^\!ticket\s*#?(\d+)/i) {
-		return "https://sourceforge.net/apps/trac/ufoai/ticket/$1";
+		return "https://github.com/ufoai/ufoai/commit/$1/";
 	} elsif ($message->{'body'} =~ /^\!faq\s*#?(\w*)?/i) {
 		return "http://ufoai.org/wiki/index.php/Manual:FAQ#$1";
 	} elsif ($message->{'body'} =~ /^\!todo/i) {
