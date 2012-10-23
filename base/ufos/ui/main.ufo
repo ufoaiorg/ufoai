@@ -59,10 +59,10 @@ window main
 			string	"_Tutorials"
 		}
 
-		cmpMenuButton button_credits
+		cmpMenuButton button_developers
 		{
-			onClick	{ cmd "seq_start credits;" }
-			string	"_Credits"
+			onClick	{ cmd "seq_start developers;" }
+			string	"_Developers"
 		}
 	}
 
