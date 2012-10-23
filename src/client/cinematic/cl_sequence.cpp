@@ -250,8 +250,7 @@ static seqEnt_t *SEQ_FindEnt (sequenceContext_t *context, const char *name)
 			break;
 	if (i < context->numEnts)
 		return se;
-	else
-		return NULL;
+	return NULL;
 }
 
 
@@ -269,8 +268,7 @@ static seq2D_t *SEQ_Find2D (sequenceContext_t *context, const char *name)
 			break;
 	if (i < context->numObj2Ds)
 		return s2d;
-	else
-		return NULL;
+	return NULL;
 }
 
 /**
@@ -286,11 +284,14 @@ static void SEQ_Render3D (sequenceContext_t *context)
 	seqEnt_t *se;
 	int i;
 
-	refdef.numEntities = 0;
-	refdef.mapTiles = cl.mapTiles;
+	if (context->numEnts == 0)
+		return;
 
 	/* set camera */
 	SEQ_SetCamera(context);
+
+	refdef.numEntities = 0;
+	refdef.mapTiles = cl.mapTiles;
 
 	/* render sequence */
 	for (i = 0, se = context->ents; i < context->numEnts; i++, se++) {
@@ -538,7 +539,7 @@ bool SEQ_Render (sequenceContext_t *context)
 }
 
 /**
- * Allocate a sequence context
+ * @brief Allocate a sequence context
  * @return Context
  */
 sequenceContext_t *SEQ_AllocContext (void)
@@ -549,7 +550,7 @@ sequenceContext_t *SEQ_AllocContext (void)
 }
 
 /**
- * Free a sequence context
+ * @brief Free a sequence context
  * @return Context
  */
 void SEQ_FreeContext (sequenceContext_t *context)
@@ -618,7 +619,7 @@ static int SEQ_ExecutePrecache (sequenceContext_t *context, const char *name, co
 			data += strlen(data) + 1;
 		}
 	} else
-		Com_Printf("SEQ_Precache: unknown format '%s'\n", name);
+		Com_Printf("SEQ_ExecutePrecache: unknown format '%s'\n", name);
 	return 1;
 }
 
@@ -637,7 +638,7 @@ static int SEQ_ExecuteCamera (sequenceContext_t *context, const char *name, cons
 				break;
 			}
 		if (!vp->string)
-			Com_Printf("SEQ_Camera: unknown token '%s'\n", data);
+			Com_Printf("SEQ_ExecuteCamera: unknown token '%s'\n", data);
 
 		data += strlen(data) + 1;
 	}
@@ -695,7 +696,7 @@ static int SEQ_ExecuteModel (sequenceContext_t *context, const char *name, const
 				Com_DPrintf(DEBUG_CLIENT, "Change anim to: %s\n", data);
 				R_AnimChange(&se->as, se->model, data);
 			} else
-				Com_Printf("SEQ_Model: unknown token '%s'\n", data);
+				Com_Printf("SEQ_ExecuteModel: unknown token '%s'\n", data);
 		}
 
 		data += strlen(data) + 1;
@@ -709,7 +710,7 @@ static int SEQ_ExecuteModel (sequenceContext_t *context, const char *name, const
  */
 static int SEQ_ExecuteMusic (sequenceContext_t *context, const char *name, const char *data)
 {
-	Com_Printf("change music to %s\n", name);
+	Com_DPrintf(DEBUG_CLIENT, "Change music to %s\n", name);
 	Cvar_Set("snd_music", name);
 	return 1;
 }
@@ -776,7 +777,7 @@ static int SEQ_ExecuteObj2D (sequenceContext_t *context, const char *name, const
 				break;
 			}
 		if (!vp->string)
-			Com_Printf("SEQ_Text: unknown token '%s'\n", data);
+			Com_Printf("SEQ_ExecuteObj2D: unknown token '%s'\n", data);
 
 		data += strlen(data) + 1;
 	}
@@ -807,7 +808,7 @@ static int SEQ_ExecuteDelete (sequenceContext_t *context, const char *name, cons
 	}
 
 	if (!se && !s2d)
-		Com_Printf("SEQ_Remove: couldn't find '%s'\n", name);
+		Com_Printf("SEQ_ExecuteDelete: couldn't find '%s'\n", name);
 	return 1;
 }
 

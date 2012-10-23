@@ -3,25 +3,6 @@ sequence developers
 	music "Crystan-Credits"
 	animspeed 1000
 
-	precache models (
-		"aircraft/ufo_fighter/ufo_fighter_hull"
-		"aircraft/ufo_fighter/ufo_fighter_engines_1"
-		"aircraft/ufo_fighter/ufo_fighter_engines_2"
-		"aircraft/ufo_fighter/ufo_fighter_wings"
-		"aircraft/inter_starchaser/starchaser"
-		"soldiers/male/body"
-		"soldiers/male/head01"
-		"soldiers/male/head03"
-		"soldiers/malelight/body"
-		"soldiers/malelight/head01"
-		"soldiers/malelight/head02"
-		"soldiers/malemedium/body"
-		"soldiers/malemedium/head02"
-		"soldiers/malemedium/head03"
-	)
-	precache pics (
-		"ufoai"
-	)
 	camera cam1
 	{
 		zoom	6.0
@@ -29,784 +10,405 @@ sequence developers
 		dist	100
 	}
 
-	// ================================
-	// Models
-	// ================================
-	model body1
+	// ========================
+	// BACKGROUND
+	// ========================
+	obj2d background_logo
 	{
-		model	"soldiers/malelight/body"
-		skin	2
-		anim	"cstand0"
-		origin	"0 -15 0"
+		pos		"0 0"
+		size	"1024 90"
+		bgcolor	"0 0 0 1"
 	}
-	model head1
+	obj2d background_line
 	{
-		model	"soldiers/malelight/head01"
-		parent	body1
-		tag		"tag_head"
+		pos		"0 91"
+		size	"1024 2"
+		bgcolor	"1 1 1 1"
 	}
-
-	model body2
-	{
-		model	"soldiers/malemedium/body"
-		anim	"cstand0"
-		origin	"0 15 0"
-	}
-	model head2
-	{
-		model	"soldiers/malemedium/head02"
-		parent	body2
-		tag		"tag_head"
-	}
-
-	model body3
-	{
-		model	"soldiers/male/body"
-		anim	"stand0"
-		skin	2
-		origin	"-10 0 5"
-	}
-	model head3
-	{
-		model	"soldiers/male/head03"
-		parent	body3
-		tag		"tag_head"
-	}
-
-	model body4
-	{
-		model	"soldiers/malelight/body"
-		anim	"stand1"
-		origin	"-10 30 5"
-	}
-	model head4
-	{
-		model	"soldiers/malelight/head02"
-		parent	body4
-		tag		"tag_head"
-	}
-
-	model body5
-	{
-		model	"soldiers/malemedium/body"
-		anim	"stand0"
-		origin	"-10 -30 5"
-	}
-
-	model head5
-	{
-		model	"soldiers/malemedium/head03"
-		parent	body5
-		tag		"tag_head"
-	}
-
-	model body6
-	{
-		model	"soldiers/male/body"
-		skin	1
-		anim	"stand0"
-		origin	"-30 -15 10"
-	}
-	model head6
-	{
-		model	"soldiers/male/head01"
-		parent	body6
-		tag		"tag_head"
-	}
-
-	model body7
-	{
-		model	"soldiers/male/body"
-		skin	3
-		anim	"stand1"
-		origin	"-30 15 10"
-	}
-	model head7
-	{
-		model	"soldiers/male/head03"
-		parent	body7
-		tag		"tag_head"
-	}
-	wait 2
-
-	// =====================================
-	// Mattn
-	// =====================================
-	obj2d mattn_text
-	{
-		text	"_Project leader"
-		pos		"1100 50"
-		align	"ur"
-		color	"0 1 0 0"
-		fade	"0 0 0 1"
-		speed	"-120 0"
-	}
-	wait 1
-	obj2d mattn_text { speed "0 0" }
-	obj2d mattn_name
-	{
-		text	"_Martin Gerhardy (mattn/tlh2000)"
-		pos		"1100 75"
-		align	"ur"
-		color	"1 1 1 0"
-		fade	"0 0 0 1"
-		speed	"-120 0"
-	}
-	wait 1
-	obj2d mattn_name { speed "0 0" }
-	wait 1
-	// now fade out the font
-	obj2d mattn_text { fade "0 0 0 -1" speed "0 60" }
-	obj2d mattn_name { fade "0 0 0 -1" speed "0 100" }
-	wait 2
-	rem mattn_text
-	rem mattn_name
-
-	// =====================================
-	// Hoehrer
-	// =====================================
-	obj2d hoehrer_text
-	{
-		text	"_Project leader"
-		pos		"-80 50"
-		align	"ul"
-		color	"0 1 0 0"
-		fade	"0 0 0 1"
-		speed	"120 0"
-	}
-	wait 1
-	obj2d hoehrer_text { speed "0 0" }
-	obj2d hoehrer_name
-	{
-		text	"_Werner Hoehrer (hoehrer)"
-		pos		"-80 75"
-		align	"ul"
-		color	"1 1 1 0"
-		fade	"0 0 0 1"
-		speed	"120 0"
-	}
-	wait 1
-	obj2d hoehrer_name { speed "0 0" }
-	wait 1
-	// now fade out the font
-	obj2d hoehrer_text { fade "0 0 0 -1" speed "0 60" }
-	obj2d hoehrer_name { fade "0 0 0 -1" speed "0 100" }
-	wait 2
-	rem hoehrer_text
-	rem hoehrer_name
-
-	// =====================================
-	// Winter
-	// =====================================
-	obj2d winter_text
-	{
-		text	"_Lead Story Developer/Game Design"
-		pos		"1100 50"
-		align	"ur"
-		color	"0 1 0 0"
-		fade	"0 0 0 1"
-		speed	"-120 0"
-	}
-	wait 1
-	obj2d winter_text { speed "0 0" }
-	obj2d winter_name
-	{
-		text	"_Ryan A. Span. (Winter)"
-		pos		"974 75"
-		align	"ur"
-		color	"1 1 1 0"
-		fade	"0 0 0 1"
-		speed	"-120 0"
-	}
-	wait 1
-	obj2d winter_name { speed "0 0" }
-	wait 1
-	// now fade out the font
-	obj2d winter_text { fade "0 0 0 -1" speed "0 60" }
-	obj2d winter_name { fade "0 0 0 -1" speed "0 100" }
-	wait 2
-	rem winter_text
-	rem winter_name
-
-	// =====================================
-	// BTAxis
-	// =====================================
-	obj2d btaxis_text
-	{
-		text	"_Story Developer/Game Design"
-		pos		"-80 50"
-		align	"ul"
-		color	"0 1 0 0"
-		fade	"0 0 0 1"
-		speed	"120 0"
-	}
-	wait 1
-	obj2d btaxis_text { speed "0 0" }
-	obj2d btaxis_name
-	{
-		text	"_Bas Fournier (BTAxis)"
-		pos		"-80 75"
-		align	"ul"
-		color	"1 1 1 0"
-		fade	"0 0 0 1"
-		speed	"120 0"
-	}
-	wait 1
-	obj2d btaxis_name { speed "0 0" }
-	wait 1
-	// now fade out the font
-	obj2d btaxis_text { fade "0 0 0 -1" speed "0 60" }
-	obj2d btaxis_name { fade "0 0 0 -1" speed "0 100" }
-	wait 2
-	rem btaxis_text
-	rem btaxis_name
-
-	// =====================================
-	// Zenerka
-	// =====================================
-	obj2d zenerka_text
-	{
-		text	"_Contributing Developer"
-		pos		"1100 50"
-		align	"ur"
-		color	"0 1 0 0"
-		fade	"0 0 0 1"
-		speed	"-120 0"
-	}
-	wait 1
-	obj2d zenerka_text { speed "0 0" }
-	obj2d zenerka_name
-	{
-		text	"_Maciej Wierzbicki (Zenerka/Voovoos)"
-		pos		"1100 75"
-		align	"ur"
-		color	"1 1 1 0"
-		fade	"0 0 0 1"
-		speed	"-120 0"
-	}
-	wait 1
-	obj2d zenerka_name { speed "0 0" }
-	wait 1
-	// now fade out the font
-	obj2d zenerka_text { fade "0 0 0 -1" speed "0 60" }
-	obj2d zenerka_name { fade "0 0 0 -1" speed "0 100" }
-	wait 2
-	rem zenerka_text
-	rem zenerka_name
-
-	// =====================================
-	// LordHavoc and Tron
-	// =====================================
-	obj2d techconsult_text
-	{
-		text	"_Technology Consultants"
-		pos		"-80 50"
-		align	"ul"
-		color	"0 1 0 0"
-		fade	"0 0 0 1"
-		speed	"120 0"
-	}
-	wait 1
-	obj2d techconsult_text { speed "0 0" }
-	obj2d lordhavoc_name
-	{
-		text	"_Forest Hale (LordHavoc)"
-		pos		"-80 75"
-		align	"ul"
-		color	"1 1 1 0"
-		fade	"0 0 0 1"
-		speed	"120 0"
-	}
-	wait 1
-	obj2d lordhavoc_name { speed "0 0" }
-	obj2d tron_name
-	{
-		text	"_Tron"
-		pos		"-80 100"
-		align	"ul"
-		color	"1 1 1 0"
-		fade	"0 0 0 1"
-		speed	"120 0"
-	}
-	wait 1
-	obj2d tron_name { speed "0 0" }
-	wait 1
-	// now fade out the font
-	obj2d techconsult_text { fade "0 0 0 -1" speed "0 60" }
-	obj2d lordhavoc_name { fade "0 0 0 -1" speed "0 80" }
-	obj2d tron_name { fade "0 0 0 -1" speed "0 100" }
-	wait 2
-	rem techconsult_text
-	rem lordhavoc_name
-	rem tron_name
-
-	// =====================================
-	// Programmers
-	// =====================================
-	obj2d programmers_text
-	{
-		text	"_Contributing Programmers"
-		pos		"1100 50"
-		align	"ur"
-		color	"0 1 0 0"
-		fade	"0 0 0 1"
-		speed	"-120 0"
-	}
-	wait 1
-	obj2d programmers_text { speed "0 0" }
-	obj2d ubequitz_name
-	{
-		text	"_Ivor Blockley (ubequitz/cassiterite)"
-		pos		"1100 75"
-		align	"ur"
-		color	"1 1 1 0"
-		fade	"0 0 0 1"
-		speed	"-120 0"
-	}
-	wait 1
-	obj2d ubequitz_name { speed "0 0" }
-	obj2d kracken_name
-	{
-		text	"_Kracken"
-		pos		"1100 100"
-		align	"ur"
-		color	"1 1 1 0"
-		fade	"0 0 0 1"
-		speed	"-120 0"
-	}
-	wait 1
-	obj2d kracken_name { speed "0 0" }
-	obj2d geever_name
-	{
-		text	"_Tamas Fehervari (geever)"
-		pos		"1100 125"
-		align	"ur"
-		color	"1 1 1 0"
-		fade	"0 0 0 1"
-		speed	"-120 0"
-	}
-	wait 1
-	obj2d geever_name { speed "0 0" }
-	obj2d bobbens_name
-	{
-		text	"_Edgar Simo (bobbens)"
-		pos		"1100 150"
-		align	"ur"
-		color	"1 1 1 0"
-		fade	"0 0 0 1"
-		speed	"-120 0"
-	}
-	wait 1
-	obj2d bobbens_name { speed "0 0" }
-	obj2d blondandy_name
-	{
-		text	"_Andy Buckle (blondandy)"
-		pos		"1100 175"
-		align	"ur"
-		color	"1 1 1 0"
-		fade	"0 0 0 1"
-		speed	"-120 0"
-	}
-	wait 1
-	obj2d blondandy_name { speed "0 0" }
-	obj2d wilminator_name
-	{
-		text	"_Michael Wilmes (wilminator)"
-		pos		"1100 200"
-		align	"ur"
-		color	"1 1 1 0"
-		fade	"0 0 0 1"
-		speed	"-120 0"
-	}
-	wait 1
-	obj2d wilminator_name { speed "0 0" }
-	wait 1
-	// now fade out the font
-	obj2d programmers_text { fade "0 0 0 -1" speed "0 60" }
-	obj2d ubequitz_name { fade "0 0 0 -1" speed "0 65" }
-	obj2d kracken_name { fade "0 0 0 -1" speed "0 70" }
-	obj2d geever_name { fade "0 0 0 -1" speed "0 75" }
-	obj2d bobbens_name { fade "0 0 0 -1" speed "0 80" }
-	obj2d blondandy_name { fade "0 0 0 -1" speed "0 85" }
-	obj2d wilminator_name { fade "0 0 0 -1" speed "0 90" }
-	wait 2
-	rem programmers_text
-	rem ubequitz_name
-	rem kracken_name
-	rem geever_name
-	rem blondandy_name
-	rem bobbens_name
-	rem wilminator_name
-
-	// =====================================
-	// General Support
-	// =====================================
-	obj2d generalsupport_text
-	{
-		text	"_General Support"
-		pos		"-80 50"
-		align	"ul"
-		color	"0 1 0 0"
-		fade	"0 0 0 1"
-		speed	"120 0"
-	}
-	wait 1
-	obj2d generalsupport_text { speed "0 0" }
-	obj2d richlv_name
-	{
-		text	"_Richlv"
-		pos		"-80 75"
-		align	"ul"
-		color	"1 1 1 0"
-		fade	"0 0 0 1"
-		speed	"120 0"
-	}
-	wait 1
-	obj2d richlv_name { speed "0 0" }
-	obj2d kildor_name
-	{
-		text	"_Kostia Romanov (Kildor)"
-		pos		"-80 100"
-		align	"ul"
-		color	"1 1 1 0"
-		fade	"0 0 0 1"
-		speed	"120 0"
-	}
-	wait 1
-	obj2d kildor_name { speed "0 0" }
-	wait 1
-	// now fade out the font
-	obj2d generalsupport_text { fade "0 0 0 -1" speed "0 60" }
-	obj2d richlv_name { fade "0 0 0 -1" speed "0 80" }
-	obj2d kildor_name { fade "0 0 0 -1" speed "0 100" }
-	wait 2
-	rem generalsupport_text
-	rem richlv_name
-	rem kildor_name
-
-	// =====================================
-	// The Original Team
-	// =====================================
-	obj2d community_driven
-	{
-		text	"_This game is now community driven"
-		pos		"512 708"		align	"uc"
-		color	"0 1 0 1"
-		speed	"0 -80"
-	}
-	obj2d original_team
-	{
-		text	"_To honor the original development team:"
-		pos		"512 768"		align	"uc"
-		color	"0 1 0 1"
-		speed	"0 -80"
-	}
-	obj2d community_driven { fade "0 0 0 -0.1" }
-	obj2d original_team { fade "0 0 0 -0.1" }
-
-	wait 8.0
-	rem original_team
-	rem community_driven
-
-	obj2d herby_text
-	{
-		text	"_Code, Visual Effects"
-		pos		"974 50"		align	"ur"
-		color	"0 1 0 0"		fade	"0 0 0 1"
-	}
-	obj2d herby_name
-	{
-		text	"_Herby"
-		pos		"974 75"		align	"ur"
-		color	"1 1 1 0"		fade	"0 0 0 1"
-	}
-	wait 4
-	// now fade out the font
-	obj2d herby_text { fade "0 0 0 -1" speed "0 60" }
-	obj2d herby_name { fade "0 0 0 -1" speed "0 100" }
-	rem herby_text
-	rem herby_name
-
-	obj2d sparx_text
-	{
-		text	"_Maps, Textures, Art"
-		pos		"50 50"		align	"ul"
-		color	"0 1 0 0"	fade	"0 0 0 1"
-	}
-	obj2d sparx_name
-	{
-		text	"_SparX"
-		pos		"50 75"		align	"ul"
-		color	"1 1 1 0"	fade	"0 0 0 1"
-	}
-	wait 4
-	// now fade out the font
-	obj2d sparx_text { fade "0 0 0 -1" speed "0 60" }
-	obj2d sparx_name { fade "0 0 0 -1" speed "0 100" }
-	rem sparx_text
-	rem sparx_name
-
-	obj2d rasta_text
-	{
-		text	"_Models, Animations"
-		pos		"974 50"	align	"ur"
-		color	"0 1 0 0"	fade	"0 0 0 1"
-	}
-	obj2d rasta_name
-	{
-		text	"_Rastaman"
-		pos		"974 75"	align	"ur"
-		color	"1 1 1 0"	fade	"0 0 0 1"
-	}
-	wait 4
-	// now fade out the font
-	obj2d rasta_text { fade "0 0 0 -1" speed "0 60" }
-	obj2d rasta_name { fade "0 0 0 -1" speed "0 100" }
-	rem rasta_text
-	rem rasta_name
-
-	obj2d vanethian_text
-	{
-		text	"_Music"
-		pos		"50 50"		align	"ul"
-		color	"0 1 0 0"	fade	"0 0 0 1"
-	}
-	obj2d vanethian_name
-	{
-		text	"_Vanethian"
-		pos		"50 75"		align	"ul"
-		color	"1 1 1 0"	fade	"0 0 0 1"
-	}
-	wait 4
-	// now fade out the font
-	obj2d vanethian_text { fade "0 0 0 -1" speed "0 60" }
-	obj2d vanethian_name { fade "0 0 0 -1" speed "0 100" }
-	rem vanethian_text
-	rem vanethian_name
-
-	obj2d ww3_text
-	{
-		text	"_Webdesign"
-		pos		"974 50"	align	"ur"
-		color	"0 1 0 0"	fade	"0 0 0 1"
-	}
-	obj2d ww3_name
-	{
-		text	"_Ww 3"
-		pos		"974 75"	align	"ur"
-		color	"1 1 1 0"	fade	"0 0 0 1"
-	}
-	wait 4
-	// now fade out the font
-	obj2d ww3_text { fade "0 0 0 -1" speed "0 60" }
-	obj2d ww3_name { fade "0 0 0 -1" speed "0 100" }
-	rem ww3_text
-	rem ww3_name
-
-	// ============================
-	// Special Thanks
-	// ============================
-
-	obj2d special_thx
-	{
-		text	"_Special Thanks To"
-		pos		"512 768"		align	"uc"
-		color	"0 1 0 1"
-		speed	"0 -80"
-	}
-	obj2d id
-	{
-		text	"_id Software"
-		pos		"512 810"		align	"uc"
-		color	"1 1 1 1"
-		speed	"0 -80"
-	}
-	obj2d engine
-	{
-		text	"_Quake 2 Engine"
-		pos		"512 835"		align	"uc"
-		color	".7 .7 .7 1"
-		speed	"0 -80"
-	}
-	obj2d ninex
-	{
-		text	"_NineX"
-		pos		"512 960"		align	"uc"
-		color	"1 1 1 1"
-		speed	"0 -80"
-	}
-	obj2d host
-	{
-		text	"_Our Host"
-		pos		"512 985"		align	"uc"
-		color	".7 .7 .7 1"
-		speed	"0 -80"
-	}
-
-	obj2d additional_thx
-	{
-		text	"_Additional Thanks To"
-		pos		"512 1300"		align	"uc"
-		color	"0 1 0 1"
-		speed	"0 -80"
-	}
-	obj2d sacrusha
-	{
-		text	"_Sacrusha"
-		pos		"512 1340"		align	"uc"
-		color	"1 1 1 1"
-		speed	"0 -80"
-	}
-	obj2d mattn
-	{
-		text	"_Mattn"
-		pos		"512 1370"		align	"uc"
-		color	"1 1 1 1"
-		speed	"0 -80"
-	}
-	obj2d sitters
-	{
-		text	"_Sitters"
-		pos		"512 1400"		align	"uc"
-		color	"1 1 1 1"
-		speed	"0 -80"
-	}
-	obj2d community
-	{
-		text	"_The Community"
-		pos		"512 1430"		align	"uc"
-		color	"1 1 1 1"
-		speed	"0 -80"
-	}
-	obj2d everyone
-	{
-		text	"_Everyone who supported us"
-		pos		"512 1460"		align	"uc"
-		color	"1 1 1 1"
-		speed	"0 -80"
-	}
-	wait 20.0
-
-	rem special_thx
-	rem id		rem engine
-	rem ninex	rem host
-	rem additional_thx
-	rem sacrusha
-	rem mattn
-	rem sitters
-	rem community
-	rem everyone
-
-	// remove the models
-	rem body1
-	rem head1
-	rem body2
-	rem head2
-	rem body3
-	rem head3
-	rem body4
-	rem head4
-	rem body5
-	rem head5
-	rem body6
-	rem head6
-	rem body7
-	rem head7
-
-	// ============================
-	// Finish
-	// ============================
-
-	obj2d ufoai
+	obj2d ufoai_logo
 	{
 		image	"pics/ufoai"
 		align	"uc"
-		pos		"384 800"
-		speed	"0 -128"
+		pos		"384 0"
+		color	"1 1 1 1"
+		speed	"0 0"
 	}
-	wait 3.5
-
-	obj2d ufoai { speed "0 0" }
-	obj2d www
+	obj2d background_world
 	{
-		text	"_http://ufoai.sf.net"
-		pos		"512 710"	align	"uc"
-		color	"0 1 0 0"	fade	"0 0 0 1"
+		pos		"768 0"
+		image	"pics/background/world_bg"
+		inbackground	"true"
 	}
-	obj2d copyright
+	obj2d ufoai_url
 	{
-		text	"_Copyright 2004-2011 by UFO: AI Team"
-		pos		"512 736"	align	"uc"
-		color	"1 1 1 0"	fade	"0 0 0 1"
+		text	"_http://www.ufoai.org"
+		pos		"512 64"
+		align	"uc"
+		color	"0 1 0 0"
+		fade	"0 0 0 1"
 	}
-	wait 8.0
 
-	obj2d ufoai { fade "0 0 0 -1" }
-	obj2d www { fade "0 0 0 -1" }
-	obj2d copyright { fade "0 0 0 -1" }
+	// ========================
+	// TEAM
+	// ========================
+	obj2d lead_title
+	{
+		text	"_Project lead"
+		pos		"512 768"
+		align	"uc"
+		color	"0 1 0 1"
+		speed	"0 -60"
+		inbackground	"true"
+	}
+	wait 0.7
+	obj2d lead_text
+	{
+		text	"_Martin Gerhardy (mattn)"
+		pos		"512 768"
+		align	"uc"
+		color	"1 1 1 1"
+		speed	"0 -60"
+		inbackground	"true"
+	}
+
 	wait 1.0
-
-	rem ufoai
-	rem www
-	rem copyright
-
-	camera cam1
+	obj2d team_members_title
 	{
-		zoom	2.0
-		angles	"20 240 0"
-		dist	500
+		text	"_Team members"
+		pos		"512 768"
+		align	"uc"
+		color	"0 1 0 1"
+		speed	"0 -60"
+		inbackground	"true"
+	}
+	wait 0.7
+	obj2d aduke_text
+	{
+		text	"_aDuke"
+		pos		"512 768"
+		align	"uc"
+		color	"1 1 1 1"
+		speed	"0 -60"
+		inbackground	"true"
+	}
+	wait 0.7
+	obj2d alextishin_text
+	{
+		text	"_Alexander Tishin (alextishin)"
+		pos		"512 768"
+		align	"uc"
+		color	"1 1 1 1"
+		speed	"0 -60"
+		inbackground	"true"
+	}
+	wait 0.7
+	obj2d bayo_text
+	{
+		text	"_bayo"
+		pos		"512 768"
+		align	"uc"
+		color	"1 1 1 1"
+		speed	"0 -60"
+		inbackground	"true"
+	}
+	wait 0.7
+	obj2d crystan_text
+	{
+		text	"_Christian Hoffmann (crystan)"
+		pos		"512 768"
+		align	"uc"
+		color	"1 1 1 1"
+		speed	"0 -60"
+		inbackground	"true"
+	}
+	wait 0.7
+	obj2d darkrain_text
+	{
+		text	"_DarkRain"
+		pos		"512 768"
+		align	"uc"
+		color	"1 1 1 1"
+		speed	"0 -60"
+		inbackground	"true"
+	}
+	wait 0.7
+	obj2d geever_text
+	{
+		text	"_Tamas Fehervari (geever)"
+		pos		"512 768"
+		align	"uc"
+		color	"1 1 1 1"
+		speed	"0 -60"
+		inbackground	"true"
+	}
+	wait 0.7
+	obj2d hhour_text
+	{
+		text	"_Nate Wright (H-Hour)"
+		pos		"512 768"
+		align	"uc"
+		color	"1 1 1 1"
+		speed	"0 -60"
+		inbackground	"true"
+	}
+	wait 0.7
+	obj2d shipit_text
+	{
+		text	"_ShipIt"
+		pos		"512 768"
+		align	"uc"
+		color	"1 1 1 1"
+		speed	"0 -60"
+		inbackground	"true"
 	}
 
-	model ship_hull
+	// ========================
+	// CONTRIBUTORS
+	// ========================
+	wait 1.0
+	obj2d contributors_title
 	{
-		model	"aircraft/ufo_fighter/ufo_fighter_hull"
-		origin	"0 -4000 0"
-		speed	"0 3000 0"
-		angles	"0 90 0"
+		text	"_Other contributors"
+		pos		"512 768"
+		align	"uc"
+		color	"0 1 0 1"
+		speed	"0 -60"
+		inbackground	"true"
 	}
-	model ship_wings
+	wait 0.7
+	obj2d btaxis_text
 	{
-		model	"aircraft/ufo_fighter/ufo_fighter_wings"
-		origin	"0 -4000 0"
-		speed	"0 3000 0"
-		angles	"0 90 0"
+		text	"_Bas Fournier (BTAxis)"
+		pos		"512 768"
+		align	"uc"
+		color	"1 1 1 1"
+		speed	"0 -60"
+		inbackground	"true"
 	}
-	model ship_engine1
+	wait 0.7
+	obj2d hoehrer_text
 	{
-		model	"aircraft/ufo_fighter/ufo_fighter_engines_1"
-		origin	"0 -4000 0"
-		speed	"0 3000 0"
-		angles	"0 90 0"
+		text	"_Werner Höhrer (Hoehrer)"
+		pos		"512 768"
+		align	"uc"
+		color	"1 1 1 1"
+		speed	"0 -60"
+		inbackground	"true"
 	}
-	model ship_engine2
+	wait 0.7
+	obj2d kildor_text
 	{
-		model	"aircraft/ufo_fighter/ufo_fighter_engines_2"
-		origin	"0 -4000 0"
-		speed	"0 3000 0"
-		angles	"0 90 0"
+		text	"_Kostia Romanov (Kildor)"
+		pos		"512 768"
+		align	"uc"
+		color	"1 1 1 1"
+		speed	"0 -60"
+		inbackground	"true"
 	}
-
-	wait 0.6
-
-	sound "seq/alienflyby"
-
-	wait 0.4
-
-	sound "seq/humanflyby"
-
-	model interceptor_hull
+	wait 0.7
+	obj2d kracken_text
 	{
-		model	"aircraft/inter_starchaser/starchaser"
-		origin	"0 -4000 0"
-		speed	"0 3000 0"
-		angles	"0 90 0"
+		text	"_Olivier Alloschery (Kracken)"
+		pos		"512 768"
+		align	"uc"
+		color	"1 1 1 1"
+		speed	"0 -60"
+		inbackground	"true"
 	}
-	wait 4.0
+	wait 0.7
+	obj2d lordhavoc_text
+	{
+		text	"_Forest Hale (LordHavoc)"
+		pos		"512 768"
+		align	"uc"
+		color	"1 1 1 1"
+		speed	"0 -60"
+		inbackground	"true"
+	}
+	wait 0.7
+	obj2d tron_text
+	{
+		text	"_Christoph Mallon (Tron)"
+		pos		"512 768"
+		align	"uc"
+		color	"1 1 1 1"
+		speed	"0 -60"
+		inbackground	"true"
+	}
+	wait 0.7
+	obj2d winter_text
+	{
+		text	"_Ryan A. Span. (Winter)"
+		pos		"512 768"
+		align	"uc"
+		color	"1 1 1 1"
+		speed	"0 -60"
+		inbackground	"true"
+	}
+	wait 0.7
+	obj2d zenerka_text
+	{
+		text	"_Maciej Wierzbicki (Zenerka)"
+		pos		"512 768"
+		align	"uc"
+		color	"1 1 1 1"
+		speed	"0 -60"
+		inbackground	"true"
+	}
 
-	rem interceptor_hull
-	rem ship_hull
-	rem ship_wings
-	rem ship_engine1
-	rem ship_engine2
+	// ========================
+	// ORIGINAL TEAM
+	// ========================
+	wait 1.0
+	obj2d original_team_title
+	{
+		text	"_Original team"
+		pos		"512 768"
+		align	"uc"
+		color	"0 1 0 1"
+		speed	"0 -60"
+		inbackground	"true"
+	}
+	wait 0.7
+	obj2d herby_text
+	{
+		text	"_Herby"
+		pos		"512 768"
+		align	"uc"
+		color	"1 1 1 1"
+		speed	"0 -60"
+		inbackground	"true"
+	}
+	wait 0.7
+	obj2d sparxx_text
+	{
+		text	"_SparXX"
+		pos		"512 768"
+		align	"uc"
+		color	"1 1 1 1"
+		speed	"0 -60"
+		inbackground	"true"
+	}
+	wait 0.7
+	obj2d rastaman_text
+	{
+		text	"_Rastaman"
+		pos		"512 768"
+		align	"uc"
+		color	"1 1 1 1"
+		speed	"0 -60"
+		inbackground	"true"
+	}
+	wait 0.7
+	obj2d sacrusha_text
+	{
+		text	"_Sacrusha"
+		pos		"512 768"
+		align	"uc"
+		color	"1 1 1 1"
+		speed	"0 -60"
+		inbackground	"true"
+	}
+	wait 0.7
+	obj2d vanethian_text
+	{
+		text	"_Vanethian"
+		pos		"512 768"
+		align	"uc"
+		color	"1 1 1 1"
+		speed	"0 -60"
+		inbackground	"true"
+	}
+
+	// ========================
+	// SPECIAL THANKS
+	// ========================
+	wait 1.0
+	obj2d special_thanks_title
+	{
+		text	"_Special thanks to"
+		pos		"512 768"
+		align	"uc"
+		color	"0 1 0 1"
+		speed	"0 -60"
+		inbackground	"true"
+	}
+	wait 0.7
+	obj2d id_text
+	{
+		text	"_id Software for the Quake 2 engine"
+		pos		"512 768"
+		align	"uc"
+		color	"1 1 1 1"
+		speed	"0 -60"
+		inbackground	"true"
+	}
+	wait 0.7
+	obj2d ninex_text
+	{
+		text	"_NineX for hosting us"
+		pos		"512 768"
+		align	"uc"
+		color	"1 1 1 1"
+		speed	"0 -60"
+		inbackground	"true"
+	}
+	wait 0.7
+	obj2d additional_thanks_text
+	{
+		text	"_To the community and everyone who supported us"
+		pos		"512 768"
+		align	"uc"
+		color	"1 1 1 1"
+		speed	"0 -60"
+		inbackground	"true"
+	}
+	wait 10.0
+
+	// ========================
+	// CLEANUP
+	// ========================
+
+	rem background_logo
+	rem background_line
+	rem ufoai_logo
+	rem background_world
+	rem ufoai_url
+
+	rem lead_title
+	rem lead_text
+
+	rem team_members_title
+	rem aduke_text
+	rem alextishin_text
+	rem bayo_text
+	rem crystan_text
+	rem darkrain_text
+	rem geever_text
+	rem hhour_text
+	rem shipit_text
+
+	rem contributors_title
+	rem btaxis_text
+	rem hoehrer_text
+	rem kildor_text
+	rem kracken_text
+	rem lordhavoc_text
+	rem tron_text
+	rem winter_text
+	rem zenerka_text
+
+	rem original_team_title
+	rem herby_text
+	rem sparxx_text
+	rem rastaman_text
+	rem sacrusha_text
+	rem vanethian_text
+
+	rem special_thanks_title
+	rem id_text
+	rem ninex_text
+	rem additional_thanks_text
+
 	music "van_theme"
 }
