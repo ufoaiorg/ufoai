@@ -176,8 +176,8 @@ extern const byte dvleft[CORE_DIRECTIONS];
 class AABB {
 public:
 	AABB(const vec3_t mini, const vec3_t maxi) {
-		VecToPos(mini, mins);
-		VecToPos(maxi, maxs);
+		VectorCopy(mini, mins);
+		VectorCopy(maxi, maxs);
 	}
 
 	inline bool isZero() const {
