@@ -42,9 +42,7 @@ sub help {
 		"!bug #tracker-id\n".
 		"!patch #tracker-id\n".
 		"!fr #tracker-id\n".
-		"!rev #svn-revision\n".
 		"!rev #git-hash\n".
-		"!ticket #trac-ticket-id\n".
 		"!faq [#section_name]\n".
 		"!todo\n".
 		"!topic #forum-topic-id [.message-id]\n";
