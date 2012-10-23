@@ -184,6 +184,11 @@ public:
 		return VectorEmpty(mins) && VectorEmpty(maxs);
 	}
 
+	inline bool doesIntersect(const AABB& other) const {
+		return !(  mins[0] > other.maxs[0] || mins[1] > other.maxs[1] || mins[2] > other.maxs[2]
+				|| maxs[0] < other.mins[0] || maxs[1] < other.mins[1] || maxs[2] < other.mins[2] );
+	}
+
 	vec3_t mins;
 	vec3_t maxs;
 };

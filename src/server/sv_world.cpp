@@ -204,11 +204,7 @@ void SV_LinkEdict (edict_t * ent)
  */
 static bool SV_BoundingBoxesIntersect (const AABB& aabb, const edict_t *ent)
 {
-	const bool outsideMaxs = ent->absmin[0] > aabb.maxs[0] || ent->absmin[1] > aabb.maxs[1] || ent->absmin[2] > aabb.maxs[2];
-	const bool outsideMins = ent->absmax[0] < aabb.mins[0] || ent->absmax[1] < aabb.mins[1] || ent->absmax[2] < aabb.mins[2];
-	if (outsideMaxs || outsideMins)
-		return false; /* not touching */
-	return true;
+	return aabb.doesIntersect(AABB(ent->absmin,ent->absmax));
 }
 
 typedef struct {
