@@ -198,15 +198,14 @@ void SV_LinkEdict (edict_t * ent)
 
 /**
  * @brief Checks whether the bounding box of the given edict will intersect with the given bbox
- * @param mins The mins of the bounding box
- * @param maxs The maxs of the bounding box
- * @param ent The edict to check the intersection for
+ * @param[in] aabb the bounding box
+ * @param[in] ent The edict to check the intersection for
  * @return @c true if intersect, @c false otherwise
  */
-static bool SV_BoundingBoxesIntersect (const WorldBox& box, const edict_t *ent)
+static bool SV_BoundingBoxesIntersect (const AABB& aabb, const edict_t *ent)
 {
-	const bool outsideMaxs = ent->absmin[0] > box.maxs[0] || ent->absmin[1] > box.maxs[1] || ent->absmin[2] > box.maxs[2];
-	const bool outsideMins = ent->absmax[0] < box.mins[0] || ent->absmax[1] < box.mins[1] || ent->absmax[2] < box.mins[2];
+	const bool outsideMaxs = ent->absmin[0] > aabb.maxs[0] || ent->absmin[1] > aabb.maxs[1] || ent->absmin[2] > aabb.maxs[2];
+	const bool outsideMins = ent->absmax[0] < aabb.mins[0] || ent->absmax[1] < aabb.mins[1] || ent->absmax[2] < aabb.mins[2];
 	if (outsideMaxs || outsideMins)
 		return false; /* not touching */
 	return true;
@@ -238,7 +237,7 @@ static void SV_AreaEdicts_r (worldSector_t * node, areaParms_t *ap)
 		if (!check->ent->inuse)
 			continue;
 
-		if (!SV_BoundingBoxesIntersect(WorldBox(ap->areaMins, ap->areaMaxs), check->ent))
+		if (!SV_BoundingBoxesIntersect(AABB(ap->areaMins, ap->areaMaxs), check->ent))
 			continue;			/* not touching */
 
 		if (ap->areaEdictListCount == ap->areaEdictListMaxCount) {
@@ -285,13 +284,13 @@ int SV_AreaEdicts (const vec3_t mins, const vec3_t maxs, edict_t **list, int max
 
 /**
  * @brief Fills a list with edicts that are in use and are touching the given bounding box
- * @param[in] bbox The bounding box
+ * @param[in] aabb The bounding box
  * @param[out] list The edict list that this trace is hitting
  * @param[in] maxCount The size of the given @c list
  * @param[in] skip An edict to skip (e.g. pointer to the calling edict)
  * @return the number of pointers filled in
  */
-int SV_GetTouchingEdicts (const WorldBox& bbox, edict_t **list, int maxCount, edict_t *skip)
+int SV_GetTouchingEdicts (const AABB& aabb, edict_t **list, int maxCount, edict_t *skip)
 {
 	int num = 0;
 	const int max = std::min(maxCount, svs.ge->num_edicts);
@@ -305,7 +304,7 @@ int SV_GetTouchingEdicts (const WorldBox& bbox, edict_t **list, int maxCount, ed
 			continue;
 		if (e == skip)
 			continue;
-		if (SV_BoundingBoxesIntersect(bbox, e))
+		if (SV_BoundingBoxesIntersect(aabb, e))
 			list[num++] = e;
 	}
 

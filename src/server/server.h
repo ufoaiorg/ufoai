@@ -226,7 +226,7 @@ void SV_ClearWorld(void);
 void SV_UnlinkEdict(edict_t * ent);
 void SV_LinkEdict(edict_t * ent);
 int SV_AreaEdicts(const vec3_t mins, const vec3_t maxs, edict_t ** list, int maxcount);
-int SV_GetTouchingEdicts(const WorldBox& bbox, edict_t **list, int maxCount, edict_t *skip);
+int SV_GetTouchingEdicts(const AABB& aabb, edict_t **list, int maxCount, edict_t *skip);
 
 /*=================================================================== */
 

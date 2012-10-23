@@ -121,7 +121,7 @@ typedef struct {
 
 	/** This updates the inline model's orientation */
 	void (IMPORT *SetInlineModelOrientation) (const char *name, const vec3_t origin, const vec3_t angles);
-	void (IMPORT *GetInlineModelBox) (const char *name, WorldBox& box);
+	void (IMPORT *GetInlineModelAABB) (const char *name, AABB& aabb);
 
 	void (IMPORT *SetModel) (edict_t * ent, const char *name);
 
@@ -143,7 +143,7 @@ typedef struct {
 	/** call before removing an interactive edict */
 	void (IMPORT *UnlinkEdict) (edict_t * ent);
 	int (IMPORT *BoxEdicts) (const vec3_t mins, const vec3_t maxs, edict_t **list, int maxcount);
-	int (IMPORT *GetTouchingEdicts) (const WorldBox& bbox, edict_t **list, int maxcount, edict_t *skip);
+	int (IMPORT *GetTouchingEdicts) (const AABB& aabb, edict_t **list, int maxcount, edict_t *skip);
 
 	/** @brief fast version of a line trace but without including entities */
 	bool (IMPORT *TestLine) (const vec3_t start, const vec3_t stop, const int levelmask);

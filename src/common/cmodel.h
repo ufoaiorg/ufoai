@@ -34,7 +34,7 @@ CMODEL
 void CM_LoadMap(const char *tiles, bool day, const char *pos, mapData_t *mapData, mapTiles_t *mapTiles);
 cBspModel_t *CM_InlineModel(const mapTiles_t *mapTiles, const char *name);
 cBspModel_t *CM_SetInlineModelOrientation(mapTiles_t *mapTiles, const char *name, const vec3_t origin, const vec3_t angles);
-void CM_GetInlineModelBox (mapTiles_t *mapTiles, const char *name, WorldBox& box);
+void CM_GetInlineModelAABB(mapTiles_t *mapTiles, const char *name, AABB& aabb);
 float CM_GetVisibility(const mapTiles_t *mapTiles, const pos3_t position);
 
 /*==============================================================

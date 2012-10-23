@@ -502,9 +502,9 @@ static void SV_SetInlineModelOrientation (const char *name, const vec3_t origin,
 	CM_SetInlineModelOrientation(&sv->mapTiles, name, origin, angles);
 }
 
-static void SV_GetInlineModelBox (const char *name, WorldBox& box)
+static void SV_GetInlineModelAABB (const char *name, AABB& aabb)
 {
-	CM_GetInlineModelBox(&sv->mapTiles, name, box);
+	CM_GetInlineModelAABB(&sv->mapTiles, name, aabb);
 }
 
 static void SV_UnloadGame (void)
@@ -692,7 +692,7 @@ void SV_InitGameProgs (void)
 	import.ModelIndex = SV_ModelIndex;
 
 	import.SetInlineModelOrientation = SV_SetInlineModelOrientation;
-	import.GetInlineModelBox = SV_GetInlineModelBox;
+	import.GetInlineModelAABB = SV_GetInlineModelAABB;
 
 	import.SetModel = SV_SetModel;
 

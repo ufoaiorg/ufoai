@@ -93,9 +93,9 @@ static bool Destroy_Breakable (edict_t *self)
 	/* now we can destroy the edict completely */
 	G_FreeEdict(self);
 
-	WorldBox oldBox(vec3_origin, vec3_origin);
-	gi.GetInlineModelBox(model, oldBox);
-	GridBox rerouteOldBox(oldBox);
+	AABB oldAABB(vec3_origin, vec3_origin);
+	gi.GetInlineModelAABB(model, oldAABB);
+	GridBox rerouteOldBox(oldAABB);
 	G_RecalcRouting(model, rerouteOldBox);
 
 	return true;
@@ -181,9 +181,9 @@ static void Door_SlidingUse (edict_t *door)
 	 * world coordinates in the map we have to translate the position by the above
 	 * calculated movement vector */
 #if 1
-	WorldBox oldBox(vec3_origin, vec3_origin);
-	gi.GetInlineModelBox(door->model, oldBox);
-	GridBox rerouteOldBox(oldBox);											/* remember the old location */
+	AABB oldAABB(vec3_origin, vec3_origin);
+	gi.GetInlineModelAABB(door->model, oldAABB);
+	GridBox rerouteOldBox(oldAABB);											/* remember the old location */
 	VectorAdd(door->origin, distanceVec, door->origin);						/* calc new model position */
 	gi.SetInlineModelOrientation(door->model, door->origin, door->angles);	/* move the model out of the way */
 	G_RecalcRouting(door->model, rerouteOldBox);							/* Update path finding table */
