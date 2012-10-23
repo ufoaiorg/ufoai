@@ -2143,15 +2143,15 @@ window options
 				{
 					{
 						cvar		*cvar:r_texturemode
-						pos			"342 5"
-						size		"150 20"
+						pos			"242 5"
+						size		"250 20"
 					}
 					option nearest {
 						label	"_None"
 						value	"GL_NEAREST"
 					}
 					option linear {
-						label	"_Bilinear filtering only"
+						label	"_Bilinear only"
 						value	"GL_LINEAR"
 					}
 					option nearest_mipmap_nearest {
@@ -2159,15 +2159,15 @@ window options
 						value	"GL_NEAREST_MIPMAP_NEAREST"
 					}
 					option linear_mipmap_nearest {
-						label	"_Bilinear filtering and mipmaps"
+						label	"_Bilinear and mipmaps"
 						value	"GL_LINEAR_MIPMAP_NEAREST"
 					}
 					option nearest_mipmap_linear {
-						label	"_Trilinear filtering and mipmaps"
+						label	"_Trilinear and mipmaps"
 						value	"GL_NEAREST_MIPMAP_LINEAR"
 					}
 					option linear_mipmap_linear {
-						label	"_Bi-/trilinear filtering and mipmaps"
+						label	"_Bi-/trilinear and mipmaps"
 						value	"GL_LINEAR_MIPMAP_LINEAR"
 					}
 				}
@@ -2286,8 +2286,8 @@ window options
 				{
 					{
 						cvar		*cvar:r_maxlightmap
-						pos			"342 5"
-						size		"150 20"
+						pos			"367 5"
+						size		"125 20"
 					}
 					option o256 {
 						label	"_256"

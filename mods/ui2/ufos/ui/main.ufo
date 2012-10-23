@@ -42,7 +42,7 @@ window main
 
 		MainMenuBtn btn_campaign
 		{
-			onClick	{ cmd "ui_push campaigns;" }
+			onClick	{ cmd "ui_push campaign;" }
 			string	"_CAMPAIGN"
 		}
 
