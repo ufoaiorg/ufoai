@@ -264,6 +264,7 @@ $(TARGET)_SRCS_TMP      = \
 	shared/byte.cpp \
 	shared/images.cpp \
 	shared/mathlib.cpp \
+	shared/aabb.cpp \
 	shared/shared.cpp \
 	shared/utf8.cpp \
 	shared/parse.cpp \

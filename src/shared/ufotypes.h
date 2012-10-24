@@ -27,8 +27,7 @@
  *
  */
 
-#ifndef COMMON_UFOTYPES_H
-#define COMMON_UFOTYPES_H
+#pragma once
 
 #include <stddef.h>
 #include <stdint.h>
@@ -39,6 +38,16 @@ typedef double double64_t;
 #ifndef byte
 typedef uint8_t byte;
 #endif
+
+typedef float vec_t;
+typedef vec_t vec2_t[2];
+typedef vec_t vec3_t[3];
+typedef vec_t vec4_t[4];
+typedef vec_t vec5_t[5];
+
+typedef byte pos_t;
+typedef pos_t pos3_t[3];
+typedef pos_t pos4_t[4];
 
 #if defined _WIN32
 #	define UFO_SIZE_T "%Iu"
@@ -53,5 +62,3 @@ typedef uint8_t byte;
 # define UFO_SIZE_T "%zu"
 #endif
 #endif
-
-#endif /* COMMON_UFOTYPES_H */

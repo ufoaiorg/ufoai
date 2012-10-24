@@ -143,6 +143,8 @@
 		<Unit filename="..\..\src\shared\infostring.h" />
 		<Unit filename="..\..\src\shared\mathlib.cpp" />
 		<Unit filename="..\..\src\shared\mathlib.h" />
+		<Unit filename="..\..\src\shared\aabb.cpp" />
+		<Unit filename="..\..\src\shared\aabb.h" />
 		<Unit filename="..\..\src\shared\parse.cpp" />
 		<Unit filename="..\..\src\shared\shared.cpp" />
 		<Unit filename="..\..\src\shared\shared.h" />

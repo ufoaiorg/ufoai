@@ -83,6 +83,7 @@ $(TARGET)_SRCS      = \
 
 ifneq ($(HARD_LINKED_CGAME),1)
 	$(TARGET)_SRCS += shared/mathlib.cpp \
+		shared/aabb.cpp \
 		shared/shared.cpp \
 		shared/utf8.cpp \
 		shared/parse.cpp \

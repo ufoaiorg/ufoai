@@ -19,6 +19,7 @@ $(TARGET)_SRCS      = \
 	tools/ufomodel/ufomodel.cpp \
 	\
 	shared/mathlib.cpp \
+	shared/aabb.cpp \
 	shared/byte.cpp \
 	shared/images.cpp \
 	shared/parse.cpp \
