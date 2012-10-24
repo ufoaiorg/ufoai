@@ -168,7 +168,7 @@ static void G_UpdateCharacterSkills (edict_t *ent)
 		gainedXP = std::min(gainedXP, maxXP);
 		chr->score.experience[i] += gainedXP;
 		totalGainedXP += gainedXP;
-		chr->score.skills[i] = chr->score.initialSkills[i] + (int) (pow((float) (chr->score.experience[i]) / 100, 0.6f));
+		chr->score.skills[i] = std::min(MAX_SKILL, chr->score.initialSkills[i] + (int) (pow((float) (chr->score.experience[i]) / 100, 0.6f)));
 		G_PrintStats("Soldier %s earned %d experience points in skill #%d (total experience: %d). It is now %d higher.",
 				chr->name, gainedXP, i, chr->score.experience[i], chr->score.skills[i] - chr->score.initialSkills[i]);
 	}
@@ -179,7 +179,7 @@ static void G_UpdateCharacterSkills (edict_t *ent)
 	gainedXP = std::min(maxXP, totalGainedXP / 2);
 
 	chr->score.experience[i] += gainedXP;
-	chr->maxHP = chr->score.initialSkills[i] + (int) (pow((float) (chr->score.experience[i]) / 100, 0.6f));
+	chr->maxHP = std::min(255, chr->score.initialSkills[i] + (int) (pow((float) (chr->score.experience[i]) / 100, 0.6f)));
 	G_PrintStats("Soldier %s earned %d experience points in skill #%d (total experience: %d). It is now %d higher.",
 			chr->name, gainedXP, i, chr->score.experience[i], chr->maxHP - chr->score.initialSkills[i]);
 }
