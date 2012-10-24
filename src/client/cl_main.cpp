@@ -1105,7 +1105,8 @@ void CL_Frame (int now, void *data)
 	/* update camera position */
 	CL_CameraMove();
 
-	CL_ParticleRun();
+	if (cls.state == ca_active)
+		CL_ParticleRun();
 
 	/* update the screen */
 	SCR_UpdateScreen();
