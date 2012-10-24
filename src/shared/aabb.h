@@ -36,6 +36,10 @@ public:
 
 	inline bool isZero () const;
 
+	/**
+	 * @brief Checks if the aabb touches or intersects with the given aabb
+	 * @param[in] other The other aabb
+	 */
 	inline bool doesIntersect (const AABB& other) const;
 
 	/**
