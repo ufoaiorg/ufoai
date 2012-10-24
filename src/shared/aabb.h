@@ -35,6 +35,7 @@ public:
 	AABB (const vec3_t mini, const vec3_t maxi);
 
 	inline bool isZero () const;
+	void add (const vec3_t point);
 
 	/**
 	 * @brief Checks if the aabb touches or intersects with the given aabb
