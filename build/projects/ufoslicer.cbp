@@ -86,14 +86,15 @@
 		<Unit filename="..\..\src\common\mem.cpp" />
 		<Unit filename="..\..\src\common\unzip.cpp" />
 		<Unit filename="..\..\src\ports\windows\win_shared.cpp" />
+		<Unit filename="..\..\src\shared\aabb.cpp" />
+		<Unit filename="..\..\src\shared\aabb.h" />
 		<Unit filename="..\..\src\shared\byte.cpp" />
 		<Unit filename="..\..\src\shared\images.cpp" />
 		<Unit filename="..\..\src\shared\mathlib.cpp" />
-		<Unit filename="..\..\src\shared\aabb.cpp" />
-		<Unit filename="..\..\src\shared\aabb.h" />
 		<Unit filename="..\..\src\shared\parse.cpp" />
 		<Unit filename="..\..\src\shared\shared.cpp" />
 		<Unit filename="..\..\src\shared\utf8.cpp" />
+		<Unit filename="..\..\src\shared\vector.h" />
 		<Unit filename="..\..\src\tools\ufo2map\common\bspfile.cpp" />
 		<Unit filename="..\..\src\tools\ufo2map\common\scriplib.cpp" />
 		<Unit filename="..\..\src\tools\ufoslicer.cpp" />

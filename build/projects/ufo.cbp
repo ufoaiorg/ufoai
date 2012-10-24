@@ -287,9 +287,9 @@
 		<Unit filename="..\..\src\client\battlescape\events\event\player\e_event_startgame.h" />
 		<Unit filename="..\..\src\client\battlescape\events\event\world\e_event_addbrushmodel.cpp" />
 		<Unit filename="..\..\src\client\battlescape\events\event\world\e_event_addbrushmodel.h" />
-		<Unit filename="..\..\src\client\battlescape\events\event\world\e_event_cameraappear.cpp" />
 		<Unit filename="..\..\src\client\battlescape\events\event\world\e_event_addedict.cpp" />
 		<Unit filename="..\..\src\client\battlescape\events\event\world\e_event_addedict.h" />
+		<Unit filename="..\..\src\client\battlescape\events\event\world\e_event_cameraappear.cpp" />
 		<Unit filename="..\..\src\client\battlescape\events\event\world\e_event_doorclose.cpp" />
 		<Unit filename="..\..\src\client\battlescape\events\event\world\e_event_doorclose.h" />
 		<Unit filename="..\..\src\client\battlescape\events\event\world\e_event_dooropen.cpp" />
@@ -813,6 +813,8 @@
 		<Unit filename="..\..\src\server\sv_send.cpp" />
 		<Unit filename="..\..\src\server\sv_user.cpp" />
 		<Unit filename="..\..\src\server\sv_world.cpp" />
+		<Unit filename="..\..\src\shared\aabb.cpp" />
+		<Unit filename="..\..\src\shared\aabb.h" />
 		<Unit filename="..\..\src\shared\bfd.cpp" />
 		<Unit filename="..\..\src\shared\byte.cpp" />
 		<Unit filename="..\..\src\shared\byte.h" />
@@ -824,8 +826,6 @@
 		<Unit filename="..\..\src\shared\mathlib.h" />
 		<Unit filename="..\..\src\shared\mathlib_extra.cpp" />
 		<Unit filename="..\..\src\shared\mathlib_extra.h" />
-		<Unit filename="..\..\src\shared\aabb.cpp" />
-		<Unit filename="..\..\src\shared\aabb.h" />
 		<Unit filename="..\..\src\shared\parse.cpp" />
 		<Unit filename="..\..\src\shared\parse.h" />
 		<Unit filename="..\..\src\shared\shared.cpp" />
@@ -835,6 +835,7 @@
 		<Unit filename="..\..\src\shared\ufotypes.h" />
 		<Unit filename="..\..\src\shared\utf8.cpp" />
 		<Unit filename="..\..\src\shared\utf8.h" />
+		<Unit filename="..\..\src\shared\vector.h" />
 		<Unit filename="..\..\src\shared\vertex_normals.h" />
 		<Extensions>
 			<code_completion />

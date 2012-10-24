@@ -88,6 +88,8 @@
 		<Unit filename="..\..\src\common\unzip.cpp" />
 		<Unit filename="..\..\src\common\unzip.h" />
 		<Unit filename="..\..\src\ports\windows\win_shared.cpp" />
+		<Unit filename="..\..\src\shared\aabb.cpp" />
+		<Unit filename="..\..\src\shared\aabb.h" />
 		<Unit filename="..\..\src\shared\byte.cpp" />
 		<Unit filename="..\..\src\shared\byte.h" />
 		<Unit filename="..\..\src\shared\defines.h" />
@@ -97,8 +99,6 @@
 		<Unit filename="..\..\src\shared\images.h" />
 		<Unit filename="..\..\src\shared\mathlib.cpp" />
 		<Unit filename="..\..\src\shared\mathlib.h" />
-		<Unit filename="..\..\src\shared\aabb.cpp" />
-		<Unit filename="..\..\src\shared\aabb.h" />
 		<Unit filename="..\..\src\shared\parse.cpp" />
 		<Unit filename="..\..\src\shared\parse.h" />
 		<Unit filename="..\..\src\shared\shared.cpp" />
@@ -106,6 +106,7 @@
 		<Unit filename="..\..\src\shared\typedefs.h" />
 		<Unit filename="..\..\src\shared\utf8.cpp" />
 		<Unit filename="..\..\src\shared\utf8.h" />
+		<Unit filename="..\..\src\shared\vector.h" />
 		<Unit filename="..\..\src\tools\ufo2map\bsp.cpp" />
 		<Unit filename="..\..\src\tools\ufo2map\bsp.h" />
 		<Unit filename="..\..\src\tools\ufo2map\bspbrush.cpp" />

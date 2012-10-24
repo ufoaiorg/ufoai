@@ -136,6 +136,8 @@
 		<Unit filename="..\..\src\server\sv_send.cpp" />
 		<Unit filename="..\..\src\server\sv_user.cpp" />
 		<Unit filename="..\..\src\server\sv_world.cpp" />
+		<Unit filename="..\..\src\shared\aabb.cpp" />
+		<Unit filename="..\..\src\shared\aabb.h" />
 		<Unit filename="..\..\src\shared\bfd.cpp" />
 		<Unit filename="..\..\src\shared\byte.cpp" />
 		<Unit filename="..\..\src\shared\byte.h" />
@@ -143,8 +145,6 @@
 		<Unit filename="..\..\src\shared\infostring.h" />
 		<Unit filename="..\..\src\shared\mathlib.cpp" />
 		<Unit filename="..\..\src\shared\mathlib.h" />
-		<Unit filename="..\..\src\shared\aabb.cpp" />
-		<Unit filename="..\..\src\shared\aabb.h" />
 		<Unit filename="..\..\src\shared\parse.cpp" />
 		<Unit filename="..\..\src\shared\shared.cpp" />
 		<Unit filename="..\..\src\shared\shared.h" />
@@ -152,6 +152,7 @@
 		<Unit filename="..\..\src\shared\ufotypes.h" />
 		<Unit filename="..\..\src\shared\utf8.cpp" />
 		<Unit filename="..\..\src\shared\utf8.h" />
+		<Unit filename="..\..\src\shared\vector.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />

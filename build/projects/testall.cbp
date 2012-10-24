@@ -542,6 +542,8 @@
 		<Unit filename="..\..\src\server\sv_send.cpp" />
 		<Unit filename="..\..\src\server\sv_user.cpp" />
 		<Unit filename="..\..\src\server\sv_world.cpp" />
+		<Unit filename="..\..\src\shared\aabb.cpp" />
+		<Unit filename="..\..\src\shared\aabb.h" />
 		<Unit filename="..\..\src\shared\bfd.cpp" />
 		<Unit filename="..\..\src\shared\byte.cpp" />
 		<Unit filename="..\..\src\shared\entitiesdef.cpp" />
@@ -549,12 +551,11 @@
 		<Unit filename="..\..\src\shared\infostring.cpp" />
 		<Unit filename="..\..\src\shared\mathlib.cpp" />
 		<Unit filename="..\..\src\shared\mathlib_extra.cpp" />
-		<Unit filename="..\..\src\shared\aabb.cpp" />
-		<Unit filename="..\..\src\shared\aabb.h" />
 		<Unit filename="..\..\src\shared\parse.cpp" />
 		<Unit filename="..\..\src\shared\shared.cpp" />
 		<Unit filename="..\..\src\shared\stringhunk.cpp" />
 		<Unit filename="..\..\src\shared\utf8.cpp" />
+		<Unit filename="..\..\src\shared\vector.h" />
 		<Unit filename="..\..\src\tests\test_all.cpp" />
 		<Unit filename="..\..\src\tests\test_campaign.cpp" />
 		<Unit filename="..\..\src\tests\test_campaign.h" />
@@ -570,13 +571,13 @@
 		<Unit filename="..\..\src\tests\test_mathlibextra.cpp" />
 		<Unit filename="..\..\src\tests\test_parser.cpp" />
 		<Unit filename="..\..\src\tests\test_parser.h" />
+		<Unit filename="..\..\src\tests\test_particles.cpp" />
 		<Unit filename="..\..\src\tests\test_renderer.cpp" />
 		<Unit filename="..\..\src\tests\test_rma.cpp" />
 		<Unit filename="..\..\src\tests\test_rma.h" />
 		<Unit filename="..\..\src\tests\test_routing.cpp" />
 		<Unit filename="..\..\src\tests\test_routing.h" />
 		<Unit filename="..\..\src\tests\test_scripts.cpp" />
-		<Unit filename="..\..\src\tests\test_particles.cpp" />
 		<Unit filename="..\..\src\tests\test_shared.cpp" />
 		<Unit filename="..\..\src\tests\test_shared.h" />
 		<Unit filename="..\..\src\tests\test_ui.cpp" />

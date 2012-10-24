@@ -130,17 +130,18 @@
 		<Unit filename="..\..\src\game\lua\print.cpp" />
 		<Unit filename="..\..\src\game\q_shared.cpp" />
 		<Unit filename="..\..\src\game\q_shared.h" />
+		<Unit filename="..\..\src\shared\aabb.cpp" />
+		<Unit filename="..\..\src\shared\aabb.h" />
 		<Unit filename="..\..\src\shared\infostring.cpp" />
 		<Unit filename="..\..\src\shared\mathlib.cpp" />
 		<Unit filename="..\..\src\shared\mathlib.h" />
-		<Unit filename="..\..\src\shared\aabb.cpp" />
-		<Unit filename="..\..\src\shared\aabb.h" />
 		<Unit filename="..\..\src\shared\parse.cpp" />
 		<Unit filename="..\..\src\shared\parse.h" />
 		<Unit filename="..\..\src\shared\shared.cpp" />
 		<Unit filename="..\..\src\shared\shared.h" />
 		<Unit filename="..\..\src\shared\utf8.cpp" />
 		<Unit filename="..\..\src\shared\utf8.h" />
+		<Unit filename="..\..\src\shared\vector.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />
