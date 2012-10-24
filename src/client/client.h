@@ -92,7 +92,7 @@ typedef struct client_static_s {
 	CURL *curl;
 
 	/** these models must only be loaded once */
-	struct model_s *modelPool[MAX_OBJDEFS];
+	model_t *modelPool[MAX_OBJDEFS];
 
 	/* unique character id */
 	int nextUniqueCharacterNumber;

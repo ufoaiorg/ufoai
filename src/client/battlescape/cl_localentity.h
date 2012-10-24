@@ -181,7 +181,7 @@ typedef struct localModel_s {
 	/** is called every frame */
 	void (*think) (struct localModel_s * localModel);
 
-	struct model_s *model;
+	model_t *model;
 } localModel_t;
 
 static const vec3_t player_mins = { -PLAYER_WIDTH, -PLAYER_WIDTH, PLAYER_MIN };
