@@ -69,7 +69,12 @@ void GAME_AutoTeam (const char *equipmentDefinitionID, int teamMembers)
 
 void GAME_AutoTeam_f (void)
 {
-	GAME_AutoTeam("multiplayer_initial", GAME_GetCharacterArraySize());
+	if (Cmd_Argc() != 2) {
+		Com_Printf("Usage: %s <equipment-definition>\n", Cmd_Argv(0));
+		return;
+	}
+
+	GAME_AutoTeam(Cmd_Argv(1), GAME_GetCharacterArraySize());
 
 	GAME_UpdateActiveTeamList();
 }

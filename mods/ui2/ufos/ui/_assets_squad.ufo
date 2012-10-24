@@ -415,7 +415,7 @@ component PlayerSquad extends panel
 			onMouseLeave 	{
 				*node:this@color = "1 1 1 0.5"
 				}
-			onClick		{ cmd "game_autoteam;toggle_custom_team_opts new;" }
+			onClick		{ cmd "game_autoteam multiplayer_initial;toggle_custom_team_opts new;" }
 		}
 
 		string squad_custom_load
