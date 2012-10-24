@@ -48,6 +48,12 @@ public:
 	 */
 	inline void getCenter (vec3_t center) const;
 
+	/**
+	 * @brief Sets mins and maxs to their starting points before using addPoint
+	 */
+	inline void clearBounds ();
+
+
 	vec3_t mins;
 	vec3_t maxs;
 };
@@ -61,6 +67,12 @@ inline bool AABB::doesIntersect (const AABB& other) const
 {
 	return !(mins[0] > other.maxs[0] || mins[1] > other.maxs[1] || mins[2] > other.maxs[2] || maxs[0] < other.mins[0]
 			|| maxs[1] < other.mins[1] || maxs[2] < other.mins[2]);
+}
+
+inline void AABB::clearBounds ()
+{
+	mins[0] = mins[1] = mins[2] = 99999;
+	maxs[0] = maxs[1] = maxs[2] = -99999;
 }
 
 inline void AABB::getCenter (vec3_t center) const
