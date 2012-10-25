@@ -191,5 +191,7 @@
 			<envvars />
 			<debugger />
 		</Extensions>
+		<UnitsGlob directory="src" recursive="1" />
+		<UnitsGlob directory="base/ufos" recursive="1" wildcard="*.ufo"/>
 	</Project>
 </CodeBlocks_project_file>
