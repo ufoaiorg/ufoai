@@ -1179,7 +1179,7 @@ item rpg_incendiary_ammo
 item rpg_hybrid_ammo
 {
 	name			"_Hybrid Rocket"
-	model			"weapons/rpg2/rgp_hbr_ammo"
+	model			"weapons/rpg2/rpg_hbr_ammo"
 	type			"ammo"
 	animationindex	0
 	shape			"0 0 1 2"
