@@ -123,15 +123,7 @@ void CP_AttackUFOCarrier_f (void)
 
 #if 1
 	/** @todo until we have the carrier mission fully implemented, this is the campaign end */
-	cgi->UI_RegisterText(TEXT_STANDARD, _("Great work, Commander. We have fought off the alien horde and kept earth safe. For now.\n\n"
-		"But we can't rest on our laurels for long. The aliens could return at any moment.\n"
-		"They must have many more Carriers up there, beyond our reach. I'm sure they'll be \n"
-		"back just as soon as the game's development team can build a carrier mission. I'll\n"
-		"be waiting for your orders.\n\n"
-		"Until then, visit ufoai.org to find out when the next version is coming out. If\n"
-		"it's not coming fast enough for you, lend a hand. We're free. We're open-source.\n"
-		"We're under-staffed. Until next time, thanks for playing.\n\n"
-		"-- UFO: Alien Invasion Development Team\n\n"));
+	cgi->UI_RegisterText(TEXT_STANDARD, "*msgid:campaignwin");
 	CP_EndCampaign(true);
 #else
 	/* check max amount - we can't win if we can't add the ufo */
