@@ -94,7 +94,7 @@ sequence developers
 	wait 0.7
 	obj2d alextishin_text
 	{
-		text	"_Alexander Tishin (alextishin)"
+		text	"_Alexander Tishin (Sandro)"
 		pos		"512 768"
 		align	"uc"
 		color	"1 1 1 1"
