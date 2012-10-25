@@ -39,6 +39,12 @@ public:
 	void add (const vec3_t point);
 
 	/**
+	 * @brief Copies the values from the given aabb
+	 * @param[in] other The other aabb
+	 */
+	inline void set (const AABB& other);
+
+	/**
 	 * @brief Checks if the aabb touches or intersects with the given aabb
 	 * @param[in] other The other aabb
 	 */
@@ -59,6 +65,12 @@ public:
 	vec3_t mins;
 	vec3_t maxs;
 };
+
+inline void AABB::set (const AABB& other)
+{
+	VectorCopy(other.mins, mins);
+	VectorCopy(other.maxs, maxs);
+}
 
 inline bool AABB::isZero () const
 {

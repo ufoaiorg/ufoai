@@ -650,8 +650,7 @@ bool SV_LoadModelAABB (const char *model, int frame, AABB& aabb)
 	/* search the currently loaded models */
 	for (i = 0, mod = sv->svModels; i < sv->numSVModels; i++, mod++)
 		if (mod->frame == frame && Q_streq(mod->name, model)) {
-			VectorCopy(mod->aabb.mins, aabb.mins);
-			VectorCopy(mod->aabb.maxs, aabb.maxs);
+			aabb.set(mod->aabb);
 			return true;
 		}
 
@@ -715,8 +714,7 @@ bool SV_LoadModelAABB (const char *model, int frame, AABB& aabb)
 		break;
 	}
 
-	VectorCopy(mod->aabb.mins, aabb.mins);
-	VectorCopy(mod->aabb.maxs, aabb.maxs);
+	aabb.set(mod->aabb);	/* to return the found values */
 
 	FS_FreeFile(buf);
 	return true;
