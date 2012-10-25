@@ -2521,12 +2521,11 @@ base/pics/althud/buttons_althud1.png | GNU General Public License 2.0 |  | Based
 base/pics/althud/buttons_althud1a.png | GNU General Public License 2.0 |  | Based on the original menu artwork by SparX and Rasta
 base/pics/althud/buttons_althud1ar.png | GNU General Public License 2.0 |  | Based on the original menu artwork by SparX and Rasta
 base/pics/althud/buttons_althud1g.png | GNU General Public License 2.0 |  | Based on the original menu artwork by SparX and Rasta
-base/pics/armour/light.png | GNU General Public License 2.0
-base/pics/armour/lightadv.png | GNU General Public License 2.0 | John W. Bjerk (eleazar)
-base/pics/armour/medium.png | GNU General Public License 2.0
+base/pics/armour/light.png | GNU General Public License 2.0 | Pawel Michalkiewicz
+base/pics/armour/medium.png | GNU General Public License 2.0 | Pawel Michalkiewicz
 base/pics/armour/ortnok_light.png | GNU General Public License 2.0
 base/pics/armour/ortnok_medium.png | GNU General Public License 2.0
-base/pics/armour/power.png | GNU General Public License 2.0
+base/pics/armour/power.png | GNU General Public License 2.0 | Pawel Michalkiewicz
 base/pics/armour/taman_light.png | GNU General Public License 2.0
 base/pics/armour/taman_medium.png | GNU General Public License 2.0
 base/pics/background/base_bg.jpg | GNU General Public License 2.0 or later
