@@ -846,6 +846,32 @@ tech rs_weapon_rpg_incendiary_ammo
 	producetime	30
 }
 
+tech rs_weapon_rpg_hybrid_ammo
+{
+	type	"weapon"
+	up_chapter	equipment
+	description {
+		default "*msgid:rpg_hybrid_ammo_txt"
+	}
+	pre_description {
+		default "*msgid:rpg_hybrid_ammo_pre_txt"
+	}
+
+	require_AND
+	{
+		tech rs_craft_ammo_hybrid_missile
+	}
+
+	require_for_production
+	{
+	    item (alienmaterials 15)
+	}
+
+	provides	rpg_hybrid_ammo
+	time	2000
+	producetime	90
+}
+
 tech rs_weapon_xaw95
 {
 	// Note: Multiplayer only

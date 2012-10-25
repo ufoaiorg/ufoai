@@ -1176,6 +1176,49 @@ item rpg_incendiary_ammo
 	}
 }
 
+item rpg_hybrid_ammo
+{
+	name			"_Hybrid Rocket"
+	model			"weapons/rpg2/rgp_hbr_ammo"
+	type			"ammo"
+	animationindex	0
+	shape			"0 0 1 2"
+	center			"0 0 0"
+	scale			1.1
+	price			700
+	size			6
+	is_primary		true
+	is_heavy		true
+	dmgtype			"blast"
+
+	weapon_mod
+	{
+		weapon rpg
+		firedef
+		{
+			name		"_Aimed Shot"
+			skill		"explosive"
+			projtl		rocket_hybrid
+			impact		explosionRPG
+			hitbody		explosionRPG
+			firesnd		"weapons/rocket-human"
+			impsnd		"weapons/explosion-rocket"
+			bodysnd		"weapons/explosion-rocket"
+			speed		450
+			spread		"1.4 1.4"
+			crouch		0.6
+			range		250
+			shots		1
+			ammo		1
+			time		24
+			damage		"0 0"
+			spldmg		"260 20"
+			splrad		5
+			dmgweight	"blast"
+		}
+	}
+}
+
 // =======================
 // GRENADE LAUNCHER
 // =======================

@@ -460,6 +460,27 @@ Addenda
 None."
 }
 
+msgid rpg_hybrid_ammo_txt {
+text "_Commander, we've finished drawing up the design for a scaled-down Hybrid Rocket.
+
+The new design takes several lessons from our aircraft missile, but of course we had to drastically reduce the payload so that a soldier can carry this around the battlefield. The result is the most powerful rocket our explosives experts have ever been able to wield.
+
+The shell is built of alien materials which splinter into thick fragments upon detonation. The explosive force of the detonation sends these durable chunks hurtling through the air at such speeds that no protective suit any man or alien could wear could possibly block them.
+
+I know the battlefield is getting bloodier by the day, sir, but you'll want to remind soldiers of the importance of keeping civilians out of the blast radius. Anyone unlucky enough to be standing near a detonation of one of these things is certain to be dead or horribly maimed.
+
+Cdr. Navarre"
+}
+msgid rpg_hybrid_ammo_pre_txt {
+text "_Commander, I'd like to recommend research into a new projectile for our rocket launcher.
+
+We had great success in developing the Hybrid Missile for our aircraft. The alien materials shatter into incredibly powerful shrapnel which can punch through heavy armour. I'd like to take a stab at retrofitting this technology for our man-portable rocket launcher.
+
+All the pieces are in place for a scaled-down version of the rocket which will help our ground assault squads as they face bigger and more heavily armoured alien forces.
+
+Cdr. Navarre"
+}
+
 msgid xaw95_txt {
 text "_"
 }

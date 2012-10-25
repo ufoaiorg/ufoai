@@ -531,6 +531,25 @@ particle rocket_inc
 	}
 }
 
+particle rocket_hybrid
+{
+	init
+	{
+		model  "weapons/rpg2/rocket_hbr"
+		tps    40.0
+		color  ".5 .5 .5 1"
+		spawn rocket_muzzle
+	}
+	think
+	{
+		// these particles are killed in their think functions
+		push   int 6
+		nspawn rocketSmoke
+		spawn rocketFire
+		spawn rocketFlame
+	}
+}
+
 // "particle beam weapon" particle
 particle rocket_particle
 {
