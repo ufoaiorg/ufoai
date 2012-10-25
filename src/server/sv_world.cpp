@@ -582,8 +582,8 @@ static void SV_ModLoadAliasMD2Model (sv_model_t* mod, const byte *buffer)
 	}
 
 	VectorMA(mins, 255, scale, maxs);
-	AddPointToBounds(mins, mod->mins, mod->maxs);
-	AddPointToBounds(maxs, mod->mins, mod->maxs);
+	mod->aabb.add(mins);
+	mod->aabb.add(maxs);
 }
 
 /**
@@ -607,8 +607,8 @@ static void SV_ModLoadAliasMD3Model (sv_model_t* mod, const byte *buffer)
 		mins[j] = LittleFloat(frame->mins[j]);
 		maxs[j] = LittleFloat(frame->maxs[j]);
 	}
-	AddPointToBounds(mins, mod->mins, mod->maxs);
-	AddPointToBounds(maxs, mod->mins, mod->maxs);
+	mod->aabb.add(mins);
+	mod->aabb.add(maxs);
 }
 
 /**
@@ -650,8 +650,8 @@ bool SV_LoadModelMinsMaxs (const char *model, int frame, vec3_t mins, vec3_t max
 	/* search the currently loaded models */
 	for (i = 0, mod = sv->svModels; i < sv->numSVModels; i++, mod++)
 		if (mod->frame == frame && Q_streq(mod->name, model)) {
-			VectorCopy(mod->mins, mins);
-			VectorCopy(mod->maxs, maxs);
+			VectorCopy(mod->aabb.mins, mins);
+			VectorCopy(mod->aabb.maxs, maxs);
 			return true;
 		}
 
@@ -693,7 +693,7 @@ bool SV_LoadModelMinsMaxs (const char *model, int frame, vec3_t mins, vec3_t max
 	OBJZERO(*mod);
 	mod->name = Mem_PoolStrDup(model, com_genericPool, 0);
 	mod->frame = frame;
-	ClearBounds(mod->mins, mod->maxs);
+	mod->aabb.clearBounds();
 
 	/* call the appropriate loader */
 	switch (LittleLong(*(unsigned *) buf)) {
@@ -715,8 +715,8 @@ bool SV_LoadModelMinsMaxs (const char *model, int frame, vec3_t mins, vec3_t max
 		break;
 	}
 
-	VectorCopy(mod->mins, mins);
-	VectorCopy(mod->maxs, maxs);
+	VectorCopy(mod->aabb.mins, mins);
+	VectorCopy(mod->aabb.maxs, maxs);
 
 	FS_FreeFile(buf);
 	return true;

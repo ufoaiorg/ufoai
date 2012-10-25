@@ -46,7 +46,7 @@ typedef struct sv_edict_s {
 
 /** @brief static mesh models (none-animated) can have a server side flag set to be clipped for pathfinding */
 typedef struct sv_model_s {
-	vec3_t mins, maxs;	/**< the mins and maxs of the model bounding box */
+	AABB aabb;			/**< the mins and maxs of the model bounding box */
 	int frame;			/**< the frame the mins and maxs were calculated for */
 	char *name;			/**< the model path (relative to base/ */
 } sv_model_t;
