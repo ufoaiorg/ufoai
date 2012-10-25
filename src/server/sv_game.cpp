@@ -701,7 +701,7 @@ void SV_InitGameProgs (void)
 	import.PointContents = SV_PointContents;
 	import.GetFootstepSound = SV_GetFootstepSound;
 	import.GetBounceFraction = SV_GetBounceFraction;
-	import.LoadModelMinsMaxs = SV_LoadModelMinsMaxs;
+	import.LoadModelMinsMaxs = SV_LoadModelAABB;
 
 	import.FS_Gamedir = FS_Gamedir;
 	import.FS_LoadFile = FS_LoadFile;

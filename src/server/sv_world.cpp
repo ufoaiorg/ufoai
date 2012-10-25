@@ -637,7 +637,7 @@ static char const* const mod_extensions[] = {
  * @param[out] mins The mins vector of the model - this is absolute to the worldorigin (0,0,0)
  * @param[out] maxs The maxs vector of the model - this is absolute to the worldorigin (0,0,0)
  */
-bool SV_LoadModelMinsMaxs (const char *model, int frame, AABB& aabb)
+bool SV_LoadModelAABB (const char *model, int frame, AABB& aabb)
 {
 	sv_model_t *mod;
 	byte *buf = NULL;
@@ -645,7 +645,7 @@ bool SV_LoadModelMinsMaxs (const char *model, int frame, AABB& aabb)
 	int modfilelen = 0;
 
 	if (model[0] == '\0')
-		Com_Error(ERR_DROP, "SV_LoadModelMinsMaxs: NULL model");
+		Com_Error(ERR_DROP, "SV_LoadModelAABB: NULL model");
 
 	/* search the currently loaded models */
 	for (i = 0, mod = sv->svModels; i < sv->numSVModels; i++, mod++)
