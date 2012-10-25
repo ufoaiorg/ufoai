@@ -86,6 +86,13 @@ sprite ui/panel_green_slim {
 	texl "0 0"
 }
 
+sprite ui/panel_green_slim_trans {
+	image "tiled/panel_green_slim_trans"
+	tiled_25_1_3	true
+	size "64 64"
+	texl "0 0"
+}
+
 sprite ui/panel_green_tab {
 	image "tiled/panel_green_tab"
 	tiled_25_1_3	true

@@ -499,3 +499,83 @@ window skirmish
 		cmd "define g_endlessaliens 0;"
 	}
 }
+
+// ===========================================
+// SKIRMISH WAIT DIALOG
+// ===========================================
+window skirmish_wait
+{
+	{
+		fill		true
+		starlayout	true
+	}
+
+	battlescape render
+	{
+		pos			"0 0"
+		size		"1024 768"
+		align		LAYOUTALIGN_FILL
+	}
+
+	panel mission_description {
+		{
+			pos			"212 134"
+			size		"600 500"
+			background	"ui/panel_green_slim_trans"
+		}
+
+		string name
+		{
+			pos 	"10 10"
+			font	"f_menu"
+			string	"*cvar:sv_mapname"
+		}
+
+		text briefing
+		{
+			dataid		TEXT_MISSIONBRIEFING
+			pos			"10 40"
+			size		"580 240"
+			lineheight	20
+		}
+
+		string victory_conditions
+		{
+			pos		"10 300"
+			font	"f_menu"
+			string "_Victory conditions:"
+		}
+
+		text briefing_conditions
+		{
+			dataid		TEXT_MISSIONBRIEFING
+			pos			"10 330"
+			size		"360 160"
+			lineheight	20
+		}
+
+		button button_ready
+		{
+			string		"_Start"
+			tooltip		"_Start the match"
+			background	"ui/button_green_small"
+			pos			"380 450"
+			width		"200"
+			font		"f_menu"
+			color		"0 0.5 0 1"
+			selectcolor	"1 1 1 1"
+			onClick		{
+				cmd "cl_ready 1;"
+			}
+		}
+	}
+
+	// ===================
+	// EVENTS
+	// ===================
+
+	func onWindowOpened
+	{
+		*cvar:cl_ready = 0
+	}
+}

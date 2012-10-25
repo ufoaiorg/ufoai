@@ -57,6 +57,7 @@ const cgame_export_t *GetCGameCampaignAPI (const cgame_import_t *import)
 	e.IsTeamKnown = GAME_CP_TeamIsKnown;
 	e.Drop = GAME_CP_Drop;
 	e.InitializeBattlescape = GAME_CP_InitializeBattlescape;
+	e.StartBattlescape = GAME_CP_StartBattlescape;
 	e.RunFrame = GAME_CP_Frame;
 	e.HandleBaseClick = GAME_CP_HandleBaseClick;
 	e.DrawBase = GAME_CP_DrawBase;

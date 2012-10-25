@@ -35,6 +35,17 @@ static const cgame_import_t *cgi;
 
 CGAME_HARD_LINKED_FUNCTIONS
 
+static void GAME_SK_StartBattlescape (bool isTeamPlay)
+{
+	cgi->UI_InitStack("skirmish_wait", NULL, true, true);
+}
+
+static void GAME_SK_NotifyEvent (event_t eventType)
+{
+	if (eventType == EV_RESET)
+		cgi->HUD_InitUI(NULL, true);
+}
+
 static inline const char* GAME_SK_GetRandomMapAssemblyNameForCraft (const char *name)
 {
 	return cgi->Com_GetRandomMapAssemblyNameForCraft(name);
@@ -113,9 +124,6 @@ static void GAME_SK_Start_f (void)
 
 	assert(md->map);
 	Com_sprintf(map, sizeof(map), "map %s %s %s;", cgi->Cvar_GetInteger("mn_serverday") ? "day" : "night", md->map, md->param ? md->param : "");
-
-	/* prepare */
-	cgi->UI_InitStack(NULL, "singleplayermission", true, false);
 
 	cgi->Cbuf_AddText(map);
 }
@@ -357,6 +365,8 @@ const cgame_export_t *GetCGameSkirmishAPI (const cgame_import_t *import)
 	e.Shutdown = GAME_SK_Shutdown;
 	e.MapInfo = GAME_SK_MapInfo;
 	e.Results = GAME_SK_Results;
+	e.StartBattlescape = GAME_SK_StartBattlescape;
+	e.NotifyEvent = GAME_SK_NotifyEvent;
 
 	cgi = import;
 

@@ -564,6 +564,12 @@ const char* GAME_CP_GetTeamDef (void)
 	return cgi->Com_ValueToStr(&team, V_TEAM, 0);
 }
 
+void GAME_CP_StartBattlescape (bool isTeamPlay)
+{
+	/* auto start the game until we have a proper missing briefing for the campaign */
+	Cvar_Set("cl_ready", "1");
+}
+
 /**
  * @brief Changes some actor states for a campaign game
  * @param team The team to change the states for
