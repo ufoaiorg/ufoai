@@ -79,7 +79,8 @@ static int32_t BuildNodeChildren (const int n[3])
 
 	for (i = 0; i < 3; i++) {
 		dBspNode_t *newnode;
-		vec3_t newmins, newmaxs, addvec;
+		vec3_t addvec;
+		AABB aabb(vec3_origin, vec3_origin);
 
 		if (n[i] == LEAFNODE)
 			continue;
@@ -88,11 +89,9 @@ static int32_t BuildNodeChildren (const int n[3])
 			/* store the valid node */
 			node = n[i];
 
-			ClearBounds(newmins, newmaxs);
-			VectorCopy(curTile->nodes[node].mins, addvec);
-			AddPointToBounds(addvec, newmins, newmaxs);
-			VectorCopy(curTile->nodes[node].maxs, addvec);
-			AddPointToBounds(addvec, newmins, newmaxs);
+			aabb.clearBounds();
+			VectorCopy(curTile->nodes[node].mins, aabb.mins);
+			VectorCopy(curTile->nodes[node].maxs, aabb.maxs);
 		} else {
 			/* add a new "special" dnode and store it */
 			newnode = &curTile->nodes[curTile->numnodes];
@@ -104,23 +103,21 @@ static int32_t BuildNodeChildren (const int n[3])
 			newnode->firstface = 0;
 			newnode->numfaces = 0;
 
-			ClearBounds(newmins, newmaxs);
-			VectorCopy(curTile->nodes[node].mins, addvec);
-			AddPointToBounds(addvec, newmins, newmaxs);
-			VectorCopy(curTile->nodes[node].maxs, addvec);
-			AddPointToBounds(addvec, newmins, newmaxs);
+			aabb.clearBounds();
+			VectorCopy(curTile->nodes[node].mins, aabb.mins);
+			VectorCopy(curTile->nodes[node].maxs, aabb.maxs);
 			VectorCopy(curTile->nodes[n[i]].mins, addvec);
-			AddPointToBounds(addvec, newmins, newmaxs);
+			aabb.add(addvec);
 			VectorCopy(curTile->nodes[n[i]].maxs, addvec);
-			AddPointToBounds(addvec, newmins, newmaxs);
-			VectorCopy(newmins, newnode->mins);
-			VectorCopy(newmaxs, newnode->maxs);
+			aabb.add(addvec);
+			VectorCopy(aabb.mins, newnode->mins);
+			VectorCopy(aabb.maxs, newnode->maxs);
 
 			node = curTile->numnodes - 1;
 		}
 
-		AddPointToBounds(newmins, worldMins, worldMaxs);
-		AddPointToBounds(newmaxs, worldMins, worldMaxs);
+		AddPointToBounds(aabb.mins, worldMins, worldMaxs);
+		AddPointToBounds(aabb.maxs, worldMins, worldMaxs);
 
 		Verb_Printf(VERB_DUMP, "BuildNodeChildren: node=%i (%i %i %i) (%i %i %i)\n", node,
 			curTile->nodes[node].mins[0], curTile->nodes[node].mins[1], curTile->nodes[node].mins[2], curTile->nodes[node].maxs[0], curTile->nodes[node].maxs[1], curTile->nodes[node].maxs[2]);
