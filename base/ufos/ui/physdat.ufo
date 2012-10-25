@@ -354,8 +354,6 @@ window physdata
 		onClick		{ cmd "ui_pop;" }
 	}
 
-	cvarlistener cl_selected { cmd "updateactorwounds;" }
-
 	// <1> Body part type (id)
 	// <2> Severity of bleeding, if 0 all wounds are treated
 	// (Note: Robots don't bleed, this just means they have serious damage in this part)
@@ -378,6 +376,7 @@ window physdata
 
 	func onWindowOpened {
 		*cvar:physdat_window_open = 1
+		cmd "ui_addcvarlistener cl_selected updateactorwounds;"
 		cmd "updateactorwounds;"
 		// if we are in campaign mode, we need these cvars
 		if ( *cvar:mn_base_count > 0 ) {
@@ -397,6 +396,7 @@ window physdata
 	}
 
 	func onWindowClosed {
+		cmd "ui_removecvarlistener cl_selected updateactorwounds;"
 		delete *cvar:physdat_window_open
 		// these cvars exist in campaign mode only
 		if ( *cvar:mn_base_count > 0 ) {
