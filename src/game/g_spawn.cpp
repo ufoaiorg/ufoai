@@ -959,7 +959,7 @@ static void SP_misc_model (edict_t *ent)
 	if (ent->spawnflags & MISC_MODEL_SOLID) {
 		if (ent->model && ent->model[0] != '\0') {
 			AABB modelAabb;
-			if (gi.LoadModelMinsMaxs(ent->model, ent->frame, modelAabb)) {
+			if (gi.LoadModelAABB(ent->model, ent->frame, modelAabb)) {
 				ent->classname = "model";
 				VectorCopy(modelAabb.maxs, ent->maxs);
 				VectorCopy(modelAabb.mins, ent->mins);
