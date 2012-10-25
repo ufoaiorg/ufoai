@@ -325,7 +325,7 @@ typedef struct cvarlist_s {
 typedef struct gametype_s {
 	char id[MAX_VAR];	/**< script id */
 	char name[MAX_VAR];	/**< translated menu name */
-	struct cvarlist_s cvars[MAX_CVARLISTINGAMETYPE];
+	cvarlist_t cvars[MAX_CVARLISTINGAMETYPE];
 	int num_cvars;
 } gametype_t;
 
