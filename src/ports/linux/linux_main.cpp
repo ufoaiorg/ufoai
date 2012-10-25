@@ -53,4 +53,6 @@ int main (int argc, char **argv)
 
 	while (1)
 		Qcommon_Frame();
+
+	return 0;
 }
