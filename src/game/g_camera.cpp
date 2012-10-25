@@ -31,10 +31,10 @@ void G_InitCamera (edict_t *ent, camera_type_t cameraType, float angle, bool rot
 		return;
 	}
 
-	vec3_t modelMins, modelMaxs;
-	if (gi.LoadModelMinsMaxs(ent->model, 0, modelMins, modelMaxs)) {
-		VectorCopy(modelMaxs, ent->maxs);
-		VectorCopy(modelMins, ent->mins);
+	AABB modelAabb;
+	if (gi.LoadModelMinsMaxs(ent->model, 0, modelAabb)) {
+		VectorCopy(modelAabb.maxs, ent->maxs);
+		VectorCopy(modelAabb.mins, ent->mins);
 
 		ent->camera.cameraType = cameraType;
 		ent->camera.rotate = rotate;

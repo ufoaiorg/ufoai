@@ -1,5 +1,10 @@
 #include "aabb.h"
 
+AABB::AABB ()
+{
+	VectorCopy(vec3_origin, mins);
+	VectorCopy(vec3_origin, maxs);
+}
 AABB::AABB (const vec3_t mini, const vec3_t maxi)
 {
 	VectorCopy(mini, mins);

@@ -958,11 +958,11 @@ static void SP_misc_model (edict_t *ent)
 {
 	if (ent->spawnflags & MISC_MODEL_SOLID) {
 		if (ent->model && ent->model[0] != '\0') {
-			vec3_t modelMins, modelMaxs;
-			if (gi.LoadModelMinsMaxs(ent->model, ent->frame, modelMins, modelMaxs)) {
+			AABB modelAabb;
+			if (gi.LoadModelMinsMaxs(ent->model, ent->frame, modelAabb)) {
 				ent->classname = "model";
-				VectorCopy(modelMaxs, ent->maxs);
-				VectorCopy(modelMins, ent->mins);
+				VectorCopy(modelAabb.maxs, ent->maxs);
+				VectorCopy(modelAabb.mins, ent->mins);
 				ent->type = ET_SOLID;
 				ent->solid = SOLID_BBOX;
 				/** @todo is fieldsize and forbidden list update really needed here? */

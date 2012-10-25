@@ -637,7 +637,7 @@ static char const* const mod_extensions[] = {
  * @param[out] mins The mins vector of the model - this is absolute to the worldorigin (0,0,0)
  * @param[out] maxs The maxs vector of the model - this is absolute to the worldorigin (0,0,0)
  */
-bool SV_LoadModelMinsMaxs (const char *model, int frame, vec3_t mins, vec3_t maxs)
+bool SV_LoadModelMinsMaxs (const char *model, int frame, AABB& aabb)
 {
 	sv_model_t *mod;
 	byte *buf = NULL;
@@ -650,8 +650,8 @@ bool SV_LoadModelMinsMaxs (const char *model, int frame, vec3_t mins, vec3_t max
 	/* search the currently loaded models */
 	for (i = 0, mod = sv->svModels; i < sv->numSVModels; i++, mod++)
 		if (mod->frame == frame && Q_streq(mod->name, model)) {
-			VectorCopy(mod->aabb.mins, mins);
-			VectorCopy(mod->aabb.maxs, maxs);
+			VectorCopy(mod->aabb.mins, aabb.mins);
+			VectorCopy(mod->aabb.maxs, aabb.maxs);
 			return true;
 		}
 
@@ -667,8 +667,8 @@ bool SV_LoadModelMinsMaxs (const char *model, int frame, vec3_t mins, vec3_t max
 		sv->numSVModels++;
 	}
 
-	VectorCopy(vec3_origin, mins);
-	VectorCopy(vec3_origin, maxs);
+	VectorCopy(vec3_origin, aabb.mins);
+	VectorCopy(vec3_origin, aabb.maxs);
 
 	/* load the file */
 	if (Com_GetExtension(model) == NULL) {
@@ -715,8 +715,8 @@ bool SV_LoadModelMinsMaxs (const char *model, int frame, vec3_t mins, vec3_t max
 		break;
 	}
 
-	VectorCopy(mod->aabb.mins, mins);
-	VectorCopy(mod->aabb.maxs, maxs);
+	VectorCopy(mod->aabb.mins, aabb.mins);
+	VectorCopy(mod->aabb.maxs, aabb.maxs);
 
 	FS_FreeFile(buf);
 	return true;

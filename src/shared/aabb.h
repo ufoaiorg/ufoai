@@ -32,6 +32,7 @@ Copyright (C) 2002-2012 UFO: Alien Invasion.
  */
 class AABB {
 public:
+	AABB ();
 	AABB (const vec3_t mini, const vec3_t maxi);
 
 	inline bool isZero () const;
