@@ -146,8 +146,8 @@ static void MakeHeadnodePortals (tree_t *tree)
 
 	/* pad with some space so there will never be null volume leafs */
 	for (i = 0; i < 3; i++) {
-		bounds[0][i] = tree->mins[i] - SIDESPACE;
-		bounds[1][i] = tree->maxs[i] + SIDESPACE;
+		bounds[0][i] = tree->aabb.mins[i] - SIDESPACE;
+		bounds[1][i] = tree->aabb.maxs[i] + SIDESPACE;
 	}
 
 	tree->outside_node.planenum = PLANENUM_LEAF;

@@ -93,7 +93,7 @@ tree_t *AllocTree (void)
 {
 	tree_t *tree = Mem_AllocType(tree_t);
 
-	ClearBounds(tree->mins, tree->maxs);
+	tree->aabb.clearBounds();
 
 	return tree;
 }
@@ -191,8 +191,8 @@ tree_t *BuildTree (bspbrush_t *brushlist, vec3_t mins, vec3_t maxs)
 
 	ClearBounds(blmins, blmaxs);
 	BrushlistCalcStats(brushlist, blmins, blmaxs);
-	AddPointToBounds(blmins, tree->mins, tree->maxs);
-	AddPointToBounds(blmaxs, tree->mins, tree->maxs);
+	tree->aabb.add(blmins);
+	tree->aabb.add(blmaxs);
 
 	c_nodes = 0;
 	c_nonvis = 0;

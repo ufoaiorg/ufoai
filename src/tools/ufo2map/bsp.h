@@ -61,9 +61,9 @@ typedef struct node_s {
 } node_t;
 
 typedef struct {
-	struct node_s		*headnode;
-	struct node_s		outside_node;
-	vec3_t		mins, maxs;
+	struct node_s	*headnode;
+	struct node_s	outside_node;
+	AABB			aabb;
 } tree_t;
 
 extern plane_t mapplanes[MAX_MAP_PLANES];
