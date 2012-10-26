@@ -37,7 +37,6 @@ CGAME_HARD_LINKED_FUNCTIONS
 
 static void GAME_SK_StartBattlescape (bool isTeamPlay)
 {
-	cgi->UI_RegisterText(TEXT_MISSIONBRIEFING, "*msgid:defaultmissionbriefing");
 	cgi->UI_InitStack("skirmish_wait", NULL, true, true);
 }
 

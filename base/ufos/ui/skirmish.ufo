@@ -524,12 +524,11 @@ window skirmish_wait
 			background	"ui/panel_green_slim_trans"
 		}
 
-		string name
+		text name
 		{
-			pos 	"10 10"
-			font	"f_menu"
-			// TODO: use the config string map tile name
-			string	"*cvar:sv_mapname"
+			pos 		"10 10"
+			font		"f_menu"
+			dataid		TEXT_MISSIONBRIEFING_TITLE
 		}
 
 		text briefing
