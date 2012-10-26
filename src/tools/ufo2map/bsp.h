@@ -88,7 +88,7 @@ uint16_t FindOrCreateFloatPlane(vec3_t normal, vec_t dist);
 /* csg.c */
 
 int MapBrushesBounds(const int startbrush, const int endbrush, const int level, const vec3_t clipmins, const vec3_t clipmaxs, vec3_t mins, vec3_t maxs);
-bspbrush_t *MakeBspBrushList(int startbrush, int endbrush, int level, vec3_t clipmins, vec3_t clipmaxs);
+bspbrush_t *MakeBspBrushList(int startbrush, int endbrush, int level, const vec3_t clipmins, const vec3_t clipmaxs);
 bspbrush_t *ChopBrushes(bspbrush_t *head);
 
 /* portals.c */
