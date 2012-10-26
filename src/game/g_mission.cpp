@@ -28,6 +28,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "g_local.h"
 
+void G_MissionAddVictoryMessage (const char *message)
+{
+	gi.ConfigString(CS_VICTORY_CONDITIONS, "%s", message);
+}
+
 /**
  * @brief Mission trigger
  * @todo use level.nextmap to spawn another map when every living actor has touched the mission trigger

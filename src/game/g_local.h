@@ -234,6 +234,8 @@ extern game_export_t globals;
 #define G_RemoveCrouched(ent)	G_RemoveState((ent), STATE_CROUCHED)
 #define G_RemoveReaction(ent)	G_RemoveState((ent), STATE_REACTION)
 
+#define G_ValidMessage(ent)		((ent)->message && ((ent)->message[0] == '_' || strstr((ent)->message, "*msgid:") != NULL))
+
 extern cvar_t *sv_maxentities;
 extern cvar_t *password;
 extern cvar_t *sv_needpass;
@@ -351,6 +353,7 @@ int G_ActorGetArmourTUPenalty(const edict_t *ent);
 int G_GetActorTimeForFiredef(const edict_t *ent, const fireDef_t *const fd, bool reaction);
 
 /* g_mission */
+void G_MissionAddVictoryMessage(const char *message);
 bool G_MissionTouch(edict_t *self, edict_t *activator);
 bool G_MissionUse(edict_t *self, edict_t *activator);
 bool G_MissionDestroy(edict_t *self);

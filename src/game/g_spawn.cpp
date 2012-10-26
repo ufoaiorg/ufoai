@@ -877,6 +877,9 @@ static void SP_misc_mission (edict_t *ent)
 	VectorSet(ent->absmax, ent->radius, ent->radius, PLAYER_STAND);
 	VectorSet(ent->absmin, -ent->radius, -ent->radius, PLAYER_MIN);
 
+	if (G_ValidMessage(ent))
+		G_MissionAddVictoryMessage(ent->message);
+
 	/* spawn the trigger entity */
 	other = G_TriggerSpawn(ent);
 	other->touch = G_MissionTouch;
@@ -1068,7 +1071,7 @@ static void SP_misc_message (edict_t *ent)
 		return;
 	}
 
-	if (ent->message[0] != '_' && strstr(ent->message, "*msgid:") == NULL)
+	if (!G_ValidMessage(ent))
 		gi.DPrintf("No translation marker for misc_message set\n");
 	ent->use = Message_Use;
 	ent->classname = "misc_message";

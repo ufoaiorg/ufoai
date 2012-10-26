@@ -1,3 +1,7 @@
 msgid defaultmissionbriefing {
 	text "_Good luck commander, make sure to bring your soldiers back alive."
 }
+
+msgid victory_condition_fueldump {
+	text "_Search the bomb and destroy the gate"
+}
