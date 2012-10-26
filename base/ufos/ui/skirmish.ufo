@@ -528,6 +528,7 @@ window skirmish_wait
 		{
 			pos 	"10 10"
 			font	"f_menu"
+			// TODO: use the config string map tile name
 			string	"*cvar:sv_mapname"
 		}
 
@@ -548,7 +549,7 @@ window skirmish_wait
 
 		text briefing_conditions
 		{
-			dataid		TEXT_MISSIONBRIEFING
+			dataid		TEXT_MISSIONBRIEFING_VICTORY_CONDITIONS
 			pos			"10 330"
 			size		"360 160"
 			lineheight	20
