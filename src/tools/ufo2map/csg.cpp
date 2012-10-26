@@ -298,22 +298,22 @@ int MapBrushesBounds (const int startbrush, const int endbrush, const int level,
 	return num;
 }
 
-bspbrush_t *MakeBspBrushList (int startbrush, int endbrush, int level, const vec3_t clipmins, const vec3_t clipmaxs)
+bspbrush_t *MakeBspBrushList (int startbrush, int endbrush, int level, const AABB& clip)
 {
 	bspbrush_t *brushlist, *newbrush;
 	int i, j, vis;
 	int numsides;
 
 	Verb_Printf(VERB_DUMP, "MakeBspBrushList: bounds (%f %f %f) (%f %f %f)\n",
-		clipmins[0], clipmins[1], clipmins[2], clipmaxs[0], clipmaxs[1], clipmaxs[2]);
+		clip.mins[0], clip.mins[1], clip.mins[2], clip.maxs[0], clip.maxs[1], clip.maxs[2]);
 
 	for (i = 0; i < 2; i++) {
 		float dist;
 		vec3_t normal = {0, 0, 0};
 		normal[i] = 1;
-		dist = clipmaxs[i];
+		dist = clip.maxs[i];
 		maxplanenums[i] = FindOrCreateFloatPlane(normal, dist);
-		dist = clipmins[i];
+		dist = clip.mins[i];
 		minplanenums[i] = FindOrCreateFloatPlane(normal, dist);
 	}
 
@@ -346,7 +346,7 @@ bspbrush_t *MakeBspBrushList (int startbrush, int endbrush, int level, const vec
 
 		/* if the brush is outside the clip area, skip it */
 		for (j = 0; j < 3; j++)
-			if (mb->mins[j] < clipmins[j] || mb->maxs[j] > clipmaxs[j])
+			if (mb->mins[j] < clip.mins[j] || mb->maxs[j] > clip.maxs[j])
 				break;
 		if (j != 3)
 			continue;
@@ -369,7 +369,7 @@ bspbrush_t *MakeBspBrushList (int startbrush, int endbrush, int level, const vec
 		VectorCopy(mb->maxs, newbrush->maxs);
 
 		/* carve off anything outside the clip box */
-		newbrush = ClipBrushToBox(newbrush, clipmins, clipmaxs);
+		newbrush = ClipBrushToBox(newbrush, clip.mins, clip.maxs);
 		if (!newbrush) {
 			Verb_Printf(VERB_DUMP, "Rejected brush %i: cannot clip to box.\n", i);
 			continue;

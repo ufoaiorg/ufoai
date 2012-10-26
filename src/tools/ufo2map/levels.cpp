@@ -200,7 +200,7 @@ static int32_t ConstructLevelNodes_r (const int levelnum, const vec3_t cmins, co
 	/* Call BeginModel only to initialize brush pointers */
 	BeginModel(entityNum);
 
-	list = MakeBspBrushList(brush_start, brush_end, levelnum, bmins, bmaxs);
+	list = MakeBspBrushList(brush_start, brush_end, levelnum, AABB(bmins, bmaxs));
 	if (!list) {
 		nn[2] = LEAFNODE;
 		return BuildNodeChildren(nn);

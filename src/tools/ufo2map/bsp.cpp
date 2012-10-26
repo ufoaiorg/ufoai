@@ -66,7 +66,7 @@ static void ProcessSubModel (int entityNum)
 	int start, end;
 	tree_t *tree;
 	bspbrush_t *list;
-	vec3_t mins, maxs;
+	AABB aabb;
 
 	BeginModel(entityNum);
 
@@ -78,14 +78,14 @@ static void ProcessSubModel (int entityNum)
 	start = e->firstbrush;
 	end = start + e->numbrushes;
 
-	mins[0] = mins[1] = mins[2] = -MAX_WORLD_WIDTH;
-	maxs[0] = maxs[1] = maxs[2] = MAX_WORLD_WIDTH;
+	aabb.mins[0] = aabb.mins[1] = aabb.mins[2] = -MAX_WORLD_WIDTH;
+	aabb.maxs[0] = aabb.maxs[1] = aabb.maxs[2] = MAX_WORLD_WIDTH;
 
 	/* every level (-1) */
-	list = MakeBspBrushList(start, end, -1, mins, maxs);
+	list = MakeBspBrushList(start, end, -1, aabb);
 	if (!config.nocsg)
 		list = ChopBrushes(list);
-	tree = BuildTree(list, mins, maxs);
+	tree = BuildTree(list, aabb.mins, aabb.maxs);
 	assert(tree);
 	assert(tree->headnode);
 	if (tree->headnode->planenum == PLANENUM_LEAF)
