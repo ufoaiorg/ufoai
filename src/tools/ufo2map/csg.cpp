@@ -111,7 +111,7 @@ static uint16_t maxplanenums[2];
  * @brief Any planes shared with the box edge will be set to no texinfo
  * @note not thread safe
  */
-static bspbrush_t *ClipBrushToBox (bspbrush_t *brush, vec3_t clipmins, vec3_t clipmaxs)
+static bspbrush_t *ClipBrushToBox (bspbrush_t *brush, const vec3_t clipmins, const vec3_t clipmaxs)
 {
 	int i, j;
 	bspbrush_t *front, *back;
@@ -298,7 +298,7 @@ int MapBrushesBounds (const int startbrush, const int endbrush, const int level,
 	return num;
 }
 
-bspbrush_t *MakeBspBrushList (int startbrush, int endbrush, int level, vec3_t clipmins, vec3_t clipmaxs)
+bspbrush_t *MakeBspBrushList (int startbrush, int endbrush, int level, const vec3_t clipmins, const vec3_t clipmaxs)
 {
 	bspbrush_t *brushlist, *newbrush;
 	int i, j, vis;
