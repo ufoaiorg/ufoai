@@ -5,7 +5,6 @@
 		<Option title="UFO:Alien Invasion" />
 		<Option makefile_is_custom="1" />
 		<Option compiler="gcc" />
-		<Option virtualFolders="src/;base/;build/;" />
 		<MakeCommands>
 			<Build command="$make -r -R -f $makefile $target" />
 			<CompileFile command="$make -r -R -f $makefile $file" />
@@ -193,5 +192,6 @@
 		</Extensions>
 		<UnitsGlob directory="src" recursive="1" />
 		<UnitsGlob directory="base/ufos" recursive="1" wildcard="*.ufo"/>
+		<UnitsGlob directory="build" recursive="1" wildcard="*.mk"/>
 	</Project>
 </CodeBlocks_project_file>
