@@ -53,7 +53,7 @@ void G_InitCamera (edict_t *ent, camera_type_t cameraType, float angle, bool rot
 
 		gi.LinkEdict(ent);
 	} else {
-		gi.DPrintf("Could not get mins/maxs for model '%s'\n", ent->model);
+		gi.DPrintf("Could not get bounding box for model '%s'\n", ent->model);
 		G_FreeEdict(ent);
 	}
 }

@@ -1297,7 +1297,7 @@ void G_ClientTeamInfo (const player_t * player)
 
 /**
  * @brief Send brush models for entities like func_breakable and func_door and triggers
- * with their mins and maxs bounding boxes to the client and let him know about them.
+ * with their bounding boxes to the client and let him know about them.
  * There are also entities that are announced here, but fully handled clientside - like
  * func_rotating.
  * @sa CL_AddBrushModel
