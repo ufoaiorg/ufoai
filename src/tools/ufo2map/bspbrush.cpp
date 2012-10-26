@@ -90,7 +90,7 @@ static void CreateBrushWindings (bspbrush_t *brush)
 /**
  * @brief Creates a new axial brush
  */
-bspbrush_t *BrushFromBounds (vec3_t mins, vec3_t maxs)
+bspbrush_t *BrushFromBounds (const vec3_t mins, const vec3_t maxs)
 {
 	bspbrush_t *b;
 	int i;

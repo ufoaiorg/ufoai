@@ -179,7 +179,7 @@ static node_t *BuildTree_r (node_t *node, bspbrush_t *brushes)
 /**
  * @brief The incoming list will be freed before exiting
  */
-tree_t *BuildTree (bspbrush_t *brushlist, vec3_t mins, vec3_t maxs)
+tree_t *BuildTree (bspbrush_t *brushlist, const vec3_t mins, const vec3_t maxs)
 {
 	node_t *node;
 	tree_t *tree;

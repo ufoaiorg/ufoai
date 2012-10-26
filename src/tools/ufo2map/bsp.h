@@ -124,7 +124,7 @@ void FreeFace(face_t *f);
 
 node_t *AllocNode(void);
 tree_t *AllocTree(void);
-tree_t *BuildTree(bspbrush_t *brushlist, vec3_t mins, vec3_t maxs);
+tree_t *BuildTree(bspbrush_t *brushlist, const vec3_t mins, const vec3_t maxs);
 void FreeTree(tree_t *tree);
 void PruneNodes(node_t *node);
 
