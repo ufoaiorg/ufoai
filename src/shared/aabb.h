@@ -37,6 +37,7 @@ public:
 
 	inline bool isZero () const;
 	void add (const vec3_t point);
+	void add (const AABB& other);
 
 	/**
 	 * @brief Copies the values from the given aabb
