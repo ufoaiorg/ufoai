@@ -139,7 +139,7 @@ item_t CP_AddWeaponAmmo (equipDef_t * ed, item_t item)
 
 /**
  * @brief Reloads weapons, removes not assigned and resets defaults
- * @param[in] aircraft Pointer to an aircraft for given team.
+ * @param[in] base Pointer to a base for given team.
  * @param[in] ed equipDef_t pointer to equipment
  * @sa CL_AddWeaponAmmo
  * @note Iterate through in container order (right hand, left hand, belt,
@@ -151,14 +151,19 @@ item_t CP_AddWeaponAmmo (equipDef_t * ed, item_t item)
  * the first person in the squad filling their backpack with spare ammo
  * leaving others with unloaded guns in their hands...
  */
-void CP_CleanupAircraftCrew (aircraft_t *aircraft, equipDef_t * ed)
+void CP_CleanupTeam (base_t *base, equipDef_t * ed)
 {
 	containerIndex_t container;
 
-	assert(aircraft);
+	assert(base);
 
 	/* Auto-assign weapons to UGVs/Robots if they have no weapon yet. */
-	LIST_Foreach(aircraft->acTeam, employee_t, employee) {
+	E_Foreach(EMPL_ROBOT, employee) {
+		if (!E_IsInBase(employee, base))
+			continue;
+		if (employee->transfer)
+			continue;
+
 		character_t *chr = &employee->chr;
 
 		/* This is an UGV */
@@ -170,7 +175,12 @@ void CP_CleanupAircraftCrew (aircraft_t *aircraft, equipDef_t * ed)
 	}
 
 	for (container = 0; container < cgi->csi->numIDs; container++) {
-		LIST_Foreach(aircraft->acTeam, employee_t, employee) {
+		E_Foreach(EMPL_SOLDIER, employee) {
+			if (!E_IsInBase(employee, base))
+				continue;
+			if (employee->transfer)
+				continue;
+
 			invList_t *ic, *next;
 			character_t *chr = &employee->chr;
 #if 0

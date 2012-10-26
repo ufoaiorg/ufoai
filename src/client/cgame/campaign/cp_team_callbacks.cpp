@@ -78,6 +78,20 @@ static void CP_TEAM_AssignSoldierByUCN_f (void)
 }
 
 /**
+ * @brief Set up equip (floor) container for soldiers
+ * @param[in,out] chr Pointer to soldiers character structure
+ */
+static void CP_TEAM_SetEquipContainer (character_t *chr)
+{
+	if (*cgi->ui_inventory && *cgi->ui_inventory != &chr->i) {
+		CONTAINER(chr, cgi->csi->idEquip) = (*cgi->ui_inventory)->c[cgi->csi->idEquip];
+		/* set 'old' idEquip to NULL */
+		(*cgi->ui_inventory)->c[cgi->csi->idEquip] = NULL;
+	}
+	*cgi->ui_inventory = &chr->i;
+}
+
+/**
  * @brief Selects a soldier by his/her Unique Character Number on team UI
  */
 static void CP_TEAM_SelectActorByUCN_f (void)
@@ -109,12 +123,7 @@ static void CP_TEAM_SelectActorByUCN_f (void)
 	chr = &employee->chr;
 
 	/* update menu inventory */
-	if (*cgi->ui_inventory && *cgi->ui_inventory != &chr->i) {
-		CONTAINER(chr, cgi->csi->idEquip) = (*cgi->ui_inventory)->c[cgi->csi->idEquip];
-		/* set 'old' idEquip to NULL */
-		(*cgi->ui_inventory)->c[cgi->csi->idEquip] = NULL;
-	}
-	*cgi->ui_inventory = &chr->i;
+	CP_TEAM_SetEquipContainer(chr);
 
 	/* set info cvars */
 	CL_UpdateCharacterValues(chr, "mn_");
@@ -224,67 +233,59 @@ static void CP_TEAM_FillEmployeeList_f (void)
 static void CP_TEAM_FillEquipSoldierList_f (void)
 {
 	base_t *base = B_GetCurrentSelectedBase();
+	if (!base)
+		return;
+
 	aircraft_t *aircraft = base->aircraftCurrent;
 	equipDef_t unused;
 
 	if (cgi->Cmd_Argc() > 1 ) {
-		aircraft = AIR_AircraftGetFromIDX(atoi(cgi->Cmd_Argv(1)));
-		if (!aircraft) {
-			Com_Printf("No aircraft exist with global idx %i\n", atoi(cgi->Cmd_Argv(2)));
-			return;
+		int idx = atoi(cgi->Cmd_Argv(1));
+
+		if (idx >= 0) {
+			aircraft = AIR_AircraftGetFromIDX(idx);
+			if (!aircraft) {
+				Com_Printf("No aircraft exist with global idx %i\n", idx);
+				return;
+			}
+			base = aircraft->homebase;
+			assert(base);
+		} else {
+			aircraft = NULL;
 		}
-		base = aircraft->homebase;
 	}
-	if (!aircraft)
-		return;
 
 	/* add soldiers to list */
+	int count = 0;
 	cgi->UI_ExecuteConfunc("equipment_soldierlist_clear");
-	LIST_Foreach(aircraft->acTeam, employee_t, employee) {
-		cgi->UI_ExecuteConfunc("equipment_soldierlist_add %d \"%s\"", employee->chr.ucn, employee->chr.name);
-	}
-
-	/* clean up aircraft crew for upcoming mission */
-	CP_CleanTempInventory(aircraft->homebase);
-	unused = aircraft->homebase->storage;
-
-	AIR_Foreach(aircraftInBase) {
-		if (aircraftInBase->homebase == base)
-			CP_CleanupAircraftCrew(aircraftInBase, &unused);
-	}
-
-	/** @HACK for handling equipment of soldiers assigned only on baseAttackFakeAircraft */
-	if (LIST_GetPointer(ccs.aircraft, (const void*)base->aircraftCurrent) == NULL) {
-		containerIndex_t container;
-
-		for (container = 0; container < cgi->csi->numIDs; container++) {
-			LIST_Foreach(base->aircraftCurrent->acTeam, employee_t, employee) {
-
-				if (AIR_IsEmployeeInAircraft(employee, NULL))
-					continue;
-
-				invList_t *ic, *next;
-				character_t *chr = &employee->chr;
-#if 0
-				/* ignore items linked from any temp container */
-				if (INVDEF(container)->temp)
-					continue;
-#endif
-				for (ic = CONTAINER(chr, container); ic; ic = next) {
-					next = ic->next;
-					if (unused.numItems[ic->item.item->idx] > 0) {
-						ic->item = CP_AddWeaponAmmo(&unused, ic->item);
-					} else {
-						/* Drop ammo used for reloading and sold carried weapons. */
-						if (!cgi->INV_RemoveFromInventory(&chr->i, INVDEF(container), ic))
-							cgi->Com_Error(ERR_DROP, "Could not remove item from inventory");
-					}
-				}
-			}
+	if (aircraft) {
+		LIST_Foreach(aircraft->acTeam, employee_t, employee) {
+			character_t *chr = &employee->chr;
+			CP_TEAM_SetEquipContainer(chr);
+			cgi->UI_ExecuteConfunc("equipment_soldierlist_add %d \"%s\"", chr->ucn, chr->name);
+			count++;
+		}
+	} else {
+		E_Foreach(EMPL_SOLDIER, employee) {
+			if (!E_IsInBase(employee, base))
+				continue;
+			if (employee->transfer)
+				continue;
+			if (E_IsAwayFromBase(employee))
+				continue;
+			character_t *chr = &employee->chr;
+			CP_TEAM_SetEquipContainer(chr);
+			cgi->UI_ExecuteConfunc("equipment_soldierlist_add %d \"%s\"", chr->ucn, chr->name);
+			count++;
 		}
 	}
-
-	cgi->UI_ContainerNodeUpdateEquipment(&aircraft->homebase->bEquipment, &unused);
+	/* clean up aircraft crew for upcoming mission */
+	CP_CleanTempInventory(base);
+	unused = base->storage;
+	CP_CleanupTeam(base, &unused);
+	cgi->UI_ContainerNodeUpdateEquipment(&base->bEquipment, &unused);
+	if (count == 0)
+		cgi->UI_PopWindow(NULL);
 }
 
 /**

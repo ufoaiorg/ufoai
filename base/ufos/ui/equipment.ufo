@@ -690,6 +690,13 @@ window equipment extends objectinfo
 		*cvar:mn_linkname = ""
 		*cvar:mn_itemname = ""
 		*node:root.selected@integer = -1
-		cmd "team_initskin; ui_team_fillequip; update_item_list;"
+
+		cmd "team_initskin;"
+		if ( paramCount > 0 ) {
+			cmd "ui_team_fillequip <1>;"
+		} else {
+			cmd "ui_team_fillequip;"
+		}
+		cmd "update_item_list;"
 	}
 }

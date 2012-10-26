@@ -66,17 +66,6 @@ void CP_BaseAttackMissionIsFailure (mission_t *mission)
 		base->baseStatus = BASE_WORKING;
 
 		/* clean up the fakeAircraft */
-		LIST_Foreach(baseAttackFakeAircraft.acTeam, employee_t, employee) {
-			bool found = false;
-			AIR_ForeachFromBase(aircraft, base) {
-				if (AIR_IsInAircraftTeam(aircraft, employee)) {
-					found = true;
-					break;
-				}
-			}
-			if (!found)
-				cgi->INV_DestroyInventory(&employee->chr.i);
-		}
 		LIST_Delete(&baseAttackFakeAircraft.acTeam);
 
 		base->aircraftCurrent = AIR_GetFirstFromBase(base);

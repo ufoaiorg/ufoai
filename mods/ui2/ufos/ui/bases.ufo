@@ -434,7 +434,7 @@ window bases
 		BaseSection soldiers
 		{
 			{
-				onClick		{ cmd "alien_containment false; show_facility false; echo soldiers_pushed;" }
+				onClick		{ cmd "alien_containment false; show_facility false; ui_push equipment -1;" }
 			}
 			string label { string "_Soldiers" }
 			button icon { icon "icons/crouch" }
