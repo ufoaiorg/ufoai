@@ -4,3 +4,5 @@ _("alien")
 _("Yes")
 _("No")
 _("Take a screenshot")
+/* CS_MAPTITLE */
+_("Base attack")

@@ -1343,7 +1343,7 @@ void GAME_StartBattlescape (bool isTeamPlay)
 
 	UI_RegisterText(TEXT_MISSIONBRIEFING, "*msgid:defaultmissionbriefing");
 	UI_RegisterText(TEXT_MISSIONBRIEFING_VICTORY_CONDITIONS, "");
-	UI_RegisterText(TEXT_MISSIONBRIEFING_TITLE, CL_GetConfigString(CS_MAPTITLE));
+	UI_RegisterText(TEXT_MISSIONBRIEFING_TITLE, _(CL_GetConfigString(CS_MAPTITLE)));
 
 	Cvar_Set("cl_maxworldlevel", va("%i", cl.mapMaxLevel - 1));
 	if (list != NULL && list->StartBattlescape) {

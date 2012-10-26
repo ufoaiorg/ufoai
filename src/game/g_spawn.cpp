@@ -1068,7 +1068,7 @@ static void SP_misc_message (edict_t *ent)
 		return;
 	}
 
-	if (ent->message[0] != '_')
+	if (ent->message[0] != '_' && strstr(ent->message, "*msgid:") == NULL)
 		gi.DPrintf("No translation marker for misc_message set\n");
 	ent->use = Message_Use;
 	ent->classname = "misc_message";
