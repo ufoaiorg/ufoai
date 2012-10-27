@@ -1,15 +1,18 @@
 msgid mission_briefing_default {
-	text "_Good luck commander, make sure to bring your soldiers back alive."
+	text "_Good luck commander. Bring our soldiers back alive."
 }
-
 msgid victory_condition_default {
-	text "_Kill all the aliens"
+	text "_Kill all the aliens."
 }
-
+msgid mission_briefing_fueldump {
+	text "_The aliens have barricaded themselves inside this fuel dump. Find a bomb nearby to destroy the gate and gain entry."
+}
 msgid victory_condition_fueldump {
-	text "_Search the bomb and destroy the gate"
+	text "_Kill all the aliens."
 }
-
+msgid mission_briefing_alienbase {
+	text "_We've located an entry point to the alien base, which appears to be a large facility built below ground. Once your men have dropped down the entry shaft you'll need to clear out the alien presence so that our analysts can investigate the technology on-site."
+}
 msgid victory_condition_alienbase {
-	text "_Try to collect new alien technology"
+	text "_Kill all the aliens to secure the base."
 }

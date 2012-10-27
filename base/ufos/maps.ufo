@@ -4263,6 +4263,8 @@ mapdef fueldump
 		fight2on2
 	)
 	maxaliens		10
+	missionbriefing		"*msgid:mission_briefing_fueldump"
+	victorycondition	"*msgid:victory_condition_fueldump"
 
 	aircraft
 	(
@@ -5107,6 +5109,7 @@ mapdef alienbase
 	gametypes (
 		fight1on1
 	)
+	missionbriefing		"*msgid:mission_briefing_alienbase"
 	victorycondition	"*msgid:victory_condition_alienbase"
 	onwin			"cp_add_researchable rs_alien_psi_device"
 }
