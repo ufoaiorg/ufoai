@@ -180,12 +180,8 @@ static void Door_SlidingUse (edict_t *door)
 	 * shifted when the door state changes. As the mins and maxs of the aabb are absolute
 	 * world coordinates in the map we have to translate the position by the above
 	 * calculated movement vector */
-	AABB oldAABB;
-	gi.GetInlineModelAABB(door->model, oldAABB);
-	GridBox rerouteOldBox(oldAABB);											/* remember the old location */
 	VectorAdd(door->origin, distanceVec, door->origin);						/* calc new model position */
-	gi.SetInlineModelOrientation(door->model, door->origin, door->angles);	/* move the model out of the way */
-	G_RecalcRouting(door->model, rerouteOldBox);							/* Update path finding table */
+//	gi.SetInlineModelOrientation(door->model, door->origin, door->angles);	/* move the model out of the way */
 }
 
 /**
@@ -206,6 +202,11 @@ static bool Door_Use (edict_t *door, edict_t *activator)
 		opening = -1;
 	} else
 		return false;
+
+	/* remember the old location */
+	AABB oldAABB;
+	gi.GetInlineModelAABB(door->model, oldAABB);
+	GridBox rerouteOldBox(oldAABB);
 
 	/* change rotation and relink */
 	if (door->type == ET_DOOR) {
@@ -230,10 +231,14 @@ static bool Door_Use (edict_t *door, edict_t *activator)
 
 	/* Update model orientation */
 	gi.SetInlineModelOrientation(door->model, door->origin, door->angles);
+	AABB newAabb;
+	gi.GetInlineModelAABB(door->model, newAabb);
+	GridBox rerouteNewBox(newAabb);
 	Com_DPrintf(DEBUG_GAME, "Server processed door movement.\n");
 
 	/* Update path finding table for the new location of the model */
-	G_RecalcRouting(door->model, GridBox::EMPTY);
+	G_RecalcRouting(door->model, rerouteOldBox);							/* Update path finding table */
+	G_RecalcRouting(door->model, rerouteNewBox);
 
 	if (activator && G_IsLivingActor(activator)) {
 		/* Check if the player appears/perishes, seen from other teams. */
