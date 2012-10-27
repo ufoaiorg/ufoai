@@ -1337,23 +1337,31 @@ static bool GAME_Spawn (chrList_t *chrList)
  */
 void GAME_StartBattlescape (bool isTeamPlay)
 {
+	static linkedList_t *msgids = NULL;
 	const cgame_export_t *list = GAME_GetCurrentType();
 
 	Cvar_SetValue("cl_onbattlescape", 1.0);
 
-	UI_RegisterText(TEXT_MISSIONBRIEFING, "*msgid:defaultmissionbriefing");
+	LIST_Delete(&msgids);
+
 	const char *msgid = CL_GetConfigString(CS_VICTORY_CONDITIONS);
-	if (!Q_strvalid(msgid))
-		msgid = "*msgid:victory_condition_general";
-	UI_RegisterText(TEXT_MISSIONBRIEFING_VICTORY_CONDITIONS, CL_Translate(msgid));
-	UI_RegisterText(TEXT_MISSIONBRIEFING_TITLE, _(CL_GetConfigString(CS_MAPTITLE)));
+	if (Q_strvalid(msgid))
+		LIST_AddString(&msgids, msgid);
 
 	Cvar_Set("cl_maxworldlevel", va("%i", cl.mapMaxLevel - 1));
 	if (list != NULL && list->StartBattlescape) {
-		list->StartBattlescape(isTeamPlay);
+		list->StartBattlescape(isTeamPlay, &msgids);
 	} else {
 		HUD_InitUI(NULL, true);
 	}
+
+	/* if the cgame has nothing to contribute here, we will add a default victory condition */
+	if (LIST_IsEmpty(msgids))
+		LIST_AddString(&msgids, "*msgid:victory_condition_general");
+
+	UI_RegisterText(TEXT_MISSIONBRIEFING, "*msgid:defaultmissionbriefing");
+	UI_RegisterLinkedListText(TEXT_MISSIONBRIEFING_VICTORY_CONDITIONS, msgids);
+	UI_RegisterText(TEXT_MISSIONBRIEFING_TITLE, _(CL_GetConfigString(CS_MAPTITLE)));
 }
 
 /**
