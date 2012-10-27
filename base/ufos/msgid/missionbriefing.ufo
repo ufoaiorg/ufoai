@@ -9,3 +9,7 @@ msgid victory_condition_general {
 msgid victory_condition_fueldump {
 	text "_Search the bomb and destroy the gate"
 }
+
+msgid victory_condition_alienbase {
+	text "_Try to collect new alien technology"
+}

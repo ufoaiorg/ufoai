@@ -189,7 +189,7 @@ void uiTextNode::drawText (uiNode_t* node, const char *text, const linkedList_t*
 	if (text) {
 		Q_strncpyz(textCopy, text, sizeof(textCopy));
 	} else if (list) {
-		Q_strncpyz(textCopy, (const char*)list->data, sizeof(textCopy));
+		Q_strncpyz(textCopy, CL_Translate((const char*)list->data), sizeof(textCopy));
 	} else
 		return;	/**< Nothing to draw */
 
@@ -334,7 +334,7 @@ void uiTextNode::drawText (uiNode_t* node, const char *text, const linkedList_t*
 		if (!cur && list) {
 			list = list->next;
 			if (list) {
-				Q_strncpyz(textCopy, (const char*)list->data, sizeof(textCopy));
+				Q_strncpyz(textCopy, CL_Translate((const char*)list->data), sizeof(textCopy));
 				cur = textCopy;
 			}
 		}

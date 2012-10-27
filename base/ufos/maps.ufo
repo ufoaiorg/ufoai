@@ -5107,6 +5107,7 @@ mapdef alienbase
 	gametypes (
 		fight1on1
 	)
+	victorycondition	"*msgid:victory_condition_alienbase"
 	onwin			"cp_add_researchable rs_alien_psi_device"
 }
 
