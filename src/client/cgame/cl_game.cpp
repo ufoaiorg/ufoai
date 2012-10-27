@@ -1367,7 +1367,7 @@ void GAME_InitMissionBriefing (const char *title)
 	UI_PushWindow("mission_briefing");
 
 	if (list != NULL && list->InitMissionBriefing)
-		list->InitMissionBriefing(&victoryConditionsMsgIDs, &missionBriefingMsgIDs);
+		list->InitMissionBriefing(&title, &victoryConditionsMsgIDs, &missionBriefingMsgIDs);
 
 	/* if the cgame has nothing to contribute here, we will add a default victory condition */
 	if (LIST_IsEmpty(victoryConditionsMsgIDs))

@@ -564,7 +564,7 @@ const char* GAME_CP_GetTeamDef (void)
 	return cgi->Com_ValueToStr(&team, V_TEAM, 0);
 }
 
-void GAME_CP_InitMissionBriefing (linkedList_t **victoryConditionsMsgIDs, linkedList_t **missionBriefingMsgIDs)
+void GAME_CP_InitMissionBriefing (const char **title, linkedList_t **victoryConditionsMsgIDs, linkedList_t **missionBriefingMsgIDs)
 {
 	const battleParam_t *bp = &ccs.battleParameters;
 	const mapDef_t *md = bp->mission->mapDef;
@@ -573,6 +573,9 @@ void GAME_CP_InitMissionBriefing (linkedList_t **victoryConditionsMsgIDs, linked
 	}
 	if (Q_strvalid(md->missionBriefing)) {
 		cgi->LIST_AddString(missionBriefingMsgIDs, md->missionBriefing);
+	}
+	if (Q_strvalid(md->description)) {
+		*title = md->description;
 	}
 }
 

@@ -66,7 +66,7 @@ typedef struct cgame_export_s {
 	void (EXPORT *DrawBaseTooltip) (int baseIdx, int x, int y, int col, int row);
 	void (EXPORT *EndRoundAnnounce) (int playerNum, int team);
 	void (EXPORT *StartBattlescape) (bool isTeamPlay);
-	void (EXPORT *InitMissionBriefing) (linkedList_t **victoryConditionsMsgIDs, linkedList_t **missionBriefingMsgIDs);
+	void (EXPORT *InitMissionBriefing) (const char **title, linkedList_t **victoryConditionsMsgIDs, linkedList_t **missionBriefingMsgIDs);
 	const char* (EXPORT *GetTeamDef) (void);
 	void (EXPORT *NotifyEvent) (event_t eventType);
 	void (EXPORT *AddChatMessage) (const char *message);
