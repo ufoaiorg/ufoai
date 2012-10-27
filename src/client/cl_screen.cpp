@@ -146,11 +146,6 @@ void SCR_DrawLoading (int percent)
 
 	R_BeginFrame();
 
-	const image_t* loadingPic = R_FindImage("pics/background/maploading", it_pic);
-	R_DrawStretchImage(viddef.virtualWidth / 2 - loadingPic->width / 2,
-			viddef.virtualHeight / 2 - loadingPic->height / 2, loadingPic->width,
-			loadingPic->height, loadingPic);
-
 	UI_Draw();
 
 	SCR_DrawLoadingBar((int)(viddef.virtualWidth / 2) - 300, viddef.virtualHeight - 30, 600, 20, percent);

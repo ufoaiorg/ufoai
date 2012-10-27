@@ -8,6 +8,14 @@ window mission_briefing
 		starlayout	true
 	}
 
+	image background
+	{
+		visiblewhen	"*cvar:cl_onbattlescape != 1"
+		src			"background/maploading"
+		pos			"0 0"
+		size		"1024 768"
+	}
+
 	battlescape render
 	{
 		pos			"0 0"

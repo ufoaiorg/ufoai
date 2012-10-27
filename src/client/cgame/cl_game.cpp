@@ -202,7 +202,7 @@ bool GAME_IsMultiplayer (void)
  */
 void GAME_EndBattlescape (void)
 {
-	Cvar_SetValue("cl_onbattlescape", 0.0);
+	Cvar_Set("cl_onbattlescape", "0");
 	Com_Printf("Used inventory slots after battle: %i\n", cls.i.GetUsedSlots(&cls.i));
 }
 
