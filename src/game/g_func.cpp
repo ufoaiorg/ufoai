@@ -206,33 +206,25 @@ static void Door_SlidingUse (edict_t *door)
  */
 static bool Door_Use (edict_t *door, edict_t *activator)
 {
+	int opening = 1;
+
 	if (door->doorState == STATE_CLOSED) {
 		door->doorState = STATE_OPENED;
-
-		/* change rotation/origin and relink */
-		if (door->type == ET_DOOR) {
-			if (door->dir & DOOR_OPEN_REVERSE)
-				door->angles[door->dir & 3] -= DOOR_ROTATION_ANGLE;
-			else
-				door->angles[door->dir & 3] += DOOR_ROTATION_ANGLE;
-		} else if (door->type == ET_DOOR_SLIDING) {
-			Door_SlidingUse(door);
-		}
+		opening = 1;
 	} else if (door->doorState == STATE_OPENED) {
 		door->doorState = STATE_CLOSED;
-
-		/* change rotation and relink */
-		if (door->type == ET_DOOR) {
-			if (door->dir & DOOR_OPEN_REVERSE)
-				door->angles[door->dir & 3] += DOOR_ROTATION_ANGLE;
-			else
-				door->angles[door->dir & 3] -= DOOR_ROTATION_ANGLE;
-		} else if (door->type == ET_DOOR_SLIDING) {
-			Door_SlidingUse(door);
-		}
+		opening = -1;
 	} else
 		return false;
 
+	/* change rotation and relink */
+	if (door->type == ET_DOOR) {
+		if (door->dir & DOOR_OPEN_REVERSE)
+			opening *= -1;
+		door->angles[door->dir & 3] += DOOR_ROTATION_ANGLE * opening;
+	} else if (door->type == ET_DOOR_SLIDING) {
+		Door_SlidingUse(door);
+	}
 	gi.LinkEdict(door);
 
 	/* maybe the server called this because the door starts opened */
@@ -250,7 +242,7 @@ static bool Door_Use (edict_t *door, edict_t *activator)
 	gi.SetInlineModelOrientation(door->model, door->origin, door->angles);
 	Com_DPrintf(DEBUG_GAME, "Server processed door movement.\n");
 
-	/* Update path finding table */
+	/* Update path finding table for the new location of the model */
 	G_RecalcRouting(door->model, GridBox::EMPTY);
 
 	if (activator && G_IsLivingActor(activator)) {
