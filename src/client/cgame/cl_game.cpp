@@ -1337,36 +1337,48 @@ static bool GAME_Spawn (chrList_t *chrList)
  */
 void GAME_StartBattlescape (bool isTeamPlay)
 {
-	static linkedList_t *victoryConditionsMsgIDs = NULL;
-	static linkedList_t *missionBriefingMsgIDs = NULL;
 	const cgame_export_t *list = GAME_GetCurrentType();
 
 	Cvar_Set("cl_onbattlescape", "1");
 
-	LIST_Delete(&victoryConditionsMsgIDs);
+	Cvar_Set("cl_maxworldlevel", va("%i", cl.mapMaxLevel - 1));
+	if (list != NULL && list->StartBattlescape) {
+		list->StartBattlescape(isTeamPlay);
+	} else {
+		HUD_InitUI(NULL, true);
+	}
+
+	GAME_InitMissionBriefing(_(CL_GetConfigString(CS_MAPTITLE)));
+}
+
+void GAME_InitMissionBriefing (const char *title)
+{
+	const cgame_export_t *list = GAME_GetCurrentType();
+
+	linkedList_t *victoryConditionsMsgIDs = NULL;
+	linkedList_t *missionBriefingMsgIDs = NULL;
 
 	/* allow the server to add e.g. the misc_mission victory condition */
 	const char *serverVictoryMsgID = CL_GetConfigString(CS_VICTORY_CONDITIONS);
 	if (Q_strvalid(serverVictoryMsgID))
 		LIST_AddString(&victoryConditionsMsgIDs, serverVictoryMsgID);
 
-	Cvar_Set("cl_maxworldlevel", va("%i", cl.mapMaxLevel - 1));
-	if (list != NULL && list->StartBattlescape) {
-		list->StartBattlescape(isTeamPlay, &victoryConditionsMsgIDs, &missionBriefingMsgIDs);
-	} else {
-		HUD_InitUI(NULL, true);
-	}
+	UI_PushWindow("mission_briefing");
+
+	if (list != NULL && list->InitMissionBriefing)
+		list->InitMissionBriefing(&victoryConditionsMsgIDs, &missionBriefingMsgIDs);
 
 	/* if the cgame has nothing to contribute here, we will add a default victory condition */
 	if (LIST_IsEmpty(victoryConditionsMsgIDs))
 		LIST_AddString(&victoryConditionsMsgIDs, "*msgid:victory_condition_default");
 
+	/* if the cgame has nothing to contribute here, we will add a default mission briefing */
 	if (LIST_IsEmpty(missionBriefingMsgIDs))
 		LIST_AddString(&missionBriefingMsgIDs, "*msgid:mission_briefing_default");
 
 	UI_RegisterLinkedListText(TEXT_MISSIONBRIEFING, missionBriefingMsgIDs);
 	UI_RegisterLinkedListText(TEXT_MISSIONBRIEFING_VICTORY_CONDITIONS, victoryConditionsMsgIDs);
-	UI_RegisterText(TEXT_MISSIONBRIEFING_TITLE, _(CL_GetConfigString(CS_MAPTITLE)));
+	UI_RegisterText(TEXT_MISSIONBRIEFING_TITLE, title);
 }
 
 /**

@@ -564,7 +564,7 @@ const char* GAME_CP_GetTeamDef (void)
 	return cgi->Com_ValueToStr(&team, V_TEAM, 0);
 }
 
-void GAME_CP_StartBattlescape (bool isTeamPlay, linkedList_t **victoryConditionsMsgIDs, linkedList_t **missionBriefingMsgIDs)
+void GAME_CP_InitMissionBriefing (linkedList_t **victoryConditionsMsgIDs, linkedList_t **missionBriefingMsgIDs)
 {
 	const battleParam_t *bp = &ccs.battleParameters;
 	const mapDef_t *md = bp->mission->mapDef;

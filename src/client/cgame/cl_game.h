@@ -59,6 +59,7 @@ void GAME_ResetCharacters(void);
 void GAME_GenerateTeam(const char *teamDefID, const equipDef_t *ed, int teamMembers);
 void GAME_AppendTeamMember(int memberIndex, const char *teamDefID, const equipDef_t *ed);
 void GAME_StartBattlescape(bool isTeamPlay);
+void GAME_InitMissionBriefing(const char *title);
 void GAME_EndBattlescape(void);
 void GAME_EndRoundAnnounce(int playerNum, int team);
 bool GAME_TeamIsKnown(const teamDef_t *teamDef);

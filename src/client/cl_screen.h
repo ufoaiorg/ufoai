@@ -33,7 +33,7 @@ void SCR_Init(void);
 void SCR_Shutdown(void);
 void SCR_ChangeCursor(int cursor);
 void SCR_UpdateScreen(void);
-void SCR_DrawLoading(int percent, const char *loadingMessages);
+void SCR_DrawLoading(int percent);
 void SCR_BeginLoadingPlaque(void);
 void SCR_EndLoadingPlaque(void);
 void SCR_RunConsole(void);

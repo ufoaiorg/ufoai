@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../client.h"
 #include "../cl_screen.h"
+#include "../cgame/cl_game.h"
 #include "cl_particle.h"
 #include "cl_localentity.h"
 #include "cl_actor.h"
@@ -49,25 +50,24 @@ void CL_ViewLoadMedia (void)
 	le_t *le;
 	int i, max;
 	float loadingPercent;
-	char loadingMessages[96];
 
 	CL_ViewUpdateRenderData();
 
 	if (CL_GetConfigString(CS_TILES)[0] == '\0')
 		return;					/* no map loaded */
 
-	Com_sprintf(loadingMessages, sizeof(loadingMessages), _("loading %s"), _(CL_GetConfigString(CS_MAPTITLE)));
+	GAME_InitMissionBriefing(_(CL_GetConfigString(CS_MAPTITLE)));
+
 	loadingPercent = 0;
 
 	/* register models, pics, and skins */
-	SCR_DrawLoading(loadingPercent, loadingMessages);
+	SCR_DrawLoading(loadingPercent);
 	R_ModBeginLoading(CL_GetConfigString(CS_TILES), CL_GetConfigStringInteger(CS_LIGHTMAP),
 			CL_GetConfigString(CS_POSITIONS), CL_GetConfigString(CS_NAME), CL_GetConfigString(CS_MAPZONE));
 	CL_SpawnParseEntitystring();
 
-	Com_sprintf(loadingMessages, sizeof(loadingMessages), _("loading models..."));
 	loadingPercent += 10.0f;
-	SCR_DrawLoading(loadingPercent, loadingMessages);
+	SCR_DrawLoading(loadingPercent);
 
 	LM_Register();
 	CL_ParticleRegisterArt();
@@ -81,11 +81,7 @@ void CL_ViewLoadMedia (void)
 		const char *name = CL_GetConfigString(CS_MODELS + i);
 		if (name[0] == '\0')
 			break;
-		/* skip inline bmodels */
-		if (name[0] != '*') {
-			Com_sprintf(loadingMessages, sizeof(loadingMessages), _("loading %s"), name);
-		}
-		SCR_DrawLoading(loadingPercent, loadingMessages);
+		SCR_DrawLoading(loadingPercent);
 		cl.model_draw[i] = R_FindModel(name);
 		if (!cl.model_draw[i]) {
 			Cmd_ExecuteString("fs_info\n");
@@ -115,9 +111,6 @@ void CL_ViewLoadMedia (void)
 	refdef.ready = true;
 
 	/* waiting for EV_START */
-	Com_sprintf(loadingMessages, sizeof(loadingMessages), _("Awaiting game start"));
-	SCR_DrawLoading(loadingPercent, loadingMessages);
-
 	SCR_EndLoadingPlaque();
 }
 

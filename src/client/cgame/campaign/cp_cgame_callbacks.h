@@ -39,7 +39,7 @@ void GAME_CP_CharacterCvars(const character_t *chr);
 bool GAME_CP_TeamIsKnown(const teamDef_t *teamDef);
 void GAME_CP_Drop(void);
 dbuffer *GAME_CP_InitializeBattlescape(const chrList_t *team);
-void GAME_CP_StartBattlescape(bool isTeamPlay, linkedList_t **victoryConditionsMsgIDs, linkedList_t **missionBriefingMsgIDs);
+void GAME_CP_InitMissionBriefing(linkedList_t **victoryConditionsMsgIDs, linkedList_t **missionBriefingMsgIDs);
 void GAME_CP_Frame(float secondsSinceLastFrame);
 const char* GAME_CP_GetTeamDef(void);
 void GAME_CP_HandleBaseClick(int baseIdx, int key, int col, int row);

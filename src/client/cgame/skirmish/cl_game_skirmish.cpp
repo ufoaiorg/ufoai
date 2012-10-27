@@ -35,9 +35,8 @@ static const cgame_import_t *cgi;
 
 CGAME_HARD_LINKED_FUNCTIONS
 
-static void GAME_SK_StartBattlescape (bool isTeamPlay, linkedList_t **victoryConditionsMsgIDs, linkedList_t **missionBriefingMsgIDs)
+static void GAME_SK_InitMissionBriefing (linkedList_t **victoryConditionsMsgIDs, linkedList_t **missionBriefingMsgIDs)
 {
-	cgi->UI_InitStack("skirmish_wait", NULL, true, true);
 	const mapDef_t *md = cgi->GAME_GetCurrentSelectedMap();
 	if (Q_strvalid(md->victoryCondition)) {
 		cgi->LIST_AddString(victoryConditionsMsgIDs, md->victoryCondition);
@@ -372,7 +371,7 @@ const cgame_export_t *GetCGameSkirmishAPI (const cgame_import_t *import)
 	e.Shutdown = GAME_SK_Shutdown;
 	e.MapInfo = GAME_SK_MapInfo;
 	e.Results = GAME_SK_Results;
-	e.StartBattlescape = GAME_SK_StartBattlescape;
+	e.InitMissionBriefing = GAME_SK_InitMissionBriefing;
 	e.NotifyEvent = GAME_SK_NotifyEvent;
 
 	cgi = import;

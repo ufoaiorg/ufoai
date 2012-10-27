@@ -116,38 +116,6 @@ void SCR_DrawLoadingScreen (bool string, int percent)
 }
 
 /**
- * @brief Updates needed cvar for loading screens
- * @param[in] mapString The mapstring of the map that is currently loaded
- * @note If @c mapString is NULL the @c sv_mapname cvar is used
- * @return The loading/background pic path
- */
-static const image_t* SCR_SetLoadingBackground (const char *mapString)
-{
-	const char *mapname;
-	image_t* image;
-
-	if (!mapString || Com_ServerState())
-		mapname = Cvar_GetString("sv_mapname");
-	else {
-		mapname = mapString;
-		Cvar_Set("sv_mapname", mapString);
-	}
-
-	/* we will try to load the random map shots by just removing the + from the beginning */
-	if (mapname[0] == '+')
-		mapname++;
-
-	image = R_FindImage(va("pics/maps/loading/%s", mapname), it_worldrelated);
-	if (image == r_noTexture)
-		image = R_FindImage("pics/maps/loading/default", it_pic);
-
-	/* strip away the pics/ part */
-	Cvar_Set("mn_mappicbig", image->name + 5);
-
-	return image;
-}
-
-/**
  * @brief Draws the current downloading status
  * @sa SCR_DrawLoadingBar
  * @sa CL_StartHTTPDownload
@@ -169,14 +137,8 @@ static void SCR_DrawDownloading (void)
  * @brief Draws the current loading pic of the map from base/pics/maps/loading
  * @sa SCR_DrawLoadingBar
  */
-void SCR_DrawLoading (int percent, const char *loadingMessages)
+void SCR_DrawLoading (int percent)
 {
-	const image_t* loadingPic;
-	const image_t* overlayPic;
-	const vec4_t color = {0.0, 0.7, 0.0, 0.8};
-	const int paddingX = 40;
-	const int paddingY = 43;
-
 	if (cls.downloadName[0]) {
 		SCR_DrawDownloading();
 		return;
@@ -184,38 +146,12 @@ void SCR_DrawLoading (int percent, const char *loadingMessages)
 
 	R_BeginFrame();
 
-	/* center loading screen */
-	overlayPic = R_FindImage("pics/maps/loading/loading_background", it_pic);
-	R_DrawImage(viddef.virtualWidth / 2 - overlayPic->width / 2, viddef.virtualHeight / 2 - overlayPic->height / 2, overlayPic);
+	const image_t* loadingPic = R_FindImage("pics/background/maploading", it_pic);
+	R_DrawStretchImage(viddef.virtualWidth / 2 - loadingPic->width / 2,
+			viddef.virtualHeight / 2 - loadingPic->height / 2, loadingPic->width,
+			loadingPic->height, loadingPic);
 
-	loadingPic = SCR_SetLoadingBackground(CL_GetConfigString(CS_MAPTITLE));
-	R_DrawStretchImage(viddef.virtualWidth / 2 - overlayPic->width / 2 + paddingX, viddef.virtualHeight / 2 - overlayPic->height / 2 + paddingY,
-			overlayPic->width - paddingX * 2, overlayPic->height - paddingY * 2, loadingPic);
-
-	overlayPic = R_FindImage("pics/maps/loading/loading_border", it_pic);
-	R_DrawImage(viddef.virtualWidth / 2 - overlayPic->width / 2, viddef.virtualHeight / 2 - overlayPic->height / 2, overlayPic);
-	overlayPic = R_FindImage("pics/maps/loading/loading_logo", it_pic);
-	R_DrawImage(viddef.virtualWidth / 2 - overlayPic->width / 2, viddef.virtualHeight / 2 - overlayPic->height / 2, overlayPic);
-
-	if (overlayPic != r_noTexture) {
-		R_DrawImage(viddef.virtualWidth / 2 - overlayPic->width / 2, viddef.virtualHeight / 2 - overlayPic->height / 2, overlayPic);
-	}
-
-	R_Color(color);
-	if (CL_GetConfigString(CS_TILES)[0] != '\0') {
-		char const* const mapmsg = va(_("Loading Map [%s]"), _(CL_GetConfigString(CS_MAPTITLE)));
-		UI_DrawString("f_menubig", ALIGN_UC,
-			(int)(viddef.virtualWidth / 2),
-			(int)(viddef.virtualHeight / 2 - 60),
-			(int)(viddef.virtualWidth / 2),
-			viddef.virtualWidth, 50, mapmsg, 1);
-	}
-
-	UI_DrawString("f_menu", ALIGN_UC,
-		(int)(viddef.virtualWidth / 2),
-		(int)(viddef.virtualHeight / 2),
-		(int)(viddef.virtualWidth / 2),
-		viddef.virtualWidth, 50, loadingMessages, 1);
+	UI_Draw();
 
 	SCR_DrawLoadingBar((int)(viddef.virtualWidth / 2) - 300, viddef.virtualHeight - 30, 600, 20, percent);
 
