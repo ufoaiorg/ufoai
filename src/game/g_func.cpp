@@ -181,7 +181,7 @@ static void Door_SlidingUse (edict_t *door)
 	 * world coordinates in the map we have to translate the position by the above
 	 * calculated movement vector */
 #if 1
-	AABB oldAABB(vec3_origin, vec3_origin);
+	AABB oldAABB;
 	gi.GetInlineModelAABB(door->model, oldAABB);
 	GridBox rerouteOldBox(oldAABB);											/* remember the old location */
 	VectorAdd(door->origin, distanceVec, door->origin);						/* calc new model position */
@@ -218,15 +218,6 @@ static bool Door_Use (edict_t *door, edict_t *activator)
 		} else if (door->type == ET_DOOR_SLIDING) {
 			Door_SlidingUse(door);
 		}
-		gi.LinkEdict(door);
-
-		/* maybe the server called this because the door starts opened */
-		if (G_MatchIsRunning()) {
-			/* let everybody know, that the door opens */
-			G_EventDoorOpen(door);
-			if (door->noise[0] != '\0')
-				G_EventSpawnSound(PM_ALL, false, door, door->origin, door->noise);
-		}
 	} else if (door->doorState == STATE_OPENED) {
 		door->doorState = STATE_CLOSED;
 
@@ -239,18 +230,21 @@ static bool Door_Use (edict_t *door, edict_t *activator)
 		} else if (door->type == ET_DOOR_SLIDING) {
 			Door_SlidingUse(door);
 		}
-		gi.LinkEdict(door);
-
-		/* closed is the standard, opened is handled above - we need an active
-		 * team here already */
-		if (G_MatchIsRunning()) {
-			/* let everybody know, that the door closes */
-			G_EventDoorClose(door);
-			if (door->noise[0] != '\0')
-				G_EventSpawnSound(PM_ALL, false, door, door->origin, door->noise);
-		}
 	} else
 		return false;
+
+	gi.LinkEdict(door);
+
+	/* maybe the server called this because the door starts opened */
+	if (G_MatchIsRunning()) {
+		/* let everybody know, that the door moves */
+		if (door->doorState == STATE_OPENED)
+			G_EventDoorOpen(door);
+		else
+			G_EventDoorClose(door);
+		if (door->noise[0] != '\0')
+			G_EventSpawnSound(PM_ALL, false, door, door->origin, door->noise);
+	}
 
 	/* Update model orientation */
 	gi.SetInlineModelOrientation(door->model, door->origin, door->angles);
