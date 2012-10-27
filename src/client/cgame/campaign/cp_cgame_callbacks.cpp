@@ -567,9 +567,13 @@ const char* GAME_CP_GetTeamDef (void)
 void GAME_CP_InitMissionBriefing (const char **title, linkedList_t **victoryConditionsMsgIDs, linkedList_t **missionBriefingMsgIDs)
 {
 	const battleParam_t *bp = &ccs.battleParameters;
-	const mapDef_t *md = bp->mission->mapDef;
+	const mission_t *mission = bp->mission;
+	const mapDef_t *md = mission->mapDef;
 	if (Q_strvalid(md->victoryCondition)) {
 		cgi->LIST_AddString(victoryConditionsMsgIDs, md->victoryCondition);
+	}
+	if (mission->crashed) {
+		cgi->LIST_AddString(missionBriefingMsgIDs, "*msgid:mission_briefing_crashsite");
 	}
 	if (Q_strvalid(md->missionBriefing)) {
 		cgi->LIST_AddString(missionBriefingMsgIDs, md->missionBriefing);

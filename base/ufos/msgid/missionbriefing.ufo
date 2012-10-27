@@ -16,3 +16,6 @@ msgid mission_briefing_alienbase {
 msgid victory_condition_alienbase {
 	text "_Kill all the aliens to secure the base."
 }
+msgid mission_briefing_crashsite {
+	text "_The dropship has arrived at the crash site."
+}
