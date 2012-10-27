@@ -180,19 +180,12 @@ static void Door_SlidingUse (edict_t *door)
 	 * shifted when the door state changes. As the mins and maxs of the aabb are absolute
 	 * world coordinates in the map we have to translate the position by the above
 	 * calculated movement vector */
-#if 1
 	AABB oldAABB;
 	gi.GetInlineModelAABB(door->model, oldAABB);
 	GridBox rerouteOldBox(oldAABB);											/* remember the old location */
 	VectorAdd(door->origin, distanceVec, door->origin);						/* calc new model position */
 	gi.SetInlineModelOrientation(door->model, door->origin, door->angles);	/* move the model out of the way */
 	G_RecalcRouting(door->model, rerouteOldBox);							/* Update path finding table */
-#else
-	/** @todo we have now updated the InlineModel - check what must be done to
-	 * upddate the entity */
-	VectorAdd(door->mins, distanceVec, door->mins);
-	VectorAdd(door->maxs, distanceVec, door->maxs);
-#endif
 }
 
 /**
