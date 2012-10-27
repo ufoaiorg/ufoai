@@ -1345,6 +1345,7 @@ void GAME_StartBattlescape (bool isTeamPlay)
 	if (list != NULL && list->StartBattlescape) {
 		list->StartBattlescape(isTeamPlay);
 	} else {
+		UI_InitStack(NULL, "singleplayermission", true, false);
 		HUD_InitUI(NULL, true);
 	}
 

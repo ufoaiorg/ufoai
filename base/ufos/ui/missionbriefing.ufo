@@ -62,6 +62,7 @@ window mission_briefing
 
 		button button_ready
 		{
+			visiblewhen	"*cvar:cl_onbattlescape == 1"
 			string		"_Start"
 			tooltip		"_Start the match"
 			background	"ui/button_green_small"
@@ -71,7 +72,7 @@ window mission_briefing
 			color		"0 0.5 0 1"
 			selectcolor	"1 1 1 1"
 			onClick		{
-				cmd "cl_ready 1;"
+				cmd "cl_ready 1;ui_pop;"
 			}
 		}
 	}

@@ -131,6 +131,9 @@ static void GAME_SK_Start_f (void)
 	assert(md->map);
 	Com_sprintf(map, sizeof(map), "map %s %s %s;", cgi->Cvar_GetInteger("mn_serverday") ? "day" : "night", md->map, md->param ? md->param : "");
 
+	/* prepare */
+	cgi->UI_InitStack(NULL, "singleplayermission", true, false);
+
 	cgi->Cbuf_AddText(map);
 }
 
