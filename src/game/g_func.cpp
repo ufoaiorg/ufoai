@@ -187,9 +187,6 @@ static void Door_SlidingUse (edict_t *door)
 	VectorAdd(door->origin, distanceVec, door->origin);						/* calc new model position */
 	gi.SetInlineModelOrientation(door->model, door->origin, door->angles);	/* move the model out of the way */
 	G_RecalcRouting(door->model, rerouteOldBox);							/* Update path finding table */
-	/** @todo once we get sliding doors that do not simply vanish inside some wall when opened,
-	 * but instead block some other place that was walkable before, we must repeat the above process
-	 * for the new position. For now that would only be a waste of cpu (Duke, 15.10.2012) */
 #else
 	/** @todo we have now updated the InlineModel - check what must be done to
 	 * upddate the entity */
