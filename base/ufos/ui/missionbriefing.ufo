@@ -35,6 +35,8 @@ window mission_briefing
 		text name
 		{
 			pos 		"10 10"
+			size		"580 20"
+			longlines	LONGLINES_PRETTYCHOP
 			font		"f_menu"
 			dataid		TEXT_MISSIONBRIEFING_TITLE
 			lineheight	20
