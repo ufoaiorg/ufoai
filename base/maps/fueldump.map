@@ -4258,7 +4258,6 @@
 "item" "bomb1"
 "time" "2"
 "spawnflags" "255"
-"message" "*msgid:victory_condition_fueldump"
 }
 // entity 23
 {
