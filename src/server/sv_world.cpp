@@ -631,11 +631,10 @@ static char const* const mod_extensions[] = {
 };
 
 /**
- * @brief Load the mins, maxs for the model on the serverside for pathfinding and clipping
- * @param[in] model The relative model path to load the mins, maxs for
- * @param[in] frame The frame to load the mins and maxs vectors for
- * @param[out] mins The mins vector of the model - this is absolute to the worldorigin (0,0,0)
- * @param[out] maxs The maxs vector of the model - this is absolute to the worldorigin (0,0,0)
+ * @brief Load the bounding box for the model on the serverside for pathfinding and clipping
+ * @param[in] model The relative model path to load the bounding box for
+ * @param[in] frame The frame to load the bounding box for
+ * @param[out] aabb The bounding box of the model - this is absolute to the worldorigin (0,0,0)
  */
 bool SV_LoadModelAABB (const char *model, int frame, AABB& aabb)
 {
