@@ -336,6 +336,7 @@ typedef struct mapDef_s {
 	char *param;			/**< in case of ump file, the assembly to use */
 	char *description;		/**< the description to show in the menus */
 	char *victoryCondition;	/**< the mission briefing victory condition */
+	char *missionBriefing;	/**< the mission briefing description */
 	char *size;				/**< small, medium, big */
 	char *civTeam;			/**< the civilian team to use for this map - this can also be NULL */
 

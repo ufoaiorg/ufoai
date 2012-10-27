@@ -2,7 +2,7 @@ msgid mission_briefing_default {
 	text "_Good luck commander, make sure to bring your soldiers back alive."
 }
 
-msgid victory_condition_general {
+msgid victory_condition_default {
 	text "_Kill all the aliens"
 }
 

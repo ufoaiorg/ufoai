@@ -34,7 +34,7 @@ static const cgame_import_t *cgi;
 
 CGAME_HARD_LINKED_FUNCTIONS
 
-static void GAME_MP_StartBattlescape (bool isTeamPlay, linkedList_t **msgids)
+static void GAME_MP_StartBattlescape (bool isTeamPlay, linkedList_t **victoryConditionsMsgIDs, linkedList_t **missionBriefingMsgIDs)
 {
 	cgi->UI_ExecuteConfunc("multiplayer_setTeamplay %i", isTeamPlay);
 	cgi->UI_InitStack("multiplayer_wait", NULL, true, true);

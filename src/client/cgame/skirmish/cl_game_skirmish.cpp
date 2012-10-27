@@ -35,12 +35,15 @@ static const cgame_import_t *cgi;
 
 CGAME_HARD_LINKED_FUNCTIONS
 
-static void GAME_SK_StartBattlescape (bool isTeamPlay, linkedList_t **msgids)
+static void GAME_SK_StartBattlescape (bool isTeamPlay, linkedList_t **victoryConditionsMsgIDs, linkedList_t **missionBriefingMsgIDs)
 {
 	cgi->UI_InitStack("skirmish_wait", NULL, true, true);
 	const mapDef_t *md = cgi->GAME_GetCurrentSelectedMap();
 	if (Q_strvalid(md->victoryCondition)) {
-		cgi->LIST_AddString(msgids, md->victoryCondition);
+		cgi->LIST_AddString(victoryConditionsMsgIDs, md->victoryCondition);
+	}
+	if (Q_strvalid(md->missionBriefing)) {
+		cgi->LIST_AddString(missionBriefingMsgIDs, md->missionBriefing);
 	}
 }
 

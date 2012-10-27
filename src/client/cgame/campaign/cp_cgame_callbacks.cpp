@@ -564,12 +564,15 @@ const char* GAME_CP_GetTeamDef (void)
 	return cgi->Com_ValueToStr(&team, V_TEAM, 0);
 }
 
-void GAME_CP_StartBattlescape (bool isTeamPlay, linkedList_t **msgids)
+void GAME_CP_StartBattlescape (bool isTeamPlay, linkedList_t **victoryConditionsMsgIDs, linkedList_t **missionBriefingMsgIDs)
 {
 	const battleParam_t *bp = &ccs.battleParameters;
 	const mapDef_t *md = bp->mission->mapDef;
 	if (Q_strvalid(md->victoryCondition)) {
-		cgi->LIST_AddString(msgids, md->victoryCondition);
+		cgi->LIST_AddString(victoryConditionsMsgIDs, md->victoryCondition);
+	}
+	if (Q_strvalid(md->missionBriefing)) {
+		cgi->LIST_AddString(missionBriefingMsgIDs, md->missionBriefing);
 	}
 }
 

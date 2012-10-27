@@ -1337,30 +1337,35 @@ static bool GAME_Spawn (chrList_t *chrList)
  */
 void GAME_StartBattlescape (bool isTeamPlay)
 {
-	static linkedList_t *msgids = NULL;
+	static linkedList_t *victoryConditionsMsgIDs = NULL;
+	static linkedList_t *missionBriefingMsgIDs = NULL;
 	const cgame_export_t *list = GAME_GetCurrentType();
 
-	Cvar_SetValue("cl_onbattlescape", 1.0);
+	Cvar_Set("cl_onbattlescape", "1");
 
-	LIST_Delete(&msgids);
+	LIST_Delete(&victoryConditionsMsgIDs);
 
-	const char *msgid = CL_GetConfigString(CS_VICTORY_CONDITIONS);
-	if (Q_strvalid(msgid))
-		LIST_AddString(&msgids, msgid);
+	/* allow the server to add e.g. the misc_mission victory condition */
+	const char *serverVictoryMsgID = CL_GetConfigString(CS_VICTORY_CONDITIONS);
+	if (Q_strvalid(serverVictoryMsgID))
+		LIST_AddString(&victoryConditionsMsgIDs, serverVictoryMsgID);
 
 	Cvar_Set("cl_maxworldlevel", va("%i", cl.mapMaxLevel - 1));
 	if (list != NULL && list->StartBattlescape) {
-		list->StartBattlescape(isTeamPlay, &msgids);
+		list->StartBattlescape(isTeamPlay, &victoryConditionsMsgIDs, &missionBriefingMsgIDs);
 	} else {
 		HUD_InitUI(NULL, true);
 	}
 
 	/* if the cgame has nothing to contribute here, we will add a default victory condition */
-	if (LIST_IsEmpty(msgids))
-		LIST_AddString(&msgids, "*msgid:victory_condition_general");
+	if (LIST_IsEmpty(victoryConditionsMsgIDs))
+		LIST_AddString(&victoryConditionsMsgIDs, "*msgid:victory_condition_default");
 
-	UI_RegisterText(TEXT_MISSIONBRIEFING, "*msgid:mission_briefing_default");
-	UI_RegisterLinkedListText(TEXT_MISSIONBRIEFING_VICTORY_CONDITIONS, msgids);
+	if (LIST_IsEmpty(missionBriefingMsgIDs))
+		LIST_AddString(&missionBriefingMsgIDs, "*msgid:mission_briefing_default");
+
+	UI_RegisterLinkedListText(TEXT_MISSIONBRIEFING, missionBriefingMsgIDs);
+	UI_RegisterLinkedListText(TEXT_MISSIONBRIEFING_VICTORY_CONDITIONS, victoryConditionsMsgIDs);
 	UI_RegisterText(TEXT_MISSIONBRIEFING_TITLE, _(CL_GetConfigString(CS_MAPTITLE)));
 }
 
