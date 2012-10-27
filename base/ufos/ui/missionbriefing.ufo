@@ -6,6 +6,8 @@ window mission_briefing
 	{
 		fill		true
 		starlayout	true
+		modal		true
+		preventtypingescape	true
 	}
 
 	image background
@@ -35,6 +37,7 @@ window mission_briefing
 			pos 		"10 10"
 			font		"f_menu"
 			dataid		TEXT_MISSIONBRIEFING_TITLE
+			lineheight	20
 		}
 
 		text briefing
