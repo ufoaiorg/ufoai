@@ -1359,7 +1359,7 @@ void GAME_StartBattlescape (bool isTeamPlay)
 	if (LIST_IsEmpty(msgids))
 		LIST_AddString(&msgids, "*msgid:victory_condition_general");
 
-	UI_RegisterText(TEXT_MISSIONBRIEFING, "*msgid:defaultmissionbriefing");
+	UI_RegisterText(TEXT_MISSIONBRIEFING, "*msgid:mission_briefing_default");
 	UI_RegisterLinkedListText(TEXT_MISSIONBRIEFING_VICTORY_CONDITIONS, msgids);
 	UI_RegisterText(TEXT_MISSIONBRIEFING_TITLE, _(CL_GetConfigString(CS_MAPTITLE)));
 }
