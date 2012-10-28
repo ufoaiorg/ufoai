@@ -429,7 +429,7 @@ edict_t *G_Spawn (void)
 static void Think_SmokeAndFire (edict_t *self)
 {
 	if (self->time + self->count <= level.actualRound) {
-		bool checkVis = self->type == ET_SMOKE;
+		const bool checkVis = self->type == ET_SMOKE;
 		G_EventEdictPerish(G_VisToPM(self->particleLink->visflags), self->particleLink);
 		G_FreeEdict(self->particleLink);
 		G_FreeEdict(self);
