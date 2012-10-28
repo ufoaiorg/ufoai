@@ -1,4 +1,5 @@
-Welcome to the UFO: Alien Invasion multiplayer lobby.
+msgid irc_motd {
+text = "_Welcome to the UFO: Alien Invasion multiplayer lobby.
 If you are searching for players, make sure to stay connected.
 NOT everyone you see in the user list is a player!
 Look for users who announce themselves with the game client.
@@ -16,4 +17,5 @@ If a player sends you a message, it will appear in a popup window.
 If you want to host a game, make sure, that TCP port 27910 is opened in your firewall.
 If you want to join the channel with a regular IRC client, connect to irc.freenode.net and join #ufoai
 
-For help with setting up multiplayer games, see http://ufoai.org/wiki/index.php/Multiplayer
+For help with setting up multiplayer games, see http://ufoai.org/wiki/index.php/Multiplayer"
+}

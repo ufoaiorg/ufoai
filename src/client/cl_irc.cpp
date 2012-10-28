@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "cl_irc.h"
 #include "client.h"
+#include "cl_language.h"
 #include "ui/ui_main.h"
 #include "ui/ui_nodes.h"
 #include "ui/ui_popup.h"
@@ -1065,17 +1066,8 @@ static bool Irc_Proto_ProcessServerMsg (const irc_server_msg_t *msg)
 
 		/* read our own motd */
 		case RPL_ENDOFMOTD:
-			{
-				byte *fbuf;
-				int size;
-				size = FS_LoadFile("irc_motd.txt", &fbuf);
-				if (size) {
-					Irc_AppendToBuffer("%s", (char *)fbuf);
-					FS_FreeFile(fbuf);
-				}
-			}
+			Irc_AppendToBuffer("%s", CL_Translate("*msgid:irc_motd"));
 			return true;
-
 		case RPL_NAMREPLY:
 			Irc_Client_CmdRplNamreply(msg->params, msg->trailing);
 			return true;
