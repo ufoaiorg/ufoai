@@ -301,8 +301,9 @@ static void Irc_ParseName (const char *mask, char *nick, size_t size, irc_nick_p
 	if (mask[0] == IRC_NICK_PREFIX_OP || mask[0] == IRC_NICK_PREFIX_VOICE) {
 		*prefix = (irc_nick_prefix_t) *mask;	/* read prefix */
 		++mask;									/* crop prefix from mask */
-	} else
+	} else {
 		*prefix = IRC_NICK_PREFIX_NONE;
+	}
 	emph = strchr(mask, '!');
 	if (emph) {
 		size_t length = emph - mask;
@@ -311,9 +312,10 @@ static void Irc_ParseName (const char *mask, char *nick, size_t size, irc_nick_p
 		/* complete hostmask, crop anything after ! */
 		memcpy(nick, mask, length);
 		nick[length] = '\0';
-	} else
+	} else {
 		/* just the nickname, use as is */
 		Q_strncpyz(nick, mask, size);
+	}
 }
 
 /*
@@ -583,38 +585,38 @@ static bool Irc_Proto_PollServerMsg (irc_server_msg_t *msg, bool *msg_complete)
 {
 	static char buf[IRC_RECV_BUF_SIZE];
 	static char *last = buf;
-	int recvd;
 	*msg_complete = false;
 	/* recv packet */
-	recvd = NET_StreamDequeue(irc_stream, last, sizeof(buf) - (last - buf) - 1);
-	if (recvd >= 0) {
-		/* terminate buf string */
-		const char * const begin = buf;
-		last += recvd;
-		*last = '\0';
-		if (last != begin) {
-			/* buffer not empty; */
-			const char * const end = strstr(begin, "\r\n");
-			if (end) {
-				/* complete command in buffer, parse */
-				const size_t cmd_len = end + 2 - begin;
-				if (!Irc_Proto_ParseServerMsg(begin, cmd_len, msg)) {
-					/* parsing successful */
-					/* move succeeding commands to begin of buffer */
-					memmove(buf, end + 2, sizeof(buf) - cmd_len);
-					last -= cmd_len;
-					*msg_complete = true;
-				} else {
-					/* parsing failure, fatal */
-					Com_Printf("Received invalid packet from server\n");
-					return true;
-				}
+	const int recvd = NET_StreamDequeue(irc_stream, last, sizeof(buf) - (last - buf) - 1);
+	if (recvd < 0)
+		return true;
+
+	/* terminate buf string */
+	const char * const begin = buf;
+	last += recvd;
+	*last = '\0';
+	if (last != begin) {
+		/* buffer not empty; */
+		const char * const end = strstr(begin, "\r\n");
+		if (end) {
+			/* complete command in buffer, parse */
+			const size_t cmd_len = end + 2 - begin;
+			if (!Irc_Proto_ParseServerMsg(begin, cmd_len, msg)) {
+				/* parsing successful */
+				/* move succeeding commands to begin of buffer */
+				memmove(buf, end + 2, sizeof(buf) - cmd_len);
+				last -= cmd_len;
+				*msg_complete = true;
+			} else {
+				/* parsing failure, fatal */
+				Com_Printf("Received invalid packet from server\n");
+				return true;
 			}
-		} else
-			*msg_complete = false;
-		return false;
+		}
+	} else {
+		*msg_complete = false;
 	}
-	return true;
+	return false;
 }
 
 /**
@@ -1456,18 +1458,20 @@ static void Irc_Logic_Connect (const char *server, const char *port)
 
 static void Irc_Logic_Disconnect (const char *reason)
 {
-	if (irc_connected) {
-		Com_Printf("Irc_Disconnect: %s\n", reason);
-		Irc_Proto_Quit(reason);
-		Irc_Proto_Disconnect();
-		irc_connected = false;
-		chan = NULL;
-		Cvar_ForceSet("irc_defaultChannel", "");
-		Cvar_ForceSet("irc_topic", "Connecting (please wait)...");
-		UI_ResetData(TEXT_IRCUSERS);
-		Irc_Input_Deactivate_f();
-	} else
+	if (!irc_connected) {
 		Com_Printf("Irc_Disconnect: not connected\n");
+		return;
+	}
+
+	Com_Printf("Irc_Disconnect: %s\n", reason);
+	Irc_Proto_Quit(reason);
+	Irc_Proto_Disconnect();
+	irc_connected = false;
+	chan = NULL;
+	Cvar_ForceSet("irc_defaultChannel", "");
+	Cvar_ForceSet("irc_topic", "Connecting (please wait)...");
+	UI_ResetData(TEXT_IRCUSERS);
+	Irc_Input_Deactivate_f();
 }
 
 /**
@@ -1613,16 +1617,17 @@ static void Irc_Connect_f (void)
 			Irc_Logic_Connect(irc_server->string, irc_port->string);
 			if (irc_connected && argc >= 4)
 				Irc_Client_Join(Cmd_Argv(3), NULL);
-		} else
+		} else {
 			Com_Printf("Already connected.\n");
-
+		}
 	} else if (irc_server->string[0] != '\0' && irc_port->integer) {
 		if (!irc_connected)
 			Cbuf_AddText(va("irc_connect %s %i %s\n", irc_server->string, irc_port->integer, irc_channel->string));
 		else
 			Com_Printf("Already connected.\n");
-	} else
+	} else {
 		Com_Printf("Usage: %s [<server>] [<port>] [<channel>]\n", Cmd_Argv(0));
+	}
 }
 
 static void Irc_Disconnect_f (void)
@@ -1655,8 +1660,9 @@ static void Irc_Client_Join_f (void)
 		/* password is optional */
 		const char * const channel_pass = (argc == 3) ? Cmd_Argv(2) : NULL;
 		Irc_Client_Join(channel, channel_pass);
-	} else
+	} else {
 		Com_Printf("Usage: %s <channel> [<password>]\n", Cmd_Argv(0));
+	}
 }
 
 static void Irc_Client_Part_f (void)
@@ -1665,8 +1671,9 @@ static void Irc_Client_Part_f (void)
 	if (argc == 2) {
 		const char * const channel = Cmd_Argv(1);
 		Irc_Proto_Part(channel);
-	} else
+	} else {
 		Com_Printf("Usage: %s <channel>\n", Cmd_Argv(0));
+	}
 }
 
 /**
@@ -1717,8 +1724,9 @@ static void Irc_Client_PrivMsg_f (void)
 			msg = cropped_msg;
 		}
 		Irc_Proto_Msg(target, msg);
-	} else
+	} else {
 		Com_Printf("Usage: %s <target> {<msg>}\n", Cmd_Argv(0));
+	}
 }
 
 static void Irc_Client_Mode_f (void)
@@ -1757,12 +1765,15 @@ static void Irc_Client_Topic_f (void)
 					out[out_len - 1] = '\0';
 				}
 				Irc_Proto_Topic(channel, out);
-			} else
+			} else {
 				Com_Printf("%s topic: \"%s\"\n", channel, Irc_Logic_GetChannelTopic(chan));
-		} else
+			}
+		} else {
 			Com_Printf("Not joined: %s\n", channel);
-	} else
+		}
+	} else {
 		Com_Printf("Usage: %s <channel> [<topic>]\n", Cmd_Argv(0));
+	}
 }
 
 #define IRC_MAX_USERLIST 512
@@ -1770,44 +1781,46 @@ static char irc_userListOrdered[IRC_MAX_USERLIST][MAX_VAR];
 
 static void Irc_Client_Names_f (void)
 {
-	irc_user_t* user;
-	if (chan) {
-		linkedList_t *irc_names_buffer = NULL;
-		int i;
-		user = chan->user;
-		for (i = 0; i < chan->users; i++) {
-			if (i >= IRC_MAX_USERLIST)
-				break;
-			Q_strncpyz(irc_userListOrdered[i], user->key, MAX_VAR);
-			user = user->next;
-		}
-		if (i > 0) {
-			qsort((void *)irc_userListOrdered, i, MAX_VAR, Q_StringSort);
-			while (i--)
-				LIST_AddString(&irc_names_buffer, irc_userListOrdered[i]);
-		}
-		UI_RegisterLinkedListText(TEXT_IRCUSERS, irc_names_buffer);
-	} else
+	if (!chan) {
 		Com_Printf("Not joined\n");
+		return;
+	}
+	linkedList_t *irc_names_buffer = NULL;
+	int i;
+	irc_user_t* user = chan->user;
+	for (i = 0; i < chan->users; i++) {
+		if (i >= IRC_MAX_USERLIST)
+			break;
+		Q_strncpyz(irc_userListOrdered[i], user->key, MAX_VAR);
+		user = user->next;
+	}
+	if (i > 0) {
+		qsort((void *)irc_userListOrdered, i, MAX_VAR, Q_StringSort);
+		while (i--)
+			LIST_AddString(&irc_names_buffer, irc_userListOrdered[i]);
+	}
+	UI_RegisterLinkedListText(TEXT_IRCUSERS, irc_names_buffer);
 }
 
 static void Irc_Client_Kick_f (void)
 {
 	const int argc = Cmd_Argc();
-	if (argc >= 3) {
-		const char *channel = Cmd_Argv(1);
-		if (chan) {
-			const char * const nick = Cmd_Argv(2);
-			const char *reason;
-			if (argc >= 4)
-				reason = Cmd_Args() + strlen(nick) + strlen(channel) + 2;
-			else
-				reason = NULL;
-			Irc_Proto_Kick(channel, nick, reason);
-		} else
-			Com_Printf("Not joined: %s.\n", channel);
-	} else
+	if (argc < 3) {
 		Com_Printf("Usage: %s <channel> <nick> [<reason>]\n", Cmd_Argv(0));
+		return;
+	}
+	const char *channel = Cmd_Argv(1);
+	if (!chan) {
+		Com_Printf("Not joined: %s.\n", channel);
+		return;
+	}
+	const char * const nick = Cmd_Argv(2);
+	const char *reason;
+	if (argc >= 4)
+		reason = Cmd_Args() + strlen(nick) + strlen(channel) + 2;
+	else
+		reason = NULL;
+	Irc_Proto_Kick(channel, nick, reason);
 }
 
 static void Irc_GetExternalIP (const char *externalIP)
@@ -1854,26 +1867,29 @@ static void Irc_Client_Invite_f (void)
 
 static void Irc_Client_Who_f (void)
 {
-	if (Cmd_Argc() == 2) {
-		Irc_Proto_Who(Cmd_Argv(1));
-	} else
+	if (Cmd_Argc() != 2) {
 		Com_Printf("Usage: %s <usermask>\n", Cmd_Argv(0));
+		return;
+	}
+	Irc_Proto_Who(Cmd_Argv(1));
 }
 
 static void Irc_Client_Whois_f (void)
 {
-	if (Cmd_Argc() == 2) {
-		Irc_Proto_Whois(Cmd_Argv(1));
-	} else
+	if (Cmd_Argc() != 2) {
 		Com_Printf("Usage: %s <nick>\n", Cmd_Argv(0));
+		return;
+	}
+	Irc_Proto_Whois(Cmd_Argv(1));
 }
 
 static void Irc_Client_Whowas_f (void)
 {
-	if (Cmd_Argc() == 2) {
-		Irc_Proto_Whowas(Cmd_Argv(1));
-	} else
+	if (Cmd_Argc() != 2) {
 		Com_Printf("Usage: %s <nick>\n", Cmd_Argv(0));
+		return;
+	}
+	Irc_Proto_Whowas(Cmd_Argv(1));
 }
 
 /*
@@ -1946,8 +1962,6 @@ static void Irc_Input_Activate_f (void)
 		Com_DPrintf(DEBUG_CLIENT, "Irc_Input_Activate: Warning - IRC not connected\n");
 		UI_PopWindow(false);
 		UI_PushWindow("irc_popup");
-		/* cancel any active editing */
-		return;
 	}
 }
 
