@@ -218,8 +218,8 @@ static void B_BuildBase_f (void)
 		const char *baseName = mn_base_title->string;
 		base_t *base;
 		/* there may be no " in the base name */
-		if (baseName[0] == '\0' || strchr(baseName, '"') != NULL)
-			baseName = "Base";
+		if (!Com_IsValidName(baseName))
+			baseName = _("Base");
 
 		base = B_Build(campaign, ccs.newBasePos, baseName);
 		if (!base)
@@ -261,7 +261,7 @@ static void B_ChangeBaseName_f (void)
 		return;
 
 	/* basename should not contain " */
-	if (strchr(cgi->Cvar_GetString("mn_base_title"), '"') != NULL) {
+	if (!Com_IsValidName(cgi->Cvar_GetString("mn_base_title"))) {
 		cgi->Cvar_Set("mn_base_title", base->name);
 		return;
 	}

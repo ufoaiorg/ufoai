@@ -288,7 +288,7 @@ static void AIR_ChangeAircraftName_f (void)
 		return;
 
 	/* aircraft name should not contain " */
-	if (strchr(newName, '"') != NULL)
+	if (!Com_IsValidName(newName))
 		return;
 
 	Q_strncpyz(aircraft->name, newName, sizeof(aircraft->name));

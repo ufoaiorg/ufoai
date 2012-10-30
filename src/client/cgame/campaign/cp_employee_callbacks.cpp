@@ -229,7 +229,7 @@ static void E_ChangeName_f (void)
 		return;
 
 	/* employee name should not contain " */
-	if (strchr(cgi->Cvar_GetString("mn_name"), '"') != NULL) {
+	if (!Com_IsValidName(cgi->Cvar_GetString("mn_name"))) {
 		cgi->Cvar_ForceSet("mn_name", employee->chr.name);
 		return;
 	}
