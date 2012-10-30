@@ -332,6 +332,17 @@ static const value_t event_vals[] = {
 	{NULL, V_NULL, 0, 0}
 };
 
+#define EVENTCONSTANTS_NAMESPACE "eventTrigger::"
+static const constListEntry_t eventConstants[] = {
+	{EVENTCONSTANTS_NAMESPACE "new_day", NEW_DAY},
+	{EVENTCONSTANTS_NAMESPACE "ufo_detection", UFO_DETECTION},
+	{EVENTCONSTANTS_NAMESPACE "captured_aliens_died", CAPTURED_ALIENS_DIED},
+	{EVENTCONSTANTS_NAMESPACE "captured_aliens", CAPTURED_ALIENS},
+	{EVENTCONSTANTS_NAMESPACE "alienbase_discovered", ALIENBASE_DISCOVERED},
+
+	{NULL, -1}
+};
+
 void CP_ParseEventTrigger (const char *name, const char **text)
 {
 	const char *errhead = "CP_ParseEventTrigger: unexpected end of file (event ";
@@ -351,11 +362,7 @@ void CP_ParseEventTrigger (const char *name, const char **text)
 		return;
 	}
 
-	cgi->Com_RegisterConstInt("new_day", NEW_DAY);
-	cgi->Com_RegisterConstInt("ufo_detection", UFO_DETECTION);
-	cgi->Com_RegisterConstInt("captured_aliens_died", CAPTURED_ALIENS_DIED);
-	cgi->Com_RegisterConstInt("captured_aliens", CAPTURED_ALIENS);
-	cgi->Com_RegisterConstInt("alienbase_discovered", ALIENBASE_DISCOVERED);
+	cgi->Com_RegisterConstList(eventConstants);
 
 	campaignTriggerEvent_t *event = &ccs.campaignTriggerEvents[ccs.numCampaignTriggerEvents];
 	OBJZERO(*event);
@@ -375,11 +382,7 @@ void CP_ParseEventTrigger (const char *name, const char **text)
 		}
 	} while (*text);
 
-	cgi->Com_UnregisterConstVariable("new_day");
-	cgi->Com_UnregisterConstVariable("ufo_detection");
-	cgi->Com_UnregisterConstVariable("captured_aliens_died");
-	cgi->Com_UnregisterConstVariable("captured_aliens");
-	cgi->Com_UnregisterConstVariable("alienbase_discovered");
+	cgi->Com_UnregisterConstList(eventConstants);
 }
 
 bool CP_TriggerEventSaveXML (xmlNode_t *p)
