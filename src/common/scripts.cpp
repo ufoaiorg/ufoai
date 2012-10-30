@@ -218,7 +218,7 @@ void Com_RegisterConstInt (const char *name, int value)
 	}
 
 	if (a) {
-		Com_Printf("Com_RegisterConstInt: Const string already defined. '%s = %d' is not set.", name, value);
+		Com_Printf("Com_RegisterConstInt: Const string already defined. '%s = %d' is not set.\n", name, value);
 		return;
 	}
 
