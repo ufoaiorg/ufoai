@@ -40,6 +40,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "node/ui_node_abstractoption.h"
 
 #include "../../shared/parse.h"
+#include "../cl_language.h"
 
 /** prototypes */
 static bool UI_ParseProperty(void* object, const value_t *property, const char* objectName, const char **text, const char **token);
@@ -1379,11 +1380,7 @@ const char *UI_GetReferenceString (const uiNode_t* const node, const char *ref)
 		/* get the reference and the name */
 		token = Com_MacroExpandString(ref);
 		if (token) {
-			if (token[0] == '_') {
-				token++;
-				return _(token);
-			}
-			return token;
+			return CL_Translate(token);
 		}
 
 		/* skip the star */
@@ -1396,14 +1393,9 @@ const char *UI_GetReferenceString (const uiNode_t* const node, const char *ref)
 		}
 
 		Sys_Error("UI_GetReferenceString: unknown reference %s", token);
-	/* translatable string */
-	} else if (ref[0] == '_') {
-		ref++;
-		return _(ref);
 	}
 
-	/* just a string */
-	return ref;
+	return CL_Translate(ref);
 }
 
 float UI_GetReferenceFloat (const uiNode_t* const node, const void *ref)

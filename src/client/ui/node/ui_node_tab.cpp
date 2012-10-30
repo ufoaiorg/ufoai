@@ -37,7 +37,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_node_abstractnode.h"
 #include "ui_node_abstractoption.h"
 
-#include "../../client.h" /* gettext _() */
+#include "../../cl_language.h"
 #include "../../input/cl_input.h"
 
 #define EXTRADATA_TYPE abstractOptionExtraData_t
@@ -86,7 +86,6 @@ static uiNode_t* UI_TabNodeTabAtPosition (const uiNode_t *node, int x, int y)
 	/* Text box test */
 	for (option = node->firstChild; option; option = option->next) {
 		int tabWidth;
-		const char *label;
 		assert(option->behaviour == ui_optionBehaviour);
 
 		/* skip hidden options */
@@ -96,9 +95,7 @@ static uiNode_t* UI_TabNodeTabAtPosition (const uiNode_t *node, int x, int y)
 		if (x < TILE_WIDTH / 2)
 			return prev;
 
-		label = OPTIONEXTRADATA(option).label;
-		if (label[0] == '_')
-			label = _(label + 1);
+		const char *label = CL_Translate(OPTIONEXTRADATA(option).label);
 
 		R_FontTextSize(font, label, 0, LONGLINES_PRETTYCHOP, &tabWidth, NULL, NULL, NULL);
 		if (OPTIONEXTRADATA(option).icon && OPTIONEXTRADATA(option).icon->size[0] < allowedWidth) {
@@ -213,7 +210,6 @@ void uiTabNode::draw (uiNode_t *node)
 		int fontWidth;
 		int tabWidth;
 		int textPos;
-		const char *label;
 		bool drawIcon = false;
 		ui_tabStatus_t status = UI_TAB_NORMAL;
 		assert(option->behaviour == ui_optionBehaviour);
@@ -237,9 +233,7 @@ void uiTabNode::draw (uiNode_t *node)
 		UI_TabNodeDrawJunction(image, currentX, pos[1], lastStatus, status);
 		currentX += TILE_WIDTH;
 
-		label = OPTIONEXTRADATA(option).label;
-		if (label[0] == '_')
-			label = _(label + 1);
+		const char *label = CL_Translate(OPTIONEXTRADATA(option).label);
 
 		R_FontTextSize(font, label, 0, LONGLINES_PRETTYCHOP, &fontWidth, &fontHeight, NULL, NULL);
 		tabWidth = fontWidth;
@@ -297,7 +291,6 @@ void uiTabNode::drawTooltip (uiNode_t *node, int x, int y)
 {
 	uiNode_t *option;
 	const int tooltipWidth = 250;
-	const char *label;
 
 	option = UI_TabNodeTabAtPosition(node, x, y);
 	if (option == NULL)
@@ -306,10 +299,7 @@ void uiTabNode::drawTooltip (uiNode_t *node, int x, int y)
 	if (!OPTIONEXTRADATA(option).truncated)
 		return;
 
-	label = OPTIONEXTRADATA(option).label;
-	if (label[0] == '_')
-		label = _(label + 1);
-
+	const char *label = CL_Translate(OPTIONEXTRADATA(option).label);
 	UI_DrawTooltip(label, x, y, tooltipWidth);
 }
 

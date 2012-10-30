@@ -125,7 +125,8 @@ static const char* CL_GetMessageID (const char* id)
 const char* CL_Translate (const char* t)
 {
 	if (t[0] == '_') {
-		t = _(++t);
+		if (t[1] != '\0')
+			t = _(++t);
 	} else {
 		const char* msgid = Q_strstart(t, "*msgid:");
 		if (msgid != NULL)

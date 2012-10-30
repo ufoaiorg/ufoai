@@ -30,7 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_actions.h"
 #include "node/ui_node_abstractnode.h"
 
-#include "../cl_shared.h"
+#include "../cl_language.h"
 
 typedef struct {
 	const char* token;
@@ -387,18 +387,13 @@ static inline void UI_ExecuteSetAction (const uiAction_t* action, const uiCallCo
 
 	if (left->type == EA_VALUE_CVARNAME || left->type == EA_VALUE_CVARNAME_WITHINJECTION) {
 		const char *cvarName;
-		const char* textValue;
 
 		if (left->type == EA_VALUE_CVARNAME)
 			cvarName = left->d.terminal.d1.constString;
 		else
 			cvarName = UI_GenInjectedString(left->d.terminal.d1.constString, false, context);
 
-		textValue = UI_GetStringFromExpression(right, context);
-
-		if (textValue[0] == '_')
-			textValue = _(textValue + 1);
-
+		const char *textValue = CL_Translate(UI_GetStringFromExpression(right, context));
 		Cvar_ForceSet(cvarName, textValue);
 		return;
 	}

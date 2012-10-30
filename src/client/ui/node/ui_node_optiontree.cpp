@@ -38,7 +38,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_node_option.h"
 #include "ui_node_panel.h"
 
-#include "../../client.h" /* gettext _() */
+#include "../../cl_language.h"
+#include "../../input/cl_keys.h"
 
 #define EXTRADATA_TYPE abstractOptionExtraData_t
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
@@ -153,7 +154,6 @@ void uiOptionTreeNode::draw (uiNode_t *node)
 	/* draw all available options for this selectbox */
 	for (; option; option = UI_OptionIteratorNextOption(&iterator)) {
 		int decX;
-		const char *label;
 
 		/* outside the node */
 		if (currentY + fontHeight > pos[1] + node->box.size[1] - node->padding) {
@@ -196,9 +196,7 @@ void uiOptionTreeNode::draw (uiNode_t *node)
 			decX += OPTIONEXTRADATA(option).icon->size[0] + fontHeight / 4;
 		}
 
-		label = OPTIONEXTRADATA(option).label;
-		if (label[0] == '_')
-			label = _(label + 1);
+		const char *label = CL_Translate(OPTIONEXTRADATA(option).label);
 
 		R_Color(textColor);
 		UI_DrawString(font, ALIGN_UL, decX, currentY + currentDecY,

@@ -55,7 +55,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_node_abstractnode.h"
 #include "ui_node_option.h"
 
-#include "../../client.h" /* gettext _() */
+#include "../../cl_language.h"
 
 #define EXTRADATA(node) UI_EXTRADATA(node, abstractOptionExtraData_t)
 
@@ -130,17 +130,13 @@ void uiSelectBoxNode::draw (uiNode_t *node)
 
 	/* draw the label for the current selected option */
 	for (option = UI_AbstractOptionGetFirstOption(node); option; option = option->next) {
-		const char *label;
-
 		if (!Q_streq(OPTIONEXTRADATA(option).value, ref))
 			continue;
 
 		if (option->invis)
 			R_Color(invisColor);
 
-		label = OPTIONEXTRADATA(option).label;
-		if (label[0] == '_')
-			label = _(label + 1);
+		const char *label = CL_Translate(OPTIONEXTRADATA(option).label);
 
 		UI_DrawString(font, ALIGN_UL, selBoxX, selBoxY,
 			selBoxX, node->box.size[0] - 4,
@@ -199,7 +195,6 @@ void uiSelectBoxNode::drawOverWindow (uiNode_t *node)
 	/* now draw all available options for this selectbox */
 	int check = 0;
 	for (option = UI_AbstractOptionGetFirstOption(node); option; option = option->next) {
-		const char *label;
 		if (option->invis)
 			continue;
 		/* draw the hover effect */
@@ -207,9 +202,7 @@ void uiSelectBoxNode::drawOverWindow (uiNode_t *node)
 			UI_DrawFill(selBoxX, selBoxY, node->box.size[0] -SELECTBOX_SIDE_WIDTH - SELECTBOX_SIDE_WIDTH - SELECTBOX_RIGHT_WIDTH,
 					SELECTBOX_DEFAULT_HEIGHT, node->color);
 		/* print the option label */
-		label = OPTIONEXTRADATA(option).label;
-		if (label[0] == '_')
-			label = _(label + 1);
+		const char *label = CL_Translate(OPTIONEXTRADATA(option).label);
 		UI_DrawString(font, ALIGN_UL, selBoxX, selBoxY,
 			selBoxX, node->box.size[0] - 4,
 			0, label, 0, 0, NULL, false, LONGLINES_PRETTYCHOP);

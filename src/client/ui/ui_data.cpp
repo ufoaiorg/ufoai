@@ -30,6 +30,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "node/ui_node_linechart.h"
 #include "node/ui_node_option.h"
 
+#include "../cl_language.h"
+
 /**
  * @brief
  */
@@ -266,18 +268,11 @@ static uiNode_t *UI_OptionNodeRemoveHigherOption (uiNode_t **option)
 	uiNode_t *prev = *option;
 	uiNode_t *prevfind = NULL;
 	uiNode_t *search = (*option)->next;
-	const char *label = OPTIONEXTRADATA(*option).label;
-
-	if (label[0] == '_')
-		label = _(label + 1);
+	const char *label = CL_Translate(OPTIONEXTRADATA(*option).label);
 
 	/* search the smaller element */
 	while (search) {
-		const char *searchlabel = OPTIONEXTRADATA(search).label;
-
-		if (searchlabel[0] == '_')
-			searchlabel = _(searchlabel + 1);
-
+		const char *searchlabel = CL_Translate(OPTIONEXTRADATA(search).label);
 		if (strcmp(label, searchlabel) < 0) {
 			prevfind = prev;
 			label = searchlabel;
