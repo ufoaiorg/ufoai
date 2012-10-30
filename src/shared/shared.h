@@ -95,6 +95,7 @@ int Com_Filter(const char *pattern, const char *text);
 char *Com_Trim(char *s);
 char *Com_ConvertToASCII7(char *s);
 char *Com_Chop(char *s);
+bool Com_IsValidName(const char *input);
 
 /** returns the amount of elements - not the amount of bytes */
 #define lengthof(x) (sizeof(x) / sizeof(*(x)))

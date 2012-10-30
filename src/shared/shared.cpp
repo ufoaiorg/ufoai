@@ -585,3 +585,23 @@ bool Q_strreplace (const char *source, const char *pattern, const char *replace,
 		return false;
 	}
 }
+
+/**
+ * @brief Checks whether the given input string is allowed to be used as a user-given name string
+ * for aircraft, soldiers, bases and so on
+ * @param[in] input The input string to check
+ * @return @c true if the string is valid and can be used as a name, @c false otherwise
+ */
+bool Com_IsValidName (const char *input)
+{
+	/* empty strings are not allowed */
+	if (!Q_strvalid(input))
+		return false;
+	/* names with only _ are not allowed - they would get translated with as empty msgid for gettext */
+	if (Q_streq(input, "_"))
+		return false;
+	/* there may be no quotes in the names - as they are given very often as parameter in the scripts */
+	if (strchr(input, '"') != NULL)
+		return false;
+	return true;
+}
