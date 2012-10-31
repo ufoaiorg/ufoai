@@ -15,6 +15,12 @@
  * 	pos	"480 508"
  * 	size "200 30"
  * }
+ * string team_hired_msgid
+ * {
+ * 	string	"*msgid:some_msgid"
+ * 	pos	"480 508"
+ * 	size "200 30"
+ * }
  * @endcode
  */
 
