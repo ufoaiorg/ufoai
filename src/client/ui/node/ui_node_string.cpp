@@ -1,7 +1,7 @@
 /**
  * @file
  * @brief A string can be a normal string, or a cvar string.
- * A string prefixed with a "_" is the auto translated.
+ * A string prefixed with a "_" or a string in the form "*msgid:some_msgid" is auto translated.
  * @code
  * string team_members
  * {
