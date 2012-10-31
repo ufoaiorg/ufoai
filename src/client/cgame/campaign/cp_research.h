@@ -237,6 +237,6 @@ bool RS_ScriptSanityCheck(void);
 void UP_AircraftDescription(const technology_t* t);
 void UP_UGVDescription(const struct ugv_s *ugvType);
 
-bool RS_RequirementsMet(const requirements_t *requiredAND, const requirements_t *requiredOR, const struct base_s *base);
+bool RS_RequirementsMet(const technology_t *tech, const struct base_s *base);
 
 #endif /* CLIENT_CL_RESEARCH_H */

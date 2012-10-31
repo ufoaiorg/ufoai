@@ -553,7 +553,7 @@ static void RS_ResearchStart_f (void)
 	if (!tech->statusResearchable) {
 		Com_DPrintf(DEBUG_CLIENT, "RS_ResearchStart_f: %s was not researchable yet. re-checking\n", tech->id);
 		/* If all requirements are met (includes a check for "enough-collected") mark this tech as researchable.*/
-		if (RS_RequirementsMet(&tech->requireAND, &tech->requireOR, base))
+		if (RS_RequirementsMet(tech, base))
 			RS_MarkOneResearchable(tech);
 		RS_MarkResearchable(base);	/* Re-check all other techs in case they depend on the marked one. */
 	}
@@ -590,8 +590,9 @@ static void RS_ResearchStart_f (void)
 		default:
 			break;
 		}
-	} else
+	} else {
 		CP_Popup(_("Notice"), _("The research on this item is not yet possible.\nYou need to research the technologies it's based on first."));
+	}
 
 	RS_InitGUI(base, true);
 }

@@ -147,11 +147,13 @@ void RS_MarkOneResearchable (technology_t* tech)
  * @return @c true if all requirements are satisfied otherwise @c false.
  * @todo Add support for the "delay" value.
  */
-bool RS_RequirementsMet (const requirements_t *requiredAND, const requirements_t *requiredOR, const base_t *base)
+bool RS_RequirementsMet (const technology_t *tech, const base_t *base)
 {
 	int i;
 	bool metAND = false;
 	bool metOR = false;
+	const requirements_t *requiredAND = &tech->requireAND;
+	const requirements_t *requiredOR = &tech->requireOR;
 
 	if (!requiredAND && !requiredOR) {
 		Com_Printf("RS_RequirementsMet: No requirement list(s) given as parameter.\n");
@@ -170,7 +172,8 @@ bool RS_RequirementsMet (const requirements_t *requiredAND, const requirements_t
 			const requirement_t *req = &requiredAND->links[i];
 			switch (req->type) {
 			case RS_LINK_TECH:
-				if (!RS_IsResearched_ptr(req->link.tech))
+				/* if a tech that links itself is already marked researchable, we can research it */
+				if (!(Q_streq(req->id, tech->id) && tech->statusResearchable) && !RS_IsResearched_ptr(req->link.tech))
 					metAND = false;
 				break;
 			case RS_LINK_TECH_NOT:
@@ -347,7 +350,7 @@ void RS_MarkResearchable (const base_t* base, bool init)
 
 		/* If required techs are all researched and all other requirements are met, mark this as researchable. */
 		/* All requirements are met. */
-		if (RS_RequirementsMet(&tech->requireAND, &tech->requireOR, base)) {
+		if (RS_RequirementsMet(tech, base)) {
 			Com_DPrintf(DEBUG_CLIENT, "RS_MarkResearchable: \"%s\" marked researchable. reason:requirements.\n", tech->id);
 			if (init && tech->time == 0)
 				tech->mailSent = MAILSENT_PROPOSAL;
@@ -780,7 +783,7 @@ int RS_ResearchRun (void)
 		if (tech->statusResearch != RS_RUNNING)
 			continue;
 
-		if (!RS_RequirementsMet(&tech->requireAND, &tech->requireOR, tech->base)) {
+		if (!RS_RequirementsMet(tech, tech->base)) {
 			Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Research prerequisites of %s do not met at %s. Research halted!"), _(tech->name), tech->base->name);
 			MSO_CheckAddNewMessage(NT_RESEARCH_HALTED, _("Research halted"), cp_messageBuffer, MSG_RESEARCH_HALTED);
 
