@@ -257,13 +257,13 @@ void R_FontListCache_f (void)
  * @param[in] string String to build the hash value for
  * @return hash value for given string
  */
-static int R_FontHash (const char *string)
+static int R_FontHash (const char *string, const font_t *font)
 {
 	register int hashValue, i;
 
-	hashValue = 0;
+	hashValue = 0x2040189 * ((f - fonts) + 1);
 	for (i = 0; string[i] != '\0'; i++)
-		hashValue += string[i] * (119 + i);
+		hashValue = (hashValue + string[i]) * 16777619 + 1;
 
 	hashValue = (hashValue ^ (hashValue >> 10) ^ (hashValue >> 20));
 	return hashValue & (MAX_WRAP_HASH - 1);
@@ -477,7 +477,7 @@ static int R_FontMakeChunks (const font_t *f, const char *text, int maxWidth, lo
 static wrapCache_t *R_FontWrapText (const font_t *f, const char *text, int maxWidth, longlines_t method)
 {
 	wrapCache_t *wrap;
-	int hashValue = R_FontHash(text);
+	int hashValue = R_FontHash(text ,f);
 	int chunksUsed;
 	int lines;
 	bool aborted = false;
