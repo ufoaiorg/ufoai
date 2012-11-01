@@ -43,6 +43,13 @@ doxygen:
 doxygen-clean:
 	$(Q)rm -rf ./src/docs/doxygen
 
+pngcrush:
+	@s="${SINCE}" ;\
+	test -z "$$s" && s="$$(git log --grep=crush --pretty=format:%H|head -n 1)" ;\
+	echo "Crushing images introdced since $$s" ;\
+	git diff --diff-filter=AM --name-only "$$s" HEAD|grep '.png$$' \
+	| xargs -I {} sh -c 'pngcrush -brute -rem alla {} /tmp/crush.png; mv -f /tmp/crush.png {}'
+
 help:
 	@echo "Makefile targets:"
 	@echo " -----"
@@ -55,6 +62,7 @@ help:
 	@echo " * pk3          - Generate the pk3 archives for the installers"
 	@echo " * rsync        - Creates a local copy of the whole repository (no checkout)"
 	@echo " * update-po    - Updates the po files with latest source and script files"
+	@echo " * pngcrush     - Optimize all png files incrementally since the last crush"
 	@echo " -----"
 	@echo " * clean        - Removes binaries, no datafiles (e.g. maps)"
 	@echo " * clean-maps   - Removes compiled maps (bsp files)"
