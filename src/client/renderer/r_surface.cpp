@@ -122,7 +122,7 @@ void R_DrawSurfaces (const mBspSurfaces_t *surfs, char *indexPtr)
 		refdef.brushCount += numTriangles;
 
 		if (batchStart + batchSize != surf->firstTriangle) {
-			/* Cannot continue assebling the batch, draw it and start a new one*/
+			/* Cannot continue assembling the batch, draw it and start a new one*/
 			if (batchSize > 0) {
 				glDrawElements(GL_TRIANGLES, batchSize * 3, GL_UNSIGNED_INT, indexPtr + batchStart * 3 * sizeof(int));
 				refdef.batchCount++;

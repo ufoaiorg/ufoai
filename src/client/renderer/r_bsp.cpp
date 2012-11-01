@@ -388,13 +388,12 @@ static void R_RenderBspRRefs (drawSurfaceFunc drawFunc, surfaceArrayType_t surfT
 	for (i = 0; i < numBspRRefs; i++) {
 		const bspRenderRef_t *const bspRR = &bspRRefs[i];
 		const mBspModel_t *const bsp = bspRR->bsp;
-		const mBspModel_t *const tile = &r_mapTiles[bsp->maptile]->bsp;
+		const mBspModel_t *const tile = &r_mapTiles[bsp->maptile]->bsp; /* This is required to find the tile (world) bsp model to which arrays belong (submodels do not own arrays, but use world model ones) */
 		char *indexPtr;
 
 		if (!bsp->sorted_surfaces[surfType]->count)
 			continue;
 
-		/* This is required to find the tile (world) bsp model to which arrays belong (submodels do not own arrays, but use world model ones) */
 		R_SetArrayState(tile);
 
 		/* Vertex buffers are NULL-based, arrays are not */
