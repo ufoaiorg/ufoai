@@ -21,7 +21,7 @@ campaign veryhard
 	map					"map_earth"
 	visible				true
 	events				main
-	researchrate		0.8
+	researchrate		0.7
 	uforeductionrate	0.75
 	healingrate			2
 	employeerate		0.8
@@ -136,7 +136,7 @@ campaign main
 	map					"map_earth"
 	visible				true
 	events				main
-	researchrate		0.8
+	researchrate		0.9
 	uforeductionrate	0.75
 	healingrate			2
 	employeerate		1.0
@@ -192,7 +192,7 @@ campaign easy
 	map					"map_earth"
 	visible				true
 	events				main
-	researchrate		0.8
+	researchrate		1.0
 	uforeductionrate	0.75
 	healingrate			2
 	employeerate		1.5
@@ -248,7 +248,7 @@ campaign veryeasy
 	map					"map_earth"
 	visible				true
 	events				main
-	researchrate		0.8
+	researchrate		1.3
 	uforeductionrate	0.75
 	healingrate			2
 	employeerate		2

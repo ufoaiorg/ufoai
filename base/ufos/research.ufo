@@ -153,7 +153,7 @@ tech rs_laser
 		icon	"icons/mail_tech"
 	}
 
-	time	6000
+	time	3000
 	image	"techs/continuous_wave_laser_operation"
 }
 
@@ -190,7 +190,7 @@ tech rs_baselaser
 	{
 		tech rs_laser
 	}
-	time	3000
+	time	1000
 	provides baselaser
 	model		"objects/laserturret/laserturret"
 	producetime	150
@@ -240,7 +240,7 @@ tech rs_antimatter
 		tech rs_alien_ufo_theory
 	}
 
-	time 6000
+	time 3000
 	image	"techs/antimatter"
 }
 
@@ -299,7 +299,7 @@ tech rs_alien_live
 		tech rs_contained_organic_alien	// LOGIC tech - see there for more
 	}
 
-	time	4000
+	time	1000
 	image	"techs/taman"
 }
 
@@ -341,7 +341,7 @@ tech rs_alien_breathing
 		tech rs_alien_shevaar_autopsy
 	}
 
-	time		2500
+	time		750
 	image		"techs/alien_breathing"
 }
 
@@ -381,7 +381,7 @@ tech rs_alien_mind
 		tech rs_alien_live
 		alienglobal 3
 	}
-	time	3500
+	time	1200
 	image		"techs/alien_mind"
 }
 
@@ -421,7 +421,7 @@ tech rs_alien_oddbehaviour
 		tech rs_alien_mind
 		alienglobal 10
 	}
-	time		3500
+	time		1400
 	image		"techs/alien_oddbehaviour"
 }
 
@@ -460,7 +460,7 @@ tech rs_alien_communication
 	{
 		tech rs_alien_oddbehaviour
 	}
-	time	3600
+	time	1600
 	image		"techs/alien_communication"
 }
 
@@ -527,7 +527,7 @@ tech rs_universal_serum
 	{
 		tech rs_alien_communication
 	}
-	time	3800
+	time	1800
 	image		"techs/universal_serum"
 }
 
@@ -562,7 +562,7 @@ tech rs_alien_origins
 		icon	"icons/mail_intelligence"
 	}
 
-	time		5700
+	time		1500
 	image		"techs/alien_origins"
 }
 
@@ -608,7 +608,7 @@ tech rs_alien_ufo_theory
 		ufo (craft_ufo_harvester 1)
 	}
 
-	time		7000
+	time		4000
 	image		"techs/ufo_theory"
 }
 
@@ -868,7 +868,7 @@ tech rs_weapon_rpg_hybrid_ammo
 	}
 
 	provides	rpg_hybrid_ammo
-	time	2000
+	time	3000
 	producetime	90
 }
 
@@ -1030,7 +1030,7 @@ tech rs_weapon_bolterrifle
 		tech rs_alien_body_armour
 	}
 	provides	bolterrifle
-	time	1500
+	time	6000
 	producetime	120
 }
 
@@ -1114,7 +1114,7 @@ tech rs_weapon_monoknife
 	}
 
 	provides	knifemono
-	time	800
+	time	750
 	producetime	100
 }
 
@@ -1324,7 +1324,7 @@ tech rs_weapon_grenl_plasma_ammo
 		tech rs_weapon_plasmagren
 	}
 	provides	grenl_plasma_ammo
-	time	3250
+	time	2000
 	producetime	40
 }
 
@@ -1428,7 +1428,7 @@ tech rs_weapon_laserpistol
 		tech rs_alien_body_armour
 	}
 	provides	laserpistol
-	time	2500
+	time	1000
 	producetime	90
 }
 
@@ -1467,7 +1467,7 @@ tech rs_weapon_laserrifle
 		tech rs_alien_body_armour
 	}
 	provides	laserrifle
-	time	3000
+	time	2000
 	producetime	140
 }
 
@@ -1507,7 +1507,7 @@ tech rs_weapon_heavylaser
 		tech rs_alien_body_armour
 	}
 	provides	heavylaser
-	time	3400
+	time	2000
 	producetime	140
 }
 
@@ -1548,7 +1548,7 @@ tech rs_weapon_electrolaser
 		tech rs_alien_live
 	}
 	provides	electrolaser
-	time	2500
+	time	1000
 	producetime	90
 }
 
@@ -1589,7 +1589,7 @@ tech rs_weapon_laserammo
 		tech rs_alien_body_armour
 	}
 	provides	laser_ammo
-	time		3000
+	time		750
 	producetime	20
 }
 
@@ -1691,7 +1691,7 @@ tech rs_weapon_plasatomizer
 	}
 
 	provides	plaspistol
-	time	3000
+	time	1500
 	producetime	160
 }
 
@@ -1761,7 +1761,7 @@ tech rs_weapon_plasblaster
 	}
 
 	provides	plasblaster
-	time	6500
+	time	3000
 	producetime	240
 }
 
@@ -1831,7 +1831,7 @@ tech rs_weapon_plasblade
 	}
 
 	provides	plasblade
-	time	2000
+	time	4000
 	producetime	150
 }
 
@@ -1876,7 +1876,7 @@ tech rs_weapon_plasmagren
 	}
 
 	provides	plasmagrenade
-	time	2000
+	time	1000
 	producetime	72
 }
 
@@ -1922,7 +1922,7 @@ tech rs_weapon_plasrifle
 	}
 
 	provides	plasrifle
-	time	4250
+	time	3000
 	producetime	200
 }
 
@@ -1992,7 +1992,7 @@ tech rs_weapon_needlergun
 	}
 
 	provides	needlergun
-	time		5000
+	time		10000
 	producetime	120
 }
 
@@ -2038,7 +2038,7 @@ tech rs_weapon_needlerheavy
 	}
 
 	provides	needlerheavy
-	time	6000
+	time	5000
 	producetime	150
 }
 
@@ -2107,7 +2107,7 @@ tech rs_weapon_coilgun
 	}
 
 	provides	coilgun
-	time		6000
+	time		4000
 	producetime	120
 }
 
@@ -2354,7 +2354,7 @@ tech rs_weapon_stungren
 	}
 
 	provides	stungrenade
-	time		4100
+	time		750
 	producetime	24
 //	image		"techs/anti_alien_gas"
 }
@@ -2485,7 +2485,7 @@ tech rs_weapon_pbeampistol
 	}
 
 	provides	pbeampistol
-	time		4750
+	time		5000
 	producetime	160
 }
 
@@ -2555,7 +2555,7 @@ tech rs_weapon_pbeamcannon
 	}
 
 	provides	pbeamcannon
-	time		8000
+	time		6000
 	producetime	220
 }
 
@@ -2624,7 +2624,7 @@ tech rs_weapon_pbeamrifle
 	}
 
 	provides	pbeamrifle
-	time		7750
+	time		6000
 	producetime	200
 }
 
@@ -2694,7 +2694,7 @@ tech rs_weapon_pbeam_ammo
 	    item (alienmaterials 30)
 	}
 
-	time		8000
+	time		1000
 	producetime	-1
 }
 
@@ -2750,7 +2750,7 @@ tech rs_nano_armour
 	}
 
 	provides	armour_medium
-	time		8000
+	time		6000
 	producetime	168
 }
 
@@ -2789,7 +2789,7 @@ tech rs_power_armour
 
 	provides	armour_power
 
-	time		3000
+	time		6000
 	producetime	180
 }
 
@@ -2826,7 +2826,7 @@ tech rs_alien_body_armour
 		item (armour_light_alien 1)
 	}
 	provides	armour_light_alien
-	time		4500
+	time		4000
 	producetime	-1
 }
 
@@ -2863,7 +2863,7 @@ tech rs_alien_medium_armour
 		item (armour_medium_alien 1)
 	}
 	provides	armour_medium_alien
-	time		6500
+	time		6000
 	producetime	-1
 }
 
@@ -3455,7 +3455,7 @@ tech rs_craft_drop_herakles
 	}
 
 	provides	craft_drop_herakles
-	time	13000
+	time	14000
 	producetime	336 //Two weeks.
 
 	model		drop_herakles
@@ -3500,7 +3500,7 @@ tech rs_craft_drop_raptor
 	}
 
 	provides	craft_drop_raptor
-	time	13000
+	time	14000
 	producetime	336
 
 	model		drop_raptor
@@ -3568,7 +3568,7 @@ tech rs_craft_inter_dragon
 	require_AND {
 		tech rs_craft_alien_propulsion
 	}
-	time	10000
+	time	14000
 	producetime	600
 
 	require_for_production
@@ -3613,7 +3613,7 @@ tech rs_craft_inter_starchaser
 		tech rs_craft_inter_dragon
 		tech rs_craft_ufo_supply
 	}
-	time	15000
+	time	14000
 	producetime	600
 
 	require_for_production
@@ -3668,7 +3668,7 @@ tech rs_craft_inter_stingray
 	}
 
 
-	time	20000
+	time	14000
 	producetime	800
 
 	model		inter_stingray
@@ -3714,7 +3714,7 @@ tech rs_craft_ufo_scout
 	}
 
 	provides	craft_ufo_scout
-	time	4500
+	time	3000
 	producetime -1
 
 	model		ufo_scout
@@ -3757,7 +3757,7 @@ tech rs_craft_ufo_fighter
 	}
 
 	provides	craft_ufo_fighter
-	time	4500
+	time	3000
 	producetime -1
 
 	model		ufo_fighter
@@ -3800,7 +3800,7 @@ tech rs_craft_ufo_supply
 	}
 
 	provides	craft_ufo_supply
-	time	5000
+	time	8000
 	producetime -1
 
 	model		ufo_supply
@@ -3843,7 +3843,7 @@ tech rs_craft_ufo_carrier
 	}
 
 	provides	craft_ufo_carrier
-	time	6500
+	time	30000
 	producetime -1
 
 	model		ufo_carrier
@@ -3878,7 +3878,6 @@ tech rs_craft_ufo_bomber
 		icon	"icons/mail_tech"
 	}
 
-	// FIXME
 	require_AND
 	{
 		tech rs_alien_ufo_theory
@@ -3886,7 +3885,7 @@ tech rs_craft_ufo_bomber
 	}
 
 	provides	craft_ufo_bomber
-	time	8500
+	time	14000
 	producetime -1
 
 	model		ufo_bomber
@@ -3929,7 +3928,7 @@ tech rs_craft_ufo_corrupter
 	}
 
 	provides	craft_ufo_corrupter
-	time	8500
+	time	8000
 	producetime -1
 
 	model		ufo_corrupter
@@ -3964,7 +3963,6 @@ tech rs_craft_ufo_gunboat
 		icon	"icons/mail_tech"
 	}
 
-	// FIXME
 	require_AND
 	{
 		tech rs_alien_ufo_theory
@@ -3972,7 +3970,7 @@ tech rs_craft_ufo_gunboat
 	}
 
 	provides	craft_ufo_gunboat
-	time	7500
+	time	14000
 	producetime -1
 
 	model		ufo_gunboat
@@ -4015,7 +4013,7 @@ tech rs_craft_ufo_ripper
 	}
 
 	provides	craft_ufo_ripper
-	time	7500
+	time	14000
 	producetime -1
 
 	model		ufo_ripper
@@ -4058,7 +4056,7 @@ tech rs_craft_ufo_harvester
 	}
 
 	provides	craft_ufo_harvester
-	time	5500
+	time	4000
 	producetime -1
 
 	model		ufo_harvester
@@ -4101,7 +4099,7 @@ tech rs_craft_ufo_mothership
 	}
 
 	provides	craft_ufo_mothership
-	time	10000
+	time	50000
 	producetime -1
 
 	model		ufo_mothership
@@ -4170,7 +4168,7 @@ tech rs_alien_bloodspider_autopsy
 	{
 		alien_dead (bloodspider 1)
 	}
-	time	4500
+	time	1500
 
 	image "techs/bloodspider_dead"
 }
@@ -4224,7 +4222,7 @@ tech rs_alien_bloodspider_adv_autopsy
 	{
 		alien_dead (bloodspider_adv 1)
 	}
-	time	8000
+	time	1500
 
 	image "techs/bloodspider_adv_dead"
 }
@@ -4282,7 +4280,7 @@ tech rs_alien_ortnok_autopsy
 	{
 		alien_dead (ortnok 1)
 	}
-	time	3500
+	time	1500
 
 	image	"techs/ortnok_dead"
 }
@@ -4326,7 +4324,7 @@ tech rs_alien_taman_autopsy
 	{
 		alien_dead (taman 1)
 	}
-	time	3500
+	time	1500
 
 	image	"techs/taman_dead"
 }
@@ -4370,7 +4368,7 @@ tech rs_alien_shevaar_autopsy
 	{
 		alien_dead (shevaar 1)
 	}
-	time	3500
+	time	1500
 
 	image	"techs/shevaar_dead"
 }
@@ -4412,7 +4410,7 @@ tech rs_alien_hovernet_autopsy
 	{
 		alien_dead (hovernet 1)
 	}
-	time	3500
+	time	1500
 
 	image	"techs/hovernet_dead"
 }
@@ -4468,7 +4466,7 @@ tech rs_alien_hovernet_adv_autopsy
 	{
 		alien_dead (hovernet_adv 1)
 	}
-	time	3500
+	time	1500
 
 	image	"techs/hovernet_adv_dead"
 }
@@ -4729,7 +4727,7 @@ tech rs_craft_alien_astrogation
 		tech	rs_alien_origins
 		item	(craft_alien_astrogation 1)
 	}
-	time		3500
+	time		750
 	producetime	-1
 
 	image		"techs/alien_astrogation"
@@ -4767,7 +4765,7 @@ tech rs_craft_alien_propulsion
 		tech 	rs_antimatter
 		item	(craft_alien_propulsion 1)
 	}
-	time		3500
+	time		3000
 	producetime	-1
 
 	model		"aircraft/craft_item_prop/propulsion"
@@ -4803,7 +4801,7 @@ tech rs_craft_alien_detection
 	require_AND {
 		item	(craft_alien_detection 1)
 	}
-	time		3500
+	time		2000
 	producetime	-1
 
 	model		"aircraft/craft_item_det/detection"
@@ -4843,7 +4841,7 @@ tech rs_craft_weapon_alc
 	}
 
 	provides	craft_weapon_alc
-	time		5500
+	time		1000
 	producetime	100
 
 	model		"aircraft/craft_weapon_alc/alc"
@@ -5035,7 +5033,7 @@ tech rs_craft_weapon_particle
 	    item (alienmaterials 250)
 	}
 
-	time		8000
+	time		4000
 	producetime	150
 
 	model		"aircraft/craft_weapon_particle/pbw"
@@ -5092,7 +5090,7 @@ tech rs_craft_weapon_alien_launcher
 	    item (alienmaterials 250)
 	}
 
-	time		8000
+	time		12000
 	producetime	150
 
 	model		"aircraft/craft_weapon_launcher/alien_launcher"
@@ -5189,7 +5187,7 @@ tech rs_craft_ammo_hybrid_missile
 	    item (alienmaterials 50)
 	}
 
-	time		4500
+	time		5000
 	producetime	75
 
 	model		"aircraft/craft_weapon_hybrid/hybrid"
@@ -5287,7 +5285,7 @@ tech rs_alien_materials
 		tech rs_alien_ufo_theory
 	}
 
-	time		6000
+	time		3000
 	image	"techs/alien_materials"
 }
 
@@ -5415,7 +5413,7 @@ tech rs_enemy_on_earth
 		tech rs_craft_ufo_corrupter
 	}
 
-	time		6000
+	time		2000
 	image		"techs/enemy_on_earth"
 }
 
@@ -5486,7 +5484,7 @@ tech rs_alien_strategy
 		tech	rs_craft_ufo_harvester
 	}
 
-	time		7000
+	time		1000
 	image		"techs/alien_strategy"
 }
 
@@ -5518,7 +5516,7 @@ tech rs_orbital_ufo_activity
 	}
 
 	provides	orbit
-	time		14000
+	time		50000
 	image		"techs/orbital_ufo_activity"
 	event		"cp_spawn_ufocarrier 105 40"
 }
@@ -5551,7 +5549,7 @@ tech rs_alien_psi_device
 		tech	rs_alien_psi_device
 	}
 
-	time		14000
+	time		2000
 	model			wormhole_device
 }
 
@@ -5583,6 +5581,6 @@ tech rs_human_vaccine
 		tech	rs_human_vaccine
 	}
 
-	time		7000
+	time		2000
 	image		"techs/human_vaccine"
 }
