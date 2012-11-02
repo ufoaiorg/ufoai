@@ -268,6 +268,7 @@ window basedefence extends objectinfo
 				pos			"10 195"
 				size		"284 80"
 				lineheight	20
+				tabwidth	200
 				color		"0.60 0.60 0.60 1"
 				selectcolor	"1 1 1 1"
 				onViewChange {

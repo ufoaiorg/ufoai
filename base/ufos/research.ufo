@@ -160,7 +160,7 @@ tech rs_laser
 tech rs_baselaser
 {
 	name "_Base-Defence Laser Turret"
-	type	"tech"
+	type	"craftitem"
 	up_chapter	equipment
 
 	description {
@@ -4590,7 +4590,7 @@ tech rs_ugv_weapon_autocannon
 
 tech rs_base_AA51_launcher
 {
-	type		"tech"
+	type		"craftitem"
 	up_chapter	equipment
 	name		"_AA51 missile launcher"
 	// pre_description	"*msgid:b_missile_pre_txt"

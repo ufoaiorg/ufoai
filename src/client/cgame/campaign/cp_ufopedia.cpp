@@ -275,16 +275,38 @@ void UP_AircraftItemDescription (const objDef_t *item)
 	/* set description text */
 	if (RS_IsResearched_ptr(tech)) {
 		int i;
-		if (item->craftitem.type == AC_ITEM_WEAPON)
-			Q_strcat(itemText, va(_("Weight:\t%s\n"), AII_WeightToName(AII_GetItemWeightBySize(item))), sizeof(itemText));
-		else if (item->craftitem.type == AC_ITEM_AMMO) {
+		const objDef_t *ammo = NULL;
+
+		switch (item->craftitem.type) {
+		case AC_ITEM_WEAPON:
+				Q_strcat(itemText, va(_("Weight:\t%s\n"), AII_WeightToName(AII_GetItemWeightBySize(item))), sizeof(itemText));
+				break;
+		case AC_ITEM_BASE_MISSILE:
+		case AC_ITEM_BASE_LASER:
+				Q_strcat(itemText, _("Weapon for base defence system\n"), sizeof(itemText));
+				break;
+		case AC_ITEM_AMMO:
+				ammo = item;
+				break;
+		default:
+				break;
+		}
+
+		/* check ammo of weapons */
+		if (item->craftitem.type <= AC_ITEM_WEAPON) {
+			for(int i = 0; i < item->numAmmos; i++)
+				if (item->ammos[i]->isVirtual) {
+					ammo = item->ammos[i];
+					break;
+				}
+		}
+
+		if (ammo) {
 			/* We display the characteristics of this ammo */
-			Q_strcat(itemText, va(_("Ammo:\t%i\n"), item->ammo), sizeof(itemText));
-			if (!EQUAL(item->craftitem.weaponDamage, 0))
-				Q_strcat(itemText, va(_("Damage:\t%i\n"), (int) item->craftitem.weaponDamage), sizeof(itemText));
-			Q_strcat(itemText, va(_("Reloading time:\t%i\n"),  (int) item->craftitem.weaponDelay), sizeof(itemText));
-		} else if (item->craftitem.type < AC_ITEM_WEAPON) {
-			Q_strcat(itemText, _("Weapon for base defence system\n"), sizeof(itemText));
+			Q_strcat(itemText, va(_("Ammo:\t%i\n"), ammo->ammo), sizeof(itemText));
+			if (!EQUAL(ammo->craftitem.weaponDamage, 0))
+				Q_strcat(itemText, va(_("Damage:\t%i\n"), (int) ammo->craftitem.weaponDamage), sizeof(itemText));
+			Q_strcat(itemText, va(_("Reloading time:\t%i\n"),  (int) ammo->craftitem.weaponDelay), sizeof(itemText));
 		}
 		/* We write the range of the weapon */
 		if (!EQUAL(item->craftitem.stats[AIR_STATS_WRANGE], 0))
