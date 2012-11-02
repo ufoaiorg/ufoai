@@ -74,12 +74,28 @@ public:
 	}
 };
 
-static ReactionFireTargetList rfData[MAX_RF_DATA];
+class ReactionFireTargets
+{
+public:
+	void init();
+	void add (const edict_t *shooter, const edict_t *target, const int tusForShot);
+	void remove (edict_t *shooter, const edict_t *target);
+	bool hasExpired (const edict_t *shooter, const edict_t *target, const int tusTarget);
+	void advance (const edict_t *shooter, const edict_t *target, const int tusShot);
+	void reset();
+	void create (const edict_t *shooter);
+
+private:
+	ReactionFireTargetList rfData[MAX_RF_DATA];
+	ReactionFireTargetList* find (const edict_t *shooter);
+};
+
+static ReactionFireTargets rft;
 
 /**
  * @brief Initialize the reaction fire table for all entities.
  */
-void G_ReactionFireTargetsInit (void)
+void ReactionFireTargets::init (void)
 {
 	int i;
 
@@ -91,7 +107,7 @@ void G_ReactionFireTargetsInit (void)
 /**
  * @brief Reset the target count in the reaction fire table for all entities.
  */
-static void G_ReactionFireTargetsReset (void)
+void ReactionFireTargets::reset (void)
 {
 	int i;
 
@@ -104,7 +120,7 @@ static void G_ReactionFireTargetsReset (void)
  * @brief Find the given edict's table of reaction fire targets.
  * @param[in] shooter The reaction firing actor
  */
-static ReactionFireTargetList* G_ReactionFireTargetsFind (const edict_t *shooter)
+ReactionFireTargetList* ReactionFireTargets::find (const edict_t *shooter)
 {
 	int i;
 
@@ -122,10 +138,10 @@ static ReactionFireTargetList* G_ReactionFireTargetsFind (const edict_t *shooter
  * @brief Create a table of reaction fire targets for the given edict.
  * @param[in] shooter The reaction firing actor
  */
-void G_ReactionFireTargetsCreate (const edict_t *shooter)
+void ReactionFireTargets::create (const edict_t *shooter)
 {
 	int i;
-	ReactionFireTargetList *rfts = G_ReactionFireTargetsFind(shooter);
+	ReactionFireTargetList *rfts = find(shooter);
 
 	if (rfts)
 		gi.Error("Entity already has rfData");
@@ -148,10 +164,10 @@ void G_ReactionFireTargetsCreate (const edict_t *shooter)
  * @param[in] target The potential reaction fire victim
  * @param[in] tusForShot The TUs needed for the shot
  */
-static void G_ReactionFireTargetsAdd (const edict_t *shooter, const edict_t *target, const int tusForShot)
+void ReactionFireTargets::add (const edict_t *shooter, const edict_t *target, const int tusForShot)
 {
 	int i;
-	ReactionFireTargetList *rfts = G_ReactionFireTargetsFind(shooter);
+	ReactionFireTargetList *rfts = find(shooter);
 
 	assert(rfts);
 	assert(target);
@@ -171,10 +187,10 @@ static void G_ReactionFireTargetsAdd (const edict_t *shooter, const edict_t *tar
  * @param[in] shooter The reaction firing actor
  * @param[in] target The potential reaction fire victim
  */
-static void G_ReactionFireTargetsRemove (edict_t *shooter, const edict_t *target)
+void ReactionFireTargets::remove (edict_t *shooter, const edict_t *target)
 {
 	int i;
-	ReactionFireTargetList *rfts = G_ReactionFireTargetsFind(shooter);
+	ReactionFireTargetList *rfts = find(shooter);
 
 	assert(rfts);
 	assert(target);
@@ -196,10 +212,10 @@ static void G_ReactionFireTargetsRemove (edict_t *shooter, const edict_t *target
  * @param[in] target The potential reaction fire victim
  * @param[in] tusTarget The TUs the target will need for the shot, 0 for just moving
  */
-static bool G_ReactionFireTargetsExpired (const edict_t *shooter, const edict_t *target, const int tusTarget)
+bool ReactionFireTargets::hasExpired (const edict_t *shooter, const edict_t *target, const int tusTarget)
 {
 	int i;
-	const ReactionFireTargetList *rfts = G_ReactionFireTargetsFind(shooter);
+	const ReactionFireTargetList *rfts = find(shooter);
 
 	if (!rfts)
 		return false;	/* the shooter doesn't aim at anything */
@@ -221,10 +237,10 @@ static bool G_ReactionFireTargetsExpired (const edict_t *shooter, const edict_t 
  * @param[in] target The potential reaction fire victim
  * @param[in] tusShot The TUs the shooter will need for the next shot
  */
-static void G_ReactionFireTargetsAdvance (const edict_t *shooter, const edict_t *target, const int tusShot)
+void ReactionFireTargets::advance (const edict_t *shooter, const edict_t *target, const int tusShot)
 {
 	int i;
-	ReactionFireTargetList *rfts = G_ReactionFireTargetsFind(shooter);
+	ReactionFireTargetList *rfts = find(shooter);
 
 	assert(rfts);
 	assert(target);
@@ -235,6 +251,22 @@ static void G_ReactionFireTargetsAdvance (const edict_t *shooter, const edict_t 
 	}
 }
 
+/**
+ * @brief free function to initialize the reaction fire table for all entities.
+ */
+void G_ReactionFireTargetsInit (void)
+{
+	rft.init();
+}
+
+/**
+ * @brief free function to create a table of reaction fire targets for the given edict.
+ * @param[in] shooter The reaction firing actor
+ */
+void G_ReactionFireTargetsCreate (const edict_t *shooter)
+{
+	rft.create(shooter);
+}
 
 /**
  * @brief Get the weapon firing TUs of the item in the right hand of the edict.
@@ -520,9 +552,9 @@ static void G_ReactionFireTargetsUpdateAll (const edict_t *target)
 			const int TUs = G_ReactionFireGetTUsForItem(shooter, target, RIGHT(shooter));
 			if (TUs < 0)
 				continue;	/* no suitable weapon */
-			G_ReactionFireTargetsAdd(shooter, target, TUs);
+			rft.add(shooter, target, TUs);
 		} else {
-			G_ReactionFireTargetsRemove(shooter, target);
+			rft.remove(shooter, target);
 		}
 	}
 }
@@ -584,7 +616,7 @@ static bool G_ReactionFireTryToShoot (edict_t *shooter, const edict_t *target)
 	/* shooter can't take a reaction shot if it's not possible - and check that
 	 * the target is still alive */
 	if (!G_ReactionFireIsPossible(shooter, target)) {
-		G_ReactionFireTargetsRemove(shooter, target);
+		rft.remove(shooter, target);
 		return false;
 	}
 
@@ -615,9 +647,9 @@ static bool G_ReactionFireCheckExecution (const edict_t *target)
 	while ((shooter = G_EdictsGetNextLivingActor(shooter))) {
 		const int tus = G_ReactionFireGetTUsForItem(shooter, target, RIGHT(shooter));
 		if (tus > 1) {	/* indicates an RF weapon is there */
-			if (G_ReactionFireTargetsExpired(shooter, target, 0)) {
+			if (rft.hasExpired(shooter, target, 0)) {
 				if (G_ReactionFireTryToShoot(shooter, target)) {
-					G_ReactionFireTargetsAdvance(shooter, target, tus);
+					rft.advance(shooter, target, tus);
 					fired |= true;
 				}
 			}
@@ -665,10 +697,10 @@ void G_ReactionFirePreShot (const edict_t *target, const int fdTime)
 		while ((shooter = G_EdictsGetNextLivingActor(shooter))) {
 			const int entTUs = G_ReactionFireGetTUsForItem(shooter, target, RIGHT(shooter));
 			if (entTUs > 1) {	/* indicates an RF weapon is there */
-				if (G_ReactionFireTargetsExpired(shooter, target, fdTime)) {
+				if (rft.hasExpired(shooter, target, fdTime)) {
 					if (G_ReactionFireTryToShoot(shooter, target)) {
 						repeat = true;
-						G_ReactionFireTargetsAdvance(shooter, target, fdTime);
+						rft.advance(shooter, target, fdTime);
 					}
 				}
 			}
@@ -694,7 +726,7 @@ void G_ReactionFirePostShot (edict_t *target)
 void G_ReactionFireOnEndTurn (void)
 {
 	/* we explicitly do nothing at end of turn, just reset the table */
-	G_ReactionFireTargetsReset();
+	rft.reset();
 }
 
 /**
