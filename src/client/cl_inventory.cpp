@@ -76,6 +76,8 @@ bool INV_MoveItem (inventory_t* inv, const invDef_t * toContainer, int px, int p
 	switch (moved) {
 	case IA_MOVE:
 	case IA_ARMOUR:
+	case IA_RELOAD:
+	case IA_RELOAD_SWAP:
 		return true;
 	default:
 		return false;
