@@ -94,3 +94,50 @@
 		lightmap
 	}
 }
+
+/* Screens for camera control center */
+
+{
+	material tex_misc/box001
+			{
+				texture tex_base/basecam0
+				animr 3 0.42
+				lightmap
+			}
+}
+
+{
+	material tex_misc/box001b
+			{
+				texture tex_base/basecam0
+				anima 3 0.55
+				lightmap
+			}
+}
+
+{
+	material tex_misc/box002
+			{
+				texture tex_base/basecam0
+				animf 3 0.37
+				lightmap
+			}
+}
+
+{
+	material tex_misc/box002b
+			{
+				texture tex_base/basecam0
+				animr 3 0.29
+				lightmap
+			}
+}
+
+{
+	material tex_base/screenp001
+		{
+			texture tex_base/screenp001
+			scroll.t 0.1
+			lightmap
+		}
+}
