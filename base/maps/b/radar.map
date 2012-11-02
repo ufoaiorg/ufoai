@@ -2504,16 +2504,19 @@
 {
 "classname" "misc_camera"
 "origin" "304 208 240"
-"spawnflags" "248"
+"spawnflags" "504"
 "team" "1"
+"targetname" "basecam"
+"active" "0"
 }
 // entity 47
 {
 "classname" "misc_camera"
 "origin" "304 16 240"
-"spawnflags" "248"
+"spawnflags" "504"
 "team" "1"
-"angle" "180"
+"targetname" "basecam"
+"active" "0"
 }
 // entity 48
 {

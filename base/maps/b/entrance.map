@@ -1664,23 +1664,26 @@
 {
 "classname" "misc_camera"
 "origin" "80 336 176"
-"spawnflags" "252"
+"spawnflags" "508"
 "team" "1"
-"angle" "-90"
+"active" "0"
+"targetname" "basecam"
 }
 // entity 37
 {
 "classname" "misc_camera"
 "origin" "464 336 112"
-"spawnflags" "254"
+"spawnflags" "258"
 "team" "1"
-"angle" "-90"
+"active" "0"
+"targetname" "basecam"
 }
 // entity 38
 {
 "classname" "misc_camera"
 "origin" "240 176 176"
-"spawnflags" "252"
+"spawnflags" "508"
 "team" "1"
-"angle" "-90"
+"active" "0"
+"targetname" "basecam"
 }
