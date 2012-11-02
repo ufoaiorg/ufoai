@@ -327,7 +327,7 @@ item smokegrenade
 			spldmg	"1 1"
 			splrad	3
 			dmgweight "normal_light"
-			rounds	2
+			rounds	4
 		}
 		firedef
 		{
@@ -353,7 +353,7 @@ item smokegrenade
 			spldmg	"1 1"
 			splrad	3
 			dmgweight "normal_light"
-			rounds	2
+			rounds	4
 		}
 	}
 }
@@ -406,7 +406,7 @@ item stungrenade
 			spldmg	"140 10"
 			splrad	4
 			dmgweight "stun_gas"
-			rounds	3
+			rounds	4
 		}
 		firedef
 		{
@@ -435,7 +435,7 @@ item stungrenade
 			spldmg	"140 10"
 			splrad	4
 			dmgweight "stun_gas"
-			rounds	3
+			rounds	4
 		}
 	}
 }
@@ -489,7 +489,7 @@ item stungrenade_alien
 			spldmg	"180 20"
 			splrad	4
 			dmgweight "stun_gas"
-			rounds	3
+			rounds	4
 		}
 		firedef
 		{
@@ -518,7 +518,7 @@ item stungrenade_alien
 			spldmg	"180 20"
 			splrad	4
 			dmgweight "stun_gas"
-			rounds	3
+			rounds	4
 		}
 	}
 }
@@ -572,7 +572,7 @@ item incgrenade
 			spldmg	"70 10"
 			splrad	3
 			dmgweight "incendiary"
-			rounds	2
+			rounds	4
 		}
 		firedef
 		{
@@ -602,7 +602,7 @@ item incgrenade
 			spldmg	"70 10"
 			splrad	3
 			dmgweight "incendiary"
-			rounds	2
+			rounds	4
 		}
 	}
 }

@@ -1171,7 +1171,7 @@ item rpg_incendiary_ammo
 			spldmg		"75 20"
 			splrad		4
 			dmgweight	"incendiary"
-			rounds		2
+			rounds		4
 		}
 	}
 }
@@ -1416,7 +1416,7 @@ item grenl_incendiary_ammo
 			splrad				3
 			dmgweight			"incendiary"
 			reaction			false
-			rounds				2
+			rounds				4
 		}
 
 		firedef
@@ -1443,7 +1443,7 @@ item grenl_incendiary_ammo
 			splrad				3
 			dmgweight			"incendiary"
 			reaction			false
-			rounds				2
+			rounds				4
 		}
 
 		firedef
@@ -1473,7 +1473,7 @@ item grenl_incendiary_ammo
 			splrad				3
 			dmgweight			"incendiary"
 			reaction			false
-			rounds				2
+			rounds				4
 		}
 
 		firedef
@@ -1503,7 +1503,7 @@ item grenl_incendiary_ammo
 			splrad				3
 			dmgweight			"incendiary"
 			reaction			false
-			rounds				2
+			rounds				4
 		}
 	}
 }
