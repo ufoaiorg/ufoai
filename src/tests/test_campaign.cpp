@@ -566,7 +566,9 @@ static void testResearch (void)
 
 	const int n = laserTech->time * 1.25;
 	for (int i = 0; i < n; i++) {
-		RS_ResearchRun();
+		const int finished = RS_ResearchRun();
+		UFO_CU_ASSERT_EQUAL_INT_MSG_FATAL(finished, 0, va("Did not expect to finish a research (#%i, i:%i)",
+				finished, i));
 	}
 
 	CU_ASSERT_EQUAL(laserTech->statusResearch, RS_RUNNING);

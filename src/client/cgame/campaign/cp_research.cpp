@@ -772,6 +772,7 @@ bool RS_MarkStoryLineEventResearched (const char *techID)
  * @brief Checks the research status
  * @todo Needs to check on the exact time that elapsed since the last check of the status.
  * @sa RS_MarkResearched
+ * @return The amout of new researched technologies
  */
 int RS_ResearchRun (void)
 {
