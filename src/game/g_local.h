@@ -130,8 +130,9 @@ typedef struct {
 	/* turn statistics */
 	int numplayers;
 	int activeTeam;
+	int teamOfs;
 	int nextEndRound;
-	int actualRound;	/**< the current running turn counter */
+	int actualRound;	/**< the current running round counter */
 
 	pathing_t *pathingMap;	/**< This is where the data for TUS used to move and actor locations go */
 

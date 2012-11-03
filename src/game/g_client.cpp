@@ -941,6 +941,7 @@ static void G_GetStartingTeam (const player_t* player)
 
 	if (sv_maxclients->integer == 1) {
 		level.activeTeam = player->pers.team;
+		level.teamOfs = MAX_TEAMS - level.activeTeam;
 		return;
 	}
 
@@ -963,6 +964,7 @@ static void G_GetStartingTeam (const player_t* player)
 		const int teamIndex = (int) (frand() * (teamCount - 1) + 0.5);
 		G_PrintStats("Starting new game: %s with %i teams", level.mapname, teamCount);
 		level.activeTeam = knownTeams[teamIndex];
+		level.teamOfs = MAX_TEAMS - level.activeTeam;
 		p = NULL;
 		while ((p = G_PlayerGetNextActiveHuman(p)))
 			if (p->pers.team != level.activeTeam)

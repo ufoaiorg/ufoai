@@ -150,6 +150,8 @@ void G_ClientEndRound (player_t * player)
 {
 	player_t *p;
 
+	const int lastTeamIndex = (G_GetActiveTeam() + level.teamOfs) % MAX_TEAMS;
+
 	if (!G_IsAIPlayer(player)) {
 		/* inactive players can't end their inactive turn :) */
 		if (level.activeTeam != player->pers.team)
@@ -198,7 +200,8 @@ void G_ClientEndRound (player_t * player)
 	if (!G_MatchIsRunning())
 		return;
 
-	level.actualRound++;
+	if (lastTeamIndex > (level.activeTeam + level.teamOfs) % MAX_TEAMS)
+		level.actualRound++;
 
 	/* communicate next player in row to clients */
 	G_EventEndRound();

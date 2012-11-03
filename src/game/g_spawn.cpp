@@ -428,7 +428,10 @@ edict_t *G_Spawn (void)
 
 static void Think_SmokeAndFire (edict_t *self)
 {
-	if (self->time + self->count <= level.actualRound) {
+	const int endRound = self->time + self->count;
+	const int spawnIndex = (self->team + level.teamOfs) % MAX_TEAMS;
+	const int currentIndex = (level.activeTeam + level.teamOfs) % MAX_TEAMS;
+	if (endRound < level.actualRound || (endRound == level.actualRound && spawnIndex <= currentIndex)) {
 		const bool checkVis = self->type == ET_SMOKE;
 		G_EventEdictPerish(G_VisToPM(self->particleLink->visflags), self->particleLink);
 		G_FreeEdict(self->particleLink);
@@ -1036,6 +1039,7 @@ static void G_SpawnField (edict_t *ent, const char *classname, entity_type_t typ
 	ent->think = Think_SmokeAndFire;
 	ent->nextthink = 1;
 	ent->time = level.actualRound;
+	ent->team = level.activeTeam;
 
 	gi.LinkEdict(ent);
 

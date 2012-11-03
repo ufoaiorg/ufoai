@@ -182,9 +182,13 @@ void G_MissionThink (edict_t *self)
 				}
 			}
 			if (chain->time) {
+				const int endTime = level.actualRound - chain->count;
+				const int spawnIndex = (self->team + level.teamOfs) % MAX_TEAMS;
+				const int currentIndex = (level.activeTeam + level.teamOfs) % MAX_TEAMS;
 				/* not every edict in the group chain has
 				 * been occupied long enough */
-				if (!chain->count || level.actualRound - chain->count < chain->time)
+				if (!chain->count || endTime < chain->time ||
+						(endTime == level.actualRound && spawnIndex <= currentIndex))
 					return;
 			}
 			/* not destroyed yet */
