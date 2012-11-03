@@ -567,7 +567,6 @@ item incgrenade
 			ammo	1
 			delaybetweenshots		1
 			time	8
-			damage	"0 0"
 			damage	"14 5"	//Fire field damage
 			spldmg	"70 10"
 			splrad	3
@@ -597,7 +596,6 @@ item incgrenade
 			ammo	1
 			delaybetweenshots		1
 			time	8
-			damage	"0 0"
 			damage	"14 5"	//Fire field damage
 			spldmg	"70 10"
 			splrad	3
