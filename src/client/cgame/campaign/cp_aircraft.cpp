@@ -2947,7 +2947,6 @@ bool AIR_RemoveEmployee (employee_t *employee, aircraft_t *aircraft)
 		return AIR_SetPilot(aircraft, NULL);
 	}
 
-	cgi->INV_DestroyInventory(&employee->chr.i);
 	return LIST_Remove(&aircraft->acTeam, employee);
 }
 
