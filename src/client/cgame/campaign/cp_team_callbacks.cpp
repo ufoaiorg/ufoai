@@ -129,6 +129,48 @@ static void CP_TEAM_SelectActorByUCN_f (void)
 	CL_UpdateCharacterValues(chr, "mn_");
 }
 
+/**
+ * @brief Removes every item from a soldier
+ */
+static void CP_TEAM_DeEquipActor_f (void)
+{
+	employee_t *employee;
+	character_t *chr;
+	int ucn;
+	base_t *base = B_GetCurrentSelectedBase();
+
+	if (!base)
+		return;
+
+	/* check syntax */
+	if (cgi->Cmd_Argc() < 1) {
+		Com_Printf("Usage: %s <ucn>\n", cgi->Cmd_Argv(0));
+		return;
+	}
+
+	ucn = atoi(cgi->Cmd_Argv(1));
+	if (ucn < 0) {
+		cgi->UI_ExecuteConfunc("reset_character_cvars");
+		return;
+	}
+
+	employee = E_GetEmployeeFromChrUCN(ucn);
+	if (!employee)
+		cgi->Com_Error(ERR_DROP, "CP_TEAM_DeEquipActor_f: No employee with UCN %i", ucn);
+
+	chr = &employee->chr;
+
+	cgi->INV_DestroyInventory(&chr->i);
+
+	CP_CleanTempInventory(base);
+	equipDef_t unused = base->storage;
+	CP_CleanupTeam(base, &unused);
+	cgi->UI_ContainerNodeUpdateEquipment(&base->bEquipment, &unused);
+
+	/* set info cvars */
+	CL_UpdateCharacterValues(chr, "mn_");
+}
+
 #ifdef DEBUG
 /**
  * @brief Debug function to list the actual team
@@ -237,7 +279,6 @@ static void CP_TEAM_FillEquipSoldierList_f (void)
 		return;
 
 	aircraft_t *aircraft = base->aircraftCurrent;
-	equipDef_t unused;
 
 	if (cgi->Cmd_Argc() > 1 ) {
 		int idx = atoi(cgi->Cmd_Argv(1));
@@ -281,7 +322,7 @@ static void CP_TEAM_FillEquipSoldierList_f (void)
 	}
 	/* clean up aircraft crew for upcoming mission */
 	CP_CleanTempInventory(base);
-	unused = base->storage;
+	equipDef_t unused = base->storage;
 	CP_CleanupTeam(base, &unused);
 	cgi->UI_ContainerNodeUpdateEquipment(&base->bEquipment, &unused);
 	if (count == 0)
@@ -356,6 +397,7 @@ void CP_TEAM_InitCallbacks (void)
 	cgi->Cmd_AddCommand("ui_team_fill", CP_TEAM_FillEmployeeList_f, "Fill the Team assignment UI with employee");
 	cgi->Cmd_AddCommand("ui_team_fillbdef", CP_TEAM_FillBDEFEmployeeList_f, "Fill the Team assignment UI with employee for base defence");
 	cgi->Cmd_AddCommand("ui_team_fillequip", CP_TEAM_FillEquipSoldierList_f, "Fill the employee list for the in-base soldier equip screen and initialize the inventory");
+	cgi->Cmd_AddCommand("ui_team_deequip", CP_TEAM_DeEquipActor_f, "De-equip soldier");
 	cgi->Cmd_AddCommand("ui_team_changeskin", CP_TEAM_ChangeSkin_f, "Change the skin of a soldier");
 #ifdef DEBUG
 	cgi->Cmd_AddCommand("debug_teamlist", CP_TeamListDebug_f, "Debug function to show all hired and assigned teammembers");
@@ -368,6 +410,7 @@ void CP_TEAM_InitCallbacks (void)
 void CP_TEAM_ShutdownCallbacks (void)
 {
 	cgi->Cmd_RemoveCommand("ui_team_changeskin");
+	cgi->Cmd_RemoveCommand("ui_team_deequip");
 	cgi->Cmd_RemoveCommand("ui_team_fillequip");
 	cgi->Cmd_RemoveCommand("ui_team_fillbdef");
 	cgi->Cmd_RemoveCommand("ui_team_fill");

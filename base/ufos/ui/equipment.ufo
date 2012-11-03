@@ -163,6 +163,19 @@ window equipment extends objectinfo
 		}
 	}
 
+	button bt_deequipsoldier {
+		string "_Remove all"
+		pos		"348 305"
+		size	"180 35"
+		background	"ui/button_blue"
+		color	"1 1 1 0.8"
+		selectcolor "1 1 1 1"
+
+		onClick	{
+			cmd "ui_team_deequip <node:root.selected@integer>;update_item_list;"
+		}
+	}
+
 	// ==================
 	// category buttons
 	// ==================
