@@ -6,8 +6,8 @@ component cmpSelect extends checkbox_green
 {
 		current		0
 		size		"20 20"
-		onChange	{ cmd "employee_hire <num>;" }
-		onRClick		{ cmd "employee_delete <num>;" }
+		onChange	{ cmd "employee_hire <num>; employee_equipcheck;" }
+		onRClick		{ cmd "employee_delete <num>; employee_equipcheck;" }
 }
 
 window employees
@@ -30,7 +30,7 @@ window employees
 
 	rows list_background {
 		pos			"29 170"
-		size		"370 580"
+		size		"370 540"
 		color1		"0 0.08 0 1"
 		color2		"0 0.16 0 1"
 		lineheight	38
@@ -38,13 +38,13 @@ window employees
 
 	panel scroll_background {
 		pos			"363 170"
-		size		"40 570"
+		size		"40 540"
 		bgcolor		"0 0 0 0.5"
 	}
 
 	panel list_border {
 		pos		"13 155"
-		size	"393 605"
+		size	"393 565"
 		background	"ui/panel_grey_green_large2"
 	}
 
@@ -91,6 +91,14 @@ window employees
 	confunc employeehide
 	{
 		*node:root.bt_employee<1>@invis = true
+	}
+
+	confunc employee_equipcheck {
+		if ( *cvar:mn_hiresoldiers > 0 ) {
+			*node:root.bt_equipsoldiers@disabled = false
+		} else {
+			*node:root.bt_equipsoldiers@disabled = true
+		}
 	}
 
 	cmpSelect bt_employee0
@@ -177,12 +185,6 @@ window employees
 		pos "325 674"
 	}
 
-	cmpSelect bt_employee14
-	{
-		num 14
-		pos "325 712"
-	}
-
 	/**
 	 * @param[in] <1> number of employee in the list
 	 */
@@ -198,11 +200,11 @@ window employees
 	textlist employee_list
 	{
 		dataid		TEXT_LIST
-		pos			"45 170"
+		pos			"45 180"
 		width		280
 		lineheight	38
 		tabwidth	100
-		rows		"15"
+		rows		"14"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
 		onClick			{ cmd "employee_select <lineselected>;" }
@@ -217,14 +219,27 @@ window employees
 	vscrollbar scroll
 	{
 		image		"ui/scrollbar_v_green"
-		pos			"368 175"
-		height		"564"
+		pos			"368 185"
+		height		"514"
 		current		0
 		viewsize	15
 		fullsize	50
 		onChange	{
 			*node:root.employee_list@viewpos = <current>
 			cmd "employee_scroll <current>;"
+		}
+	}
+
+	button bt_equipsoldiers {
+		string "_Equip soldiers"
+		pos		"110 725"
+		size	"198 35"
+		background	"ui/button_blue"
+		color	"1 1 1 0.8"
+		selectcolor "1 1 1 1"
+
+		onClick	{
+			cmd "ui_push equipment -1;"
 		}
 	}
 
@@ -681,7 +696,7 @@ window employees
 		*node:root.scroll@current = 0
 		cmd "employee_init 0;"
 		*cvar:mn_hiretype = 0
-		cmd "employee_update_count;"
+		cmd "employee_update_count; employee_equipcheck;"
 	}
 
 	func onWindowClosed

@@ -35,7 +35,7 @@ static employee_t *selectedEmployee = NULL;
 /* Holds the current active employee category */
 static int employeeCategory = 0;
 
-static const int maxEmployeesPerPage = 15;
+static const int maxEmployeesPerPage = 14;
 
 static int employeeScrollPos = 0;
 
