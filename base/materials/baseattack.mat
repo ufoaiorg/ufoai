@@ -98,37 +98,65 @@
 /* Screens for camera control center */
 
 {
-	material tex_misc/box001
+	material tex_anim/anim_back_0
 			{
-				texture tex_base/basecam0
-				animr 3 0.42
+				texture tex_base/screen_base
+				blend GL_SRC_ALPHA GL_ONE
+			}
+			{
+				texture tex_anim/basecam0
+				blend GL_SRC_ALPHA GL_ONE
+				animr 4 0.42
+			}
+			{
 				lightmap
 			}
 }
 
 {
-	material tex_misc/box001b
+	material tex_anim/anim_back_1
 			{
-				texture tex_base/basecam0
-				anima 3 0.55
+				texture tex_base/screen_base
+				blend GL_SRC_ALPHA GL_ONE
+			}
+			{
+				texture tex_anim/basecam0
+				blend GL_SRC_ALPHA GL_ONE
+				anima 4 0.55
+			}
+			{
 				lightmap
 			}
 }
 
 {
-	material tex_misc/box002
+	material tex_anim/anim_back_2
 			{
-				texture tex_base/basecam0
-				animf 3 0.37
+				texture tex_base/screen_base
+				blend GL_SRC_ALPHA GL_ONE
+			}
+			{
+				texture tex_anim/basecam0
+				blend GL_SRC_ALPHA GL_ONE
+				animf 4 0.37
+			}
+			{
 				lightmap
 			}
 }
 
 {
-	material tex_misc/box002b
+	material tex_anim/anim_back_3
 			{
-				texture tex_base/basecam0
-				animr 3 0.29
+				texture tex_base/screen_base
+				blend GL_SRC_ALPHA GL_ONE
+			}
+			{
+				texture tex_anim/basecam0
+				blend GL_SRC_ALPHA GL_ONE
+				animr 4 0.29
+			}
+			{
 				lightmap
 			}
 }
