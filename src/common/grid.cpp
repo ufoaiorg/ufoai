@@ -838,10 +838,6 @@ void Grid_RecalcBoxRouting (mapTiles_t *mapTiles, routing_t *map, const GridBox 
 {
 	int x, y, z, actorSize, dir;
 
-	Com_DPrintf(DEBUG_PATHING, "rerouting (%i %i %i) (%i %i %i)\n",
-		(int)box.mins[0], (int)box.mins[1], (int)box.mins[2],
-		(int)box.maxs[0], (int)box.maxs[1], (int)box.maxs[2]);
-
 	/* check unit heights */
 	for (actorSize = 1; actorSize <= ACTOR_MAX_SIZE; actorSize++) {
 		const int maxY = box.maxs[1] + actorSize;

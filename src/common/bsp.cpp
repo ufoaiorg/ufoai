@@ -872,16 +872,11 @@ static void CMod_RerouteMap (mapTiles_t *mapTiles, mapData_t *mapData)
 	for (i = 0; i < 3; i++)
 		mins[i] = std::max(mins[i], (pos_t)0);
 
-	Com_DPrintf(DEBUG_PATHING, "rerouting (%i %i %i) (%i %i %i)\n",
-		(int)mins[0], (int)mins[1], (int)mins[2],
-		(int)maxs[0], (int)maxs[1], (int)maxs[2]);
-
 	/* Floor pass */
 	for (size = ACTOR_SIZE_INVALID; size < ACTOR_MAX_SIZE; size++) {
 		for (y = mins[1]; y <= maxs[1]; y++) {
 			for (x = mins[0]; x <= maxs[0]; x++) {
 				if (mapData->reroute[size][y][x] == ROUTING_NOT_REACHABLE) {
-					/* Com_Printf("Tracing floor (%i %i s:%i)\n", x, y, size); */
 					for (z = maxs[2]; z >= mins[2]; z--) {
 						const int newZ = RT_CheckCell(mapTiles, mapData->map, size + 1, x, y, z, NULL);
 						assert(newZ <= z);
@@ -914,7 +909,6 @@ static void CMod_RerouteMap (mapTiles_t *mapTiles, mapData_t *mapData)
 						if (tile2 && (tile2 == ROUTING_NOT_REACHABLE || tile2 != tile)) {
 							/** @note This update MUST go from the bottom (0) to the top (7) of the model.
 							 * RT_UpdateConnection expects it and breaks otherwise. */
-							/* Com_Printf("Tracing passage (%i %i s:%i d:%i)\n", x, y, size, dir); */
 							RT_UpdateConnectionColumn(mapTiles, mapData->map, size + 1, x, y, dir, NULL);
 						}
 					}
