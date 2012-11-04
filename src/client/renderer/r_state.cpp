@@ -157,9 +157,6 @@ void R_BindArray (GLenum target, GLenum type, const void *array)
 	case GL_COLOR_ARRAY:
 		glColorPointer(COMPONENTS_COLOR_ARRAY, type, 0, array);
 		break;
-	case GL_INDEX_ARRAY:
-		glIndexPointer(type, 0, array);
-		break;
 	case GL_NORMAL_ARRAY:
 		glNormalPointer(type, 0, array);
 		break;
@@ -193,9 +190,6 @@ void R_BindDefaultArray (GLenum target)
 	case GL_COLOR_ARRAY:
 		R_BindArray(target, GL_FLOAT, r_state.color_array);
 		break;
-	case GL_INDEX_ARRAY:
-		R_BindArray(target, GL_INT, r_state.index_array);
-		break;
 	case GL_NORMAL_ARRAY:
 		R_BindArray(target, GL_FLOAT, r_state.normal_array);
 		break;
@@ -222,9 +216,9 @@ void R_BindBuffer (GLenum target, GLenum type, GLuint id)
 	if (!r_vertexbuffers->integer)
 		return;
 
-	if (target == GL_INDEX_ARRAY) {
+	if (target == GL_ELEMENT_ARRAY_BUFFER) {
 		qglBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id);
-		return; /* No need to call glIndexPoiner -- this binding is special and automates that */
+		return; /* No need to call gl***Poiner -- this binding is special and automates that */
 	} else {
 		qglBindBuffer(GL_ARRAY_BUFFER, id);
 	}
@@ -860,9 +854,6 @@ void R_SetDefaultState (void)
 	glEnableClientState(GL_VERTEX_ARRAY);
 	R_BindDefaultArray(GL_VERTEX_ARRAY);
 
-	glEnableClientState(GL_INDEX_ARRAY);
-	R_BindDefaultArray(GL_INDEX_ARRAY);
-
 	R_EnableColorArray(true);
 	R_BindDefaultArray(GL_COLOR_ARRAY);
 	R_EnableColorArray(false);
@@ -965,7 +956,6 @@ void R_ReallocateStateArrays (int size)
 	r_state.array_size = size;
 	R_BindDefaultArray(GL_VERTEX_ARRAY);
 	R_BindDefaultArray(GL_COLOR_ARRAY);
-	R_BindDefaultArray(GL_INDEX_ARRAY);
 	R_BindDefaultArray(GL_NORMAL_ARRAY);
 	R_BindDefaultArray(GL_TANGENT_ARRAY);
 	R_BindDefaultArray(GL_NEXT_VERTEX_ARRAY);

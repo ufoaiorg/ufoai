@@ -84,10 +84,6 @@ static inline void R_SetVertexArrayState (const mBspModel_t* bsp, int mask)
 	if (mask & R_ARRAY_VERTEX)
 		R_BindArray(GL_VERTEX_ARRAY, GL_FLOAT, bsp->verts);
 
-	/* index array */
-	if (mask & R_ARRAY_ELEMENT)
-		R_BindArray(GL_INDEX_ARRAY, GL_INT, bsp->indexes);
-
 	/* normals and tangents for lighting */
 	if (r_state.lighting_enabled) {
 		if (mask & R_ARRAY_NORMAL)
@@ -125,7 +121,7 @@ static inline void R_SetVertexBufferState (const mBspModel_t* bsp, int mask)
 
 	/* index array */
 	if (mask & R_ARRAY_ELEMENT)
-		R_BindBuffer(GL_INDEX_ARRAY, GL_INT, bsp->index_buffer);
+		R_BindBuffer(GL_ELEMENT_ARRAY_BUFFER, GL_INT, bsp->index_buffer);
 
 	if (r_state.lighting_enabled) { /* normals and tangents for lighting */
 		if (mask & R_ARRAY_NORMAL)
