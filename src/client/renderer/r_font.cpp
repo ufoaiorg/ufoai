@@ -261,7 +261,7 @@ static int R_FontHash (const char *string, const font_t *font)
 {
 	register int hashValue, i;
 
-	hashValue = 0x2040189 * ((f - fonts) + 1);
+	hashValue = 0x2040189 * ((font - fonts) + 1);
 	for (i = 0; string[i] != '\0'; i++)
 		hashValue = (hashValue + string[i]) * 16777619 + 1;
 
