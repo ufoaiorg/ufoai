@@ -251,13 +251,22 @@ void uiTextEntryNode::draw (uiNode_t *node)
 		char  buf[MAX_VAR];
 		char* c = buf;
 		if (EXTRADATA(node).isPassword) {
-			size_t const size = UTF8_strlen(text);
+			size_t size = UTF8_strlen(text);
+
+			if (size > MAX_VAR - 2)
+				size = MAX_VAR - 2;
+
 			memset(buf, HIDECHAR, size);
 			c += size;
 		} else {
 			size_t const size = strlen(text);
-			memcpy(buf, text, size);
-			c += size;
+			if (size < MAX_VAR - 2) {
+				memcpy(buf, text, size);
+				c += size;
+			} else {
+				memcpy(buf, text, MAX_VAR - 2);
+				c += MAX_VAR - 2;
+			}
 		}
 
 		if (UI_HasFocus(node) && CL_Milliseconds() % 1000 < 500) {
