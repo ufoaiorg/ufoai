@@ -907,8 +907,6 @@ static void CMod_RerouteMap (mapTiles_t *mapTiles, mapData_t *mapData)
 						tile2 = mapData->reroute[size][dy][dx];
 						/* Both cells are present and if either cell is ROUTING_NOT_REACHABLE or if the cells are different. */
 						if (tile2 && (tile2 == ROUTING_NOT_REACHABLE || tile2 != tile)) {
-							/** @note This update MUST go from the bottom (0) to the top (7) of the model.
-							 * RT_UpdateConnection expects it and breaks otherwise. */
 							RT_UpdateConnectionColumn(mapTiles, mapData->map, size + 1, x, y, dir, NULL);
 						}
 					}
