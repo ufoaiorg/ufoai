@@ -134,6 +134,15 @@ public:
 	inline bool isZero() const {
 		return VectorIntZero(mins) && VectorIntZero(maxs);
 	}
+	/** @brief expand the box in four directions, but clip them to the maximum boundaries
+	 * @note this is pretty much nonsense with the current setting of PATHFINDING_WIDTH
+	 * and the data type of pos3_t, but who knows the future... */
+	inline void expandXY(const int byVal) {
+		mins[0] = std::max(mins[0] - byVal, 0);
+		mins[1] = std::max(mins[1] - byVal, 0);
+		maxs[0] = std::min(maxs[0] + byVal, PATHFINDING_WIDTH - 1);
+		maxs[1] = std::min(maxs[1] + byVal, PATHFINDING_WIDTH - 1);
+	}
 
 	pos3_t mins;
 	pos3_t maxs;
