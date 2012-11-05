@@ -113,6 +113,21 @@ base/maps/city2/c2_craft_drop_herakles.map | GNU General Public License 2.0 or l
 base/maps/city2/c2_craft_drop_raptor.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
 base/maps/city2/c2_main.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
 base/maps/city2/c2_mp_team_4.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/city3.ump | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/city3/c3_bld_abandoned.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/city3/c3_bld_parking.map | GNU General Public License 2.0 or later | Nate Wright, Holger 'ShipIt' Gellrich | maps/city/citybldl_4x4_2a.map
+base/maps/city3/c3_common.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/city3/c3_common_a.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/city3/c3_common_b.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/city3/c3_craft_drop_firebird.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/city3/c3_craft_drop_herakles.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/city3/c3_craft_drop_raptor.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/city3/c3_junction_e.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/city3/c3_junction_n.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/city3/c3_junction_s.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/city3/c3_junction_w.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/city3/c3_street_h_1.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/city3/c3_street_v_1.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
 base/maps/city_disco.ump | GNU General Public License 2.0 or later
 base/maps/city_disco/cd_craft_drop_firebird.map | GNU General Public License 2.0 or later | "SparX" Beyeler
 base/maps/city_disco/cd_craft_drop_herakles.map | GNU General Public License 2.0 or later | "SparX" Beyeler

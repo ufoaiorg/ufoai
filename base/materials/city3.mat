@@ -1,0 +1,673 @@
+/* Textures Common For All Tiles-----------------------------------*/
+
+// dark texture to cover the cutting planes
+{
+	material tex_dirt/dirt001
+		bump 1.0
+		parallax 1.0
+		specular 0.1
+		hardness 0.1
+			{
+				lightmap
+			}
+}
+
+// sidewalk
+{
+	material tex_buildings/sidewalk01
+		bump 1.0
+		parallax 1.0
+		specular 0.1
+		hardness 0.1
+			{
+				lightmap
+			}
+}
+
+/* Textures Used On Dropship Tiles --------------------------------*/
+
+// Grass texture
+{
+	material tex_nature/grass
+		bump 1.0
+		parallax 1.0
+		specular 0.1
+		hardness 0.1
+			{
+				lightmap
+			}
+}
+
+// wall texture for abondoned building
+{
+	material tex_buildings/wall044
+		bump 2.0
+		parallax 1.0
+		specular 0.1
+		hardness 0.1
+			{
+				lightmap
+			}
+}
+
+// 1st floor texture for abondoned building
+{
+	material tex_buildings/cemdrk
+		bump 1.0
+		parallax 1.0
+		specular 0.1
+		hardness 0.1
+			{
+				lightmap
+			}
+}
+
+// 2nd floor texture for abondoned building
+{
+	material tex_buildings/floor009
+		bump 1.0
+		parallax 1.0
+		specular 0.1
+		hardness 0.1
+			{
+				lightmap
+			}
+}
+
+// stairs texture for abondoned building
+{
+	material tex_buildings/concrete01dark
+		bump 1.0
+		parallax 1.0
+		specular 0.1
+		hardness 0.1
+			{
+				lightmap
+			}
+}
+
+// dry dirt texture used in shadows
+{
+	material tex_nature/drymud
+		bump 1.0
+		parallax 1.0
+		specular 0.1
+		hardness 0.1
+			{
+				lightmap
+			}
+}
+
+// wood texture for the fence
+{
+	material tex_material/wood017
+		bump 2.0
+		parallax 1.0
+		specular 0.1
+		hardness 0.1
+			{
+				texture tex_material/metall013
+				dirtmap 1.0
+				lightmap
+			}
+}
+
+// grafitti
+{
+	material tex_mattn/wall074
+		bump 1.0
+		parallax 1.0
+		specular 0.1
+		hardness 0.1
+			{
+				texture tex_material/metall013
+				dirtmap 1.0
+				lightmap
+			}
+}
+
+
+/* Textures Used On Street Tiles ----------------------------------*/
+
+/* Street textures */
+
+// base texture for streets
+{
+	material tex_streets/base
+		bump 1.0
+		parallax 1.0
+		specular 0.1
+		hardness 0.1
+			{
+				lightmap
+			}
+}
+
+// vertical streets
+{
+	material tex_streets/2ln
+		bump 1.0
+		parallax 1.0
+		specular 0.1
+		hardness 0.1
+			{
+				texture tex_streets/2ln_g
+				blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+				lightmap
+			}
+}
+
+/* other materials used on street tiles */
+
+// rails
+{
+	material tex_material/metall002
+		bump 0.1
+		parallax 0.1
+		specular 1.0
+		hardness 1.0
+			{
+				envmap 1
+				lightmap
+			}
+}
+
+// sidelines scroll to show the driving direction
+{
+	material tex_lights/mtl_l1_fx1
+			{
+				texture tex_lights/mtl_l1_fx1
+				scroll.s 2
+				lightmap
+			}
+}
+
+// stage for embankment up the 1st street level - used for smoothing the border between _grass and _dirt2 textures
+{
+	material tex_mattn/ground_dirt2
+		bump 1.0
+		parallax 1.0
+		specular 0.1
+		hardness 0.1
+			{
+				texture tex_nature/grass
+				tape 68 4 4
+				lightmap
+			}
+}
+
+// congrete texture for the street posts
+{
+	material tex_buildings/concrete022
+		bump 1.0
+		parallax 1.0
+		specular 0.1
+		hardness 0.1
+			{
+				texture tex_buildings/concrete01dark
+				terrain 32 336
+				lightmap
+			}
+}
+
+// congrete textures for the subway
+{
+	material tex_buildings/e8crete03e
+		bump 1.0
+		parallax 1.0
+		specular 0.1
+		hardness 0.1
+			{
+				texture tex_material/metall013
+				dirtmap 0.5
+				lightmap
+			}
+}
+
+{
+	material tex_buildings/e8crete03f
+		bump 1.0
+		parallax 1.0
+		specular 0.1
+		hardness 0.1
+			{
+				texture tex_material/metall013
+				dirtmap 0.5
+				lightmap
+			}
+}
+
+{
+	material tex_buildings/e8crete03g
+		bump 1.0
+		parallax 1.0
+		specular 0.1
+		hardness 0.1
+			{
+				texture tex_material/metall013
+				dirtmap 0.5
+				lightmap
+			}
+}
+
+// the rope holding the 2nd street level
+{
+	material tex_mattn/steelrope
+		bump 1.0
+		parallax 1.0
+		specular 1.0
+		hardness 1.0
+			{
+				texture tex_material/metall013
+				dirtmap 1.0
+				lightmap
+			}
+}
+
+// lights alongside the street
+{
+	material tex_lights/mtl_l2
+		bump 1.0
+		parallax 1.0
+		specular 0.1
+		hardness 0.1
+}
+
+// subway lights
+{
+	material tex_lights/mtl_l2_fx0
+		bump 1.0
+		parallax 1.0
+		specular 0.1
+		hardness 0.1
+}
+
+// warning lights on top of the posts
+{
+	material tex_lights/light004off
+		bump 1.0
+		parallax 1.0
+		specular 1.0
+		hardness 1.0
+			{
+				texture tex_lights/light004
+				pulse 0.5
+				dutycycle 0.4
+				lightmap
+			}
+			{
+				flare 2
+				scale.s 1.5
+				color 1.0 0.0 0.0
+				lightmap
+			}
+}
+
+{
+	material tex_lights/light008off
+		bump 1.0
+		parallax 1.0
+		specular 1.0
+		hardness 1.0
+			{
+				texture tex_lights/light008
+				pulse 0.5
+				dutycycle 0.4
+				lightmap
+			}
+}
+
+/* Adverts --------------------------------------------------------*/
+
+{
+	material tex_buildings/pipe_tall
+		bump 1.0
+		parallax 1.0
+		specular 0.1
+		hardness 0.1
+			{
+				texture tex_material/metall013
+				dirtmap 0.5
+				lightmap
+			}
+}
+
+{
+	material tex_buildings/pipe_flat
+		bump 1.0
+		parallax 1.0
+		specular 0.1
+		hardness 0.1
+			{
+				texture tex_material/metall013
+				dirtmap 0.5
+				lightmap
+			}
+}
+
+{
+	material tex_buildings/platside
+		bump 1.0
+		parallax 1.0
+		specular 0.1
+		hardness 0.1
+			{
+				texture tex_material/metall013
+				dirtmap 1.0
+				lightmap
+			}
+}
+
+{
+	material textures/tex_buildings/plat
+		bump 1.0
+		parallax 1.0
+		specular 0.1
+		hardness 0.1
+			{
+				texture tex_material/metall013
+				dirtmap 1.0
+				lightmap
+			}
+}
+
+{
+	material tex_misc/advert_back
+		bump 1.0
+		parallax 1.0
+		specular 2.0
+		hardness 2.0
+}
+
+{
+	material tex_misc/advertaa0
+		bump 1.0
+		parallax 1.0
+		specular 2.0
+		hardness 2.0
+			{
+				texture tex_misc/advertaa0
+				anim 5 8.0
+				glowmaplink
+				glowscale 0.1
+				lightmap
+			}
+}
+
+{
+	material tex_misc/advertab0
+		bump 1.0
+		parallax 1.0
+		specular 2.0
+		hardness 2.0
+			{
+				texture tex_misc/advertab0
+				anim 7 1.0
+				glowmaplink
+				glowscale 0.1
+				lightmap
+			}
+}
+
+{
+	material tex_misc/advertba
+		bump 1.0
+		parallax 1.0
+		specular 2.0
+		hardness 2.0
+}
+
+{
+	material tex_misc/advertbb
+		bump 1.0
+		parallax 1.0
+		specular 2.0
+		hardness 2.0
+			{
+				texture tex_misc/advertbb0
+				blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+				anim 8 3.0
+				glowmaplink
+				glowscale 0.1
+				lightmap
+			}
+}
+
+{
+	material tex_base/screen_base
+		specular 1.0
+		hardness 1.0
+			{
+				texture tex_tech/tv0
+				blend GL_SRC_ALPHA GL_ONE
+				anim 2 10.0
+				lightmap
+			}
+}
+
+/* Textures For Parking Lot ---------------------------------------*/
+
+// Camera control center
+
+{
+	material tex_anim/anim_back_0
+			{
+				texture tex_tech/laptop_screen
+				blend GL_SRC_ALPHA GL_ONE
+			}
+			{
+				texture tex_anim/basecam0
+				blend GL_SRC_ALPHA GL_ONE
+				animr 4 0.42
+			}
+			{
+				lightmap
+			}
+}
+
+{
+	material tex_anim/anim_back_1
+			{
+				texture tex_base/screen_base
+				blend GL_SRC_ALPHA GL_ONE
+			}
+			{
+				texture tex_anim/basecam0
+				blend GL_SRC_ALPHA GL_ONE
+				anima 4 0.55
+			}
+			{
+				lightmap
+			}
+}
+
+{
+	material tex_anim/anim_back_2
+			{
+				texture tex_base/screen_base
+				blend GL_SRC_ALPHA GL_ONE
+			}
+			{
+				texture tex_anim/basecam0
+				blend GL_SRC_ALPHA GL_ONE
+				animf 4 0.37
+			}
+			{
+				lightmap
+			}
+}
+
+{
+	material tex_anim/anim_back_3
+			{
+				texture tex_base/screen_base
+				blend GL_SRC_ALPHA GL_ONE
+			}
+			{
+				texture tex_anim/basecam0
+				blend GL_SRC_ALPHA GL_ONE
+				animr 4 0.29
+			}
+			{
+				lightmap
+			}
+}
+
+// Parking Garage Sign
+
+{
+	material tex_misc/sign_parkbld
+		specular 2.0
+		hardness 2.0
+}
+
+// Parking Garage Sign (animated side)
+
+{
+	material tex_misc/sign_parkblda
+		specular 2.0
+		hardness 2.0
+			{
+				texture tex_misc/sign_parkblda0
+				blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+				anim 4 8.0
+			}
+}
+
+// Vehicle Entrance Panel
+
+{
+	material tex_misc/vehentpan
+		specular 2.0
+		hardness 2.0
+			{
+				texture tex_misc/vehentpan0
+				blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+				anim 10 2
+			}
+}
+
+// floor
+
+{
+	material tex_streets/2ln_crn_ne
+		bump 2.0
+		parallax 2.0
+			{
+				texture tex_streets/2ln_crn_ne_g
+				blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+				lightmap
+			}
+}
+
+{
+	material tex_streets/2ln_crn_nw
+		bump 2.0
+		parallax 2.0
+			{
+				texture tex_streets/2ln_crn_nw_g
+				blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+				lightmap
+			}
+}
+
+{
+	material tex_streets/2ln_crn_se
+		bump 2.0
+		parallax 2.0
+			{
+				texture tex_streets/2ln_crn_se_g
+				blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+				lightmap
+			}
+}
+
+{
+	material tex_streets/2ln_crn_sw
+		bump 2.0
+		parallax 2.0
+			{
+				texture tex_streets/2ln_crn_sw_g
+				blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+				lightmap
+			}
+}
+
+{
+	material tex_streets/2ln_crnw_ne
+		bump 2.0
+		parallax 2.0
+			{
+				texture tex_streets/2ln_crnw_ne_g
+				blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+				lightmap
+			}
+}
+
+{
+	material tex_streets/2ln_crnw_nw
+		2.0
+		parallax 2.0
+			{
+				texture tex_streets/2ln_crnw_nw_g
+				blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+				lightmap
+			}
+}
+
+{
+	material tex_streets/2ln_crnw_se
+		bump 2.0
+		parallax 2.0
+			{
+				texture tex_streets/2ln_crnw_se_g
+				blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+				lightmap
+			}
+}
+
+{
+	material tex_streets/2ln_crnw_sw
+		bump 2.0
+		parallax 2.0
+			{
+				texture tex_streets/2ln_crnw_sw_g
+				blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+				lightmap
+			}
+}
+
+{
+	material tex_streets/2lnh
+		bump 2.0
+		parallax 2.0
+			{
+				texture tex_streets/2lnh_g
+				blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+				lightmap
+			}
+}
+
+// Parking Spaces
+
+{
+	material tex_streets/park1h
+		bump 2.0
+		parallax 2.0
+			{
+				texture tex_streets/park1h_g
+				blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+				lightmap
+			}
+}
+
+{
+	material tex_streets/park1v
+		bump 2.0
+		parallax 2.0
+			{
+				texture tex_streets/park1v_g
+				blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+				lightmap
+			}
+}

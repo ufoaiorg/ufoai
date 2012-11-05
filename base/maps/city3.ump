@@ -1,0 +1,206 @@
+// *********************************
+// CITY RMA THEME
+// *********************************
+
+// by Holger 'ShipIt' Gellrich
+
+// Tiletypes:
+// ----------
+// + : tile contains something
+// 0 : always means no restrictions
+// a : common tile
+// h : street horizontally
+// v : street vertically
+
+base city3/c3_
+
+/* street tiles ---------------------------------------------------*/
+
+tile +street_v_1
+	// street vertically, standard
+{
+3 3
+0		v		0
+0		+v		0
+0		v		0
+}
+
+tile +street_v_9_a
+	// a tunnel crosses the street
+{
+5 3
+0		0		v		0		0
+0		+a		+v		+a		0
+0		0		v		0		0
+}
+
+tile +street_h_1
+{
+3 3
+0		0		0
+h		+h		h
+0		0		0
+}
+
+tile +street_h_9_a
+	// a tunnel crosses the street
+{
+3 5
+0		0		0
+0		+a		0
+h		+h		h
+0		+a		0
+0		0		0
+}
+
+tile +junction_e
+	// |-
+{
+4 4
+0		v		0		0
+a		+vh		+h		h
+0		+v		+a		0
+0		v		0		0
+}
+
+tile +junction_n
+	// _|_
+{
+4 4
+0		0		v		0
+0		+a		+v		0
+h		+h		+hv		h
+0		0		a		0
+}
+
+tile +junction_s
+	// ¯|¯
+{
+4 4
+0		a		0		0
+h		+hv		+h		h
+0		+v		+a		0
+0		v		0		0
+}
+
+tile +junction_w
+	// -|
+{
+4 4
+0		0		v		0
+0		+a		+v		0
+h		+h		+vh		a
+0		0		v		0
+}
+
+/* common tiles ---------------------------------------------------*/
+
+tile +common
+{
+3 3
+0		0		0
+0		+a		0
+0		0		0
+}
+
+tile +common_a
+// adverts
+{
+3 3
+0		0		0
+0		+a		0
+0		0		0
+}
+
+tile +common_b
+// a bench
+{
+3 3
+0		0		0
+0		+a		0
+0		0		0
+}
+
+/* buildings ------------------------------------------------------*/
+
+tile +bld_abandoned
+	// an abandoned building, inhabited by homless people
+{
+5 6
+0		0		0		0		0
+0		+a		+a		+a		0
+0		+a		+a		+a		0
+0		+a		+a		+a		0
+0		+a		+a		0		0
+0		0		0		0		0
+}
+
+tile +bld_parking
+{
+8 6
+0		0		0		0		0		0		0		0
+0		v		0		+a		+a		+a		+a		0
+a		+v		+a		+a		+a		+a		+a		0
+a		+v		+a		+a		+a		+a		+a		0
+a		+v		+a		+a		+a		+a		+a		0
+0		v		0		0		0		0		0		0
+}
+
+/* dropship tiles -------------------------------------------------*/
+
+tile +craft_drop_firebird
+{
+5 4
+0		0		0		0		0
+0		+a		+a		+a		0
+0		+a		+a		+a		0
+0		0		0		0		0
+}
+
+tile +craft_drop_herakles
+{
+6 4
+0		0		0		0		0		0
+0		+a		+a		+a		+a		0
+0		+a		+a		+a		+a		0
+0		0		0		0		0		0
+}
+
+tile +craft_drop_raptor
+{
+5 5
+0		0		0		0		0
+0		+a		+a		+a		0
+0		+a		+a		+a		0
+0		+a		+a		+a		0
+0		0		0		0		0
+}
+
+/* ufo tiles ------------------------------------------------------*/
+
+/* tilesets -------------------------------------------------------*/
+
+tileset buildings
+	{
+		+bld_abandoned
+		+bld_parking
+	}
+
+/* map assemblies -------------------------------------------------*/
+
+assembly small_noufo
+{
+title		"_The outscirt of a big city."
+size "6 7"
+tileset buildings	"1 1"
++common				"0 30"
++common_a			"0 1"
++common_b			"0 1"
++junction_e			"0 1"
++junction_n			"0 1"
++junction_s			"0 1"
++junction_w			"0 1"
++street_h_1			"0 15"
++street_v_1			"0 15"
+*rm_drop +craft_drop_firebird "1 1"
+}
