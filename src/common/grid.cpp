@@ -840,13 +840,14 @@ void Grid_RecalcBoxRouting (mapTiles_t *mapTiles, routing_t *map, const GridBox 
 
 	/* check unit heights */
 	for (actorSize = 1; actorSize <= ACTOR_MAX_SIZE; actorSize++) {
-		const int minX = std::max(box.mins[0] - actorSize + 1, 0);
-		const int minY = std::max(box.mins[1] - actorSize + 1, 0);
-		const int maxX = box.maxs[0] + actorSize;
-		const int maxY = box.maxs[1] + actorSize;
+		GridBox rBox(box);	/* the box we will actually reroute */
 		/* Offset the initial X and Y to compensate for larger actors when needed. */
-		for (y = minY; y < maxY; y++) {
-			for (x = minX; x < maxX; x++) {
+		rBox.mins[0] = std::max(box.mins[0] - actorSize + 1, 0);
+		rBox.mins[1] = std::max(box.mins[1] - actorSize + 1, 0);
+		rBox.maxs[0] = box.maxs[0] + actorSize;
+		rBox.maxs[1] = box.maxs[1] + actorSize;
+		for (y = rBox.mins[1]; y < rBox.maxs[1]; y++) {
+			for (x = rBox.mins[0]; x < rBox.maxs[0]; x++) {
 				/** @note RT_CheckCell goes from top (7) to bottom (0) */
 				for (z = box.maxs[2]; z >= 0; z--) {
 					const int newZ = RT_CheckCell(mapTiles, map, actorSize, x, y, z, list);
