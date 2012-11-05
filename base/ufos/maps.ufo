@@ -2822,48 +2822,6 @@ mapdef city2
 	)
 }
 
-////////////////////////
-// CITY3 RANDOM MAPS //
-///////////////////////
-
-mapdef city3
-{
-	map				"+city3"
-	description		"_A hospital in the outskirts of a city."
-	param			"city3"
-	maxaliens		8
-	campaign		false
-	singleplayer	true
-	multiplayer		false
-
-	aircraft
-	(
-		craft_drop_firebird
-		craft_drop_herakles
-		craft_drop_raptor
-	)
-
-	ufos
-	(
-		//any
-	)
-
-	terrains
-	(
-		//any
-	)
-
-	cultures
-	(
-		//any
-	)
-
-	populations
-	(
-		"urban"
-	)
-}
-
 ////////////////////////////
 // CITY_DISCO RANDOM MAPS //
 ////////////////////////////
