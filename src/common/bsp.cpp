@@ -856,28 +856,19 @@ static void CMod_RerouteMap (mapTiles_t *mapTiles, mapData_t *mapData)
 {
 	actorSizeEnum_t size;
 	int x, y, z, dir;
-	int i;
-	pos3_t mins, maxs;
-	double start, end;
+	double start, end;	/* stopwatch */
 
 	start = time(NULL);
 
-	VecToPos(mapData->mapMin, mins);
-	VecToPos(mapData->mapMax, maxs);
-
-	/* fit min/max into the world size */
-	maxs[0] = std::min(maxs[0], (pos_t)(PATHFINDING_WIDTH - 1));
-	maxs[1] = std::min(maxs[1], (pos_t)(PATHFINDING_WIDTH - 1));
-	maxs[2] = std::min(maxs[2], (pos_t)(PATHFINDING_HEIGHT - 1));
-	for (i = 0; i < 3; i++)
-		mins[i] = std::max(mins[i], (pos_t)0);
+	GridBox rBox(mapData->mapMin, mapData->mapMax);	/* the box we will actually reroute */
+	rBox.clipToMaxBoundaries();
 
 	/* Floor pass */
 	for (size = ACTOR_SIZE_INVALID; size < ACTOR_MAX_SIZE; size++) {
-		for (y = mins[1]; y <= maxs[1]; y++) {
-			for (x = mins[0]; x <= maxs[0]; x++) {
+		for (y = rBox.mins[1]; y <= rBox.maxs[1]; y++) {
+			for (x = rBox.mins[0]; x <= rBox.maxs[0]; x++) {
 				if (mapData->reroute[size][y][x] == ROUTING_NOT_REACHABLE) {
-					for (z = maxs[2]; z >= mins[2]; z--) {
+					for (z = rBox.maxs[2]; z >= rBox.mins[2]; z--) {
 						const int newZ = RT_CheckCell(mapTiles, mapData->map, size + 1, x, y, z, NULL);
 						assert(newZ <= z);
 						z = newZ;
@@ -889,8 +880,8 @@ static void CMod_RerouteMap (mapTiles_t *mapTiles, mapData_t *mapData)
 
 	/* Wall pass */
 	for (size = ACTOR_SIZE_INVALID; size < ACTOR_MAX_SIZE; size++) {
-		for (y = mins[1]; y <= maxs[1]; y++) {
-			for (x = mins[0]; x <= maxs[0]; x++) {
+		for (y = rBox.mins[1]; y <= rBox.maxs[1]; y++) {
+			for (x = rBox.mins[0]; x <= rBox.maxs[0]; x++) {
 				const byte tile = mapData->reroute[size][y][x];
 				if (tile) {
 					/** @note The new R_UpdateConnection updates both directions at the same time,

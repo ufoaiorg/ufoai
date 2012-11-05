@@ -143,6 +143,9 @@ public:
 		maxs[0] = std::min(maxs[0] + byVal, PATHFINDING_WIDTH - 1);
 		maxs[1] = std::min(maxs[1] + byVal, PATHFINDING_WIDTH - 1);
 	}
+	inline void clipToMaxBoundaries() {
+		return;	/* do nothing, see above */
+	}
 
 	pos3_t mins;
 	pos3_t maxs;
