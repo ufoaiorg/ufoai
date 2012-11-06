@@ -188,9 +188,8 @@ static void CL_SelectTeam_Init_f (void)
 
 static bool GAME_MP_SetTeamNum (int teamnum)
 {
-	static char buf[MAX_STRING_CHARS];
-
 	if (teamData.maxPlayersPerTeam > teamData.teamCount[teamnum]) {
+		static char buf[MAX_VAR];
 		cgi->Cvar_SetValue("cl_teamnum", teamnum);
 		Com_sprintf(buf, sizeof(buf), _("Current team: %i"), teamnum);
 		cgi->UI_RegisterText(TEXT_STANDARD, buf);
