@@ -57,9 +57,10 @@ void CL_CameraAppear (const eventRegister_t *self, dbuffer * msg)
 	le->flags |= LE_CHECK_LEVELFLAGS;
 	le->levelflags = levelflags;
 	le->model1 = R_FindModel(va("objects/cameras/camera%i", cameraType));
-	const char *rotateAnim = "rotate";
-	if (rotate)
+	if (rotate) {
+		const char *rotateAnim = "rotate";
 		R_AnimChange(&le->as, le->model1, rotateAnim);
+	}
 
 	Com_DPrintf(DEBUG_CLIENT, "CL_CameraAppear: entnum: %i\n", entnum);
 }
