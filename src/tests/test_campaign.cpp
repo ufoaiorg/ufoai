@@ -562,7 +562,7 @@ static void testResearch (void)
 
 	CU_ASSERT_FALSE(otherLaserTech->statusResearchable);
 
-	const int n = laserTech->time * 1.25;
+	const int n = laserTech->time * (1.0f / ccs.curCampaign->researchRate);
 	for (int i = 0; i < n; i++) {
 		const int finished = RS_ResearchRun();
 		UFO_CU_ASSERT_EQUAL_INT_MSG_FATAL(finished, 0, va("Did not expect to finish a research (#%i, i:%i)",
