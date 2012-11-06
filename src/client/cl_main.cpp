@@ -962,15 +962,15 @@ static void CL_InitLocal (void)
 static void CL_SendChangedUserinfos (void)
 {
 	/* send a userinfo update if needed */
-	if (cls.state >= ca_connected) {
-		if (Com_IsUserinfoModified()) {
-			dbuffer *msg = new_dbuffer();
-			NET_WriteByte(msg, clc_userinfo);
-			NET_WriteString(msg, Cvar_Userinfo());
-			NET_WriteMsg(cls.netStream, msg);
-			Com_SetUserinfoModified(false);
-		}
-	}
+	if (cls.state < ca_connected)
+		return;
+	if (!Com_IsUserinfoModified())
+		return;
+	dbuffer *msg = new_dbuffer();
+	NET_WriteByte(msg, clc_userinfo);
+	NET_WriteString(msg, Cvar_Userinfo());
+	NET_WriteMsg(cls.netStream, msg);
+	Com_SetUserinfoModified(false);
 }
 
 /**
