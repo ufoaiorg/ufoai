@@ -652,19 +652,19 @@ void RS_AssignScientist (technology_t* tech, base_t *base, employee_t *employee)
 		return;
 	}
 
-	if (tech->statusResearchable) {
-		if (CAP_GetFreeCapacity(base, CAP_LABSPACE) > 0) {
-			tech->scientists++;
-			tech->base = base;
-			CAP_AddCurrent(base, CAP_LABSPACE, 1);
-			employee->assigned = true;
-		} else {
-			CP_Popup(_("Not enough laboratories"), _("No free space in laboratories left.\nBuild more laboratories.\n"));
-			return;
-		}
+	if (!tech->statusResearchable)
+		return;
 
-		tech->statusResearch = RS_RUNNING;
+	if (CAP_GetFreeCapacity(base, CAP_LABSPACE) <= 0) {
+		CP_Popup(_("Not enough laboratories"), _("No free space in laboratories left.\nBuild more laboratories.\n"));
+		return;
 	}
+
+	tech->scientists++;
+	tech->base = base;
+	CAP_AddCurrent(base, CAP_LABSPACE, 1);
+	employee->assigned = true;
+	tech->statusResearch = RS_RUNNING;
 }
 
 /**
@@ -688,15 +688,14 @@ void RS_RemoveScientist (technology_t* tech, employee_t *employee)
 
 	if (!employee)
 		employee = E_GetAssignedEmployee(tech->base, EMPL_SCIENTIST);
-	if (employee) {
-		/* Remove the scientist from the tech. */
-		tech->scientists--;
-		/* Update capacity. */
-		CAP_AddCurrent(tech->base, CAP_LABSPACE, -1);
-		employee->assigned = false;
-	} else {
+	if (!employee)
 		cgi->Com_Error(ERR_DROP, "No assigned scientists found - serious inconsistency.");
-	}
+
+	/* Remove the scientist from the tech. */
+	tech->scientists--;
+	/* Update capacity. */
+	CAP_AddCurrent(tech->base, CAP_LABSPACE, -1);
+	employee->assigned = false;
 
 	assert(tech->scientists >= 0);
 
