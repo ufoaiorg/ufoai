@@ -35,13 +35,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static inline void CLMN_AddBindings (linkedList_t **list, char **bindings)
 {
 	int i;
-	for (i = K_FIRST_KEY; i < K_LAST_KEY; i++)
-		if (bindings[i] && bindings[i][0] != '\0') {
-			const char *binding = Cmd_GetCommandDesc(bindings[i]);
-			if (binding != NULL && binding[0] != '\0')
-				binding = _(binding);
-			LIST_AddString(list, va("%s\t%s", Key_KeynumToString(i), binding));
-		}
+	for (i = K_FIRST_KEY; i < K_LAST_KEY; i++) {
+		if (Q_strnull(bindings[i]))
+			continue;
+		const char *binding = Cmd_GetCommandDesc(bindings[i]);
+		if (Q_strvalid(binding))
+			binding = _(binding);
+		LIST_AddString(list, va("%s\t%s", Key_KeynumToString(i), binding));
+	}
 }
 
 /**
