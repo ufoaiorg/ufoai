@@ -366,6 +366,7 @@ void UP_AircraftDescription (const technology_t* tech)
 			case AIR_STATS_FUELSIZE:
 				Q_strcat(upBuffer, va(_("Operational range:\t%i km\n"),
 					AIR_GetOperationRange(aircraft)), sizeof(upBuffer));
+				break;
 			case AIR_STATS_ACCURACY:
 				Q_strcat(upBuffer, va(_("%s:\t%i\n"), UP_AircraftStatToName(i),
 					AIR_AircraftMenuStatsValues(aircraft->stats[i], i)), sizeof(upBuffer));
