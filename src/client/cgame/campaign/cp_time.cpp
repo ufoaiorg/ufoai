@@ -273,7 +273,7 @@ bool Date_IsDue (const date_t *date)
  * @param[in] b Second date.
  * @return The result of adding date_ b to date_t a.
  */
-date_t Date_Add (date_t a, const date_t b)
+date_t Date_Add (date_t a, const date_t &b)
 {
 	a.sec += b.sec;
 	a.day += (a.sec / SECONDS_PER_DAY) + b.day;
@@ -286,7 +286,7 @@ date_t Date_Add (date_t a, const date_t b)
  * @param[in] a First date.
  * @param[in] b Second date.
  */
-date_t Date_Substract (date_t a, const date_t b)
+date_t Date_Substract (date_t a, const date_t &b)
 {
 	a.day -= b.day;
 	a.sec -= b.sec;
@@ -296,7 +296,6 @@ date_t Date_Substract (date_t a, const date_t b)
 	}
 	return a;
 }
-
 
 /**
  * @brief Return a random relative date which lies between a lower and upper limit.

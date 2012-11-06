@@ -54,8 +54,8 @@ void CP_SetGameTime_f(void);
 int Date_DateToSeconds(const date_t *date);
 bool Date_LaterThan(const date_t *now, const date_t *compare);
 bool Date_IsDue(const date_t *date);
-date_t Date_Add(date_t a, const date_t b);
-date_t Date_Substract(date_t a, const date_t b);
+date_t Date_Add(date_t a, const date_t &b);
+date_t Date_Substract(date_t a, const date_t &b);
 date_t Date_Random(date_t minFrame, date_t maxFrame);
 const char *Date_GetMonthName(int month);
 
