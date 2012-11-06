@@ -269,11 +269,9 @@ static void CL_ChangeSkin_f (void)
 	const int sel = cl_selected->integer;
 
 	if (sel >= 0 && sel < chrDisplayList.num) {
-		int newSkin = Cvar_GetInteger("mn_body_skin");
 		character_t *chr = chrDisplayList.chr[sel];
-		newSkin = CL_FixActorSkinIDX(newSkin);
-
 		if (chr) {
+			const int newSkin = CL_FixActorSkinIDX(Cvar_GetInteger("mn_body_skin"));
 			/** @todo Get the skin id from the model by using the actorskin id */
 			/** @todo Or remove skins from models and convert character_t->skin to string */
 			chr->bodySkin = newSkin;
