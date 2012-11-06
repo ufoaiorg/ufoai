@@ -106,8 +106,6 @@ void CL_ViewLoadMedia (void)
 			le->model2 = LE_GetDrawModel(le->modelnum2);
 	}
 
-	loadingPercent = 100.0f;
-
 	refdef.ready = true;
 
 	/* waiting for EV_START */
