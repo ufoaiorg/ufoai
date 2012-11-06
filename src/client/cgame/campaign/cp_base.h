@@ -232,7 +232,7 @@ void B_ManageAntimatter(base_t *base, int amount, bool add);
 /* savesystem */
 void B_SaveBaseSlotsXML(const baseWeapon_t *weapons, const int numWeapons, xmlNode_t *p);
 int B_LoadBaseSlotsXML(baseWeapon_t* weapons, int numWeapons, xmlNode_t *p);
-bool B_SaveStorageXML(xmlNode_t *parent, const equipDef_t equip);
+bool B_SaveStorageXML(xmlNode_t *parent, const equipDef_t &equip);
 bool B_LoadStorageXML(xmlNode_t *parent, equipDef_t *equip);
 
 /* other */

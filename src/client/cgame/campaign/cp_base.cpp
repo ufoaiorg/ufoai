@@ -2494,7 +2494,7 @@ void B_SaveBaseSlotsXML (const baseWeapon_t *weapons, const int numWeapons, xmlN
  * @param[out] parent XML Node structure, where we write the information to
  * @param[in] equip Storage to save
  */
-bool B_SaveStorageXML (xmlNode_t *parent, const equipDef_t equip)
+bool B_SaveStorageXML (xmlNode_t *parent, const equipDef_t &equip)
 {
 	int k;
 	for (k = 0; k < cgi->csi->numODs; k++) {
