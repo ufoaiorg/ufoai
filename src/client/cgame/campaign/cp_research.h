@@ -220,7 +220,7 @@ void RS_ResearchFinish(technology_t* tech);
 void RS_StopResearch(technology_t* tech);
 void RS_MarkOneResearchable(technology_t *tech);
 
-void RS_AssignScientist(technology_t* tech, struct base_s *base, struct employee_s *employee);
+void RS_AssignScientist(technology_t* tech, struct base_s *base, struct employee_s *employee = NULL);
 void RS_RemoveScientist(technology_t* tech, struct employee_s *employee);
 void RS_RemoveFiredScientist(struct base_s *base, struct employee_s *employee);
 void RS_RemoveScientistsExceedingCapacity(struct base_s *base);

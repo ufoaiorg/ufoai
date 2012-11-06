@@ -554,9 +554,7 @@ static void testResearch (void)
 
 	CU_ASSERT_TRUE(laserTech->statusResearchable);
 
-	employee_t *employee = E_GetUnassignedEmployee(base, EMPL_SCIENTIST);
-	CU_ASSERT_PTR_NOT_NULL(employee);
-	RS_AssignScientist(laserTech, base, employee);
+	RS_AssignScientist(laserTech, base);
 
 	CU_ASSERT_EQUAL(laserTech->base, base);
 	CU_ASSERT_EQUAL(laserTech->scientists, 1);
