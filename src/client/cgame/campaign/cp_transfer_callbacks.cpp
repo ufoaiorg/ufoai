@@ -176,7 +176,7 @@ static void TR_TransferStart_f (void)
 		return;
 	}
 
-	if (TR_TransferStart(base, &td) == NULL)
+	if (TR_TransferStart(base, td) == NULL)
 		return;
 
 	/* Clear temporary cargo arrays. */

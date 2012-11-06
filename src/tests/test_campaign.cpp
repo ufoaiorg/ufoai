@@ -423,7 +423,7 @@ static void testTransferItem (void)
 	td.transferBase = targetBase;
 	TR_AddData(&td, CARGO_TYPE_ITEM, od);
 
-	transfer = TR_TransferStart(base, &td);
+	transfer = TR_TransferStart(base, td);
 	CU_ASSERT_PTR_NOT_NULL_FATAL(transfer);
 
 	CU_ASSERT_EQUAL(LIST_Count(ccs.transfers), 1);
@@ -447,7 +447,7 @@ static void testTransferItem (void)
 	CU_ASSERT_TRUE(LIST_IsEmpty(ccs.transfers));
 
 	/* Start another transfer to check higher time lapse */
-	transfer = TR_TransferStart(base, &td);
+	transfer = TR_TransferStart(base, td);
 	CU_ASSERT_PTR_NOT_NULL_FATAL(transfer);
 	CU_ASSERT_EQUAL(LIST_Count(ccs.transfers), 1);
 
@@ -460,7 +460,7 @@ static void testTransferItem (void)
 	CU_ASSERT_TRUE(LIST_IsEmpty(ccs.transfers));
 
 	/* Start another transfer to check higher time lapse */
-	transfer = TR_TransferStart(base, &td);
+	transfer = TR_TransferStart(base, td);
 	CU_ASSERT_PTR_NOT_NULL_FATAL(transfer);
 	CU_ASSERT_EQUAL(LIST_Count(ccs.transfers), 1);
 

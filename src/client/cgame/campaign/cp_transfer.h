@@ -124,7 +124,7 @@ bool TR_AddData(transferData_t *transferData, transferCargoType_t type, const vo
 void TR_TransferRun(void);
 void TR_NotifyAircraftRemoved(const aircraft_t *aircraft);
 
-transfer_t* TR_TransferStart(base_t *srcBase, transferData_t *transData);
+transfer_t* TR_TransferStart(base_t *srcBase, transferData_t &transData);
 void TR_TransferAlienAfterMissionStart(const base_t *base, aircraft_t *transferAircraft);
 
 

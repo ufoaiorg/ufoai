@@ -274,19 +274,19 @@ bool TR_AddData (transferData_t *transferData, transferCargoType_t type, const v
  * @param[in] srcBase start transfer from this base
  * @param[in] transData Container holds transfer details
  */
-transfer_t* TR_TransferStart (base_t *srcBase, transferData_t *transData)
+transfer_t* TR_TransferStart (base_t *srcBase, transferData_t &transData)
 {
 	transfer_t transfer;
 	float time;
 	int i;
 
-	if (!transData->transferBase || !srcBase) {
+	if (!transData.transferBase || !srcBase) {
 		Com_Printf("TR_TransferStart: No base selected!\n");
 		return NULL;
 	}
 
 	/* don't start any empty transport */
-	if (!transData->trCargoCountTmp) {
+	if (!transData.trCargoCountTmp) {
 		return NULL;
 	}
 
@@ -294,7 +294,7 @@ transfer_t* TR_TransferStart (base_t *srcBase, transferData_t *transData)
 
 	/* Initialize transfer. */
 	/* calculate time to go from 1 base to another : 1 day for one quarter of the globe*/
-	time = GetDistanceOnGlobe(transData->transferBase->pos, srcBase->pos) / 90.0f;
+	time = GetDistanceOnGlobe(transData.transferBase->pos, srcBase->pos) / 90.0f;
 	transfer.event.day = ccs.date.day + floor(time);	/* add day */
 	time = (time - floor(time)) * SECONDS_PER_DAY;	/* convert remaining time in second */
 	transfer.event.sec = ccs.date.sec + round(time);
@@ -303,20 +303,20 @@ transfer_t* TR_TransferStart (base_t *srcBase, transferData_t *transData)
 		transfer.event.sec -= SECONDS_PER_DAY;
 		transfer.event.day++;
 	}
-	transfer.destBase = transData->transferBase;	/* Destination base. */
+	transfer.destBase = transData.transferBase;	/* Destination base. */
 	assert(transfer.destBase);
 	transfer.srcBase = srcBase;	/* Source base. */
 
 	for (i = 0; i < cgi->csi->numODs; i++) {	/* Items. */
-		if (transData->trItemsTmp[i] > 0) {
+		if (transData.trItemsTmp[i] > 0) {
 			transfer.hasItems = true;
-			transfer.itemAmount[i] = transData->trItemsTmp[i];
+			transfer.itemAmount[i] = transData.trItemsTmp[i];
 		}
 	}
 	/* Note that the employee remains hired in source base during the transfer, that is
 	 * it takes Living Quarters capacity, etc, but it cannot be used anywhere. */
 	for (i = 0; i < MAX_EMPL; i++) {		/* Employees. */
-		LIST_Foreach(transData->trEmployeesTmp[i], employee_t, employee) {
+		LIST_Foreach(transData.trEmployeesTmp[i], employee_t, employee) {
 			assert(E_IsInBase(employee, srcBase));
 
 			transfer.hasEmployees = true;
@@ -327,17 +327,17 @@ transfer_t* TR_TransferStart (base_t *srcBase, transferData_t *transData)
 		}
 	}
 	for (i = 0; i < ccs.numAliensTD; i++) {		/* Aliens. */
-		if (transData->trAliensTmp[i][TRANS_ALIEN_ALIVE] > 0) {
+		if (transData.trAliensTmp[i][TRANS_ALIEN_ALIVE] > 0) {
 			transfer.hasAliens = true;
-			transfer.alienAmount[i][TRANS_ALIEN_ALIVE] = transData->trAliensTmp[i][TRANS_ALIEN_ALIVE];
+			transfer.alienAmount[i][TRANS_ALIEN_ALIVE] = transData.trAliensTmp[i][TRANS_ALIEN_ALIVE];
 		}
-		if (transData->trAliensTmp[i][TRANS_ALIEN_DEAD] > 0) {
+		if (transData.trAliensTmp[i][TRANS_ALIEN_DEAD] > 0) {
 			transfer.hasAliens = true;
-			transfer.alienAmount[i][TRANS_ALIEN_DEAD] = transData->trAliensTmp[i][TRANS_ALIEN_DEAD];
+			transfer.alienAmount[i][TRANS_ALIEN_DEAD] = transData.trAliensTmp[i][TRANS_ALIEN_DEAD];
 		}
 	}
 
-	LIST_Foreach(transData->aircraft, aircraft_t, aircraft) {
+	LIST_Foreach(transData.aircraft, aircraft_t, aircraft) {
 		aircraft->status = AIR_TRANSFER;
 		AIR_RemoveEmployees(*aircraft);
 		transfer.hasAircraft = true;
