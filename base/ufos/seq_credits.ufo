@@ -152,6 +152,16 @@ sequence developers
 		inbackground	"true"
 	}
 	wait 0.7
+	obj2d pawel_text
+	{
+		text	"_Pawel Michalkiewicz"
+		pos		"512 768"
+		align	"uc"
+		color	"1 1 1 1"
+		speed	"0 -60"
+		inbackground	"true"
+	}
+	wait 0.7
 	obj2d shipit_text
 	{
 		text	"_ShipIt"
@@ -386,6 +396,7 @@ sequence developers
 	rem darkrain_text
 	rem geever_text
 	rem hhour_text
+	rem pawel_text
 	rem shipit_text
 
 	rem contributors_title
