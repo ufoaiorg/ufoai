@@ -788,7 +788,15 @@ bool CL_ParseClientData (const char *type, const char *name, const char **text)
 		SCR_DrawLoadingScreen(false, std::min(progressCurrent * 30 / 1500, 30));
 #endif
 
-	if (Q_streq(type, "font"))
+	if (Q_streq(type, "window"))
+		return UI_ParseWindow(type, name, text);
+	else if (Q_streq(type, "component"))
+		return UI_ParseComponent(type, name, text);
+	else if (Q_streq(type, "particle"))
+		CL_ParseParticle(name, text);
+	else if (Q_streq(type, "language"))
+		CL_ParseLanguages(name, text);
+	else if (Q_streq(type, "font"))
 		return UI_ParseFont(name, text);
 	else if (Q_streq(type, "tutorial"))
 		TUT_ParseTutorials(name, text);
@@ -796,24 +804,16 @@ bool CL_ParseClientData (const char *type, const char *name, const char **text)
 		return UI_ParseUIModel(name, text);
 	else if (Q_streq(type, "sprite"))
 		return UI_ParseSprite(name, text);
-	else if (Q_streq(type, "particle"))
-		CL_ParseParticle(name, text);
 	else if (Q_streq(type, "sequence"))
 		CL_ParseSequence(name, text);
 	else if (Q_streq(type, "music"))
 		M_ParseMusic(name, text);
-	else if (Q_streq(type, "tip"))
-		CL_ParseTipOfTheDay(name, text);
-	else if (Q_streq(type, "language"))
-		CL_ParseLanguages(name, text);
-	else if (Q_streq(type, "window"))
-		return UI_ParseWindow(type, name, text);
-	else if (Q_streq(type, "component"))
-		return UI_ParseComponent(type, name, text);
 	else if (Q_streq(type, "actorskin"))
 		CL_ParseActorSkin(name, text);
 	else if (Q_streq(type, "cgame"))
 		GAME_ParseModes(name, text);
+	else if (Q_streq(type, "tip"))
+		CL_ParseTipOfTheDay(name, text);
 	return true;
 }
 
