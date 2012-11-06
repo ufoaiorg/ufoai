@@ -929,7 +929,6 @@ void CL_ParseSequence (const char *name, const char **text)
 		int i = CL_FindSequenceCommand(token);
 		if (i != -1) {
 			int maxLength = MAX_DATA_LENGTH;
-			int depth;
 			char *data;
 			seqCmd_t *sc;
 
@@ -958,7 +957,7 @@ void CL_ParseSequence (const char *name, const char **text)
 				return;
 			if (*token == '{') {
 				// TODO depth is useless IMHO (bayo)
-				depth = 1;
+				int depth = 1;
 				data = &sc->data[0];
 				while (depth) {
 					if (maxLength <= 0) {
