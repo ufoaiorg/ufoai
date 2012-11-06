@@ -64,7 +64,7 @@ typedef struct ufoRecovery_s {
 	const nation_t *nation;							/**< selected nation to sell to for current ufo recovery */
 	bool recoveryDone;							/**< recoveryDone? Then the buttons are disabled */
 	float condition;								/**< How much the UFO is damaged - used for disassembies */
-	ufoRecoveryNation_t UFONations[MAX_NATIONS];	/**< Sorted array of nations. */
+	ufoRecoveryNation_t ufoNations[MAX_NATIONS];	/**< Sorted array of nations. */
 	ufoRecoveryNationOrder_t sortedColumn;			/**< Column sell sorted by */
 	bool sortDescending;						/**< ascending (false) / descending (true) */
 } ufoRecovery_t;
@@ -211,11 +211,11 @@ static void UR_DialogFillNations (void)
 	linkedList_t *nationList = NULL;
 
 	for (i = 0; i < ccs.numNations; i++) {
-		const nation_t *nation = ufoRecovery.UFONations[i].nation;
+		const nation_t *nation = ufoRecovery.ufoNations[i].nation;
 		if (nation) {
 			char row[512];
 			Com_sprintf(row, lengthof(row), "%s\t\t\t%i\t\t%s", _(nation->name),
-				ufoRecovery.UFONations[i].price, NAT_GetHappinessString(nation));
+				ufoRecovery.ufoNations[i].price, NAT_GetHappinessString(nation));
 			LIST_AddString(&nationList, row);
 		}
 	}
@@ -291,16 +291,16 @@ static void UR_SortNations (COMP_FUNCTION comp, bool order)
 		int j;
 
 		for (j = 0; j < ccs.numNations - 1; j++) {
-			int value = (*comp)(&ufoRecovery.UFONations[j], &ufoRecovery.UFONations[j + 1]);
+			int value = (*comp)(&ufoRecovery.ufoNations[j], &ufoRecovery.ufoNations[j + 1]);
 			ufoRecoveryNation_t tmp;
 
 			if (order)
 				value *= -1;
 			if (value > 0) {
 				/* swap nations */
-				tmp = ufoRecovery.UFONations[j];
-				ufoRecovery.UFONations[j] = ufoRecovery.UFONations[j + 1];
-				ufoRecovery.UFONations[j + 1] = tmp;
+				tmp = ufoRecovery.ufoNations[j];
+				ufoRecovery.ufoNations[j] = ufoRecovery.ufoNations[j + 1];
+				ufoRecovery.ufoNations[j + 1] = tmp;
 				swapped = true;
 			}
 		}
@@ -352,8 +352,8 @@ static void UR_DialogInitSell_f (void)
 		/* Nation will pay less if corrupted */
 		price = (int) (price * exp(-stats->xviInfection / 20.0f));
 
-		ufoRecovery.UFONations[i].nation = nation;
-		ufoRecovery.UFONations[i].price = price;
+		ufoRecovery.ufoNations[i].nation = nation;
+		ufoRecovery.ufoNations[i].price = price;
 	}
 	UR_SortNations(UR_GetSortFunctionByColumn(ufoRecovery.sortedColumn), ufoRecovery.sortDescending);
 	UR_DialogFillNations();
@@ -368,7 +368,7 @@ static int UR_DialogGetCurrentNationIndex (void)
 	int i;
 
 	for (i = 0; i < ccs.numNations; i++)
-		if (ufoRecovery.UFONations[i].nation == ufoRecovery.nation)
+		if (ufoRecovery.ufoNations[i].nation == ufoRecovery.nation)
 			return i;
 	return -1;
 }
@@ -447,7 +447,7 @@ static void UR_DialogSelectSellNation_f (void)
 	if (0 > num || num >= ccs.numNations)
 		return;
 
-	nation = ufoRecovery.UFONations[num].nation;
+	nation = ufoRecovery.ufoNations[num].nation;
 
 	ufoRecovery.nation = nation;
 	Com_DPrintf(DEBUG_CLIENT, "CP_UFORecoveryNationSelectPopup_f: picked nation: %s\n", nation->name);
@@ -472,7 +472,7 @@ static void UR_DialogStartSell_f (void)
 	nation = ufoRecovery.nation;
 
 	i = UR_DialogGetCurrentNationIndex();
-	price = ufoRecovery.UFONations[i].price;
+	price = ufoRecovery.ufoNations[i].price;
 
 	assert(price >= 0);
 #if 0
