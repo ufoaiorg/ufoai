@@ -848,7 +848,7 @@ void CP_StartSelectedMission (void)
 	 */
 	ccs.eMission = base->storage; /* copied, including arrays inside! */
 	CP_CleanTempInventory(base);
-	CP_CleanupTeam(base, &ccs.eMission);
+	CP_CleanupAircraftTeam(aircraft, &ccs.eMission);
 	CP_StartMissionMap(mis, battleParam);
 }
 

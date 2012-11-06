@@ -203,6 +203,58 @@ void CP_CleanupTeam (base_t *base, equipDef_t * ed)
 }
 
 /**
+ * @brief Reloads weapons, removes not assigned and resets defaults
+ * @param[in] aircraft Pointer to an aircraft for given team.
+ * @param[in] ed equipDef_t pointer to equipment
+ * @sa CL_AddWeaponAmmo
+ * @note Iterate through in container order (right hand, left hand, belt,
+ * holster, backpack) at the top level, i.e. each squad member reloads
+ * the right hand, then each reloads the left hand, etc. The effect
+ * of this is that when things are tight, everyone has the opportunity
+ * to get their preferred weapon(s) loaded before anyone is allowed
+ * to keep her spares in the backpack or on the floor. We don't want
+ * the first person in the squad filling their backpack with spare ammo
+ * leaving others with unloaded guns in their hands...
+ */
+void CP_CleanupAircraftTeam (aircraft_t *aircraft, equipDef_t * ed)
+{
+	containerIndex_t container;
+
+	assert(aircraft);
+
+	for (container = 0; container < cgi->csi->numIDs; container++) {
+		LIST_Foreach(aircraft->acTeam, employee_t, employee) {
+			invList_t *ic, *next;
+			character_t *chr = &employee->chr;
+
+			/* Auto-assign weapons to UGVs/Robots if they have no weapon yet. */
+			if (employee->ugv) {
+				/* Check if there is a weapon and add it if there isn't. */
+				if (!RIGHT(chr) || !RIGHT(chr)->item.item)
+					cgi->INV_EquipActorRobot(&chr->i, INVSH_GetItemByID(employee->ugv->weapon));
+				continue;
+			}
+
+#if 0
+			/* ignore items linked from any temp container */
+			if (INVDEF(container)->temp)
+				continue;
+#endif
+			for (ic = CONTAINER(chr, container); ic; ic = next) {
+				next = ic->next;
+				if (ed->numItems[ic->item.item->idx] > 0) {
+					ic->item = CP_AddWeaponAmmo(ed, ic->item);
+				} else {
+					/* Drop ammo used for reloading and sold carried weapons. */
+					if (!cgi->INV_RemoveFromInventory(&chr->i, INVDEF(container), ic))
+						cgi->Com_Error(ERR_DROP, "Could not remove item from inventory");
+				}
+			}
+		}
+	}
+}
+
+/**
  * @brief Clears all containers that are temp containers (see script definition).
  * @sa GAME_SaveTeamInfo
  * @sa GAME_SendCurrentTeamSpawningInfo
