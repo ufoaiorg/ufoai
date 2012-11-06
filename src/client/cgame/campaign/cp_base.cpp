@@ -1907,7 +1907,7 @@ static void B_InitialEquipment (aircraft_t *aircraft, const equipDef_t *ed)
 		chrListTemp.num++;
 	}
 
-	AIR_MoveEmployeeInventoryIntoStorage(aircraft, &homebase->storage);
+	AIR_MoveEmployeeInventoryIntoStorage(*aircraft, homebase->storage);
 	CL_SwapSkills(&chrListTemp);
 	CAP_UpdateStorageCap(homebase);
 }

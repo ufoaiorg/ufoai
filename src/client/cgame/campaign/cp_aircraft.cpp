@@ -3014,26 +3014,17 @@ void AIR_RemoveEmployees (aircraft_t *aircraft)
  * @param[in] aircraft The craft with the team (and thus equipment) onboard.
  * @param[out] ed The equipment definition which will receive all the stuff from the aircraft-team.
  */
-void AIR_MoveEmployeeInventoryIntoStorage (const aircraft_t *aircraft, equipDef_t *ed)
+void AIR_MoveEmployeeInventoryIntoStorage (const aircraft_t &aircraft, equipDef_t &ed)
 {
 	containerIndex_t container;
 
-	if (!aircraft) {
-		Com_Printf("AIR_MoveEmployeeInventoryIntoStorage: Warning: Called with no aircraft (and thus no carried equipment to add).\n");
-		return;
-	}
-	if (!ed) {
-		Com_Printf("AIR_MoveEmployeeInventoryIntoStorage: Warning: Called with no equipment definition at add stuff to.\n");
-		return;
-	}
-
-	if (AIR_GetTeamSize(aircraft) == 0) {
+	if (AIR_GetTeamSize(&aircraft) == 0) {
 		Com_DPrintf(DEBUG_CLIENT, "AIR_MoveEmployeeInventoryIntoStorage: No team to remove equipment from.\n");
 		return;
 	}
 
 	for (container = 0; container < cgi->csi->numIDs; container++) {
-		LIST_Foreach(aircraft->acTeam, employee_t, employee) {
+		LIST_Foreach(aircraft.acTeam, employee_t, employee) {
 			character_t *chr = &employee->chr;
 			invList_t *ic = CONTAINER(chr, container);
 #if 0
@@ -3045,14 +3036,14 @@ void AIR_MoveEmployeeInventoryIntoStorage (const aircraft_t *aircraft, equipDef_
 				const objDef_t *type = item.item;
 				invList_t *next = ic->next;
 
-				ed->numItems[type->idx]++;
+				ed.numItems[type->idx]++;
 				if (item.ammoLeft && type->reload) {
 					assert(item.ammo);
-					ed->numItemsLoose[item.ammo->idx] += item.ammoLeft;
+					ed.numItemsLoose[item.ammo->idx] += item.ammoLeft;
 					/* Accumulate loose ammo into clips */
-					if (ed->numItemsLoose[item.ammo->idx] >= type->ammo) {
-						ed->numItemsLoose[item.ammo->idx] -= type->ammo;
-						ed->numItems[item.ammo->idx]++;
+					if (ed.numItemsLoose[item.ammo->idx] >= type->ammo) {
+						ed.numItemsLoose[item.ammo->idx] -= type->ammo;
+						ed.numItems[item.ammo->idx]++;
 					}
 				}
 				ic = next;
