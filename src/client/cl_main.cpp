@@ -645,12 +645,11 @@ static void CL_SetRatioFilter_f (void)
 	while (option) {
 		int width;
 		int height;
-		float ratio;
 		bool visible = false;
-		int result = sscanf(OPTIONEXTRADATA(option).label, "%i x %i", &width, &height);
+		const int result = sscanf(OPTIONEXTRADATA(option).label, "%i x %i", &width, &height);
 		if (result != 2)
 			Com_Error(ERR_FATAL, "CL_SetRatioFilter_f: Impossible to decode resolution label.\n");
-		ratio = (float)width / (float)height;
+		const float ratio = (float)width / (float)height;
 
 		if (all)
 			visible = true;
