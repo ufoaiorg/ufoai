@@ -152,7 +152,6 @@ void FreeFace (face_t *f)
  */
 static void FaceFromSuperverts (node_t *node, face_t *f, int base)
 {
-	face_t *newf;
 	int i, remaining;
 
 	remaining = numsuperverts;
@@ -160,8 +159,7 @@ static void FaceFromSuperverts (node_t *node, face_t *f, int base)
 	while (remaining > MAXEDGES) {
 		c_faceoverflows++;
 
-		newf = f->split[0] = NewFaceFromFace(f);
-		newf = f->split[0];
+		face_t *newf = f->split[0] = NewFaceFromFace(f);
 		newf->next = node->faces;
 		node->faces = newf;
 
