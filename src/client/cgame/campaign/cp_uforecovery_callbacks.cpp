@@ -136,9 +136,7 @@ static void UR_DialogInitStore_f (void)
 
 	/* Check how many bases can store this UFO. */
 	INS_Foreach(installation) {
-		const capacities_t *capacity;
-
-		capacity = &installation->ufoCapacity;
+		const capacities_t *capacity = &installation->ufoCapacity;
 		if (capacity->max > 0 && capacity->max > capacity->cur) {
 			Com_sprintf(cap, lengthof(cap), "%i/%i", (capacity->max - capacity->cur), capacity->max);
 			LIST_AddString(&recoveryYardName, installation->name);
@@ -212,12 +210,12 @@ static void UR_DialogFillNations (void)
 
 	for (i = 0; i < ccs.numNations; i++) {
 		const nation_t *nation = ufoRecovery.ufoNations[i].nation;
-		if (nation) {
-			char row[512];
-			Com_sprintf(row, lengthof(row), "%s\t\t\t%i\t\t%s", _(nation->name),
-				ufoRecovery.ufoNations[i].price, NAT_GetHappinessString(nation));
-			LIST_AddString(&nationList, row);
-		}
+		if (!nation)
+			continue;
+		char row[512];
+		Com_sprintf(row, lengthof(row), "%s\t\t\t%i\t\t%s", _(nation->name),
+			ufoRecovery.ufoNations[i].price, NAT_GetHappinessString(nation));
+		LIST_AddString(&nationList, row);
 	}
 
 	cgi->UI_RegisterLinkedListText(TEXT_UFORECOVERY_NATIONS, nationList);
@@ -396,15 +394,12 @@ static ufoRecoveryNationOrder_t UR_GetOrderTypeByID (const char *id)
  */
 static void UR_DialogSortByColumn_f (void)
 {
-	COMP_FUNCTION comp = 0;
-	ufoRecoveryNationOrder_t column;
-
 	if (cgi->Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <nation|price|happiness>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
-	column = UR_GetOrderTypeByID(cgi->Cmd_Argv(1));
+	const ufoRecoveryNationOrder_t column = UR_GetOrderTypeByID(cgi->Cmd_Argv(1));
 	if (ufoRecovery.sortedColumn != column) {
 		ufoRecovery.sortDescending = false;
 		ufoRecovery.sortedColumn = column;
@@ -412,18 +407,19 @@ static void UR_DialogSortByColumn_f (void)
 		ufoRecovery.sortDescending = !ufoRecovery.sortDescending;
 	}
 
-	comp = UR_GetSortFunctionByColumn(column);
-	if (comp) {
-		int index;
+	COMP_FUNCTION comp = UR_GetSortFunctionByColumn(column);
+	if (!comp)
+		return;
 
-		UR_SortNations(comp, ufoRecovery.sortDescending);
-		UR_DialogFillNations();
+	UR_SortNations(comp, ufoRecovery.sortDescending);
+	UR_DialogFillNations();
 
-		/* changed line selection corresponding to current nation */
-		index = UR_DialogGetCurrentNationIndex();
-		if (index != -1)
-			cgi->UI_ExecuteConfunc("cp_nationsel_select %d", index);
-	}
+	/* changed line selection corresponding to current nation */
+	const int index = UR_DialogGetCurrentNationIndex();
+	if (index == -1)
+		return;
+
+	cgi->UI_ExecuteConfunc("cp_nationsel_select %d", index);
 }
 
 /**
@@ -539,20 +535,21 @@ static void US_SelectStoredUfo_f (void)
 
 	if (cgi->Cmd_Argc() < 2 || (ufo = US_GetStoredUFOByIDX(atoi(cgi->Cmd_Argv(1)))) == NULL) {
 		cgi->UI_ExecuteConfunc("show_storedufo -");
-	} else {
-		const char *ufoName = UFO_AircraftToIDOnGeoscape(ufo->ufoTemplate);
-		const char *status = US_StoredUFOStatus(ufo);
-		const char *eta;
-
-		if (Q_streq(status, "transfering")) {
-			date_t time = Date_Substract(ufo->arrive, ccs.date);
-			eta = CP_SecondConvert(Date_DateToSeconds(&time));
-		} else {
-			eta = "-";
-		}
-
-		cgi->UI_ExecuteConfunc("show_storedufo %d \"%s\" %3.0f \"%s\" \"%s\" \"%s\" \"%s\"", ufo->idx, ufoName, ufo->condition * 100, ufo->ufoTemplate->model, status, eta, ufo->installation->name);
+		return;
 	}
+
+	const char *ufoName = UFO_AircraftToIDOnGeoscape(ufo->ufoTemplate);
+	const char *status = US_StoredUFOStatus(ufo);
+	const char *eta;
+
+	if (Q_streq(status, "transfering")) {
+		date_t time = Date_Substract(ufo->arrive, ccs.date);
+		eta = CP_SecondConvert(Date_DateToSeconds(&time));
+	} else {
+		eta = "-";
+	}
+
+	cgi->UI_ExecuteConfunc("show_storedufo %d \"%s\" %3.0f \"%s\" \"%s\" \"%s\" \"%s\"", ufo->idx, ufoName, ufo->condition * 100, ufo->ufoTemplate->model, status, eta, ufo->installation->name);
 }
 
 
