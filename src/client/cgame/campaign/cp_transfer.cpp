@@ -339,7 +339,7 @@ transfer_t* TR_TransferStart (base_t *srcBase, transferData_t *transData)
 
 	LIST_Foreach(transData->aircraft, aircraft_t, aircraft) {
 		aircraft->status = AIR_TRANSFER;
-		AIR_RemoveEmployees(aircraft);
+		AIR_RemoveEmployees(*aircraft);
 		transfer.hasAircraft = true;
 		LIST_AddPointer(&transfer.aircraft, (void*)aircraft);
 	}

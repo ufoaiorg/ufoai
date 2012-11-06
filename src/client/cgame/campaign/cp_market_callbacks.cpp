@@ -140,7 +140,7 @@ static void BS_Buy_f (void)
 			Com_Printf("Invalid aircraft index!\n");
 			return;
 		}
-		AIR_RemoveEmployees(aircraft);
+		AIR_RemoveEmployees(*aircraft);
 		BS_SellAircraft(aircraft);
 		return;
 	}

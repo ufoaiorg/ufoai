@@ -975,7 +975,7 @@ void AIR_DeleteAircraft (aircraft_t *aircraft)
 	TR_NotifyAircraftRemoved(aircraft);
 
 	/* Remove pilot and all soldiers from the aircraft (the employees are still hired after this). */
-	AIR_RemoveEmployees(aircraft);
+	AIR_RemoveEmployees(*aircraft);
 
 	/* base is NULL here because we don't want to readd this to the inventory
 	 * If you want this in the inventory you really have to call these functions
@@ -2991,20 +2991,17 @@ const aircraft_t *AIR_IsEmployeeInAircraft (const employee_t *employee, const ai
  * @param[in,out] aircraft The aircraft to remove the soldiers from.
  * @sa AIR_RemoveEmployee
  */
-void AIR_RemoveEmployees (aircraft_t *aircraft)
+void AIR_RemoveEmployees (aircraft_t &aircraft)
 {
-	if (!aircraft)
-		return;
-
-	LIST_Foreach(aircraft->acTeam, employee_t, employee) {
+	LIST_Foreach(aircraft.acTeam, employee_t, employee) {
 		/* use global aircraft index here */
-		AIR_RemoveEmployee(employee, aircraft);
+		AIR_RemoveEmployee(employee, &aircraft);
 	}
 
 	/* Remove pilot */
-	AIR_SetPilot(aircraft, NULL);
+	AIR_SetPilot(&aircraft, NULL);
 
-	if (AIR_GetTeamSize(aircraft) > 0)
+	if (AIR_GetTeamSize(&aircraft) > 0)
 		cgi->Com_Error(ERR_DROP, "AIR_RemoveEmployees: Error, there went something wrong with soldier-removing from aircraft.");
 }
 

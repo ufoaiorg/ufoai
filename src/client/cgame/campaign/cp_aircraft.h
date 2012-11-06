@@ -309,7 +309,7 @@ bool AIR_PilotSurvivedCrash(const aircraft_t *aircraft);
 
 void AIR_AutoAddPilotToAircraft(const struct base_s* base, struct employee_s* pilot);
 void AIR_RemovePilotFromAssignedAircraft(const struct base_s* base, const struct employee_s* pilot);
-void AIR_RemoveEmployees(aircraft_t* aircraft);
+void AIR_RemoveEmployees(aircraft_t &aircraft);
 bool AIR_AddEmployee(struct employee_s *employee, aircraft_t *aircraft);
 bool AIR_RemoveEmployee(struct employee_s *employee, aircraft_t* aircraft);
 const aircraft_t *AIR_IsEmployeeInAircraft(const struct employee_s *employee, const aircraft_t* aircraft);
