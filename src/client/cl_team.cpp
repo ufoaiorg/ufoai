@@ -286,15 +286,11 @@ static void CL_ChangeSkin_f (void)
  */
 static void CL_ChangeSkinForWholeTeam_f (void)
 {
-	int newSkin, i;
-
-	/* Get selected skin and fall back to default skin if it is not valid. */
-	newSkin = Cvar_GetInteger("mn_body_skin");
-	newSkin = CL_FixActorSkinIDX(newSkin);
-
 	/* Apply new skin to all (shown/displayed) team-members. */
 	/** @todo What happens if a model of a team member does not have the selected skin? */
-	for (i = 0; i < chrDisplayList.num; i++) {
+	for (int i = 0; i < chrDisplayList.num; i++) {
+		/* Get selected skin and fall back to default skin if it is not valid. */
+		const int newSkin = CL_FixActorSkinIDX(Cvar_GetInteger("mn_body_skin"));
 		character_t *chr = chrDisplayList.chr[i];
 		assert(chr);
 		/** @todo Get the skin id from the model by using the actorskin id */
