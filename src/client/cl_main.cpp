@@ -707,8 +707,6 @@ static const value_t actorskin_vals[] = {
 
 static void CL_ParseActorSkin (const char *name, const char **text)
 {
-	actorSkin_t *skin;
-
 	/* NOTE: first skin is special cause we don't get the skin with suffix */
 	if (CL_GetActorSkinCount() == 0) {
 		if (!Q_streq(name, "default") != 0) {
@@ -716,7 +714,7 @@ static void CL_ParseActorSkin (const char *name, const char **text)
 		}
 	}
 
-	skin = CL_AllocateActorSkin(name);
+	actorSkin_t *skin = CL_AllocateActorSkin(name);
 
 	Com_ParseBlock(name, text, skin, actorskin_vals, NULL);
 }
