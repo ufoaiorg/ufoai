@@ -42,6 +42,7 @@ damagetypes standard
 	"plasma_light"
 	"plasma_medium"
 	"plasma_heavy"
+	"plasma_pierce"
 	"_particlebeam"
 	"particlebeam_light"
 	"particlebeam_medium"
@@ -93,6 +94,7 @@ item armour_light
 		plasma_light		15
 		plasma_medium		15
 		plasma_heavy		10
+		plasma_pierce		0
 
 		laser_light			5
 		laser_medium		5
@@ -156,6 +158,7 @@ item armour_medium
 		plasma_light		25
 		plasma_medium		30
 		plasma_heavy		40
+		plasma_pierce		0
 
 		laser_light			10
 		laser_medium		10
@@ -219,6 +222,7 @@ item armour_power
 		plasma_light		35
 		plasma_medium		50
 		plasma_heavy		60
+		plasma_pierce		0
 
 		laser_light			15
 		laser_medium		15
@@ -290,6 +294,7 @@ item armour_light_alien
 		plasma_light	30
 		plasma_medium	30
 		plasma_heavy	25
+		plasma_pierce		0
 
 		particlebeam_light	-5
 		particlebeam_medium	-10
@@ -353,6 +358,7 @@ item armour_medium_alien
 		plasma_light	50
 		plasma_medium	40
 		plasma_heavy	25
+		plasma_pierce		0
 
 		particlebeam_light	-30
 		particlebeam_medium	-40

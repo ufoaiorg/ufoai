@@ -354,3 +354,266 @@ item plasblaster_ammo
 		}
 	}
 }
+
+// =======================
+// ENCASED PLASMA ROUNDS
+// =======================
+item encased_plasma_assault_ammo
+{
+	name			"_Encased Plasma Ammo - Assault Rifle"
+	model			"weapons/assault/enc_plasma_clip"
+	type			"ammo"
+	animationindex	0
+	shape			"0 0 1 2"
+	center			"0 0 0"
+	scale			1.25
+	price			1500
+	size			3
+	is_primary		true
+	dmgtype			"plasma"
+
+	weapon_mod
+	{
+		weapon assault
+		firedef
+		{
+			name		"_Snap Shot"
+			skill		"assault"
+			projtl		bullet
+			impact		bulletImpact
+			hitbody		null
+			firesnd		"weapons/bullet-rifle-1x"
+			impsnd		"impact/bullet-impact"
+			bodysnd 	"impact/bullet-bodyimpact"
+			speed		3000
+			spread		"1.2 1.2"
+			crouch		0.85
+			range		100
+			shots		1
+			ammo		1
+			time		8
+			damage		"80 10"
+			dmgweight	"plasma_pierce"
+			reaction	true
+		}
+		firedef
+		{
+			name				"_3-Round Burst"
+			skill				"assault"
+			projtl				bullet
+			impact				bulletImpact
+			hitbody				null
+			firesnd				"weapons/bullet-rifle-3x"
+			impsnd				"impact/bullet-impact"
+			bodysnd 			"impact/bullet-bodyimpact"
+			sndonce				true
+			speed				3000
+			spread				"1.4 1.4"
+			crouch				0.85
+			range				100
+			shots				3
+			ammo				3
+			delaybetweenshots	10
+			time				12
+			damage				"80 10"
+			dmgweight			"plasma_pierce"
+			reaction			true
+		}
+		firedef
+		{
+			name				"_Full-Auto"
+			skill				"assault"
+			projtl				bullet
+			impact				bulletImpact
+			hitbody				null
+			firesnd				"weapons/bullet-rifle-8x"
+			impsnd				"impact/bullet-impact"
+			bodysnd 			"impact/bullet-bodyimpact"
+			sndonce				true
+			speed				3000
+			spread				"1.6 1.6"
+			crouch				0.85
+			range				100
+			shots				8
+			ammo				8
+			delaybetweenshots	10
+			time				16
+			damage				"80 10"
+			dmgweight			"plasma_pierce"
+		}
+		firedef
+		{
+			name		"_Aimed Shot"
+			skill		"sniper"
+			projtl		bullet
+			impact		bulletImpact
+			hitbody		null
+			firesnd		"weapons/bullet-rifle-1x"
+			impsnd		"impact/bullet-impact"
+			bodysnd 	"impact/bullet-bodyimpact"
+			speed		3000
+			spread		"1 1"
+			crouch		0.85
+			range		100
+			shots		1
+			ammo		1
+			time		16
+			damage		"80 10"
+			dmgweight	"plasma_pierce"
+		}
+	}
+}
+
+item encased_plasma_mg_ammo
+{
+	name			"_Machine Gun - Encased Plasma Ammo"
+	model			"weapons/machinegun/enc_plasma_clip_mg"
+	type			"ammo"
+	animationindex	0
+	shape			"0 0 2 2"
+	center			"0 0 0"
+	scale			1.9
+	price			65
+	size			6
+	is_primary		true
+	is_heavy		true
+	dmgtype			"plasma"
+
+	weapon_mod
+	{
+		weapon machinegun
+		firedef
+		{
+			name				"_5-Shot Burst"
+			skill				"assault"
+			projtl				bullet-hmg
+			impact				bulletImpact
+			hitbody				null
+			firesnd				"weapons/bullet-hmg-5x"
+			impsnd				"impact/bullet-impact"
+			bodysnd 			"impact/bullet-bodyimpact"
+			sndonce				true
+			speed				3000
+			spread				"1.8 1.8"
+			crouch				1.2
+			range				100
+			shots				5
+			ammo				5
+			delaybetweenshots	10
+			time				14
+			damage				"80 10"
+			dmgweight			"plasma_pierce"
+			reaction			true
+		}
+		firedef
+		{
+			name				"_Full-Auto"
+			skill				"assault"
+			projtl				bullet-hmg
+			impact				bulletImpact
+			hitbody				null
+			firesnd				"weapons/bullet-hmg-20x"
+			impsnd				"impact/bullet-impact"
+			bodysnd 			"impact/bullet-bodyimpact"
+			sndonce				true
+			speed				3000
+			spread				"2.4 2.4"
+			crouch				1.2
+			range				100
+			shots				20
+			ammo				20
+			delaybetweenshots	10
+			time				24
+			damage				"80 10"
+			dmgweight			"plasma_pierce"
+			reaction			true
+		}
+		firedef
+		{
+			name				"_Full-Auto Sweep"
+			skill				"assault"
+			projtl				bullet-hmg
+			impact				bulletImpact
+			hitbody				null
+			firesnd				"weapons/bullet-hmg-20x"
+			impsnd				"impact/bullet-impact"
+			bodysnd 			"impact/bullet-bodyimpact"
+			sndonce				true
+			speed				3000
+			spread				"3 20"
+			crouch				1.2
+			range				100
+			shots				20
+			ammo				20
+			delaybetweenshots	10
+			time				24
+			damage				"80 10"
+			dmgweight			"plasma_pierce"
+			reaction			true
+		}
+	}
+}
+
+item encased_plasma_sniper_ammo
+{
+	name			"_Encased Plasma Ammo - Sniper Rifle"
+	model			"weapons/sniper/enc_plasma_clip_snp"
+	type			"ammo"
+	animationindex	0
+	shape			"0 0 1 2"
+	center			"0 0 0"
+	scale			1.15
+	price			85
+	size			8
+	is_primary		true
+	dmgtype			"plasma"
+
+	weapon_mod
+	{
+		weapon sniper
+		firedef
+		{
+			name		"_Snap Shot"
+			skill		"assault"
+			projtl		bullet_sniper
+			impact		bulletImpact
+			hitbody		null
+			firesnd		"weapons/bullet-sniper"
+			impsnd		"impact/bullet-impact"
+			bodysnd 	"impact/bullet-bodyimpact"
+			speed		3600
+			spread		"2.5 2.5"
+			crouch		1
+			range		100
+			shots		1
+			ammo		1
+			time		15
+			damage		"160 20"
+			dmgweight	"plasma_pierce"
+			reaction	true
+			throughwall 1
+		}
+		firedef
+		{
+			name		"_Aimed Shot"
+			skill		"sniper"
+			projtl		bullet_sniper
+			impact		bulletImpact
+			hitbody		null
+			firesnd		"weapons/bullet-sniper"
+			impsnd		"impact/bullet-impact"
+			bodysnd 	"impact/bullet-bodyimpact"
+			speed		3600
+			spread		"0.85 0.85"
+			crouch		0.6
+			range		100
+			shots		1
+			ammo		1
+			time		20
+			damage		"160 20"
+			dmgweight	"plasma_pierce"
+			reaction	true
+			throughwall 1
+		}
+	}
+}

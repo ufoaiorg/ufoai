@@ -1950,6 +1950,113 @@ tech rs_weapon_plasrifle_ammo
 	producetime	40
 }
 
+tech rs_weapon_encased_plasma
+{
+	name	"_Encased Plasma Rounds"
+	type	"tech"
+	up_chapter	equipment
+
+	description {
+		default "*msgid:encased_plasma_txt"
+	}
+	pre_description {
+		default "*msgid:encased_plasma_pre_txt"
+	}
+
+	mail_pre
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+
+	mail
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+
+	require_AND
+	{
+		tech rs_weapon_plasblade
+	}
+
+	time	6000
+	producetime -1
+}
+
+tech rs_weapon_encased_plasma_assault_ammo
+{
+	name	"_Encased Plasma Rounds"
+	type	"weapon"
+	up_chapter	equipment
+
+	redirect	rs_weapon_encased_plasma
+
+	require_AND
+	{
+		tech rs_weapon_encased_plasma
+	}
+
+	require_for_production
+	{
+	    item (alienmaterials 10)
+	}
+
+	provides	encased_plasma_assault_ammo
+	time	0
+	producetime	40
+}
+
+tech rs_weapon_encased_plasma_mg_ammo
+{
+	name	"_Encased Plasma Rounds"
+	type	"weapon"
+	up_chapter	equipment
+
+	redirect	rs_weapon_encased_plasma
+
+	require_AND
+	{
+		tech rs_weapon_encased_plasma
+	}
+
+	require_for_production
+	{
+	    item (alienmaterials 10)
+	}
+
+	provides	encased_plasma_mg_ammo
+	time	0
+	producetime	40
+}
+
+tech rs_weapon_encased_plasma_sniper_ammo
+{
+	name	"_Encased Plasma Rounds"
+	type	"weapon"
+	up_chapter	equipment
+
+	redirect	rs_weapon_encased_plasma
+
+	require_AND
+	{
+		tech rs_weapon_encased_plasma
+	}
+
+	require_for_production
+	{
+	    item (alienmaterials 10)
+	}
+
+	provides	encased_plasma_sniper_ammo
+	time	0
+	producetime	40
+}
+
 tech rs_weapon_needlergun
 {
 	name	"_Needler Gun"

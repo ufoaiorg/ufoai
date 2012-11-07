@@ -1379,6 +1379,14 @@ text "_Commander, my department is ready to begin studying the recovered alien p
 Cdr. Navarre"
 }
 
+msgid encased_plasma_txt {
+text "_None."
+}
+
+msgid encased_plasma_pre_txt {
+text "_None."
+}
+
 msgid needlergun_txt {
 text "_Commander, we've finished analysing the alien needler gun, and I've prepared a threat assessment and technical overview for you.
 

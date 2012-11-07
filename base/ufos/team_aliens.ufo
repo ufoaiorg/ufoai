@@ -113,6 +113,7 @@ team taman
 		plasma_light 5
 		plasma_medium 5
 		plasma_heavy 5
+		plasma_pierce		0
 
 		particlebeam_light 50
 		particlebeam_medium 50
@@ -235,6 +236,7 @@ team ortnok
 		plasma_light 0
 		plasma_medium 0
 		plasma_heavy 0
+		plasma_pierce		0
 
 		particlebeam_light -30
 		particlebeam_medium -40
@@ -338,6 +340,7 @@ team shevaar
 		plasma_light -10
 		plasma_medium -20
 		plasma_heavy -30
+		plasma_pierce		0
 
 		particlebeam_light -10
 		particlebeam_medium -20
@@ -439,6 +442,7 @@ team bloodspider
 		plasma_light	30
 		plasma_medium	30
 		plasma_heavy	25
+		plasma_pierce		0
 
 		particlebeam_light	-5
 		particlebeam_medium	-10
@@ -540,6 +544,7 @@ team bloodspider_adv
 		plasma_light	50
 		plasma_medium	40
 		plasma_heavy	25
+		plasma_pierce		0
 
 		particlebeam_light	-30
 		particlebeam_medium	-40
@@ -642,6 +647,7 @@ team hovernet
 		plasma_light	30
 		plasma_medium	30
 		plasma_heavy	25
+		plasma_pierce		0
 
 		particlebeam_light	-5
 		particlebeam_medium	-10
@@ -743,6 +749,7 @@ team hovernet_adv
 		plasma_light	50
 		plasma_medium	40
 		plasma_heavy	25
+		plasma_pierce		0
 
 		particlebeam_light	-30
 		particlebeam_medium	-40
