@@ -1347,9 +1347,8 @@ void GAME_StartBattlescape (bool isTeamPlay)
 	} else {
 		UI_InitStack(NULL, "singleplayermission", true, false);
 		HUD_InitUI(NULL, true);
+		GAME_InitMissionBriefing(_(CL_GetConfigString(CS_MAPTITLE)));
 	}
-
-	GAME_InitMissionBriefing(_(CL_GetConfigString(CS_MAPTITLE)));
 }
 
 void GAME_InitMissionBriefing (const char *title)
