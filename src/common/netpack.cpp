@@ -402,9 +402,7 @@ float NET_ReadAngle (dbuffer *buf)
 
 float NET_ReadAngle16 (dbuffer *buf)
 {
-	short s;
-
-	s = NET_ReadShort(buf);
+	const short s = NET_ReadShort(buf);
 	return (float) SHORT2ANGLE(s);
 }
 
@@ -569,7 +567,7 @@ void NET_ReadFormat (dbuffer *buf, const char *format, ...)
 void NET_OOB_Printf (struct net_stream *s, const char *format, ...)
 {
 	va_list argptr;
-	char string[4096];
+	char string[256];
 	const char cmd = (const char)clc_oob;
 	int len;
 
@@ -590,7 +588,7 @@ void NET_OOB_Printf (struct net_stream *s, const char *format, ...)
  */
 void NET_WriteMsg (struct net_stream *s, dbuffer *buf)
 {
-	char tmp[INITIAL_CAPACITY];
+	char tmp[256];
 	int len = LittleLong(dbuffer_len(buf));
 	NET_StreamEnqueue(s, (char *)&len, 4);
 
@@ -612,7 +610,7 @@ void NET_WriteMsg (struct net_stream *s, dbuffer *buf)
  */
 void NET_WriteConstMsg (struct net_stream *s, const dbuffer *buf)
 {
-	char tmp[4096];
+	char tmp[256];
 	int len = LittleLong(dbuffer_len(buf));
 	int pos = 0;
 	NET_StreamEnqueue(s, (char *)&len, 4);
@@ -635,21 +633,20 @@ void NET_WriteConstMsg (struct net_stream *s, const dbuffer *buf)
 dbuffer *NET_ReadMsg (struct net_stream *s)
 {
 	unsigned int v;
-	int len;
-	dbuffer *buf;
-	char tmp[INITIAL_CAPACITY];
 	if (NET_StreamPeek(s, (char *)&v, 4) < 4)
 		return NULL;
 
-	len = LittleLong(v);
+	int len = LittleLong(v);
 	if (NET_StreamGetLength(s) < (4 + len))
 		return NULL;
 
+	char tmp[256];
+	const int size = sizeof(tmp);
 	NET_StreamDequeue(s, tmp, 4);
 
-	buf = new_dbuffer();
+	dbuffer *buf = new_dbuffer();
 	while (len > 0) {
-		const int x = NET_StreamDequeue(s, tmp, std::min(len, INITIAL_CAPACITY));
+		const int x = NET_StreamDequeue(s, tmp, std::min(len, size));
 		dbuffer_add(buf, tmp, x);
 		len -= x;
 	}
