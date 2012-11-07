@@ -348,7 +348,7 @@ item plasblaster_ammo
 			time				10
 			damage				"0 0"
 			spldmg				"180 20"
-			splrad				3
+			splrad				1
 			dmgweight			"plasma_heavy"
 			reaction			true
 		}
