@@ -1380,11 +1380,25 @@ Cdr. Navarre"
 }
 
 msgid encased_plasma_txt {
-text "_None."
+text "_Commander, we've finished drawing up the specs for the Encased Plasma Ammo. We've got design documents in place for your engineers to build new ammo cartridges for the Assault Rifle, Machine Gun and SR-1 Sniper Rifle.
+
+The Encased Plasma Ammo is essentially a shape charge miniaturized to fit inside of a traditional rifle. It consists of a small plasma core, a tip that fragments on impact and a soft outer casing. When the bullet hits its target, the tip fragments and the small plasma core slams into the armour. The speed of the blow causes the soft outer casing to deform, creating a sealed shell around the plasma core and trapping the heat so that it burns through the armour.
+
+The amount of plasma in the tip is, of course, much smaller than that delivered by the aliens' plasma weaponry. But because the heat of the plasma is able to penetrate its target, much more of its heat is transferred, causing horrific wounding.
+
+Get this ammo into the field as soon as possible, sir. You won't regret it.
+
+Cdr. Navarre"
 }
 
 msgid encased_plasma_pre_txt {
-text "_None."
+text "_Commander, our research on the plasma blade has given us an idea for a suite of advanced ammo that could restore the stopping power of our traditional weaponry.
+
+As you know, the alien armour we're facing in the field is especially well adapted to protect against plasma weaponry. Because the plasma bursts inflict their damage by melting a target, the alien materials are designed to deflect the heat long enough for the plasma bursts to burn out. But the enormous power of the plasma blade lies in its ability to trap the heat of the plasma and redirect it at the target. It can't be diffused.
+
+We want to do the same thing -- on a much smaller scale -- for ammo cartridges that would fit into our assault rifles, machine guns and sniper rifles. Give us some time to work out the details, sir, and I'm confident we can return with an attractive upgrade to our capabilities on the battlefield.
+
+Cdr. Navarre"
 }
 
 msgid needlergun_txt {
