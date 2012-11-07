@@ -251,7 +251,7 @@ void R_PopMatrix (void)
 /**
  * @brief Dumps OpenGL state for debugging - typically every capability set with glEnable().
  */
-void R_DumpOpenGlState()
+void R_DumpOpenGlState (void)
 {
 #define CAPABILITY( X ) {GL_ ## X, # X}
 	/* List taken from here: http://www.khronos.org/opengles/sdk/1.1/docs/man/glIsEnabled.xml */
@@ -287,7 +287,6 @@ void R_DumpOpenGlState()
 	GLint maxTexUnits = 0;
 	GLint activeTexUnit = 0;
 	GLint activeClientTexUnit = 0;
-	GLint activeTexClient = 0;
 	GLint activeTexId = 0;
 	GLfloat texEnvMode = 0;
 	const char * texEnvModeStr = "UNKNOWN";
@@ -346,7 +345,7 @@ void R_DumpOpenGlState()
 /**
  * @brief Re-initializes OpenGL state machine, all textures and renderer variables, this needed when application is put to background on Android.
  */
-void R_ReinitOpenglContext()
+void R_ReinitOpenglContext (void)
 {
 	R_SetDefaultState();
 	R_ShutdownPrograms();

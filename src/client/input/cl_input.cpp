@@ -395,7 +395,7 @@ static void CL_SelectUp_f (void)
 	IN_SetMouseSpace(MS_NULL);
 }
 
-static void CL_SelectDown_ProcessMouseMovement (void)
+static void CL_SelectDownProcessMouseMovement (void)
 {
 	if (!battlescapeMouseScrollCaptured)
 		return;
@@ -853,7 +853,7 @@ void IN_Frame (void)
 
 	IN_JoystickMove();
 
-	CL_SelectDown_ProcessMouseMovement();
+	CL_SelectDownProcessMouseMovement();
 
 	if (vid_grabmouse->modified) {
 		vid_grabmouse->modified = false;
@@ -976,11 +976,11 @@ void IN_Frame (void)
 			/* make sure that SDL_SetVideoMode is called again after we changed the size
 			 * otherwise the mouse will make problems */
 			vid_mode->modified = true;
-			#ifdef ANDROID
+#ifdef ANDROID
 			/* On Android the OpenGL context is destroyed after we've received a resize event,
 			 * so wee need to re-init OpenGL state machine and re-upload all textures */
 			R_ReinitOpenglContext();
-			#endif
+#endif
 			break;
 		}
 	}

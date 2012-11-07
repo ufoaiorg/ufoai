@@ -170,7 +170,7 @@ void R_DrawChars (void)
 	glVertexPointer(2, GL_SHORT, 0, r_char_arrays.verts);
 
 #ifdef GL_VERSION_ES_CM_1_0
-	for(int i = 0; i < r_char_arrays.vert_index / 8; i++)
+	for (int i = 0; i < r_char_arrays.vert_index / 8; i++)
 		glDrawArrays(GL_TRIANGLE_FAN, i * 4, 4);
 #else
 	glDrawArrays(GL_QUADS, 0, r_char_arrays.vert_index / 2);
@@ -251,7 +251,7 @@ void R_DrawFills (void)
 	glVertexPointer(2, GL_SHORT, 0, r_fill_arrays.verts);
 
 #ifdef GL_VERSION_ES_CM_1_0
-	for(int i = 0; i < r_fill_arrays.vert_index / 8; i++)
+	for (int i = 0; i < r_fill_arrays.vert_index / 8; i++)
 		glDrawArrays(GL_TRIANGLE_FAN, i * 4, 4);
 #else
 	glDrawArrays(GL_QUADS, 0, r_fill_arrays.vert_index / 2);
