@@ -92,6 +92,7 @@ static void CL_RconCallback (struct net_stream *s)
 			cgi->NET_ReadString(buf, paramBuf, sizeof(paramBuf));
 			cgi->Com_Printf("%s\n", paramBuf);
 		}
+		free_dbuffer(buf);
 	}
 	cgi->NET_StreamFree(s);
 }
