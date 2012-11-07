@@ -53,11 +53,6 @@ const float MAX_ZOOM = 32.0;
 #define MAX_CAMMOVE_ACCEL	3000
 #define LEVEL_MIN			0.05
 #define LEVEL_SPEED			3.0
-#ifdef ANDROID
-#define ZOOM_SPEED			0.4
-#else
-#define ZOOM_SPEED			2.0
-#endif
 #define MIN_CAMZOOM_QUANT	0.05
 #define MAX_CAMZOOM_QUANT	1.0
 
@@ -66,6 +61,7 @@ static cvar_t *cl_cammovespeed;
 static cvar_t *cl_cammoveaccel;
 static cvar_t *cl_campitchmin;
 static cvar_t *cl_campitchmax;
+static cvar_t *cl_camzoomspeed;
 cvar_t *cl_camzoommax;
 cvar_t *cl_camzoomquant;
 cvar_t *cl_camzoommin;
@@ -213,11 +209,11 @@ void CL_CameraMove (void)
 	/* zoom change */
 	frac = CL_GetKeyMouseState(STATE_ZOOM);
 	if (frac > 0.1) {
-		cl.cam.zoom *= 1.0 + cls.frametime * ZOOM_SPEED * frac;
+		cl.cam.zoom *= 1.0 + cls.frametime * cl_camzoomspeed->value * frac;
 		/* ensure zoom isn't greater than either MAX_ZOOM or cl_camzoommax */
 		cl.cam.zoom = std::min(std::min(MAX_ZOOM, cl_camzoommax->value), cl.cam.zoom);
 	} else if (frac < -0.1) {
-		cl.cam.zoom /= 1.0 - cls.frametime * ZOOM_SPEED * frac;
+		cl.cam.zoom /= 1.0 - cls.frametime * cl_camzoomspeed->value * frac;
 		/* ensure zoom isn't less than either MIN_ZOOM or cl_camzoommin */
 		cl.cam.zoom = std::max(std::max(MIN_ZOOM, cl_camzoommin->value), cl.cam.zoom);
 	}
@@ -369,6 +365,7 @@ void CL_CameraInit (void)
 	cl_cammovespeed = Cvar_Get("cl_cammovespeed", "750", CVAR_ARCHIVE, "Movement speed of the battlescape camera.");
 	cl_cammoveaccel = Cvar_Get("cl_cammoveaccel", "1250", CVAR_ARCHIVE, "Movement acceleration of the battlescape camera.");
 	cl_campitchmax = Cvar_Get("cl_campitchmax", "89", 0, "Max. battlescape camera pitch - over 90 presents apparent mouse inversion.");
+	cl_camzoomspeed = Cvar_Get("cl_camzoomspeed", "2.0", 0);
 	cl_campitchmin = Cvar_Get("cl_campitchmin", "10", 0, "Min. battlescape camera pitch - under 35 presents difficulty positioning cursor.");
 	cl_camzoomquant = Cvar_Get("cl_camzoomquant", "0.16", CVAR_ARCHIVE, "Battlescape camera zoom quantisation.");
 	cl_camzoommin = Cvar_Get("cl_camzoommin", "0.3", 0, "Minimum zoom value for tactical missions.");

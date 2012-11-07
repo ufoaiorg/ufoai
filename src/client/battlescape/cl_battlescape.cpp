@@ -390,12 +390,12 @@ char *CL_SetConfigString (int index, dbuffer *msg)
 	return cl.configstrings[index];
 }
 
-void CL_InitBattlescapeMouseScrolling(void)
+void CL_InitBattlescapeMouseScrolling (void)
 {
 	VectorCopy(truePos, mouseScrollPos);
 }
 
-void CL_DoBattlescapeMouseScrolling(void)
+void CL_DoBattlescapeMouseScrolling (void)
 {
 	/* TODO: the movement is snapping to the cell center, and is clunky - make it smooth */
 	/* Difference between last and currently selected cell, we'll move camera by that difference */
