@@ -255,7 +255,7 @@ void R_DumpOpenGlState (void)
 {
 #define CAPABILITY( X ) {GL_ ## X, # X}
 	/* List taken from here: http://www.khronos.org/opengles/sdk/1.1/docs/man/glIsEnabled.xml */
-	const struct { GLenum idx; const char * text; } OpenGlCaps[] = {
+	const struct { GLenum idx; const char * text; } openGLCaps[] = {
 		CAPABILITY(ALPHA_TEST),
 		CAPABILITY(BLEND),
 		CAPABILITY(COLOR_ARRAY),
@@ -292,10 +292,10 @@ void R_DumpOpenGlState (void)
 	const char * texEnvModeStr = "UNKNOWN";
 	GLfloat color[4];
 
-	for( int i = 0; i < sizeof(OpenGlCaps) / sizeof(OpenGlCaps[0]); i++ ) {
-		if( glIsEnabled(OpenGlCaps[i].idx) ) {
-			strcat(s, OpenGlCaps[i].text);
-			strcat(s, " ");
+	for (int i = 0; i < lengthof(openGLCaps); i++) {
+		if (glIsEnabled(openGLCaps[i].idx)) {
+			Q_strcat(s, openGLCaps[i].text, sizeof(s));
+			Q_strcat(s, " ", sizeof(s));
 		}
 	}
 	glGetFloatv(GL_CURRENT_COLOR, color);
@@ -306,40 +306,40 @@ void R_DumpOpenGlState (void)
 	glGetIntegerv(GL_CLIENT_ACTIVE_TEXTURE, &activeClientTexUnit);
 
 	glGetIntegerv(GL_MAX_TEXTURE_UNITS, &maxTexUnits);
-	for ( i = GL_TEXTURE0; i < GL_TEXTURE0 + maxTexUnits; i++) {
-		glActiveTexture(i);
-		glClientActiveTexture(i);
+	for (i = GL_TEXTURE0; i < GL_TEXTURE0 + maxTexUnits; i++) {
+		qglActiveTexture(i);
+		qglClientActiveTexture(i);
 
 		strcpy(s, "");
-		if( glIsEnabled(GL_TEXTURE_2D) )
+		if (glIsEnabled (GL_TEXTURE_2D))
 			strcat(s, "enabled, ");
-		if( glIsEnabled(GL_TEXTURE_COORD_ARRAY) )
+		if (glIsEnabled (GL_TEXTURE_COORD_ARRAY))
 			strcat(s, "with texcoord array, ");
-		if( i == activeTexUnit )
+		if (i == activeTexUnit)
 			strcat(s, "active, ");
-		if( i == activeClientTexUnit )
+		if (i == activeClientTexUnit)
 			strcat(s, "client active, ");
 
 		glGetIntegerv(GL_TEXTURE_BINDING_2D, &activeTexId);
 		glGetTexEnvfv(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, &texEnvMode);
-		if (fabs( texEnvMode - GL_ADD ) < 0.1f)
+		if (fabs(texEnvMode - GL_ADD) < 0.1f)
 			texEnvModeStr = "ADD";
-		if (fabs( texEnvMode - GL_MODULATE ) < 0.1f)
+		if (fabs(texEnvMode - GL_MODULATE) < 0.1f)
 			texEnvModeStr = "MODULATE";
-		if (fabs( texEnvMode - GL_DECAL ) < 0.1f)
+		if (fabs(texEnvMode - GL_DECAL) < 0.1f)
 			texEnvModeStr = "DECAL";
-		if (fabs( texEnvMode - GL_BLEND ) < 0.1f)
+		if (fabs(texEnvMode - GL_BLEND) < 0.1f)
 			texEnvModeStr = "BLEND";
-		if (fabs( texEnvMode - GL_REPLACE ) < 0.1f)
+		if (fabs(texEnvMode - GL_REPLACE) < 0.1f)
 			texEnvModeStr = "REPLACE";
-		if (fabs( texEnvMode - GL_COMBINE ) < 0.1f)
+		if (fabs(texEnvMode - GL_COMBINE) < 0.1f)
 			texEnvModeStr = "COMBINE";
 
 		Com_Printf("Texunit: %d texID %d %s texEnv mode %s\n", i - GL_TEXTURE0, activeTexId, s, texEnvModeStr);
 	}
 
-	glActiveTexture(activeTexUnit);
-	glClientActiveTexture(activeClientTexUnit);
+	qglActiveTexture(activeTexUnit);
+	qglClientActiveTexture(activeClientTexUnit);
 }
 
 /**
