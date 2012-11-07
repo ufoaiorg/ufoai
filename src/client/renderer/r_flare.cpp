@@ -111,12 +111,7 @@ void R_DrawFlareSurfaces (const mBspSurfaces_t *surfs, char *indexPtr)
 
 		/* bind the flare's texture */
 		if (f->image != image) {
-#ifdef GL_VERSION_ES_CM_1_0
-			for(int ii = 0; ii < l / 3 / 4; ii++)
-				glDrawArrays(GL_TRIANGLE_FAN, ii * 4, 4);
-#else
-			glDrawArrays(GL_QUADS, 0, l / 3);
-#endif
+			R_DrawArrays(0, l / 3);
 			j = k = l = 0;
 
 			refdef.batchCount++;
@@ -187,12 +182,7 @@ void R_DrawFlareSurfaces (const mBspSurfaces_t *surfs, char *indexPtr)
 		l += sizeof(vec3_t) / sizeof(vec_t) * 4;
 	}
 
-#ifdef GL_VERSION_ES_CM_1_0
-	for(int ii = 0; ii < l / 3 / 4; ii++)
-		glDrawArrays(GL_TRIANGLE_FAN, ii * 4, 4);
-#else
-	glDrawArrays(GL_QUADS, 0, l / 3);
-#endif
+	R_DrawArrays(0, l / 3);
 
 	refdef.batchCount++;
 

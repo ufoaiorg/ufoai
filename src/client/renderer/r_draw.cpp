@@ -169,12 +169,7 @@ void R_DrawChars (void)
 	R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, r_char_arrays.texcoords);
 	glVertexPointer(2, GL_SHORT, 0, r_char_arrays.verts);
 
-#ifdef GL_VERSION_ES_CM_1_0
-	for (int i = 0; i < r_char_arrays.vert_index / 8; i++)
-		glDrawArrays(GL_TRIANGLE_FAN, i * 4, 4);
-#else
-	glDrawArrays(GL_QUADS, 0, r_char_arrays.vert_index / 2);
-#endif
+	R_DrawArrays(0, r_char_arrays.vert_index / 2);
 
 	refdef.batchCount++;
 
@@ -250,12 +245,7 @@ void R_DrawFills (void)
 	R_BindArray(GL_COLOR_ARRAY, GL_UNSIGNED_BYTE, r_fill_arrays.colors);
 	glVertexPointer(2, GL_SHORT, 0, r_fill_arrays.verts);
 
-#ifdef GL_VERSION_ES_CM_1_0
-	for (int i = 0; i < r_fill_arrays.vert_index / 8; i++)
-		glDrawArrays(GL_TRIANGLE_FAN, i * 4, 4);
-#else
-	glDrawArrays(GL_QUADS, 0, r_fill_arrays.vert_index / 2);
-#endif
+	R_DrawArrays(0, r_fill_arrays.vert_index / 2);
 
 	refdef.batchCount++;
 
@@ -670,9 +660,7 @@ void R_DrawBoundingBoxes (void)
 	if (!r_bbox_array.bboxes_index)
 		return;
 
-#ifndef GL_VERSION_ES_CM_1_0
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-#endif
 
 	R_Color(NULL);
 
@@ -687,9 +675,7 @@ void R_DrawBoundingBoxes (void)
 
 	R_BindDefaultArray(GL_VERTEX_ARRAY);
 
-#ifndef GL_VERSION_ES_CM_1_0
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-#endif
 
 	r_bbox_array.bboxes_index = 0;
 }
@@ -723,9 +709,7 @@ void R_DrawBoundingBox (const vec3_t absmins, const vec3_t absmaxs)
 
 	R_ComputeBoundingBox(absmins, absmaxs, bbox);
 
-#ifndef GL_VERSION_ES_CM_1_0
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-#endif
 
 	R_BindArray(GL_VERTEX_ARRAY, GL_FLOAT, bbox);
 	/* Draw top and sides */
@@ -734,9 +718,7 @@ void R_DrawBoundingBox (const vec3_t absmins, const vec3_t absmaxs)
 	glDrawElements(GL_TRIANGLE_STRIP, 3, GL_UNSIGNED_INT, indexes2);
 	R_BindDefaultArray(GL_VERTEX_ARRAY);
 
-#ifndef GL_VERSION_ES_CM_1_0
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-#endif
 }
 
 /**

@@ -32,6 +32,20 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <SDL_opengl.h>
 #endif
 
+#ifdef GL_VERSION_ES_CM_1_0
+#define glPolygonMode(x, y)
+#endif
+
+inline void R_DrawArrays (GLint first, GLsizei count) {
+#ifdef GL_VERSION_ES_CM_1_0
+	const int cnt = count / 4;
+	for (int i = 0; i < cnt; i++)
+		glDrawArrays(GL_TRIANGLE_FAN, i * 4, 4);
+#else
+	glDrawArrays(GL_QUADS, first, count);
+#endif
+}
+
 /** @todo update SDL to version that includes these */
 #ifndef GL_READ_FRAMEBUFFER_EXT
 #define GL_READ_FRAMEBUFFER_EXT 0x8CA8

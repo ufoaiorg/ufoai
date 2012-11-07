@@ -292,10 +292,8 @@ void R_RenderFrame (void)
 	R_Setup3D();
 
 	/* activate wire mode */
-#ifndef GL_VERSION_ES_CM_1_0
 	if (r_wire->integer)
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-#endif
 
 	if (!(refdef.rendererFlags & RDF_NOWORLDMODEL)) {
 		int tile;
@@ -404,10 +402,8 @@ void R_RenderFrame (void)
 	R_EnableBlend(false);
 
 	/* leave wire mode again */
-#ifndef GL_VERSION_ES_CM_1_0
 	if (r_wire->integer)
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-#endif
 
 	R_DrawBloom();
 
