@@ -1503,6 +1503,9 @@ void RS_ParseTechnologies (const char *name, const char **text)
 		*/
 		techHashProvided[hash] = tech;
 	} else {
+		if (tech->type == RS_WEAPON || tech->type == RS_ARMOUR) {
+			Sys_Error("RS_ParseTechnologies: weapon or armour tech without a provides property");
+		}
 		Com_DPrintf(DEBUG_CLIENT, "tech '%s' doesn't have a provides string\n", tech->id);
 	}
 
