@@ -358,40 +358,41 @@ void R_ReinitOpenglContext (void)
 	R_UpdateDefaultMaterial("", "", "", NULL);
 
 	/* Re-upload the battlescape terrain geometry */
-	if (qglBindBuffer) {
-		for (int tile = 0; tile < r_numMapTiles; tile++) {
-			model_t *mod = r_mapTiles[tile];
+	if (!qglBindBuffer)
+		return;
 
-			int vertind = 0, coordind = 0, tangind = 0;
-			mBspSurface_t *surf = mod->bsp.surfaces;
+	for (int tile = 0; tile < r_numMapTiles; tile++) {
+		model_t *mod = r_mapTiles[tile];
 
-			for (int i = 0; i < mod->bsp.numsurfaces; i++, surf++) {
-				vertind += 3 * surf->numedges;
-				coordind += 2 * surf->numedges;
-				tangind += 4 * surf->numedges;
-			}
+		int vertind = 0, coordind = 0, tangind = 0;
+		mBspSurface_t *surf = mod->bsp.surfaces;
 
-			qglGenBuffers(1, &mod->bsp.vertex_buffer);
-			qglBindBuffer(GL_ARRAY_BUFFER, mod->bsp.vertex_buffer);
-			qglBufferData(GL_ARRAY_BUFFER, vertind * sizeof(GLfloat), mod->bsp.verts, GL_STATIC_DRAW);
-
-			qglGenBuffers(1, &mod->bsp.texcoord_buffer);
-			qglBindBuffer(GL_ARRAY_BUFFER, mod->bsp.texcoord_buffer);
-			qglBufferData(GL_ARRAY_BUFFER, coordind * sizeof(GLfloat), mod->bsp.texcoords, GL_STATIC_DRAW);
-
-			qglGenBuffers(1, &mod->bsp.lmtexcoord_buffer);
-			qglBindBuffer(GL_ARRAY_BUFFER, mod->bsp.lmtexcoord_buffer);
-			qglBufferData(GL_ARRAY_BUFFER, coordind * sizeof(GLfloat), mod->bsp.lmtexcoords, GL_STATIC_DRAW);
-
-			qglGenBuffers(1, &mod->bsp.normal_buffer);
-			qglBindBuffer(GL_ARRAY_BUFFER, mod->bsp.normal_buffer);
-			qglBufferData(GL_ARRAY_BUFFER, vertind * sizeof(GLfloat), mod->bsp.normals, GL_STATIC_DRAW);
-
-			qglGenBuffers(1, &mod->bsp.tangent_buffer);
-			qglBindBuffer(GL_ARRAY_BUFFER, mod->bsp.tangent_buffer);
-			qglBufferData(GL_ARRAY_BUFFER, tangind * sizeof(GLfloat), mod->bsp.tangents, GL_STATIC_DRAW);
+		for (int i = 0; i < mod->bsp.numsurfaces; i++, surf++) {
+			vertind += 3 * surf->numedges;
+			coordind += 2 * surf->numedges;
+			tangind += 4 * surf->numedges;
 		}
 
-		qglBindBuffer(GL_ARRAY_BUFFER, 0);
+		qglGenBuffers(1, &mod->bsp.vertex_buffer);
+		qglBindBuffer(GL_ARRAY_BUFFER, mod->bsp.vertex_buffer);
+		qglBufferData(GL_ARRAY_BUFFER, vertind * sizeof(GLfloat), mod->bsp.verts, GL_STATIC_DRAW);
+
+		qglGenBuffers(1, &mod->bsp.texcoord_buffer);
+		qglBindBuffer(GL_ARRAY_BUFFER, mod->bsp.texcoord_buffer);
+		qglBufferData(GL_ARRAY_BUFFER, coordind * sizeof(GLfloat), mod->bsp.texcoords, GL_STATIC_DRAW);
+
+		qglGenBuffers(1, &mod->bsp.lmtexcoord_buffer);
+		qglBindBuffer(GL_ARRAY_BUFFER, mod->bsp.lmtexcoord_buffer);
+		qglBufferData(GL_ARRAY_BUFFER, coordind * sizeof(GLfloat), mod->bsp.lmtexcoords, GL_STATIC_DRAW);
+
+		qglGenBuffers(1, &mod->bsp.normal_buffer);
+		qglBindBuffer(GL_ARRAY_BUFFER, mod->bsp.normal_buffer);
+		qglBufferData(GL_ARRAY_BUFFER, vertind * sizeof(GLfloat), mod->bsp.normals, GL_STATIC_DRAW);
+
+		qglGenBuffers(1, &mod->bsp.tangent_buffer);
+		qglBindBuffer(GL_ARRAY_BUFFER, mod->bsp.tangent_buffer);
+		qglBufferData(GL_ARRAY_BUFFER, tangind * sizeof(GLfloat), mod->bsp.tangents, GL_STATIC_DRAW);
 	}
+
+	qglBindBuffer(GL_ARRAY_BUFFER, 0);
 }
