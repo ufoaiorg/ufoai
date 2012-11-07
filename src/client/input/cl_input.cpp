@@ -75,6 +75,15 @@ mouseSpace_t mouseSpace;
 int mousePosX, mousePosY;
 static int oldMousePosX, oldMousePosY;
 
+static int battlescapeMouseScrollX;
+static int battlescapeMouseScrollY;
+static bool battlescapeMouseScrollCaptured;
+static bool battlescapeMouseScrollMoved;
+enum {
+	BATTLESCAPE_MOUSE_SCROLL_TRIGGER_X = VID_NORM_WIDTH / 10,
+	BATTLESCAPE_MOUSE_SCROLL_TRIGGER_Y = VID_NORM_HEIGHT / 10
+};
+
 /*
 ===============================================================================
 KEY BUTTONS
@@ -360,10 +369,6 @@ static void CL_WheelUp_f (void)
 {
 	UI_MouseScroll(0, -1);
 }
-
-static int battlescapeMouseScrollX = 0, battlescapeMouseScrollY = 0;
-static bool battlescapeMouseScrollCaptured = false, battlescapeMouseScrollMoved = false;
-enum { BATTLESCAPE_MOUSE_SCROLL_TRIGGER_X = 1024 / 10, BATTLESCAPE_MOUSE_SCROLL_TRIGGER_Y = 768 / 10 };
 
 /**
  * @brief Left mouse click
