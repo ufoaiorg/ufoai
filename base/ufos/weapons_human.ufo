@@ -1125,7 +1125,7 @@ item rpg_ammo
 			ammo		1
 			time		24
 			damage		"0 0"
-			spldmg		"150 20"
+			spldmg		"170 20"
 			splrad		4
 			dmgweight	"blast"
 		}
