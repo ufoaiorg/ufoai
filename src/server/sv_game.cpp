@@ -316,7 +316,7 @@ static void SV_AbortEvents (void)
 		return;
 
 	p->pending = false;
-	free_dbuffer(p->buf);
+	delete p->buf;
 	p->buf = NULL;
 }
 
@@ -333,7 +333,7 @@ static void SV_EndEvents (void)
 	NET_WriteByte(p->buf, EV_NULL);
 	SV_Multicast(p->playerMask, *p->buf);
 	p->pending = false;
-	free_dbuffer(p->buf);
+	delete p->buf;
 	p->buf = NULL;
 }
 
@@ -419,7 +419,7 @@ static void SV_AddEvent (unsigned int mask, int eType, int entnum)
 	p->playerMask = mask;
 	p->type = eType;
 	p->entnum = entnum;
-	p->buf = new_dbuffer();
+	p->buf = new dbuffer();
 
 	/* write header */
 	NET_WriteByte(p->buf, svc_event);

@@ -590,7 +590,7 @@ void GAME_CP_InitMissionBriefing (const char **title, linkedList_t **victoryCond
 dbuffer *GAME_CP_InitializeBattlescape (const chrList_t *team)
 {
 	int i;
-	dbuffer *msg = new_dbuffer();
+	dbuffer *msg = new dbuffer(2 + team->num * 10);
 
 	NET_WriteByte(msg, clc_initactorstates);
 	NET_WriteByte(msg, team->num);

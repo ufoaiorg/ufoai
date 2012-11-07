@@ -427,7 +427,7 @@ static void CL_ReadPackets (void)
 			CL_ConnectionlessPacket(msg);
 		else
 			CL_ParseServerMessage(cmd, msg);
-		free_dbuffer(msg);
+		delete msg;
 	}
 }
 

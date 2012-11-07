@@ -1400,7 +1400,7 @@ static void GAME_InitializeBattlescape (chrList_t *team)
 		dbuffer *msg = list->InitializeBattlescape(team);
 		if (msg != NULL) {
 			NET_WriteMsg(cls.netStream, *msg);
-			free_dbuffer(msg);
+			delete msg;
 		}
 	}
 }

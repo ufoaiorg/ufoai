@@ -51,7 +51,7 @@ static void testDBuffer (void)
 {
 	int i;
 	const int size = 10000000;
-	dbuffer* buf = new_dbuffer();
+	dbuffer* buf = new dbuffer();
 	char data[128];
 	size_t dataSize = sizeof(data);
 	for (i = 0; i < size; i++)
@@ -64,9 +64,9 @@ static void testDBuffer (void)
 	CU_ASSERT_EQUAL(dataSize, buf->extract(data, dataSize));
 	CU_ASSERT_EQUAL(size - dataSize, buf->length());
 
-	free_dbuffer(buf);
+	delete buf;
 
-	buf = new_dbuffer();
+	buf = new dbuffer();
 	buf->add("b", 1);
 	CU_ASSERT_EQUAL(1, buf->length());
 
@@ -76,8 +76,8 @@ static void testDBuffer (void)
 	CU_ASSERT_EQUAL(1, buf->extract(data, dataSize));
 	CU_ASSERT_EQUAL(0, buf->length());
 
-	dbuffer* dup = buf->dup();
-	free_dbuffer(buf);
+	dbuffer* dup = new dbuffer(*buf);
+	delete buf;
 	buf = dup;
 	CU_ASSERT_EQUAL(0, buf->length());
 
@@ -110,27 +110,25 @@ static void testDBufferBigData (void)
 	byte *data;
 	/* this entity string may not contain any inline models, we don't have the bsp tree loaded here */
 	const int size = FS_LoadFile("game/entity.txt", &data);
-	dbuffer* buf = new_dbuffer();
+	dbuffer buf;
 
 	for (i = 0; i < count; i++) {
-		buf->add((char *)data, size);
+		buf.add((char *)data, size);
 	}
 
-	CU_ASSERT_EQUAL(size * count, buf->length());
-	free_dbuffer(buf);
+	CU_ASSERT_EQUAL(size * count, buf.length());
 	FS_FreeFile(data);
 }
 
 static void testDBufferNetHandling (void)
 {
-	dbuffer* buf = new_dbuffer();
-	NET_WriteByte(buf, 'b');
-	CU_ASSERT_EQUAL(1, buf->length());
-	NET_WriteShort(buf, 128);
-	CU_ASSERT_EQUAL(3, buf->length());
-	NET_WriteLong(buf, 128);
-	CU_ASSERT_EQUAL(7, buf->length());
-	free_dbuffer(buf);
+	dbuffer buf;
+	NET_WriteByte(&buf, 'b');
+	CU_ASSERT_EQUAL(1, buf.length());
+	NET_WriteShort(&buf, 128);
+	CU_ASSERT_EQUAL(3, buf.length());
+	NET_WriteLong(&buf, 128);
+	CU_ASSERT_EQUAL(7, buf.length());
 }
 
 int UFO_AddDBufferTests (void)

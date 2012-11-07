@@ -388,8 +388,8 @@ static void do_accept (SOCKET sock)
 
 	s = NET_StreamNew(index);
 	s->socket = sock;
-	s->inbound = dbufferptr(new_dbuffer());
-	s->outbound = dbufferptr(new_dbuffer());
+	s->inbound = dbufferptr(new dbuffer(4096));
+	s->outbound = dbufferptr(new dbuffer(4096));
 	s->family = server_family;
 	s->addrlen = server_addrlen;
 	s->func = server_func;
@@ -600,8 +600,8 @@ static struct net_stream *NET_DoConnect (const char *node, const char *service, 
 
 	s = NET_StreamNew(i);
 	s->socket = sock;
-	s->inbound = dbufferptr(new_dbuffer());
-	s->outbound = dbufferptr(new_dbuffer());
+	s->inbound = dbufferptr(new dbuffer(4096));
+	s->outbound = dbufferptr(new dbuffer(4096));
 	s->family = addr->ai_family;
 	s->addrlen = addr->ai_addrlen;
 	s->onclose = onclose;
@@ -681,8 +681,8 @@ struct net_stream *NET_ConnectToLoopBack (stream_onclose_func *onclose)
 
 	client = NET_StreamNew(client_index);
 	client->loopback = true;
-	client->inbound = dbufferptr(new_dbuffer());
-	client->outbound = dbufferptr(new_dbuffer());
+	client->inbound = dbufferptr(new dbuffer(4096));
+	client->outbound = dbufferptr(new dbuffer(4096));
 	client->onclose = onclose;
 
 	server = NET_StreamNew(server_index);

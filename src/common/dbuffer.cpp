@@ -24,11 +24,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "common.h"
 
-#define INITIAL_CAPACITY 4096
-
-dbuffer::dbuffer () : _length(0)
+dbuffer::dbuffer (int reserve) : _length(0)
 {
-	reserve(INITIAL_CAPACITY);
+	_data.reserve(reserve);
+}
+
+dbuffer::dbuffer (const dbuffer &other)
+{
+	_data = other._data;
+	_length = other._length;
 }
 
 dbuffer::~dbuffer ()
@@ -37,7 +41,7 @@ dbuffer::~dbuffer ()
 
 void dbuffer::add (const char *data, size_t len)
 {
-	insert(begin() + _length, data, data + len);
+	_data.insert(_data.begin() + _length, data, data + len);
 	_length += len;
 }
 
@@ -59,8 +63,8 @@ size_t dbuffer::get (char *data, size_t len) const
 	if (len > _length) {
 		len = _length;
 	}
-	dbuffer::const_iterator copyEnd = begin() + len;
-	std::copy(begin(), copyEnd, data);
+	std::vector<char>::const_iterator copyEnd = _data.begin() + len;
+	std::copy(_data.begin(), copyEnd, data);
 
 	return len;
 }
@@ -84,11 +88,11 @@ size_t dbuffer::getAt (size_t offset, char *data, size_t len) const
 	if (offset > _length)
 		return 0;
 
-	dbuffer::const_iterator copyBegin = begin() + offset;
+	std::vector<char>::const_iterator copyBegin = _data.begin() + offset;
 	if (len > _length) {
 		len = _length;
 	}
-	dbuffer::const_iterator copyEnd = copyBegin + len;
+	std::vector<char>::const_iterator copyEnd = copyBegin + len;
 	std::copy(copyBegin, copyEnd, data);
 
 	return len;
@@ -104,8 +108,8 @@ size_t dbuffer::remove (size_t len)
 	if (len > _length) {
 		len = _length;
 	}
-	dbuffer::iterator eraseEnd = begin() + len;
-	erase(begin(), eraseEnd);
+	std::vector<char>::iterator eraseEnd = _data.begin() + len;
+	_data.erase(_data.begin(), eraseEnd);
 	_length -= len;
 	return len;
 
@@ -133,18 +137,4 @@ size_t dbuffer::extract (char *data, size_t len)
 	len = get(data, len);
 	remove(len);
 	return len;
-}
-
-/**
- * @brief Allocate a dbuffer
- * @param[in] old the source buffer
- * @return the newly allocated buffer
- * Allocates a new dbuffer and initialises it to contain a copy of the
- * data in old
- */
-dbuffer *dbuffer::dup () const
-{
-	dbuffer* d = new_dbuffer();
-	*d = *this;
-	return d;
 }

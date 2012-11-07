@@ -145,7 +145,7 @@ static void CL_PingServerCallback (struct net_stream *s)
 			cgi->Com_DPrintf(DEBUG_CLIENT, "%s", paramBuf);
 		}
 	}
-	free_dbuffer(buf);
+	delete buf;
 	cgi->NET_StreamFree(s);
 }
 
@@ -374,7 +374,7 @@ static void CL_ServerInfoCallback (struct net_stream *s)
 			cgi->NET_StreamPeerToName(s, hostname, sizeof(hostname), true);
 			CL_ParseServerInfoMessage(buf, hostname);
 		}
-		free_dbuffer(buf);
+		delete buf;
 	}
 	cgi->NET_StreamFree(s);
 }

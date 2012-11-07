@@ -511,7 +511,7 @@ void SV_ReadPacket (struct net_stream *s)
 			s = NULL;
 		}
 
-		free_dbuffer(msg);
+		delete msg;
 	}
 }
 

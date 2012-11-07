@@ -640,7 +640,7 @@ dbuffer *NET_ReadMsg (struct net_stream *s)
 	const int size = sizeof(tmp);
 	NET_StreamDequeue(s, tmp, 4);
 
-	dbuffer *buf = new_dbuffer();
+	dbuffer *buf = new dbuffer();
 	while (len > 0) {
 		const int x = NET_StreamDequeue(s, tmp, std::min(len, size));
 		buf->add(tmp, x);

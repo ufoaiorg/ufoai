@@ -141,14 +141,14 @@ static void CL_ExecuteBattlescapeEvent (int now, void *data)
 		Com_DPrintf(DEBUG_EVENTSYS, "event(not executed): %s %p\n", eventData->name, (void*)event);
 	}
 
-	free_dbuffer(event->msg);
+	delete event->msg;
 	Mem_Free(event);
 }
 
 static void CL_FreeBattlescapeEvent (void *data)
 {
 	evTimes_t *event = (evTimes_t *)data;
-	free_dbuffer(event->msg);
+	delete event->msg;
 	Mem_Free(event);
 }
 
@@ -250,7 +250,7 @@ event_t CL_ParseEvent (dbuffer *msg)
 		int when;
 
 		/* copy the buffer as first action, the event time functions can modify the buffer already */
-		cur->msg = msg->dup();
+		cur->msg = new dbuffer(*msg);
 		cur->eType = (event_t)eType;
 
 		/* timestamp (msec) that is used to determine when the event should be executed */

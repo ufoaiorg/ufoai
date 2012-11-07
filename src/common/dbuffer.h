@@ -17,15 +17,17 @@
  * inserted only at the end and removed only from the beginning.
  */
 
-class dbuffer: public std::vector<char>
+class dbuffer
 {
 private:
 	/** this is the length of the entries in the
 	 * buffer, not the allocated size of the buffer */
 	size_t _length;
+	std::vector<char> _data;
 
 public:
-	dbuffer ();
+	dbuffer (int reserve = 512);
+	dbuffer (const dbuffer &other);
 	virtual ~dbuffer ();
 
 	/* Append the given byte string to the buffer */
@@ -38,8 +40,6 @@ public:
 	size_t remove (size_t);
 	/* Read and remove in one pass */
 	size_t extract (char *, size_t);
-	/* Duplicate the buffer */
-	dbuffer *dup () const;
 
 	size_t length () const;
 };
@@ -50,8 +50,5 @@ inline size_t dbuffer::length () const
 {
 	return _length;
 }
-
-#define new_dbuffer() new dbuffer
-#define free_dbuffer(dbuf) delete (dbuf)
 
 #endif
