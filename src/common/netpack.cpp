@@ -30,43 +30,43 @@ const vec3_t bytedirs[] = {
 
 void NET_WriteChar (dbuffer *buf, char c)
 {
-	dbuffer_add(buf, &c, 1);
+	buf->add(&c, 1);
 	Com_DPrintf(DEBUG_EVENTSYS, "char event data: %s (%i)\n", Com_ByteToBinary(c), c);
 }
 
 void NET_WriteByte (dbuffer *buf, byte c)
 {
-	dbuffer_add(buf, (char *)&c, 1);
+	buf->add((char *)&c, 1);
 	Com_DPrintf(DEBUG_EVENTSYS, "byte event data: %s (%i)\n", Com_ByteToBinary(c), c);
 }
 
 void NET_WriteShort (dbuffer *buf, int c)
 {
 	unsigned short v = LittleShort(c);
-	dbuffer_add(buf, (char *)&v, 2);
+	buf->add((char *)&v, 2);
 	Com_DPrintf(DEBUG_EVENTSYS, "short event data: %i\n", c);
 }
 
 void NET_WriteLong (dbuffer *buf, int c)
 {
 	int v = LittleLong(c);
-	dbuffer_add(buf, (char *)&v, 4);
+	buf->add((char *)&v, 4);
 	Com_DPrintf(DEBUG_EVENTSYS, "long event data: %i\n", c);
 }
 
 void NET_WriteString (dbuffer *buf, const char *str)
 {
 	if (!str)
-		dbuffer_add(buf, "", 1);
+		buf->add("", 1);
 	else
-		dbuffer_add(buf, str, strlen(str) + 1);
+		buf->add(str, strlen(str) + 1);
 	Com_DPrintf(DEBUG_EVENTSYS, "string event data: %s\n", str);
 }
 
 void NET_WriteRawString (dbuffer *buf, const char *str)
 {
 	if (str) {
-		dbuffer_add(buf, str, strlen(str));
+		buf->add(str, strlen(str));
 		Com_DPrintf(DEBUG_EVENTSYS, "string raw event data: %s\n", str);
 	}
 }
@@ -234,7 +234,7 @@ void NET_WriteFormat (dbuffer *buf, const char *format, ...)
 int NET_ReadChar (dbuffer *buf)
 {
 	char c;
-	if (dbuffer_extract(buf, &c, 1) == 0)
+	if (buf->extract(&c, 1) == 0)
 		return -1;
 	return c;
 }
@@ -247,7 +247,7 @@ int NET_ReadChar (dbuffer *buf)
 int NET_ReadByte (dbuffer *buf)
 {
 	unsigned char c;
-	if (dbuffer_extract(buf, (char *)&c, 1) == 0)
+	if (buf->extract((char *)&c, 1) == 0)
 		return -1;
 	return c;
 }
@@ -255,7 +255,7 @@ int NET_ReadByte (dbuffer *buf)
 int NET_ReadShort (dbuffer *buf)
 {
 	unsigned short v;
-	if (dbuffer_extract(buf, (char *)&v, 2) < 2)
+	if (buf->extract((char *)&v, 2) < 2)
 		return -1;
 
 	return LittleShort(v);
@@ -264,7 +264,7 @@ int NET_ReadShort (dbuffer *buf)
 int NET_PeekByte (const dbuffer *buf)
 {
 	unsigned char c;
-	if (dbuffer_get(buf, (char *)&c, 1) == 0)
+	if (buf->get((char *)&c, 1) == 0)
 		return -1;
 	return c;
 }
@@ -277,7 +277,7 @@ int NET_PeekByte (const dbuffer *buf)
 int NET_PeekShort (const dbuffer *buf)
 {
 	uint16_t v;
-	if (dbuffer_get(buf, (char *)&v, 2) < 2)
+	if (buf->get((char *)&v, 2) < 2)
 		return -1;
 
 	return LittleShort(v);
@@ -286,7 +286,7 @@ int NET_PeekShort (const dbuffer *buf)
 int NET_PeekLong (const dbuffer *buf)
 {
 	uint32_t v;
-	if (dbuffer_get(buf, (char *)&v, 4) < 4)
+	if (buf->get((char *)&v, 4) < 4)
 		return -1;
 
 	return LittleLong(v);
@@ -295,7 +295,7 @@ int NET_PeekLong (const dbuffer *buf)
 int NET_ReadLong (dbuffer *buf)
 {
 	unsigned int v;
-	if (dbuffer_extract(buf, (char *)&v, 4) < 4)
+	if (buf->extract((char *)&v, 4) < 4)
 		return -1;
 
 	return LittleLong(v);
@@ -589,11 +589,11 @@ void NET_OOB_Printf (struct net_stream *s, const char *format, ...)
 void NET_WriteMsg (struct net_stream *s, dbuffer &buf)
 {
 	char tmp[256];
-	int len = LittleLong(dbuffer_len(&buf));
+	int len = LittleLong(buf.length());
 	NET_StreamEnqueue(s, (char *)&len, 4);
 
-	while (dbuffer_len(&buf)) {
-		len = dbuffer_extract(&buf, tmp, sizeof(tmp));
+	while (buf.length()) {
+		len = buf.extract(tmp, sizeof(tmp));
 		NET_StreamEnqueue(s, tmp, len);
 	}
 }
@@ -608,12 +608,12 @@ void NET_WriteMsg (struct net_stream *s, dbuffer &buf)
 void NET_WriteConstMsg (struct net_stream *s, const dbuffer &buf)
 {
 	char tmp[256];
-	int len = LittleLong(dbuffer_len(&buf));
+	int len = LittleLong(buf.length());
 	int pos = 0;
 	NET_StreamEnqueue(s, (char *)&len, 4);
 
-	while (pos < dbuffer_len(&buf)) {
-		const int x = dbuffer_get_at(&buf, pos, tmp, sizeof(tmp));
+	while (pos < buf.length()) {
+		const int x = buf.getAt(pos, tmp, sizeof(tmp));
 		assert(x > 0);
 		NET_StreamEnqueue(s, tmp, x);
 		pos += x;
@@ -625,7 +625,6 @@ void NET_WriteConstMsg (struct net_stream *s, const dbuffer &buf)
  * where you can use the NET_Read* functions to get the values in the correct
  * order
  * @sa NET_StreamDequeue
- * @sa dbuffer_add
  */
 dbuffer *NET_ReadMsg (struct net_stream *s)
 {
@@ -644,7 +643,7 @@ dbuffer *NET_ReadMsg (struct net_stream *s)
 	dbuffer *buf = new_dbuffer();
 	while (len > 0) {
 		const int x = NET_StreamDequeue(s, tmp, std::min(len, size));
-		dbuffer_add(buf, tmp, x);
+		buf->add(tmp, x);
 		len -= x;
 	}
 
@@ -654,5 +653,5 @@ dbuffer *NET_ReadMsg (struct net_stream *s)
 void NET_VPrintf (dbuffer *buf, const char *format, va_list ap, char *str, size_t length)
 {
 	const int len = Q_vsnprintf(str, length, format, ap);
-	dbuffer_add(buf, str, len);
+	buf->add(str, len);
 }

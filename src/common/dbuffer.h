@@ -52,21 +52,6 @@ inline size_t dbuffer::length () const
 }
 
 #define new_dbuffer() new dbuffer
-#define free_dbuffer(dbuf) delete dbuf
-
-/* Append the given byte string to the buffer */
-#define dbuffer_add(dbuf, data, dataSize) (dbuf)->add((data), (dataSize))
-/* Read the given number of bytes from the start of the buffer */
-#define dbuffer_get(dbuf, data, dataSize) (dbuf)->get((data), (dataSize))
-/* Read the given number of bytes from the given position */
-#define dbuffer_get_at(dbuf, size, data, dataSize) (dbuf)->getAt((size), (data), (dataSize))
-/* Remove the given number of bytes from the start of the buffer */
-#define dbuffer_remove(dbuf, size) (dbuf)->remove((size))
-/* Read and remove in one pass */
-#define dbuffer_extract(dbuf, data, dataSize) (dbuf)->extract((data), (dataSize))
-/* Duplicate the buffer */
-#define dbuffer_dup(dbuf) (dbuf)->dup()
-
-#define dbuffer_len(dbuf) (dbuf ? (dbuf)->length() : 0)
+#define free_dbuffer(dbuf) delete (dbuf)
 
 #endif

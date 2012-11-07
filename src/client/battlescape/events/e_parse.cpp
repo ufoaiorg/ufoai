@@ -250,7 +250,7 @@ event_t CL_ParseEvent (dbuffer *msg)
 		int when;
 
 		/* copy the buffer as first action, the event time functions can modify the buffer already */
-		cur->msg = dbuffer_dup(msg);
+		cur->msg = msg->dup();
 		cur->eType = (event_t)eType;
 
 		/* timestamp (msec) that is used to determine when the event should be executed */

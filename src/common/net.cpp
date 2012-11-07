@@ -89,6 +89,8 @@ typedef int SOCKET;
  */
 #define NET_MULTICAST_IP6 "ff04::696f:7175:616b:6533"
 
+#define dbuffer_len(dbuf) (dbuf ? (dbuf)->length() : 0)
+
 static cvar_t* net_ipv4;
 
 struct net_stream {
@@ -482,7 +484,7 @@ void NET_Wait (int timeout)
 				continue;
 			}
 
-			len = dbuffer_get(s->outbound, buf, sizeof(buf));
+			len = s->outbound->get(buf, sizeof(buf));
 			len = send(s->socket, buf, len, 0);
 
 			if (len < 0) {
@@ -493,7 +495,7 @@ void NET_Wait (int timeout)
 
 			Com_DPrintf(DEBUG_SERVER, "wrote %d bytes to stream %d (%s)\n", len, i, NET_StreamPeerToName(s, buf, sizeof(buf), true));
 
-			dbuffer_remove(s->outbound, len);
+			s->outbound->remove(len);
 		}
 
 		if (FD_ISSET(s->socket, &read_fds_out)) {
@@ -506,7 +508,7 @@ void NET_Wait (int timeout)
 				continue;
 			} else {
 				if (s->inbound) {
-					dbuffer_add(s->inbound, buf, len);
+					s->inbound->add(buf, len);
 
 					Com_DPrintf(DEBUG_SERVER, "read %d bytes from stream %d (%s)\n", len, i, NET_StreamPeerToName(s, buf, sizeof(buf), true));
 
@@ -701,7 +703,6 @@ struct net_stream *NET_ConnectToLoopBack (stream_onclose_func *onclose)
 /**
  * @brief Enqueue a network message into a stream
  * @sa NET_StreamDequeue
- * @sa dbuffer_add
  */
 void NET_StreamEnqueue (struct net_stream *s, const char *data, int len)
 {
@@ -709,7 +710,7 @@ void NET_StreamEnqueue (struct net_stream *s, const char *data, int len)
 		return;
 
 	if (s->outbound)
-		dbuffer_add(s->outbound, data, len);
+		s->outbound->add(data, len);
 
 	if (s->socket >= 0)
 		FD_SET(s->socket, &write_fds);
@@ -732,7 +733,6 @@ int NET_StreamGetLength (struct net_stream *s)
 
 /**
  * @brief Returns the length of the waiting inbound buffer
- * @sa dbuffer_get
  */
 int NET_StreamPeek (struct net_stream *s, char *data, int len)
 {
@@ -742,7 +742,7 @@ int NET_StreamPeek (struct net_stream *s, char *data, int len)
 	if ((s->closed || s->finished) && dbuffer_len(s->inbound) == 0)
 		return 0;
 
-	return dbuffer_get(s->inbound, data, len);
+	return s->inbound->get(data, len);
 }
 
 /**
@@ -754,7 +754,7 @@ int NET_StreamDequeue (struct net_stream *s, char *data, int len)
 	if (len <= 0 || !s || s->finished)
 		return 0;
 
-	return dbuffer_extract(s->inbound, data, len);
+	return s->inbound->extract(data, len);
 }
 
 void *NET_StreamGetData (struct net_stream *s)

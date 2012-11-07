@@ -55,50 +55,52 @@ static void testDBuffer (void)
 	char data[128];
 	size_t dataSize = sizeof(data);
 	for (i = 0; i < size; i++)
-		dbuffer_add(buf, "b", 1);
-	CU_ASSERT_EQUAL(size, dbuffer_len(buf));
+		buf->add("b", 1);
+	CU_ASSERT_EQUAL(size, buf->length());
 
-	CU_ASSERT_EQUAL(dataSize, dbuffer_get(buf, data, dataSize));
-	CU_ASSERT_EQUAL(size, dbuffer_len(buf));
+	CU_ASSERT_EQUAL(dataSize, buf->get(data, dataSize));
+	CU_ASSERT_EQUAL(size, buf->length());
 
-	CU_ASSERT_EQUAL(dataSize, dbuffer_extract(buf, data, dataSize));
-	CU_ASSERT_EQUAL(size - dataSize, dbuffer_len(buf));
+	CU_ASSERT_EQUAL(dataSize, buf->extract(data, dataSize));
+	CU_ASSERT_EQUAL(size - dataSize, buf->length());
 
 	free_dbuffer(buf);
 
 	buf = new_dbuffer();
-	dbuffer_add(buf, "b", 1);
-	CU_ASSERT_EQUAL(1, dbuffer_len(buf));
+	buf->add("b", 1);
+	CU_ASSERT_EQUAL(1, buf->length());
 
-	CU_ASSERT_EQUAL(1, dbuffer_get(buf, data, dataSize));
-	CU_ASSERT_EQUAL(1, dbuffer_len(buf));
+	CU_ASSERT_EQUAL(1, buf->get(data, dataSize));
+	CU_ASSERT_EQUAL(1, buf->length());
 
-	CU_ASSERT_EQUAL(1, dbuffer_extract(buf, data, dataSize));
-	CU_ASSERT_EQUAL(0, dbuffer_len(buf));
+	CU_ASSERT_EQUAL(1, buf->extract(data, dataSize));
+	CU_ASSERT_EQUAL(0, buf->length());
 
-	buf = dbuffer_dup(buf);
-	CU_ASSERT_EQUAL(0, dbuffer_len(buf));
-
-	for (i = 0; i <= dataSize; i++)
-		dbuffer_add(buf, "b", 1);
-	CU_ASSERT_EQUAL(dataSize + 1, dbuffer_len(buf));
-
-	CU_ASSERT_EQUAL(dataSize, dbuffer_extract(buf, data, dataSize));
-	CU_ASSERT_EQUAL(1, dbuffer_len(buf));
-
-	CU_ASSERT_EQUAL(1, dbuffer_remove(buf, 1));
-	CU_ASSERT_EQUAL(0, dbuffer_len(buf));
-
-	CU_ASSERT_EQUAL(0, dbuffer_remove(buf, 1));
-
-	CU_ASSERT_EQUAL(0, dbuffer_get_at(buf, 1, data, dataSize));
+	dbuffer* dup = buf->dup();
+	free_dbuffer(buf);
+	buf = dup;
+	CU_ASSERT_EQUAL(0, buf->length());
 
 	for (i = 0; i <= dataSize; i++)
-		dbuffer_add(buf, "b", 1);
-	CU_ASSERT_EQUAL(dataSize + 1, dbuffer_len(buf));
+		buf->add("b", 1);
+	CU_ASSERT_EQUAL(dataSize + 1, buf->length());
 
-	CU_ASSERT_EQUAL(dataSize, dbuffer_get_at(buf, 1, data, dataSize));
-	CU_ASSERT_EQUAL(dataSize + 1, dbuffer_len(buf));
+	CU_ASSERT_EQUAL(dataSize, buf->extract(data, dataSize));
+	CU_ASSERT_EQUAL(1, buf->length());
+
+	CU_ASSERT_EQUAL(1, buf->remove(1));
+	CU_ASSERT_EQUAL(0, buf->length());
+
+	CU_ASSERT_EQUAL(0, buf->remove(1));
+
+	CU_ASSERT_EQUAL(0, buf->getAt(1, data, dataSize));
+
+	for (i = 0; i <= dataSize; i++)
+		buf->add("b", 1);
+	CU_ASSERT_EQUAL(dataSize + 1, buf->length());
+
+	CU_ASSERT_EQUAL(dataSize, buf->getAt(1, data, dataSize));
+	CU_ASSERT_EQUAL(dataSize + 1, buf->length());
 }
 
 static void testDBufferBigData (void)
@@ -111,10 +113,10 @@ static void testDBufferBigData (void)
 	dbuffer* buf = new_dbuffer();
 
 	for (i = 0; i < count; i++) {
-		dbuffer_add(buf, (char *)data, size);
+		buf->add((char *)data, size);
 	}
 
-	CU_ASSERT_EQUAL(size * count, dbuffer_len(buf));
+	CU_ASSERT_EQUAL(size * count, buf->length());
 	free_dbuffer(buf);
 	FS_FreeFile(data);
 }
@@ -123,11 +125,11 @@ static void testDBufferNetHandling (void)
 {
 	dbuffer* buf = new_dbuffer();
 	NET_WriteByte(buf, 'b');
-	CU_ASSERT_EQUAL(1, dbuffer_len(buf));
+	CU_ASSERT_EQUAL(1, buf->length());
 	NET_WriteShort(buf, 128);
-	CU_ASSERT_EQUAL(3, dbuffer_len(buf));
+	CU_ASSERT_EQUAL(3, buf->length());
 	NET_WriteLong(buf, 128);
-	CU_ASSERT_EQUAL(7, dbuffer_len(buf));
+	CU_ASSERT_EQUAL(7, buf->length());
 	free_dbuffer(buf);
 }
 

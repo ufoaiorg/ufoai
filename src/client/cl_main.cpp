@@ -105,12 +105,12 @@ void Cmd_ForwardToServer (void)
 
 	dbuffer msg;
 	NET_WriteByte(&msg, clc_stringcmd);
-	dbuffer_add(&msg, cmd, strlen(cmd));
+	msg.add(cmd, strlen(cmd));
 	if (Cmd_Argc() > 1) {
-		dbuffer_add(&msg, " ", 1);
-		dbuffer_add(&msg, Cmd_Args(), strlen(Cmd_Args()));
+		msg.add(" ", 1);
+		msg.add(Cmd_Args(), strlen(Cmd_Args()));
 	}
-	dbuffer_add(&msg, "", 1);
+	msg.add("", 1);
 	NET_WriteMsg(cls.netStream, msg);
 }
 
@@ -145,7 +145,7 @@ static void CL_ForwardToServer_f (void)
 	if (Cmd_Argc() > 1) {
 		dbuffer msg;
 		NET_WriteByte(&msg, clc_stringcmd);
-		dbuffer_add(&msg, Cmd_Args(), strlen(Cmd_Args()) + 1);
+		msg.add(Cmd_Args(), strlen(Cmd_Args()) + 1);
 		NET_WriteMsg(cls.netStream, msg);
 	}
 }
