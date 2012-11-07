@@ -2,7 +2,7 @@
  * @file
  * @brief Based on the BSP_tool from botman's Half-Life BSP utilities
  */
-
+#ifndef ANDROID
 #include "bspslicer.h"
 #include "../ports/system.h"
 #include "../common/common.h"
@@ -337,3 +337,5 @@ void SL_BSPSlice (const TR_TILE_TYPE *model, float thickness, int scale, bool si
 
 	SL_SliceTheWorld(model, mins, maxs, thickness, scale, singleContour, multipleContour);
 }
+
+#endif

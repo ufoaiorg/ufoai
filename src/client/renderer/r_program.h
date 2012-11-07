@@ -22,7 +22,7 @@
 #ifndef __R_PROGRAM_H__
 #define __R_PROGRAM_H__
 
-#include <SDL_opengl.h>
+#include "r_gl.h"
 
 /* glsl vertex and fragment shaders */
 typedef struct r_shader_s {

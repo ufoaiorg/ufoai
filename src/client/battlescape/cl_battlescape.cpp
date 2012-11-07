@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_actor.h"
 
 clientBattleScape_t cl;
+static pos3_t mouseScrollPos; /**< The cell, which we "grab" to scroll the world in touchscreen mode. */
 
 /**
  * @brief Searches a local entity at the given position.
@@ -387,4 +388,29 @@ char *CL_SetConfigString (int index, dbuffer *msg)
 		NET_ReadString(msg, cl.configstrings[index], sizeof(cl.configstrings[index]));
 
 	return cl.configstrings[index];
+}
+
+void CL_InitBattlescapeMouseScrolling(void)
+{
+	VectorCopy(truePos, mouseScrollPos);
+}
+
+void CL_DoBattlescapeMouseScrolling(void)
+{
+	/* TODO: the movement is snapping to the cell center, and is clunky - make it smooth */
+	/* Difference between last and currently selected cell, we'll move camera by that difference */
+	pos3_t pos, cameraMovement;
+
+	if (VectorEqual(truePos, mouseScrollPos))
+		return;
+
+	VecToPos(cl.cam.origin, pos);
+
+	VectorSubtract(mouseScrollPos, truePos, cameraMovement);
+	VectorAdd(pos, cameraMovement, pos);
+	PosToVec(pos, cl.cam.origin);
+	Cvar_SetValue("cl_worldlevel", truePos[2]);
+	CL_CameraMove(); /* Update cl.cam.camorg from the cl.cam.origin */
+	CL_ActorMouseTrace(); /* Calculate new truePos */
+	VectorCopy(truePos, mouseScrollPos);
 }

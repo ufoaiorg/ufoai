@@ -499,7 +499,7 @@ void Com_Quit (void)
  */
 int Com_ServerState (void)
 {
-	return sv->state;
+	return SV_GetServerState();
 }
 
 /**

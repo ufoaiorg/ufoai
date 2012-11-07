@@ -33,7 +33,11 @@ lightmaps_t r_lightmaps;
 
 static void R_UploadLightmapBlock (void)
 {
+#ifdef GL_VERSION_ES_CM_1_0
+	const int texFormat = GL_RGB;
+#else
 	const int texFormat = r_config.gl_compressed_solid_format ? r_config.gl_compressed_solid_format : r_config.gl_solid_format;
+#endif
 	GLuint texid;
 	if (r_lightmaps.lightmap_count >= MAX_GL_LIGHTMAPS) {
 		Com_Printf("R_UploadLightmapBlock: MAX_GL_LIGHTMAPS reached.\n");

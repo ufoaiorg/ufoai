@@ -163,7 +163,9 @@ void R_EnableModelLights (const light_t **lights, int numLights, bool inShadow, 
 		glEnable(GL_LIGHTING);
 		glEnable(GL_LIGHT0);
 		glEnable(GL_COLOR_MATERIAL);
+#ifndef GL_VERSION_ES_CM_1_0
 		glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
+#endif
 
 		glLightf(GL_LIGHT0, GL_CONSTANT_ATTENUATION, 1.0);
 		glLightf(GL_LIGHT0, GL_LINEAR_ATTENUATION, 0);

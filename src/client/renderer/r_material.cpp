@@ -424,7 +424,9 @@ void R_DrawMaterialSurfaces (const mBspSurfaces_t *surfs, char *indexPtr)
 
 	R_EnableTexture(&texunit_lightmap, false);
 
+#ifndef GL_VERSION_ES_CM_1_0
 	glEnable(GL_POLYGON_OFFSET_FILL);
+#endif
 	glPolygonOffset(-1.f, -1.f);
 
 	glMatrixMode(GL_TEXTURE);  /* some stages will manipulate texcoords */
@@ -454,7 +456,9 @@ void R_DrawMaterialSurfaces (const mBspSurfaces_t *surfs, char *indexPtr)
 
 	/* polygon offset parameters */
 	glPolygonOffset(0.0, 0.0);
+#ifndef GL_VERSION_ES_CM_1_0
 	glDisable(GL_POLYGON_OFFSET_FILL);
+#endif
 
 	glLoadIdentity();
 	glMatrixMode(GL_MODELVIEW);

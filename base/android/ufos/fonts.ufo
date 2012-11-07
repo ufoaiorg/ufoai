@@ -1,0 +1,91 @@
+// valid flags
+// =======================
+// style:	(string)	TTF_STYLE_NORMAL, TTF_STYLE_BOLD, TTF_STYLE_ITALIC, TTF_STYLE_UNDERLINE
+// size:	(int)		pixel size for font
+// font		(string)	path to truetype font file
+
+// The fonts are marked as translatable to let the translators decide which font they want to use
+
+font f_verysmall_bold
+{
+	font	"_media/DejaVuSans.ttf"
+	size	15
+	style	TTF_STYLE_BOLD
+}
+
+font f_verysmall
+{
+	font	"_media/DejaVuSans.ttf"
+	size	15
+}
+
+font f_small_bold
+{
+	font	"_media/DejaVuSans.ttf"
+	size	16
+	style	TTF_STYLE_BOLD
+}
+
+font f_small
+{
+	font	"_media/DejaVuSans.ttf"
+	size	16
+}
+
+font f_normal_bold
+{
+	font	"_media/DejaVuSans.ttf"
+	size	18
+	style	TTF_STYLE_BOLD
+}
+
+font f_normal
+{
+	font	"_media/DejaVuSans.ttf"
+	size	18
+}
+
+font f_verybig_bold
+{
+	font	"_media/DejaVuSans.ttf"
+	size	30
+	style	TTF_STYLE_BOLD
+}
+
+font f_verybig
+{
+	font	"_media/DejaVuSans.ttf"
+	size	30
+}
+
+font f_big
+{
+	font	"_media/DejaVuSans.ttf"
+	size	20
+}
+
+font f_menu
+{
+	font	"_media/DejaVuSans.ttf"
+	size	22
+}
+
+font f_menubig
+{
+	font	"_media/DejaVuSans.ttf"
+	size	24
+	style	TTF_STYLE_BOLD
+}
+
+font f_menusmall
+{
+	font	"_media/DejaVuSans.ttf"
+	size	18
+	style	TTF_STYLE_BOLD
+}
+
+font f_language
+{
+	font	"_media/languages.ttf"
+	size	18
+}

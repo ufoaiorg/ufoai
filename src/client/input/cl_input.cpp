@@ -54,6 +54,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui/node/ui_node_abstractnode.h"
 
 #include "../../common/tracing.h"
+#include "../renderer/r_misc.h"
 
 /* power of two please */
 #define MAX_KEYQ 64
@@ -360,6 +361,10 @@ static void CL_WheelUp_f (void)
 	UI_MouseScroll(0, -1);
 }
 
+static int battlescapeMouseScrollX = 0, battlescapeMouseScrollY = 0;
+static bool battlescapeMouseScrollCaptured = false, battlescapeMouseScrollMoved = false;
+enum { BATTLESCAPE_MOUSE_SCROLL_TRIGGER_X = 1024 / 10, BATTLESCAPE_MOUSE_SCROLL_TRIGGER_Y = 768 / 10 };
+
 /**
  * @brief Left mouse click
  */
@@ -367,14 +372,36 @@ static void CL_SelectDown_f (void)
 {
 	if (IN_GetMouseSpace() != MS_WORLD)
 		return;
-	CL_ActorSelectMouse();
+	battlescapeMouseScrollX = mousePosX;
+	battlescapeMouseScrollY = mousePosY;
+	battlescapeMouseScrollCaptured = true;
+	battlescapeMouseScrollMoved = false;
+	CL_InitBattlescapeMouseScrolling();
 }
 
 static void CL_SelectUp_f (void)
 {
+	if (!battlescapeMouseScrollMoved && IN_GetMouseSpace() == MS_WORLD)
+		CL_ActorSelectMouse();
+	battlescapeMouseScrollCaptured = false;
+	battlescapeMouseScrollMoved = false;
 	if (IN_GetMouseSpace() == MS_UI)
 		return;
 	IN_SetMouseSpace(MS_NULL);
+}
+
+static void CL_SelectDown_ProcessMouseMovement (void)
+{
+	if (!battlescapeMouseScrollCaptured)
+		return;
+
+	if (!battlescapeMouseScrollMoved &&
+		(abs(battlescapeMouseScrollX - mousePosX) > BATTLESCAPE_MOUSE_SCROLL_TRIGGER_X ||
+		 abs(battlescapeMouseScrollY - mousePosY) > BATTLESCAPE_MOUSE_SCROLL_TRIGGER_Y))
+		battlescapeMouseScrollMoved = true;
+
+	if (battlescapeMouseScrollMoved)
+		CL_DoBattlescapeMouseScrolling();
 }
 
 /**
@@ -821,6 +848,8 @@ void IN_Frame (void)
 
 	IN_JoystickMove();
 
+	CL_SelectDown_ProcessMouseMovement();
+
 	if (vid_grabmouse->modified) {
 		vid_grabmouse->modified = false;
 
@@ -942,6 +971,11 @@ void IN_Frame (void)
 			/* make sure that SDL_SetVideoMode is called again after we changed the size
 			 * otherwise the mouse will make problems */
 			vid_mode->modified = true;
+			#ifdef ANDROID
+			/* On Android the OpenGL context is destroyed after we've received a resize event,
+			 * so wee need to re-init OpenGL state machine and re-upload all textures */
+			R_ReinitOpenglContext();
+			#endif
 			break;
 		}
 	}

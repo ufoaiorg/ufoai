@@ -595,7 +595,8 @@ void R_EnableFog (bool enable)
 
 static void R_UpdateGlowBufferBinding (void)
 {
-	static GLenum glowRenderTarget = GL_COLOR_ATTACHMENT1_EXT;
+#ifndef GL_VERSION_ES_CM_1_0
+	static GLenum glowRenderTarget = GL_COLOR_ATTACHMENT1_EXT; // Not supported in GLES
 
 	if (r_state.active_program) {
 		/* got an active shader */
@@ -637,6 +638,7 @@ static void R_UpdateGlowBufferBinding (void)
 			}
 		}
 	}
+#endif
 }
 
 void R_EnableGlowMap (const image_t *image)
@@ -718,9 +720,9 @@ void R_EnableRoughnessMap (const image_t *image, bool enable)
 /**
  * @sa R_Setup3D
  */
-static void MYgluPerspective (GLdouble zNear, GLdouble zFar)
+static void MYgluPerspective (GLfloat zNear, GLfloat zFar)
 {
-	GLdouble xmin, xmax, ymin, ymax, yaspect = (double) viddef.context.height / viddef.context.width;
+	GLfloat xmin, xmax, ymin, ymax, yaspect = (float) viddef.context.height / viddef.context.width;
 
 	if (r_isometric->integer) {
 		glOrtho(-10 * refdef.fieldOfViewX, 10 * refdef.fieldOfViewX, -10 * refdef.fieldOfViewX * yaspect, 10 * refdef.fieldOfViewX * yaspect, -zFar, zFar);
@@ -839,9 +841,32 @@ void R_SetDefaultState (void)
 {
 	int i;
 
+	r_state.shell_enabled = false;
+	r_state.blend_enabled = false;
+	r_state.color_array_enabled = false;
+	r_state.alpha_test_enabled = false;
+	r_state.stencil_test_enabled = false;
+	r_state.lighting_enabled = false;
+	r_state.warp_enabled = false;
+	r_state.fog_enabled = false;
+	r_state.blur_enabled = false;
+	r_state.glowmap_enabled = false;
+	r_state.draw_glow_enabled = false;
+	r_state.dynamic_lighting_enabled = false;
+	r_state.specularmap_enabled = false;
+	r_state.roughnessmap_enabled = false;
+	r_state.animation_enabled = false;
+	r_state.renderbuffer_enabled = false;
+	r_state.active_material = NULL;
+	r_state.blend_src = 0;
+	r_state.blend_dest = 0;
+	r_state.active_texunit = NULL;
+
 	glClearColor(0, 0, 0, 0);
 
+#ifndef GL_VERSION_ES_CM_1_0
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+#endif
 
 	R_ReallocateStateArrays(GL_ARRAY_LENGTH_CHUNK);
 	R_ReallocateTexunitArray(&texunit_0, GL_ARRAY_LENGTH_CHUNK);
@@ -862,6 +887,8 @@ void R_SetDefaultState (void)
 	R_BindDefaultArray(GL_NORMAL_ARRAY);
 	glDisableClientState(GL_NORMAL_ARRAY);
 
+	R_EnableAlphaTest(false);
+
 	/* reset gl error state */
 	R_CheckError();
 
@@ -869,10 +896,13 @@ void R_SetDefaultState (void)
 	for (i = 0; i < r_config.maxTextureCoords && i < MAX_GL_TEXUNITS; i++) {
 		gltexunit_t *tex = &r_state.texunits[i];
 		tex->texture = GL_TEXTURE0 + i;
+		tex->enabled = false;
 
 		R_EnableTexture(tex, true);
 
 		R_BindDefaultArray(GL_TEXTURE_COORD_ARRAY);
+		R_TexEnv(GL_MODULATE);
+		R_ReallocateTexunitArray(tex, GL_ARRAY_LENGTH_CHUNK);
 
 		if (i > 0)  /* turn them off for now */
 			R_EnableTexture(tex, false);
@@ -897,6 +927,7 @@ void R_SetDefaultState (void)
 	glPolygonOffset(1, 1);
 
 	/* alpha blend parameters */
+	R_EnableBlend(true);
 	R_BlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	/* remove leftover lights */
@@ -930,7 +961,7 @@ void R_Color (const vec4_t rgba)
 	else
 		color = color_white;
 
-	glColor4fv(color);
+	glColor4f(color[0], color[1], color[2], color[3]);
 	R_CheckError();
 }
 

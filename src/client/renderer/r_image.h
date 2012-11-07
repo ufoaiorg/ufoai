@@ -26,7 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef R_IMAGE_H
 #define R_IMAGE_H
 
-#include <SDL_opengl.h>
+#include "r_gl.h"
 #include "r_material.h"
 /*
 skins will be outline flood filled and mip mapped
@@ -90,6 +90,7 @@ image_t* R_RenderToTexture(const char *name, int x, int y, int w, int h);
 void R_ImageList_f(void);
 void R_InitImages(void);
 void R_ShutdownImages(void);
+void R_ReloadImages (void);
 void R_FreeWorldImages(void);
 void R_ImageClearMaterials(void);
 void R_UploadAlpha(const image_t *image, const byte *alphaData);

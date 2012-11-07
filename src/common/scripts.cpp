@@ -24,6 +24,7 @@
 #include "scripts.h"
 #include "../shared/parse.h"
 #include "../game/inventory.h"
+#include "../client/cl_screen.h"
 
 #define CONSTNAMEINT_HASH_SIZE	32
 
@@ -903,6 +904,13 @@ int Com_SetValue (void *base, const void *set, valueTypes_t type, int ofs, size_
 #endif
 	}
 
+#ifdef DEBUG
+	if (b != Com_AlignPtr(b, type)) {
+		Com_Printf("Wrong alignment: %p %p type:%d size:"UFO_SIZE_T" - this code will CRASH on ARM CPU\n", b, Com_AlignPtr(b, type), type, vt_aligns[type]);
+		Sys_Backtrace();
+	}
+#endif
+
 	switch (type) {
 	case V_NULL:
 		return 0;
@@ -1094,6 +1102,13 @@ const char *Com_ValueToStr (const void *base, const valueTypes_t type, const int
 
 	b = (const byte *) base + ofs;
 
+#ifdef DEBUG
+	if (b != Com_AlignPtr(b, type)) {
+		Com_Printf("Wrong alignment: %p %p type:%d size:"UFO_SIZE_T" - this code will CRASH on ARM CPU\n", b, Com_AlignPtr(b, type), type, vt_aligns[type]);
+		Sys_Backtrace();
+	}
+#endif
+
 	switch (type) {
 	case V_NULL:
 		return 0;
@@ -1105,7 +1120,7 @@ const char *Com_ValueToStr (const void *base, const valueTypes_t type, const int
 			return (const char*)b;
 
 	case V_BOOL:
-		if (*(bool *)b)
+		if (*(const bool *)b)
 			return "true";
 		else
 			return "false";

@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_error.h"
 #include "r_geoscape.h"
 #include "../../shared/images.h"
+#include "../cl_screen.h"
 
 #define MAX_IMAGEHASH 256
 static image_t *imageHash[MAX_IMAGEHASH];
@@ -256,6 +257,9 @@ void R_UploadTexture (unsigned *data, int width, int height, image_t* image)
 	byte *scan;
 	const bool mipmap = (image->type != it_pic && image->type != it_worldrelated && image->type != it_chars);
 	const bool clamp = R_IsClampedImageType(image->type);
+#ifdef GL_VERSION_ES_CM_1_0
+	texFormat = GL_RGBA;
+#endif
 
 	/* scan the texture for any non-255 alpha */
 	c = width * height;
@@ -276,6 +280,7 @@ void R_UploadTexture (unsigned *data, int width, int height, image_t* image)
 	/* some images need very little attention (pics, fonts, etc..) */
 	if (!mipmap && scaledWidth == width && scaledHeight == height) {
 		/* no mipmapping for these images to save memory */
+		/* TODO: check if GL_NEAREST will give any speed advantage on Android */
 		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		if (clamp) {
@@ -304,10 +309,12 @@ void R_UploadTexture (unsigned *data, int width, int height, image_t* image)
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, r_config.maxAnisotropic);
 			R_CheckError();
 		}
+#ifndef GL_VERSION_ES_CM_1_0
 		if (r_texture_lod->integer && r_config.lod_bias) {
 			glTexEnvf(GL_TEXTURE_FILTER_CONTROL_EXT, GL_TEXTURE_LOD_BIAS_EXT, r_texture_lod->value);
 			R_CheckError();
 		}
+#endif
 	} else {
 		if (r_config.anisotropic) {
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, 1);
@@ -507,7 +514,9 @@ image_t* R_RenderToTexture (const char *name, int x, int y, int w, int h)
 	}
 
 	glFlush();
+#ifndef GL_VERSION_ES_CM_1_0
 	glReadBuffer(GL_BACK);
+#endif
 	R_SelectTexture(&texunit_diffuse);
 	R_BindTexture(img->texnum);
 	glCopyTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, x, y, w, h, 0);
@@ -759,6 +768,46 @@ void R_ShutdownImages (void)
 	r_numImages = 0;
 }
 
+static void R_ReloadImageData (image_t *image)
+{
+	SDL_Surface *surf;
+	if (image == r_noTexture || !image || !image->texnum)
+		return;
+
+	surf = Img_LoadImage(image->name);
+	if (!surf) {
+		Com_Printf("R_ReloadImageData: unable to load image %s", image->name);
+		surf = SDL_CreateRGBSurface(0, image->width, image->height, 32,
+					0xff000000, 0x00ff0000, 0x0000ff00, 0x000000ff);
+		SDL_FillRect(surf, NULL, 0x99ff33ff); /* A random color */
+	}
+	glGenTextures(1, &image->texnum);
+	R_BindTexture(image->texnum);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	R_UploadTexture((unsigned *)surf->pixels, surf->w, surf->h, image);
+	SDL_FreeSurface(surf);
+}
+
+void R_ReloadImages (void)
+{
+	int i;
+	image_t *image;
+	imageArray_t *images;
+
+	R_CheckError();
+	glEnable(GL_TEXTURE_2D);
+	FOR_EACH_IMAGE(i, image, images) {
+		if (i % 5 == 0) {
+			SCR_DrawLoadingScreen(false, i * 100 / r_numImages);
+		}
+		R_ReloadImageData(image);
+		R_ReloadImageData(image->normalmap);
+		R_ReloadImageData(image->glowmap);
+		R_ReloadImageData(image->specularmap);
+		R_ReloadImageData(image->roughnessmap);
+	}
+}
 
 typedef struct {
 	const char *name;
@@ -810,6 +859,14 @@ void R_TextureMode (const char *string)
 	}
 }
 
+#ifdef GL_VERSION_ES_CM_1_0
+void R_TextureSolidMode (const char *string)
+{
+}
+void R_TextureAlphaMode (const char *string)
+{
+}
+#else
 typedef struct {
 	const char *name;
 	int mode;
@@ -881,3 +938,4 @@ void R_TextureSolidMode (const char *string)
 
 	Com_Printf("bad solid texture mode name (%s)\n", string);
 }
+#endif

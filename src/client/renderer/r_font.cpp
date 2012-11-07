@@ -118,7 +118,7 @@ void R_FontSetTruncationMarker (const char *marker)
 /**
  * @brief Clears font cache and frees memory associated with the cache
  */
-static void R_FontCleanCache (void)
+void R_FontCleanCache (void)
 {
 	int i;
 
@@ -575,9 +575,15 @@ static void R_FontGenerateTexture (const font_t *font, const char *text, chunkCa
 	SDL_Rect rect = {0, 0, 0, 0};
 	char buf[BUF_SIZE];
 	static const SDL_Color color = {255, 255, 255, 0};	/* The 4th value is unused */
-	const int samples = r_config.gl_compressed_alpha_format ? r_config.gl_compressed_alpha_format : r_config.gl_alpha_format;
 	int colordepth = 32;
+
+#ifdef GL_VERSION_ES_CM_1_0
+	const int samples = GL_RGBA;
+	int pixelFormat = GL_RGBA; /* There's no GL_BGRA symbol defined in Android GLES headers */
+#else
+	const int samples = r_config.gl_compressed_alpha_format ? r_config.gl_compressed_alpha_format : r_config.gl_alpha_format;
 	int pixelFormat = GL_BGRA;
+#endif
 
 #if SDL_BYTEORDER == SDL_BIG_ENDIAN
 	Uint32 rmask = 0xff000000;

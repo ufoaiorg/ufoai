@@ -26,7 +26,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef __R_GL_H__
 #define __R_GL_H__
 
+#ifdef ANDROID
+#include "../../ports/android/r_gles_android.h"
+#else
 #include <SDL_opengl.h>
+#endif
 
 /** @todo update SDL to version that includes these */
 #ifndef GL_READ_FRAMEBUFFER_EXT

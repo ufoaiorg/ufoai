@@ -20,6 +20,8 @@ static void mySignalHandler (int sig)
 
 void androidDumpBacktrace (FILE * out)
 {
+	__android_log_print(ANDROID_LOG_INFO, "UFOAI", "Backtrace on Android does not work currently, you need to actually crash your code to get backtrace");
+	/*
 	debuggerHandler = signal(SIGSEGV, mySignalHandler);
 	__android_log_print(ANDROID_LOG_INFO, "UFOAI", "Backtrace (run command \"arm-eabi-gdb libapplication.so -ex 'list *0xaabbccdd'\" where aabbccdd is a stack address below):");
 	if (debuggerHandler == SIG_IGN || debuggerHandler == SIG_DFL || debuggerHandler == SIG_ERR) {
@@ -28,4 +30,5 @@ void androidDumpBacktrace (FILE * out)
 		return;
 	}
 	raise(SIGSEGV);
+	*/
 }

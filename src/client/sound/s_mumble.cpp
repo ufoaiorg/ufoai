@@ -7,6 +7,23 @@
 #include "../client.h"
 #include "s_mumble.h"
 #include "s_local.h"
+
+#ifdef ANDROID
+
+void S_MumbleInit (void)
+{
+}
+void S_MumbleLink (void)
+{
+}
+void S_MumbleUnlink (void)
+{
+}
+void S_MumbleUpdate (const vec3_t origin, const vec3_t forward, const vec3_t right, const vec3_t up)
+{
+}
+
+#else
 #include <libmumblelink.h>
 
 static cvar_t *snd_mumble;
@@ -78,3 +95,5 @@ void S_MumbleUpdate (const vec3_t origin, const vec3_t forward, const vec3_t rig
 		Q_strncpyz(context, va("%i", cls.team), sizeof(context));
 	mumble_set_context(context, strlen(context) + 1);
 }
+
+#endif

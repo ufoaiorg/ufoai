@@ -374,7 +374,12 @@ static void R_DrawStarfield (int texnum, const vec3_t pos, const vec3_t rotate, 
 	glTexCoordPointer(2, GL_FLOAT, 0, starFieldTexCoords);
 
 	/* draw the cube */
+#ifdef GL_VERSION_ES_CM_1_0
+	for( int ii = 0; ii < 6; ii++ )
+		glDrawArrays(GL_TRIANGLE_FAN, ii * 4, 4);
+#else
 	glDrawArrays(GL_QUADS, 0, 24);
+#endif
 
 	refdef.batchCount++;
 
@@ -760,7 +765,9 @@ void R_DrawBloom (void)
 	glMatrixMode(GL_PROJECTION);
 	glPushMatrix();
 	glLoadIdentity();
+#ifndef GL_VERSION_ES_CM_1_0
 	glPushAttrib(GL_ENABLE_BIT | GL_VIEWPORT_BIT | GL_LIGHTING_BIT | GL_DEPTH_BUFFER_BIT);
+#endif
 	glOrtho(0, viddef.context.width, viddef.context.height, 0, 9999.0f, SKYBOX_DEPTH);
 
 	glDisable(GL_LIGHTING);
@@ -814,7 +821,9 @@ void R_DrawBloom (void)
 
 	R_CheckError();
 
+#ifndef GL_VERSION_ES_CM_1_0
 	glPopAttrib();
+#endif
 	glMatrixMode(GL_PROJECTION);
 	glPopMatrix();
 	glMatrixMode(GL_TEXTURE);

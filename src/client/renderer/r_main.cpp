@@ -239,6 +239,7 @@ void R_BeginFrame (void)
 	}
 
 	/* draw buffer stuff */
+#ifndef GL_VERSION_ES_CM_1_0
 	if (r_drawbuffer->modified) {
 		r_drawbuffer->modified = false;
 
@@ -248,6 +249,7 @@ void R_BeginFrame (void)
 			glDrawBuffer(GL_BACK);
 		R_CheckError();
 	}
+#endif
 
 	/* texturemode stuff */
 	/* Realtime set level of anisotropy filtering and change texture lod bias */
@@ -290,8 +292,10 @@ void R_RenderFrame (void)
 	R_Setup3D();
 
 	/* activate wire mode */
+#ifndef GL_VERSION_ES_CM_1_0
 	if (r_wire->integer)
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+#endif
 
 	if (!(refdef.rendererFlags & RDF_NOWORLDMODEL)) {
 		int tile;
@@ -400,8 +404,10 @@ void R_RenderFrame (void)
 	R_EnableBlend(false);
 
 	/* leave wire mode again */
+#ifndef GL_VERSION_ES_CM_1_0
 	if (r_wire->integer)
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+#endif
 
 	R_DrawBloom();
 
@@ -734,6 +740,11 @@ static uintptr_t R_GetProcAddressExt (const char *functionName)
 static inline bool R_CheckExtension (const char *extension)
 {
 	bool found;
+#ifdef GL_VERSION_ES_CM_1_0
+	if(strcmp(extension, "GL_ARB_texture_non_power_of_two") == 0) {
+		extension = "GL_OES_texture_npot";
+	}
+#endif
 	const char *s = strstr(extension, "###");
 	if (s == NULL) {
 		found = strstr(r_config.extensionsString, extension) != NULL;
@@ -760,6 +771,13 @@ static inline bool R_CheckExtension (const char *extension)
 	else
 		Com_Printf("%s not found\n", extension);
 
+#ifdef GL_VERSION_ES_CM_1_0
+	if(strcmp(extension, "GL_ARB_multitexture") == 0) { /* Always present in GLES */
+		found = true;
+		Com_Printf("Overriding %s - it is always present in GLES\n", extension);
+	}
+#endif
+
 	return found;
 }
 
@@ -775,7 +793,15 @@ static void R_InitExtensions (void)
 	int tmpInteger;
 
 	/* Get OpenGL version.*/
-	sscanf(r_config.versionString, "%d.%d", &r_config.glVersionMajor, &r_config.glVersionMinor);
+	if(sscanf(r_config.versionString, "%d.%d", &r_config.glVersionMajor, &r_config.glVersionMinor) != 2) {
+		const char * versionNumbers = r_config.versionString; /* GLES reports version as "OpenGL ES 1.1", so we must skip non-numeric symbols first */
+		while(*versionNumbers && strchr("0123456789", *versionNumbers) == NULL) {
+			versionNumbers ++;
+		}
+		if( *versionNumbers )
+			sscanf(versionNumbers, "%d.%d", &r_config.glVersionMajor, &r_config.glVersionMinor);
+	}
+	Com_Printf("OpenGL version detected: %d.%d", r_config.glVersionMajor, r_config.glVersionMinor);
 
 	/* multitexture */
 	qglActiveTexture = NULL;
@@ -845,6 +871,7 @@ static void R_InitExtensions (void)
 		qglClientActiveTexture = (ClientActiveTexture_t)R_GetProcAddress("glClientActiveTexture");
 	}
 
+#ifndef GL_VERSION_ES_CM_1_0
 	if (R_CheckExtension("GL_ARB_texture_compression")) {
 		if (r_ext_texture_compression->integer) {
 			Com_Printf("using GL_ARB_texture_compression\n");
@@ -857,6 +884,7 @@ static void R_InitExtensions (void)
 			}
 		}
 	}
+#endif
 
 	if (R_CheckExtension("GL_ARB_texture_non_power_of_two")) {
 		if (r_ext_nonpoweroftwo->integer) {
@@ -898,7 +926,10 @@ static void R_InitExtensions (void)
 		qglDeleteBuffers = (DeleteBuffers_t)R_GetProcAddress("glDeleteBuffers");
 		qglBindBuffer = (BindBuffer_t)R_GetProcAddress("glBindBuffer");
 		qglBufferData = (BufferData_t)R_GetProcAddress("glBufferData");
+		r_config.maxVertexBufferSize = 256 * 256 * 256; // This is only recommended value, so we don't really care about it, and set some big number.
+#ifndef GL_VERSION_ES_CM_1_0
 		glGetIntegerv(GL_MAX_ELEMENTS_VERTICES, &r_config.maxVertexBufferSize);
+#endif
 		Com_Printf("using GL_ARB_vertex_buffer_object\nmax vertex buffer size: %i\n", r_config.maxVertexBufferSize);
 	}
 
@@ -973,8 +1004,13 @@ static void R_InitExtensions (void)
 
 		if (qglDeleteRenderbuffersEXT && qglDeleteFramebuffersEXT && qglGenFramebuffersEXT && qglBindFramebufferEXT
 		 && qglFramebufferTexture2DEXT && qglBindRenderbufferEXT && qglRenderbufferStorageEXT && qglCheckFramebufferStatusEXT) {
+#ifdef GL_VERSION_ES_CM_1_0
+			r_config.maxDrawBuffers = 1; /* GLES does not support multiple buffers or color attachments, only COLOR_ATTACHMENT0_OES is available */
+			r_config.maxColorAttachments = 1;
+#else
 			glGetIntegerv(GL_MAX_DRAW_BUFFERS, &r_config.maxDrawBuffers);
 			glGetIntegerv(GL_MAX_COLOR_ATTACHMENTS_EXT, &r_config.maxColorAttachments);
+#endif
 			glGetIntegerv(GL_MAX_RENDERBUFFER_SIZE_EXT, &r_config.maxRenderbufferSize);
 
 			r_config.frameBufferObject = true;
@@ -1031,14 +1067,21 @@ static void R_InitExtensions (void)
 	glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &r_config.maxVertexAttribs);
 	Com_Printf("max vertex attributes: %i\n", r_config.maxVertexAttribs);
 
+#ifdef ANDROID
+	glGetIntegerv(GL_MAX_VARYING_VECTORS, &tmpInteger);
+	Com_Printf("max varying floats: %i\n", tmpInteger * 4);
+	glGetIntegerv(GL_MAX_FRAGMENT_UNIFORM_VECTORS, &tmpInteger);
+	Com_Printf("max fragment uniform components: %i\n", tmpInteger * 4);
+	glGetIntegerv(GL_MAX_VERTEX_UNIFORM_VECTORS, &tmpInteger);
+	Com_Printf("max vertex uniform components: %i\n", tmpInteger * 4);
+#else
 	glGetIntegerv(GL_MAX_VARYING_FLOATS, &tmpInteger);
 	Com_Printf("max varying floats: %i\n", tmpInteger);
-
 	glGetIntegerv(GL_MAX_FRAGMENT_UNIFORM_COMPONENTS, &tmpInteger);
 	Com_Printf("max fragment uniform components: %i\n", tmpInteger);
-
 	glGetIntegerv(GL_MAX_VERTEX_UNIFORM_COMPONENTS, &tmpInteger);
 	Com_Printf("max vertex uniform components: %i\n", tmpInteger);
+#endif
 
 	/* reset gl error state */
 	R_CheckError();
@@ -1093,6 +1136,7 @@ static inline void R_EnforceVersion (void)
 
 	sscanf(r_config.versionString, "%d.%d.%d ", &maj, &min, &rel);
 
+#ifndef GL_VERSION_ES_CM_1_0
 	if (maj > 1)
 		return;
 
@@ -1110,6 +1154,7 @@ static inline void R_EnforceVersion (void)
 
 	if (rel < 1)
 		Com_Error(ERR_FATAL, "OpenGL version %s is less than 1.2.1", r_config.versionString);
+#endif
 }
 
 /**

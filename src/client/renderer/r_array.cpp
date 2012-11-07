@@ -121,7 +121,8 @@ static inline void R_SetVertexBufferState (const mBspModel_t* bsp, int mask)
 
 	/* index array */
 	if (mask & R_ARRAY_ELEMENT)
-		R_BindBuffer(GL_ELEMENT_ARRAY_BUFFER, GL_INT, bsp->index_buffer);
+		R_BindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0, bsp->index_buffer);
+		/* R_BindBuffer ignores the type parameter for GL_ELEMENT_ARRAY_BUFFER, and GL_INT is not defined in GLES */
 
 	if (r_state.lighting_enabled) { /* normals and tangents for lighting */
 		if (mask & R_ARRAY_NORMAL)

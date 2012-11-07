@@ -25,6 +25,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_local.h"
 #include "r_misc.h"
 #include "r_error.h"
+#include "r_font.h"
+#include "r_model.h"
 #include "../../shared/images.h"
 
 static const byte gridtexture[8][8] = {
@@ -54,6 +56,7 @@ void R_InitMiscTexture (void)
 		}
 	}
 	r_noTexture = R_LoadImageData("***r_notexture***", (byte *) data, 8, 8, it_effect);
+	R_UploadTexture((unsigned int *)data, 8, 8, r_noTexture);
 
 	for (x = 0; x < MISC_TEXTURE_SIZE; x++) {
 		for (y = 0; y < MISC_TEXTURE_SIZE; y++) {
@@ -64,6 +67,7 @@ void R_InitMiscTexture (void)
 		}
 	}
 	r_warpTexture = R_LoadImageData("***r_warptexture***", (byte *)data, MISC_TEXTURE_SIZE, MISC_TEXTURE_SIZE, it_effect);
+	R_UploadTexture((unsigned int *)data, MISC_TEXTURE_SIZE, MISC_TEXTURE_SIZE, r_warpTexture);
 
 	/* empty pic in the texture chain for cinematic frames */
 	R_LoadImageData("***cinematic***", NULL, VID_NORM_WIDTH, VID_NORM_HEIGHT, it_pic);
@@ -242,4 +246,153 @@ void R_PushMatrix (void)
 void R_PopMatrix (void)
 {
 	glPopMatrix();
+}
+
+/**
+ * @brief Dumps OpenGL state for debugging - typically every capability set with glEnable().
+ */
+void R_DumpOpenGlState()
+{
+#define CAPABILITY( X ) {GL_ ## X, # X}
+	/* List taken from here: http://www.khronos.org/opengles/sdk/1.1/docs/man/glIsEnabled.xml */
+	const struct { GLenum idx; const char * text; } OpenGlCaps[] = {
+		CAPABILITY(ALPHA_TEST),
+		CAPABILITY(BLEND),
+		CAPABILITY(COLOR_ARRAY),
+		CAPABILITY(COLOR_LOGIC_OP),
+		CAPABILITY(COLOR_MATERIAL),
+		CAPABILITY(CULL_FACE),
+		CAPABILITY(DEPTH_TEST),
+		CAPABILITY(DITHER),
+		CAPABILITY(FOG),
+		CAPABILITY(LIGHTING),
+		CAPABILITY(LINE_SMOOTH),
+		CAPABILITY(MULTISAMPLE),
+		CAPABILITY(NORMAL_ARRAY),
+		CAPABILITY(NORMALIZE),
+		CAPABILITY(POINT_SMOOTH),
+		CAPABILITY(POLYGON_OFFSET_FILL),
+		CAPABILITY(RESCALE_NORMAL),
+		CAPABILITY(SAMPLE_ALPHA_TO_COVERAGE),
+		CAPABILITY(SAMPLE_ALPHA_TO_ONE),
+		CAPABILITY(SAMPLE_COVERAGE),
+		CAPABILITY(SCISSOR_TEST),
+		CAPABILITY(STENCIL_TEST),
+		CAPABILITY(VERTEX_ARRAY)
+	};
+#undef CAPABILITY
+
+	char s[1024] = "";
+	GLint i;
+	GLint maxTexUnits = 0;
+	GLint activeTexUnit = 0;
+	GLint activeClientTexUnit = 0;
+	GLint activeTexClient = 0;
+	GLint activeTexId = 0;
+	GLfloat texEnvMode = 0;
+	const char * texEnvModeStr = "UNKNOWN";
+	GLfloat color[4];
+
+	for( int i = 0; i < sizeof(OpenGlCaps) / sizeof(OpenGlCaps[0]); i++ ) {
+		if( glIsEnabled(OpenGlCaps[i].idx) ) {
+			strcat(s, OpenGlCaps[i].text);
+			strcat(s, " ");
+		}
+	}
+	glGetFloatv(GL_CURRENT_COLOR, color);
+
+	Com_Printf("OpenGL enabled caps: %s color %f %f %f %f \n", s, color[0], color[1], color[2], color[3]);
+
+	glGetIntegerv(GL_ACTIVE_TEXTURE, &activeTexUnit);
+	glGetIntegerv(GL_CLIENT_ACTIVE_TEXTURE, &activeClientTexUnit);
+
+	glGetIntegerv(GL_MAX_TEXTURE_UNITS, &maxTexUnits);
+	for ( i = GL_TEXTURE0; i < GL_TEXTURE0 + maxTexUnits; i++) {
+		glActiveTexture(i);
+		glClientActiveTexture(i);
+
+		strcpy(s, "");
+		if( glIsEnabled(GL_TEXTURE_2D) )
+			strcat(s, "enabled, ");
+		if( glIsEnabled(GL_TEXTURE_COORD_ARRAY) )
+			strcat(s, "with texcoord array, ");
+		if( i == activeTexUnit )
+			strcat(s, "active, ");
+		if( i == activeClientTexUnit )
+			strcat(s, "client active, ");
+
+		glGetIntegerv(GL_TEXTURE_BINDING_2D, &activeTexId);
+		glGetTexEnvfv(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, &texEnvMode);
+		if (fabs( texEnvMode - GL_ADD ) < 0.1f)
+			texEnvModeStr = "ADD";
+		if (fabs( texEnvMode - GL_MODULATE ) < 0.1f)
+			texEnvModeStr = "MODULATE";
+		if (fabs( texEnvMode - GL_DECAL ) < 0.1f)
+			texEnvModeStr = "DECAL";
+		if (fabs( texEnvMode - GL_BLEND ) < 0.1f)
+			texEnvModeStr = "BLEND";
+		if (fabs( texEnvMode - GL_REPLACE ) < 0.1f)
+			texEnvModeStr = "REPLACE";
+		if (fabs( texEnvMode - GL_COMBINE ) < 0.1f)
+			texEnvModeStr = "COMBINE";
+
+		Com_Printf("Texunit: %d texID %d %s texEnv mode %s\n", i - GL_TEXTURE0, activeTexId, s, texEnvModeStr);
+	}
+
+	glActiveTexture(activeTexUnit);
+	glClientActiveTexture(activeClientTexUnit);
+}
+
+/**
+ * @brief Re-initializes OpenGL state machine, all textures and renderer variables, this needed when application is put to background on Android.
+ */
+void R_ReinitOpenglContext()
+{
+	R_SetDefaultState();
+	R_ShutdownPrograms();
+	R_InitPrograms();
+	R_InitMiscTexture();
+	R_ReloadImages();
+	R_FontCleanCache();
+	R_ShutdownFBObjects();
+	R_InitFBObjects();
+	R_UpdateDefaultMaterial("", "", "", NULL);
+
+	/* Re-upload the battlescape terrain geometry */
+	if (qglBindBuffer) {
+		for (int tile = 0; tile < r_numMapTiles; tile++) {
+			model_t *mod = r_mapTiles[tile];
+
+			int vertind = 0, coordind = 0, tangind = 0;
+			mBspSurface_t *surf = mod->bsp.surfaces;
+
+			for (int i = 0; i < mod->bsp.numsurfaces; i++, surf++) {
+				vertind += 3 * surf->numedges;
+				coordind += 2 * surf->numedges;
+				tangind += 4 * surf->numedges;
+			}
+
+			qglGenBuffers(1, &mod->bsp.vertex_buffer);
+			qglBindBuffer(GL_ARRAY_BUFFER, mod->bsp.vertex_buffer);
+			qglBufferData(GL_ARRAY_BUFFER, vertind * sizeof(GLfloat), mod->bsp.verts, GL_STATIC_DRAW);
+
+			qglGenBuffers(1, &mod->bsp.texcoord_buffer);
+			qglBindBuffer(GL_ARRAY_BUFFER, mod->bsp.texcoord_buffer);
+			qglBufferData(GL_ARRAY_BUFFER, coordind * sizeof(GLfloat), mod->bsp.texcoords, GL_STATIC_DRAW);
+
+			qglGenBuffers(1, &mod->bsp.lmtexcoord_buffer);
+			qglBindBuffer(GL_ARRAY_BUFFER, mod->bsp.lmtexcoord_buffer);
+			qglBufferData(GL_ARRAY_BUFFER, coordind * sizeof(GLfloat), mod->bsp.lmtexcoords, GL_STATIC_DRAW);
+
+			qglGenBuffers(1, &mod->bsp.normal_buffer);
+			qglBindBuffer(GL_ARRAY_BUFFER, mod->bsp.normal_buffer);
+			qglBufferData(GL_ARRAY_BUFFER, vertind * sizeof(GLfloat), mod->bsp.normals, GL_STATIC_DRAW);
+
+			qglGenBuffers(1, &mod->bsp.tangent_buffer);
+			qglBindBuffer(GL_ARRAY_BUFFER, mod->bsp.tangent_buffer);
+			qglBufferData(GL_ARRAY_BUFFER, tangind * sizeof(GLfloat), mod->bsp.tangents, GL_STATIC_DRAW);
+		}
+
+		qglBindBuffer(GL_ARRAY_BUFFER, 0);
+	}
 }
