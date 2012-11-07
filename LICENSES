@@ -2218,6 +2218,8 @@ base/models/weapons/assault/assault.tag | GNU General Public License 2.0 or late
 base/models/weapons/assault/assault_clip.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/assault/assault_clip.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/assault/assault_gm.png | GNU General Public License 2.0 or later | MCR | based on original UFO:AI content
+base/models/weapons/assault/enc_plasma_clip.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/weapons/assault/enc_plasma_clip.png | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler, Nate Wright
 base/models/weapons/autocannon/ugv_autocannon.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/autocannon/ugv_autocannon.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/autocannon/ugv_autocannon.tag | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -2303,6 +2305,8 @@ base/models/weapons/laserrifle/laserrifle_clip.jpg | GNU General Public License 
 base/models/weapons/laserrifle/laserrifle_clip.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/laserrifle/laserrifle_clip_gm.png | GNU General Public License 2.0 or later | MCR | based on original UFO:AI content
 base/models/weapons/laserrifle/laserrifle_gm.png | GNU General Public License 2.0 or later | MCR | based on original UFO:AI content
+base/models/weapons/machinegun/enc_plasma_clip_mg.md2 | Creative Commons Attribution-Share Alike 3.0 | Daniel Holden (Yoshiboy)
+base/models/weapons/machinegun/enc_plasma_clip_mg.png | Creative Commons Attribution-Share Alike 3.0 | Daniel Holden (Yoshiboy), Nate Wright
 base/models/weapons/machinegun/machinegun.jpg | Creative Commons Attribution-Share Alike 3.0 | Daniel Holden (Yoshiboy)
 base/models/weapons/machinegun/machinegun.md2 | Creative Commons Attribution-Share Alike 3.0 | Ryan Span (Winter) - model, Daniel Holden (Yoshiboy) - uvmap + texture
 base/models/weapons/machinegun/machinegun.tag | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -2426,6 +2430,8 @@ base/models/weapons/smokegren/smoke_r.jpg | GNU General Public License 2.0 | Den
 base/models/weapons/smokegren/smoke_w.jpg | GNU General Public License 2.0 | Denis (De_Nis / tdtv / Денис)
 base/models/weapons/smokegren/smoke_y.jpg | GNU General Public License 2.0 | Denis (De_Nis / tdtv / Денис)
 base/models/weapons/smokegren/smokegren.md2 | GNU General Public License 2.0 | Denis (De_Nis / tdtv / Денис)
+base/models/weapons/sniper/enc_plasma_clip_snp.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/weapons/sniper/enc_plasma_clip_snp.png | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler, Nate Wright
 base/models/weapons/sniper/sniper.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/sniper/sniper.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/sniper/sniper.tag | GNU General Public License 2.0 or later | Martin Gerhardy
