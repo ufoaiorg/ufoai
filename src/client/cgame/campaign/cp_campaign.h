@@ -563,6 +563,8 @@ typedef struct ccs_s {
 
 	missionSpawnFunction_t missionSpawnCallback;
 	missionResultFunction_t missionResultCallback;
+
+	linkedList_t *updateCharacters;
 } ccs_t;
 
 typedef struct {
@@ -615,7 +617,8 @@ bool CP_CheckCredits (int costs);
 void CP_UpdateCredits(int credits);
 
 /* Other functions */
-void CP_ParseCharacterData(dbuffer *msg);
+void CP_UpdateCharacterData(linkedList_t *updateCharacters);
+void CP_ParseCharacterData(dbuffer *msg, linkedList_t **updateCharacters);
 bool CP_CheckNextStageDestination(const campaign_t* campaign, aircraft_t *ufo);
 
 const city_t * CP_GetCity(const char *id);

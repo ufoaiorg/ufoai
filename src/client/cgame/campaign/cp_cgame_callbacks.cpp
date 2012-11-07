@@ -213,7 +213,7 @@ void GAME_CP_Results (dbuffer *msg, int winner, int *numSpawned, int *numAlive, 
 	aircraft_t *aircraft = MAP_GetMissionAircraft();
 	battleParam_t *bp = &ccs.battleParameters;
 
-	CP_ParseCharacterData(msg);
+	CP_ParseCharacterData(msg, &ccs.updateCharacters);
 
 	ownSurvived = ownKilled = ownStunned = 0;
 	aliensSurvived = aliensKilled = aliensStunned = 0;

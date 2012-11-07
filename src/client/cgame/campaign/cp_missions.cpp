@@ -1106,7 +1106,8 @@ void CP_MissionEnd (const campaign_t *campaign, mission_t* mission, const battle
 	CP_CheckLostCondition(campaign);
 
 	/* update the character stats */
-	CP_ParseCharacterData(NULL);
+	CP_UpdateCharacterData(ccs.updateCharacters);
+	LIST_Delete(&ccs.updateCharacters);
 
 	/* update stats */
 	CP_UpdateCharacterStats(base, aircraft);

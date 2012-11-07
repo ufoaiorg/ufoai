@@ -73,6 +73,37 @@ typedef struct {
 } updateCharacter_t;
 
 /**
+ * @brief Transforms the battlescape values to the character
+ * @sa CP_ParseCharacterData
+ */
+void CP_UpdateCharacterData (linkedList_t *updateCharacters)
+{
+	LIST_Foreach(updateCharacters, updateCharacter_t, c) {
+		employee_t *employee = E_GetEmployeeFromChrUCN(c->ucn);
+		character_t* chr;
+
+		if (!employee) {
+			Com_Printf("Warning: Could not get character with ucn: %i.\n", c->ucn);
+			continue;
+		}
+
+		chr = &employee->chr;
+		chr->HP = std::min(c->HP, chr->maxHP);
+		chr->STUN = c->STUN;
+		chr->morale = c->morale;
+		chr->maxHP = c->maxHP;
+
+		memcpy(chr->wounds.treatmentLevel, c->wounds.treatmentLevel, sizeof(chr->wounds.treatmentLevel));
+
+		memcpy(chr->score.experience, c->chrscore.experience, sizeof(chr->score.experience));
+		memcpy(chr->score.skills, c->chrscore.skills, sizeof(chr->score.skills));
+		memcpy(chr->score.kills, c->chrscore.kills, sizeof(chr->score.kills));
+		memcpy(chr->score.stuns, c->chrscore.stuns, sizeof(chr->score.stuns));
+		chr->score.assignedMissions = c->chrscore.assignedMissions;
+	}
+}
+
+/**
  * @brief Parses the character data which was send by G_MatchSendResults using G_SendCharacterData
  * @param[in] msg The network buffer message. If this is NULL the character is updated, if this
  * is not NULL the data is stored in a temp buffer because the player can choose to retry
@@ -81,67 +112,36 @@ typedef struct {
  * @sa GAME_SendCurrentTeamSpawningInfo
  * @sa E_Save
  */
-void CP_ParseCharacterData (dbuffer *msg)
+void CP_ParseCharacterData (dbuffer *msg, linkedList_t **updateCharacters)
 {
-	static linkedList_t *updateCharacters = NULL;
+	int i, j;
+	const int num = NET_ReadByte(msg);
 
-	if (!msg) {
-		LIST_Foreach(updateCharacters, updateCharacter_t, c) {
-			employee_t *employee = E_GetEmployeeFromChrUCN(c->ucn);
-			character_t* chr;
+	if (num < 0)
+		cgi->Com_Error(ERR_DROP, "CP_ParseCharacterData: invalid character number found in stream (%i)\n", num);
 
-			if (!employee) {
-				Com_Printf("Warning: Could not get character with ucn: %i.\n", c->ucn);
-				continue;
-			}
+	for (i = 0; i < num; i++) {
+		updateCharacter_t c;
+		OBJZERO(c);
+		c.ucn = NET_ReadShort(msg);
+		c.HP = NET_ReadShort(msg);
+		c.STUN = NET_ReadByte(msg);
+		c.morale = NET_ReadByte(msg);
+		c.maxHP = NET_ReadShort(msg);
 
-			chr = &employee->chr;
-			chr->HP = std::min(c->HP, chr->maxHP);
-			chr->STUN = c->STUN;
-			chr->morale = c->morale;
-			chr->maxHP = c->maxHP;
+		for (j = 0; j < BODYPART_MAXTYPE; ++j)
+			c.wounds.treatmentLevel[j] = NET_ReadByte(msg);
 
-			memcpy(chr->wounds.treatmentLevel, c->wounds.treatmentLevel, sizeof(chr->wounds.treatmentLevel));
-
-			memcpy(chr->score.experience, c->chrscore.experience, sizeof(chr->score.experience));
-			memcpy(chr->score.skills, c->chrscore.skills, sizeof(chr->score.skills));
-			memcpy(chr->score.kills, c->chrscore.kills, sizeof(chr->score.kills));
-			memcpy(chr->score.stuns, c->chrscore.stuns, sizeof(chr->score.stuns));
-			chr->score.assignedMissions = c->chrscore.assignedMissions;
-		}
-		LIST_Delete(&updateCharacters);
-	} else {
-		int i, j;
-		const int num = NET_ReadByte(msg);
-
-		if (num < 0)
-			cgi->Com_Error(ERR_DROP, "CP_ParseCharacterData: NET_ReadShort error (%i)\n", num);
-
-		LIST_Delete(&updateCharacters);
-
-		for (i = 0; i < num; i++) {
-			updateCharacter_t c;
-			OBJZERO(c);
-			c.ucn = NET_ReadShort(msg);
-			c.HP = NET_ReadShort(msg);
-			c.STUN = NET_ReadByte(msg);
-			c.morale = NET_ReadByte(msg);
-			c.maxHP = NET_ReadShort(msg);
-
-			for (j = 0; j < BODYPART_MAXTYPE; ++j)
-				c.wounds.treatmentLevel[j] = NET_ReadByte(msg);
-
-			for (j = 0; j < SKILL_NUM_TYPES + 1; j++)
-				c.chrscore.experience[j] = NET_ReadLong(msg);
-			for (j = 0; j < SKILL_NUM_TYPES; j++)
-				c.chrscore.skills[j] = NET_ReadByte(msg);
-			for (j = 0; j < KILLED_NUM_TYPES; j++)
-				c.chrscore.kills[j] = NET_ReadShort(msg);
-			for (j = 0; j < KILLED_NUM_TYPES; j++)
-				c.chrscore.stuns[j] = NET_ReadShort(msg);
-			c.chrscore.assignedMissions = NET_ReadShort(msg);
-			LIST_Add(&updateCharacters, c);
-		}
+		for (j = 0; j < SKILL_NUM_TYPES + 1; j++)
+			c.chrscore.experience[j] = NET_ReadLong(msg);
+		for (j = 0; j < SKILL_NUM_TYPES; j++)
+			c.chrscore.skills[j] = NET_ReadByte(msg);
+		for (j = 0; j < KILLED_NUM_TYPES; j++)
+			c.chrscore.kills[j] = NET_ReadShort(msg);
+		for (j = 0; j < KILLED_NUM_TYPES; j++)
+			c.chrscore.stuns[j] = NET_ReadShort(msg);
+		c.chrscore.assignedMissions = NET_ReadShort(msg);
+		LIST_Add(updateCharacters, c);
 	}
 }
 
