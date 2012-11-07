@@ -31,7 +31,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 static void CL_NextRound_f (void)
 {
-	dbuffer *msg;
 	/* can't end round if we are not in battlescape */
 	if (!CL_BattlescapeRunning())
 		return;
@@ -43,8 +42,8 @@ static void CL_NextRound_f (void)
 	}
 
 	/* send endround */
-	msg = new_dbuffer();
-	NET_WriteByte(msg, clc_endround);
+	dbuffer msg;
+	NET_WriteByte(&msg, clc_endround);
 	NET_WriteMsg(cls.netStream, msg);
 }
 

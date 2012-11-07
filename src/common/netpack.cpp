@@ -586,19 +586,16 @@ void NET_OOB_Printf (struct net_stream *s, const char *format, ...)
  * @note Frees the msg buffer
  * @sa NET_WriteConstMsg
  */
-void NET_WriteMsg (struct net_stream *s, dbuffer *buf)
+void NET_WriteMsg (struct net_stream *s, dbuffer &buf)
 {
 	char tmp[256];
-	int len = LittleLong(dbuffer_len(buf));
+	int len = LittleLong(dbuffer_len(&buf));
 	NET_StreamEnqueue(s, (char *)&len, 4);
 
-	while (dbuffer_len(buf)) {
-		len = dbuffer_extract(buf, tmp, sizeof(tmp));
+	while (dbuffer_len(&buf)) {
+		len = dbuffer_extract(&buf, tmp, sizeof(tmp));
 		NET_StreamEnqueue(s, tmp, len);
 	}
-
-	/* and now free the buffer */
-	free_dbuffer(buf);
 }
 
 /**
@@ -608,15 +605,15 @@ void NET_WriteMsg (struct net_stream *s, dbuffer *buf)
  * @note Make sure that you free the msg buffer after you called this
  * @sa NET_WriteMsg
  */
-void NET_WriteConstMsg (struct net_stream *s, const dbuffer *buf)
+void NET_WriteConstMsg (struct net_stream *s, const dbuffer &buf)
 {
 	char tmp[256];
-	int len = LittleLong(dbuffer_len(buf));
+	int len = LittleLong(dbuffer_len(&buf));
 	int pos = 0;
 	NET_StreamEnqueue(s, (char *)&len, 4);
 
-	while (pos < dbuffer_len(buf)) {
-		const int x = dbuffer_get_at(buf, pos, tmp, sizeof(tmp));
+	while (pos < dbuffer_len(&buf)) {
+		const int x = dbuffer_get_at(&buf, pos, tmp, sizeof(tmp));
 		assert(x > 0);
 		NET_StreamEnqueue(s, tmp, x);
 		pos += x;

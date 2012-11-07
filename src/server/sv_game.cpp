@@ -120,10 +120,10 @@ static unsigned int SV_FindIndex (const char *name, int start, int max, bool cre
 	SV_SetConfigString(start + i, name);
 
 	if (Com_ServerState() != ss_loading) {	/* send the update to everyone */
-		dbuffer *msg = new_dbuffer();
-		NET_WriteByte(msg, svc_configstring);
-		NET_WriteShort(msg, start + i);
-		NET_WriteString(msg, name);
+		dbuffer msg;
+		NET_WriteByte(&msg, svc_configstring);
+		NET_WriteShort(&msg, start + i);
+		NET_WriteString(&msg, name);
 		SV_Multicast(~0, msg);
 	}
 
@@ -176,10 +176,10 @@ static void SV_Configstring (int index, const char *fmt, ...)
 	SV_SetConfigString(index, val);
 
 	if (Com_ServerState() != ss_loading) { /* send the update to everyone */
-		dbuffer *msg = new_dbuffer();
-		NET_WriteByte(msg, svc_configstring);
-		NET_WriteShort(msg, index);
-		NET_WriteString(msg, val);
+		dbuffer msg;
+		NET_WriteByte(&msg, svc_configstring);
+		NET_WriteShort(&msg, index);
+		NET_WriteString(&msg, val);
 
 		/* send to all clients */
 		SV_Multicast(~0, msg);
@@ -331,9 +331,9 @@ static void SV_EndEvents (void)
 		return;
 
 	NET_WriteByte(p->buf, EV_NULL);
-	SV_Multicast(p->playerMask, p->buf);
+	SV_Multicast(p->playerMask, *p->buf);
 	p->pending = false;
-	/* freed in SV_Multicast */
+	free_dbuffer(p->buf);
 	p->buf = NULL;
 }
 

@@ -1399,8 +1399,10 @@ static void GAME_InitializeBattlescape (chrList_t *team)
 
 	if (list && list->InitializeBattlescape) {
 		dbuffer *msg = list->InitializeBattlescape(team);
-		if (msg != NULL)
-			NET_WriteMsg(cls.netStream, msg);
+		if (msg != NULL) {
+			NET_WriteMsg(cls.netStream, *msg);
+			free_dbuffer(msg);
+		}
 	}
 }
 
@@ -1422,11 +1424,9 @@ void GAME_SpawnSoldiers (void)
 	Com_Printf("Used inventory slots: %i\n", cls.i.GetUsedSlots(&cls.i));
 
 	if (spawnStatus && cl.chrList.num > 0) {
-		dbuffer *msg;
-
 		/* send team info */
-		msg = new_dbuffer();
-		GAME_SendCurrentTeamSpawningInfo(msg, chrList);
+		dbuffer msg;
+		GAME_SendCurrentTeamSpawningInfo(&msg, chrList);
 		NET_WriteMsg(cls.netStream, msg);
 	}
 }
@@ -1434,9 +1434,9 @@ void GAME_SpawnSoldiers (void)
 void GAME_StartMatch (void)
 {
 	if (cl.chrList.num > 0) {
-		dbuffer *msg = new_dbuffer();
-		NET_WriteByte(msg, clc_stringcmd);
-		NET_WriteString(msg, "startmatch\n");
+		dbuffer msg;
+		NET_WriteByte(&msg, clc_stringcmd);
+		NET_WriteString(&msg, "startmatch\n");
 		NET_WriteMsg(cls.netStream, msg);
 
 		GAME_InitializeBattlescape(&cl.chrList);

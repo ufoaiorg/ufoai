@@ -97,21 +97,20 @@ memPool_t* vid_modelPool;	/**< modeldata - wiped with every new map */
 void Cmd_ForwardToServer (void)
 {
 	const char *cmd = Cmd_Argv(0);
-	dbuffer *msg;
 
 	if (cls.state <= ca_connected || cmd[0] == '-' || cmd[0] == '+') {
 		Com_Printf("Unknown command \"%s\" - wasn't sent to server\n", cmd);
 		return;
 	}
 
-	msg = new_dbuffer();
-	NET_WriteByte(msg, clc_stringcmd);
-	dbuffer_add(msg, cmd, strlen(cmd));
+	dbuffer msg;
+	NET_WriteByte(&msg, clc_stringcmd);
+	dbuffer_add(&msg, cmd, strlen(cmd));
 	if (Cmd_Argc() > 1) {
-		dbuffer_add(msg, " ", 1);
-		dbuffer_add(msg, Cmd_Args(), strlen(Cmd_Args()));
+		dbuffer_add(&msg, " ", 1);
+		dbuffer_add(&msg, Cmd_Args(), strlen(Cmd_Args()));
 	}
-	dbuffer_add(msg, "", 1);
+	dbuffer_add(&msg, "", 1);
 	NET_WriteMsg(cls.netStream, msg);
 }
 
@@ -144,10 +143,9 @@ static void CL_ForwardToServer_f (void)
 
 	/* don't forward the first argument */
 	if (Cmd_Argc() > 1) {
-		dbuffer *msg;
-		msg = new_dbuffer();
-		NET_WriteByte(msg, clc_stringcmd);
-		dbuffer_add(msg, Cmd_Args(), strlen(Cmd_Args()) + 1);
+		dbuffer msg;
+		NET_WriteByte(&msg, clc_stringcmd);
+		dbuffer_add(&msg, Cmd_Args(), strlen(Cmd_Args()) + 1);
 		NET_WriteMsg(cls.netStream, msg);
 	}
 }
@@ -255,8 +253,6 @@ static void CL_ClearState (void)
  */
 void CL_Disconnect (void)
 {
-	dbuffer *msg;
-
 	if (cls.state < ca_connecting)
 		return;
 
@@ -264,9 +260,9 @@ void CL_Disconnect (void)
 
 	/* send a disconnect message to the server */
 	if (!Com_ServerState()) {
-		msg = new_dbuffer();
-		NET_WriteByte(msg, clc_stringcmd);
-		NET_WriteString(msg, "disconnect\n");
+		dbuffer msg;
+		NET_WriteByte(&msg, clc_stringcmd);
+		NET_WriteString(&msg, "disconnect\n");
 		NET_WriteMsg(cls.netStream, msg);
 		/* make sure, that this is send */
 		NET_Wait(0);
@@ -367,10 +363,10 @@ static void CL_ConnectionlessPacket (dbuffer *msg)
 			Com_Printf("Dup connect received. Ignored.\n");
 			return;
 		}
-		msg = new_dbuffer();
-		NET_WriteByte(msg, clc_stringcmd);
-		NET_WriteString(msg, "new\n");
-		NET_WriteMsg(cls.netStream, msg);
+		dbuffer buf;;
+		NET_WriteByte(&buf, clc_stringcmd);
+		NET_WriteString(&buf, "new\n");
+		NET_WriteMsg(cls.netStream, buf);
 		return;
 	}
 
@@ -594,12 +590,12 @@ void CL_RequestNextDownload (void)
 	CL_ViewLoadMedia();
 
 	{
-		dbuffer *msg = new_dbuffer();
+		dbuffer msg;
 		/* send begin */
 		/* this will activate the render process (see client state ca_active) */
-		NET_WriteByte(msg, clc_stringcmd);
+		NET_WriteByte(&msg, clc_stringcmd);
 		/* see CL_StartGame */
-		NET_WriteString(msg, "begin\n");
+		NET_WriteString(&msg, "begin\n");
 		NET_WriteMsg(cls.netStream, msg);
 	}
 
@@ -966,9 +962,9 @@ static void CL_SendChangedUserinfos (void)
 		return;
 	if (!Com_IsUserinfoModified())
 		return;
-	dbuffer *msg = new_dbuffer();
-	NET_WriteByte(msg, clc_userinfo);
-	NET_WriteString(msg, Cvar_Userinfo());
+	dbuffer msg;
+	NET_WriteByte(&msg, clc_userinfo);
+	NET_WriteString(&msg, Cvar_Userinfo());
 	NET_WriteMsg(cls.netStream, msg);
 	Com_SetUserinfoModified(false);
 }

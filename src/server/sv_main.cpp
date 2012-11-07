@@ -139,9 +139,9 @@ client_t *SV_GetClient (int index)
 void SV_DropClient (client_t * drop, const char *message)
 {
 	/* add the disconnect */
-	dbuffer *msg = new_dbuffer();
-	NET_WriteByte(msg, svc_disconnect);
-	NET_WriteString(msg, message);
+	dbuffer msg;
+	NET_WriteByte(&msg, svc_disconnect);
+	NET_WriteString(&msg, message);
 	NET_WriteMsg(drop->stream, msg);
 	SV_BroadcastPrintf(PRINT_CHAT, "%s was dropped from the server - reason: %s\n", drop->name, message);
 
@@ -184,16 +184,16 @@ CONNECTIONLESS COMMANDS
 static void SVC_TeamInfo (struct net_stream *s)
 {
 	client_t *cl;
-	dbuffer *msg = new_dbuffer();
+	dbuffer msg;
 	char infoGlobal[MAX_INFO_STRING] = "";
 
-	NET_WriteByte(msg, clc_oob);
-	NET_WriteRawString(msg, "teaminfo\n");
+	NET_WriteByte(&msg, clc_oob);
+	NET_WriteRawString(&msg, "teaminfo\n");
 
 	Info_SetValueForKey(infoGlobal, sizeof(infoGlobal), "sv_teamplay", Cvar_GetString("sv_teamplay"));
 	Info_SetValueForKey(infoGlobal, sizeof(infoGlobal), "sv_maxteams", Cvar_GetString("sv_maxteams"));
 	Info_SetValueForKey(infoGlobal, sizeof(infoGlobal), "sv_maxplayersperteam", Cvar_GetString("sv_maxplayersperteam"));
-	NET_WriteString(msg, infoGlobal);
+	NET_WriteString(&msg, infoGlobal);
 
 	cl = NULL;
 	while ((cl = SV_GetNextClient(cl)) != NULL) {
@@ -206,11 +206,11 @@ static void SVC_TeamInfo (struct net_stream *s)
 			Info_SetValueForKeyAsInteger(infoPlayer, sizeof(infoPlayer), "cl_team", teamId);
 			Info_SetValueForKeyAsInteger(infoPlayer, sizeof(infoPlayer), "cl_ready", svs.ge->ClientIsReady(cl->player));
 			Info_SetValueForKey(infoPlayer, sizeof(infoPlayer), "cl_name", cl->name);
-			NET_WriteString(msg, infoPlayer);
+			NET_WriteString(&msg, infoPlayer);
 		}
 	}
 
-	NET_WriteByte(msg, 0);
+	NET_WriteByte(&msg, 0);
 
 	NET_WriteMsg(s, msg);
 }
@@ -223,18 +223,18 @@ static void SVC_Status (struct net_stream *s)
 {
 	client_t *cl;
 	char player[1024];
-	dbuffer *msg = new_dbuffer();
-	NET_WriteByte(msg, clc_oob);
-	NET_WriteRawString(msg, "print\n");
+	dbuffer msg;
+	NET_WriteByte(&msg, clc_oob);
+	NET_WriteRawString(&msg, "print\n");
 
-	NET_WriteRawString(msg, Cvar_Serverinfo());
-	NET_WriteRawString(msg, "\n");
+	NET_WriteRawString(&msg, Cvar_Serverinfo());
+	NET_WriteRawString(&msg, "\n");
 
 	cl = NULL;
 	while ((cl = SV_GetNextClient(cl)) != NULL) {
 		if (cl->state > cs_free) {
 			Com_sprintf(player, sizeof(player), "%i \"%s\"\n", svs.ge->ClientGetTeamNum(cl->player), cl->name);
-			NET_WriteRawString(msg, player);
+			NET_WriteRawString(&msg, player);
 		}
 	}
 
@@ -634,8 +634,8 @@ static void SV_PingPlayers (void)
 	cl = NULL;
 	while ((cl = SV_GetNextClient(cl)) != NULL)
 		if (cl->state != cs_free) {
-			dbuffer *msg = new_dbuffer();
-			NET_WriteByte(msg, svc_ping);
+			dbuffer msg;
+			NET_WriteByte(&msg, svc_ping);
 			NET_WriteMsg(cl->stream, msg);
 		}
 }
@@ -825,13 +825,13 @@ void SV_Init (void)
 static void SV_FinalMessage (const char *message, bool reconnect)
 {
 	client_t *cl;
-	dbuffer *msg = new_dbuffer();
+	dbuffer msg;
 
 	if (reconnect)
-		NET_WriteByte(msg, svc_reconnect);
+		NET_WriteByte(&msg, svc_reconnect);
 	else
-		NET_WriteByte(msg, svc_disconnect);
-	NET_WriteString(msg, message);
+		NET_WriteByte(&msg, svc_disconnect);
+	NET_WriteString(&msg, message);
 
 	cl = NULL;
 	while ((cl = SV_GetNextClient(cl)) != NULL)
@@ -843,8 +843,6 @@ static void SV_FinalMessage (const char *message, bool reconnect)
 
 	/* make sure, that this is send */
 	NET_Wait(0);
-
-	free_dbuffer(msg);
 }
 
 /**

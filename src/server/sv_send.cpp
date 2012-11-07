@@ -41,12 +41,12 @@ void SV_ClientCommand (client_t *client, const char *fmt, ...)
 {
 	va_list ap;
 	char str[1024];
-	dbuffer *msg = new_dbuffer();
+	dbuffer msg;
 
-	NET_WriteByte(msg, svc_stufftext);
+	NET_WriteByte(&msg, svc_stufftext);
 
 	va_start(ap, fmt);
-	NET_VPrintf(msg, fmt, ap, str, sizeof(str));
+	NET_VPrintf(&msg, fmt, ap, str, sizeof(str));
 	va_end(ap);
 
 	NET_WriteMsg(client->stream, msg);
@@ -58,18 +58,17 @@ void SV_ClientCommand (client_t *client, const char *fmt, ...)
 void SV_ClientPrintf (client_t * cl, int level, const char *fmt, ...)
 {
 	va_list argptr;
-	dbuffer *msg;
 	char str[1024];
 
 	if (level > cl->messagelevel)
 		return;
 
-	msg = new_dbuffer();
-	NET_WriteByte(msg, svc_print);
-	NET_WriteByte(msg, level);
+	dbuffer msg;
+	NET_WriteByte(&msg, svc_print);
+	NET_WriteByte(&msg, level);
 
 	va_start(argptr, fmt);
-	NET_VPrintf(msg, fmt, argptr, str, sizeof(str));
+	NET_VPrintf(&msg, fmt, argptr, str, sizeof(str));
 	va_end(argptr);
 
 	NET_WriteMsg(cl->stream, msg);
@@ -81,16 +80,15 @@ void SV_ClientPrintf (client_t * cl, int level, const char *fmt, ...)
 void SV_BroadcastPrintf (int level, const char *fmt, ...)
 {
 	va_list argptr;
-	dbuffer *msg;
 	client_t *cl;
 	char str[1024];
 
-	msg = new_dbuffer();
-	NET_WriteByte(msg, svc_print);
-	NET_WriteByte(msg, level);
+	dbuffer msg;
+	NET_WriteByte(&msg, svc_print);
+	NET_WriteByte(&msg, level);
 
 	va_start(argptr, fmt);
-	NET_VPrintf(msg, fmt, argptr, str, sizeof(str));
+	NET_VPrintf(&msg, fmt, argptr, str, sizeof(str));
 	va_end(argptr);
 
 	/* echo to console */
@@ -118,8 +116,6 @@ void SV_BroadcastPrintf (int level, const char *fmt, ...)
 			continue;
 		NET_WriteConstMsg(cl->stream, msg);
 	}
-
-	free_dbuffer(msg);
 }
 
 /**
@@ -127,7 +123,7 @@ void SV_BroadcastPrintf (int level, const char *fmt, ...)
  * @param[in] mask Bitmask of the players to send the multicast to
  * @param[in,out] msg The message to send to the clients
  */
-void SV_Multicast (int mask, dbuffer *msg)
+void SV_Multicast (int mask, dbuffer &msg)
 {
 	client_t *cl;
 	int j;
@@ -145,6 +141,4 @@ void SV_Multicast (int mask, dbuffer *msg)
 		/* write the message */
 		NET_WriteConstMsg(cl->stream, msg);
 	}
-
-	free_dbuffer(msg);
 }

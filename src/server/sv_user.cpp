@@ -76,14 +76,14 @@ static void SV_New_f (client_t *cl)
 	/* send the serverdata */
 	{
 		const int playernum = cl - SV_GetClient(0);
-		dbuffer *msg = new_dbuffer();
-		NET_WriteByte(msg, svc_serverdata);
-		NET_WriteLong(msg, PROTOCOL_VERSION);
+		dbuffer msg;
+		NET_WriteByte(&msg, svc_serverdata);
+		NET_WriteLong(&msg, PROTOCOL_VERSION);
 
-		NET_WriteShort(msg, playernum);
+		NET_WriteShort(&msg, playernum);
 
 		/* send full levelname */
-		NET_WriteString(msg, SV_GetConfigString(CS_NAME));
+		NET_WriteString(&msg, SV_GetConfigString(CS_NAME));
 
 		NET_WriteMsg(cl->stream, msg);
 	}
@@ -102,11 +102,11 @@ static void SV_New_f (client_t *cl)
 
 			configString = SV_GetConfigString(i);
 			if (configString[0] != '\0') {
-				dbuffer *msg = new_dbuffer();
+				dbuffer msg;
 				Com_DPrintf(DEBUG_SERVER, "sending configstring %d: %s\n", i, configString);
-				NET_WriteByte(msg, svc_configstring);
-				NET_WriteShort(msg, i);
-				NET_WriteString(msg, configString);
+				NET_WriteByte(&msg, svc_configstring);
+				NET_WriteShort(&msg, i);
+				NET_WriteString(&msg, configString);
 				/* enqueue and free msg */
 				NET_WriteMsg(cl->stream, msg);
 			}
