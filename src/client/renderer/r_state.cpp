@@ -864,9 +864,7 @@ void R_SetDefaultState (void)
 
 	glClearColor(0, 0, 0, 0);
 
-#ifndef GL_VERSION_ES_CM_1_0
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-#endif
 
 	R_ReallocateStateArrays(GL_ARRAY_LENGTH_CHUNK);
 	R_ReallocateTexunitArray(&texunit_0, GL_ARRAY_LENGTH_CHUNK);
