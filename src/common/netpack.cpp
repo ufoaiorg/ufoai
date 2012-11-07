@@ -140,7 +140,6 @@ void NET_WriteDir (dbuffer *buf, const vec3_t dir)
 	NET_WriteByte(buf, best);
 }
 
-
 /**
  * @brief Writes to buffer according to format; version without syntactic sugar
  * for variable arguments, to call it from other functions with variable arguments
@@ -209,10 +208,10 @@ void NET_vWriteFormat (dbuffer *buf, const char *format, va_list ap)
 		}
 	}
 	/* Too many arguments for the given format; too few cause crash above */
-	#ifndef ANDROID
+#ifndef ANDROID
 	if (!ap)
 		Com_Error(ERR_DROP, "WriteFormat: Too many arguments!");
-	#endif
+#endif
 }
 
 /**
@@ -425,7 +424,6 @@ void NET_ReadDir (dbuffer *buf, vec3_t dir)
 	VectorCopy(bytedirs[b], dir);
 }
 
-
 /**
  * @brief Reads from a buffer according to format; version without syntactic sugar for variable arguments, to call it from other functions with variable arguments
  * @sa SV_ReadFormat
@@ -489,10 +487,10 @@ void NET_vReadFormat (dbuffer *buf, const char *format, va_list ap)
 		}
 	}
 	/* Too many arguments for the given format; too few cause crash above */
-	#ifndef ANDROID
+#ifndef ANDROID
 	if (!ap)
 		Com_Error(ERR_DROP, "ReadFormat: Too many arguments!");
-	#endif
+#endif
 }
 
 void NET_SkipFormat (dbuffer *buf, const char *format)
