@@ -350,7 +350,7 @@ int G_ActorUsableTUs(const edict_t *ent);
 int G_ActorGetReservedTUs(const edict_t *ent);
 void G_ActorCheckRevitalise(edict_t *ent);
 int G_ActorCalculateMaxTU(const edict_t *ent);
-int G_ActorGetArmourTUPenalty(const edict_t *ent);
+float G_ActorGetEncumbranceTUPenalty(const edict_t *ent);
 int G_GetActorTimeForFiredef(const edict_t *ent, const fireDef_t *const fd, bool reaction);
 
 /* g_mission */

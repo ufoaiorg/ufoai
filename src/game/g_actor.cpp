@@ -292,42 +292,25 @@ void G_ActorSetMaxs (edict_t* ent)
  * @return The amount of TU that should be used as penalty, @c 0 if the actor does not wear any armour
  * @note The armour weight only adds penalty if its weight is big enough.
  */
-int G_ActorGetArmourTUPenalty (const edict_t *ent)
+float G_ActorGetEncumbranceTUPenalty (const edict_t *ent)
 {
-	const invList_t *invList = ARMOUR(ent);
-	const objDef_t *armour;
-	int penalty;
-	int weightToCausePenalty = 100;
-	int actorPower;
-	float factorPower;
+	const float weightHeavy = ent->chr.score.skills[ABILITY_POWER] * 0.5;
+	const float weightLight = ent->chr.score.skills[ABILITY_POWER] * 0.2;
+	const float inventoryWeight = INVSH_GetInventoryWeight(ent->chr.i);
+	float penalty = 0.7;
 
-	if (ARMOUR(ent) == NULL)
-		return 0;
-
-	armour = invList->item.item;
-	if (armour->weight >= weightToCausePenalty)
-		penalty = (armour->weight - weightToCausePenalty - 1) / 10;
-	else
-		penalty = 0;
-
-	actorPower = ent->chr.score.skills[ABILITY_POWER] * 10 / MAX_SKILL;
-	if (actorPower <= 2)
-		factorPower = 2.0F;
-	else if (actorPower <= 5)
-		factorPower = 1.0F;
-	else if (actorPower <= 7)
-		factorPower = 0.5F;
-	else
-		factorPower = 0.25F;
-
-	penalty *= factorPower;
+	if (inventoryWeight > weightHeavy)
+		penalty = 0.4;
+	else if (inventoryWeight < weightLight)
+		penalty = 1;
 
 	return penalty;
 }
 
 int G_ActorCalculateMaxTU (const edict_t *ent)
 {
-	const int currentMaxTU = (MIN_TU + (ent->chr.score.skills[ABILITY_SPEED]) * 20 / MAX_SKILL) * G_ActorGetInjuryPenalty(ent, MODIFIER_TU) - G_ActorGetArmourTUPenalty(ent);
+	const int currentMaxTU = (MIN_TU + (ent->chr.score.skills[ABILITY_SPEED]) * 20 / MAX_SKILL) *
+			G_ActorGetInjuryPenalty(ent, MODIFIER_TU) * G_ActorGetEncumbranceTUPenalty(ent);
 	return std::min(currentMaxTU, MAX_TU);
 }
 

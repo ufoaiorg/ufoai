@@ -612,6 +612,31 @@ bool INVSH_LoadableInWeapon (const objDef_t *od, const objDef_t *weapon)
 	return false;
 }
 
+static float INVSH_GetItemWeight (const item_t &item)
+{
+	float weight = item.item->weight;
+	if (item.ammo && item.ammo != item.item && item.ammoLeft > 0) {
+		weight += item.ammo->weight;
+	}
+	return weight;
+}
+
+float INVSH_GetInventoryWeight (const inventory_t &inventory)
+{
+	float weight = 0;
+
+	for (int containerID = 0; containerID < CSI->numIDs; containerID++) {
+		if (CSI->ids[containerID].temp)
+			continue;
+		for (invList_t *ic = inventory.c[containerID], *next; ic; ic = next) {
+			next = ic->next;
+			weight += INVSH_GetItemWeight(ic->item);
+		}
+	}
+
+	return weight;
+}
+
 /*
 ===============================
 FIREMODE MANAGEMENT FUNCTIONS

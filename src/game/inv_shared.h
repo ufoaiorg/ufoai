@@ -424,6 +424,7 @@ const objDef_t *INVSH_GetItemByID(const char *id);
 const objDef_t *INVSH_GetItemByIDX(int index);
 const objDef_t *INVSH_GetItemByIDSilent(const char *id);
 bool INVSH_LoadableInWeapon(const objDef_t *od, const objDef_t *weapon);
+float INVSH_GetInventoryWeight(const inventory_t &inventory);
 
 const invDef_t *INVSH_GetInventoryDefinitionByID(const char *id);
 

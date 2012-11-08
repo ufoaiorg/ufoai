@@ -45,12 +45,12 @@ static int G_GetEarnedExperience (abilityskills_t skill, edict_t *ent)
 		experience = 46; /** @todo Make a formula for this once strength is used in combat. */
 		/* if soldier gets a TU impact from the armour, it trains power by moving around in heavy armour */
 		/* the training goes faster if the TU impact is higher, up to a limit */
-		int penalty = G_ActorGetArmourTUPenalty(ent);
+		float penalty = G_ActorGetEncumbranceTUPenalty(ent);
 		if (penalty == 0)
 			break;
 		int moving = chr->scoreMission->movedNormal / 2 + chr->scoreMission->movedCrouched;
-		penalty = std::min(penalty, 2);
-		int training = penalty * moving;
+		penalty = std::min(penalty, 2.0f);
+		int training = moving / penalty;
 		training = std::min(training, 200);
 		experience += std::max(168 * training / 200, 0);
 		break;
