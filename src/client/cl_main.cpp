@@ -363,7 +363,7 @@ static void CL_ConnectionlessPacket (dbuffer *msg)
 			Com_Printf("Dup connect received. Ignored.\n");
 			return;
 		}
-		dbuffer buf;;
+		dbuffer buf(5);
 		NET_WriteByte(&buf, clc_stringcmd);
 		NET_WriteString(&buf, "new\n");
 		NET_WriteMsg(cls.netStream, buf);
@@ -590,7 +590,7 @@ void CL_RequestNextDownload (void)
 	CL_ViewLoadMedia();
 
 	{
-		dbuffer msg;
+		dbuffer msg(7);
 		/* send begin */
 		/* this will activate the render process (see client state ca_active) */
 		NET_WriteByte(&msg, clc_stringcmd);
@@ -962,9 +962,10 @@ static void CL_SendChangedUserinfos (void)
 		return;
 	if (!Com_IsUserinfoModified())
 		return;
-	dbuffer msg;
+	const char *userInfo = Cvar_Userinfo();
+	dbuffer msg(strlen(userInfo) + 2);
 	NET_WriteByte(&msg, clc_userinfo);
-	NET_WriteString(&msg, Cvar_Userinfo());
+	NET_WriteString(&msg, userInfo);
 	NET_WriteMsg(cls.netStream, msg);
 	Com_SetUserinfoModified(false);
 }

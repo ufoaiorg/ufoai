@@ -1434,7 +1434,7 @@ void GAME_SpawnSoldiers (void)
 void GAME_StartMatch (void)
 {
 	if (cl.chrList.num > 0) {
-		dbuffer msg;
+		dbuffer msg(12);
 		NET_WriteByte(&msg, clc_stringcmd);
 		NET_WriteString(&msg, "startmatch\n");
 		NET_WriteMsg(cls.netStream, msg);

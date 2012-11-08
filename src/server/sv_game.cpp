@@ -120,7 +120,7 @@ static unsigned int SV_FindIndex (const char *name, int start, int max, bool cre
 	SV_SetConfigString(start + i, name);
 
 	if (Com_ServerState() != ss_loading) {	/* send the update to everyone */
-		dbuffer msg;
+		dbuffer msg(4 + strlen(name));
 		NET_WriteByte(&msg, svc_configstring);
 		NET_WriteShort(&msg, start + i);
 		NET_WriteString(&msg, name);
@@ -176,7 +176,7 @@ static void SV_Configstring (int index, const char *fmt, ...)
 	SV_SetConfigString(index, val);
 
 	if (Com_ServerState() != ss_loading) { /* send the update to everyone */
-		dbuffer msg;
+		dbuffer msg(4 + strlen(val));
 		NET_WriteByte(&msg, svc_configstring);
 		NET_WriteShort(&msg, index);
 		NET_WriteString(&msg, val);

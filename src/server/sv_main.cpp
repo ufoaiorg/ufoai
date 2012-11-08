@@ -139,7 +139,7 @@ client_t *SV_GetClient (int index)
 void SV_DropClient (client_t * drop, const char *message)
 {
 	/* add the disconnect */
-	dbuffer msg;
+	dbuffer msg(2 + strlen(message));
 	NET_WriteByte(&msg, svc_disconnect);
 	NET_WriteString(&msg, message);
 	NET_WriteMsg(drop->stream, msg);
@@ -634,7 +634,7 @@ static void SV_PingPlayers (void)
 	cl = NULL;
 	while ((cl = SV_GetNextClient(cl)) != NULL)
 		if (cl->state != cs_free) {
-			dbuffer msg;
+			dbuffer msg(1);
 			NET_WriteByte(&msg, svc_ping);
 			NET_WriteMsg(cl->stream, msg);
 		}
@@ -825,7 +825,7 @@ void SV_Init (void)
 static void SV_FinalMessage (const char *message, bool reconnect)
 {
 	client_t *cl;
-	dbuffer msg;
+	dbuffer msg(2 + strlen(message));
 
 	if (reconnect)
 		NET_WriteByte(&msg, svc_reconnect);
