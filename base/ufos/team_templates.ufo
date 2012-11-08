@@ -161,7 +161,7 @@ chrtemplate robot {
 // For multiplayer characters ONLY! Keep rate set to 0!
 chrtemplate soldier_mp {
 	rate 0
-	strength	"25 75"
+	strength	"30 75"
 	speed	"25 35"
 	accuracy	"20 75"
 	mind	"30 75"
