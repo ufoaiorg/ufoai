@@ -494,19 +494,14 @@ static void SV_TraceBounds (const vec3_t start, const vec3_t mins, const vec3_t 
  * @param[in] mins The mins of the bounding box that is moved through the world
  * @param[in] maxs The maxs of the bounding box that is moved through the world
  */
-trace_t SV_Trace (const vec3_t start, const vec3_t mins, const vec3_t maxs, const vec3_t end, const edict_t * passedict, int contentmask)
+trace_t SV_Trace (const vec3_t start, const AABB &box, const vec3_t end, const edict_t * passedict, int contentmask)
 {
 	moveclip_t clip;
-
-	if (!mins)
-		mins = vec3_origin;
-	if (!maxs)
-		maxs = vec3_origin;
 
 	OBJZERO(clip);
 
 	/* clip to world - 0x1FF = all levels */
-	clip.trace = CM_CompleteBoxTrace(&sv->mapTiles, start, end, mins, maxs, TRACING_ALL_VISIBLE_LEVELS, contentmask, 0);
+	clip.trace = CM_CompleteBoxTrace(&sv->mapTiles, start, end, box.mins, box.maxs, TRACING_ALL_VISIBLE_LEVELS, contentmask, 0);
 	/** @todo There is more than one world in case of a map assembly - use
 	 * @c clip.trace.mapTile to get the correct one */
 	clip.trace.ent = svs.ge->edicts; /* the first edict is the world */
@@ -516,8 +511,8 @@ trace_t SV_Trace (const vec3_t start, const vec3_t mins, const vec3_t maxs, cons
 	clip.contentmask = contentmask;
 	clip.start = start;
 	clip.end = end;
-	clip.mins = mins;
-	clip.maxs = maxs;
+	clip.mins = box.mins;
+	clip.maxs = box.maxs;
 	clip.passedict = passedict;
 
 	/* create the bounding box for the entire path traveled by the shot */

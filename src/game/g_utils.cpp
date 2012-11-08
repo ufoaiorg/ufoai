@@ -282,8 +282,10 @@ bool G_TestLine (const vec3_t start, const vec3_t end)
  */
 trace_t G_Trace (const vec3_t start, const vec3_t end, const edict_t * passent, int contentmask)
 {
+//	AABB box();	/* does not compile */
+	AABB box(vec3_origin, vec3_origin);
 	G_TraceDraw(start, end);
-	return gi.Trace(start, NULL, NULL, end, passent, contentmask);
+	return gi.Trace(start, box, end, passent, contentmask);
 }
 
 /**
