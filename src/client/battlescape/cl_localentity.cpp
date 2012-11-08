@@ -563,7 +563,7 @@ static void LE_PlayFootStepSound (le_t *le)
 		/* we should really hit the ground with this */
 		to[2] -= UNIT_HEIGHT;
 
-		trace = CL_Trace(from, to, vec3_origin, vec3_origin, NULL, NULL, MASK_SOLID, cl_worldlevel->integer);
+		trace = CL_Trace(from, to, AABB(), NULL, NULL, MASK_SOLID, cl_worldlevel->integer);
 		if (trace.surface)
 			LE_PlaySoundFileAndParticleForSurface(le, trace.surface->name);
 	} else
@@ -1733,15 +1733,15 @@ static inline void CL_TraceBounds (const vec3_t start, const vec3_t mins, const 
  * @param[in] contentmask Searched content the trace should watch for
  * @param[in] worldLevel The worldlevel (0-7) to calculate the levelmask for the trace from
  */
-trace_t CL_Trace (const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, const le_t * passle, le_t * passle2, int contentmask, int worldLevel)
+trace_t CL_Trace (const vec3_t start, const vec3_t end, const AABB &box, const le_t * passle, le_t * passle2, int contentmask, int worldLevel)
 {
 	moveclip_t clip;
 
 	if (cl_trace_debug->integer)
-		R_DrawBoundingBoxBatched(mins, maxs);
+		R_DrawBoundingBoxBatched(box.mins, box.maxs);
 
 	/* clip to world */
-	clip.trace = CM_CompleteBoxTrace(cl.mapTiles, start, end, AABB(mins, maxs), (1 << (worldLevel + 1)) - 1, contentmask, 0);
+	clip.trace = CM_CompleteBoxTrace(cl.mapTiles, start, end, box, (1 << (worldLevel + 1)) - 1, contentmask, 0);
 	clip.trace.le = NULL;
 	if (clip.trace.fraction == 0)
 		return clip.trace;		/* blocked by the world */
@@ -1749,13 +1749,13 @@ trace_t CL_Trace (const vec3_t start, const vec3_t end, const vec3_t mins, const
 	clip.contentmask = contentmask;
 	clip.start = start;
 	clip.end = end;
-	clip.mins = mins;
-	clip.maxs = maxs;
+	clip.mins = box.mins;
+	clip.maxs = box.maxs;
 	clip.passle = passle;
 	clip.passle2 = passle2;
 
 	/* create the bounding box of the entire move */
-	CL_TraceBounds(start, mins, maxs, end, clip.boxmins, clip.boxmaxs);
+	CL_TraceBounds(start, box.mins, box.maxs, end, clip.boxmins, clip.boxmaxs);
 
 	/* clip to other solid entities */
 	CL_ClipMoveToLEs(&clip);

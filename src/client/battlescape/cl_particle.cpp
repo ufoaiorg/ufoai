@@ -889,7 +889,7 @@ static inline trace_t PTL_Trace (ptl_t *ptl, const vec3_t mins, const vec3_t max
 	VectorCopy(mins, ptlCache.mins);
 	VectorCopy(maxs, ptlCache.maxs);
 
-	ptlCache.trace = CL_Trace(ptl->origin, ptl->s, mins, maxs, NULL, NULL, MASK_SOLID, cl.mapMaxLevel - 1);
+	ptlCache.trace = CL_Trace(ptl->origin, ptl->s, AABB(mins, maxs), NULL, NULL, MASK_SOLID, cl.mapMaxLevel - 1);
 	return ptlCache.trace;
 }
 
