@@ -32,10 +32,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <SDL_opengl.h>
 #endif
 
-#ifdef GL_VERSION_ES_CM_1_0
-#define glPolygonMode(x, y)
-#endif
-
 inline void R_DrawArrays (GLint first, GLsizei count) {
 #ifdef GL_VERSION_ES_CM_1_0
 	const int cnt = count / 4;

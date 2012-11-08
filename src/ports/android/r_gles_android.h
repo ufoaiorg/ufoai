@@ -77,4 +77,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define GL_MAX_FRAGMENT_UNIFORM_VECTORS     0x8DFD
 #define GL_MAX_VERTEX_UNIFORM_VECTORS       0x8DFB
 
+/* Stub, so that we won't clutter the code with #ifdefs */
+#define glPolygonMode(x, y)
+
 #endif
