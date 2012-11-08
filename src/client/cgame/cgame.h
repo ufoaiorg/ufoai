@@ -54,6 +54,10 @@ typedef struct cgame_export_s {
 	void (EXPORT *UpdateCharacterValues) (const character_t *chr);
 	/** checks whether the given team is known in the particular gamemode */
 	bool (EXPORT *IsTeamKnown) (const teamDef_t *teamDef);
+	/** returns the selected character */
+	character_t* (EXPORT *GetSelectedChr) (void);
+	/** if you want to have a different control on how much a soldier can carry implement this */
+	int (EXPORT *GetChrMaxLoad) (const character_t *chr);
 	/** called on errors */
 	void (EXPORT *Drop) (void);
 	/** called after the team spawn messages where send, can e.g. be used to set initial actor states */
@@ -331,6 +335,7 @@ typedef struct cgame_import_s {
 	bool (IMPORT *INV_RemoveFromInventory) (inventory_t* const i, const invDef_t * container, invList_t *fItem);
 
 	void (IMPORT *INV_ItemDescription) (const objDef_t *od);
+	float (IMPORT *INVSH_GetInventoryWeight) (const inventory_t *inventory);
 
 	/** @todo: remove me */
 	byte *r_xviAlpha;

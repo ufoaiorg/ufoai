@@ -93,6 +93,7 @@ const cgame_export_t *GetCGameStaticCampaignAPI (const cgame_import_t *import)
 	e.GetEquipmentDefinition = GAME_CP_GetEquipmentDefinition;
 	e.UpdateCharacterValues = GAME_CP_CharacterCvars;
 	e.IsTeamKnown = GAME_CP_TeamIsKnown;
+	e.GetSelectedChr = GAME_CP_GetSelectedChr;
 	e.Drop = GAME_CP_Drop;
 	e.InitializeBattlescape = GAME_CP_InitializeBattlescape;
 	e.InitMissionBriefing = GAME_CP_InitMissionBriefing;

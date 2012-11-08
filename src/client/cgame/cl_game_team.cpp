@@ -839,7 +839,7 @@ bool GAME_LoadCharacter (xmlNode_t *p, character_t *chr)
 
 	cls.i.DestroyInventory(&cls.i, &chr->i);
 	sInventory = XML_GetNode(p, SAVE_INVENTORY_INVENTORY);
-	GAME_LoadInventory(sInventory, &chr->i, chr->score.skills[ABILITY_POWER]);
+	GAME_LoadInventory(sInventory, &chr->i, GAME_GetChrMaxLoad(chr));
 
 	Com_UnregisterConstList(saveCharacterConstants);
 

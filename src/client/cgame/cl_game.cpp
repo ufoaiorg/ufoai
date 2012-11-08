@@ -149,7 +149,7 @@ void GAME_AppendTeamMember (int memberIndex, const char *teamDefID, const equipD
 
 	CL_GenerateCharacter(chr, teamDefID);
 	/* pack equipment */
-	cls.i.EquipActor(&cls.i, chr, ed, chr->score.skills[ABILITY_POWER]);
+	cls.i.EquipActor(&cls.i, chr, ed, GAME_GetChrMaxLoad(chr));
 
 	chrDisplayList.chr[memberIndex] = chr;
 	chrDisplayList.num++;
@@ -651,6 +651,7 @@ static const cgame_import_t* GAME_GetImportData (const cgameType_t *t)
 		cgi->INV_RemoveFromInventory = GAME_RemoveFromInventory;
 
 		cgi->INV_ItemDescription = INV_ItemDescription;
+		cgi->INVSH_GetInventoryWeight = INVSH_GetInventoryWeight;
 
 		cgi->Sys_Error = Sys_Error;
 
@@ -1577,6 +1578,27 @@ const char* GAME_GetModelForItem (const objDef_t *od, uiModel_t** uiModel)
 	if (uiModel != NULL)
 		*uiModel = NULL;
 	return od->model;
+}
+
+character_t* GAME_GetSelectedChr (void)
+{
+	const cgame_export_t *list = GAME_GetCurrentType();
+	if (list && list->GetSelectedChr != NULL)
+		return list->GetSelectedChr();
+
+	return GAME_GetCharacter(Cvar_GetInteger("cl_selected"));
+}
+
+int GAME_GetChrMaxLoad (const character_t *chr)
+{
+	if (chr) {
+		const cgame_export_t *list = GAME_GetCurrentType();
+		const int strength = chr->score.skills[ABILITY_POWER];
+		if (list && list->GetChrMaxLoad != NULL)
+			return std::min(strength, list->GetChrMaxLoad(chr));
+		return strength;
+	}
+	return NONE;
 }
 
 /**

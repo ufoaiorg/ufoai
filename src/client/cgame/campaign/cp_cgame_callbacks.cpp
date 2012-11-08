@@ -368,6 +368,14 @@ bool GAME_CP_TeamIsKnown (const teamDef_t *teamDef)
 	return RS_IsResearched_ptr(ccs.teamDefTechs[teamDef->idx]);
 }
 
+character_t* GAME_CP_GetSelectedChr (void)
+{
+	employee_t *employee = E_GetEmployeeFromChrUCN( cgi->Cvar_GetInteger("mn_ucn"));
+	if (employee)
+		return &employee->chr;
+	return NULL;
+}
+
 void GAME_CP_Drop (void)
 {
 	/** @todo maybe create a savegame? */

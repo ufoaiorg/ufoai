@@ -80,6 +80,8 @@ void GAME_DrawMap(geoscapeData_t *data);
 void GAME_DrawMapMarkers(uiNode_t *node);
 void GAME_MapClick(uiNode_t *node, int x, int y, const vec2_t pos);
 void GAME_SetServerInfo(const char *server, const char *serverport);
+character_t* GAME_GetSelectedChr(void);
+int GAME_GetChrMaxLoad(const character_t *chr);
 
 const equipDef_t *GAME_ChangeEquip(const linkedList_t *equipmentList, changeEquipType_t changeType, const char *equipID);
 
