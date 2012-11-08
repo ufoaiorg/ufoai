@@ -182,6 +182,15 @@ window inventory
 		contentalign	ALIGN_CL
 	}
 
+	string s_load
+	{
+		pos "90 310"
+		contentalign ALIGN_UC
+		string	"0/0 Kg"
+		color "1 1 1 1"
+		size "106 25"
+	}
+
 	// ==================
 	// model
 	// ==================
@@ -246,6 +255,14 @@ window inventory
 		onClick	{ call *node:root.hideinventory }
 	}
 
+	confunc inv_actorload {
+		*node:root.s_load@string = "<1>"
+		*node:root.s_load@tooltip = "<2>"
+		if ( <3> > 0 ) { *node:root.s_load@color = "0 1 0 1" }
+		elif ( <3> < 0 ) { *node:root.s_load@color = "1 0 0 1" }
+		else { *node:root.s_load@color = "1 1 1 1" }
+	}
+
 	func onWindowOpened {
 		*cvar:inventory_window_open = 1
 		// make sure mn_chrrankprefix is cleared when we are not in campaign anymore
@@ -257,9 +274,12 @@ window inventory
 		}
 		// the physdat window will automatically be closed if open
 		if ( *cvar:physdat_window_open == 1 ) { cmd "ui_close hudphysdat;" }
+		cmd "ui_addcvarlistener cl_selected hud_updateactorload;"
+		cmd "hud_updateactorload;"
 	}
 
 	func onWindowClosed {
+		cmd "ui_removecvarlistener cl_selected hud_updateactorload;"
 		delete *cvar:inventory_window_open
 	}
 }

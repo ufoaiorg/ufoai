@@ -98,6 +98,15 @@ window equipment extends objectinfo
 		size "160 25"
 	}
 
+	string s_load
+	{
+		pos "570 310"
+		contentalign ALIGN_UC
+		string	"0/0 Kg"
+		color "1 1 1 1"
+		size "160 25"
+	}
+
 	// ==================
 	// names list
 	// ==================
@@ -160,6 +169,7 @@ window equipment extends objectinfo
 		if ( *node:root.selected@integer >= 0 ) {
 			*node:parent.soldierlist.member<1>.name@color = "1 1 1 1"
 			cmd "ui_team_select_ucn <node:root.selected@integer>;"
+			cmd "mn_updateactorload equip_actorload;"
 		}
 	}
 
@@ -173,7 +183,16 @@ window equipment extends objectinfo
 
 		onClick	{
 			cmd "ui_team_deequip <node:root.selected@integer>;update_item_list;"
+			cmd "mn_updateactorload equip_actorload;"
 		}
+	}
+
+	confunc equip_actorload {
+		*node:root.s_load@string = "<1>"
+		*node:root.s_load@tooltip = "<2>"
+		if ( <3> > 0 ) { *node:root.s_load@color = "0 1 0 1" }
+		elif ( <3> < 0 ) { *node:root.s_load@color = "1 0 0 1" }
+		else { *node:root.s_load@color = "1 1 1 1" }
 	}
 
 	// ==================
@@ -642,6 +661,7 @@ window equipment extends objectinfo
 			*node:root.equip_scroll@fullsize = <fullsize>
 		}
 		onSelect { cmd "object_update <lastselectedid> update_item_list 0;" }
+		onChange { cmd "mn_updateactorload equip_actorload;" }
 	}
 
 	baseinventory equip_ammo	{
@@ -655,6 +675,7 @@ window equipment extends objectinfo
 			*node:root.equip_ammo_scroll@fullsize = <fullsize>
 		}
 		onSelect { cmd "object_update <lastselectedid> update_item_list 0;" }
+		onChange { cmd "mn_updateactorload equip_actorload;" }
 	}
 
 	vscrollbar equip_scroll {
