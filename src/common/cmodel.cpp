@@ -304,7 +304,7 @@ bool CM_EntTestLineDM (mapTiles_t *mapTiles, const vec3_t start, const vec3_t st
  * @param[in] brushreject brushes the trace should ignore (see MASK_*)
  * @brief Traces all submodels in all tiles.  Used by ufo and ufo_ded.
  */
-trace_t CM_CompleteBoxTrace (mapTiles_t *mapTiles, const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, int levelmask, int brushmask, int brushreject)
+trace_t CM_CompleteBoxTrace (mapTiles_t *mapTiles, const vec3_t start, const vec3_t end, const AABB &box, int levelmask, int brushmask, int brushreject)
 {
 	trace_t newtr, tr;
 	int tile, i;
@@ -316,10 +316,10 @@ trace_t CM_CompleteBoxTrace (mapTiles_t *mapTiles, const vec3_t start, const vec
 
 	/* Prep the mins and maxs */
 	for (i = 0; i < 3; i++) {
-		smin[i] = start[i] + std::min(mins[i], maxs[i]);
-		smax[i] = start[i] + std::max(mins[i], maxs[i]);
-		emin[i] = end[i] + std::min(mins[i], maxs[i]);
-		emax[i] = end[i] + std::max(mins[i], maxs[i]);
+		smin[i] = start[i] + std::min(box.mins[i], box.maxs[i]);
+		smax[i] = start[i] + std::max(box.mins[i], box.maxs[i]);
+		emin[i] = end[i] + std::min(box.mins[i], box.maxs[i]);
+		emax[i] = end[i] + std::max(box.mins[i], box.maxs[i]);
 	}
 
 	/* trace against all loaded map tiles */
@@ -342,7 +342,7 @@ trace_t CM_CompleteBoxTrace (mapTiles_t *mapTiles, const vec3_t start, const vec
 			continue;
 		if (smin[2] > wpmaxs[2] && emin[2] > wpmaxs[2])
 			continue;
-		newtr = TR_TileBoxTrace(myTile, start, end, mins, maxs, levelmask, brushmask, brushreject);
+		newtr = TR_TileBoxTrace(myTile, start, end, box.mins, box.maxs, levelmask, brushmask, brushreject);
 		newtr.mapTile = tile;
 
 		/* memorize the trace with the minimal fraction */
@@ -376,7 +376,7 @@ trace_t CM_EntCompleteBoxTrace (mapTiles_t *mapTiles, const vec3_t start, const 
 	vec3_t bmins, bmaxs;
 
 	/* trace against world first */
-	trace = CM_CompleteBoxTrace(mapTiles, start, end, traceBox->mins, traceBox->maxs, levelmask, brushmask, brushreject);
+	trace = CM_CompleteBoxTrace(mapTiles, start, end, AABB(traceBox->mins, traceBox->maxs), levelmask, brushmask, brushreject);
 	if (!list || trace.fraction == 0.0)
 		return trace;
 

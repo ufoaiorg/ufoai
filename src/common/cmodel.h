@@ -48,5 +48,5 @@ trace_t CM_HintedTransformedBoxTrace(mapTile_t *tile, const vec3_t start, const 
 trace_t CM_EntCompleteBoxTrace(mapTiles_t *mapTiles, const vec3_t start, const vec3_t end, const box_t* traceBox, int levelmask, int brushmask, int brushreject, const char **list);
 bool CM_EntTestLineDM(mapTiles_t *mapTiles, const vec3_t start, const vec3_t stop, vec3_t end, const int levelmask, const char **entlist);
 bool CM_EntTestLine(mapTiles_t *mapTiles, const vec3_t start, const vec3_t stop, const int levelmask, const char **entlist);
-trace_t CM_CompleteBoxTrace(mapTiles_t *mapTiles, const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, int levelmask, int brushmask, int brushreject);
+trace_t CM_CompleteBoxTrace(mapTiles_t *mapTiles, const vec3_t start, const vec3_t end, const AABB &box, int levelmask, int brushmask, int brushreject);
 #endif
