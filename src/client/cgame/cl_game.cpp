@@ -1580,6 +1580,10 @@ const char* GAME_GetModelForItem (const objDef_t *od, uiModel_t** uiModel)
 	return od->model;
 }
 
+/**
+ * @brief Returns the currently selected character.
+ * @return The selected character or @c NULL.
+ */
 character_t* GAME_GetSelectedChr (void)
 {
 	const cgame_export_t *list = GAME_GetCurrentType();
@@ -1589,6 +1593,11 @@ character_t* GAME_GetSelectedChr (void)
 	return GAME_GetCharacter(Cvar_GetInteger("cl_selected"));
 }
 
+/**
+ * @brief Returns the max weight the given character can carry.
+ * @param[in] chr The character to find the max load for.
+ * @return The max load the character can carry or @c NONE.
+ */
 int GAME_GetChrMaxLoad (const character_t *chr)
 {
 	if (chr) {

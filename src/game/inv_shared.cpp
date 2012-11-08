@@ -612,6 +612,11 @@ bool INVSH_LoadableInWeapon (const objDef_t *od, const objDef_t *weapon)
 	return false;
 }
 
+/**
+ * @brief Return the weight of an item.
+ * @param[in] item The item to find the weight for.
+ * @return The weight of the given item including any ammo loaded.
+ */
 float INVSH_GetItemWeight (const item_t &item)
 {
 	float weight = item.item->weight;
@@ -621,6 +626,15 @@ float INVSH_GetItemWeight (const item_t &item)
 	return weight;
 }
 
+/**
+ * @brief Check that adding an item to the inventory won't exceed the max permitted weight.
+ * @param[in] inv The inventory the item is added to.
+ * @param[in] from Index of the container the item comes from.
+ * @param[in] to Index of the container the item is being placed.
+ * @param[in] item The item that is being added.
+ * @param[in] item The max permitted weight.
+ * @return @c true if it is Ok to add the item @c false otherwise.
+ */
 bool INVSH_CheckAddingItemToInventory (const inventory_t *inv, containerIndex_t from, containerIndex_t to, const item_t &item, int maxWeight)
 {
 	if (CSI->ids[to].temp || !CSI->ids[from].temp)
@@ -684,6 +698,11 @@ const fireDef_t *FIRESH_FiredefForWeapon (const item_t *item)
 	return NULL;
 }
 
+/**
+ * @brief Get the firedef that uses the most TU for the given item.
+ * @param[in] item The item for which we want to find the slowest fireDef.
+ * @return The firedef that uses the most TU for this item or @c NULL.
+ */
 const fireDef_t *FIRESH_SlowestFireDef (const item_t &item)
 {
 	const fireDef_t *fdArray = FIRESH_FiredefForWeapon(&item);
@@ -824,6 +843,11 @@ uint32_t INVSH_ShapeRotate (const uint32_t shape)
 	return shapeNew;
 }
 
+/**
+ * @brief Get the weight of the items in the given inventory (excluding those in temp containers).
+ * @param[in] inventory The inventory to get the items weight.
+ * @return The total weight of the inventory items (excluding those in temp containers)
+ */
 float INVSH_GetInventoryWeight (const inventory_t *inventory)
 {
 	float weight = 0;

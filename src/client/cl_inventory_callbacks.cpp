@@ -339,6 +339,9 @@ static void INV_UpdateObject_f (void)
 	INV_ItemDescription(obj);
 }
 
+/**
+ * @brief Update the equipment weight for the selected actor.
+ */
 static void INV_UpdateActorLoad_f (void)
 {
 	if (Cmd_Argc() < 2) {

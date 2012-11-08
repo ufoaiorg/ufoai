@@ -56,7 +56,7 @@ typedef struct cgame_export_s {
 	bool (EXPORT *IsTeamKnown) (const teamDef_t *teamDef);
 	/** returns the selected character */
 	character_t* (EXPORT *GetSelectedChr) (void);
-	/** if you want to have a different control on how much a soldier can carry implement this */
+	/** if you want to have a different control on how much a soldier can carry implement this (but max is still limited to actor strength) */
 	int (EXPORT *GetChrMaxLoad) (const character_t *chr);
 	/** called on errors */
 	void (EXPORT *Drop) (void);

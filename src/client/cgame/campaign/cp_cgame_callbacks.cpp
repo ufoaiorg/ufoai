@@ -368,6 +368,10 @@ bool GAME_CP_TeamIsKnown (const teamDef_t *teamDef)
 	return RS_IsResearched_ptr(ccs.teamDefTechs[teamDef->idx]);
 }
 
+/**
+ * @brief Returns the currently selected character.
+ * @return The selected character or @c NULL.
+ */
 character_t* GAME_CP_GetSelectedChr (void)
 {
 	employee_t *employee = E_GetEmployeeFromChrUCN( cgi->Cvar_GetInteger("mn_ucn"));

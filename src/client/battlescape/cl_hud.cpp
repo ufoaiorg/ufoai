@@ -1330,6 +1330,9 @@ static void HUD_ActorWoundData_f (void)
 	}
 }
 
+/**
+ * @brief Update the equipment weight for the selected actor.
+ */
 static void HUD_UpdateActorLoad_f (void)
 {
 	if (!CL_BattlescapeRunning())

@@ -530,6 +530,13 @@ static void I_DestroyInventory (inventoryInterface_t* self, inventory_t* const i
 	OBJZERO(*inv);
 }
 
+/**
+ * @brief Get the state of the given inventory: the items weight and the min TU needed to make full use of all the items.
+ * @param[in] self The inventory interface pointer
+ * @param[in] inventory The pointer to the inventory to evaluate.
+ * @param[out] slowestFd The TU needed to use the slowest fireDef in the inventory.
+ * @note temp containers are excluded.
+ */
 static float I_GetInventoryState (inventoryInterface_t *self, const inventory_t *inventory, int &slowestFd)
 {
 	float weight = 0;
@@ -554,10 +561,11 @@ static float I_GetInventoryState (inventoryInterface_t *self, const inventory_t 
 /**
  * @brief Pack a weapon, possibly with some ammo
  * @param[in] self The inventory interface pointer
- * @param[in] inv The inventory that will get the weapon
+ * @param[in] chr The character that will get the weapon
  * @param[in] weapon The weapon type index in gi.csi->ods
  * @param[in] ed The equipment for debug messages
  * @param[in] missedPrimary if actor didn't get primary weapon, this is 0-100 number to increase ammo number.
+ * @param[in] maxWeight The max weight this actor is allowed to carry.
  * @sa INVSH_LoadableInWeapon
  */
 static int I_PackAmmoAndWeapon (inventoryInterface_t *self, character_t* const chr, const objDef_t* weapon, int missedPrimary, const equipDef_t *ed, int maxWeight)
@@ -743,9 +751,9 @@ typedef enum {
  * @brief Fully equip one actor. The equipment that is added to the inventory of the given actor
  * is taken from the equipment script definition.
  * @param[in] self The inventory interface pointer
- * @param[in] inv The inventory that will get the weapon.
+ * @param[in] chr The character that will get the weapon.
  * @param[in] ed The equipment that is added from to the actors inventory
- * @param[in] td Pointer to teamdef data - to get the weapon and armour bools.
+ * @param[in] maxWeight The max weight this actor is allowed to carry.
  * @note The code below is a complete implementation
  * of the scheme sketched at the beginning of equipment_missions.ufo.
  * Beware: If two weapons in the same category have the same price,

@@ -614,7 +614,8 @@ static void GAME_LoadItem (xmlNode_t *n, item_t *item, containerIndex_t *contain
 /**
  * @brief Load callback for savegames in XML Format
  * @param[in] p XML Node structure, where we load the information from
- * @param[out] i Pointer to the inventory
+ * @param[in,out] inv Pointer to the inventory
+ * @param[in] maxLoad The max load for this inventory.
  * @sa GAME_SaveInventory
  * @sa GAME_LoadItem
  * @sa I_AddToInventory
