@@ -588,7 +588,7 @@ bool G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, cons
 	if (checkaction && !G_ActionCheckForCurrentTeam(player, ent, 1))
 		return false;
 
-	if(!INVSH_CheckAddingItemToInventory(&ent->chr.i, from->id, to->id, fItem->item, ent->chr.score.skills[ABILITY_POWER])) {
+	if (!INVSH_CheckAddingItemToInventory(&ent->chr.i, from->id, to->id, fItem->item, ent->chr.score.skills[ABILITY_POWER])) {
 		G_ClientPrintf(player, PRINT_HUD, _("This soldier can not carry anything else."));
 		return false;
 	}
