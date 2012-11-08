@@ -89,7 +89,7 @@ window game_team_edit extends objectinfo
 	{
 		pos "570 310"
 		contentalign ALIGN_UC
-		string	"0/0 Kg"
+		string	"_0/0 Kg"
 		color "1 1 1 1"
 		size "160 25"
 	}

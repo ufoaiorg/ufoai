@@ -186,7 +186,7 @@ window inventory
 	{
 		pos "90 310"
 		contentalign ALIGN_UC
-		string	"0/0 Kg"
+		string	"_0/0 Kg"
 		color "1 1 1 1"
 		size "106 25"
 	}
