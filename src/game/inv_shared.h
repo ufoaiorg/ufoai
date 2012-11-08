@@ -292,7 +292,7 @@ typedef struct objDef_s {
 	int price;			/**< Price for this item. */
 	int productionCost;	/**< Production costs for this item. */
 	int size;			/**< Size of an item, used in storage capacities. */
-	int weight;			/**< The weight of the item */
+	float weight;			/**< The weight of the item */
 	bool notOnMarket;		/**< True if this item should not be available on market. */
 } objDef_t;
 
