@@ -633,27 +633,6 @@ bool INVSH_CheckAddingItemToInventory (const inventory_t *inv, containerIndex_t 
 	return (maxWeight < 0 || maxWeight >= invWeight + itemWeight);
 }
 
-/**
- * @brief Calculates the TU penalty when the given actor is wearing armour
- * @param[in] ent The actor to calculate the TU penalty for
- * @return The amount of TU that should be used as penalty, @c 0 if the actor does not wear any armour
- * @note The armour weight only adds penalty if its weight is big enough.
- */
-float INVSH_GetEncumbranceTUPenalty (float inventoryWeight, int maxLoad)
-{
-	const float weightHeavy = maxLoad * 0.5;
-	const float weightLight = maxLoad * 0.2;
-	float penalty = 0.7;
-
-	if (inventoryWeight > weightHeavy)
-		penalty = 0.4;
-	else if (inventoryWeight < weightLight)
-		penalty = 1;
-
-	return penalty;
-}
-
-
 /*
 ===============================
 FIREMODE MANAGEMENT FUNCTIONS

@@ -45,7 +45,7 @@ static int G_GetEarnedExperience (abilityskills_t skill, edict_t *ent)
 		experience = 46; /** @todo Make a formula for this once strength is used in combat. */
 		/* if soldier gets a TU impact from the armour, it trains power by moving around in heavy armour */
 		/* the training goes faster if the TU impact is higher, up to a limit */
-		float penalty = INVSH_GetEncumbranceTUPenalty(INVSH_GetInventoryWeight(&ent->chr.i), ent->chr.score.skills[ABILITY_POWER]);
+		float penalty = GET_ENCUMBRANCE_PENALTY(INVSH_GetInventoryWeight(&ent->chr.i), ent->chr.score.skills[ABILITY_POWER]);
 		if (penalty == 0)
 			break;
 		int moving = chr->scoreMission->movedNormal / 2 + chr->scoreMission->movedCrouched;

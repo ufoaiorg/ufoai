@@ -100,7 +100,7 @@ void INV_ItemDescription (const objDef_t *od)
 			}
 			Cvar_ForceSet("mn_linkname", _(od->weapons[itemIndex]->name));
 		}
-	} else if (od->weapon && od->reload) {
+	} else if (od->weapon) {
 		/* We display the pre/next buttons for changing ammo only if there are at least 2 researched ammo
 		 * we are counting the number of ammo that is usable with this weapon */
 		for (i = 0; i < od->numAmmos; i++)
@@ -129,6 +129,7 @@ void INV_ItemDescription (const objDef_t *od)
 		*itemText = '\0';
 		if (INV_IsArmour(od)) {
 			Com_sprintf(itemText, sizeof(itemText), _("Size:\t%i\n"), od->size);
+			Q_strcat(itemText, va(_("Weight:\t%g\n"), od->weight), sizeof(itemText));
 			Q_strcat(itemText, "\n", sizeof(itemText));
 			Q_strcat(itemText, _("^BDamage type:\tProtection:\n"), sizeof(itemText));
 			for (i = 0; i < csi.numDTs; i++) {
@@ -154,6 +155,7 @@ void INV_ItemDescription (const objDef_t *od)
 					weaponIndex = itemIndex;
 				}
 
+				Q_strcat(itemText, va(_("Weight:\t%g\n"), od->weight), sizeof(itemText));
 				/** @todo is there ammo with no firedefs? */
 				if (GAME_ItemIsUseable(odAmmo) && odAmmo->numFiredefs[weaponIndex] > 0) {
 					const fireDef_t *fd;
@@ -180,12 +182,15 @@ void INV_ItemDescription (const objDef_t *od)
 				}
 			} else {
 				Com_sprintf(itemText, sizeof(itemText), _("%s. No detailed info available.\n"), INV_IsAmmo(od) ? _("Ammunition") : _("Weapon"));
+				Q_strcat(itemText, va(_("Weight:\t%g\n"), od->weight), sizeof(itemText));
 			}
 		} else if (od->weapon) {
 			Com_sprintf(itemText, sizeof(itemText), _("%s ammo-less weapon\n"), (od->fireTwoHanded ? _("Two-handed") : _("One-handed")));
+			Q_strcat(itemText, va(_("Weight:\t%g\n"), od->weight), sizeof(itemText));
 		} else {
 			/* just an item - only primary definition */
 			Com_sprintf(itemText, sizeof(itemText), _("%s auxiliary equipment\n"), (od->fireTwoHanded ? _("Two-handed") : _("One-handed")));
+			Q_strcat(itemText, va(_("Weight:\t%g\n"), od->weight), sizeof(itemText));
 			if (od->numWeapons > 0 && od->numFiredefs[0] > 0) {
 				const fireDef_t *fd = &od->fd[0][0];
 				Q_strcat(itemText, va(_("Action:\t%s\n"), _(fd->name)), sizeof(itemText));
@@ -202,7 +207,6 @@ void INV_ItemDescription (const objDef_t *od)
 		UI_ExecuteConfunc("itemdesc_view 0 0;");
 	}
 }
-
 
 /**
  * @brief Increases the number of the firemode to display
@@ -335,6 +339,48 @@ static void INV_UpdateObject_f (void)
 	INV_ItemDescription(obj);
 }
 
+static void INV_UpdateActorLoad_f (void)
+{
+	if (Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <callback>\n", Cmd_Argv(0));
+		return;
+	}
+
+	const character_t *chr = GAME_GetSelectedChr();
+	if (chr != NULL) {
+		const float invWeight = INVSH_GetInventoryWeight(&chr->i);
+		const int maxWeight = GAME_GetChrMaxLoad(chr);
+		const float penalty = GET_ENCUMBRANCE_PENALTY(invWeight, chr->score.skills[ABILITY_POWER]);
+		const int maxTU = GET_TU(chr->score.skills[ABILITY_SPEED]);
+		const int tus = maxTU * penalty;
+		const int tuPenalty = maxTU * WEIGHT_NORMAL_PENALTY - (maxTU - tus);
+		int count = 0;
+
+		for (containerIndex_t containerID = 0; containerID < csi.numIDs; containerID++) {
+			if (csi.ids[containerID].temp)
+				continue;
+			for (invList_t *invList = chr->i.c[containerID], *next; invList; invList = next) {
+				const fireDef_t *fireDef;
+				next = invList->next;
+				fireDef = FIRESH_FiredefForWeapon(&invList->item);
+				if (fireDef == NULL)
+					continue;
+				for (int i = 0; i < MAX_FIREDEFS_PER_WEAPON; i++)
+					if (fireDef[i].time > 0 && fireDef[i].time > tus) {
+						if (count <= 0)
+							Com_sprintf(popupText, sizeof(popupText), _("This soldier no longer has enough TUs to use the following items:\n\n"));
+						Q_strcat(popupText, va("%s: %s (%i)\n", _(invList->item.item->name), _(fireDef[i].name), fireDef[i].time), sizeof(popupText));
+						++count;
+					}
+			}
+		}
+		if (count > 0)
+			UI_Popup(_("Warning"), popupText);
+
+		UI_ExecuteConfunc("%s \"%g/%i %s\" \"%s %+i\" %f", Cmd_Argv(1), invWeight, maxWeight, _("Kg"), _("TU:"), tuPenalty, WEIGHT_NORMAL_PENALTY - (1 - penalty));
+	}
+}
+
 void INV_InitCallbacks (void)
 {
 	Cmd_AddCommand("mn_increasefiremode", INV_IncreaseFiremode_f, "Increases the number of the firemode to display");
@@ -342,4 +388,5 @@ void INV_InitCallbacks (void)
 	Cmd_AddCommand("mn_increaseitem", INV_IncreaseItem_f, "Increases the number of the weapon or the ammo to display");
 	Cmd_AddCommand("mn_decreaseitem", INV_DecreaseItem_f, "Decreases the number of the weapon or the ammo to display");
 	Cmd_AddCommand("object_update", INV_UpdateObject_f, "Update the GUI with the selected item");
+	Cmd_AddCommand("mn_updateactorload", INV_UpdateActorLoad_f, "Update the GUI with the selected actor inventory load");
 }

@@ -289,7 +289,7 @@ int G_ActorCalculateMaxTU (const edict_t *ent)
 {
 	const int invWeight = INVSH_GetInventoryWeight(&ent->chr.i);
 	const int currentMaxTU = GET_TU(ent->chr.score.skills[ABILITY_SPEED]) * G_ActorGetInjuryPenalty(ent, MODIFIER_TU) *
-			INVSH_GetEncumbranceTUPenalty(invWeight, ent->chr.score.skills[ABILITY_POWER]);
+			GET_ENCUMBRANCE_PENALTY(invWeight, ent->chr.score.skills[ABILITY_POWER]);
 	return std::min(currentMaxTU, MAX_TU);
 }
 

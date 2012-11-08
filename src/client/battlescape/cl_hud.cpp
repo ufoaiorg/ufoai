@@ -1330,6 +1330,25 @@ static void HUD_ActorWoundData_f (void)
 	}
 }
 
+static void HUD_UpdateActorLoad_f (void)
+{
+	if (!CL_BattlescapeRunning())
+		return;
+
+	/* check if actor exists */
+	if (selActor) {
+		const character_t *chr = CL_ActorGetChr(selActor);
+		const float invWeight = INVSH_GetInventoryWeight(&selActor->i);
+		const int maxWeight = GAME_GetChrMaxLoad(chr);
+		const float penalty = GET_ENCUMBRANCE_PENALTY(invWeight, chr->score.skills[ABILITY_POWER]);
+		const int maxTU = GET_TU(chr->score.skills[ABILITY_SPEED]);
+		const int tus = maxTU * penalty;
+		const int tuPenalty = maxTU * WEIGHT_NORMAL_PENALTY - (maxTU - tus);
+
+		UI_ExecuteConfunc("inv_actorload \"%g/%i %s\" \"%s %+i\" %f", invWeight, maxWeight, _("Kg"), _("TU:"), tuPenalty, WEIGHT_NORMAL_PENALTY - (1 - penalty));
+	}
+}
+
 /**
  * @brief Updates the hud for one actor
  * @param actor The actor to update the hud values for
@@ -1339,7 +1358,6 @@ static void HUD_UpdateActor (le_t *actor)
 	int time;
 
 	HUD_UpdateActorCvar(actor, "mn_");
-
 	/* write info */
 	time = 0;
 
@@ -1572,6 +1590,7 @@ void HUD_InitStartup (void)
 	Cmd_AddCommand("hud_listactions", HUD_DisplayActions_f, "Display a list of action from the selected soldier.");
 	Cmd_AddCommand("hud_getactorcvar", HUD_ActorGetCvarData_f, "Update cvars from actor from list.");
 	Cmd_AddCommand("hud_updateactorwounds", HUD_ActorWoundData_f, "Update info on actor wounds.");
+	Cmd_AddCommand("hud_updateactorload", HUD_UpdateActorLoad_f, "Update the HUD with the selected actor inventory load.");
 
 	/** @note We can't check the value at startup cause scripts are not yet loaded */
 	cl_hud = Cvar_Get("cl_hud", "hud_default", CVAR_ARCHIVE | CVAR_LATCH, "Current selected HUD.");

@@ -275,13 +275,19 @@ typedef int32_t shoot_types_t;
 
 #define MAX_SKILL	100
 #define MIN_TU				39
+#define WEIGHT_LIGHT	0.2
+#define WEIGHT_HEAVY	0.5
+#define WEIGHT_NORMAL_PENALTY	0.3
+#define WEIGHT_HEAVY_PENALTY	0.6
 
 #define GET_HP( ab )        (std::min((80 + (ab) * 90/MAX_SKILL), 255))
 #define GET_INJURY_MULT( mind, hp, hpmax )  ((float)(hp) / (float)(hpmax) > 0.5f ? 1.0f : 1.0f + INJURY_BALANCE * ((1.0f / ((float)(hp) / (float)(hpmax) + INJURY_THRESHOLD)) -1.0f)* (float)MAX_SKILL / (float)(mind))
+#define GET_ENCUMBRANCE_PENALTY(weight, max)	(1.0 - ((weight) > (max) * WEIGHT_HEAVY ? WEIGHT_HEAVY_PENALTY : (weight) > (max) * WEIGHT_LIGHT ? WEIGHT_NORMAL_PENALTY : 0))
 /** @todo Skill-influence needs some balancing. */
 #define GET_ACC( ab, sk )   ((1 - ((float)(ab)/MAX_SKILL + (float)(sk)/MAX_SKILL) / 2))
 #define GET_MORALE( ab )        (std::min((100 + (ab) * 150/MAX_SKILL), 255))
 #define GET_TU(ab)		(MIN_TU + (ab) * 20 / MAX_SKILL)
+
 
 #define DOOR_OPEN_REVERSE 4
 #define GET_SLIDING_DOOR_SHIFT_VECTOR(dir, speed, vecout) \

@@ -23,6 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "../../../../client.h"
+#include "../../../cl_actor.h"
 #include "../../../cl_localentity.h"
 #include "e_event_invdel.h"
 
@@ -64,6 +65,9 @@ void CL_InvDel (const eventRegister_t *self, dbuffer *msg)
 
 	if (!cls.i.RemoveFromInventory(&cls.i, &le->i, INVDEF(container), ic))
 		Com_Error(ERR_DROP, "CL_InvDel: No item was removed from container %i", container);
+
+	if (le == selActor)
+		Cmd_ExecuteString("hud_updateactorload");
 
 	/* update the rendered item after it was removed from the floor container */
 	if (LE_IsItem(le))
