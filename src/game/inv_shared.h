@@ -424,7 +424,10 @@ const objDef_t *INVSH_GetItemByID(const char *id);
 const objDef_t *INVSH_GetItemByIDX(int index);
 const objDef_t *INVSH_GetItemByIDSilent(const char *id);
 bool INVSH_LoadableInWeapon(const objDef_t *od, const objDef_t *weapon);
-float INVSH_GetInventoryWeight(const inventory_t &inventory);
+float INVSH_GetItemWeight(const item_t &item);
+bool INVSH_CheckAddingItemToInventory(const inventory_t *inv, containerIndex_t from, containerIndex_t to, const item_t &item, int maxWeight);
+float INVSH_GetEncumbranceTUPenalty(float inventoryWeight, int maxLoad);
+float INVSH_GetInventoryWeight(const inventory_t *inventory);
 
 const invDef_t *INVSH_GetInventoryDefinitionByID(const char *id);
 
@@ -440,6 +443,7 @@ const invDef_t *INVSH_GetInventoryDefinitionByID(const char *id);
 
 const fireDef_t* FIRESH_GetFiredef(const objDef_t *obj, const weaponFireDefIndex_t weapFdsIdx, const fireDefIndex_t fdIdx);
 const fireDef_t *FIRESH_FiredefForWeapon(const item_t *item);
+const fireDef_t *FIRESH_SlowestFireDef(const item_t &item);
 #define FIRESH_IsMedikit(firedef) ((firedef)->damage[0] < 0)
 void INVSH_MergeShapes(uint32_t *shape, const uint32_t itemShape, const int x, const int y);
 bool INVSH_CheckShape(const uint32_t *shape, const int x, const int y);

@@ -39,7 +39,7 @@ typedef struct inventoryInterface_s
 
 	void (*EmptyContainer) (struct inventoryInterface_s* self, inventory_t* const i, const invDef_t * container)__attribute__((nonnull(1), nonnull(2)));
 
-	void (*EquipActor) (struct inventoryInterface_s* self, inventory_t* const inv, const equipDef_t *ed, const teamDef_t* td) __attribute__((nonnull(1), nonnull(2)));
+	void (*EquipActor) (struct inventoryInterface_s* self, character_t* const chr, const equipDef_t *ed, int maxWeight) __attribute__((nonnull(1), nonnull(2)));
 
 	void (*EquipActorMelee) (struct inventoryInterface_s* self, inventory_t* const inv, const teamDef_t* td) __attribute__((nonnull(1)));
 

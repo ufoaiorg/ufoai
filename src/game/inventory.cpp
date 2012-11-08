@@ -530,6 +530,24 @@ static void I_DestroyInventory (inventoryInterface_t* self, inventory_t* const i
 	OBJZERO(*inv);
 }
 
+static float I_GetInventoryState (inventoryInterface_t *self, const inventory_t *inventory, int &slowestFd)
+{
+	float weight = 0;
+
+	slowestFd = 0;
+	for (int containerID = 0; containerID < self->csi->numIDs; containerID++) {
+		if (self->csi->ids[containerID].temp)
+			continue;
+		for (invList_t *ic = inventory->c[containerID], *next; ic; ic = next) {
+			next = ic->next;
+			weight += INVSH_GetItemWeight(ic->item);
+			const fireDef_t *fireDef = FIRESH_SlowestFireDef(ic->item);
+			if (slowestFd == 0 || (fireDef && fireDef->time > slowestFd))
+					slowestFd = fireDef->time;
+		}
+	}
+	return weight;
+}
 
 #define WEAPONLESS_BONUS	0.4		/* if you got neither primary nor secondary weapon, this is the chance to retry to get one (before trying to get grenades or blades) */
 
@@ -542,13 +560,18 @@ static void I_DestroyInventory (inventoryInterface_t* self, inventory_t* const i
  * @param[in] missedPrimary if actor didn't get primary weapon, this is 0-100 number to increase ammo number.
  * @sa INVSH_LoadableInWeapon
  */
-static int I_PackAmmoAndWeapon (inventoryInterface_t *self, inventory_t* const inv, const objDef_t* weapon, int missedPrimary, const equipDef_t *ed)
+static int I_PackAmmoAndWeapon (inventoryInterface_t *self, character_t* const chr, const objDef_t* weapon, int missedPrimary, const equipDef_t *ed, int maxWeight)
 {
+	inventory_t* const inv = &chr->i;
+	const int speed = chr->score.skills[ABILITY_SPEED];
 	const objDef_t *ammo = NULL;
 	item_t item = {NONE_AMMO, NULL, NULL, 0, 0};
 	bool allowLeft;
 	bool packed;
 	int ammoMult = 1;
+	int tuNeed = 0;
+	int maxTU;
+	float weight;
 
 	assert(!INV_IsArmour(weapon));
 	item.item = weapon;
@@ -605,6 +628,14 @@ static int I_PackAmmoAndWeapon (inventoryInterface_t *self, inventory_t* const i
 		return 0;
 	}
 
+	weight = I_GetInventoryState(self, inv, tuNeed) + INVSH_GetItemWeight(item);
+	maxTU = GET_TU(speed) * INVSH_GetEncumbranceTUPenalty(weight, chr->score.skills[ABILITY_POWER]);
+	if (weight > maxWeight || tuNeed > maxTU) {
+		Com_DPrintf(DEBUG_SHARED, "I_PackAmmoAndWeapon: weapon too heavy: '%s' in equipment '%s' (%s).\n",
+				weapon->id, ed->id, self->name);
+		return 0;
+	}
+
 	/* now try to pack the weapon */
 	packed = self->TryAddToInventory(self, inv, &item, &self->csi->ids[self->csi->idRight]);
 	if (packed)
@@ -630,10 +661,13 @@ static int I_PackAmmoAndWeapon (inventoryInterface_t *self, inventory_t* const i
 		/* pack some ammo */
 		while (num--) {
 			item_t mun = {NONE_AMMO, NULL, NULL, 0, 0};
+			weight = I_GetInventoryState(self, inv, tuNeed) + INVSH_GetItemWeight(item);
+			maxTU = GET_TU(speed) * INVSH_GetEncumbranceTUPenalty(weight, chr->score.skills[ABILITY_POWER]);
 
 			mun.item = ammo;
 			/* ammo to backpack; belt is for knives and grenades */
-			numpacked += self->TryAddToInventory(self, inv, &mun, &self->csi->ids[self->csi->idBackpack]);
+			if (weight <= maxWeight && tuNeed <= maxTU)
+					numpacked += self->TryAddToInventory(self, inv, &mun, &self->csi->ids[self->csi->idBackpack]);
 			/* no problem if no space left; one ammo already loaded */
 			if (numpacked > ammoMult || numpacked * weapon->ammo > 11)
 				break;
@@ -717,8 +751,11 @@ typedef enum {
  * Beware: If two weapons in the same category have the same price,
  * only one will be considered for inventory.
  */
-static void I_EquipActor (inventoryInterface_t* self, inventory_t* const inv, const equipDef_t *ed, const teamDef_t* td)
+static void I_EquipActor (inventoryInterface_t* self, character_t* const chr, const equipDef_t *ed, int maxWeight)
 {
+	inventory_t* const inv = &chr->i;
+	const teamDef_t* td = chr->teamDef;
+	const int speed = chr->score.skills[ABILITY_SPEED];
 	int i;
 	const int numEquip = lengthof(ed->numItems);
 	int repeat = 0;
@@ -746,7 +783,7 @@ static void I_EquipActor (inventoryInterface_t* self, inventory_t* const inv, co
 		}
 		/* See if a weapon has been selected. */
 		if (primaryWeapon) {
-			hasWeapon += I_PackAmmoAndWeapon(self, inv, primaryWeapon, 0, ed);
+			hasWeapon += I_PackAmmoAndWeapon(self, chr, primaryWeapon, 0, ed, maxWeight);
 			if (hasWeapon) {
 				int ammo;
 
@@ -789,11 +826,11 @@ static void I_EquipActor (inventoryInterface_t* self, inventory_t* const inv, co
 			}
 
 			if (secondaryWeapon) {
-				hasWeapon += I_PackAmmoAndWeapon(self, inv, secondaryWeapon, missedPrimary, ed);
+				hasWeapon += I_PackAmmoAndWeapon(self, chr, secondaryWeapon, missedPrimary, ed, maxWeight);
 				if (hasWeapon) {
 					/* Try to get the second akimbo pistol if no primary weapon. */
 					if (primary == WEAPON_NO_PRIMARY && !secondaryWeapon->fireTwoHanded && frand() < AKIMBO_CHANCE) {
-						I_PackAmmoAndWeapon(self, inv, secondaryWeapon, 0, ed);
+						I_PackAmmoAndWeapon(self, chr, secondaryWeapon, 0, ed, maxWeight);
 					}
 				}
 			}
@@ -836,7 +873,7 @@ static void I_EquipActor (inventoryInterface_t* self, inventory_t* const inv, co
 				if (secondaryWeapon) {
 					int num = ed->numItems[secondaryWeapon->idx] / 100 + (ed->numItems[secondaryWeapon->idx] % 100 >= 100 * frand());
 					while (num--) {
-						hasWeapon += I_PackAmmoAndWeapon(self, inv, secondaryWeapon, 0, ed);
+						hasWeapon += I_PackAmmoAndWeapon(self, chr, secondaryWeapon, 0, ed, maxWeight);
 					}
 				}
 			} while (repeat--); /* Gives more if no serious weapons. */
@@ -858,7 +895,7 @@ static void I_EquipActor (inventoryInterface_t* self, inventory_t* const inv, co
 				}
 			}
 			if (maxPrice)
-				hasWeapon += I_PackAmmoAndWeapon(self, inv, blade, 0, ed);
+				hasWeapon += I_PackAmmoAndWeapon(self, chr, blade, 0, ed, maxWeight);
 		}
 		/* If still no weapon, something is broken, or no blades in equipment. */
 		if (!hasWeapon)
@@ -880,6 +917,11 @@ static void I_EquipActor (inventoryInterface_t* self, inventory_t* const inv, co
 					randNumber -= ed->numItems[i];
 					if (randNumber < 0) {
 						const item_t item = {NONE_AMMO, NULL, armour, 0, 0};
+						int tuNeed = 0;
+						const float weight = I_GetInventoryState(self, inv, tuNeed) + INVSH_GetItemWeight(item);
+						const int maxTU = GET_TU(speed) * INVSH_GetEncumbranceTUPenalty(weight, chr->score.skills[ABILITY_POWER]);
+						if (weight > maxWeight || tuNeed > maxTU)
+							continue;
 						if (self->TryAddToInventory(self, inv, &item, &self->csi->ids[self->csi->idArmour])) {
 							repeat = 0;
 							break;
@@ -904,12 +946,18 @@ static void I_EquipActor (inventoryInterface_t* self, inventory_t* const inv, co
 						const bool oneShot = miscItem->oneshot;
 						const item_t item = {oneShot ? miscItem->ammo : NONE_AMMO, oneShot ? miscItem : NULL, miscItem, 0, 0};
 						containerIndex_t container;
+						int tuNeed;
+						const fireDef_t *itemFd = FIRESH_SlowestFireDef(item);
+						const float weight = I_GetInventoryState(self, inv, tuNeed) + INVSH_GetItemWeight(item);
+						const int maxTU = GET_TU(speed) * INVSH_GetEncumbranceTUPenalty(weight, chr->score.skills[ABILITY_POWER]);
 						if (miscItem->headgear)
 							container = self->csi->idHeadgear;
 						else if (miscItem->extension)
 							container = self->csi->idExtension;
 						else
 							container = self->csi->idBackpack;
+						if (weight > maxWeight || tuNeed > maxTU || (itemFd && itemFd->time > maxTU))
+							continue;
 						self->TryAddToInventory(self, inv, &item, &self->csi->ids[container]);
 					}
 				}

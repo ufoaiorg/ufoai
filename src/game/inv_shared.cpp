@@ -612,7 +612,7 @@ bool INVSH_LoadableInWeapon (const objDef_t *od, const objDef_t *weapon)
 	return false;
 }
 
-static float INVSH_GetItemWeight (const item_t &item)
+float INVSH_GetItemWeight (const item_t &item)
 {
 	float weight = item.item->weight;
 	if (item.ammo && item.ammo != item.item && item.ammoLeft > 0) {
@@ -621,21 +621,38 @@ static float INVSH_GetItemWeight (const item_t &item)
 	return weight;
 }
 
-float INVSH_GetInventoryWeight (const inventory_t &inventory)
+bool INVSH_CheckAddingItemToInventory (const inventory_t *inv, containerIndex_t from, containerIndex_t to, const item_t &item, int maxWeight)
 {
-	float weight = 0;
+	if (CSI->ids[to].temp || !CSI->ids[from].temp)
+		return true;
 
-	for (int containerID = 0; containerID < CSI->numIDs; containerID++) {
-		if (CSI->ids[containerID].temp)
-			continue;
-		for (invList_t *ic = inventory.c[containerID], *next; ic; ic = next) {
-			next = ic->next;
-			weight += INVSH_GetItemWeight(ic->item);
-		}
-	}
+	const bool swapArmour = INV_IsArmour(item.item) && inv->c[CSI->idArmour];
+	const float invWeight = INVSH_GetInventoryWeight(inv) - (swapArmour ? INVSH_GetItemWeight(inv->c[CSI->idArmour]->item) : 0);
+	float itemWeight = INVSH_GetItemWeight(item);
 
-	return weight;
+	return (maxWeight < 0 || maxWeight >= invWeight + itemWeight);
 }
+
+/**
+ * @brief Calculates the TU penalty when the given actor is wearing armour
+ * @param[in] ent The actor to calculate the TU penalty for
+ * @return The amount of TU that should be used as penalty, @c 0 if the actor does not wear any armour
+ * @note The armour weight only adds penalty if its weight is big enough.
+ */
+float INVSH_GetEncumbranceTUPenalty (float inventoryWeight, int maxLoad)
+{
+	const float weightHeavy = maxLoad * 0.5;
+	const float weightLight = maxLoad * 0.2;
+	float penalty = 0.7;
+
+	if (inventoryWeight > weightHeavy)
+		penalty = 0.4;
+	else if (inventoryWeight < weightLight)
+		penalty = 1;
+
+	return penalty;
+}
+
 
 /*
 ===============================
@@ -686,6 +703,21 @@ const fireDef_t *FIRESH_FiredefForWeapon (const item_t *item)
 	}
 
 	return NULL;
+}
+
+const fireDef_t *FIRESH_SlowestFireDef (const item_t &item)
+{
+	const fireDef_t *fdArray = FIRESH_FiredefForWeapon(&item);
+	int slowest = 0;
+
+	if (fdArray == NULL)
+		return NULL;
+
+	for (int i = 0; i < MAX_FIREDEFS_PER_WEAPON; i++)
+		if (fdArray[i].time > fdArray[slowest].time)
+			slowest = i;
+
+	return &fdArray[slowest];
 }
 
 /**
@@ -811,4 +843,19 @@ uint32_t INVSH_ShapeRotate (const uint32_t shape)
 	}
 
 	return shapeNew;
+}
+
+float INVSH_GetInventoryWeight (const inventory_t *inventory)
+{
+	float weight = 0;
+
+	for (int containerID = 0; containerID < CSI->numIDs; containerID++) {
+		if (CSI->ids[containerID].temp)
+			continue;
+		for (invList_t *ic = inventory->c[containerID], *next; ic; ic = next) {
+			next = ic->next;
+			weight += INVSH_GetItemWeight(ic->item);
+		}
+	}
+	return weight;
 }

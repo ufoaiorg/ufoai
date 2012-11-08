@@ -32,6 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_view.h"
 #include "../cl_screen.h"
 #include "../ui/ui_main.h"
+#include "../ui/ui_popup.h"
 #include "../ui/node/ui_node_container.h"
 #include "../renderer/r_entity.h"
 #include "../renderer/r_mesh.h"
@@ -1048,7 +1049,15 @@ void CL_ActorInvMove (const le_t *le, containerIndex_t fromContainer, int fromX,
 	assert(le);
 	assert(LE_IsActor(le));
 
-	if (INVSH_SearchInInventory(&le->i, fromPtr, fromX, fromY) != NULL)
+	const invList_t *item = INVSH_SearchInInventory(&le->i, fromPtr, fromX, fromY);
+	const character_t *chr = CL_ActorGetChr(le);
+
+
+	if (item != NULL)
+		if (!INVSH_CheckAddingItemToInventory(&le->i, fromContainer, toContainer, item->item, chr->score.skills[ABILITY_POWER])) {
+			UI_Popup(_("Warning"), _("This soldier can not carry anything else."));
+			return;
+		}
 		MSG_Write_PA(PA_INVMOVE, le->entnum, fromContainer, fromX, fromY, toContainer, toX, toY);
 }
 

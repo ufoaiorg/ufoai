@@ -149,7 +149,7 @@ void GAME_AppendTeamMember (int memberIndex, const char *teamDefID, const equipD
 
 	CL_GenerateCharacter(chr, teamDefID);
 	/* pack equipment */
-	cls.i.EquipActor(&cls.i, &chr->i, ed, chr->teamDef);
+	cls.i.EquipActor(&cls.i, chr, ed, chr->score.skills[ABILITY_POWER]);
 
 	chrDisplayList.chr[memberIndex] = chr;
 	chrDisplayList.num++;
@@ -329,9 +329,9 @@ static void GAME_DestroyInventory (inventory_t * const i)
 	cls.i.DestroyInventory(&cls.i, i);
 }
 
-static void GAME_EquipActor (inventory_t* const inv, const equipDef_t *ed, const teamDef_t* td)
+static void GAME_EquipActor (character_t* const chr, const equipDef_t *ed, int maxWeight)
 {
-	cls.i.EquipActor(&cls.i, inv, ed, td);
+	cls.i.EquipActor(&cls.i, chr, ed, maxWeight);
 }
 
 static void GAME_EquipActorMelee (inventory_t* const inv, const teamDef_t* td)

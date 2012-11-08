@@ -619,7 +619,7 @@ static void GAME_LoadItem (xmlNode_t *n, item_t *item, containerIndex_t *contain
  * @sa GAME_LoadItem
  * @sa I_AddToInventory
   */
-static void GAME_LoadInventory (xmlNode_t *p, inventory_t *i)
+static void GAME_LoadInventory (xmlNode_t *p, inventory_t *inv, int maxLoad)
 {
 	xmlNode_t *s;
 
@@ -631,8 +631,11 @@ static void GAME_LoadInventory (xmlNode_t *p, inventory_t *i)
 		GAME_LoadItem(s, &item, &container, &x, &y);
 		if (INVDEF(container)->temp)
 			Com_Error(ERR_DROP, "GAME_LoadInventory failed, tried to add '%s' to a temp container %i", item.item->id, container);
+		/* ignore the overload for now */
+		if (!INVSH_CheckAddingItemToInventory(inv, csi.idEquip, container, item, maxLoad))
+			Com_Printf("GAME_LoadInventory: Item %s exceeds weight capacity\n", item.item->id);
 
-		if (!cls.i.AddToInventory(&cls.i, i, &item, INVDEF(container), x, y, 1))
+		if (!cls.i.AddToInventory(&cls.i, inv, &item, INVDEF(container), x, y, 1))
 			Com_Printf("Could not add item '%s' to inventory\n", item.item ? item.item->id : "NULL");
 	}
 }
@@ -836,7 +839,7 @@ bool GAME_LoadCharacter (xmlNode_t *p, character_t *chr)
 
 	cls.i.DestroyInventory(&cls.i, &chr->i);
 	sInventory = XML_GetNode(p, SAVE_INVENTORY_INVENTORY);
-	GAME_LoadInventory(sInventory, &chr->i);
+	GAME_LoadInventory(sInventory, &chr->i, chr->score.skills[ABILITY_POWER]);
 
 	Com_UnregisterConstList(saveCharacterConstants);
 

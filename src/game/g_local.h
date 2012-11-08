@@ -86,7 +86,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define ACTOR_VIS_10	0.1
 #define ACTOR_VIS_0		0.0
 
-#define MIN_TU				27
 #define MAX_TU				(ROUTING_NOT_REACHABLE - 1)
 
 #define G_FreeTags(tag) gi.FreeTags((tag), __FILE__, __LINE__)

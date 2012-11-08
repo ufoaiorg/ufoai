@@ -1902,7 +1902,7 @@ static void B_InitialEquipment (aircraft_t *aircraft, const equipDef_t *ed)
 
 		/* pack equipment */
 		Com_DPrintf(DEBUG_CLIENT, "B_InitialEquipment: Packing initial equipment for %s.\n", chr->name);
-		cgi->INV_EquipActor(&chr->i, ed, chr->teamDef);
+		cgi->INV_EquipActor(chr, ed, chr->score.skills[ABILITY_POWER]);
 		chrListTemp.chr[chrListTemp.num] = chr;
 		chrListTemp.num++;
 	}

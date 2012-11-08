@@ -285,32 +285,11 @@ void G_ActorSetMaxs (edict_t* ent)
 	/* Link it. */
 	gi.LinkEdict(ent);
 }
-
-/**
- * @brief Calculates the TU penalty when the given actor is wearing armour
- * @param[in] ent The actor to calculate the TU penalty for
- * @return The amount of TU that should be used as penalty, @c 0 if the actor does not wear any armour
- * @note The armour weight only adds penalty if its weight is big enough.
- */
-float G_ActorGetEncumbranceTUPenalty (const edict_t *ent)
-{
-	const float weightHeavy = ent->chr.score.skills[ABILITY_POWER] * 0.5;
-	const float weightLight = ent->chr.score.skills[ABILITY_POWER] * 0.2;
-	const float inventoryWeight = INVSH_GetInventoryWeight(ent->chr.i);
-	float penalty = 0.7;
-
-	if (inventoryWeight > weightHeavy)
-		penalty = 0.4;
-	else if (inventoryWeight < weightLight)
-		penalty = 1;
-
-	return penalty;
-}
-
 int G_ActorCalculateMaxTU (const edict_t *ent)
 {
-	const int currentMaxTU = (MIN_TU + (ent->chr.score.skills[ABILITY_SPEED]) * 20 / MAX_SKILL) *
-			G_ActorGetInjuryPenalty(ent, MODIFIER_TU) * G_ActorGetEncumbranceTUPenalty(ent);
+	const int invWeight = INVSH_GetInventoryWeight(&ent->chr.i);
+	const int currentMaxTU = GET_TU(ent->chr.score.skills[ABILITY_SPEED]) * G_ActorGetInjuryPenalty(ent, MODIFIER_TU) *
+			INVSH_GetEncumbranceTUPenalty(invWeight, ent->chr.score.skills[ABILITY_POWER]);
 	return std::min(currentMaxTU, MAX_TU);
 }
 
@@ -608,6 +587,11 @@ bool G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, cons
 	/* TUs are 1 here - but this is only a dummy - the real TU check is done in the inventory functions below */
 	if (checkaction && !G_ActionCheckForCurrentTeam(player, ent, 1))
 		return false;
+
+	if(!INVSH_CheckAddingItemToInventory(&ent->chr.i, from->id, to->id, fItem->item, ent->chr.score.skills[ABILITY_POWER])) {
+		G_ClientPrintf(player, PRINT_HUD, _("This soldier can not carry anything else."));
+		return false;
+	}
 
 	/* "get floor ready" - searching for existing floor-edict */
 	floor = G_GetFloorItems(ent);

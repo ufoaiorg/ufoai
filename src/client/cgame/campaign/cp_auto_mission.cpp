@@ -230,7 +230,7 @@ static void AM_CreateUnitChr (autoUnit_t *unit, const teamDef_t *teamDef, const 
 		} else {
 			/* Pack equipment. */
 			if (teamDef->weapons)
-				cgi->INV_EquipActor(&unit->chr->i, ed, teamDef);
+				cgi->INV_EquipActor(unit->chr, ed, unit->chr->score.skills[ABILITY_POWER]);
 		}
 	}
 }

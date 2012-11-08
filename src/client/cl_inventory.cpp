@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_inventory.h"
 #include "cl_inventory_callbacks.h"
 #include "../shared/parse.h"
+#include "ui/ui_popup.h"
 
 /**
  * @brief Gets equipment definition by id.
@@ -69,6 +70,11 @@ bool INV_MoveItem (inventory_t* inv, const invDef_t * toContainer, int px, int p
 
 	if (!fItem)
 		return false;
+	/** @todo a better way to get the strength than this? */
+	if (!INVSH_CheckAddingItemToInventory(inv, fromContainer->id, toContainer->id, fItem->item, Cvar_GetInteger("mn_vpwr"))) {
+		UI_Popup(_("Warning"), _("This soldier can not carry anything else."));
+		return false;
+	}
 
 	/* move the item */
 	moved = cls.i.MoveInInventory(&cls.i, inv, fromContainer, fItem, toContainer, px, py, NULL, tItem);
