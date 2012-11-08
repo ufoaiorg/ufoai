@@ -19,6 +19,7 @@ item plaspistol
 	price			2000
 	size			20
 	is_secondary	true
+	weight			1.5
 }
 
 item plaspistol_ammo
@@ -34,6 +35,7 @@ item plaspistol_ammo
 	size			3
 	is_secondary	true
 	dmgtype			"plasma"
+	weight			0.2
 
 	weapon_mod
 	{
@@ -128,6 +130,7 @@ item plasrifle
 	price			2500
 	size			40
 	is_primary		true
+	weight			3.8
 }
 
 item plasrifle_ammo
@@ -143,6 +146,7 @@ item plasrifle_ammo
 	size			4
 	is_primary		true
 	dmgtype			"plasma"
+	weight			0.4
 
 	weapon_mod
 	{
@@ -262,6 +266,7 @@ item plasblaster
 	size			60
 	is_primary		true
 	is_heavy		true
+	weight			5.5
 }
 
 item plasblaster_ammo
@@ -278,6 +283,7 @@ item plasblaster_ammo
 	is_primary		true
 	is_heavy		true
 	dmgtype			"plasma"
+	weight			0.7
 
 	weapon_mod
 	{
