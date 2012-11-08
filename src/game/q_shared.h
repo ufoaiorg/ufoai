@@ -274,7 +274,7 @@ typedef int32_t shoot_types_t;
 #define GRAVITY				500.0
 
 #define MAX_SKILL	100
-#define MIN_TU				27
+#define MIN_TU				39
 
 #define GET_HP( ab )        (std::min((80 + (ab) * 90/MAX_SKILL), 255))
 #define GET_INJURY_MULT( mind, hp, hpmax )  ((float)(hp) / (float)(hpmax) > 0.5f ? 1.0f : 1.0f + INJURY_BALANCE * ((1.0f / ((float)(hp) / (float)(hpmax) + INJURY_THRESHOLD)) -1.0f)* (float)MAX_SKILL / (float)(mind))

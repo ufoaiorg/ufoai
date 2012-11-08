@@ -113,7 +113,7 @@ static int G_CharacterGetMaxExperiencePerMission (const abilityskills_t skill)
 {
 	switch (skill) {
 	case ABILITY_POWER:
-		return 214;
+		return 375;
 	case ABILITY_SPEED:
 		return 91;
 	case ABILITY_ACCURACY:

@@ -14,7 +14,7 @@
 
 chrtemplate soldier {
 	rate	74
-	strength	"15 25"
+	strength	"30 40"
 	speed	"15 25"
 	accuracy	"20 30"
 	mind	"20 35"
@@ -47,7 +47,7 @@ chrtemplate pilot {
 }
 
 chrtemplate civilian {
-	strength	"5 10"
+	strength	"15 20"
 	speed	"5 10"
 	accuracy	"10 15"
 	mind	"10 15"
@@ -63,7 +63,7 @@ chrtemplate civilian {
 }
 
 chrtemplate alien_taman {
-	strength	"25 35"
+	strength	"40 50"
 	speed	"25 35"
 	accuracy	"40 50"
 	mind	"50 85"
@@ -79,7 +79,7 @@ chrtemplate alien_taman {
 }
 
 chrtemplate alien_ortnok {
-	strength	"45 65"
+	strength	"60 80"
 	speed	"20 30"
 	accuracy	"30 45"
 	mind	"20 40"
@@ -95,7 +95,7 @@ chrtemplate alien_ortnok {
 }
 
 chrtemplate alien_shevaar {
-	strength	"30 40"
+	strength	"45 55"
 	speed	"30 40"
 	accuracy	"40 70"
 	mind	"30 60"
