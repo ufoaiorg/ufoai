@@ -491,8 +491,7 @@ static void SV_TraceBounds (const vec3_t start, const vec3_t mins, const vec3_t 
  * trace.startsolid will be set, and trace.fraction will be 0
  * if the starting point is in a solid, it will be allowed to move out to an open area
  * @param[in] contentmask brushes the trace should stop at (see MASK_*)
- * @param[in] mins The mins of the bounding box that is moved through the world
- * @param[in] maxs The maxs of the bounding box that is moved through the world
+ * @param[in] box The bounding box that is moved through the world
  */
 trace_t SV_Trace (const vec3_t start, const AABB &box, const vec3_t end, const edict_t * passedict, int contentmask)
 {
