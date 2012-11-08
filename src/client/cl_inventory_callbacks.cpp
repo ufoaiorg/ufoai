@@ -129,7 +129,7 @@ void INV_ItemDescription (const objDef_t *od)
 		*itemText = '\0';
 		if (INV_IsArmour(od)) {
 			Com_sprintf(itemText, sizeof(itemText), _("Size:\t%i\n"), od->size);
-			Q_strcat(itemText, va(_("Weight:\t%g\n"), od->weight), sizeof(itemText));
+			Q_strcat(itemText, va(_("Weight:\t%g Kg\n"), od->weight), sizeof(itemText));
 			Q_strcat(itemText, "\n", sizeof(itemText));
 			Q_strcat(itemText, _("^BDamage type:\tProtection:\n"), sizeof(itemText));
 			for (i = 0; i < csi.numDTs; i++) {
@@ -155,7 +155,7 @@ void INV_ItemDescription (const objDef_t *od)
 					weaponIndex = itemIndex;
 				}
 
-				Q_strcat(itemText, va(_("Weight:\t%g\n"), od->weight), sizeof(itemText));
+				Q_strcat(itemText, va(_("Weight:\t%g Kg\n"), od->weight), sizeof(itemText));
 				/** @todo is there ammo with no firedefs? */
 				if (GAME_ItemIsUseable(odAmmo) && odAmmo->numFiredefs[weaponIndex] > 0) {
 					const fireDef_t *fd;
@@ -182,15 +182,15 @@ void INV_ItemDescription (const objDef_t *od)
 				}
 			} else {
 				Com_sprintf(itemText, sizeof(itemText), _("%s. No detailed info available.\n"), INV_IsAmmo(od) ? _("Ammunition") : _("Weapon"));
-				Q_strcat(itemText, va(_("Weight:\t%g\n"), od->weight), sizeof(itemText));
+				Q_strcat(itemText, va(_("Weight:\t%g Kg\n"), od->weight), sizeof(itemText));
 			}
 		} else if (od->weapon) {
 			Com_sprintf(itemText, sizeof(itemText), _("%s ammo-less weapon\n"), (od->fireTwoHanded ? _("Two-handed") : _("One-handed")));
-			Q_strcat(itemText, va(_("Weight:\t%g\n"), od->weight), sizeof(itemText));
+			Q_strcat(itemText, va(_("Weight:\t%g Kg\n"), od->weight), sizeof(itemText));
 		} else {
 			/* just an item - only primary definition */
 			Com_sprintf(itemText, sizeof(itemText), _("%s auxiliary equipment\n"), (od->fireTwoHanded ? _("Two-handed") : _("One-handed")));
-			Q_strcat(itemText, va(_("Weight:\t%g\n"), od->weight), sizeof(itemText));
+			Q_strcat(itemText, va(_("Weight:\t%g Kg\n"), od->weight), sizeof(itemText));
 			if (od->numWeapons > 0 && od->numFiredefs[0] > 0) {
 				const fireDef_t *fd = &od->fd[0][0];
 				Q_strcat(itemText, va(_("Action:\t%s\n"), _(fd->name)), sizeof(itemText));
