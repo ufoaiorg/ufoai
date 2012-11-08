@@ -1228,6 +1228,8 @@ static void G_ClientAssignDefaultActorValues (edict_t *ent)
 	/* set models */
 	ent->body = gi.ModelIndex(CHRSH_CharGetBody(&ent->chr));
 	ent->head = gi.ModelIndex(CHRSH_CharGetHead(&ent->chr));
+
+	ent->chr.scoreMission->carriedWeight = INVSH_GetInventoryWeight(&ent->chr.i);
 }
 
 /**

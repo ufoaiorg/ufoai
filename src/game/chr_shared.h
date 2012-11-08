@@ -100,6 +100,7 @@ typedef struct chrScoreMission_s {
 	int skillKills[SKILL_NUM_TYPES];	/**< Number of kills related to each skill. */
 
 	int heal;	/**< How many hitpoints has this soldier received trough healing in battlescape. */
+	float carriedWeight;	/**< The weight this soldier carried during combat */
 } chrScoreMission_t;
 
 /**

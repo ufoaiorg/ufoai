@@ -122,6 +122,17 @@ static void G_UpdateStunState (int team)
 	}
 }
 
+static void G_UpdateCarriedWeight (int team)
+{
+	edict_t *ent = NULL;
+
+	while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, team))) {
+		if (ent->chr.scoreMission) {
+			ent->chr.scoreMission->carriedWeight += INVSH_GetInventoryWeight(&ent->chr.i);
+		}
+	}
+}
+
 /**
  * @brief Get the next active team
  */
@@ -222,6 +233,8 @@ void G_ClientEndRound (player_t * player)
 	G_ReactionFireReset(level.activeTeam);
 	if (mor_panic->integer)
 		G_MoraleBehaviour(level.activeTeam);
+
+	G_UpdateCarriedWeight(level.activeTeam);
 
 	/* start ai - there is only one player for ai teams, and the last pointer must only
 	 * be updated for ai players */
