@@ -2788,7 +2788,7 @@ mapdef cemetery_main
 {
 	map				"+cemetery"
 	param			"main"
-	description		"_Cemetery terror mission."
+	description		"_A cemetery near a centre of population."
 	multiplayer		false
 	maxaliens		6 //TODO: This is an arbitrary value right now.
 
@@ -4979,7 +4979,7 @@ mapdef village
 mapdef wilderness
 {
 	map				"wilderness"
-	description		"_Wilderness terror mission."
+	description		"_A house in the wilderness."
 	multiplayer		true
 	teams			2
 	gametypes (
