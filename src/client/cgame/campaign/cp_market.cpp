@@ -310,7 +310,7 @@ bool BS_SellAircraft (aircraft_t *aircraft)
  * @param[in] ugv The ugv template of the UGV to buy
  * @param[out] base Base to buy at
  * @return @c true if the ugv could get bought, @c false otherwise
- * @TODO Implement this correctly once we have UGV
+ * @todo Implement this correctly once we have UGV
  */
 bool BS_BuyUGV (const ugv_t *ugv, base_t *base)
 {
@@ -346,7 +346,7 @@ bool BS_BuyUGV (const ugv_t *ugv, base_t *base)
  * @brief Sells the given UGV with all the equipment.
  * @param robot The employee record of the UGV to sell
  * @return @c true if the ugv could get sold, @c false otherwise
- * @TODO Implement this correctly once we have UGV
+ * @todo Implement this correctly once we have UGV
  */
 bool BS_SellUGV (employee_t *robot)
 {

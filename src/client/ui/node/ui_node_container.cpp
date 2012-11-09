@@ -556,7 +556,7 @@ static void UI_ContainerNodeDrawDropPreview (uiNode_t *target)
 	case INV_FITS:
 		break;
 	case INV_FITS_BOTH:
-		/** @TODO enable Shift-rotate for battlescape too when issues are solved */
+		/** @todo enable Shift-rotate for battlescape too when issues are solved */
 		if (!Key_IsDown(K_SHIFT) || CL_BattlescapeRunning())
 			break;
 	case INV_FITS_ONLY_ROTATED:
@@ -1019,7 +1019,7 @@ bool uiContainerNode::onDndFinished (uiNode_t *source, bool isDropped)
 				INV_UnloadWeapon(fItem, ui_inventory, targetContainer);
 
 			/* rotate on Shift */
-			/** @TODO enable Shift-rotate for battlescape too when issues are solved */
+			/** @todo enable Shift-rotate for battlescape too when issues are solved */
 			fItem->item.rotated = Key_IsDown(K_SHIFT) && !CL_BattlescapeRunning();
 
 			/* move the item */

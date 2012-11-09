@@ -267,7 +267,7 @@ static void INS_FillTypes_f (void)
 		}
 	}
 
-	/** @TODO Move this out from installations code */
+	/** @todo Move this out from installations code */
 	if (B_GetCount() < MAX_BASES)
 		cgi->UI_ExecuteConfunc("installationtype_add base \"%s\" - \"%d c\"", _("Base"), ccs.curCampaign->basecost);
 }
