@@ -392,6 +392,7 @@ char *CL_SetConfigString (int index, dbuffer *msg)
 
 void CL_InitBattlescapeMouseScrolling (void)
 {
+	CL_ActorMouseTrace(); /* Update truePos ahead of time - with touchscreen we'll have mouse move and click at the same frame */
 	VectorCopy(truePos, mouseScrollPos);
 }
 

@@ -386,6 +386,12 @@ static void CL_SelectDown_f (void)
 
 static void CL_SelectUp_f (void)
 {
+#ifdef ANDROID
+	/* Android input quirk - when user tries to zoom/rotate, and touches the screen with a second finger,
+	 * SDL will send left mouse button up event, and right mouse button down event immediately after that,
+	 * so we need to cancel the mouse click action, and let the user zoom/rotate as she wants */
+	if ((SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_RIGHT)) == 0)
+#endif
 	if (!battlescapeMouseScrollMoved && IN_GetMouseSpace() == MS_WORLD)
 		CL_ActorSelectMouse();
 	battlescapeMouseScrollCaptured = false;
