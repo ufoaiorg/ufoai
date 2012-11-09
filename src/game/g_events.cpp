@@ -415,7 +415,8 @@ void G_EventCenterView (const edict_t *ent)
 
 /**
  * @brief Centers the view for all clients that are seeing the given edict on the world position of the edict
- * @param[in] ent The edict to use the position from
+ * @param playerMask The clients that should see the edict
+ * @param pos The position to center the view
  */
 void G_EventCenterViewAt (int playerMask, const pos3_t pos)
 {

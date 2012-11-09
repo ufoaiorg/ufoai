@@ -654,7 +654,7 @@ bool R_ImageExists (const char *pname, ...)
 
 /**
  * @brief Returns an index of the image pointer in the r_images linked list, as if r_images would be a plain contiguous array
- * @param image The image pointer
+ * @param imagePtr The image pointer
  */
 int R_GetImageIndex (image_t *imagePtr)
 {
