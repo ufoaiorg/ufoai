@@ -370,13 +370,14 @@ window physdata
 	}
 
 	confunc updateactorwounds {
-		call *node:root.wounds@removeAllchild
-		cmd "hud_updateactorwounds;"
+		if ( *cvar:physdat_window_open == 1 ) {
+			call *node:root.wounds@removeAllchild
+			cmd "hud_updateactorwounds;"
+		}
 	}
 
 	func onWindowOpened {
 		*cvar:physdat_window_open = 1
-		cmd "ui_addcvarlistener cl_selected updateactorwounds;"
 		cmd "updateactorwounds;"
 		// if we are in campaign mode, we need these cvars
 		if ( *cvar:mn_base_count > 0 ) {
@@ -396,7 +397,6 @@ window physdata
 	}
 
 	func onWindowClosed {
-		cmd "ui_removecvarlistener cl_selected updateactorwounds;"
 		delete *cvar:physdat_window_open
 		// these cvars exist in campaign mode only
 		if ( *cvar:mn_base_count > 0 ) {
