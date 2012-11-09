@@ -1063,7 +1063,7 @@ static void R_InitExtensions (void)
 	glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &r_config.maxVertexAttribs);
 	Com_Printf("max vertex attributes: %i\n", r_config.maxVertexAttribs);
 
-#ifdef ANDROID
+#ifdef GL_VERSION_ES_CM_1_0
 	glGetIntegerv(GL_MAX_VARYING_VECTORS, &tmpInteger);
 	Com_Printf("max varying floats: %i\n", tmpInteger * 4);
 	glGetIntegerv(GL_MAX_FRAGMENT_UNIFORM_VECTORS, &tmpInteger);
