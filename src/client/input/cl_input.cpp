@@ -75,13 +75,12 @@ mouseSpace_t mouseSpace;
 int mousePosX, mousePosY;
 static int oldMousePosX, oldMousePosY;
 
-static int battlescapeMouseScrollX;
-static int battlescapeMouseScrollY;
-static bool battlescapeMouseScrollCaptured;
-static bool battlescapeMouseScrollMoved;
+static int battlescapeMouseDraggingX;
+static int battlescapeMouseDraggingY;
+static bool battlescapeMouseDraggingPossible, battlescapeMouseDraggingActive;
 enum {
-	BATTLESCAPE_MOUSE_SCROLL_TRIGGER_X = VID_NORM_WIDTH / 10,
-	BATTLESCAPE_MOUSE_SCROLL_TRIGGER_Y = VID_NORM_HEIGHT / 10
+	BATTLESCAPE_MOUSE_DRAGGING_TRIGGER_X = VID_NORM_WIDTH / 10,
+	BATTLESCAPE_MOUSE_DRAGGING_TRIGGER_Y = VID_NORM_HEIGHT / 10
 };
 
 /*
@@ -375,13 +374,13 @@ static void CL_WheelUp_f (void)
  */
 static void CL_SelectDown_f (void)
 {
-	if (IN_GetMouseSpace() != MS_WORLD)
+	battlescapeMouseDraggingPossible = (CL_BattlescapeRunning() && IN_GetMouseSpace() != MS_UI);
+	if (!battlescapeMouseDraggingPossible)
 		return;
-	battlescapeMouseScrollX = mousePosX;
-	battlescapeMouseScrollY = mousePosY;
-	battlescapeMouseScrollCaptured = true;
-	battlescapeMouseScrollMoved = false;
-	CL_InitBattlescapeMouseScrolling();
+	battlescapeMouseDraggingX = mousePosX;
+	battlescapeMouseDraggingY = mousePosY;
+	battlescapeMouseDraggingActive = false;
+	CL_InitBattlescapeMouseDragging();
 }
 
 static void CL_SelectUp_f (void)
@@ -392,27 +391,27 @@ static void CL_SelectUp_f (void)
 	 * so we need to cancel the mouse click action, and let the user zoom/rotate as she wants */
 	if ((SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_RIGHT)) == 0)
 #endif
-	if (!battlescapeMouseScrollMoved && IN_GetMouseSpace() == MS_WORLD)
+	if (IN_GetMouseSpace() == MS_WORLD && !battlescapeMouseDraggingActive)
 		CL_ActorSelectMouse();
-	battlescapeMouseScrollCaptured = false;
-	battlescapeMouseScrollMoved = false;
+	battlescapeMouseDraggingPossible = false;
+	battlescapeMouseDraggingActive = false;
 	if (IN_GetMouseSpace() == MS_UI)
 		return;
 	IN_SetMouseSpace(MS_NULL);
 }
 
-static void CL_SelectDownProcessMouseMovement (void)
+static void CL_ProcessMouseDragging (void)
 {
-	if (!battlescapeMouseScrollCaptured)
+	if (!battlescapeMouseDraggingPossible)
 		return;
 
-	if (!battlescapeMouseScrollMoved &&
-		(abs(battlescapeMouseScrollX - mousePosX) > BATTLESCAPE_MOUSE_SCROLL_TRIGGER_X ||
-		 abs(battlescapeMouseScrollY - mousePosY) > BATTLESCAPE_MOUSE_SCROLL_TRIGGER_Y))
-		battlescapeMouseScrollMoved = true;
+	if (!battlescapeMouseDraggingActive &&
+		(abs(battlescapeMouseDraggingX - mousePosX) > BATTLESCAPE_MOUSE_DRAGGING_TRIGGER_X ||
+		 abs(battlescapeMouseDraggingY - mousePosY) > BATTLESCAPE_MOUSE_DRAGGING_TRIGGER_Y))
+		battlescapeMouseDraggingActive = true;
 
-	if (battlescapeMouseScrollMoved)
-		CL_DoBattlescapeMouseScrolling();
+	if (battlescapeMouseDraggingActive)
+		CL_BattlescapeMouseDragging();
 }
 
 /**
@@ -859,7 +858,7 @@ void IN_Frame (void)
 
 	IN_JoystickMove();
 
-	CL_SelectDownProcessMouseMovement();
+	CL_ProcessMouseDragging();
 
 	if (vid_grabmouse->modified) {
 		vid_grabmouse->modified = false;

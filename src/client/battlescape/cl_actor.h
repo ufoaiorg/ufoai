@@ -92,8 +92,9 @@ void CL_NextRound_f(void);
 void CL_ResetMouseLastPos(void);
 void CL_ActorResetMoveLength(le_t *le);
 bool CL_ActorMouseTrace(void);
-void CL_InitBattlescapeMouseScrolling(void);
-void CL_DoBattlescapeMouseScrolling(void);
+void CL_GetWorldCoordsUnderMouse(vec3_t groundIntersection, vec3_t upperTracePoint, vec3_t lowerTracePoint);
+void CL_InitBattlescapeMouseDragging(void);
+void CL_BattlescapeMouseDragging(void);
 
 bool CL_AddActor(le_t *le, entity_t *ent);
 bool CL_AddUGV(le_t *le, entity_t *ent);

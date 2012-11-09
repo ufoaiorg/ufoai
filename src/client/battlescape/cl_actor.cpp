@@ -50,6 +50,7 @@ static cvar_t *cl_reactionleftover;
 le_t *selActor;
 pos3_t truePos; /**< The cell at the current worldlevel under the mouse cursor. */
 pos3_t mousePos; /**< The cell that an actor will move to when directed to move. */
+static vec3_t mouseDraggingPos; /**< The world pos, which we "grab" to scroll the world in touchscreen mode. */
 
 /**
  * @brief If you want to change the z level of targeting and shooting,
@@ -1323,21 +1324,22 @@ MOUSE SCANNING
 */
 
 /**
- * @brief Battlescape cursor positioning.
- * @note Sets global var mouseActor to current selected le
- * @sa IN_Parse
+ * @brief Get battlescape cell position under mouse cursor.
+ * @note The returned position might be out of world boundaries, or under the ground etc.
+ * @param[out] groundIntersection Point on the ground under the mouse cursor, in the world coordinates
+ * @param[out] upperTracePoint Point in the sky under the mouse cursor, in the world coordinates
+ * @param[out] lowerTracePoint Point below the ground under the mouse cursor, at the world boundary
+ * @sa CL_ActorMouseTrace
  */
-bool CL_ActorMouseTrace (void)
+void CL_GetWorldCoordsUnderMouse (vec3_t groundIntersection, vec3_t upperTracePoint, vec3_t lowerTracePoint)
 {
+	/* TODO: Move this to cl_battlescape.cpp? This functino is not directly related to actors. */
 	float cur[2], frustumSlope[2];
 	const float projectionDistance = 2048.0f;
 	float nDotP2minusP1;
 	vec3_t forward, right, up, stop;
 	vec3_t from, end;
 	vec3_t mapNormal, P3, P2minusP1;
-	vec3_t pA, pB, pC;
-	pos3_t testPos;
-	le_t *interactLe;
 
 	/* get cursor position as a -1 to +1 range for projection */
 	cur[0] = (mousePosX * viddef.rx - viddef.viewWidth * 0.5 - viddef.x) / (viddef.viewWidth * 0.5);
@@ -1399,8 +1401,28 @@ bool CL_ActorMouseTrace (void)
 		CM_EntTestLineDM(cl.mapTiles, from, stop, end, TL_FLAG_ACTORCLIP, cl.leInlineModelList);
 	}
 
-	VecToPos(end, testPos);
+	if (groundIntersection)
+		VectorCopy(end, groundIntersection);
+	if (upperTracePoint)
+		VectorCopy(from, upperTracePoint);
+	if (lowerTracePoint)
+		VectorCopy(stop, lowerTracePoint);
+}
 
+/**
+ * @brief Battlescape cursor positioning.
+ * @note Sets global var mouseActor to current selected le
+ * @sa IN_Parse CL_GetWorldCoordsUnderMouse
+ */
+bool CL_ActorMouseTrace (void)
+{
+	vec3_t from, stop, end;
+	vec3_t pA, pB, pC;
+	pos3_t testPos;
+	le_t *interactLe;
+
+	CL_GetWorldCoordsUnderMouse(end, from, stop);
+	VecToPos(end, testPos);
 	/* hack to prevent cursor from getting stuck on the top of an invisible
 	 * playerclip surface (in most cases anyway) */
 	PosToVec(testPos, pA);
@@ -1468,6 +1490,31 @@ bool CL_ActorMouseTrace (void)
 	}
 
 	return true;
+}
+
+/**
+ * @brief Scroll battlescape touchscreen-style, by clicking and dragging away
+ */
+void CL_InitBattlescapeMouseDragging (void)
+{
+	CL_GetWorldCoordsUnderMouse(mouseDraggingPos, NULL, NULL);
+}
+
+/**
+ * @brief Scroll battlescape touchscreen-style, by clicking and dragging away
+ */
+void CL_BattlescapeMouseDragging (void)
+{
+	/* TODO: the movement is snapping to the cell center, and is clunky - make it smooth */
+	/* Difference between last and currently selected cell, we'll move camera by that difference */
+	vec3_t currentMousePos, mousePosDiff;
+
+	CL_GetWorldCoordsUnderMouse(currentMousePos, NULL, NULL);
+	if (fabs(currentMousePos[0] - mouseDraggingPos[0]) + fabs(currentMousePos[1] - mouseDraggingPos[1]) < 0.5f)
+		return;
+	VectorSubtract(mouseDraggingPos, currentMousePos, mousePosDiff);
+	VectorMA(cl.cam.origin, 0.2f, mousePosDiff, cl.cam.origin); /* Move camera slowly to the dest point, to prevent shaking */
+	Cvar_SetValue("cl_worldlevel", truePos[2]); /* Do not change world level */
 }
 
 /*
