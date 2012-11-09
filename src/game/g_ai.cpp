@@ -304,17 +304,10 @@ static bool AI_CheckPosition (const edict_t *const ent)
 	if (G_IsInsane(ent))
 		return true;
 
-	/* Don't stand on trigger_hurt or misc_fire */
-	if (G_GetEdictFromPos(ent->pos, ET_TRIGGER_HURT) || G_GetEdictFromPos(ent->pos, ET_SMOKESTUN))
+	/* Don't stand on hurt triggers or fire/stun gas */
+	if (G_GetEdictFromPos(ent->pos, ET_TRIGGER_HURT) || G_GetEdictFromPos(ent->pos, ET_SMOKESTUN) ||
+			G_GetEdictFromPos(ent->pos, ET_FIRE))
 		return false;
-
-	/* Don't stand next to misc_fire */
-	pos3_t pos;
-	for (int i = 0; i < DIRECTIONS; ++i) {
-		VectorSet(pos, ent->pos[0] + dvecs[i][0], ent->pos[1] + dvecs[i][1], ent->pos[2]);
-		if (G_GetEdictFromPos(pos, ET_FIRE))
-			return false;
-	}
 
 	return true;
 }
