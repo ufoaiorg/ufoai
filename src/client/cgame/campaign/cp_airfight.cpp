@@ -155,7 +155,7 @@ static void AIRFIGHT_ProjectileList_f (void)
  * @brief Change destination of projectile to an idle point of the map, close to its former target.
  * @param[in] projectile The projectile to update
  */
-static void AIRFIGHT_MissTarget (aircraftProjectile_t *projectile, bool returnToBase)
+static void AIRFIGHT_MissTarget (aircraftProjectile_t *projectile)
 {
 	vec3_t newTarget;
 	float offset;
@@ -186,13 +186,6 @@ static void AIRFIGHT_MissTarget (aircraftProjectile_t *projectile, bool returnTo
 	newTarget[1] = newTarget[1] + offset;
 
 	VectorCopy(newTarget, projectile->idleTarget);
-
-	if (returnToBase && projectile->attackingAircraft) {
-		if (projectile->attackingAircraft->homebase) {
-			assert(!AIR_IsUFO(projectile->attackingAircraft));
-			AIR_AircraftReturnToBase(projectile->attackingAircraft);
-		}
-	}
 }
 
 /**
@@ -376,7 +369,7 @@ void AIRFIGHT_ExecuteActions (const campaign_t* campaign, aircraft_t* shooter, a
 			Com_DPrintf(DEBUG_CLIENT, "AIRFIGHT_ExecuteActions: %s - Calculated probability to hit: %f\n", shooter->name, calculatedProbability);
 
 			if (probability > calculatedProbability)
-				AIRFIGHT_MissTarget(&ccs.projectiles[ccs.numProjectiles - 1], false);
+				AIRFIGHT_MissTarget(&ccs.projectiles[ccs.numProjectiles - 1]);
 
 			if (shooter->type != AIRCRAFT_UFO) {
 				/* Maybe UFO is going to shoot back ? */
@@ -426,8 +419,14 @@ void AIRFIGHT_RemoveProjectileAimingAircraft (const aircraft_t * aircraft)
 		return;
 
 	for (projectile = ccs.projectiles; idx < ccs.numProjectiles; projectile++, idx++) {
-		if (projectile->aimedAircraft == aircraft)
-			AIRFIGHT_MissTarget(projectile, true);
+		if (projectile->aimedAircraft != aircraft)
+			continue;
+
+		AIRFIGHT_MissTarget(projectile);
+		if (projectile->attackingAircraft && projectile->attackingAircraft->homebase) {
+			assert(!AIR_IsUFO(projectile->attackingAircraft));
+			AIR_AircraftReturnToBase(projectile->attackingAircraft);
+		}
 	}
 }
 
@@ -764,7 +763,7 @@ static void AIRFIGHT_BaseShoot (const base_t *base, baseWeapon_t *weapons, int m
 			slot->delayNextShot = slot->ammo->craftitem.weaponDelay;
 			/* will we miss the target ? */
 			if (frand() > AIRFIGHT_ProbabilityToHit(NULL, target, slot))
-				AIRFIGHT_MissTarget(&ccs.projectiles[ccs.numProjectiles - 1], false);
+				AIRFIGHT_MissTarget(&ccs.projectiles[ccs.numProjectiles - 1]);
 		}
 	}
 }
@@ -819,7 +818,7 @@ static void AIRFIGHT_InstallationShoot (const installation_t *installation, base
 			slot->delayNextShot = slot->ammo->craftitem.weaponDelay;
 			/* will we miss the target ? */
 			if (frand() > AIRFIGHT_ProbabilityToHit(NULL, target, slot))
-				AIRFIGHT_MissTarget(&ccs.projectiles[ccs.numProjectiles - 1], false);
+				AIRFIGHT_MissTarget(&ccs.projectiles[ccs.numProjectiles - 1]);
 		}
 	}
 }
