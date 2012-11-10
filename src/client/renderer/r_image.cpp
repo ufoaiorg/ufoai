@@ -280,7 +280,6 @@ void R_UploadTexture (unsigned *data, int width, int height, image_t* image)
 	/* some images need very little attention (pics, fonts, etc..) */
 	if (!mipmap && scaledWidth == width && scaledHeight == height) {
 		/* no mipmapping for these images to save memory */
-		/* TODO: check if GL_NEAREST will give any speed advantage on Android */
 		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		if (clamp) {
