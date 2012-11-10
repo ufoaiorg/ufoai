@@ -248,7 +248,7 @@ void G_EventReactionFireChange (const edict_t* ent)
 
 	G_EventAdd(G_PlayerToPM(G_PLAYER_FROM_ENT(ent)), EV_ACTOR_REACTIONFIRECHANGE, ent->number);
 	gi.WriteByte(ent->chr.RFmode.fmIdx);
-	gi.WriteByte(ent->chr.RFmode.hand);
+	gi.WriteByte(ent->chr.RFmode.getHand());
 	gi.WriteShort(od ? od->idx : NONE);
 
 	G_EventEnd();

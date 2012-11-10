@@ -430,8 +430,7 @@ float INVSH_GetInventoryWeight(const inventory_t *inventory);
 
 const invDef_t *INVSH_GetInventoryDefinitionByID(const char *id);
 
-#define THIS_FIREMODE(fm, HAND, fdIdx)	((fm)->hand == (HAND) && (fm)->fmIdx == (fdIdx))
-#define SANE_FIREMODE(fm)	(((fm)->hand > ACTOR_HAND_NOT_SET && (fm)->fmIdx >= 0 && (fm)->fmIdx < MAX_FIREDEFS_PER_WEAPON && (fm)->weapon != NULL))
+#define THIS_FIREMODE(fm, HAND, fdIdx)	((fm)->getHand() == (HAND) && (fm)->fmIdx == (fdIdx))
 
 #define INV_IsArmour(od)	(Q_streq((od)->type, "armour"))
 #define INV_IsAmmo(od)		(Q_streq((od)->type, "ammo"))

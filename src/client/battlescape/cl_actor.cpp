@@ -207,7 +207,7 @@ character_t *CL_ActorGetChr (const le_t * le)
  */
 void CL_ActorSetRFMode (character_t *chr, actorHands_t hand, int fireModeIndex, const objDef_t *weapon)
 {
-	chr->RFmode.hand = hand;
+	chr->RFmode.setHand(hand);
 	chr->RFmode.fmIdx = fireModeIndex;
 	chr->RFmode.weapon = weapon;
 }
@@ -221,7 +221,7 @@ void CL_ActorSetRFMode (character_t *chr, actorHands_t hand, int fireModeIndex, 
  */
 void CL_ActorSetShotSettings (character_t *chr, actorHands_t hand, int fireModeIndex, const objDef_t *weapon)
 {
-	chr->reservedTus.shotSettings.hand = hand;
+	chr->reservedTus.shotSettings.setHand(hand);
 	chr->reservedTus.shotSettings.fmIdx = fireModeIndex;
 	chr->reservedTus.shotSettings.weapon = weapon;
 }

@@ -147,7 +147,7 @@ int G_ActorGetTUForReactionFire (const edict_t *ent)
 	const FiremodeSettings *fm = &ent->chr.RFmode;
 	const fireDef_t *fd;
 
-	invlistWeapon = ACTOR_GET_INV(ent, fm->hand);
+	invlistWeapon = ACTOR_GET_INV(ent, fm->getHand());
 	assert(invlistWeapon);
 	assert(invlistWeapon->item.item);
 
@@ -738,7 +738,7 @@ bool G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, cons
 		G_EventEnd();
 	}
 
-	G_ReactionFireUpdate(ent, ent->chr.RFmode.fmIdx, ent->chr.RFmode.hand, ent->chr.RFmode.weapon);
+	G_ReactionFireUpdate(ent, ent->chr.RFmode.fmIdx, ent->chr.RFmode.getHand(), ent->chr.RFmode.weapon);
 
 	/* Other players receive weapon info only. */
 	mask = G_VisToPM(ent->visflags) & ~G_TeamToPM(ent->team);

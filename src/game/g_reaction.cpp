@@ -288,7 +288,7 @@ static int G_ReactionFireGetTUsForItem (const edict_t *ent, const edict_t *targe
 			return -1;
 
 		fmSetting = &ent->chr.RFmode;
-		if (fmSetting->hand == ACTOR_HAND_RIGHT && fmSetting->fmIdx >= 0
+		if (fmSetting->getHand() == ACTOR_HAND_RIGHT && fmSetting->fmIdx >= 0
 		 && fmSetting->fmIdx < MAX_FIREDEFS_PER_WEAPON) { /* If a RIGHT-hand firemode is selected and sane. */
 			const fireDefIndex_t fmIdx = fmSetting->fmIdx;
 			const int reactionFire = G_PLAYER_FROM_ENT(ent)->reactionLeftover;
@@ -324,10 +324,10 @@ static bool G_ActorHasReactionFireEnabledWeapon (const edict_t *ent)
 static bool G_ActorHasWorkingFireModeSet (const edict_t *actor)
 {
 	const FiremodeSettings *fmSettings = &actor->chr.RFmode;
-	if (!SANE_FIREMODE(fmSettings))
+	if (!fmSettings->isSaneFiremode())	/* just checks for valid values */
 		return false;
 
-	const invList_t* invList = ACTOR_GET_INV(actor, fmSettings->hand);
+	const invList_t* invList = ACTOR_GET_INV(actor, fmSettings->getHand());
 	if (!invList)
 		return false;
 	const fireDef_t *fd = FIRESH_FiredefForWeapon(&invList->item);
@@ -354,7 +354,7 @@ void G_ReactionFireUpdate (edict_t *ent, fireDefIndex_t fmIdx, actorHands_t hand
 {
 	FiremodeSettings *fm = &ent->chr.RFmode;
 	fm->fmIdx = fmIdx;
-	fm->hand = hand;
+	fm->setHand(hand);
 	fm->weapon = od;
 
 	if (!G_ActorHasWorkingFireModeSet(ent)) {
@@ -405,7 +405,7 @@ static bool G_ReactionFireSetDefault (edict_t *ent)
 		return false;
 
 	ent->chr.RFmode.fmIdx = 0;
-	ent->chr.RFmode.hand = hand;
+	ent->chr.RFmode.setHand(hand);
 	ent->chr.RFmode.weapon = weapon;
 
 	if (!G_ActorHasWorkingFireModeSet(ent))
@@ -501,10 +501,10 @@ static bool G_ReactionFireIsPossible (edict_t *ent, const edict_t *target)
 		return false;
 
 	/* check ent has weapon in RF hand */
-	if (!ACTOR_GET_INV(ent, ent->chr.RFmode.hand)) {
+	if (!ACTOR_GET_INV(ent, ent->chr.RFmode.getHand())) {
 		/* print character info if this happens, for now */
 		gi.DPrintf("Reaction fire enabled but no weapon for hand (name=%s,entnum=%i,hand=%i,fmIdx=%i)\n",
-				ent->chr.name, ent->number, ent->chr.RFmode.hand, ent->chr.RFmode.fmIdx);
+				ent->chr.name, ent->number, ent->chr.RFmode.getHand(), ent->chr.RFmode.fmIdx);
 		G_RemoveReaction(ent);
 		return false;
 	}
