@@ -347,13 +347,13 @@ void R_DumpOpenGlState (void)
  */
 void R_ReinitOpenglContext (void)
 {
-	R_SetDefaultState();
+	R_FontCleanCache();
+	R_ShutdownFBObjects();
 	R_ShutdownPrograms();
+	R_SetDefaultState();
 	R_InitPrograms();
 	R_InitMiscTexture();
 	R_ReloadImages();
-	R_FontCleanCache();
-	R_ShutdownFBObjects();
 	R_InitFBObjects();
 	R_UpdateDefaultMaterial("", "", "", NULL);
 
@@ -392,6 +392,12 @@ void R_ReinitOpenglContext (void)
 		qglGenBuffers(1, &mod->bsp.tangent_buffer);
 		qglBindBuffer(GL_ARRAY_BUFFER, mod->bsp.tangent_buffer);
 		qglBufferData(GL_ARRAY_BUFFER, tangind * sizeof(GLfloat), mod->bsp.tangents, GL_STATIC_DRAW);
+
+
+		qglGenBuffers(1, &mod->bsp.index_buffer);
+		qglBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mod->bsp.index_buffer);
+		qglBufferData(GL_ELEMENT_ARRAY_BUFFER, mod->bsp.numIndexes * sizeof(glElementIndex_t), mod->bsp.indexes, GL_STATIC_DRAW);
+		qglBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	}
 
 	qglBindBuffer(GL_ARRAY_BUFFER, 0);

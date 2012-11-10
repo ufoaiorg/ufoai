@@ -775,7 +775,7 @@ static void R_ReloadImageData (image_t *image)
 
 	surf = Img_LoadImage(image->name);
 	if (!surf) {
-		Com_Printf("R_ReloadImageData: unable to load image %s", image->name);
+		Com_Printf("R_ReloadImageData: unable to load image %s\n", image->name);
 		surf = SDL_CreateRGBSurface(0, image->width, image->height, 32,
 					0xff000000, 0x00ff0000, 0x0000ff00, 0x000000ff);
 		SDL_FillRect(surf, NULL, 0x99ff33ff); /* A random color */
