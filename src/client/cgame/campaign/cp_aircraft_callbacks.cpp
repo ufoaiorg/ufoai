@@ -258,7 +258,7 @@ static void AIR_AircraftUpdateList_f (void)
  * current selected aircraft
  * @note empty name will reset aircraft's name to the default
  * @note renaming to name with only non printable characters (eg. space) is denied
- * @todo make it not using cvar and default aircraft but get them from parameterlist
+ * @TODO make it not using cvar and default aircraft but get them from parameterlist
  */
 static void AIR_ChangeAircraftName_f (void)
 {

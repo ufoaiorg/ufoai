@@ -253,6 +253,7 @@ static inline bool MAP_IsXVIOverlayActivated (void)
  * @param[in] node UI Node of the geoscape map
  * @param[in] x Mouse click X coordinate
  * @param[in] y Mouse click Y coordinate
+ * @param[in] pos Geoscape (longitude, latitude) coordinate of the click
  * @return True if the event is used for something
  */
 bool MAP_MapClick (const uiNode_t* node, int x, int y, const vec2_t pos)
@@ -891,6 +892,7 @@ float MAP_AngleOfPath (const vec3_t start, const vec2_t end, vec3_t direction, v
 
 /**
  * @brief Will set the vector for the geoscape position
+ * @param[in] flatgeoscape True for 2D geoscape
  * @param[out] vector The output vector. A two-dim vector for the flat geoscape, and a three-dim vector for the 3d geoscape
  * @param[in] objectPos The position vector of the object to transform.
  */
@@ -1780,9 +1782,7 @@ void MAP_DrawMapMarkers (const uiNode_t* node)
 
 /**
  * @brief Draw the geoscape
- * @param[in] node The map menu node
- * @param[in] map the prefix of the map to use (image must be at base/pics/menu/\<map\>_[day|night])
- * @sa MAP_DrawMapMarkers
+ * @param[in] data Geoscape status data structure
  */
 void MAP_DrawMap (geoscapeData_t* data)
 {

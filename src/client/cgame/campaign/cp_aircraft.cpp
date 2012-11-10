@@ -252,9 +252,8 @@ static equipDef_t eTempEq;		/**< Used to count ammo in magazines. */
 
 /**
  * @brief Count and collect ammo from gun magazine.
+ * @param[in] data Pointer to aircraft used in this mission.
  * @param[in] magazine Pointer to invList_t being magazine.
- * @param[in] aircraft Pointer to aircraft used in this mission.
- * @sa AII_CollectingItems
  */
 static void AII_CollectingAmmo (void *data, const invList_t *magazine)
 {
