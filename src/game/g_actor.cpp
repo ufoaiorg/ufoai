@@ -144,7 +144,7 @@ int G_ActorUsableTUs (const edict_t *ent)
 int G_ActorGetTUForReactionFire (const edict_t *ent)
 {
 	const invList_t *invlistWeapon;
-	const chrFiremodeSettings_t *fm = &ent->chr.RFmode;
+	const FiremodeSettings *fm = &ent->chr.RFmode;
 	const fireDef_t *fd;
 
 	invlistWeapon = ACTOR_GET_INV(ent, fm->hand);

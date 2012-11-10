@@ -125,11 +125,13 @@ typedef struct chrScoreGlobal_s {
 	int rank;					/**< Index of rank (in ccs.ranks). */
 } chrScoreGlobal_t;
 
-typedef struct chrFiremodeSettings_s {
+class FiremodeSettings
+{
+public:
 	actorHands_t hand;	/**< Stores the used hand */
 	fireDefIndex_t fmIdx;	/**< Stores the used firemode index. Max. number is MAX_FIREDEFS_PER_WEAPON -1=undef*/
 	const objDef_t *weapon;
-} chrFiremodeSettings_t;
+};
 
 /**
  * @brief How many TUs (and of what type) did a player reserve for a unit?
@@ -147,8 +149,8 @@ typedef struct chrReservations_s {
 
 	/* Shot reservation (for current turn) */
 	int shot;	/**< If non-zero we reserved a shot in this turn. */
-	chrFiremodeSettings_t shotSettings;	/**< Stores what type of firemode & weapon
-										 * (and hand) was used for "shot" reservation. */
+	FiremodeSettings shotSettings;	/**< Stores what type of firemode & weapon
+									 * (and hand) was used for "shot" reservation. */
 } chrReservations_t;
 
 typedef enum {
@@ -327,7 +329,7 @@ typedef struct character_s {
 	const teamDef_t *teamDef;		/**< Pointer to team definition. */
 	int gender;						/**< Gender index. */
 	chrReservations_t reservedTus;	/**< Stores the reserved TUs for actions. @sa See chrReserveSettings_t for more. */
-	chrFiremodeSettings_t RFmode;	/**< Stores the firemode to be used for reaction fire (if the fireDef allows that) See also reaction_firemode_type_t */
+	FiremodeSettings RFmode;		/**< Stores the firemode to be used for reaction fire (if the fireDef allows that) See also reaction_firemode_type_t */
 } character_t;
 
 /* ================================ */
