@@ -43,26 +43,14 @@ inline void R_DrawArrays (GLint first, GLsizei count) {
 #endif
 }
 
-inline void R_DrawElements(GLenum mode, GLsizei count, GLenum type, const GLvoid * indices) {
 #ifdef GL_VERSION_ES_CM_1_0
-	if (type == GL_UNSIGNED_BYTE || type == GL_UNSIGNED_SHORT) {
-		glDrawElements(mode, count, type, indices);
-		return;
-	}
-	if (type != GL_UNSIGNED_INT)
-		return;
-	/* GLES does not accept GL_UNSIGNED_INT indices, so we'll have to resize index array */
-	const GLuint * indicesInt = (const GLuint *) indices;
-	GLushort * resized = (GLushort *) malloc(count * sizeof(GLushort));
-	for (uint32_t i = 0; i < count; i++)
-		resized[i] = indicesInt[i]; /* We may possibly lose some data here, if value will be greater than 65536 */
-	glDrawElements(mode, count, GL_UNSIGNED_SHORT, resized);
-	free(resized);
+/* glDrawElements() cannot be invoked with GL_UNSIGNED_INT on GLES */
+typedef GLushort glElementIndex_t;
+#define GL_ELEMENT_INDEX_TYPE GL_UNSIGNED_SHORT
 #else
-	glDrawElements(mode, count, type, indices);
+typedef GLuint glElementIndex_t;
+#define GL_ELEMENT_INDEX_TYPE GL_UNSIGNED_INT
 #endif
-}
-
 
 /** @todo update SDL to version that includes these */
 #ifndef GL_READ_FRAMEBUFFER_EXT
