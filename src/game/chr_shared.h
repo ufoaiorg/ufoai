@@ -136,7 +136,8 @@ public:
 
 	inline bool isSaneFiremode() const { return _hand > ACTOR_HAND_NOT_SET && fmIdx >= 0 && fmIdx < MAX_FIREDEFS_PER_WEAPON && weapon != NULL; }
 	inline actorHands_t getHand() const { return _hand;}
-	inline void setHand(actorHands_t hand) { _hand = hand;}
+	inline void setHand(const actorHands_t hand) { _hand = hand;}
+	inline void set(const actorHands_t hand, const fireDefIndex_t _fmIdx, const objDef_t *_weapon) { _hand = hand; fmIdx = _fmIdx; weapon = _weapon; }
 };
 
 /**

@@ -352,10 +352,7 @@ static bool G_ActorHasWorkingFireModeSet (const edict_t *actor)
  */
 void G_ReactionFireUpdate (edict_t *ent, fireDefIndex_t fmIdx, actorHands_t hand, const objDef_t *od)
 {
-	FiremodeSettings *fm = &ent->chr.RFmode;
-	fm->fmIdx = fmIdx;
-	fm->setHand(hand);
-	fm->weapon = od;
+	ent->chr.RFmode.set(hand, fmIdx, od);	/* FiremodeSettings */
 
 	if (!G_ActorHasWorkingFireModeSet(ent)) {
 		/* Disable reaction fire if no valid firemode was found. */
