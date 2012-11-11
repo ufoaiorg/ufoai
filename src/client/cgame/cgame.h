@@ -181,6 +181,7 @@ typedef struct cgame_import_s {
 	void (IMPORT *GAME_SetServerInfo) (const char *server, const char *serverport);
 	void (IMPORT *GAME_AppendTeamMember) (int memberIndex, const char *teamDefID, const equipDef_t *ed);
 	void (IMPORT *GAME_ReloadMode) (void);
+	int (IMPORT *GAME_GetChrMaxLoad) (const character_t *chr);
 	void (IMPORT *Free) (void *ptr);
 
 	/* sound functions */

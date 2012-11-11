@@ -614,6 +614,7 @@ static const cgame_import_t* GAME_GetImportData (const cgameType_t *t)
 		cgi->GAME_AppendTeamMember = GAME_AppendTeamMember;
 		cgi->GAME_ReloadMode = GAME_ReloadMode;
 		cgi->GAME_SetServerInfo = GAME_SetServerInfo;
+		cgi->GAME_GetChrMaxLoad = GAME_GetChrMaxLoad;
 
 		cgi->Free = GAME_Free;
 

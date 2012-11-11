@@ -230,7 +230,7 @@ static void AM_CreateUnitChr (autoUnit_t *unit, const teamDef_t *teamDef, const 
 		} else {
 			/* Pack equipment. */
 			if (teamDef->weapons)
-				cgi->INV_EquipActor(unit->chr, ed, GAME_GetChrMaxLoad(unit->chr));
+				cgi->INV_EquipActor(unit->chr, ed, cgi->GAME_GetChrMaxLoad(unit->chr));
 		}
 	}
 }
