@@ -555,7 +555,6 @@ static void G_ReactionFireTargetsUpdateAll (const edict_t *target)
 
 /**
  * @brief Perform the reaction fire shot
- * @param[in] player The player this action belongs to (the human player or the ai)
  * @param[in] shooter The actor that is trying to shoot
  * @param[in] at Position to fire on.
  * @param[in] type What type of shot this is (left, right reaction-left etc...).
@@ -563,11 +562,12 @@ static void G_ReactionFireTargetsUpdateAll (const edict_t *target)
  * @return true if everything went ok (i.e. the shot(s) where fired ok), otherwise false.
  * @sa G_ClientShoot
  */
-static bool G_ReactionFireShoot (const player_t *player, edict_t *shooter, const pos3_t at, shoot_types_t type, fireDefIndex_t firemode)
+static bool G_ReactionFireShoot (edict_t *shooter, const pos3_t at, shoot_types_t type, fireDefIndex_t firemode)
 {
 	const int minhit = 30;
 	shot_mock_t mock;
 	int i;
+	const player_t *player = G_PLAYER_FROM_ENT(shooter);
 	/* this is the max amount of friendly units that were hit during the mock calculation */
 	int maxff;
 
@@ -615,7 +615,7 @@ static bool G_ReactionFireTryToShoot (edict_t *shooter, const edict_t *target)
 	}
 
 	/* take the shot */
-	const bool tookShot = G_ReactionFireShoot(G_PLAYER_FROM_ENT(shooter), shooter, target->pos, ST_RIGHT_REACTION, shooter->chr.RFmode.fmIdx);
+	const bool tookShot = G_ReactionFireShoot(shooter, target->pos, ST_RIGHT_REACTION, shooter->chr.RFmode.fmIdx);
 
 	if (tookShot) {
 		/* clear any shakenness */
