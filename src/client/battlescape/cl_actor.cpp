@@ -520,9 +520,6 @@ bool CL_ActorSelect (le_t * le)
 
 	CL_ActorConditionalMoveCalc(le);
 
-	UI_ExecuteConfunc("updateactorwounds");
-	UI_ExecuteConfunc("updateactorload");
-
 	return true;
 }
 

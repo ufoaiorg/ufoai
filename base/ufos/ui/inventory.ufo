@@ -255,12 +255,6 @@ window inventory
 		onClick	{ call *node:root.hideinventory }
 	}
 
-	confunc updateactorload {
-		if ( *cvar:inventory_window_open == 1 ) {
-			cmd "hud_updateactorload;"
-		}
-	}
-
 	confunc inv_actorload {
 		*node:root.s_load@string = "<1>"
 		*node:root.s_load@tooltip = "<2>"
@@ -280,10 +274,12 @@ window inventory
 		}
 		// the physdat window will automatically be closed if open
 		if ( *cvar:physdat_window_open == 1 ) { cmd "ui_close hudphysdat;" }
-		cmd "updateactorload;"
+		cmd "ui_addcvarlistener cl_selected hud_updateactorload;"
+		cmd "hud_updateactorload;"
 	}
 
 	func onWindowClosed {
+		cmd "ui_removecvarlistener cl_selected hud_updateactorload;"
 		delete *cvar:inventory_window_open
 	}
 }
