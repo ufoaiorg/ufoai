@@ -401,9 +401,7 @@ static bool G_ReactionFireSetDefault (edict_t *ent)
 	if (!weapon)
 		return false;
 
-	ent->chr.RFmode.fmIdx = 0;
-	ent->chr.RFmode.setHand(hand);
-	ent->chr.RFmode.weapon = weapon;
+	ent->chr.RFmode.set(hand, 0, weapon);	/* no special firemode */
 
 	if (!G_ActorHasWorkingFireModeSet(ent))
 		return false;

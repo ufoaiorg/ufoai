@@ -59,7 +59,7 @@ void CL_ActorReactionFireChange (const eventRegister_t *self, dbuffer *msg)
 	else
 		od = NULL;
 
-	CL_ActorSetRFMode(chr, hand, fmIdx, od);
+	chr->RFmode.set(hand, fmIdx, od);
 
 	UI_ExecuteConfunc("reactionfire_updated");
 }

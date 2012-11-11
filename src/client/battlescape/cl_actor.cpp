@@ -199,20 +199,6 @@ character_t *CL_ActorGetChr (const le_t * le)
 }
 
 /**
- * @brief Sets reactionfire firemode for given actor.
- * @param[out] chr Pointer to an actor for which RF is being set.
- * @param[in] hand Store the given hand.
- * @param[in] fireModeIndex Store the given firemode for this hand.
- * @param[in] weapon Pointer to weapon in the hand.
- */
-void CL_ActorSetRFMode (character_t *chr, actorHands_t hand, int fireModeIndex, const objDef_t *weapon)
-{
-	chr->RFmode.setHand(hand);
-	chr->RFmode.fmIdx = fireModeIndex;
-	chr->RFmode.weapon = weapon;
-}
-
-/**
  * @brief Sets firemode for given actor.
  * @param[out] chr Pointer to an actor for which firemode is being set.
  * @param[in] hand Store the given hand.
