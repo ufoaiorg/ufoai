@@ -363,6 +363,12 @@ void R_EndBuildingLightmaps (void)
 {
 	/* upload the pending lightmap block */
 	R_UploadLightmapBlock();
+	Mem_Free(r_lightmaps.allocated);
+	Mem_Free(r_lightmaps.sample_buffer);
+	Mem_Free(r_lightmaps.direction_buffer);
+	r_lightmaps.allocated = NULL;
+	r_lightmaps.sample_buffer = NULL;
+	r_lightmaps.direction_buffer = NULL;
 }
 
 
