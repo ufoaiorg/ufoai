@@ -199,20 +199,6 @@ character_t *CL_ActorGetChr (const le_t * le)
 }
 
 /**
- * @brief Sets firemode for given actor.
- * @param[out] chr Pointer to an actor for which firemode is being set.
- * @param[in] hand Store the given hand.
- * @param[in] fireModeIndex Store the given firemode for this hand.
- * @param[in] weapon Pointer to weapon in the hand.
- */
-void CL_ActorSetShotSettings (character_t *chr, actorHands_t hand, int fireModeIndex, const objDef_t *weapon)
-{
-	chr->reservedTus.shotSettings.setHand(hand);
-	chr->reservedTus.shotSettings.fmIdx = fireModeIndex;
-	chr->reservedTus.shotSettings.weapon = weapon;
-}
-
-/**
  * @brief Returns the amount of reserved TUs for a certain type.
  * @param[in] le The actor to check.
  * @param[in] type The type to check. Use RES_ALL_ACTIVE to get all reserved TUs that are not "active" (e.g. RF is skipped if disabled). RES_ALL returns ALL of them, no matter what. See reservation_types_t for a list of options.

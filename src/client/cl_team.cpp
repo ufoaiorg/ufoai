@@ -203,7 +203,7 @@ void CL_GenerateCharacter (character_t *chr, const char *teamDefName)
 	/* get ucn */
 	chr->ucn = cls.nextUniqueCharacterNumber++;
 
-	CL_ActorSetShotSettings(chr, ACTOR_HAND_NOT_SET, -1, NULL);
+	chr->reservedTus.shotSettings.set(ACTOR_HAND_NOT_SET, -1, NULL);
 
 	Com_GetCharacterValues(teamDefName, chr);
 	/* Create attributes. */

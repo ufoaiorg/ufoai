@@ -104,8 +104,6 @@ void CL_AddPathing(void);
 void CL_AddActorPathing(void);
 void CL_ActorTargetAlign_f(void);
 
-void CL_ActorSetShotSettings(character_t *chr, actorHands_t hand, int fireModeIndex, const objDef_t *weapon);
-
 void CL_DisplayFloorArrows(void);
 void CL_DisplayObstructionArrows(void);
 #endif
