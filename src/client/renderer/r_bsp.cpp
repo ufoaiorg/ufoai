@@ -373,7 +373,7 @@ void R_AddBspRRef (const mBspModel_t *model, const vec3_t origin, const vec3_t a
 	}
 }
 
-typedef void (*drawSurfaceFunc)(const mBspSurfaces_t *surfs, glElementIndex_t *indexPtr);
+typedef void (*drawSurfaceFunc)(const mBspSurfaces_t *surfs, GLushort *indexPtr);
 
 /**
  * @param[in] drawFunc The function pointer to the surface draw function
@@ -389,7 +389,7 @@ static void R_RenderBspRRefs (drawSurfaceFunc drawFunc, surfaceArrayType_t surfT
 		const bspRenderRef_t *const bspRR = &bspRRefs[i];
 		const mBspModel_t *const bsp = bspRR->bsp;
 		const mBspModel_t *const tile = &r_mapTiles[bsp->maptile]->bsp; /* This is required to find the tile (world) bsp model to which arrays belong (submodels do not own arrays, but use world model ones) */
-		glElementIndex_t *indexPtr;
+		GLushort *indexPtr;
 
 		if (!bsp->sorted_surfaces[surfType]->count)
 			continue;

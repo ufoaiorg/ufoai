@@ -546,7 +546,7 @@ static void R_LoadBspVertexArrays (model_t *mod)
 	mod->bsp.verts       = Mem_PoolAllocTypeN(GLfloat, vertexCount * 3, vid_modelPool);
 	mod->bsp.normals     = Mem_PoolAllocTypeN(GLfloat, vertexCount * 3, vid_modelPool);
 	mod->bsp.tangents    = Mem_PoolAllocTypeN(GLfloat, vertexCount * 4, vid_modelPool);
-	mod->bsp.indexes     = Mem_PoolAllocTypeN(glElementIndex_t, indexCount, vid_modelPool); /* Will be filled at the end of map loading, after building surface lists */
+	mod->bsp.indexes     = Mem_PoolAllocTypeN(GLushort, indexCount, vid_modelPool); /* Will be filled at the end of map loading, after building surface lists */
 
 	for (i = 0; i < mod->bsp.numsurfaces; i++, surf++) {
 		surf->index = vertOfs / 3;
@@ -890,7 +890,7 @@ static void R_GenerateTriangleSoup ()
 
 			qglGenBuffers(1, &bsp->index_buffer);
 			qglBindBuffer(GL_ELEMENT_ARRAY_BUFFER, bsp->index_buffer);
-			qglBufferData(GL_ELEMENT_ARRAY_BUFFER, bsp->numIndexes * sizeof(glElementIndex_t), bsp->indexes, GL_STATIC_DRAW);
+			qglBufferData(GL_ELEMENT_ARRAY_BUFFER, bsp->numIndexes * sizeof(GLushort), bsp->indexes, GL_STATIC_DRAW);
 		}
 
 		qglBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);

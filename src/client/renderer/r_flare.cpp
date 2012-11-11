@@ -69,7 +69,7 @@ void R_CreateSurfaceFlare (mBspSurface_t *surf)
  * trace.  Flares are also faded according to the angle of their surface to the
  * view origin.
  */
-void R_DrawFlareSurfaces (const mBspSurfaces_t *surfs, glElementIndex_t *indexPtr)
+void R_DrawFlareSurfaces (const mBspSurfaces_t *surfs, GLushort *indexPtr)
 {
 	const image_t *image;
 	int i, j, k, l, m;

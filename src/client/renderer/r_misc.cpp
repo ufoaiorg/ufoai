@@ -396,7 +396,7 @@ void R_ReinitOpenglContext (void)
 
 		qglGenBuffers(1, &mod->bsp.index_buffer);
 		qglBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mod->bsp.index_buffer);
-		qglBufferData(GL_ELEMENT_ARRAY_BUFFER, mod->bsp.numIndexes * sizeof(glElementIndex_t), mod->bsp.indexes, GL_STATIC_DRAW);
+		qglBufferData(GL_ELEMENT_ARRAY_BUFFER, mod->bsp.numIndexes * sizeof(GLushort), mod->bsp.indexes, GL_STATIC_DRAW);
 		qglBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	}
 

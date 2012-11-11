@@ -399,7 +399,7 @@ static void R_DrawSurfaceStage (mBspSurface_t *surf, materialStage_t *stage)
  * throughout the iteration, so there is a concerted effort to restore the
  * state after all surface stages have been rendered.
  */
-void R_DrawMaterialSurfaces (const mBspSurfaces_t *surfs, glElementIndex_t *indexPtr)
+void R_DrawMaterialSurfaces (const mBspSurfaces_t *surfs, GLushort *indexPtr)
 {
 	int i;
 
