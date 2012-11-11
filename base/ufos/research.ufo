@@ -2434,7 +2434,7 @@ tech rs_weapon_stungren
 
 	mail_pre
 	{
-		from	"*msgid:mail_from_paul_navarre"
+		from	"*msgid:mail_from_dr_connor"
 		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_tech"
@@ -2442,7 +2442,7 @@ tech rs_weapon_stungren
 
 	mail
 	{
-		from	"*msgid:mail_from_paul_navarre"
+		from	"*msgid:mail_from_dr_connor"
 		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
 		icon	"icons/mail_tech"
