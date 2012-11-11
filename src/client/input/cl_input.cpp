@@ -954,17 +954,6 @@ void IN_Frame (void)
 				break;
 			}
 
-#ifdef DEBUG
-			/* Debug re-initializing OpenGL context during mission, by pressing Alt-Break (needed for Android) */
-			if ((event.key.keysym.mod & KMOD_ALT) && event.key.keysym.sym == SDLK_PAUSE) {
-				vid_mode->modified = true;
-				SDL_QuitSubSystem(SDL_INIT_VIDEO);
-				SDL_InitSubSystem(SDL_INIT_VIDEO);
-				SDL_SetVideoMode(viddef.context.width, viddef.context.height, 0, SDL_OPENGL);
-				R_ReinitOpenglContext();
-				break;
-			}
-#endif
 			IN_TranslateKey(&event.key.keysym, &key, &unicode);
 			IN_EventEnqueue(key, unicode, true);
 			break;

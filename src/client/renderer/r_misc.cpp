@@ -347,13 +347,18 @@ void R_DumpOpenGlState (void)
  */
 void R_ReinitOpenglContext (void)
 {
+	/* De-allocate old GL state, these functinos will call glDeleteTexture(), so they should go before everything else */
 	R_FontCleanCache();
 	R_ShutdownFBObjects();
 	R_ShutdownPrograms();
+	R_BeginBuildingLightmaps(); /* This function will also call glDeleteTexture() */
+	/* Re-initialize GL state */
 	R_SetDefaultState();
 	R_InitPrograms();
+	/* Re-upload all textures */
 	R_InitMiscTexture();
 	R_ReloadImages();
+	/* Re-upload other GL stuff */
 	R_InitFBObjects();
 	R_UpdateDefaultMaterial("", "", "", NULL);
 
@@ -393,12 +398,15 @@ void R_ReinitOpenglContext (void)
 		qglBindBuffer(GL_ARRAY_BUFFER, mod->bsp.tangent_buffer);
 		qglBufferData(GL_ARRAY_BUFFER, tangind * sizeof(GLfloat), mod->bsp.tangents, GL_STATIC_DRAW);
 
-
 		qglGenBuffers(1, &mod->bsp.index_buffer);
 		qglBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mod->bsp.index_buffer);
 		qglBufferData(GL_ELEMENT_ARRAY_BUFFER, mod->bsp.numIndexes * sizeof(GLushort), mod->bsp.indexes, GL_STATIC_DRAW);
 		qglBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+		for (int i = 0; i < mod->bsp.numsurfaces; i++)
+			R_CreateSurfaceLightmap(&mod->bsp.surfaces[i]);
 	}
 
+	R_EndBuildingLightmaps();
 	qglBindBuffer(GL_ARRAY_BUFFER, 0);
 }
