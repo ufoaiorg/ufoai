@@ -104,7 +104,7 @@ static void SL_Bresenham (int x0, int y0, int x1, int y1, int width, int height,
 }
 
 /**
- * @info the "vector" parameter should be NORMALIZED!!!
+ * @note the "vector" parameter should be NORMALIZED!!!
  */
 static float SL_DistanceToIntersection (const vec3_t origin, const vec3_t vector, const vec3_t planeOrigin, const vec3_t planeNormal)
 {

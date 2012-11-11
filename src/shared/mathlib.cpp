@@ -909,6 +909,7 @@ void RotatePointAroundVector (vec3_t dst, const vec3_t dir, const vec3_t point, 
 /**
  * @brief Print a 3D vector
  * @param[in] v The vector to be printed
+ * @param[out] text The resulting string. Must be pre-allocated !
  */
 void Print3Vector (const vec3_t v, const char *text)
 {
@@ -918,6 +919,7 @@ void Print3Vector (const vec3_t v, const char *text)
 /**
  * @brief Print a 2D vector
  * @param[in] v The vector to be printed
+ * @param[out] text The resulting string. Must be pre-allocated !
  */
 void Print2Vector (const vec2_t v, const char *text)
 {

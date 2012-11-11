@@ -1726,8 +1726,7 @@ static inline void CL_TraceBounds (const vec3_t start, const vec3_t mins, const 
  * @sa SV_Trace
  * @param[in] start Start vector to start the trace from
  * @param[in] end End vector to stop the trace at
- * @param[in] mins Bounding box used for tracing
- * @param[in] maxs Bounding box used for tracing
+ * @param[in] box Bounding box used for tracing
  * @param[in] passle Ignore this local entity in the trace (might be NULL)
  * @param[in] passle2 Ignore this local entity in the trace (might be NULL)
  * @param[in] contentmask Searched content the trace should watch for

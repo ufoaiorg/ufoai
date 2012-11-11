@@ -386,7 +386,6 @@ void G_VisMakeEverythingVisible (void)
  * @brief Check if the edict appears/perishes for the other teams. If they appear
  * for other teams, the needed information for those clients are also send in
  * @c G_CheckVisTeam resp. @c G_AppearPerishEvent
- * @param[in] perish Also check for perishing events
  * @param[in] check The edict that is maybe seen by others. If NULL, all edicts are checked
  * @return Bitmask of VIS_* values
  * @sa G_CheckVisTeam

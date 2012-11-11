@@ -29,7 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /**
  * @brief Determines the amount of XP earned by a given soldier for a given skill, based on the soldier's performance in the last mission.
  * @param[in] skill The skill for which to fetch the maximum amount of XP.
- * @param[in] chr Pointer to the character you want to get the earned experience for
+ * @param[in] ent Pointer to the character you want to get the earned experience for
  * @sa G_UpdateCharacterSkills
  * @sa G_GetMaxExperiencePerMission
  */
@@ -135,7 +135,7 @@ static int G_CharacterGetMaxExperiencePerMission (const abilityskills_t skill)
 
 /**
  * @brief Updates character skills after a mission.
- * @param[in,out] chr Pointer to the character that should get the skills updated
+ * @param[in,out] ent Pointer to the character that should get the skills updated
  * @sa CP_UpdateCharacterStats
  * @sa G_UpdateCharacterScore
  * @sa G_UpdateHitScore

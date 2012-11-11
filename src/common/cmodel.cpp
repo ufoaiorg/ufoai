@@ -297,8 +297,7 @@ bool CM_EntTestLineDM (mapTiles_t *mapTiles, const vec3_t start, const vec3_t st
  * @param[in] mapTiles List of tiles the current (RMA-)map is composed of
  * @param[in] start trace start vector
  * @param[in] end trace end vector
- * @param[in] mins box mins
- * @param[in] maxs box maxs
+ * @param[in] box The box we move through the world
  * @param[in] levelmask Selects which submodels get scanned.
  * @param[in] brushmask brushes the trace should stop at (see MASK_*)
  * @param[in] brushreject brushes the trace should ignore (see MASK_*)
