@@ -372,9 +372,6 @@ typedef struct equipDef_s {
 
 /* Maximum number of alien teams per alien group */
 #define MAX_TEAMS_PER_MISSION MAX_TEAMDEFS
-#define MAX_TERRAINS 8
-#define MAX_CULTURES 8
-#define MAX_POPULATIONS 8
 
 typedef struct damageType_s {
 	char id[MAX_VAR];
