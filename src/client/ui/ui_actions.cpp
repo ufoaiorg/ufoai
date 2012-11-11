@@ -918,7 +918,8 @@ static void UI_AddCvarListener_f (void)
 	cvarName = Cmd_Argv(1);
 	confuncName = Cmd_Argv(2);
 	l = Cvar_RegisterChangeListener(cvarName, UI_CvarChangeListener);
-	LIST_AddString(reinterpret_cast<linkedList_t**>(&l->data), confuncName);
+	if (LIST_ContainsString(static_cast<linkedList_t*>(l->data), confuncName) == NULL)
+		LIST_AddString(reinterpret_cast<linkedList_t**>(&l->data), confuncName);
 }
 
 static void UI_RemoveCvarListener_f (void)
