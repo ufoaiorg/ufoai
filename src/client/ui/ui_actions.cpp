@@ -942,7 +942,9 @@ static void UI_RemoveCvarListener_f (void)
 	cvarChangeListener_t *l = var->changeListener;
 	while (l) {
 		if (l->exec == UI_CvarChangeListener) {
-			LIST_Remove(reinterpret_cast<linkedList_t**>(&l->data), confuncName);
+			linkedList_t *entry = const_cast<linkedList_t*>(LIST_ContainsString(static_cast<linkedList_t*>(l->data), confuncName));
+			if (entry != NULL)
+				LIST_RemoveEntry(reinterpret_cast<linkedList_t**>(&l->data), entry);
 			if (LIST_IsEmpty(static_cast<linkedList_t*>(l->data))) {
 				Cvar_UnRegisterChangeListener(cvarName, UI_CvarChangeListener);
 			}
