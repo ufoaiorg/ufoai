@@ -378,9 +378,11 @@ static void HUD_ShotReserve_f (void)
 
 /**
  * @brief Sets the display for a single weapon/reload HUD button.
- * @param[in] hand What list to display
+ * @param callback confunc callback
+ * @param le The actor local entity
+ * @param hand What list to display
  */
-static void HUD_DisplayFiremodeEntry (const char* callback, const le_t* actor, const objDef_t* ammo, const weaponFireDefIndex_t weapFdsIdx, const actorHands_t hand, int index)
+static void HUD_DisplayFiremodeEntry (const char* callback, const le_t* actor, const objDef_t* ammo, const weaponFireDefIndex_t weapFdsIdx, const actorHands_t hand, const int index)
 {
 	int time;
 	char tuString[MAX_VAR];
@@ -425,7 +427,7 @@ static void HUD_DisplayFiremodeEntry (const char* callback, const le_t* actor, c
 }
 
 /**
- * List actions from a soldier to a callback confunc
+ * @brief List actions from a soldier to a callback confunc
  * @param callback confunc callback
  * @param actor actor who can do the actions
  * @param right if true, list right firemode
