@@ -307,7 +307,7 @@ static int G_ReactionFireGetTUsForItem (const edict_t *ent, const edict_t *targe
 /**
  * @brief Checks whether the actor has a reaction fire enabled weapon in one of his hands.
  * @param[in] ent The actor to check the weapons for
- * @return @c NULL if no actor has not reaction fire enabled weapons, the fire definition otherwise.
+ * @return @c true if the actor has reaction fire enabled weapons
  */
 static bool G_ActorHasReactionFireEnabledWeapon (const edict_t *ent)
 {
