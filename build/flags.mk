@@ -32,6 +32,11 @@ CFLAGS += -Wno-unused-parameter
 CFLAGS += -Wreturn-type
 CFLAGS += -Wwrite-strings
 
+# clang stuff
+#CFLAGS += -Wno-extended-offsetof
+#CFLAGS += -Wno-c++11-extensions
+#CFLAGS += -Wno-cast-align
+
 ifeq ($(PROFILING),1)
   CFLAGS  += -pg
   LDFLAGS += -pg
