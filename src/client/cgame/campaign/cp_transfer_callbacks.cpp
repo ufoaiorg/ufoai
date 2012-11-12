@@ -582,7 +582,7 @@ static void TR_TransferSelect_f (void)
 	else
 		type = TR_GetTransferType(cgi->Cmd_Argv(1));
 
-	if (type < TRANS_TYPE_ITEM || type >= TRANS_TYPE_MAX)
+	if (type == TRANS_TYPE_INVALID)
 		return;
 
 	TR_TransferSelect(base, td.transferBase, type);
@@ -830,7 +830,7 @@ static void TR_AddToTransferList (base_t *base, transferData_t *transfer, int nu
 	case TRANS_TYPE_AIRCRAFT:
 		TR_AddAircraftToTransferList(base, transfer, num);
 		break;
-	case TRANS_TYPE_INVALID:
+	default:
 		break;
 	}
 

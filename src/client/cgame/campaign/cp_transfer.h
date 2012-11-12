@@ -69,10 +69,10 @@ typedef enum {
 	TRANS_TYPE_ITEM,
 	TRANS_TYPE_EMPLOYEE,
 	TRANS_TYPE_ALIEN,
-	TRANS_TYPE_AIRCRAFT
-} transferType_t;
+	TRANS_TYPE_AIRCRAFT,
 
-#define TRANS_TYPE_MAX (TRANS_TYPE_AIRCRAFT + 1)
+	TRANS_TYPE_MAX
+} transferType_t;
 
 /** @brief Array of current cargo onboard. */
 typedef struct transferCargo_s {

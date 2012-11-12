@@ -515,7 +515,7 @@ bool _Mem_AllocatedInPool (memPool_t *pool, const void *pointer)
 	memBlock_t *mem;
 
 	if (!pool)
-		return NULL;
+		return false;
 
 	/* if it's in the pool, it must be in THIS block */
 	mem = pool->blocks[(uintptr_t)pointer % MEM_HASH];

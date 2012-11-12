@@ -326,7 +326,7 @@ static void CP_TEAM_FillEquipSoldierList_f (void)
 	CP_CleanupTeam(base, &unused);
 	cgi->UI_ContainerNodeUpdateEquipment(&base->bEquipment, &unused);
 	if (count == 0)
-		cgi->UI_PopWindow(NULL);
+		cgi->UI_PopWindow(false);
 }
 
 /**

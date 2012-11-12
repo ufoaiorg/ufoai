@@ -1283,9 +1283,10 @@ static void AI_SetCharacterValues (edict_t * ent, int team)
 			const teamDef_t *td = gi.csi->alienTeams[alienTeam];
 			assert(td);
 			teamDefinition = td->id;
-		} else
+		} else {
 			teamDefinition = gi.Cvar_String("ai_alien");
-	} else if (team == TEAM_CIVILIAN) {
+		}
+	} else {
 		teamDefinition = gi.Cvar_String("ai_civilian");
 	}
 	gi.GetCharacterValues(teamDefinition, &ent->chr);
