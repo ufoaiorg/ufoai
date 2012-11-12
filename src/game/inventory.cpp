@@ -767,8 +767,6 @@ static void I_EquipActor (inventoryInterface_t* self, character_t* const chr, co
 	int i;
 	const int numEquip = lengthof(ed->numItems);
 	int repeat = 0;
-	const float AKIMBO_CHANCE = 0.3; 	/**< if you got a one-handed secondary weapon (and no primary weapon),
-											 this is the chance to get another one (between 0 and 1) */
 
 	if (td->weapons) {
 		equipPrimaryWeaponType_t primary = WEAPON_NO_PRIMARY;
@@ -836,6 +834,8 @@ static void I_EquipActor (inventoryInterface_t* self, character_t* const chr, co
 			if (secondaryWeapon) {
 				hasWeapon += I_PackAmmoAndWeapon(self, chr, secondaryWeapon, missedPrimary, ed, maxWeight);
 				if (hasWeapon) {
+					const float AKIMBO_CHANCE = 0.3; 	/**< if you got a one-handed secondary weapon (and no primary weapon),
+															 this is the chance to get another one (between 0 and 1) */
 					/* Try to get the second akimbo pistol if no primary weapon. */
 					if (primary == WEAPON_NO_PRIMARY && !secondaryWeapon->fireTwoHanded && frand() < AKIMBO_CHANCE) {
 						I_PackAmmoAndWeapon(self, chr, secondaryWeapon, 0, ed, maxWeight);

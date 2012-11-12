@@ -119,9 +119,8 @@ void XML_AddDouble (xmlNode_t *parent, const char *name, double value)
  */
 void XML_AddDoubleValue (xmlNode_t *parent, const char *name, double value)
 {
-	char txt[50];
-
 	if (value) {
+		char txt[50];
 		snprintf(txt, sizeof(txt), "%f", value);
 		mxmlElementSetAttr(parent, name, txt);
 	}
@@ -218,9 +217,8 @@ void XML_AddLong (xmlNode_t *parent, const char *name, long value)
  */
 void XML_AddLongValue (xmlNode_t *parent, const char *name, long value)
 {
-	char txt[50];
-
 	if (value) {
+		char txt[50];
 		snprintf(txt, sizeof(txt), "%ld", value);
 		mxmlElementSetAttr(parent, name, txt);
 	}

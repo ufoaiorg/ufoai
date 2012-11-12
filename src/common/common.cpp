@@ -227,7 +227,6 @@ TARGETING FUNCTIONS
  */
 float Com_GrenadeTarget (const vec3_t from, const vec3_t at, float speed, bool launched, bool rolled, vec3_t v0)
 {
-	const float rollAngle = 3.0; /* angle to throw at for rolling, in degrees. */
 	vec3_t delta;
 	float d, h, g, v, alpha, vx, vy;
 	float k, gd2, len;
@@ -250,6 +249,7 @@ float Com_GrenadeTarget (const vec3_t from, const vec3_t at, float speed, bool l
 
 	/* are we rolling? */
 	if (rolled) {
+		const float rollAngle = 3.0; /* angle to throw at for rolling, in degrees. */
 		float theta;
 		alpha = rollAngle * torad;
 		theta = atan2(d, -h) - 2 * alpha;
@@ -688,7 +688,6 @@ bool Com_ConsoleCompleteCommand (const char *s, char *target, size_t bufSize, ui
 	char cmdLine[MAXCMDLINE] = "";
 	char cmdBase[MAXCMDLINE] = "";
 	bool append = true;
-	char *tmp;
 
 	if (!s[0] || s[0] == ' ')
 		return false;
@@ -707,6 +706,7 @@ bool Com_ConsoleCompleteCommand (const char *s, char *target, size_t bufSize, ui
 	 * parameter stage */
 	if (strstr(s, " ")) {
 		int cntParams;
+		char *tmp;
 		Q_strncpyz(cmdLine, s, sizeof(cmdLine));
 		/* remove the last whitespace */
 		cmdLine[strlen(cmdLine) - 1] = '\0';

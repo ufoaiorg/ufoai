@@ -99,7 +99,6 @@ trace_t CM_HintedTransformedBoxTrace (mapTile_t *tile, const vec3_t start, const
 {
 	trace_t trace;
 	vec3_t start_l, end_l;
-	vec3_t a;
 	vec3_t forward, right, up;
 	vec3_t temp;
 	bool rotated;
@@ -141,6 +140,7 @@ trace_t CM_HintedTransformedBoxTrace (mapTile_t *tile, const vec3_t start, const
 	trace.mapTile = tile->idx;
 
 	if (rotated && trace.fraction != 1.0) {
+		vec3_t a;
 		/** @todo figure out how to do this with existing angles */
 		VectorNegate(angles, a);
 		AngleVectors(a, forward, right, up);

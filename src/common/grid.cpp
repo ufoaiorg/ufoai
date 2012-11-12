@@ -912,14 +912,14 @@ void Grid_RecalcBoxRouting (mapTiles_t *mapTiles, routing_t *map, const GridBox 
  */
 void Grid_RecalcRouting (mapTiles_t *mapTiles, routing_t *map, const char *name, const GridBox &box, const char **list)
 {
-	const cBspModel_t *model;
 	pos3_t min, max;
-	unsigned int i;
 	double start, end;
 
 	start = time(NULL);
 
 	if (box.isZero()) {
+		const cBspModel_t *model;
+		unsigned int i;
 		/* get inline model, if it is one */
 		if (*name != '*') {
 			Com_Printf("Called Grid_RecalcRouting with no inline model\n");

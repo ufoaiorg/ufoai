@@ -1682,7 +1682,6 @@ struct parseItemWeapon_t {
 
 static void Com_ParseFireDefinition (objDef_t *od, const char *name, const char *token, const char **text)
 {
-	const char *errhead = "Com_ParseFireDefinition: unexpected end of file (weapon_mod ";
 	if (od->numWeapons < MAX_WEAPONS_PER_OBJDEF) {
 		/* get it's body */
 		token = Com_Parse(text);
@@ -1709,6 +1708,7 @@ static void Com_ParseFireDefinition (objDef_t *od, const char *name, const char 
 
 		/* For each firedef entry for this weapon.  */
 		do {
+			const char *errhead = "Com_ParseFireDefinition: unexpected end of file (weapon_mod ";
 			token = Com_EParse(text, errhead, name);
 			if (!*text)
 				return;
