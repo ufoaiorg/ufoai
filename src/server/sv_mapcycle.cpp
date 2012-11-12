@@ -21,8 +21,6 @@ void SV_NextMapcycle (void)
 {
 	const char *map = NULL, *gameType = NULL;
 	bool day = true;
-	char *base;
-	char assembly[MAX_QPATH];
 	char expanded[MAX_QPATH];
 	char cmd[MAX_QPATH];
 	mapcycle_t *mapcycle;
@@ -36,7 +34,8 @@ void SV_NextMapcycle (void)
 			 * but in sv->assembly */
 			if (mapcycle->map[0] == '+') {
 				Q_strncpyz(expanded, mapcycle->map, sizeof(expanded));
-				base = strstr(expanded, " ");
+				char *base = strstr(expanded, " ");
+				char assembly[MAX_QPATH];
 				if (base) {
 					base[0] = '\0'; /* split the strings */
 					Q_strncpyz(assembly, base + 1, sizeof(assembly));
@@ -189,9 +188,7 @@ static void SV_ParseMapcycle (void)
 {
 	int length = 0;
 	byte *buffer = NULL;
-	const char *token;
 	const char *buf;
-	char map[MAX_VAR], gameType[MAX_VAR];
 
 	mapcycleCount = 0;
 	mapcycleList = NULL;
@@ -204,6 +201,8 @@ static void SV_ParseMapcycle (void)
 		buf = (const char*)buffer;
 		do {
 			bool day = false;
+			const char *token;
+			char map[MAX_VAR], gameType[MAX_VAR];
 			/* parse map name */
 			token = Com_Parse(&buf);
 			if (!buf)

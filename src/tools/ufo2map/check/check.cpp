@@ -1464,10 +1464,10 @@ void SetImpliedFlags (side_t *side, brush_texture_t *tex, const mapbrush_t *brus
 	const char *texname = tex->name;
 	const int initSurf = tex->surfaceFlags;
 	const int initCont = side->contentFlags;
-	const char *flagsDescription = NULL;
 
 	/* see discussion at Check_SetNodraw */
 	if (!config.fixMap && !config.performMapCheck) {
+		const char *flagsDescription = NULL;
 		if (Q_streq(texname, "tex_common/actorclip")) {
 			side->contentFlags |= CONTENTS_ACTORCLIP;
 			flagsDescription = "CONTENTS_ACTORCLIP";
