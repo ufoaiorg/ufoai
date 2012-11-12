@@ -125,19 +125,35 @@ typedef struct chrScoreGlobal_s {
 	int rank;					/**< Index of rank (in ccs.ranks). */
 } chrScoreGlobal_t;
 
-class FiremodeSettings
-{
+class FiremodeSettings {
 public:
-/** @todo _hand is supposed to be private, but we need to get rid of the offsetof macro first */
-	actorHands_t _hand;		/**< the used hand, an enum */
+	/** @todo _hand is supposed to be private, but we need to get rid of the offsetof macro first */
+	actorHands_t _hand; /**< the used hand, an enum */
 
-	fireDefIndex_t fmIdx;	/**< Stores the used firemode index. Max. number is MAX_FIREDEFS_PER_WEAPON -1=undef*/
+	fireDefIndex_t fmIdx; /**< Stores the used firemode index. Max. number is MAX_FIREDEFS_PER_WEAPON -1=undef*/
 	const objDef_t *weapon;
 
-	inline bool isSaneFiremode() const { return _hand > ACTOR_HAND_NOT_SET && fmIdx >= 0 && fmIdx < MAX_FIREDEFS_PER_WEAPON && weapon != NULL; }
-	inline actorHands_t getHand() const { return _hand;}
-	inline void setHand(const actorHands_t hand) { _hand = hand;}
-	inline void set(const actorHands_t hand, const fireDefIndex_t _fmIdx, const objDef_t *_weapon) { _hand = hand; fmIdx = _fmIdx; weapon = _weapon; }
+	inline bool isSaneFiremode () const
+	{
+		return _hand > ACTOR_HAND_NOT_SET && fmIdx >= 0 && fmIdx < MAX_FIREDEFS_PER_WEAPON && weapon != NULL;
+	}
+
+	inline actorHands_t getHand () const
+	{
+		return _hand;
+	}
+
+	inline void setHand (const actorHands_t hand)
+	{
+		_hand = hand;
+	}
+
+	inline void set (const actorHands_t hand, const fireDefIndex_t _fmIdx, const objDef_t *_weapon)
+	{
+		_hand = hand;
+		fmIdx = _fmIdx;
+		weapon = _weapon;
+	}
 };
 
 /**
