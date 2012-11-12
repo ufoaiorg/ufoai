@@ -1,0 +1,100 @@
+// *********************************
+// Prospectorcamp
+// *********************************
+
+base solarplant/sp_  
+
+// d= craft square
+// a= main square
+// b= south
+// e= east
+// w= west
+// f= northwest
+// g= northeast
+// h= southwest
+// i= southeast
+
+tile +craft_drop_firebird
+{
+    6 6 
+
+    0  a  a  a  a  0
+    f +d +d +d +d  g
+    f +d +d +d +d  g
+    f +d +d +d +d  g
+    f +d +d +d +d  g
+    0  a  a  a  a  0
+}
+
+tile +main
+{
+    6 6 
+
+    0  d  d  d  d  0
+    w +a +a +a +a  e
+    w +a +a +a +a  e
+    w +a +a +a +a  e
+    w +a +a +a +a  e
+    0  a  a  a  a  0
+}
+
+tile +west
+{
+    6 6 
+
+    0  f  f  f  f  0
+    a +w +w +w +w  a
+    a +w +w +w +w  a
+    a +w +w +w +w  a
+    a +w +w +w +w  a
+    0  a  a  a  a  0
+}
+
+tile +east
+{
+    6 6 
+
+    0  g  g  g  g  0
+    a +e +e +e +e  a
+    a +e +e +e +e  a
+    a +e +e +e +e  a
+    a +e +e +e +e  a
+    0  a  a  a  a  0
+}
+
+tile +northwest
+{
+    6 6 
+
+    0  a  a  a  a  0
+    a +f +f +f +f  d
+    a +f +f +f +f  d
+    a +f +f +f +f  d
+    a +f +f +f +f  d
+    0  w  w  w  w  0
+}
+
+tile +northeast
+{
+    6 6 
+
+    0  a  a  a  a  0
+    d +g +g +g +g  a
+    d +g +g +g +g  a
+    d +g +g +g +g  a
+    d +g +g +g +g  a
+    0  e  e  e  e  0
+}
+
+
+assembly default
+{
+	size "12 8" //Size in RMA (256x256) tiles
+	grid "4 4" //All pieces are multiple of 4 x 4 (in this case they are exactly 4x4)
+	*rm_drop +craft_drop_firebird "1 1"
+	+northwest "1 1" 
+	+northeast "1 1"
+	+main "1 1"
+	+east "1 1"
+	+west "1 1"
+}

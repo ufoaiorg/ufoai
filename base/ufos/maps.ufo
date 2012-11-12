@@ -3476,6 +3476,48 @@ mapdef shelter
 	)
 }
 
+//////////////////////////////
+// SOLARPLANT RANDOM MAPS  //
+/////////////////////////////
+
+mapdef solarplant
+
+{
+	map				"+solarplant"
+	description		"_A solarplant project in the desert."
+	param			"default"
+	campaign		false
+	maxaliens		30
+	
+	aircraft 
+	(
+		craft_drop_firebird
+	)
+
+	ufos
+	(
+		// any
+	)
+
+	terrains
+	(
+		"desert"
+		"wasted"
+	)
+
+	cultures
+	(
+		// any
+	)
+
+	populations
+	(
+		"village"
+		"rural"
+		"nopopulation"
+	)
+}
+
 ///////////////////////////
 // SPEDITION RANDOM MAPS //
 ///////////////////////////

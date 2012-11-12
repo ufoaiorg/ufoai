@@ -596,6 +596,13 @@ base/maps/shelter/shelter_room_n_b.map | GNU General Public License 2.0 or later
 base/maps/shelter/shelter_room_w_a.map | GNU General Public License 2.0 or later | Bas Fournier
 base/maps/shelter/shelter_room_w_b.map | GNU General Public License 2.0 or later | Bas Fournier
 base/maps/shelter/shelter_solid.map | GNU General Public License 2.0 or later | Bas Fournier
+base/maps/solarplant.ump | GNU General Public License 2.0 or later | Davide "Deadman" Amato
+base/maps/solarplant/sp_craft_drop_firebird.map | GNU General Public License 2.0 or later | Davide "Deadman" Amato
+base/maps/solarplant/sp_east.map | GNU General Public License 2.0 or later | Davide "Deadman" Amato
+base/maps/solarplant/sp_main.map | GNU General Public License 2.0 or later | Davide "Deadman" Amato
+base/maps/solarplant/sp_northeast.map | GNU General Public License 2.0 or later | Davide "Deadman" Amato
+base/maps/solarplant/sp_northwest.map | GNU General Public License 2.0 or later | Davide "Deadman" Amato
+base/maps/solarplant/sp_west.map | GNU General Public License 2.0 or later | Davide "Deadman" Amato
 base/maps/spedition.ump | GNU General Public License 2.0 or later
 base/maps/spedition/sp_craft_drop_firebird.map | GNU General Public License 2.0 or later
 base/maps/spedition/sp_craft_drop_herakles.map | GNU General Public License 2.0 or later

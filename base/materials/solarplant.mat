@@ -1,0 +1,33 @@
+/* projectors in the main tile*/
+{
+	material tex_misc/sign_lvl18
+	hardness 2.0
+	specular 2.0
+	{
+		texture tex_tech/tv0
+		blend GL_SRC_ALPHA GL_ONE
+		anim 2 10.0
+	}
+}
+{
+	material tex_pics/statistics
+	hardness 2.0
+	specular 2.0
+	{
+		texture tex_tech/tv0
+		blend GL_SRC_ALPHA GL_ONE
+		anim 2 10.0
+	}
+}
+
+
+/* flare effect for the control tower*/
+{
+	material tex_material/c_yellow2
+	{
+		flare 1
+		color 1.0 0.3 0.1
+	}
+}
+
+
