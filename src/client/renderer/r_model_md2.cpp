@@ -146,7 +146,7 @@ static void R_ModLoadAliasMD2MeshUnindexed (model_t *mod, const dMD2Model_t *md2
 		} else {
 			/* load the skins */
 			outMesh->num_skins = LittleLong(md2->num_skins);
-			if (outMesh->num_skins < 0 || outMesh->num_skins >= MD2_MAX_SKINS)
+			if (outMesh->num_skins <= 0 || outMesh->num_skins >= MD2_MAX_SKINS)
 				Com_Error(ERR_DROP, "Could not load model '%s' - invalid num_skins value: %i", mod->name, outMesh->num_skins);
 
 			outMesh->skins = Mem_PoolAllocTypeN(mAliasSkin_t, outMesh->num_skins, vid_modelPool);
@@ -320,7 +320,7 @@ static void R_ModLoadAliasMD2MeshIndexed (model_t *mod, const dMD2Model_t *md2, 
 	if (mod->alias.num_meshes == 1) {
 		/* load the skins */
 		outMesh->num_skins = LittleLong(md2->num_skins);
-		if (outMesh->num_skins < 0 || outMesh->num_skins >= MD2_MAX_SKINS)
+		if (outMesh->num_skins <= 0 || outMesh->num_skins >= MD2_MAX_SKINS)
 			Com_Error(ERR_DROP, "Could not load model '%s' - invalid num_skins value: %i\n", mod->name, outMesh->num_skins);
 
 		outMesh->skins = Mem_PoolAllocTypeN(mAliasSkin_t, outMesh->num_skins, vid_modelPool);
