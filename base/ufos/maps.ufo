@@ -54,6 +54,7 @@ mapdef africa_medium
 {
 	map				"+africa"
 	param			"medium"
+	description		"_African Village"
 	multiplayer		true
 	teams			2
 	gametypes (
@@ -63,7 +64,6 @@ mapdef africa_medium
 		coop3
 		coop4
 	)
-	description		"_A suburb that has received a visit from a UFO."
 	maxaliens		16
 
 	civilianteam	africa
@@ -106,7 +106,7 @@ mapdef africa_medium_crash
 {
 	map				"+africa"
 	param			"medium"
-	description		"_A UFO crashed here."
+	description		"_African Village"
 	multiplayer		true
 	teams			2
 	gametypes (
@@ -159,6 +159,7 @@ mapdef africa_small
 {
 	map				"+africa"
 	param			"small"
+	description		"_African Village"
 	multiplayer		true
 	teams			2
 	gametypes (
@@ -168,7 +169,6 @@ mapdef africa_small
 		coop3
 		coop4
 	)
-	description		"_A suburb that has been visited by an UFO."
 	maxaliens		6
 
 	civilianteam	africa
@@ -211,11 +211,11 @@ mapdef africa_small_crash
 {
 	map			"+africa"
 	param		"small_crash"
+	description		"_African Village"
 	civilianteam	africa
 	campaign	true
 	multiplayer	false
 	hurtaliens	true
-	description	"_Crashed UFO in an african suburban district."
 	size		"small"
 	maxaliens	8
 
@@ -260,7 +260,7 @@ mapdef africa_small_crash
 mapdef beach
 {
 	map				"+beach"
-	description		"_An UFO crashsite."
+	description		"_Coastal Crash Site"
 	campaign		false
 	multiplayer		false
 	hurtaliens		true
@@ -301,7 +301,7 @@ mapdef beach
 mapdef bomber_city
 {
 	map				"+bomber_city"
-	description		"_A Bomber has landed in the middle of a city."
+	description		"_Bomber in the City"
 	multiplayer		true
 	teams			4
 	gametypes (
@@ -359,7 +359,7 @@ mapdef bridge
 {
 	map				"+bridge"
 	param			"default"
-	description		"_A small UFO has crashed in this mining region."
+	description		"_Bridge"
 	multiplayer		false
 	gametypes ( )
 	maxaliens		30
@@ -401,7 +401,7 @@ mapdef bridge_mp
 {
 	map				"+bridge"
 	param			"mp"
-	description		"_A small UFO has crashed in this mining region."
+	description		"_Bridge (MP)"
 	campaign 		false
 	singleplayer	false
 	multiplayer		true
@@ -453,8 +453,8 @@ mapdef city3_small_noufo
 
 {
 	map				"+city3"
-	description		"_A city."
 	param			"small_noufo"
+	description		"_Urban Periphery"
 	maxaliens		25
 
 	aircraft
@@ -495,7 +495,7 @@ mapdef country_large
 	map			"+country"
 	param		"large"
 	multiplayer	false
-	description	"_Some houses in the desert."
+	description	"_Country Desert"
 	size		"large"
 	maxaliens	6
 
@@ -580,6 +580,7 @@ mapdef desert_harvester_crash
 {
 	map				"+desert"
 	param			"harvester_crash"
+	description		"_Country Desert (Crashed Harvester)"
 	multiplayer		true
 	teams			2
 	hurtaliens		true
@@ -590,7 +591,6 @@ mapdef desert_harvester_crash
 		coop3
 		coop4
 	)
-	description		"_An alien Harvester has crashed in the wastelands."
 	maxaliens		14
 
 	aircraft
@@ -630,7 +630,7 @@ mapdef farm_large
 {
 	map			"+farm"
 	param		"large"
-	description	"_A farm in a rural area. Lots of land to cover, but few obstacles to impair line of sight."
+	description	"_Farm"
 	size		"large"
 	teams		4
 	multiplayer	false
@@ -672,7 +672,7 @@ mapdef farm_medium
 {
 	map			"+farm"
 	param		"medium"
-	description	"_A farm in a rural area. Lots of land to cover, but few obstacles to impair line of sight."
+	description	"_Farm"
 	size		"medium"
 	teams		4
 	multiplayer	false
@@ -711,7 +711,7 @@ mapdef farm_small
 {
 	map			"+farm"
 	param		"small"
-	description	"_A farm in a rural area. Lots of land to cover, but few obstacles to impair line of sight."
+	description	"_Farm"
 	size		"small"
 	teams		4
 	multiplayer	false
@@ -754,7 +754,7 @@ mapdef farm_small
 mapdef farm2
 {
 	map				"+farm2"
-	description		"_A farmhouse surrounded by fields and sheds. A UFO has landed in one of the fields."
+	description		"_Farm"
 	size			"medium"
 	teams			2
 	multiplayer		true
@@ -806,8 +806,8 @@ mapdef forest_large
 {
 	map			"+forest"
 	param		"large"
+	description	"_Forest"
 	multiplayer	false
-	description	"_Aliens are up to no good in this sparsely populated forest region."
 	size		"large"
 	maxaliens	15
 
@@ -846,8 +846,8 @@ mapdef forest_large_crash
 {
 	map			"+forest"
 	param		"large_crash"
+	description	"_Forest"
 	multiplayer	false
-	description	"_Aliens are up to no good in this sparsely populated forest region."
 	size		"large"
 	maxaliens	15
 	hurtaliens	true
@@ -887,8 +887,8 @@ mapdef forest_small
 {
 	map			"+forest"
 	param		"small"
+	description	"_Forest"
 	multiplayer	false
-	description	"_Aliens are up to no good in this sparsely populated forest region."
 	size		"small"
 	maxaliens	6
 
@@ -927,9 +927,9 @@ mapdef forest_small_crash
 {
 	map			"+forest"
 	param		"small_crash"
+	description	"_Forest"
 	multiplayer	false
 	hurtaliens	true
-	description	"_UFO crashed in this sparsely populated forest region."
 	size		"small"
 	maxaliens	6
 
@@ -972,7 +972,7 @@ mapdef frozen_alienlandingindustrial
 {
 	map				"+frozen"
 	param			"alienlandingindustrial"
-	description		"_An industrial area in a cold region."
+	description		"_Arctic Industrial Site"
 	maxaliens		14
 	multiplayer		true
 	teams			2
@@ -1025,7 +1025,7 @@ mapdef frozen_alienlandingnature
 {
 	map			"+frozen"
 	param		"alienlandingnature"
-	description	"_An industrial area in a cold region."
+	description	"_Arctic Industrial Site"
 	maxaliens	8
 	multiplayer		true
 	teams			2
@@ -1078,7 +1078,7 @@ mapdef frozen_industrial
 {
 	map			"+frozen"
 	param		"industrial"
-	description	"_An industrial area in a cold region."
+	description	"_Arctic Industrial Site"
 	maxaliens	8 //TODO: This is an arbitrary value right now.
 	multiplayer		true
 	teams			2
@@ -1129,7 +1129,7 @@ mapdef frozen_small
 {
 	map				"+frozen"
 	param			"small"
-	description		"_An underpopulated area in a cold region."
+	description		"_Arctic Industrial Site"
 	maxaliens		3
 	multiplayer		true
 	teams			2
@@ -1179,7 +1179,7 @@ mapdef frozen_crash_medium_industrial
 {
 	map			"+frozen"
 	param		"crash_medium_industrial"
-	description	"_An underpopulated area in a cold region."
+	description	"_Arctic Industrial Site"
 	maxaliens	12 //TODO: This is an arbitrary value right now.
 	hurtaliens	true
 	multiplayer		true
@@ -1230,7 +1230,7 @@ mapdef frozen_crash_medium_nature
 {
 	map			"+frozen"
 	param		"crash_medium_nature"
-	description	"_An underpopulated area in a cold region."
+	description	"_Arctic Industrial Site"
 	maxaliens	12 //TODO: This is an arbitrary value right now.
 	hurtaliens	true
 	multiplayer		true
@@ -1285,7 +1285,7 @@ mapdef frozen_crash_medium_nature
 mapdef harbour2
 {
 	map			"+harbour2"
-	description	"_An important container harbour is attacked by alien invaders."
+	description	"_Harbour"
 	size		"large"
 	multiplayer	true
 	teams		2
@@ -1340,7 +1340,7 @@ mapdef hills_harvester
 {
 	map			"+hills"
 	param		"harvester"
-	description	"_UFO landed in hills area."
+	description	"_Suburban Housing"
 	size		"small"
 	teams		4
 	multiplayer	false
@@ -1380,12 +1380,11 @@ mapdef hills_harvester
 	)
 }
 
-
 mapdef hills_harvester_desert
 {
 	map			"+hills"
 	param		"desert_harvester"
-	description	"_UFO landed in hills area."
+	description	"_Suburban Housing"
 	size		"small"
 	teams		4
 	multiplayer	false
@@ -1427,7 +1426,7 @@ mapdef hills_small
 {
 	map			"+hills"
 	param		"small_ufo"
-	description	"_UFO landed in hills area."
+	description	"_Suburban Housing"
 	size		"small"
 	teams		4
 	multiplayer	false
@@ -1473,8 +1472,8 @@ mapdef hills_small
 mapdef ice_medium
 {
 	map				"+ice"
-	description		"_An icy environment."
 	param			"medium"
+	description		"_Frozen Landscape"
 	campaign 		true
 	singleplayer	true
 	multiplayer		false
@@ -1513,8 +1512,8 @@ mapdef ice_medium
 mapdef ice_crash_medium
 {
 	map				"+ice"
-	description		"_An icy environment."
 	param			"medium"
+	description		"_Frozen Landscape"
 	campaign		true
 	singleplayer	true
 	multiplayer		false
@@ -1554,8 +1553,8 @@ mapdef ice_crash_medium
 mapdef ice_small
 {
 	map				"+ice"
-	description		"_An icy environment."
 	param			"small"
+	description		"_Frozen Landscape"
 	campaign 		true
 	singleplayer	true
 	multiplayer		false
@@ -1593,8 +1592,8 @@ mapdef ice_small
 mapdef ice_crash_small
 {
 	map				"+ice"
-	description		"_An icy environment."
 	param			"small"
+	description		"_Frozen Landscape"
 	campaign 		true
 	singleplayer	true
 	multiplayer		false
@@ -1638,7 +1637,7 @@ mapdef industrial_large
 {
 	map			"+industrial"
 	param		"large"
-	description	"_Industrial theme."
+	description	"_Industrial Site"
 	size		"large"
 	teams		4
 	multiplayer	false
@@ -1679,7 +1678,7 @@ mapdef industrial_small
 {
 	map			"+industrial"
 	param		"small"
-	description	"_Industrial theme."
+	description	"_Industrial Site"
 	size		"small"
 	teams		4
 	multiplayer	false
@@ -1724,7 +1723,7 @@ mapdef japan_large
 {
 	map			"+japan"
 	param		"large"
-	description	"_A classic eastern suburban area."
+	description	"_East Asian Village"
 	teams		2
 	multiplayer	false
 	gametypes (
@@ -1772,7 +1771,7 @@ mapdef japan_small
 {
 	map			"+japan"
 	param		"small"
-	description	"_A classic eastern suburban area."
+	description	"_East Asian Village"
 	teams		2
 	multiplayer	false
 	gametypes (
@@ -1824,7 +1823,7 @@ mapdef laboratory
 {
 	map				"+laboratory"
 	param			"default"
-	description		"_A laboratory where they examined found UFO wreck tiles."
+	description		"_Laboratory"
 	multiplayer		true
 	teams			2
 	gametypes (
@@ -1875,7 +1874,7 @@ mapdef laboratory_noufo
 {
 	map				"+laboratory"
 	param			"noufo"
-	description		"_A laboratory where they examined found UFO wreck tiles."
+	description		"_Laboratory"
 	multiplayer		true
 	teams			2
 	gametypes (
@@ -1928,8 +1927,8 @@ mapdef laboratory_noufo
 mapdef mansion_huge
 {
 	map				"+mansion"
-	description		"_A mansion near the coast."
 	param			"huge"
+	description		"_Mansion"
 	maxaliens		19
 	multiplayer		true
 	teams			4
@@ -1982,8 +1981,8 @@ mapdef mansion_huge
 mapdef mansion_medium
 {
 	map				"+mansion1"
-	description		"_A mansion. An important and influential person lives here."
 	param			"medium"
+	description		"_Mansion"
 	maxaliens		18
 	singleplayer	true
 	campaign		true
@@ -2030,8 +2029,8 @@ mapdef mansion_medium
 mapdef mansion_small
 {
 	map				"+mansion"
-	description		"_A mansion. An important and influential person lives here."
 	param			"small"
+	description		"_Mansion"
 	maxaliens		15
 	singleplayer	true
 	campaign		true
@@ -2082,8 +2081,8 @@ mapdef oriental_large
 {
 	map			"+oriental"
 	param		"large"
+	description	"_Middle Eastern Suburb"
 	multiplayer	false
-	description	"_A suburban district of an oriental area."
 	size		"small"
 	maxaliens	14
 	civilianteam	middle
@@ -2122,8 +2121,8 @@ mapdef oriental_medium
 {
 	map			"+oriental"
 	param		"medium"
+	description	"_Middle Eastern Suburb"
 	multiplayer	false
-	description	"_A suburban district of an oriental area."
 	size		"small"
 	maxaliens	8
 	civilianteam	middle
@@ -2163,9 +2162,9 @@ mapdef oriental_medium_crash
 {
 	map			"+oriental"
 	param		"medium_crash"
+	description	"_Middle Eastern Suburb"
 	multiplayer	false
 	hurtaliens	true
-	description	"_Crashed UFO in oriental suburban district."
 	size		"small"
 	maxaliens	8
 	civilianteam	middle
@@ -2205,8 +2204,8 @@ mapdef oriental_small
 {
 	map			"+oriental"
 	param		"small"
+	description	"_Middle Eastern Suburb"
 	multiplayer	false
-	description	"_A suburban district of an oriental area."
 	size		"small"
 	maxaliens	8
 	civilianteam	middle
@@ -2258,7 +2257,7 @@ mapdef scout_crash
 		coop4
 	)
 	maxaliens		5
-	description		"_A crashed Scout UFO."
+	description		"_Crashed Scout"
 
 	aircraft
 	(
@@ -2299,8 +2298,8 @@ mapdef scout_crash
 mapdef tropic_bigufo
 {
 	map			"+tropic"
-	description	"_A cleared stretch of land in the middle of the jungle."
 	param		"bigufo"
+	description	"_Tropical Jungle"
 	multiplayer	false
 	maxaliens	25
 
@@ -2339,8 +2338,8 @@ mapdef tropic_bigufo
 mapdef tropic_drug
 {
 	map			"+tropic"
-	description	"_A cleared stretch of land in the middle of the jungle."
 	param		"drug"
+	description	"_Tropical Jungle"
 	multiplayer	false
 	maxaliens	14
 
@@ -2380,8 +2379,8 @@ mapdef tropic_drug
 mapdef tropic_drug_crash
 {
 	map			"+tropic"
-	description	"_A cleared stretch of land in the middle of the jungle."
 	param		"drug_crash"
+	description	"_Tropical Jungle"
 	multiplayer	false
 	maxaliens	14
 	hurtaliens	true
@@ -2421,8 +2420,8 @@ mapdef tropic_drug_crash
 mapdef tropic_river
 {
 	map			"+tropic"
-	description	"_A river runs through this piece of jungle."
 	param		"river"
+	description	"_Tropical Jungle"
 	multiplayer	false
 	maxaliens	6
 
@@ -2461,8 +2460,8 @@ mapdef tropic_river
 mapdef tropic_river_crash
 {
 	map			"+tropic"
-	description	"_A river runs through this piece of jungle."
 	param		"river_crash"
+	description	"_Tropical Jungle"
 	hurtaliens	true
 	multiplayer	false
 	maxaliens	6
@@ -2508,7 +2507,7 @@ mapdef ufocrash
 	map				"+ufocrash"
 	singleplayer	false
 	multiplayer		false
-	description		"_UFO Crashsite."
+	description		"_UFO Crash Site"
 	storyrelated	true
 	maxaliens		30
 	hurtaliens		true
@@ -2540,8 +2539,8 @@ mapdef village_commercial
 {
 	map			"+village"
 	param		"commercial"
+	description	"_Suburban City"
 	multiplayer	false
-	description	"_A peaceful neighbourhood on the outskirts of a centre of population."
 	maxaliens	16
 
 	aircraft
@@ -2577,97 +2576,13 @@ mapdef village_commercial
 	)
 }
 
-/*
-mapdef village_large
-{
-	map			"+village"
-	param		"large"
-	multiplayer	false
-	description	"_A peaceful neighbourhood on the outskirts of a centre of population."
-	maxaliens	8 //TODO: This is an arbitrary value right now.
-
-	aircraft
-	(
-		craft_drop_firebird
-		craft_drop_raptor
-		craft_drop_herakles
-	)
-
-	ufos
-	(
-		craft_ufo_scout
-		craft_ufo_fighter
-		craft_ufo_harvester
-	)
-
-	terrains
-	(
-		"grass"
-		"cold"
-		"tropical"
-	)
-
-	cultures
-	(
-		//any
-	)
-
-	populations
-	(
-		"village"
-		"suburban"
-	)
-}
-
-mapdef village_residential
-{
-	map			"+village"
-	param		"residential"
-	multiplayer	false
-	description	"_A peaceful neighbourhood on the outskirts of a centre of population."
-	maxaliens	8 //TODO: This is an arbitrary value right now.
-
-	aircraft
-	(
-		craft_drop_firebird
-		craft_drop_raptor
-		craft_drop_herakles
-	)
-
-	ufos
-	(
-		craft_ufo_scout
-		craft_ufo_fighter
-		craft_ufo_harvester
-	)
-
-	terrains
-	(
-		"grass"
-		"cold"
-		"tropical"
-	)
-
-	cultures
-	(
-		//any
-	)
-
-	populations
-	(
-		"village"
-		"suburban"
-	)
-}
-*/
-
 mapdef village_small
 {
 	map			"+village"
 	param		"small"
+	description	"_Suburban City"
 	multiplayer	false
 	size "small"
-	description	"_A peaceful neighbourhood on the outskirts of a centre of population."
 	maxaliens	6
 
 	aircraft
@@ -2714,7 +2629,7 @@ mapdef base_initial
 {
 	map			"+baseattack"
 	param		"initial"
-	description	"_Base is under attack."
+	description	"_PHALANX Base Under Attack"
 	campaign	false
 	multiplayer	false
 	maxaliens	14
@@ -2749,7 +2664,7 @@ mapdef base_random
 {
 	map			"+baseattack"
 	param		"random"
-	description	"_Base is under attack."
+	description	"_PHALANX Base Under Attack"
 	campaign	false
 	multiplayer	false
 	maxaliens	16
@@ -2788,7 +2703,7 @@ mapdef cemetery_main
 {
 	map				"+cemetery"
 	param			"main"
-	description		"_A cemetery near a centre of population."
+	description		"_Cemetery"
 	multiplayer		false
 	maxaliens		6 //TODO: This is an arbitrary value right now.
 
@@ -2829,8 +2744,8 @@ mapdef cemetery_main
 mapdef city2
 {
 	map				"+city2"
-	description		"_A city high rise."
 	param			"city2"
+	description		"_City High-Rise"
 	multiplayer		false
 	campaign		true
 	maxaliens		23
@@ -2870,7 +2785,7 @@ mapdef city2
 mapdef city_disco
 {
 	map				"+city_disco"
-	description		"_A small neighbourhood in a warm urban region."
+	description		"_Urban Disco"
 	multiplayer		true
 	teams			2
 	gametypes (
@@ -2919,7 +2834,7 @@ mapdef city_disco
 mapdef community_centre
 {
 	map				"+community_centre"
-	description		"_A place where people come to relax and mingle."
+	description		"_Community Centre"
 	multiplayer		true
 	teams			3
 	gametypes (
@@ -2971,7 +2886,7 @@ mapdef community_centre
 mapdef construction
 {
 	map				"+construction"
-	description		"_An office complex under construction."
+	description		"_Construction Site"
 	param			"default"
 	maxaliens		29
 	multiplayer		true
@@ -3025,7 +2940,7 @@ mapdef construction
 mapdef druglord
 {
 	map				"+druglord"
-	description		"_A tropical area where several suspected criminals have made their homes."
+	description		"_Tropical Jungle Estate"
 	multiplayer		true
 	teams			2
 	gametypes (
@@ -3084,7 +2999,7 @@ mapdef eaglenest
 	)
 	maxaliens		5
 
-	description		"_A small estate in the mountains."
+	description		"_Mountain Estate"
 
 	aircraft
 	(
@@ -3125,7 +3040,7 @@ mapdef eaglenest
 mapdef gasstation
 {
 	map				"+gasstation"
-	description		"_A place where citizens come to replenish their vehicles' fuel supply."
+	description		"_Gas Station"
 	multiplayer		true
 	teams			2
 	gametypes (
@@ -3173,7 +3088,7 @@ mapdef gasstation
 mapdef italy
 {
 	map			"+italy"
-	description	"_A small office in a mountainous region."
+	description	"_Luxury House"
 	teams		2
 	multiplayer	true
 	gametypes (
@@ -3223,7 +3138,7 @@ mapdef italy
 mapdef japan_default
 {
 	map			"+japan"
-	description	"_A classic eastern suburban area."
+	description	"_East Asian Village"
 	param		"default"
 	teams		2
 	multiplayer	true
@@ -3275,7 +3190,7 @@ mapdef japan_default
 mapdef mart
 {
 	map			"+mart"
-	description	"_A kind of communal gathering centre annex foraging facility, known as a supermarket."
+	description	"_Supermarket"
 	multiplayer	true
 	teams		2
 	gametypes (
@@ -3327,7 +3242,7 @@ mapdef mart
 mapdef military_convoy
 {
 	map				"+military_convoy"
-	description		"_A military convoy has caught the eye of the aliens."
+	description		"_Military Convoy Ambush Site"
 	multiplayer		true
 	teams			2
 	gametypes (
@@ -3375,7 +3290,7 @@ mapdef military_convoy
 mapdef oriental_mosque
 {
 	map				"+oriental_mosque"
-	description		"_An urban district in an oriental region."
+	description		"_Middle Eastern Suburb"
 	multiplayer		true
 	teams			2
 	gametypes (
@@ -3426,7 +3341,7 @@ mapdef oriental_mosque
 mapdef shelter
 {
 	map				"+shelter"
-	description		"_A shelter that was built to house people in times of major disasters. Some internal blast doors may have been closed."
+	description		"_Military Shelter"
 	size			"medium"
 	teams			4
 	multiplayer		true
@@ -3481,10 +3396,9 @@ mapdef shelter
 /////////////////////////////
 
 mapdef solarplant
-
 {
 	map				"+solarplant"
-	description		"_A solarplant project in the desert."
+	description		"_Solar Power Plant"
 	param			"default"
 	campaign		false
 	maxaliens		30
@@ -3525,7 +3439,7 @@ mapdef solarplant
 mapdef spedition
 {
 	map			"+spedition"
-	description	"_A small industrial area."
+	description	"_Workshop"
 	multiplayer	true
 	teams		2
 	gametypes (
@@ -3575,7 +3489,7 @@ mapdef spedition
 mapdef stadium
 {
 	map				"+stadium"
-	description		"_A stadium used for various recreational events."
+	description		"_Basketball Stadium"
 	multiplayer		true
 	teams			2
 	gametypes (
@@ -3626,7 +3540,7 @@ mapdef stadium
 mapdef tower
 {
 	map				"+tower"
-	description		"_An office complex in the centre of town."
+	description		"_Office Complex"
 	multiplayer		true
 	teams			3
 	gametypes (
@@ -3680,7 +3594,7 @@ mapdef tower
 mapdef transport
 {
 	map			"+transport"
-	description	"_An industrial area, used for loading and unloading goods."
+	description	"_Warehouse"
 	multiplayer	true
 	teams		2
 	gametypes (
@@ -3728,7 +3642,7 @@ mapdef transport
 mapdef bungalow
 {
 	map			"bungalow"
-	description	"_A small bungalow."
+	description	"_Bungalow"
 	multiplayer	true
 	teams		3
 	gametypes (
@@ -3772,7 +3686,7 @@ mapdef bungalow
 mapdef bungalow2
 {
 	map			"bungalow2"
-	description	"_A small bungalow."
+	description	"_House"
 	multiplayer	true
 	teams		3
 	gametypes (
@@ -3818,7 +3732,7 @@ mapdef bungalow2
 mapdef bunker
 {
 	map			"bunker"
-	description	"_A bunker used in a previous conflict."
+	description	"_Military Bunker"
 	multiplayer	true
 	teams		2
 	gametypes (
@@ -3867,7 +3781,7 @@ mapdef bunker
 mapdef city_industry
 {
 	map				"city_industry"
-	description		"_A small industry city area."
+	description		"_Urban Warehouse"
 	multiplayer		true
 	teams			2
 	gametypes (
@@ -3912,7 +3826,7 @@ mapdef city_industry
 mapdef city_train
 {
 	map				"city_train"
-	description		"_A small neighbourhood in a warm urban region."
+	description		"_Rural Village"
 	multiplayer		true
 	teams			2
 	gametypes (
@@ -3960,7 +3874,7 @@ mapdef city_train
 mapdef corrupter_crash
 {
 	map				"corrupter_crash"
-	description		"_A crashed UFO-Corrupter."
+	description		"_Corrupter UFO Crash Site"
 	multiplayer		true
 	teams			2
 	campaign		false // TODO: activate once the corrupter is available in the campaign
@@ -4006,7 +3920,7 @@ mapdef corrupter_crash
 mapdef dam
 {
 	map			"dam"
-	description	"_A hydroelectricity dam that is threatened by the alien invaders."
+	description	"_Hydroelectric Dam"
 	multiplayer	true
 	teams		2
 	gametypes (
@@ -4054,7 +3968,7 @@ mapdef dam
 mapdef england
 {
 	map				"england"
-	description		"_A small village."
+	description		"_Small Village"
 	multiplayer		true
 	teams			3
 	gametypes (
@@ -4103,7 +4017,7 @@ mapdef england
 mapdef estate
 {
 	map				"estate"
-	description		"_An estate owned by rich and influential people."
+	description		"_Estate"
 	multiplayer		true
 	teams			2
 	gametypes (
@@ -4148,7 +4062,7 @@ mapdef estate
 mapdef excavation
 {
 	map				"excavation"
-	description		"_An excavation site that has fallen under alien attack."
+	description		"_Archaeological Dig"
 	multiplayer		true
 	teams			2
 	maxaliens		23
@@ -4198,7 +4112,7 @@ mapdef excavation
 mapdef ferry
 {
 	map				"ferry"
-	description		"_A ferry."
+	description		"_Ferry"
 	size			"medium"
 	teams			4
 	multiplayer		true
@@ -4248,7 +4162,7 @@ mapdef ferry
 mapdef fighter_crash
 {
 	map				"fighter_crash"
-	description		"_A small UFO has crashed in this mining region."
+	description		"_Fighter UFO Crash Site"
 	multiplayer		true
 	teams			2
 	maxaliens		6 //info_alien_start spawnpoints:19
@@ -4296,7 +4210,7 @@ mapdef fighter_crash
 mapdef fueldump
 {
 	map				"fueldump"
-	description		"_A fuel depot the aliens try to destroy."
+	description		"_Fuel Depot"
 	multiplayer		true
 	teams			2
 	gametypes (
@@ -4338,7 +4252,7 @@ mapdef fueldump
 mapdef gate
 {
 	map				"gate"
-	description		"_A depot with the name 'The Gate' where secret technology is stored."
+	description		"_Secret Depot"
 	multiplayer		true
 	teams			2
 	gametypes (
@@ -4386,7 +4300,7 @@ mapdef gate
 mapdef harbour
 {
 	map				"harbour"
-	description		"_A local harbour."
+	description		"_Port"
 	multiplayer		true
 	teams			2
 	gametypes (
@@ -4432,6 +4346,7 @@ mapdef harbour
 mapdef lake_ice
 {
 	map				"lake_ice"
+	description		"_Snowy Logging Site"
 	multiplayer		true
 	teams			2
 	gametypes (
@@ -4441,7 +4356,6 @@ mapdef lake_ice
 		coop3
 		coop4
 	)
-	description		"_A small settlement in winter."
 	maxaliens		16
 
 	aircraft
@@ -4478,7 +4392,7 @@ mapdef lake_ice_big
 	map				"lake_ice_big"
 	multiplayer		true
 	teams			3
-	description		"_A small settlement in winter."
+	description		"_Snowy Logging Site"
 	maxaliens		28
 
 	gametypes (
@@ -4527,7 +4441,7 @@ mapdef lake_ice_big
 mapdef mine
 {
 	map			"mine"
-	description	"_An old mine."
+	description	"_Old Mine"
 	multiplayer	true
 	teams		3
 	gametypes (
@@ -4580,7 +4494,7 @@ mapdef mine
 mapdef neighbourhood
 {
 	map			"neighbourhood"
-	description	"_Neighbourhood."
+	description	"_Residential Neighbourhood"
 	multiplayer	true
 	teams		2
 	gametypes (
@@ -4624,7 +4538,7 @@ mapdef neighbourhood
 mapdef office
 {
 	map				"office"
-	description		"_An office complex on the outskirts of town."
+	description		"_Office Complex"
 	multiplayer		true
 	teams			2
 	gametypes (
@@ -4670,7 +4584,7 @@ mapdef office
 mapdef oriental
 {
 	map				"oriental"
-	description		"_An urban district in an oriental region."
+	description		"_Middle Eastern Suburb"
 	multiplayer		true
 	teams			2
 	gametypes (
@@ -4717,7 +4631,7 @@ mapdef oriental
 mapdef pipes_const
 {
 	map				"pipes_const"
-	description		"_Underground pipe construction site."
+	description		"_Sewerage Construction Site"
 	multiplayer		true
 	teams			3
 	gametypes (
@@ -4764,7 +4678,7 @@ mapdef pipes_const
 mapdef resort
 {
 	map				"resort"
-	description		"_A luxurious vacation resort."
+	description		"_Luxurious Resort"
 	multiplayer		true
 	teams			2
 	gametypes (
@@ -4810,7 +4724,7 @@ mapdef resort
 mapdef rivertown
 {
 	map				"rivertown"
-	description		"_A rather old-fashioned suburban district."
+	description		"_Old Town Center"
 	multiplayer		true
 	teams			4
 	gametypes (
@@ -4862,7 +4776,7 @@ mapdef rivertown
 mapdef small_house
 {
 	map			"small_house"
-	description		"A small house."
+	description		"_Small House"
 	multiplayer		false
 	maxaliens		8
 
@@ -4895,7 +4809,7 @@ mapdef small_house
 mapdef small_street
 {
 	map			"small_street"
-	description		"A small suburban street."
+	description		"_Small Suburban Street"
 	multiplayer		false
 	maxaliens		6
 
@@ -4928,7 +4842,7 @@ mapdef small_street
 mapdef subway
 {
 	map				"subway"
-	description		"_A subway station in a suburban part of town."
+	description		"_Subway Station"
 	multiplayer		true
 	teams			2
 	gametypes (
@@ -4975,7 +4889,7 @@ mapdef subway
 mapdef village
 {
 	map				"village"
-	description		"_A suburban district."
+	description		"_Suburban City"
 	multiplayer		true
 	teams			2
 	gametypes (
@@ -5021,7 +4935,7 @@ mapdef village
 mapdef wilderness
 {
 	map				"wilderness"
-	description		"_A house in the wilderness."
+	description		"_Wilderness"
 	multiplayer		true
 	teams			2
 	gametypes (
@@ -5070,7 +4984,7 @@ mapdef wilderness
 mapdef city2mp
 {
 	map				"+city2"
-	description		"_A city high rise."
+	description		"_City High-Rise (MP)"
 	param			"city2mp"
 	maxaliens		23
 	singleplayer	false
@@ -5097,8 +5011,8 @@ mapdef city2mp
 mapdef frozen_mp_coop
 {
 	map				"+frozen"
-	description		"_An underpopulated area in a cold region."
 	param			"multiplayercoop"
+	description		"_Frozen Industrial Site (Coop)"
 	maxaliens		12
 	singleplayer	false
 	campaign		false
@@ -5115,8 +5029,8 @@ mapdef frozen_mp_coop
 mapdef frozen_mp_deathmatch
 {
 	map				"+frozen"
-	description		"_An underpopulated area in a cold region."
 	param			"multiplayerdeathmatch"
+	description		"_Frozen Industrial Site (MP)"
 	maxaliens		12
 	singleplayer	false
 	campaign		false
@@ -5142,7 +5056,7 @@ mapdef frozen_mp_deathmatch
 mapdef alienbase
 {
 	map				"+alienbase"
-	description		"_An alien base."
+	description		"_Alien Base"
 	storyrelated	true
 	maxaliens		30
 	multiplayer		true
@@ -5164,7 +5078,7 @@ mapdef baseattack
 	map			".baseattack"
 	multiplayer	false
 	storyrelated	true
-	description	"_Base is under attack."
+	description	"_PHALANX Base Under Attack"
 	maxaliens	16
 }
 
@@ -5176,7 +5090,7 @@ mapdef rescue
 {
 	map				"+rescue"
 	multiplayer		false
-	description		"_Rescue mission."
+	description		"_PHALANX Craft Crash Site"
 	storyrelated		true
 	maxaliens		30
 	hurtaliens		true
