@@ -632,7 +632,7 @@ float INVSH_GetItemWeight (const item_t &item)
  * @param[in] from Index of the container the item comes from.
  * @param[in] to Index of the container the item is being placed.
  * @param[in] item The item that is being added.
- * @param[in] item The max permitted weight.
+ * @param[in] maxWeight The max permitted weight.
  * @return @c true if it is Ok to add the item @c false otherwise.
  */
 bool INVSH_CheckAddingItemToInventory (const inventory_t *inv, containerIndex_t from, containerIndex_t to, const item_t &item, int maxWeight)

@@ -325,8 +325,9 @@ void G_EventActorStats (const edict_t* ent, int playerMask)
 }
 
 /**
- * @brief Actor has been wounded/treated
- * @param[in] ent The actor whose wound status has changed
+ * @brief Send info about an actor's wounds to the client.
+ * @param[in] ent The actor whose wound status we are sending.
+ * @param[in] bodyPart The body part index we are sending wound info about.
  * @note This event is sent to the player this actor belongs to
  */
 void G_EventActorWound (const edict_t *ent, const int bodyPart)
