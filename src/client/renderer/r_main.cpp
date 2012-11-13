@@ -768,7 +768,8 @@ static inline bool R_CheckExtension (const char *extension)
 		Com_Printf("%s not found\n", extension);
 
 #ifdef GL_VERSION_ES_CM_1_0
-	if(strcmp(extension, "GL_ARB_multitexture") == 0) { /* Always present in GLES */
+	if (strcmp(extension, "GL_ARB_multitexture") == 0 ||
+		strcmp(extension, "GL_ARB_vertex_buffer_object") == 0) {
 		found = true;
 		Com_Printf("Overriding %s - it is always present in GLES\n", extension);
 	}
