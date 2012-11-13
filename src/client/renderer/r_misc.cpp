@@ -355,6 +355,7 @@ void R_ReinitOpenglContext (void)
 	/* Re-initialize GL state */
 	R_SetDefaultState();
 	R_InitPrograms();
+	R_ResetArrayState();
 	/* Re-upload all textures */
 	R_InitMiscTexture();
 	R_ReloadImages();
