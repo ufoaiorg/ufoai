@@ -36,6 +36,30 @@ Addenda
 None."
 }
 
+msgid craft_electronics_ew_alien_pre_txt {
+text "_Commander, we've recovered an interesting set of electronics from one of our disassembled UFOs. From our preliminary testing, it appears to be an alien EW (Electronic Warfare) suite.
+
+This is an extremely important find, Commander. If we can decipher how these alien electronics work, we could improve our targeting and detection systems dramatically. This means a vast increase in our aircraft's survivability against UFOs if we can adapt the suite for our own purposes.
+
+Please, Commander, approve this project as soon as you possibly can.
+
+Cdr. Navarre"
+}
+
+msgid craft_electronics_ew_alien_txt {
+text "_Commander, I'm happy to report that we've cracked the code. We now have a list of primary EW (Electronic Warfare) frequencies used by the aliens, and a good understanding of how this powerful piece of electronics does what it does.
+
+Of course, before you get too excited, let me stress that we have not found a magic path through the aliens' defences. Regardless of what we take away from this research, it's not going to end the war or make UFOs any less dangerous. This is because of the EW suite's most important function -- it has an independent onboard intelligence that adapts to its combat environment.
+
+This intelligence is continually experimenting, trying to keep enemy systems off-balance, changing its methods and deviating from its preferred frequencies to try ones that might be more difficult to work with but could bypass enemy jamming. We even believe that, when patched into a UFO's main computer, this suite will hook into other onboard systems to make efficiency-increasing adjustments based on enemy EW activity. Particularly to the targeting computers.
+
+Besides the intelligent computer at its heart, the suite has projectors of every kind, capable of saturating virtually any frequency in the electromagnetic spectrum, even several frequencies at a time. It is also capable of 'throwing' heat several metres away from the craft, causing thermal spikes on infrared sensors that can fool missiles and draw them away from the real target. Lastly the suite comes with a set of decoys that can emulate practically any sensor signature, deployed as and when the computer thinks it's necessary.
+
+With some modifications, we've been able to make the suite work with our current aircraft electronics. Our main success has been in developing a set of software upgrades which patch the alien EW suite into the onboard intelligence systems of our aircraft. It's a hack if there ever was one, but it will do for now.
+
+Cdr. Navarre"
+}
+
 msgid craft_shield_light_txt {
 text "_Technical Specifications: Polymer Aircraft Armour
 
@@ -98,6 +122,24 @@ The main drawback of these alien materials is their weight. They are significant
 Even a very thin skin of alien materials offers a substantial protective benefit. The new aircraft plating we've designed takes full advantage of these capabilities and shows the supreme toughness of the alien materials.
 
 The new plating will be essential in keeping our current airfleet effective against the mounting alien threat. You and I both know the price tag of new aircraft, Commander -- we cannot afford to let any of our planes become obsolete.
+
+Cdr. Navarre"
+}
+
+msgid craft_shield_polymer_alien_pre_txt {
+text "_Commander, the skin of armour wrapped around that Gunboat UFO that we investigated suggested several innovations we might be able to deploy in our own aircraft. It wasn't just thicker, as most alien armour improvements have been. It was lighter and more durable than anything we've seen.
+
+Give us some time in the lab, sir, and maybe we can come up with new armour fabricration techniques derived from this UFO to outfit our own aircraft.
+
+Cdr. Navarre"
+}
+
+msgid craft_shield_polymer_alien_txt {
+text "_Commander, we've finished our examination of the new alien armour and come up with several improvements we can apply to our own manufacturing techniques for a more durable aircraft armour.
+
+The key innovations lay in the way the materials are layered and woven together, making remarkably thin applications very durable. This will improve the main drawback of our current armour, which is so heavy that we're forced to sacrifice protection for airspeed.
+
+Start fabricating this new armour in the workshop as soon as possible, sir. It will provide a dramatic step up in our aircrafts' defense over our existing armour solutions without adding any more drag to the aircraft.
 
 Cdr. Navarre"
 }

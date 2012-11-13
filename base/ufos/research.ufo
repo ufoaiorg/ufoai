@@ -1052,6 +1052,39 @@ tech rs_weapon_bolterrifle_ammo
 	producetime	24
 }
 
+/* @TEMP-awaiting-md2s-2.5dev
+tech rs_weapon_bolterrifle_am_ammo
+{
+	name	"_Electromagnetic Rifle Antimatter Magazine"
+	type	"weapon"
+	up_chapter	equipment
+
+	description {
+		default "*msgid:bolterrifle_am_txt"
+	}
+	pre_description {
+		default "*msgid:bolterrifle_am_pre_txt"
+	}
+
+	require_AND
+	{
+		tech rs_damage_normal
+		tech rs_weapon_bolterrifle
+		tech rs_craft_ammo_am_missile
+	}
+
+	require_for_production
+	{
+	    item (alienmaterials 5)
+		item (antimatter 3)
+	}
+
+	provides	bolterrifle_am_ammo
+	time	5000
+	producetime	90
+}
+*/
+
 tech rs_weapon_combatknife
 {
 	type	"weapon"
@@ -4802,6 +4835,52 @@ tech rs_craft_shield_plating
 	model	"aircraft/craft_arm_plate/plating"
 }
 
+/* @TEMP-awaiting-md2s-2.5dev
+tech rs_craft_shield_polymer_alien
+{
+	type		"craftitem"
+	up_chapter	crafts
+	name		"_Alien Polymer Armour"
+	pre_description {
+		default	"*msgid:craft_shield_polymer_alien_pre_txt"
+	}
+	description {
+		default "*msgid:craft_shield_polymer_alien_txt"
+	}
+	mail_pre
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to	"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+	mail
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to	"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+
+	provides	craft_shield_polymer_alien
+
+	require_AND {
+		tech	rs_alien_materials
+		tech rs_craft_ufo_gunboat
+	}
+
+	require_for_production
+	{
+	    item (alienmaterials 500)
+	}
+
+	time		8000
+	producetime	350
+
+	model	"aircraft/craft_arm_poly_alien/polymer_alien"
+}
+*/
+
 tech rs_craft_alien_astrogation
 {
 	name		"_Alien Astrogation"
@@ -5337,21 +5416,26 @@ tech rs_craft_el_alien_ew
 	type		"craftitem"
 	up_chapter	crafts
 	name		"_Alien Electronic Warfare Suite"
+	pre_description {
+		default	"*msgid:craft_electronics_ew_alien_pre_txt"
+	}
 	description {
-		default "*msgid:craft_electronics_raven_txt"
+		default "*msgid:craft_electronics_ew_alien_txt"
 	}
 
-	// Require itself to make this not appear in normal gameplay
 	require_AND
 	{
-		tech rs_craft_el_alien_ew
+		item (craft_el_alien_ew 1)
 	}
 
 	provides	craft_el_alien_ew
-	time		0
-	producetime	100
+	time		3000
+	producetime	200
 
 	model	"aircraft/craft_item_raven_ecm/ecm"
+/* @TEMP-awaiting-md2s-2.5dev
+	model	"aircraft/craft_item_ew_alien/ew_alien"
+*/
 }
 
 //========================

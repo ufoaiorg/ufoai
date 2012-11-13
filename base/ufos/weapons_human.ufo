@@ -1800,3 +1800,73 @@ item bolterrifle_ammo
 		}
 	}
 }
+
+/* @TEMP-awaiting-md2s-2.5dev
+item bolterrifle_am_ammo
+{
+	name			"_Electromagnetic Rifle Antimatter Magazine"
+	model			"weapons/bolterrifle/bolterrifle_am_clip"
+	type			"ammo"
+	animationindex	0
+	shape			"0 0 3 1"
+	center			"0 0 0"
+	scale			1.2
+	price			930
+	size			9
+	is_primary		true
+	is_heavy		true
+	dmgtype			"normal"
+	weight			1.4
+
+	weapon_mod
+	{
+		weapon bolterrifle
+		firedef
+		{
+			name		"_Snap Shot"
+			skill		"assault"
+			projtl		bolter
+			impact		bolterImpact
+			hitbody		null
+			firesnd		"weapons/bullet-bolter"
+			impsnd		"impact/nail-impact"
+			bodysnd 	"impact/nail-bodyimpact"
+			sndonce		true
+			speed		2000
+			spread		"2.5 2.5"
+			crouch		1
+			range		100
+			shots		1
+			ammo		1
+			time		18
+			damage		"220 20"
+			dmgweight	"blast"
+			reaction	true
+			throughwall 2
+		}
+
+		firedef
+		{
+			name				"_Aimed Shot"
+			skill				"sniper"
+			projtl				bolter
+			impact				bolterImpact
+			hitbody				null
+			firesnd				"weapons/bullet-bolter"
+			impsnd				"impact/nail-impact"
+			bodysnd 			"impact/nail-bodyimpact"
+			speed				2000
+			spread				"0.65 0.65"
+			crouch				0.6
+			range				100
+			shots				1
+			ammo				1
+			time				24
+			damage				"220 20"
+			dmgweight			"blast"
+			reaction	true
+			throughwall 2
+		}
+	}
+}
+*/

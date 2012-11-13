@@ -99,6 +99,11 @@ components craft_ufo_fighter_cmp {
 		amount 1
 		numbercrash %
 	}
+	item {
+		id craft_el_alien_ew
+		amount 1
+		numbercrash %
+	}
 }
 
 // UFO -- Harvester
@@ -143,6 +148,11 @@ components craft_ufo_harvester_cmp {
 	item {
 		id craft_ammo_am_missile
 		amount 12
+		numbercrash %
+	}
+	item {
+		id craft_el_alien_ew
+		amount 1
 		numbercrash %
 	}
 }
@@ -222,6 +232,11 @@ components craft_ufo_gunboat_cmp {
 		amount 24
 		numbercrash %
 	}
+	item {
+		id craft_el_alien_ew
+		amount 1
+		numbercrash %
+	}
 }
 
 // UFO -- Corrupter
@@ -258,6 +273,11 @@ components craft_ufo_corrupter_cmp {
 		amount 3
 		numbercrash %
 	}
+	item {
+		id craft_el_alien_ew
+		amount 1
+		numbercrash %
+	}
 }
 
 // UFO -- Bomber
@@ -292,6 +312,11 @@ components craft_ufo_bomber_cmp {
 	item {
 		id craft_weapon_particle_beam
 		amount 3
+		numbercrash %
+	}
+	item {
+		id craft_el_alien_ew
+		amount 1
 		numbercrash %
 	}
 }

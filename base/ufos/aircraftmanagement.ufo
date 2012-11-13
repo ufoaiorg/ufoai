@@ -1060,6 +1060,22 @@ craftitem craft_shield_plating
 	maxspeed	0.9
 }
 
+/* @TEMP-awaiting-md2s-2.5dev
+craftitem craft_shield_polymer_alien
+{
+	name				"_Alien Polymer Armour"
+	crafttype			"shield"
+	installationTime	36
+	price				3000
+	size				50 // "light"
+	model				"aircraft/craft_arm_poly_alien/polymer_alien"
+
+	shield		+16
+	speed		0.9
+	maxspeed	0.9
+}
+*/
+
 craftitem craft_el_alien_ew
 {
 	name				"_Alien Electronic Warfare Suite"
@@ -1068,7 +1084,9 @@ craftitem craft_el_alien_ew
 	installationTime	1
 	price				8000
 	model				"aircraft/craft_item_raven_ecm/ecm"
-
+/* @TEMP-awaiting-md2s-2.5dev
+	model				"aircraft/craft_item_ew_alien/ew_alien"
+*/
 	ecm		1.5
 }
 

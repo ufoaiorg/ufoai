@@ -579,6 +579,28 @@ This idea holds a lot of promise, Commander. We would like your authorisation fo
 Cdr. Navarre"
 }
 
+msgid bolterrifle_am_txt {
+text "_Commander, we've completed the designs for an Antimatter Flechette round for the Electromagnetic Rifle.
+
+The flechettes contain a tiny amount of antimatter inside the tip. The heat and force of the kinetic impact should always be enough to cause the antimatter to detonate, resulting in a significant explosion in spite of the smaller size of the round.
+
+The sheer expense involved in creating these rounds mean we should probably save them for decisive battles. They are difficult and time-consuming to produce, and they use up precious antimatter that may be needed elsewhere. But when we need victory at all costs, this weapon will transform any sniper into a killing machine.
+
+Cdr. Navarre"
+}
+
+msgid bolterrifle_am_pre_txt {
+text "_Commander, our research into antimatter weaponry has given us a lot of new ideas for creating new weapons and modifying our old ones. Unfortunately it has also highlighted the crippling limitations of most of those ideas.
+
+Using antimatter in our conventional firearms -- in any capacity -- is out of the question. There are too many shocks and vibrations involved in the firing of conventional weapons for us to shield against. All attempts we've made have suffered containment failures and other explosive mishaps. However, it's occurred to us that our own Bolter Rifle may be just unconventional enough for our needs.
+
+What we propose to do is to create a new type of ammunition for the Bolter using antimatter as a primary component. If we can place a tiny quantity of antimatter at the heart of the round, we can engineer this antimatter to break free of its containment and explode on impact. This should create an impressive little blast that will make any alien think twice about sticking its head out of cover again.
+
+Please let me know when you'd like us to start work, Commander.
+
+Cdr. Navarre"
+}
+
 msgid combatknife_txt {
 text "_Technical Specifications: Combat Knife
 
