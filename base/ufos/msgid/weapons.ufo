@@ -1312,11 +1312,11 @@ Cdr. Navarre"
 msgid plasblaster_txt {
 text "_Commander, here's my report on our alien plasma blaster research.
 
-This is by far the heaviest member we've observed out of the plasma weapon family, and it seems unlikely that they will get any larger. The plasma blaster is made up of a thick containment plastic housing a heavy duty plasma chamber capable of spitting out extremely thick bolts.
+This is the heaviest member we've observed out of the plasma weapon family, and it seems unlikely that they will get any larger. The plasma blaster is made up of a thick containment plastic housing a heavy duty plasma chamber capable of spitting out extremely thick bolts.
 
 It's capable of firing plasma bolts in single and burst modes but it seems especially designed to fire what we're calling around the office the Ball of Pain. A thick container of plasma that sprays especially widely on impact, this special firing mode will be incredibly deadly in close quarters, where accuracy can be sacrificed for sheer killing power.
 
-Lastly, we've mapped out the weapon's full control scheme for you, which is documented in the attached field manual. This could be a significant upgrade in power for our close weapons specialists. I recommend you deploy it immediately.
+Lastly, we've mapped out the weapon's full control scheme for you, which is documented in the attached field manual. This could be a significant upgrade in power for our close weapons specialists, but it is probably not accurate enough to be effective in mid-range engagements. I recommend you deploy it immediately.
 
 Cdr. Navarre"
 }
@@ -1433,6 +1433,8 @@ The needles are fired by a fast-changing magnetic field inside the barrel, hooke
 One of the main components that caught my attention is the powerful electromagnet array. It's laid out as a 'coilgun', many electromagnetic coils wrapped around the barrel, a method we'd previously thought to be too energy-inefficient to use on the battlefield. The aliens seem to have made it viable through clever use of superconductors and alien engineering. We may be able to adapt this technology to our own EM weapons research, I'll take a closer look and get back to you when I have anything concrete.
 
 Instead of an ordinary top-mounted sniper scope, the aliens have incorporated a highly effective holographic aiming mechanism and rangefinder which projects directly in front of the user's leading eye. Targets are shown with absolute clarity at any range, the sight automatically compensates for natural body motions, and it will even tell the user the exact chances of scoring a hit at any time. We've run this thing by our own troops and -- once they got used to it -- the alien holo-sight was the preferred choice by an amazing 100% compared to our own scopes. If we can adapt and duplicate this sight in a self-contained package, we could create the ultimate aiming unit to use on any of our rifles, possibly even some handguns.
+
+The Needler's electromagnet array makes it much heavier than the average rifle, which could reduce the effectiveness of some of our troops. But given its deadly power, I'm sure more than a few of our boys will gladly shed some other equipment to carry the Needler into battle.
 
 Equipped with a bipod for prone firing and a very large magazine, the needler is a serious threat to our troops. Snipers can inflict serious casualties on exposed troops and we cannot afford the losses. If a needler is spotted, our soldiers will have to make optimal use of cover and try to flank whilst staying out of sight. A direct assault on an entrenched needler gun will likely prove suicidal and I don't recommend anyone to try it, Commander.
 

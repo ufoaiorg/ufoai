@@ -131,7 +131,7 @@ item armour_medium
 	scale		0.7
 	price		7500
 	size		120
-	weight		12.0
+	weight		9.0
 	useable		"phalanx"
 	armourpath	"medium"
 
@@ -195,7 +195,7 @@ item armour_power
 	scale		0.7
 	price		32000
 	size		150
-	weight		15.0
+	weight		14.0
 	useable		"phalanx"
 	armourpath	"power"
 

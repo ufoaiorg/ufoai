@@ -205,7 +205,7 @@ item laser_ammo
 			shots		1
 			ammo		3
 			time		12
-			damage		"80 10"
+			damage		"90 10"
 			dmgweight	"laser_heavy"
 			reaction	true
 		}
@@ -227,7 +227,7 @@ item laser_ammo
 			shots				3
 			ammo				12
 			time				18
-			damage				"80 10"
+			damage				"90 10"
 			dmgweight			"laser_heavy"
 			reaction			true
 		}
@@ -256,7 +256,7 @@ item electrolaser
 	price			1000
 	size			35
 	is_primary		true
-	weight			7.8
+	weight			3.2
 }
 
 item laser_ammo_stun
@@ -272,7 +272,7 @@ item laser_ammo_stun
 	size			7
 	is_primary		true
 	dmgtype			"stun_electro"
-	weight			0.5
+	weight			0.3
 
 	weapon_mod
 	{

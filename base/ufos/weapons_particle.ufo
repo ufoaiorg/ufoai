@@ -218,7 +218,7 @@ item pbeamcannon
 	size			70
 	is_primary		true
 	is_heavy		true
-	weight			4.4
+	weight			6.0
 }
 
 item pbeamcannon_ammo

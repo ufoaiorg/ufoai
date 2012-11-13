@@ -18,7 +18,7 @@ item medikit
 	oneshot		true
 	ammo			5
 	dmgtype 	"normal"
-	weight		0.5
+	weight		2.0
 
 	weapon_mod
 	{
@@ -304,7 +304,7 @@ item smokegrenade
 	is_misc	true
 	thrown		true
 	dmgtype "smoke"
-	weight		0.3
+	weight		0.2
 
 	weapon_mod
 	{
@@ -381,7 +381,7 @@ item stungrenade
 	is_misc	true
 	thrown		true
 	dmgtype "stun_gas"
-	weight		0.3
+	weight		0.2
 
 	weapon_mod
 	{
@@ -465,7 +465,7 @@ item stungrenade_alien
 	is_misc	true
 	thrown		true
 	dmgtype "stun_gas"
-	weight		0.3
+	weight		0.2
 
 	weapon_mod
 	{
@@ -548,7 +548,7 @@ item incgrenade
 	is_misc	true
 	thrown		true
 	dmgtype 	"incendiary"
-	weight		0.6
+	weight		0.2
 
 	weapon_mod
 	{
@@ -631,7 +631,7 @@ item plasmagrenade
 	is_misc	true
 	thrown		true
 	dmgtype "plasma"
-	weight		0.5
+	weight		0.6
 
 	weapon_mod
 	{

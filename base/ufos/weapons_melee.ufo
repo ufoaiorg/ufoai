@@ -16,7 +16,7 @@ item knife
 	is_secondary	true
 	thrown			true
 	dmgtype			"normal"
-	weight			0.4
+	weight			0.5
 
 	weapon_mod
 	{
@@ -147,7 +147,7 @@ item stunrod
 	oneshot			true
 	ammo			4
 	dmgtype			"stun_electro"
-	weight			3.0
+	weight			1.8
 
 	weapon_mod
 	{
@@ -227,7 +227,7 @@ item kerrblade
 	is_secondary	true
 	thrown			true
 	dmgtype			"normal"
-	weight			2.0
+	weight			3.0
 
 	weapon_mod
 	{
@@ -291,7 +291,7 @@ item plasblade
 	thrown			true
 	oneshot			true
 	deplete			true
-	weight			0.2
+	weight			1.0
 
 	weapon_mod
 	{

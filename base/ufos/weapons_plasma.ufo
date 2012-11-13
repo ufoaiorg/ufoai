@@ -130,7 +130,7 @@ item plasrifle
 	price			2500
 	size			40
 	is_primary		true
-	weight			3.8
+	weight			3.4
 }
 
 item plasrifle_ammo
@@ -266,7 +266,7 @@ item plasblaster
 	size			60
 	is_primary		true
 	is_heavy		true
-	weight			5.5
+	weight			5.0
 }
 
 item plasblaster_ammo
@@ -283,7 +283,7 @@ item plasblaster_ammo
 	is_primary		true
 	is_heavy		true
 	dmgtype			"plasma"
-	weight			0.7
+	weight			1.0
 
 	weapon_mod
 	{
@@ -377,6 +377,7 @@ item encased_plasma_assault_ammo
 	size			3
 	is_primary		true
 	dmgtype			"plasma"
+	weight			0.5
 
 	weapon_mod
 	{
@@ -484,6 +485,7 @@ item encased_plasma_mg_ammo
 	is_primary		true
 	is_heavy		true
 	dmgtype			"plasma"
+	weight			1.5
 
 	weapon_mod
 	{
@@ -573,6 +575,7 @@ item encased_plasma_sniper_ammo
 	size			8
 	is_primary		true
 	dmgtype			"plasma"
+	weight			0.5
 
 	weapon_mod
 	{
