@@ -36,6 +36,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../input/cl_keys.h"
 #include "../input/cl_input.h"
+#include "../cl_shared.h"
+#include "../battlescape/cl_localentity.h"
+#include "../battlescape/cl_camera.h"
+#include "../battlescape/cl_actor.h"
+#include "../battlescape/cl_battlescape.h"
 
 /**
  * @brief save the node with the focus
@@ -429,6 +434,13 @@ bool UI_KeyPressed (unsigned int key, unsigned short unicode)
 		if (key == K_ESCAPE)
 			UI_DNDAbort();
 		return false;
+	}
+
+	if (key == K_ESCAPE && CL_BattlescapeRunning()
+	 && selActor && CL_ActorFireModeActivated(selActor->actorMode)) {
+		/* Cancel firing with Escape, needed for Android, where right mouse click is bound to multitouch, which is non-obvious */
+		CL_ActorSetMode(selActor, M_MOVE);
+		return true;
 	}
 
 	/* translate event into the node with focus */
