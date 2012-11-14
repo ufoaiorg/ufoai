@@ -48,6 +48,65 @@ static int UFO_CleanSuiteParser (void)
 	return 0;
 }
 
+#define PARSER_XX 0
+
+#if PARSER_XX > 0
+
+/* our sample class to parse from a string/stream */
+class Hugo
+{
+	int myInt;
+	char myStr[20];
+public:
+	void setMyInt(const int i);
+	void setMyStr(const char* str);
+};
+
+void Hugo::setMyInt(const int i) {myInt = i;}
+void Hugo::setMyStr(const char* str) {strcpy(myStr, str);}
+
+// defines one key/value pair
+class KeyDef
+{
+public:
+	const char* key;
+	int typeCode;
+	void (*setter)(int val);
+//	void (*setter)(byte *val);
+};
+
+//table of keys in the input
+const int numKeys = 2;
+static KeyDef ourKeys[numKeys] = {
+	{ "number", 1 , Hugo::setMyInt },
+	{ "string", 2 , Hugo::setMyInt }
+};
+
+static void parse (Hugo &toFill, const KeyDef table[], const char* toParse)
+{
+	char key[50];
+	char value[50];
+	sscanf(toParse, "%s %s", key, value);
+
+	for (int i = 0; i < numKeys; i++){
+		if (!strcmp(key, table[i].key)) {
+			int val = atoi(value);
+			toFill.*(table[i].setter)(val);
+		}
+	}
+}
+/**
+ * @brief unittest for new C++ parser
+ */
+static void testParserXX (void)
+{
+	const char* test1 = "number 17";
+	Hugo myHugo;
+
+	parse(myHugo, ourKeys, test1);
+}
+#endif
+
 /**
  * @brief unittest around default use of parser
  */
@@ -447,6 +506,10 @@ int UFO_AddParserTests (void)
 		return CU_get_error();
 
 	/* add the tests to the suite */
+#if PARSER_XX > 0
+	if (CU_ADD_TEST(ParserSuite, testParserXX) == NULL)
+		return CU_get_error();
+#else
 	if (CU_ADD_TEST(ParserSuite, testParser) == NULL)
 		return CU_get_error();
 	if (CU_ADD_TEST(ParserSuite, testParserWithFunctionScriptToken) == NULL)
@@ -468,6 +531,6 @@ int UFO_AddParserTests (void)
 		return CU_get_error();
 	if (CU_ADD_TEST(ParserSuite, testParserListKoNewList) == NULL)
 		return CU_get_error();
-
+#endif
 	return CUE_SUCCESS;
 }
