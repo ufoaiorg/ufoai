@@ -59,11 +59,16 @@ class Hugo
 	char myStr[20];
 public:
 	void setMyInt(const int i);
+	int getMyInt();
 	void setMyStr(const char* str);
+	const char* getMyStr();
 };
 
 void Hugo::setMyInt(const int i) {myInt = i;}
+int Hugo::getMyInt() { return myInt; }
 void Hugo::setMyStr(const char* str) {strcpy(myStr, str);}
+const char* Hugo::getMyStr() { return myStr; }
+
 
 // defines one key/value pair
 class KeyDef
@@ -71,7 +76,7 @@ class KeyDef
 public:
 	const char* key;
 	int typeCode;
-	void (Hugo::*setter)(int val);
+	void (Hugo::*setter)(const int val);
 //	void (*setter)(byte *val);
 };
 
@@ -79,7 +84,7 @@ public:
 const int numKeys = 2;
 static KeyDef ourKeys[numKeys] = {
 	{ "number", 1 , &Hugo::setMyInt },
-	{ "string", 2 , &Hugo::setMyInt }
+	{ "string", 2 , static_cast<void (Hugo::*)(const int)> (&Hugo::setMyStr) }
 };
 
 static void parse (Hugo &toFill, const KeyDef table[], const char* toParse)
@@ -90,8 +95,18 @@ static void parse (Hugo &toFill, const KeyDef table[], const char* toParse)
 
 	for (int i = 0; i < numKeys; i++){
 		if (!strcmp(key, table[i].key)) {
-			int val = atoi(value);
-			(toFill.*table[i].setter)(val);
+			int val;
+			switch (table[i].typeCode) {
+			case 1:
+				val = atoi(value);
+				(toFill.*table[i].setter)(val);
+				break;
+			case 2:	/* string */
+				static_cast<void (Hugo::*)(const char*)> (toFill.*table[i].setter)(value);
+				break;
+			default:
+				break;
+			}
 		}
 	}
 }
@@ -101,9 +116,13 @@ static void parse (Hugo &toFill, const KeyDef table[], const char* toParse)
 static void testParserXX (void)
 {
 	const char* test1 = "number 17";
+	const char* test2 = "string  Duke";
 	Hugo myHugo;
 
 	parse(myHugo, ourKeys, test1);
+	parse(myHugo, ourKeys, test2);
+	Com_Printf("myInt: %i myStr: %s\n", myHugo.getMyInt(), myHugo.getMyStr());
+	CU_ASSERT_EQUAL(myHugo.getMyInt(), 17);
 }
 #endif
 
