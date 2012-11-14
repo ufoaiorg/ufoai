@@ -354,7 +354,6 @@ bool INV_ItemMatchesFilter (const objDef_t *obj, const itemFilterTypes_t filterT
  * @note x = x-th item in a row, y = row. i.e. x/y does not equal the "grid" coordinates as used in those containers.
  * @param[in] i Pointer to the inventory where we will search.
  * @param[in] container Container in the inventory.
- * @param[in] x/y Position in the scrollable container that you want to check. Ignored if "item" is set.
  * @param[in] item The item to search. Will ignore "x" and "y" if set, it'll also search invisible items.
  * @param[in] filterType Enum definition of type (types of items for filtering purposes).
  * @return @c invList_t Pointer to the invList_t/item that is located at x/y or equals "item".

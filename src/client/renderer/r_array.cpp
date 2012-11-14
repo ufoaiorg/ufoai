@@ -76,7 +76,7 @@ static int R_ArraysMask (void)
 
 /**
  * @sa R_SetVertexBufferState
- * @param[in] mod The BSP model to use arrays from
+ * @param[in] bsp The BSP model to use arrays from
  */
 static inline void R_SetVertexArrayState (const mBspModel_t* bsp, int mask)
 {

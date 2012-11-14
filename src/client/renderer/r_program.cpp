@@ -384,7 +384,7 @@ static size_t R_InitializeShader (const GLenum type, const char *name, char *out
  * of the value of a cvar interpreted as a bool. Note the GLSL implementation
  * preprocessor handles #ifdef and #ifndef, not #if.
  * @param[in] name The file name of the shader (e.g. "world_fs.glsl").
- * @param[in] in The non-preprocessed shader string.
+ * @param[in] inPtr The non-preprocessed shader string.
  * @param[in,out] out The preprocessed shader string, NULL if we don't want to write to it.
  * @param[in,out] remainingOutChars The number of characters left in the out buffer.
  * @param[in] nested If true, parsing a part of #if clause, so #else and #endif tokens are allowed

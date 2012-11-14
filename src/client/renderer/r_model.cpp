@@ -109,7 +109,7 @@ model_t *R_AllocModelSlot (void)
 /**
  * @brief Loads in a model for the given name
  * @param[in] filename Filename relative to base dir and with extension (models/model.md2)
- * @param[inout] mod Structure to initialize
+ * @param[in,out] mod Structure to initialize
  * @return True if the loading was succeed. True or false structure mod was edited.
  */
 static bool R_LoadModel (model_t *mod, const char *filename)

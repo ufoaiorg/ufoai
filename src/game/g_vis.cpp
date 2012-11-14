@@ -325,8 +325,6 @@ int G_CheckVisPlayer (player_t* player, int visFlags)
  * @param[in] team Team to check the vis for
  * @param[in] check The edict that you want to check (and which maybe will appear
  * or perish for the given team). If this is NULL every edict will be checked.
- * @param[in] perish Also check whether the edict (the actor) is going to become
- * invisible for the given team
  * @param[in] ent The edict that is (maybe) seeing other edicts
  * @return If an actor get visible who's no civilian VIS_STOP is added to the
  * bit mask, VIS_YES means, he is visible, VIS_CHANGE means that the actor
