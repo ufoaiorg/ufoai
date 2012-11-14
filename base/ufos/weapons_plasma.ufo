@@ -307,13 +307,13 @@ item plasblaster_ammo
 			ammo				1
 			delaybetweenshots	38
 			time				10
-			damage				"30 5"
-			dmgweight			"plasma_heavy"
+			damage				"60 10"
+			dmgweight			"plasma_medium"
 			reaction			true
 		}
 		firedef
 		{
-			name				"_5-Round Burst"
+			name				"_3-Round Burst"
 			skill 				"close"
 			projtl				plasmaContinuous
 			impact				plasmaImpact
@@ -326,12 +326,12 @@ item plasblaster_ammo
 			spread				"3.5 3.5"
 			crouch				1
 			range				35
-			shots				5
-			ammo				5
+			shots				3
+			ammo				3
 			delaybetweenshots	38
 			time				16
-			damage				"30 5"
-			dmgweight			"plasma_heavy"
+			damage				"60 10"
+			dmgweight			"plasma_medium"
 			reaction			true
 		}
 		firedef

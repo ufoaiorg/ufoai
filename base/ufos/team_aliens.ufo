@@ -441,7 +441,7 @@ team bloodspider
 
 		plasma_light	30
 		plasma_medium	30
-		plasma_heavy	25
+		plasma_heavy	20
 		plasma_pierce		0
 
 		particlebeam_light	-5
@@ -543,7 +543,7 @@ team bloodspider_adv
 
 		plasma_light	50
 		plasma_medium	40
-		plasma_heavy	25
+		plasma_heavy	20
 		plasma_pierce		0
 
 		particlebeam_light	-30
@@ -646,7 +646,7 @@ team hovernet
 
 		plasma_light	30
 		plasma_medium	30
-		plasma_heavy	25
+		plasma_heavy	20
 		plasma_pierce		0
 
 		particlebeam_light	-5
@@ -748,7 +748,7 @@ team hovernet_adv
 
 		plasma_light	50
 		plasma_medium	40
-		plasma_heavy	25
+		plasma_heavy	20
 		plasma_pierce		0
 
 		particlebeam_light	-30

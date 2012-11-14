@@ -293,7 +293,7 @@ item armour_light_alien
 
 		plasma_light	30
 		plasma_medium	30
-		plasma_heavy	25
+		plasma_heavy	20
 		plasma_pierce		0
 
 		particlebeam_light	-5
