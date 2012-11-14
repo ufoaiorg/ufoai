@@ -71,15 +71,15 @@ class KeyDef
 public:
 	const char* key;
 	int typeCode;
-	void (*setter)(int val);
+	void (Hugo::*setter)(int val);
 //	void (*setter)(byte *val);
 };
 
 //table of keys in the input
 const int numKeys = 2;
 static KeyDef ourKeys[numKeys] = {
-	{ "number", 1 , Hugo::setMyInt },
-	{ "string", 2 , Hugo::setMyInt }
+	{ "number", 1 , &Hugo::setMyInt },
+	{ "string", 2 , &Hugo::setMyInt }
 };
 
 static void parse (Hugo &toFill, const KeyDef table[], const char* toParse)
@@ -91,7 +91,7 @@ static void parse (Hugo &toFill, const KeyDef table[], const char* toParse)
 	for (int i = 0; i < numKeys; i++){
 		if (!strcmp(key, table[i].key)) {
 			int val = atoi(value);
-			toFill.*(table[i].setter)(val);
+			(toFill.*table[i].setter)(val);
 		}
 	}
 }
