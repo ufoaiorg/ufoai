@@ -26,6 +26,30 @@ tile +craft_drop_firebird
     0  a  a  a  a  0
 }
 
+tile +craft_drop_herakles
+{
+    6 6
+
+    0  a  a  a  a  0
+    f +d +d +d +d  g
+    f +d +d +d +d  g
+    f +d +d +d +d  g
+    f +d +d +d +d  g
+    0  a  a  a  a  0
+}
+
+tile +craft_drop_raptor
+{
+    6 6
+
+    0  a  a  a  a  0
+    f +d +d +d +d  g
+    f +d +d +d +d  g
+    f +d +d +d +d  g
+    f +d +d +d +d  g
+    0  a  a  a  a  0
+}
+
 tile +main
 {
     6 6 

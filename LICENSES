@@ -598,6 +598,8 @@ base/maps/shelter/shelter_room_w_b.map | GNU General Public License 2.0 or later
 base/maps/shelter/shelter_solid.map | GNU General Public License 2.0 or later | Bas Fournier
 base/maps/solarplant.ump | GNU General Public License 2.0 or later | Davide "Deadman" Amato
 base/maps/solarplant/sp_craft_drop_firebird.map | GNU General Public License 2.0 or later | Davide "Deadman" Amato
+base/maps/solarplant/sp_craft_drop_herakles.map | GNU General Public License 2.0 or later | Davide "Deadman" Amato
+base/maps/solarplant/sp_craft_drop_raptor.map | GNU General Public License 2.0 or later | Davide "Deadman" Amato
 base/maps/solarplant/sp_east.map | GNU General Public License 2.0 or later | Davide "Deadman" Amato
 base/maps/solarplant/sp_main.map | GNU General Public License 2.0 or later | Davide "Deadman" Amato
 base/maps/solarplant/sp_northeast.map | GNU General Public License 2.0 or later | Davide "Deadman" Amato
@@ -4610,6 +4612,7 @@ base/textures/tex_buildings/sfloor1_2.jpg | GNU General Public License 2.0 | Ope
 base/textures/tex_buildings/sfloor1_2_nm.png | GNU General Public License 2.0 | Martin Gerhardy | sfloor1_2.jpg
 base/textures/tex_buildings/sidewalk01.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_buildings/sidewalk01_nm.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_buildings/solar.jpg | Public Domain | http://www.burningwell.org | 234_001.jpg
 base/textures/tex_buildings/sp_stairs.jpg | GNU General Public License 2.0 | OpenArena
 base/textures/tex_buildings/sp_stairs_nm.png | GNU General Public License 2.0 or later
 base/textures/tex_buildings/step.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)

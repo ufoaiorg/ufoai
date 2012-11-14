@@ -3398,14 +3398,19 @@ mapdef shelter
 mapdef solarplant
 {
 	map				"+solarplant"
+<<<<<<< HEAD
 	description		"_Solar Power Plant"
+=======
+	description		"_Solarplant."
+>>>>>>> * map [+solarplant] Latino210 added the missing dropship tiles for Herakles and Raptor
 	param			"default"
-	campaign		false
-	maxaliens		30
+	maxaliens		16
 	
 	aircraft 
 	(
 		craft_drop_firebird
+		craft_drop_herakles
+		craft_drop_raptor
 	)
 
 	ufos
