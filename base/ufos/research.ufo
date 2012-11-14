@@ -5662,6 +5662,15 @@ tech rs_alien_strategy
 		default "*msgid:alien_strategy_pre_txt"
 	}
 
+	mail_pre
+	{
+		from	"*msgid:mail_from_col_falkland"
+		to	"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		model	"characters/falkland"
+		icon	"icons/mail_intelligence"
+	}
+
 	mail
 	{
 		from	"*msgid:mail_from_col_falkland"
