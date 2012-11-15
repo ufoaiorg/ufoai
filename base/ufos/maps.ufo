@@ -3398,11 +3398,7 @@ mapdef shelter
 mapdef solarplant
 {
 	map				"+solarplant"
-<<<<<<< HEAD
 	description		"_Solar Power Plant"
-=======
-	description		"_Solarplant."
->>>>>>> * map [+solarplant] Latino210 added the missing dropship tiles for Herakles and Raptor
 	param			"default"
 	maxaliens		16
 	
