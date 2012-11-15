@@ -1426,13 +1426,11 @@ Cdr. Navarre"
 msgid needlergun_txt {
 text "_Commander, we've finished analysing the alien needler gun, and I've prepared a threat assessment and technical overview for you.
 
-As I mentioned in my research proposal, the needler is indeed a type of sniper rifle, but an unusual one. It ignores the normal concept of firing powerful slugs to make single, long-range kills. Instead it vomits out hundreds and hundreds of ultra-fast silicon steel needles which can easily tear apart a target at any range.
+As I mentioned in my research proposal, the needler is indeed a type of rifle, but an unusual one. Like a machine gun, it is designed to saturate a target with projectiles, but it takes this concept much further. It vomits out hundreds and hundreds of ultra-fast silicon steel needles which can easily tear apart a target.
 
-The needles are fired by a fast-changing magnetic field inside the barrel, hooked up to a feed mechanism that injects thousands of needles a minute into the barrel. This creates a near-constant stream of fire which lasts for as long as you hold down the trigger and the magazine holds out. Unlike bullets, these needles have a practically flat trajectory from muzzle to target. They punch through most armour like it doesn't exist. They're so low in mass that there's little appreciable recoil when firing, giving them excellent accuracy, but at the same time thin enough to avoid being overly affected by weather. Wind, rain and physical obstructions can knock some of the needles off course but not enough to make the weapon much less effective.
+The needles are fired by a fast-changing magnetic field inside the barrel, hooked up to a feed mechanism that injects thousands of needles a minute into the barrel. This creates a near-constant stream of fire which lasts for as long as you hold down the trigger and the magazine holds out. Unlike bullets, these needles have a practically flat trajectory from muzzle to target. They punch through most armour like it doesn't exist. They're so low in mass that there's little appreciable recoil when firing. They are easily knocked off course for the same reason, but so many needles are put down range that even distant shots are likely to make some contact with the enemy.
 
-One of the main components that caught my attention is the powerful electromagnet array. It's laid out as a 'coilgun', many electromagnetic coils wrapped around the barrel, a method we'd previously thought to be too energy-inefficient to use on the battlefield. The aliens seem to have made it viable through clever use of superconductors and alien engineering. We may be able to adapt this technology to our own EM weapons research, I'll take a closer look and get back to you when I have anything concrete.
-
-Instead of an ordinary top-mounted sniper scope, the aliens have incorporated a highly effective holographic aiming mechanism and rangefinder which projects directly in front of the user's leading eye. Targets are shown with absolute clarity at any range, the sight automatically compensates for natural body motions, and it will even tell the user the exact chances of scoring a hit at any time. We've run this thing by our own troops and -- once they got used to it -- the alien holo-sight was the preferred choice by an amazing 100% compared to our own scopes. If we can adapt and duplicate this sight in a self-contained package, we could create the ultimate aiming unit to use on any of our rifles, possibly even some handguns.
+One of the main components that caught my attention is the powerful electromagnet array. It's laid out as a 'coilgun', many electromagnetic coils wrapped around the barrel, a method we'd previously thought to be too energy-inefficient to use on the battlefield. The aliens seem to have made it viable through clever use of superconductors and alien engineering. We may be able to adapt this technology to our own EM weapons research. I've put a new research proposal in your queue along these lines.
 
 The Needler's electromagnet array makes it much heavier than the average rifle, which could reduce the effectiveness of some of our troops. But given its deadly power, I'm sure more than a few of our boys will gladly shed some other equipment to carry the Needler into battle.
 
@@ -1442,7 +1440,7 @@ Cdr. Navarre"
 }
 
 msgid needlergun_pre_txt {
-text "_Commander, it seems we've recovered a new alien weapon, some kind of fully-automatic sniper rifle that fires masses of paper-thin needles made from silicon steel. Preliminary testing shows that the needles are virtually unaffected by ordinary body armour and will pass through most surfaces without even slowing down. It's a very interesting design and we'd like to figure out exactly how it's meant to work.
+text "_Commander, it seems we've recovered a new alien weapon, some kind of fully-automatic rifle that fires masses of paper-thin needles made from silicon steel. Preliminary testing shows that the needles are virtually unaffected by ordinary body armour and will pass through most surfaces without even slowing down. It's a very interesting design and we'd like to figure out exactly how it's meant to work.
 
 Please authorise this program at your convenience, Commander.
 
@@ -1450,11 +1448,21 @@ Cdr. Navarre"
 }
 
 msgid needlerheavy_txt {
-text "_"
+text "_Commander, here's my report on the new Heavy Needler we're encountering.
+
+As we suspected, there are few technological advancements in this weapon. It is larger, heavier, and capable of putting out more needles at a faster rate. But don't let its simplicity fool you. This is an extraordinarily deadly weapon, made all the worse by the spray of needles so often knocked off course. It will rip apart its target and probably anyone unlucky enough to be caught in the crossfire.
+
+This weapon is so heavy only our strongest soldiers may be able to use it effectively. It's weight exceeds the any other weapon we've seen, a real problem for us in turning this thing back on the enemy. But if you can find a soldier capable of lugging it into combat, you'll probably be happy for the extra power.
+
+Finally, I'd like to bring up one more thing. We believe this rifle may have been rapidly developed very recently, maybe even in the last few months. Parts of the Heavy Needlers' design look rushed. It's clear this weapon was developed and thrust upon their fighters as quickly as possible. This leads us to suspect that they are actively prototyping and deploying new weaponry, not just calling up more deadlier forces. In short, we are in an arms race with the alien horde and we are not winning.
+
+Cdr. Navarre"
 }
 
 msgid needlerheavy_pre_txt {
-text "_No pre research info available"
+text "_Commander, we've recovered a new alien weapon that appears to be a larger version of the Needler. Please let my men take a look as soon as possible.
+
+Cdr. Navarre"
 }
 
 msgid coilgun_txt {
