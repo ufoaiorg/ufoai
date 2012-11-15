@@ -682,3 +682,11 @@ component spinner_blue extends spinner
 	bottomIcon	"ui/spinner_blue_down"
 	size "15 19"
 }
+
+component spinner_horiz extends spinner
+{
+	topIcon		"buttons/blue_right"
+	bottomIcon	"buttons/blue_left"
+	size		"80 50"
+	horizontal	true
+}

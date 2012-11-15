@@ -103,7 +103,7 @@ window production
 		size		"530 568"
 		color1		"0 0.08 0 1"
 		color2		"0 0.16 0 1"
-		lineheight	25
+		lineheight	50
 	}
 
 	panel scroll_bg {
@@ -228,8 +228,8 @@ window production
 	{
 		dataid		TEXT_PRODUCTION_LIST
 		color		"0 .78 0 1"
-		rows		"22"
-		lineheight	"25"
+		rows		"11"
+		lineheight	"50"
 		pos			"55 180"
 		size		"250 550"
 		longlines	LONGLINES_PRETTYCHOP
@@ -258,9 +258,9 @@ window production
 		color		"0 .78 0 1"
 		contentalign	ALIGN_CR
 		pos			"310 180"
-		rows		"22"
+		rows		"11"
 		size		"60 550"
-		lineheight	"25"
+		lineheight	"50"
 		onClick		{
 			*node:root.prodlist@lineselected = <node:this@lineselected>
 			*node:root.prodlist_queued@lineselected = <node:this@lineselected>
@@ -286,8 +286,8 @@ window production
 		pos			"465 180"
 		size		"60 550"
 		color		"0 .78 0 1"
-		lineheight	"25"
-		rows		"22"
+		lineheight	"50"
+		rows		"11"
 		onClick		{
 			*node:root.prodlist@lineselected = <node:this@lineselected>
 			*node:root.prodlist_amount@lineselected = <node:this@lineselected>
@@ -356,34 +356,35 @@ window production
 
 	string prod_amount {
 		string		*cvar:mn_production_amount
-		pos			"730 505"
-		size		"40 20"
+		pos			"650 480"
+		size		"40 50"
 		color		"0 .78 0 1"
 		font		"f_small"
-		contentalign	ALIGN_UR
+		contentalign	ALIGN_CR
 	}
 
 	string label_1 {
 		string		"x1"
-		pos			"786 505"
-		size		"24 20"
+		pos			"680 480"
+		size		"24 50"
 		color		"0 .78 0 1"
 		font		"f_small"
-		contentalign	ALIGN_UR
+		contentalign	ALIGN_CR
 	}
 
 	string label_10 {
 		string		"x10"
-		pos			"824 505"
-		size		"36 20"
+		pos			"810 480"
+		size		"36 50"
 		color		"0 .78 0 1"
 		font		"f_small"
-		contentalign	ALIGN_UR
+		contentalign	ALIGN_CR
 	}
 
-	spinner_blue prod_change {
+	spinner_horiz prod_change {
 		tooltip		"_Change the production amount"
-		pos			"810 505"
+		pos			"710 480"
+		inverted	true
 		min			1
 		current		*cvar:mn_production_amount
 		max			1000
@@ -391,9 +392,10 @@ window production
 		onChange	{ cmd "prod_change <lastdiff>;" }
 	}
 
-	spinner_blue prod_change_10 {
+	spinner_horiz prod_change_10 {
 		tooltip		"_Change the production amount"
-		pos			"860 505"
+		pos			"850 480"
+		inverted	true
 		min			1
 		current		*cvar:mn_production_amount
 		max			1000
@@ -406,7 +408,7 @@ window production
 		string		"_Start this production"
 		background		"ui/button_green_small"
 		pos			"670 480"
-		size		"250 32"
+		size		"250 50"
 		font		"f_small"
 		color		"0 .78 0 1"
 		onClick		{ cmd "prod_inc;" }
@@ -416,9 +418,9 @@ window production
 	{
 		tooltip		"_Stop production"
 		icon		"icons/bordered_cross"
-		pos			"900 505"
-		size		"16 16"
-		padding		0
+		pos			"931 480"
+		size		"50 50"
+		padding		17
 		onClick		{ cmd "prod_stop;" }
 	}
 
@@ -501,7 +503,7 @@ window production
 
 	panel requirement {
 		{
-			pos		"610 610"
+			pos		"610 615"
 			size	"346 120"
 		}
 
@@ -542,7 +544,7 @@ window production
 
 	panel proddesc {
 		{
-			pos			"610 528"
+			pos			"610 533"
 			size		"346 80"
 			layout		LAYOUT_BORDER
 		}

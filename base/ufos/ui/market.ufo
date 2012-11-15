@@ -4,7 +4,7 @@
 
 component cmpMarketItem extends panel {
 	{
-		size "425 25"
+		size "425 50"
 		onClick {
 			cmd "ui_market_select <node:this.id@string>;"
 		}
@@ -15,7 +15,7 @@ component cmpMarketItem extends panel {
 
 	checkbox_blue autosell {
 		current		0
-		pos			"0 0"
+		pos			"0 17"
 		size		"22 18"
 
 		onChange {
@@ -27,35 +27,38 @@ component cmpMarketItem extends panel {
 
 	string name {
 		color		"0 .78 0 1"
+		contentalign	ALIGN_CL
 		pos			"25 0"
-		size		"250 25"
+		size		"250 50"
 		ghost		true
 	}
 	string storage {
 		color		"0 .78 0 1"
 		contentalign	ALIGN_CR
-		pos			"280 0"
-		size		"60 25"
+		pos			"235 0"
+		size		"60 50"
 		ghost		true
 	}
 	string market {
 		color		"0 .78 0 1"
 		contentalign	ALIGN_CR
-		pos			"370 0"
-		size		"46 25"
+		pos			"375 0"
+		size		"60 50"
 		ghost true
 	}
 	string price {
 		color		"0 .78 0 1"
 		contentalign	ALIGN_CR
-		pos			"432 0"
-		size		"60 25"
+		pos			"442 0"
+		size		"60 50"
 		ghost		true
 	}
 
-	spinner_blue buysell {
+	spinner_horiz buysell {
 		tooltip		"_Buy and sell item"
-		pos			"346 0"
+		pos			"305 0"
+		inverted	true
+
 		onChange {
 			if ( ( ( <node:parent.storage@string> + <node:parent.market@string> ) + <lastdiff> ) < 1 ) {
 				*node:root.selected@string = ""
@@ -155,13 +158,13 @@ window market extends objectinfo {
 	rows lines {
 		pos			"28 175"
 		size		"530 568"
-		color1		"0 0.08 0 1"
-		color2		"0 0.16 0 1"
+		color1		"0 0.10 0 1"
+		color2		"0 0.12 0 1"
 		lineheight	25
 	}
 
 	panel verticalline {
-		pos		"451 175"
+		pos		"470 175"
 		size	"4 565"
 		bgcolor	"0.03 0.42 0.03 1"
 	}
@@ -180,22 +183,22 @@ window market extends objectinfo {
 	string storage_label {
 		string		"_Store"
 		tooltip		"_Number of such items in base"
-		pos			"325 180"
-		size		"60 25"
+		pos			"255 180"
+		size		"70 25"
 		color		"0 .78 0 1"
 		contentalign	ALIGN_CR
 	}
 	string market_label {
 		string		"_Market"
 		tooltip		"_Number of such items on the market"
-		pos			"390 180"
-		size		"60 25"
+		pos			"395 180"
+		size		"70 25"
 		color		"0 .78 0 1"
 		contentalign	ALIGN_CR
 	}
 	string price {
 		string		"_Price"
-		pos			"462 180"
+		pos			"470 180"
 		size		"60 25"
 		color		"0 .78 0 1"
 		contentalign	ALIGN_CR

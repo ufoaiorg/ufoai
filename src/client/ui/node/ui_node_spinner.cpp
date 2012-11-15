@@ -105,6 +105,8 @@ bool uiSpinnerNode::isPositionIncrease(uiNode_t *node, int x, int y)
 	case ONLY_DECREASE:
 		return false;
 	case NORMAL:
+		if (EXTRADATA(node).horizontal)
+			return x > node->box.size[0] * 0.5;
 		return y < node->box.size[1] * 0.5;
 	default:
 		return false;
@@ -121,6 +123,8 @@ void uiSpinnerNode::onMouseDown (uiNode_t *node, int x, int y, int button)
 		UI_SetMouseCapture(node);
 		UI_NodeAbsoluteToRelativePos(node, &x, &y);
 		capturedDownButton = !isPositionIncrease(node, x, y);
+		if (EXTRADATA(node).inverted)
+			capturedDownButton = !capturedDownButton;
 		step(node, capturedDownButton);
 		capturedTimer = UI_AllocTimer(node, 500, UI_SpinnerNodeRepeat);
 		UI_TimerStart(capturedTimer);
@@ -186,29 +190,45 @@ void uiSpinnerNode::draw (uiNode_t *node)
 		bool increaseLocation = isPositionIncrease(node, mousePosX - pos[0], mousePosY - pos[1]);
 
 		/* top button status */
-		if (value >= max) {
-			topStatus = SPRITE_STATUS_DISABLED;
-		} else if (node->state && increaseLocation) {
+		if (node->state && increaseLocation) {
 			topStatus = SPRITE_STATUS_HOVER;
 		} else {
 			topStatus = SPRITE_STATUS_NORMAL;
 		}
 		/* bottom button status */
-		if (value <= min) {
-			bottomStatus = SPRITE_STATUS_DISABLED;
-		} else if (node->state && !increaseLocation) {
+		if (node->state && !increaseLocation) {
 			bottomStatus = SPRITE_STATUS_HOVER;
 		} else {
 			bottomStatus = SPRITE_STATUS_NORMAL;
+		}
+
+		if (value >= max) {
+			if (EXTRADATA(node).inverted)
+				bottomStatus = SPRITE_STATUS_DISABLED;
+			else
+				topStatus = SPRITE_STATUS_DISABLED;
+		}
+		if (value <= min) {
+			if (EXTRADATA(node).inverted)
+				topStatus = SPRITE_STATUS_DISABLED;
+			else
+				bottomStatus = SPRITE_STATUS_DISABLED;
 		}
 	}
 
 	if (EXTRADATA(node).background)
 		UI_DrawSpriteInBox(false, EXTRADATA(node).background, status, pos[0], pos[1], node->box.size[0], node->box.size[1]);
-	if (EXTRADATA(node).topIcon)
-		UI_DrawSpriteInBox(false, EXTRADATA(node).topIcon, topStatus, pos[0], pos[1], node->box.size[0], node->box.size[1]);
-	if (EXTRADATA(node).bottomIcon)
-		UI_DrawSpriteInBox(false, EXTRADATA(node).bottomIcon, bottomStatus, pos[0], pos[1], node->box.size[0], node->box.size[1]);
+	if (!EXTRADATA(node).horizontal) {
+		if (EXTRADATA(node).topIcon)
+			UI_DrawSpriteInBox(false, EXTRADATA(node).topIcon, topStatus, pos[0], pos[1], node->box.size[0], node->box.size[1]);
+		if (EXTRADATA(node).bottomIcon)
+			UI_DrawSpriteInBox(false, EXTRADATA(node).bottomIcon, bottomStatus, pos[0], pos[1], node->box.size[0], node->box.size[1]);
+	} else {
+		if (EXTRADATA(node).topIcon) /* Top becomes right */
+			UI_DrawSpriteInBox(false, EXTRADATA(node).topIcon, topStatus, pos[0] + node->box.size[0] / 2, pos[1], node->box.size[0] / 2, node->box.size[1]);
+		if (EXTRADATA(node).bottomIcon) /* Bottom becomes left */
+			UI_DrawSpriteInBox(false, EXTRADATA(node).bottomIcon, bottomStatus, pos[0], pos[1], node->box.size[0] / 2, node->box.size[1]);
+	}
 }
 
 void uiSpinnerNode::onLoading (uiNode_t *node)
@@ -245,6 +265,16 @@ void UI_RegisterSpinnerNode (uiBehaviour_t *behaviour)
 	 * it will decrease the value.
 	 */
 	UI_RegisterExtradataNodeProperty(behaviour, "mode", V_INT, EXTRADATA_TYPE, mode);
+
+	/**
+	 * @brief Draw images in horizontal orientation, also change active touch area for images.
+	 */
+	UI_RegisterExtradataNodeProperty(behaviour, "horizontal", V_BOOL, EXTRADATA_TYPE, horizontal);
+
+	/**
+	 * @brief Invert spinner directions, so that down/left will increase value, up/right will decrease it.
+	 */
+	UI_RegisterExtradataNodeProperty(behaviour, "inverted", V_BOOL, EXTRADATA_TYPE, inverted);
 
 	Com_RegisterConstInt("SPINNER_NORMAL", NORMAL);
 	Com_RegisterConstInt("SPINNER_ONLY_INC", ONLY_INCREASE);

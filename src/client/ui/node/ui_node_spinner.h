@@ -49,6 +49,8 @@ struct spinnerExtraData_t {
 	uiSprite_t *bottomIcon;		/**< Link to the icon used for the bottom button */
 	uiSprite_t *topIcon;		/**< Link to the icon used for the top button */
 	int mode;					/**< The way the node react to input (see spinnerMode_t) */
+	bool horizontal;			/**< Horizontal orientation for spinner images */
+	bool inverted;				/**< Invert spinner directions */
 };
 
 void UI_RegisterSpinnerNode(uiBehaviour_t *behaviour);

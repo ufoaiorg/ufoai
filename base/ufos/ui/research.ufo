@@ -4,13 +4,13 @@
 
 component cmpResearchItem extends panel {
 	{
-		size		"590 25"
+		size		"590 50"
 	}
 
 	// use a node icon, instead of a button
 	button img_status {
 		icon		"icons/bordered_question"
-		pos			"0 0"
+		pos			"0 17"
 		size		"16 16"
 		padding		0
 		onClick		{ cmd "research_select <node:parent@num>;" cmd "mn_show_ufopedia;" }
@@ -19,29 +19,31 @@ component cmpResearchItem extends panel {
 
 	string txt_item	{
 		pos			"20 0"
-		size		"365 25"
+		size		"355 50"
 		color		"0 .78 0 1"
 		longlines	LONGLINES_PRETTYCHOP
+		contentalign	ALIGN_CL
 		onClick		{ cmd "research_select <node:parent@num>;" }
 	}
 
 	string txt_assigned	{
-		pos			"405 0"
-		size		"40 20"
+		pos			"345 0"
+		size		"40 50"
 		color		"0 .78 0 1"
-		contentalign	ALIGN_UR
+		contentalign	ALIGN_CR
 	}
 
 	string txt_rsstatus	{
 		pos			"480 0"
-		size		"60 20"
+		size		"60 50"
 		color		"0 .78 0 1"
-		contentalign	ALIGN_UR
+		contentalign	ALIGN_CR
 	}
 
-	spinner_blue bt_rs_change {
+	spinner_horiz bt_rs_change {
 		tooltip		"_Add/Remove scientist"
-		pos			"450 0"
+		pos			"390 0"
+		inverted	true
 		min			0
 		current		10000
 		max			20000
@@ -244,87 +246,34 @@ window research
 		pos "50 113"
 	}
 	cmpResearchItem item1 {
-		pos	"50 138"
-	}
-
-	cmpResearchItem item2 {
 		pos	"50 163"
 	}
-
-	cmpResearchItem item3 {
-		pos	"50 188"
-	}
-
-	cmpResearchItem item4 {
+	cmpResearchItem item2 {
 		pos	"50 213"
 	}
-
-	cmpResearchItem item5 {
-		pos	"50 238"
-	}
-
-	cmpResearchItem item6 {
+	cmpResearchItem item3 {
 		pos	"50 263"
 	}
-
-	cmpResearchItem item7 {
-		pos	"50 288"
-	}
-
-	cmpResearchItem item8 {
+	cmpResearchItem item4 {
 		pos	"50 313"
 	}
-
-	cmpResearchItem item9 {
-		pos	"50 338"
-	}
-
-	cmpResearchItem item10 {
+	cmpResearchItem item5 {
 		pos	"50 363"
 	}
-
-	cmpResearchItem item11 {
-		pos	"50 388"
-	}
-
-	cmpResearchItem item12 {
+	cmpResearchItem item6 {
 		pos	"50 413"
 	}
-
-	cmpResearchItem item13 {
-		pos	"50 438"
-	}
-
-	cmpResearchItem item14 {
+	cmpResearchItem item7 {
 		pos	"50 463"
 	}
-
-	cmpResearchItem item15 {
-		pos	"50 488"
-	}
-
-	cmpResearchItem item16 {
+	cmpResearchItem item8 {
 		pos	"50 513"
 	}
-
-	cmpResearchItem item17 {
-		pos	"50 538"
-	}
-
-	cmpResearchItem item18 {
+	cmpResearchItem item9 {
 		pos	"50 563"
 	}
-
-	cmpResearchItem item19 {
-		pos	"50 588"
-	}
-
-	cmpResearchItem item20 {
+	cmpResearchItem item10 {
 		pos	"50 613"
-	}
-
-	cmpResearchItem item21 {
-		pos	"50 638"
 	}
 
 	// ===================
@@ -530,7 +479,7 @@ window research
 	func onWindowOpened
 	{
 		*cvar:i = 0
-		while ( *cvar:i < 22 ) {
+		while ( *cvar:i < 11 ) {
 			*node:root.item<cvar:i>@num = <cvar:i>
 			*node:root.item<cvar:i>.img_status@tooltip = *cvar:mn_researchstatus<cvar:i>
 			*node:root.item<cvar:i>.txt_item@string = *cvar:mn_researchitem<cvar:i>

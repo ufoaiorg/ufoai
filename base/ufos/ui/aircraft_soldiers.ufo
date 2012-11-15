@@ -131,7 +131,7 @@ window team extends iaircraft
 		size		"270 283"
 		color1		"0 0.08 0 1"
 		color2		"0 0.16 0 1"
-		lineheight	25
+		lineheight	50
 	}
 	panel soldierlist {
 		pos			"35 460"

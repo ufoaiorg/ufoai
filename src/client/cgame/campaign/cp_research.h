@@ -26,7 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_CL_RESEARCH
 #define CLIENT_CL_RESEARCH
 
-#define MAX_RESEARCHDISPLAY 22	/**< Number of the available string (in the list) in the research menu */
+#define MAX_RESEARCHDISPLAY 11	/**< Number of the available string (in the list) in the research menu */
 #define MAX_RESEARCHLIST 32
 #define MAX_TECHNOLOGIES 256	/**< Maximum number of technologies overall. */
 #define MAX_TECHLINKS 16	/**< Maximum number of requirements in a technology (i.e in requireAND and requireOR). */
