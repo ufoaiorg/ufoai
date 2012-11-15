@@ -282,7 +282,7 @@ item pbeamcannon_ammo
 			time				24
 			damage				"150 30"
 			dmgweight			"particlebeam_heavy"
-			reaction			false
+			reaction			true
 		}
 		firedef
 		{
@@ -305,7 +305,6 @@ item pbeamcannon_ammo
 			spldmg		"220 50"
 			splrad		3
 			dmgweight	"particlebeam_heavy"
-			reaction	false
 		}
 	}
 }
