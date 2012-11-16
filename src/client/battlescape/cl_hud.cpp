@@ -960,12 +960,12 @@ void HUD_UpdateCursor (void)
 {
 	/* Offset of the first icon on the x-axis. */
 	int iconOffsetX = 16;
-	/* Offset of the first icon on the y-axis. */
-	/* the space between different icons. */
-	const int iconSpacing = 2;
 	le_t *le = selActor;
 	if (le) {
+		/* Offset of the first icon on the y-axis. */
 		int iconOffsetY = 16;
+		/* the space between different icons. */
+		const int iconSpacing = 2;
 		image_t *image;
 		/* icon width */
 		int iconW = 16;

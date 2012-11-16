@@ -297,11 +297,11 @@ void CL_ActorReserveTUs (const le_t * le, const reservation_types_t type, const 
  */
 float CL_ActorInjuryModifier (const le_t *le, const modifier_types_t type)
 {
-	int bodyPart;
 	float mod = 0;
 
 	if (le) {
 		const character_t *chr = CL_ActorGetChr(le);
+		int bodyPart;
 		if (!chr)
 			return 0;
 		const BodyData *bodyTemplate = chr->teamDef->bodyTemplate;
@@ -1942,7 +1942,6 @@ static void CL_AddTargetingBox (pos3_t pos, bool pendBox)
 void CL_ActorTargetAlign_f (void)
 {
 	int align = GROUND_DELTA;
-	static int currentPos = 0;
 
 	/* no firedef selected */
 	if (!selActor || !selActor->fd)
@@ -1954,6 +1953,7 @@ void CL_ActorTargetAlign_f (void)
 	if (Cmd_Argc() == 2) {
 		align = atoi(Cmd_Argv(1));
 	} else {
+		static int currentPos = 0;
 		switch (currentPos) {
 		case 0:
 			if (selActor->fd->gravity)
