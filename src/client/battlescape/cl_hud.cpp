@@ -959,7 +959,7 @@ static void HUD_DrawMouseCursorText (int xOffset, int yOffset, int textId)
 void HUD_UpdateCursor (void)
 {
 	/* Offset of the first icon on the x-axis. */
-	int iconOffsetX = 16;
+	const int iconOffsetX = 16;
 	le_t *le = selActor;
 	if (le) {
 		/* Offset of the first icon on the y-axis. */
