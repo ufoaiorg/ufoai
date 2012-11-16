@@ -239,8 +239,6 @@ void uiWindowNode::onLoading (uiNode_t *node)
  */
 void uiWindowNode::onLoaded (uiNode_t *node)
 {
-	static const char* closeCommand = "ui_close <path:root>;";
-
 	/* create a drag zone, if it is requested */
 	if (EXTRADATA(node).dragButton) {
 		uiNode_t *control = UI_AllocNode("move_window_button", "controls", node->dynamic);
@@ -257,6 +255,7 @@ void uiWindowNode::onLoaded (uiNode_t *node)
 	if (EXTRADATA(node).closeButton) {
 		uiNode_t *button = UI_AllocNode("close_window_button", "button", node->dynamic);
 		const int positionFromRight = CONTROLS_PADDING;
+		static const char* closeCommand = "ui_close <path:root>;";
 
 		button->root = node;
 		UI_NodeSetProperty(button, UI_GetPropertyFromBehaviour(button->behaviour, "icon"), "icons/system_close");

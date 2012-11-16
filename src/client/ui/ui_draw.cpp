@@ -208,8 +208,6 @@ static void UI_CheckTooltipDelay (uiNode_t *node, uiTimer_t *timer)
 
 static void UI_DrawNode (uiNode_t *node)
 {
-	static int globalTransX = 0;
-	static int globalTransY = 0;
 	uiNode_t *child;
 	vec2_t pos;
 
@@ -246,6 +244,8 @@ static void UI_DrawNode (uiNode_t *node)
 
 	/* draw all child */
 	if (!UI_Node_IsDrawItselfChild(node) && node->firstChild) {
+		static int globalTransX = 0;
+		static int globalTransY = 0;
 		bool hasClient = false;
 		vec2_t clientPosition;
 		if (UI_Node_IsScrollableContainer(node)) {

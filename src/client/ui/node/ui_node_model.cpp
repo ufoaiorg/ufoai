@@ -253,8 +253,6 @@ void UI_DrawModelNode (uiNode_t *node, const char *source)
 	uiModel_t *model;
 	vec3_t nodeorigin;
 	vec2_t screenPos;
-	vec3_t autoScale;
-	vec3_t autoCenter;
 
 	assert(UI_NodeInstanceOf(node, "model"));			/**< We use model extradata */
 
@@ -309,6 +307,8 @@ void UI_DrawModelNode (uiNode_t *node, const char *source)
 
 	/* autoscale? */
 	if (EXTRADATA(node).autoscale) {
+		vec3_t autoScale;
+		vec3_t autoCenter;
 		const vec2_t size = {node->box.size[0] - node->padding, node->box.size[1] - node->padding};
 		R_ModelAutoScale(size, &mi, autoScale, autoCenter);
 	}

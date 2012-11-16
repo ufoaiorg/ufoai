@@ -37,7 +37,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 void uiEkgNode::draw (uiNode_t *node)
 {
-	vec2_t size;
 	vec2_t nodepos;
 	const image_t *image;
 
@@ -49,6 +48,7 @@ void uiEkgNode::draw (uiNode_t *node)
 
 	image = UI_LoadWrappedImage(imageName);
 	if (image) {
+		vec2_t size;
 		const int ekgHeight = node->box.size[1];
 		const int ekgWidth = image->width;
 		/* we have different ekg parts in each ekg image... */
