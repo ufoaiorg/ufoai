@@ -35,8 +35,8 @@ void SV_NextMapcycle (void)
 			if (mapcycle->map[0] == '+') {
 				Q_strncpyz(expanded, mapcycle->map, sizeof(expanded));
 				char *base = strstr(expanded, " ");
-				char assembly[MAX_QPATH];
 				if (base) {
+					char assembly[MAX_QPATH];
 					base[0] = '\0'; /* split the strings */
 					Q_strncpyz(assembly, base + 1, sizeof(assembly));
 					/* get current position */

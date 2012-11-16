@@ -47,7 +47,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 void Check_Printf (verbosityLevel_t msgVerbLevel, bool change,
 							int entnum, int brushnum, const char *format, ...)
 {
-	static int skippingCheckLine = 0;
 	static verbosityLevel_t lastMsgVerbLevel = VERB_NORMAL;
 	static bool firstSuccessfulPrint = true;
 	static bool startOfLine = true;
@@ -70,6 +69,7 @@ void Check_Printf (verbosityLevel_t msgVerbLevel, bool change,
 	 * be displayed in fix mode. may be sent here in several function calls.
 	 * skip everything from start of line "  " to \n */
 	if (config.fixMap) {
+		static int skippingCheckLine = 0;
 		/* skip warning output sent in single call */
 		if (!skippingCheckLine && startOfLine && !change && containsNewline)
 			return;

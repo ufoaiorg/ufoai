@@ -996,7 +996,6 @@ void XYWnd::drawGrid (void)
 {
 	float x, y, xb, xe, yb, ye;
 	float w, h;
-	char text[32];
 	float step, minor_step, stepx, stepy;
 	step = minor_step = stepx = stepy = GlobalGrid().getGridSize();
 
@@ -1164,6 +1163,7 @@ void XYWnd::drawGrid (void)
 		glColor3fv(colourGridText);
 		const float offx = m_vOrigin[nDim2] + h - GlobalOpenGL().m_fontHeight / m_fScale;
 		const float offy = m_vOrigin[nDim1] - w + 1 / m_fScale;
+		char text[32];
 		for (x = xb - fmod(xb, stepx); x <= xe; x += stepx) {
 			glRasterPos2f(x, offx);
 			sprintf(text, "%g", x);
@@ -1220,7 +1220,6 @@ void XYWnd::drawBlockGrid (void)
 		blockSize = string::toInt(value);
 
 	float x, y, xb, xe, yb, ye;
-	char text[32];
 
 	glDisable(GL_TEXTURE_2D);
 	glDisable(GL_TEXTURE_1D);
@@ -1260,6 +1259,7 @@ void XYWnd::drawBlockGrid (void)
 	if (m_viewType == XY && m_fScale > .1) {
 		for (x = xb; x < xe; x += blockSize)
 			for (y = yb; y < ye; y += blockSize) {
+				char text[32];
 				glRasterPos2f(x + (blockSize / 2), y + (blockSize / 2));
 				sprintf(text, "%i,%i", (int) floor(x / blockSize), (int) floor(y / blockSize));
 				GlobalOpenGL().drawString(text);

@@ -87,7 +87,6 @@ namespace sidebar
 				void PrefabAdd (const std::string& name) const
 				{
 					GtkTreeIter iter;
-					const char *description = "";
 					char buffer[256];
 					StringOutputStream nameContent(256);
 					// remove extension from prefab filename
@@ -100,6 +99,7 @@ namespace sidebar
 					std::string descriptionPath = fullBaseNamePath + ".txt";
 					AutoPtr<ArchiveTextFile> file(GlobalFileSystem().openTextFile(descriptionPath));
 					if (file) {
+						const char *description = "";
 						TextInputStream &stream = file->getInputStream();
 						const std::size_t realsize = stream.read(buffer, file->size());
 						buffer[realsize] = '\0';

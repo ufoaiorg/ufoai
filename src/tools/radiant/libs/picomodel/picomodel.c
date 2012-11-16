@@ -411,16 +411,14 @@ picoShader_t *PicoFindShader (picoModel_t *model, char *name, int caseSensitive)
  */
 picoSurface_t *PicoNewSurface (picoModel_t *model)
 {
-	picoSurface_t *surface;
-	char surfaceName[64];
-
 	/* allocate and clear */
-	surface = _pico_alloc(sizeof(*surface));
+	picoSurface_t *surface = _pico_alloc(sizeof(*surface));
 	if (surface == NULL)
 		return NULL;
 
 	/* attach it to the model */
 	if (model != NULL) {
+		char surfaceName[64];
 		/* adjust model */
 		if (!PicoAdjustModel(model, 0, model->numSurfaces + 1)) {
 			_pico_free(surface);

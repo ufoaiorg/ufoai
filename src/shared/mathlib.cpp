@@ -121,15 +121,13 @@ const byte dvleft[CORE_DIRECTIONS] = { DIRECTION_NORTHEAST, DIRECTION_SOUTHWEST,
 
 
 /**
- * @brief Returns the indice of array directionAngles[DIRECTIONS] whose value is the closest to angle
+ * @brief Returns the index of array directionAngles[DIRECTIONS] whose value is the closest to angle
  * @note This function allows to know the closest multiple of 45 degree of angle.
  * @param[in] angle The angle (in degrees) which is tested.
- * @return Corresponding indice of array directionAngles[DIRECTIONS].
+ * @return Corresponding index of array directionAngles[DIRECTIONS].
  */
 int AngleToDir (int angle)
 {
-	static const int anglesToDV[8] = {0, 4, 2, 6, 1, 5, 3, 7};
-
 	angle += 22;
 	/* set angle between 0 <= angle < 360 */
 	angle %= 360;
@@ -141,8 +139,10 @@ int AngleToDir (int angle)
 	/* get an integer quotient */
 	angle /= 45;
 
-	if (angle >= 0 && angle < CORE_DIRECTIONS)
+	if (angle >= 0 && angle < CORE_DIRECTIONS) {
+		static const int anglesToDV[8] = {0, 4, 2, 6, 1, 5, 3, 7};
 		return anglesToDV[angle];
+	}
 
 	/* This is the default for unknown values. */
 	Com_Printf("Error in AngleToDV: shouldn't have reached this line\n");
