@@ -573,7 +573,7 @@ static size_t R_PreprocessShaderR (const char *name, const char **inPtr, char *o
  * @brief Do our own preprocessing to the shader file, before the
  * GLSL implementation calls it's preprocessor.
  *
- * #if/#endif pairs, #unroll, #endunroll, #include, #replace are handled by our
+ * \#if/#endif pairs, '#unroll', "#endunroll", #include, #replace are handled by our
  * preprocessor, not the GLSL implementation's preprocessor (except #include which may
  * also be handled by the implementation's preprocessor).  #if operates off
  * of the value of a cvar interpreted as a bool. Note the GLSL implementation
