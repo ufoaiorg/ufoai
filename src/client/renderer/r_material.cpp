@@ -220,9 +220,8 @@ static inline void R_StageTextureMatrix (const mBspSurface_t *surf, const materi
  */
 static void R_StageTexCoord (const materialStage_t *stage, const vec3_t v, const vec2_t in, vec2_t out)
 {
-	vec3_t tmp;
-
 	if (stage->flags & STAGE_ENVMAP) {  /* generate texcoords */
+		vec3_t tmp;
 		VectorSubtract(v, refdef.viewOrigin, tmp);
 		VectorNormalizeFast(tmp);
 		Vector2Copy(tmp, out);
@@ -294,8 +293,6 @@ static void R_StageColor (const materialStage_t *stage, const vec3_t v, vec4_t c
  */
 static void R_SetSurfaceStageState (const mBspSurface_t *surf, const materialStage_t *stage)
 {
-	vec4_t color;
-
 	/* bind the texture */
 	R_BindTexture(stage->image->texnum);
 
@@ -321,6 +318,8 @@ static void R_SetSurfaceStageState (const mBspSurface_t *surf, const materialSta
 
 	/* when not using the color array, resolve the shade color */
 	if (!r_state.color_array_enabled) {
+		vec4_t color;
+
 		if (stage->flags & STAGE_COLOR)  /* explicit */
 			VectorCopy(stage->color, color);
 

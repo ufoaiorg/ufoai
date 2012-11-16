@@ -260,8 +260,6 @@ void UI_DrawItem (uiNode_t *node, const vec3_t org, const item_t *item, int x, i
  */
 static void UI_GetItemTooltip (item_t item, char *tooltipText, size_t stringMaxLength)
 {
-	const objDef_t *weapon;
-
 	assert(item.item);
 
 	if (item.amount > 1)
@@ -290,7 +288,7 @@ static void UI_GetItemTooltip (item_t item, char *tooltipText, size_t stringMaxL
 				/* If it's ammo get the weapon names it can be used in */
 				Q_strcat(tooltipText, _("Usable in:\n"), stringMaxLength);
 				for (i = 0; i < item.item->numWeapons; i++) {
-					weapon = item.item->weapons[i];
+					const objDef_t *weapon = item.item->weapons[i];
 					if (GAME_ItemIsUseable(weapon)) {
 						Q_strcat(tooltipText, va("* %s\n", _(weapon->name)), stringMaxLength);
 					}
@@ -673,7 +671,6 @@ static invList_t *UI_ContainerNodeGetItemAtPosition (const uiNode_t* const node,
  */
 void uiContainerNode::drawTooltip (uiNode_t *node, int x, int y)
 {
-	static char tooltiptext[MAX_VAR * 2];
 	const invList_t *itemHover;
 	vec2_t nodepos;
 
@@ -683,6 +680,7 @@ void uiContainerNode::drawTooltip (uiNode_t *node, int x, int y)
 	itemHover = UI_ContainerNodeGetItemAtPosition(node, x, y);
 
 	if (itemHover) {
+		static char tooltiptext[MAX_VAR * 2];
 		const int itemToolTipWidth = 250;
 
 		/* Get name and info about item */

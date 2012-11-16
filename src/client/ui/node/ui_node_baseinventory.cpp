@@ -631,7 +631,6 @@ static invList_t *UI_BaseInventoryNodeGetItem (const uiNode_t* const node, int m
  */
 void uiBaseInventoryNode::drawTooltip (uiNode_t *node, int x, int y)
 {
-	static char tooltiptext[MAX_VAR * 2];
 	const invList_t *itemHover;
 	vec2_t nodepos;
 
@@ -641,6 +640,7 @@ void uiBaseInventoryNode::drawTooltip (uiNode_t *node, int x, int y)
 	itemHover = UI_BaseInventoryNodeGetItem(node, x, y, NULL, NULL);
 
 	if (itemHover) {
+		static char tooltiptext[MAX_VAR * 2];
 		const int itemToolTipWidth = 250;
 
 		/* Get name and info about item */
