@@ -116,6 +116,7 @@ static void UI_InitOption (uiNode_t* option, const char* label, const char* valu
 
 /**
  * @brief Initializes an option with a very little set of values.
+ * @param[in] name The name of the new node
  * @param[in] label label displayed
  * @param[in] value value used when this option is selected
  */

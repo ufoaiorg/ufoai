@@ -94,6 +94,7 @@ static void SCR_DrawLoadingBar (int x, int y, int w, int h, int percent)
  * @sa CL_InitAfter
  * @param[in] string Draw the loading string - if the scripts are not parsed, this is
  * not possible, so use false for very early calls
+ * @param percent Progress value for the status bar
  */
 void SCR_DrawLoadingScreen (bool string, int percent)
 {

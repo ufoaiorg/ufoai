@@ -584,12 +584,12 @@ void UI_RegisterPanelNode (uiBehaviour_t *behaviour)
 	 * do not move or resize child without align property set. In the image, number identify
 	 * the position of the child into node, and same color identify the same node. Text on child
 	 * display the value of the "align" property of each child.
-	 * <li>0: no layout manager. Child keep there position and there size.
-	 * <li>LAYOUT_TOP_DOWN_FLOW: layout child from top to down. Only child height do not change.
-	 * <li>LAYOUT_PACK: Pack one by one child into the available space of the node.
-	 * <li>LAYOUT_BORDER: Align nodes at a know position. Its look like pack layout, but the order is not the same.
-	 * top and bottom child first, then left and right, then middle. We can show the difference into the image.
-	 * <li>LAYOUT_STAR: Align the corner of child into the corner of the node. Child size do not change.
+	 * - 0: no layout manager. Child keep there position and there size.
+	 * - LAYOUT_TOP_DOWN_FLOW: layout child from top to down. Only child height do not change.
+	 * - LAYOUT_PACK: Pack one by one child into the available space of the node.
+	 * - LAYOUT_BORDER: Align nodes at a know position. Its look like pack layout, but the order is not the same.
+	 *   top and bottom child first, then left and right, then middle. We can show the difference into the image.
+	 * - LAYOUT_STAR: Align the corner of child into the corner of the node. Child size do not change.
 	 * @image html http://ufoai.org/wiki/images/Layout.png
 	 */
 	UI_RegisterExtradataNodeProperty(behaviour, "layout", V_INT, panelExtraData_t, layout);
