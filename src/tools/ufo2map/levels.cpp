@@ -78,8 +78,6 @@ static int32_t BuildNodeChildren (const int n[3])
 	int i;
 
 	for (i = 0; i < 3; i++) {
-		dBspNode_t *newnode;
-		vec3_t addvec;
 		AABB aabb(vec3_origin, vec3_origin);
 
 		if (n[i] == LEAFNODE)
@@ -93,6 +91,8 @@ static int32_t BuildNodeChildren (const int n[3])
 			VectorCopy(curTile->nodes[node].mins, aabb.mins);
 			VectorCopy(curTile->nodes[node].maxs, aabb.maxs);
 		} else {
+			dBspNode_t *newnode;
+			vec3_t addvec;
 			/* add a new "special" dnode and store it */
 			newnode = &curTile->nodes[curTile->numnodes];
 			curTile->numnodes++;
