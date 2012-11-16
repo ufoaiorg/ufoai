@@ -830,6 +830,7 @@
 		<Unit filename="..\..\src\shared\parse.h" />
 		<Unit filename="..\..\src\shared\shared.cpp" />
 		<Unit filename="..\..\src\shared\shared.h" />
+		<Unit filename="..\..\src\shared\sharedptr.h" />
 		<Unit filename="..\..\src\shared\stringhunk.cpp" />
 		<Unit filename="..\..\src\shared\typedefs.h" />
 		<Unit filename="..\..\src\shared\ufotypes.h" />
