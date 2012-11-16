@@ -952,7 +952,6 @@ static void CL_ParticleRun2 (ptl_t *p)
 
 		/* hit something solid */
 		if (tr.fraction < 1.0 || tr.startsolid) {
-			vec3_t temp;
 
 			p->hitSolid = true;
 
@@ -965,6 +964,7 @@ static void CL_ParticleRun2 (ptl_t *p)
 				return;
 			} else if (p->bounce) {
 				/* bounce */
+				vec3_t temp;
 				VectorCopy(p->v, p->oldV);
 				VectorScale(tr.plane.normal, -DotProduct(tr.plane.normal, p->v), temp);
 				VectorAdd(temp, p->v, temp);

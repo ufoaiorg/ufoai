@@ -2361,14 +2361,13 @@ static bool AIR_SaveAircraftXML (xmlNode_t *p, const aircraft_t* const aircraft,
 
 	subnode = cgi->XML_AddNode(node, SAVE_AIRCRAFT_AIRSTATS);
 	for (l = 0; l < AIR_STATS_MAX; l++) {
-		xmlNode_t *statNode;
 #ifdef DEBUG
 		/* UFO HP can be < 0 if the UFO has been destroyed */
 		if (!(isUfo && l == AIR_STATS_DAMAGE) && aircraft->stats[l] < 0)
 			Com_Printf("Warning: ufo '%s' stats %i: %i is smaller than 0\n", aircraft->id, l, aircraft->stats[l]);
 #endif
 		if (aircraft->stats[l] != 0) {
-			statNode = cgi->XML_AddNode(subnode, SAVE_AIRCRAFT_AIRSTAT);
+			xmlNode_t *statNode = cgi->XML_AddNode(subnode, SAVE_AIRCRAFT_AIRSTAT);
 			cgi->XML_AddString(statNode, SAVE_AIRCRAFT_AIRSTATID, cgi->Com_GetConstVariable(SAVE_AIRCRAFTSTAT_NAMESPACE, l));
 			cgi->XML_AddLong(statNode, SAVE_AIRCRAFT_VAL, aircraft->stats[l]);
 		}

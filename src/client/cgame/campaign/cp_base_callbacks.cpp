@@ -208,13 +208,13 @@ static void B_SetBaseTitle_f (void)
  */
 static void B_BuildBase_f (void)
 {
-	const nation_t *nation;
 	const campaign_t *campaign = ccs.curCampaign;
 
 	if (ccs.mapAction == MA_NEWBASE)
 		ccs.mapAction = MA_NONE;
 
 	if (ccs.credits - campaign->basecost > 0) {
+		const nation_t *nation;
 		const char *baseName = mn_base_title->string;
 		base_t *base;
 		/* there may be no " in the base name */
