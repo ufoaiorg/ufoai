@@ -707,9 +707,8 @@ bool GAME_SaveCharacter (xmlNode_t *p, const character_t* chr)
 	}
 	/* Store kills */
 	for (k = 0; k < KILLED_NUM_TYPES; k++) {
-		xmlNode_t *sKill;
 		if (score->kills[k] || score->stuns[k]) {
-			sKill = XML_AddNode(sScore, SAVE_CHARACTER_KILLS);
+			xmlNode_t *sKill = XML_AddNode(sScore, SAVE_CHARACTER_KILLS);
 			XML_AddString(sKill, SAVE_CHARACTER_KILLTYPE, Com_GetConstVariable(SAVE_CHARACTER_KILLTYPE_NAMESPACE, k));
 			XML_AddIntValue(sKill, SAVE_CHARACTER_KILLED, score->kills[k]);
 			XML_AddIntValue(sKill, SAVE_CHARACTER_STUNNED, score->stuns[k]);

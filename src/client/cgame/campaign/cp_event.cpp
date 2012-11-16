@@ -493,8 +493,6 @@ void CL_ParseCampaignEvents (const char *name, const char **text)
  */
 void CL_EventAddMail (const char *eventMailId)
 {
-	char dateBuf[MAX_VAR] = "";
-
 	eventMail_t* eventMail = CL_GetEventMail(eventMailId);
 	if (!eventMail) {
 		Com_Printf("CL_EventAddMail: Could not find eventmail with id '%s'\n", eventMailId);
@@ -512,6 +510,8 @@ void CL_EventAddMail (const char *eventMailId)
 
 	if (!eventMail->date) {
 		dateLong_t date;
+		char dateBuf[MAX_VAR] = "";
+
 		CP_DateConvertLong(&ccs.date, &date);
 		Com_sprintf(dateBuf, sizeof(dateBuf), _("%i %s %02i"),
 			date.year, Date_GetMonthName(date.month - 1), date.day);

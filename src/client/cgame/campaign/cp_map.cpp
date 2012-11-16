@@ -1401,7 +1401,6 @@ static void MAP_DrawMapOneBase (const uiNode_t* node, const base_t *base,
  */
 static void MAP_DrawAircraftHealthBar (const uiNode_t* node, const aircraft_t *aircraft)
 {
-	const vec4_t bordercolor = {1, 1, 1, 1};
 	const int width = 8 * UI_MAPEXTRADATACONST(node).zoom;
 	const int height = 1 * UI_MAPEXTRADATACONST(node).zoom * 0.9;
 	vec4_t color;
@@ -1428,6 +1427,7 @@ static void MAP_DrawAircraftHealthBar (const uiNode_t* node, const aircraft_t *a
 		visible = MAP_AllMapToScreen(node, aircraft->pos, &centerX, &centerY, NULL);
 
 	if (visible) {
+		const vec4_t bordercolor = {1, 1, 1, 1};
 		cgi->R_DrawFill(centerX - width / 2 , centerY - 5 * UI_MAPEXTRADATACONST(node).zoom, round(width * ((float)aircraft->damage / aircraft->stats[AIR_STATS_DAMAGE])), height, color);
 		cgi->R_DrawRect(centerX - width / 2, centerY - 5 * UI_MAPEXTRADATACONST(node).zoom, width, height, bordercolor, 1.0, 1);
 	}

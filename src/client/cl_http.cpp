@@ -143,7 +143,6 @@ static void CL_EscapeHTTPPath (const char *filePath, char *escaped)
  */
 static void CL_StartHTTPDownload (dlqueue_t *entry, dlhandle_t *dl)
 {
-	char tempFile[MAX_OSPATH];
 	char escapedFilePath[MAX_QPATH * 4];
 	const char *extension = Com_GetExtension(entry->ufoPath);
 
@@ -153,6 +152,7 @@ static void CL_StartHTTPDownload (dlqueue_t *entry, dlhandle_t *dl)
 		dl->file = NULL;
 		CL_EscapeHTTPPath(entry->ufoPath, escapedFilePath);
 	} else {
+		char tempFile[MAX_OSPATH];
 		/** @todo use the FS_OpenFile function here */
 		Com_sprintf(dl->filePath, sizeof(dl->filePath), "%s/%s", FS_Gamedir(), entry->ufoPath);
 

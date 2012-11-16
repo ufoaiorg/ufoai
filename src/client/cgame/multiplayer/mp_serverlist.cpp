@@ -284,7 +284,6 @@ static char userInfoText[256];
 void CL_ParseServerInfoMessage (dbuffer *msg, const char *hostname)
 {
 	const char *value;
-	const char *token;
 	char str[MAX_INFO_STRING];
 	char buf[256];
 
@@ -293,6 +292,7 @@ void CL_ParseServerInfoMessage (dbuffer *msg, const char *hostname)
 	/* check for server status response message */
 	value = Info_ValueForKey(str, "sv_dedicated");
 	if (*value) {
+		const char *token;
 		/* server info cvars and users are seperated via newline */
 		const char *users = strstr(str, "\n");
 		if (!users) {
