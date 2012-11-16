@@ -1468,6 +1468,7 @@ void HUD_Update (void)
  * @param cvarName The cvar name (cl_selected)
  * @param oldValue The old value of the cvar (a sane actor idx)
  * @param newValue The new value of the cvar (a sane actor idx)
+ * @param data Unused here, but required by cvarChangeListenerFunc_t
  */
 static void HUD_ActorSelectionChangeListener (const char *cvarName, const char *oldValue, const char *newValue, void *data)
 {
@@ -1487,6 +1488,7 @@ static void HUD_ActorSelectionChangeListener (const char *cvarName, const char *
  * @param cvarName The cvar name
  * @param oldValue The old value of the cvar
  * @param newValue The new value of the cvar
+ * @param data Unused here, but required by cvarChangeListenerFunc_t
  */
 static void HUD_RightHandChangeListener (const char *cvarName, const char *oldValue, const char *newValue, void *data)
 {
@@ -1501,6 +1503,7 @@ static void HUD_RightHandChangeListener (const char *cvarName, const char *oldVa
  * @param cvarName The cvar name
  * @param oldValue The old value of the cvar
  * @param newValue The new value of the cvar
+ * @param data Unused here, but required by cvarChangeListenerFunc_t
  */
 static void HUD_LeftHandChangeListener (const char *cvarName, const char *oldValue, const char *newValue, void *data)
 {
@@ -1515,6 +1518,7 @@ static void HUD_LeftHandChangeListener (const char *cvarName, const char *oldVal
  * @param cvarName The cvar name
  * @param oldValue The old value of the cvar
  * @param newValue The new value of the cvar
+ * @param data Unused here, but required by cvarChangeListenerFunc_t
  */
 static void HUD_TUChangeListener (const char *cvarName, const char *oldValue, const char *newValue, void *data)
 {
