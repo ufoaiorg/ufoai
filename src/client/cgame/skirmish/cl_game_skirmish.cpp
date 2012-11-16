@@ -191,6 +191,7 @@ static void GAME_SK_ChangeEquip_f (void)
  * the attacker team, the second the victim team
  * @param numStunned The amount of stunned actors for all teams. The first dimension contains
  * the attacker team, the second the victim team
+ * @param nextmap Indicates if there is another map to follow within the same msission
  */
 static void GAME_SK_Results (dbuffer *msg, int winner, int *numSpawned, int *numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS], bool nextmap)
 {
