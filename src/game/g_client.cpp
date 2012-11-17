@@ -1048,7 +1048,7 @@ static void G_ThinkActorGoCrouch (edict_t *ent)
 }
 
 /**
- * @brief Searches a free spawning point for a given actor size
+ * @brief Searches a free spawning point for a given actor size and turns it into an actor
  * @param[in] player The player to get the free spawn points for
  * @param[in] actorSize The actor size to get a spawning point for
  * @return An actor edict or @c NULL if no free spawning point was found
