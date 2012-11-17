@@ -1357,7 +1357,7 @@
 // entity 25
 {
 "classname" "info_human_start"
-"origin" "336 80 92"
+"origin" "336 112 92"
 "angle" "-135"
 }
 // entity 26
@@ -2302,4 +2302,32 @@
 "team" "1"
 "active" "0"
 "targetname" "basecam"
+}
+// entity 65
+{
+"classname" "info_human_start"
+"origin" "400 176 92"
+"angle" "45"
+}
+// entity 66
+{
+"classname" "info_human_start"
+"origin" "176 80 92"
+}
+// entity 67
+{
+"classname" "info_human_start"
+"origin" "112 336 92"
+"angle" "-135"
+}
+// entity 68
+{
+"classname" "info_human_start"
+"origin" "272 432 92"
+"angle" "90"
+}
+// entity 69
+{
+"classname" "info_human_start"
+"origin" "144 400 92"
 }
