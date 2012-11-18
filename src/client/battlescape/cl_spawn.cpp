@@ -22,15 +22,53 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
+#include "cl_spawn.h"
 #include "../client.h"
 #include "../cgame/cl_game.h"
 #include "cl_particle.h"
-#include "cl_spawn.h"
 #include "../../shared/parse.h"
 
 /* position in the spawnflags */
 #define MISC_MODEL_GLOW 9
 #define SPAWNFLAG_NO_DAY 8
+
+typedef struct {
+	char classname[MAX_VAR];
+	char target[MAX_VAR];
+	char targetname[MAX_VAR];
+	char tagname[MAX_VAR];
+	char anim[MAX_VAR];
+	char model[MAX_QPATH];
+	char particle[MAX_VAR];
+	char noise[MAX_QPATH];
+	vec3_t origin;
+	vec3_t angles;
+	vec3_t scale;
+	vec3_t color;
+	vec3_t ambientNightColor;
+	vec_t nightLight;
+	vec2_t nightSunAngles;
+	vec3_t nightSunColor;
+	vec3_t ambientDayColor;
+	vec_t dayLight;
+	vec2_t daySunAngles;
+	vec3_t daySunColor;
+	vec2_t wait;
+	int maxLevel;
+	int maxMultiplayerTeams;
+	int skin;
+	int frame;
+	int light;
+	int spawnflags;
+	float volume;
+	float attenuation;
+	float angle;
+	int maxteams;
+
+	/* not filled from entity string */
+	const char *entStringPos;
+	int entnum;
+} localEntityParse_t;
 
 static const value_t localEntityValues[] = {
 	{"skin", V_INT, offsetof(localEntityParse_t, skin), MEMBER_SIZEOF(localEntityParse_t, skin)},
