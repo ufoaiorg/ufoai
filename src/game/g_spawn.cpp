@@ -638,7 +638,7 @@ edict_t *G_SpawnParticle (const vec3_t origin, int spawnflags, const char *parti
 }
 
 /**
- * @brief Spawn a 1x1 unit.
+ * @brief Spawn point for a 1x1 unit.
  */
 static void G_ActorSpawn (edict_t *ent)
 {
