@@ -101,7 +101,7 @@ static void testMapDefsMassRMA (void)
 		{
 			int i;
 			long time;
-			mapInfo_t *randomMap;
+			MapInfo *randomMap;
 			char *p = md->map;
 
 			if (*p == '+')
@@ -218,7 +218,7 @@ static void testMapDefStatistic (void)
 			continue;
 
 		{
-			mapInfo_t *theMap = Mem_AllocType(mapInfo_t);
+			MapInfo *theMap = Mem_AllocType(mapInfo_t);
 			char mapAssName[80];
 			const char *p = md->map;
 
