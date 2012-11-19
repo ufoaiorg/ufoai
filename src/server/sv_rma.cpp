@@ -162,7 +162,7 @@ static void SV_TileMaskToString (unsigned long m, char *str)
 
 #define ACW 6	/* ascii cell width */
 #define ACH 3	/* ascii cell height */
-#define MMW 13	/* map max height 13 means we support 12 */
+#define MMW 13	/* map max width 13 means we support 12 */
 #define MMH 13	/* map max height */
 static void SV_RmaPrintMap (const MapInfo *map)
 {
