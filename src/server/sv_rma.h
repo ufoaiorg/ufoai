@@ -39,6 +39,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MAX_RANDOM_MAP_WIDTH 32
 #define MAX_RANDOM_MAP_HEIGHT 32
 
+#define RMA_HIGHEST_SUPPORTED_SEED 50
+
 /** @brief Stores the parsed data for a map tile. (See *.ump files) */
 class Tile {
 public:

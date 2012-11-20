@@ -194,7 +194,7 @@ static void testNewSeedlists (void)
 	MapInfo *randomMap;
 
 	sv_threads->integer = 0;
-	for (i = 0; i < 50; i++) {
+	for (i = 0; i < RMA_HIGHEST_SUPPORTED_SEED; i++) {
 		srand(i);
 		time = Sys_Milliseconds();
 		Com_Printf("Seed: %i\n", i);
