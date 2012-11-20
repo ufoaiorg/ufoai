@@ -379,7 +379,7 @@ static size_t R_InitializeShader (const GLenum type, const char *name, char *out
  * GLSL implementation calls it's preprocessor.
  *
  * "#if/#endif" pairs, "#unroll", "#endunroll", "#include", "#replace" are handled by our
- * preprocessor, not the GLSL implementation's preprocessor (except #include which may
+ * preprocessor, not the GLSL implementation's preprocessor (except "#include" which may
  * also be handled by the implementation's preprocessor).  "#if" operates off
  * of the value of a cvar interpreted as a bool. Note the GLSL implementation
  * preprocessor handles "#ifdef" and "#ifndef", not "#if".
