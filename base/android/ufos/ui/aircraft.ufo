@@ -4,7 +4,7 @@
 
 component aircraft_teammember extends panel {
 	{
-		size		"260 25"
+		size		"260 50"
 	}
 
 	data id {
@@ -14,7 +14,8 @@ component aircraft_teammember extends panel {
 	string name {
 		pos			"0 0"
 		color		"0 .78 0 1"
-		size		"230 25"
+		size		"230 50"
+		contentalign	ALIGN_CL
 		onClick {
 			cmd "aircraft_soldierlist_select <node:parent.id@integer>;"
 		}
@@ -22,8 +23,9 @@ component aircraft_teammember extends panel {
 
 	checkbox_green selected {
 		tooltip		"_Add/remove soldier to the team"
-		pos			"230 0"
-		size		"25 25"
+		pos			"210 0"
+		size		"50 50"
+		padding		17
 
 		onChange {
 			cmd "ui_team_assign_ucn <node:parent.id@integer>; ui_team_fill \"<node:parent.id@string>\"; aircraft_soldierlist_select <node:parent.id@integer>;"

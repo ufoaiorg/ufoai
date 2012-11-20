@@ -2,7 +2,7 @@
 // TRANSFER MENU
 // ==================
 
-component cmp_t_spinner extends spinner_blue
+component cmp_t_spinner extends spinner_horiz
 {
 	tooltip		"_Add/Remove item to transfer cargo, hold SHIFT for speed increase."
 	shiftincreasefactor	10.0
@@ -123,7 +123,7 @@ window transfer
 			size		"520 550"
 			color1		"0 0.08 0 1"
 			color2		"0 0.16 0 1"
-			lineheight	25
+			lineheight	50
 		}
 
 		string title_item
@@ -136,7 +136,7 @@ window transfer
 		string title_amount
 		{
 			string		"_Amount/Transfer"
-			pos			"300 18"
+			pos			"320 18"
 			size		"200 25"
 			contentalign	ALIGN_UC
 			font		"f_small_bold"
@@ -145,9 +145,10 @@ window transfer
 		textlist trans_list
 		{
 			dataid		TEXT_TRANSFER_LIST
-			pos			"25 41"
-			size		"325 525"
-			lineheight	"25"
+			pos			"25 66"
+			size		"325 500"
+			lineheight	"50"
+			contentalign	ALIGN_CL
 			onClick		{
 				if ( *cvar:mn_itemtype ne "item" ) {
 					cmd "trans_list_click <lineselected>"
@@ -166,9 +167,9 @@ window transfer
 		textlist trans_list_amount
 		{
 			dataid		TEXT_TRANSFER_LIST_AMOUNT
-			pos			"350 41"
-			size		"50 525"
-			lineheight	"25"
+			pos			"310 66"
+			size		"50 500"
+			lineheight	"50"
 			contentalign	ALIGN_CR
 			onViewChange	{
 				*node:root.itemlist.trans_list@viewpos = <viewpos>
@@ -183,9 +184,9 @@ window transfer
 		textlist trans_list_transfered
 		{
 			dataid		TEXT_TRANSFER_LIST_TRANSFERED
-			pos			"425 41"
-			size		"50 525"
-			lineheight	"25"
+			pos			"445 66"
+			size		"50 500"
+			lineheight	"50"
 			contentalign	ALIGN_CR
 			onViewChange	{
 				*node:root.itemlist.trans_list@viewpos = <viewpos>
@@ -199,8 +200,8 @@ window transfer
 
 		vscrollbar trans_list_scroll {
 			image		"ui/scrollbar_v_green"
-			pos			"510 43"
-			height		"520"
+			pos			"510 68"
+			height		"495"
 			hidewhenunused	true
 			onChange	{
 				*node:root.itemlist.trans_list_scroll@current = <current>
@@ -213,88 +214,43 @@ window transfer
 
 		cmp_t_spinner t_spinner0
 		{
-			pos			"485 43"
+			pos			"375 66"
 		}
 		cmp_t_spinner t_spinner1
 		{
-			pos			"485 68"
+			pos			"375 116"
 		}
 		cmp_t_spinner t_spinner2
 		{
-			pos			"485 93"
+			pos			"375 166"
 		}
 		cmp_t_spinner t_spinner3
 		{
-			pos			"485 118"
+			pos			"375 216"
 		}
-
 		cmp_t_spinner t_spinner4
 		{
-			pos			"485 143"
+			pos			"375 266"
 		}
 		cmp_t_spinner t_spinner5
 		{
-			pos			"485 168"
+			pos			"375 316"
 		}
 		cmp_t_spinner t_spinner6
 		{
-			pos			"485 193"
+			pos			"375 366"
 		}
 		cmp_t_spinner t_spinner7
 		{
-			pos			"485 218"
+			pos			"375 416"
 		}
 		cmp_t_spinner t_spinner8
 		{
-			pos			"485 243"
+			pos			"375 466"
 		}
 		cmp_t_spinner t_spinner9
 		{
-			pos			"485 268"
-		}
-		cmp_t_spinner t_spinner10
-		{
-			pos			"485 293"
-		}
-		cmp_t_spinner t_spinner11
-		{
-			pos			"485 318"
-		}
-		cmp_t_spinner t_spinner12
-		{
-			pos			"485 343"
-		}
-		cmp_t_spinner t_spinner13
-		{
-			pos			"485 368"
-		}
-		cmp_t_spinner t_spinner14
-		{
-			pos			"485 393"
-		}
-		cmp_t_spinner t_spinner15
-		{
-			pos			"485 418"
-		}
-		cmp_t_spinner t_spinner16
-		{
-			pos			"485 443"
-		}
-		cmp_t_spinner t_spinner17
-		{
-			pos			"485 468"
-		}
-		cmp_t_spinner t_spinner18
-		{
-			pos			"485 493"
-		}
-		cmp_t_spinner t_spinner19
-		{
-			pos			"485 518"
-		}
-		cmp_t_spinner t_spinner20
-		{
-			pos			"485 543"
+			pos			"375 516"
 		}
 	}
 
@@ -306,14 +262,14 @@ window transfer
 		*cvar:loop_max = <1>
 		*cvar:i = 0
 
-		if ( *cvar:loop_max > 21 ) {
-			*cvar:loop_max = 21
+		if ( *cvar:loop_max > 10 ) {
+			*cvar:loop_max = 10
 		}
 		while ( *cvar:i < *cvar:loop_max ) {
 			*node:root.itemlist.t_spinner<cvar:i>@invis = false
 			*cvar:i = ( *cvar:i + 1 )
 		}
-		while ( *cvar:i < 21 ) {
+		while ( *cvar:i < 10 ) {
 			*node:root.itemlist.t_spinner<cvar:i>@invis = true
 			*cvar:i = ( *cvar:i + 1 )
 		}
@@ -588,7 +544,7 @@ window transfer
 		cmd "trans_init;"
 		if ( *cvar:mn_itemtype_name eq "" ) { *cvar:mn_itemtype_name = "_Equipment" }
 		*cvar:i = 0;
-		while ( *cvar:i < 21 ) {
+		while ( *cvar:i < 10 ) {
 			*node:root.itemlist.t_spinner<cvar:i>@num = <cvar:i>
 			*cvar:i = ( *cvar:i + 1 )
 		}

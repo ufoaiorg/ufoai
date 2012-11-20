@@ -59,6 +59,9 @@ static int researchListLength;
 /** The currently selected entry in the above list. */
 static int researchListPos;
 
+/** Number of the available string (in the list) in the research menu */
+static int researchListMaxDisplayItems;
+
 /**
  * @brief Displays the informations of the current selected technology in the description-area.
  */
@@ -217,7 +220,7 @@ static void RS_InitGUI (base_t* base, bool update)
 		available[i] = E_CountUnassigned(b, EMPL_SCIENTIST);
 	}
 
-	for (i = 0; i < MAX_RESEARCHDISPLAY && i < researchListLength; i++) {
+	for (i = 0; i < researchListMaxDisplayItems && i < researchListLength; i++) {
 		guiResearchElement_t *element = &researchList2[i];
 
 		/* only element of the current base can change */
@@ -324,7 +327,7 @@ static void RS_InitGUI (base_t* base, bool update)
 
 	/* Set rest of the list-entries to have no text at all. */
 	if (!update) {
-		for (; i < MAX_RESEARCHDISPLAY; i++) {
+		for (; i < researchListMaxDisplayItems; i++) {
 			cgi->UI_ExecuteConfunc("research_hide %i", i);
 		}
 	}
@@ -332,7 +335,7 @@ static void RS_InitGUI (base_t* base, bool update)
 	/* Select last selected item if possible or the very first one if not. */
 	if (researchListLength) {
 		Com_DPrintf(DEBUG_CLIENT, "RS_UpdateData: Pos%i Len%i\n", researchListPos, researchListLength);
-		if (researchListPos >= 0 && researchListPos < researchListLength && researchListLength < MAX_RESEARCHDISPLAY) {
+		if (researchListPos >= 0 && researchListPos < researchListLength && researchListLength < researchListMaxDisplayItems) {
 			const int t = researchList2[researchListPos].type;
 			/* is it a tech row */
 			if (t == RSGUI_RESEARCH || t == RSGUI_RESEARCHOUT || t == RSGUI_UNRESEARCHABLEITEM) {
@@ -837,6 +840,11 @@ static void UI_ResearchInit_f (void)
 
 	if (!base)
 		return;
+
+	researchListMaxDisplayItems = 22;
+	if (cgi->Cmd_Argc() >= 2) {
+		researchListMaxDisplayItems = atoi(cgi->Cmd_Argv(1));
+	}
 
 	CL_ResearchType_f();
 	RS_InitGUI(base, false);
