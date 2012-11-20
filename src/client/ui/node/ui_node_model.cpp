@@ -422,10 +422,7 @@ void uiModelNode::onCapturedMouseMove (uiNode_t *node, int x, int y)
 	rotateAngles[ROLL] += ROTATE_SPEED * (y - oldMousePosY);
 
 	/* clamp the angles */
-	while (rotateAngles[YAW] > 360.0)
-		rotateAngles[YAW] -= 360.0;
-	while (rotateAngles[YAW] < 0.0)
-		rotateAngles[YAW] += 360.0;
+	rotateAngles[YAW] -= floor(rotateAngles[YAW] / 360.0) * 360.0;
 
 	if (rotateAngles[ROLL] < 0.0)
 		rotateAngles[ROLL] = 0.0;
