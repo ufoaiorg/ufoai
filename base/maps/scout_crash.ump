@@ -15,10 +15,10 @@ base scout_crash/sc_
 tile +craft_drop_firebird
 {
 5 4
-0      0       0       0       0
-0      +b      +b      +b      0
-0      +b      +b      +b      0
-0      0       0       0       0
+0		0		0		0		0
+0		+b		+b		+b		0
+0		+b		+b		+b		0
+0		0		0		0		0
 }
 
 // ---------------------------------
@@ -26,10 +26,10 @@ tile +craft_drop_firebird
 tile +craft_drop_herakles
 {
 5 4
-0      0       0       0       0
-0      +b      +b      +b      0
-0      +b      +b      +b      0
-0      0       0       0       0
+0		0		0		0		0
+0		+b		+b		+b		0
+0		+b		+b		+b		0
+0		0		0		0		0
 }
 
 // ---------------------------------
@@ -37,10 +37,10 @@ tile +craft_drop_herakles
 tile +craft_drop_raptor
 {
 5 4
-0      0       0       0       0
-0      +b      +b      +b      0
-0      +b      +b      +b      0
-0      0       0       0       0
+0		0		0		0		0
+0		+b		+b		+b		0
+0		+b		+b		+b		0
+0		0		0		0		0
 }
 
 // ---------------------------------
@@ -48,20 +48,19 @@ tile +craft_drop_raptor
 tile +main
 {
 10 7
-0      0       0       0       0       0       0       0       0       0
-0      +a      +a      +a      +a      +a      +a      +a      +a      0
-0      +a      +a      +a      +a      +a      +a      +a      +a      0
-0      +a      +a      +a      +a      +a      +a      +a      +a      0
-0      +a      +a      +a      +a      +a      b       b       b       0
-0      +a      +a      +a      +a      +a      b       b       b       0
-0      0       0       0       0       0       0       0       0       0
+0		0		0		0		0		0		0		0		0		0
+0		+a		+a		+a		+a		+a		+a		+a		+a		0
+0		+a		+a		+a		+a		+a		+a		+a		+a		0
+0		+a		+a		+a		+a		+a		+a		+a		+a		0
+0		+a		+a		+a		+a		+a		b		b		b		0
+0		+a		+a		+a		+a		+a		b		b		b		0
+0		0		0		0		0		0		0		0		0		0
 }
 
 assembly standard
 {
 size "8 5"
 grid "1 1"
-
 +main "1 1"
 *rm_drop +craft_drop_firebird "1 1"
 }
