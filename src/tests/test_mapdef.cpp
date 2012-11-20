@@ -32,6 +32,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../server/server.h"
 #include "../server/sv_rma.h"
 
+#define RMA_HIGHEST_SUPPORTED_SEED 50
+
 /**
  * The suite initialization function.
  * Returns zero on success, non-zero otherwise.
@@ -134,7 +136,7 @@ static void testMapDefsMassRMA (void)
 					else
 						Cvar_Set("rm_ufo", "");
 
-					for (i = 0; i < 50; i++) {
+					for (i = 0; i < RMA_HIGHEST_SUPPORTED_SEED; i++) {
 						const char *ass = NULL;
 						srand(i);
 						time = Sys_Milliseconds();
