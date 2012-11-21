@@ -2901,7 +2901,7 @@ bool B_UpdateStorageAndCapacity (base_t* base, const objDef_t *obj, int amount, 
 
 	if (base->storage.numItems[obj->idx] == 0) {
 		technology_t *tech = RS_GetTechForItem(obj);
-		if (tech->statusResearch == RS_RUNNING)
+		if (tech->statusResearch == RS_RUNNING && tech->base == base)
 			RS_StopResearch(tech);
 	}
 
