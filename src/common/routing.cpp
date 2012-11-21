@@ -70,25 +70,25 @@ static const box_t actor2x2Box = {{-half2x2Width, -half2x2Width, 0},
  */
 typedef struct RT_data_s {
 	mapTiles_t *mapTiles;
-	routing_t *map;				/**< The routing table */
+	routing_t *routes;			/**< The routing table */
 	actorSizeEnum_t actorSize;	/**< The size of the actor, in cells */
 	const char **list;			/**< The local models list */
 } RT_data_t;
 
 static inline void RT_ConnSet (RT_data_t *rtd, const int x, const int y, const int z, const int dir, const int val)
 {
-	RT_CONN(rtd->map, rtd->actorSize, x, y, z, dir) = val;
+	RT_CONN(rtd->routes, rtd->actorSize, x, y, z, dir) = val;
 }
 
 static inline void RT_StepupSet (RT_data_t *rtd, const int x, const int y, const int z, const int dir, const int val)
 {
-	RT_STEPUP(rtd->map, rtd->actorSize, x, y, z, dir) = val;
+	RT_STEPUP(rtd->routes, rtd->actorSize, x, y, z, dir) = val;
 }
 
 static inline void RT_ConnSetNoGo (RT_data_t *rtd, const int x, const int y, const int z, const int dir)
 {
 	RT_ConnSet(rtd, x, y, z, dir, 0);
-	RT_STEPUP(rtd->map, rtd->actorSize, x, y, z, dir) = PATHFINDING_NO_STEPUP;
+	RT_STEPUP(rtd->routes, rtd->actorSize, x, y, z, dir) = PATHFINDING_NO_STEPUP;
 }
 
 /**
@@ -674,7 +674,7 @@ static int RT_FillPassageData (RT_data_t *rtd, const int dir, const int  x, cons
 	/* Last, update the routes of cells from (x, y, fz) to (x, y, cz) for direction dir */
 	for (i = fz; i <= cz; i++) {
 		int oh;
-		RT_CONN_TEST(rtd->map, rtd->actorSize, x, y, i, dir);
+		RT_CONN_TEST(rtd->routes, rtd->actorSize, x, y, i, dir);
 		/* Offset from the floor or the bottom of the current cell, whichever is higher. */
 		oh = openingTop - std::max(openingBase, i * CELL_HEIGHT);
 		/* Only if > 0 */
@@ -683,7 +683,7 @@ static int RT_FillPassageData (RT_data_t *rtd, const int dir, const int  x, cons
 		/* The stepup is 0 for all cells that are not at the floor. */
 		RT_StepupSet(rtd, x, y, i, dir, 0);
 		if (debugTrace) {
-			Com_Printf("RT_CONN for (%i, %i, %i) as:%i dir:%i = %i\n", x, y, i, rtd->actorSize, dir, RT_CONN(rtd->map, rtd->actorSize, x, y, i, dir));
+			Com_Printf("RT_CONN for (%i, %i, %i) as:%i dir:%i = %i\n", x, y, i, rtd->actorSize, dir, RT_CONN(rtd->routes, rtd->actorSize, x, y, i, dir));
 		}
 	}
 
@@ -696,7 +696,7 @@ static int RT_FillPassageData (RT_data_t *rtd, const int dir, const int  x, cons
 	 * Return the highest z coordinate scanned- cz if fz==cz, z==cz, or the floor in cz is negative.
 	 * Otherwise cz - 1 to recheck cz in case there is a floor in cz with its own ceiling.
 	 */
-	if (fz == cz || z == cz || RT_FLOOR(rtd->map, rtd->actorSize, x, y, cz) < 0)
+	if (fz == cz || z == cz || RT_FLOOR(rtd->routes, rtd->actorSize, x, y, cz) < 0)
 		return cz;
 	return cz - 1;
 }
@@ -873,10 +873,10 @@ static int RT_CalcNewZ (RT_data_t *rtd, const int ax, const int ay, const int to
 
 	temp_z = floor((hi - 1) / CELL_HEIGHT);
 	temp_z = std::min(temp_z, PATHFINDING_HEIGHT - 1);
-	adj_lo = RT_FLOOR(rtd->map, rtd->actorSize, ax, ay, temp_z) + temp_z * CELL_HEIGHT;
+	adj_lo = RT_FLOOR(rtd->routes, rtd->actorSize, ax, ay, temp_z) + temp_z * CELL_HEIGHT;
 	if (adj_lo > hi) {
 		temp_z--;
-		adj_lo = RT_FLOOR(rtd->map, rtd->actorSize, ax, ay, temp_z) + temp_z * CELL_HEIGHT;
+		adj_lo = RT_FLOOR(rtd->routes, rtd->actorSize, ax, ay, temp_z) + temp_z * CELL_HEIGHT;
 	}
 	/**
 	 * @note Return a value only if there is a floor for the adjacent cell.
@@ -956,7 +956,7 @@ static int RT_FindOpening (RT_data_t *rtd, const place_t* from, const int ax, co
 	pos3_t pos;
 	int temp_z;
 
-	const int endfloor = RT_FLOOR(rtd->map, rtd->actorSize, ax, ay, from->cell[2]) + from->cell[2] * CELL_HEIGHT;
+	const int endfloor = RT_FLOOR(rtd->routes, rtd->actorSize, ax, ay, from->cell[2]) + from->cell[2] * CELL_HEIGHT;
 	const int hifloor = std::max(endfloor, bottom);
 
 	if (debugTrace)
@@ -982,7 +982,7 @@ static int RT_FindOpening (RT_data_t *rtd, const place_t* from, const int ax, co
 	/* shortcut: if both ceilings are the sky, we can check for walls
 	 * AND determine the bottom of the passage in just one trace */
 	if (from->ceiling >= PATHFINDING_HEIGHT * CELL_HEIGHT
-	 && from->cell[2] * CELL_HEIGHT + RT_CEILING(rtd->map, rtd->actorSize, ax, ay, from->cell[2]) >= PATHFINDING_HEIGHT * CELL_HEIGHT) {
+	 && from->cell[2] * CELL_HEIGHT + RT_CEILING(rtd->routes, rtd->actorSize, ax, ay, from->cell[2]) >= PATHFINDING_HEIGHT * CELL_HEIGHT) {
 		vec3_t sky, earth;
 		const box_t* box = (rtd->actorSize == ACTOR_SIZE_NORMAL ? &actor1x1Box : &actor2x2Box);
 		trace_t tr;
@@ -1069,7 +1069,7 @@ static int RT_MicroTrace (RT_data_t *rtd, const place_t* from, const int ax, con
 
 	/* First prepare the two known end values. */
 	bases[0] = from->floor;
-	const int floorVal = RT_FLOOR(rtd->map, rtd->actorSize, ax, ay, az);
+	const int floorVal = RT_FLOOR(rtd->routes, rtd->actorSize, ax, ay, az);
 	bases[steps] = last_step = std::max(0, floorVal) + az * CELL_HEIGHT;
 
 	/* Initialize the starting vector */
@@ -1268,7 +1268,7 @@ static int RT_TraceOnePassage (RT_data_t *rtd, const place_t* from, const place_
 	 */
 	if (az != RT_NO_OPENING && opening->size >= PATHFINDING_MIN_OPENING - PATHFINDING_MIN_STEPUP) {
 		const int srcFloor = from->floor;
-		const int dstFloor = RT_FLOOR(rtd->map, rtd->actorSize, ax, ay, az) + az * CELL_HEIGHT;
+		const int dstFloor = RT_FLOOR(rtd->routes, rtd->actorSize, ax, ay, az) + az * CELL_HEIGHT;
 		/* if we already have enough headroom, try to skip microtracing */
 		if (opening->size < ACTOR_MAX_HEIGHT
 			|| abs(srcFloor - opening->base) > PATHFINDING_MIN_STEPUP
@@ -1337,11 +1337,11 @@ static void RT_TracePassage (RT_data_t *rtd, const int x, const int y, const int
 	place_t from, to, above;
 	const place_t* placeToCheck = NULL;
 
-	RT_PlaceInit(rtd->map, rtd->actorSize, &from, x, y, z);
-	RT_PlaceInit(rtd->map, rtd->actorSize, &to, ax, ay, z);
+	RT_PlaceInit(rtd->routes, rtd->actorSize, &from, x, y, z);
+	RT_PlaceInit(rtd->routes, rtd->actorSize, &to, ax, ay, z);
 
-	aboveCeil = (z < PATHFINDING_HEIGHT - 1) ? RT_CEILING(rtd->map, rtd->actorSize, ax, ay, z + 1) + (z + 1) * CELL_HEIGHT : to.ceiling;
-	lowCeil = std::min(from.ceiling, (RT_CEILING(rtd->map, rtd->actorSize, ax, ay, z) == 0 || to.ceiling - from.floor < PATHFINDING_MIN_OPENING) ? aboveCeil : to.ceiling);
+	aboveCeil = (z < PATHFINDING_HEIGHT - 1) ? RT_CEILING(rtd->routes, rtd->actorSize, ax, ay, z + 1) + (z + 1) * CELL_HEIGHT : to.ceiling;
+	lowCeil = std::min(from.ceiling, (RT_CEILING(rtd->routes, rtd->actorSize, ax, ay, z) == 0 || to.ceiling - from.floor < PATHFINDING_MIN_OPENING) ? aboveCeil : to.ceiling);
 
 	/*
 	 * First check the ceiling for the cell beneath the adjacent floor to see
@@ -1364,7 +1364,7 @@ static void RT_TracePassage (RT_data_t *rtd, const int x, const int y, const int
 	if (RT_PlaceIsUsable(&to) && RT_PlaceDoesIntersectEnough(&from, &to)) {
 		placeToCheck = &to;
 	} else if (z < PATHFINDING_HEIGHT - 1) {
-		RT_PlaceInit(rtd->map, rtd->actorSize, &above, ax, ay, z + 1);
+		RT_PlaceInit(rtd->routes, rtd->actorSize, &above, ax, ay, z + 1);
 		if (RT_PlaceIsUsable(&above) && RT_PlaceDoesIntersectEnough(&from, &above)) {
 			placeToCheck = &above;
 		}
@@ -1413,14 +1413,14 @@ static void RT_TracePassage (RT_data_t *rtd, const int x, const int y, const int
  */
 static int RT_UpdateConnection (RT_data_t *rtd, const int x, const int y, const int ax, const int ay, const int z, const int dir)
 {
-	const int ceiling = RT_CEILING(rtd->map, rtd->actorSize, x, y, z);
-	const int adjCeiling = RT_CEILING(rtd->map, rtd->actorSize, ax, ay, z);
-	const int extAdjCeiling = (z < PATHFINDING_HEIGHT - 1) ? RT_CEILING(rtd->map, rtd->actorSize, ax, ay, z + 1) : adjCeiling;
+	const int ceiling = RT_CEILING(rtd->routes, rtd->actorSize, x, y, z);
+	const int adjCeiling = RT_CEILING(rtd->routes, rtd->actorSize, ax, ay, z);
+	const int extAdjCeiling = (z < PATHFINDING_HEIGHT - 1) ? RT_CEILING(rtd->routes, rtd->actorSize, ax, ay, z + 1) : adjCeiling;
 	const int absCeiling = ceiling + z * CELL_HEIGHT;
 	const int absAdjCeiling = adjCeiling + z * CELL_HEIGHT;
 	const int absExtAdjCeiling = (z < PATHFINDING_HEIGHT - 1) ? adjCeiling + (z + 1) * CELL_HEIGHT : absCeiling;
-	const int absFloor = RT_FLOOR(rtd->map, rtd->actorSize, x, y, z) + z * CELL_HEIGHT;
-	const int absAdjFloor = RT_FLOOR(rtd->map, rtd->actorSize, ax, ay, z) + z * CELL_HEIGHT;
+	const int absFloor = RT_FLOOR(rtd->routes, rtd->actorSize, x, y, z) + z * CELL_HEIGHT;
+	const int absAdjFloor = RT_FLOOR(rtd->routes, rtd->actorSize, ax, ay, z) + z * CELL_HEIGHT;
 	opening_t opening;	/** the opening between the two cells */
 	int new_z1, az = z;
 #if RT_IS_BIDIRECTIONAL == 1
@@ -1438,14 +1438,14 @@ static int RT_UpdateConnection (RT_data_t *rtd, const int x, const int y, const 
 		RT_ConnSetNoGo(rtd, ax, ay, z, dir ^ 1);
 #endif
 		if (debugTrace)
-			Com_Printf("Current cell filled. c:%i ac:%i\n", RT_CEILING(rtd->map, rtd->actorSize, x, y, z), RT_CEILING(rtd->map, rtd->actorSize, ax, ay, z));
+			Com_Printf("Current cell filled. c:%i ac:%i\n", RT_CEILING(rtd->routes, rtd->actorSize, x, y, z), RT_CEILING(rtd->routes, rtd->actorSize, ax, ay, z));
 		return z;
 	}
 
 #if RT_IS_BIDIRECTIONAL == 1
 	/** In case the adjacent floor has no ceiling, swap the current and adjacent cells. */
 	if (ceiling == 0 && adjCeiling != 0) {
-		return RT_UpdateConnection(rtd->map, actorSize, ax, ay, x, y, z, dir ^ 1);
+		return RT_UpdateConnection(rtd->routes, actorSize, ax, ay, x, y, z, dir ^ 1);
 	}
 #endif
 
@@ -1533,7 +1533,7 @@ void RT_UpdateConnectionColumn (mapTiles_t *mapTiles, routing_t * map, const int
 
 	/* build the param list passed to most of the RT_* functions */
 	rtd.mapTiles = mapTiles;
-	rtd.map = map;
+	rtd.routes = map;
 	rtd.actorSize = actorSize;
 	rtd.list = list;
 
