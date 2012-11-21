@@ -2848,6 +2848,12 @@ int B_AddToStorage (base_t* base, const objDef_t *obj, int amount)
 		if (obj->size > 0)
 			cap->cur += (amount * obj->size);
 		base->storage.numItems[obj->idx] += amount;
+
+		if (base->storage.numItems[obj->idx] == 0) {
+			technology_t *tech = RS_GetTechForItem(obj);
+			if (tech->statusResearch == RS_RUNNING && tech->base == base)
+				RS_StopResearch(tech);
+		}
 	}
 
 	return amount;
