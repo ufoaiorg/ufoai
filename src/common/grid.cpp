@@ -136,7 +136,7 @@ static void Grid_SetMoveData (pathing_t *path, const pos3_t toPos, const int c, 
  * @brief a struct holding the relevant data to check if we can move between two adjacent cells
  */
 typedef struct step_s {
-	const routing_t *map;
+	const routing_t *routes;
 	bool flier;
 
 	/** @todo has_ladder_climb should return true if
@@ -157,15 +157,15 @@ typedef struct step_s {
 /**
  * @brief Initialize the step_t data
  * @param[in] step The struct describing the move
- * @param[in] map Pointer to client or server side routing table (clMap, svMap)
+ * @param[in] routes Pointer to client or server side routing table (clMap, svMap)
  * @param[in] actorSize Give the field size of the actor (e.g. for 2x2 units) to check linked fields as well.
  * @param[in] crouchingState Whether the actor is currently crouching, 1 is yes, 0 is no.
  * @param[in] dir Direction vector index (see DIRECTIONS and dvecs)
  * @return false if dir is irrelevant or something went wrong
  */
-static bool Grid_StepInit (step_t *step, const routing_t *map, const actorSizeEnum_t actorSize, const byte crouchingState, const int dir)
+static bool Grid_StepInit (step_t *step, const routing_t *routes, const actorSizeEnum_t actorSize, const byte crouchingState, const int dir)
 {
-	step->map = map;
+	step->routes = routes;
 	/** @todo flier should return true if the actor can fly. */
 	step->flier = false; /**< This can be keyed into whether an actor can fly or not to allow flying */
 	step->hasLadderToClimb = false;
@@ -242,7 +242,7 @@ static bool Grid_StepCheckWalkingDirections (step_t *step, pathing_t *path, cons
 	const actorSizeEnum_t actorSize = step->actorSize;
 	/** @todo falling_height should be replaced with an arbitrary max falling height based on the actor. */
 	const int fallingHeight = PATHFINDING_MAX_FALL;/**<This is the maximum height that an actor can fall. */
-	const int stepup = RT_STEPUP_POS(step->map, actorSize, pos, dir); /**< The stepup needed to get to/through the passage */
+	const int stepup = RT_STEPUP_POS(step->routes, actorSize, pos, dir); /**< The stepup needed to get to/through the passage */
 	const int stepupHeight = stepup & ~(PATHFINDING_BIG_STEPDOWN | PATHFINDING_BIG_STEPUP); /**< The actual stepup height without the level flags */
 	int heightChange;
 	/** @todo actor_stepup_height should be replaced with an arbitrary max stepup height based on the actor. */
@@ -250,7 +250,7 @@ static bool Grid_StepCheckWalkingDirections (step_t *step, pathing_t *path, cons
 
 	/* This is the standard passage height for all units trying to move horizontally. */
 	RT_CONN_TEST_POS(step->map, actorSize, pos, dir);
-	passageHeight = RT_CONN_POS(step->map, actorSize, pos, dir);
+	passageHeight = RT_CONN_POS(step->routes, actorSize, pos, dir);
 	if (passageHeight < step->actorHeight) {
 #if 0
 /** I know this code could be streamlined, but until I understand it myself, plz leave it like it is !*/
@@ -331,11 +331,11 @@ static bool Grid_StepCheckWalkingDirections (step_t *step, pathing_t *path, cons
 		 * not be able to use the opening.
 		 */
 	} else if ((stepup & PATHFINDING_BIG_STEPDOWN) && toPos[2] > 0
-		&& actorStepupHeight >= (RT_STEPUP(step->map, actorSize, nx, ny, nz - 1, dir ^ 1) & ~(PATHFINDING_BIG_STEPDOWN | PATHFINDING_BIG_STEPUP))) {
+		&& actorStepupHeight >= (RT_STEPUP(step->routes, actorSize, nx, ny, nz - 1, dir ^ 1) & ~(PATHFINDING_BIG_STEPDOWN | PATHFINDING_BIG_STEPUP))) {
 		toPos[2]--;		/* Stepping down into lower cell. */
 	}
 
-	heightChange = RT_FLOOR_POS(step->map, actorSize, toPos) - RT_FLOOR_POS(step->map, actorSize, pos) + (toPos[2] - pos[2]) * CELL_HEIGHT;
+	heightChange = RT_FLOOR_POS(step->routes, actorSize, toPos) - RT_FLOOR_POS(step->routes, actorSize, pos) + (toPos[2] - pos[2]) * CELL_HEIGHT;
 
 	/* If the actor tries to fall more than falling_height, then prohibit the move. */
 	if (heightChange < -fallingHeight && !step->hasLadderSupport) {
@@ -347,7 +347,7 @@ static bool Grid_StepCheckWalkingDirections (step_t *step, pathing_t *path, cons
 	 * Set heightChange to 0.
 	 * The actor enters the cell.
 	 * The actor will be forced to fall (dir 13) from the destination cell to the cell below. */
-	if (RT_FLOOR_POS(step->map, actorSize, toPos) < 0) {
+	if (RT_FLOOR_POS(step->routes, actorSize, toPos) < 0) {
 		/* We cannot fall if STEPDOWN is defined. */
 		if (stepup & PATHFINDING_BIG_STEPDOWN) {
 			return false;		/* There is stepdown from here. */
@@ -377,19 +377,19 @@ static bool Grid_StepCheckFlyingDirections (step_t *step, const pos3_t pos, cons
 	if (toPos[2] > pos[2]) {
 		/* If the actor is moving up, check the passage at the current cell.
 		 * The minimum height is the actor's height plus the distance from the current floor to the top of the cell. */
-		neededHeight = step->actorHeight + CELL_HEIGHT - std::max((const signed char)0, RT_FLOOR_POS(step->map, actorSize, pos));
-		RT_CONN_TEST_POS(step->map, actorSize, pos, coreDir);
-		passageHeight = RT_CONN_POS(step->map, actorSize, pos, coreDir);
+		neededHeight = step->actorHeight + CELL_HEIGHT - std::max((const signed char)0, RT_FLOOR_POS(step->routes, actorSize, pos));
+		RT_CONN_TEST_POS(step->routes, actorSize, pos, coreDir);
+		passageHeight = RT_CONN_POS(step->routes, actorSize, pos, coreDir);
 	} else if (toPos[2] < pos[2]) {
 		/* If the actor is moving down, check from the destination cell back. *
 		 * The minimum height is the actor's height plus the distance from the destination floor to the top of the cell. */
-		neededHeight = step->actorHeight + CELL_HEIGHT - std::max((const signed char)0, RT_FLOOR_POS(step->map, actorSize, toPos));
-		RT_CONN_TEST_POS(step->map, actorSize, toPos, coreDir ^ 1);
-		passageHeight = RT_CONN_POS(step->map, actorSize, toPos, coreDir ^ 1);
+		neededHeight = step->actorHeight + CELL_HEIGHT - std::max((const signed char)0, RT_FLOOR_POS(step->routes, actorSize, toPos));
+		RT_CONN_TEST_POS(step->routes, actorSize, toPos, coreDir ^ 1);
+		passageHeight = RT_CONN_POS(step->routes, actorSize, toPos, coreDir ^ 1);
 	} else {
 		neededHeight = step->actorHeight;
-		RT_CONN_TEST_POS(step->map, actorSize, pos, coreDir);
-		passageHeight = RT_CONN_POS(step->map, actorSize, pos, coreDir);
+		RT_CONN_TEST_POS(step->routes, actorSize, pos, coreDir);
+		passageHeight = RT_CONN_POS(step->routes, actorSize, pos, coreDir);
 	}
 	if (passageHeight < neededHeight) {
 		return false;
@@ -410,7 +410,7 @@ static bool Grid_StepCheckVerticalDirections (step_t *step, const pos3_t pos, co
 		if (step->flier) {
 			/* Fliers cannot fall intentionally. */
 			return false;
-		} else if (RT_FLOOR_POS(step->map, step->actorSize, pos) >= 0) {
+		} else if (RT_FLOOR_POS(step->routes, step->actorSize, pos) >= 0) {
 			/* We cannot fall if there is a floor in this cell. */
 			return false;
 		} else if (step->hasLadderSupport) {
@@ -418,7 +418,7 @@ static bool Grid_StepCheckVerticalDirections (step_t *step, const pos3_t pos, co
 			return false;
 		}
 	} else if (dir == DIRECTION_CLIMB_UP) {
-		if (step->flier && QuantToModel(RT_CEILING_POS(step->map, step->actorSize, pos)) < UNIT_HEIGHT * 2 - PLAYER_HEIGHT) { /* Not enough headroom to fly up. */
+		if (step->flier && QuantToModel(RT_CEILING_POS(step->routes, step->actorSize, pos)) < UNIT_HEIGHT * 2 - PLAYER_HEIGHT) { /* Not enough headroom to fly up. */
 			return false;
 		}
 		/* If the actor is not a flyer and tries to move up, there must be a ladder. */
@@ -427,7 +427,7 @@ static bool Grid_StepCheckVerticalDirections (step_t *step, const pos3_t pos, co
 		}
 	} else if (dir == DIRECTION_CLIMB_DOWN) {
 		if (step->flier) {
-			if (RT_FLOOR_POS(step->map, step->actorSize, pos) >= 0 ) { /* Can't fly down through a floor. */
+			if (RT_FLOOR_POS(step->routes, step->actorSize, pos) >= 0 ) { /* Can't fly down through a floor. */
 				return false;
 			}
 		} else {
@@ -441,7 +441,7 @@ static bool Grid_StepCheckVerticalDirections (step_t *step, const pos3_t pos, co
 }
 
 /**
- * @param[in] map Pointer to client or server side routing table (clMap, svMap)
+ * @param[in] routes Pointer to client or server side routing table (clMap, svMap)
  * @param[in] exclude Exclude this position from the forbidden list check
  * @param[in] actorSize Give the field size of the actor (e.g. for 2x2 units) to check linked fields as well.
  * @param[in,out] path Pointer to client or server side pathing table (clMap, svMap)
@@ -451,14 +451,14 @@ static bool Grid_StepCheckVerticalDirections (step_t *step, const pos3_t pos, co
  * @param[in,out] pqueue Priority queue (heap) to insert the now reached tiles for reconsidering
  * @sa Grid_CheckForbidden
  */
-static void Grid_MoveMark (const routing_t *map, const pos3_t exclude, const actorSizeEnum_t actorSize, pathing_t *path, const pos3_t pos, byte crouchingState, const int dir, priorityQueue_t *pqueue)
+static void Grid_MoveMark (const routing_t *routes, const pos3_t exclude, const actorSizeEnum_t actorSize, pathing_t *path, const pos3_t pos, byte crouchingState, const int dir, priorityQueue_t *pqueue)
 {
 	step_t step_;
 	step_t *step = &step_;	/* temporary solution */
 	pos3_t toPos;
 	byte TUsSoFar, TUsForMove, TUsAfter;
 
-	if (!Grid_StepInit(step, map, actorSize, crouchingState, dir))
+	if (!Grid_StepInit(step, routes, actorSize, crouchingState, dir))
 		return;		/* either dir is irrelevant or something worse happened */
 
 	TUsSoFar = RT_AREA_POS(path, pos, crouchingState);
