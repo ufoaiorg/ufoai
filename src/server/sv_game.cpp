@@ -492,9 +492,9 @@ static bool SV_TestLineWithEnt (const vec3_t start, const vec3_t stop, const int
 	return hit;
 }
 
-static void SV_RecalcRouting (routing_t *map, const char *name, const GridBox& box, const char **list)
+static void SV_RecalcRouting (routing_t *routes, const char *name, const GridBox& box, const char **list)
 {
-	Grid_RecalcRouting(&sv->mapTiles, map, name, box, list);
+	Grid_RecalcRouting(&sv->mapTiles, routes, name, box, list);
 }
 
 static void SV_SetInlineModelOrientation (const char *name, const vec3_t origin, const vec3_t angles)

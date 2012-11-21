@@ -54,14 +54,14 @@ namespace routing
 
 	/**
 	 * @brief evaluate access state for given position for given routing data
-	 * @param map routing data
+	 * @param routes routing data
 	 * @param pos position to evaluate
 	 * @return access state as enum value for later rendering
 	 */
-	static EAccessState evaluateAccessState (const routing_t map[ACTOR_MAX_SIZE], const pos3_t pos, const int actorSize)
+	static EAccessState evaluateAccessState (const routing_t routes[ACTOR_MAX_SIZE], const pos3_t pos, const int actorSize)
 	{
-		const int height = QuantToModel(RT_CEILING(map, actorSize, pos[0], pos[1], pos[2] & (PATHFINDING_HEIGHT - 1))
-				- RT_FLOOR(map, actorSize, pos[0], pos[1], pos[2] & (PATHFINDING_HEIGHT - 1)));
+		const int height = QuantToModel(RT_CEILING(routes, actorSize, pos[0], pos[1], pos[2] & (PATHFINDING_HEIGHT - 1))
+				- RT_FLOOR(routes, actorSize, pos[0], pos[1], pos[2] & (PATHFINDING_HEIGHT - 1)));
 		if (height >= PLAYER_STANDING_HEIGHT)
 			return ACC_STAND;
 		else if (height >= PLAYER_CROUCHING_HEIGHT)
@@ -70,7 +70,7 @@ namespace routing
 			return ACC_DISABLED;
 	}
 
-	static EConnectionState evaluateConnectionState (const routing_t map[ACTOR_MAX_SIZE], const pos3_t pos,
+	static EConnectionState evaluateConnectionState (const routing_t routes[ACTOR_MAX_SIZE], const pos3_t pos,
 			const int actorSize, const EDirection direction)
 	{
 		byte route = 0;
@@ -78,36 +78,36 @@ namespace routing
 
 		switch (direction) {
 		case DIR_WEST:
-			route = RT_CONN_NY(map,actorSize,pos[0],pos[1],pos[2]);
-			stepup = RT_STEPUP_NY(map,actorSize,pos[0],pos[1],pos[2]);
+			route = RT_CONN_NY(routes,actorSize,pos[0],pos[1],pos[2]);
+			stepup = RT_STEPUP_NY(routes,actorSize,pos[0],pos[1],pos[2]);
 			break;
 		case DIR_NORTHWEST:
-			route = RT_CONN_PX_NY(map,actorSize,pos[0],pos[1],pos[2]);
-			stepup = RT_STEPUP_PX_NY(map,actorSize,pos[0],pos[1],pos[2]);
+			route = RT_CONN_PX_NY(routes,actorSize,pos[0],pos[1],pos[2]);
+			stepup = RT_STEPUP_PX_NY(routes,actorSize,pos[0],pos[1],pos[2]);
 			break;
 		case DIR_NORTH:
-			route = RT_CONN_PX(map,actorSize,pos[0],pos[1],pos[2]);
-			stepup = RT_STEPUP_PX(map,actorSize,pos[0],pos[1],pos[2]);
+			route = RT_CONN_PX(routes,actorSize,pos[0],pos[1],pos[2]);
+			stepup = RT_STEPUP_PX(routes,actorSize,pos[0],pos[1],pos[2]);
 			break;
 		case DIR_NORTHEAST:
-			route = RT_CONN_PX_PY(map,actorSize,pos[0],pos[1],pos[2]);
-			stepup = RT_STEPUP_PX_PY(map,actorSize,pos[0],pos[1],pos[2]);
+			route = RT_CONN_PX_PY(routes,actorSize,pos[0],pos[1],pos[2]);
+			stepup = RT_STEPUP_PX_PY(routes,actorSize,pos[0],pos[1],pos[2]);
 			break;
 		case DIR_EAST:
-			route = RT_CONN_PY(map,actorSize,pos[0],pos[1],pos[2]);
-			stepup = RT_STEPUP_PY(map,actorSize,pos[0],pos[1],pos[2]);
+			route = RT_CONN_PY(routes,actorSize,pos[0],pos[1],pos[2]);
+			stepup = RT_STEPUP_PY(routes,actorSize,pos[0],pos[1],pos[2]);
 			break;
 		case DIR_SOUTHEAST:
-			route = RT_CONN_NX_PY(map,actorSize,pos[0],pos[1],pos[2]);
-			stepup = RT_STEPUP_NX_PY(map,actorSize,pos[0],pos[1],pos[2]);
+			route = RT_CONN_NX_PY(routes,actorSize,pos[0],pos[1],pos[2]);
+			stepup = RT_STEPUP_NX_PY(routes,actorSize,pos[0],pos[1],pos[2]);
 			break;
 		case DIR_SOUTH:
-			route = RT_CONN_NX(map,actorSize,pos[0],pos[1],pos[2]);
-			stepup = RT_STEPUP_NX(map,actorSize,pos[0],pos[1],pos[2]);
+			route = RT_CONN_NX(routes,actorSize,pos[0],pos[1],pos[2]);
+			stepup = RT_STEPUP_NX(routes,actorSize,pos[0],pos[1],pos[2]);
 			break;
 		case DIR_SOUTHWEST:
-			route = RT_CONN_NX_NY(map,actorSize,pos[0],pos[1],pos[2]);
-			stepup = RT_STEPUP_NX_NY(map,actorSize,pos[0],pos[1],pos[2]);
+			route = RT_CONN_NX_NY(routes,actorSize,pos[0],pos[1],pos[2]);
+			stepup = RT_STEPUP_NX_NY(routes,actorSize,pos[0],pos[1],pos[2]);
 			break;
 		case MAX_DIRECTIONS:
 			break;
@@ -126,14 +126,14 @@ namespace routing
 	/**
 	 * @brief evaluate map data to set access and connectivity state to given lump entry.
 	 * @param entry entry to fill values into
-	 * @param map routing data
+	 * @param routes routing data
 	 * @param pos position to evaluate
 	 */
-	static void FillRoutingLumpEntry (RoutingLumpEntry &entry, routing_t map[ACTOR_MAX_SIZE], pos3_t pos)
+	static void FillRoutingLumpEntry (RoutingLumpEntry &entry, routing_t routes[ACTOR_MAX_SIZE], pos3_t pos)
 	{
-		entry.setAccessState(evaluateAccessState(map, pos, ACTOR_SIZE_NORMAL));
+		entry.setAccessState(evaluateAccessState(routes, pos, ACTOR_SIZE_NORMAL));
 		for (EDirection direction = DIR_WEST; direction < MAX_DIRECTIONS; direction++) {
-			entry.setConnectionState(direction, evaluateConnectionState(map, pos, ACTOR_SIZE_NORMAL, direction));
+			entry.setConnectionState(direction, evaluateConnectionState(routes, pos, ACTOR_SIZE_NORMAL, direction));
 		}
 	}
 
