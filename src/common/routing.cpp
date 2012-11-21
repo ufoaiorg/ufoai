@@ -1674,7 +1674,7 @@ int RT_DebugSpecial (mapTiles_t *mapTiles, routing_t * map, const int actorSize,
 
 	/* build the param list passed to most of the RT_* functions */
 	rtd.mapTiles = mapTiles;
-	rtd.map = map;
+	rtd.routes = map;
 	rtd.actorSize = actorSize;
 	rtd.list = list;
 
