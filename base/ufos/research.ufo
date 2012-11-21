@@ -1416,11 +1416,6 @@ tech rs_weapon_kerrblade
 		tech rs_damage_normal
 	}
 
-	require_for_production
-	{
-	    item (alienmaterials 70)
-	}
-
 	provides	kerrblade
 	time	1000
 	producetime	-1
