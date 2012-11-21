@@ -4245,29 +4245,6 @@ tech rs_craft_ufo_mothership
 //========================
 
 // BLOODSPIDER
-/* Is this needed?
-tech rs_alien_bloodspider_live
-{
-	type	"alien"
-	name	"_Live Specimen - Bloodspider"
-	description {
-		default "*msgid:bloodspider_notes_txt"
-	}
-	pre_description {
-		default "*msgid:bloodspider_notes_pre_txt"
-	}
-	up_chapter	aliens
-
-	require_AND
-	{
-		alien (bloodspider 1)
-	}
-	time	0
-
-	model	"aliens/bloodspider/bloodspider"
-}
-*/
-
 tech rs_alien_bloodspider_autopsy
 {
 	name	"_Alien Autopsy - Bloodspider"
