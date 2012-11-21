@@ -103,13 +103,13 @@ typedef struct place_s {
 	bool usable;/**< does an actor fit in here ? */
 } place_t;
 
-static inline void RT_PlaceInit (const routing_t *map, const actorSizeEnum_t actorSize, place_t *p, const int x, const int y, const int z)
+static inline void RT_PlaceInit (const routing_t *routes, const actorSizeEnum_t actorSize, place_t *p, const int x, const int y, const int z)
 {
-	const int relCeiling = RT_CEILING(map, actorSize, x, y, z);
+	const int relCeiling = RT_CEILING(routes, actorSize, x, y, z);
 	p->cell[0] = x;
 	p->cell[1] = y;
 	p->cell[2] = z;
-	p->floor = RT_FLOOR(map, actorSize, x, y, z) + z * CELL_HEIGHT;
+	p->floor = RT_FLOOR(routes, actorSize, x, y, z) + z * CELL_HEIGHT;
 	p->ceiling = relCeiling + z * CELL_HEIGHT;
 	p->floorZ = std::max(0, p->floor / CELL_HEIGHT) ;
 	p->usable = (relCeiling && p->floor > -1 && p->ceiling - p->floor >= PATHFINDING_MIN_OPENING) ? true : false;
@@ -163,7 +163,7 @@ typedef struct opening_s {
 /**
  * @brief Dumps contents of a map to console for inspection.
  * @sa Grid_RecalcRouting
- * @param[in] map The routing map (either server or client map)
+ * @param[in] routes The routing map (either server or client map)
  * @param[in] actorSize The size of the actor along the X and Y axis in cell units
  * @param[in] lx The low end of the x range updated
  * @param[in] ly The low end of the y range updated
@@ -172,7 +172,7 @@ typedef struct opening_s {
  * @param[in] hy The high end of the y range updated
  * @param[in] hz The high end of the z range updated
  */
-static void RT_DumpMap (const routing_t *map, actorSizeEnum_t actorSize, int lx, int ly, int lz, int hx, int hy, int hz)
+static void RT_DumpMap (const routing_t *routes, actorSizeEnum_t actorSize, int lx, int ly, int lz, int hx, int hy, int hz)
 {
 	int x, y, z;
 
@@ -187,10 +187,10 @@ static void RT_DumpMap (const routing_t *map, actorSizeEnum_t actorSize, int lx,
 			Com_Printf("%3i ", y);
 			for (x = lx; x <= hx; ++x) {
 				Com_Printf("%s%s%s%s "
-					, RT_CONN_NX(map, actorSize, x, y, z) ? "w" : " "
-					, RT_CONN_PY(map, actorSize, x, y, z) ? "n" : " "
-					, RT_CONN_NY(map, actorSize, x, y, z) ? "s" : " "
-					, RT_CONN_PX(map, actorSize, x, y, z) ? "e" : " "
+					, RT_CONN_NX(routes, actorSize, x, y, z) ? "w" : " "
+					, RT_CONN_PY(routes, actorSize, x, y, z) ? "n" : " "
+					, RT_CONN_NY(routes, actorSize, x, y, z) ? "s" : " "
+					, RT_CONN_PX(routes, actorSize, x, y, z) ? "e" : " "
 					);
 			}
 			Com_Printf("\n");
@@ -202,7 +202,7 @@ static void RT_DumpMap (const routing_t *map, actorSizeEnum_t actorSize, int lx,
  * @brief Dumps contents of the entire client map to console for inspection.
  * @param[in] map A pointer to the map being dumped
  */
-void RT_DumpWholeMap (mapTiles_t *mapTiles, const routing_t *map)
+void RT_DumpWholeMap (mapTiles_t *mapTiles, const routing_t *routes)
 {
 	box_t box;
 	vec3_t normal, origin;
@@ -255,7 +255,7 @@ void RT_DumpWholeMap (mapTiles_t *mapTiles, const routing_t *map)
 	}
 
 	/* Dump the client map */
-	RT_DumpMap(map, 0, start[0], start[1], start[2], end[0], end[1], end[2]);
+	RT_DumpMap(routes, 0, start[0], start[1], start[2], end[0], end[1], end[2]);
 }
 #endif
 
@@ -340,14 +340,14 @@ NEW MAP TRACING FUNCTIONS
 
 /**
  * @brief Check if pos is on solid ground
- * @param[in] map The map's routing data
+ * @param[in] routes The map's routing data
  * @param[in] actorSize The size of the actor along the X and Y axis in cell units
  * @param[in] pos The position to check below
  * @return true if solid
  * @sa CL_AddTargetingBox
  * @todo see CL_ActorMoveMouse
  */
-bool RT_AllCellsBelowAreFilled (const routing_t * map, const int actorSize, const pos3_t pos)
+bool RT_AllCellsBelowAreFilled (const routing_t * routes, const int actorSize, const pos3_t pos)
 {
 	int i;
 
@@ -356,7 +356,7 @@ bool RT_AllCellsBelowAreFilled (const routing_t * map, const int actorSize, cons
 		return true;
 
 	for (i = 0; i < pos[2]; i++) {
-		if (RT_CEILING(map, actorSize, pos[0], pos[1], i) != 0)
+		if (RT_CEILING(routes, actorSize, pos[0], pos[1], i) != 0)
 			return false;
 	}
 	return true;
@@ -370,7 +370,7 @@ bool RT_AllCellsBelowAreFilled (const routing_t * map, const int actorSize, cons
  *  be the top of the model.  This function will also adjust all floor and ceiling values for all cells
  *  between the found floor and ceiling.
  * @param[in] mapTiles List of tiles the current (RMA-)map is composed of
- * @param[in] map The map's routing data
+ * @param[in] routes The map's routing data
  * @param[in] actorSize The size of the actor along the X and Y axis in cell units
  * @param[in] x The x position in the routing arrays (0 - PATHFINDING_WIDTH-1)
  * @param[in] y The y position in the routing arrays (0 - PATHFINDING_WIDTH-1)
@@ -379,7 +379,7 @@ bool RT_AllCellsBelowAreFilled (const routing_t * map, const int actorSize, cons
  * @return The z value of the next cell to scan, usually the cell with the ceiling.
  * @sa Grid_RecalcRouting
  */
-int RT_CheckCell (mapTiles_t *mapTiles, routing_t * map, const int actorSize, const int x, const int y, const int z, const char **list)
+int RT_CheckCell (mapTiles_t *mapTiles, routing_t *routes, const int actorSize, const int x, const int y, const int z, const char **list)
 {
 	/* Width of the box required to stand in a cell by an actor's torso.  */
 	const float halfActorWidth = UNIT_SIZE * actorSize / 2 - WALL_SIZE - DIST_EPSILON;
@@ -452,8 +452,8 @@ int RT_CheckCell (mapTiles_t *mapTiles, routing_t * map, const int actorSize, co
 			/* Mark all cells to the model base as filled. */
 			for (i = z; i >= 0 ; i--) {
 				/* no floor in this cell, it is bottomless! */
-				RT_FLOOR(map, actorSize, x, y, i) = -1 - i * CELL_HEIGHT; /* There is no floor in this cell, place it at -1 below the model. */
-				RT_CEILING(map, actorSize, x, y, i) = 0; /* There is no ceiling, the true indicator of a filled cell. */
+				RT_FLOOR(routes, actorSize, x, y, i) = -1 - i * CELL_HEIGHT; /* There is no floor in this cell, place it at -1 below the model. */
+				RT_CEILING(routes, actorSize, x, y, i) = 0; /* There is no ceiling, the true indicator of a filled cell. */
 			}
 			/* return 0 to indicate we just scanned the model bottom. */
 			return 0;
@@ -497,8 +497,8 @@ int RT_CheckCell (mapTiles_t *mapTiles, routing_t * map, const int actorSize, co
 				/* Mark all cells to the model base as filled. */
 				for (i = z; i >= 0 ; i--) {
 					/* no floor in this cell, it is bottomless! */
-					RT_FLOOR(map, actorSize, x, y, i) = CELL_HEIGHT; /* There is no floor in this cell. */
-					RT_CEILING(map, actorSize, x, y, i) = 0; /* There is no ceiling, the true indicator of a filled cell. */
+					RT_FLOOR(routes, actorSize, x, y, i) = CELL_HEIGHT; /* There is no floor in this cell. */
+					RT_CEILING(routes, actorSize, x, y, i) = 0; /* There is no ceiling, the true indicator of a filled cell. */
 				}
 				/* return 0 to indicate we just scanned the model bottom. */
 				return 0;
@@ -532,8 +532,8 @@ int RT_CheckCell (mapTiles_t *mapTiles, routing_t * map, const int actorSize, co
 				/* Mark all cells to the model base as filled. */
 				for (i = z; i >= 0 ; i--) {
 					/* no floor in this cell, it is bottomless! */
-					RT_FLOOR(map, actorSize, x, y, i) = CELL_HEIGHT; /* There is no floor in this cell. */
-					RT_CEILING(map, actorSize, x, y, i) = 0; /* There is no ceiling, the true indicator of a filled cell. */
+					RT_FLOOR(routes, actorSize, x, y, i) = CELL_HEIGHT; /* There is no floor in this cell. */
+					RT_CEILING(routes, actorSize, x, y, i) = 0; /* There is no ceiling, the true indicator of a filled cell. */
 				}
 				/* return 0 to indicate we just scanned the model bottom. */
 				return 0;
@@ -567,7 +567,7 @@ int RT_CheckCell (mapTiles_t *mapTiles, routing_t * map, const int actorSize, co
 		 * ceiling if it is lower than our found ceiling.
 		 */
 		if (tr.endpos[2] > (z + 1) * UNIT_HEIGHT) {
-			const float topf = (z + 1) * UNIT_HEIGHT + QuantToModel(RT_FLOOR(map, actorSize, x, y, z + 1) - 1);
+			const float topf = (z + 1) * UNIT_HEIGHT + QuantToModel(RT_FLOOR(routes, actorSize, x, y, z + 1) - 1);
 			top = std::min(tr.endpos[2], topf);
 		}
 
@@ -599,22 +599,22 @@ int RT_CheckCell (mapTiles_t *mapTiles, routing_t * map, const int actorSize, co
 	/* Last, update the floors and ceilings of cells from (x, y, fz) to (x, y, cz) */
 	for (i = fz; i <= cz; i++) {
 		/* Round up floor to keep feet out of model. */
-		RT_FLOOR(map, actorSize, x, y, i) = bottomQ - i * CELL_HEIGHT;
+		RT_FLOOR(routes, actorSize, x, y, i) = bottomQ - i * CELL_HEIGHT;
 		/* Round down ceiling to heep head out of model.  Also offset by floor and max at 255. */
-		RT_CEILING(map, actorSize, x, y, i) = topQ - i * CELL_HEIGHT;
+		RT_CEILING(routes, actorSize, x, y, i) = topQ - i * CELL_HEIGHT;
 		if (debugTrace) {
-			Com_Printf("floor(%i, %i, %i, %i)=%i.\n", x, y, i, actorSize, RT_FLOOR(map, actorSize, x, y, i));
-			Com_Printf("ceil(%i, %i, %i, %i)=%i.\n", x, y, i, actorSize, RT_CEILING(map, actorSize, x, y, i));
+			Com_Printf("floor(%i, %i, %i, %i)=%i.\n", x, y, i, actorSize, RT_FLOOR(routes, actorSize, x, y, i));
+			Com_Printf("ceil(%i, %i, %i, %i)=%i.\n", x, y, i, actorSize, RT_CEILING(routes, actorSize, x, y, i));
 		}
 	}
 
 	/* Also, update the floors of any filled cells immediately above the ceiling up to our original cell. */
 	for (i = cz + 1; i <= z; i++) {
-		RT_FLOOR(map, actorSize, x, y, i) = CELL_HEIGHT; /* There is no floor in this cell. */
-		RT_CEILING(map, actorSize, x, y, i) = 0; /* There is no ceiling, the true indicator of a filled cell. */
+		RT_FLOOR(routes, actorSize, x, y, i) = CELL_HEIGHT; /* There is no floor in this cell. */
+		RT_CEILING(routes, actorSize, x, y, i) = 0; /* There is no ceiling, the true indicator of a filled cell. */
 		if (debugTrace) {
-			Com_Printf("floor(%i, %i, %i)=%i.\n", x, y, i, RT_FLOOR(map, actorSize, x, y, i));
-			Com_Printf("ceil(%i, %i, %i)=%i.\n", x, y, i, RT_CEILING(map, actorSize, x, y, i));
+			Com_Printf("floor(%i, %i, %i)=%i.\n", x, y, i, RT_FLOOR(routes, actorSize, x, y, i));
+			Com_Printf("ceil(%i, %i, %i)=%i.\n", x, y, i, RT_CEILING(routes, actorSize, x, y, i));
 		}
 	}
 
@@ -1497,14 +1497,14 @@ static int RT_UpdateConnection (RT_data_t *rtd, const int x, const int y, const 
 /**
  * @brief Routing Function to update the connection between two fields
  * @param[in] mapTiles List of tiles the current (RMA-)map is composed of
- * @param[in] map Routing table of the current loaded map
+ * @param[in] routes Routing table of the current loaded map
  * @param[in] actorSize The size of the actor, in units
  * @param[in] x The x position in the routing arrays (0 to PATHFINDING_WIDTH - actorSize)
  * @param[in] y The y position in the routing arrays (0 to PATHFINDING_WIDTH - actorSize)
  * @param[in] dir The direction to test for a connection through
  * @param[in] list The local models list (a local model has a name starting with * followed by the model number)
  */
-void RT_UpdateConnectionColumn (mapTiles_t *mapTiles, routing_t * map, const int actorSize, const int x, const int y, const int dir, const char **list)
+void RT_UpdateConnectionColumn (mapTiles_t *mapTiles, routing_t * routes, const int actorSize, const int x, const int y, const int dir, const char **list)
 {
 	int z = 0; /**< The current z value that we are testing. */
 	RT_data_t rtd;	/* the essential data passed down the calltree */
@@ -1514,7 +1514,7 @@ void RT_UpdateConnectionColumn (mapTiles_t *mapTiles, routing_t * map, const int
 	const int ay = y + dvecs[dir][1];
 
 	assert(actorSize > ACTOR_SIZE_INVALID && actorSize <= ACTOR_MAX_SIZE);
-	assert(map);
+	assert(routes);
 	assert((x >= 0) && (x <= PATHFINDING_WIDTH - actorSize));
 	assert((y >= 0) && (y <= PATHFINDING_WIDTH - actorSize));
 
@@ -1527,13 +1527,13 @@ void RT_UpdateConnectionColumn (mapTiles_t *mapTiles, routing_t * map, const int
 #endif
 
 	/* Ensure that the current coordinates are valid. */
-	RT_CONN_TEST(map, actorSize, x, y, z, dir);
+	RT_CONN_TEST(routes, actorSize, x, y, z, dir);
 
 	/* Com_Printf("At (%i, %i, %i) looking in direction %i with size %i\n", x, y, z, dir, actorSize); */
 
 	/* build the param list passed to most of the RT_* functions */
 	rtd.mapTiles = mapTiles;
-	rtd.routes = map;
+	rtd.routes = routes;
 	rtd.actorSize = actorSize;
 	rtd.list = list;
 
@@ -1548,7 +1548,7 @@ void RT_UpdateConnectionColumn (mapTiles_t *mapTiles, routing_t * map, const int
 	}
 
 	/* Ensure that the destination coordinates are valid. */
-	RT_CONN_TEST(map, actorSize, ax, ay, z, dir);
+	RT_CONN_TEST(routes, actorSize, ax, ay, z, dir);
 
 	/* Main loop */
 	for (z = 0; z < PATHFINDING_HEIGHT; z++) {
@@ -1559,7 +1559,7 @@ void RT_UpdateConnectionColumn (mapTiles_t *mapTiles, routing_t * map, const int
 	}
 }
 
-void RT_WriteCSVFiles (const routing_t *map, const char* baseFilename, const ipos3_t mins, const ipos3_t maxs)
+void RT_WriteCSVFiles (const routing_t *routes, const char* baseFilename, const ipos3_t mins, const ipos3_t maxs)
 {
 	char filename[MAX_OSPATH], ext[MAX_OSPATH];
 	qFILE f;
@@ -1582,7 +1582,7 @@ void RT_WriteCSVFiles (const routing_t *map, const char* baseFilename, const ipo
 				FS_Printf(&f, "z:%i  y:%i,", z ,y);
 				for (x = mins[0]; x <= maxs[0] - i + 1; x++) {
 					/* compare results */
-					FS_Printf(&f, "h:%i c:%i,", RT_FLOOR(map, i, x, y, z), RT_CEILING(map, i, x, y, z));
+					FS_Printf(&f, "h:%i c:%i,", RT_FLOOR(routes, i, x, y, z), RT_CEILING(routes, i, x, y, z));
 				}
 				FS_Printf(&f, "\n");
 			}
@@ -1611,35 +1611,35 @@ void RT_WriteCSVFiles (const routing_t *map, const char* baseFilename, const ipo
 					FS_Printf(&f, "\"");
 
 					/* NW corner */
-					FS_Printf(&f, "%3i-%3i ", RT_CONN_NX_PY(map, i, x, y, z), RT_STEPUP_NX_PY(map, i, x, y, z));
+					FS_Printf(&f, "%3i-%3i ", RT_CONN_NX_PY(routes, i, x, y, z), RT_STEPUP_NX_PY(routes, i, x, y, z));
 
 					/* N side */
-					FS_Printf(&f, "%3i-%3i ", RT_CONN_PY(map, i, x, y, z), RT_STEPUP_PY(map, i, x, y, z));
+					FS_Printf(&f, "%3i-%3i ", RT_CONN_PY(routes, i, x, y, z), RT_STEPUP_PY(routes, i, x, y, z));
 
 					/* NE corner */
-					FS_Printf(&f, "%3i-%3i ", RT_CONN_PX_PY(map, i, x, y, z), RT_STEPUP_PX_PY(map, i, x, y, z));
+					FS_Printf(&f, "%3i-%3i ", RT_CONN_PX_PY(routes, i, x, y, z), RT_STEPUP_PX_PY(routes, i, x, y, z));
 
 					FS_Printf(&f, "\n");
 
 					/* W side */
-					FS_Printf(&f, "%3i-%3i ", RT_CONN_NX(map, i, x, y, z), RT_STEPUP_NX(map, i, x, y, z));
+					FS_Printf(&f, "%3i-%3i ", RT_CONN_NX(routes, i, x, y, z), RT_STEPUP_NX(routes, i, x, y, z));
 
 					/* Center - display floor height */
-					FS_Printf(&f, "_%+2i_ ", RT_FLOOR(map, i, x, y, z));
+					FS_Printf(&f, "_%+2i_ ", RT_FLOOR(routes, i, x, y, z));
 
 					/* E side */
-					FS_Printf(&f, "%3i-%3i ", RT_CONN_PX(map, i, x, y, z), RT_STEPUP_PX(map, i, x, y, z));
+					FS_Printf(&f, "%3i-%3i ", RT_CONN_PX(routes, i, x, y, z), RT_STEPUP_PX(routes, i, x, y, z));
 
 					FS_Printf(&f, "\n");
 
 					/* SW corner */
-					FS_Printf(&f, "%3i-%3i ", RT_CONN_NX_NY(map, i, x, y, z), RT_STEPUP_NX_NY(map, i, x, y, z));
+					FS_Printf(&f, "%3i-%3i ", RT_CONN_NX_NY(routes, i, x, y, z), RT_STEPUP_NX_NY(routes, i, x, y, z));
 
 					/* S side */
-					FS_Printf(&f, "%3i-%3i ", RT_CONN_NY(map, i, x, y, z), RT_STEPUP_NY(map, i, x, y, z));
+					FS_Printf(&f, "%3i-%3i ", RT_CONN_NY(routes, i, x, y, z), RT_STEPUP_NY(routes, i, x, y, z));
 
 					/* SE corner */
-					FS_Printf(&f, "%3i-%3i ", RT_CONN_PX_NY(map, i, x, y, z), RT_STEPUP_PX_NY(map, i, x, y, z));
+					FS_Printf(&f, "%3i-%3i ", RT_CONN_PX_NY(routes, i, x, y, z), RT_STEPUP_PX_NY(routes, i, x, y, z));
 
 					FS_Printf(&f, "\",");
 				}
@@ -1655,14 +1655,14 @@ void RT_WriteCSVFiles (const routing_t *map, const char* baseFilename, const ipo
 /**
  * @brief A debug function to be called from CL_DebugPath_f
  * @param[in] mapTiles List of tiles the current (RMA-)map is composed of
- * @param[in] map Routing table of the current loaded map
+ * @param[in] routes Routing table of the current loaded map
  * @param[in] actorSize The size of the actor, in units
  * @param[in] x The x position in the routing arrays (0 to PATHFINDING_WIDTH - actorSize)
  * @param[in] y The y position in the routing arrays (0 to PATHFINDING_WIDTH - actorSize)
  * @param[in] dir The direction to test for a connection through
  * @param[in] list The local models list (a local model has a name starting with * followed by the model number)
  */
-int RT_DebugSpecial (mapTiles_t *mapTiles, routing_t * map, const int actorSize, const int x, const int y, const int dir, const char **list)
+int RT_DebugSpecial (mapTiles_t *mapTiles, routing_t * routes, const int actorSize, const int x, const int y, const int dir, const char **list)
 {
 	int z = 0; /**< The current z value that we are testing. */
 	int new_z; /**< The last z value processed by the tracing function.  */
@@ -1674,7 +1674,7 @@ int RT_DebugSpecial (mapTiles_t *mapTiles, routing_t * map, const int actorSize,
 
 	/* build the param list passed to most of the RT_* functions */
 	rtd.mapTiles = mapTiles;
-	rtd.routes = map;
+	rtd.routes = routes;
 	rtd.actorSize = actorSize;
 	rtd.list = list;
 
