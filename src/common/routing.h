@@ -150,9 +150,9 @@ GAME RELATED TRACING
 */
 
 
-int RT_CheckCell(mapTiles_t *mapTiles, routing_t * map, const int actorSize, const int x, const int y, const int z, const char **list);
-void RT_UpdateConnectionColumn(mapTiles_t *mapTiles, routing_t * map, const int actorSize, const int x, const int y, const int dir, const char **list);
-bool RT_AllCellsBelowAreFilled(const routing_t * map, const int actorSize, const pos3_t pos);
+int RT_CheckCell(mapTiles_t *mapTiles, routing_t *routes, const int actorSize, const int x, const int y, const int z, const char **list);
+void RT_UpdateConnectionColumn(mapTiles_t *mapTiles, routing_t *routes, const int actorSize, const int x, const int y, const int dir, const char **list);
+bool RT_AllCellsBelowAreFilled(const routing_t *routes, const int actorSize, const pos3_t pos);
 void RT_GetMapSize(mapTiles_t *mapTiles, vec3_t map_min, vec3_t map_max);
 
 
@@ -163,9 +163,9 @@ DEBUGGING CODE
 */
 
 #ifdef DEBUG
-void RT_DumpWholeMap(mapTiles_t *mapTiles, const routing_t *map);
-int RT_DebugSpecial(mapTiles_t *mapTiles, routing_t * map, const int actorSize, const int x, const int y, const int dir, const char **list);
+void RT_DumpWholeMap(mapTiles_t *mapTiles, const routing_t *routes);
+int RT_DebugSpecial(mapTiles_t *mapTiles, routing_t *routes, const int actorSize, const int x, const int y, const int dir, const char **list);
 #endif
-void RT_WriteCSVFiles(const routing_t *map, const char* baseFilename, const ipos3_t mins, const ipos3_t maxs);
+void RT_WriteCSVFiles(const routing_t *routes, const char* baseFilename, const ipos3_t mins, const ipos3_t maxs);
 
 #endif
