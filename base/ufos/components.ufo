@@ -45,7 +45,7 @@ components craft_ufo_scout_cmp {
 	}
 	item {
 		id antimatter
-		amount 200
+		amount 100
 		numbercrash 0
 	}
 	item {
@@ -68,10 +68,10 @@ components craft_ufo_scout_cmp {
 // UFO -- Fighter
 components craft_ufo_fighter_cmp {
 	aircraft craft_ufo_fighter
-	time	330
+	time	400
 	item {
 		id alienmaterials
-		amount 400
+		amount 430
 		numbercrash %
 	}
 	item {
@@ -109,10 +109,10 @@ components craft_ufo_fighter_cmp {
 // UFO -- Harvester
 components craft_ufo_harvester_cmp {
 	aircraft craft_ufo_harvester
-	time	510
+	time	600
 	item {
 		id alienmaterials
-		amount 800
+		amount 750
 		numbercrash %
 	}
 	item {
@@ -163,12 +163,12 @@ components craft_ufo_supply_cmp {
 	time	450
 	item {
 		id alienmaterials
-		amount 600
+		amount 480
 		numbercrash %
 	}
 	item {
 		id antimatter
-		amount 600
+		amount 310
 		numbercrash 0
 	}
 	item {
@@ -194,12 +194,12 @@ components craft_ufo_gunboat_cmp {
 	time	500
 	item {
 		id alienmaterials
-		amount 600
+		amount 700
 		numbercrash %
 	}
 	item {
 		id antimatter
-		amount 500
+		amount 400
 		numbercrash 0
 	}
 	item {
@@ -242,15 +242,15 @@ components craft_ufo_gunboat_cmp {
 // UFO -- Corrupter
 components craft_ufo_corrupter_cmp {
 	aircraft craft_ufo_corrupter
-	time	622
+	time	800
 	item {
 		id alienmaterials
-		amount 800
+		amount 1100
 		numbercrash %
 	}
 	item {
 		id antimatter
-		amount 670
+		amount 650
 		numbercrash 0
 	}
 	item {
@@ -283,10 +283,10 @@ components craft_ufo_corrupter_cmp {
 // UFO -- Bomber
 components craft_ufo_bomber_cmp {
 	aircraft craft_ufo_bomber
-	time	675
+	time	1000
 	item {
 		id alienmaterials
-		amount 1100
+		amount 1400
 		numbercrash %
 	}
 	item {
@@ -347,10 +347,10 @@ components craft_ufo_bomber_cmp {
 // The Carrier missions are special storyline-driven missions
 components craft_ufo_carrier_cmp {
 	aircraft craft_ufo_carrier
-	time	10000
+	time	5000
 	item {
 		id alienmaterials
-		amount 2000
+		amount 5000
 		numbercrash %
 	}
 	//item {

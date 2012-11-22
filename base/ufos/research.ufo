@@ -869,7 +869,7 @@ tech rs_weapon_rpg_hybrid_ammo
 
 	provides	rpg_hybrid_ammo
 	time	3000
-	producetime	90
+	producetime	30
 }
 
 tech rs_weapon_xaw95
@@ -1031,7 +1031,7 @@ tech rs_weapon_bolterrifle
 	}
 	provides	bolterrifle
 	time	6000
-	producetime	120
+	producetime	50
 }
 
 tech rs_weapon_bolterrifle_ammo
@@ -1049,7 +1049,7 @@ tech rs_weapon_bolterrifle_ammo
 	}
 	provides	bolterrifle_ammo
 	time	0
-	producetime	24
+	producetime	15
 }
 
 /* @TEMP-awaiting-md2s-2.5dev
@@ -1075,13 +1075,13 @@ tech rs_weapon_bolterrifle_am_ammo
 
 	require_for_production
 	{
-	    item (alienmaterials 5)
-		item (antimatter 3)
+	    item (alienmaterials 10)
+		item (antimatter 1)
 	}
 
 	provides	bolterrifle_am_ammo
 	time	5000
-	producetime	90
+	producetime	30
 }
 */
 
@@ -1143,12 +1143,12 @@ tech rs_weapon_monoknife
 
 	require_for_production
 	{
-	    item (alienmaterials 50)
+	    item (alienmaterials 25)
 	}
 
 	provides	knifemono
 	time	750
-	producetime	100
+	producetime	50
 }
 
 tech rs_weapon_flamer
@@ -1358,7 +1358,7 @@ tech rs_weapon_grenl_plasma_ammo
 	}
 	provides	grenl_plasma_ammo
 	time	2000
-	producetime	40
+	producetime	15
 }
 
 tech rs_irgoggles
@@ -1457,7 +1457,7 @@ tech rs_weapon_laserpistol
 	}
 	provides	laserpistol
 	time	1000
-	producetime	90
+	producetime	40
 }
 
 tech rs_weapon_laserrifle
@@ -1496,7 +1496,7 @@ tech rs_weapon_laserrifle
 	}
 	provides	laserrifle
 	time	2000
-	producetime	140
+	producetime	50
 }
 
 tech rs_weapon_heavylaser
@@ -1536,7 +1536,7 @@ tech rs_weapon_heavylaser
 	}
 	provides	heavylaser
 	time	2000
-	producetime	140
+	producetime	80
 }
 
 tech rs_weapon_electrolaser
@@ -1577,7 +1577,7 @@ tech rs_weapon_electrolaser
 	}
 	provides	electrolaser
 	time	1000
-	producetime	90
+	producetime	60
 }
 
 // Generic laser ammo
@@ -1618,7 +1618,7 @@ tech rs_weapon_laserammo
 	}
 	provides	laser_ammo
 	time		750
-	producetime	20
+	producetime	15
 }
 
 tech rs_weapon_laserammo_stun
@@ -1655,7 +1655,7 @@ tech rs_weapon_laserammo_stun
 	}
 	provides	laser_ammo_stun
 	time		0
-	producetime	20
+	producetime	15
 }
 
 tech rs_medikit
@@ -1715,12 +1715,12 @@ tech rs_weapon_plasatomizer
 
 	require_for_production
 	{
-	    item (alienmaterials 90)
+	    item (alienmaterials 15)
 	}
 
 	provides	plaspistol
 	time	1500
-	producetime	160
+	producetime	35
 }
 
 tech rs_weapon_plasatomizer_ammo
@@ -1739,12 +1739,12 @@ tech rs_weapon_plasatomizer_ammo
 
 	require_for_production
 	{
-	    item (alienmaterials 10)
+	    item (alienmaterials 5)
 	}
 
 	provides	plaspistol_ammo
 	time	0
-	producetime	24
+	producetime	15
 }
 
 tech rs_weapon_plasblaster
@@ -1785,12 +1785,12 @@ tech rs_weapon_plasblaster
 
 	require_for_production
 	{
-	    item (alienmaterials 120)
+	    item (alienmaterials 40)
 	}
 
 	provides	plasblaster
 	time	3000
-	producetime	240
+	producetime	60
 }
 
 tech rs_weapon_plasblaster_ammo
@@ -1809,12 +1809,12 @@ tech rs_weapon_plasblaster_ammo
 
 	require_for_production
 	{
-	    item (alienmaterials 15)
+	    item (alienmaterials 10)
 	}
 
 	provides	plasblaster_ammo
 	time	0
-	producetime	30
+	producetime	15
 }
 
 tech rs_weapon_plasblade
@@ -1855,12 +1855,12 @@ tech rs_weapon_plasblade
 
 	require_for_production
 	{
-	    item (alienmaterials 50)
+	    item (alienmaterials 10)
 	}
 
 	provides	plasblade
 	time	4000
-	producetime	150
+	producetime	100
 }
 
 tech rs_weapon_plasmagren
@@ -1900,12 +1900,12 @@ tech rs_weapon_plasmagren
 
 	require_for_production
 	{
-	    item (alienmaterials 30)
+	    item (alienmaterials 10)
 	}
 
 	provides	plasmagrenade
 	time	1000
-	producetime	72
+	producetime	50
 }
 
 tech rs_weapon_plasrifle
@@ -1946,12 +1946,12 @@ tech rs_weapon_plasrifle
 
 	require_for_production
 	{
-	    item (alienmaterials 110)
+	    item (alienmaterials 30)
 	}
 
 	provides	plasrifle
 	time	3000
-	producetime	200
+	producetime	45
 }
 
 tech rs_weapon_plasrifle_ammo
@@ -1970,12 +1970,12 @@ tech rs_weapon_plasrifle_ammo
 
 	require_for_production
 	{
-	    item (alienmaterials 13)
+	    item (alienmaterials 5)
 	}
 
 	provides	plasrifle_ammo
 	time	0
-	producetime	40
+	producetime	15
 }
 
 tech rs_weapon_encased_plasma
@@ -2031,12 +2031,12 @@ tech rs_weapon_encased_plasma_assault_ammo
 
 	require_for_production
 	{
-	    item (alienmaterials 10)
+	    item (alienmaterials 5)
 	}
 
 	provides	encased_plasma_assault_ammo
 	time	0
-	producetime	40
+	producetime	30
 }
 
 tech rs_weapon_encased_plasma_mg_ammo
@@ -2054,12 +2054,12 @@ tech rs_weapon_encased_plasma_mg_ammo
 
 	require_for_production
 	{
-	    item (alienmaterials 10)
+	    item (alienmaterials 5)
 	}
 
 	provides	encased_plasma_mg_ammo
 	time	0
-	producetime	40
+	producetime	30
 }
 
 tech rs_weapon_encased_plasma_sniper_ammo
@@ -2077,12 +2077,12 @@ tech rs_weapon_encased_plasma_sniper_ammo
 
 	require_for_production
 	{
-	    item (alienmaterials 10)
+	    item (alienmaterials 5)
 	}
 
 	provides	encased_plasma_sniper_ammo
 	time	0
-	producetime	40
+	producetime	30
 }
 
 tech rs_weapon_needlergun
@@ -2123,12 +2123,12 @@ tech rs_weapon_needlergun
 
 	require_for_production
 	{
-	    item (alienmaterials 140)
+	    item (alienmaterials 50)
 	}
 
 	provides	needlergun
 	time		10000
-	producetime	120
+	producetime	100
 }
 
 tech rs_weapon_needlerheavy
@@ -2169,7 +2169,7 @@ tech rs_weapon_needlerheavy
 
 	require_for_production
 	{
-	    item (alienmaterials 160)
+	    item (alienmaterials 70)
 	}
 
 	provides	needlerheavy
@@ -2199,7 +2199,7 @@ tech rs_weapon_needlergun_ammo
 
 	provides	needlergun_ammo
 	time		0
-	producetime	24
+	producetime	30
 }
 
 tech rs_weapon_coilgun
@@ -2238,12 +2238,12 @@ tech rs_weapon_coilgun
 
 	require_for_production
 	{
-	    item (alienmaterials 80)
+	    item (alienmaterials 50)
 	}
 
 	provides	coilgun
 	time		4000
-	producetime	120
+	producetime	100
 }
 
 tech rs_weapon_coilgun_ammo
@@ -2261,12 +2261,12 @@ tech rs_weapon_coilgun_ammo
 
 	require_for_production
 	{
-	    item (alienmaterials 10)
+	    item (alienmaterials 5)
 	}
 
 	provides	coilgun_ammo
 	time		0
-	producetime	24
+	producetime	20
 }
 
 tech rs_weapon_shotgun2
@@ -2490,7 +2490,7 @@ tech rs_weapon_stungren
 
 	provides	stungrenade
 	time		750
-	producetime	24
+	producetime	30
 //	image		"techs/anti_alien_gas"
 }
 
@@ -2576,7 +2576,7 @@ tech rs_weapon_stunrod
 
 	provides	stunrod
 	time		1500
-	producetime	70
+	producetime	50
 }
 
 tech rs_weapon_pbeampistol
@@ -2616,12 +2616,12 @@ tech rs_weapon_pbeampistol
 
 	require_for_production
 	{
-	    item (alienmaterials 110)
+	    item (alienmaterials 60)
 	}
 
 	provides	pbeampistol
 	time		5000
-	producetime	160
+	producetime	140
 }
 
 tech rs_weapon_pbeampistol_ammo
@@ -2636,11 +2636,6 @@ tech rs_weapon_pbeampistol_ammo
 	{
 		tech rs_damage_pbeam
 		tech rs_weapon_pbeam_ammo
-	}
-
-	require_for_production
-	{
-	    item (alienmaterials 20)
 	}
 
 	provides	pbeampistol_ammo
@@ -2686,12 +2681,12 @@ tech rs_weapon_pbeamcannon
 
 	require_for_production
 	{
-	    item (alienmaterials 200)
+	    item (alienmaterials 100)
 	}
 
 	provides	pbeamcannon
 	time		6000
-	producetime	220
+	producetime	200
 }
 
 tech rs_weapon_pbeamcannon_ammo
@@ -2706,11 +2701,6 @@ tech rs_weapon_pbeamcannon_ammo
 	{
 		tech rs_damage_pbeam
 		tech rs_weapon_pbeam_ammo
-	}
-
-	require_for_production
-	{
-	    item (alienmaterials 30)
 	}
 
 	provides	pbeamcannon_ammo
@@ -2755,12 +2745,12 @@ tech rs_weapon_pbeamrifle
 
 	require_for_production
 	{
-	    item (alienmaterials 180)
+	    item (alienmaterials 80)
 	}
 
 	provides	pbeamrifle
 	time		6000
-	producetime	200
+	producetime	180
 }
 
 tech rs_weapon_pbeamrifle_ammo
@@ -2775,11 +2765,6 @@ tech rs_weapon_pbeamrifle_ammo
 	{
 		tech rs_damage_pbeam
 		tech rs_weapon_pbeam_ammo
-	}
-
-	require_for_production
-	{
-	    item (alienmaterials 20)
 	}
 
 	provides	pbeamrifle_ammo
@@ -2822,11 +2807,6 @@ tech rs_weapon_pbeam_ammo
 		tech rs_weapon_pbeampistol
 		tech rs_weapon_pbeamcannon
 		tech rs_weapon_pbeamrifle
-	}
-
-	require_for_production
-	{
-	    item (alienmaterials 30)
 	}
 
 	time		1000
@@ -2886,7 +2866,7 @@ tech rs_nano_armour
 
 	provides	armour_medium
 	time		6000
-	producetime	168
+	producetime	150
 }
 
 tech rs_power_armour
@@ -2925,7 +2905,7 @@ tech rs_power_armour
 	provides	armour_power
 
 	time		6000
-	producetime	180
+	producetime	300
 }
 
 tech rs_alien_body_armour
@@ -3554,7 +3534,7 @@ tech rs_craft_drop_firebird
 
 	provides	craft_drop_firebird
 	time	0
-	producetime	336 //Two weeks.
+	producetime	300
 
 	model		drop_firebird
 }
@@ -3591,7 +3571,7 @@ tech rs_craft_drop_herakles
 
 	provides	craft_drop_herakles
 	time	14000
-	producetime	336 //Two weeks.
+	producetime	350
 
 	model		drop_herakles
 }
@@ -3628,7 +3608,7 @@ tech rs_craft_drop_raptor
 
 	require_for_production
 	{
-	    item (alienmaterials 12000)
+	    item (alienmaterials 1400)
 		item	(craft_alien_propulsion	4)
 		item	(craft_alien_astrogation	1)
 		item	(craft_alien_detection	1)
@@ -3636,7 +3616,7 @@ tech rs_craft_drop_raptor
 
 	provides	craft_drop_raptor
 	time	14000
-	producetime	336
+	producetime	500
 
 	model		drop_raptor
 }
@@ -3652,7 +3632,7 @@ tech rs_craft_inter_stiletto
 
 	provides	craft_inter_stiletto
 	time	0
-	producetime	336
+	producetime	300
 
 	model		inter_stiletto
 }
@@ -3668,7 +3648,7 @@ tech rs_craft_inter_saracen
 
 	provides	craft_inter_saracen
 	time	0
-	producetime	400
+	producetime	300
 
 	model		inter_saracen
 }
@@ -3704,11 +3684,11 @@ tech rs_craft_inter_dragon
 		tech rs_craft_alien_propulsion
 	}
 	time	14000
-	producetime	600
+	producetime	400
 
 	require_for_production
 	{
-	    item (alienmaterials 5000)
+	    item (alienmaterials 700)
 		item	(craft_alien_propulsion	2)
 		item	(craft_alien_astrogation	1)
 		item	(craft_alien_detection	1)
@@ -3749,11 +3729,11 @@ tech rs_craft_inter_starchaser
 		tech rs_craft_ufo_supply
 	}
 	time	14000
-	producetime	600
+	producetime	500
 
 	require_for_production
 	{
-	    item (alienmaterials 7000)
+	    item (alienmaterials 800)
 		item	(craft_alien_propulsion	2)
 		item	(craft_alien_astrogation	1)
 		item	(craft_alien_detection	2)
@@ -3796,7 +3776,7 @@ tech rs_craft_inter_stingray
 
 	require_for_production
 	{
-	    item (alienmaterials 9000)
+	    item (alienmaterials 1000)
 		item	(craft_alien_propulsion	3)
 		item	(craft_alien_astrogation	1)
 		item	(craft_alien_detection	2)
@@ -3804,7 +3784,7 @@ tech rs_craft_inter_stingray
 
 
 	time	14000
-	producetime	800
+	producetime	600
 
 	model		inter_stingray
 }
@@ -4712,7 +4692,7 @@ tech rs_base_AA51_launcher
 
 	provides	base_AA51_launcher
 	time		0
-	producetime	200
+	producetime	150
 
 	model			"objects/samlauncher/samlauncher"
 }
@@ -4798,11 +4778,11 @@ tech rs_craft_shield_plating
 
 	require_for_production
 	{
-	    item (alienmaterials 300)
+	    item (alienmaterials 150)
 	}
 
 	time		3000
-	producetime	240
+	producetime	200
 
 	model	"aircraft/craft_arm_plate/plating"
 }
@@ -4843,11 +4823,11 @@ tech rs_craft_shield_polymer_alien
 
 	require_for_production
 	{
-	    item (alienmaterials 500)
+	    item (alienmaterials 250)
 	}
 
 	time		8000
-	producetime	350
+	producetime	400
 
 	model	"aircraft/craft_arm_poly_alien/polymer_alien"
 }
@@ -5000,7 +4980,7 @@ tech rs_craft_weapon_alc
 
 	provides	craft_weapon_alc
 	time		1000
-	producetime	100
+	producetime	90
 
 	model		"aircraft/craft_weapon_alc/alc"
 }
@@ -5107,7 +5087,7 @@ tech rs_craft_ammo_sparrowhawk
 		tech rs_craft_weapon_sparrowhawk
 	}
 	time		0
-	producetime	80 //10 per missile.
+	producetime	40 //10 per missile.
 
 	model		"aircraft/craft_weapon_sparrow/sparrowhawk"
 }
@@ -5188,11 +5168,11 @@ tech rs_craft_weapon_particle
 
 	require_for_production
 	{
-	    item (alienmaterials 250)
+	    item (alienmaterials 100)
 	}
 
 	time		4000
-	producetime	150
+	producetime	80
 
 	model		"aircraft/craft_weapon_particle/pbw"
 }
@@ -5245,11 +5225,11 @@ tech rs_craft_weapon_alien_launcher
 
 	require_for_production
 	{
-	    item (alienmaterials 250)
+	    item (alienmaterials 150)
 	}
 
 	time		12000
-	producetime	150
+	producetime	100
 
 	model		"aircraft/craft_weapon_launcher/alien_launcher"
 }
@@ -5293,12 +5273,12 @@ tech rs_craft_ammo_am_missile
 
 	require_for_production
 	{
-	    item (alienmaterials 50)
+	    item (alienmaterials 20)
 	    item (antimatter 3)
 	}
 
 	time		5000
-	producetime	100
+	producetime	60
 
 	model		"aircraft/craft_weapon_launcher/antimatter"
 }
@@ -5342,11 +5322,11 @@ tech rs_craft_ammo_hybrid_missile
 
 	require_for_production
 	{
-	    item (alienmaterials 50)
+	    item (alienmaterials 20)
 	}
 
 	time		5000
-	producetime	75
+	producetime	40
 
 	model		"aircraft/craft_weapon_hybrid/hybrid"
 }

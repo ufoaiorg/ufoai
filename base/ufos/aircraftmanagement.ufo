@@ -162,7 +162,7 @@ aircraft craft_drop_raptor
 		damage		250
 		accuracy	100
 		range		220
-		antimatter	186
+		antimatter	40
 	}
 	name		"_Raptor-class Combat Transport"
 	defaultname	"_Raptor"
@@ -297,7 +297,7 @@ aircraft craft_inter_dragon
 		damage		500
 		accuracy	100
 		range		146
-		antimatter	120
+		antimatter	15
 	}
 	name		"_Dragon Interceptor"
 	defaultname	"_Dragon"
@@ -338,7 +338,7 @@ aircraft craft_inter_starchaser
 		damage		800
 		accuracy	100
 		range		150
-		antimatter	130
+		antimatter	20
 	}
 	name		"_Starchaser-class Interceptor"
 	defaultname	"_Starchaser"
@@ -384,7 +384,7 @@ aircraft craft_inter_stingray
 		damage		900
 		accuracy	100
 		range		156
-		antimatter	145
+		antimatter	25
 	}
 	name		"_Stingray Interceptor"
 	defaultname	"_Stingray"
