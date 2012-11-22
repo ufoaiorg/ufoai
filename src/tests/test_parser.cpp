@@ -52,6 +52,17 @@ static int UFO_CleanSuiteParser (void)
 
 #if PARSER_XX > 0
 
+class Token
+{
+	const char* _keyStr;
+	const char* _valStr;
+public:
+	void set(const char* keyStr, const char* valStr) {_keyStr = keyStr; _valStr = valStr;}
+	bool isKey(const char* name) {return !strcmp(_keyStr, name);}
+	int asInt() { return atoi(_valStr);}
+	const char* asString() {return _valStr;}
+};
+
 /* our sample class to parse from a string/stream */
 class Hugo
 {
@@ -62,14 +73,20 @@ public:
 	int getMyInt();
 	void setMyStr(const char* str);
 	const char* getMyStr();
+	void parse(Token &token);
 };
 
 void Hugo::setMyInt(const int i) {myInt = i;}
 int Hugo::getMyInt() { return myInt; }
 void Hugo::setMyStr(const char* str) {strcpy(myStr, str);}
 const char* Hugo::getMyStr() { return myStr; }
+void Hugo::parse(Token &token)
+{
+	if		(token.isKey("number")) setMyInt(token.asInt());
+	else if (token.isKey("string")) setMyStr(token.asString());
+}
 
-
+/*
 // defines one key/value pair
 class KeyDef
 {
@@ -101,7 +118,7 @@ static void parse (Hugo &toFill, const KeyDef table[], const char* toParse)
 				val = atoi(value);
 				(toFill.*table[i].setter)(val);
 				break;
-			case 2:	/* string */
+			case 2:	// string
 				static_cast<void (Hugo::*)(const char*)> (toFill.*table[i].setter)(value);
 				break;
 			default:
@@ -110,6 +127,7 @@ static void parse (Hugo &toFill, const KeyDef table[], const char* toParse)
 		}
 	}
 }
+*/
 /**
  * @brief unittest for new C++ parser
  */
@@ -117,10 +135,16 @@ static void testParserXX (void)
 {
 	const char* test1 = "number 17";
 	const char* test2 = "string  Duke";
+	Token tok1;
+	Token tok2;
+	tok1.set("number", "17");
+	tok2.set("string", "Duke");
 	Hugo myHugo;
 
-	parse(myHugo, ourKeys, test1);
-	parse(myHugo, ourKeys, test2);
+	myHugo.parse(tok1);
+	myHugo.parse(tok2);
+//	parse(myHugo, ourKeys, test1);
+//	parse(myHugo, ourKeys, test2);
 	Com_Printf("myInt: %i myStr: %s\n", myHugo.getMyInt(), myHugo.getMyStr());
 	CU_ASSERT_EQUAL(myHugo.getMyInt(), 17);
 }
