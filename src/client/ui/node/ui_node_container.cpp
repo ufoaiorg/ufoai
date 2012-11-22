@@ -1016,6 +1016,9 @@ bool uiContainerNode::onDndFinished (uiNode_t *source, bool isDropped)
 			if (UI_IsScrollContainerNode(target) && fItem->item.ammo && fItem->item.ammo != fItem->item.item && fItem->item.ammoLeft)
 				INV_UnloadWeapon(fItem, ui_inventory, targetContainer);
 
+			/* Save rotation: in case the move fails we don't want the item overlapping other items or
+			 * ending partially out of the container due to changed rotation */
+			bool rotated = fItem->item.rotated;
 			/* rotate on Shift */
 			/** @todo enable Shift-rotate for battlescape too when issues are solved */
 			fItem->item.rotated = Key_IsDown(K_SHIFT) && !CL_BattlescapeRunning();
@@ -1024,8 +1027,10 @@ bool uiContainerNode::onDndFinished (uiNode_t *source, bool isDropped)
 			moved = INV_MoveItem(ui_inventory, targetContainer, dragInfoToX, dragInfoToY, sourceContainer, fItem, &tItem);
 
 			/* No need to continue move wasn't successful */
-			if (!moved)
+			if (!moved) {
+				fItem->item.rotated = rotated;
 				return false;
+			}
 
 			/* Add ammo on adding weapon to a soldier */
 			if (UI_IsScrollContainerNode(source) && ((fItem->item.item->weapon && !fItem->item.ammoLeft) || fItem->item.item->oneshot))
