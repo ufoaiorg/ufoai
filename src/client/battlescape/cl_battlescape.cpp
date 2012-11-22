@@ -344,7 +344,7 @@ void Grid_DumpWholeClientMap_f (void)
 	int i;
 
 	for (i = 0; i < ACTOR_MAX_SIZE; i++)
-		RT_DumpWholeMap(cl.mapTiles, &(cl.mapData->map[i]));
+		RT_DumpWholeMap(cl.mapTiles, &(cl.mapData->routes[i]));
 }
 
 /**
@@ -356,7 +356,7 @@ void Grid_DumpClientRoutes_f (void)
 	ipos3_t wpMins, wpMaxs;
 	VecToPos(cl.mapData->mapMin, wpMins);
 	VecToPos(cl.mapData->mapMax, wpMaxs);
-	RT_WriteCSVFiles(cl.mapData->map, "ufoaiclient", wpMins, wpMaxs);
+	RT_WriteCSVFiles(cl.mapData->routes, "ufoaiclient", wpMins, wpMaxs);
 }
 #endif
 

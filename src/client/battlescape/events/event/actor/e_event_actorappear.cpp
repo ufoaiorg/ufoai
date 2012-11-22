@@ -131,7 +131,7 @@ void CL_ActorAppear (const eventRegister_t *self, dbuffer *msg)
 	le->modelnum2 = modelnum2;
 	le->model1 = LE_GetDrawModel(modelnum1);
 	le->model2 = LE_GetDrawModel(modelnum2);
-	Grid_PosToVec(cl.mapData->map, le->fieldSize, le->pos, le->origin);
+	Grid_PosToVec(cl.mapData->routes, le->fieldSize, le->pos, le->origin);
 	le->angles[YAW] = directionAngles[le->angle];
 
 	if (LE_IsDead(le) && !LE_IsStunned(le))

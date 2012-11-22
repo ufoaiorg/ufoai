@@ -563,11 +563,11 @@ static void CMod_LoadRouting (mapTile_t *tile, mapData_t *mapData, const byte *b
 				if (x < 0 || y < 0)
 					continue;
 				for (z = minZ; z <= maxZ; z++) {
-					mapData->map[size].floor[z][y][x] = tempMap[size].floor[z - sZ][y - sY][x - sX];
-					mapData->map[size].ceil[z][y][x] = tempMap[size].ceil[z - sZ][y - sY][x - sX];
+					mapData->routes[size].floor[z][y][x] = tempMap[size].floor[z - sZ][y - sY][x - sX];
+					mapData->routes[size].ceil[z][y][x] = tempMap[size].ceil[z - sZ][y - sY][x - sX];
 					for (dir = 0; dir < CORE_DIRECTIONS; dir++) {
-						mapData->map[size].route[z][y][x][dir] = tempMap[size].route[z - sZ][y - sY][x - sX][dir];
-						mapData->map[size].stepup[z][y][x][dir] = tempMap[size].stepup[z - sZ][y - sY][x - sX][dir];
+						mapData->routes[size].route[z][y][x][dir] = tempMap[size].route[z - sZ][y - sY][x - sX][dir];
+						mapData->routes[size].stepup[z][y][x][dir] = tempMap[size].stepup[z - sZ][y - sY][x - sX][dir];
 					}
 				}
 				/* Update the reroute table */
@@ -871,7 +871,7 @@ static void CMod_RerouteMap (mapTiles_t *mapTiles, mapData_t *mapData)
 			for (x = rBox.mins[0]; x <= rBox.maxs[0]; x++) {
 				if (mapData->reroute[size][y][x] == ROUTING_NOT_REACHABLE) {
 					for (z = rBox.maxs[2]; z >= rBox.mins[2]; z--) {
-						const int newZ = RT_CheckCell(mapTiles, mapData->map, size + 1, x, y, z, NULL);
+						const int newZ = RT_CheckCell(mapTiles, mapData->routes, size + 1, x, y, z, NULL);
 						assert(newZ <= z);
 						z = newZ;
 					}
@@ -900,7 +900,7 @@ static void CMod_RerouteMap (mapTiles_t *mapTiles, mapData_t *mapData)
 						tile2 = mapData->reroute[size][dy][dx];
 						/* Both cells are present and if either cell is ROUTING_NOT_REACHABLE or if the cells are different. */
 						if (tile2 && (tile2 == ROUTING_NOT_REACHABLE || tile2 != tile)) {
-							RT_UpdateConnectionColumn(mapTiles, mapData->map, size + 1, x, y, dir, NULL);
+							RT_UpdateConnectionColumn(mapTiles, mapData->routes, size + 1, x, y, dir, NULL);
 						}
 					}
 				}

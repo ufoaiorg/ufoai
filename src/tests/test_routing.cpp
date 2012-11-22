@@ -92,7 +92,7 @@ static void testMove (void)
 	CU_ASSERT_EQUAL(pos[1], 128);
 	CU_ASSERT_EQUAL(pos[2], 1);
 
-	routing = &mapData.map[ACTOR_SIZE_NORMAL - 1];
+	routing = &mapData.routes[ACTOR_SIZE_NORMAL - 1];
 	gridPos = Grid_Fall(routing, ACTOR_SIZE_NORMAL, pos);
 	CU_ASSERT_EQUAL(gridPos, 1);
 
@@ -228,7 +228,7 @@ static void testMoveEntities (void)
 	VectorSet(vec, 240, -144, 32);
 	VecToPos(vec, pos);
 
-	routing = &sv->mapData.map[ACTOR_SIZE_NORMAL - 1];
+	routing = &sv->mapData.routes[ACTOR_SIZE_NORMAL - 1];
 
 	G_CompleteRecalcRouting();
 

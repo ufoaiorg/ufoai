@@ -763,7 +763,7 @@ void SV_InitGameProgs (void)
 	Com_Printf("setting game random seed to %i\n", import.seed);
 
 	/* import the server routing table */
-	import.routingMap = sv->mapData.map;
+	import.routingMap = sv->mapData.routes;
 
 	svs.ge = SV_GetGameAPI(&import);
 

@@ -205,7 +205,7 @@ typedef struct mapData_s {
 	 * @todo not threadsafe */
 	byte reroute[ACTOR_MAX_SIZE][PATHFINDING_WIDTH][PATHFINDING_WIDTH];
 
-	routing_t map[ACTOR_MAX_SIZE];	/**< routing table */
+	routing_t routes[ACTOR_MAX_SIZE];	/**< routing table */
 
 	/**
 	 * @note The vectors are from 0 up to 2*MAX_WORLD_WIDTH - but not negative
