@@ -15,7 +15,7 @@ item alienmaterials
 	name		"_Alien Materials"
 	is_dummy	true
 	model		"objects/alien/box/box"
-	price		3
+	price		7
 	size		1
 	weapon		false
 }
