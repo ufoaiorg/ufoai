@@ -425,7 +425,8 @@ int RT_CheckCell (mapTiles_t *mapTiles, routing_t *routes, const int actorSize, 
 #ifdef DEBUG
 	initial = start[2] + UNIT_HEIGHT / 2; /* This is the top-most starting point in this cell. */
 #endif
-	start[2] += UNIT_HEIGHT / 2 - QUANT; /* This one QUANT unit below initial. */
+//	start[2] += UNIT_HEIGHT / 2 - QUANT; /* This is one QUANT unit below initial. (Why ?? This causes the Z=61-63 not walkable bug)*/
+	start[2] += UNIT_HEIGHT / 2 - DIST_EPSILON; /* This is marginally below initial. */
 	end[2] = -UNIT_HEIGHT * 2; /* To the bottom of the model! (Plus some for good measure) */
 
 	/*
