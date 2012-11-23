@@ -62,8 +62,40 @@ chrtemplate civilian {
 	health	"20 30"
 }
 
+chrtemplate alien_taman_light {
+	strength	"20 20"
+	speed	"25 35"
+	accuracy	"40 50"
+	mind	"50 85"
+	close	"50 90"
+	heavy	"50 90"
+	assault	"50 90"
+	sniper	"50 90"
+	explosive	"50 90"
+	piloting	"0 0"
+	targeting	"0 0"
+	evading	"0 0"
+	health	"100 130"
+}
+
 chrtemplate alien_taman {
-	strength	"40 50"
+	strength	"38 38"
+	speed	"25 35"
+	accuracy	"40 50"
+	mind	"50 85"
+	close	"50 90"
+	heavy	"50 90"
+	assault	"50 90"
+	sniper	"50 90"
+	explosive	"50 90"
+	piloting	"0 0"
+	targeting	"0 0"
+	evading	"0 0"
+	health	"100 130"
+}
+
+chrtemplate alien_taman_heavy {
+	strength	"60 60"
 	speed	"25 35"
 	accuracy	"40 50"
 	mind	"50 85"
