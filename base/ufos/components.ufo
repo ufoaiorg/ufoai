@@ -141,16 +141,6 @@ components craft_ufo_harvester_cmp {
 		numbercrash %
 	}
 	item {
-		id craft_weapon_alien_launcher
-		amount 1
-		numbercrash %
-	}
-	item {
-		id craft_ammo_am_missile
-		amount 12
-		numbercrash %
-	}
-	item {
 		id craft_el_alien_ew
 		amount 1
 		numbercrash %
@@ -219,7 +209,7 @@ components craft_ufo_gunboat_cmp {
 	}
 	item {
 		id craft_weapon_particle_beam
-		amount 2
+		amount 3
 		numbercrash %
 	}
 	item {
@@ -269,8 +259,13 @@ components craft_ufo_corrupter_cmp {
 		numbercrash %
 	}
 	item {
-		id craft_weapon_particle_beam
-		amount 3
+		id craft_weapon_alien_launcher
+		amount 2
+		numbercrash %
+	}
+	item {
+		id craft_ammo_am_missile
+		amount 12
 		numbercrash %
 	}
 	item {
@@ -310,8 +305,13 @@ components craft_ufo_bomber_cmp {
 		numbercrash %
 	}
 	item {
-		id craft_weapon_particle_beam
-		amount 3
+		id craft_weapon_alien_launcher
+		amount 6
+		numbercrash %
+	}
+	item {
+		id craft_ammo_am_missile
+		amount 36
 		numbercrash %
 	}
 	item {
