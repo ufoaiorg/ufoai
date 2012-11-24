@@ -601,6 +601,7 @@ team phalanx
 		male("soldiers/male" "body" "head03" 0 0)
 		male("soldiers/male" "body" "head04" 0 0)
 		male("soldiers/male" "body" "head05" 0 0)
+		male("soldiers/male" "body" "head06" 0 0)
 	}
 
 	actorsounds {

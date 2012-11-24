@@ -2154,6 +2154,8 @@ base/models/soldiers/male/head04.md2 | GNU General Public License 3.0 or later |
 base/models/soldiers/male/head04a.png | GNU General Public License 3.0 or later | MakeHuman;Nate Wright
 base/models/soldiers/male/head05.md2 | GNU General Public License 2.0 or later | Sitters
 base/models/soldiers/male/head05a.png | GNU General Public License 2.0 or later | Sitters
+base/models/soldiers/male/head06.md2 | GNU General Public License 2.0 or later | Pawel Michalkiewicz
+base/models/soldiers/male/head06a.png | GNU General Public License 2.0 or later | Pawel Michalkiewicz
 base/models/soldiers/malelight/body.anm | GNU General Public License 2.0 or later | Origin
 base/models/soldiers/malelight/body.md2 | GNU General Public License 2.0 or later | Origin
 base/models/soldiers/malelight/body.png | GNU General Public License 2.0 or later | Origin
@@ -2173,6 +2175,8 @@ base/models/soldiers/malelight/head04.md2 | GNU General Public License 3.0 or la
 base/models/soldiers/malelight/head04a.png | GNU General Public License 3.0 or later | MakeHuman;Origin;Nate Wright
 base/models/soldiers/malelight/head05.md2 | GNU General Public License 2.0 or later | Sitters;Origin
 base/models/soldiers/malelight/head05a.png | GNU General Public License 2.0 or later | Sitters;Origin
+base/models/soldiers/malelight/head06.md2 | GNU General Public License 2.0 or later | Pawel Michalkiewicz;Origin
+base/models/soldiers/malelight/head06a.png | GNU General Public License 2.0 or later | Pawel Michalkiewicz;Origin
 base/models/soldiers/malemedium/body.anm | GNU General Public License 2.0 or later | Origin
 base/models/soldiers/malemedium/body.md2 | GNU General Public License 2.0 or later | Origin
 base/models/soldiers/malemedium/body.png | GNU General Public License 2.0 or later | Origin
@@ -2183,6 +2187,7 @@ base/models/soldiers/malemedium/head02.md2 | GNU General Public License 2.0 or l
 base/models/soldiers/malemedium/head03.md2 | GNU General Public License 2.0 or later | Origin
 base/models/soldiers/malemedium/head04.md2 | GNU General Public License 2.0 or later | Origin
 base/models/soldiers/malemedium/head05.md2 | GNU General Public License 2.0 or later | Origin
+base/models/soldiers/malemedium/head06.md2 | GNU General Public License 2.0 or later | Origin
 base/models/soldiers/malemedium/helmet.png | GNU General Public License 2.0 or later | Origin
 base/models/soldiers/malemedium/helmet_nm.png | GNU General Public License 2.0 or later | Origin
 base/models/soldiers/malepower/body.anm | GNU General Public License 2.0 or later | Origin
@@ -2197,6 +2202,7 @@ base/models/soldiers/malepower/head02.md2 | GNU General Public License 2.0 or la
 base/models/soldiers/malepower/head03.md2 | GNU General Public License 2.0 or later | Origin
 base/models/soldiers/malepower/head04.md2 | GNU General Public License 2.0 or later | Origin
 base/models/soldiers/malepower/head05.md2 | GNU General Public License 2.0 or later | Origin
+base/models/soldiers/malepower/head06.md2 | GNU General Public License 2.0 or later | Origin
 base/models/soldiers/ugv_ares/ares.anm | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/soldiers/ugv_ares/ares_h.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/soldiers/ugv_ares/ares_h.png | GNU General Public License 2.0 or later | Willem Sitters
