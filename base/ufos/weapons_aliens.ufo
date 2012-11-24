@@ -154,7 +154,7 @@ item needlergun_ammo
 			crouch		0.85
 			range		250
 			shots		40
-			delaybetweenshots	40
+			delaybetweenshots	25
 			ammo		40
 			time		14
 			damage		"8 2"
@@ -178,7 +178,7 @@ item needlergun_ammo
 			crouch		0.85
 			range		250
 			shots		80
-			delaybetweenshots	40
+			delaybetweenshots	25
 			ammo		80
 			time		20
 			damage		"8 2"
@@ -201,7 +201,7 @@ item needlergun_ammo
 			crouch		0.85
 			range		250
 			shots		120
-			delaybetweenshots	40
+			delaybetweenshots	25
 			ammo		150
 			time		26
 			damage		"8 2"
