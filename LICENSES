@@ -730,6 +730,8 @@ base/models/aircraft/craft_item_astro/astrogation.md2 | GNU General Public Licen
 base/models/aircraft/craft_item_astro/astrogation.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/aircraft/craft_item_det/detection.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/aircraft/craft_item_det/detection.png | GNU General Public License 2.0 or later | Willem Sitters | High res version in data_source/models/sittes/craft_item_detection
+base/models/aircraft/craft_item_ew_alien/ew_alien.md2 | GNU General Public License 2.0 or later | Pawel Michalkiewicz
+base/models/aircraft/craft_item_ew_alien/ew_alien.png | GNU General Public License 2.0 or later | Pawel Michalkiewicz
 base/models/aircraft/craft_item_fuel/fuel.md2 | GNU General Public License 2.0 | David Townsend (Psawhn)
 base/models/aircraft/craft_item_fuel/fuel.png | GNU General Public License 2.0 | David Townsend (Psawhn)
 base/models/aircraft/craft_item_prop/propulsion.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler

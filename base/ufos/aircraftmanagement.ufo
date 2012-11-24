@@ -1083,10 +1083,7 @@ craftitem craft_el_alien_ew
 	size				20 // "light"
 	installationTime	1
 	price				8000
-	model				"aircraft/craft_item_raven_ecm/ecm"
-/* @TEMP-awaiting-md2s-2.5dev
 	model				"aircraft/craft_item_ew_alien/ew_alien"
-*/
 	ecm		1.5
 }
 
