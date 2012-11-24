@@ -2237,6 +2237,8 @@ base/models/weapons/binocs/binocs.md2 | Creative Commons Attribution-Share Alike
 base/models/weapons/bolterrifle/bolterrifle.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/bolterrifle/bolterrifle.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/bolterrifle/bolterrifle.tag | GNU General Public License 2.0 or later | Martin Gerhardy
+base/models/weapons/bolterrifle/bolterrifle_am_clip.md2 | GNU General Public License 2.0 or later | Werner Hoehrer (hoehrer), Lukas Beyeler (Rasta) | clip model based on old version by Lukas Beyeler (Rasta), see old/ subdirectory
+base/models/weapons/bolterrifle/bolterrifle_am_clip.png | GNU General Public License 2.0 or later | Pawel Michalkiewicz
 base/models/weapons/bolterrifle/bolterrifle_clip.jpg | GNU General Public License 2.0 | Werner Hoehrer (hoehrer), Lukas Beyeler (Rasta), MCR | clip model based on old version by Lukas Beyeler (Rasta), see old/ subdirectory
 base/models/weapons/bolterrifle/bolterrifle_clip.md2 | GNU General Public License 2.0 | Werner Hoehrer (hoehrer), Lukas Beyeler (Rasta) | clip model based on old version by Lukas Beyeler (Rasta), see old/ subdirectory
 base/models/weapons/bolterrifle/bolterrifle_clip_gm.png | GNU General Public License 2.0 or later | MCR | based on original UFO:AI content

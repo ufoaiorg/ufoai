@@ -1052,7 +1052,6 @@ tech rs_weapon_bolterrifle_ammo
 	producetime	15
 }
 
-/* @TEMP-awaiting-md2s-2.5dev
 tech rs_weapon_bolterrifle_am_ammo
 {
 	name	"_Electromagnetic Rifle Antimatter Magazine"
@@ -1083,7 +1082,6 @@ tech rs_weapon_bolterrifle_am_ammo
 	time	5000
 	producetime	30
 }
-*/
 
 tech rs_weapon_combatknife
 {

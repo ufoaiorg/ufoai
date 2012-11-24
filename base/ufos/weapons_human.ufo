@@ -1801,7 +1801,6 @@ item bolterrifle_ammo
 	}
 }
 
-/* @TEMP-awaiting-md2s-2.5dev
 item bolterrifle_am_ammo
 {
 	name			"_Electromagnetic Rifle Antimatter Magazine"
@@ -1869,4 +1868,3 @@ item bolterrifle_am_ammo
 		}
 	}
 }
-*/
