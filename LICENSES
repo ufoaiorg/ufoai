@@ -722,10 +722,12 @@ base/media/UnGraphicBold.ttf | GNU General Public License 2.0 |  | http://kldp.n
 base/media/languages.ttf | GNU General Public License 2.0 or later | UFOAI team
 base/media/ume-pgo4.ttf | see umefont-readme_license.html | Wada Laboratory, the University of Tokyo; Electronic Font Open Laboratory | http://ume-font.sourceforge.jp
 base/media/wqy-zenhei.ttf | GNU General Public License 2.0 |  | http://sourceforge.net/projects/wqy/
-base/models/aircraft/craft_arm_plate/plating.md2 | GNU General Public License 2.0 or later | Willem Sitters
-base/models/aircraft/craft_arm_plate/plating.png | GNU General Public License 2.0 or later | Willem Sitters
-base/models/aircraft/craft_arm_poly/polymer.md2 | GNU General Public License 2.0 or later | Willem Sitters
-base/models/aircraft/craft_arm_poly/polymer.png | GNU General Public License 2.0 or later | Willem Sitters
+base/models/aircraft/craft_arm_plate/plating.md2 | GNU General Public License 2.0 or later | Pawel Michalkiewicz
+base/models/aircraft/craft_arm_plate/plating.png | GNU General Public License 2.0 or later | Pawel Michalkiewicz
+base/models/aircraft/craft_arm_poly/polymer.md2 | GNU General Public License 2.0 or later | Pawel Michalkiewicz
+base/models/aircraft/craft_arm_poly/polymer.png | GNU General Public License 2.0 or later | Pawel Michalkiewicz
+base/models/aircraft/craft_arm_poly_alien/polymer_alien.md2 | GNU General Public License 2.0 or later | Pawel Michalkiewicz
+base/models/aircraft/craft_arm_poly_alien/polymer_alien.png | GNU General Public License 2.0 or later | Pawel Michalkiewicz
 base/models/aircraft/craft_item_astro/astrogation.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/aircraft/craft_item_astro/astrogation.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/aircraft/craft_item_det/detection.md2 | GNU General Public License 2.0 or later | Willem Sitters

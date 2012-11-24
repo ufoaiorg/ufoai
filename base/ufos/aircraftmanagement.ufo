@@ -1060,7 +1060,6 @@ craftitem craft_shield_plating
 	maxspeed	0.9
 }
 
-/* @TEMP-awaiting-md2s-2.5dev
 craftitem craft_shield_polymer_alien
 {
 	name				"_Alien Polymer Armour"
@@ -1074,7 +1073,6 @@ craftitem craft_shield_polymer_alien
 	speed		0.9
 	maxspeed	0.9
 }
-*/
 
 craftitem craft_el_alien_ew
 {

@@ -4785,7 +4785,6 @@ tech rs_craft_shield_plating
 	model	"aircraft/craft_arm_plate/plating"
 }
 
-/* @TEMP-awaiting-md2s-2.5dev
 tech rs_craft_shield_polymer_alien
 {
 	type		"craftitem"
@@ -4816,7 +4815,7 @@ tech rs_craft_shield_polymer_alien
 
 	require_AND {
 		tech	rs_alien_materials
-		tech rs_craft_ufo_gunboat
+		tech	rs_craft_ufo_gunboat
 	}
 
 	require_for_production
@@ -4829,7 +4828,6 @@ tech rs_craft_shield_polymer_alien
 
 	model	"aircraft/craft_arm_poly_alien/polymer_alien"
 }
-*/
 
 tech rs_craft_alien_astrogation
 {
