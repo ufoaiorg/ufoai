@@ -115,9 +115,9 @@ team taman_light
 		plasma_heavy 5
 		plasma_pierce		0
 
-		particlebeam_light 50
-		particlebeam_medium 50
-		particlebeam_heavy 50
+		particlebeam_light 0
+		particlebeam_medium 0
+		particlebeam_heavy 0
 
 		stun_electro 0
 		stun_gas 0
@@ -237,9 +237,9 @@ team taman
 		plasma_heavy 5
 		plasma_pierce		0
 
-		particlebeam_light 50
-		particlebeam_medium 50
-		particlebeam_heavy 50
+		particlebeam_light 0
+		particlebeam_medium 0
+		particlebeam_heavy 0
 
 		stun_electro 0
 		stun_gas 0
@@ -359,9 +359,9 @@ team taman_heavy
 		plasma_heavy 5
 		plasma_pierce		0
 
-		particlebeam_light 50
-		particlebeam_medium 50
-		particlebeam_heavy 50
+		particlebeam_light 0
+		particlebeam_medium 0
+		particlebeam_heavy 0
 
 		stun_electro 0
 		stun_gas 0
@@ -482,9 +482,9 @@ team ortnok
 		plasma_heavy 0
 		plasma_pierce		0
 
-		particlebeam_light -30
-		particlebeam_medium -40
-		particlebeam_heavy -50
+		particlebeam_light 0
+		particlebeam_medium 0
+		particlebeam_heavy 0
 
 		stun_electro 0
 		stun_gas 0
@@ -586,9 +586,9 @@ team shevaar
 		plasma_heavy -30
 		plasma_pierce		0
 
-		particlebeam_light -10
-		particlebeam_medium -20
-		particlebeam_heavy -30
+		particlebeam_light 0
+		particlebeam_medium 0
+		particlebeam_heavy 0
 
 		stun_electro -10
 		stun_gas -10
@@ -688,9 +688,9 @@ team bloodspider
 		plasma_heavy	20
 		plasma_pierce		0
 
-		particlebeam_light	-5
-		particlebeam_medium	-10
-		particlebeam_heavy	-15
+		particlebeam_light	10
+		particlebeam_medium	20
+		particlebeam_heavy	20
 
 		stun_electro 999
 		stun_gas 999
@@ -790,9 +790,9 @@ team bloodspider_adv
 		plasma_heavy	20
 		plasma_pierce		0
 
-		particlebeam_light	-30
-		particlebeam_medium	-40
-		particlebeam_heavy	-50
+		particlebeam_light	30
+		particlebeam_medium	40
+		particlebeam_heavy	50
 
 		stun_electro	999
 		stun_gas		999
@@ -893,9 +893,9 @@ team hovernet
 		plasma_heavy	20
 		plasma_pierce		0
 
-		particlebeam_light	-5
-		particlebeam_medium	-10
-		particlebeam_heavy	-15
+		particlebeam_light	10
+		particlebeam_medium	20
+		particlebeam_heavy	20
 
 		stun_electro 999
 		stun_gas 999
@@ -995,9 +995,9 @@ team hovernet_adv
 		plasma_heavy	20
 		plasma_pierce		0
 
-		particlebeam_light	-30
-		particlebeam_medium	-40
-		particlebeam_heavy	-50
+		particlebeam_light	30
+		particlebeam_medium	40
+		particlebeam_heavy	50
 
 		stun_electro	999
 		stun_gas		999

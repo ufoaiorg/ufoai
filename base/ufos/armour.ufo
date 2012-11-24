@@ -164,9 +164,9 @@ item armour_medium
 		laser_medium		10
 		laser_heavy			10
 
-		particlebeam_light	-5
-		particlebeam_medium	-10
-		particlebeam_heavy	-15
+		particlebeam_light	10
+		particlebeam_medium	20
+		particlebeam_heavy	20
 
 		stun_electro		15
 		stun_gas			30
@@ -228,9 +228,9 @@ item armour_power
 		laser_medium		15
 		laser_heavy			15
 
-		particlebeam_light	-30
-		particlebeam_medium	-40
-		particlebeam_heavy	-50
+		particlebeam_light	30
+		particlebeam_medium	40
+		particlebeam_heavy	50
 
 		stun_electro		30
 		stun_gas			999
@@ -296,9 +296,9 @@ item armour_light_alien
 		plasma_heavy	20
 		plasma_pierce		0
 
-		particlebeam_light	-5
-		particlebeam_medium	-10
-		particlebeam_heavy	-15
+		particlebeam_light	10
+		particlebeam_medium	20
+		particlebeam_heavy	20
 
 		stun_electro	0
 		stun_gas		0
@@ -360,9 +360,9 @@ item armour_medium_alien
 		plasma_heavy	25
 		plasma_pierce		0
 
-		particlebeam_light	-30
-		particlebeam_medium	-40
-		particlebeam_heavy	-50
+		particlebeam_light	30
+		particlebeam_medium	40
+		particlebeam_heavy	50
 
 		stun_electro	10
 		stun_gas		10

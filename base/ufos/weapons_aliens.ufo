@@ -102,9 +102,9 @@ item needlergun_ammo
 			spread		"2 2"
 			crouch		0.85
 			range		250
-			shots		90
+			shots		60
 			delaybetweenshots	25
-			ammo		90
+			ammo		60
 			time		16
 			damage		"8 2"
 			dmgweight	"normal_needle"
@@ -125,9 +125,9 @@ item needlergun_ammo
 			spread		"2.5 2.5"
 			crouch		0.85
 			range		250
-			shots		120
+			shots		90
 			delaybetweenshots	25
-			ammo		120
+			ammo		90
 			time		20
 			damage		"8 2"
 			dmgweight	"normal_needle"
@@ -153,9 +153,9 @@ item needlergun_ammo
 			spread		"1.9 1.9"
 			crouch		0.85
 			range		250
-			shots		30
+			shots		40
 			delaybetweenshots	40
-			ammo		30
+			ammo		40
 			time		14
 			damage		"8 2"
 			dmgweight	"normal_needle"
@@ -177,9 +177,9 @@ item needlergun_ammo
 			spread		"2.5 2.5"
 			crouch		0.85
 			range		250
-			shots		90
+			shots		80
 			delaybetweenshots	40
-			ammo		90
+			ammo		80
 			time		20
 			damage		"8 2"
 			dmgweight	"normal_needle"
@@ -202,7 +202,7 @@ item needlergun_ammo
 			range		250
 			shots		120
 			delaybetweenshots	40
-			ammo		120
+			ammo		150
 			time		26
 			damage		"8 2"
 			dmgweight	"normal_needle"

@@ -399,7 +399,7 @@ item encased_plasma_assault_ammo
 			shots		1
 			ammo		1
 			time		8
-			damage		"80 10"
+			damage		"90 10"
 			dmgweight	"plasma_pierce"
 			reaction	true
 		}
@@ -422,7 +422,7 @@ item encased_plasma_assault_ammo
 			ammo				3
 			delaybetweenshots	10
 			time				12
-			damage				"80 10"
+			damage				"90 10"
 			dmgweight			"plasma_pierce"
 			reaction			true
 		}
@@ -445,7 +445,7 @@ item encased_plasma_assault_ammo
 			ammo				8
 			delaybetweenshots	10
 			time				16
-			damage				"80 10"
+			damage				"90 10"
 			dmgweight			"plasma_pierce"
 		}
 		firedef
@@ -465,7 +465,7 @@ item encased_plasma_assault_ammo
 			shots		1
 			ammo		1
 			time		16
-			damage		"80 10"
+			damage		"90 10"
 			dmgweight	"plasma_pierce"
 		}
 	}
@@ -509,7 +509,7 @@ item encased_plasma_mg_ammo
 			ammo				5
 			delaybetweenshots	10
 			time				14
-			damage				"80 10"
+			damage				"90 10"
 			dmgweight			"plasma_pierce"
 			reaction			true
 		}
@@ -532,7 +532,7 @@ item encased_plasma_mg_ammo
 			ammo				20
 			delaybetweenshots	10
 			time				24
-			damage				"80 10"
+			damage				"90 10"
 			dmgweight			"plasma_pierce"
 			reaction			true
 		}
@@ -555,7 +555,7 @@ item encased_plasma_mg_ammo
 			ammo				20
 			delaybetweenshots	10
 			time				24
-			damage				"80 10"
+			damage				"90 10"
 			dmgweight			"plasma_pierce"
 			reaction			true
 		}
