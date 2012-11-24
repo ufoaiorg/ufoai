@@ -3724,7 +3724,7 @@ tech rs_craft_inter_starchaser
 	provides	craft_inter_starchaser
 	require_AND {
 		tech rs_craft_inter_dragon
-		tech rs_craft_ufo_supply
+		tech rs_craft_alien_propulsion_adv
 	}
 	time	14000
 	producetime	500
@@ -4900,6 +4900,45 @@ tech rs_craft_alien_propulsion
 		item	(craft_alien_propulsion 1)
 	}
 	time		3000
+	producetime	-1
+
+	model		"aircraft/craft_item_prop/propulsion"
+}
+
+tech rs_craft_alien_propulsion_adv
+{
+	name		"_Advanced Alien Propulsion"
+	type		"craftitem"
+	up_chapter	crafts
+
+	pre_description {
+		default "*msgid:craft_alien_propulsion_adv_pre_txt"
+	}
+	description {
+		default "*msgid:craft_alien_propulsion_adv_txt"
+	}
+	mail_pre
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to	"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+	mail
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to	"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+	provides	craft_alien_propulsion_adv
+	require_AND {
+		tech	rs_alien_materials
+		tech 	rs_antimatter
+		tech	rs_craft_alien_propulsion
+		item	(craft_alien_propulsion_adv 1)
+	}
+	time		10000
 	producetime	-1
 
 	image		"techs/alien_propulsion"

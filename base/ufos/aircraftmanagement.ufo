@@ -1103,6 +1103,15 @@ craftitem craft_alien_propulsion
 	size				50 // "light"
 }
 
+craftitem craft_alien_propulsion_adv
+{
+	name				"_Advanced Alien Propulsion"
+	crafttype			"electronics"
+	installationTime	-1
+	price				6000
+	size				50 // "light"
+}
+
 craftitem craft_alien_detection
 {
 	name				"_Alien Detection"

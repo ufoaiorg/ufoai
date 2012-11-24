@@ -162,7 +162,7 @@ components craft_ufo_supply_cmp {
 		numbercrash 0
 	}
 	item {
-		id craft_alien_propulsion
+		id craft_alien_propulsion_adv
 		amount 2
 		numbercrash %
 	}
@@ -193,7 +193,7 @@ components craft_ufo_gunboat_cmp {
 		numbercrash 0
 	}
 	item {
-		id craft_alien_propulsion
+		id craft_alien_propulsion_adv
 		amount 4
 		numbercrash %
 	}
@@ -290,7 +290,7 @@ components craft_ufo_bomber_cmp {
 		numbercrash 0
 	}
 	item {
-		id craft_alien_propulsion
+		id craft_alien_propulsion_adv
 		amount 4
 		numbercrash %
 	}
