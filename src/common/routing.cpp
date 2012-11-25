@@ -805,21 +805,15 @@ static int RT_FindOpeningFloor (const RT_data_t *rtd, const vec3_t start, const 
 	if (start[0] == end[0] || start[1] == end[1]) {
 		/* For orthogonal dirs, find the height at the midpoint. */
 		midfloor = RT_FindOpeningFloorFrac(rtd, start, end, 0.5, startingHeight);
-		if (debugTrace)
-			Com_Printf("midfloor:%i.\n", midfloor);
 	} else {
 		int midfloor2;
 
 		/* If this is diagonal, trace the 1/3 and 2/3 points instead. */
 		/* 1/3 point */
 		midfloor = RT_FindOpeningFloorFrac(rtd, start, end, 0.33, startingHeight);
-		if (debugTrace)
-			Com_Printf("1/3floor:%i.\n", midfloor);
 
 		/* 2/3 point */
 		midfloor2 = RT_FindOpeningFloorFrac(rtd, start, end, 0.66, startingHeight);
-		if (debugTrace)
-			Com_Printf("2/3floor:%i.\n", midfloor2);
 		midfloor = std::max(midfloor, midfloor2);
 	}
 
@@ -844,21 +838,15 @@ static int RT_FindOpeningCeiling (const RT_data_t *rtd, const vec3_t start, cons
 	if (start[0] == end[0] || start[1] == end[1]) {
 		/* For orthogonal dirs, find the height at the midpoint. */
 		midceil = RT_FindOpeningCeilingFrac(rtd, start, end, 0.5, startingHeight);
-		if (debugTrace)
-			Com_Printf("midceil:%i.\n", midceil);
 	} else {
 		int midceil2;
 
 		/* If this is diagonal, trace the 1/3 and 2/3 points instead. */
 		/* 1/3 point */
 		midceil = RT_FindOpeningCeilingFrac(rtd, start, end, 0.33, startingHeight);
-		if (debugTrace)
-			Com_Printf("1/3ceil:%i.\n", midceil);
 
 		/* 2/3 point */
 		midceil2 = RT_FindOpeningCeilingFrac(rtd, start, end, 0.66, startingHeight);
-		if (debugTrace)
-			Com_Printf("2/3ceil:%i.\n", midceil2);
 		midceil = std::min(midceil, midceil2);
 	}
 
