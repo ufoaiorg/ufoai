@@ -650,7 +650,7 @@ window game_team_edit extends objectinfo
 			skin	*cvar:mn_body_skin
 			anim	"stand_menu"
 			angles	"0 70 90"
-			scale	"5 5 5"
+			scale	"4 4 4"
 
 			pos		"676 69"
 			size	"197 258"
