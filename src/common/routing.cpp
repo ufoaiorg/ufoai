@@ -955,9 +955,6 @@ static int RT_FindOpening (RT_data_t *rtd, const place_t* from, const int ax, co
 	pos3_t pos;
 	int tempZ;
 
-	const int endfloor = RT_FLOOR(rtd->routes, rtd->actorSize, ax, ay, from->cell[2]) + from->cell[2] * CELL_HEIGHT;
-	const int hifloor = std::max(endfloor, bottom);
-
 	if (bottom == -1) {
 		/* Bailing- no floor in current cell. */
 		*foundLow = *foundHigh = 0;
@@ -1010,7 +1007,7 @@ static int RT_FindOpening (RT_data_t *rtd, const place_t* from, const int ax, co
 		const int lo = top - PATHFINDING_MIN_OPENING;
 		const int hi = bottom + PATHFINDING_MIN_OPENING;
 
-		tempZ = RT_TraceOpening(rtd, start, end, ax, ay, hifloor, top, lo, hi, foundLow, foundHigh);
+		tempZ = RT_TraceOpening(rtd, start, end, ax, ay, bottom, top, lo, hi, foundLow, foundHigh);
 	} else {
 		/* ----- brute force trace ------ */
 		/* There is no "guaranteed" opening, brute force search. */
