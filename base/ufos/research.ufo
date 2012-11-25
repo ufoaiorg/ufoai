@@ -5317,7 +5317,7 @@ tech rs_craft_ammo_am_missile
 	time		5000
 	producetime	60
 
-	model		"aircraft/craft_weapon_launcher/antimatter"
+	model		"aircraft/craft_weapon_antim/antimatter"
 }
 
 tech rs_craft_ammo_hybrid_missile
