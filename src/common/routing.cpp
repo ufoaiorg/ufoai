@@ -919,8 +919,7 @@ static int RT_TraceOpening (RT_data_t *rtd, const vec3_t start, const vec3_t end
 		if (hi - lo >= PATHFINDING_MIN_OPENING) {
 			int temp_z;
 			if (lo == -1) {
-				if (debugTrace)
-					Com_Printf("Bailing- no floor in destination cell.\n");
+				/* Bailing- no floor in destination cell. */
 				*lo_val = *hi_val = 0;
 				return RT_NO_OPENING;
 			}
@@ -959,12 +958,8 @@ static int RT_FindOpening (RT_data_t *rtd, const place_t* from, const int ax, co
 	const int endfloor = RT_FLOOR(rtd->routes, rtd->actorSize, ax, ay, from->cell[2]) + from->cell[2] * CELL_HEIGHT;
 	const int hifloor = std::max(endfloor, bottom);
 
-	if (debugTrace)
-		Com_Printf("ef:%i t:%i b:%i\n", endfloor, top, bottom);
-
 	if (bottom == -1) {
-		if (debugTrace)
-			Com_Printf("Bailing- no floor in current cell.\n");
+		/* Bailing- no floor in current cell. */
 		*lo_val = *hi_val = 0;
 		return RT_NO_OPENING;
 	}
@@ -979,6 +974,7 @@ static int RT_FindOpening (RT_data_t *rtd, const place_t* from, const int ax, co
 	/* Initialize the z component of both vectors */
 	start[2] = end[2] = 0;
 
+	/* ----- sky trace ------ */
 	/* shortcut: if both ceilings are the sky, we can check for walls
 	 * AND determine the bottom of the passage in just one trace */
 	if (from->ceiling >= PATHFINDING_HEIGHT * CELL_HEIGHT
@@ -987,9 +983,6 @@ static int RT_FindOpening (RT_data_t *rtd, const place_t* from, const int ax, co
 		const box_t* box = (rtd->actorSize == ACTOR_SIZE_NORMAL ? &actor1x1Box : &actor2x2Box);
 		trace_t tr;
 		int tempBottom;
-
-		if (debugTrace)
-			Com_Printf("Using sky trace.\n");
 
 		VectorInterpolation(start, end, 0.5, sky);	/* center it halfway between the cells */
 		VectorCopy(sky, earth);
@@ -1000,17 +993,15 @@ static int RT_FindOpening (RT_data_t *rtd, const place_t* from, const int ax, co
 		tempBottom = ModelFloorToQuant(tr.endpos[2]);
 		if (tempBottom <= bottom + PATHFINDING_MIN_STEPUP) {
 			const int hi = bottom + PATHFINDING_MIN_OPENING;
-			if (debugTrace)
-				Com_Printf("Found opening with sky trace.\n");
+			/* Found opening with sky trace. */
 			*lo_val = tempBottom;
 			*hi_val = CELL_HEIGHT * PATHFINDING_HEIGHT;
 			return RT_CalcNewZ(rtd, ax, ay, top, hi);
 		}
-		if (debugTrace)
-			Com_Printf("Failed sky trace.\n");
 	}
 	/* Warning: never try to make this an 'else if', or 'arched entry' situations will fail !! */
 
+	/* ----- guaranteed opening trace ------ */
 	/* Now calculate the "guaranteed" opening, if any. If the opening from
 	 * the floor to the ceiling is not too tall, there must be a section that
 	 * will always be vacant if there is a usable passage of any size and at
@@ -1018,17 +1009,14 @@ static int RT_FindOpening (RT_data_t *rtd, const place_t* from, const int ax, co
 	if (top - bottom < PATHFINDING_MIN_OPENING * 2) {
 		const int lo = top - PATHFINDING_MIN_OPENING;
 		const int hi = bottom + PATHFINDING_MIN_OPENING;
-		if (debugTrace)
-			Com_Printf("Tracing closed space from %i to %i.\n", bottom, top);
 		temp_z = RT_TraceOpening(rtd, start, end, ax, ay, hifloor, top, lo, hi, lo_val, hi_val);
 	} else {
+		/* ----- brute force trace ------ */
 		/* There is no "guaranteed" opening, brute force search. */
 		int lo = bottom;
 		temp_z = 0;
 		while (lo <= top - PATHFINDING_MIN_OPENING) {
 			/* Check for a 1 QUANT opening. */
-			if (debugTrace)
-				Com_Printf("Tracing open space from %i.\n", lo);
 			temp_z = RT_TraceOpening(rtd, start, end, ax, ay, bottom, top, lo, lo + 1, lo_val, hi_val);
 			if (temp_z != RT_NO_OPENING)
 				break;
