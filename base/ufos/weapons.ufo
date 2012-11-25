@@ -25,7 +25,7 @@ item medikit
 		weapon medikit
 		firedef
 		{
-			name	"_Heal"
+			name	"_First Aid"
 			projtl	null
 			impact	null
 			hitbody heal
