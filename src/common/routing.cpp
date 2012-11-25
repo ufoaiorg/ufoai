@@ -709,7 +709,7 @@ static int RT_FillPassageData (RT_data_t *rtd, const int dir, const int  x, cons
  * @param[in] hi The upper height ABOVE THE FLOOR of the bounding box.
  * @param[in] lo The lower height ABOVE THE FLOOR of the bounding box.
  */
-static trace_t RT_ObstructedTrace (RT_data_t *rtd, const vec3_t start, const vec3_t end, int hi, int lo)
+static trace_t RT_ObstructedTrace (const RT_data_t *rtd, const vec3_t start, const vec3_t end, int hi, int lo)
 {
 	box_t box; /**< Tracing box extents */
 	const float halfActorWidth = UNIT_SIZE * rtd->actorSize / 2 - WALL_SIZE - DIST_EPSILON;
@@ -732,7 +732,7 @@ static trace_t RT_ObstructedTrace (RT_data_t *rtd, const vec3_t start, const vec
  * @param[in] startingHeight The starting height for this upward trace.
  * @return The absolute height of the found floor in QUANT units.
  */
-static int RT_FindOpeningFloorFrac (RT_data_t *rtd, const vec3_t start, const vec3_t end, const float frac, const int startingHeight)
+static int RT_FindOpeningFloorFrac (const RT_data_t *rtd, const vec3_t start, const vec3_t end, const float frac, const int startingHeight)
 {
 	vec3_t mstart, mend;	/**< Midpoint line to trace across */	/**< Tracing box extents */
 	trace_t tr;
@@ -765,7 +765,7 @@ static int RT_FindOpeningFloorFrac (RT_data_t *rtd, const vec3_t start, const ve
  * @param[in] startingHeight The starting height for this upward trace.
  * @return The absolute height of the found ceiling in QUANT units.
  */
-static int RT_FindOpeningCeilingFrac (RT_data_t *rtd, const vec3_t start, const vec3_t end, const float frac, const int startingHeight)
+static int RT_FindOpeningCeilingFrac (const RT_data_t *rtd, const vec3_t start, const vec3_t end, const float frac, const int startingHeight)
 {
 	vec3_t mstart, mend;	/**< Midpoint line to trace across */
 	trace_t tr;
@@ -797,7 +797,7 @@ static int RT_FindOpeningCeilingFrac (RT_data_t *rtd, const vec3_t start, const 
  * @param[in] floorLimit The lowest limit of the found floor.
  * @return The absolute height of the found floor in QUANT units.
  */
-static int RT_FindOpeningFloor (RT_data_t *rtd, const vec3_t start, const vec3_t end, const int startingHeight, const int floorLimit)
+static int RT_FindOpeningFloor (const RT_data_t *rtd, const vec3_t start, const vec3_t end, const int startingHeight, const int floorLimit)
 {
 	/* Look for additional space below init_bottom, down to lowest_bottom. */
 	int midfloor;
@@ -837,7 +837,7 @@ static int RT_FindOpeningFloor (RT_data_t *rtd, const vec3_t start, const vec3_t
  * @param[in] ceilLimit The highest the ceiling may be.
  * @return The absolute height of the found ceiling in QUANT units.
  */
-static int RT_FindOpeningCeiling (RT_data_t *rtd, const vec3_t start, const vec3_t end, const int startingHeight, const int ceilLimit)
+static int RT_FindOpeningCeiling (const RT_data_t *rtd, const vec3_t start, const vec3_t end, const int startingHeight, const int ceilLimit)
 {
 	int midceil;
 
@@ -867,7 +867,7 @@ static int RT_FindOpeningCeiling (RT_data_t *rtd, const vec3_t start, const vec3
 }
 
 
-static int RT_CalcNewZ (RT_data_t *rtd, const int ax, const int ay, const int top, const int hi)
+static int RT_CalcNewZ (const RT_data_t *rtd, const int ax, const int ay, const int top, const int hi)
 {
 	int temp_z, adj_lo;
 
@@ -906,33 +906,33 @@ static int RT_CalcNewZ (RT_data_t *rtd, const int ax, const int ay, const int to
  * @param[in] top Actual height of the starting ceiling.
  * @param[in] lo Actual height of the bottom of the slice trace.
  * @param[in] hi Actual height of the top of the slice trace.
- * @param[out] lo_val Actual height of the bottom of the found passage.
- * @param[out] hi_val Actual height of the top of the found passage.
+ * @param[out] foundLow Actual height of the bottom of the found passage.
+ * @param[out] foundHigh Actual height of the top of the found passage.
  * @return The new z value of the actor after traveling in this direction from the starting location.
  */
-static int RT_TraceOpening (RT_data_t *rtd, const vec3_t start, const vec3_t end, const int ax, const int ay, const int bottom, const int top, int lo, int hi, int *lo_val, int *hi_val)
+static int RT_TraceOpening (const RT_data_t *rtd, const vec3_t start, const vec3_t end, const int ax, const int ay, const int bottom, const int top, int lo, int hi, int *foundLow, int *foundHigh)
 {
 	trace_t tr = RT_ObstructedTrace(rtd, start, end, hi, lo);
 	if (tr.fraction >= 1.0) {
 		lo = RT_FindOpeningFloor(rtd, start, end, lo, bottom);
 		hi = RT_FindOpeningCeiling(rtd, start, end, hi, top);
 		if (hi - lo >= PATHFINDING_MIN_OPENING) {
-			int temp_z;
+			int tempZ;
 			if (lo == -1) {
 				/* Bailing- no floor in destination cell. */
-				*lo_val = *hi_val = 0;
+				*foundLow = *foundHigh = 0;
 				return RT_NO_OPENING;
 			}
 			/* This opening works, use it! */
-			*lo_val = lo;
-			*hi_val = hi;
+			*foundLow = lo;
+			*foundHigh = hi;
 			/* Find the floor for the highest adjacent cell in this passage. */
-			temp_z = RT_CalcNewZ(rtd, ax, ay, top, hi);
-			if (temp_z != RT_NO_OPENING)
-				return temp_z;
+			tempZ = RT_CalcNewZ(rtd, ax, ay, top, hi);
+			if (tempZ != RT_NO_OPENING)
+				return tempZ;
 		}
 	}
-	*lo_val = *hi_val = hi;
+	*foundLow = *foundHigh = hi;
 	return RT_NO_OPENING;
 }
 
