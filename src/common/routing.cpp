@@ -945,22 +945,22 @@ static int RT_TraceOpening (RT_data_t *rtd, const vec3_t start, const vec3_t end
  * @param[in] ay Ending y coordinate
  * @param[in] bottom Actual height of the starting floor.
  * @param[in] top Actual height of the starting ceiling.
- * @param[out] lo_val Actual height of the bottom of the found passage.
- * @param[out] hi_val Actual height of the top of the found passage.
+ * @param[out] foundLow Actual height of the bottom of the found passage.
+ * @param[out] foundHigh Actual height of the top of the found passage.
  * @return The new z value of the actor after traveling in this direction from the starting location.
  */
-static int RT_FindOpening (RT_data_t *rtd, const place_t* from, const int ax, const int ay, const int bottom, const int top, int *lo_val, int *hi_val)
+static int RT_FindOpening (RT_data_t *rtd, const place_t* from, const int ax, const int ay, const int bottom, const int top, int *foundLow, int *foundHigh)
 {
 	vec3_t start, end;
 	pos3_t pos;
-	int temp_z;
+	int tempZ;
 
 	const int endfloor = RT_FLOOR(rtd->routes, rtd->actorSize, ax, ay, from->cell[2]) + from->cell[2] * CELL_HEIGHT;
 	const int hifloor = std::max(endfloor, bottom);
 
 	if (bottom == -1) {
 		/* Bailing- no floor in current cell. */
-		*lo_val = *hi_val = 0;
+		*foundLow = *foundHigh = 0;
 		return RT_NO_OPENING;
 	}
 
@@ -994,8 +994,8 @@ static int RT_FindOpening (RT_data_t *rtd, const place_t* from, const int ax, co
 		if (tempBottom <= bottom + PATHFINDING_MIN_STEPUP) {
 			const int hi = bottom + PATHFINDING_MIN_OPENING;
 			/* Found opening with sky trace. */
-			*lo_val = tempBottom;
-			*hi_val = CELL_HEIGHT * PATHFINDING_HEIGHT;
+			*foundLow = tempBottom;
+			*foundHigh = CELL_HEIGHT * PATHFINDING_HEIGHT;
 			return RT_CalcNewZ(rtd, ax, ay, top, hi);
 		}
 	}
@@ -1009,23 +1009,24 @@ static int RT_FindOpening (RT_data_t *rtd, const place_t* from, const int ax, co
 	if (top - bottom < PATHFINDING_MIN_OPENING * 2) {
 		const int lo = top - PATHFINDING_MIN_OPENING;
 		const int hi = bottom + PATHFINDING_MIN_OPENING;
-		temp_z = RT_TraceOpening(rtd, start, end, ax, ay, hifloor, top, lo, hi, lo_val, hi_val);
+
+		tempZ = RT_TraceOpening(rtd, start, end, ax, ay, hifloor, top, lo, hi, foundLow, foundHigh);
 	} else {
 		/* ----- brute force trace ------ */
 		/* There is no "guaranteed" opening, brute force search. */
 		int lo = bottom;
-		temp_z = 0;
+		tempZ = 0;
 		while (lo <= top - PATHFINDING_MIN_OPENING) {
 			/* Check for a 1 QUANT opening. */
-			temp_z = RT_TraceOpening(rtd, start, end, ax, ay, bottom, top, lo, lo + 1, lo_val, hi_val);
-			if (temp_z != RT_NO_OPENING)
+			tempZ = RT_TraceOpening(rtd, start, end, ax, ay, bottom, top, lo, lo + 1, foundLow, foundHigh);
+			if (tempZ != RT_NO_OPENING)
 				break;
 			/* Credit to Duke: We skip the minimum opening, as if there is a
 			 * viable opening, even one slice above, that opening would be open. */
-			lo = *hi_val + PATHFINDING_MIN_OPENING;
+			lo = *foundHigh + PATHFINDING_MIN_OPENING;
 		}
 	}
-	return temp_z;
+	return tempZ;
 }
 
 
