@@ -1008,7 +1008,7 @@ static int RT_FindOpening (RT_data_t *rtd, const place_t* from, const int ax, co
 				break;
 			/* Credit to Duke: We skip the minimum opening, as if there is a
 			 * viable opening, even one slice above, that opening would be open. */
-			lo = *foundHigh + PATHFINDING_MIN_OPENING;
+			lo += PATHFINDING_MIN_OPENING;
 		}
 	}
 	return tempZ;
