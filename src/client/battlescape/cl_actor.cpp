@@ -1411,6 +1411,11 @@ bool CL_ActorMouseTrace (void)
 	pos_t restingLevel = Grid_Fall(cl.mapData->routes, ACTOR_GET_FIELDSIZE(selActor), testPos);
 	CM_EntTestLineDM(cl.mapTiles, pA, pB, pC, TL_FLAG_ACTORCLIP, cl.leInlineModelList);
 	VecToPos(pC, testPos);
+	/* VecToPos strictly rounds the values down, while routing will round floors up to the next QUANT.
+	 * This makes a huge diffence when calculating the z-level:
+	 * without compensation, z of 61-63 will belong to the level below. */
+	testPos[2] = ModelFloorToQuant(pC[2] / CELL_HEIGHT);
+
 	restingLevel = std::min(restingLevel, Grid_Fall(cl.mapData->routes, ACTOR_GET_FIELDSIZE(selActor), testPos));
 
 	/* if grid below intersection level, start a trace from the intersection */
