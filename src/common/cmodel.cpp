@@ -249,7 +249,7 @@ bool CM_EntTestLineDM (mapTiles_t *mapTiles, const vec3_t start, const vec3_t st
 {
 	trace_t trace;
 	const char **name;
-	int blocked;
+	bool blocked;
 	float fraction = 2.0f;
 
 	/* trace against world first */
