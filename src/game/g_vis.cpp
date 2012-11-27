@@ -201,9 +201,8 @@ bool G_Vis (const int team, const edict_t *from, const edict_t *check, const int
 		return false;
 
 	/* view frustum check */
-	if (!(flags & VT_NOFRUSTUM))
-		if (!G_FrustumVis(from, check->origin))
-			return false;
+	if (!(flags & VT_NOFRUSTUM) && !G_FrustumVis(from, check->origin))
+		return false;
 
 	/* get viewers eye height */
 	G_ActorGetEyeVector(from, eye);
