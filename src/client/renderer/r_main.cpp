@@ -729,7 +729,7 @@ static uintptr_t R_GetProcAddressExt (const char *functionName)
  * @brief Checks for an OpenGL extension that was announced via the OpenGL ext string. If the given extension string
  * includes a placeholder (###), several types are checked. Those from the ARB, those that official extensions (EXT),
  * and those from OpenGL ES (OES)
- * @param extension The extension string to check. Might also contain placeholders. E.g. GL_###_framebuffer_object,
+ * @param extension The extension string to check. Might also contain placeholders. E.g. "GL_###_framebuffer_object",
  * GL_ARB_framebuffer_object
  * @return @c true if the extension was announced by the OpenGL driver, @c false otherwise.
  */
