@@ -388,7 +388,7 @@ void G_VisMakeEverythingVisible (void)
  * @return Bitmask of VIS_* values
  * @sa G_CheckVisTeam
  */
-int G_CheckVis (edict_t * check, int visFlags)
+int G_CheckVis (edict_t * check, const int visFlags)
 {
 	int team;
 	int status;

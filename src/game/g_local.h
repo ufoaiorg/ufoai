@@ -523,7 +523,7 @@ void G_VisFlagsAdd(edict_t *ent, vismask_t visMask);
 void G_VisFlagsSwap(edict_t *ent, vismask_t visMask);
 void G_VisFlagsReset(edict_t *ent);
 void G_VisMakeEverythingVisible(void);
-int G_CheckVis(edict_t *check, int visFlags = VT_PERISH);
+int G_CheckVis(edict_t *check, const int visFlags = VT_PERISH);
 int G_CheckVisPlayer(player_t* player, int visFlags);
 int G_TestVis(const int team, edict_t * check, const int flags);
 bool G_Vis(const int team, const edict_t * from, const edict_t * check, const int flags);
