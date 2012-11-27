@@ -164,7 +164,7 @@ int G_VisCheckDist (const edict_t *const ent)
  * @param[in] check The edict we want to get the visibility for
  * @param[in] flags @c VT_NOFRUSTUM, ...
  */
-bool G_Vis (const int team, const edict_t *from, const edict_t *check, int flags)
+bool G_Vis (const int team, const edict_t *from, const edict_t *check, const int flags)
 {
 	vec3_t eye;
 
@@ -234,7 +234,7 @@ bool G_Vis (const int team, const edict_t *from, const edict_t *check, int flags
  * bits of @c VT_PERISH, no further checks are performed - only the
  * @c VIS_YES bits are returned
  */
-int G_TestVis (const int team, edict_t * check, int flags)
+int G_TestVis (const int team, edict_t * check, const int flags)
 {
 	edict_t *from = NULL;
 	/* store old flag */
@@ -267,7 +267,7 @@ static bool G_VisShouldStop (const edict_t *ent)
  * are not sent - we only update the visflags of the edict
  * @param[in] visFlags The flags for the vis check
  */
-static int G_DoTestVis (const int team, edict_t * check, int visFlags, int playerMask, const edict_t *ent)
+static int G_DoTestVis (const int team, edict_t * check, const int visFlags, int playerMask, const edict_t *ent)
 {
 	int status = 0;
 	const int vis = G_TestVis(team, check, visFlags);
@@ -304,7 +304,7 @@ static int G_DoTestVis (const int team, edict_t * check, int visFlags, int playe
  * @sa G_CheckVisTeam
  * @sa G_AppearPerishEvent
  */
-int G_CheckVisPlayer (player_t* player, int visFlags)
+int G_CheckVisPlayer (player_t* player, const int visFlags)
 {
 	int status = 0;
 	edict_t* ent = NULL;
@@ -339,7 +339,7 @@ int G_CheckVisPlayer (player_t* player, int visFlags)
  * @note If something appears, the needed information for those clients that are affected
  * are also send in @c G_AppearPerishEvent
  */
-int G_CheckVisTeam (const int team, edict_t *check, int visFlags, const edict_t *ent)
+int G_CheckVisTeam (const int team, edict_t *check, const int visFlags, const edict_t *ent)
 {
 	int status = 0;
 
@@ -355,7 +355,7 @@ int G_CheckVisTeam (const int team, edict_t *check, int visFlags, const edict_t 
 /**
  * @brief Do @c G_CheckVisTeam for all entities
  */
-int G_CheckVisTeamAll (const int team, int visFlags, const edict_t *ent)
+int G_CheckVisTeamAll (const int team, const int visFlags, const edict_t *ent)
 {
 	edict_t *chk = NULL;
 	int status = 0;

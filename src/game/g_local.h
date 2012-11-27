@@ -443,7 +443,7 @@ bool G_ActionCheckForCurrentTeam(const player_t *player, edict_t *ent, int TU);
 bool G_ActionCheckForReaction(const player_t *player, edict_t *ent, int TU);
 void G_SendStats(edict_t *ent) __attribute__((nonnull));
 edict_t *G_SpawnFloor(const pos3_t pos);
-int G_CheckVisTeam(const int team, edict_t *check, int visFlags, const edict_t *ent);
+int G_CheckVisTeam(const int team, edict_t *check, const int visFlags, const edict_t *ent);
 int G_CheckVisTeamAll(const int team, int visFlags, const edict_t *ent);
 edict_t *G_GetFloorItems(edict_t *ent) __attribute__((nonnull));
 bool G_InventoryRemoveItemByID(const char *itemID, edict_t *ent, containerIndex_t index);
@@ -525,8 +525,8 @@ void G_VisFlagsReset(edict_t *ent);
 void G_VisMakeEverythingVisible(void);
 int G_CheckVis(edict_t *check, int visFlags = VT_PERISH);
 int G_CheckVisPlayer(player_t* player, int visFlags);
-int G_TestVis(const int team, edict_t * check, int flags);
-bool G_Vis(const int team, const edict_t * from, const edict_t * check, int flags);
+int G_TestVis(const int team, edict_t * check, const int flags);
+bool G_Vis(const int team, const edict_t * from, const edict_t * check, const int flags);
 int G_VisCheckDist(const edict_t *const ent);
 
 /* g_combat.c */
