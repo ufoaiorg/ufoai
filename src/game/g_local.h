@@ -479,7 +479,7 @@ void G_SendInvisible(const player_t *player);
 void G_GiveTimeUnits(int team);
 
 void G_AppearPerishEvent(unsigned int player_mask, bool appear, edict_t * check, const edict_t *ent);
-unsigned int G_VisToPM(vismask_t vis_mask);
+unsigned int G_VisToPM(vismask_t visMask);
 vismask_t G_PMToVis(unsigned int playerMask);
 void G_SendInventory(unsigned int player_mask, const edict_t * ent);
 unsigned int G_TeamToPM(int team);
