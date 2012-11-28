@@ -24,6 +24,23 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #pragma once
 #include "g_local.h"
 
+#define VIS_APPEAR	1
+#define VIS_PERISH	2
+#define VIS_NEW		4
+
+/** the visibility changed - if it was visible - it's (the edict) now invisible */
+#define VIS_CHANGE	1
+/** actor visible? */
+#define VIS_YES		2
+/** stop the current action if actor appears */
+#define VIS_STOP	4
+
+/** check whether edict is still visible - it maybe is currently visible but this
+ * might have changed due to some action */
+#define VT_PERISH		1
+/** don't perform a frustum vis check via G_FrustumVis in G_Vis */
+#define VT_NOFRUSTUM	2
+
 bool G_FrustumVis(const edict_t *from, const vec3_t point);
 float G_ActorVis(const vec3_t from, const edict_t *ent, const edict_t *check, bool full);
 void G_VisFlagsClear(int team);

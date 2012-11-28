@@ -416,25 +416,6 @@ typedef unsigned int vismask_t;
 
 #include "g_events.h"
 
-/* g_vis.c */
-#define VIS_APPEAR	1
-#define VIS_PERISH	2
-#define VIS_NEW		4
-
-/** the visibility changed - if it was visible - it's (the edict) now invisible */
-#define VIS_CHANGE	1
-/** actor visible? */
-#define VIS_YES		2
-/** stop the current action if actor appears */
-#define VIS_STOP	4
-
-/* g_client.c */
-/** check whether edict is still visible - it maybe is currently visible but this
- * might have changed due to some action */
-#define VT_PERISH		1
-/** don't perform a frustum vis check via G_FrustumVis in G_Vis */
-#define VT_NOFRUSTUM	2
-
 #define MORALE_RANDOM( mod )	( (mod) * (1.0 + 0.3*crand()) )
 
 edict_t* G_ClientGetFreeSpawnPointForActorSize(const player_t *player, const actorSizeEnum_t actorSize);
