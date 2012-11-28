@@ -1,4 +1,5 @@
 #include "g_local.h"
+#include "g_vis.h"
 
 static bool G_CameraUse (edict_t *self, edict_t *activator)
 {

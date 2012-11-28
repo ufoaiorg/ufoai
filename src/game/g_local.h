@@ -515,20 +515,6 @@ bool G_RunFrame(void);
 void G_InvList_f(const player_t *player);
 #endif
 
-/* g_vis.c */
-bool G_FrustumVis(const edict_t *from, const vec3_t point);
-float G_ActorVis(const vec3_t from, const edict_t *ent, const edict_t *check, bool full);
-void G_VisFlagsClear(int team);
-void G_VisFlagsAdd(edict_t *ent, vismask_t visMask);
-void G_VisFlagsSwap(edict_t *ent, vismask_t visMask);
-void G_VisFlagsReset(edict_t *ent);
-void G_VisMakeEverythingVisible(void);
-int G_CheckVis(edict_t *check, const int visFlags = VT_PERISH);
-int G_CheckVisPlayer(player_t* player, int visFlags);
-int G_TestVis(const int team, edict_t * check, const int flags);
-bool G_Vis(const int team, const edict_t * from, const edict_t * check, const int flags);
-int G_VisCheckDist(const edict_t *const ent);
-
 /* g_combat.c */
 bool G_ClientShoot(const player_t *player, edict_t* ent, const pos3_t at, shoot_types_t shootType, fireDefIndex_t firemode, shot_mock_t *mock, bool allowReaction, int z_align);
 void G_CheckDeathOrKnockout(edict_t *target, edict_t *attacker, const fireDef_t *fd, int damage);

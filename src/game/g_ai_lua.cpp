@@ -34,6 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "g_local.h"
 #include "g_ai.h"
+#include "g_vis.h"
 #include "lua/lauxlib.h"
 
 #define POS3_METATABLE	"pos3" /**< Pos3 Lua Metatable name. */

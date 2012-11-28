@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "g_local.h"
 #include "g_ai.h"
+#include "g_vis.h"
 
 /**
  * @brief Determines the amount of XP earned by a given soldier for a given skill, based on the soldier's performance in the last mission.

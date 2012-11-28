@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 
 #include "g_local.h"
+#include "g_vis.h"
 
 /**
  * @brief If an actor was standing on the breakable that is going to get destroyed, we have to let him fall to the ground
