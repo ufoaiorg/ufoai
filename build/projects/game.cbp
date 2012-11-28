@@ -93,6 +93,7 @@
 		<Unit filename="..\..\src\game\g_trigger.cpp" />
 		<Unit filename="..\..\src\game\g_utils.cpp" />
 		<Unit filename="..\..\src\game\g_vis.cpp" />
+		<Unit filename="..\..\src\game\g_vis.h" />
 		<Unit filename="..\..\src\game\game.def" />
 		<Unit filename="..\..\src\game\game.h" />
 		<Unit filename="..\..\src\game\inv_shared.cpp" />
