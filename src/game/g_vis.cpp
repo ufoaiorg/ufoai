@@ -326,6 +326,7 @@ int G_CheckVisPlayer (player_t* player, const int visFlags)
  * @param[in] team Team to check the vis for
  * @param[in] check The edict that you want to check (and which maybe will appear
  * or perish for the given team). If this is NULL every edict will be checked.
+ * @param visFlags Modifiers for the checks
  * @param[in] ent The edict that is (maybe) seeing other edicts
  * @return If an actor get visible who's no civilian VIS_STOP is added to the
  * bit mask, VIS_YES means, he is visible, VIS_CHANGE means that the actor
@@ -386,6 +387,7 @@ void G_VisMakeEverythingVisible (void)
  * for other teams, the needed information for those clients are also send in
  * @c G_CheckVisTeam resp. @c G_AppearPerishEvent
  * @param[in] check The edict that is maybe seen by others. If NULL, all edicts are checked
+ * @param visFlags Modifiers for the checks
  * @return Bitmask of VIS_* values
  * @sa G_CheckVisTeam
  */
