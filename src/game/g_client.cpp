@@ -133,10 +133,10 @@ player_t* G_PlayerGetNextActiveAI (player_t* lastPlayer)
  * @note E.g. multiplayer team play can have more than one human player on the
  * same team.
  */
-unsigned int G_TeamToPM (int team)
+playermask_t G_TeamToPM (int team)
 {
 	player_t *p;
-	unsigned int playerMask;
+	playermask_t playerMask;
 
 	playerMask = 0;
 
@@ -157,7 +157,7 @@ unsigned int G_TeamToPM (int team)
  * @return Returns a vis mask for all the teams of the connected players that
  * are marked in the given @c playerMask.
  */
-teammask_t G_PMToVis (unsigned int playerMask)
+teammask_t G_PMToVis (playermask_t playerMask)
 {
 	player_t *p;
 	teammask_t teamMask = 0;
@@ -179,10 +179,10 @@ teammask_t G_PMToVis (unsigned int playerMask)
  * @return Returns a playermask for all the teams of the connected players that
  * are marked in the given @c vis_mask.
  */
-unsigned int G_VisToPM (teammask_t teamMask)
+playermask_t G_VisToPM (teammask_t teamMask)
 {
 	player_t *p;
-	unsigned int playerMask;
+	playermask_t playerMask;
 
 	playerMask = 0;
 

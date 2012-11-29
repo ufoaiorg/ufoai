@@ -475,11 +475,11 @@ int G_ActorDoTurn(edict_t * ent, byte dir);
 void G_SendInvisible(const player_t *player);
 void G_GiveTimeUnits(int team);
 
-void G_AppearPerishEvent(unsigned int player_mask, bool appear, edict_t * check, const edict_t *ent);
-unsigned int G_VisToPM(teammask_t teamMask);
-teammask_t G_PMToVis(unsigned int playerMask);
-void G_SendInventory(unsigned int player_mask, const edict_t * ent);
-unsigned int G_TeamToPM(int team);
+void G_AppearPerishEvent(playermask_t player_mask, bool appear, edict_t * check, const edict_t *ent);
+playermask_t G_VisToPM(teammask_t teamMask);
+teammask_t G_PMToVis(playermask_t playerMask);
+void G_SendInventory(playermask_t player_mask, const edict_t * ent);
+playermask_t G_TeamToPM(int team);
 
 player_t* G_PlayerGetNextHuman(player_t* lastPlayer);
 player_t* G_PlayerGetNextActiveHuman(player_t* lastPlayer);
