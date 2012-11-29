@@ -415,15 +415,15 @@ int G_CheckVis (edict_t * check, const int visFlags)
 void G_VisFlagsClear (int team)
 {
 	edict_t *ent = NULL;
-	const vismask_t mask = ~G_TeamToVisMask(team);
+	const teammask_t mask = ~G_TeamToVisMask(team);
 	while ((ent = G_EdictsGetNextInUse(ent))) {
 		ent->visflags &= mask;
 	}
 }
 
-void G_VisFlagsAdd (edict_t *ent, vismask_t visMask)
+void G_VisFlagsAdd (edict_t *ent, teammask_t teamMask)
 {
-	ent->visflags |= visMask;
+	ent->visflags |= teamMask;
 }
 
 void G_VisFlagsReset (edict_t *ent)
@@ -431,7 +431,7 @@ void G_VisFlagsReset (edict_t *ent)
 	ent->visflags = 0;
 }
 
-void G_VisFlagsSwap (edict_t *ent, vismask_t visMask)
+void G_VisFlagsSwap (edict_t *ent, teammask_t teamMask)
 {
-	ent->visflags ^= visMask;
+	ent->visflags ^= teamMask;
 }

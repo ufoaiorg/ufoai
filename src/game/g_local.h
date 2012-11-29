@@ -476,8 +476,8 @@ void G_SendInvisible(const player_t *player);
 void G_GiveTimeUnits(int team);
 
 void G_AppearPerishEvent(unsigned int player_mask, bool appear, edict_t * check, const edict_t *ent);
-unsigned int G_VisToPM(vismask_t visMask);
-vismask_t G_PMToVis(unsigned int playerMask);
+unsigned int G_VisToPM(teammask_t teamMask);
+teammask_t G_PMToVis(unsigned int playerMask);
 void G_SendInventory(unsigned int player_mask, const edict_t * ent);
 unsigned int G_TeamToPM(int team);
 
@@ -579,7 +579,7 @@ typedef enum {
 /** @brief actor movement */
 typedef struct {
 	int			contentFlags[MAX_ROUTE];
-	vismask_t	visflags[MAX_ROUTE];
+	teammask_t	visflags[MAX_ROUTE];
 	byte		steps;
 	int			currentStep;
 } moveinfo_t;
@@ -697,7 +697,7 @@ struct edict_s {
 	edict_t *particleLink;
 	const edict_t *link;		/**< can be used to store another edict that e.g. interacts with the current one */
 	entity_type_t type;
-	vismask_t visflags;			/**< bitmask of teams that can see this edict */
+	teammask_t visflags;		/**< bitmask of teams that can see this edict */
 
 	int contentFlags;			/**< contents flags of the brush the actor is walking in */
 

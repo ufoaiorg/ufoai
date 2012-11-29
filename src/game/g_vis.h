@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /** @todo make this a byte */
 /* A bit mask. One bit for each affected team. */
-typedef unsigned int vismask_t;
+typedef unsigned int teammask_t;
 
 #define VIS_APPEAR	1
 #define VIS_PERISH	2
@@ -49,8 +49,8 @@ typedef unsigned int vismask_t;
 bool G_FrustumVis(const edict_t *from, const vec3_t point);
 float G_ActorVis(const vec3_t from, const edict_t *ent, const edict_t *check, bool full);
 void G_VisFlagsClear(int team);
-void G_VisFlagsAdd(edict_t *ent, vismask_t visMask);
-void G_VisFlagsSwap(edict_t *ent, vismask_t visMask);
+void G_VisFlagsAdd(edict_t *ent, teammask_t visMask);
+void G_VisFlagsSwap(edict_t *ent, teammask_t visMask);
 void G_VisFlagsReset(edict_t *ent);
 void G_VisMakeEverythingVisible(void);
 int G_CheckVis(edict_t *check, const int visFlags = VT_PERISH);

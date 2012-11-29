@@ -157,19 +157,19 @@ unsigned int G_TeamToPM (int team)
  * @return Returns a vis mask for all the teams of the connected players that
  * are marked in the given @c playerMask.
  */
-vismask_t G_PMToVis (unsigned int playerMask)
+teammask_t G_PMToVis (unsigned int playerMask)
 {
 	player_t *p;
-	vismask_t visMask = 0;
+	teammask_t teamMask = 0;
 
 	/* don't handle the ai players, here */
 	p = NULL;
 	while ((p = G_PlayerGetNextActiveHuman(p))) {
 		if (playerMask & G_PlayerToPM(p))
-			visMask |= G_TeamToVisMask(p->pers.team);
+			teamMask |= G_TeamToVisMask(p->pers.team);
 	}
 
-	return visMask;
+	return teamMask;
 }
 
 /**
@@ -179,7 +179,7 @@ vismask_t G_PMToVis (unsigned int playerMask)
  * @return Returns a playermask for all the teams of the connected players that
  * are marked in the given @c vis_mask.
  */
-unsigned int G_VisToPM (vismask_t visMask)
+unsigned int G_VisToPM (teammask_t teamMask)
 {
 	player_t *p;
 	unsigned int playerMask;
@@ -189,7 +189,7 @@ unsigned int G_VisToPM (vismask_t visMask)
 	/* don't handle the ai players, here */
 	p = NULL;
 	while ((p = G_PlayerGetNextActiveHuman(p))) {
-		if (visMask & G_TeamToVisMask(p->pers.team))
+		if (teamMask & G_TeamToVisMask(p->pers.team))
 			playerMask |= G_PlayerToPM(p);
 	}
 
@@ -244,14 +244,14 @@ void G_GiveTimeUnits (int team)
  */
 void G_AppearPerishEvent (unsigned int playerMask, bool appear, edict_t *check, const edict_t *ent)
 {
-	vismask_t visMaskDiff;
+	teammask_t teamMaskDiff;
 
 	/* test for pointless player mask */
 	if (!playerMask)
 		return;
 
-	visMaskDiff = G_PMToVis(playerMask);
-	G_VisFlagsSwap(check, visMaskDiff);
+	teamMaskDiff = G_PMToVis(playerMask);
+	G_VisFlagsSwap(check, teamMaskDiff);
 
 	if (appear) {
 		/* appear */

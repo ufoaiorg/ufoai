@@ -185,9 +185,9 @@ void G_EventInventoryAmmo (const edict_t* ent, const objDef_t* ammo, int amount,
  * @param shootType The type of the shoot
  * @param at The grid position to target to
  */
-void G_EventStartShoot (const edict_t* ent, vismask_t visMask, shoot_types_t shootType, const pos3_t at)
+void G_EventStartShoot (const edict_t* ent, teammask_t teamMask, shoot_types_t shootType, const pos3_t at)
 {
-	G_EventAdd(G_VisToPM(visMask), EV_ACTOR_START_SHOOT, ent->number);
+	G_EventAdd(G_VisToPM(teamMask), EV_ACTOR_START_SHOOT, ent->number);
 	gi.WriteByte(shootType);
 	gi.WriteGPos(ent->pos);
 	gi.WriteGPos(at);
@@ -200,9 +200,9 @@ void G_EventStartShoot (const edict_t* ent, vismask_t visMask, shoot_types_t sho
  * @param fd The firedefinition to use for the shoot
  * @param firstShoot Is this the first shoot
  */
-void G_EventShootHidden (vismask_t visMask, const fireDef_t* fd, bool firstShoot)
+void G_EventShootHidden (teammask_t teamMask, const fireDef_t* fd, bool firstShoot)
 {
-	G_EventAdd(~G_VisToPM(visMask), EV_ACTOR_SHOOT_HIDDEN, -1);
+	G_EventAdd(~G_VisToPM(teamMask), EV_ACTOR_SHOOT_HIDDEN, -1);
 	gi.WriteByte(firstShoot);
 	gi.WriteShort(fd->obj->idx);
 	gi.WriteByte(fd->weapFdsIdx);
@@ -222,11 +222,11 @@ void G_EventShootHidden (vismask_t visMask, const fireDef_t* fd, bool firstShoot
  * @param from The position the entity shoots from
  * @param impact The impact world vector for the shot
  */
-void G_EventShoot (const edict_t* ent, vismask_t visMask, const fireDef_t* fd, bool firstShoot, shoot_types_t shootType, int flags, const trace_t* trace, const vec3_t from, const vec3_t impact)
+void G_EventShoot (const edict_t* ent, teammask_t teamMask, const fireDef_t* fd, bool firstShoot, shoot_types_t shootType, int flags, const trace_t* trace, const vec3_t from, const vec3_t impact)
 {
 	const edict_t *targetEdict = trace->ent;
 
-	G_EventAdd(G_VisToPM(visMask), EV_ACTOR_SHOOT, ent->number);
+	G_EventAdd(G_VisToPM(teamMask), EV_ACTOR_SHOOT, ent->number);
 	if (targetEdict && G_IsBreakable(targetEdict))
 		gi.WriteShort(targetEdict->number);
 	else
@@ -373,9 +373,9 @@ void G_EventInventoryReload (const edict_t* ent, playermask_t playerMask, const 
  * @param[in] position The current position
  * @param[in] velocity The velocity of the throw
  */
-void G_EventThrow (vismask_t visMask, const fireDef_t *fd, float dt, byte flags, const vec3_t position, const vec3_t velocity)
+void G_EventThrow (teammask_t teamMask, const fireDef_t *fd, float dt, byte flags, const vec3_t position, const vec3_t velocity)
 {
-	G_EventAdd(G_VisToPM(visMask), EV_ACTOR_THROW, -1);
+	G_EventAdd(G_VisToPM(teamMask), EV_ACTOR_THROW, -1);
 	gi.WriteShort(dt * 1000);
 	gi.WriteShort(fd->obj->idx);
 	gi.WriteByte(fd->weapFdsIdx);
