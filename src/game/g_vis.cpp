@@ -415,9 +415,9 @@ int G_CheckVis (edict_t * check, const int visFlags)
 void G_VisFlagsClear (int team)
 {
 	edict_t *ent = NULL;
-	const teammask_t mask = ~G_TeamToVisMask(team);
+	const teammask_t teamMask = ~G_TeamToVisMask(team);
 	while ((ent = G_EdictsGetNextInUse(ent))) {
-		ent->visflags &= mask;
+		ent->visflags &= teamMask;
 	}
 }
 
