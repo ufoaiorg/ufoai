@@ -171,7 +171,7 @@ static void testVisFlags (void)
 		num = 0;
 		ent = NULL;
 		while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, TEAM_ALIEN))) {
-			const vismask_t teamMask = G_TeamToVisMask(ent->team);
+			const teammask_t teamMask = G_TeamToVisMask(ent->team);
 			const bool visible = ent->visflags & teamMask;
 			char *visFlagsBuf = Mem_StrDup(Com_UnsignedIntToBinary(ent->visflags));
 			char *teamMaskBuf = Mem_StrDup(Com_UnsignedIntToBinary(teamMask));
