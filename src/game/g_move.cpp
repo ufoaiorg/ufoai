@@ -51,19 +51,19 @@ static int forbiddenListLength;
 static void G_BuildForbiddenList (int team, const edict_t *movingActor)
 {
 	edict_t *ent = NULL;
-	int visMask;
+	teammask_t teamMask;
 
 	forbiddenListLength = 0;
 
 	/* team visibility */
 	if (team)
-		visMask = G_TeamToVisMask(team);
+		teamMask = G_TeamToVisMask(team);
 	else
-		visMask = TEAM_ALL;
+		teamMask = TEAM_ALL;
 
 	while ((ent = G_EdictsGetNextInUse(ent))) {
 		/* Dead 2x2 unit will stop walking, too. */
-		if (G_IsBlockingMovementActor(ent) && (G_IsAI(movingActor) || (ent->visflags & visMask))) {
+		if (G_IsBlockingMovementActor(ent) && (G_IsAI(movingActor) || (ent->visflags & teamMask))) {
 			forbiddenList[forbiddenListLength++] = ent->pos;
 			forbiddenList[forbiddenListLength++] = (byte*) &ent->fieldSize;
 		} else if (ent->type == ET_SOLID) {

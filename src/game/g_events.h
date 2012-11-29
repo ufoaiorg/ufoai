@@ -69,7 +69,7 @@ void G_EventSendEdict(const edict_t *ent);
 void G_EventSendParticle(playermask_t playerMask, const edict_t *ent);
 void G_EventSendState(playermask_t playerMask, const edict_t *ent);
 void G_EventSetClientAction(const edict_t *ent);
-void G_EventShootHidden(teammask_t visMask, const fireDef_t* fd, bool firstShoot);
+void G_EventShootHidden(teammask_t teamMask, const fireDef_t* fd, bool firstShoot);
 void G_EventShoot(const edict_t* ent, teammask_t teamMask, const fireDef_t* fd, bool firstShoot, shoot_types_t shootType, int flags, const trace_t* trace, const vec3_t from, const vec3_t impact);
 void G_EventSpawnSound(playermask_t playerMask, bool instant, const edict_t* ent, const vec3_t origin, const char *sound);
 void G_EventStart(const player_t *player, bool teamplay);
