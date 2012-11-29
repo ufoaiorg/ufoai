@@ -22,7 +22,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 #pragma once
+
 #include "g_local.h"
+
+/** @todo make this a byte */
+typedef unsigned int vismask_t;
 
 #define VIS_APPEAR	1
 #define VIS_PERISH	2

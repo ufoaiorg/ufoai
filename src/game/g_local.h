@@ -411,9 +411,6 @@ void G_CompleteRecalcRouting(void);
 void G_RecalcRouting(const char *model, const GridBox& box);
 void G_GenerateEntList(const char *entList[MAX_EDICTS]);
 
-/** @todo make this a byte */
-typedef unsigned int vismask_t;
-
 #include "g_events.h"
 
 #define MORALE_RANDOM( mod )	( (mod) * (1.0 + 0.3*crand()) )

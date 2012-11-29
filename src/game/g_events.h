@@ -29,6 +29,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef GAME_G_EVENTS_H
 #define GAME_G_EVENTS_H
 
+#include "g_vis.h"
+
 void G_EventActorAdd(unsigned int playerMask, const edict_t *ent);
 void G_EventActorAppear(unsigned int playerMask, const edict_t *check, const edict_t *ent);
 void G_EventActorDie(const edict_t* ent);
