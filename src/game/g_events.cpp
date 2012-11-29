@@ -181,7 +181,7 @@ void G_EventInventoryAmmo (const edict_t* ent, const objDef_t* ammo, int amount,
 /**
  * @brief Start the shooting event
  * @param ent The entity that starts the shooting
- * @param visMask the vis mask of the teams to determine the clients from this event is send to
+ * @param teamMask the vis mask of the teams to determine the clients from this event is send to
  * @param shootType The type of the shoot
  * @param at The grid position to target to
  */
@@ -196,7 +196,7 @@ void G_EventStartShoot (const edict_t* ent, teammask_t teamMask, shoot_types_t s
 
 /**
  * @brief Start the shooting event for hidden actors
- * @param visMask the vis mask to determine the clients from this event is send to
+ * @param teamMask the vis mask to determine the clients from this event is send to
  * @param fd The firedefinition to use for the shoot
  * @param firstShoot Is this the first shoot
  */
@@ -213,7 +213,7 @@ void G_EventShootHidden (teammask_t teamMask, const fireDef_t* fd, bool firstSho
 /**
  * @brief Do the shooting
  * @param ent The entity that is doing the shooting
- * @param visMask the vis mask to determine the clients from this event is send to
+ * @param teamMask the vis mask to determine the clients from this event is send to
  * @param fd The firedefinition to use for the shoot
  * @param firstShoot Is this the first shoot
  * @param shootType The type of the shoot
@@ -366,7 +366,7 @@ void G_EventInventoryReload (const edict_t* ent, playermask_t playerMask, const 
 }
 
 /**
- * @param[in] visMask the vis mask to determine the clients from this event is send to
+ * @param[in] teamMask the vis mask to determine the clients from this event is send to
  * @param[in] fd The firedefinition to use
  * @param[in] dt Delta time
  * @param[in] flags bitmask of the following values: @c SF_BODY, @c SF_IMPACT, @c SF_BOUNCING and @c SF_BOUNCED
