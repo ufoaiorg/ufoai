@@ -242,7 +242,7 @@ void G_GiveTimeUnits (int team)
  * or perish. Might be @c NULL.
  * @sa CL_ActorAppear
  */
-void G_AppearPerishEvent (unsigned int playerMask, bool appear, edict_t *check, const edict_t *ent)
+void G_AppearPerishEvent (playermask_t playerMask, bool appear, edict_t *check, const edict_t *ent)
 {
 	teammask_t teamMaskDiff;
 
