@@ -111,7 +111,7 @@ void G_EventActorSendReservations (const edict_t *ent)
  * @param[in] x Position of item in container.
  * @param[in] y Position of item in container.
  */
-void G_EventInventoryDelete (const edict_t* ent, int playerMask, const invDef_t* invDef, int x, int y)
+void G_EventInventoryDelete (const edict_t* ent, playermask_t playerMask, const invDef_t* invDef, int x, int y)
 {
 	G_EventAdd(playerMask, EV_INV_DEL, ent->number);
 	gi.WriteByte(invDef->id);
@@ -127,7 +127,7 @@ void G_EventInventoryDelete (const edict_t* ent, int playerMask, const invDef_t*
  * @param[in] itemAmount How many items to add.
  * @note This event must be followed by a @c G_WriteItem call
  */
-void G_EventInventoryAdd (const edict_t* ent, int playerMask, int itemAmount)
+void G_EventInventoryAdd (const edict_t* ent, playermask_t playerMask, int itemAmount)
 {
 	G_EventAdd(playerMask, EV_INV_ADD, ent->number);
 	gi.WriteShort(itemAmount);
@@ -262,7 +262,7 @@ void G_EventReactionFireChange (const edict_t* ent)
  * @param[in] v velocity vector
  * @param[in] a acceleration vector
  */
-void G_EventParticleSpawn (int playerMask, const char *name, int levelFlags, const vec3_t s, const vec3_t v, const vec3_t a)
+void G_EventParticleSpawn (playermask_t playerMask, const char *name, int levelFlags, const vec3_t s, const vec3_t v, const vec3_t a)
 {
 	G_EventAdd(playerMask, EV_PARTICLE_SPAWN, -1);
 	gi.WriteByte(levelFlags);
@@ -314,7 +314,7 @@ void G_EventResetClientAction (const edict_t* ent)
 	G_EventEnd();
 }
 
-void G_EventActorStats (const edict_t* ent, int playerMask)
+void G_EventActorStats (const edict_t* ent, playermask_t playerMask)
 {
 	G_EventAdd(playerMask, EV_ACTOR_STATS, ent->number);
 	gi.WriteByte(ent->TU);
@@ -351,7 +351,7 @@ void G_EventEndRound (void)
 	G_EventEnd();
 }
 
-void G_EventInventoryReload (const edict_t* ent, int playerMask, const item_t* item, const invDef_t* invDef, const invList_t* ic)
+void G_EventInventoryReload (const edict_t* ent, playermask_t playerMask, const item_t* item, const invDef_t* invDef, const invList_t* ic)
 {
 	G_EventAdd(playerMask, EV_INV_RELOAD, ent->number);
 	gi.WriteByte(item->item->ammo);
@@ -419,7 +419,7 @@ void G_EventCenterView (const edict_t *ent)
  * @param playerMask The clients that should see the edict
  * @param pos The position to center the view
  */
-void G_EventCenterViewAt (int playerMask, const pos3_t pos)
+void G_EventCenterViewAt (playermask_t playerMask, const pos3_t pos)
 {
 	G_EventAdd(playerMask, EV_CENTERVIEW, -1);
 	gi.WriteGPos(pos);
@@ -621,10 +621,10 @@ void G_EventModelExplode (const edict_t *ent)
 	G_EventEnd();
 }
 
-void G_EventAdd (unsigned int mask, int eType, int entnum)
+void G_EventAdd (playermask_t playerMask, int eType, int entnum)
 {
 	G_EventEnd();
-	gi.AddEvent(mask, eType, entnum);
+	gi.AddEvent(playerMask, eType, entnum);
 }
 
 void G_EventEnd (void)

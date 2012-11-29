@@ -557,7 +557,7 @@ bool G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, cons
 	bool newFloor;
 	invList_t *ic, *tc;
 	item_t item;
-	int mask;
+	playermask_t mask;
 	inventory_action_t ia;
 	invList_t fItemBackup, tItemBackup;
 	int fx, fy;

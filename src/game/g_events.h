@@ -31,48 +31,51 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "g_vis.h"
 
-void G_EventActorAdd(unsigned int playerMask, const edict_t *ent);
-void G_EventActorAppear(unsigned int playerMask, const edict_t *check, const edict_t *ent);
+/* A bit mask. One bit for each affected player. */
+typedef unsigned int playermask_t;
+
+void G_EventActorAdd(playermask_t playerMask, const edict_t *ent);
+void G_EventActorAppear(playermask_t playerMask, const edict_t *check, const edict_t *ent);
 void G_EventActorDie(const edict_t* ent);
 void G_EventActorFall(const edict_t* ent);
 void G_EventActorRevitalise(const edict_t* ent);
 void G_EventActorSendReservations(const edict_t *ent);
-void G_EventActorStateChange(unsigned int playerMask, const edict_t *ent);
-void G_EventActorStats(const edict_t* ent, int playerMask);
+void G_EventActorStateChange(playermask_t playerMask, const edict_t *ent);
+void G_EventActorStats(const edict_t* ent, playermask_t playerMask);
 void G_EventActorTurn(const edict_t* ent);
-void G_EventAddBrushModel(unsigned int playerMask, const edict_t *ent);
+void G_EventAddBrushModel(playermask_t playerMask, const edict_t *ent);
 void G_EventCenterView(const edict_t *ent);
-void G_EventCenterViewAt(int playerMask, const pos3_t pos);
+void G_EventCenterViewAt(playermask_t playerMask, const pos3_t pos);
 void G_EventDoorClose(const edict_t *door);
 void G_EventDoorOpen(const edict_t *door);
 void G_EventDestroyEdict(const edict_t* ent);
-void G_EventEdictAppear(unsigned int playerMask, const edict_t *ent);
-void G_EventEdictPerish(unsigned int playerMask, const edict_t *ent);
-void G_EventCameraAppear(unsigned int playerMask, const edict_t *ent);
+void G_EventEdictAppear(playermask_t playerMask, const edict_t *ent);
+void G_EventEdictPerish(playermask_t playerMask, const edict_t *ent);
+void G_EventCameraAppear(playermask_t playerMask, const edict_t *ent);
 void G_EventEndRound(void);
 void G_EventEndRoundAnnounce(const player_t *player);
-void G_EventInventoryAdd(const edict_t* ent, int playerMask, int itemAmount);
+void G_EventInventoryAdd(const edict_t* ent, playermask_t playerMask, int itemAmount);
 void G_EventInventoryAmmo(const edict_t* ent, const objDef_t* ammo, int amount, shoot_types_t shootType);
-void G_EventInventoryDelete(const edict_t* ent, int playerMask, const invDef_t* invDef, int x, int y);
-void G_EventInventoryReload(const edict_t* ent, int playerMask, const item_t* item, const invDef_t* invDef, const invList_t* ic);
+void G_EventInventoryDelete(const edict_t* ent, playermask_t playerMask, const invDef_t* invDef, int x, int y);
+void G_EventInventoryReload(const edict_t* ent, playermask_t playerMask, const item_t* item, const invDef_t* invDef, const invList_t* ic);
 void G_EventModelExplodeTriggered(const edict_t *ent);
 void G_EventModelExplode(const edict_t *ent);
-void G_EventParticleSpawn(int playerMask, const char *name, int levelFlags, const vec3_t s, const vec3_t v, const vec3_t a);
+void G_EventParticleSpawn(playermask_t playerMask, const char *name, int levelFlags, const vec3_t s, const vec3_t v, const vec3_t a);
 void G_EventPerish(const edict_t* ent);
 void G_EventReactionFireChange(const edict_t* ent);
 void G_EventReset(const player_t *player, int activeTeam);
 void G_EventResetClientAction(const edict_t* ent);
 void G_EventSendEdict(const edict_t *ent);
-void G_EventSendParticle(unsigned int playerMask, const edict_t *ent);
-void G_EventSendState(unsigned int playerMask, const edict_t *ent);
+void G_EventSendParticle(playermask_t playerMask, const edict_t *ent);
+void G_EventSendState(playermask_t playerMask, const edict_t *ent);
 void G_EventSetClientAction(const edict_t *ent);
 void G_EventShootHidden(vismask_t visMask, const fireDef_t* fd, bool firstShoot);
 void G_EventShoot(const edict_t* ent, vismask_t visMask, const fireDef_t* fd, bool firstShoot, shoot_types_t shootType, int flags, const trace_t* trace, const vec3_t from, const vec3_t impact);
-void G_EventSpawnSound(unsigned int playerMask, bool instant, const edict_t* ent, const vec3_t origin, const char *sound);
+void G_EventSpawnSound(playermask_t playerMask, bool instant, const edict_t* ent, const vec3_t origin, const char *sound);
 void G_EventStart(const player_t *player, bool teamplay);
 void G_EventStartShoot(const edict_t* ent, vismask_t visMask, shoot_types_t shootType, const pos3_t at);
 void G_EventThrow(vismask_t visMask, const fireDef_t *fd, float dt, byte flags, const vec3_t position, const vec3_t velocity);
-void G_EventAdd(unsigned int mask, int eType, int entnum);
+void G_EventAdd(playermask_t playerMask, int eType, int entnum);
 void G_EventEnd(void);
 void G_EventActorWound(const edict_t *ent, const int bodyPart);
 

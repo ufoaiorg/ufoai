@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "g_local.h"
 
 /** @todo make this a byte */
+/* A bit mask. One bit for each affected team. */
 typedef unsigned int vismask_t;
 
 #define VIS_APPEAR	1
