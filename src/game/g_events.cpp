@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /**
  * @brief Spawns a sound (that will be spatialized on the client side)
+ * @param playerMask A bit mask. One bit for each affected player
  * @param ent The edict that is causing the sound
  * @param origin The origin of the sound
  * @param sound The sound file, path relative to sounds/. If there is a + at the end the client will
@@ -256,6 +257,7 @@ void G_EventReactionFireChange (const edict_t* ent)
 
 /**
  * @brief Spawn a new particle for the client
+ * @param[in] playerMask A bit mask. One bit for each affected player
  * @param[in] name The id of the particle (see ptl_*.ufo script files in base/ufos)
  * @param[in] levelFlags Show at which levels
  * @param[in] s starting/location vector
