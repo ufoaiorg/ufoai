@@ -40,6 +40,9 @@ typedef unsigned int teammask_t;
 /** stop the current action if actor appears */
 #define VIS_STOP	4
 
+/* A bit mask. Modifiers for the way visibility check are performed. */
+typedef unsigned int vischeckflags_t;
+/* possible values are: */
 /** check whether edict is still visible - it maybe is currently visible but this
  * might have changed due to some action */
 #define VT_PERISH		1
@@ -53,8 +56,8 @@ void G_VisFlagsAdd(edict_t *ent, teammask_t teamMask);
 void G_VisFlagsSwap(edict_t *ent, teammask_t teamMask);
 void G_VisFlagsReset(edict_t *ent);
 void G_VisMakeEverythingVisible(void);
-int G_CheckVis(edict_t *check, const int visFlags = VT_PERISH);
+int G_CheckVis(edict_t *check, const vischeckflags_t visFlags = VT_PERISH);
 int G_CheckVisPlayer(player_t* player, int visFlags);
-int G_TestVis(const int team, edict_t * check, const int flags);
-bool G_Vis(const int team, const edict_t * from, const edict_t * check, const int flags);
+int G_TestVis(const int team, edict_t * check, const vischeckflags_t flags);
+bool G_Vis(const int team, const edict_t * from, const edict_t * check, const vischeckflags_t flags);
 int G_VisCheckDist(const edict_t *const ent);

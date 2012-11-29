@@ -165,7 +165,7 @@ int G_VisCheckDist (const edict_t *const ent)
  * @param[in] check The edict we want to get the visibility for
  * @param[in] flags @c VT_NOFRUSTUM, ...
  */
-bool G_Vis (const int team, const edict_t *from, const edict_t *check, const int flags)
+bool G_Vis (const int team, const edict_t *from, const edict_t *check, const vischeckflags_t flags)
 {
 	vec3_t eye;
 
@@ -235,7 +235,7 @@ bool G_Vis (const int team, const edict_t *from, const edict_t *check, const int
  * bits of @c VT_PERISH, no further checks are performed - only the
  * @c VIS_YES bits are returned
  */
-int G_TestVis (const int team, edict_t * check, const int flags)
+int G_TestVis (const int team, edict_t * check, const vischeckflags_t flags)
 {
 	edict_t *from = NULL;
 	/* store old flag */
@@ -268,7 +268,7 @@ static bool G_VisShouldStop (const edict_t *ent)
  * are not sent - we only update the visflags of the edict
  * @param[in] visFlags The flags for the vis check
  */
-static int G_DoTestVis (const int team, edict_t * check, const int visFlags, int playerMask, const edict_t *ent)
+static int G_DoTestVis (const int team, edict_t * check, const vischeckflags_t visFlags, int playerMask, const edict_t *ent)
 {
 	int status = 0;
 	const int vis = G_TestVis(team, check, visFlags);
@@ -341,7 +341,7 @@ int G_CheckVisPlayer (player_t* player, const int visFlags)
  * @note If something appears, the needed information for those clients that are affected
  * are also send in @c G_AppearPerishEvent
  */
-int G_CheckVisTeam (const int team, edict_t *check, const int visFlags, const edict_t *ent)
+int G_CheckVisTeam (const int team, edict_t *check, const vischeckflags_t visFlags, const edict_t *ent)
 {
 	int status = 0;
 
@@ -357,7 +357,7 @@ int G_CheckVisTeam (const int team, edict_t *check, const int visFlags, const ed
 /**
  * @brief Do @c G_CheckVisTeam for all entities
  */
-int G_CheckVisTeamAll (const int team, const int visFlags, const edict_t *ent)
+int G_CheckVisTeamAll (const int team, const vischeckflags_t visFlags, const edict_t *ent)
 {
 	edict_t *chk = NULL;
 	int status = 0;
@@ -391,7 +391,7 @@ void G_VisMakeEverythingVisible (void)
  * @return Bitmask of VIS_* values
  * @sa G_CheckVisTeam
  */
-int G_CheckVis (edict_t * check, const int visFlags)
+int G_CheckVis (edict_t * check, const vischeckflags_t visFlags)
 {
 	int team;
 	int status;
