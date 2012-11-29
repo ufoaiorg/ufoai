@@ -33,7 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * choose a random sound. See the event function for more information.
  * of the path, a random sound will be taken.
  */
-void G_EventSpawnSound (unsigned int playerMask, bool instant, const edict_t* ent, const vec3_t origin, const char *sound)
+void G_EventSpawnSound (playermask_t playerMask, bool instant, const edict_t* ent, const vec3_t origin, const char *sound)
 {
 	G_EventAdd(playerMask, EV_SOUND | (instant ? EVENT_INSTANTLY : 0), ent->number);
 
@@ -398,7 +398,7 @@ void G_EventSendEdict (const edict_t *ent)
 	G_EventEnd();
 }
 
-void G_EventSendState (unsigned int playerMask, const edict_t *ent)
+void G_EventSendState (playermask_t playerMask, const edict_t *ent)
 {
 	G_EventActorStateChange(playerMask & G_TeamToPM(ent->team), ent);
 
@@ -431,7 +431,7 @@ void G_EventCenterViewAt (playermask_t playerMask, const pos3_t pos)
 /**
  * @sa CL_ActorAdd
  */
-void G_EventActorAdd (unsigned int playerMask, const edict_t *ent)
+void G_EventActorAdd (playermask_t playerMask, const edict_t *ent)
 {
 	G_EventAdd(playerMask, EV_ACTOR_ADD, ent->number);
 	gi.WriteByte(ent->team);
@@ -449,7 +449,7 @@ void G_EventActorAdd (unsigned int playerMask, const edict_t *ent)
  * @param[in] playerMask The clients that should see the particle
  * @param[in] ent The particle to spawn
  */
-void G_EventSendParticle (unsigned int playerMask, const edict_t *ent)
+void G_EventSendParticle (playermask_t playerMask, const edict_t *ent)
 {
 	G_EventAdd(playerMask, EV_PARTICLE_APPEAR, ent->number);
 	gi.WriteShort(ent->spawnflags);
@@ -463,7 +463,7 @@ void G_EventSendParticle (unsigned int playerMask, const edict_t *ent)
  * @param playerMask The players to send the event to
  * @param ent The camera that should appear to the players included in the given mask.
  */
-void G_EventCameraAppear (unsigned int playerMask, const edict_t *ent)
+void G_EventCameraAppear (playermask_t playerMask, const edict_t *ent)
 {
 	G_EventAdd(playerMask, EV_CAMERA_APPEAR, ent->number);
 	gi.WritePos(ent->origin);
@@ -483,7 +483,7 @@ void G_EventCameraAppear (unsigned int playerMask, const edict_t *ent)
  * @note Each following event that is relying on the fact that this edict must already
  * be known in the client, must also adopt the client side parsing of the event times.
  */
-void G_EventEdictAppear (unsigned int playerMask, const edict_t *ent)
+void G_EventEdictAppear (playermask_t playerMask, const edict_t *ent)
 {
 	G_EventAdd(playerMask, EV_ENT_APPEAR, ent->number);
 	gi.WriteByte(ent->type);
@@ -491,7 +491,7 @@ void G_EventEdictAppear (unsigned int playerMask, const edict_t *ent)
 	G_EventEnd();
 }
 
-void G_EventActorAppear (unsigned int playerMask, const edict_t *check, const edict_t *ent)
+void G_EventActorAppear (playermask_t playerMask, const edict_t *check, const edict_t *ent)
 {
 	const int mask = G_TeamToPM(check->team) & playerMask;
 
@@ -544,7 +544,7 @@ void G_EventActorAppear (unsigned int playerMask, const edict_t *check, const ed
  * @param[in] playerMask The bitmask to determine the clients this event is send to
  * @param[in,out] ent The edict that perished
  */
-void G_EventEdictPerish (unsigned int playerMask, const edict_t *ent)
+void G_EventEdictPerish (playermask_t playerMask, const edict_t *ent)
 {
 	assert(ent->inuse);
 	G_EventAdd(playerMask, EV_ENT_PERISH, ent->number);
@@ -552,14 +552,14 @@ void G_EventEdictPerish (unsigned int playerMask, const edict_t *ent)
 	G_EventEnd();
 }
 
-void G_EventActorStateChange (unsigned int playerMask, const edict_t *ent)
+void G_EventActorStateChange (playermask_t playerMask, const edict_t *ent)
 {
 	G_EventAdd(playerMask, EV_ACTOR_STATECHANGE, ent->number);
 	gi.WriteShort(ent->state);
 	G_EventEnd();
 }
 
-void G_EventAddBrushModel (unsigned int playerMask, const edict_t *ent)
+void G_EventAddBrushModel (playermask_t playerMask, const edict_t *ent)
 {
 	G_EventAdd(playerMask, EV_ADD_BRUSH_MODEL, ent->number);
 	gi.WriteByte(ent->type);
