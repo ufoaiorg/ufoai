@@ -338,7 +338,7 @@ void G_CheckVisPlayer (player_t* player, const vischeckflags_t visFlags)
  * @note If something appears, the needed information for those clients that are affected
  * are also send in @c G_AppearPerishEvent
  */
-int G_CheckVisTeam (const int team, edict_t *check, const vischeckflags_t visFlags, const edict_t *ent)
+static int G_CheckVisTeam (const int team, edict_t *check, const vischeckflags_t visFlags, const edict_t *ent)
 {
 	int status = 0;
 
