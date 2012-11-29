@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /**
  * @brief Spawns a sound (that will be spatialized on the client side)
  * @param playerMask A bit mask. One bit for each affected player
+ * @param instant Whether the sound should be played instantly rather than queued
  * @param ent The edict that is causing the sound
  * @param origin The origin of the sound
  * @param sound The sound file, path relative to sounds/. If there is a + at the end the client will
