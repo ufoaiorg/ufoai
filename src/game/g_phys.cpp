@@ -42,7 +42,7 @@ void G_PhysicsStep (edict_t *ent)
 		/* new content flags */
 		const int stepContentFlags = ent->moveinfo.contentFlags[ent->moveinfo.currentStep];
 		const teammask_t visflags = ent->moveinfo.visflags[ent->moveinfo.currentStep];
-		const int playerMask = ~G_VisToPM(visflags);
+		const playermask_t playerMask = ~G_VisToPM(visflags);
 		/* Send the sound effect to everyone how's not seeing the actor */
 		if (!G_IsCrouched(ent)) {
 			const char *snd = NULL;
