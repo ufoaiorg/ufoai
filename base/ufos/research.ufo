@@ -1065,6 +1065,22 @@ tech rs_weapon_bolterrifle_am_ammo
 		default "*msgid:bolterrifle_am_pre_txt"
 	}
 
+	mail_pre
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+
+	mail
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+
 	require_AND
 	{
 		tech rs_damage_normal
