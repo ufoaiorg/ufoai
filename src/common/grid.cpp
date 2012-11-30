@@ -154,6 +154,7 @@ public:
 	int actorCrouchedHeight;
 
 	bool init (const routing_t *routes, const actorSizeEnum_t actorSize, const byte crouchingState, const int dir);
+	bool calcNewPos (const pos3_t pos, pos3_t toPos, const int dir);
 };
 
 /**
@@ -204,7 +205,7 @@ bool Step::init (const routing_t *_routes, const actorSizeEnum_t _actorSize, con
  * @param[in] dir Direction vector index (see DIRECTIONS and dvecs)
  * @return false if we can't fly there
  */
-static bool Grid_StepCalcNewPos (Step *step, const pos3_t pos, pos3_t toPos, const int dir)
+bool Step::calcNewPos (const pos3_t pos, pos3_t toPos, const int dir)
 {
 	toPos[0] = pos[0] + dvecs[dir][0];	/**< "new" x value = starting x value + difference from chosen direction */
 	toPos[1] = pos[1] + dvecs[dir][1];	/**< "new" y value = starting y value + difference from chosen direction */
@@ -468,7 +469,7 @@ static void Grid_MoveMark (const routing_t *routes, const pos3_t exclude, const 
 	TUsForMove = Grid_GetTUsForDirection(dir, crouchingState);
 
 	/* calculate the position we would normally end up if moving in the given dir. */
-	if (!Grid_StepCalcNewPos(step, pos, toPos, dir)) {
+	if (!step->calcNewPos(pos, toPos, dir)) {
 		return;
 	}
 	/* If there is no passageway (or rather lack of a wall) to the desired cell, then return. */
