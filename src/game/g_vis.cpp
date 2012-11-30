@@ -268,7 +268,7 @@ static bool G_VisShouldStop (const edict_t *ent)
  * are not sent - we only update the visflags of the edict
  * @param[in] visFlags The flags for the vis check
  */
-static int G_DoTestVis (const int team, edict_t * check, const vischeckflags_t visFlags, int playerMask, const edict_t *ent)
+static int G_DoTestVis (const int team, edict_t *check, const vischeckflags_t visFlags, playermask_t playerMask, const edict_t *ent)
 {
 	int status = 0;
 	const int vis = G_TestVis(team, check, visFlags);
