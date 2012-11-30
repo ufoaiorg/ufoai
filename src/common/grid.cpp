@@ -135,7 +135,8 @@ static void Grid_SetMoveData (pathing_t *path, const pos3_t toPos, const int c, 
 /**
  * @brief a struct holding the relevant data to check if we can move between two adjacent cells
  */
-typedef struct step_s {
+class Step {
+public:
 	const routing_t *routes;
 	bool flier;
 
@@ -152,10 +153,10 @@ typedef struct step_s {
 	int actorHeight;		/**< The actor's height in QUANT units. */
 	int actorCrouchedHeight;
 
-} step_t;
+};
 
 /**
- * @brief Initialize the step_t data
+ * @brief Initialize the Step data
  * @param[in] step The struct describing the move
  * @param[in] routes Pointer to client or server side routing table (clMap, svMap)
  * @param[in] actorSize Give the field size of the actor (e.g. for 2x2 units) to check linked fields as well.
@@ -163,7 +164,7 @@ typedef struct step_s {
  * @param[in] dir Direction vector index (see DIRECTIONS and dvecs)
  * @return false if dir is irrelevant or something went wrong
  */
-static bool Grid_StepInit (step_t *step, const routing_t *routes, const actorSizeEnum_t actorSize, const byte crouchingState, const int dir)
+static bool Grid_StepInit (Step *step, const routing_t *routes, const actorSizeEnum_t actorSize, const byte crouchingState, const int dir)
 {
 	step->routes = routes;
 	/** @todo flier should return true if the actor can fly. */
@@ -202,7 +203,7 @@ static bool Grid_StepInit (step_t *step, const routing_t *routes, const actorSiz
  * @param[in] dir Direction vector index (see DIRECTIONS and dvecs)
  * @return false if we can't fly there
  */
-static bool Grid_StepCalcNewPos (step_t *step, const pos3_t pos, pos3_t toPos, const int dir)
+static bool Grid_StepCalcNewPos (Step *step, const pos3_t pos, pos3_t toPos, const int dir)
 {
 	toPos[0] = pos[0] + dvecs[dir][0];	/**< "new" x value = starting x value + difference from chosen direction */
 	toPos[1] = pos[1] + dvecs[dir][1];	/**< "new" y value = starting y value + difference from chosen direction */
@@ -235,7 +236,7 @@ static bool Grid_StepCalcNewPos (step_t *step, const pos3_t pos, pos3_t toPos, c
  * @param[in] crouchingState Whether the actor is currently crouching, 1 is yes, 0 is no.
  * @return false if we can't fly there
  */
-static bool Grid_StepCheckWalkingDirections (step_t *step, pathing_t *path, const pos3_t pos, pos3_t toPos, const int dir, const byte crouchingState)
+static bool Grid_StepCheckWalkingDirections (Step *step, pathing_t *path, const pos3_t pos, pos3_t toPos, const int dir, const byte crouchingState)
 {
 	int nx, ny, nz;
 	int passageHeight;
@@ -367,7 +368,7 @@ static bool Grid_StepCheckWalkingDirections (step_t *step, pathing_t *path, cons
  * @param[in] dir Direction vector index (see DIRECTIONS and dvecs)
  * @return false if we can't fly there
  */
-static bool Grid_StepCheckFlyingDirections (step_t *step, const pos3_t pos, const pos3_t toPos, const int dir)
+static bool Grid_StepCheckFlyingDirections (Step *step, const pos3_t pos, const pos3_t toPos, const int dir)
 {
 	const int coreDir = dir % CORE_DIRECTIONS;	/**< The compass direction of this flying move */
 	int neededHeight;
@@ -404,7 +405,7 @@ static bool Grid_StepCheckFlyingDirections (step_t *step, const pos3_t pos, cons
  * @param[in] dir Direction vector index (see DIRECTIONS and dvecs)
  * @return false if we can't move there
  */
-static bool Grid_StepCheckVerticalDirections (step_t *step, const pos3_t pos, const int dir)
+static bool Grid_StepCheckVerticalDirections (Step *step, const pos3_t pos, const int dir)
 {
 	if (dir == DIRECTION_FALL) {
 		if (step->flier) {
@@ -453,8 +454,8 @@ static bool Grid_StepCheckVerticalDirections (step_t *step, const pos3_t pos, co
  */
 static void Grid_MoveMark (const routing_t *routes, const pos3_t exclude, const actorSizeEnum_t actorSize, pathing_t *path, const pos3_t pos, byte crouchingState, const int dir, priorityQueue_t *pqueue)
 {
-	step_t step_;
-	step_t *step = &step_;	/* temporary solution */
+	Step step_;
+	Step *step = &step_;	/* temporary solution */
 	pos3_t toPos;
 	byte TUsSoFar, TUsForMove, TUsAfter;
 
