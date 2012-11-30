@@ -153,6 +153,7 @@ public:
 	int actorHeight;		/**< The actor's height in QUANT units. */
 	int actorCrouchedHeight;
 
+	bool init (const routing_t *routes, const actorSizeEnum_t actorSize, const byte crouchingState, const int dir);
 };
 
 /**
@@ -164,25 +165,25 @@ public:
  * @param[in] dir Direction vector index (see DIRECTIONS and dvecs)
  * @return false if dir is irrelevant or something went wrong
  */
-static bool Grid_StepInit (Step *step, const routing_t *routes, const actorSizeEnum_t actorSize, const byte crouchingState, const int dir)
+bool Step::init (const routing_t *_routes, const actorSizeEnum_t _actorSize, const byte crouchingState, const int dir)
 {
-	step->routes = routes;
+	routes = _routes;
 	/** @todo flier should return true if the actor can fly. */
-	step->flier = false; /**< This can be keyed into whether an actor can fly or not to allow flying */
-	step->hasLadderToClimb = false;
-	step->hasLadderSupport = false;
-	step->actorSize = actorSize;
+	flier = false; /**< This can be keyed into whether an actor can fly or not to allow flying */
+	hasLadderToClimb = false;
+	hasLadderSupport = false;
+	actorSize = _actorSize;
 	/** @note This is the actor's height in QUANT units. */
 	/** @todo actor_height is currently the fixed height of a 1x1 actor.  This needs to be adjusted
 	 *  to the actor's actual height. */
-	step->actorHeight = ModelCeilingToQuant((float)(crouchingState ? PLAYER_CROUCHING_HEIGHT : PLAYER_STANDING_HEIGHT)); /**< The actor's height */
-	step->actorCrouchedHeight = ModelCeilingToQuant((float)(PLAYER_CROUCHING_HEIGHT));
+	actorHeight = ModelCeilingToQuant((float)(crouchingState ? PLAYER_CROUCHING_HEIGHT : PLAYER_STANDING_HEIGHT)); /**< The actor's height */
+	actorCrouchedHeight = ModelCeilingToQuant((float)(PLAYER_CROUCHING_HEIGHT));
 
 	/* Ensure that dir is in bounds. */
 	assert(dir >= 0 && dir < PATHFINDING_DIRECTIONS);
 
 	/* IMPORTANT: only fliers can use directions higher than NON_FLYING_DIRECTIONS. */
-	if (!step->flier && dir >= FLYING_DIRECTIONS) {
+	if (!flier && dir >= FLYING_DIRECTIONS) {
 		return false;
 	}
 
@@ -459,7 +460,7 @@ static void Grid_MoveMark (const routing_t *routes, const pos3_t exclude, const 
 	pos3_t toPos;
 	byte TUsSoFar, TUsForMove, TUsAfter;
 
-	if (!Grid_StepInit(step, routes, actorSize, crouchingState, dir))
+	if (!step->init(routes, actorSize, crouchingState, dir))
 		return;		/* either dir is irrelevant or something worse happened */
 
 	TUsSoFar = RT_AREA_POS(path, pos, crouchingState);
