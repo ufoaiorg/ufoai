@@ -149,6 +149,8 @@ void G_ActorFall (edict_t *ent)
  * @brief Checks whether the actor should stop movement
  * @param ent The actors edict
  * @param visState The visibility check state @c VIS_PERISH, @c VIS_APPEAR
+ * @param dvtab The direction vectors
+ * @param max The index of the next step in dvtab
  * @return @c true if the actor should stop movement, @c false otherwise
  */
 static bool G_ActorShouldStopInMidMove (const edict_t *ent, int visState, dvec_t* dvtab, int max)
