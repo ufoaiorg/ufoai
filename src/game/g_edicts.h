@@ -1,6 +1,6 @@
 /**
  * @file
- * @brief functions to handle the storage of all edicts in the game module.
+ * @brief functions to handle the storage and lifecycle of all edicts in the game module.
  */
 
 /*
@@ -29,3 +29,18 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #pragma once
 
 #include "g_local.h"
+
+edict_t* G_EdictsInit(void);
+void G_EdictsReset(void);
+edict_t* G_EdictsGetNewEdict(void);
+edict_t* G_EdictDuplicate(const edict_t *edict);
+int G_EdictsGetNumber(const edict_t *ent);
+bool G_EdictsIsValidNum(const int idx);
+edict_t* G_EdictsGetByNum(const int num);
+edict_t* G_EdictsGetFirst(void);
+edict_t* G_EdictsGetNext(edict_t *lastEnt);
+edict_t* G_EdictsGetNextInUse(edict_t *lastEnt);
+edict_t* G_EdictsGetNextActor(edict_t *lastEnt);
+edict_t* G_EdictsGetNextLivingActor(edict_t *lastEnt);
+edict_t* G_EdictsGetNextLivingActorOfTeam(edict_t *lastEnt, const int team);
+edict_t* G_EdictsGetTriggerNextMaps(edict_t *lastEnt);

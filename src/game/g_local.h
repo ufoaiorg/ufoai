@@ -541,22 +541,6 @@ void G_BleedWounds(const int team);
 void G_SendWoundStats(edict_t *const ent);
 float G_ActorGetInjuryPenalty(const edict_t *const ent, const modifier_types_t type);
 
-/** Functions handling the storage and lifecycle of all edicts */
-edict_t* G_EdictsInit(void);
-void G_EdictsReset(void);
-edict_t* G_EdictsGetNewEdict(void);
-edict_t* G_EdictDuplicate(const edict_t *edict);
-int G_EdictsGetNumber(const edict_t *ent);
-bool G_EdictsIsValidNum(const int idx);
-edict_t* G_EdictsGetByNum(const int num);
-edict_t* G_EdictsGetFirst(void);
-edict_t* G_EdictsGetNext(edict_t *lastEnt);
-edict_t* G_EdictsGetNextInUse(edict_t *lastEnt);
-edict_t* G_EdictsGetNextActor(edict_t *lastEnt);
-edict_t* G_EdictsGetNextLivingActor(edict_t *lastEnt);
-edict_t* G_EdictsGetNextLivingActorOfTeam(edict_t *lastEnt, const int team);
-edict_t* G_EdictsGetTriggerNextMaps(edict_t *lastEnt);
-
 /** Functions to handle single edicts, trying to encapsulate edict->pos in the first place. */
 void G_EdictCalcOrigin(edict_t *ent);
 void G_EdictSetOrigin(edict_t *ent, const pos3_t newPos);
