@@ -156,6 +156,7 @@ public:
 	bool init (const routing_t *routes, const actorSizeEnum_t actorSize, const byte crouchingState, const int dir);
 	bool calcNewPos (const pos3_t pos, pos3_t toPos, const int dir);
 	bool checkWalkingDirections (pathing_t *path, const pos3_t pos, pos3_t toPos, const int dir, const byte crouchingState);
+	bool checkFlyingDirections (const pos3_t pos, const pos3_t toPos, const int dir);
 };
 
 /**
@@ -361,35 +362,33 @@ bool Step::checkWalkingDirections (pathing_t *path, const pos3_t pos, pos3_t toP
 
 /**
  * @brief Checks if we can move in the given flying direction
- * @param[in] step The struct describing the move
  * @param[in] pos Current location in the map.
  * @param[in] toPos The position we are moving to with this step.
  * @param[in] dir Direction vector index (see DIRECTIONS and dvecs)
  * @return false if we can't fly there
  */
-static bool Grid_StepCheckFlyingDirections (Step *step, const pos3_t pos, const pos3_t toPos, const int dir)
+bool Step::checkFlyingDirections (const pos3_t pos, const pos3_t toPos, const int dir)
 {
 	const int coreDir = dir % CORE_DIRECTIONS;	/**< The compass direction of this flying move */
 	int neededHeight;
 	int passageHeight;
-	const actorSizeEnum_t actorSize = step->actorSize;
 
 	if (toPos[2] > pos[2]) {
 		/* If the actor is moving up, check the passage at the current cell.
 		 * The minimum height is the actor's height plus the distance from the current floor to the top of the cell. */
-		neededHeight = step->actorHeight + CELL_HEIGHT - std::max((const signed char)0, RT_FLOOR_POS(step->routes, actorSize, pos));
-		RT_CONN_TEST_POS(step->routes, actorSize, pos, coreDir);
-		passageHeight = RT_CONN_POS(step->routes, actorSize, pos, coreDir);
+		neededHeight = actorHeight + CELL_HEIGHT - std::max((const signed char)0, RT_FLOOR_POS(routes, actorSize, pos));
+		RT_CONN_TEST_POS(routes, actorSize, pos, coreDir);
+		passageHeight = RT_CONN_POS(routes, actorSize, pos, coreDir);
 	} else if (toPos[2] < pos[2]) {
 		/* If the actor is moving down, check from the destination cell back. *
 		 * The minimum height is the actor's height plus the distance from the destination floor to the top of the cell. */
-		neededHeight = step->actorHeight + CELL_HEIGHT - std::max((const signed char)0, RT_FLOOR_POS(step->routes, actorSize, toPos));
-		RT_CONN_TEST_POS(step->routes, actorSize, toPos, coreDir ^ 1);
-		passageHeight = RT_CONN_POS(step->routes, actorSize, toPos, coreDir ^ 1);
+		neededHeight = actorHeight + CELL_HEIGHT - std::max((const signed char)0, RT_FLOOR_POS(routes, actorSize, toPos));
+		RT_CONN_TEST_POS(routes, actorSize, toPos, coreDir ^ 1);
+		passageHeight = RT_CONN_POS(routes, actorSize, toPos, coreDir ^ 1);
 	} else {
-		neededHeight = step->actorHeight;
-		RT_CONN_TEST_POS(step->routes, actorSize, pos, coreDir);
-		passageHeight = RT_CONN_POS(step->routes, actorSize, pos, coreDir);
+		neededHeight = actorHeight;
+		RT_CONN_TEST_POS(routes, actorSize, pos, coreDir);
+		passageHeight = RT_CONN_POS(routes, actorSize, pos, coreDir);
 	}
 	if (passageHeight < neededHeight) {
 		return false;
@@ -472,7 +471,7 @@ static void Grid_MoveMark (const routing_t *routes, const pos3_t exclude, const 
 	/* If there is no passageway (or rather lack of a wall) to the desired cell, then return. */
 	/* If the flier is moving up or down diagonally, then passage height will also adjust */
 	if (dir >= FLYING_DIRECTIONS) {
-		if (!Grid_StepCheckFlyingDirections(step, pos, toPos, dir)) {
+		if (!step->checkFlyingDirections(pos, toPos, dir)) {
 			return;
 		}
 	} else if (dir < CORE_DIRECTIONS) {
