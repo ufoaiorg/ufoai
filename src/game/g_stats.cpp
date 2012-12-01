@@ -29,7 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @brief Send stats to network buffer
  * @sa CL_ActorStats
  */
-void G_SendStats (edict_t * ent)
+void G_SendStats (edict_t *ent)
 {
 	/* extra sanity checks */
 	assert(ent->TU >= 0);

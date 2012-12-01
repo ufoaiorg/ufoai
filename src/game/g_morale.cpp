@@ -31,7 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @sa G_MoraleStopRage
  * @sa G_MoraleBehaviour
  */
-static void G_MoralePanic (edict_t * ent, bool sanity)
+static void G_MoralePanic (edict_t *ent, bool sanity)
 {
 	G_ClientPrintf(G_PLAYER_FROM_ENT(ent), PRINT_HUD, _("%s panics!"), ent->chr.name);
 	G_PrintStats("%s panics (entnum %i).", ent->chr.name, ent->number);
@@ -71,7 +71,7 @@ static void G_MoralePanic (edict_t * ent, bool sanity)
  * @sa G_MoraleStopRage
  * @sa G_MoraleBehaviour
  */
-static void G_MoraleStopPanic (edict_t * ent)
+static void G_MoraleStopPanic (edict_t *ent)
 {
 	if (ent->morale / mor_panic->value > m_panic_stop->value * frand()) {
 		G_RemovePanic(ent);
@@ -87,7 +87,7 @@ static void G_MoraleStopPanic (edict_t * ent)
  * @sa G_MoraleStopRage
  * @sa G_MoraleBehaviour
  */
-static void G_MoraleRage (edict_t * ent, bool sanity)
+static void G_MoraleRage (edict_t *ent, bool sanity)
 {
 	if (sanity) {
 		G_SetRage(ent);
@@ -111,7 +111,7 @@ static void G_MoraleRage (edict_t * ent, bool sanity)
  * @sa G_MoraleStopPanic
  * @sa G_MoraleBehaviour
  */
-static void G_MoraleStopRage (edict_t * ent)
+static void G_MoraleStopRage (edict_t *ent)
 {
 	if (ent->morale / mor_panic->value > m_rage_stop->value * frand()) {
 		G_RemoveInsane(ent);
