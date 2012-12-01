@@ -235,10 +235,10 @@ entity misc_particle {
 		particle	"Name of the particle definition."
 		origin		"position"
 		spawnflags	"Levelflags and noday"
-		targetname	"The id of this entity"
 	}
 
 	optional {
+		targetname	"The id of this entity"
 		wait	"Wait times are of the format 'a b'. It spawns particles in random intervals ranging from (a) to (a+b) seconds. If no wait time is specified one particle is created at map start."
 	}
 
