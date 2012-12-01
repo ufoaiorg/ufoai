@@ -159,9 +159,8 @@ public:
 
 /**
  * @brief Initialize the Step data
- * @param[in] step The struct describing the move
- * @param[in] routes Pointer to client or server side routing table (clMap, svMap)
- * @param[in] actorSize Give the field size of the actor (e.g. for 2x2 units) to check linked fields as well.
+ * @param[in] _routes Pointer to client or server side routing table (clMap, svMap)
+ * @param[in] _actorSize Give the field size of the actor (e.g. for 2x2 units) to check linked fields as well.
  * @param[in] crouchingState Whether the actor is currently crouching, 1 is yes, 0 is no.
  * @param[in] dir Direction vector index (see DIRECTIONS and dvecs)
  * @return false if dir is irrelevant or something went wrong
@@ -199,7 +198,6 @@ bool Step::init (const routing_t *_routes, const actorSizeEnum_t _actorSize, con
 
 /**
  * @brief Calculate the cell the we end up in if moving in the give dir
- * @param[in] step The struct describing the move
  * @param[in] pos Current location in the map.
  * @param[in] toPos The position we are moving to with this step.
  * @param[in] dir Direction vector index (see DIRECTIONS and dvecs)
