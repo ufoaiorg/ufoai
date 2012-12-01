@@ -157,6 +157,7 @@ public:
 	bool calcNewPos (const pos3_t pos, pos3_t toPos, const int dir);
 	bool checkWalkingDirections (pathing_t *path, const pos3_t pos, pos3_t toPos, const int dir, const byte crouchingState);
 	bool checkFlyingDirections (const pos3_t pos, const pos3_t toPos, const int dir);
+	bool checkVerticalDirections (const pos3_t pos, const int dir);
 };
 
 /**
@@ -398,40 +399,39 @@ bool Step::checkFlyingDirections (const pos3_t pos, const pos3_t toPos, const in
 
 /**
  * @brief Checks if we can move in the given vertical direction
- * @param[in] step The struct describing the move
  * @param[in] pos Current location in the map.
  * @param[in] dir Direction vector index (see DIRECTIONS and dvecs)
  * @return false if we can't move there
  */
-static bool Grid_StepCheckVerticalDirections (Step *step, const pos3_t pos, const int dir)
+bool Step::checkVerticalDirections (const pos3_t pos, const int dir)
 {
 	if (dir == DIRECTION_FALL) {
-		if (step->flier) {
+		if (flier) {
 			/* Fliers cannot fall intentionally. */
 			return false;
-		} else if (RT_FLOOR_POS(step->routes, step->actorSize, pos) >= 0) {
+		} else if (RT_FLOOR_POS(routes, actorSize, pos) >= 0) {
 			/* We cannot fall if there is a floor in this cell. */
 			return false;
-		} else if (step->hasLadderSupport) {
+		} else if (hasLadderSupport) {
 			/* The actor can't fall if there is ladder support. */
 			return false;
 		}
 	} else if (dir == DIRECTION_CLIMB_UP) {
-		if (step->flier && QuantToModel(RT_CEILING_POS(step->routes, step->actorSize, pos)) < UNIT_HEIGHT * 2 - PLAYER_HEIGHT) { /* Not enough headroom to fly up. */
+		if (flier && QuantToModel(RT_CEILING_POS(routes, actorSize, pos)) < UNIT_HEIGHT * 2 - PLAYER_HEIGHT) { /* Not enough headroom to fly up. */
 			return false;
 		}
 		/* If the actor is not a flyer and tries to move up, there must be a ladder. */
-		if (dir == DIRECTION_CLIMB_UP && !step->hasLadderToClimb) {
+		if (dir == DIRECTION_CLIMB_UP && !hasLadderToClimb) {
 			return false;
 		}
 	} else if (dir == DIRECTION_CLIMB_DOWN) {
-		if (step->flier) {
-			if (RT_FLOOR_POS(step->routes, step->actorSize, pos) >= 0 ) { /* Can't fly down through a floor. */
+		if (flier) {
+			if (RT_FLOOR_POS(routes, actorSize, pos) >= 0 ) { /* Can't fly down through a floor. */
 				return false;
 			}
 		} else {
 			/* If the actor is not a flyer and tries to move down, there must be a ladder. */
-			if (!step->hasLadderToClimb) {
+			if (!hasLadderToClimb) {
 				return false;
 			}
 		}
@@ -482,7 +482,7 @@ static void Grid_MoveMark (const routing_t *routes, const pos3_t exclude, const 
 	} else {
 		/* else there is no movement that uses passages. */
 		/* If we are falling, the height difference is the floor value. */
-		if (!Grid_StepCheckVerticalDirections(step, pos, dir)) {
+		if (!step->checkVerticalDirections(pos, dir)) {
 			return;
 		}
 	}
