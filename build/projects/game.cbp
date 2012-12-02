@@ -88,6 +88,7 @@
 		<Unit filename="..\..\src\game\g_move.cpp" />
 		<Unit filename="..\..\src\game\g_phys.cpp" />
 		<Unit filename="..\..\src\game\g_reaction.cpp" />
+		<Unit filename="..\..\src\game\g_reaction.h" />
 		<Unit filename="..\..\src\game\g_round.cpp" />
 		<Unit filename="..\..\src\game\g_spawn.cpp" />
 		<Unit filename="..\..\src\game\g_stats.cpp" />
