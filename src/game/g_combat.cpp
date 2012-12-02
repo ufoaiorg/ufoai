@@ -574,7 +574,7 @@ static void G_SpawnItemOnFloor (const pos3_t pos, const item_t *item)
 		if (!game.i.TryAddToInventory(&game.i, &floor->chr.i, item, INVDEF(gi.csi->idFloor))) {
 			G_FreeEdict(floor);
 		} else {
-			edict_t *actor = G_GetLivingActorFromPos(pos);
+			edict_t *actor = G_EdictsGetLivingActorFromPos(pos);
 
 			/* send the inventory */
 			G_CheckVis(floor);
@@ -1134,7 +1134,7 @@ bool G_ClientShoot (const player_t * player, edict_t* ent, const pos3_t at, shoo
 		return false;
 
 	if (FIRESH_IsMedikit(fd)) {
-		const edict_t *target = G_GetLivingActorFromPos(at);
+		const edict_t *target = G_EdictsGetLivingActorFromPos(at);
 		if (!target)
 			return false;
 	}

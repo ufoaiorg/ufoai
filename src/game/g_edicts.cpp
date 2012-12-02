@@ -237,6 +237,25 @@ edict_t* G_EdictsGetNextActor (edict_t* lastEnt)
 }
 
 /**
+ * @brief Searches an actor at the given grid location.
+ * @param pos The grid location to look for an edict.
+ * @return @c NULL if nothing was found, otherwise the actor located at the given grid position.
+ */
+edict_t *G_EdictsGetLivingActorFromPos (const pos3_t pos)
+{
+	edict_t *ent = NULL;
+
+	while ((ent = G_EdictsGetNextLivingActor(ent))) {
+		if (!VectorCompare(pos, ent->pos))
+			continue;
+
+		return ent;
+	}
+	/* nothing found at this pos */
+	return NULL;
+}
+
+/**
  * @brief Calculate the edict's origin vector from it's grid position
  * @param ent The entity
  */

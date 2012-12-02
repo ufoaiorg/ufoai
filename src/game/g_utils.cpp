@@ -48,25 +48,6 @@ void G_FreeEdict (edict_t *ent)
 }
 
 /**
- * @brief Searches an actor at the given grid location.
- * @param pos The grid location to look for an edict.
- * @return @c NULL if nothing was found, otherwise the actor located at the given grid position.
- */
-edict_t *G_GetLivingActorFromPos (const pos3_t pos)
-{
-	edict_t *ent = NULL;
-
-	while ((ent = G_EdictsGetNextLivingActor(ent))) {
-		if (!VectorCompare(pos, ent->pos))
-			continue;
-
-		return ent;
-	}
-	/* nothing found at this pos */
-	return NULL;
-}
-
-/**
  * @brief Searches an edict of the given type at the given grid location.
  * @param pos The grid location to look for an edict.
  * @param type The type of the edict to look for or @c -1 to look for any type in the search.
