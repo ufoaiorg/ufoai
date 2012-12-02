@@ -97,6 +97,17 @@ a		+b		+b		+b		+b		+b		a
 0		a		a		a		a		a		0
 }
 
+tile +craft_crash_supply
+{
+7 6
+0		0		0		0		0		0		0
+0		+b		+b		0		+b		0		0
+0		+b		+b		+b		+b		+b		0
+0		0		+b		+b		+b		+b		0
+0		0		+b		+b		+b		+b		0
+0		0		0		0		0		0		0
+}
+
 // dropships --------------------------------------------------------
 
 tile +craft_drop_firebird
@@ -614,7 +625,7 @@ assembly medium
 size "10 8"
 title "_Africa"
 multiplayer +mp_team2
-+empty6		"0 99"
++empty6		"0 30"
 +house1		"0 3"
 +house1a	"0 3"
 +house2		"0 3"
