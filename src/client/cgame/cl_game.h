@@ -63,7 +63,7 @@ void GAME_InitMissionBriefing(const char *title);
 void GAME_EndBattlescape(void);
 void GAME_EndRoundAnnounce(int playerNum, int team);
 bool GAME_TeamIsKnown(const teamDef_t *teamDef);
-void GAME_NofityEvent(event_t eventType);
+void GAME_NotifyEvent(event_t eventType);
 const char* GAME_GetTeamDef(void);
 void GAME_Drop(void);
 void GAME_Frame(void);

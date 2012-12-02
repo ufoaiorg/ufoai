@@ -1454,7 +1454,7 @@ equipDef_t *GAME_GetEquipmentDefinition (void)
 	return &equipDefStandard;
 }
 
-void GAME_NofityEvent (event_t eventType)
+void GAME_NotifyEvent (event_t eventType)
 {
 	const cgame_export_t *list = GAME_GetCurrentType();
 	if (list && list->NotifyEvent)

@@ -135,7 +135,7 @@ static void CL_ExecuteBattlescapeEvent (int now, void *data)
 		if (!eventData->eventCallback)
 			Com_Error(ERR_DROP, "Event %i doesn't have a callback", event->eType);
 
-		GAME_NofityEvent(event->eType);
+		GAME_NotifyEvent(event->eType);
 		eventData->eventCallback(eventData, event->msg);
 	} else {
 		Com_DPrintf(DEBUG_EVENTSYS, "event(not executed): %s %p\n", eventData->name, (void*)event);
@@ -243,7 +243,7 @@ event_t CL_ParseEvent (dbuffer *msg)
 		/* log and call function */
 		CL_LogEvent(eventData);
 		Com_DPrintf(DEBUG_EVENTSYS, "event(now [%i]): %s\n", cl.time, eventData->name);
-		GAME_NofityEvent((event_t)eType);
+		GAME_NotifyEvent((event_t)eType);
 		eventData->eventCallback(eventData, msg);
 	} else {
 		evTimes_t* const cur = Mem_PoolAllocType(evTimes_t, cl_genericPool);
