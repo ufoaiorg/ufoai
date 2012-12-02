@@ -39,6 +39,7 @@
 
 #include "g_local.h"
 #include "g_edicts.h"
+#include "g_reaction.h"
 #include "g_vis.h"
 
 static chrScoreMission_t scoreMission[MAX_EDICTS];

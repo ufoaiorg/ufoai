@@ -24,4 +24,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
+#pragma once
+
 #include "g_local.h"
+
+void G_ReactionFirePreShot(const edict_t *target, const int fdTime);
+void G_ReactionFirePostShot(edict_t *target);
+void G_ReactionFireReset(int team);
+void G_ReactionFireUpdate(edict_t *ent, fireDefIndex_t fmIdx, actorHands_t hand, const objDef_t *od);
+bool G_ReactionFireSettingsReserveTUs(edict_t *ent);
+bool G_ReactionFireOnMovement(edict_t *target);
+void G_ReactionFireOnEndTurn(void);
+void G_ReactionFireTargetsInit (void);
+void G_ReactionFireTargetsCreate (const edict_t *shooter);

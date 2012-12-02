@@ -396,17 +396,6 @@ edict_t *G_SpawnCamera(const vec3_t origin, int team, camera_type_t cameraType);
 int G_ApplyProtection(const edict_t *target, const byte dmgWeight, int damage);
 void G_GetShotOrigin(const edict_t *shooter, const fireDef_t *fd, const vec3_t dir, vec3_t shotOrigin);
 
-/* g_reaction */
-void G_ReactionFirePreShot(const edict_t *target, const int fdTime);
-void G_ReactionFirePostShot(edict_t *target);
-void G_ReactionFireReset(int team);
-void G_ReactionFireUpdate(edict_t *ent, fireDefIndex_t fmIdx, actorHands_t hand, const objDef_t *od);
-bool G_ReactionFireSettingsReserveTUs(edict_t *ent);
-bool G_ReactionFireOnMovement(edict_t *target);
-void G_ReactionFireOnEndTurn(void);
-void G_ReactionFireTargetsInit (void);
-void G_ReactionFireTargetsCreate (const edict_t *shooter);
-
 void G_CompleteRecalcRouting(void);
 void G_RecalcRouting(const char *model, const GridBox& box);
 void G_GenerateEntList(const char *entList[MAX_EDICTS]);
