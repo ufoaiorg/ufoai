@@ -377,25 +377,6 @@ void G_PrintActorStats (const edict_t *victim, const edict_t *attacker, const fi
 }
 
 /**
- * @brief Searches the edict that has the given target as @c targetname set
- * @param target The target name of the edict that you are searching
- * @return @c NULL if no edict with the given target name was found, otherwise
- * the edict that has the targetname set you were looking for.
- */
-edict_t *G_FindTargetEntity (const char *target)
-{
-	edict_t *ent = NULL;
-
-	while ((ent = G_EdictsGetNextInUse(ent))) {
-		const char *n = ent->targetname;
-		if (n && Q_streq(n, target))
-			return ent;
-	}
-
-	return NULL;
-}
-
-/**
  * @brief Returns entities that have origins within a spherical area.
  * @param[in] from The entity to start the search from. @c NULL will start from the beginning.
  * @param[in] org The origin that is the center of the circle.

@@ -256,6 +256,25 @@ edict_t *G_EdictsGetLivingActorFromPos (const pos3_t pos)
 }
 
 /**
+ * @brief Searches the edict that has the given target as @c targetname set
+ * @param target The target name of the edict that you are searching
+ * @return @c NULL if no edict with the given target name was found, otherwise
+ * the edict that has the targetname set you were looking for.
+ */
+edict_t *G_EdictsFindTargetEntity (const char *target)
+{
+	edict_t *ent = NULL;
+
+	while ((ent = G_EdictsGetNextInUse(ent))) {
+		const char *n = ent->targetname;
+		if (n && Q_streq(n, target))
+			return ent;
+	}
+
+	return NULL;
+}
+
+/**
  * @brief Calculate the edict's origin vector from it's grid position
  * @param ent The entity
  */

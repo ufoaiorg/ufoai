@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 
 #include "g_local.h"
+#include "g_edicts.h"
 
 /**
  * @brief Checks whether the activator of this trigger_touch was already recognized
@@ -276,7 +277,7 @@ static bool Touch_TouchTrigger (edict_t *self, edict_t *activator)
 	assert(!G_IsDead(activator));
 	assert(!G_IsDead(activator));
 
-	self->owner = G_FindTargetEntity(self->target);
+	self->owner = G_EdictsFindTargetEntity(self->target);
 	if (!self->owner) {
 		gi.DPrintf("Target '%s' wasn't found for %s\n", self->target, self->classname);
 		G_FreeEdict(self);

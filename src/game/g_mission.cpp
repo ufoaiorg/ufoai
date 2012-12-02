@@ -114,7 +114,7 @@ bool G_MissionDestroy (edict_t *self)
  */
 bool G_MissionUse (edict_t *self, edict_t *activator)
 {
-	edict_t *target = G_FindTargetEntity(self->target);
+	edict_t *target = G_EdictsFindTargetEntity(self->target);
 	if (!target) {
 		gi.DPrintf("Target '%s' wasn't found for misc_mission\n", self->target);
 		G_FreeEdict(self);
