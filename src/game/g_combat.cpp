@@ -533,7 +533,7 @@ static void G_SplashDamage (edict_t *ent, const fireDef_t *fd, vec3_t impact, sh
 		}
 
 		/* check for walls */
-		if (G_IsLivingActor(check) && !G_ActorVis(impact, ent, check, false))
+		if (G_IsLivingActor(check) && G_TestLine(impact, check->origin))
 			continue;
 
 		/* do damage */
