@@ -387,8 +387,8 @@ static size_t R_InitializeShader (const GLenum type, const char *name, char *out
  * @param[in] inPtr The non-preprocessed shader string.
  * @param[in,out] out The preprocessed shader string, NULL if we don't want to write to it.
  * @param[in,out] remainingOutChars The number of characters left in the out buffer.
- * @param[in] nested If true, parsing a part of #if clause, so #else and #endif tokens are allowed
- * @param[in] inElse If true, parsing an #else clause and shouldn't expect another #else
+ * @param[in] nested If true, parsing a part of "#if" clause, so "#else" and "#endif" tokens are allowed
+ * @param[in] inElse If true, parsing an "#else" clause and shouldn't expect another "#else"
  * @return The number of characters added to the buffer pointed to by out.
  */
 static size_t R_PreprocessShaderR (const char *name, const char **inPtr, char *out, long *remainingOutChars, bool nested, bool inElse)
