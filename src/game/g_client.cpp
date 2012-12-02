@@ -727,7 +727,7 @@ int G_ClientAction (player_t * player)
 
 	case PA_REACT_SELECT:
 		gi.ReadFormat(format, &hand, &fmIdx, &objIdx);
-		G_ReactionFireUpdate(ent, fmIdx, hand, INVSH_GetItemByIDX(objIdx));
+		G_ReactionFireSettingsUpdate(ent, fmIdx, hand, INVSH_GetItemByIDX(objIdx));
 		break;
 
 	case PA_RESERVE_STATE:
@@ -1259,7 +1259,7 @@ void G_ClientInitActorStates (const player_t * player)
 		objIdx = gi.ReadShort();
 		G_ActorSetTU(ent, saveTU);
 		if (objIdx != NONE) {
-			G_ReactionFireUpdate(ent, fmIdx, hand, INVSH_GetItemByIDX(objIdx));
+			G_ReactionFireSettingsUpdate(ent, fmIdx, hand, INVSH_GetItemByIDX(objIdx));
 		}
 		G_ClientStateChangeUpdate(ent);
 	}

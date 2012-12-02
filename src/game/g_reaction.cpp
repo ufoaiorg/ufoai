@@ -353,7 +353,7 @@ static bool G_ActorHasWorkingFireModeSet (const edict_t *actor)
  * @param[in] hand The hand that should be used for reaction fire
  * @param[in] od The object/weapon for the reaction fire
  */
-void G_ReactionFireUpdate (edict_t *ent, fireDefIndex_t fmIdx, actorHands_t hand, const objDef_t *od)
+void G_ReactionFireSettingsUpdate (edict_t *ent, fireDefIndex_t fmIdx, actorHands_t hand, const objDef_t *od)
 {
 	ent->chr.RFmode.set(hand, fmIdx, od);	/* FiremodeSettings */
 
