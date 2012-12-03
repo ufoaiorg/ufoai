@@ -136,10 +136,8 @@ static void Grid_SetMoveData (pathing_t *path, const pos3_t toPos, const int c, 
  * @brief a struct holding the relevant data to check if we can move between two adjacent cells
  */
 class Step {
-public:
-	const routing_t *routes;
-	int dir;
-	bool flier;
+	/** @todo flier should return true if the actor can fly. */
+	bool flier; /**< This can be keyed into whether an actor can fly or not to allow flying */
 
 	/** @todo has_ladder_climb should return true if
 	 *  1) There is a ladder in the new cell in the specified direction. */
@@ -153,6 +151,9 @@ public:
 	actorSizeEnum_t actorSize;
 	int actorHeight;		/**< The actor's height in QUANT units. */
 	int actorCrouchedHeight;
+public:
+	const routing_t *routes;
+	int dir;
 
 	bool init (const routing_t *routes, const actorSizeEnum_t actorSize, const byte crouchingState, const int dir);
 	bool calcNewPos (const pos3_t pos, pos3_t toPos);
@@ -174,8 +175,7 @@ bool Step::init (const routing_t *_routes, const actorSizeEnum_t _actorSize, con
 	routes = _routes;
 	actorSize = _actorSize;
 	dir = _dir;
-	/** @todo flier should return true if the actor can fly. */
-	flier = false; /**< This can be keyed into whether an actor can fly or not to allow flying */
+	flier = false;
 	hasLadderToClimb = false;
 	hasLadderSupport = false;
 	/** @note This is the actor's height in QUANT units. */
