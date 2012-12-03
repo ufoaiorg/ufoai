@@ -5112,7 +5112,7 @@ mapdef rescue
 		craft_drop_firebird
 //		craft_drop_herakles
 //		craft_drop_dragon
-		craft_drop_raptor
+//		craft_drop_raptor
 	)
 }
 
