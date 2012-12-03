@@ -104,8 +104,7 @@ edict_t* G_TriggerSpawn (edict_t *owner)
 	edict_t* trigger;
 	vec3_t mins, maxs;
 
-	trigger = G_Spawn();
-	trigger->classname = "trigger";
+	trigger = G_Spawn("trigger");
 	trigger->type = ET_TRIGGER;
 	/* e.g. link the door into the trigger */
 	trigger->owner = owner;

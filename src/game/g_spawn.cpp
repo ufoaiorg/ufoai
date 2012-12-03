@@ -405,7 +405,7 @@ void G_SpawnEntities (const char *mapname, bool day, const char *entities)
  * angles and bad trails.
  * @sa G_FreeEdict
  */
-edict_t *G_Spawn (void)
+edict_t *G_Spawn (const char *classname)
 {
 	edict_t *ent = G_EdictsGetNewEdict();
 
@@ -413,10 +413,13 @@ edict_t *G_Spawn (void)
 		gi.Error("G_Spawn: no free edicts");
 
 	ent->inuse = true;
-	ent->classname = "noclass";
 	ent->number = G_EdictsGetNumber(ent);
+	if (classname)
+		ent->classname = classname;
+	else
+		ent->classname = "noclass";
 	ent->fieldSize = ACTOR_SIZE_NORMAL;
-	ent->active = true;
+	ent->active = true;		/* only used by camera */
 	return ent;
 }
 
@@ -598,8 +601,7 @@ edict_t *G_SpawnFloor (const pos3_t pos)
 {
 	edict_t *floor;
 
-	floor = G_Spawn();
-	floor->classname = "item";
+	floor = G_Spawn("item");
 	floor->type = ET_ITEM;
 	/* make sure that the item is always on a field that even the smallest actor can reach */
 	floor->fieldSize = ACTOR_SIZE_NORMAL;
@@ -615,8 +617,7 @@ edict_t *G_SpawnFloor (const pos3_t pos)
  */
 edict_t *G_SpawnParticle (const vec3_t origin, int spawnflags, const char *particle)
 {
-	edict_t *ent = G_Spawn();
-	ent->classname = "particle";
+	edict_t *ent = G_Spawn("particle");
 	ent->type = ET_PARTICLE;
 	VectorCopy(origin, ent->origin);
 

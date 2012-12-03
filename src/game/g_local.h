@@ -370,7 +370,7 @@ void G_PrintStats(const char *format, ...) __attribute__((format(__printf__, 1, 
 int G_TouchTriggers(edict_t *ent);
 int G_TouchSolids(edict_t *ent, float extend);
 void G_TouchEdicts(edict_t *ent, float extend);
-edict_t *G_Spawn(void);
+edict_t *G_Spawn(const char *classname = NULL);
 void G_SpawnSmokeField(const vec3_t vec, const char *particle, int rounds, vec_t radius);
 void G_SpawnFireField(const vec3_t vec, const char *particle, int rounds, int damage, vec_t radius);
 void G_SpawnStunSmokeField(const vec3_t vec, const char *particle, int rounds, int damage, vec_t radius);
