@@ -398,24 +398,11 @@ void G_SpawnEntities (const char *mapname, bool day, const char *entities)
 }
 
 /**
- * @sa G_Spawn
- */
-static inline void G_InitEdict (edict_t * ent)
-{
-	ent->inuse = true;
-	ent->classname = "noclass";
-	ent->number = G_EdictsGetNumber(ent);
-	ent->fieldSize = ACTOR_SIZE_NORMAL;
-	ent->active = true;
-}
-
-/**
  * @brief Either finds a free edict, or allocates a new one.
  * @note Try to avoid reusing an entity that was recently freed, because it
  * can cause the player to think the entity morphed into something else
  * instead of being removed and recreated, which can cause interpolated
  * angles and bad trails.
- * @sa G_InitEdict
  * @sa G_FreeEdict
  */
 edict_t *G_Spawn (void)
@@ -425,7 +412,11 @@ edict_t *G_Spawn (void)
 	if (!ent)
 		gi.Error("G_Spawn: no free edicts");
 
-	G_InitEdict(ent);
+	ent->inuse = true;
+	ent->classname = "noclass";
+	ent->number = G_EdictsGetNumber(ent);
+	ent->fieldSize = ACTOR_SIZE_NORMAL;
+	ent->active = true;
 	return ent;
 }
 
