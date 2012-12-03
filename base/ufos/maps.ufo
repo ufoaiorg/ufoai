@@ -116,7 +116,7 @@ mapdef africa_medium_crash
 		coop3
 		coop4
 	)
-	maxaliens		18
+	maxaliens		24
 	hurtaliens		true
 
 	civilianteam	africa
@@ -133,6 +133,7 @@ mapdef africa_medium_crash
 		craft_crash_gunboat
 		craft_crash_harvester
 		craft_crash_supply
+		craft_crash_bomber
 	)
 
 	terrains

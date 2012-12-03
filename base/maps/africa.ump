@@ -108,6 +108,21 @@ tile +craft_crash_supply
 0		0		0		0		0		0		0
 }
 
+tile +craft_crash_bomber
+{
+6 10
+0		0		0		0		0		0
+0		+b		+b		+b		+b		0
+0		+b		+b		+b		+b		0
+0		+b		+b		+b		+b		0
+0		+b		+b		+b		+b		0
+0		+b		+b		+b		+b		0
+0		+b		+b		+b		+b		0
+0		+b		+b		+b		+b		0
+0		+b		+b		+b		+b		0
+0		0		0		0		0		0
+}
+
 // dropships --------------------------------------------------------
 
 tile +craft_drop_firebird
@@ -644,7 +659,7 @@ multiplayer +mp_team2
 tileset cowshed		"0 1"
 tileset filler_a	"0 4"
 tileset house_a		"0 1"
-tileset mountain	"1 1"
+tileset mountain	"0 1"
 tileset rock_a		"0 1"
 *rm_ufo +craft_ufo_harvester "1 1"
 *rm_drop +craft_drop_firebird "1 1"
