@@ -138,6 +138,7 @@ static void Grid_SetMoveData (pathing_t *path, const pos3_t toPos, const int c, 
 class Step {
 public:
 	const routing_t *routes;
+	int dir;
 	bool flier;
 
 	/** @todo has_ladder_climb should return true if
@@ -154,10 +155,10 @@ public:
 	int actorCrouchedHeight;
 
 	bool init (const routing_t *routes, const actorSizeEnum_t actorSize, const byte crouchingState, const int dir);
-	bool calcNewPos (const pos3_t pos, pos3_t toPos, const int dir);
-	bool checkWalkingDirections (pathing_t *path, const pos3_t pos, pos3_t toPos, const int dir, const byte crouchingState);
-	bool checkFlyingDirections (const pos3_t pos, const pos3_t toPos, const int dir);
-	bool checkVerticalDirections (const pos3_t pos, const int dir);
+	bool calcNewPos (const pos3_t pos, pos3_t toPos);
+	bool checkWalkingDirections (pathing_t *path, const pos3_t pos, pos3_t toPos, const byte crouchingState);
+	bool checkFlyingDirections (const pos3_t pos, const pos3_t toPos);
+	bool checkVerticalDirections (const pos3_t pos);
 };
 
 /**
@@ -168,14 +169,15 @@ public:
  * @param[in] dir Direction vector index (see DIRECTIONS and dvecs)
  * @return false if dir is irrelevant or something went wrong
  */
-bool Step::init (const routing_t *_routes, const actorSizeEnum_t _actorSize, const byte crouchingState, const int dir)
+bool Step::init (const routing_t *_routes, const actorSizeEnum_t _actorSize, const byte crouchingState, const int _dir)
 {
 	routes = _routes;
+	actorSize = _actorSize;
+	dir = _dir;
 	/** @todo flier should return true if the actor can fly. */
 	flier = false; /**< This can be keyed into whether an actor can fly or not to allow flying */
 	hasLadderToClimb = false;
 	hasLadderSupport = false;
-	actorSize = _actorSize;
 	/** @note This is the actor's height in QUANT units. */
 	/** @todo actor_height is currently the fixed height of a 1x1 actor.  This needs to be adjusted
 	 *  to the actor's actual height. */
@@ -206,7 +208,7 @@ bool Step::init (const routing_t *_routes, const actorSizeEnum_t _actorSize, con
  * @param[in] dir Direction vector index (see DIRECTIONS and dvecs)
  * @return false if we can't fly there
  */
-bool Step::calcNewPos (const pos3_t pos, pos3_t toPos, const int dir)
+bool Step::calcNewPos (const pos3_t pos, pos3_t toPos)
 {
 	toPos[0] = pos[0] + dvecs[dir][0];	/**< "new" x value = starting x value + difference from chosen direction */
 	toPos[1] = pos[1] + dvecs[dir][1];	/**< "new" y value = starting y value + difference from chosen direction */
@@ -238,7 +240,7 @@ bool Step::calcNewPos (const pos3_t pos, pos3_t toPos, const int dir)
  * @param[in] crouchingState Whether the actor is currently crouching, 1 is yes, 0 is no.
  * @return false if we can't fly there
  */
-bool Step::checkWalkingDirections (pathing_t *path, const pos3_t pos, pos3_t toPos, const int dir, const byte crouchingState)
+bool Step::checkWalkingDirections (pathing_t *path, const pos3_t pos, pos3_t toPos, const byte crouchingState)
 {
 	int nx, ny, nz;
 	int passageHeight;
@@ -368,7 +370,7 @@ bool Step::checkWalkingDirections (pathing_t *path, const pos3_t pos, pos3_t toP
  * @param[in] dir Direction vector index (see DIRECTIONS and dvecs)
  * @return false if we can't fly there
  */
-bool Step::checkFlyingDirections (const pos3_t pos, const pos3_t toPos, const int dir)
+bool Step::checkFlyingDirections (const pos3_t pos, const pos3_t toPos)
 {
 	const int coreDir = dir % CORE_DIRECTIONS;	/**< The compass direction of this flying move */
 	int neededHeight;
@@ -403,7 +405,7 @@ bool Step::checkFlyingDirections (const pos3_t pos, const pos3_t toPos, const in
  * @param[in] dir Direction vector index (see DIRECTIONS and dvecs)
  * @return false if we can't move there
  */
-bool Step::checkVerticalDirections (const pos3_t pos, const int dir)
+bool Step::checkVerticalDirections (const pos3_t pos)
 {
 	if (dir == DIRECTION_FALL) {
 		if (flier) {
@@ -465,24 +467,24 @@ static void Grid_MoveMark (const routing_t *routes, const pos3_t exclude, const 
 	TUsForMove = Grid_GetTUsForDirection(dir, crouchingState);
 
 	/* calculate the position we would normally end up if moving in the given dir. */
-	if (!step->calcNewPos(pos, toPos, dir)) {
+	if (!step->calcNewPos(pos, toPos)) {
 		return;
 	}
 	/* If there is no passageway (or rather lack of a wall) to the desired cell, then return. */
 	/* If the flier is moving up or down diagonally, then passage height will also adjust */
 	if (dir >= FLYING_DIRECTIONS) {
-		if (!step->checkFlyingDirections(pos, toPos, dir)) {
+		if (!step->checkFlyingDirections(pos, toPos)) {
 			return;
 		}
 	} else if (dir < CORE_DIRECTIONS) {
 		/** note that this function may modify toPos ! */
-		if (!step->checkWalkingDirections(path, pos, toPos, dir, crouchingState)) {
+		if (!step->checkWalkingDirections(path, pos, toPos, crouchingState)) {
 			return;
 		}
 	} else {
 		/* else there is no movement that uses passages. */
 		/* If we are falling, the height difference is the floor value. */
-		if (!step->checkVerticalDirections(pos, dir)) {
+		if (!step->checkVerticalDirections(pos)) {
 			return;
 		}
 	}
