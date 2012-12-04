@@ -236,7 +236,7 @@ bool G_Vis (const int team, const edict_t *from, const edict_t *check, const vis
  * bits of @c VT_PERISH, no further checks are performed - only the
  * @c VIS_YES bits are returned
  */
-int G_TestVis (const int team, edict_t * check, const vischeckflags_t flags)
+int G_TestVis (const int team, edict_t *check, const vischeckflags_t flags)
 {
 	edict_t *from = NULL;
 	/* store old flag */
@@ -264,10 +264,12 @@ static bool G_VisShouldStop (const edict_t *ent)
 }
 
 /**
+ * @param[in] team The team looking at the edict (or not)
  * @param[in] check The edict to check the visibility for
+ * @param[in] visFlags The flags for the vis check
  * @param[in] playerMask The mask for the players to send the appear/perish events to. If this is @c 0 the events
  * are not sent - we only update the visflags of the edict
- * @param[in] visFlags The flags for the vis check
+ * @param[in] ent The edict that was responsible for letting the check edict appear
  */
 static int G_DoTestVis (const int team, edict_t *check, const vischeckflags_t visFlags, playermask_t playerMask, const edict_t *ent)
 {
