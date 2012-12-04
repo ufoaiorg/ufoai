@@ -513,7 +513,6 @@ static void Grid_MoveMark (const routing_t *routes, const pos3_t exclude, const 
 		pos4_t dummy;
 
 		Vector4Set(dummy, toPos[0], toPos[1], toPos[2], crouchingState);
-		/** @todo add heuristic for A* algorithm */
 		PQueuePush(pqueue, dummy, TUsAfter);
 	}
 }
