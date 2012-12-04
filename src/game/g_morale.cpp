@@ -76,6 +76,7 @@ static void G_MoraleStopPanic (edict_t *ent)
 	if (ent->morale / mor_panic->value > m_panic_stop->value * frand()) {
 		G_RemovePanic(ent);
 		G_PrintStats("%s is no longer panicked (entnum %i).", ent->chr.name, ent->number);
+		G_EventSendState(G_VisToPM(ent->visflags), ent);
 	} else {
 		G_MoralePanic(ent, true);
 	}
