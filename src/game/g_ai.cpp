@@ -747,7 +747,7 @@ static float AI_CivilianCalcActionScore (edict_t * ent, pos3_t to, aiAction_t * 
 	/* check whether this civilian can use weapons */
 	if (ent->chr.teamDef) {
 		const teamDef_t* teamDef = ent->chr.teamDef;
-		if (!G_IsPaniced(ent) && teamDef->weapons)
+		if (!G_IsPanicked(ent) && teamDef->weapons)
 			return AI_FighterCalcActionScore(ent, to, aia);
 	} else
 		gi.DPrintf("AI_CivilianCalcActionScore: Error - civilian team with no teamdef\n");
@@ -1019,7 +1019,7 @@ static aiAction_t AI_PrepBestAction (const player_t *player, edict_t * ent)
 				if (move != ROUTING_NOT_REACHABLE && move <= G_ActorUsableTUs(ent)) {
 					if (G_IsCivilian(ent))
 						bestActionScore = AI_CivilianCalcActionScore(ent, to, &aia);
-					else if (G_IsPaniced(ent))
+					else if (G_IsPanicked(ent))
 						bestActionScore = AI_PanicCalcActionScore(ent, to, &aia);
 					else
 						bestActionScore = AI_FighterCalcActionScore(ent, to, &aia);
@@ -1112,7 +1112,7 @@ static void AI_TryToReloadWeapon (edict_t *ent, containerIndex_t containerID)
 }
 
 /**
- * @brief The think function for the ai controlled aliens or paniced humans
+ * @brief The think function for the ai controlled aliens or panicked humans
  * @param[in] player The AI or human player object
  * @param[in] ent The ai controlled edict or the human actor edict
  * @sa AI_FighterCalcActionScore
@@ -1125,7 +1125,7 @@ void AI_ActorThink (player_t * player, edict_t * ent)
 	aiAction_t bestAia;
 
 	/* if a weapon can be reloaded we attempt to do so if TUs permit, otherwise drop it */
-	if (!G_IsPaniced(ent)) {
+	if (!G_IsPanicked(ent)) {
 		if (RIGHT(ent) && RIGHT(ent)->item.item->reload && RIGHT(ent)->item.ammoLeft == 0)
 			AI_TryToReloadWeapon(ent, gi.csi->idRight);
 		if (LEFT(ent) && LEFT(ent)->item.item->reload && LEFT(ent)->item.ammoLeft == 0)

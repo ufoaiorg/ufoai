@@ -412,7 +412,7 @@ void G_ActorModifyCounters (const edict_t *attacker, const edict_t *victim, int 
 void G_ActorGetEyeVector (const edict_t *actor, vec3_t eye)
 {
 	VectorCopy(actor->origin, eye);
-	if (G_IsCrouched(actor) || G_IsPaniced(actor))
+	if (G_IsCrouched(actor) || G_IsPanicked(actor))
 		eye[2] += EYE_CROUCH;
 	else
 		eye[2] += EYE_STAND;

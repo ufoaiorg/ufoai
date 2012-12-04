@@ -455,7 +455,7 @@ void LET_StartIdle (le_t * le)
 	if (le->type != ET_ACTORHIDDEN) {
 		if (LE_IsDead(le))
 			R_AnimChange(&le->as, le->model1, va("dead%i", LE_GetAnimationIndexForDeath(le)));
-		else if (LE_IsPaniced(le))
+		else if (LE_IsPanicked(le))
 			R_AnimChange(&le->as, le->model1, "panic0");
 		else
 			R_AnimChange(&le->as, le->model1, LE_GetAnim("stand", le->right, le->left, le->state));

@@ -578,7 +578,7 @@ static bool G_ReactionFireShoot (edict_t *shooter, const pos3_t at, shoot_types_
 		maxff = 100;
 	else if (G_IsRaged(shooter))
 		maxff = 60;
-	else if (G_IsPaniced(shooter))
+	else if (G_IsPanicked(shooter))
 		maxff = 30;
 	else if (G_IsShaken(shooter))
 		maxff = 15;

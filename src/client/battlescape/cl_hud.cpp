@@ -1367,7 +1367,7 @@ static void HUD_UpdateActor (le_t *actor)
 	time = 0;
 
 	/* handle actor in a panic */
-	if (LE_IsPaniced(actor)) {
+	if (LE_IsPanicked(actor)) {
 		UI_RegisterText(TEXT_STANDARD, _("Currently panics!\n"));
 	} else if (displayRemainingTus[REMAINING_TU_CROUCH]) {
 		if (CL_ActorUsableTUs(actor) >= TU_CROUCH)

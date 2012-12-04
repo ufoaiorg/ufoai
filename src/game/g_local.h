@@ -179,7 +179,7 @@ extern game_export_t globals;
 #define G_IsState(ent, s)		((ent)->state & (s))
 #define G_IsShaken(ent)			G_IsState(ent, STATE_SHAKEN)
 #define G_IsStunned(ent)		(G_IsState(ent, STATE_STUN) & ~STATE_DEAD)
-#define G_IsPaniced(ent)		G_IsState(ent, STATE_PANIC)
+#define G_IsPanicked(ent)		G_IsState(ent, STATE_PANIC)
 #define G_IsReaction(ent)		G_IsState(ent, STATE_REACTION)
 #define G_IsRaged(ent)			G_IsState(ent, STATE_RAGE)
 #define G_IsInsane(ent)			G_IsState(ent, STATE_INSANE)

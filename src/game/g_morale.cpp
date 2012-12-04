@@ -75,7 +75,7 @@ static void G_MoraleStopPanic (edict_t *ent)
 {
 	if (ent->morale / mor_panic->value > m_panic_stop->value * frand()) {
 		G_RemovePanic(ent);
-		G_PrintStats("%s is no longer paniced (entnum %i).", ent->chr.name, ent->number);
+		G_PrintStats("%s is no longer panicked (entnum %i).", ent->chr.name, ent->number);
 	} else {
 		G_MoralePanic(ent, true);
 	}
@@ -160,7 +160,7 @@ void G_MoraleBehaviour (int team)
 			continue;
 
 		/* if panic, determine what kind of panic happens: */
-		if (!G_IsPaniced(ent) && !G_IsRaged(ent)) {
+		if (!G_IsPanicked(ent) && !G_IsRaged(ent)) {
 			if (ent->morale <= mor_panic->integer) {
 				const float ratio = (float) ent->morale / mor_panic->value;
 				const bool sanity = ratio > (m_sanity->value * frand());
@@ -179,7 +179,7 @@ void G_MoraleBehaviour (int team)
 				G_PrintStats("%s is shaken (entnum %i).", ent->chr.name, ent->number);
 			}
 		} else {
-			if (G_IsPaniced(ent))
+			if (G_IsPanicked(ent))
 				G_MoraleStopPanic(ent);
 			else if (G_IsRaged(ent))
 				G_MoraleStopRage(ent);
