@@ -388,7 +388,6 @@ void G_VisMakeEverythingVisible (void)
  * @c G_CheckVisTeam resp. @c G_AppearPerishEvent
  * @param[in] check The edict that is maybe seen by others. If NULL, all edicts are checked
  * @param visFlags Modifiers for the checks
- * @return Bitmask of VIS_* values
  * @sa G_CheckVisTeam
  */
 void G_CheckVis (edict_t * check, const vischeckflags_t visFlags)
