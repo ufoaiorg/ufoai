@@ -869,7 +869,7 @@ item shotgun2_slug_ammo
 			shots				1
 			ammo				1
 			delaybetweenshots	0
-			time				10
+			time				8
 			damage				"120 20"
 			dmgweight			"normal_medium"
 			reaction			true
@@ -937,7 +937,7 @@ item shotgun_micro_ammo
 			shots				8
 			ammo				1
 			delaybetweenshots	0
-			time				10
+			time				8
 			damage				"20 5"
 			dmgweight			"normal_spray"
 			reaction			true
@@ -965,7 +965,7 @@ item shotgun_micro_ammo
 			shots				8
 			ammo				1
 			delaybetweenshots	0
-			time				10
+			time				8
 			damage				"20 5"
 			dmgweight			"normal_spray"
 			reaction			true

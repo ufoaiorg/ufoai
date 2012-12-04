@@ -305,7 +305,7 @@ item plasblaster_ammo
 			shots				1
 			ammo				10
 			delaybetweenshots	10
-			time				10
+			time				8
 			damage				"0 0"
 			spldmg				"180 20"
 			splrad				1
@@ -330,7 +330,7 @@ item plasblaster_ammo
 			shots				1
 			ammo				1
 			delaybetweenshots	38
-			time				10
+			time				8
 			damage				"60 10"
 			dmgweight			"plasma_medium"
 			reaction			true
@@ -353,7 +353,7 @@ item plasblaster_ammo
 			shots				3
 			ammo				3
 			delaybetweenshots	38
-			time				16
+			time				12
 			damage				"60 10"
 			dmgweight			"plasma_medium"
 			reaction			true
