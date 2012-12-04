@@ -290,6 +290,30 @@ item plasblaster_ammo
 		weapon plasblaster
 		firedef
 		{
+			name				"_Ball"
+			skill				"close"
+			projtl				plasmaBigBall
+			impact				plasmaBigImpact
+			hitbody				plasmaBigImpact
+			firesnd				"weapons/plasma-huge"
+			impsnd				"impact/plasmaball-impact"
+			bodysnd 			"impact/plasmaball-impact"
+			speed				600
+			spread				"3 3"
+			crouch 				1
+			range				20
+			shots				1
+			ammo				10
+			delaybetweenshots	10
+			time				10
+			damage				"0 0"
+			spldmg				"180 20"
+			splrad				1
+			dmgweight			"plasma_heavy"
+			reaction			true
+		}
+		firedef
+		{
 			name				"_Snap Shot"
 			skill				"close"
 			projtl				plasmaContinuous
@@ -300,7 +324,7 @@ item plasblaster_ammo
 			bodysnd 			"impact/plasma-bodyimpact"
 			sndonce				true
 			speed				0
-			spread				"3 3"
+			spread				"2 2"
 			crouch				1
 			range				35
 			shots				1
@@ -323,7 +347,7 @@ item plasblaster_ammo
 			bodysnd 			"impact/plasma-bodyimpact"
 			sndonce				true
 			speed				0
-			spread				"3.5 3.5"
+			spread				"2.5 2.5"
 			crouch				1
 			range				35
 			shots				3
@@ -332,30 +356,6 @@ item plasblaster_ammo
 			time				16
 			damage				"60 10"
 			dmgweight			"plasma_medium"
-			reaction			true
-		}
-		firedef
-		{
-			name				"_Ball"
-			skill				"close"
-			projtl				plasmaBigBall
-			impact				plasmaBigImpact
-			hitbody				plasmaBigImpact
-			firesnd				"weapons/plasma-huge"
-			impsnd				"impact/plasmaball-impact"
-			bodysnd 			"impact/plasmaball-impact"
-			speed				600
-			spread				"4 4"
-			crouch 				1
-			range				20
-			shots				1
-			ammo				10
-			delaybetweenshots	10
-			time				10
-			damage				"0 0"
-			spldmg				"180 20"
-			splrad				1
-			dmgweight			"plasma_heavy"
 			reaction			true
 		}
 	}
