@@ -777,7 +777,7 @@ item smg_ammo
 			shots				5
 			ammo				5
 			delaybetweenshots	14
-			time				8
+			time				7
 			damage				"15 3"
 			dmgweight			"normal_spray"
 			reaction			true
@@ -800,7 +800,7 @@ item smg_ammo
 			shots				15
 			ammo				15
 			delaybetweenshots	14
-			time				16
+			time				12
 			damage				"15 3"
 			dmgweight			"normal_spray"
 			reaction			true
