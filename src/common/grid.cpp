@@ -154,9 +154,10 @@ class Step {
 public:
 	const routing_t *routes;
 	int dir;
+	pos3_t fromPos;
 
-	bool init (const routing_t *routes, const actorSizeEnum_t actorSize, const byte crouchingState, const int dir);
-	bool calcNewPos (const pos3_t pos, pos3_t toPos);
+	bool init (const routing_t *routes, const pos3_t fromPos, const actorSizeEnum_t actorSize, const byte crouchingState, const int dir);
+	bool calcNewPos (pos3_t toPos);
 	bool checkWalkingDirections (pathing_t *path, const pos3_t pos, pos3_t toPos, const byte crouchingState);
 	bool checkFlyingDirections (const pos3_t pos, const pos3_t toPos);
 	bool checkVerticalDirections (const pos3_t pos);
@@ -170,10 +171,11 @@ public:
  * @param[in] _dir Direction vector index (see DIRECTIONS and dvecs)
  * @return false if dir is irrelevant or something went wrong
  */
-bool Step::init (const routing_t *_routes, const actorSizeEnum_t _actorSize, const byte crouchingState, const int _dir)
+bool Step::init (const routing_t *_routes, const pos3_t _fromPos, const actorSizeEnum_t _actorSize, const byte crouchingState, const int _dir)
 {
 	routes = _routes;
 	actorSize = _actorSize;
+	VectorCopy(_fromPos, fromPos);
 	dir = _dir;
 	flier = false;
 	hasLadderToClimb = false;
@@ -207,11 +209,11 @@ bool Step::init (const routing_t *_routes, const actorSizeEnum_t _actorSize, con
  * @param[in] toPos The position we are moving to with this step.
  * @return false if we can't fly there
  */
-bool Step::calcNewPos (const pos3_t pos, pos3_t toPos)
+bool Step::calcNewPos (pos3_t toPos)
 {
-	toPos[0] = pos[0] + dvecs[dir][0];	/**< "new" x value = starting x value + difference from chosen direction */
-	toPos[1] = pos[1] + dvecs[dir][1];	/**< "new" y value = starting y value + difference from chosen direction */
-	toPos[2] = pos[2] + dvecs[dir][2];	/**< "new" z value = starting z value + difference from chosen direction */
+	toPos[0] = fromPos[0] + dvecs[dir][0];	/**< "new" x value = starting x value + difference from chosen direction */
+	toPos[1] = fromPos[1] + dvecs[dir][1];	/**< "new" y value = starting y value + difference from chosen direction */
+	toPos[2] = fromPos[2] + dvecs[dir][2];	/**< "new" z value = starting z value + difference from chosen direction */
 
 	/* Connection checks.  If we cannot move in the desired direction, then bail. */
 	/* Range check of new values (all sizes) */
@@ -455,7 +457,7 @@ static void Grid_MoveMark (const routing_t *routes, const pos3_t exclude, const 
 	pos3_t toPos;
 	byte TUsSoFar, TUsForMove, TUsAfter;
 
-	if (!step->init(routes, actorSize, crouchingState, dir))
+	if (!step->init(routes, pos, actorSize, crouchingState, dir))
 		return;		/* either dir is irrelevant or something worse happened */
 
 	TUsSoFar = RT_AREA_POS(path, pos, crouchingState);
@@ -463,7 +465,7 @@ static void Grid_MoveMark (const routing_t *routes, const pos3_t exclude, const 
 	TUsForMove = Grid_GetTUsForDirection(dir, crouchingState);
 
 	/* calculate the position we would normally end up if moving in the given dir. */
-	if (!step->calcNewPos(pos, toPos)) {
+	if (!step->calcNewPos(toPos)) {
 		return;
 	}
 	/* If there is no passageway (or rather lack of a wall) to the desired cell, then return. */
