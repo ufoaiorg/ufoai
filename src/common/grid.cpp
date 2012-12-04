@@ -167,7 +167,7 @@ public:
  * @param[in] _routes Pointer to client or server side routing table (clMap, svMap)
  * @param[in] _actorSize Give the field size of the actor (e.g. for 2x2 units) to check linked fields as well.
  * @param[in] crouchingState Whether the actor is currently crouching, 1 is yes, 0 is no.
- * @param[in] dir Direction vector index (see DIRECTIONS and dvecs)
+ * @param[in] _dir Direction vector index (see DIRECTIONS and dvecs)
  * @return false if dir is irrelevant or something went wrong
  */
 bool Step::init (const routing_t *_routes, const actorSizeEnum_t _actorSize, const byte crouchingState, const int _dir)
@@ -205,7 +205,6 @@ bool Step::init (const routing_t *_routes, const actorSizeEnum_t _actorSize, con
  * @brief Calculate the cell the we end up in if moving in the give dir
  * @param[in] pos Current location in the map.
  * @param[in] toPos The position we are moving to with this step.
- * @param[in] dir Direction vector index (see DIRECTIONS and dvecs)
  * @return false if we can't fly there
  */
 bool Step::calcNewPos (const pos3_t pos, pos3_t toPos)
@@ -236,7 +235,6 @@ bool Step::calcNewPos (const pos3_t pos, pos3_t toPos)
  * @param[in] path Pointer to client or server side pathing table (clPathMap, svPathMap)
  * @param[in] pos Current location in the map.
  * @param[in] toPos The position we are moving to with this step.
- * @param[in] dir Direction vector index (see DIRECTIONS and dvecs)
  * @param[in] crouchingState Whether the actor is currently crouching, 1 is yes, 0 is no.
  * @return false if we can't fly there
  */
@@ -367,7 +365,6 @@ bool Step::checkWalkingDirections (pathing_t *path, const pos3_t pos, pos3_t toP
  * @brief Checks if we can move in the given flying direction
  * @param[in] pos Current location in the map.
  * @param[in] toPos The position we are moving to with this step.
- * @param[in] dir Direction vector index (see DIRECTIONS and dvecs)
  * @return false if we can't fly there
  */
 bool Step::checkFlyingDirections (const pos3_t pos, const pos3_t toPos)
@@ -402,7 +399,6 @@ bool Step::checkFlyingDirections (const pos3_t pos, const pos3_t toPos)
 /**
  * @brief Checks if we can move in the given vertical direction
  * @param[in] pos Current location in the map.
- * @param[in] dir Direction vector index (see DIRECTIONS and dvecs)
  * @return false if we can't move there
  */
 bool Step::checkVerticalDirections (const pos3_t pos)
