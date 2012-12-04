@@ -119,17 +119,11 @@ static bool Grid_CheckForbidden (const pos3_t exclude, const actorSizeEnum_t act
 	return false;
 }
 
-static void Grid_SetMoveData (pathing_t *path, const pos3_t toPos, const int crouch, const byte length, const int dir, const int oldZ, priorityQueue_t *pqueue)
+static void Grid_SetMoveData (pathing_t *path, const pos3_t toPos, const int crouch, const byte length, const int dir, const int oldZ)
 {
-	pos4_t dummy;
-
 	RT_AREA_TEST_POS(path, toPos, crouch);
 	RT_AREA_POS(path, toPos, crouch) = length;	/**< Store TUs for this square. */
 	RT_AREA_FROM_POS(path, toPos, crouch) = makeDV(dir, oldZ); /**< Store origination information for this square. */
-
-	Vector4Set(dummy, toPos[0], toPos[1], toPos[2], crouch);
-	/** @todo add heuristic for A* algorithm */
-	PQueuePush(pqueue, dummy, length);
 }
 
 /**
@@ -513,9 +507,14 @@ static void Grid_MoveMark (const routing_t *routes, const pos3_t exclude, const 
 		return;		/* That spot is occupied. */
 	}
 
-	/* Store move. */
+	/* Store move in pathing table. */
+	Grid_SetMoveData(path, toPos, crouchingState, TUsAfter, dir, pos[2]);
 	if (pqueue) {
-		Grid_SetMoveData(path, toPos, crouchingState, TUsAfter, dir, pos[2], pqueue);
+		pos4_t dummy;
+
+		Vector4Set(dummy, toPos[0], toPos[1], toPos[2], crouchingState);
+		/** @todo add heuristic for A* algorithm */
+		PQueuePush(pqueue, dummy, TUsAfter);
 	}
 }
 
