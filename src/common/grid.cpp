@@ -152,9 +152,9 @@ public:
 
 	bool init (const routing_t *routes, const pos3_t fromPos, const actorSizeEnum_t actorSize, const byte crouchingState, const int dir);
 	bool calcNewPos (pos3_t toPos);
-	bool checkWalkingDirections (pathing_t *path, const pos3_t pos, pos3_t toPos, const byte crouchingState);
-	bool checkFlyingDirections (const pos3_t pos, const pos3_t toPos);
-	bool checkVerticalDirections (const pos3_t pos);
+	bool checkWalkingDirections (pathing_t *path, pos3_t toPos, const byte crouchingState);
+	bool checkFlyingDirections (const pos3_t toPos);
+	bool checkVerticalDirections (void);
 };
 
 /**
@@ -234,21 +234,21 @@ bool Step::calcNewPos (pos3_t toPos)
  * @param[in] crouchingState Whether the actor is currently crouching, 1 is yes, 0 is no.
  * @return false if we can't fly there
  */
-bool Step::checkWalkingDirections (pathing_t *path, const pos3_t pos, pos3_t toPos, const byte crouchingState)
+bool Step::checkWalkingDirections (pathing_t *path, pos3_t toPos, const byte crouchingState)
 {
 	int nx, ny, nz;
 	int passageHeight;
 	/** @todo falling_height should be replaced with an arbitrary max falling height based on the actor. */
 	const int fallingHeight = PATHFINDING_MAX_FALL;/**<This is the maximum height that an actor can fall. */
-	const int stepup = RT_STEPUP_POS(routes, actorSize, pos, dir); /**< The stepup needed to get to/through the passage */
+	const int stepup = RT_STEPUP_POS(routes, actorSize, fromPos, dir); /**< The stepup needed to get to/through the passage */
 	const int stepupHeight = stepup & ~(PATHFINDING_BIG_STEPDOWN | PATHFINDING_BIG_STEPUP); /**< The actual stepup height without the level flags */
 	int heightChange;
 	/** @todo actor_stepup_height should be replaced with an arbitrary max stepup height based on the actor. */
 	int actorStepupHeight = PATHFINDING_MAX_STEPUP;
 
 	/* This is the standard passage height for all units trying to move horizontally. */
-	RT_CONN_TEST_POS(step->map, actorSize, pos, dir);
-	passageHeight = RT_CONN_POS(routes, actorSize, pos, dir);
+	RT_CONN_TEST_POS(step->map, actorSize, fromPos, dir);
+	passageHeight = RT_CONN_POS(routes, actorSize, fromPos, dir);
 	if (passageHeight < actorHeight) {
 #if 0
 /** I know this code could be streamlined, but until I understand it myself, plz leave it like it is !*/
@@ -256,7 +256,7 @@ bool Step::checkWalkingDirections (pathing_t *path, const pos3_t pos, pos3_t toP
 		if (!crouchingState									/* not in std crouch mode */
 		 && passageHeight >= step->actorCrouchedHeight)	{	/* and passage is tall enough for crouching ? */
 															/* we should try autocrouching */
-			int dvFlagsOld = getDVflags(RT_AREA_POS(path, pos, crouchingState));
+			int dvFlagsOld = getDVflags(RT_AREA_POS(path, fromPos, crouchingState));
 			int toHeight = RT_CEILING_POS(step->map, actorSize, toPos) - RT_FLOOR_POS(step->map, actorSize, toPos);
 			int tuCr = Grid_GetTUsForDirection(dir, 1);		/* 1 means crouched */
 			int newTUs = 0;
@@ -333,7 +333,7 @@ bool Step::checkWalkingDirections (pathing_t *path, const pos3_t pos, pos3_t toP
 		toPos[2]--;		/* Stepping down into lower cell. */
 	}
 
-	heightChange = RT_FLOOR_POS(routes, actorSize, toPos) - RT_FLOOR_POS(routes, actorSize, pos) + (toPos[2] - pos[2]) * CELL_HEIGHT;
+	heightChange = RT_FLOOR_POS(routes, actorSize, toPos) - RT_FLOOR_POS(routes, actorSize, fromPos) + (toPos[2] - fromPos[2]) * CELL_HEIGHT;
 
 	/* If the actor tries to fall more than falling_height, then prohibit the move. */
 	if (heightChange < -fallingHeight && !hasLadderSupport) {
@@ -359,23 +359,22 @@ bool Step::checkWalkingDirections (pathing_t *path, const pos3_t pos, pos3_t toP
 
 /**
  * @brief Checks if we can move in the given flying direction
- * @param[in] pos Current location in the map.
  * @param[in] toPos The position we are moving to with this step.
  * @return false if we can't fly there
  */
-bool Step::checkFlyingDirections (const pos3_t pos, const pos3_t toPos)
+bool Step::checkFlyingDirections (const pos3_t toPos)
 {
 	const int coreDir = dir % CORE_DIRECTIONS;	/**< The compass direction of this flying move */
 	int neededHeight;
 	int passageHeight;
 
-	if (toPos[2] > pos[2]) {
+	if (toPos[2] > fromPos[2]) {
 		/* If the actor is moving up, check the passage at the current cell.
 		 * The minimum height is the actor's height plus the distance from the current floor to the top of the cell. */
-		neededHeight = actorHeight + CELL_HEIGHT - std::max((const signed char)0, RT_FLOOR_POS(routes, actorSize, pos));
-		RT_CONN_TEST_POS(routes, actorSize, pos, coreDir);
-		passageHeight = RT_CONN_POS(routes, actorSize, pos, coreDir);
-	} else if (toPos[2] < pos[2]) {
+		neededHeight = actorHeight + CELL_HEIGHT - std::max((const signed char)0, RT_FLOOR_POS(routes, actorSize, fromPos));
+		RT_CONN_TEST_POS(routes, actorSize, fromPos, coreDir);
+		passageHeight = RT_CONN_POS(routes, actorSize, fromPos, coreDir);
+	} else if (toPos[2] < fromPos[2]) {
 		/* If the actor is moving down, check from the destination cell back. *
 		 * The minimum height is the actor's height plus the distance from the destination floor to the top of the cell. */
 		neededHeight = actorHeight + CELL_HEIGHT - std::max((const signed char)0, RT_FLOOR_POS(routes, actorSize, toPos));
@@ -383,8 +382,8 @@ bool Step::checkFlyingDirections (const pos3_t pos, const pos3_t toPos)
 		passageHeight = RT_CONN_POS(routes, actorSize, toPos, coreDir ^ 1);
 	} else {
 		neededHeight = actorHeight;
-		RT_CONN_TEST_POS(routes, actorSize, pos, coreDir);
-		passageHeight = RT_CONN_POS(routes, actorSize, pos, coreDir);
+		RT_CONN_TEST_POS(routes, actorSize, fromPos, coreDir);
+		passageHeight = RT_CONN_POS(routes, actorSize, fromPos, coreDir);
 	}
 	if (passageHeight < neededHeight) {
 		return false;
@@ -397,13 +396,13 @@ bool Step::checkFlyingDirections (const pos3_t pos, const pos3_t toPos)
  * @param[in] pos Current location in the map.
  * @return false if we can't move there
  */
-bool Step::checkVerticalDirections (const pos3_t pos)
+bool Step::checkVerticalDirections (void)
 {
 	if (dir == DIRECTION_FALL) {
 		if (flier) {
 			/* Fliers cannot fall intentionally. */
 			return false;
-		} else if (RT_FLOOR_POS(routes, actorSize, pos) >= 0) {
+		} else if (RT_FLOOR_POS(routes, actorSize, fromPos) >= 0) {
 			/* We cannot fall if there is a floor in this cell. */
 			return false;
 		} else if (hasLadderSupport) {
@@ -411,7 +410,7 @@ bool Step::checkVerticalDirections (const pos3_t pos)
 			return false;
 		}
 	} else if (dir == DIRECTION_CLIMB_UP) {
-		if (flier && QuantToModel(RT_CEILING_POS(routes, actorSize, pos)) < UNIT_HEIGHT * 2 - PLAYER_HEIGHT) { /* Not enough headroom to fly up. */
+		if (flier && QuantToModel(RT_CEILING_POS(routes, actorSize, fromPos)) < UNIT_HEIGHT * 2 - PLAYER_HEIGHT) { /* Not enough headroom to fly up. */
 			return false;
 		}
 		/* If the actor is not a flyer and tries to move up, there must be a ladder. */
@@ -420,7 +419,7 @@ bool Step::checkVerticalDirections (const pos3_t pos)
 		}
 	} else if (dir == DIRECTION_CLIMB_DOWN) {
 		if (flier) {
-			if (RT_FLOOR_POS(routes, actorSize, pos) >= 0 ) { /* Can't fly down through a floor. */
+			if (RT_FLOOR_POS(routes, actorSize, fromPos) >= 0 ) { /* Can't fly down through a floor. */
 				return false;
 			}
 		} else {
@@ -465,18 +464,18 @@ static void Grid_MoveMark (const routing_t *routes, const pos3_t exclude, const 
 	/* If there is no passageway (or rather lack of a wall) to the desired cell, then return. */
 	/* If the flier is moving up or down diagonally, then passage height will also adjust */
 	if (dir >= FLYING_DIRECTIONS) {
-		if (!step->checkFlyingDirections(pos, toPos)) {
+		if (!step->checkFlyingDirections(toPos)) {
 			return;
 		}
 	} else if (dir < CORE_DIRECTIONS) {
 		/** note that this function may modify toPos ! */
-		if (!step->checkWalkingDirections(path, pos, toPos, crouchingState)) {
+		if (!step->checkWalkingDirections(path, toPos, crouchingState)) {
 			return;
 		}
 	} else {
 		/* else there is no movement that uses passages. */
 		/* If we are falling, the height difference is the floor value. */
-		if (!step->checkVerticalDirections(pos)) {
+		if (!step->checkVerticalDirections()) {
 			return;
 		}
 	}
