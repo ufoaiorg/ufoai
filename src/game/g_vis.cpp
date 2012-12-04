@@ -391,21 +391,17 @@ void G_VisMakeEverythingVisible (void)
  * @return Bitmask of VIS_* values
  * @sa G_CheckVisTeam
  */
-int G_CheckVis (edict_t * check, const vischeckflags_t visFlags)
+void G_CheckVis (edict_t * check, const vischeckflags_t visFlags)
 {
 	int team;
-	int status;
 
-	status = 0;
 	for (team = 0; team < MAX_TEAMS; team++)
 		if (level.num_alive[team]) {
 			if (!check)	/* no special entity given, so check them all */
-				status |= G_CheckVisTeamAll(team, visFlags, NULL);
+				G_CheckVisTeamAll(team, visFlags, NULL);
 			else
-				status |= G_CheckVisTeam(team, check, visFlags, NULL);
+				G_CheckVisTeam(team, check, visFlags, NULL);
 		}
-
-	return status;
 }
 
 /**
