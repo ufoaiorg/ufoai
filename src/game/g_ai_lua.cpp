@@ -339,7 +339,7 @@ static int actorL_shoot (lua_State *L)
 		return 1;
 	}
 
-	shots = tu / G_GetActorTimeForFiredef(AIL_ent, fdArray, false);
+	shots = tu / G_ActorGetTimeForFiredef(AIL_ent, fdArray, false);
 
 	while (shots > 0) {
 		shots--;

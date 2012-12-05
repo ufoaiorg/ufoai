@@ -297,7 +297,7 @@ static int G_ReactionFireGetTUsForItem (const edict_t *ent, const edict_t *targe
 			const fireDefIndex_t fmIdx = fmSetting->fmIdx;
 			const int reactionFire = G_PLAYER_FROM_ENT(ent)->reactionLeftover;
 			const fireDef_t *fd = &fdArray[fmIdx];
-			const int tus = G_GetActorTimeForFiredef(ent, fd, true) + reactionFire;
+			const int tus = G_ActorGetTimeForFiredef(ent, fd, true) + reactionFire;
 
 			if (tus <= ent->TU && fd->range > VectorDist(ent->origin, target->origin)) {
 				return tus;
