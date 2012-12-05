@@ -1,6 +1,6 @@
 /**
  * @file
- * @brief Artificial Intelligence structures.
+ * @brief Artificial Intelligence functions.
  */
 
 /*
@@ -23,8 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef G_AI_H
-#define G_AI_H
+#pragma once
 
 #include "g_local.h"
 
@@ -45,5 +44,3 @@ int AIL_InitActor(edict_t * ent, const char *type, const char *subtype);
 void AIL_Cleanup(void);
 void AIL_Init(void);
 void AIL_Shutdown(void);
-
-#endif
