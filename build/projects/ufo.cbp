@@ -806,6 +806,7 @@
 		<Unit filename="..\..\src\server\sv_game.cpp" />
 		<Unit filename="..\..\src\server\sv_init.cpp" />
 		<Unit filename="..\..\src\server\sv_log.cpp" />
+		<Unit filename="..\..\src\server\sv_log.h" />
 		<Unit filename="..\..\src\server\sv_main.cpp" />
 		<Unit filename="..\..\src\server\sv_mapcycle.cpp" />
 		<Unit filename="..\..\src\server\sv_rma.cpp" />
