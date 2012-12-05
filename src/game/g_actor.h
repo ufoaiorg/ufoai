@@ -35,7 +35,6 @@ int G_ActorGetReservedTUs(const edict_t *ent);
 int G_ActorUsableTUs(const edict_t *ent);
 int G_ActorGetTUForReactionFire(const edict_t *ent);
 void G_ActorReserveTUs(edict_t *ent, int resReaction, int resShot, int resCrouch);
-edict_t *G_ActorGetByUCN(const int ucn, const int team);
 int G_ActorDoTurn(edict_t *ent, byte dir);
 void G_ActorSetMaxs(edict_t *ent);
 int G_ActorCalculateMaxTU(const edict_t *ent);

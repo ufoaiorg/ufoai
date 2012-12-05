@@ -238,6 +238,23 @@ edict_t* G_EdictsGetNextActor (edict_t* lastEnt)
 }
 
 /**
+ * @brief Searches an actor by a unique character number
+ * @param[in] ucn The unique character number
+ * @param[in] team The team to get the actor with the ucn from
+ * @return The actor edict if found, otherwise @c NULL
+ */
+edict_t *G_EdictsGetActorByUCN (const int ucn, const int team)
+{
+	edict_t *ent = NULL;
+
+	while ((ent = G_EdictsGetNextActor(ent)))
+		if (team == ent->team && ent->chr.ucn == ucn)
+			return ent;
+
+	return NULL;
+}
+
+/**
  * @brief Searches an actor at the given grid location.
  * @param pos The grid location to look for an edict.
  * @return @c NULL if nothing was found, otherwise the actor located at the given grid position.

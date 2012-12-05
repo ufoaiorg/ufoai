@@ -178,23 +178,6 @@ void G_ActorReserveTUs (edict_t *ent, int resReaction, int resShot, int resCrouc
 }
 
 /**
- * @brief Searches an actor by a unique character number
- * @param[in] ucn The unique character number
- * @param[in] team The team to get the actor with the ucn from
- * @return The actor edict if found, otherwise @c NULL
- */
-edict_t *G_ActorGetByUCN (const int ucn, const int team)
-{
-	edict_t *ent = NULL;
-
-	while ((ent = G_EdictsGetNextActor(ent)))
-		if (team == ent->team && ent->chr.ucn == ucn)
-			return ent;
-
-	return NULL;
-}
-
-/**
  * @brief Turns an actor around
  * @param[in] ent the actor (edict) we are talking about
  * @param[in] dir the direction to turn the edict into, might be an action
