@@ -93,6 +93,8 @@ int Com_CountTokensInBuffer (const char *buffer)
 /**
  * @brief Parse a token out of a string
  * @param data_p Pointer to a string which is to be parsed
+ * @param target A place to put the parsed data. If 0, an internal buffer of 4096 is used.
+ * @param size The length of target buffer, if any
  * @pre @c data_p is expected to be null-terminated
  * @return The string result of parsing in a string.
  * @note if used to parse a quoted string that needs further parsing
