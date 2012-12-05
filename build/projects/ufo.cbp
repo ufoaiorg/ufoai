@@ -704,6 +704,7 @@
 		<Unit filename="..\..\src\client\ui\ui_windows.cpp" />
 		<Unit filename="..\..\src\client\ui\ui_windows.h" />
 		<Unit filename="..\..\src\common\binaryexpressionparser.cpp" />
+		<Unit filename="..\..\src\common\binaryexpressionparser.h" />
 		<Unit filename="..\..\src\common\bsp.cpp" />
 		<Unit filename="..\..\src\common\cmd.cpp" />
 		<Unit filename="..\..\src\common\cmd.h" />
