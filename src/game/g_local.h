@@ -342,15 +342,6 @@ void G_MoraleBehaviour(int team);
 void G_PhysicsRun(void);
 void G_PhysicsStep(edict_t *ent);
 
-/* g_actor */
-void G_ActorReserveTUs(edict_t *ent, int resReaction, int resShot, int resCrouch);
-int G_ActorGetTUForReactionFire(const edict_t *ent);
-int G_ActorUsableTUs(const edict_t *ent);
-int G_ActorGetReservedTUs(const edict_t *ent);
-void G_ActorCheckRevitalise(edict_t *ent);
-int G_ActorCalculateMaxTU(const edict_t *ent);
-int G_GetActorTimeForFiredef(const edict_t *ent, const fireDef_t *const fd, bool reaction);
-
 /* g_mission */
 void G_MissionAddVictoryMessage(const char *message);
 bool G_MissionTouch(edict_t *self, edict_t *activator);
@@ -411,22 +402,6 @@ edict_t *G_GetFloorItems(edict_t *ent) __attribute__((nonnull));
 bool G_InventoryRemoveItemByID(const char *itemID, edict_t *ent, containerIndex_t index);
 bool G_SetTeamForPlayer(player_t* player, const int team);
 
-bool G_ActorIsInRescueZone(const edict_t *actor);
-void G_ActorSetInRescueZone(edict_t *actor, bool inRescueZone);
-void G_ActorUseDoor(edict_t *actor, edict_t *door);
-bool G_IsLivingActor(const edict_t *ent) __attribute__((nonnull));
-void G_ActorSetClientAction(edict_t *actor, edict_t *ent);
-edict_t *G_ActorGetByUCN(const int ucn, const int team);
-void G_CheckForceEndRound(void);
-int G_ActorGetContentFlags(const vec3_t origin);
-bool G_ActorDieOrStun(edict_t *ent, edict_t *attacker);
-int G_ActorCountAlive(int team);
-void G_ActorSetMaxs(edict_t *ent);
-void G_ActorGiveTimeUnits(edict_t *ent);
-void G_ActorSetTU(edict_t *ent, int tus);
-void G_ActorUseTU(edict_t *ent, int tus);
-void G_ActorModifyCounters(const edict_t *attacker, const edict_t *victim, int deltaAlive, int deltaKills, int deltaStuns);
-void G_ActorGetEyeVector(const edict_t *actor, vec3_t eye);
 int G_ClientAction(player_t *player);
 void G_ClientEndRound(player_t *player);
 void G_ClientTeamInfo(const player_t *player);
@@ -444,7 +419,7 @@ void G_ClientStartMatch(player_t *player);
 bool G_ClientConnect(player_t *player, char *userinfo, size_t userinfoSize);
 void G_ClientDisconnect(player_t *player);
 
-void G_ActorReload(edict_t *ent, const invDef_t *invDef);
+void G_CheckForceEndRound(void);
 bool G_ClientCanReload(edict_t *ent, containerIndex_t containerID);
 void G_ClientGetWeaponFromInventory(edict_t *ent);
 byte G_ActorMoveLength(const edict_t *ent, const pathing_t *path, const pos3_t to, bool stored);
@@ -452,9 +427,7 @@ void G_ClientMove(const player_t *player, int visTeam, edict_t *ent, const pos3_
 void G_ActorFall(edict_t *ent);
 void G_MoveCalc(int team, const edict_t *movingActor, const pos3_t from, byte crouchingState, int distance);
 void G_MoveCalcLocal(pathing_t *pt, int team, const edict_t *movingActor, const pos3_t from, byte crouchingState, int distance);
-bool G_ActorInvMove(edict_t *ent, const invDef_t *from, invList_t *fItem, const invDef_t *to, int tx, int ty, bool checkaction);
 void G_ClientStateChange(const player_t* player, edict_t *ent, int reqState, bool checkaction);
-int G_ActorDoTurn(edict_t *ent, byte dir);
 
 void G_SendInvisible(const player_t *player);
 void G_GiveTimeUnits(int team);
