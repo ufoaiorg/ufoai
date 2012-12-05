@@ -66,6 +66,7 @@
 		<Unit filename="..\..\src\game\chr_shared.cpp" />
 		<Unit filename="..\..\src\game\chr_shared.h" />
 		<Unit filename="..\..\src\game\g_actor.cpp" />
+		<Unit filename="..\..\src\game\g_actor.h" />
 		<Unit filename="..\..\src\game\g_ai.cpp" />
 		<Unit filename="..\..\src\game\g_ai.h" />
 		<Unit filename="..\..\src\game\g_ai_lua.cpp" />
