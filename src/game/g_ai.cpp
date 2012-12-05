@@ -23,11 +23,55 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "g_local.h"
 #include "g_ai.h"
 #include "g_actor.h"
 #include "g_edicts.h"
 #include "g_vis.h"
+
+typedef struct {
+	pos3_t to;			/**< grid pos to walk to for performing the action */
+	pos3_t stop;		/**< grid pos to end turn at (e.g. hiding spots) */
+	shoot_types_t shootType;	/**< the shoot type */
+	byte shots;			/**< how many shoots can this actor do - only set this if the target is an actor */
+	edict_t *target;	/**< the target edict */
+	const fireDef_t *fd;/**< the firemode to use for shooting */
+	int z_align;		/**< the z-align for every shoot */
+} aiAction_t;
+
+#define SCORE_HIDE			60
+#define SCORE_CLOSE_IN		20
+#define SCORE_KILL			30
+#define SCORE_RANDOM		10
+#define SCORE_REACTION_ERADICATION 30
+#define SCORE_REACTION_FEAR_FACTOR 20
+#define SCORE_NONHIDING_PLACE_PENALTY 25
+#define SCORE_CIV_FACTOR	0.25
+#define SCORE_DISABLED_FACTOR 0.25
+
+#define SCORE_CIV_RANDOM	10
+#define SCORE_RUN_AWAY		50
+#define SCORE_CIV_LAZINESS	5
+#define RUN_AWAY_DIST		160
+#define WAYPOINT_CIV_DIST	768
+#define HERD_THRESHOLD 128
+#define SCORE_HERDING_PENALTY 100
+#define SCORE_NOSAFE_POSITION_PENALTY 500
+
+#define SCORE_MISSION_OPPONENT_TARGET	50
+#define SCORE_MISSION_TARGET	60
+
+#define SCORE_PANIC_RUN_TO_FRIENDS 300.0
+#define SCORE_PANIC_FLEE_FROM_STRANGERS 500.0
+#define SCORE_PANIC_RANDOM 25.0
+
+#define AI_ACTION_NOTHING_FOUND -10000.0
+
+#define CLOSE_IN_DIST		1200.0
+#define SPREAD_FACTOR		8.0
+#define	SPREAD_NORM(x)		(x > 0 ? SPREAD_FACTOR/(x*torad) : 0)
+/** @brief distance for (ai) hiding in grid tiles */
+#define HIDE_DIST			7
+#define HERD_DIST			7
 
 static pathing_t *hidePathingTable;
 static pathing_t *herdPathingTable;
