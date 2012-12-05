@@ -279,21 +279,13 @@ int G_ActorCalculateMaxTU (const edict_t *ent)
 	return std::min(currentMaxTU, MAX_TU);
 }
 
-static inline int G_ActorGetTU (const edict_t *ent)
-{
-	if (G_IsDazed(ent))
-		return 0;
-
-	return G_ActorCalculateMaxTU(ent);
-}
-
 /**
  * @brief Set time units for the given edict. Based on speed skills
  * @param ent The actor edict
  */
 void G_ActorGiveTimeUnits (edict_t *ent)
 {
-	const int tus = G_ActorGetTU(ent);
+	const int tus = G_IsDazed(ent) ? 0 : G_ActorCalculateMaxTU(ent);
 	G_ActorSetTU(ent, tus);
 	G_RemoveDazed(ent);
 }
