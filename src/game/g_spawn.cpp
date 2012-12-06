@@ -465,6 +465,10 @@ static void G_SpawnSmoke (const vec3_t vec, const char *particle, int rounds)
 /**
  * @brief Spawns a smoke field that is available for some rounds
  * @param[in] vec The position in the world that is the center of the smoke field
+ * @param[in] particle The id of the particle (see ptl_*.ufo script files in base/ufos)
+ * @param[in] rounds The number of rounds the particle will last
+ * @todo Does '2 rounds' mean: created in player's turn, last through the aliens turn, vanish before the 2nd player's turn ??
+ * @param[in] radius The max distance of a cell from the center to get a particle
  */
 void G_SpawnSmokeField (const vec3_t vec, const char *particle, int rounds, vec_t radius)
 {
@@ -472,6 +476,7 @@ void G_SpawnSmokeField (const vec3_t vec, const char *particle, int rounds, vec_
 
 	G_SpawnSmoke(vec, particle, rounds);
 
+	/* for all cells in a square of +/- radius */
 	for (x = vec[0] - radius; x <= vec[0] + radius; x += UNIT_SIZE) {
 		for (y = vec[1] - radius; y <= vec[1] + radius; y += UNIT_SIZE) {
 			vec3_t end;
@@ -479,6 +484,7 @@ void G_SpawnSmokeField (const vec3_t vec, const char *particle, int rounds, vec_
 
 			VectorSet(end, x, y, vec[2]);
 
+			/* cut off the edges of the square to resemble a circle */
 			if (VectorDist(end, vec) > radius)
 				continue;
 			tr = G_Trace(vec, end, NULL, MASK_SMOKE_AND_FIRE);
