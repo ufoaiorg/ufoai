@@ -31,7 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <string.h>
 #include <fcntl.h>
 #include <unistd.h>
-
+#include <SDL_thread.h>
 #ifdef _WIN32
 #include "../ports/system.h"
 #endif
@@ -92,6 +92,7 @@ typedef int SOCKET;
 #define dbuffer_len(dbuf) (dbuf ? (dbuf)->length() : 0)
 
 static cvar_t* net_ipv4;
+static SDL_mutex *netMutex;
 
 struct net_stream {
 	void *data;
@@ -105,6 +106,8 @@ struct net_stream {
 	int family;
 	int addrlen;
 
+	/* these buffers must be used in a thread safe manner
+	 * (lock netMutex) because the game thread can also write to it */
 	dbufferptr inbound;
 	dbufferptr outbound;
 
@@ -314,6 +317,8 @@ void NET_Init (void)
 
 	net_ipv4 = Cvar_Get("net_ipv4", "1", CVAR_ARCHIVE, "Only use ipv4");
 	Cmd_AddCommand("net_showstreams", NET_ShowStreams_f, "Show opened streams");
+
+	netMutex = SDL_CreateMutex();
 }
 
 /**
@@ -324,6 +329,8 @@ void NET_Shutdown (void)
 #ifdef _WIN32
 	WSACleanup();
 #endif
+	SDL_DestroyMutex(netMutex);
+	netMutex = NULL;
 }
 
 /**
@@ -484,7 +491,9 @@ void NET_Wait (int timeout)
 				continue;
 			}
 
+			SDL_LockMutex(netMutex);
 			len = s->outbound->get(buf, sizeof(buf));
+			SDL_UnlockMutex(netMutex);
 			len = send(s->socket, buf, len, 0);
 
 			if (len < 0) {
@@ -495,7 +504,9 @@ void NET_Wait (int timeout)
 
 			Com_DPrintf(DEBUG_SERVER, "wrote %d bytes to stream %d (%s)\n", len, i, NET_StreamPeerToName(s, buf, sizeof(buf), true));
 
+			SDL_LockMutex(netMutex);
 			s->outbound->remove(len);
+			SDL_UnlockMutex(netMutex);
 		}
 
 		if (FD_ISSET(s->socket, &read_fds_out)) {
@@ -508,7 +519,9 @@ void NET_Wait (int timeout)
 				continue;
 			} else {
 				if (s->inbound) {
+					SDL_LockMutex(netMutex);
 					s->inbound->add(buf, len);
+					SDL_UnlockMutex(netMutex);
 
 					Com_DPrintf(DEBUG_SERVER, "read %d bytes from stream %d (%s)\n", len, i, NET_StreamPeerToName(s, buf, sizeof(buf), true));
 
@@ -709,8 +722,11 @@ void NET_StreamEnqueue (struct net_stream *s, const char *data, int len)
 	if (len <= 0 || !s || s->closed || s->finished)
 		return;
 
-	if (s->outbound)
+	if (s->outbound) {
+		SDL_LockMutex(netMutex);
 		s->outbound->add(data, len);
+		SDL_UnlockMutex(netMutex);
+	}
 
 	if (s->socket >= 0)
 		FD_SET(s->socket, &write_fds);
@@ -742,7 +758,10 @@ int NET_StreamPeek (struct net_stream *s, char *data, int len)
 	if ((s->closed || s->finished) && dbuffer_len(s->inbound) == 0)
 		return 0;
 
-	return s->inbound->get(data, len);
+	SDL_LockMutex(netMutex);
+	const int ret = s->inbound->get(data, len);
+	SDL_UnlockMutex(netMutex);
+	return ret;
 }
 
 /**
@@ -754,7 +773,10 @@ int NET_StreamDequeue (struct net_stream *s, char *data, int len)
 	if (len <= 0 || !s || s->finished)
 		return 0;
 
-	return s->inbound->extract(data, len);
+	SDL_LockMutex(netMutex);
+	const int ret = s->inbound->extract(data, len);
+	SDL_UnlockMutex(netMutex);
+	return ret;
 }
 
 void *NET_StreamGetData (struct net_stream *s)

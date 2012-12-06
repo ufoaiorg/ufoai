@@ -891,8 +891,7 @@ void SV_Shutdown (const char *finalmsg, bool reconnect)
 	/* free server static data */
 	Mem_Free(svs.clients);
 
-	if (svs.serverMutex != NULL)
-		SDL_DestroyMutex(svs.serverMutex);
+	SDL_DestroyMutex(svs.serverMutex);
 
 	OBJZERO(svs);
 
