@@ -28,7 +28,6 @@
 #define IMAGES_H_
 
 #include "ufotypes.h"
-#include "byte.h"
 #include "../common/filesys.h"
 #include <SDL_video.h>
 
