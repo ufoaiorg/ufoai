@@ -352,9 +352,6 @@ void G_MissionThink(edict_t *self);
 /* g_utils */
 uint32_t G_GetLevelFlagsFromPos(const pos3_t pos);
 edict_t *G_FindRadius(edict_t *from, const vec3_t org, float rad, entity_type_t type = ET_NULL);
-const char* G_GetPlayerName(int pnum);
-player_t* G_GetPlayerForTeam(int team);
-int G_GetActiveTeam(void);
 const char* G_GetWeaponNameForFiredef(const fireDef_t *fd);
 void G_PrintActorStats(const edict_t *victim, const edict_t *attacker, const fireDef_t *fd);
 void G_PrintStats(const char *format, ...) __attribute__((format(__printf__, 1, 2)));
@@ -392,56 +389,22 @@ void G_GenerateEntList(const char *entList[MAX_EDICTS]);
 
 #define MORALE_RANDOM( mod )	( (mod) * (1.0 + 0.3*crand()) )
 
-edict_t* G_ClientGetFreeSpawnPointForActorSize(const player_t *player, const actorSizeEnum_t actorSize);
-bool G_ClientUseEdict(const player_t *player, edict_t *actor, edict_t *door);
-bool G_ActionCheckForCurrentTeam(const player_t *player, edict_t *ent, int TU);
-bool G_ActionCheckForReaction(const player_t *player, edict_t *ent, int TU);
-void G_SendStats(edict_t *ent) __attribute__((nonnull));
-edict_t *G_SpawnFloor(const pos3_t pos);
-edict_t *G_GetFloorItems(edict_t *ent) __attribute__((nonnull));
-bool G_InventoryRemoveItemByID(const char *itemID, edict_t *ent, containerIndex_t index);
-bool G_SetTeamForPlayer(player_t* player, const int team);
-
-int G_ClientAction(player_t *player);
-void G_ClientEndRound(player_t *player);
-void G_ClientTeamInfo(const player_t *player);
-void G_ClientInitActorStates(const player_t *player);
-int G_ClientGetTeamNum(const player_t *player);
-int G_ClientGetTeamNumPref(const player_t *player);
-bool G_ClientIsReady(const player_t *player);
-void G_ClientPrintf(const player_t *player, int printlevel, const char *fmt, ...) __attribute__((format(__printf__, 3, 4)));
-void G_ResetClientData(void);
-
-void G_ClientCommand(player_t *player);
-void G_ClientUserinfoChanged(player_t *player, const char *userinfo);
-bool G_ClientBegin(player_t *player);
-void G_ClientStartMatch(player_t *player);
-bool G_ClientConnect(player_t *player, char *userinfo, size_t userinfoSize);
-void G_ClientDisconnect(player_t *player);
-
 void G_CheckForceEndRound(void);
-bool G_ClientCanReload(edict_t *ent, containerIndex_t containerID);
-void G_ClientGetWeaponFromInventory(edict_t *ent);
 byte G_ActorMoveLength(const edict_t *ent, const pathing_t *path, const pos3_t to, bool stored);
 void G_ClientMove(const player_t *player, int visTeam, edict_t *ent, const pos3_t to);
 void G_ActorFall(edict_t *ent);
 void G_MoveCalc(int team, const edict_t *movingActor, const pos3_t from, byte crouchingState, int distance);
 void G_MoveCalcLocal(pathing_t *pt, int team, const edict_t *movingActor, const pos3_t from, byte crouchingState, int distance);
-void G_ClientStateChange(const player_t* player, edict_t *ent, int reqState, bool checkaction);
+void G_ClientEndRound(player_t *player);
 
-void G_SendInvisible(const player_t *player);
-void G_GiveTimeUnits(int team);
-
-void G_AppearPerishEvent(playermask_t player_mask, bool appear, edict_t *check, const edict_t *ent);
-playermask_t G_VisToPM(teammask_t teamMask);
-teammask_t G_PMToVis(playermask_t playerMask);
+void G_ClientCommand(player_t *player);
 void G_SendInventory(playermask_t player_mask, const edict_t *ent);
-playermask_t G_TeamToPM(int team);
-
-player_t* G_PlayerGetNextHuman(player_t *lastPlayer);
-player_t* G_PlayerGetNextActiveHuman(player_t *lastPlayer);
-player_t* G_PlayerGetNextAI(player_t *lastPlayer);
-player_t* G_PlayerGetNextActiveAI(player_t *lastPlayer);
+const char* G_GetPlayerName(int pnum);
+player_t* G_GetPlayerForTeam(int team);
+void G_SendStats(edict_t *ent) __attribute__((nonnull));
+edict_t *G_SpawnFloor(const pos3_t pos);
+edict_t *G_GetFloorItems(edict_t *ent) __attribute__((nonnull));
+bool G_InventoryRemoveItemByID(const char *itemID, edict_t *ent, containerIndex_t index);
 
 void G_SpawnEntities(const char *mapname, bool day, const char *entities);
 bool G_RunFrame(void);

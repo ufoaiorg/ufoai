@@ -37,7 +37,7 @@
 
  */
 
-#include "g_local.h"
+#include "g_client.h"
 #include "g_actor.h"
 #include "g_edicts.h"
 #include "g_reaction.h"
