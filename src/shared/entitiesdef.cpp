@@ -214,8 +214,10 @@ int ED_GetIntVector (const entityKeyDef_t *kd, int v[], const int n)
 
 /**
  * @brief checks that a string represents a single number
+ * @param value The string to parse from
  * @param floatOrInt one of ED_TYPE_FLOAT or ED_TYPE_INT
  * @param insistPositive if 1, then tests for the number being greater than or equal to zero.
+ * @param parsedNumber The result as a union
  * @sa ED_CheckNumericType
  * @note disallows hex, inf, NaN, numbers with junk on the end (eg -0123junk)
  * @return ED_OK or ED_ERROR
@@ -258,8 +260,10 @@ static int ED_CheckNumber (const char *value, const int floatOrInt, const int in
 
 /**
  * @brief check a value against the range for the key
+ * @param keyDef The descriptor of the key/value pair
  * @param type either ED_TYPE_FLOAT, ED_TYPE_INT or ED_TYPE_BOOL
  * @param index the index of the number being checked in the value. eg angles "90 180", 90 is at 0, 180 is at 1.
+ * @param parsedNumber The value to check
  * @note checks lastCheckedInt or lastCheckedFloat against the range in the supplied keyDef.
  * @return ED_ERROR or ED_OK
  */
@@ -312,6 +316,8 @@ static int ED_CheckRange (const entityKeyDef_t *keyDef, const int type, const in
 /**
  * @brief tests if a value string matches the type for this key. this includes
  * each element of a numeric array. Also checks value against range def, if one exists.
+ * @param keyDef The descriptor of the key/value pair
+ * @param value The string to parse from
  * @param type one of ED_TYPE_FLOAT, ED_TYPE_INT or ED_TYPE_BOOL
  * @return ED_OK or ED_ERROR (call ED_GetLastError)
  */
