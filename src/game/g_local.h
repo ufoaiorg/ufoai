@@ -377,10 +377,6 @@ bool G_TestLine(const vec3_t start, const vec3_t end);
 void G_InitCamera(edict_t *ent, camera_type_t cameraType, float angle, bool rotate);
 edict_t *G_SpawnCamera(const vec3_t origin, int team, camera_type_t cameraType);
 
-/* g_combat */
-int G_ApplyProtection(const edict_t *target, const byte dmgWeight, int damage);
-void G_GetShotOrigin(const edict_t *shooter, const fireDef_t *fd, const vec3_t dir, vec3_t shotOrigin);
-
 void G_CompleteRecalcRouting(void);
 void G_RecalcRouting(const char *model, const GridBox& box);
 void G_GenerateEntList(const char *entList[MAX_EDICTS]);
@@ -412,10 +408,6 @@ bool G_RunFrame(void);
 #ifdef DEBUG
 void G_InvList_f(const player_t *player);
 #endif
-
-/* g_combat.c */
-bool G_ClientShoot(const player_t *player, edict_t *ent, const pos3_t at, shoot_types_t shootType, fireDefIndex_t firemode, shot_mock_t *mock, bool allowReaction, int z_align);
-void G_CheckDeathOrKnockout(edict_t *target, edict_t *attacker, const fireDef_t *fd, int damage);
 
 /* g_ai.c */
 void AI_Init(void);
