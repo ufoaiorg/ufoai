@@ -449,7 +449,7 @@ bool Step::checkVerticalDirections (void)
 
 /**
  * @param[in] step Holds all relevant data to check the step, eg. ptr to routing table
- * @param[in,out] path Pointer to client or server side pathing table (clMap, svMap)
+ * @param[in] path Pointer to client or server side pathing table (clMap, svMap)
  */
 static bool Grid_MoveMark (Step &step, const pathing_t *path)
 {
