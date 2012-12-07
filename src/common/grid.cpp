@@ -156,7 +156,7 @@ public:
 	bool init (const routing_t *routes, const pos3_t fromPos, const actorSizeEnum_t actorSize, const byte crouchingState, const int dir);
 	bool calcNewPos (void);
 	void calcNewTUs (pathing_t *path);
-	bool checkWalkingDirections (pathing_t *path, const byte crouchingState);
+	bool checkWalkingDirections (pathing_t *path);
 	bool checkFlyingDirections (void);
 	bool checkVerticalDirections (void);
 };
@@ -230,6 +230,7 @@ bool Step::calcNewPos (void)
 
 /**
  * @brief Calculate the TUs after we in the given dir
+ * @param[in] path Pointer to client or server side pathing table (clPathMap, svPathMap)
  */
 void Step::calcNewTUs (pathing_t *path)
 {
@@ -248,10 +249,9 @@ void Step::calcNewTUs (pathing_t *path)
  * First test for opening height availablilty. Then test for stepup compatibility. Last test for fall.
  * @note Fliers use this code only when they are walking.
  * @param[in] path Pointer to client or server side pathing table (clPathMap, svPathMap)
- * @param[in] crouchingState Whether the actor is currently crouching, 1 is yes, 0 is no.
  * @return false if we can't fly there
  */
-bool Step::checkWalkingDirections (pathing_t *path, const byte crouchingState)
+bool Step::checkWalkingDirections (pathing_t *path)
 {
 	int nx, ny, nz;
 	int passageHeight;
@@ -470,7 +470,7 @@ static void Grid_MoveMark (Step &step, const pos3_t exclude, pathing_t *path, pr
 		}
 	} else if (step.dir < CORE_DIRECTIONS) {
 		/** note that this function may modify toPos ! */
-		if (!step.checkWalkingDirections(path, step.crouchingState)) {
+		if (!step.checkWalkingDirections(path)) {
 			return;
 		}
 	} else {
