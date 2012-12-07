@@ -148,7 +148,7 @@ public:
 	const routing_t *routes;
 	int dir;
 	pos3_t fromPos;
-	pos3_t toPos;
+	pos3_t toPos;	/* The position we are moving to with this step. */
 	actorSizeEnum_t actorSize;
 	byte crouchingState;
 	byte TUsAfter;
@@ -248,7 +248,6 @@ void Step::calcNewTUs (pathing_t *path)
  * First test for opening height availablilty. Then test for stepup compatibility. Last test for fall.
  * @note Fliers use this code only when they are walking.
  * @param[in] path Pointer to client or server side pathing table (clPathMap, svPathMap)
- * @param[in] toPos The position we are moving to with this step.
  * @param[in] crouchingState Whether the actor is currently crouching, 1 is yes, 0 is no.
  * @return false if we can't fly there
  */
@@ -377,7 +376,6 @@ bool Step::checkWalkingDirections (pathing_t *path, const byte crouchingState)
 
 /**
  * @brief Checks if we can move in the given flying direction
- * @param[in] toPos The position we are moving to with this step.
  * @return false if we can't fly there
  */
 bool Step::checkFlyingDirections (void)
