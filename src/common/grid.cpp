@@ -150,9 +150,11 @@ public:
 	pos3_t fromPos;
 	actorSizeEnum_t actorSize;
 	byte crouchingState;
+	byte TUsAfter;
 
 	bool init (const routing_t *routes, const pos3_t fromPos, const actorSizeEnum_t actorSize, const byte crouchingState, const int dir);
 	bool calcNewPos (pos3_t toPos);
+	void calcNewTUs (pathing_t *path);
 	bool checkWalkingDirections (pathing_t *path, pos3_t toPos, const byte crouchingState);
 	bool checkFlyingDirections (const pos3_t toPos);
 	bool checkVerticalDirections (void);
@@ -223,6 +225,21 @@ bool Step::calcNewPos (pos3_t toPos)
 		return false;
 	}
 	return true;
+}
+
+/**
+ * @brief Calculate the TUs after we in the given dir
+ */
+void Step::calcNewTUs (pathing_t *path)
+{
+	byte TUsSoFar, TUsForMove;
+
+	TUsSoFar = RT_AREA_POS(path, fromPos, crouchingState);
+	/* Find the number of TUs used (normally) to move in this direction. */
+	TUsForMove = Grid_GetTUsForDirection(dir, crouchingState);
+
+	/* Now add the TUs needed to get to the originating cell. */
+	TUsAfter = TUsSoFar + TUsForMove;
 }
 
 /**
@@ -441,16 +458,13 @@ bool Step::checkVerticalDirections (void)
 static void Grid_MoveMark (Step &step, const pos3_t exclude, pathing_t *path, priorityQueue_t *pqueue)
 {
 	pos3_t toPos;
-	byte TUsSoFar, TUsForMove, TUsAfter;
-
-	TUsSoFar = RT_AREA_POS(path, step.fromPos, step.crouchingState);
-	/* Find the number of TUs used (normally) to move in this direction. */
-	TUsForMove = Grid_GetTUsForDirection(step.dir, step.crouchingState);
 
 	/* calculate the position we would normally end up if moving in the given dir. */
 	if (!step.calcNewPos(toPos)) {
 		return;
 	}
+	step.calcNewTUs(path);
+
 	/* If there is no passageway (or rather lack of a wall) to the desired cell, then return. */
 	/* If the flier is moving up or down diagonally, then passage height will also adjust */
 	if (step.dir >= FLYING_DIRECTIONS) {
@@ -478,12 +492,9 @@ static void Grid_MoveMark (Step &step, const pos3_t exclude, pathing_t *path, pr
 	 * If the actor is a flier, as long as there is a passage, it can be moved through.
 	 * There are no floor difference restrictions for fliers, only obstructions. */
 
-	/* Now add the TUs needed to get to the originating cell. */
-	TUsAfter = TUsSoFar + TUsForMove;
-
 	/* Is this a better move into this cell? */
 	RT_AREA_TEST_POS(path, toPos, step.crouchingState);
-	if (RT_AREA_POS(path, toPos, step.crouchingState) <= TUsAfter) {
+	if (RT_AREA_POS(path, toPos, step.crouchingState) <= step.TUsAfter) {
 		return;	/* This move is not optimum. */
 	}
 
@@ -493,12 +504,12 @@ static void Grid_MoveMark (Step &step, const pos3_t exclude, pathing_t *path, pr
 	}
 
 	/* Store move in pathing table. */
-	Grid_SetMoveData(path, toPos, step.crouchingState, TUsAfter, step.dir, step.fromPos[2]);
+	Grid_SetMoveData(path, toPos, step.crouchingState, step.TUsAfter, step.dir, step.fromPos[2]);
 	if (pqueue) {
 		pos4_t dummy;
 
 		Vector4Set(dummy, toPos[0], toPos[1], toPos[2], step.crouchingState);
-		PQueuePush(pqueue, dummy, TUsAfter);
+		PQueuePush(pqueue, dummy, step.TUsAfter);
 	}
 }
 
