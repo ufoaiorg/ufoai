@@ -148,15 +148,16 @@ public:
 	const routing_t *routes;
 	int dir;
 	pos3_t fromPos;
+	pos3_t toPos;
 	actorSizeEnum_t actorSize;
 	byte crouchingState;
 	byte TUsAfter;
 
 	bool init (const routing_t *routes, const pos3_t fromPos, const actorSizeEnum_t actorSize, const byte crouchingState, const int dir);
-	bool calcNewPos (pos3_t toPos);
+	bool calcNewPos (void);
 	void calcNewTUs (pathing_t *path);
-	bool checkWalkingDirections (pathing_t *path, pos3_t toPos, const byte crouchingState);
-	bool checkFlyingDirections (const pos3_t toPos);
+	bool checkWalkingDirections (pathing_t *path, const byte crouchingState);
+	bool checkFlyingDirections (void);
 	bool checkVerticalDirections (void);
 };
 
@@ -206,7 +207,7 @@ bool Step::init (const routing_t *_routes, const pos3_t _fromPos, const actorSiz
  * @param[in] toPos The position we are moving to with this step.
  * @return false if we can't fly there
  */
-bool Step::calcNewPos (pos3_t toPos)
+bool Step::calcNewPos (void)
 {
 	toPos[0] = fromPos[0] + dvecs[dir][0];	/**< "new" x value = starting x value + difference from chosen direction */
 	toPos[1] = fromPos[1] + dvecs[dir][1];	/**< "new" y value = starting y value + difference from chosen direction */
@@ -251,7 +252,7 @@ void Step::calcNewTUs (pathing_t *path)
  * @param[in] crouchingState Whether the actor is currently crouching, 1 is yes, 0 is no.
  * @return false if we can't fly there
  */
-bool Step::checkWalkingDirections (pathing_t *path, pos3_t toPos, const byte crouchingState)
+bool Step::checkWalkingDirections (pathing_t *path, const byte crouchingState)
 {
 	int nx, ny, nz;
 	int passageHeight;
@@ -379,7 +380,7 @@ bool Step::checkWalkingDirections (pathing_t *path, pos3_t toPos, const byte cro
  * @param[in] toPos The position we are moving to with this step.
  * @return false if we can't fly there
  */
-bool Step::checkFlyingDirections (const pos3_t toPos)
+bool Step::checkFlyingDirections (void)
 {
 	const int coreDir = dir % CORE_DIRECTIONS;	/**< The compass direction of this flying move */
 	int neededHeight;
@@ -457,10 +458,8 @@ bool Step::checkVerticalDirections (void)
  */
 static void Grid_MoveMark (Step &step, const pos3_t exclude, pathing_t *path, priorityQueue_t *pqueue)
 {
-	pos3_t toPos;
-
 	/* calculate the position we would normally end up if moving in the given dir. */
-	if (!step.calcNewPos(toPos)) {
+	if (!step.calcNewPos()) {
 		return;
 	}
 	step.calcNewTUs(path);
@@ -468,12 +467,12 @@ static void Grid_MoveMark (Step &step, const pos3_t exclude, pathing_t *path, pr
 	/* If there is no passageway (or rather lack of a wall) to the desired cell, then return. */
 	/* If the flier is moving up or down diagonally, then passage height will also adjust */
 	if (step.dir >= FLYING_DIRECTIONS) {
-		if (!step.checkFlyingDirections(toPos)) {
+		if (!step.checkFlyingDirections()) {
 			return;
 		}
 	} else if (step.dir < CORE_DIRECTIONS) {
 		/** note that this function may modify toPos ! */
-		if (!step.checkWalkingDirections(path, toPos, step.crouchingState)) {
+		if (!step.checkWalkingDirections(path, step.crouchingState)) {
 			return;
 		}
 	} else {
@@ -493,22 +492,22 @@ static void Grid_MoveMark (Step &step, const pos3_t exclude, pathing_t *path, pr
 	 * There are no floor difference restrictions for fliers, only obstructions. */
 
 	/* Is this a better move into this cell? */
-	RT_AREA_TEST_POS(path, toPos, step.crouchingState);
-	if (RT_AREA_POS(path, toPos, step.crouchingState) <= step.TUsAfter) {
+	RT_AREA_TEST_POS(path, step.toPos, step.crouchingState);
+	if (RT_AREA_POS(path, step.toPos, step.crouchingState) <= step.TUsAfter) {
 		return;	/* This move is not optimum. */
 	}
 
 	/* Test for forbidden (by other entities) areas. */
-	if (Grid_CheckForbidden(exclude, step.actorSize, path, toPos[0], toPos[1], toPos[2])) {
+	if (Grid_CheckForbidden(exclude, step.actorSize, path, step.toPos[0], step.toPos[1], step.toPos[2])) {
 		return;		/* That spot is occupied. */
 	}
 
 	/* Store move in pathing table. */
-	Grid_SetMoveData(path, toPos, step.crouchingState, step.TUsAfter, step.dir, step.fromPos[2]);
+	Grid_SetMoveData(path, step.toPos, step.crouchingState, step.TUsAfter, step.dir, step.fromPos[2]);
 	if (pqueue) {
 		pos4_t dummy;
 
-		Vector4Set(dummy, toPos[0], toPos[1], toPos[2], step.crouchingState);
+		Vector4Set(dummy, step.toPos[0], step.toPos[1], step.toPos[2], step.crouchingState);
 		PQueuePush(pqueue, dummy, step.TUsAfter);
 	}
 }
