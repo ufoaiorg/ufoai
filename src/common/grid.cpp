@@ -162,7 +162,7 @@ public:
  * @brief Initialize the Step data
  * @param[in] _routes Pointer to client or server side routing table (clMap, svMap)
  * @param[in] _actorSize Give the field size of the actor (e.g. for 2x2 units) to check linked fields as well.
- * @param[in] crouchingState Whether the actor is currently crouching, 1 is yes, 0 is no.
+ * @param[in] _crouchingState Whether the actor is currently crouching, 1 is yes, 0 is no.
  * @param[in] _dir Direction vector index (see DIRECTIONS and dvecs)
  * @return false if dir is irrelevant or something went wrong
  */
@@ -201,7 +201,6 @@ bool Step::init (const routing_t *_routes, const pos3_t _fromPos, const actorSiz
 
 /**
  * @brief Calculate the cell the we end up in if moving in the give dir
- * @param[in] pos Current location in the map.
  * @param[in] toPos The position we are moving to with this step.
  * @return false if we can't fly there
  */
@@ -231,7 +230,6 @@ bool Step::calcNewPos (pos3_t toPos)
  * First test for opening height availablilty. Then test for stepup compatibility. Last test for fall.
  * @note Fliers use this code only when they are walking.
  * @param[in] path Pointer to client or server side pathing table (clPathMap, svPathMap)
- * @param[in] pos Current location in the map.
  * @param[in] toPos The position we are moving to with this step.
  * @param[in] crouchingState Whether the actor is currently crouching, 1 is yes, 0 is no.
  * @return false if we can't fly there
@@ -395,7 +393,6 @@ bool Step::checkFlyingDirections (const pos3_t toPos)
 
 /**
  * @brief Checks if we can move in the given vertical direction
- * @param[in] pos Current location in the map.
  * @return false if we can't move there
  */
 bool Step::checkVerticalDirections (void)
