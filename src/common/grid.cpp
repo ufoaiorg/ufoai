@@ -443,7 +443,7 @@ bool Step::checkVerticalDirections (void)
  * @param[in,out] pqueue Priority queue (heap) to insert the now reached tiles for reconsidering
  * @sa Grid_CheckForbidden
  */
-static void Grid_MoveMark (const routing_t *routes, const pos3_t exclude, const actorSizeEnum_t actorSize, pathing_t *path, const pos3_t pos, byte crouchingState, const int dir, priorityQueue_t *pqueue)
+static void Grid_MoveMark (const routing_t *routes, const pos3_t exclude, const actorSizeEnum_t actorSize, pathing_t *path, const pos3_t pos, const byte crouchingState, const int dir, priorityQueue_t *pqueue)
 {
 	Step step_;
 	Step *step = &step_;	/* temporary solution */
@@ -487,10 +487,6 @@ static void Grid_MoveMark (const routing_t *routes, const pos3_t exclude, const 
 	 *
 	 * If the actor is a flier, as long as there is a passage, it can be moved through.
 	 * There are no floor difference restrictions for fliers, only obstructions. */
-
-	/* nz can't move out of bounds */
-	if (toPos[2] >= PATHFINDING_HEIGHT)
-		toPos[2] = PATHFINDING_HEIGHT - 1;
 
 	/* Now add the TUs needed to get to the originating cell. */
 	TUsAfter = TUsSoFar + TUsForMove;
