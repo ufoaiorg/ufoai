@@ -454,11 +454,11 @@ bool Step::checkVerticalDirections (void)
  * @param[in,out] pqueue Priority queue (heap) to insert the now reached tiles for reconsidering
  * @sa Grid_CheckForbidden
  */
-static void Grid_MoveMark (Step &step, const pos3_t exclude, pathing_t *path, priorityQueue_t *pqueue)
+static bool Grid_MoveMark (Step &step, const pos3_t exclude, pathing_t *path, priorityQueue_t *pqueue)
 {
 	/* calculate the position we would normally end up if moving in the given dir. */
 	if (!step.calcNewPos()) {
-		return;
+		return false;
 	}
 	step.calcNewTUs(path);
 
@@ -466,18 +466,18 @@ static void Grid_MoveMark (Step &step, const pos3_t exclude, pathing_t *path, pr
 	/* If the flier is moving up or down diagonally, then passage height will also adjust */
 	if (step.dir >= FLYING_DIRECTIONS) {
 		if (!step.checkFlyingDirections()) {
-			return;
+			return false;
 		}
 	} else if (step.dir < CORE_DIRECTIONS) {
 		/** note that this function may modify toPos ! */
 		if (!step.checkWalkingDirections(path)) {
-			return;
+			return false;
 		}
 	} else {
 		/* else there is no movement that uses passages. */
 		/* If we are falling, the height difference is the floor value. */
 		if (!step.checkVerticalDirections()) {
-			return;
+			return false;
 		}
 	}
 
@@ -492,12 +492,12 @@ static void Grid_MoveMark (Step &step, const pos3_t exclude, pathing_t *path, pr
 	/* Is this a better move into this cell? */
 	RT_AREA_TEST_POS(path, step.toPos, step.crouchingState);
 	if (RT_AREA_POS(path, step.toPos, step.crouchingState) <= step.TUsAfter) {
-		return;	/* This move is not optimum. */
+		return false;	/* This move is not optimum. */
 	}
 
 	/* Test for forbidden (by other entities) areas. */
 	if (Grid_CheckForbidden(exclude, step.actorSize, path, step.toPos[0], step.toPos[1], step.toPos[2])) {
-		return;		/* That spot is occupied. */
+		return false;		/* That spot is occupied. */
 	}
 
 	/* Store move in pathing table. */
@@ -508,6 +508,7 @@ static void Grid_MoveMark (Step &step, const pos3_t exclude, pathing_t *path, pr
 		Vector4Set(dummy, step.toPos[0], step.toPos[1], step.toPos[2], step.crouchingState);
 		PQueuePush(pqueue, dummy, step.TUsAfter);
 	}
+	return true;
 }
 
 
