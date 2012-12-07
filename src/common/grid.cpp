@@ -142,13 +142,14 @@ class Step {
 	 *  2) There is a ladder in any direction in the cell below the new cell and no ladder in the new cell itself. */
 	bool hasLadderSupport;	/**< Indicates if there is a ladder present providing support. */
 
-	actorSizeEnum_t actorSize;
 	int actorHeight;		/**< The actor's height in QUANT units. */
 	int actorCrouchedHeight;
 public:
 	const routing_t *routes;
 	int dir;
 	pos3_t fromPos;
+	actorSizeEnum_t actorSize;
+	byte crouchingState;
 
 	bool init (const routing_t *routes, const pos3_t fromPos, const actorSizeEnum_t actorSize, const byte crouchingState, const int dir);
 	bool calcNewPos (pos3_t toPos);
@@ -165,11 +166,12 @@ public:
  * @param[in] _dir Direction vector index (see DIRECTIONS and dvecs)
  * @return false if dir is irrelevant or something went wrong
  */
-bool Step::init (const routing_t *_routes, const pos3_t _fromPos, const actorSizeEnum_t _actorSize, const byte crouchingState, const int _dir)
+bool Step::init (const routing_t *_routes, const pos3_t _fromPos, const actorSizeEnum_t _actorSize, const byte _crouchingState, const int _dir)
 {
 	routes = _routes;
 	actorSize = _actorSize;
 	VectorCopy(_fromPos, fromPos);
+	crouchingState = _crouchingState;
 	dir = _dir;
 	flier = false;
 	hasLadderToClimb = false;
@@ -433,49 +435,40 @@ bool Step::checkVerticalDirections (void)
 }
 
 /**
- * @param[in] routes Pointer to client or server side routing table (clMap, svMap)
+ * @param[in] step Holds all relevant data to check the step, eg. ptr to routing table
  * @param[in] exclude Exclude this position from the forbidden list check
- * @param[in] actorSize Give the field size of the actor (e.g. for 2x2 units) to check linked fields as well.
  * @param[in,out] path Pointer to client or server side pathing table (clMap, svMap)
- * @param[in] pos Current location in the map.
- * @param[in] crouchingState Whether the actor is currently crouching, 1 is yes, 0 is no.
- * @param[in] dir Direction vector index (see DIRECTIONS and dvecs)
  * @param[in,out] pqueue Priority queue (heap) to insert the now reached tiles for reconsidering
  * @sa Grid_CheckForbidden
  */
-static void Grid_MoveMark (const routing_t *routes, const pos3_t exclude, const actorSizeEnum_t actorSize, pathing_t *path, const pos3_t pos, const byte crouchingState, const int dir, priorityQueue_t *pqueue)
+static void Grid_MoveMark (Step &step, const pos3_t exclude, pathing_t *path, priorityQueue_t *pqueue)
 {
-	Step step_;
-	Step *step = &step_;	/* temporary solution */
 	pos3_t toPos;
 	byte TUsSoFar, TUsForMove, TUsAfter;
 
-	if (!step->init(routes, pos, actorSize, crouchingState, dir))
-		return;		/* either dir is irrelevant or something worse happened */
-
-	TUsSoFar = RT_AREA_POS(path, pos, crouchingState);
+	TUsSoFar = RT_AREA_POS(path, step.fromPos, step.crouchingState);
 	/* Find the number of TUs used (normally) to move in this direction. */
-	TUsForMove = Grid_GetTUsForDirection(dir, crouchingState);
+	TUsForMove = Grid_GetTUsForDirection(step.dir, step.crouchingState);
 
 	/* calculate the position we would normally end up if moving in the given dir. */
-	if (!step->calcNewPos(toPos)) {
+	if (!step.calcNewPos(toPos)) {
 		return;
 	}
 	/* If there is no passageway (or rather lack of a wall) to the desired cell, then return. */
 	/* If the flier is moving up or down diagonally, then passage height will also adjust */
-	if (dir >= FLYING_DIRECTIONS) {
-		if (!step->checkFlyingDirections(toPos)) {
+	if (step.dir >= FLYING_DIRECTIONS) {
+		if (!step.checkFlyingDirections(toPos)) {
 			return;
 		}
-	} else if (dir < CORE_DIRECTIONS) {
+	} else if (step.dir < CORE_DIRECTIONS) {
 		/** note that this function may modify toPos ! */
-		if (!step->checkWalkingDirections(path, toPos, crouchingState)) {
+		if (!step.checkWalkingDirections(path, toPos, step.crouchingState)) {
 			return;
 		}
 	} else {
 		/* else there is no movement that uses passages. */
 		/* If we are falling, the height difference is the floor value. */
-		if (!step->checkVerticalDirections()) {
+		if (!step.checkVerticalDirections()) {
 			return;
 		}
 	}
@@ -492,22 +485,22 @@ static void Grid_MoveMark (const routing_t *routes, const pos3_t exclude, const 
 	TUsAfter = TUsSoFar + TUsForMove;
 
 	/* Is this a better move into this cell? */
-	RT_AREA_TEST_POS(path, toPos, crouchingState);
-	if (RT_AREA_POS(path, toPos, crouchingState) <= TUsAfter) {
+	RT_AREA_TEST_POS(path, toPos, step.crouchingState);
+	if (RT_AREA_POS(path, toPos, step.crouchingState) <= TUsAfter) {
 		return;	/* This move is not optimum. */
 	}
 
 	/* Test for forbidden (by other entities) areas. */
-	if (Grid_CheckForbidden(exclude, actorSize, path, toPos[0], toPos[1], toPos[2])) {
+	if (Grid_CheckForbidden(exclude, step.actorSize, path, toPos[0], toPos[1], toPos[2])) {
 		return;		/* That spot is occupied. */
 	}
 
 	/* Store move in pathing table. */
-	Grid_SetMoveData(path, toPos, crouchingState, TUsAfter, dir, pos[2]);
+	Grid_SetMoveData(path, toPos, step.crouchingState, TUsAfter, step.dir, step.fromPos[2]);
 	if (pqueue) {
 		pos4_t dummy;
 
-		Vector4Set(dummy, toPos[0], toPos[1], toPos[2], crouchingState);
+		Vector4Set(dummy, toPos[0], toPos[1], toPos[2], step.crouchingState);
 		PQueuePush(pqueue, dummy, TUsAfter);
 	}
 }
@@ -575,6 +568,7 @@ void Grid_MoveCalc (const routing_t *routes, const actorSizeEnum_t actorSize, pa
 			continue;
 
 		for (dir = 0; dir < PATHFINDING_DIRECTIONS; dir++) {
+			Step step;
 			/* Directions 12, 14, and 15 are currently undefined. */
 			if (dir == 12 || dir == 14 || dir == 15)
 				continue;
@@ -582,7 +576,10 @@ void Grid_MoveCalc (const routing_t *routes, const actorSizeEnum_t actorSize, pa
 			if (dir == DIRECTION_STAND_UP || dir == DIRECTION_CROUCH)
 				continue;
 
-			Grid_MoveMark(routes, excludeFromForbiddenList, actorSize, path, pos, epos[3], dir, &pqueue);
+			if (!step.init(routes, pos, actorSize, crouchingState, dir))
+				continue;		/* either dir is irrelevant or something worse happened */
+
+			Grid_MoveMark(step, excludeFromForbiddenList, path, &pqueue);
 		}
 	}
 	/* Com_Printf("Loop: %i", count); */
