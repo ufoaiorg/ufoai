@@ -155,8 +155,8 @@ public:
 
 	bool init (const routing_t *routes, const pos3_t fromPos, const actorSizeEnum_t actorSize, const byte crouchingState, const int dir);
 	bool calcNewPos (void);
-	void calcNewTUs (pathing_t *path);
-	bool checkWalkingDirections (pathing_t *path);
+	void calcNewTUs (const pathing_t *path);
+	bool checkWalkingDirections (const pathing_t *path);
 	bool checkFlyingDirections (void);
 	bool checkVerticalDirections (void);
 };
@@ -232,7 +232,7 @@ bool Step::calcNewPos (void)
  * @brief Calculate the TUs after we in the given dir
  * @param[in] path Pointer to client or server side pathing table (clPathMap, svPathMap)
  */
-void Step::calcNewTUs (pathing_t *path)
+void Step::calcNewTUs (const pathing_t *path)
 {
 	byte TUsSoFar, TUsForMove;
 
@@ -251,7 +251,7 @@ void Step::calcNewTUs (pathing_t *path)
  * @param[in] path Pointer to client or server side pathing table (clPathMap, svPathMap)
  * @return false if we can't fly there
  */
-bool Step::checkWalkingDirections (pathing_t *path)
+bool Step::checkWalkingDirections (const pathing_t *path)
 {
 	int nx, ny, nz;
 	int passageHeight;
@@ -451,7 +451,7 @@ bool Step::checkVerticalDirections (void)
  * @param[in] step Holds all relevant data to check the step, eg. ptr to routing table
  * @param[in,out] path Pointer to client or server side pathing table (clMap, svMap)
  */
-static bool Grid_MoveMark (Step &step, pathing_t *path)
+static bool Grid_MoveMark (Step &step, const pathing_t *path)
 {
 	/* calculate the position we would normally end up if moving in the given dir. */
 	if (!step.calcNewPos()) {
