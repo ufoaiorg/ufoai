@@ -34,6 +34,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "g_vis.h"
 #include "../shared/parse.h"
 
+/* fields are needed for spawning from the entity string */
+#define FFL_SPAWNTEMP		1
+#define FFL_NOSPAWN			2
+
 static spawn_temp_t st;
 
 static void SP_light(edict_t *ent);

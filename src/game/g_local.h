@@ -320,10 +320,6 @@ extern cvar_t *flood_waitdelay;
 
 extern cvar_t *g_difficulty;
 
-/* fields are needed for spawning from the entity string */
-#define FFL_SPAWNTEMP		1
-#define FFL_NOSPAWN			2
-
 /* g_stats */
 void G_SendPlayerStats(const player_t *player);
 
