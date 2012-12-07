@@ -409,16 +409,6 @@ bool G_RunFrame(void);
 void G_InvList_f(const player_t *player);
 #endif
 
-/* g_ai.c */
-void AI_Init(void);
-void AI_CheckRespawn(int team);
-extern edict_t *ai_waypointList;
-void G_AddToWayPointList(edict_t *ent);
-void AI_Run(void);
-void AI_ActorThink(player_t *player, edict_t *ent);
-player_t *AI_CreatePlayer(int team);
-bool AI_CheckUsingDoor(const edict_t *ent, const edict_t *door);
-
 /* g_svcmds.c */
 void G_ServerCommand(void);
 bool SV_FilterPacket(const char *from);

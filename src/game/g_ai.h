@@ -28,6 +28,18 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "g_local.h"
 
 /*
+ * AI functions
+ */
+void AI_Init(void);
+void AI_CheckRespawn(int team);
+extern edict_t *ai_waypointList;
+void G_AddToWayPointList(edict_t *ent);
+void AI_Run(void);
+void AI_ActorThink(player_t *player, edict_t *ent);
+player_t *AI_CreatePlayer(int team);
+bool AI_CheckUsingDoor(const edict_t *ent, const edict_t *door);
+
+/*
  * Shared functions (between C AI and LUA AI)
  */
 void AI_TurnIntoDirection(edict_t *ent, const pos3_t pos);
