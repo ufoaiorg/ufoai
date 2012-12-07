@@ -593,7 +593,6 @@ team phalanx
 		female("soldiers/female" "body" "head05" 0 0)
 		female("soldiers/female" "body" "head06" 0 0)
 		female("soldiers/female" "body" "head07" 0 0)
-/*
 		male("soldiers/male" "body" "head01" 0 0)
 		male("soldiers/male" "body" "head01" 0 1)
 		male("soldiers/male" "body" "head01" 0 2)
@@ -614,7 +613,6 @@ team phalanx
 		male("soldiers/male" "body" "head10" 0 1)
 		male("soldiers/male" "body" "head11" 0 0)
 		male("soldiers/male" "body" "head11" 0 1)
-*/
 		male("soldiers/male" "body" "head12" 0 0)
 		male("soldiers/male" "body" "head12" 0 1)
 		male("soldiers/male" "body" "head13" 0 0)
