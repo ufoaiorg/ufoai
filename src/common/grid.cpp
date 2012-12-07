@@ -489,25 +489,6 @@ static bool Grid_MoveMark (Step &step, const pos3_t exclude, pathing_t *path, pr
 	 * If the actor is a flier, as long as there is a passage, it can be moved through.
 	 * There are no floor difference restrictions for fliers, only obstructions. */
 
-	/* Is this a better move into this cell? */
-	RT_AREA_TEST_POS(path, step.toPos, step.crouchingState);
-	if (RT_AREA_POS(path, step.toPos, step.crouchingState) <= step.TUsAfter) {
-		return false;	/* This move is not optimum. */
-	}
-
-	/* Test for forbidden (by other entities) areas. */
-	if (Grid_CheckForbidden(exclude, step.actorSize, path, step.toPos[0], step.toPos[1], step.toPos[2])) {
-		return false;		/* That spot is occupied. */
-	}
-
-	/* Store move in pathing table. */
-	Grid_SetMoveData(path, step.toPos, step.crouchingState, step.TUsAfter, step.dir, step.fromPos[2]);
-	if (pqueue) {
-		pos4_t dummy;
-
-		Vector4Set(dummy, step.toPos[0], step.toPos[1], step.toPos[2], step.crouchingState);
-		PQueuePush(pqueue, dummy, step.TUsAfter);
-	}
 	return true;
 }
 
@@ -585,7 +566,25 @@ void Grid_MoveCalc (const routing_t *routes, const actorSizeEnum_t actorSize, pa
 			if (!step.init(routes, pos, actorSize, crouchingState, dir))
 				continue;		/* either dir is irrelevant or something worse happened */
 
-			Grid_MoveMark(step, excludeFromForbiddenList, path, &pqueue);
+			if (Grid_MoveMark(step, excludeFromForbiddenList, path, &pqueue)) {
+				/* Is this a better move into this cell? */
+				RT_AREA_TEST_POS(path, step.toPos, step.crouchingState);
+				if (RT_AREA_POS(path, step.toPos, step.crouchingState) <= step.TUsAfter) {
+					continue;	/* This move is not optimum. */
+				}
+
+				/* Test for forbidden (by other entities) areas. */
+				if (Grid_CheckForbidden(excludeFromForbiddenList, step.actorSize, path, step.toPos[0], step.toPos[1], step.toPos[2])) {
+					continue;		/* That spot is occupied. */
+				}
+
+				/* Store move in pathing table. */
+				Grid_SetMoveData(path, step.toPos, step.crouchingState, step.TUsAfter, step.dir, step.fromPos[2]);
+
+				pos4_t dummy;
+				Vector4Set(dummy, step.toPos[0], step.toPos[1], step.toPos[2], step.crouchingState);
+				PQueuePush(&pqueue, dummy, step.TUsAfter);
+			}
 		}
 	}
 	/* Com_Printf("Loop: %i", count); */
