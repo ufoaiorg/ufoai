@@ -449,12 +449,9 @@ bool Step::checkVerticalDirections (void)
 
 /**
  * @param[in] step Holds all relevant data to check the step, eg. ptr to routing table
- * @param[in] exclude Exclude this position from the forbidden list check
  * @param[in,out] path Pointer to client or server side pathing table (clMap, svMap)
- * @param[in,out] pqueue Priority queue (heap) to insert the now reached tiles for reconsidering
- * @sa Grid_CheckForbidden
  */
-static bool Grid_MoveMark (Step &step, const pos3_t exclude, pathing_t *path, priorityQueue_t *pqueue)
+static bool Grid_MoveMark (Step &step, pathing_t *path)
 {
 	/* calculate the position we would normally end up if moving in the given dir. */
 	if (!step.calcNewPos()) {
@@ -566,7 +563,7 @@ void Grid_MoveCalc (const routing_t *routes, const actorSizeEnum_t actorSize, pa
 			if (!step.init(routes, pos, actorSize, crouchingState, dir))
 				continue;		/* either dir is irrelevant or something worse happened */
 
-			if (Grid_MoveMark(step, excludeFromForbiddenList, path, &pqueue)) {
+			if (Grid_MoveMark(step, path)) {
 				/* Is this a better move into this cell? */
 				RT_AREA_TEST_POS(path, step.toPos, step.crouchingState);
 				if (RT_AREA_POS(path, step.toPos, step.crouchingState) <= step.TUsAfter) {
