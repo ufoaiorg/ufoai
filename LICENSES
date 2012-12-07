@@ -2158,6 +2158,49 @@ base/models/soldiers/male/head05.md2 | GNU General Public License 2.0 or later |
 base/models/soldiers/male/head05a.png | GNU General Public License 2.0 or later | Sitters
 base/models/soldiers/male/head06.md2 | GNU General Public License 2.0 or later | Pawel Michalkiewicz
 base/models/soldiers/male/head06a.png | GNU General Public License 2.0 or later | Pawel Michalkiewicz
+base/models/soldiers/male/head06b.png | GNU General Public License 2.0 or later | Pawel Michalkiewicz
+base/models/soldiers/male/head07.md2 | GNU General Public License 2.0 or later | Pawel Michalkiewicz
+base/models/soldiers/male/head07a.png | GNU General Public License 2.0 or later | Pawel Michalkiewicz
+base/models/soldiers/male/head07b.png | GNU General Public License 2.0 or later | Pawel Michalkiewicz
+base/models/soldiers/male/head08.md2 | GNU General Public License 2.0 or later | Pawel Michalkiewicz
+base/models/soldiers/male/head08a.png | GNU General Public License 2.0 or later | Pawel Michalkiewicz
+base/models/soldiers/male/head08b.png | GNU General Public License 2.0 or later | Pawel Michalkiewicz
+base/models/soldiers/male/head09.md2 | GNU General Public License 2.0 or later | Pawel Michalkiewicz
+base/models/soldiers/male/head09a.png | GNU General Public License 2.0 or later | Pawel Michalkiewicz
+base/models/soldiers/male/head09b.png | GNU General Public License 2.0 or later | Pawel Michalkiewicz
+base/models/soldiers/male/head10.md2 | GNU General Public License 2.0 or later | Pawel Michalkiewicz
+base/models/soldiers/male/head10a.png | GNU General Public License 2.0 or later | Pawel Michalkiewicz
+base/models/soldiers/male/head10b.png | GNU General Public License 2.0 or later | Pawel Michalkiewicz
+base/models/soldiers/male/head11.md2 | GNU General Public License 2.0 or later | Pawel Michalkiewicz
+base/models/soldiers/male/head11a.png | GNU General Public License 2.0 or later | Pawel Michalkiewicz
+base/models/soldiers/male/head11b.png | GNU General Public License 2.0 or later | Pawel Michalkiewicz
+base/models/soldiers/male/head12.md2 | GNU General Public License 2.0 or later | Pawel Michalkiewicz
+base/models/soldiers/male/head12a.png | GNU General Public License 2.0 or later | Pawel Michalkiewicz
+base/models/soldiers/male/head12b.png | GNU General Public License 2.0 or later | Pawel Michalkiewicz
+base/models/soldiers/male/head13.md2 | GNU General Public License 2.0 or later | Pawel Michalkiewicz
+base/models/soldiers/male/head13a.png | GNU General Public License 2.0 or later | Pawel Michalkiewicz
+base/models/soldiers/male/head13b.png | GNU General Public License 2.0 or later | Pawel Michalkiewicz
+base/models/soldiers/male/head14.md2 | GNU General Public License 2.0 or later | Pawel Michalkiewicz
+base/models/soldiers/male/head14a.png | GNU General Public License 2.0 or later | Pawel Michalkiewicz
+base/models/soldiers/male/head14b.png | GNU General Public License 2.0 or later | Pawel Michalkiewicz
+base/models/soldiers/male/head15.md2 | GNU General Public License 2.0 or later | Pawel Michalkiewicz
+base/models/soldiers/male/head15a.png | GNU General Public License 2.0 or later | Pawel Michalkiewicz
+base/models/soldiers/male/head15b.png | GNU General Public License 2.0 or later | Pawel Michalkiewicz
+base/models/soldiers/male/head16.md2 | GNU General Public License 2.0 or later | Pawel Michalkiewicz
+base/models/soldiers/male/head16a.png | GNU General Public License 2.0 or later | Pawel Michalkiewicz
+base/models/soldiers/male/head16b.png | GNU General Public License 2.0 or later | Pawel Michalkiewicz
+base/models/soldiers/male/head17.md2 | GNU General Public License 2.0 or later | Pawel Michalkiewicz
+base/models/soldiers/male/head17a.png | GNU General Public License 2.0 or later | Pawel Michalkiewicz
+base/models/soldiers/male/head17b.png | GNU General Public License 2.0 or later | Pawel Michalkiewicz
+base/models/soldiers/male/head18.md2 | GNU General Public License 2.0 or later | Pawel Michalkiewicz
+base/models/soldiers/male/head18a.png | GNU General Public License 2.0 or later | Pawel Michalkiewicz
+base/models/soldiers/male/head18b.png | GNU General Public License 2.0 or later | Pawel Michalkiewicz
+base/models/soldiers/male/head19.md2 | GNU General Public License 2.0 or later | Pawel Michalkiewicz
+base/models/soldiers/male/head19a.png | GNU General Public License 2.0 or later | Pawel Michalkiewicz
+base/models/soldiers/male/head19b.png | GNU General Public License 2.0 or later | Pawel Michalkiewicz
+base/models/soldiers/male/head20.md2 | GNU General Public License 2.0 or later | Pawel Michalkiewicz
+base/models/soldiers/male/head20a.png | GNU General Public License 2.0 or later | Pawel Michalkiewicz
+base/models/soldiers/male/head20b.png | GNU General Public License 2.0 or later | Pawel Michalkiewicz
 base/models/soldiers/malelight/body.anm | GNU General Public License 2.0 or later | Origin
 base/models/soldiers/malelight/body.md2 | GNU General Public License 2.0 or later | Origin
 base/models/soldiers/malelight/body.png | GNU General Public License 2.0 or later | Origin
@@ -2179,6 +2222,49 @@ base/models/soldiers/malelight/head05.md2 | GNU General Public License 2.0 or la
 base/models/soldiers/malelight/head05a.png | GNU General Public License 2.0 or later | Sitters;Origin
 base/models/soldiers/malelight/head06.md2 | GNU General Public License 2.0 or later | Pawel Michalkiewicz;Origin
 base/models/soldiers/malelight/head06a.png | GNU General Public License 2.0 or later | Pawel Michalkiewicz;Origin
+base/models/soldiers/malelight/head06b.png | GNU General Public License 2.0 or later | Pawel Michalkiewicz;Origin
+base/models/soldiers/malelight/head07.md2 | GNU General Public License 2.0 or later | Pawel Michalkiewicz;Origin
+base/models/soldiers/malelight/head07a.png | GNU General Public License 2.0 or later | Pawel Michalkiewicz;Origin
+base/models/soldiers/malelight/head07b.png | GNU General Public License 2.0 or later | Pawel Michalkiewicz;Origin
+base/models/soldiers/malelight/head08.md2 | GNU General Public License 2.0 or later | Pawel Michalkiewicz;Origin
+base/models/soldiers/malelight/head08a.png | GNU General Public License 2.0 or later | Pawel Michalkiewicz;Origin
+base/models/soldiers/malelight/head08b.png | GNU General Public License 2.0 or later | Pawel Michalkiewicz;Origin
+base/models/soldiers/malelight/head09.md2 | GNU General Public License 2.0 or later | Pawel Michalkiewicz;Origin
+base/models/soldiers/malelight/head09a.png | GNU General Public License 2.0 or later | Pawel Michalkiewicz;Origin
+base/models/soldiers/malelight/head09b.png | GNU General Public License 2.0 or later | Pawel Michalkiewicz;Origin
+base/models/soldiers/malelight/head10.md2 | GNU General Public License 2.0 or later | Pawel Michalkiewicz;Origin
+base/models/soldiers/malelight/head10a.png | GNU General Public License 2.0 or later | Pawel Michalkiewicz;Origin
+base/models/soldiers/malelight/head10b.png | GNU General Public License 2.0 or later | Pawel Michalkiewicz;Origin
+base/models/soldiers/malelight/head11.md2 | GNU General Public License 2.0 or later | Pawel Michalkiewicz;Origin
+base/models/soldiers/malelight/head11a.png | GNU General Public License 2.0 or later | Pawel Michalkiewicz;Origin
+base/models/soldiers/malelight/head11b.png | GNU General Public License 2.0 or later | Pawel Michalkiewicz;Origin
+base/models/soldiers/malelight/head12.md2 | GNU General Public License 2.0 or later | Pawel Michalkiewicz;Origin
+base/models/soldiers/malelight/head12a.png | GNU General Public License 2.0 or later | Pawel Michalkiewicz;Origin
+base/models/soldiers/malelight/head12b.png | GNU General Public License 2.0 or later | Pawel Michalkiewicz;Origin
+base/models/soldiers/malelight/head13.md2 | GNU General Public License 2.0 or later | Pawel Michalkiewicz;Origin
+base/models/soldiers/malelight/head13a.png | GNU General Public License 2.0 or later | Pawel Michalkiewicz;Origin
+base/models/soldiers/malelight/head13b.png | GNU General Public License 2.0 or later | Pawel Michalkiewicz;Origin
+base/models/soldiers/malelight/head14.md2 | GNU General Public License 2.0 or later | Pawel Michalkiewicz;Origin
+base/models/soldiers/malelight/head14a.png | GNU General Public License 2.0 or later | Pawel Michalkiewicz;Origin
+base/models/soldiers/malelight/head14b.png | GNU General Public License 2.0 or later | Pawel Michalkiewicz;Origin
+base/models/soldiers/malelight/head15.md2 | GNU General Public License 2.0 or later | Pawel Michalkiewicz;Origin
+base/models/soldiers/malelight/head15a.png | GNU General Public License 2.0 or later | Pawel Michalkiewicz;Origin
+base/models/soldiers/malelight/head15b.png | GNU General Public License 2.0 or later | Pawel Michalkiewicz;Origin
+base/models/soldiers/malelight/head16.md2 | GNU General Public License 2.0 or later | Pawel Michalkiewicz;Origin
+base/models/soldiers/malelight/head16a.png | GNU General Public License 2.0 or later | Pawel Michalkiewicz;Origin
+base/models/soldiers/malelight/head16b.png | GNU General Public License 2.0 or later | Pawel Michalkiewicz;Origin
+base/models/soldiers/malelight/head17.md2 | GNU General Public License 2.0 or later | Pawel Michalkiewicz;Origin
+base/models/soldiers/malelight/head17a.png | GNU General Public License 2.0 or later | Pawel Michalkiewicz;Origin
+base/models/soldiers/malelight/head17b.png | GNU General Public License 2.0 or later | Pawel Michalkiewicz;Origin
+base/models/soldiers/malelight/head18.md2 | GNU General Public License 2.0 or later | Pawel Michalkiewicz;Origin
+base/models/soldiers/malelight/head18a.png | GNU General Public License 2.0 or later | Pawel Michalkiewicz;Origin
+base/models/soldiers/malelight/head18b.png | GNU General Public License 2.0 or later | Pawel Michalkiewicz;Origin
+base/models/soldiers/malelight/head19.md2 | GNU General Public License 2.0 or later | Pawel Michalkiewicz;Origin
+base/models/soldiers/malelight/head19a.png | GNU General Public License 2.0 or later | Pawel Michalkiewicz;Origin
+base/models/soldiers/malelight/head19b.png | GNU General Public License 2.0 or later | Pawel Michalkiewicz;Origin
+base/models/soldiers/malelight/head20.md2 | GNU General Public License 2.0 or later | Pawel Michalkiewicz;Origin
+base/models/soldiers/malelight/head20a.png | GNU General Public License 2.0 or later | Pawel Michalkiewicz;Origin
+base/models/soldiers/malelight/head20b.png | GNU General Public License 2.0 or later | Pawel Michalkiewicz;Origin
 base/models/soldiers/malemedium/body.anm | GNU General Public License 2.0 or later | Origin
 base/models/soldiers/malemedium/body.md2 | GNU General Public License 2.0 or later | Origin
 base/models/soldiers/malemedium/body.png | GNU General Public License 2.0 or later | Origin
@@ -2190,6 +2276,20 @@ base/models/soldiers/malemedium/head03.md2 | GNU General Public License 2.0 or l
 base/models/soldiers/malemedium/head04.md2 | GNU General Public License 2.0 or later | Origin
 base/models/soldiers/malemedium/head05.md2 | GNU General Public License 2.0 or later | Origin
 base/models/soldiers/malemedium/head06.md2 | GNU General Public License 2.0 or later | Origin
+base/models/soldiers/malemedium/head07.md2 | GNU General Public License 2.0 or later | Origin
+base/models/soldiers/malemedium/head08.md2 | GNU General Public License 2.0 or later | Origin
+base/models/soldiers/malemedium/head09.md2 | GNU General Public License 2.0 or later | Origin
+base/models/soldiers/malemedium/head10.md2 | GNU General Public License 2.0 or later | Origin
+base/models/soldiers/malemedium/head11.md2 | GNU General Public License 2.0 or later | Origin
+base/models/soldiers/malemedium/head12.md2 | GNU General Public License 2.0 or later | Origin
+base/models/soldiers/malemedium/head13.md2 | GNU General Public License 2.0 or later | Origin
+base/models/soldiers/malemedium/head14.md2 | GNU General Public License 2.0 or later | Origin
+base/models/soldiers/malemedium/head15.md2 | GNU General Public License 2.0 or later | Origin
+base/models/soldiers/malemedium/head16.md2 | GNU General Public License 2.0 or later | Origin
+base/models/soldiers/malemedium/head17.md2 | GNU General Public License 2.0 or later | Origin
+base/models/soldiers/malemedium/head18.md2 | GNU General Public License 2.0 or later | Origin
+base/models/soldiers/malemedium/head19.md2 | GNU General Public License 2.0 or later | Origin
+base/models/soldiers/malemedium/head20.md2 | GNU General Public License 2.0 or later | Origin
 base/models/soldiers/malemedium/helmet.png | GNU General Public License 2.0 or later | Origin
 base/models/soldiers/malemedium/helmet_nm.png | GNU General Public License 2.0 or later | Origin
 base/models/soldiers/malepower/body.anm | GNU General Public License 2.0 or later | Origin
@@ -2205,6 +2305,20 @@ base/models/soldiers/malepower/head03.md2 | GNU General Public License 2.0 or la
 base/models/soldiers/malepower/head04.md2 | GNU General Public License 2.0 or later | Origin
 base/models/soldiers/malepower/head05.md2 | GNU General Public License 2.0 or later | Origin
 base/models/soldiers/malepower/head06.md2 | GNU General Public License 2.0 or later | Origin
+base/models/soldiers/malepower/head07.md2 | GNU General Public License 2.0 or later | Origin
+base/models/soldiers/malepower/head08.md2 | GNU General Public License 2.0 or later | Origin
+base/models/soldiers/malepower/head09.md2 | GNU General Public License 2.0 or later | Origin
+base/models/soldiers/malepower/head10.md2 | GNU General Public License 2.0 or later | Origin
+base/models/soldiers/malepower/head11.md2 | GNU General Public License 2.0 or later | Origin
+base/models/soldiers/malepower/head12.md2 | GNU General Public License 2.0 or later | Origin
+base/models/soldiers/malepower/head13.md2 | GNU General Public License 2.0 or later | Origin
+base/models/soldiers/malepower/head14.md2 | GNU General Public License 2.0 or later | Origin
+base/models/soldiers/malepower/head15.md2 | GNU General Public License 2.0 or later | Origin
+base/models/soldiers/malepower/head16.md2 | GNU General Public License 2.0 or later | Origin
+base/models/soldiers/malepower/head17.md2 | GNU General Public License 2.0 or later | Origin
+base/models/soldiers/malepower/head18.md2 | GNU General Public License 2.0 or later | Origin
+base/models/soldiers/malepower/head19.md2 | GNU General Public License 2.0 or later | Origin
+base/models/soldiers/malepower/head20.md2 | GNU General Public License 2.0 or later | Origin
 base/models/soldiers/ugv_ares/ares.anm | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/soldiers/ugv_ares/ares_h.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/soldiers/ugv_ares/ares_h.png | GNU General Public License 2.0 or later | Willem Sitters
