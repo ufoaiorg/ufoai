@@ -29,3 +29,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #pragma once
 
 #include "g_local.h"
+
+void SP_func_breakable(edict_t *ent);
+void SP_func_door(edict_t *ent);
+void SP_func_door_sliding(edict_t *ent);
+void SP_func_rotating(edict_t *ent);

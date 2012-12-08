@@ -428,12 +428,6 @@ void SP_trigger_rescue(edict_t *ent);
 bool Touch_HurtTrigger(edict_t *self, edict_t *activator);
 void Think_NextMapTrigger(edict_t *self);
 
-/* g_func.c */
-void SP_func_rotating(edict_t *ent);
-void SP_func_door(edict_t *ent);
-void SP_func_door_sliding(edict_t *ent);
-void SP_func_breakable(edict_t *ent);
-
 /* g_health */
 void G_DamageActor(edict_t *target, const int damage, const vec3_t impact);
 void G_TreatActor(edict_t *target, const fireDef_t *const fd, const int heal, const int healerTeam);
