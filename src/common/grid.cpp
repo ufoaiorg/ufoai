@@ -164,6 +164,7 @@ public:
 /**
  * @brief Initialize the Step data
  * @param[in] _routes Pointer to client or server side routing table (clMap, svMap)
+ * @param[in] _fromPos Position where we start this step
  * @param[in] _actorSize Give the field size of the actor (e.g. for 2x2 units) to check linked fields as well.
  * @param[in] _crouchingState Whether the actor is currently crouching, 1 is yes, 0 is no.
  * @param[in] _dir Direction vector index (see DIRECTIONS and dvecs)
@@ -204,8 +205,7 @@ bool Step::init (const routing_t *_routes, const pos3_t _fromPos, const actorSiz
 
 /**
  * @brief Calculate the cell the we end up in if moving in the give dir
- * @param[in] toPos The position we are moving to with this step.
- * @return false if we can't fly there
+ * @return false if we can't move there
  */
 bool Step::calcNewPos (void)
 {
