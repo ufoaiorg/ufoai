@@ -79,6 +79,4 @@ void NET_vReadFormat(dbuffer *buf, const char *format, va_list ap);
 void NET_ReadFormat(dbuffer *buf, const char *format, ...);
 void NET_SkipFormat(dbuffer *buf, const char *format);
 
-dbuffer *NET_ReadMsg(struct net_stream *s);
-
 #endif

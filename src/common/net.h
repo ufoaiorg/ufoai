@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef _COMMON_NET_H
 #define _COMMON_NET_H
 
+class dbuffer;
 struct net_stream;
 struct datagram_socket;
 struct sockaddr;
@@ -48,9 +49,6 @@ void NET_Wait(int timeout);
 struct net_stream *NET_Connect(const char *node, const char *service, stream_onclose_func *onclose);
 struct net_stream *NET_ConnectToLoopBack(stream_onclose_func *onclose);
 void NET_StreamEnqueue(struct net_stream *s, const char *data, int len);
-bool NET_StreamIsClosed(struct net_stream *s);
-int NET_StreamGetLength(struct net_stream *s);
-int NET_StreamPeek(struct net_stream *s, char *data, int len);
 int NET_StreamDequeue(struct net_stream *s, char *data, int len);
 void *NET_StreamGetData(struct net_stream *s);
 void NET_StreamSetData(struct net_stream *s, void *data);
@@ -59,5 +57,7 @@ bool NET_StreamIsLoopback(struct net_stream *s);
 void NET_StreamFree(struct net_stream *s);
 void NET_StreamFinished(struct net_stream *s);
 void NET_StreamSetCallback(struct net_stream *s, stream_callback_func *func);
+
+dbuffer *NET_ReadMsg(struct net_stream *s);
 
 #endif

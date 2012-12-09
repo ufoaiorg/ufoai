@@ -620,36 +620,6 @@ void NET_WriteConstMsg (struct net_stream *s, const dbuffer &buf)
 	}
 }
 
-/**
- * @brief Reads messages from the network channel and adds them to the dbuffer
- * where you can use the NET_Read* functions to get the values in the correct
- * order
- * @sa NET_StreamDequeue
- */
-dbuffer *NET_ReadMsg (struct net_stream *s)
-{
-	unsigned int v;
-	if (NET_StreamPeek(s, (char *)&v, 4) < 4)
-		return NULL;
-
-	int len = LittleLong(v);
-	if (NET_StreamGetLength(s) < (4 + len))
-		return NULL;
-
-	char tmp[256];
-	const int size = sizeof(tmp);
-	NET_StreamDequeue(s, tmp, 4);
-
-	dbuffer *buf = new dbuffer();
-	while (len > 0) {
-		const int x = NET_StreamDequeue(s, tmp, std::min(len, size));
-		buf->add(tmp, x);
-		len -= x;
-	}
-
-	return buf;
-}
-
 void NET_VPrintf (dbuffer *buf, const char *format, va_list ap, char *str, size_t length)
 {
 	const int len = Q_vsnprintf(str, length, format, ap);

@@ -35,6 +35,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifdef _WIN32
 #include "../ports/system.h"
 #endif
+#include "../shared/scopedmutex.h"
 
 #define MAX_STREAMS 56
 #define MAX_DATAGRAM_SOCKETS 7
@@ -198,6 +199,11 @@ static const char *netStringErrorWin (int code)
 	}
 }
 #endif
+
+static inline int NET_StreamGetLength (struct net_stream *s)
+{
+	return s ? dbuffer_len(s->inbound) : 0;
+}
 
 /**
  * @brief
@@ -491,10 +497,13 @@ void NET_Wait (int timeout)
 				continue;
 			}
 
-			SDL_LockMutex(netMutex);
-			len = s->outbound->get(buf, sizeof(buf));
-			SDL_UnlockMutex(netMutex);
-			len = send(s->socket, buf, len, 0);
+			{
+				const ScopedMutex scopedMutex(netMutex);
+				len = s->outbound->get(buf, sizeof(buf));
+				len = send(s->socket, buf, len, 0);
+
+				s->outbound->remove(len);
+			}
 
 			if (len < 0) {
 				Com_Printf("write on socket %d failed: %s\n", s->socket, netStringError(netError));
@@ -503,10 +512,6 @@ void NET_Wait (int timeout)
 			}
 
 			Com_DPrintf(DEBUG_SERVER, "wrote %d bytes to stream %d (%s)\n", len, i, NET_StreamPeerToName(s, buf, sizeof(buf), true));
-
-			SDL_LockMutex(netMutex);
-			s->outbound->remove(len);
-			SDL_UnlockMutex(netMutex);
 		}
 
 		if (FD_ISSET(s->socket, &read_fds_out)) {
@@ -723,9 +728,8 @@ void NET_StreamEnqueue (struct net_stream *s, const char *data, int len)
 		return;
 
 	if (s->outbound) {
-		SDL_LockMutex(netMutex);
+		const ScopedMutex scopedMutex(netMutex);
 		s->outbound->add(data, len);
-		SDL_UnlockMutex(netMutex);
 	}
 
 	if (s->socket >= 0)
@@ -737,46 +741,62 @@ void NET_StreamEnqueue (struct net_stream *s, const char *data, int len)
 	}
 }
 
-bool NET_StreamIsClosed (struct net_stream *s)
-{
-	return s ? (s->closed || s->finished) : true;
-}
-
-int NET_StreamGetLength (struct net_stream *s)
-{
-	return s ? dbuffer_len(s->inbound) : 0;
-}
-
 /**
  * @brief Returns the length of the waiting inbound buffer
  */
-int NET_StreamPeek (struct net_stream *s, char *data, int len)
+static int NET_StreamPeek (struct net_stream *s, char *data, int len)
 {
 	if (len <= 0 || !s)
 		return 0;
 
-	if ((s->closed || s->finished) && dbuffer_len(s->inbound) == 0)
+	dbufferptr &dbuf = s->inbound;
+	if ((s->closed || s->finished) && dbuffer_len(dbuf) == 0)
 		return 0;
 
-	SDL_LockMutex(netMutex);
-	const int ret = s->inbound->get(data, len);
-	SDL_UnlockMutex(netMutex);
-	return ret;
+	return dbuf->get(data, len);
 }
 
 /**
  * @sa NET_StreamEnqueue
- * @sa dbuffer_extract
  */
 int NET_StreamDequeue (struct net_stream *s, char *data, int len)
 {
 	if (len <= 0 || !s || s->finished)
 		return 0;
 
-	SDL_LockMutex(netMutex);
-	const int ret = s->inbound->extract(data, len);
-	SDL_UnlockMutex(netMutex);
-	return ret;
+	return s->inbound->extract(data, len);
+}
+
+/**
+ * @brief Reads messages from the network channel and adds them to the dbuffer
+ * where you can use the NET_Read* functions to get the values in the correct
+ * order
+ * @sa NET_StreamDequeue
+ */
+dbuffer *NET_ReadMsg (struct net_stream *s)
+{
+	unsigned int v;
+	const ScopedMutex scopedMutex(netMutex);
+
+	if (NET_StreamPeek(s, (char *)&v, 4) < 4)
+		return NULL;
+
+	int len = LittleLong(v);
+	if (NET_StreamGetLength(s) < (4 + len))
+		return NULL;
+
+	char tmp[256];
+	const int size = sizeof(tmp);
+	NET_StreamDequeue(s, tmp, 4);
+
+	dbuffer *buf = new dbuffer();
+	while (len > 0) {
+		const int x = NET_StreamDequeue(s, tmp, std::min(len, size));
+		buf->add(tmp, x);
+		len -= x;
+	}
+
+	return buf;
 }
 
 void *NET_StreamGetData (struct net_stream *s)
@@ -825,6 +845,7 @@ void NET_StreamFinished (struct net_stream *s)
 	if (s->loopback_peer)
 		s->loopback_peer->outbound = dbufferptr();
 
+	const ScopedMutex scopedMutex(netMutex);
 	s->inbound = dbufferptr();
 
 	/* If there's nothing in the outbound buffer, any finished stream is
