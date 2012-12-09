@@ -573,11 +573,16 @@ base/maps/oriental/or_well.map | GNU General Public License 2.0 or later
 base/maps/oriental_mosque/om_main.map | GNU General Public License 2.0 or later | "SparX" Beyeler
 base/maps/pipes_const.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/rescue/r_craft_crash_drop_firebird.map | GNU General Public License 2.0 or later | Martin Gerhardy
+base/maps/rescue/r_craft_crash_drop_herakles.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
 base/maps/rescue/r_craft_crash_drop_raptor.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/rescue/r_craft_crash_inter_dragon.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/rescue/r_craft_crash_inter_saracen.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/rescue/r_craft_crash_inter_starchaser.map | GNU General Public License 2.0 or later | Martin Gerhardy
+base/maps/rescue/r_craft_crash_inter_stiletto.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/rescue/r_craft_crash_inter_stingray.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
 base/maps/rescue/r_craft_drop_firebird.map | GNU General Public License 2.0 or later | Martin Gerhardy
+base/maps/rescue/r_craft_drop_herakles.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/rescue/r_craft_drop_raptor.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
 base/maps/resort.map | GNU General Public License 2.0 or later | "SparX" Beyeler
 base/maps/rivertown.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/scout_crash/sc_main.map | GNU General Public License 2.0 or later

@@ -5094,9 +5094,10 @@ mapdef rescue
 	map				"+rescue"
 	multiplayer		false
 	description		"_PHALANX Craft Crash Site"
-	storyrelated		true
+	storyrelated	true
 	maxaliens		30
 	hurtaliens		true
+
 	ufos
 	(
 		craft_ufo_scout
@@ -5110,9 +5111,8 @@ mapdef rescue
 	aircraft
 	(
 		craft_drop_firebird
-//		craft_drop_herakles
-//		craft_drop_dragon
-//		craft_drop_raptor
+		craft_drop_herakles
+		craft_drop_raptor
 	)
 }
 
