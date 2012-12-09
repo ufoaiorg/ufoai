@@ -30,6 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "server.h"
 #include "sv_rma.h"
 #include "../shared/parse.h"
+#include "../shared/scopedmutex.h"
 
 serverInstanceStatic_t svs;			/* persistant server info */
 serverInstanceGame_t * sv;					/* local server */
@@ -205,9 +206,10 @@ void SV_Map (bool day, const char *levelstring, const char *assembly)
 	Com_SetServerState(ss_loading);
 
 	/* load and spawn all other entities */
-	SDL_LockMutex(svs.serverMutex);
-	svs.ge->SpawnEntities(sv->name, SV_GetConfigStringInteger(CS_LIGHTMAP), sv->mapData.mapEntityString);
-	SDL_UnlockMutex(svs.serverMutex);
+	{
+		const ScopedMutex scopedMutex(svs.serverMutex);
+		svs.ge->SpawnEntities(sv->name, SV_GetConfigStringInteger(CS_LIGHTMAP), sv->mapData.mapEntityString);
+	}
 
 	/* all precaches are complete */
 	Com_SetServerState(ss_game);

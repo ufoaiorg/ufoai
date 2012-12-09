@@ -30,6 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "server.h"
 #include "../common/http.h"
+#include "../shared/scopedmutex.h"
 
 void SV_Heartbeat_f (void)
 {
@@ -372,9 +373,8 @@ static void SV_ServerCommand_f (void)
 
 	Com_DPrintf(DEBUG_SERVER, "Execute game command '%s'\n", Cmd_Args());
 
-	SDL_LockMutex(svs.serverMutex);
+	const ScopedMutex scopedMutex(svs.serverMutex);
 	svs.ge->ServerCommand();
-	SDL_UnlockMutex(svs.serverMutex);
 }
 
 /*=========================================================== */

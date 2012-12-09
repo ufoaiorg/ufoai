@@ -29,6 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "server.h"
 #include "sv_log.h"
 #include "../ports/system.h"
+#include "../shared/scopedmutex.h"
 
 /** password for remote server commands */
 static cvar_t *rcon_password;
@@ -148,9 +149,8 @@ void SV_DropClient (client_t * drop, const char *message)
 	if (drop->state == cs_spawned || drop->state == cs_spawning) {
 		/* call the prog function for removing a client */
 		/* this will remove the body, among other things */
-		SDL_LockMutex(svs.serverMutex);
+		const ScopedMutex scopedMutex(svs.serverMutex);
 		svs.ge->ClientDisconnect(drop->player);
-		SDL_UnlockMutex(svs.serverMutex);
 	}
 
 	NET_StreamFinished(drop->stream);
@@ -361,9 +361,10 @@ static void SVC_DirectConnect (struct net_stream *stream)
 	cl->player = player;
 	cl->player->num = playernum;
 
-	SDL_LockMutex(svs.serverMutex);
-	connected = svs.ge->ClientConnect(player, userinfo, sizeof(userinfo));
-	SDL_UnlockMutex(svs.serverMutex);
+	{
+		const ScopedMutex scopedMutex(svs.serverMutex);
+		connected = svs.ge->ClientConnect(player, userinfo, sizeof(userinfo));
+	}
 
 	/* get the game a chance to reject this connection or modify the userinfo */
 	if (!connected) {
@@ -745,9 +746,10 @@ void SV_UserinfoChanged (client_t * cl)
 	unsigned int i;
 
 	/* call prog code to allow overrides */
-	SDL_LockMutex(svs.serverMutex);
-	svs.ge->ClientUserinfoChanged(cl->player, cl->userinfo);
-	SDL_UnlockMutex(svs.serverMutex);
+	{
+		const ScopedMutex scopedMutex(svs.serverMutex);
+		svs.ge->ClientUserinfoChanged(cl->player, cl->userinfo);
+	}
 
 	/* name of the player */
 	Q_strncpyz(cl->name, Info_ValueForKey(cl->userinfo, "cl_name"), sizeof(cl->name));

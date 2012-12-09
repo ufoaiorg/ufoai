@@ -30,6 +30,7 @@
 #include "sv_log.h"
 #include "../common/grid.h"
 #include "../ports/system.h"
+#include "../shared/scopedmutex.h"
 #include <SDL.h>
 
 /**
@@ -628,10 +629,9 @@ void SV_ShutdownGameProgs (void)
 int SV_RunGameFrameThread (void *data)
 {
 	do {
-		SDL_LockMutex(svs.serverMutex);
+		const ScopedMutex scopedMutex(svs.serverMutex);
 		SDL_CondWait(svs.gameFrameCond, svs.serverMutex);
 		SV_RunGameFrame();
-		SDL_UnlockMutex(svs.serverMutex);
 	} while (!sv->endgame);
 
 	return 0;
