@@ -71,12 +71,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define INVDEF(containerID) (&gi.csi->ids[(containerID)])
 
-/** Actor visibility constants */
-#define ACTOR_VIS_100	1.0
-#define ACTOR_VIS_50	0.5
-#define ACTOR_VIS_10	0.1
-#define ACTOR_VIS_0		0.0
-
 #define MAX_TU				(ROUTING_NOT_REACHABLE - 1)
 
 #define G_FreeTags(tag) gi.FreeTags((tag), __FILE__, __LINE__)

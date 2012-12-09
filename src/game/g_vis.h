@@ -51,6 +51,12 @@ typedef unsigned int vischeckflags_t;
 /** don't perform a frustum vis check via G_FrustumVis in G_Vis */
 #define VT_NOFRUSTUM	2
 
+/** Actor visibility constants */
+#define ACTOR_VIS_100	1.0
+#define ACTOR_VIS_50	0.5
+#define ACTOR_VIS_10	0.1
+#define ACTOR_VIS_0		0.0
+
 bool G_FrustumVis(const edict_t *from, const vec3_t point);
 float G_ActorVis(const vec3_t from, const edict_t *ent, const edict_t *check, bool full);
 void G_VisFlagsClear(int team);
