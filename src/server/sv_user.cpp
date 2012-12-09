@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "server.h"
+#include "../shared/scopedmutex.h"
 
 /**
  * @brief Set the client state
@@ -133,9 +134,10 @@ static void SV_Begin_f (client_t *cl)
 	}
 
 	/* call the game begin function */
-	SDL_LockMutex(svs.serverMutex);
-	began = svs.ge->ClientBegin(cl->player);
-	SDL_UnlockMutex(svs.serverMutex);
+	{
+		ScopedMutex scopedMutex(svs.serverMutex);
+		began = svs.ge->ClientBegin(cl->player);
+	}
 
 	if (!began) {
 		SV_DropClient(cl, "'begin' failed\n");
@@ -158,9 +160,10 @@ static void SV_StartMatch_f (client_t *cl)
 		return;
 	}
 
-	SDL_LockMutex(svs.serverMutex);
-	svs.ge->ClientStartMatch(cl->player);
-	SDL_UnlockMutex(svs.serverMutex);
+	{
+		ScopedMutex scopedMutex(svs.serverMutex);
+		svs.ge->ClientStartMatch(cl->player);
+	}
 
 	Cbuf_InsertFromDefer();
 }
@@ -222,9 +225,8 @@ static void SV_ExecuteUserCommand (client_t * cl, const char *s)
 
 	if (Com_ServerState() == ss_game) {
 		Com_DPrintf(DEBUG_SERVER, "SV_ExecuteUserCommand: client command: %s\n", s);
-		SDL_LockMutex(svs.serverMutex);
+		ScopedMutex scopedMutex(svs.serverMutex);
 		svs.ge->ClientCommand(cl->player);
-		SDL_UnlockMutex(svs.serverMutex);
 	}
 }
 
@@ -268,44 +270,44 @@ void SV_ExecuteClientMessage (client_t * cl, int cmd, dbuffer *msg)
 		break;
 	}
 
-	case clc_action:
+	case clc_action: {
 		/* client actions are handled by the game module */
-		SDL_LockMutex(svs.serverMutex);
+		ScopedMutex scopedMutex(svs.serverMutex);
 		sv->messageBuffer = msg;
 		svs.ge->ClientAction(cl->player);
 		sv->messageBuffer = NULL;
-		SDL_UnlockMutex(svs.serverMutex);
 		break;
+	}
 
-	case clc_endround:
+	case clc_endround: {
 		/* player wants to end round */
-		SDL_LockMutex(svs.serverMutex);
+		ScopedMutex scopedMutex(svs.serverMutex);
 		sv->messageBuffer = msg;
 		svs.ge->ClientEndRound(cl->player);
 		sv->messageBuffer = NULL;
-		SDL_UnlockMutex(svs.serverMutex);
 		break;
+	}
 
-	case clc_teaminfo:
+	case clc_teaminfo: {
 		/* player sends team info */
 		/* actors spawn accordingly */
-		SDL_LockMutex(svs.serverMutex);
+		ScopedMutex scopedMutex(svs.serverMutex);
 		sv->messageBuffer = msg;
 		svs.ge->ClientTeamInfo(cl->player);
 		sv->messageBuffer = NULL;
-		SDL_UnlockMutex(svs.serverMutex);
 		SV_SetClientState(cl, cs_spawned);
 		break;
+	}
 
-	case clc_initactorstates:
+	case clc_initactorstates: {
 		/* player sends team info */
 		/* actors spawn accordingly */
-		SDL_LockMutex(svs.serverMutex);
+		ScopedMutex scopedMutex(svs.serverMutex);
 		sv->messageBuffer = msg;
 		svs.ge->ClientInitActorStates(cl->player);
 		sv->messageBuffer = NULL;
-		SDL_UnlockMutex(svs.serverMutex);
 		break;
+	}
 	}
 }
 
