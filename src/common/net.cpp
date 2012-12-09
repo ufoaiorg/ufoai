@@ -864,32 +864,31 @@ const char *NET_StreamPeerToName (struct net_stream *s, char *dst, int len, bool
 {
 	if (!s)
 		return "(null)";
-	else if (NET_StreamIsLoopback(s))
-		return "loopback connection";
-	else {
-		char buf[128];
-		char node[64];
-		char service[64];
-		int rc;
-		socklen_t addrlen = s->addrlen;
-		if (getpeername(s->socket, (struct sockaddr *)buf, &addrlen) != 0)
-			return "(error)";
 
-		rc = getnameinfo((struct sockaddr *)buf, addrlen, node, sizeof(node), service, sizeof(service),
-				NI_NUMERICHOST | NI_NUMERICSERV);
-		if (rc != 0) {
-			Com_Printf("Failed to convert sockaddr to string: %s\n", gai_strerror(rc));
-			return "(error)";
-		}
-		if (!appendPort)
-			Q_strncpyz(dst, node, len);
-		else {
-			node[sizeof(node) - 1] = '\0';
-			service[sizeof(service) - 1] = '\0';
-			Com_sprintf(dst, len, "%s %s", node, service);
-		}
-		return dst;
+	if (NET_StreamIsLoopback(s))
+		return "loopback connection";
+
+	char buf[128];
+	socklen_t addrlen = s->addrlen;
+	if (getpeername(s->socket, (struct sockaddr *)buf, &addrlen) != 0)
+		return "(error)";
+
+	char node[64];
+	char service[64];
+	const int rc = getnameinfo((struct sockaddr *)buf, addrlen, node, sizeof(node), service, sizeof(service),
+			NI_NUMERICHOST | NI_NUMERICSERV);
+	if (rc != 0) {
+		Com_Printf("Failed to convert sockaddr to string: %s\n", gai_strerror(rc));
+		return "(error)";
 	}
+	if (!appendPort) {
+		Q_strncpyz(dst, node, len);
+	} else {
+		node[sizeof(node) - 1] = '\0';
+		service[sizeof(service) - 1] = '\0';
+		Com_sprintf(dst, len, "%s %s", node, service);
+	}
+	return dst;
 }
 
 void NET_StreamSetCallback (struct net_stream *s, stream_callback_func *func)
