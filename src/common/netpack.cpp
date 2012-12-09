@@ -28,6 +28,8 @@ const vec3_t bytedirs[] = {
 #include "../shared/vertex_normals.h"
 };
 
+static const float POSSCALE = 32.0f;
+
 void NET_WriteChar (dbuffer *buf, char c)
 {
 	buf->add(&c, 1);
@@ -36,21 +38,21 @@ void NET_WriteChar (dbuffer *buf, char c)
 
 void NET_WriteByte (dbuffer *buf, byte c)
 {
-	buf->add((char *)&c, 1);
+	buf->add((const char *)&c, 1);
 	Com_DPrintf(DEBUG_EVENTSYS, "byte event data: %s (%i)\n", Com_ByteToBinary(c), c);
 }
 
 void NET_WriteShort (dbuffer *buf, int c)
 {
-	unsigned short v = LittleShort(c);
-	buf->add((char *)&v, 2);
+	const unsigned short v = LittleShort(c);
+	buf->add((const char *)&v, 2);
 	Com_DPrintf(DEBUG_EVENTSYS, "short event data: %i\n", c);
 }
 
 void NET_WriteLong (dbuffer *buf, int c)
 {
-	int v = LittleLong(c);
-	buf->add((char *)&v, 4);
+	const int v = LittleLong(c);
+	buf->add((const char *)&v, 4);
 	Com_DPrintf(DEBUG_EVENTSYS, "long event data: %i\n", c);
 }
 
@@ -65,10 +67,10 @@ void NET_WriteString (dbuffer *buf, const char *str)
 
 void NET_WriteRawString (dbuffer *buf, const char *str)
 {
-	if (str) {
-		buf->add(str, strlen(str));
-		Com_DPrintf(DEBUG_EVENTSYS, "string raw event data: %s\n", str);
-	}
+	if (!str)
+		return;
+	buf->add(str, strlen(str));
+	Com_DPrintf(DEBUG_EVENTSYS, "string raw event data: %s\n", str);
 }
 
 void NET_WriteCoord (dbuffer *buf, float f)
@@ -81,8 +83,8 @@ void NET_WriteCoord (dbuffer *buf, float f)
  */
 void NET_Write2Pos (dbuffer *buf, const vec2_t pos)
 {
-	NET_WriteLong(buf, (long) (pos[0] * 32.));
-	NET_WriteLong(buf, (long) (pos[1] * 32.));
+	NET_WriteLong(buf, (long) (pos[0] * POSSCALE));
+	NET_WriteLong(buf, (long) (pos[1] * POSSCALE));
 }
 
 /**
@@ -90,9 +92,9 @@ void NET_Write2Pos (dbuffer *buf, const vec2_t pos)
  */
 void NET_WritePos (dbuffer *buf, const vec3_t pos)
 {
-	NET_WriteLong(buf, (long) (pos[0] * 32.));
-	NET_WriteLong(buf, (long) (pos[1] * 32.));
-	NET_WriteLong(buf, (long) (pos[2] * 32.));
+	NET_WriteLong(buf, (long) (pos[0] * POSSCALE));
+	NET_WriteLong(buf, (long) (pos[1] * POSSCALE));
+	NET_WriteLong(buf, (long) (pos[2] * POSSCALE));
 }
 
 void NET_WriteGPos (dbuffer *buf, const pos3_t pos)
@@ -118,19 +120,15 @@ void NET_WriteAngle16 (dbuffer *buf, float f)
  */
 void NET_WriteDir (dbuffer *buf, const vec3_t dir)
 {
-	int i, best;
-	float bestd;
-	size_t bytedirsLength;
-
 	if (!dir) {
 		NET_WriteByte(buf, 0);
 		return;
 	}
 
-	bestd = 0;
-	best = 0;
-	bytedirsLength = lengthof(bytedirs);
-	for (i = 0; i < bytedirsLength; i++) {
+	float bestd = 0.0f;
+	int best = 0;
+	const size_t bytedirsLength = lengthof(bytedirs);
+	for (int i = 0; i < bytedirsLength; i++) {
 		const float d = DotProduct(dir, bytedirs[i]);
 		if (d > bestd) {
 			bestd = d;
@@ -147,62 +145,48 @@ void NET_WriteDir (dbuffer *buf, const vec3_t dir)
  */
 void NET_vWriteFormat (dbuffer *buf, const char *format, va_list ap)
 {
-	char typeID;
-
 	while (*format) {
-		typeID = *format++;
+		const char typeID = *format++;
 
 		switch (typeID) {
 		case 'c':
 			NET_WriteChar(buf, va_arg(ap, int));
-
 			break;
 		case 'b':
 			NET_WriteByte(buf, va_arg(ap, int));
-
 			break;
 		case 's':
 			NET_WriteShort(buf, va_arg(ap, int));
-
 			break;
 		case 'l':
 			NET_WriteLong(buf, va_arg(ap, int));
-
 			break;
 		case 'p':
 			NET_WritePos(buf, va_arg(ap, float *));
-
 			break;
 		case 'g':
 			NET_WriteGPos(buf, va_arg(ap, byte *));
 			break;
 		case 'd':
 			NET_WriteDir(buf, va_arg(ap, float *));
-
 			break;
 		case 'a':
 			/* NOTE: float is promoted to double through ... */
 			NET_WriteAngle(buf, va_arg(ap, double));
-
 			break;
 		case '!':
 			break;
 		case '&':
 			NET_WriteString(buf, va_arg(ap, char *));
 			break;
-		case '*':
-			{
-				int i, n;
-				byte *p;
-
-				n = va_arg(ap, int);
-
-				p = va_arg(ap, byte *);
-				NET_WriteShort(buf, n);
-				for (i = 0; i < n; i++)
-					NET_WriteByte(buf, *p++);
-			}
+		case '*': {
+			const int n = va_arg(ap, int);
+			const byte *p = va_arg(ap, byte *);
+			NET_WriteShort(buf, n);
+			for (int i = 0; i < n; i++)
+				NET_WriteByte(buf, *p++);
 			break;
+		}
 		default:
 			Com_Error(ERR_DROP, "WriteFormat: Unknown type!");
 		}
@@ -369,8 +353,8 @@ float NET_ReadCoord (dbuffer *buf)
  */
 void NET_Read2Pos (dbuffer *buf, vec2_t pos)
 {
-	pos[0] = NET_ReadLong(buf) / 32.;
-	pos[1] = NET_ReadLong(buf) / 32.;
+	pos[0] = NET_ReadLong(buf) / POSSCALE;
+	pos[1] = NET_ReadLong(buf) / POSSCALE;
 }
 
 /**
@@ -378,9 +362,9 @@ void NET_Read2Pos (dbuffer *buf, vec2_t pos)
  */
 void NET_ReadPos (dbuffer *buf, vec3_t pos)
 {
-	pos[0] = NET_ReadLong(buf) / 32.;
-	pos[1] = NET_ReadLong(buf) / 32.;
-	pos[2] = NET_ReadLong(buf) / 32.;
+	pos[0] = NET_ReadLong(buf) / POSSCALE;
+	pos[1] = NET_ReadLong(buf) / POSSCALE;
+	pos[2] = NET_ReadLong(buf) / POSSCALE;
 }
 
 /**
@@ -534,9 +518,8 @@ void NET_SkipFormat (dbuffer *buf, const char *format)
 			NET_ReadString(buf, NULL, 0);
 			break;
 		case '*': {
-			int i;
 			const int n = NET_ReadShort(buf);
-			for (i = 0; i < n; i++)
+			for (int i = 0; i < n; i++)
 				NET_ReadByte(buf);
 			break;
 		}
@@ -569,13 +552,12 @@ void NET_OOB_Printf (struct net_stream *s, const char *format, ...)
 	va_list argptr;
 	char string[256];
 	const char cmd = (const char)clc_oob;
-	int len;
 
 	va_start(argptr, format);
 	Q_vsnprintf(string, sizeof(string), format, argptr);
 	va_end(argptr);
 
-	len = LittleLong(strlen(string) + 1);
+	const int len = LittleLong(strlen(string) + 1);
 	NET_StreamEnqueue(s, (const char *)&len, 4);
 	NET_StreamEnqueue(s, &cmd, 1);
 	NET_StreamEnqueue(s, string, strlen(string));
@@ -608,7 +590,7 @@ void NET_WriteMsg (struct net_stream *s, dbuffer &buf)
 void NET_WriteConstMsg (struct net_stream *s, const dbuffer &buf)
 {
 	char tmp[256];
-	int len = LittleLong(buf.length());
+	const int len = LittleLong(buf.length());
 	int pos = 0;
 	NET_StreamEnqueue(s, (char *)&len, 4);
 

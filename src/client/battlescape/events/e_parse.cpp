@@ -60,22 +60,19 @@ typedef struct evTimes_s {
  */
 static void CL_LogEvent (const eventRegister_t *eventData)
 {
-	qFILE f;
-
 	if (!cl_log_battlescape_events->integer)
 		return;
 
+	qFILE f;
 	FS_OpenFile("events.log", &f, FILE_APPEND);
 	if (!f.f)
 		return;
-	else {
-		char tbuf[32];
 
-		Com_MakeTimestamp(tbuf, sizeof(tbuf));
+	char tbuf[32];
+	Com_MakeTimestamp(tbuf, sizeof(tbuf));
 
-		FS_Printf(&f, "%s - %s: %10i %s\n", tbuf, CL_GetConfigString(CS_MAPTITLE), cl.time, eventData->name);
-		FS_CloseFile(&f);
-	}
+	FS_Printf(&f, "%s - %s: %10i %s\n", tbuf, CL_GetConfigString(CS_MAPTITLE), cl.time, eventData->name);
+	FS_CloseFile(&f);
 }
 
 /**
@@ -106,17 +103,16 @@ static bool CL_AreBattlescapeEventsBlocked (void)
  */
 static bool CL_CheckBattlescapeEvent (int now, void *data)
 {
-	if (CL_AreBattlescapeEventsBlocked()) {
+	if (CL_AreBattlescapeEventsBlocked())
 		return false;
-	} else {
-		const evTimes_t *event = (evTimes_t *)data;
-		const eventRegister_t *eventData = CL_GetEvent(event->eType);
 
-		if (eventData->eventCheck == NULL)
-			return true;
+	const evTimes_t *event = (evTimes_t *)data;
+	const eventRegister_t *eventData = CL_GetEvent(event->eType);
 
-		return eventData->eventCheck(eventData, event->msg);
-	}
+	if (eventData->eventCheck == NULL)
+		return true;
+
+	return eventData->eventCheck(eventData, event->msg);
 }
 
 /**
@@ -168,7 +164,7 @@ static bool CL_FilterBattlescapeEvents (int when, event_func *func, event_check_
 
 int CL_ClearBattlescapeEvents (void)
 {
-	int filtered = CL_FilterEventQueue(&CL_FilterBattlescapeEvents);
+	const int filtered = CL_FilterEventQueue(&CL_FilterBattlescapeEvents);
 	CL_BlockBattlescapeEvents(false);
 	return filtered;
 }
@@ -215,12 +211,11 @@ static int CL_GetEventTime (const event_t eType, dbuffer *msg, eventTiming_t *ev
 event_t CL_ParseEvent (dbuffer *msg)
 {
 	static eventTiming_t eventTiming;
-	bool now;
-	const eventRegister_t *eventData;
 	int eType = NET_ReadByte(msg);
 	if (eType == EV_NULL)
 		return EV_NULL;
 
+	bool now;
 	/* check instantly flag */
 	if (eType & EVENT_INSTANTLY) {
 		now = true;
@@ -232,7 +227,7 @@ event_t CL_ParseEvent (dbuffer *msg)
 	if (eType >= EV_NUM_EVENTS)
 		Com_Error(ERR_DROP, "CL_ParseEvent: invalid event %i", eType);
 
-	eventData = CL_GetEvent((event_t)eType);
+	const eventRegister_t *eventData = CL_GetEvent((event_t)eType);
 	if (!eventData->eventCallback)
 		Com_Error(ERR_DROP, "CL_ParseEvent: no handling function for event %i", eType);
 
@@ -247,14 +242,13 @@ event_t CL_ParseEvent (dbuffer *msg)
 		eventData->eventCallback(eventData, msg);
 	} else {
 		evTimes_t* const cur = Mem_PoolAllocType(evTimes_t, cl_genericPool);
-		int when;
 
 		/* copy the buffer as first action, the event time functions can modify the buffer already */
 		cur->msg = new dbuffer(*msg);
 		cur->eType = (event_t)eType;
 
 		/* timestamp (msec) that is used to determine when the event should be executed */
-		when = CL_GetEventTime(cur->eType, msg, &eventTiming);
+		const int when = CL_GetEventTime(cur->eType, msg, &eventTiming);
 		Schedule_Event(when, &CL_ExecuteBattlescapeEvent, &CL_CheckBattlescapeEvent, &CL_FreeBattlescapeEvent, cur);
 
 		Com_DPrintf(DEBUG_EVENTSYS, "event(at %d): %s %p\n", when, eventData->name, (void*)cur);
