@@ -33,6 +33,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /* A bit mask. One bit for each affected player. */
 typedef unsigned int playermask_t;
+/* Bitmask for all players */
+#define PM_ALL			0xFFFFFFFF
+
 
 void G_EventActorAdd(playermask_t playerMask, const edict_t *ent);
 void G_EventActorAppear(playermask_t playerMask, const edict_t *check, const edict_t *ent);

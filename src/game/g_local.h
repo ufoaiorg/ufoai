@@ -50,15 +50,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MAX_SPOT_DIST_CAMERA	768
 #define MAX_SPOT_DIST	4096
 
-/**
- * Bitmask for all players
- */
-#define PM_ALL			0xFFFFFFFF
-/**
- * Bitmask for all teams
- */
-#define TEAM_ALL		0xFFFFFFFF
-
 #define G_PlayerToPM(player) ((player)->num < game.sv_maxplayersperteam ? 1 << ((player)->num) : 0)
 
 /** server is running at 10 fps */

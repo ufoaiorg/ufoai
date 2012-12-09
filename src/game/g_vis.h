@@ -28,6 +28,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /** @todo make this a byte */
 /* A bit mask. One bit for each affected team. */
 typedef unsigned int teammask_t;
+/* Bitmask for all teams */
+#define TEAM_ALL		0xFFFFFFFF
 
 #define VIS_APPEAR	1
 #define VIS_PERISH	2
