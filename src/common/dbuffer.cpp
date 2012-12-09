@@ -105,6 +105,10 @@ size_t dbuffer::getAt (size_t offset, char *data, size_t len) const
  */
 size_t dbuffer::remove (size_t len)
 {
+	if (len <= 0) {
+		return 0;
+	}
+
 	if (len > _length) {
 		len = _length;
 	}
@@ -112,7 +116,6 @@ size_t dbuffer::remove (size_t len)
 	_data.erase(_data.begin(), eraseEnd);
 	_length -= len;
 	return len;
-
 }
 
 /**
