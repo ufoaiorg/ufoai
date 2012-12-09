@@ -83,6 +83,7 @@
 		<Unit filename="..\..\src\game\g_func.cpp" />
 		<Unit filename="..\..\src\game\g_func.h" />
 		<Unit filename="..\..\src\game\g_health.cpp" />
+		<Unit filename="..\..\src\game\g_health.h" />
 		<Unit filename="..\..\src\game\g_inventory.cpp" />
 		<Unit filename="..\..\src\game\g_local.h" />
 		<Unit filename="..\..\src\game\g_main.cpp" />
