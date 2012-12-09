@@ -39,6 +39,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define FFL_SPAWNTEMP		1
 #define FFL_NOSPAWN			2
 
+#define G_ValidMessage(ent)		((ent)->message && ((ent)->message[0] == '_' || strstr((ent)->message, "*msgid:") != NULL))
+
 static spawn_temp_t st;
 
 static void SP_light(edict_t *ent);

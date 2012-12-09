@@ -27,6 +27,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "g_local.h"
 
+/** @brief used in shot probability calculations (pseudo shots) */
+typedef struct {
+	int enemyCount;			/**< shot would hit that much enemies */
+	int friendCount;		/**< shot would hit that much friends */
+	int civilian;			/**< shot would hit that much civilians */
+	int self;				/**< @todo incorrect actor facing or shotOrg, or bug in trace code? */
+	int damage;
+	bool allow_self;
+} shot_mock_t;
+
 int G_ApplyProtection(const edict_t *target, const byte dmgWeight, int damage);
 void G_CheckDeathOrKnockout(edict_t *target, edict_t *attacker, const fireDef_t *fd, int damage);
 void G_GetShotOrigin(const edict_t *shooter, const fireDef_t *fd, const vec3_t dir, vec3_t shotOrigin);

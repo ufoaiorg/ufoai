@@ -149,16 +149,6 @@ typedef struct {
 	int noEquipment;	/**< spawn the actors with no equipment - must be collected in the map */
 } spawn_temp_t;
 
-/** @brief used in shot probability calculations (pseudo shots) */
-typedef struct {
-	int enemyCount;			/**< shot would hit that much enemies */
-	int friendCount;		/**< shot would hit that much friends */
-	int civilian;			/**< shot would hit that much civilians */
-	int self;				/**< @todo incorrect actor facing or shotOrg, or bug in trace code? */
-	int damage;
-	bool allow_self;
-} shot_mock_t;
-
 extern game_locals_t game;
 extern level_locals_t level;
 extern game_import_t gi;
@@ -224,8 +214,6 @@ extern game_export_t globals;
 #define G_RemovePanic(ent)		G_RemoveState((ent), STATE_PANIC)
 #define G_RemoveCrouched(ent)	G_RemoveState((ent), STATE_CROUCHED)
 #define G_RemoveReaction(ent)	G_RemoveState((ent), STATE_REACTION)
-
-#define G_ValidMessage(ent)		((ent)->message && ((ent)->message[0] == '_' || strstr((ent)->message, "*msgid:") != NULL))
 
 extern cvar_t *sv_maxentities;
 extern cvar_t *password;
