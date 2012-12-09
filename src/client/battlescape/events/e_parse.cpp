@@ -224,7 +224,7 @@ event_t CL_ParseEvent (dbuffer *msg)
 		now = false;
 
 	/* check if eType is valid */
-	if (eType >= EV_NUM_EVENTS)
+	if (eType >= EV_NUM_EVENTS || eType < 0)
 		Com_Error(ERR_DROP, "CL_ParseEvent: invalid event %i", eType);
 
 	const eventRegister_t *eventData = CL_GetEvent((event_t)eType);
