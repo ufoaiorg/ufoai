@@ -428,13 +428,6 @@ void SP_trigger_rescue(edict_t *ent);
 bool Touch_HurtTrigger(edict_t *self, edict_t *activator);
 void Think_NextMapTrigger(edict_t *self);
 
-/* g_health */
-void G_DamageActor(edict_t *target, const int damage, const vec3_t impact);
-void G_TreatActor(edict_t *target, const fireDef_t *const fd, const int heal, const int healerTeam);
-void G_BleedWounds(const int team);
-void G_SendWoundStats(edict_t *const ent);
-float G_ActorGetInjuryPenalty(const edict_t *const ent, const modifier_types_t type);
-
 /** Functions to handle single edicts, trying to encapsulate edict->pos in the first place. */
 void G_EdictCalcOrigin(edict_t *ent);
 void G_EdictSetOrigin(edict_t *ent, const pos3_t newPos);
