@@ -1,7 +1,6 @@
 ./client/battlescape/cl_actor.cpp
 ./client/battlescape/cl_hud_callbacks.cpp
 ./client/battlescape/cl_hud.cpp
-./client/battlescape/cl_view.cpp
 ./client/battlescape/events/e_server.cpp
 ./client/battlescape/events/event/actor/e_event_actorappear.cpp
 ./client/battlescape/events/event/actor/e_event_actordie.cpp
@@ -21,6 +20,7 @@
 ./client/cgame/campaign/cp_cgame_callbacks.cpp
 ./client/cgame/campaign/cp_employee_callbacks.cpp
 ./client/cgame/campaign/cp_employee.cpp
+./client/cgame/campaign/cp_event_callbacks.cpp
 ./client/cgame/campaign/cp_event.cpp
 ./client/cgame/campaign/cp_fightequip_callbacks.cpp
 ./client/cgame/campaign/cp_hospital_callbacks.cpp
@@ -33,7 +33,6 @@
 ./client/cgame/campaign/cp_messages.cpp
 ./client/cgame/campaign/cp_mission_callbacks.cpp
 ./client/cgame/campaign/cp_missions.cpp
-./client/cgame/campaign/cp_mission_triggers.cpp
 ./client/cgame/campaign/cp_nation.cpp
 ./client/cgame/campaign/cp_popup.cpp
 ./client/cgame/campaign/cp_produce_callbacks.cpp
@@ -63,6 +62,7 @@
 ./client/cgame/staticcampaign/scp_missions.cpp
 ./client/cl_console.cpp
 ./client/cl_inventory_callbacks.cpp
+./client/cl_inventory.cpp
 ./client/cl_irc.cpp
 ./client/cl_language.cpp
 ./client/cl_main.cpp
