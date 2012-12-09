@@ -122,14 +122,13 @@ static void CL_Rcon_f (void)
 		cgi->NET_OOB_Printf2("%s", message);
 	} else if (rcon_address->string) {
 		const char *port;
-		struct net_stream *s;
 
 		if (strstr(rcon_address->string, ":"))
 			port = strstr(rcon_address->string, ":") + 1;
 		else
 			port = DOUBLEQUOTE(PORT_SERVER);
 
-		s = cgi->NET_Connect(rcon_address->string, port, NULL);
+		struct net_stream *s = cgi->NET_Connect(rcon_address->string, port, NULL);
 		if (s) {
 			cgi->NET_OOB_Printf(s, "%s", message);
 			cgi->NET_StreamSetCallback(s, &CL_RconCallback);

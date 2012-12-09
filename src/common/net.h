@@ -22,8 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef _COMMON_NET_H
-#define _COMMON_NET_H
+#pragma once
 
 class dbuffer;
 struct net_stream;
@@ -59,5 +58,3 @@ void NET_StreamFinished(struct net_stream *s);
 void NET_StreamSetCallback(struct net_stream *s, stream_callback_func *func);
 
 dbuffer *NET_ReadMsg(struct net_stream *s);
-
-#endif
