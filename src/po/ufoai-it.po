@@ -7,18 +7,16 @@ msgstr ""
 "Project-Id-Version: it\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
 "POT-Creation-Date: 2012-10-16 10:46+0700\n"
-"PO-Revision-Date: 2012-03-23 15:25+0100\n"
-"Last-Translator: \n"
+"PO-Revision-Date: 2012-11-09 02:56+0100\n"
+"Last-Translator: profantibus <spam.profantibus@gmail.com>\n"
 "Language-Team: ITALIAN <it@li.org>\n"
-"Language: \n"
+"Language: it_IT\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-Country: ITALY\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Generator: KBabel 1.11.4\n"
+"X-Generator: Poedit 1.5.4\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Poedit-Language: Italian\n"
 "X-Poedit-Basepath: ../\n"
 
 #: ../base/maps/africa.ump:552 ../base/maps/africa.ump:584
@@ -98,9 +96,8 @@ msgid "Alien landing - Industrial"
 msgstr "Atterraggio alieno - Industriale"
 
 #: ../base/maps/frozen.ump:379 ../base/maps/frozen.ump:401
-#, fuzzy
 msgid "A UFO crashed into the snow here."
-msgstr "Un piccolo UFO si é schiantato in questa regione mineraria."
+msgstr "Qui un UFO è precipitato nella neve."
 
 #: ../base/maps/frozen.ump:419
 msgid "Multiplayer Coop"
@@ -160,9 +157,8 @@ msgstr "Laboratorio"
 
 #: ../base/maps/mansion.ump:398 ../base/maps/mansion.ump:442
 #: ../base/maps/mansion1.ump:68
-#, fuzzy
 msgid "Mansion"
-msgstr "Missioni"
+msgstr "Palazzo"
 
 #: ../base/maps/mart.ump:64
 msgid "Mart"
@@ -424,18 +420,16 @@ msgid "Particle Beam Weapon"
 msgstr "Arma a Raggi"
 
 #: ../base/ufos/aircraftmanagement.ufo:967 ../base/ufos/research.ufo:5062
-#, fuzzy
 msgid "Alien Launcher"
-msgstr "Lanciagranate"
+msgstr "Lanciagranate alieno"
 
 #: ../base/ufos/aircraftmanagement.ufo:977 ../base/ufos/research.ufo:5109
-#, fuzzy
 msgid "Antimatter Missile"
-msgstr "Antimateria"
+msgstr "Missile ad Antimateria"
 
 #: ../base/ufos/aircraftmanagement.ufo:994 ../base/ufos/research.ufo:5158
 msgid "Hybrid Missile"
-msgstr ""
+msgstr "Missile Ibrido"
 
 #: ../base/ufos/aircraftmanagement.ufo:1011 ../base/ufos/research.ufo:5208
 msgid "Targeting Computer"
@@ -526,9 +520,8 @@ msgid "Power Armour"
 msgstr "Armatura potenziata"
 
 #: ../base/ufos/armour.ufo:251
-#, fuzzy
 msgid "Advanced Nanocomposite Armour"
-msgstr "Armatura Nanocomposita"
+msgstr "Armatura Nanocomposita Avanzata"
 
 #: ../base/ufos/armour.ufo:312
 #, fuzzy
@@ -2515,9 +2508,8 @@ msgid "Memo: Live Aliens"
 msgstr "Alieno Vivo"
 
 #: ../base/ufos/events.ufo:65
-#, fuzzy
 msgid "Memo: Sam Sites"
-msgstr "Alieno Vivo"
+msgstr "Sito Sam"
 
 #: ../base/ufos/events.ufo:76
 msgid "Alien died"
@@ -2548,14 +2540,12 @@ msgid "media/languages.ttf"
 msgstr "media/languages.ttf"
 
 #: ../base/ufos/gamemodes.ufo:16
-#, fuzzy
 msgid "Full Campaign"
-msgstr "Campagna"
+msgstr "Campagna completa"
 
 #: ../base/ufos/gamemodes.ufo:21
-#, fuzzy
 msgid "Simple Campaign"
-msgstr "Campagna"
+msgstr "Campagna semplice"
 
 #: ../base/ufos/gamemodes.ufo:26
 msgid "Skirmish"
@@ -2667,9 +2657,8 @@ msgstr ""
 "ONU apporteranno gratuitamente rifornimenti."
 
 #: ../base/ufos/installation.ufo:52
-#, fuzzy
 msgid "Orbital Rocket Launcher"
-msgstr "Lanciarazzi"
+msgstr "Lanciarazzi Orbitale"
 
 #: ../base/ufos/installation.ufo:62
 msgid ""
@@ -2795,23 +2784,20 @@ msgid "No language"
 msgstr "Nessuna lingua"
 
 #: ../base/ufos/maps.ufo:66
-#, fuzzy
 msgid "A suburb that has received a visit from a UFO."
-msgstr "Un sobborgo a ricevuto la visita di un Mietitrice."
+msgstr "Un sobborgo ha ricevuto la visita di un Mietitrice."
 
 #: ../base/ufos/maps.ufo:109
-#, fuzzy
 msgid "A UFO crashed here."
-msgstr "Un piccolo UFO si é schiantato in questa regione mineraria."
+msgstr "Un UFO si è schiantato qui."
 
 #: ../base/ufos/maps.ufo:171
 msgid "A suburb that has been visited by an UFO."
 msgstr "Un sobborgo che è stato visitato da un UFO."
 
 #: ../base/ufos/maps.ufo:218
-#, fuzzy
 msgid "Crashed UFO in an african suburban district."
-msgstr "UFO precipitato in un distretto suburbano orientale."
+msgstr "UFO precipitato in un distretto suburbano africano."
 
 #: ../base/ufos/maps.ufo:263
 msgid "An UFO crashsite."
@@ -2952,9 +2938,8 @@ msgid "A city high rise."
 msgstr ""
 
 #: ../base/ufos/maps.ufo:2783
-#, fuzzy
 msgid "A hospital in the outskirts of a city."
-msgstr "Un complesso di uffici in periferia."
+msgstr "Un ospedale nella periferia di una città."
 
 #: ../base/ufos/maps.ufo:2825 ../base/ufos/maps.ufo:3825
 msgid "A small neighbourhood in a warm urban region."
@@ -3129,7 +3114,7 @@ msgstr "Una vecchia miniera."
 
 #: ../base/ufos/maps.ufo:4491
 msgid "Neighbourhood."
-msgstr ""
+msgstr "Vicinato"
 
 #: ../base/ufos/maps.ufo:4535
 msgid "An office complex on the outskirts of town."
@@ -3508,6 +3493,11 @@ msgid ""
 "\n"
 "Cdr. Navarre"
 msgstr ""
+"Comandante, sono soddisfatto di presentarle gli schemi del cargo pesante "
+"Herakles.\n"
+"\n"
+"Per velocizzare lo sviluppo di questa nave da sbarco, abbiamo adattato il "
+"progetto di un cargo "
 
 #: ../base/ufos/msgid/aircraft.ufo:64
 msgid ""
@@ -23855,9 +23845,8 @@ msgid "Alien Autopsy - Bloodspider"
 msgstr "Autopsia Aliena - Bloodspider"
 
 #: ../base/ufos/research.ufo:4166
-#, fuzzy
 msgid "Alien Autopsy - Combat Bloodspider"
-msgstr "Autopsia Aliena - Bloodspider"
+msgstr "Autopsia Aliena - Bloodspider combattente"
 
 #: ../base/ufos/research.ufo:4222
 msgid "Alien Autopsy - Ortnok"
@@ -23872,14 +23861,12 @@ msgid "Alien Autopsy - Shevaar"
 msgstr "Autopsia Aliena - Shevaar"
 
 #: ../base/ufos/research.ufo:4354
-#, fuzzy
 msgid "Alien Autopsy - Hovernet"
-msgstr "Autopsia Aliena - Ortnok"
+msgstr "Autopsia Aliena - Hovernet"
 
 #: ../base/ufos/research.ufo:4427
-#, fuzzy
 msgid "Alien Autopsy - Combat Hovernet"
-msgstr "Autopsia Aliena - Taman"
+msgstr "Autopsia Aliena - Hovernet combattente"
 
 #: ../base/ufos/research.ufo:4506 ../base/ufos/team_humans.ufo:2072
 msgid "Phoenix UGV"
@@ -23942,107 +23929,16 @@ msgid "Orbital UFO Activity"
 msgstr "Attività orbitale UFO"
 
 #: ../base/ufos/research.ufo:5577
-#, fuzzy
 msgid "Alien Psi Device"
-msgstr "Alieni uccisi"
+msgstr "Dispositivo psichico alieno"
 
 #: ../base/ufos/research.ufo:5609
-#, fuzzy
 msgid "Alien Infiltration"
-msgstr "Astrazione Aliena"
+msgstr "Infiltrazione aliena"
 
 #: ../base/ufos/research.ufo:5640
-#, fuzzy
 msgid "Human Vaccine"
-msgstr ""
-"Specifiche: Mitragliatore MG12\n"
-"\n"
-"RISERVATO: LIVELLO GIALLO\n"
-"\n"
-"Corpo Contromisure Extraterrestri PHALANX\n"
-"\n"
-"Foglio Tecnico, Salvacondotto: Delta\n"
-"\n"
-"Archiviato: 20 Marzo 2084\n"
-"\n"
-"Da: C.te Paul Navarre, R&S: Dipartimento Ingegneria, PHALANX, Comando "
-"Operazioni Atlantiche\n"
-"\n"
-"\n"
-"\n"
-"\n"
-"Quadro Generale\n"
-"\n"
-"\n"
-"L'attacco alieno su Mumbai ha reso la nostra situazione dolorosamente ovvia. "
-"La loro tecnologia è ben più avanzata della nostra...PHALANX deve superare "
-"queste disparità, e per farlo ci occorre il meglio del meglio che la "
-"tecnologia umana ha da offrire.\n"
-"\n"
-"Il Programma Excalibur è stato creato per trovare le più efficaci armi sulla "
-"Terra, attraverso la rassegna dei loro standard costruttivi, affidabilità, "
-"resoconti operativi, e le loro prestazioni quando si è riusciti a dar "
-"battaglia gli alieni.\n"
-"\n"
-"Stato creato per trovare le più efficaci armi sulla Terra, attraverso la "
-"rassegna dei loro standard costruttivi, affidabilità, resoconti operativi, e "
-"le loro prestazioni quando si è riusciti a dar battaglia gli alieni.\n"
-"\n"
-"Il Britannico SA-3000 GPG (General-Purpose Gun), comunemente conosciuta come "
-"l' Arma Gran Britannica, è una versatile mitragliatrice con caricatore a "
-"tamburo che ha visto servizio in tutto il mondo nei suoi 16 anni di vita "
-"operativa. Prima impiegata nel 2068, ha rapidamente trovato la sua nicchia "
-"come una mitragliatrice leggera per la fanteria ed elicotteri di supporto, "
-"in grado di essere sparata dal fianco con la stessa facilità che da un "
-"bipede o montaggio a cardine.\n"
-"\n"
-"La versione di fanteria della GPG è una arma molto versatile e affidabile. A "
-"differenza della maggior parte delle mitragliatrici la GPG prende le "
-"munizioni senza bossolo da un grosso caricatore a tamburo invece che da un "
-"nastro. Questo limita il rateo di tiro e la durata del caricatore, ma è "
-"anche la ragione per la versatilità dell'arma. Il processo di ricarica per "
-"il GPG è quasi altrettanto veloce e facile come per un fucile d'assalto, e i "
-"tamburi contengono 100 colpi ognuno. Questo permette al GPG di essere "
-"utilizzato quasi come un fucile d'assalto pesante. I caricatori sono "
-"piuttosto sul grosso, ma ancora abbastanza piccoli e leggeri perché un "
-"soldato medio possa portarne diversi in battaglia.\n"
-"\n"
-"L arma sorprendentemente contiene pochi componenti elettronici, solo un "
-"potente compensatore di rinculo potente e un sistema ammortizzante. Ciò "
-"contribuisce a migliorare l'accuratezza sopra quella delle mitragliatrici "
-"più vecchie, sebbene non ne farà un fucile di precisione. Il design solido e "
-"pura semplicità dei suoi interni si combinano per rendere il GPG un'arma "
-"molto affidabile. Ha visto azione a Mumbai si è comportata mirabilmente lì, "
-"fornendo risposte efficaci ed altamente mobili come fuoco di soppressione, "
-"riuscendo a colte a inchiodare intere squadre alieni a seconda del terreno.\n"
-"\n"
-"La GPG spara il comune 4.7mm senza bossolo, lo stesso usato nel nostro "
-"Fucile d'Assalto AR-80. Sfortunatamente i caricatori non sono scambiabili "
-"poiché usano sistemi di alimentazione differenti.\n"
-"\n"
-"Riteniamo che la GPG è il miglior candidato per il nostro arsenale nella "
-"categoria mitragliatrice. Le nostre truppe possono contare su questa arma "
-"per consegnare masse di fuoco quando e dove ne hanno più bisogno.\n"
-"\n"
-"Per l'uso PHALANX, abbiamo dato a questa mitragliatrice la nomenclatura "
-"MG12 .\n"
-"\n"
-"\n"
-"Dottrina Consigliata\n"
-"\n"
-"Il MG12 sarà uno strumento estremamente prezioso nel controllo del campo di "
-"battaglia. Può costruire teste di ponte mobili da cui far partire attacchi "
-"contro le posizioni aliene, può fornire un efficace fuoco di soppressione o "
-"diversivo da tutti le distanze, oppure può essere usato semplicemente come "
-"un potente arma d'assalto a media gittata.\n"
-"\n"
-"Dovrebbe essere la prima opzione per qualunque soldato esperto in armi "
-"pesanti.\n"
-"\n"
-"\n"
-"Addenda\n"
-"\n"
-"Nessuna"
+msgstr "Vaccino umano"
 
 #: ../base/ufos/seq_credits.ufo:137 ../base/ufos/seq_credits.ufo:170
 msgid "Project leader"
@@ -24569,19 +24465,16 @@ msgid "Bloodspider"
 msgstr "Bloodspider"
 
 #: ../base/ufos/team_aliens.ufo:456
-#, fuzzy
 msgid "Combat Bloodspider"
-msgstr "Bloodspider"
+msgstr "Bloodspider combattente"
 
 #: ../base/ufos/team_aliens.ufo:558
-#, fuzzy
 msgid "Hovernet"
-msgstr "Hanover"
+msgstr "Hovernet"
 
 #: ../base/ufos/team_aliens.ufo:658
-#, fuzzy
 msgid "Combat Hovernet"
-msgstr "Pugnale da Combattimento"
+msgstr "Hovernet combattente"
 
 #: ../base/ufos/team_humans.ufo:60
 msgid "Phalanx"
@@ -24608,7 +24501,6 @@ msgid "Arms"
 msgstr ""
 
 #: ../base/ufos/team_templates.ufo:239
-#, fuzzy
 msgid "Head"
 msgstr "Elmetto"
 
@@ -25203,22 +25095,24 @@ msgid "Keyinfo and General Help"
 msgstr "info-tasti e aiuto"
 
 #: ../base/ufos/ui/_menu.ufo:612
-#, fuzzy
 msgid ""
 "Visit our forums and join the community at http://ufoai.org.\n"
 "Hint: Press CTRL+G to grab/release the mousepointer."
-msgstr "Visita i nostri forum e unisciti alla community: http://ufoai.org."
+msgstr ""
+"Visita i nostri forum e unisciti alla community: http://ufoai.org.\n"
+"Consiglio: premi CTRL+G per afferrare/rilasciare il puntatore del muode."
 
 #: ../base/ufos/ui/_menu.ufo:614
 msgid "Visit our forums and join the community at http://ufoai.org."
 msgstr "Visita i nostri forum e unisciti alla community: http://ufoai.org."
 
 #: ../base/ufos/ui/_menu.ufo:619
-#, fuzzy
 msgid ""
 "Note: Campaign-specific keybindings visible in Campaign mode only.\n"
 "Hint: Press CTRL+G to grab/release the mousepointer."
-msgstr "Nota: Associazioni tasti della campagna visibili solo nella campagna"
+msgstr ""
+"Nota: Associazioni tasti della campagna visibili solo nella campagna.\n"
+"Consiglio: premi CTRL+G per afferrare/rilasciare il puntatore del muode."
 
 #: ../base/ufos/ui/_menu.ufo:621
 msgid "Note: Campaign-specific keybindings visible in Campaign mode only."
@@ -25443,9 +25337,8 @@ msgid "Assign tanks"
 msgstr ""
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:391
-#, fuzzy
 msgid "Assign soldiers"
-msgstr "Assegna soldato a questo velivolo"
+msgstr "Assegna soldati"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:419
 msgid "No soldiers assigned"
@@ -25788,7 +25681,6 @@ msgid "Click to continue"
 msgstr "Clicca per continuare"
 
 #: ../base/ufos/ui/campaign.ufo:699
-#, fuzzy
 msgid "Thank you for playing UFO: Alien Invasion"
 msgstr "Grazie per aver giocato a UFO: Alien Invasion"
 
@@ -26139,14 +26031,12 @@ msgid "Enemies Killed:"
 msgstr "Nemici uccisi:"
 
 #: ../base/ufos/ui/hire.ufo:471
-#, fuzzy
 msgid "Piloting:"
-msgstr "Filtering:"
+msgstr "Pilotanto:"
 
 #: ../base/ufos/ui/hire.ufo:480
-#, fuzzy
 msgid "Targeting:"
-msgstr "Sistema di Puntamento"
+msgstr "Puntando:"
 
 #: ../base/ufos/ui/hire.ufo:489
 msgid "Evading:"
@@ -26227,21 +26117,18 @@ msgid "Check to use this firemode for reaction fire"
 msgstr "Clicca per usare questa modalità di fuoco per il fuoco di reazione"
 
 #: ../base/ufos/ui/hud_.ufo:175
-#, fuzzy
 msgid "TU:"
-msgstr "T:"
+msgstr "TU:"
 
 #: ../base/ufos/ui/hud_.ufo:191 ../base/ufos/ui/hud_phone.ufo:100
-#, fuzzy
 msgid "Shots:"
-msgstr "Shots: <8>"
+msgstr ""
 
 #: ../base/ufos/ui/hud_.ufo:581
 msgid "Chat"
 msgstr "Chat"
 
 #: ../base/ufos/ui/hud_.ufo:613
-#, fuzzy
 msgid "Party chat"
 msgstr "Chat Gruppo"
 
@@ -26272,7 +26159,6 @@ msgid "TUs reserved"
 msgstr "UT riservate"
 
 #: ../base/ufos/ui/hud_alt.ufo:1192 ../base/ufos/ui/hud_default.ufo:827
-#, fuzzy
 msgid "Keyinfo/General Help window"
 msgstr "Sinistro:Mostra/Destro:Nascondi Tasti/Aiuto generico"
 
@@ -26306,15 +26192,13 @@ msgstr "Fine turno"
 
 #: ../base/ufos/ui/hud_alt.ufo:1606 ../base/ufos/ui/hud_default.ufo:1148
 #: ../base/ufos/ui/hud_mini.ufo:2067
-#, fuzzy
 msgid "Reaction fire"
-msgstr "Nessun fuoco di reazione"
+msgstr "Fuoco di reazione"
 
 #: ../base/ufos/ui/hud_alt.ufo:1611 ../base/ufos/ui/hud_default.ufo:1154
 #: ../base/ufos/ui/hud_mini.ufo:2072
-#, fuzzy
 msgid "Reaction fire (not possible)"
-msgstr "Fuoco di reazione a colpo singolo (non possibile)"
+msgstr "Fuoco di reazione  (non possibile)"
 
 #: ../base/ufos/ui/hud_alt.ufo:1617 ../base/ufos/ui/hud_default.ufo:1160
 #: ../base/ufos/ui/hud_mini.ufo:2078
@@ -26380,23 +26264,20 @@ msgid "Original HUD"
 msgstr "HUD originale"
 
 #: ../base/ufos/ui/hud_genradar.ufo:53
-#, fuzzy
 msgid "Reinit"
-msgstr "Reinit"
+msgstr "Reinizializzazione"
 
 #: ../base/ufos/ui/hud_genradar.ufo:68
 msgid "Preview"
 msgstr "Anteprima"
 
 #: ../base/ufos/ui/hud_genradar.ufo:84
-#, fuzzy
 msgid "Gen this level"
-msgstr "Gen this level"
+msgstr "Genera questo livello"
 
 #: ../base/ufos/ui/hud_genradar.ufo:99
-#, fuzzy
 msgid "Gen all levels"
-msgstr "Gen all levels"
+msgstr "Genera tutti i livelli"
 
 #: ../base/ufos/ui/hud_mini.ufo:267
 msgid ""
@@ -26479,7 +26360,6 @@ msgstr ""
 "tasto:8"
 
 #: ../base/ufos/ui/hud_mini.ufo:419
-#, fuzzy
 msgid ""
 "LMB/RMB:Select\n"
 "Wheel:Select Next/Prev\n"
@@ -26487,10 +26367,9 @@ msgid ""
 msgstr ""
 "snst/dst:Selezione\n"
 "Rotella: succ./prec.\n"
-"tasto:1"
+"tasto:9"
 
 #: ../base/ufos/ui/hud_mini.ufo:438
-#, fuzzy
 msgid ""
 "LMB/RMB:Select\n"
 "Wheel:Select Next/Prev\n"
@@ -26498,17 +26377,15 @@ msgid ""
 msgstr ""
 "snst/dst:Selezione\n"
 "Rotella: succ./prec.\n"
-"tasto:1"
+"tasto:0"
 
 #: ../base/ufos/ui/hud_mini.ufo:457 ../base/ufos/ui/hud_mini.ufo:476
-#, fuzzy
 msgid ""
 "LMB/RMB:Select\n"
 "Wheel:Select Next/Prev"
 msgstr ""
-"snst/dst:Selezione\n"
-"Rotella: succ./prec.\n"
-"tasto:1"
+"LMB/RMB:Selezione\n"
+"Rotella: successivo/precedente"
 
 #: ../base/ufos/ui/hud_mini.ufo:679
 msgid "Wheel:Select Next/Previous"
@@ -26561,19 +26438,16 @@ msgstr ""
 "rotella su:mano destra"
 
 #: ../base/ufos/ui/hud_mini.ufo:1557
-#, fuzzy
 msgid "End turn"
 msgstr "Fine turno"
 
 #: ../base/ufos/ui/hud_mini.ufo:1570
-#, fuzzy
 msgid "LMB:Show/Hide Physical Data"
-msgstr "Sinistro:Mostra/Destro:Nascondi Condizioni Fisiche"
+msgstr "LMBo:Mostra/Destro:Nascondi Condizioni Fisiche"
 
 #: ../base/ufos/ui/hud_mini.ufo:1579
-#, fuzzy
 msgid "LMB:Show/Hide Inventory"
-msgstr "Sinistro:Mostra/Destro:Nasconde Inventorio"
+msgstr "LMB:Mostra/Destro:Nasconde Inventorio"
 
 #: ../base/ufos/ui/hud_mini.ufo:1588
 msgid "LMB:Show/RMB:Hide Radar"
@@ -26624,9 +26498,8 @@ msgid "Play Next Random Track"
 msgstr "Esegui il brano casuale successivo"
 
 #: ../base/ufos/ui/hud_mini.ufo:2150
-#, fuzzy
 msgid "Minimal HUD"
-msgstr "HUD originale"
+msgstr "HUD minimo"
 
 #: ../base/ufos/ui/hud_phone.ufo:185
 msgid "No ammo"
@@ -26891,14 +26764,12 @@ msgid "Name"
 msgstr "Nome"
 
 #: ../base/ufos/ui/market.ufo:181
-#, fuzzy
 msgid "Store"
 msgstr "Magazzini"
 
 #: ../base/ufos/ui/market.ufo:182
-#, fuzzy
 msgid "Number of such items in base"
-msgstr "Nome della base"
+msgstr "Numero di questi oggetti nella base"
 
 #: ../base/ufos/ui/market.ufo:189
 msgid "Market"
@@ -26909,37 +26780,32 @@ msgid "Number of such items on the market"
 msgstr ""
 
 #: ../base/ufos/ui/market.ufo:197
-#, fuzzy
 msgid "Price"
-msgstr "Prezzo:"
+msgstr "Prezzo"
 
 #: ../base/ufos/ui/market.ufo:314
 msgid "Storage (used/all):"
 msgstr "Magazzino (usato/totale):"
 
 #: ../base/ufos/ui/material_editor.ufo:12
-#, fuzzy
 msgid "Material editor"
-msgstr "Material editor"
+msgstr ""
 
 #: ../base/ufos/ui/material_editor.ufo:71
 msgid "Hardness:"
 msgstr "Durezza:"
 
 #: ../base/ufos/ui/material_editor.ufo:94
-#, fuzzy
 msgid "Bump:"
-msgstr "Bump:"
+msgstr ""
 
 #: ../base/ufos/ui/material_editor.ufo:117
-#, fuzzy
 msgid "Specular:"
-msgstr "Specular:"
+msgstr ""
 
 #: ../base/ufos/ui/material_editor.ufo:140
-#, fuzzy
 msgid "Parallax:"
-msgstr "Parallax:"
+msgstr ""
 
 #: ../base/ufos/ui/material_editor.ufo:241
 msgid "+"
@@ -27365,9 +27231,8 @@ msgid "Mods"
 msgstr ""
 
 #: ../base/ufos/ui/options.ufo:182
-#, fuzzy
 msgid "Available game modifications"
-msgstr "Available game controllers."
+msgstr ""
 
 #: ../base/ufos/ui/options.ufo:211
 msgid "Activate mod"
@@ -27382,18 +27247,16 @@ msgid "Show cursor tooltips in menus."
 msgstr ""
 
 #: ../base/ufos/ui/options.ufo:233
-#, fuzzy
 msgid "Tooltips (menu):"
-msgstr "Tooltip:"
+msgstr ""
 
 #: ../base/ufos/ui/options.ufo:249
 msgid "Show cursor tooltips in tactical mode."
 msgstr ""
 
 #: ../base/ufos/ui/options.ufo:250
-#, fuzzy
 msgid "Tooltips (battlescape):"
-msgstr "Ruota la visuale più verso l'orizzonte"
+msgstr ""
 
 #: ../base/ufos/ui/options.ufo:265
 msgid "Show 'Tip of the Day':"
@@ -27528,31 +27391,26 @@ msgid "Default is to play the intro video just once at the first game start."
 msgstr "Predefinito è far girare il filmato solola prima volta."
 
 #: ../base/ufos/ui/options.ufo:663
-#, fuzzy
 msgid "Texture Settings"
-msgstr "Texture Settings"
+msgstr "Impostazioni texture"
 
 #: ../base/ufos/ui/options.ufo:671
-#, fuzzy
 msgid ""
 "Sets the maximum size for textures and caps resolutions higher than that "
 "value."
 msgstr ""
-"Sets the maximum size for textures and caps resolutions higher than that "
-"value."
 
 #: ../base/ufos/ui/options.ufo:672
 msgid "Resolution Cap:"
 msgstr "Risoluzione limite:"
 
 #: ../base/ufos/ui/options.ufo:679
-#, fuzzy
 msgid ""
 "Low means a maximum of 256x256 pixel texture resolution. Extreme means up to "
 "8192x8192 pixel."
 msgstr ""
-"Low means a maximum of 256x256 pixel texture resolution. Extreme means up to "
-"8192x8192 pixel."
+"Basso significa una risoluzione massima di 256x256 pixel per le texture. "
+"Estremo significa fino a 8192x8192 pixel."
 
 #: ../base/ufos/ui/options.ufo:685 ../base/ufos/ui/options.ufo:1086
 #: ../base/ufos/ui/options.ufo:1242
@@ -27583,44 +27441,36 @@ msgid "Extreme"
 msgstr "Estremo"
 
 #: ../base/ufos/ui/options.ufo:715
-#, fuzzy
 msgid "Sets the texture filtering and mipmapping method."
-msgstr "Sets the texture filtering and mipmapping method."
+msgstr "Imposta i filtri delle tezture ed il medoto delle mipmap."
 
 #: ../base/ufos/ui/options.ufo:716
-#, fuzzy
 msgid "Filtering:"
-msgstr "Filtering:"
+msgstr "Filtraggio:"
 
 #: ../base/ufos/ui/options.ufo:729
-#, fuzzy
 msgid "No filtering, no mipmaps"
-msgstr "No filtering, no mipmaps"
+msgstr "Nessun filtro, nessuna mipmap"
 
 #: ../base/ufos/ui/options.ufo:733
-#, fuzzy
 msgid "Bilinear filtering, no mipmaps"
-msgstr "Bilinear filtering, no mipmaps"
+msgstr "Filtro bilineare, nessuna mipmap"
 
 #: ../base/ufos/ui/options.ufo:737
-#, fuzzy
 msgid "No filtering, mipmaps"
-msgstr "No filtering, mipmaps"
+msgstr "Nessun filtro, mipmaps"
 
 #: ../base/ufos/ui/options.ufo:741
-#, fuzzy
 msgid "Bilinear filtering, mipmaps"
-msgstr "Bilinear filtering, mipmaps"
+msgstr "Filtro bilineare, mipmap"
 
 #: ../base/ufos/ui/options.ufo:745
-#, fuzzy
 msgid "Trilinear filtering, mipmaps"
-msgstr "Trilinear filtering, mipmaps"
+msgstr "Filtro trilineare, mipmaps"
 
 #: ../base/ufos/ui/options.ufo:749
-#, fuzzy
 msgid "Bilinear filtering, trilinear filtering, mipmaps"
-msgstr "Bilinear filtering, trilinear filtering, mipmaps"
+msgstr "Filtro bilineare, filtro trilinearem mipmap"
 
 #: ../base/ufos/ui/options.ufo:759
 msgid ""
@@ -27635,50 +27485,42 @@ msgid "Compression:"
 msgstr "Compressione:"
 
 #: ../base/ufos/ui/options.ufo:775
-#, fuzzy
 msgid ""
 "Texture Level-of-Detail. Enabling this might result in some blurry textures "
 "if you zoom out a little bit."
 msgstr ""
-"Texture Level-of-Detail. Enabling this might result in some blurry textures "
-"if you zoom out a little bit."
 
 #: ../base/ufos/ui/options.ufo:776
-#, fuzzy
 msgid "LoD:"
 msgstr "LoD:"
 
 #: ../base/ufos/ui/options.ufo:791
-#, fuzzy
 msgid ""
 "The degree or ratio of anisotropic filtering. High ratios will make distant "
 "textures appear more sharp. Very high ratios are only recommended when "
 "playing in high resolutions."
 msgstr ""
-"The degree or ratio of anisotropic filtering. High ratios will make distant "
-"textures appear more sharp. Very high ratios are only recommended when "
-"playing in high resolutions."
+"Grado del rapporto del filtro anisotropico. Alti rapporti faranno apparire "
+"le texture distanti più nitide. Rapporti molto alti sono raccomandabili "
+"solamente quando si gioca con alte risoluzioni."
 
 #: ../base/ufos/ui/options.ufo:792
-#, fuzzy
 msgid "Anisotropy Level:"
-msgstr "Anisotropy Level:"
+msgstr "Livello anisotropico:"
 
 #: ../base/ufos/ui/options.ufo:805
-#, fuzzy
 msgid ""
 "Very high values are only recommended when playing in very high screen "
 "resolutions."
 msgstr ""
-"Very high values are only recommended when playing in very high screen "
-"resolutions."
+"Livello molto alti sono raccomandati solamente quando si gioca con "
+"risoluzioni schermo molto alte."
 
 #: ../base/ufos/ui/options.ufo:818
 msgid "OpenGL Settings"
 msgstr "Impostazioni OpenGl"
 
 #: ../base/ufos/ui/options.ufo:828
-#, fuzzy
 msgid ""
 "OpenGL GLSL Shaders are available only if your graphics-card driver fully "
 "supports OpenGL 2.0+ and will enhance UFO:AI using advanced shading "
@@ -27686,10 +27528,11 @@ msgid ""
 msgstr ""
 "OpenGL GLSL Shaders are available only if your graphics-card driver fully "
 "supports OpenGL 2.0+ and will enhance UFO:AI using advanced shading "
-"techniques."
+"techniques.Gli Shaders OpenGL GLSL sono disponibili solamente se i driver "
+"della tua scheda video supportano completamente OpenGL 2.0; questo esalterà "
+"UFO:AI usando tecniche avanzate di ombreggiatura."
 
 #: ../base/ufos/ui/options.ufo:829
-#, fuzzy
 msgid "GLSL Shaders:"
 msgstr "GLSL Shaders:"
 
@@ -27698,55 +27541,48 @@ msgid "Set the OpenGL shader quality - or disable them."
 msgstr ""
 
 #: ../base/ufos/ui/options.ufo:846
-#, fuzzy
 msgid "Disabled"
-msgstr "Smonta"
+msgstr "Disailitato"
 
 #: ../base/ufos/ui/options.ufo:851
 msgid "Low quality"
 msgstr ""
 
 #: ../base/ufos/ui/options.ufo:856
-#, fuzzy
 msgid "Medium quality"
-msgstr "Medio"
+msgstr "Qualità media"
 
 #: ../base/ufos/ui/options.ufo:861
-#, fuzzy
 msgid "High quality"
-msgstr "Qualità JPEG:"
+msgstr "Alta qualità"
 
 #: ../base/ufos/ui/options.ufo:884
-#, fuzzy
 msgid ""
 "Vertex Buffers are submitting extensible arrays of vertex attributes to be "
 "mapped into the GPU for fast drawing."
 msgstr ""
-"Vertex Buffers are submitting extensible arrays of vertex attributes to be "
-"mapped into the GPU for fast drawing."
+"Vertex Buffer sottopongono array estensibili di attributi Vertex da mappare "
+"nella GPU per il disegno veloce."
 
 #: ../base/ufos/ui/options.ufo:885
-#, fuzzy
 msgid "Vertex Buffers:"
 msgstr "Vertex Buffers:"
 
 #: ../base/ufos/ui/options.ufo:900
-#, fuzzy
 msgid ""
 "OpenGL multisample buffers provide a mechanism to antialias all GL "
 "primitives. / The Swap Interval selects when a buffer swap will occur. The "
 "value '0' means that the swap will occur immediately (also known as 'v-sync "
 "off')."
 msgstr ""
-"OpenGL multisample buffers provide a mechanism to antialias all GL "
-"primitives. / The Swap Interval selects when a buffer swap will occur. The "
-"value '0' means that the swap will occur immediately (also known as 'v-sync "
-"off')."
+"OpenGL multisample buffers provvede ad un  meccanismo antialias per tutte le "
+"primitive GL. / L'intervallo di scambio seleziona quando uno scambio di "
+"buffer  accadrà. Il valore '0' significa che lo scambio avverrà "
+"immediatamente (noto come  'v-sync off')."
 
 #: ../base/ufos/ui/options.ufo:901
-#, fuzzy
 msgid "Multisample Buffers / Swap Interval:"
-msgstr "Multisample Buffers / Swap Interval:"
+msgstr ""
 
 #: ../base/ufos/ui/options.ufo:907
 msgid ""
@@ -27765,69 +27601,54 @@ msgstr ""
 "abilitare la v-sync (migliore qualità)."
 
 #: ../base/ufos/ui/options.ufo:940
-#, fuzzy
 msgid "Post-processing shader effects like glowing textures."
 msgstr ""
-"Post-processing shader effects like glowing textures (only available if GLSL "
-"Shaders are turned on)."
 
 #: ../base/ufos/ui/options.ufo:941
-#, fuzzy
 msgid "Post-Processing Shader Effects:"
-msgstr "Post-Processing Shader Effects:"
+msgstr ""
 
 #: ../base/ufos/ui/options.ufo:947
-#, fuzzy
 msgid "Enable post processing shader effects."
-msgstr "Post-Processing Shader Effects:"
+msgstr ""
 
 #: ../base/ufos/ui/options.ufo:957
-#, fuzzy
 msgid ""
 "Realtime lighting of the 3D world in UFO:AI. / Maximum number of dynamic "
 "hardware accelerated lights allowed."
 msgstr ""
-"Realtime lighting of the 3D world in UFO:AI. / Maximum number of dynamic "
-"hardware accelerated lights allowed."
 
 #: ../base/ufos/ui/options.ufo:958
 msgid "Realtime Lighting / Max Dynamic Lights:"
 msgstr "Sorgenti di luce e illuminazione:"
 
 #: ../base/ufos/ui/options.ufo:970
-#, fuzzy
 msgid "Change the number of allowed hardware accelerated dynamic lights."
 msgstr ""
-"Change the number of allowed hardware accelerated dynamic lights. ATTENTION: "
-"Realtime lighting has to be turned on for this setting to work."
 
 #: ../base/ufos/ui/options.ufo:999
 msgid "Also known as bumpmapping."
 msgstr "Altrimenti noto come bumpmapping."
 
 #: ../base/ufos/ui/options.ufo:1000
-#, fuzzy
 msgid "Texture Normalmapping:"
-msgstr "Texture Normalmapping:"
+msgstr ""
 
 #: ../base/ufos/ui/options.ufo:1006
-#, fuzzy
 msgid "Enable normal-/bumpmapping."
-msgstr "Altrimenti noto come bumpmapping."
+msgstr ""
 
 #: ../base/ufos/ui/options.ufo:1017
 msgid "Amount of light emitting from the sun and shining on the earth."
 msgstr "Quantità di luce emessa dal sole e riflessa sulla terra."
 
 #: ../base/ufos/ui/options.ufo:1018
-#, fuzzy
 msgid "Geo Ambient Lighting:"
-msgstr "Geo Ambient Lighting:"
+msgstr ""
 
 #: ../base/ufos/ui/options.ufo:1043
-#, fuzzy
 msgid "At the moment these are just drop-shadows."
-msgstr "At the moment these are just drop-shadows."
+msgstr ""
 
 #: ../base/ufos/ui/options.ufo:1044
 msgid "Shadows:"
@@ -27842,27 +27663,20 @@ msgid "Light and Shadow"
 msgstr "Luce e Ombra"
 
 #: ../base/ufos/ui/options.ufo:1072
-#, fuzzy
 msgid ""
 "The lightmap block size defines the resolution of the lightmap. Higher block "
 "size means using more detailed lightmaps."
 msgstr ""
-"The lightmap block size defines the resolution of the lightmap. Higher block "
-"size means using more detailed lightmaps."
 
 #: ../base/ufos/ui/options.ufo:1073
-#, fuzzy
 msgid "Lightmap Block Size:"
-msgstr "Lightmap Block Size:"
+msgstr ""
 
 #: ../base/ufos/ui/options.ufo:1080
-#, fuzzy
 msgid ""
 "Low means a maximum lightmap resolution of 512x512 pixel. High means up to "
 "2048x2048 pixel."
 msgstr ""
-"Low means a maximum lightmap resolution of 512x512 pixel. High means up to "
-"2048x2048 pixel."
 
 #: ../base/ufos/ui/options.ufo:1121
 msgid "Enabled by default for compatibility reasons."
@@ -27879,22 +27693,18 @@ msgid ""
 msgstr ""
 
 #: ../base/ufos/ui/options.ufo:1161
-#, fuzzy
 msgid ""
 "Flares are used to display light reflection effects. Flare visibility is "
 "calculated according to the angle of the surface emitting the light."
 msgstr ""
-"Flares are used to display light reflection effects. Flare visibility is "
-"calculated according to the angle of the surface emitting the light."
 
 #: ../base/ufos/ui/options.ufo:1162
 msgid "Flares:"
 msgstr "Lampeggi:"
 
 #: ../base/ufos/ui/options.ufo:1177
-#, fuzzy
 msgid "Coronas are soft, alpha-blended, rounded polygons."
-msgstr "Coronas are soft, alpha-blended, rounded polygons."
+msgstr ""
 
 #: ../base/ufos/ui/options.ufo:1178
 msgid "Coronas:"
@@ -27921,22 +27731,16 @@ msgid "Weather Effects:"
 msgstr "Effetti atmosferici:"
 
 #: ../base/ufos/ui/options.ufo:1225
-#, fuzzy
 msgid ""
 "The material system is used to display texture animations, effects like "
 "rotating or stretching or scrolling textures and manipulate rendering "
 "through applying special material properties like specularity or hardness to "
 "defined textures."
 msgstr ""
-"The material system is used to display texture animations, effects like "
-"rotating or stretching or scrolling textures and manipulate rendering "
-"through applying special material properties like specularity or hardness to "
-"defined textures."
 
 #: ../base/ufos/ui/options.ufo:1226
-#, fuzzy
 msgid "Material System:"
-msgstr "Material System:"
+msgstr ""
 
 #: ../base/ufos/ui/options.ufo:1239
 msgid "Switch to low video settings"
@@ -27985,9 +27789,8 @@ msgstr ""
 "Sample Rate - frequenza in KHz. Valori più alti per migliore qualità audio."
 
 #: ../base/ufos/ui/options.ufo:1422
-#, fuzzy
 msgid "Audio Sample Rate:"
-msgstr "Audio Sample Rate:"
+msgstr ""
 
 #: ../base/ufos/ui/options.ufo:1456
 msgid "Restart the sound-engine and apply your settings."
@@ -28050,9 +27853,8 @@ msgid "Battlescape Gameplay Settings"
 msgstr "Impostazioni di gioco in modalità tattica"
 
 #: ../base/ufos/ui/options.ufo:1611
-#, fuzzy
 msgid "Select the Head-Up-Display for the battlescape."
-msgstr "Select the Head-Up-Display for the battlescape."
+msgstr ""
 
 #: ../base/ufos/ui/options.ufo:1612
 msgid "HUD Design:"
@@ -28136,18 +27938,16 @@ msgid "Show/Hide the panel decoration on the geoscape."
 msgstr ""
 
 #: ../base/ufos/ui/options.ufo:1726
-#, fuzzy
 msgid "Show decoration:"
-msgstr "Riserva per sparare"
+msgstr ""
 
 #: ../base/ufos/ui/options.ufo:1741
 msgid "The minimum/maximum zoom of the geoscape camera"
 msgstr "Minimo/Massimo zoom della visuale Geoscape"
 
 #: ../base/ufos/ui/options.ufo:1742
-#, fuzzy
 msgid "Min/Max Geo-Cam Zoom:"
-msgstr "Min/Max Geo-Cam Zoom:"
+msgstr ""
 
 #: ../base/ufos/ui/options.ufo:1749
 msgid "Minimum zoom level of the geoscape camera"
@@ -28198,9 +27998,8 @@ msgid "Joystick or Joypad:"
 msgstr "Joystick o Joypad:"
 
 #: ../base/ufos/ui/options.ufo:1880
-#, fuzzy
 msgid "Available game controllers."
-msgstr "Available game controllers."
+msgstr ""
 
 #: ../base/ufos/ui/options.ufo:1891
 msgid ""
@@ -28223,7 +28022,6 @@ msgid "Key Bindings"
 msgstr "Associazioni tasti"
 
 #: ../base/ufos/ui/physdat.ufo:303
-#, fuzzy
 msgid "EKG"
 msgstr "EKG"
 
@@ -28291,25 +28089,21 @@ msgid "free"
 msgstr ""
 
 #: ../base/ufos/ui/popup_installations.ufo:347
-#, fuzzy
 msgid "UFO Yards"
 msgstr "Cantiere UFO"
 
 #: ../base/ufos/ui/popup_installations.ufo:501
-#, fuzzy
 msgid "Rename Installation"
-msgstr "Costruisci installazione"
+msgstr "Rinomina istallazione"
 
 #: ../base/ufos/ui/popup_installations.ufo:512
 #: ../base/ufos/ui/popup_installations.ufo:626
-#, fuzzy
 msgid "Location:"
-msgstr "Nazione:"
+msgstr "Locazione:"
 
 #: ../base/ufos/ui/popup_installations.ufo:538
-#, fuzzy
 msgid "Capacity:"
-msgstr "Capacità della base:"
+msgstr "Capacità:"
 
 #: ../base/ufos/ui/popup_installations.ufo:550
 msgid "Free Space:"
@@ -28317,42 +28111,34 @@ msgstr ""
 
 #: ../base/ufos/ui/popup_installations.ufo:562
 #: ../base/ufos/ui/popup_installations.ufo:662
-#, fuzzy
 msgid "Confirm destroying"
-msgstr "Conferma Azioni:"
+msgstr "Conferma demolizione"
 
 #: ../base/ufos/ui/popup_installations.ufo:602
-#, fuzzy
 msgid "Condition:"
 msgstr "Conferma Azioni:"
 
 #: ../base/ufos/ui/popup_installations.ufo:651
-#, fuzzy
 msgid "Transfer UFO"
-msgstr "Trasferisci"
+msgstr "Trasferisci UFO"
 
 #: ../base/ufos/ui/popup_installations.ufo:669
-#, fuzzy
 msgid "Destroy UFO"
-msgstr "Demolisci"
+msgstr "Distruggi UFO"
 
 #: ../base/ufos/ui/popup_installations.ufo:833
-#, fuzzy
 msgid "disassembling"
 msgstr "Smonta"
 
 #: ../base/ufos/ui/popup_installations.ufo:839
-#, fuzzy
 msgid "transfering"
 msgstr "trasferisci"
 
 #: ../base/ufos/ui/popup_installations.ufo:845
-#, fuzzy
 msgid "stored"
 msgstr "Magazzini"
 
 #: ../base/ufos/ui/popup_installations.ufo:851
-#, fuzzy
 msgid "unknown"
 msgstr "Sconosciuto"
 
@@ -28463,7 +28249,6 @@ msgid "Quit"
 msgstr "Esci"
 
 #: ../base/ufos/ui/skirmish.ufo:44
-#, fuzzy
 msgid "<1>"
 msgstr "<1>"
 
@@ -28581,46 +28366,38 @@ msgid "max"
 msgstr "max"
 
 #: ../base/ufos/ui/sys_editor.ufo:12
-#, fuzzy
 msgid "Node editor"
 msgstr "Editor nodi"
 
 #: ../base/ufos/ui/sys_editor.ufo:30
-#, fuzzy
 msgid "Capture a node"
 msgstr "Cattura un nodo"
 
 #: ../base/ufos/ui/sys_editor.ufo:42
-#, fuzzy
 msgid "Select parent node"
 msgstr "Seleziona nodo genitore"
 
 #: ../base/ufos/ui/sys_editor.ufo:54
-#, fuzzy
 msgid "Select first child node"
 msgstr "Seleziona primo nodo figlio"
 
 #: ../base/ufos/ui/sys_editor.ufo:66
-#, fuzzy
 msgid "Select next node"
 msgstr "Seleziona nodo successivo"
 
 #: ../base/ufos/ui/sys_editor.ufo:79
-#, fuzzy
 msgid "Extract window"
 msgstr "Estrai finestra"
 
 #: ../base/ufos/ui/sys_editor.ufo:80
-#, fuzzy
 msgid "Extract the window of the last/current selected node"
-msgstr "Extract the window of the last/current selected node"
+msgstr "Estrai la finestra dell'ultimo/corrente nodo selezionato"
 
 #: ../base/ufos/ui/sys_editor.ufo:93
 msgid "Current window:"
 msgstr "Finestra attuale:"
 
 #: ../base/ufos/ui/sys_editor.ufo:107
-#, fuzzy
 msgid "Current node:"
 msgstr "Nodo attuale:"
 
@@ -28647,14 +28424,12 @@ msgid "Destination base"
 msgstr "Base di destinazione"
 
 #: ../base/ufos/ui/transfer.ufo:429
-#, fuzzy
 msgid "Building"
 msgstr "Strutture"
 
 #: ../base/ufos/ui/transfer.ufo:453
-#, fuzzy
 msgid "all space"
-msgstr "Richiama"
+msgstr ""
 
 #: ../base/ufos/ui/transfer.ufo:496
 msgid "Capacity overload\";"
@@ -28717,9 +28492,8 @@ msgid "Heal"
 msgstr "Cura"
 
 #: ../base/ufos/weapons.ufo:43
-#, fuzzy
 msgid "Stimulants"
-msgstr "Impianti"
+msgstr "Stimolanti"
 
 #: ../base/ufos/weapons.ufo:59
 msgid "Antipsychotics"
@@ -28959,25 +28733,21 @@ msgstr "Granate 25mm HIT"
 
 #: ../base/ufos/weapons_human.ufo:1224 ../base/ufos/weapons_human.ufo:1354
 #: ../base/ufos/weapons_human.ufo:1531
-#, fuzzy
 msgid "Snap Shot (Impact)"
 msgstr "Colpo Immediato"
 
 #: ../base/ufos/weapons_human.ufo:1250 ../base/ufos/weapons_human.ufo:1381
 #: ../base/ufos/weapons_human.ufo:1557
-#, fuzzy
 msgid "Aimed Shot (Impact)"
 msgstr "Colpo Mirato"
 
 #: ../base/ufos/weapons_human.ufo:1276 ../base/ufos/weapons_human.ufo:1408
 #: ../base/ufos/weapons_human.ufo:1582
-#, fuzzy
 msgid "Snap Shot (Timer)"
 msgstr "Colpo immediato - A tempo"
 
 #: ../base/ufos/weapons_human.ufo:1305 ../base/ufos/weapons_human.ufo:1438
 #: ../base/ufos/weapons_human.ufo:1610
-#, fuzzy
 msgid "Aimed Shot (Timer)"
 msgstr "Colpo Mirato - A tempo"
 
@@ -29084,12 +28854,10 @@ msgid "Shotgun"
 msgstr "Fucile Semiautomatico"
 
 #: ../base/ufos/weapons_multiplayer.ufo:165
-#, fuzzy
 msgid "Single Barrel"
-msgstr "Singapore"
+msgstr "Scarica singola"
 
 #: ../base/ufos/weapons_multiplayer.ufo:188
-#, fuzzy
 msgid "Double Barrel"
 msgstr "Scarica Doppia"
 
@@ -29134,9 +28902,8 @@ msgid "Cannon Particle Accelerator"
 msgstr "Sincrotrone per cannone"
 
 #: ../base/ufos/weapons_particle.ufo:261
-#, fuzzy
 msgid "4-Round Burst"
-msgstr "Serie di 3 colpi"
+msgstr "Serie di 4 colpi"
 
 #: ../base/ufos/weapons_particle.ufo:283
 msgid "Unrestricted Blast"
@@ -29171,14 +28938,12 @@ msgid "Ball"
 msgstr "Palla"
 
 #: ../base/ufos/weapons_ugv.ufo:22
-#, fuzzy
 msgid "ugv_ares_w"
-msgstr "Nulla"
+msgstr ""
 
 #: ../base/ufos/weapons_ugv.ufo:31
-#, fuzzy
 msgid "ugv_phoenix"
-msgstr "Nulla"
+msgstr ""
 
 #: ../base/ufos/weapons_ugv.ufo:44
 msgid "Chaingun"
@@ -29189,9 +28954,8 @@ msgid "Chaingun Belt"
 msgstr "Nastro mitragliatrice"
 
 #: ../base/ufos/weapons_ugv.ufo:82
-#, fuzzy
 msgid "25-Round Burst"
-msgstr "Serie di 5 Colpi"
+msgstr "Serie di 25 Colpi"
 
 #: ../base/ufos/weapons_ugv.ufo:159
 msgid "Autocannon Module"
@@ -29243,9 +29007,8 @@ msgid "It is not your turn!"
 msgstr "Non è il tuo turno!"
 
 #: client/battlescape/cl_actor.cpp:1016
-#, fuzzy
 msgid "You cannot reload this unknown item."
-msgstr "Non puoi ricaricare questo oggetto sconosciuto.\n"
+msgstr "Non puoi ricaricare questo oggetto sconosciuto."
 
 #: client/battlescape/cl_actor.cpp:1855
 msgid "Unknown alien race"
@@ -29421,13 +29184,12 @@ msgid "Reload weapon (%i TU)."
 msgstr "Ricarica arma (%i UT)."
 
 #: client/battlescape/cl_hud.cpp:1117
-#, fuzzy
 msgid ""
 "You cannot use this unknown item.\n"
 "You need to research it first."
 msgstr ""
 "Non puoi usare questo oggetto sconosciuto.\n"
-"Devi ricercarlo prima.\n"
+"Devi ricercarlo prima."
 
 #: client/battlescape/cl_hud.cpp:1138
 #, c-format
@@ -29449,7 +29211,7 @@ msgid "Morale  %i"
 msgstr "Morale  %i"
 
 #: client/battlescape/cl_hud.cpp:1167
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Morale  %i | Reserved TUs: %i\n"
 "%s %i (%i|%i TUs left)\n"
@@ -29458,7 +29220,7 @@ msgstr ""
 "%s %i (%i|%i UT rimanenti)\n"
 
 #: client/battlescape/cl_hud.cpp:1171
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Morale  %i\n"
 "%s %i (%i TUs left)\n"
@@ -29480,31 +29242,26 @@ msgstr ""
 "- Rimanenti: %i\n"
 
 #: client/battlescape/cl_hud.cpp:1285
-#, fuzzy
 msgid "accuracy"
 msgstr "Precisione"
 
 #: client/battlescape/cl_hud.cpp:1287
-#, fuzzy
 msgid "shooting speed"
-msgstr "Velocità di crociera"
+msgstr "velocità di scatto"
 
 #: client/battlescape/cl_hud.cpp:1289
 msgid "movement speed"
 msgstr ""
 
 #: client/battlescape/cl_hud.cpp:1291
-#, fuzzy
 msgid "sight range"
-msgstr "Mano Destra"
+msgstr "portata visiva"
 
 #: client/battlescape/cl_hud.cpp:1293
-#, fuzzy
 msgid "reaction speed"
-msgstr "Velocità rotazione:"
+msgstr "Velocità reazione:"
 
 #: client/battlescape/cl_hud.cpp:1295
-#, fuzzy
 msgid "TU"
 msgstr "UT"
 
@@ -29530,75 +29287,61 @@ msgstr "In preda al panico!\n"
 
 #: client/battlescape/cl_hud_callbacks.cpp:86
 #: client/battlescape/cl_hud_callbacks.cpp:250
-#, fuzzy
 msgid "Can't perform action - no item in hand!"
-msgstr "Impossibile eseguire - non è un unità!\n"
+msgstr "Impossibile eseguire -nessun oggetto in mano!"
 
 #: client/battlescape/cl_hud_callbacks.cpp:91
 #: client/battlescape/cl_hud_callbacks.cpp:263 game/g_combat.cpp:1149
-#, fuzzy
 msgid "Can't perform action - no ammo!"
-msgstr "Impossibile eseguire - munizioni insufficienti\n"
+msgstr "Impossibile eseguire - munizioni insufficienti"
 
 #: client/battlescape/cl_hud_callbacks.cpp:96 game/g_combat.cpp:1142
-#, fuzzy
 msgid "Can't perform action - weapon cannot be fired one handed!"
-msgstr "Impossibile eseguire - L'arma non può essere usata con una mano sola\n"
+msgstr "Impossibile eseguire - L'arma non può essere usata con una mano sola|"
 
 #: client/battlescape/cl_hud_callbacks.cpp:146
 #: client/battlescape/cl_hud_callbacks.cpp:268 game/g_actor.cpp:670
-#, fuzzy
 msgid "Can't perform action - not enough TUs!"
-msgstr "Impossibile eseguire - UT insufficenti!\n"
+msgstr "Impossibile eseguire - UT insufficenti!"
 
 #: client/battlescape/cl_hud_callbacks.cpp:173
-#, fuzzy
 msgid "Disabled automatic crouching/standing up."
-msgstr "Riserva %i UT per abbassarti/alzarti."
+msgstr "Disabilitato automaticamente abbassarti/alzarti."
 
 #: client/battlescape/cl_hud_callbacks.cpp:177
-#, fuzzy, c-format
+#, c-format
 msgid "Reserved %i TUs for crouching/standing up."
 msgstr "Riserva %i UT per abbassarti/alzarti."
 
 #: client/battlescape/cl_hud_callbacks.cpp:194
-#, fuzzy
 msgid "Reaction fire enabled."
-msgstr "Nessuna arma con fuoco di reazione abilitato.\n"
+msgstr "Fuoco di reazione abilitato"
 
 #: client/battlescape/cl_hud_callbacks.cpp:197
-#, fuzzy
 msgid "Reaction fire disabled."
-msgstr "Nessuna arma con fuoco di reazione abilitato.\n"
+msgstr "Fuoco di reazione disabilitato"
 
 #: client/battlescape/cl_hud_callbacks.cpp:256
-#, fuzzy
 msgid "Can't perform action - this item is not reloadable!"
-msgstr ""
-"Impossibile eseguire:\n"
-"quest'oggetto non è ricaricabile.\n"
+msgstr "Impossibile eseguire - quest'oggetto non è ricaricabile!"
 
 #: client/battlescape/cl_hud_callbacks.cpp:289
-#, fuzzy
 msgid "Left hand weapon reloaded."
-msgstr "L'arma non può essere ricaricata."
+msgstr "Arma nella mano sinistra ricaricata."
 
 #: client/battlescape/cl_hud_callbacks.cpp:302
 msgid "Right hand weapon reloaded."
 msgstr ""
 
 #: client/battlescape/cl_hud_callbacks.cpp:343
-#, fuzzy
 msgid "Set selected actor to move mode (it cancels the fire mode)."
 msgstr "Cambia a modalità muovi l'agente selezionato (annulla spara)"
 
 #: client/battlescape/cl_hud_callbacks.cpp:344
-#, fuzzy
 msgid "Reload the weapon in the soldiers left hand."
 msgstr "Ricarica l'arma nella mano sinistra del soldato"
 
 #: client/battlescape/cl_hud_callbacks.cpp:345
-#, fuzzy
 msgid "Reload the weapon in the soldiers right hand."
 msgstr "Ricarica l'arma nella mano destra del soldato"
 
@@ -29607,7 +29350,6 @@ msgid "Toggle reservation for crouching."
 msgstr "Attiva/disattiva riserva UT per abbassarsi."
 
 #: client/battlescape/cl_hud_callbacks.cpp:347
-#, fuzzy
 msgid "Toggle reaction fire."
 msgstr "Cambia fuoco di reazione"
 
@@ -29642,14 +29384,12 @@ msgid "Enemy spotted: %s!"
 msgstr "Nemico individuato: %s!"
 
 #: client/battlescape/events/event/actor/e_event_actorappear.cpp:170
-#, fuzzy
 msgid "Unknown enemy spotted!"
-msgstr "Nemico individuato!\n"
+msgstr "Nemico individuato!"
 
 #: client/battlescape/events/event/actor/e_event_actorappear.cpp:172
-#, fuzzy
 msgid "Civilian spotted."
-msgstr "Civile individuato!\n"
+msgstr "Civile individuato,"
 
 #: client/battlescape/events/event/actor/e_event_actordie.cpp:88
 #, c-format
@@ -29667,44 +29407,38 @@ msgid "%s was killed\n"
 msgstr "%s è stato ucciso\n"
 
 #: client/battlescape/events/event/actor/e_event_actordie.cpp:106
-#, fuzzy
 msgid "A civilian was stunned."
-msgstr "Un civile è stato stordito.\n"
+msgstr "Un civile è stato stordito."
 
 #: client/battlescape/events/event/actor/e_event_actordie.cpp:108
-#, fuzzy
 msgid "A civilian was killed."
-msgstr "Un civile è stato ucciso.\n"
+msgstr "Un civile è stato ucciso."
 
 #: client/battlescape/events/event/actor/e_event_actordie.cpp:112
-#, fuzzy
 msgid "An alien was stunned."
-msgstr "Un alieno è stato stordito.\n"
+msgstr "Un alieno è stato stordito."
 
 #: client/battlescape/events/event/actor/e_event_actordie.cpp:114
-#, fuzzy
 msgid "An alien was killed."
-msgstr "Un alieno è stato ucciso.\n"
+msgstr "Un alieno è stato ucciso."
 
 #: client/battlescape/events/event/actor/e_event_actordie.cpp:118
-#, fuzzy
 msgid "A soldier was stunned."
-msgstr "Un soldato è stato stordito.\n"
+msgstr "Un soldato è stato stordito."
 
 #: client/battlescape/events/event/actor/e_event_actordie.cpp:120
-#, fuzzy
 msgid "A soldier was killed."
-msgstr "Un soldato è stato ucciso.\n"
+msgstr "Un soldato è stato ucciso."
 
 #: client/battlescape/events/event/actor/e_event_actordie.cpp:124
-#, fuzzy, c-format
+#, c-format
 msgid "A member of team %i was stunned."
-msgstr "Un membro della squadra %i è stato stordito.\n"
+msgstr "Un membro della squadra %i è stato stordito."
 
 #: client/battlescape/events/event/actor/e_event_actordie.cpp:126
-#, fuzzy, c-format
+#, c-format
 msgid "A member of team %i was killed."
-msgstr "Un membro della squadra %i è stato ucciso.\n"
+msgstr "Un membro della squadra %i è stato ucciso."
 
 #: client/battlescape/events/event/actor/e_event_actorrevitalised.cpp:69
 #, c-format
@@ -29712,30 +29446,26 @@ msgid "%s was revitalised\n"
 msgstr "%s è stato rianimato\n"
 
 #: client/battlescape/events/event/actor/e_event_actorrevitalised.cpp:75
-#, fuzzy
 msgid "A civilian was revitalised."
-msgstr "Un civile è stato rianimato.\n"
+msgstr "Un civile è stato rianimato."
 
 #: client/battlescape/events/event/actor/e_event_actorrevitalised.cpp:78
-#, fuzzy
 msgid "An alien was revitalised."
-msgstr "Un alieno è stato rianimato.\n"
+msgstr "Un alieno è stato rianimato."
 
 #: client/battlescape/events/event/actor/e_event_actorrevitalised.cpp:81
-#, fuzzy
 msgid "A soldier was revitalised."
-msgstr "Un soldato è stato rianimato.\n"
+msgstr "Un soldato è stato rianimato."
 
 #: client/battlescape/events/event/actor/e_event_actorrevitalised.cpp:84
-#, fuzzy, c-format
+#, c-format
 msgid "A member of team %i was revitalised."
-msgstr "Un membro della squadra %i è stato ucciso.\n"
+msgstr "Un membro della squadra %i è stato rianimato."
 
 # # in-game (hud)
 #: client/battlescape/events/event/player/e_event_doendround.cpp:57
-#, fuzzy
 msgid "Your round started!"
-msgstr "Il tuo turno è iniziato!\n"
+msgstr "Il tuo turno è iniziato!"
 
 #: client/cgame/campaign/cp_aircraft.cpp:417
 msgid "ON RED ALERT"
@@ -29900,9 +29630,9 @@ msgid "That base is beyond this aircraft's range."
 msgstr "La base è fuori portata del velivolo."
 
 #: client/cgame/campaign/cp_aircraft.cpp:1131
-#, fuzzy, c-format
+#, c-format
 msgid "Craft %s has returned to %s."
-msgstr "Velivolo %s: rifornimento completato in %s."
+msgstr "Velivolo %s: è ritornato a %s."
 
 #: client/cgame/campaign/cp_aircraft.cpp:1172
 #, c-format
@@ -29979,17 +29709,17 @@ msgid "Operational range:\t%i km\n"
 msgstr "Raggio d'azione:\t%i km\n"
 
 #: client/cgame/campaign/cp_aircraft_callbacks.cpp:218
-#, fuzzy, c-format
+#, c-format
 msgid "Weapons:\t%i of %i\n"
 msgstr "Armamento:\t%i su %i\n"
 
 #: client/cgame/campaign/cp_aircraft_callbacks.cpp:219
-#, fuzzy, c-format
+#, c-format
 msgid "Armour:\t%i of 1\n"
 msgstr "Armatura:\t%i su 1\n"
 
 #: client/cgame/campaign/cp_aircraft_callbacks.cpp:220
-#, fuzzy, c-format
+#, c-format
 msgid "Electronics:\t%i of %i"
 msgstr "Elettronica:\t%i su %i"
 
@@ -30014,14 +29744,12 @@ msgid "UFO interception successful -- UFO lost to sea."
 msgstr "L'intercettamento ha avuto successo -- UFO sprofondato in mare."
 
 #: client/cgame/campaign/cp_airfight.cpp:529
-#, fuzzy
 msgid "Pilot ejected from craft"
-msgstr "Pilota nel velivolo"
+msgstr "Pilota espulso dal velivolo"
 
 #: client/cgame/campaign/cp_airfight.cpp:531
-#, fuzzy
 msgid "Pilot killed in action"
-msgstr "Pilota nel velivolo"
+msgstr "Pilota ucciso in azione"
 
 #: client/cgame/campaign/cp_airfight.cpp:538
 #: client/cgame/campaign/cp_auto_mission.cpp:771
@@ -30074,11 +29802,10 @@ msgid "You've won the battle"
 msgstr "Hai vinto la battaglia"
 
 #: client/cgame/campaign/cp_auto_mission.cpp:768
-#, fuzzy
 msgid ""
 "You've defeated the enemy, but did poorly, and many civilians were killed"
 msgstr ""
-"Hai sconfitto il nemico, ma poveramente, e molti civili sono rimasti uccisi."
+"Hai sconfitto il nemico, ma malamente, e molti civili sono rimasti uccisi."
 
 #: client/cgame/campaign/cp_auto_mission.cpp:832
 msgid "Collected alien bodies"
@@ -30646,11 +30373,13 @@ msgstr[0] "Pilota"
 msgstr[1] "Pilota"
 
 #: client/cgame/campaign/cp_cgame_callbacks.cpp:425
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s\n"
 "not operational, depends on %s"
-msgstr "non operativo, dipende da"
+msgstr ""
+"%s\n"
+"non operativo, dipende da %s"
 
 #: client/cgame/campaign/cp_cgame_callbacks.cpp:480
 #, c-format
@@ -31041,17 +30770,13 @@ msgstr ""
 
 #: client/cgame/campaign/cp_market_callbacks.cpp:219
 #: client/cgame/campaign/cp_market_callbacks.cpp:260
-#, fuzzy
 msgid "Not enough money"
-msgstr "Spazio insufficente"
+msgstr "Crediti insufficienti"
 
 #: client/cgame/campaign/cp_market_callbacks.cpp:219
 #: client/cgame/campaign/cp_market_callbacks.cpp:260
-#, fuzzy
 msgid "You cannot buy this item as you don't have enough credits."
-msgstr ""
-"Non puoi acquistare questo velivolo.\n"
-"Fondi insufficienti.\n"
+msgstr "Non puoi acquistare questo oggetto finche non avrai fondi sufficienti."
 
 #: client/cgame/campaign/cp_market_callbacks.cpp:224
 #: client/cgame/campaign/cp_market_callbacks.cpp:270
@@ -31074,7 +30799,6 @@ msgid "UGV is away from home"
 msgstr ""
 
 #: client/cgame/campaign/cp_market_callbacks.cpp:435
-#, fuzzy
 msgid "Aircraft is away from home"
 msgstr "Velivolo decollato"
 
@@ -31099,9 +30823,8 @@ msgid "aircraft_cannotrefuel"
 msgstr "problema_rifornimento"
 
 #: client/cgame/campaign/cp_messageoptions.cpp:40
-#, fuzzy
 msgid "aircraft_arrivedhome"
-msgstr "rifornimento_completato"
+msgstr "velivolo_tornato a casa"
 
 #: client/cgame/campaign/cp_messageoptions.cpp:41
 msgid "installation_build_started"
@@ -32012,22 +31735,18 @@ msgid "%i of %i"
 msgstr "%i di %i"
 
 #: client/cgame/campaign/cp_team_callbacks.cpp:203
-#, fuzzy
 msgid "No more employee can be assigned to this aircraft"
-msgstr "Nessun altro soldato può essere assegnato a questo velivolo"
+msgstr "Nessun altro impiegato può essere assegnato a questo velivolo"
 
 #: client/cgame/campaign/cp_team_callbacks.cpp:214
-#, fuzzy
 msgid "Employee is assigned to another aircraft"
-msgstr "Pilota assegnato ad un altro velivolo"
+msgstr "Impiegato assegnato ad un altro velivolo"
 
 #: client/cgame/campaign/cp_team_callbacks.cpp:284
-#, fuzzy
 msgid "Employee is away from base"
 msgstr "Impiegato non disponibile"
 
 #: client/cgame/campaign/cp_team_callbacks.cpp:286
-#, fuzzy
 msgid "No more employee can be assigned to this team"
 msgstr "Nessun altro soldato può essere assegnato a questo velivolo"
 
@@ -32170,7 +31889,6 @@ msgid "Transport mission started, cargo is being transported to %s"
 msgstr "Missione di trasporto iniziata, il cargo è diretto alla base %s"
 
 #: client/cgame/campaign/cp_transfer.cpp:251
-#, fuzzy
 msgid ""
 "The destination base no longer exists! Transfer cargo was lost, personnel "
 "has been discharged."
@@ -32490,19 +32208,17 @@ msgid "UFO Recovered"
 msgstr "UFO Recuperato"
 
 #: client/cgame/campaign/cp_uforecovery.cpp:62
-#, fuzzy
 msgid "UFO Transfered"
-msgstr "Trasferisci"
+msgstr "UFO trasferito"
 
 #: client/cgame/campaign/cp_uforecovery.cpp:261
-#, fuzzy, c-format
+#, c-format
 msgid "UFO transport started, cargo is being transported to %s"
-msgstr "Missione di trasporto iniziata, il cargo è diretto alla base %s"
+msgstr "Missione di trasporto UFO iniziata, il cargo è diretto alla base %s"
 
 #: client/cgame/campaign/cp_uforecovery.cpp:262
-#, fuzzy
 msgid "UFO transport"
-msgstr "Trasporto"
+msgstr "Trasporto UFO"
 
 #: client/cgame/campaign/cp_uforecovery_callbacks.cpp:113
 #, c-format
@@ -32554,14 +32270,12 @@ msgstr ""
 
 #: client/cgame/campaign/cp_uforecovery_callbacks.cpp:580
 #: client/cgame/campaign/cp_uforecovery_callbacks.cpp:581
-#, fuzzy
 msgid "Destroy stored UFO"
-msgstr "Demolisci magazzino"
+msgstr "Demolisci UFO immagazzianti"
 
 #: client/cgame/campaign/cp_uforecovery_callbacks.cpp:580
-#, fuzzy
 msgid "Do you really want to destroy this stored UFO?"
-msgstr "Sei sicuro di voler distruggere l'installazione?"
+msgstr "Sei sicuro di voler distruggere questo UFO immagazzinato?"
 
 #: client/cgame/campaign/missions/cp_mission_baseattack.cpp:121
 #, c-format
@@ -32578,32 +32292,29 @@ msgid "Base '%s' is under attack!"
 msgstr "Base '%s' sotto attacco!"
 
 #: client/cgame/campaign/missions/cp_mission_baseattack.cpp:206
-#, fuzzy, c-format
+#, c-format
 msgid "Base '%s' is under attack! What to do?"
 msgstr "La base '%s' é sotto attacco! Che fare?"
 
 #: client/cgame/campaign/missions/cp_mission_ufocarrier.cpp:63
 msgid "The Carrier UFO is in range. Should we launch the payload?"
-msgstr ""
+msgstr "La "
 
 #: client/cgame/campaign/missions/cp_mission_ufocarrier.cpp:64
-#, fuzzy
 msgid "Don't attack the UFO-Carrier yet"
-msgstr "UFO -Trasporto"
+msgstr "Non attaccare ancora la nave madre UFO"
 
 #: client/cgame/campaign/missions/cp_mission_ufocarrier.cpp:64
 msgid "Wait"
-msgstr ""
+msgstr "aspetta"
 
 #: client/cgame/campaign/missions/cp_mission_ufocarrier.cpp:65
-#, fuzzy
 msgid "Attack the UFO-Carrier now"
-msgstr "UFO -Trasporto"
+msgstr "Attaccare ora la nave madre UFO"
 
 #: client/cgame/campaign/missions/cp_mission_ufocarrier.cpp:65
-#, fuzzy
 msgid "Launch"
-msgstr "Lanciagranate"
+msgstr "Lanciare"
 
 #: client/cgame/campaign/missions/cp_mission_ufocarrier.cpp:126
 msgid ""
@@ -32627,6 +32338,23 @@ msgid ""
 "-- UFO: Alien Invasion Development Team\n"
 "\n"
 msgstr ""
+"Congratulazioni, Comandante. Abbiamo combattuto l'orda aliena e mantenuto la "
+"Terra al sicuro. Per ora.\n"
+"\n"
+"Non possiamo riposarci sugli allori per troppo tempo.Gli alieni possono "
+"tornare in ogni momento.\n"
+"Devono avere molte altre navi madri lassù, fuori dalla nostra portata, Sono "
+"sicuro che loro \n"
+"torneranno non appena il Team di Sviluppatori realizzeranno una missione "
+"sulla nave madre.\n"
+"Aspettero per ulteriori ordini.\n"
+"\n"
+"Fino ad allora, visita ufoai.org per scoprire quando uscirà la prossima "
+"versione. Se non dovesse\n"
+"uscire a breve, dacci una mano. Siamo gratis. Siamo Open-sorce.\n"
+"Siamo sotto organico. Fino alla prossima volta, grazie per aver giocato.\n"
+"\n"
+"-- UFO: Team di sviluppo di Alien Invasion\n"
 
 #: client/cgame/cl_game_team.cpp:263
 msgid "Error saving team. Nothing to save yet."
@@ -32800,7 +32528,6 @@ msgid "Game Drawn!"
 msgstr "Partita pari!"
 
 #: client/cgame/skirmish/cl_game_skirmish.cpp:188
-#, fuzzy
 msgid ""
 "The game was a draw!\n"
 "\n"
@@ -32808,7 +32535,7 @@ msgid ""
 msgstr ""
 "La partita è pari!\n"
 "\n"
-"Nessun sopravvissuto da nessun lato."
+"Il nemico è scappato"
 
 #: client/cgame/skirmish/cl_game_skirmish.cpp:193
 msgid ""
@@ -32828,6 +32555,11 @@ msgid ""
 "%i of %i team members survived, %i enemy kills, %i friendly fire kills.\n"
 "%i of %i civilians saved, %i enemy kills, %i friendly fire kills."
 msgstr ""
+"\n"
+"%i di %i nemici uccisi, %i storditi, %i sopravvissuti.\n"
+"%i di %i membri della squadra sopravvissuti, %i nemici uccisi, %i uccisi da "
+"fuoco amico.\n"
+"%i di %i civili salvati, %i nemici uccisi, %i uccisi da fuoco amico."
 
 #: client/cgame/skirmish/cl_game_skirmish.cpp:214
 msgid "Congratulations"
@@ -32976,12 +32708,10 @@ msgid "Target your shot to the ground"
 msgstr "Sparare basso"
 
 #: client/cl_main.cpp:1152
-#, fuzzy
 msgid "This change requires a restart!"
 msgstr "Questa modifica richiede il riavvio"
 
 #: client/cl_main.cpp:1157
-#, fuzzy
 msgid "This change might require a restart."
 msgstr "Questa modifica potrebbe richiedere il riavvio"
 
@@ -33032,28 +32762,24 @@ msgid "Move battlescape camera left"
 msgstr "Sposta la visuale a sinistra"
 
 #: client/input/cl_input.cpp:1013
-#, fuzzy
 msgid "Move battlescape camera top left"
-msgstr "Sposta la visuale a sinistra"
+msgstr "Sposta la visuale in alto a sinistra"
 
 #: client/input/cl_input.cpp:1015
-#, fuzzy
 msgid "Move battlescape camera bottom left"
-msgstr "Sposta la visuale a sinistra"
+msgstr "Sposta la visuale in basso a sinistra"
 
 #: client/input/cl_input.cpp:1017
 msgid "Move battlescape camera right"
 msgstr "Sposta la visuale a destra"
 
 #: client/input/cl_input.cpp:1019
-#, fuzzy
 msgid "Move battlescape camera top right"
-msgstr "Sposta la visuale a destra"
+msgstr "Sposta la visuale in alto a  destra"
 
 #: client/input/cl_input.cpp:1021
-#, fuzzy
 msgid "Move battlescape camera bottom right"
-msgstr "Sposta la visuale a destra"
+msgstr "Sposta la visuale in basso a destra"
 
 #: client/input/cl_input.cpp:1023
 msgid "Move battlescape camera forward"
@@ -33096,7 +32822,6 @@ msgid "Select objects/Walk to a square/In fire mode, fire etc"
 msgstr "Seleziona oggetti/Cammina/In modalità di fuoco spara ecc"
 
 #: client/input/cl_input.cpp:1042
-#, fuzzy
 msgid "Rotate Battlescape/In fire mode, cancel action"
 msgstr "Cammina/In modalità di fuoco annulla l'azione"
 
@@ -33163,61 +32888,50 @@ msgid "Key: %s"
 msgstr "Tasto: %s"
 
 #: game/g_actor.cpp:87
-#, fuzzy
 msgid "Soldier entered the rescue zone."
-msgstr "Il soldato è entrato nella Zona Recupero\n"
+msgstr "Il soldato è entrato nella Zona Recupero"
 
 #: game/g_actor.cpp:89
-#, fuzzy
 msgid "Soldier left the rescue zone."
-msgstr "Il soldato è uscito dalla Zona Recupero\n"
+msgstr "Il soldato è uscito dalla Zona Recupero"
 
 #: game/g_actor.cpp:674
-#, fuzzy
 msgid ""
 "Can't perform action - weapon already fully loaded with the same ammunition!"
 msgstr ""
-"Impossibile eseguire - arma già caricata con lo stesso tipo di proiettili!\n"
+"Impossibile eseguire - arma già caricata con lo stesso tipo di proiettili!"
 
 #: game/g_client.cpp:344
-#, fuzzy
 msgid "Can't perform action - object not present!"
-msgstr "Impossibile eseguire - oggetto non presente!\n"
+msgstr "Impossibile eseguire - oggetto non presente!"
 
 #: game/g_client.cpp:349
-#, fuzzy
 msgid "Can't perform action - not an actor!"
-msgstr "Impossibile eseguire - non è un unità!\n"
+msgstr "Impossibile eseguire - non è un unità!"
 
 #: game/g_client.cpp:354
-#, fuzzy
 msgid "Can't perform action - actor is stunned!"
-msgstr "Impossibile eseguire - l'unità è stordita!\n"
+msgstr "Impossibile eseguire - l'unità è stordita!"
 
 #: game/g_client.cpp:359
-#, fuzzy
 msgid "Can't perform action - actor is dead!"
-msgstr "Impossibile eseguire - l'unità è morta!\n"
+msgstr "Impossibile eseguire - l'unità è morta!"
 
 #: game/g_client.cpp:364
-#, fuzzy
 msgid "Can't perform action - not on same team!"
-msgstr "Impossibile eseguire - non nella stessa squadra!\n"
+msgstr "Impossibile eseguire - non nella stessa squadra!"
 
 #: game/g_client.cpp:369
-#, fuzzy
 msgid "Can't perform action - no control over allied actors!"
-msgstr "Impossibile eseguire - non si ha il controllo delle unità alleate!\n"
+msgstr "Impossibile eseguire - non si ha il controllo delle unità alleate!"
 
 #: game/g_client.cpp:392
-#, fuzzy
 msgid "Can't perform action - it is not your turn!"
-msgstr "Impossibile eseguire - non è il tuo turno!\n"
+msgstr "Impossibile eseguire - non è il tuo turno!"
 
 #: game/g_client.cpp:503
-#, fuzzy
 msgid "Currently shaken, won't let their guard down."
-msgstr "Sotto shock, non abbasserà la guardia.\n"
+msgstr "Sotto shock, non abbasserà la guardia."
 
 #: game/g_cmds.cpp:68
 #, c-format
@@ -33231,132 +32945,111 @@ msgstr ""
 "Protezione da inondazione di messaggi: non puoi parlare per %d secondi.\n"
 
 #: game/g_combat.cpp:404
-#, fuzzy
 msgid ""
 "Soldier is dazed!\n"
 "Enemy used flashbang!"
 msgstr ""
 "Il soldato é stordito!\n"
-"Il nemico ha usato una granata stordente!\n"
+"Il nemico ha usato una granata stordente!"
 
 #: game/g_combat.cpp:638
-#, fuzzy
 msgid "Can't perform action - impossible throw!"
-msgstr "Impossibile eseguire - lancio impossibile!\n"
+msgstr "Impossibile eseguire - lancio impossibile!"
 
 #: game/g_combat.cpp:1110
-#, fuzzy
 msgid "Can't perform action - object not activatable!"
-msgstr "Impossibile eseguire - oggetto non attivabile!\n"
+msgstr "Impossibile eseguire - oggetto non attivabile!"
 
 #: game/g_combat.cpp:1157
-#, fuzzy
 msgid "Can't perform action - target out of range!"
-msgstr "Impossibile eseguire - obbiettivo fuori portata!\n"
+msgstr "Impossibile eseguire - obbiettivo fuori portata!"
 
 #: game/g_combat.cpp:1203
-#, fuzzy
 msgid "Can't perform action - not enough ammo!"
-msgstr "Impossibile eseguire - munizioni insufficienti\n"
+msgstr "Impossibile eseguire - munizioni insufficienti"
 
 #: game/g_health.cpp:61 game/g_health.cpp:68
-#, fuzzy, c-format
+#, c-format
 msgid "%s has been wounded!"
-msgstr "%s e'stato promosso a %s.\n"
+msgstr "%s e'stato ferito!"
 
 #: game/g_mission.cpp:48
-#, fuzzy
 msgid "Aliens entered target zone!"
-msgstr "Gli alieni sono entrati nella zona selezionata\n"
+msgstr "Gli alieni sono entrati nella zona selezionata"
 
 #: game/g_mission.cpp:79
-#, fuzzy
 msgid "Item was placed."
-msgstr "L'oggetto é stato posizionato\n"
+msgstr "L'oggetto é stato posizionato"
 
 #: game/g_mission.cpp:86
-#, fuzzy
 msgid "Target zone is occupied!"
-msgstr "La zona selezionata é occupata\n"
+msgstr "La zona selezionata é occupata"
 
 #: game/g_morale.cpp:36
-#, fuzzy, c-format
+#, c-format
 msgid "%s panics!"
-msgstr "%s è in preda al panico!\n"
+msgstr "%s è in preda al panico!"
 
 #: game/g_morale.cpp:94
-#, fuzzy, c-format
+#, c-format
 msgid "%s is on a rampage!"
-msgstr "%s è scatenato.\n"
+msgstr "%s è scatenato."
 
 #: game/g_morale.cpp:98
-#, fuzzy, c-format
+#, c-format
 msgid "%s is consumed by mad rage!"
-msgstr "%s è infuriato!\n"
+msgstr "%s è infuriato!"
 
 #: game/g_morale.cpp:177
-#, fuzzy, c-format
+#, c-format
 msgid "%s is currently shaken."
-msgstr "%s è sotto shock\n"
+msgstr "%s è sotto shock"
 
 #: game/g_reaction.cpp:409
-#, fuzzy
 msgid "No reaction fire enabled weapon."
-msgstr "Nessuna arma con fuoco di reazione abilitato.\n"
+msgstr "Nessuna arma con fuoco di reazione abilitato."
 
 #: game/g_reaction.cpp:414
-#, fuzzy
 msgid "No fire mode selected for reaction fire."
-msgstr "Nessuna modalità di fuoco selezionata per il fuoco di reazione.\n"
+msgstr "Nessuna modalità di fuoco selezionata per il fuoco di reazione."
 
 #: game/g_reaction.cpp:419
-#, fuzzy
 msgid "Not enough TUs left for activating reaction fire."
-msgstr "UT insufficenti per attivare il fuoco di reazione.\n"
+msgstr "UT insufficenti per attivare il fuoco di reazione."
 
 #: game/g_round.cpp:45
-#, fuzzy
 msgid "4 minutes left until forced turn end."
-msgstr "4 minuti alla fine del turno forzata.\n"
+msgstr "4 minuti alla fine del turno forzata."
 
 #: game/g_round.cpp:48
-#, fuzzy
 msgid "3 minutes left until forced turn end."
-msgstr "3 minuti alla fine del turno forzata.\n"
+msgstr "3 minuti alla fine del turno forzata."
 
 #: game/g_round.cpp:51
-#, fuzzy
 msgid "2 minutes left until forced turn end."
-msgstr "2 minuti alla fine del turno forzata.\n"
+msgstr "2 minuti alla fine del turno forzata."
 
 #: game/g_round.cpp:54
-#, fuzzy
 msgid "1 minute left until forced turn end."
-msgstr "1 minuto alla fine del turno forzata.\n"
+msgstr "1 minuto alla fine del turno forzata."
 
 #: game/g_round.cpp:57
-#, fuzzy
 msgid "30 seconds left until forced turn end."
-msgstr "30 secondi alla fine del turno forzata.\n"
+msgstr "30 secondi alla fine del turno forzata."
 
 #: game/g_round.cpp:60
-#, fuzzy
 msgid "15 seconds left until forced turn end."
-msgstr "15 secondi alla fine del turno forzata.\n"
+msgstr "15 secondi alla fine del turno forzata."
 
 #: game/g_round.cpp:68
-#, fuzzy
 msgid "Current active team hit the max round time."
-msgstr ""
-"La squadra attualmente attiva ha raggiunto il tempo massimo per turno\n"
+msgstr "La squadra attualmente attiva ha raggiunto il tempo massimo per turno."
 
 #: game/g_trigger.cpp:142
-#, fuzzy
 msgid "Switching map!"
-msgstr "Scambiando mappa!\n"
+msgstr "Scambiando mappa!"
 
 #: game/g_trigger.cpp:171
-#, fuzzy
 msgid "You are now ready to switch the map."
 msgstr "Ora puoi cambiare mappa"
 
