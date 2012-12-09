@@ -671,6 +671,8 @@ static bool FS_GetHomeDirectory(char *gdir, size_t length)
 
 /**
  * @note e.g. *nix: Use ~/.ufoai/dir as gamedir
+ * @param[in] dir The directory name relative to the game dir
+ * @param[in] write Add this directory as writable (config files, save games)
  * @sa Sys_GetHomeDirectory
  */
 static void FS_AddHomeAsGameDirectory (const char *dir, bool write)
@@ -688,8 +690,6 @@ static void FS_AddHomeAsGameDirectory (const char *dir, bool write)
 /**
  * @brief Adds the directory to the head of the search path
  * @note No ending slash here
- * @param[in] dir The directory name relative to the game dir
- * @param[in] write Add this directory as writable (config files, save games)
  */
 int FS_GetModList (linkedList_t **mods)
 {
