@@ -5096,7 +5096,6 @@ mapdef rescue
 	description		"_PHALANX Craft Crash Site"
 	storyrelated	true
 	maxaliens		30
-	hurtaliens		true
 
 	ufos
 	(
