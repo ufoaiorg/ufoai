@@ -496,7 +496,7 @@ static void SV_ConnectionlessPacket (struct net_stream *stream, dbuffer *msg)
  */
 void SV_ReadPacket (struct net_stream *s)
 {
-	client_t *cl = (client_t *)NET_StreamGetData(s);
+	client_t *cl = static_cast<client_t *>(NET_StreamGetData(s));
 	dbuffer *msg;
 
 	while ((msg = NET_ReadMsg(s))) {
