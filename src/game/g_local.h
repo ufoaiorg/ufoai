@@ -30,7 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define GAME_G_LOCAL_H
 
 #include "q_shared.h"
-#include "inventory.h"
+#include "inventory.h"				/* for inventoryInterface_t in game_locals_t */
 #include "../shared/infostring.h"
 #include "lua/lua.h"
 
