@@ -146,6 +146,12 @@ enum svc_ops_e {
 	svc_oob = 0xff
 };
 
+#define MAX_SVC_STUFFTEXT 1024
+#define MAX_SVC_PRINT 1024
+#define MAX_SVC_RECONNECT 256
+#define MAX_SVC_DISCONNECT 256
+#define MAX_CLC_STRINGCMD 512
+
 typedef int32_t svc_ops_t;
 
 /*============================================== */

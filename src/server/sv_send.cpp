@@ -40,7 +40,7 @@ EVENT MESSAGES
 void SV_ClientCommand (client_t *client, const char *fmt, ...)
 {
 	va_list ap;
-	char str[1024];
+	char str[MAX_SVC_STUFFTEXT];
 	dbuffer msg;
 
 	NET_WriteByte(&msg, svc_stufftext);
@@ -57,9 +57,6 @@ void SV_ClientCommand (client_t *client, const char *fmt, ...)
  */
 void SV_ClientPrintf (client_t * cl, int level, const char *fmt, ...)
 {
-	va_list argptr;
-	char str[1024];
-
 	if (level > cl->messagelevel)
 		return;
 
@@ -67,7 +64,9 @@ void SV_ClientPrintf (client_t * cl, int level, const char *fmt, ...)
 	NET_WriteByte(&msg, svc_print);
 	NET_WriteByte(&msg, level);
 
+	va_list argptr;
 	va_start(argptr, fmt);
+	char str[MAX_SVC_PRINT];
 	NET_VPrintf(&msg, fmt, argptr, str, sizeof(str));
 	va_end(argptr);
 
@@ -79,15 +78,13 @@ void SV_ClientPrintf (client_t * cl, int level, const char *fmt, ...)
  */
 void SV_BroadcastPrintf (int level, const char *fmt, ...)
 {
-	va_list argptr;
-	client_t *cl;
-	char str[1024];
-
 	dbuffer msg;
 	NET_WriteByte(&msg, svc_print);
 	NET_WriteByte(&msg, level);
 
+	va_list argptr;
 	va_start(argptr, fmt);
+	char str[MAX_SVC_PRINT];
 	NET_VPrintf(&msg, fmt, argptr, str, sizeof(str));
 	va_end(argptr);
 
@@ -108,7 +105,7 @@ void SV_BroadcastPrintf (int level, const char *fmt, ...)
 		Com_Printf("%s", copy);
 	}
 
-	cl = NULL;
+	client_t *cl = NULL;
 	while ((cl = SV_GetNextClient(cl)) != NULL) {
 		if (level > cl->messagelevel)
 			continue;
@@ -123,14 +120,11 @@ void SV_BroadcastPrintf (int level, const char *fmt, ...)
  * @param[in] mask Bitmask of the players to send the multicast to
  * @param[in,out] msg The message to send to the clients
  */
-void SV_Multicast (int mask, dbuffer &msg)
+void SV_Multicast (int mask, const dbuffer &msg)
 {
-	client_t *cl;
-	int j;
-
 	/* send the data to all relevant clients */
-	cl = NULL;
-	j = -1;
+	client_t *cl = NULL;
+	int j = -1;
 	while ((cl = SV_GetNextClient(cl)) != NULL) {
 		j++;
 		if (cl->state < cs_connected)

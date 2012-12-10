@@ -257,9 +257,8 @@ void SV_ExecuteClientMessage (client_t * cl, int cmd, dbuffer *msg)
 		SV_UserinfoChanged(cl);
 		break;
 
-	case clc_stringcmd:
-	{
-		char str[1024];
+	case clc_stringcmd: {
+		char str[MAX_CLC_STRINGCMD];
 		NET_ReadString(msg, str, sizeof(str));
 
 		Com_DPrintf(DEBUG_SERVER, "stringcmd from client: %s\n", str);

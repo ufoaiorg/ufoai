@@ -183,7 +183,7 @@ void CL_ParseServerMessage (svc_ops_t cmd, dbuffer *msg)
 	}
 
 	case svc_disconnect: {
-		char s[256];
+		char s[MAX_SVC_DISCONNECT];
 		NET_ReadString(msg, s, sizeof(s));
 		Com_Printf("%s\n", s);
 		CL_Drop();	/* ensure the right menu cvars are set */
@@ -191,7 +191,7 @@ void CL_ParseServerMessage (svc_ops_t cmd, dbuffer *msg)
 	}
 
 	case svc_reconnect: {
-		char s[256];
+		char s[MAX_SVC_RECONNECT];
 		NET_ReadString(msg, s, sizeof(s));
 		Com_Printf("%s\n", s);
 		cls.reconnectTime = CL_Milliseconds() + 4000;
@@ -200,7 +200,7 @@ void CL_ParseServerMessage (svc_ops_t cmd, dbuffer *msg)
 
 	case svc_print: {
 		const int i = NET_ReadByte(msg);
-		char s[1024];
+		char s[MAX_SVC_PRINT];
 		NET_ReadString(msg, s, sizeof(s));
 		switch (i) {
 		case PRINT_HUD:
@@ -226,7 +226,7 @@ void CL_ParseServerMessage (svc_ops_t cmd, dbuffer *msg)
 	}
 
 	case svc_stufftext: {
-		char s[1024];
+		char s[MAX_SVC_STUFFTEXT];
 		NET_ReadString(msg, s, sizeof(s));
 		Com_DPrintf(DEBUG_CLIENT, "stufftext: %s\n", s);
 		Cbuf_AddText(s);

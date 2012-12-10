@@ -143,9 +143,10 @@ static void CL_ForwardToServer_f (void)
 
 	/* don't forward the first argument */
 	if (Cmd_Argc() > 1) {
-		dbuffer msg;
+		const int l = strlen(Cmd_Args()) + 1;
+		dbuffer msg(l + 1);
 		NET_WriteByte(&msg, clc_stringcmd);
-		msg.add(Cmd_Args(), strlen(Cmd_Args()) + 1);
+		msg.add(Cmd_Args(), l);
 		NET_WriteMsg(cls.netStream, msg);
 	}
 }
@@ -295,31 +296,30 @@ void CL_Disconnect (void)
  */
 static void CL_Packet_f (void)
 {
-	int i, l;
-	const char *in;
-	char *out;
-	struct net_stream *s;
-
 	if (Cmd_Argc() != 4) {
 		Com_Printf("Usage: %s <destination> <port> <contents>\n", Cmd_Argv(0));
 		return;
 	}
 
-	s = NET_Connect(Cmd_Argv(1), Cmd_Argv(2));
+	struct net_stream *s = NET_Connect(Cmd_Argv(1), Cmd_Argv(2));
 	if (!s) {
 		Com_Printf("Could not connect to %s at port %s\n", Cmd_Argv(1), Cmd_Argv(2));
 		return;
 	}
 
-	in = Cmd_Argv(3);
+	const char *in = Cmd_Argv(3);
 
-	l = strlen(in);
-	for (i = 0; i < l; i++) {
+	const int l = strlen(in);
+	char buf[MAX_STRING_TOKENS];
+	char *out = buf;
+
+	for (int i = 0; i < l; i++) {
 		if (in[i] == '\\' && in[i + 1] == 'n') {
 			*out++ = '\n';
 			i++;
-		} else
+		} else {
 			*out++ = in[i];
+		}
 	}
 	*out = 0;
 
@@ -337,14 +337,12 @@ static void CL_Packet_f (void)
  */
 static void CL_ConnectionlessPacket (dbuffer *msg)
 {
-	char s[1024];
-	const char *c;
+	char s[512];
+	const char *c = Cmd_Argv(0);
 
 	NET_ReadStringLine(msg, s, sizeof(s));
 
 	Cmd_TokenizeString(s, false);
-
-	c = Cmd_Argv(0);
 
 	Com_DPrintf(DEBUG_CLIENT, "server OOB: %s (%s)\n", c, Cmd_Args());
 
@@ -376,7 +374,7 @@ static void CL_ConnectionlessPacket (dbuffer *msg)
 			Com_Printf("Command packet from remote host. Ignored.\n");
 			return;
 		} else {
-			char str[1024];
+			char str[512];
 			NET_ReadString(msg, str, sizeof(str));
 			Cbuf_AddText(str);
 			Cbuf_AddText("\n");
@@ -666,15 +664,16 @@ static void CL_SetRatioFilter_f (void)
 static void CL_VideoInitMenu (void)
 {
 	uiNode_t* option = UI_GetOption(OPTION_VIDEO_RESOLUTIONS);
-	if (option == NULL) {
-		int i;
-		for (i = 0; i < VID_GetModeNums(); i++) {
-			vidmode_t vidmode;
-			if (VID_GetModeInfo(i, &vidmode))
-				UI_AddOption(&option, va("r%ix%i", vidmode.width, vidmode.height), va("%i x %i", vidmode.width, vidmode.height), va("%i", i));
-		}
-		UI_RegisterOption(OPTION_VIDEO_RESOLUTIONS, option);
+	if (option != NULL) {
+		return;
 	}
+	int i;
+	for (i = 0; i < VID_GetModeNums(); i++) {
+		vidmode_t vidmode;
+		if (VID_GetModeInfo(i, &vidmode))
+			UI_AddOption(&option, va("r%ix%i", vidmode.width, vidmode.height), va("%i x %i", vidmode.width, vidmode.height), va("%i", i));
+	}
+	UI_RegisterOption(OPTION_VIDEO_RESOLUTIONS, option);
 }
 
 static void CL_TeamDefInitMenu (void)

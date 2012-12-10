@@ -43,7 +43,7 @@ void CL_AddBrushModel (const eventRegister_t *self, dbuffer *msg)
 	int angle;
 	vec3_t origin, angles;
 
-	NET_ReadFormat(msg, self->formatString,&entnum, &type, &modelnum1, &levelflags, &origin, &angles, &speed, &angle, &dir);
+	NET_ReadFormat(msg, self->formatString, &entnum, &type, &modelnum1, &levelflags, &origin, &angles, &speed, &angle, &dir);
 
 	if (type != ET_BREAKABLE && type != ET_DOOR && type != ET_ROTATING && type != ET_DOOR_SLIDING && type != ET_TRIGGER_RESCUE && type != ET_TRIGGER_NEXTMAP)
 		Com_Error(ERR_DROP, "Invalid le announced via EV_ADD_BRUSH_MODEL type: %i\n", type);
