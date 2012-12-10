@@ -318,7 +318,6 @@ bool Step::checkWalkingDirections (const pathing_t *path)
 	nz = toPos[2];
 
 	if ((stepup & PATHFINDING_BIG_STEPUP) && toPos[2] < PATHFINDING_HEIGHT - 1) {
-		Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Stepping up into higher cell.\n");
 		toPos[2]++;
 		/**
 		 * @note If you need to know about how pathfinding works,  you need to understand the
@@ -367,7 +366,6 @@ bool Step::checkWalkingDirections (const pathing_t *path)
 		if (stepup & PATHFINDING_BIG_STEPDOWN) {
 			return false;		/* There is stepdown from here. */
 		}
-		Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Preparing for a fall. change:%i fall:%i\n", heightChange, -actorStepupHeight);
 		heightChange = 0;
 		toPos[2]--;
 	}
@@ -537,8 +535,6 @@ void Grid_MoveCalc (const routing_t *routes, const actorSizeEnum_t actorSize, pa
 	/* set starting position to 0 TUs.*/
 	RT_AREA_POS(path, from, crouchingState) = 0;
 
-	Com_DPrintf(DEBUG_PATHING, "Grid_MoveCalc: Start at (%i %i %i) c:%i\n", from[0], from[1], from[2], crouchingState);
-
 	count = 0;
 	while (!PQueueIsEmpty(&pqueue)) {
 		PQueuePop(&pqueue, epos);
@@ -586,8 +582,6 @@ void Grid_MoveCalc (const routing_t *routes, const actorSizeEnum_t actorSize, pa
 	}
 	/* Com_Printf("Loop: %i", count); */
 	PQueueFree(&pqueue);
-
-	Com_DPrintf(DEBUG_PATHING, "Grid_MoveCalc: Done\n\n");
 }
 
 /**
@@ -612,12 +606,6 @@ void Grid_MoveStore (pathing_t *path)
  */
 pos_t Grid_MoveLength (const pathing_t *path, const pos3_t to, byte crouchingState, bool stored)
 {
-#ifdef PARANOID
-	if (to[2] >= PATHFINDING_HEIGHT) {
-		Com_DPrintf(DEBUG_PATHING, "Grid_MoveLength: WARNING to[2] = %i(>= HEIGHT)\n", to[2]);
-		return ROUTING_NOT_REACHABLE;
-	}
-#endif
 	/* Confirm bounds */
 	assert(to[2] < PATHFINDING_HEIGHT);
 	assert(crouchingState == 0 || crouchingState == 1);	/* s.a. ACTOR_MAX_STATES */
@@ -771,7 +759,6 @@ pos_t Grid_Fall (const routing_t *routes, const actorSizeEnum_t actorSize, const
 
 	/* Is z off the map? */
 	if (z >= PATHFINDING_HEIGHT) {
-		Com_DPrintf(DEBUG_PATHING, "Grid_Fall: z (height) out of bounds): z=%i max=%i\n", z, PATHFINDING_HEIGHT);
 		return 0xFF;
 	}
 
@@ -921,12 +908,6 @@ void Grid_RecalcRouting (mapTiles_t *mapTiles, routing_t *routes, const char *na
 			Com_Printf("Called Grid_RecalcRouting with invalid inline model name '%s'\n", name);
 			return;
 		}
-
-		Com_DPrintf(DEBUG_PATHING, "Model:%s origin(%f,%f,%f) angles(%f,%f,%f) mins(%f,%f,%f) maxs(%f,%f,%f)\n", name,
-			model->origin[0], model->origin[1], model->origin[2],
-			model->angles[0], model->angles[1], model->angles[2],
-			model->mins[0], model->mins[1], model->mins[2],
-			model->maxs[0], model->maxs[1], model->maxs[2]);
 
 		/* get the target model's dimensions */
 		if (VectorNotEmpty(model->angles)) {
