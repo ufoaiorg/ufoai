@@ -244,6 +244,7 @@ static void G_SendCharacterData (const edict_t* ent)
 /**
  * @brief Handles the end of a match
  * @param[in] team The winning team number
+ * @param[in] nextmap Is there a follow-up map within the same match ?
  * @sa G_RunFrame
  * @sa CL_ParseResults
  */

@@ -89,6 +89,7 @@ void AI_Init (void)
  * @brief Check whether friendly units are in the line of fire when shooting
  * @param[in] ent AI that is trying to shoot
  * @param[in] target Shoot to this location
+ * @param[in] spread The spread of the weapon used (from fireDef)
  */
 static bool AI_CheckFF (const edict_t * ent, const vec3_t target, float spread)
 {
