@@ -40,7 +40,6 @@ void G_SendStats (edict_t *ent)
 	ent->morale = std::max(ent->morale, 0);
 
 	G_EventActorStats(ent, G_TeamToPM(ent->team));
-	G_SendWoundStats(ent);
 }
 
 /**
@@ -52,6 +51,8 @@ void G_SendPlayerStats (const player_t *player)
 	edict_t *ent = NULL;
 
 	while ((ent = G_EdictsGetNextActor(ent)))
-		if (ent->team == player->pers.team)
+		if (ent->team == player->pers.team) {
 			G_EventActorStats(ent, G_PlayerToPM(player));
+			G_SendWoundStats(ent);
+		}
 }

@@ -63,22 +63,18 @@ void G_DamageActor (edict_t *target, const int damage, const vec3_t impact)
 			const float impactHeight = impact[2] / (target->absmin[2] + target->absmax[2]);
 			bodyPart = teamDef->bodyTemplate->getHitBodyPart(impactDirection, impactHeight);
 			target->chr.wounds.woundLevel[bodyPart] += damage;
-			if (target->chr.wounds.woundLevel[bodyPart] > target->chr.maxHP * teamDef->bodyTemplate->woundThreshold(bodyPart))
-				G_ClientPrintf(G_PLAYER_FROM_ENT(target), PRINT_HUD, _("%s has been wounded!"), target->chr.name);
 		} else {
 			/* No direct hit (splash damage) */
 			int bodyPart;
-			for (bodyPart = 0; bodyPart < teamDef->bodyTemplate->numBodyParts(); ++bodyPart) {
+			for (bodyPart = 0; bodyPart < teamDef->bodyTemplate->numBodyParts(); ++bodyPart)
 				target->chr.wounds.woundLevel[bodyPart] += teamDef->bodyTemplate->getArea(bodyPart) * damage;
-				if (target->chr.wounds.woundLevel[bodyPart] > target->chr.maxHP * teamDef->bodyTemplate->woundThreshold(bodyPart))
-					G_ClientPrintf(G_PLAYER_FROM_ENT(target), PRINT_HUD, _("%s has been wounded!"), target->chr.name);
-			}
 		}
 #if 0
 		if (!CHRSH_IsTeamDefRobot(target->chr.teamDef))
 			/* Knockback -- currently disabled, not planned in the specs, also there's no way to tell stunned and dead actors apart */
 			target->STUN = std::min(255.0f, target->STUN + std::max(0.0f, damage * crand() * 0.25f));
 #endif
+		G_SendWoundStats(target);
 	}
 }
 
@@ -130,6 +126,8 @@ void G_TreatActor (edict_t *target, const fireDef_t *const fd, const int heal, c
 	/* Increase morale */
 	if (fd->dmgweight == gi.csi->damShock)
 		target->morale = std::min(GET_MORALE(target->chr.score.skills[ABILITY_MIND]), target->morale - heal);
+
+	G_SendWoundStats(target);
 }
 
 /**

@@ -23,7 +23,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "../../../../client.h"
-#include "../../../cl_localentity.h"
+#include "../../../cl_actor.h"
+#include "../../../cl_hud.h"
 #include "e_event_actorwound.h"
 
 /**
@@ -52,6 +53,13 @@ void CL_ActorWound (const eventRegister_t *self, dbuffer *msg)
 		return;
 	}
 
+	if (le->wounds.woundLevel[bodyPart] < wounds &&
+			wounds > le->teamDef->bodyTemplate->woundThreshold(bodyPart)) {
+		const character_t *chr = CL_ActorGetChr(le);
+		char tmpbuf[128];
+		Com_sprintf(tmpbuf, lengthof(tmpbuf), _("%s has been wounded"), chr->name);
+		HUD_DisplayMessage(tmpbuf);
+	}
 	le->wounds.woundLevel[bodyPart] = wounds;
 	le->wounds.treatmentLevel[bodyPart] = treatment;
 }
