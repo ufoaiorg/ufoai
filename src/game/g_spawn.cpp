@@ -42,6 +42,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define G_ValidMessage(ent)		((ent)->message && ((ent)->message[0] == '_' || strstr((ent)->message, "*msgid:") != NULL))
 
+/**
+ * @brief this is only used to hold entity field values that can be set from
+ * the editor, but aren't actually present in edict_t during gameplay
+ */
+typedef struct {
+	/* world vars */
+	int noRandomSpawn;	/**< spawn the actors on random spawnpoints */
+	int noEquipment;	/**< spawn the actors with no equipment - must be collected in the map */
+} spawn_temp_t;
+
 static spawn_temp_t st;
 
 static void SP_light(edict_t *ent);

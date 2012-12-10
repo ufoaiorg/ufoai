@@ -133,16 +133,6 @@ typedef struct {
 } level_locals_t;
 
 
-/**
- * @brief this is only used to hold entity field values that can be set from
- * the editor, but aren't actually present in edict_t during gameplay
- */
-typedef struct {
-	/* world vars */
-	int noRandomSpawn;	/**< spawn the actors on random spawnpoints */
-	int noEquipment;	/**< spawn the actors with no equipment - must be collected in the map */
-} spawn_temp_t;
-
 extern game_locals_t game;
 extern level_locals_t level;
 extern game_import_t gi;
