@@ -148,9 +148,6 @@ extern level_locals_t level;
 extern game_import_t gi;
 extern game_export_t globals;
 
-#define random()	((rand() & 0x7fff) / ((float)0x7fff))
-#define crandom()	(2.0 * (random() - 0.5))
-
 #define G_IsState(ent, s)		((ent)->state & (s))
 #define G_IsShaken(ent)			G_IsState(ent, STATE_SHAKEN)
 #define G_IsStunned(ent)		(G_IsState(ent, STATE_STUN) & ~STATE_DEAD)
