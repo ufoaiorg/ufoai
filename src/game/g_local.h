@@ -296,14 +296,6 @@ extern cvar_t *g_difficulty;
 /* g_stats */
 void G_SendPlayerStats(const player_t *player);
 
-/* g_inventory */
-void G_WriteItem(const item_t *item, const invDef_t *container, int x, int y);
-void G_ReadItem(item_t *item, const invDef_t **container, int *x, int *y);
-void G_InventoryToFloor(edict_t *ent);
-bool G_AddItemToFloor(const pos3_t pos, const char *itemID);
-edict_t *G_GetFloorItemsFromPos(const pos3_t pos);
-const equipDef_t *G_GetEquipDefByID(const char *equipID);
-
 /* g_morale */
 void G_MoraleBehaviour(int team);
 
@@ -363,13 +355,10 @@ void G_MoveCalcLocal(pathing_t *pt, int team, const edict_t *movingActor, const 
 void G_ClientEndRound(player_t *player);
 
 void G_ClientCommand(player_t *player);
-void G_SendInventory(playermask_t player_mask, const edict_t *ent);
 const char* G_GetPlayerName(int pnum);
 player_t* G_GetPlayerForTeam(int team);
 void G_SendStats(edict_t *ent) __attribute__((nonnull));
 edict_t *G_SpawnFloor(const pos3_t pos);
-edict_t *G_GetFloorItems(edict_t *ent) __attribute__((nonnull));
-bool G_InventoryRemoveItemByID(const char *itemID, edict_t *ent, containerIndex_t index);
 
 void G_SpawnEntities(const char *mapname, bool day, const char *entities);
 bool G_RunFrame(void);

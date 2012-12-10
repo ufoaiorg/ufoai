@@ -41,6 +41,7 @@
 #include "g_actor.h"
 #include "g_combat.h"
 #include "g_edicts.h"
+#include "g_inventory.h"
 #include "g_reaction.h"
 #include "g_vis.h"
 

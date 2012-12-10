@@ -29,6 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../game/g_local.h"
 #include "../game/g_actor.h"
 #include "../game/g_edicts.h"
+#include "../game/g_inventory.h"
 #include "../server/server.h"
 #include "../client/renderer/r_state.h"
 

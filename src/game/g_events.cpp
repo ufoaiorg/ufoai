@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "g_local.h"
 #include "g_actor.h"
 #include "g_client.h"
+#include "g_inventory.h"
 
 /**
  * @brief Spawns a sound (that will be spatialized on the client side)
