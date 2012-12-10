@@ -100,7 +100,7 @@ typedef struct {
 	bool routed;
 	bool day;
 	bool hurtAliens;
-	bool nextMapSwitch;		/**< trigger the nextmap command when ending the match */
+	bool nextMapSwitch;			/**< trigger the nextmap command when ending the match */
 
 	/* intermission state */
 	float intermissionTime;		/**< the seconds to wait until the game will be closed.
@@ -114,18 +114,18 @@ typedef struct {
 	int activeTeam;
 	int teamOfs;
 	int nextEndRound;
-	int actualRound;	/**< the current running round counter */
+	int actualRound;		/**< the current running round counter */
 
 	pathing_t *pathingMap;	/**< This is where the data for TUS used to move and actor locations go */
 
-	int noRandomSpawn;	/**< can be set via worldspawn to force random spawn point order for each team */
-	int noEquipment;	/**< can be set via worldspawn to force the players to collect their equipment in the map */
+	int noRandomSpawn;		/**< can be set via worldspawn to force random spawn point order for each team */
+	int noEquipment;		/**< can be set via worldspawn to force the players to collect their equipment in the map */
 
 	int initialAlienActorsSpawned;
-	byte num_alive[MAX_TEAMS];		/**< the number of alive actors per team */
-	byte num_spawned[MAX_TEAMS];	/**< the number of spawned actors per team */
-	byte num_spawnpoints[MAX_TEAMS];	/**< the number of spawn points in the map per team */
-	byte num_2x2spawnpoints[MAX_TEAMS]; /**< the number of spawn points for 2x2 units in the map per team */
+	byte num_alive[MAX_TEAMS];				/**< the number of alive actors per team */
+	byte num_spawned[MAX_TEAMS];			/**< the number of spawned actors per team */
+	byte num_spawnpoints[MAX_TEAMS];		/**< the number of spawn points in the map per team */
+	byte num_2x2spawnpoints[MAX_TEAMS]; 	/**< the number of spawn points for 2x2 units in the map per team */
 	byte num_kills[MAX_TEAMS][MAX_TEAMS];	/**< the amount of kills per team, the first dimension contains the attacker team, the second the victim team */
 	byte num_stuns[MAX_TEAMS][MAX_TEAMS];	/**< the amount of stuns per team, the first dimension contains the attacker team, the second the victim team */
 } level_locals_t;
@@ -538,7 +538,7 @@ struct edict_s {
 								 * string for each door part and they will open both
 								 * if you open one */
 
-	bool inRescueZone;		/**< the actor is standing in a rescue zone if this is true - this means that
+	bool inRescueZone;			/**< the actor is standing in a rescue zone if this is true - this means that
 								 * when the mission is aborted the actor will not die */
 
 	/** client actions - interact with the world */
@@ -547,10 +547,10 @@ struct edict_s {
 	/** here are the character values */
 	character_t chr;
 
-	int spawnflags;	/**< set via mapeditor */
+	int spawnflags;				/**< set via mapeditor */
 
-	float angle;	/**< entity yaw - (0-360 degree) set via mapeditor - sometimes used for movement direction,
-					 * then -1=up; -2=down is used additionally */
+	float angle;				/**< entity yaw - (0-360 degree) set via mapeditor - sometimes used for movement direction,
+								 * then -1=up; -2=down is used additionally */
 
 	int radius;					/**< this is used to extend the bounding box of a trigger_touch for e.g. misc_mission */
 	int speed;					/**< speed of entities - e.g. rotating or actors */
@@ -596,10 +596,10 @@ struct edict_s {
 	 * have the above mentioned flag set.
 	 * @sa G_FindEdictGroups */
 	edict_t *groupChain;
-	edict_t *groupMaster;	/**< first entry in the list */
-	int flags;				/**< FL_* */
+	edict_t *groupMaster;		/**< first entry in the list */
+	int flags;					/**< FL_* */
 
-	AI_t AI; /**< The character's artificial intelligence */
+	AI_t AI; 					/**< The character's artificial intelligence */
 
 	pos3_t *forbiddenListPos;	/**< this is used for e.g. misc_models with the solid flag set - this will
 								 * hold a list of grid positions that are blocked by the aabb of the model */
