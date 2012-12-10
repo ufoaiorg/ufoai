@@ -513,6 +513,10 @@ void Grid_CalcPathing (const routing_t *routes, const actorSizeEnum_t actorSize,
 	/* this is the position of the current actor- so the actor can stand in the cell it is in when pathfinding */
 	pos3_t excludeFromForbiddenList;
 
+	/* Confirm bounds */
+	assert((from[2]) < PATHFINDING_HEIGHT);
+	assert(crouchingState == 0 || crouchingState == 1);	/* s.a. ACTOR_MAX_STATES */
+
 	/* reset move data */
 	OBJSET(path->area,     ROUTING_NOT_REACHABLE);
 	OBJSET(path->areaFrom, ROUTING_NOT_REACHABLE);
@@ -527,10 +531,6 @@ void Grid_CalcPathing (const routing_t *routes, const actorSizeEnum_t actorSize,
 	PQueueInitialise(&pqueue, 1024);
 	Vector4Set(epos, from[0], from[1], from[2], crouchingState);
 	PQueuePush(&pqueue, epos, 0);
-
-	/* Confirm bounds */
-	assert((from[2]) < PATHFINDING_HEIGHT);
-	assert(crouchingState == 0 || crouchingState == 1);	/* s.a. ACTOR_MAX_STATES */
 
 	/* set starting position to 0 TUs.*/
 	RT_AREA_POS(path, from, crouchingState) = 0;
