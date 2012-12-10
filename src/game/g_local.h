@@ -342,8 +342,6 @@ void G_CompleteRecalcRouting(void);
 void G_RecalcRouting(const char *model, const GridBox& box);
 void G_GenerateEntList(const char *entList[MAX_EDICTS]);
 
-#include "g_events.h"
-
 #define MORALE_RANDOM( mod )	( (mod) * (1.0 + 0.3*crand()) )
 
 void G_CheckForceEndRound(void);
@@ -394,6 +392,8 @@ void Think_NextMapTrigger(edict_t *self);
 void G_EdictCalcOrigin(edict_t *ent);
 void G_EdictSetOrigin(edict_t *ent, const pos3_t newPos);
 bool G_EdictPosIsSameAs(edict_t *ent, const pos3_t cmpPos);
+
+#include "g_events.h"
 
 /*============================================================================ */
 
