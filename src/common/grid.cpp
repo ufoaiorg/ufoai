@@ -503,7 +503,7 @@ static bool Grid_MoveMark (Step &step, const pathing_t *path)
  * @sa G_MoveCalc
  * @sa CL_ConditionalMoveCalc
  */
-void Grid_MoveCalc (const routing_t *routes, const actorSizeEnum_t actorSize, pathing_t *path, const pos3_t from, byte crouchingState, int maxTUs, byte ** fb_list, int fb_length)
+void Grid_CalcPathing (const routing_t *routes, const actorSizeEnum_t actorSize, pathing_t *path, const pos3_t from, byte crouchingState, int maxTUs, byte ** fb_list, int fb_length)
 {
 	int dir;
 	int count;

@@ -674,7 +674,7 @@ void SV_InitGameProgs (void)
 	import.TestLineWithEnt = SV_TestLineWithEnt;
 	import.GrenadeTarget = Com_GrenadeTarget;
 
-	import.MoveCalc = Grid_MoveCalc;
+	import.MoveCalc = Grid_CalcPathing;
 	import.MoveStore = Grid_MoveStore;
 	import.MoveLength = Grid_MoveLength;
 	import.MoveNext = Grid_MoveNext;

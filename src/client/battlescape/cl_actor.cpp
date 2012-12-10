@@ -703,7 +703,7 @@ void CL_ActorConditionalMoveCalc (le_t *le)
 	CL_BuildForbiddenList();
 	if (le && LE_IsSelected(le)) {
 		const byte crouchingState = LE_IsCrouched(le) ? 1 : 0;
-		Grid_MoveCalc(cl.mapData->routes, le->fieldSize, &cl.pathMap, le->pos, crouchingState, MAX_ROUTE_TUS, forbiddenList, forbiddenListLength);
+		Grid_CalcPathing(cl.mapData->routes, le->fieldSize, &cl.pathMap, le->pos, crouchingState, MAX_ROUTE_TUS, forbiddenList, forbiddenListLength);
 		CL_ActorResetMoveLength(le);
 	}
 }
@@ -2233,7 +2233,7 @@ static void CL_DumpMoveMark_f (void)
 	developer->integer |= DEBUG_PATHING;
 
 	CL_BuildForbiddenList();
-	Grid_MoveCalc(cl.mapData->routes, ACTOR_GET_FIELDSIZE(selActor), &cl.pathMap, truePos, crouchingState, MAX_ROUTE_TUS, forbiddenList, forbiddenListLength);
+	Grid_CalcPathing(cl.mapData->routes, ACTOR_GET_FIELDSIZE(selActor), &cl.pathMap, truePos, crouchingState, MAX_ROUTE_TUS, forbiddenList, forbiddenListLength);
 
 	developer->integer ^= DEBUG_PATHING;
 
