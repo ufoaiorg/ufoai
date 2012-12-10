@@ -526,13 +526,12 @@ void Grid_CalcPathing (const routing_t *routes, const actorSizeEnum_t actorSize,
 
 	/* Prepare exclusion of starting-location (i.e. this should be ent-pos or le-pos) in Grid_CheckForbidden */
 	VectorCopy(from, excludeFromForbiddenList);
+	/* set starting position to 0 TUs.*/
+	RT_AREA_POS(path, from, crouchingState) = 0;
 
 	PQueueInitialise(&pqueue, 1024);
 	Vector4Set(epos, from[0], from[1], from[2], crouchingState);
 	PQueuePush(&pqueue, epos, 0);
-
-	/* set starting position to 0 TUs.*/
-	RT_AREA_POS(path, from, crouchingState) = 0;
 
 	count = 0;
 	while (!PQueueIsEmpty(&pqueue)) {
