@@ -102,6 +102,8 @@ static int cacheCheckToInventory = INV_DOES_NOT_FIT;
  * @brief Will check if the item-shape is colliding with something else in the container-shape at position x/y.
  * @note The function expects an already rotated shape for itemShape. Use INVSH_ShapeRotate if needed.
  * @param[in] shape Pointer to 'uint32_t shape[SHAPE_BIG_MAX_HEIGHT]'
+ * @param[in] x The x value in the container (1 << x in the shape bitmask)
+ * @param[in] y The y value in the container (SHAPE_BIG_MAX_HEIGHT is the max)
  */
 static bool INVSH_CheckShapeCollision (const uint32_t *shape, const uint32_t itemShape, const int x, const int y)
 {
@@ -143,7 +145,7 @@ static bool INVSH_CheckShapeCollision (const uint32_t *shape, const uint32_t ite
  * @param[in] container The container (index) to look into.
  * @param[in] itemShape The shape info of an item to fit into the container.
  * @param[in] x The x value in the container (1 << x in the shape bitmask)
- * @param[in] y The x value in the container (SHAPE_BIG_MAX_HEIGHT is the max)
+ * @param[in] y The y value in the container (SHAPE_BIG_MAX_HEIGHT is the max)
  * @param[in] ignoredItem You can ignore one item in the container (most often the currently dragged one). Use NULL if you want to check against all items in the container.
  * @sa INVSH_CheckToInventory
  * @return false if the item does not fit, true if it fits.
@@ -296,6 +298,8 @@ bool INVSH_CompareItem (const item_t *const item1, const item_t *const item2)
 /**
  * @brief Checks the shape if there is a 1-bit on the position x/y.
  * @param[in] shape The shape to check in. (8x4)
+ * @param[in] x The x value in the container (1 << x in the shape bitmask)
+ * @param[in] y The y value in the container (SHAPE_SMALL_MAX_HEIGHT is the max)
  */
 static bool INVSH_CheckShapeSmall (const uint32_t shape, const int x, const int y)
 {
@@ -744,6 +748,8 @@ const objDef_t* INVSH_HasReactionFireEnabledWeapon (const invList_t *invList)
  * @brief Will merge the second shape (=itemShape) into the first one (=big container shape) on the position x/y.
  * @note The function expects an already rotated shape for itemShape. Use INVSH_ShapeRotate if needed.
  * @param[in] shape Pointer to 'uint32_t shape[SHAPE_BIG_MAX_HEIGHT]'
+ * @param[in] x The x value in the container (1 << x in the shape bitmask)
+ * @param[in] y The y value in the container (SHAPE_BIG_MAX_HEIGHT is the max)
  */
 void INVSH_MergeShapes (uint32_t *shape, const uint32_t itemShape, const int x, const int y)
 {
@@ -756,6 +762,8 @@ void INVSH_MergeShapes (uint32_t *shape, const uint32_t itemShape, const int x, 
 /**
  * @brief Checks the shape if there is a 1-bit on the position x/y.
  * @param[in] shape Pointer to 'uint32_t shape[SHAPE_BIG_MAX_HEIGHT]'
+ * @param[in] x The x value in the container (1 << x in the shape bitmask)
+ * @param[in] y The y value in the container (SHAPE_BIG_MAX_HEIGHT is the max)
  */
 bool INVSH_CheckShape (const uint32_t *shape, const int x, const int y)
 {
