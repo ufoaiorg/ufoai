@@ -45,6 +45,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "g_client.h"
 #include "g_combat.h"
 #include "g_edicts.h"
+#include "g_match.h"
 #include "g_vis.h"
 
 #define MAX_RF_TARGETS 10

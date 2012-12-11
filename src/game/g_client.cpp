@@ -42,6 +42,7 @@
 #include "g_combat.h"
 #include "g_edicts.h"
 #include "g_inventory.h"
+#include "g_match.h"
 #include "g_reaction.h"
 #include "g_vis.h"
 

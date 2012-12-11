@@ -30,6 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "g_func.h"
 #include "g_actor.h"
 #include "g_ai.h"
+#include "g_match.h"
 #include "g_vis.h"
 
 /**

@@ -25,4 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #pragma once
 
-#include "g_local.h"
+void G_MatchEndTrigger(int team, int timeGap);
+bool G_MatchDoEnd(void);
+void G_MatchEndCheck(void);
+bool G_MatchIsRunning(void);

@@ -354,12 +354,6 @@ void G_InvList_f(const player_t *player);
 void G_ServerCommand(void);
 bool SV_FilterPacket(const char *from);
 
-/* g_match.c */
-bool G_MatchIsRunning(void);
-void G_MatchEndTrigger(int team, int timeGap);
-void G_MatchEndCheck(void);
-bool G_MatchDoEnd(void);
-
 /* g_trigger.c */
 edict_t* G_TriggerSpawn(edict_t *owner);
 bool G_TriggerRemoveFromList(edict_t *self, edict_t *activator);
