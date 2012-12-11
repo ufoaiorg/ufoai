@@ -89,6 +89,7 @@
 		<Unit filename="..\..\src\game\g_local.h" />
 		<Unit filename="..\..\src\game\g_main.cpp" />
 		<Unit filename="..\..\src\game\g_match.cpp" />
+		<Unit filename="..\..\src\game\g_match.h" />
 		<Unit filename="..\..\src\game\g_mission.cpp" />
 		<Unit filename="..\..\src\game\g_morale.cpp" />
 		<Unit filename="..\..\src\game\g_move.cpp" />
