@@ -732,7 +732,11 @@ void NET_StreamEnqueue (struct net_stream *s, const char *data, int len)
 		s->outbound->add(data, len);
 	}
 
-	if (s->socket >= 0)
+	/* on linux, socket is int, and INVALID_SOCKET -1
+	 * on windows it is unsigned and  INVALID_SOCKET (~0)
+	 * Let's hope that checking for INVALID_SOCKET is good enough for linux. */
+	//if (s->socket >= 0)
+	if (s->socket != INVALID_SOCKET)
 		FD_SET(s->socket, &write_fds);
 
 	if (s->loopback_peer) {
