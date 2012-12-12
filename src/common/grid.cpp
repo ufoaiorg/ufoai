@@ -603,8 +603,9 @@ void Grid_CalcPathing (const routing_t *routes, const actorSizeEnum_t actorSize,
  * @sa G_MoveCalc
  * @sa CL_ConditionalMoveCalc
  */
-void Grid_FindPath (const routing_t *routes, const actorSizeEnum_t actorSize, pathing_t *path, const pos3_t from, const pos3_t targetPos, byte crouchingState, int maxTUs, byte ** fb_list, int fb_length)
+bool Grid_FindPath (const routing_t *routes, const actorSizeEnum_t actorSize, pathing_t *path, const pos3_t from, const pos3_t targetPos, byte crouchingState, int maxTUs, byte ** fb_list, int fb_length)
 {
+	bool found = false;
 	int count;
 	priorityQueue_t pqueue;
 	pos4_t epos; /**< Extended position; includes crouching state */
@@ -677,10 +678,17 @@ void Grid_FindPath (const routing_t *routes, const actorSizeEnum_t actorSize, pa
 				Vector4Set(dummy, step.toPos[0], step.toPos[1], step.toPos[2], step.crouchingState);
 				PQueuePush(&pqueue, dummy, dist);
 			}
+			if (VectorEqual(step.toPos, targetPos)) {
+				found = true;
+				break;
+			}
 		}
+		if (found)
+			break;
 	}
 	/* Com_Printf("Loop: %i", count); */
 	PQueueFree(&pqueue);
+	return found;
 }
 
 /**
