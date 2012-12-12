@@ -4,7 +4,6 @@
  *
  * For compilers that provide it, includes C99 inttypes.h for defining integer types.
  * For those that do not (e.g. MS Visual C), defines integer types with equivalent syntax.
- * Also defines float32_t, double64_t and bool_t, to match the naming convention used by integer types.
  */
 
 /*
@@ -31,8 +30,6 @@
 
 #include <stddef.h>
 #include <stdint.h>
-
-typedef double double64_t;
 
 #ifndef byte
 typedef uint8_t byte;
