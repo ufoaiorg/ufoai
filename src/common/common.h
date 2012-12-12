@@ -23,8 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef _COMMON_DEFINED
-#define _COMMON_DEFINED
+#pragma once
 
 #include "../shared/ufotypes.h"
 #include "../shared/byte.h"
@@ -411,5 +410,3 @@ do { \
 } while (0)
 
 #define HASH_Delete(anchor) (*(anchor) = (*(anchor))->hash_next)
-
-#endif

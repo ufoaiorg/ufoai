@@ -23,8 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef _COMMON_CMODEL_H
-#define _COMMON_CMODEL_H
+#pragma once
 
 /*==============================================================
 CMODEL
@@ -49,4 +48,3 @@ trace_t CM_EntCompleteBoxTrace(mapTiles_t *mapTiles, const vec3_t start, const v
 bool CM_EntTestLineDM(mapTiles_t *mapTiles, const vec3_t start, const vec3_t stop, vec3_t end, const int levelmask, const char **entlist);
 bool CM_EntTestLine(mapTiles_t *mapTiles, const vec3_t start, const vec3_t stop, const int levelmask, const char **entlist);
 trace_t CM_CompleteBoxTrace(mapTiles_t *mapTiles, const vec3_t start, const vec3_t end, const AABB &box, int levelmask, int brushmask, int brushreject);
-#endif
