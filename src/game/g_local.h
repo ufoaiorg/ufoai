@@ -288,13 +288,6 @@ void G_MoraleBehaviour(int team);
 void G_PhysicsRun(void);
 void G_PhysicsStep(edict_t *ent);
 
-/* g_mission */
-void G_MissionAddVictoryMessage(const char *message);
-bool G_MissionTouch(edict_t *self, edict_t *activator);
-bool G_MissionUse(edict_t *self, edict_t *activator);
-bool G_MissionDestroy(edict_t *self);
-void G_MissionThink(edict_t *self);
-
 /* g_utils */
 uint32_t G_GetLevelFlagsFromPos(const pos3_t pos);
 edict_t *G_FindRadius(edict_t *from, const vec3_t org, float rad, entity_type_t type = ET_NULL);
