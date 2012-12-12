@@ -340,7 +340,7 @@ typedef struct {
 } eventNames_t;
 
 #define M(x) { #x }
-const eventNames_t eventNames[] = {
+static const eventNames_t eventNames[] = {
 	M(EV_NULL),
 	M(EV_RESET),
 	M(EV_START),
@@ -396,6 +396,7 @@ const eventNames_t eventNames[] = {
 	M(EV_CAMERA_APPEAR)
 };
 #undef M
+CASSERT(lengthof(eventNames) == EV_NUM_EVENTS);
 
 /**
  * @sa gi.AddEvent
