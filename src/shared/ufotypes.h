@@ -32,7 +32,6 @@
 #include <stddef.h>
 #include <stdint.h>
 
-typedef float float32_t;
 typedef double double64_t;
 
 #ifndef byte

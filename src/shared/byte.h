@@ -29,7 +29,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define __BYTE_H__
 
 #include <SDL/SDL_endian.h>
-#include "ufotypes.h"
+
+typedef float float32_t;
 
 #define BigShort(X) (short)SDL_SwapBE16(X)
 #define LittleShort(X) (short)SDL_SwapLE16(X)
