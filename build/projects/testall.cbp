@@ -94,6 +94,7 @@
 			<Add option="-Wreturn-type" />
 			<Add option="-Wwrite-strings" />
 			<Add option="-Wno-format" />
+			<Add option="-Wno-variadic-macros" />
 			<Add option="-D__GNUWIN32__" />
 			<Add option="-DWINVER=0x501" />
 			<Add option="-DCOMPILE_UFO" />
