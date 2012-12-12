@@ -89,9 +89,7 @@ size_t dbuffer::getAt (size_t offset, char *data, size_t len) const
 		return 0;
 
 	std::vector<char>::const_iterator copyBegin = _data.begin() + offset;
-	if (len > _length) {
-		len = _length;
-	}
+	len = std::min(len, _length - offset);
 	std::vector<char>::const_iterator copyEnd = copyBegin + len;
 	std::copy(copyBegin, copyEnd, data);
 
