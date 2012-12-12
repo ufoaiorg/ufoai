@@ -584,6 +584,106 @@ void Grid_CalcPathing (const routing_t *routes, const actorSizeEnum_t actorSize,
 }
 
 /**
+ * @brief Tries to find a path from the given actor(-position) to a given target position
+ *
+ * Unlike Grid_CalcPathing, this function does not neccessarily calculate the TU values for
+ * all positions reachable from 'from'. Instead it tries to find the shortest/fastest path to
+ * the target position. There is no limit to maxTUs.
+ *
+ * @param[in] routes Pointer to client or server side routing table (clMap, svMap)
+ * @param[in] actorSize The size of thing to calc the move for (e.g. size=2 means 2x2).
+ * The plan is to have the 'origin' in 2x2 units in the bottom-left (towards the lower coordinates) corner of the 2x2 square.
+ * @param[in,out] path Pointer to client or server side pathing table (clMap, svMap)
+ * @param[in] from The position to start the calculation from.
+ * @param[in] maxTUs The maximum TUs away from 'from' to calculate move-information for
+ * @param[in] crouchingState Whether the actor is currently crouching, 1 is yes, 0 is no.
+ * @param[in] fb_list Forbidden list (entities are standing at those points)
+ * @param[in] fb_length Length of forbidden list
+ * @sa Grid_MoveMark
+ * @sa G_MoveCalc
+ * @sa CL_ConditionalMoveCalc
+ */
+void Grid_FindPath (const routing_t *routes, const actorSizeEnum_t actorSize, pathing_t *path, const pos3_t from, const pos3_t targetPos, byte crouchingState, int maxTUs, byte ** fb_list, int fb_length)
+{
+	int count;
+	priorityQueue_t pqueue;
+	pos4_t epos; /**< Extended position; includes crouching state */
+	pos3_t pos;
+	/* this is the position of the current actor- so the actor can stand in the cell it is in when pathfinding */
+	pos3_t excludeFromForbiddenList;
+
+	/* Confirm bounds */
+	assert((from[2]) < PATHFINDING_HEIGHT);
+	assert(crouchingState == 0 || crouchingState == 1);	/* s.a. ACTOR_MAX_STATES */
+
+	/* reset move data */
+	OBJSET(path->area,     ROUTING_NOT_REACHABLE);
+	OBJSET(path->areaFrom, ROUTING_NOT_REACHABLE);
+	path->fblist = fb_list;
+	path->fblength = fb_length;
+
+	/* Prepare exclusion of starting-location (i.e. this should be ent-pos or le-pos) in Grid_CheckForbidden */
+	VectorCopy(from, excludeFromForbiddenList);
+	/* set starting position to 0 TUs.*/
+	RT_AREA_POS(path, from, crouchingState) = 0;
+
+	PQueueInitialise(&pqueue, 1024);
+	Vector4Set(epos, from[0], from[1], from[2], crouchingState);
+	PQueuePush(&pqueue, epos, 0);
+
+	count = 0;
+	while (!PQueueIsEmpty(&pqueue)) {
+		int dir;
+		PQueuePop(&pqueue, epos);
+		VectorCopy(epos, pos);
+		count++;
+
+		/* if reaching that square already took too many TUs,
+		 * don't bother to reach new squares *from* there. */
+		const byte usedTUs = RT_AREA_POS(path, pos, crouchingState);
+		if (usedTUs >= maxTUs)
+			continue;
+
+		for (dir = 0; dir < PATHFINDING_DIRECTIONS; dir++) {
+			Step step;
+			/* Directions 12, 14, and 15 are currently undefined. */
+			if (dir == 12 || dir == 14 || dir == 15)
+				continue;
+			/* If this is a crouching or crouching move, forget it. */
+			if (dir == DIRECTION_STAND_UP || dir == DIRECTION_CROUCH)
+				continue;
+
+			if (!step.init(routes, pos, actorSize, crouchingState, dir))
+				continue;		/* either dir is irrelevant or something worse happened */
+
+			if (Grid_MoveMark(step, path)) {
+				/* Is this a better move into this cell? */
+				RT_AREA_TEST_POS(path, step.toPos, step.crouchingState);
+				if (RT_AREA_POS(path, step.toPos, step.crouchingState) <= step.TUsAfter) {
+					continue;	/* This move is not optimum. */
+				}
+
+				/* Test for forbidden (by other entities) areas. */
+				/* Do NOT check the forbiddenList. We might find a multi-turn path. */
+			//	if (Grid_CheckForbidden(excludeFromForbiddenList, step.actorSize, path, step.toPos[0], step.toPos[1], step.toPos[2])) {
+			//		continue;		/* That spot is occupied. */
+			//	}
+
+				/* Store move in pathing table. */
+				Grid_SetMoveData(path, step.toPos, step.crouchingState, step.TUsAfter, step.dir, step.fromPos[2]);
+
+				pos4_t dummy;
+				int dist = (int) VectorDist(step.toPos, targetPos);
+				Vector4Set(dummy, step.toPos[0], step.toPos[1], step.toPos[2], step.crouchingState);
+				PQueuePush(&pqueue, dummy, dist);
+			}
+		}
+	}
+	/* Com_Printf("Loop: %i", count); */
+	PQueueFree(&pqueue);
+}
+
+/**
  * @brief Caches the calculated move
  * @param[in] path Pointer to client or server side pathing table (clPathMap, svPathMap)
  * @sa AI_ActorThink
