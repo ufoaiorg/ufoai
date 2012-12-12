@@ -338,12 +338,11 @@ static void CL_Packet_f (void)
 static void CL_ConnectionlessPacket (dbuffer *msg)
 {
 	char s[512];
-	const char *c = Cmd_Argv(0);
-
 	NET_ReadStringLine(msg, s, sizeof(s));
 
 	Cmd_TokenizeString(s, false);
 
+	const char *c = Cmd_Argv(0);
 	Com_DPrintf(DEBUG_CLIENT, "server OOB: %s (%s)\n", c, Cmd_Args());
 
 	/* server connection */
