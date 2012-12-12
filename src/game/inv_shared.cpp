@@ -101,7 +101,8 @@ static int cacheCheckToInventory = INV_DOES_NOT_FIT;
 /**
  * @brief Will check if the item-shape is colliding with something else in the container-shape at position x/y.
  * @note The function expects an already rotated shape for itemShape. Use INVSH_ShapeRotate if needed.
- * @param[in] shape Pointer to 'uint32_t shape[SHAPE_BIG_MAX_HEIGHT]'
+ * @param[in] shape The shape of the container [SHAPE_BIG_MAX_HEIGHT]
+ * @param[in] itemShape The shape of the item [SHAPE_SMALL_MAX_HEIGHT]
  * @param[in] x The x value in the container (1 << x in the shape bitmask)
  * @param[in] y The y value in the container (SHAPE_BIG_MAX_HEIGHT is the max)
  */
@@ -458,6 +459,7 @@ invList_t *INVSH_SearchInInventory (const inventory_t* const i, const invDef_t *
  * @brief Searches if there is an item of the given type in a container.
  * @param[in] i Pointer to the inventory where we will search.
  * @param[in] container Container in the inventory.
+ * @param[in] item Look for this kind of item.
  * @return invList_t Pointer to the invList_t/item.
  */
 invList_t *INVSH_SearchInInventoryByItem (const inventory_t* const i, const invDef_t * container, const objDef_t *item)
@@ -747,7 +749,8 @@ const objDef_t* INVSH_HasReactionFireEnabledWeapon (const invList_t *invList)
 /**
  * @brief Will merge the second shape (=itemShape) into the first one (=big container shape) on the position x/y.
  * @note The function expects an already rotated shape for itemShape. Use INVSH_ShapeRotate if needed.
- * @param[in] shape Pointer to 'uint32_t shape[SHAPE_BIG_MAX_HEIGHT]'
+ * @param[in] shape The shape of the container [SHAPE_BIG_MAX_HEIGHT]'
+ * @param[in] itemShape The shape of the item [SHAPE_SMALL_MAX_HEIGHT]
  * @param[in] x The x value in the container (1 << x in the shape bitmask)
  * @param[in] y The y value in the container (SHAPE_BIG_MAX_HEIGHT is the max)
  */
