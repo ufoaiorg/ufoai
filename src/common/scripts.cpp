@@ -906,7 +906,7 @@ int Com_SetValue (void *base, const void *set, valueTypes_t type, int ofs, size_
 
 #ifdef DEBUG
 	if (b != Com_AlignPtr(b, type)) {
-		Com_Printf("Wrong alignment: %p %p type:%d size:"UFO_SIZE_T" - this code will CRASH on ARM CPU\n", b, Com_AlignPtr(b, type), type, vt_aligns[type]);
+		Com_Printf("Wrong alignment: %p %p type:%d size:" UFO_SIZE_T " - this code will CRASH on ARM CPU\n", b, Com_AlignPtr(b, type), type, vt_aligns[type]);
 		Sys_Backtrace();
 	}
 #endif
@@ -1104,7 +1104,7 @@ const char *Com_ValueToStr (const void *base, const valueTypes_t type, const int
 
 #ifdef DEBUG
 	if (b != Com_AlignPtr(b, type)) {
-		Com_Printf("Wrong alignment: %p %p type:%d size:"UFO_SIZE_T" - this code will CRASH on ARM CPU\n", b, Com_AlignPtr(b, type), type, vt_aligns[type]);
+		Com_Printf("Wrong alignment: %p %p type:%d size:" UFO_SIZE_T " - this code will CRASH on ARM CPU\n", b, Com_AlignPtr(b, type), type, vt_aligns[type]);
 		Sys_Backtrace();
 	}
 #endif
