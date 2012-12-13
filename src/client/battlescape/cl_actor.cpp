@@ -794,12 +794,9 @@ static bool CL_ActorTraceMove (const pos3_t to)
 	Grid_PosToVec(cl.mapData->routes, selActor->fieldSize, to, oldVec);
 	VectorCopy(to, pos);
 
-	Com_DPrintf(DEBUG_PATHING, "Starting pos: (%i, %i, %i).\n", pos[0], pos[1], pos[2]);
-
 	while ((dvec = Grid_MoveNext(&cl.pathMap, pos, crouchingState)) != ROUTING_UNREACHABLE) {
 		length = CL_ActorMoveLength(selActor, pos);
 		PosSubDV(pos, crouchingState, dvec); /* We are going backwards to the origin. */
-		Com_DPrintf(DEBUG_PATHING, "Next pos: (%i, %i, %i, %i) [%i].\n", pos[0], pos[1], pos[2], crouchingState, dvec);
 		Grid_PosToVec(cl.mapData->routes, selActor->fieldSize, pos, vec);
 		if (length > CL_ActorUsableTUs(selActor))
 			CL_ParticleSpawn("longRangeTracer", 0, vec, oldVec);
@@ -2230,12 +2227,8 @@ static void CL_DumpMoveMark_f (void)
 	if (!selActor)
 		return;
 
-	developer->integer |= DEBUG_PATHING;
-
 	CL_BuildForbiddenList();
 	Grid_CalcPathing(cl.mapData->routes, ACTOR_GET_FIELDSIZE(selActor), &cl.pathMap, truePos, crouchingState, MAX_ROUTE_TUS, forbiddenList, forbiddenListLength);
-
-	developer->integer ^= DEBUG_PATHING;
 
 	CL_ActorConditionalMoveCalc(selActor);
 	developer->integer = temp;
@@ -2309,7 +2302,7 @@ static void CL_DebugPath_f (void)
 
 	RT_DebugSpecial(cl.mapTiles, cl.mapData->routes, actorSize, x, y, dir, cl.leInlineModelList);
 
-#if 0
+#if 1
 	Grid_FindPath(cl.mapData->routes, actorSize, &cl.pathMap, selActor->pos, mousePos, 0, 100, NULL, NULL);
 	{
 //	pos3_t boxmin = {134,128,0};

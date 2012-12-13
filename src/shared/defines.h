@@ -63,8 +63,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define	DEBUG_RENDERER	0x0100
 #define	DEBUG_SOUND		0x0200
 #define DEBUG_EVENTSYS	0x0400
-/* note that pathing and routing are not included in DEBUG_ALL (too much output) */
-#define DEBUG_PATHING	0x0800
+/* note that routing is not included in DEBUG_ALL (too much output) */
 #define DEBUG_ROUTING	0x1000
 
 #define	NONE		-1
