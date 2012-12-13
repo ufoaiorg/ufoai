@@ -94,6 +94,7 @@
 		<Unit filename="..\..\src\game\g_mission.h" />
 		<Unit filename="..\..\src\game\g_morale.cpp" />
 		<Unit filename="..\..\src\game\g_move.cpp" />
+		<Unit filename="..\..\src\game\g_move.h" />
 		<Unit filename="..\..\src\game\g_phys.cpp" />
 		<Unit filename="..\..\src\game\g_reaction.cpp" />
 		<Unit filename="..\..\src\game\g_reaction.h" />
