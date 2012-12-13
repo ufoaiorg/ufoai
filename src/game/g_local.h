@@ -278,15 +278,24 @@ extern cvar_t *flood_waitdelay;
 
 extern cvar_t *g_difficulty;
 
-/* g_stats */
-void G_SendPlayerStats(const player_t *player);
+/* g_camera */
+void G_InitCamera(edict_t *ent, camera_type_t cameraType, float angle, bool rotate);
+edict_t *G_SpawnCamera(const vec3_t origin, int team, camera_type_t cameraType);
 
 /* g_morale */
 void G_MoraleBehaviour(int team);
+#define MORALE_RANDOM( mod )	( (mod) * (1.0 + 0.3*crand()) )
 
 /* g_phys */
 void G_PhysicsRun(void);
 void G_PhysicsStep(edict_t *ent);
+
+/* g_round */
+void G_CheckForceEndRound(void);
+void G_ClientEndRound(player_t *player);
+
+/* g_stats */
+void G_SendPlayerStats(const player_t *player);
 
 /* g_utils */
 uint32_t G_GetLevelFlagsFromPos(const pos3_t pos);
@@ -312,18 +321,9 @@ trace_t G_Trace(const vec3_t start, const vec3_t end, const edict_t * passent, i
 bool G_TestLineWithEnts(const vec3_t start, const vec3_t end);
 bool G_TestLine(const vec3_t start, const vec3_t end);
 
-/* g_camera */
-void G_InitCamera(edict_t *ent, camera_type_t cameraType, float angle, bool rotate);
-edict_t *G_SpawnCamera(const vec3_t origin, int team, camera_type_t cameraType);
-
 void G_CompleteRecalcRouting(void);
 void G_RecalcRouting(const char *model, const GridBox& box);
 void G_GenerateEntList(const char *entList[MAX_EDICTS]);
-
-#define MORALE_RANDOM( mod )	( (mod) * (1.0 + 0.3*crand()) )
-
-void G_CheckForceEndRound(void);
-void G_ClientEndRound(player_t *player);
 
 void G_ClientCommand(player_t *player);
 const char* G_GetPlayerName(int pnum);
