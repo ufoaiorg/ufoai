@@ -595,6 +595,7 @@ void Grid_CalcPathing (const routing_t *routes, const actorSizeEnum_t actorSize,
  * The plan is to have the 'origin' in 2x2 units in the bottom-left (towards the lower coordinates) corner of the 2x2 square.
  * @param[in,out] path Pointer to client or server side pathing table (clMap, svMap)
  * @param[in] from The position to start the calculation from.
+ * @param[in] targetPos The position where we want to end up.
  * @param[in] maxTUs The maximum TUs away from 'from' to calculate move-information for
  * @param[in] crouchingState Whether the actor is currently crouching, 1 is yes, 0 is no.
  * @param[in] fb_list Forbidden list (entities are standing at those points)
