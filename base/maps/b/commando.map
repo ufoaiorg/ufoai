@@ -2291,7 +2291,7 @@
 "origin" "80 80 112"
 "spawnflags" "258"
 "team" "1"
-"active" "0"
+"active" "1"
 "targetname" "basecam"
 }
 // entity 64
@@ -2300,7 +2300,7 @@
 "origin" "432 432 112"
 "spawnflags" "258"
 "team" "1"
-"active" "0"
+"active" "1"
 "targetname" "basecam"
 }
 // entity 65
