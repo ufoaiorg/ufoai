@@ -39,6 +39,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../shared/images.h"
 #include "../../common/common.h"
 #include <SDL_main.h>
+#include <cstddef>
 
 #define VERSION "0.2"
 
@@ -52,6 +53,7 @@ typedef enum {
 	ACTION_SKINEDIT,
 	ACTION_SKINNUM,
 	ACTION_CHECK,
+	ACTION_INFO,
 	ACTION_SKINFIX,
 	ACTION_GLCMDSREMOVE
 } ufoModelAction_t;
@@ -319,6 +321,7 @@ static void Usage (void)
 	Com_Printf(" -check                   perform general checks for all the models\n");
 	Com_Printf(" -skinedit <filename>     edit skin of a model\n");
 	Com_Printf(" -skinnum <filename>      edit the skin numbers of a model\n");
+	Com_Printf(" -info <filename>         show model information\n");
 	Com_Printf(" -overwrite               overwrite existing mdx files\n");
 	Com_Printf(" -s <float>               sets the smoothness value for normal-smoothing (in the range -1.0 to 1.0)\n");
 	Com_Printf(" -f <filename>            build tangentspace for the specified model file\n");
@@ -357,6 +360,14 @@ static void UM_Parameter (int argc, char **argv)
 			config.action = ACTION_SKINFIX;
 		} else if (Q_streq(argv[i], "-check")) {
 			config.action = ACTION_CHECK;
+		} else if (Q_streq(argv[i], "-info")) {
+			config.action = ACTION_INFO;
+			if (i + 1 == argc) {
+				Usage();
+				Exit(1);
+			}
+			Q_strncpyz(config.fileName, argv[i + 1], sizeof(config.fileName));
+			i++;
 		} else if (Q_streq(argv[i], "-skinedit")) {
 			config.action = ACTION_SKINEDIT;
 			if (i + 1 == argc) {
@@ -393,6 +404,10 @@ static void MD2HeaderCheck (const dMD2Model_t *md2, const char *fileName, int bu
 	const uint32_t numSkins = LittleLong(md2->num_skins);
 	const uint32_t numTris = LittleLong(md2->num_tris);
 	const uint32_t numVerts = LittleLong(md2->num_verts);
+	const uint32_t ident = LittleLong(md2->ident);
+
+	if (ident != IDALIASHEADER)
+		Com_Error(ERR_DROP, "%s is no valid md2 file", fileName);
 
 	if (version != MD2_ALIAS_VERSION)
 		Com_Error(ERR_DROP, "%s has wrong version number (%i should be %i)", fileName, version, MD2_ALIAS_VERSION);
@@ -422,9 +437,12 @@ static void MD2SkinEdit (const byte *buf, const char *fileName, int bufSize, voi
 	md2Path = (char *) copy + LittleLong(md2->ofs_skins);
 	numSkins = LittleLong(md2->num_skins);
 
+	Com_Printf("  \\ - skins %i\n", numSkins);
 	for (int i = 0; i < numSkins; i++) {
 		char *name = md2Path + i * MD2_MAX_SKINNAME;
-		Com_Printf("  \\ - skin %i: %s\n", i, name);
+		Com_Printf("  \\ - skin %i: %s\n", i + 1, name);
+		printf("  \\ - new skin: ");
+		fflush(stdout);
 		scanf(va("%%%is", MD2_MAX_SKINNAME), name);
 	}
 
@@ -440,6 +458,55 @@ static void MD2SkinEdit (const byte *buf, const char *fileName, int bufSize, voi
 	Mem_Free(copy);
 }
 
+static void MD2Info (const byte *buf, const char *fileName, int bufSize, void *userData)
+{
+	const dMD2Model_t *md2 = (const dMD2Model_t *)buf;
+
+	MD2HeaderCheck(md2, fileName, bufSize);
+
+	const uint32_t numSkins = LittleLong(md2->num_skins);
+	const uint32_t numVerts = LittleLong(md2->num_verts);
+	const uint32_t numST = LittleLong(md2->num_st);
+	const uint32_t numTris = LittleLong(md2->num_tris);
+	const uint32_t numGLCmds = LittleLong(md2->num_glcmds);
+	const uint32_t numFrames = LittleLong(md2->num_frames);
+	const uint32_t frameSize = LittleLong(md2->framesize);
+	const uint32_t skinHeight = LittleLong(md2->skinheight);
+	const uint32_t skinWidth = LittleLong(md2->skinwidth);
+	const uint32_t version = LittleLong(md2->version);
+
+	const uint32_t ofsST = LittleLong(md2->ofs_st);
+	const uint32_t ofsTris = LittleLong(md2->ofs_tris);
+	const uint32_t ofsFrames = LittleLong(md2->ofs_frames);
+	const uint32_t ofsGLCmds = LittleLong(md2->ofs_glcmds);
+	const uint32_t ofsEnd = LittleLong(md2->ofs_end);
+	const uint32_t ofsSkins = LittleLong(md2->ofs_skins);
+
+	const char *md2Path = (const char *) md2 + LittleLong(md2->ofs_skins);
+
+	Com_Printf("  \\ - skins %i\n", numSkins);
+	for (int i = 0; i < numSkins; i++) {
+		const char *name = md2Path + i * MD2_MAX_SKINNAME;
+		Com_Printf("    \\ -> skin %i: %s\n", i + 1, name);
+	}
+	Com_Printf("  \\ - vertices %i\n", numVerts);
+	Com_Printf("  \\ - texcoords %i\n", numST);
+	Com_Printf("  \\ - tris %i\n", numTris);
+	Com_Printf("  \\ - glcmds %i\n", numGLCmds);
+	Com_Printf("  \\ - frames %i\n", numFrames);
+	Com_Printf("  \\ - frameSize %i\n", frameSize);
+	Com_Printf("  \\ - skinHeight %i\n", skinHeight);
+	Com_Printf("  \\ - skinWidth %i\n", skinWidth);
+	Com_Printf("  \\ - version %i\n", version);
+	Com_Printf("  \\ - offsets\n");
+	Com_Printf("    \\ - ofsST %i\n", ofsST);
+	Com_Printf("    \\ - ofsTris %i\n", ofsTris);
+	Com_Printf("    \\ - ofsFrames %i\n", ofsFrames);
+	Com_Printf("    \\ - ofsGLCmds %i\n", ofsGLCmds);
+	Com_Printf("    \\ - ofsSkins %i\n", ofsSkins);
+	Com_Printf("    \\ - ofsEnd %i\n", ofsEnd);
+}
+
 static void MD2SkinNum (const byte *buf, const char *fileName, int bufSize, void *userData)
 {
 	byte *copy = Mem_Dup(byte, buf, bufSize);
@@ -449,16 +516,32 @@ static void MD2SkinNum (const byte *buf, const char *fileName, int bufSize, void
 
 	const uint32_t numSkins = LittleLong(md2->num_skins);
 
-	uint32_t ofsST = LittleLong(md2->ofs_st);
-	uint32_t ofsTris = LittleLong(md2->ofs_tris);
-	uint32_t ofsFrames = LittleLong(md2->ofs_frames);
-	uint32_t ofsGLCmds = LittleLong(md2->ofs_glcmds);
-	uint32_t ofsEnd = LittleLong(md2->ofs_end);
-	uint32_t ofsSkins = LittleLong(md2->ofs_skins);
+	const uint32_t ofsST = LittleLong(md2->ofs_st);
+	const uint32_t ofsTris = LittleLong(md2->ofs_tris);
+	const uint32_t ofsFrames = LittleLong(md2->ofs_frames);
+	const uint32_t ofsGLCmds = LittleLong(md2->ofs_glcmds);
+	const uint32_t ofsEnd = LittleLong(md2->ofs_end);
+	const uint32_t ofsSkins = LittleLong(md2->ofs_skins);
+
+	uint32_t moveOffset = ofsEnd;
+#define CHECKMAX(val) 	if ((val) > ofsSkins && (val) < moveOffset) moveOffset = (val);
+	CHECKMAX(ofsST);
+	CHECKMAX(ofsTris);
+	CHECKMAX(ofsFrames);
+	CHECKMAX(ofsGLCmds);
+	CHECKMAX(ofsSkins);
+#undef CHECKMAX
 
 	Com_Printf("  \\ - skins %i\n", numSkins);
 	int newSkins = 0;
+	printf("  \\ - new skin number: ");
+	fflush(stdout);
 	scanf("%i", &newSkins);
+	if (newSkins <= 0) {
+		Com_Printf("A model must have a skin\n");
+		Mem_Free(copy);
+		return;
+	}
 	if (newSkins > MD2_MAX_SKINS) {
 		Com_Printf("Only %i skins are allowed\n", MD2_MAX_SKINS);
 		Mem_Free(copy);
@@ -470,42 +553,42 @@ static void MD2SkinNum (const byte *buf, const char *fileName, int bufSize, void
 		return;
 	}
 
-	const int n = ofsEnd - ofsSkins;
-	void *to = md2 + ofsSkins;
-	const void * from = md2 + ofsSkins;
-
-	const int32_t deltaSkins = (newSkins > numSkins ? newSkins - numSkins : numSkins - newSkins);
+	const int32_t deltaSkins = newSkins - numSkins;
 	const int32_t offsetDelta = deltaSkins * MD2_MAX_SKINNAME;
-	if (ofsST > ofsSkins) {
-		ofsST += offsetDelta;
-	}
-	if (ofsTris > ofsSkins) {
-		ofsTris += offsetDelta;
-	}
-	if (ofsFrames > ofsSkins) {
-		ofsFrames += offsetDelta;
-	}
-	if (ofsGLCmds > ofsSkins) {
-		ofsGLCmds += offsetDelta;
-	}
-	ofsEnd += offsetDelta;
-	ofsSkins += offsetDelta;
-
-	md2->ofs_st = LittleLong(ofsST);
-	md2->ofs_tris = LittleLong(ofsTris);
-	md2->ofs_frames = LittleLong(ofsFrames);
-	md2->ofs_glcmds = LittleLong(ofsGLCmds);
-	md2->ofs_skins = LittleLong(ofsSkins);
-	md2->ofs_end = LittleLong(ofsEnd);
+	if (ofsST > ofsSkins)
+		md2->ofs_st = LittleLong(ofsST + offsetDelta);
+	if (ofsTris > ofsSkins)
+		md2->ofs_tris = LittleLong(ofsTris + offsetDelta);
+	if (ofsFrames > ofsSkins)
+		md2->ofs_frames = LittleLong(ofsFrames + offsetDelta);
+	if (ofsGLCmds > ofsSkins)
+		md2->ofs_glcmds = LittleLong(ofsGLCmds + offsetDelta);
+	md2->ofs_end = LittleLong(ofsEnd + offsetDelta);
 	md2->num_skins = LittleLong(newSkins);
 
 	Com_Printf("change to %i skins\n", newSkins);
-	if (newSkins > numSkins) {
+	if (deltaSkins > 0) {
 		copy = (byte*)Mem_ReAlloc(copy, md2->ofs_end);
 		md2 = (dMD2Model_t *)copy;
 	}
+
+	const int n = ofsEnd - moveOffset;
+	byte* from = copy + moveOffset;
+	byte *to = from + offsetDelta;
 	memmove(to, from, n);
 
+	if (deltaSkins > 0) {
+		char * md2Path = (char *) copy + LittleLong(md2->ofs_skins);
+		for (int i = numSkins; i < numSkins + deltaSkins; i++) {
+			char *name = md2Path + i * MD2_MAX_SKINNAME;
+			memset(name, 0, MD2_MAX_SKINNAME);
+			strcpy(name, ".none");
+			Com_Printf("  \\ - skin %i: %s\n", i + 1, name);
+			printf("  \\ - new skin: ");
+			fflush(stdout);
+			scanf(va("%%%is", MD2_MAX_SKINNAME), name);
+		}
+	}
 	qFILE md2ModelFile;
 	FS_OpenFile(fileName, &md2ModelFile, FILE_WRITE);
 	if (!md2ModelFile.f) {
@@ -798,6 +881,10 @@ int main (int argc, char **argv)
 
 	case ACTION_SKINNUM:
 		ModelWorker(MD2SkinNum, config.fileName, NULL);
+		break;
+
+	case ACTION_INFO:
+		ModelWorker(MD2Info, config.fileName, NULL);
 		break;
 
 	case ACTION_CHECK:
