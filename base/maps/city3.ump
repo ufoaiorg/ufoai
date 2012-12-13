@@ -186,6 +186,12 @@ tileset buildings
 		+bld_parking
 	}
 
+tileset tunnels
+	{
+		+street_h_9_a
+		+street_v_9_a
+	}
+
 /* map assemblies -------------------------------------------------*/
 
 assembly small_noufo
@@ -193,7 +199,8 @@ assembly small_noufo
 title		"_The outscirt of a big city."
 size "6 7"
 tileset buildings	"1 1"
-+common				"0 30"
+tileset tunnels		"0 1"
++common				"0 10"
 +common_a			"0 1"
 +common_b			"0 1"
 +junction_e			"0 1"
