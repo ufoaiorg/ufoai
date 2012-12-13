@@ -1181,8 +1181,6 @@ static void G_ClientReadCharacter (edict_t *ent)
 		ent->chr.score.experience[k] = gi.ReadLong();
 	for (k = 0; k < SKILL_NUM_TYPES; k++) /* new attributes */
 		ent->chr.score.skills[k] = gi.ReadByte();
-	for (k = 0; k < SKILL_NUM_TYPES + 1; k++)
-		ent->chr.score.initialSkills[k] = gi.ReadByte();
 	for (k = 0; k < KILLED_NUM_TYPES; k++)
 		ent->chr.score.kills[k] = gi.ReadShort();
 	for (k = 0; k < KILLED_NUM_TYPES; k++)

@@ -1252,8 +1252,6 @@ static void GAME_NetSendCharacter (dbuffer * buf, const character_t *chr)
 		NET_WriteLong(buf, chr->score.experience[j]);
 	for (j = 0; j < SKILL_NUM_TYPES; j++)
 		NET_WriteByte(buf, chr->score.skills[j]);
-	for (j = 0; j < SKILL_NUM_TYPES + 1; j++)
-		NET_WriteByte(buf, chr->score.initialSkills[j]);
 	for (j = 0; j < KILLED_NUM_TYPES; j++)
 		NET_WriteShort(buf, chr->score.kills[j]);
 	for (j = 0; j < KILLED_NUM_TYPES; j++)

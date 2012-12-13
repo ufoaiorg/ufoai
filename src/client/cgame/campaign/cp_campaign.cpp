@@ -66,11 +66,26 @@ typedef struct {
 	int HP;
 	int STUN;
 	int morale;
-	int maxHP;
 	woundInfo_t wounds;
 
 	chrScoreGlobal_t chrscore;
 } updateCharacter_t;
+
+/**
+ * @brief Updates the character skills after a mission.
+ * @param[in,out] chr Pointer to the character that should get the skills updated.
+ */
+void CP_UpdateCharacterSkills (character_t *chr)
+{
+	int i;
+	for (i = 0; i < SKILL_NUM_TYPES; ++i)
+		chr->score.skills[i] = std::min(MAX_SKILL, chr->score.initialSkills[i] +
+			static_cast<int>(pow(static_cast<float>(chr->score.experience[i]) / 100, 0.6f)));
+	/* Ensure that index for health-experience is correct. */
+	assert(i == SKILL_NUM_TYPES);
+	chr->maxHP = std::min(255, chr->score.initialSkills[i] +
+		static_cast<int>(pow(static_cast<float>(chr->score.experience[i]) / 100, 0.6f)));
+}
 
 /**
  * @brief Transforms the battlescape values to the character
@@ -81,6 +96,7 @@ void CP_UpdateCharacterData (linkedList_t *updateCharacters)
 	LIST_Foreach(updateCharacters, updateCharacter_t, c) {
 		employee_t *employee = E_GetEmployeeFromChrUCN(c->ucn);
 		character_t* chr;
+		bool fullHP;
 
 		if (!employee) {
 			Com_Printf("Warning: Could not get character with ucn: %i.\n", c->ucn);
@@ -88,18 +104,20 @@ void CP_UpdateCharacterData (linkedList_t *updateCharacters)
 		}
 
 		chr = &employee->chr;
-		chr->HP = std::min(c->HP, chr->maxHP);
+		fullHP = c->HP >= chr->maxHP;
 		chr->STUN = c->STUN;
 		chr->morale = c->morale;
-		chr->maxHP = c->maxHP;
 
 		memcpy(chr->wounds.treatmentLevel, c->wounds.treatmentLevel, sizeof(chr->wounds.treatmentLevel));
 
 		memcpy(chr->score.experience, c->chrscore.experience, sizeof(chr->score.experience));
-		memcpy(chr->score.skills, c->chrscore.skills, sizeof(chr->score.skills));
 		memcpy(chr->score.kills, c->chrscore.kills, sizeof(chr->score.kills));
 		memcpy(chr->score.stuns, c->chrscore.stuns, sizeof(chr->score.stuns));
 		chr->score.assignedMissions = c->chrscore.assignedMissions;
+		CP_UpdateCharacterSkills(chr);
+		/* If character returned unscratched and maxHP just went up due to experience
+		 * don't send him/her to the hospital */
+		chr->HP = (fullHP ? chr->maxHP : std::min(c->HP, chr->maxHP));
 	}
 }
 
@@ -127,15 +145,12 @@ void CP_ParseCharacterData (dbuffer *msg, linkedList_t **updateCharacters)
 		c.HP = NET_ReadShort(msg);
 		c.STUN = NET_ReadByte(msg);
 		c.morale = NET_ReadByte(msg);
-		c.maxHP = NET_ReadShort(msg);
 
 		for (j = 0; j < BODYPART_MAXTYPE; ++j)
 			c.wounds.treatmentLevel[j] = NET_ReadByte(msg);
 
 		for (j = 0; j < SKILL_NUM_TYPES + 1; j++)
 			c.chrscore.experience[j] = NET_ReadLong(msg);
-		for (j = 0; j < SKILL_NUM_TYPES; j++)
-			c.chrscore.skills[j] = NET_ReadByte(msg);
 		for (j = 0; j < KILLED_NUM_TYPES; j++)
 			c.chrscore.kills[j] = NET_ReadShort(msg);
 		for (j = 0; j < KILLED_NUM_TYPES; j++)

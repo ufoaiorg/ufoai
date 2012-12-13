@@ -870,6 +870,8 @@ static void AM_UpdateSurivorsAfterBattle (const autoMissionBattle_t *battle, str
 
 		for (expCount = ABILITY_NUM_TYPES; expCount < SKILL_NUM_TYPES; expCount++)
 			score->experience[expCount] += (int) (battleExperience * SKILL_AWARD_SCALE * frand());
+
+		CP_UpdateCharacterSkills(chr);
 	}
 }
 

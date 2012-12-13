@@ -36,7 +36,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @brief Determines the amount of XP earned by a given soldier for a given skill, based on the soldier's performance in the last mission.
  * @param[in] skill The skill for which to fetch the maximum amount of XP.
  * @param[in] ent Pointer to the character you want to get the earned experience for
- * @sa G_UpdateCharacterSkills
+ * @sa G_UpdateCharacterExperience
  * @sa G_GetMaxExperiencePerMission
  */
 static int G_GetEarnedExperience (abilityskills_t skill, edict_t *ent)
@@ -95,7 +95,7 @@ static int G_GetEarnedExperience (abilityskills_t skill, edict_t *ent)
 /**
  * @brief Determines the maximum amount of XP per skill that can be gained from any one mission.
  * @param[in] skill The skill for which to fetch the maximum amount of XP.
- * @sa G_UpdateCharacterSkills
+ * @sa G_UpdateCharacterExperience
  * @sa G_GetEarnedExperience
  * @note Explanation of the values here:
  * There is a maximum speed at which skills may rise over the course of 100 missions (the predicted career length of a veteran soldier).
@@ -105,7 +105,7 @@ static int G_GetEarnedExperience (abilityskills_t skill, edict_t *ent)
  * log x = log 20 / 0.6
  * x = 10 ^ (log 20 / 0.6)
  * x = 214
- * The division by 100 happens in G_UpdateCharacterSkills
+ * The division by 100 happens in G_UpdateCharacterExperience
  */
 static int G_CharacterGetMaxExperiencePerMission (const abilityskills_t skill)
 {
@@ -140,13 +140,13 @@ static int G_CharacterGetMaxExperiencePerMission (const abilityskills_t skill)
 }
 
 /**
- * @brief Updates character skills after a mission.
- * @param[in,out] ent Pointer to the character that should get the skills updated
+ * @brief Updates character experience after a mission.
+ * @param[in,out] ent Pointer to the character that should get the experience updated
  * @sa CP_UpdateCharacterStats
  * @sa G_UpdateCharacterScore
  * @sa G_UpdateHitScore
  */
-static void G_UpdateCharacterSkills (edict_t *ent)
+static void G_UpdateCharacterExperience (edict_t *ent)
 {
 	character_t *chr = &ent->chr;
 
@@ -166,20 +166,13 @@ static void G_UpdateCharacterSkills (edict_t *ent)
 		gainedXP = std::min(gainedXP, maxXP);
 		chr->score.experience[i] += gainedXP;
 		totalGainedXP += gainedXP;
-		chr->score.skills[i] = std::min(MAX_SKILL, chr->score.initialSkills[i] + (int) (pow((float) (chr->score.experience[i]) / 100, 0.6f)));
-		G_PrintStats("Soldier %s earned %d experience points in skill #%d (total experience: %d). It is now %d higher.",
-				chr->name, gainedXP, i, chr->score.experience[i], chr->score.skills[i] - chr->score.initialSkills[i]);
 	}
 
 	/* Health isn't part of abilityskills_t, so it needs to be handled separately. */
 	assert(i == SKILL_NUM_TYPES);	/**< We need to get sure that index for health-experience is correct. */
 	maxXP = G_CharacterGetMaxExperiencePerMission((abilityskills_t)i);
 	gainedXP = std::min(maxXP, totalGainedXP / 2);
-
 	chr->score.experience[i] += gainedXP;
-	chr->maxHP = std::min(255, chr->score.initialSkills[i] + (int) (pow((float) (chr->score.experience[i]) / 100, 0.6f)));
-	G_PrintStats("Soldier %s earned %d experience points in skill #%d (total experience: %d). It is now %d higher.",
-			chr->name, gainedXP, i, chr->score.experience[i], chr->maxHP - chr->score.initialSkills[i]);
 }
 
 /**
@@ -227,7 +220,6 @@ static void G_SendCharacterData (const edict_t* ent)
 	gi.WriteShort(ent->HP);
 	gi.WriteByte(ent->STUN);
 	gi.WriteByte(ent->morale);
-	gi.WriteShort(ent->chr.maxHP);
 
 	for (k = 0; k < BODYPART_MAXTYPE; ++k)
 		gi.WriteByte(ent->chr.wounds.woundLevel[k] + ent->chr.wounds.treatmentLevel[k]);
@@ -235,8 +227,6 @@ static void G_SendCharacterData (const edict_t* ent)
 	/** Scores @sa inv_shared.h:chrScoreGlobal_t */
 	for (k = 0; k < SKILL_NUM_TYPES + 1; k++)
 		gi.WriteLong(ent->chr.score.experience[k]);
-	for (k = 0; k < SKILL_NUM_TYPES; k++)
-		gi.WriteByte(ent->chr.score.skills[k]);
 	for (k = 0; k < KILLED_NUM_TYPES; k++)
 		gi.WriteShort(ent->chr.score.kills[k]);
 	for (k = 0; k < KILLED_NUM_TYPES; k++)
@@ -261,7 +251,7 @@ static void G_MatchSendResults (int team, bool nextmap)
 	/* Calculate new scores/skills for the soldiers. */
 	while ((ent = G_EdictsGetNextLivingActor(ent))) {
 		if (!G_IsAI(ent))
-			G_UpdateCharacterSkills(ent);
+			G_UpdateCharacterExperience(ent);
 		else if (ent->team == team)
 			attacker = ent;
 	}
