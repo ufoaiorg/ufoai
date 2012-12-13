@@ -2302,8 +2302,10 @@ static void CL_DebugPath_f (void)
 
 	RT_DebugSpecial(cl.mapTiles, cl.mapData->routes, actorSize, x, y, dir, cl.leInlineModelList);
 
-#if 1
-	Grid_FindPath(cl.mapData->routes, actorSize, &cl.pathMap, selActor->pos, mousePos, 0, 100, NULL, NULL);
+#if 0
+	bool found = Grid_FindPath(cl.mapData->routes, actorSize, &cl.pathMap, selActor->pos, mousePos, 0, 600, NULL, NULL);
+	if (found)
+		Com_Printf("found the path !\n");
 	{
 //	pos3_t boxmin = {134,128,0};
 //	pos3_t boxmax = {136,130,1};
