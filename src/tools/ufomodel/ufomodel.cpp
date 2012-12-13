@@ -179,7 +179,6 @@ void Com_Error (int code, const char *fmt, ...)
 	Exit(1);
 }
 
-
 /**
  * @brief Loads in a model for the given name
  * @param[in] name Filename relative to base dir and with extension (models/model.md2)
@@ -344,7 +343,7 @@ static void UM_Parameter (int argc, char **argv)
 			Q_strncpyz(config.inputName, argv[++i], sizeof(config.inputName));
 		} else if (Q_streq(argv[i], "-s") && (i + 1 < argc)) {
 			config.smoothness = strtod(argv[++i], NULL);
-			if (config.smoothness < -1.0 || config.smoothness > 1.0){
+			if (config.smoothness < -1.0 || config.smoothness > 1.0) {
 				Usage();
 				Exit(1);
 			}
@@ -403,21 +402,32 @@ static void MD2HeaderCheck (const dMD2Model_t *md2, const char *fileName, int bu
 
 static void MD2SkinEdit (const byte *buf, const char *fileName, int bufSize, void *userData)
 {
-	const char *md2Path;
 	uint32_t numSkins;
-	int i;
-	const dMD2Model_t *md2 = (const dMD2Model_t *)buf;
+	byte *const copy = Mem_Dup(byte, buf, bufSize);
+	dMD2Model_t *md2 = (dMD2Model_t *)copy;
+	char *md2Path;
 
 	MD2HeaderCheck(md2, fileName, bufSize);
 
-	md2Path = (const char *) md2 + LittleLong(md2->ofs_skins);
+	md2Path = (char *) copy + LittleLong(md2->ofs_skins);
 	numSkins = LittleLong(md2->num_skins);
 
-	for (i = 0; i < numSkins; i++) {
-		const char *name = md2Path + i * MD2_MAX_SKINNAME;
+	for (int i = 0; i < numSkins; i++) {
+		char *name = md2Path + i * MD2_MAX_SKINNAME;
 		Com_Printf("  \\ - skin %i: %s\n", i, name);
-		/** @todo: Implement this */
+		scanf(va("%%%is", MD2_MAX_SKINNAME), name);
 	}
+
+	qFILE md2ModelFile;
+	FS_OpenFile(fileName, &md2ModelFile, FILE_WRITE);
+	if (!md2ModelFile.f) {
+		Com_Printf("Error writing md2 file %s\n", fileName);
+		Mem_Free(copy);
+		return;
+	}
+	FS_Write(copy, bufSize, &md2ModelFile);
+	FS_CloseFile(&md2ModelFile);
+	Mem_Free(copy);
 }
 
 typedef void (*modelWorker_t) (const byte *buf, const char *fileName, int bufSize, void *userData);
