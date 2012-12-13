@@ -442,20 +442,19 @@ static void MD2SkinEdit (const byte *buf, const char *fileName, int bufSize, voi
 
 static void MD2SkinNum (const byte *buf, const char *fileName, int bufSize, void *userData)
 {
-	byte *const copy = Mem_Dup(byte, buf, bufSize);
+	byte *copy = Mem_Dup(byte, buf, bufSize);
 	dMD2Model_t *md2 = (dMD2Model_t *)copy;
 
 	MD2HeaderCheck(md2, fileName, bufSize);
 
-	uint32_t numSkins = LittleLong(md2->num_skins);
-#if 0
-	uint32_t ofsSkins = LittleLong(md2->ofs_skins);
+	const uint32_t numSkins = LittleLong(md2->num_skins);
+
 	uint32_t ofsST = LittleLong(md2->ofs_st);
 	uint32_t ofsTris = LittleLong(md2->ofs_tris);
 	uint32_t ofsFrames = LittleLong(md2->ofs_frames);
 	uint32_t ofsGLCmds = LittleLong(md2->ofs_glcmds);
 	uint32_t ofsEnd = LittleLong(md2->ofs_end);
-#endif
+	uint32_t ofsSkins = LittleLong(md2->ofs_skins);
 
 	Com_Printf("  \\ - skins %i\n", numSkins);
 	int newSkins = 0;
@@ -466,7 +465,46 @@ static void MD2SkinNum (const byte *buf, const char *fileName, int bufSize, void
 		return;
 	}
 
-	// TODO: update the offsets and memmove the data
+	if (newSkins == numSkins) {
+		Mem_Free(copy);
+		return;
+	}
+
+	const int n = ofsEnd - ofsSkins;
+	void *to = md2 + ofsSkins;
+	const void * from = md2 + ofsSkins;
+
+	const int32_t deltaSkins = (newSkins > numSkins ? newSkins - numSkins : numSkins - newSkins);
+	const int32_t offsetDelta = deltaSkins * MD2_MAX_SKINNAME;
+	if (ofsST > ofsSkins) {
+		ofsST += offsetDelta;
+	}
+	if (ofsTris > ofsSkins) {
+		ofsTris += offsetDelta;
+	}
+	if (ofsFrames > ofsSkins) {
+		ofsFrames += offsetDelta;
+	}
+	if (ofsGLCmds > ofsSkins) {
+		ofsGLCmds += offsetDelta;
+	}
+	ofsEnd += offsetDelta;
+	ofsSkins += offsetDelta;
+
+	md2->ofs_st = LittleLong(ofsST);
+	md2->ofs_tris = LittleLong(ofsTris);
+	md2->ofs_frames = LittleLong(ofsFrames);
+	md2->ofs_glcmds = LittleLong(ofsGLCmds);
+	md2->ofs_skins = LittleLong(ofsSkins);
+	md2->ofs_end = LittleLong(ofsEnd);
+	md2->num_skins = LittleLong(newSkins);
+
+	Com_Printf("change to %i skins\n", newSkins);
+	if (newSkins > numSkins) {
+		copy = (byte*)Mem_ReAlloc(copy, md2->ofs_end);
+		md2 = (dMD2Model_t *)copy;
+	}
+	memmove(to, from, n);
 
 	qFILE md2ModelFile;
 	FS_OpenFile(fileName, &md2ModelFile, FILE_WRITE);
@@ -475,7 +513,7 @@ static void MD2SkinNum (const byte *buf, const char *fileName, int bufSize, void
 		Mem_Free(copy);
 		return;
 	}
-	FS_Write(copy, bufSize, &md2ModelFile);
+	FS_Write(copy, md2->ofs_end, &md2ModelFile);
 	FS_CloseFile(&md2ModelFile);
 	Mem_Free(copy);
 }
