@@ -50,6 +50,7 @@ typedef enum {
 
 	ACTION_MDX,
 	ACTION_SKINEDIT,
+	ACTION_SKINNUM,
 	ACTION_CHECK,
 	ACTION_SKINFIX,
 	ACTION_GLCMDSREMOVE
@@ -317,6 +318,7 @@ static void Usage (void)
 	Com_Printf(" -glcmds                  remove the unused glcmds from md2 models\n");
 	Com_Printf(" -check                   perform general checks for all the models\n");
 	Com_Printf(" -skinedit <filename>     edit skin of a model\n");
+	Com_Printf(" -skinnum <filename>      edit the skin numbers of a model\n");
 	Com_Printf(" -overwrite               overwrite existing mdx files\n");
 	Com_Printf(" -s <float>               sets the smoothness value for normal-smoothing (in the range -1.0 to 1.0)\n");
 	Com_Printf(" -f <filename>            build tangentspace for the specified model file\n");
@@ -357,6 +359,14 @@ static void UM_Parameter (int argc, char **argv)
 			config.action = ACTION_CHECK;
 		} else if (Q_streq(argv[i], "-skinedit")) {
 			config.action = ACTION_SKINEDIT;
+			if (i + 1 == argc) {
+				Usage();
+				Exit(1);
+			}
+			Q_strncpyz(config.fileName, argv[i + 1], sizeof(config.fileName));
+			i++;
+		} else if (Q_streq(argv[i], "-skinnum")) {
+			config.action = ACTION_SKINNUM;
 			if (i + 1 == argc) {
 				Usage();
 				Exit(1);
@@ -417,6 +427,46 @@ static void MD2SkinEdit (const byte *buf, const char *fileName, int bufSize, voi
 		Com_Printf("  \\ - skin %i: %s\n", i, name);
 		scanf(va("%%%is", MD2_MAX_SKINNAME), name);
 	}
+
+	qFILE md2ModelFile;
+	FS_OpenFile(fileName, &md2ModelFile, FILE_WRITE);
+	if (!md2ModelFile.f) {
+		Com_Printf("Error writing md2 file %s\n", fileName);
+		Mem_Free(copy);
+		return;
+	}
+	FS_Write(copy, bufSize, &md2ModelFile);
+	FS_CloseFile(&md2ModelFile);
+	Mem_Free(copy);
+}
+
+static void MD2SkinNum (const byte *buf, const char *fileName, int bufSize, void *userData)
+{
+	byte *const copy = Mem_Dup(byte, buf, bufSize);
+	dMD2Model_t *md2 = (dMD2Model_t *)copy;
+
+	MD2HeaderCheck(md2, fileName, bufSize);
+
+	uint32_t numSkins = LittleLong(md2->num_skins);
+#if 0
+	uint32_t ofsSkins = LittleLong(md2->ofs_skins);
+	uint32_t ofsST = LittleLong(md2->ofs_st);
+	uint32_t ofsTris = LittleLong(md2->ofs_tris);
+	uint32_t ofsFrames = LittleLong(md2->ofs_frames);
+	uint32_t ofsGLCmds = LittleLong(md2->ofs_glcmds);
+	uint32_t ofsEnd = LittleLong(md2->ofs_end);
+#endif
+
+	Com_Printf("  \\ - skins %i\n", numSkins);
+	int newSkins = 0;
+	scanf("%i", &newSkins);
+	if (newSkins > MD2_MAX_SKINS) {
+		Com_Printf("Only %i skins are allowed\n", MD2_MAX_SKINS);
+		Mem_Free(copy);
+		return;
+	}
+
+	// TODO: update the offsets and memmove the data
 
 	qFILE md2ModelFile;
 	FS_OpenFile(fileName, &md2ModelFile, FILE_WRITE);
@@ -706,6 +756,10 @@ int main (int argc, char **argv)
 
 	case ACTION_SKINEDIT:
 		ModelWorker(MD2SkinEdit, config.fileName, NULL);
+		break;
+
+	case ACTION_SKINNUM:
+		ModelWorker(MD2SkinNum, config.fileName, NULL);
 		break;
 
 	case ACTION_CHECK:
