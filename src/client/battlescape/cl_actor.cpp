@@ -2310,13 +2310,12 @@ static void CL_DebugPath_f (void)
 	RT_DebugSpecial(cl.mapTiles, cl.mapData->routes, actorSize, x, y, dir, cl.leInlineModelList);
 
 #if 0
+	Grid_FindPath(cl.mapData->routes, actorSize, &cl.pathMap, selActor->pos, mousePos, 0, 100, NULL, NULL);
 	{
-	pos3_t boxmin = {134,128,0};
-	pos3_t boxmax = {136,130,1};
-	GridBox myBox;
-	myBox.setMins(boxmin);
-	myBox.setMaxs(boxmax);
-	Grid_RecalcBoxRouting(cl.mapTiles, cl.mapData->routes, myBox, cl.leInlineModelList);
+//	pos3_t boxmin = {134,128,0};
+//	pos3_t boxmax = {136,130,1};
+//	GridBox myBox(boxmin, boxmax);
+//	Grid_RecalcBoxRouting(cl.mapTiles, cl.mapData->routes, myBox, cl.leInlineModelList);
 	}
 #endif
 
