@@ -678,10 +678,11 @@ bool Grid_FindPath (const routing_t *routes, const actorSizeEnum_t actorSize, pa
 				int dist = (int) VectorDist(step.toPos, targetPos);
 				Vector4Set(dummy, step.toPos[0], step.toPos[1], step.toPos[2], step.crouchingState);
 				PQueuePush(&pqueue, dummy, dist);
-			}
-			if (VectorEqual(step.toPos, targetPos)) {
-				found = true;
-				break;
+
+				if (VectorEqual(step.toPos, targetPos)) {
+					found = true;
+					break;
+				}
 			}
 		}
 		if (found)
