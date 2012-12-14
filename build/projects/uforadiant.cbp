@@ -114,6 +114,7 @@
 			<Add option="-Wwrite-strings" />
 			<Add option="-I../../src/tools/radiant/libs" />
 			<Add option="-I../../src/tools/radiant/include" />
+			<Add option="-Wno-variadic-macros" />
 			<Add option="-D__GNUWIN32__" />
 			<Add option="-DWINVER=0x501" />
 		</Compiler>
@@ -121,12 +122,8 @@
 			<Add library="libjpeg" />
 		</Linker>
 		<Unit filename="..\..\src\shared\autoptr.h" />
-		<Unit filename="..\..\src\shared\entitiesdef.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\shared\parse.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
+		<Unit filename="..\..\src\shared\entitiesdef.cpp" />
+		<Unit filename="..\..\src\shared\parse.cpp" />
 		<Unit filename="..\..\src\tools\radiant\include\Bounded.h" />
 		<Unit filename="..\..\src\tools\radiant\include\VolumeIntersectionValue.h" />
 		<Unit filename="..\..\src\tools\radiant\include\cullable.h" />
@@ -181,6 +178,7 @@
 		<Unit filename="..\..\src\tools\radiant\include\shared.h" />
 		<Unit filename="..\..\src\tools\radiant\include\version.h" />
 		<Unit filename="..\..\src\tools\radiant\include\windowobserver.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\Instance.cpp" />
 		<Unit filename="..\..\src\tools\radiant\libs\archivelib.h" />
 		<Unit filename="..\..\src\tools\radiant\libs\bytestreamutils.h" />
 		<Unit filename="..\..\src\tools\radiant\libs\character.h" />
@@ -290,7 +288,6 @@
 		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\window\PersistentTransientWindow.h" />
 		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\window\TransientWindow.h" />
 		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\xorrectangle.h" />
-		<Unit filename="..\..\src\tools\radiant\libs\Instance.cpp" />
 		<Unit filename="..\..\src\tools\radiant\libs\imagelib.h" />
 		<Unit filename="..\..\src\tools\radiant\libs\instancelib.h" />
 		<Unit filename="..\..\src\tools\radiant\libs\maplib.h" />
@@ -489,27 +486,27 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\entity\keyobservers.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\entity\light\Light.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\entity\light\Light.h" />
-		<Unit filename="..\..\src\tools\radiant\radiant\entity\light\LightNode.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\entity\light\LightInstance.cpp" />
+		<Unit filename="..\..\src\tools\radiant\radiant\entity\light\LightNode.cpp" />
+		<Unit filename="..\..\src\tools\radiant\radiant\entity\model.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\entity\model\MiscModel.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\entity\model\MiscModel.h" />
-		<Unit filename="..\..\src\tools\radiant\radiant\entity\model\MiscModelNode.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\entity\model\MiscModelInstance.cpp" />
-		<Unit filename="..\..\src\tools\radiant\radiant\entity\particle\MiscParticle.cpp" />
-		<Unit filename="..\..\src\tools\radiant\radiant\entity\particle\MiscParticle.h" />
-		<Unit filename="..\..\src\tools\radiant\radiant\entity\particle\MiscParticleNode.cpp" />
-		<Unit filename="..\..\src\tools\radiant\radiant\entity\particle\MiscParticleNode.h" />
-		<Unit filename="..\..\src\tools\radiant\radiant\entity\particle\MiscParticleInstance.cpp" />
-		<Unit filename="..\..\src\tools\radiant\radiant\entity\particle\MiscParticleInstance.h" />
-		<Unit filename="..\..\src\tools\radiant\radiant\entity\sound\MiscSound.cpp" />
-		<Unit filename="..\..\src\tools\radiant\radiant\entity\sound\MiscSoundInstance.cpp" />
-		<Unit filename="..\..\src\tools\radiant\radiant\entity\sound\MiscSoundNode.cpp" />
-		<Unit filename="..\..\src\tools\radiant\radiant\entity\sound\MiscSound.h" />
-		<Unit filename="..\..\src\tools\radiant\radiant\entity\model.h" />
+		<Unit filename="..\..\src\tools\radiant\radiant\entity\model\MiscModelNode.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\entity\namedentity.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\entity\namekeys.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\entity\origin.h" />
+		<Unit filename="..\..\src\tools\radiant\radiant\entity\particle\MiscParticle.cpp" />
+		<Unit filename="..\..\src\tools\radiant\radiant\entity\particle\MiscParticle.h" />
+		<Unit filename="..\..\src\tools\radiant\radiant\entity\particle\MiscParticleInstance.cpp" />
+		<Unit filename="..\..\src\tools\radiant\radiant\entity\particle\MiscParticleInstance.h" />
+		<Unit filename="..\..\src\tools\radiant\radiant\entity\particle\MiscParticleNode.cpp" />
+		<Unit filename="..\..\src\tools\radiant\radiant\entity\particle\MiscParticleNode.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\entity\scale.h" />
+		<Unit filename="..\..\src\tools\radiant\radiant\entity\sound\MiscSound.cpp" />
+		<Unit filename="..\..\src\tools\radiant\radiant\entity\sound\MiscSound.h" />
+		<Unit filename="..\..\src\tools\radiant\radiant\entity\sound\MiscSoundInstance.cpp" />
+		<Unit filename="..\..\src\tools\radiant\radiant\entity\sound\MiscSoundNode.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\entity\targetable.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\entity\targetable.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\environment.cpp" />
@@ -615,7 +612,6 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\render\OpenGLRenderSystem.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\render\OpenGLRenderSystem.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\render\RenderStatistics.h" />
-		<Unit filename="..\..\src\tools\radiant\radiant\render\frontend\SphereRenderable.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\render\backend\OpenGLShader.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\render\backend\OpenGLShader.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\render\backend\OpenGLShaderCache.h" />
@@ -625,6 +621,7 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\render\backend\OpenGLStateLess.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\render\backend\OpenGLStateManager.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\render\backend\OpenGLStateMap.h" />
+		<Unit filename="..\..\src\tools\radiant\radiant\render\frontend\SphereRenderable.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\renderer.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\scenegraph\CompiledGraph.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\scenegraph\SceneGraphModule.cpp" />
@@ -717,8 +714,8 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\sidebar\entityinspector\SpawnflagsPropertyEditor.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\sidebar\entityinspector\Vector3PropertyEditor.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\sidebar\entitylist\EntityList.cpp" />
-		<Unit filename="..\..\src\tools\radiant\radiant\sidebar\entitylist\GraphTreeModel.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\sidebar\entitylist\EntityList.h" />
+		<Unit filename="..\..\src\tools\radiant\radiant\sidebar\entitylist\GraphTreeModel.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\sidebar\sidebar.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\sidebar\sidebar.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\sidebar\surfaceinspector\surfaceinspector.cpp" />
@@ -814,7 +811,6 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\ui\findshader\FindShader.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\ui\lightdialog\LightDialog.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\ui\lightdialog\LightDialog.h" />
-		<Unit filename="..\..\src\tools\radiant\radiant\ui\textureoverview\TextureOverviewDialog.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\ui\mainframe\SplitPaneLayout.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\ui\mainframe\mainframe.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\ui\mainframe\mainframe.h" />
@@ -848,6 +844,7 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\ui\scripteditor\UFOScriptEditor.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\ui\splash\Splash.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\ui\splash\Splash.h" />
+		<Unit filename="..\..\src\tools\radiant\radiant\ui\textureoverview\TextureOverviewDialog.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\ui\transform\TransformDialog.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\ui\transform\TransformDialog.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\ui\uimanager\MenuItem.cpp" />
