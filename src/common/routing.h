@@ -100,15 +100,9 @@ MACROS
 #define RT_FILLED(map, actorSize, x, y, z)			(RT_CEILING(map, actorSize, x, y, z) - RT_FLOOR(map, actorSize, x, y, z) < PATHFINDING_MIN_OPENING)
 
 /* area - Used by Grid_* only */
-#define RT_AREA(path, x, y, z, state)				((path)->area[(state)][(z)][(y)][(x)])
 #define RT_AREA_POS(path, p, state)					((path)->area[(state)][(p)[2]][(p)[1]][(p)[0]])
-#define RT_AREA_FROM(path, x, y, z, state)			((path)->areaFrom[(state)][(z)][(y)][(x)])
 #define RT_AREA_FROM_POS(path, p, state)			((path)->areaFrom[(state)][(p)[2]][(p)[1]][(p)[0]])
 #define RT_SAREA(path, x, y, z, state)				((path)->areaStored[(state)][(z)][(y)][(x)])
-#define RT_AREA_TEST(path, x, y, z, state)			assert((z) >= 0); assert((z) < PATHFINDING_HEIGHT);\
-														assert((y) >= 0); assert((y) < PATHFINDING_WIDTH);\
-														assert((x) >= 0); assert((x) < PATHFINDING_WIDTH);\
-														assert((state) == 0 || (state) == 1);
 #define RT_AREA_TEST_POS(path, p, state)			assert((p)[2] < PATHFINDING_HEIGHT);\
 														assert((state) == 0 || (state) == 1);
 														/* assuming p is a pos3_t, we don't need to check for p[n] >= 0 here because it's unsigned.
