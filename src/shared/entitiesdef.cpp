@@ -768,6 +768,8 @@ const char *ED_GetLastError (void)
 
 /**
  * @brief searches for the parsed key def
+ * @param classname The name, eg. "func_door"
+ * @param keyname The key we are looking for
  * @param abstract send abstract to find an abstract key with this name
  * @return NULL if the entity def or key def is not found. call ED_GetLastError to get a relevant message.
  */
@@ -779,6 +781,8 @@ const entityKeyDef_t *ED_GetKeyDef (const char *classname, const char *keyname, 
 
 /**
  * @brief searches for the parsed key def, when the entity def is known
+ * @param ed The list of keys for the entity
+ * @param keyname The key we are looking for
  * @param abstract send a nonzero value if the abstract (radiant - not in any block) version of the
  * key is required
  * @return NULL if the entity def or key def is not found. call ED_GetLastError to get a relevant message.
