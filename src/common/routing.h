@@ -111,7 +111,7 @@ MACROS
 														assert((state) == 0 || (state) == 1);
 #define RT_AREA_TEST_POS(path, p, state)			assert((p)[2] < PATHFINDING_HEIGHT);\
 														assert((state) == 0 || (state) == 1);
-														/* assuming p is a pos3_t, we don't need to check fo p[n] >= 0 here because it's unsigned.
+														/* assuming p is a pos3_t, we don't need to check for p[n] >= 0 here because it's unsigned.
 														 * also we don't need to check against PATHFINDING_WIDTH because it's always greater than a 'byte' type. */
 
 
