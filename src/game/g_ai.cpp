@@ -708,7 +708,7 @@ static float AI_FighterCalcActionScore (edict_t * ent, pos3_t to, aiAction_t * a
 		tu -= bestTime;
 	}
 
-	/* Try not to stand in dangerous terrain */
+	/* Try not to stand in dangerous terrain (eg. fireField) */
 	if (!AI_CheckPosition(ent))
 		bestActionScore -= SCORE_NOSAFE_POSITION_PENALTY;
 
