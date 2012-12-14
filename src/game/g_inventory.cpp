@@ -24,6 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "g_inventory.h"
 #include "g_client.h"
+#include "g_spawn.h"
 #include "g_vis.h"
 
 const equipDef_t *G_GetEquipDefByID (const char *equipID)

@@ -306,12 +306,6 @@ void G_PrintStats(const char *format, ...) __attribute__((format(__printf__, 1, 
 int G_TouchTriggers(edict_t *ent);
 int G_TouchSolids(edict_t *ent, float extend);
 void G_TouchEdicts(edict_t *ent, float extend);
-edict_t *G_Spawn(const char *classname = NULL);
-void G_SpawnSmokeField(const vec3_t vec, const char *particle, int rounds, vec_t radius);
-void G_SpawnFireField(const vec3_t vec, const char *particle, int rounds, int damage, vec_t radius);
-void G_SpawnStunSmokeField(const vec3_t vec, const char *particle, int rounds, int damage, vec_t radius);
-edict_t *G_SpawnParticle(const vec3_t origin, int spawnflags, const char *particle);
-edict_t *G_SpawnCamera(const vec3_t origin, int team, camera_type_t cameraType);
 void G_FreeEdict(edict_t *e);
 bool G_UseEdict(edict_t *ent, edict_t* activator);
 edict_t *G_GetEdictFromPos(const pos3_t pos, const entity_type_t type);
@@ -329,9 +323,7 @@ void G_ClientCommand(player_t *player);
 const char* G_GetPlayerName(int pnum);
 player_t* G_GetPlayerForTeam(int team);
 void G_SendStats(edict_t *ent) __attribute__((nonnull));
-edict_t *G_SpawnFloor(const pos3_t pos);
 
-void G_SpawnEntities(const char *mapname, bool day, const char *entities);
 bool G_RunFrame(void);
 
 #ifdef DEBUG
