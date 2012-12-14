@@ -675,7 +675,7 @@ bool Grid_FindPath (const routing_t *routes, const actorSizeEnum_t actorSize, pa
 				Grid_SetMoveData(path, step.toPos, step.crouchingState, step.TUsAfter, step.dir, step.fromPos[2]);
 
 				pos4_t dummy;
-				int dist = (int) VectorDist(step.toPos, targetPos);
+				int dist = step.TUsAfter + (int) (2 * VectorDist(step.toPos, targetPos));
 				Vector4Set(dummy, step.toPos[0], step.toPos[1], step.toPos[2], step.crouchingState);
 				PQueuePush(&pqueue, dummy, dist);
 
