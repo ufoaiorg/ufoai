@@ -64,7 +64,7 @@ typedef struct entityKeyRange_s {
 typedef struct entityKeyDef_s {
 	char	*name;		/**< the name of the key (eg classname) */
 	char	*desc;		/**< a description or value for the key (eg worldspawn) */
-	char	*defaultVal;/**< a defualt value that may be provided by ufo2map -fix */
+	char	*defaultVal;/**< a default value that may be provided by ufo2map -fix */
 	int		flags;		/**< optional, mandatory, etc, see @sa ED_OPTIONAL, ED_MANDATORY, ED_ABSTRACT */
 	int		vLen;		/**< for numeric types that may be vectors, the number of elements */
 	entityKeyRange_t **ranges; /**< store allowed values for this key. may be a different range for each element */
