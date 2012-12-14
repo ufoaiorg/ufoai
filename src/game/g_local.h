@@ -295,6 +295,7 @@ void G_CheckForceEndRound(void);
 void G_ClientEndRound(player_t *player);
 
 /* g_stats */
+void G_SendStats(edict_t *ent) __attribute__((nonnull));
 void G_SendPlayerStats(const player_t *player);
 
 /* g_utils */
@@ -322,7 +323,6 @@ void G_GenerateEntList(const char *entList[MAX_EDICTS]);
 void G_ClientCommand(player_t *player);
 const char* G_GetPlayerName(int pnum);
 player_t* G_GetPlayerForTeam(int team);
-void G_SendStats(edict_t *ent) __attribute__((nonnull));
 
 bool G_RunFrame(void);
 
