@@ -29,6 +29,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "routing.h"
 #include "pqueue.h"
 
+#define RT_AREA_POS(path, p, state)					((path)->area[(state)][(p)[2]][(p)[1]][(p)[0]])
+#define RT_AREA_FROM_POS(path, p, state)			((path)->areaFrom[(state)][(p)[2]][(p)[1]][(p)[0]])
+#define RT_SAREA(path, x, y, z, state)				((path)->areaStored[(state)][(z)][(y)][(x)])
+#define RT_AREA_TEST_POS(path, p, state)			assert((p)[2] < PATHFINDING_HEIGHT);\
+														assert((state) == 0 || (state) == 1);
+														/* assuming p is a pos3_t, we don't need to check for p[n] >= 0 here because it's unsigned.
+														 * also we don't need to check against PATHFINDING_WIDTH because it's always greater than a 'byte' type. */
+
 /** @note these are the TUs used to intentionally move in a given direction.  Falling not included. */
 static const int TUsUsed[] = {
 	TU_MOVE_STRAIGHT, /* E  */

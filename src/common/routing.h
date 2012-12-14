@@ -99,15 +99,6 @@ MACROS
 #define RT_CEILING_POS(map, actorSize, p)			map[(actorSize) - 1].ceil[(p)[2]][(p)[1]][(p)[0]]
 #define RT_FILLED(map, actorSize, x, y, z)			(RT_CEILING(map, actorSize, x, y, z) - RT_FLOOR(map, actorSize, x, y, z) < PATHFINDING_MIN_OPENING)
 
-/* area - Used by Grid_* only */
-#define RT_AREA_POS(path, p, state)					((path)->area[(state)][(p)[2]][(p)[1]][(p)[0]])
-#define RT_AREA_FROM_POS(path, p, state)			((path)->areaFrom[(state)][(p)[2]][(p)[1]][(p)[0]])
-#define RT_SAREA(path, x, y, z, state)				((path)->areaStored[(state)][(z)][(y)][(x)])
-#define RT_AREA_TEST_POS(path, p, state)			assert((p)[2] < PATHFINDING_HEIGHT);\
-														assert((state) == 0 || (state) == 1);
-														/* assuming p is a pos3_t, we don't need to check for p[n] >= 0 here because it's unsigned.
-														 * also we don't need to check against PATHFINDING_WIDTH because it's always greater than a 'byte' type. */
-
 
 /** @brief  These macros are meant to correctly convert from model units to QUANT units and back. */
 /* Surfaces used as floors are rounded up. */
