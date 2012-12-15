@@ -1120,6 +1120,10 @@ static void CL_ActorStandCrouch_f (void)
 	if (!CL_ActorCheckAction(selActor))
 		return;
 
+	/* In case of standing up also check the headroom */
+	if (LE_IsCrouched(selActor) && !RT_CanActorStandHere(cl.mapData->routes, selActor->fieldSize, selActor->pos))
+		return;
+
 	/* Check if we should even try to send this command (no TUs left or). */
 	if (CL_ActorUsableTUs(selActor) >= TU_CROUCH || CL_ActorReservedTUs(selActor, RES_CROUCH) >= TU_CROUCH) {
 		/* send a request to toggle crouch to the server */
