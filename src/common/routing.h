@@ -139,6 +139,7 @@ int RT_CheckCell(mapTiles_t *mapTiles, routing_t *routes, const int actorSize, c
 void RT_UpdateConnectionColumn(mapTiles_t *mapTiles, routing_t *routes, const int actorSize, const int x, const int y, const int dir, const char **list);
 bool RT_AllCellsBelowAreFilled(const routing_t *routes, const int actorSize, const pos3_t pos);
 void RT_GetMapSize(mapTiles_t *mapTiles, vec3_t map_min, vec3_t map_max);
+bool RT_CanActorStandHere(const routing_t *routes, const int actorSize, const pos3_t pos);
 
 
 /*

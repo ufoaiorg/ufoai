@@ -259,6 +259,14 @@ void RT_DumpWholeMap (mapTiles_t *mapTiles, const routing_t *routes)
 }
 #endif
 
+bool RT_CanActorStandHere (const routing_t *routes, const int actorSize, const pos3_t pos)
+{
+	if (RT_CEILING_POS(routes, actorSize, pos) - RT_FLOOR_POS(routes, actorSize, pos) >= PLAYER_STANDING_HEIGHT)
+		return true;
+	else
+		return false;
+}
+
 /**
  * @brief Calculate the map size via model data and store grid size
  * in map_min and map_max. This is done with every new map load
