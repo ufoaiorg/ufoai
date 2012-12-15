@@ -25,8 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef COMMON_ROUTING_H
-#define COMMON_ROUTING_H
+#pragma once
 
 /*==============================================================
 GLOBAL TYPES
@@ -153,5 +152,3 @@ void RT_DumpWholeMap(mapTiles_t *mapTiles, const routing_t *routes);
 int RT_DebugSpecial(mapTiles_t *mapTiles, routing_t *routes, const int actorSize, const int x, const int y, const int dir, const char **list);
 #endif
 void RT_WriteCSVFiles(const routing_t *routes, const char* baseFilename, const ipos3_t mins, const ipos3_t maxs);
-
-#endif
