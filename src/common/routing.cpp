@@ -259,6 +259,9 @@ void RT_DumpWholeMap (mapTiles_t *mapTiles, const routing_t *routes)
 }
 #endif
 
+/**
+ * @brief Check if an actor can stand(up) in the cell given by pos
+ */
 bool RT_CanActorStandHere (const routing_t *routes, const int actorSize, const pos3_t pos)
 {
 	if (RT_CEILING_POS(routes, actorSize, pos) - RT_FLOOR_POS(routes, actorSize, pos) >= PLAYER_STANDING_HEIGHT)
