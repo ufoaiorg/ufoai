@@ -25,6 +25,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef E_MAIN_H_
 #define E_MAIN_H_
 
+class dbuffer;
+
 /** @brief CL_ParseEvent timers and vars */
 typedef struct eventTiming_s {
 	int nextTime;	/**< time when the next event should be executed */
