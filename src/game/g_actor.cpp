@@ -485,7 +485,7 @@ bool G_ActorDieOrStun (edict_t * ent, edict_t *attacker)
 		ent->solid = SOLID_NOT;
 
 	/* send death */
-	G_EventActorDie(ent);
+	G_EventActorDie(ent, attacker != NULL);
 
 	/* handle inventory - drop everything but the armour to the floor */
 	G_InventoryToFloor(ent);

@@ -23,7 +23,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "../../../../client.h"
-#include "../../../cl_actor.h"
 #include "../../../cl_localentity.h"
 #include "e_event_invadd.h"
 
@@ -112,7 +111,7 @@ void CL_InvAdd (const eventRegister_t *self, dbuffer *msg)
 	switch (le->type) {
 	case ET_ACTOR:
 	case ET_ACTOR2x2:
-		if (le == selActor)
+		if (LE_IsSelected(le))
 			Cmd_ExecuteString("hud_updateactorload");
 		LE_SetThink(le, LET_StartIdle);
 		break;

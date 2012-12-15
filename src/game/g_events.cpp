@@ -75,11 +75,12 @@ void G_EventActorTurn (const edict_t* ent)
  * @brief Announce the actor die event for the clients that are seeing the actor
  * @param[in] ent The actor that is dying
  */
-void G_EventActorDie (const edict_t* ent)
+void G_EventActorDie (const edict_t* ent, bool attacker)
 {
 	G_EventAdd(G_VisToPM(ent->visflags), EV_ACTOR_DIE, ent->number);
 	gi.WriteShort(ent->state);
 	gi.WriteByte(ent->pnum);
+	gi.WriteByte(attacker);
 	G_EventEnd();
 }
 

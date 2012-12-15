@@ -39,7 +39,7 @@ typedef unsigned int playermask_t;
 
 void G_EventActorAdd(playermask_t playerMask, const edict_t *ent);
 void G_EventActorAppear(playermask_t playerMask, const edict_t *check, const edict_t *ent);
-void G_EventActorDie(const edict_t* ent);
+void G_EventActorDie(const edict_t* ent, bool attacker);
 void G_EventActorFall(const edict_t* ent);
 void G_EventActorRevitalise(const edict_t* ent);
 void G_EventActorSendReservations(const edict_t *ent);

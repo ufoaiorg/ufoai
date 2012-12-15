@@ -48,9 +48,9 @@ int CL_ActorDieTime (const struct eventRegister_s *self, dbuffer *msg, eventTimi
 void CL_ActorDie (const eventRegister_t *self, dbuffer *msg)
 {
 	le_t *le;
-	int entnum, state, playerNum;
+	int entnum, state, playerNum, attacker;
 
-	NET_ReadFormat(msg, self->formatString, &entnum, &state, &playerNum);
+	NET_ReadFormat(msg, self->formatString, &entnum, &state, &playerNum, &attacker);
 
 	/* get les */
 	le = LE_Get(entnum);
@@ -92,6 +92,8 @@ void CL_ActorDie (const eventRegister_t *self, dbuffer *msg)
 				char tmpbuf[128];
 				if (LE_IsStunned(le)) {
 					Com_sprintf(tmpbuf, lengthof(tmpbuf), _("%s was stunned\n"), chr->name);
+				} else if (!attacker) {
+					Com_sprintf(tmpbuf, lengthof(tmpbuf), _("%s has died\n"), chr->name);
 				} else {
 					Com_sprintf(tmpbuf, lengthof(tmpbuf), _("%s was killed\n"), chr->name);
 				}
@@ -103,24 +105,32 @@ void CL_ActorDie (const eventRegister_t *self, dbuffer *msg)
 		case (TEAM_CIVILIAN):
 			if (LE_IsStunned(le))
 				HUD_DisplayMessage(_("A civilian was stunned."));
+			else if (!attacker)
+				HUD_DisplayMessage(_("A civilian has died."));
 			else
 				HUD_DisplayMessage(_("A civilian was killed."));
 			break;
 		case (TEAM_ALIEN):
 			if (LE_IsStunned(le))
 				HUD_DisplayMessage(_("An alien was stunned."));
+			else if (!attacker)
+				HUD_DisplayMessage(_("An alien has died."));
 			else
 				HUD_DisplayMessage(_("An alien was killed."));
 			break;
 		case (TEAM_PHALANX):
 			if (LE_IsStunned(le))
 				HUD_DisplayMessage(_("A soldier was stunned."));
+			else if (!attacker)
+				HUD_DisplayMessage(_("A soldier has died."));
 			else
 				HUD_DisplayMessage(_("A soldier was killed."));
 			break;
 		default:
 			if (LE_IsStunned(le))
 				HUD_DisplayMessage(va(_("A member of team %i was stunned."), le->team));
+			else if (!attacker)
+				HUD_DisplayMessage(va(_("A member of team %i has died."), le->team));
 			else
 				HUD_DisplayMessage(va(_("A member of team %i was killed."), le->team));
 			break;
