@@ -34,6 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "g_inventory.h"
 #include "g_mission.h"
 #include "g_reaction.h"
+#include "g_trigger.h"
 #include "g_vis.h"
 #include "../shared/parse.h"
 

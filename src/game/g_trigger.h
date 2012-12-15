@@ -29,3 +29,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #pragma once
 
 #include "g_local.h"
+
+bool G_TriggerIsInList(edict_t *self, edict_t *activator);
+void G_TriggerAddToList(edict_t *self, edict_t *activator);
+bool G_TriggerRemoveFromList(edict_t *self, edict_t *activator);
+edict_t* G_TriggerSpawn(edict_t *owner);
+void Think_NextMapTrigger(edict_t *self);
+void SP_trigger_nextmap(edict_t *ent);
+bool Touch_HurtTrigger(edict_t *self, edict_t *activator);
+void SP_trigger_hurt(edict_t *ent);
+void SP_trigger_touch(edict_t *ent);
+void SP_trigger_rescue(edict_t *ent);

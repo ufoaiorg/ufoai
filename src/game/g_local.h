@@ -334,19 +334,6 @@ void G_InvList_f(const player_t *player);
 void G_ServerCommand(void);
 bool SV_FilterPacket(const char *from);
 
-/* g_trigger.c */
-edict_t* G_TriggerSpawn(edict_t *owner);
-bool G_TriggerRemoveFromList(edict_t *self, edict_t *activator);
-bool G_TriggerIsInList(edict_t *self, edict_t *activator);
-void G_TriggerAddToList(edict_t *self, edict_t *activator);
-void SP_trigger_nextmap(edict_t *ent);
-void SP_trigger_hurt(edict_t *ent);
-void SP_trigger_touch(edict_t *ent);
-void SP_trigger_rescue(edict_t *ent);
-
-bool Touch_HurtTrigger(edict_t *self, edict_t *activator);
-void Think_NextMapTrigger(edict_t *self);
-
 /** Functions to handle single edicts, trying to encapsulate edict->pos in the first place. */
 void G_EdictCalcOrigin(edict_t *ent);
 void G_EdictSetOrigin(edict_t *ent, const pos3_t newPos);
