@@ -1647,7 +1647,7 @@ void RT_WriteCSVFiles (const routing_t *routes, const char* baseFilename, const 
  * @param[in] dir The direction to test for a connection through
  * @param[in] list The local models list (a local model has a name starting with * followed by the model number)
  */
-int RT_DebugSpecial (mapTiles_t *mapTiles, routing_t * routes, const int actorSize, const int x, const int y, const int dir, const char **list)
+int RT_DebugSpecial (mapTiles_t *mapTiles, routing_t *routes, const int actorSize, const int x, const int y, const int dir, const char **list)
 {
 	int z = 0; /**< The current z value that we are testing. */
 	int new_z; /**< The last z value processed by the tracing function.  */
@@ -1666,4 +1666,32 @@ int RT_DebugSpecial (mapTiles_t *mapTiles, routing_t * routes, const int actorSi
 	new_z = RT_UpdateConnection(&rtd, x, y, ax, ay, z, dir);
 	return new_z;
 }
+
+/**
+ * @brief display pathfinding info to the console. Also useful to
+ * directly use the debugger on some vital pathfinding functions.
+ * Will probably be removed for the release.
+ */
+void RT_DebugPathDisplay (routing_t *routes, actorSizeEnum_t actorSize, int x, int y, int z)
+{
+	Com_Printf("data at cursor XYZ(%i, %i, %i) Floor(%i) Ceiling(%i)\n", x, y, z,
+		RT_FLOOR(routes, actorSize, x, y, z),
+		RT_CEILING(routes, actorSize, x, y, z) );
+	Com_Printf("connections ortho: (PX=%i, NX=%i, PY=%i, NY=%i))\n",
+		RT_CONN_PX(routes, actorSize, x, y, z),		/* dir = 0 */
+		RT_CONN_NX(routes, actorSize, x, y, z),		/* 1 */
+		RT_CONN_PY(routes, actorSize, x, y, z),		/* 2 */
+		RT_CONN_NY(routes, actorSize, x, y, z) );	/* 3 */
+	Com_Printf("connections diago: (PX_PY=%i, NX_NY=%i, NX_PY=%i, PX_NY=%i))\n",
+		RT_CONN_PX_PY(routes, actorSize, x, y, z),		/* dir = 4 */
+		RT_CONN_NX_NY(routes, actorSize, x, y, z),		/* 5 */
+		RT_CONN_NX_PY(routes, actorSize, x, y, z),		/* 6 */
+		RT_CONN_PX_NY(routes, actorSize, x, y, z) );	/* 7 */
+	Com_Printf("stepup ortho: (PX=%i, NX=%i, PY=%i, NY=%i))\n",
+		RT_STEPUP_PX(routes, actorSize, x, y, z),		/* dir = 0 */
+		RT_STEPUP_NX(routes, actorSize, x, y, z),		/* 1 */
+		RT_STEPUP_PY(routes, actorSize, x, y, z),		/* 2 */
+		RT_STEPUP_NY(routes, actorSize, x, y, z) );		/* 3 */
+}
+
 #endif

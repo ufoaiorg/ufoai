@@ -2265,33 +2265,6 @@ static void CL_DumpTUs_f (void)
 	Com_Printf("TUs at (%i, %i, %i) = %i\n", pos[0], pos[1], pos[2], Grid_MoveLength(&cl.pathMap, pos, crouchingState, false));
 }
 
-/**
- * @brief display pathfinding info to the console. Also useful to
- * directly use the debugger on some vital pathfinding functions.
- * Will probably be removed for the release.
- */
-static void CL_DebugPathDisplay (actorSizeEnum_t actorSize, int x, int y, int z)
-{
-	Com_Printf("data at cursor XYZ(%i, %i, %i) Floor(%i) Ceiling(%i)\n", x, y, z,
-		RT_FLOOR(cl.mapData->routes, actorSize, x, y, z),
-		RT_CEILING(cl.mapData->routes, actorSize, x, y, z) );
-	Com_Printf("connections ortho: (PX=%i, NX=%i, PY=%i, NY=%i))\n",
-		RT_CONN_PX(cl.mapData->routes, actorSize, x, y, z),		/* dir = 0 */
-		RT_CONN_NX(cl.mapData->routes, actorSize, x, y, z),		/* 1 */
-		RT_CONN_PY(cl.mapData->routes, actorSize, x, y, z),		/* 2 */
-		RT_CONN_NY(cl.mapData->routes, actorSize, x, y, z) );	/* 3 */
-	Com_Printf("connections diago: (PX_PY=%i, NX_NY=%i, NX_PY=%i, PX_NY=%i))\n",
-		RT_CONN_PX_PY(cl.mapData->routes, actorSize, x, y, z),		/* dir = 4 */
-		RT_CONN_NX_NY(cl.mapData->routes, actorSize, x, y, z),		/* 5 */
-		RT_CONN_NX_PY(cl.mapData->routes, actorSize, x, y, z),		/* 6 */
-		RT_CONN_PX_NY(cl.mapData->routes, actorSize, x, y, z) );	/* 7 */
-	Com_Printf("stepup ortho: (PX=%i, NX=%i, PY=%i, NY=%i))\n",
-		RT_STEPUP_PX(cl.mapData->routes, actorSize, x, y, z),		/* dir = 0 */
-		RT_STEPUP_NX(cl.mapData->routes, actorSize, x, y, z),		/* 1 */
-		RT_STEPUP_PY(cl.mapData->routes, actorSize, x, y, z),		/* 2 */
-		RT_STEPUP_NY(cl.mapData->routes, actorSize, x, y, z) );		/* 3 */
-}
-
 static void CL_DebugPath_f (void)
 {
 	const actorSizeEnum_t actorSize = ACTOR_SIZE_NORMAL;
@@ -2318,7 +2291,7 @@ static void CL_DebugPath_f (void)
 	}
 #endif
 
-	CL_DebugPathDisplay(actorSize, x, y, z);
+	RT_DebugPathDisplay(cl.mapData->routes, actorSize, x, y, z);
 
 }
 #endif
