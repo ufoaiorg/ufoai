@@ -23,13 +23,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "../../../../client.h"
+#include "e_event_actorappear.h"
 #include "../../../cl_localentity.h"
 #include "../../../cl_ugv.h"
 #include "../../../cl_actor.h"
 #include "../../../cl_hud.h"
 #include "../../../../cgame/cl_game.h"
 #include "../../../cl_particle.h"
-#include "e_event_actorappear.h"
 #include "../../../../../common/grid.h"
 
 /**
