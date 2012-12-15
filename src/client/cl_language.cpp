@@ -41,9 +41,9 @@ static memPool_t* cl_msgidPool;
  * pointing to the po file content to not waste memory for our long texts.
  */
 typedef struct msgid_s {
-	const char *id;	/**< the msgid id used for referencing via *msgid:<id> */
-	const char *text;	/**< the pointer to the po file */
-	struct msgid_s *hash_next;			/**< hash map next pointer in case of collision */
+	const char *id;				/**< the msgid id used for referencing via *msgid: 'id' */
+	const char *text;			/**< the pointer to the po file */
+	struct msgid_s *hash_next;	/**< hash map next pointer in case of collision */
 } msgid_t;
 
 static msgid_t msgIDs[MAX_MSGIDS];
