@@ -116,6 +116,7 @@
 		<Unit filename="..\..\src\common\unzip.cpp" />
 		<Unit filename="..\..\src\common\unzip.h" />
 		<Unit filename="..\..\src\game\chr_shared.cpp" />
+		<Unit filename="..\..\src\game\game.h" />
 		<Unit filename="..\..\src\game\inv_shared.cpp" />
 		<Unit filename="..\..\src\game\q_shared.cpp" />
 		<Unit filename="..\..\src\ports\windows\ufo.rc">
