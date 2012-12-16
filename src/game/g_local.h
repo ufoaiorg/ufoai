@@ -298,31 +298,7 @@ void G_ClientEndRound(player_t *player);
 void G_SendStats(edict_t *ent) __attribute__((nonnull));
 void G_SendPlayerStats(const player_t *player);
 
-/* g_utils */
-uint32_t G_GetLevelFlagsFromPos(const pos3_t pos);
-edict_t *G_FindRadius(edict_t *from, const vec3_t org, float rad, entity_type_t type = ET_NULL);
-const char* G_GetWeaponNameForFiredef(const fireDef_t *fd);
-void G_PrintActorStats(const edict_t *victim, const edict_t *attacker, const fireDef_t *fd);
-void G_PrintStats(const char *format, ...) __attribute__((format(__printf__, 1, 2)));
-int G_TouchTriggers(edict_t *ent);
-int G_TouchSolids(edict_t *ent, float extend);
-void G_TouchEdicts(edict_t *ent, float extend);
-void G_FreeEdict(edict_t *e);
-bool G_UseEdict(edict_t *ent, edict_t* activator);
-edict_t *G_GetEdictFromPos(const pos3_t pos, const entity_type_t type);
-edict_t *G_GetEdictFromPosExcluding(const pos3_t pos, const int n, ...);
-void G_TakeDamage(edict_t *ent, int damage);
-trace_t G_Trace(const vec3_t start, const vec3_t end, const edict_t * passent, int contentmask);
-bool G_TestLineWithEnts(const vec3_t start, const vec3_t end);
-bool G_TestLine(const vec3_t start, const vec3_t end);
-
-void G_CompleteRecalcRouting(void);
-void G_RecalcRouting(const char *model, const GridBox& box);
-void G_GenerateEntList(const char *entList[MAX_EDICTS]);
-
 void G_ClientCommand(player_t *player);
-const char* G_GetPlayerName(int pnum);
-player_t* G_GetPlayerForTeam(int team);
 
 bool G_RunFrame(void);
 

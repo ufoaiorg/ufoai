@@ -24,6 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "g_local.h"
 #include "g_spawn.h"
+#include "g_utils.h"
 #include "g_vis.h"
 
 static bool G_CameraUse (edict_t *self, edict_t *activator)

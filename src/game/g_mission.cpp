@@ -33,6 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "g_inventory.h"
 #include "g_match.h"
 #include "g_spawn.h"
+#include "g_utils.h"
 
 void G_MissionAddVictoryMessage (const char *message)
 {

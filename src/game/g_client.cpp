@@ -45,6 +45,7 @@
 #include "g_match.h"
 #include "g_move.h"
 #include "g_reaction.h"
+#include "g_utils.h"
 #include "g_vis.h"
 
 static chrScoreMission_t scoreMission[MAX_EDICTS];
