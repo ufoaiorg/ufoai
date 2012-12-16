@@ -304,9 +304,6 @@ void G_ClientEndRound(player_t *player);
 void G_SendStats(edict_t *ent) __attribute__((nonnull));
 void G_SendPlayerStats(const player_t *player);
 
-bool G_RunFrame(void);
-
-
 /* g_svcmds.c */
 void G_ServerCommand(void);
 bool SV_FilterPacket(const char *from);

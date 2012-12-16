@@ -294,6 +294,86 @@ static void G_Shutdown (void)
 	Com_Printf("Used inventory slots in game on shutdown: %i\n", game.i.GetUsedSlots(&game.i));
 }
 
+/**
+ * @brief If password has changed, update sv_needpass cvar as needed
+ */
+static void CheckNeedPass (void)
+{
+	if (password->modified) {
+		const char *need = "0";
+		password->modified = false;
+
+		if (password->string[0] != '\0' && Q_strcasecmp(password->string, "none"))
+			need = "1";
+
+		gi.Cvar_Set("sv_needpass", need);
+	}
+}
+
+static void G_SendBoundingBoxes (void)
+{
+	if (sv_send_edicts->integer) {
+		edict_t *ent = G_EdictsGetFirst();	/* skip the world */
+		while ((ent = G_EdictsGetNextInUse(ent)))
+			G_EventSendEdict(ent);
+	}
+}
+
+/**
+ * @sa SV_RunGameFrame
+ * @sa G_MatchEndTrigger
+ * @sa AI_Run
+ * @return true if game reaches its end - false otherwise
+ */
+static bool G_RunFrame (void)
+{
+	level.framenum++;
+	/* server is running at 10 fps */
+	level.time = level.framenum * SERVER_FRAME_SECONDS;
+
+	/* this doesn't belong here, but it works */
+	if (!level.routed) {
+		level.routed = true;
+		G_CompleteRecalcRouting();
+	}
+
+	/* still waiting for other players */
+	if (!G_MatchIsRunning()) {
+		if (sv_maxteams->modified) {
+			/* inform the client */
+			gi.ConfigString(CS_MAXTEAMS, "%i", sv_maxteams->integer);
+			sv_maxteams->modified = false;
+		}
+	}
+
+	if (sv_maxclients->integer > 1) {
+		if (sv_roundtimelimit->modified) {
+			/* some played around here - restart the count down */
+			level.roundstartTime = level.time;
+			/* don't allow smaller values here */
+			if (sv_roundtimelimit->integer < 30 && sv_roundtimelimit->integer > 0) {
+				gi.DPrintf("The minimum value for sv_roundtimelimit is 30\n");
+				gi.Cvar_Set("sv_roundtimelimit", "30");
+			}
+			sv_roundtimelimit->modified = false;
+		}
+		G_CheckForceEndRound();
+	}
+
+	/* end this game? */
+	if (G_MatchDoEnd())
+		return true;
+
+	CheckNeedPass();
+
+	/* run ai */
+	AI_Run();
+	G_PhysicsRun();
+
+	G_SendBoundingBoxes();
+
+	return false;
+}
 
 /**
  * @brief Returns a pointer to the structure with all entry points and global variables
@@ -379,84 +459,3 @@ void Com_DPrintf (int level, const char *msg, ...)
 	gi.DPrintf("%s", text);
 }
 #endif
-
-/**
- * @brief If password has changed, update sv_needpass cvar as needed
- */
-static void CheckNeedPass (void)
-{
-	if (password->modified) {
-		const char *need = "0";
-		password->modified = false;
-
-		if (password->string[0] != '\0' && Q_strcasecmp(password->string, "none"))
-			need = "1";
-
-		gi.Cvar_Set("sv_needpass", need);
-	}
-}
-
-static void G_SendBoundingBoxes (void)
-{
-	if (sv_send_edicts->integer) {
-		edict_t *ent = G_EdictsGetFirst();	/* skip the world */
-		while ((ent = G_EdictsGetNextInUse(ent)))
-			G_EventSendEdict(ent);
-	}
-}
-
-/**
- * @sa SV_RunGameFrame
- * @sa G_MatchEndTrigger
- * @sa AI_Run
- * @return true if game reaches its end - false otherwise
- */
-bool G_RunFrame (void)
-{
-	level.framenum++;
-	/* server is running at 10 fps */
-	level.time = level.framenum * SERVER_FRAME_SECONDS;
-
-	/* this doesn't belong here, but it works */
-	if (!level.routed) {
-		level.routed = true;
-		G_CompleteRecalcRouting();
-	}
-
-	/* still waiting for other players */
-	if (!G_MatchIsRunning()) {
-		if (sv_maxteams->modified) {
-			/* inform the client */
-			gi.ConfigString(CS_MAXTEAMS, "%i", sv_maxteams->integer);
-			sv_maxteams->modified = false;
-		}
-	}
-
-	if (sv_maxclients->integer > 1) {
-		if (sv_roundtimelimit->modified) {
-			/* some played around here - restart the count down */
-			level.roundstartTime = level.time;
-			/* don't allow smaller values here */
-			if (sv_roundtimelimit->integer < 30 && sv_roundtimelimit->integer > 0) {
-				gi.DPrintf("The minimum value for sv_roundtimelimit is 30\n");
-				gi.Cvar_Set("sv_roundtimelimit", "30");
-			}
-			sv_roundtimelimit->modified = false;
-		}
-		G_CheckForceEndRound();
-	}
-
-	/* end this game? */
-	if (G_MatchDoEnd())
-		return true;
-
-	CheckNeedPass();
-
-	/* run ai */
-	AI_Run();
-	G_PhysicsRun();
-
-	G_SendBoundingBoxes();
-
-	return false;
-}
