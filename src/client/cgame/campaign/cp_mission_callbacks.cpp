@@ -120,13 +120,17 @@ void MIS_InitResultScreen (const missionResults_t *results)
 	LIST_AddString(&list, va("%s\t%i", _("Alien survivors"), results->aliensSurvived));
 	LIST_AddString(&list, "");
 	/* phalanx */
-	LIST_AddString(&list, va("%s\t%i", _("PHALANX soldiers killed by Aliens"), results->ownKilled));
+	LIST_AddString(&list, va("%s\t%i", _("PHALANX soldiers killed in action"), results->ownKilled));
+	/* @todo FIXME right now stunned soldiers are shown as MIA when the game ends in a draw or the
+	 * mission is aborted and they are in the rescue zone, and in both cases they aren't MIA they'll,
+	 * return safely to base, on the other hand stunned soldiers left behind when aborting are
+	 * killed at mission end, so there's never a valid case of soldiers going MIA */
 	LIST_AddString(&list, va("%s\t%i", _("PHALANX soldiers missing in action"), results->ownStunned));
 	LIST_AddString(&list, va("%s\t%i", _("PHALANX friendly fire losses"), results->ownKilledFriendlyFire));
 	LIST_AddString(&list, va("%s\t%i", _("PHALANX survivors"), results->ownSurvived));
 	LIST_AddString(&list, "");
 
-	LIST_AddString(&list, va("%s\t%i", _("Civilians killed by Aliens"), results->civiliansKilled));
+	LIST_AddString(&list, va("%s\t%i", _("Civilians killed"), results->civiliansKilled));
 	LIST_AddString(&list, va("%s\t%i", _("Civilians killed by friendly fire"), results->civiliansKilledFriendlyFire));
 	LIST_AddString(&list, va("%s\t%i", _("Civilians saved"), results->civiliansSurvived));
 	LIST_AddString(&list, "");

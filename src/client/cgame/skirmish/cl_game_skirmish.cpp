@@ -197,8 +197,11 @@ static void GAME_SK_Results (dbuffer *msg, int winner, int *numSpawned, int *num
 {
 	char resultText[1024];
 	int enemiesKilled, enemiesStunned;
-	int i;
 	const int team = cgi->GAME_GetCurrentTeam();
+	const int ownFriendlyFire = numKilled[team][team] + numKilled[TEAM_CIVILIAN][team];
+	const int ownLost = numSpawned[team] - numAlive[team] - ownFriendlyFire;
+	const int civFriendlyFire = numKilled[team][TEAM_CIVILIAN] + numKilled[TEAM_CIVILIAN][TEAM_CIVILIAN];
+	const int civLost = numSpawned[TEAM_CIVILIAN] - numAlive[TEAM_CIVILIAN] - civFriendlyFire;
 
 	if (nextmap)
 		return;
@@ -215,22 +218,19 @@ static void GAME_SK_Results (dbuffer *msg, int winner, int *numSpawned, int *num
 		return;
 	}
 
-	enemiesKilled = enemiesStunned = 0;
-	for (i = 0; i < MAX_TEAMS; i++) {
-		if (i != team && i != TEAM_CIVILIAN) {
-			enemiesKilled += numKilled[team][i];
-			enemiesStunned += numStunned[team][i];
-		}
+	enemiesStunned = 0;
+	for (int i = 0; i <= MAX_TEAMS; ++i) {
+			enemiesStunned += numStunned[i][TEAM_ALIEN];
 	}
+	enemiesKilled = numSpawned[TEAM_ALIEN] - numAlive[TEAM_ALIEN] - enemiesStunned;
 
 	Com_sprintf(resultText, sizeof(resultText),
 			_("\n%i of %i enemies killed, %i stunned, %i survived.\n"
-			  "%i of %i team members survived, %i enemy kills, %i friendly fire kills.\n"
-			  "%i of %i civilians saved, %i enemy kills, %i friendly fire kills."),
+			  "%i of %i team members survived, %i lost in action, %i friendly fire loses.\n"
+			  "%i of %i civilians saved, %i civilian loses, %i friendly fire loses."),
 			enemiesKilled, numSpawned[TEAM_ALIEN], enemiesStunned, numAlive[TEAM_ALIEN],
-			numAlive[team], numSpawned[team], numKilled[TEAM_ALIEN][team], numKilled[team][team],
-			numAlive[TEAM_CIVILIAN], numSpawned[TEAM_CIVILIAN], numKilled[TEAM_ALIEN][TEAM_CIVILIAN],
-			numKilled[team][TEAM_CIVILIAN]);
+			numAlive[team], numSpawned[team], ownLost, ownFriendlyFire,
+			numAlive[TEAM_CIVILIAN], numSpawned[TEAM_CIVILIAN], civLost, civFriendlyFire);
 	if (winner == team) {
 		cgi->UI_Popup(_("Congratulations"), "%s\n%s\n", _("You won the game!"), resultText);
 	} else {

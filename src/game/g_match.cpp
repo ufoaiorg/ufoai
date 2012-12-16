@@ -289,11 +289,11 @@ static void G_MatchSendResults (int team, bool nextmap)
 		gi.WriteByte(level.num_alive[i]);
 	}
 
-	for (i = 0; i < MAX_TEAMS; i++)
+	for (i = 0; i <= MAX_TEAMS; i++)
 		for (j = 0; j < MAX_TEAMS; j++)
 			gi.WriteByte(level.num_kills[i][j]);
 
-	for (i = 0; i < MAX_TEAMS; i++)
+	for (i = 0; i <= MAX_TEAMS; i++)
 		for (j = 0; j < MAX_TEAMS; j++)
 			gi.WriteByte(level.num_stuns[i][j]);
 

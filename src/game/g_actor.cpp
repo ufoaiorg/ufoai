@@ -330,26 +330,25 @@ static bool G_ActorStun (edict_t * ent, const edict_t *attacker)
 void G_ActorModifyCounters (const edict_t *attacker, const edict_t *victim, int deltaAlive, int deltaKills, int deltaStuns)
 {
 	const int spawned = level.num_spawned[victim->team];
+	const int attackerTeam = (attacker != NULL ? attacker->team : MAX_TEAMS);
 	byte *alive = level.num_alive;
 
 	alive[victim->team] += deltaAlive;
 	if (alive[victim->team] > spawned)
 		gi.Error("alive counter out of sync");
 
-	if (attacker != NULL) {
-		if (deltaStuns != 0) {
-			byte *stuns = level.num_stuns[attacker->team];
-			stuns[victim->team] += deltaStuns;
-			if (stuns[victim->team] > spawned)
-				gi.Error("stuns counter out of sync");
-		}
+	if (deltaStuns != 0) {
+		byte *stuns = level.num_stuns[attackerTeam];
+		stuns[victim->team] += deltaStuns;
+		if (stuns[victim->team] > spawned)
+			gi.Error("stuns counter out of sync");
+	}
 
-		if (deltaKills != 0) {
-			byte *kills = level.num_kills[attacker->team];
-			kills[victim->team] += deltaKills;
-			if (kills[victim->team] > spawned)
-				gi.Error("kills counter out of sync");
-		}
+	if (deltaKills != 0) {
+		byte *kills = level.num_kills[attackerTeam];
+		kills[victim->team] += deltaKills;
+		if (kills[victim->team] > spawned)
+			gi.Error("kills counter out of sync");
 	}
 #if 0
 	{

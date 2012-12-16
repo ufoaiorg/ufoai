@@ -42,8 +42,8 @@ void CL_ParseResults (const eventRegister_t *self, dbuffer *msg)
 	int num_spawned[MAX_TEAMS];
 	int num_alive[MAX_TEAMS];
 	/* the first dimension contains the attacker team, the second the victim team */
-	int num_kills[MAX_TEAMS][MAX_TEAMS];
-	int num_stuns[MAX_TEAMS][MAX_TEAMS];
+	int num_kills[MAX_TEAMS + 1][MAX_TEAMS];
+	int num_stuns[MAX_TEAMS + 1][MAX_TEAMS];
 
 	OBJZERO(num_spawned);
 	OBJZERO(num_alive);
@@ -71,12 +71,12 @@ void CL_ParseResults (const eventRegister_t *self, dbuffer *msg)
 	}
 
 	/* get kills */
-	for (int i = 0; i < num; i++)
+	for (int i = 0; i <= num; i++)
 		for (int j = 0; j < num; j++)
 			num_kills[i][j] = NET_ReadByte(msg);
 
 	/* get stuns */
-	for (int i = 0; i < num; i++)
+	for (int i = 0; i <= num; i++)
 		for (int j = 0; j < num; j++)
 			num_stuns[i][j] = NET_ReadByte(msg);
 

@@ -32,6 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "g_reaction.h"
 #include "g_utils.h"
 #include "g_vis.h"
+#include "g_match.h"
 
 #define ACTOR_SPEED_NORMAL 100
 #define ACTOR_SPEED_CROUCHED (ACTOR_SPEED_NORMAL / 2)
@@ -469,6 +470,7 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos
 				if (!G_IsDead(ent)) {
 					G_CheckDeathOrKnockout(ent, NULL, NULL, (oldHP - ent->HP) + (ent->STUN - oldSTUN));
 				}
+				G_MatchEndCheck();
 				return;
 			}
 

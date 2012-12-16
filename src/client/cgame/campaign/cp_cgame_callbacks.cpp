@@ -219,12 +219,12 @@ void GAME_CP_Results (dbuffer *msg, int winner, int *numSpawned, int *numAlive, 
 	aliensSurvived = aliensKilled = aliensStunned = 0;
 	civiliansSurvived = civiliansKilled = civiliansStunned = 0;
 
-	for (i = 0; i < MAX_TEAMS; i++) {
+	for (i = 0; i <= MAX_TEAMS; i++) {
 		if (i == currentTeam)
 			ownSurvived = numAlive[i];
 		else if (i == TEAM_CIVILIAN)
 			civiliansSurvived = numAlive[i];
-		else
+		else if (i < MAX_TEAMS)
 			aliensSurvived += numAlive[i];
 		for (j = 0; j < MAX_TEAMS; j++)
 			if (j == currentTeam) {
