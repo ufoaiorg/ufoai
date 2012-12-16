@@ -1233,7 +1233,7 @@ void Com_ReadFromPipe (void)
 static void tick_timer (int now, void *data)
 {
 	struct timer *timer = (struct timer *)data;
-	int old_interval = timer->interval;
+	const int old_interval = timer->interval;
 
 	/* Compute and store the lateness, updating the total */
 	const int lateness = Sys_Milliseconds() - now;
