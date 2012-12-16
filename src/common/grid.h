@@ -23,8 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef GRID_H_
-#define GRID_H_
+#pragma once
 
 /*==========================================================
 GRID ORIENTED MOVEMENT AND SCANNING
@@ -45,5 +44,3 @@ int Grid_GetTUsForDirection(const int dir, const int crouched);
 int Grid_Filled(const routing_t *routes, const actorSizeEnum_t actorSize, const pos3_t pos);
 pos_t Grid_Fall(const routing_t *routes, const actorSizeEnum_t actorSize, const pos3_t pos);
 void Grid_PosToVec(const routing_t *routes, const actorSizeEnum_t actorSize, const pos3_t pos, vec3_t vec);
-
-#endif /* GRID_H_ */
