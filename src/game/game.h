@@ -160,6 +160,7 @@ typedef struct {
 	pos_t (IMPORT *GridFall) (const routing_t * routes, actorSizeEnum_t actorSize, const pos3_t pos);
 	void (IMPORT *GridPosToVec) (const routing_t * routes, actorSizeEnum_t actorSize, const pos3_t pos, vec3_t vec);
 	void (IMPORT *GridRecalcRouting) (routing_t * routes, const char *name, const GridBox& box, const char **list);
+	bool (IMPORT *CanActorStandHere) (actorSizeEnum_t actorSize, const pos3_t pos);
 	float (IMPORT *GetVisibility) (const pos3_t position);
 
 	/* filesystem functions */

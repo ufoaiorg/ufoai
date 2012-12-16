@@ -29,6 +29,7 @@
 #include "server.h"
 #include "sv_log.h"
 #include "../common/grid.h"
+#include "../common/routing.h"
 #include "../ports/system.h"
 #include "../shared/scopedmutex.h"
 #include <SDL.h>
@@ -501,6 +502,11 @@ static void SV_RecalcRouting (routing_t *routes, const char *name, const GridBox
 	Grid_RecalcRouting(&sv->mapTiles, routes, name, box, list);
 }
 
+static bool SV_CanActorStandHere (const int actorSize, const pos3_t pos)
+{
+	return RT_CanActorStandHere(sv->mapData.routes, actorSize, pos);
+}
+
 static void SV_SetInlineModelOrientation (const char *name, const vec3_t origin, const vec3_t angles)
 {
 	CM_SetInlineModelOrientation(&sv->mapTiles, name, origin, angles);
@@ -689,6 +695,7 @@ void SV_InitGameProgs (void)
 	import.GridFall = Grid_Fall;
 	import.GridPosToVec = Grid_PosToVec;
 	import.GridRecalcRouting = SV_RecalcRouting;
+	import.CanActorStandHere = SV_CanActorStandHere;
 
 	import.GetVisibility = SV_GetVisibility;
 
