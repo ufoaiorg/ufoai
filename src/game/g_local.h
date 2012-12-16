@@ -282,6 +282,12 @@ extern cvar_t *g_difficulty;
 void G_InitCamera(edict_t *ent, camera_type_t cameraType, float angle, bool rotate);
 edict_t *G_SpawnCamera(const vec3_t origin, int team, camera_type_t cameraType);
 
+/* g_cmds.c */
+void G_ClientCommand(player_t *player);
+#ifdef DEBUG
+void G_InvList_f(const player_t *player);
+#endif
+
 /* g_morale */
 void G_MoraleBehaviour(int team);
 #define MORALE_RANDOM( mod )	( (mod) * (1.0 + 0.3*crand()) )
@@ -298,13 +304,8 @@ void G_ClientEndRound(player_t *player);
 void G_SendStats(edict_t *ent) __attribute__((nonnull));
 void G_SendPlayerStats(const player_t *player);
 
-void G_ClientCommand(player_t *player);
-
 bool G_RunFrame(void);
 
-#ifdef DEBUG
-void G_InvList_f(const player_t *player);
-#endif
 
 /* g_svcmds.c */
 void G_ServerCommand(void);
