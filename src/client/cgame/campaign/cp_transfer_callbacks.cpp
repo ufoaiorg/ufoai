@@ -1239,7 +1239,7 @@ static void TR_TransferList_Scroll_f (void)
 	const objDef_t *antimatterOD = INVSH_GetItemByID(ANTIMATTER_TECH_ID);
 	const int antimatterCargo = td.trItemsTmp[antimatterOD->idx];
 
-	if (!srcBase)
+	if (!srcBase || !td.transferBase)
 		return;
 
 	if (cgi->Cmd_Argc() < 3) {
