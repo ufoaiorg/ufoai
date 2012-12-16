@@ -264,7 +264,7 @@ void RT_DumpWholeMap (mapTiles_t *mapTiles, const routing_t *routes)
  */
 bool RT_CanActorStandHere (const routing_t *routes, const int actorSize, const pos3_t pos)
 {
-	if (RT_CEILING_POS(routes, actorSize, pos) - RT_FLOOR_POS(routes, actorSize, pos) >= PLAYER_STANDING_HEIGHT)
+	if (RT_CEILING_POS(routes, actorSize, pos) - RT_FLOOR_POS(routes, actorSize, pos) >= PLAYER_STANDING_HEIGHT / QUANT)
 		return true;
 	else
 		return false;
