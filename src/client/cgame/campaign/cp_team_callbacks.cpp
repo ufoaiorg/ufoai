@@ -334,9 +334,11 @@ static void CP_TEAM_FillEquipSoldierList_f (void)
  */
 static void CP_TEAM_FillBDEFEmployeeList_f (void)
 {
-	base_t *base = B_GetCurrentSelectedBase();
-	aircraft_t *aircraft = base->aircraftCurrent;
+	const base_t *base = B_GetCurrentSelectedBase();
+	if (!base)
+		return;
 
+	const aircraft_t *aircraft = base->aircraftCurrent;
 	if (!aircraft)
 		return;
 
