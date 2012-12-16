@@ -494,12 +494,12 @@ bool B_GetBuildingStatus (const base_t* const base, const buildingType_t buildin
 
 	if (buildingType == B_MISC)
 		return true;
-	else if (buildingType < MAX_BUILDING_TYPE)
+
+	if (buildingType < MAX_BUILDING_TYPE)
 		return base->hasBuilding[buildingType];
-	else {
-		Com_Printf("B_GetBuildingStatus: Building-type %i does not exist.\n", buildingType);
-		return false;
-	}
+
+	Com_Printf("B_GetBuildingStatus: Building-type %i does not exist.\n", buildingType);
+	return false;
 }
 
 /**

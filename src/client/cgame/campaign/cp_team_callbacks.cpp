@@ -346,16 +346,13 @@ static void CP_TEAM_FillBDEFEmployeeList_f (void)
 	const int teamSize = AIR_GetTeamSize(aircraft);
 	const int maxTeamSize = aircraft->maxTeamSize;
 	E_Foreach(EMPL_SOLDIER, employee) {
-		const rank_t *rank = CL_GetRankByIdx(employee->chr.score.rank);
-		const char *tooltip;
-		bool isInTeam;
-
 		if (!E_IsInBase(employee, base))
 			continue;
 		if (employee->transfer)
 			continue;
 
-		isInTeam = AIR_IsEmployeeInAircraft(employee, aircraft) != NULL;
+		const char *tooltip;
+		const bool isInTeam = AIR_IsEmployeeInAircraft(employee, aircraft) != NULL;
 		if (E_IsAwayFromBase(employee))
 			tooltip = _("Employee is away from base");
 		else if (!isInTeam && teamSize >= maxTeamSize)
@@ -363,6 +360,7 @@ static void CP_TEAM_FillBDEFEmployeeList_f (void)
 		else
 			tooltip = "";
 
+		const rank_t *rank = CL_GetRankByIdx(employee->chr.score.rank);
 		cgi->UI_ExecuteConfunc("soldierlist_add %d \"%s %s\" %d \"%s\"", employee->chr.ucn, (rank) ? _(rank->shortname) : "", employee->chr.name, isInTeam, tooltip);
 	}
 }
