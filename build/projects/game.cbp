@@ -106,6 +106,7 @@
 		<Unit filename="..\..\src\game\g_trigger.cpp" />
 		<Unit filename="..\..\src\game\g_trigger.h" />
 		<Unit filename="..\..\src\game\g_utils.cpp" />
+		<Unit filename="..\..\src\game\g_utils.h" />
 		<Unit filename="..\..\src\game\g_vis.cpp" />
 		<Unit filename="..\..\src\game\g_vis.h" />
 		<Unit filename="..\..\src\game\game.def" />
