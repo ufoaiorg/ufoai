@@ -943,7 +943,7 @@ static void G_ShootSingle (edict_t *ent, const fireDef_t *fd, const vec3_t from,
 			/* send shot sound to the others */
 			G_EventShootHidden(mask, fd, false);
 
-			if (i == 0 && G_FireAffectedSurface(tr.surface, fd)) {
+			if (firstShot && G_FireAffectedSurface(tr.surface, fd)) {
 				vec3_t origin;
 				/* sent particle to all players */
 				VectorMA(impact, 1, tr.plane.normal, origin);
