@@ -59,6 +59,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define G_RemoveCrouched(ent)	G_RemoveState((ent), STATE_CROUCHED)
 #define G_RemoveReaction(ent)	G_RemoveState((ent), STATE_REACTION)
 
+#define G_ToggleState(ent, s)	(ent)->state ^= (s)
+#define G_ToggleCrouched(ent)	G_ToggleState(ent, STATE_CROUCHED)
+
 bool G_IsLivingActor(const edict_t *ent) __attribute__((nonnull));
 void G_ActorUseDoor(edict_t *actor, edict_t *door);
 bool G_ActorIsInRescueZone(const edict_t *actor);

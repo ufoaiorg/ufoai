@@ -157,9 +157,6 @@ extern game_export_t globals;
 #define G_IsAlien(ent)			((ent)->team == TEAM_ALIEN)
 #define G_IsBlockingMovementActor(ent)	(((ent)->type == ET_ACTOR && !G_IsDead(ent)) || ent->type == ET_ACTOR2x2)
 
-#define G_ToggleState(ent, s)	(ent)->state ^= (s)
-#define G_ToggleCrouched(ent)	G_ToggleState(ent, STATE_CROUCHED)
-
 extern cvar_t *sv_maxentities;
 extern cvar_t *password;
 extern cvar_t *sv_needpass;
