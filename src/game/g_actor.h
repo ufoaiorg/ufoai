@@ -26,6 +26,39 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "g_local.h"
 
+#define G_IsState(ent, s)		((ent)->state & (s))
+#define G_IsShaken(ent)			G_IsState(ent, STATE_SHAKEN)
+#define G_IsStunned(ent)		(G_IsState(ent, STATE_STUN) & ~STATE_DEAD)
+#define G_IsPanicked(ent)		G_IsState(ent, STATE_PANIC)
+#define G_IsReaction(ent)		G_IsState(ent, STATE_REACTION)
+#define G_IsRaged(ent)			G_IsState(ent, STATE_RAGE)
+#define G_IsInsane(ent)			G_IsState(ent, STATE_INSANE)
+#define G_IsDazed(ent)			G_IsState(ent, STATE_DAZED)
+#define G_IsCrouched(ent)		G_IsState(ent, STATE_CROUCHED)
+/** @note This check also includes the IsStunned check - see the STATE_* bitmasks */
+#define G_IsDead(ent)			G_IsState(ent, STATE_DEAD)
+
+#define G_SetState(ent, s)		(ent)->state |= (s)
+#define G_SetShaken(ent)		G_SetState((ent), STATE_SHAKEN)
+#define G_SetDazed(ent)			G_SetState((ent), STATE_DAZED)
+#define G_SetStunned(ent)		G_SetState((ent), STATE_STUN)
+#define G_SetDead(ent)			G_SetState((ent), STATE_DEAD)
+#define G_SetInsane(ent)		G_SetState((ent), STATE_INSANE)
+#define G_SetRage(ent)			G_SetState((ent), STATE_RAGE)
+#define G_SetPanic(ent)			G_SetState((ent), STATE_PANIC)
+#define G_SetCrouched(ent)		G_SetState((ent), STATE_CROUCHED)
+
+#define G_RemoveState(ent, s)	(ent)->state &= ~(s)
+#define G_RemoveShaken(ent)		G_RemoveState((ent), STATE_SHAKEN)
+#define G_RemoveDazed(ent)		G_RemoveState((ent), STATE_DAZED)
+#define G_RemoveStunned(ent)	G_RemoveState((ent), STATE_STUN)
+#define G_RemoveDead(ent)		G_RemoveState((ent), STATE_DEAD)
+#define G_RemoveInsane(ent)		G_RemoveState((ent), STATE_INSANE)
+#define G_RemoveRage(ent)		G_RemoveState((ent), STATE_RAGE)
+#define G_RemovePanic(ent)		G_RemoveState((ent), STATE_PANIC)
+#define G_RemoveCrouched(ent)	G_RemoveState((ent), STATE_CROUCHED)
+#define G_RemoveReaction(ent)	G_RemoveState((ent), STATE_REACTION)
+
 bool G_IsLivingActor(const edict_t *ent) __attribute__((nonnull));
 void G_ActorUseDoor(edict_t *actor, edict_t *door);
 bool G_ActorIsInRescueZone(const edict_t *actor);
