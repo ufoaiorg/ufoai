@@ -499,6 +499,10 @@ void G_ClientStateChange (const player_t* player, edict_t* ent, int reqState, bo
 	case STATE_CROUCHED: /* Toggle between crouch/stand. */
 		/* Check if player has enough TUs (TU_CROUCH TUs for crouch/uncrouch). */
 		if (!checkaction || G_ActionCheckForCurrentTeam(player, ent, TU_CROUCH)) {
+			if (G_IsCrouched(ent)) {
+				if (!gi.CanActorStandHere(ent->fieldSize, ent->pos))
+					break;
+			}
 			G_ToggleCrouched(ent);
 			G_ActorUseTU(ent, TU_CROUCH);
 			G_ActorSetMaxs(ent);
