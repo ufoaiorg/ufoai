@@ -32,6 +32,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "g_utils.h"
 #include "g_vis.h"
 
+/* however we manipulate TUs, this value must never be exceeded */
+#define MAX_TU				(ROUTING_NOT_REACHABLE - 1)
+
 /**
  * @brief Checks whether the given edict is a living actor
  * @param[in] ent The edict to perform the check for
