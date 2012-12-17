@@ -88,7 +88,7 @@ public:
 	void add (const edict_t *shooter, const edict_t *target, const int tusForShot);
 	void remove (edict_t *shooter, const edict_t *target);
 	bool hasExpired (const edict_t *shooter, const edict_t *target, const int tusTarget);
-	void advance (const edict_t *shooter, const edict_t *target, const int tusShot);
+	void advance (const edict_t *shooter, const int tusShot);
 	void reset();
 	void create (const edict_t *shooter);
 
@@ -238,22 +238,19 @@ bool ReactionFireTargets::hasExpired (const edict_t *shooter, const edict_t *tar
 
 
 /**
- * @brief Increase the triggertime for the next RF shot (after a reaction fire at the given target).
+ * @brief Increase the triggertime for the next RF shot for all targets of the shooter (after a reaction fire).
  * @param[in] shooter The reaction firing actor
- * @param[in] target The potential reaction fire victim
  * @param[in] tusShot The TUs the shooter will need for the next shot
  */
-void ReactionFireTargets::advance (const edict_t *shooter, const edict_t *target, const int tusShot)
+void ReactionFireTargets::advance (const edict_t *shooter, const int tusShot)
 {
 	int i;
 	ReactionFireTargetList *rfts = find(shooter);
 
 	assert(rfts);
-	assert(target);
 
 	for (i = 0; i < rfts->count; i++) {
-		if (rfts->targets[i].target == target)	/* found it ? */
-			rfts->targets[i].triggerTUs -= tusShot;
+		rfts->targets[i].triggerTUs -= tusShot;
 	}
 }
 
@@ -650,7 +647,7 @@ static bool G_ReactionFireCheckExecution (const edict_t *target)
 		if (tus > 1) {	/* indicates an RF weapon is there */
 			if (rft.hasExpired(shooter, target, 0)) {
 				if (G_ReactionFireTryToShoot(shooter, target)) {
-					rft.advance(shooter, target, tus);
+					rft.advance(shooter, tus);
 					fired |= true;
 				}
 			}
@@ -701,7 +698,7 @@ void G_ReactionFirePreShot (const edict_t *target, const int fdTime)
 				if (rft.hasExpired(shooter, target, fdTime)) {
 					if (G_ReactionFireTryToShoot(shooter, target)) {
 						repeat = true;
-						rft.advance(shooter, target, fdTime);
+						rft.advance(shooter, fdTime);
 					}
 				}
 			}
