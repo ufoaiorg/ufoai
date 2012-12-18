@@ -53,8 +53,8 @@ void CL_ActorWound (const eventRegister_t *self, dbuffer *msg)
 		return;
 	}
 
-	if (le->wounds.woundLevel[bodyPart] < wounds &&
-			wounds > le->teamDef->bodyTemplate->woundThreshold(bodyPart)) {
+	if (le->wounds.woundLevel[bodyPart] < wounds && wounds > le->maxHP *
+			le->teamDef->bodyTemplate->woundThreshold(bodyPart)) {
 		const character_t *chr = CL_ActorGetChr(le);
 		char tmpbuf[128];
 		Com_sprintf(tmpbuf, lengthof(tmpbuf), _("%s has been wounded"), chr->name);
