@@ -267,7 +267,6 @@ bool G_TestLine (const vec3_t start, const vec3_t end)
  */
 trace_t G_Trace (const vec3_t start, const vec3_t end, const edict_t * passent, int contentmask)
 {
-//	AABB box();	/* does not compile */
 	AABB box(vec3_origin, vec3_origin);
 	G_TraceDraw(start, end);
 	return gi.Trace(start, box, end, passent, contentmask);
@@ -281,6 +280,24 @@ const char* G_GetPlayerName (int pnum)
 	if (pnum >= game.sv_maxplayersperteam)
 		return "";
 	return game.players[pnum].pers.netname;
+}
+
+/**
+ * @brief Assembles a player mask for those players that have a living team
+ * member close to the given location
+ * @param[in] origin The center of the area to search for close actors
+ * @param[in] radius The radius to look in
+ */
+playermask_t G_GetClosePlayerMask (const vec3_t origin, float radius)
+{
+	playermask_t pm = 0;
+	edict_t *closeActor = NULL;
+	while ((closeActor = G_FindRadius(closeActor, origin, radius))) {
+		if (!G_IsLivingActor(closeActor))
+			continue;
+		pm |= G_TeamToPM(closeActor->team);
+	}
+	return pm;
 }
 
 /**

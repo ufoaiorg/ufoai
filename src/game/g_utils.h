@@ -44,6 +44,7 @@ const char* G_GetPlayerName(int pnum);
 void G_PrintStats(const char *format, ...) __attribute__((format(__printf__, 1, 2)));
 void G_PrintActorStats(const edict_t *victim, const edict_t *attacker, const fireDef_t *fd);
 edict_t *G_FindRadius(edict_t *from, const vec3_t org, float rad, entity_type_t type = ET_NULL);
+playermask_t G_GetClosePlayerMask(const vec3_t origin, float radius);
 void G_GenerateEntList(const char *entList[MAX_EDICTS]);
 void G_RecalcRouting(const char *model, const GridBox& box);
 void G_CompleteRecalcRouting(void);

@@ -233,8 +233,10 @@ static bool Door_Use (edict_t *door, edict_t *activator)
 			G_EventDoorOpen(door);
 		else
 			G_EventDoorClose(door);
-		if (door->noise[0] != '\0')
-			G_EventSpawnSound(PM_ALL, false, door, door->origin, door->noise);
+		if (door->noise[0] != '\0') {
+			const playermask_t playerMask = G_GetClosePlayerMask(door->origin, UNIT_SIZE * 10);
+			G_EventSpawnSound(playerMask, false, door, door->origin, door->noise);
+		}
 	}
 
 	/* Update model orientation */
