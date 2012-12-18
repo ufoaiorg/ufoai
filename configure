@@ -143,7 +143,7 @@ makefile_local() {
 
 check_header_cc() {
 	if [ -n "${2}" ]; then
-		( echo "#include <${1}>" | ${CROSS}${CC} ${CFLAGS} $(pkg-config --cflags ${2}) -o /dev/null -xc -c - 2> /dev/null ) && echo "1" || echo ""
+		( echo "#include <${1}>" | ${CROSS}${CC} ${CFLAGS} $(${CROSS}pkg-config --cflags ${2}) -o /dev/null -xc -c - 2> /dev/null ) && echo "1" || echo ""
 	else
 		( echo "#include <${1}>" | ${CROSS}${CC} ${CFLAGS} -o /dev/null -xc -c - 2> /dev/null ) && echo "1" || echo ""
 	fi
