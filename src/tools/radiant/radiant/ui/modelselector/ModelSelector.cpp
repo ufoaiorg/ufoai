@@ -129,7 +129,7 @@ namespace ui
 				// Constructor
 
 				ModelFileFunctor (GtkTreeStore* store, const gtkutil::ModalProgressDialog& dialog, const std::string& path, DirIterMap& dirIterMap) :
-					_store(store), _dialog(dialog), _path(path), _dirIterMap(dirIterMap)
+					_scanForDirectory(false), _store(store), _dialog(dialog), _path(path), _dirIterMap(dirIterMap)
 				{
 				}
 
