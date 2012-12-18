@@ -49,6 +49,7 @@ bool debugTrace = false;
 /* This is a template for the extents of the box used by an actor's feet. */
 static const box_t footBox = {{-halfMicrostepSize, -halfMicrostepSize, 0},
 						{ halfMicrostepSize,  halfMicrostepSize, 0}};
+static const AABB footBoxA(-halfMicrostepSize, -halfMicrostepSize, 0, halfMicrostepSize, halfMicrostepSize, 0);
 
 /* Width of the box required to stand in a cell by an actor's torso.  */
 #define half1x1Width (UNIT_SIZE * 1 / 2 - WALL_SIZE - DIST_EPSILON)
@@ -58,6 +59,8 @@ static const box_t actor1x1Box = {{-half1x1Width, -half1x1Width, 0},
 							{ half1x1Width,  half1x1Width, 0}};
 static const box_t actor2x2Box = {{-half2x2Width, -half2x2Width, 0},
 							{ half2x2Width,  half2x2Width, 0}};
+static const AABB actor1x1BoxA(-half1x1Width, -half1x1Width, 0, half1x1Width, half1x1Width, 0);
+static const AABB actor2x2BoxA(-half2x2Width, -half2x2Width, 0, half2x2Width, half2x2Width, 0);
 
 /*
 ==========================================================
@@ -403,6 +406,15 @@ int RT_CheckCell (mapTiles_t *mapTiles, routing_t *routes, const int actorSize, 
 	/* This is a template for the ceiling trace after an actor's torso space has been found. */
 	const box_t ceilBox = {{-halfActorWidth, -halfActorWidth, 0},
 							{ halfActorWidth,  halfActorWidth, 0}};
+	/* This is a template for the extents of the box used by an actor's legs. */
+	const AABB legBoxA(-halfMicrostepSize, -halfMicrostepSize, 0,
+						halfMicrostepSize,  halfMicrostepSize, QuantToModel(PATHFINDING_LEGROOMHEIGHT) - DIST_EPSILON * 2);
+	/* This is a template for the extents of the box used by an actor's torso. */
+	const AABB torsoBoxA(-halfActorWidth, -halfActorWidth, QuantToModel(PATHFINDING_LEGROOMHEIGHT),
+						  halfActorWidth,  halfActorWidth, QuantToModel(PATHFINDING_MIN_OPENING) - DIST_EPSILON * 2);
+	/* This is a template for the ceiling trace after an actor's torso space has been found. */
+	const AABB ceilBoxA(-halfActorWidth, -halfActorWidth, 0,
+						 halfActorWidth,  halfActorWidth, 0);
 
 	vec3_t start, end; /* Start and end of the downward traces. */
 	vec3_t tstart, tend; /* Start and end of the upward traces. */
