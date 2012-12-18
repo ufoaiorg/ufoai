@@ -1035,6 +1035,28 @@ void LMT_Init (localModel_t* localModel)
 }
 
 /**
+ * @brief Rotates a door in the given speed
+ *
+ * @param[in] le The local entity of the door to rotate
+ * @param[in] speed The speed to rotate the door with
+ */
+void LET_RotateDoor (le_t *le, int speed)
+{
+	/** @todo lerp the rotation */
+	const int angle = speed > 0 ? DOOR_ROTATION_ANGLE : -DOOR_ROTATION_ANGLE;
+	if (le->dir & DOOR_OPEN_REVERSE)
+		le->angles[le->dir & 3] -= angle;
+	else
+		le->angles[le->dir & 3] += angle;
+
+	CM_SetInlineModelOrientation(cl.mapTiles, le->inlineModelName, le->origin, le->angles);
+	CL_RecalcRouting(le);
+
+	/* reset the think function as the movement finished */
+	LE_SetThink(le, NULL);
+}
+
+/**
  * @brief Slides a door
  *
  * @note Though doors, sliding doors need a very different handling:

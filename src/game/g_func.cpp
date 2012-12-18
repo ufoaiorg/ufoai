@@ -338,6 +338,8 @@ void SP_func_door (edict_t *ent)
 	ent->child = other;
 
 	G_ActorSetTU(ent, TU_DOOR_ACTION);
+	if (!ent->speed)
+		ent->speed = 10;
 	ent->use = Door_Use;
 
 	/* the door should start opened */

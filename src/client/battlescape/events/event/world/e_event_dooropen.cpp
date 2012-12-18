@@ -28,7 +28,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 static void LET_DoorSlidingOpen (le_t * le)
 {
+	assert(le->slidingSpeed > 0);
 	LET_SlideDoor(le, le->slidingSpeed);
+}
+
+static void LET_DoorRotatingOpen (le_t * le)
+{
+	assert(le->rotationSpeed > 0);
+	LET_RotateDoor(le, le->rotationSpeed);
 }
 
 /**
@@ -48,13 +55,8 @@ void CL_DoorOpen (const eventRegister_t *self, dbuffer *msg)
 		LE_NotFoundError(number);
 
 	if (le->type == ET_DOOR) {
-		if (le->dir & DOOR_OPEN_REVERSE)
-			le->angles[le->dir & 3] -= DOOR_ROTATION_ANGLE;
-		else
-			le->angles[le->dir & 3] += DOOR_ROTATION_ANGLE;
-
-		CM_SetInlineModelOrientation(cl.mapTiles, le->inlineModelName, le->origin, le->angles);
-		CL_RecalcRouting(le);
+		LE_SetThink(le, LET_DoorRotatingOpen);
+		le->think(le);
 	} else if (le->type == ET_DOOR_SLIDING) {
 		LE_SetThink(le, LET_DoorSlidingOpen);
 		le->think(le);
