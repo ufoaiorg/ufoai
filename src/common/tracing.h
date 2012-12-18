@@ -90,10 +90,6 @@ typedef struct boxtrace_s {
 	TR_TILE_TYPE *tile;
 } boxtrace_t;
 
-typedef struct box_s {
-	vec3_t mins, maxs;
-} box_t;
-
 typedef struct {
 	/** @note loaded map tiles with this assembly.  ufo2map has exactly 1. */
 	TR_TILE_TYPE mapTiles[MAX_MAPTILES];

@@ -47,20 +47,14 @@ bool debugTrace = false;
 /* Width of the box required to stand in a cell by an actor's feet.  */
 #define halfMicrostepSize (PATHFINDING_MICROSTEP_SIZE / 2 - DIST_EPSILON)
 /* This is a template for the extents of the box used by an actor's feet. */
-static const box_t footBox = {{-halfMicrostepSize, -halfMicrostepSize, 0},
-						{ halfMicrostepSize,  halfMicrostepSize, 0}};
-static const AABB footBoxA(-halfMicrostepSize, -halfMicrostepSize, 0, halfMicrostepSize, halfMicrostepSize, 0);
+static const AABB footBox(-halfMicrostepSize, -halfMicrostepSize, 0, halfMicrostepSize, halfMicrostepSize, 0);
 
 /* Width of the box required to stand in a cell by an actor's torso.  */
 #define half1x1Width (UNIT_SIZE * 1 / 2 - WALL_SIZE - DIST_EPSILON)
 #define half2x2Width (UNIT_SIZE * 2 / 2 - WALL_SIZE - DIST_EPSILON)
 /* These are templates for the extents of the box used by an actor's torso. */
-static const box_t actor1x1Box = {{-half1x1Width, -half1x1Width, 0},
-							{ half1x1Width,  half1x1Width, 0}};
-static const box_t actor2x2Box = {{-half2x2Width, -half2x2Width, 0},
-							{ half2x2Width,  half2x2Width, 0}};
-static const AABB actor1x1BoxA(-half1x1Width, -half1x1Width, 0, half1x1Width, half1x1Width, 0);
-static const AABB actor2x2BoxA(-half2x2Width, -half2x2Width, 0, half2x2Width, half2x2Width, 0);
+static const AABB actor1x1Box(-half1x1Width, -half1x1Width, 0, half1x1Width, half1x1Width, 0);
+static const AABB actor2x2Box(-half2x2Width, -half2x2Width, 0, half2x2Width, half2x2Width, 0);
 
 /*
 ==========================================================
@@ -398,22 +392,13 @@ int RT_CheckCell (mapTiles_t *mapTiles, routing_t *routes, const int actorSize, 
 	/* Width of the box required to stand in a cell by an actor's torso.  */
 	const float halfActorWidth = UNIT_SIZE * actorSize / 2 - WALL_SIZE - DIST_EPSILON;
 	/* This is a template for the extents of the box used by an actor's legs. */
-	const box_t legBox = {{-halfMicrostepSize, -halfMicrostepSize, 0},
-							{ halfMicrostepSize,  halfMicrostepSize, QuantToModel(PATHFINDING_LEGROOMHEIGHT) - DIST_EPSILON * 2}};
-	/* This is a template for the extents of the box used by an actor's torso. */
-	const box_t torsoBox = {{-halfActorWidth, -halfActorWidth, QuantToModel(PATHFINDING_LEGROOMHEIGHT)},
-							{ halfActorWidth,  halfActorWidth, QuantToModel(PATHFINDING_MIN_OPENING) - DIST_EPSILON * 2}};
-	/* This is a template for the ceiling trace after an actor's torso space has been found. */
-	const box_t ceilBox = {{-halfActorWidth, -halfActorWidth, 0},
-							{ halfActorWidth,  halfActorWidth, 0}};
-	/* This is a template for the extents of the box used by an actor's legs. */
-	const AABB legBoxA(-halfMicrostepSize, -halfMicrostepSize, 0,
+	const AABB legBox(-halfMicrostepSize, -halfMicrostepSize, 0,
 						halfMicrostepSize,  halfMicrostepSize, QuantToModel(PATHFINDING_LEGROOMHEIGHT) - DIST_EPSILON * 2);
 	/* This is a template for the extents of the box used by an actor's torso. */
-	const AABB torsoBoxA(-halfActorWidth, -halfActorWidth, QuantToModel(PATHFINDING_LEGROOMHEIGHT),
+	const AABB torsoBox(-halfActorWidth, -halfActorWidth, QuantToModel(PATHFINDING_LEGROOMHEIGHT),
 						  halfActorWidth,  halfActorWidth, QuantToModel(PATHFINDING_MIN_OPENING) - DIST_EPSILON * 2);
 	/* This is a template for the ceiling trace after an actor's torso space has been found. */
-	const AABB ceilBoxA(-halfActorWidth, -halfActorWidth, 0,
+	const AABB ceilBox(-halfActorWidth, -halfActorWidth, 0,
 						 halfActorWidth,  halfActorWidth, 0);
 
 	vec3_t start, end; /* Start and end of the downward traces. */
@@ -463,7 +448,7 @@ int RT_CheckCell (mapTiles_t *mapTiles, routing_t *routes, const int actorSize, 
 	 *      restart below the current floor.
 	 */
 	while (true) { /* Loop forever, we will exit if we hit the model bottom or find a valid floor. */
-		tr = RT_COMPLETEBOXTRACE_PASSAGE(mapTiles, start, end, &footBoxA, list);
+		tr = RT_COMPLETEBOXTRACE_PASSAGE(mapTiles, start, end, &footBox, list);
 		if (tr.fraction >= 1.0) {
 			/* There is no brush underneath this starting point. */
 			/* Mark all cells to the model base as filled. */
@@ -551,7 +536,7 @@ int RT_CheckCell (mapTiles_t *mapTiles, routing_t *routes, const int actorSize, 
 		VectorCopy(tstart, tend);
 		tend[2] = PATHFINDING_HEIGHT * UNIT_HEIGHT; /* tend now reaches the model ceiling. */
 
-		tr = RT_COMPLETEBOXTRACE_PASSAGE(mapTiles, tstart, tend, &ceilBoxA, list);
+		tr = RT_COMPLETEBOXTRACE_PASSAGE(mapTiles, tstart, tend, &ceilBox, list);
 
 		/* We found the ceiling. */
 		top = tr.endpos[2];
@@ -721,7 +706,7 @@ static int RT_FindOpeningFloorFrac (const RT_data_t *rtd, const vec3_t start, co
 {
 	vec3_t mstart, mend;	/**< Midpoint line to trace across */	/**< Tracing box extents */
 	trace_t tr;
-	const AABB* box = (rtd->actorSize == ACTOR_SIZE_NORMAL ? &actor1x1BoxA : &actor2x2BoxA);
+	const AABB* box = (rtd->actorSize == ACTOR_SIZE_NORMAL ? &actor1x1Box : &actor2x2Box);
 
 	/* Position mstart and mend at the fraction point */
 	VectorInterpolation(start, end, frac, mstart);
@@ -754,7 +739,7 @@ static int RT_FindOpeningCeilingFrac (const RT_data_t *rtd, const vec3_t start, 
 {
 	vec3_t mstart, mend;	/**< Midpoint line to trace across */
 	trace_t tr;
-	const AABB* box = (rtd->actorSize == ACTOR_SIZE_NORMAL ? &actor1x1BoxA : &actor2x2BoxA);	/**< Tracing box extents */
+	const AABB* box = (rtd->actorSize == ACTOR_SIZE_NORMAL ? &actor1x1Box : &actor2x2Box);	/**< Tracing box extents */
 
 	/* Position mstart and mend at the midpoint */
 	VectorInterpolation(start, end, frac, mstart);
@@ -950,7 +935,7 @@ static int RT_FindOpening (RT_data_t *rtd, const place_t* from, const int ax, co
 	if (from->ceiling >= PATHFINDING_HEIGHT * CELL_HEIGHT
 	 && from->cell[2] * CELL_HEIGHT + RT_CEILING(rtd->routes, rtd->actorSize, ax, ay, from->cell[2]) >= PATHFINDING_HEIGHT * CELL_HEIGHT) {
 		vec3_t sky, earth;
-		const AABB* box = (rtd->actorSize == ACTOR_SIZE_NORMAL ? &actor1x1BoxA : &actor2x2BoxA);
+		const AABB* box = (rtd->actorSize == ACTOR_SIZE_NORMAL ? &actor1x1Box : &actor2x2Box);
 		trace_t tr;
 		int tempBottom;
 
@@ -1055,7 +1040,7 @@ static int RT_MicroTrace (RT_data_t *rtd, const place_t* from, const int ax, con
 		start[1] = end[1] = sy + (ey - sy) * (i / (float)steps);
 
 		/* perform the trace, then return true if the trace was obstructed. */
-		tr = RT_COMPLETEBOXTRACE_PASSAGE(rtd->mapTiles, start, end, &footBoxA, rtd->list);
+		tr = RT_COMPLETEBOXTRACE_PASSAGE(rtd->mapTiles, start, end, &footBox, rtd->list);
 		if (tr.fraction >= 1.0) {
 			bases[i] = -1;
 		} else {
