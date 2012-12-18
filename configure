@@ -171,8 +171,14 @@ check_headers() {
 	check_header "link.h"
 	check_header "CUnit/Basic.h"
 	check_header "mxml.h"
+	check_header "gtk/gtk.h" "gtk+-2.0"
+	check_header "gtksourceview/gtksourceview.h" "gtksourceview-2.0"
+	check_header "gtk/gtkglwidget.h" "gtkglext-1.0"
 	if [ "$HAVE_CUNIT_BASIC_H" != "1" ]; then
 		set_var "testall_DISABLE" "yes"
+	fi
+	if [ "$HAVE_GTK_GTK_H" != "1" ] || [ "$HAVE_GTKSOURCEVIEW_GTKSOURCEVIEW_H" != "1" ] || [ "$HAVE_GTK_GTKGLWIDGET_H" != "1" ]; then
+		set_var "uforadiant_DISABLE" "yes"
 	fi
 }
 
@@ -336,9 +342,6 @@ enable_only() {
 }
 
 check_path_characters
-
-# uforadiant is disabled by default
-set_var "uforadiant_DISABLE" "yes"
 
 while [ $# -gt 0 ]; do
 	case "$1" in
