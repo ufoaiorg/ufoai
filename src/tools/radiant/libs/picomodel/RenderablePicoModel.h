@@ -118,6 +118,10 @@ namespace model
 			 */
 			const ModelSkinList& getSkinsForModel () const;
 
+			void addSkin (const std::string& skinName);
+			void changeSkin (int index, const std::string& skinName);
+			void removeSkin (int index);
+
 			/** Apply the given skin to this model.
 			 */
 			void applySkin (const std::string& skin);

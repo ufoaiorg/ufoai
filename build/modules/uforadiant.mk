@@ -357,6 +357,7 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/libs/gtkutil/PanedPosition.cpp \
 	$(RADIANT_BASE)/libs/gtkutil/RegistryConnector.cpp \
 	$(RADIANT_BASE)/libs/gtkutil/SourceView.cpp \
+	$(RADIANT_BASE)/libs/gtkutil/TextEntryDialog.cpp \
 	$(RADIANT_BASE)/libs/gtkutil/TextPanel.cpp \
 	$(RADIANT_BASE)/libs/gtkutil/Timer.cpp \
 	$(RADIANT_BASE)/libs/gtkutil/TreeModel.cpp \

@@ -85,6 +85,19 @@ namespace gtkutil
 			static std::string getSelectedString (GtkTreeSelection* selection, gint colNo);
 
 			/**
+			 * Extract the selected integer from the given column in the TreeModel. The
+			 * selection object will be queried for a selection, and the integer
+			 * returned if present, otherwise -1 will be returned.
+			 *
+			 * @param selection
+			 * GtkTreeSelection object to be tested for a selection.
+			 *
+			 * @param colNo
+			 * The column number to extract data from if the selection is valid.
+			 */
+			static int getSelectedInt (GtkTreeSelection* selection, gint colNo);
+
+			/**
 			 * Extract the parent string from the selected entry from the given column in
 			 * the TreeModel. The selection object will be queried for a selection. After that
 			 * we are trying to get the parent, if there is one, return the string for the

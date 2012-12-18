@@ -94,11 +94,23 @@ namespace ui
 			// Return the value from the selected column, or -1 if nothing was selected
 			int getSelectedInteger (gint col);
 
+			void openPopupMenu (bool model, GdkEventButton *);
+
+			model::IModelPtr getModel (const std::string& extension, const std::string& relativePath);
+			model::IModelPtr getModelFromSelection ();
+
+			void updateTreeStore (const std::string& directory, const std::string& name);
+
 			/* GTK CALLBACKS */
 			static void callbackHide (GtkWidget*, GdkEvent*, ModelSelector*);
 			static void callbackSelChanged (GtkWidget*, ModelSelector*);
+			static gboolean onButtonPressed (GtkWidget*, GdkEventButton*, ModelSelector*);
 			static void callbackOK (GtkWidget*, ModelSelector*);
 			static void callbackCancel (GtkWidget*, ModelSelector*);
+
+			static void callbackOnAddSkin (GtkWidget*, ModelSelector*);
+			static void callbackOnChangeSkin (GtkWidget*, ModelSelector*);
+			static void callbackOnRemoveSkin (GtkWidget*, ModelSelector*);
 
 		public:
 

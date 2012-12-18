@@ -24,14 +24,14 @@ public:
 	// Constructor
 	AboutDialog();
 
-	// This is called to initialise the dialog window / create the widgets
-	virtual void populateWindow();
-
 	/** greebo: Shows the dialog (allocates on heap, dialog self-destructs)
 	 */
 	static void showDialog();
 
 private:
+	// This is called to initialise the dialog window / create the widgets
+	void populateWindow();
+
 	// The callback for the buttons
 	static void callbackClose(GtkWidget* widget, AboutDialog* self);
 }; // class AboutDialog

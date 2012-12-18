@@ -5,7 +5,9 @@
 #include "gtkutil/image.h"
 #include "gtkutil/ScrolledFrame.h"
 #include "gtkutil/ModalProgressDialog.h"
+#include "gtkutil/TextEntryDialog.h"
 #include "gtkutil/TreeModel.h"
+#include "gtkutil/dialog.h"
 
 #include "ifilesystem.h"
 #include "iradiant.h"
@@ -41,7 +43,15 @@ namespace ui
 			SKIN_COLUMN, // e.e. "chair1_brown_wood", or "" for no skin
 			SKIN_INDEX,
 			IMAGE_COLUMN, // icon to display
+			TYPE_COLUMN,
 			N_COLUMNS
+		};
+
+		enum
+		{
+			DIRECTORY_TYPE,
+			MODEL_TYPE,
+			SKIN_TYPE
 		};
 	}
 
@@ -49,7 +59,7 @@ namespace ui
 
 	ModelSelector::ModelSelector () :
 		_widget(gtk_window_new(GTK_WINDOW_TOPLEVEL)), _treeStore(gtk_tree_store_new(N_COLUMNS, G_TYPE_STRING,
-				G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_INT, GDK_TYPE_PIXBUF)), _infoStore(gtk_list_store_new(2,
+				G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_INT, GDK_TYPE_PIXBUF, G_TYPE_INT)), _infoStore(gtk_list_store_new(2,
 				G_TYPE_STRING, G_TYPE_STRING)), _lastModel(""), _lastSkin(-1)
 	{
 		// Window properties
@@ -157,7 +167,7 @@ namespace ui
 					gtk_tree_store_append(_store, &iter, parIter);
 					gtk_tree_store_set(_store, &iter, NAME_COLUMN, dirName.c_str(), DIRNAME_COLUMN,
 							relativePath.c_str(), FULLNAME_COLUMN, "", SKIN_COLUMN, "", IMAGE_COLUMN,
-							gtkutil::getLocalPixbuf(ui::icons::ICON_FOLDER), -1);
+							gtkutil::getLocalPixbuf(ui::icons::ICON_FOLDER), TYPE_COLUMN, DIRECTORY_TYPE, -1);
 					GtkTreeIter* dynIter = gtk_tree_iter_copy(&iter); // get a heap-allocated iter
 
 					// Now add a map entry that maps our directory name to the row we just
@@ -192,19 +202,19 @@ namespace ui
 					if (iTemp != _dirIterMap.end())
 						return;
 
-					// Add the fields to the treeview
-					GtkTreeIter iter;
-					gtk_tree_store_append(_store, &iter, parIter);
-					gtk_tree_store_set(_store, &iter, NAME_COLUMN, fileName.c_str(), DIRNAME_COLUMN,
-							"", FULLNAME_COLUMN, relativePath.c_str(), SKIN_COLUMN, "", IMAGE_COLUMN,
-							gtkutil::getLocalPixbuf(imgPath), -1);
-					GtkTreeIter* dynIter = gtk_tree_iter_copy(&iter); // get a heap-allocated iter
-
 					// Load the model
 					ModelLoader* loader = ModelLoader_forType(os::getExtension(fileName));
 					if (loader != NULL) {
 						model::IModelPtr model = loader->loadModelFromPath(relativePath);
-						if (model.get() != NULL) {
+						if (model) {
+							// Add the fields to the treeview
+							GtkTreeIter iter;
+							gtk_tree_store_append(_store, &iter, parIter);
+							gtk_tree_store_set(_store, &iter, NAME_COLUMN, fileName.c_str(), DIRNAME_COLUMN,
+									"", FULLNAME_COLUMN, relativePath.c_str(), SKIN_COLUMN, "-", IMAGE_COLUMN,
+									gtkutil::getLocalPixbuf(imgPath), TYPE_COLUMN, MODEL_TYPE, -1);
+							GtkTreeIter* dynIter = gtk_tree_iter_copy(&iter); // get a heap-allocated iter
+
 							// Update the text in the dialog
 							_dialog.setText(relativePath);
 
@@ -220,17 +230,17 @@ namespace ui
 								gtk_tree_store_append(_store, &skIter, &iter);
 								gtk_tree_store_set(_store, &skIter, NAME_COLUMN, i->c_str(), DIRNAME_COLUMN, "", FULLNAME_COLUMN,
 										relativePath.c_str(), SKIN_COLUMN, i->c_str(), SKIN_INDEX,
-										index, IMAGE_COLUMN, gtkutil::getLocalPixbuf(ui::icons::ICON_SKIN), -1);
+										index, IMAGE_COLUMN, gtkutil::getLocalPixbuf(ui::icons::ICON_SKIN), TYPE_COLUMN, SKIN_TYPE, -1);
 								index++;
 							}
+
+							// Now add a map entry that maps our directory name to the row we just
+							// added
+							_dirIterMap[relativePath] = dynIter;
 						} else {
 							globalWarningStream() << "Could not load model " << relativePath << "\n";
 						}
 					}
-
-					// Now add a map entry that maps our directory name to the row we just
-					// added
-					_dirIterMap[relativePath] = dynIter;
 				}
 
 				// Functor operator
@@ -257,7 +267,8 @@ namespace ui
 		}
 	}
 
-	void ModelSelector::loadDirectory(const std::string& path) {
+	void ModelSelector::loadDirectory (const std::string& path)
+	{
 		if (path.empty())
 			return;
 
@@ -303,6 +314,7 @@ namespace ui
 
 		_selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(treeView));
 		g_signal_connect(G_OBJECT(_selection), "changed", G_CALLBACK(callbackSelChanged), this);
+		g_signal_connect(G_OBJECT(treeView), "button-press-event", (GCallback) onButtonPressed, this);
 
 		// Pack treeview into a scrolled window and frame, and return
 
@@ -370,21 +382,28 @@ namespace ui
 	// Get the value from the selected column
 	int ModelSelector::getSelectedInteger (gint colNum)
 	{
-		// Get the selection
-		GtkTreeIter iter;
-		GtkTreeModel* model;
+		return gtkutil::TreeModel::getSelectedInt(_selection, colNum);
+	}
 
-		if (gtk_tree_selection_get_selected(_selection, &model, &iter)) {
-			// Get the value
-			GValue val;
-			val.g_type = 0;
-			gtk_tree_model_get_value(model, &iter, colNum, &val);
-			// Get the integer
-			return g_value_get_int(&val);
-		} else {
-			// Nothing selected, return empty string
-			return -1;
+	model::IModelPtr ModelSelector::getModel (const std::string& extension, const std::string& relativePath)
+	{
+		ModelLoader* loader = ModelLoader_forType(extension);
+		if (loader != NULL) {
+			model::IModelPtr model = loader->loadModelFromPath(relativePath);
+			return model;
 		}
+		return model::IModelPtr();
+	}
+
+	model::IModelPtr ModelSelector::getModelFromSelection ()
+	{
+		const std::string relativePath = getSelectedString(FULLNAME_COLUMN);
+		return getModel(os::getExtension(relativePath), relativePath);
+	}
+
+	void ModelSelector::updateTreeStore (const std::string& directory, const std::string& name)
+	{
+		// TODO:
 	}
 
 	// Update the info table and model preview based on the current selection
@@ -425,6 +444,65 @@ namespace ui
 				-1);
 	}
 
+	void ModelSelector::callbackOnAddSkin (GtkWidget *menuitem, ModelSelector* self)
+	{
+		model::IModelPtr model = self->getModelFromSelection();
+		if (model) {
+			gtkutil::TextEntryDialog d("Enter skinname", ".none", GlobalRadiant().getMainWindow());
+			model->addSkin(d.getText());
+			self->updateTreeStore(self->getSelectedString(DIRNAME_COLUMN), self->getSelectedString(NAME_COLUMN));
+		} else {
+			gtkutil::errorDialog(_("Cannot load the model"));
+		}
+	}
+
+	void ModelSelector::callbackOnChangeSkin (GtkWidget *menuitem, ModelSelector* self)
+	{
+		model::IModelPtr model = self->getModelFromSelection();
+		if (model) {
+			const int index = self->getSelectedInteger(SKIN_INDEX);
+			gtkutil::TextEntryDialog d("Enter new skinname", self->getSelectedString(SKIN_COLUMN), GlobalRadiant().getMainWindow());
+			const std::string& text = d.getText();
+			model->changeSkin(index, text);
+			self->updateTreeStore(self->getSelectedString(DIRNAME_COLUMN), self->getSelectedString(FULLNAME_COLUMN));
+		} else {
+			gtkutil::errorDialog(_("Cannot load the model"));
+		}
+	}
+
+	void ModelSelector::callbackOnRemoveSkin (GtkWidget *menuitem, ModelSelector* self)
+	{
+		model::IModelPtr model = self->getModelFromSelection();
+		if (model) {
+			const int index = self->getSelectedInteger(SKIN_INDEX);
+			model->removeSkin(index);
+			self->updateTreeStore(self->getSelectedString(DIRNAME_COLUMN), self->getSelectedString(NAME_COLUMN));
+		} else {
+			gtkutil::errorDialog(_("Cannot load the model"));
+		}
+	}
+
+	void ModelSelector::openPopupMenu (bool model, GdkEventButton *event)
+	{
+		GtkWidget *menu = gtk_menu_new();
+		if (model) {
+			GtkWidget *addSkinItem = gtk_menu_item_new_with_label("Add skin");
+			g_signal_connect(G_OBJECT(addSkinItem), "activate", (GCallback) callbackOnAddSkin, this);
+			gtk_menu_shell_append(GTK_MENU_SHELL(menu), addSkinItem);
+		} else {
+			GtkWidget *removeSkinItem = gtk_menu_item_new_with_label("Remove skin");
+			g_signal_connect(G_OBJECT(removeSkinItem), "activate", (GCallback) callbackOnRemoveSkin, this);
+			gtk_menu_shell_append(GTK_MENU_SHELL(menu), removeSkinItem);
+			GtkWidget *changeSkinItem = gtk_menu_item_new_with_label("Change skin");
+			g_signal_connect(G_OBJECT(changeSkinItem), "activate", (GCallback) callbackOnChangeSkin, this);
+			gtk_menu_shell_append(GTK_MENU_SHELL(menu), changeSkinItem);
+		}
+
+		gtk_widget_show_all(menu);
+
+		gtk_menu_popup(GTK_MENU(menu), NULL, NULL, NULL, NULL, event->button, gdk_event_get_time((GdkEvent*) event));
+	}
+
 	/* GTK CALLBACKS */
 
 	void ModelSelector::callbackHide (GtkWidget* widget, GdkEvent* ev, ModelSelector* self)
@@ -443,11 +521,22 @@ namespace ui
 		self->updateSelected();
 	}
 
+	gboolean ModelSelector::onButtonPressed (GtkWidget *treeview, GdkEventButton *event, ModelSelector* self)
+	{
+		if (event->type == GDK_BUTTON_PRESS && event->button == 3) {
+			const int type = self->getSelectedInteger(TYPE_COLUMN);
+			if (type != DIRECTORY_TYPE) {
+				self->openPopupMenu(type == MODEL_TYPE, event);
+				return TRUE;
+			}
+		}
+		return FALSE;
+	}
+
 	void ModelSelector::callbackOK (GtkWidget* widget, ModelSelector* self)
 	{
 		// Remember the selected model then exit from the recursive main loop
 		self->_lastModel = self->getSelectedString(FULLNAME_COLUMN);
-		// TODO: This must not be the name, but the skin index
 		self->_lastSkin = self->getSelectedInteger(SKIN_INDEX);
 		gtk_main_quit();
 		gtk_widget_hide(self->_widget);

@@ -72,10 +72,22 @@ namespace gtkutil
 		// Get the selected value by querying the selection object
 		if (gtk_tree_selection_get_selected(sel, &model, &iter)) {
 			return getString(model, &iter, colNo);
-		} else {
-			// Nothing selected, return empty string
-			return "";
 		}
+		// Nothing selected, return empty string
+		return "";
+	}
+
+	int TreeModel::getSelectedInt (GtkTreeSelection* selection, gint colNo)
+	{
+		GtkTreeIter iter;
+		GtkTreeModel* model;
+
+		// Get the selected value by querying the selection object
+		if (gtk_tree_selection_get_selected(selection, &model, &iter)) {
+			return getInt(model, &iter, colNo);
+		}
+		// Nothing selected, return empty string
+		return -1;
 	}
 
 	// Extract a parent string

@@ -82,6 +82,10 @@ namespace model
 			 * given model. The vector may be empty as a model does not require any associated skins.
 			 */
 			virtual const ModelSkinList& getSkinsForModel () const = 0;
+
+			virtual void addSkin (const std::string& skinName) = 0;
+			virtual void changeSkin (int index, const std::string& skinName) = 0;
+			virtual void removeSkin (int index) = 0;
 	};
 
 	// Smart pointer typedef

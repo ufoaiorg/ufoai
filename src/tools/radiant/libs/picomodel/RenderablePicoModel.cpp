@@ -122,6 +122,18 @@ namespace model
 		return modelSkinList;
 	}
 
+	void RenderablePicoModel::addSkin (const std::string& skinName)
+	{
+	}
+
+	void RenderablePicoModel::changeSkin (int index, const std::string& skinName)
+	{
+	}
+
+	void RenderablePicoModel::removeSkin (int index)
+	{
+	}
+
 	void RenderablePicoModel::render (Renderer& renderer, const VolumeTest& volume, const Matrix4& localToWorld,
 			std::vector<Shader*> states) const
 	{
