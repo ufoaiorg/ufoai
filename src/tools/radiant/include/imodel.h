@@ -28,6 +28,7 @@
 #include "generic/constant.h"
 #include "Bounded.h"
 #include "irender.h"
+#include "../../../shared/sharedptr.h"
 
 // Model skinlist typedef
 typedef std::vector<std::string> ModelSkinList;
@@ -84,7 +85,7 @@ namespace model
 	};
 
 	// Smart pointer typedef
-	typedef std::auto_ptr<model::IModel> IModelPtr;
+	typedef SharedPtr<model::IModel> IModelPtr;
 
 } // namespace model
 
