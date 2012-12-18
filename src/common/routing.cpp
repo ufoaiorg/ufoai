@@ -451,15 +451,9 @@ int RT_CheckCell (mapTiles_t *mapTiles, routing_t *routes, const int actorSize, 
 	 *      restart below the current floor.
 	 */
 	while (true) { /* Loop forever, we will exit if we hit the model bottom or find a valid floor. */
-		if (debugTrace)
-			Com_Printf("[(%i, %i, %i, %i)]Casting floor (%f, %f, %f) to (%f, %f, %f)\n",
-				x, y, z, actorSize, start[0], start[1], start[2], end[0], end[1], end[2]);
-
 		tr = RT_COMPLETEBOXTRACE_PASSAGE(mapTiles, start, end, &footBox, list);
 		if (tr.fraction >= 1.0) {
 			/* There is no brush underneath this starting point. */
-			if (debugTrace)
-				Com_Printf("Reached bottom of map.  No floor in cell(s). %f\n", tr.endpos[2]);
 			/* Mark all cells to the model base as filled. */
 			for (i = z; i >= 0 ; i--) {
 				/* no floor in this cell, it is bottomless! */
@@ -470,15 +464,12 @@ int RT_CheckCell (mapTiles_t *mapTiles, routing_t *routes, const int actorSize, 
 			return 0;
 		}
 
-		/* We have hit a brush that faces up and can be stood on. Look for a ceiling. */
+		/* We have hit a brush that faces up and can be stood on. A potential floor. Look for a ceiling. */
 		bottom = tr.endpos[2];  /* record the floor position. */
 
 #ifdef DEBUG
 		assert(initial > bottom);
 #endif
-
-		if (debugTrace)
-			Com_Printf("Potential floor found at %f.\n", bottom);
 
 		/* Record the hit position in tstart for later use. */
 		VectorCopy(tr.endpos, tstart);
@@ -487,13 +478,8 @@ int RT_CheckCell (mapTiles_t *mapTiles, routing_t *routes, const int actorSize, 
 		VectorAdd(tstart, legBox.mins, box.mins); /* Now bmins has the lower required foot space extent */
 		VectorAdd(tstart, legBox.maxs, box.maxs); /* Now bmaxs has the upper required foot space extent */
 
-		if (debugTrace)
-			Com_Printf("    Casting leg room (%f, %f, %f) to (%f, %f, %f)\n",
-				box.mins[0], box.mins[1], box.mins[2], box.maxs[0], box.maxs[1], box.maxs[2]);
 		tr = RT_COMPLETEBOXTRACE_PASSAGE(mapTiles, vec3_origin, vec3_origin, &box, list);
 		if (tr.fraction < 1.0) {
-			if (debugTrace)
-				Com_Printf("Cannot use found surface- leg obstruction found.\n");
 			/*
 			 * There is a premature obstruction.  We can't use this as a floor.
 			 * Check under start.  We need to have at least the minimum amount of clearance from our ceiling,
@@ -503,8 +489,6 @@ int RT_CheckCell (mapTiles_t *mapTiles, routing_t *routes, const int actorSize, 
 			/* Check in case we are trying to scan too close to the bottom of the model. */
 			if (start[2] <= QuantToModel(PATHFINDING_MIN_OPENING)) {
 				/* There is no brush underneath this starting point. */
-				if (debugTrace)
-					Com_Printf("Reached bottom of map.  No floor in cell(s).\n");
 				/* Mark all cells to the model base as filled. */
 				for (i = z; i >= 0 ; i--) {
 					/* no floor in this cell, it is bottomless! */
@@ -522,13 +506,8 @@ int RT_CheckCell (mapTiles_t *mapTiles, routing_t *routes, const int actorSize, 
 		VectorAdd(tstart, torsoBox.mins, box.mins); /* Now bmins has the lower required torso space extent */
 		VectorAdd(tstart, torsoBox.maxs, box.maxs); /* Now bmaxs has the upper required torso space extent */
 
-		if (debugTrace)
-			Com_Printf("    Casting torso room (%f, %f, %f) to (%f, %f, %f)\n",
-				box.mins[0], box.mins[1], box.mins[2], box.maxs[0], box.maxs[1], box.maxs[2]);
 		tr = RT_COMPLETEBOXTRACE_PASSAGE(mapTiles, vec3_origin, vec3_origin, &box, list);
 		if (tr.fraction < 1.0) {
-			if (debugTrace)
-				Com_Printf("Cannot use found surface- torso obstruction found.\n");
 			/*
 			 * There is a premature obstruction.  We can't use this as a floor.
 			 * Check under start.  We need to have at least the minimum amount of clearance from our ceiling,
@@ -538,8 +517,6 @@ int RT_CheckCell (mapTiles_t *mapTiles, routing_t *routes, const int actorSize, 
 			/* Check in case we are trying to scan too close to the bottom of the model. */
 			if (start[2] <= QuantToModel(PATHFINDING_MIN_OPENING)) {
 				/* There is no brush underneath this starting point. */
-				if (debugTrace)
-					Com_Printf("Reached bottom of map.  No floor in cell(s).\n");
 				/* Mark all cells to the model base as filled. */
 				for (i = z; i >= 0 ; i--) {
 					/* no floor in this cell, it is bottomless! */
@@ -561,10 +538,6 @@ int RT_CheckCell (mapTiles_t *mapTiles, routing_t *routes, const int actorSize, 
 		tstart[2] = box.maxs[2]; /* The box trace for height starts at the top of the last trace. */
 		VectorCopy(tstart, tend);
 		tend[2] = PATHFINDING_HEIGHT * UNIT_HEIGHT; /* tend now reaches the model ceiling. */
-
-		if (debugTrace)
-			Com_Printf("    Casting ceiling (%f, %f, %f) to (%f, %f, %f)\n",
-				tstart[0], tstart[1], tstart[2], tend[0], tend[1], tend[2]);
 
 		tr = RT_COMPLETEBOXTRACE_PASSAGE(mapTiles, tstart, tend, &ceilBox, list);
 
@@ -604,29 +577,18 @@ int RT_CheckCell (mapTiles_t *mapTiles, routing_t *routes, const int actorSize, 
 
 	assert(fz <= cz);
 
-	if (debugTrace)
-		Com_Printf("Valid ceiling found, bottom=%f, top=%f, fz=%i, cz=%i.\n", bottom, top, fz, cz);
-
 	/* Last, update the floors and ceilings of cells from (x, y, fz) to (x, y, cz) */
 	for (i = fz; i <= cz; i++) {
 		/* Round up floor to keep feet out of model. */
 		RT_FLOOR(routes, actorSize, x, y, i) = bottomQ - i * CELL_HEIGHT;
 		/* Round down ceiling to heep head out of model.  Also offset by floor and max at 255. */
 		RT_CEILING(routes, actorSize, x, y, i) = topQ - i * CELL_HEIGHT;
-		if (debugTrace) {
-			Com_Printf("floor(%i, %i, %i, %i)=%i.\n", x, y, i, actorSize, RT_FLOOR(routes, actorSize, x, y, i));
-			Com_Printf("ceil(%i, %i, %i, %i)=%i.\n", x, y, i, actorSize, RT_CEILING(routes, actorSize, x, y, i));
-		}
 	}
 
 	/* Also, update the floors of any filled cells immediately above the ceiling up to our original cell. */
 	for (i = cz + 1; i <= z; i++) {
 		RT_FLOOR(routes, actorSize, x, y, i) = CELL_HEIGHT; /* There is no floor in this cell. */
 		RT_CEILING(routes, actorSize, x, y, i) = 0; /* There is no ceiling, the true indicator of a filled cell. */
-		if (debugTrace) {
-			Com_Printf("floor(%i, %i, %i)=%i.\n", x, y, i, RT_FLOOR(routes, actorSize, x, y, i));
-			Com_Printf("ceil(%i, %i, %i)=%i.\n", x, y, i, RT_CEILING(routes, actorSize, x, y, i));
-		}
 	}
 
 	/* Return the lowest z coordinate that we updated floors for. */
