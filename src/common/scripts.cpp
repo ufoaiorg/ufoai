@@ -2218,14 +2218,15 @@ bool Com_GetCharacterModel (character_t * chr)
  * @param[in] teamDef pointer to the teamDef to get the gender for.
  * @return A valid gender for the teamDef.
  */
-static int Com_GetGender(const teamDef_t *teamDef) {
+static int Com_GetGender (const teamDef_t *teamDef)
+{
 	int gender;
 	int numModels = 0;
 	for (gender = 0; gender < NAME_LAST; ++gender)
 		if (teamDef->numNames[gender] > 0 && teamDef->numNames[gender + NAME_LAST] > 0)
 			numModels += teamDef->numModels[gender];
 	if (numModels == 0)
-		Com_Error(ERR_DROP, "Could not set character values for team '%s'\n", teamDef->name);
+		Com_Error(ERR_DROP, "Could not set character values for team '%s'", teamDef->name);
 	int roll = rand() % numModels;
 	for (gender = 0; gender < NAME_LAST; ++gender)
 		if (teamDef->numNames[gender] > 0 && teamDef->numNames[gender + NAME_LAST] > 0) {
