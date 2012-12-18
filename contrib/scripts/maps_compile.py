@@ -64,7 +64,7 @@ def get_maps(path, verbose=True):
 
 def runret(command):
   """ Run command through shell, return ret code """
-  print command
+  print(command)
   return subprocess.call(command, shell=True)
 
 # --- /functions ---
