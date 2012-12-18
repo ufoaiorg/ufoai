@@ -17,6 +17,7 @@ endif
 
 $(TARGET)_SRCS      = \
 	tools/ufomodel/ufomodel.cpp \
+	tools/ufomodel/md2.cpp \
 	\
 	shared/mathlib.cpp \
 	shared/aabb.cpp \

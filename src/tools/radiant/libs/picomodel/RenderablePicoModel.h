@@ -35,6 +35,8 @@ namespace model
 			std::string surfaceCountStr;
 			std::string vertexCountStr;
 
+			std::string _fileName;
+
 		public:
 
 			/** Constructor. Accepts a picoModel_t struct containing the raw model data
@@ -151,6 +153,10 @@ namespace model
 			 */
 			const SurfaceList& getSurfaces() const {
 				return _surfVec;
+			}
+
+			const std::string& getFilename() const {
+				return _fileName;
 			}
 	};
 }

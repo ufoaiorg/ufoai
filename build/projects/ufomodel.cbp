@@ -113,6 +113,7 @@
 		<Unit filename="..\..\src\shared\utf8.h" />
 		<Unit filename="..\..\src\shared\vector.h" />
 		<Unit filename="..\..\src\tools\ufomodel\ufomodel.cpp" />
+		<Unit filename="..\..\src\tools\ufomodel\md2.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />

@@ -55,6 +55,8 @@ namespace model
 		const int vertexCount = getVertexCount();
 		vertexCountStream << vertexCount;
 		vertexCountStr = vertexCountStream.str();
+
+		_fileName = mod->fileName;
 	}
 
 	// Virtual render function
@@ -124,14 +126,21 @@ namespace model
 
 	void RenderablePicoModel::addSkin (const std::string& skinName)
 	{
+		modelSkinList.push_back(skinName);
 	}
 
 	void RenderablePicoModel::changeSkin (int index, const std::string& skinName)
 	{
+		if (index < 0 || index >= modelSkinList.size())
+			return;
+		modelSkinList[index] = skinName;
 	}
 
 	void RenderablePicoModel::removeSkin (int index)
 	{
+		if (index < 0 || index >= modelSkinList.size())
+			return;
+		modelSkinList.erase(modelSkinList.begin() + index);
 	}
 
 	void RenderablePicoModel::render (Renderer& renderer, const VolumeTest& volume, const Matrix4& localToWorld,
