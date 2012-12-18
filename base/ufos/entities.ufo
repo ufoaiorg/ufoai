@@ -493,13 +493,15 @@ entity func_door {
 		health		"Define the needed damage to destroy the door"
 		group		"Multipart doors can be grouped to open together"
 		noise		"Soundfile to play when door opens"
+		material	"Material id MAT_GLASS = 0 (default), MAT_METAL = 1, MAT_ELECTRICAL = 2, MAT_WOOD = 3"
 		particle	"Particle id to be spawned after object is destroyed"
 		targetname	"The id of this entity"
 		speed		"The speed of this door"
 	}
 
 	type {
-		speed	"UNSIGNED V_INT"
+		speed		"UNSIGNED V_INT"
+		material	"UNSIGNED V_INT"
 	}
 
 	mandatory {
@@ -509,6 +511,7 @@ entity func_door {
 	default {
 		spawnflags	"255"
 		speed		"50"
+		material	"1"
 	}
 }
 
