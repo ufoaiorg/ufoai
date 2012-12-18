@@ -300,7 +300,7 @@ bool MS_LoadXML (xmlNode_t *p)
 			/** No tech found drop message. */
 			continue;
 		}
-		mess = MS_AddNewMessage(title, text, (messageType_t)mtype, tech);
+		mess = MS_AddNewMessage(title, text, (messageType_t)mtype, tech, false, false);
 		mess->eventMail = mail;
 		cgi->XML_GetDate(sn, SAVE_MESSAGES_DATE, &mess->date.day, &mess->date.sec);
 		/* redo timestamp text after setting date */
