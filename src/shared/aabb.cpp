@@ -35,6 +35,15 @@ AABB::AABB (const vec3_t mini, const vec3_t maxi)
 	VectorCopy(mini, mins);
 	VectorCopy(maxi, maxs);
 }
+AABB::AABB (const vec_t minX, const vec_t minY, const vec_t minZ, const vec_t maxX, const vec_t maxY, const vec_t maxZ)
+{
+	mins[0] = minX;
+	mins[1] = minY;
+	mins[2] = minZ;
+	maxs[0] = maxX;
+	maxs[1] = maxY;
+	maxs[2] = maxZ;
+}
 /**
  * @brief If the point is outside the box, expand the box to accommodate it.
  */
