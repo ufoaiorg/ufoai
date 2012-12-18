@@ -2214,6 +2214,29 @@ bool Com_GetCharacterModel (character_t * chr)
 }
 
 /**
+ * @brief Return a random (weighted by number of models) gender for this teamDef.
+ * @param[in] teamDef pointer to the teamDef to get the gender for.
+ * @return A valid gender for the teamDef.
+ */
+static int Com_GetGender(const teamDef_t *teamDef) {
+	int gender;
+	int numModels = 0;
+	for (gender = 0; gender < NAME_LAST; ++gender)
+		if (teamDef->numNames[gender] > 0 && teamDef->numNames[gender + NAME_LAST] > 0)
+			numModels += teamDef->numModels[gender];
+	if (numModels == 0)
+		Com_Error(ERR_DROP, "Could not set character values for team '%s'\n", teamDef->name);
+	int roll = rand() % numModels;
+	for (gender = 0; gender < NAME_LAST; ++gender)
+		if (teamDef->numNames[gender] > 0 && teamDef->numNames[gender + NAME_LAST] > 0) {
+			if (roll < teamDef->numModels[gender])
+				break;
+			roll -= teamDef->numModels[gender];
+		}
+	return gender;
+}
+
+/**
  * @brief Assign character values, 3D models and names to a character.
  * @param[in] teamDefition The team definition id to use to generate the character values.
  * @param[in,out] chr The character that should get the paths to the different models/skins.
@@ -2238,7 +2261,7 @@ void Com_GetCharacterValues (const char *teamDefition, character_t * chr)
 	/* get the models */
 	while (retry--) {
 		const char *str;
-		const int gender = rand() % NAME_LAST;
+		const int gender = Com_GetGender(chr->teamDef);
 
 		chr->gender = gender;
 
