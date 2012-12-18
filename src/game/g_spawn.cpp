@@ -108,6 +108,7 @@ static const spawn_t spawns[] = {
 	{"misc_message", SP_misc_message},
 	{"misc_smoke", SP_misc_smoke},
 	{"misc_fire", SP_misc_fire},
+	{"misc_smokestun", SP_misc_smokestun},
 	{"misc_camera", SP_misc_camera},
 
 	{NULL, NULL}
