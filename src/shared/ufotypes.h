@@ -45,6 +45,9 @@ typedef byte pos_t;
 typedef pos_t pos3_t[3];
 typedef pos_t pos4_t[4];
 
+typedef int ipos_t;
+typedef ipos_t ipos3_t[3];
+
 #if defined _WIN32
 #	define UFO_SIZE_T "%Iu"
 #else

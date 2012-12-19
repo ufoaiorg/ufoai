@@ -11,9 +11,6 @@ MAP CONFIGURATION
 ==============================================================
 */
 
-typedef int ipos_t;
-typedef ipos_t ipos3_t[3];
-
 /**
  * @brief plane_t structure
  */
