@@ -1059,7 +1059,7 @@ trace_t TR_BoxTrace (TR_TILE_TYPE *tile, const vec3_t start, const vec3_t end, c
  * @brief Traces all submodels in the specified tile.  Provides for a short
  *   circuit if the trace tries to move past fraction to save time.
  */
-trace_t TR_TileBoxTrace (TR_TILE_TYPE *myTile, const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, const int levelmask, const int brushmask, const int brushreject)
+trace_t TR_TileBoxTrace (TR_TILE_TYPE *myTile, const vec3_t start, const vec3_t end, const AABB &aabb, const int levelmask, const int brushmask, const int brushreject)
 {
 	trace_t newtr, tr;
 	int i;
@@ -1079,7 +1079,7 @@ trace_t TR_TileBoxTrace (TR_TILE_TYPE *myTile, const vec3_t start, const vec3_t 
 			continue;
 
 		assert(h->cnode < myTile->numnodes + 6); /* +6 => bbox */
-		newtr = TR_BoxTrace(myTile, start, end, mins, maxs, h->cnode, brushmask, brushreject, tr.fraction);
+		newtr = TR_BoxTrace(myTile, start, end, aabb.mins, aabb.maxs, h->cnode, brushmask, brushreject, tr.fraction);
 
 		/* memorize the trace with the minimal fraction */
 		if (newtr.fraction == 0.0)
@@ -1106,7 +1106,7 @@ trace_t TR_SingleTileBoxTrace (mapTiles_t *mapTiles, const vec3_t start, const v
 {
 	trace_t tr;
 	/* Trace the whole line against the first tile. */
-	tr = TR_TileBoxTrace(&mapTiles->mapTiles[0], start, end, traceBox->mins, traceBox->maxs, levelmask, brushmask, brushreject);
+	tr = TR_TileBoxTrace(&mapTiles->mapTiles[0], start, end, *traceBox, levelmask, brushmask, brushreject);
 	tr.mapTile = 0;
 	return tr;
 }

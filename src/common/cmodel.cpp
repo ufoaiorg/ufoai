@@ -340,7 +340,7 @@ trace_t CM_CompleteBoxTrace (mapTiles_t *mapTiles, const vec3_t start, const vec
 			continue;
 		if (smin[2] > wpmaxs[2] && emin[2] > wpmaxs[2])
 			continue;
-		newtr = TR_TileBoxTrace(myTile, start, end, box.mins, box.maxs, levelmask, brushmask, brushreject);
+		newtr = TR_TileBoxTrace(myTile, start, end, box, levelmask, brushmask, brushreject);
 		newtr.mapTile = tile;
 
 		/* memorize the trace with the minimal fraction */
