@@ -23,8 +23,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
-#ifndef SHARED_H
-#define SHARED_H
+#pragma once
 
 #ifdef HAVE_CONFIG_H
 # ifdef ANDROID
@@ -173,5 +172,3 @@ void Com_Error(int code, const char *fmt, ...) __attribute__((noreturn, format(_
 
 #define OBJSET(obj, val) (memset(&(obj), (val), sizeof(obj)))
 #define OBJZERO(obj)     OBJSET((obj), 0)
-
-#endif
