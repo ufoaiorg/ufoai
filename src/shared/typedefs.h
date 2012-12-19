@@ -218,19 +218,6 @@ typedef struct mapData_s {
 	vec3_t mapMin, mapMax;
 } mapData_t;
 
-typedef struct pathing_s {
-	/* TUs needed to move to this cell for the current actor */
-	byte area[ACTOR_MAX_STATES][PATHFINDING_HEIGHT][PATHFINDING_WIDTH][PATHFINDING_WIDTH];
-	byte areaStored[ACTOR_MAX_STATES][PATHFINDING_HEIGHT][PATHFINDING_WIDTH][PATHFINDING_WIDTH];
-
-	/* Indicates where the actor would have moved from to get to the cell */
-	dvec_t areaFrom[ACTOR_MAX_STATES][PATHFINDING_HEIGHT][PATHFINDING_WIDTH][PATHFINDING_WIDTH];
-
-	/* forbidden list */
-	pos_t **fblist;	/**< pointer to forbidden list (entities are standing here) */
-	int fblength;	/**< length of forbidden list (amount of entries) */
-} pathing_t;
-
 typedef struct {
 	vec3_t mins, maxs;
 	vec3_t origin;			/**< for sounds or lights */
