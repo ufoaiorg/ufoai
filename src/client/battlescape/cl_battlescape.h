@@ -22,8 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CL_BATTLESCAPE_H_
-#define CL_BATTLESCAPE_H_
+#pragma once
 
 typedef struct {
 	char name[MAX_VAR];
@@ -100,5 +99,3 @@ char *CL_SetConfigString(int index, dbuffer *msg);
 void Grid_DumpWholeClientMap_f(void);
 void Grid_DumpClientRoutes_f(void);
 #endif
-
-#endif /* CL_BATTLESCAPE_H_ */
