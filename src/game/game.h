@@ -30,7 +30,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define GAME_GAME_H
 
 #include "../shared/defines.h"
-#include "../shared/typedefs.h"
 #include "../common/tracing.h"
 #include "../common/grid.h"
 #include "../common/cvar.h"
