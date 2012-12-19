@@ -374,7 +374,7 @@ trace_t CM_EntCompleteBoxTrace (mapTiles_t *mapTiles, const vec3_t start, const 
 	vec3_t bmins, bmaxs;
 
 	/* trace against world first */
-	trace = CM_CompleteBoxTrace(mapTiles, start, end, AABB(traceBox->mins, traceBox->maxs), levelmask, brushmask, brushreject);
+	trace = CM_CompleteBoxTrace(mapTiles, start, end, *traceBox, levelmask, brushmask, brushreject);
 	if (!list || trace.fraction == 0.0)
 		return trace;
 
