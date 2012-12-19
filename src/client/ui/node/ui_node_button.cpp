@@ -67,6 +67,9 @@ void uiButtonNode::draw (uiNode_t *node)
 	uiSpriteStatus_t iconStatus = SPRITE_STATUS_NORMAL;
 	const char *font = UI_GetFontFromNode(node);
 
+	if (node->flash)
+		UI_EnableFlashing(node->flashColor, node->flashSpeed);
+
 	if (!node->onClick || node->disabled) {
 		/** @todo need custom color when button is disabled */
 		textColor = disabledColor;
@@ -143,6 +146,9 @@ void uiButtonNode::draw (uiNode_t *node)
 			text);
 		R_Color(NULL);
 	}
+
+	if (node->flash)
+		UI_DisableFlashing();
 }
 
 /**
@@ -152,8 +158,10 @@ void uiButtonNode::onLoading (uiNode_t *node)
 {
 	node->padding = 8;
 	node->contentAlign = ALIGN_CC;
+	node->flashSpeed = 1.0;
 	Vector4Set(node->selectedColor, 1, 1, 1, 1);
 	Vector4Set(node->color, 1, 1, 1, 1);
+	Vector4Set(node->flashColor, 1, 1, 1, 0);
 }
 
 /**

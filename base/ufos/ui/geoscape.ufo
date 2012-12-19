@@ -515,9 +515,10 @@ window geoscape
 
 			string		"_Mailclient"
 			tooltip		"_INBOX (with unread mails)"
-			color		"1 1 1 1"
+			color		"0 0.5 0 1"
 			font	 	"f_small"
 			pos			"41 595"
+			flash		true
 			size		"175 34"
 			selectcolor	"1 1 1 1"
 			background		"ui/button_geoscape"

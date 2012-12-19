@@ -334,6 +334,10 @@ void UI_RegisterAbstractNode (uiBehaviour_t *behaviour)
 	UI_RegisterNodeProperty(behaviour, "disabled", V_BOOL, uiNode_t, disabled);
 	/* If true, the node is not ''tangible''. We click through it, then it will not receive mouse event. */
 	UI_RegisterNodeProperty(behaviour, "ghost", V_BOOL, uiNode_t, ghost);
+	/* Flashing effect. */
+	UI_RegisterNodeProperty(behaviour, "flash", V_BOOL, uiNode_t, flash);
+	/* Speed of the flashing effect */
+	UI_RegisterNodeProperty(behaviour, "flashspeed", V_FLOAT, uiNode_t, flashSpeed);
 	/* Border size we want to display. */
 	UI_RegisterNodeProperty(behaviour, "border", V_INT, uiNode_t, border);
 	/* Padding size we want to use. Few node support it. */
@@ -375,6 +379,8 @@ void UI_RegisterAbstractNode (uiBehaviour_t *behaviour)
 	UI_RegisterNodeProperty(behaviour, "color", V_COLOR, uiNode_t, color);
 	/* Text color the node will use when something is selected. */
 	UI_RegisterNodeProperty(behaviour, "selectcolor", V_COLOR, uiNode_t, selectedColor);
+	/* Flashing color */
+	UI_RegisterNodeProperty(behaviour, "flashcolor", V_COLOR, uiNode_t, flashColor);
 	/* Alignement of the text into the node, or elements into blocks. */
 	UI_RegisterNodeProperty(behaviour, "contentalign", V_UI_ALIGN, uiNode_t, contentAlign);
 	/* When <code>invis</code> property is false (default value);

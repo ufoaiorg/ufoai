@@ -341,15 +341,23 @@ int UI_DrawString (const char *fontID, align_t align, int x, int y, int absX, in
 	return lines * lineHeight;
 }
 
-void UI_EnableFlashing (bool enable)
+/**
+ * @brief Enables flashing effect for UI nodes
+ * @param[in] flashingColor Color to fade to and back
+ * @param[in] speed Speed of flashing effect
+ */
+void UI_EnableFlashing (const vec4_t flashingColor, float speed)
 {
-	if (!enable) {
-		R_TexOverride(NULL);
-		return;
-	}
-
-	vec4_t color = {1, 1, 1, 0};
-
-	color[3] = sin(3.1415 * cls.realtime * 2 / 1000.0) * 0.5 + 0.5;
+	vec4_t color;
+	Vector4Copy(flashingColor, color);
+	color[3] = sin(3.1415 * cls.realtime * speed / 500.0) * 0.5 + 0.5;
 	R_TexOverride(color);
+}
+
+/**
+ * @brief Disables flashing effect for UI nodes
+ */
+void UI_DisableFlashing (void)
+{
+	R_TexOverride(NULL);
 }

@@ -101,6 +101,8 @@ struct uiNode_t {
 	bool invalidated;		/**< true if we need to update the layout */
 	bool ghost;				/**< true if the node is not tangible */
 	bool state;				/**< is node hovered */
+	bool flash;				/**< is node flashing */
+	float flashSpeed;		/**< speed of the flashing effect */
 	int padding;				/**< padding for this node - default 3 - see bgcolor */
 	int align;					/**< used to identify node position into a parent using a layout manager. Else it do nothing. */
 	int num;					/**< used to identify child into a parent; not sure it is need @todo delete it */
@@ -120,6 +122,7 @@ struct uiNode_t {
 	vec4_t bordercolor;			/**< rgba - see border and padding */
 	vec4_t color;				/**< rgba */
 	vec4_t selectedColor;		/**< rgba The color to draw the line specified by textLineSelected in. */
+	vec3_t flashColor;		/**< rgb The color of the flashing effect. */
 
 	/* common events */
 	struct uiAction_s *onClick;
