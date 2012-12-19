@@ -123,7 +123,7 @@ typedef struct {
 	void (IMPORT *SetInlineModelOrientation) (const char *name, const vec3_t origin, const vec3_t angles);
 	void (IMPORT *GetInlineModelAABB) (const char *name, AABB& aabb);
 
-	void (IMPORT *SetModel) (edict_t * ent, const char *name);
+	void (IMPORT *SetModel) (edict_t *ent, const char *name);
 
 	/** @brief collision detection
 	 * @note traces a box from start to end, ignoring entities passent, stopping if it hits an object of type specified
@@ -139,9 +139,9 @@ typedef struct {
 
 	/** links entity into the world - so that it is sent to the client and used for
 	 * collision detection, etc. Must be relinked if its size, position or solidarity changes */
-	void (IMPORT *LinkEdict) (edict_t * ent);
+	void (IMPORT *LinkEdict) (edict_t *ent);
 	/** call before removing an interactive edict */
-	void (IMPORT *UnlinkEdict) (edict_t * ent);
+	void (IMPORT *UnlinkEdict) (edict_t *ent);
 	int (IMPORT *BoxEdicts) (const vec3_t mins, const vec3_t maxs, edict_t **list, int maxcount);
 	int (IMPORT *GetTouchingEdicts) (const AABB& aabb, edict_t **list, int maxcount, edict_t *skip);
 
@@ -151,15 +151,15 @@ typedef struct {
 	bool (IMPORT *TestLineWithEnt) (const vec3_t start, const vec3_t stop, const int levelmask, const char **entlist);
 	float (IMPORT *GrenadeTarget) (const vec3_t from, const vec3_t at, float speed, bool launched, bool rolled, vec3_t v0);
 
-	void (IMPORT *MoveCalc) (const routing_t * routes, actorSizeEnum_t actorSize, pathing_t * path, const pos3_t from, byte crouchingState, int distance, pos_t ** forbiddenList, int forbiddenListLength);
-	void (IMPORT *MoveStore) (pathing_t * path);
-	pos_t (IMPORT *MoveLength) (const pathing_t * path, const pos3_t to, byte crouchingState, bool stored);
+	void (IMPORT *MoveCalc) (const routing_t *routes, actorSizeEnum_t actorSize, pathing_t * path, const pos3_t from, byte crouchingState, int distance, pos_t ** forbiddenList, int forbiddenListLength);
+	void (IMPORT *MoveStore) (pathing_t *path);
+	pos_t (IMPORT *MoveLength) (const pathing_t *path, const pos3_t to, byte crouchingState, bool stored);
 	int (IMPORT *MoveNext) (const pathing_t *path, const pos3_t from, byte crouchingState);
-	int (IMPORT *GridFloor) (const routing_t * routes, actorSizeEnum_t actorSize, const pos3_t pos);
+	int (IMPORT *GridFloor) (const routing_t *routes, actorSizeEnum_t actorSize, const pos3_t pos);
 	int (IMPORT *GetTUsForDirection) (int dir, int crouched);
-	pos_t (IMPORT *GridFall) (const routing_t * routes, actorSizeEnum_t actorSize, const pos3_t pos);
-	void (IMPORT *GridPosToVec) (const routing_t * routes, actorSizeEnum_t actorSize, const pos3_t pos, vec3_t vec);
-	void (IMPORT *GridRecalcRouting) (routing_t * routes, const char *name, const GridBox& box, const char **list);
+	pos_t (IMPORT *GridFall) (const routing_t *routes, actorSizeEnum_t actorSize, const pos3_t pos);
+	void (IMPORT *GridPosToVec) (const routing_t *routes, actorSizeEnum_t actorSize, const pos3_t pos, vec3_t vec);
+	void (IMPORT *GridRecalcRouting) (routing_t *routes, const char *name, const GridBox& box, const char **list);
 	bool (IMPORT *CanActorStandHere) (actorSizeEnum_t actorSize, const pos3_t pos);
 	float (IMPORT *GetVisibility) (const pos3_t position);
 
@@ -243,20 +243,20 @@ typedef struct {
 	/* each new level entered will cause a call to G_SpawnEntities */
 	void (EXPORT *SpawnEntities) (const char *mapname, bool day, const char *entstring);
 
-	bool (EXPORT *ClientConnect) (player_t * client, char *userinfo, size_t userinfoSize);
-	bool (EXPORT *ClientBegin) (player_t * client);
-	void (EXPORT *ClientStartMatch) (player_t * client);
-	void (EXPORT *ClientUserinfoChanged) (player_t * client, const char *userinfo);
-	void (EXPORT *ClientDisconnect) (player_t * client);
-	void (EXPORT *ClientCommand) (player_t * client);
+	bool (EXPORT *ClientConnect) (player_t *client, char *userinfo, size_t userinfoSize);
+	bool (EXPORT *ClientBegin) (player_t *client);
+	void (EXPORT *ClientStartMatch) (player_t *client);
+	void (EXPORT *ClientUserinfoChanged) (player_t *client, const char *userinfo);
+	void (EXPORT *ClientDisconnect) (player_t *client);
+	void (EXPORT *ClientCommand) (player_t *client);
 
-	int (EXPORT *ClientAction) (player_t * client);
-	void (EXPORT *ClientEndRound) (player_t * client);
-	void (EXPORT *ClientTeamInfo) (const player_t * client);
-	void (EXPORT *ClientInitActorStates) (const player_t * client);
-	int (EXPORT *ClientGetTeamNum) (const player_t * client);
-	int (EXPORT *ClientGetTeamNumPref) (const player_t * client);
-	bool (EXPORT *ClientIsReady) (const player_t * client);
+	int (EXPORT *ClientAction) (player_t *client);
+	void (EXPORT *ClientEndRound) (player_t *client);
+	void (EXPORT *ClientTeamInfo) (const player_t *client);
+	void (EXPORT *ClientInitActorStates) (const player_t *client);
+	int (EXPORT *ClientGetTeamNum) (const player_t *client);
+	int (EXPORT *ClientGetTeamNumPref) (const player_t *client);
+	bool (EXPORT *ClientIsReady) (const player_t *client);
 
 	int (EXPORT *ClientGetActiveTeam) (void);
 	const char* (EXPORT *ClientGetName) (int pnum);
