@@ -1048,16 +1048,15 @@ trace_t TR_BoxTrace (TR_TILE_TYPE *tile, const vec3_t start, const vec3_t end, c
 }
 
 /**
+ * @brief Traces all submodels in the specified tile.  Provides for a short
+ *   circuit if the trace tries to move past fraction to save time.
  * @param[in] myTile The tile being traced
  * @param[in] start trace start vector
  * @param[in] end trace end vector
- * @param[in] mins box mins
- * @param[in] maxs box maxs
+ * @param[in] aabb The box we are moving through the world
  * @param[in] levelmask Selects which submodels get scanned.
  * @param[in] brushmask brushes the trace should stop at (see MASK_*)
  * @param[in] brushreject brushes the trace should ignore (see MASK_*)
- * @brief Traces all submodels in the specified tile.  Provides for a short
- *   circuit if the trace tries to move past fraction to save time.
  */
 trace_t TR_TileBoxTrace (TR_TILE_TYPE *myTile, const vec3_t start, const vec3_t end, const AABB &aabb, const int levelmask, const int brushmask, const int brushreject)
 {
