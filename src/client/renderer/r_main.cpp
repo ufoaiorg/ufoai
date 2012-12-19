@@ -47,6 +47,7 @@ rlocals_t r_locals;
 
 image_t *r_noTexture;			/* use for bad textures */
 image_t *r_warpTexture;
+image_t *r_dummyTexture; /* 1x1 pixel white texture to be used when texturing is required, but texture is not available */
 
 static cvar_t *r_maxtexres;
 

@@ -118,5 +118,6 @@ extern image_t *r_flaretextures[NUM_FLARETEXTURES];
 extern image_t *shadow;	/**< draw this when actor is alive */
 extern image_t *r_noTexture;
 extern image_t *r_warpTexture;
+extern image_t *r_dummyTexture;  /**< 1x1 pixel white texture to be used when texturing is required, but texture is not available */
 
 #endif
