@@ -944,6 +944,45 @@ void R_TexEnv (GLenum mode)
 	r_state.active_texunit->texenv = mode;
 }
 
+/**
+ * @brief Sets special texture environment mode to override texture color; don't forget to call R_TexOverride(NULL) to reset after drawing; intended for UI only, will conflict with lightmaps
+ */
+void R_TexOverride (vec4_t rgba)
+{
+	R_SelectTexture(&texunit_lightmap); /* abuse lightmap texture unit for color manipulation */
+
+	if (!rgba) {
+		R_TexEnv(GL_MODULATE);
+		glDisable(GL_TEXTURE_2D);
+		R_SelectTexture(&texunit_diffuse);
+		return;
+	}
+
+	glEnable(GL_TEXTURE_2D);
+
+	R_TexEnv(GL_COMBINE); /* enable color combiner */
+	/* setup texture combiner to blend between actual color of previous texture stage and the constant rgb color given as the parameter to this function
+	 * amount of blending is defined by alpha channel of constant color
+	 */
+	glTexEnvi(GL_TEXTURE_ENV, GL_SOURCE0_RGB, GL_CONSTANT); /* set constant color as blending target*/
+	glTexEnvi(GL_TEXTURE_ENV, GL_OPERAND0_RGB, GL_SRC_COLOR);
+	glTexEnvi(GL_TEXTURE_ENV, GL_SOURCE1_RGB, GL_PREVIOUS); /* set incoming color as blending source */
+	glTexEnvi(GL_TEXTURE_ENV, GL_OPERAND1_RGB, GL_SRC_COLOR);
+	glTexEnvi(GL_TEXTURE_ENV, GL_SOURCE2_RGB, GL_CONSTANT); /* set constant color alpha as blending factor */
+	glTexEnvi(GL_TEXTURE_ENV, GL_OPERAND2_RGB, GL_SRC_ALPHA);
+	glTexEnvi(GL_TEXTURE_ENV, GL_COMBINE_RGB, GL_INTERPOLATE); /* set blending mode to interpolation from src1 to src0 */
+	/* copy alpha from incoming color, it could be used later for framebuffer operations */
+	glTexEnvi(GL_TEXTURE_ENV, GL_COMBINE_ALPHA, GL_REPLACE);
+	glTexEnvi(GL_TEXTURE_ENV, GL_SOURCE0_ALPHA, GL_PREVIOUS);
+	glTexEnvi(GL_TEXTURE_ENV, GL_OPERAND0_ALPHA, GL_SRC_ALPHA);
+
+	glTexEnvfv(GL_TEXTURE_ENV, GL_TEXTURE_ENV_COLOR, rgba);
+
+	R_BindTexture(r_dummyTexture->texnum);
+
+	R_SelectTexture(&texunit_diffuse);
+}
+
 const vec4_t color_white = {1, 1, 1, 1};
 
 /**

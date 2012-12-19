@@ -43,4 +43,6 @@ void UI_DrawRect(int x, int y, int w, int h, const vec4_t color, float lineWidth
 void UI_PushClipRect(int x, int y, int width, int height);
 void UI_PopClipRect(void);
 
+void UI_EnableFlashing(bool enable);
+
 #endif

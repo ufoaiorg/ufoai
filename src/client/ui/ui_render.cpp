@@ -25,9 +25,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_main.h"
 #include "ui_font.h"
 #include "ui_render.h"
+#include "../client.h"
 #include "../cl_video.h"
 #include "../renderer/r_draw.h"
 #include "../renderer/r_misc.h"
+#include "../renderer/r_state.h"
 
 /**
  * @brief Fills a box of pixels with a single color
@@ -337,4 +339,17 @@ int UI_DrawString (const char *fontID, align_t align, int x, int y, int absX, in
 		*curLine += lines;
 
 	return lines * lineHeight;
+}
+
+void UI_EnableFlashing (bool enable)
+{
+	if (!enable) {
+		R_TexOverride(NULL);
+		return;
+	}
+
+	vec4_t color = {1, 1, 1, 0};
+
+	color[3] = sin(3.1415 * cls.realtime * 2 / 1000.0) * 0.5 + 0.5;
+	R_TexOverride(color);
 }
