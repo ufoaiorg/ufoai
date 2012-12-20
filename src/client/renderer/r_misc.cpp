@@ -58,7 +58,6 @@ void R_InitMiscTexture (void)
 		}
 	}
 	r_noTexture = R_LoadImageData("***r_notexture***", (byte *) data, 8, 8, it_effect);
-	R_UploadTexture((unsigned int *)data, 8, 8, r_noTexture);
 
 	for (x = 0; x < MISC_TEXTURE_SIZE; x++) {
 		for (y = 0; y < MISC_TEXTURE_SIZE; y++) {
@@ -69,11 +68,9 @@ void R_InitMiscTexture (void)
 		}
 	}
 	r_warpTexture = R_LoadImageData("***r_warptexture***", (byte *)data, MISC_TEXTURE_SIZE, MISC_TEXTURE_SIZE, it_effect);
-	R_UploadTexture((unsigned int *)data, MISC_TEXTURE_SIZE, MISC_TEXTURE_SIZE, r_warpTexture);
 
 	/* 1x1 pixel white texture to be used when texturing is required, but texture is not available */
 	r_dummyTexture = R_LoadImageData("***r_dummytexture***", (byte *)dummytexture, 1, 1, it_effect);
-	R_UploadTexture((unsigned int *)dummytexture, 1, 1, r_dummyTexture);
 
 	/* empty pic in the texture chain for cinematic frames */
 	R_LoadImageData("***cinematic***", NULL, VID_NORM_WIDTH, VID_NORM_HEIGHT, it_pic);
