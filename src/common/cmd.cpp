@@ -31,6 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
+#include "cmd.h"
 #include "common.h"
 #include "msg.h"
 #include "../shared/parse.h"
