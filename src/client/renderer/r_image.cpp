@@ -169,7 +169,7 @@ void R_LoadImage (const char *name, byte **pic, int *width, int *height)
 	}
 }
 
-void R_ScaleTexture (unsigned *in, int inwidth, int inheight, unsigned *out, int outwidth, int outheight)
+void R_ScaleTexture (const unsigned *in, int inwidth, int inheight, unsigned *out, int outwidth, int outheight)
 {
 	int i, j;
 	unsigned frac;
@@ -248,9 +248,9 @@ void R_GetScaledTextureSize (int width, int height, int *scaledWidth, int *scale
  * @param height Height of the image
  * @param[in,out] image Pointer to the image structure to initialize
  */
-void R_UploadTexture (unsigned *data, int width, int height, image_t* image)
+void R_UploadTexture (const unsigned *data, int width, int height, image_t* image)
 {
-	unsigned *scaled;
+	unsigned *scaled = 0;
 	int scaledWidth, scaledHeight;
 	int texFormat = r_config.gl_compressed_solid_format ? r_config.gl_compressed_solid_format : r_config.gl_solid_format;
 	int i, c;
@@ -295,8 +295,6 @@ void R_UploadTexture (unsigned *data, int width, int height, image_t* image)
 	if (scaledWidth != width || scaledHeight != height) {  /* whereas others need to be scaled */
 		scaled = Mem_PoolAllocTypeN(unsigned, scaledWidth * scaledHeight, vid_imagePool);
 		R_ScaleTexture(data, width, height, scaled, scaledWidth, scaledHeight);
-	} else {
-		scaled = data;
 	}
 
 	/* and mipmapped */
@@ -331,10 +329,10 @@ void R_UploadTexture (unsigned *data, int width, int height, image_t* image)
 		R_CheckError();
 	}
 
-	glTexImage2D(GL_TEXTURE_2D, 0, texFormat, scaledWidth, scaledHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, scaled);
+	glTexImage2D(GL_TEXTURE_2D, 0, texFormat, scaledWidth, scaledHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, scaled ? scaled : data);
 	R_CheckError();
 
-	if (scaled != data)
+	if (scaled)
 		Mem_Free(scaled);
 }
 
@@ -427,7 +425,7 @@ image_t *R_GetImage (const char *name)
  * @param[in] height The height of the image (power of two, please)
  * @param[in] type The image type @sa imagetype_t
  */
-image_t *R_LoadImageData (const char *name, byte * pic, int width, int height, imagetype_t type)
+image_t *R_LoadImageData (const char *name, const byte *pic, int width, int height, imagetype_t type)
 {
 	image_t *image;
 	imageArray_t *images;
@@ -494,7 +492,7 @@ image_t *R_LoadImageData (const char *name, byte * pic, int width, int height, i
 
 	if (pic) {
 		R_BindTexture(image->texnum);
-		R_UploadTexture((unsigned *) pic, width, height, image);
+		R_UploadTexture((const unsigned *) pic, width, height, image);
 	}
 	return image;
 }
