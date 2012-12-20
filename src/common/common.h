@@ -30,7 +30,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../shared/shared.h"
 #include "../shared/mathlib.h"
 #include "../shared/defines.h"
-#include "../shared/typedefs.h"
 #include "cvar.h"
 #include "mem.h"
 
