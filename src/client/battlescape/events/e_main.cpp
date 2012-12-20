@@ -115,12 +115,12 @@ const eventRegister_t events[] = {
 	{E(EV_ACTOR_DIE), "ssbb", CL_ActorDie, CL_ActorDieTime, CL_CheckDefault},
 	{E(EV_ACTOR_REVITALISED), "ss", CL_ActorRevitalised, NULL, CL_CheckDefault},
 	{E(EV_ACTOR_STATS), "!sbsbb", CL_ActorStats, NULL, NULL},
-	{E(EV_ACTOR_STATECHANGE), "ss", CL_ActorStateChange, NULL, NULL},
+	{E(EV_ACTOR_STATECHANGE), "ss", CL_ActorStateChange, NULL, CL_CheckDefault},
 	{E(EV_ACTOR_RESERVATIONCHANGE), "ssss", CL_ActorReservationChange, NULL, NULL},
 	{E(EV_ACTOR_WOUND), "sbbb", CL_ActorWound, NULL, NULL},
 
-	{E(EV_INV_ADD), "s*", CL_InvAdd, CL_InvAddTime, NULL},
-	{E(EV_INV_DEL), "sbbb", CL_InvDel, NULL, NULL},
+	{E(EV_INV_ADD), "s*", CL_InvAdd, CL_InvAddTime, CL_CheckDefault},
+	{E(EV_INV_DEL), "sbbb", CL_InvDel, NULL, CL_CheckDefault},
 	{E(EV_INV_AMMO), "sbbbbb", CL_InvAmmo, NULL, NULL},
 	{E(EV_INV_RELOAD), "sbbbbb", CL_InvReload, CL_InvReloadTime, NULL},
 	/** @sa G_ReadItem, G_WriteItem */
