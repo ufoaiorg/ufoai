@@ -350,7 +350,7 @@ void UI_EnableFlashing (const vec4_t flashingColor, float speed)
 {
 	vec4_t color;
 	Vector4Copy(flashingColor, color);
-	color[3] = sin(3.1415 * cls.realtime * speed / 500.0) * 0.5 + 0.5;
+	color[3] = sin(M_PI * cls.realtime * speed / 500.0f) * 0.5f + 0.5f;
 	R_TexOverride(color);
 }
 
