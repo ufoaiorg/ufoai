@@ -20,7 +20,7 @@
  */
 
 #include <stdio.h>
-#include "picomodel.h"
+#include <picomodel.h>
 typedef unsigned char byte;
 #include <stdlib.h>
 #include <algorithm>

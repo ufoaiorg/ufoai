@@ -173,6 +173,7 @@ check_headers() {
 	check_header "link.h"
 	check_header "CUnit/Basic.h"
 	check_header "mxml.h"
+	check_header "picomodel.h"
 	check_header "gtk/gtk.h" "gtk+-2.0"
 	check_header "gtksourceview/gtksourceview.h" "gtksourceview-2.0"
 	check_header "gtk/gtkglwidget.h" "gtkglext-1.0"

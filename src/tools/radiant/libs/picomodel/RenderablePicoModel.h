@@ -5,7 +5,6 @@
 #include <vector>
 #include "RenderablePicoSurface.h"
 #include "imodel.h"
-#include "picomodel.h"
 #include "cullable.h"
 #include "math/aabb.h"
 #include "igl.h"

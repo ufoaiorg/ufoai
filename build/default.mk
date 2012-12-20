@@ -35,6 +35,8 @@ OGG_CFLAGS               ?= $(call PKG_CFLAGS,ogg)
 OGG_LIBS                 ?= $(call PKG_LIBS,ogg)
 MXML_CFLAGS              ?= $(call PKG_CFLAGS,mxml)
 MXML_LIBS                ?= $(call PKG_LIBS,mxml)
+PICOMODEL_CFLAGS         ?= $(call PKG_CFLAGS,picomodel)
+PICOMODEL_LIBS           ?= $(call PKG_LIBS,picomodel)
 INTL_LIBS                ?=
 ifdef HAVE_XVID_H
 XVID_CFLAGS              ?=
@@ -61,4 +63,17 @@ MXML_CFLAGS               = -Isrc/libs/mxml
 MXML_LIBS                 =
 else
 MXML_SRCS                 =
+endif
+ifndef HAVE_PICOMODEL_H
+PICOMODEL_SRCS            = libs/picomodel/picointernal.c \
+                            libs/picomodel/picomodel.c \
+                            libs/picomodel/picomodules.c \
+                            libs/picomodel/pm_ase.c \
+                            libs/picomodel/pm_md3.c \
+                            libs/picomodel/pm_obj.c \
+                            libs/picomodel/pm_md2.c
+PICOMODEL_CFLAGS          = -Isrc/libs/picomodel
+PICOMODEL_LIBS            =
+else
+PICOMODEL_SRCS            =
 endif

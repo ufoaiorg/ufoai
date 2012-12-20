@@ -49,8 +49,7 @@
 /* #define DEBUG_PM_OBJ_EX */
 
 /** this holds temporary vertex data read by parser */
-typedef struct SObjVertexData
-{
+typedef struct SObjVertexData {
 	picoVec3_t v; /**< geometric vertices */
 	picoVec2_t vt; /**< texture vertices */
 	picoVec3_t vn; /**< vertex normals (optional) */
@@ -97,9 +96,8 @@ static int _obj_canload (PM_PARAMS_CANLOAD)
 
 		/* material library keywords are teh good */
 		if (!_pico_stricmp(p->token, "usemtl") || !_pico_stricmp(p->token, "mtllib") || !_pico_stricmp(p->token, "g")
-				||
-				!_pico_stricmp(p->token, "v")) /* v,g bit fishy, but uh... */
-		{
+				|| !_pico_stricmp(p->token, "v")) /* v,g bit fishy, but uh... */
+				{
 			/* free the pico parser thing */
 			_pico_free_parser(p);
 
@@ -213,11 +211,11 @@ static int _obj_mtl_load (picoModel_t *model)
 
 	/* sanity checks */
 	if (model == NULL || model->fileName == NULL)
-		return 0;
+	return 0;
 
 	/* skip if we have a zero length model file name */
 	if (!strlen(model->fileName))
-		return 0;
+	return 0;
 
 	/* helper */
 #define _obj_mtl_error_return \
@@ -230,7 +228,7 @@ static int _obj_mtl_load (picoModel_t *model)
 	/* alloc copy of model file name */
 	fileName = _pico_clone_alloc(model->fileName);
 	if (fileName == NULL)
-		return 0;
+	return 0;
 
 	/* change extension of model file to .mtl */
 	_pico_setfext(fileName, "mtl");
@@ -240,25 +238,25 @@ static int _obj_mtl_load (picoModel_t *model)
 
 	/* check result */
 	if (mtlBufSize == 0)
-		return 1; /* file is empty: no error */
+	return 1; /* file is empty: no error */
 	if (mtlBufSize < 0)
-		return 0; /* load failed: error */
+	return 0; /* load failed: error */
 
 	/* create a new pico parser */
 	p = _pico_new_parser(mtlBuffer, mtlBufSize);
 	if (p == NULL)
-		_obj_mtl_error_return;
+	_obj_mtl_error_return;
 
 	/* doo teh .mtl parse */
 	while (1) {
 		/* get next token in material file */
 		if (_pico_parse(p, 1) == NULL)
-			break;
+		break;
 #if 0
 
 		/* skip empty lines */
 		if (p->token == NULL || !strlen(p->token))
-			continue;
+		continue;
 
 		/* skip comment lines */
 		if (p->token[0] == '#') {
@@ -281,7 +279,7 @@ static int _obj_mtl_load (picoModel_t *model)
 			/* create a new pico shader */
 			shader = PicoNewShader(model);
 			if (shader == NULL)
-				_obj_mtl_error_return;
+			_obj_mtl_error_return;
 
 			/* set shader name */
 			PicoSetShaderName(shader, name);
@@ -295,7 +293,7 @@ static int _obj_mtl_load (picoModel_t *model)
 
 			/* pointer to current shader must be valid */
 			if (curShader == NULL)
-				_obj_mtl_error_return;
+			_obj_mtl_error_return;
 
 			/* get material's diffuse map name */
 			mapName = _pico_parse(p, 0);
@@ -316,7 +314,7 @@ static int _obj_mtl_load (picoModel_t *model)
 
 			/* get dissolve factor */
 			if (!_pico_parse_float(p, &value))
-				_obj_mtl_error_return;
+			_obj_mtl_error_return;
 
 			/* set shader transparency */
 			PicoSetShaderTransparency(curShader, value);
@@ -344,34 +342,34 @@ static int _obj_mtl_load (picoModel_t *model)
 
 			/* pointer to current shader must be valid */
 			if (curShader == NULL)
-				_obj_mtl_error_return;
+			_obj_mtl_error_return;
 
 			/* get totally screwed up shininess (a random value in fact ;) */
 			if (!_pico_parse_float(p, &value))
-				_obj_mtl_error_return;
+			_obj_mtl_error_return;
 
 			/* okay, there is no way to set this correctly, so we simply */
 			/* try to guess a few ranges (most common ones i have seen) */
 
 			/* assume 0..2048 range */
 			if (value > 1000)
-				value = 128.0 * (value / 2048.0);
+			value = 128.0 * (value / 2048.0);
 			/* assume 0..1000 range */
 			else if (value > 200)
-				value = 128.0 * (value / 1000.0);
+			value = 128.0 * (value / 1000.0);
 			/* assume 0..200 range */
 			else if (value > 100)
-				value = 128.0 * (value / 200.0);
+			value = 128.0 * (value / 200.0);
 			/* assume 0..100 range */
 			else if (value > 1)
-				value = 128.0 * (value / 100.0);
+			value = 128.0 * (value / 100.0);
 			/* assume 0..1 range */
 			else {
 				value *= 128.0;
 			}
 			/* negative shininess is bad (yes, i have seen it...) */
 			if (value < 0.0)
-				value = 0.0;
+			value = 0.0;
 
 			/* set the pico shininess value in range 0..127 */
 			/* geez, .obj is such a mess... */
@@ -384,11 +382,11 @@ static int _obj_mtl_load (picoModel_t *model)
 
 			/* pointer to current shader must be valid */
 			if (curShader == NULL)
-				_obj_mtl_error_return;
+			_obj_mtl_error_return;
 
 			/* get color vector */
 			if (!_pico_parse_vec(p, v))
-				_obj_mtl_error_return;
+			_obj_mtl_error_return;
 
 			/* scale to byte range */
 			color[0] = (picoByte_t) (v[0] * 255);
@@ -406,11 +404,11 @@ static int _obj_mtl_load (picoModel_t *model)
 
 			/* pointer to current shader must be valid */
 			if (curShader == NULL)
-				_obj_mtl_error_return;
+			_obj_mtl_error_return;
 
 			/* get color vector */
 			if (!_pico_parse_vec(p, v))
-				_obj_mtl_error_return;
+			_obj_mtl_error_return;
 
 			/* scale to byte range */
 			color[0] = (picoByte_t) (v[0] * 255);
@@ -428,11 +426,11 @@ static int _obj_mtl_load (picoModel_t *model)
 
 			/* pointer to current shader must be valid */
 			if (curShader == NULL)
-				_obj_mtl_error_return;
+			_obj_mtl_error_return;
 
 			/* get color vector */
 			if (!_pico_parse_vec(p, v))
-				_obj_mtl_error_return;
+			_obj_mtl_error_return;
 
 			/* scale to byte range */
 			color[0] = (picoByte_t) (v[0] * 255);
@@ -506,7 +504,6 @@ static picoModel_t *_obj_load (PM_PARAMS_LOAD)
 #if 0
 	shader = _obj_mtl_load(model);
 #endif
-
 
 	/* parse obj line by line */
 	while (1) {

@@ -27,9 +27,6 @@
 
 #include "model.h"
 
-#include "picomodel.h"
-#include "RenderablePicoModel.h"
-
 #include "iarchive.h"
 #include "idatastream.h"
 #include "imodel.h"

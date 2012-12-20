@@ -112,11 +112,12 @@
 			<Add option="-Wno-unused-parameter" />
 			<Add option="-Wreturn-type" />
 			<Add option="-Wwrite-strings" />
-			<Add option="-I../../src/tools/radiant/libs" />
-			<Add option="-I../../src/tools/radiant/include" />
 			<Add option="-Wno-variadic-macros" />
 			<Add option="-D__GNUWIN32__" />
 			<Add option="-DWINVER=0x501" />
+			<Add directory="../../src/tools/radiant/libs" />
+			<Add directory="../../src/tools/radiant/include" />
+			<Add directory="../../src/libs/picomodel" />
 		</Compiler>
 		<Linker>
 			<Add library="libjpeg" />
@@ -315,7 +316,6 @@
 		<Unit filename="..\..\src\tools\radiant\libs\os\file.h" />
 		<Unit filename="..\..\src\tools\radiant\libs\os\path.h" />
 		<Unit filename="..\..\src\tools\radiant\libs\particles.h" />
-		<Unit filename="..\..\src\tools\radiant\libs\picomodel.h" />
 		<Unit filename="..\..\src\tools\radiant\libs\picomodel\RenderablePicoModel.cpp" />
 		<Unit filename="..\..\src\tools\radiant\libs\picomodel\RenderablePicoModel.h" />
 		<Unit filename="..\..\src\tools\radiant\libs\picomodel\RenderablePicoSurface.cpp" />
@@ -323,26 +323,27 @@
 		<Unit filename="..\..\src\tools\radiant\libs\picomodel\VectorLightList.h" />
 		<Unit filename="..\..\src\tools\radiant\libs\picomodel\model.cpp" />
 		<Unit filename="..\..\src\tools\radiant\libs\picomodel\model.h" />
-		<Unit filename="..\..\src\tools\radiant\libs\picomodel\picointernal.c">
+		<Unit filename="..\..\src\libs\picomodel\picointernal.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\radiant\libs\picomodel\picointernal.h" />
-		<Unit filename="..\..\src\tools\radiant\libs\picomodel\picomodel.c">
+		<Unit filename="..\..\src\libs\picomodel\picomodel.h" />
+		<Unit filename="..\..\src\libs\picomodel\picointernal.h" />
+		<Unit filename="..\..\src\libs\picomodel\picomodel.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\radiant\libs\picomodel\picomodules.c">
+		<Unit filename="..\..\src\libs\picomodel\picomodules.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\radiant\libs\picomodel\pm_ase.c">
+		<Unit filename="..\..\src\libs\picomodel\pm_ase.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\radiant\libs\picomodel\pm_md2.c">
+		<Unit filename="..\..\src\libs\picomodel\pm_md2.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\radiant\libs\picomodel\pm_md3.c">
+		<Unit filename="..\..\src\libs\picomodel\pm_md3.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\radiant\libs\picomodel\pm_obj.c">
+		<Unit filename="..\..\src\libs\picomodel\pm_obj.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\tools\radiant\libs\pivot.h" />

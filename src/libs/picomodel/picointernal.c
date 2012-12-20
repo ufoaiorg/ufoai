@@ -42,14 +42,13 @@
 #include "picointernal.h"
 
 /* function pointers */
-void *(*_pico_ptr_malloc) (size_t) = malloc;
+void *(*_pico_ptr_malloc) ( size_t) = malloc;
 void (*_pico_ptr_free) (void*) = free;
 void (*_pico_ptr_load_file) (char*, unsigned char**, int*) = NULL;
 void (*_pico_ptr_free_file) (void*) = NULL;
 void (*_pico_ptr_print) (int, const char*) = NULL;
 
-typedef union
-{
+typedef union {
 	float f;
 	char c[4];
 } floatSwapUnion;
@@ -231,7 +230,7 @@ void _pico_printf (int level, const char *format, ...)
 		return;
 
 	/* format string */
-	va_start(argptr,format);
+	va_start(argptr, format);
 	vsprintf(str, format, argptr);
 	va_end(argptr);
 
@@ -528,8 +527,8 @@ float _pico_little_float (float src)
 
 int _pico_big_long (int src)
 {
-	return ((src & 0xFF000000) >> 24) | ((src & 0x00FF0000) >> 8) | ((src & 0x0000FF00) << 8) | ((src & 0x000000FF)
-			<< 24);
+	return ((src & 0xFF000000) >> 24) | ((src & 0x00FF0000) >> 8) | ((src & 0x0000FF00) << 8)
+			| ((src & 0x000000FF) << 24);
 }
 
 short _pico_big_short (short src)

@@ -46,8 +46,7 @@
 #define MD3_SCALE		  (1.0f / 64.0f)
 
 /* md3 model frame information */
-typedef struct md3Frame_s
-{
+typedef struct md3Frame_s {
 	float bounds[2][3];
 	float localOrigin[3];
 	float radius;
@@ -55,8 +54,7 @@ typedef struct md3Frame_s
 } md3Frame_t;
 
 /* md3 surface md3 (one object mesh) */
-typedef struct md3Surface_s
-{
+typedef struct md3Surface_s {
 	char magic[4];
 	char name[64]; /* polyset name */
 	int flags;
@@ -71,31 +69,26 @@ typedef struct md3Surface_s
 	int ofsEnd; /* next surface follows */
 } md3Surface_t;
 
-typedef struct md3Shader_s
-{
+typedef struct md3Shader_s {
 	char name[64];
 	int shaderIndex; /* for ingame use */
 } md3Shader_t;
 
-typedef struct md3Triangle_s
-{
+typedef struct md3Triangle_s {
 	int indexes[3];
 } md3Triangle_t;
 
-typedef struct md3TexCoord_s
-{
+typedef struct md3TexCoord_s {
 	float st[2];
 } md3TexCoord_t;
 
-typedef struct md3Vertex_s
-{
+typedef struct md3Vertex_s {
 	short xyz[3];
 	short normal;
 } md3Vertex_t;
 
 /* md3 model file md3 structure */
-typedef struct md3_s
-{
+typedef struct md3_s {
 	char magic[4]; /* MD3_MAGIC */
 	int version;
 	char name[64]; /* model name */
@@ -316,8 +309,8 @@ static picoModel_t *_md3_load (PM_PARAMS_LOAD)
 
 		/* copy vertexes */
 		texCoord = (md3TexCoord_t*) ((picoByte_t *) surface + surface->ofsSt);
-		vertex = (md3Vertex_t*) ((picoByte_t*) surface + surface->ofsVertexes + surface->numVerts * frameNum
-				* sizeof(md3Vertex_t));
+		vertex = (md3Vertex_t*) ((picoByte_t*) surface + surface->ofsVertexes
+				+ surface->numVerts * frameNum * sizeof(md3Vertex_t));
 		_pico_set_color(color, 255, 255, 255, 255);
 
 		for (j = 0; j < surface->numVerts; j++, texCoord++, vertex++) {

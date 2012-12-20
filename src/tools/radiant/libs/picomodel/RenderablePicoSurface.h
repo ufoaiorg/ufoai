@@ -1,7 +1,7 @@
 #ifndef RENDERABLEPICOSURFACE_H_
 #define RENDERABLEPICOSURFACE_H_
 
-#include "picomodel.h"
+#include <picomodel.h>
 #include "irender.h"
 #include "render.h"
 #include "cullable.h"

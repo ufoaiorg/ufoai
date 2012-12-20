@@ -1,5 +1,6 @@
 TARGET             := uforadiant
 RADIANT_BASE       := tools/radiant
+LIBS_BASE          := libs
 
 # if the linking should be static
 $(TARGET)_STATIC   ?= $(STATIC)
@@ -9,8 +10,8 @@ endif
 
 $(TARGET)_LINKER   := $(CXX)
 $(TARGET)_FILE     := radiant/$(TARGET)$(EXE_EXT)
-$(TARGET)_CFLAGS   += -Isrc/$(RADIANT_BASE)/libs -Isrc/$(RADIANT_BASE)/include $(GTK_CFLAGS) $(GLIB_CFLAGS) $(GTK_SOURCEVIEW_CFLAGS) $(GTK_GLEXT_CFLAGS) $(OPENAL_CFLAGS) $(OPENGL_CFLAGS) $(XML2_CFLAGS) $(GDK_PIXBUF_CFLAGS)
-$(TARGET)_LDFLAGS  += -lgthread-2.0 -lvorbisfile -lvorbis -logg $(GTK_LIBS) $(GLIB_LIBS) $(GTK_SOURCEVIEW_LIBS) $(GTK_GLEXT_LIBS) $(OPENAL_LIBS) $(OPENGL_LIBS) $(XML2_LIBS) $(GDK_PIXBUF_LIBS) $(SO_LIBS) -lm -lz
+$(TARGET)_CFLAGS   += -Isrc/$(RADIANT_BASE)/libs -Isrc/$(RADIANT_BASE)/include $(GTK_CFLAGS) $(GLIB_CFLAGS) $(GTK_SOURCEVIEW_CFLAGS) $(GTK_GLEXT_CFLAGS) $(OPENAL_CFLAGS) $(OPENGL_CFLAGS) $(XML2_CFLAGS) $(GDK_PIXBUF_CFLAGS) $(PICOMODEL_CFLAGS)
+$(TARGET)_LDFLAGS  += -lgthread-2.0 -lvorbisfile -lvorbis -logg $(GTK_LIBS) $(GLIB_LIBS) $(GTK_SOURCEVIEW_LIBS) $(GTK_GLEXT_LIBS) $(OPENAL_LIBS) $(OPENGL_LIBS) $(XML2_LIBS) $(GDK_PIXBUF_LIBS) $(PICOMODEL_LIBS) $(SO_LIBS) -lm -lz
 
 $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/commands.cpp \
@@ -377,13 +378,8 @@ $(TARGET)_SRCS      = \
 	\
 	shared/parse.cpp \
 	shared/entitiesdef.cpp \
-	$(RADIANT_BASE)/libs/picomodel/picointernal.c \
-	$(RADIANT_BASE)/libs/picomodel/picomodel.c \
-	$(RADIANT_BASE)/libs/picomodel/picomodules.c \
-	$(RADIANT_BASE)/libs/picomodel/pm_ase.c \
-	$(RADIANT_BASE)/libs/picomodel/pm_md3.c \
-	$(RADIANT_BASE)/libs/picomodel/pm_obj.c \
-	$(RADIANT_BASE)/libs/picomodel/pm_md2.c
+	\
+	$(PICOMODEL_SRCS)
 
 ifeq ($(TARGET_OS),mingw32)
 	$(TARGET)_SRCS += $(RADIANT_BASE)/radiant/radiant.rc

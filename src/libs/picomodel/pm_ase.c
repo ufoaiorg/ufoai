@@ -54,16 +54,14 @@ static picoColor_t white = { 255, 255, 255, 255 };
 /* Material/SubMaterial management */
 /* A material should have 1..n submaterials assigned to it */
 
-typedef struct aseSubMaterial_s
-{
+typedef struct aseSubMaterial_s {
 	struct aseSubMaterial_s* next;
 	int subMtlId;
 	picoShader_t* shader;
 
 } aseSubMaterial_t;
 
-typedef struct aseMaterial_s
-{
+typedef struct aseMaterial_s {
 	struct aseMaterial_s* next;
 	struct aseSubMaterial_s* subMtls;
 	int mtlId;
@@ -227,25 +225,21 @@ static int _ase_canload (PM_PARAMS_CANLOAD)
 	return PICO_PMV_OK;
 }
 
-typedef struct aseVertex_s
-{
+typedef struct aseVertex_s {
 	picoVec3_t xyz;
 	picoVec3_t normal;
 	picoIndex_t id;
 } aseVertex_t;
 
-typedef struct aseTexCoord_s
-{
+typedef struct aseTexCoord_s {
 	picoVec2_t texcoord;
 } aseTexCoord_t;
 
-typedef struct aseColor_s
-{
+typedef struct aseColor_s {
 	picoColor_t color;
 } aseColor_t;
 
-typedef struct aseFace_s
-{
+typedef struct aseFace_s {
 	picoIndex_t indices[9];
 	picoIndex_t smoothingGroup;
 	picoIndex_t materialId;
