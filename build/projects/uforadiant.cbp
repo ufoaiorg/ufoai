@@ -234,6 +234,8 @@
 		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\StockIconMenuItem.h" />
 		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\TextButton.h" />
 		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\TextColumn.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\TextEntryDialog.cpp" />
+		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\TextEntryDialog.h" />
 		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\TextMenuItem.h" />
 		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\TextMenuItemToggle.h" />
 		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\TextPanel.cpp" />
