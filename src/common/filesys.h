@@ -30,6 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define _COMMON_FILESYS_H
 
 #include <stdio.h>
+#include "../shared/ufotypes.h"
 
 #define	BASEDIRNAME	"base"
 
