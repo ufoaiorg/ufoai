@@ -122,7 +122,7 @@ struct uiNode_t {
 	vec4_t bordercolor;			/**< rgba - see border and padding */
 	vec4_t color;				/**< rgba */
 	vec4_t selectedColor;		/**< rgba The color to draw the line specified by textLineSelected in. */
-	vec3_t flashColor;		/**< rgb The color of the flashing effect. */
+	vec4_t flashColor;		/**< rgbx The color of the flashing effect. */
 
 	/* common events */
 	struct uiAction_s *onClick;
