@@ -1424,8 +1424,6 @@ ufoType_t CP_MissionChooseUFO (const mission_t *mission)
 {
 	ufoType_t ufoTypes[UFO_MAX];
 	int numTypes = 0;
-	int idx;
-	float randNumber;
 
 	switch (mission->category) {
 	case INTERESTCATEGORY_RECON:
@@ -1468,13 +1466,13 @@ ufoType_t CP_MissionChooseUFO (const mission_t *mission)
 		return UFO_MAX;
 
 	/* Roll the random number */
-	randNumber = frand();
+	const float randNumber = frand();
 
 	/* If we reached this point, then mission will be spawned from space: choose UFO */
-	idx = (int) ((numTypes - 1) * randNumber);
-	if (idx >= numTypes)
-		Sys_Error("CP_MissionChooseUFO: idx exceeded: %i (randNumber: %f, numTypes: %i)",
-				idx, randNumber, numTypes);
+	int idx = (int) (numTypes * randNumber);
+	if (idx >= numTypes) {
+		idx = numTypes -1;
+	}
 
 	return ufoTypes[idx];
 }
