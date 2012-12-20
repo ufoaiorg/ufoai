@@ -497,9 +497,9 @@ static bool SV_TestLineWithEnt (const vec3_t start, const vec3_t stop, const int
 	return hit;
 }
 
-static void SV_RecalcRouting (routing_t *routes, const char *name, const GridBox& box, const char **list)
+static void SV_RecalcRouting (const char *name, const GridBox& box, const char **list)
 {
-	Grid_RecalcRouting(&sv->mapTiles, routes, name, box, list);
+	Grid_RecalcRouting(&sv->mapTiles, sv->mapData.routes, name, box, list);
 }
 
 static bool SV_CanActorStandHere (const int actorSize, const pos3_t pos)
