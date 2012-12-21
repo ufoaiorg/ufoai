@@ -110,7 +110,7 @@ void Com_DPrintf (int level, const char *fmt, ...)
 	}
 }
 
-image_t *R_LoadImageData (const char *name, byte * pic, int width, int height, imagetype_t type)
+image_t *R_LoadImageData (const char *name, const byte *pic, int width, int height, imagetype_t type)
 {
 	image_t *image;
 	size_t len;
