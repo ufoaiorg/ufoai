@@ -37,14 +37,12 @@ GLOBAL TYPES
   #define TR_PLANE_TYPE			dBspPlane_t
   #define TR_NODE_TYPE			dBspNode_t
   #define TR_LEAF_TYPE			dBspLeaf_t
-  #define TR_BRUSH_TYPE			dBspBrush_t
   #define TR_BRUSHSIDE_TYPE		dBspBrushSide_t
 #elif defined(COMPILE_UFO)
   #define TR_TILE_TYPE			mapTile_t
   #define TR_PLANE_TYPE			cBspPlane_t
   #define TR_NODE_TYPE			cBspNode_t
   #define TR_LEAF_TYPE			cBspLeaf_t
-  #define TR_BRUSH_TYPE			cBspBrush_t
   #define TR_BRUSHSIDE_TYPE		cBspBrushSide_t
 #else
   #error Either COMPILE_MAP or COMPILE_UFO must be defined in order for tracing.c to work.
