@@ -97,7 +97,7 @@ typedef struct place_s {
 	int floor;		/**< The floor of the place, given in absolute QUANTs */
 	int ceiling;	/**< The ceiling of it, given in absolute QUANTs. */
 	int floorZ;		/**< The level (0-7) of the floor. */
-	bool usable;/**< does an actor fit in here ? */
+	bool usable;	/**< does an actor fit in here ? */
 } place_t;
 
 static inline void RT_PlaceInit (const routing_t *routes, const actorSizeEnum_t actorSize, place_t *p, const int x, const int y, const int z)
@@ -1158,7 +1158,7 @@ static int RT_MicroTrace (RT_data_t *rtd, const place_t* from, const int ax, con
 	}
 
 	if (stairwaySituation) {
-		const int middle = bases[4];	/* terrible hack by Duke. This relies on PATHFINDING_MICROSTEP_SIZE being set to 4 !! */
+		const int middle = bases[4];		/* terrible hack by Duke. This relies on PATHFINDING_MICROSTEP_SIZE being set to 4 !! */
 
 		if (stairwaySituation == 1) {		/* stepping up */
 			if (bases[1] <= middle &&		/* if nothing in the 1st part of the passage is higher than what's at the border */
