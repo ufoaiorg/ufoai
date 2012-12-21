@@ -601,12 +601,14 @@ bool AII_ReloadWeapon (aircraftSlot_t *slot)
 			/* no more ammo available */
 			if (!B_BaseHasItem(slot->aircraft->homebase, slot->ammo)) {
 				slot->ammo = NULL;
+				AII_UpdateAircraftStats(slot->aircraft);
 				return false;
 			}
 
 			B_UpdateStorageAndCapacity(slot->aircraft->homebase, slot->ammo, -1, false);
 			slot->ammoLeft = slot->ammo->ammo;
 			slot->delayNextShot = slot->ammo->craftitem.weaponDelay * AIRCRAFT_RELOAD_DELAY_MULTIPLIER;
+			AII_UpdateAircraftStats(slot->aircraft);
 		}
 	} else if (slot->base) {
 		/* Base Defence weapons */
