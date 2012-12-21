@@ -114,6 +114,7 @@
 		<Unit filename="..\..\src\game\inv_shared.cpp" />
 		<Unit filename="..\..\src\game\inv_shared.h" />
 		<Unit filename="..\..\src\game\inventory.cpp" />
+		<Unit filename="..\..\src\game\inventory.h" />
 		<Unit filename="..\..\src\game\lua\lapi.cpp" />
 		<Unit filename="..\..\src\game\lua\lauxlib.cpp" />
 		<Unit filename="..\..\src\game\lua\lbaselib.cpp" />
