@@ -81,7 +81,8 @@ typedef struct chead_s {
 /**
  * @brief Stores the data of a map tile
  */
-typedef struct {
+class MapTile {
+public:
 	char name[MAX_QPATH];
 	int idx;
 
@@ -130,7 +131,8 @@ typedef struct {
 
 	byte lightquant;
 	byte *lightdata;
-} mapTile_t;
+};
+typedef MapTile mapTile_t;
 
 /**
  * @brief Pathfinding routing structure and tile layout
