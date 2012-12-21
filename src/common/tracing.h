@@ -25,9 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef COMMON_TRACING_H
-#define COMMON_TRACING_H
-
+#pragma once
 
 #include "../shared/typedefs.h"
 
@@ -115,5 +113,3 @@ trace_t TR_BoxTrace(TR_TILE_TYPE *tile, const vec3_t start, const vec3_t end, co
 bool TR_TestLine(mapTiles_t *mapTiles, const vec3_t start, const vec3_t stop, const int levelmask);
 bool TR_TestLineDM(mapTiles_t* mapTiles, const vec3_t start, const vec3_t stop, vec3_t end, const int levelmask);
 trace_t TR_TileBoxTrace(TR_TILE_TYPE *myTile, const vec3_t start, const vec3_t end, const AABB &aabb, const int levelmask, const int brushmask, const int brushreject);
-
-#endif /* COMMON_TRACING_H */
