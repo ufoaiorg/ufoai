@@ -24,14 +24,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef _CHECKENTITIES_H
-#define _CHECKENTITIES_H
+#pragma once
 
-#include "../../../shared/typedefs.h"
 #include "../map.h"
 
 void Check_Stats(void);
 void CheckEntities(void);
 mapbrush_t **Check_ExtraBrushesForWorldspawn(int *numBrushes);
-
-#endif /* _CHECKENTITIES_H */
