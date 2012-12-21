@@ -35,7 +35,6 @@ GLOBAL TYPES
 #if defined(COMPILE_MAP)
   #define TR_TILE_TYPE			dMapTile_t
   #define TR_PLANE_TYPE			dBspPlane_t
-  #define TR_PLANE2_TYPE		plane_t
   #define TR_NODE_TYPE			dBspNode_t
   #define TR_LEAF_TYPE			dBspLeaf_t
   #define TR_BRUSH_TYPE			dBspBrush_t
@@ -43,7 +42,6 @@ GLOBAL TYPES
 #elif defined(COMPILE_UFO)
   #define TR_TILE_TYPE			mapTile_t
   #define TR_PLANE_TYPE			cBspPlane_t
-  #define TR_PLANE2_TYPE		cBspPlane_t
   #define TR_NODE_TYPE			cBspNode_t
   #define TR_LEAF_TYPE			cBspLeaf_t
   #define TR_BRUSH_TYPE			cBspBrush_t
@@ -51,7 +49,7 @@ GLOBAL TYPES
 #else
   #error Either COMPILE_MAP or COMPILE_UFO must be defined in order for tracing.c to work.
 #endif
-/** @note all the above types are declared in typedefs.h except for plane_t, which is in map.h */
+/** @note all the above types are declared in typedefs.h */
 
 /**
  * mask to trace against all the different visible levels (1-8) (resp. (1<<[0-7])
