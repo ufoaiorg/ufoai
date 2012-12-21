@@ -79,7 +79,7 @@ typedef struct chead_s {
 } cBspHead_t;
 
 /**
- * @brief Stores the data of a map tile
+ * @brief Stores the data of a map tile, mostly the BSP stuff
  */
 class MapTile {
 public:
