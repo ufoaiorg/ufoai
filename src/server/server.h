@@ -74,7 +74,7 @@ typedef struct pending_event_s {
 	dbuffer *buf;
 } pending_event_t;
 
-typedef struct {
+typedef struct serverInstanceStatic_s {
 	bool initialized;		/**< sv_init has completed */
 	int realtime;				/**< always increasing, no clamping, etc */
 	struct datagram_socket *netDatagramSocket;
@@ -93,7 +93,7 @@ typedef struct {
 	game_export_t *ge;
 } serverInstanceStatic_t;
 
-typedef enum {
+typedef enum server_state_e {
 	ss_dead,					/**< no map loaded */
 	ss_restart,					/**< clients should reconnect, the server switched the map */
 	ss_loading,					/**< spawning level edicts */
@@ -104,7 +104,7 @@ typedef enum {
 /**
  * @brief Struct that is only valid for one map. It's deleted on every map load.
  */
-typedef struct {
+typedef struct serverInstanceGame_s {
 	server_state_t state;		/**< precache commands are only valid during load */
 
 	char name[MAX_QPATH];		/**< map name */
