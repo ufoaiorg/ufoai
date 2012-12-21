@@ -48,7 +48,7 @@ MAP LOADING
  * @sa R_ModLoadSubmodels
  * @sa CM_InlineModel
  */
-static void CMod_LoadSubmodels (mapTile_t *tile, const byte *base, const lump_t * l, const vec3_t shift)
+static void CMod_LoadSubmodels (MapTile &tile, const byte *base, const lump_t * l, const vec3_t shift)
 {
 	const dBspModel_t *in;
 	int i, j, count;
@@ -68,8 +68,8 @@ static void CMod_LoadSubmodels (mapTile_t *tile, const byte *base, const lump_t 
 		Com_Error(ERR_DROP, "Map has too many models: %i", count);
 
 	cBspModel_t* out = Mem_PoolAllocTypeN(cBspModel_t, count + 6, com_cmodelSysPool);
-	tile->models = out;
-	tile->nummodels = count;
+	tile.models = out;
+	tile.nummodels = count;
 
 	for (i = 0; i < count; i++, in++, out++) {
 		/* Record the shift in case we need to undo it. */
@@ -80,7 +80,7 @@ static void CMod_LoadSubmodels (mapTile_t *tile, const byte *base, const lump_t 
 			out->maxs[j] = LittleFloat(in->maxs[j]) + 1 + shift[j];
 		}
 		out->headnode = LittleLong(in->headnode);
-		out->tile = tile->idx; /* backlink to the loaded map tile */
+		out->tile = tile.idx; /* backlink to the loaded map tile */
 	}
 }
 
@@ -91,7 +91,7 @@ static void CMod_LoadSubmodels (mapTile_t *tile, const byte *base, const lump_t 
  * @param[in] l descriptor of the data block we are working on
  * @sa CM_AddMapTile
  */
-static void CMod_LoadSurfaces (mapTile_t *tile, const byte *base, const lump_t * l)
+static void CMod_LoadSurfaces (MapTile &tile, const byte *base, const lump_t * l)
 {
 	const dBspTexinfo_t *in;
 	int i, count;
@@ -112,8 +112,8 @@ static void CMod_LoadSurfaces (mapTile_t *tile, const byte *base, const lump_t *
 
 	cBspSurface_t* out = Mem_PoolAllocTypeN(cBspSurface_t, count, com_cmodelSysPool);
 
-	tile->surfaces = out;
-	tile->numtexinfo = count;
+	tile.surfaces = out;
+	tile.numtexinfo = count;
 
 	for (i = 0; i < count; i++, in++, out++) {
 		Q_strncpyz(out->name, in->texture, sizeof(out->name));
@@ -131,7 +131,7 @@ static void CMod_LoadSurfaces (mapTile_t *tile, const byte *base, const lump_t *
  * @sa CM_AddMapTile
  * @sa TR_BuildTracingNode_r
  */
-static void CMod_LoadNodes (mapTile_t *tile, const byte *base, const lump_t * l, const vec3_t shift)
+static void CMod_LoadNodes (MapTile &tile, const byte *base, const lump_t * l, const vec3_t shift)
 {
 	const dBspNode_t *in;
 	int child;
@@ -154,14 +154,14 @@ static void CMod_LoadNodes (mapTile_t *tile, const byte *base, const lump_t * l,
 	/* add some for the box */
 	cBspNode_t* out = Mem_PoolAllocTypeN(cBspNode_t, count + 6, com_cmodelSysPool);
 
-	tile->numnodes = count;
-	tile->nodes = out;
+	tile.numnodes = count;
+	tile.nodes = out;
 
 	for (i = 0; i < count; i++, out++, in++) {
 		if (LittleLong(in->planenum) == PLANENUM_LEAF)
 			out->plane = NULL;
 		else
-			out->plane = tile->planes + LittleLong(in->planenum);
+			out->plane = tile.planes + LittleLong(in->planenum);
 
 		/* in case this is a map assemble */
 		for (j = 0; j < 3; j++) {
@@ -182,7 +182,7 @@ static void CMod_LoadNodes (mapTile_t *tile, const byte *base, const lump_t * l,
  * @param[in] l descriptor of the data block we are working on
  * @sa CM_AddMapTile
  */
-static void CMod_LoadBrushes (mapTile_t *tile, const byte *base, const lump_t * l)
+static void CMod_LoadBrushes (MapTile &tile, const byte *base, const lump_t * l)
 {
 	const dBspBrush_t *in;
 	int i, count;
@@ -202,8 +202,8 @@ static void CMod_LoadBrushes (mapTile_t *tile, const byte *base, const lump_t * 
 	/* add some for the box */
 	cBspBrush_t* out = Mem_PoolAllocTypeN(cBspBrush_t, count + 1, com_cmodelSysPool);
 
-	tile->numbrushes = count;
-	tile->brushes = out;
+	tile.numbrushes = count;
+	tile.brushes = out;
 
 	for (i = 0; i < count; i++, out++, in++) {
 		out->firstbrushside = LittleLong(in->firstbrushside);
@@ -821,14 +821,14 @@ static void CM_AddMapTile (const char *name, const bool day, const int sX, const
 	VectorSet(shift, sX * UNIT_SIZE, sY * UNIT_SIZE, sZ * UNIT_HEIGHT);
 
 	/* load into heap */
-	CMod_LoadSurfaces(tile, base, &header.lumps[LUMP_TEXINFO]);
+	CMod_LoadSurfaces(*tile, base, &header.lumps[LUMP_TEXINFO]);
 	CMod_LoadLeafs(tile, base, &header.lumps[LUMP_LEAFS]);
 	CMod_LoadLeafBrushes(tile, base, &header.lumps[LUMP_LEAFBRUSHES]);
 	CMod_LoadPlanes(tile, base, &header.lumps[LUMP_PLANES], shift);
-	CMod_LoadBrushes(tile, base, &header.lumps[LUMP_BRUSHES]);
+	CMod_LoadBrushes(*tile, base, &header.lumps[LUMP_BRUSHES]);
 	CMod_LoadBrushSides(tile, base, &header.lumps[LUMP_BRUSHSIDES]);
-	CMod_LoadSubmodels(tile, base, &header.lumps[LUMP_MODELS], shift);
-	CMod_LoadNodes(tile, base, &header.lumps[LUMP_NODES], shift);
+	CMod_LoadSubmodels(*tile, base, &header.lumps[LUMP_MODELS], shift);
+	CMod_LoadNodes(*tile, base, &header.lumps[LUMP_NODES], shift);
 	CMod_LoadEntityString(tile, mapData, base, &header.lumps[LUMP_ENTITIES], shift);
 	if (day)
 		CMod_LoadLighting(tile, base, &header.lumps[LUMP_LIGHTING_DAY]);
