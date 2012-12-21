@@ -660,15 +660,12 @@ static inline bool AI_IsValidTarget (const edict_t *ent, const edict_t *target)
 static float AI_FighterCalcActionScore (edict_t * ent, pos3_t to, aiAction_t * aia)
 {
 	edict_t *check = NULL;
-	int tu;
-	pos_t move;
 	shoot_types_t shootType;
 	float minDist;
 	float bestActionScore, maxDmg;
 	int bestTime = -1;
-
-	move = G_ActorMoveLength(ent, level.pathingMap, to, true);
-	tu = G_ActorUsableTUs(ent) - move;
+	const pos_t move = G_ActorMoveLength(ent, level.pathingMap, to, true);
+	int tu = G_ActorUsableTUs(ent) - move;
 
 	/* test for time */
 	if (tu < 0 || move == ROUTING_NOT_REACHABLE)
@@ -776,11 +773,12 @@ static float AI_FighterCalcActionScore (edict_t * ent, pos3_t to, aiAction_t * a
 static float AI_CivilianCalcActionScore (edict_t * ent, pos3_t to, aiAction_t * aia)
 {
 	edict_t *check = NULL;
-	pos_t move;
 	float minDist, minDistCivilian, minDistFighter;
 	float bestActionScore;
 	float reactionTrap = 0.0;
 	float delta;
+	const pos_t move = G_ActorMoveLength(ent, level.pathingMap, to, true);
+	const int tu = G_ActorUsableTUs(ent) - move;
 
 	/* set basic parameters */
 	bestActionScore = 0.0;
@@ -789,8 +787,6 @@ static float AI_CivilianCalcActionScore (edict_t * ent, pos3_t to, aiAction_t * 
 	VectorCopy(to, aia->stop);
 	G_EdictSetOrigin(ent, to);
 
-	move = G_ActorMoveLength(ent, level.pathingMap, to, true);
-	const int tu = G_ActorUsableTUs(ent) - move;
 
 	/* test for time */
 	if (tu < 0 || move == ROUTING_NOT_REACHABLE)
@@ -900,15 +896,14 @@ static float AI_PanicCalcActionScore (edict_t * ent, pos3_t to, aiAction_t * aia
 	edict_t *check = NULL;
 	float minDistFriendly, minDistOthers;
 	float bestActionScore = 0.0;
+	const pos_t move = G_ActorMoveLength(ent, level.pathingMap, to, true);
+	const int tu = G_ActorUsableTUs(ent) - move;
 
 	/* set basic parameters */
 	OBJZERO(*aia);
 	VectorCopy(to, aia->to);
 	VectorCopy(to, aia->stop);
 	G_EdictSetOrigin(ent, to);
-
-	const pos_t move = G_ActorMoveLength(ent, level.pathingMap, to, true);
-	const int tu = G_ActorUsableTUs(ent) - move;
 
 	/* test for time */
 	if (tu < 0 || move == ROUTING_NOT_REACHABLE)
