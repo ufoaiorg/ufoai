@@ -59,8 +59,8 @@ GLOBAL TYPES
 
 /** a trace is returned when a box is swept through the world */
 typedef struct trace_s {
-	bool allsolid;			/**< if true, plane is not valid */
-	bool startsolid;		/**< if true, the initial point was in a solid area */
+	bool allsolid;				/**< if true, plane is not valid */
+	bool startsolid;			/**< if true, the initial point was in a solid area */
 	float fraction;				/**< distance traveled, 1.0 = didn't hit anything, 0.0 Inside of a brush */
 	vec3_t endpos;				/**< final position along line */
 	TR_PLANE_TYPE plane;		/**< surface plane at impact - normal is in there */
@@ -83,7 +83,7 @@ typedef struct boxtrace_s {
 	trace_t trace;
 	uint32_t contents;			/**< content flags to match again - MASK_ALL to match everything */
 	uint32_t rejects;			/**< content flags that should be rejected in a trace - ignored when MASK_ALL is given as content flags */
-	bool ispoint;			/* optimized case */
+	bool ispoint;				/* optimized case */
 
 	TR_TILE_TYPE *tile;
 } boxtrace_t;
