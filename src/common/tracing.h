@@ -51,6 +51,7 @@ GLOBAL TYPES
 #else
   #error Either COMPILE_MAP or COMPILE_UFO must be defined in order for tracing.c to work.
 #endif
+/** @note all the above types are declared in typedefs.h except for plane_t, which is in map.h */
 
 /**
  * mask to trace against all the different visible levels (1-8) (resp. (1<<[0-7])
