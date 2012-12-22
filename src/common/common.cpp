@@ -1388,6 +1388,16 @@ int CL_FilterEventQueue (event_filter *filter)
 }
 
 /**
+ * @brief Eventfilter that filter out all events
+ * @sa CL_FilterEventQueue
+ * @TODO add parameter documentation
+ */
+static bool Event_FilterAll (int when, event_func *func, event_check_func *check, void *data)
+{
+	return false;
+}
+
+/**
  * @brief This is the function that is called directly from main()
  * @sa main
  * @sa Qcommon_Init
@@ -1408,6 +1418,7 @@ void Qcommon_Frame (void)
 		SV_Shutdown("Restart.", false);
 		CL_Shutdown();
 		Qcommon_Shutdown();
+		CL_FilterEventQueue(&Event_FilterAll);
 		if (restart.gamedir != NULL) {
 			const char *restartArgv[] = {"", "+set", "fs_gamedir", restart.gamedir};
 			Qcommon_Init(4, const_cast<char **>(restartArgv));
