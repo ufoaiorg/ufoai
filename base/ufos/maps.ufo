@@ -50,6 +50,109 @@
 // AFRICA RANDOM MAPS //
 ////////////////////////
 
+mapdef africa_large
+{
+	map				"+africa"
+	param			"large"
+	description		"_African Village"
+	multiplayer		true
+	teams			2
+	gametypes (
+		fight1on1
+		fight2on2
+		coop2
+		coop3
+		coop4
+	)
+	maxaliens		30
+
+	civilianteam	africa
+
+	aircraft
+	(
+		craft_drop_firebird
+		craft_drop_herakles
+		craft_drop_raptor
+	)
+
+	ufos
+	(
+		craft_ufo_bomber
+	)
+
+	terrains
+	(
+		"grass"
+		"tropical"
+		"desert"
+		"mountain"
+	)
+
+	cultures
+	(
+		"african"
+	)
+
+	populations
+	(
+		"village"
+		"suburban"
+		"urban"
+	)
+}
+
+mapdef africa_large_crash
+{
+	map				"+africa"
+	param			"large"
+	description		"_African Village"
+	multiplayer		true
+	teams			2
+	gametypes (
+		fight1on1
+		fight2on2
+		coop2
+		coop3
+		coop4
+	)
+	maxaliens		30
+	hurtaliens		true
+
+	civilianteam	africa
+
+	aircraft
+	(
+		craft_drop_firebird
+		craft_drop_herakles
+		craft_drop_raptor
+	)
+
+	ufos
+	(
+		craft_crash_bomber
+	)
+
+	terrains
+	(
+		"grass"
+		"tropical"
+		"desert"
+		"mountain"
+	)
+
+	cultures
+	(
+		"african"
+	)
+
+	populations
+	(
+		"village"
+		"suburban"
+		"urban"
+	)
+}
+
 mapdef africa_medium
 {
 	map				"+africa"
@@ -133,7 +236,6 @@ mapdef africa_medium_crash
 		craft_crash_gunboat
 		craft_crash_harvester
 		craft_crash_supply
-		craft_crash_bomber
 	)
 
 	terrains

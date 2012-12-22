@@ -108,6 +108,21 @@ tile +craft_crash_supply
 0		0		0		0		0		0		0
 }
 
+tile +craft_ufo_bomber
+{
+6 10
+0		0		0		0		0		0
+0		+b		+b		+b		+b		0
+0		+b		+b		+b		+b		0
+0		+b		+b		+b		+b		0
+0		+b		+b		+b		+b		0
+0		+b		+b		+b		+b		0
+0		+b		+b		+b		+b		0
+0		+b		+b		+b		+b		0
+0		+b		+b		+b		+b		0
+0		0		0		0		0		0
+}
+
 tile +craft_crash_bomber
 {
 6 10
@@ -659,8 +674,38 @@ multiplayer +mp_team2
 tileset cowshed		"0 1"
 tileset filler_a	"0 4"
 tileset house_a		"0 1"
-tileset mountain	"0 1"
+tileset mountain	"1 1"
 tileset rock_a		"0 1"
 *rm_ufo +craft_ufo_harvester "1 1"
+*rm_drop +craft_drop_firebird "1 1"
+}
+
+assembly large
+{
+size "10 8"
+title "_Africa"
+multiplayer +mp_team2
++empty6		"0 10"
++house1		"0 3"
++house1a	"0 3"
++house2		"0 3"
++house2a	"0 3"
++house3		"0 3"
++house3a	"0 3"
++house6		"0 2"
++house6a	"0 1"
++house6b	"0 1"
++fence1		"0 2"
++fence2		"0 2"
++fence3		"0 2"
++misc1		"0 1"
++misc2		"0 1"
++well1		"0 1"
+tileset cowshed		"0 1"
+tileset filler_a	"0 4"
+tileset house_a		"0 1"
+tileset mountain	"0 1"
+tileset rock_a		"0 1"
+*rm_ufo +craft_ufo_bomber "1 1"
 *rm_drop +craft_drop_firebird "1 1"
 }
