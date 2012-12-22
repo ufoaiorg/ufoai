@@ -218,7 +218,7 @@ static void CMod_LoadBrushes (MapTile &tile, const byte *base, const lump_t * l)
  * @param[in] l descriptor of the data block we are working on
  * @sa CM_AddMapTile
  */
-static void CMod_LoadLeafs (mapTile_t *tile, const byte *base, const lump_t * l)
+static void CMod_LoadLeafs (MapTile &tile, const byte *base, const lump_t * l)
 {
 	int i;
 	const dBspLeaf_t *in;
@@ -242,8 +242,8 @@ static void CMod_LoadLeafs (mapTile_t *tile, const byte *base, const lump_t * l)
 	/* add some for the box */
 	cBspLeaf_t* out = Mem_PoolAllocTypeN(cBspLeaf_t, count + 1, com_cmodelSysPool);
 
-	tile->numleafs = count;
-	tile->leafs = out;
+	tile.numleafs = count;
+	tile.leafs = out;
 
 	for (i = 0; i < count; i++, in++, out++) {
 		out->contentFlags = LittleLong(in->contentFlags);
@@ -251,16 +251,16 @@ static void CMod_LoadLeafs (mapTile_t *tile, const byte *base, const lump_t * l)
 		out->numleafbrushes = LittleShort(in->numleafbrushes);
 	}
 
-	if (tile->leafs[0].contentFlags != CONTENTS_SOLID)
+	if (tile.leafs[0].contentFlags != CONTENTS_SOLID)
 		Com_Error(ERR_DROP, "Map leaf 0 is not CONTENTS_SOLID");
-	tile->emptyleaf = -1;
-	for (i = 1; i < tile->numleafs; i++) {
-		if (!tile->leafs[i].contentFlags) {
-			tile->emptyleaf = i;
+	tile.emptyleaf = -1;
+	for (i = 1; i < tile.numleafs; i++) {
+		if (!tile.leafs[i].contentFlags) {
+			tile.emptyleaf = i;
 			break;
 		}
 	}
-	if (tile->emptyleaf == -1)
+	if (tile.emptyleaf == -1)
 		Com_Error(ERR_DROP, "Map does not have an empty leaf");
 }
 
@@ -272,7 +272,7 @@ static void CMod_LoadLeafs (mapTile_t *tile, const byte *base, const lump_t * l)
  * @sa CM_AddMapTile
  * @sa R_ModLoadPlanes
  */
-static void CMod_LoadPlanes (mapTile_t *tile, const byte *base, const lump_t * l, const vec3_t shift)
+static void CMod_LoadPlanes (MapTile &tile, const byte *base, const lump_t * l, const vec3_t shift)
 {
 	int i, j;
 	const dBspPlane_t *in;
@@ -296,8 +296,8 @@ static void CMod_LoadPlanes (mapTile_t *tile, const byte *base, const lump_t * l
 	/* add some for the box */
 	cBspPlane_t* out = Mem_PoolAllocTypeN(cBspPlane_t, count + 12, com_cmodelSysPool);
 
-	tile->numplanes = count;
-	tile->planes = out;
+	tile.numplanes = count;
+	tile.planes = out;
 
 	for (i = 0; i < count; i++, in++, out++) {
 		out->dist = LittleFloat(in->dist);
@@ -317,7 +317,7 @@ static void CMod_LoadPlanes (mapTile_t *tile, const byte *base, const lump_t * l
  * @param[in] l descriptor of the data block we are working on
  * @sa CM_AddMapTile
  */
-static void CMod_LoadLeafBrushes (mapTile_t *tile, const byte *base, const lump_t * l)
+static void CMod_LoadLeafBrushes (MapTile &tile, const byte *base, const lump_t * l)
 {
 	int i;
 	const unsigned short *in;
@@ -341,8 +341,8 @@ static void CMod_LoadLeafBrushes (mapTile_t *tile, const byte *base, const lump_
 	if (count >= MAX_MAP_LEAFBRUSHES)
 		Com_Error(ERR_DROP, "Map has too many leafbrushes");
 
-	tile->numleafbrushes = count;
-	tile->leafbrushes = out;
+	tile.numleafbrushes = count;
+	tile.leafbrushes = out;
 
 	for (i = 0; i < count; i++, in++, out++)
 		*out = LittleShort(*in);
@@ -597,7 +597,7 @@ static void CMod_LoadRouting (mapTile_t *tile, mapData_t *mapData, const byte *b
  * loaded map tiles.
  * @sa CM_AddMapTile
  */
-static void CMod_LoadEntityString (mapTile_t *tile, mapData_t *mapData, const byte *base, const lump_t * l, const vec3_t shift)
+static void CMod_LoadEntityString (MapTile &tile, mapData_t *mapData, const byte *base, const lump_t * l, const vec3_t shift)
 {
 	const char *token;
 	const char *es;
@@ -662,12 +662,12 @@ static void CMod_LoadEntityString (mapTile_t *tile, mapData_t *mapData, const by
 				/* adapt inline model number */
 				int num = atoi(token + 1);
 				/* Get the model */
-				model = &tile->models[NUM_REGULAR_MODELS + num - 1];
+				model = &tile.models[NUM_REGULAR_MODELS + num - 1];
 				/* Now update the model number to reflect prior tiles loaded. */
 				num += mapData->numInline;
 				Q_strcat(mapData->mapEntityString, va("%s *%i ", keyname, num), sizeof(mapData->mapEntityString));
 			} else if (Q_streq(keyname, "targetname") || Q_streq(keyname, "target")) {
-				Q_strcat(mapData->mapEntityString, va("%s \"%s-%i\" ", keyname, token, tile->idx), sizeof(mapData->mapEntityString));
+				Q_strcat(mapData->mapEntityString, va("%s \"%s-%i\" ", keyname, token, tile.idx), sizeof(mapData->mapEntityString));
 			} else {
 				/* just store key and value */
 				Q_strcat(mapData->mapEntityString, va("%s \"%s\" ", keyname, token), sizeof(mapData->mapEntityString));
@@ -822,14 +822,14 @@ static void CM_AddMapTile (const char *name, const bool day, const int sX, const
 
 	/* load into heap */
 	CMod_LoadSurfaces(*tile, base, &header.lumps[LUMP_TEXINFO]);
-	CMod_LoadLeafs(tile, base, &header.lumps[LUMP_LEAFS]);
-	CMod_LoadLeafBrushes(tile, base, &header.lumps[LUMP_LEAFBRUSHES]);
-	CMod_LoadPlanes(tile, base, &header.lumps[LUMP_PLANES], shift);
+	CMod_LoadLeafs(*tile, base, &header.lumps[LUMP_LEAFS]);
+	CMod_LoadLeafBrushes(*tile, base, &header.lumps[LUMP_LEAFBRUSHES]);
+	CMod_LoadPlanes(*tile, base, &header.lumps[LUMP_PLANES], shift);
 	CMod_LoadBrushes(*tile, base, &header.lumps[LUMP_BRUSHES]);
 	CMod_LoadBrushSides(tile, base, &header.lumps[LUMP_BRUSHSIDES]);
 	CMod_LoadSubmodels(*tile, base, &header.lumps[LUMP_MODELS], shift);
 	CMod_LoadNodes(*tile, base, &header.lumps[LUMP_NODES], shift);
-	CMod_LoadEntityString(tile, mapData, base, &header.lumps[LUMP_ENTITIES], shift);
+	CMod_LoadEntityString(*tile, mapData, base, &header.lumps[LUMP_ENTITIES], shift);
 	if (day)
 		CMod_LoadLighting(tile, base, &header.lumps[LUMP_LIGHTING_DAY]);
 	else
