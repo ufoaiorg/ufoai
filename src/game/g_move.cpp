@@ -133,7 +133,7 @@ void G_ActorFall (edict_t *ent)
 	edict_t* entAtPos;
 	const int oldZ = ent->pos[2];
 
-	ent->pos[2] = gi.GridFall(gi.routingMap, ent->fieldSize, ent->pos);
+	ent->pos[2] = gi.GridFall(ent->fieldSize, ent->pos);
 
 	if (oldZ == ent->pos[2])
 		return;

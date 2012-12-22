@@ -497,6 +497,11 @@ static bool SV_TestLineWithEnt (const vec3_t start, const vec3_t stop, const int
 	return hit;
 }
 
+static pos_t SV_GridFall (const int actorSize, const pos3_t pos)
+{
+	return Grid_Fall(sv->mapData.routes, actorSize, pos);
+}
+
 static void SV_RecalcRouting (const char *name, const GridBox& box, const char **list)
 {
 	Grid_RecalcRouting(&sv->mapTiles, sv->mapData.routes, name, box, list);
@@ -691,7 +696,7 @@ void SV_InitGameProgs (void)
 	import.MoveLength = Grid_MoveLength;
 	import.MoveNext = Grid_MoveNext;
 	import.GetTUsForDirection = Grid_GetTUsForDirection;
-	import.GridFall = Grid_Fall;
+	import.GridFall = SV_GridFall;
 	import.GridPosToVec = Grid_PosToVec;
 	import.GridRecalcRouting = SV_RecalcRouting;
 	import.CanActorStandHere = SV_CanActorStandHere;

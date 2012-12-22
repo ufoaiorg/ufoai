@@ -155,7 +155,7 @@ typedef struct {
 	pos_t (IMPORT *MoveLength) (const pathing_t *path, const pos3_t to, byte crouchingState, bool stored);
 	int (IMPORT *MoveNext) (const pathing_t *path, const pos3_t from, byte crouchingState);
 	int (IMPORT *GetTUsForDirection) (int dir, int crouched);
-	pos_t (IMPORT *GridFall) (const routing_t *routes, actorSizeEnum_t actorSize, const pos3_t pos);
+	pos_t (IMPORT *GridFall) (actorSizeEnum_t actorSize, const pos3_t pos);
 	void (IMPORT *GridPosToVec) (const routing_t *routes, actorSizeEnum_t actorSize, const pos3_t pos, vec3_t vec);
 	void (IMPORT *GridRecalcRouting) (const char *name, const GridBox& box, const char **list);
 	bool (IMPORT *CanActorStandHere) (actorSizeEnum_t actorSize, const pos3_t pos);

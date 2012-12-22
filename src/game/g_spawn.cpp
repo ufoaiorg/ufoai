@@ -471,7 +471,7 @@ static void G_SpawnSmoke (const vec3_t vec, const char *particle, int rounds)
 
 	ent = G_GetEdictFromPos(pos, ET_SMOKE);
 	if (ent == NULL) {
-		pos_t z = gi.GridFall(gi.routingMap, ACTOR_SIZE_NORMAL, pos);
+		pos_t z = gi.GridFall(ACTOR_SIZE_NORMAL, pos);
 		if (z != pos[2])
 			return;
 
@@ -530,7 +530,7 @@ static void G_SpawnFire (const vec3_t vec, const char *particle, int rounds, int
 
 	ent = G_GetEdictFromPos(pos, ET_FIRE);
 	if (ent == NULL) {
-		pos_t z = gi.GridFall(gi.routingMap, ACTOR_SIZE_NORMAL, pos);
+		pos_t z = gi.GridFall(ACTOR_SIZE_NORMAL, pos);
 		if (z != pos[2])
 			return;
 
@@ -581,7 +581,7 @@ static void G_SpawnStunSmoke (const vec3_t vec, const char *particle, int rounds
 
 	ent = G_GetEdictFromPos(pos, ET_SMOKESTUN);
 	if (ent == NULL) {
-		pos_t z = gi.GridFall(gi.routingMap, ACTOR_SIZE_NORMAL, pos);
+		pos_t z = gi.GridFall(ACTOR_SIZE_NORMAL, pos);
 		if (z != pos[2])
 			return;
 
@@ -636,7 +636,7 @@ edict_t *G_SpawnFloor (const pos3_t pos)
 	/* make sure that the item is always on a field that even the smallest actor can reach */
 	floor->fieldSize = ACTOR_SIZE_NORMAL;
 	VectorCopy(pos, floor->pos);
-	floor->pos[2] = gi.GridFall(gi.routingMap, floor->fieldSize, floor->pos);
+	floor->pos[2] = gi.GridFall(floor->fieldSize, floor->pos);
 	G_EdictCalcOrigin(floor);
 	return floor;
 }
@@ -677,7 +677,7 @@ static void G_ActorSpawn (edict_t *ent)
 	if (ent->pos[2] >= PATHFINDING_HEIGHT)
 		ent->pos[2] = PATHFINDING_HEIGHT - 1;
 
-	ent->pos[2] = gi.GridFall(gi.routingMap, ent->fieldSize, ent->pos);
+	ent->pos[2] = gi.GridFall(ent->fieldSize, ent->pos);
 	if (ent->pos[2] >= PATHFINDING_HEIGHT)
 		gi.DPrintf("G_ActorSpawn: Warning: z level is out of bounds: %i\n", ent->pos[2]);
 
@@ -709,7 +709,7 @@ static void G_Actor2x2Spawn (edict_t *ent)
 	/* Fall to ground */
 	if (ent->pos[2] >= PATHFINDING_HEIGHT)
 		ent->pos[2] = PATHFINDING_HEIGHT - 1;
-	ent->pos[2] = gi.GridFall(gi.routingMap, ent->fieldSize, ent->pos);
+	ent->pos[2] = gi.GridFall(ent->fieldSize, ent->pos);
 	if (ent->pos[2] >= PATHFINDING_HEIGHT)
 		gi.DPrintf("G_Actor2x2Spawn: Warning: z level is out of bounds: %i\n", ent->pos[2]);
 	G_EdictCalcOrigin(ent);
@@ -864,7 +864,7 @@ static void SP_civilian_target (edict_t *ent)
 	/* fall to ground */
 	if (ent->pos[2] >= PATHFINDING_HEIGHT)
 		ent->pos[2] = PATHFINDING_HEIGHT - 1;
-	ent->pos[2] = gi.GridFall(gi.routingMap, ent->fieldSize, ent->pos);
+	ent->pos[2] = gi.GridFall(ent->fieldSize, ent->pos);
 	G_EdictCalcOrigin(ent);
 }
 
