@@ -236,28 +236,31 @@ bool G_Vis (const int team, const edict_t *from, const edict_t *check, const vis
  * @param[in] check the edict we are talking about - which may become visible
  * or perish
  * @param[in] flags if you want to check whether the edict may also perish from
- * other players view, you should use the @c VT_PERISH bits
+ * other players view, you should use the @c VT_PERISHCHK bits
  * @note If the edict is already visible and flags doesn't contain the
- * bits of @c VT_PERISH, no further checks are performed - only the
- * @c VIS_YES bits are returned
+ * bits of @c VT_PERISHCHK, no further checks are performed - only the
+ * @c VS_YES bits are returned
+ * @return VS_CHANGE is added to the bit mask if the edict flipped its visibility
+ * (invisible to visible or vice versa) VS_YES means the edict is visible for the
+ * given team
  */
 int G_TestVis (const int team, edict_t *check, const vischeckflags_t flags)
 {
 	edict_t *from = NULL;
 	/* store old flag */
-	const int old = G_IsVisibleForTeam(check, team) ? VIS_CHANGE : 0;
+	const int old = G_IsVisibleForTeam(check, team) ? VS_CHANGE : 0;
 
 	if (g_aidebug->integer)
-		return VIS_YES | !old;
+		return VS_YES | !old;
 
-	if (!(flags & VT_PERISH) && old)
-		return VIS_YES;
+	if (!(flags & VT_PERISHCHK) && old)
+		return VS_YES;
 
 	/* test if check is visible */
 	while ((from = G_EdictsGetNextInUse(from)))
 		if (G_Vis(team, from, check, flags))
 			/* visible */
-			return VIS_YES | !old;
+			return VS_YES | !old;
 
 	/* just return the old state */
 	return old;
@@ -282,9 +285,9 @@ static int G_DoTestVis (const int team, edict_t *check, const vischeckflags_t vi
 	const int vis = G_TestVis(team, check, visFlags);
 
 	/* visibility has changed ... */
-	if (vis & VIS_CHANGE) {
+	if (vis & VS_CHANGE) {
 		/* swap the vis mask for the given team */
-		const bool appear = (vis & VIS_YES) == VIS_YES;
+		const bool appear = (vis & VS_YES) == VS_YES;
 		if (playerMask == 0) {
 			G_VisFlagsSwap(check, G_TeamToVisMask(team));
 		} else {
@@ -292,14 +295,14 @@ static int G_DoTestVis (const int team, edict_t *check, const vischeckflags_t vi
 		}
 
 		/* ... to visible */
-		if (vis & VIS_YES) {
+		if (vis & VS_YES) {
 			status |= VIS_APPEAR;
 			if (G_VisShouldStop(check))
 				status |= VIS_STOP;
 		} else {
 			status |= VIS_PERISH;
 		}
-	} else if (vis == 0 && (visFlags & VIS_NEW)) {
+	} else if (vis == 0 && (visFlags & VT_NEW)) {
 		if (G_IsActor(check)) {
 			G_EventActorAdd(playerMask, check);
 		}
@@ -334,9 +337,8 @@ void G_CheckVisPlayer (player_t* player, const vischeckflags_t visFlags)
  * @param visFlags Modifiers for the checks
  * @param[in] ent The edict that is (maybe) seeing other edicts
  * @return If an actor get visible who's no civilian VIS_STOP is added to the
- * bit mask, VIS_YES means, he is visible, VIS_CHANGE means that the actor
- * flipped its visibility (invisible to visible or vice versa), VIS_PERISH means
- * that the actor (the edict) is getting invisible for the queried team
+ * bit mask, VIS_APPEAR means, that the actor is becoming visible for the queried
+ * team, VIS_PERISH means that the actor (the edict) is getting invisible
  * @note the edict may not only be actors, but also items of course
  * @sa G_TeamToPM
  * @sa G_TestVis

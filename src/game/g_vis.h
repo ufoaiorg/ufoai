@@ -31,25 +31,31 @@ typedef unsigned int teammask_t;
 /* Bitmask for all teams */
 #define TEAM_ALL		0xFFFFFFFF
 
+/* Visibility changes -- see G_DoTestVis */
+/** Edict became visible */
 #define VIS_APPEAR	1
+/** Edict became invisible */
 #define VIS_PERISH	2
-#define VIS_NEW		4
-
-/** the visibility changed - if it was visible - it's (the edict) now invisible */
-#define VIS_CHANGE	1
-/** actor visible? */
-#define VIS_YES		2
 /** stop the current action if actor appears */
 #define VIS_STOP	4
+
+/* Visibility state -- see G_TestVis */
+/** the visibility changed - (invisible to visible or vice versa) */
+#define VS_CHANGE	1
+/** actor is visible */
+#define VS_YES		2
 
 /* A bit mask. Modifiers for the way visibility check are performed. */
 typedef unsigned int vischeckflags_t;
 /* possible values are: */
 /** check whether edict is still visible - it maybe is currently visible but this
  * might have changed due to some action */
-#define VT_PERISH		1
+#define VT_PERISHCHK	1
 /** don't perform a frustum vis check via G_FrustumVis in G_Vis */
 #define VT_NOFRUSTUM	2
+/** If the actor doesn't become visible add it as a hidden actor
+ * (sends the EV_ACTOR_ADD event) */
+#define VT_NEW			4
 
 /** Actor visibility constants */
 #define ACTOR_VIS_100	1.0
@@ -64,7 +70,7 @@ void G_VisFlagsAdd(edict_t *ent, teammask_t teamMask);
 void G_VisFlagsSwap(edict_t *ent, teammask_t teamMask);
 void G_VisFlagsReset(edict_t *ent);
 void G_VisMakeEverythingVisible(void);
-void G_CheckVis(edict_t *check, const vischeckflags_t visFlags = VT_PERISH);
+void G_CheckVis(edict_t *check, const vischeckflags_t visFlags = VT_PERISHCHK);
 void G_CheckVisPlayer(player_t* player, const vischeckflags_t visFlags);
 int G_CheckVisTeamAll(const int team, const vischeckflags_t visFlags, const edict_t *ent);
 int G_TestVis(const int team, edict_t * check, const vischeckflags_t flags);

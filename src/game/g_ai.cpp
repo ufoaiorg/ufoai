@@ -713,7 +713,7 @@ static float AI_FighterCalcActionScore (edict_t * ent, pos3_t to, aiAction_t * a
 	if (!G_IsRaged(ent)) {
 		const int hidingTeam = AI_GetHidingTeam(ent);
 		/* hide */
-		if (!AI_HideNeeded(ent) || !(G_TestVis(hidingTeam, ent, VT_PERISH | VT_NOFRUSTUM) & VIS_YES)) {
+		if (!AI_HideNeeded(ent) || !(G_TestVis(hidingTeam, ent, VT_PERISHCHK | VT_NOFRUSTUM) & VS_YES)) {
 			/* is a hiding spot */
 			bestActionScore += SCORE_HIDE + (aia->target ? SCORE_CLOSE_IN : 0);
 		} else if (aia->target && tu >= TU_MOVE_STRAIGHT) {
@@ -1433,7 +1433,7 @@ static edict_t* G_SpawnAIPlayer (const player_t * player, const equipDef_t *ed)
 	G_TouchTriggers(ent);
 
 	gi.DPrintf("Spawned ai player for team %i with entnum %i (%s)\n", ent->team, ent->number, ent->chr.name);
-	G_CheckVis(ent, VIS_PERISH | VIS_NEW);
+	G_CheckVis(ent, VT_PERISHCHK | VT_NEW);
 	G_CheckVisTeamAll(ent->team, 0, ent);
 
 	return ent;
