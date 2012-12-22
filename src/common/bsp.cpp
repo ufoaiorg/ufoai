@@ -354,7 +354,7 @@ static void CMod_LoadLeafBrushes (MapTile &tile, const byte *base, const lump_t 
  * @param[in] l descriptor of the data block we are working on
  * @sa CM_AddMapTile
  */
-static void CMod_LoadBrushSides (mapTile_t *tile, const byte *base, const lump_t * l)
+static void CMod_LoadBrushSides (MapTile &tile, const byte *base, const lump_t * l)
 {
 	int i;
 	const dBspBrushSide_t *in;
@@ -376,16 +376,16 @@ static void CMod_LoadBrushSides (mapTile_t *tile, const byte *base, const lump_t
 	/* add some for the box */
 	cBspBrushSide_t* out = Mem_PoolAllocTypeN(cBspBrushSide_t, count + 6, com_cmodelSysPool);
 
-	tile->numbrushsides = count;
-	tile->brushsides = out;
+	tile.numbrushsides = count;
+	tile.brushsides = out;
 
 	for (i = 0; i < count; i++, in++, out++) {
 		const int num = LittleShort(in->planenum);
 		const int j = LittleShort(in->texinfo);
-		if (j >= tile->numtexinfo)
+		if (j >= tile.numtexinfo)
 			Com_Error(ERR_DROP, "Bad brushside texinfo");
-		out->plane = &tile->planes[num];
-		out->surface = &tile->surfaces[j];
+		out->plane = &tile.planes[num];
+		out->surface = &tile.surfaces[j];
 	}
 }
 
@@ -438,28 +438,28 @@ TRACING NODES
  * @note tile->tnodes is expected to have enough memory malloc'ed for the function to work.
  * @sa BuildTracingNode_r
  */
-static void CM_MakeTracingNodes (mapTile_t *tile)
+static void CM_MakeTracingNodes (MapTile &tile)
 {
 	int i;
 
-	tnode_t* tnode = tile->tnodes = Mem_PoolAllocTypeN(tnode_t, tile->numnodes + 6, com_cmodelSysPool);
+	tnode_t* tnode = tile.tnodes = Mem_PoolAllocTypeN(tnode_t, tile.numnodes + 6, com_cmodelSysPool);
 
-	tile->numtheads = 0;
-	tile->numcheads = 0;
+	tile.numtheads = 0;
+	tile.numcheads = 0;
 
-	for (i = 0; i < tile->nummodels; i++) {
-		if (tile->models[i].headnode == LEAFNODE || tile->models[i].headnode >= tile->numnodes + 6)
+	for (i = 0; i < tile.nummodels; i++) {
+		if (tile.models[i].headnode == LEAFNODE || tile.models[i].headnode >= tile.numnodes + 6)
 			continue;
 
-		tile->thead[tile->numtheads] = tnode - tile->tnodes;
-		tile->theadlevel[tile->numtheads] = i;
-		tile->numtheads++;
-		assert(tile->numtheads < LEVEL_MAX);
+		tile.thead[tile.numtheads] = tnode - tile.tnodes;
+		tile.theadlevel[tile.numtheads] = i;
+		tile.numtheads++;
+		assert(tile.numtheads < LEVEL_MAX);
 
 		/* If this level (i) is the last visible level or earlier, then trace it.
 		 * Otherwise don't; we have separate checks for entities. */
 		if (i < NUM_REGULAR_MODELS)
-			TR_BuildTracingNode_r(tile, &tnode, tile->models[i].headnode, i);
+			TR_BuildTracingNode_r(&tile, &tnode, tile.models[i].headnode, i);
 	}
 }
 
@@ -475,7 +475,7 @@ static void CM_MakeTracingNodes (mapTile_t *tile)
  * @sa CM_AddMapTile
  * @todo TEST z-level routing
  */
-static void CMod_LoadRouting (mapTile_t *tile, mapData_t *mapData, const byte *base, const char *name, const lump_t * l, const int sX, const int sY, const int sZ)
+static void CMod_LoadRouting (MapTile &tile, mapData_t *mapData, const byte *base, const char *name, const lump_t * l, const int sX, const int sY, const int sZ)
 {
 	/** @todo this eats a lot of memory - load directory into mapData->map */
 	routing_t *tempMap = (routing_t *)Mem_Alloc(sizeof(routing_t) * ACTOR_MAX_SIZE);
@@ -486,7 +486,7 @@ static void CMod_LoadRouting (mapTile_t *tile, mapData_t *mapData, const byte *b
 	int maxX, maxY, maxZ;
 	unsigned int i;
 	double start, end;
-	const int targetLength = sizeof(tile->wpMins) + sizeof(tile->wpMaxs) + sizeof(routing_t) * ACTOR_MAX_SIZE;
+	const int targetLength = sizeof(tile.wpMins) + sizeof(tile.wpMaxs) + sizeof(routing_t) * ACTOR_MAX_SIZE;
 
 	start = time(NULL);
 
@@ -502,9 +502,9 @@ static void CMod_LoadRouting (mapTile_t *tile, mapData_t *mapData, const byte *b
 
 	source = base + l->fileofs;
 
-	i = CMod_DeCompressRouting(&source, (byte*)tile->wpMins);
+	i = CMod_DeCompressRouting(&source, (byte*)tile.wpMins);
 	length = i;
-	i = CMod_DeCompressRouting(&source, (byte*)tile->wpMaxs);
+	i = CMod_DeCompressRouting(&source, (byte*)tile.wpMaxs);
 	length += i;
 	i = CMod_DeCompressRouting(&source, (byte*)tempMap);
 	length += i;
@@ -514,25 +514,25 @@ static void CMod_LoadRouting (mapTile_t *tile, mapData_t *mapData, const byte *b
 
 	/* endian swap possibly necessary */
 	for (i = 0; i < 3; i++) {
-		tile->wpMins[i] = LittleLong(tile->wpMins[i]);
-		tile->wpMaxs[i] = LittleLong(tile->wpMaxs[i]);
+		tile.wpMins[i] = LittleLong(tile.wpMins[i]);
+		tile.wpMaxs[i] = LittleLong(tile.wpMaxs[i]);
 	}
 
 	Com_DPrintf(DEBUG_ROUTING, "Map:%s  Offset:(%i, %i, %i)\n", name, sX, sY, sZ);
-	Com_DPrintf(DEBUG_ROUTING, "wpMins:(%i, %i, %i) wpMaxs:(%i, %i, %i)\n", tile->wpMins[0], tile->wpMins[1],
-			tile->wpMins[2], tile->wpMaxs[0], tile->wpMaxs[1], tile->wpMaxs[2]);
+	Com_DPrintf(DEBUG_ROUTING, "wpMins:(%i, %i, %i) wpMaxs:(%i, %i, %i)\n", tile.wpMins[0], tile.wpMins[1],
+			tile.wpMins[2], tile.wpMaxs[0], tile.wpMaxs[1], tile.wpMaxs[2]);
 
 	/* wpMins and wpMaxs have the map size data from the initial build.
 	 * Offset this by the given parameters so the stored values are in real coordinates. */
-	tile->wpMins[0] += sX;
-	tile->wpMins[1] += sY;
-	tile->wpMins[2] += sZ;
-	tile->wpMaxs[0] += sX;
-	tile->wpMaxs[1] += sY;
-	tile->wpMaxs[2] += sZ;
+	tile.wpMins[0] += sX;
+	tile.wpMins[1] += sY;
+	tile.wpMins[2] += sZ;
+	tile.wpMaxs[0] += sX;
+	tile.wpMaxs[1] += sY;
+	tile.wpMaxs[2] += sZ;
 
-	Com_DPrintf(DEBUG_ROUTING, "Shifted wpMins:(%i, %i, %i) wpMaxs:(%i, %i, %i)\n", tile->wpMins[0],
-			tile->wpMins[1], tile->wpMins[2], tile->wpMaxs[0], tile->wpMaxs[1], tile->wpMaxs[2]);
+	Com_DPrintf(DEBUG_ROUTING, "Shifted wpMins:(%i, %i, %i) wpMaxs:(%i, %i, %i)\n", tile.wpMins[0],
+			tile.wpMins[1], tile.wpMins[2], tile.wpMaxs[0], tile.wpMaxs[1], tile.wpMaxs[2]);
 
 	/* Things that need to be done:
 	 * The floor, ceiling, and route data can be copied over from the map.
@@ -540,12 +540,12 @@ static void CMod_LoadRouting (mapTile_t *tile, mapData_t *mapData, const byte *b
 	 * model data is adjacent to a cell with existing model data. */
 
 	/* Copy the routing information into our master table */
-	minX = std::max(tile->wpMins[0], 0);
-	minY = std::max(tile->wpMins[1], 0);
-	minZ = std::max(tile->wpMins[2], 0);
-	maxX = std::min(tile->wpMaxs[0], PATHFINDING_WIDTH - 1);
-	maxY = std::min(tile->wpMaxs[1], PATHFINDING_WIDTH - 1);
-	maxZ = std::min(tile->wpMaxs[2], PATHFINDING_HEIGHT - 1);
+	minX = std::max(tile.wpMins[0], 0);
+	minY = std::max(tile.wpMins[1], 0);
+	minZ = std::max(tile.wpMins[2], 0);
+	maxX = std::min(tile.wpMaxs[0], PATHFINDING_WIDTH - 1);
+	maxY = std::min(tile.wpMaxs[1], PATHFINDING_WIDTH - 1);
+	maxZ = std::min(tile.wpMaxs[2], PATHFINDING_HEIGHT - 1);
 
 	assert(minX <= maxX);
 	assert(minY <= maxY);
@@ -572,7 +572,7 @@ static void CMod_LoadRouting (mapTile_t *tile, mapData_t *mapData, const byte *b
 				}
 				/* Update the reroute table */
 				if (!mapData->reroute[size][y][x]) {
-					mapData->reroute[size][y][x] = tile->idx + 1;
+					mapData->reroute[size][y][x] = tile.idx + 1;
 				} else {
 					mapData->reroute[size][y][x] = ROUTING_NOT_REACHABLE;
 				}
@@ -683,44 +683,44 @@ static void CMod_LoadEntityString (MapTile &tile, mapData_t *mapData, const byte
  * @brief Loads the lightmap for server side visibility lookup
  * @todo Implement this
  */
-static void CMod_LoadLighting (mapTile_t *tile, const byte *base, const lump_t * l)
+static void CMod_LoadLighting (MapTile &tile, const byte *base, const lump_t * l)
 {
 	if (l->filelen == 0)
 		return;
 
-	tile->lightdata = Mem_PoolAllocTypeN(byte, l->filelen, com_cmodelSysPool);
-	memcpy(tile->lightdata, base + l->fileofs, l->filelen);
+	tile.lightdata = Mem_PoolAllocTypeN(byte, l->filelen, com_cmodelSysPool);
+	memcpy(tile.lightdata, base + l->fileofs, l->filelen);
 }
 
 /**
  * @brief Set up the planes and nodes so that the six floats of a bounding
  * box can just be stored out and get a proper clipping hull structure.
  */
-static void CM_InitBoxHull (mapTile_t *tile)
+static void CM_InitBoxHull (MapTile &tile)
 {
 	int i;
 
-	tile->box_headnode = tile->numnodes;
-	tile->box_planes = &tile->planes[tile->numplanes];
+	tile.box_headnode = tile.numnodes;
+	tile.box_planes = &tile.planes[tile.numplanes];
 	/* sanity check if you only use one maptile => no map assembly */
-	if (tile->idx == 1 && (tile->numnodes + 6 > MAX_MAP_NODES
-		|| tile->numbrushes + 1 > MAX_MAP_BRUSHES
-		|| tile->numleafbrushes + 1 > MAX_MAP_LEAFBRUSHES
-		|| tile->numbrushsides + 6 > MAX_MAP_BRUSHSIDES
-		|| tile->numplanes + 12 > MAX_MAP_PLANES))
+	if (tile.idx == 1 && (tile.numnodes + 6 > MAX_MAP_NODES
+		|| tile.numbrushes + 1 > MAX_MAP_BRUSHES
+		|| tile.numleafbrushes + 1 > MAX_MAP_LEAFBRUSHES
+		|| tile.numbrushsides + 6 > MAX_MAP_BRUSHSIDES
+		|| tile.numplanes + 12 > MAX_MAP_PLANES))
 		Com_Error(ERR_DROP, "Not enough room for box tree");
 
-	tile->box_brush = &tile->brushes[tile->numbrushes];
-	tile->box_brush->numsides = 6;
-	tile->box_brush->firstbrushside = tile->numbrushsides;
-	tile->box_brush->contentFlags = CONTENTS_WEAPONCLIP;
+	tile.box_brush = &tile.brushes[tile.numbrushes];
+	tile.box_brush->numsides = 6;
+	tile.box_brush->firstbrushside = tile.numbrushsides;
+	tile.box_brush->contentFlags = CONTENTS_WEAPONCLIP;
 
-	tile->box_leaf = &tile->leafs[tile->numleafs];
-	tile->box_leaf->contentFlags = CONTENTS_WEAPONCLIP;
-	tile->box_leaf->firstleafbrush = tile->numleafbrushes;
-	tile->box_leaf->numleafbrushes = 1;
+	tile.box_leaf = &tile.leafs[tile.numleafs];
+	tile.box_leaf->contentFlags = CONTENTS_WEAPONCLIP;
+	tile.box_leaf->firstleafbrush = tile.numleafbrushes;
+	tile.box_leaf->numleafbrushes = 1;
 
-	tile->leafbrushes[tile->numleafbrushes] = tile->numbrushes;
+	tile.leafbrushes[tile.numleafbrushes] = tile.numbrushes;
 
 	/* each side */
 	for (i = 0; i < 6; i++) {
@@ -730,26 +730,26 @@ static void CM_InitBoxHull (mapTile_t *tile)
 		cBspBrushSide_t *s;
 
 		/* brush sides */
-		s = &tile->brushsides[tile->numbrushsides + i];
-		s->plane = tile->planes + (tile->numplanes + i * 2 + side);
+		s = &tile.brushsides[tile.numbrushsides + i];
+		s->plane = tile.planes + (tile.numplanes + i * 2 + side);
 		s->surface = &nullSurface;
 
 		/* nodes */
-		c = &tile->nodes[tile->box_headnode + i];
-		c->plane = tile->planes + (tile->numplanes + i * 2);
-		c->children[side] = -1 - tile->emptyleaf;
+		c = &tile.nodes[tile.box_headnode + i];
+		c->plane = tile.planes + (tile.numplanes + i * 2);
+		c->children[side] = -1 - tile.emptyleaf;
 		if (i != 5)
-			c->children[side ^ 1] = tile->box_headnode + i + 1;
+			c->children[side ^ 1] = tile.box_headnode + i + 1;
 		else
-			c->children[side ^ 1] = LEAFNODE - tile->numleafs;
+			c->children[side ^ 1] = LEAFNODE - tile.numleafs;
 
 		/* planes */
-		p = &tile->box_planes[i * 2];
+		p = &tile.box_planes[i * 2];
 		p->type = i >> 1;
 		VectorClear(p->normal);
 		p->normal[i >> 1] = 1;
 
-		p = &tile->box_planes[i * 2 + 1];
+		p = &tile.box_planes[i * 2 + 1];
 		p->type = PLANE_ANYX + (i >> 1);
 		VectorClear(p->normal);
 		p->normal[i >> 1] = -1;
@@ -826,21 +826,21 @@ static void CM_AddMapTile (const char *name, const bool day, const int sX, const
 	CMod_LoadLeafBrushes(*tile, base, &header.lumps[LUMP_LEAFBRUSHES]);
 	CMod_LoadPlanes(*tile, base, &header.lumps[LUMP_PLANES], shift);
 	CMod_LoadBrushes(*tile, base, &header.lumps[LUMP_BRUSHES]);
-	CMod_LoadBrushSides(tile, base, &header.lumps[LUMP_BRUSHSIDES]);
+	CMod_LoadBrushSides(*tile, base, &header.lumps[LUMP_BRUSHSIDES]);
 	CMod_LoadSubmodels(*tile, base, &header.lumps[LUMP_MODELS], shift);
 	CMod_LoadNodes(*tile, base, &header.lumps[LUMP_NODES], shift);
 	CMod_LoadEntityString(*tile, mapData, base, &header.lumps[LUMP_ENTITIES], shift);
 	if (day)
-		CMod_LoadLighting(tile, base, &header.lumps[LUMP_LIGHTING_DAY]);
+		CMod_LoadLighting(*tile, base, &header.lumps[LUMP_LIGHTING_DAY]);
 	else
-		CMod_LoadLighting(tile, base, &header.lumps[LUMP_LIGHTING_NIGHT]);
+		CMod_LoadLighting(*tile, base, &header.lumps[LUMP_LIGHTING_NIGHT]);
 
-	CM_InitBoxHull(tile);
-	CM_MakeTracingNodes(tile);
+	CM_InitBoxHull(*tile);
+	CM_MakeTracingNodes(*tile);
 
 	mapData->numInline += tile->nummodels - NUM_REGULAR_MODELS;
 
-	CMod_LoadRouting(tile, mapData, base, name, &header.lumps[LUMP_ROUTING], sX, sY, sZ);
+	CMod_LoadRouting(*tile, mapData, base, name, &header.lumps[LUMP_ROUTING], sX, sY, sZ);
 
 	/* now increase the amount of loaded tiles */
 	mapTiles->numTiles++;
