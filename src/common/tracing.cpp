@@ -29,6 +29,20 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "tracing.h"
 #include "common.h"
 
+/* TR_TILE_TYPE	and TR_PLANE_TYPE are defined in tracing.h */
+#if defined(COMPILE_MAP)
+  #define TR_NODE_TYPE			dBspNode_t
+  #define TR_LEAF_TYPE			dBspLeaf_t
+  #define TR_BRUSHSIDE_TYPE		dBspBrushSide_t
+#elif defined(COMPILE_UFO)
+  #define TR_NODE_TYPE			cBspNode_t
+  #define TR_LEAF_TYPE			cBspLeaf_t
+  #define TR_BRUSHSIDE_TYPE		cBspBrushSide_t
+#else
+  #error Either COMPILE_MAP or COMPILE_UFO must be defined in order for tracing.c to work.
+#endif
+/** @note all the above types are declared in typedefs.h */
+
 /** @note For multi-check avoidance.
  * @todo not thread safe */
 static int checkcount;
