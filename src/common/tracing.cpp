@@ -186,12 +186,12 @@ LINE TRACING - TEST FOR BRUSH PRESENCE
  * @param[in] tile The map tile containing the structures to be traced.
  * @param[in] nodenum Node index
  * @param[in] start The position to start the trace.
- * @param[in] stop The position where the trace ends.
+ * @param[in] end The position where the trace ends.
  * @return zero if the line is not blocked, else a positive value
  * @sa TR_TestLineDist_r
  * @sa CM_TestLine
  */
-int TR_TestLine_r (TR_TILE_TYPE *tile, int32_t nodenum, const vec3_t start, const vec3_t stop)
+int TR_TestLine_r (TR_TILE_TYPE *tile, int32_t nodenum, const vec3_t start, const vec3_t end)
 {
 	tnode_t *tnode;
 	float front, back;
@@ -209,34 +209,34 @@ int TR_TestLine_r (TR_TILE_TYPE *tile, int32_t nodenum, const vec3_t start, cons
 	case PLANE_Y:
 	case PLANE_Z:
 		front = start[tnode->type] - tnode->dist;
-		back = stop[tnode->type] - tnode->dist;
+		back = end[tnode->type] - tnode->dist;
 		break;
 	case PLANE_NONE:
-		r = TR_TestLine_r(tile, tnode->children[0], start, stop);
+		r = TR_TestLine_r(tile, tnode->children[0], start, end);
 		if (r)
 			return r;
-		return TR_TestLine_r(tile, tnode->children[1], start, stop);
+		return TR_TestLine_r(tile, tnode->children[1], start, end);
 	default:
 		front = DotProduct(start, tnode->normal) - tnode->dist;
-		back = DotProduct(stop, tnode->normal) - tnode->dist;
+		back = DotProduct(end, tnode->normal) - tnode->dist;
 		break;
 	}
 
 	if (front >= -ON_EPSILON && back >= -ON_EPSILON)
-		return TR_TestLine_r(tile, tnode->children[0], start, stop);
+		return TR_TestLine_r(tile, tnode->children[0], start, end);
 	else if (front < ON_EPSILON && back < ON_EPSILON)
-		return TR_TestLine_r(tile, tnode->children[1], start, stop);
+		return TR_TestLine_r(tile, tnode->children[1], start, end);
 	else {
 		const int side = front < 0;
 		const float frac = front / (front - back);
 		vec3_t mid;
 
-		VectorInterpolation(start, stop, frac, mid);
+		VectorInterpolation(start, end, frac, mid);
 
 		r = TR_TestLine_r(tile, tnode->children[side], start, mid);
 		if (r)
 			return r;
-		return TR_TestLine_r(tile, tnode->children[!side], mid, stop);
+		return TR_TestLine_r(tile, tnode->children[!side], mid, end);
 	}
 }
 
@@ -288,18 +288,18 @@ static bool TR_TileTestLine (TR_TILE_TYPE *tile, const vec3_t start, const vec3_
  * @brief Checks traces against the world
  * @param[in] mapTiles List of tiles the current (RMA-)map is composed of
  * @param[in] start The position to start the trace.
- * @param[in] stop The position where the trace ends.
+ * @param[in] end The position where the trace ends.
  * @param[in] levelmask Indicates which special levels, if any, to include in the trace.
  * @note Special levels are LEVEL_ACTORCLIP and LEVEL_WEAPONCLIP.
  * @sa TR_TestLine_r
  * @return false if not blocked
  */
-bool TR_TestLine (mapTiles_t *mapTiles, const vec3_t start, const vec3_t stop, const int levelmask)
+bool TR_TestLine (mapTiles_t *mapTiles, const vec3_t start, const vec3_t end, const int levelmask)
 {
 	int tile;
 
 	for (tile = 0; tile < mapTiles->numTiles; tile++) {
-		if (TR_TileTestLine(&mapTiles->mapTiles[tile], start, stop, levelmask))
+		if (TR_TileTestLine(&mapTiles->mapTiles[tile], start, end, levelmask))
 			return true;
 	}
 	return false;
@@ -441,28 +441,28 @@ static bool TR_TileTestLineDM (TR_TILE_TYPE *tile, const vec3_t start, const vec
  * @param[in] mapTiles List of tiles the current (RMA-)map is composed of
  * @param[in] start The position to start the trace.
  * @param[in] stop The position where the trace ends.
- * @param[out] end The position where the trace hits a object or the stop position if nothing is in the line.
+ * @param[out] hit The position where the trace hits a object or the stop position if nothing is in the line.
  * @param[in] levelmask Indicates which special levels, if any, to include in the trace.
  * @sa TR_TestLineDM
  * @sa CL_ActorMouseTrace
  * @return false if no connection between start and stop - 1 otherwise
  */
-bool TR_TestLineDM (mapTiles_t* mapTiles, const vec3_t start, const vec3_t stop, vec3_t end, const int levelmask)
+bool TR_TestLineDM (mapTiles_t* mapTiles, const vec3_t start, const vec3_t end, vec3_t hit, const int levelmask)
 {
 	int tile;
 	vec3_t t_end;
 
-	VectorCopy(stop, end);
-	VectorCopy(stop, t_end);
+	VectorCopy(end, hit);
+	VectorCopy(end, t_end);
 
 	for (tile = 0; tile < mapTiles->numTiles; tile++) {
-		if (TR_TileTestLineDM(&mapTiles->mapTiles[tile], start, stop, t_end, levelmask)) {
-			if (VectorNearer(t_end, end, start))
-				VectorCopy(t_end, end);
+		if (TR_TileTestLineDM(&mapTiles->mapTiles[tile], start, end, t_end, levelmask)) {
+			if (VectorNearer(t_end, hit, start))
+				VectorCopy(t_end, hit);
 		}
 	}
 
-	if (VectorCompareEps(end, stop, EQUAL_EPSILON))
+	if (VectorCompareEps(hit, end, EQUAL_EPSILON))
 		return false;
 	else
 		return true;
