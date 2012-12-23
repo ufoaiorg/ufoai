@@ -43,7 +43,7 @@ typedef enum {
 } guiResearchElementType_t;
 
 typedef struct {
-	base_t *base;
+	const base_t *base;
 	technology_t *tech;
 	guiResearchElementType_t type;
 } guiResearchElement_t;
@@ -67,10 +67,6 @@ static int researchListMaxDisplayItems;
  */
 static void RS_UpdateInfo (const base_t* base)
 {
-	char tmpbuf[128];
-	technology_t *tech;
-	int type;
-
 	/* reset cvars */
 	cgi->Cvar_Set("mn_research_image", "");
 	cgi->Cvar_Set("mn_research_model", "");
@@ -83,14 +79,15 @@ static void RS_UpdateInfo (const base_t* base)
 
 	/* selection is not a research */
 	/** @todo it can be an assert */
-	type = researchList2[researchListPos].type;
+	const int type = researchList2[researchListPos].type;
 	if (type != RSGUI_RESEARCH && type != RSGUI_RESEARCHOUT && type != RSGUI_UNRESEARCHABLEITEM)
 		return;
 
-	tech = researchList2[researchListPos].tech;
+	technology_t *tech = researchList2[researchListPos].tech;
 	if (tech == NULL)
 		return;
 
+	char tmpbuf[128];
 	/* Display laboratories limits. */
 	Com_sprintf(tmpbuf, sizeof(tmpbuf), _("Laboratory space (used/all): %i/%i"),
 		CAP_GetCurrent(base, CAP_LABSPACE), CAP_GetMax(base, CAP_LABSPACE));
@@ -354,8 +351,6 @@ static void RS_InitGUI (base_t* base, bool update)
  */
 static void CL_ResearchSelect_f (void)
 {
-	int num;
-	int type;
 	base_t *base = B_GetCurrentSelectedBase();
 
 	if (!base)
@@ -366,29 +361,28 @@ static void CL_ResearchSelect_f (void)
 		return;
 	}
 
-	num = atoi(cgi->Cmd_Argv(1));
+	const int num = atoi(cgi->Cmd_Argv(1));
 	if (num < 0 || num >= researchListLength) {
 		cgi->UI_ResetData(TEXT_STANDARD);
 		return;
 	}
 
-	type = researchList2[num].type;
+	const int type = researchList2[num].type;
 
 	/* switch to another team */
 	if (type == RSGUI_BASETITLE) {
-		base_t *b = researchList2[num].base;
+		const base_t *b = researchList2[num].base;
 		if (b != NULL && b != base) {
 			cgi->UI_ExecuteConfunc("research_changebase %i %i", b->idx, researchListPos);
 			return;
 		}
 	}
 
-	if (type == RSGUI_RESEARCH || type == RSGUI_RESEARCHOUT || type == RSGUI_UNRESEARCHABLEITEM) {
-		/* update the selected row */
-		researchListPos = num;
-	} else {
+	if (type != RSGUI_RESEARCH && type != RSGUI_RESEARCHOUT && type != RSGUI_UNRESEARCHABLEITEM)
 		return;
-	}
+
+	/* update the selected row */
+	researchListPos = num;
 
 	/** @todo improve that, don't need to update everything */
 	/* need to set previous selected tech to proper color */
@@ -403,8 +397,6 @@ static void CL_ResearchSelect_f (void)
  */
 static void RS_ChangeScientist_f (void)
 {
-	int num;
-	int diff;
 	base_t *base = B_GetCurrentSelectedBase();
 
 	if (!base)
@@ -415,11 +407,11 @@ static void RS_ChangeScientist_f (void)
 		return;
 	}
 
-	num = atoi(cgi->Cmd_Argv(1));
+	const int num = atoi(cgi->Cmd_Argv(1));
 	if (num < 0 || num >= researchListLength)
 		return;
 
-	diff = atoi(cgi->Cmd_Argv(2));
+	const int diff = atoi(cgi->Cmd_Argv(2));
 	if (diff == 0)
 		return;
 
@@ -463,7 +455,6 @@ static void RS_MaxOutResearch (base_t *base, technology_t* tech)
  */
 static void RS_AssignScientist_f (void)
 {
-	int num;
 	base_t *base = B_GetCurrentSelectedBase();
 
 	if (!base)
@@ -474,7 +465,7 @@ static void RS_AssignScientist_f (void)
 		return;
 	}
 
-	num = atoi(cgi->Cmd_Argv(1));
+	const int num = atoi(cgi->Cmd_Argv(1));
 	if (num < 0 || num >= researchListLength)
 		return;
 
@@ -492,7 +483,6 @@ static void RS_AssignScientist_f (void)
  */
 static void RS_RemoveScientist_f (void)
 {
-	int num;
 	base_t *base = B_GetCurrentSelectedBase();
 
 	if (!base)
@@ -503,7 +493,7 @@ static void RS_RemoveScientist_f (void)
 		return;
 	}
 
-	num = atoi(cgi->Cmd_Argv(1));
+	const int num = atoi(cgi->Cmd_Argv(1));
 	if (num < 0 || num >= researchListLength)
 		return;
 
@@ -531,7 +521,6 @@ static void RS_UpdateData_f (void)
  */
 static void RS_ResearchStart_f (void)
 {
-	technology_t *tech;
 	base_t *base = B_GetCurrentSelectedBase();
 
 	/* We are not in base view. */
@@ -546,7 +535,7 @@ static void RS_ResearchStart_f (void)
 		return;
 
 	/* get the currently selected research-item */
-	tech = researchList2[researchListPos].tech;
+	technology_t *tech = researchList2[researchListPos].tech;
 
 	if (!tech)
 		return;
@@ -605,7 +594,6 @@ static void RS_ResearchStart_f (void)
  */
 static void RS_ResearchStop_f (void)
 {
-	technology_t *tech;
 	base_t *base = B_GetCurrentSelectedBase();
 
 	/* we are not in base view */
@@ -620,7 +608,7 @@ static void RS_ResearchStop_f (void)
 		return;
 
 	/* get the currently selected research-item */
-	tech = researchList2[researchListPos].tech;
+	technology_t *tech = researchList2[researchListPos].tech;
 
 	if (!tech)
 		return;
@@ -650,14 +638,11 @@ static void RS_ResearchStop_f (void)
  */
 static void RS_ShowPedia_f (void)
 {
-	const technology_t *tech;
-
 	if (researchListPos < 0 || researchListPos >= researchListLength)
 		return;
 
 	/* get the currently selected research-item */
-	tech = researchList2[researchListPos].tech;
-
+	const technology_t *tech = researchList2[researchListPos].tech;
 	if (!tech)
 		return;
 
@@ -677,7 +662,6 @@ static void RS_InitGUIData (base_t* base)
 {
 	int i, j;
 	int row;
-	bool first;
 
 	assert(base);
 
@@ -704,7 +688,7 @@ static void RS_InitGUIData (base_t* base)
 		if (tech->base != NULL && tech->base != base)
 			continue;
 
-		if(!RS_RequirementsMet(tech, base))
+		if (!RS_RequirementsMet(tech, base))
 			continue;
 
 		/* Assign the current tech in the global list to the correct entry in the displayed list. */
@@ -718,7 +702,7 @@ static void RS_InitGUIData (base_t* base)
 	row++;
 
 	/* Items collected but not yet researchable. */
-	first = true;
+	bool first = true;
 	for (i = 0; i < ccs.numTechnologies; i++) {
 		technology_t *tech = RS_GetTechByIDX(i);
 
@@ -750,7 +734,6 @@ static void RS_InitGUIData (base_t* base)
 		researchList2[row].type = RSGUI_UNRESEARCHABLEITEM;
 		row++;
 	}
-
 
 	/* research from another bases */
 	for (j = 0; j < MAX_BASES; j++) {
