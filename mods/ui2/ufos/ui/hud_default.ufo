@@ -335,7 +335,7 @@ window hud_default extends hud
 					{
 						pos			"0 0"
 						size		"48 48"
-						icon		"icons/circle_disabled"
+						icon		"icons/circle_disabled0"
 						invis		true
 					}
 				}
@@ -401,7 +401,7 @@ window hud_default extends hud
 				{
 					pos			"250 0"
 					size		"48 48"
-					icon		"icons/circle_disabled"
+					icon		"icons/circle_disabled0"
 					invis		true
 				}
 
@@ -428,7 +428,7 @@ window hud_default extends hud
 				{
 					pos			"220 0"
 					size		"48 48"
-					icon		"icons/circle_disabled"
+					icon		"icons/circle_disabled0"
 					invis		true
 				}
 
