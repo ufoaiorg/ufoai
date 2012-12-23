@@ -704,6 +704,9 @@ static void RS_InitGUIData (base_t* base)
 		if (tech->base != NULL && tech->base != base)
 			continue;
 
+		if(!RS_RequirementsMet(tech, base))
+			continue;
+
 		/* Assign the current tech in the global list to the correct entry in the displayed list. */
 		researchList2[row].tech = tech;
 		researchList2[row].base = base;
@@ -728,7 +731,7 @@ static void RS_InitGUIData (base_t* base)
 			continue;
 
 		/* Hide searchable or uncollected tech */
-		if (tech->statusResearchable || !tech->statusCollected)
+		if ((tech->statusResearchable && RS_RequirementsMet(tech, base)) || !tech->statusCollected)
 			continue;
 
 		/* title */
