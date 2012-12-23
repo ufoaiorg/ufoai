@@ -43,6 +43,21 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #endif
 /** @note all the above types are declared in typedefs.h */
 
+/* This attempts to make the box tracing code thread safe. */
+typedef struct boxtrace_s {
+	vec3_t start, end;
+	vec3_t mins, maxs;
+	vec3_t absmins, absmaxs;
+	vec3_t extents;
+
+	trace_t trace;
+	uint32_t contents;			/**< content flags to match again - MASK_ALL to match everything */
+	uint32_t rejects;			/**< content flags that should be rejected in a trace - ignored when MASK_ALL is given as content flags */
+	bool ispoint;				/* optimized case */
+
+	TR_TILE_TYPE *tile;
+} boxtrace_t;
+
 /** @note For multi-check avoidance.
  * @todo not thread safe */
 static int checkcount;

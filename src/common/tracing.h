@@ -65,21 +65,6 @@ typedef struct trace_s {
 	struct edict_s *ent;		/**< not set by CM_*() functions */
 } trace_t;
 
-/* This attempts to make the box tracing code thread safe. */
-typedef struct boxtrace_s {
-	vec3_t start, end;
-	vec3_t mins, maxs;
-	vec3_t absmins, absmaxs;
-	vec3_t extents;
-
-	trace_t trace;
-	uint32_t contents;			/**< content flags to match again - MASK_ALL to match everything */
-	uint32_t rejects;			/**< content flags that should be rejected in a trace - ignored when MASK_ALL is given as content flags */
-	bool ispoint;				/* optimized case */
-
-	TR_TILE_TYPE *tile;
-} boxtrace_t;
-
 typedef struct {
 	/** @note loaded map tiles with this assembly.  ufo2map has exactly 1. */
 	TR_TILE_TYPE mapTiles[MAX_MAPTILES];
