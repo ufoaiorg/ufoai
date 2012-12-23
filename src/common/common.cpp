@@ -1390,7 +1390,11 @@ int CL_FilterEventQueue (event_filter *filter)
 /**
  * @brief Eventfilter that filter out all events
  * @sa CL_FilterEventQueue
- * @TODO add parameter documentation
+ * @param[in] when The time the event should get executed (this is >= now because otherwise the
+ * event would have been executed already and would not need any filtering)
+ * @param[in] func The event execute callback
+ * @param[in] check The event check callback that can be used to delay event
+ * @param[in] data The userdata that was given at event scheduling
  */
 static bool Event_FilterAll (int when, event_func *func, event_check_func *check, void *data)
 {
