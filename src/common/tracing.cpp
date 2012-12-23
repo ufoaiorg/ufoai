@@ -410,14 +410,14 @@ static int TR_TestLineDist_r (TR_TILE_TYPE *tile, int32_t nodenum, const vec3_t 
  * @brief Checks traces against the world, gives hit position back
  * @param[in] tile The map tile containing the structures to be traced.
  * @param[in] start The position to start the trace.
- * @param[in] stop The position where the trace ends.
- * @param[out] end The position where the trace hits a object or the stop position if nothing is in the line.
+ * @param[in] end The position where the trace ends.
+ * @param[out] hit The position where the trace hits a object or the stop position if nothing is in the line.
  * @param[in] levelmask The bitmask of the levels (1<<[0-7]) to trace for
  * @sa TR_TestLineDM
  * @sa CL_ActorMouseTrace
- * @return false if no connection between start and stop - 1 otherwise
+ * @return false if no connection between start and end - 1 otherwise
  */
-static bool TR_TileTestLineDM (TR_TILE_TYPE *tile, const vec3_t start, const vec3_t stop, vec3_t end, const int levelmask)
+static bool TR_TileTestLineDM (TR_TILE_TYPE *tile, const vec3_t start, const vec3_t end, vec3_t hit, const int levelmask)
 {
 #ifdef COMPILE_MAP
 	const int corelevels = (levelmask & TL_FLAG_REGULAR_LEVELS);
@@ -425,7 +425,7 @@ static bool TR_TileTestLineDM (TR_TILE_TYPE *tile, const vec3_t start, const vec
 	vec3_t tr_end;
 	int i;
 
-	VectorCopy(stop, end);
+	VectorCopy(end, hit);
 
 	for (i = 0; i < tile->numtheads; i++) {
 #ifdef COMPILE_MAP
@@ -439,12 +439,12 @@ static bool TR_TileTestLineDM (TR_TILE_TYPE *tile, const vec3_t start, const vec
 		if (level == LEVEL_WEAPONCLIP && !(levelmask & TL_FLAG_WEAPONCLIP))
 			continue;
 #endif
-		if (TR_TestLineDist_r(tile, tile->thead[i], start, stop, tr_end))
-			if (VectorNearer(tr_end, end, start))
-				VectorCopy(tr_end, end);
+		if (TR_TestLineDist_r(tile, tile->thead[i], start, end, tr_end))
+			if (VectorNearer(tr_end, hit, start))
+				VectorCopy(tr_end, hit);
 	}
 
-	if (VectorCompareEps(end, stop, EQUAL_EPSILON))
+	if (VectorCompareEps(hit, end, EQUAL_EPSILON))
 		return false;
 	else
 		return true;
