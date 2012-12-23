@@ -404,7 +404,7 @@ static void SV_ClipMoveToEntities (moveclip_t *clip)
 			angles = touch->angles;
 
 		assert(headnode < MAX_MAP_NODES);
-		trace = CM_HintedTransformedBoxTrace(&sv->mapTiles.mapTiles[tile], clip->start, clip->end, clip->mins, clip->maxs, headnode,
+		trace = CM_HintedTransformedBoxTrace(sv->mapTiles.mapTiles[tile], clip->start, clip->end, clip->mins, clip->maxs, headnode,
 				clip->contentmask, 0, touch->origin, angles, rmaShift, 1.0);
 
 #ifdef PARANOID
