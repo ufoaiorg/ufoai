@@ -13,7 +13,7 @@ $(shell find $(BASE_DIR)/$(1) -type f -print)
 endef
 
 define ZIP #dont use 7zip it will ignore recursion on a recursive search for files on linux and Mingw
-$(shell ([ -x "$$(which zip 2> /dev/null)" ] && echo "zip -u9"))
+$(shell ([ -x "$$(which $(PROGRAM_ZIP) 2> /dev/null)" ] && echo "$(PROGRAM_ZIP) -u9"))
 endef
 
 %.pk3 : # zip return code 12: zip has nothing to do, bad for a "make pk3 -B"

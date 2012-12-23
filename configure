@@ -129,6 +129,8 @@ makefile_local() {
 	add_to_makefile_local_quote PKGLIBDIR "Using libdir ${PKGLIBDIR}"
 	add_to_makefile_local_quote LOCALEDIR "Using localedir ${LOCALEDIR}"
 	add_to_makefile_local_quote PREFIX "Using prefix ${PREFIX}"
+	add_to_makefile_local_quote PROGRAM_ZIP "Found zip"
+	add_to_makefile_local_quote PROGRAM_PYTHON "Found python"
 
 	echo "Build modules:"
 	for i in `get_modules`; do
@@ -309,6 +311,23 @@ check_ccache() {
 	fi
 }
 
+check_program() {
+	HAVE=PROGRAM_`echo $1 | tr '[a-z]' '[A-Z]'`
+	$1 --help > /dev/null 2>&1
+	if [ $? -eq 0 ]; then
+		echo "Found $1"
+		set_var $HAVE $1
+	else
+		set_var $HAVE 0
+	fi
+}
+
+check_programs() {
+	check_program zip
+	check_program python
+	check_program doxygen
+}
+
 check_target_os() {
 	local FOUND=0
 	for i in build/platforms/*.mk; do
@@ -487,6 +506,7 @@ PKGBINDIR=${PKGBINDIR:-${PREFIX}/bin}
 PKGLIBDIR=${PKGLIBDIR:-${PREFIX}/lib}
 
 check_compiler
+check_programs
 check_ccache
 check_headers
 makefile_local

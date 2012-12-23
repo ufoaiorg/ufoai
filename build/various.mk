@@ -7,7 +7,7 @@ endif
 
 # auto generate icon packs
 resources:
-	$(Q)python ./src/resources/sprite_pack.py
+	$(Q)$(PROGRAM_PYTHON) ./src/resources/sprite_pack.py
 
 clean-resources:
 	$(Q)rm ./base/pics/banks/autogen*
@@ -35,7 +35,7 @@ deb:
 	$(Q)debuild binary
 
 license-generate:
-	$(Q)python contrib/licenses/generate.py
+	$(Q)$(PROGRAM_PYTHON) contrib/licenses/generate.py
 
 doxygen:
 	$(Q)doxygen src/docs/doxywarn
