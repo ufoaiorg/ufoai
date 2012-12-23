@@ -455,7 +455,7 @@ static bool TR_TileTestLineDM (TR_TILE_TYPE *tile, const vec3_t start, const vec
  * @brief Checks traces against the world, gives hit position back
  * @param[in] mapTiles List of tiles the current (RMA-)map is composed of
  * @param[in] start The position to start the trace.
- * @param[in] stop The position where the trace ends.
+ * @param[in] end The position where the trace ends.
  * @param[out] hit The position where the trace hits a object or the stop position if nothing is in the line.
  * @param[in] levelmask Indicates which special levels, if any, to include in the trace.
  * @sa TR_TestLineDM
