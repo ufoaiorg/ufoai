@@ -661,7 +661,7 @@ static int I_PackAmmoAndWeapon (inventoryInterface_t *self, character_t* const c
 	}
 
 	weight = I_GetInventoryState(self, inv, tuNeed) + INVSH_GetItemWeight(item);
-	maxTU = GET_TU(speed) * GET_ENCUMBRANCE_PENALTY(weight, chr->score.skills[ABILITY_POWER]);
+	maxTU = GET_TU(speed, GET_ENCUMBRANCE_PENALTY(weight, chr->score.skills[ABILITY_POWER]));
 	if (weight > maxWeight || tuNeed > maxTU) {
 		Com_DPrintf(DEBUG_SHARED, "I_PackAmmoAndWeapon: weapon too heavy: '%s' in equipment '%s' (%s).\n",
 				weapon->id, ed->id, self->name);
@@ -694,7 +694,7 @@ static int I_PackAmmoAndWeapon (inventoryInterface_t *self, character_t* const c
 		while (num--) {
 			item_t mun = {NONE_AMMO, NULL, NULL, 0, 0};
 			weight = I_GetInventoryState(self, inv, tuNeed) + INVSH_GetItemWeight(item);
-			maxTU = GET_TU(speed) * GET_ENCUMBRANCE_PENALTY(weight, chr->score.skills[ABILITY_POWER]);
+			maxTU = GET_TU(speed, GET_ENCUMBRANCE_PENALTY(weight, chr->score.skills[ABILITY_POWER]));
 
 			mun.item = ammo;
 			/* ammo to backpack; belt is for knives and grenades */
@@ -951,7 +951,7 @@ static void I_EquipActor (inventoryInterface_t* self, character_t* const chr, co
 						const item_t item = {NONE_AMMO, NULL, armour, 0, 0};
 						int tuNeed = 0;
 						const float weight = I_GetInventoryState(self, inv, tuNeed) + INVSH_GetItemWeight(item);
-						const int maxTU = GET_TU(speed) * GET_ENCUMBRANCE_PENALTY(weight, chr->score.skills[ABILITY_POWER]);
+						const int maxTU = GET_TU(speed, GET_ENCUMBRANCE_PENALTY(weight, chr->score.skills[ABILITY_POWER]));
 						if (weight > maxWeight || tuNeed > maxTU)
 							continue;
 						if (self->TryAddToInventory(self, inv, &item, &self->csi->ids[self->csi->idArmour])) {
@@ -981,7 +981,7 @@ static void I_EquipActor (inventoryInterface_t* self, character_t* const chr, co
 						int tuNeed;
 						const fireDef_t *itemFd = FIRESH_SlowestFireDef(item);
 						const float weight = I_GetInventoryState(self, inv, tuNeed) + INVSH_GetItemWeight(item);
-						const int maxTU = GET_TU(speed) * GET_ENCUMBRANCE_PENALTY(weight, chr->score.skills[ABILITY_POWER]);
+						const int maxTU = GET_TU(speed, GET_ENCUMBRANCE_PENALTY(weight, chr->score.skills[ABILITY_POWER]));
 
 						if (miscItem->headgear)
 							container = self->csi->idHeadgear;

@@ -285,7 +285,7 @@ typedef int32_t shoot_types_t;
 /** @todo Skill-influence needs some balancing. */
 #define GET_ACC( ab, sk )   ((1 - ((float)(ab)/MAX_SKILL + (float)(sk)/MAX_SKILL) / 2))
 #define GET_MORALE( ab )        (std::min((100 + (ab) * 150/MAX_SKILL), 255))
-#define GET_TU(ab)		(MIN_TU + (ab) * 20 / MAX_SKILL)
+#define GET_TU( ab, md )		(MIN_TU * (md) + (ab) * 20 / MAX_SKILL)
 
 
 #define DOOR_OPEN_REVERSE 4

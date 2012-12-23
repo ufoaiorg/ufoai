@@ -1346,11 +1346,11 @@ static void HUD_UpdateActorLoad_f (void)
 		const float invWeight = INVSH_GetInventoryWeight(&selActor->i);
 		const int maxWeight = GAME_GetChrMaxLoad(chr);
 		const float penalty = GET_ENCUMBRANCE_PENALTY(invWeight, chr->score.skills[ABILITY_POWER]);
-		const int maxTU = GET_TU(chr->score.skills[ABILITY_SPEED]);
-		const int tus = maxTU * penalty;
+		const int maxTU = GET_TU(chr->score.skills[ABILITY_SPEED], 1);
+		const int tus = GET_TU(chr->score.skills[ABILITY_SPEED], penalty);
 		const int tuPenalty = maxTU * WEIGHT_NORMAL_PENALTY - (maxTU - tus);
 
-		UI_ExecuteConfunc("inv_actorload \"%g/%i %s\" \"%s %+i\" %f", invWeight, maxWeight, _("Kg"), _("TU:"), tuPenalty, WEIGHT_NORMAL_PENALTY - (1 - penalty));
+		UI_ExecuteConfunc("inv_actorload \"%g/%i %s\" \"%s %+i\" %f", invWeight, maxWeight, _("Kg"), _("TU:"), tuPenalty, WEIGHT_NORMAL_PENALTY - (1.0f - penalty));
 	}
 }
 
