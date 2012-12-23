@@ -337,7 +337,7 @@ LINE TRACING - TEST FOR BRUSH LOCATION
  * @sa TR_TestLine_r
  * @sa TR_TestLineDM
  */
-static int TR_TestLineDist_r (TR_TILE_TYPE *tile, int32_t nodenum, const vec3_t start, const vec3_t stop, vec3_t tr_end)
+static int TR_TestLineDist_r (TR_TILE_TYPE *tile, int32_t nodenum, const vec3_t start, const vec3_t end, vec3_t tr_end)
 {
 	tnode_t *tnode;
 	float front, back;
@@ -360,13 +360,13 @@ static int TR_TestLineDist_r (TR_TILE_TYPE *tile, int32_t nodenum, const vec3_t 
 	case PLANE_Y:
 	case PLANE_Z:
 		front = start[tnode->type] - tnode->dist;
-		back = stop[tnode->type] - tnode->dist;
+		back = end[tnode->type] - tnode->dist;
 		break;
 	case PLANE_NONE:
-		r = TR_TestLineDist_r(tile, tnode->children[0], start, stop, tr_end);
+		r = TR_TestLineDist_r(tile, tnode->children[0], start, end, tr_end);
 		if (r)
 			VectorCopy(tr_end, mid);
-		side = TR_TestLineDist_r(tile, tnode->children[1], start, stop, tr_end);
+		side = TR_TestLineDist_r(tile, tnode->children[1], start, end, tr_end);
 		if (side && r) {
 			if (VectorNearer(mid, tr_end, start)) {
 				VectorCopy(mid, tr_end);
@@ -384,26 +384,26 @@ static int TR_TestLineDist_r (TR_TILE_TYPE *tile, int32_t nodenum, const vec3_t 
 		return side;
 	default:
 		front = (start[0] * tnode->normal[0] + start[1] * tnode->normal[1] + start[2] * tnode->normal[2]) - tnode->dist;
-		back = (stop[0] * tnode->normal[0] + stop[1] * tnode->normal[1] + stop[2] * tnode->normal[2]) - tnode->dist;
+		back = (end[0] * tnode->normal[0] + end[1] * tnode->normal[1] + end[2] * tnode->normal[2]) - tnode->dist;
 		break;
 	}
 
 	if (front >= -ON_EPSILON && back >= -ON_EPSILON)
-		return TR_TestLineDist_r(tile, tnode->children[0], start, stop, tr_end);
+		return TR_TestLineDist_r(tile, tnode->children[0], start, end, tr_end);
 
 	if (front < ON_EPSILON && back < ON_EPSILON)
-		return TR_TestLineDist_r(tile, tnode->children[1], start, stop, tr_end);
+		return TR_TestLineDist_r(tile, tnode->children[1], start, end, tr_end);
 
 	side = front < 0;
 
 	frac = front / (front - back);
 
-	VectorInterpolation(start, stop, frac, mid);
+	VectorInterpolation(start, end, frac, mid);
 
 	r = TR_TestLineDist_r(tile, tnode->children[side], start, mid, tr_end);
 	if (r)
 		return r;
-	return TR_TestLineDist_r(tile, tnode->children[!side], mid, stop, tr_end);
+	return TR_TestLineDist_r(tile, tnode->children[!side], mid, end, tr_end);
 }
 
 /**
