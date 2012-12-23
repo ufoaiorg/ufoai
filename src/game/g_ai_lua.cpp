@@ -844,7 +844,7 @@ static int AIL_positionshoot (lua_State *L)
 			for (to[0] = xl; to[0] < xh; to[0]++) {
 				pos_t tu;
 				/* Can we see the target? */
-				gi.GridPosToVec(gi.routingMap, ent->fieldSize, to, check);
+				gi.GridPosToVec(ent->fieldSize, to, check);
 				tu = G_ActorMoveLength(ent, level.pathingMap, to, true);
 				if (tu > G_ActorUsableTUs(ent) || tu == ROUTING_NOT_REACHABLE)
 					continue;

@@ -298,7 +298,7 @@ edict_t *G_EdictsFindTargetEntity (const char *target)
  */
 void G_EdictCalcOrigin (edict_t* ent)
 {
-	gi.GridPosToVec(gi.routingMap, ent->fieldSize, ent->pos, ent->origin);
+	gi.GridPosToVec(ent->fieldSize, ent->pos, ent->origin);
 }
 
 /**
@@ -309,7 +309,7 @@ void G_EdictCalcOrigin (edict_t* ent)
 void G_EdictSetOrigin (edict_t* ent, const pos3_t newPos)
 {
 	VectorCopy(newPos, ent->pos);
-	gi.GridPosToVec(gi.routingMap, ent->fieldSize, ent->pos, ent->origin);
+	gi.GridPosToVec(ent->fieldSize, ent->pos, ent->origin);
 }
 
 /**

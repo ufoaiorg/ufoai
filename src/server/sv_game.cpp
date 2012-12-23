@@ -507,6 +507,11 @@ static void SV_RecalcRouting (const char *name, const GridBox& box, const char *
 	Grid_RecalcRouting(&sv->mapTiles, sv->mapData.routes, name, box, list);
 }
 
+static void SV_GridPosToVec (const int actorSize, const pos3_t pos, vec3_t vec)
+{
+	Grid_PosToVec(sv->mapData.routes, actorSize, pos, vec);
+}
+
 static bool SV_CanActorStandHere (const int actorSize, const pos3_t pos)
 {
 	return RT_CanActorStandHere(sv->mapData.routes, actorSize, pos);
@@ -697,7 +702,7 @@ void SV_InitGameProgs (void)
 	import.MoveNext = Grid_MoveNext;
 	import.GetTUsForDirection = Grid_GetTUsForDirection;
 	import.GridFall = SV_GridFall;
-	import.GridPosToVec = Grid_PosToVec;
+	import.GridPosToVec = SV_GridPosToVec;
 	import.GridRecalcRouting = SV_RecalcRouting;
 	import.CanActorStandHere = SV_CanActorStandHere;
 
