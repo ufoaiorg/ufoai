@@ -138,6 +138,21 @@ tile +craft_crash_bomber
 0		0		0		0		0		0
 }
 
+tile +craft_ufo_corrupter
+{
+8 10
+0		0		0		0		0		0		0		0
+0		+b		+b		+b		+b		+b		+b		0
+0		+b		+b		+b		+b		+b		+b		0
+0		+b		+b		+b		+b		+b		+b		0
+0		+b		+b		+b		+b		+b		+b		0
+0		+b		+b		+b		+b		+b		+b		0
+0		0		0		+b		+b		0		0		0
+0		0		0		+b		+b		0		0		0
+0		0		0		+b		+b		0		0		0
+0		0		0		0		0		0		0		0
+}
+
 // dropships --------------------------------------------------------
 
 tile +craft_drop_firebird
