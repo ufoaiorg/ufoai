@@ -422,7 +422,7 @@ window ufopedia extends objectinfo
 		}
 		if ( *cvar:mn_upmodel_top ne "" ) {
 			*cvar:mn_rightpanel = 1
-			cmd "del mn_upimage_top2;"
+			delete *cvar:mn_upimage_top2
 			*node:root.content.decoration_panel@invis = false
 		}
 		if ( *cvar:mn_upmodel_bottom ne "" ) {
@@ -430,7 +430,9 @@ window ufopedia extends objectinfo
 			*node:root.content.decoration_panel2@invis = false
 		}
 
-		if ( *cvar:mn_uprequirement ne "" ) { *cvar:mn_rightpanel = 1 }
+		if ( *cvar:mn_uprequirement ne "" ) {
+			*cvar:mn_rightpanel = 1
+		}
 
 		// invalidate techtree selection
 		*node:root.content.requirement.techtree@lineselected = -1
@@ -600,7 +602,7 @@ window ufopedia extends objectinfo
 		if ( *cvar:mn_upimage_top2 eq "" ) {
 			*node:root.content.image_top2@invis = true
 		}
-		cmd "del mn_rightpanel;"
+		delete *cvar:mn_rightpanel
 	}
 
 	confunc mn_up_empty
