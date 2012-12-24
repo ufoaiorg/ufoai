@@ -2499,12 +2499,12 @@ static const BodyData* Com_GetBodyTemplateByID (const char *id)
 	return NULL;
 }
 
-static const teamNames_t *Com_GetNameListById(const char *id)
+static const teamNames_t *Com_GetNameListByID (const char *id)
 {
 	LIST_Foreach(csi.actorNames, teamNames_t, names)
 		if (Q_streq(id, names->id))
 			return names;
-	Com_Printf("Com_GetNameListById: could not find name list: '%s'\n", id);
+	Com_Printf("Com_GetNameListByID: could not find name list: '%s'\n", id);
 	return NULL;
 }
 
@@ -2620,7 +2620,7 @@ static void Com_ParseTeam (const char *name, const char **text)
 			} else if (Q_streq(token, "names")) {
 				const teamNames_t *nameList;
 				token = Com_EParse(text, errhead, name);
-				nameList = Com_GetNameListById(token);
+				nameList = Com_GetNameListByID(token);
 				if (nameList == NULL)
 					Sys_Error("Com_ParseTeam: Could not find name list %s in team def %s\n", token, name);
 				td->names = nameList->names;
