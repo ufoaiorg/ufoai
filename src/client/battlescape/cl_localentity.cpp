@@ -1657,7 +1657,7 @@ static int32_t CL_HullForEntity (const le_t *le, int *tile, vec3_t rmaShift, vec
 		*tile = 0;
 		VectorCopy(vec3_origin, angles);
 		VectorCopy(vec3_origin, rmaShift);
-		return CM_HeadnodeForBox(&(cl.mapTiles->mapTiles[*tile]), le->mins, le->maxs);
+		return CM_HeadnodeForBox(cl.mapTiles->mapTiles[*tile], le->mins, le->maxs);
 	}
 }
 
