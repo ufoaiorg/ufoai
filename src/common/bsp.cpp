@@ -782,7 +782,6 @@ static void CM_AddMapTile (const char *name, const bool day, const int sX, const
 	/* use for random map assembly for shifting origins and so on */
 	vec3_t shift;
 	const byte *base;
-	mapTile_t *tile;
 
 	Com_DPrintf(DEBUG_ENGINE, "CM_AddMapTile: %s at %i,%i,%i\n", name, sX, sY, sZ);
 	assert(name);
@@ -811,36 +810,36 @@ static void CM_AddMapTile (const char *name, const bool day, const int sX, const
 	if (mapTiles->numTiles >= MAX_MAPTILES)
 		Com_Error(ERR_FATAL, "CM_AddMapTile: too many tiles loaded %i", mapTiles->numTiles);
 
-	tile = &(mapTiles->mapTiles[mapTiles->numTiles]);
-	OBJZERO(*tile);
-	tile->idx = mapTiles->numTiles;
-	Q_strncpyz(tile->name, name, sizeof(tile->name));
+	MapTile &tile = mapTiles->mapTiles[mapTiles->numTiles];
+	OBJZERO(tile);
+	tile.idx = mapTiles->numTiles;
+	Q_strncpyz(tile.name, name, sizeof(tile.name));
 
 	/* pathfinding and the like must be shifted on the worldplane when we
 	 * are assembling a map */
 	VectorSet(shift, sX * UNIT_SIZE, sY * UNIT_SIZE, sZ * UNIT_HEIGHT);
 
 	/* load into heap */
-	CMod_LoadSurfaces(*tile, base, &header.lumps[LUMP_TEXINFO]);
-	CMod_LoadLeafs(*tile, base, &header.lumps[LUMP_LEAFS]);
-	CMod_LoadLeafBrushes(*tile, base, &header.lumps[LUMP_LEAFBRUSHES]);
-	CMod_LoadPlanes(*tile, base, &header.lumps[LUMP_PLANES], shift);
-	CMod_LoadBrushes(*tile, base, &header.lumps[LUMP_BRUSHES]);
-	CMod_LoadBrushSides(*tile, base, &header.lumps[LUMP_BRUSHSIDES]);
-	CMod_LoadSubmodels(*tile, base, &header.lumps[LUMP_MODELS], shift);
-	CMod_LoadNodes(*tile, base, &header.lumps[LUMP_NODES], shift);
-	CMod_LoadEntityString(*tile, mapData, base, &header.lumps[LUMP_ENTITIES], shift);
+	CMod_LoadSurfaces(tile, base, &header.lumps[LUMP_TEXINFO]);
+	CMod_LoadLeafs(tile, base, &header.lumps[LUMP_LEAFS]);
+	CMod_LoadLeafBrushes(tile, base, &header.lumps[LUMP_LEAFBRUSHES]);
+	CMod_LoadPlanes(tile, base, &header.lumps[LUMP_PLANES], shift);
+	CMod_LoadBrushes(tile, base, &header.lumps[LUMP_BRUSHES]);
+	CMod_LoadBrushSides(tile, base, &header.lumps[LUMP_BRUSHSIDES]);
+	CMod_LoadSubmodels(tile, base, &header.lumps[LUMP_MODELS], shift);
+	CMod_LoadNodes(tile, base, &header.lumps[LUMP_NODES], shift);
+	CMod_LoadEntityString(tile, mapData, base, &header.lumps[LUMP_ENTITIES], shift);
 	if (day)
-		CMod_LoadLighting(*tile, base, &header.lumps[LUMP_LIGHTING_DAY]);
+		CMod_LoadLighting(tile, base, &header.lumps[LUMP_LIGHTING_DAY]);
 	else
-		CMod_LoadLighting(*tile, base, &header.lumps[LUMP_LIGHTING_NIGHT]);
+		CMod_LoadLighting(tile, base, &header.lumps[LUMP_LIGHTING_NIGHT]);
 
-	CM_InitBoxHull(*tile);
-	CM_MakeTracingNodes(*tile);
+	CM_InitBoxHull(tile);
+	CM_MakeTracingNodes(tile);
 
-	mapData->numInline += tile->nummodels - NUM_REGULAR_MODELS;
+	mapData->numInline += tile.nummodels - NUM_REGULAR_MODELS;
 
-	CMod_LoadRouting(*tile, mapData, base, name, &header.lumps[LUMP_ROUTING], sX, sY, sZ);
+	CMod_LoadRouting(tile, mapData, base, name, &header.lumps[LUMP_ROUTING], sX, sY, sZ);
 
 	/* now increase the amount of loaded tiles */
 	mapTiles->numTiles++;
@@ -1068,9 +1067,9 @@ float CM_GetVisibility (const mapTiles_t *mapTiles, const pos3_t position)
 	int i;
 
 	for (i = 0; i < mapTiles->numTiles; i++) {
-		const mapTile_t *tile = &mapTiles->mapTiles[i];
-		if (VectorInside(position, tile->wpMins, tile->wpMaxs)) {
-			if (tile->lightdata == NULL)
+		const MapTile &tile = mapTiles->mapTiles[i];
+		if (VectorInside(position, tile.wpMins, tile.wpMaxs)) {
+			if (tile.lightdata == NULL)
 				return 1.0f;
 			/** @todo implement me */
 			return 1.0f;

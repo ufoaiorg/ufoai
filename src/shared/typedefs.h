@@ -132,7 +132,6 @@ public:
 	byte lightquant;
 	byte *lightdata;
 };
-typedef MapTile mapTile_t;
 
 /**
  * @brief Pathfinding routing structure and tile layout

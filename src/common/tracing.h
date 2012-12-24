@@ -37,7 +37,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
   #define TR_TILE_TYPE			dMapTile_t
   #define TR_PLANE_TYPE			dBspPlane_t
 #elif defined(COMPILE_UFO)
-  #define TR_TILE_TYPE			mapTile_t
+  #define TR_TILE_TYPE			MapTile
   #define TR_PLANE_TYPE			cBspPlane_t
 #else
   #error Either COMPILE_MAP or COMPILE_UFO must be defined in order for tracing.c to work.

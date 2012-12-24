@@ -150,7 +150,7 @@ namespace routing
 	{
 		static routing_t tempMap[ACTOR_MAX_SIZE];
 		static routing_t clMap[ACTOR_MAX_SIZE];
-		static mapTile_t curTile;
+		static MapTile curTile;
 		byte *source;
 		int length;
 		int x, y, z, size, dir;

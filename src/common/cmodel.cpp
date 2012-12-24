@@ -322,10 +322,10 @@ trace_t CM_CompleteBoxTrace (mapTiles_t *mapTiles, const vec3_t start, const vec
 
 	/* trace against all loaded map tiles */
 	for (tile = 0; tile < mapTiles->numTiles; tile++) {
-		mapTile_t *myTile = &mapTiles->mapTiles[tile];
-		PosToVec(myTile->wpMins, wpmins);
+		MapTile &myTile = mapTiles->mapTiles[tile];
+		PosToVec(myTile.wpMins, wpmins);
 		VectorSubtract(wpmins, offset, wpmins);
-		PosToVec(myTile->wpMaxs, wpmaxs);
+		PosToVec(myTile.wpMaxs, wpmaxs);
 		VectorAdd(wpmaxs, offset, wpmaxs);
 		/* If the trace is completely outside of the tile, then skip it. */
 		if (smax[0] < wpmins[0] && emax[0] < wpmins[0])
@@ -340,7 +340,7 @@ trace_t CM_CompleteBoxTrace (mapTiles_t *mapTiles, const vec3_t start, const vec
 			continue;
 		if (smin[2] > wpmaxs[2] && emin[2] > wpmaxs[2])
 			continue;
-		newtr = TR_TileBoxTrace(myTile, start, end, box, levelmask, brushmask, brushreject);
+		newtr = TR_TileBoxTrace(&myTile, start, end, box, levelmask, brushmask, brushreject);
 		newtr.mapTile = tile;
 
 		/* memorize the trace with the minimal fraction */
