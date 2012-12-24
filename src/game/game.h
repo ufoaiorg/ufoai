@@ -150,7 +150,7 @@ typedef struct {
 	bool (IMPORT *TestLineWithEnt) (const vec3_t start, const vec3_t stop, const int levelmask, const char **entlist);
 	float (IMPORT *GrenadeTarget) (const vec3_t from, const vec3_t at, float speed, bool launched, bool rolled, vec3_t v0);
 
-	void (IMPORT *GridCalcPathing) (const routing_t *routes, actorSizeEnum_t actorSize, pathing_t * path, const pos3_t from, byte crouchingState, int distance, pos_t ** forbiddenList, int forbiddenListLength);
+	void (IMPORT *GridCalcPathing) (actorSizeEnum_t actorSize, pathing_t * path, const pos3_t from, byte crouchingState, int distance, pos_t ** forbiddenList, int forbiddenListLength);
 	void (IMPORT *MoveStore) (pathing_t *path);
 	pos_t (IMPORT *MoveLength) (const pathing_t *path, const pos3_t to, byte crouchingState, bool stored);
 	int (IMPORT *MoveNext) (const pathing_t *path, const pos3_t from, byte crouchingState);

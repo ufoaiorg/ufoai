@@ -512,6 +512,10 @@ static void SV_GridPosToVec (const int actorSize, const pos3_t pos, vec3_t vec)
 	Grid_PosToVec(sv->mapData.routes, actorSize, pos, vec);
 }
 
+static void SV_GridCalcPathing (actorSizeEnum_t actorSize, pathing_t *path, const pos3_t from, byte crouchingState, int distance, pos_t **forbiddenList, int forbiddenListLength)
+{
+	Grid_CalcPathing (sv->mapData.routes, actorSize, path, from, crouchingState, distance, forbiddenList, forbiddenListLength);
+}
 static bool SV_CanActorStandHere (const int actorSize, const pos3_t pos)
 {
 	return RT_CanActorStandHere(sv->mapData.routes, actorSize, pos);
@@ -696,7 +700,7 @@ void SV_InitGameProgs (void)
 	import.TestLineWithEnt = SV_TestLineWithEnt;
 	import.GrenadeTarget = Com_GrenadeTarget;
 
-	import.GridCalcPathing = Grid_CalcPathing;
+	import.GridCalcPathing = SV_GridCalcPathing;
 	import.MoveStore = Grid_MoveStore;
 	import.MoveLength = Grid_MoveLength;
 	import.MoveNext = Grid_MoveNext;

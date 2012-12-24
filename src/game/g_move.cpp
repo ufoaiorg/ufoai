@@ -119,8 +119,7 @@ void G_MoveCalc (int team, const edict_t *movingActor, const pos3_t from, byte c
 void G_MoveCalcLocal (pathing_t *pt, int team, const edict_t *movingActor, const pos3_t from, byte crouchingState, int distance)
 {
 	G_BuildForbiddenList(team, movingActor);
-	gi.GridCalcPathing(gi.routingMap, movingActor->fieldSize, pt, from, crouchingState, distance,
-			forbiddenList, forbiddenListLength);
+	gi.GridCalcPathing(movingActor->fieldSize, pt, from, crouchingState, distance, forbiddenList, forbiddenListLength);
 }
 
 /**
