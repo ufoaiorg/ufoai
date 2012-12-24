@@ -37,7 +37,7 @@ sequence developers
 	{
 		pos		"768 0"
 		image	"pics/background/world_bg"
-		inbackground	"true"
+		inbackground	true
 	}
 	obj2d ufoai_url
 	{
@@ -58,7 +58,7 @@ sequence developers
 		align	"uc"
 		color	"0 1 0 1"
 		speed	"0 -60"
-		inbackground	"true"
+		inbackground	true
 	}
 	wait 0.7
 	obj2d lead_text
@@ -68,7 +68,7 @@ sequence developers
 		align	"uc"
 		color	"1 1 1 1"
 		speed	"0 -60"
-		inbackground	"true"
+		inbackground	true
 	}
 
 	wait 1.0
@@ -79,7 +79,7 @@ sequence developers
 		align	"uc"
 		color	"0 1 0 1"
 		speed	"0 -60"
-		inbackground	"true"
+		inbackground	true
 	}
 	wait 0.7
 	obj2d aduke_text
@@ -89,7 +89,7 @@ sequence developers
 		align	"uc"
 		color	"1 1 1 1"
 		speed	"0 -60"
-		inbackground	"true"
+		inbackground	true
 	}
 	wait 0.7
 	obj2d alextishin_text
@@ -99,7 +99,7 @@ sequence developers
 		align	"uc"
 		color	"1 1 1 1"
 		speed	"0 -60"
-		inbackground	"true"
+		inbackground	true
 	}
 	wait 0.7
 	obj2d bayo_text
@@ -109,7 +109,7 @@ sequence developers
 		align	"uc"
 		color	"1 1 1 1"
 		speed	"0 -60"
-		inbackground	"true"
+		inbackground	true
 	}
 	wait 0.7
 	obj2d crystan_text
@@ -119,7 +119,7 @@ sequence developers
 		align	"uc"
 		color	"1 1 1 1"
 		speed	"0 -60"
-		inbackground	"true"
+		inbackground	true
 	}
 	wait 0.7
 	obj2d darkrain_text
@@ -129,7 +129,7 @@ sequence developers
 		align	"uc"
 		color	"1 1 1 1"
 		speed	"0 -60"
-		inbackground	"true"
+		inbackground	true
 	}
 	wait 0.7
 	obj2d geever_text
@@ -139,7 +139,7 @@ sequence developers
 		align	"uc"
 		color	"1 1 1 1"
 		speed	"0 -60"
-		inbackground	"true"
+		inbackground	true
 	}
 	wait 0.7
 	obj2d hhour_text
@@ -149,7 +149,7 @@ sequence developers
 		align	"uc"
 		color	"1 1 1 1"
 		speed	"0 -60"
-		inbackground	"true"
+		inbackground	true
 	}
 	wait 0.7
 	obj2d pawel_text
@@ -159,7 +159,7 @@ sequence developers
 		align	"uc"
 		color	"1 1 1 1"
 		speed	"0 -60"
-		inbackground	"true"
+		inbackground	true
 	}
 	wait 0.7
 	obj2d shipit_text
@@ -169,7 +169,7 @@ sequence developers
 		align	"uc"
 		color	"1 1 1 1"
 		speed	"0 -60"
-		inbackground	"true"
+		inbackground	true
 	}
 
 	// ========================
@@ -183,7 +183,7 @@ sequence developers
 		align	"uc"
 		color	"0 1 0 1"
 		speed	"0 -60"
-		inbackground	"true"
+		inbackground	true
 	}
 	wait 0.7
 	obj2d btaxis_text
@@ -193,7 +193,7 @@ sequence developers
 		align	"uc"
 		color	"1 1 1 1"
 		speed	"0 -60"
-		inbackground	"true"
+		inbackground	true
 	}
 	wait 0.7
 	obj2d hoehrer_text
@@ -203,7 +203,7 @@ sequence developers
 		align	"uc"
 		color	"1 1 1 1"
 		speed	"0 -60"
-		inbackground	"true"
+		inbackground	true
 	}
 	wait 0.7
 	obj2d kildor_text
@@ -213,7 +213,7 @@ sequence developers
 		align	"uc"
 		color	"1 1 1 1"
 		speed	"0 -60"
-		inbackground	"true"
+		inbackground	true
 	}
 	wait 0.7
 	obj2d kracken_text
@@ -223,7 +223,7 @@ sequence developers
 		align	"uc"
 		color	"1 1 1 1"
 		speed	"0 -60"
-		inbackground	"true"
+		inbackground	true
 	}
 	wait 0.7
 	obj2d lordhavoc_text
@@ -233,7 +233,7 @@ sequence developers
 		align	"uc"
 		color	"1 1 1 1"
 		speed	"0 -60"
-		inbackground	"true"
+		inbackground	true
 	}
 	wait 0.7
 	obj2d tron_text
@@ -243,7 +243,7 @@ sequence developers
 		align	"uc"
 		color	"1 1 1 1"
 		speed	"0 -60"
-		inbackground	"true"
+		inbackground	true
 	}
 	wait 0.7
 	obj2d winter_text
@@ -253,7 +253,7 @@ sequence developers
 		align	"uc"
 		color	"1 1 1 1"
 		speed	"0 -60"
-		inbackground	"true"
+		inbackground	true
 	}
 	wait 0.7
 	obj2d zenerka_text
@@ -263,7 +263,7 @@ sequence developers
 		align	"uc"
 		color	"1 1 1 1"
 		speed	"0 -60"
-		inbackground	"true"
+		inbackground	true
 	}
 
 	// ========================
@@ -277,7 +277,7 @@ sequence developers
 		align	"uc"
 		color	"0 1 0 1"
 		speed	"0 -60"
-		inbackground	"true"
+		inbackground	true
 	}
 	wait 0.7
 	obj2d herby_text
@@ -287,7 +287,7 @@ sequence developers
 		align	"uc"
 		color	"1 1 1 1"
 		speed	"0 -60"
-		inbackground	"true"
+		inbackground	true
 	}
 	wait 0.7
 	obj2d sparxx_text
@@ -297,7 +297,7 @@ sequence developers
 		align	"uc"
 		color	"1 1 1 1"
 		speed	"0 -60"
-		inbackground	"true"
+		inbackground	true
 	}
 	wait 0.7
 	obj2d rastaman_text
@@ -307,7 +307,7 @@ sequence developers
 		align	"uc"
 		color	"1 1 1 1"
 		speed	"0 -60"
-		inbackground	"true"
+		inbackground	true
 	}
 	wait 0.7
 	obj2d sacrusha_text
@@ -317,7 +317,7 @@ sequence developers
 		align	"uc"
 		color	"1 1 1 1"
 		speed	"0 -60"
-		inbackground	"true"
+		inbackground	true
 	}
 	wait 0.7
 	obj2d vanethian_text
@@ -327,7 +327,7 @@ sequence developers
 		align	"uc"
 		color	"1 1 1 1"
 		speed	"0 -60"
-		inbackground	"true"
+		inbackground	true
 	}
 
 	// ========================
@@ -341,7 +341,7 @@ sequence developers
 		align	"uc"
 		color	"0 1 0 1"
 		speed	"0 -60"
-		inbackground	"true"
+		inbackground	true
 	}
 	wait 0.7
 	obj2d id_text
@@ -351,7 +351,7 @@ sequence developers
 		align	"uc"
 		color	"1 1 1 1"
 		speed	"0 -60"
-		inbackground	"true"
+		inbackground	true
 	}
 	wait 0.7
 	obj2d ninex_text
@@ -361,7 +361,7 @@ sequence developers
 		align	"uc"
 		color	"1 1 1 1"
 		speed	"0 -60"
-		inbackground	"true"
+		inbackground	true
 	}
 	wait 0.7
 	obj2d additional_thanks_text
@@ -371,7 +371,7 @@ sequence developers
 		align	"uc"
 		color	"1 1 1 1"
 		speed	"0 -60"
-		inbackground	"true"
+		inbackground	true
 	}
 	wait 10.0
 
