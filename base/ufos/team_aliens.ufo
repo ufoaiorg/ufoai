@@ -13,7 +13,7 @@ team taman
 	size			1
 	hit_particle	blood
 	bodytype		humanoid_standard
-	names			alien_taman
+	names			alien_taman_names
 
 	models {
 		neutral("aliens/taman" "body01" "head01" 0 0) // Body: very high rank, Head: yellow eyes
@@ -94,7 +94,7 @@ team ortnok
 	//hit_particle	none
 	death_texture	"pics/sfx/blood/blood_green_0"
 	bodytype		humanoid_standard
-	names			alien_ortnok
+	names			alien_ortnok_names
 
 	models {
 		neutral("aliens/ortnok" "body01" "head01" 0 0) // Body: Big open wound, Head: 2 small scars over the left eye
@@ -176,7 +176,7 @@ team shevaar
 	size			1
 	hit_particle	blood
 	bodytype		humanoid_standard
-	names			aliens_shevaar
+	names			aliens_shevaar_names
 
 	models {
 		neutral("aliens/shevaar" "body01" "head01" 0 0) // Body: Original brown skin, blue trousers, Head: Original brown skin
@@ -254,7 +254,7 @@ team bloodspider
 	//hit_particle	none
 	death_texture	"pics/sfx/blood/blood_oil_2"
 	bodytype		default_unipart
-	names		alien_bloodspider
+	names		alien_bloodspider_names
 
 	models {
 		neutral("aliens/bloodspider" "bloodspider" "head" 0 0)
@@ -326,7 +326,7 @@ team bloodspider_adv
 	//hit_particle	none
 	death_texture	"pics/sfx/blood/blood_oil_2"
 	bodytype		default_unipart
-	names		alien_bloodspider_adv
+	names		alien_bloodspider_adv_names
 
 	models {
 		neutral("aliens/bloodspider_adv" "body01" "head" 0 0)
@@ -400,7 +400,7 @@ team hovernet
 	//hit_particle	none
 	death_texture	"pics/sfx/blood/blood_oil_2"
 	bodytype		default_unipart
-	names		alien_hovernet
+	names		alien_hovernet_names
 
 	models {
 		neutral("aliens/hovernet" "body01" "head" 0 0)
@@ -472,7 +472,7 @@ team hovernet_adv
 	//hit_particle	none
 	death_texture	"pics/sfx/blood/blood_oil_2"
 	bodytype		default_unipart
-	names		alien_hovernet_adv
+	names		alien_hovernet_adv_names
 
 	models {
 		neutral("aliens/hovernet_adv" "body01" "head" 0 0)
@@ -538,7 +538,7 @@ team taman_light
 	size			1
 	hit_particle	blood
 	bodytype		humanoid_standard
-	names			alien_taman
+	names			alien_taman_names
 
 	models {
 		neutral("aliens/taman" "body01" "head01" 0 0) // Body: very high rank, Head: yellow eyes
@@ -618,7 +618,7 @@ team taman_heavy
 	size			1
 	hit_particle	blood
 	bodytype		humanoid_standard
-	names			alien_taman
+	names			alien_taman_names
 
 	models {
 		neutral("aliens/taman" "body01" "head01" 0 0) // Body: very high rank, Head: yellow eyes

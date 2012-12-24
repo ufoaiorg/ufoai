@@ -13,7 +13,7 @@
 //			male_lastname {}
 //========================================================================
 
-names human {
+names human_names {
 	female (
 		"Aakriti"
 		"Abeba"
@@ -655,7 +655,7 @@ names human {
 	)
 }
 
-names ugv_phoenix {
+names ugv_phoenix_names {
 	neutral (
 		"_UGV"
 	)
@@ -664,7 +664,7 @@ names ugv_phoenix {
 	)
 }
 
-names ugv_ares_w {
+names ugv_ares_w_names {
 	neutral (
 		"_UGV"
 	)
@@ -673,7 +673,7 @@ names ugv_ares_w {
 	)
 }
 
-names alien_taman {
+names alien_taman_names {
 	neutral (
 		"Akrokk"
 		"Mkeek"
@@ -716,7 +716,7 @@ names alien_taman {
 	)
 }
 
-names alien_ortnok {
+names alien_ortnok_names {
 	neutral (
 		"Oorgh"
 		"Ourhg"
@@ -758,7 +758,7 @@ names alien_ortnok {
 	)
 }
 
-names aliens_shevaar {
+names aliens_shevaar_names {
 	neutral (
 		"Fsshw"
 		"Fhzwh"
@@ -790,7 +790,7 @@ names aliens_shevaar {
 	)
 }
 
-names alien_bloodspider {
+names alien_bloodspider_names {
 	neutral (
 		"BS/X"
 		"BS/Z"
@@ -821,7 +821,7 @@ names alien_bloodspider {
 	)
 }
 
-names alien_bloodspider_adv {
+names alien_bloodspider_adv_names {
 	neutral (
 		"C/BS/X"
 		"C/BS/Z"
@@ -852,7 +852,7 @@ names alien_bloodspider_adv {
 	)
 }
 
-names alien_hovernet {
+names alien_hovernet_names {
 	neutral (
 		"HN/X"
 		"HN/Z"
@@ -883,7 +883,7 @@ names alien_hovernet {
 	)
 }
 
-names alien_hovernet_adv {
+names alien_hovernet_adv_names {
 	neutral (
 		"CHN/X"
 		"CHN/Z"
@@ -914,7 +914,7 @@ names alien_hovernet_adv {
 	)
 }
 
-names dummy {
+names dummy_names {
 	female ( "a" )
 	male ( "b" )
 	lastname ( "c" )

@@ -15,7 +15,7 @@ team africa
 	armour			false
 	team			"civilian"
 	bodytype		humanoid_standard
-	names			dummy
+	names			dummy_names
 
 	models {
 		female("civilians/female" "body03" "head04a" 0 0) //body:blue dress, head: African, black hair, ponytail
@@ -61,7 +61,7 @@ team asia
 	armour			false
 	team			"civilian"
 	bodytype		humanoid_standard
-	names			dummy
+	names			dummy_names
 
 	models {
 		female("civilians/female" "body03" "head03a" 0 0) //body:green skirt, blue top, head: Asian
@@ -102,7 +102,7 @@ team europe
 	armour			false
 	team			"civilian"
 	bodytype		humanoid_standard
-	names			dummy
+	names			dummy_names
 
 	models {
 		female("civilians/female" "body01" "head01a" 0 0) //body:green skirt, blue top, head: brown hair, ponytail
@@ -185,7 +185,7 @@ team latin
 	armour			false
 	team			"civilian"
 	bodytype		humanoid_standard
-	names			dummy
+	names			dummy_names
 
 	models {
 		female("civilians/female" "body03" "head04a" 0 0)
@@ -229,7 +229,7 @@ team middle
 	armour			false
 	team			"civilian"
 	bodytype		humanoid_standard
-	names			dummy
+	names			dummy_names
 
 	models {
 		female("civilians/female" "body03" "head04b" 0 0) //body:blue dress, head: African, red disguise, black hair, ponytail
@@ -273,7 +273,7 @@ team states
 	armour			false
 	team			"civilian"
 	bodytype		humanoid_standard
-	names			dummy
+	names			dummy_names
 
 	models {
 		female("civilians/female" "body01" "head01a" 0 0) //body:green skirt, blue top, head: brown hair, ponytail
@@ -356,7 +356,7 @@ team oceania
 	armour			false
 	team			"civilian"
 	bodytype		humanoid_standard
-	names			dummy
+	names			dummy_names
 
 	models {
 		female("civilians/female" "body03" "head04a" 0 0)
@@ -399,7 +399,7 @@ team russia
 	armour			false
 	team			"civilian"
 	bodytype		humanoid_standard
-	names			dummy
+	names			dummy_names
 
 	models {
 		female("civilians/female" "body01" "head01a" 0 0) //body:green skirt, blue top, head: brown hair, ponytail
@@ -472,7 +472,7 @@ team armysoldier
 	armour			false
 	team			"civilian"
 	bodytype		humanoid_standard
-	names			dummy
+	names			dummy_names
 
 	models {
 		male("civilians/male" "soldier01" "soldier01_head" 0 0)
@@ -503,7 +503,7 @@ team miner
 	armour			false
 	team			"civilian"
 	bodytype		humanoid_standard
-	names			dummy
+	names			dummy_names
 
 	models {
 		male("civilians/male" "worker01" "worker01_head" 0 0)
@@ -536,7 +536,7 @@ team scientist
 	armour			false
 	team			"civilian"
 	bodytype		humanoid_standard
-	names			dummy
+	names			dummy_names
 
 	models {
 		female("civilians/female" "scientist01" "head05a" 0 0)
@@ -581,7 +581,7 @@ team worker
 	armour			false
 	team			"civilian"
 	bodytype		humanoid_standard
-	names			dummy
+	names			dummy_names
 
 	models {
 		male("civilians/male" "worker01" "worker01_head" 0 0)

@@ -62,7 +62,7 @@ team phalanx
 	hit_particle blood
 	team	"phalanx"
 	bodytype		humanoid_standard
-	names	human
+	names	human_names
 
 	models {
 		female("soldiers/female" "body" "head01" 0 0)
@@ -168,7 +168,7 @@ team phalanx_scientist
 	armour	false
 	team	"civilian"
 	bodytype		humanoid_standard
-	names	human
+	names	human_names
 
 	models {
 		female("civilians/female" "scientist01" "head05a" 0 0)
@@ -232,7 +232,7 @@ team phalanx_pilot
 	name	"_Pilot"
 	armour	false
 	bodytype		humanoid_standard
-	names	human
+	names	human_names
 
 	models {
 		male("pilots/male" "body" "head01" 0 0)
@@ -293,7 +293,7 @@ team phalanx_worker
 	armour	false
 	team	"civilian"
 	bodytype		humanoid_standard
-	names	human
+	names	human_names
 
 	models {
 		male("civilians/male" "worker01" "worker01_head" 0 0)
@@ -345,7 +345,7 @@ team phalanx_ugv_phoenix
 	// we can't assign any extra armour
 	armour	false
 	bodytype		default_unipart
-	names	ugv_phoenix
+	names	ugv_phoenix_names
 
 	models {
 		neutral("soldiers/ugv_phoenix" "phoenix" "phoenix_turret" 0 0)
@@ -402,7 +402,7 @@ team phalanx_ugv_ares_w
 	// we can't assign any extra armour
 	armour	false
 	bodytype		default_unipart
-	names	ugv_ares_w
+	names	ugv_ares_w_names
 
 	models {
 		neutral("soldiers/ugv_ares" "ares_w" "ares_w_turret" 0 0)
