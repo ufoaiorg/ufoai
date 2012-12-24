@@ -13,49 +13,7 @@ team taman
 	size			1
 	hit_particle	blood
 	bodytype		humanoid_standard
-
-	names {
-		neutral (
-			"Akrokk"
-			"Mkeek"
-			"Rniuk"
-			"Tranok"
-			"Kronuk"
-			"Trenakk"
-			"Zrokk"
-			"Kraerak"
-			"Mnookk"
-			"Zmolukk"
-			"Abtrenek"
-			"Uonak"
-			"Ktrukk"
-			"Onukark"
-			"Ebnuzuk"
-			"Krrnaak"
-			"Zmuknesk"
-		)
-
-		lastname (
-			"Uk Kronok"
-			"Np Zlrok"
-			"T Zruujk"
-			"Kr Zrrosk"
-			"Mt Trekluk"
-			"H Hrkakk"
-			"Pt Mrlkuk"
-			"Tsk Hrekk"
-			"Kkr Kraukk"
-			"Tkr Hruk"
-			"Ts Srulok"
-			"K Krokk"
-			"Zt Hrmokuk"
-			"H Nhrokekk"
-			"Tt Treknk"
-			"Ok Orokk"
-			"Sk Trevuk"
-			"Zr Znaztrk"
-		)
-	}
+	names			alien_taman
 
 	models {
 		neutral("aliens/taman" "body01" "head01" 0 0) // Body: very high rank, Head: yellow eyes
@@ -136,48 +94,7 @@ team ortnok
 	//hit_particle	none
 	death_texture	"pics/sfx/blood/blood_green_0"
 	bodytype		humanoid_standard
-
-	names {
-		neutral (
-			"Oorgh"
-			"Ourhg"
-			"Uoghr"
-			"Uurgh"
-			"Morgh"
-			"Mrorg"
-			"Muurgh"
-			"Uoorgh"
-			"Moorgh"
-			"Muorgh"
-			"Oohnz"
-			"Ouhrz"
-			"Uorgz"
-			"Urgoz"
-			"Uurunz"
-			"Uuorgh"
-		)
-
-		lastname (
-			"Uk Ohm Umhpf"
-			"Ok Uhm Uurrp"
-			"Uz Oor Ruogh"
-			"Ur Uor Umhfm"
-			"Or Hom Mohrm"
-			"Zo Ooz Ruzsu"
-			"Zr Zus Soufz"
-			"Zu Sou Uorou"
-			"Zk Zok Suomf"
-			"Sr Sor Umpfh"
-			"Ts Sru Hmpfr"
-			"Ks Ksr Ouurz"
-			"Kr Hrm Uorpf"
-			"Hs Nhs Oorgh"
-			"Ws Our Hfmzs"
-			"Wr Oro Uoroh"
-			"Fz Oru Fzsmo"
-			"Fs Ksf Urmpf"
-		)
-	}
+	names			alien_ortnok
 
 	models {
 		neutral("aliens/ortnok" "body01" "head01" 0 0) // Body: Big open wound, Head: 2 small scars over the left eye
@@ -259,37 +176,7 @@ team shevaar
 	size			1
 	hit_particle	blood
 	bodytype		humanoid_standard
-
-	names {
-		neutral (
-			"Fsshw"
-			"Fhzwh"
-			"Fzszh"
-			"Sszwh"
-			"Swhzf"
-			"Szsfh"
-			"Whssf"
-			"Wwzhs"
-			"Wzszh"
-			"Zssfh"
-			"Zsfwz"
-			"Zwfss"
-		)
-		lastname (
-			"Vso Zhozf"
-			"Vso Zshff"
-			"Vso Zwfwz"
-			"Vso Zzhwf"
-			"Vze Hwzsf"
-			"Vze Hzwzf"
-			"Vze Wfszs"
-			"Vzs Wzshf"
-			"Vzs Hzswf"
-			"Vzs Hzffs"
-			"Vzs Wszfs"
-			"Vzs Wfzsh"
-		)
-	}
+	names			aliens_shevaar
 
 	models {
 		neutral("aliens/shevaar" "body01" "head01" 0 0) // Body: Original brown skin, blue trousers, Head: Original brown skin
@@ -367,37 +254,7 @@ team bloodspider
 	//hit_particle	none
 	death_texture	"pics/sfx/blood/blood_oil_2"
 	bodytype		default_unipart
-
-	names {
-		neutral (
-			"BS/X"
-			"BS/Z"
-			"BS/A"
-			"BS/V"
-			"BS/W"
-			"BS/U"
-			"BS/P"
-			"BS/Q"
-			"BS/S"
-			"BS/R"
-			"BS/T"
-			"BS/M"
-		)
-		lastname (
-			"000.1100"
-			"001.1100"
-			"010.1100"
-			"011.1100"
-			"100.1100"
-			"101.1100"
-			"110.1100"
-			"111.1100"
-			"000.1101"
-			"001.1101"
-			"010.1101"
-			"011.1101"
-		)
-	}
+	names		alien_bloodspider
 
 	models {
 		neutral("aliens/bloodspider" "bloodspider" "head" 0 0)
@@ -469,37 +326,7 @@ team bloodspider_adv
 	//hit_particle	none
 	death_texture	"pics/sfx/blood/blood_oil_2"
 	bodytype		default_unipart
-
-	names {
-		neutral (
-			"C/BS/X"
-			"C/BS/Z"
-			"C/BS/A"
-			"C/BS/V"
-			"C/BS/W"
-			"C/BS/U"
-			"C/BS/P"
-			"C/BS/Q"
-			"C/BS/S"
-			"C/BS/R"
-			"C/BS/T"
-			"C/BS/M"
-		)
-		lastname (
-			"000.1100"
-			"001.1100"
-			"010.1100"
-			"011.1100"
-			"100.1100"
-			"101.1100"
-			"110.1100"
-			"111.1100"
-			"000.1101"
-			"001.1101"
-			"010.1101"
-			"011.1101"
-		)
-	}
+	names		alien_bloodspider_adv
 
 	models {
 		neutral("aliens/bloodspider_adv" "body01" "head" 0 0)
@@ -573,37 +400,7 @@ team hovernet
 	//hit_particle	none
 	death_texture	"pics/sfx/blood/blood_oil_2"
 	bodytype		default_unipart
-
-	names {
-		neutral (
-			"HN/X"
-			"HN/Z"
-			"HN/A"
-			"HN/V"
-			"HN/W"
-			"HN/U"
-			"HN/P"
-			"HN/Q"
-			"HN/S"
-			"HN/R"
-			"HN/T"
-			"HN/M"
-		)
-		lastname (
-			"000.1100"
-			"001.1100"
-			"010.1100"
-			"011.1100"
-			"100.1100"
-			"101.1100"
-			"110.1100"
-			"111.1100"
-			"000.1101"
-			"001.1101"
-			"010.1101"
-			"011.1101"
-		)
-	}
+	names		alien_hovernet
 
 	models {
 		neutral("aliens/hovernet" "body01" "head" 0 0)
@@ -675,37 +472,7 @@ team hovernet_adv
 	//hit_particle	none
 	death_texture	"pics/sfx/blood/blood_oil_2"
 	bodytype		default_unipart
-
-	names {
-		neutral (
-			"CHN/X"
-			"CHN/Z"
-			"CHN/A"
-			"CHN/V"
-			"CHN/W"
-			"CHN/U"
-			"CHN/P"
-			"CHN/Q"
-			"CHN/S"
-			"CHN/R"
-			"CHN/T"
-			"CHN/M"
-		)
-		lastname (
-			"000.1100"
-			"001.1100"
-			"010.1100"
-			"011.1100"
-			"100.1100"
-			"101.1100"
-			"110.1100"
-			"111.1100"
-			"000.1101"
-			"001.1101"
-			"010.1101"
-			"011.1101"
-		)
-	}
+	names		alien_hovernet_adv
 
 	models {
 		neutral("aliens/hovernet_adv" "body01" "head" 0 0)
@@ -771,49 +538,7 @@ team taman_light
 	size			1
 	hit_particle	blood
 	bodytype		humanoid_standard
-
-	names {
-		neutral (
-			"Akrokk"
-			"Mkeek"
-			"Rniuk"
-			"Tranok"
-			"Kronuk"
-			"Trenakk"
-			"Zrokk"
-			"Kraerak"
-			"Mnookk"
-			"Zmolukk"
-			"Abtrenek"
-			"Uonak"
-			"Ktrukk"
-			"Onukark"
-			"Ebnuzuk"
-			"Krrnaak"
-			"Zmuknesk"
-		)
-
-		lastname (
-			"Uk Kronok"
-			"Np Zlrok"
-			"T Zruujk"
-			"Kr Zrrosk"
-			"Mt Trekluk"
-			"H Hrkakk"
-			"Pt Mrlkuk"
-			"Tsk Hrekk"
-			"Kkr Kraukk"
-			"Tkr Hruk"
-			"Ts Srulok"
-			"K Krokk"
-			"Zt Hrmokuk"
-			"H Nhrokekk"
-			"Tt Treknk"
-			"Ok Orokk"
-			"Sk Trevuk"
-			"Zr Znaztrk"
-		)
-	}
+	names			alien_taman
 
 	models {
 		neutral("aliens/taman" "body01" "head01" 0 0) // Body: very high rank, Head: yellow eyes
@@ -893,49 +618,7 @@ team taman_heavy
 	size			1
 	hit_particle	blood
 	bodytype		humanoid_standard
-
-	names {
-		neutral (
-			"Akrokk"
-			"Mkeek"
-			"Rniuk"
-			"Tranok"
-			"Kronuk"
-			"Trenakk"
-			"Zrokk"
-			"Kraerak"
-			"Mnookk"
-			"Zmolukk"
-			"Abtrenek"
-			"Uonak"
-			"Ktrukk"
-			"Onukark"
-			"Ebnuzuk"
-			"Krrnaak"
-			"Zmuknesk"
-		)
-
-		lastname (
-			"Uk Kronok"
-			"Np Zlrok"
-			"T Zruujk"
-			"Kr Zrrosk"
-			"Mt Trekluk"
-			"H Hrkakk"
-			"Pt Mrlkuk"
-			"Tsk Hrekk"
-			"Kkr Kraukk"
-			"Tkr Hruk"
-			"Ts Srulok"
-			"K Krokk"
-			"Zt Hrmokuk"
-			"H Nhrokekk"
-			"Tt Treknk"
-			"Ok Orokk"
-			"Sk Trevuk"
-			"Zr Znaztrk"
-		)
-	}
+	names			alien_taman
 
 	models {
 		neutral("aliens/taman" "body01" "head01" 0 0) // Body: very high rank, Head: yellow eyes

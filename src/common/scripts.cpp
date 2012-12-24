@@ -2289,14 +2289,24 @@ void Com_GetCharacterValues (const char *teamDefition, character_t * chr)
  * @sa Com_ParseActors
  * @sa Com_ParseScripts
  */
-static void Com_ParseActorNames (const char *name, const char **text, teamDef_t* td)
+static void Com_ParseActorNames (const char *name, const char **text)
 {
 	const char *errhead = "Com_ParseNames: unexpected end of file (names ";
 	const char *token;
+	teamNames_t nameList;
 
-	/* get name list body body */
+	LIST_Foreach(csi.actorNames, teamNames_t, names) {
+		if (Q_streq(name, names->id)) {
+			Com_Printf("Com_ParseActorNames: Name list with same name found, second ignored '%s'\n", name);
+			return;
+		}
+	}
+
+	OBJZERO(nameList);
+	Q_strncpyz(nameList.id, name, sizeof(nameList.id));
+
+	/* get name list body */
 	token = Com_Parse(text);
-
 	if (!*text || *token != '{') {
 		Com_Printf("Com_ParseActorNames: names def \"%s\" without body ignored\n", name);
 		return;
@@ -2322,8 +2332,8 @@ static void Com_ParseActorNames (const char *name, const char **text, teamDef_t*
 			const char *n = (char*)element->data;
 			if (*n == '_')
 				token++;
-			LIST_AddString(&td->names[nameType], n);
-			td->numNames[nameType]++;
+			LIST_AddString(&nameList.names[nameType], n);
+			nameList.numNames[nameType]++;
 		}
 		LIST_Delete(&list);
 
@@ -2331,19 +2341,21 @@ static void Com_ParseActorNames (const char *name, const char **text, teamDef_t*
 		/* fill female and male lastnames from neutral lastnames */
 		if (nameType == NAME_LAST) {
 			for (int i = NAME_NUM_TYPES - 1; i > NAME_LAST; i--) {
-				td->names[i] = td->names[NAME_LAST];
-				td->numNames[i] = td->numNames[NAME_LAST];
+				nameList.names[i] = nameList.names[NAME_LAST];
+				nameList.numNames[i] = nameList.numNames[NAME_LAST];
 			}
 		}
 
 	} while (*text);
 
-	if (td->numNames[NAME_FEMALE] && !td->numNames[NAME_FEMALE_LAST])
-		Sys_Error("Com_ParseNames: '%s' has no female lastname category\n", td->id);
-	if (td->numNames[NAME_MALE] && !td->numNames[NAME_MALE_LAST])
-		Sys_Error("Com_ParseNames: '%s' has no male lastname category\n", td->id);
-	if (td->numNames[NAME_NEUTRAL] && !td->numNames[NAME_LAST])
-		Sys_Error("Com_ParseNames: '%s' has no neutral lastname category\n", td->id);
+	if (nameList.numNames[NAME_FEMALE] && !nameList.numNames[NAME_FEMALE_LAST])
+		Sys_Error("Com_ParseNames: '%s' has no female lastname category\n", nameList.id);
+	if (nameList.numNames[NAME_MALE] && !nameList.numNames[NAME_MALE_LAST])
+		Sys_Error("Com_ParseNames: '%s' has no male lastname category\n", nameList.id);
+	if (nameList.numNames[NAME_NEUTRAL] && !nameList.numNames[NAME_LAST])
+		Sys_Error("Com_ParseNames: '%s' has no neutral lastname category\n", nameList.id);
+
+	LIST_Add(&csi.actorNames, nameList);
 }
 
 /**
@@ -2487,6 +2499,15 @@ static const BodyData* Com_GetBodyTemplateByID (const char *id)
 	return NULL;
 }
 
+static const teamNames_t *Com_GetNameListById(const char *id)
+{
+	LIST_Foreach(csi.actorNames, teamNames_t, names)
+		if (Q_streq(id, names->id))
+			return names;
+	Com_Printf("Com_GetNameListById: could not find name list: '%s'\n", id);
+	return NULL;
+}
+
 /** @brief possible teamdesc values (ufo-scriptfiles) */
 static const value_t teamDefValues[] = {
 	{"tech", V_STRING, offsetof(teamDef_t, tech), 0}, /**< tech id from research.ufo */
@@ -2596,10 +2617,16 @@ static void Com_ParseTeam (const char *name, const char **text)
 				if (bd == NULL)
 					Sys_Error("Com_ParseTeam: Could not find body type %s in team def %s\n", token, name);
 				td->bodyTemplate = bd;
+			} else if (Q_streq(token, "names")) {
+				const teamNames_t *nameList;
+				token = Com_EParse(text, errhead, name);
+				nameList = Com_GetNameListById(token);
+				if (nameList == NULL)
+					Sys_Error("Com_ParseTeam: Could not find name list %s in team def %s\n", token, name);
+				td->names = nameList->names;
+				td->numNames = nameList->numNames;
 			} else if (Q_streq(token, "models"))
 				Com_ParseActorModels(name, text, td);
-			else if (Q_streq(token, "names"))
-				Com_ParseActorNames(name, text, td);
 			else if (Q_streq(token, "actorsounds"))
 				Com_ParseActorSounds(name, text, td);
 			else if (Q_streq(token, "resistance"))
@@ -3428,6 +3455,8 @@ void Com_ParseScripts (bool onlyServer)
 			Com_ParseMapDefinition(name, &text);
 		else if (Q_streq(type, "bodydef"))
 			Com_ParseBodyTemplate(name, &text);
+		else if (Q_streq(type, "names"))
+			Com_ParseActorNames(name, &text);
 		else if (!onlyServer)
 			CL_ParseClientData(type, name, &text);
 	}

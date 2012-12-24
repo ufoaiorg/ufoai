@@ -271,6 +271,12 @@ public:
 	float getArea(const short bodyPart) const;
 };
 
+typedef struct teamNames_s {
+	char id[MAX_VAR];						/**< id from script file. */
+	linkedList_t *names[NAME_NUM_TYPES];	/**< Names list per gender. */
+	int numNames[NAME_NUM_TYPES];			/**< Amount of names in this list for all different genders. */
+} teamNames_t;
+
 typedef struct teamDef_s {
 	int idx;			/**< The index in the teamDef array. */
 	char id[MAX_VAR];	/**< id from script file. */
@@ -278,8 +284,8 @@ typedef struct teamDef_s {
 	char tech[MAX_VAR];	/**< technology_t id from research.ufo */
 	char footstepSound[MAX_VAR];
 
-	linkedList_t *names[NAME_NUM_TYPES];	/**< Names list per gender. */
-	int numNames[NAME_NUM_TYPES];	/**< Amount of names in this list for all different genders. */
+	linkedList_t *const *names;	/**< Names list per gender. */
+	const int *numNames;	/**< Amount of names in this list for all different genders. */
 
 	struct model_t {
 		char* path;

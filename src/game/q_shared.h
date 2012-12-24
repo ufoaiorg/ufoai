@@ -433,8 +433,9 @@ typedef struct csi_s {
 	/** character templates */
 	chrTemplate_t chrTemplates[MAX_CHARACTER_TEMPLATES];
 	int numChrTemplates;
-
 	linkedList_t *bodyTemplates;
+
+	linkedList_t *actorNames;
 
 	ugv_t ugvs[MAX_UGV];
 	int numUGV;
