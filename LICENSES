@@ -430,32 +430,32 @@ base/maps/ice/ice_r11_b.map | GNU General Public License 2.0 or later | Holger '
 base/maps/ice/ice_r11_c.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
 base/maps/ice/ice_r11_d.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
 base/maps/industrial.ump | GNU General Public License 2.0 or later
-base/maps/industrial/craft_drop_firebird.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/industrial/craft_drop_herakles.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/industrial/craft_drop_raptor.map | GNU General Public License 2.0 or later
-base/maps/industrial/craft_ufo_bomber.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
-base/maps/industrial/craft_ufo_corrupter.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
-base/maps/industrial/craft_ufo_fighter.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/industrial/craft_ufo_gunboat.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
-base/maps/industrial/craft_ufo_harvester.map | GNU General Public License 2.0 or later
-base/maps/industrial/craft_ufo_scout.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/industrial/craft_ufo_supply.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/industrial/fr01.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/industrial/fr02.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/industrial/fr03.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/industrial/fr04.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/industrial/fr05.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/industrial/fr06_3x2.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/industrial/fr07.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/industrial/fr08.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/industrial/fr09.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/industrial/fr10.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/industrial/fr11_1x2.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/industrial/fr12_3x3.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/industrial/fr13_2x1.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/industrial/fr14_1x3.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/industrial/fr15_2x1.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/industrial/fr16_5x1.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/industrial/ind_craft_drop_firebird.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/industrial/ind_craft_drop_herakles.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/industrial/ind_craft_drop_raptor.map | GNU General Public License 2.0 or later
+base/maps/industrial/ind_craft_ufo_bomber.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/industrial/ind_craft_ufo_corrupter.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/industrial/ind_craft_ufo_fighter.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/industrial/ind_craft_ufo_gunboat.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/industrial/ind_craft_ufo_harvester.map | GNU General Public License 2.0 or later
+base/maps/industrial/ind_craft_ufo_scout.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/industrial/ind_craft_ufo_supply.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/industrial/ind_fr01.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/industrial/ind_fr02.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/industrial/ind_fr03.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/industrial/ind_fr04.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/industrial/ind_fr05.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/industrial/ind_fr06_3x2.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/industrial/ind_fr07.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/industrial/ind_fr08.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/industrial/ind_fr09.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/industrial/ind_fr10.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/industrial/ind_fr11_1x2.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/industrial/ind_fr12_3x3.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/industrial/ind_fr13_2x1.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/industrial/ind_fr14_1x3.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/industrial/ind_fr15_2x1.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/industrial/ind_fr16_5x1.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
 base/maps/italy.ump | GNU General Public License 2.0 or later
 base/maps/italy/it_craft_drop_firebird.map | GNU General Public License 2.0 or later
 base/maps/italy/it_craft_drop_herakles.map | GNU General Public License 2.0 or later
