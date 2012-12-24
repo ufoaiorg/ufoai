@@ -260,7 +260,7 @@ int TR_TestLine_r (TR_TILE_TYPE *tile, int32_t nodenum, const vec3_t start, cons
  * @brief Tests to see if a line intersects any brushes in a tile.
  * @param[in] tile The map tile containing the structures to be traced.
  * @param[in] start The position to start the trace.
- * @param[in] stop The position where the trace ends.
+ * @param[in] end The position where the trace ends.
  * @param[in] levelmask
  * @return true if the line is blocked
  * @note This function uses levels and levelmasks.  The levels are as following:
@@ -277,7 +277,7 @@ int TR_TestLine_r (TR_TILE_TYPE *tile, int32_t nodenum, const vec3_t start, cons
  * 0x100: Actorclip bit.  If this bit is set, the actorclip level will be traced.
  * 0x200: Weaponclip bit.  If this bit is set, the weaponclip level will be traced.
  */
-static bool TR_TileTestLine (TR_TILE_TYPE *tile, const vec3_t start, const vec3_t stop, const int levelmask)
+static bool TR_TileTestLine (TR_TILE_TYPE *tile, const vec3_t start, const vec3_t end, const int levelmask)
 {
 	const int corelevels = (levelmask & TL_FLAG_REGULAR_LEVELS);
 	int i;
@@ -293,7 +293,7 @@ static bool TR_TileTestLine (TR_TILE_TYPE *tile, const vec3_t start, const vec3_
 			continue;
 		if (level == LEVEL_WEAPONCLIP && !(levelmask & TL_FLAG_WEAPONCLIP))
 			continue;
-		if (TR_TestLine_r(tile, tile->thead[i], start, stop))
+		if (TR_TestLine_r(tile, tile->thead[i], start, end))
 			return true;
 	}
 	return false;
