@@ -96,7 +96,6 @@ typedef struct {
 	/* client/server information */
 	int seed; /**< random seed */
 	const csi_t *csi;
-	routing_t *routingMap;	/**< server side routing table */
 
 	/* special messages */
 
