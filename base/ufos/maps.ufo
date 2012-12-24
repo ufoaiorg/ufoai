@@ -1738,6 +1738,47 @@ mapdef ice_crash_small
 // INDUSTRIAL RANDOM MAPS //
 ////////////////////////////
 
+mapdef industrial_large
+{
+	map			"+industrial"
+	param		"large"
+	description	"_Industrial Site"
+	size		"large"
+	teams		4
+	multiplayer	false
+	maxaliens	30
+	civilianteam	worker
+
+	aircraft
+	(
+		craft_drop_firebird
+		craft_drop_raptor
+		craft_drop_herakles
+	)
+
+	ufos
+	(
+		craft_ufo_bomber
+		craft_ufo_corrupter
+	)
+
+	terrains
+	(
+	)
+
+	cultures
+	(
+	)
+
+	populations
+	(
+		"rural"
+		"village"
+		"suburban"
+		"urban"
+	)
+}
+
 mapdef industrial_medium
 {
 	map			"+industrial"
