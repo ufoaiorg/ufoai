@@ -1740,13 +1740,12 @@ mapdef ice_crash_small
 
 mapdef industrial_large
 {
-	map			"+industrial"
-	param		"large"
-	description	"_Industrial Site"
-	size		"large"
-	teams		4
-	multiplayer	false
-	maxaliens	30
+	map				"+industrial"
+	param			"large"
+	description		"_Industrial Site"
+	size			"large"
+	multiplayer		false
+	maxaliens		30
 	civilianteam	worker
 
 	aircraft
@@ -1764,14 +1763,17 @@ mapdef industrial_large
 
 	terrains
 	(
+		// any
 	)
 
 	cultures
 	(
+		// any
 	)
 
 	populations
 	(
+		"nopopulation"
 		"rural"
 		"village"
 		"suburban"
@@ -1781,13 +1783,12 @@ mapdef industrial_large
 
 mapdef industrial_medium
 {
-	map			"+industrial"
-	param		"medium"
-	description	"_Industrial Site"
-	size		"large"
-	teams		4
-	multiplayer	false
-	maxaliens	12
+	map				"+industrial"
+	param			"medium"
+	description		"_Industrial Site"
+	size			"large"
+	multiplayer		false
+	maxaliens		14
 	civilianteam	worker
 
 	aircraft
@@ -1806,14 +1807,17 @@ mapdef industrial_medium
 
 	terrains
 	(
+		// any
 	)
 
 	cultures
 	(
+		// any
 	)
 
 	populations
 	(
+		"nopopulation"
 		"rural"
 		"village"
 		"suburban"
@@ -1823,13 +1827,12 @@ mapdef industrial_medium
 
 mapdef industrial_small
 {
-	map			"+industrial"
-	param		"small"
-	description	"_Industrial Site"
-	size		"small"
-	teams		4
-	multiplayer	false
-	maxaliens	6
+	map				"+industrial"
+	param			"small"
+	description		"_Industrial Site"
+	size			"small"
+	multiplayer		false
+	maxaliens		8
 	civilianteam	worker
 
 	aircraft
@@ -1847,14 +1850,17 @@ mapdef industrial_small
 
 	terrains
 	(
+		// any
 	)
 
 	cultures
 	(
+		// any
 	)
 
 	populations
 	(
+		"nopopulation"
 		"rural"
 		"village"
 		"suburban"
