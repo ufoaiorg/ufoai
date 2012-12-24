@@ -1868,6 +1868,48 @@ mapdef industrial_small
 	)
 }
 
+mapdef industrial_noufo
+{
+	map				"+industrial"
+	param			"noufo"
+	description		"_Industrial Site"
+	size			"medium"
+	multiplayer		false
+	maxaliens		14
+	civilianteam	worker
+
+	aircraft
+	(
+		craft_drop_firebird
+		craft_drop_raptor
+		craft_drop_herakles
+	)
+
+	ufos
+	(
+		// any
+	)
+
+	terrains
+	(
+		// any
+	)
+
+	cultures
+	(
+		// any
+	)
+
+	populations
+	(
+		"nopopulation"
+		"rural"
+		"village"
+		"suburban"
+		"urban"
+	)
+}
+
 ///////////////////////
 // JAPAN RANDOM MAPS //
 ///////////////////////
