@@ -105,7 +105,7 @@ int main (int argc, char **argv)
 	TYPESIZE(materialStage_t);
 	TYPESIZE(mapData_t);
 	TYPESIZE(mapDef_t);
-	TYPESIZE(mapTile_t);
+	TYPESIZE(MapTile);
 	TYPESIZE(mapTiles_t);
 	TYPESIZE(mBspModel_t)
 	TYPESIZE(mission_t);
