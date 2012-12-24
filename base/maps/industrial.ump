@@ -48,27 +48,6 @@ g    +d   +d   +d   g
 }
 
 //---------------------------------
-//Interceptors
-
-tile +inter_stiletto
-{
-3 4
-0    0    0
-0    +g   0
-0    +g   0
-0    0    0
-}
-
-tile +inter_saracen
-{
-5 4
-0    0    0    0    0
-0    +g   +g   +g   0
-0    +g   +g   +g   0
-0    0    0    0    0
-}
-
-//---------------------------------
 //UFOs
 tile +craft_ufo_scout //A(3)
 {
