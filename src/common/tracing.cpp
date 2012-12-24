@@ -332,7 +332,7 @@ LINE TRACING - TEST FOR BRUSH LOCATION
  * @param[in] tile The map tile containing the structures to be traced.
  * @param[in] nodenum Node index
  * @param[in] start The position to start the trace.
- * @param[in] stop The position where the trace ends.
+ * @param[in] end The position where the trace ends.
  * @param[in,out] tr_end used to hold the point on a line that an obstacle is encountered.
  * @sa TR_TestLine_r
  * @sa TR_TestLineDM
@@ -411,7 +411,7 @@ static int TR_TestLineDist_r (TR_TILE_TYPE *tile, int32_t nodenum, const vec3_t 
  * @param[in] tile The map tile containing the structures to be traced.
  * @param[in] start The position to start the trace.
  * @param[in] end The position where the trace ends.
- * @param[out] hit The position where the trace hits a object or the stop position if nothing is in the line.
+ * @param[out] hit The position where the trace hits a object or the 'end' position if nothing is in the line.
  * @param[in] levelmask The bitmask of the levels (1<<[0-7]) to trace for
  * @sa TR_TestLineDM
  * @sa CL_ActorMouseTrace
@@ -456,11 +456,11 @@ static bool TR_TileTestLineDM (TR_TILE_TYPE *tile, const vec3_t start, const vec
  * @param[in] mapTiles List of tiles the current (RMA-)map is composed of
  * @param[in] start The position to start the trace.
  * @param[in] end The position where the trace ends.
- * @param[out] hit The position where the trace hits a object or the stop position if nothing is in the line.
+ * @param[out] hit The position where the trace hits a object or the 'end' position if nothing is in the line.
  * @param[in] levelmask Indicates which special levels, if any, to include in the trace.
  * @sa TR_TestLineDM
  * @sa CL_ActorMouseTrace
- * @return false if no connection between start and stop - 1 otherwise
+ * @return false if no connection between start and end - 1 otherwise
  */
 bool TR_TestLineDM (mapTiles_t* mapTiles, const vec3_t start, const vec3_t end, vec3_t hit, const int levelmask)
 {
