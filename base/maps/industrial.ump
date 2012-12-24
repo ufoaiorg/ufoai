@@ -255,7 +255,7 @@ size "6 6"
 +fr16_5x1	"0 1"
 }
 
-assembly large
+assembly medium
 {
 title "_UFO Landed"
 size "7 8"

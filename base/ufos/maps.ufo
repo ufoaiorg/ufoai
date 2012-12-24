@@ -1738,10 +1738,10 @@ mapdef ice_crash_small
 // INDUSTRIAL RANDOM MAPS //
 ////////////////////////////
 
-mapdef industrial_large
+mapdef industrial_medium
 {
 	map			"+industrial"
-	param		"large"
+	param		"medium"
 	description	"_Industrial Site"
 	size		"large"
 	teams		4
