@@ -1758,6 +1758,7 @@ mapdef industrial_medium
 
 	ufos
 	(
+		craft_ufo_gunboat
 		craft_ufo_harvester
 		craft_ufo_supply
 	)

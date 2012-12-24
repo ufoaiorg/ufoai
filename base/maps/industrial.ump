@@ -68,6 +68,18 @@ g		+u		+u		+u		g
 0		g		g		g		0
 }
 
+tile +craft_ufo_gunboat
+{
+6 7
+0		g		g		g		g		0
+g		+u		+u		+u		+u		g
+g		+u		+u		+u		+u		g
+g		+u		+u		+u		+u		g
+g		+u		+u		+u		+u		g
+g		+u		+u		+u		+u		g
+0		g		g		g		g		0
+}
+
 tile +craft_ufo_supply //A(12)
 {
 6 5
@@ -273,7 +285,7 @@ size "7 8"
 +fr13_2x1	"0 1"
 +fr14_1x3	"0 1"
 +fr15_2x1	"0 1"
-+fr16_5x1	"1 1"
++fr16_5x1	"0 1"
 *rm_drop +craft_drop_firebird "1 1"
 *rm_ufo +craft_ufo_supply "1 1" //Enough Alien spawnpoints for Max Crew capacity
 }
