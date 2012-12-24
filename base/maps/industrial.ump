@@ -61,12 +61,11 @@ g		+u		+u		g
 
 tile +craft_ufo_fighter //A(5)
 {
-4 5
-0		g		g		0
-g		+u		+u		g
-g		+u		+u		g
-g		+u		+u		g
-0		g		g		0
+5 4
+0		g		g		g		0
+g		+u		+u		+u		g
+g		+u		+u		+u		g
+0		g		g		g		0
 }
 
 tile +craft_ufo_supply //A(12)
