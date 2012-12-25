@@ -54,7 +54,7 @@ class SrvPlayer
 public:
 	bool inuse;
 	int num;				/**< communicated by server to clients */
-	bool isReady;
+	bool isReady;			/**< the player agreed to start the party */
 
 	inline void setInUse(bool b) { inuse = b; }
 	/** the game dll can add anything it wants after this point in the structure */
@@ -87,7 +87,7 @@ struct player_s {
 	/* known to server */
 	bool inuse;
 	int num;
-	bool isReady;			/**< the player agreed to start the party */
+	bool isReady;
 
 	/* private to game */
 	bool spawned;			/**< already spawned? */
