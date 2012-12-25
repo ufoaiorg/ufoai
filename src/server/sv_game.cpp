@@ -50,7 +50,7 @@ static void SV_dprintf (const char *fmt, ...)
  * @brief Print to a single client
  * @sa SV_BroadcastPrintf
  */
-static void SV_PlayerPrintf (const player_t * player, int level, const char *fmt, va_list ap)
+static void SV_PlayerPrintf (const SrvPlayer *player, int level, const char *fmt, va_list ap)
 {
 	if (level == PRINT_NONE)
 		return;

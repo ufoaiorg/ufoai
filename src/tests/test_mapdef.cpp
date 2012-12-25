@@ -308,7 +308,7 @@ static void testMapDefsMultiplayer (void)
 
 	MapDef_ForeachCondition(md, md->multiplayer) {
 		unsigned int seed;
-		player_t *player;
+		SrvPlayer *player;
 
 		if (filterId && strcmp(filterId, md->id) != 0)
 			continue;

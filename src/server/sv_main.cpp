@@ -297,7 +297,7 @@ static void SVC_DirectConnect (struct net_stream *stream)
 {
 	char userinfo[MAX_INFO_STRING];
 	client_t *cl;
-	player_t *player;
+	SrvPlayer *player;
 	int playernum;
 	int version;
 	bool connected;
