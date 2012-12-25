@@ -45,18 +45,20 @@ typedef enum {
 /*=============================================================== */
 
 typedef struct edict_s edict_t;
-typedef struct player_s player_t;
 
 
 #ifndef GAME_INCLUDE
 
-struct player_s {
+class SrvPlayer
+{
+public:
 	bool inuse;
 	int num;				/**< communicated by server to clients */
 	bool isReady;
 
 	/** the game dll can add anything it wants after this point in the structure */
 };
+typedef SrvPlayer player_t;
 
 #else
 
@@ -96,6 +98,7 @@ struct player_s {
 
 	client_persistant_t pers;
 };
+typedef struct player_s player_t;
 
 #endif
 
