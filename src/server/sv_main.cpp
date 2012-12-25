@@ -156,7 +156,7 @@ void SV_DropClient (client_t * drop, const char *message)
 	NET_StreamFinished(drop->stream);
 	drop->stream = NULL;
 
-	drop->player->inuse = false;
+	drop->player->setInUse(false);
 	SV_SetClientState(drop, cs_free);
 	drop->name[0] = 0;
 
@@ -380,7 +380,7 @@ static void SVC_DirectConnect (struct net_stream *stream)
 	}
 
 	/* new player */
-	cl->player->inuse = true;
+	cl->player->setInUse(true);
 	cl->lastmessage = svs.realtime;
 
 	/* parse some info from the info strings */

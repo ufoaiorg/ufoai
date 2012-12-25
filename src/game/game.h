@@ -56,6 +56,7 @@ public:
 	int num;				/**< communicated by server to clients */
 	bool isReady;
 
+	inline void setInUse(bool b) { inuse = b; }
 	/** the game dll can add anything it wants after this point in the structure */
 };
 typedef SrvPlayer player_t;
