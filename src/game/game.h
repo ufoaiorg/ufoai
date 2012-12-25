@@ -56,7 +56,9 @@ public:
 	int num;				/**< communicated by server to clients */
 	bool isReady;			/**< the player agreed to start the party */
 
-	inline void setInUse(bool b) { inuse = b; }
+	inline void setInUse (bool b)	{ inuse = b; }
+	inline int	getNum (void) const	{ return num; }
+	inline void	setNum (int n) 		{ num = n; }
 	/** the game dll can add anything it wants after this point in the structure */
 };
 typedef SrvPlayer player_t;
@@ -83,7 +85,8 @@ typedef struct client_persistant_s {
 /** @brief this structure is cleared on each PutClientInServer(),
  * except for 'client->pers'
  * @note shared between game and server - but server doesn't know all the fields */
-struct player_s {
+class Player {
+public:
 	/* known to server */
 	bool inuse;
 	int num;
@@ -99,7 +102,7 @@ struct player_s {
 
 	client_persistant_t pers;
 };
-typedef struct player_s player_t;
+typedef Player player_t;
 
 #endif
 
@@ -322,7 +325,7 @@ typedef struct {
 	int num_edicts;				/**< current number, <= max_edicts */
 	int max_edicts;
 
-	struct player_s *players;
+	player_t *players;
 	int player_size;
 	int maxplayersperteam;
 } game_export_t;

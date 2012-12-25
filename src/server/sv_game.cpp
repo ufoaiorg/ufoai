@@ -58,7 +58,7 @@ static void SV_PlayerPrintf (const SrvPlayer *player, int level, const char *fmt
 	if (player) {
 		char msg[1024];
 		Q_vsnprintf(msg, sizeof(msg), fmt, ap);
-		client_t *cl = SV_GetClient(player->num);
+		client_t *cl = SV_GetClient(player->getNum());
 		SV_ClientPrintf(cl, level, "%s", msg);
 	} else
 		SV_LogAdd(fmt, ap);

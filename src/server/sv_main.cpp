@@ -359,7 +359,7 @@ static void SVC_DirectConnect (struct net_stream *stream)
 	playernum = cl - SV_GetClient(0);
 	player = PLAYER_NUM(playernum);
 	cl->player = player;
-	cl->player->num = playernum;
+	cl->player->setNum(playernum);
 
 	{
 		const ScopedMutex scopedMutex(svs.serverMutex);
