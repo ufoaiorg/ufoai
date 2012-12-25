@@ -53,11 +53,10 @@ typedef struct player_s player_t;
 
 struct player_s {
 	bool inuse;
-	int num;					/**< communicated by server to clients */
+	int num;				/**< communicated by server to clients */
 	bool isReady;
 
-	/** the game dll can add anything it wants after
-	 * this point in the structure */
+	/** the game dll can add anything it wants after this point in the structure */
 };
 
 #else
@@ -67,17 +66,16 @@ typedef struct client_persistant_s {
 	char userinfo[MAX_INFO_STRING];
 	char netname[16];
 
-	/** the number of the team for this player
-	 * 0 is reserved for civilians and critters */
-	int team;
+	int team;				/** the number of the team for this player
+							 * 0 is reserved for civilians and critters */
 	bool ai;				/**< client controlled by ai */
 
 	/** ai specific data */
-	edict_t *last; /**< set to the last actor edict that was handled for the ai in their think function */
+	edict_t *last;			/**< set to the last actor edict that was handled for the ai in their think function */
 
-	float		flood_locktill;		/**< locked from talking */
-	float		flood_when[10];		/**< when messages were said */
-	int			flood_whenhead;		/**< head pointer for when said */
+	float	flood_locktill;	/**< locked from talking */
+	float	flood_when[10];	/**< when messages were said */
+	int		flood_whenhead;	/**< head pointer for when said */
 } client_persistant_t;
 
 /** @brief this structure is cleared on each PutClientInServer(),
@@ -93,10 +91,8 @@ struct player_s {
 	bool spawned;			/**< already spawned? */
 	bool began;				/**< the player sent his 'begin' already */
 	bool roundDone;			/**< ready to end his turn */
-
 	int lastSeen;			/**< the round the player has last seen an ai controlled enemy */
-
-	int reactionLeftover;		/**< Minimum TU left over by reaction fire */
+	int reactionLeftover;	/**< Minimum TU left over by reaction fire */
 	bool autostand;			/**< autostand for long walks */
 
 	client_persistant_t pers;
@@ -119,16 +115,15 @@ struct edict_s {
 	vec3_t angles;		/**< the rotation in the world (pitch, yaw, roll) */
 	pos3_t pos;			/** < the grid position of the actor */
 
-	/** tracing info SOLID_BSP, SOLID_BBOX, ... */
-	solid_t solid;
+	solid_t solid;		/** tracing info SOLID_BSP, SOLID_BBOX, ... */
 
-	vec3_t mins, maxs; /**< position of min and max points - relative to origin */
+	vec3_t mins, maxs;	/**< position of min and max points - relative to origin */
 	vec3_t absmin, absmax; /**< position of min and max points - relative to world's origin */
 	vec3_t size;
 
-	edict_t *child;	/**< e.g. the trigger for this edict */
-	edict_t *owner;	/**< e.g. the door model in case of func_door */
-	int modelindex;	/**< inline model index */
+	edict_t *child;		/**< e.g. the trigger for this edict */
+	edict_t *owner;		/**< e.g. the door model in case of func_door */
+	int modelindex;		/**< inline model index */
 
 	const char *classname;
 };
@@ -141,7 +136,7 @@ struct edict_s {
 /** @brief functions provided by the main engine */
 typedef struct {
 	/* client/server information */
-	int seed; /**< random seed */
+	int seed;	/**< random seed */
 	const csi_t *csi;
 
 	/* special messages */
