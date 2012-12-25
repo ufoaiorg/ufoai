@@ -315,7 +315,7 @@ static void SVCmd_ActorInvList_f (void)
 
 	/* show inventory off all players around - include even the ai players */
 	for (i = 0, player = game.players; i < game.sv_maxplayersperteam * 2; i++, player++) {
-		if (!player->inuse)
+		if (!player->isInUse())
 			continue;
 		G_InvList_f(player);
 	}

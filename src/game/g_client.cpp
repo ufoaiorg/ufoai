@@ -112,7 +112,7 @@ Player* G_PlayerGetNextActiveHuman (Player *lastPlayer)
 	Player *player = lastPlayer;
 
 	while ((player = G_PlayerGetNextHuman(player))) {
-		if (player->inuse)
+		if (player->isInUse())
 			return player;
 	}
 
@@ -128,7 +128,7 @@ Player* G_PlayerGetNextActiveAI (Player *lastPlayer)
 	Player *player = lastPlayer;
 
 	while ((player = G_PlayerGetNextAI(player))) {
-		if (player->inuse)
+		if (player->isInUse())
 			return player;
 	}
 
@@ -148,7 +148,7 @@ playermask_t G_TeamToPM (int team)
 
 	/* don't handle the ai players, here */
 	while ((p = G_PlayerGetNextHuman(p))) {
-		if (p->inuse && team == p->pers.team)
+		if (p->isInUse() && team == p->pers.team)
 			playerMask |= G_PlayerToPM(p);
 	}
 
@@ -846,7 +846,7 @@ static void G_GetTeam (Player *player)
 			while ((p = G_PlayerGetNextActiveHuman(p))) {
 				if (p->pers.team == i) {
 					gi.BroadcastPrintf(PRINT_CONSOLE, "Removing ai player...");
-					p->inuse = false;
+					p->setInUse(false);
 					break;
 				}
 			}
@@ -1480,7 +1480,7 @@ bool G_ClientConnect (Player *player, char *userinfo, size_t userinfoSize)
 	}
 
 	/* fix for fast reconnects after a disconnect */
-	if (player->inuse) {
+	if (player->isInUse()) {
 		gi.BroadcastPrintf(PRINT_CONSOLE, "%s already in use.\n", player->pers.netname);
 		G_ClientDisconnect(player);
 	}

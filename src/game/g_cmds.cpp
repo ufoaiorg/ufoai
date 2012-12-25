@@ -430,7 +430,7 @@ void G_ClientCommand (Player *player)
 {
 	const char *cmd;
 
-	if (!player->inuse)
+	if (!player->isInUse())
 		return;					/* not fully in game yet */
 
 	cmd = gi.Cmd_Argv(0);

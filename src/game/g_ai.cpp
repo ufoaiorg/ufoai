@@ -1511,9 +1511,9 @@ Player *AI_CreatePlayer (int team)
 	/* set players to ai players and cycle over all of them */
 	p = NULL;
 	while ((p = G_PlayerGetNextAI(p))) {
-		if (!p->inuse) {
+		if (!p->isInUse()) {
 			OBJZERO(*p);
-			p->inuse = true;
+			p->setInUse(true);
 			p->num = p - game.players;
 			p->pers.ai = true;
 			G_SetTeamForPlayer(p, team);
