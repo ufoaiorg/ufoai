@@ -1360,7 +1360,7 @@ bool G_ClientBegin (Player *player)
 	gi.ConfigString(CS_PLAYERCOUNT, "%i", level.numplayers);
 
 	/* spawn camera (starts client rendering) */
-	G_EventStart(player, sv_teamplay->integer);
+	G_EventStart(*player, sv_teamplay->integer);
 
 	/* send things like doors and breakables */
 	G_ClientSendEdictsAndBrushModels(player);
@@ -1391,7 +1391,7 @@ void G_ClientStartMatch (Player *player)
 
 	/* do all the init events here... */
 	/* reset the data */
-	G_EventReset(player, level.activeTeam);
+	G_EventReset(*player, level.activeTeam);
 
 	/* show visible actors and add invisible actor */
 	G_VisFlagsClear(player->pers.team);

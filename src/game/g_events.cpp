@@ -579,25 +579,25 @@ void G_EventAddBrushModel (playermask_t playerMask, const edict_t *ent)
 	G_EventEnd();
 }
 
-void G_EventEndRoundAnnounce (const player_t *player)
+void G_EventEndRoundAnnounce (const Player &player)
 {
 	G_EventAdd(PM_ALL, EV_ENDROUNDANNOUNCE | EVENT_INSTANTLY, -1);
-	gi.WriteByte(player->num);
-	gi.WriteByte(player->pers.team);
+	gi.WriteByte(player.num);
+	gi.WriteByte(player.pers.team);
 	G_EventEnd();
 }
 
-void G_EventStart (const player_t *player, bool teamplay)
+void G_EventStart (const Player &player, bool teamplay)
 {
-	G_EventAdd(G_PlayerToPM(player), EV_START | EVENT_INSTANTLY, -1);
+	G_EventAdd(G_PlayerToPM(&player), EV_START | EVENT_INSTANTLY, -1);
 	gi.WriteByte(teamplay);
 	G_EventEnd();
 }
 
-void G_EventReset (const player_t *player, int activeTeam)
+void G_EventReset (const Player &player, int activeTeam)
 {
-	G_EventAdd(G_PlayerToPM(player), EV_RESET | EVENT_INSTANTLY, -1);
-	gi.WriteByte(player->pers.team);
+	G_EventAdd(G_PlayerToPM(&player), EV_RESET | EVENT_INSTANTLY, -1);
+	gi.WriteByte(player.pers.team);
 	gi.WriteByte(activeTeam);
 	G_EventEnd();
 }

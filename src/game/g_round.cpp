@@ -170,7 +170,7 @@ static void G_GetNextActiveTeam (void)
 /**
  * @sa G_PlayerSoldiersCount
  */
-void G_ClientEndRound (Player * player)
+void G_ClientEndRound (Player *player)
 {
 	Player *p;
 
@@ -195,7 +195,7 @@ void G_ClientEndRound (Player * player)
 		/* check if all team members are ready */
 		if (!player->roundDone) {
 			player->roundDone = true;
-			G_EventEndRoundAnnounce(player);
+			G_EventEndRoundAnnounce(*player);
 			G_EventEnd();
 		}
 		p = NULL;
