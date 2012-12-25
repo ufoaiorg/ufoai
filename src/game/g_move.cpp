@@ -279,7 +279,7 @@ byte G_ActorMoveLength (const edict_t *ent, const pathing_t *path, const pos3_t 
  * @sa CL_ActorStartMove
  * @sa PA_MOVE
  */
-void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos3_t to)
+void G_ClientMove (const Player *player, int visTeam, edict_t *ent, const pos3_t to)
 {
 	int status, initTU;
 	dvec_t dvtab[MAX_ROUTE];

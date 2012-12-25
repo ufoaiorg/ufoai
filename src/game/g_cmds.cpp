@@ -33,12 +33,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "g_match.h"
 #include "../shared/parse.h"
 
-static void G_Players_f (const player_t *player)
+static void G_Players_f (const Player *player)
 {
 	int count = 0;
 	char smallBuf[64];
 	char largeBuf[1280];
-	player_t *p;
+	Player *p;
 
 	/* print information */
 	largeBuf[0] = 0;
@@ -63,7 +63,7 @@ static void G_Players_f (const player_t *player)
 /**
  * @brief Check whether the user can talk
  */
-static bool G_CheckFlood (player_t *player)
+static bool G_CheckFlood (Player *player)
 {
 	int i;
 
@@ -87,10 +87,10 @@ static bool G_CheckFlood (player_t *player)
 	return false;
 }
 
-static void G_Say_f (player_t *player, bool arg0, bool team)
+static void G_Say_f (Player *player, bool arg0, bool team)
 {
 	char text[256];
-	player_t *p;
+	Player *p;
 
 	if (gi.Cmd_Argc() < 2 && !arg0)
 		return;
@@ -295,7 +295,7 @@ static void G_ListMissionScore_f (void)
 /**
  * @brief Debug function to print a player's inventory
  */
-void G_InvList_f (const player_t *player)
+void G_InvList_f (const Player *player)
 {
 	edict_t *ent = NULL;
 
@@ -426,7 +426,7 @@ static void G_StateChange_f (void)
 }
 #endif
 
-void G_ClientCommand (player_t * player)
+void G_ClientCommand (Player *player)
 {
 	const char *cmd;
 

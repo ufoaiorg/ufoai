@@ -616,7 +616,7 @@ static void G_SpawnItemOnFloor (const pos3_t pos, const item_t *item)
  * @param[in] z_align This value may change the target z height
  * @param[out] impact The location of the target (-center?)
  */
-static void G_ShootGrenade (const player_t *player, edict_t *ent, const fireDef_t *fd,
+static void G_ShootGrenade (const Player *player, edict_t *ent, const fireDef_t *fd,
 	const vec3_t from, const pos3_t at, int mask, const item_t *weapon, shot_mock_t *mock, int z_align, vec3_t impact)
 {
 	vec3_t last, target, temp;
@@ -1095,7 +1095,7 @@ static bool G_PrepareShot (edict_t *ent, shoot_types_t shootType, fireDefIndex_t
  * victim. That way you don't need a 100 percent chance to hit your target. Even if you don't hit it, the splash
  * damage might reduce the health of your target.
  */
-bool G_ClientShoot (const player_t * player, edict_t* ent, const pos3_t at, shoot_types_t shootType,
+bool G_ClientShoot (const Player *player, edict_t *ent, const pos3_t at, shoot_types_t shootType,
 		fireDefIndex_t firemode, shot_mock_t *mock, bool allowReaction, int z_align)
 {
 	const fireDef_t *fd;
