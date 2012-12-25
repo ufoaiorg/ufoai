@@ -427,7 +427,7 @@ bool G_ActionCheckForReaction (const Player *player, edict_t *ent, int TU)
 /**
  * @brief Sends the actual actor turn event over the netchannel
  */
-static void G_ClientTurn (Player * player, edict_t* ent, dvec_t dvec)
+static void G_ClientTurn (Player *player, edict_t* ent, dvec_t dvec)
 {
 	const int dir = getDVdir(dvec);
 
@@ -653,7 +653,7 @@ bool G_ClientUseEdict (const Player *player, edict_t *actor, edict_t *edict)
  * @param[in] player The player to execute the action for (the actor belongs to this player)
  * @note a client action will also send the server side edict number to determine the actor
  */
-int G_ClientAction (Player * player)
+int G_ClientAction (Player *player)
 {
 	player_action_t action;
 	int num;
@@ -757,7 +757,7 @@ int G_ClientAction (Player * player)
  * @param[in] player Pointer to connected player
  * @todo Check whether there are enough free spawnpoints in all cases
  */
-static void G_GetTeam (Player * player)
+static void G_GetTeam (Player *player)
 {
 	player_t *p;
 	int playersInGame = 0;
@@ -910,7 +910,7 @@ bool G_SetTeamForPlayer (Player *player, const int team)
 /**
  * @brief Returns the assigned team number of the player
  */
-int G_ClientGetTeamNum (const Player * player)
+int G_ClientGetTeamNum (const Player *player)
 {
 	assert(player);
 	return player->pers.team;
@@ -919,7 +919,7 @@ int G_ClientGetTeamNum (const Player * player)
 /**
  * @brief Returns the preferred team number for the player
  */
-int G_ClientGetTeamNumPref (const Player * player)
+int G_ClientGetTeamNumPref (const Player *player)
 {
 	assert(player);
 	return Info_IntegerForKey(player->pers.userinfo, "cl_teamnum");
@@ -928,7 +928,7 @@ int G_ClientGetTeamNumPref (const Player * player)
 /**
  * @return @c true if the player is for starting the multiplayer match
  */
-bool G_ClientIsReady (const Player * player)
+bool G_ClientIsReady (const Player *player)
 {
 	assert(player);
 	return player->isReady;
@@ -990,7 +990,7 @@ static void G_GetStartingTeam (const Player *player)
  * @param[in] spawnType The type of spawn-point so search for (ET_ACTORSPAWN or ET_ACTOR2x2SPAWN)
  * @return A pointer to a found spawn point or NULL if nothing was found or on error.
  */
-static edict_t *G_ClientGetFreeSpawnPoint (const Player * player, int spawnType)
+static edict_t *G_ClientGetFreeSpawnPoint (const Player *player, int spawnType)
 {
 	edict_t *ent = NULL;
 
@@ -1245,7 +1245,7 @@ static void G_ClientAssignDefaultActorValues (edict_t *ent)
  * @brief This is called after the actors are spawned and will set actor states without consuming TUs
  * @param player The player to perform the action for
  */
-void G_ClientInitActorStates (const Player * player)
+void G_ClientInitActorStates (const Player *player)
 {
 	const int length = gi.ReadByte(); /* Get the actor amount that the client sent. */
 	int i;
@@ -1279,7 +1279,7 @@ void G_ClientInitActorStates (const Player * player)
  * @sa GAME_SendCurrentTeamSpawningInfo
  * @sa clc_teaminfo
  */
-void G_ClientTeamInfo (const Player * player)
+void G_ClientTeamInfo (const Player *player)
 {
 	const int length = gi.ReadByte(); /* Get the actor amount that the client sent. */
 	int i;
@@ -1385,7 +1385,7 @@ bool G_ClientBegin (Player *player)
  * @sa G_ClientBegin
  * @sa CL_Reset
  */
-void G_ClientStartMatch (Player * player)
+void G_ClientStartMatch (Player *player)
 {
 	G_GetStartingTeam(player);
 
@@ -1417,7 +1417,7 @@ void G_ClientStartMatch (Player * player)
  * @brief called whenever the player updates a userinfo variable.
  * @note The game can override any of the settings in place (forcing skins or names, etc) before copying it off.
  */
-void G_ClientUserinfoChanged (Player * player, const char *userinfo)
+void G_ClientUserinfoChanged (Player *player, const char *userinfo)
 {
 	const bool alreadyReady = player->isReady;
 	const int oldTeamnum = Info_IntegerForKey(player->pers.userinfo, "cl_teamnum");
@@ -1461,7 +1461,7 @@ void G_ClientUserinfoChanged (Player * player, const char *userinfo)
  * and reject connection if so
  * @return @c false if the connection is refused, @c true otherwise
  */
-bool G_ClientConnect (Player * player, char *userinfo, size_t userinfoSize)
+bool G_ClientConnect (Player *player, char *userinfo, size_t userinfoSize)
 {
 	const char *value;
 
@@ -1503,7 +1503,7 @@ bool G_ClientConnect (Player * player, char *userinfo, size_t userinfoSize)
 /**
  * @sa G_ClientConnect
  */
-void G_ClientDisconnect (Player * player)
+void G_ClientDisconnect (Player *player)
 {
 #if 0
 	edict_t *ent = NULL;
