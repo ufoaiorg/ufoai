@@ -63,7 +63,7 @@ struct player_s {
 #else
 
 /** @brief client data that stays across multiple level loads */
-typedef struct {
+typedef struct client_persistant_s {
 	char userinfo[MAX_INFO_STRING];
 	char netname[16];
 
