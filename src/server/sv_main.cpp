@@ -580,7 +580,7 @@ static void SV_CheckSpawnSoldiers (void)
 	while ((cl = SV_GetNextClient(cl)) != NULL) {
 		/* all players must be connected and all of them must have set
 		 * the ready flag */
-		if (cl->state != cs_began || !cl->player->isReady)
+		if (cl->state != cs_began || !cl->player->isReady())
 			return;
 	}
 

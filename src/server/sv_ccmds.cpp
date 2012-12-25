@@ -217,7 +217,7 @@ static void SV_StartGame_f (void)
 	int cnt = 0;
 	while ((cl = SV_GetNextClient(cl)) != NULL) {
 		if (cl->state != cs_free) {
-			cl->player->isReady = true;
+			cl->player->setReady(true);
 			cnt++;
 		}
 	}
@@ -274,7 +274,7 @@ static void SV_Status_f (void)
 
 		s = NET_StreamPeerToName(cl->stream, buf, sizeof(buf), false);
 		Com_Printf("%3i %s %-15s %14i %-5s %-21s\n", i, state, cl->name, cl->lastmessage,
-				cl->player->isReady ? "true" : "false", s);
+				cl->player->isReady() ? "true" : "false", s);
 	}
 	Com_Printf("\n");
 }

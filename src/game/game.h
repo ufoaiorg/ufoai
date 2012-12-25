@@ -54,11 +54,13 @@ class SrvPlayer
 public:
 	bool inuse;
 	int num;				/**< communicated by server to clients */
-	bool isReady;			/**< the player agreed to start the party */
+	bool ready;				/**< the player agreed to start the party */
 
 	inline void setInUse (bool b)	{ inuse = b; }
 	inline int	getNum (void) const	{ return num; }
 	inline void	setNum (int n) 		{ num = n; }
+	inline bool isReady () const	{ return ready; }
+	inline void setReady (bool b)	{ ready = b; }
 	/** the game dll can add anything it wants after this point in the structure */
 };
 typedef SrvPlayer player_t;
