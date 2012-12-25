@@ -55,10 +55,10 @@ static int scoreMissionNum = 0;
  * @brief Iterate through the list of players
  * @param lastPlayer The player found in the previous iteration; if NULL, we start at the beginning
  */
-player_t* G_PlayerGetNextHuman (Player *lastPlayer)
+Player* G_PlayerGetNextHuman (Player *lastPlayer)
 {
-	player_t *endOfPlayers = &game.players[game.sv_maxplayersperteam];
-	player_t *player;
+	Player *endOfPlayers = &game.players[game.sv_maxplayersperteam];
+	Player *player;
 
 	if (!game.sv_maxplayersperteam)
 		return NULL;
@@ -81,10 +81,10 @@ player_t* G_PlayerGetNextHuman (Player *lastPlayer)
  * @brief Iterate through the list of players
  * @param lastPlayer The player found in the previous iteration; if NULL, we start at the beginning
  */
-player_t* G_PlayerGetNextAI (Player *lastPlayer)
+Player* G_PlayerGetNextAI (Player *lastPlayer)
 {
-	player_t *endOfPlayers = &game.players[game.sv_maxplayersperteam * 2];
-	player_t *player;
+	Player *endOfPlayers = &game.players[game.sv_maxplayersperteam * 2];
+	Player *player;
 
 	if (!game.sv_maxplayersperteam)
 		return NULL;
@@ -107,9 +107,9 @@ player_t* G_PlayerGetNextAI (Player *lastPlayer)
  * @brief Iterate through the list of players
  * @param lastPlayer The player found in the previous iteration; if NULL, we start at the beginning
  */
-player_t *G_PlayerGetNextActiveHuman (Player *lastPlayer)
+Player* G_PlayerGetNextActiveHuman (Player *lastPlayer)
 {
-	player_t *player = lastPlayer;
+	Player *player = lastPlayer;
 
 	while ((player = G_PlayerGetNextHuman(player))) {
 		if (player->inuse)
@@ -123,9 +123,9 @@ player_t *G_PlayerGetNextActiveHuman (Player *lastPlayer)
  * @brief Iterate through the list of players
  * @param lastPlayer The player found in the previous iteration; if NULL, we start at the beginning
  */
-player_t* G_PlayerGetNextActiveAI (Player *lastPlayer)
+Player* G_PlayerGetNextActiveAI (Player *lastPlayer)
 {
-	player_t *player = lastPlayer;
+	Player *player = lastPlayer;
 
 	while ((player = G_PlayerGetNextAI(player))) {
 		if (player->inuse)
@@ -144,7 +144,7 @@ player_t* G_PlayerGetNextActiveAI (Player *lastPlayer)
 playermask_t G_TeamToPM (int team)
 {
 	playermask_t playerMask = 0;
-	player_t *p = NULL;
+	Player *p = NULL;
 
 	/* don't handle the ai players, here */
 	while ((p = G_PlayerGetNextHuman(p))) {
@@ -165,7 +165,7 @@ playermask_t G_TeamToPM (int team)
 teammask_t G_PMToVis (playermask_t playerMask)
 {
 	teammask_t teamMask = 0;
-	player_t *p = NULL;
+	Player *p = NULL;
 
 	/* don't handle the ai players, here */
 	while ((p = G_PlayerGetNextActiveHuman(p))) {
@@ -186,7 +186,7 @@ teammask_t G_PMToVis (playermask_t playerMask)
 playermask_t G_VisToPM (teammask_t teamMask)
 {
 	playermask_t playerMask = 0;
-	player_t *p = NULL;
+	Player *p = NULL;
 
 	/* don't handle the ai players, here */
 	while ((p = G_PlayerGetNextActiveHuman(p))) {
@@ -752,7 +752,7 @@ int G_ClientAction (Player *player)
  */
 static void G_GetTeam (Player *player)
 {
-	player_t *p;
+	Player *p;
 	int playersInGame = 0;
 
 	/* player has already a team */
@@ -875,7 +875,7 @@ bool G_SetTeamForPlayer (Player *player, const int team)
 			return false;
 	} else {
 		if (!sv_teamplay->integer) {
-			player_t *p = NULL;
+			Player *p = NULL;
 			while ((p = G_PlayerGetNextHuman(p)) != NULL) {
 				if (p->pers.team == team)
 					return false;
@@ -937,7 +937,7 @@ static void G_GetStartingTeam (const Player *player)
 	int teamCount;
 	int playerCount;
 	int knownTeams[MAX_TEAMS];
-	player_t *p;
+	Player *p;
 
 	/* return with no action if activeTeam already assigned or if are in single-player mode */
 	if (G_MatchIsRunning())
