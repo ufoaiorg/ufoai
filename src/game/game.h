@@ -26,8 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef GAME_GAME_H
-#define GAME_GAME_H
+#pragma once
 
 #include "../common/tracing.h"
 #include "../common/grid.h"
@@ -325,5 +324,3 @@ typedef struct {
 } game_export_t;
 
 extern "C" game_export_t *GetGameAPI(game_import_t * import);
-
-#endif /* GAME_GAME_H */
