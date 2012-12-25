@@ -143,13 +143,10 @@ player_t* G_PlayerGetNextActiveAI (Player *lastPlayer)
  */
 playermask_t G_TeamToPM (int team)
 {
-	player_t *p;
-	playermask_t playerMask;
-
-	playerMask = 0;
+	playermask_t playerMask = 0;
+	player_t *p = NULL;
 
 	/* don't handle the ai players, here */
-	p = NULL;
 	while ((p = G_PlayerGetNextHuman(p))) {
 		if (p->inuse && team == p->pers.team)
 			playerMask |= G_PlayerToPM(p);
@@ -167,11 +164,10 @@ playermask_t G_TeamToPM (int team)
  */
 teammask_t G_PMToVis (playermask_t playerMask)
 {
-	player_t *p;
 	teammask_t teamMask = 0;
+	player_t *p = NULL;
 
 	/* don't handle the ai players, here */
-	p = NULL;
 	while ((p = G_PlayerGetNextActiveHuman(p))) {
 		if (playerMask & G_PlayerToPM(p))
 			teamMask |= G_TeamToVisMask(p->pers.team);
@@ -189,13 +185,10 @@ teammask_t G_PMToVis (playermask_t playerMask)
  */
 playermask_t G_VisToPM (teammask_t teamMask)
 {
-	player_t *p;
-	playermask_t playerMask;
-
-	playerMask = 0;
+	playermask_t playerMask = 0;
+	player_t *p = NULL;
 
 	/* don't handle the ai players, here */
-	p = NULL;
 	while ((p = G_PlayerGetNextActiveHuman(p))) {
 		if (teamMask & G_TeamToVisMask(p->pers.team))
 			playerMask |= G_PlayerToPM(p);
