@@ -298,46 +298,6 @@ typedef struct {
 	int			currentStep;
 } moveinfo_t;
 
-/** @brief client data that stays across multiple level loads */
-typedef struct {
-	char userinfo[MAX_INFO_STRING];
-	char netname[16];
-
-	/** the number of the team for this player
-	 * 0 is reserved for civilians and critters */
-	int team;
-	bool ai;				/**< client controlled by ai */
-
-	/** ai specific data */
-	edict_t *last; /**< set to the last actor edict that was handled for the ai in their think function */
-
-	float		flood_locktill;		/**< locked from talking */
-	float		flood_when[10];		/**< when messages were said */
-	int			flood_whenhead;		/**< head pointer for when said */
-} client_persistant_t;
-
-/** @brief this structure is cleared on each PutClientInServer(),
- * except for 'client->pers'
- * @note shared between game and server - but server doesn't know all the fields */
-struct player_s {
-	/* known to server */
-	bool inuse;
-	int num;
-	bool isReady;			/**< the player agreed to start the party */
-
-	/* private to game */
-	bool spawned;			/**< already spawned? */
-	bool began;				/**< the player sent his 'begin' already */
-	bool roundDone;			/**< ready to end his turn */
-
-	int lastSeen;			/**< the round the player has last seen an ai controlled enemy */
-
-	int reactionLeftover;		/**< Minimum TU left over by reaction fire */
-	bool autostand;			/**< autostand for long walks */
-
-	client_persistant_t pers;
-};
-
 /**
  * @brief If an edict is destroyable (like ET_BREAKABLE, ET_DOOR [if health set]
  * or maybe a ET_MISSION [if health set])
