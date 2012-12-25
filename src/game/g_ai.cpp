@@ -1496,7 +1496,7 @@ void AI_CheckRespawn (int team)
  * @brief Spawn civilians and aliens
  * @param[in] team
  * @sa G_SpawnAIPlayer
- * @return player_t pointer
+ * @return Player pointer
  * @note see cvars ai_numaliens, ai_numcivilians, ai_numactors
  */
 Player *AI_CreatePlayer (int team)

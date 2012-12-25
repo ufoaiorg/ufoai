@@ -185,9 +185,9 @@ const char* G_GetWeaponNameForFiredef (const fireDef_t *fd)
  * @return The inuse player for the given team or @c NULL when no player found.
  * @todo What if there are multiple players for a team (multiplayer coop match)
  */
-player_t* G_GetPlayerForTeam (int team)
+Player* G_GetPlayerForTeam (int team)
 {
-	player_t *p;
+	Player *p;
 
 	/* search corresponding player (even ai players) */
 	p = NULL;

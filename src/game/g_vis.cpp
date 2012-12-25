@@ -316,7 +316,7 @@ static int G_DoTestVis (const int team, edict_t *check, const vischeckflags_t vi
  * @sa G_CheckVisTeam
  * @sa G_AppearPerishEvent
  */
-void G_CheckVisPlayer (player_t *player, const vischeckflags_t visFlags)
+void G_CheckVisPlayer (Player *player, const vischeckflags_t visFlags)
 {
 	edict_t* ent = NULL;
 

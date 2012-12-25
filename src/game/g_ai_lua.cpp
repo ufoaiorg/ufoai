@@ -98,7 +98,7 @@ typedef struct aiActor_s {
  * Current AI Actor.
  */
 static edict_t *AIL_ent; /**< Actor currently running the Lua AI. */
-static player_t *AIL_player; /**< Player currently running the Lua AI. */
+static Player *AIL_player; /**< Player currently running the Lua AI. */
 
 
 /*
@@ -962,7 +962,7 @@ static int AIL_distance (lua_State *L)
  * @sa G_ClientMove
  * @sa G_ClientShoot
  */
-void AIL_ActorThink (player_t * player, edict_t * ent)
+void AIL_ActorThink (Player *player, edict_t *ent)
 {
 	lua_State *L;
 

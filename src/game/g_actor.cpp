@@ -537,7 +537,7 @@ int G_ActorGetContentFlags (const vec3_t origin)
 bool G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, const invDef_t * to, int tx,
 		int ty, bool checkaction)
 {
-	player_t *player;
+	Player *player;
 	edict_t *floor;
 	bool newFloor;
 	invList_t *ic, *tc;
