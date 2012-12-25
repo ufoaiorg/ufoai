@@ -924,7 +924,7 @@ int G_ClientGetTeamNumPref (const Player *player)
 bool G_ClientIsReady (const Player *player)
 {
 	assert(player);
-	return player->isReady;
+	return player->isReady();
 }
 
 /**
@@ -1412,7 +1412,7 @@ void G_ClientStartMatch (Player *player)
  */
 void G_ClientUserinfoChanged (Player *player, const char *userinfo)
 {
-	const bool alreadyReady = player->isReady;
+	const bool alreadyReady = player->isReady();
 	const int oldTeamnum = Info_IntegerForKey(player->pers.userinfo, "cl_teamnum");
 
 	/* check for malformed or illegal info strings */
@@ -1424,7 +1424,7 @@ void G_ClientUserinfoChanged (Player *player, const char *userinfo)
 	Q_strncpyz(player->pers.userinfo, userinfo, sizeof(player->pers.userinfo));
 	player->autostand = Info_IntegerForKey(userinfo, "cl_autostand");
 	player->reactionLeftover = Info_IntegerForKey(userinfo, "cl_reactionleftover");
-	player->isReady = Info_IntegerForKey(userinfo, "cl_ready");
+	player->setReady(Info_IntegerForKey(userinfo, "cl_ready"));
 
 	/* send the updated config string */
 	gi.ConfigString(CS_PLAYERNAMES + player->getNum(), "%s", player->pers.netname);
@@ -1432,7 +1432,7 @@ void G_ClientUserinfoChanged (Player *player, const char *userinfo)
 	/* try to update to the preferred team */
 	if (!G_MatchIsRunning() && oldTeamnum != Info_IntegerForKey(userinfo, "cl_teamnum")) {
 		/* if the player is marked as ready he can't change his team */
-		if (!alreadyReady || !player->isReady) {
+		if (!alreadyReady || !player->isReady()) {
 			player->pers.team = TEAM_NO_ACTIVE;
 			G_GetTeam(player);
 		} else {
@@ -1525,7 +1525,7 @@ void G_ClientDisconnect (Player *player)
 
 	player->began = false;
 	player->roundDone = false;
-	player->isReady = false;
+	player->setReady(false);
 
 	gi.BroadcastPrintf(PRINT_CONSOLE, "%s disconnected.\n", player->pers.netname);
 }

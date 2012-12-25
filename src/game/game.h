@@ -90,7 +90,7 @@ public:
 	/* known to server */
 	bool inuse;
 	int num;
-	bool isReady;
+	bool ready;
 
 	/* private to game */
 	bool spawned;			/**< already spawned? */
@@ -106,6 +106,8 @@ public:
 	inline void setInUse (bool b)	{ inuse = b; }
 	inline int	getNum (void) const	{ return num; }
 	inline void	setNum (int n) 		{ num = n; }
+	inline bool isReady () const	{ return ready; }
+	inline void setReady (bool b)	{ ready = b; }
 };
 typedef Player player_t;
 
