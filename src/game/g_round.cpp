@@ -93,7 +93,7 @@ void G_CheckForceEndRound (void)
 /**
  * @brief Counts the still living actors for a player
  */
-static int G_PlayerSoldiersCount (const player_t* player)
+static int G_PlayerSoldiersCount (const player_t *player)
 {
 	int cnt = 0;
 	edict_t *ent = NULL;

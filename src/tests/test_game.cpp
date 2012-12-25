@@ -196,11 +196,11 @@ static void testInventoryForDiedAlien (void)
 {
 	const char *mapName = "test_game";
 	if (FS_CheckFile("maps/%s.bsp", mapName) != -1) {
-		edict_t* diedEnt;
-		edict_t* ent;
-		edict_t* floorItems;
-		player_t* player;
-		invList_t* invlist;
+		edict_t *diedEnt;
+		edict_t *ent;
+		edict_t *floorItems;
+		player_t *player;
+		invList_t *invlist;
 		int count;
 		/* the other tests didn't call the server shutdown function to clean up */
 		OBJZERO(*sv);
@@ -261,12 +261,12 @@ static void testInventoryWithTwoDiedAliensOnTheSameGridTile (void)
 {
 	const char *mapName = "test_game";
 	if (FS_CheckFile("maps/%s.bsp", mapName) != -1) {
-		edict_t* diedEnt;
-		edict_t* diedEnt2;
-		edict_t* ent;
-		edict_t* floorItems;
-		player_t* player;
-		invList_t* invlist;
+		edict_t *diedEnt;
+		edict_t *diedEnt2;
+		edict_t *ent;
+		edict_t *floorItems;
+		player_t *player;
+		invList_t *invlist;
 		int count;
 		/* the other tests didn't call the server shutdown function to clean up */
 		OBJZERO(*sv);

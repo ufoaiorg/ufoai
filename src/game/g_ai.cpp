@@ -966,7 +966,7 @@ static float AI_PanicCalcActionScore (edict_t * ent, pos3_t to, aiAction_t * aia
  * @note The routing table is still valid, so we can still use
  * gi.MoveLength for the given edict here
  */
-static int AI_CheckForMissionTargets (const player_t* player, edict_t *ent, aiAction_t *aia)
+static int AI_CheckForMissionTargets (const player_t *player, edict_t *ent, aiAction_t *aia)
 {
 	int bestActionScore = AI_ACTION_NOTHING_FOUND;
 
