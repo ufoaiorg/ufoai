@@ -966,7 +966,7 @@ static float AI_PanicCalcActionScore (edict_t * ent, pos3_t to, aiAction_t * aia
  * @note The routing table is still valid, so we can still use
  * gi.MoveLength for the given edict here
  */
-static int AI_CheckForMissionTargets (const player_t *player, edict_t *ent, aiAction_t *aia)
+static int AI_CheckForMissionTargets (const Player *player, edict_t *ent, aiAction_t *aia)
 {
 	int bestActionScore = AI_ACTION_NOTHING_FOUND;
 
@@ -1031,7 +1031,7 @@ static int AI_CheckForMissionTargets (const player_t *player, edict_t *ent, aiAc
  * @param[in] player The AI player
  * @param[in] ent The AI actor
  */
-static aiAction_t AI_PrepBestAction (const player_t *player, edict_t * ent)
+static aiAction_t AI_PrepBestAction (const Player *player, edict_t * ent)
 {
 	aiAction_t aia, bestAia;
 	pos3_t oldPos, to;
@@ -1167,7 +1167,7 @@ static void AI_TryToReloadWeapon (edict_t *ent, containerIndex_t containerID)
  * @sa G_ClientMove
  * @sa G_ClientShoot
  */
-void AI_ActorThink (player_t *player, edict_t * ent)
+void AI_ActorThink (Player *player, edict_t * ent)
 {
 	aiAction_t bestAia;
 
@@ -1229,7 +1229,7 @@ void AI_ActorThink (player_t *player, edict_t * ent)
 	}
 }
 
-static void AI_PlayerRun (player_t *player)
+static void AI_PlayerRun (Player *player)
 {
 	if (level.activeTeam == player->pers.team) {
 		/* find next actor to handle */
@@ -1261,7 +1261,7 @@ static void AI_PlayerRun (player_t *player)
  */
 void AI_Run (void)
 {
-	player_t *player;
+	Player *player;
 
 	/* don't run this too often to prevent overflows */
 	if (level.framenum % 10)
@@ -1374,7 +1374,7 @@ static void AI_SetEquipment (edict_t * ent, const equipDef_t * ed)
  * @param[in,out] ent Pointer to edict_t representing actor.
  * @param[in] ed Equipment definition for the new actor. Might be @c NULL.
  */
-static void AI_InitPlayer (const player_t *player, edict_t * ent, const equipDef_t * ed)
+static void AI_InitPlayer (const Player *player, edict_t * ent, const equipDef_t * ed)
 {
 	const int team = player->pers.team;
 
@@ -1419,7 +1419,7 @@ static const equipDef_t* G_GetEquipmentForAISpawn (int team)
 	return NULL;
 }
 
-static edict_t* G_SpawnAIPlayer (const player_t *player, const equipDef_t *ed)
+static edict_t* G_SpawnAIPlayer (const Player *player, const equipDef_t *ed)
 {
 	edict_t *ent = G_ClientGetFreeSpawnPointForActorSize(player, ACTOR_SIZE_NORMAL);
 	if (!ent) {
@@ -1445,7 +1445,7 @@ static edict_t* G_SpawnAIPlayer (const player_t *player, const equipDef_t *ed)
  * @param[in] numSpawn
  * @sa AI_CreatePlayer
  */
-static void G_SpawnAIPlayers (const player_t *player, int numSpawn)
+static void G_SpawnAIPlayers (const Player *player, int numSpawn)
 {
 	int i;
 	const equipDef_t *ed = G_GetEquipmentForAISpawn(player->pers.team);
@@ -1479,7 +1479,7 @@ void AI_CheckRespawn (int team)
 	const equipDef_t *ed = G_GetEquipmentForAISpawn(team);
 
 	while (diff > 0) {
-		const player_t *player = G_GetPlayerForTeam(team);
+		const Player *player = G_GetPlayerForTeam(team);
 		edict_t *ent = G_SpawnAIPlayer(player, ed);
 		if (ent == NULL)
 			break;
@@ -1499,9 +1499,9 @@ void AI_CheckRespawn (int team)
  * @return player_t pointer
  * @note see cvars ai_numaliens, ai_numcivilians, ai_numactors
  */
-player_t *AI_CreatePlayer (int team)
+Player *AI_CreatePlayer (int team)
 {
-	player_t *p;
+	Player *p;
 
 	if (!sv_ai->integer) {
 		gi.DPrintf("AI deactivated - set sv_ai cvar to 1 to activate it\n");
