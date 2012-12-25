@@ -99,7 +99,7 @@ static int G_PlayerSoldiersCount (const Player *player)
 	edict_t *ent = NULL;
 
 	while ((ent = G_EdictsGetNextLivingActor(ent))) {
-		if (ent->pnum == player->num)
+		if (ent->pnum == player->getNum())
 			cnt++;
 	}
 
@@ -273,7 +273,7 @@ void G_ClientEndRound (Player *player)
 				}
 				if (level.actualRound - p->lastSeen > g_lastseen->integer) {
 					Com_Printf("round end triggered by g_lastseen (player %i (team %i) last seen in round %i of %i rounds)\n",
-							p->num, level.activeTeam, p->lastSeen, level.actualRound);
+							p->getNum(), level.activeTeam, p->lastSeen, level.actualRound);
 					G_MatchEndTrigger(-1, 0);
 					break;
 				}

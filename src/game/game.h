@@ -101,8 +101,11 @@ public:
 	bool autostand;			/**< autostand for long walks */
 
 	client_persistant_t pers;
+
 	inline bool isInUse () const	{ return inuse; }
 	inline void setInUse (bool b)	{ inuse = b; }
+	inline int	getNum (void) const	{ return num; }
+	inline void	setNum (int n) 		{ num = n; }
 };
 typedef Player player_t;
 

@@ -45,7 +45,7 @@ static void G_Players_f (const Player *player)
 
 	p = NULL;
 	while ((p = G_PlayerGetNextActiveHuman(p))) {
-		Com_sprintf(smallBuf, sizeof(smallBuf), "(%i) Team %i %s status: %s\n", p->num,
+		Com_sprintf(smallBuf, sizeof(smallBuf), "(%i) Team %i %s status: %s\n", p->getNum(),
 				p->pers.team, p->pers.netname, (p->roundDone ? "waiting" : "playing"));
 
 		/* can't print all of them in one packet */

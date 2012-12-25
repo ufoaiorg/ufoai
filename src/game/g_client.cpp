@@ -365,7 +365,7 @@ static bool G_ActionCheck (const Player *player, edict_t *ent)
 		return false;
 	}
 
-	if (ent->pnum != player->num) {
+	if (ent->pnum != player->getNum()) {
 		G_ClientPrintf(player, PRINT_HUD, _("Can't perform action - no control over allied actors!"));
 		return false;
 	}
@@ -1090,7 +1090,7 @@ edict_t* G_ClientGetFreeSpawnPointForActorSize (const Player *player, const acto
 		return NULL;
 
 	level.num_spawned[ent->team]++;
-	ent->pnum = player->num;
+	ent->pnum = player->getNum();
 	ent->chr.fieldSize = actorSize;
 	ent->fieldSize = ent->chr.fieldSize;
 	ent->flags |= FL_DESTROYABLE;
@@ -1285,7 +1285,7 @@ void G_ClientTeamInfo (const Player *player)
 		else {
 			edict_t *ent = G_ClientGetFreeSpawnPointForActorSize(player, actorFieldSize);
 			if (ent) {
-				Com_DPrintf(DEBUG_GAME, "Player: %i - team %i - size: %i\n", player->num, ent->team, ent->fieldSize);
+				Com_DPrintf(DEBUG_GAME, "Player: %i - team %i - size: %i\n", player->getNum(), ent->team, ent->fieldSize);
 
 				G_ClientReadCharacter(ent);
 				G_ClientReadInventory(ent);
@@ -1362,7 +1362,7 @@ bool G_ClientBegin (Player *player)
 	G_EventEnd();
 
 	/* set the net name */
-	gi.ConfigString(CS_PLAYERNAMES + player->num, "%s", player->pers.netname);
+	gi.ConfigString(CS_PLAYERNAMES + player->getNum(), "%s", player->pers.netname);
 
 	/* inform all clients */
 	gi.BroadcastPrintf(PRINT_CONSOLE, "%s has joined team %i\n", player->pers.netname, player->pers.team);
@@ -1427,7 +1427,7 @@ void G_ClientUserinfoChanged (Player *player, const char *userinfo)
 	player->isReady = Info_IntegerForKey(userinfo, "cl_ready");
 
 	/* send the updated config string */
-	gi.ConfigString(CS_PLAYERNAMES + player->num, "%s", player->pers.netname);
+	gi.ConfigString(CS_PLAYERNAMES + player->getNum(), "%s", player->pers.netname);
 
 	/* try to update to the preferred team */
 	if (!G_MatchIsRunning() && oldTeamnum != Info_IntegerForKey(userinfo, "cl_teamnum")) {
