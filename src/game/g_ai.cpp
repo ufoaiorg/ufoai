@@ -1167,7 +1167,7 @@ static void AI_TryToReloadWeapon (edict_t *ent, containerIndex_t containerID)
  * @sa G_ClientMove
  * @sa G_ClientShoot
  */
-void AI_ActorThink (player_t * player, edict_t * ent)
+void AI_ActorThink (player_t *player, edict_t * ent)
 {
 	aiAction_t bestAia;
 
@@ -1374,7 +1374,7 @@ static void AI_SetEquipment (edict_t * ent, const equipDef_t * ed)
  * @param[in,out] ent Pointer to edict_t representing actor.
  * @param[in] ed Equipment definition for the new actor. Might be @c NULL.
  */
-static void AI_InitPlayer (const player_t * player, edict_t * ent, const equipDef_t * ed)
+static void AI_InitPlayer (const player_t *player, edict_t * ent, const equipDef_t * ed)
 {
 	const int team = player->pers.team;
 
@@ -1419,7 +1419,7 @@ static const equipDef_t* G_GetEquipmentForAISpawn (int team)
 	return NULL;
 }
 
-static edict_t* G_SpawnAIPlayer (const player_t * player, const equipDef_t *ed)
+static edict_t* G_SpawnAIPlayer (const player_t *player, const equipDef_t *ed)
 {
 	edict_t *ent = G_ClientGetFreeSpawnPointForActorSize(player, ACTOR_SIZE_NORMAL);
 	if (!ent) {
@@ -1445,7 +1445,7 @@ static edict_t* G_SpawnAIPlayer (const player_t * player, const equipDef_t *ed)
  * @param[in] numSpawn
  * @sa AI_CreatePlayer
  */
-static void G_SpawnAIPlayers (const player_t * player, int numSpawn)
+static void G_SpawnAIPlayers (const player_t *player, int numSpawn)
 {
 	int i;
 	const equipDef_t *ed = G_GetEquipmentForAISpawn(player->pers.team);

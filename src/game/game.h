@@ -152,7 +152,7 @@ typedef struct {
 	/** print output to server console */
 	void (IMPORT *DPrintf) (const char *fmt, ...) __attribute__((format(__printf__, 1, 2)));
 	/** sends message to only one player (don't use this to send messages to an AI player struct) */
-	void (IMPORT *PlayerPrintf) (const player_t * player, int printlevel, const char *fmt, va_list ap);
+	void (IMPORT *PlayerPrintf) (const player_t *player, int printlevel, const char *fmt, va_list ap);
 
 	/** configstrings hold all the index strings.
 	 * All of the current configstrings are sent to clients when
