@@ -26,8 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef SV_RMA_H_
-#define SV_RMA_H_
+#pragma once
 
 #define MAX_MAPASSEMBLIES 32
 #define MAX_TILETYPES 64
@@ -151,5 +150,3 @@ MapInfo* SV_AssembleMap(const char *name, const char *assembly, char *asmMap, ch
 /* the next two functions are only exported for cunits tests */
 void SV_ParseUMP(const char *name, MapInfo *map, bool inherit);
 void SV_PrepareTilesToPlace (MapInfo *map);
-
-#endif /* SV_RMA_H_ */
