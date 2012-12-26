@@ -411,7 +411,7 @@ static void G_Damage (edict_t *target, const fireDef_t *fd, int damage, edict_t 
 				G_SendStats(target);
 				/* entity is dazed */
 				G_SetDazed(target);
-				G_ClientPrintf(*(G_PLAYER_FROM_ENT(target)), PRINT_HUD, _("Soldier is dazed!\nEnemy used flashbang!"));
+				G_ClientPrintf(G_PLAYER_FROM_ENT(target), PRINT_HUD, _("Soldier is dazed!\nEnemy used flashbang!"));
 				return;
 			}
 		} else {

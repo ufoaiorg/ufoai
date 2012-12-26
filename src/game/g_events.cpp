@@ -101,7 +101,7 @@ void G_EventActorRevitalise (const edict_t* ent)
  */
 void G_EventActorSendReservations (const edict_t *ent)
 {
-	G_EventAdd(G_PlayerToPM(G_PLAYER_FROM_ENT(ent)), EV_ACTOR_RESERVATIONCHANGE, ent->number);
+	G_EventAdd(G_PlayerToPM(&G_PLAYER_FROM_ENT(ent)), EV_ACTOR_RESERVATIONCHANGE, ent->number);
 	gi.WriteShort(ent->chr.reservedTus.reaction);
 	gi.WriteShort(ent->chr.reservedTus.shot);
 	gi.WriteShort(ent->chr.reservedTus.crouch);
@@ -252,7 +252,7 @@ void G_EventReactionFireChange (const edict_t* ent)
 {
 	const objDef_t *od = ent->chr.RFmode.weapon;
 
-	G_EventAdd(G_PlayerToPM(G_PLAYER_FROM_ENT(ent)), EV_ACTOR_REACTIONFIRECHANGE, ent->number);
+	G_EventAdd(G_PlayerToPM(&G_PLAYER_FROM_ENT(ent)), EV_ACTOR_REACTIONFIRECHANGE, ent->number);
 	gi.WriteByte(ent->chr.RFmode.fmIdx);
 	gi.WriteByte(ent->chr.RFmode.getHand());
 	gi.WriteShort(od ? od->idx : NONE);
@@ -316,7 +316,7 @@ void G_EventSetClientAction (const edict_t *ent)
  */
 void G_EventResetClientAction (const edict_t* ent)
 {
-	const int playerMask = G_PlayerToPM(G_PLAYER_FROM_ENT(ent));
+	const int playerMask = G_PlayerToPM(&G_PLAYER_FROM_ENT(ent));
 	G_EventAdd(playerMask, EV_RESET_CLIENT_ACTION, ent->number);
 	G_EventEnd();
 }
@@ -339,7 +339,7 @@ void G_EventActorStats (const edict_t* ent, playermask_t playerMask)
  */
 void G_EventActorWound (const edict_t *ent, const int bodyPart)
 {
-	const int mask = G_PlayerToPM(G_PLAYER_FROM_ENT(ent));
+	const int mask = G_PlayerToPM(&G_PLAYER_FROM_ENT(ent));
 	G_EventAdd(mask, EV_ACTOR_WOUND, ent->number);
 	gi.WriteByte(bodyPart);
 	gi.WriteByte(ent->chr.wounds.woundLevel[bodyPart]);

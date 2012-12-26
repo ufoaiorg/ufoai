@@ -1036,12 +1036,12 @@ static bool Message_Use (edict_t *self, edict_t *activator)
 	if (!activator || !G_IsActor(activator)) {
 		return false;
 	} else {
-		player_t *player = G_PLAYER_FROM_ENT(activator);
+		Player &player = G_PLAYER_FROM_ENT(activator);
 		const char *msg = self->message;
 		/* remove gettext marker */
 		if (msg[0] == '_')
 			msg++;
-		G_ClientPrintf(*player, PRINT_HUD, "%s", msg);
+		G_ClientPrintf(player, PRINT_HUD, "%s", msg);
 
 		if (self->spawnflags & 1)
 			G_FreeEdict(self);

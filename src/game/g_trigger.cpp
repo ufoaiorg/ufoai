@@ -145,7 +145,7 @@ static bool Touch_NextMapTrigger (edict_t *self, edict_t *activator)
 	if (activator != NULL && activator->team == self->team) {
 		char command[MAX_VAR];
 		self->inuse = false;
-		G_ClientPrintf(*(G_PLAYER_FROM_ENT(activator)), PRINT_HUD, _("Switching map!"));
+		G_ClientPrintf(G_PLAYER_FROM_ENT(activator), PRINT_HUD, _("Switching map!"));
 		Com_sprintf(command, sizeof(command), "map %s %s\n",
 				level.day ? "day" : "night", self->nextmap);
 		level.mapEndCommand = (char *)G_TagMalloc(strlen(command) + 1, TAG_GAME);

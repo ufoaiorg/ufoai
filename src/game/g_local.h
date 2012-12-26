@@ -73,7 +73,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define G_TagMalloc(size, tag) gi.TagMalloc((size), (tag), __FILE__, __LINE__)
 #define G_MemFree(ptr) gi.TagFree((ptr), __FILE__, __LINE__)
 
-#define G_PLAYER_FROM_ENT(ent) (game.players + (ent)->pnum)
+#define G_PLAYER_FROM_ENT(ent) (game.players[(ent)->pnum])
 
 /** @brief this structure is left intact through an entire game
  * it should be initialized at game library load time */
@@ -148,7 +148,7 @@ extern game_export_t globals;
 #define G_IsBrushModel(ent)		((ent)->type == ET_BREAKABLE || G_IsDoor(ent) || (ent)->type == ET_ROTATING)
 /** @note Every none solid (none-bmodel) edict that is visible for the client */
 #define G_IsVisibleOnBattlefield(ent)	(G_IsActor((ent)) || G_IsItem(ent) || G_IsCamera(ent) || (ent)->type == ET_PARTICLE)
-#define G_IsAI(ent)				(G_PLAYER_FROM_ENT((ent))->pers.ai)
+#define G_IsAI(ent)				(G_PLAYER_FROM_ENT((ent)).pers.ai)
 #define G_IsAIPlayer(player)	((player)->pers.ai)
 #define G_TeamToVisMask(team)	(1 << (team))
 #define G_IsVisibleForTeam(ent, team) ((ent)->visflags & G_TeamToVisMask(team))

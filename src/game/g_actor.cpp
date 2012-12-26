@@ -58,7 +58,7 @@ void G_ActorUseDoor (edict_t *actor, edict_t *door)
 	if (door->flags & FL_GROUPSLAVE)
 		door = door->groupMaster;
 
-	if (!G_ClientUseEdict(G_PLAYER_FROM_ENT(actor), actor, door))
+	if (!G_ClientUseEdict(&G_PLAYER_FROM_ENT(actor), actor, door))
 		return;
 
 	/* end this loop here, for the AI this is a) not interesting,
@@ -95,9 +95,9 @@ void G_ActorSetInRescueZone (edict_t* actor, bool inRescueZone)
 		return;
 
 	if (inRescueZone)
-		G_ClientPrintf(*(G_PLAYER_FROM_ENT(actor)), PRINT_HUD, _("Soldier entered the rescue zone."));
+		G_ClientPrintf(G_PLAYER_FROM_ENT(actor), PRINT_HUD, _("Soldier entered the rescue zone."));
 	else
-		G_ClientPrintf(*(G_PLAYER_FROM_ENT(actor)), PRINT_HUD, _("Soldier left the rescue zone."));
+		G_ClientPrintf(G_PLAYER_FROM_ENT(actor), PRINT_HUD, _("Soldier left the rescue zone."));
 
 	actor->inRescueZone = inRescueZone;
 }
@@ -548,7 +548,7 @@ bool G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, cons
 	int fx, fy;
 	int originalTU, reservedTU = 0;
 
-	player = G_PLAYER_FROM_ENT(ent);
+	player = &G_PLAYER_FROM_ENT(ent);
 
 	assert(fItem);
 	assert(fItem->item.item);

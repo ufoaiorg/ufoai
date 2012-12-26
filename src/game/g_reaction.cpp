@@ -295,7 +295,7 @@ static int G_ReactionFireGetTUsForItem (const edict_t *ent, const edict_t *targe
 		if (fmSetting->getHand() == ACTOR_HAND_RIGHT && fmSetting->fmIdx >= 0
 		 && fmSetting->fmIdx < MAX_FIREDEFS_PER_WEAPON) { /* If a RIGHT-hand firemode is selected and sane. */
 			const fireDefIndex_t fmIdx = fmSetting->fmIdx;
-			const int reactionFire = G_PLAYER_FROM_ENT(ent)->reactionLeftover;
+			const int reactionFire = G_PLAYER_FROM_ENT(ent).reactionLeftover;
 			const fireDef_t *fd = &fdArray[fmIdx];
 			const int tus = G_ActorGetTimeForFiredef(ent, fd, true) + reactionFire;
 
@@ -360,7 +360,7 @@ void G_ReactionFireSettingsUpdate (edict_t *ent, fireDefIndex_t fmIdx, actorHand
 
 	if (!G_ActorHasWorkingFireModeSet(ent)) {
 		/* Disable reaction fire if no valid firemode was found. */
-		G_ClientStateChange(G_PLAYER_FROM_ENT(ent), ent, ~STATE_REACTION, true);
+		G_ClientStateChange(&G_PLAYER_FROM_ENT(ent), ent, ~STATE_REACTION, true);
 		return;
 	}
 
@@ -436,17 +436,17 @@ static bool G_ReactionFireCanBeEnabled (const edict_t *ent)
 		return false;
 
 	if (!G_ActorHasReactionFireEnabledWeapon(ent)) {
-		G_ClientPrintf(*(G_PLAYER_FROM_ENT(ent)), PRINT_HUD, _("No reaction fire enabled weapon."));
+		G_ClientPrintf(G_PLAYER_FROM_ENT(ent), PRINT_HUD, _("No reaction fire enabled weapon."));
 		return false;
 	}
 
 	if (!G_ActorHasWorkingFireModeSet(ent)) {
-		G_ClientPrintf(*(G_PLAYER_FROM_ENT(ent)), PRINT_HUD, _("No fire mode selected for reaction fire."));
+		G_ClientPrintf(G_PLAYER_FROM_ENT(ent), PRINT_HUD, _("No fire mode selected for reaction fire."));
 		return false;
 	}
 
 	if (!G_ActorHasEnoughTUsReactionFire(ent)) {
-		G_ClientPrintf(*(G_PLAYER_FROM_ENT(ent)), PRINT_HUD, _("Not enough TUs left for activating reaction fire."));
+		G_ClientPrintf(G_PLAYER_FROM_ENT(ent), PRINT_HUD, _("Not enough TUs left for activating reaction fire."));
 		return false;
 	}
 
@@ -571,7 +571,7 @@ static bool G_ReactionFireShoot (edict_t *shooter, const pos3_t at, shoot_types_
 	const int minhit = 30;
 	shot_mock_t mock;
 	int i;
-	const player_t *player = G_PLAYER_FROM_ENT(shooter);
+	const player_t *player = &G_PLAYER_FROM_ENT(shooter);
 	/* this is the max amount of friendly units that were hit during the mock calculation */
 	int maxff;
 
