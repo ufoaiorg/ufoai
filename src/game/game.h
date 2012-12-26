@@ -68,7 +68,7 @@ typedef SrvPlayer player_t;
 #else
 
 /** @brief client data that stays across multiple level loads */
-typedef struct client_persistant_s {
+typedef struct client_persistent_s {
 	char userinfo[MAX_INFO_STRING];
 	char netname[16];
 
@@ -82,7 +82,7 @@ typedef struct client_persistant_s {
 	float	flood_locktill;	/**< locked from talking */
 	float	flood_when[10];	/**< when messages were said */
 	int		flood_whenhead;	/**< head pointer for when said */
-} client_persistant_t;
+} client_persistent_t;
 
 /** @brief this structure is cleared on each PutClientInServer(),
  * except for 'client->pers'
@@ -102,7 +102,7 @@ public:
 	int reactionLeftover;	/**< Minimum TU left over by reaction fire */
 	bool autostand;			/**< autostand for long walks */
 
-	client_persistant_t pers;
+	client_persistent_t pers;
 
 	inline bool isInUse () const	{ return inuse; }
 	inline void setInUse (bool b)	{ inuse = b; }
