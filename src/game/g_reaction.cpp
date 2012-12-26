@@ -571,7 +571,7 @@ static bool G_ReactionFireShoot (edict_t *shooter, const pos3_t at, shoot_types_
 	const int minhit = 30;
 	shot_mock_t mock;
 	int i;
-	const player_t *player = &G_PLAYER_FROM_ENT(shooter);
+	const Player player = G_PLAYER_FROM_ENT(shooter);
 	/* this is the max amount of friendly units that were hit during the mock calculation */
 	int maxff;
 
@@ -590,12 +590,12 @@ static bool G_ReactionFireShoot (edict_t *shooter, const pos3_t at, shoot_types_
 	 * when opening the reaction fire */
 	OBJZERO(mock);
 	for (i = 0; i < 100; i++)
-		if (!G_ClientShoot(player, shooter, at, type, firemode, &mock, false, 0))
+		if (!G_ClientShoot(&player, shooter, at, type, firemode, &mock, false, 0))
 			break;
 
 	const int ff = mock.friendCount + (G_IsAlien(shooter) ? 0 : mock.civilian);
 	if (ff <= maxff && mock.enemyCount >= minhit)
-		return G_ClientShoot(player, shooter, at, type, firemode, NULL, false, 0);
+		return G_ClientShoot(&player, shooter, at, type, firemode, NULL, false, 0);
 
 	return false;
 }

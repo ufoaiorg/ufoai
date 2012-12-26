@@ -35,7 +35,7 @@ edict_t *G_GetEdictFromPos(const pos3_t pos, const entity_type_t type);
 edict_t *G_GetEdictFromPosExcluding(const pos3_t pos, const int n, ...);
 bool G_UseEdict(edict_t *ent, edict_t* activator);
 const char* G_GetWeaponNameForFiredef(const fireDef_t *fd);
-player_t* G_GetPlayerForTeam(int team);
+Player* G_GetPlayerForTeam(int team);
 void G_TakeDamage(edict_t *ent, int damage);
 bool G_TestLineWithEnts(const vec3_t start, const vec3_t end);
 bool G_TestLine(const vec3_t start, const vec3_t end);
