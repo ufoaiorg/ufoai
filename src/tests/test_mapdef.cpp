@@ -202,7 +202,7 @@ char posStr[MAX_TOKEN_CHARS * MAX_TILESTRINGS];
 
 /**
  * @brief This test cycles through the list of map definitions found in the maps.ufo script
- * and builds each map mutiple times with different seeds.
+ * and collects some properties of the maps relevant to RMA.
  */
 static void testMapDefStatistic (void)
 {
@@ -263,7 +263,7 @@ static void testMapDefStatistic (void)
 #if !SEED_TEST
 /**
  * @brief This test cycles through the list of map definitions found in the maps.ufo script
- * and tries to load (and build in case of RMA) each map.
+ * and tries to load (and build in case of RMA) each map once (with a random seed).
  */
 static void testMapDefsSingleplayer (void)
 {
