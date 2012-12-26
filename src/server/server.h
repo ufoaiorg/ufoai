@@ -134,10 +134,7 @@ typedef struct serverInstanceGame_s {
 } serverInstanceGame_t;
 
 #define EDICT_NUM(n) ((edict_t *)((byte *)svs.ge->edicts + svs.ge->edict_size * (n)))
-#define NUM_FOR_EDICT(e) (((byte *)(e) - (byte *)svs.ge->edicts) / svs.ge->edict_size)
-
 #define PLAYER_NUM(n) ((player_t *)((byte *)svs.ge->players + svs.ge->player_size * (n)))
-#define NUM_FOR_PLAYER(e) (((byte *)(e) - (byte *)svs.ge->players) / svs.ge->player_size)
 
 typedef enum {
 	cs_free,					/**< can be reused for a new connection */
