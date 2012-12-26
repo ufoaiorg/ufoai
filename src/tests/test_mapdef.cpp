@@ -300,26 +300,26 @@ static void testMapDefsFootSteps (void)
 			SV_Map(true, md->map, md->param);
 
 			/* now that we have loaded the map, check all cells for walkable places */
-			int x,y,z;
-			for (x=125; x<135 && !done;x++){
-				for (y=125; y<135 && !done;y++){
-					for (z=0; z<2;z++){
+			int x, y, z;
+			for (x = 125; x < 135 && !done; x++){
+				for (y = 125; y < 135 && !done; y++){
+					for (z = 0; z < 2; z++){
 //						if (RT_FLOOR(sv->mapData.routes, 1, x, y,z) >= 0){	// if we have a floor
 						if (sv->mapData.routes[0].floor[(z)][(y)][(x)] >= 0){	// if we have a floor
 							AABB noBox(vec3_origin, vec3_origin);	// we're doing a point-trace
-							pos3_t cellPos = {x,y,z};
+							pos3_t cellPos = {x, y, z};
 							vec3_t from, to;
 							PosToVec(cellPos, from);
 							VectorCopy(from, to);
-							from[2] += UNIT_HEIGHT/4;
-							to[2] -= 2*UNIT_HEIGHT;			// we should really hit the ground with this
+							from[2] += UNIT_HEIGHT / 4;
+							to[2] -= 2 * UNIT_HEIGHT;			// we should really hit the ground with this
 							const trace_t trace = SV_Trace(from, noBox, to, NULL, MASK_SOLID);
 							if (trace.surface) {
 								const char *snd = NULL;
 								snd = SV_GetFootstepSound(trace.surface->name);
 								if (!snd) {
 								//	Com_Printf("No sound for %s\n", trace.surface->name);
-									for (i=0;i<maxCount;i++) {
+									for (i = 0; i < maxCount; i++) {
 										if (!texNames[i][0]) {	// found a free slot ?
 											strcpy(texNames[i], trace.surface->name);
 											count++;
@@ -339,7 +339,7 @@ static void testMapDefsFootSteps (void)
 				}
 			}
 			Com_Printf("In map %s: No sound for:\n", md->param);
-			for (i=0;i<maxCount;i++) {
+			for (i = 0; i < maxCount; i++) {
 				if (texNames[i][0]) {
 					Com_Printf("%s\n", texNames[i]);
 				}
