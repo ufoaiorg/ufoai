@@ -295,12 +295,12 @@ static void G_ListMissionScore_f (void)
 /**
  * @brief Debug function to print a player's inventory
  */
-void G_InvList_f (const Player *player)
+void G_InvList_f (const Player &player)
 {
 	edict_t *ent = NULL;
 
-	gi.DPrintf("Print inventory for '%s'\n", player->pers.netname);
-	while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, player->pers.team))) {
+	gi.DPrintf("Print inventory for '%s'\n", player.pers.netname);
+	while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, player.pers.team))) {
 		containerIndex_t container;
 		gi.DPrintf("actor: '%s'\n", ent->chr.name);
 
@@ -443,7 +443,7 @@ void G_ClientCommand (Player *player)
 		G_Say_f(player, false, true);
 #ifdef DEBUG
 	else if (Q_strcasecmp(cmd, "debug_actorinvlist") == 0)
-		G_InvList_f(player);
+		G_InvList_f(*player);
 	else if (Q_strcasecmp(cmd, "debug_killteam") == 0)
 		G_KillTeam_f();
 	else if (Q_strcasecmp(cmd, "debug_stunteam") == 0)

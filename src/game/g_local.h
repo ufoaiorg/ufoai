@@ -248,7 +248,7 @@ edict_t *G_SpawnCamera(const vec3_t origin, int team, camera_type_t cameraType);
 /* g_cmds.c */
 void G_ClientCommand(Player *player);
 #ifdef DEBUG
-void G_InvList_f(const Player *player);
+void G_InvList_f(const Player &player);
 #endif
 
 /* g_morale */

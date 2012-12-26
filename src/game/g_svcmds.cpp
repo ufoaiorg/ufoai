@@ -307,18 +307,18 @@ static void SVCmd_AddItem_f (void)
 }
 
 /**
- * @brief Debug function to show the hole inventory of all connected clients on the server
+ * @brief Debug function to show the whole inventory of all connected clients on the server
  */
 static void SVCmd_ActorInvList_f (void)
 {
 	Player *player;
 	int i;
 
-	/* show inventory off all players around - include even the ai players */
+	/* show inventory of all players around - include even the ai players */
 	for (i = 0, player = game.players; i < game.sv_maxplayersperteam * 2; i++, player++) {
 		if (!player->isInUse())
 			continue;
-		G_InvList_f(player);
+		G_InvList_f(*player);
 	}
 }
 
