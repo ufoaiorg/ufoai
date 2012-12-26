@@ -149,7 +149,7 @@ playermask_t G_TeamToPM (int team)
 	/* don't handle the ai players, here */
 	while ((p = G_PlayerGetNextHuman(p))) {
 		if (p->isInUse() && team == p->pers.team)
-			playerMask |= G_PlayerToPM(p);
+			playerMask |= G_PlayerToPM(*p);
 	}
 
 	return playerMask;
@@ -169,7 +169,7 @@ teammask_t G_PMToVis (playermask_t playerMask)
 
 	/* don't handle the ai players, here */
 	while ((p = G_PlayerGetNextActiveHuman(p))) {
-		if (playerMask & G_PlayerToPM(p))
+		if (playerMask & G_PlayerToPM(*p))
 			teamMask |= G_TeamToVisMask(p->pers.team);
 	}
 
@@ -191,7 +191,7 @@ playermask_t G_VisToPM (teammask_t teamMask)
 	/* don't handle the ai players, here */
 	while ((p = G_PlayerGetNextActiveHuman(p))) {
 		if (teamMask & G_TeamToVisMask(p->pers.team))
-			playerMask |= G_PlayerToPM(p);
+			playerMask |= G_PlayerToPM(*p);
 	}
 
 	return playerMask;
@@ -312,7 +312,7 @@ void G_SendInvisible (const Player *player)
 			if (ent->team != team) {
 				/* not visible for this team - so add the le only */
 				if (!G_IsVisibleForTeam(ent, team)) {
-					G_EventActorAdd(G_PlayerToPM(player), ent);
+					G_EventActorAdd(G_PlayerToPM(*player), ent);
 				}
 			}
 		}
@@ -1315,7 +1315,7 @@ void G_ClientTeamInfo (const Player *player)
  */
 static void G_ClientSendEdictsAndBrushModels (const Player *player)
 {
-	const int mask = G_PlayerToPM(player);
+	const int mask = G_PlayerToPM(*player);
 	/* skip the world */
 	edict_t *ent = G_EdictsGetFirst();
 
@@ -1468,7 +1468,7 @@ bool G_ClientConnect (Player *player, char *userinfo, size_t userinfoSize)
 		return false;
 	}
 
-	if (!G_PlayerToPM(player)) {
+	if (!G_PlayerToPM(*player)) {
 		Info_SetValueForKey(userinfo, userinfoSize, "rejmsg", "Server is full");
 		return false;
 	}

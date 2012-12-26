@@ -35,7 +35,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 typedef unsigned int playermask_t;
 /* Bitmask for all players */
 #define PM_ALL			0xFFFFFFFF
-#define G_PlayerToPM(player) ((player)->getNum() < game.sv_maxplayersperteam ? 1 << ((player)->getNum()) : 0)
+#define G_PlayerToPM(player) ((player).getNum() < game.sv_maxplayersperteam ? 1 << ((player).getNum()) : 0)
 
 void G_EventActorAdd(playermask_t playerMask, const edict_t *ent);
 void G_EventActorAppear(playermask_t playerMask, const edict_t *check, const edict_t *ent);

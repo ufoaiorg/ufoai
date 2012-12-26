@@ -52,7 +52,7 @@ void G_SendPlayerStats (const Player *player)
 
 	while ((ent = G_EdictsGetNextActor(ent)))
 		if (ent->team == player->pers.team) {
-			G_EventActorStats(ent, G_PlayerToPM(player));
+			G_EventActorStats(ent, G_PlayerToPM(*player));
 			G_SendWoundStats(ent);
 		}
 }
