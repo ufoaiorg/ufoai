@@ -285,7 +285,7 @@ typedef struct {
 } game_import_t;
 
 /** @brief functions exported by the game subsystem */
-typedef struct {
+typedef struct game_export_s {
 	int apiversion;
 
 	/** the init function will only be called when a game starts,
