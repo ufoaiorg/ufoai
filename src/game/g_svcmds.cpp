@@ -79,7 +79,8 @@ static bool StringToFilter (const char *s, ipfilter_t * f)
 
 	for (i = 0; i < 4; i++) {
 		if (*s < '0' || *s > '9') {
-			G_ClientPrintf(NULL, PRINT_CONSOLE, "Bad filter address: %s\n", s);
+			/** @todo find out if this printf is needed. Passing NULL as a player would have crashed anyway. */
+			//G_ClientPrintf(NULL, PRINT_CONSOLE, "Bad filter address: %s\n", s);
 			return false;
 		}
 

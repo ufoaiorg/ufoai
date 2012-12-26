@@ -57,7 +57,7 @@ static void G_Players_f (const Player *player)
 		count++;
 	}
 
-	G_ClientPrintf(player, PRINT_CONSOLE, "%s\n%i players\n", largeBuf, count);
+	G_ClientPrintf(*player, PRINT_CONSOLE, "%s\n%i players\n", largeBuf, count);
 }
 
 /**
@@ -69,7 +69,7 @@ static bool G_CheckFlood (Player *player)
 
 	if (flood_msgs->integer) {
 		if (level.time < player->pers.flood_locktill) {
-			G_ClientPrintf(player, PRINT_CHAT, _("You can't talk for %d more seconds\n"), (int)(player->pers.flood_locktill - level.time));
+			G_ClientPrintf(*player, PRINT_CHAT, _("You can't talk for %d more seconds\n"), (int)(player->pers.flood_locktill - level.time));
 			return true;
 		}
 		i = player->pers.flood_whenhead - flood_msgs->value + 1;
@@ -77,7 +77,7 @@ static bool G_CheckFlood (Player *player)
 			i = (sizeof(player->pers.flood_when)/sizeof(player->pers.flood_when[0])) + i;
 		if (player->pers.flood_when[i] && level.time - player->pers.flood_when[i] < flood_persecond->value) {
 			player->pers.flood_locktill = level.time + flood_waitdelay->value;
-			G_ClientPrintf(player, PRINT_CHAT, _("Flood protection: You can't talk for %d seconds.\n"), flood_waitdelay->integer);
+			G_ClientPrintf(*player, PRINT_CHAT, _("Flood protection: You can't talk for %d seconds.\n"), flood_waitdelay->integer);
 			return true;
 		}
 		player->pers.flood_whenhead = (player->pers.flood_whenhead + 1) %
@@ -123,7 +123,7 @@ static void G_Say_f (Player *player, bool arg0, bool team)
 	while ((p = G_PlayerGetNextActiveHuman(p))) {
 		if (team && p->pers.team != player->pers.team)
 			continue;
-		G_ClientPrintf(p, PRINT_CHAT, "%s", text);
+		G_ClientPrintf(*p, PRINT_CHAT, "%s", text);
 	}
 }
 

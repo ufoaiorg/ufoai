@@ -203,17 +203,17 @@ playermask_t G_VisToPM (teammask_t teamMask)
  * @param printLevel A numeric value to restrict and channel the printing (CONSOLE, HUD, CHAT...)
  * @param fmt A format string as in printf
  */
-void G_ClientPrintf (const Player *player, int printLevel, const char *fmt, ...)
+void G_ClientPrintf (const Player &player, int printLevel, const char *fmt, ...)
 {
 	va_list ap;
 
 	/* there is no client for an AI controlled player on the server where we
 	 * could send the message to */
-	if (G_IsAIPlayer(player))
+	if (G_IsAIPlayer(&player))
 		return;
 
 	va_start(ap, fmt);
-	gi.PlayerPrintf(player, printLevel, fmt, ap);
+	gi.PlayerPrintf(&player, printLevel, fmt, ap);
 	va_end(ap);
 }
 
@@ -341,32 +341,32 @@ static bool G_ActionCheck (const Player *player, edict_t *ent)
 		return true;
 
 	if (!ent || !ent->inuse) {
-		G_ClientPrintf(player, PRINT_HUD, _("Can't perform action - object not present!"));
+		G_ClientPrintf(*player, PRINT_HUD, _("Can't perform action - object not present!"));
 		return false;
 	}
 
 	if (ent->type != ET_ACTOR && ent->type != ET_ACTOR2x2) {
-		G_ClientPrintf(player, PRINT_HUD, _("Can't perform action - not an actor!"));
+		G_ClientPrintf(*player, PRINT_HUD, _("Can't perform action - not an actor!"));
 		return false;
 	}
 
 	if (G_IsStunned(ent)) {
-		G_ClientPrintf(player, PRINT_HUD, _("Can't perform action - actor is stunned!"));
+		G_ClientPrintf(*player, PRINT_HUD, _("Can't perform action - actor is stunned!"));
 		return false;
 	}
 
 	if (G_IsDead(ent)) {
-		G_ClientPrintf(player, PRINT_HUD, _("Can't perform action - actor is dead!"));
+		G_ClientPrintf(*player, PRINT_HUD, _("Can't perform action - actor is dead!"));
 		return false;
 	}
 
 	if (ent->team != player->pers.team) {
-		G_ClientPrintf(player, PRINT_HUD, _("Can't perform action - not on same team!"));
+		G_ClientPrintf(*player, PRINT_HUD, _("Can't perform action - not on same team!"));
 		return false;
 	}
 
 	if (ent->pnum != player->getNum()) {
-		G_ClientPrintf(player, PRINT_HUD, _("Can't perform action - no control over allied actors!"));
+		G_ClientPrintf(*player, PRINT_HUD, _("Can't perform action - no control over allied actors!"));
 		return false;
 	}
 
@@ -389,7 +389,7 @@ bool G_ActionCheckForCurrentTeam (const Player *player, edict_t *ent, int TU)
 
 	/* a generic tester if an action could be possible */
 	if (level.activeTeam != player->pers.team) {
-		G_ClientPrintf(player, PRINT_HUD, _("Can't perform action - it is not your turn!"));
+		G_ClientPrintf(*player, PRINT_HUD, _("Can't perform action - it is not your turn!"));
 		return false;
 	}
 
@@ -504,7 +504,7 @@ void G_ClientStateChange (const Player *player, edict_t* ent, int reqState, bool
 	case ~STATE_REACTION: /* Request to turn off reaction fire. */
 		if (G_IsReaction(ent)) {
 			if (G_IsShaken(ent)) {
-				G_ClientPrintf(player, PRINT_HUD, _("Currently shaken, won't let their guard down."));
+				G_ClientPrintf(*player, PRINT_HUD, _("Currently shaken, won't let their guard down."));
 			} else {
 				/* Turn off reaction fire. */
 				G_RemoveReaction(ent);

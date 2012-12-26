@@ -95,9 +95,9 @@ void G_ActorSetInRescueZone (edict_t* actor, bool inRescueZone)
 		return;
 
 	if (inRescueZone)
-		G_ClientPrintf(G_PLAYER_FROM_ENT(actor), PRINT_HUD, _("Soldier entered the rescue zone."));
+		G_ClientPrintf(*(G_PLAYER_FROM_ENT(actor)), PRINT_HUD, _("Soldier entered the rescue zone."));
 	else
-		G_ClientPrintf(G_PLAYER_FROM_ENT(actor), PRINT_HUD, _("Soldier left the rescue zone."));
+		G_ClientPrintf(*(G_PLAYER_FROM_ENT(actor)), PRINT_HUD, _("Soldier left the rescue zone."));
 
 	actor->inRescueZone = inRescueZone;
 }
@@ -575,7 +575,7 @@ bool G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, cons
 		return false;
 
 	if (!INVSH_CheckAddingItemToInventory(&ent->chr.i, from->id, to->id, fItem->item, ent->chr.score.skills[ABILITY_POWER])) {
-		G_ClientPrintf(player, PRINT_HUD, _("This soldier can not carry anything else."));
+		G_ClientPrintf(*player, PRINT_HUD, _("This soldier can not carry anything else."));
 		return false;
 	}
 
@@ -620,10 +620,10 @@ bool G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, cons
 		/* No action possible - abort */
 		return false;
 	case IA_NOTIME:
-		G_ClientPrintf(player, PRINT_HUD, _("Can't perform action - not enough TUs!"));
+		G_ClientPrintf(*player, PRINT_HUD, _("Can't perform action - not enough TUs!"));
 		return false;
 	case IA_NORELOAD:
-		G_ClientPrintf(player, PRINT_HUD,
+		G_ClientPrintf(*player, PRINT_HUD,
 				_("Can't perform action - weapon already fully loaded with the same ammunition!"));
 		return false;
 	default:

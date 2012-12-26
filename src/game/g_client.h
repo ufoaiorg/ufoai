@@ -35,7 +35,7 @@ Player* G_PlayerGetNextActiveAI(Player *lastPlayer);
 playermask_t G_TeamToPM(int team);
 teammask_t G_PMToVis(playermask_t playerMask);
 playermask_t G_VisToPM(teammask_t teamMask);
-void G_ClientPrintf(const Player *player, int printlevel, const char *fmt, ...) __attribute__((format(__printf__, 3, 4)));
+void G_ClientPrintf(const Player &player, int printlevel, const char *fmt, ...) __attribute__((format(__printf__, 3, 4)));
 void G_GiveTimeUnits(int team);
 void G_AppearPerishEvent(playermask_t player_mask, bool appear, edict_t *check, const edict_t *ent);
 void G_SendInvisible(const Player *player);

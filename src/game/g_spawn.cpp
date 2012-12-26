@@ -1041,7 +1041,7 @@ static bool Message_Use (edict_t *self, edict_t *activator)
 		/* remove gettext marker */
 		if (msg[0] == '_')
 			msg++;
-		G_ClientPrintf(player, PRINT_HUD, "%s", msg);
+		G_ClientPrintf(*player, PRINT_HUD, "%s", msg);
 
 		if (self->spawnflags & 1)
 			G_FreeEdict(self);
