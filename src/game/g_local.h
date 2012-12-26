@@ -77,7 +77,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /** @brief this structure is left intact through an entire game
  * it should be initialized at game library load time */
-typedef struct {
+typedef struct game_locals_s {
 	Player *players;			/* [maxplayers] */
 
 	/* store latched cvars here that we want to get at often */
@@ -88,7 +88,7 @@ typedef struct {
 } game_locals_t;
 
 /** @brief this structure is cleared as each map is entered */
-typedef struct {
+typedef struct level_locals_s {
 	int framenum;		/**< the current frame (10fps) */
 	float time;			/**< seconds the game is running already
 						 * calculated through framenum * SERVER_FRAME_SECONDS */
