@@ -1872,7 +1872,10 @@ void SV_ParseUMP (const char *name, MapInfo *map, bool inherit)
 
 		if (Q_streq(token, "extends")) {
 			token = Com_Parse(&text);
-			SV_ParseUMP(token, map, true);
+			if (inherit || map->inheritBasePath[0] != '\0')
+				Com_Printf("SV_ParseUMP: Too many extends in %s 'extends %s' ignored\n", filename, token);
+			else
+				SV_ParseUMP(token, map, true);
 		} else if (Q_streq(token, "base")) {
 			token = Com_Parse(&text);
 			if (inherit)
