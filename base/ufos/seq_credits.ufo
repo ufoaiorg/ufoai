@@ -198,7 +198,7 @@ sequence developers
 	wait 0.7
 	obj2d hoehrer_text
 	{
-		text	"_Werner Höhrer (Hoehrer)"
+		text	"_Werner Hohrer (Hoehrer)"
 		pos		"512 768"
 		align	"uc"
 		color	"1 1 1 1"
