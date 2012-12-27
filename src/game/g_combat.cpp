@@ -1307,9 +1307,14 @@ bool G_ClientShoot (const Player *player, edict_t *ent, const pos3_t at, shoot_t
 			G_SpawnStunSmokeField(impact, "green_smoke", rounds, damage, fd->splrad);
 		}
 
-		/* check whether this caused a touch event for closed actors */
+		/* check whether this caused a touch event for close actors */
+		/* NOTE: Right now stunned actors can't are skipped from activating triggers, which makes sense
+		 * if triggers could only be activated by walking in them (wich was the original behaviour), now
+		 * its use here implies that may not always be the case (it does make sense that they would affected
+		 * by fire fields and similar triggers after all) */
+		/* @todo decide if stunned should be able to touch some triggers and adjust accordingly */
 		edict_t *closeActor = NULL;
-		while ((closeActor = G_FindRadius(closeActor, impact, fd->splrad))) {
+		while ((closeActor = G_FindRadius(closeActor, impact, fd->splrad, ET_ACTOR))) {
 			G_TouchTriggers(closeActor);
 		}
 

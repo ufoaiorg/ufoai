@@ -515,7 +515,7 @@ int G_TouchTriggers (edict_t *ent)
 	int i, num, usedNum = 0;
 	edict_t *touched[MAX_EDICTS];
 
-	if (!G_IsLivingActor(ent))
+	if (!G_IsLivingActor(ent) || G_IsStunned(ent))
 		return 0;
 
 	num = gi.GetTouchingEdicts(AABB(ent->absmin, ent->absmax), touched, lengthof(touched), ent);

@@ -232,8 +232,6 @@ bool Touch_HurtTrigger (edict_t *self, edict_t *activator)
 	/* these actors should really not be able to trigger this - they don't move anymore */
 	if (G_IsDead(activator))
 		return false;
-	if (G_IsStunned(activator))
-		return false;
 
 	if (stunEl || (stunGas && !isRobot)) {
 		activator->STUN += damage;
@@ -279,7 +277,6 @@ void SP_trigger_hurt (edict_t *ent)
 static bool Touch_TouchTrigger (edict_t *self, edict_t *activator)
 {
 	/* these actors should really not be able to trigger this - they don't move anymore */
-	assert(!G_IsDead(activator));
 	assert(!G_IsDead(activator));
 
 	self->owner = G_EdictsFindTargetEntity(self->target);
@@ -345,7 +342,6 @@ void SP_trigger_touch (edict_t *ent)
 static bool Touch_RescueTrigger (edict_t *self, edict_t *activator)
 {
 	/* these actors should really not be able to trigger this - they don't move anymore */
-	assert(!G_IsDead(activator));
 	assert(!G_IsDead(activator));
 
 	if (self->team == activator->team)
