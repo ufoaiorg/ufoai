@@ -304,7 +304,7 @@ static void testMapDefsFootSteps (void)
 			}
 			srand(seed);
 
-			Com_Printf("testMapDefsSingleplayer: Mapdef %s (seed %u)\n", md->id, seed);
+			Com_Printf("testMapDefsFootSteps: Mapdef %s (seed %u)\n", md->id, seed);
 			SV_Map(true, md->map, md->param);
 
 			/* now that we have loaded the map, check all cells for walkable places */
