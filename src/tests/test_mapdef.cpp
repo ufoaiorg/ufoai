@@ -276,9 +276,11 @@ static void testMapDefsFootSteps (void)
 	const mapDef_t* md;
 	int count = 0;
 	int mapCount = 0;
-	const int mapCountMax = 5;
-	const int maxCount = 10;
-	char texNames[maxCount][60];
+	int badMapCount = 0;
+	const int badMapCountMax = 5;
+	const int mapCountMax = 15;
+	const int texCountMax = 10;
+	char texNames[texCountMax][60];
 	bool done = false;
 	int i = 0;
 
@@ -334,7 +336,7 @@ static void testMapDefsFootSteps (void)
 								snd = SV_GetFootstepSound(trace.surface->name);
 								if (!snd) {
 								//	Com_Printf("No sound for %s\n", trace.surface->name);
-									for (i = 0; i < maxCount; i++) {
+									for (i = 0; i < texCountMax; i++) {
 										if (!texNames[i][0]) {	// found a free slot ?
 											strcpy(texNames[i], trace.surface->name);
 											count++;
@@ -343,7 +345,7 @@ static void testMapDefsFootSteps (void)
 										if (!strcmp(trace.surface->name, texNames[i]))	// already there ?
 											break;
 									}
-									if (count > maxCount) {
+									if (count > texCountMax) {
 										done = true;
 										break;	// the z-loop
 									}
@@ -357,7 +359,8 @@ static void testMapDefsFootSteps (void)
 				Com_Printf("In map %s, ass %s: perfect\n", md->map, md->param);
 			}
 			else {
-				for (i = 0; i < maxCount; i++) {
+				badMapCount++;
+				for (i = 0; i < texCountMax; i++) {
 					if (texNames[i][0]) {
 						Com_Printf("In map %s, ass %s: No sound for: %s\n", md->map, md->param, texNames[i]);
 					}
@@ -368,7 +371,7 @@ static void testMapDefsFootSteps (void)
 			SV_ShutdownGameProgs();
 			CU_PASS(md->map);
 
-			if (mapCount >= mapCountMax)
+			if (mapCount >= mapCountMax || badMapCount >= badMapCountMax)
 				break;
 		}
 
