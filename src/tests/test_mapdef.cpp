@@ -349,10 +349,9 @@ static void testMapDefsFootSteps (void)
 					}
 				}
 			}
-			Com_Printf("In map %s: No sound for:\n", md->param);
 			for (i = 0; i < maxCount; i++) {
 				if (texNames[i][0]) {
-					Com_Printf("%s\n", texNames[i]);
+					Com_Printf("In map %s, ass %s: No sound for: %s\n", md->map, md->param, texNames[i]);
 				}
 			}
 			OBJZERO(texNames);
