@@ -46,13 +46,13 @@ void G_SendStats (edict_t *ent)
  * @brief Write player stats to network buffer
  * @sa G_SendStats
  */
-void G_SendPlayerStats (const Player *player)
+void G_SendPlayerStats (const Player &player)
 {
 	edict_t *ent = NULL;
 
 	while ((ent = G_EdictsGetNextActor(ent)))
-		if (ent->team == player->getTeam()) {
-			G_EventActorStats(ent, G_PlayerToPM(*player));
+		if (ent->team == player.getTeam()) {
+			G_EventActorStats(ent, G_PlayerToPM(player));
 			G_SendWoundStats(ent);
 		}
 }

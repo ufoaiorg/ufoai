@@ -316,14 +316,14 @@ static int G_DoTestVis (const int team, edict_t *check, const vischeckflags_t vi
  * @sa G_CheckVisTeam
  * @sa G_AppearPerishEvent
  */
-void G_CheckVisPlayer (Player *player, const vischeckflags_t visFlags)
+void G_CheckVisPlayer (Player &player, const vischeckflags_t visFlags)
 {
 	edict_t* ent = NULL;
 
 	/* check visibility */
 	while ((ent = G_EdictsGetNextInUse(ent))) {
 		/* check if he's visible */
-		G_DoTestVis(player->getTeam(), ent, visFlags, G_PlayerToPM(*player), NULL);
+		G_DoTestVis(player.getTeam(), ent, visFlags, G_PlayerToPM(player), NULL);
 	}
 }
 

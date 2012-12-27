@@ -616,7 +616,7 @@ static void G_SpawnItemOnFloor (const pos3_t pos, const item_t *item)
  * @param[in] z_align This value may change the target z height
  * @param[out] impact The location of the target (-center?)
  */
-static void G_ShootGrenade (const Player *player, edict_t *ent, const fireDef_t *fd,
+static void G_ShootGrenade (const Player &player, edict_t *ent, const fireDef_t *fd,
 	const vec3_t from, const pos3_t at, int mask, const item_t *weapon, shot_mock_t *mock, int z_align, vec3_t impact)
 {
 	vec3_t last, target, temp;
@@ -645,7 +645,7 @@ static void G_ShootGrenade (const Player *player, edict_t *ent, const fireDef_t 
 	dt = gi.GrenadeTarget(last, target, fd->range, fd->launched, fd->rolled, startV);
 	if (!dt) {
 		if (!mock)
-			G_ClientPrintf(*player, PRINT_HUD, _("Can't perform action - impossible throw!"));
+			G_ClientPrintf(player, PRINT_HUD, _("Can't perform action - impossible throw!"));
 		return;
 	}
 
@@ -695,7 +695,7 @@ static void G_ShootGrenade (const Player *player, edict_t *ent, const fireDef_t 
 			/* calculate additional visibility */
 			if (!mock) {
 				for (i = 0; i < MAX_TEAMS; i++)
-					if (player->getTeam() != level.activeTeam && G_TeamPointVis(i, newPos))
+					if (player.getTeam() != level.activeTeam && G_TeamPointVis(i, newPos))
 						mask |= 1 << i;
 			}
 
@@ -1289,7 +1289,7 @@ bool G_ClientShoot (const Player *player, edict_t *ent, const pos3_t at, shoot_t
 	/* Fire all shots. */
 	for (i = 0; i < shots; i++)
 		if (fd->gravity)
-			G_ShootGrenade(player, ent, fd, shotOrigin, at, mask, weapon, mock, z_align, impact);
+			G_ShootGrenade(*player, ent, fd, shotOrigin, at, mask, weapon, mock, z_align, impact);
 		else
 			G_ShootSingle(ent, fd, shotOrigin, at, mask, weapon, mock, z_align, i, shootType, impact);
 

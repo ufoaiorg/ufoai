@@ -265,7 +265,7 @@ void G_ClientEndRound(Player *player);
 
 /* g_stats */
 void G_SendStats(edict_t *ent) __attribute__((nonnull));
-void G_SendPlayerStats(const Player *player);
+void G_SendPlayerStats(const Player &player);
 
 /* g_svcmds.c */
 void G_ServerCommand(void);

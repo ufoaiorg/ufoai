@@ -1388,11 +1388,11 @@ void G_ClientStartMatch (Player *player)
 
 	/* show visible actors and add invisible actor */
 	G_VisFlagsClear(player->pers.team);
-	G_CheckVisPlayer(player, false);
+	G_CheckVisPlayer(*player, false);
 	G_SendInvisible(player);
 
 	/* submit stats */
-	G_SendPlayerStats(player);
+	G_SendPlayerStats(*player);
 
 	/* ensure that the last event is send, too */
 	G_EventEnd();
