@@ -81,7 +81,7 @@ void G_CheckForceEndRound (void)
 	/* set all team members to ready (only human players) */
 	Player *p = NULL;
 	while ((p = G_PlayerGetNextActiveHuman(p))) {
-		if (p->pers.team == activeTeam) {
+		if (p->getTeam() == activeTeam) {
 			G_ClientEndRound(p);
 			level.nextEndRound = level.framenum;
 		}
@@ -178,7 +178,7 @@ void G_ClientEndRound (Player *player)
 
 	if (!G_IsAIPlayer(player)) {
 		/* inactive players can't end their inactive turn :) */
-		if (level.activeTeam != player->pers.team)
+		if (level.activeTeam != player->getTeam())
 			return;
 
 		/* check for "team oszillation" */
@@ -200,11 +200,11 @@ void G_ClientEndRound (Player *player)
 		}
 		p = NULL;
 		while ((p = G_PlayerGetNextActiveHuman(p)))
-			if (p->pers.team == level.activeTeam && !p->roundDone && G_PlayerSoldiersCount(p) > 0)
+			if (p->getTeam() == level.activeTeam && !p->roundDone && G_PlayerSoldiersCount(p) > 0)
 				return;
 		p = NULL;
 		while ((p = G_PlayerGetNextActiveAI(p)))
-			if (p->pers.team == level.activeTeam && !p->roundDone && G_PlayerSoldiersCount(p) > 0)
+			if (p->getTeam() == level.activeTeam && !p->roundDone && G_PlayerSoldiersCount(p) > 0)
 				return;
 	} else {
 		player->roundDone = true;
@@ -261,7 +261,7 @@ void G_ClientEndRound (Player *player)
 	/* reset ready flag for every player on the current team (even ai players) */
 	p = NULL;
 	while ((p = G_PlayerGetNextActiveHuman(p))) {
-		if (p->pers.team == level.activeTeam) {
+		if (p->getTeam() == level.activeTeam) {
 			p->roundDone = false;
 			if (g_lastseen->integer > 0) {
 				edict_t *ent = NULL;
@@ -283,7 +283,7 @@ void G_ClientEndRound (Player *player)
 
 	p = NULL;
 	while ((p = G_PlayerGetNextActiveAI(p))) {
-		if (p->pers.team == level.activeTeam) {
+		if (p->getTeam() == level.activeTeam) {
 			p->roundDone = false;
 		}
 	}

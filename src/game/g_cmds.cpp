@@ -46,7 +46,7 @@ static void G_Players_f (const Player *player)
 	p = NULL;
 	while ((p = G_PlayerGetNextActiveHuman(p))) {
 		Com_sprintf(smallBuf, sizeof(smallBuf), "(%i) Team %i %s status: %s\n", p->getNum(),
-				p->pers.team, p->pers.netname, (p->roundDone ? "waiting" : "playing"));
+				p->getTeam(), p->pers.netname, (p->roundDone ? "waiting" : "playing"));
 
 		/* can't print all of them in one packet */
 		if (strlen(smallBuf) + strlen(largeBuf) > sizeof(largeBuf) - 100) {
@@ -120,7 +120,7 @@ static void G_Say_f (Player &player, bool arg0, bool team)
 
 	Player *p = NULL;
 	while ((p = G_PlayerGetNextActiveHuman(p))) {
-		if (team && p->pers.team != player.pers.team)
+		if (team && p->getTeam() != player.getTeam())
 			continue;
 		G_ClientPrintf(*p, PRINT_CHAT, "%s", text);
 	}
@@ -299,7 +299,7 @@ void G_InvList_f (const Player &player)
 	edict_t *ent = NULL;
 
 	gi.DPrintf("Print inventory for '%s'\n", player.pers.netname);
-	while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, player.pers.team))) {
+	while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, player.getTeam()))) {
 		containerIndex_t container;
 		gi.DPrintf("actor: '%s'\n", ent->chr.name);
 
