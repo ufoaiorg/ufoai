@@ -1516,7 +1516,7 @@ Player *AI_CreatePlayer (int team)
 			p->setInUse(true);
 			p->setNum(p - game.players);
 			p->pers.ai = true;
-			G_SetTeamForPlayer(p, team);
+			G_SetTeamForPlayer(*p, team);
 			if (p->getTeam() == TEAM_CIVILIAN) {
 				G_SpawnAIPlayers(*p, ai_numcivilians->integer);
 			} else {

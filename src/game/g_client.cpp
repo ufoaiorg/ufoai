@@ -300,9 +300,9 @@ void G_AppearPerishEvent (playermask_t playerMask, bool appear, edict_t *check, 
  * @sa G_CheckVis
  * @sa CL_ActorAdd
  */
-void G_SendInvisible (const Player *player)
+void G_SendInvisible (const Player &player)
 {
-	const int team = player->pers.team;
+	const int team = player.getTeam();
 
 	assert(team != TEAM_NO_ACTIVE);
 	if (level.num_alive[team]) {
@@ -312,7 +312,7 @@ void G_SendInvisible (const Player *player)
 			if (ent->team != team) {
 				/* not visible for this team - so add the le only */
 				if (!G_IsVisibleForTeam(ent, team)) {
-					G_EventActorAdd(G_PlayerToPM(*player), ent);
+					G_EventActorAdd(G_PlayerToPM(player), ent);
 				}
 			}
 		}
@@ -790,7 +790,7 @@ static void G_GetTeam (Player *player)
 			const int team = spawnCheck[randomSpot];
 			if (i == 0)
 				gi.Error("G_GetTeam: Could not assign a team!");
-			if (G_SetTeamForPlayer(player, team)) {
+			if (G_SetTeamForPlayer(*player, team)) {
 				gi.DPrintf("%s has been randomly assigned to team %i\n",
 						player->pers.netname, G_ClientGetTeamNum(player));
 				break;
@@ -803,18 +803,18 @@ static void G_GetTeam (Player *player)
 
 	/* find a team */
 	if (sv_maxclients->integer == 1)
-		G_SetTeamForPlayer(player, TEAM_PHALANX);
+		G_SetTeamForPlayer(*player, TEAM_PHALANX);
 	else if (sv_teamplay->integer) {
 		/* set the team specified in the userinfo */
 		const int i = G_ClientGetTeamNumPref(player);
 		gi.DPrintf("Get a team for teamplay for %s\n", player->pers.netname);
 		/* civilians are at team zero */
 		if (i > TEAM_CIVILIAN && sv_maxteams->integer >= i) {
-			G_SetTeamForPlayer(player, i);
+			G_SetTeamForPlayer(*player, i);
 			gi.BroadcastPrintf(PRINT_CONSOLE, "serverconsole: %s has chosen team %i\n", player->pers.netname, i);
 		} else {
 			gi.DPrintf("Team %i is not valid - choose a team between 1 and %i\n", i, sv_maxteams->integer);
-			G_SetTeamForPlayer(player, TEAM_DEFAULT);
+			G_SetTeamForPlayer(*player, TEAM_DEFAULT);
 		}
 	} else {
 		int i;
@@ -851,7 +851,7 @@ static void G_GetTeam (Player *player)
 				}
 			}
 			Com_DPrintf(DEBUG_GAME, "Assigning %s to team %i\n", player->pers.netname, i);
-			G_SetTeamForPlayer(player, i);
+			G_SetTeamForPlayer(*player, i);
 		} else {
 			gi.DPrintf("No free team - disconnecting '%s'\n", player->pers.netname);
 			G_ClientDisconnect(player);
@@ -865,12 +865,11 @@ static void G_GetTeam (Player *player)
  * @param[in] team The team to set for the given player
  * @return <code>true</code> if the team was set successfully, <code>false</code> otherwise.
  */
-bool G_SetTeamForPlayer (Player *player, const int team)
+bool G_SetTeamForPlayer (Player &player, const int team)
 {
-	assert(player);
 	assert(team >= TEAM_NO_ACTIVE && team < MAX_TEAMS);
 
-	if (G_IsAIPlayer(player)) {
+	if (G_IsAIPlayer(&player)) {
 		if (team != TEAM_ALIEN && team != TEAM_CIVILIAN)
 			return false;
 	} else {
@@ -883,7 +882,7 @@ bool G_SetTeamForPlayer (Player *player, const int team)
 		}
 	}
 
-	player->pers.team = team;
+	player.pers.team = team;
 
 	/* if we started in dev mode, we maybe don't have a
 	 * starting position in this map */
@@ -894,8 +893,8 @@ bool G_SetTeamForPlayer (Player *player, const int team)
 		}
 	}
 
-	if (!G_IsAIPlayer(player))
-		Info_SetValueForKeyAsInteger(player->pers.userinfo, sizeof(player->pers.userinfo), "cl_team", team);
+	if (!G_IsAIPlayer(&player))
+		Info_SetValueForKeyAsInteger(player.pers.userinfo, sizeof(player.pers.userinfo), "cl_team", team);
 
 	return true;
 }
@@ -1389,7 +1388,7 @@ void G_ClientStartMatch (Player *player)
 	/* show visible actors and add invisible actor */
 	G_VisFlagsClear(player->pers.team);
 	G_CheckVisPlayer(*player, false);
-	G_SendInvisible(player);
+	G_SendInvisible(*player);
 
 	/* submit stats */
 	G_SendPlayerStats(*player);
