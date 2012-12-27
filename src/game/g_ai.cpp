@@ -94,7 +94,7 @@ void AI_Init (void)
  * @param[in] target Shoot to this location
  * @param[in] spread The spread of the weapon used (from fireDef)
  */
-static bool AI_CheckFF (const edict_t * ent, const vec3_t target, float spread)
+static bool AI_CheckFF (const edict_t *ent, const vec3_t target, float spread)
 {
 	edict_t *check = NULL;
 	vec3_t dtarget, dcheck, back;
@@ -657,7 +657,7 @@ static inline bool AI_IsValidTarget (const edict_t *ent, const edict_t *target)
  * @todo fill z_align values
  * @todo optimize this
  */
-static float AI_FighterCalcActionScore (edict_t * ent, pos3_t to, aiAction_t * aia)
+static float AI_FighterCalcActionScore (edict_t *ent, pos3_t to, aiAction_t * aia)
 {
 	edict_t *check = NULL;
 	shoot_types_t shootType;
@@ -770,7 +770,7 @@ static float AI_FighterCalcActionScore (edict_t * ent, pos3_t to, aiAction_t * a
  * @sa AI_ActorThink
  * @note Even civilians can use weapons if the teamdef allows this
  */
-static float AI_CivilianCalcActionScore (edict_t * ent, pos3_t to, aiAction_t * aia)
+static float AI_CivilianCalcActionScore (edict_t *ent, pos3_t to, aiAction_t * aia)
 {
 	edict_t *check = NULL;
 	float minDist, minDistCivilian, minDistFighter;
@@ -891,7 +891,7 @@ static float AI_CivilianCalcActionScore (edict_t * ent, pos3_t to, aiAction_t * 
  * @sa AI_ActorThink
  * @note Panicking units will run away from everyone other than their own team (e.g. aliens will run away even from civilians)
  */
-static float AI_PanicCalcActionScore (edict_t * ent, pos3_t to, aiAction_t * aia)
+static float AI_PanicCalcActionScore (edict_t *ent, pos3_t to, aiAction_t * aia)
 {
 	edict_t *check = NULL;
 	float minDistFriendly, minDistOthers;
@@ -1031,7 +1031,7 @@ static int AI_CheckForMissionTargets (const Player &player, edict_t *ent, aiActi
  * @param[in] player The AI player
  * @param[in] ent The AI actor
  */
-static aiAction_t AI_PrepBestAction (const Player *player, edict_t * ent)
+static aiAction_t AI_PrepBestAction (const Player *player, edict_t *ent)
 {
 	aiAction_t aia, bestAia;
 	pos3_t oldPos, to;
@@ -1167,7 +1167,7 @@ static void AI_TryToReloadWeapon (edict_t *ent, containerIndex_t containerID)
  * @sa G_ClientMove
  * @sa G_ClientShoot
  */
-void AI_ActorThink (Player *player, edict_t * ent)
+void AI_ActorThink (Player *player, edict_t *ent)
 {
 	aiAction_t bestAia;
 
@@ -1285,7 +1285,7 @@ void AI_Run (void)
  * @brief Initializes the actor's stats like morals, strength and so on.
  * @param ent Actor to set the stats for.
  */
-static void AI_SetStats (edict_t * ent)
+static void AI_SetStats (edict_t *ent)
 {
 	CHRSH_CharGenAbilitySkills(&ent->chr, sv_maxclients->integer >= 2);
 
@@ -1322,7 +1322,7 @@ static void AI_SetStats (edict_t * ent)
  * @param ent Actor to set the model for.
  * @param[in] team Team to which actor belongs.
  */
-static void AI_SetCharacterValues (edict_t * ent, int team)
+static void AI_SetCharacterValues (edict_t *ent, int team)
 {
 	/* Set model. */
 	const char *teamDefinition;
@@ -1349,7 +1349,7 @@ static void AI_SetCharacterValues (edict_t * ent, int team)
  * @param ent Actor to give equipment to.
  * @param[in] ed Equipment definition for the new actor.
  */
-static void AI_SetEquipment (edict_t * ent, const equipDef_t * ed)
+static void AI_SetEquipment (edict_t *ent, const equipDef_t * ed)
 {
 	/* Pack equipment. */
 	if (ent->chr.teamDef->robot && ent->chr.teamDef->onlyWeapon) {
@@ -1374,7 +1374,7 @@ static void AI_SetEquipment (edict_t * ent, const equipDef_t * ed)
  * @param[in,out] ent Pointer to edict_t representing actor.
  * @param[in] ed Equipment definition for the new actor. Might be @c NULL.
  */
-static void AI_InitPlayer (const Player &player, edict_t * ent, const equipDef_t * ed)
+static void AI_InitPlayer (const Player &player, edict_t *ent, const equipDef_t * ed)
 {
 	const int team = player.getTeam();
 

@@ -265,7 +265,7 @@ bool G_TestLine (const vec3_t start, const vec3_t end)
  * via contentmask (MASK_*).
  * @return The trace result
  */
-trace_t G_Trace (const vec3_t start, const vec3_t end, const edict_t * passent, int contentmask)
+trace_t G_Trace (const vec3_t start, const vec3_t end, const edict_t *passent, int contentmask)
 {
 	AABB box(vec3_origin, vec3_origin);
 	G_TraceDraw(start, end);
@@ -409,7 +409,7 @@ void G_PrintActorStats (const edict_t *victim, const edict_t *attacker, const fi
  * }
  * @endcode
  */
-edict_t *G_FindRadius (edict_t * from, const vec3_t org, float rad, entity_type_t type)
+edict_t *G_FindRadius (edict_t *from, const vec3_t org, float rad, entity_type_t type)
 {
 	edict_t *ent = from;
 

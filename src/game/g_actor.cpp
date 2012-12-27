@@ -192,7 +192,7 @@ void G_ActorReserveTUs (edict_t *ent, int resReaction, int resShot, int resCrouc
  * @return Bitmask of visible (VIS_*) values
  * @sa G_CheckVisTeamAll
  */
-int G_ActorDoTurn (edict_t * ent, byte dir)
+int G_ActorDoTurn (edict_t *ent, byte dir)
 {
 	float angleDiv;
 	const byte *rot;
@@ -315,7 +315,7 @@ void G_ActorUseTU (edict_t *ent, int tus)
 	G_ActorSetTU(ent, ent->TU - tus);
 }
 
-static bool G_ActorStun (edict_t * ent, const edict_t *attacker)
+static bool G_ActorStun (edict_t *ent, const edict_t *attacker)
 {
 	/* already dead or stunned? */
 	if (G_IsDead(ent))
@@ -439,7 +439,7 @@ void G_ActorCheckRevitalise (edict_t *ent)
 	}
 }
 
-static bool G_ActorDie (edict_t * ent, const edict_t *attacker)
+static bool G_ActorDie (edict_t *ent, const edict_t *attacker)
 {
 	const bool stunned = G_IsStunned(ent);
 
@@ -469,7 +469,7 @@ static bool G_ActorDie (edict_t * ent, const edict_t *attacker)
  * @todo Discuss whether stunned actor should really drop everything to floor. Maybe
  * it should drop only what he has in hands? Stunned actor can wake later during mission.
  */
-bool G_ActorDieOrStun (edict_t * ent, edict_t *attacker)
+bool G_ActorDieOrStun (edict_t *ent, edict_t *attacker)
 {
 	bool state;
 
