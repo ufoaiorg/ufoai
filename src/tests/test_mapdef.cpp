@@ -29,6 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../client/cl_shared.h"
 #include "../client/renderer/r_state.h"
 #include "../client/ui/ui_main.h"
+#include "../common/routing.h"
 #include "../server/server.h"
 #include "../server/sv_rma.h"
 
@@ -315,8 +316,7 @@ static void testMapDefsFootSteps (void)
 			for (x = rBox.mins[0]; x <= rBox.maxs[0] && !done; x++) {
 				for (y = rBox.mins[1]; y <= rBox.maxs[1] && !done; y++) {
 					for (z = rBox.mins[2]; z <= rBox.maxs[2]; z++) {
-//						if (RT_FLOOR(sv->mapData.routes, 1, x, y,z) >= 0){	// if we have a floor
-						if (sv->mapData.routes[0].floor[(z)][(y)][(x)] >= 0){	// if we have a floor
+						if (RT_FLOOR(sv->mapData.routes, 1, x, y,z) >= 0){	// if we have a floor
 							AABB noBox(vec3_origin, vec3_origin);	// we're doing a point-trace
 							pos3_t cellPos = {x, y, z};
 							vec3_t from, to;
