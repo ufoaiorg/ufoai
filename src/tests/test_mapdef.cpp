@@ -275,10 +275,11 @@ static void testMapDefsFootSteps (void)
 	const char *filterId = TEST_GetStringProperty("mapdef-id");
 	const mapDef_t* md;
 	int count = 0;
-	int mapCount = 0;
+	int mapCount = 0;				// the number of maps read
 	int badMapCount = 0;
-	const int badMapCountMax = 5;
-	const int mapCountMax = 15;
+	const int skipCount = 0;		// to skip the first n mapDefs
+	const int badMapCountMax = 5;	// # of maps with missing sounds before this test stops
+	const int mapCountMax = 20;		// should of cause be higher than skip + bad
 	const int texCountMax = 30;
 	char texNames[texCountMax][60];
 	bool done = false;
@@ -295,6 +296,8 @@ static void testMapDefsFootSteps (void)
 
 		{
 			mapCount++;
+			if (mapCount <= skipCount)
+				continue;
 			/* use a known seed to reproduce an error */
 			unsigned int seed;
 			if (TEST_ExistsProperty("mapdef-seed")) {
@@ -311,7 +314,7 @@ static void testMapDefsFootSteps (void)
 			int x, y, z;
 			GridBox mBox(sv->mapData.mapMin, sv->mapData.mapMax);	// test ALL the cells
 #if !FOOTSTEPS_FULL
-			if (mapCount != 1) {				// after the 1st map, reduce the testing area
+			if (mapCount != skipCount + 1) {	// after the 1st map, reduce the testing area
 				pos3_t center = {128, 128, 0};
 				mBox.set(center, center);		// the box on the map we're testing
 				mBox.expandXY(5);				// just test a few cells around the center of the map
