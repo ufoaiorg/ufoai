@@ -323,13 +323,15 @@ static void testMapDefsFootSteps (void)
 			for (x = mBox.mins[0]; x <= mBox.maxs[0] && !done; x++) {
 				for (y = mBox.mins[1]; y <= mBox.maxs[1] && !done; y++) {
 					for (z = mBox.mins[2]; z <= mBox.maxs[2]; z++) {
-						if (RT_FLOOR(sv->mapData.routes, 1, x, y,z) >= 0){	// if we have a floor
+						int floor = RT_FLOOR(sv->mapData.routes, 1, x, y,z);
+						if (floor >= 0){						// if we have a floor in that cell
 							AABB noBox(vec3_origin, vec3_origin);	// we're doing a point-trace
-							pos3_t cellPos = {x, y, z};
+							pos3_t cellPos = {x, y, z};			// the cell inquestion
 							vec3_t from, to;
-							PosToVec(cellPos, from);
-							VectorCopy(from, to);
-							from[2] += UNIT_HEIGHT / 4;
+							PosToVec(cellPos, from);			// the center of the cell
+							VectorCopy(from, to);				// also base for the endpoint of the trace
+							from[2] -= UNIT_HEIGHT / 2;			// bottom of the cell
+							from[2] += (floor + 2) * QUANT;		// add the height of the floor plus 2 QUANTS
 							to[2] -= 2 * UNIT_HEIGHT;			// we should really hit the ground with this
 							const trace_t trace = SV_Trace(from, noBox, to, NULL, MASK_SOLID);
 							if (trace.surface) {
