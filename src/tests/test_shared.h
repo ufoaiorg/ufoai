@@ -22,8 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef TEST_SHARED_H
-#define TEST_SHARED_H
+#pragma once
 
 #include <CUnit/Basic.h>
 #include "../common/common.h"
@@ -60,5 +59,3 @@ bool TEST_ExistsProperty (const char* name);
 int TEST_GetIntProperty(const char* name);
 long TEST_GetLongProperty(const char* name);
 const char* TEST_GetStringProperty(const char* name);
-
-#endif

@@ -26,8 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef SERVER_SERVER_H
-#define SERVER_SERVER_H
+#pragma once
 
 #include "../common/common.h"
 #include "../common/http.h"
@@ -235,5 +234,3 @@ bool SV_LoadModelAABB(const char *model, int frame, AABB& aabb);
 trace_t SV_Trace(const vec3_t start, const AABB &box, const vec3_t end, const edict_t * passedict, int contentmask);
 server_state_t SV_GetServerState(void);
 void SV_SetServerState(server_state_t);
-
-#endif /* SERVER_SERVER_H */
