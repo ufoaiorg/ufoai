@@ -279,7 +279,7 @@ static void testMapDefsFootSteps (void)
 	int badMapCount = 0;
 	const int badMapCountMax = 5;
 	const int mapCountMax = 15;
-	const int texCountMax = 10;
+	const int texCountMax = 30;
 	char texNames[texCountMax][60];
 	bool done = false;
 	int i = 0;
