@@ -1239,7 +1239,7 @@ static void AI_PlayerRun (Player *player)
 			const int beforeTUs = ent->TU;
 			if (beforeTUs > 0) {
 				if (g_ailua->integer)
-					AIL_ActorThink(player, ent);
+					AIL_ActorThink(*player, ent);
 				else
 					AI_ActorThink(player, ent);
 				player->pers.last = ent;
@@ -1445,18 +1445,18 @@ static edict_t* G_SpawnAIPlayer (const Player &player, const equipDef_t *ed)
  * @param[in] numSpawn
  * @sa AI_CreatePlayer
  */
-static void G_SpawnAIPlayers (const Player *player, int numSpawn)
+static void G_SpawnAIPlayers (const Player &player, int numSpawn)
 {
 	int i;
-	const equipDef_t *ed = G_GetEquipmentForAISpawn(player->getTeam());
+	const equipDef_t *ed = G_GetEquipmentForAISpawn(player.getTeam());
 
 	for (i = 0; i < numSpawn; i++) {
-		if (G_SpawnAIPlayer(*player, ed) == NULL)
+		if (G_SpawnAIPlayer(player, ed) == NULL)
 			break;
 	}
 
 	/* show visible actors */
-	G_VisFlagsClear(player->getTeam());
+	G_VisFlagsClear(player.getTeam());
 	G_CheckVis(NULL, 0);
 }
 
@@ -1518,12 +1518,12 @@ Player *AI_CreatePlayer (int team)
 			p->pers.ai = true;
 			G_SetTeamForPlayer(p, team);
 			if (p->getTeam() == TEAM_CIVILIAN) {
-				G_SpawnAIPlayers(p, ai_numcivilians->integer);
+				G_SpawnAIPlayers(*p, ai_numcivilians->integer);
 			} else {
 				if (sv_maxclients->integer == 1)
-					G_SpawnAIPlayers(p, ai_numaliens->integer);
+					G_SpawnAIPlayers(*p, ai_numaliens->integer);
 				else
-					G_SpawnAIPlayers(p, ai_numactors->integer);
+					G_SpawnAIPlayers(*p, ai_numactors->integer);
 
 				level.initialAlienActorsSpawned = level.num_spawned[p->getTeam()];
 			}

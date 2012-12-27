@@ -87,21 +87,20 @@ static bool G_CheckFlood (Player *player)
 	return false;
 }
 
-static void G_Say_f (Player *player, bool arg0, bool team)
+static void G_Say_f (Player &player, bool arg0, bool team)
 {
 	char text[256];
-	Player *p;
 
 	if (gi.Cmd_Argc() < 2 && !arg0)
 		return;
 
-	if (G_CheckFlood(player))
+	if (G_CheckFlood(&player))
 		return;
 
 	if (!team)
-		Com_sprintf(text, sizeof(text), "%s: ", player->pers.netname);
+		Com_sprintf(text, sizeof(text), "%s: ", player.pers.netname);
 	else
-		Com_sprintf(text, sizeof(text), "^B%s (team): ", player->pers.netname);
+		Com_sprintf(text, sizeof(text), "^B%s (team): ", player.pers.netname);
 
 	if (arg0) {
 		Q_strcat(text, gi.Cmd_Argv(0), sizeof(text));
@@ -119,9 +118,9 @@ static void G_Say_f (Player *player, bool arg0, bool team)
 	if (sv_dedicated->integer)
 		gi.DPrintf("%s", text);
 
-	p = NULL;
+	Player *p = NULL;
 	while ((p = G_PlayerGetNextActiveHuman(p))) {
-		if (team && p->pers.team != player->pers.team)
+		if (team && p->pers.team != player.pers.team)
 			continue;
 		G_ClientPrintf(*p, PRINT_CHAT, "%s", text);
 	}
@@ -438,9 +437,9 @@ void G_ClientCommand (Player *player)
 	if (Q_strcasecmp(cmd, "players") == 0)
 		G_Players_f(player);
 	else if (Q_strcasecmp(cmd, "say") == 0)
-		G_Say_f(player, false, false);
+		G_Say_f(*player, false, false);
 	else if (Q_strcasecmp(cmd, "say_team") == 0)
-		G_Say_f(player, false, true);
+		G_Say_f(*player, false, true);
 #ifdef DEBUG
 	else if (Q_strcasecmp(cmd, "debug_actorinvlist") == 0)
 		G_InvList_f(*player);
@@ -461,5 +460,5 @@ void G_ClientCommand (Player *player)
 #endif
 	else
 		/* anything that doesn't match a command will be a chat */
-		G_Say_f(player, true, false);
+		G_Say_f(*player, true, false);
 }

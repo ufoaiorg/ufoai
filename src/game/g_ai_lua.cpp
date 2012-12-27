@@ -962,7 +962,7 @@ static int AIL_distance (lua_State *L)
  * @sa G_ClientMove
  * @sa G_ClientShoot
  */
-void AIL_ActorThink (Player *player, edict_t *ent)
+void AIL_ActorThink (Player &player, edict_t *ent)
 {
 	lua_State *L;
 
@@ -971,7 +971,7 @@ void AIL_ActorThink (Player *player, edict_t *ent)
 
 	/* Set the global player and edict */
 	AIL_ent = ent;
-	AIL_player = player;
+	AIL_player = &player;
 
 	/* Try to run the function. */
 	lua_getglobal(L, "think");
