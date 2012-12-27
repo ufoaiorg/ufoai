@@ -551,6 +551,7 @@
 		<Unit filename="..\..\src\shared\images.cpp" />
 		<Unit filename="..\..\src\shared\infostring.cpp" />
 		<Unit filename="..\..\src\shared\mathlib.cpp" />
+		<Unit filename="..\..\src\shared\mathlib.h" />
 		<Unit filename="..\..\src\shared\mathlib_extra.cpp" />
 		<Unit filename="..\..\src\shared\parse.cpp" />
 		<Unit filename="..\..\src\shared\shared.cpp" />
