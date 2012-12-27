@@ -695,7 +695,7 @@ static void G_ShootGrenade (const Player *player, edict_t *ent, const fireDef_t 
 			/* calculate additional visibility */
 			if (!mock) {
 				for (i = 0; i < MAX_TEAMS; i++)
-					if (player->pers.team != level.activeTeam && G_TeamPointVis(i, newPos))
+					if (player->getTeam() != level.activeTeam && G_TeamPointVis(i, newPos))
 						mask |= 1 << i;
 			}
 

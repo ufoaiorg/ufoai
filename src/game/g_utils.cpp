@@ -192,13 +192,13 @@ Player* G_GetPlayerForTeam (int team)
 	/* search corresponding player (even ai players) */
 	p = NULL;
 	while ((p = G_PlayerGetNextActiveHuman(p)))
-		if (p->pers.team == team)
+		if (p->getTeam() == team)
 			/* found player */
 			return p;
 
 	p = NULL;
 	while ((p = G_PlayerGetNextActiveAI(p)))
-		if (p->pers.team == team)
+		if (p->getTeam() == team)
 			/* found player */
 			return p;
 

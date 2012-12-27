@@ -110,6 +110,8 @@ public:
 	inline void	setNum (int n) 		{ num = n; }
 	inline bool isReady () const	{ return ready; }
 	inline void setReady (bool b)	{ ready = b; }
+
+	inline int	getTeam (void) const { return pers.team; }
 };
 typedef Player player_t;
 

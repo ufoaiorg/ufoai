@@ -583,7 +583,7 @@ void G_EventEndRoundAnnounce (const Player &player)
 {
 	G_EventAdd(PM_ALL, EV_ENDROUNDANNOUNCE | EVENT_INSTANTLY, -1);
 	gi.WriteByte(player.getNum());
-	gi.WriteByte(player.pers.team);
+	gi.WriteByte(player.getTeam());
 	G_EventEnd();
 }
 
@@ -597,7 +597,7 @@ void G_EventStart (const Player &player, bool teamplay)
 void G_EventReset (const Player &player, int activeTeam)
 {
 	G_EventAdd(G_PlayerToPM(player), EV_RESET | EVENT_INSTANTLY, -1);
-	gi.WriteByte(player.pers.team);
+	gi.WriteByte(player.getTeam());
 	gi.WriteByte(activeTeam);
 	G_EventEnd();
 }
