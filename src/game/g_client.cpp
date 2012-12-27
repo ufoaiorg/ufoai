@@ -983,7 +983,7 @@ static void G_GetStartingTeam (const Player *player)
  * @param[in] spawnType The type of spawn-point so search for (ET_ACTORSPAWN or ET_ACTOR2x2SPAWN)
  * @return A pointer to a found spawn point or NULL if nothing was found or on error.
  */
-static edict_t *G_ClientGetFreeSpawnPoint (const Player *player, int spawnType)
+static edict_t *G_ClientGetFreeSpawnPoint (const Player &player, int spawnType)
 {
 	edict_t *ent = NULL;
 
@@ -992,7 +992,7 @@ static edict_t *G_ClientGetFreeSpawnPoint (const Player *player, int spawnType)
 
 	if (level.noRandomSpawn) {
 		while ((ent = G_EdictsGetNextInUse(ent)))
-			if (ent->type == spawnType && player->pers.team == ent->team) {
+			if (ent->type == spawnType && player.pers.team == ent->team) {
 				if (G_EdictsGetLivingActorFromPos(ent->pos))
 					continue;
 				return ent;
@@ -1001,7 +1001,7 @@ static edict_t *G_ClientGetFreeSpawnPoint (const Player *player, int spawnType)
 		edict_t *list[MAX_EDICTS];
 		int count = 0;
 		while ((ent = G_EdictsGetNextInUse(ent)))
-			if (ent->type == spawnType && player->pers.team == ent->team) {
+			if (ent->type == spawnType && player.pers.team == ent->team) {
 				if (G_EdictsGetLivingActorFromPos(ent->pos))
 					continue;
 				list[count++] = ent;
@@ -1057,7 +1057,7 @@ static void G_ThinkActorGoCrouch (edict_t *ent)
  * @param[in] actorSize The actor size to get a spawning point for
  * @return An actor edict or @c NULL if no free spawning point was found
  */
-edict_t* G_ClientGetFreeSpawnPointForActorSize (const Player *player, const actorSizeEnum_t actorSize)
+edict_t* G_ClientGetFreeSpawnPointForActorSize (const Player &player, const actorSizeEnum_t actorSize)
 {
 	edict_t *ent;
 
@@ -1090,7 +1090,7 @@ edict_t* G_ClientGetFreeSpawnPointForActorSize (const Player *player, const acto
 		return NULL;
 
 	level.num_spawned[ent->team]++;
-	ent->pnum = player->getNum();
+	ent->pnum = player.getNum();
 	ent->chr.fieldSize = actorSize;
 	ent->fieldSize = ent->chr.fieldSize;
 	ent->flags |= FL_DESTROYABLE;
@@ -1283,7 +1283,7 @@ void G_ClientTeamInfo (const Player *player)
 		if (player->pers.team == TEAM_NO_ACTIVE || !G_ActorSpawnIsAllowed(i, player->pers.team))
 			G_ClientSkipActorInfo();
 		else {
-			edict_t *ent = G_ClientGetFreeSpawnPointForActorSize(player, actorFieldSize);
+			edict_t *ent = G_ClientGetFreeSpawnPointForActorSize(*player, actorFieldSize);
 			if (ent) {
 				Com_DPrintf(DEBUG_GAME, "Player: %i - team %i - size: %i\n", player->getNum(), ent->team, ent->fieldSize);
 

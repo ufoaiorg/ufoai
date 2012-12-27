@@ -966,7 +966,7 @@ static float AI_PanicCalcActionScore (edict_t * ent, pos3_t to, aiAction_t * aia
  * @note The routing table is still valid, so we can still use
  * gi.MoveLength for the given edict here
  */
-static int AI_CheckForMissionTargets (const Player *player, edict_t *ent, aiAction_t *aia)
+static int AI_CheckForMissionTargets (const Player &player, edict_t *ent, aiAction_t *aia)
 {
 	int bestActionScore = AI_ACTION_NOTHING_FOUND;
 
@@ -1010,7 +1010,7 @@ static int AI_CheckForMissionTargets (const Player *player, edict_t *ent, aiActi
 			if (mission->type == ET_MISSION) {
 				VectorCopy(mission->pos, aia->to);
 				aia->target = mission;
-				if (player->pers.team == mission->team) {
+				if (player.pers.team == mission->team) {
 					bestActionScore = SCORE_MISSION_TARGET;
 					break;
 				} else {
@@ -1081,7 +1081,7 @@ static aiAction_t AI_PrepBestAction (const Player *player, edict_t * ent)
 	VectorCopy(oldPos, ent->pos);
 	VectorCopy(oldOrigin, ent->origin);
 
-	bestActionScore = AI_CheckForMissionTargets(player, ent, &aia);
+	bestActionScore = AI_CheckForMissionTargets(*player, ent, &aia);
 	if (bestActionScore > best) {
 		bestAia = aia;
 		best = bestActionScore;
@@ -1374,9 +1374,9 @@ static void AI_SetEquipment (edict_t * ent, const equipDef_t * ed)
  * @param[in,out] ent Pointer to edict_t representing actor.
  * @param[in] ed Equipment definition for the new actor. Might be @c NULL.
  */
-static void AI_InitPlayer (const Player *player, edict_t * ent, const equipDef_t * ed)
+static void AI_InitPlayer (const Player &player, edict_t * ent, const equipDef_t * ed)
 {
-	const int team = player->pers.team;
+	const int team = player.pers.team;
 
 	/* Set the model and chose alien race. */
 	AI_SetCharacterValues(ent, team);
@@ -1394,7 +1394,7 @@ static void AI_InitPlayer (const Player *player, edict_t * ent, const equipDef_t
 
 	/* no need to call G_SendStats for the AI - reaction fire is serverside only for the AI */
 	if (frand() < 0.75f) {
-		G_ClientStateChange(player, ent, STATE_REACTION, false);
+		G_ClientStateChange(&player, ent, STATE_REACTION, false);
 	}
 
 	/* initialize the LUA AI now */
@@ -1419,11 +1419,11 @@ static const equipDef_t* G_GetEquipmentForAISpawn (int team)
 	return NULL;
 }
 
-static edict_t* G_SpawnAIPlayer (const Player *player, const equipDef_t *ed)
+static edict_t* G_SpawnAIPlayer (const Player &player, const equipDef_t *ed)
 {
 	edict_t *ent = G_ClientGetFreeSpawnPointForActorSize(player, ACTOR_SIZE_NORMAL);
 	if (!ent) {
-		gi.DPrintf("Not enough spawn points for team %i\n", player->pers.team);
+		gi.DPrintf("Not enough spawn points for team %i\n", player.pers.team);
 		return NULL;
 	}
 
@@ -1451,7 +1451,7 @@ static void G_SpawnAIPlayers (const Player *player, int numSpawn)
 	const equipDef_t *ed = G_GetEquipmentForAISpawn(player->pers.team);
 
 	for (i = 0; i < numSpawn; i++) {
-		if (G_SpawnAIPlayer(player, ed) == NULL)
+		if (G_SpawnAIPlayer(*player, ed) == NULL)
 			break;
 	}
 
@@ -1480,7 +1480,7 @@ void AI_CheckRespawn (int team)
 
 	while (diff > 0) {
 		const Player *player = G_GetPlayerForTeam(team);
-		edict_t *ent = G_SpawnAIPlayer(player, ed);
+		edict_t *ent = G_SpawnAIPlayer(*player, ed);
 		if (ent == NULL)
 			break;
 
