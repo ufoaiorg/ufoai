@@ -260,7 +260,7 @@ static void testMapDefStatistic (void)
 }
 #endif
 
-#define FOOTSTEPS 0
+#define FOOTSTEPS 1
 #define FOOTSTEPS_FULL 0
 #if !MAP_STATISTIC
 #if !SEED_TEST
