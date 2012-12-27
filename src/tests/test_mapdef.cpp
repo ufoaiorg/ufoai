@@ -280,7 +280,7 @@ static void testMapDefsFootSteps (void)
 	const int maxCount = 10;
 	char texNames[maxCount][60];
 	bool done = false;
-	int i;
+	int i = 0;
 
 	OBJZERO(texNames);
 	CU_ASSERT_TRUE(csi.numMDs > 0);
@@ -352,9 +352,14 @@ static void testMapDefsFootSteps (void)
 					}
 				}
 			}
-			for (i = 0; i < maxCount; i++) {
-				if (texNames[i][0]) {
-					Com_Printf("In map %s, ass %s: No sound for: %s\n", md->map, md->param, texNames[i]);
+			Com_Printf("In map %s, ass %s: ", md->map, md->param);
+			if (!texNames[i][0])
+				Com_Printf("perfect\n");
+			else {
+				for (i = 0; i < maxCount; i++) {
+					if (texNames[i][0]) {
+						Com_Printf("No sound for: %s\n", texNames[i]);
+					}
 				}
 			}
 			OBJZERO(texNames);
