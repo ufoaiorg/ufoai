@@ -275,6 +275,8 @@ static void testMapDefsFootSteps (void)
 	const char *filterId = TEST_GetStringProperty("mapdef-id");
 	const mapDef_t* md;
 	int count = 0;
+	int mapCount = 0;
+	const int mapCountMax = 3;
 	const int maxCount = 10;
 	char texNames[maxCount][60];
 	bool done = false;
@@ -290,6 +292,7 @@ static void testMapDefsFootSteps (void)
 			continue;
 
 		{
+			mapCount++;
 			/* use a known seed to reproduce an error */
 			unsigned int seed;
 			if (TEST_ExistsProperty("mapdef-seed")) {
@@ -358,6 +361,9 @@ static void testMapDefsFootSteps (void)
 			count = 0;
 			SV_ShutdownGameProgs();
 			CU_PASS(md->map);
+
+			if (mapCount >= mapCountMax)
+				break;
 		}
 
 		if (done)
