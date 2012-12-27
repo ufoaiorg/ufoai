@@ -260,6 +260,7 @@ static void testMapDefStatistic (void)
 #endif
 
 #define FOOTSTEPS 0
+#define FOOTSTEPS_FULL 0
 #if !MAP_STATISTIC
 #if !SEED_TEST
 #if FOOTSTEPS
@@ -302,10 +303,13 @@ static void testMapDefsFootSteps (void)
 
 			/* now that we have loaded the map, check all cells for walkable places */
 			int x, y, z;
+#if !FOOTSTEPS_FULL
 			pos3_t bmin = {125, 125, 0};
 			pos3_t bmax = {131, 131, 2};
 			GridBox rBox(bmin, bmax);		// just test a few cell around the center of the map
-		//	GridBox rBox(sv->mapData->mapMin, sv->mapData->mapMax);	// test ALL the cells
+#else
+			GridBox rBox(sv->mapData.mapMin, sv->mapData.mapMax);	// test ALL the cells
+#endif
 			rBox.clipToMaxBoundaries();
 
 			for (x = rBox.mins[0]; x <= rBox.maxs[0] && !done; x++) {
