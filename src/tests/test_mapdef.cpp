@@ -301,9 +301,15 @@ static void testMapDefsFootSteps (void)
 
 			/* now that we have loaded the map, check all cells for walkable places */
 			int x, y, z;
-			for (x = 125; x < 135 && !done; x++){
-				for (y = 125; y < 135 && !done; y++){
-					for (z = 0; z < 2; z++){
+			pos3_t bmin = {125, 125, 0};
+			pos3_t bmax = {131, 131, 2};
+			GridBox rBox(bmin, bmax);		// just test a few cell around the center of the map
+		//	GridBox rBox(sv->mapData->mapMin, sv->mapData->mapMax);	// test ALL the cells
+			rBox.clipToMaxBoundaries();
+
+			for (x = rBox.mins[0]; x <= rBox.maxs[0] && !done; x++) {
+				for (y = rBox.mins[1]; y <= rBox.maxs[1] && !done; y++) {
+					for (z = rBox.mins[2]; z <= rBox.maxs[2]; z++) {
 //						if (RT_FLOOR(sv->mapData.routes, 1, x, y,z) >= 0){	// if we have a floor
 						if (sv->mapData.routes[0].floor[(z)][(y)][(x)] >= 0){	// if we have a floor
 							AABB noBox(vec3_origin, vec3_origin);	// we're doing a point-trace
