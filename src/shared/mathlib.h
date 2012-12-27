@@ -146,6 +146,10 @@ public:
 	inline void clipToMaxBoundaries() {
 		return;	/* do nothing, see above */
 	}
+	inline void set(const pos3_t mini, const pos3_t maxi) {
+		VectorCopy(mini, mins);
+		VectorCopy(maxi, maxs);
+	}
 
 	pos3_t mins;
 	pos3_t maxs;

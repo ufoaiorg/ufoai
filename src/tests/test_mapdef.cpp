@@ -313,8 +313,7 @@ static void testMapDefsFootSteps (void)
 #if !FOOTSTEPS_FULL
 			if (mapCount != 1) {				// after the 1st map, reduce the testing area
 				pos3_t center = {128, 128, 0};
-				VectorCopy(center, mBox.mins);	// the box on the map we're testing
-				VectorCopy(center, mBox.maxs);
+				mBox.set(center, center);		// the box on the map we're testing
 				mBox.expandXY(5);				// just test a few cells around the center of the map
 				mBox.maxs[2] = 2;				// and 3 levels high
 			}
