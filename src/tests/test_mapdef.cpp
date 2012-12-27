@@ -259,9 +259,10 @@ static void testMapDefStatistic (void)
 }
 #endif
 
+#define FOOTSTEPS 0
 #if !MAP_STATISTIC
 #if !SEED_TEST
-#if 0
+#if FOOTSTEPS
 /**
  * @brief This test cycles through the list of map definitions found in the maps.ufo script
  * and tries to find surfaces to stand on with no sound assigned to them.
@@ -454,14 +455,17 @@ int UFO_AddMapDefTests (void)
 	if (CU_ADD_TEST(mapDefSuite, testMapDefsMassRMA) == NULL)
 		return CU_get_error();
 #else
-/*	if (CU_ADD_TEST(mapDefSuite, testMapDefsFootSteps) == NULL)
-		return CU_get_error(); */
+#if FOOTSTEPS
+	if (CU_ADD_TEST(mapDefSuite, testMapDefsFootSteps) == NULL)
+		return CU_get_error();
 
+#else
 	if (CU_ADD_TEST(mapDefSuite, testMapDefsSingleplayer) == NULL)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(mapDefSuite, testMapDefsMultiplayer) == NULL)
 		return CU_get_error();
+#endif
 #endif
 #endif
 	return CUE_SUCCESS;
