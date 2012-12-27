@@ -276,7 +276,7 @@ static void testMapDefsFootSteps (void)
 	const mapDef_t* md;
 	int count = 0;
 	int mapCount = 0;
-	const int mapCountMax = 3;
+	const int mapCountMax = 5;
 	const int maxCount = 10;
 	char texNames[maxCount][60];
 	bool done = false;
@@ -308,17 +308,18 @@ static void testMapDefsFootSteps (void)
 			/* now that we have loaded the map, check all cells for walkable places */
 			int x, y, z;
 #if !FOOTSTEPS_FULL
-			pos3_t bmin = {125, 125, 0};
-			pos3_t bmax = {131, 131, 2};
-			GridBox rBox(bmin, bmax);		// just test a few cell around the center of the map
+			pos3_t center = {128, 128, 0};
+			GridBox mBox(center, center);	// the box on the map we're testing
+			mBox.expandXY(5);				// just test a few cells around the center of the map
+			mBox.maxs[2] = 2;				// and 3 levels high
 #else
-			GridBox rBox(sv->mapData.mapMin, sv->mapData.mapMax);	// test ALL the cells
+			GridBox mBox(sv->mapData.mapMin, sv->mapData.mapMax);	// test ALL the cells
 #endif
-			rBox.clipToMaxBoundaries();
+			mBox.clipToMaxBoundaries();
 
-			for (x = rBox.mins[0]; x <= rBox.maxs[0] && !done; x++) {
-				for (y = rBox.mins[1]; y <= rBox.maxs[1] && !done; y++) {
-					for (z = rBox.mins[2]; z <= rBox.maxs[2]; z++) {
+			for (x = mBox.mins[0]; x <= mBox.maxs[0] && !done; x++) {
+				for (y = mBox.mins[1]; y <= mBox.maxs[1] && !done; y++) {
+					for (z = mBox.mins[2]; z <= mBox.maxs[2]; z++) {
 						if (RT_FLOOR(sv->mapData.routes, 1, x, y,z) >= 0){	// if we have a floor
 							AABB noBox(vec3_origin, vec3_origin);	// we're doing a point-trace
 							pos3_t cellPos = {x, y, z};
@@ -352,13 +353,13 @@ static void testMapDefsFootSteps (void)
 					}
 				}
 			}
-			Com_Printf("In map %s, ass %s: ", md->map, md->param);
-			if (!texNames[i][0])
-				Com_Printf("perfect\n");
+			if (!texNames[0][0]) {
+				Com_Printf("In map %s, ass %s: perfect\n", md->map, md->param);
+			}
 			else {
 				for (i = 0; i < maxCount; i++) {
 					if (texNames[i][0]) {
-						Com_Printf("No sound for: %s\n", texNames[i]);
+						Com_Printf("In map %s, ass %s: No sound for: %s\n", md->map, md->param, texNames[i]);
 					}
 				}
 			}
