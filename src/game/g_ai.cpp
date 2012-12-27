@@ -34,7 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "g_utils.h"
 #include "g_vis.h"
 
-typedef struct {
+typedef struct aiAction_s {
 	pos3_t to;			/**< grid pos to walk to for performing the action */
 	pos3_t stop;		/**< grid pos to end turn at (e.g. hiding spots) */
 	shoot_types_t shootType;	/**< the shoot type */

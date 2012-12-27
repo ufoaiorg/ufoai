@@ -28,7 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "g_local.h"
 
 /** @brief used in shot probability calculations (pseudo shots) */
-typedef struct {
+typedef struct shot_mock_s {
 	int enemyCount;			/**< shot would hit that much enemies */
 	int friendCount;		/**< shot would hit that much friends */
 	int civilian;			/**< shot would hit that much civilians */
