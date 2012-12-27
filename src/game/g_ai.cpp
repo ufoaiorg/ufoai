@@ -546,6 +546,8 @@ static void AI_SearchBestTarget (aiAction_t *aia, const edict_t *ent, edict_t *c
 			if (!AI_FighterCheckShoot(ent, check, fd, &dist))
 				continue;
 
+			if (G_IsStunned(check) && (item->item->dmgtype == gi.csi->damStunElectro || item->item->dmgtype == gi.csi->damStunGas))
+				continue;
 			/* check how good the target is visible and if we have a shot */
 			if (!visChecked) {	/* only do this once per actor ! */
 				vis = G_ActorVis(ent->origin, ent, check, true);
