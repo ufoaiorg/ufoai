@@ -1010,7 +1010,7 @@ static int AI_CheckForMissionTargets (const Player &player, edict_t *ent, aiActi
 			if (mission->type == ET_MISSION) {
 				VectorCopy(mission->pos, aia->to);
 				aia->target = mission;
-				if (player.pers.team == mission->team) {
+				if (player.getTeam() == mission->team) {
 					bestActionScore = SCORE_MISSION_TARGET;
 					break;
 				} else {
@@ -1231,11 +1231,11 @@ void AI_ActorThink (Player *player, edict_t * ent)
 
 static void AI_PlayerRun (Player *player)
 {
-	if (level.activeTeam == player->pers.team) {
+	if (level.activeTeam == player->getTeam()) {
 		/* find next actor to handle */
 		edict_t *ent = player->pers.last;
 
-		while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, player->pers.team))) {
+		while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, player->getTeam()))) {
 			const int beforeTUs = ent->TU;
 			if (beforeTUs > 0) {
 				if (g_ailua->integer)
@@ -1376,7 +1376,7 @@ static void AI_SetEquipment (edict_t * ent, const equipDef_t * ed)
  */
 static void AI_InitPlayer (const Player &player, edict_t * ent, const equipDef_t * ed)
 {
-	const int team = player.pers.team;
+	const int team = player.getTeam();
 
 	/* Set the model and chose alien race. */
 	AI_SetCharacterValues(ent, team);
@@ -1423,7 +1423,7 @@ static edict_t* G_SpawnAIPlayer (const Player &player, const equipDef_t *ed)
 {
 	edict_t *ent = G_ClientGetFreeSpawnPointForActorSize(player, ACTOR_SIZE_NORMAL);
 	if (!ent) {
-		gi.DPrintf("Not enough spawn points for team %i\n", player.pers.team);
+		gi.DPrintf("Not enough spawn points for team %i\n", player.getTeam());
 		return NULL;
 	}
 
@@ -1448,7 +1448,7 @@ static edict_t* G_SpawnAIPlayer (const Player &player, const equipDef_t *ed)
 static void G_SpawnAIPlayers (const Player *player, int numSpawn)
 {
 	int i;
-	const equipDef_t *ed = G_GetEquipmentForAISpawn(player->pers.team);
+	const equipDef_t *ed = G_GetEquipmentForAISpawn(player->getTeam());
 
 	for (i = 0; i < numSpawn; i++) {
 		if (G_SpawnAIPlayer(*player, ed) == NULL)
@@ -1456,7 +1456,7 @@ static void G_SpawnAIPlayers (const Player *player, int numSpawn)
 	}
 
 	/* show visible actors */
-	G_VisFlagsClear(player->pers.team);
+	G_VisFlagsClear(player->getTeam());
 	G_CheckVis(NULL, 0);
 }
 
@@ -1517,7 +1517,7 @@ Player *AI_CreatePlayer (int team)
 			p->setNum(p - game.players);
 			p->pers.ai = true;
 			G_SetTeamForPlayer(p, team);
-			if (p->pers.team == TEAM_CIVILIAN) {
+			if (p->getTeam() == TEAM_CIVILIAN) {
 				G_SpawnAIPlayers(p, ai_numcivilians->integer);
 			} else {
 				if (sv_maxclients->integer == 1)
@@ -1525,10 +1525,10 @@ Player *AI_CreatePlayer (int team)
 				else
 					G_SpawnAIPlayers(p, ai_numactors->integer);
 
-				level.initialAlienActorsSpawned = level.num_spawned[p->pers.team];
+				level.initialAlienActorsSpawned = level.num_spawned[p->getTeam()];
 			}
 
-			gi.DPrintf("Created AI player (team %i)\n", p->pers.team);
+			gi.DPrintf("Created AI player (team %i)\n", p->getTeam());
 			return p;
 		}
 	}
