@@ -44,12 +44,12 @@ typedef enum {
 
 	/* Non-soldier items */
 	FILTER_CRAFTITEM,	/**< Aircraft equipment. */
-	FILTER_UGVITEM,	/**< Heavy equipment like tanks (i.e. these are actually employees) and their parts.
-					 * Some of the content are special normal items (like for soldiers).
-					 * The UGVs themself are specially handled.*/
+	FILTER_UGVITEM,		/**< Heavy equipment like tanks (i.e. these are actually employees) and their parts.
+						 * Some of the content are special normal items (like for soldiers).
+						 * The UGVs themself are specially handled.*/
 	FILTER_AIRCRAFT,	/**< Aircrafts. */
 	FILTER_DUMMY,		/**< Everything that is not in _any_ of the other filter types.
-					 * Mostly plot-relevant stuff, unproducible stuff and stuff. */
+						 * Mostly plot-relevant stuff, unproducible stuff and stuff. */
 	FILTER_DISASSEMBLY,
 
 	MAX_FILTERTYPES,
