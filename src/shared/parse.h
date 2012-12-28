@@ -25,8 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef PARSE_H
-#define PARSE_H
+#pragma once
 
 #include "ufotypes.h"
 
@@ -50,5 +49,3 @@ Com_TokenType_t Com_NextToken(const char **data_p);
 const char *Com_Parse(const char **data_p, char *target = 0, size_t size = 0);
 int Com_CountTokensInBuffer(const char *buffer);
 void Com_UnParseLastToken(void);
-
-#endif

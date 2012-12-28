@@ -23,8 +23,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
-#ifndef UTF8_H_
-#define UTF8_H_
+#pragma once
 
 #include <stddef.h>
 
@@ -41,5 +40,3 @@ int UTF8_char_len(unsigned char c);
 int UTF8_encoded_len(int codepoint);
 size_t UTF8_strlen(const char *str);
 char *UTF8_strncpyz(char *dest, const char *src, size_t limit);
-
-#endif

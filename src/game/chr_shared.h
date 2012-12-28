@@ -22,8 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef GAME_CHR_SHARED_H
-#define GAME_CHR_SHARED_H
+#pragma once
 
 typedef enum {
 	KILLED_ENEMIES,		/**< Killed enemies */
@@ -371,5 +370,3 @@ const char *CHRSH_CharGetHead(const character_t* const chr) __attribute__((nonnu
 bool CHRSH_IsTeamDefAlien(const teamDef_t* const td) __attribute__((nonnull));
 bool CHRSH_IsTeamDefRobot(const teamDef_t* const td) __attribute__((nonnull));
 bool CHRSH_IsArmourUseableForTeam(const objDef_t *od, const teamDef_t *teamDef);
-
-#endif

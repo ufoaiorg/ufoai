@@ -28,8 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef GAME_Q_SHARED_H
-#define GAME_Q_SHARED_H
+#pragma once
 
 #include "../shared/ufotypes.h"
 #include "../shared/shared.h"
@@ -453,5 +452,3 @@ extern csi_t csi;
 /** @brief Reject messages that are send to the client from the game module */
 #define REJ_PASSWORD_REQUIRED_OR_INCORRECT "Password required or incorrect."
 #define REJ_BANNED "Banned."
-
-#endif /* GAME_Q_SHARED_H */

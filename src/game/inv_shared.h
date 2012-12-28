@@ -23,8 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef GAME_INV_SHARED_H
-#define GAME_INV_SHARED_H
+#pragma once
 
 struct csi_s;
 
@@ -446,5 +445,3 @@ int INVSH_ShapeSize(const uint32_t shape);
 uint32_t INVSH_ShapeRotate(const uint32_t shape);
 
 const objDef_t* INVSH_HasReactionFireEnabledWeapon(const invList_t *invList);
-
-#endif /* GAME_INV_SHARED_H */

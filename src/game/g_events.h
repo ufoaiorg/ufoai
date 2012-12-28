@@ -26,8 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef GAME_G_EVENTS_H
-#define GAME_G_EVENTS_H
+#pragma once
 
 #include "g_vis.h"
 
@@ -81,5 +80,3 @@ void G_EventThrow(teammask_t teamMask, const fireDef_t *fd, float dt, byte flags
 void G_EventAdd(playermask_t playerMask, int eType, int entnum);
 void G_EventEnd(void);
 void G_EventActorWound(const edict_t *ent, const int bodyPart);
-
-#endif

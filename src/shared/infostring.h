@@ -25,8 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef __INFOSTRING_H__
-#define __INFOSTRING_H__
+#pragma once
 
 #include <stddef.h>
 #include "ufotypes.h"
@@ -44,5 +43,3 @@ void Info_SetValueForKey(char *s, const size_t size, const char *key, const char
 void Info_SetValueForKeyAsInteger(char *s, const size_t size, const char *key, const int value);
 void Info_Print(const char *s);
 bool Info_Validate(const char *s);
-
-#endif /* __INFOSTRING_H__ */
