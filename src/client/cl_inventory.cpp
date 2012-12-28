@@ -61,8 +61,8 @@ const equipDef_t *INV_GetEquipmentDefinitionByID (const char *name)
  * @note a free spot in the targetContainer
  * @return true if the move was successful.
  */
-bool INV_MoveItem (inventory_t* inv, const invDef_t * toContainer, int px, int py,
-	const invDef_t * fromContainer, invList_t *fItem, invList_t **tItem)
+bool INV_MoveItem (inventory_t* inv, const invDef_t *toContainer, int px, int py,
+	const invDef_t *fromContainer, invList_t *fItem, invList_t **tItem)
 {
 	int moved;
 
@@ -359,7 +359,7 @@ bool INV_ItemMatchesFilter (const objDef_t *obj, const itemFilterTypes_t filterT
  * @return @c invList_t Pointer to the invList_t/item that is located at x/y or equals "item".
  * @sa INVSH_SearchInInventory
  */
-invList_t *INV_SearchInInventoryWithFilter (const inventory_t* const i, const invDef_t * container, const objDef_t *item,  const itemFilterTypes_t filterType)
+invList_t *INV_SearchInInventoryWithFilter (const inventory_t* const i, const invDef_t *container, const objDef_t *item,  const itemFilterTypes_t filterType)
 {
 	invList_t *ic;
 

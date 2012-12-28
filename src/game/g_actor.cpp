@@ -534,7 +534,7 @@ int G_ActorGetContentFlags (const vec3_t origin)
  * @sa event PA_INVMOVE
  * @sa AI_ActorThink
  */
-bool G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, const invDef_t * to, int tx,
+bool G_ActorInvMove (edict_t *ent, const invDef_t *from, invList_t *fItem, const invDef_t *to, int tx,
 		int ty, bool checkaction)
 {
 	Player *player;

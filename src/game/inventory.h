@@ -51,19 +51,19 @@ typedef struct inventoryInterface_s
 	const char *name;
 
 	/* public */
-	bool (*RemoveFromInventory) (struct inventoryInterface_s* self, inventory_t* const i, const invDef_t * container, invList_t *fItem) __attribute__((nonnull(1), nonnull(2), warn_unused_result));
+	bool (*RemoveFromInventory) (struct inventoryInterface_s* self, inventory_t* const i, const invDef_t *container, invList_t *fItem) __attribute__((nonnull(1), nonnull(2), warn_unused_result));
 
-	invList_t* (*AddToInventory) (struct inventoryInterface_s* self, inventory_t * const i, const item_t* const item, const invDef_t * container, int x, int y,
+	invList_t* (*AddToInventory) (struct inventoryInterface_s* self, inventory_t * const i, const item_t* const item, const invDef_t *container, int x, int y,
 			int amount) __attribute__((nonnull(1), nonnull(2), warn_unused_result));
 
-	inventory_action_t (*MoveInInventory) (struct inventoryInterface_s* self, inventory_t* const i, const invDef_t * from, invList_t *item, const invDef_t * to,
+	inventory_action_t (*MoveInInventory) (struct inventoryInterface_s* self, inventory_t* const i, const invDef_t *from, invList_t *item, const invDef_t *to,
 			int tx, int ty, int *TU, invList_t ** icp) __attribute__((nonnull(1), nonnull(2)));
 
-	bool (*TryAddToInventory) (struct inventoryInterface_s* self, inventory_t* const inv, const item_t * const item, const invDef_t * container);
+	bool (*TryAddToInventory) (struct inventoryInterface_s* self, inventory_t* const inv, const item_t * const item, const invDef_t *container);
 
 	void (*DestroyInventory) (struct inventoryInterface_s* self, inventory_t* const i) __attribute__((nonnull(1), nonnull(2)));
 
-	void (*EmptyContainer) (struct inventoryInterface_s* self, inventory_t* const i, const invDef_t * container)__attribute__((nonnull(1), nonnull(2)));
+	void (*EmptyContainer) (struct inventoryInterface_s* self, inventory_t* const i, const invDef_t *container)__attribute__((nonnull(1), nonnull(2)));
 
 	void (*EquipActor) (struct inventoryInterface_s* self, character_t* const chr, const equipDef_t *ed, int maxWeight) __attribute__((nonnull(1), nonnull(2)));
 

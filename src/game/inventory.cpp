@@ -97,7 +97,7 @@ static invList_t* I_AddInvList (inventoryInterface_t* self, invList_t **invList)
  * @sa I_RemoveFromInventory
  * @return the @c invList_t pointer the item was added to, or @c NULL in case of an error (item wasn't added)
  */
-static invList_t *I_AddToInventory (inventoryInterface_t* self, inventory_t * const inv, const item_t* const item, const invDef_t * container, int x, int y, int amount)
+static invList_t *I_AddToInventory (inventoryInterface_t* self, inventory_t * const inv, const item_t* const item, const invDef_t *container, int x, int y, int amount)
 {
 	invList_t *ic;
 	int checkedTo;
@@ -160,7 +160,7 @@ static invList_t *I_AddToInventory (inventoryInterface_t* self, inventory_t * co
  * @return false If nothing was removed or an error occurred.
  * @sa I_AddToInventory
  */
-static bool I_RemoveFromInventory (inventoryInterface_t* self, inventory_t* const i, const invDef_t * container, invList_t *fItem)
+static bool I_RemoveFromInventory (inventoryInterface_t* self, inventory_t* const i, const invDef_t *container, invList_t *fItem)
 {
 	invList_t *ic, *previous;
 
@@ -248,7 +248,7 @@ static bool I_RemoveFromInventory (inventoryInterface_t* self, inventory_t* cons
  * @return IA_ARMOUR when placing an armour on the actor.
  * @return IA_MOVE when just moving an item.
  */
-static inventory_action_t I_MoveInInventory (inventoryInterface_t* self, inventory_t* const inv, const invDef_t * from, invList_t *fItem, const invDef_t * to, int tx, int ty, int *TU, invList_t ** icp)
+static inventory_action_t I_MoveInInventory (inventoryInterface_t* self, inventory_t* const inv, const invDef_t *from, invList_t *fItem, const invDef_t *to, int tx, int ty, int *TU, invList_t ** icp)
 {
 	invList_t *ic;
 
@@ -483,7 +483,7 @@ static inventory_action_t I_MoveInInventory (inventoryInterface_t* self, invento
  * @sa INVSH_FindSpace
  * @sa I_AddToInventory
  */
-static bool I_TryAddToInventory (inventoryInterface_t* self, inventory_t* const inv, const item_t * const item, const invDef_t * container)
+static bool I_TryAddToInventory (inventoryInterface_t* self, inventory_t* const inv, const item_t * const item, const invDef_t *container)
 {
 	int x, y;
 
@@ -515,7 +515,7 @@ static bool I_TryAddToInventory (inventoryInterface_t* self, inventory_t* const 
  * e.g. the container of a dropped weapon in tactical mission (ET_ITEM)
  * in every other case just set the pointer to NULL for a temp container like idEquip or idFloor
  */
-static void I_EmptyContainer (inventoryInterface_t* self, inventory_t* const i, const invDef_t * container)
+static void I_EmptyContainer (inventoryInterface_t* self, inventory_t* const i, const invDef_t *container)
 {
 	invList_t *ic;
 
