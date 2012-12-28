@@ -61,7 +61,7 @@ bool CHRSH_IsTeamDefRobot (const teamDef_t* const td)
  * @param[in] multiplayer If this is true we use the skill values from @c soldier_mp
  * mulitplayer is a special case here
  */
-void CHRSH_CharGenAbilitySkills (character_t * chr, bool multiplayer)
+void CHRSH_CharGenAbilitySkills (character_t *chr, bool multiplayer)
 {
 	int i;
 	const int (*chrTemplate)[2];
@@ -142,7 +142,7 @@ void CHRSH_CharGenAbilitySkills (character_t * chr, bool multiplayer)
  * @sa CHRSH_CharGetBody
  * @return the character body model (from a static buffer)
  */
-const char *CHRSH_CharGetBody (const character_t * const chr)
+const char *CHRSH_CharGetBody (const character_t *const chr)
 {
 	static char returnModel[MAX_VAR];
 
@@ -164,7 +164,7 @@ const char *CHRSH_CharGetBody (const character_t * const chr)
  * @param[in] chr Pointer to character struct
  * @sa CHRSH_CharGetBody
  */
-const char *CHRSH_CharGetHead (const character_t * const chr)
+const char *CHRSH_CharGetHead (const character_t *const chr)
 {
 	static char returnModel[MAX_VAR];
 

@@ -142,7 +142,7 @@ static void CL_CharacterSkillAndScoreCvars (const character_t *chr, const char* 
  * @sa CL_UGVCvars
  * @sa CL_ActorSelect
  */
-static void CL_ActorCvars (const character_t * chr, const char* cvarPrefix)
+static void CL_ActorCvars (const character_t *chr, const char* cvarPrefix)
 {
 	invList_t *weapon;
 	assert(chr);

@@ -2194,7 +2194,7 @@ const teamDef_t* Com_GetTeamDefinitionByID (const char *team)
 	return NULL;
 }
 
-bool Com_GetCharacterModel (character_t * chr)
+bool Com_GetCharacterModel (character_t *chr)
 {
 	if (!chr->teamDef)
 		return false;
@@ -2244,7 +2244,7 @@ static int Com_GetGender (const teamDef_t *teamDef)
  * @sa Com_GiveName
  * @sa Com_GiveModel
  */
-void Com_GetCharacterValues (const char *teamDefition, character_t * chr)
+void Com_GetCharacterValues (const char *teamDefition, character_t *chr)
 {
 	int retry = 1000;
 
