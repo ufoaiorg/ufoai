@@ -200,7 +200,7 @@ static void SVC_TeamInfo (struct net_stream *s)
 		if (cl->state >= cs_connected) {
 			char infoPlayer[MAX_INFO_STRING] = "";
 			/* show players that already have a team with their teamnum */
-			int teamId = svs.ge->ClientGetTeamNum(cl->player);
+			int teamId = svs.ge->ClientGetTeamNum(*cl->player);
 			if (!teamId)
 				teamId = TEAM_NO_ACTIVE;
 			Info_SetValueForKeyAsInteger(infoPlayer, sizeof(infoPlayer), "cl_team", teamId);
@@ -233,7 +233,7 @@ static void SVC_Status (struct net_stream *s)
 	cl = NULL;
 	while ((cl = SV_GetNextClient(cl)) != NULL) {
 		if (cl->state > cs_free) {
-			Com_sprintf(player, sizeof(player), "%i \"%s\"\n", svs.ge->ClientGetTeamNum(cl->player), cl->name);
+			Com_sprintf(player, sizeof(player), "%i \"%s\"\n", svs.ge->ClientGetTeamNum(*cl->player), cl->name);
 			NET_WriteRawString(&msg, player);
 		}
 	}

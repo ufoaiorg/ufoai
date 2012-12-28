@@ -162,7 +162,7 @@ static void SV_StartMatch_f (client_t *cl)
 
 	{
 		ScopedMutex scopedMutex(svs.serverMutex);
-		svs.ge->ClientStartMatch(cl->player);
+		svs.ge->ClientStartMatch(*cl->player);
 	}
 
 	Cbuf_InsertFromDefer();

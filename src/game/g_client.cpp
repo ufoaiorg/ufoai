@@ -792,7 +792,7 @@ static void G_GetTeam (Player *player)
 				gi.Error("G_GetTeam: Could not assign a team!");
 			if (G_SetTeamForPlayer(*player, team)) {
 				gi.DPrintf("%s has been randomly assigned to team %i\n",
-						player->pers.netname, G_ClientGetTeamNum(player));
+						player->pers.netname, G_ClientGetTeamNum(*player));
 				break;
 			}
 			i--;
@@ -902,10 +902,9 @@ bool G_SetTeamForPlayer (Player &player, const int team)
 /**
  * @brief Returns the assigned team number of the player
  */
-int G_ClientGetTeamNum (const Player *player)
+int G_ClientGetTeamNum (const Player &player)
 {
-	assert(player);
-	return player->getTeam();
+	return player.getTeam();
 }
 
 /**
@@ -931,7 +930,7 @@ bool G_ClientIsReady (const Player *player)
  * @param[in] player In singleplayer mode the team of this player will get the first turn
  * @sa SVCmd_StartGame_f
  */
-static void G_GetStartingTeam (const Player *player)
+static void G_GetStartingTeam (const Player &player)
 {
 	int teamCount;
 	int playerCount;
@@ -943,7 +942,7 @@ static void G_GetStartingTeam (const Player *player)
 		return;
 
 	if (sv_maxclients->integer == 1) {
-		level.activeTeam = player->getTeam();
+		level.activeTeam = player.getTeam();
 		level.teamOfs = MAX_TEAMS - level.activeTeam;
 		return;
 	}
@@ -1377,21 +1376,21 @@ bool G_ClientBegin (Player *player)
  * @sa G_ClientBegin
  * @sa CL_Reset
  */
-void G_ClientStartMatch (Player *player)
+void G_ClientStartMatch (Player &player)
 {
 	G_GetStartingTeam(player);
 
 	/* do all the init events here... */
 	/* reset the data */
-	G_EventReset(*player, level.activeTeam);
+	G_EventReset(player, level.activeTeam);
 
 	/* show visible actors and add invisible actor */
-	G_VisFlagsClear(player->getTeam());
-	G_CheckVisPlayer(*player, false);
-	G_SendInvisible(*player);
+	G_VisFlagsClear(player.getTeam());
+	G_CheckVisPlayer(player, false);
+	G_SendInvisible(player);
 
 	/* submit stats */
-	G_SendPlayerStats(*player);
+	G_SendPlayerStats(player);
 
 	/* ensure that the last event is send, too */
 	G_EventEnd();
@@ -1402,7 +1401,7 @@ void G_ClientStartMatch (Player *player)
 	}
 
 	/* inform all clients */
-	gi.BroadcastPrintf(PRINT_CONSOLE, "%s has taken control over team %i.\n", player->pers.netname, player->getTeam());
+	gi.BroadcastPrintf(PRINT_CONSOLE, "%s has taken control over team %i.\n", player.pers.netname, player.getTeam());
 }
 
 /**
