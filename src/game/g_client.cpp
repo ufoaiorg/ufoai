@@ -882,7 +882,7 @@ bool G_SetTeamForPlayer (Player &player, const int team)
 		}
 	}
 
-	player.pers.team = team;
+	player.setTeam(team);
 
 	/* if we started in dev mode, we maybe don't have a
 	 * starting position in this map */
@@ -1432,7 +1432,7 @@ void G_ClientUserinfoChanged (Player *player, const char *userinfo)
 	if (!G_MatchIsRunning() && oldTeamnum != Info_IntegerForKey(userinfo, "cl_teamnum")) {
 		/* if the player is marked as ready he can't change his team */
 		if (!alreadyReady || !player->isReady()) {
-			player->pers.team = TEAM_NO_ACTIVE;
+			player->setTeam(TEAM_NO_ACTIVE);
 			G_GetTeam(player);
 		} else {
 			Com_DPrintf(DEBUG_GAME, "G_ClientUserinfoChanged: player %s is already marked as being ready\n",

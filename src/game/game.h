@@ -112,6 +112,7 @@ public:
 	inline void setReady (bool b)	{ ready = b; }
 
 	inline int	getTeam (void) const { return pers.team; }
+	inline void	setTeam (int t)		{ pers.team = t; }
 };
 typedef Player player_t;
 
