@@ -266,7 +266,10 @@ static void testMapDefStatistic (void)
 /**
  * @brief This test cycles through the list of map definitions found in the maps.ufo script
  * and tries to find surfaces to stand on with no sound assigned to them.
- * @note HEAVILY work in progress !!
+ *
+ * This test takes too long to be run every time testall is run. So it's set up almost like a game:
+ * After 5 maps (the first of them is fully checked) with missing sounds, the test stops.
+ * If we manage to 'clean' one of those 5 maps, the next map will show up in the next run.
  */
 static void testMapDefsFootSteps (void)
 {
@@ -339,7 +342,6 @@ static void testMapDefsFootSteps (void)
 								const char *snd = NULL;
 								snd = SV_GetFootstepSound(trace.surface->name);
 								if (!snd) {
-								//	Com_Printf("No sound for %s\n", trace.surface->name);
 									for (i = 0; i < texCountMax; i++) {
 										if (!texNames[i][0]) {	// found a free slot ?
 											strcpy(texNames[i], trace.surface->name);
