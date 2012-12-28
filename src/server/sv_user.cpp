@@ -273,7 +273,7 @@ void SV_ExecuteClientMessage (client_t * cl, int cmd, dbuffer *msg)
 		/* client actions are handled by the game module */
 		ScopedMutex scopedMutex(svs.serverMutex);
 		sv->messageBuffer = msg;
-		svs.ge->ClientAction(cl->player);
+		svs.ge->ClientAction(*cl->player);
 		sv->messageBuffer = NULL;
 		break;
 	}

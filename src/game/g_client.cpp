@@ -646,7 +646,7 @@ bool G_ClientUseEdict (const Player *player, edict_t *actor, edict_t *edict)
  * @param[in] player The player to execute the action for (the actor belongs to this player)
  * @note a client action will also send the server side edict number to determine the actor
  */
-int G_ClientAction (Player *player)
+int G_ClientAction (Player &player)
 {
 	player_action_t action;
 	int num;
@@ -677,22 +677,22 @@ int G_ClientAction (Player *player)
 
 	case PA_TURN:
 		gi.ReadFormat(format, &i);
-		G_ClientTurn(player, ent, (dvec_t) i);
+		G_ClientTurn(&player, ent, (dvec_t) i);
 		break;
 
 	case PA_MOVE:
 		gi.ReadFormat(format, &pos);
-		G_ClientMove(player, player->getTeam(), ent, pos);
+		G_ClientMove(&player, player.getTeam(), ent, pos);
 		break;
 
 	case PA_STATE:
 		gi.ReadFormat(format, &i);
-		G_ClientStateChange(player, ent, i, true);
+		G_ClientStateChange(&player, ent, i, true);
 		break;
 
 	case PA_SHOOT:
 		gi.ReadFormat(format, &pos, &i, &firemode, &from);
-		G_ClientShoot(player, ent, pos, i, firemode, NULL, true, from);
+		G_ClientShoot(&player, ent, pos, i, firemode, NULL, true, from);
 		break;
 
 	case PA_INVMOVE:

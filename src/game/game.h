@@ -306,7 +306,7 @@ typedef struct game_export_s {
 	void (EXPORT *ClientDisconnect) (player_t *client);
 	void (EXPORT *ClientCommand) (player_t *client);
 
-	int (EXPORT *ClientAction) (player_t *client);
+	int (EXPORT *ClientAction) (player_t &client);
 	void (EXPORT *ClientEndRound) (player_t *client);
 	void (EXPORT *ClientTeamInfo) (const player_t *client);
 	void (EXPORT *ClientInitActorStates) (const player_t *client);
