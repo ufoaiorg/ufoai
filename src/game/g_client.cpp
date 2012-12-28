@@ -148,7 +148,7 @@ playermask_t G_TeamToPM (int team)
 
 	/* don't handle the ai players, here */
 	while ((p = G_PlayerGetNextHuman(p))) {
-		if (p->isInUse() && team == p->pers.team)
+		if (p->isInUse() && team == p->getTeam())
 			playerMask |= G_PlayerToPM(*p);
 	}
 
@@ -170,7 +170,7 @@ teammask_t G_PMToVis (playermask_t playerMask)
 	/* don't handle the ai players, here */
 	while ((p = G_PlayerGetNextActiveHuman(p))) {
 		if (playerMask & G_PlayerToPM(*p))
-			teamMask |= G_TeamToVisMask(p->pers.team);
+			teamMask |= G_TeamToVisMask(p->getTeam());
 	}
 
 	return teamMask;
@@ -190,7 +190,7 @@ playermask_t G_VisToPM (teammask_t teamMask)
 
 	/* don't handle the ai players, here */
 	while ((p = G_PlayerGetNextActiveHuman(p))) {
-		if (teamMask & G_TeamToVisMask(p->pers.team))
+		if (teamMask & G_TeamToVisMask(p->getTeam()))
 			playerMask |= G_PlayerToPM(*p);
 	}
 
@@ -360,7 +360,7 @@ static bool G_ActionCheck (const Player *player, edict_t *ent)
 		return false;
 	}
 
-	if (ent->team != player->pers.team) {
+	if (ent->team != player->getTeam()) {
 		G_ClientPrintf(*player, PRINT_HUD, _("Can't perform action - not on same team!"));
 		return false;
 	}
@@ -388,7 +388,7 @@ bool G_ActionCheckForCurrentTeam (const Player *player, edict_t *ent, int TU)
 		return true;
 
 	/* a generic tester if an action could be possible */
-	if (level.activeTeam != player->pers.team) {
+	if (level.activeTeam != player->getTeam()) {
 		G_ClientPrintf(*player, PRINT_HUD, _("Can't perform action - it is not your turn!"));
 		return false;
 	}
@@ -682,7 +682,7 @@ int G_ClientAction (Player *player)
 
 	case PA_MOVE:
 		gi.ReadFormat(format, &pos);
-		G_ClientMove(player, player->pers.team, ent, pos);
+		G_ClientMove(player, player->getTeam(), ent, pos);
 		break;
 
 	case PA_STATE:
@@ -756,8 +756,8 @@ static void G_GetTeam (Player *player)
 	int playersInGame = 0;
 
 	/* player has already a team */
-	if (player->pers.team > 0) {
-		Com_DPrintf(DEBUG_GAME, "Player %s is already on team %i\n", player->pers.netname, player->pers.team);
+	if (player->getTeam() > 0) {
+		Com_DPrintf(DEBUG_GAME, "Player %s is already on team %i\n", player->pers.netname, player->getTeam());
 		return;
 	}
 
@@ -827,7 +827,7 @@ static void G_GetTeam (Player *player)
 				p = NULL;
 				/* check if team is in use (only human controlled players) */
 				while ((p = G_PlayerGetNextActiveAI(p))) {
-					if (p->pers.team == i) {
+					if (p->getTeam() == i) {
 						Com_DPrintf(DEBUG_GAME, "Team %i is already in use\n", i);
 						/* team already in use */
 						teamAvailable = false;
@@ -844,7 +844,7 @@ static void G_GetTeam (Player *player)
 			/* remove ai player */
 			p = NULL;
 			while ((p = G_PlayerGetNextActiveHuman(p))) {
-				if (p->pers.team == i) {
+				if (p->getTeam() == i) {
 					gi.BroadcastPrintf(PRINT_CONSOLE, "Removing ai player...");
 					p->setInUse(false);
 					break;
@@ -876,7 +876,7 @@ bool G_SetTeamForPlayer (Player &player, const int team)
 		if (!sv_teamplay->integer) {
 			Player *p = NULL;
 			while ((p = G_PlayerGetNextHuman(p)) != NULL) {
-				if (p->pers.team == team)
+				if (p->getTeam() == team)
 					return false;
 			}
 		}
@@ -905,7 +905,7 @@ bool G_SetTeamForPlayer (Player &player, const int team)
 int G_ClientGetTeamNum (const Player *player)
 {
 	assert(player);
-	return player->pers.team;
+	return player->getTeam();
 }
 
 /**
@@ -943,7 +943,7 @@ static void G_GetStartingTeam (const Player *player)
 		return;
 
 	if (sv_maxclients->integer == 1) {
-		level.activeTeam = player->pers.team;
+		level.activeTeam = player->getTeam();
 		level.teamOfs = MAX_TEAMS - level.activeTeam;
 		return;
 	}
@@ -956,11 +956,11 @@ static void G_GetStartingTeam (const Player *player)
 		int j;
 		playerCount++;
 		for (j = 0; j < teamCount; j++) {
-			if (p->pers.team == knownTeams[j])
+			if (p->getTeam() == knownTeams[j])
 				break;
 		}
 		if (j == teamCount)
-			knownTeams[teamCount++] = p->pers.team;
+			knownTeams[teamCount++] = p->getTeam();
 	}
 
 	if (teamCount) {
@@ -970,7 +970,7 @@ static void G_GetStartingTeam (const Player *player)
 		level.teamOfs = MAX_TEAMS - level.activeTeam;
 		p = NULL;
 		while ((p = G_PlayerGetNextActiveHuman(p)))
-			if (p->pers.team != level.activeTeam)
+			if (p->getTeam() != level.activeTeam)
 				p->roundDone = true;
 	}
 }
@@ -991,7 +991,7 @@ static edict_t *G_ClientGetFreeSpawnPoint (const Player &player, int spawnType)
 
 	if (level.noRandomSpawn) {
 		while ((ent = G_EdictsGetNextInUse(ent)))
-			if (ent->type == spawnType && player.pers.team == ent->team) {
+			if (ent->type == spawnType && player.getTeam() == ent->team) {
 				if (G_EdictsGetLivingActorFromPos(ent->pos))
 					continue;
 				return ent;
@@ -1000,7 +1000,7 @@ static edict_t *G_ClientGetFreeSpawnPoint (const Player &player, int spawnType)
 		edict_t *list[MAX_EDICTS];
 		int count = 0;
 		while ((ent = G_EdictsGetNextInUse(ent)))
-			if (ent->type == spawnType && player.pers.team == ent->team) {
+			if (ent->type == spawnType && player.getTeam() == ent->team) {
 				if (G_EdictsGetLivingActorFromPos(ent->pos))
 					continue;
 				list[count++] = ent;
@@ -1247,9 +1247,9 @@ void G_ClientInitActorStates (const Player *player)
 		int saveTU;
 		actorHands_t hand;
 		int fmIdx, objIdx;
-		edict_t *ent = G_EdictsGetActorByUCN(ucn, player->pers.team);
+		edict_t *ent = G_EdictsGetActorByUCN(ucn, player->getTeam());
 		if (!ent)
-			gi.Error("Could not find character on team %i with unique character number %i", player->pers.team, ucn);
+			gi.Error("Could not find character on team %i with unique character number %i", player->getTeam(), ucn);
 
 		/* these state changes are not consuming any TUs */
 		saveTU = ent->TU;
@@ -1279,7 +1279,7 @@ void G_ClientTeamInfo (const Player *player)
 	for (i = 0; i < length; i++) {
 		const actorSizeEnum_t actorFieldSize = gi.ReadByte();
 		/* Search for a spawn point for each entry the client sent */
-		if (player->pers.team == TEAM_NO_ACTIVE || !G_ActorSpawnIsAllowed(i, player->pers.team))
+		if (player->getTeam() == TEAM_NO_ACTIVE || !G_ActorSpawnIsAllowed(i, player->getTeam()))
 			G_ClientSkipActorInfo();
 		else {
 			edict_t *ent = G_ClientGetFreeSpawnPointForActorSize(*player, actorFieldSize);
@@ -1293,7 +1293,7 @@ void G_ClientTeamInfo (const Player *player)
 				G_TouchTriggers(ent);
 				ent->contentFlags = G_ActorGetContentFlags(ent->origin);
 			} else {
-				gi.DPrintf("Not enough spawn points for team %i (actorsize: %i)\n", player->pers.team, actorFieldSize);
+				gi.DPrintf("Not enough spawn points for team %i (actorsize: %i)\n", player->getTeam(), actorFieldSize);
 
 				G_ClientSkipActorInfo();
 			}
@@ -1364,7 +1364,7 @@ bool G_ClientBegin (Player *player)
 	gi.ConfigString(CS_PLAYERNAMES + player->getNum(), "%s", player->pers.netname);
 
 	/* inform all clients */
-	gi.BroadcastPrintf(PRINT_CONSOLE, "%s has joined team %i\n", player->pers.netname, player->pers.team);
+	gi.BroadcastPrintf(PRINT_CONSOLE, "%s has joined team %i\n", player->pers.netname, player->getTeam());
 
 	return true;
 }
@@ -1386,7 +1386,7 @@ void G_ClientStartMatch (Player *player)
 	G_EventReset(*player, level.activeTeam);
 
 	/* show visible actors and add invisible actor */
-	G_VisFlagsClear(player->pers.team);
+	G_VisFlagsClear(player->getTeam());
 	G_CheckVisPlayer(*player, false);
 	G_SendInvisible(*player);
 
@@ -1402,7 +1402,7 @@ void G_ClientStartMatch (Player *player)
 	}
 
 	/* inform all clients */
-	gi.BroadcastPrintf(PRINT_CONSOLE, "%s has taken control over team %i.\n", player->pers.netname, player->pers.team);
+	gi.BroadcastPrintf(PRINT_CONSOLE, "%s has taken control over team %i.\n", player->pers.netname, player->getTeam());
 }
 
 /**
@@ -1506,7 +1506,7 @@ void G_ClientDisconnect (Player *player)
 		level.numplayers--;
 		gi.ConfigString(CS_PLAYERCOUNT, "%i", level.numplayers);
 
-		if (level.activeTeam == player->pers.team)
+		if (level.activeTeam == player->getTeam())
 			G_ClientEndRound(player);
 
 		/* if no more players are connected - stop the server */
