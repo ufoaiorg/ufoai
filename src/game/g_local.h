@@ -291,7 +291,7 @@ typedef enum {
 } edictMaterial_t;
 
 /** @brief actor movement */
-typedef struct {
+typedef struct moveinfo_s {
 	int			contentFlags[MAX_ROUTE];
 	teammask_t	visflags[MAX_ROUTE];
 	byte		steps;
