@@ -750,14 +750,14 @@ int G_ClientAction (Player &player)
  * @param[in] player Pointer to connected player
  * @todo Check whether there are enough free spawnpoints in all cases
  */
-static void G_GetTeam (Player *player)
+static void G_GetTeam (Player &player)
 {
 	Player *p;
 	int playersInGame = 0;
 
 	/* player has already a team */
-	if (player->getTeam() > 0) {
-		Com_DPrintf(DEBUG_GAME, "Player %s is already on team %i\n", player->pers.netname, player->getTeam());
+	if (player.getTeam() > 0) {
+		Com_DPrintf(DEBUG_GAME, "Player %s is already on team %i\n", player.pers.netname, player.getTeam());
 		return;
 	}
 
@@ -790,9 +790,9 @@ static void G_GetTeam (Player *player)
 			const int team = spawnCheck[randomSpot];
 			if (i == 0)
 				gi.Error("G_GetTeam: Could not assign a team!");
-			if (G_SetTeamForPlayer(*player, team)) {
+			if (G_SetTeamForPlayer(player, team)) {
 				gi.DPrintf("%s has been randomly assigned to team %i\n",
-						player->pers.netname, G_ClientGetTeamNum(*player));
+						player.pers.netname, G_ClientGetTeamNum(player));
 				break;
 			}
 			i--;
@@ -803,23 +803,23 @@ static void G_GetTeam (Player *player)
 
 	/* find a team */
 	if (sv_maxclients->integer == 1)
-		G_SetTeamForPlayer(*player, TEAM_PHALANX);
+		G_SetTeamForPlayer(player, TEAM_PHALANX);
 	else if (sv_teamplay->integer) {
 		/* set the team specified in the userinfo */
-		const int i = G_ClientGetTeamNumPref(player);
-		gi.DPrintf("Get a team for teamplay for %s\n", player->pers.netname);
+		const int i = G_ClientGetTeamNumPref(&player);
+		gi.DPrintf("Get a team for teamplay for %s\n", player.pers.netname);
 		/* civilians are at team zero */
 		if (i > TEAM_CIVILIAN && sv_maxteams->integer >= i) {
-			G_SetTeamForPlayer(*player, i);
-			gi.BroadcastPrintf(PRINT_CONSOLE, "serverconsole: %s has chosen team %i\n", player->pers.netname, i);
+			G_SetTeamForPlayer(player, i);
+			gi.BroadcastPrintf(PRINT_CONSOLE, "serverconsole: %s has chosen team %i\n", player.pers.netname, i);
 		} else {
 			gi.DPrintf("Team %i is not valid - choose a team between 1 and %i\n", i, sv_maxteams->integer);
-			G_SetTeamForPlayer(*player, TEAM_DEFAULT);
+			G_SetTeamForPlayer(player, TEAM_DEFAULT);
 		}
 	} else {
 		int i;
 		/* search team */
-		gi.DPrintf("Getting a multiplayer team for %s\n", player->pers.netname);
+		gi.DPrintf("Getting a multiplayer team for %s\n", player.pers.netname);
 		for (i = TEAM_CIVILIAN + 1; i < MAX_TEAMS; i++) {
 			if (level.num_spawnpoints[i]) {
 				bool teamAvailable = true;
@@ -850,11 +850,11 @@ static void G_GetTeam (Player *player)
 					break;
 				}
 			}
-			Com_DPrintf(DEBUG_GAME, "Assigning %s to team %i\n", player->pers.netname, i);
-			G_SetTeamForPlayer(*player, i);
+			Com_DPrintf(DEBUG_GAME, "Assigning %s to team %i\n", player.pers.netname, i);
+			G_SetTeamForPlayer(player, i);
 		} else {
-			gi.DPrintf("No free team - disconnecting '%s'\n", player->pers.netname);
-			G_ClientDisconnect(player);
+			gi.DPrintf("No free team - disconnecting '%s'\n", player.pers.netname);
+			G_ClientDisconnect(&player);
 		}
 	}
 }
@@ -1344,7 +1344,7 @@ bool G_ClientBegin (Player *player)
 	level.numplayers++;
 
 	/* find a team */
-	G_GetTeam(player);
+	G_GetTeam(*player);
 	if (!player->began)
 		return false;
 
@@ -1432,7 +1432,7 @@ void G_ClientUserinfoChanged (Player *player, const char *userinfo)
 		/* if the player is marked as ready he can't change his team */
 		if (!alreadyReady || !player->isReady()) {
 			player->setTeam(TEAM_NO_ACTIVE);
-			G_GetTeam(player);
+			G_GetTeam(*player);
 		} else {
 			Com_DPrintf(DEBUG_GAME, "G_ClientUserinfoChanged: player %s is already marked as being ready\n",
 					player->pers.netname);

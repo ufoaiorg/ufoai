@@ -1231,20 +1231,20 @@ void AI_ActorThink (Player *player, edict_t *ent)
 	}
 }
 
-static void AI_PlayerRun (Player *player)
+static void AI_PlayerRun (Player &player)
 {
-	if (level.activeTeam == player->getTeam()) {
+	if (level.activeTeam == player.getTeam()) {
 		/* find next actor to handle */
-		edict_t *ent = player->pers.last;
+		edict_t *ent = player.pers.last;
 
-		while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, player->getTeam()))) {
+		while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, player.getTeam()))) {
 			const int beforeTUs = ent->TU;
 			if (beforeTUs > 0) {
 				if (g_ailua->integer)
-					AIL_ActorThink(*player, ent);
+					AIL_ActorThink(player, ent);
 				else
-					AI_ActorThink(player, ent);
-				player->pers.last = ent;
+					AI_ActorThink(&player, ent);
+				player.pers.last = ent;
 
 				if (beforeTUs > ent->TU)
 					return;
@@ -1252,8 +1252,8 @@ static void AI_PlayerRun (Player *player)
 		}
 
 		/* nothing left to do, request endround */
-		G_ClientEndRound(player);
-		player->pers.last = NULL;
+		G_ClientEndRound(&player);
+		player.pers.last = NULL;
 	}
 }
 
@@ -1272,13 +1272,13 @@ void AI_Run (void)
 	/* set players to ai players and cycle over all of them */
 	player = NULL;
 	while ((player = G_PlayerGetNextActiveAI(player))) {
-		AI_PlayerRun(player);
+		AI_PlayerRun(*player);
 	}
 
 	if (g_aihumans->integer) {
 		player = NULL;
 		while ((player = G_PlayerGetNextActiveHuman(player))) {
-			AI_PlayerRun(player);
+			AI_PlayerRun(*player);
 		}
 	}
 }
