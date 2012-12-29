@@ -15,7 +15,7 @@
 #include "lstate.h"
 #include "lundump.h"
 
-typedef struct {
+typedef struct DumpState_s {
  lua_State* L;
  lua_Writer writer;
  void* data;

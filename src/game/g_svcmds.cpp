@@ -55,7 +55,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * If 0, then only addresses matching the list will be allowed.  This lets you easily set up a private game, or a game that only allows players from your local network.
  */
 
-typedef struct {
+typedef struct ipfilter_s {
 	unsigned mask;
 	unsigned compare;
 } ipfilter_t;

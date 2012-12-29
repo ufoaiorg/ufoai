@@ -49,7 +49,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @brief this is only used to hold entity field values that can be set from
  * the editor, but aren't actually present in edict_t during gameplay
  */
-typedef struct {
+typedef struct spawn_temp_s {
 	/* world vars */
 	int noRandomSpawn;	/**< spawn the actors on random spawnpoints */
 	int noEquipment;	/**< spawn the actors with no equipment - must be collected in the map */
@@ -76,7 +76,7 @@ static void SP_misc_fire(edict_t *ent);
 static void SP_misc_camera(edict_t *ent);
 static void SP_misc_smokestun(edict_t *ent);
 
-typedef struct {
+typedef struct spawn_s {
 	const char *name;
 	void (*spawn) (edict_t *ent);
 } spawn_t;
@@ -123,7 +123,7 @@ typedef enum {
 	F_IGNORE
 } fieldtype_t;
 
-typedef struct {
+typedef struct field_s {
 	const char *name;
 	size_t ofs;
 	fieldtype_t type;

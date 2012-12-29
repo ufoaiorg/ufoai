@@ -152,7 +152,7 @@ struct edict_s {
 /*=============================================================== */
 
 /** @brief functions provided by the main engine */
-typedef struct {
+typedef struct game_import_s {
 	/* client/server information */
 	int seed;	/**< random seed */
 	const csi_t *csi;
