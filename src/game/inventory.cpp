@@ -160,7 +160,7 @@ static invList_t *I_AddToInventory (inventoryInterface_t* self, inventory_t *con
  * @return false If nothing was removed or an error occurred.
  * @sa I_AddToInventory
  */
-static bool I_RemoveFromInventory (inventoryInterface_t* self, inventory_t* const i, const invDef_t *container, invList_t *fItem)
+bool InventoryInterface::RemoveFromInventory (inventoryInterface_t* self, inventory_t* const i, const invDef_t *container, invList_t *fItem)
 {
 	invList_t *ic, *previous;
 
@@ -1039,7 +1039,7 @@ void INV_InitInventory (const char *name, inventoryInterface_t *interface, const
 
 	interface->TryAddToInventory = I_TryAddToInventory;
 	interface->AddToInventory = I_AddToInventory;
-	interface->RemoveFromInventory = I_RemoveFromInventory;
+//	interface->RemoveFromInventory = I_RemoveFromInventory;
 	interface->MoveInInventory = I_MoveInInventory;
 	interface->DestroyInventory = I_DestroyInventory;
 	interface->EmptyContainer = I_EmptyContainer;
