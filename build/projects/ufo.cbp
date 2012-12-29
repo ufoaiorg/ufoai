@@ -355,8 +355,8 @@
 		<Unit filename="..\..\src\client\cgame\campaign\cp_installation.h" />
 		<Unit filename="..\..\src\client\cgame\campaign\cp_installation_callbacks.cpp" />
 		<Unit filename="..\..\src\client\cgame\campaign\cp_installation_callbacks.h" />
-		<Unit filename="..\..\src\client\cgame\campaign\cp_map.cpp" />
-		<Unit filename="..\..\src\client\cgame\campaign\cp_map.h" />
+		<Unit filename="..\..\src\client\cgame\campaign\cp_geoscape.cpp" />
+		<Unit filename="..\..\src\client\cgame\campaign\cp_geoscape.h" />
 		<Unit filename="..\..\src\client\cgame\campaign\cp_mapfightequip.cpp" />
 		<Unit filename="..\..\src\client\cgame\campaign\cp_mapfightequip.h" />
 		<Unit filename="..\..\src\client\cgame\campaign\cp_market.cpp" />

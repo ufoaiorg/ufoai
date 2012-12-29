@@ -201,7 +201,7 @@
 		<Unit filename="..\..\src\client\cgame\campaign\cp_hospital_callbacks.cpp" />
 		<Unit filename="..\..\src\client\cgame\campaign\cp_installation.cpp" />
 		<Unit filename="..\..\src\client\cgame\campaign\cp_installation_callbacks.cpp" />
-		<Unit filename="..\..\src\client\cgame\campaign\cp_map.cpp" />
+		<Unit filename="..\..\src\client\cgame\campaign\cp_geoscape.cpp" />
 		<Unit filename="..\..\src\client\cgame\campaign\cp_mapfightequip.cpp" />
 		<Unit filename="..\..\src\client\cgame\campaign\cp_market.cpp" />
 		<Unit filename="..\..\src\client\cgame\campaign\cp_market_callbacks.cpp" />

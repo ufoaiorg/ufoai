@@ -4,7 +4,7 @@
  */
 
 /*
-Copyright (C) 2002-2011 UFO: Alien Invasion.
+Copyright (C) 2002-2013 UFO: Alien Invasion.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -29,7 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../client/renderer/r_state.h" /* r_state */
 #include "../client/ui/ui_main.h"
 #include "../client/cgame/campaign/cp_campaign.h"
-#include "../client/cgame/campaign/cp_map.h"
+#include "../client/cgame/campaign/cp_geoscape.h"
 #include "../client/cgame/campaign/cp_hospital.h"
 #include "../client/cgame/campaign/cp_missions.h"
 #include "../client/cgame/campaign/cp_nation.h"

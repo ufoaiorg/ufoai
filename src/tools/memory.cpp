@@ -14,7 +14,7 @@
 #include "../client/ui/ui_main.h"
 #include "../client/ui/ui_behaviour.h"
 #include "../client/cgame/campaign/cp_campaign.h"
-#include "../client/cgame/campaign/cp_map.h"
+#include "../client/cgame/campaign/cp_geoscape.h"
 #include "../client/cgame/campaign/cp_hospital.h"
 #include "../client/cgame/campaign/cp_missions.h"
 #include "../client/cgame/campaign/cp_nation.h"

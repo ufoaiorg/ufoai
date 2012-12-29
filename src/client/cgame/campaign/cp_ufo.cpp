@@ -4,7 +4,7 @@
  */
 
 /*
- Copyright (C) 2002-2011 UFO: Alien Invasion.
+ Copyright (C) 2002-2013 UFO: Alien Invasion.
 
  This program is free software; you can redistribute it and/or
  modify it under the terms of the GNU General Public License
@@ -24,7 +24,7 @@
 
 #include "../../cl_shared.h"
 #include "cp_campaign.h"
-#include "cp_map.h"
+#include "cp_geoscape.h"
 #include "cp_ufo.h"
 #include "cp_aircraft.h"
 #include "cp_mapfightequip.h"

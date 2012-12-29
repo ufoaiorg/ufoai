@@ -4,7 +4,7 @@
  */
 
 /*
-Copyright (C) 2002-2011 UFO: Alien Invasion.
+Copyright (C) 2002-2013 UFO: Alien Invasion.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -23,8 +23,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_CL_MAP_H
-#define CLIENT_CL_MAP_H
+#ifndef CP_GEOSCAPE_H
+#define CP_GEOSCAPE_H
 
 #define KILOMETER_PER_DEGREE	111.2		/* this is the conversion between distance in game (in degree) and km */
 
@@ -83,4 +83,4 @@ void MAP_DeactivateOverlay(const char *overlayID);
 void MAP_UpdateGeoscapeDock(void);
 bool MAP_IsRadarOverlayActivated(void);
 
-#endif /* CLIENT_CL_MAP_H */
+#endif

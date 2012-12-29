@@ -4,7 +4,7 @@
  */
 
 /*
-Copyright (C) 2002-2012 UFO: Alien Invasion.
+Copyright (C) 2002-2013 UFO: Alien Invasion.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_base_callbacks.h"
 #include "cp_base.h"
 #include "cp_capacity.h"
-#include "cp_map.h"
+#include "cp_geoscape.h"
 #include "cp_popup.h"
 #include "cp_time.h"
 #include "cp_ufo.h"

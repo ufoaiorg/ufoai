@@ -3,7 +3,7 @@
  */
 
 /*
- Copyright (C) 2002-2011 UFO: Alien Invasion.
+ Copyright (C) 2002-2013 UFO: Alien Invasion.
 
  This program is free software; you can redistribute it and/or
  modify it under the terms of the GNU General Public License
@@ -29,7 +29,7 @@
 #include "cp_missions.h"
 #include "cp_mission_triggers.h"
 #include "cp_team.h"
-#include "cp_map.h"
+#include "cp_geoscape.h"
 #include "../../battlescape/cl_hud.h"
 #include "cp_mission_callbacks.h"
 

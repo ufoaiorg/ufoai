@@ -46,9 +46,9 @@ $(TARGET)_SRCS      = \
 	client/cgame/campaign/cp_employee_callbacks.cpp \
 	client/cgame/campaign/cp_installation.cpp \
 	client/cgame/campaign/cp_installation_callbacks.cpp \
+	client/cgame/campaign/cp_geoscape.cpp \
 	client/cgame/campaign/cp_market.cpp \
 	client/cgame/campaign/cp_market_callbacks.cpp \
-	client/cgame/campaign/cp_map.cpp \
 	client/cgame/campaign/cp_mapfightequip.cpp \
 	client/cgame/campaign/cp_nation.cpp \
 	client/cgame/campaign/cp_produce.cpp \

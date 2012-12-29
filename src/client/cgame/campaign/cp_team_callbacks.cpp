@@ -4,7 +4,7 @@
  */
 
 /*
-All original material Copyright (C) 2002-2012 UFO: Alien Invasion.
+All original material Copyright (C) 2002-2013 UFO: Alien Invasion.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -31,7 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_team.h"
 #include "cp_team_callbacks.h"
 #ifdef DEBUG
-#include "cp_map.h" /* MAP_GetSelectedAircraft */
+#include "cp_geoscape.h" /* MAP_GetSelectedAircraft */
 #endif
 
 /**

@@ -36,7 +36,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_team.h"
 #include "cp_team_callbacks.h"
 #include "cp_popup.h"
-#include "cp_map.h"
+#include "cp_geoscape.h"
 #include "cp_ufo.h"
 #include "cp_installation_callbacks.h"
 #include "cp_alien_interest.h"
