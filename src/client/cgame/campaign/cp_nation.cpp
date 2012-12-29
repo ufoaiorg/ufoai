@@ -75,7 +75,7 @@ nation_t *NAT_GetNationByID (const char *nationID)
 void NAT_UpdateHappinessForAllNations (const float minhappiness)
 {
 	MIS_Foreach(mission) {
-		nation_t *nation = MAP_GetNation(mission->pos);
+		nation_t *nation = GEO_GetNation(mission->pos);
 		/* Difficulty modifier range is [0, 0.02f] */
 
 		/* Some non-water location have no nation */
@@ -394,7 +394,7 @@ bool NAT_ScriptSanityCheck (void)
 			Com_Printf("...... city '%s' has no name\n", city->id);
 		}
 
-		if (MapIsWater(MAP_GetColor(city->pos, MAPTYPE_TERRAIN, NULL))) {
+		if (MapIsWater(GEO_GetColor(city->pos, MAPTYPE_TERRAIN, NULL))) {
 			error++;
 			Com_Printf("...... city '%s' has a position in the water\n", city->id);
 		}
@@ -405,7 +405,7 @@ bool NAT_ScriptSanityCheck (void)
 			if (md->storyRelated)
 				continue;
 
-			if (MAP_PositionFitsTCPNTypes(city->pos, md->terrains, md->cultures, md->populations, NULL)) {
+			if (GEO_PositionFitsTCPNTypes(city->pos, md->terrains, md->cultures, md->populations, NULL)) {
 				int i;
 				/* this map fits city parameter, check if we have some terror mission UFOs available for this map */
 				parametersFit = true;
@@ -438,7 +438,7 @@ bool NAT_ScriptSanityCheck (void)
 					Com_Printf(" %s", cgi->Com_UFOTypeToShortName(ufoTypes[i]));
 				Com_Printf(")\n");
 			}
-			MAP_PrintParameterStringByPos(city->pos);
+			GEO_PrintParameterStringByPos(city->pos);
 		}
 	}
 
@@ -707,7 +707,7 @@ static void NAT_ListCities_f (void)
 {
 	LIST_Foreach(ccs.cities, city_t, city) {
 		Com_Printf("City '%s' -- position (%0.1f, %0.1f)\n", city->id, city->pos[0], city->pos[1]);
-		MAP_PrintParameterStringByPos(city->pos);
+		GEO_PrintParameterStringByPos(city->pos);
 	}
 }
 

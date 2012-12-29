@@ -183,7 +183,7 @@ static void CP_BuildBaseGovernmentLeave (const campaign_t *campaign, mission_t *
 	mission->stage = STAGE_RETURN_TO_ORBIT;
 
 	/* Mission is a success: government is subverted => lower happiness */
-	nation = MAP_GetNation(mission->pos);
+	nation = GEO_GetNation(mission->pos);
 	/** @todo when the mission is created, we should select a position where nation exists,
 	 * otherwise subverting a government is meaningless */
 	if (nation) {

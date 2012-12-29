@@ -128,8 +128,8 @@ void RADAR_DeactivateRadarOverlay (void)
 			return;
 	}
 
-	if (MAP_IsRadarOverlayActivated())
-		MAP_SetOverlay("radar");
+	if (GEO_IsRadarOverlayActivated())
+		GEO_SetOverlay("radar");
 }
 
 /**
@@ -466,5 +466,5 @@ void RADAR_SetRadarAfterLoading (void)
 		RADAR_AddDetectedUFOToEveryRadar(ufo);
 	}
 
-	MAP_UpdateGeoscapeDock();
+	GEO_UpdateGeoscapeDock();
 }

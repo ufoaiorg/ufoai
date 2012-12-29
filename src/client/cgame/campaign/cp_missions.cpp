@@ -53,17 +53,14 @@ static const float MAX_CRASHEDUFO_CONDITION = 0.81f;
 ====================================*/
 
 /**
- * @brief Set some needed cvars from mission definition
- * @param[in] mission mission definition pointer with the needed data to set the cvars to
+ * @brief Set some needed cvars from a battle definition
+ * @param[in] battleParameters battle definition pointer with the needed data to set the cvars to
  * @sa CP_StartSelectedMission
  */
-void CP_SetMissionVars (const mission_t *mission, const battleParam_t *battleParameters)
+void BATTLE_SetVars (const battleParam_t *battleParameters)
 {
 	int i;
 
-	assert(mission->mapDef);
-
-	/* start the map */
 	cgi->Cvar_SetValue("ai_numaliens", battleParameters->aliens);
 	cgi->Cvar_SetValue("ai_numcivilians", battleParameters->civilians);
 	cgi->Cvar_Set("ai_civilian", battleParameters->civTeam);
@@ -88,7 +85,7 @@ void CP_SetMissionVars (const mission_t *mission, const battleParam_t *battlePar
  * @sa Mod_LoadTexinfo
  * @sa B_AssembleMap_f
  */
-void CP_StartMissionMap (mission_t* mission, const battleParam_t *battleParameters)
+void BATTLE_Start (mission_t* mission, const battleParam_t *battleParameters)
 {
 	const char *param = NULL;
 
@@ -130,7 +127,7 @@ void CP_StartMissionMap (mission_t* mission, const battleParam_t *battleParamete
 	else
 		cgi->Cvar_Set("sv_hurtaliens", "0");
 
-	cgi->Cbuf_AddText(va("map %s %s %s\n", (MAP_IsNight(mission->pos) ? "night" : "day"),
+	cgi->Cbuf_AddText(va("map %s %s %s\n", (GEO_IsNight(mission->pos) ? "night" : "day"),
 		mission->mapDef->map, param ? param : ""));
 }
 
@@ -291,9 +288,9 @@ static void CP_CreateCivilianTeam (const mission_t *mission, battleParam_t *para
 
 	assert(mission->posAssigned);
 
-	param->civilians = MAP_GetCivilianNumberByPosition(mission->pos);
+	param->civilians = GEO_GetCivilianNumberByPosition(mission->pos);
 
-	nation = MAP_GetNation(mission->pos);
+	nation = GEO_GetNation(mission->pos);
 	param->nation = nation;
 	if (mission->mapDef->civTeam != NULL) {
 		Q_strncpyz(param->civTeam, mission->mapDef->civTeam, sizeof(param->civTeam));
@@ -335,8 +332,8 @@ void CP_CreateBattleParameters (mission_t *mission, battleParam_t *param, const 
 	cgi->Cvar_Set("rm_crashed", "");
 
 	param->mission = mission;
-	color = MAP_GetColor(mission->pos, MAPTYPE_TERRAIN, NULL);
-	zoneType = MAP_GetTerrainType(color);
+	color = GEO_GetColor(mission->pos, MAPTYPE_TERRAIN, NULL);
+	zoneType = GEO_GetTerrainType(color);
 	param->zoneType = zoneType; /* store to terrain type for texture replacement */
 	/* Is there a UFO to recover ? */
 	if (mission->ufo) {
@@ -420,7 +417,7 @@ mission_t* CP_GetMissionByID (const char *missionId)
 /**
  * @brief Find mission corresponding to idx
  */
-mission_t* MAP_GetMissionByIDX (int id)
+mission_t* MIS_GetByIdx (int id)
 {
 	MIS_Foreach(mission) {
 		if (mission->idx == id)
@@ -433,7 +430,7 @@ mission_t* MAP_GetMissionByIDX (int id)
 /**
  * @brief Find idx corresponding to mission
  */
-int MAP_GetIDXByMission (const mission_t *mis)
+int MIS_GetIdx (const mission_t *mis)
 {
 	return mis->idx;
 }
@@ -535,9 +532,9 @@ int CP_CountMissionOnGeoscape (void)
 /**
  * @brief Get mission model that should be shown on the geoscape
  * @param[in] mission Pointer to the mission drawn on geoscape
- * @sa MAP_DrawMapMarkers
+ * @sa GEO_DrawMarkers
  */
-const char* MAP_GetMissionModel (const mission_t *mission)
+const char* MIS_GetModel (const mission_t *mission)
 {
 	/* Mission shouldn't be drawn on geoscape if mapDef is not defined */
 	assert(mission->mapDef);
@@ -636,7 +633,7 @@ void CP_MissionRemoveFromGeoscape (mission_t *mission)
 	mission->onGeoscape = false;
 
 	/* Notifications */
-	MAP_NotifyMissionRemoved(mission);
+	GEO_NotifyMissionRemoved(mission);
 	AIR_AircraftsNotifyMissionRemoved(mission);
 }
 
@@ -702,7 +699,7 @@ void CP_MissionAddToGeoscape (mission_t *mission, bool force)
 
 	mission->onGeoscape = true;
 	CP_GameTimeStop();
-	MAP_UpdateGeoscapeDock();
+	GEO_UpdateGeoscapeDock();
 }
 
 /**
@@ -734,8 +731,8 @@ bool CP_CheckNewMissionDetectedOnGeoscape (void)
 			CP_MissionAddToGeoscape(mission, true);
 
 			/* maybe radar is not activated yet (as ufo wasn't detected before) */
-			if (!MAP_IsRadarOverlayActivated())
-				MAP_SetOverlay("radar");
+			if (!GEO_IsRadarOverlayActivated())
+				GEO_SetOverlay("radar");
 
 			/* if mission has a UFO, detect the UFO when it takes off */
 			if (mission->ufo)
@@ -782,7 +779,7 @@ void CP_UFORemoveFromGeoscape (mission_t *mission, bool destroyed)
 
 	/* Notications */
 	AIR_AircraftsNotifyUFORemoved(mission->ufo, destroyed);
-	MAP_NotifyUFORemoved(mission->ufo, destroyed);
+	GEO_NotifyUFORemoved(mission->ufo, destroyed);
 	AIRFIGHT_RemoveProjectileAimingAircraft(mission->ufo);
 
 	if (destroyed) {
@@ -1088,7 +1085,7 @@ void CP_MissionEnd (const campaign_t *campaign, mission_t* mission, const battle
 		/* HACK */
 		aircraft = base->aircraftCurrent;
 	} else {
-		aircraft = MAP_GetMissionAircraft();
+		aircraft = GEO_GetMissionAircraft();
 		base = aircraft->homebase;
 	}
 
@@ -1221,7 +1218,7 @@ void CP_SpawnCrashSiteMission (aircraft_t *ufo)
 	Vector2Copy(ufo->pos, mission->pos);
 	mission->posAssigned = true;
 
-	nation = MAP_GetNation(mission->pos);
+	nation = GEO_GetNation(mission->pos);
 	if (nation) {
 		Com_sprintf(mission->location, sizeof(mission->location), "%s", _(nation->name));
 	} else {
@@ -1284,8 +1281,8 @@ void CP_SpawnRescueMission (aircraft_t *aircraft, aircraft_t *ufo)
 	/* a crashed aircraft is no longer using capacity of the hangars */
 	AIR_UpdateHangarCapForAll(aircraft->homebase);
 
-	if (MAP_IsAircraftSelected(aircraft))
-		MAP_SetSelectedAircraft(NULL);
+	if (GEO_IsAircraftSelected(aircraft))
+		GEO_SetSelectedAircraft(NULL);
 
 	/* Check if ufo was destroyed too */
 	if (!ufo) {

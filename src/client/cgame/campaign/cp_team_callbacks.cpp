@@ -31,7 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_team.h"
 #include "cp_team_callbacks.h"
 #ifdef DEBUG
-#include "cp_geoscape.h" /* MAP_GetSelectedAircraft */
+#include "cp_geoscape.h" /* GEO_GetSelectedAircraft */
 #endif
 
 /**
@@ -181,7 +181,7 @@ static void CP_TeamListDebug_f (void)
 	aircraft_t *aircraft;
 	linkedList_t *l;
 
-	aircraft = MAP_GetSelectedAircraft();
+	aircraft = GEO_GetSelectedAircraft();
 	if (!aircraft) {
 		Com_Printf("Buy/build an aircraft first.\n");
 		return;

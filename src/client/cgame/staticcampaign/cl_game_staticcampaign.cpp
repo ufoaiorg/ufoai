@@ -32,9 +32,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "scp_parse.h"
 #include "scp_shared.h"
 
-extern void MAP_DrawMap(geoscapeData_t* data);
-extern void MAP_DrawMapMarkers(const uiNode_t* node);
-extern void MAP_MapClick(const uiNode_t* node, int x, int y, const vec2_t pos);
+extern void GEO_Draw(geoscapeData_t* data);
+extern void GEO_DrawMarkers(const uiNode_t* node);
+extern void GEO_Click(const uiNode_t* node, int x, int y, const vec2_t pos);
 
 CGAME_HARD_LINKED_FUNCTIONS
 
@@ -103,9 +103,9 @@ const cgame_export_t *GetCGameStaticCampaignAPI (const cgame_import_t *import)
 	e.DrawBaseLayout = GAME_CP_DrawBaseLayout;
 	e.DrawBaseTooltip = GAME_CP_DrawBaseTooltip;
 	e.GetTeamDef = GAME_CP_GetTeamDef;
-	e.MapDraw = MAP_DrawMap;
-	e.MapDrawMarkers = MAP_DrawMapMarkers;
-	e.MapClick = MAP_MapClick;
+	e.MapDraw = GEO_Draw;
+	e.MapDrawMarkers = GEO_DrawMarkers;
+	e.MapClick = GEO_Click;
 
 	cgi = import;
 

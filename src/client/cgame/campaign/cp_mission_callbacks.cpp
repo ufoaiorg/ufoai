@@ -37,7 +37,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 static void AM_Go_f (void)
 {
-	mission_t *mission = MAP_GetSelectedMission();
+	mission_t *mission = GEO_GetSelectedMission();
 	missionResults_t *results = &ccs.missionResults;
 	battleParam_t *battleParam = &ccs.battleParameters;
 
@@ -46,12 +46,12 @@ static void AM_Go_f (void)
 		return;
 	}
 
-	if (MAP_GetMissionAircraft() == NULL) {
+	if (GEO_GetMissionAircraft() == NULL) {
 		Com_Printf("GAME_CP_MissionAutoGo_f: No aircraft at target pos\n");
 		return;
 	}
 
-	if (MAP_GetInterceptorAircraft() == NULL) {
+	if (GEO_GetInterceptorAircraft() == NULL) {
 		Com_Printf("GAME_CP_MissionAutoGo_f: No intercept aircraft given\n");
 		return;
 	}
@@ -71,11 +71,11 @@ static void AM_Go_f (void)
 	}
 
 	/* start the map */
-	CP_CreateBattleParameters(mission, battleParam, MAP_GetMissionAircraft());
+	CP_CreateBattleParameters(mission, battleParam, GEO_GetMissionAircraft());
 	battleParam->retriable = false;
 
 	results->state = LOST;
-	AM_Go(mission, MAP_GetInterceptorAircraft(), ccs.curCampaign, battleParam, results);
+	AM_Go(mission, GEO_GetInterceptorAircraft(), ccs.curCampaign, battleParam, results);
 }
 
 /**
@@ -87,9 +87,9 @@ static void AM_Go_f (void)
  */
 static void AM_Check_f (void)
 {
-	const mission_t *mission = MAP_GetSelectedMission();
+	const mission_t *mission = GEO_GetSelectedMission();
 
-	if (!mission || MAP_GetInterceptorAircraft() == NULL) {
+	if (!mission || GEO_GetInterceptorAircraft() == NULL) {
 		Com_DPrintf(DEBUG_CLIENT, "GAME_CP_MissionAutoCheck_f: No update after automission\n");
 		return;
 	}

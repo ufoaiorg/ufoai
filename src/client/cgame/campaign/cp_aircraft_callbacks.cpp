@@ -110,7 +110,7 @@ static void AIM_AircraftStart_f (void)
 	MS_AddNewMessage(_("Notice"), _("Aircraft started"));
 	aircraft->status = AIR_IDLE;
 
-	MAP_SelectAircraft(aircraft);
+	GEO_SelectAircraft(aircraft);
 	/* Return to geoscape. */
 	cgi->UI_PopWindow(false);
 	cgi->UI_PopWindow(false);

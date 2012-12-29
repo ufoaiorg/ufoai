@@ -199,7 +199,7 @@ static bool CP_MapIsSelectable (const mission_t *mission, const mapDef_t *md, co
 			return false;
 	}
 
-	if (pos && !MAP_PositionFitsTCPNTypes(pos, md->terrains, md->cultures, md->populations, NULL))
+	if (pos && !GEO_PositionFitsTCPNTypes(pos, md->terrains, md->cultures, md->populations, NULL))
 		return false;
 
 	return true;
@@ -256,7 +256,7 @@ bool CP_ChooseMap (mission_t *mission, const vec2_t pos)
 		Com_Printf("CP_ChooseMap: Could not find map with required conditions:\n");
 		Com_Printf("  ufo: %s -- pos: ", mission->ufo ? cgi->Com_UFOTypeToShortName(mission->ufo->ufotype) : "none");
 		if (pos)
-			Com_Printf("%s", MapIsWater(MAP_GetColor(pos, MAPTYPE_TERRAIN, NULL)) ? " (in water) " : "");
+			Com_Printf("%s", MapIsWater(GEO_GetColor(pos, MAPTYPE_TERRAIN, NULL)) ? " (in water) " : "");
 		if (pos)
 			Com_Printf("(%.02f, %.02f)\n", pos[0], pos[1]);
 		else
@@ -718,7 +718,7 @@ bool CP_LoadXML (xmlNode_t *parent)
 
 	CP_CampaignInit(campaign, true);
 	/* init the map images and reset the map actions */
-	MAP_Reset(campaign->map);
+	GEO_Reset(campaign->map);
 
 	/* read credits */
 	CP_UpdateCredits(cgi->XML_GetLong(campaignNode, SAVE_CAMPAIGN_CREDITS, 0));
@@ -810,12 +810,12 @@ bool CP_SaveXML (xmlNode_t *parent)
  * @brief Starts a selected mission
  * @note Checks whether a dropship is near the landing zone and whether
  * it has a team on board
- * @sa CP_SetMissionVars
+ * @sa BATTLE_SetVars
  */
 void CP_StartSelectedMission (void)
 {
 	mission_t *mis;
-	aircraft_t *aircraft = MAP_GetMissionAircraft();
+	aircraft_t *aircraft = GEO_GetMissionAircraft();
 	base_t *base;
 	battleParam_t *battleParam = &ccs.battleParameters;
 
@@ -826,10 +826,10 @@ void CP_StartSelectedMission (void)
 
 	base = aircraft->homebase;
 
-	if (MAP_GetSelectedMission() == NULL)
-		MAP_SetSelectedMission(aircraft->mission);
+	if (GEO_GetSelectedMission() == NULL)
+		GEO_SetSelectedMission(aircraft->mission);
 
-	mis = MAP_GetSelectedMission();
+	mis = GEO_GetSelectedMission();
 	if (!mis) {
 		Com_Printf("CP_StartSelectedMission: No mission selected\n");
 		return;
@@ -853,7 +853,7 @@ void CP_StartSelectedMission (void)
 	cgi->CL_Disconnect();
 
 	CP_CreateBattleParameters(mis, battleParam, aircraft);
-	CP_SetMissionVars(mis, battleParam);
+	BATTLE_SetVars(battleParam);
 
 	/* manage inventory */
 	/**
@@ -864,7 +864,7 @@ void CP_StartSelectedMission (void)
 	ccs.eMission = base->storage; /* copied, including arrays inside! */
 	CP_CleanTempInventory(base);
 	CP_CleanupAircraftTeam(aircraft, &ccs.eMission);
-	CP_StartMissionMap(mis, battleParam);
+	BATTLE_Start(mis, battleParam);
 }
 
 /**
@@ -1047,7 +1047,7 @@ static const cmdList_t game_commands[] = {
 	{"game_timeslow", CP_GameTimeSlow, NULL},
 	{"game_timefast", CP_GameTimeFast, NULL},
 	{"game_settimeid", CP_SetGameTime_f, NULL},
-	{"map_center", MAP_CenterOnPoint_f, "Centers the geoscape view on items on the geoscape - and cycle through them"},
+	{"map_center", GEO_CenterOnPoint_f, "Centers the geoscape view on items on the geoscape - and cycle through them"},
 	{"cp_start_xvi_spreading", CP_StartXVISpreading_f, "Start XVI spreading"},
 	{"cp_spawn_ufocarrier", CP_SpawnUFOCarrier_f, "Spawns a UFO-Carrier on the geoscape"},
 	{"cp_attack_ufocarrier", CP_AttackUFOCarrier_f, "Attack the UFO-Carrier"},
@@ -1160,7 +1160,7 @@ void CP_CampaignInit (campaign_t *campaign, bool load)
 	/* create initial employees */
 	E_InitialEmployees(campaign);
 
-	MAP_Reset(campaign->map);
+	GEO_Reset(campaign->map);
 	PR_ProductionInit();
 
 	CP_UpdateCredits(campaign->credits);
@@ -1212,7 +1212,7 @@ void CP_Shutdown (void)
 		CP_RemoveCampaignCommands();
 	}
 
-	MAP_Shutdown();
+	GEO_Shutdown();
 }
 
 /**
@@ -1317,7 +1317,7 @@ void CP_GetRandomPosOnGeoscape (vec2_t pos, bool noWater)
 	do {
 		pos[0] = (frand() - 0.5f) * 360.0f;
 		pos[1] = asin((frand() - 0.5f) * 2.0f) * todeg;
-	} while (noWater && MapIsWater(MAP_GetColor(pos, MAPTYPE_TERRAIN, NULL)));
+	} while (noWater && MapIsWater(GEO_GetColor(pos, MAPTYPE_TERRAIN, NULL)));
 
 	Com_DPrintf(DEBUG_CLIENT, "CP_GetRandomPosOnGeoscape: Get random position on geoscape %.2f:%.2f\n", pos[0], pos[1]);
 }
@@ -1363,7 +1363,7 @@ bool CP_GetRandomPosOnGeoscapeWithParameters (vec2_t pos, const linkedList_t* te
 
 			Vector2Set(posT, posX, posY);
 
-			if (MAP_PositionFitsTCPNTypes(posT, terrainTypes, cultureTypes, populationTypes, nations)) {
+			if (GEO_PositionFitsTCPNTypes(posT, terrainTypes, cultureTypes, populationTypes, nations)) {
 				/* the location given in pos belongs to the terrain, culture, population types and nations
 				 * that are acceptable, so count it */
 				/** @todo - cache the counted hits */
@@ -1388,7 +1388,7 @@ bool CP_GetRandomPosOnGeoscapeWithParameters (vec2_t pos, const linkedList_t* te
 
 			Vector2Set(posT,posX,posY);
 
-			if (MAP_PositionFitsTCPNTypes(posT, terrainTypes, cultureTypes, populationTypes, nations)) {
+			if (GEO_PositionFitsTCPNTypes(posT, terrainTypes, cultureTypes, populationTypes, nations)) {
 				num--;
 
 				if (num < 1) {
@@ -1489,7 +1489,7 @@ void CP_InitStartup (void)
 	HOS_InitStartup();
 	INT_InitStartup();
 	AC_InitStartup();
-	MAP_InitStartup();
+	GEO_InitStartup();
 	UFO_InitStartup();
 	TR_InitStartup();
 	AB_InitStartup();

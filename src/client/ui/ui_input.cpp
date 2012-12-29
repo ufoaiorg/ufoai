@@ -697,7 +697,7 @@ static void UI_LeftClick (int x, int y)
 }
 
 /**
- * @sa MAP_ResetAction
+ * @sa GEO_ResetAction
  * @sa UI_ExecuteEventActions
  * @sa UI_LeftClick
  * @sa UI_MiddleClick

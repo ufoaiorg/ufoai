@@ -98,9 +98,9 @@ void CP_SpawnUFOCarrier_f (void)
 
 	if (cgi->Cmd_Argc() == 3) {
 		const vec2_t pos = { atof(cgi->Cmd_Argv(1)), atof(cgi->Cmd_Argv(2)) };
-		if (!MapIsWater(MAP_GetColor(pos, MAPTYPE_TERRAIN, NULL))) {
+		if (!MapIsWater(GEO_GetColor(pos, MAPTYPE_TERRAIN, NULL))) {
 			INS_Build(installationTemplate, pos, _(installationTemplate->name));
-			MAP_CenterPosition(pos);
+			GEO_CenterPosition(pos);
 			CL_EventAddMail("ufocarrier");
 		}
 	}

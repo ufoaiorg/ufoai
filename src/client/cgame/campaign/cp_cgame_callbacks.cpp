@@ -42,7 +42,7 @@ const cgame_import_t *cgi;
  */
 static void GAME_CP_Results_f (void)
 {
-	mission_t *mission = MAP_GetSelectedMission();
+	mission_t *mission = GEO_GetSelectedMission();
 	battleParam_t *bp = &ccs.battleParameters;
 
 	if (!mission)
@@ -210,7 +210,7 @@ void GAME_CP_Results (dbuffer *msg, int winner, int *numSpawned, int *numAlive, 
 	const bool won = (winner == currentTeam);
 	const bool draw = (winner == -1 || winner == 0);
 	missionResults_t *results;
-	aircraft_t *aircraft = MAP_GetMissionAircraft();
+	aircraft_t *aircraft = GEO_GetMissionAircraft();
 	battleParam_t *bp = &ccs.battleParameters;
 
 	CP_ParseCharacterData(msg, &ccs.updateCharacters);
@@ -323,7 +323,7 @@ void GAME_CP_Results (dbuffer *msg, int winner, int *numSpawned, int *numAlive, 
 
 bool GAME_CP_Spawn (chrList_t *chrList)
 {
-	aircraft_t *aircraft = MAP_GetMissionAircraft();
+	aircraft_t *aircraft = GEO_GetMissionAircraft();
 	base_t *base;
 
 	if (!aircraft)

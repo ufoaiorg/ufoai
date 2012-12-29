@@ -146,7 +146,7 @@ bool CL_DisplayHomebasePopup (aircraft_t *aircraft, bool alwaysDisplay)
 		VectorSet(popupListNode->selectedColor, 0.0, 0.78, 0.0);	/**< Set color for selected entry. */
 		popupListNode->selectedColor[3] = 1.0;
 		cgi->UI_TextNodeSelectLine(popupListNode, homebase);
-		MAP_SelectAircraft(aircraft);
+		GEO_SelectAircraft(aircraft);
 		return true;
 	}
 
@@ -164,7 +164,7 @@ static void CL_PopupChangeHomebase_f (void)
 	int i;
 	base_t *base;
 	int baseIdx;
-	aircraft_t *aircraft = MAP_GetSelectedAircraft();
+	aircraft_t *aircraft = GEO_GetSelectedAircraft();
 
 	/* If popup is opened, that means an aircraft is selected */
 	if (!aircraft) {
@@ -235,7 +235,7 @@ void CL_DisplayPopupAircraft (aircraft_t* aircraft)
 				continue;
 
 			if (tempMission->pos) {
-				popupAircraft.itemsId[popupAircraft.numItems] = MAP_GetIDXByMission(tempMission);
+				popupAircraft.itemsId[popupAircraft.numItems] = MIS_GetIdx(tempMission);
 				popupAircraft.itemsAction[popupAircraft.numItems++] = POPUP_AIRCRAFT_ACTION_MOVETOMISSION;
 				Q_strcat(popupAircraft.textPopup, va(_("Mission\t%s (%s)\n"),
 					CP_MissionToTypeString(tempMission), _(tempMission->location)), lengthof(popupAircraft.textPopup));
@@ -285,7 +285,7 @@ static void CL_PopupAircraftClick_f (void)
 		CL_DisplayHomebasePopup(aircraft, true);
 		break;
 	case POPUP_AIRCRAFT_ACTION_MOVETOMISSION:	/* Aircraft move to mission */
-		mission = MAP_GetMissionByIDX(popupAircraft.itemsId[num]);
+		mission = MIS_GetByIdx(popupAircraft.itemsId[num]);
 		if (mission)
 			AIR_SendAircraftToMission(aircraft, mission);
 		break;
@@ -510,7 +510,7 @@ static void CL_PopupInterceptRClick_f (void)
 
 	/* Display aircraft menu */
 	AIR_AircraftSelect(aircraft);
-	MAP_ResetAction();
+	GEO_ResetAction();
 	B_SelectBase(aircraft->homebase);
 	cgi->UI_PushWindow("aircraft");
 }
@@ -532,7 +532,7 @@ static void CL_PopupInterceptBaseClick_f (void)
 	}
 
 	/* If popup is opened, that means that ufo is selected on geoscape */
-	if (MAP_GetSelectedUFO() == NULL)
+	if (GEO_GetSelectedUFO() == NULL)
 		return;
 
 	num = atoi(cgi->Cmd_Argv(1));
@@ -576,12 +576,12 @@ static void CL_PopupInterceptBaseClick_f (void)
 	assert(base || installation);
 	if (installation) {
 		for (i = 0; i < installation->installationTemplate->maxBatteries; i++)
-			installation->batteries[i].target = MAP_GetSelectedUFO();
+			installation->batteries[i].target = GEO_GetSelectedUFO();
 	} else {
 		for (i = 0; i < base->numBatteries; i++)
-			base->batteries[i].target = MAP_GetSelectedUFO();
+			base->batteries[i].target = GEO_GetSelectedUFO();
 		for (i = 0; i < base->numLasers; i++)
-			base->lasers[i].target = MAP_GetSelectedUFO();
+			base->lasers[i].target = GEO_GetSelectedUFO();
 	}
 
 	cgi->UI_PopWindow(false);

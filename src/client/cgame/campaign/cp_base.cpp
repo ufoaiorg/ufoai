@@ -608,7 +608,7 @@ bool B_AssembleMap (const base_t *base)
 
 	SAV_QuickSave();
 
-	cgi->Cbuf_AddText(va("map %s \"%s\" \"%s\"\n", (MAP_IsNight(base->pos) ? "night" : "day"), maps, coords));
+	cgi->Cbuf_AddText(va("map %s \"%s\" \"%s\"\n", (GEO_IsNight(base->pos) ? "night" : "day"), maps, coords));
 
 	return true;
 }
@@ -907,7 +907,7 @@ static void B_MoveAircraftOnGeoscapeToOtherBases (const base_t *base)
 			if (!moved) {
 				/* No base can hold this aircraft */
 				UFO_NotifyPhalanxAircraftRemoved(aircraft);
-				if (!MapIsWater(MAP_GetColor(aircraft->pos, MAPTYPE_TERRAIN, NULL))) {
+				if (!MapIsWater(GEO_GetColor(aircraft->pos, MAPTYPE_TERRAIN, NULL))) {
 					CP_SpawnRescueMission(aircraft, NULL);
 				} else {
 					/* Destroy the aircraft and everything onboard - the aircraft pointer
@@ -1738,14 +1738,14 @@ void B_SelectBase (const base_t *base)
 		/* if player hit the "create base" button while creating base mode is enabled
 		 * that means that player wants to quit this mode */
 		if (ccs.mapAction == MA_NEWBASE) {
-			MAP_ResetAction();
+			GEO_ResetAction();
 			return;
 		}
 
 		if (B_GetCount() < MAX_BASES) {
 			/* show radar overlay (if not already displayed) */
-			if (!MAP_IsRadarOverlayActivated())
-				MAP_SetOverlay("radar");
+			if (!GEO_IsRadarOverlayActivated())
+				GEO_SetOverlay("radar");
 			ccs.mapAction = MA_NEWBASE;
 		} else {
 			ccs.mapAction = MA_NONE;

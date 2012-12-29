@@ -134,7 +134,7 @@ static void CP_TerrorMissionGo (mission_t *mission)
 		if (!city)
 			continue;
 
-		if (MAP_PositionCloseToBase(city->pos))
+		if (GEO_PositionCloseToBase(city->pos))
 			continue;
 
 		if (!CP_ChooseMap(mission, city->pos))

@@ -553,7 +553,7 @@ static void SAV_GameSaveNameCleanup_f (void)
 
 /**
  * @brief Quick save the current campaign
- * @sa CP_StartMissionMap
+ * @sa BATTLE_Start
  */
 bool SAV_QuickSave (void)
 {

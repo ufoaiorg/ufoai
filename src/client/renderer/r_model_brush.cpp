@@ -179,7 +179,7 @@ static void R_ModLoadEdges (const lump_t *l)
 }
 
 /**
- * @sa CP_StartMissionMap
+ * @sa BATTLE_Start
  */
 static void R_ModLoadTexinfo (const char *mapZone, const lump_t *l)
 {

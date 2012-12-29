@@ -89,7 +89,7 @@ static void CP_ChangeNationHappiness_f (void)
 	float change;
 	nation_t *nation;
 	const nationInfo_t *stats;
-	const mission_t *mission = MAP_GetSelectedMission();
+	const mission_t *mission = GEO_GetSelectedMission();
 
 	if (cgi->Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <absolute change value>\n", cgi->Cmd_Argv(0));
@@ -102,7 +102,7 @@ static void CP_ChangeNationHappiness_f (void)
 		return;
 	}
 
-	nation = MAP_GetNation(mission->pos);
+	nation = GEO_GetNation(mission->pos);
 	assert(nation);
 
 	stats = NAT_GetCurrentMonthInfo(nation);

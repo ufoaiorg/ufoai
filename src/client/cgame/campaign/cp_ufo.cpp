@@ -425,7 +425,7 @@ static void UFO_SearchAircraftTarget (const campaign_t* campaign, aircraft_t *uf
 			AIR_GetDestinationWhilePursuing(ufo, otherUFO, dest);
 			dest[0] += polarCoordinatesOffset;
 			dest[1] += polarCoordinatesOffset;
-			MAP_MapCalcLine(ufo->pos, dest, &ufo->route);
+			GEO_CalcLine(ufo->pos, dest, &ufo->route);
 			ufo->time = 0;
 			ufo->point = 0;
 			break;
@@ -454,7 +454,7 @@ bool UFO_SendPursuingAircraft (aircraft_t* ufo, aircraft_t* aircraft)
 
 	vec2_t dest;
 	AIR_GetDestinationWhilePursuing(ufo, aircraft, dest);
-	MAP_MapCalcLine(ufo->pos, dest, &ufo->route);
+	GEO_CalcLine(ufo->pos, dest, &ufo->route);
 	ufo->status = AIR_UFO;
 	ufo->time = 0;
 	ufo->point = 0;
@@ -473,7 +473,7 @@ void UFO_SendToDestination (aircraft_t* ufo, const vec2_t dest)
 {
 	assert(ufo);
 
-	MAP_MapCalcLine(ufo->pos, dest, &ufo->route);
+	GEO_CalcLine(ufo->pos, dest, &ufo->route);
 	ufo->status = AIR_TRANSIT;
 	ufo->time = 0;
 	ufo->point = 0;
@@ -526,7 +526,7 @@ void UFO_CampaignRunUFOs (const campaign_t* campaign, int deltaTime)
 		if (AIR_AircraftMakeMove(deltaTime, ufo) && ufo->status != AIR_UFO) {
 			const vec2_t &end = ufo->route.point[ufo->route.numPoints - 1];
 			Vector2Copy(end, ufo->pos);
-			MAP_CheckPositionBoundaries(ufo->pos);
+			GEO_CheckPositionBoundaries(ufo->pos);
 			if (ufo->mission->stage == STAGE_INTERCEPT && ufo->mission->data.aircraft) {
 				/* Attacking an installation: fly over this installation */
 				UFO_SetRandomDestAround(ufo, ufo->mission->pos);
@@ -767,12 +767,12 @@ void UFO_DetectNewUFO (aircraft_t *ufocraft)
 	ufocraft->lastSpotted = ccs.date;
 
 	/* If this is the first UFO on geoscape, activate radar */
-	if (!MAP_IsRadarOverlayActivated())
-		MAP_SetOverlay("radar");
+	if (!GEO_IsRadarOverlayActivated())
+		GEO_SetOverlay("radar");
 
 	CP_TriggerEvent(UFO_DETECTION, cgi->Com_UFOTypeToShortName(ufocraft->ufotype));
 
-	MAP_UpdateGeoscapeDock();
+	GEO_UpdateGeoscapeDock();
 }
 
 /**
@@ -870,7 +870,7 @@ bool UFO_CampaignCheckEvents (void)
 				ufo->detected = false;
 				/* Notify that ufo disappeared */
 				AIR_AircraftsUFODisappear(ufo);
-				MAP_NotifyUFODisappear(ufo);
+				GEO_NotifyUFODisappear(ufo);
 
 				/* Deactivate Radar overlay */
 				RADAR_DeactivateRadarOverlay();

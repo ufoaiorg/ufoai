@@ -82,8 +82,8 @@ static void ResetCampaignData (void)
 
 	CP_UpdateCredits(MAX_CREDITS);
 
-	MAP_Shutdown();
-	MAP_Init(campaign->map);
+	GEO_Shutdown();
+	GEO_Init(campaign->map);
 
 	ccs.curCampaign = campaign;
 }
@@ -754,16 +754,16 @@ static void testMap (void)
 	ResetCampaignData();
 
 	Vector2Set(pos, -51, 0);
-	CU_ASSERT_TRUE(MapIsWater(MAP_GetColor(pos, MAPTYPE_TERRAIN, NULL)));
+	CU_ASSERT_TRUE(MapIsWater(GEO_GetColor(pos, MAPTYPE_TERRAIN, NULL)));
 
 	Vector2Set(pos, 51, 0);
-	CU_ASSERT_TRUE(!MapIsWater(MAP_GetColor(pos, MAPTYPE_TERRAIN, NULL)));
+	CU_ASSERT_TRUE(!MapIsWater(GEO_GetColor(pos, MAPTYPE_TERRAIN, NULL)));
 
 	Vector2Set(pos, 20, 20);
-	CU_ASSERT_TRUE(MapIsWater(MAP_GetColor(pos, MAPTYPE_TERRAIN, NULL)));
+	CU_ASSERT_TRUE(MapIsWater(GEO_GetColor(pos, MAPTYPE_TERRAIN, NULL)));
 
 	Vector2Set(pos, -45, 2.5);
-	CU_ASSERT_TRUE(!MapIsWater(MAP_GetColor(pos, MAPTYPE_TERRAIN, &coast)));
+	CU_ASSERT_TRUE(!MapIsWater(GEO_GetColor(pos, MAPTYPE_TERRAIN, &coast)));
 	CU_ASSERT_TRUE(coast);
 }
 

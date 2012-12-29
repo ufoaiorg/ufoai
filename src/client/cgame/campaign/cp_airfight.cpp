@@ -477,13 +477,13 @@ void AIRFIGHT_ActionsAfterAirfight (const campaign_t* campaign, aircraft_t *shoo
 		 * (in case we need to know what item to collect e.g.) */
 
 		/* get the color value of the map at the crash position */
-		color = MAP_GetColor(aircraft->pos, MAPTYPE_TERRAIN, NULL);
+		color = GEO_GetColor(aircraft->pos, MAPTYPE_TERRAIN, NULL);
 		/* if this color value is not the value for water ...
 		 * and we hit the probability to spawn a crashsite mission */
 		if (!MapIsWater(color)) {
 			CP_SpawnCrashSiteMission(aircraft);
 		} else {
-			Com_DPrintf(DEBUG_CLIENT, "AIRFIGHT_ActionsAfterAirfight: zone: %s (%i:%i:%i)\n", MAP_GetTerrainType(color), color[0], color[1], color[2]);
+			Com_DPrintf(DEBUG_CLIENT, "AIRFIGHT_ActionsAfterAirfight: zone: %s (%i:%i:%i)\n", GEO_GetTerrainType(color), color[0], color[1], color[2]);
 			MS_AddNewMessage(_("Interception"), _("UFO interception successful -- UFO lost to sea."));
 			CP_MissionIsOverByUFO(aircraft);
 		}
@@ -513,7 +513,7 @@ void AIRFIGHT_ActionsAfterAirfight (const campaign_t* campaign, aircraft_t *shoo
 		/* notify UFOs that a phalanx aircraft has been destroyed */
 		UFO_NotifyPhalanxAircraftRemoved(aircraft);
 
-		if (!MapIsWater(MAP_GetColor(aircraft->pos, MAPTYPE_TERRAIN, NULL))) {
+		if (!MapIsWater(GEO_GetColor(aircraft->pos, MAPTYPE_TERRAIN, NULL))) {
 			CP_SpawnRescueMission(aircraft, shooter);
 		} else {
 			/* Destroy the aircraft and everything onboard - the aircraft pointer
@@ -663,7 +663,7 @@ static void AIRFIGHT_GetNextPointInPathFromVector (const float *movement, const 
  */
 static void AIRFIGHT_GetNextPointInPath (const float *movement, const vec2_t originalPoint, const vec2_t targetPoint, float *angle, vec2_t finalPoint, vec3_t orthogonalVector)
 {
-	*angle = MAP_AngleOfPath(originalPoint, targetPoint, NULL, orthogonalVector);
+	*angle = GEO_AngleOfPath(originalPoint, targetPoint, NULL, orthogonalVector);
 	AIRFIGHT_GetNextPointInPathFromVector(movement, originalPoint, orthogonalVector, finalPoint);
 }
 

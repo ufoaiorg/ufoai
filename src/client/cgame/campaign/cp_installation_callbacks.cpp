@@ -114,7 +114,7 @@ static void INS_BuildInstallation_f (void)
 		/* this cvar is used for disabling the installation build button on geoscape if MAX_INSTALLATIONS was reached */
 		cgi->Cvar_SetValue("mn_installation_count", INS_GetCount());
 
-		const nation_t *nation = MAP_GetNation(installation->pos);
+		const nation_t *nation = GEO_GetNation(installation->pos);
 		if (nation)
 			Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("A new installation has been built: %s (nation: %s)"), installation->name, _(nation->name));
 		else
@@ -122,8 +122,8 @@ static void INS_BuildInstallation_f (void)
 		MSO_CheckAddNewMessage(NT_INSTALLATION_BUILDSTART, _("Installation building"), cp_messageBuffer, MSG_CONSTRUCTION);
 	} else {
 		if (installationTemplate->type == INSTALLATION_RADAR) {
-			if (MAP_IsRadarOverlayActivated())
-					MAP_SetOverlay("radar");
+			if (GEO_IsRadarOverlayActivated())
+					GEO_SetOverlay("radar");
 		}
 		if (ccs.mapAction == MA_NEWINSTALLATION)
 			ccs.mapAction = MA_NONE;
@@ -228,7 +228,7 @@ static void INS_FillUFOYardData_f (void)
 	}
 
 	if (ins) {
-		const nation_t *nat = MAP_GetNation(ins->pos);
+		const nation_t *nat = GEO_GetNation(ins->pos);
 		const int timeToBuild = std::max(0, ins->installationTemplate->buildTime - (ccs.date.day - ins->buildStart));
 		const char *buildTime = (timeToBuild > 0 && ins->installationStatus == INSTALLATION_UNDER_CONSTRUCTION) ? va(ngettext("%d day", "%d days", timeToBuild), timeToBuild) : "-";
 		const int freeCap = std::max(0, ins->ufoCapacity.max - ins->ufoCapacity.cur);
@@ -283,7 +283,7 @@ static void INS_SelectType_f (void)
 	const char *id = cgi->Cmd_Argv(1);
 
 	if (ccs.mapAction == MA_NEWINSTALLATION) {
-		MAP_ResetAction();
+		GEO_ResetAction();
 		return;
 	}
 
@@ -311,8 +311,8 @@ static void INS_SelectType_f (void)
 	ccs.mapAction = MA_NEWINSTALLATION;
 
 	/* show radar overlay (if not already displayed) */
-	if (tpl->type == INSTALLATION_RADAR && !MAP_IsRadarOverlayActivated())
-		MAP_SetOverlay("radar");
+	if (tpl->type == INSTALLATION_RADAR && !GEO_IsRadarOverlayActivated())
+		GEO_SetOverlay("radar");
 
 	INS_SetInstallationTitle(tpl->type);
 	cgi->Cvar_Set("mn_installation_type", tpl->id);

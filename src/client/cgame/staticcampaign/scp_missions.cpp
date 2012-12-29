@@ -206,7 +206,7 @@ static void SCP_CampaignAddMission (setState_t *set)
 	}
 	Vector2Copy(mis->def->pos, mission->pos);
 	mission->posAssigned = true;
-	nation = MAP_GetNation(mission->pos);
+	nation = GEO_GetNation(mission->pos);
 	if (nation) {
 		Com_sprintf(mission->location, sizeof(mission->location), "%s", _(nation->name));
 	} else {

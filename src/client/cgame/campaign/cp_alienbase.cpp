@@ -53,7 +53,7 @@ void AB_SetAlienBasePosition (vec2_t pos)
 		CP_GetRandomPosOnGeoscape(randomPos, true);
 
 		/* Alien base must not be too close from phalanx base */
-		if (MAP_PositionCloseToBase(randomPos))
+		if (GEO_PositionCloseToBase(randomPos))
 			continue;
 
 		/* If this is the first alien base, there's no further condition: select this pos and quit */
@@ -243,7 +243,7 @@ void AB_BaseSearchedByNations (void)
 		return;
 
 	AB_Foreach(base) {
-		const nation_t *nation = MAP_GetNation(base->pos);
+		const nation_t *nation = GEO_GetNation(base->pos);
 
 		/* If nation is a lot infected, it won't help in finding base (government infected) */
 		if (nation) {

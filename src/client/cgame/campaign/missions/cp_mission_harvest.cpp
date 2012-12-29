@@ -146,7 +146,7 @@ void CP_HarvestMissionGo (mission_t *mission)
 		for (counter = 0; counter < MAX_POS_LOOP; counter++) {
 			if (!CP_GetRandomPosOnGeoscapeWithParameters(mission->pos, mission->mapDef->terrains, mission->mapDef->cultures, mission->mapDef->populations, nationTest ? nationList : NULL))
 				continue;
-			if (MAP_PositionCloseToBase(mission->pos))
+			if (GEO_PositionCloseToBase(mission->pos))
 				continue;
 			mission->posAssigned = true;
 			break;
@@ -163,7 +163,7 @@ void CP_HarvestMissionGo (mission_t *mission)
 		return;
 	}
 
-	nation = MAP_GetNation(mission->pos);
+	nation = GEO_GetNation(mission->pos);
 	if (nation) {
 		Com_sprintf(mission->location, sizeof(mission->location), "%s", _(nation->name));
 	} else {

@@ -72,13 +72,13 @@ void CP_BaseAttackMissionIsFailure (mission_t *mission)
 	}
 	ccs.mapAction = MA_NONE;
 
-	MAP_SetMissionAircraft(NULL);
+	GEO_SetMissionAircraft(NULL);
 
 	INT_ChangeIndividualInterest(0.05f, INTERESTCATEGORY_BUILDING);
 	INT_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_BASE_ATTACK);
 
 	/* reset current selected mission */
-	MAP_NotifyMissionRemoved(mission);
+	GEO_NotifyMissionRemoved(mission);
 
 	CP_MissionRemove(mission);
 }
@@ -129,7 +129,7 @@ void CP_BaseAttackMissionDestroyBase (mission_t *mission)
 	CP_GameTimeStop();
 
 	/* we really don't want to use the fake aircraft anywhere */
-	MAP_SetMissionAircraft(NULL);
+	GEO_SetMissionAircraft(NULL);
 
 	/* HACK This hack is only needed until base will be really destroyed
 	 * we must recalculate items in storage because of the items we collected on battlefield */
@@ -171,7 +171,7 @@ void CP_BaseAttackStartMission (mission_t *mission)
 	base->baseStatus = BASE_UNDER_ATTACK;
 	ccs.campaignStats.basesAttacked++;
 
-	MAP_SelectMission(mission);
+	GEO_SelectMission(mission);
 	mission->active = true;
 	ccs.mapAction = MA_BASEATTACK;
 	Com_DPrintf(DEBUG_CLIENT, "Base attack: %s at %.0f:%.0f\n", mission->id, mission->pos[0], mission->pos[1]);
@@ -200,10 +200,10 @@ void CP_BaseAttackStartMission (mission_t *mission)
 	}
 
 	base->aircraftCurrent = &baseAttackFakeAircraft;
-	MAP_SetMissionAircraft(&baseAttackFakeAircraft);
+	GEO_SetMissionAircraft(&baseAttackFakeAircraft);
 	/** @todo remove me - this is not needed because we are using the base->aircraftCurrent
 	 * pointer for resolving the aircraft - only CP_GameAutoGo needs this */
-	MAP_SetInterceptorAircraft(&baseAttackFakeAircraft);	/* needed for updating soldier stats sa CP_UpdateCharacterStats */
+	GEO_SetInterceptorAircraft(&baseAttackFakeAircraft);	/* needed for updating soldier stats sa CP_UpdateCharacterStats */
 	B_SetCurrentSelectedBase(base);						/* needed for equipment menu */
 
 	static char popupText[1024];

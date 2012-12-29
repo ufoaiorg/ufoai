@@ -580,7 +580,7 @@ int AIR_GetRemainingRange (const aircraft_t *aircraft)
  * @brief check if aircraft has enough fuel to go to destination, and then come back home
  * @param[in] aircraft Pointer to the aircraft
  * @param[in] destination Pointer to the position the aircraft should go to
- * @sa MAP_MapCalcLine
+ * @sa GEO_CalcLine
  * @return true if the aircraft can go to the position, false else
  */
 bool AIR_AircraftHasEnoughFuel (const aircraft_t *aircraft, const vec2_t destination)
@@ -606,7 +606,7 @@ bool AIR_AircraftHasEnoughFuel (const aircraft_t *aircraft, const vec2_t destina
  * @brief check if aircraft has enough fuel to go to destination
  * @param[in] aircraft Pointer to the aircraft
  * @param[in] destination Pointer to the position the aircraft should go to
- * @sa MAP_MapCalcLine
+ * @sa GEO_CalcLine
  * @return true if the aircraft can go to the position, false else
  */
 bool AIR_AircraftHasEnoughFuelOneWay (const aircraft_t *aircraft, const vec2_t destination)
@@ -631,7 +631,7 @@ void AIR_AircraftReturnToBase (aircraft_t *aircraft)
 {
 	if (aircraft && AIR_IsAircraftOnGeoscape(aircraft)) {
 		const base_t *base = aircraft->homebase;
-		MAP_MapCalcLine(aircraft->pos, base->pos, &aircraft->route);
+		GEO_CalcLine(aircraft->pos, base->pos, &aircraft->route);
 		aircraft->status = AIR_RETURNING;
 		aircraft->time = 0;
 		aircraft->point = 0;
@@ -941,7 +941,7 @@ bool AIR_MoveAircraftIntoNewHomebase (aircraft_t *aircraft, base_t *base)
 
 	/* No need to update global IDX of every aircraft: the global IDX of this aircraft did not change */
 	/* Redirect selectedAircraft */
-	MAP_SelectAircraft(aircraft);
+	GEO_SelectAircraft(aircraft);
 
 	if (aircraft->status == AIR_RETURNING) {
 		/* redirect to the new base */
@@ -970,7 +970,7 @@ void AIR_DeleteAircraft (aircraft_t *aircraft)
 	base = aircraft->homebase;
 	assert(base);
 
-	MAP_NotifyAircraftRemoved(aircraft);
+	GEO_NotifyAircraftRemoved(aircraft);
 	TR_NotifyAircraftRemoved(aircraft);
 
 	/* Remove pilot and all soldiers from the aircraft (the employees are still hired after this). */
@@ -1077,7 +1077,7 @@ bool AIR_AircraftMakeMove (int dt, aircraft_t* aircraft)
 		aircraft->pos[0] = (1 - frac) * aircraft->route.point[p][0] + frac * aircraft->route.point[p + 1][0];
 		aircraft->pos[1] = (1 - frac) * aircraft->route.point[p][1] + frac * aircraft->route.point[p + 1][1];
 
-		MAP_CheckPositionBoundaries(aircraft->pos);
+		GEO_CheckPositionBoundaries(aircraft->pos);
 	}
 
 	dist = (float) aircraft->stats[AIR_STATS_SPEED] * (aircraft->time + dt) / (float)SECONDS_PER_HOUR;
@@ -1094,7 +1094,7 @@ bool AIR_AircraftMakeMove (int dt, aircraft_t* aircraft)
 		aircraft->projectedPos[0] = (1 - frac) * aircraft->route.point[p][0] + frac * aircraft->route.point[p + 1][0];
 		aircraft->projectedPos[1] = (1 - frac) * aircraft->route.point[p][1] + frac * aircraft->route.point[p + 1][1];
 
-		MAP_CheckPositionBoundaries(aircraft->projectedPos);
+		GEO_CheckPositionBoundaries(aircraft->projectedPos);
 	}
 
 	return false;
@@ -1107,7 +1107,7 @@ static void AIR_Move (aircraft_t* aircraft, int deltaTime)
 		/* aircraft reach its destination */
 		const float *end = aircraft->route.point[aircraft->route.numPoints - 1];
 		Vector2Copy(end, aircraft->pos);
-		MAP_CheckPositionBoundaries(aircraft->pos);
+		GEO_CheckPositionBoundaries(aircraft->pos);
 
 		switch (aircraft->status) {
 		case AIR_MISSION:
@@ -1115,9 +1115,9 @@ static void AIR_Move (aircraft_t* aircraft, int deltaTime)
 			assert(aircraft->mission);
 			aircraft->mission->active = true;
 			aircraft->status = AIR_DROP;
-			MAP_SetMissionAircraft(aircraft);
-			MAP_SelectMission(aircraft->mission);
-			MAP_SetInterceptorAircraft(aircraft);
+			GEO_SetMissionAircraft(aircraft);
+			GEO_SelectMission(aircraft->mission);
+			GEO_SetInterceptorAircraft(aircraft);
 			CP_GameTimeStop();
 			cgi->UI_PushWindow("popup_intercept_ready");
 			cgi->UI_ExecuteConfunc("pop_intready_aircraft \"%s\"", aircraft->name);
@@ -1249,7 +1249,7 @@ void AIR_CampaignRun (const campaign_t* campaign, int dt, bool updateRadarOverla
 		}
 	}
 
-	if (updateRadarOverlay && radarOverlayReset && MAP_IsRadarOverlayActivated()) {
+	if (updateRadarOverlay && radarOverlayReset && GEO_IsRadarOverlayActivated()) {
 		RADAR_UpdateWholeRadarOverlay();
 		radarOverlayReset = false;
 	}
@@ -1295,7 +1295,7 @@ bool AIR_SendAircraftToMission (aircraft_t *aircraft, mission_t *mission)
 	}
 
 	/* ensure interceptAircraft is set correctly */
-	MAP_SetInterceptorAircraft(aircraft);
+	GEO_SetInterceptorAircraft(aircraft);
 
 	/* if mission is a base-attack and aircraft already in base, launch
 	 * mission immediately */
@@ -1311,7 +1311,7 @@ bool AIR_SendAircraftToMission (aircraft_t *aircraft, mission_t *mission)
 		return false;
 	}
 
-	MAP_MapCalcLine(aircraft->pos, mission->pos, &aircraft->route);
+	GEO_CalcLine(aircraft->pos, mission->pos, &aircraft->route);
 	aircraft->status = AIR_MISSION;
 	aircraft->time = 0;
 	aircraft->point = 0;
@@ -2037,7 +2037,7 @@ bool AIR_SendAircraftPursuingUFO (aircraft_t* aircraft, aircraft_t* ufo)
 		}
 	}
 
-	MAP_MapCalcLine(aircraft->pos, dest, &aircraft->route);
+	GEO_CalcLine(aircraft->pos, dest, &aircraft->route);
 	aircraft->status = AIR_UFO;
 	aircraft->time = 0;
 	aircraft->point = 0;
@@ -2153,7 +2153,7 @@ bool AIR_PilotSurvivedCrash (const aircraft_t* aircraft)
 	const int pilotSkill = aircraft->pilot->chr.score.skills[SKILL_PILOTING];
 	float baseProbability = (float) pilotSkill;
 
-	const byte *color = MAP_GetColor(aircraft->pos, MAPTYPE_TERRAIN, NULL);
+	const byte *color = GEO_GetColor(aircraft->pos, MAPTYPE_TERRAIN, NULL);
 	/* Crash over water: chances for survival are very bad */
 	if (MapIsWater(color)) {
 		baseProbability /= 10.0f;

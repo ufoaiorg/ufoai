@@ -121,16 +121,16 @@ void CP_UpdateNationXVIInfection (void)
 		OBJZERO(sum);
 
 		Vector2Set(currentPos, 180.0f, 90.0f - y / heightPerDegree);
-		previousNationColor = MAP_GetColor(currentPos, MAPTYPE_NATIONS, NULL);
-		nation = MAP_GetNation(currentPos);
+		previousNationColor = GEO_GetColor(currentPos, MAPTYPE_NATIONS, NULL);
+		nation = GEO_GetNation(currentPos);
 
 		for (int x = 0; x < width; x++) {
 			const byte* nationColor;
 			currentPos[0] = 180.0f - x / widthPerDegree;
-			nationColor = MAP_GetColor(currentPos, MAPTYPE_NATIONS, NULL);
+			nationColor = GEO_GetColor(currentPos, MAPTYPE_NATIONS, NULL);
 			if (!VectorCompare(nationColor, previousNationColor)) {
 				previousNationColor = nationColor;
-				nation = MAP_GetNation(currentPos);
+				nation = GEO_GetNation(currentPos);
 			}
 			if (nation) {
 				const int xviLevel = CP_GetXVILevel(x, y);
