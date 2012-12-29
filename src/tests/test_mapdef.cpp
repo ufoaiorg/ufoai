@@ -278,9 +278,9 @@ static void testMapDefsFootSteps (void)
 	int count = 0;
 	int mapCount = 0;				// the number of maps read
 	int badMapCount = 0;
-	const int skipCount = 0;		// to skip the first n mapDefs
+	const int skipCount = 6;		// to skip the first n mapDefs
 	const int badMapCountMax = 5;	// # of maps with missing sounds before this test stops
-	const int mapCountMax = 20;		// should of cause be higher than skip + bad
+	const int mapCountMax = 30;		// should of cause be higher than skip + bad
 	const int texCountMax = 30;
 	char texNames[texCountMax][60];
 	bool done = false;
@@ -362,7 +362,7 @@ static void testMapDefsFootSteps (void)
 				}
 			}
 			if (!texNames[0][0]) {
-				Com_Printf("In map %s, ass %s: perfect\n", md->map, md->param);
+				Com_Printf("In map %s, ass %s: Nothing detected\n", md->map, md->param);
 			}
 			else {
 				badMapCount++;
