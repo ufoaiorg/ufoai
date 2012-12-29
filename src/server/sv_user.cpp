@@ -226,7 +226,7 @@ static void SV_ExecuteUserCommand (client_t * cl, const char *s)
 	if (Com_ServerState() == ss_game) {
 		Com_DPrintf(DEBUG_SERVER, "SV_ExecuteUserCommand: client command: %s\n", s);
 		ScopedMutex scopedMutex(svs.serverMutex);
-		svs.ge->ClientCommand(cl->player);
+		svs.ge->ClientCommand(*cl->player);
 	}
 }
 
@@ -282,7 +282,7 @@ void SV_ExecuteClientMessage (client_t * cl, int cmd, dbuffer *msg)
 		/* player wants to end round */
 		ScopedMutex scopedMutex(svs.serverMutex);
 		sv->messageBuffer = msg;
-		svs.ge->ClientEndRound(cl->player);
+		svs.ge->ClientEndRound(*cl->player);
 		sv->messageBuffer = NULL;
 		break;
 	}
@@ -292,7 +292,7 @@ void SV_ExecuteClientMessage (client_t * cl, int cmd, dbuffer *msg)
 		/* actors spawn accordingly */
 		ScopedMutex scopedMutex(svs.serverMutex);
 		sv->messageBuffer = msg;
-		svs.ge->ClientTeamInfo(cl->player);
+		svs.ge->ClientTeamInfo(*cl->player);
 		sv->messageBuffer = NULL;
 		SV_SetClientState(cl, cs_spawned);
 		break;
@@ -303,7 +303,7 @@ void SV_ExecuteClientMessage (client_t * cl, int cmd, dbuffer *msg)
 		/* actors spawn accordingly */
 		ScopedMutex scopedMutex(svs.serverMutex);
 		sv->messageBuffer = msg;
-		svs.ge->ClientInitActorStates(cl->player);
+		svs.ge->ClientInitActorStates(*cl->player);
 		sv->messageBuffer = NULL;
 		break;
 	}

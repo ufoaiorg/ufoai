@@ -1252,7 +1252,7 @@ static void AI_PlayerRun (Player &player)
 		}
 
 		/* nothing left to do, request endround */
-		G_ClientEndRound(&player);
+		G_ClientEndRound(player);
 		player.pers.last = NULL;
 	}
 }

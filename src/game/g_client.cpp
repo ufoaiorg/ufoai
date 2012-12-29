@@ -854,7 +854,7 @@ static void G_GetTeam (Player &player)
 			G_SetTeamForPlayer(player, i);
 		} else {
 			gi.DPrintf("No free team - disconnecting '%s'\n", player.pers.netname);
-			G_ClientDisconnect(&player);
+			G_ClientDisconnect(player);
 		}
 	}
 }
@@ -1236,7 +1236,7 @@ static void G_ClientAssignDefaultActorValues (edict_t *ent)
  * @brief This is called after the actors are spawned and will set actor states without consuming TUs
  * @param player The player to perform the action for
  */
-void G_ClientInitActorStates (const Player *player)
+void G_ClientInitActorStates (const Player &player)
 {
 	const int length = gi.ReadByte(); /* Get the actor amount that the client sent. */
 	int i;
@@ -1246,13 +1246,13 @@ void G_ClientInitActorStates (const Player *player)
 		int saveTU;
 		actorHands_t hand;
 		int fmIdx, objIdx;
-		edict_t *ent = G_EdictsGetActorByUCN(ucn, player->getTeam());
+		edict_t *ent = G_EdictsGetActorByUCN(ucn, player.getTeam());
 		if (!ent)
-			gi.Error("Could not find character on team %i with unique character number %i", player->getTeam(), ucn);
+			gi.Error("Could not find character on team %i with unique character number %i", player.getTeam(), ucn);
 
 		/* these state changes are not consuming any TUs */
 		saveTU = ent->TU;
-		G_ClientStateChange(player, ent, gi.ReadShort(), false);
+		G_ClientStateChange(&player, ent, gi.ReadShort(), false);
 		hand = (actorHands_t)gi.ReadShort();
 		fmIdx = gi.ReadShort();
 		objIdx = gi.ReadShort();
@@ -1270,7 +1270,7 @@ void G_ClientInitActorStates (const Player *player)
  * @sa GAME_SendCurrentTeamSpawningInfo
  * @sa clc_teaminfo
  */
-void G_ClientTeamInfo (const Player *player)
+void G_ClientTeamInfo (const Player &player)
 {
 	const int length = gi.ReadByte(); /* Get the actor amount that the client sent. */
 	int i;
@@ -1278,12 +1278,12 @@ void G_ClientTeamInfo (const Player *player)
 	for (i = 0; i < length; i++) {
 		const actorSizeEnum_t actorFieldSize = gi.ReadByte();
 		/* Search for a spawn point for each entry the client sent */
-		if (player->getTeam() == TEAM_NO_ACTIVE || !G_ActorSpawnIsAllowed(i, player->getTeam()))
+		if (player.getTeam() == TEAM_NO_ACTIVE || !G_ActorSpawnIsAllowed(i, player.getTeam()))
 			G_ClientSkipActorInfo();
 		else {
-			edict_t *ent = G_ClientGetFreeSpawnPointForActorSize(*player, actorFieldSize);
+			edict_t *ent = G_ClientGetFreeSpawnPointForActorSize(player, actorFieldSize);
 			if (ent) {
-				Com_DPrintf(DEBUG_GAME, "Player: %i - team %i - size: %i\n", player->getNum(), ent->team, ent->fieldSize);
+				Com_DPrintf(DEBUG_GAME, "Player: %i - team %i - size: %i\n", player.getNum(), ent->team, ent->fieldSize);
 
 				G_ClientReadCharacter(ent);
 				G_ClientReadInventory(ent);
@@ -1292,14 +1292,14 @@ void G_ClientTeamInfo (const Player *player)
 				G_TouchTriggers(ent);
 				ent->contentFlags = G_ActorGetContentFlags(ent->origin);
 			} else {
-				gi.DPrintf("Not enough spawn points for team %i (actorsize: %i)\n", player->getTeam(), actorFieldSize);
+				gi.DPrintf("Not enough spawn points for team %i (actorsize: %i)\n", player.getTeam(), actorFieldSize);
 
 				G_ClientSkipActorInfo();
 			}
 		}
 	}
 
-	Com_Printf("Used inventory slots client %s spawn: %i\n", player->pers.netname, game.i.GetUsedSlots(&game.i));
+	Com_Printf("Used inventory slots client %s spawn: %i\n", player.pers.netname, game.i.GetUsedSlots(&game.i));
 }
 
 /**
@@ -1480,7 +1480,7 @@ bool G_ClientConnect (Player *player, char *userinfo, size_t userinfoSize)
 	/* fix for fast reconnects after a disconnect */
 	if (player->isInUse()) {
 		gi.BroadcastPrintf(PRINT_CONSOLE, "%s already in use.\n", player->pers.netname);
-		G_ClientDisconnect(player);
+		G_ClientDisconnect(*player);
 	}
 
 	/* reset persistent data */
@@ -1494,18 +1494,18 @@ bool G_ClientConnect (Player *player, char *userinfo, size_t userinfoSize)
 /**
  * @sa G_ClientConnect
  */
-void G_ClientDisconnect (Player *player)
+void G_ClientDisconnect (Player &player)
 {
 #if 0
 	edict_t *ent = NULL;
 #endif
 
 	/* only if the player already sent his began */
-	if (player->began) {
+	if (player.began) {
 		level.numplayers--;
 		gi.ConfigString(CS_PLAYERCOUNT, "%i", level.numplayers);
 
-		if (level.activeTeam == player->getTeam())
+		if (level.activeTeam == player.getTeam())
 			G_ClientEndRound(player);
 
 		/* if no more players are connected - stop the server */
@@ -1521,11 +1521,11 @@ void G_ClientDisconnect (Player *player)
 	G_MatchEndCheck();
 #endif
 
-	player->began = false;
-	player->roundDone = false;
-	player->setReady(false);
+	player.began = false;
+	player.roundDone = false;
+	player.setReady(false);
 
-	gi.BroadcastPrintf(PRINT_CONSOLE, "%s disconnected.\n", player->pers.netname);
+	gi.BroadcastPrintf(PRINT_CONSOLE, "%s disconnected.\n", player.pers.netname);
 }
 
 /**

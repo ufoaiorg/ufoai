@@ -425,24 +425,24 @@ static void G_StateChange_f (void)
 }
 #endif
 
-void G_ClientCommand (Player *player)
+void G_ClientCommand (Player &player)
 {
 	const char *cmd;
 
-	if (!player->isInUse())
+	if (!player.isInUse())
 		return;					/* not fully in game yet */
 
 	cmd = gi.Cmd_Argv(0);
 
 	if (Q_strcasecmp(cmd, "players") == 0)
-		G_Players_f(player);
+		G_Players_f(&player);
 	else if (Q_strcasecmp(cmd, "say") == 0)
-		G_Say_f(*player, false, false);
+		G_Say_f(player, false, false);
 	else if (Q_strcasecmp(cmd, "say_team") == 0)
-		G_Say_f(*player, false, true);
+		G_Say_f(player, false, true);
 #ifdef DEBUG
 	else if (Q_strcasecmp(cmd, "debug_actorinvlist") == 0)
-		G_InvList_f(*player);
+		G_InvList_f(player);
 	else if (Q_strcasecmp(cmd, "debug_killteam") == 0)
 		G_KillTeam_f();
 	else if (Q_strcasecmp(cmd, "debug_stunteam") == 0)
@@ -460,5 +460,5 @@ void G_ClientCommand (Player *player)
 #endif
 	else
 		/* anything that doesn't match a command will be a chat */
-		G_Say_f(*player, true, false);
+		G_Say_f(player, true, false);
 }

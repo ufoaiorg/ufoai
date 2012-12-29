@@ -304,16 +304,16 @@ typedef struct game_export_s {
 	bool (EXPORT *ClientBegin) (player_t *client);
 	void (EXPORT *ClientStartMatch) (player_t &client);
 	void (EXPORT *ClientUserinfoChanged) (player_t *client, const char *userinfo);
-	void (EXPORT *ClientDisconnect) (player_t *client);
-	void (EXPORT *ClientCommand) (player_t *client);
+	void (EXPORT *ClientDisconnect) (player_t &client);
+	void (EXPORT *ClientCommand) (player_t &client);
 
 	int (EXPORT *ClientAction) (player_t &client);
-	void (EXPORT *ClientEndRound) (player_t *client);
-	void (EXPORT *ClientTeamInfo) (const player_t *client);
-	void (EXPORT *ClientInitActorStates) (const player_t *client);
+	void (EXPORT *ClientEndRound) (player_t &client);
+	void (EXPORT *ClientTeamInfo) (const player_t &client);
+	void (EXPORT *ClientInitActorStates) (const player_t &client);
 	int (EXPORT *ClientGetTeamNum) (const player_t &client);
-	int (EXPORT *ClientGetTeamNumPref) (const player_t *client);
-	bool (EXPORT *ClientIsReady) (const player_t *client);
+	int (EXPORT *ClientGetTeamNumPref) (const player_t *client);	/* assert ! */
+	bool (EXPORT *ClientIsReady) (const player_t *client);	/* assert ! */
 
 	int (EXPORT *ClientGetActiveTeam) (void);
 	const char* (EXPORT *ClientGetName) (int pnum);

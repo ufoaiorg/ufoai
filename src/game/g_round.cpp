@@ -82,7 +82,7 @@ void G_CheckForceEndRound (void)
 	Player *p = NULL;
 	while ((p = G_PlayerGetNextActiveHuman(p))) {
 		if (p->getTeam() == activeTeam) {
-			G_ClientEndRound(p);
+			G_ClientEndRound(*p);
 			level.nextEndRound = level.framenum;
 		}
 	}
@@ -170,15 +170,15 @@ static void G_GetNextActiveTeam (void)
 /**
  * @sa G_PlayerSoldiersCount
  */
-void G_ClientEndRound (Player *player)
+void G_ClientEndRound (Player &player)
 {
 	Player *p;
 
 	const int lastTeamIndex = (G_GetActiveTeam() + level.teamOfs) % MAX_TEAMS;
 
-	if (!G_IsAIPlayer(player)) {
+	if (!G_IsAIPlayer(&player)) {
 		/* inactive players can't end their inactive turn :) */
-		if (level.activeTeam != player->getTeam())
+		if (level.activeTeam != player.getTeam())
 			return;
 
 		/* check for "team oszillation" */
@@ -191,11 +191,11 @@ void G_ClientEndRound (Player *player)
 	/* only use this for teamplay matches like coopX or fight2on2 and above
 	 * also skip this for ai players, this is only called when all ai actors
 	 * have finished their 'thinking' */
-	if (!G_IsAIPlayer(player) && sv_teamplay->integer) {
+	if (!G_IsAIPlayer(&player) && sv_teamplay->integer) {
 		/* check if all team members are ready */
-		if (!player->roundDone) {
-			player->roundDone = true;
-			G_EventEndRoundAnnounce(*player);
+		if (!player.roundDone) {
+			player.roundDone = true;
+			G_EventEndRoundAnnounce(player);
 			G_EventEnd();
 		}
 		p = NULL;
@@ -207,7 +207,7 @@ void G_ClientEndRound (Player *player)
 			if (p->getTeam() == level.activeTeam && !p->roundDone && G_PlayerSoldiersCount(p) > 0)
 				return;
 	} else {
-		player->roundDone = true;
+		player.roundDone = true;
 	}
 
 	/* clear any remaining reaction fire */

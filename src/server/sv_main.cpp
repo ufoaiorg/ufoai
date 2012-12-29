@@ -150,7 +150,7 @@ void SV_DropClient (client_t * drop, const char *message)
 		/* call the prog function for removing a client */
 		/* this will remove the body, among other things */
 		const ScopedMutex scopedMutex(svs.serverMutex);
-		svs.ge->ClientDisconnect(drop->player);
+		svs.ge->ClientDisconnect(*drop->player);
 	}
 
 	NET_StreamFinished(drop->stream);
