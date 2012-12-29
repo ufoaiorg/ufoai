@@ -98,7 +98,7 @@ static inline sv_edict_t* SV_GetServerDataForEdict (const edict_t *ent)
 /**
  * @brief call before removing an entity, and before trying to move one, so it doesn't clip against itself
  */
-void SV_UnlinkEdict (edict_t * ent)
+void SV_UnlinkEdict (edict_t *ent)
 {
 	sv_edict_t *sv_ent = SV_GetServerDataForEdict(ent);
 	sv_edict_t *scan;
@@ -132,7 +132,7 @@ void SV_UnlinkEdict (edict_t * ent)
  * or solid. Automatically unlinks if needed. Sets ent->absmin and ent->absmax
  * @sa SV_CreateAreaNode
  */
-void SV_LinkEdict (edict_t * ent)
+void SV_LinkEdict (edict_t *ent)
 {
 	worldSector_t *node;
 	sv_edict_t *sv_ent = SV_GetServerDataForEdict(ent);
@@ -493,7 +493,7 @@ static void SV_TraceBounds (const vec3_t start, const vec3_t mins, const vec3_t 
  * @param[in] contentmask brushes the trace should stop at (see MASK_*)
  * @param[in] box The bounding box that is moved through the world
  */
-trace_t SV_Trace (const vec3_t start, const AABB &box, const vec3_t end, const edict_t * passedict, int contentmask)
+trace_t SV_Trace (const vec3_t start, const AABB &box, const vec3_t end, const edict_t *passedict, int contentmask)
 {
 	moveclip_t clip;
 

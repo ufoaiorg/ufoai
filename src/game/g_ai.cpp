@@ -657,7 +657,7 @@ static inline bool AI_IsValidTarget (const edict_t *ent, const edict_t *target)
  * @todo fill z_align values
  * @todo optimize this
  */
-static float AI_FighterCalcActionScore (edict_t *ent, pos3_t to, aiAction_t * aia)
+static float AI_FighterCalcActionScore (edict_t *ent, pos3_t to, aiAction_t *aia)
 {
 	edict_t *check = NULL;
 	shoot_types_t shootType;
@@ -770,7 +770,7 @@ static float AI_FighterCalcActionScore (edict_t *ent, pos3_t to, aiAction_t * ai
  * @sa AI_ActorThink
  * @note Even civilians can use weapons if the teamdef allows this
  */
-static float AI_CivilianCalcActionScore (edict_t *ent, pos3_t to, aiAction_t * aia)
+static float AI_CivilianCalcActionScore (edict_t *ent, pos3_t to, aiAction_t *aia)
 {
 	edict_t *check = NULL;
 	float minDist, minDistCivilian, minDistFighter;
@@ -891,7 +891,7 @@ static float AI_CivilianCalcActionScore (edict_t *ent, pos3_t to, aiAction_t * a
  * @sa AI_ActorThink
  * @note Panicking units will run away from everyone other than their own team (e.g. aliens will run away even from civilians)
  */
-static float AI_PanicCalcActionScore (edict_t *ent, pos3_t to, aiAction_t * aia)
+static float AI_PanicCalcActionScore (edict_t *ent, pos3_t to, aiAction_t *aia)
 {
 	edict_t *check = NULL;
 	float minDistFriendly, minDistOthers;
@@ -1349,7 +1349,7 @@ static void AI_SetCharacterValues (edict_t *ent, int team)
  * @param ent Actor to give equipment to.
  * @param[in] ed Equipment definition for the new actor.
  */
-static void AI_SetEquipment (edict_t *ent, const equipDef_t * ed)
+static void AI_SetEquipment (edict_t *ent, const equipDef_t *ed)
 {
 	/* Pack equipment. */
 	if (ent->chr.teamDef->robot && ent->chr.teamDef->onlyWeapon) {
@@ -1374,7 +1374,7 @@ static void AI_SetEquipment (edict_t *ent, const equipDef_t * ed)
  * @param[in,out] ent Pointer to edict_t representing actor.
  * @param[in] ed Equipment definition for the new actor. Might be @c NULL.
  */
-static void AI_InitPlayer (const Player &player, edict_t *ent, const equipDef_t * ed)
+static void AI_InitPlayer (const Player &player, edict_t *ent, const equipDef_t *ed)
 {
 	const int team = player.getTeam();
 

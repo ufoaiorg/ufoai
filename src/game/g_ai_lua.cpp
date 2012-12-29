@@ -993,7 +993,7 @@ void AIL_ActorThink (Player &player, edict_t *ent)
  * @param[in] subtype Subtype of the AI.
  * @return 0 on success.
  */
-int AIL_InitActor (edict_t * ent, const char *type, const char *subtype)
+int AIL_InitActor (edict_t *ent, const char *type, const char *subtype)
 {
 	AI_t *AI;
 	int size;
@@ -1040,7 +1040,7 @@ int AIL_InitActor (edict_t * ent, const char *type, const char *subtype)
  * @brief Cleans up the AI part of the actor.
  * @param[in] ent Pointer to actor to cleanup AI.
  */
-static void AIL_CleanupActor (edict_t * ent)
+static void AIL_CleanupActor (edict_t *ent)
 {
 	AI_t *AI = &ent->AI;
 

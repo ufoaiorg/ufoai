@@ -78,7 +78,7 @@ static void SP_misc_smokestun(edict_t *ent);
 
 typedef struct {
 	const char *name;
-	void (*spawn) (edict_t * ent);
+	void (*spawn) (edict_t *ent);
 } spawn_t;
 
 static const spawn_t spawns[] = {
@@ -173,7 +173,7 @@ static const field_t fields[] = {
 /**
  * @brief Finds the spawn function for the entity and calls it
  */
-static void ED_CallSpawn (edict_t * ent)
+static void ED_CallSpawn (edict_t *ent)
 {
 	const spawn_t *s;
 
@@ -224,7 +224,7 @@ static char *ED_NewString (const char *string)
 /**
  * @brief Takes a key/value pair and sets the binary values in an edict
  */
-static void ED_ParseField (const char *key, const char *value, edict_t * ent)
+static void ED_ParseField (const char *key, const char *value, edict_t *ent)
 {
 	const field_t *f;
 	byte *b;
@@ -270,7 +270,7 @@ static void ED_ParseField (const char *key, const char *value, edict_t * ent)
  * @param[in] data The string to parse from
  * @param[in] ent should be a properly initialized empty edict.
  */
-static const char *ED_ParseEdict (const char *data, edict_t * ent)
+static const char *ED_ParseEdict (const char *data, edict_t *ent)
 {
 	bool init;
 	char keyname[MAX_VAR];

@@ -36,7 +36,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @sa CP_CleanupAircraftCrew
  * @todo remove return value and make item a pointer
  */
-item_t CP_AddWeaponAmmo (equipDef_t * ed, item_t item)
+item_t CP_AddWeaponAmmo (equipDef_t *ed, item_t item)
 {
 	int i;
 	const objDef_t *type = item.item;
@@ -151,7 +151,7 @@ item_t CP_AddWeaponAmmo (equipDef_t * ed, item_t item)
  * the first person in the squad filling their backpack with spare ammo
  * leaving others with unloaded guns in their hands...
  */
-void CP_CleanupTeam (base_t *base, equipDef_t * ed)
+void CP_CleanupTeam (base_t *base, equipDef_t *ed)
 {
 	containerIndex_t container;
 

@@ -138,7 +138,7 @@ static unsigned int SV_ModelIndex (const char *name)
  * @note Also sets mins and maxs for inline bmodels
  * @sa CM_InlineModel
  */
-static void SV_SetModel (edict_t * ent, const char *name)
+static void SV_SetModel (edict_t *ent, const char *name)
 {
 	if (!name)
 		SV_error("SV_SetModel: NULL");

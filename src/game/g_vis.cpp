@@ -397,7 +397,7 @@ void G_VisMakeEverythingVisible (void)
  * @param visFlags Modifiers for the checks
  * @sa G_CheckVisTeam
  */
-void G_CheckVis (edict_t * check, const vischeckflags_t visFlags)
+void G_CheckVis (edict_t *check, const vischeckflags_t visFlags)
 {
 	int team;
 

@@ -82,7 +82,7 @@ static bool G_TeamPointVis (int team, const vec3_t point)
  * @param[in] param Used to modify morale changes, for G_Damage() it is value of damage.
  * @sa G_Damage
  */
-static void G_Morale (int type, const edict_t * victim, const edict_t * attacker, int param)
+static void G_Morale (int type, const edict_t *victim, const edict_t *attacker, int param)
 {
 	edict_t *ent = NULL;
 	int newMorale;
@@ -243,7 +243,7 @@ static void G_UpdateCharacterBodycount (edict_t *attacker, const fireDef_t *fd, 
  * @param[in] fd the used fire definition.
  * @param[in] splashDamage Do we count it as splashdamage? If this value is not zero the stats well be counted as splashdamage and the value will be added to the overall splash-damage count.
  */
-static void G_UpdateHitScore (edict_t * attacker, const edict_t * target, const fireDef_t * fd, const int splashDamage)
+static void G_UpdateHitScore (edict_t *attacker, const edict_t *target, const fireDef_t * fd, const int splashDamage)
 {
 	chrScoreMission_t *score;
 	killtypes_t type;

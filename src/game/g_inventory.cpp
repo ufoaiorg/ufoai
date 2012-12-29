@@ -57,7 +57,7 @@ edict_t *G_GetFloorItemsFromPos (const pos3_t pos)
  * @return pointer to edict_t being a floor (with items) or @c NULL in case no items were found
  * on the edict grid position.
  */
-edict_t *G_GetFloorItems (edict_t * ent)
+edict_t *G_GetFloorItems (edict_t *ent)
 {
 	edict_t *floor = G_GetFloorItemsFromPos(ent->pos);
 	/* found items */
