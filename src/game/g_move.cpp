@@ -362,14 +362,14 @@ void G_ClientMove (const Player *player, int visTeam, edict_t *ent, const pos3_t
 
 			/* turn around first */
 			status = G_ActorDoTurn(ent, dir);
-			if (status & VIS_STOP) {
+			if ((status & VIS_STOP) && visTeam != 0) {
 				autoCrouchRequired = false;
 				if (ent->moveinfo.steps == 0)
 					usedTUs += TU_TURN;
 				break;
 			}
 
-			if (G_ActorShouldStopInMidMove(ent, status, dvtab, numdv)) {
+			if (visTeam != 0 && G_ActorShouldStopInMidMove(ent, status, dvtab, numdv)) {
 				/* don't autocrouch if new enemy becomes visible */
 				autoCrouchRequired = false;
 				/* if something appears on our route that didn't trigger a VIS_STOP, we have to
@@ -473,7 +473,7 @@ void G_ClientMove (const Player *player, int visTeam, edict_t *ent, const pos3_t
 				return;
 			}
 
-			if (G_ActorShouldStopInMidMove(ent, status, dvtab, numdv - 1)) {
+			if (visTeam != 0 && G_ActorShouldStopInMidMove(ent, status, dvtab, numdv - 1)) {
 				/* don't autocrouch if new enemy becomes visible */
 				autoCrouchRequired = false;
 				break;
