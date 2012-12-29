@@ -214,7 +214,7 @@ SCRIPT PARSING
 
 extern const char *const name_strings[];
 
-#define SND_VOLUME_FOOTSTEPS 0.2f
+#define SND_VOLUME_FOOTSTEPS 0.4f
 
 /** @brief Different terrain definitions for footsteps and particles */
 typedef struct terrainType_s {
