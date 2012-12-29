@@ -1533,7 +1533,7 @@ static const value_t fdps[] = {
 };
 
 
-static bool Com_ParseFire (const char *name, const char **text, fireDef_t * fd)
+static bool Com_ParseFire (const char *name, const char **text, fireDef_t *fd)
 {
 	const char *errhead = "Com_ParseFire: unexpected end of file";
 	const char *token;

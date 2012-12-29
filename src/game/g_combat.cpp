@@ -243,7 +243,7 @@ static void G_UpdateCharacterBodycount (edict_t *attacker, const fireDef_t *fd, 
  * @param[in] fd the used fire definition.
  * @param[in] splashDamage Do we count it as splashdamage? If this value is not zero the stats well be counted as splashdamage and the value will be added to the overall splash-damage count.
  */
-static void G_UpdateHitScore (edict_t *attacker, const edict_t *target, const fireDef_t * fd, const int splashDamage)
+static void G_UpdateHitScore (edict_t *attacker, const edict_t *target, const fireDef_t *fd, const int splashDamage)
 {
 	chrScoreMission_t *score;
 	killtypes_t type;

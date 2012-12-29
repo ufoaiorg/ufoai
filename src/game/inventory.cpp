@@ -97,7 +97,7 @@ static invList_t* I_AddInvList (inventoryInterface_t* self, invList_t **invList)
  * @sa I_RemoveFromInventory
  * @return the @c invList_t pointer the item was added to, or @c NULL in case of an error (item wasn't added)
  */
-static invList_t *I_AddToInventory (inventoryInterface_t* self, inventory_t * const inv, const item_t* const item, const invDef_t *container, int x, int y, int amount)
+static invList_t *I_AddToInventory (inventoryInterface_t* self, inventory_t *const inv, const item_t* const item, const invDef_t *container, int x, int y, int amount)
 {
 	invList_t *ic;
 	int checkedTo;
@@ -483,7 +483,7 @@ static inventory_action_t I_MoveInInventory (inventoryInterface_t* self, invento
  * @sa INVSH_FindSpace
  * @sa I_AddToInventory
  */
-static bool I_TryAddToInventory (inventoryInterface_t* self, inventory_t* const inv, const item_t * const item, const invDef_t *container)
+static bool I_TryAddToInventory (inventoryInterface_t* self, inventory_t* const inv, const item_t *const item, const invDef_t *container)
 {
 	int x, y;
 

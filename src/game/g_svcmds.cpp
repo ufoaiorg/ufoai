@@ -65,7 +65,7 @@ typedef struct {
 static ipfilter_t ipfilters[MAX_IPFILTERS];
 static int numipfilters;
 
-static bool StringToFilter (const char *s, ipfilter_t * f)
+static bool StringToFilter (const char *s, ipfilter_t *f)
 {
 	char num[128];
 	int i, j;

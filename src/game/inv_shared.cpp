@@ -36,7 +36,7 @@ static const csi_t *CSI;
  * @sa G_Init
  * @sa Com_ParseScripts
  */
-void INVSH_InitCSI (const csi_t * import)
+void INVSH_InitCSI (const csi_t *import)
 {
 	CSI = import;
 }
@@ -46,7 +46,7 @@ void INVSH_InitCSI (const csi_t * import)
  * @param invDef The inventory definition to check
  * @return @c true if the given inventory definition is of type floor
  */
-bool INV_IsFloorDef (const invDef_t* invDef)
+bool INV_IsFloorDef (const invDef_t *invDef)
 {
 	return invDef->id == CSI->idFloor;
 }
@@ -56,7 +56,7 @@ bool INV_IsFloorDef (const invDef_t* invDef)
  * @param invDef The inventory definition to check
  * @return @c true if the given inventory definition is of type right
  */
-bool INV_IsRightDef (const invDef_t* invDef)
+bool INV_IsRightDef (const invDef_t *invDef)
 {
 	return invDef->id == CSI->idRight;
 }
@@ -151,7 +151,7 @@ static bool INVSH_CheckShapeCollision (const uint32_t *shape, const uint32_t ite
  * @sa INVSH_CheckToInventory
  * @return false if the item does not fit, true if it fits.
  */
-static bool INVSH_CheckToInventory_shape (const inventory_t * const i, const invDef_t *container, const uint32_t itemShape, const int x, const int y, const invList_t *ignoredItem)
+static bool INVSH_CheckToInventory_shape (const inventory_t *const i, const invDef_t *container, const uint32_t itemShape, const int x, const int y, const invList_t *ignoredItem)
 {
 	invList_t *ic;
 	static uint32_t mask[SHAPE_BIG_MAX_HEIGHT];
@@ -203,7 +203,7 @@ static bool INVSH_CheckToInventory_shape (const inventory_t * const i, const inv
  * @return INV_FITS_ONLY_ROTATED if it fits only when rotated 90 degree (to the left).
  * @return INV_FITS_BOTH if it fits either normally or when rotated 90 degree (to the left).
  */
-int INVSH_CheckToInventory (const inventory_t * const i, const objDef_t *od, const invDef_t *container, const int x, const int y, const invList_t *ignoredItem)
+int INVSH_CheckToInventory (const inventory_t *const i, const objDef_t *od, const invDef_t *container, const int x, const int y, const invList_t *ignoredItem)
 {
 	int fits;
 	assert(i);
@@ -366,7 +366,7 @@ void INVSH_GetFirstShapePosition (const invList_t *ic, int* const x, int* const 
  * @param[in] item The item to search for.
  * @return true if there already is at least one item of this type, otherwise false.
  */
-bool INVSH_ExistsInInventory (const inventory_t* const inv, const invDef_t *container, const item_t * item)
+bool INVSH_ExistsInInventory (const inventory_t* const inv, const invDef_t *container, const item_t *item)
 {
 	invList_t *ic;
 
@@ -385,7 +385,7 @@ bool INVSH_ExistsInInventory (const inventory_t* const inv, const invDef_t *cont
  * @param[in] item The item to search for.
  * @return Pointer to the first item of this type found, otherwise @c NULL.
  */
-invList_t *INVSH_FindInInventory (const inventory_t* const inv, const invDef_t *container, const item_t * const item)
+invList_t *INVSH_FindInInventory (const inventory_t* const inv, const invDef_t *container, const item_t *const item)
 {
 	invList_t *ic;
 
