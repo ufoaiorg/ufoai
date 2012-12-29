@@ -73,7 +73,7 @@ public:
 
 	void EquipActorRobot (inventoryInterface_t* self, inventory_t* const inv, const objDef_t* weapon) __attribute__((nonnull(1), nonnull(2)));
 
-	int GetUsedSlots (inventoryInterface_t* self);
+	int GetUsedSlots ();
 };
 
 void INV_InitInventory(const char *name, inventoryInterface_t *ii, const csi_t* csi, const inventoryImport_t *iimport);

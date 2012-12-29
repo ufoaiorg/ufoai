@@ -1004,15 +1004,15 @@ void InventoryInterface::EquipActor (inventoryInterface_t* self, character_t* co
  * @param[in] self The inventory interface pointer
  * @return The number of free inventory slots
  */
-int InventoryInterface::GetUsedSlots (inventoryInterface_t* self)
+int InventoryInterface::GetUsedSlots ()
 {
 	int i = 0;
-	const invList_t* slot = self->invList;
+	const invList_t* slot = invList;
 	while (slot) {
 		slot = slot->next;
 		i++;
 	}
-	Com_DPrintf(DEBUG_SHARED, "Used inventory slots %i (%s)\n", i, self->name);
+	Com_DPrintf(DEBUG_SHARED, "Used inventory slots %i (%s)\n", i, name);
 	return i;
 }
 

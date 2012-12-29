@@ -416,7 +416,7 @@ void G_SpawnEntities (const char *mapname, bool day, const char *entities)
 			gi.DPrintf("Could not create alien\n");
 	}
 
-	Com_Printf("Used inventory slots after ai spawn: %i\n", game.i.GetUsedSlots(&game.i));
+	Com_Printf("Used inventory slots after ai spawn: %i\n", game.i.GetUsedSlots());
 
 	G_FindEdictGroups();
 }

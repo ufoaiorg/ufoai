@@ -1299,7 +1299,7 @@ void G_ClientTeamInfo (const Player &player)
 		}
 	}
 
-	Com_Printf("Used inventory slots client %s spawn: %i\n", player.pers.netname, game.i.GetUsedSlots(&game.i));
+	Com_Printf("Used inventory slots client %s spawn: %i\n", player.pers.netname, game.i.GetUsedSlots());
 }
 
 /**

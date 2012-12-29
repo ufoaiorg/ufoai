@@ -203,7 +203,7 @@ bool GAME_IsMultiplayer (void)
 void GAME_EndBattlescape (void)
 {
 	Cvar_Set("cl_onbattlescape", "0");
-	Com_Printf("Used inventory slots after battle: %i\n", cls.i.GetUsedSlots(&cls.i));
+	Com_Printf("Used inventory slots after battle: %i\n", cls.i.GetUsedSlots());
 }
 
 /**
@@ -1421,7 +1421,7 @@ void GAME_SpawnSoldiers (void)
 	else
 		spawnStatus = GAME_Spawn(chrList);
 
-	Com_Printf("Used inventory slots: %i\n", cls.i.GetUsedSlots(&cls.i));
+	Com_Printf("Used inventory slots: %i\n", cls.i.GetUsedSlots());
 
 	if (spawnStatus && cl.chrList.num > 0) {
 		/* send team info */
