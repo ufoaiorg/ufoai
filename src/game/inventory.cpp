@@ -97,7 +97,7 @@ static invList_t* I_AddInvList (inventoryInterface_t* self, invList_t **invList)
  * @sa I_RemoveFromInventory
  * @return the @c invList_t pointer the item was added to, or @c NULL in case of an error (item wasn't added)
  */
-static invList_t *I_AddToInventory (inventoryInterface_t* self, inventory_t *const inv, const item_t* const item, const invDef_t *container, int x, int y, int amount)
+invList_t *InventoryInterface::AddToInventory (inventoryInterface_t* self, inventory_t *const inv, const item_t* const item, const invDef_t *container, int x, int y, int amount)
 {
 	invList_t *ic;
 	int checkedTo;
@@ -248,7 +248,7 @@ bool InventoryInterface::RemoveFromInventory (inventoryInterface_t* self, invent
  * @return IA_ARMOUR when placing an armour on the actor.
  * @return IA_MOVE when just moving an item.
  */
-static inventory_action_t I_MoveInInventory (inventoryInterface_t* self, inventory_t* const inv, const invDef_t *from, invList_t *fItem, const invDef_t *to, int tx, int ty, int *TU, invList_t ** icp)
+inventory_action_t InventoryInterface::MoveInInventory (inventoryInterface_t* self, inventory_t* const inv, const invDef_t *from, invList_t *fItem, const invDef_t *to, int tx, int ty, int *TU, invList_t ** icp)
 {
 	invList_t *ic;
 
@@ -483,7 +483,7 @@ static inventory_action_t I_MoveInInventory (inventoryInterface_t* self, invento
  * @sa INVSH_FindSpace
  * @sa I_AddToInventory
  */
-static bool I_TryAddToInventory (inventoryInterface_t* self, inventory_t* const inv, const item_t *const item, const invDef_t *container)
+bool InventoryInterface::TryAddToInventory (inventoryInterface_t* self, inventory_t* const inv, const item_t *const item, const invDef_t *container)
 {
 	int x, y;
 
@@ -515,7 +515,7 @@ static bool I_TryAddToInventory (inventoryInterface_t* self, inventory_t* const 
  * e.g. the container of a dropped weapon in tactical mission (ET_ITEM)
  * in every other case just set the pointer to NULL for a temp container like idEquip or idFloor
  */
-static void I_EmptyContainer (inventoryInterface_t* self, inventory_t* const i, const invDef_t *container)
+void InventoryInterface::EmptyContainer (inventoryInterface_t* self, inventory_t* const i, const invDef_t *container)
 {
 	invList_t *ic;
 
@@ -538,7 +538,7 @@ static void I_EmptyContainer (inventoryInterface_t* self, inventory_t* const i, 
  * for real containers @c I_EmptyContainer is called.
  * @sa I_EmptyContainer
  */
-static void I_DestroyInventory (inventoryInterface_t* self, inventory_t* const inv)
+void InventoryInterface::DestroyInventory (inventoryInterface_t* self, inventory_t* const inv)
 {
 	containerIndex_t container;
 
@@ -717,7 +717,7 @@ static int I_PackAmmoAndWeapon (inventoryInterface_t *self, character_t* const c
  * @param[in] td Pointer to a team definition.
  * @note Weapons assigned here cannot be collected in any case. These are dummy "actor weapons".
  */
-static void I_EquipActorMelee (inventoryInterface_t *self, inventory_t* const inv, const teamDef_t* td)
+void InventoryInterface::EquipActorMelee (inventoryInterface_t *self, inventory_t* const inv, const teamDef_t* td)
 {
 	const objDef_t *obj;
 	item_t item;
@@ -744,7 +744,7 @@ static void I_EquipActorMelee (inventoryInterface_t *self, inventory_t* const in
  * @param[in] inv The inventory that will get the weapon.
  * @param[in] weapon Pointer to the item which being added to robot's inventory.
  */
-static void I_EquipActorRobot (inventoryInterface_t *self, inventory_t* const inv, const objDef_t* weapon)
+void InventoryInterface::EquipActorRobot (inventoryInterface_t *self, inventory_t* const inv, const objDef_t* weapon)
 {
 	item_t item;
 
@@ -783,7 +783,7 @@ typedef enum {
  * Beware: If two weapons in the same category have the same price,
  * only one will be considered for inventory.
  */
-static void I_EquipActor (inventoryInterface_t* self, character_t* const chr, const equipDef_t *ed, int maxWeight)
+void InventoryInterface::EquipActor (inventoryInterface_t* self, character_t* const chr, const equipDef_t *ed, int maxWeight)
 {
 	inventory_t* const inv = &chr->i;
 	const teamDef_t* td = chr->teamDef;
@@ -1004,7 +1004,7 @@ static void I_EquipActor (inventoryInterface_t* self, character_t* const chr, co
  * @param[in] self The inventory interface pointer
  * @return The number of free inventory slots
  */
-static int I_GetUsedSlots (inventoryInterface_t* self)
+int InventoryInterface::GetUsedSlots (inventoryInterface_t* self)
 {
 	int i = 0;
 	const invList_t* slot = self->invList;
@@ -1036,17 +1036,6 @@ void INV_InitInventory (const char *name, inventoryInterface_t *interface, const
 	interface->cacheItem = item;
 	interface->csi = csi;
 	interface->invList = NULL;
-
-	interface->TryAddToInventory = I_TryAddToInventory;
-	interface->AddToInventory = I_AddToInventory;
-//	interface->RemoveFromInventory = I_RemoveFromInventory;
-	interface->MoveInInventory = I_MoveInInventory;
-	interface->DestroyInventory = I_DestroyInventory;
-	interface->EmptyContainer = I_EmptyContainer;
-	interface->EquipActor = I_EquipActor;
-	interface->EquipActorMelee = I_EquipActorMelee;
-	interface->EquipActorRobot = I_EquipActorRobot;
-	interface->GetUsedSlots = I_GetUsedSlots;
 }
 
 void INV_DestroyInventory (inventoryInterface_t *interface)

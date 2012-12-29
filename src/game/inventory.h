@@ -55,25 +55,25 @@ public:
 	/* public */
 	bool RemoveFromInventory ( inventoryInterface_t* self, inventory_t* const i, const invDef_t *container, invList_t *fItem) __attribute__((nonnull(1), nonnull(2), warn_unused_result));
 
-	invList_t* (*AddToInventory) (inventoryInterface_t* self, inventory_t *const i, const item_t* const item, const invDef_t *container, int x, int y,
+	invList_t* AddToInventory (inventoryInterface_t* self, inventory_t *const i, const item_t* const item, const invDef_t *container, int x, int y,
 			int amount) __attribute__((nonnull(1), nonnull(2), warn_unused_result));
 
-	inventory_action_t (*MoveInInventory) (inventoryInterface_t* self, inventory_t* const i, const invDef_t *from, invList_t *item, const invDef_t *to,
+	inventory_action_t MoveInInventory (inventoryInterface_t* self, inventory_t* const i, const invDef_t *from, invList_t *item, const invDef_t *to,
 			int tx, int ty, int *TU, invList_t ** icp) __attribute__((nonnull(1), nonnull(2)));
 
-	bool (*TryAddToInventory) (inventoryInterface_t* self, inventory_t* const inv, const item_t *const item, const invDef_t *container);
+	bool TryAddToInventory (inventoryInterface_t* self, inventory_t* const inv, const item_t *const item, const invDef_t *container);
 
-	void (*DestroyInventory) (inventoryInterface_t* self, inventory_t* const i) __attribute__((nonnull(1), nonnull(2)));
+	void DestroyInventory (inventoryInterface_t* self, inventory_t* const i) __attribute__((nonnull(1), nonnull(2)));
 
-	void (*EmptyContainer) (inventoryInterface_t* self, inventory_t* const i, const invDef_t *container)__attribute__((nonnull(1), nonnull(2)));
+	void EmptyContainer (inventoryInterface_t* self, inventory_t* const i, const invDef_t *container)__attribute__((nonnull(1), nonnull(2)));
 
-	void (*EquipActor) (inventoryInterface_t* self, character_t* const chr, const equipDef_t *ed, int maxWeight) __attribute__((nonnull(1), nonnull(2)));
+	void EquipActor (inventoryInterface_t* self, character_t* const chr, const equipDef_t *ed, int maxWeight) __attribute__((nonnull(1), nonnull(2)));
 
-	void (*EquipActorMelee) (inventoryInterface_t* self, inventory_t* const inv, const teamDef_t* td) __attribute__((nonnull(1)));
+	void EquipActorMelee (inventoryInterface_t* self, inventory_t* const inv, const teamDef_t* td) __attribute__((nonnull(1)));
 
-	void (*EquipActorRobot) (inventoryInterface_t* self, inventory_t* const inv, const objDef_t* weapon) __attribute__((nonnull(1), nonnull(2)));
+	void EquipActorRobot (inventoryInterface_t* self, inventory_t* const inv, const objDef_t* weapon) __attribute__((nonnull(1), nonnull(2)));
 
-	int (*GetUsedSlots) (inventoryInterface_t* self);
+	int GetUsedSlots (inventoryInterface_t* self);
 };
 
 void INV_InitInventory(const char *name, inventoryInterface_t *ii, const csi_t* csi, const inventoryImport_t *iimport);
