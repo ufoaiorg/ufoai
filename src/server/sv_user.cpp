@@ -210,7 +210,7 @@ static const ucmd_t ucmds[] = {
 /**
  * @sa SV_ExecuteClientMessage
  */
-static void SV_ExecuteUserCommand (client_t * cl, const char *s)
+static void SV_ExecuteUserCommand (client_t *cl, const char *s)
 {
 	const ucmd_t *u;
 
@@ -233,7 +233,7 @@ static void SV_ExecuteUserCommand (client_t * cl, const char *s)
 /**
  * @brief The current net_message is parsed for the given client
  */
-void SV_ExecuteClientMessage (client_t * cl, int cmd, dbuffer *msg)
+void SV_ExecuteClientMessage (client_t *cl, int cmd, dbuffer *msg)
 {
 	if (cmd == -1)
 		return;

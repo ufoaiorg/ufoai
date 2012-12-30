@@ -137,7 +137,7 @@ client_t *SV_GetClient (int index)
  * or unwillingly. This is NOT called if the entire server is quitting
  * or crashing.
  */
-void SV_DropClient (client_t * drop, const char *message)
+void SV_DropClient (client_t *drop, const char *message)
 {
 	/* add the disconnect */
 	dbuffer msg(2 + strlen(message));
@@ -741,7 +741,7 @@ static void Master_Shutdown (void)
 /**
  * @brief Pull specific info from a newly changed userinfo string into a more C friendly form.
  */
-void SV_UserinfoChanged (client_t * cl)
+void SV_UserinfoChanged (client_t *cl)
 {
 	unsigned int i;
 
