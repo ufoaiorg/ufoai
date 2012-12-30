@@ -1,5 +1,5 @@
 //========================================================================
-// HUMANS - List of NAMES, MODELS and SOUNDS
+// HUMANS - List of MODELS and SOUNDS
 //========================================================================
 // Description:
 //
@@ -12,22 +12,16 @@
 //	name
 //		The name of the team (translatable)
 //	team
-//      team type (alien, civilian, phalanx)
+//		team type (alien, civilian, phalanx)
 //  robot
-//      Boolean - whether the teamdef is for a robot or not (e.g. ugv or bloodspider)
+//		Boolean - whether the teamdef is for a robot or not (e.g. ugv or bloodspider)
 //	armour
 //		Boolean - team can carry armour
 //	weapons
 //		Boolean - team can carry weapons
-//	names <lang-id> {}
-//		A list of actor-names for the given language.
-//		Uses sub-lists as follows:
-//			neutral {}
-//			female {}
-//			male {}
-//			lastname {}
-//			female_lastname {}
-//			male_lastname {}
+//	footstepsound
+//		in case of using a certain sound when moving
+//		<path/to/soundfile/soundfile/relative/to/base/sounds>
 //	models {}
 //			A List of model-paths with the following syntax:
 //			<path/to/model/relative/to/base/models> <model_file_name> <model_head_filename> <skinnumber>
