@@ -250,6 +250,7 @@ team bloodspider
 	robot		true
 	weapons		false
 	onlyWeapon	bloodspider_weapon
+	footstepsound	"aliens/bloodspider/move"
 	size		1
 	//hit_particle	none
 	death_texture	"pics/sfx/blood/blood_oil_2"
@@ -322,6 +323,7 @@ team bloodspider_adv
 	robot		true
 	weapons		false
 	onlyWeapon	bloodspider_weapon
+	footstepsound	"aliens/bloodspider/move"
 	size		1
 	//hit_particle	none
 	death_texture	"pics/sfx/blood/blood_oil_2"
@@ -395,7 +397,7 @@ team hovernet
 	robot		true
 	weapons		false
 	onlyWeapon	hovernet_plasma
-	footstepsound	""
+	footstepsound	"aliens/hovernet/move1"
 	size		1
 	//hit_particle	none
 	death_texture	"pics/sfx/blood/blood_oil_2"
@@ -467,7 +469,7 @@ team hovernet_adv
 	robot		true
 	weapons		false
 	onlyWeapon	hovernet_adv_plasma
-	footstepsound	""
+	footstepsound	"aliens/hovernet/move1"
 	size		1
 	//hit_particle	none
 	death_texture	"pics/sfx/blood/blood_oil_2"
