@@ -748,7 +748,7 @@ void SV_UserinfoChanged (client_t * cl)
 	/* call prog code to allow overrides */
 	{
 		const ScopedMutex scopedMutex(svs.serverMutex);
-		svs.ge->ClientUserinfoChanged(cl->player, cl->userinfo);
+		svs.ge->ClientUserinfoChanged(*cl->player, cl->userinfo);
 	}
 
 	/* name of the player */

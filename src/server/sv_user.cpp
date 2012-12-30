@@ -136,7 +136,7 @@ static void SV_Begin_f (client_t *cl)
 	/* call the game begin function */
 	{
 		ScopedMutex scopedMutex(svs.serverMutex);
-		began = svs.ge->ClientBegin(cl->player);
+		began = svs.ge->ClientBegin(*cl->player);
 	}
 
 	if (!began) {

@@ -1311,9 +1311,9 @@ void G_ClientTeamInfo (const Player &player)
  * @sa EV_ADD_BRUSH_MODEL
  * @param[in] player The player the edicts are send to
  */
-static void G_ClientSendEdictsAndBrushModels (const Player *player)
+static void G_ClientSendEdictsAndBrushModels (const Player &player)
 {
-	const int mask = G_PlayerToPM(*player);
+	const int mask = G_PlayerToPM(player);
 	/* skip the world */
 	edict_t *ent = G_EdictsGetFirst();
 
@@ -1338,20 +1338,20 @@ static void G_ClientSendEdictsAndBrushModels (const Player *player)
  * @sa G_ClientStartMatch
  * @sa CL_StartGame
  */
-bool G_ClientBegin (Player *player)
+bool G_ClientBegin (Player &player)
 {
-	player->began = true;
+	player.began = true;
 	level.numplayers++;
 
 	/* find a team */
-	G_GetTeam(*player);
-	if (!player->began)
+	G_GetTeam(player);
+	if (!player.began)
 		return false;
 
 	gi.ConfigString(CS_PLAYERCOUNT, "%i", level.numplayers);
 
 	/* spawn camera (starts client rendering) */
-	G_EventStart(*player, sv_teamplay->integer);
+	G_EventStart(player, sv_teamplay->integer);
 
 	/* send things like doors and breakables */
 	G_ClientSendEdictsAndBrushModels(player);
@@ -1360,10 +1360,10 @@ bool G_ClientBegin (Player *player)
 	G_EventEnd();
 
 	/* set the net name */
-	gi.ConfigString(CS_PLAYERNAMES + player->getNum(), "%s", player->pers.netname);
+	gi.ConfigString(CS_PLAYERNAMES + player.getNum(), "%s", player.pers.netname);
 
 	/* inform all clients */
-	gi.BroadcastPrintf(PRINT_CONSOLE, "%s has joined team %i\n", player->pers.netname, player->getTeam());
+	gi.BroadcastPrintf(PRINT_CONSOLE, "%s has joined team %i\n", player.pers.netname, player.getTeam());
 
 	return true;
 }
@@ -1408,34 +1408,34 @@ void G_ClientStartMatch (Player &player)
  * @brief called whenever the player updates a userinfo variable.
  * @note The game can override any of the settings in place (forcing skins or names, etc) before copying it off.
  */
-void G_ClientUserinfoChanged (Player *player, const char *userinfo)
+void G_ClientUserinfoChanged (Player &player, const char *userinfo)
 {
-	const bool alreadyReady = player->isReady();
-	const int oldTeamnum = Info_IntegerForKey(player->pers.userinfo, "cl_teamnum");
+	const bool alreadyReady = player.isReady();
+	const int oldTeamnum = Info_IntegerForKey(player.pers.userinfo, "cl_teamnum");
 
 	/* check for malformed or illegal info strings */
 	if (!Info_Validate(userinfo))
 		userinfo = "\\cl_name\\badinfo";
 
 	/* set name */
-	Q_strncpyz(player->pers.netname, Info_ValueForKey(userinfo, "cl_name"), sizeof(player->pers.netname));
-	Q_strncpyz(player->pers.userinfo, userinfo, sizeof(player->pers.userinfo));
-	player->autostand = Info_IntegerForKey(userinfo, "cl_autostand");
-	player->reactionLeftover = Info_IntegerForKey(userinfo, "cl_reactionleftover");
-	player->setReady(Info_IntegerForKey(userinfo, "cl_ready"));
+	Q_strncpyz(player.pers.netname, Info_ValueForKey(userinfo, "cl_name"), sizeof(player.pers.netname));
+	Q_strncpyz(player.pers.userinfo, userinfo, sizeof(player.pers.userinfo));
+	player.autostand = Info_IntegerForKey(userinfo, "cl_autostand");
+	player.reactionLeftover = Info_IntegerForKey(userinfo, "cl_reactionleftover");
+	player.setReady(Info_IntegerForKey(userinfo, "cl_ready"));
 
 	/* send the updated config string */
-	gi.ConfigString(CS_PLAYERNAMES + player->getNum(), "%s", player->pers.netname);
+	gi.ConfigString(CS_PLAYERNAMES + player.getNum(), "%s", player.pers.netname);
 
 	/* try to update to the preferred team */
 	if (!G_MatchIsRunning() && oldTeamnum != Info_IntegerForKey(userinfo, "cl_teamnum")) {
 		/* if the player is marked as ready he can't change his team */
-		if (!alreadyReady || !player->isReady()) {
-			player->setTeam(TEAM_NO_ACTIVE);
-			G_GetTeam(*player);
+		if (!alreadyReady || !player.isReady()) {
+			player.setTeam(TEAM_NO_ACTIVE);
+			G_GetTeam(player);
 		} else {
 			Com_DPrintf(DEBUG_GAME, "G_ClientUserinfoChanged: player %s is already marked as being ready\n",
-					player->pers.netname);
+					player.pers.netname);
 		}
 	}
 }
@@ -1485,7 +1485,7 @@ bool G_ClientConnect (Player *player, char *userinfo, size_t userinfoSize)
 
 	/* reset persistent data */
 	OBJZERO(player->pers);
-	G_ClientUserinfoChanged(player, userinfo);
+	G_ClientUserinfoChanged(*player, userinfo);
 
 	gi.BroadcastPrintf(PRINT_CONSOLE, "%s is connecting...\n", player->pers.netname);
 	return true;
