@@ -215,6 +215,7 @@ $(TARGET)_SRCS      = \
 	client/renderer/r_flare.cpp \
 	client/renderer/r_framebuffer.cpp \
 	client/renderer/r_geoscape.cpp \
+	client/renderer/r_grass.cpp \
 	client/renderer/r_image.cpp \
 	client/renderer/r_light.cpp \
 	client/renderer/r_lightmap.cpp \

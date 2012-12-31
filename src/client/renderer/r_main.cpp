@@ -31,6 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_font.h"
 #include "r_light.h"
 #include "r_lightmap.h"
+#include "r_grass.h"
 #include "r_main.h"
 #include "r_geoscape.h"
 #include "r_misc.h"
@@ -330,6 +331,7 @@ void R_RenderFrame (void)
 		R_DrawOpaqueMeshEntities(r_opaque_mesh_entities);
 
 		R_RenderAlphaTestBspRRefs();
+		R_DrawGrass();
 
 		R_EnableBlend(true);
 		R_RenderMaterialBspRRefs();

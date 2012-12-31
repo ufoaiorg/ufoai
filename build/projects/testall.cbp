@@ -283,6 +283,8 @@
 		<Unit filename="..\..\src\client\renderer\r_font.cpp" />
 		<Unit filename="..\..\src\client\renderer\r_framebuffer.cpp" />
 		<Unit filename="..\..\src\client\renderer\r_geoscape.cpp" />
+		<Unit filename="..\..\src\client\renderer\r_grass.cpp" />
+		<Unit filename="..\..\src\client\renderer\r_grass.h" />
 		<Unit filename="..\..\src\client\renderer\r_image.cpp" />
 		<Unit filename="..\..\src\client\renderer\r_light.cpp" />
 		<Unit filename="..\..\src\client\renderer\r_lightmap.cpp" />

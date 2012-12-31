@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_lightmap.h"
 #include "../../shared/parse.h"
 #include "r_light.h"
+#include "r_grass.h"
 
 /*
 ===============================================================================
@@ -1099,6 +1100,7 @@ static void R_ModEndLoading (const char *mapName)
 	R_LoadMaterials(mapName);
 	R_LoadSurfacesArrays();
 	R_GenerateTriangleSoup();
+	R_GenerateGrass();
 }
 
 /**
@@ -1131,6 +1133,8 @@ void R_ModBeginLoading (const char *tiles, bool day, const char *pos, const char
 
 	/* clear any lights leftover in the active list from previous maps */
 	R_ClearStaticLights();
+	/* remove all leftover grass */
+	R_ClearGrass();
 
 	/* init */
 	R_BeginBuildingLightmaps();
