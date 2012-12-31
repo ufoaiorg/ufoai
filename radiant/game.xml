@@ -13,6 +13,7 @@
   surf11="phong"
   surf12="fireaffected"
   surf13="footstep"
+  surf15="foliage"
   surf26="alphatest"
   cont1="solid"
   cont2="window"
