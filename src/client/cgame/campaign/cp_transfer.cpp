@@ -285,14 +285,8 @@ transfer_t* TR_TransferStart (base_t *srcBase, transferData_t &transData)
 		return NULL;
 	}
 
-	/* don't start any empty transport */
-	if (!transData.trCargoCountTmp) {
-		return NULL;
-	}
-
-	OBJZERO(transfer);
-
 	/* Initialize transfer. */
+	OBJZERO(transfer);
 	/* calculate time to go from 1 base to another : 1 day for one quarter of the globe*/
 	time = GetDistanceOnGlobe(transData.transferBase->pos, srcBase->pos) / 90.0f;
 	transfer.event.day = ccs.date.day + floor(time);	/* add day */
@@ -304,13 +298,14 @@ transfer_t* TR_TransferStart (base_t *srcBase, transferData_t &transData)
 		transfer.event.day++;
 	}
 	transfer.destBase = transData.transferBase;	/* Destination base. */
-	assert(transfer.destBase);
 	transfer.srcBase = srcBase;	/* Source base. */
 
+	int count = 0;
 	for (i = 0; i < cgi->csi->numODs; i++) {	/* Items. */
 		if (transData.trItemsTmp[i] > 0) {
 			transfer.hasItems = true;
 			transfer.itemAmount[i] = transData.trItemsTmp[i];
+			count++;
 		}
 	}
 	/* Note that the employee remains hired in source base during the transfer, that is
@@ -324,16 +319,19 @@ transfer_t* TR_TransferStart (base_t *srcBase, transferData_t &transData)
 			LIST_AddPointer(&transfer.employees[i], (void*) employee);
 			employee->baseHired = NULL;
 			employee->transfer = true;
+			count++;
 		}
 	}
 	for (i = 0; i < ccs.numAliensTD; i++) {		/* Aliens. */
 		if (transData.trAliensTmp[i][TRANS_ALIEN_ALIVE] > 0) {
 			transfer.hasAliens = true;
 			transfer.alienAmount[i][TRANS_ALIEN_ALIVE] = transData.trAliensTmp[i][TRANS_ALIEN_ALIVE];
+			count++;
 		}
 		if (transData.trAliensTmp[i][TRANS_ALIEN_DEAD] > 0) {
 			transfer.hasAliens = true;
 			transfer.alienAmount[i][TRANS_ALIEN_DEAD] = transData.trAliensTmp[i][TRANS_ALIEN_DEAD];
+			count++;
 		}
 	}
 
@@ -342,7 +340,12 @@ transfer_t* TR_TransferStart (base_t *srcBase, transferData_t &transData)
 		AIR_RemoveEmployees(*aircraft);
 		transfer.hasAircraft = true;
 		LIST_AddPointer(&transfer.aircraft, (void*)aircraft);
+		count++;
 	}
+
+	/* don't start empty transfer */
+	if (count == 0)
+		return NULL;
 
 	/* Recheck if production/research can be done on srcbase (if there are workers/scientists) */
 	PR_ProductionAllowed(srcBase);

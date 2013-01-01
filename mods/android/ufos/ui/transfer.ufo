@@ -1,15 +1,70 @@
 // ==================
 // TRANSFER MENU
 // ==================
+component cmp_t_storage extends panel {
+	{
+		size		"475 50"
+		onClick {
+			cmd "ui_trans_add <node:this.id@string> 1;"
+		}
+		onRClick {
+			cmd "ui_trans_add <node:this.id@string> -1;"
+		}
+	}
 
-component cmp_t_spinner extends spinner_horiz
-{
-	tooltip		"_Add/Remove item to transfer cargo, hold SHIFT for speed increase."
-	shiftincreasefactor	10.0
-	onChange	{
-		*cvar:tline = <node:parent.trans_list@viewpos>
-		*cvar:tline = ( *cvar:tline + *node:this@num )
-		cmd "trans_list_click <cvar:tline> <lastdiff>;"
+	data id {
+	}
+
+	string name {
+		pos			"0 0"
+		size		"250 50"
+		ghost		true
+		contentalign	ALIGN_CL
+	}
+	string src_store {
+		pos			"250 0"
+		size		"50 50"
+		contentalign	ALIGN_CR
+		ghost		true
+	}
+	spinner_horiz spinner {
+		tooltip		"_Add/Remove item to transfer cargo, hold SHIFT for speed increase."
+		pos			"302 0"
+		size		"100 50"
+		shiftincreasefactor	100.0
+		onChange {
+			cmd "ui_trans_add <node:parent.id@string> <lastdiff>;"
+		}
+	}
+	string dst_store {
+		pos			"425 0"
+		size		"100 50"
+		contentalign	ALIGN_CR
+		ghost		true
+	}
+}
+
+component cmp_t_cargo extends panel {
+	{
+		size		"368 50"
+		onClick {
+			cmd "ui_trans_add <node:this.id@string> -1;"
+		}
+	}
+
+	data id {
+	}
+	string name {
+		pos			"0 0"
+		size		"268 50"
+		ghost		true
+		contentalign	ALIGN_CL
+	}
+	string amount {
+		pos			"268 0"
+		size		"100 50"
+		contentalign	ALIGN_CR
+		ghost		true
 	}
 }
 
@@ -73,7 +128,7 @@ window transfer
 			size	"938 39"
 			cvar	*cvar:mn_itemtype
 			onChange	{
-				cmd "trans_type <cvar:mn_itemtype>;"
+				cmd "ui_trans_fill <cvar:mn_itemtype>;"
 				if ( *cvar:mn_itemtype eq "item" ) {
 					*cvar:mn_itemtype_name = "_Equipment"
 				} elif ( *cvar:mn_itemtype eq "employee" ) {
@@ -114,177 +169,99 @@ window transfer
 	panel itemlist {
 		{
 			pos			"12 160"
-			size		"552 582"
-			background		"ui/panel_grey_green_large2"
+			size		"552 552"
+			background	"ui/panel_grey_green_large2"
+		}
+
+		rows lines_head {
+			pos			"16 16"
+			size		"520 20"
+			color2		"0 0.08 0 1"
+			color1		"0 0.16 0 1"
+			lineheight	20
+		}
+
+		string title_name {
+			string		*cvar:mn_itemtype_name
+			pos			"25 16"
+			size		"250 20"
+			contentalign	ALIGN_CL
+			font		"f_small_bold"
+		}
+
+		string title_src_store {
+			string		"_From"
+			pos			"275 16"
+			size		"50 20"
+			contentalign	ALIGN_CR
+			font		"f_small_bold"
+		}
+		string dst_store {
+			string		"_To"
+			pos			"450 16"
+			size		"50 20"
+			contentalign	ALIGN_CR
+			font		"f_small_bold"
 		}
 
 		rows lines {
-			pos			"16 16"
-			size		"520 550"
+			pos			"16 36"
+			size		"520 500"
 			color1		"0 0.08 0 1"
 			color2		"0 0.16 0 1"
 			lineheight	50
 		}
+		panel translist {
+			pos			"25 36"
+			size		"475 500"
+			layout		LAYOUT_TOP_DOWN_FLOW
 
-		string title_item
-		{
-			string		*cvar:mn_itemtype_name
-			pos			"25 18"
-			size		"250 25"
-			font		"f_small_bold"
-		}
-		string title_amount
-		{
-			string		"_Amount/Transfer"
-			pos			"320 18"
-			size		"200 25"
-			contentalign	ALIGN_UC
-			font		"f_small_bold"
-		}
-
-		textlist trans_list
-		{
-			dataid		TEXT_TRANSFER_LIST
-			pos			"25 66"
-			size		"325 500"
-			lineheight	"50"
-			contentalign	ALIGN_CL
-			onClick		{
-				if ( *cvar:mn_itemtype ne "item" ) {
-					cmd "trans_list_click <lineselected>"
-				}
-			}
-			onViewChange	{
-				*node:root.itemlist.trans_list_amount@viewpos = <viewpos>
-				*node:root.itemlist.trans_list_transfered@viewpos = <viewpos>
-				*node:root.itemlist.trans_list_scroll@fullsize = <fullsize>
-				*node:root.itemlist.trans_list_scroll@current = <viewpos>
-				*node:root.itemlist.trans_list_scroll@viewsize = <viewsize>
-				cmd "trans_list_scroll <cvar:mn_itemtype> <viewpos>;"
+			onViewChange {
+				*node:parent.translist_scroll@fullsize = <fullsize>
+				*node:parent.translist_scroll@current = <viewpos>
+				*node:parent.translist_scroll@viewsize = <viewsize>
 			}
 		}
-
-		textlist trans_list_amount
-		{
-			dataid		TEXT_TRANSFER_LIST_AMOUNT
-			pos			"310 66"
-			size		"50 500"
-			lineheight	"50"
-			contentalign	ALIGN_CR
-			onViewChange	{
-				*node:root.itemlist.trans_list@viewpos = <viewpos>
-				*node:root.itemlist.trans_list_transfered@viewpos = <viewpos>
-				*node:root.itemlist.trans_list_scroll@fullsize = <fullsize>
-				*node:root.itemlist.trans_list_scroll@current = <viewpos>
-				*node:root.itemlist.trans_list_scroll@viewsize = <viewsize>
-				cmd "trans_list_scroll <cvar:mn_itemtype> <viewpos>;"
-			}
-		}
-
-		textlist trans_list_transfered
-		{
-			dataid		TEXT_TRANSFER_LIST_TRANSFERED
-			pos			"445 66"
-			size		"50 500"
-			lineheight	"50"
-			contentalign	ALIGN_CR
-			onViewChange	{
-				*node:root.itemlist.trans_list@viewpos = <viewpos>
-				*node:root.itemlist.trans_list_amount@viewpos = <viewpos>
-				*node:root.itemlist.trans_list_scroll@fullsize = <fullsize>
-				*node:root.itemlist.trans_list_scroll@current = <viewpos>
-				*node:root.itemlist.trans_list_scroll@viewsize = <viewsize>
-				cmd "trans_list_scroll <cvar:mn_itemtype> <viewpos>;"
-			}
-		}
-
-		vscrollbar trans_list_scroll {
+		vscrollbar translist_scroll {
 			image		"ui/scrollbar_v_green"
-			pos			"510 68"
-			height		"495"
+			pos			"510 36"
+			height		"500"
 			hidewhenunused	true
 			onChange	{
-				*node:root.itemlist.trans_list_scroll@current = <current>
-				*node:root.itemlist.trans_list@viewpos = <current>
-				*node:root.itemlist.trans_list_amount@viewpos = <current>
-				*node:root.itemlist.trans_list_transfered@viewpos = <current>
-				cmd "trans_list_scroll <cvar:mn_itemtype> <current>;"
+				*node:parent.translist@viewpos = <current>
 			}
 		}
 
-		cmp_t_spinner t_spinner0
-		{
-			pos			"375 66"
+		confunc ui_translist_clear {
+			call *node:parent.translist@removeAllchild
 		}
-		cmp_t_spinner t_spinner1
-		{
-			pos			"375 116"
-		}
-		cmp_t_spinner t_spinner2
-		{
-			pos			"375 166"
-		}
-		cmp_t_spinner t_spinner3
-		{
-			pos			"375 216"
-		}
-		cmp_t_spinner t_spinner4
-		{
-			pos			"375 266"
-		}
-		cmp_t_spinner t_spinner5
-		{
-			pos			"375 316"
-		}
-		cmp_t_spinner t_spinner6
-		{
-			pos			"375 366"
-		}
-		cmp_t_spinner t_spinner7
-		{
-			pos			"375 416"
-		}
-		cmp_t_spinner t_spinner8
-		{
-			pos			"375 466"
-		}
-		cmp_t_spinner t_spinner9
-		{
-			pos			"375 516"
-		}
-	}
 
-	/**
-	 * @brief display N spinners
-	 * @param[in] <1> number of spinners to show
-	 */
-	confunc trans_display_spinners {
-		*cvar:loop_max = <1>
-		*cvar:i = 0
+		confunc ui_translist_add {
+			call *node:parent.translist@createChild("trans_<1>", "cmp_t_storage")
 
-		if ( *cvar:loop_max > 10 ) {
-			*cvar:loop_max = 10
+			*node:parent.translist.trans_<1>.id@string = <1>
+			*node:parent.translist.trans_<1>.name@string = <2>
+			*node:parent.translist.trans_<1>.src_store@string = <3>
+			if ( *node:parent.translist.trans_<1>.src_store@string eq "-1" ) {
+				*node:parent.translist.trans_<1>.src_store@invis = true
+			} else {
+				*node:parent.translist.trans_<1>.src_store@invis = false
+			}
+			*node:parent.translist.trans_<1>.dst_store@string = <4>
+			if ( *node:parent.translist.trans_<1>.dst_store@string eq "-1" ) {
+				*node:parent.translist.trans_<1>.dst_store@invis = true
+			} else {
+				*node:parent.translist.trans_<1>.dst_store@invis = false
+			}
+			*node:parent.translist.trans_<1>.spinner@min = <5>
+			*node:parent.translist.trans_<1>.spinner@current = <6>
+			*node:parent.translist.trans_<1>.spinner@max = <7>
+			if ( *node:parent.translist.trans_<1>.spinner@max == -1 ) {
+				*node:parent.translist.trans_<1>.spinner@invis = true
+			} else {
+				*node:parent.translist.trans_<1>.spinner@invis = false
+			}
 		}
-		while ( *cvar:i < *cvar:loop_max ) {
-			*node:root.itemlist.t_spinner<cvar:i>@invis = false
-			*cvar:i = ( *cvar:i + 1 )
-		}
-		while ( *cvar:i < 10 ) {
-			*node:root.itemlist.t_spinner<cvar:i>@invis = true
-			*cvar:i = ( *cvar:i + 1 )
-		}
-	}
-	/**
-	 * @brief sets the correct values for spinner controls
-	 * @param[in] <1> row of the item
-	 * @param[in] <2> quantity of the item in cargo
-	 * @param[in] <3> min value allowed
-	 * @param[in] <4> max value allowed
-	 */
-	confunc trans_updatespinners {
-		*node:root.itemlist.t_spinner<1>@current = <2>
-		*node:root.itemlist.t_spinner<1>@min = <3>
-		*node:root.itemlist.t_spinner<1>@max = <4>
 	}
 
 	/**
@@ -297,57 +274,68 @@ window transfer
 			background	"ui/panel_grey_green_large2"
 		}
 
-		rows lines_transfer_cargolist {
+		rows lines_transfer_cargolist_head {
 			pos			"16 16"
-			size		"388 225"
+			size		"388 20"
+			color2		"0 0.08 0 1"
+			color1		"0 0.16 0 1"
+			lineheight	20
+		}
+
+		string title_name {
+			string		"_Cargo"
+			pos			"16 16"
+			size		"268 20"
+			contentalign	ALIGN_CL
+			font		"f_small_bold"
+		}
+
+		string title_amount {
+			string		"_Amount"
+			pos			"284 16"
+			size		"100 20"
+			contentalign	ALIGN_CR
+			font		"f_small_bold"
+		}
+
+		rows lines_transfer_cargolist {
+			pos			"16 36"
+			size		"388 200"
 			color1		"0 0.08 0 1"
 			color2		"0 0.16 0 1"
-			lineheight	25
+			lineheight	50
 		}
+		panel cargolist {
+			pos			"16 36"
+			size		"368 200"
+			layout		LAYOUT_TOP_DOWN_FLOW
 
-		textlist trans_cargolist
-		{
-			dataid		TEXT_CARGO_LIST
-			pos			"25 16"
-			size		"290 225"
-			lineheight	"25"
-			onClick		{
-				if ( *cvar:mn_itemtype ne "item" ) {
-					cmd "trans_cargolist_click <lineselected>"
-				}
-			}
-			onViewChange	{
-				*node:root.transfer_cargolist.trans_cargolist_amount@viewpos = <viewpos>
-				*node:root.transfer_cargolist.trans_cargolist_scroll@fullsize = <fullsize>
-				*node:root.transfer_cargolist.trans_cargolist_scroll@current = <viewpos>
-				*node:root.transfer_cargolist.trans_cargolist_scroll@viewsize = <viewsize>
+			onViewChange {
+				*node:parent.cargolist_scroll@fullsize = <fullsize>
+				*node:parent.cargolist_scroll@current = <viewpos>
+				*node:parent.cargolist_scroll@viewsize = <viewsize>
 			}
 		}
-
-		textlist trans_cargolist_amount
-		{
-			dataid		TEXT_CARGO_LIST_AMOUNT
-			pos			"320 16"
-			size		"50 225"
-			lineheight	"25"
-			contentalign	ALIGN_CR
-			onViewChange	{
-				*node:root.transfer_cargolist.trans_cargolist@viewpos = <viewpos>
-				*node:root.transfer_cargolist.trans_cargolist_scroll@fullsize = <fullsize>
-				*node:root.transfer_cargolist.trans_cargolist_scroll@current = <viewpos>
-				*node:root.transfer_cargolist.trans_cargolist_scroll@viewsize = <viewsize>
-			}
-		}
-
-		vscrollbar trans_cargolist_scroll {
+		vscrollbar cargolist_scroll {
 			image		"ui/scrollbar_v_green"
-			pos			"380 18"
-			height		"221"
+			pos			"384 36"
+			height		"200"
 			hidewhenunused	true
 			onChange	{
-				*node:root.transfer_cargolist.trans_cargolist@viewpos = <current>
-				*node:root.transfer_cargolist.trans_cargolist_amount@viewpos = <current>
+				*node:parent.cargolist@viewpos = <current>
 			}
+		}
+
+		confunc ui_cargolist_clear {
+			call *node:parent.cargolist@removeAllchild
+		}
+
+		confunc ui_cargolist_add {
+			call *node:parent.cargolist@createChild("cargo_<1>", "cmp_t_cargo")
+
+			*node:parent.cargolist.cargo_<1>.id@string = <1>
+			*node:parent.cargolist.cargo_<1>.name@string = <2>
+			*node:parent.cargolist.cargo_<1>.amount@string = <3>
 		}
 	}
 
@@ -377,7 +365,7 @@ window transfer
 			dataid		OPTION_BASELIST
 			onChange {
 				cmd "trans_selectbase <cvar:mn_trans_base_id>;"
-				cmd "trans_type <cvar:mn_itemtype>;"
+				cmd "ui_trans_fill <cvar:mn_itemtype>;"
 			}
 		}
 
@@ -477,21 +465,9 @@ window transfer
 		}
 	}
 
-	confunc trans_resetscroll {
-		*node:root.itemlist.trans_list_scroll@current = 0
-		*node:root.itemlist.trans_list@viewpos = 0
-		*node:root.itemlist.trans_list_amount@viewpos = 0
-		*node:root.itemlist.trans_list_transfered@viewpos = 0
-		if ( *cvar:mn_itemtype ne "" ) {
-			cmd "trans_list_scroll <cvar:mn_itemtype> <itemlist.trans_list@viewpos>;"
-		}
-	}
-
 	// ==================
 	// buttons
 	// ==================
-
-
 	button bt_translist
 	{
 		string		"_List"
@@ -524,8 +500,8 @@ window transfer
 
 	button bt_emptycraftstorage
 	{
-		string		"_Cancel"
-		tooltip		"_Empty the aircraft storage"
+		string		"_Clear"
+		tooltip		"_Clear cargo"
 		background		"ui/button_blue"
 		pos			"870 711"
 		size		"128 52"
@@ -543,12 +519,6 @@ window transfer
 	{
 		cmd "trans_init;"
 		if ( *cvar:mn_itemtype_name eq "" ) { *cvar:mn_itemtype_name = "_Equipment" }
-		*cvar:i = 0;
-		while ( *cvar:i < 10 ) {
-			*node:root.itemlist.t_spinner<cvar:i>@num = <cvar:i>
-			*cvar:i = ( *cvar:i + 1 )
-		}
-		delete *cvar:i
 		*cvar:mn_lastsubmenu = "transfer"
 	}
 
