@@ -4,7 +4,7 @@
  */
 
 /*
-Copyright (C) 2002-2012 UFO: Alien Invasion.
+Copyright (C) 2002-2013 UFO: Alien Invasion.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -107,11 +107,11 @@ typedef enum {
 } aircraft_notifications_t;
 
 /** alien cargo in aircraft_t, carrying aliens and bodies from a mission to base */
-typedef struct aliensTmp_s {
+typedef struct alienCargo_s {
 	const teamDef_t* teamDef;		/**< Pointer to type (team) of alien race in global csi.teamDef array. */
 	int amountAlive;		/**< Amount of live captured aliens. */
 	int amountDead;		/**< Amount of alien corpses. */
-} aliensTmp_t;
+} alienCargo_t;
 
 #define MAX_AIRCRAFTSLOT 8
 
@@ -230,7 +230,7 @@ typedef struct aircraft_s {
 	int ufoInterestOnGeoscape;	/**< interest level at which this ufo should be available on geoscape first */
 	int detectionIdx;		/**< detected UFO number (for descriptions "UFO #4")*/
 	date_t lastSpotted;		/**< date the UFO was detected last time */
-	aliensTmp_t alienCargo[MAX_CARGO];	/**< Cargo of aliens. */
+	alienCargo_t alienCargo[MAX_CARGO];	/**< Cargo of aliens. */
 	int alienCargoTypes;						/**< How many types of aliens we collected. */
 } aircraft_t;
 

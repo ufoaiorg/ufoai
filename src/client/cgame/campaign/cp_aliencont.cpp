@@ -43,7 +43,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 static inline int AL_GetCargoIndexForTeamDefinition (const aircraft_t *aircraft, const teamDef_t *teamDef)
 {
-	const aliensTmp_t *cargo = AL_GetAircraftAlienCargo(aircraft);
+	const alienCargo_t *cargo = AL_GetAircraftAlienCargo(aircraft);
 	const int alienCargoTypes = AL_GetAircraftAlienCargoTypes(aircraft);
 	int i;
 
@@ -71,10 +71,10 @@ static inline int AL_GetCargoIndexForTeamDefinition (const aircraft_t *aircraft,
  */
 bool AL_AddAlienTypeToAircraftCargo (aircraft_t *aircraft, const teamDef_t *teamDef, int amount, bool dead)
 {
-	aliensTmp_t *cargo = AL_GetAircraftAlienCargo(aircraft);
+	alienCargo_t *cargo = AL_GetAircraftAlienCargo(aircraft);
 	const int alienCargoTypes = AL_GetAircraftAlienCargoTypes(aircraft);
 	const int index = AL_GetCargoIndexForTeamDefinition(aircraft, teamDef);
-	aliensTmp_t *c = &cargo[index];
+	alienCargo_t *c = &cargo[index];
 
 	if (!c->teamDef)
 		AL_SetAircraftAlienCargoTypes(aircraft, alienCargoTypes + 1);
@@ -136,7 +136,7 @@ void AL_FillInContainment (base_t *base)
 void AL_AddAliens (aircraft_t *aircraft)
 {
 	base_t *toBase;
-	const aliensTmp_t *cargo;
+	const alienCargo_t *cargo;
 	int alienCargoTypes;
 	int i;
 	int j;

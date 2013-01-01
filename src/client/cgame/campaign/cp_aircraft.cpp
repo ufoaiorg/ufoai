@@ -2406,7 +2406,7 @@ static bool AIR_SaveAircraftXML (xmlNode_t *p, const aircraft_t* const aircraft,
 	/* aliencargo */
 	{
 		const int alienCargoTypes = AL_GetAircraftAlienCargoTypes(aircraft);
-		const aliensTmp_t *cargo  = AL_GetAircraftAlienCargo(aircraft);
+		const alienCargo_t *cargo  = AL_GetAircraftAlienCargo(aircraft);
 		subnode = cgi->XML_AddNode(node, SAVE_AIRCRAFT_ALIENCARGO);
 		for (l = 0; l < alienCargoTypes; l++) {
 			xmlNode_t *ssnode = cgi->XML_AddNode(subnode, SAVE_AIRCRAFT_CARGO);
@@ -2658,7 +2658,7 @@ static bool AIR_LoadAircraftXML (xmlNode_t *p, aircraft_t *craft)
 	snode = cgi->XML_GetNode(p, SAVE_AIRCRAFT_ALIENCARGO);
 	for (l = 0, ssnode = cgi->XML_GetNode(snode, SAVE_AIRCRAFT_CARGO); l < MAX_CARGO && ssnode;
 			l++, ssnode = cgi->XML_GetNextNode(ssnode, snode, SAVE_AIRCRAFT_CARGO)) {
-		aliensTmp_t *cargo = AL_GetAircraftAlienCargo(craft);
+		alienCargo_t *cargo = AL_GetAircraftAlienCargo(craft);
 		const char *const str = cgi->XML_GetString(ssnode, SAVE_AIRCRAFT_TEAMDEFID);
 
 		cargo[l].teamDef = cgi->Com_GetTeamDefinitionByID(str);

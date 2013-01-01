@@ -166,7 +166,7 @@ void TR_TransferAlienAfterMissionStart (const base_t *base, aircraft_t *transfer
 	float time;
 	char message[256];
 	int alienCargoTypes;
-	aliensTmp_t *cargo;
+	alienCargo_t *cargo;
 	const technology_t *breathingTech;
 	bool alienBreathing = false;
 

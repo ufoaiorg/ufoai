@@ -67,7 +67,7 @@ static void TR_ClearTempCargo (void)
 static int TR_CountStunnedAliensInCargo (const aircraft_t *transferAircraft)
 {
 	int stunnedAliens = 0;
-	const aliensTmp_t *cargo = AL_GetAircraftAlienCargo(transferAircraft);
+	const alienCargo_t *cargo = AL_GetAircraftAlienCargo(transferAircraft);
 
 	if (cargo) {
 		int i;
