@@ -139,8 +139,49 @@ void CP_BaseAttackMissionDestroyBase (mission_t *mission)
 }
 
 /**
+ * @brief Prepare things for baseattack battle
+ * @param[in] mission Mission to prepare battle for
+ */
+static void CP_BaseAttackPrepareBattle (mission_t *mission)
+{
+	if (!mission)
+		return;
+
+	base_t *base = mission->data.base;
+
+	GEO_SelectMission(mission);
+	mission->active = true;
+	ccs.mapAction = MA_BASEATTACK;
+	Com_DPrintf(DEBUG_CLIENT, "Base attack: %s at %.0f:%.0f\n", mission->id, mission->pos[0], mission->pos[1]);
+
+	/* Fill the fake aircraft */
+	OBJZERO(baseAttackFakeAircraft);
+	baseAttackFakeAircraft.homebase = base;
+	/* needed for transfer of alien corpses */
+	VectorCopy(base->pos, baseAttackFakeAircraft.pos);
+
+	/* needed to spawn soldiers on map */
+	baseAttackFakeAircraft.maxTeamSize = std::min(MAX_ACTIVETEAM, E_CountByType(EMPL_SOLDIER) + E_CountByType(EMPL_ROBOT));
+
+
+	base->aircraftCurrent = &baseAttackFakeAircraft;
+	GEO_SetMissionAircraft(&baseAttackFakeAircraft);
+	/** @todo remove me - this is not needed because we are using the base->aircraftCurrent
+	 * pointer for resolving the aircraft - only CP_GameAutoGo needs this */
+	GEO_SetInterceptorAircraft(&baseAttackFakeAircraft);	/* needed for updating soldier stats sa CP_UpdateCharacterStats */
+	B_SetCurrentSelectedBase(base);						/* needed for equipment menu */
+
+	static char popupText[1024];
+	Com_sprintf(popupText, sizeof(popupText), _("Base '%s' is under attack! What to do?"), base->name);
+	cgi->UI_RegisterText(TEXT_POPUP, popupText);
+
+	CP_GameTimeStop();
+	cgi->UI_PushWindow("popup_baseattack");
+}
+
+/**
  * @brief Start Base Attack.
- * @note Base attack mission -- Stage 2
+ * @param[in] mission Pointer to the baseattack mission
  */
 void CP_BaseAttackStartMission (mission_t *mission)
 {
@@ -171,20 +212,6 @@ void CP_BaseAttackStartMission (mission_t *mission)
 	base->baseStatus = BASE_UNDER_ATTACK;
 	ccs.campaignStats.basesAttacked++;
 
-	GEO_SelectMission(mission);
-	mission->active = true;
-	ccs.mapAction = MA_BASEATTACK;
-	Com_DPrintf(DEBUG_CLIENT, "Base attack: %s at %.0f:%.0f\n", mission->id, mission->pos[0], mission->pos[1]);
-
-	/* Fill the fake aircraft */
-	OBJZERO(baseAttackFakeAircraft);
-	baseAttackFakeAircraft.homebase = base;
-	/* needed for transfer of alien corpses */
-	VectorCopy(base->pos, baseAttackFakeAircraft.pos);
-
-	/* needed to spawn soldiers on map */
-	baseAttackFakeAircraft.maxTeamSize = std::min(MAX_ACTIVETEAM, E_CountByType(EMPL_SOLDIER) + E_CountByType(EMPL_ROBOT));
-
 	soldiers = 0;
 	E_Foreach(EMPL_SOLDIER, employee) {
 		if (!E_IsInBase(employee, base))
@@ -198,20 +225,7 @@ void CP_BaseAttackStartMission (mission_t *mission)
 		CP_BaseAttackMissionDestroyBase(mission);
 		return;
 	}
-
-	base->aircraftCurrent = &baseAttackFakeAircraft;
-	GEO_SetMissionAircraft(&baseAttackFakeAircraft);
-	/** @todo remove me - this is not needed because we are using the base->aircraftCurrent
-	 * pointer for resolving the aircraft - only CP_GameAutoGo needs this */
-	GEO_SetInterceptorAircraft(&baseAttackFakeAircraft);	/* needed for updating soldier stats sa CP_UpdateCharacterStats */
-	B_SetCurrentSelectedBase(base);						/* needed for equipment menu */
-
-	static char popupText[1024];
-	Com_sprintf(popupText, sizeof(popupText), _("Base '%s' is under attack! What to do?"), base->name);
-	cgi->UI_RegisterText(TEXT_POPUP, popupText);
-
-	CP_GameTimeStop();
-	cgi->UI_PushWindow("popup_baseattack");
+	CP_BaseAttackPrepareBattle(mission);
 }
 
 
@@ -223,7 +237,7 @@ void CP_CheckBaseAttacks (void)
 {
 	MIS_Foreach(mission) {
 		if (mission->category == INTERESTCATEGORY_BASE_ATTACK && mission->stage == STAGE_BASE_ATTACK)
-			CP_BaseAttackStartMission(mission);
+			CP_BaseAttackPrepareBattle(mission);
 	}
 }
 
