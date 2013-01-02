@@ -1871,6 +1871,7 @@ static void CL_AddTargetingBox (pos3_t pos, bool pendBox)
 	VectorAdd(cursor.origin, boxSize, cursor.oldorigin);
 
 	/* color */
+	/* if the mouse is over an actor, but not the selected one */
 	if (mouseActor && !LE_IsSelected(mouseActor)) {
 		cursor.alpha = 0.6 + 0.2 * sin((float) cl.time / 80);
 		/* Paint the box red if the soldiers under the cursor is
@@ -1918,17 +1919,17 @@ static void CL_AddTargetingBox (pos3_t pos, bool pendBox)
 			VectorSubtract(cursor.origin, realBoxSize, cursor.origin);
 		}
 	} else {
-		if (selActor) {
+	    /* either no actor under the cursor or the selected one */
+		cursor.alpha = 0.3;
+		if (selActor) {     /* there should always be an actor selected, but who knows */
 			BoxOffset(selActor->fieldSize, cursorOffset);
 			VectorAdd(cursor.oldorigin, cursorOffset, cursor.oldorigin);
 			VectorAdd(cursor.origin, cursorOffset, cursor.origin);
-
 			BoxSize(selActor->fieldSize, boxSize, realBoxSize);
 			VectorSubtract(cursor.origin, realBoxSize, cursor.origin);
 		} else {
 			VectorSubtract(cursor.origin, boxSize, cursor.origin);
 		}
-		cursor.alpha = 0.3;
 	}
 
 	/* if pendBox is true then ignore all the previous color considerations and use cyan */
