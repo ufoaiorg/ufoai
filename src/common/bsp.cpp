@@ -793,8 +793,10 @@ static void CM_AddMapTile (const char *name, const bool day, const int sX, const
 	/* load the file */
 	Com_sprintf(filename, sizeof(filename), "maps/%s.bsp", name);
 	length = FS_LoadFile(filename, &buf);
-	if (!buf)
+	if (!buf) {
+		Sys_Error("Couldn't load %s.\nDid you compile the maps ?", filename);
 		Com_Error(ERR_DROP, "Couldn't load %s", filename);
+	}
 
 	checksum = LittleLong(Com_BlockChecksum(buf, length));
 
