@@ -42,7 +42,7 @@ BEGIN
 			VALUE "FileDescription", "UFO:Alien Invasion"
 			VALUE "FileVersion", VER_FILEVERSION_STR
 			VALUE "InternalName", "ufoai"
-			VALUE "LegalCopyright", "Copyright (C) 2002-2011"
+			VALUE "LegalCopyright", "Copyright (C) 2002-2013"
 			VALUE "OriginalFilename", "ufo.exe"
 			VALUE "ProductName", "UFO:AI"
 			VALUE "ProductVersion", "2.5.0.0"
