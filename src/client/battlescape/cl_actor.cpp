@@ -1847,39 +1847,39 @@ static const vec3_t boxSize = { BOX_DELTA_WIDTH, BOX_DELTA_LENGTH, BOX_DELTA_HEI
  */
 static void CL_AddTargetingBox (pos3_t pos, bool pendBox)
 {
-	entity_t ent;
+	entity_t cursor;
 	vec3_t realBoxSize;
 	vec3_t cursorOffset;
 
 	if (!cl_showactors->integer)
 		return;
 
-	OBJZERO(ent);
-	ent.flags = RF_BOX;
+	OBJZERO(cursor);
+	cursor.flags = RF_BOX;
 
-	Grid_PosToVec(cl.mapData->routes, ACTOR_GET_FIELDSIZE(selActor), pos, ent.origin);
+	Grid_PosToVec(cl.mapData->routes, ACTOR_GET_FIELDSIZE(selActor), pos, cursor.origin);
 
 	/* Paint the green box if move is possible ...
 	 * OR paint a dark blue one if move is impossible or the
 	 * soldier does not have enough TimeUnits left. */
 	if (selActor && selActor->actorMoveLength < ROUTING_NOT_REACHABLE
 	 && selActor->actorMoveLength <= CL_ActorUsableTUs(selActor))
-		VectorSet(ent.color, 0, 1, 0); /* Green */
+		VectorSet(cursor.color, 0, 1, 0); /* Green */
 	else
-		VectorSet(ent.color, 0.6, 0.68, 1); /* Light Blue */
+		VectorSet(cursor.color, 0.6, 0.68, 1); /* Light Blue */
 
-	VectorAdd(ent.origin, boxSize, ent.oldorigin);
+	VectorAdd(cursor.origin, boxSize, cursor.oldorigin);
 
 	/* color */
 	if (mouseActor && !LE_IsSelected(mouseActor)) {
-		ent.alpha = 0.6 + 0.2 * sin((float) cl.time / 80);
+		cursor.alpha = 0.6 + 0.2 * sin((float) cl.time / 80);
 		/* Paint the box red if the soldiers under the cursor is
 		 * not in our team and no civilian either. */
 		if (mouseActor->team != cls.team) {
 			switch (mouseActor->team) {
 			case TEAM_CIVILIAN:
 				/* Civilians are yellow */
-				VectorSet(ent.color, 1, 1, 0); /* Yellow */
+				VectorSet(cursor.color, 1, 1, 0); /* Yellow */
 				break;
 			default:
 				if (LE_IsAlien(mouseActor)) {
@@ -1893,7 +1893,7 @@ static void CL_AddTargetingBox (pos3_t pos, bool pendBox)
 					UI_RegisterText(TEXT_MOUSECURSOR_PLAYERNAMES, CL_PlayerGetName(mouseActor->pnum));
 				}
 				/* Aliens (and players not in our team [multiplayer]) are red */
-				VectorSet(ent.color, 1, 0, 0); /* Red */
+				VectorSet(cursor.color, 1, 0, 0); /* Red */
 				break;
 			}
 		} else {
@@ -1907,38 +1907,38 @@ static void CL_AddTargetingBox (pos3_t pos, bool pendBox)
 				UI_RegisterText(TEXT_MOUSECURSOR_PLAYERNAMES, chr->name);
 			}
 			/* Paint a light blue box if on our team */
-			VectorSet(ent.color, 0.2, 0.3, 1); /* Light Blue */
+			VectorSet(cursor.color, 0.2, 0.3, 1); /* Light Blue */
 		}
 
 		if (selActor) {
 			BoxOffset(selActor->fieldSize, cursorOffset);
-			VectorAdd(ent.oldorigin, cursorOffset, ent.oldorigin);
-			VectorAdd(ent.origin, cursorOffset, ent.origin);
+			VectorAdd(cursor.oldorigin, cursorOffset, cursor.oldorigin);
+			VectorAdd(cursor.origin, cursorOffset, cursor.origin);
 			BoxSize(selActor->fieldSize, boxSize, realBoxSize);
-			VectorSubtract(ent.origin, realBoxSize, ent.origin);
+			VectorSubtract(cursor.origin, realBoxSize, cursor.origin);
 		}
 	} else {
 		if (selActor) {
 			BoxOffset(selActor->fieldSize, cursorOffset);
-			VectorAdd(ent.oldorigin, cursorOffset, ent.oldorigin);
-			VectorAdd(ent.origin, cursorOffset, ent.origin);
+			VectorAdd(cursor.oldorigin, cursorOffset, cursor.oldorigin);
+			VectorAdd(cursor.origin, cursorOffset, cursor.origin);
 
 			BoxSize(selActor->fieldSize, boxSize, realBoxSize);
-			VectorSubtract(ent.origin, realBoxSize, ent.origin);
+			VectorSubtract(cursor.origin, realBoxSize, cursor.origin);
 		} else {
-			VectorSubtract(ent.origin, boxSize, ent.origin);
+			VectorSubtract(cursor.origin, boxSize, cursor.origin);
 		}
-		ent.alpha = 0.3;
+		cursor.alpha = 0.3;
 	}
 
 	/* if pendBox is true then ignore all the previous color considerations and use cyan */
 	if (pendBox) {
-		VectorSet(ent.color, 0, 1, 1); /* Cyan */
-		ent.alpha = 0.15;
+		VectorSet(cursor.color, 0, 1, 1); /* Cyan */
+		cursor.alpha = 0.15;
 	}
 
 	/* add it */
-	R_AddEntity(&ent);
+	R_AddEntity(&cursor);
 }
 
 /**
