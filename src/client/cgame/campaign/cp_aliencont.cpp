@@ -29,63 +29,30 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_capacity.h"
 #include "cp_aliencont_callbacks.h"
 #include "save/save_aliencont.h"
+#include "aliencargo.h"
 
 /**
  * Collecting aliens functions for aircraft
  */
 
 /**
- * @brief Searches an existing index in the alien cargo of an aircraft, or returns the next free index of
- * the alien cargo if the team definition wasn't found in the current alien cargo.
- * @param[in] aircraft The aircraft that should have the given team definition in its alien cargo
- * @param[in] teamDef The team definition that should be searched for
- * @return The index of the team definition in the alien cargo of the given aircraft
- */
-static inline int AL_GetCargoIndexForTeamDefinition (const aircraft_t *aircraft, const teamDef_t *teamDef)
-{
-	const alienCargo_t *cargo = AL_GetAircraftAlienCargo(aircraft);
-	const int alienCargoTypes = AL_GetAircraftAlienCargoTypes(aircraft);
-	int i;
-
-	for (i = 0; i < alienCargoTypes; i++, cargo++) {
-		if (cargo->teamDef == teamDef)
-			break;
-	}
-
-	/* in case teamdef wasn't found, return the next free index */
-	assert(i < MAX_CARGO);
-	return i;
-}
-
-/**
  * @brief Adds an alientype to an aircraft cargo
  * @param[in] aircraft The aircraft that owns the alien cargo to add the alien race to
- * @param[in] teamDef The team definition of the alien race to add to the alien cargo container of the
- * given aircraft
- * @param[in] amount The amount of aliens of the given race (@c teamDef ) that should be added to
- * the alien cargo
- * @param[in] dead true for cases where the aliens should be added as dead to the alien cargo - false for
- * living aliens
- * @todo Return false for cases where the alien race could not be added to the alien cargo of the aircraft
- * @returns Currently always true
+ * @param[in] teamDef The team definition of the alien race to add to the alien cargo container of the given aircraft
+ * @param[in] amount The amount of aliens of the given race (@c teamDef ) that should be added to the alien cargo
+ * @param[in] dead true for cases where the aliens should be added as dead to the alien cargo - false for living aliens
  */
 bool AL_AddAlienTypeToAircraftCargo (aircraft_t *aircraft, const teamDef_t *teamDef, int amount, bool dead)
 {
-	alienCargo_t *cargo = AL_GetAircraftAlienCargo(aircraft);
-	const int alienCargoTypes = AL_GetAircraftAlienCargoTypes(aircraft);
-	const int index = AL_GetCargoIndexForTeamDefinition(aircraft, teamDef);
-	alienCargo_t *c = &cargo[index];
-
-	if (!c->teamDef)
-		AL_SetAircraftAlienCargoTypes(aircraft, alienCargoTypes + 1);
-	c->teamDef = teamDef;
+	if (aircraft->alienCargo == NULL)
+		aircraft->alienCargo = new AlienCargo();
+	if (aircraft->alienCargo == NULL)
+		return false;
 
 	if (dead)
-		c->amountDead += amount;
+		return aircraft->alienCargo->add(teamDef, 0, amount);
 	else
-		c->amountAlive += amount;
-
-	return true;
+		return aircraft->alienCargo->add(teamDef, amount, 0);
 }
 
 /**
@@ -136,23 +103,17 @@ void AL_FillInContainment (base_t *base)
 void AL_AddAliens (aircraft_t *aircraft)
 {
 	base_t *toBase;
-	const alienCargo_t *cargo;
-	int alienCargoTypes;
 	int i;
 	int j;
 	bool limit = false;
 	bool messageAlreadySet = false;
-	technology_t *breathingTech;
 	bool alienBreathing = false;
 
 	assert(aircraft);
 	toBase = aircraft->homebase;
 	assert(toBase);
 
-	cargo = AL_GetAircraftAlienCargo(aircraft);
-	alienCargoTypes = AL_GetAircraftAlienCargoTypes(aircraft);
-
-	if (alienCargoTypes == 0)
+	if (aircraft->alienCargo == NULL)
 		return;
 
 	if (!B_GetBuildingStatus(toBase, B_ALIEN_CONTAINMENT)) {
@@ -160,27 +121,31 @@ void AL_AddAliens (aircraft_t *aircraft)
 		return;
 	}
 
-	breathingTech = RS_GetTechByID(BREATHINGAPPARATUS_TECH);
+	technology_t *breathingTech = RS_GetTechByID(BREATHINGAPPARATUS_TECH);
 	if (!breathingTech)
 		cgi->Com_Error(ERR_DROP, "AL_AddAliens: Could not get breathing apparatus tech definition");
 	alienBreathing = RS_IsResearched_ptr(breathingTech);
 
-	for (i = 0; i < alienCargoTypes; i++) {
+	linkedList_t *cargo = aircraft->alienCargo->list();
+	LIST_Foreach(cargo, alienCargo_t, item) {
 		for (j = 0; j < ccs.numAliensTD; j++) {
 			aliensCont_t *ac = &toBase->alienscont[j];
 			assert(ac->teamDef);
-			assert(cargo[i].teamDef);
 
-			if (ac->teamDef == cargo[i].teamDef) {
-				const bool isRobot = CHRSH_IsTeamDefRobot(cargo[i].teamDef);
-				ac->amountDead += cargo[i].amountDead;
-				ccs.campaignStats.killedAliens += cargo[i].amountDead;
-				if (cargo[i].amountAlive <= 0)
-					continue;
+			if (ac->teamDef == item->teamDef) {
+				const bool isRobot = CHRSH_IsTeamDefRobot(item->teamDef);
+				ac->amountDead += item->dead;
+				aircraft->alienCargo->add(item->teamDef, 0, -item->dead);
+				ccs.campaignStats.killedAliens += item->dead;
+
+				if (item->alive <= 0)
+					break;
+
 				if (!alienBreathing && !isRobot) {
 					/* We can not store living (i.e. no robots or dead bodies) aliens without rs_alien_breathing tech */
-					ac->amountDead += cargo[i].amountAlive;
-					ccs.campaignStats.killedAliens += cargo[i].amountAlive;
+					ac->amountDead += item->alive;
+					aircraft->alienCargo->add(item->teamDef, -item->alive, 0);
+					ccs.campaignStats.killedAliens += item->alive;
 					CP_TriggerEvent(CAPTURED_ALIENS_DIED, NULL);
 					/* only once */
 					if (!messageAlreadySet) {
@@ -188,12 +153,11 @@ void AL_AddAliens (aircraft_t *aircraft)
 						messageAlreadySet = true;
 					}
 				} else {
-					int k;
-
-					for (k = 0; k < cargo[i].amountAlive; k++) {
+					for (int k = 0; k < item->alive; k++) {
 						/* Check base capacity. */
 						if (AL_CheckAliveFreeSpace(toBase, NULL, 1)) {
 							AL_ChangeAliveAlienNumber(toBase, ac, 1);
+							aircraft->alienCargo->add(item->teamDef, -1, 0);
 							ccs.campaignStats.capturedAliens++;
 						} else {
 							/* Every exceeding alien is killed
@@ -205,6 +169,7 @@ void AL_AddAliens (aircraft_t *aircraft)
 							}
 							/* Just kill aliens which don't fit the limit. */
 							ac->amountDead++;
+							aircraft->alienCargo->add(item->teamDef, -1, 0);
 							ccs.campaignStats.killedAliens++;
 						}
 					}
@@ -219,6 +184,7 @@ void AL_AddAliens (aircraft_t *aircraft)
 			}
 		}
 	}
+	LIST_Delete(&cargo);
 
 	for (i = 0; i < ccs.numAliensTD; i++) {
 		aliensCont_t *ac = &toBase->alienscont[i];
@@ -238,9 +204,6 @@ void AL_AddAliens (aircraft_t *aircraft)
 			Com_DPrintf(DEBUG_CLIENT, "AL_AddAliens bodies: %s amount: %i\n", ac->teamDef->name, ac->amountDead);
 #endif
 	}
-
-	/* we shouldn't have any more aliens on the aircraft after this */
-	AL_SetAircraftAlienCargoTypes(aircraft, 0);
 }
 
 /**
@@ -331,13 +294,13 @@ void AL_RemoveAliens (base_t *base, const teamDef_t *alienType, int amount, cons
 	}
 }
 
-#ifdef DEBUG
 /**
- * @todo find a better name (or rename the other AL_AddAliens function
- * @todo use this function more often - the containment[j].amountDead and containment[j].amountAlive counter
- * are used all over the code
+ * @brief adds one alien to a container
+ * @param[out] base Pointer to the base of the alien containment
+ * @param[in] alienType Pointer to the team definition (alien race)
+ * @param[in] dead If the alien to add is dead
  */
-static void AL_AddAliens2 (base_t *base, const teamDef_t *alienType, const bool dead)
+void AL_AddAlienToContainer (base_t *base, const teamDef_t *alienType, const bool dead)
 {
 	int j;
 	aliensCont_t *containment;
@@ -369,7 +332,6 @@ static void AL_AddAliens2 (base_t *base, const teamDef_t *alienType, const bool 
 		}
 	}
 }
-#endif
 
 /**
  * @brief Get index of alien.
@@ -674,7 +636,7 @@ static void AC_AddOne_f (void)
 	}
 
 	/* call the function that actually changes the persistent datastructure */
-	AL_AddAliens2(base, alienType, !updateAlive);
+	AL_AddAlienToContainer(base, alienType, !updateAlive);
 }
 #endif
 

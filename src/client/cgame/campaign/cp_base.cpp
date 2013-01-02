@@ -2335,8 +2335,6 @@ static void B_SellOrAddItems (aircraft_t *aircraft)
  */
 void B_DumpAircraftToHomeBase (aircraft_t *aircraft)
 {
-	alienCargo_t *cargo;
-
 	/* Don't call cargo functions if aircraft is not a transporter. */
 	if (aircraft->type != AIRCRAFT_TRANSPORTER)
 		return;
@@ -2347,10 +2345,7 @@ void B_DumpAircraftToHomeBase (aircraft_t *aircraft)
 	B_SellOrAddItems(aircraft);
 
 	/* Now empty alien/item cargo just in case. */
-	cargo = AL_GetAircraftAlienCargo(aircraft);
-	OBJZERO(*cargo);
 	OBJZERO(aircraft->itemcargo);
-	AL_SetAircraftAlienCargoTypes(aircraft, 0);
 }
 
 /**

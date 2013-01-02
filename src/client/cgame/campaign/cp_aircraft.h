@@ -106,13 +106,6 @@ typedef enum {
 	MAX_AIR_NOTIFICATIONS
 } aircraft_notifications_t;
 
-/** alien cargo in aircraft_t, carrying aliens and bodies from a mission to base */
-typedef struct alienCargo_s {
-	const teamDef_t* teamDef;		/**< Pointer to type (team) of alien race in global csi.teamDef array. */
-	int amountAlive;		/**< Amount of live captured aliens. */
-	int amountDead;		/**< Amount of alien corpses. */
-} alienCargo_t;
-
 #define MAX_AIRCRAFTSLOT 8
 
 /** @brief slot of aircraft */
@@ -230,8 +223,8 @@ typedef struct aircraft_s {
 	int ufoInterestOnGeoscape;	/**< interest level at which this ufo should be available on geoscape first */
 	int detectionIdx;		/**< detected UFO number (for descriptions "UFO #4")*/
 	date_t lastSpotted;		/**< date the UFO was detected last time */
-	alienCargo_t alienCargo[MAX_CARGO];	/**< Cargo of aliens. */
-	int alienCargoTypes;						/**< How many types of aliens we collected. */
+
+	class AlienCargo* alienCargo;	/**< Cargo of aliens. */
 } aircraft_t;
 
 /* script functions */

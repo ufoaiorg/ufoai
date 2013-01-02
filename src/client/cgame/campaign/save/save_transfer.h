@@ -36,6 +36,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SAVE_TRANSFER_ITEMID "itemid"
 #define SAVE_TRANSFER_AMOUNT "amount"
 
+#define SAVE_TRANSFER_ALIENCARGO "alienCargo"
+
+/** @TODO Remove: Fallback for compatibility. */
 #define SAVE_TRANSFER_ALIEN "alien"
 #define SAVE_TRANSFER_ALIENID "alienid"
 #define SAVE_TRANSFER_ALIVEAMOUNT "aliveAmount"

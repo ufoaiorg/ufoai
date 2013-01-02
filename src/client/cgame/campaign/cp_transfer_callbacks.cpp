@@ -29,6 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_popup.h"
 #include "cp_time.h"
 #include "../../ui/ui_dataids.h"
+#include "aliencargo.h"
 
 /**
  * @brief transfer typeID strings
@@ -50,130 +51,16 @@ static transferData_t td;
 static void TR_ClearTempCargo (void)
 {
 	OBJZERO(td.trItemsTmp);
-	OBJZERO(td.trAliensTmp);
+	if (td.alienCargo != NULL) {
+		delete td.alienCargo;
+		td.alienCargo = NULL;
+	}
 	for (int i = EMPL_SOLDIER; i < MAX_EMPL; i++) {
 		const employeeType_t emplType = (employeeType_t)i;
 		LIST_Delete(&td.trEmployeesTmp[emplType]);
 	}
 	LIST_Delete(&td.aircraft);
 }
-
-/* === Transfer Aliens From Mission (to be removed) === */
-
-/**
- * @brief Counts the stunned aliens in the cargo of the aircraft.
- * @param[in] transferAircraft with the stunned aliens.
- */
-static int TR_CountStunnedAliensInCargo (const aircraft_t *transferAircraft)
-{
-	int stunnedAliens = 0;
-	const alienCargo_t *cargo = AL_GetAircraftAlienCargo(transferAircraft);
-
-	if (cargo) {
-		int i;
-		for (i = 0; i < MAX_CARGO; i++)
-			stunnedAliens += cargo[i].amountAlive;
-	}
-	return stunnedAliens;
-}
-
-/**
- * @brief Action to realize when clicking on Transfer Menu.
- * @note This menu is used when a dropship ending a mission collected alien bodies, but there's no alien cont. in home base
- * @sa TR_TransferAliensFromMission_f
- */
-static void TR_TransferBaseListClick_f (void)
-{
-	int num;
-	base_t *base;
-
-	assert(td.transferStartAircraft);
-
-	if (cgi->Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <base index>\n", cgi->Cmd_Argv(0));
-		return;
-	}
-
-	num = atoi(cgi->Cmd_Argv(1));
-	base = B_GetFoundedBaseByIDX(num);
-	if (!base) {
-		Com_Printf("TR_TransferBaseListClick_f: baseIdx %i doesn't exist.\n", num);
-		return;
-	}
-
-	TR_TransferAlienAfterMissionStart(base, td.transferStartAircraft);
-}
-
-/**
- * @brief Shows available bases to collect aliens after a mission is finished.
- * @sa TR_TransferBaseListClick_f
- */
-static void TR_TransferAliensFromMission_f (void)
-{
-	const vec4_t green = {0.0f, 1.0f, 0.0f, 0.8f};
-	const vec4_t yellow = {1.0f, 0.874f, 0.294f, 1.0f};
-	const vec4_t red = {1.0f, 0.0f, 0.0f, 0.8f};
-	int i;
-	aircraft_t *aircraft;
-	int stunnedAliens;
-	uiNode_t *baseList = NULL;
-	base_t *base;
-
-	if (cgi->Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <aircraft index>\n", cgi->Cmd_Argv(0));
-		return;
-	}
-
-	i = atoi(cgi->Cmd_Argv(1));
-	aircraft = AIR_AircraftGetFromIDX(i);
-	if (!aircraft) {
-		Com_Printf("Usage: No aircraft with index %i\n", i);
-		return;
-	}
-
-	stunnedAliens = TR_CountStunnedAliensInCargo(aircraft);
-
-	/* store the aircraft to be able to remove alien bodies */
-	td.transferStartAircraft = aircraft;
-
-	base = NULL;
-	while ((base = B_GetNext(base)) != NULL) {
-		const char* string;
-		uiNode_t *option;
-		int freeSpace;
-
-		if (!AC_ContainmentAllowed(base))
-			continue;
-
-		freeSpace = CAP_GetFreeCapacity(base, CAP_ALIENS);
-
-		string = va(ngettext("(can host %i live alien)", "(can host %i live aliens)", freeSpace), freeSpace);
-		string = va("%s %s", base->name, string);
-		option = cgi->UI_AddOption(&baseList, va("base%i", base->idx), string, va("%i", base->idx));
-
-		/** @todo tooltip assigining wrong here, also ui doesn't yet support tooltip on options */
-		if (freeSpace >= stunnedAliens) {
-			Vector4Copy(green, option->color);
-			/* option->tooltip = _("Has free space for all captured aliens."); */
-		} else if (freeSpace > 0) {
-			Vector4Copy(yellow, option->color);
-			/* option->tooltip = _("Has free space for some captured aliens, others will die."); */
-		} else {
-			Vector4Copy(red, option->color);
-			/* option->tooltip = _("Doesn't have free space captured aliens, only dead ones can be stored."); */
-		}
-	}
-
-	if (baseList != NULL){
-		cgi->UI_RegisterOption(OPTION_BASELIST, baseList);
-		cgi->UI_PushWindow("popup_transferbaselist");
-	} else {
-		/** @todo send a message (?) */
-		Com_Printf("TR_TransferAliensFromMission_f: No base with alien containment available.\n");
-	}
-}
-
-/* === Normal base-to-base transfers === */
 
 /**
  * @brief Starts the transfer.
@@ -298,17 +185,15 @@ static void TR_CargoList (void)
 	}
 
 	/* Show aliens. */
-	for (int i = 0; i < ccs.numAliensTD; i++) {
-		const teamDef_t* teamDef = AL_GetAlienTeamDef(i);
-		const int transferDead = td.trAliensTmp[i][TRANS_ALIEN_DEAD];
-		const int transferAlive = td.trAliensTmp[i][TRANS_ALIEN_ALIVE];
-
-		if (teamDef == NULL)
-			continue;
-		if (transferDead > 0)
-			cgi->UI_ExecuteConfunc("ui_cargolist_add \"dead:%s\" \"%s\" %d", teamDef->id, va(_("Corpse of %s"), _(teamDef->name)), transferDead);
-		if (transferAlive > 0)
-			cgi->UI_ExecuteConfunc("ui_translist_add \"alive:%s\" \"%s\" %d", teamDef->id, va(_("Alive %s"), _(teamDef->name)), transferAlive);
+	if (td.alienCargo != NULL) {
+		linkedList_t *cargo = td.alienCargo->list();
+		LIST_Foreach(cargo, alienCargo_t, item) {
+			if (item->dead > 0)
+				cgi->UI_ExecuteConfunc("ui_cargolist_add \"dead:%s\" \"%s\" %d", item->teamDef->id, va(_("Corpse of %s"), _(item->teamDef->name)), item->dead);
+			if (item->alive > 0)
+				cgi->UI_ExecuteConfunc("ui_translist_add \"alive:%s\" \"%s\" %d", item->teamDef->id, va(_("Alive %s"), _(item->teamDef->name)), item->alive);
+		}
+		LIST_Delete(&cargo);
 	}
 
 	/* Show all aircraft. */
@@ -438,18 +323,19 @@ static void TR_FillAliens (const base_t *srcBase, const base_t *destBase)
 		const teamDef_t *teamDef = alienContSrc->teamDef;
 		if (teamDef == NULL)
 			continue;
-		if (alienContSrc->amountDead > 0 || td.trAliensTmp[i][TRANS_ALIEN_DEAD] > 0) {
+
+		const int transferDead = (td.alienCargo) ? td.alienCargo->getDead(teamDef) : 0;
+		const int transferAlive = (td.alienCargo) ? td.alienCargo->getAlive(teamDef) : 0;
+		if (alienContSrc->amountDead > 0 || transferDead > 0) {
 			char str[128];
-			const int transferDead = td.trAliensTmp[i][TRANS_ALIEN_DEAD];
 			Com_sprintf(str, sizeof(str), _("Corpse of %s"), _(teamDef->name));
 
 			cgi->UI_ExecuteConfunc("ui_translist_add \"dead:%s\" \"%s\" %d %d %d %d %d",
 				teamDef->id, str, alienContSrc->amountDead, alienContDst->amountDead,
 				0, transferDead, alienContSrc->amountDead + transferDead);
 		}
-		if (alienContSrc->amountAlive > 0 || td.trAliensTmp[i][TRANS_ALIEN_ALIVE] > 0) {
+		if (alienContSrc->amountAlive > 0 || transferAlive > 0) {
 			char str[128];
-			const int transferAlive = td.trAliensTmp[i][TRANS_ALIEN_ALIVE];
 			Com_sprintf(str, sizeof(str), _("Alive %s"), _(teamDef->name));
 
 			cgi->UI_ExecuteConfunc("ui_translist_add \"alive:%s\" \"%s\" %d %d %d %d %d",
@@ -620,6 +506,11 @@ static void TR_Add_f (void)
 			}
 		}
 	} else if (Q_strstart(itemId, "alive:")) {
+		if (td.alienCargo == NULL)
+			td.alienCargo = new AlienCargo();
+		if (td.alienCargo == NULL)
+			cgi->Com_Error(ERR_DROP, "TR_Add_f: Cannot create AlienCargo object\n");
+
 		for (int i = 0; i < ccs.numAliensTD; i++) {
 			aliensCont_t *aliensCont = &base->alienscont[i];
 			if (!aliensCont->teamDef)
@@ -627,7 +518,7 @@ static void TR_Add_f (void)
 			if (!Q_streq(aliensCont->teamDef->id, itemId + 6))
 				continue;
 
-			const int cargo = td.trAliensTmp[i][TRANS_ALIEN_ALIVE];
+			const int cargo = td.alienCargo->getAlive(aliensCont->teamDef);
 			const int store = aliensCont->amountAlive;
 
 			if (amount >= 0)
@@ -636,12 +527,17 @@ static void TR_Add_f (void)
 				amount = std::max(amount, -cargo);
 
 			if (amount != 0) {
-				td.trAliensTmp[i][TRANS_ALIEN_ALIVE] += amount;
+				td.alienCargo->add(aliensCont->teamDef, amount, 0);
 				AL_ChangeAliveAlienNumber(base, aliensCont, -amount);
 			}
 			break;
 		}
 	} else if (Q_strstart(itemId, "dead:")) {
+		if (td.alienCargo == NULL)
+			td.alienCargo = new AlienCargo();
+		if (td.alienCargo == NULL)
+			cgi->Com_Error(ERR_DROP, "TR_Add_f: Cannot create AlienCargo object\n");
+
 		for (int i = 0; i < ccs.numAliensTD; i++) {
 			aliensCont_t *aliensCont = &base->alienscont[i];
 			if (!aliensCont->teamDef)
@@ -649,7 +545,7 @@ static void TR_Add_f (void)
 			if (!Q_streq(aliensCont->teamDef->id, itemId + 5))
 				continue;
 
-			const int cargo = td.trAliensTmp[i][TRANS_ALIEN_DEAD];
+			const int cargo = td.alienCargo->getDead(aliensCont->teamDef);
 			const int store = aliensCont->amountDead;
 
 			if (amount >= 0)
@@ -658,7 +554,7 @@ static void TR_Add_f (void)
 				amount = std::max(amount, -cargo);
 
 			if (amount != 0) {
-				td.trAliensTmp[i][TRANS_ALIEN_DEAD] += amount;
+				td.alienCargo->add(aliensCont->teamDef, 0, amount);
 				aliensCont->amountDead -= amount;
 			}
 			break;
@@ -730,10 +626,13 @@ static void TR_TransferListClear_f (void)
 		}
 	}
 	for (i = 0; i < ccs.numAliensTD; i++) {	/* Return aliens. */
-		const int alienCargoAmountAlive = td.trAliensTmp[i][TRANS_ALIEN_ALIVE];
-		const int alienCargoAmountDead = td.trAliensTmp[i][TRANS_ALIEN_DEAD];
+		aliensCont_t *aliensCont = &base->alienscont[i];
+		if (!aliensCont->teamDef)
+			continue;
+		const int alienCargoAmountAlive = (td.alienCargo) ? td.alienCargo->getAlive(aliensCont->teamDef) : 0;
+		const int alienCargoAmountDead = (td.alienCargo) ? td.alienCargo->getDead(aliensCont->teamDef) : 0;
 		if (alienCargoAmountAlive > 0)
-			AL_ChangeAliveAlienNumber(base, &(base->alienscont[i]), alienCargoAmountAlive);
+			AL_ChangeAliveAlienNumber(base, aliensCont, alienCargoAmountAlive);
 		if (alienCargoAmountDead > 0)
 			base->alienscont[i].amountDead += alienCargoAmountDead;
 	}
@@ -852,23 +751,10 @@ static void TR_Init_f (void)
  */
 static void TR_TransferClose_f (void)
 {
-	base_t *base = B_GetCurrentSelectedBase();
-	int i;
-
-	if (!base)
-		return;
-
 	/* Unload what was loaded. */
 	TR_TransferListClear_f();
-
 	/* Clear temporary cargo arrays. */
-	OBJZERO(td.trItemsTmp);
-	OBJZERO(td.trAliensTmp);
-	for (i = EMPL_SOLDIER; i < MAX_EMPL; i++) {
-		const employeeType_t emplType = (employeeType_t)i;
-		LIST_Delete(&td.trEmployeesTmp[emplType]);
-	}
-	LIST_Delete(&td.aircraft);
+	TR_ClearTempCargo();
 }
 
 /**
@@ -915,21 +801,16 @@ static void TR_List_f (void)
 			}
 		}
 		/* Aliens */
-		if (transfer->hasAliens) {
-			int j;
-
+		if (transfer->alienCargo != NULL) {
 			cgi->UI_ExecuteConfunc("tr_listaddcargo %d \"%s\" \"%s\" \"%s\"", i, "tr_cargo", "aliens", _("Aliens"));
-			for (j = 0; j < cgi->csi->numTeamDefs; j++) {
-				const teamDef_t *team = &cgi->csi->teamDef[j];
-
-				if (transfer->alienAmount[j][TRANS_ALIEN_ALIVE]) {
-					cgi->UI_ExecuteConfunc("tr_listaddcargo %d \"%s\" \"%s\" \"%s\"", i, "tr_cargo.aliens", va("%s_alive", team->id), va("%i %s %s", transfer->alienAmount[j][TRANS_ALIEN_ALIVE], _("alive"), _(team->name)));
-				}
-
-				if (transfer->alienAmount[j][TRANS_ALIEN_DEAD]) {
-					cgi->UI_ExecuteConfunc("tr_listaddcargo %d \"%s\" \"%s\" \"%s\"", i, "tr_cargo.aliens", va("%s_dead", team->id), va("%i %s %s", transfer->alienAmount[j][TRANS_ALIEN_DEAD], _("dead"), _(team->name)));
-				}
+			linkedList_t *cargo = transfer->alienCargo->list();
+			LIST_Foreach(cargo, alienCargo_t, item) {
+				if (item->alive > 0)
+					cgi->UI_ExecuteConfunc("tr_listaddcargo %d \"%s\" \"%s\" \"%s\"", i, "tr_cargo.aliens", va("%s_alive", item->teamDef->id), va("%i %s %s", item->alive, _("alive"), _(item->teamDef->name)));
+				if (item->dead > 0)
+					cgi->UI_ExecuteConfunc("tr_listaddcargo %d \"%s\" \"%s\" \"%s\"", i, "tr_cargo.aliens", va("%s_dead", item->teamDef->id), va("%i %s %s", item->dead, _("dead"), _(item->teamDef->name)));
 			}
+			LIST_Delete(&cargo);
 		}
 		/* Aircraft */
 		if (transfer->hasAircraft) {
@@ -975,19 +856,6 @@ static void TR_CountEmployeeInListArray (linkedList_t *employeeListArray[], int 
 }
 
 /**
- * @brief Count capacity need of live aliens in arrays
- * @param[in] aliensArray Array to count aliens in
- * @param[in,out] capacity Capacity need array to update
- */
-static void TR_CountLiveAliensInArray (int aliensArray[][TRANS_ALIEN_MAX], int capacity[])
-{
-	for (int i = 0; i < ccs.numAliensTD; i++) {
-		if (aliensArray[i][TRANS_ALIEN_ALIVE] > 0)
-			capacity[CAP_ALIENS] += aliensArray[i][TRANS_ALIEN_ALIVE];
-	}
-}
-
-/**
  * @brief Count capacity need of aircraft in lists
  * @param[in] aircraftList List to count aircraft in
  * @param[in,out] capacity Capacity need array to update
@@ -1028,7 +896,7 @@ static void TR_DestinationCapacityList_f (void)
 		/* - Employee */
 		TR_CountEmployeeInListArray(transfer->employees, currentCap);
 		/* - Aliens */
-		TR_CountLiveAliensInArray(transfer->alienAmount, currentCap);
+		currentCap[CAP_ALIENS] += (transfer->alienCargo) ? transfer->alienCargo->getAlive() : 0;
 		/* - Aircraft */
 		TR_CountAircraftInList(transfer->aircraft, currentCap);
 	}
@@ -1039,7 +907,7 @@ static void TR_DestinationCapacityList_f (void)
 	/* - Employee */
 	TR_CountEmployeeInListArray(td.trEmployeesTmp, currentCap);
 	/* - Aliens */
-	TR_CountLiveAliensInArray(td.trAliensTmp, currentCap);
+	currentCap[CAP_ALIENS] += (td.alienCargo) ? td.alienCargo->getAlive() : 0;
 	/* - Aircraft */
 	TR_CountAircraftInList(td.aircraft, currentCap);
 
@@ -1072,8 +940,6 @@ void TR_InitCallbacks (void)
 	cgi->Cmd_AddCommand("trans_start", TR_TransferStart_f, "Starts the transfer");
 	cgi->Cmd_AddCommand("trans_emptyairstorage", TR_TransferListClear_f, "Unload everything from transfer cargo back to base");
 	cgi->Cmd_AddCommand("trans_selectbase", TR_SelectBase_f, "Callback for selecting a base");
-	cgi->Cmd_AddCommand("trans_baselist_click", TR_TransferBaseListClick_f, "Callback for choosing base while recovering alien after mission");
-	cgi->Cmd_AddCommand("trans_aliens", TR_TransferAliensFromMission_f, "Transfer aliens collected at missions");
 
 	cgi->Cmd_AddCommand("ui_trans_caplist", TR_DestinationCapacityList_f, "Update destination base capacity list");
 	cgi->Cmd_AddCommand("ui_trans_fill", TR_Fill_f, "Fill itemlists for transfer");
@@ -1094,6 +960,4 @@ void TR_ShutdownCallbacks (void)
 	cgi->Cmd_RemoveCommand("trans_start");
 	cgi->Cmd_RemoveCommand("trans_emptyairstorage");
 	cgi->Cmd_RemoveCommand("trans_selectbase");
-	cgi->Cmd_RemoveCommand("trans_baselist_click");
-	cgi->Cmd_RemoveCommand("trans_aliens");
 }

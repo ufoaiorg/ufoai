@@ -69,6 +69,7 @@ $(TARGET)_SRCS      = \
 	client/cgame/campaign/cp_overlay.cpp \
 	client/cgame/campaign/cp_popup.cpp \
 	client/cgame/campaign/cp_fightequip_callbacks.cpp \
+	client/cgame/campaign/aliencargo.cpp \
 	\
 	client/cgame/campaign/missions/cp_mission_baseattack.cpp \
 	client/cgame/campaign/missions/cp_mission_buildbase.cpp \

@@ -51,13 +51,12 @@ typedef struct transfer_s {
 	date_t event;					/**< When the transfer finish process should start. */
 
 	int itemAmount[MAX_OBJDEFS];			/**< Amount of given item. */
-	int alienAmount[MAX_TEAMDEFS][TRANS_ALIEN_MAX];		/**< Alien cargo, [0] alive, [1] dead. */
+	class AlienCargo *alienCargo;			/**< Alien cargo */
 	linkedList_t *employees[MAX_EMPL];
 	linkedList_t *aircraft;
 
 	bool hasItems;				/**< Transfer of items. */
 	bool hasEmployees;			/**< Transfer of employees. */
-	bool hasAliens;				/**< Transfer of aliens. */
 	bool hasAircraft;			/**< Transfer of aircraft. */
 } transfer_t;
 
@@ -102,8 +101,8 @@ typedef struct transferData_s {
 	/** @brief Current item cargo. Amount of items for each object definition index. */
 	int trItemsTmp[MAX_OBJDEFS];
 
-	/** @brief Current alien cargo. [0] alive [1] dead */
-	int trAliensTmp[MAX_TEAMDEFS][TRANS_ALIEN_MAX];
+	/** @brief Current alien cargo. */
+	class AlienCargo *alienCargo;
 
 	/** @brief Current personnel cargo. */
 	linkedList_t *trEmployeesTmp[MAX_EMPL];
@@ -125,7 +124,6 @@ void TR_TransferRun(void);
 void TR_NotifyAircraftRemoved(const aircraft_t *aircraft);
 
 transfer_t* TR_TransferStart(base_t *srcBase, transferData_t &transData);
-void TR_TransferAlienAfterMissionStart(const base_t *base, aircraft_t *transferAircraft);
 
 
 void TR_InitStartup(void);

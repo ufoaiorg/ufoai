@@ -31,6 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_time.h"
 #include "save/save_transfer.h"
 #include "cp_transfer_callbacks.h"
+#include "aliencargo.h"
 
 /**
  * @brief Unloads transfer cargo when finishing the transfer or destroys it when no buildings/base.
@@ -103,42 +104,27 @@ static void TR_EmptyTransferCargo (base_t *destination, transfer_t *transfer, bo
 		}
 	}
 
-	if (transfer->hasAliens && success) {	/* Aliens. */
-		if (!B_GetBuildingStatus(destination, B_ALIEN_CONTAINMENT)) {
-			Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("%s does not have Alien Containment, Aliens are removed!"), destination->name);
-			MSO_CheckAddNewMessage(NT_TRANSFER_LOST, _("Transport mission"), cp_messageBuffer, MSG_TRANSFERFINISHED);
-			/* Aliens cargo is not unloaded, will be destroyed in TR_TransferCheck(). */
-		} else {
-			int i;
-			bool capacityWarning = false;
-
-			for (i = 0; i < ccs.numAliensTD; i++) {
-				/* dead aliens */
-				if (transfer->alienAmount[i][TRANS_ALIEN_DEAD] > 0) {
-					destination->alienscont[i].amountDead += transfer->alienAmount[i][TRANS_ALIEN_DEAD];
-				}
-				/* alive aliens */
-				if (transfer->alienAmount[i][TRANS_ALIEN_ALIVE] > 0) {
-					int amount = std::min(transfer->alienAmount[i][TRANS_ALIEN_ALIVE], CAP_GetFreeCapacity(destination, CAP_ALIENS));
-
-					if (transfer->alienAmount[i][TRANS_ALIEN_ALIVE] != amount)
-						capacityWarning = true;
-					if (amount < 1)
-						continue;
-
-					AL_ChangeAliveAlienNumber(destination, &(destination->alienscont[i]), amount);
-				}
-			}
-			if (capacityWarning) {
-				Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("%s does not have enough Alien Containment space, some Aliens are removed!"), destination->name);
+	/* Aliens */
+	if (transfer->alienCargo != NULL) {
+		if (success) {
+			if (!B_GetBuildingStatus(destination, B_ALIEN_CONTAINMENT)) {
+				Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("%s does not have Alien Containment, Aliens are removed!"), destination->name);
 				MSO_CheckAddNewMessage(NT_TRANSFER_LOST, _("Transport mission"), cp_messageBuffer, MSG_TRANSFERFINISHED);
+			} else {
+				linkedList_t *cargo = transfer->alienCargo->list();
+				LIST_Foreach(cargo, alienCargo_t, item) {
+					for (int i = 0; i < item->alive; i++)
+						AL_AddAlienToContainer(destination, item->teamDef, false);
+					for (int i = 0; i < item->dead; i++)
+						AL_AddAlienToContainer(destination, item->teamDef, true);
+				}
+				LIST_Delete(&cargo);
 			}
 		}
+		delete transfer->alienCargo;
+		transfer->alienCargo = NULL;
 	}
 
-	/** @todo If source base is destroyed during transfer, aircraft doesn't exist anymore.
-	 * aircraftArray should contain pointers to aircraftTemplates to avoid this problem, and be removed from
-	 * source base as soon as transfer starts */
 	if (transfer->hasAircraft && success && transfer->srcBase) {	/* Aircraft. Cannot come from mission */
 		TR_ForeachAircraft(aircraft, transfer) {
 			if ((AIR_CalculateHangarStorage(aircraft->tpl, destination, 0) <= 0) || !AIR_MoveAircraftIntoNewHomebase(aircraft, destination)) {
@@ -150,91 +136,6 @@ static void TR_EmptyTransferCargo (base_t *destination, transfer_t *transfer, bo
 		}
 		LIST_Delete(&transfer->aircraft);
 	}
-}
-
-/**
- * @brief Starts alien bodies transfer between mission and base.
- * @param[in] base Pointer to the base to send the alien bodies.
- * @param[in, out] transferAircraft Pointer to the dropship held bodies (temporary)
- * @sa TR_TransferBaseListClick_f
- * @sa TR_TransferStart_f
- */
-void TR_TransferAlienAfterMissionStart (const base_t *base, aircraft_t *transferAircraft)
-{
-	int i, j;
-	transfer_t transfer;
-	float time;
-	char message[256];
-	int alienCargoTypes;
-	alienCargo_t *cargo;
-	const technology_t *breathingTech;
-	bool alienBreathing = false;
-
-	if (!base) {
-		Com_Printf("TR_TransferAlienAfterMissionStart_f: No base selected!\n");
-		return;
-	}
-
-	breathingTech = RS_GetTechByID(BREATHINGAPPARATUS_TECH);
-	if (!breathingTech)
-		cgi->Com_Error(ERR_DROP, "AL_AddAliens: Could not get breathing apparatus tech definition");
-	alienBreathing = RS_IsResearched_ptr(breathingTech);
-
-	OBJZERO(transfer);
-
-	/* Initialize transfer.
-	 * calculate time to go from 1 base to another : 1 day for one quarter of the globe*/
-	time = GetDistanceOnGlobe(base->pos, transferAircraft->pos) / 90.0f;
-	transfer.event.day = ccs.date.day + floor(time);	/* add day */
-	time = (time - floor(time)) * SECONDS_PER_DAY;	/* convert remaining time in second */
-	transfer.event.sec = ccs.date.sec + round(time);
-	/* check if event is not the following day */
-	if (transfer.event.sec > SECONDS_PER_DAY) {
-		transfer.event.sec -= SECONDS_PER_DAY;
-		transfer.event.day++;
-	}
-	transfer.destBase = B_GetFoundedBaseByIDX(base->idx);	/* Destination base. */
-	transfer.srcBase = NULL;	/* Source base. */
-
-	alienCargoTypes = AL_GetAircraftAlienCargoTypes(transferAircraft);
-	cargo = AL_GetAircraftAlienCargo(transferAircraft);
-	for (i = 0; i < alienCargoTypes; i++, cargo++) {		/* Aliens. */
-		if (!alienBreathing) {
-			cargo->amountDead += cargo->amountAlive;
-			cargo->amountAlive = 0;
-		}
-		if (cargo->amountAlive > 0) {
-			for (j = 0; j < ccs.numAliensTD; j++) {
-				if (!CHRSH_IsTeamDefAlien(&cgi->csi->teamDef[j]))
-					continue;
-				if (base->alienscont[j].teamDef == cargo->teamDef) {
-					transfer.hasAliens = true;
-					transfer.alienAmount[j][TRANS_ALIEN_ALIVE] = cargo->amountAlive;
-					cargo->amountAlive = 0;
-					break;
-				}
-			}
-		}
-		if (cargo->amountDead > 0) {
-			for (j = 0; j < ccs.numAliensTD; j++) {
-				if (!CHRSH_IsTeamDefAlien(&cgi->csi->teamDef[j]))
-					continue;
-				if (base->alienscont[j].teamDef == cargo->teamDef) {
-					transfer.hasAliens = true;
-					transfer.alienAmount[j][TRANS_ALIEN_DEAD] = cargo->amountDead;
-					cargo->amountDead = 0;
-					break;
-				}
-			}
-		}
-	}
-	AL_SetAircraftAlienCargoTypes(transferAircraft, 0);
-
-	Com_sprintf(message, sizeof(message), _("Transport mission started, cargo is being transported to %s"), transfer.destBase->name);
-	MSO_CheckAddNewMessage(NT_TRANSFER_ALIENBODIES_DEFERED, _("Transport mission"), message, MSG_TRANSFERFINISHED);
-	cgi->UI_PopWindow(false);
-
-	LIST_Add(&ccs.transfers, transfer);
 }
 
 /**
@@ -322,19 +223,15 @@ transfer_t* TR_TransferStart (base_t *srcBase, transferData_t &transData)
 			count++;
 		}
 	}
-	for (i = 0; i < ccs.numAliensTD; i++) {		/* Aliens. */
-		if (transData.trAliensTmp[i][TRANS_ALIEN_ALIVE] > 0) {
-			transfer.hasAliens = true;
-			transfer.alienAmount[i][TRANS_ALIEN_ALIVE] = transData.trAliensTmp[i][TRANS_ALIEN_ALIVE];
-			count++;
-		}
-		if (transData.trAliensTmp[i][TRANS_ALIEN_DEAD] > 0) {
-			transfer.hasAliens = true;
-			transfer.alienAmount[i][TRANS_ALIEN_DEAD] = transData.trAliensTmp[i][TRANS_ALIEN_DEAD];
-			count++;
-		}
+
+	/* Aliens. */
+	if (transData.alienCargo != NULL) {
+		transfer.alienCargo = new AlienCargo(*transData.alienCargo);
+		count += transData.alienCargo->getAlive();
+		count += transData.alienCargo->getDead();
 	}
 
+	/* Aircraft */
 	LIST_Foreach(transData.aircraft, aircraft_t, aircraft) {
 		aircraft->status = AIR_TRANSFER;
 		AIR_RemoveEmployees(*aircraft);
@@ -457,13 +354,13 @@ static void TR_ListTransfers_f (void)
 			}
 		}
 		/* AlienCargo */
-		if (transfer->hasAliens) {
-			int j;
+		if (transfer->alienCargo != NULL) {
 			Com_Printf("...AlienCargo:\n");
-			for (j = 0; j < cgi->csi->numTeamDefs; j++) {
-				if (transfer->alienAmount[j][TRANS_ALIEN_ALIVE] + transfer->alienAmount[j][TRANS_ALIEN_DEAD])
-					Com_Printf("......%s alive: %i dead: %i\n", cgi->csi->teamDef[j].id, transfer->alienAmount[j][TRANS_ALIEN_ALIVE], transfer->alienAmount[j][TRANS_ALIEN_DEAD]);
+			linkedList_t *cargo = transfer->alienCargo->list();
+			LIST_Foreach(cargo, alienCargo_t, item) {
+				Com_Printf("......%s alive: %i dead: %i\n", item->teamDef->id, item->alive, item->dead);
 			}
+			LIST_Delete(&cargo);
 		}
 		/* Transfered Aircraft */
 		if (transfer->hasAircraft) {
@@ -516,20 +413,11 @@ bool TR_SaveXML (xmlNode_t *p)
 			}
 		}
 		/* save aliens */
-		if (transfer->hasAliens) {
-			for (j = 0; j < ccs.numAliensTD; j++) {
-				if (transfer->alienAmount[j][TRANS_ALIEN_ALIVE] > 0
-				 || transfer->alienAmount[j][TRANS_ALIEN_DEAD] > 0)
-				{
-					teamDef_t *team = ccs.alienTeams[j];
-					xmlNode_t *ss = cgi->XML_AddNode(s, SAVE_TRANSFER_ALIEN);
-
-					assert(team);
-					cgi->XML_AddString(ss, SAVE_TRANSFER_ALIENID, team->id);
-					cgi->XML_AddIntValue(ss, SAVE_TRANSFER_ALIVEAMOUNT, transfer->alienAmount[j][TRANS_ALIEN_ALIVE]);
-					cgi->XML_AddIntValue(ss, SAVE_TRANSFER_DEADAMOUNT, transfer->alienAmount[j][TRANS_ALIEN_DEAD]);
-				}
-			}
+		if (transfer->alienCargo != NULL) {
+			xmlNode_t *alienNode = cgi->XML_AddNode(s, SAVE_TRANSFER_ALIENCARGO);
+			if (!alienNode)
+				return false;
+			transfer->alienCargo->save(alienNode);
 		}
 		/* save employee */
 		if (transfer->hasEmployees) {
@@ -586,7 +474,6 @@ bool TR_LoadXML (xmlNode_t *p)
 		/* Initializing some variables */
 		transfer.hasItems = false;
 		transfer.hasEmployees = false;
-		transfer.hasAliens = false;
 		transfer.hasAircraft = false;
 
 		/* load items */
@@ -603,26 +490,25 @@ bool TR_LoadXML (xmlNode_t *p)
 			}
 		}
 		/* load aliens */
-		ss = cgi->XML_GetNode(s, SAVE_TRANSFER_ALIEN);
+		ss = cgi->XML_GetNode(s, SAVE_TRANSFER_ALIENCARGO);
 		if (ss) {
-			transfer.hasAliens = true;
-			for (; ss; ss = cgi->XML_GetNextNode(ss, s, SAVE_TRANSFER_ALIEN)) {
-				const int alive = cgi->XML_GetInt(ss, SAVE_TRANSFER_ALIVEAMOUNT, 0);
-				const int dead  = cgi->XML_GetInt(ss, SAVE_TRANSFER_DEADAMOUNT, 0);
-				const char *id = cgi->XML_GetString(ss, SAVE_TRANSFER_ALIENID);
-				int j;
-
-				/* look for alien teamDef */
-				for (j = 0; j < ccs.numAliensTD; j++) {
-					if (ccs.alienTeams[j] && Q_streq(id, ccs.alienTeams[j]->id))
-						break;
-				}
-
-				if (j < ccs.numAliensTD) {
-					transfer.alienAmount[j][TRANS_ALIEN_ALIVE] = alive;
-					transfer.alienAmount[j][TRANS_ALIEN_DEAD] = dead;
-				} else {
-					Com_Printf("TR_LoadXML: AlienId '%s' is invalid\n", id);
+			transfer.alienCargo = new AlienCargo();
+			if (transfer.alienCargo == NULL)
+				cgi->Com_Error(ERR_DROP, "TR_LoadXML: Cannot create AlienCargo object\n");
+			transfer.alienCargo->load(ss);
+		} else {
+			/** @TODO Remove: Fallback for compatibility */
+			ss = cgi->XML_GetNode(s, SAVE_TRANSFER_ALIEN);
+			if (ss) {
+				transfer.alienCargo = new AlienCargo();
+				if (transfer.alienCargo == NULL)
+					cgi->Com_Error(ERR_DROP, "TR_LoadXML: Cannot create AlienCargo object\n");
+				for (; ss; ss = cgi->XML_GetNextNode(ss, s, SAVE_TRANSFER_ALIEN)) {
+					const int alive = cgi->XML_GetInt(ss, SAVE_TRANSFER_ALIVEAMOUNT, 0);
+					const int dead  = cgi->XML_GetInt(ss, SAVE_TRANSFER_DEADAMOUNT, 0);
+					const char *id = cgi->XML_GetString(ss, SAVE_TRANSFER_ALIENID);
+					if (!transfer.alienCargo->add(id, alive, dead))
+						Com_Printf("TR_LoadXML: Cannot add aliens to cargo: %s, alive: %d, dead: %d\n", id, alive, dead);
 				}
 			}
 		}
@@ -681,8 +567,11 @@ void TR_Shutdown (void)
 	TR_Foreach(transfer) {
 		int i;
 
+		if (transfer->alienCargo != NULL) {
+			delete transfer->alienCargo;
+			transfer->alienCargo = NULL;
+		}
 		LIST_Delete(&transfer->aircraft);
-
 		for (i = EMPL_SOLDIER; i < MAX_EMPL; i++) {
 			LIST_Delete(&transfer->employees[i]);
 		}

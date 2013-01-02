@@ -64,7 +64,7 @@ int AL_CountInBase(const struct base_s *base);
 #define AL_GetAircraftAlienCargoTypes(a) ((a)->alienCargoTypes)
 #define AL_SetAircraftAlienCargoTypes(a, i) (a)->alienCargoTypes = (i)
 bool AL_AddAlienTypeToAircraftCargo(struct aircraft_s *aircraft, const teamDef_t *teamDef, int amount, bool dead);
-
+void AL_AddAlienToContainer(struct base_s *base, const teamDef_t *alienType, const bool dead);
 void AL_RemoveAliensExceedingCapacity(struct base_s *base);
 /**
  * Menu functions

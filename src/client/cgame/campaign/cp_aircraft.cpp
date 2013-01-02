@@ -39,6 +39,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_aircraft_callbacks.h"
 #include "save/save_aircraft.h"
 #include "cp_popup.h"
+#include "aliencargo.h"
 
 /**
  * @brief Iterates through the aircraft of a base
@@ -243,6 +244,15 @@ void AIR_ListAircraft_f (void)
 		LIST_Foreach(aircraft->acTeam, employee_t, employee) {
 			character_t *chr = &employee->chr;
 			Com_Printf(".........name: %s (ucn: %i)\n", chr->name, chr->ucn);
+		}
+
+		if (aircraft->alienCargo) {
+			Com_Printf("...alienCargo:\n");
+			linkedList_t *cargo = aircraft->alienCargo->list();
+			LIST_Foreach(cargo, alienCargo_t, item) {
+				Com_Printf("......team: %s alive: %d dead: %d\n", item->teamDef->id, item->alive, item->dead);
+			}
+			LIST_Delete(&cargo);
 		}
 	}
 }
@@ -987,6 +997,11 @@ void AIR_DeleteAircraft (aircraft_t *aircraft)
 
 	if (base->aircraftCurrent == aircraft)
 		base->aircraftCurrent = NULL;
+
+	if (aircraft->alienCargo != NULL) {
+		delete aircraft->alienCargo;
+		aircraft->alienCargo = NULL;
+	}
 
 	AIR_Delete(base, aircraft);
 
@@ -2404,17 +2419,11 @@ static bool AIR_SaveAircraftXML (xmlNode_t *p, const aircraft_t* const aircraft,
 	}
 
 	/* aliencargo */
-	{
-		const int alienCargoTypes = AL_GetAircraftAlienCargoTypes(aircraft);
-		const alienCargo_t *cargo  = AL_GetAircraftAlienCargo(aircraft);
+	if (aircraft->alienCargo != NULL) {
 		subnode = cgi->XML_AddNode(node, SAVE_AIRCRAFT_ALIENCARGO);
-		for (l = 0; l < alienCargoTypes; l++) {
-			xmlNode_t *ssnode = cgi->XML_AddNode(subnode, SAVE_AIRCRAFT_CARGO);
-			assert(cargo[l].teamDef);
-			cgi->XML_AddString(ssnode, SAVE_AIRCRAFT_TEAMDEFID, cargo[l].teamDef->id);
-			cgi->XML_AddIntValue(ssnode, SAVE_AIRCRAFT_ALIVE, cargo[l].amountAlive);
-			cgi->XML_AddIntValue(ssnode, SAVE_AIRCRAFT_DEAD, cargo[l].amountDead);
-		}
+		if (!subnode)
+			return false;
+		aircraft->alienCargo->save(subnode);
 	}
 
 	return true;
@@ -2656,22 +2665,12 @@ static bool AIR_LoadAircraftXML (xmlNode_t *p, aircraft_t *craft)
 
 	/* aliencargo */
 	snode = cgi->XML_GetNode(p, SAVE_AIRCRAFT_ALIENCARGO);
-	for (l = 0, ssnode = cgi->XML_GetNode(snode, SAVE_AIRCRAFT_CARGO); l < MAX_CARGO && ssnode;
-			l++, ssnode = cgi->XML_GetNextNode(ssnode, snode, SAVE_AIRCRAFT_CARGO)) {
-		alienCargo_t *cargo = AL_GetAircraftAlienCargo(craft);
-		const char *const str = cgi->XML_GetString(ssnode, SAVE_AIRCRAFT_TEAMDEFID);
-
-		cargo[l].teamDef = cgi->Com_GetTeamDefinitionByID(str);
-		if (!cargo[l].teamDef) {
-			Com_Printf("AIR_LoadAircraftXML: Could not find teamDef '%s'\n", str);
-			l--;
-			continue;
-		}
-
-		cargo[l].amountAlive = cgi->XML_GetInt(ssnode, SAVE_AIRCRAFT_ALIVE, 0);
-		cargo[l].amountDead  =	cgi->XML_GetInt(ssnode, SAVE_AIRCRAFT_DEAD, 0);
+	if (snode) {
+		craft->alienCargo = new AlienCargo();
+		if (craft->alienCargo == NULL)
+			cgi->Com_Error(ERR_DROP, "AIR_LoadAircraftXML: Cannot create AlienCargo object\n");
+		craft->alienCargo->load(snode);
 	}
-	AL_SetAircraftAlienCargoTypes(craft, l);
 
 	return true;
 }
@@ -3119,6 +3118,10 @@ void AIR_Shutdown (void)
 {
 	AIR_Foreach(craft) {
 		AIR_ResetAircraftTeam(craft);
+		if (craft->alienCargo != NULL) {
+			delete craft->alienCargo;
+			craft->alienCargo = NULL;
+		}
 	}
 	LIST_Delete(&ccs.aircraft);
 
