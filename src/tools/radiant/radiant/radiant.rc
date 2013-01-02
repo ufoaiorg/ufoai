@@ -28,7 +28,7 @@ BEGIN
 			VALUE "CompanyName", "UFO:Alien Invasion Team"
 			VALUE "FileDescription", "UFORadiant"
 			VALUE "InternalName", "uforadiant"
-			VALUE "LegalCopyright", "Copyright (C) 2002-2012"
+			VALUE "LegalCopyright", "Copyright (C) 2002-2013"
 			VALUE "OriginalFilename", "uforadiant.exe"
 			VALUE "ProductName", "UFORadiant"
 			VALUE "ProductVersion", "Release"
