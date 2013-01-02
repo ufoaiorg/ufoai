@@ -22,9 +22,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CL_SPAWN_H_
-#define CL_SPAWN_H_
+#pragma once
 
 void CL_SpawnParseEntitystring(void);
-
-#endif /* CL_SPAWN_H_ */

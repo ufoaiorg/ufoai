@@ -25,8 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef __BYTE_H__
-#define __BYTE_H__
+#pragma once
 
 #include <SDL/SDL_endian.h>
 
@@ -62,5 +61,3 @@ static __inline__ float32_t FloatSwap (const float32_t *f)
 #endif
 
 void Swap_Init(void);
-
-#endif /* __BYTE_H__ */

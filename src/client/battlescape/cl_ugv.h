@@ -22,9 +22,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CL_UGV_H_
-#define CL_UGV_H_
+#pragma once
 
 bool CL_AddUGV(le_t * le, entity_t * ent);
-
-#endif /* CL_UGV_H_ */

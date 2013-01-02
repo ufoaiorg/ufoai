@@ -23,8 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef __CLIENT_HTTP_H__
-#define __CLIENT_HTTP_H__
+#pragma once
 
 #include "../common/http.h"
 
@@ -38,5 +37,3 @@ void CL_RequestNextDownload(void);
 bool CL_CheckOrDownloadFile(const char *filename);
 
 void HTTP_InitStartup(void);
-
-#endif /* __CLIENT_HTTP_H__ */
