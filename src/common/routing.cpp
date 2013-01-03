@@ -355,7 +355,7 @@ NEW MAP TRACING FUNCTIONS
  * @sa CL_AddTargetingBox
  * @todo see CL_ActorMoveMouse
  */
-bool RT_AllCellsBelowAreFilled (const routing_t * routes, const int actorSize, const pos3_t pos)
+bool RT_AllCellsBelowAreFilled (const routing_t *routes, const int actorSize, const pos3_t pos)
 {
 	int i;
 
@@ -1448,7 +1448,7 @@ static int RT_UpdateConnection (RT_data_t *rtd, const int x, const int y, const 
  * @param[in] dir The direction to test for a connection through
  * @param[in] list The local models list (a local model has a name starting with * followed by the model number)
  */
-void RT_UpdateConnectionColumn (mapTiles_t *mapTiles, routing_t * routes, const int actorSize, const int x, const int y, const int dir, const char **list)
+void RT_UpdateConnectionColumn (mapTiles_t *mapTiles, routing_t *routes, const int actorSize, const int x, const int y, const int dir, const char **list)
 {
 	int z = 0; /**< The current z value that we are testing. */
 	RT_data_t rtd;	/* the essential data passed down the calltree */

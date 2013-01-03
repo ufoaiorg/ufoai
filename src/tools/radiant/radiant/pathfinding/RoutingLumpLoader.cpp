@@ -145,7 +145,7 @@ namespace routing
 	 * @sa CM_AddMapTile
 	 * @todo TEST z-level routing
 	 */
-	static void CMod_LoadRouting (RoutingLump& routingLump, const std::string& name, const lump_t * l,
+	static void CMod_LoadRouting (RoutingLump& routingLump, const std::string& name, const lump_t *l,
 			byte* cModelBase, int sX, int sY, int sZ)
 	{
 		static routing_t tempMap[ACTOR_MAX_SIZE];
