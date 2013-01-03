@@ -65,7 +65,7 @@ typedef struct trace_s {
 	struct edict_s *ent;		/**< not set by CM_*() functions */
 } trace_t;
 
-typedef struct {
+typedef struct mapTiles_s {
 	/** @note loaded map tiles with this assembly.  ufo2map has exactly 1. */
 	TR_TILE_TYPE mapTiles[MAX_MAPTILES];
 

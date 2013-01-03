@@ -60,7 +60,7 @@ typedef struct node_s {
 	struct portal_s	*portals;	/**< also on nodes during construction */
 } node_t;
 
-typedef struct {
+typedef struct tree_s {
 	struct node_s	*headnode;
 	struct node_s	outside_node;
 	AABB			aabb;
