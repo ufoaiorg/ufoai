@@ -26,13 +26,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../../cl_localentity.h"
 #include "e_event_doorclose.h"
 
-static void LET_DoorSlidingClose (le_t * le)
+static void LET_DoorSlidingClose (le_t *le)
 {
 	assert(le->slidingSpeed > 0);
 	LET_SlideDoor(le, -le->slidingSpeed);
 }
 
-static void LET_DoorRotatingClose (le_t * le)
+static void LET_DoorRotatingClose (le_t *le)
 {
 	assert(le->rotationSpeed > 0);
 	LET_RotateDoor(le, -le->rotationSpeed);

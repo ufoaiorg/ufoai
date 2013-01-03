@@ -448,7 +448,7 @@ const char *LE_GetAnim (const char *anim, int right, int left, int state)
  * @note Think function
  * @note See the *.anm files in the models dir
  */
-void LET_StartIdle (le_t * le)
+void LET_StartIdle (le_t *le)
 {
 	/* hidden actors don't have models assigned, thus we can not change the
 	 * animation for any model */
@@ -626,7 +626,7 @@ void LE_DoEndPathMove (le_t *le)
  * @param[in] impact The impact location (where the particles are spawned).
  * @param[in] normal The index of the normal vector of the particles (think: impact angle).
  */
-static void LE_ActorBodyHit (const le_t * le, const vec3_t impact, int normal)
+static void LE_ActorBodyHit (const le_t *le, const vec3_t impact, int normal)
 {
 	if (le->teamDef) {
 		/* Spawn "hit_particle" if defined in teamDef. */
@@ -640,7 +640,7 @@ static void LE_ActorBodyHit (const le_t * le, const vec3_t impact, int normal)
  * @note Think function
  * @sa CL_ActorDoMove
  */
-static void LET_PathMove (le_t * le)
+static void LET_PathMove (le_t *le)
 {
 	float frac;
 	vec3_t start, dest, delta;
@@ -696,7 +696,7 @@ void LET_StartPathMove (le_t *le)
 /**
  * @note Think function
  */
-static void LET_Projectile (le_t * le)
+static void LET_Projectile (le_t *le)
 {
 	if (cl.time >= le->endTime) {
 		vec3_t impact;
@@ -937,7 +937,7 @@ void LE_AddGrenade (const fireDef_t *fd, int flags, const vec3_t muzzle, const v
  * @brief Add function for brush models
  * @sa LE_AddToScene
  */
-bool LE_BrushModelAction (le_t * le, entity_t * ent)
+bool LE_BrushModelAction (le_t *le, entity_t * ent)
 {
 	switch (le->type) {
 	case ET_ROTATING:
@@ -1754,7 +1754,7 @@ static inline void CL_TraceBounds (const vec3_t start, const vec3_t mins, const 
  * @param[in] contentmask Searched content the trace should watch for
  * @param[in] worldLevel The worldlevel (0-7) to calculate the levelmask for the trace from
  */
-trace_t CL_Trace (const vec3_t start, const vec3_t end, const AABB &box, const le_t * passle, le_t * passle2, int contentmask, int worldLevel)
+trace_t CL_Trace (const vec3_t start, const vec3_t end, const AABB &box, const le_t *passle, le_t *passle2, int contentmask, int worldLevel)
 {
 	moveclip_t clip;
 

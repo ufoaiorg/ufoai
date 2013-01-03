@@ -166,7 +166,7 @@ int CL_ActorMoveMode (const le_t *le, int length)
  * @param[in] le The actor to search.
  * @return The number of the actor in the teamlist. Or @c -1 if the given entity is not in the team list.
  */
-static int CL_ActorGetNumber (const le_t * le)
+static int CL_ActorGetNumber (const le_t *le)
 {
 	int actorIdx;
 
@@ -184,7 +184,7 @@ static int CL_ActorGetNumber (const le_t * le)
  * @param[in] le The actor to search.
  * @return A pointer to a character struct.
  */
-character_t *CL_ActorGetChr (const le_t * le)
+character_t *CL_ActorGetChr (const le_t *le)
 {
 	int i;
 	const chrList_t *chrList = &cl.chrList;
@@ -205,7 +205,7 @@ character_t *CL_ActorGetChr (const le_t * le)
  * @return The reserved TUs for the given type.
  * @return -1 on error.
  */
-int CL_ActorReservedTUs (const le_t * le, const reservation_types_t type)
+int CL_ActorReservedTUs (const le_t *le, const reservation_types_t type)
 {
 	character_t *chr;
 	int reservedReaction, reservedCrouch, reservedShot;
@@ -253,7 +253,7 @@ int CL_ActorReservedTUs (const le_t * le, const reservation_types_t type)
  * @return The remaining/usable TUs for this actor
  * @return -1 on error (this includes bad [very large] numbers stored in the struct).
  */
-int CL_ActorUsableTUs (const le_t * le)
+int CL_ActorUsableTUs (const le_t *le)
 {
 	if (!le)
 		return -1;
@@ -267,7 +267,7 @@ int CL_ActorUsableTUs (const le_t * le)
  * @param[in] type The reservation type to be changed (i.e be replaced).
  * @param[in] tus How many TUs to set.
  */
-void CL_ActorReserveTUs (const le_t * le, const reservation_types_t type, const int tus)
+void CL_ActorReserveTUs (const le_t *le, const reservation_types_t type, const int tus)
 {
 	character_t *chr;
 
@@ -352,7 +352,7 @@ ACTOR SELECTION AND TEAM LIST
  * @sa CL_ActorRemoveFromTeamList
  * @param le Pointer to local entity struct
  */
-void CL_ActorAddToTeamList (le_t * le)
+void CL_ActorAddToTeamList (le_t *le)
 {
 	int actorIdx;
 	const size_t size = lengthof(cl.teamList);
@@ -392,7 +392,7 @@ void CL_ActorCleanup (le_t *le)
  * @sa CL_ActorAddToTeamList
  * @param[in,out] le Pointer to local entity struct of the actor of your team
  */
-void CL_ActorRemoveFromTeamList (le_t * le)
+void CL_ActorRemoveFromTeamList (le_t *le)
 {
 	int i;
 
@@ -437,7 +437,7 @@ void CL_ActorRemoveFromTeamList (le_t * le)
  * @sa CL_UGVCvars
  * @sa CL_ActorCvars
  */
-bool CL_ActorSelect (le_t * le)
+bool CL_ActorSelect (le_t *le)
 {
 	int actorIdx;
 	character_t* chr;
@@ -847,7 +847,7 @@ void CL_ActorSetMode (le_t *actor, actorModes_t actorMode)
  * @sa CL_ActorActionMouse
  * @sa CL_ActorSelectMouse
  */
-void CL_ActorStartMove (le_t * le, const pos3_t to)
+void CL_ActorStartMove (le_t *le, const pos3_t to)
 {
 	byte length;
 	pos3_t toReal;
@@ -890,7 +890,7 @@ void CL_ActorStartMove (le_t * le, const pos3_t to)
  * @param[in] le Who is shooting
  * @param[in] at Position you are targeting to
  */
-void CL_ActorShoot (const le_t * le, const pos3_t at)
+void CL_ActorShoot (const le_t *le, const pos3_t at)
 {
 	int type;
 
@@ -1524,7 +1524,7 @@ static inline bool CL_AddActorWeapon (int objID)
  * @sa CL_ActorAppear
  * @note Called via addfunc for each local entity in every frame
  */
-bool CL_AddActor (le_t * le, entity_t * ent)
+bool CL_AddActor (le_t *le, entity_t * ent)
 {
 	entity_t add;
 

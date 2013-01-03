@@ -54,7 +54,7 @@ invList_t* HUD_GetLeftHandWeapon (const le_t *actor, containerIndex_t *container
  * @param[in] hand Which hand to use
  * @return the used @c fireDef_t
  */
-const fireDef_t *HUD_GetFireDefinitionForHand (const le_t * actor, const actorHands_t hand)
+const fireDef_t *HUD_GetFireDefinitionForHand (const le_t *actor, const actorHands_t hand)
 {
 	const invList_t *invlistWeapon;
 

@@ -28,5 +28,5 @@ void HUD_InitCallbacks(void);
 
 /** @todo remove me */
 invList_t* HUD_GetLeftHandWeapon(const le_t *actor, containerIndex_t *container);
-const fireDef_t *HUD_GetFireDefinitionForHand(const le_t * actor, const actorHands_t hand);
+const fireDef_t *HUD_GetFireDefinitionForHand(const le_t *actor, const actorHands_t hand);
 int HUD_CalcReloadTime(const le_t *le, const objDef_t *weapon, int toContainer);

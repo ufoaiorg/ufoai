@@ -24,4 +24,4 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #pragma once
 
-bool CL_AddUGV(le_t * le, entity_t * ent);
+bool CL_AddUGV(le_t *le, entity_t * ent);

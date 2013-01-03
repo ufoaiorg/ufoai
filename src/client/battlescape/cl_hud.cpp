@@ -179,7 +179,7 @@ static void HUD_SetWeaponButton (buttonTypes_t button, weaponButtonState_t state
  * @return -1 on error (this includes bad [very large] numbers stored in the struct).
  * @todo Maybe only return "reaction" value if reaction-state is active? The value _should_ be 0, but one never knows :)
  */
-static int HUD_UsableReactionTUs (const le_t * le)
+static int HUD_UsableReactionTUs (const le_t *le)
 {
 	/* Get the amount of usable TUs depending on the state (i.e. is RF on or off?) */
 	if (le->state & STATE_REACTION)
@@ -587,7 +587,7 @@ static void HUD_SwitchFiremodeList_f (void)
  * @param[in] hand Which weapon(-hand) to use.
  * @param[in] firemodeActive Set this to the firemode index you want to activate or set it to -1 if the default one (currently the first one found) should be used.
  */
-static void HUD_UpdateReactionFiremodes (const le_t * actor, const actorHands_t hand, fireDefIndex_t firemodeActive)
+static void HUD_UpdateReactionFiremodes (const le_t *actor, const actorHands_t hand, fireDefIndex_t firemodeActive)
 {
 	const fireDef_t *fd;
 	const objDef_t *ammo, *od;
@@ -744,7 +744,7 @@ static int HUD_WeaponCanBeReloaded (const le_t *le, containerIndex_t containerID
  * @brief Checks if there is a weapon in the hand that can be used for reaction fire.
  * @param[in] actor What actor to check.
  */
-static bool HUD_WeaponWithReaction (const le_t * actor)
+static bool HUD_WeaponWithReaction (const le_t *actor)
 {
 	const objDef_t *weapon = INVSH_HasReactionFireEnabledWeapon(RIGHT(actor));
 	if (weapon)
@@ -757,7 +757,7 @@ static bool HUD_WeaponWithReaction (const le_t * actor)
  * @param[in] actor the actor to check for his reaction state.
  * @return true if nothing changed message was sent otherwise false.
  */
-static bool HUD_DisplayImpossibleReaction (const le_t * actor)
+static bool HUD_DisplayImpossibleReaction (const le_t *actor)
 {
 	if (!actor)
 		return false;
@@ -779,7 +779,7 @@ static bool HUD_DisplayImpossibleReaction (const le_t * actor)
  * @brief Display 'usable" (blue) reaction buttons.
  * @param[in] actor the actor to check for his reaction state.
  */
-static void HUD_DisplayPossibleReaction (const le_t * actor)
+static void HUD_DisplayPossibleReaction (const le_t *actor)
 {
 	if (!actor)
 		return;
