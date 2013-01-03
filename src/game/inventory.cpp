@@ -1001,7 +1001,6 @@ void InventoryInterface::EquipActor (inventoryInterface_t* self, character_t* co
 
 /**
  * @brief Calculate the number of used inventory slots
- * @param[in] self The inventory interface pointer
  * @return The number of free inventory slots
  */
 int InventoryInterface::GetUsedSlots ()
