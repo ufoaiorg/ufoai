@@ -74,6 +74,10 @@ public:
 	void EquipActorRobot (inventoryInterface_t* self, inventory_t* const inv, const objDef_t* weapon) __attribute__((nonnull(1), nonnull(2)));
 
 	int GetUsedSlots ();
+
+	inline void *alloc (size_t size)    { return import->Alloc(size); }
+    inline void free (void *data)       { import->Free(data); }
+protected:
 };
 
 void INV_InitInventory(const char *name, inventoryInterface_t *ii, const csi_t* csi, const inventoryImport_t *iimport);

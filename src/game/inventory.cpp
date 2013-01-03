@@ -24,7 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "inventory.h"
 
-static inline void I_Free (inventoryInterface_t* self, void *data)
+/*static inline void I_Free (inventoryInterface_t* self, void *data)
 {
 	self->import->Free(data);
 }
@@ -32,7 +32,7 @@ static inline void I_Free (inventoryInterface_t* self, void *data)
 static inline void *I_Alloc (inventoryInterface_t* self, size_t size)
 {
 	return self->import->Alloc(size);
-}
+}*/
 
 static void I_RemoveInvList (inventoryInterface_t* self, invList_t *invList)
 {
@@ -42,7 +42,7 @@ static void I_RemoveInvList (inventoryInterface_t* self, invList_t *invList)
 	if (self->invList == invList) {
 		invList_t *ic = self->invList;
 		self->invList = ic->next;
-		I_Free(self, ic);
+		self->free(ic);
 	} else {
 		invList_t *ic = self->invList;
 		invList_t* prev = NULL;
@@ -50,7 +50,7 @@ static void I_RemoveInvList (inventoryInterface_t* self, invList_t *invList)
 			if (ic == invList) {
 				if (prev)
 					prev->next = ic->next;
-				I_Free(self, ic);
+				self->free(ic);
 				break;
 			}
 			prev = ic;
@@ -68,7 +68,7 @@ static invList_t* I_AddInvList (inventoryInterface_t* self, invList_t **invList)
 
 	/* create the list */
 	if (!*invList) {
-		*invList = (invList_t*)I_Alloc(self, sizeof(**invList));
+		*invList = (invList_t*)self->alloc(sizeof(**invList));
 		(*invList)->next = NULL; /* not really needed - but for better readability */
 		return *invList;
 	} else
@@ -77,7 +77,7 @@ static invList_t* I_AddInvList (inventoryInterface_t* self, invList_t **invList)
 	while (list->next)
 		list = list->next;
 
-	newEntry = (invList_t*)I_Alloc(self, sizeof(*newEntry));
+	newEntry = (invList_t*)self->alloc(sizeof(*newEntry));
 	list->next = newEntry;
 	newEntry->next = NULL; /* not really needed - but for better readability */
 
