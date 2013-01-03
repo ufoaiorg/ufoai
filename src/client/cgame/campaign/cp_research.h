@@ -23,8 +23,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_CL_RESEARCH
-#define CLIENT_CL_RESEARCH
+#ifndef CP_RESEARCH
+#define CP_RESEARCH
 
 #define MAX_RESEARCHLIST 32
 #define MAX_TECHNOLOGIES 256	/**< Maximum number of technologies overall. */
@@ -87,6 +87,7 @@ typedef struct requirements_s {
 	requirement_t links[MAX_TECHLINKS];
 } requirements_t;
 
+/** @TODO MAX_CAMPAIGNS is not defined unless cp_campaign.h is included before */
 typedef struct markResearched_s {
 	bool markOnly[MAX_CAMPAIGNS];
 	char *campaign[MAX_CAMPAIGNS];
@@ -208,6 +209,7 @@ bool RS_IsResearched_idx(int techIdx);
 bool RS_IsResearched_ptr(const technology_t *tech);
 
 technology_t* RS_GetTechForItem(const objDef_t *item);
+technology_t* RS_GetTechForTeam(const teamDef_t *team);
 void RS_AddObjectTechs(void);
 void RS_RequiredLinksAssign(void);
 void RS_InitTree(const struct campaign_s *campaign, bool load);

@@ -450,6 +450,10 @@ void RS_RequiredLinksAssign (void)
 	LIST_Delete(&redirectedTechs);
 }
 
+/**
+ * @brief Returns technology entry for an item
+ * @param[in] item Pointer to the item (object) definition
+ */
 technology_t* RS_GetTechForItem (const objDef_t *item)
 {
 	if (item == NULL)
@@ -459,6 +463,21 @@ technology_t* RS_GetTechForItem (const objDef_t *item)
 	if (ccs.objDefTechs[item->idx] == NULL)
 		cgi->Com_Error(ERR_DROP, "RS_GetTechForItem: No technology for item %s", item->id);
 	return ccs.objDefTechs[item->idx];
+}
+
+/**
+ * @brief Returns technology entry for a team
+ * @param[in] team Pointer to the team definition
+ */
+technology_t* RS_GetTechForTeam (const teamDef_t *team)
+{
+	if (team == NULL)
+		cgi->Com_Error(ERR_DROP, "RS_GetTechForTeam: No team given");
+	if (team->idx < 0 || team->idx > lengthof(ccs.teamDefTechs))
+		cgi->Com_Error(ERR_DROP, "RS_GetTechForTeam: Buffer overflow");
+	if (ccs.teamDefTechs[team->idx] == NULL)
+		cgi->Com_Error(ERR_DROP, "RS_GetTechForTeam: No technology for team %s", team->id);
+	return ccs.teamDefTechs[team->idx];
 }
 
 /**
