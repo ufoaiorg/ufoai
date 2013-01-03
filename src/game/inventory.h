@@ -78,6 +78,7 @@ public:
 	inline void *alloc (size_t size)    { return import->Alloc(size); }
     inline void free (void *data)       { import->Free(data); }
 protected:
+    void removeInvList (invList_t *invList);
 };
 
 void INV_InitInventory(const char *name, inventoryInterface_t *ii, const csi_t* csi, const inventoryImport_t *iimport);

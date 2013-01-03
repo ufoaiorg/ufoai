@@ -34,23 +34,23 @@ static inline void *I_Alloc (inventoryInterface_t* self, size_t size)
 	return self->import->Alloc(size);
 }*/
 
-static void I_RemoveInvList (inventoryInterface_t* self, invList_t *invList)
+void InventoryInterface::removeInvList (invList_t *invList)
 {
-	Com_DPrintf(DEBUG_SHARED, "I_RemoveInvList: remove one slot (%s)\n", self->name);
+	Com_DPrintf(DEBUG_SHARED, "I_RemoveInvList: remove one slot (%s)\n", name);
 
 	/* first entry */
-	if (self->invList == invList) {
-		invList_t *ic = self->invList;
-		self->invList = ic->next;
-		self->free(ic);
+	if (this->invList == invList) {
+		invList_t *ic = this->invList;
+		this->invList = ic->next;
+		free(ic);
 	} else {
-		invList_t *ic = self->invList;
+		invList_t *ic = this->invList;
 		invList_t* prev = NULL;
 		while (ic) {
 			if (ic == invList) {
 				if (prev)
 					prev->next = ic->next;
-				self->free(ic);
+				free(ic);
 				break;
 			}
 			prev = ic;
@@ -198,7 +198,7 @@ bool InventoryInterface::RemoveFromInventory (inventoryInterface_t* self, invent
 		i->c[container->id] = ic->next;
 
 		/* updated invUnused to be able to reuse this space later again */
-		I_RemoveInvList(self, ic);
+		removeInvList(ic);
 
 		return true;
 	}
@@ -219,7 +219,7 @@ bool InventoryInterface::RemoveFromInventory (inventoryInterface_t* self, invent
 			else
 				previous->next = ic->next;
 
-			I_RemoveInvList(self, ic);
+			removeInvList(ic);
 
 			return true;
 		}
@@ -524,7 +524,7 @@ void InventoryInterface::EmptyContainer (inventoryInterface_t* self, inventory_t
 	while (ic) {
 		invList_t *old = ic;
 		ic = ic->next;
-		I_RemoveInvList(self, old);
+		removeInvList(old);
 	}
 
 	i->c[container->id] = NULL;
