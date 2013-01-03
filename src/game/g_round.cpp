@@ -93,13 +93,13 @@ void G_CheckForceEndRound (void)
 /**
  * @brief Counts the still living actors for a player
  */
-static int G_PlayerSoldiersCount (const Player *player)
+static int G_PlayerSoldiersCount (const Player &player)
 {
 	int cnt = 0;
 	edict_t *ent = NULL;
 
 	while ((ent = G_EdictsGetNextLivingActor(ent))) {
-		if (ent->pnum == player->getNum())
+		if (ent->pnum == player.getNum())
 			cnt++;
 	}
 
@@ -200,11 +200,11 @@ void G_ClientEndRound (Player &player)
 		}
 		p = NULL;
 		while ((p = G_PlayerGetNextActiveHuman(p)))
-			if (p->getTeam() == level.activeTeam && !p->roundDone && G_PlayerSoldiersCount(p) > 0)
+			if (p->getTeam() == level.activeTeam && !p->roundDone && G_PlayerSoldiersCount(*p) > 0)
 				return;
 		p = NULL;
 		while ((p = G_PlayerGetNextActiveAI(p)))
-			if (p->getTeam() == level.activeTeam && !p->roundDone && G_PlayerSoldiersCount(p) > 0)
+			if (p->getTeam() == level.activeTeam && !p->roundDone && G_PlayerSoldiersCount(*p) > 0)
 				return;
 	} else {
 		player.roundDone = true;

@@ -537,7 +537,6 @@ int G_ActorGetContentFlags (const vec3_t origin)
 bool G_ActorInvMove (edict_t *ent, const invDef_t *from, invList_t *fItem, const invDef_t *to, int tx,
 		int ty, bool checkaction)
 {
-	Player *player;
 	edict_t *floor;
 	bool newFloor;
 	invList_t *ic, *tc;
@@ -547,8 +546,7 @@ bool G_ActorInvMove (edict_t *ent, const invDef_t *from, invList_t *fItem, const
 	invList_t fItemBackup, tItemBackup;
 	int fx, fy;
 	int originalTU, reservedTU = 0;
-
-	player = &G_PLAYER_FROM_ENT(ent);
+	Player &player = G_PLAYER_FROM_ENT(ent);
 
 	assert(fItem);
 	assert(fItem->item.item);
@@ -571,11 +569,11 @@ bool G_ActorInvMove (edict_t *ent, const invDef_t *from, invList_t *fItem, const
 
 	/* Check if action is possible */
 	/* TUs are 1 here - but this is only a dummy - the real TU check is done in the inventory functions below */
-	if (checkaction && !G_ActionCheckForCurrentTeam(player, ent, 1))
+	if (checkaction && !G_ActionCheckForCurrentTeam(&player, ent, 1))
 		return false;
 
 	if (!INVSH_CheckAddingItemToInventory(&ent->chr.i, from->id, to->id, fItem->item, ent->chr.score.skills[ABILITY_POWER])) {
-		G_ClientPrintf(*player, PRINT_HUD, _("This soldier can not carry anything else."));
+		G_ClientPrintf(player, PRINT_HUD, _("This soldier can not carry anything else."));
 		return false;
 	}
 
@@ -620,10 +618,10 @@ bool G_ActorInvMove (edict_t *ent, const invDef_t *from, invList_t *fItem, const
 		/* No action possible - abort */
 		return false;
 	case IA_NOTIME:
-		G_ClientPrintf(*player, PRINT_HUD, _("Can't perform action - not enough TUs!"));
+		G_ClientPrintf(player, PRINT_HUD, _("Can't perform action - not enough TUs!"));
 		return false;
 	case IA_NORELOAD:
-		G_ClientPrintf(*player, PRINT_HUD,
+		G_ClientPrintf(player, PRINT_HUD,
 				_("Can't perform action - weapon already fully loaded with the same ammunition!"));
 		return false;
 	default:
