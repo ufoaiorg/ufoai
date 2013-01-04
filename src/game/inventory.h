@@ -75,8 +75,15 @@ public:
 
 	int GetUsedSlots ();
 
-	inline void *alloc (size_t size)    { return import->Alloc(size); }
-    inline void free (void *data)       { import->Free(data); }
+	inline void *alloc (size_t size)
+	{
+		return import->Alloc(size);
+	}
+
+	inline void free (void *data)
+	{
+		import->Free(data);
+	}
 protected:
     void removeInvList (invList_t *invList);
 };
