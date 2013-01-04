@@ -1403,3 +1403,51 @@
 "classname" "info_human_start"
 "origin" "400 112 60"
 }
+// entity 41
+{
+"classname" "info_player_start"
+"team" "1"
+"origin" "400 112 60"
+}
+// entity 42
+{
+"classname" "info_player_start"
+"team" "1"
+"origin" "400 176 60"
+}
+// entity 43
+{
+"classname" "info_player_start"
+"team" "1"
+"origin" "368 112 60"
+}
+// entity 44
+{
+"classname" "info_player_start"
+"team" "1"
+"origin" "368 176 60"
+}
+// entity 45
+{
+"classname" "info_player_start"
+"team" "1"
+"origin" "336 112 60"
+}
+// entity 46
+{
+"classname" "info_player_start"
+"team" "1"
+"origin" "336 176 60"
+}
+// entity 47
+{
+"classname" "info_player_start"
+"team" "1"
+"origin" "304 112 60"
+}
+// entity 48
+{
+"classname" "info_player_start"
+"team" "1"
+"origin" "304 176 60"
+}
