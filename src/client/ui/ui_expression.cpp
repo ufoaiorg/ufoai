@@ -481,13 +481,25 @@ bool UI_GetBooleanFromExpression (uiAction_t *expression, const uiCallContext_t 
 		case EA_OPERATOR_EXISTS:
 			{
 				const uiAction_t *e = expression->d.nonTerminal.left;
-				const char* cvarName;
+				const char* name;
 				assert(e);
-				assert(e->type == EA_VALUE_CVARNAME || e->type == EA_VALUE_CVARNAME_WITHINJECTION);
-				cvarName = e->d.terminal.d1.constString;
-				if (e->type == EA_VALUE_CVARNAME_WITHINJECTION)
-					cvarName = UI_GenInjectedString(cvarName, false, context);
-				return Cvar_FindVar(cvarName) != NULL;
+				name = e->d.terminal.d1.constString;
+				switch (e->type) {
+				case EA_VALUE_CVARNAME_WITHINJECTION:
+					name = UI_GenInjectedString(name, false, context);
+				case EA_VALUE_CVARNAME:
+					return Cvar_FindVar(name) != NULL;
+				case EA_VALUE_PATHNODE_WITHINJECTION:
+					name = UI_GenInjectedString(name, false, context);
+				case EA_VALUE_PATHNODE: {
+					uiNode_t* node = NULL;
+					const value_t *property;
+					UI_ReadNodePath(name, context->source, &node, &property);
+					return node != NULL;
+				}
+				default:
+					return false;
+				}
 			}
 		case EA_OPERATOR_PATHPROPERTYFROM:
 			return UI_GetFloatFromExpression(expression, context) != 0;
@@ -707,8 +719,14 @@ uiAction_t *UI_ParseExpression (const char **text)
 			expression->d.nonTerminal.left = e;
 
 			if (expression->type == EA_OPERATOR_EXISTS) {
-				if (e->type != EA_VALUE_CVARNAME && e->type != EA_VALUE_CVARNAME_WITHINJECTION) {
-					Com_Printf("UI_ParseExpression: Cvar expected, but type %d found\n", e->type);
+				switch (e->type) {
+				case EA_VALUE_CVARNAME:
+				case EA_VALUE_CVARNAME_WITHINJECTION:
+				case EA_VALUE_PATHNODE:
+				case EA_VALUE_PATHNODE_WITHINJECTION:
+					break;
+				default:
+					Com_Printf("UI_ParseExpression: Cvar or Node path expected, but type %d found\n", e->type);
 					return NULL;
 				}
 			}
