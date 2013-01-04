@@ -540,7 +540,7 @@ void uiPanelNode::onPropertyChanged (uiNode_t *node, const value_t *property)
  * @brief Handle mouse wheel scrolling
  * @param[in, out] node UI node to scroll
  * @param[in] deltaX horizontal scrolling value (not used)
- * @param[in] deltaX vertical scrolling value
+ * @param[in] deltaY vertical scrolling value
  */
 bool uiPanelNode::onScroll (uiNode_t *node, int deltaX, int deltaY)
 {
