@@ -626,6 +626,9 @@ window ufopedia extends objectinfo
 	func onWindowOpened
 	{
 		call *node:root.init_summary
+		if ( paramCount > 0 ) {
+			cmd "ufopedia <1>;"
+		}
 		cmd "update_ufopedia_layout;"
 	}
 
