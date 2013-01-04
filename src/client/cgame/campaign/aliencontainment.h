@@ -1,6 +1,6 @@
 /**
  * @file
- * @brief Header file for Alien Containment stuff.
+ * @brief Alien containment class header
  */
 
 /*
@@ -22,18 +22,28 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
-#ifndef CP_ALIENCONT_H
-#define CP_ALIENCONT_H
+#pragma once
+
+#include "aliencargo.h"
+#include "cp_capacity.h"
 
 /**
- * Collecting aliens functions.
+ * @brief Alien containment class
  */
+class AlienContainment : public AlienCargo {
+	protected:
+		capacities_t *aliveCapacity;
+		capacities_t *deadCapacity;
 
-void AL_AddAliens(struct aircraft_s *aircraft);
-bool AL_AddAlienTypeToAircraftCargo(struct aircraft_s *aircraft, const teamDef_t *teamDef, int amount, bool dead);
-void AL_RemoveAliensExceedingCapacity(struct base_s *base);
+	public:
+		virtual bool add (const teamDef_t *team, int alive, int dead);
+		virtual bool add (const char *teamId, int alive, int dead);
 
-int AL_CountAll(void);
-void AC_InitStartup(void);
+		static bool isLifeSupported (const teamDef_t *team);
 
-#endif
+		AlienContainment (capacities_t *aliveCapacity, capacities_t *deadCapacity);
+		virtual ~AlienContainment (void);
+	private:
+		void resetCurrentCapacities (void);
+		int getCapacityNeedForAlien (const teamDef_t *teamDef, const bool isDead);
+};

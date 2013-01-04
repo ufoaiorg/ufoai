@@ -32,6 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_time.h"
 #include "cp_ufo.h"
 #include "../../ui/ui_dataids.h"
+#include "aliencontainment.h"
 
 /** @brief Used from menu scripts as parameter for mn_base_select */
 #define CREATE_NEW_BASE_ID -1
@@ -823,7 +824,6 @@ static void BaseSummary_Init (const base_t *base)
 {
 	static char textStatsBuffer[1024];
 	static char textInfoBuffer[256];
-	const aliensCont_t *containment = base->alienscont;
 	int i;
 
 	baseCapacities_t cap;
@@ -861,12 +861,13 @@ static void BaseSummary_Init (const base_t *base)
 	Q_strcat(textInfoBuffer, "\n", sizeof(textInfoBuffer));
 
 	Q_strcat(textInfoBuffer, _("^BAliens\n"), sizeof(textInfoBuffer));
-	for (i = 0; i < ccs.numAliensTD; i++) {
-		if (!containment[i].amountAlive && !containment[i].amountDead)
-			continue;
-		Q_strcat(textInfoBuffer, va("\t%s:\t\t\t\t%i/%i\n",
-			_(containment[i].teamDef->name), containment[i].amountAlive,
-			containment[i].amountDead), sizeof(textInfoBuffer));
+	if (base->alienContainment) {
+		linkedList_t *list = base->alienContainment->list();
+		LIST_Foreach(list, alienCargo_t, item) {
+			Q_strcat(textInfoBuffer, va("\t%s:\t\t\t\t%i/%i\n",
+				_(item->teamDef->name), item->alive, item->dead), sizeof(textInfoBuffer));
+		}
+		LIST_Delete(&list);
 	}
 
 	/* link into the menu */

@@ -30,6 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_time.h"
 #include "../../ui/ui_dataids.h"
 #include "aliencargo.h"
+#include "aliencontainment.h"
 
 /**
  * @brief transfer typeID strings
@@ -317,32 +318,32 @@ static void TR_FillEmployees (const base_t *srcBase, const base_t *destBase)
  */
 static void TR_FillAliens (const base_t *srcBase, const base_t *destBase)
 {
-	for (int i = 0; i < ccs.numAliensTD; i++) {
-		const aliensCont_t *alienContSrc = &srcBase->alienscont[i];
-		const aliensCont_t *alienContDst = &destBase->alienscont[i];
-		const teamDef_t *teamDef = alienContSrc->teamDef;
-		if (teamDef == NULL)
-			continue;
+	if (!srcBase->alienContainment)
+		return;
 
-		const int transferDead = (td.alienCargo) ? td.alienCargo->getDead(teamDef) : 0;
-		const int transferAlive = (td.alienCargo) ? td.alienCargo->getAlive(teamDef) : 0;
-		if (alienContSrc->amountDead > 0 || transferDead > 0) {
+	linkedList_t *list = srcBase->alienContainment->list();
+	LIST_Foreach(list, alienCargo_t, item) {
+		const int srcDead = item->dead;
+		const int srcAlive = item->alive;
+		const int dstDead = (destBase->alienContainment) ? destBase->alienContainment->getAlive(item->teamDef) : 0;
+		const int dstAlive = (destBase->alienContainment) ? destBase->alienContainment->getDead(item->teamDef) : 0;
+		const int transferDead = (td.alienCargo) ? td.alienCargo->getDead(item->teamDef) : 0;
+		const int transferAlive = (td.alienCargo) ? td.alienCargo->getAlive(item->teamDef) : 0;
+
+		if (srcDead > 0 || transferDead > 0) {
 			char str[128];
-			Com_sprintf(str, sizeof(str), _("Corpse of %s"), _(teamDef->name));
-
+			Com_sprintf(str, sizeof(str), _("Corpse of %s"), _(item->teamDef->name));
 			cgi->UI_ExecuteConfunc("ui_translist_add \"dead:%s\" \"%s\" %d %d %d %d %d",
-				teamDef->id, str, alienContSrc->amountDead, alienContDst->amountDead,
-				0, transferDead, alienContSrc->amountDead + transferDead);
+				item->teamDef->id, str, srcDead, dstDead, 0, transferDead, srcDead + transferDead);
 		}
-		if (alienContSrc->amountAlive > 0 || transferAlive > 0) {
+		if (srcAlive > 0 || transferAlive > 0) {
 			char str[128];
-			Com_sprintf(str, sizeof(str), _("Alive %s"), _(teamDef->name));
-
+			Com_sprintf(str, sizeof(str), _("Alive %s"), _(item->teamDef->name));
 			cgi->UI_ExecuteConfunc("ui_translist_add \"alive:%s\" \"%s\" %d %d %d %d %d",
-				teamDef->id, str, alienContSrc->amountAlive, alienContDst->amountAlive,
-				0, transferAlive, alienContSrc->amountAlive + transferAlive);
+				item->teamDef->id, str, srcAlive, dstAlive,	0, transferAlive, srcAlive + transferAlive);
 		}
 	}
+	LIST_Delete(&list);
 }
 
 /**
@@ -511,15 +512,10 @@ static void TR_Add_f (void)
 		if (td.alienCargo == NULL)
 			cgi->Com_Error(ERR_DROP, "TR_Add_f: Cannot create AlienCargo object\n");
 
-		for (int i = 0; i < ccs.numAliensTD; i++) {
-			aliensCont_t *aliensCont = &base->alienscont[i];
-			if (!aliensCont->teamDef)
-				continue;
-			if (!Q_streq(aliensCont->teamDef->id, itemId + 6))
-				continue;
-
-			const int cargo = td.alienCargo->getAlive(aliensCont->teamDef);
-			const int store = aliensCont->amountAlive;
+		const teamDef_t *teamDef = cgi->Com_GetTeamDefinitionByID(itemId + 6);
+		if (teamDef && base->alienContainment) {
+			const int cargo = td.alienCargo->getAlive(teamDef);
+			const int store = base->alienContainment->getAlive(teamDef);
 
 			if (amount >= 0)
 				amount = std::min(amount, store);
@@ -527,10 +523,9 @@ static void TR_Add_f (void)
 				amount = std::max(amount, -cargo);
 
 			if (amount != 0) {
-				td.alienCargo->add(aliensCont->teamDef, amount, 0);
-				AL_ChangeAliveAlienNumber(base, aliensCont, -amount);
+				td.alienCargo->add(teamDef, amount, 0);
+				base->alienContainment->add(teamDef, -amount, 0);
 			}
-			break;
 		}
 	} else if (Q_strstart(itemId, "dead:")) {
 		if (td.alienCargo == NULL)
@@ -538,15 +533,10 @@ static void TR_Add_f (void)
 		if (td.alienCargo == NULL)
 			cgi->Com_Error(ERR_DROP, "TR_Add_f: Cannot create AlienCargo object\n");
 
-		for (int i = 0; i < ccs.numAliensTD; i++) {
-			aliensCont_t *aliensCont = &base->alienscont[i];
-			if (!aliensCont->teamDef)
-				continue;
-			if (!Q_streq(aliensCont->teamDef->id, itemId + 5))
-				continue;
-
-			const int cargo = td.alienCargo->getDead(aliensCont->teamDef);
-			const int store = aliensCont->amountDead;
+		const teamDef_t *teamDef = cgi->Com_GetTeamDefinitionByID(itemId + 5);
+		if (teamDef && base->alienContainment) {
+			const int cargo = td.alienCargo->getDead(teamDef);
+			const int store = base->alienContainment->getDead(teamDef);
 
 			if (amount >= 0)
 				amount = std::min(amount, store);
@@ -554,10 +544,9 @@ static void TR_Add_f (void)
 				amount = std::max(amount, -cargo);
 
 			if (amount != 0) {
-				td.alienCargo->add(aliensCont->teamDef, 0, amount);
-				aliensCont->amountDead -= amount;
+				td.alienCargo->add(teamDef, 0, amount);
+				base->alienContainment->add(teamDef, 0, -amount);
 			}
-			break;
 		}
 	} else if (Q_streq(itemId, ANTIMATTER_TECH_ID)) {
 		/* antimatter */
@@ -625,16 +614,12 @@ static void TR_TransferListClear_f (void)
 				B_UpdateStorageAndCapacity(base, od, itemCargoAmount, false);
 		}
 	}
-	for (i = 0; i < ccs.numAliensTD; i++) {	/* Return aliens. */
-		aliensCont_t *aliensCont = &base->alienscont[i];
-		if (!aliensCont->teamDef)
-			continue;
-		const int alienCargoAmountAlive = (td.alienCargo) ? td.alienCargo->getAlive(aliensCont->teamDef) : 0;
-		const int alienCargoAmountDead = (td.alienCargo) ? td.alienCargo->getDead(aliensCont->teamDef) : 0;
-		if (alienCargoAmountAlive > 0)
-			AL_ChangeAliveAlienNumber(base, aliensCont, alienCargoAmountAlive);
-		if (alienCargoAmountDead > 0)
-			base->alienscont[i].amountDead += alienCargoAmountDead;
+	if (td.alienCargo && base->alienContainment) {
+		linkedList_t *list = td.alienCargo->list();
+		LIST_Foreach(list, alienCargo_t, item) {
+			base->alienContainment->add(item->teamDef, item->alive, item->dead);
+		}
+		LIST_Delete(&list);
 	}
 
 	TR_ClearTempCargo();

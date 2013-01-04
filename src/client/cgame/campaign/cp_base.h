@@ -124,7 +124,7 @@ typedef struct base_s {
 
 	struct radar_s radar;
 
-	aliensCont_t alienscont[MAX_ALIENCONT_CAP];	/**< alien containment capacity */
+	class AlienContainment* alienContainment;	/**< alien containment data */
 
 	capacities_t capacities[MAX_CAP];		/**< Capacities. */
 

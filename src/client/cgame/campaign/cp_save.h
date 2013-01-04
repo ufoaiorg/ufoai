@@ -54,7 +54,6 @@ bool BS_SaveXML(xmlNode_t *parent);
 bool BS_LoadXML(xmlNode_t *parent);
 bool AIR_SaveXML(xmlNode_t *parent);
 bool AIR_LoadXML(xmlNode_t *parent);
-bool AC_SaveXML(xmlNode_t *parent);
 bool AC_LoadXML(xmlNode_t *parent);
 bool E_SaveXML(xmlNode_t *parent);
 bool E_LoadXML(xmlNode_t *parent);

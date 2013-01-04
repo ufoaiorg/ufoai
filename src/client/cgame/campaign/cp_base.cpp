@@ -39,6 +39,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_base_callbacks.h"
 #include "cp_ufo.h"
 #include "save/save_base.h"
+#include "aliencontainment.h"
 
 #define B_GetBuildingByIDX(baseIdx, buildingIdx) (&ccs.buildings[(baseIdx)][(buildingIdx)])
 #define B_GetBuildingIDX(base, building) ((ptrdiff_t)((building) - ccs.buildings[base->idx]))
@@ -616,7 +617,6 @@ bool B_AssembleMap (const base_t *base)
 /**
  * @brief Check base status for particular buildings as well as capacities.
  * @param[in] building Pointer to building.
- * @note This function checks  base status for particular buildings and base capacities.
  * @return true if a base status has been modified (but do not check capacities)
  */
 static bool B_CheckUpdateBuilding (building_t* building)
@@ -758,8 +758,8 @@ void B_ResetAllStatusAndCapacities (base_t *base, bool firstEnable)
 	B_UpdateBaseCapacities(MAX_CAP, base);
 
 	/* calculate capacities.cur for every capacity */
-	if (B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_ALIENS)))
-		CAP_SetCurrent(base, CAP_ALIENS, AL_CountInBase(base));
+
+	/* Current CAP_ALIENS (live alien capacity) is managed by AlienContainment class */
 
 	if (B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_AIRCRAFT_SMALL)) ||
 		B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_AIRCRAFT_BIG)))
@@ -1294,7 +1294,7 @@ base_t *B_Build (const campaign_t *campaign, const vec2_t pos, const char *name)
 	RADAR_InitialiseUFOs(&base->radar);
 
 	B_ResetAllStatusAndCapacities(base, true);
-	AL_FillInContainment(base);
+
 	PR_UpdateProductionCap(base);
 
 	ccs.campaignStats.basesBuilt++;
@@ -2451,6 +2451,15 @@ void B_UpdateBaseCapacities (baseCapacities_t cap, base_t *base)
 		if (buildingTemplateIDX != -1)
 			Com_DPrintf(DEBUG_CLIENT, "B_UpdateBaseCapacities: updated capacity of %s: %i\n",
 				ccs.buildingTemplates[buildingTemplateIDX].id, CAP_GetMax(base, cap));
+
+		if (cap == CAP_ALIENS) {
+			if (base->alienContainment != NULL && CAP_GetMax(base, CAP_ALIENS) == 0) {
+				delete base->alienContainment;
+				base->alienContainment = NULL;
+			} else if (base->alienContainment == NULL && CAP_GetMax(base, CAP_ALIENS) > 0) {
+				base->alienContainment = new AlienContainment(CAP_Get(base, CAP_ALIENS), NULL);
+			}
+		}
 		break;
 	case MAX_CAP:			/**< Update all capacities in base. */
 		Com_DPrintf(DEBUG_CLIENT, "B_UpdateBaseCapacities: going to update ALL capacities.\n");
@@ -2579,6 +2588,11 @@ bool B_SaveXML (xmlNode_t *parent)
 		/* radar */
 		cgi->XML_AddIntValue(act_base, SAVE_BASES_RADARRANGE, b->radar.range);
 		cgi->XML_AddIntValue(act_base, SAVE_BASES_TRACKINGRANGE, b->radar.trackingRange);
+		/* alien containment */
+		if (b->alienContainment) {
+			node = cgi->XML_AddNode(act_base, SAVE_BASES_ALIENCONTAINMENT);
+			b->alienContainment->save(node);
+		}
 
 		cgi->Com_UnregisterConstList(saveBaseConstants);
 	}
@@ -2783,6 +2797,12 @@ bool B_LoadXML (xmlNode_t *parent)
 		/* read radar info */
 		RADAR_InitialiseUFOs(&b->radar);
 		RADAR_Initialise(&b->radar, cgi->XML_GetInt(base, SAVE_BASES_RADARRANGE, 0), cgi->XML_GetInt(base, SAVE_BASES_TRACKINGRANGE, 0), B_GetMaxBuildingLevel(b, B_RADAR), true);
+
+		node = cgi->XML_GetNode(base, SAVE_BASES_ALIENCONTAINMENT);
+		if (node) {
+			b->alienContainment = new AlienContainment(CAP_Get(b, CAP_ALIENS), NULL);
+			b->alienContainment->load(node);
+		}
 
 		/** @todo can't we use something like I_DestroyInventory here? */
 		/* clear the mess of stray loaded pointers */

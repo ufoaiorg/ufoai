@@ -64,6 +64,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SAVE_BASES_RADARRANGE "radarRange"
 #define SAVE_BASES_TRACKINGRANGE "trackingRange"
 
+#define SAVE_BASES_ALIENCONTAINMENT "alienContainment"
+
 #define SAVE_BASESTATUS_NAMESPACE "savebaseStatus"
 #define SAVE_BUILDINGSTATUS_NAMESPACE "savebuildingStatus"
 static const constListEntry_t saveBaseConstants[] = {
@@ -84,7 +86,7 @@ static const constListEntry_t saveBaseConstants[] = {
 DTD:
 
 <!ELEMENT bases base+>
-<!ELEMENT base pos buildingSpace buildings batteries lasers>
+<!ELEMENT base pos buildingSpace buildings batteries lasers alienContainment?>
 <!ATTLIST base
 	idx					CDATA		#REQUIRED
 	name				CDATA		#IMPLIED

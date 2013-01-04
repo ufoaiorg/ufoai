@@ -2,77 +2,94 @@
 // BASE ALIEN CONTAINMENU MENU
 // ============================
 
-// ======================
-// Alien Image Component
-// ======================
-
-	component cmpAlienImage extends image
-	{
-		src			*cvar:mn_al_alienimage
-		pos				"18 19"
-		size			"279 626"
-		preventratio	true
-		contentalign	ALIGN_CC
-	}
-
 // ===========================
 // Aliencontainment Component
 // ===========================
-
 component cmpAlienContainment extends image {
 	{
-		src				"ui/hosp_button_green"
-		onClick			{ cmd "aliencont_click <num>;" }
+		src		"ui/hosp_button_green"
+		onClick {
+			cmd "ui_aliencont_select <node:this.tech_id@string>;"
+		}
 		onRClick {
-			cmd "aliencont_click <num>;"
-			cmd "aliencont_pedia <num>;"
+			cmd "ui_aliencont_select <node:this.tech_id@string>;"
+			cmd "ui_push ufopedia <node:this.tech_id@string>;"
 		}
 		onMouseEnter {
-			if ( *node:this@src == "ui/hosp_button_green" ) {
+			if ( ( exists *node:this ) && ( *node:this@src eq "ui/hosp_button_green" ) ) {
 				*node:this@src = "ui/hosp_button_light"
 			}
 		}
 		onMouseLeave {
-			if ( *node:this@src == "ui/hosp_button_light" ) {
+			if ( ( exists *node:this ) && ( *node:this@src eq "ui/hosp_button_light" ) ) {
 				*node:this@src = "ui/hosp_button_green"
 			}
 		}
-		tooltip			"_LMB:Select\nRMB:Show UFOpaedia"
 	}
+	data team_id {
+		string	""
+	}
+	data tech_id {
+		string	""
+	}
+	data tech_image {
+		string	""
+	}
+	data alive {
+		integer	0
+	}
+	data dead {
+		integer	0
+	}
+
 	button icon {
 		pos		"247 11"
 		size	"40 40"
 		padding	0
-		icon 	"icons/alien_unused"
 	}
 	zone kill_zone		{
 		pos			"247 11"
 		size		"40 40"
 		tooltip		"_Kill this alien"
-		onClick		{ cmd "aliencont_killone <node:parent@num>;" }
+		invis		true
+		onClick {
+			cmd "ui_aliencont_killone <node:parent.tech_id@string>;"
+		}
 		onMouseEnter {
-			*node:parent.icon@icon = "icons/alien_kill_hovered"
+			if ( exists *node:parent.icon ) {
+				*node:parent.icon@icon = "icons/alien_kill_hovered"
+			}
 		}
 		onMouseLeave {
-			*node:parent.icon@icon = "icons/alien_kill"
+			if ( exists *node:parent.icon ) {
+				*node:parent.icon@icon = "icons/alien_kill"
+			}
 		}
 	}
 	zone autopsy_zone {
 		pos			"247  11"
 		size		"40 40"
 		tooltip		"_Start autopsy"
-		onClick		{ cmd "aliencont_research <node:parent@num>;" }
+		invis		true
+		onClick {
+			cmd "ui_push research;"
+		}
 		onMouseEnter {
-			*node:parent.icon@icon = "icons/alien_surgery_hovered"
+			if ( exists *node:parent.icon ) {
+				*node:parent.icon@icon = "icons/alien_surgery_hovered"
+			}
 		}
 		onMouseLeave {
-			*node:parent.icon@icon = "icons/alien_surgery"
+			if ( exists *node:parent.icon ) {
+				*node:parent.icon@icon = "icons/alien_surgery"
+			}
 		}
 	}
 	string name {
 		pos			"15 10"
 		color		"1 1 1 1"
 		size		"220 16"
+		font		"f_small_bold"
 		ghost		true
 	}
 	string status {
@@ -98,35 +115,18 @@ window aliencont
 	// ==================
 	// background
 	// ==================
-
-	image background
-	{
+	image background {
 		src		"background/base_bg"
 	}
 
 	// ==================
 	// Base header
 	// ==================
-
-	cmpBaseHeader baseHeader {
-	}
-
-	// ==================
-	// aliencont actions
-	// ==================
-
-	confunc aliencont_killb {
-		*node:root.bt_alc_killaliens@disabled = false
-	}
-
-	confunc aliencont_killg {
-		*node:root.bt_alc_killaliens@disabled = true
-	}
+	cmpBaseHeader baseHeader {}
 
 	// =======================
 	// info window (top left)
 	// =======================
-
 	panel baseinfo {
 		{
 			pos		"11 93"
@@ -135,74 +135,57 @@ window aliencont
 		}
 
 		// ==================
-		// base info
+		// base info (aliencont capacity)
 		// ==================
-
-		string txt_base_info
-		{
+		string txt_base_info {
 			string		"_Live Alien Containment Info"
 			pos			"19 25"
 			size		"296 20"
 			font		"f_small_bold"
 			contentalign	ALIGN_CC
 		}
-
-		// ===================
-		// aliencont capacity
-		// ===================
-
-		string txt_alc_limit_prefix
-		{
+		string txt_alc_limit_prefix {
 			string		"_Base capacity:"
 			pos			"37 49"
 			size		"265 20"
 			font		"f_small"
 			contentalign	ALIGN_CL
 		}
-
-		string txt_alc_limit
-		{
-			string		"*cvar:mn_al_capacity / *cvar:mn_al_capacity_max"
+		string txt_alc_limit {
 			pos			"37 49"
 			size		"265 20"
 			font		"f_small"
 			contentalign	ALIGN_CR
 		}
-		image alc_img
-		{
+		image alc_img {
 			pos			"40 66"
-			src		"ui/bar_rahmen"
+			src			"ui/bar_rahmen"
 		}
-		bar alc_bar
-		{
+		bar alc_bar {
 			pos			"50 71"
-			current		*cvar:mn_al_capacity
 			size		"236 6"
 			color		"0 .8 0 1"
-			max			*cvar:mn_al_capacity_max
-			disabled	true
+			readonly	true
 		}
-
 	}
 
 	// ==========================
 	// kill living aliens button
 	// ==========================
-
-	button bt_alc_killaliens
-	{
+	button bt_alc_killaliens {
 		tooltip		"_Kill all aliens in this base"
 		pos			"275 165"
 		size		"64 64"
 		icon		"icons/killalien"
-		onClick		{ cmd "aliencont_killall;" }
-		visiblewhen	"*cvar:mn_al_capacity > 0"
+		disabled	true
+		onClick {
+			cmd "ui_aliencont_killall;"
+		}
 	}
 
 	// ==============================
 	// alien info window (top right)
 	// ==============================
-
 	panel raceinfo {
 		{
 			pos		"347 93"
@@ -210,112 +193,46 @@ window aliencont
 			background	"ui/panel_grey_green_large"
 		}
 
-		// ==================
-		// race info
-		// ==================
-
-		string txt_race_info
-		{
-			string		*cvar:mn_al_alientype
+		string txt_race_info {
 			pos			"19 25"
 			size		"296 20"
 			font		"f_small_bold"
 			contentalign	ALIGN_CC
 		}
-
-		// ==================
-		// alive alien amount
-		// ==================
-
-		string txt_alc_alive
-		{
+		string txt_alc_alive {
 			string		"_Alive:"
 			pos			"50 49"
 			size		"100 20"
 			font		"f_small"
 		}
-
-		string txt_alc_alive_v
-		{
-			string		*cvar:mn_al_alive
-			tooltip		"_amount on this base (all)"
+		string alive {
+			string		"0"
 			pos			"160 49"
 			size		"125 20"
 			font		"f_small"
 			contentalign	ALIGN_UR
 		}
-
-		// ==================
-		// dead alien amount
-		// ==================
-
-		string txt_alc_dead
-		{
+		string txt_alc_dead	{
 			string		"_Dead:"
 			pos			"50 74"
 			size		"100 20"
 			font		"f_small"
 		}
-
-		string txt_alc_dead_v
-		{
-			string		*cvar:mn_al_dead
-			tooltip		"_amount on this base (all)"
+		string dead	{
+			string		"0"
 			pos			"160 74"
 			size		"125 20"
 			font		"f_small"
 			contentalign	ALIGN_UR
 		}
-
-	}
-
-	// ==================
-	// main window
-	// ==================
-
-	confunc aliencont_clear
-	{
-		*cvar:i = 0
-		while ( *cvar:i < 10 ) {
-			*node:root.ac.ac<cvar:i>@src = "ui/hosp_button_green"
-			*node:root.ac.ac<cvar:i>.icon@icon = "icons/alien_unused"
-			*node:root.ac.ac<cvar:i>.kill_zone@invis = true
-			*node:root.ac.ac<cvar:i>.autopsy_zone@invis = true
-			*cvar:i = ( *cvar:i + 1 )
-		}
-		delete *cvar:i
-	}
-
-	/**
-	 * @param[in] <1> index of the field
-	 */
-	confunc aliencontneedautopsy {
-		*node:root.ac.ac<1>@src = "ui/hosp_button_light"
-		*node:root.ac.ac<1>.icon@icon = "icons/alien_surgery"
-		*node:root.ac.ac<1>.icon@tooltip = "_Start autopsy"
-
-		/* hide kill */
-		*node:root.ac.ac<1>.kill_zone@invis = true
-		*node:root.ac.ac<1>.autopsy_zone@invis = false
-	}
-
-	/**
-	 * @param[in] <1> index of the field
-	 */
-	confunc aliencontkill
-	{
-		*node:root.ac.ac<1>.icon@icon = "icons/alien_kill"
-		*node:root.ac.ac<1>.icon@tooltip = "_Kill this alien"
-		*node:root.ac.ac<1>@src = "ui/hosp_button_light"
-
-		/* hide autopsy */
-		*node:root.ac.ac<1>.kill_zone@invis = false
-		*node:root.ac.ac<1>.autopsy_zone@invis = true
 	}
 
 	// ==============================
 	// Alien Containment Slots Panel
 	// ==============================
+	data selected {
+		string	""
+	}
 
 	panel ac {
 		{
@@ -324,112 +241,131 @@ window aliencont
 			background	"ui/panel_grey_green_large"
 		}
 
-		cmpAlienContainment ac0 {
-			{
-				pos				"25 25"
-				num				0
-			}
-			string name			{ string *cvar:mn_ac_name0 font "f_small_bold" }
-			string status		{ string *cvar:mn_ac_statusstr0 }
-			bar tech_progress	{ current *cvar:mn_ac_progress0 }
-		}
+		panel species {
+			pos 		"20 20"
+			size		"610 473"
+			layout		LAYOUT_COLUMN
+			layoutColumns	2
+			layoutMargin	5
+			padding		2
+			wheelscrollable	true
 
-		cmpAlienContainment ac1 {
-			{
-				pos				"345  25"
-				num				1
+			onViewChange	{
+				*node:parent.species_scroll@fullsize = <fullsize>
+				*node:parent.species_scroll@current = <viewpos>
+				*node:parent.species_scroll@viewsize = <viewsize>
 			}
-			string name			{ string *cvar:mn_ac_name1 font "f_small_bold" }
-			string status		{ string *cvar:mn_ac_statusstr1 }
-			bar tech_progress	{ current *cvar:mn_ac_progress1 }
 		}
-
-		cmpAlienContainment ac2 {
-			{
-				pos				"25 120"
-				num				2
+		vscrollbar species_scroll {
+			image		"ui/scrollbar_v_green"
+			pos			"630 20"
+			height		"473"
+			//hidewhenunused	true
+			onChange	{
+				*node:parent.species@viewpos = <current>
 			}
-			string name			{ string *cvar:mn_ac_name2 font "f_small_bold" }
-			string status		{ string *cvar:mn_ac_statusstr2 }
-			bar tech_progress	{ current *cvar:mn_ac_progress2 }
 		}
+	}
 
-		cmpAlienContainment ac3 {
-			{
-				pos				"345 120"
-				num				3
-			}
-			string name			{ string *cvar:mn_ac_name3 font "f_small_bold" }
-			string status		{ string *cvar:mn_ac_statusstr3 }
-			bar tech_progress	{ current *cvar:mn_ac_progress3 }
+	/**
+	 * @brief Clear UI
+	 */
+	confunc ui_aliencont_clear {
+		*node:root.bt_alc_killaliens@disabled = true
+		call *node:root.ac.species@removeAllChild
+	}
+
+	/**
+	 * @brief Select an alien team on the UI (updates alive/dead counts and image)
+	 * @param[in] <1> technology ID
+	 */
+	confunc ui_aliencont_select {
+		*node:root.selected@string = "<1>"
+		if ( *node:root.selected@string ne "" ) {
+			// Update alive and dead counters
+			/** @TODO temp-cvar magic was required for a simple assignment as "<foo<bar>>" isn't supported */
+			// Alien name
+			*cvar:ui_aliencont_select_temp = *node:root.ac.species.alien_<1>.name@string
+			*node:root.raceinfo.txt_race_info@string = "<cvar:ui_aliencont_select_temp>"
+			// Alive / dead counts
+			*cvar:ui_aliencont_select_temp = *node:root.ac.species.alien_<1>.alive@integer
+			*node:root.raceinfo.alive@string = "<cvar:ui_aliencont_select_temp>"
+			*cvar:ui_aliencont_select_temp = *node:root.ac.species.alien_<1>.dead@integer
+			*node:root.raceinfo.dead@string = "<cvar:ui_aliencont_select_temp>"
+			// Update alien image
+			*cvar:ui_aliencont_select_temp = *node:root.ac.species.alien_<1>.tech_image@string
+			*node:root.alc_alien_panel.ai@src = "<cvar:ui_aliencont_select_temp>"
+			delete *cvar:ui_aliencont_select_temp
+		} else {
+			*node:root.raceinfo.alive@string = "0"
+			*node:root.raceinfo.dead@string = "0"
+			*node:root.raceinfo.txt_race_info@string = ""
+			*node:root.alc_alien_panel.ai@src = ""
 		}
+	}
 
-		cmpAlienContainment ac4 {
-			{
-				pos				"25 215"
-				num				4
-			}
-			string name			{ string *cvar:mn_ac_name4 font "f_small_bold" }
-			string status		{ string *cvar:mn_ac_statusstr4 }
-			bar tech_progress	{ current *cvar:mn_ac_progress4 }
+	/**
+	 * @brief Adds alien data to UI
+	 * @param[in] <1> teamDef ID
+	 * @param[in] <2> Translated teamDef name
+	 * @param[in] <3> technology ID for the team
+	 * @param[in] <4> Image (technology)
+	 * @param[in] <5> Translated Containment status for the alien
+	 * @param[in] <6> Research progress (percent, float)
+	 * @param[in] <7> Number of alive aliens
+	 * @param[in] <8> Number of dead bodies
+	 * @note The function does a bit black magic due to the hack of multiple team definitions per race (taman_light, taman, etc)
+	 */
+	confunc ui_aliencont_add {
+		/* if type is in the list adjust values, otherwise add new entry */
+		if ( exists *node:root.ac.species.alien_<3> ) {
+			*node:root.ac.species.alien_<3>.alive@integer = ( *node:root.ac.species.alien_<3>.alive@integer + <7> )
+			*node:root.ac.species.alien_<3>.dead@integer = ( *node:root.ac.species.alien_<3>.dead@integer + <8> )
+		} else {
+			call *node:root.ac.species@createChild("alien_<3>", "cmpAlienContainment")
+			*node:root.ac.species.alien_<3>.team_id@string = "<1>"
+			*node:root.ac.species.alien_<3>.name@string = "<2>"
+			*node:root.ac.species.alien_<3>.tech_id@string = "<3>"
+			*node:root.ac.species.alien_<3>.tech_image@string = "<4>"
+			*node:root.ac.species.alien_<3>.status@string = "<5>"
+			*node:root.ac.species.alien_<3>.tech_progress@current = <6>
+			*node:root.ac.species.alien_<3>.alive@integer = <7>
+			*node:root.ac.species.alien_<3>.dead@integer = <8>
 		}
+		/* if there is any alive aliens, enable killing them */
+		if ( *node:root.ac.species.alien_<3>.alive@integer > 0 ) {
+			*node:root.bt_alc_killaliens@disabled = false
 
-		cmpAlienContainment ac5 {
-			{
-				pos				"345 215"
-				num				5
-			}
-			string name			{ string *cvar:mn_ac_name5 font "f_small_bold" }
-			string status		{ string *cvar:mn_ac_statusstr5 }
-			bar tech_progress	{ current *cvar:mn_ac_progress5 }
+			*node:root.ac.species.alien_<3>.icon@icon = "icons/alien_kill"
+			*node:root.ac.species.alien_<3>.icon@tooltip = "_Kill this alien"
+			*node:root.ac.species.alien_<3>.kill_zone@invis = false
+			*node:root.ac.species.alien_<3>.autopsy_zone@invis = true
+		} else {
+			*node:root.ac.species.alien_<3>.icon@icon = "icons/alien_surgery"
+			*node:root.ac.species.alien_<3>.icon@tooltip = "_Start autopsy"
+			*node:root.ac.species.alien_<3>.kill_zone@invis = true
+			*node:root.ac.species.alien_<3>.autopsy_zone@invis = false
 		}
-
-		cmpAlienContainment ac6 {
-			{
-				pos				"25 310"
-				num				6
-			}
-			string name			{ string *cvar:mn_ac_name6 font "f_small_bold" }
-			string status		{ string *cvar:mn_ac_statusstr6 }
-			bar tech_progress	{ current *cvar:mn_ac_progress6 }
+		/* if none selected, select this */
+		if ( ( *node:root.selected@string eq "" ) || ( *node:root.selected@string eq "<3>" ) ) {
+			call *node:root.ui_aliencont_select ( <3> )
 		}
+	}
 
-		cmpAlienContainment ac7 {
-			{
-				pos				"345 310"
-				num				7
-			}
-			string name			{ string *cvar:mn_ac_name7 font "f_small_bold" }
-			string status		{ string *cvar:mn_ac_statusstr7 }
-			bar tech_progress	{ current *cvar:mn_ac_progress7 }
-		}
-
-		cmpAlienContainment ac8 {
-			{
-				pos				"25 405"
-				num				8
-			}
-			string name			{ string *cvar:mn_ac_name8 font "f_small_bold" }
-			string status		{ string *cvar:mn_ac_statusstr8 }
-			bar tech_progress	{ current *cvar:mn_ac_progress8 }
-		}
-
-		cmpAlienContainment ac9 {
-			{
-				pos				"345 405"
-				num				9
-			}
-			string name			{ string *cvar:mn_ac_name9 font "f_small_bold" }
-			string status		{ string *cvar:mn_ac_statusstr9 }
-			bar tech_progress	{ current *cvar:mn_ac_progress9 }
-		}
-
+	/**
+	 * @brief Updates Alien Containment capacities on UI
+	 * @param[in] <1> Current used capacity
+	 * @param[in] <2> Maximal capacity
+	 */
+	confunc ui_aliencont_cap {
+		*node:root.baseinfo.txt_alc_limit@string = "<1> / <2>"
+		*node:root.baseinfo.alc_bar@current = <1>
+		*node:root.baseinfo.alc_bar@max = <2>
 	}
 
 	// ==========================
 	// Right Panel (Alien image)
 	// ==========================
-
 	panel alc_alien_panel
 	{
 		{
@@ -438,8 +374,12 @@ window aliencont
 			background	"ui/panel_grey_green_large"
 		}
 
-		cmpAlienImage ai { }
-
+		image ai {
+			pos				"18 19"
+			size			"279 626"
+			preventratio	true
+			contentalign	ALIGN_CC
+		}
 	}
 
 	// ================================================================================
@@ -447,12 +387,8 @@ window aliencont
 	// ================================================================================
 	func onWindowOpened
 	{
-		cmd "aliencont_init;"
+		*node:root.selected@string = ""
+		cmd "ui_aliencont_init;"
 		*cvar:mn_lastsubmenu = "aliencont"
-	}
-	func onWindowClosed
-	{
-		cmd "del mn_al_alive;del mn_al_alientype;"
-		cmd "del mn_al_alienimage;del mn_al_dead;del mn_al_capacity;"
 	}
 }

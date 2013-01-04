@@ -36,6 +36,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_popup.h"
 #include "cp_time.h"
 #include "save/save_research.h"
+#include "aliencontainment.h"
 
 #define TECH_HASH_SIZE 64
 static technology_t *techHash[TECH_HASH_SIZE];
@@ -186,8 +187,11 @@ bool RS_RequirementsMet (const technology_t *tech, const base_t *base)
 					metAND = false;
 				break;
 			case RS_LINK_ALIEN_DEAD:
+				if (!base || !base->alienContainment || base->alienContainment->getDead(req->link.td) < req->amount)
+					metAND = false;
+				break;
 			case RS_LINK_ALIEN:
-				if (!base || AL_GetAlienAmount(req->link.td, req->type, base) < req->amount)
+				if (!base || !base->alienContainment || base->alienContainment->getAlive(req->link.td) < req->amount)
 					metAND = false;
 				break;
 			case RS_LINK_ALIEN_GLOBAL:
@@ -229,8 +233,11 @@ bool RS_RequirementsMet (const technology_t *tech, const base_t *base)
 					metOR = true;
 				break;
 			case RS_LINK_ALIEN:
+				if (base && base->alienContainment && base->alienContainment->getAlive(req->link.td) >= req->amount)
+					metOR = true;
+				break;
 			case RS_LINK_ALIEN_DEAD:
-				if (base && AL_GetAlienAmount(req->link.td, req->type, base) >= req->amount)
+				if (base && base->alienContainment && base->alienContainment->getDead(req->link.td) >= req->amount)
 					metOR = true;
 				break;
 			case RS_LINK_ALIEN_GLOBAL:

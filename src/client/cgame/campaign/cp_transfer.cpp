@@ -32,6 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "save/save_transfer.h"
 #include "cp_transfer_callbacks.h"
 #include "aliencargo.h"
+#include "aliencontainment.h"
 
 /**
  * @brief Unloads transfer cargo when finishing the transfer or destroys it when no buildings/base.
@@ -107,16 +108,13 @@ static void TR_EmptyTransferCargo (base_t *destination, transfer_t *transfer, bo
 	/* Aliens */
 	if (transfer->alienCargo != NULL) {
 		if (success) {
-			if (!B_GetBuildingStatus(destination, B_ALIEN_CONTAINMENT)) {
+			if (!destination->alienContainment) {
 				Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("%s does not have Alien Containment, Aliens are removed!"), destination->name);
 				MSO_CheckAddNewMessage(NT_TRANSFER_LOST, _("Transport mission"), cp_messageBuffer, MSG_TRANSFERFINISHED);
 			} else {
 				linkedList_t *cargo = transfer->alienCargo->list();
 				LIST_Foreach(cargo, alienCargo_t, item) {
-					for (int i = 0; i < item->alive; i++)
-						AL_AddAlienToContainer(destination, item->teamDef, false);
-					for (int i = 0; i < item->dead; i++)
-						AL_AddAlienToContainer(destination, item->teamDef, true);
+					destination->alienContainment->add(item->teamDef, item->alive, item->dead);
 				}
 				LIST_Delete(&cargo);
 			}

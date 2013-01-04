@@ -213,6 +213,8 @@ bool SAV_GameLoad (const char *file, const char **error)
 
 	Com_Printf("Load '%s' %d subsystems\n", filename, saveSubsystemsAmount);
 	for (i = 0; i < saveSubsystemsAmount; i++) {
+		if (!saveSubsystems[i].load)
+			continue;
 		Com_Printf("...Running subsystem '%s'\n", saveSubsystems[i].name);
 		if (!saveSubsystems[i].load(node)) {
 			Com_Printf("...subsystem '%s' returned false - savegame could not be loaded\n",
@@ -286,6 +288,8 @@ static bool SAV_GameSave (const char *filename, const char *comment, char **erro
 	/* working through all subsystems. perhaps we should redesign it, order is not important anymore */
 	Com_Printf("Calling subsystems\n");
 	for (i = 0; i < saveSubsystemsAmount; i++) {
+		if (!saveSubsystems[i].save)
+			continue;
 		if (!saveSubsystems[i].save(node))
 			Com_Printf("...subsystem '%s' failed to save the data\n", saveSubsystems[i].name);
 		else
@@ -639,7 +643,7 @@ void SAV_Init (void)
 	static saveSubsystems_t hos_subsystemXML = {"hospital", HOS_SaveXML, HOS_LoadXML};
 	static saveSubsystems_t bs_subsystemXML = {"market", BS_SaveXML, BS_LoadXML};
 	static saveSubsystems_t e_subsystemXML = {"employee", E_SaveXML, E_LoadXML};
-	static saveSubsystems_t ac_subsystemXML = {"aliencont", AC_SaveXML, AC_LoadXML};
+	static saveSubsystems_t ac_subsystemXML = {"aliencont", NULL, AC_LoadXML};
 	static saveSubsystems_t pr_subsystemXML = {"production", PR_SaveXML, PR_LoadXML};
 	static saveSubsystems_t air_subsystemXML = {"aircraft", AIR_SaveXML, AIR_LoadXML};
 	static saveSubsystems_t ab_subsystemXML = {"alien base", AB_SaveXML, AB_LoadXML};
