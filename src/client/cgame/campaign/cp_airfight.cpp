@@ -959,7 +959,7 @@ bool AIRFIGHT_LoadXML (xmlNode_t *parent)
 		projectile->aircraftItem = INVSH_GetItemByID(tech->provides);
 
 		for (j = 0, positions = cgi->XML_GetPos2(node, SAVE_AIRFIGHT_POS, projectile->pos[0]); j < MAX_MULTIPLE_PROJECTILES && positions;
-		     j++, positions = cgi->XML_GetNextPos2(positions, node, SAVE_AIRFIGHT_POS, projectile->pos[j]))
+			j++, positions = cgi->XML_GetNextPos2(positions, node, SAVE_AIRFIGHT_POS, projectile->pos[j]))
 			;
 		projectile->numProjectiles = j;
 		cgi->XML_GetPos3(node, SAVE_AIRFIGHT_IDLETARGET, projectile->idleTarget);

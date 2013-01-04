@@ -416,7 +416,7 @@ static void CP_ParseCampaign (const char *name, const char **text)
 
 	/* set undefined markers */
 	s = &cp->salaries;
-    for (i = 0; i < MAX_EMPL; i++) {
+	for (i = 0; i < MAX_EMPL; i++) {
 		s->base[i] = -1;
 		s->rankBonus[i] = -1;
 		s->admin[i] = -1;

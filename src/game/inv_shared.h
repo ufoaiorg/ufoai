@@ -115,10 +115,10 @@ typedef struct fireDef_s {
 	int shots;			/**< how many shots this firemode will produce */
 	int ammo;			/**< how many ammo this firemode will use */
 	float delayBetweenShots;	/**< delay between shots (sounds and particles) for this firemode;
-					     the higher the value, the less the delay (1000/delay) */
+						 the higher the value, the less the delay (1000/delay) */
 	int time;			/**< amount of TU used for this firemode */
 	vec2_t damage;		/**< G_Damage(), damage[0] is min value of damage, damage[1] is used for randomized calculations
-					     of additional damage; damage[0] < 0 means healing, not applying damage */
+						 of additional damage; damage[0] < 0 means healing, not applying damage */
 	vec2_t spldmg;		/**< G_SplashDamage(), currently we use only first value (spldmg[0]) for apply splashdamage effect */
 	float splrad;		/**< splash damage radius */
 	int weaponSkill;	/**< What weapon skill is needed to fire this weapon. */
