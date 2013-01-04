@@ -24,16 +24,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "inventory.h"
 
-/*static inline void I_Free (inventoryInterface_t* self, void *data)
-{
-	self->import->Free(data);
-}
-
-static inline void *I_Alloc (inventoryInterface_t* self, size_t size)
-{
-	return self->import->Alloc(size);
-}*/
-
 void InventoryInterface::removeInvList (invList_t *invList)
 {
 	Com_DPrintf(DEBUG_SHARED, "I_RemoveInvList: remove one slot (%s)\n", name);
