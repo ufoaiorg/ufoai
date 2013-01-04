@@ -56,11 +56,24 @@ public:
 	int num;				/**< communicated by server to clients */
 	bool ready;				/**< the player agreed to start the party */
 
-	inline void setInUse (bool b)	{ inuse = b; }
-	inline int	getNum (void) const	{ return num; }
-	inline void	setNum (int n) 		{ num = n; }
-	inline bool isReady () const	{ return ready; }
-	inline void setReady (bool b)	{ ready = b; }
+	inline bool isInUse () const {
+		return inuse;
+	}
+	inline void setInUse (bool inuse) {
+		this->inuse = inuse;
+	}
+	inline int getNum (void) const {
+		return num;
+	}
+	inline void setNum (int num) {
+		this->num = num;
+	}
+	inline bool isReady () const {
+		return ready;
+	}
+	inline void setReady (bool ready) {
+		this->ready = ready;
+	}
 	/** the game dll can add anything it wants after this point in the structure */
 };
 typedef SrvPlayer player_t;
@@ -104,15 +117,30 @@ public:
 
 	client_persistent_t pers;
 
-	inline bool isInUse () const	{ return inuse; }
-	inline void setInUse (bool b)	{ inuse = b; }
-	inline int	getNum (void) const	{ return num; }
-	inline void	setNum (int n) 		{ num = n; }
-	inline bool isReady () const	{ return ready; }
-	inline void setReady (bool b)	{ ready = b; }
-
-	inline int	getTeam (void) const { return pers.team; }
-	inline void	setTeam (int t)		{ pers.team = t; }
+	inline bool isInUse () const {
+		return inuse;
+	}
+	inline void setInUse (bool inuse) {
+		this->inuse = inuse;
+	}
+	inline int getNum (void) const {
+		return num;
+	}
+	inline void setNum (int num) {
+		this->num = num;
+	}
+	inline bool isReady () const {
+		return ready;
+	}
+	inline void setReady (bool ready) {
+		this->ready = ready;
+	}
+	inline int getTeam (void) const {
+		return pers.team;
+	}
+	inline void setTeam (int team) {
+		pers.team = team;
+	}
 };
 typedef Player player_t;
 
