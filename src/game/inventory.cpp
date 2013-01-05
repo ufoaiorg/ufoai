@@ -49,16 +49,16 @@ void InventoryInterface::removeInvList (invList_t *invList)
 	}
 }
 
-static invList_t* I_AddInvList (inventoryInterface_t* self, invList_t **invList)
+invList_t* InventoryInterface::addInvList (invList_t **invList)
 {
 	invList_t *newEntry;
 	invList_t *list;
 
-	Com_DPrintf(DEBUG_SHARED, "I_AddInvList: add one slot (%s)\n", self->name);
+	Com_DPrintf(DEBUG_SHARED, "I_AddInvList: add one slot (%s)\n", name);
 
 	/* create the list */
 	if (!*invList) {
-		*invList = (invList_t*)self->alloc(sizeof(**invList));
+		*invList = (invList_t*)alloc(sizeof(**invList));
 		(*invList)->next = NULL; /* not really needed - but for better readability */
 		return *invList;
 	} else
@@ -67,7 +67,7 @@ static invList_t* I_AddInvList (inventoryInterface_t* self, invList_t **invList)
 	while (list->next)
 		list = list->next;
 
-	newEntry = (invList_t*)self->alloc(sizeof(*newEntry));
+	newEntry = (invList_t*)alloc(sizeof(*newEntry));
 	list->next = newEntry;
 	newEntry->next = NULL; /* not really needed - but for better readability */
 
@@ -126,7 +126,7 @@ invList_t *InventoryInterface::AddToInventory (inventoryInterface_t* self, inven
 	assert(checkedTo);
 
 	/* not found - add a new one */
-	ic = I_AddInvList(self, &inv->c[container->id]);
+	ic = addInvList(&inv->c[container->id]);
 
 	/* Set the data in the new entry to the data we got via function-parameters.*/
 	ic->item = *item;

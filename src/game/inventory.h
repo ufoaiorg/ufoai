@@ -86,6 +86,7 @@ public:
 	}
 protected:
 	void removeInvList (invList_t *invList);
+    invList_t* addInvList (invList_t **invList);
 };
 
 void INV_InitInventory(const char *name, inventoryInterface_t *ii, const csi_t* csi, const inventoryImport_t *iimport);
