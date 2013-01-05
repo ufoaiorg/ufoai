@@ -93,6 +93,11 @@ terrain tex_buildings/wall011 {
 	bouncefraction "1.0"
 }
 
+terrain tex_buildings/wall013 {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
 terrain tex_buildings/wall019 {
 	footstepsound "footsteps/stone1"
 	bouncefraction "1.0"
@@ -149,6 +154,11 @@ terrain tex_ctp1/concrete_g_11 {
 }
 
 terrain tex_mattn/concrete002 {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_material/conc02 {
 	footstepsound "footsteps/stone1"
 	bouncefraction "1.0"
 }
@@ -248,6 +258,11 @@ terrain tex_streets/street008 {
 	bouncefraction "1.0"
 }
 
+terrain tex_trak/trak4_concrete1a {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
 terrain tex_trak/trak4_concrete2a {
 	footstepsound "footsteps/stone1"
 	bouncefraction "1.0"
@@ -284,6 +299,11 @@ terrain tex_nature/dirt_se05 {
 }
 
 terrain tex_nature/drymud {
+	footstepsound "footsteps/dirt1"
+	bouncefraction "0.6"
+}
+
+terrain tex_nature/sp_ground {
 	footstepsound "footsteps/dirt1"
 	bouncefraction "0.6"
 }
@@ -478,6 +498,11 @@ terrain tex_base/grid_alpha {
 	bouncefraction "0.6"
 }
 
+terrain tex_base/vent003 {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.6"
+}
+
 terrain tex_buildings/9gratefloor01b {
 	footstepsound "footsteps/metal1"
 	bouncefraction "0.6"
@@ -489,6 +514,11 @@ terrain tex_buildings/met_panel01 {
 }
 
 terrain tex_buildings/met_panel02 {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.6"
+}
+
+terrain tex_misc/box008 {
 	footstepsound "footsteps/metal1"
 	bouncefraction "0.6"
 }
@@ -628,6 +658,11 @@ terrain tex_material/metall013 {
 	bouncefraction "1.0"
 }
 
+terrain tex_mattn/metal {
+	footstepsound "footsteps/metal3"
+	bouncefraction "1.0"
+}
+
 terrain tex_mattn/metal_rust {
 	footstepsound "footsteps/metal3"
 	bouncefraction "1.0"
@@ -644,6 +679,16 @@ terrain tex_trak/vertpanel1e {
 }
 
 terrain tex_trak/vertpanel2d {
+	footstepsound "footsteps/metal3"
+	bouncefraction "1.0"
+}
+
+terrain tex_ufo/ufo1_04 {
+	footstepsound "footsteps/metal3"
+	bouncefraction "1.0"
+}
+
+terrain tex_ufo/ufo1_05 {
 	footstepsound "footsteps/metal3"
 	bouncefraction "1.0"
 }
@@ -1518,6 +1563,11 @@ terrain tex_ctp1/tiles_w_1 {
 	bouncefraction "1.0"
 }
 
+terrain tex_ctp1/wood_b_10 {
+	footstepsound "footsteps/wood1"
+	bouncefraction "0.7"
+}
+
 terrain tex_mattn/floor024 {
 	footstepsound "footsteps/stone1"
 	bouncefraction "1.0"
@@ -1593,6 +1643,11 @@ terrain tex_ctp1/bark_b_1 {
 }
 
 terrain tex_furniture/table001 {
+	footstepsound "footsteps/wood1"
+	bouncefraction "0.7"
+}
+
+terrain tex_furniture/table002 {
 	footstepsound "footsteps/wood1"
 	bouncefraction "0.7"
 }
@@ -1792,6 +1847,11 @@ terrain tex_misc/box012 {
 	bouncefraction "0.7"
 }
 
+terrain tex_misc/pingpong {
+	footstepsound "footsteps/wood1"
+	bouncefraction "0.7"
+}
+
 terrain tex_nature/tree_bark_001 {
 	footstepsound "footsteps/wood1"
 	bouncefraction "0.7"
@@ -1808,6 +1868,11 @@ terrain tex_nature/tree001 {
 }
 
 terrain tex_nature/tree003 {
+	footstepsound "footsteps/wood1"
+	bouncefraction "0.7"
+}
+
+terrain tex_shop/tetra003 {
 	footstepsound "footsteps/wood1"
 	bouncefraction "0.7"
 }
