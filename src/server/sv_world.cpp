@@ -308,7 +308,7 @@ int SV_GetTouchingEdicts (const AABB& aabb, edict_t **list, int maxCount, edict_
 }
 
 /** @brief Server side moveclip - see cmodel.c */
-typedef struct {
+typedef struct moveclip_s {
 	vec3_t boxmins, boxmaxs;	/**< enclose the test object along entire move */
 	const float *mins, *maxs;	/**< size of the moving object */
 	const float *start, *end;
