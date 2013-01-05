@@ -57,6 +57,6 @@ void G_ClientTeamInfo(const Player &player);
 bool G_ClientBegin(Player &player);
 void G_ClientStartMatch(Player &player);
 void G_ClientUserinfoChanged(Player &player, const char *userinfo);
-bool G_ClientConnect(Player *player, char *userinfo, size_t userinfoSize);
+bool G_ClientConnect(Player *player, char *userinfo, size_t userinfoSize);  /* can't change to Player&. Conflict with SrvPlayer ! */
 void G_ClientDisconnect(Player &player);
 void G_ResetClientData(void);
