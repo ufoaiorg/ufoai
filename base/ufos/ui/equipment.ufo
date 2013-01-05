@@ -582,7 +582,12 @@ window equipment extends objectinfo
 		tooltip		"_Rename your unit"
 		pos			"544 24"
 		size		"230 20"
-		onChange	{ cmd "employee_changename; ui_team_fillequip; update_item_list;" }
+		onChange {
+			cmd "employee_changename;"
+			cmd "ui_team_fillequip;"
+			cmd "update_item_list;"
+			cmd "equipment_soldierlist_select <node:root.selected@integer>;"
+		}
 	}
 
 	button bt_edit
