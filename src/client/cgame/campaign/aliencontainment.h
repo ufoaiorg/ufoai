@@ -45,5 +45,5 @@ class AlienContainment : public AlienCargo {
 		virtual ~AlienContainment (void);
 	private:
 		void resetCurrentCapacities (void);
-		int getCapacityNeedForAlien (const teamDef_t *teamDef, const bool isDead);
+		int getCapacityNeedForAlien (const teamDef_t *teamDef, const bool isDead) const;
 };

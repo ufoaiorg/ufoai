@@ -16,12 +16,12 @@ component cmpAlienContainment extends image {
 			cmd "ui_push ufopedia <node:this.tech_id@string>;"
 		}
 		onMouseEnter {
-			if ( ( exists *node:this ) && ( *node:this@src eq "ui/hosp_button_green" ) ) {
+			if ( exists *node:this ) {
 				*node:this@src = "ui/hosp_button_light"
 			}
 		}
 		onMouseLeave {
-			if ( ( exists *node:this ) && ( *node:this@src eq "ui/hosp_button_light" ) ) {
+			if ( exists *node:this ) {
 				*node:this@src = "ui/hosp_button_green"
 			}
 		}
@@ -72,7 +72,13 @@ component cmpAlienContainment extends image {
 		tooltip		"_Start autopsy"
 		invis		true
 		onClick {
-			cmd "ui_push research;"
+			if ( exists *node:parent.tech_progress ) {
+				if ( *node:parent.tech_progress@current < 100 ) {
+					cmd "ui_push research;"
+				} else {
+					cmd "ui_push ufopedia <node:parent.tech_id@string>;"
+				}
+			}
 		}
 		onMouseEnter {
 			if ( exists *node:parent.icon ) {
@@ -260,7 +266,6 @@ window aliencont
 			image		"ui/scrollbar_v_green"
 			pos			"630 20"
 			height		"473"
-			//hidewhenunused	true
 			onChange	{
 				*node:parent.species@viewpos = <current>
 			}
@@ -297,9 +302,9 @@ window aliencont
 			*node:root.alc_alien_panel.ai@src = "<cvar:ui_aliencont_select_temp>"
 			delete *cvar:ui_aliencont_select_temp
 		} else {
+			*node:root.raceinfo.txt_race_info@string = ""
 			*node:root.raceinfo.alive@string = "0"
 			*node:root.raceinfo.dead@string = "0"
-			*node:root.raceinfo.txt_race_info@string = ""
 			*node:root.alc_alien_panel.ai@src = ""
 		}
 	}

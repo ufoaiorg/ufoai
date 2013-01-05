@@ -224,6 +224,7 @@ AlienCargo::AlienCargo(AlienCargo& alienCargo) : cargo (0), sumAlive (0), sumDea
 			this->sumDead += cargoItem->dead;
 		}
 	}
+	LIST_Delete(&list);
 }
 
 /**
