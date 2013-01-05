@@ -1914,11 +1914,6 @@ static void CL_AddTargetingBox (pos3_t pos, bool pendBox)
 
 		if (selActor) {
 			actorSize = selActor->fieldSize;
-			BoxOffset(actorSize, cursorOffset);
-			VectorAdd(cursor.oldorigin, cursorOffset, cursor.oldorigin);
-			VectorAdd(cursor.origin, cursorOffset, cursor.origin);
-			BoxSize(actorSize, halfBoxSize, realBoxSize);
-			VectorSubtract(cursor.origin, realBoxSize, cursor.origin);
 		}
 	} else {
 		/* either no actor under the cursor or the selected one */
@@ -1926,12 +1921,12 @@ static void CL_AddTargetingBox (pos3_t pos, bool pendBox)
 		if (selActor) { /* there should always be an actor selected, but who knows */
 			actorSize = selActor->fieldSize;
 		}
-		BoxOffset(actorSize, cursorOffset);
-		VectorAdd(cursor.oldorigin, cursorOffset, cursor.oldorigin);
-		VectorAdd(cursor.origin, cursorOffset, cursor.origin);
-		BoxSize(actorSize, halfBoxSize, realBoxSize);
-		VectorSubtract(cursor.origin, realBoxSize, cursor.origin);
 	}
+    BoxOffset(actorSize, cursorOffset);
+    VectorAdd(cursor.oldorigin, cursorOffset, cursor.oldorigin);
+    VectorAdd(cursor.origin, cursorOffset, cursor.origin);
+    BoxSize(actorSize, halfBoxSize, realBoxSize);
+    VectorSubtract(cursor.origin, realBoxSize, cursor.origin);
 
 	/* if pendBox is true then ignore all the previous color considerations and use cyan */
 	if (pendBox) {
