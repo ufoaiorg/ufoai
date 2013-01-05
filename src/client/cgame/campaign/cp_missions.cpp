@@ -122,7 +122,7 @@ void BATTLE_Start (mission_t* mission, const battleParam_t *battleParameters)
 	else
 		param = mission->mapDef->param;
 
-	if (mission->mapDef->hurtAliens)
+	if (mission->crashed)
 		cgi->Cvar_Set("sv_hurtaliens", "1");
 	else
 		cgi->Cvar_Set("sv_hurtaliens", "0");
