@@ -806,7 +806,7 @@ static void G_GetTeam (Player &player)
 		G_SetTeamForPlayer(player, TEAM_PHALANX);
 	else if (sv_teamplay->integer) {
 		/* set the team specified in the userinfo */
-		const int i = G_ClientGetTeamNumPref(&player);
+		const int i = G_ClientGetTeamNumPref(player);
 		gi.DPrintf("Get a team for teamplay for %s\n", player.pers.netname);
 		/* civilians are at team zero */
 		if (i > TEAM_CIVILIAN && sv_maxteams->integer >= i) {
@@ -910,10 +910,9 @@ int G_ClientGetTeamNum (const Player &player)
 /**
  * @brief Returns the preferred team number for the player
  */
-int G_ClientGetTeamNumPref (const Player *player)
+int G_ClientGetTeamNumPref (const Player &player)
 {
-	assert(player);
-	return Info_IntegerForKey(player->pers.userinfo, "cl_teamnum");
+	return Info_IntegerForKey(player.pers.userinfo, "cl_teamnum");
 }
 
 /**

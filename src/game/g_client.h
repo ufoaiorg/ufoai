@@ -49,7 +49,7 @@ bool G_ClientUseEdict(const Player *player, edict_t *actor, edict_t *door);
 int G_ClientAction(Player &player);
 bool G_SetTeamForPlayer(Player &player, const int team);
 int G_ClientGetTeamNum(const Player &player);
-int G_ClientGetTeamNumPref(const Player *player);
+int G_ClientGetTeamNumPref(const Player &player);
 bool G_ClientIsReady(const Player *player);
 edict_t* G_ClientGetFreeSpawnPointForActorSize(const Player &player, const actorSizeEnum_t actorSize);
 void G_ClientInitActorStates(const Player &player);
