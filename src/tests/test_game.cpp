@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../shared/ufotypes.h"
 #include "../game/g_local.h"
 #include "../game/g_actor.h"
+#include "../game/g_client.h"
 #include "../game/g_edicts.h"
 #include "../game/g_inventory.h"
 #include "../game/g_move.h"
@@ -79,7 +80,7 @@ static void testSpawnAndConnect (void)
 	/* otherwise we can't link the entities */
 	SV_ClearWorld();
 
-	player = PLAYER_NUM(0);
+	player = G_PlayerGetNextHuman(0);
 	svs.ge->SpawnEntities(name, day, (const char *)buf);
 	CU_ASSERT_TRUE(svs.ge->ClientConnect(player, userinfo, sizeof(userinfo)));
 	CU_ASSERT_FALSE(svs.ge->RunFrame());
