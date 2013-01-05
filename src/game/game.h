@@ -340,7 +340,6 @@ typedef struct game_export_s {
 	void (EXPORT *ClientTeamInfo) (const player_t &client);
 	void (EXPORT *ClientInitActorStates) (const player_t &client);
 	int (EXPORT *ClientGetTeamNum) (const player_t &client);
-	int (EXPORT *ClientGetTeamNumPref) (const player_t *client);	/* assert ! */
 	bool (EXPORT *ClientIsReady) (const player_t *client);	/* assert ! */
 
 	int (EXPORT *ClientGetActiveTeam) (void);
