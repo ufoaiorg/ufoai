@@ -4,7 +4,7 @@
 
 component cmpNamedTbar extends cmpDefNamedTbar {
 	{
-		size	"450 20"
+		size	"440 23"
 	}
 	image	bdr {
 		pos "165 2"
@@ -20,7 +20,7 @@ component cmpNamedTbar extends cmpDefNamedTbar {
 
 component cmpNamedBar extends panel {
 	{
-		size	"450 20"
+		size	"440 23"
 	}
 	image			bdr {
 		pos "165 2"
@@ -241,110 +241,79 @@ window team extends iaircraft
 	}
 
 	panel stats_phys {
-	{
-		pos		"208 44"
-		size	"440 264"
-		background	"ui/panel_green_tab"
-	}
-	cmpNamedBar pwr {
 		{
-			pos "9 27"
+			pos			"208 44"
+			size		"440 264"
+			background	"ui/panel_green_tab"
+			layout		LAYOUT_TOP_DOWN_FLOW
+			padding		9
 		}
-		bar currbar { current *cvar:mn_vpwr }
-		bar initbar { current *cvar:mn_vpwri }
-		string lbl  { string "_Strength:" }
-		string val  { string *cvar:mn_tpwr }
-	}
-	cmpNamedBar spd {
-	{
-		pos "9 50"
-	}
-		bar currbar { current *cvar:mn_vspd }
-		bar initbar { current *cvar:mn_vspdi }
-		string lbl  { string "_Speed:" }
-		string val  { string *cvar:mn_tspd }
-	}
-	cmpNamedBar acc {
-	{
-		pos "9 73"
-	}
-		bar currbar { current *cvar:mn_vacc }
-		bar initbar { current *cvar:mn_vacci }
-		string lbl  { string "_Accuracy:" }
-		string val  { string *cvar:mn_tacc }
-	}
-	cmpNamedBar mnd {
-	{
-		pos "9 96"
-	}
-		bar currbar { current *cvar:mn_vmnd }
-		bar initbar { current *cvar:mn_vmndi }
-		string lbl  { string "_Mind:" }
-		string val  { string *cvar:mn_tmnd }
-	}
-	cmpNamedBar cls {
-	{
-		pos "9 119"
-	}
-		bar currbar { current *cvar:mn_vcls }
-		bar initbar { current *cvar:mn_vclsi }
-		string lbl  { string "_Close Combat:" }
-		string val  { string *cvar:mn_tcls }
-	}
-
-	cmpNamedBar hvy {
-	{
-		pos "9 142"
-	}
-		bar currbar { current *cvar:mn_vhvy }
-		bar initbar { current *cvar:mn_vhvyi }
-		string lbl  { string "_Heavy Weapons:" }
-		string val  { string *cvar:mn_thvy }
-	}
-
-	cmpNamedBar ass {
-	{
-		pos "9 165"
-	}
-		bar currbar { current *cvar:mn_vass }
-		bar initbar { current *cvar:mn_vassi }
-		string lbl  { string "_Assault Weapons:" }
-		string val  { string *cvar:mn_tass }
-	}
-
-	cmpNamedBar snp {
-	{
-		pos "9 188"
-	}
-		bar currbar { current *cvar:mn_vsnp }
-		bar initbar { current *cvar:mn_vsnpi }
-		string lbl  { string "_Sniper Rifles:" }
-		string val  { string *cvar:mn_tsnp }
-	}
-
-	cmpNamedBar exp {
-	{
-		pos "9 211"
-	}
-		bar currbar { current *cvar:mn_vexp }
-		bar initbar { current *cvar:mn_vexpi }
-		string lbl  { string "_High-Explosives:" }
-		string val  { string *cvar:mn_texp }
-	}
-
-	cmpNamedTbar hp {
-	{
-		pos "9 234"
-	}
-		tbar bar   {
-			current *cvar:mn_vhp
-			max *cvar:mn_vhpmax
-			image "ui/bar_health"
+		string padding {
+			size		"440 16"
+		}
+		cmpNamedBar pwr {
+			bar currbar { current *cvar:mn_vpwr }
+			bar initbar { current *cvar:mn_vpwri }
+			string lbl  { string "_Strength:" }
+			string val  { string *cvar:mn_tpwr }
+		}
+		cmpNamedBar spd {
+			bar currbar { current *cvar:mn_vspd }
+			bar initbar { current *cvar:mn_vspdi }
+			string lbl  { string "_Speed:" }
+			string val  { string *cvar:mn_tspd }
+		}
+		cmpNamedBar acc {
+			bar currbar { current *cvar:mn_vacc }
+			bar initbar { current *cvar:mn_vacci }
+			string lbl  { string "_Accuracy:" }
+			string val  { string *cvar:mn_tacc }
+		}
+		cmpNamedBar mnd {
+			bar currbar { current *cvar:mn_vmnd }
+			bar initbar { current *cvar:mn_vmndi }
+			string lbl  { string "_Mind:" }
+			string val  { string *cvar:mn_tmnd }
+		}
+		cmpNamedBar cls {
+			bar currbar { current *cvar:mn_vcls }
+			bar initbar { current *cvar:mn_vclsi }
+			string lbl  { string "_Close Combat:" }
+			string val  { string *cvar:mn_tcls }
+		}
+		cmpNamedBar hvy {
+			bar currbar { current *cvar:mn_vhvy }
+			bar initbar { current *cvar:mn_vhvyi }
+			string lbl  { string "_Heavy Weapons:" }
+			string val  { string *cvar:mn_thvy }
+		}
+		cmpNamedBar ass {
+			bar currbar { current *cvar:mn_vass }
+			bar initbar { current *cvar:mn_vassi }
+			string lbl  { string "_Assault Weapons:" }
+			string val  { string *cvar:mn_tass }
+		}
+		cmpNamedBar snp {
+			bar currbar { current *cvar:mn_vsnp }
+			bar initbar { current *cvar:mn_vsnpi }
+			string lbl  { string "_Sniper Rifles:" }
+			string val  { string *cvar:mn_tsnp }
+		}
+		cmpNamedBar exp {
+			bar currbar { current *cvar:mn_vexp }
+			bar initbar { current *cvar:mn_vexpi }
+			string lbl  { string "_High-Explosives:" }
+			string val  { string *cvar:mn_texp }
+		}
+		cmpNamedTbar hp {
+			tbar bar   {
+				current *cvar:mn_vhp
+				max *cvar:mn_vhpmax
+				image "ui/bar_health"
 			}
-		string lbl { string "_Health:" }
-		string val { string *cvar:mn_thp }
-	}
-
+			string lbl { string "_Health:" }
+			string val { string *cvar:mn_thp }
+		}
 	}
 
 	panel stats_missions {
