@@ -498,6 +498,9 @@ static bool Grid_MoveMark (Step &step, const pathing_t *path)
 
 /**
  * @brief Recalculate the pathing table for the given actor(-position)
+ *
+ * We calculate the table for ALL possible movement states (atm stand and crouch)
+ * to be able to propose smart things like autostand.
  * @param[in] routes Pointer to client or server side routing table (clMap, svMap)
  * @param[in] actorSize The size of thing to calc the move for (e.g. size=2 means 2x2).
  * The plan is to have the 'origin' in 2x2 units in the bottom-left (towards the lower coordinates) corner of the 2x2 square.
@@ -517,12 +520,12 @@ void Grid_CalcPathing (const routing_t *routes, const actorSizeEnum_t actorSize,
 	priorityQueue_t pqueue;
 	pos4_t epos; /**< Extended position; includes crouching state */
 	pos3_t pos;
+	int amst;       /* acronym for actor movement state */
 	/* this is the position of the current actor- so the actor can stand in the cell it is in when pathfinding */
 	pos3_t excludeFromForbiddenList;
 
 	/* Confirm bounds */
 	assert((from[2]) < PATHFINDING_HEIGHT);
-	assert(crouchingState == 0 || crouchingState == 1);	/* s.a. ACTOR_MAX_STATES */
 
 	/* reset move data */
 	OBJSET(path->area,     ROUTING_NOT_REACHABLE);
@@ -534,61 +537,65 @@ void Grid_CalcPathing (const routing_t *routes, const actorSizeEnum_t actorSize,
 
 	/* Prepare exclusion of starting-location (i.e. this should be ent-pos or le-pos) in Grid_CheckForbidden */
 	VectorCopy(from, excludeFromForbiddenList);
-	/* set starting position to 0 TUs.*/
-	RT_AREA_POS(path, from, crouchingState) = 0;
 
-	PQueueInitialise(&pqueue, 1024);
-	Vector4Set(epos, from[0], from[1], from[2], crouchingState);
-	PQueuePush(&pqueue, epos, 0);
+	for (amst = 0; amst < ACTOR_MAX_STATES; amst++) {
+        /* set starting position to 0 TUs.*/
+        RT_AREA_POS(path, from, amst) = 0;
 
-	count = 0;
-	while (!PQueueIsEmpty(&pqueue)) {
-		int dir;
-		PQueuePop(&pqueue, epos);
-		VectorCopy(epos, pos);
-		count++;
+        PQueueInitialise(&pqueue, 1024);
+        Vector4Set(epos, from[0], from[1], from[2], amst);
+        PQueuePush(&pqueue, epos, 0);
 
-		/* if reaching that square already took too many TUs,
-		 * don't bother to reach new squares *from* there. */
-		const byte usedTUs = RT_AREA_POS(path, pos, crouchingState);
-		if (usedTUs >= maxTUs)
-			continue;
+        count = 0;
+        while (!PQueueIsEmpty(&pqueue)) {
+            int dir;
+            PQueuePop(&pqueue, epos);
+            VectorCopy(epos, pos);
+            count++;
 
-		for (dir = 0; dir < PATHFINDING_DIRECTIONS; dir++) {
-			Step step;
-			/* Directions 12, 14, and 15 are currently undefined. */
-			if (dir == 12 || dir == 14 || dir == 15)
-				continue;
-			/* If this is a crouching or crouching move, forget it. */
-			if (dir == DIRECTION_STAND_UP || dir == DIRECTION_CROUCH)
-				continue;
+            /* if reaching that square already took too many TUs,
+             * don't bother to reach new squares *from* there. */
+            const byte usedTUs = RT_AREA_POS(path, pos, amst);
+            if (usedTUs >= maxTUs)
+                continue;
 
-			if (!step.init(routes, pos, actorSize, crouchingState, dir))
-				continue;		/* either dir is irrelevant or something worse happened */
+            for (dir = 0; dir < PATHFINDING_DIRECTIONS; dir++) {
+                Step step;
+                /* Directions 12, 14, and 15 are currently undefined. */
+                if (dir == 12 || dir == 14 || dir == 15)
+                    continue;
+                /* If this is a crouching or crouching move, forget it. */
+                if (dir == DIRECTION_STAND_UP || dir == DIRECTION_CROUCH)
+                    continue;
 
-			if (Grid_MoveMark(step, path)) {
-				/* Is this a better move into this cell? */
-				RT_AREA_TEST_POS(path, step.toPos, step.crouchingState);
-				if (RT_AREA_POS(path, step.toPos, step.crouchingState) <= step.TUsAfter) {
-					continue;	/* This move is not optimum. */
-				}
+                if (!step.init(routes, pos, actorSize, amst, dir))
+                    continue;		/* either dir is irrelevant or something worse happened */
 
-				/* Test for forbidden (by other entities) areas. */
-				if (Grid_CheckForbidden(excludeFromForbiddenList, step.actorSize, path, step.toPos[0], step.toPos[1], step.toPos[2])) {
-					continue;		/* That spot is occupied. */
-				}
+                if (Grid_MoveMark(step, path)) {
+                    /* Is this a better move into this cell? */
+                    RT_AREA_TEST_POS(path, step.toPos, step.crouchingState);
+                    if (RT_AREA_POS(path, step.toPos, step.crouchingState) <= step.TUsAfter) {
+                        continue;	/* This move is not optimum. */
+                    }
 
-				/* Store move in pathing table. */
-				Grid_SetMoveData(path, step.toPos, step.crouchingState, step.TUsAfter, step.dir, step.fromPos[2]);
+                    /* Test for forbidden (by other entities) areas. */
+                    if (Grid_CheckForbidden(excludeFromForbiddenList, step.actorSize, path, step.toPos[0], step.toPos[1], step.toPos[2])) {
+                        continue;		/* That spot is occupied. */
+                    }
 
-				pos4_t dummy;
-				Vector4Set(dummy, step.toPos[0], step.toPos[1], step.toPos[2], step.crouchingState);
-				PQueuePush(&pqueue, dummy, step.TUsAfter);
-			}
-		}
+                    /* Store move in pathing table. */
+                    Grid_SetMoveData(path, step.toPos, step.crouchingState, step.TUsAfter, step.dir, step.fromPos[2]);
+
+                    pos4_t dummy;
+                    Vector4Set(dummy, step.toPos[0], step.toPos[1], step.toPos[2], step.crouchingState);
+                    PQueuePush(&pqueue, dummy, step.TUsAfter);
+                }
+            }
+        }
+        /* Com_Printf("Loop: %i", count); */
+        PQueueFree(&pqueue);
 	}
-	/* Com_Printf("Loop: %i", count); */
-	PQueueFree(&pqueue);
+
 }
 
 /**
