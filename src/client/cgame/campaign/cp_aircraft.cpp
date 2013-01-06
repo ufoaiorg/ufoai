@@ -1006,7 +1006,6 @@ void AIR_DeleteAircraft (aircraft_t *aircraft)
 	AIR_Delete(base, aircraft);
 
 	if (!AIR_BaseHasAircraft(base)) {
-		cgi->Cvar_SetValue("mn_equipsoldierstate", 0);
 		cgi->Cvar_Set("mn_aircraftstatus", "");
 		cgi->Cvar_Set("mn_aircraftinbase", "0");
 		cgi->Cvar_Set("mn_aircraftname", "");

@@ -146,21 +146,6 @@ window aircraft extends iaircraft
 			*node:root.aircraft_return@onClick = { cmd "aircraft_return;" }
 			*node:root.aircraft_return@icon = "icons/aircraft_return"
 		}
-
-		// absent from base
-		if ( *cvar:mn_equipsoldierstate == 1 ) {
-			*node:root.aircraft_navigation@disabled = true
-		}
-		// no soldiers
-		elif ( *cvar:mn_equipsoldierstate == 2 ) {
-			*node:root.aircraft_navigation@disabled = false
-			*node:root.aircraft_navigation.soldier@invis = true
-		}
-		// normal
-		elif ( *cvar:mn_equipsoldierstate == 3 ) {
-			*node:root.aircraft_navigation@disabled = false
-			*node:root.aircraft_navigation.soldier@invis = false
-		}
 	}
 
 	func aircraft_healtbarchange {

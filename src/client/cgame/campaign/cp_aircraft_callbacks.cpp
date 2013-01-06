@@ -116,26 +116,6 @@ static void AIM_AircraftStart_f (void)
 	cgi->UI_PopWindow(false);
 }
 
-#define SOLDIER_EQUIP_MENU_BUTTON_NO_AIRCRAFT_IN_BASE 1
-#define SOLDIER_EQUIP_MENU_BUTTON_NO_SOLDIERS_AVAILABLE 2
-#define SOLDIER_EQUIP_MENU_BUTTON_OK 3
-/**
- * @brief Determines the state of the equip soldier menu button:
- * @returns SOLDIER_EQUIP_MENU_BUTTON_NO_AIRCRAFT_IN_BASE if no aircraft in base
- * @returns SOLDIER_EQUIP_MENU_BUTTON_NO_SOLDIERS_AVAILABLE if no soldiers available
- * @returns SOLDIER_EQUIP_MENU_BUTTON_OK if none of the above is true
- */
-static int CL_EquipSoldierState (const aircraft_t * aircraft)
-{
-	if (!AIR_IsAircraftInBase(aircraft))
-		return SOLDIER_EQUIP_MENU_BUTTON_NO_AIRCRAFT_IN_BASE;
-
-	if (E_CountHired(aircraft->homebase, EMPL_SOLDIER) <= 0)
-		return SOLDIER_EQUIP_MENU_BUTTON_NO_SOLDIERS_AVAILABLE;
-
-	return SOLDIER_EQUIP_MENU_BUTTON_OK;
-}
-
 /**
  * @brief Returns the amount of assigned items for a given slot of a given aircraft
  * @param[in] type This is the slot type to get the amount of assigned items for
@@ -200,7 +180,6 @@ void AIR_AircraftSelect (aircraft_t* aircraft)
 	assert(aircraft->homebase == base);
 	CP_UpdateActorAircraftVar(aircraft, EMPL_SOLDIER);
 
-	cgi->Cvar_SetValue("mn_equipsoldierstate", CL_EquipSoldierState(aircraft));
 	cgi->Cvar_Set("mn_aircraftstatus", AIR_AircraftStatusToName(aircraft));
 	cgi->Cvar_Set("mn_aircraftinbase", AIR_IsAircraftInBase(aircraft) ? "1" : "0");
 	cgi->Cvar_Set("mn_aircraftname", aircraft->name);
