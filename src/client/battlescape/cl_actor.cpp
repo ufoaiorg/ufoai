@@ -1922,11 +1922,11 @@ static void CL_AddTargetingBox (pos3_t pos, bool pendBox)
 			actorSize = selActor->fieldSize;
 		}
 	}
-    BoxOffset(actorSize, cursorOffset);
-    VectorAdd(cursor.oldorigin, cursorOffset, cursor.oldorigin);
-    VectorAdd(cursor.origin, cursorOffset, cursor.origin);
-    BoxSize(actorSize, halfBoxSize, realBoxSize);
-    VectorSubtract(cursor.origin, realBoxSize, cursor.origin);
+	BoxOffset(actorSize, cursorOffset);
+	VectorAdd(cursor.oldorigin, cursorOffset, cursor.oldorigin);
+	VectorAdd(cursor.origin, cursorOffset, cursor.origin);
+	BoxSize(actorSize, halfBoxSize, realBoxSize);
+	VectorSubtract(cursor.origin, realBoxSize, cursor.origin);
 
 	/* if pendBox is true then ignore all the previous color considerations and use cyan */
 	if (pendBox) {
