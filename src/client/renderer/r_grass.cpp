@@ -33,22 +33,45 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define MAX_CLUMP_TRIS (TRIS_PER_CLUMP * MAX_CLUMPS)
 
+struct Clump {
+	int firstTriangle, numTriangles; /* populated only when actual geometry is generated */
+	vec3_t position;
+	vec3_t normal;
+	float rotation;
+	int level;
+};
+
+static int clumpCount = 0;
+static Clump clumps[MAX_CLUMPS];
+
+static int clumpsForLevel[8] = {0};
+static int clumpTrianglesForLevel[8] = {0};
+
 static int clumpTriangleCount = 0;
 
 /* gfv -- grass fragment vertex */
 vec3_t gfv_pos[MAX_CLUMP_TRIS * 3];
 vec2_t gfv_texcoord[MAX_CLUMP_TRIS * 3];
 
+
 void R_ClearGrass ()
 {
+	clumpCount = 0;
 	clumpTriangleCount = 0;
+	OBJZERO(clumpsForLevel);
+	OBJZERO(clumpTrianglesForLevel);
 }
 
-static void R_PlantGrass (const vec3_t pos, const vec3_t normal)
+static void R_PlantGrass (Clump &clump)
 {
 	if (clumpTriangleCount + TRIS_PER_CLUMP >= MAX_CLUMP_TRIS) {
+		clump.firstTriangle = clumpTriangleCount;
+		clump.numTriangles = 0;
 		return;
 	}
+
+	clump.firstTriangle = clumpTriangleCount;
+	clump.numTriangles = 0; /* safeguard */
 
 	vec3_t rot[3]; /* rotation matrix for the plant */
 #define xt (rot[0])
@@ -64,7 +87,7 @@ static void R_PlantGrass (const vec3_t pos, const vec3_t normal)
 
 	/* we can calculate the downslope vector and use it instead;
 	 * a bit more of math, but call allow us to create plants that interact with the slope in various ways */
-	VectorCopy(normal, zt);
+	VectorCopy(clump.normal, zt);
 	VectorSet(xt, zt[2], 0.0, -zt[0]); /* short-circuit CrossProduct(yaxis, normal, xt) since it degenerates to a simple shuffle */
 	VectorNormalizeFast(xt);
 #endif
@@ -83,7 +106,7 @@ static void R_PlantGrass (const vec3_t pos, const vec3_t normal)
 
 	/* marker */
 	vec_t *ptr = gfv_pos[clumpTriangleCount * 3];
-	VectorMA(pos, 1, zt, ptr);
+	VectorMA(clump.position, 1, zt, ptr);
 	VectorMA(ptr, 16, yt, ptr + 3);
 	VectorMA(ptr, 16, xt, ptr + 6);
 
@@ -115,7 +138,7 @@ static void R_PlantGrass (const vec3_t pos, const vec3_t normal)
 #if 0
 		/* debug marker */
 		vec_t *ptr = gfv_pos[clumpTriangleCount * 3];
-		VectorCopy(pos, ptr);
+		VectorCopy(clump.position, ptr);
 		VectorMA(ptr, 16, sdir, ptr + 3);
 		VectorMA(ptr, 16, tdir, ptr + 6);
 
@@ -128,8 +151,8 @@ static void R_PlantGrass (const vec3_t pos, const vec3_t normal)
 #else
 		/* billboard sprite */
 		vec_t *ptr = gfv_pos[clumpTriangleCount * 3];
-		VectorCopy(pos, ptr);
-		VectorMA(pos, -24, sdir, ptr); /* quad vertex 0 */
+		VectorCopy(clump.position, ptr);
+		VectorMA(clump.position, -24, sdir, ptr); /* quad vertex 0 */
 		VectorMA(ptr, 32, tdir, ptr + 3); /* quad vertex 1 */
 		VectorMA(ptr + 3, 48, sdir, ptr + 6); /* quad vertex 2 */
 
@@ -154,6 +177,52 @@ static void R_PlantGrass (const vec3_t pos, const vec3_t normal)
 #undef xt
 #undef yt
 #undef zt
+	clump.numTriangles = clumpTriangleCount - clump.firstTriangle;
+}
+
+static void R_AddClump (const vec3_t pos, const vec3_t normal, int level)
+{
+	if (clumpCount >= MAX_CLUMPS)
+		return;
+
+	Clump &cp = clumps[clumpCount];
+
+	VectorCopy(pos, cp.position);
+	VectorCopy(normal, cp.normal);
+
+	cp.rotation = frand() * 360;
+	cp.level = level;
+
+	clumpCount++;
+}
+
+static int ClumpOrder (const void *a, const void *b)
+{
+	const Clump *pa = static_cast <const Clump *>(a);
+	const Clump *pb = static_cast <const Clump *>(b);
+
+	if (pa->level != pb->level)
+		return pa->level - pb->level;
+
+	/** @todo Morton order comparison to improve clusterization after sorting (beware the black magic) */
+	 return 0;
+}
+
+static void R_OrganizeClumps ()
+{
+	qsort(clumps, clumpCount, sizeof(Clump), ClumpOrder);
+
+	int lastLevel = 0, i;
+	for (i = 0; i < clumpCount; i++)
+		while (lastLevel < clumps[i].level) {
+			clumpsForLevel[lastLevel] = i;
+			lastLevel++;
+		}
+
+	while (lastLevel < 8) {
+		clumpsForLevel[lastLevel] = i;
+		lastLevel++;
+	}
 }
 
 void R_GenerateGrass ()
@@ -239,6 +308,12 @@ void R_GenerateGrass ()
 			if (!header->numfaces)
 				continue;
 
+			int level;
+
+			for (level = 0; level < 7; level++)
+				if ((1 << level) & i)
+					break;
+
 			for (int j = 0; j < header->numfaces; j++) {
 				mBspSurface_t *const surf = &bspModel->surfaces[header->firstface + j];
 				const cBspPlane_t *const plane = surf->plane;
@@ -284,13 +359,37 @@ void R_GenerateGrass ()
 						 VectorMA(vo, u, va, pos);
 						 VectorMA(pos, v, vb, pos);
 
-						 R_PlantGrass(pos, plane->normal);
+						 R_AddClump(pos, plane->normal, level);
 
 						 clumpsToPlant -= 1.0;
 						 planted++;
 					}
 				}
 			}
+		}
+	}
+
+	R_OrganizeClumps();
+
+	for (int i = 0; i < clumpCount; i++)
+		R_PlantGrass(clumps[i]);
+
+	if (clumpTriangleCount <= 0) {
+		/* no grass geometry generated, so zero triangle counts */
+		for (int i = 0; i < 8; i++)
+			clumpTrianglesForLevel[i] = 0;
+	} else {
+		/* generate triangle counts to render the grass in a single OpenGL call */
+		int lastClumpCount = 0;
+		int triangles = 0;
+		for (int i = 0; i < 8; i++) {
+			if (clumpsForLevel[i] > lastClumpCount) {
+				lastClumpCount = clumpsForLevel[i];
+				Clump &clump = clumps[lastClumpCount - 1];
+				triangles = clump.firstTriangle + clump.numTriangles;
+			}
+			clumpTrianglesForLevel[i] = triangles;
+			Com_Printf("%i triangles for level %i (%i clumps)\n", triangles, i + 1, lastClumpCount);
 		}
 	}
 
@@ -308,7 +407,7 @@ void R_DrawGrass ()
 
 	R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, gfv_texcoord);
 	R_BindArray(GL_VERTEX_ARRAY, GL_FLOAT, gfv_pos);
-	glDrawArrays(GL_TRIANGLES, 0, clumpTriangleCount * 3);
+	glDrawArrays(GL_TRIANGLES, 0, clumpTrianglesForLevel[refdef.worldlevel] * 3);
 	R_BindDefaultArray(GL_VERTEX_ARRAY);
 	R_BindDefaultArray(GL_TEXTURE_COORD_ARRAY);
 
