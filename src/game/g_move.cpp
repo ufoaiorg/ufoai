@@ -102,7 +102,7 @@ static void G_BuildForbiddenList (int team, const edict_t *movingActor)
  */
 void G_MoveCalc (int team, const edict_t *movingActor, const pos3_t from, byte crouchingState, int distance)
 {
-	G_MoveCalcLocal(level.pathingMap, team, movingActor, from, crouchingState, distance);
+	G_MoveCalcLocal(level.pathingMap, team, movingActor, from, distance);
 }
 
 /**
@@ -116,10 +116,10 @@ void G_MoveCalc (int team, const edict_t *movingActor, const pos3_t from, byte c
  * @sa G_MoveCalc
  * @sa G_BuildForbiddenList
  */
-void G_MoveCalcLocal (pathing_t *pt, int team, const edict_t *movingActor, const pos3_t from, byte crouchingState, int distance)
+void G_MoveCalcLocal (pathing_t *pt, int team, const edict_t *movingActor, const pos3_t from, int distance)
 {
 	G_BuildForbiddenList(team, movingActor);
-	gi.GridCalcPathing(movingActor->fieldSize, pt, from, crouchingState, distance, forbiddenList, forbiddenListLength);
+	gi.GridCalcPathing(movingActor->fieldSize, pt, from, distance, forbiddenList, forbiddenListLength);
 }
 
 /**

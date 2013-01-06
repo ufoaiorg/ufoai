@@ -377,14 +377,13 @@ static bool AI_CheckPosition (const edict_t *const ent)
  */
 bool AI_FindHidingLocation (int team, edict_t *ent, const pos3_t from, int *tuLeft)
 {
-	const byte crouchingState = G_IsCrouched(ent) ? 1 : 0;
 	const int distance = std::min(*tuLeft, HIDE_DIST * 2);
 
 	/* We need a local table to calculate the hiding steps */
 	if (!hidePathingTable)
 		hidePathingTable = (pathing_t *) G_TagMalloc(sizeof(*hidePathingTable), TAG_LEVEL);
 	/* search hiding spot */
-	G_MoveCalcLocal(hidePathingTable, 0, ent, from, crouchingState, distance);
+	G_MoveCalcLocal(hidePathingTable, 0, ent, from, distance);
 	ent->pos[2] = from[2];
 	const byte minX = std::max(from[0] - HIDE_DIST, 0);
 	const byte minY = std::max(from[1] - HIDE_DIST, 0);
@@ -426,7 +425,6 @@ bool AI_FindHidingLocation (int team, edict_t *ent, const pos3_t from, int *tuLe
  */
 bool AI_FindHerdLocation (edict_t *ent, const pos3_t from, const vec3_t target, int tu)
 {
-	const byte crouchingState = G_IsCrouched(ent) ? 1 : 0;
 	const int distance = std::min(tu, HERD_DIST * 2);
 	vec_t bestlength = 0.0f;
 	pos3_t bestpos;
@@ -446,7 +444,7 @@ bool AI_FindHerdLocation (edict_t *ent, const pos3_t from, const vec3_t target, 
 	assert(enemy);
 
 	/* calculate move table */
-	G_MoveCalcLocal(herdPathingTable, 0, ent, from, crouchingState, distance);
+	G_MoveCalcLocal(herdPathingTable, 0, ent, from, distance);
 	ent->pos[2] = from[2];
 	const byte minX = std::max(from[0] - HERD_DIST, 0);
 	const byte minY = std::max(from[1] - HERD_DIST, 0);

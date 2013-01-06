@@ -512,9 +512,9 @@ static void SV_GridPosToVec (const int actorSize, const pos3_t pos, vec3_t vec)
 	Grid_PosToVec(sv->mapData.routes, actorSize, pos, vec);
 }
 
-static void SV_GridCalcPathing (actorSizeEnum_t actorSize, pathing_t *path, const pos3_t from, byte crouchingState, int distance, pos_t **forbiddenList, int forbiddenListLength)
+static void SV_GridCalcPathing (actorSizeEnum_t actorSize, pathing_t *path, const pos3_t from, int distance, pos_t **forbiddenList, int forbiddenListLength)
 {
-	Grid_CalcPathing (sv->mapData.routes, actorSize, path, from, crouchingState, distance, forbiddenList, forbiddenListLength);
+	Grid_CalcPathing (sv->mapData.routes, actorSize, path, from, distance, forbiddenList, forbiddenListLength);
 }
 static bool SV_CanActorStandHere (const int actorSize, const pos3_t pos)
 {
