@@ -58,7 +58,7 @@ particle smokefield
 	init
 	{
 		v		"0 0 0"
-		tps		24.0
+		tps		6.0
 	}
 	think
 	{
@@ -83,7 +83,7 @@ particle smokefield_smoke
 		rand  vector "0 0 16"	// variance velocity
 		add    *v
 		pop    *v
-		physics true
+		physics false
 	}
 	run
 	{
