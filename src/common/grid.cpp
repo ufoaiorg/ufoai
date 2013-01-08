@@ -907,6 +907,18 @@ pos_t Grid_Fall (const routing_t *routes, const actorSizeEnum_t actorSize, const
 }
 
 /**
+ * @brief Checks if a crouched actor could save TUs by standing up, walking and crouching again.
+ * @param[in] path Pointer to client or server side pathing table
+ * @param[in] toPos Desired position
+ */
+bool Grid_ShouldUseAutostand (const pathing_t *path, const pos3_t toPos)
+{
+	int tusCrouched = RT_AREA_POS(path, toPos, 1);
+	int tusUpright = RT_AREA_POS(path, toPos, 0);
+	return tusUpright + 2 * TU_CROUCH < tusCrouched;
+}
+
+/**
  * @brief Converts a grid position to world coordinates
  * @sa Grid_Height
  * @param[in] routes The routing map
