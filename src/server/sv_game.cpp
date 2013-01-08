@@ -709,6 +709,7 @@ void SV_InitGameProgs (void)
 	import.GridPosToVec = SV_GridPosToVec;
 	import.GridRecalcRouting = SV_RecalcRouting;
 	import.CanActorStandHere = SV_CanActorStandHere;
+	import.GridShouldUseAutostand = Grid_ShouldUseAutostand;
 
 	import.GetVisibility = SV_GetVisibility;
 

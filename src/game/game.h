@@ -246,6 +246,7 @@ typedef struct game_import_s {
 	void (IMPORT *GridPosToVec) (actorSizeEnum_t actorSize, const pos3_t pos, vec3_t vec);
 	void (IMPORT *GridRecalcRouting) (const char *name, const GridBox& box, const char **list);
 	bool (IMPORT *CanActorStandHere) (actorSizeEnum_t actorSize, const pos3_t pos);
+	bool (IMPORT *GridShouldUseAutostand) (const pathing_t *path, const pos3_t pos);
 	float (IMPORT *GetVisibility) (const pos3_t position);
 
 	/* filesystem functions */
