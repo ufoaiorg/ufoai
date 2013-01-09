@@ -1523,7 +1523,7 @@ static inline bool CL_AddActorWeapon (int objID)
  * @sa CL_ActorAppear
  * @note Called via addfunc for each local entity in every frame
  */
-bool CL_AddActor (le_t *le, entity_t * ent)
+bool CL_AddActor (le_t *le, entity_t *ent)
 {
 	entity_t add;
 

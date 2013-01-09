@@ -937,7 +937,7 @@ void LE_AddGrenade (const fireDef_t *fd, int flags, const vec3_t muzzle, const v
  * @brief Add function for brush models
  * @sa LE_AddToScene
  */
-bool LE_BrushModelAction (le_t *le, entity_t * ent)
+bool LE_BrushModelAction (le_t *le, entity_t *ent)
 {
 	switch (le->type) {
 	case ET_ROTATING:

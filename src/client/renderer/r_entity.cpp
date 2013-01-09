@@ -64,7 +64,7 @@ void R_EntityAddToOrigin (entity_t *ent, const vec3_t offset)
  * @sa CL_AddTargeting
  * @sa RF_BOX
  */
-static void R_DrawBox (const entity_t * e)
+static void R_DrawBox (const entity_t *e)
 {
 	const vec4_t color = {e->color[0], e->color[1], e->color[2], e->alpha};
 
@@ -128,7 +128,7 @@ static void R_DrawBox (const entity_t * e)
  * @sa CL_AddPathing
  * @sa RF_BOX
  */
-static void R_DrawFloor (const entity_t * e)
+static void R_DrawFloor (const entity_t *e)
 {
 	GLint oldDepthFunc;
 	glGetIntegerv(GL_DEPTH_FUNC, &oldDepthFunc);
@@ -172,7 +172,7 @@ static void R_DrawFloor (const entity_t * e)
  * @sa CL_AddArrow
  * @sa RF_BOX
  */
-static void R_DrawArrow (const entity_t * e)
+static void R_DrawArrow (const entity_t *e)
 {
 	const vec3_t upper = { e->origin[0] + 2, e->origin[1], e->origin[2] };
 	const vec3_t mid = { e->origin[0], e->origin[1] + 2, e->origin[2] };
@@ -535,7 +535,7 @@ void R_TransformForEntity (const entity_t *e, const vec3_t in, vec3_t out)
  * @brief Calculates transformation matrix for the model and its tags
  * @note The transformation matrix is only calculated once
  */
-static float *R_CalcTransform (entity_t * e)
+static float *R_CalcTransform (entity_t *e)
 {
 	transform_t *t;
 	float *mp;

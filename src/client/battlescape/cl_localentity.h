@@ -43,7 +43,7 @@ typedef enum {
 #define IS_MODE_FIRE_HEADGEAR(x)	((x) == M_FIRE_HEADGEAR)
 #define IS_MODE_FIRE_PENDING(x)		((x) == M_PEND_FIRE_L || (x) == M_PEND_FIRE_R)
 
-typedef bool (*localEntitiyAddFunc_t) (struct le_s * le, entity_t * ent);
+typedef bool (*localEntitiyAddFunc_t) (struct le_s * le, entity_t *ent);
 typedef void (*localEntityThinkFunc_t) (struct le_s * le);
 
 #define LE_CHECK_LEVELFLAGS		0x0001
