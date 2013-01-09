@@ -41,8 +41,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 typedef struct {
 	int			outLen;					/**< To keep track of output buffer len */
 	char		cmdBuffer[MAXCMDLINE];	/**< Buffered input from dedicated console */
-	bool	timerActive;			/**< Timer is active (for fatal errors) */
-	bool	flashColor;				/**< If true, flash error message to red */
+	bool		timerActive;			/**< Timer is active (for fatal errors) */
+	bool		flashColor;				/**< If true, flash error message to red */
 
 	/* Window stuff */
 	HWND		hWnd;
