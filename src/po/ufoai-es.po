@@ -29737,7 +29737,7 @@ msgstr "%s fue paralizado\n"
 #: client/battlescape/events/event/actor/e_event_actordie.cpp:96
 #, c-format
 msgid "%s has died\n"
-msgstr "¡%s ha muerto!"
+msgstr "¡%s ha muerto!\n"
 
 #: client/battlescape/events/event/actor/e_event_actordie.cpp:98
 #, c-format
