@@ -1596,7 +1596,7 @@ void LM_List_f (void)
 =========================================================================== */
 
 /** @brief Client side moveclip */
-typedef struct {
+typedef struct moveclip_s {
 	vec3_t boxmins, boxmaxs;	/**< enclose the test object along entire move */
 	const float *mins, *maxs;	/**< size of the moving object */
 	const float *start, *end;

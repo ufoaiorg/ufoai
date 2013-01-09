@@ -32,7 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MISC_MODEL_GLOW 9
 #define SPAWNFLAG_NO_DAY 8
 
-typedef struct {
+typedef struct localEntityParse_s {
 	char classname[MAX_VAR];
 	char target[MAX_VAR];
 	char targetname[MAX_VAR];

@@ -28,7 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CL_CAMERA_H
 #define CL_CAMERA_H
 
-typedef struct {
+typedef struct camera_s {
 	vec3_t origin;		/**< the reference origin used for rotating around and to look at */
 	vec3_t camorg;		/**< origin of the camera (look from) */
 	vec3_t speed;		/**< speed of camera movement */
