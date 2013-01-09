@@ -218,3 +218,15 @@ float G_ActorGetInjuryPenalty (const edict_t *const ent, const modifier_types_t 
 
 	return penalty;
 }
+
+bool G_IsActorWounded (const edict_t *ent)
+{
+	if (ent == NULL || !G_IsLivingActor(ent) || ent->chr.teamDef == NULL)
+		return false;
+
+	for (int i = 0; i < ent->chr.teamDef->bodyTemplate->numBodyParts(); ++i)
+		if (ent->chr.wounds.woundLevel[i] > 0)
+			return true;
+
+	return false;
+}

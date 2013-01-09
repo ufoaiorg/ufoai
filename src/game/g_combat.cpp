@@ -1144,6 +1144,11 @@ bool G_ClientShoot (const Player *player, edict_t *ent, const pos3_t at, shoot_t
 		const edict_t *target = G_EdictsGetLivingActorFromPos(at);
 		if (!target)
 			return false;
+		else if (fd->dmgweight == gi.csi->damNormal && !G_IsActorWounded(target)) {
+			if (!quiet)
+				G_ClientPrintf(*player, PRINT_HUD, _("Can't perform action - target is not wounded!"));
+			return false;
+		}
 	}
 
 	/* check that we're not firing a twohanded weapon with one hand! */
