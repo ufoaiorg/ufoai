@@ -246,10 +246,10 @@ static int G_FillDirectionTable (dvec_t *dvtab, size_t size, byte crouchingState
 * @param stored Use the stored mask (the cached move) of the routing data
 * @return ROUTING_NOT_REACHABLE if the move isn't possible, length of move otherwise (TUs)
 */
-byte G_ActorMoveLength (const edict_t *ent, const pathing_t *path, const pos3_t to, bool stored)
+pos_t G_ActorMoveLength (const edict_t *ent, const pathing_t *path, const pos3_t to, bool stored)
 {
 	byte crouchingState = G_IsCrouched(ent) ? 1 : 0;
-	const int length = gi.MoveLength(path, to, crouchingState, stored);
+	const pos_t length = gi.MoveLength(path, to, crouchingState, stored);
 	int dvec, numSteps = 0;
 	pos3_t pos;
 
@@ -281,16 +281,12 @@ byte G_ActorMoveLength (const edict_t *ent, const pathing_t *path, const pos3_t 
  */
 void G_ClientMove (const Player *player, int visTeam, edict_t *ent, const pos3_t to)
 {
-	int status, initTU;
-	dvec_t dvtab[MAX_ROUTE];
-	byte numdv, length;
+	int status;
 	pos3_t pos;
-	float div;
 	int oldState;
 	int oldHP;
 	int oldSTUN;
 	bool autoCrouchRequired = false;
-	byte crouchingState;
 
 	if (VectorCompare(ent->pos, to))
 		return;
@@ -299,12 +295,12 @@ void G_ClientMove (const Player *player, int visTeam, edict_t *ent, const pos3_t
 	if (!G_ActionCheckForCurrentTeam(player, ent, TU_MOVE_STRAIGHT))
 		return;
 
-	crouchingState = G_IsCrouched(ent) ? 1 : 0;
+	byte crouchingState = G_IsCrouched(ent) ? 1 : 0;
 	oldState = oldHP = oldSTUN = 0;
 
 	/* calculate move table */
 	G_MoveCalc(visTeam, ent, ent->pos, crouchingState, ent->TU);
-	length = G_ActorMoveLength(ent, level.pathingMap, to, false);
+	const pos_t length = G_ActorMoveLength(ent, level.pathingMap, to, false);
 
 	/* length of ROUTING_NOT_REACHABLE means not reachable */
 	if (length && length >= ROUTING_NOT_REACHABLE)
@@ -322,7 +318,7 @@ void G_ClientMove (const Player *player, int visTeam, edict_t *ent, const pos3_t
 			crouchingState = G_IsCrouched(ent) ? 1 : 0;
 			if (!crouchingState) {
 				G_MoveCalc(visTeam, ent, ent->pos, crouchingState, ent->TU);
-				length = G_ActorMoveLength(ent, level.pathingMap, to, false);
+				G_ActorMoveLength(ent, level.pathingMap, to, false);
 				autoCrouchRequired = true;
 			}
 		}
@@ -334,9 +330,10 @@ void G_ClientMove (const Player *player, int visTeam, edict_t *ent, const pos3_t
 
 	/* assemble dvec-encoded move data */
 	VectorCopy(to, pos);
-	initTU = ent->TU;
+	const int initTU = ent->TU;
 
-	numdv = G_FillDirectionTable(dvtab, lengthof(dvtab), crouchingState, pos);
+	dvec_t dvtab[MAX_ROUTE];
+	byte numdv = G_FillDirectionTable(dvtab, lengthof(dvtab), crouchingState, pos);
 
 	/* make sure to end any other pending events - we rely on EV_ACTOR_MOVE not being active anymore */
 	G_EventEnd();
@@ -382,7 +379,7 @@ void G_ClientMove (const Player *player, int visTeam, edict_t *ent, const pos3_t
 			}
 
 			/* decrease TUs */
-			div = gi.GetTUsForDirection(dir, G_IsCrouched(ent));
+			const float div = gi.GetTUsForDirection(dir, G_IsCrouched(ent));
 			if ((int) (usedTUs + div + movingModifier) > ent->TU)
 				break;
 			usedTUs += div + movingModifier;
