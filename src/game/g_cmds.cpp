@@ -33,7 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "g_match.h"
 #include "../shared/parse.h"
 
-static void G_Players_f (const Player *player)
+static void G_Players_f (const Player &player)
 {
 	int count = 0;
 	char smallBuf[64];
@@ -57,32 +57,32 @@ static void G_Players_f (const Player *player)
 		count++;
 	}
 
-	G_ClientPrintf(*player, PRINT_CONSOLE, "%s\n%i players\n", largeBuf, count);
+	G_ClientPrintf(player, PRINT_CONSOLE, "%s\n%i players\n", largeBuf, count);
 }
 
 /**
  * @brief Check whether the user can talk
  */
-static bool G_CheckFlood (Player *player)
+static bool G_CheckFlood (Player &player)
 {
 	int i;
 
 	if (flood_msgs->integer) {
-		if (level.time < player->pers.flood_locktill) {
-			G_ClientPrintf(*player, PRINT_CHAT, _("You can't talk for %d more seconds\n"), (int)(player->pers.flood_locktill - level.time));
+		if (level.time < player.pers.flood_locktill) {
+			G_ClientPrintf(player, PRINT_CHAT, _("You can't talk for %d more seconds\n"), (int)(player.pers.flood_locktill - level.time));
 			return true;
 		}
-		i = player->pers.flood_whenhead - flood_msgs->value + 1;
+		i = player.pers.flood_whenhead - flood_msgs->value + 1;
 		if (i < 0)
-			i = (sizeof(player->pers.flood_when)/sizeof(player->pers.flood_when[0])) + i;
-		if (player->pers.flood_when[i] && level.time - player->pers.flood_when[i] < flood_persecond->value) {
-			player->pers.flood_locktill = level.time + flood_waitdelay->value;
-			G_ClientPrintf(*player, PRINT_CHAT, _("Flood protection: You can't talk for %d seconds.\n"), flood_waitdelay->integer);
+			i = (sizeof(player.pers.flood_when)/sizeof(player.pers.flood_when[0])) + i;
+		if (player.pers.flood_when[i] && level.time - player.pers.flood_when[i] < flood_persecond->value) {
+			player.pers.flood_locktill = level.time + flood_waitdelay->value;
+			G_ClientPrintf(player, PRINT_CHAT, _("Flood protection: You can't talk for %d seconds.\n"), flood_waitdelay->integer);
 			return true;
 		}
-		player->pers.flood_whenhead = (player->pers.flood_whenhead + 1) %
-				(sizeof(player->pers.flood_when)/sizeof(player->pers.flood_when[0]));
-		player->pers.flood_when[player->pers.flood_whenhead] = level.time;
+		player.pers.flood_whenhead = (player.pers.flood_whenhead + 1) %
+				(sizeof(player.pers.flood_when)/sizeof(player.pers.flood_when[0]));
+		player.pers.flood_when[player.pers.flood_whenhead] = level.time;
 	}
 	return false;
 }
@@ -94,7 +94,7 @@ static void G_Say_f (Player &player, bool arg0, bool team)
 	if (gi.Cmd_Argc() < 2 && !arg0)
 		return;
 
-	if (G_CheckFlood(&player))
+	if (G_CheckFlood(player))
 		return;
 
 	if (!team)
@@ -435,7 +435,7 @@ void G_ClientCommand (Player &player)
 	cmd = gi.Cmd_Argv(0);
 
 	if (Q_strcasecmp(cmd, "players") == 0)
-		G_Players_f(&player);
+		G_Players_f(player);
 	else if (Q_strcasecmp(cmd, "say") == 0)
 		G_Say_f(player, false, false);
 	else if (Q_strcasecmp(cmd, "say_team") == 0)
