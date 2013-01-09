@@ -913,8 +913,8 @@ pos_t Grid_Fall (const routing_t *routes, const actorSizeEnum_t actorSize, const
  */
 bool Grid_ShouldUseAutostand (const pathing_t *path, const pos3_t toPos)
 {
-	int tusCrouched = RT_AREA_POS(path, toPos, 1);
-	int tusUpright = RT_AREA_POS(path, toPos, 0);
+	const int tusCrouched = RT_AREA_POS(path, toPos, 1);
+	const int tusUpright = RT_AREA_POS(path, toPos, 0);
 	return tusUpright + 2 * TU_CROUCH < tusCrouched;
 }
 
