@@ -1857,8 +1857,6 @@ static void CL_AddTargetingBox (pos3_t pos, bool pendBox)
 	OBJZERO(cursor);
 	cursor.flags = RF_BOX;
 
-	Grid_PosToVec(cl.mapData->routes, ACTOR_GET_FIELDSIZE(selActor), pos, cursor.origin);
-
 	/* Paint the green box if move is possible ...
 	 * OR paint a dark blue one if move is impossible or the
 	 * soldier does not have enough TimeUnits left. */
@@ -1867,8 +1865,6 @@ static void CL_AddTargetingBox (pos3_t pos, bool pendBox)
 		VectorSet(cursor.color, 0, 1, 0); /* Green */
 	else
 		VectorSet(cursor.color, 0.6, 0.68, 1); /* Light Blue */
-
-	VectorAdd(cursor.origin, halfBoxSize, cursor.oldorigin);
 
 	/* color */
 	/* if the mouse is over an actor, but not the selected one */
@@ -1921,6 +1917,12 @@ static void CL_AddTargetingBox (pos3_t pos, bool pendBox)
 			actorSize = selActor->fieldSize;
 		}
 	}
+
+	/* Now calculate the size of the cursor box, depending on the actor. */
+	/* For some strange reason we use origin and oldorigin instead of the ent's min/max, respectively */
+	Grid_PosToVec(cl.mapData->routes, ACTOR_GET_FIELDSIZE(selActor), pos, cursor.origin);
+	VectorAdd(cursor.origin, halfBoxSize, cursor.oldorigin);
+
 	BoxOffset(actorSize, cursorOffset);
 	VectorAdd(cursor.oldorigin, cursorOffset, cursor.oldorigin);
 	VectorAdd(cursor.origin, cursorOffset, cursor.origin);
