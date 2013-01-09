@@ -3,15 +3,6 @@
 // ==============================
 
 /**
- * Main menu background
- */
-component main_bg extends image
-{
-	src	"ui/main_bg"
-}
-
-
-/**
  * Fuzzy screen effect
  */
 component screen extends texture
@@ -19,22 +10,8 @@ component screen extends texture
 	pos 		"0 0"
 	// TODO: this should be always the full screen
 	size		"2048 1536"
-	bgcolor		"0 0 0 0"
 	src			"ui/screen"
 	ghost		true
-}
-
-/**
- * Title text top center
- */
-component maintitle extends string
-{
-	string			"_UFO: ALIEN INVASION"
-	size			"500 50"
-	pos				"262 0"
-	font			"f_title"
-	color			"0.59 0.78 0.56 1"
-	contentalign	LAYOUTALIGN_MIDDLE
 }
 
 /**
@@ -51,7 +28,6 @@ component MainMenuToolbar extends panel
 		pos			"0 0"
 	}
 /*
-
 	string main_menu_str
 	{
 		pos				"10 0"

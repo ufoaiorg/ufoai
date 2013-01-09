@@ -59,14 +59,9 @@ component cmpMapPreviewButton extends radiobutton
 
 window skirmish
 {
-	/** @todo Remove me */
-	{ }
-	// empty properties to fix parsing problem with "image" token (behaviour or property?)
-	// ===========
-	// BACKGROUND
-	// ===========
-
-	main_bg background { }
+	{
+		background	"ui/main_bg"
+	}
 
 	// Toolbar across the top of the screen
 	MainMenuToolbar mmtoolbar { }

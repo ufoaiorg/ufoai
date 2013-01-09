@@ -11,10 +11,9 @@
 window options
 {
 	{
+		background	"ui/main_bg"
 //		noticepos	"512 110"
 	}
-
-	main_bg background { }
 
 	// Toolbar across the top of the screen
 	MainMenuToolbar mmtoolbar { }
