@@ -1038,10 +1038,9 @@ static aiAction_t AI_PrepBestAction (const Player *player, edict_t *ent)
 	vec3_t oldOrigin;
 	float bestActionScore, best;
 	/* The actor will be forced to stand before doing the move, so calculations here might be a little off */
-	const byte crouchingState = G_IsCrouched(ent) ? 1 : 0;
 
 	/* calculate move table */
-	G_MoveCalc(0, ent, ent->pos, crouchingState, G_ActorUsableTUs(ent));
+	G_MoveCalc(0, ent, ent->pos, G_ActorUsableTUs(ent));
 	Com_DPrintf(DEBUG_ENGINE, "AI_PrepBestAction: Called MoveMark.\n");
 	gi.MoveStore(level.pathingMap);
 
@@ -1135,7 +1134,7 @@ void G_AddToWayPointList (edict_t *ent)
 void AI_TurnIntoDirection (edict_t *ent, const pos3_t pos)
 {
 	const byte crouchingState = G_IsCrouched(ent) ? 1 : 0;
-	G_MoveCalc(ent->team, ent, pos, crouchingState, G_ActorUsableTUs(ent));
+	G_MoveCalc(ent->team, ent, pos, G_ActorUsableTUs(ent));
 
 	const int dvec = gi.MoveNext(level.pathingMap, pos, crouchingState);
 	if (dvec != ROUTING_UNREACHABLE) {

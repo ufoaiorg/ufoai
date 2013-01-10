@@ -26,7 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "g_local.h"
 
-void G_MoveCalc(int team, const edict_t *movingActor, const pos3_t from, byte crouchingState, int distance);
+void G_MoveCalc(int team, const edict_t *movingActor, const pos3_t from, int distance);
 void G_MoveCalcLocal(pathing_t *pt, int team, const edict_t *movingActor, const pos3_t from, int distance);
 void G_ActorFall(edict_t *ent);
 pos_t G_ActorMoveLength(const edict_t *ent, const pathing_t *path, const pos3_t to, bool stored);

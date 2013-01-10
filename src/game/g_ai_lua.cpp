@@ -490,12 +490,11 @@ static int pos3L_tostring (lua_State *L)
 static int pos3L_goto (lua_State *L)
 {
 	pos3_t *pos;
-	const byte crouchingState = G_IsCrouched(AIL_ent) ? 1 : 0;
 
 	assert(lua_ispos3(L, 1));
 
 	/* Calculate move table. */
-	G_MoveCalc(0, AIL_ent, AIL_ent->pos, crouchingState,  G_ActorUsableTUs(AIL_ent));
+	G_MoveCalc(0, AIL_ent, AIL_ent->pos, G_ActorUsableTUs(AIL_ent));
 	gi.MoveStore(level.pathingMap);
 
 	/* Move. */
@@ -808,7 +807,6 @@ static int AIL_positionshoot (lua_State *L)
 	int xl, yl, xh, yh;
 	int min_tu;
 	aiActor_t *target;
-	const byte crouchingState = G_IsCrouched(AIL_ent) ? 1 : 0;
 
 	/* We need a target. */
 	assert(lua_isactor(L, 1));
@@ -819,7 +817,7 @@ static int AIL_positionshoot (lua_State *L)
 	dist = G_ActorUsableTUs(ent);
 
 	/* Calculate move table. */
-	G_MoveCalc(0, ent, ent->pos, crouchingState, G_ActorUsableTUs(ent));
+	G_MoveCalc(0, ent, ent->pos, G_ActorUsableTUs(ent));
 	gi.MoveStore(level.pathingMap);
 
 	/* set borders */

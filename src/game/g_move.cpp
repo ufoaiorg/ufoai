@@ -100,7 +100,7 @@ static void G_BuildForbiddenList (int team, const edict_t *movingActor)
  * @sa G_BuildForbiddenList
  * @sa G_MoveCalcLocal
  */
-void G_MoveCalc (int team, const edict_t *movingActor, const pos3_t from, byte crouchingState, int distance)
+void G_MoveCalc (int team, const edict_t *movingActor, const pos3_t from, int distance)
 {
 	G_MoveCalcLocal(level.pathingMap, team, movingActor, from, distance);
 }
@@ -299,7 +299,7 @@ void G_ClientMove (const Player *player, int visTeam, edict_t *ent, const pos3_t
 	oldState = oldHP = oldSTUN = 0;
 
 	/* calculate move table */
-	G_MoveCalc(visTeam, ent, ent->pos, crouchingState, ent->TU);
+	G_MoveCalc(visTeam, ent, ent->pos, ent->TU);
 	const pos_t length = G_ActorMoveLength(ent, level.pathingMap, to, false);
 
 	/* length of ROUTING_NOT_REACHABLE means not reachable */
@@ -318,7 +318,7 @@ void G_ClientMove (const Player *player, int visTeam, edict_t *ent, const pos3_t
 			G_ClientStateChange(player, ent, STATE_CROUCHED, true); /* change to stand state */
 			crouchingState = G_IsCrouched(ent) ? 1 : 0;
 			if (!crouchingState) {
-				G_MoveCalc(visTeam, ent, ent->pos, crouchingState, ent->TU);
+				G_MoveCalc(visTeam, ent, ent->pos, ent->TU);
 				G_ActorMoveLength(ent, level.pathingMap, to, false);
 				autoCrouchRequired = true;
 			}
