@@ -278,35 +278,6 @@ int SV_AreaEdicts (const vec3_t mins, const vec3_t maxs, edict_t **list, int max
 	return ap.areaEdictListCount;
 }
 
-/**
- * @brief Fills a list with edicts that are in use and are touching the given bounding box
- * @param[in] aabb The bounding box
- * @param[out] list The edict list that this trace is hitting
- * @param[in] maxCount The size of the given @c list
- * @param[in] skip An edict to skip (e.g. pointer to the calling edict)
- * @return the number of pointers filled in
- */
-int SV_GetTouchingEdicts (const AABB& aabb, edict_t **list, int maxCount, edict_t *skip)
-{
-	int num = 0;
-	const int max = std::min(maxCount, svs.ge->num_edicts);
-	int i;
-
-	/* skip the world */
-	for (i = 1; i < max; i++) {
-		edict_t *e = EDICT_NUM(i);
-		/* deactivated */
-		if (e->solid == SOLID_NOT)
-			continue;
-		if (e == skip)
-			continue;
-		if (SV_BoundingBoxesIntersect(aabb, e))
-			list[num++] = e;
-	}
-
-	return num;
-}
-
 /** @brief Server side moveclip - see cmodel.c */
 typedef struct moveclip_s {
 	vec3_t boxmins, boxmaxs;	/**< enclose the test object along entire move */
