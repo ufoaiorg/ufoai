@@ -506,6 +506,36 @@ static void G_ResetTriggers (edict_t *ent, edict_t **touched, int num)
 }
 
 /**
+ * @brief Fills a list with edicts that are in use and are touching the given bounding box
+ * @param[in] aabb The bounding box
+ * @param[out] list The edict list that this trace is hitting
+ * @param[in] maxCount The size of the given @c list
+ * @param[in] skip An edict to skip (e.g. pointer to the calling edict)
+ * @return the number of pointers filled in
+ */
+static int G_GetTouchingEdicts (const AABB& aabb, edict_t **list, int maxCount, edict_t *skip)
+{
+	int num = 0;
+
+	/* skip the world */
+	edict_t *ent = G_EdictsGetFirst();
+	while ((ent = G_EdictsGetNextInUse(ent))) {
+		/* deactivated */
+		if (ent->solid == SOLID_NOT)
+			continue;
+		if (ent == skip)
+			continue;
+		if (aabb.doesIntersect(AABB(ent->absmin,ent->absmax))) {
+			list[num++] = ent;
+			if (num >= maxCount)
+				break;
+		}
+	}
+
+	return num;
+}
+
+/**
  * @brief Check the world against triggers for the current entity
  * @param[in,out] ent The entity that maybe touches others
  * @return Returns the number of associated client actions
