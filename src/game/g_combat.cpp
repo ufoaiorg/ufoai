@@ -1139,12 +1139,12 @@ bool G_ClientShoot (const Player *player, edict_t *ent, const pos3_t at, shoot_t
 	/* Don't allow to shoot yourself */
 	if (!fd->irgoggles && G_EdictPosIsSameAs(ent, at))
 		return false;
-
+	const edict_t *targetEnt = NULL;
 	if (FIRESH_IsMedikit(fd)) {
-		const edict_t *target = G_EdictsGetLivingActorFromPos(at);
-		if (!target)
+		targetEnt = G_EdictsGetLivingActorFromPos(at);
+		if (!targetEnt)
 			return false;
-		else if (fd->dmgweight == gi.csi->damNormal && !G_IsActorWounded(target)) {
+		else if (fd->dmgweight == gi.csi->damNormal && !G_IsActorWounded(targetEnt)) {
 			if (!quiet)
 				G_ClientPrintf(*player, PRINT_HUD, _("Can't perform action - target is not wounded!"));
 			return false;
@@ -1257,6 +1257,9 @@ bool G_ClientShoot (const Player *player, edict_t *ent, const pos3_t at, shoot_t
 				/* dead men can't shoot */
 				return false;
 		}
+		/* Check we aren't trying to heal a dead actor */
+		if (targetEnt != NULL && (G_IsDead(targetEnt) && !G_IsStunned(targetEnt)))
+			return false;
 
 		/* start shoot */
 		G_EventStartShoot(ent, mask, shootType, at);
