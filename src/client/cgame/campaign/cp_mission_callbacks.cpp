@@ -115,28 +115,28 @@ void MIS_InitResultScreen (const missionResults_t *results)
 	cgi->UI_ResetData(TEXT_LIST2);
 
 	/* aliens */
-	LIST_AddString(&list, va("%s\t%i", _("Aliens killed"), results->aliensKilled));
-	LIST_AddString(&list, va("%s\t%i", _("Aliens captured"), results->aliensStunned));
-	LIST_AddString(&list, va("%s\t%i", _("Alien survivors"), results->aliensSurvived));
-	LIST_AddString(&list, "");
+	cgi->LIST_AddString(&list, va("%s\t%i", _("Aliens killed"), results->aliensKilled));
+	cgi->LIST_AddString(&list, va("%s\t%i", _("Aliens captured"), results->aliensStunned));
+	cgi->LIST_AddString(&list, va("%s\t%i", _("Alien survivors"), results->aliensSurvived));
+	cgi->LIST_AddString(&list, "");
 	/* phalanx */
-	LIST_AddString(&list, va("%s\t%i", _("PHALANX soldiers killed in action"), results->ownKilled));
+	cgi->LIST_AddString(&list, va("%s\t%i", _("PHALANX soldiers killed in action"), results->ownKilled));
 	/* @todo FIXME right now stunned soldiers are shown as MIA when the game ends in a draw or the
 	 * mission is aborted and they are in the rescue zone, and in both cases they aren't MIA they'll,
 	 * return safely to base, on the other hand stunned soldiers left behind when aborting are
 	 * killed at mission end, so there's never a valid case of soldiers going MIA */
-	LIST_AddString(&list, va("%s\t%i", _("PHALANX soldiers missing in action"), results->ownStunned));
-	LIST_AddString(&list, va("%s\t%i", _("PHALANX friendly fire losses"), results->ownKilledFriendlyFire));
-	LIST_AddString(&list, va("%s\t%i", _("PHALANX survivors"), results->ownSurvived));
-	LIST_AddString(&list, "");
+	cgi->LIST_AddString(&list, va("%s\t%i", _("PHALANX soldiers missing in action"), results->ownStunned));
+	cgi->LIST_AddString(&list, va("%s\t%i", _("PHALANX friendly fire losses"), results->ownKilledFriendlyFire));
+	cgi->LIST_AddString(&list, va("%s\t%i", _("PHALANX survivors"), results->ownSurvived));
+	cgi->LIST_AddString(&list, "");
 
-	LIST_AddString(&list, va("%s\t%i", _("Civilians killed"), results->civiliansKilled));
-	LIST_AddString(&list, va("%s\t%i", _("Civilians killed by friendly fire"), results->civiliansKilledFriendlyFire));
-	LIST_AddString(&list, va("%s\t%i", _("Civilians saved"), results->civiliansSurvived));
-	LIST_AddString(&list, "");
+	cgi->LIST_AddString(&list, va("%s\t%i", _("Civilians killed"), results->civiliansKilled));
+	cgi->LIST_AddString(&list, va("%s\t%i", _("Civilians killed by friendly fire"), results->civiliansKilledFriendlyFire));
+	cgi->LIST_AddString(&list, va("%s\t%i", _("Civilians saved"), results->civiliansSurvived));
+	cgi->LIST_AddString(&list, "");
 
 	if (results->itemTypes > 0 && results->itemAmount > 0)
-		LIST_AddString(&list, va("%s\t%i/%i", _("Gathered items (types/all)"), results->itemTypes, results->itemAmount));
+		cgi->LIST_AddString(&list, va("%s\t%i/%i", _("Gathered items (types/all)"), results->itemTypes, results->itemAmount));
 
 	cgi->UI_RegisterLinkedListText(TEXT_LIST2, list);
 }

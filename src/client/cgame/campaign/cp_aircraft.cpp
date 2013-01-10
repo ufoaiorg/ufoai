@@ -240,7 +240,7 @@ void AIR_ListAircraft_f (void)
 		Com_Printf("...fuel %i\n", aircraft->fuel);
 		Com_Printf("...status %s\n", (aircraft->status == AIR_CRASHED) ? "crashed" : AIR_AircraftStatusToName(aircraft));
 		Com_Printf("...pos %.0f:%.0f\n", aircraft->pos[0], aircraft->pos[1]);
-		Com_Printf("...team: (%i/%i)\n", LIST_Count(aircraft->acTeam), aircraft->maxTeamSize);
+		Com_Printf("...team: (%i/%i)\n", cgi->LIST_Count(aircraft->acTeam), aircraft->maxTeamSize);
 		LIST_Foreach(aircraft->acTeam, employee_t, employee) {
 			character_t *chr = &employee->chr;
 			Com_Printf(".........name: %s (ucn: %i)\n", chr->name, chr->ucn);
@@ -746,7 +746,7 @@ aircraft_t *AIR_Add (base_t *base, const aircraft_t *aircraftTemplate)
  */
 bool AIR_Delete (base_t *base, const aircraft_t *aircraft)
 {
-	return LIST_Remove(&ccs.aircraft, (const void *)aircraft);
+	return cgi->LIST_Remove(&ccs.aircraft, (const void *)aircraft);
 }
 
 /**
@@ -2069,7 +2069,7 @@ Aircraft functions related to team handling.
  */
 void AIR_ResetAircraftTeam (aircraft_t *aircraft)
 {
-	LIST_Delete(&aircraft->acTeam);
+	cgi->LIST_Delete(&aircraft->acTeam);
 }
 
 /**
@@ -2087,7 +2087,7 @@ bool AIR_AddToAircraftTeam (aircraft_t *aircraft, employee_t* employee)
 		return false;
 
 	if (AIR_GetTeamSize(aircraft) < aircraft->maxTeamSize) {
-		LIST_AddPointer(&aircraft->acTeam, employee);
+		cgi->LIST_AddPointer(&aircraft->acTeam, employee);
 		return true;
 	}
 
@@ -2104,7 +2104,7 @@ bool AIR_IsInAircraftTeam (const aircraft_t *aircraft, const employee_t *employe
 {
 	assert(aircraft);
 	assert(employee);
-	return LIST_GetPointer(aircraft->acTeam, employee) != NULL;
+	return cgi->LIST_GetPointer(aircraft->acTeam, employee) != NULL;
 }
 
 /**
@@ -2115,7 +2115,7 @@ bool AIR_IsInAircraftTeam (const aircraft_t *aircraft, const employee_t *employe
 int AIR_GetTeamSize (const aircraft_t *aircraft)
 {
 	assert(aircraft);
-	return LIST_Count(aircraft->acTeam);
+	return cgi->LIST_Count(aircraft->acTeam);
 }
 
 /**
@@ -2628,7 +2628,7 @@ static bool AIR_LoadAircraftXML (xmlNode_t *p, aircraft_t *craft)
 			ssnode = cgi->XML_GetNextNode(ssnode, snode, SAVE_AIRCRAFT_MEMBER)) {
 		const int ucn = cgi->XML_GetInt(ssnode, SAVE_AIRCRAFT_TEAM_UCN, -1);
 		if (ucn != -1)
-			LIST_AddPointer(&craft->acTeam, E_GetEmployeeFromChrUCN(ucn));
+			cgi->LIST_AddPointer(&craft->acTeam, E_GetEmployeeFromChrUCN(ucn));
 	}
 
 	tmpInt = cgi->XML_GetInt(p, SAVE_AIRCRAFT_PILOTUCN, -1);
@@ -2943,7 +2943,7 @@ bool AIR_RemoveEmployee (employee_t *employee, aircraft_t *aircraft)
 		return AIR_SetPilot(aircraft, NULL);
 	}
 
-	return LIST_Remove(&aircraft->acTeam, employee);
+	return cgi->LIST_Remove(&aircraft->acTeam, employee);
 }
 
 /**
@@ -3122,7 +3122,7 @@ void AIR_Shutdown (void)
 			craft->alienCargo = NULL;
 		}
 	}
-	LIST_Delete(&ccs.aircraft);
+	cgi->LIST_Delete(&ccs.aircraft);
 
 	AIR_ShutdownCallbacks();
 #ifdef DEBUG

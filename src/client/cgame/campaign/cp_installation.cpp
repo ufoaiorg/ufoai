@@ -38,7 +38,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 int INS_GetCount (void)
 {
-	return LIST_Count(ccs.installations);
+	return cgi->LIST_Count(ccs.installations);
 }
 
 installationType_t INS_GetType (const char *type)
@@ -189,7 +189,7 @@ void INS_DestroyInstallation (installation_t *installation)
 	Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Installation %s was destroyed."), installation->name);
 	MSO_CheckAddNewMessage(NT_INSTALLATION_DESTROY, _("Installation destroyed"), cp_messageBuffer, MSG_CONSTRUCTION);
 
-	LIST_Remove(&ccs.installations, installation);
+	cgi->LIST_Remove(&ccs.installations, installation);
 	cgi->Cvar_Set("mn_installation_count", va("%i", INS_GetCount()));
 }
 
@@ -339,7 +339,7 @@ void INS_InitStartup (void)
  */
 void INS_Shutdown (void)
 {
-	LIST_Delete(&ccs.installations);
+	cgi->LIST_Delete(&ccs.installations);
 #ifdef DEBUG
 	cgi->Cmd_RemoveCommand("debug_listinstallation");
 	cgi->Cmd_RemoveCommand("debug_finishinstallation");

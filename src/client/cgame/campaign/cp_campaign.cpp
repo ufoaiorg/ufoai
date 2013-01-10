@@ -133,7 +133,7 @@ void CP_UpdateCharacterData (linkedList_t *updateCharacters)
 void CP_ParseCharacterData (dbuffer *msg, linkedList_t **updateCharacters)
 {
 	int i, j;
-	const int num = NET_ReadByte(msg);
+	const int num = cgi->NET_ReadByte(msg);
 
 	if (num < 0)
 		cgi->Com_Error(ERR_DROP, "CP_ParseCharacterData: invalid character number found in stream (%i)\n", num);
@@ -143,11 +143,11 @@ void CP_ParseCharacterData (dbuffer *msg, linkedList_t **updateCharacters)
 		OBJZERO(c);
 		c.ucn = NET_ReadShort(msg);
 		c.HP = NET_ReadShort(msg);
-		c.STUN = NET_ReadByte(msg);
-		c.morale = NET_ReadByte(msg);
+		c.STUN = cgi->NET_ReadByte(msg);
+		c.morale = cgi->NET_ReadByte(msg);
 
 		for (j = 0; j < BODYPART_MAXTYPE; ++j)
-			c.wounds.treatmentLevel[j] = NET_ReadByte(msg);
+			c.wounds.treatmentLevel[j] = cgi->NET_ReadByte(msg);
 
 		for (j = 0; j < SKILL_NUM_TYPES + 1; j++)
 			c.chrscore.experience[j] = NET_ReadLong(msg);
@@ -182,9 +182,9 @@ static bool CP_MapIsSelectable (const mission_t *mission, const mapDef_t *md, co
 
 	if (!mission->ufo) {
 		/* a mission without UFO should not use a map with UFO */
-		if (!LIST_IsEmpty(md->ufos))
+		if (!cgi->LIST_IsEmpty(md->ufos))
 			return false;
-	} else if (!LIST_IsEmpty(md->ufos)) {
+	} else if (!cgi->LIST_IsEmpty(md->ufos)) {
 		/* A mission with UFO should use a map with UFO
 		 * first check that list is not empty */
 		const ufoType_t type = mission->ufo->ufotype;
@@ -195,7 +195,7 @@ static bool CP_MapIsSelectable (const mission_t *mission, const mapDef_t *md, co
 		else
 			ufoID = cgi->Com_UFOTypeToShortName(type);
 
-		if (!LIST_ContainsString(md->ufos, ufoID))
+		if (!cgi->LIST_ContainsString(md->ufos, ufoID))
 			return false;
 	}
 
@@ -849,7 +849,7 @@ void CP_StartSelectedMission (void)
 	}
 
 	/* if we retry a mission we have to drop from the current game before */
-	SV_Shutdown("Server quit.", false);
+	cgi->SV_Shutdown("Server quit.", false);
 	cgi->CL_Disconnect();
 
 	CP_CreateBattleParameters(mis, battleParam, aircraft);
@@ -1203,7 +1203,7 @@ void CP_Shutdown (void)
 		/** @todo Where does this belong? */
 		for (i = 0; i < ccs.numAlienCategories; i++) {
 			alienTeamCategory_t *alienCat = &ccs.alienCategories[i];
-			LIST_Delete(&alienCat->equipment);
+			cgi->LIST_Delete(&alienCat->equipment);
 		}
 
 		cgi->Cvar_SetValue("cl_geoscape_overlay", 0);

@@ -139,15 +139,15 @@ static void UR_DialogInitStore_f (void)
 		const capacities_t *capacity = &installation->ufoCapacity;
 		if (capacity->max > 0 && capacity->max > capacity->cur) {
 			Com_sprintf(cap, lengthof(cap), "%i/%i", (capacity->max - capacity->cur), capacity->max);
-			LIST_AddString(&recoveryYardName, installation->name);
-			LIST_AddString(&recoveryYardCapacity, cap);
+			cgi->LIST_AddString(&recoveryYardName, installation->name);
+			cgi->LIST_AddString(&recoveryYardCapacity, cap);
 			count++;
 		}
 	}
 
 	if (count == 0) {
 		/* No UFO base with proper conditions, show a hint and disable list. */
-		LIST_AddString(&recoveryYardName, _("No free UFO yard available."));
+		cgi->LIST_AddString(&recoveryYardName, _("No free UFO yard available."));
 		cgi->UI_ExecuteConfunc("uforecovery_tabselect sell");
 		cgi->UI_ExecuteConfunc("btbasesel disable");
 	} else {
@@ -215,7 +215,7 @@ static void UR_DialogFillNations (void)
 		char row[512];
 		Com_sprintf(row, lengthof(row), "%s\t\t\t%i\t\t%s", _(nation->name),
 			ufoRecovery.ufoNations[i].price, NAT_GetHappinessString(nation));
-		LIST_AddString(&nationList, row);
+		cgi->LIST_AddString(&nationList, row);
 	}
 
 	cgi->UI_RegisterLinkedListText(TEXT_UFORECOVERY_NATIONS, nationList);

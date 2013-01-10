@@ -92,32 +92,32 @@ static void PR_UpdateProductionList (const base_t* base)
 		const production_t *prod = &queue->items[i];
 		if (PR_IsItem(prod)) {
 			const objDef_t *od = prod->data.data.item;
-			LIST_AddString(&productionList, va("%s", _(od->name)));
-			LIST_AddString(&productionAmount, va("%i", B_ItemInBase(prod->data.data.item, base)));
-			LIST_AddString(&productionQueued, va("%i", prod->amount));
+			cgi->LIST_AddString(&productionList, va("%s", _(od->name)));
+			cgi->LIST_AddString(&productionAmount, va("%i", B_ItemInBase(prod->data.data.item, base)));
+			cgi->LIST_AddString(&productionQueued, va("%i", prod->amount));
 		} else if (PR_IsAircraft(prod)) {
 			const aircraft_t *aircraftTemplate = prod->data.data.aircraft;
 
-			LIST_AddString(&productionList, va("%s", _(aircraftTemplate->name)));
-			LIST_AddString(&productionAmount, va("%i", AIR_CountInBaseByTemplate(base, aircraftTemplate)));
-			LIST_AddString(&productionQueued, va("%i", prod->amount));
+			cgi->LIST_AddString(&productionList, va("%s", _(aircraftTemplate->name)));
+			cgi->LIST_AddString(&productionAmount, va("%i", AIR_CountInBaseByTemplate(base, aircraftTemplate)));
+			cgi->LIST_AddString(&productionQueued, va("%i", prod->amount));
 		} else if (PR_IsDisassembly(prod)) {
 			const storedUFO_t *ufo = prod->data.data.ufo;
 
-			LIST_AddString(&productionList, va("%s (%.0f%%)", UFO_TypeToName(ufo->ufoTemplate->ufotype), ufo->condition * 100));
-			LIST_AddString(&productionAmount, va("%i", US_UFOsInStorage(ufo->ufoTemplate, ufo->installation)));
-			LIST_AddString(&productionQueued, "1");
+			cgi->LIST_AddString(&productionList, va("%s (%.0f%%)", UFO_TypeToName(ufo->ufoTemplate->ufotype), ufo->condition * 100));
+			cgi->LIST_AddString(&productionAmount, va("%i", US_UFOsInStorage(ufo->ufoTemplate, ufo->installation)));
+			cgi->LIST_AddString(&productionQueued, "1");
 		}
 	}
 
 	/* Then spacers ... */
 	for (i = 0; i < QUEUE_SPACERS; i++) {
-		LIST_AddString(&productionList, "");
-		LIST_AddString(&productionAmount, "");
-		LIST_AddString(&productionQueued, "");
+		cgi->LIST_AddString(&productionList, "");
+		cgi->LIST_AddString(&productionAmount, "");
+		cgi->LIST_AddString(&productionQueued, "");
 	}
 
-	LIST_Delete(&productionItemList);
+	cgi->LIST_Delete(&productionItemList);
 
 	/* Then go through all object definitions ... */
 	if (produceCategory == FILTER_DISASSEMBLY) {
@@ -133,10 +133,10 @@ static void PR_UpdateProductionList (const base_t* base)
 			if (ufo->disassembly)
 				continue;
 
-			LIST_AddPointer(&productionItemList, ufo);
-			LIST_AddString(&productionList, va("%s (%.0f%%)", UFO_TypeToName(ufo->ufoTemplate->ufotype), ufo->condition * 100));
-			LIST_AddString(&productionAmount, va("%i", US_UFOsInStorage(ufo->ufoTemplate, ufo->installation)));
-			LIST_AddString(&productionQueued, "");
+			cgi->LIST_AddPointer(&productionItemList, ufo);
+			cgi->LIST_AddString(&productionList, va("%s (%.0f%%)", UFO_TypeToName(ufo->ufoTemplate->ufotype), ufo->condition * 100));
+			cgi->LIST_AddString(&productionAmount, va("%i", US_UFOsInStorage(ufo->ufoTemplate, ufo->installation)));
+			cgi->LIST_AddString(&productionQueued, "");
 		}
 	} else if (produceCategory == FILTER_AIRCRAFT) {
 		for (i = 0; i < ccs.numAircraftTemplates; i++) {
@@ -153,10 +153,10 @@ static void PR_UpdateProductionList (const base_t* base)
 					aircraftTemplate->ufotype, aircraftTemplate->tech->id, aircraftTemplate->tech->produceTime);
 
 			if (aircraftTemplate->tech->produceTime > 0 && RS_IsResearched_ptr(aircraftTemplate->tech)) {
-				LIST_AddPointer(&productionItemList, aircraftTemplate);
-				LIST_AddString(&productionList, va("%s", _(aircraftTemplate->name)));
-				LIST_AddString(&productionAmount, va("%i", AIR_CountInBaseByTemplate(base, aircraftTemplate)));
-				LIST_AddString(&productionQueued, "");
+				cgi->LIST_AddPointer(&productionItemList, aircraftTemplate);
+				cgi->LIST_AddString(&productionList, va("%s", _(aircraftTemplate->name)));
+				cgi->LIST_AddString(&productionAmount, va("%i", AIR_CountInBaseByTemplate(base, aircraftTemplate)));
+				cgi->LIST_AddString(&productionQueued, "");
 			}
 		}
 	} else {
@@ -169,11 +169,11 @@ static void PR_UpdateProductionList (const base_t* base)
 			/* We will not show items that are not producible.
 			 * We can only produce what was researched before. */
 			if (RS_IsResearched_ptr(tech) && PR_ItemIsProduceable(od) && INV_ItemMatchesFilter(od, produceCategory)) {
-				LIST_AddPointer(&productionItemList, od);
+				cgi->LIST_AddPointer(&productionItemList, od);
 
-				LIST_AddString(&productionList, va("%s", _(od->name)));
-				LIST_AddString(&productionAmount, va("%i", B_ItemInBase(od, base)));
-				LIST_AddString(&productionQueued, "");
+				cgi->LIST_AddString(&productionList, va("%s", _(od->name)));
+				cgi->LIST_AddString(&productionAmount, va("%i", B_ItemInBase(od, base)));
+				cgi->LIST_AddString(&productionQueued, "");
 			}
 		}
 	}
@@ -417,19 +417,19 @@ static void PR_ProductionListRightClick_f (void)
 		const int idx = num - queue->numItems - QUEUE_SPACERS;
 
 		if (produceCategory == FILTER_AIRCRAFT) {
-			const aircraft_t *aircraftTemplate = (const aircraft_t*)LIST_GetByIdx(productionItemList, idx);
+			const aircraft_t *aircraftTemplate = (const aircraft_t*)cgi->LIST_GetByIdx(productionItemList, idx);
 			/* aircraftTemplate may be empty if rclicked below real entry.
 			 * UFO research definition must not have a tech assigned,
 			 * only RS_CRAFT types have */
 			if (aircraftTemplate && aircraftTemplate->tech)
 				UP_OpenWith(aircraftTemplate->tech->id);
 		} else if (produceCategory == FILTER_DISASSEMBLY) {
-			const storedUFO_t *ufo = (const storedUFO_t*)LIST_GetByIdx(productionItemList, idx);
+			const storedUFO_t *ufo = (const storedUFO_t*)cgi->LIST_GetByIdx(productionItemList, idx);
 			if (ufo && ufo->ufoTemplate && ufo->ufoTemplate->tech) {
 				UP_OpenWith(ufo->ufoTemplate->tech->id);
 			}
 		} else {
-			objDef_t *od = (objDef_t*)LIST_GetByIdx(productionItemList, idx);
+			objDef_t *od = (objDef_t*)cgi->LIST_GetByIdx(productionItemList, idx);
 			const technology_t *tech = RS_GetTechForItem(od);
 
 			/* Open up UFOpaedia for this entry. */
@@ -482,14 +482,14 @@ static void PR_ProductionListClick_f (void)
 		const int idx = num - queue->numItems - QUEUE_SPACERS;
 
 		if (produceCategory == FILTER_DISASSEMBLY) {
-			storedUFO_t *ufo = (storedUFO_t*)LIST_GetByIdx(productionItemList, idx);
+			storedUFO_t *ufo = (storedUFO_t*)cgi->LIST_GetByIdx(productionItemList, idx);
 
 			PR_ClearSelected();
 			PR_SetData(&selectedData, PRODUCTION_TYPE_DISASSEMBLY, ufo);
 
 			PR_ProductionInfo(base);
 		} else if (produceCategory == FILTER_AIRCRAFT) {
-			aircraft_t *aircraftTemplate = (aircraft_t*)LIST_GetByIdx(productionItemList, idx);
+			aircraft_t *aircraftTemplate = (aircraft_t*)cgi->LIST_GetByIdx(productionItemList, idx);
 			if (!aircraftTemplate) {
 				Com_DPrintf(DEBUG_CLIENT, "PR_ProductionListClick_f: No item found at the list-position %i!\n", idx);
 				return;
@@ -504,7 +504,7 @@ static void PR_ProductionListClick_f (void)
 				PR_ProductionInfo(base);
 			}
 		} else {
-			objDef_t *od = (objDef_t*)LIST_GetByIdx(productionItemList, idx);
+			objDef_t *od = (objDef_t*)cgi->LIST_GetByIdx(productionItemList, idx);
 			const technology_t *tech = RS_GetTechForItem(od);
 
 			/* We can only produce items that fulfill the following conditions... */
@@ -550,15 +550,15 @@ static void PR_ProductionType_f (void)
 	PR_ClearSelectedItems();
 
 	/* Select first entry in the list (if any). */
-	if (LIST_Count(productionItemList) > 0) {
+	if (cgi->LIST_Count(productionItemList) > 0) {
 		if (produceCategory == FILTER_AIRCRAFT) {
-			const aircraft_t *aircraft = (const aircraft_t*)LIST_GetByIdx(productionItemList, 0);
+			const aircraft_t *aircraft = (const aircraft_t*)cgi->LIST_GetByIdx(productionItemList, 0);
 			PR_SetData(&selectedData, PRODUCTION_TYPE_AIRCRAFT, aircraft);
 		} else if (produceCategory == FILTER_DISASSEMBLY) {
-			const storedUFO_t *storedUFO = (const storedUFO_t*)LIST_GetByIdx(productionItemList, 0);
+			const storedUFO_t *storedUFO = (const storedUFO_t*)cgi->LIST_GetByIdx(productionItemList, 0);
 			PR_SetData(&selectedData, PRODUCTION_TYPE_DISASSEMBLY, storedUFO);
 		} else {
-			const objDef_t *item = (const objDef_t*)LIST_GetByIdx(productionItemList, 0);
+			const objDef_t *item = (const objDef_t*)cgi->LIST_GetByIdx(productionItemList, 0);
 			PR_SetData(&selectedData, PRODUCTION_TYPE_ITEM, item);
 		}
 	}

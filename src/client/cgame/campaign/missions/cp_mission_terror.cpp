@@ -96,7 +96,7 @@ static const city_t* CP_ChooseCity (void)
 	if (ccs.numCities > 0) {
 		const int randnumber = rand() % ccs.numCities;
 
-		return (city_t*) LIST_GetByIdx(ccs.cities, randnumber);
+		return (city_t*) cgi->LIST_GetByIdx(ccs.cities, randnumber);
 	}
 
 	return NULL;

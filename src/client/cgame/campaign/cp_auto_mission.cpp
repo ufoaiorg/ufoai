@@ -262,7 +262,7 @@ static void AM_FillTeamFromBattleParams (autoMissionBattle_t *battle, const batt
 	battle->nUnits[AUTOMISSION_TEAM_TYPE_ALIEN] = missionParams->aliens;
 	battle->actUnits[AUTOMISSION_TEAM_TYPE_ALIEN] = missionParams->aliens;
 	if (missionParams->aliens > 0) {
-		const equipDef_t *ed = INV_GetEquipmentDefinitionByID(missionParams->alienEquipment);
+		const equipDef_t *ed = cgi->INV_GetEquipmentDefinitionByID(missionParams->alienEquipment);
 		const alienTeamGroup_t *alienTeamGroup = missionParams->alienTeamGroup;
 		int unitIDX;
 		for (unitIDX = 0; unitIDX < missionParams->aliens; unitIDX++) {

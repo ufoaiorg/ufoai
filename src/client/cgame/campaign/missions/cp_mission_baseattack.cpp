@@ -66,7 +66,7 @@ void CP_BaseAttackMissionIsFailure (mission_t *mission)
 		base->baseStatus = BASE_WORKING;
 
 		/* clean up the fakeAircraft */
-		LIST_Delete(&baseAttackFakeAircraft.acTeam);
+		cgi->LIST_Delete(&baseAttackFakeAircraft.acTeam);
 
 		base->aircraftCurrent = AIR_GetFirstFromBase(base);
 	}
@@ -124,7 +124,7 @@ void CP_BaseAttackMissionDestroyBase (mission_t *mission)
 	Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Your base: %s has been destroyed! All employees killed and all equipment destroyed."), base->name);
 	MS_AddNewMessage(_("Notice"), cp_messageBuffer);
 
-	LIST_Delete(&baseAttackFakeAircraft.acTeam);
+	cgi->LIST_Delete(&baseAttackFakeAircraft.acTeam);
 	B_Destroy(base);
 	CP_GameTimeStop();
 

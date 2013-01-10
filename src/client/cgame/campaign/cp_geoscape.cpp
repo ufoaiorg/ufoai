@@ -2276,13 +2276,13 @@ bool GEO_PositionFitsTCPNTypes (const vec2_t pos, const linkedList_t* terrainTyp
 	if (MapIsWater(GEO_GetColor(pos, MAPTYPE_TERRAIN, NULL)))
 		return false;
 
-	if (!terrainTypes || LIST_ContainsString(terrainTypes, terrainType) || (coast && LIST_ContainsString(terrainTypes, "coast"))) {
-		if (!cultureTypes || LIST_ContainsString(cultureTypes, cultureType)) {
-			if (!populationTypes || LIST_ContainsString(populationTypes, populationType)) {
+	if (!terrainTypes || cgi->LIST_ContainsString(terrainTypes, terrainType) || (coast && cgi->LIST_ContainsString(terrainTypes, "coast"))) {
+		if (!cultureTypes || cgi->LIST_ContainsString(cultureTypes, cultureType)) {
+			if (!populationTypes || cgi->LIST_ContainsString(populationTypes, populationType)) {
 				const nation_t *nationAtPos = GEO_GetNation(pos);
 				if (!nations)
 					return true;
-				if (nationAtPos && (!nations || LIST_ContainsString(nations, nationAtPos->id))) {
+				if (nationAtPos && (!nations || cgi->LIST_ContainsString(nations, nationAtPos->id))) {
 					return true;
 				}
 			}

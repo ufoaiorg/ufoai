@@ -168,7 +168,7 @@ static void E_EmployeeList_f (void)
 	/* reset the employee count */
 	employeesInCurrentList = 0;
 
-	LIST_Delete(&employeeList);
+	cgi->LIST_Delete(&employeeList);
 	/* make sure, that we are using the linked list */
 	cgi->UI_ResetData(TEXT_LIST);
 	employeeListName = NULL;
@@ -180,8 +180,8 @@ static void E_EmployeeList_f (void)
 		/* don't show employees being transfered to other bases */
 		if (e->transfer)
 			continue;
-		LIST_AddPointer(&employeeListName, e->chr.name);
-		LIST_AddPointer(&employeeList, e);
+		cgi->LIST_AddPointer(&employeeListName, e->chr.name);
+		cgi->LIST_AddPointer(&employeeList, e);
 		employeesInCurrentList++;
 	}
 	cgi->UI_RegisterLinkedListText(TEXT_LIST, employeeListName);
@@ -254,7 +254,7 @@ int E_GenerateHiredEmployeesList (const base_t *base)
  */
 employee_t* E_GetEmployeeByMenuIndex (int num)
 {
-	return (employee_t*)LIST_GetByIdx(employeeList, num);
+	return (employee_t*)cgi->LIST_GetByIdx(employeeList, num);
 }
 
 /**

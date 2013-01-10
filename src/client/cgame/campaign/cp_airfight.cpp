@@ -121,7 +121,7 @@ static bool AIRFIGHT_AddProjectile (const base_t* attackingBase, const installat
 	}
 
 	if (sound != NULL)
-		S_StartLocalSample(sound, 1.0f);
+		cgi->S_StartLocalSample(sound, 1.0f);
 
 	return true;
 }
@@ -627,10 +627,10 @@ static void AIRFIGHT_ProjectileHits (const campaign_t* campaign, aircraftProject
 		if (target->damage <= 0) {
 			/* Target is destroyed */
 			AIRFIGHT_ActionsAfterAirfight(campaign, projectile->attackingAircraft, target, target->type == AIRCRAFT_UFO);
-			S_StartLocalSample("geoscape/combat-explosion", 1.0f);
+			cgi->S_StartLocalSample("geoscape/combat-explosion", 1.0f);
 		} else {
 			if (projectile->rocket)
-				S_StartLocalSample("geoscape/combat-rocket-exp", 1.0f);
+				cgi->S_StartLocalSample("geoscape/combat-rocket-exp", 1.0f);
 		}
 	}
 }

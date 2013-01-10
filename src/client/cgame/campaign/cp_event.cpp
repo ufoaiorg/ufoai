@@ -67,7 +67,7 @@ void CP_FreeDynamicEventMail (void)
 {
 	/* the pointers are not freed, this is done with the
 	 * pool clear in CP_ResetCampaignData */
-	LIST_Delete(&eventMails);
+	cgi->LIST_Delete(&eventMails);
 }
 
 /** @brief Valid event mail parameters */

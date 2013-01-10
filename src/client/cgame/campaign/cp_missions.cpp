@@ -357,7 +357,7 @@ void CP_CreateBattleParameters (mission_t *mission, battleParam_t *param, const 
 
 		Com_sprintf(mission->onwin, sizeof(mission->onwin), "cp_uforecovery_init %s %f", ufo->id, ufoCondition);
 		/* Set random map UFO if this is a random map */
-		if (mission->mapDef->map[0] == '+' && !LIST_IsEmpty(mission->mapDef->ufos)) {
+		if (mission->mapDef->map[0] == '+' && !cgi->LIST_IsEmpty(mission->mapDef->ufos)) {
 			/* set rm_ufo to the ufo type used */
 			cgi->Cvar_Set("rm_ufo", cgi->Com_GetRandomMapAssemblyNameForCraft(shortUFOType));
 		}
@@ -368,7 +368,7 @@ void CP_CreateBattleParameters (mission_t *mission, battleParam_t *param, const 
 		if (mission->category == INTERESTCATEGORY_RESCUE) {
 			cgi->Cvar_Set("rm_crashed", cgi->Com_GetRandomMapAssemblyNameForCrashedCraft(mission->data.aircraft->id));
 		}
-		if (!LIST_IsEmpty(mission->mapDef->aircraft))
+		if (!cgi->LIST_IsEmpty(mission->mapDef->aircraft))
 			cgi->Cvar_Set("rm_drop", cgi->Com_GetRandomMapAssemblyNameForCraft(aircraft->id));
 	}
 }
@@ -826,7 +826,7 @@ void CP_MissionRemove (mission_t *mission)
 	/* Notifications */
 	CP_MissionRemoveFromGeoscape(mission);
 
-	if (!LIST_Remove(&ccs.missions, mission))
+	if (!cgi->LIST_Remove(&ccs.missions, mission))
 		cgi->Com_Error(ERR_DROP, "CP_MissionRemove: Could not find mission '%s' to remove.\n", mission->id);
 }
 
@@ -1092,7 +1092,7 @@ void CP_MissionEnd (const campaign_t *campaign, mission_t* mission, const battle
 
 	/* update the character stats */
 	CP_UpdateCharacterData(ccs.updateCharacters);
-	LIST_Delete(&ccs.updateCharacters);
+	cgi->LIST_Delete(&ccs.updateCharacters);
 
 	/* update stats */
 	CP_UpdateCharacterStats(base, aircraft);
@@ -1466,7 +1466,7 @@ static inline void CP_SetMissionName (mission_t *mission)
 			mission->category, mission->initialOverallInterest, num);
 
 		/* if mission list is empty, the id is unique for sure */
-		if (LIST_IsEmpty(ccs.missions))
+		if (cgi->LIST_IsEmpty(ccs.missions))
 			return;
 
 		/* check whether a mission with the same id already exists in the list
@@ -2030,7 +2030,7 @@ void MIS_InitStartup (void)
  */
 void MIS_Shutdown (void)
 {
-	LIST_Delete(&ccs.missions);
+	cgi->LIST_Delete(&ccs.missions);
 
 	MIS_ShutdownCallbacks();
 #ifdef DEBUG

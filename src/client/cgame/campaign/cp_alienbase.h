@@ -37,7 +37,7 @@ typedef struct alienBase_s {
 #define AB_Foreach(var) LIST_Foreach(ccs.alienBases, alienBase_t, var)
 alienBase_t* AB_GetByIDX(int baseIDX);
 
-#define AB_Exists() (!LIST_IsEmpty(ccs.alienBases))
+#define AB_Exists() (!cgi->LIST_IsEmpty(ccs.alienBases))
 
 void AB_SetAlienBasePosition(vec2_t pos);
 alienBase_t* AB_BuildBase(const vec2_t pos);

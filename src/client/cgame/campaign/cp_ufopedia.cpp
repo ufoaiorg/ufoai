@@ -190,7 +190,7 @@ static void UP_DisplayTechTree (const technology_t* t)
 	upTechtree = NULL;
 
 	if (required->numLinks <= 0)
-		LIST_AddString(&upTechtree, _("No requirements"));
+		cgi->LIST_AddString(&upTechtree, _("No requirements"));
 	else {
 		int i;
 		for (i = 0; i < required->numLinks; i++) {
@@ -205,7 +205,7 @@ static void UP_DisplayTechTree (const technology_t* t)
 				if (!UP_TechGetsDisplayed(techRequired))
 					continue;
 
-				LIST_AddString(&upTechtree, _(techRequired->name));
+				cgi->LIST_AddString(&upTechtree, _(techRequired->name));
 			}
 		}
 	}
@@ -251,7 +251,7 @@ void UP_AircraftItemDescription (const objDef_t *item)
 	const technology_t *tech;
 
 	/* Set menu text node content to null. */
-	INV_ItemDescription(NULL);
+	cgi->INV_ItemDescription(NULL);
 	*itemText = '\0';
 
 	/* no valid item id given */
@@ -343,7 +343,7 @@ void UP_AircraftItemDescription (const objDef_t *item)
  */
 void UP_AircraftDescription (const technology_t* tech)
 {
-	INV_ItemDescription(NULL);
+	cgi->INV_ItemDescription(NULL);
 
 	/* ensure that the buffer is emptied in every case */
 	upBuffer[0] = '\0';
@@ -408,7 +408,7 @@ void UP_UGVDescription (const ugv_t *ugvType)
 	tech = RS_GetTechByProvided(ugvType->id);
 	assert(tech);
 
-	INV_ItemDescription(NULL);
+	cgi->INV_ItemDescription(NULL);
 
 	/* Set name of ugv/robot */
 	cgi->Cvar_Set("mn_itemname", _(tech->name));
@@ -658,7 +658,7 @@ static void UP_Article (technology_t* tech, eventMail_t *mail)
 				for (i = 0; i < cgi->csi->numODs; i++) {
 					const objDef_t *od = INVSH_GetItemByIDX(i);
 					if (Q_streq(tech->provides, od->id)) {
-						INV_ItemDescription(od);
+						cgi->INV_ItemDescription(od);
 						UP_DisplayTechTree(tech);
 						cgi->Cvar_Set("mn_upmetadata", "1");
 						break;

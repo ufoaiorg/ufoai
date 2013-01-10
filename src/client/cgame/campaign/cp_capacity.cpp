@@ -71,23 +71,23 @@ void CAP_RemoveAircraftExceedingCapacity (base_t* base, baseCapacities_t capacit
 		/* Only aircraft in hangar will be destroyed by hangar destruction */
 		if (!AIR_IsAircraftInBase(aircraft)) {
 			if (AIR_IsAircraftOnGeoscape(aircraft))
-				LIST_AddPointer(&awayAircraft, (void*)aircraft);
+				cgi->LIST_AddPointer(&awayAircraft, (void*)aircraft);
 			continue;
 		}
 
 		/* Remove aircraft and aircraft items, but do not fire employees */
 		AIR_DeleteAircraft(aircraft);
-		LIST_Delete(&awayAircraft);
+		cgi->LIST_Delete(&awayAircraft);
 		return;
 	}
-	numAwayAircraft = LIST_Count(awayAircraft);
+	numAwayAircraft = cgi->LIST_Count(awayAircraft);
 
 	if (!numAwayAircraft)
 		return;
 	/* All aircraft are away from base, pick up one and change it's homebase */
 	randomNum = rand() % numAwayAircraft;
-	if (!CL_DisplayHomebasePopup((aircraft_t*)LIST_GetByIdx(awayAircraft, randomNum), false)) {
-		aircraft_t *aircraft = (aircraft_t*)LIST_GetByIdx(awayAircraft, randomNum);
+	if (!CL_DisplayHomebasePopup((aircraft_t*)cgi->LIST_GetByIdx(awayAircraft, randomNum), false)) {
+		aircraft_t *aircraft = (aircraft_t*)cgi->LIST_GetByIdx(awayAircraft, randomNum);
 		/* No base can hold this aircraft */
 		UFO_NotifyPhalanxAircraftRemoved(aircraft);
 		if (!MapIsWater(GEO_GetColor(aircraft->pos, MAPTYPE_TERRAIN, NULL)))
@@ -99,7 +99,7 @@ void CAP_RemoveAircraftExceedingCapacity (base_t* base, baseCapacities_t capacit
 			AIR_DestroyAircraft(aircraft);
 		}
 	}
-	LIST_Delete(&awayAircraft);
+	cgi->LIST_Delete(&awayAircraft);
 }
 
 /**

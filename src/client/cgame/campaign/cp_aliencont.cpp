@@ -121,7 +121,7 @@ void AL_AddAliens (aircraft_t *aircraft)
 			}
 		}
 	}
-	LIST_Delete(&cargo);
+	cgi->LIST_Delete(&cargo);
 	AL_RemoveAliensExceedingCapacity(aircraft->homebase);
 }
 
@@ -149,7 +149,7 @@ void AL_RemoveAliensExceedingCapacity (base_t *base)
 		base->alienContainment->add(item->teamDef, -remove, 0);
 		current = CAP_GetCurrent(base, CAP_ALIENS);
 	}
-	LIST_Delete(&list);
+	cgi->LIST_Delete(&list);
 }
 
 /**

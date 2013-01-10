@@ -127,7 +127,7 @@ static void CP_ParseAlienTeam (const char *name, const char **text)
 					Com_Printf("CP_ParseAlienTeam: alien team category \"%s\" is used with no mission category. It won't be used in game.\n", name);
 				alienCategory->numMissionCategories++;
 			}
-			LIST_Delete(&list);
+			cgi->LIST_Delete(&list);
 		} else if (Q_streq(token, "teaminterest")) {
 			alienTeamGroup_t *group;
 
@@ -167,7 +167,7 @@ static void CP_ParseAlienTeam (const char *name, const char **text)
 							if (teamDef)
 								group->alienTeams[group->numAlienTeams++] = teamDef;
 						}
-						LIST_Delete(&list);
+						cgi->LIST_Delete(&list);
 					} else {
 						cgi->Com_Error(ERR_DROP, "CL_ParseAlienTeam: Unknown token \"%s\"\n", token);
 					}
@@ -179,7 +179,7 @@ static void CP_ParseAlienTeam (const char *name, const char **text)
 		}
 	} while (*text);
 
-	if (LIST_IsEmpty(alienCategory->equipment))
+	if (cgi->LIST_IsEmpty(alienCategory->equipment))
 		Sys_Error("alien category equipment list is empty");
 }
 
@@ -780,22 +780,22 @@ void CP_ParseCampaignData (void)
 	campaign_t *campaign;
 
 	/* pre-stage parsing */
-	FS_BuildFileList("ufos/*.ufo");
-	FS_NextScriptHeader(NULL, NULL, NULL);
+	cgi->FS_BuildFileList("ufos/*.ufo");
+	cgi->FS_NextScriptHeader(NULL, NULL, NULL);
 	text = NULL;
 
-	while ((type = FS_NextScriptHeader("ufos/*.ufo", &name, &text)) != NULL)
+	while ((type = cgi->FS_NextScriptHeader("ufos/*.ufo", &name, &text)) != NULL)
 		CP_ParseScriptFirst(type, name, &text);
 
 	/* fill in IDXs for required research techs */
 	RS_RequiredLinksAssign();
 
 	/* stage two parsing */
-	FS_NextScriptHeader(NULL, NULL, NULL);
+	cgi->FS_NextScriptHeader(NULL, NULL, NULL);
 	text = NULL;
 
 	Com_DPrintf(DEBUG_CLIENT, "Second stage parsing started...\n");
-	while ((type = FS_NextScriptHeader("ufos/*.ufo", &name, &text)) != NULL)
+	while ((type = cgi->FS_NextScriptHeader("ufos/*.ufo", &name, &text)) != NULL)
 		CP_ParseScriptSecond(type, name, &text);
 	INS_LinkTechnologies();
 
@@ -811,8 +811,8 @@ void CP_ParseCampaignData (void)
 
 	for (i = 0, campaign = ccs.campaigns; i < ccs.numCampaigns; i++, campaign++) {
 		/* find the relevant markets */
-		campaign->marketDef = INV_GetEquipmentDefinitionByID(campaign->market);
-		campaign->asymptoticMarketDef = INV_GetEquipmentDefinitionByID(campaign->asymptoticMarket);
+		campaign->marketDef = cgi->INV_GetEquipmentDefinitionByID(campaign->market);
+		campaign->asymptoticMarketDef = cgi->INV_GetEquipmentDefinitionByID(campaign->asymptoticMarket);
 	}
 
 	Com_Printf("Campaign data loaded - size " UFO_SIZE_T " bytes\n", sizeof(ccs));
@@ -829,11 +829,11 @@ void CP_ReadCampaignData (const campaign_t *campaign)
 	const char *type, *name, *text;
 
 	/* stage two parsing */
-	FS_NextScriptHeader(NULL, NULL, NULL);
+	cgi->FS_NextScriptHeader(NULL, NULL, NULL);
 	text = NULL;
 
 	Com_DPrintf(DEBUG_CLIENT, "Second stage parsing started...\n");
-	while ((type = FS_NextScriptHeader("ufos/*.ufo", &name, &text)) != NULL)
+	while ((type = cgi->FS_NextScriptHeader("ufos/*.ufo", &name, &text)) != NULL)
 		CP_ParseScriptCampaignRelated(campaign, type, name, &text);
 
 	/* initialise date */

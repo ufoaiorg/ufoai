@@ -318,7 +318,7 @@ void GAME_CP_Results (dbuffer *msg, int winner, int *numSpawned, int *numAlive, 
 		cgi->UI_ExecuteConfunc("enable_retry");
 
 	cgi->CL_Disconnect();
-	SV_Shutdown("Mission end", false);
+	cgi->SV_Shutdown("Mission end", false);
 }
 
 bool GAME_CP_Spawn (chrList_t *chrList)
@@ -691,5 +691,5 @@ void GAME_CP_Shutdown (void)
 
 	CP_ResetCampaignData();
 
-	SV_Shutdown("Quitting server.", false);
+	cgi->SV_Shutdown("Quitting server.", false);
 }

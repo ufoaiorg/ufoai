@@ -116,7 +116,7 @@ static void TR_EmptyTransferCargo (base_t *destination, transfer_t *transfer, bo
 				LIST_Foreach(cargo, alienCargo_t, item) {
 					destination->alienContainment->add(item->teamDef, item->alive, item->dead);
 				}
-				LIST_Delete(&cargo);
+				cgi->LIST_Delete(&cargo);
 			}
 		}
 		delete transfer->alienCargo;
@@ -132,7 +132,7 @@ static void TR_EmptyTransferCargo (base_t *destination, transfer_t *transfer, bo
 				AIR_DeleteAircraft(aircraft);
 			}
 		}
-		LIST_Delete(&transfer->aircraft);
+		cgi->LIST_Delete(&transfer->aircraft);
 	}
 }
 
@@ -155,7 +155,7 @@ static void TR_TransferEnd (transfer_t *transfer)
 		Com_sprintf(message, sizeof(message), _("Transport mission ended, unloading cargo in %s"), destination->name);
 		MSO_CheckAddNewMessage(NT_TRANSFER_COMPLETED_SUCCESS, _("Transport mission"), message, MSG_TRANSFERFINISHED);
 	}
-	LIST_Remove(&ccs.transfers, transfer);
+	cgi->LIST_Remove(&ccs.transfers, transfer);
 }
 
 bool TR_AddData (transferData_t *transferData, transferCargoType_t type, const void* data)
@@ -215,7 +215,7 @@ transfer_t* TR_TransferStart (base_t *srcBase, transferData_t &transData)
 
 			transfer.hasEmployees = true;
 			E_ResetEmployee(employee);
-			LIST_AddPointer(&transfer.employees[i], (void*) employee);
+			cgi->LIST_AddPointer(&transfer.employees[i], (void*) employee);
 			employee->baseHired = NULL;
 			employee->transfer = true;
 			count++;
@@ -234,7 +234,7 @@ transfer_t* TR_TransferStart (base_t *srcBase, transferData_t &transData)
 		aircraft->status = AIR_TRANSFER;
 		AIR_RemoveEmployees(*aircraft);
 		transfer.hasAircraft = true;
-		LIST_AddPointer(&transfer.aircraft, (void*)aircraft);
+		cgi->LIST_AddPointer(&transfer.aircraft, (void*)aircraft);
 		count++;
 	}
 
@@ -262,7 +262,7 @@ void TR_NotifyAircraftRemoved (const aircraft_t *aircraft)
 	TR_Foreach(transfer) {
 		if (!transfer->hasAircraft)
 			continue;
-		if (LIST_Remove(&transfer->aircraft, aircraft))
+		if (cgi->LIST_Remove(&transfer->aircraft, aircraft))
 			return;
 	}
 }
@@ -293,7 +293,7 @@ static void TR_ListTransfers_f (void)
 
 	if (cgi->Cmd_Argc() == 2) {
 		transIdx = atoi(cgi->Cmd_Argv(1));
-		if (transIdx < 0 || transIdx > LIST_Count(ccs.transfers)) {
+		if (transIdx < 0 || transIdx > cgi->LIST_Count(ccs.transfers)) {
 			Com_Printf("Usage: %s [transferIDX]\nWithout parameter it lists all.\n", cgi->Cmd_Argv(0));
 			return;
 		}
@@ -358,7 +358,7 @@ static void TR_ListTransfers_f (void)
 			LIST_Foreach(cargo, alienCargo_t, item) {
 				Com_Printf("......%s alive: %i dead: %i\n", item->teamDef->id, item->alive, item->dead);
 			}
-			LIST_Delete(&cargo);
+			cgi->LIST_Delete(&cargo);
 		}
 		/* Transfered Aircraft */
 		if (transfer->hasAircraft) {
@@ -523,7 +523,7 @@ bool TR_LoadXML (xmlNode_t *p)
 					return false;
 				}
 
-				LIST_AddPointer(&transfer.employees[empl->type], (void*) empl);
+				cgi->LIST_AddPointer(&transfer.employees[empl->type], (void*) empl);
 				empl->transfer = true;
 			}
 		}
@@ -536,7 +536,7 @@ bool TR_LoadXML (xmlNode_t *p)
 				aircraft_t *aircraft = AIR_AircraftGetFromIDX(j);
 
 				if (aircraft)
-					LIST_AddPointer(&transfer.aircraft, (void*)aircraft);
+					cgi->LIST_AddPointer(&transfer.aircraft, (void*)aircraft);
 			}
 		}
 		LIST_Add(&ccs.transfers, transfer);
@@ -569,9 +569,9 @@ void TR_Shutdown (void)
 			delete transfer->alienCargo;
 			transfer->alienCargo = NULL;
 		}
-		LIST_Delete(&transfer->aircraft);
+		cgi->LIST_Delete(&transfer->aircraft);
 		for (i = EMPL_SOLDIER; i < MAX_EMPL; i++) {
-			LIST_Delete(&transfer->employees[i]);
+			cgi->LIST_Delete(&transfer->employees[i]);
 		}
 	}
 

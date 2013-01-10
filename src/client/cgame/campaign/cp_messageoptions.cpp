@@ -310,7 +310,7 @@ static int MSO_ParseOption (const char *blockName, const char **text)
 		} else if (Q_streq(token, "status")) {
 			if (status != NULL) {
 				Com_Printf("MSO_ParseOption: status already defined. Previous definition ignored.\n");
-				LIST_Delete(&status);
+				cgi->LIST_Delete(&status);
 			} else if (!Com_ParseList(text, &status)) {
 				Com_Printf("MSO_ParseOption: error while parsing option status.\n");
 				return -1;

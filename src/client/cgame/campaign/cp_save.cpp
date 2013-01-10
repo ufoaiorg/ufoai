@@ -456,7 +456,7 @@ static void SAV_GameLoad_f (void)
 	}
 
 	/* Check if savegame exists */
-	if (FS_CheckFile("save/%s.%s", cgi->Cmd_Argv(1), SAVEGAME_EXTENSION) <= 0) {
+	if (cgi->FS_CheckFile("save/%s.%s", cgi->Cmd_Argv(1), SAVEGAME_EXTENSION) <= 0) {
 		Com_Printf("savegame file '%s' doesn't exist or an empty file\n", cgi->Cmd_Argv(1));
 		return;
 	}

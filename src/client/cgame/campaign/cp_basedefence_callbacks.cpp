@@ -77,7 +77,7 @@ static void BDEF_UpdateAircraftItemList (const aircraftSlot_t *slot)
 	/* Copy only those which are researched to buffer */
 	while (*list) {
 		if (AIM_SelectableCraftItem(slot, *list))
-			LIST_AddString(&itemList, _((*list)->name));
+			cgi->LIST_AddString(&itemList, _((*list)->name));
 		list++;
 	}
 
@@ -141,10 +141,10 @@ static void BDEF_SelectItem_f (void)
 static void BDEF_AddSlotToSlotList (const aircraftSlot_t *slot, linkedList_t **slotList)
 {
 	char defBuffer[512];
-	const int size = LIST_Count(*slotList) + 1;
+	const int size = cgi->LIST_Count(*slotList) + 1;
 	if (!slot->item) {
 		Com_sprintf(defBuffer, lengthof(defBuffer), _("%i: empty"), size);
-		LIST_AddString(slotList, defBuffer);
+		cgi->LIST_AddString(slotList, defBuffer);
 	} else {
 		const technology_t *tech;
 		const char *status;
@@ -163,7 +163,7 @@ static void BDEF_AddSlotToSlotList (const aircraftSlot_t *slot, linkedList_t **s
 			tech = RS_GetTechForItem(slot->item);
 
 		Com_sprintf(defBuffer, lengthof(defBuffer), "%i: %s (%s)", size, _(tech->name), status);
-		LIST_AddString(slotList, defBuffer);
+		cgi->LIST_AddString(slotList, defBuffer);
 	}
 }
 
@@ -277,21 +277,21 @@ static void BDEF_BaseDefenceMenuUpdate_f (void)
 	if (installation) {
 		/* we are in the installation defence menu */
 		if (installation->installationTemplate->maxBatteries == 0) {
-			LIST_AddString(&slotList, _("No defence of this type in this installation"));
+			cgi->LIST_AddString(&slotList, _("No defence of this type in this installation"));
 		} else {
 			BDEF_FillSlotList(installation->batteries, installation->installationTemplate->maxBatteries, &slotList);
 		}
 	} else if (bdefType == AC_ITEM_BASE_MISSILE) {
 		/* we are in the base defence menu for missile */
 		if (base->numBatteries == 0) {
-			LIST_AddString(&slotList, _("No defence of this type in this base"));
+			cgi->LIST_AddString(&slotList, _("No defence of this type in this base"));
 		} else {
 			BDEF_FillSlotList(base->batteries, base->numActiveBatteries, &slotList);
 		}
 	} else if (bdefType == AC_ITEM_BASE_LASER) {
 		/* we are in the base defence menu for laser */
 		if (base->numLasers == 0) {
-			LIST_AddString(&slotList, _("No defence of this type in this base"));
+			cgi->LIST_AddString(&slotList, _("No defence of this type in this base"));
 		} else {
 			BDEF_FillSlotList(base->lasers, base->numActiveLasers, &slotList);
 		}

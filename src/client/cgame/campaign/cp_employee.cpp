@@ -38,7 +38,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 int E_CountByType (employeeType_t type)
 {
-	return LIST_Count(ccs.employees[type]);
+	return cgi->LIST_Count(ccs.employees[type]);
 }
 
 /**
@@ -262,7 +262,7 @@ void E_ResetEmployees (void)
 
 	Com_DPrintf(DEBUG_CLIENT, "E_ResetEmployees: Delete all employees\n");
 	for (i = EMPL_SOLDIER; i < MAX_EMPL; i++)
-		LIST_Delete(&ccs.employees[i]);
+		cgi->LIST_Delete(&ccs.employees[i]);
 }
 
 /**
@@ -299,17 +299,17 @@ int E_GetHiredEmployees (const base_t* const base, employeeType_t type, linkedLi
 		return -1;
 	}
 
-	LIST_Delete(hiredEmployees);
+	cgi->LIST_Delete(hiredEmployees);
 
 	E_Foreach(type, employee) {
 		if (!E_IsHired(employee))
 			continue;
 		if (!employee->transfer && (!base || E_IsInBase(employee, base))) {
-			LIST_AddPointer(hiredEmployees, employee);
+			cgi->LIST_AddPointer(hiredEmployees, employee);
 		}
 	}
 
-	return LIST_Count(*hiredEmployees);
+	return cgi->LIST_Count(*hiredEmployees);
 }
 
 /**
@@ -336,7 +336,7 @@ employee_t* E_GetHiredRobot (const base_t* const base, const ugv_t *ugvType)
 		}
 	}
 
-	LIST_Delete(&hiredEmployees);
+	cgi->LIST_Delete(&hiredEmployees);
 
 	if (!employee)
 		Com_DPrintf(DEBUG_CLIENT, "Could not get unhired ugv/robot.\n");
@@ -641,7 +641,7 @@ bool E_DeleteEmployee (employee_t *employee)
 	}
 
 	/* Remove the employee from the global list. */
-	return LIST_Remove(&ccs.employees[type], (void*) employee);
+	return cgi->LIST_Remove(&ccs.employees[type], (void*) employee);
 }
 
 /**
@@ -1211,7 +1211,7 @@ void E_Shutdown (void)
 
 	for (i = EMPL_SOLDIER; i < MAX_EMPL; i++) {
 		const employeeType_t emplType = (employeeType_t)i;
-		LIST_Delete(&ccs.employees[emplType]);
+		cgi->LIST_Delete(&ccs.employees[emplType]);
 	}
 
 	E_ShutdownCallbacks();

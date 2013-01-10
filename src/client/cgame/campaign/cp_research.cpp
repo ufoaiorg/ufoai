@@ -454,7 +454,7 @@ void RS_RequiredLinksAssign (void)
 	}
 
 	/* clean up redirected techs list as it is no longer needed */
-	LIST_Delete(&redirectedTechs);
+	cgi->LIST_Delete(&redirectedTechs);
 }
 
 /**
@@ -1081,7 +1081,7 @@ void RS_ResetTechs (void)
 	OBJZERO(techHashProvided);
 
 	/* delete redirectedTechs, will be filled during parse */
-	LIST_Delete(&redirectedTechs);
+	cgi->LIST_Delete(&redirectedTechs);
 }
 
 /**
@@ -1253,15 +1253,15 @@ void RS_ParseTechnologies (const char *name, const char **text)
 
 					if (Q_streq(token, "default")) {
 						list = NULL;
-						LIST_AddString(&list, token);
+						cgi->LIST_AddString(&list, token);
 						token = cgi->Com_EParse(text, errhead, name);
-						LIST_AddString(&list, token);
+						cgi->LIST_AddString(&list, token);
 					} else if (Q_streq(token, "extra")) {
 						if (!Com_ParseList(text, &list)) {
 							cgi->Com_Error(ERR_DROP, "RS_ParseTechnologies: error while reading extra description tuple");
 						}
-						if (LIST_Count(list) != 2) {
-							LIST_Delete(&list);
+						if (cgi->LIST_Count(list) != 2) {
+							cgi->LIST_Delete(&list);
 							cgi->Com_Error(ERR_DROP, "RS_ParseTechnologies: extra description tuple must contains 2 elements (id string)");
 						}
 					} else {
@@ -1284,14 +1284,14 @@ void RS_ParseTechnologies (const char *name, const char **text)
 					} else {
 						Com_Printf("skipped description for tech '%s'\n", tech->id);
 					}
-					LIST_Delete(&list);
+					cgi->LIST_Delete(&list);
 				} while (*text);
 
 			} else if (Q_streq(token, "redirect")) {
 				token = cgi->Com_EParse(text, errhead, name);
 				/* Store this tech and the parsed tech-id of the target of the redirection for later linking. */
-				LIST_AddPointer(&redirectedTechs, tech);
-				LIST_AddString(&redirectedTechs, token);
+				cgi->LIST_AddPointer(&redirectedTechs, tech);
+				cgi->LIST_AddString(&redirectedTechs, token);
 			} else if (Q_streq(token, "require_AND") || Q_streq(token, "require_OR") || Q_streq(token, "require_for_production")) {
 				/* Link to correct list. */
 				if (Q_streq(token, "require_AND")) {
@@ -1341,7 +1341,7 @@ void RS_ParseTechnologies (const char *name, const char **text)
 								cgi->Com_Error(ERR_DROP, "RS_ParseTechnologies: error while reading required item tuple");
 							}
 
-							if (LIST_Count(list) != 2) {
+							if (cgi->LIST_Count(list) != 2) {
 								cgi->Com_Error(ERR_DROP, "RS_ParseTechnologies: required item tuple must contains 2 elements (id pos)");
 							}
 
@@ -1356,7 +1356,7 @@ void RS_ParseTechnologies (const char *name, const char **text)
 							requiredTemp->links[requiredTemp->numLinks].amount = atoi(amountToken);
 							Com_DPrintf(DEBUG_CLIENT, "RS_ParseTechnologies: require-item - %s - %i\n", requiredTemp->links[requiredTemp->numLinks].id, requiredTemp->links[requiredTemp->numLinks].amount);
 							requiredTemp->numLinks++;
-							LIST_Delete(&list);
+							cgi->LIST_Delete(&list);
 						} else {
 							Com_Printf("RS_ParseTechnologies: \"%s\" Too many 'required' defined. Limit is %i - ignored.\n", name, MAX_TECHLINKS);
 						}
@@ -1390,7 +1390,7 @@ void RS_ParseTechnologies (const char *name, const char **text)
 								cgi->Com_Error(ERR_DROP, "RS_ParseTechnologies: error while reading required alien tuple");
 							}
 
-							if (LIST_Count(list) != 2) {
+							if (cgi->LIST_Count(list) != 2) {
 								cgi->Com_Error(ERR_DROP, "RS_ParseTechnologies: required alien tuple must contains 2 elements (id pos)");
 							}
 
@@ -1402,7 +1402,7 @@ void RS_ParseTechnologies (const char *name, const char **text)
 							/* Set requirement-amount of item. */
 							requiredTemp->links[requiredTemp->numLinks].amount = atoi(amountToken);
 							requiredTemp->numLinks++;
-							LIST_Delete(&list);
+							cgi->LIST_Delete(&list);
 						} else {
 							Com_Printf("RS_ParseTechnologies: \"%s\" Too many 'required' defined. Limit is %i - ignored.\n", name, MAX_TECHLINKS);
 						}
@@ -1414,7 +1414,7 @@ void RS_ParseTechnologies (const char *name, const char **text)
 								cgi->Com_Error(ERR_DROP, "RS_ParseTechnologies: error while reading required item tuple");
 							}
 
-							if (LIST_Count(list) != 2) {
+							if (cgi->LIST_Count(list) != 2) {
 								cgi->Com_Error(ERR_DROP, "RS_ParseTechnologies: required item tuple must contains 2 elements (id pos)");
 							}
 

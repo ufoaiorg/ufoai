@@ -171,7 +171,7 @@ void US_RemoveStoredUFO (storedUFO_t *ufo)
 
 	/* remove ufo */
 	ufo->installation->ufoCapacity.cur--;
-	LIST_Remove(&ccs.storedUFOs, (void*)ufo);
+	cgi->LIST_Remove(&ccs.storedUFOs, (void*)ufo);
 }
 
 
@@ -299,7 +299,7 @@ storedUFO_t *US_GetClosestStoredUFO (const aircraft_t *ufoTemplate, const base_t
  */
 int US_StoredUFOCount (void)
 {
-	return LIST_Count(ccs.storedUFOs);
+	return cgi->LIST_Count(ccs.storedUFOs);
 }
 
 /**
@@ -503,7 +503,7 @@ void UR_InitStartup (void)
  */
 void UR_Shutdown (void)
 {
-	LIST_Delete(&ccs.storedUFOs);
+	cgi->LIST_Delete(&ccs.storedUFOs);
 
 	UR_ShutdownCallbacks();
 #ifdef DEBUG

@@ -72,18 +72,18 @@ static linkedList_t *B_GetNeighbours (const building_t *building)
 	for (i = x; i < x + building->size[0]; i++) {
 		/* North */
 		if (y > 0 && B_GetBuildingAt(base, i, y - 1) != NULL)
-			LIST_AddPointer(&neighbours, (void*)B_GetBuildingAt(base, i, y - 1));
+			cgi->LIST_AddPointer(&neighbours, (void*)B_GetBuildingAt(base, i, y - 1));
 		/* South */
 		if (y < BASE_SIZE - building->size[1] && B_GetBuildingAt(base, i, y + building->size[1]) != NULL)
-			LIST_AddPointer(&neighbours, (void*)B_GetBuildingAt(base, i, y + building->size[1]));
+			cgi->LIST_AddPointer(&neighbours, (void*)B_GetBuildingAt(base, i, y + building->size[1]));
 	}
 	for (i = y; i < y + building->size[1]; i++) {
 		/* West */
 		if (x > 0 && B_GetBuildingAt(base, x - 1, i) != NULL)
-			LIST_AddPointer(&neighbours, (void*)B_GetBuildingAt(base, x - 1, i));
+			cgi->LIST_AddPointer(&neighbours, (void*)B_GetBuildingAt(base, x - 1, i));
 		/* East */
 		if (x < BASE_SIZE - building->size[0] && B_GetBuildingAt(base, x + building->size[0], i) != NULL)
-			LIST_AddPointer(&neighbours, (void*)B_GetBuildingAt(base, x + building->size[0], i));
+			cgi->LIST_AddPointer(&neighbours, (void*)B_GetBuildingAt(base, x + building->size[0], i));
 	}
 	return neighbours;
 }
@@ -103,27 +103,27 @@ static bool B_IsCoherent (const base_t *base)
 
 	OBJZERO(found);
 	while ((bldg = B_GetNextBuilding(base, bldg)) != NULL) {
-		LIST_AddPointer(&queue, (void*)bldg);
+		cgi->LIST_AddPointer(&queue, (void*)bldg);
 		break;
 	}
 	if (!bldg)
 		return true;
 
-	while (!LIST_IsEmpty(queue)) {
+	while (!cgi->LIST_IsEmpty(queue)) {
 		bldg = (building_t*)queue->data;
 		found[bldg->idx] = 1;
-		LIST_RemoveEntry(&queue, queue);
+		cgi->LIST_RemoveEntry(&queue, queue);
 
 		neighbours = B_GetNeighbours(bldg);
 		LIST_Foreach(neighbours, building_t, bldg) {
 			if (found[bldg->idx] == 0) {
 				found[bldg->idx] = 1;
-				LIST_AddPointer(&queue, (void*)bldg);
+				cgi->LIST_AddPointer(&queue, (void*)bldg);
 			}
 		}
-		LIST_Delete(&neighbours);
+		cgi->LIST_Delete(&neighbours);
 	}
-	LIST_Delete(&queue);
+	cgi->LIST_Delete(&queue);
 
 	for (i = 0; i < ccs.numBuildings[base->idx]; i++) {
 		if (found[i] != 1)
@@ -156,40 +156,40 @@ static bool B_AddBlockedTile (base_t *base, int row, int column)
 	found[row][column] = -1;
 
 	/* Get first non blocked tile */
-	for (y = 0; y < BASE_SIZE && LIST_IsEmpty(queue); y++) {
-		for (x = 0; x < BASE_SIZE && LIST_IsEmpty(queue); x++) {
+	for (y = 0; y < BASE_SIZE && cgi->LIST_IsEmpty(queue); y++) {
+		for (x = 0; x < BASE_SIZE && cgi->LIST_IsEmpty(queue); x++) {
 			if (x == column && y == row)
 				continue;
 			if (!B_IsTileBlocked(base, x, y))
-				LIST_AddPointer(&queue, &base->map[y][x]);
+				cgi->LIST_AddPointer(&queue, &base->map[y][x]);
 		}
 	}
 
-	if (LIST_IsEmpty(queue))
+	if (cgi->LIST_IsEmpty(queue))
 		return false;
 
 	/* BS Traversal */
-	while (!LIST_IsEmpty(queue)) {
+	while (!cgi->LIST_IsEmpty(queue)) {
 		baseBuildingTile_t *tile = (baseBuildingTile_t*)queue->data;
-		LIST_RemoveEntry(&queue, queue);
+		cgi->LIST_RemoveEntry(&queue, queue);
 		x = tile->posX;
 		y = tile->posY;
 
 		found[y][x] = 1;
 		/* West */
 		if (x > 0 && !B_IsTileBlocked(base, x - 1, y) && found[y][x - 1] == 0)
-			LIST_AddPointer(&queue, (void*)&base->map[y][x - 1]);
+			cgi->LIST_AddPointer(&queue, (void*)&base->map[y][x - 1]);
 		/* East */
 		if (x < BASE_SIZE - 1 && !B_IsTileBlocked(base, x + 1, y) && found[y][x + 1] == 0)
-			LIST_AddPointer(&queue, (void*)&base->map[y][x + 1]);
+			cgi->LIST_AddPointer(&queue, (void*)&base->map[y][x + 1]);
 		/* North */
 		if (y > 0 && !B_IsTileBlocked(base, x, y - 1) && found[y - 1][x] == 0)
-			LIST_AddPointer(&queue, (void*)&base->map[y - 1][x]);
+			cgi->LIST_AddPointer(&queue, (void*)&base->map[y - 1][x]);
 		/* South */
 		if (y < BASE_SIZE - 1 && !B_IsTileBlocked(base, x, y + 1) && found[y + 1][x] == 0)
-			LIST_AddPointer(&queue, (void*)&base->map[y + 1][x]);
+			cgi->LIST_AddPointer(&queue, (void*)&base->map[y + 1][x]);
 	}
-	LIST_Delete(&queue);
+	cgi->LIST_Delete(&queue);
 
 	/* Check for unreached areas */
 	for (y = 0; y < BASE_SIZE; y++) {
@@ -252,28 +252,28 @@ bool B_IsBuildingDestroyable (const building_t *building)
 
 		while ((bldg = B_GetNextBuilding(base, bldg)) != NULL) {
 			if (bldg != building) {
-				LIST_AddPointer(&queue, (void*)bldg);
+				cgi->LIST_AddPointer(&queue, (void*)bldg);
 				break;
 			}
 		}
 		if (!bldg)
 			return true;
 
-		while (!LIST_IsEmpty(queue)) {
+		while (!cgi->LIST_IsEmpty(queue)) {
 			bldg = (building_t*)queue->data;
 			found[bldg->idx] = 1;
-			LIST_RemoveEntry(&queue, queue);
+			cgi->LIST_RemoveEntry(&queue, queue);
 
 			neighbours = B_GetNeighbours(bldg);
 			LIST_Foreach(neighbours, building_t, bldg) {
 				if (found[bldg->idx] == 0) {
 					found[bldg->idx] = 1;
-					LIST_AddPointer(&queue, (void*)bldg);
+					cgi->LIST_AddPointer(&queue, (void*)bldg);
 				}
 			}
-			LIST_Delete(&neighbours);
+			cgi->LIST_Delete(&neighbours);
 		}
-		LIST_Delete(&queue);
+		cgi->LIST_Delete(&queue);
 
 		for (i = 0; i < ccs.numBuildings[base->idx]; i++) {
 			if (found[i] != 1)
@@ -1181,7 +1181,7 @@ void B_SetUpFirstBase (const campaign_t *campaign, base_t* base)
 	const equipDef_t *ed;
 
 	/* Find the initial equipment definition for current campaign. */
-	ed = INV_GetEquipmentDefinitionByID(campaign->equipment);
+	ed = cgi->INV_GetEquipmentDefinitionByID(campaign->equipment);
 	/* Copy it to base storage. */
 	base->storage = *ed;
 
@@ -1189,7 +1189,7 @@ void B_SetUpFirstBase (const campaign_t *campaign, base_t* base)
 	/** @todo move aircraft to .ufo */
 	/* buy two first aircraft and hire pilots for them. */
 	if (B_GetBuildingStatus(base, B_HANGAR)) {
-		const equipDef_t *equipDef = INV_GetEquipmentDefinitionByID(campaign->soldierEquipment);
+		const equipDef_t *equipDef = cgi->INV_GetEquipmentDefinitionByID(campaign->soldierEquipment);
 		const char *firebird = cgi->Com_DropShipTypeToShortName(DROPSHIP_FIREBIRD);
 		const aircraft_t *firebirdAircraft = AIR_GetAircraft(firebird);
 		aircraft_t *aircraft = AIR_NewAircraft(base, firebirdAircraft);
@@ -1398,7 +1398,7 @@ building_t* B_SetBuildingByClick (base_t *base, const building_t *buildingTempla
 						break;
 					}
 				}
-				LIST_Delete(&neighbours);
+				cgi->LIST_Delete(&neighbours);
 
 				if (!coherent) {
 					CP_Popup(_("Notice"), _("You must build next to existing buildings."));
@@ -1619,7 +1619,7 @@ void B_ParseBaseTemplate (const char *name, const char **text)
 			cgi->Com_Error(ERR_DROP, "B_ParseBaseTemplate: error while reading building tuple");
 		}
 
-		if (LIST_Count(list) != 2) {
+		if (cgi->LIST_Count(list) != 2) {
 			cgi->Com_Error(ERR_DROP, "B_ParseBaseTemplate: building tuple must contains 2 elements (id pos)");
 		}
 
@@ -1658,7 +1658,7 @@ void B_ParseBaseTemplate (const char *name, const char **text)
 			cgi->Com_Error(ERR_DROP, "Base template '%s' has ambiguous positions for buildings set.", baseTemplate->id);
 		map[tile->posY][tile->posX] = true;
 
-		LIST_Delete(&list);
+		cgi->LIST_Delete(&list);
 	} while (*text);
 
 	/* templates without the must-have buildings can't be used */

@@ -87,8 +87,8 @@ static void B_BuildingAddToList (linkedList_t **buildingList, building_t *buildi
 	assert(building);
 	assert(building->name);
 
-	count = LIST_Count(*buildingList);
-	LIST_AddPointer(buildingList, _(building->name));
+	count = cgi->LIST_Count(*buildingList);
+	cgi->LIST_AddPointer(buildingList, _(building->name));
 	buildingConstructionList[count] = building->tpl;
 }
 
@@ -508,7 +508,7 @@ static void B_BuildingInit (base_t* base)
 	else
 		cgi->UI_ExecuteConfunc("mn_buildings_reset");
 
-	buildingNumber = LIST_Count(buildingList);
+	buildingNumber = cgi->LIST_Count(buildingList);
 	cgi->UI_RegisterLinkedListText(TEXT_BUILDINGS, buildingList);
 }
 

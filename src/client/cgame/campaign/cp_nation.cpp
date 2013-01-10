@@ -417,7 +417,7 @@ bool NAT_ScriptSanityCheck (void)
 
 				/* loop must be backward, as we remove items */
 				for (i = numTypes - 1 ; i >= 0; i--) {
-					if (LIST_ContainsString(md->ufos, cgi->Com_UFOTypeToShortName(ufoTypes[i]))) {
+					if (cgi->LIST_ContainsString(md->ufos, cgi->Com_UFOTypeToShortName(ufoTypes[i]))) {
 						REMOVE_ELEM(ufoTypes, i, numTypes);
 					}
 				}
@@ -907,7 +907,7 @@ void NAT_InitStartup (void)
  */
 void NAT_Shutdown (void)
 {
-	LIST_Delete(&ccs.cities);
+	cgi->LIST_Delete(&ccs.cities);
 
 	cgi->Cmd_RemoveCommand("nation_stats_click");
 	cgi->Cmd_RemoveCommand("nation_update");

@@ -110,7 +110,7 @@ bool CL_DisplayHomebasePopup (aircraft_t *aircraft, bool alwaysDisplay)
 
 	capacity = AIR_GetCapacityByAircraftWeight(aircraft);
 
-	LIST_Delete(&popupListData);
+	cgi->LIST_Delete(&popupListData);
 
 	popupNum = 0;
 	homebase = -1;
@@ -136,7 +136,7 @@ bool CL_DisplayHomebasePopup (aircraft_t *aircraft, bool alwaysDisplay)
 		}
 
 		Com_sprintf(text, sizeof(text), "%s\t%s", base->name, msg);
-		LIST_AddString(&popupListText, text);
+		cgi->LIST_AddString(&popupListText, text);
 		popupNum++;
 	}
 
@@ -341,14 +341,14 @@ void CL_DisplayPopupInterceptMission (mission_t* mission)
 			const char *time = CP_SecondConvert((float)SECONDS_PER_HOUR * distance / aircraft->stats[AIR_STATS_SPEED]);
 			Com_sprintf(aircraftListText, sizeof(aircraftListText), _("%s (%i/%i)\t%s\t%s\t%s"), aircraft->name,
 					teamSize, aircraft->maxTeamSize, statusName, aircraft->homebase->name, time);
-			LIST_AddString(&aircraftList, aircraftListText);
+			cgi->LIST_AddString(&aircraftList, aircraftListText);
 			popupIntercept.aircraft[popupIntercept.numAircraft] = aircraft;
 			popupIntercept.numAircraft++;
 			if (popupIntercept.numAircraft >= POPUP_INTERCEPT_MAX_AIRCRAFT)
 				break;
 		}
 	}
-	LIST_Delete(&aircraftListSorted);
+	cgi->LIST_Delete(&aircraftListSorted);
 
 	if (popupIntercept.numAircraft)
 		cgi->UI_RegisterLinkedListText(TEXT_AIRCRAFT_LIST, aircraftList);
@@ -403,21 +403,21 @@ void CL_DisplayPopupInterceptUFO (aircraft_t* ufo)
 
 			Com_sprintf(aircraftListText, sizeof(aircraftListText), _("%s%s (%i/%i)\t%s\t%s"), enoughFuelMarker, aircraft->name,
 				AIR_GetTeamSize(aircraft), aircraft->maxTeamSize, AIR_AircraftStatusToName(aircraft), aircraft->homebase->name);
-			LIST_AddString(&aircraftList, aircraftListText);
+			cgi->LIST_AddString(&aircraftList, aircraftListText);
 			popupIntercept.aircraft[popupIntercept.numAircraft] = aircraft;
 			popupIntercept.numAircraft++;
 			if (popupIntercept.numAircraft >= POPUP_INTERCEPT_MAX_AIRCRAFT)
 				break;
 		}
 	}
-	LIST_Delete(&aircraftListSorted);
+	cgi->LIST_Delete(&aircraftListSorted);
 
 	base = NULL;
 	while ((base = B_GetNext(base)) != NULL) {
 		/* Check if the base should be displayed in base list
 		 * don't check range because maybe UFO will get closer */
 		if (AII_BaseCanShoot(base))
-			LIST_AddString(&baseList, va("^B%s", base->name));
+			cgi->LIST_AddString(&baseList, va("^B%s", base->name));
 	}	/* bases */
 
 	if (popupIntercept.numAircraft)
@@ -429,7 +429,7 @@ void CL_DisplayPopupInterceptUFO (aircraft_t* ufo)
 		/* Check if the installation should be displayed in base list
 		 * don't check range because maybe UFO will get closer */
 		if (AII_InstallationCanShoot(installation))
-			LIST_AddString(&baseList, va("^B%s", installation->name));
+			cgi->LIST_AddString(&baseList, va("^B%s", installation->name));
 	}
 
 	if (baseList)

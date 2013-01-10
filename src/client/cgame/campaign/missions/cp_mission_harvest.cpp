@@ -117,7 +117,7 @@ static bool CP_ChooseNation (const mission_t *mission, linkedList_t **nationList
 		const nationInfo_t *stats = NAT_GetCurrentMonthInfo(nation);
 		randomNumber -= OFFSET + stats->xviInfection;
 		if (randomNumber < 0) {
-			LIST_AddString(nationList, nation->id);
+			cgi->LIST_AddString(nationList, nation->id);
 			return true;
 		}
 	}
@@ -156,7 +156,7 @@ void CP_HarvestMissionGo (mission_t *mission)
 			CP_MissionRemove(mission);
 			return;
 		}
-		LIST_Delete(&nationList);
+		cgi->LIST_Delete(&nationList);
 	} else {
 		Com_Printf("CP_HarvestMissionGo: No map found, remove mission.\n");
 		CP_MissionRemove(mission);

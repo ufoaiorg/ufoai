@@ -108,7 +108,7 @@ void AB_DestroyBase (alienBase_t *base)
 {
 	assert(base);
 
-	LIST_Remove(&ccs.alienBases, (void*)base);
+	cgi->LIST_Remove(&ccs.alienBases, (void*)base);
 
 	/* Alien loose all their interest in supply if there's no base to send the supply */
 	if (!AB_Exists())
@@ -314,7 +314,7 @@ void AB_SupplyBase (alienBase_t *base, bool decreaseStealth)
  */
 int AB_GetAlienBaseNumber (void)
 {
-	return LIST_Count(ccs.alienBases);
+	return cgi->LIST_Count(ccs.alienBases);
 }
 
 #ifdef DEBUG
@@ -418,7 +418,7 @@ void AB_InitStartup (void)
  */
 void AB_Shutdown (void)
 {
-	LIST_Delete(&ccs.alienBases);
+	cgi->LIST_Delete(&ccs.alienBases);
 
 #ifdef DEBUG
 	cgi->Cmd_RemoveCommand("debug_listalienbase");

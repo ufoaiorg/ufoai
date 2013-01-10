@@ -62,7 +62,7 @@ static void AC_Init_f (void)
 			(RS_IsResearched_ptr(tech)) ? _("Researched") : _("Awaiting autopsy"),
 			(1.0f - tech->time / tech->overallTime) * 100, item->alive, item->dead);
 	}
-	LIST_Delete(&list);
+	cgi->LIST_Delete(&list);
 }
 
 /**
@@ -89,7 +89,7 @@ static void AC_KillAll_f (void)
 	LIST_Foreach(list, alienCargo_t, item) {
 		base->alienContainment->add(item->teamDef, -item->alive, item->alive);
 	}
-	LIST_Delete(&list);
+	cgi->LIST_Delete(&list);
 
 	cgi->Cmd_ExecuteString("ui_aliencont_init");
 }
@@ -127,7 +127,7 @@ static void AC_KillOne_f (void)
 			continue;
 		base->alienContainment->add(item->teamDef, -1, 1);
 	}
-	LIST_Delete(&list);
+	cgi->LIST_Delete(&list);
 
 	cgi->Cmd_ExecuteString("ui_aliencont_init");
 }

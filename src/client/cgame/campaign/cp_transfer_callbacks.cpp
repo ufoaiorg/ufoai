@@ -58,9 +58,9 @@ static void TR_ClearTempCargo (void)
 	}
 	for (int i = EMPL_SOLDIER; i < MAX_EMPL; i++) {
 		const employeeType_t emplType = (employeeType_t)i;
-		LIST_Delete(&td.trEmployeesTmp[emplType]);
+		cgi->LIST_Delete(&td.trEmployeesTmp[emplType]);
 	}
-	LIST_Delete(&td.aircraft);
+	cgi->LIST_Delete(&td.aircraft);
 }
 
 /**
@@ -173,7 +173,7 @@ static void TR_CargoList (void)
 			break;
 		case EMPL_SCIENTIST:
 		case EMPL_WORKER: {
-			int emplCount = LIST_Count(td.trEmployeesTmp[emplType]);
+			int emplCount = cgi->LIST_Count(td.trEmployeesTmp[emplType]);
 			if (emplCount <= 0)
 				break;
 			cgi->UI_ExecuteConfunc("ui_cargolist_add \"%s\" \"%s\" %d", (emplType == EMPL_SCIENTIST) ? "scientist" : "worker",
@@ -194,7 +194,7 @@ static void TR_CargoList (void)
 			if (item->alive > 0)
 				cgi->UI_ExecuteConfunc("ui_translist_add \"alive:%s\" \"%s\" %d", item->teamDef->id, va(_("Alive %s"), _(item->teamDef->name)), item->alive);
 		}
-		LIST_Delete(&cargo);
+		cgi->LIST_Delete(&cargo);
 	}
 
 	/* Show all aircraft. */
@@ -212,7 +212,7 @@ static bool TR_AircraftListSelect (const aircraft_t *aircraft)
 {
 	if (!AIR_IsAircraftInBase(aircraft))	/* Aircraft is not in base. */
 		return false;
-	if (LIST_GetPointer(td.aircraft, aircraft))	/* Already on transfer list. */
+	if (cgi->LIST_GetPointer(td.aircraft, aircraft))	/* Already on transfer list. */
 		return false;
 
 	return true;
@@ -273,7 +273,7 @@ static void TR_FillEmployees (const base_t *srcBase, const base_t *destBase)
 					continue;
 
 				/* Skip if already on transfer list. */
-				if (LIST_GetPointer(td.trEmployeesTmp[emplType], (void*) employee))
+				if (cgi->LIST_GetPointer(td.trEmployeesTmp[emplType], (void*) employee))
 					continue;
 
 				if (emplType == EMPL_SOLDIER) {
@@ -295,7 +295,7 @@ static void TR_FillEmployees (const base_t *srcBase, const base_t *destBase)
 		case EMPL_WORKER: {
 			const int hiredSrc = E_CountHired(srcBase, emplType);
 			const int hiredDst = E_CountHired(destBase, emplType);
-			const int trCount = LIST_Count(td.trEmployeesTmp[emplType]);
+			const int trCount = cgi->LIST_Count(td.trEmployeesTmp[emplType]);
 
 			if (hiredSrc <= 0)
 				break;
@@ -343,7 +343,7 @@ static void TR_FillAliens (const base_t *srcBase, const base_t *destBase)
 				item->teamDef->id, str, srcAlive, dstAlive,	0, transferAlive, srcAlive + transferAlive);
 		}
 	}
-	LIST_Delete(&list);
+	cgi->LIST_Delete(&list);
 }
 
 /**
@@ -358,7 +358,7 @@ static void TR_FillAircraft (const base_t *srcBase, const base_t *destBase)
 		if (!AIR_IsAircraftInBase(aircraft))
 			continue;
 		/* Already on transfer list. */
-		if (LIST_GetPointer(td.aircraft, aircraft))
+		if (cgi->LIST_GetPointer(td.aircraft, aircraft))
 			continue;
 
 		cgi->UI_ExecuteConfunc("ui_translist_add \"aircraft:%d\" \"%s\" %d %d %d %d %d",
@@ -444,9 +444,9 @@ static void TR_Add_f (void)
 		if (amount > 0) {
 			if (!TR_AircraftListSelect(aircraft))
 				return;
-			LIST_AddPointer(&td.aircraft, (void*)aircraft);
+			cgi->LIST_AddPointer(&td.aircraft, (void*)aircraft);
 		} else if (amount < 0) {
-			LIST_Remove(&td.aircraft, (void*)aircraft);
+			cgi->LIST_Remove(&td.aircraft, (void*)aircraft);
 		}
 	} else if (Q_strstart(itemId, "ucn:")) {
 		employee_t *employee = E_GetEmployeeFromChrUCN(atoi(itemId + 4));
@@ -455,14 +455,14 @@ static void TR_Add_f (void)
 		if (amount > 0) {
 			if (!E_IsInBase(employee, base))
 				return;
-			if (LIST_GetPointer(td.trEmployeesTmp[employee->type], (void*)employee))
+			if (cgi->LIST_GetPointer(td.trEmployeesTmp[employee->type], (void*)employee))
 				return;
 			if (!TR_CheckEmployee(employee, td.transferBase))
 				return;
 
-			LIST_AddPointer(&td.trEmployeesTmp[employee->type], (void*)employee);
+			cgi->LIST_AddPointer(&td.trEmployeesTmp[employee->type], (void*)employee);
 		} else if (amount < 0) {
-			LIST_Remove(&td.trEmployeesTmp[employee->type], (void*)employee);
+			cgi->LIST_Remove(&td.trEmployeesTmp[employee->type], (void*)employee);
 		}
 	} else if (Q_streq(itemId, "scientist")) {
 		if (amount > 0) {
@@ -472,16 +472,16 @@ static void TR_Add_f (void)
 				if (!E_IsInBase(employee, base))
 					continue;
 				/* Already on transfer list. */
-				if (LIST_GetPointer(td.trEmployeesTmp[EMPL_SCIENTIST], (void*)employee))
+				if (cgi->LIST_GetPointer(td.trEmployeesTmp[EMPL_SCIENTIST], (void*)employee))
 					continue;
 				if (!TR_CheckEmployee(employee, td.transferBase))
 					continue;
-				LIST_AddPointer(&td.trEmployeesTmp[EMPL_SCIENTIST], (void*) employee);
+				cgi->LIST_AddPointer(&td.trEmployeesTmp[EMPL_SCIENTIST], (void*) employee);
 				amount--;
 			}
 		} else if (amount < 0) {
-			while (!LIST_IsEmpty(td.trEmployeesTmp[EMPL_SCIENTIST]) && amount < 0) {
-				if (LIST_RemoveEntry(&td.trEmployeesTmp[EMPL_SCIENTIST], td.trEmployeesTmp[EMPL_SCIENTIST]))
+			while (!cgi->LIST_IsEmpty(td.trEmployeesTmp[EMPL_SCIENTIST]) && amount < 0) {
+				if (cgi->LIST_RemoveEntry(&td.trEmployeesTmp[EMPL_SCIENTIST], td.trEmployeesTmp[EMPL_SCIENTIST]))
 					amount++;
 			}
 		}
@@ -493,16 +493,16 @@ static void TR_Add_f (void)
 				if (!E_IsInBase(employee, base))
 					continue;
 				/* Already on transfer list. */
-				if (LIST_GetPointer(td.trEmployeesTmp[EMPL_WORKER], (void*)employee))
+				if (cgi->LIST_GetPointer(td.trEmployeesTmp[EMPL_WORKER], (void*)employee))
 					continue;
 				if (!TR_CheckEmployee(employee, td.transferBase))
 					continue;
-				LIST_AddPointer(&td.trEmployeesTmp[EMPL_WORKER], (void*) employee);
+				cgi->LIST_AddPointer(&td.trEmployeesTmp[EMPL_WORKER], (void*) employee);
 				amount--;
 			}
 		} else if (amount < 0) {
-			while (!LIST_IsEmpty(td.trEmployeesTmp[EMPL_WORKER]) && amount < 0) {
-				if (LIST_RemoveEntry(&td.trEmployeesTmp[EMPL_WORKER], td.trEmployeesTmp[EMPL_WORKER]))
+			while (!cgi->LIST_IsEmpty(td.trEmployeesTmp[EMPL_WORKER]) && amount < 0) {
+				if (cgi->LIST_RemoveEntry(&td.trEmployeesTmp[EMPL_WORKER], td.trEmployeesTmp[EMPL_WORKER]))
 					amount++;
 			}
 		}
@@ -619,7 +619,7 @@ static void TR_TransferListClear_f (void)
 		LIST_Foreach(list, alienCargo_t, item) {
 			base->alienContainment->add(item->teamDef, item->alive, item->dead);
 		}
-		LIST_Delete(&list);
+		cgi->LIST_Delete(&list);
 	}
 
 	TR_ClearTempCargo();
@@ -795,7 +795,7 @@ static void TR_List_f (void)
 				if (item->dead > 0)
 					cgi->UI_ExecuteConfunc("tr_listaddcargo %d \"%s\" \"%s\" \"%s\"", i, "tr_cargo.aliens", va("%s_dead", item->teamDef->id), va("%i %s %s", item->dead, _("dead"), _(item->teamDef->name)));
 			}
-			LIST_Delete(&cargo);
+			cgi->LIST_Delete(&cargo);
 		}
 		/* Aircraft */
 		if (transfer->hasAircraft) {
@@ -836,7 +836,7 @@ static void TR_CountItemSizeInArray (int itemAmountArray[], int capacity[])
 static void TR_CountEmployeeInListArray (linkedList_t *employeeListArray[], int capacity[])
 {
 	for (int i = EMPL_SOLDIER; i < EMPL_ROBOT; i++) {
-		capacity[CAP_EMPLOYEES] += LIST_Count(employeeListArray[i]);
+		capacity[CAP_EMPLOYEES] += cgi->LIST_Count(employeeListArray[i]);
 	}
 }
 
