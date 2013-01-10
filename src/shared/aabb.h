@@ -26,10 +26,14 @@ Copyright (C) 2002-2013 UFO: Alien Invasion.
 
 #include "ufotypes.h"
 #include "vector.h"
+#include "defines.h"	/* for MAX_WORLD_WIDTH */
+#include <algorithm>
 
 /**
  * @brief Axis-aligned bounding box
  */
+const float MWW = MAX_WORLD_WIDTH;
+
 class AABB {
 public:
 	AABB ();
@@ -63,6 +67,13 @@ public:
 	 */
 	inline void clearBounds ();
 
+	/** @brief expand the box in four directions, but clip them to the maximum boundaries */
+	inline void expandXY(const float byVal) {
+		mins[0] = std::max(mins[0] - byVal, -MWW);
+		mins[1] = std::max(mins[1] - byVal, -MWW);
+		maxs[0] = std::min(maxs[0] + byVal, MWW);
+		maxs[1] = std::min(maxs[1] + byVal, MWW);
+	}
 
 	vec3_t mins;
 	vec3_t maxs;
