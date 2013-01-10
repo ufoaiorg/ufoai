@@ -107,25 +107,16 @@ bool G_TriggerRemoveFromList (edict_t *self, edict_t *activator)
 
 edict_t* G_TriggerSpawn (edict_t *owner)
 {
-	edict_t* trigger;
-	vec3_t mins, maxs;
-
-	trigger = G_Spawn("trigger");
+	edict_t* trigger = G_Spawn("trigger");
 	trigger->type = ET_TRIGGER;
-	/* e.g. link the door into the trigger */
+	/* set the owner, e.g. link the door into the trigger */
 	trigger->owner = owner;
 
-	VectorCopy(owner->absmin, mins);
-	VectorCopy(owner->absmax, maxs);
+	AABB aabb(owner->absmin, owner->absmax);
+	aabb.expandXY(UNIT_SIZE / 2);	/* expand the trigger box */
 
-	/* expand the trigger box */
-	mins[0] -= (UNIT_SIZE / 2);
-	mins[1] -= (UNIT_SIZE / 2);
-	maxs[0] += (UNIT_SIZE / 2);
-	maxs[1] += (UNIT_SIZE / 2);
-
-	VectorCopy(mins, trigger->mins);
-	VectorCopy(maxs, trigger->maxs);
+	VectorCopy(aabb.mins, trigger->mins);
+	VectorCopy(aabb.maxs, trigger->maxs);
 
 	trigger->solid = SOLID_TRIGGER;
 	trigger->reset = NULL;
