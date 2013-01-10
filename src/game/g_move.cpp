@@ -317,10 +317,8 @@ void G_ClientMove (const Player *player, int visTeam, edict_t *ent, const pos3_t
 			 * fewer TU than just crawling while crouched. */
 			G_ClientStateChange(player, ent, STATE_CROUCHED, true); /* change to stand state */
 			crouchingState = G_IsCrouched(ent) ? 1 : 0;
-			if (!crouchingState) {
-				G_ActorMoveLength(ent, level.pathingMap, to, false);
+			if (!crouchingState)
 				autoCrouchRequired = true;
-			}
 		}
 	}
 
