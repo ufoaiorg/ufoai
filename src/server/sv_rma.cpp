@@ -537,8 +537,7 @@ static void SV_GetTilesFromTileSet (const MapInfo *map, const char *filename, co
 {
 	const char *errhead = "SV_GetTilesFromTileSet: Unexpected end of file (";
 	const TileSet *tileSet;
-	const Tile *tile;
-	int c, x, y, random;
+	int min, max;
 	const char *token;
 
 	/* get tileset id */
@@ -555,32 +554,21 @@ static void SV_GetTilesFromTileSet (const MapInfo *map, const char *filename, co
 		Com_Error(ERR_DROP, "SV_GetTilesFromTilesSet: Error in assembly %s (invalid syntax for tileset %s)", filename, tileSet->id);
 	if (!strstr(token, " "))
 		Com_Error(ERR_DROP, "SV_GetTilesFromTilesSet: Error in assembly %s (min max value of tileset %s)", filename, tileSet->id);
-	sscanf(token, "%i %i", &x, &y);
-	if (x > y)
+	sscanf(token, "%i %i", &min, &max);
+	if (min > max)
 		Com_Error(ERR_DROP, "SV_GetTilesFromTilesSet: Error in assembly %s (min is bigger than max for tileset %s)", filename, tileSet->id);
-	if (y <= 0)
+	if (max <= 0)
 		Com_Error(ERR_DROP, "SV_GetTilesFromTilesSet: Error in assembly %s (max is <= 0 for tileset %s)", filename, tileSet->id);
-	/* set max tile numbers (increasing the max of random tiles until the required max is reached)t */
-	for (c = y; c > 0; c--) {
-		random = rand() % tileSet->numTiles;
-		tile = SV_GetMapTile(map, tileSet->tiles[random]);
+	/* set min and max tile numbers (increasing random tiles until the required number is reached) */
+	for (int i = max, j = min; i > 0; --i) {
+		const int random = rand() % tileSet->numTiles;
+		const Tile *tile = SV_GetMapTile(map, tileSet->tiles[random]);
 		if (tile != NULL) {
-			const ptrdiff_t i = tile - map->mTile;
-			a->max[i]++;
-		} else {
-			Com_Error(ERR_DROP, "Could not find tile: '%s' in tileset '%s' (%s)", tileSet->tiles[random], tileSet->id, filename);
-		}
-	}
-	/* set min tile numbers (increasing the min of random tiles until the required min is reached) */
-	c = x;
-	while (c > 0) {
-		random = rand() % tileSet->numTiles;
-		tile = SV_GetMapTile(map, tileSet->tiles[random]);
-		if (tile != NULL) {
-			const ptrdiff_t i = tile - map->mTile;
-			if (a->min[i] < a->max[i]) {
-				a->min[i]++;
-				c--;
+			const ptrdiff_t tileIdx = tile - map->mTile;
+			++a->max[tileIdx];
+			if (j > 0) {
+				++a->min[tileIdx];
+				--j;
 			}
 		} else {
 			Com_Error(ERR_DROP, "Could not find tile: '%s' in tileset '%s' (%s)", tileSet->tiles[random], tileSet->id, filename);
