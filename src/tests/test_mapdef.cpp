@@ -278,9 +278,9 @@ static void testMapDefsFootSteps (void)
 	int count = 0;
 	int mapCount = 0;				// the number of maps read
 	int badMapCount = 0;
-	const int skipCount = 6;		// to skip the first n mapDefs
-	const int badMapCountMax = 5;	// # of maps with missing sounds before this test stops
-	const int mapCountMax = 30;		// should of cause be higher than skip + bad
+	const int skipCount = 0;		// to skip the first n mapDefs
+	const int badMapCountMax = 25;	// # of maps with missing sounds before this test stops
+	const int mapCountMax = 100;	// should of cause be higher than skip + bad
 	const int texCountMax = 30;
 	char texNames[texCountMax][60];
 	bool done = false;
