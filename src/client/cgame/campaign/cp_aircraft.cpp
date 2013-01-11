@@ -783,8 +783,8 @@ aircraft_t* AIR_NewAircraft (base_t *base, const aircraft_t *aircraftTemplate)
 	MS_AddNewMessage(_("Notice"), cp_messageBuffer);
 	Com_DPrintf(DEBUG_CLIENT, "Setting aircraft to pos: %.0f:%.0f\n", base->pos[0], base->pos[1]);
 	Vector2Copy(base->pos, aircraft->pos);
-	RADAR_Initialise(&aircraft->radar, RADAR_AIRCRAFTRANGE, RADAR_AIRCRAFTTRACKINGRANGE, 1.0f, false);
-	aircraft->radar.ufoDetectionProbability = 1;
+	RADAR_Initialise(&aircraft->radar, aircraftTemplate->radar.range, aircraftTemplate->radar.trackingRange, 1.0f, false);
+	aircraft->radar.ufoDetectionProbability = aircraftTemplate->radar.ufoDetectionProbability;
 
 	/* Update base capacities. */
 	Com_DPrintf(DEBUG_CLIENT, "idx_sample: %i name: %s weight: %i\n", aircraft->tpl->idx, aircraft->id, aircraft->size);
@@ -1402,6 +1402,15 @@ static const value_t aircraft_vals[] = {
 	{NULL, V_NULL, 0, 0}
 };
 
+/** @brief Valid radar definition values for an airtcraft from script files. */
+static const value_t aircraft_radar_vals[] = {
+	{"range", V_INT, offsetof(aircraft_t, radar.range), MEMBER_SIZEOF(aircraft_t, radar.range)},
+	{"trackingrange", V_INT, offsetof(aircraft_t, radar.trackingRange), MEMBER_SIZEOF(aircraft_t, radar.trackingRange)},
+	{"detectionprobability", V_FLOAT, offsetof(aircraft_t, radar.ufoDetectionProbability), MEMBER_SIZEOF(aircraft_t, radar.ufoDetectionProbability)},
+
+	{NULL, V_NULL, 0, 0}
+};
+
 /**
  * @brief Parses all aircraft that are defined in our UFO-scripts.
  * @sa CL_ParseClientData
@@ -1452,6 +1461,8 @@ void AIR_ParseAircraft (const char *name, const char **text, bool assignAircraft
 		AII_InitialiseAircraftSlots(aircraftTemplate);
 		/* Initialise UFO sensored */
 		RADAR_InitialiseUFOs(&aircraftTemplate->radar);
+		/* Default detection probability remains 100% for now */
+		aircraftTemplate->radar.ufoDetectionProbability = 1.0f;
 
 		ccs.numAircraftTemplates++;
 	} else {
@@ -1489,6 +1500,24 @@ void AIR_ParseAircraft (const char *name, const char **text, bool assignAircraft
 			if (token[0] == '_')
 				token++;
 			Q_strncpyz(aircraftTemplate->name, token, sizeof(aircraftTemplate->name));
+			continue;
+		} else if (Q_streq(token, "radar")) {
+			token = cgi->Com_EParse(text, errhead, name);
+			if (!*text || *token != '{') {
+				Com_Printf("AIR_ParseAircraft: Invalid radar value for aircraft: %s\n", name);
+				return;
+			}
+			do {
+				token = cgi->Com_EParse(text, errhead, name);
+				if (!*text)
+					break;
+				if (*token == '}')
+					break;
+
+				if (!Com_ParseBlockToken(name, text, aircraftTemplate, aircraft_radar_vals, cp_campaignPool, token))
+					Com_Printf("AIR_ParseAircraft: Ignoring unknown radar value '%s'\n", token);
+
+			} while (*text); /* dummy condition */
 			continue;
 		}
 		if (assignAircraftItems) {
@@ -2640,9 +2669,9 @@ static bool AIR_LoadAircraftXML (xmlNode_t *p, aircraft_t *craft)
 	else
 		AIR_SetPilot(craft, NULL);
 
-	RADAR_Initialise(&craft->radar, RADAR_AIRCRAFTRANGE, RADAR_AIRCRAFTTRACKINGRANGE, 1.0f, false);
+	RADAR_Initialise(&craft->radar, crafttype->radar.range, crafttype->radar.trackingRange, 1.0f, false);
 	RADAR_InitialiseUFOs(&craft->radar);
-	craft->radar.ufoDetectionProbability = 1;
+	craft->radar.ufoDetectionProbability = 	crafttype->radar.ufoDetectionProbability;
 
 	/* itemcargo */
 	snode = cgi->XML_GetNode(p, SAVE_AIRCRAFT_CARGO);

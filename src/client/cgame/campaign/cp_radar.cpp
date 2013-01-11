@@ -37,8 +37,6 @@ bool radarOverlayWasSet;
 /* Define base radar range (can be modified by level of the radar) */
 const float RADAR_BASERANGE = 24.0f;
 const float RADAR_BASETRACKINGRANGE = 34.0f;
-const float RADAR_AIRCRAFTRANGE = 10.0f;
-const float RADAR_AIRCRAFTTRACKINGRANGE = 14.0f;
 const float RADAR_INSTALLATIONLEVEL = 1.0f;
 /** @brief this is the multiplier applied to the radar range when the radar levels up */
 static const float RADAR_UPGRADE_MULTIPLIER = 0.4f;
@@ -80,7 +78,8 @@ void RADAR_UpdateStaticRadarCoverage (void)
  */
 static inline void RADAR_DrawCoverage (const radar_t* radar, const vec2_t pos)
 {
-	CP_AddRadarCoverage(pos, radar->range, radar->trackingRange, false);
+	if (radar && radar->range)
+		CP_AddRadarCoverage(pos, radar->range, radar->trackingRange, false);
 }
 
 /**

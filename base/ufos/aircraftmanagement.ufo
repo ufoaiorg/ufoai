@@ -13,6 +13,11 @@
 //		contains	- technology of the item in the slot at the beginning of the game.
 //		ammo		- Technology of the ammo loading the weapon (only for weapon slots).
 //
+// radar {} - Properties of the aircraft's radar system:
+//		range					- Detection range (integer)
+//		trackingrange			- Tracking range (integer), must be greater than Detection range!
+//		detectionprobability	- (optional) Detection probability (float), defaults to 1.0 (100%)
+//
 //	--vv-- Parameters which can get influenced by craft equipment ("craftitem"). --vv--
 //	speed - The speed of the aircraft, which tells how fast the aircraft is.
 //		to convert in km/h, multiply speed by 111 (= pi / 180 * radius_of_earth)
@@ -24,6 +29,7 @@
 //			point on earth. Used to defined fuelsize. This value must be AFTER speed value.
 //	wrange - Not defined here for aircraft (see aircraft items below) - will be set ingame to the biggest wrange of weapons aboard.
 //  antimatter - amount of antimatter needed for a full refuel
+//
 //  interestlevel - the campaign interest level ufos appear on the geoscape. This is used to controll the 'time' on which ufos appear during a campaign.
 //	---------------------------------------------------------------------
 //
@@ -102,6 +108,12 @@ aircraft craft_drop_firebird
 	numteam		8
 	size		2
 	image		"geoscape/air_dropship"
+
+	radar {
+		range	10
+		trackingrange	14
+	}
+
 	slot {
 		type		"weapon"
 		position	"nose_center"
@@ -137,6 +149,12 @@ aircraft craft_drop_herakles
 	numteam		12
 	size		2
 	image		"geoscape/air_dropship"
+
+	radar {
+		range	10
+		trackingrange	14
+	}
+
 	slot {
 		type		"weapon"
 		position	"nose_center"
@@ -173,6 +191,12 @@ aircraft craft_drop_raptor
 	numteam		10
 	size		2
 	image		"geoscape/air_dropship"
+
+	radar {
+		range	10
+		trackingrange	14
+	}
+
 	slot {
 		type		"weapon"
 		position	"nose_center"
@@ -222,6 +246,12 @@ aircraft craft_inter_stiletto
 	price		20000
 	building	building_intercept
 	image		"geoscape/air_interceptor"
+
+	radar {
+		range	10
+		trackingrange	14
+	}
+
 	slot {
 		type		"weapon"
 		position	"nose_center"
@@ -267,6 +297,12 @@ aircraft craft_inter_saracen
 	price		30000
 	building	building_intercept
 	image		"geoscape/air_interceptor"
+
+	radar {
+		range	10
+		trackingrange	14
+	}
+
 	slot {
 		type		"weapon"
 		position	"wing_left"
@@ -308,6 +344,12 @@ aircraft craft_inter_dragon
 	price		40000
 	building	building_intercept
 	image		"geoscape/air_interceptor"
+
+	radar {
+		range	10
+		trackingrange	14
+	}
+
 	slot {
 		type		"weapon"
 		position	"wing_left"
@@ -349,6 +391,12 @@ aircraft craft_inter_starchaser
 	price		40000
 	building	building_intercept
 	image		"geoscape/air_interceptor"
+
+	radar {
+		range	10
+		trackingrange	14
+	}
+
 	slot {
 		type		"weapon"
 		position	"nose_center"
@@ -395,6 +443,12 @@ aircraft craft_inter_stingray
 	price		55000
 	building	building_intercept
 	image		"geoscape/air_interceptor"
+
+	radar {
+		range	10
+		trackingrange	14
+	}
+
 	slot {
 		type		"weapon"
 		position	"rear_left"
@@ -452,6 +506,11 @@ aircraft craft_ufo_scout
 	price		8000
 	image		"geoscape/air_ufo"
 	interestlevel 0
+
+	radar {
+		range	10
+		trackingrange	14
+	}
 }
 
 aircraft craft_ufo_fighter
@@ -474,6 +533,12 @@ aircraft craft_ufo_fighter
 	price		12000
 	image		"geoscape/air_ufo"
 	interestlevel 50
+
+	radar {
+		range	10
+		trackingrange	14
+	}
+
 	slot {
 		type		"weapon"
 		size		"heavy"
@@ -502,6 +567,12 @@ aircraft craft_ufo_harvester
 	price		18000
 	image		"geoscape/air_ufo"
 	interestlevel 80
+
+	radar {
+		range	10
+		trackingrange	14
+	}
+
 	slot {
 		type		"weapon"
 		size		"heavy"
@@ -541,6 +612,12 @@ aircraft craft_ufo_corrupter
 	numteam		18
 	price		27000
 	image		"geoscape/air_ufo"
+
+	radar {
+		range	10
+		trackingrange	14
+	}
+
 	slot {
 		type		"weapon"
 		size		"heavy"
@@ -576,6 +653,11 @@ aircraft craft_ufo_supply
 	price		20000
 	image		"geoscape/air_ufo"
 	interestlevel	200
+
+	radar {
+		range	10
+		trackingrange	14
+	}
 }
 
 aircraft craft_ufo_gunboat
@@ -598,6 +680,12 @@ aircraft craft_ufo_gunboat
 	price		23000
 	image		"geoscape/air_ufo"
 	interestlevel 310
+
+	radar {
+		range	10
+		trackingrange	14
+	}
+
 	slot {
 		type		"weapon"
 		size		"heavy"
@@ -650,6 +738,12 @@ aircraft craft_ufo_bomber
 	leader		true
 	price		45000
 	image		"geoscape/air_ufo"
+
+	radar {
+		range	10
+		trackingrange	14
+	}
+
 	slot {
 		type		"weapon"
 		size		"heavy"
@@ -708,6 +802,12 @@ aircraft craft_ufo_ripper
 	numteam		18
 	price		30000
 	image		"geoscape/air_ufo"
+
+	radar {
+		range	10
+		trackingrange	14
+	}
+
 	slot {
 		type		"weapon"
 		size		"heavy"

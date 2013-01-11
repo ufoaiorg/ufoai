@@ -31,8 +31,6 @@ extern bool radarOverlayWasSet;
 
 extern const float RADAR_BASERANGE;
 extern const float RADAR_BASETRACKINGRANGE;
-extern const float RADAR_AIRCRAFTRANGE;
-extern const float RADAR_AIRCRAFTTRACKINGRANGE;
 
 typedef struct radar_s {
 	int range;						/**< Range of radar */
