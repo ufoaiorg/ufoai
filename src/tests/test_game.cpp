@@ -200,7 +200,6 @@ static void testInventoryForDiedAlien (void)
 		edict_t *diedEnt;
 		edict_t *ent;
 		edict_t *floorItems;
-		Player player;
 		invList_t *invlist;
 		int count;
 		/* the other tests didn't call the server shutdown function to clean up */
@@ -220,7 +219,7 @@ static void testInventoryForDiedAlien (void)
 		CU_ASSERT_PTR_NOT_NULL_FATAL(ent);
 
 		/* move to the location of the first died alien to drop the inventory into the same floor container */
-		player = G_PLAYER_FROM_ENT(ent);
+		Player& player = G_PLAYER_FROM_ENT(ent);
 		CU_ASSERT_TRUE_FATAL(G_IsAIPlayer(&player));
 		G_ClientMove(&player, 0, ent, diedEnt->pos);
 		CU_ASSERT_TRUE_FATAL(VectorCompare(ent->pos, diedEnt->pos));
@@ -266,7 +265,6 @@ static void testInventoryWithTwoDiedAliensOnTheSameGridTile (void)
 		edict_t *diedEnt2;
 		edict_t *ent;
 		edict_t *floorItems;
-		Player player;
 		invList_t *invlist;
 		int count;
 		/* the other tests didn't call the server shutdown function to clean up */
@@ -286,7 +284,7 @@ static void testInventoryWithTwoDiedAliensOnTheSameGridTile (void)
 		CU_ASSERT_PTR_NOT_NULL_FATAL(diedEnt2);
 
 		/* move to the location of the first died alien to drop the inventory into the same floor container */
-		player = G_PLAYER_FROM_ENT(diedEnt2);
+		Player &player = G_PLAYER_FROM_ENT(diedEnt2);
 		CU_ASSERT_TRUE_FATAL(G_IsAIPlayer(&player));
 		G_ClientMove(&player, 0, diedEnt2, diedEnt->pos);
 		CU_ASSERT_TRUE_FATAL(VectorCompare(diedEnt2->pos, diedEnt->pos));
