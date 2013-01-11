@@ -277,7 +277,7 @@ static bool G_VisShouldStop (const edict_t *ent)
  * @param[in] visFlags The flags for the vis check
  * @param[in] playerMask The mask for the players to send the appear/perish events to. If this is @c 0 the events
  * are not sent - we only update the visflags of the edict
- * @param[in] ent The edict that was responsible for letting the check edict appear
+ * @param[in] ent The edict that was responsible for letting the check edict appear and is looking
  */
 static int G_DoTestVis (const int team, edict_t *check, const vischeckflags_t visFlags, playermask_t playerMask, const edict_t *ent)
 {
@@ -363,6 +363,7 @@ static int G_CheckVisTeam (const int team, edict_t *check, const vischeckflags_t
 
 /**
  * @brief Do @c G_CheckVisTeam for all entities
+ * ent is the one that is looking at the others
  */
 int G_CheckVisTeamAll (const int team, const vischeckflags_t visFlags, const edict_t *ent)
 {
