@@ -192,7 +192,7 @@ void NET_vWriteFormat (dbuffer *buf, const char *format, va_list ap)
 		}
 	}
 	/* Too many arguments for the given format; too few cause crash above */
-#ifndef ANDROID
+#ifdef PARANOID
 	if (!ap)
 		Com_Error(ERR_DROP, "WriteFormat: Too many arguments!");
 #endif
@@ -469,7 +469,7 @@ void NET_vReadFormat (dbuffer *buf, const char *format, va_list ap)
 		}
 	}
 	/* Too many arguments for the given format; too few cause crash above */
-#ifndef ANDROID
+#ifdef PARANOID
 	if (!ap)
 		Com_Error(ERR_DROP, "ReadFormat: Too many arguments!");
 #endif
