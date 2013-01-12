@@ -85,15 +85,6 @@ window game_team_edit extends objectinfo
 		size "160 25"
 	}
 
-	string s_load
-	{
-		pos "570 310"
-		contentalign ALIGN_UC
-		string	"_0/0 Kg"
-		color "1 1 1 1"
-		size "160 25"
-	}
-
 	// ==================
 	// checkbox list
 	// ==================
@@ -180,6 +171,7 @@ window game_team_edit extends objectinfo
 	 */
 	confunc team_soldier_select {
 		*node:root.txt_actor<1>@color = "1 1 1 1"
+		*node:root.load_warnings@integer = 0
 		cmd "equipselect <1>;"
 		cmd "mn_updateactorload team_actorload;"
 	}
@@ -200,14 +192,6 @@ window game_team_edit extends objectinfo
 		}
 		delete *cvar:i
 		delete *cvar:tmp
-	}
-
-	confunc team_actorload {
-		*node:root.s_load@string = "<1>"
-		*node:root.s_load@tooltip = "<2>"
-		if ( <3> > 0 ) { *node:root.s_load@color = "0 1 0 1" }
-		elif ( <3> < 0 ) { *node:root.s_load@color = "1 0 0 1" }
-		else { *node:root.s_load@color = "1 1 1 1" }
 	}
 
 	func team_checkboxes_set
@@ -711,7 +695,7 @@ window game_team_edit extends objectinfo
 			*node:root.equip_scroll@fullsize = <fullsize>
 		}
 		onSelect { cmd "object_update <lastselectedid> team_update_item_list 0;" }
-		onChange { cmd "mn_updateactorload team_actorload;" }
+		onChange { cmd "mn_updateactorload team_actorload <node:root.load_warnings@integer>;" }
 	}
 
 	baseinventory equip_ammo	{
@@ -725,7 +709,7 @@ window game_team_edit extends objectinfo
 			*node:root.equip_ammo_scroll@fullsize = <fullsize>
 		}
 		onSelect { cmd "object_update <lastselectedid> team_update_item_list 0;" }
-		onChange { cmd "mn_updateactorload team_actorload;" }
+		onChange { cmd "mn_updateactorload team_actorload <node:root.load_warnings@integer>;" }
 	}
 
 	vscrollbar equip_scroll {
@@ -744,6 +728,32 @@ window game_team_edit extends objectinfo
 		onChange {
 			*node:root.equip_ammo@viewpos = <current>
 		}
+	}
+
+	confunc team_actorload {
+		*node:root.bt_load@string = "<1>"
+		*node:root.bt_load@tooltip = "<2>"
+		*node:root.load_warnings@integer = "<4>"
+		if ( <3> > 0 ) { *node:root.bt_load@color = "0 1 0 1" }
+		elif ( <3> < 0 ) { *node:root.bt_load@color = "1 1 0 1" }
+		else { *node:root.bt_load@color = "1 1 1 1" }
+		if ( <4> > 0 ) { *node:root.bt_load@flash = true }
+		else { *node:root.bt_load@flash = false }
+	}
+
+	button bt_load
+	{
+		pos "604 311"
+		contentalign ALIGN_CL
+		string	"_0/0 Kg"
+		color "1 1 1 1"
+		flashcolor "1 0 0 1"
+		size "285 22"
+		onClick { cmd "mn_updateactorload team_actorload;" }
+	}
+
+	data load_warnings {
+		integer 0
 	}
 
 	// ==================

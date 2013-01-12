@@ -182,15 +182,6 @@ window inventory
 		contentalign	ALIGN_CL
 	}
 
-	string s_load
-	{
-		pos "90 310"
-		contentalign ALIGN_UC
-		string	"_0/0 Kg"
-		color "1 1 1 1"
-		size "106 25"
-	}
-
 	// ==================
 	// model
 	// ==================
@@ -255,12 +246,25 @@ window inventory
 		onClick	{ call *node:root.hideinventory }
 	}
 
+	button bt_load
+	{
+		pos "90 310"
+		contentalign ALIGN_CL
+		string	"_0/0 Kg"
+		color "1 1 1 1"
+		flashcolor "1 0 0 1"
+		size "106 25"
+		onClick { cmd "hud_updateactorload;" }
+	}
+
 	confunc inv_actorload {
-		*node:root.s_load@string = "<1>"
-		*node:root.s_load@tooltip = "<2>"
-		if ( <3> > 0 ) { *node:root.s_load@color = "0 1 0 1" }
-		elif ( <3> < 0 ) { *node:root.s_load@color = "1 0 0 1" }
-		else { *node:root.s_load@color = "1 1 1 1" }
+		*node:root.bt_load@string = "<1>"
+		*node:root.bt_load@tooltip = "<2>"
+		if ( <3> > 0 ) { *node:root.bt_load@color = "0 1 0 1" }
+		elif ( <3> < 0 ) { *node:root.bt_load@color = "1 1 0 1" }
+		else { *node:root.bt_load@color = "1 1 1 1" }
+		if ( <4> > 0 ) { *node:root.bt_load@flash = true }
+		else { *node:root.bt_load@flash = false }
 	}
 
 	func onWindowOpened {

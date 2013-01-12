@@ -1349,8 +1349,35 @@ static void HUD_UpdateActorLoad_f (void)
 		const int maxTU = GET_TU(chr->score.skills[ABILITY_SPEED], 1);
 		const int tus = GET_TU(chr->score.skills[ABILITY_SPEED], penalty);
 		const int tuPenalty = maxTU * WEIGHT_NORMAL_PENALTY - (maxTU - tus);
+		int count = 0;
 
-		UI_ExecuteConfunc("inv_actorload \"%g/%i %s\" \"%s %+i\" %f", invWeight, maxWeight, _("Kg"), _("TU:"), tuPenalty, WEIGHT_NORMAL_PENALTY - (1.0f - penalty));
+		for (containerIndex_t containerID = 0; containerID < csi.numIDs; containerID++) {
+			if (csi.ids[containerID].temp)
+				continue;
+			for (invList_t *invList = chr->i.c[containerID], *next; invList; invList = next) {
+				const fireDef_t *fireDef;
+				next = invList->next;
+				fireDef = FIRESH_FiredefForWeapon(&invList->item);
+				if (fireDef == NULL)
+					continue;
+				for (int i = 0; i < MAX_FIREDEFS_PER_WEAPON; i++)
+					if (fireDef[i].time > 0 && fireDef[i].time > tus) {
+						if (count <= 0)
+							Com_sprintf(popupText, sizeof(popupText), _("This soldier no longer has enough TUs to use the following items:\n\n"));
+						Q_strcat(popupText, va("%s: %s (%i)\n", _(invList->item.item->name), _(fireDef[i].name), fireDef[i].time), sizeof(popupText));
+						++count;
+					}
+			}
+		}
+
+		if (count > 0)
+			UI_Popup(_("Warning"), popupText);
+
+		char label[MAX_VAR];
+		char tooltip[MAX_VAR];
+		Com_sprintf(label, sizeof(label), "%g/%i %s", invWeight, maxWeight, _("Kg"));
+		Com_sprintf(tooltip, sizeof(tooltip), "%s %+i", _("TU:"), tuPenalty);
+		UI_ExecuteConfunc("inv_actorload \"%s\" \"%s\" %f %i", label, tooltip, WEIGHT_NORMAL_PENALTY - (1.0f - penalty), count);
 	}
 }
 

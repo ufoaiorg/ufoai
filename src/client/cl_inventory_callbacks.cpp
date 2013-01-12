@@ -377,10 +377,16 @@ static void INV_UpdateActorLoad_f (void)
 					}
 			}
 		}
-		if (count > 0)
+
+		if ((Cmd_Argc() == 2 || atoi(Cmd_Argv(2)) == 0) && count > 0)
 			UI_Popup(_("Warning"), popupText);
 
-		UI_ExecuteConfunc("%s \"%g/%i %s\" \"%s %+i\" %f", Cmd_Argv(1), invWeight, maxWeight, _("Kg"), _("TU:"), tuPenalty, WEIGHT_NORMAL_PENALTY - (1.0f - penalty));
+		char label[MAX_VAR];
+		char tooltip[MAX_VAR];
+		Com_sprintf(label, sizeof(label), "%g/%i %s %s", invWeight, maxWeight, _("Kg"),
+				(count > 0 ? _("Warning: Not enough TUs...") : ""));
+		Com_sprintf(tooltip, sizeof(tooltip), "%s %+i", _("TU:"), tuPenalty);
+		UI_ExecuteConfunc("%s \"%s\" \"%s\" %f %i", Cmd_Argv(1), label, tooltip, WEIGHT_NORMAL_PENALTY - (1.0f - penalty), count);
 	}
 }
 
