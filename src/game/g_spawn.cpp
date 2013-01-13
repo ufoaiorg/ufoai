@@ -279,7 +279,7 @@ static void ED_ParseField2 (const char *key, const char *value, edict_t *ent)
 	else if (kvp.isKey("norandomspawn"))st.noRandomSpawn = kvp.asInt();
 	else if (kvp.isKey("noequipment"))	st.noEquipment = kvp.asInt();
 }
-
+#if 0
 /**
  * @brief Takes a key/value pair and sets the binary values in an edict
  */
@@ -323,7 +323,7 @@ static void ED_ParseField (const char *key, const char *value, edict_t *ent)
 		}
 	}
 }
-
+#endif
 /**
  * @brief Parses an edict out of the given string, returning the new position
  * @param[in] data The string to parse from
@@ -363,7 +363,7 @@ static const char *ED_ParseEdict (const char *data, edict_t *ent)
 		if (keyname[0] == '_')
 			continue;
 
-		ED_ParseField(keyname, c, ent);
+		ED_ParseField2(keyname, c, ent);
 	}
 
 	if (!init)
