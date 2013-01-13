@@ -129,7 +129,7 @@ typedef struct field_s {
 	fieldtype_t type;
 	int flags;
 } field_t;
-
+#if 0
 static const field_t fields[] = {
 	{"classname", offsetof(edict_t, classname), F_LSTRING, 0},
 	{"model", offsetof(edict_t, model), F_LSTRING, 0},
@@ -169,7 +169,7 @@ static const field_t fields[] = {
 
 	{0, 0, F_IGNORE, 0}
 };
-
+#endif
 /**
  * @brief Finds the spawn function for the entity and calls it
  */

@@ -334,7 +334,8 @@ typedef struct camera_edict_data_s {
  * @brief Everything that is not in the bsp tree is an edict, the spawnpoints,
  * the actors, the misc_models, the weapons and so on.
  */
-struct edict_s {
+class Edict {
+public:
 	bool inuse;
 	int linkcount;		/**< count the amount of server side links - if a link was called,
 						 * something on the position or the size of the entity was changed */

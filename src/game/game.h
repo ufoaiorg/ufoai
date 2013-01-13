@@ -44,8 +44,8 @@ typedef enum {
 
 /*=============================================================== */
 
-typedef struct edict_s edict_t;
-
+class Edict;
+class SrvEdict;
 
 #ifndef GAME_INCLUDE
 
@@ -90,7 +90,7 @@ typedef struct client_persistent_s {
 	bool ai;				/**< client controlled by ai */
 
 	/** ai specific data */
-	edict_t *last;			/**< set to the last actor edict that was handled for the ai in their think function */
+	Edict *last;			/**< set to the last actor edict that was handled for the ai in their think function */
 
 	float	flood_locktill;	/**< locked from talking */
 	float	flood_when[10];	/**< when messages were said */
@@ -150,7 +150,8 @@ typedef Player player_t;
 #ifndef GAME_INCLUDE
 
 /** @note don't change the order - also see edict_s in g_local.h */
-struct edict_s {
+class SrvEdict {
+public:
 	bool inuse;
 	int linkcount;		/**< count the amount of server side links - if a link was called,
 						 * something on the position or the size of the entity was changed */
@@ -167,13 +168,16 @@ struct edict_s {
 	vec3_t absmin, absmax; /**< position of min and max points - relative to world's origin */
 	vec3_t size;
 
-	edict_t *child;		/**< e.g. the trigger for this edict */
-	edict_t *owner;		/**< e.g. the door model in case of func_door */
+	SrvEdict *child;		/**< e.g. the trigger for this edict */
+	SrvEdict *owner;		/**< e.g. the door model in case of func_door */
 	int modelindex;		/**< inline model index */
 
 	const char *classname;
 };
 
+typedef SrvEdict edict_t;
+#else
+typedef Edict edict_t;
 
 #endif	/* GAME_INCLUDE */
 
@@ -359,7 +363,7 @@ typedef struct game_export_s {
 	/* can vary in size from one game to another. */
 
 	/** The size will be fixed when ge->Init() is called */
-	struct edict_s *edicts;
+	edict_t *edicts;
 	int edict_size;
 	int num_edicts;				/**< current number, <= max_edicts */
 	int max_edicts;
