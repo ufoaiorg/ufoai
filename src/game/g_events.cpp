@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "g_local.h"	/* also includes g_event.h */
 #include "g_actor.h"
 #include "g_client.h"
+#include "g_edicts.h"
 #include "g_inventory.h"
 
 /**
@@ -228,7 +229,7 @@ void G_EventShootHidden (teammask_t teamMask, const fireDef_t* fd, bool firstSho
  */
 void G_EventShoot (const edict_t* ent, teammask_t teamMask, const fireDef_t* fd, bool firstShoot, shoot_types_t shootType, int flags, const trace_t* trace, const vec3_t from, const vec3_t impact)
 {
-	const edict_t *targetEdict = trace->ent;
+	const edict_t *targetEdict = G_EdictsGetByNum(trace->entNum);	/* the ent possibly hit by the trace */
 
 	G_EventAdd(G_VisToPM(teamMask), EV_ACTOR_SHOOT, ent->number);
 	if (targetEdict && G_IsBreakable(targetEdict))

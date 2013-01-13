@@ -681,6 +681,7 @@ static void G_ShootGrenade (const Player &player, edict_t *ent, const fireDef_t 
 		/* trace */
 		tr = G_Trace(oldPos, newPos, ent, MASK_SHOT);
 		if (tr.fraction < 1.0 || time + dt > 4.0) {
+			edict_t *trEnt = G_EdictsGetByNum(tr.entNum);	/* the ent possibly hit by the trace */
 			const float bounceFraction = tr.surface ? gi.GetBounceFraction(tr.surface->name) : 1.0f;
 			int i;
 
@@ -701,11 +702,11 @@ static void G_ShootGrenade (const Player &player, edict_t *ent, const fireDef_t 
 
 			/* enough bouncing around or we have hit an actor */
 			if (VectorLength(curV) < GRENADE_STOPSPEED || time > 4.0 || bounce > fd->bounce
-			 || (!fd->delay && tr.ent && G_IsActor(tr.ent))) {
+			 || (!fd->delay && trEnt && G_IsActor(trEnt))) {
 				if (!mock) {
 					/* explode */
 					byte impactFlags = flags;
-					if (tr.ent && G_IsActor(tr.ent))
+					if (trEnt && G_IsActor(trEnt))
 						impactFlags |= SF_BODY;
 					else
 						impactFlags |= SF_IMPACT;
@@ -892,7 +893,8 @@ static void G_ShootSingle (edict_t *ent, const fireDef_t *fd, const vec3_t from,
 
 	VectorMA(cur_loc, UNIT_SIZE, dir, impact);
 	tr = G_Trace(cur_loc, impact, ent, MASK_SHOT);
-	if (tr.ent && (tr.ent->team == ent->team || G_IsCivilian(tr.ent)) && G_IsCrouched(tr.ent) && !FIRESH_IsMedikit(fd))
+	edict_t *trEnt = G_EdictsGetByNum(tr.entNum);	/* the ent possibly hit by the trace */
+	if (trEnt && (trEnt->team == ent->team || G_IsCivilian(trEnt)) && G_IsCrouched(trEnt) && !FIRESH_IsMedikit(fd))
 		VectorMA(cur_loc, UNIT_SIZE * 1.4, dir, cur_loc);
 
 	VectorCopy(cur_loc, tracefrom);
@@ -906,6 +908,7 @@ static void G_ShootSingle (edict_t *ent, const fireDef_t *fd, const vec3_t from,
 		/* Do the trace from current position of the projectile
 		 * to the end_of_range location.*/
 		tr = G_Trace(tracefrom, impact, ent, MASK_SHOT);
+		trEnt = G_EdictsGetByNum(tr.entNum);	/* the ent possibly hit by the trace */
 
 #ifdef DEBUG
 		DumpAllEntities();
@@ -921,7 +924,7 @@ static void G_ShootSingle (edict_t *ent, const fireDef_t *fd, const vec3_t from,
 
 		/* set flags when trace hit something */
 		if (tr.fraction < 1.0) {
-			if (tr.ent && G_IsActor(tr.ent)
+			if (trEnt && G_IsActor(trEnt)
 				/* check if we differentiate between body and wall */
 				&& !fd->delay)
 				flags |= SF_BODY;
@@ -932,8 +935,8 @@ static void G_ShootSingle (edict_t *ent, const fireDef_t *fd, const vec3_t from,
 		}
 
 		/* victims see shots */
-		if (tr.ent && G_IsActor(tr.ent))
-			mask |= G_TeamToVisMask(tr.ent->team);
+		if (trEnt && G_IsActor(trEnt))
+			mask |= G_TeamToVisMask(trEnt->team);
 
 		if (!mock) {
 			/* send shot */
@@ -972,13 +975,13 @@ static void G_ShootSingle (edict_t *ent, const fireDef_t *fd, const vec3_t from,
 		}
 
 		/* do damage if the trace hit an entity */
-		if (tr.ent && (G_IsActor(tr.ent) || (G_IsBreakable(tr.ent) && damage > 0))) {
+		if (trEnt && (G_IsActor(trEnt) || (G_IsBreakable(trEnt) && damage > 0))) {
 			VectorCopy(tr.endpos, impact);
-			G_Damage(tr.ent, fd, damage, ent, mock, impact);
+			G_Damage(trEnt, fd, damage, ent, mock, impact);
 
 			if (!mock) { /* check for firedHit is done in G_UpdateHitScore */
 				/* Count this as a hit of this firemode. */
-				G_UpdateHitScore(ent, tr.ent, fd, 0);
+				G_UpdateHitScore(ent, trEnt, fd, 0);
 			}
 			break;
 		}

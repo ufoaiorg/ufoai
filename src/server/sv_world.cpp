@@ -390,14 +390,14 @@ static void SV_ClipMoveToEntities (moveclip_t *clip)
 
 			/* make sure we keep a startsolid from a previous trace */
 			oldStart = clip->trace.startsolid;
-			trace.ent = touch;
+			trace.entNum = touch->number;
 			clip->trace = trace;
 			clip->trace.startsolid |= oldStart;
 		} else if (trace.allsolid) {
-			trace.ent = touch;
+			trace.entNum = touch->number;
 			clip->trace = trace;
 		} else if (trace.startsolid) {
-			trace.ent = touch;
+			trace.entNum = touch->number;
 			clip->trace.startsolid = true;
 		}
 	}
@@ -474,7 +474,7 @@ trace_t SV_Trace (const vec3_t start, const AABB &box, const vec3_t end, const e
 	clip.trace = CM_CompleteBoxTrace(&sv->mapTiles, start, end, box, TRACING_ALL_VISIBLE_LEVELS, contentmask, 0);
 	/** @todo There is more than one world in case of a map assembly - use
 	 * @c clip.trace.mapTile to get the correct one */
-	clip.trace.ent = svs.ge->edicts; /* the first edict is the world */
+	clip.trace.entNum = 0; /* the first edict is the world */
 	if (clip.trace.fraction == 0)
 		return clip.trace;		/* blocked by the world */
 
