@@ -263,11 +263,11 @@ static void ED_ParseField2 (const char *key, const char *value, edict_t *ent)
 	else if (kvp.isKey("sounds"))		ent->sounds = kvp.asInt();
 //	else if (kvp.isKey("material"))		ent->material = kvp.asInt();	// enum !!
 //	{"material", offsetof(edict_t, material), F_INT, 0},
-//	{"light", 0, F_IGNORE, 0},
+	else if (kvp.isKey("light"))		;	// ignore
 	/** @todo This (maxteams) should also be handled server side - currently this is
 	 * only done client side */
-//	{"maxteams", 0, F_IGNORE, 0},
-//	{"maxlevel", 0, F_IGNORE, 0},
+	else if (kvp.isKey("maxteams"))		;	// ignore
+	else if (kvp.isKey("maxlevel"))		;	// ignore
 	else if (kvp.isKey("dmg"))			ent->dmg = kvp.asInt();
 //	{"origin", offsetof(edict_t, origin), F_VECTOR, 0},
 //	{"angles", offsetof(edict_t, angles), F_VECTOR, 0},
