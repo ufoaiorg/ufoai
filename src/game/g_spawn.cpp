@@ -226,13 +226,14 @@ class KeyValuePair
 	const char* _keyStr;
 	const char* _valStr;
 public:
-	KeyValuePair (const char* keyStr, const char* valStr) {_keyStr = keyStr; _valStr = valStr;}
-	void set(const char* keyStr, const char* valStr) {_keyStr = keyStr; _valStr = valStr;}
-	bool isKey(const char* name) {return !strcmp(_keyStr, name);}
-	float asFloat()	{ return atof(_valStr);}
-	int asInt()		{ return atoi(_valStr);}
-	bool asBool()	{ return asInt();}
-	const char* asString() {return _valStr;}
+	KeyValuePair (const char* keyStr, const char* valStr) {_keyStr = keyStr; _valStr = valStr; }
+	void set(const char* keyStr, const char* valStr) {_keyStr = keyStr; _valStr = valStr; }
+	bool isKey(const char* name) { return !strcmp(_keyStr, name); }
+	float asFloat()			{ return atof(_valStr); }
+	int asInt()				{ return atoi(_valStr); }
+	bool asBool()			{ return asInt(); }
+	const char* asString()	{ return _valStr; }
+	void asVec3(vec3_t vec) { sscanf(_valStr, "%f %f %f", &vec[0], &vec[1], &vec[2]); }
 };
 
 /**
@@ -263,8 +264,7 @@ static void ED_ParseField2 (const char *key, const char *value, edict_t *ent)
 	else if (kvp.isKey("health"))		ent->HP = kvp.asInt();
 	else if (kvp.isKey("radius"))		ent->radius = kvp.asInt();
 	else if (kvp.isKey("sounds"))		ent->sounds = kvp.asInt();
-//	else if (kvp.isKey("material"))		ent->material = kvp.asInt();	// enum !!
-//	{"material", offsetof(edict_t, material), F_INT, 0},
+	else if (kvp.isKey("material"))		ent->material = static_cast<edictMaterial_t>(kvp.asInt());	// enum !!
 	else if (kvp.isKey("light"))		;	// ignore
 	/** @todo This (maxteams) should also be handled server side - currently this is
 	 * only done client side */
@@ -276,8 +276,8 @@ static void ED_ParseField2 (const char *key, const char *value, edict_t *ent)
 	else if (kvp.isKey("angle"))		ent->angle = kvp.asFloat();
 	else if (kvp.isKey("message"))		ent->message = ED_NewString(value);
 
-//	{"norandomspawn", offsetof(spawn_temp_t, noRandomSpawn), F_INT, FFL_SPAWNTEMP},
-//	{"noequipment", offsetof(spawn_temp_t, noEquipment), F_INT, FFL_SPAWNTEMP},
+	else if (kvp.isKey("norandomspawn"))st.noRandomSpawn = kvp.asInt();
+	else if (kvp.isKey("noequipment"))	st.noEquipment = kvp.asInt();
 }
 
 /**
