@@ -229,7 +229,9 @@ public:
 	KeyValuePair (const char* keyStr, const char* valStr) {_keyStr = keyStr; _valStr = valStr;}
 	void set(const char* keyStr, const char* valStr) {_keyStr = keyStr; _valStr = valStr;}
 	bool isKey(const char* name) {return !strcmp(_keyStr, name);}
-	int asInt() { return atoi(_valStr);}
+	float asFloat()	{ return atof(_valStr);}
+	int asInt()		{ return atoi(_valStr);}
+	bool asBool()	{ return asInt();}
 	const char* asString() {return _valStr;}
 };
 
@@ -245,7 +247,7 @@ static void ED_ParseField2 (const char *key, const char *value, edict_t *ent)
 	else if (kvp.isKey("spawnflags"))	ent->spawnflags = kvp.asInt();
 	else if (kvp.isKey("speed"))		ent->speed = kvp.asInt();
 	else if (kvp.isKey("dir"))			ent->dir = kvp.asInt();
-//	{"active", offsetof(edict_t, active), F_BOOL, 0},
+	else if (kvp.isKey("active"))		ent->active = kvp.asBool();
 	else if (kvp.isKey("target"))		ent->target = ED_NewString(value);
 	else if (kvp.isKey("targetname"))	ent->targetname = ED_NewString(value);
 	else if (kvp.isKey("item"))			ent->item = ED_NewString(value);
@@ -271,7 +273,7 @@ static void ED_ParseField2 (const char *key, const char *value, edict_t *ent)
 	else if (kvp.isKey("dmg"))			ent->dmg = kvp.asInt();
 //	{"origin", offsetof(edict_t, origin), F_VECTOR, 0},
 //	{"angles", offsetof(edict_t, angles), F_VECTOR, 0},
-//	{"angle", offsetof(edict_t, angle), F_FLOAT, 0},
+	else if (kvp.isKey("angle"))		ent->angle = kvp.asFloat();
 	else if (kvp.isKey("message"))		ent->message = ED_NewString(value);
 
 //	{"norandomspawn", offsetof(spawn_temp_t, noRandomSpawn), F_INT, FFL_SPAWNTEMP},
