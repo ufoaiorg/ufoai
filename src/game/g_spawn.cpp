@@ -271,8 +271,8 @@ static void ED_ParseField2 (const char *key, const char *value, edict_t *ent)
 	else if (kvp.isKey("maxteams"))		;	// ignore
 	else if (kvp.isKey("maxlevel"))		;	// ignore
 	else if (kvp.isKey("dmg"))			ent->dmg = kvp.asInt();
-//	{"origin", offsetof(edict_t, origin), F_VECTOR, 0},
-//	{"angles", offsetof(edict_t, angles), F_VECTOR, 0},
+	else if (kvp.isKey("origin"))		kvp.asVec3(ent->origin);
+	else if (kvp.isKey("angles"))		kvp.asVec3(ent->angles);
 	else if (kvp.isKey("angle"))		ent->angle = kvp.asFloat();
 	else if (kvp.isKey("message"))		ent->message = ED_NewString(value);
 
