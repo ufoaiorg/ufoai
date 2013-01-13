@@ -221,6 +221,63 @@ static char *ED_NewString (const char *string)
 	return newb;
 }
 
+class KeyValuePair
+{
+	const char* _keyStr;
+	const char* _valStr;
+public:
+	KeyValuePair (const char* keyStr, const char* valStr) {_keyStr = keyStr; _valStr = valStr;}
+	void set(const char* keyStr, const char* valStr) {_keyStr = keyStr; _valStr = valStr;}
+	bool isKey(const char* name) {return !strcmp(_keyStr, name);}
+	int asInt() { return atoi(_valStr);}
+	const char* asString() {return _valStr;}
+};
+
+/**
+ * @brief Takes a key/value pair and sets the binary values in an edict
+ */
+static void ED_ParseField2 (const char *key, const char *value, edict_t *ent)
+{
+	KeyValuePair kvp(key, value);
+
+	if		(kvp.isKey("classname"))	ent->classname = ED_NewString(value);
+	else if (kvp.isKey("model"))		ent->model = ED_NewString(value);
+	else if (kvp.isKey("spawnflags"))	ent->spawnflags = kvp.asInt();
+	else if (kvp.isKey("speed"))		ent->speed = kvp.asInt();
+	else if (kvp.isKey("dir"))			ent->dir = kvp.asInt();
+//	{"active", offsetof(edict_t, active), F_BOOL, 0},
+	else if (kvp.isKey("target"))		ent->target = ED_NewString(value);
+	else if (kvp.isKey("targetname"))	ent->targetname = ED_NewString(value);
+	else if (kvp.isKey("item"))			ent->item = ED_NewString(value);
+	else if (kvp.isKey("noise"))		ent->noise = ED_NewString(value);
+	else if (kvp.isKey("particle"))		ent->particle = ED_NewString(value);
+	else if (kvp.isKey("nextmap"))		ent->nextmap = ED_NewString(value);
+	else if (kvp.isKey("frame"))		ent->frame = kvp.asInt();
+	else if (kvp.isKey("team"))			ent->team = kvp.asInt();
+	else if (kvp.isKey("group"))		ent->group = ED_NewString(value);
+	else if (kvp.isKey("size"))			ent->fieldSize = kvp.asInt();
+	else if (kvp.isKey("count"))		ent->count = kvp.asInt();
+	else if (kvp.isKey("time"))			ent->time = kvp.asInt();
+	else if (kvp.isKey("health"))		ent->HP = kvp.asInt();
+	else if (kvp.isKey("radius"))		ent->radius = kvp.asInt();
+	else if (kvp.isKey("sounds"))		ent->sounds = kvp.asInt();
+//	else if (kvp.isKey("material"))		ent->material = kvp.asInt();	// enum !!
+//	{"material", offsetof(edict_t, material), F_INT, 0},
+//	{"light", 0, F_IGNORE, 0},
+	/** @todo This (maxteams) should also be handled server side - currently this is
+	 * only done client side */
+//	{"maxteams", 0, F_IGNORE, 0},
+//	{"maxlevel", 0, F_IGNORE, 0},
+	else if (kvp.isKey("dmg"))			ent->dmg = kvp.asInt();
+//	{"origin", offsetof(edict_t, origin), F_VECTOR, 0},
+//	{"angles", offsetof(edict_t, angles), F_VECTOR, 0},
+//	{"angle", offsetof(edict_t, angle), F_FLOAT, 0},
+	else if (kvp.isKey("message"))		ent->message = ED_NewString(value);
+
+//	{"norandomspawn", offsetof(spawn_temp_t, noRandomSpawn), F_INT, FFL_SPAWNTEMP},
+//	{"noequipment", offsetof(spawn_temp_t, noEquipment), F_INT, FFL_SPAWNTEMP},
+}
+
 /**
  * @brief Takes a key/value pair and sets the binary values in an edict
  */
