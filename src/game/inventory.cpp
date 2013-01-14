@@ -77,7 +77,6 @@ invList_t* InventoryInterface::addInvList (invList_t **invList)
 /**
  * @brief Add an item to a specified container in a given inventory.
  * @note Set x and y to NONE if the item should get added to an automatically chosen free spot in the container.
- * @param[in] self The inventory interface pointer
  * @param[in,out] inv Pointer to inventory definition, to which we will add item.
  * @param[in] item Item to add to given container (needs to have "rotated" tag already set/checked, this is NOT checked here!)
  * @param[in] container Container in given inventory definition, where the new item will be stored.
@@ -87,7 +86,7 @@ invList_t* InventoryInterface::addInvList (invList_t **invList)
  * @sa I_RemoveFromInventory
  * @return the @c invList_t pointer the item was added to, or @c NULL in case of an error (item wasn't added)
  */
-invList_t *InventoryInterface::AddToInventory (inventoryInterface_t* self, inventory_t *const inv, const item_t* const item, const invDef_t *container, int x, int y, int amount)
+invList_t *InventoryInterface::AddToInventory (inventory_t *const inv, const item_t* const item, const invDef_t *container, int x, int y, int amount)
 {
 	invList_t *ic;
 	int checkedTo;
@@ -110,7 +109,7 @@ invList_t *InventoryInterface::AddToInventory (inventoryInterface_t* self, inven
 			if (INVSH_CompareItem(&ic->item, item)) {
 				ic->item.amount += amount;
 				Com_DPrintf(DEBUG_SHARED, "I_AddToInventory: Amount of '%s': %i (%s)\n",
-					ic->item.item->name, ic->item.amount, self->name);
+					ic->item.item->name, ic->item.amount, this->name);
 				return ic;
 			}
 	}
@@ -150,7 +149,7 @@ invList_t *InventoryInterface::AddToInventory (inventoryInterface_t* self, inven
  * @return false If nothing was removed or an error occurred.
  * @sa I_AddToInventory
  */
-bool InventoryInterface::RemoveFromInventory (inventoryInterface_t* self, inventory_t* const i, const invDef_t *container, invList_t *fItem)
+bool InventoryInterface::RemoveFromInventory (inventory_t* const i, const invDef_t *container, invList_t *fItem)
 {
 	invList_t *ic, *previous;
 
@@ -168,17 +167,17 @@ bool InventoryInterface::RemoveFromInventory (inventoryInterface_t* self, invent
 	 * to check for this case of move and only update the x and y coordinates instead
 	 * of calling the add and remove functions */
 	if (container->single || ic == fItem) {
-		self->cacheItem = ic->item;
+		this->cacheItem = ic->item;
 		/* temp container like idEquip and idFloor */
 		if (container->temp && ic->item.amount > 1) {
 			ic->item.amount--;
 			Com_DPrintf(DEBUG_SHARED, "I_RemoveFromInventory: Amount of '%s': %i (%s)\n",
-				ic->item.item->name, ic->item.amount, self->name);
+				ic->item.item->name, ic->item.amount, this->name);
 			return true;
 		}
 
 		if (container->single && ic->next)
-			Com_Printf("I_RemoveFromInventory: Error: single container %s has many items. (%s)\n", container->name, self->name);
+			Com_Printf("I_RemoveFromInventory: Error: single container %s has many items. (%s)\n", container->name, this->name);
 
 		/* An item in other containers than idFloor or idEquip should
 		 * always have an amount value of 1.
@@ -195,12 +194,12 @@ bool InventoryInterface::RemoveFromInventory (inventoryInterface_t* self, invent
 
 	for (previous = i->c[container->id]; ic; ic = ic->next) {
 		if (ic == fItem) {
-			self->cacheItem = ic->item;
+			this->cacheItem = ic->item;
 			/* temp container like idEquip and idFloor */
 			if (ic->item.amount > 1 && container->temp) {
 				ic->item.amount--;
 				Com_DPrintf(DEBUG_SHARED, "I_RemoveFromInventory: Amount of '%s': %i (%s)\n",
-					ic->item.item->name, ic->item.amount, self->name);
+					ic->item.item->name, ic->item.amount, this->name);
 				return true;
 			}
 
@@ -238,7 +237,7 @@ bool InventoryInterface::RemoveFromInventory (inventoryInterface_t* self, invent
  * @return IA_ARMOUR when placing an armour on the actor.
  * @return IA_MOVE when just moving an item.
  */
-inventory_action_t InventoryInterface::MoveInInventory (inventoryInterface_t* self, inventory_t* const inv, const invDef_t *from, invList_t *fItem, const invDef_t *to, int tx, int ty, int *TU, invList_t ** icp)
+inventory_action_t InventoryInterface::MoveInInventory (inventory_t* const inv, const invDef_t *from, invList_t *fItem, const invDef_t *to, int tx, int ty, int *TU, invList_t ** icp)
 {
 	invList_t *ic;
 
@@ -334,20 +333,20 @@ inventory_action_t InventoryInterface::MoveInInventory (inventoryInterface_t* se
 			return IA_NONE;
 
 		/* Actually remove the ammo from the 'from' container. */
-		if (!self->RemoveFromInventory(self, inv, from, fItem))
+		if (!RemoveFromInventory(inv, from, fItem))
 			return IA_NONE;
 		else
 			/* Removal successful - store this info. */
 			alreadyRemovedSource = true;
 
-		cacheItem2 = self->cacheItem; /* Save/cache (source) item. The cacheItem is modified in I_MoveInInventory. */
+		cacheItem2 = this->cacheItem; /* Save/cache (source) item. The cacheItem is modified in I_MoveInInventory. */
 
 		/* Move the destination item to the source. */
-		self->MoveInInventory(self, inv, to, icTo, from, cacheFromX, cacheFromY, TU, icp);
+		MoveInInventory(inv, to, icTo, from, cacheFromX, cacheFromY, TU, icp);
 
 		/* Reset the cached item (source) (It'll be move to container emptied by destination item later.) */
-		self->cacheItem = cacheItem2;
-		checkedTo = INVSH_CheckToInventory(inv, self->cacheItem.item, to, 0, 0, fItem);
+		this->cacheItem = cacheItem2;
+		checkedTo = INVSH_CheckToInventory(inv, this->cacheItem.item, to, 0, 0, fItem);
 	} else if (!checkedTo) {
 		/* Get the target-invlist (e.g. a weapon). We don't need to check for
 		 * scroll because checkedTo is always true here. */
@@ -372,23 +371,23 @@ inventory_action_t InventoryInterface::MoveInInventory (inventoryInterface_t* se
 					const int cacheFromY = INV_IsFloorDef(from) ? NONE : fItem->y;
 
 					/* Actually remove the ammo from the 'from' container. */
-					if (!self->RemoveFromInventory(self, inv, from, fItem))
+					if (!RemoveFromInventory(inv, from, fItem))
 						return IA_NONE;
 
 					/* Add the currently used ammo in place of the new ammo in the "from" container. */
-					if (self->AddToInventory(self, inv, &item, from, cacheFromX, cacheFromY, 1) == NULL)
-						Sys_Error("Could not reload the weapon - add to inventory failed (%s)", self->name);
+					if (AddToInventory(inv, &item, from, cacheFromX, cacheFromY, 1) == NULL)
+						Sys_Error("Could not reload the weapon - add to inventory failed (%s)", this->name);
 
-					ic->item.ammo = self->cacheItem.item;
+					ic->item.ammo = this->cacheItem.item;
 					if (icp)
 						*icp = ic;
 					return IA_RELOAD_SWAP;
 				} else {
 					/* Actually remove the ammo from the 'from' container. */
-					if (!self->RemoveFromInventory(self, inv, from, fItem))
+					if (!RemoveFromInventory(inv, from, fItem))
 						return IA_NONE;
 
-					ic->item.ammo = self->cacheItem.item;
+					ic->item.ammo = this->cacheItem.item;
 					/* loose ammo of type ic->item.m saved on server side */
 					ic->item.ammoLeft = ic->item.item->ammo;
 					if (icp)
@@ -408,7 +407,7 @@ inventory_action_t InventoryInterface::MoveInInventory (inventoryInterface_t* se
 			/** @todo change the other code to browse trough these things. */
 			INVSH_FindSpace(inv, &fItem->item, to, &tx, &ty, fItem);
 			if (tx == NONE || ty == NONE) {
-				Com_DPrintf(DEBUG_SHARED, "I_MoveInInventory - item will be added non-visible (%s)\n", self->name);
+				Com_DPrintf(DEBUG_SHARED, "I_MoveInInventory - item will be added non-visible (%s)\n", this->name);
 			}
 		} else {
 			/* Impossible move -> abort. */
@@ -418,7 +417,7 @@ inventory_action_t InventoryInterface::MoveInInventory (inventoryInterface_t* se
 
 	/* twohanded exception - only CSI->idRight is allowed for fireTwoHanded weapons */
 	if (fItem->item.item->fireTwoHanded && INV_IsLeftDef(to))
-		to = &self->csi->ids[self->csi->idRight];
+		to = &this->csi->ids[this->csi->idRight];
 
 	switch (checkedTo) {
 	case INV_DOES_NOT_FIT:
@@ -440,15 +439,15 @@ inventory_action_t InventoryInterface::MoveInInventory (inventoryInterface_t* se
 
 	/* Actually remove the item from the 'from' container (if it wasn't already removed). */
 	if (!alreadyRemovedSource)
-		if (!self->RemoveFromInventory(self, inv, from, fItem))
+		if (!RemoveFromInventory(inv, from, fItem))
 			return IA_NONE;
 
 	/* successful */
 	if (TU)
 		*TU -= time;
 
-	assert(self->cacheItem.item);
-	ic = self->AddToInventory(self, inv, &self->cacheItem, to, tx, ty, 1);
+	assert(this->cacheItem.item);
+	ic = AddToInventory(inv, &this->cacheItem, to, tx, ty, 1);
 
 	/* return data */
 	if (icp) {
@@ -457,7 +456,7 @@ inventory_action_t InventoryInterface::MoveInInventory (inventoryInterface_t* se
 	}
 
 	if (INV_IsArmourDef(to)) {
-		assert(INV_IsArmour(self->cacheItem.item));
+		assert(INV_IsArmour(this->cacheItem.item));
 		return IA_ARMOUR;
 	}
 
@@ -491,7 +490,7 @@ bool InventoryInterface::TryAddToInventory (inventoryInterface_t* self, inventor
 		item_t itemRotation = *item;
 		itemRotation.rotated = rotated;
 
-		return self->AddToInventory(self, inv, &itemRotation, container, x, y, 1) != NULL;
+		return self->AddToInventory(inv, &itemRotation, container, x, y, 1) != NULL;
 	}
 }
 

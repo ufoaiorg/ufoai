@@ -609,7 +609,7 @@ bool G_ActorInvMove (edict_t *ent, const invDef_t *from, invList_t *fItem, const
 	/* Temporary decrease ent->TU to make I_MoveInInventory do what expected. */
 	G_ActorUseTU(ent, reservedTU);
 	/* Try to actually move the item and check the return value after restoring valid ent->TU. */
-	ia = game.i.MoveInInventory(&game.i, &ent->chr.i, from, fItem, to, tx, ty, checkaction ? &ent->TU : NULL, &ic);
+	ia = game.i.MoveInInventory(&ent->chr.i, from, fItem, to, tx, ty, checkaction ? &ent->TU : NULL, &ic);
 	/* Now restore the original ent->TU and decrease it for TU used for inventory move. */
 	G_ActorSetTU(ent, originalTU - (originalTU - reservedTU - ent->TU));
 

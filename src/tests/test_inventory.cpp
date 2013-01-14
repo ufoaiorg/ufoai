@@ -99,7 +99,7 @@ static void testItemAdd (void)
 
 	CU_ASSERT(INVSH_ExistsInInventory(&inv, container, &item) == false);
 
-	CU_ASSERT_PTR_NOT_NULL(i.AddToInventory(&i, &inv, &item, container, NONE, NONE, 1));
+	CU_ASSERT_PTR_NOT_NULL(i.AddToInventory(&inv, &item, container, NONE, NONE, 1));
 
 	CU_ASSERT(INVSH_ExistsInInventory(&inv, container, &item) == true);
 }
@@ -128,11 +128,11 @@ static void testItemDel (void)
 
 	CU_ASSERT(INVSH_ExistsInInventory(&inv, container, &item) == false);
 
-	addedItem = i.AddToInventory(&i, &inv, &item, container, NONE, NONE, 1);
+	addedItem = i.AddToInventory(&inv, &item, container, NONE, NONE, 1);
 
 	CU_ASSERT(INVSH_ExistsInInventory(&inv, container, &item) == true);
 
-	CU_ASSERT(i.RemoveFromInventory(&i, &inv, container, addedItem));
+	CU_ASSERT(i.RemoveFromInventory(&inv, container, addedItem));
 
 	CU_ASSERT(INVSH_ExistsInInventory(&inv, container, &item) == false);
 }
@@ -162,7 +162,7 @@ static void testItemMove (void)
 
 	CU_ASSERT(INVSH_ExistsInInventory(&inv, container, &item) == false);
 
-	addedItem = i.AddToInventory(&i, &inv, &item, container, NONE, NONE, 1);
+	addedItem = i.AddToInventory(&inv, &item, container, NONE, NONE, 1);
 	CU_ASSERT_PTR_NOT_NULL(addedItem);
 
 	CU_ASSERT(INVSH_ExistsInInventory(&inv, container, &item) == true);
@@ -170,7 +170,7 @@ static void testItemMove (void)
 	containerTo = INVSH_GetInventoryDefinitionByID("backpack");
 	CU_ASSERT_PTR_NOT_NULL(containerTo);
 
-	CU_ASSERT_EQUAL(IA_MOVE, i.MoveInInventory(&i, &inv, container, addedItem, containerTo, NONE, NONE, NULL, NULL));
+	CU_ASSERT_EQUAL(IA_MOVE, i.MoveInInventory(&inv, container, addedItem, containerTo, NONE, NONE, NULL, NULL));
 
 	CU_ASSERT(INVSH_ExistsInInventory(&inv, container, &item) == false);
 	CU_ASSERT(INVSH_ExistsInInventory(&inv, containerTo, &item) == true);
@@ -200,7 +200,7 @@ static void testItemReload (void)
 
 	CU_ASSERT(INVSH_ExistsInInventory(&inv, container, &item) == false);
 
-	addedItem = i.AddToInventory(&i, &inv, &item, container, NONE, NONE, 1);
+	addedItem = i.AddToInventory(&inv, &item, container, NONE, NONE, 1);
 	CU_ASSERT_PTR_NOT_NULL(addedItem);
 
 	CU_ASSERT(INVSH_ExistsInInventory(&inv, container, &item) == true);
@@ -217,12 +217,12 @@ static void testItemReload (void)
 
 	CU_ASSERT(INVSH_ExistsInInventory(&inv, containerFrom, &ammo) == false);
 
-	addedItem = i.AddToInventory(&i, &inv, &ammo, containerFrom, NONE, NONE, 1);
+	addedItem = i.AddToInventory(&inv, &ammo, containerFrom, NONE, NONE, 1);
 	CU_ASSERT_PTR_NOT_NULL(addedItem);
 
 	CU_ASSERT(INVSH_ExistsInInventory(&inv, containerFrom, &ammo) == true);
 
-	CU_ASSERT_EQUAL(IA_RELOAD, i.MoveInInventory(&i, &inv, containerFrom, addedItem, container, NONE, NONE, NULL, NULL));
+	CU_ASSERT_EQUAL(IA_RELOAD, i.MoveInInventory(&inv, containerFrom, addedItem, container, NONE, NONE, NULL, NULL));
 
 	CU_ASSERT(INVSH_ExistsInInventory(&inv, containerFrom, &ammo) == false);
 
@@ -240,12 +240,12 @@ static void testItemReload (void)
 
 	CU_ASSERT(INVSH_ExistsInInventory(&inv, containerFrom, &ammoFrom) == false);
 
-	addedItem = i.AddToInventory(&i, &inv, &ammoFrom, containerFrom, NONE, NONE, 1);
+	addedItem = i.AddToInventory(&inv, &ammoFrom, containerFrom, NONE, NONE, 1);
 	CU_ASSERT_PTR_NOT_NULL(addedItem);
 
 	CU_ASSERT(INVSH_ExistsInInventory(&inv, containerFrom, &ammoFrom) == true);
 
-	CU_ASSERT_EQUAL(IA_RELOAD_SWAP, i.MoveInInventory(&i, &inv, containerFrom, addedItem, container, NONE, NONE, NULL, NULL));
+	CU_ASSERT_EQUAL(IA_RELOAD_SWAP, i.MoveInInventory(&inv, containerFrom, addedItem, container, NONE, NONE, NULL, NULL));
 
 	CU_ASSERT(INVSH_ExistsInInventory(&inv, containerFrom, &ammoFrom) == false);
 	CU_ASSERT(INVSH_ExistsInInventory(&inv, containerFrom, &ammo) == true);
@@ -353,11 +353,11 @@ static void testItemToHeadgear (void)
 
 	CU_ASSERT_FALSE(INVSH_ExistsInInventory(&inv, container, &item));
 
-	CU_ASSERT_PTR_NOT_NULL(i.AddToInventory(&i, &inv, &item, container, NONE, NONE, 1));
+	CU_ASSERT_PTR_NOT_NULL(i.AddToInventory(&inv, &item, container, NONE, NONE, 1));
 
 	CU_ASSERT_TRUE(INVSH_ExistsInInventory(&inv, container, &item));
 
-	CU_ASSERT_PTR_NULL(i.AddToInventory(&i, &inv, &item, container, NONE, NONE, 1));
+	CU_ASSERT_PTR_NULL(i.AddToInventory(&inv, &item, container, NONE, NONE, 1));
 }
 
 int UFO_AddInventoryTests (void)

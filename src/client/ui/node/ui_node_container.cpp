@@ -131,7 +131,7 @@ void UI_ContainerNodeUpdateEquipment (inventory_t *inv, const equipDef_t *ed)
 
 		while (numItems[i]) {
 			const item_t item = {NONE_AMMO, NULL, od, 0, 0};
-			if (!cls.i.AddToInventory(&cls.i, inv, &item, INVDEF(csi.idEquip), NONE, NONE, 1)) {
+			if (!cls.i.AddToInventory(inv, &item, INVDEF(csi.idEquip), NONE, NONE, 1)) {
 				/* no space left in the inventory */
 				break;
 			}

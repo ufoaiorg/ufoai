@@ -77,7 +77,7 @@ bool INV_MoveItem (inventory_t* inv, const invDef_t *toContainer, int px, int py
 	}
 
 	/* move the item */
-	moved = cls.i.MoveInInventory(&cls.i, inv, fromContainer, fItem, toContainer, px, py, NULL, tItem);
+	moved = cls.i.MoveInInventory(inv, fromContainer, fItem, toContainer, px, py, NULL, tItem);
 
 	switch (moved) {
 	case IA_MOVE:
@@ -145,7 +145,7 @@ bool INV_UnloadWeapon (invList_t *weapon, inventory_t *inv, const invDef_t *cont
 	assert(weapon);
 	if (container && inv) {
 		const item_t item = {NONE_AMMO, NULL, weapon->item.ammo, 0, 0};
-		if (cls.i.AddToInventory(&cls.i, inv, &item, container, NONE, NONE, 1) != NULL) {
+		if (cls.i.AddToInventory(inv, &item, container, NONE, NONE, 1) != NULL) {
 			weapon->item.ammo = NULL;
 			weapon->item.ammoLeft = 0;
 			return true;

@@ -346,7 +346,7 @@ static void GAME_EquipActorRobot (inventory_t* const inv, const objDef_t* weapon
 
 static bool GAME_RemoveFromInventory (inventory_t* const i, const invDef_t *container, invList_t *fItem)
 {
-	return cls.i.RemoveFromInventory(&cls.i, i, container, fItem);
+	return cls.i.RemoveFromInventory(i, container, fItem);
 }
 
 static void GAME_SetNextUniqueCharacterNumber (int ucn)
