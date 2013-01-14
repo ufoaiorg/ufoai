@@ -624,7 +624,6 @@ static void G_ShootGrenade (const Player &player, edict_t *ent, const fireDef_t 
 	vec3_t angles;
 	float dt, time, speed;
 	float acc;
-	trace_t tr;
 	int bounce;
 	byte flags;
 
@@ -679,7 +678,7 @@ static void G_ShootGrenade (const Player &player, edict_t *ent, const fireDef_t 
 		curV[2] -= GRAVITY * GRENADE_DT;
 
 		/* trace */
-		tr = G_Trace(oldPos, newPos, ent, MASK_SHOT);
+		trace_t tr = G_Trace(oldPos, newPos, ent, MASK_SHOT);
 		if (tr.fraction < 1.0 || time + dt > 4.0) {
 			edict_t *trEnt = G_EdictsGetByNum(tr.entNum);	/* the ent possibly hit by the trace */
 			const float bounceFraction = tr.surface ? gi.GetBounceFraction(tr.surface->name) : 1.0f;
