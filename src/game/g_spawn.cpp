@@ -115,62 +115,6 @@ static const spawn_t spawns[] = {
 	{NULL, NULL}
 };
 
-typedef enum {
-	F_INT,
-	F_FLOAT,
-	F_LSTRING,					/* string on disk, pointer in memory, TAG_LEVEL */
-	F_VECTOR,
-	F_BOOL,
-	F_IGNORE
-} fieldtype_t;
-
-typedef struct field_s {
-	const char *name;
-	size_t ofs;
-	fieldtype_t type;
-	int flags;
-} field_t;
-#if 0
-static const field_t fields[] = {
-	{"classname", offsetof(edict_t, classname), F_LSTRING, 0},
-	{"model", offsetof(edict_t, model), F_LSTRING, 0},
-	{"spawnflags", offsetof(edict_t, spawnflags), F_INT, 0},
-	{"speed", offsetof(edict_t, speed), F_INT, 0},
-	{"dir", offsetof(edict_t, dir), F_INT, 0},
-	{"active", offsetof(edict_t, active), F_BOOL, 0},
-	{"target", offsetof(edict_t, target), F_LSTRING, 0},
-	{"targetname", offsetof(edict_t, targetname), F_LSTRING, 0},
-	{"item", offsetof(edict_t, item), F_LSTRING, 0},
-	{"noise", offsetof(edict_t, noise), F_LSTRING, 0},
-	{"particle", offsetof(edict_t, particle), F_LSTRING, 0},
-	{"nextmap", offsetof(edict_t, nextmap), F_LSTRING, 0},
-	{"frame", offsetof(edict_t, frame), F_INT, 0},
-	{"team", offsetof(edict_t, team), F_INT, 0},
-	{"group", offsetof(edict_t, group), F_LSTRING, 0},
-	{"size", offsetof(edict_t, fieldSize), F_INT, 0},
-	{"count", offsetof(edict_t, count), F_INT, 0},
-	{"time", offsetof(edict_t, time), F_INT, 0},
-	{"health", offsetof(edict_t, HP), F_INT, 0},
-	{"radius", offsetof(edict_t, radius), F_INT, 0},
-	{"sounds", offsetof(edict_t, sounds), F_INT, 0},
-	{"material", offsetof(edict_t, material), F_INT, 0},
-	{"light", 0, F_IGNORE, 0},
-	/** @todo This (maxteams) should also be handled server side - currently this is
-	 * only done client side */
-	{"maxteams", 0, F_IGNORE, 0},
-	{"maxlevel", 0, F_IGNORE, 0},
-	{"dmg", offsetof(edict_t, dmg), F_INT, 0},
-	{"origin", offsetof(edict_t, origin), F_VECTOR, 0},
-	{"angles", offsetof(edict_t, angles), F_VECTOR, 0},
-	{"angle", offsetof(edict_t, angle), F_FLOAT, 0},
-	{"message", offsetof(edict_t, message), F_LSTRING, 0},
-
-	{"norandomspawn", offsetof(spawn_temp_t, noRandomSpawn), F_INT, FFL_SPAWNTEMP},
-	{"noequipment", offsetof(spawn_temp_t, noEquipment), F_INT, FFL_SPAWNTEMP},
-
-	{0, 0, F_IGNORE, 0}
-};
-#endif
 /**
  * @brief Finds the spawn function for the entity and calls it
  */
@@ -225,7 +169,7 @@ static char *ED_NewString (const char *string)
 /**
  * @brief Takes a key/value pair and sets the binary values in an edict
  */
-static void ED_ParseField2 (const char *key, const char *value, edict_t *ent)
+static void ED_ParseField (const char *key, const char *value, edict_t *ent)
 {
 	KeyValuePair kvp(key, value);
 
@@ -297,51 +241,7 @@ static void ED_ParseField2 (const char *key, const char *value, edict_t *ent)
 	else if (kvp.isKey("noequipment"))
 		st.noEquipment = kvp.asInt();
 }
-#if 0
-/**
- * @brief Takes a key/value pair and sets the binary values in an edict
- */
-static void ED_ParseField (const char *key, const char *value, edict_t *ent)
-{
-	const field_t *f;
-	byte *b;
-	vec3_t vec;
 
-	for (f = fields; f->name; f++) {
-		if (!(f->flags & FFL_NOSPAWN) && !Q_strcasecmp(f->name, key)) {
-			/* found it */
-			if (f->flags & FFL_SPAWNTEMP)
-				b = (byte *) & st;
-			else
-				b = (byte *) ent;
-
-			switch (f->type) {
-			case F_LSTRING:
-				*(char **) (b + f->ofs) = ED_NewString(value);
-				break;
-			case F_VECTOR:
-				sscanf(value, "%f %f %f", &vec[0], &vec[1], &vec[2]);
-				((float *) (b + f->ofs))[0] = vec[0];
-				((float *) (b + f->ofs))[1] = vec[1];
-				((float *) (b + f->ofs))[2] = vec[2];
-				break;
-			case F_INT:
-				*(int *) (b + f->ofs) = atoi(value);
-				break;
-			case F_BOOL:
-				*(bool *) (b + f->ofs) = atoi(value);
-				break;
-			case F_FLOAT:
-				*(float *) (b + f->ofs) = atof(value);
-				break;
-			case F_IGNORE:
-				break;
-			}
-			return;
-		}
-	}
-}
-#endif
 /**
  * @brief Parses an edict out of the given string, returning the new position
  * @param[in] data The string to parse from
@@ -381,7 +281,7 @@ static const char *ED_ParseEdict (const char *data, edict_t *ent)
 		if (keyname[0] == '_')
 			continue;
 
-		ED_ParseField2(keyname, c, ent);
+		ED_ParseField(keyname, c, ent);
 	}
 
 	if (!init)
