@@ -769,10 +769,11 @@ static void DumpTrace (vec3_t start, trace_t tr)
 		tr.allsolid ? "true" : "false",
 		tr.startsolid ? "true" : "false",
 		tr.fraction, tr.contentFlags);
+	edict_t *trEnt = G_EdictsGetByNum(tr.entNum);	/* the ent possibly hit by the trace */
 	Com_DPrintf(DEBUG_GAME, "is entity:%s %s %i\n",
-		tr.ent ? "yes" : "no",
-		tr.ent ? tr.ent->classname : "",
-		tr.ent ? tr.ent->HP : 0);
+		trEnt ? "yes" : "no",
+		trEnt ? trEnt->classname : "",
+		trEnt ? trEnt->HP : 0);
 }
 
 /**
