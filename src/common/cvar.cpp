@@ -150,7 +150,7 @@ bool Cvar_SetCheckFunction (const char *varName, bool (*check) (cvar_t* cvar))
  * @param[in] maxVal The maximal value the cvar should have
  * @param[in] shouldBeIntegral No floats for this cvar please
  */
-bool Cvar_AssertValue (cvar_t * cvar, float minVal, float maxVal, bool shouldBeIntegral)
+bool Cvar_AssertValue (cvar_t *cvar, float minVal, float maxVal, bool shouldBeIntegral)
 {
 	assert(cvar);
 

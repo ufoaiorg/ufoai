@@ -172,7 +172,7 @@ const char *Cvar_Serverinfo(void);
 /**
  * @brief this function checks cvar ranges and integral values
  */
-bool Cvar_AssertValue(cvar_t * cvar, float minVal, float maxVal, bool shouldBeIntegral);
+bool Cvar_AssertValue(cvar_t *cvar, float minVal, float maxVal, bool shouldBeIntegral);
 
 /**
  * @brief Sets the check functions for a cvar (e.g. Cvar_Assert)

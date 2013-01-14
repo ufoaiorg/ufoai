@@ -722,7 +722,7 @@ static void TR_ClipBoxToBrush (boxtrace_t *traceData, cBspBrush_t *brush, TR_LEA
 /**
  * @sa CM_TraceToLeaf
  */
-static void TR_TestBoxInBrush (boxtrace_t *traceData, cBspBrush_t * brush)
+static void TR_TestBoxInBrush (boxtrace_t *traceData, cBspBrush_t *brush)
 {
 	int i, j;
 	TR_PLANE_TYPE *plane;
