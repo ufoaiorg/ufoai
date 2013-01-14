@@ -30,6 +30,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "mathlib.h"
 #include <stdio.h>
 
+/**
+ * @brief A pair of strings representing a key and a value
+ * The value string can be trimmed and rendered in the data type it is expected to be.
+ * We might add some validity checking here.
+ */
 class KeyValuePair {
 private:
 	const char* _keyStr;
