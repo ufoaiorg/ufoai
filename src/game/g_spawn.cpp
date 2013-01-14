@@ -262,7 +262,8 @@ public:
 
 	void asVec3 (vec3_t vec) const
 	{
-		sscanf(_valStr, "%f %f %f", &vec[0], &vec[1], &vec[2]);
+		if (sscanf(_valStr, "%f %f %f", &vec[0], &vec[1], &vec[2]) != 3)
+			VectorCopy(vec3_origin, vec);
 	}
 };
 
