@@ -760,7 +760,7 @@ static void G_ShootGrenade (const Player &player, edict_t *ent, const fireDef_t 
  * @param[in] start The starting loaction of the trace.
  * @param[in] tr The trace data.
  */
-static void DumpTrace (vec3_t start, trace_t tr)
+static void DumpTrace (vec3_t start, const trace_t &tr)
 {
 	Com_DPrintf(DEBUG_GAME, "start (%i, %i, %i) end (%i, %i, %i)\n",
 		(int)start[0], (int)start[1], (int)start[2],
