@@ -125,9 +125,8 @@ typedef struct chrScoreGlobal_s {
 } chrScoreGlobal_t;
 
 class FiremodeSettings {
-public:
-	/** @todo _hand is supposed to be private, but we need to get rid of the offsetof macro first */
 	actorHands_t _hand; /**< the used hand, an enum */
+public:
 
 	fireDefIndex_t fmIdx; /**< Stores the used firemode index. Max. number is MAX_FIREDEFS_PER_WEAPON -1=undef*/
 	const objDef_t *weapon;
