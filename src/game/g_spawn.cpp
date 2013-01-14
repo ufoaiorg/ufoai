@@ -248,41 +248,73 @@ static void ED_ParseField2 (const char *key, const char *value, edict_t *ent)
 {
 	KeyValuePair kvp(key, value);
 
-	if		(kvp.isKey("classname"))	ent->classname = ED_NewString(value);
-	else if (kvp.isKey("model"))		ent->model = ED_NewString(value);
-	else if (kvp.isKey("spawnflags"))	ent->spawnflags = kvp.asInt();
-	else if (kvp.isKey("speed"))		ent->speed = kvp.asInt();
-	else if (kvp.isKey("dir"))			ent->dir = kvp.asInt();
-	else if (kvp.isKey("active"))		ent->active = kvp.asBool();
-	else if (kvp.isKey("target"))		ent->target = ED_NewString(value);
-	else if (kvp.isKey("targetname"))	ent->targetname = ED_NewString(value);
-	else if (kvp.isKey("item"))			ent->item = ED_NewString(value);
-	else if (kvp.isKey("noise"))		ent->noise = ED_NewString(value);
-	else if (kvp.isKey("particle"))		ent->particle = ED_NewString(value);
-	else if (kvp.isKey("nextmap"))		ent->nextmap = ED_NewString(value);
-	else if (kvp.isKey("frame"))		ent->frame = kvp.asInt();
-	else if (kvp.isKey("team"))			ent->team = kvp.asInt();
-	else if (kvp.isKey("group"))		ent->group = ED_NewString(value);
-	else if (kvp.isKey("size"))			ent->fieldSize = kvp.asInt();
-	else if (kvp.isKey("count"))		ent->count = kvp.asInt();
-	else if (kvp.isKey("time"))			ent->time = kvp.asInt();
-	else if (kvp.isKey("health"))		ent->HP = kvp.asInt();
-	else if (kvp.isKey("radius"))		ent->radius = kvp.asInt();
-	else if (kvp.isKey("sounds"))		ent->sounds = kvp.asInt();
-	else if (kvp.isKey("material"))		ent->material = static_cast<edictMaterial_t>(kvp.asInt());	// enum !!
-	else if (kvp.isKey("light"))		;	// ignore
+	if (kvp.isKey("classname"))
+		ent->classname = ED_NewString(value);
+	else if (kvp.isKey("model"))
+		ent->model = ED_NewString(value);
+	else if (kvp.isKey("spawnflags"))
+		ent->spawnflags = kvp.asInt();
+	else if (kvp.isKey("speed"))
+		ent->speed = kvp.asInt();
+	else if (kvp.isKey("dir"))
+		ent->dir = kvp.asInt();
+	else if (kvp.isKey("active"))
+		ent->active = kvp.asBool();
+	else if (kvp.isKey("target"))
+		ent->target = ED_NewString(value);
+	else if (kvp.isKey("targetname"))
+		ent->targetname = ED_NewString(value);
+	else if (kvp.isKey("item"))
+		ent->item = ED_NewString(value);
+	else if (kvp.isKey("noise"))
+		ent->noise = ED_NewString(value);
+	else if (kvp.isKey("particle"))
+		ent->particle = ED_NewString(value);
+	else if (kvp.isKey("nextmap"))
+		ent->nextmap = ED_NewString(value);
+	else if (kvp.isKey("frame"))
+		ent->frame = kvp.asInt();
+	else if (kvp.isKey("team"))
+		ent->team = kvp.asInt();
+	else if (kvp.isKey("group"))
+		ent->group = ED_NewString(value);
+	else if (kvp.isKey("size"))
+		ent->fieldSize = kvp.asInt();
+	else if (kvp.isKey("count"))
+		ent->count = kvp.asInt();
+	else if (kvp.isKey("time"))
+		ent->time = kvp.asInt();
+	else if (kvp.isKey("health"))
+		ent->HP = kvp.asInt();
+	else if (kvp.isKey("radius"))
+		ent->radius = kvp.asInt();
+	else if (kvp.isKey("sounds"))
+		ent->sounds = kvp.asInt();
+	else if (kvp.isKey("material"))
+		ent->material = static_cast<edictMaterial_t>(kvp.asInt()); // enum !!
+	else if (kvp.isKey("light"))
+		; // ignore
 	/** @todo This (maxteams) should also be handled server side - currently this is
 	 * only done client side */
-	else if (kvp.isKey("maxteams"))		;	// ignore
-	else if (kvp.isKey("maxlevel"))		;	// ignore
-	else if (kvp.isKey("dmg"))			ent->dmg = kvp.asInt();
-	else if (kvp.isKey("origin"))		kvp.asVec3(ent->origin);
-	else if (kvp.isKey("angles"))		kvp.asVec3(ent->angles);
-	else if (kvp.isKey("angle"))		ent->angle = kvp.asFloat();
-	else if (kvp.isKey("message"))		ent->message = ED_NewString(value);
+	else if (kvp.isKey("maxteams"))
+		; // ignore
+	else if (kvp.isKey("maxlevel"))
+		; // ignore
+	else if (kvp.isKey("dmg"))
+		ent->dmg = kvp.asInt();
+	else if (kvp.isKey("origin"))
+		kvp.asVec3(ent->origin);
+	else if (kvp.isKey("angles"))
+		kvp.asVec3(ent->angles);
+	else if (kvp.isKey("angle"))
+		ent->angle = kvp.asFloat();
+	else if (kvp.isKey("message"))
+		ent->message = ED_NewString(value);
 
-	else if (kvp.isKey("norandomspawn"))st.noRandomSpawn = kvp.asInt();
-	else if (kvp.isKey("noequipment"))	st.noEquipment = kvp.asInt();
+	else if (kvp.isKey("norandomspawn"))
+		st.noRandomSpawn = kvp.asInt();
+	else if (kvp.isKey("noequipment"))
+		st.noEquipment = kvp.asInt();
 }
 #if 0
 /**
