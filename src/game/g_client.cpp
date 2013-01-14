@@ -692,7 +692,7 @@ int G_ClientAction (Player &player)
 
 	case PA_SHOOT:
 		gi.ReadFormat(format, &pos, &i, &firemode, &from);
-		G_ClientShoot(&player, ent, pos, i, firemode, NULL, true, from);
+		G_ClientShoot(player, ent, pos, i, firemode, NULL, true, from);
 		break;
 
 	case PA_INVMOVE:

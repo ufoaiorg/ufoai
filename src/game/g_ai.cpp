@@ -1190,7 +1190,7 @@ void AI_ActorThink (Player *player, edict_t *ent)
 		const fireDefIndex_t fdIdx = bestAia.fd ? bestAia.fd->fdIdx : 0;
 		/* shoot until no shots are left or target died */
 		while (bestAia.shots) {
-			G_ClientShoot(player, ent, bestAia.target->pos, bestAia.shootType, fdIdx, NULL, true, bestAia.z_align);
+			G_ClientShoot(*player, ent, bestAia.target->pos, bestAia.shootType, fdIdx, NULL, true, bestAia.z_align);
 			bestAia.shots--;
 			/* died by our own shot? */
 			if (G_IsDead(ent))
