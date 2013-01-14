@@ -38,6 +38,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "g_utils.h"
 #include "g_vis.h"
 #include "../shared/parse.h"
+#include "../shared/keyvaluepair.h"
 
 /* fields are needed for spawning from the entity string */
 #define FFL_SPAWNTEMP		1
@@ -219,57 +220,6 @@ static char *ED_NewString (const char *string)
 	}
 
 	return newb;
-}
-
-class KeyValuePair {
-private:
-	const char* _keyStr;
-	const char* _valStr;
-public:
-	KeyValuePair (const char* keyStr, const char* valStr)
-	{
-		_keyStr = keyStr;
-		_valStr = valStr;
-	}
-
-	void set (const char* keyStr, const char* valStr)
-	{
-		_keyStr = keyStr;
-		_valStr = valStr;
-	}
-
-	bool isKey (const char* name) const;
-
-	float asFloat () const
-	{
-		return atof(_valStr);
-	}
-
-	int asInt () const
-	{
-		return atoi(_valStr);
-	}
-
-	bool asBool () const
-	{
-		return asInt() != 0 ? true : false;
-	}
-
-	const char* asString () const
-	{
-		return _valStr;
-	}
-
-	void asVec3 (vec3_t vec) const
-	{
-		if (sscanf(_valStr, "%f %f %f", &vec[0], &vec[1], &vec[2]) != 3)
-			VectorCopy(vec3_origin, vec);
-	}
-};
-
-bool KeyValuePair::isKey(const char* name) const
-{
-	return !strcmp(_keyStr, name);
 }
 
 /**
