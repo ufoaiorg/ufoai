@@ -421,14 +421,14 @@ public:
 	const char *noise;			/**< sounds - e.g. for func_door */
 	edictMaterial_t material;	/**< material value (e.g. for func_breakable) */
 	camera_edict_data_t camera;
-	int count;		/**< general purpose 'amount' variable - set via mapeditor often */
-	int time;		/**< general purpose 'rounds' variable - set via mapeditor often */
-	int sounds;		/**< type of sounds to play - e.g. doors */
-	int dmg;		/**< damage done by entity */
-	byte dmgtype;	/**< damage type done by the entity */
+	int count;					/**< general purpose 'amount' variable - set via mapeditor often */
+	int time;					/**< general purpose 'rounds' variable - set via mapeditor often */
+	int sounds;					/**< type of sounds to play - e.g. doors */
+	int dmg;					/**< damage done by entity */
+	byte dmgtype;				/**< damage type done by the entity */
 	/** @sa memcpy in Grid_CheckForbidden */
-	actorSizeEnum_t fieldSize;	/* ACTOR_SIZE_* */
-	bool hiding;		/**< for ai actors - when they try to hide after the performed their action */
+	actorSizeEnum_t fieldSize;	/**< ACTOR_SIZE_* */
+	bool hiding;				/**< for ai actors - when they try to hide after the performed their action */
 
 	/** function to call when triggered - this function should only return true when there is
 	 * a client action associated with it */
@@ -443,8 +443,8 @@ public:
 	bool (*use)(edict_t *self, edict_t *activator);
 	bool (*destroy)(edict_t *self);
 
-	edict_t *touchedNext;	/**< entity list of edict that are currently touching the trigger_touch */
-	int doorState;			/**< open or closed */
+	edict_t *touchedNext;		/**< entity list of edict that are currently touching the trigger_touch */
+	int doorState;				/**< open or closed */
 
 	moveinfo_t		moveinfo;
 
