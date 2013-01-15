@@ -389,7 +389,7 @@ static bool G_ActorHasEnoughTUsReactionFire (const edict_t *ent)
  * @return @c true if the needed settings could have been made or settings are
  * already valid, @c false otherwise.
  */
-static bool G_ReactionFireSetDefault (edict_t *ent)
+static bool G_ReactionFireSettingsSetDefault (edict_t *ent)
 {
 	if (G_ActorHasWorkingFireModeSet(ent))
 		return true;
@@ -461,7 +461,7 @@ static bool G_ReactionFireCanBeEnabled (const edict_t *ent)
  */
 bool G_ReactionFireSettingsReserveTUs (edict_t *ent)
 {
-	if (G_ReactionFireSetDefault(ent) && G_ReactionFireCanBeEnabled(ent)) {
+	if (G_ReactionFireSettingsSetDefault(ent) && G_ReactionFireCanBeEnabled(ent)) {
 		const int TUs = G_ActorGetTUForReactionFire(ent);
 		/* Enable requested reaction fire. */
 		G_ActorReserveTUs(ent, TUs, ent->chr.reservedTus.shot, ent->chr.reservedTus.crouch);
