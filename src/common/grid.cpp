@@ -90,7 +90,6 @@ CASSERT(lengthof(TUsUsed) == PATHFINDING_DIRECTIONS);
  * @param[in] x Field in x direction
  * @param[in] y Field in y direction
  * @param[in] z Field in z direction
- * @sa Grid_MoveMark
  * @sa G_BuildForbiddenList
  * @sa CL_BuildForbiddenList
  * @return true if one can't walk there (i.e. the field [and attached fields for e.g. 2x2 units] is/are blocked by entries in
@@ -167,6 +166,7 @@ public:
 	bool checkWalkingDirections (const pathing_t *path);
 	bool checkFlyingDirections (void);
 	bool checkVerticalDirections (void);
+	bool isPossible (const pathing_t *path);
 };
 
 /**
@@ -457,29 +457,29 @@ bool Step::checkVerticalDirections (void)
  * @param[in] step Holds all relevant data to check the step, eg. ptr to routing table
  * @param[in] path Pointer to client or server side pathing table (clMap, svMap)
  */
-static bool Grid_MoveMark (Step &step, const pathing_t *path)
+bool Step::isPossible (const pathing_t *path)
 {
 	/* calculate the position we would normally end up if moving in the given dir. */
-	if (!step.calcNewPos()) {
+	if (!calcNewPos()) {
 		return false;
 	}
-	step.calcNewTUs(path);
+	calcNewTUs(path);
 
 	/* If there is no passageway (or rather lack of a wall) to the desired cell, then return. */
 	/* If the flier is moving up or down diagonally, then passage height will also adjust */
-	if (step.dir >= FLYING_DIRECTIONS) {
-		if (!step.checkFlyingDirections()) {
+	if (dir >= FLYING_DIRECTIONS) {
+		if (!checkFlyingDirections()) {
 			return false;
 		}
-	} else if (step.dir < CORE_DIRECTIONS) {
+	} else if (dir < CORE_DIRECTIONS) {
 		/** note that this function may modify toPos ! */
-		if (!step.checkWalkingDirections(path)) {
+		if (!checkWalkingDirections(path)) {
 			return false;
 		}
 	} else {
 		/* else there is no movement that uses passages. */
 		/* If we are falling, the height difference is the floor value. */
-		if (!step.checkVerticalDirections()) {
+		if (!checkVerticalDirections()) {
 			return false;
 		}
 	}
@@ -510,7 +510,6 @@ static bool Grid_MoveMark (Step &step, const pathing_t *path)
  * @param[in] crouchingState Whether the actor is currently crouching, 1 is yes, 0 is no.
  * @param[in] fb_list Forbidden list (entities are standing at those points)
  * @param[in] fb_length Length of forbidden list
- * @sa Grid_MoveMark
  * @sa G_MoveCalc
  * @sa CL_ConditionalMoveCalc
  */
@@ -571,7 +570,7 @@ void Grid_CalcPathing (const routing_t *routes, const actorSizeEnum_t actorSize,
                 if (!step.init(routes, pos, actorSize, amst, dir))
                     continue;		/* either dir is irrelevant or something worse happened */
 
-                if (Grid_MoveMark(step, path)) {
+                if (step.isPossible(path)) {
                     /* Is this a better move into this cell? */
                     RT_AREA_TEST_POS(path, step.toPos, step.crouchingState);
                     if (RT_AREA_POS(path, step.toPos, step.crouchingState) <= step.TUsAfter) {
@@ -615,7 +614,6 @@ void Grid_CalcPathing (const routing_t *routes, const actorSizeEnum_t actorSize,
  * @param[in] crouchingState Whether the actor is currently crouching, 1 is yes, 0 is no.
  * @param[in] fb_list Forbidden list (entities are standing at those points)
  * @param[in] fb_length Length of forbidden list
- * @sa Grid_MoveMark
  * @sa G_MoveCalc
  * @sa CL_ConditionalMoveCalc
  */
@@ -673,7 +671,7 @@ bool Grid_FindPath (const routing_t *routes, const actorSizeEnum_t actorSize, pa
 			if (!step.init(routes, pos, actorSize, crouchingState, dir))
 				continue;		/* either dir is irrelevant or something worse happened */
 
-			if (Grid_MoveMark(step, path)) {
+			if (step.isPossible(path)) {
 				/* Is this a better move into this cell? */
 				RT_AREA_TEST_POS(path, step.toPos, step.crouchingState);
 				if (RT_AREA_POS(path, step.toPos, step.crouchingState) <= step.TUsAfter) {

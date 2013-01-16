@@ -2219,7 +2219,7 @@ void CL_DisplayObstructionArrows (void)
 
 #ifdef DEBUG
 /**
- * @brief Triggers @c Grid_MoveMark in every direction at the current truePos.
+ * @brief Triggers @c Step::isPossible in every direction at the current truePos.
  */
 static void CL_DumpMoveMark_f (void)
 {
@@ -2567,7 +2567,7 @@ void ACTOR_InitStartup (void)
 #ifdef DEBUG
 	Cmd_AddCommand("debug_path", CL_DebugPath_f, "Display routing data for current mouse position.");
 	Cmd_AddCommand("debug_drawblocked", CL_DisplayBlockedPaths_f, "Draw a marker for all blocked map-positions.");
-	Cmd_AddCommand("debug_movemark", CL_DumpMoveMark_f, "Trigger Grid_MoveMark in every direction at the current truePos.");
+	Cmd_AddCommand("debug_movemark", CL_DumpMoveMark_f, "Trigger Step::isPossible in every direction at the current truePos.");
 	Cmd_AddCommand("debug_tus", CL_DumpTUs_f, "Show a table of the TUs that would be used by the current actor to move relative to his current location.");
 	Cmd_AddCommand("debug_actorinvlist", NULL, "Show the inventory list of all actors.");
 #endif /* DEBUG */
