@@ -442,9 +442,8 @@ void AII_AutoAddAmmo (aircraftSlot_t *slot)
 	const objDef_t *item;
 
 	assert(slot);
-	assert(slot->aircraft);
 
-	if (!AIR_IsUFO(slot->aircraft) && !AIR_IsAircraftInBase(slot->aircraft))
+	if (slot->aircraft && !AIR_IsUFO(slot->aircraft) && !AIR_IsAircraftInBase(slot->aircraft))
 		return;
 
 	/* Get the weapon (either current weapon or weapon to install after this one is removed) */
