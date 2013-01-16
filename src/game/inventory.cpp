@@ -581,7 +581,7 @@ float InventoryInterface::GetInventoryState (const inventory_t *inventory, int &
  * @param[in] maxWeight The max weight this actor is allowed to carry.
  * @sa INVSH_LoadableInWeapon
  */
-int InventoryInterface::PackAmmoAndWeapon (inventoryInterface_t *self, character_t* const chr, const objDef_t* weapon, int missedPrimary, const equipDef_t *ed, int maxWeight)
+int InventoryInterface::PackAmmoAndWeapon (character_t* const chr, const objDef_t* weapon, int missedPrimary, const equipDef_t *ed, int maxWeight)
 {
 	inventory_t* const inv = &chr->i;
 	const int speed = chr->score.skills[ABILITY_SPEED];
@@ -598,14 +598,14 @@ int InventoryInterface::PackAmmoAndWeapon (inventoryInterface_t *self, character
 	item.item = weapon;
 
 	/* are we going to allow trying the left hand */
-	allowLeft = !(inv->c[self->csi->idRight] && inv->c[self->csi->idRight]->item.item->fireTwoHanded);
+	allowLeft = !(inv->c[csi->idRight] && inv->c[csi->idRight]->item.item->fireTwoHanded);
 
 	if (weapon->oneshot) {
 		/* The weapon provides its own ammo (i.e. it is charged or loaded in the base.) */
 		item.ammoLeft = weapon->ammo;
 		item.ammo = weapon;
 		Com_DPrintf(DEBUG_SHARED, "I_PackAmmoAndWeapon: oneshot weapon '%s' in equipment '%s' (%s).\n",
-				weapon->id, ed->id, self->name);
+				weapon->id, ed->id, this->name);
 	} else if (!weapon->reload) {
 		item.ammo = item.item; /* no ammo needed, so fire definitions are in t */
 	} else {
@@ -613,7 +613,7 @@ int InventoryInterface::PackAmmoAndWeapon (inventoryInterface_t *self, character
 		 * weapon in equipment definition) */
 		int totalAvailableAmmo = 0;
 		int i;
-		for (i = 0; i < self->csi->numODs; i++) {
+		for (i = 0; i < csi->numODs; i++) {
 			const objDef_t *obj = INVSH_GetItemByIDX(i);
 			if (ed->numItems[i] && INVSH_LoadableInWeapon(obj, weapon)) {
 				totalAvailableAmmo++;
@@ -621,7 +621,7 @@ int InventoryInterface::PackAmmoAndWeapon (inventoryInterface_t *self, character
 		}
 		if (totalAvailableAmmo) {
 			int randNumber = rand() % totalAvailableAmmo;
-			for (i = 0; i < self->csi->numODs; i++) {
+			for (i = 0; i < csi->numODs; i++) {
 				const objDef_t *obj = INVSH_GetItemByIDX(i);
 				if (ed->numItems[i] && INVSH_LoadableInWeapon(obj, weapon)) {
 					randNumber--;
@@ -635,7 +635,7 @@ int InventoryInterface::PackAmmoAndWeapon (inventoryInterface_t *self, character
 
 		if (!ammo) {
 			Com_DPrintf(DEBUG_SHARED, "I_PackAmmoAndWeapon: no ammo for sidearm or primary weapon '%s' in equipment '%s' (%s).\n",
-					weapon->id, ed->id, self->name);
+					weapon->id, ed->id, this->name);
 			return 0;
 		}
 		/* load ammo */
@@ -645,7 +645,7 @@ int InventoryInterface::PackAmmoAndWeapon (inventoryInterface_t *self, character
 
 	if (!item.ammo) {
 		Com_Printf("I_PackAmmoAndWeapon: no ammo for sidearm or primary weapon '%s' in equipment '%s' (%s).\n",
-				weapon->id, ed->id, self->name);
+				weapon->id, ed->id, this->name);
 		return 0;
 	}
 
@@ -653,20 +653,20 @@ int InventoryInterface::PackAmmoAndWeapon (inventoryInterface_t *self, character
 	maxTU = GET_TU(speed, GET_ENCUMBRANCE_PENALTY(weight, chr->score.skills[ABILITY_POWER]));
 	if (weight > maxWeight || tuNeed > maxTU) {
 		Com_DPrintf(DEBUG_SHARED, "I_PackAmmoAndWeapon: weapon too heavy: '%s' in equipment '%s' (%s).\n",
-				weapon->id, ed->id, self->name);
+				weapon->id, ed->id, this->name);
 		return 0;
 	}
 
 	/* now try to pack the weapon */
-	packed = self->TryAddToInventory(self, inv, &item, &self->csi->ids[self->csi->idRight]);
+	packed = TryAddToInventory(this, inv, &item, &csi->ids[csi->idRight]);
 	if (packed)
 		ammoMult = 3;
 	if (!packed && allowLeft)
-		packed = self->TryAddToInventory(self, inv, &item, &self->csi->ids[self->csi->idLeft]);
+		packed = TryAddToInventory(this, inv, &item, &csi->ids[csi->idLeft]);
 	if (!packed)
-		packed = self->TryAddToInventory(self, inv, &item, &self->csi->ids[self->csi->idBelt]);
+		packed = TryAddToInventory(this, inv, &item, &csi->ids[csi->idBelt]);
 	if (!packed)
-		packed = self->TryAddToInventory(self, inv, &item, &self->csi->ids[self->csi->idHolster]);
+		packed = TryAddToInventory(this, inv, &item, &csi->ids[csi->idHolster]);
 	if (!packed)
 		return 0;
 
@@ -688,7 +688,7 @@ int InventoryInterface::PackAmmoAndWeapon (inventoryInterface_t *self, character
 			mun.item = ammo;
 			/* ammo to backpack; belt is for knives and grenades */
 			if (weight <= maxWeight && tuNeed <= maxTU)
-					numpacked += self->TryAddToInventory(self, inv, &mun, &self->csi->ids[self->csi->idBackpack]);
+					numpacked += TryAddToInventory(this, inv, &mun, &csi->ids[csi->idBackpack]);
 			/* no problem if no space left; one ammo already loaded */
 			if (numpacked > ammoMult || numpacked * weapon->ammo > 11)
 				break;
@@ -802,7 +802,7 @@ void InventoryInterface::EquipActor (inventoryInterface_t* self, character_t* co
 		}
 		/* See if a weapon has been selected. */
 		if (primaryWeapon) {
-			hasWeapon += PackAmmoAndWeapon(self, chr, primaryWeapon, 0, ed, maxWeight);
+			hasWeapon += PackAmmoAndWeapon(chr, primaryWeapon, 0, ed, maxWeight);
 			if (hasWeapon) {
 				int ammo;
 
@@ -845,13 +845,13 @@ void InventoryInterface::EquipActor (inventoryInterface_t* self, character_t* co
 			}
 
 			if (secondaryWeapon) {
-				hasWeapon += PackAmmoAndWeapon(self, chr, secondaryWeapon, missedPrimary, ed, maxWeight);
+				hasWeapon += PackAmmoAndWeapon(chr, secondaryWeapon, missedPrimary, ed, maxWeight);
 				if (hasWeapon) {
 					const float AKIMBO_CHANCE = 0.3; 	/**< if you got a one-handed secondary weapon (and no primary weapon),
 															 this is the chance to get another one (between 0 and 1) */
 					/* Try to get the second akimbo pistol if no primary weapon. */
 					if (primary == WEAPON_NO_PRIMARY && !secondaryWeapon->fireTwoHanded && frand() < AKIMBO_CHANCE) {
-						PackAmmoAndWeapon(self, chr, secondaryWeapon, 0, ed, maxWeight);
+						PackAmmoAndWeapon(chr, secondaryWeapon, 0, ed, maxWeight);
 					}
 				}
 			}
@@ -894,7 +894,7 @@ void InventoryInterface::EquipActor (inventoryInterface_t* self, character_t* co
 				if (secondaryWeapon) {
 					int num = ed->numItems[secondaryWeapon->idx] / 100 + (ed->numItems[secondaryWeapon->idx] % 100 >= 100 * frand());
 					while (num--) {
-						hasWeapon += PackAmmoAndWeapon(self, chr, secondaryWeapon, 0, ed, maxWeight);
+						hasWeapon += PackAmmoAndWeapon(chr, secondaryWeapon, 0, ed, maxWeight);
 					}
 				}
 			} while (repeat--); /* Gives more if no serious weapons. */
@@ -916,7 +916,7 @@ void InventoryInterface::EquipActor (inventoryInterface_t* self, character_t* co
 				}
 			}
 			if (maxPrice)
-				hasWeapon += PackAmmoAndWeapon(self, chr, blade, 0, ed, maxWeight);
+				hasWeapon += PackAmmoAndWeapon(chr, blade, 0, ed, maxWeight);
 		}
 		/* If still no weapon, something is broken, or no blades in equipment. */
 		if (!hasWeapon)

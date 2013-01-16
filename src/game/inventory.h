@@ -88,7 +88,7 @@ protected:
 	void removeInvList (invList_t *invList);
 	invList_t* addInvList (invList_t **invList);
 	float GetInventoryState (const inventory_t *inventory, int &slowestFd);
-	int PackAmmoAndWeapon (inventoryInterface_t *self, character_t* const chr, const objDef_t* weapon, int missedPrimary, const equipDef_t *ed, int maxWeight);
+	int PackAmmoAndWeapon (character_t* const chr, const objDef_t* weapon, int missedPrimary, const equipDef_t *ed, int maxWeight);
 };
 
 void INV_InitInventory(const char *name, inventoryInterface_t *ii, const csi_t* csi, const inventoryImport_t *iimport);
