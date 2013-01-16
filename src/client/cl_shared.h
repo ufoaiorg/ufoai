@@ -65,7 +65,7 @@ typedef struct chr_list_s {
 #define RADAR_WIDTH		512
 #define RADAR_HEIGHT	256
 
-typedef struct {
+typedef struct geoscapeData_s {
 	bool active;
 	bool nationOverlay;
 	bool xviOverlay;
