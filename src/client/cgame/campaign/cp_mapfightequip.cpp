@@ -1063,7 +1063,7 @@ float AIR_GetMaxAircraftWeaponRange (const aircraftSlot_t *slot, int maxSlot)
 			continue;
 
 		/* make sure this item is useable */
-		if (!AII_CheckUpdateAircraftStats(slot, AIR_STATS_WRANGE))
+		if (!AII_CheckUpdateAircraftStats(weapon, AIR_STATS_WRANGE))
 			continue;
 
 		/* select this weapon if this is the one with the longest range */
