@@ -223,9 +223,9 @@ typedef struct craftitem_s {
  */
 typedef struct objDef_s {
 	/* Common */
-	int idx;	/**< Index of the objDef in the global item list (ods). */
+	int idx;				/**< Index of the objDef in the global item list (ods). */
 	const char *name;		/**< Item name taken from scriptfile. */
-	const char *id;		/**< Identifier of the item being item definition in scriptfile. */
+	const char *id;			/**< Identifier of the item being item definition in scriptfile. */
 	const char *model;		/**< Model name - relative to game dir. */
 	const char *image;		/**< Object image file - relative to game dir. */
 	const char *type;		/**< melee, rifle, ammo, armour. e.g. used in the ufopedia */
@@ -234,13 +234,13 @@ typedef struct objDef_s {
 
 	float scale;			/**< scale value for images? and models */
 	vec3_t center;			/**< origin for models */
-	bool weapon;		/**< This item is a weapon or ammo. */
+	bool weapon;			/**< This item is a weapon or ammo. */
 	bool holdTwoHanded;		/**< The soldier needs both hands to hold this object. */
 	bool fireTwoHanded;		/**< The soldier needs both hands to fire using object. */
-	bool extension;		/**< This is an extension. (may not be headgear, too). */
-	bool headgear;		/**< This is a headgear. (may not be extension, too). */
-	bool thrown;		/**< This item can be thrown. */
-	bool isVirtual;	/**< virtual equipment don't show up in menus, if it's an ammo no item needed for reload */
+	bool extension;			/**< This is an extension. (may not be headgear, too). */
+	bool headgear;			/**< This is a headgear. (may not be extension, too). */
+	bool thrown;			/**< This item can be thrown. */
+	bool isVirtual;			/**< virtual equipment don't show up in menus, if it's an ammo no item needed for reload */
 	bool isPrimary;
 	bool isSecondary;
 	bool isHeavy;
@@ -254,17 +254,17 @@ typedef struct objDef_s {
 					     weapon with currently loaded type of ammo. */
 	int reload;			/**< Time units (TUs) for reloading the weapon. */
 	const char *reloadSound;	/**< Sound played when weapon is reloaded */
-	float reloadAttenuation;		/**< Attenuation of reload sound - less louder over distance - */
-	bool oneshot;	/**< This weapon contains its own ammo (it is loaded in the base).
+	float reloadAttenuation;	/**< Attenuation of reload sound - less louder over distance - */
+	bool oneshot;		/**< This weapon contains its own ammo (it is loaded in the base).
 						 * "int ammo" of objDef_s defines the amount of ammo used in oneshoot weapons. */
-	bool deplete;	/**< This weapon useless after all ("oneshot") ammo is used up.
+	bool deplete;		/**< This weapon useless after all ("oneshot") ammo is used up.
 						 * If true this item will not be collected on mission-end. (see INV_CollectinItems). */
 
 	int useable;		/**< Defines which team can use this item: TEAM_*.
 						 * Used in checking the right team when filling the containers with available armour. */
 
 	const struct objDef_s *ammos[MAX_AMMOS_PER_OBJDEF];		/**< List of ammo-object pointers that can be used in this one. */
-	int numAmmos;			/**< Number of ammos this weapon can be used with, which is <= MAX_AMMOS_PER_OBJDEF. */
+	int numAmmos;		/**< Number of ammos this weapon can be used with, which is <= MAX_AMMOS_PER_OBJDEF. */
 
 	/* Firemodes (per weapon). */
 	const struct objDef_s *weapons[MAX_WEAPONS_PER_OBJDEF];		/**< List of weapon-object pointers where this item can be used in.
@@ -288,9 +288,9 @@ typedef struct objDef_s {
 	/**** @todo move into campaign only structure ****/
 	/* Aircraft specific */
 	craftitem_t craftitem;
-	int price;			/**< Price for this item. */
-	int productionCost;	/**< Production costs for this item. */
-	int size;			/**< Size of an item, used in storage capacities. */
+	int price;				/**< Price for this item. */
+	int productionCost;		/**< Production costs for this item. */
+	int size;				/**< Size of an item, used in storage capacities. */
 	float weight;			/**< The weight of the item */
 	bool notOnMarket;		/**< True if this item should not be available on market. */
 } objDef_t;
