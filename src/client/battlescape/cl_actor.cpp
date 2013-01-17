@@ -1836,7 +1836,6 @@ static void CL_TargetingGrenade (const pos3_t fromPos, actorSizeEnum_t fromActor
  * @sa ModelOffset
  */
 static const vec3_t halfBoxSize = { BOX_DELTA_WIDTH, BOX_DELTA_LENGTH, BOX_DELTA_HEIGHT };
-#define BoxSize(aSize, halfBox, target) (target[0]=aSize*halfBox[0]+((aSize-1)*UNIT_SIZE), target[1]=aSize*halfBox[1]+((aSize-1)*UNIT_SIZE), target[2]=halfBox[2])
 #define BoxOffset(aSize, target) (target[0]=(aSize-1)*(UNIT_SIZE+BOX_DELTA_WIDTH), target[1]=(aSize-1)*(UNIT_SIZE+BOX_DELTA_LENGTH), target[2]=0)
 
 /**
@@ -1847,8 +1846,6 @@ static const vec3_t halfBoxSize = { BOX_DELTA_WIDTH, BOX_DELTA_LENGTH, BOX_DELTA
 static void CL_AddTargetingBox (pos3_t pos, bool pendBox)
 {
 	entity_t cursor;
-	vec3_t realBoxSize;
-	vec3_t cursorOffset;
 	actorSizeEnum_t actorSize = ACTOR_SIZE_NORMAL;
 
 	if (!cl_showactors->integer)
@@ -1928,10 +1925,6 @@ static void CL_AddTargetingBox (pos3_t pos, bool pendBox)
 		vec3_t increase = { inc, inc, 0};
 		VectorAdd(cursor.oldorigin, increase, cursor.oldorigin);
 	}
-/*	BoxOffset(actorSize, cursorOffset);
-	VectorAdd(cursor.oldorigin, cursorOffset, cursor.oldorigin);
-	VectorAdd(cursor.origin, cursorOffset, cursor.origin);
-	BoxSize(actorSize, halfBoxSize, realBoxSize);*/
 
 	/* if pendBox is true then ignore all the previous color considerations and use cyan */
 	if (pendBox) {
