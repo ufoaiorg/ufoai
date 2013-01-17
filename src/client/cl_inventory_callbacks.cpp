@@ -354,9 +354,9 @@ static void INV_UpdateActorLoad_f (void)
 		const float invWeight = INVSH_GetInventoryWeight(&chr->i);
 		const int maxWeight = GAME_GetChrMaxLoad(chr);
 		const float penalty = GET_ENCUMBRANCE_PENALTY(invWeight, chr->score.skills[ABILITY_POWER]);
-		const int maxTU = GET_TU(chr->score.skills[ABILITY_SPEED], 1);
+		const int normalTU = GET_TU(chr->score.skills[ABILITY_SPEED], 1.0f - WEIGHT_NORMAL_PENALTY);
 		const int tus = GET_TU(chr->score.skills[ABILITY_SPEED], penalty);
-		const int tuPenalty = maxTU * WEIGHT_NORMAL_PENALTY - (maxTU - tus);
+		const int tuPenalty = tus - normalTU;
 		int count = 0;
 
 		for (containerIndex_t containerID = 0; containerID < csi.numIDs; containerID++) {
@@ -385,7 +385,7 @@ static void INV_UpdateActorLoad_f (void)
 		char tooltip[MAX_VAR];
 		Com_sprintf(label, sizeof(label), "%g/%i %s %s", invWeight, maxWeight, _("Kg"),
 				(count > 0 ? _("Warning: Not enough TUs...") : ""));
-		Com_sprintf(tooltip, sizeof(tooltip), "%s %+i", _("TU:"), tuPenalty);
+		Com_sprintf(tooltip, sizeof(tooltip), "%s %i (%+i)", _("TU:"), tus, tuPenalty);
 		UI_ExecuteConfunc("%s \"%s\" \"%s\" %f %i", Cmd_Argv(1), label, tooltip, WEIGHT_NORMAL_PENALTY - (1.0f - penalty), count);
 	}
 }
