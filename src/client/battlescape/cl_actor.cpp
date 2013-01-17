@@ -1920,14 +1920,18 @@ static void CL_AddTargetingBox (pos3_t pos, bool pendBox)
 
 	/* Now calculate the size of the cursor box, depending on the actor. */
 	/* For some strange reason we use origin and oldorigin instead of the ent's min/max, respectively */
-	Grid_PosToVec(cl.mapData->routes, ACTOR_GET_FIELDSIZE(selActor), pos, cursor.origin);
+	Grid_PosToVec(cl.mapData->routes, ACTOR_SIZE_NORMAL, pos, cursor.origin);	/* center of the (lower left) cell */
 	VectorAdd(cursor.origin, halfBoxSize, cursor.oldorigin);
-
-	BoxOffset(actorSize, cursorOffset);
+	VectorSubtract(cursor.origin, halfBoxSize, cursor.origin);
+	if (actorSize > ACTOR_SIZE_NORMAL) {
+		vec_t inc = UNIT_SIZE * (actorSize - 1);
+		vec3_t increase = { inc, inc, 0};
+		VectorAdd(cursor.oldorigin, increase, cursor.oldorigin);
+	}
+/*	BoxOffset(actorSize, cursorOffset);
 	VectorAdd(cursor.oldorigin, cursorOffset, cursor.oldorigin);
 	VectorAdd(cursor.origin, cursorOffset, cursor.origin);
-	BoxSize(actorSize, halfBoxSize, realBoxSize);
-	VectorSubtract(cursor.origin, realBoxSize, cursor.origin);
+	BoxSize(actorSize, halfBoxSize, realBoxSize);*/
 
 	/* if pendBox is true then ignore all the previous color considerations and use cyan */
 	if (pendBox) {
