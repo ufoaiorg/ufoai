@@ -544,11 +544,11 @@ static void AI_SearchBestTarget (aiAction_t *aia, const edict_t *ent, edict_t *c
 		const int shots = tu / time;
 		if (shots) {
 			float dmg;
+			if (G_IsStunned(check) && (item->item->dmgtype == gi.csi->damStunElectro || item->item->dmgtype == gi.csi->damStunGas))
+				return;
 			if (!AI_FighterCheckShoot(ent, check, fd, &dist))
 				continue;
 
-			if (G_IsStunned(check) && (item->item->dmgtype == gi.csi->damStunElectro || item->item->dmgtype == gi.csi->damStunGas))
-				continue;
 			/* check how good the target is visible and if we have a shot */
 			if (!visChecked) {	/* only do this once per actor ! */
 				vis = G_ActorVis(ent->origin, ent, check, true);
@@ -563,12 +563,12 @@ static void AI_SearchBestTarget (aiAction_t *aia, const edict_t *ent, edict_t *c
 
 					/* gun-to-target line free? */
 					if (G_TestLine(origin, check->origin))
-						continue;
+						return;
 				}
 			}
 
 			if (vis == ACTOR_VIS_0)
-				continue;
+				return;
 
 			/* calculate expected damage */
 			dmg = vis * (fd->damage[0] + fd->spldmg[0]) * fd->shots * shots;
