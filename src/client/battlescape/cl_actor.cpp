@@ -1866,6 +1866,7 @@ static void CL_AddTargetingBox (pos3_t pos, bool pendBox)
 	/* color */
 	/* if the mouse is over an actor, but not the selected one */
 	if (mouseActor && !LE_IsSelected(mouseActor)) {
+		actorSize = mouseActor->fieldSize;
 		cursor.alpha = 0.6 + 0.2 * sin((float) cl.time / 80);
 		/* Paint the box red if the soldiers under the cursor is
 		 * not in our team and no civilian either. */
@@ -1902,10 +1903,6 @@ static void CL_AddTargetingBox (pos3_t pos, bool pendBox)
 			}
 			/* Paint a light blue box if on our team */
 			VectorSet(cursor.color, 0.2, 0.3, 1); /* Light Blue */
-		}
-
-		if (selActor) {
-			actorSize = selActor->fieldSize;
 		}
 	} else {
 		/* either no actor under the cursor or the selected one */
