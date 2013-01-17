@@ -74,7 +74,7 @@ typedef struct aiAction_s {
 
 #define CLOSE_IN_DIST		1200.0
 #define SPREAD_FACTOR		8.0
-#define	SPREAD_NORM(x)		(x > 0 ? SPREAD_FACTOR/(x*torad) : 0)
+#define	SPREAD_NORM(x)		((x) > 0 ? SPREAD_FACTOR/((x)*torad) : 0)
 /** @brief distance for (ai) hiding in grid tiles */
 #define HIDE_DIST			7
 #define HERD_DIST			7
