@@ -93,8 +93,9 @@ void AI_Init (void)
  * @param[in] ent AI that is trying to shoot
  * @param[in] target Shoot to this location
  * @param[in] spread The spread of the weapon used (from fireDef)
+ * @param[in] radius The splash radius of the weapon
  */
-static bool AI_CheckFF (const edict_t *ent, const vec3_t target, float spread)
+static bool AI_CheckFF (const edict_t *ent, const vec3_t target, float spread, float radius)
 {
 	edict_t *check = NULL;
 	vec3_t dtarget, dcheck, back;
@@ -121,6 +122,8 @@ static bool AI_CheckFF (const edict_t *ent, const vec3_t target, float spread)
 					return true;
 			}
 		}
+		if (VectorDist(target, check->origin) < radius + UNIT_SIZE)
+			return true;
 	}
 
 	/* no ally in danger */
@@ -148,7 +151,7 @@ static bool AI_FighterCheckShoot (const edict_t* ent, const edict_t* check, cons
 		return false;
 
 	/* check FF */
-	if (AI_CheckFF(ent, check->origin, fd->spread[0]))
+	if (AI_CheckFF(ent, check->origin, fd->spread[0], fd->splrad))
 		return false;
 
 	return true;
