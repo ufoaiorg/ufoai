@@ -149,6 +149,7 @@
 		<Unit filename="..\..\src\game\lua\print.cpp" />
 		<Unit filename="..\..\src\game\q_shared.cpp" />
 		<Unit filename="..\..\src\game\q_shared.h" />
+		<Unit filename="..\..\src\game\srvedict.h" />
 		<Unit filename="..\..\src\shared\aabb.cpp" />
 		<Unit filename="..\..\src\shared\aabb.h" />
 		<Unit filename="..\..\src\shared\infostring.cpp" />
