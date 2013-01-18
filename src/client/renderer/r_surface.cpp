@@ -134,7 +134,7 @@ void R_DrawSurfaces (const mBspSurfaces_t *surfs, GLushort *indexPtr)
 
 		/** @todo integrate it better with R_SetSurfaceState - maybe cache somewhere in the mBspSurface_t ? */
 		texInfo = surf->texinfo;
-		texFlags = texInfo->flags & (SURF_BLEND33 | SURF_BLEND66 | MSURF_LIGHTMAP); /* should match flags that affect R_SetSurfaceState behavior */
+		texFlags = texInfo->flags & (SURF_BLEND33 | SURF_BLEND66); /* should match flags that affect R_SetSurfaceState behavior */
 		if (texInfo->image != lastTexture || surf->lightmap_texnum != lastLightMap || surf->deluxemap_texnum != lastDeluxeMap || texFlags != lastFlags) {
 			if (!newBatch) {
 				/* changes in texturing require new batch */
