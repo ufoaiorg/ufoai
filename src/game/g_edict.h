@@ -1,0 +1,171 @@
+/**
+ * @file
+ * @brief Local definitions for game module
+ */
+
+/*
+All original material Copyright (C) 2002-2013 UFO: Alien Invasion.
+
+Original file from Quake 2 v3.21: quake2-2.31/game/g_local.h
+Copyright (C) 1997-2001 Id Software, Inc.
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+
+*/
+
+#pragma once
+
+//#include "q_shared.h"
+//#include "inventory.h"				/* for inventoryInterface_t in game_locals_t */
+#include "../shared/ufotypes.h"
+//#include "lua/lua.h"
+
+
+/**
+ * @brief Everything that is not in the bsp tree is an edict, the spawnpoints,
+ * the actors, the misc_models, the weapons and so on.
+ */
+class Edict {
+public:
+	bool inuse;
+	int linkcount;		/**< count the amount of server side links - if a link was called,
+						 * something on the position or the size of the entity was changed */
+
+	int number;			/**< the number in the global edict array */
+
+	vec3_t origin;		/**< the position in the world */
+	vec3_t angles;		/**< the rotation in the world (pitch, yaw, roll) */
+	pos3_t pos;			/**< the position on the grid @sa @c UNIT_SIZE */
+
+	/** tracing info SOLID_BSP, SOLID_BBOX, ... */
+	solid_t solid;
+
+	vec3_t mins, maxs;		/**< position of min and max points - relative to origin */
+	vec3_t absmin, absmax;	/**< position of min and max points - relative to world's origin */
+	vec3_t size;
+
+	edict_t *child;	/**< e.g. the trigger for this edict */
+	edict_t *owner;	/**< e.g. the door model in case of func_door */
+	int modelindex;	/**< inline model index */
+	const char *classname;
+
+	/*================================ */
+	/* don't change anything above here - the server expects the fields in that order */
+	/*================================ */
+
+	int mapNum;			/**< entity number in the map file */
+	const char *model;	/**< inline model (start with * and is followed by the model numberer)
+						 * or misc_model model name (e.g. md2) */
+
+	/** only used locally in game, not by server */
+
+	edict_t *particleLink;
+	const edict_t *link;		/**< can be used to store another edict that e.g. interacts with the current one */
+	entity_type_t type;
+	teammask_t visflags;		/**< bitmask of teams that can see this edict */
+
+	int contentFlags;			/**< contents flags of the brush the actor is walking in */
+
+	byte dir;					/**< direction the player looks at */
+
+	int TU;						/**< remaining timeunits for actors or timeunits needed to 'use' this entity */
+	int HP;						/**< remaining healthpoints */
+	int STUN;					/**< The stun damage received in a mission. */
+	int morale;					/**< the current morale value */
+
+	int state;					/**< the player state - dead, shaken.... */
+
+	int team;					/**< player of which team? */
+	int pnum;					/**< the actual player slot */
+	/** the model indices */
+	unsigned int body;
+	unsigned int head;
+	int frame;					/**< frame of the model to show */
+
+	char *group;				/**< this can be used to trigger a group of entities
+								 * e.g. for two-part-doors - set the group to the same
+								 * string for each door part and they will open both
+								 * if you open one */
+
+	bool inRescueZone;			/**< the actor is standing in a rescue zone if this is true - this means that
+								 * when the mission is aborted the actor will not die */
+
+	/** client actions - interact with the world */
+	edict_t *clientAction;
+
+	/** here are the character values */
+	character_t chr;
+
+	int spawnflags;				/**< set via mapeditor */
+
+	float angle;				/**< entity yaw - (0-360 degree) set via mapeditor - sometimes used for movement direction,
+								 * then -1=up; -2=down is used additionally */
+
+	int radius;					/**< this is used to extend the bounding box of a trigger_touch for e.g. misc_mission */
+	int speed;					/**< speed of entities - e.g. rotating or actors */
+	const char *target;			/**< name of the entity to trigger or move towards - this name is stored in the target edicts targetname value */
+	const char *targetname;		/**< name pointed to by target - see the target of the parent edict */
+	const char *item;			/**< the item id that must be placed to e.g. the func_mission to activate the use function */
+	const char *particle;
+	const char *nextmap;
+	const char *message;		/**< misc_message */
+	const char *noise;			/**< sounds - e.g. for func_door */
+	edictMaterial_t material;	/**< material value (e.g. for func_breakable) */
+	camera_edict_data_t camera;
+	int count;					/**< general purpose 'amount' variable - set via mapeditor often */
+	int time;					/**< general purpose 'rounds' variable - set via mapeditor often */
+	int sounds;					/**< type of sounds to play - e.g. doors */
+	int dmg;					/**< damage done by entity */
+	byte dmgtype;				/**< damage type done by the entity */
+	/** @sa memcpy in Grid_CheckForbidden */
+	actorSizeEnum_t fieldSize;	/**< ACTOR_SIZE_* */
+	bool hiding;				/**< for ai actors - when they try to hide after the performed their action */
+
+	/** function to call when triggered - this function should only return true when there is
+	 * a client action associated with it */
+	bool (*touch)(edict_t *self, edict_t *activator);
+	/** reset function that is called before the touch triggers are called */
+	void (*reset)(edict_t *self, edict_t *activator);
+	float nextthink;
+	void (*think)(edict_t *self);
+	/** general use function that is called when the triggered client action is executed
+	 * or when the server has to 'use' the entity
+	 * @param activator Might be @c NULL if there is no activator */
+	bool (*use)(edict_t *self, edict_t *activator);
+	bool (*destroy)(edict_t *self);
+
+	edict_t *touchedNext;		/**< entity list of edict that are currently touching the trigger_touch */
+	int doorState;				/**< open or closed */
+
+	moveinfo_t		moveinfo;
+
+	/** flags will have FL_GROUPSLAVE set when the edict is part of a chain,
+	 * but not the master - you can use the groupChain pointer to get all the
+	 * edicts in the particular chain - and start out for the on that doesn't
+	 * have the above mentioned flag set.
+	 * @sa G_FindEdictGroups */
+	edict_t *groupChain;
+	edict_t *groupMaster;		/**< first entry in the list */
+	int flags;					/**< FL_* */
+
+	AI_t AI; 					/**< The character's artificial intelligence */
+
+	pos3_t *forbiddenListPos;	/**< this is used for e.g. misc_models with the solid flag set - this will
+								 * hold a list of grid positions that are blocked by the aabb of the model */
+	int forbiddenListSize;		/**< amount of entries in the forbiddenListPos */
+
+	bool active;
+};
