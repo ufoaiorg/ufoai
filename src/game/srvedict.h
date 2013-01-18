@@ -54,4 +54,8 @@ public:
 	int modelindex;		/**< inline model index */
 
 	const char *classname;
+
+	bool isSameAs (const SrvEdict *other) const {
+		return number == other->number;
+	}
 };
