@@ -28,16 +28,18 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #pragma once
 
-//#include "q_shared.h"
-//#include "inventory.h"				/* for inventoryInterface_t in game_locals_t */
 #include "../shared/ufotypes.h"
-//#include "lua/lua.h"
-
 
 /**
  * @brief Everything that is not in the bsp tree is an edict, the spawnpoints,
  * the actors, the misc_models, the weapons and so on.
  */
+#define INH 0
+#if INH
+#include "srvedict.h"
+class Edict : public SrvEdict {
+public:
+#else
 class Edict {
 public:
 	bool inuse;
@@ -61,7 +63,7 @@ public:
 	edict_t *owner;	/**< e.g. the door model in case of func_door */
 	int modelindex;	/**< inline model index */
 	const char *classname;
-
+#endif
 	/*================================ */
 	/* don't change anything above here - the server expects the fields in that order */
 	/*================================ */
