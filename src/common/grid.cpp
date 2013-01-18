@@ -507,7 +507,6 @@ bool Step::isPossible (const pathing_t *path)
  * @param[in,out] path Pointer to client or server side pathing table (clMap, svMap)
  * @param[in] from The position to start the calculation from.
  * @param[in] maxTUs The maximum TUs away from 'from' to calculate move-information for
- * @param[in] crouchingState Whether the actor is currently crouching, 1 is yes, 0 is no.
  * @param[in] fb_list Forbidden list (entities are standing at those points)
  * @param[in] fb_length Length of forbidden list
  * @sa G_MoveCalc

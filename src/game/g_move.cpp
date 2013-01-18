@@ -94,7 +94,6 @@ static void G_BuildForbiddenList (int team, const edict_t *movingActor)
  * from the given spot with the given actorsize
  * @param[in] team The current team (see G_BuildForbiddenList)
  * @param[in] from Position in the map to start the move-calculation from.
- * @param[in] crouchingState The crouching state of the actor. 0=stand, 1=crouch
  * @param[in] distance The distance in TUs to calculate the move for.
  * @param[in] movingActor The actor to calculate the move for
  * @sa G_BuildForbiddenList
@@ -110,7 +109,6 @@ void G_MoveCalc (int team, const edict_t *movingActor, const pos3_t from, int di
  * @param[in] pt the pathfinding table
  * @param[in] team The current team (see G_BuildForbiddenList)
  * @param[in] from Position in the map to start the move-calculation from.
- * @param[in] crouchingState The crouching state of the actor. 0=stand, 1=crouch
  * @param[in] distance The distance in TUs to calculate the move for.
  * @param[in] movingActor The actor to calculate the move for
  * @sa G_MoveCalc
