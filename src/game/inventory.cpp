@@ -545,7 +545,6 @@ void InventoryInterface::DestroyInventory (inventoryInterface_t* self, inventory
 
 /**
  * @brief Get the state of the given inventory: the items weight and the min TU needed to make full use of all the items.
- * @param[in] self The inventory interface pointer
  * @param[in] inventory The pointer to the inventory to evaluate.
  * @param[out] slowestFd The TU needed to use the slowest fireDef in the inventory.
  * @note temp containers are excluded.
