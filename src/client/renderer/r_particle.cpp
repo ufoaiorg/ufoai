@@ -75,7 +75,7 @@ static void R_GetSpriteVectors (const ptl_t *p, vec3_t right, vec3_t up)
 
 /**
  * @brief Fills float array with texture coordinates
- * @note Used if sprite is scrolled
+ * @note Also cares for sprite scrolling (if any)
  */
 static inline void R_SpriteTexcoords (const ptl_t *p, float out[8])
 {
@@ -83,16 +83,16 @@ static inline void R_SpriteTexcoords (const ptl_t *p, float out[8])
 	const float t = p->scrollT * refdef.time;
 
 	out[0] = 0.0 + s;
-	out[1] = 0.0 + t;
+	out[1] = 1.0 + t;
 
 	out[2] = 0.0 + s;
-	out[3] = 1.0 + t;
+	out[3] = 0.0 + t;
 
 	out[4] = 1.0 + s;
-	out[5] = 1.0 + t;
+	out[5] = 0.0 + t;
 
 	out[6] = 1.0 + s;
-	out[7] = 0.0 + t;
+	out[7] = 1.0 + t;
 }
 
 /**
