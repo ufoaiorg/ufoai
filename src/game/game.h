@@ -34,14 +34,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define	GAME_API_VERSION	10
 
-/** @brief edict->solid values */
-typedef enum {
-	SOLID_NOT,					/**< no interaction with other objects */
-	SOLID_TRIGGER,				/**< only touch when inside, after moving (triggers) */
-	SOLID_BBOX,					/**< touch on edge (monsters, etc) */
-	SOLID_BSP					/**< bsp clip, touch on edge (solid walls, blocks, etc) */
-} solid_t;
-
 /*=============================================================== */
 
 class Edict;
@@ -147,33 +139,17 @@ typedef Player player_t;
 #endif
 
 
+/** @brief edict->solid values */
+typedef enum {
+	SOLID_NOT,					/**< no interaction with other objects */
+	SOLID_TRIGGER,				/**< only touch when inside, after moving (triggers) */
+	SOLID_BBOX,					/**< touch on edge (monsters, etc) */
+	SOLID_BSP					/**< bsp clip, touch on edge (solid walls, blocks, etc) */
+} solid_t;
+
 #ifndef GAME_INCLUDE
 
-/** @note don't change the order - also see edict_s in g_local.h */
-class SrvEdict {
-public:
-	bool inuse;
-	int linkcount;		/**< count the amount of server side links - if a link was called,
-						 * something on the position or the size of the entity was changed */
-
-	int number;			/**< the number in the global edict array */
-
-	vec3_t origin;		/**< the position in the world */
-	vec3_t angles;		/**< the rotation in the world (pitch, yaw, roll) */
-	pos3_t pos;			/** < the grid position of the actor */
-
-	solid_t solid;		/** tracing info SOLID_BSP, SOLID_BBOX, ... */
-
-	vec3_t mins, maxs;	/**< position of min and max points - relative to origin */
-	vec3_t absmin, absmax; /**< position of min and max points - relative to world's origin */
-	vec3_t size;
-
-	SrvEdict *child;		/**< e.g. the trigger for this edict */
-	SrvEdict *owner;		/**< e.g. the door model in case of func_door */
-	int modelindex;		/**< inline model index */
-
-	const char *classname;
-};
+#include "srvedict.h"
 
 typedef SrvEdict edict_t;
 #else
