@@ -60,4 +60,13 @@ public:
 			return false;
 		return number == other->number;
 	}
+	inline bool isParentship (const SrvEdict *other) const {
+		if (other) {
+			if (other->owner && other->owner->isSameAs(this))
+				return true;
+			if (this->owner && this->owner->isSameAs(other))
+				return true;
+		}
+		return false;
+	}
 };
