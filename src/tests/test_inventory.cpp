@@ -263,7 +263,7 @@ static bool testAddSingle (inventory_t *inv, const objDef_t *od, const invDef_t 
 	item.ammo = NULL;
 	item.ammoLeft = 0;
 
-	return i.TryAddToInventory(&i, inv, &item, container);
+	return i.TryAddToInventory(inv, &item, container);
 }
 
 static void testItemMassActions (void)
