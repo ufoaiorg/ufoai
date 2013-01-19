@@ -971,9 +971,10 @@ void CL_ActorReload (le_t *le, containerIndex_t containerID)
 		/* Check for two-handed weapon */
 		containerID = csi.idRight;
 		weapon = inv->c[containerID]->item.item;
-	} else
-		/* otherwise we could use weapon uninitialized */
+	} else {
+		/* no weapon in the reloadable containers found */
 		return;
+	}
 
 	if (!weapon)
 		return;
