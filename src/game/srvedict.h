@@ -56,6 +56,8 @@ public:
 	const char *classname;
 
 	bool isSameAs (const SrvEdict *other) const {
+		if (!other)
+			return false;
 		return number == other->number;
 	}
 };
