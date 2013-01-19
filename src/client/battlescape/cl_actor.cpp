@@ -1530,7 +1530,7 @@ bool CL_AddActor (le_t *le, entity_t *ent)
 	if (!cl_showactors->integer)
 		return false;
 
-	bool hasTagHead = R_GetTagIndexByName(le->model1, "tag_head") != -1;
+	const bool hasTagHead = R_GetTagIndexByName(le->model1, "tag_head") != -1;
 	const int delta = hasTagHead ? 2 : 1;
 
 	if (LE_IsStunned(le)) {

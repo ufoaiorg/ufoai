@@ -1020,7 +1020,7 @@ particle spiral2
 }
 
 particle stunnedactor
- {
+{
 		init
 		{
 			child   spiral1
