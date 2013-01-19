@@ -1570,15 +1570,6 @@ bool CL_AddActor (le_t *le, entity_t *ent)
 
 			R_AddEntity(&add);
 		}
-		if (le->ptl) {
-			CL_ParticleFree(le->ptl);
-			le->ptl = NULL;
-		}
-	} else {
-		if (le->ptl) {
-			CL_ParticleFree(le->ptl);
-			le->ptl = NULL;
-		}
 	}
 
 	if (hasTagHead) {

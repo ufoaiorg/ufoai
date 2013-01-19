@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../../../client.h"
 #include "../../../cl_actor.h"
 #include "../../../cl_hud.h"
+#include "../../../cl_particle.h"
 #include "e_event_actorrevitalised.h"
 
 /**
@@ -87,6 +88,11 @@ void CL_ActorRevitalised (const eventRegister_t *self, dbuffer *msg)
 	}
 
 	VectorCopy(player_maxs, le->maxs);
+
+	if (le->ptl) {
+		CL_ParticleFree(le->ptl);
+		le->ptl = NULL;
+	}
 
 	/* add team members to the actor list */
 	CL_ActorAddToTeamList(le);
