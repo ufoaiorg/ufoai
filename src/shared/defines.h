@@ -308,7 +308,9 @@ COLLISION DETECTION
 #define ACTOR_SIZE_INVALID 0
 #define ACTOR_SIZE_NORMAL 1
 #define ACTOR_SIZE_2x2 2
+#define ACTOR_SIZE_3x3 3
 #define	ACTOR_MAX_SIZE	(ACTOR_SIZE_2x2)
+//#define	ACTOR_MAX_SIZE	(ACTOR_SIZE_3x3)
 
 /* Maximum falling distance in QUANT units (model units / QUANT) */
 #define	PATHFINDING_MAX_FALL	16
