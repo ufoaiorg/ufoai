@@ -842,7 +842,7 @@ void NET_StreamFinished (struct net_stream *s)
 
 	s->finished = true;
 
-	if (s->socket >= 0)
+	if (s->socket != INVALID_SOCKET)
 		FD_CLR(s->socket, &read_fds);
 
 	/* Stop the loopback peer from queueing stuff up in here */
