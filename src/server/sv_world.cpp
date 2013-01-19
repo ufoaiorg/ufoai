@@ -358,9 +358,9 @@ static void SV_ClipMoveToEntities (moveclip_t *clip)
 			return;
 
 		if (clip->passedict) {
-			if (touch->owner->isSameAs(clip->passedict))
+			if (touch->owner && touch->owner->isSameAs(clip->passedict))
 				continue;		/* don't clip against own missiles */
-			if (clip->passedict->owner->isSameAs(touch))
+			if (clip->passedict->owner && clip->passedict->owner->isSameAs(touch))
 				continue;		/* don't clip against owner */
 		}
 
