@@ -2,6 +2,10 @@
  * @file
  * @brief Reaction fire code
  *
+ * Note that in a turn-based game, reaction fire is a design bug in the first place,
+ * causing several logic problems. But we want it and we need it, so we'll have to
+ * work around those problems.
+ *
  * Reaction fire is involved in the following situations:
  * 1. G_ReactionFireOnMovement()
  *		calls	G_ReactionFireCheckExecution()
