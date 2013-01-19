@@ -296,9 +296,9 @@ static int G_ReactionFireGetTUsForItem (const edict_t *ent, const edict_t *targe
 			return -1;
 
 		fmSetting = &ent->chr.RFmode;
-		if (fmSetting->getHand() == ACTOR_HAND_RIGHT && fmSetting->fmIdx >= 0
-		 && fmSetting->fmIdx < MAX_FIREDEFS_PER_WEAPON) { /* If a RIGHT-hand firemode is selected and sane. */
-			const fireDefIndex_t fmIdx = fmSetting->fmIdx;
+		if (fmSetting->getHand() == ACTOR_HAND_RIGHT && fmSetting->getFmIdx() >= 0
+		 && fmSetting->getFmIdx() < MAX_FIREDEFS_PER_WEAPON) { /* If a RIGHT-hand firemode is selected and sane. */
+			const fireDefIndex_t fmIdx = fmSetting->getFmIdx();
 			const int reactionFire = G_PLAYER_FROM_ENT(ent).reactionLeftover;
 			const fireDef_t *fd = &fdArray[fmIdx];
 			const int tus = G_ActorGetTimeForFiredef(ent, fd, true) + reactionFire;
@@ -343,7 +343,7 @@ static bool G_ActorHasWorkingFireModeSet (const edict_t *actor)
 		return false;
 
 	if (fd->obj->weapons[fd->weapFdsIdx] == fmSettings->weapon
-		&& fmSettings->fmIdx < fd->obj->numFiredefs[fd->weapFdsIdx]) {
+		&& fmSettings->getFmIdx() < fd->obj->numFiredefs[fd->weapFdsIdx]) {
 		return true;
 	}
 
@@ -507,7 +507,7 @@ static bool G_ReactionFireIsPossible (edict_t *ent, const edict_t *target)
 	if (!ACTOR_GET_INV(ent, ent->chr.RFmode.getHand())) {
 		/* print character info if this happens, for now */
 		gi.DPrintf("Reaction fire enabled but no weapon for hand (name=%s,entnum=%i,hand=%i,fmIdx=%i)\n",
-				ent->chr.name, ent->number, ent->chr.RFmode.getHand(), ent->chr.RFmode.fmIdx);
+				ent->chr.name, ent->number, ent->chr.RFmode.getHand(), ent->chr.RFmode.getFmIdx());
 		G_RemoveReaction(ent);
 		return false;
 	}
@@ -623,7 +623,7 @@ static bool G_ReactionFireTryToShoot (edict_t *shooter, const edict_t *target)
 	}
 
 	/* take the shot */
-	const bool tookShot = G_ReactionFireShoot(shooter, target->pos, ST_RIGHT_REACTION, shooter->chr.RFmode.fmIdx);
+	const bool tookShot = G_ReactionFireShoot(shooter, target->pos, ST_RIGHT_REACTION, shooter->chr.RFmode.getFmIdx());
 
 	if (tookShot) {
 		/* clear any shakenness */

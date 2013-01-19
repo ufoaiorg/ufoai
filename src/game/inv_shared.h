@@ -426,7 +426,7 @@ float INVSH_GetInventoryWeight(const inventory_t *inventory);
 
 const invDef_t *INVSH_GetInventoryDefinitionByID(const char *id);
 
-#define THIS_FIREMODE(fm, HAND, fdIdx)	((fm)->getHand() == (HAND) && (fm)->fmIdx == (fdIdx))
+#define THIS_FIREMODE(fm, HAND, fdIdx)	((fm)->getHand() == (HAND) && (fm)->getFmIdx() == (fdIdx))
 
 #define INV_IsArmour(od)	(Q_streq((od)->type, "armour"))
 #define INV_IsAmmo(od)		(Q_streq((od)->type, "ammo"))

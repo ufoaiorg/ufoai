@@ -125,17 +125,21 @@ typedef struct chrScoreGlobal_s {
 } chrScoreGlobal_t;
 
 class FiremodeSettings {
-	actorHands_t _hand; /**< the used hand, an enum */
+	actorHands_t _hand;		/**< the used hand, an enum */
+	fireDefIndex_t _fmIdx;	/**< Stores the used firemode index. Max. number is MAX_FIREDEFS_PER_WEAPON -1=undef*/
 public:
 
-	fireDefIndex_t fmIdx; /**< Stores the used firemode index. Max. number is MAX_FIREDEFS_PER_WEAPON -1=undef*/
 	const objDef_t *weapon;
 
 	inline bool isSaneFiremode () const
 	{
-		return _hand > ACTOR_HAND_NOT_SET && fmIdx >= 0 && fmIdx < MAX_FIREDEFS_PER_WEAPON && weapon != NULL;
+		return _hand > ACTOR_HAND_NOT_SET && _fmIdx >= 0 && _fmIdx < MAX_FIREDEFS_PER_WEAPON && weapon != NULL;
 	}
 
+	inline int getFmIdx () const
+	{
+		return _fmIdx;
+	}
 	inline actorHands_t getHand () const
 	{
 		return _hand;
@@ -146,10 +150,10 @@ public:
 		_hand = hand;
 	}
 
-	inline void set (const actorHands_t hand, const fireDefIndex_t _fmIdx, const objDef_t *_weapon)
+	inline void set (const actorHands_t hand, const fireDefIndex_t fmIdx, const objDef_t *_weapon)
 	{
 		_hand = hand;
-		fmIdx = _fmIdx;
+		_fmIdx = fmIdx;
 		weapon = _weapon;
 	}
 };

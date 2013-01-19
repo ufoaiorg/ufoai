@@ -612,7 +612,7 @@ dbuffer *GAME_CP_InitializeBattlescape (const chrList_t *team)
 		NET_WriteShort(msg, chr->ucn);
 		NET_WriteShort(msg, chr->state);
 		NET_WriteShort(msg, chr->RFmode.getHand());
-		NET_WriteShort(msg, chr->RFmode.fmIdx);
+		NET_WriteShort(msg, chr->RFmode.getFmIdx());
 		NET_WriteShort(msg, chr->RFmode.weapon != NULL ? chr->RFmode.weapon->idx : NONE);
 	}
 
