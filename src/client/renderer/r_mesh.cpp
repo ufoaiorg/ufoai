@@ -178,6 +178,14 @@ void R_GetTags (const model_t* mod, const char* tagName, int currentFrame, int o
 	*old = R_GetTagOrientByFrame(mod, index, oldFrame);
 }
 
+/**
+ * @param[in] mod The model to get the tag transformation matrix for
+ * @param[in] tagName The name of the tag to get the transformation matrix for
+ * @param[in] frame The frame of the tag to get the transformation matrix for
+ * @param[out] matrix The transformation matrix
+ * @return @c false if the tag name for the given model wasn't found, @c true if
+ * the matrix was filled.
+ */
 bool R_GetTagMatrix (const model_t* mod, const char* tagName, int frame, float matrix[16])
 {
 	const int index = R_GetTagIndexByName(mod, tagName);
