@@ -67,19 +67,29 @@ public:
 	 */
 	inline void clearBounds ();
 
+	/** @brief clip the box to the maximum boundaries */
+	inline void clipToWorld () {
+		mins[0] = std::max(mins[0], -MWW);
+		mins[1] = std::max(mins[1], -MWW);
+		/* Hmm, we don't have a MAX_WORLD_HEIGHT ?!? */
+		maxs[0] = std::min(maxs[0], MWW);
+		maxs[1] = std::min(maxs[1], MWW);
+	}
 	/** @brief expand the box in four directions, but clip them to the maximum boundaries */
 	inline void expandXY (const float byVal) {
-		mins[0] = std::max(mins[0] - byVal, -MWW);
-		mins[1] = std::max(mins[1] - byVal, -MWW);
-		maxs[0] = std::min(maxs[0] + byVal, MWW);
-		maxs[1] = std::min(maxs[1] + byVal, MWW);
+		mins[0] -= byVal;
+		mins[1] -= byVal;
+		maxs[0] += byVal;
+		maxs[1] += byVal;
+		clipToWorld();
 	}
 	/** @brief shove the whole box by the given vector */
 	inline void shift (const vec3_t shiftVec) {
 		VectorAdd(mins, shiftVec, mins);
 		VectorAdd(maxs, shiftVec, maxs);
+		clipToWorld();
 	}
-
+	/** we explicitly don't make them private for now, because the goal of this class is to NOT handle them separately */
 	vec3_t mins;
 	vec3_t maxs;
 };
