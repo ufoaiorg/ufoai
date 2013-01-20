@@ -49,16 +49,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define CVAR_R_MASK (CVAR_R_IMAGES | CVAR_R_CONTEXT | CVAR_R_PROGRAMS)
 
 /**
- * @brief Callback for the listener
+ * @brief Callback for the change listener
  * @param cvarName The name of the cvar that was changed.
  * @param oldValue The old value of the cvar - this is never @c NULL, but can be empty.
  * @param newValue The new value of the cvar - this is never @c NULL, but can be empty.
  */
 typedef void (*cvarChangeListenerFunc_t) (const char *cvarName, const char *oldValue, const char *newValue, void *data);
 
-typedef struct cvarListener_s {
+typedef struct cvarChangeListener_s {
 	cvarChangeListenerFunc_t exec;
-	struct cvarListener_s *next;
+	struct cvarChangeListener_s *next;
 	void *data;
 } cvarChangeListener_t;
 
@@ -186,6 +186,7 @@ bool Cvar_SetCheckFunction(const char *varName, bool (*check) (cvar_t* cvar));
  * @param listenerFunc The listener callback to register
  */
 cvarChangeListener_t *Cvar_RegisterChangeListener(const char *varName, cvarChangeListenerFunc_t listenerFunc);
+
 /**
  * @brief Unregisters a cvar change listener
  * @param varName The cvar name to register the listener for
