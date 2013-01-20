@@ -68,11 +68,16 @@ public:
 	inline void clearBounds ();
 
 	/** @brief expand the box in four directions, but clip them to the maximum boundaries */
-	inline void expandXY(const float byVal) {
+	inline void expandXY (const float byVal) {
 		mins[0] = std::max(mins[0] - byVal, -MWW);
 		mins[1] = std::max(mins[1] - byVal, -MWW);
 		maxs[0] = std::min(maxs[0] + byVal, MWW);
 		maxs[1] = std::min(maxs[1] + byVal, MWW);
+	}
+	/** @brief shove the whole box by the given vector */
+	inline void shift (const vec3_t shiftVec) {
+		VectorAdd(mins, shiftVec, mins);
+		VectorAdd(maxs, shiftVec, maxs);
 	}
 
 	vec3_t mins;

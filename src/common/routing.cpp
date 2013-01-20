@@ -472,8 +472,8 @@ int RT_CheckCell (mapTiles_t *mapTiles, routing_t *routes, const int actorSize, 
 		VectorCopy(tr.endpos, tstart);
 
 		/* Prep the start and end of the "leg room" test. */
-		VectorAdd(tstart, legBox.mins, box.mins); /* Now bmins has the lower required foot space extent */
-		VectorAdd(tstart, legBox.maxs, box.maxs); /* Now bmaxs has the upper required foot space extent */
+		box.set(legBox);
+		box.shift(tstart);	/* Now box has the lower and upper required foot space extent */
 
 		tr = RT_COMPLETEBOXTRACE_PASSAGE(mapTiles, vec3_origin, vec3_origin, &box, list);
 		if (tr.fraction < 1.0) {
@@ -500,8 +500,8 @@ int RT_CheckCell (mapTiles_t *mapTiles, routing_t *routes, const int actorSize, 
 		}
 
 		/* Prep the start and end of the "torso room" test. */
-		VectorAdd(tstart, torsoBox.mins, box.mins); /* Now bmins has the lower required torso space extent */
-		VectorAdd(tstart, torsoBox.maxs, box.maxs); /* Now bmaxs has the upper required torso space extent */
+		box.set(torsoBox);
+		box.shift(tstart);	/* Now box has the lower and upper required torso space extent */
 
 		tr = RT_COMPLETEBOXTRACE_PASSAGE(mapTiles, vec3_origin, vec3_origin, &box, list);
 		if (tr.fraction < 1.0) {
