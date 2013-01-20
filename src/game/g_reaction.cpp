@@ -6,6 +6,25 @@
  * causing several logic problems. But we want it and we need it, so we'll have to
  * work around those problems.
  *
+ * Imagine the following situations:
+ * One of your soldiers is standing next to a house by a street. There is an alien down
+ * the street with a gun in snap shot mode (8 TUs). The soldier steps out on street, trying
+ * to cross it (and entering the line of sight of that alien). After 4 more paces or spending
+ * 8 TUs, your soldier is shot by the alien. Sounds reasonable ? Fine. That's the basic idea
+ * of raction fire.
+ *
+ * Now assume you have 5 soldiers next to that house. They all step out on the street. Nothing
+ * happens because they all just entered the line of sight of the alien. The first soldier
+ * starts walking and gets shot after 4 paces like above. The second soldier will walk 7 paces
+ * unharmed and get shot after 8 paces and the third soldier will be shot after 12 paces/24 TUs.
+ * This is because when the alien shoots at one target, all his other targets will receive a
+ * bonus equal to the amount of TUs the alien used for his shot. Still sounds reasonable ? Fine.
+ *
+ * A slight modification: only one of the 5 soldiers steps out and gets shot after 4 paces.
+ * Then the 2nd steps out and gets shot after 4 paces as well. Likewise the 3rd soldier.
+ * That's because the soldiers hidden behind the house are not among the targets of the alien
+ * and thus don't receive the bonus when the alien shoots,
+ *
  * Reaction fire is involved in the following situations:
  * 1. G_ReactionFireOnMovement()
  *		calls	G_ReactionFireCheckExecution()
