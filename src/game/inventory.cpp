@@ -527,17 +527,17 @@ void InventoryInterface::EmptyContainer (inventoryInterface_t* self, inventory_t
  * for real containers @c I_EmptyContainer is called.
  * @sa I_EmptyContainer
  */
-void InventoryInterface::DestroyInventory (inventoryInterface_t* self, inventory_t* const inv)
+void InventoryInterface::DestroyInventory (inventory_t* const inv)
 {
 	containerIndex_t container;
 
 	if (!inv)
 		return;
 
-	for (container = 0; container < self->csi->numIDs; container++) {
-		const invDef_t *invDef = &self->csi->ids[container];
+	for (container = 0; container < this->csi->numIDs; container++) {
+		const invDef_t *invDef = &this->csi->ids[container];
 		if (!invDef->temp)
-			self->EmptyContainer(self, inv, invDef);
+			EmptyContainer(this, inv, invDef);
 	}
 
 	OBJZERO(*inv);

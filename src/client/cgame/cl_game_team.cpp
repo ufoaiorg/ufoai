@@ -837,7 +837,7 @@ bool GAME_LoadCharacter (xmlNode_t *p, character_t *chr)
 	chr->score.assignedMissions = XML_GetInt(sScore, SAVE_CHARACTER_SCORE_ASSIGNEDMISSIONS, 0);
 	chr->score.rank = XML_GetInt(sScore, SAVE_CHARACTER_SCORE_RANK, -1);
 
-	cls.i.DestroyInventory(&cls.i, &chr->i);
+	cls.i.DestroyInventory(&chr->i);
 	sInventory = XML_GetNode(p, SAVE_INVENTORY_INVENTORY);
 	GAME_LoadInventory(sInventory, &chr->i, GAME_GetChrMaxLoad(chr));
 

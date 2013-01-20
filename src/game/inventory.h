@@ -63,7 +63,7 @@ public:
 
 	bool TryAddToInventory (inventory_t* const inv, const item_t *const item, const invDef_t *container);
 
-	void DestroyInventory (inventoryInterface_t* self, inventory_t* const i);
+	void DestroyInventory (inventory_t* const i);
 
 	void EmptyContainer (inventoryInterface_t* self, inventory_t* const i, const invDef_t *container);
 

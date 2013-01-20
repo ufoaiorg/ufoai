@@ -383,7 +383,7 @@ void CL_ActorAddToTeamList (le_t *le)
 
 void CL_ActorCleanup (le_t *le)
 {
-	cls.i.DestroyInventory(&cls.i, &le->i);
+	cls.i.DestroyInventory(&le->i);
 }
 
 /**
@@ -408,7 +408,7 @@ void CL_ActorRemoveFromTeamList (le_t *le)
 			} else {
 				/** @todo why the heck is that needed? the inventory was already dropped to floor. */
 				le->left = le->right = le->extension = le->headgear = NONE;
-				cls.i.DestroyInventory(&cls.i, &le->i);
+				cls.i.DestroyInventory(&le->i);
 			}
 
 			/* disable hud button */

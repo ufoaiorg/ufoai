@@ -367,9 +367,9 @@ static void GAME_Free (void *ptr)
 	Mem_Free(ptr);
 }
 
-static void GAME_DestroyInventory (inventory_t * const i)
+static void GAME_DestroyInventory (inventory_t * const inv)
 {
-	cls.i.DestroyInventory(&cls.i, i);
+	cls.i.DestroyInventory(inv);
 }
 
 static void GAME_EquipActor (character_t* const chr, const equipDef_t *ed, int maxWeight)

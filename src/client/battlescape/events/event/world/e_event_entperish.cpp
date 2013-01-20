@@ -60,7 +60,7 @@ void CL_EntPerish (const eventRegister_t *self, dbuffer *msg)
 		break;
 	case ET_ACTOR:
 	case ET_ACTOR2x2:
-		cls.i.DestroyInventory(&cls.i, &le->i);
+		cls.i.DestroyInventory(&le->i);
 		break;
 #ifdef DEBUG
 	case ET_ACTORHIDDEN:
