@@ -26,7 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 void InventoryInterface::removeInvList (invList_t *invList)
 {
-	Com_DPrintf(DEBUG_SHARED, "I_RemoveInvList: remove one slot (%s)\n", name);
+	Com_DPrintf(DEBUG_SHARED, "I_RemoveInvList: remove one slot (%s)\n", invName);
 
 	/* first entry */
 	if (this->invList == invList) {
@@ -54,7 +54,7 @@ invList_t* InventoryInterface::addInvList (invList_t **invList)
 	invList_t *newEntry;
 	invList_t *list;
 
-	Com_DPrintf(DEBUG_SHARED, "I_AddInvList: add one slot (%s)\n", name);
+	Com_DPrintf(DEBUG_SHARED, "I_AddInvList: add one slot (%s)\n", invName);
 
 	/* create the list */
 	if (!*invList) {
@@ -109,7 +109,7 @@ invList_t *InventoryInterface::AddToInventory (inventory_t *const inv, const ite
 			if (INVSH_CompareItem(&ic->item, item)) {
 				ic->item.amount += amount;
 				Com_DPrintf(DEBUG_SHARED, "I_AddToInventory: Amount of '%s': %i (%s)\n",
-					ic->item.item->name, ic->item.amount, this->name);
+					ic->item.item->name, ic->item.amount, invName);
 				return ic;
 			}
 	}
@@ -172,12 +172,12 @@ bool InventoryInterface::RemoveFromInventory (inventory_t* const i, const invDef
 		if (container->temp && ic->item.amount > 1) {
 			ic->item.amount--;
 			Com_DPrintf(DEBUG_SHARED, "I_RemoveFromInventory: Amount of '%s': %i (%s)\n",
-				ic->item.item->name, ic->item.amount, this->name);
+				ic->item.item->name, ic->item.amount, invName);
 			return true;
 		}
 
 		if (container->single && ic->next)
-			Com_Printf("I_RemoveFromInventory: Error: single container %s has many items. (%s)\n", container->name, this->name);
+			Com_Printf("I_RemoveFromInventory: Error: single container %s has many items. (%s)\n", container->name, invName);
 
 		/* An item in other containers than idFloor or idEquip should
 		 * always have an amount value of 1.
@@ -199,7 +199,7 @@ bool InventoryInterface::RemoveFromInventory (inventory_t* const i, const invDef
 			if (ic->item.amount > 1 && container->temp) {
 				ic->item.amount--;
 				Com_DPrintf(DEBUG_SHARED, "I_RemoveFromInventory: Amount of '%s': %i (%s)\n",
-					ic->item.item->name, ic->item.amount, this->name);
+					ic->item.item->name, ic->item.amount, invName);
 				return true;
 			}
 
@@ -376,7 +376,7 @@ inventory_action_t InventoryInterface::MoveInInventory (inventory_t* const inv, 
 
 					/* Add the currently used ammo in place of the new ammo in the "from" container. */
 					if (AddToInventory(inv, &item, from, cacheFromX, cacheFromY, 1) == NULL)
-						Sys_Error("Could not reload the weapon - add to inventory failed (%s)", this->name);
+						Sys_Error("Could not reload the weapon - add to inventory failed (%s)", invName);
 
 					ic->item.ammo = this->cacheItem.item;
 					if (icp)
@@ -407,7 +407,7 @@ inventory_action_t InventoryInterface::MoveInInventory (inventory_t* const inv, 
 			/** @todo change the other code to browse trough these things. */
 			INVSH_FindSpace(inv, &fItem->item, to, &tx, &ty, fItem);
 			if (tx == NONE || ty == NONE) {
-				Com_DPrintf(DEBUG_SHARED, "I_MoveInInventory - item will be added non-visible (%s)\n", this->name);
+				Com_DPrintf(DEBUG_SHARED, "I_MoveInInventory - item will be added non-visible (%s)\n", invName);
 			}
 		} else {
 			/* Impossible move -> abort. */
@@ -604,7 +604,7 @@ int InventoryInterface::PackAmmoAndWeapon (character_t* const chr, const objDef_
 		item.ammoLeft = weapon->ammo;
 		item.ammo = weapon;
 		Com_DPrintf(DEBUG_SHARED, "I_PackAmmoAndWeapon: oneshot weapon '%s' in equipment '%s' (%s).\n",
-				weapon->id, ed->id, this->name);
+				weapon->id, ed->id, invName);
 	} else if (!weapon->reload) {
 		item.ammo = item.item; /* no ammo needed, so fire definitions are in t */
 	} else {
@@ -634,7 +634,7 @@ int InventoryInterface::PackAmmoAndWeapon (character_t* const chr, const objDef_
 
 		if (!ammo) {
 			Com_DPrintf(DEBUG_SHARED, "I_PackAmmoAndWeapon: no ammo for sidearm or primary weapon '%s' in equipment '%s' (%s).\n",
-					weapon->id, ed->id, this->name);
+					weapon->id, ed->id, invName);
 			return 0;
 		}
 		/* load ammo */
@@ -644,7 +644,7 @@ int InventoryInterface::PackAmmoAndWeapon (character_t* const chr, const objDef_
 
 	if (!item.ammo) {
 		Com_Printf("I_PackAmmoAndWeapon: no ammo for sidearm or primary weapon '%s' in equipment '%s' (%s).\n",
-				weapon->id, ed->id, this->name);
+				weapon->id, ed->id, invName);
 		return 0;
 	}
 
@@ -652,7 +652,7 @@ int InventoryInterface::PackAmmoAndWeapon (character_t* const chr, const objDef_
 	maxTU = GET_TU(speed, GET_ENCUMBRANCE_PENALTY(weight, chr->score.skills[ABILITY_POWER]));
 	if (weight > maxWeight || tuNeed > maxTU) {
 		Com_DPrintf(DEBUG_SHARED, "I_PackAmmoAndWeapon: weapon too heavy: '%s' in equipment '%s' (%s).\n",
-				weapon->id, ed->id, this->name);
+				weapon->id, ed->id, invName);
 		return 0;
 	}
 
@@ -722,7 +722,7 @@ void InventoryInterface::EquipActorMelee (inventoryInterface_t *self, inventory_
 	/* Every melee actor weapon definition is firetwohanded, add to right hand. */
 	if (!obj->fireTwoHanded)
 		Sys_Error("INVSH_EquipActorMelee: melee weapon %s for team %s is not firetwohanded! (%s)",
-				obj->id, td->id, self->name);
+				obj->id, td->id, self->invName);
 	self->TryAddToInventory(inv, &item, &self->csi->ids[self->csi->idRight]);
 }
 
@@ -823,7 +823,7 @@ void InventoryInterface::EquipActor (inventoryInterface_t* self, character_t* co
 				missedPrimary = 0;
 			} else {
 				Com_DPrintf(DEBUG_SHARED, "INVSH_EquipActor: primary weapon '%s' couldn't be equipped in equipment '%s' (%s).\n",
-						primaryWeapon->id, ed->id, self->name);
+						primaryWeapon->id, ed->id, self->invName);
 				repeat = WEAPONLESS_BONUS > frand();
 			}
 		}
@@ -904,7 +904,7 @@ void InventoryInterface::EquipActor (inventoryInterface_t* self, character_t* co
 			int maxPrice = 0;
 			const objDef_t *blade = NULL;
 			Com_DPrintf(DEBUG_SHARED, "INVSH_EquipActor: no weapon picked in equipment '%s', defaulting to the most expensive secondary weapon without reload. (%s)\n",
-					ed->id, self->name);
+					ed->id, self->invName);
 			for (i = 0; i < self->csi->numODs; i++) {
 				const objDef_t *obj = INVSH_GetItemByIDX(i);
 				if (ed->numItems[i] && obj->weapon && obj->isSecondary && !obj->reload) {
@@ -920,7 +920,7 @@ void InventoryInterface::EquipActor (inventoryInterface_t* self, character_t* co
 		/* If still no weapon, something is broken, or no blades in equipment. */
 		if (!hasWeapon)
 			Com_DPrintf(DEBUG_SHARED, "INVSH_EquipActor: cannot add any weapon; no secondary weapon without reload detected for equipment '%s' (%s).\n",
-					ed->id, self->name);
+					ed->id, self->invName);
 
 		/* Armour; especially for those without primary weapons. */
 		repeat = (float) missedPrimary > frand() * 100.0;
@@ -952,7 +952,7 @@ void InventoryInterface::EquipActor (inventoryInterface_t* self, character_t* co
 		} while (repeat-- > 0);
 	} else {
 		Com_DPrintf(DEBUG_SHARED, "INVSH_EquipActor: teamdef '%s' may not carry armour (%s)\n",
-				td->name, self->name);
+				td->name, self->invName);
 	}
 
 	{
@@ -999,7 +999,7 @@ int InventoryInterface::GetUsedSlots ()
 		slot = slot->next;
 		i++;
 	}
-	Com_DPrintf(DEBUG_SHARED, "Used inventory slots %i (%s)\n", i, name);
+	Com_DPrintf(DEBUG_SHARED, "Used inventory slots %i (%s)\n", i, invName);
 	return i;
 }
 
@@ -1019,7 +1019,7 @@ void INV_InitInventory (const char *name, inventoryInterface_t *interface, const
 	OBJZERO(*interface);
 
 	interface->import = import;
-	interface->name = name;
+	interface->invName = name;
 	interface->cacheItem = item;
 	interface->csi = csi;
 	interface->invList = NULL;

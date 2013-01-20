@@ -51,7 +51,7 @@ public:
 
 	const csi_t* csi;
 
-	const char *name;
+	const char *invName;
 	/* public */
 	bool RemoveFromInventory (inventory_t* const i, const invDef_t *container, invList_t *fItem) __attribute__((warn_unused_result));
 
