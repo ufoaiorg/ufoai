@@ -30,10 +30,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "common.h"
 #include "../shared/infostring.h"
+#include <vector>
 
 #define CVAR_HASH_SIZE          64
 
 static cvar_t *cvarVarsHash[CVAR_HASH_SIZE];
+
+typedef std::vector<CvarListenerPtr> CvarListeners;
+static CvarListeners cvarListeners;
 
 /**
  * @brief This is set each time a CVAR_USERINFO variable is changed
@@ -299,6 +303,11 @@ bool Cvar_Delete (const char *varName)
 				assert(var->next->prev == var);
 				var->next->prev = var->prev;
 			}
+
+			for (CvarListeners::iterator i = cvarListeners.begin(); i != cvarListeners.end(); ++i) {
+				(*i)->onDelete(var);
+			}
+
 			Mem_Free(var->name);
 			Mem_Free(var->string);
 			Mem_Free(var->description);
@@ -390,7 +399,30 @@ cvar_t *Cvar_Get (const char *var_name, const char *var_value, int flags, const 
 	if (var->flags & CVAR_CHEAT)
 		var->defaultString = Mem_PoolStrDup(var_value, com_cvarSysPool, 0);
 
+	for (CvarListeners::iterator i = cvarListeners.begin(); i != cvarListeners.end(); ++i) {
+		(*i)->onCreate(var);
+	}
+
 	return var;
+}
+
+/**
+ * @brief Registers a cvar listener
+ * @param listener The listener callback to register
+ */
+void Cvar_RegisterCvarListener (CvarListenerPtr listener)
+{
+	cvarListeners.push_back(listener);
+}
+
+/**
+ * @brief Unregisters a cvar listener
+ * @param varName The cvar name to register the listener for
+ * @param listenerFunc The listener callback to unregister
+ */
+void Cvar_UnRegisterCvarListener (CvarListenerPtr listener)
+{
+	cvarListeners.erase(std::remove(cvarListeners.begin(), cvarListeners.end(), listener), cvarListeners.end());
 }
 
 /**

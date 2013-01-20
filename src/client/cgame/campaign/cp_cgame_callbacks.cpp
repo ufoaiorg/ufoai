@@ -675,8 +675,6 @@ void GAME_CP_InitStartup (void)
 	cgi->Cvar_ForceSet("sv_maxclients", "1");
 	cgi->Cvar_ForceSet("sv_ai", "1");
 
-	cgi->Cvar_Delete("mn_upunreadmail");
-
 	/* reset campaign data */
 	CP_ResetCampaignData();
 	CP_ParseCampaignData();

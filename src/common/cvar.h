@@ -35,6 +35,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef COMMON_CVAR
 #define COMMON_CVAR
 
+#include "../shared/sharedptr.h"
+
 #define CVAR_ARCHIVE    1       /**< set to cause it to be saved to vars.rc */
 #define CVAR_USERINFO   2       /**< added to userinfo  when changed */
 #define CVAR_SERVERINFO 4       /**< added to serverinfo when changed */
@@ -88,6 +90,19 @@ typedef struct cvarList_s {
 	const char *name;
 	const char *value;
 } cvarList_t;
+
+/**
+ * @brief Listener for cvar changes
+ * @param cvar The cvar that was created.
+ */
+class CvarListener {
+public:
+	virtual ~CvarListener() {}
+	virtual void onCreate (const struct cvar_s *cvar) = 0;
+	virtual void onDelete (const struct cvar_s *cvar) = 0;
+};
+
+typedef struct SharedPtr<CvarListener> CvarListenerPtr;
 
 /**
  * @brief Return the first cvar of the cvar list
@@ -193,6 +208,18 @@ cvarChangeListener_t *Cvar_RegisterChangeListener(const char *varName, cvarChang
  * @param listenerFunc The listener callback to unregister
  */
 void Cvar_UnRegisterChangeListener(const char *varName, cvarChangeListenerFunc_t listenerFunc);
+
+/**
+ * @brief Registers a cvar listener
+ * @param listener The listener callback to register
+ */
+void Cvar_RegisterCvarListener(CvarListenerPtr listener);
+
+/**
+ * @brief Unregisters a cvar listener
+ * @param listener The listener callback to unregister
+ */
+void Cvar_UnRegisterCvarListener(CvarListenerPtr listener);
 
 /**
  * @brief Reset cheat cvar values to default

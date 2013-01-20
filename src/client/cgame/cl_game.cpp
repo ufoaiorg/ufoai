@@ -51,9 +51,57 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../renderer/r_framebuffer.h"
 #include "../renderer/r_geoscape.h"
 
+#include <set>
+#include <string>
+
 #define MAX_CGAMETYPES 16
 static cgameType_t cgameTypes[MAX_CGAMETYPES];
 static int numCGameTypes;
+
+static inline const cgame_export_t *GAME_GetCurrentType (void)
+{
+	return cls.gametype;
+}
+
+class GAMECvarListener: public CvarListener
+{
+private:
+	typedef std::set<const struct cvar_s *> GameCvars;
+	GameCvars _cvars;
+public:
+	~GAMECvarListener ()
+	{
+		_cvars.clear();
+	}
+
+	void onCreate (const struct cvar_s *cvar)
+	{
+		const cgame_export_t *list = GAME_GetCurrentType();
+		if (list)
+			_cvars.insert(cvar);
+	}
+
+	void onDelete (const struct cvar_s *cvar)
+	{
+		_cvars.erase(cvar);
+	}
+
+	void onGameModeChange ()
+	{
+		GameCvars copy = _cvars;
+		for (GameCvars::const_iterator i = copy.begin(); i != copy.end(); ++i) {
+			const struct cvar_s *cvar = *i;
+			if (cvar->flags == 0) {
+				const cgame_export_t *list = GAME_GetCurrentType();
+				Com_DPrintf(DEBUG_CLIENT, "Delete cvar %s because it was created in the context of the cgame %s\n",
+						cvar->name, list ? list->name : "none");
+				Cvar_Delete(cvar->name);
+			}
+		}
+	}
+};
+
+static SharedPtr<GAMECvarListener> cvarListener(new GAMECvarListener());
 
 /* @todo: remove me - this should be per geoscape node data */
 geoscapeData_t geoscapeData;
@@ -169,11 +217,6 @@ void GAME_GenerateTeam (const char *teamDefID, const equipDef_t *ed, int teamMem
 
 	for (i = 0; i < teamMembers; i++)
 		GAME_AppendTeamMember(i, teamDefID, ed);
-}
-
-static const cgame_export_t *GAME_GetCurrentType (void)
-{
-	return cls.gametype;
 }
 
 void GAME_ReloadMode (void)
@@ -788,6 +831,7 @@ void GAME_SetMode (const cgame_export_t *gametype)
 	if (list) {
 		Com_Printf("Shutdown gametype '%s'\n", list->name);
 		list->Shutdown();
+		cvarListener->onGameModeChange();
 
 		/* we dont need to go back to "main" stack if we are already on this stack */
 		if (!UI_IsWindowOnStack("main"))
@@ -1711,6 +1755,8 @@ void GAME_InitStartup (void)
 	Cmd_AddCommand("mn_prevmap", UI_PreviousMap_f, "Switch to the previous valid map for the selected gametype");
 	Cmd_AddCommand("mn_selectmap", UI_SelectMap_f, "Switch to the map given by the parameter - may be invalid for the current gametype");
 	Cmd_AddCommand("mn_requestmaplist", UI_RequestMapList_f, "Request to send the list of available maps for the current gametype to a command.");
+
+	Cvar_RegisterCvarListener(cvarListener);
 }
 
 void GAME_Shutdown (void)
@@ -1719,4 +1765,6 @@ void GAME_Shutdown (void)
 	numCGameTypes = 0;
 	OBJZERO(equipDefStandard);
 	OBJZERO(characters);
+
+	Cvar_UnRegisterCvarListener(cvarListener);
 }
