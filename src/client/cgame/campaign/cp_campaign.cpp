@@ -1262,12 +1262,6 @@ void CP_ResetCampaignData (void)
 
 	ccs.missionSpawnCallback = CP_SpawnNewMissions;
 
-	/* Collect and count Alien team definitions. */
-	for (i = 0; i < cgi->csi->numTeamDefs; i++) {
-		teamDef_t *td = &cgi->csi->teamDef[i];
-		if (CHRSH_IsTeamDefAlien(td))
-			ccs.alienTeams[ccs.numAliensTD++] = td;
-	}
 	/* Clear mapDef usage statistics */
 	MapDef_ForeachSingleplayerCampaign(md) {
 		md->timesAlreadyUsed = 0;

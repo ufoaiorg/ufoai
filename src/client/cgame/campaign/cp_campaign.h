@@ -485,10 +485,6 @@ typedef struct ccs_s {
 	/* == stored UFOs == */
 	linkedList_t *storedUFOs;
 
-	/* Alien Team Definitions. */
-	teamDef_t *alienTeams[MAX_TEAMDEFS];
-	int numAliensTD;
-
 	/* Alien Team Package used during battle */
 	alienTeamCategory_t alienCategories[ALIENCATEGORY_MAX];	/**< different alien team available
 														 * that will be used in mission */
