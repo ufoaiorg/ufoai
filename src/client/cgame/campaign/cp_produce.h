@@ -26,7 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define CP_PRODUCE
 
 /** @brief Maximum number of productions queued in any one base. */
-#define MAX_PRODUCTIONS		256
+#define MAX_PRODUCTIONS		40
 #define MAX_PRODUCTIONS_PER_WORKSHOP 5
 /** Maximum number of produced items. */
 #define MAX_PRODUCTION_AMOUNT 500
