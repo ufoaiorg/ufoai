@@ -166,8 +166,9 @@ void US_RemoveStoredUFO (storedUFO_t *ufo)
 	 * also clear collected status */
 	assert(ufo->ufoTemplate);
 	ufoCount = US_UFOsInStorage(ufo->ufoTemplate, NULL);
-	if (ufoCount <= 1 && ufo->ufoTemplate->tech->statusResearch == RS_RUNNING)
-		RS_StopResearch(ufo->ufoTemplate->tech);
+
+	/* Check all researches their requirements may broke */
+	RS_CheckRequirements();
 
 	/* remove ufo */
 	ufo->installation->ufoCapacity.cur--;

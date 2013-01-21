@@ -792,6 +792,26 @@ bool RS_MarkStoryLineEventResearched (const char *techID)
 	return false;
 }
 
+/**
+ * @brief Checks if running researches still meet their requirements
+ */
+void RS_CheckRequirements (void)
+{
+	for (int i = 0; i < ccs.numTechnologies; i++) {
+		technology_t *tech = RS_GetTechByIDX(i);
+
+		if (tech->statusResearch != RS_RUNNING)
+			continue;
+
+		if (RS_RequirementsMet(tech, tech->base))
+			continue;
+
+		Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Research prerequisites of %s do not met at %s. Research halted!"), _(tech->name), tech->base->name);
+		MSO_CheckAddNewMessage(NT_RESEARCH_HALTED, _("Research halted"), cp_messageBuffer, MSG_RESEARCH_HALTED);
+
+		RS_StopResearch(tech);
+	}
+}
 
 /**
  * @brief Checks the research status
