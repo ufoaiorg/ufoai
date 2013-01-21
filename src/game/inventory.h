@@ -65,9 +65,9 @@ public:
 
 	void DestroyInventory (inventory_t* const i);
 
-	void EmptyContainer (inventoryInterface_t* self, inventory_t* const i, const invDef_t *container);
+	void EmptyContainer (inventory_t* const i, const invDef_t *container);
 
-	void EquipActor (inventoryInterface_t* self, character_t* const chr, const equipDef_t *ed, int maxWeight);
+	void EquipActor (character_t* const chr, const equipDef_t *ed, int maxWeight);
 
 	void EquipActorMelee (inventoryInterface_t* self, inventory_t* const inv, const teamDef_t* td);
 

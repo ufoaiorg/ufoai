@@ -496,7 +496,6 @@ bool InventoryInterface::TryAddToInventory (inventory_t* const inv, const item_t
 
 /**
  * @brief Clears the linked list of a container - removes all items from this container.
- * @param[in] self The inventory interface pointer
  * @param[in] i The inventory where the container is located.
  * @param[in] container Index of the container which will be cleared.
  * @sa I_DestroyInventory
@@ -504,7 +503,7 @@ bool InventoryInterface::TryAddToInventory (inventory_t* const inv, const item_t
  * e.g. the container of a dropped weapon in tactical mission (ET_ITEM)
  * in every other case just set the pointer to NULL for a temp container like idEquip or idFloor
  */
-void InventoryInterface::EmptyContainer (inventoryInterface_t* self, inventory_t* const i, const invDef_t *container)
+void InventoryInterface::EmptyContainer (inventory_t* const i, const invDef_t *container)
 {
 	invList_t *ic;
 
@@ -537,7 +536,7 @@ void InventoryInterface::DestroyInventory (inventory_t* const inv)
 	for (container = 0; container < this->csi->numIDs; container++) {
 		const invDef_t *invDef = &this->csi->ids[container];
 		if (!invDef->temp)
-			EmptyContainer(this, inv, invDef);
+			EmptyContainer(inv, invDef);
 	}
 
 	OBJZERO(*inv);
@@ -771,7 +770,7 @@ typedef enum {
  * Beware: If two weapons in the same category have the same price,
  * only one will be considered for inventory.
  */
-void InventoryInterface::EquipActor (inventoryInterface_t* self, character_t* const chr, const equipDef_t *ed, int maxWeight)
+void InventoryInterface::EquipActor (character_t* const chr, const equipDef_t *ed, int maxWeight)
 {
 	inventory_t* const inv = &chr->i;
 	const teamDef_t* td = chr->teamDef;
@@ -788,7 +787,7 @@ void InventoryInterface::EquipActor (inventoryInterface_t* self, character_t* co
 		const objDef_t *primaryWeapon = NULL;
 		int hasWeapon = 0;
 		/* Primary weapons */
-		const int maxWeaponIdx = std::min(self->csi->numODs - 1, numEquip - 1);
+		const int maxWeaponIdx = std::min(this->csi->numODs - 1, numEquip - 1);
 		int randNumber = rand() % 100;
 		for (i = 0; i < maxWeaponIdx; i++) {
 			const objDef_t *obj = INVSH_GetItemByIDX(i);
@@ -806,14 +805,14 @@ void InventoryInterface::EquipActor (inventoryInterface_t* self, character_t* co
 				int ammo;
 
 				/* Find the first possible ammo to check damage type. */
-				for (ammo = 0; ammo < self->csi->numODs; ammo++)
-					if (ed->numItems[ammo] && INVSH_LoadableInWeapon(&self->csi->ods[ammo], primaryWeapon))
+				for (ammo = 0; ammo < this->csi->numODs; ammo++)
+					if (ed->numItems[ammo] && INVSH_LoadableInWeapon(&this->csi->ods[ammo], primaryWeapon))
 						break;
-				if (ammo < self->csi->numODs) {
+				if (ammo < this->csi->numODs) {
 					if (/* To avoid two particle weapons. */
-						!(self->csi->ods[ammo].dmgtype == self->csi->damParticle)
+						!(this->csi->ods[ammo].dmgtype == this->csi->damParticle)
 						/* To avoid SMG + Assault Rifle */
-						&& !(self->csi->ods[ammo].dmgtype == self->csi->damNormal)) {
+						&& !(this->csi->ods[ammo].dmgtype == this->csi->damNormal)) {
 						primary = WEAPON_OTHER;
 					} else {
 						primary = WEAPON_PARTICLE_OR_NORMAL;
@@ -823,7 +822,7 @@ void InventoryInterface::EquipActor (inventoryInterface_t* self, character_t* co
 				missedPrimary = 0;
 			} else {
 				Com_DPrintf(DEBUG_SHARED, "INVSH_EquipActor: primary weapon '%s' couldn't be equipped in equipment '%s' (%s).\n",
-						primaryWeapon->id, ed->id, self->invName);
+						primaryWeapon->id, ed->id, invName);
 				repeat = WEAPONLESS_BONUS > frand();
 			}
 		}
@@ -832,7 +831,7 @@ void InventoryInterface::EquipActor (inventoryInterface_t* self, character_t* co
 		do {
 			int randNumber = rand() % 100;
 			const objDef_t *secondaryWeapon = NULL;
-			for (i = 0; i < self->csi->numODs; i++) {
+			for (i = 0; i < this->csi->numODs; i++) {
 				const objDef_t *obj = INVSH_GetItemByIDX(i);
 				if (ed->numItems[i] && obj->weapon && obj->reload && !obj->deplete && obj->isSecondary) {
 					randNumber -= ed->numItems[i] / (primary == WEAPON_PARTICLE_OR_NORMAL ? 2 : 1);
@@ -864,7 +863,7 @@ void InventoryInterface::EquipActor (inventoryInterface_t* self, character_t* co
 		/* Misc object probability can be bigger than 100 -- you're sure to
 		 * have one misc if it fits your backpack */
 		sum = 0;
-		for (i = 0; i < self->csi->numODs; i++) {
+		for (i = 0; i < this->csi->numODs; i++) {
 			const objDef_t *obj = INVSH_GetItemByIDX(i);
 			if (ed->numItems[i] && ((obj->weapon && obj->isSecondary
 			 && (!obj->reload || obj->deplete)) || obj->isMisc)) {
@@ -878,7 +877,7 @@ void InventoryInterface::EquipActor (inventoryInterface_t* self, character_t* co
 			do {
 				int randNumber = rand() % sum;
 				const objDef_t *secondaryWeapon = NULL;
-				for (i = 0; i < self->csi->numODs; i++) {
+				for (i = 0; i < this->csi->numODs; i++) {
 					const objDef_t *obj = INVSH_GetItemByIDX(i);
 					if (ed->numItems[i] && ((obj->weapon && obj->isSecondary
 					 && (!obj->reload || obj->deplete)) || obj->isMisc)) {
@@ -904,8 +903,8 @@ void InventoryInterface::EquipActor (inventoryInterface_t* self, character_t* co
 			int maxPrice = 0;
 			const objDef_t *blade = NULL;
 			Com_DPrintf(DEBUG_SHARED, "INVSH_EquipActor: no weapon picked in equipment '%s', defaulting to the most expensive secondary weapon without reload. (%s)\n",
-					ed->id, self->invName);
-			for (i = 0; i < self->csi->numODs; i++) {
+					ed->id, invName);
+			for (i = 0; i < this->csi->numODs; i++) {
 				const objDef_t *obj = INVSH_GetItemByIDX(i);
 				if (ed->numItems[i] && obj->weapon && obj->isSecondary && !obj->reload) {
 					if (obj->price > maxPrice) {
@@ -920,7 +919,7 @@ void InventoryInterface::EquipActor (inventoryInterface_t* self, character_t* co
 		/* If still no weapon, something is broken, or no blades in equipment. */
 		if (!hasWeapon)
 			Com_DPrintf(DEBUG_SHARED, "INVSH_EquipActor: cannot add any weapon; no secondary weapon without reload detected for equipment '%s' (%s).\n",
-					ed->id, self->invName);
+					ed->id, invName);
 
 		/* Armour; especially for those without primary weapons. */
 		repeat = (float) missedPrimary > frand() * 100.0;
@@ -931,7 +930,7 @@ void InventoryInterface::EquipActor (inventoryInterface_t* self, character_t* co
 	if (td->armour) {
 		do {
 			int randNumber = rand() % 100;
-			for (i = 0; i < self->csi->numODs; i++) {
+			for (i = 0; i < this->csi->numODs; i++) {
 				const objDef_t *armour = INVSH_GetItemByIDX(i);
 				if (ed->numItems[i] && INV_IsArmour(armour)) {
 					randNumber -= ed->numItems[i];
@@ -942,7 +941,7 @@ void InventoryInterface::EquipActor (inventoryInterface_t* self, character_t* co
 						const int maxTU = GET_TU(speed, GET_ENCUMBRANCE_PENALTY(weight, chr->score.skills[ABILITY_POWER]));
 						if (weight > maxWeight || tuNeed > maxTU)
 							continue;
-						if (self->TryAddToInventory(inv, &item, &self->csi->ids[self->csi->idArmour])) {
+						if (TryAddToInventory(inv, &item, &this->csi->ids[this->csi->idArmour])) {
 							repeat = 0;
 							break;
 						}
@@ -952,12 +951,12 @@ void InventoryInterface::EquipActor (inventoryInterface_t* self, character_t* co
 		} while (repeat-- > 0);
 	} else {
 		Com_DPrintf(DEBUG_SHARED, "INVSH_EquipActor: teamdef '%s' may not carry armour (%s)\n",
-				td->name, self->invName);
+				td->name, invName);
 	}
 
 	{
 		int randNumber = rand() % 10;
-		for (i = 0; i < self->csi->numODs; i++) {
+		for (i = 0; i < this->csi->numODs; i++) {
 			if (ed->numItems[i]) {
 				const objDef_t *miscItem = INVSH_GetItemByIDX(i);
 				if (miscItem->isMisc && !miscItem->weapon) {
@@ -972,14 +971,14 @@ void InventoryInterface::EquipActor (inventoryInterface_t* self, character_t* co
 						const int maxTU = GET_TU(speed, GET_ENCUMBRANCE_PENALTY(weight, chr->score.skills[ABILITY_POWER]));
 
 						if (miscItem->headgear)
-							container = self->csi->idHeadgear;
+							container = this->csi->idHeadgear;
 						else if (miscItem->extension)
-							container = self->csi->idExtension;
+							container = this->csi->idExtension;
 						else
-							container = self->csi->idBackpack;
+							container = this->csi->idBackpack;
 						if (weight > maxWeight || tuNeed > maxTU || (itemFd && itemFd->time > maxTU))
 							continue;
-						self->TryAddToInventory(inv, &item, &self->csi->ids[container]);
+						TryAddToInventory(inv, &item, &this->csi->ids[container]);
 					}
 				}
 			}
