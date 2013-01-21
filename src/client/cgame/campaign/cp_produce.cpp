@@ -196,24 +196,6 @@ int PR_RequirementsMet (int amount, const requirements_t *reqs, base_t *base)
 }
 
 /**
- * @brief returns the number of free production slots of a queue
- * @param[in] base Pointer to the base to check
- */
-int PR_QueueFreeSpace (const base_t* base)
-{
-	const production_queue_t *queue = PR_GetProductionForBase(base);
-
-	int numWorkshops;
-
-	assert(queue);
-	assert(base);
-
-	numWorkshops = std::max(B_GetNumberOfBuildingsInBaseByBuildingType(base, B_WORKSHOP), 0);
-
-	return std::min(MAX_PRODUCTIONS, numWorkshops * MAX_PRODUCTIONS_PER_WORKSHOP - queue->numItems);
-}
-
-/**
  * @return The translated name of the item in production
  */
 const char* PR_GetName (const productionData_t *data)
@@ -259,7 +241,7 @@ production_t *PR_QueueNew (base_t *base, const productionData_t *data, signed in
 	const technology_t *tech;
 	production_queue_t *queue = PR_GetProductionForBase(base);
 
-	if (PR_QueueFreeSpace(base) <= 0)
+	if (queue->numItems >= MAX_PRODUCTIONS)
 		return NULL;
 	if (E_CountHired(base, EMPL_WORKER) <= 0)
 		return NULL;

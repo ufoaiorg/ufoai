@@ -588,7 +588,6 @@ static void PR_ProductionList_f (void)
 
 	numWorkshops = std::max(0, B_GetNumberOfBuildingsInBaseByBuildingType(base, B_WORKSHOP));
 
-	cgi->Cvar_SetValue("mn_production_limit", MAX_PRODUCTIONS_PER_WORKSHOP * numWorkshops);
 	cgi->Cvar_SetValue("mn_production_basecap", CAP_GetMax(base, CAP_WORKSPACE));
 
 	/* Set amount of workers - all/ready to work (determined by base capacity. */
@@ -666,12 +665,6 @@ static void PR_ProductionIncrease_f (void)
 		cgi->Cvar_SetValue("mn_production_amount", prod->amount);
 	} else {
 		const char *name = NULL;
-
-		/* no free production slot */
-		if (PR_QueueFreeSpace(base) <= 0) {
-			CP_Popup(_("Not enough workshops"), _("You cannot queue more items.\nBuild more workshops.\n"));
-			return;
-		}
 
 		tech = PR_GetTech(&selectedData);
 		name = PR_GetName(&selectedData);

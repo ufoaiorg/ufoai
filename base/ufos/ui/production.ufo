@@ -197,27 +197,6 @@ window production
 			contentalign	ALIGN_UR
 			font		"f_small"
 		}
-
-		// ==================
-		// prod limit
-		// ==================
-
-		string txt_prod_limit_caption
-		{
-			string		"_Production limit:"
-			pos			"30 100"
-			size		"250 20"
-			font		"f_small"
-		}
-
-		string txt_prod_limit
-		{
-			string		*cvar:mn_production_limit
-			pos			"295 100"
-			size		"100 20"
-			contentalign	ALIGN_UR
-			font		"f_small"
-		}
 	}
 
 	// ==================
