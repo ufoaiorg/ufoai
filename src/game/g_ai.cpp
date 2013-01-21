@@ -562,7 +562,9 @@ static void AI_SearchBestTarget (aiAction_t *aia, const edict_t *ent, edict_t *c
 					G_GetShotOrigin(ent, fd, dir, origin);
 
 					/* gun-to-target line free? */
-					if (G_TestLine(origin, check->origin))
+					const trace_t trace = G_Trace(origin, check->origin, ent, MASK_SHOT);
+					const edict_t *trEnt = G_EdictsGetByNum(trace.entNum);
+					if (!trEnt || !(trEnt == check || (G_IsBrushModel(trEnt) && G_IsBreakable(trEnt))))
 						return;
 				}
 			}
