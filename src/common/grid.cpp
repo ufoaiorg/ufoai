@@ -279,14 +279,14 @@ bool Step::checkWalkingDirections (const pathing_t *path)
 /** I know this code could be streamlined, but until I understand it myself, plz leave it like it is !*/
 		int dvFlagsNew = 0;
 		if (!crouchingState									/* not in std crouch mode */
-		 && passageHeight >= step->actorCrouchedHeight)	{	/* and passage is tall enough for crouching ? */
+		 && passageHeight >= actorCrouchedHeight) {			/* and passage is tall enough for crouching ? */
 															/* we should try autocrouching */
 			int dvFlagsOld = getDVflags(RT_AREA_POS(path, fromPos, crouchingState));
-			int toHeight = RT_CEILING_POS(step->map, actorSize, toPos) - RT_FLOOR_POS(step->map, actorSize, toPos);
+			int toHeight = RT_getCeiling(routes, actorSize, toPos) - RT_getFloor(routes, actorSize, toPos);
 			int tuCr = Grid_GetTUsForDirection(dir, 1);		/* 1 means crouched */
 			int newTUs = 0;
 
-			if (toHeight >= step->actorHeight) {			/* can we stand in the new cell ? */
+			if (toHeight >= actorHeight) {					/* can we stand in the new cell ? */
 				if ((dvFlagsOld & DV_FLAG_AUTOCROUCH)		/* already in auto-crouch mode ? */
 				 || (dvFlagsOld & DV_FLAG_AUTOCROUCHED)) {
 					dvFlagsNew |= DV_FLAG_AUTOCROUCHED;		/* keep that ! */
