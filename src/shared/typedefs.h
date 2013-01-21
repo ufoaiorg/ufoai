@@ -198,6 +198,7 @@ typedef struct routing_s {
 	inline byte getCeiling (const pos3_t pos) const {
 		return getCeiling(pos[0], pos[1], pos[2]);
 	}
+
 	inline void setFloor (const int x, const int y, const int z, const int val) {
 		_floor[z][y][x] = val;
 	}
@@ -221,11 +222,12 @@ inline byte RT_getCeiling (const routing_t *routes, const int actorSize, const p
 {
 	return routes[actorSize - 1].getCeiling(pos);
 }
+
 inline void RT_setFloor (routing_t *routes, const int actorSize, const int x, const int y, const int z, const int val)
 {
 	routes[actorSize - 1].setFloor(x, y, z, val);
 }
-inline byte RT_getFloor (const routing_t *routes, const int actorSize, const int x, const int y, const int z)
+inline signed char RT_getFloor (const routing_t *routes, const int actorSize, const int x, const int y, const int z)
 {
 	return routes[actorSize - 1].getFloor(x, y, z);
 }
