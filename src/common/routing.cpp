@@ -102,10 +102,10 @@ typedef struct place_s {
 
 static inline void RT_PlaceInit (const routing_t *routes, const actorSizeEnum_t actorSize, place_t *p, const int x, const int y, const int z)
 {
-	const int relCeiling = RT_CEILING(routes, actorSize, x, y, z);
 	p->cell[0] = x;
 	p->cell[1] = y;
 	p->cell[2] = z;
+	const int relCeiling = routes[actorSize - 1].getCeiling(p->cell);
 	p->floor = RT_FLOOR(routes, actorSize, x, y, z) + z * CELL_HEIGHT;
 	p->ceiling = relCeiling + z * CELL_HEIGHT;
 	p->floorZ = std::max(0, p->floor / CELL_HEIGHT) ;
@@ -261,7 +261,7 @@ void RT_DumpWholeMap (mapTiles_t *mapTiles, const routing_t *routes)
  */
 bool RT_CanActorStandHere (const routing_t *routes, const int actorSize, const pos3_t pos)
 {
-	if (RT_CEILING_POS(routes, actorSize, pos) - RT_FLOOR_POS(routes, actorSize, pos) >= PLAYER_STANDING_HEIGHT / QUANT)
+	if (RT_getCeiling(routes, actorSize, pos) - RT_FLOOR_POS(routes, actorSize, pos) >= PLAYER_STANDING_HEIGHT / QUANT)
 		return true;
 	else
 		return false;
@@ -364,7 +364,7 @@ bool RT_AllCellsBelowAreFilled (const routing_t *routes, const int actorSize, co
 		return true;
 
 	for (i = 0; i < pos[2]; i++) {
-		if (RT_CEILING(routes, actorSize, pos[0], pos[1], i) != 0)
+		if (RT_getCeiling(routes, actorSize, pos[0], pos[1], i) != 0)
 			return false;
 	}
 	return true;
@@ -455,7 +455,7 @@ int RT_CheckCell (mapTiles_t *mapTiles, routing_t *routes, const int actorSize, 
 			for (i = z; i >= 0 ; i--) {
 				/* no floor in this cell, it is bottomless! */
 				RT_FLOOR(routes, actorSize, x, y, i) = -1 - i * CELL_HEIGHT; /* There is no floor in this cell, place it at -1 below the model. */
-				RT_CEILING(routes, actorSize, x, y, i) = 0; /* There is no ceiling, the true indicator of a filled cell. */
+				RT_setCeiling(routes, actorSize, x, y, i, 0); /* There is no ceiling, the true indicator of a filled cell. */
 			}
 			/* return 0 to indicate we just scanned the model bottom. */
 			return 0;
@@ -490,7 +490,7 @@ int RT_CheckCell (mapTiles_t *mapTiles, routing_t *routes, const int actorSize, 
 				for (i = z; i >= 0 ; i--) {
 					/* no floor in this cell, it is bottomless! */
 					RT_FLOOR(routes, actorSize, x, y, i) = CELL_HEIGHT; /* There is no floor in this cell. */
-					RT_CEILING(routes, actorSize, x, y, i) = 0; /* There is no ceiling, the true indicator of a filled cell. */
+					RT_setCeiling(routes, actorSize, x, y, i, 0);		/* There is no ceiling, the true indicator of a filled cell. */
 				}
 				/* return 0 to indicate we just scanned the model bottom. */
 				return 0;
@@ -518,7 +518,7 @@ int RT_CheckCell (mapTiles_t *mapTiles, routing_t *routes, const int actorSize, 
 				for (i = z; i >= 0 ; i--) {
 					/* no floor in this cell, it is bottomless! */
 					RT_FLOOR(routes, actorSize, x, y, i) = CELL_HEIGHT; /* There is no floor in this cell. */
-					RT_CEILING(routes, actorSize, x, y, i) = 0; /* There is no ceiling, the true indicator of a filled cell. */
+					RT_setCeiling(routes, actorSize, x, y, i, 0);		/* There is no ceiling, the true indicator of a filled cell. */
 				}
 				/* return 0 to indicate we just scanned the model bottom. */
 				return 0;
@@ -579,13 +579,13 @@ int RT_CheckCell (mapTiles_t *mapTiles, routing_t *routes, const int actorSize, 
 		/* Round up floor to keep feet out of model. */
 		RT_FLOOR(routes, actorSize, x, y, i) = bottomQ - i * CELL_HEIGHT;
 		/* Round down ceiling to heep head out of model.  Also offset by floor and max at 255. */
-		RT_CEILING(routes, actorSize, x, y, i) = topQ - i * CELL_HEIGHT;
+		RT_setCeiling(routes, actorSize, x, y, i, topQ - i * CELL_HEIGHT);
 	}
 
 	/* Also, update the floors of any filled cells immediately above the ceiling up to our original cell. */
 	for (i = cz + 1; i <= z; i++) {
 		RT_FLOOR(routes, actorSize, x, y, i) = CELL_HEIGHT; /* There is no floor in this cell. */
-		RT_CEILING(routes, actorSize, x, y, i) = 0; /* There is no ceiling, the true indicator of a filled cell. */
+		RT_setCeiling(routes, actorSize, x, y, i, 0);		/* There is no ceiling, the true indicator of a filled cell. */
 	}
 
 	/* Return the lowest z coordinate that we updated floors for. */
@@ -933,7 +933,7 @@ static int RT_FindOpening (RT_data_t *rtd, const place_t* from, const int ax, co
 	/* shortcut: if both ceilings are the sky, we can check for walls
 	 * AND determine the bottom of the passage in just one trace */
 	if (from->ceiling >= PATHFINDING_HEIGHT * CELL_HEIGHT
-	 && from->cell[2] * CELL_HEIGHT + RT_CEILING(rtd->routes, rtd->actorSize, ax, ay, from->cell[2]) >= PATHFINDING_HEIGHT * CELL_HEIGHT) {
+	 && from->cell[2] * CELL_HEIGHT + RT_getCeiling(rtd->routes, rtd->actorSize, ax, ay, from->cell[2]) >= PATHFINDING_HEIGHT * CELL_HEIGHT) {
 		vec3_t sky, earth;
 		const AABB* box = (rtd->actorSize == ACTOR_SIZE_NORMAL ? &actor1x1Box : &actor2x2Box);
 		trace_t tr;
@@ -1284,8 +1284,8 @@ static void RT_TracePassage (RT_data_t *rtd, const int x, const int y, const int
 	RT_PlaceInit(rtd->routes, rtd->actorSize, &from, x, y, z);
 	RT_PlaceInit(rtd->routes, rtd->actorSize, &to, ax, ay, z);
 
-	aboveCeil = (z < PATHFINDING_HEIGHT - 1) ? RT_CEILING(rtd->routes, rtd->actorSize, ax, ay, z + 1) + (z + 1) * CELL_HEIGHT : to.ceiling;
-	lowCeil = std::min(from.ceiling, (RT_CEILING(rtd->routes, rtd->actorSize, ax, ay, z) == 0 || to.ceiling - from.floor < PATHFINDING_MIN_OPENING) ? aboveCeil : to.ceiling);
+	aboveCeil = (z < PATHFINDING_HEIGHT - 1) ? RT_getCeiling(rtd->routes, rtd->actorSize, ax, ay, z + 1) + (z + 1) * CELL_HEIGHT : to.ceiling;
+	lowCeil = std::min(from.ceiling, (RT_getCeiling(rtd->routes, rtd->actorSize, ax, ay, z) == 0 || to.ceiling - from.floor < PATHFINDING_MIN_OPENING) ? aboveCeil : to.ceiling);
 
 	/*
 	 * First check the ceiling for the cell beneath the adjacent floor to see
@@ -1357,9 +1357,9 @@ static void RT_TracePassage (RT_data_t *rtd, const int x, const int y, const int
  */
 static int RT_UpdateConnection (RT_data_t *rtd, const int x, const int y, const int ax, const int ay, const int z, const int dir)
 {
-	const int ceiling = RT_CEILING(rtd->routes, rtd->actorSize, x, y, z);
-	const int adjCeiling = RT_CEILING(rtd->routes, rtd->actorSize, ax, ay, z);
-	const int extAdjCeiling = (z < PATHFINDING_HEIGHT - 1) ? RT_CEILING(rtd->routes, rtd->actorSize, ax, ay, z + 1) : adjCeiling;
+	const int ceiling = RT_getCeiling(rtd->routes, rtd->actorSize, x, y, z);
+	const int adjCeiling = RT_getCeiling(rtd->routes, rtd->actorSize, ax, ay, z);
+	const int extAdjCeiling = (z < PATHFINDING_HEIGHT - 1) ? RT_getCeiling(rtd->routes, rtd->actorSize, ax, ay, z + 1) : adjCeiling;
 	const int absCeiling = ceiling + z * CELL_HEIGHT;
 	const int absAdjCeiling = adjCeiling + z * CELL_HEIGHT;
 	const int absExtAdjCeiling = (z < PATHFINDING_HEIGHT - 1) ? adjCeiling + (z + 1) * CELL_HEIGHT : absCeiling;
@@ -1382,7 +1382,7 @@ static int RT_UpdateConnection (RT_data_t *rtd, const int x, const int y, const 
 		RT_ConnSetNoGo(rtd, ax, ay, z, dir ^ 1);
 #endif
 		if (debugTrace)
-			Com_Printf("Current cell filled. c:%i ac:%i\n", RT_CEILING(rtd->routes, rtd->actorSize, x, y, z), RT_CEILING(rtd->routes, rtd->actorSize, ax, ay, z));
+			Com_Printf("Current cell filled. c:%i ac:%i\n", RT_getCeiling(rtd->routes, rtd->actorSize, x, y, z), RT_getCeiling(rtd->routes, rtd->actorSize, ax, ay, z));
 		return z;
 	}
 
@@ -1526,7 +1526,7 @@ void RT_WriteCSVFiles (const routing_t *routes, const char* baseFilename, const 
 				FS_Printf(&f, "z:%i  y:%i,", z ,y);
 				for (x = mins[0]; x <= maxs[0] - i + 1; x++) {
 					/* compare results */
-					FS_Printf(&f, "h:%i c:%i,", RT_FLOOR(routes, i, x, y, z), RT_CEILING(routes, i, x, y, z));
+					FS_Printf(&f, "h:%i c:%i,", RT_FLOOR(routes, i, x, y, z), RT_getCeiling(routes, i, x, y, z));
 				}
 				FS_Printf(&f, "\n");
 			}
@@ -1635,7 +1635,7 @@ void RT_DebugPathDisplay (routing_t *routes, actorSizeEnum_t actorSize, int x, i
 {
 	Com_Printf("data at cursor XYZ(%i, %i, %i) Floor(%i) Ceiling(%i)\n", x, y, z,
 		RT_FLOOR(routes, actorSize, x, y, z),
-		RT_CEILING(routes, actorSize, x, y, z) );
+		RT_getCeiling(routes, actorSize, x, y, z) );
 	Com_Printf("connections ortho: (PX=%i, NX=%i, PY=%i, NY=%i))\n",
 		RT_CONN_PX(routes, actorSize, x, y, z),		/* dir = 0 */
 		RT_CONN_NX(routes, actorSize, x, y, z),		/* 1 */

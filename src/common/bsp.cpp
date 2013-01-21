@@ -564,7 +564,7 @@ static void CMod_LoadRouting (MapTile &tile, mapData_t *mapData, const byte *bas
 					continue;
 				for (z = minZ; z <= maxZ; z++) {
 					mapData->routes[size].floor[z][y][x] = tempMap[size].floor[z - sZ][y - sY][x - sX];
-					mapData->routes[size].ceil[z][y][x] = tempMap[size].ceil[z - sZ][y - sY][x - sX];
+					mapData->routes[size].setCeiling(x, y, z, tempMap[size].getCeiling(x - sX, y - sY, z - sZ));
 					for (dir = 0; dir < CORE_DIRECTIONS; dir++) {
 						mapData->routes[size].route[z][y][x][dir] = tempMap[size].route[z - sZ][y - sY][x - sX][dir];
 						mapData->routes[size].stepup[z][y][x][dir] = tempMap[size].stepup[z - sZ][y - sY][x - sX][dir];

@@ -431,7 +431,7 @@ bool Step::checkVerticalDirections (void)
 			return false;
 		}
 	} else if (dir == DIRECTION_CLIMB_UP) {
-		if (flier && QuantToModel(RT_CEILING_POS(routes, actorSize, fromPos)) < UNIT_HEIGHT * 2 - PLAYER_HEIGHT) { /* Not enough headroom to fly up. */
+		if (flier && QuantToModel(RT_getCeiling(routes, actorSize, fromPos)) < UNIT_HEIGHT * 2 - PLAYER_HEIGHT) { /* Not enough headroom to fly up. */
 			return false;
 		}
 		/* If the actor is not a flyer and tries to move up, there must be a ladder. */
@@ -775,7 +775,7 @@ unsigned int Grid_Ceiling (const routing_t *routes, const actorSizeEnum_t actorS
 		Com_Printf("Grid_Height: Warning: z level is bigger than %i: %i\n",
 			(PATHFINDING_HEIGHT - 1), pos[2]);
 	}
-	return QuantToModel(RT_CEILING(routes, actorSize, pos[0], pos[1], pos[2] & 7));
+	return QuantToModel(RT_getCeiling(routes, actorSize, pos[0], pos[1], pos[2] & 7));
 }
 
 
@@ -793,7 +793,7 @@ int Grid_Height (const routing_t *routes, const actorSizeEnum_t actorSize, const
 		Com_Printf("Grid_Height: Warning: z level is bigger than %i: %i\n",
 			(PATHFINDING_HEIGHT - 1), pos[2]);
 	}
-	return QuantToModel(RT_CEILING(routes, actorSize, pos[0], pos[1], pos[2] & (PATHFINDING_HEIGHT - 1))
+	return QuantToModel(RT_getCeiling(routes, actorSize, pos[0], pos[1], pos[2] & (PATHFINDING_HEIGHT - 1))
 		- RT_FLOOR(routes, actorSize, pos[0], pos[1], pos[2] & (PATHFINDING_HEIGHT - 1)));
 }
 

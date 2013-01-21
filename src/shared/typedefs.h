@@ -187,8 +187,31 @@ typedef struct routing_s {
 	byte stepup[PATHFINDING_HEIGHT][PATHFINDING_WIDTH][PATHFINDING_WIDTH][CORE_DIRECTIONS];
 	byte route[PATHFINDING_HEIGHT][PATHFINDING_WIDTH][PATHFINDING_WIDTH][CORE_DIRECTIONS];
 	signed char floor[PATHFINDING_HEIGHT][PATHFINDING_WIDTH][PATHFINDING_WIDTH];
-	byte ceil[PATHFINDING_HEIGHT][PATHFINDING_WIDTH][PATHFINDING_WIDTH];
+	byte _ceil[PATHFINDING_HEIGHT][PATHFINDING_WIDTH][PATHFINDING_WIDTH];
+
+	inline void setCeiling (const int x, const int y, const int z, const int val) {
+		_ceil[z][y][x] = val;
+	}
+	inline byte getCeiling (const int x, const int y, const int z) const {
+		return _ceil[z][y][x];
+	}
+	inline byte getCeiling (const pos3_t pos) const {
+		return getCeiling(pos[2], pos[1], pos[0]);
+	}
 } routing_t;
+
+inline void RT_setCeiling (routing_t *routes, const int actorSize, const int x, const int y, const int z, const int val)
+{
+	routes[actorSize - 1].setCeiling(x, y, z, val);
+}
+inline byte RT_getCeiling (const routing_t *routes, const int actorSize, const int x, const int y, const int z)
+{
+	return routes[actorSize - 1].getCeiling(x, y, z);
+}
+inline byte RT_getCeiling (const routing_t *routes, const int actorSize, const pos3_t pos)
+{
+	return routes[actorSize - 1].getCeiling(pos);
+}
 
 typedef struct mapData_s {
 	/** @note holds all entity data as a single parsable string */
