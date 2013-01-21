@@ -186,7 +186,7 @@ public:
 typedef struct routing_s {
 	byte stepup[PATHFINDING_HEIGHT][PATHFINDING_WIDTH][PATHFINDING_WIDTH][CORE_DIRECTIONS];
 	byte route[PATHFINDING_HEIGHT][PATHFINDING_WIDTH][PATHFINDING_WIDTH][CORE_DIRECTIONS];
-	signed char floor[PATHFINDING_HEIGHT][PATHFINDING_WIDTH][PATHFINDING_WIDTH];
+	signed char _floor[PATHFINDING_HEIGHT][PATHFINDING_WIDTH][PATHFINDING_WIDTH];
 	byte _ceil[PATHFINDING_HEIGHT][PATHFINDING_WIDTH][PATHFINDING_WIDTH];
 
 	inline void setCeiling (const int x, const int y, const int z, const int val) {
@@ -196,7 +196,16 @@ typedef struct routing_s {
 		return _ceil[z][y][x];
 	}
 	inline byte getCeiling (const pos3_t pos) const {
-		return getCeiling(pos[2], pos[1], pos[0]);
+		return getCeiling(pos[0], pos[1], pos[2]);
+	}
+	inline void setFloor (const int x, const int y, const int z, const int val) {
+		_floor[z][y][x] = val;
+	}
+	inline signed char getFloor (const int x, const int y, const int z) const {
+		return _floor[z][y][x];
+	}
+	inline signed char getFloor (const pos3_t pos) const {
+		return getFloor(pos[0], pos[1], pos[2]);
 	}
 } routing_t;
 
@@ -211,6 +220,18 @@ inline byte RT_getCeiling (const routing_t *routes, const int actorSize, const i
 inline byte RT_getCeiling (const routing_t *routes, const int actorSize, const pos3_t pos)
 {
 	return routes[actorSize - 1].getCeiling(pos);
+}
+inline void RT_setFloor (routing_t *routes, const int actorSize, const int x, const int y, const int z, const int val)
+{
+	routes[actorSize - 1].setFloor(x, y, z, val);
+}
+inline byte RT_getFloor (const routing_t *routes, const int actorSize, const int x, const int y, const int z)
+{
+	return routes[actorSize - 1].getFloor(x, y, z);
+}
+inline signed char RT_getFloor (const routing_t *routes, const int actorSize, const pos3_t pos)
+{
+	return routes[actorSize - 1].getFloor(pos);
 }
 
 typedef struct mapData_s {

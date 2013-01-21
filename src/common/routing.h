@@ -96,7 +96,7 @@ MACROS
 #define RT_FLOOR_POS(map, actorSize, p)				map[(actorSize) - 1].floor[(p)[2]][(p)[1]][(p)[0]]
 #define RT_CEILING(map, actorSize, x, y, z)			map[(actorSize) - 1].ceil[(z)][(y)][(x)]
 #define RT_CEILING_POS(map, actorSize, p)			map[(actorSize) - 1].ceil[(p)[2]][(p)[1]][(p)[0]]
-#define RT_FILLED(map, actorSize, x, y, z)			(RT_getCeiling(map, actorSize, x, y, z) - RT_FLOOR(map, actorSize, x, y, z) < PATHFINDING_MIN_OPENING)
+#define RT_FILLED(map, actorSize, x, y, z)			(RT_getCeiling(map, actorSize, x, y, z) - RT_getFloor(map, actorSize, x, y, z) < PATHFINDING_MIN_OPENING)
 
 
 /** @brief  These macros are meant to correctly convert from model units to QUANT units and back. */

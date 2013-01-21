@@ -61,7 +61,7 @@ namespace routing
 	static EAccessState evaluateAccessState (const routing_t routes[ACTOR_MAX_SIZE], const pos3_t pos, const int actorSize)
 	{
 		const int height = QuantToModel(RT_getCeiling(routes, actorSize, pos[0], pos[1], pos[2] & (PATHFINDING_HEIGHT - 1))
-				- RT_FLOOR(routes, actorSize, pos[0], pos[1], pos[2] & (PATHFINDING_HEIGHT - 1)));
+				- RT_getFloor(routes, actorSize, pos[0], pos[1], pos[2] & (PATHFINDING_HEIGHT - 1)));
 		if (height >= PLAYER_STANDING_HEIGHT)
 			return ACC_STAND;
 		else if (height >= PLAYER_CROUCHING_HEIGHT)
@@ -212,7 +212,7 @@ namespace routing
 					if (x < 0 || y < 0)
 						continue;
 					for (z = minZ; z <= maxZ; z++) {
-						clMap[size].floor[z][y][x] = tempMap[size].floor[z - sZ][y - sY][x - sX];
+						clMap[size].setFloor(x, y, z, tempMap[size].getFloor(x - sX, y - sY, z - sZ));
 						clMap[size].setCeiling(x, y, z, tempMap[size].getCeiling(x - sX, y - sY, z - sZ));
 						for (dir = 0; dir < CORE_DIRECTIONS; dir++) {
 							clMap[size].route[z][y][x][dir] = tempMap[size].route[z - sZ][y - sY][x - sX][dir];

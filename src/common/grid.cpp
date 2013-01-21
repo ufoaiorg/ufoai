@@ -357,7 +357,7 @@ bool Step::checkWalkingDirections (const pathing_t *path)
 		toPos[2]--;		/* Stepping down into lower cell. */
 	}
 
-	heightChange = RT_FLOOR_POS(routes, actorSize, toPos) - RT_FLOOR_POS(routes, actorSize, fromPos) + (toPos[2] - fromPos[2]) * CELL_HEIGHT;
+	heightChange = RT_getFloor(routes, actorSize, toPos) - RT_getFloor(routes, actorSize, fromPos) + (toPos[2] - fromPos[2]) * CELL_HEIGHT;
 
 	/* If the actor tries to fall more than falling_height, then prohibit the move. */
 	if (heightChange < -fallingHeight && !hasLadderSupport) {
@@ -369,7 +369,7 @@ bool Step::checkWalkingDirections (const pathing_t *path)
 	 * Set heightChange to 0.
 	 * The actor enters the cell.
 	 * The actor will be forced to fall (dir 13) from the destination cell to the cell below. */
-	if (RT_FLOOR_POS(routes, actorSize, toPos) < 0) {
+	if (RT_getFloor(routes, actorSize, toPos) < 0) {
 		/* We cannot fall if STEPDOWN is defined. */
 		if (stepup & PATHFINDING_BIG_STEPDOWN) {
 			return false;		/* There is stepdown from here. */
@@ -393,13 +393,13 @@ bool Step::checkFlyingDirections (void)
 	if (toPos[2] > fromPos[2]) {
 		/* If the actor is moving up, check the passage at the current cell.
 		 * The minimum height is the actor's height plus the distance from the current floor to the top of the cell. */
-		neededHeight = actorHeight + CELL_HEIGHT - std::max((const signed char)0, RT_FLOOR_POS(routes, actorSize, fromPos));
+		neededHeight = actorHeight + CELL_HEIGHT - std::max((const signed char)0, RT_getFloor(routes, actorSize, fromPos));
 		RT_CONN_TEST_POS(routes, actorSize, fromPos, coreDir);
 		passageHeight = RT_CONN_POS(routes, actorSize, fromPos, coreDir);
 	} else if (toPos[2] < fromPos[2]) {
 		/* If the actor is moving down, check from the destination cell back. *
 		 * The minimum height is the actor's height plus the distance from the destination floor to the top of the cell. */
-		neededHeight = actorHeight + CELL_HEIGHT - std::max((const signed char)0, RT_FLOOR_POS(routes, actorSize, toPos));
+		neededHeight = actorHeight + CELL_HEIGHT - std::max((const signed char)0, RT_getFloor(routes, actorSize, toPos));
 		RT_CONN_TEST_POS(routes, actorSize, toPos, coreDir ^ 1);
 		passageHeight = RT_CONN_POS(routes, actorSize, toPos, coreDir ^ 1);
 	} else {
@@ -423,7 +423,7 @@ bool Step::checkVerticalDirections (void)
 		if (flier) {
 			/* Fliers cannot fall intentionally. */
 			return false;
-		} else if (RT_FLOOR_POS(routes, actorSize, fromPos) >= 0) {
+		} else if (RT_getFloor(routes, actorSize, fromPos) >= 0) {
 			/* We cannot fall if there is a floor in this cell. */
 			return false;
 		} else if (hasLadderSupport) {
@@ -440,7 +440,7 @@ bool Step::checkVerticalDirections (void)
 		}
 	} else if (dir == DIRECTION_CLIMB_DOWN) {
 		if (flier) {
-			if (RT_FLOOR_POS(routes, actorSize, fromPos) >= 0 ) { /* Can't fly down through a floor. */
+			if (RT_getFloor(routes, actorSize, fromPos) >= 0 ) { /* Can't fly down through a floor. */
 				return false;
 			}
 		} else {
@@ -794,7 +794,7 @@ int Grid_Height (const routing_t *routes, const actorSizeEnum_t actorSize, const
 			(PATHFINDING_HEIGHT - 1), pos[2]);
 	}
 	return QuantToModel(RT_getCeiling(routes, actorSize, pos[0], pos[1], pos[2] & (PATHFINDING_HEIGHT - 1))
-		- RT_FLOOR(routes, actorSize, pos[0], pos[1], pos[2] & (PATHFINDING_HEIGHT - 1)));
+		- RT_getFloor(routes, actorSize, pos[0], pos[1], pos[2] & (PATHFINDING_HEIGHT - 1)));
 }
 
 
@@ -812,7 +812,7 @@ int Grid_Floor (const routing_t *routes, const actorSizeEnum_t actorSize, const 
 		Com_Printf("Grid_Floor: Warning: z level is bigger than %i: %i\n",
 			(PATHFINDING_HEIGHT - 1), pos[2]);
 	}
-	return QuantToModel(RT_FLOOR(routes, actorSize, pos[0], pos[1], pos[2] & (PATHFINDING_HEIGHT - 1)));
+	return QuantToModel(RT_getFloor(routes, actorSize, pos[0], pos[1], pos[2] & (PATHFINDING_HEIGHT - 1)));
 }
 
 
@@ -891,7 +891,7 @@ pos_t Grid_Fall (const routing_t *routes, const actorSizeEnum_t actorSize, const
 	 * If z < 0, we are going down.
 	 * If z >= CELL_HEIGHT, we are going up.
 	 * If 0 <= z <= CELL_HEIGHT, then z / 16 = 0, no change. */
-	base = RT_FLOOR(routes, actorSize, pos[0], pos[1], z);
+	base = RT_getFloor(routes, actorSize, pos[0], pos[1], z);
 	/* Hack to deal with negative numbers- otherwise rounds toward 0 instead of down. */
 	diff = base < 0 ? (base - (CELL_HEIGHT - 1)) / CELL_HEIGHT : base / CELL_HEIGHT;
 	z += diff;

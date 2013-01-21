@@ -106,7 +106,7 @@ static inline void RT_PlaceInit (const routing_t *routes, const actorSizeEnum_t 
 	p->cell[1] = y;
 	p->cell[2] = z;
 	const int relCeiling = routes[actorSize - 1].getCeiling(p->cell);
-	p->floor = RT_FLOOR(routes, actorSize, x, y, z) + z * CELL_HEIGHT;
+	p->floor = RT_getFloor(routes, actorSize, x, y, z) + z * CELL_HEIGHT;
 	p->ceiling = relCeiling + z * CELL_HEIGHT;
 	p->floorZ = std::max(0, p->floor / CELL_HEIGHT) ;
 	p->usable = (relCeiling && p->floor > -1 && p->ceiling - p->floor >= PATHFINDING_MIN_OPENING) ? true : false;
@@ -261,7 +261,7 @@ void RT_DumpWholeMap (mapTiles_t *mapTiles, const routing_t *routes)
  */
 bool RT_CanActorStandHere (const routing_t *routes, const int actorSize, const pos3_t pos)
 {
-	if (RT_getCeiling(routes, actorSize, pos) - RT_FLOOR_POS(routes, actorSize, pos) >= PLAYER_STANDING_HEIGHT / QUANT)
+	if (RT_getCeiling(routes, actorSize, pos) - RT_getFloor(routes, actorSize, pos) >= PLAYER_STANDING_HEIGHT / QUANT)
 		return true;
 	else
 		return false;
@@ -454,7 +454,7 @@ int RT_CheckCell (mapTiles_t *mapTiles, routing_t *routes, const int actorSize, 
 			/* Mark all cells to the model base as filled. */
 			for (i = z; i >= 0 ; i--) {
 				/* no floor in this cell, it is bottomless! */
-				RT_FLOOR(routes, actorSize, x, y, i) = -1 - i * CELL_HEIGHT; /* There is no floor in this cell, place it at -1 below the model. */
+				RT_setFloor(routes, actorSize, x, y, i, -1 - i * CELL_HEIGHT); /* There is no floor in this cell, place it at -1 below the model. */
 				RT_setCeiling(routes, actorSize, x, y, i, 0); /* There is no ceiling, the true indicator of a filled cell. */
 			}
 			/* return 0 to indicate we just scanned the model bottom. */
@@ -489,8 +489,8 @@ int RT_CheckCell (mapTiles_t *mapTiles, routing_t *routes, const int actorSize, 
 				/* Mark all cells to the model base as filled. */
 				for (i = z; i >= 0 ; i--) {
 					/* no floor in this cell, it is bottomless! */
-					RT_FLOOR(routes, actorSize, x, y, i) = CELL_HEIGHT; /* There is no floor in this cell. */
-					RT_setCeiling(routes, actorSize, x, y, i, 0);		/* There is no ceiling, the true indicator of a filled cell. */
+					RT_setFloor(routes, actorSize, x, y, i, CELL_HEIGHT);	/* There is no floor in this cell. */
+					RT_setCeiling(routes, actorSize, x, y, i, 0);			/* There is no ceiling, the true indicator of a filled cell. */
 				}
 				/* return 0 to indicate we just scanned the model bottom. */
 				return 0;
@@ -517,8 +517,8 @@ int RT_CheckCell (mapTiles_t *mapTiles, routing_t *routes, const int actorSize, 
 				/* Mark all cells to the model base as filled. */
 				for (i = z; i >= 0 ; i--) {
 					/* no floor in this cell, it is bottomless! */
-					RT_FLOOR(routes, actorSize, x, y, i) = CELL_HEIGHT; /* There is no floor in this cell. */
-					RT_setCeiling(routes, actorSize, x, y, i, 0);		/* There is no ceiling, the true indicator of a filled cell. */
+					RT_setFloor(routes, actorSize, x, y, i, CELL_HEIGHT);	/* There is no floor in this cell. */
+					RT_setCeiling(routes, actorSize, x, y, i, 0);			/* There is no ceiling, the true indicator of a filled cell. */
 				}
 				/* return 0 to indicate we just scanned the model bottom. */
 				return 0;
@@ -548,7 +548,7 @@ int RT_CheckCell (mapTiles_t *mapTiles, routing_t *routes, const int actorSize, 
 		 * ceiling if it is lower than our found ceiling.
 		 */
 		if (tr.endpos[2] > (z + 1) * UNIT_HEIGHT) {
-			const float topf = (z + 1) * UNIT_HEIGHT + QuantToModel(RT_FLOOR(routes, actorSize, x, y, z + 1) - 1);
+			const float topf = (z + 1) * UNIT_HEIGHT + QuantToModel(RT_getFloor(routes, actorSize, x, y, z + 1) - 1);
 			top = std::min(tr.endpos[2], topf);
 		}
 
@@ -577,15 +577,15 @@ int RT_CheckCell (mapTiles_t *mapTiles, routing_t *routes, const int actorSize, 
 	/* Last, update the floors and ceilings of cells from (x, y, fz) to (x, y, cz) */
 	for (i = fz; i <= cz; i++) {
 		/* Round up floor to keep feet out of model. */
-		RT_FLOOR(routes, actorSize, x, y, i) = bottomQ - i * CELL_HEIGHT;
+		RT_setFloor(routes, actorSize, x, y, i, bottomQ - i * CELL_HEIGHT);
 		/* Round down ceiling to heep head out of model.  Also offset by floor and max at 255. */
 		RT_setCeiling(routes, actorSize, x, y, i, topQ - i * CELL_HEIGHT);
 	}
 
 	/* Also, update the floors of any filled cells immediately above the ceiling up to our original cell. */
 	for (i = cz + 1; i <= z; i++) {
-		RT_FLOOR(routes, actorSize, x, y, i) = CELL_HEIGHT; /* There is no floor in this cell. */
-		RT_setCeiling(routes, actorSize, x, y, i, 0);		/* There is no ceiling, the true indicator of a filled cell. */
+		RT_setFloor(routes, actorSize, x, y, i, CELL_HEIGHT);	/* There is no floor in this cell. */
+		RT_setCeiling(routes, actorSize, x, y, i, 0);			/* There is no ceiling, the true indicator of a filled cell. */
 	}
 
 	/* Return the lowest z coordinate that we updated floors for. */
@@ -666,7 +666,7 @@ static int RT_FillPassageData (RT_data_t *rtd, const int dir, const int  x, cons
 	 * Return the highest z coordinate scanned- cz if fz==cz, z==cz, or the floor in cz is negative.
 	 * Otherwise cz - 1 to recheck cz in case there is a floor in cz with its own ceiling.
 	 */
-	if (fz == cz || z == cz || RT_FLOOR(rtd->routes, rtd->actorSize, x, y, cz) < 0)
+	if (fz == cz || z == cz || RT_getFloor(rtd->routes, rtd->actorSize, x, y, cz) < 0)
 		return cz;
 	return cz - 1;
 }
@@ -831,10 +831,10 @@ static int RT_CalcNewZ (const RT_data_t *rtd, const int ax, const int ay, const 
 
 	temp_z = floor((hi - 1) / CELL_HEIGHT);
 	temp_z = std::min(temp_z, PATHFINDING_HEIGHT - 1);
-	adj_lo = RT_FLOOR(rtd->routes, rtd->actorSize, ax, ay, temp_z) + temp_z * CELL_HEIGHT;
+	adj_lo = RT_getFloor(rtd->routes, rtd->actorSize, ax, ay, temp_z) + temp_z * CELL_HEIGHT;
 	if (adj_lo > hi) {
 		temp_z--;
-		adj_lo = RT_FLOOR(rtd->routes, rtd->actorSize, ax, ay, temp_z) + temp_z * CELL_HEIGHT;
+		adj_lo = RT_getFloor(rtd->routes, rtd->actorSize, ax, ay, temp_z) + temp_z * CELL_HEIGHT;
 	}
 	/**
 	 * @note Return a value only if there is a floor for the adjacent cell.
@@ -1013,7 +1013,7 @@ static int RT_MicroTrace (RT_data_t *rtd, const place_t* from, const int ax, con
 
 	/* First prepare the two known end values. */
 	bases[0] = from->floor;
-	const int floorVal = RT_FLOOR(rtd->routes, rtd->actorSize, ax, ay, az);
+	const int floorVal = RT_getFloor(rtd->routes, rtd->actorSize, ax, ay, az);
 	bases[steps] = last_step = std::max(0, floorVal) + az * CELL_HEIGHT;
 
 	/* Initialize the starting vector */
@@ -1212,7 +1212,7 @@ static int RT_TraceOnePassage (RT_data_t *rtd, const place_t* from, const place_
 	 */
 	if (az != RT_NO_OPENING && opening->size >= PATHFINDING_MIN_OPENING - PATHFINDING_MIN_STEPUP) {
 		const int srcFloor = from->floor;
-		const int dstFloor = RT_FLOOR(rtd->routes, rtd->actorSize, ax, ay, az) + az * CELL_HEIGHT;
+		const int dstFloor = RT_getFloor(rtd->routes, rtd->actorSize, ax, ay, az) + az * CELL_HEIGHT;
 		/* if we already have enough headroom, try to skip microtracing */
 		if (opening->size < ACTOR_MAX_HEIGHT
 			|| abs(srcFloor - opening->base) > PATHFINDING_MIN_STEPUP
@@ -1363,8 +1363,8 @@ static int RT_UpdateConnection (RT_data_t *rtd, const int x, const int y, const 
 	const int absCeiling = ceiling + z * CELL_HEIGHT;
 	const int absAdjCeiling = adjCeiling + z * CELL_HEIGHT;
 	const int absExtAdjCeiling = (z < PATHFINDING_HEIGHT - 1) ? adjCeiling + (z + 1) * CELL_HEIGHT : absCeiling;
-	const int absFloor = RT_FLOOR(rtd->routes, rtd->actorSize, x, y, z) + z * CELL_HEIGHT;
-	const int absAdjFloor = RT_FLOOR(rtd->routes, rtd->actorSize, ax, ay, z) + z * CELL_HEIGHT;
+	const int absFloor = RT_getFloor(rtd->routes, rtd->actorSize, x, y, z) + z * CELL_HEIGHT;
+	const int absAdjFloor = RT_getFloor(rtd->routes, rtd->actorSize, ax, ay, z) + z * CELL_HEIGHT;
 	opening_t opening;	/** the opening between the two cells */
 	int new_z1, az = z;
 #if RT_IS_BIDIRECTIONAL == 1
@@ -1526,7 +1526,7 @@ void RT_WriteCSVFiles (const routing_t *routes, const char* baseFilename, const 
 				FS_Printf(&f, "z:%i  y:%i,", z ,y);
 				for (x = mins[0]; x <= maxs[0] - i + 1; x++) {
 					/* compare results */
-					FS_Printf(&f, "h:%i c:%i,", RT_FLOOR(routes, i, x, y, z), RT_getCeiling(routes, i, x, y, z));
+					FS_Printf(&f, "h:%i c:%i,", RT_getFloor(routes, i, x, y, z), RT_getCeiling(routes, i, x, y, z));
 				}
 				FS_Printf(&f, "\n");
 			}
@@ -1569,7 +1569,7 @@ void RT_WriteCSVFiles (const routing_t *routes, const char* baseFilename, const 
 					FS_Printf(&f, "%3i-%3i ", RT_CONN_NX(routes, i, x, y, z), RT_STEPUP_NX(routes, i, x, y, z));
 
 					/* Center - display floor height */
-					FS_Printf(&f, "_%+2i_ ", RT_FLOOR(routes, i, x, y, z));
+					FS_Printf(&f, "_%+2i_ ", RT_getFloor(routes, i, x, y, z));
 
 					/* E side */
 					FS_Printf(&f, "%3i-%3i ", RT_CONN_PX(routes, i, x, y, z), RT_STEPUP_PX(routes, i, x, y, z));
@@ -1634,7 +1634,7 @@ int RT_DebugSpecial (mapTiles_t *mapTiles, routing_t *routes, const int actorSiz
 void RT_DebugPathDisplay (routing_t *routes, actorSizeEnum_t actorSize, int x, int y, int z)
 {
 	Com_Printf("data at cursor XYZ(%i, %i, %i) Floor(%i) Ceiling(%i)\n", x, y, z,
-		RT_FLOOR(routes, actorSize, x, y, z),
+		RT_getFloor(routes, actorSize, x, y, z),
 		RT_getCeiling(routes, actorSize, x, y, z) );
 	Com_Printf("connections ortho: (PX=%i, NX=%i, PY=%i, NY=%i))\n",
 		RT_CONN_PX(routes, actorSize, x, y, z),		/* dir = 0 */
