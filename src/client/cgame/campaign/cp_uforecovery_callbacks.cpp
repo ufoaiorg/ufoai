@@ -573,7 +573,7 @@ static void US_DestroySoredUFO_f (void)
 	if (cgi->Cmd_Argc() < 3 || !atoi(cgi->Cmd_Argv(2))) {
 		char command[128];
 
-		Com_sprintf(command, sizeof(command), "ui_destroystoredufo %d 1;ui_pop; mn_installation_select %d;", ufo->idx, ufo->installation->idx);
+		Com_sprintf(command, sizeof(command), "ui_pop; ui_destroystoredufo %d 1; mn_installation_select %d;", ufo->idx, ufo->installation->idx);
 		cgi->UI_PopupButton(_("Destroy stored UFO"), _("Do you really want to destroy this stored UFO?"),
 			command, _("Destroy"), _("Destroy stored UFO"),
 			"ui_pop;", _("Cancel"), _("Forget it"),
