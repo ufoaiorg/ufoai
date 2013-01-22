@@ -653,13 +653,13 @@ static int RT_FillPassageData (RT_data_t *rtd, const int dir, const int  x, cons
 		/* The stepup is 0 for all cells that are not at the floor. */
 		RT_StepupSet(rtd, x, y, i, dir, 0);
 		if (debugTrace) {
-			Com_Printf("RT_CONN for (%i, %i, %i) as:%i dir:%i = %i\n", x, y, i, rtd->actorSize, dir, RT_getConn(rtd->routes, rtd->actorSize, x, y, i, dir));
+			Com_Printf("RT_getConn for (%i, %i, %i) as:%i dir:%i = %i\n", x, y, i, rtd->actorSize, dir, RT_getConn(rtd->routes, rtd->actorSize, x, y, i, dir));
 		}
 	}
 
 	RT_StepupSet(rtd, x, y, z, dir, stepup);
 	if (debugTrace) {
-		Com_Printf("Final RT_STEPUP for (%i, %i, %i) as:%i dir:%i = %i\n", x, y, z, rtd->actorSize, dir, stepup);
+		Com_Printf("Final STEPUP for (%i, %i, %i) as:%i dir:%i = %i\n", x, y, z, rtd->actorSize, dir, stepup);
 	}
 
 	/*
@@ -1411,7 +1411,7 @@ static int RT_UpdateConnection (RT_data_t *rtd, const int x, const int y, const 
 	/** Find an opening. */
 	RT_TracePassage(rtd, x, y, z, ax, ay, &opening);
 	if (debugTrace) {
-		Com_Printf("Final RT_STEPUP for (%i, %i, %i) as:%i dir:%i = %i\n", x, y, z, rtd->actorSize, dir, opening.stepup);
+		Com_Printf("Final STEPUP for (%i, %i, %i) as:%i dir:%i = %i\n", x, y, z, rtd->actorSize, dir, opening.stepup);
 	}
 	/** Apply the data to the routing table.
 	 * We always call the fill function.  If the passage cannot be traveled, the
