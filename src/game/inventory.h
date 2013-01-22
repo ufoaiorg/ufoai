@@ -69,9 +69,9 @@ public:
 
 	void EquipActor (character_t* const chr, const equipDef_t *ed, int maxWeight);
 
-	void EquipActorMelee (inventoryInterface_t* self, inventory_t* const inv, const teamDef_t* td);
+	void EquipActorMelee (inventory_t* const inv, const teamDef_t* td);
 
-	void EquipActorRobot (inventoryInterface_t* self, inventory_t* const inv, const objDef_t* weapon);
+	void EquipActorRobot (inventory_t* const inv, const objDef_t* weapon);
 
 	int GetUsedSlots ();
 

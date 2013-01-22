@@ -379,12 +379,12 @@ static void GAME_EquipActor (character_t* const chr, const equipDef_t *ed, int m
 
 static void GAME_EquipActorMelee (inventory_t* const inv, const teamDef_t* td)
 {
-	cls.i.EquipActorMelee(&cls.i, inv, td);
+	cls.i.EquipActorMelee(inv, td);
 }
 
 static void GAME_EquipActorRobot (inventory_t* const inv, const objDef_t* weapon)
 {
-	cls.i.EquipActorRobot(&cls.i, inv, weapon);
+	cls.i.EquipActorRobot(inv, weapon);
 }
 
 static bool GAME_RemoveFromInventory (inventory_t* const i, const invDef_t *container, invList_t *fItem)

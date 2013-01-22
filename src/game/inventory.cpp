@@ -704,7 +704,7 @@ int InventoryInterface::PackAmmoAndWeapon (character_t* const chr, const objDef_
  * @param[in] td Pointer to a team definition.
  * @note Weapons assigned here cannot be collected in any case. These are dummy "actor weapons".
  */
-void InventoryInterface::EquipActorMelee (inventoryInterface_t *self, inventory_t* const inv, const teamDef_t* td)
+void InventoryInterface::EquipActorMelee (inventory_t* const inv, const teamDef_t* td)
 {
 	const objDef_t *obj;
 	item_t item;
@@ -721,8 +721,8 @@ void InventoryInterface::EquipActorMelee (inventoryInterface_t *self, inventory_
 	/* Every melee actor weapon definition is firetwohanded, add to right hand. */
 	if (!obj->fireTwoHanded)
 		Sys_Error("INVSH_EquipActorMelee: melee weapon %s for team %s is not firetwohanded! (%s)",
-				obj->id, td->id, self->invName);
-	self->TryAddToInventory(inv, &item, &self->csi->ids[self->csi->idRight]);
+				obj->id, td->id, invName);
+	TryAddToInventory(inv, &item, &this->csi->ids[this->csi->idRight]);
 }
 
 /**
@@ -731,7 +731,7 @@ void InventoryInterface::EquipActorMelee (inventoryInterface_t *self, inventory_
  * @param[in] inv The inventory that will get the weapon.
  * @param[in] weapon Pointer to the item which being added to robot's inventory.
  */
-void InventoryInterface::EquipActorRobot (inventoryInterface_t *self, inventory_t* const inv, const objDef_t* weapon)
+void InventoryInterface::EquipActorRobot (inventory_t* const inv, const objDef_t* weapon)
 {
 	item_t item;
 
@@ -746,7 +746,7 @@ void InventoryInterface::EquipActorRobot (inventoryInterface_t *self, inventory_
 	assert(weapon->ammos[0]);
 	item.ammo = weapon->ammos[0];
 
-	self->TryAddToInventory(inv, &item, &self->csi->ids[self->csi->idRight]);
+	TryAddToInventory(inv, &item, &this->csi->ids[this->csi->idRight]);
 }
 
 /**
