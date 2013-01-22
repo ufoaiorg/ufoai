@@ -282,6 +282,70 @@ void UI_DrawPanel (const vec2_t pos, const vec2_t size, const char *texture, int
 }
 
 /**
+ * @brief draw a panel from a texture as we can see on the image
+ * @image html http://ufoai.org/wiki/images/Inline_draw_panel.png
+ * @param[in] pos Position of the output panel
+ * @param[in] size Size of the output panel
+ * @param[in] texture Texture contain the template of the panel
+ * @param[in] texX Position x of the panel template into the texture
+ * @param[in] texY Position y of the panel template into the texture
+ * @param[in] border Size of unscalable border
+ * From the first to the last: left width, mid width, right width,
+ * top height, mid height, bottom height, and margin
+ * @todo can we improve the code? is it need?
+ */
+void UI_DrawBorderedPanel (const vec2_t pos, const vec2_t size, const char *texture, int texX, int texY, int texW, int texH, int border)
+{
+	const image_t *image = UI_LoadImage(texture);
+	if (!image)
+		return;
+
+	const int leftWidth = border;
+	const int midWidth = texW - 2 * border;
+	const int rightWidth = border;
+	const int topHeight = border;
+	const int midHeight = texH - 2 * border;
+	const int bottomHeight = border;
+	const int marge = 0;
+
+	const int firstPos = texX;
+	const int secondPos = firstPos + leftWidth + marge;
+	const int thirdPos = secondPos + midWidth + marge;
+	const int firstPosY = texY;
+	const int secondPosY = firstPosY + topHeight + marge;
+	const int thirdPosY = secondPosY + midHeight + marge;
+
+	int y, h;
+
+	/* draw top (from left to right) */
+	UI_DrawNormImage(false, pos[0], pos[1], leftWidth, topHeight, firstPos + leftWidth, firstPosY + topHeight,
+		firstPos, firstPosY, image);
+	UI_DrawNormImage(false, pos[0] + leftWidth, pos[1], size[0] - leftWidth - rightWidth, topHeight, secondPos + midWidth, firstPosY + topHeight,
+		secondPos, firstPosY, image);
+	UI_DrawNormImage(false, pos[0] + size[0] - rightWidth, pos[1], rightWidth, topHeight, thirdPos + rightWidth, firstPosY + topHeight,
+		thirdPos, firstPosY, image);
+
+	/* draw middle (from left to right) */
+	y = pos[1] + topHeight;
+	h = size[1] - topHeight - bottomHeight; /* height of middle */
+	UI_DrawNormImage(false, pos[0], y, leftWidth, h, firstPos + leftWidth, secondPosY + midHeight,
+		firstPos, secondPosY, image);
+	UI_DrawNormImage(false, pos[0] + leftWidth, y, size[0] - leftWidth - rightWidth, h, secondPos + midWidth, secondPosY + midHeight,
+		secondPos, secondPosY, image);
+	UI_DrawNormImage(false, pos[0] + size[0] - rightWidth, y, rightWidth, h, thirdPos + rightWidth, secondPosY + midHeight,
+		thirdPos, secondPosY, image);
+
+	/* draw bottom (from left to right) */
+	y = pos[1] + size[1] - bottomHeight;
+	UI_DrawNormImage(false, pos[0], y, leftWidth, bottomHeight, firstPos + leftWidth, thirdPosY + bottomHeight,
+		firstPos, thirdPosY, image);
+	UI_DrawNormImage(false, pos[0] + leftWidth, y, size[0] - leftWidth - rightWidth, bottomHeight, secondPos + midWidth, thirdPosY + bottomHeight,
+		secondPos, thirdPosY, image);
+	UI_DrawNormImage(false, pos[0] + size[0] - bottomHeight, y, rightWidth, bottomHeight, thirdPos + rightWidth, thirdPosY + bottomHeight,
+		thirdPos, thirdPosY, image);
+}
+
+/**
  * @brief draw a line into a bounding box
  * @param[in] fontID the font id (defined in ufos/fonts.ufo)
  * @param[in] align Align of the text into the bounding box

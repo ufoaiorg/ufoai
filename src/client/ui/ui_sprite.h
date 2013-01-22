@@ -48,6 +48,7 @@ struct uiSprite_t {
 	bool tiled_17_1_3;
 	bool tiled_25_1_3;
 	bool tiled_popup;
+	int border;
 
 	vec4_t color[SPRITE_STATUS_MAX];
 	char* image[SPRITE_STATUS_MAX];
