@@ -36,6 +36,7 @@ const value_t ui_spriteProperties[] = {
 	{"tiled_17_1_3", V_BOOL, offsetof(uiSprite_t, tiled_17_1_3), 0},
 	{"tiled_25_1_3", V_BOOL, offsetof(uiSprite_t, tiled_25_1_3), 0},
 	{"tiled_popup", V_BOOL, offsetof(uiSprite_t, tiled_popup), 0},
+	{"border", V_INT, offsetof(uiSprite_t, border), MEMBER_SIZEOF(uiSprite_t, border)},
 
 	{"texl", V_POS, offsetof(uiSprite_t, pos[SPRITE_STATUS_NORMAL]), MEMBER_SIZEOF(uiSprite_t, pos[SPRITE_STATUS_NORMAL])},
 	{"hoveredtexl", V_POS, offsetof(uiSprite_t, pos[SPRITE_STATUS_HOVER]), MEMBER_SIZEOF(uiSprite_t, pos[SPRITE_STATUS_HOVER])},
@@ -241,6 +242,10 @@ void UI_DrawSpriteInBox (bool flip, const uiSprite_t* sprite, uiSpriteStatus_t s
 		vec2_t pos = {posX, posY};
 		vec2_t size = {sizeX, sizeY};
 		UI_DrawPanel(pos, size, image, texX, texY, tile_template_popup);
+	} else if (sprite->border != 0) {
+		vec2_t pos = {posX, posY};
+		vec2_t size = {sizeX, sizeY};
+		UI_DrawBorderedPanel(pos, size, image, texX, texY, sprite->size[0], sprite->size[1], sprite->border);
 	} else {
 		posX += (sizeX - sprite->size[0]) / 2;
 		posY += (sizeY - sprite->size[1]) / 2;
