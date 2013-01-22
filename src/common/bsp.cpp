@@ -566,7 +566,7 @@ static void CMod_LoadRouting (MapTile &tile, mapData_t *mapData, const byte *bas
 					mapData->routes[size].setFloor(x, y, z, tempMap[size].getFloor(x - sX, y - sY, z - sZ));
 					mapData->routes[size].setCeiling(x, y, z, tempMap[size].getCeiling(x - sX, y - sY, z - sZ));
 					for (dir = 0; dir < CORE_DIRECTIONS; dir++) {
-						mapData->routes[size].route[z][y][x][dir] = tempMap[size].route[z - sZ][y - sY][x - sX][dir];
+						mapData->routes[size].setConn(x, y, z, dir, tempMap[size].getConn(x - sX, y - sY, z - sZ, dir));
 						mapData->routes[size].setStepup(x, y, z, dir, tempMap[size].getStepup(x - sX, y - sY, z - sZ, dir));
 					}
 				}

@@ -74,7 +74,7 @@ typedef struct RT_data_s {
 
 static inline void RT_ConnSet (RT_data_t *rtd, const int x, const int y, const int z, const int dir, const int val)
 {
-	RT_CONN(rtd->routes, rtd->actorSize, x, y, z, dir) = val;
+	RT_setConn(rtd->routes, rtd->actorSize, x, y, z, dir, val);
 }
 
 static inline void RT_StepupSet (RT_data_t *rtd, const int x, const int y, const int z, const int dir, const int val)
@@ -653,7 +653,7 @@ static int RT_FillPassageData (RT_data_t *rtd, const int dir, const int  x, cons
 		/* The stepup is 0 for all cells that are not at the floor. */
 		RT_StepupSet(rtd, x, y, i, dir, 0);
 		if (debugTrace) {
-			Com_Printf("RT_CONN for (%i, %i, %i) as:%i dir:%i = %i\n", x, y, i, rtd->actorSize, dir, RT_CONN(rtd->routes, rtd->actorSize, x, y, i, dir));
+			Com_Printf("RT_CONN for (%i, %i, %i) as:%i dir:%i = %i\n", x, y, i, rtd->actorSize, dir, RT_getConn(rtd->routes, rtd->actorSize, x, y, i, dir));
 		}
 	}
 

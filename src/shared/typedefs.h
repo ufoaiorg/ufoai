@@ -185,7 +185,7 @@ public:
  */
 typedef struct routing_s {
 	byte _stepup[PATHFINDING_HEIGHT][PATHFINDING_WIDTH][PATHFINDING_WIDTH][CORE_DIRECTIONS];
-	byte route[PATHFINDING_HEIGHT][PATHFINDING_WIDTH][PATHFINDING_WIDTH][CORE_DIRECTIONS];
+	byte _route[PATHFINDING_HEIGHT][PATHFINDING_WIDTH][PATHFINDING_WIDTH][CORE_DIRECTIONS];
 	signed char _floor[PATHFINDING_HEIGHT][PATHFINDING_WIDTH][PATHFINDING_WIDTH];
 	byte _ceil[PATHFINDING_HEIGHT][PATHFINDING_WIDTH][PATHFINDING_WIDTH];
 
@@ -195,6 +195,14 @@ typedef struct routing_s {
 	inline byte getStepup (const int x, const int y, const int z, const int dir) const {
 		return _stepup[z][y][x][dir];
 	}
+
+	inline void setConn (const int x, const int y, const int z, const int dir, const int val) {
+		_route[z][y][x][dir] = val;
+	}
+	inline byte getConn (const int x, const int y, const int z, const int dir) const {
+		return _route[z][y][x][dir];
+	}
+
 	inline void setCeiling (const int x, const int y, const int z, const int val) {
 		_ceil[z][y][x] = val;
 	}
@@ -223,6 +231,19 @@ inline void RT_setStepup (routing_t *routes, const int actorSize, const int x, c
 inline byte RT_getStepup (const routing_t *routes, const int actorSize, const int x, const int y, const int z, const int dir)
 {
 	return routes[actorSize - 1].getStepup(x, y, z, dir);
+}
+
+inline void RT_setConn (routing_t *routes, const int actorSize, const int x, const int y, const int z, const int dir, const int val)
+{
+	routes[actorSize - 1].setConn(x, y, z, dir, val);
+}
+inline byte RT_getConn (const routing_t *routes, const int actorSize, const int x, const int y, const int z, const int dir)
+{
+	return routes[actorSize - 1].getConn(x, y, z, dir);
+}
+inline byte RT_getConn (const routing_t *routes, const int actorSize, const pos3_t pos, const int dir)
+{
+	return routes[actorSize - 1].getConn(pos[0], pos[1], pos[2], dir);
 }
 
 inline void RT_setCeiling (routing_t *routes, const int actorSize, const int x, const int y, const int z, const int val)
