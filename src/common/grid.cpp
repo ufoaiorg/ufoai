@@ -265,7 +265,7 @@ bool Step::checkWalkingDirections (const pathing_t *path)
 	int passageHeight;
 	/** @todo falling_height should be replaced with an arbitrary max falling height based on the actor. */
 	const int fallingHeight = PATHFINDING_MAX_FALL;/**<This is the maximum height that an actor can fall. */
-	const int stepup = RT_STEPUP_POS(routes, actorSize, fromPos, dir); /**< The stepup needed to get to/through the passage */
+	const int stepup = RT_getStepup(routes, actorSize, fromPos[0], fromPos[1], fromPos[2], dir); /**< The stepup needed to get to/through the passage */
 	const int stepupHeight = stepup & ~(PATHFINDING_BIG_STEPDOWN | PATHFINDING_BIG_STEPUP); /**< The actual stepup height without the level flags */
 	int heightChange;
 	/** @todo actor_stepup_height should be replaced with an arbitrary max stepup height based on the actor. */
@@ -353,7 +353,7 @@ bool Step::checkWalkingDirections (const pathing_t *path)
 		 * not be able to use the opening.
 		 */
 	} else if ((stepup & PATHFINDING_BIG_STEPDOWN) && toPos[2] > 0
-		&& actorStepupHeight >= (RT_STEPUP(routes, actorSize, nx, ny, nz - 1, dir ^ 1) & ~(PATHFINDING_BIG_STEPDOWN | PATHFINDING_BIG_STEPUP))) {
+		&& actorStepupHeight >= (RT_getStepup(routes, actorSize, nx, ny, nz - 1, dir ^ 1) & ~(PATHFINDING_BIG_STEPDOWN | PATHFINDING_BIG_STEPUP))) {
 		toPos[2]--;		/* Stepping down into lower cell. */
 	}
 
@@ -830,7 +830,7 @@ pos_t Grid_StepUp (const routing_t *routes, const actorSizeEnum_t actorSize, con
 	if (pos[2] >= PATHFINDING_HEIGHT) {
 		Com_Printf("Grid_StepUp: Warning: z level is bigger than 7: %i\n", pos[2]);
 	}
-	return QuantToModel(RT_STEPUP(routes, actorSize, pos[0], pos[1], pos[2] & (PATHFINDING_HEIGHT - 1), dir));
+	return QuantToModel(RT_getStepup(routes, actorSize, pos[0], pos[1], pos[2] & (PATHFINDING_HEIGHT - 1), dir));
 }
 
 
