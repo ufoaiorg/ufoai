@@ -1102,7 +1102,8 @@ static aiAction_t AI_PrepBestAction (const Player *player, edict_t *ent)
 		G_ClientStateChange(player, ent, STATE_CROUCHED, true);
 
 	/* do the move */
-	G_ClientMove(player, 0, ent, bestAia.to);
+	while (!G_IsDead(ent) && !G_EdictPosIsSameAs(ent, bestAia.to))
+		G_ClientMove(player, 0, ent, bestAia.to);
 
 	/* test for possible death during move. reset bestAia due to dead status */
 	if (G_IsDead(ent))
