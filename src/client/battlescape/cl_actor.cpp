@@ -2260,7 +2260,7 @@ static void CL_DebugPath_f (void)
 	if (IN_GetMouseSpace() != MS_WORLD)
 		return;
 
-	RT_DebugSpecial(cl.mapTiles, cl.mapData->routing.routes, actorSize, x, y, dir, cl.leInlineModelList);
+	RT_DebugSpecial(cl.mapTiles, cl.mapData->routing, actorSize, x, y, dir, cl.leInlineModelList);
 
 #if 0
 	bool found = Grid_FindPath(cl.mapData->routing.routes, actorSize, &cl.pathMap, selActor->pos, mousePos, 0, 600, NULL, NULL);
@@ -2274,7 +2274,7 @@ static void CL_DebugPath_f (void)
 	}
 #endif
 
-	RT_DebugPathDisplay(cl.mapData->routing.routes, actorSize, x, y, z);
+	RT_DebugPathDisplay(cl.mapData->routing, actorSize, x, y, z);
 
 }
 #endif

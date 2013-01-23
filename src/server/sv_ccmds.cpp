@@ -520,10 +520,7 @@ static void SV_PrintConfigStrings_f (void)
  */
 static void Grid_DumpWholeServerMap_f (void)
 {
-	int i;
-
-	for (i = 0; i < ACTOR_MAX_SIZE; i++)
-		RT_DumpWholeMap(&sv->mapTiles, &sv->mapData.routing.routes[i]);
+	RT_DumpWholeMap(&sv->mapTiles, sv->mapData.routing);
 }
 
 /**

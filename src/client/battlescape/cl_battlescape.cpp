@@ -341,10 +341,7 @@ int CL_CountVisibleEnemies (void)
  */
 void Grid_DumpWholeClientMap_f (void)
 {
-	int i;
-
-	for (i = 0; i < ACTOR_MAX_SIZE; i++)
-		RT_DumpWholeMap(cl.mapTiles, &(cl.mapData->routing.routes[i]));
+	RT_DumpWholeMap(cl.mapTiles, cl.mapData->routing);
 }
 
 /**

@@ -199,7 +199,7 @@ static void RT_DumpMap (const routing_t *routes, actorSizeEnum_t actorSize, int 
  * @brief Dumps contents of the entire client map to console for inspection.
  * @param[in] map A pointer to the map being dumped
  */
-void RT_DumpWholeMap (mapTiles_t *mapTiles, const routing_t *routes)
+void RT_DumpWholeMap (mapTiles_t *mapTiles, const Routing &routing)
 {
 	AABB box;
 	vec3_t normal, origin;
@@ -252,7 +252,7 @@ void RT_DumpWholeMap (mapTiles_t *mapTiles, const routing_t *routes)
 	}
 
 	/* Dump the client map */
-	RT_DumpMap(routes, 0, start[0], start[1], start[2], end[0], end[1], end[2]);
+	RT_DumpMap(routing.routes, 0, start[0], start[1], start[2], end[0], end[1], end[2]);
 }
 #endif
 
@@ -1608,7 +1608,7 @@ void RT_WriteCSVFiles (const Routing &routing, const char* baseFilename, const i
  * @param[in] dir The direction to test for a connection through
  * @param[in] list The local models list (a local model has a name starting with * followed by the model number)
  */
-int RT_DebugSpecial (mapTiles_t *mapTiles, routing_t *routes, const int actorSize, const int x, const int y, const int dir, const char **list)
+int RT_DebugSpecial (mapTiles_t *mapTiles, Routing &routing, const int actorSize, const int x, const int y, const int dir, const char **list)
 {
 	int z = 0; /**< The current z value that we are testing. */
 	int new_z; /**< The last z value processed by the tracing function.  */
@@ -1620,7 +1620,7 @@ int RT_DebugSpecial (mapTiles_t *mapTiles, routing_t *routes, const int actorSiz
 
 	/* build the param list passed to most of the RT_* functions */
 	rtd.mapTiles = mapTiles;
-	rtd.routes = routes;
+	rtd.routes = routing.routes;
 	rtd.actorSize = actorSize;
 	rtd.list = list;
 
@@ -1633,8 +1633,9 @@ int RT_DebugSpecial (mapTiles_t *mapTiles, routing_t *routes, const int actorSiz
  * directly use the debugger on some vital pathfinding functions.
  * Will probably be removed for the release.
  */
-void RT_DebugPathDisplay (routing_t *routes, actorSizeEnum_t actorSize, int x, int y, int z)
+void RT_DebugPathDisplay (Routing &routing, actorSizeEnum_t actorSize, int x, int y, int z)
 {
+	routing_t* routes = routing.routes;
 	Com_Printf("data at cursor XYZ(%i, %i, %i) Floor(%i) Ceiling(%i)\n", x, y, z,
 		RT_getFloor(routes, actorSize, x, y, z),
 		RT_getCeiling(routes, actorSize, x, y, z) );
