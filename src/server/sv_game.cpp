@@ -504,7 +504,7 @@ static pos_t SV_GridFall (const int actorSize, const pos3_t pos)
 
 static void SV_RecalcRouting (const char *name, const GridBox& box, const char **list)
 {
-	Grid_RecalcRouting(&sv->mapTiles, sv->mapData.routing.routes, name, box, list);
+	Grid_RecalcRouting(&sv->mapTiles, sv->mapData.routing, name, box, list);
 }
 
 static void SV_GridPosToVec (const int actorSize, const pos3_t pos, vec3_t vec)

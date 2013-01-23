@@ -945,7 +945,7 @@ void Grid_PosToVec (const routing_t *routes, const actorSizeEnum_t actorSize, co
  * @param[in] box The box to recalc routing for
  * @param[in] list The local models list (a local model has a name starting with * followed by the model number)
  */
-void Grid_RecalcBoxRouting (mapTiles_t *mapTiles, routing_t *routes, const GridBox &box, const char **list)
+void Grid_RecalcBoxRouting (mapTiles_t *mapTiles, Routing &routing, const GridBox &box, const char **list)
 {
 	int x, y, z, actorSize, dir;
 
@@ -958,7 +958,7 @@ void Grid_RecalcBoxRouting (mapTiles_t *mapTiles, routing_t *routes, const GridB
 			for (x = rBox.mins[0]; x <= rBox.maxs[0]; x++) {
 				/** @note RT_CheckCell goes from top (7) to bottom (0) */
 				for (z = box.maxs[2]; z >= 0; z--) {
-					const int newZ = RT_CheckCell(mapTiles, routes, actorSize, x, y, z, list);
+					const int newZ = RT_CheckCell(mapTiles, routing.routes, actorSize, x, y, z, list);
 					assert(newZ <= z);
 					z = newZ;
 				}
@@ -1000,7 +1000,7 @@ void Grid_RecalcBoxRouting (mapTiles_t *mapTiles, routing_t *routes, const GridB
 						if (y < box.mins[1] - 1 && dir != 2 && dir != 4 && dir != 6)
 							continue;
 					}
-					RT_UpdateConnectionColumn(mapTiles, routes, actorSize, x, y, dir, list);
+					RT_UpdateConnectionColumn(mapTiles, routing, actorSize, x, y, dir, list);
 				}
 			}
 		}
@@ -1021,7 +1021,7 @@ void Grid_RecalcBoxRouting (mapTiles_t *mapTiles, routing_t *routes, const GridB
  * @param[in] box The box around the inline model (alternative to name)
  * @param[in] list The local models list (a local model has a name starting with * followed by the model number)
  */
-void Grid_RecalcRouting (mapTiles_t *mapTiles, routing_t *routes, const char *name, const GridBox &box, const char **list)
+void Grid_RecalcRouting (mapTiles_t *mapTiles, Routing &routing, const char *name, const GridBox &box, const char **list)
 {
 	pos3_t min, max;
 	double start, end;
@@ -1085,10 +1085,10 @@ void Grid_RecalcRouting (mapTiles_t *mapTiles, routing_t *routes, const char *na
 
 		/* We now have the dimensions, call the generic rerouting function. */
 		GridBox rerouteBox(min, max);
-		Grid_RecalcBoxRouting(mapTiles, routes, rerouteBox, list);
+		Grid_RecalcBoxRouting(mapTiles, routing, rerouteBox, list);
 	} else
 		/* use the passed box */
-		Grid_RecalcBoxRouting(mapTiles, routes, box, list);
+		Grid_RecalcBoxRouting(mapTiles, routing, box, list);
 
 	end = time(NULL);
 	Com_DPrintf(DEBUG_ROUTING, "Retracing for model %s between (%i, %i, %i) and (%i, %i %i) in %5.1fs\n",

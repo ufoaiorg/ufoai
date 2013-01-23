@@ -79,7 +79,7 @@ static void CL_GridRecalcRouting (const le_t *le)
 
 	Com_DPrintf(DEBUG_ROUTING, "Rerouting le %i client side\n", le->entnum);
 
-	Grid_RecalcRouting(cl.mapTiles, cl.mapData->routing.routes, le->inlineModelName, reroute, cl.leInlineModelList);
+	Grid_RecalcRouting(cl.mapTiles, cl.mapData->routing, le->inlineModelName, reroute, cl.leInlineModelList);
 }
 
 /**

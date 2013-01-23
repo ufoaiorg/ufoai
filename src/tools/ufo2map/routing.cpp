@@ -100,7 +100,7 @@ static void CheckConnectionsThread (unsigned int unitnum)
 
 	Verb_Printf(VERB_EXTRA, "%i %i %i %i (%i, %i, %i) (%i, %i, %i)\n", x, y, dir, actorSize, wpMins[0], wpMins[1], wpMins[2], wpMaxs[0], wpMaxs[1], wpMaxs[2]);
 
-	RT_UpdateConnectionColumn(&mapTiles, Nmap.routes, actorSize + 1, x, y, dir, NULL);
+	RT_UpdateConnectionColumn(&mapTiles, Nmap, actorSize + 1, x, y, dir, NULL);
 
 	/* Com_Printf("z:%i nz:%i\n", z, new_z); */
 }

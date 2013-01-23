@@ -42,8 +42,8 @@ typedef struct pathing_s {
 GRID ORIENTED MOVEMENT AND SCANNING
 ==========================================================*/
 
-void Grid_RecalcRouting(mapTiles_t *mapTiles, routing_t *routes, const char *name, const GridBox &box, const char **list);
-void Grid_RecalcBoxRouting(mapTiles_t *mapTiles, routing_t *routes, const GridBox &box, const char **list);
+void Grid_RecalcRouting(mapTiles_t *mapTiles, Routing &routing, const char *name, const GridBox &box, const char **list);
+void Grid_RecalcBoxRouting(mapTiles_t *mapTiles, Routing &routing, const GridBox &box, const char **list);
 void Grid_CalcPathing(const routing_t *routes, const actorSizeEnum_t actorSize, pathing_t *path, const pos3_t from, int distance, byte ** fb_list, int fb_length);
 bool Grid_FindPath(const routing_t *routes, const actorSizeEnum_t actorSize, pathing_t *path, const pos3_t from, const pos3_t targetPos, byte crouchingState, int maxTUs, byte ** fb_list, int fb_length);
 void Grid_MoveStore(pathing_t *path);
