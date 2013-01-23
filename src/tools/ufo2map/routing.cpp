@@ -29,8 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../common/routing.h"
 #include "levels.h"
 
-/** routing data structures */
-static routing_t Nmap[ACTOR_MAX_SIZE]; /**< A routing_t per size */
+static Routing Nmap;	/**< The routing tables */
 
 /** @brief world min and max values converted from vec to pos */
 static ipos3_t wpMins, wpMaxs;
@@ -57,7 +56,7 @@ static int CheckUnit (unsigned int unitnum)
 	}
 
 	/* Call the common CheckUnit function */
-	new_z = RT_CheckCell(&mapTiles, Nmap, actorSize + 1, x, y, z, NULL);
+	new_z = RT_CheckCell(&mapTiles, Nmap.routes, actorSize + 1, x, y, z, NULL);
 
 	/* new_z should never be above z. */
 	assert(new_z <= z);
@@ -101,7 +100,7 @@ static void CheckConnectionsThread (unsigned int unitnum)
 
 	Verb_Printf(VERB_EXTRA, "%i %i %i %i (%i, %i, %i) (%i, %i, %i)\n", x, y, dir, actorSize, wpMins[0], wpMins[1], wpMins[2], wpMaxs[0], wpMaxs[1], wpMaxs[2]);
 
-	RT_UpdateConnectionColumn(&mapTiles, Nmap, actorSize + 1, x, y, dir, NULL);
+	RT_UpdateConnectionColumn(&mapTiles, Nmap.routes, actorSize + 1, x, y, dir, NULL);
 
 	/* Com_Printf("z:%i nz:%i\n", z, new_z); */
 }
@@ -160,7 +159,7 @@ void DoRouting (void)
 		while (wpMaxs[j] > wpMins[j]) {
 			VectorSet(pos, wpMins[0], wpMins[1], wpMaxs[2]);
 			for (pos[i] = wpMins[i]; pos[i] <= wpMaxs[i]; pos[i]++) {	/* for all cells in an x or y row */
-				if (RT_getFloor(Nmap, 1, pos[0], pos[1], wpMaxs[2]) + wpMaxs[2] * CELL_HEIGHT != -1)	/* no floor ? */
+				if (RT_getFloor(Nmap.routes, 1, pos[0], pos[1], wpMaxs[2]) + wpMaxs[2] * CELL_HEIGHT != -1)	/* no floor ? */
 					break;
 			}
 			if (pos[i] <= wpMaxs[i])	/* found a floor before the end of the row ? */
@@ -171,7 +170,7 @@ void DoRouting (void)
 		while (wpMaxs[j] > wpMins[j]) {
 			VectorCopy(wpMaxs, pos);
 			for (pos[i] = wpMins[i]; pos[i] <= wpMaxs[i]; pos[i]++) {
-				if (RT_getFloor(Nmap, 1, pos[0], pos[1], wpMaxs[2]) + wpMaxs[2] * CELL_HEIGHT != -1)
+				if (RT_getFloor(Nmap.routes, 1, pos[0], pos[1], wpMaxs[2]) + wpMaxs[2] * CELL_HEIGHT != -1)
 					break;
 			}
 			if (pos[i] <= wpMaxs[i])
@@ -182,7 +181,7 @@ void DoRouting (void)
 
 	/* Output the floor trace file if set */
 	if (config.generateTraceFile) {
-		RT_WriteCSVFiles(Nmap, baseFilename, wpMins, wpMaxs);
+		RT_WriteCSVFiles(Nmap.routes, baseFilename, wpMins, wpMaxs);
 	}
 
 	/* store the data */
@@ -193,7 +192,7 @@ void DoRouting (void)
 	for (i = 0; i < 3; i++)
 		wpMaxs[i] = LittleLong(wpMaxs[i]);
 	data = CompressRouting((byte*)wpMaxs, data, sizeof(wpMaxs));
-	data = CompressRouting((byte*)Nmap, data, sizeof(Nmap));
+	data = CompressRouting((byte*)Nmap.routes, data, sizeof(Nmap));
 
 	curTile->routedatasize = data - curTile->routedata;
 

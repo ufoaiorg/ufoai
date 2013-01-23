@@ -499,26 +499,26 @@ static bool SV_TestLineWithEnt (const vec3_t start, const vec3_t stop, const int
 
 static pos_t SV_GridFall (const int actorSize, const pos3_t pos)
 {
-	return Grid_Fall(sv->mapData.routes, actorSize, pos);
+	return Grid_Fall(sv->mapData.routing.routes, actorSize, pos);
 }
 
 static void SV_RecalcRouting (const char *name, const GridBox& box, const char **list)
 {
-	Grid_RecalcRouting(&sv->mapTiles, sv->mapData.routes, name, box, list);
+	Grid_RecalcRouting(&sv->mapTiles, sv->mapData.routing.routes, name, box, list);
 }
 
 static void SV_GridPosToVec (const int actorSize, const pos3_t pos, vec3_t vec)
 {
-	Grid_PosToVec(sv->mapData.routes, actorSize, pos, vec);
+	Grid_PosToVec(sv->mapData.routing.routes, actorSize, pos, vec);
 }
 
 static void SV_GridCalcPathing (actorSizeEnum_t actorSize, pathing_t *path, const pos3_t from, int distance, pos_t **forbiddenList, int forbiddenListLength)
 {
-	Grid_CalcPathing (sv->mapData.routes, actorSize, path, from, distance, forbiddenList, forbiddenListLength);
+	Grid_CalcPathing (sv->mapData.routing.routes, actorSize, path, from, distance, forbiddenList, forbiddenListLength);
 }
 static bool SV_CanActorStandHere (const int actorSize, const pos3_t pos)
 {
-	return RT_CanActorStandHere(sv->mapData.routes, actorSize, pos);
+	return RT_CanActorStandHere(sv->mapData.routing.routes, actorSize, pos);
 }
 
 static void SV_SetInlineModelOrientation (const char *name, const vec3_t origin, const vec3_t angles)

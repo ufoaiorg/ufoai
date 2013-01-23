@@ -662,7 +662,7 @@ static void CL_DisplayBlockedPaths_f (void)
 		case ET_ACTOR2x2:
 			/* draw blocking cursor at le->pos */
 			if (!LE_IsDead(le))
-				Grid_PosToVec(cl.mapData->routes, le->fieldSize, le->pos, s);
+				Grid_PosToVec(cl.mapData->routing.routes, le->fieldSize, le->pos, s);
 			break;
 		case ET_DOOR:
 		case ET_BREAKABLE:
@@ -702,7 +702,7 @@ void CL_ActorConditionalMoveCalc (le_t *le)
 {
 	CL_BuildForbiddenList();
 	if (le && LE_IsSelected(le)) {
-		Grid_CalcPathing(cl.mapData->routes, le->fieldSize, &cl.pathMap, le->pos, MAX_ROUTE_TUS, forbiddenList, forbiddenListLength);
+		Grid_CalcPathing(cl.mapData->routing.routes, le->fieldSize, &cl.pathMap, le->pos, MAX_ROUTE_TUS, forbiddenList, forbiddenListLength);
 		CL_ActorResetMoveLength(le);
 	}
 }
@@ -790,13 +790,13 @@ static bool CL_ActorTraceMove (const pos3_t to)
 
 	crouchingState = LE_IsCrouched(selActor) ? 1 : 0;
 
-	Grid_PosToVec(cl.mapData->routes, selActor->fieldSize, to, oldVec);
+	Grid_PosToVec(cl.mapData->routing.routes, selActor->fieldSize, to, oldVec);
 	VectorCopy(to, pos);
 
 	while ((dvec = Grid_MoveNext(&cl.pathMap, pos, crouchingState)) != ROUTING_UNREACHABLE) {
 		length = CL_ActorMoveLength(selActor, pos);
 		PosSubDV(pos, crouchingState, dvec); /* We are going backwards to the origin. */
-		Grid_PosToVec(cl.mapData->routes, selActor->fieldSize, pos, vec);
+		Grid_PosToVec(cl.mapData->routing.routes, selActor->fieldSize, pos, vec);
 		if (length > CL_ActorUsableTUs(selActor))
 			CL_ParticleSpawn("longRangeTracer", 0, vec, oldVec);
 		else if (crouchingState)
@@ -1121,7 +1121,7 @@ static void CL_ActorStandCrouch_f (void)
 		return;
 
 	/* In case of standing up also check the headroom */
-	if (LE_IsCrouched(selActor) && !RT_CanActorStandHere(cl.mapData->routes, selActor->fieldSize, selActor->pos))
+	if (LE_IsCrouched(selActor) && !RT_CanActorStandHere(cl.mapData->routing.routes, selActor->fieldSize, selActor->pos))
 		return;
 
 	/* Check if we should even try to send this command (no TUs left or). */
@@ -1409,7 +1409,7 @@ bool CL_ActorMouseTrace (void)
 	/** @todo Shouldn't we check the return value of CM_TestLineDM here - maybe
 	 * we don't have to do the second Grid_Fall call at all and can safe a lot
 	 * of traces */
-	pos_t restingLevel = Grid_Fall(cl.mapData->routes, ACTOR_GET_FIELDSIZE(selActor), testPos);
+	pos_t restingLevel = Grid_Fall(cl.mapData->routing.routes, ACTOR_GET_FIELDSIZE(selActor), testPos);
 	CM_EntTestLineDM(cl.mapTiles, pA, pB, pC, TL_FLAG_ACTORCLIP, cl.leInlineModelList);
 	VecToPos(pC, testPos);
 	/* VecToPos strictly rounds the values down, while routing will round floors up to the next QUANT.
@@ -1417,7 +1417,7 @@ bool CL_ActorMouseTrace (void)
 	 * without compensation, z of 61-63 will belong to the level below. */
 	testPos[2] = ModelFloorToQuant(pC[2] / CELL_HEIGHT);
 
-	restingLevel = std::min(restingLevel, Grid_Fall(cl.mapData->routes, ACTOR_GET_FIELDSIZE(selActor), testPos));
+	restingLevel = std::min(restingLevel, Grid_Fall(cl.mapData->routing.routes, ACTOR_GET_FIELDSIZE(selActor), testPos));
 
 	/* if grid below intersection level, start a trace from the intersection */
 	if (restingLevel < cl_worldlevel->integer) {
@@ -1425,7 +1425,7 @@ bool CL_ActorMouseTrace (void)
 		from[2] -= CURSOR_OFFSET;
 		CM_EntTestLineDM(cl.mapTiles, from, stop, end, TL_FLAG_ACTORCLIP, cl.leInlineModelList);
 		VecToPos(end, testPos);
-		restingLevel = Grid_Fall(cl.mapData->routes, ACTOR_GET_FIELDSIZE(selActor), testPos);
+		restingLevel = Grid_Fall(cl.mapData->routing.routes, ACTOR_GET_FIELDSIZE(selActor), testPos);
 	}
 
 	/* test if the selected grid is out of the world */
@@ -1681,8 +1681,8 @@ static void CL_TargetingStraight (const pos3_t fromPos, actorSizeEnum_t fromActo
 		? target->fieldSize
 		: ACTOR_SIZE_NORMAL;
 
-	Grid_PosToVec(cl.mapData->routes, fromActorSize, fromPos, start);
-	Grid_PosToVec(cl.mapData->routes, toActorSize, toPos, end);
+	Grid_PosToVec(cl.mapData->routing.routes, fromActorSize, fromPos, start);
+	Grid_PosToVec(cl.mapData->routing.routes, toActorSize, toPos, end);
 	if (mousePosTargettingAlign)
 		end[2] -= mousePosTargettingAlign;
 
@@ -1762,8 +1762,8 @@ static void CL_TargetingGrenade (const pos3_t fromPos, actorSizeEnum_t fromActor
 		: ACTOR_SIZE_NORMAL;
 
 	/* get vectors, paint cross */
-	Grid_PosToVec(cl.mapData->routes, fromActorSize, fromPos, from);
-	Grid_PosToVec(cl.mapData->routes, toActorSize, toPos, at);
+	Grid_PosToVec(cl.mapData->routing.routes, fromActorSize, fromPos, from);
+	Grid_PosToVec(cl.mapData->routing.routes, toActorSize, toPos, at);
 	from[2] += selActor->fd->shotOrg[1];
 
 	/* prefer to aim grenades at the ground */
@@ -1818,7 +1818,7 @@ static void CL_TargetingGrenade (const pos3_t fromPos, actorSizeEnum_t fromActor
 		CL_ParticleSpawn("cross", 0, cross);
 
 	if (selActor->fd->splrad > 0.0) {
-		Grid_PosToVec(cl.mapData->routes, toActorSize, toPos, at);
+		Grid_PosToVec(cl.mapData->routing.routes, toActorSize, toPos, at);
 		CL_TargetingRadius(at, selActor->fd->splrad);
 	}
 }
@@ -1906,7 +1906,7 @@ static void CL_AddTargetingBox (pos3_t pos, bool pendBox)
 
 	/* Now calculate the size of the cursor box, depending on the actor. */
 	/* For some strange reason we use origin and oldorigin instead of the ent's min/max, respectively */
-	Grid_PosToVec(cl.mapData->routes, ACTOR_SIZE_NORMAL, pos, cursor.origin);	/* center of the (lower left) cell */
+	Grid_PosToVec(cl.mapData->routing.routes, ACTOR_SIZE_NORMAL, pos, cursor.origin);	/* center of the (lower left) cell */
 	VectorAdd(cursor.origin, halfBoxSize, cursor.oldorigin);
 	VectorSubtract(cursor.origin, halfBoxSize, cursor.origin);
 	if (actorSize > ACTOR_SIZE_NORMAL) {
@@ -2063,10 +2063,10 @@ static bool CL_AddPathingBox (pos3_t pos, bool addUnreachableCells)
 	OBJZERO(ent);
 	ent.flags = RF_PATH;
 
-	Grid_PosToVec(cl.mapData->routes, ACTOR_GET_FIELDSIZE(selActor), pos, ent.origin);
+	Grid_PosToVec(cl.mapData->routing.routes, ACTOR_GET_FIELDSIZE(selActor), pos, ent.origin);
 	VectorSubtract(ent.origin, boxShift, ent.origin);
 
-	base = Grid_Floor(cl.mapData->routes, ACTOR_GET_FIELDSIZE(selActor), pos);
+	base = Grid_Floor(cl.mapData->routing.routes, ACTOR_GET_FIELDSIZE(selActor), pos);
 
 	/* Paint the box green if it is reachable,
 	 * yellow if it can be entered but is too far,
@@ -2184,7 +2184,7 @@ void CL_DisplayFloorArrows (void)
 {
 	vec3_t base, start;
 
-	Grid_PosToVec(cl.mapData->routes, ACTOR_GET_FIELDSIZE(selActor), truePos, base);
+	Grid_PosToVec(cl.mapData->routing.routes, ACTOR_GET_FIELDSIZE(selActor), truePos, base);
 	VectorCopy(base, start);
 	base[2] -= QUANT;
 	start[2] += QUANT;
@@ -2198,7 +2198,7 @@ void CL_DisplayObstructionArrows (void)
 {
 	vec3_t base, start;
 
-	Grid_PosToVec(cl.mapData->routes, ACTOR_GET_FIELDSIZE(selActor), truePos, base);
+	Grid_PosToVec(cl.mapData->routing.routes, ACTOR_GET_FIELDSIZE(selActor), truePos, base);
 	VectorCopy(base, start);
 	CL_AddArrow(base, start, 0.0, 0.0, 0.0);
 }
@@ -2215,7 +2215,7 @@ static void CL_DumpMoveMark_f (void)
 		return;
 
 	CL_BuildForbiddenList();
-	Grid_CalcPathing(cl.mapData->routes, ACTOR_GET_FIELDSIZE(selActor), &cl.pathMap, truePos, MAX_ROUTE_TUS, forbiddenList, forbiddenListLength);
+	Grid_CalcPathing(cl.mapData->routing.routes, ACTOR_GET_FIELDSIZE(selActor), &cl.pathMap, truePos, MAX_ROUTE_TUS, forbiddenList, forbiddenListLength);
 
 	CL_ActorConditionalMoveCalc(selActor);
 	developer->integer = temp;
@@ -2260,10 +2260,10 @@ static void CL_DebugPath_f (void)
 	if (IN_GetMouseSpace() != MS_WORLD)
 		return;
 
-	RT_DebugSpecial(cl.mapTiles, cl.mapData->routes, actorSize, x, y, dir, cl.leInlineModelList);
+	RT_DebugSpecial(cl.mapTiles, cl.mapData->routing.routes, actorSize, x, y, dir, cl.leInlineModelList);
 
 #if 0
-	bool found = Grid_FindPath(cl.mapData->routes, actorSize, &cl.pathMap, selActor->pos, mousePos, 0, 600, NULL, NULL);
+	bool found = Grid_FindPath(cl.mapData->routing.routes, actorSize, &cl.pathMap, selActor->pos, mousePos, 0, 600, NULL, NULL);
 	if (found)
 		Com_Printf("found the path !\n");
 	{
@@ -2274,7 +2274,7 @@ static void CL_DebugPath_f (void)
 	}
 #endif
 
-	RT_DebugPathDisplay(cl.mapData->routes, actorSize, x, y, z);
+	RT_DebugPathDisplay(cl.mapData->routing.routes, actorSize, x, y, z);
 
 }
 #endif

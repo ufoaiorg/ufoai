@@ -272,6 +272,18 @@ inline signed char RT_getFloor (const routing_t *routes, const int actorSize, co
 	return routes[actorSize - 1].getFloor(pos);
 }
 
+/** @brief The home of the routing tables
+ *
+ * The purpose of this class is
+ * 1. to hide the actual dimensions of the map. Atm we allocate the maximum mapsize, This is about to change.
+ * 2. to hide the way the info for different actor sizes is handled. That will changen in the future.
+ */
+class Routing
+{
+public:
+	routing_t routes[ACTOR_MAX_SIZE];	/**< routing table */
+};
+
 typedef struct mapData_s {
 	/** @note holds all entity data as a single parsable string */
 	char mapEntityString[MAX_MAP_ENTSTRING];
@@ -284,8 +296,7 @@ typedef struct mapData_s {
 	/** @brief Used to track where rerouting needs to occur.
 	 * @todo not threadsafe */
 	byte reroute[ACTOR_MAX_SIZE][PATHFINDING_WIDTH][PATHFINDING_WIDTH];
-
-	routing_t routes[ACTOR_MAX_SIZE];	/**< routing table */
+	Routing routing;
 
 	/**
 	 * @note The vectors are from 0 up to 2*MAX_WORLD_WIDTH - but not negative

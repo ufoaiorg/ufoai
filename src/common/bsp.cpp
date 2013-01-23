@@ -563,11 +563,11 @@ static void CMod_LoadRouting (MapTile &tile, mapData_t *mapData, const byte *bas
 				if (x < 0 || y < 0)
 					continue;
 				for (z = minZ; z <= maxZ; z++) {
-					mapData->routes[size].setFloor(x, y, z, tempMap[size].getFloor(x - sX, y - sY, z - sZ));
-					mapData->routes[size].setCeiling(x, y, z, tempMap[size].getCeiling(x - sX, y - sY, z - sZ));
+					mapData->routing.routes[size].setFloor(x, y, z, tempMap[size].getFloor(x - sX, y - sY, z - sZ));
+					mapData->routing.routes[size].setCeiling(x, y, z, tempMap[size].getCeiling(x - sX, y - sY, z - sZ));
 					for (dir = 0; dir < CORE_DIRECTIONS; dir++) {
-						mapData->routes[size].setConn(x, y, z, dir, tempMap[size].getConn(x - sX, y - sY, z - sZ, dir));
-						mapData->routes[size].setStepup(x, y, z, dir, tempMap[size].getStepup(x - sX, y - sY, z - sZ, dir));
+						mapData->routing.routes[size].setConn(x, y, z, dir, tempMap[size].getConn(x - sX, y - sY, z - sZ, dir));
+						mapData->routing.routes[size].setStepup(x, y, z, dir, tempMap[size].getStepup(x - sX, y - sY, z - sZ, dir));
 					}
 				}
 				/* Update the reroute table */
@@ -870,7 +870,7 @@ static void CMod_RerouteMap (mapTiles_t *mapTiles, mapData_t *mapData)
 			for (x = rBox.mins[0]; x <= rBox.maxs[0]; x++) {
 				if (mapData->reroute[size][y][x] == ROUTING_NOT_REACHABLE) {
 					for (z = rBox.maxs[2]; z >= rBox.mins[2]; z--) {
-						const int newZ = RT_CheckCell(mapTiles, mapData->routes, size + 1, x, y, z, NULL);
+						const int newZ = RT_CheckCell(mapTiles, mapData->routing.routes, size + 1, x, y, z, NULL);
 						assert(newZ <= z);
 						z = newZ;
 					}
@@ -899,7 +899,7 @@ static void CMod_RerouteMap (mapTiles_t *mapTiles, mapData_t *mapData)
 						tile2 = mapData->reroute[size][dy][dx];
 						/* Both cells are present and if either cell is ROUTING_NOT_REACHABLE or if the cells are different. */
 						if (tile2 && (tile2 == ROUTING_NOT_REACHABLE || tile2 != tile)) {
-							RT_UpdateConnectionColumn(mapTiles, mapData->routes, size + 1, x, y, dir, NULL);
+							RT_UpdateConnectionColumn(mapTiles, mapData->routing.routes, size + 1, x, y, dir, NULL);
 						}
 					}
 				}
