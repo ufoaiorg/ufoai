@@ -118,7 +118,7 @@ window bases
 			{
 				{
 					pos		"0 0"
-					onClick { cmd "ui_push research;" }
+					onClick { cmd "alien_containment false; show_facility false; ui_push research;" }
 				}
 				string label { string "_Scientists" }
 				button icon { icon "icons/head_scientist" }
@@ -127,7 +127,7 @@ window bases
 			{
 				{
 					pos		"120 0"
-					onClick { cmd "ui_push production;" }
+					onClick { cmd "alien_containment false; show_facility false; ui_push production;" }
 				}
 				string label { string "_Engineers" }
 				button icon { icon "icons/head_worker" }
@@ -136,6 +136,7 @@ window bases
 			{
 				{
 					pos		"240 0"
+					onClick { cmd "alien_containment false; show_facility false; ui_push equipment -1;" }
 				}
 				string label { string "_Soldiers" }
 				button icon { icon "icons/head_soldier" }
@@ -533,7 +534,7 @@ window bases
 				*node:parent.sections.soldiers.bg@bgcolor = "0.527 0.6 0.21 0.2"
 				*node:parent.sections.soldiers@onMouseEnter = { *node:this.bg@bgcolor = "0.527 0.6 0.21 0.4" *node:this.icon@background = "icons/circle" }
 				*node:parent.sections.soldiers@onMouseLeave = { *node:this.bg@bgcolor = "0.527 0.6 0.21 0.2" *node:this.icon@background = "icons/circle0" }
-				*node:parent.sections.soldiers@onClick = { cmd "alien_containment false; show_facility false; ui_push aliencont;" }
+				*node:parent.sections.soldiers@onClick = { cmd "alien_containment false; show_facility false; ui_push equipment -1;" }
 				*node:parent.sections.soldiers@tooltip = ""
 			} elif (param1 eq "hospital") {
 			} elif (param1 eq "transfer") {
