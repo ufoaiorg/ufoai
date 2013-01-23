@@ -518,7 +518,7 @@ static void SV_GridCalcPathing (actorSizeEnum_t actorSize, pathing_t *path, cons
 }
 static bool SV_CanActorStandHere (const int actorSize, const pos3_t pos)
 {
-	return RT_CanActorStandHere(sv->mapData.routing.routes, actorSize, pos);
+	return RT_CanActorStandHere(sv->mapData.routing, actorSize, pos);
 }
 
 static void SV_SetInlineModelOrientation (const char *name, const vec3_t origin, const vec3_t angles)

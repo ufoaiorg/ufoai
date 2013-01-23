@@ -870,7 +870,7 @@ static void CMod_RerouteMap (mapTiles_t *mapTiles, mapData_t *mapData)
 			for (x = rBox.mins[0]; x <= rBox.maxs[0]; x++) {
 				if (mapData->reroute[size][y][x] == ROUTING_NOT_REACHABLE) {
 					for (z = rBox.maxs[2]; z >= rBox.mins[2]; z--) {
-						const int newZ = RT_CheckCell(mapTiles, mapData->routing.routes, size + 1, x, y, z, NULL);
+						const int newZ = RT_CheckCell(mapTiles, mapData->routing, size + 1, x, y, z, NULL);
 						assert(newZ <= z);
 						z = newZ;
 					}

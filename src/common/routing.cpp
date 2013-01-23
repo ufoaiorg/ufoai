@@ -259,9 +259,9 @@ void RT_DumpWholeMap (mapTiles_t *mapTiles, const routing_t *routes)
 /**
  * @brief Check if an actor can stand(up) in the cell given by pos
  */
-bool RT_CanActorStandHere (const routing_t *routes, const int actorSize, const pos3_t pos)
+bool RT_CanActorStandHere (const Routing &routing, const int actorSize, const pos3_t pos)
 {
-	if (RT_getCeiling(routes, actorSize, pos) - RT_getFloor(routes, actorSize, pos) >= PLAYER_STANDING_HEIGHT / QUANT)
+	if (RT_getCeiling(routing.routes, actorSize, pos) - RT_getFloor(routing.routes, actorSize, pos) >= PLAYER_STANDING_HEIGHT / QUANT)
 		return true;
 	else
 		return false;
@@ -355,7 +355,7 @@ NEW MAP TRACING FUNCTIONS
  * @sa CL_AddTargetingBox
  * @todo see CL_ActorMoveMouse
  */
-bool RT_AllCellsBelowAreFilled (const routing_t *routes, const int actorSize, const pos3_t pos)
+bool RT_AllCellsBelowAreFilled (const Routing &routing, const int actorSize, const pos3_t pos)
 {
 	int i;
 
@@ -364,7 +364,7 @@ bool RT_AllCellsBelowAreFilled (const routing_t *routes, const int actorSize, co
 		return true;
 
 	for (i = 0; i < pos[2]; i++) {
-		if (RT_getCeiling(routes, actorSize, pos[0], pos[1], i) != 0)
+		if (RT_getCeiling(routing.routes, actorSize, pos[0], pos[1], i) != 0)
 			return false;
 	}
 	return true;
@@ -387,8 +387,9 @@ bool RT_AllCellsBelowAreFilled (const routing_t *routes, const int actorSize, co
  * @return The z value of the next cell to scan, usually the cell with the ceiling.
  * @sa Grid_RecalcRouting
  */
-int RT_CheckCell (mapTiles_t *mapTiles, routing_t *routes, const int actorSize, const int x, const int y, const int z, const char **list)
+int RT_CheckCell (mapTiles_t *mapTiles, Routing &routing, const int actorSize, const int x, const int y, const int z, const char **list)
 {
+	routing_t* routes = routing.routes;
 	/* Width of the box required to stand in a cell by an actor's torso.  */
 	const float halfActorWidth = UNIT_SIZE * actorSize / 2 - WALL_SIZE - DIST_EPSILON;
 	/* This is a template for the extents of the box used by an actor's legs. */
@@ -1458,7 +1459,7 @@ void RT_UpdateConnectionColumn (mapTiles_t *mapTiles, Routing &routing, const in
 	const int ay = y + dvecs[dir][1];
 
 	assert(actorSize > ACTOR_SIZE_INVALID && actorSize <= ACTOR_MAX_SIZE);
-	assert(routes);
+	assert(routing.routes);
 	assert((x >= 0) && (x <= PATHFINDING_WIDTH - actorSize));
 	assert((y >= 0) && (y <= PATHFINDING_WIDTH - actorSize));
 
@@ -1503,8 +1504,9 @@ void RT_UpdateConnectionColumn (mapTiles_t *mapTiles, Routing &routing, const in
 	}
 }
 
-void RT_WriteCSVFiles (const routing_t *routes, const char* baseFilename, const ipos3_t mins, const ipos3_t maxs)
+void RT_WriteCSVFiles (const Routing &routing, const char* baseFilename, const ipos3_t mins, const ipos3_t maxs)
 {
+	const routing_t* routes = routing.routes;
 	char filename[MAX_OSPATH], ext[MAX_OSPATH];
 	qFILE f;
 	int i, x, y, z;

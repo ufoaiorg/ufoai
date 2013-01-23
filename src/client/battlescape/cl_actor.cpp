@@ -1121,7 +1121,7 @@ static void CL_ActorStandCrouch_f (void)
 		return;
 
 	/* In case of standing up also check the headroom */
-	if (LE_IsCrouched(selActor) && !RT_CanActorStandHere(cl.mapData->routing.routes, selActor->fieldSize, selActor->pos))
+	if (LE_IsCrouched(selActor) && !RT_CanActorStandHere(cl.mapData->routing, selActor->fieldSize, selActor->pos))
 		return;
 
 	/* Check if we should even try to send this command (no TUs left or). */

@@ -356,7 +356,7 @@ void Grid_DumpClientRoutes_f (void)
 	ipos3_t wpMins, wpMaxs;
 	VecToPos(cl.mapData->mapMin, wpMins);
 	VecToPos(cl.mapData->mapMax, wpMaxs);
-	RT_WriteCSVFiles(cl.mapData->routing.routes, "ufoaiclient", wpMins, wpMaxs);
+	RT_WriteCSVFiles(cl.mapData->routing, "ufoaiclient", wpMins, wpMaxs);
 }
 #endif
 

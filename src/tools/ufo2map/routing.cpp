@@ -56,7 +56,7 @@ static int CheckUnit (unsigned int unitnum)
 	}
 
 	/* Call the common CheckUnit function */
-	new_z = RT_CheckCell(&mapTiles, Nmap.routes, actorSize + 1, x, y, z, NULL);
+	new_z = RT_CheckCell(&mapTiles, Nmap, actorSize + 1, x, y, z, NULL);
 
 	/* new_z should never be above z. */
 	assert(new_z <= z);
@@ -181,7 +181,7 @@ void DoRouting (void)
 
 	/* Output the floor trace file if set */
 	if (config.generateTraceFile) {
-		RT_WriteCSVFiles(Nmap.routes, baseFilename, wpMins, wpMaxs);
+		RT_WriteCSVFiles(Nmap, baseFilename, wpMins, wpMaxs);
 	}
 
 	/* store the data */
