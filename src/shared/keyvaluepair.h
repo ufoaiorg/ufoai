@@ -77,7 +77,7 @@ public:
 		return _valStr;
 	}
 
-	inline 	void asVec3 (vec3_t vec) const
+	void asVec3 (vec3_t vec) const
 	{
 		if (sscanf(_valStr, "%f %f %f", &vec[0], &vec[1], &vec[2]) != 3)
 			VectorCopy(vec3_origin, vec);
