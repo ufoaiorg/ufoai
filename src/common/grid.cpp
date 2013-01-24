@@ -512,7 +512,7 @@ bool Step::isPossible (const pathing_t *path)
  * @sa G_MoveCalc
  * @sa CL_ConditionalMoveCalc
  */
-void Grid_CalcPathing (const routing_t *routes, const actorSizeEnum_t actorSize, pathing_t *path, const pos3_t from, int maxTUs, byte ** fb_list, int fb_length)
+void Grid_CalcPathing (const Routing &routing, const actorSizeEnum_t actorSize, pathing_t *path, const pos3_t from, int maxTUs, byte ** fb_list, int fb_length)
 {
 	int count;
 	priorityQueue_t pqueue;
@@ -566,7 +566,7 @@ void Grid_CalcPathing (const routing_t *routes, const actorSizeEnum_t actorSize,
                 if (dir == DIRECTION_STAND_UP || dir == DIRECTION_CROUCH)
                     continue;
 
-                if (!step.init(routes, pos, actorSize, amst, dir))
+                if (!step.init(routing.routes, pos, actorSize, amst, dir))
                     continue;		/* either dir is irrelevant or something worse happened */
 
                 if (step.isPossible(path)) {
@@ -616,7 +616,7 @@ void Grid_CalcPathing (const routing_t *routes, const actorSizeEnum_t actorSize,
  * @sa G_MoveCalc
  * @sa CL_ConditionalMoveCalc
  */
-bool Grid_FindPath (const routing_t *routes, const actorSizeEnum_t actorSize, pathing_t *path, const pos3_t from, const pos3_t targetPos, byte crouchingState, int maxTUs, byte ** fb_list, int fb_length)
+bool Grid_FindPath (const Routing &routing, const actorSizeEnum_t actorSize, pathing_t *path, const pos3_t from, const pos3_t targetPos, byte crouchingState, int maxTUs, byte ** fb_list, int fb_length)
 {
 	bool found = false;
 	int count;
@@ -667,7 +667,7 @@ bool Grid_FindPath (const routing_t *routes, const actorSizeEnum_t actorSize, pa
 			if (dir == DIRECTION_STAND_UP || dir == DIRECTION_CROUCH)
 				continue;
 
-			if (!step.init(routes, pos, actorSize, crouchingState, dir))
+			if (!step.init(routing.routes, pos, actorSize, crouchingState, dir))
 				continue;		/* either dir is irrelevant or something worse happened */
 
 			if (step.isPossible(path)) {
