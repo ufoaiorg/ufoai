@@ -772,7 +772,7 @@ unsigned int Grid_Ceiling (const routing_t *routes, const actorSizeEnum_t actorS
 {
 	/* max 8 levels */
 	if (pos[2] >= PATHFINDING_HEIGHT) {
-		Com_Printf("Grid_Height: Warning: z level is bigger than %i: %i\n",
+		Com_Printf("Grid_Ceiling: Warning: z level is bigger than %i: %i\n",
 			(PATHFINDING_HEIGHT - 1), pos[2]);
 	}
 	return QuantToModel(RT_getCeiling(routes, actorSize, pos[0], pos[1], pos[2] & 7));
