@@ -770,11 +770,7 @@ int Grid_MoveNext (const pathing_t *path, const pos3_t toPos, byte crouchingStat
  */
 unsigned int Grid_Ceiling (const routing_t *routes, const actorSizeEnum_t actorSize, const pos3_t pos)
 {
-	/* max 8 levels */
-	if (pos[2] >= PATHFINDING_HEIGHT) {
-		Com_Printf("Grid_Ceiling: Warning: z level is bigger than %i: %i\n",
-			(PATHFINDING_HEIGHT - 1), pos[2]);
-	}
+	assert(pos[2] < PATHFINDING_HEIGHT);
 	return QuantToModel(RT_getCeiling(routes, actorSize, pos[0], pos[1], pos[2] & 7));
 }
 
@@ -788,11 +784,7 @@ unsigned int Grid_Ceiling (const routing_t *routes, const actorSizeEnum_t actorS
  */
 int Grid_Height (const routing_t *routes, const actorSizeEnum_t actorSize, const pos3_t pos)
 {
-	/* max 8 levels */
-	if (pos[2] >= PATHFINDING_HEIGHT) {
-		Com_Printf("Grid_Height: Warning: z level is bigger than %i: %i\n",
-			(PATHFINDING_HEIGHT - 1), pos[2]);
-	}
+	assert(pos[2] < PATHFINDING_HEIGHT);
 	return QuantToModel(RT_getCeiling(routes, actorSize, pos[0], pos[1], pos[2] & (PATHFINDING_HEIGHT - 1))
 		- RT_getFloor(routes, actorSize, pos[0], pos[1], pos[2] & (PATHFINDING_HEIGHT - 1)));
 }
@@ -807,11 +799,7 @@ int Grid_Height (const routing_t *routes, const actorSizeEnum_t actorSize, const
  */
 int Grid_Floor (const routing_t *routes, const actorSizeEnum_t actorSize, const pos3_t pos)
 {
-	/* max 8 levels */
-	if (pos[2] >= PATHFINDING_HEIGHT) {
-		Com_Printf("Grid_Floor: Warning: z level is bigger than %i: %i\n",
-			(PATHFINDING_HEIGHT - 1), pos[2]);
-	}
+	assert(pos[2] < PATHFINDING_HEIGHT);
 	return QuantToModel(RT_getFloor(routes, actorSize, pos[0], pos[1], pos[2] & (PATHFINDING_HEIGHT - 1)));
 }
 
@@ -826,10 +814,7 @@ int Grid_Floor (const routing_t *routes, const actorSizeEnum_t actorSize, const 
  */
 pos_t Grid_StepUp (const routing_t *routes, const actorSizeEnum_t actorSize, const pos3_t pos, const int dir)
 {
-	/* max 8 levels */
-	if (pos[2] >= PATHFINDING_HEIGHT) {
-		Com_Printf("Grid_StepUp: Warning: z level is bigger than 7: %i\n", pos[2]);
-	}
+	assert(pos[2] < PATHFINDING_HEIGHT);
 	return QuantToModel(RT_getStepup(routes, actorSize, pos[0], pos[1], pos[2] & (PATHFINDING_HEIGHT - 1), dir));
 }
 
