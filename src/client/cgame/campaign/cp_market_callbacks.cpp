@@ -447,6 +447,10 @@ static void BS_FillMarket_f (void)
 	default:
 		break;
 	}
+	/* update capacity counters */
+	cgi->UI_ExecuteConfunc("ui_market_update_caps %d %d %d %d %d %d", CAP_GetFreeCapacity(base, CAP_ITEMS), CAP_GetMax(base, CAP_ITEMS),
+		CAP_GetFreeCapacity(base, CAP_AIRCRAFT_SMALL), CAP_GetMax(base, CAP_AIRCRAFT_SMALL),
+		CAP_GetFreeCapacity(base, CAP_AIRCRAFT_BIG), CAP_GetMax(base, CAP_AIRCRAFT_BIG));
 }
 
 /**
