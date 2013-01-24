@@ -803,22 +803,6 @@ int Grid_Floor (const routing_t *routes, const actorSizeEnum_t actorSize, const 
 	return QuantToModel(RT_getFloor(routes, actorSize, pos[0], pos[1], pos[2] & (PATHFINDING_HEIGHT - 1)));
 }
 
-
-/**
- * @brief Returns the maximum height of an obstruction that an actor can travel over.
- * @param[in] routes Pointer to client or server side routing table (clMap, svMap)
- * @param[in] actorSize width of the actor in cells
- * @param[in] pos Position in the map to check the height
- * @param[in] dir the direction in which we are moving
- * @return The actual model height increase needed to move into an adjacent cell.
- */
-pos_t Grid_StepUp (const routing_t *routes, const actorSizeEnum_t actorSize, const pos3_t pos, const int dir)
-{
-	assert(pos[2] < PATHFINDING_HEIGHT);
-	return QuantToModel(RT_getStepup(routes, actorSize, pos[0], pos[1], pos[2] & (PATHFINDING_HEIGHT - 1), dir));
-}
-
-
 /**
  * @brief Returns the amounts of TUs that are needed to perform one step into the given direction.
  * @param[in] dir the direction in which we are moving
