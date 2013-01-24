@@ -141,7 +141,6 @@ invList_t *InventoryInterface::AddToInventory (inventory_t *const inv, const ite
 }
 
 /**
- * @param[in] self The inventory interface pointer
  * @param[in] i The inventory the container is in.
  * @param[in] container The container where the item should be removed.
  * @param[in] fItem The item to be removed.
@@ -219,7 +218,6 @@ bool InventoryInterface::RemoveFromInventory (inventory_t* const i, const invDef
 
 /**
  * @brief Conditions for moving items between containers.
- * @param[in] self The inventory interface pointer
  * @param[in] inv Inventory to move in.
  * @param[in] from Source container.
  * @param[in] fItem The item to be moved.
@@ -465,7 +463,6 @@ inventory_action_t InventoryInterface::MoveInInventory (inventory_t* const inv, 
 
 /**
  * @brief Tries to add an item to a container (in the inventory inv).
- * @param[in] self The inventory interface pointer
  * @param[in] inv Inventory pointer to add the item.
  * @param[in] item Item to add to inventory.
  * @param[in] container Container id.
@@ -520,7 +517,6 @@ void InventoryInterface::EmptyContainer (inventory_t* const i, const invDef_t *c
 
 /**
  * @brief Destroys inventory.
- * @param[in] self The inventory interface pointer
  * @param[in] inv Pointer to the inventory which should be erased.
  * @note Loops through all containers in inventory. @c NULL for temp containers are skipped,
  * for real containers @c I_EmptyContainer is called.
@@ -571,7 +567,6 @@ float InventoryInterface::GetInventoryState (const inventory_t *inventory, int &
 
 /**
  * @brief Pack a weapon, possibly with some ammo
- * @param[in] self The inventory interface pointer
  * @param[in] chr The character that will get the weapon
  * @param[in] weapon The weapon type index in gi.csi->ods
  * @param[in] ed The equipment for debug messages
@@ -699,7 +694,6 @@ int InventoryInterface::PackAmmoAndWeapon (character_t* const chr, const objDef_
 
 /**
  * @brief Equip melee actor with item defined per teamDefs.
- * @param[in] self The inventory interface pointer
  * @param[in] inv The inventory that will get the weapon.
  * @param[in] td Pointer to a team definition.
  * @note Weapons assigned here cannot be collected in any case. These are dummy "actor weapons".
@@ -727,7 +721,6 @@ void InventoryInterface::EquipActorMelee (inventory_t* const inv, const teamDef_
 
 /**
  * @brief Equip robot actor with default weapon. (defined in ugv_t->weapon)
- * @param[in] self The inventory interface pointer
  * @param[in] inv The inventory that will get the weapon.
  * @param[in] weapon Pointer to the item which being added to robot's inventory.
  */
@@ -761,7 +754,6 @@ typedef enum {
 /**
  * @brief Fully equip one actor. The equipment that is added to the inventory of the given actor
  * is taken from the equipment script definition.
- * @param[in] self The inventory interface pointer
  * @param[in] chr The character that will get the weapon.
  * @param[in] ed The equipment that is added from to the actors inventory
  * @param[in] maxWeight The max weight this actor is allowed to carry.
