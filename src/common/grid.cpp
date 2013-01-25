@@ -892,7 +892,7 @@ bool Grid_ShouldUseAutostand (const pathing_t *path, const pos3_t toPos)
  * @param[in] pos The grid position
  * @param[out] vec The world vector
  */
-void Grid_PosToVec (const routing_t *routes, const actorSizeEnum_t actorSize, const pos3_t pos, vec3_t vec)
+void Grid_PosToVec (const Routing &routing, const actorSizeEnum_t actorSize, const pos3_t pos, vec3_t vec)
 {
 	SizedPosToVec(pos, actorSize, vec);
 #ifdef PARANOID
@@ -900,7 +900,7 @@ void Grid_PosToVec (const routing_t *routes, const actorSizeEnum_t actorSize, co
 		Com_Printf("Grid_PosToVec: Warning - z level bigger than 7 (%i - source: %.02f)\n", pos[2], vec[2]);
 #endif
 	/* Clamp the floor value between 0 and UNIT_HEIGHT */
-	const int gridFloor = Grid_Floor(routes, actorSize, pos);
+	const int gridFloor = Grid_Floor(routing.routes, actorSize, pos);
 	vec[2] += std::max(0, std::min(UNIT_HEIGHT, gridFloor));
 }
 

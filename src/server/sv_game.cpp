@@ -509,7 +509,7 @@ static void SV_RecalcRouting (const char *name, const GridBox& box, const char *
 
 static void SV_GridPosToVec (const int actorSize, const pos3_t pos, vec3_t vec)
 {
-	Grid_PosToVec(sv->mapData.routing.routes, actorSize, pos, vec);
+	Grid_PosToVec(sv->mapData.routing, actorSize, pos, vec);
 }
 
 static void SV_GridCalcPathing (actorSizeEnum_t actorSize, pathing_t *path, const pos3_t from, int distance, pos_t **forbiddenList, int forbiddenListLength)

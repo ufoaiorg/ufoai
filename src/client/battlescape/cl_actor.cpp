@@ -662,7 +662,7 @@ static void CL_DisplayBlockedPaths_f (void)
 		case ET_ACTOR2x2:
 			/* draw blocking cursor at le->pos */
 			if (!LE_IsDead(le))
-				Grid_PosToVec(cl.mapData->routing.routes, le->fieldSize, le->pos, s);
+				Grid_PosToVec(cl.mapData->routing, le->fieldSize, le->pos, s);
 			break;
 		case ET_DOOR:
 		case ET_BREAKABLE:
@@ -790,13 +790,13 @@ static bool CL_ActorTraceMove (const pos3_t to)
 
 	crouchingState = LE_IsCrouched(selActor) ? 1 : 0;
 
-	Grid_PosToVec(cl.mapData->routing.routes, selActor->fieldSize, to, oldVec);
+	Grid_PosToVec(cl.mapData->routing, selActor->fieldSize, to, oldVec);
 	VectorCopy(to, pos);
 
 	while ((dvec = Grid_MoveNext(&cl.pathMap, pos, crouchingState)) != ROUTING_UNREACHABLE) {
 		length = CL_ActorMoveLength(selActor, pos);
 		PosSubDV(pos, crouchingState, dvec); /* We are going backwards to the origin. */
-		Grid_PosToVec(cl.mapData->routing.routes, selActor->fieldSize, pos, vec);
+		Grid_PosToVec(cl.mapData->routing, selActor->fieldSize, pos, vec);
 		if (length > CL_ActorUsableTUs(selActor))
 			CL_ParticleSpawn("longRangeTracer", 0, vec, oldVec);
 		else if (crouchingState)
@@ -1681,8 +1681,8 @@ static void CL_TargetingStraight (const pos3_t fromPos, actorSizeEnum_t fromActo
 		? target->fieldSize
 		: ACTOR_SIZE_NORMAL;
 
-	Grid_PosToVec(cl.mapData->routing.routes, fromActorSize, fromPos, start);
-	Grid_PosToVec(cl.mapData->routing.routes, toActorSize, toPos, end);
+	Grid_PosToVec(cl.mapData->routing, fromActorSize, fromPos, start);
+	Grid_PosToVec(cl.mapData->routing, toActorSize, toPos, end);
 	if (mousePosTargettingAlign)
 		end[2] -= mousePosTargettingAlign;
 
@@ -1762,8 +1762,8 @@ static void CL_TargetingGrenade (const pos3_t fromPos, actorSizeEnum_t fromActor
 		: ACTOR_SIZE_NORMAL;
 
 	/* get vectors, paint cross */
-	Grid_PosToVec(cl.mapData->routing.routes, fromActorSize, fromPos, from);
-	Grid_PosToVec(cl.mapData->routing.routes, toActorSize, toPos, at);
+	Grid_PosToVec(cl.mapData->routing, fromActorSize, fromPos, from);
+	Grid_PosToVec(cl.mapData->routing, toActorSize, toPos, at);
 	from[2] += selActor->fd->shotOrg[1];
 
 	/* prefer to aim grenades at the ground */
@@ -1818,7 +1818,7 @@ static void CL_TargetingGrenade (const pos3_t fromPos, actorSizeEnum_t fromActor
 		CL_ParticleSpawn("cross", 0, cross);
 
 	if (selActor->fd->splrad > 0.0) {
-		Grid_PosToVec(cl.mapData->routing.routes, toActorSize, toPos, at);
+		Grid_PosToVec(cl.mapData->routing, toActorSize, toPos, at);
 		CL_TargetingRadius(at, selActor->fd->splrad);
 	}
 }
@@ -1906,7 +1906,7 @@ static void CL_AddTargetingBox (pos3_t pos, bool pendBox)
 
 	/* Now calculate the size of the cursor box, depending on the actor. */
 	/* For some strange reason we use origin and oldorigin instead of the ent's min/max, respectively */
-	Grid_PosToVec(cl.mapData->routing.routes, ACTOR_SIZE_NORMAL, pos, cursor.origin);	/* center of the (lower left) cell */
+	Grid_PosToVec(cl.mapData->routing, ACTOR_SIZE_NORMAL, pos, cursor.origin);	/* center of the (lower left) cell */
 	VectorAdd(cursor.origin, halfBoxSize, cursor.oldorigin);
 	VectorSubtract(cursor.origin, halfBoxSize, cursor.origin);
 	if (actorSize > ACTOR_SIZE_NORMAL) {
@@ -2063,7 +2063,7 @@ static bool CL_AddPathingBox (pos3_t pos, bool addUnreachableCells)
 	OBJZERO(ent);
 	ent.flags = RF_PATH;
 
-	Grid_PosToVec(cl.mapData->routing.routes, ACTOR_GET_FIELDSIZE(selActor), pos, ent.origin);
+	Grid_PosToVec(cl.mapData->routing, ACTOR_GET_FIELDSIZE(selActor), pos, ent.origin);
 	VectorSubtract(ent.origin, boxShift, ent.origin);
 
 	base = Grid_Floor(cl.mapData->routing.routes, ACTOR_GET_FIELDSIZE(selActor), pos);
@@ -2184,7 +2184,7 @@ void CL_DisplayFloorArrows (void)
 {
 	vec3_t base, start;
 
-	Grid_PosToVec(cl.mapData->routing.routes, ACTOR_GET_FIELDSIZE(selActor), truePos, base);
+	Grid_PosToVec(cl.mapData->routing, ACTOR_GET_FIELDSIZE(selActor), truePos, base);
 	VectorCopy(base, start);
 	base[2] -= QUANT;
 	start[2] += QUANT;
@@ -2198,7 +2198,7 @@ void CL_DisplayObstructionArrows (void)
 {
 	vec3_t base, start;
 
-	Grid_PosToVec(cl.mapData->routing.routes, ACTOR_GET_FIELDSIZE(selActor), truePos, base);
+	Grid_PosToVec(cl.mapData->routing, ACTOR_GET_FIELDSIZE(selActor), truePos, base);
 	VectorCopy(base, start);
 	CL_AddArrow(base, start, 0.0, 0.0, 0.0);
 }

@@ -56,4 +56,4 @@ int Grid_GetTUsForDirection(const int dir, const int crouched);
 int Grid_Filled(const routing_t *routes, const actorSizeEnum_t actorSize, const pos3_t pos);
 pos_t Grid_Fall(const routing_t *routes, const actorSizeEnum_t actorSize, const pos3_t pos);
 bool Grid_ShouldUseAutostand (const pathing_t *path, const pos3_t toPos);
-void Grid_PosToVec(const routing_t *routes, const actorSizeEnum_t actorSize, const pos3_t pos, vec3_t vec);
+void Grid_PosToVec(const Routing &routing, const actorSizeEnum_t actorSize, const pos3_t pos, vec3_t vec);
