@@ -318,7 +318,7 @@ static void testMapDefsFootSteps (void)
 			if (mapCount >= skipCount + 2) {	// after the first 2 maps, reduce the testing area
 				pos3_t center = {128, 128, 0};
 				mBox.set(center, center);		// the box on the map we're testing
-				mBox.expandXY(5);				// just test a few cells around the center of the map
+				mBox.expandXY(10);				// just test a few cells around the center of the map
 				mBox.maxs[2] = 2;				// and 3 levels high
 			}
 #endif
