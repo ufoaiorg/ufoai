@@ -160,7 +160,7 @@ public:
 	byte crouchingState;
 	byte TUsAfter;
 
-	bool init (const routing_t *routes, const pos3_t fromPos, const actorSizeEnum_t actorSize, const byte crouchingState, const int dir);
+	bool init (const Routing &routing, const pos3_t fromPos, const actorSizeEnum_t actorSize, const byte crouchingState, const int dir);
 	bool calcNewPos (void);
 	void calcNewTUs (const pathing_t *path);
 	bool checkWalkingDirections (const pathing_t *path);
@@ -178,9 +178,9 @@ public:
  * @param[in] _dir Direction vector index (see DIRECTIONS and dvecs)
  * @return false if dir is irrelevant or something went wrong
  */
-bool Step::init (const routing_t *_routes, const pos3_t _fromPos, const actorSizeEnum_t _actorSize, const byte _crouchingState, const int _dir)
+bool Step::init (const Routing &_routing, const pos3_t _fromPos, const actorSizeEnum_t _actorSize, const byte _crouchingState, const int _dir)
 {
-	routes = _routes;
+	routes = _routing.routes;
 	actorSize = _actorSize;
 	VectorCopy(_fromPos, fromPos);
 	crouchingState = _crouchingState;
@@ -566,7 +566,7 @@ void Grid_CalcPathing (const Routing &routing, const actorSizeEnum_t actorSize, 
                 if (dir == DIRECTION_STAND_UP || dir == DIRECTION_CROUCH)
                     continue;
 
-                if (!step.init(routing.routes, pos, actorSize, amst, dir))
+                if (!step.init(routing, pos, actorSize, amst, dir))
                     continue;		/* either dir is irrelevant or something worse happened */
 
                 if (step.isPossible(path)) {
@@ -667,7 +667,7 @@ bool Grid_FindPath (const Routing &routing, const actorSizeEnum_t actorSize, pat
 			if (dir == DIRECTION_STAND_UP || dir == DIRECTION_CROUCH)
 				continue;
 
-			if (!step.init(routing.routes, pos, actorSize, crouchingState, dir))
+			if (!step.init(routing, pos, actorSize, crouchingState, dir))
 				continue;		/* either dir is irrelevant or something worse happened */
 
 			if (step.isPossible(path)) {
