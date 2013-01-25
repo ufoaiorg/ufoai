@@ -95,7 +95,7 @@ static void testMove (void)
 	CU_ASSERT_EQUAL(pos[2], 1);
 
 	routes = &mapData.routing.routes[ACTOR_SIZE_NORMAL - 1];
-	gridPos = Grid_Fall(mapData.routing.routes, ACTOR_SIZE_NORMAL, pos);
+	gridPos = Grid_Fall(mapData.routing, ACTOR_SIZE_NORMAL, pos);
 	CU_ASSERT_EQUAL(gridPos, 1);
 
 	{

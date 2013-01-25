@@ -1409,7 +1409,7 @@ bool CL_ActorMouseTrace (void)
 	/** @todo Shouldn't we check the return value of CM_TestLineDM here - maybe
 	 * we don't have to do the second Grid_Fall call at all and can safe a lot
 	 * of traces */
-	pos_t restingLevel = Grid_Fall(cl.mapData->routing.routes, ACTOR_GET_FIELDSIZE(selActor), testPos);
+	pos_t restingLevel = Grid_Fall(cl.mapData->routing, ACTOR_GET_FIELDSIZE(selActor), testPos);
 	CM_EntTestLineDM(cl.mapTiles, pA, pB, pC, TL_FLAG_ACTORCLIP, cl.leInlineModelList);
 	VecToPos(pC, testPos);
 	/* VecToPos strictly rounds the values down, while routing will round floors up to the next QUANT.
@@ -1417,7 +1417,7 @@ bool CL_ActorMouseTrace (void)
 	 * without compensation, z of 61-63 will belong to the level below. */
 	testPos[2] = ModelFloorToQuant(pC[2] / CELL_HEIGHT);
 
-	restingLevel = std::min(restingLevel, Grid_Fall(cl.mapData->routing.routes, ACTOR_GET_FIELDSIZE(selActor), testPos));
+	restingLevel = std::min(restingLevel, Grid_Fall(cl.mapData->routing, ACTOR_GET_FIELDSIZE(selActor), testPos));
 
 	/* if grid below intersection level, start a trace from the intersection */
 	if (restingLevel < cl_worldlevel->integer) {
@@ -1425,7 +1425,7 @@ bool CL_ActorMouseTrace (void)
 		from[2] -= CURSOR_OFFSET;
 		CM_EntTestLineDM(cl.mapTiles, from, stop, end, TL_FLAG_ACTORCLIP, cl.leInlineModelList);
 		VecToPos(end, testPos);
-		restingLevel = Grid_Fall(cl.mapData->routing.routes, ACTOR_GET_FIELDSIZE(selActor), testPos);
+		restingLevel = Grid_Fall(cl.mapData->routing, ACTOR_GET_FIELDSIZE(selActor), testPos);
 	}
 
 	/* test if the selected grid is out of the world */
@@ -2066,7 +2066,7 @@ static bool CL_AddPathingBox (pos3_t pos, bool addUnreachableCells)
 	Grid_PosToVec(cl.mapData->routing, ACTOR_GET_FIELDSIZE(selActor), pos, ent.origin);
 	VectorSubtract(ent.origin, boxShift, ent.origin);
 
-	base = Grid_Floor(cl.mapData->routing.routes, ACTOR_GET_FIELDSIZE(selActor), pos);
+	base = Grid_Floor(cl.mapData->routing, ACTOR_GET_FIELDSIZE(selActor), pos);
 
 	/* Paint the box green if it is reachable,
 	 * yellow if it can be entered but is too far,

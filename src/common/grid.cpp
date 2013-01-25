@@ -768,10 +768,10 @@ int Grid_MoveNext (const pathing_t *path, const pos3_t toPos, byte crouchingStat
  * @param[in] pos Position in the map to check the height
  * @return The actual model height of the cell's ceiling.
  */
-unsigned int Grid_Ceiling (const routing_t *routes, const actorSizeEnum_t actorSize, const pos3_t pos)
+unsigned int Grid_Ceiling (const Routing &routing, const actorSizeEnum_t actorSize, const pos3_t pos)
 {
 	assert(pos[2] < PATHFINDING_HEIGHT);
-	return QuantToModel(RT_getCeiling(routes, actorSize, pos[0], pos[1], pos[2] & 7));
+	return QuantToModel(RT_getCeiling(routing.routes, actorSize, pos[0], pos[1], pos[2] & 7));
 }
 
 /**
@@ -781,10 +781,10 @@ unsigned int Grid_Ceiling (const routing_t *routes, const actorSizeEnum_t actorS
  * @param[in] pos Position in the map to check the height
  * @return The actual model height of the cell's floor.
  */
-int Grid_Floor (const routing_t *routes, const actorSizeEnum_t actorSize, const pos3_t pos)
+int Grid_Floor (const Routing &routing, const actorSizeEnum_t actorSize, const pos3_t pos)
 {
 	assert(pos[2] < PATHFINDING_HEIGHT);
-	return QuantToModel(RT_getFloor(routes, actorSize, pos[0], pos[1], pos[2] & (PATHFINDING_HEIGHT - 1)));
+	return QuantToModel(RT_getFloor(routing.routes, actorSize, pos[0], pos[1], pos[2] & (PATHFINDING_HEIGHT - 1)));
 }
 
 /**
@@ -810,11 +810,11 @@ int Grid_GetTUsForDirection (const int dir, const int crouched)
  * @param[in] pos Position in the map to check for filling
  * @return 0 if the cell is vacant (of the world model), non-zero otherwise.
  */
-int Grid_Filled (const routing_t *routes, const actorSizeEnum_t actorSize, const pos3_t pos)
+int Grid_Filled (const Routing &routing, const actorSizeEnum_t actorSize, const pos3_t pos)
 {
 	/* max 8 levels */
 	assert(pos[2] < PATHFINDING_HEIGHT);
-	return RT_FILLED(routes, pos[0], pos[1], pos[2], actorSize);
+	return RT_FILLED(routing.routes, pos[0], pos[1], pos[2], actorSize);
 }
 
 
@@ -826,7 +826,7 @@ int Grid_Filled (const routing_t *routes, const actorSizeEnum_t actorSize, const
  * @return New z (height) value.
  * @return 0xFF if an error occurred.
  */
-pos_t Grid_Fall (const routing_t *routes, const actorSizeEnum_t actorSize, const pos3_t pos)
+pos_t Grid_Fall (const Routing &routing, const actorSizeEnum_t actorSize, const pos3_t pos)
 {
 	int z = pos[2], base, diff;
 	bool flier = false; /** @todo if an actor can fly, then set this to true. */
@@ -844,7 +844,7 @@ pos_t Grid_Fall (const routing_t *routes, const actorSizeEnum_t actorSize, const
 	 * If z < 0, we are going down.
 	 * If z >= CELL_HEIGHT, we are going up.
 	 * If 0 <= z <= CELL_HEIGHT, then z / 16 = 0, no change. */
-	base = RT_getFloor(routes, actorSize, pos[0], pos[1], z);
+	base = RT_getFloor(routing.routes, actorSize, pos[0], pos[1], z);
 	/* Hack to deal with negative numbers- otherwise rounds toward 0 instead of down. */
 	diff = base < 0 ? (base - (CELL_HEIGHT - 1)) / CELL_HEIGHT : base / CELL_HEIGHT;
 	z += diff;
@@ -883,7 +883,7 @@ void Grid_PosToVec (const Routing &routing, const actorSizeEnum_t actorSize, con
 		Com_Printf("Grid_PosToVec: Warning - z level bigger than 7 (%i - source: %.02f)\n", pos[2], vec[2]);
 #endif
 	/* Clamp the floor value between 0 and UNIT_HEIGHT */
-	const int gridFloor = Grid_Floor(routing.routes, actorSize, pos);
+	const int gridFloor = Grid_Floor(routing, actorSize, pos);
 	vec[2] += std::max(0, std::min(UNIT_HEIGHT, gridFloor));
 }
 

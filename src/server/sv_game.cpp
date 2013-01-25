@@ -499,7 +499,7 @@ static bool SV_TestLineWithEnt (const vec3_t start, const vec3_t stop, const int
 
 static pos_t SV_GridFall (const int actorSize, const pos3_t pos)
 {
-	return Grid_Fall(sv->mapData.routing.routes, actorSize, pos);
+	return Grid_Fall(sv->mapData.routing, actorSize, pos);
 }
 
 static void SV_RecalcRouting (const char *name, const GridBox& box, const char **list)
