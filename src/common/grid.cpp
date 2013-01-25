@@ -774,22 +774,6 @@ unsigned int Grid_Ceiling (const routing_t *routes, const actorSizeEnum_t actorS
 	return QuantToModel(RT_getCeiling(routes, actorSize, pos[0], pos[1], pos[2] & 7));
 }
 
-
-/**
- * @brief Returns the height of the floor in a cell.
- * @param[in] routes Pointer to client or server side routing table (clMap, svMap)
- * @param[in] actorSize width of the actor in cells
- * @param[in] pos Position in the map to check the height
- * @return The actual model height of the cell's ceiling.
- */
-int Grid_Height (const routing_t *routes, const actorSizeEnum_t actorSize, const pos3_t pos)
-{
-	assert(pos[2] < PATHFINDING_HEIGHT);
-	return QuantToModel(RT_getCeiling(routes, actorSize, pos[0], pos[1], pos[2] & (PATHFINDING_HEIGHT - 1))
-		- RT_getFloor(routes, actorSize, pos[0], pos[1], pos[2] & (PATHFINDING_HEIGHT - 1)));
-}
-
-
 /**
  * @brief Returns the height of the floor in a cell.
  * @param[in] routes Pointer to client or server side routing table (clMap, svMap)
@@ -886,7 +870,6 @@ bool Grid_ShouldUseAutostand (const pathing_t *path, const pos3_t toPos)
 
 /**
  * @brief Converts a grid position to world coordinates
- * @sa Grid_Height
  * @param[in] routes The routing map
  * @param[in] actorSize width of the actor in cells
  * @param[in] pos The grid position
