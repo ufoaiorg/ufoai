@@ -152,6 +152,7 @@ class Step {
 	int actorHeight;		/**< The actor's height in QUANT units. */
 	int actorCrouchedHeight;
 public:
+	const Routing *routing;
 	const routing_t *routes;
 	int dir;
 	pos3_t fromPos;
@@ -160,7 +161,8 @@ public:
 	byte crouchingState;
 	byte TUsAfter;
 
-	bool init (const Routing &routing, const pos3_t fromPos, const actorSizeEnum_t actorSize, const byte crouchingState, const int dir);
+	Step (const Routing &r, const pos3_t fromPos, const actorSizeEnum_t actorSize, const byte crouchingState, const int dir);
+	bool init ();
 	bool calcNewPos (void);
 	void calcNewTUs (const pathing_t *path);
 	bool checkWalkingDirections (const pathing_t *path);
@@ -170,21 +172,30 @@ public:
 };
 
 /**
- * @brief Initialize the Step data
- * @param[in] _routes Pointer to client or server side routing table (clMap, svMap)
+ * @brief Constructor
+ * @param[in] _routes Reference to client or server side routing table (clMap, svMap)
  * @param[in] _fromPos Position where we start this step
  * @param[in] _actorSize Give the field size of the actor (e.g. for 2x2 units) to check linked fields as well.
  * @param[in] _crouchingState Whether the actor is currently crouching, 1 is yes, 0 is no.
  * @param[in] _dir Direction vector index (see DIRECTIONS and dvecs)
- * @return false if dir is irrelevant or something went wrong
  */
-bool Step::init (const Routing &_routing, const pos3_t _fromPos, const actorSizeEnum_t _actorSize, const byte _crouchingState, const int _dir)
+Step::Step (const Routing &r, const pos3_t _fromPos, const actorSizeEnum_t _actorSize, const byte _crouchingState, const int _dir)
 {
-	routes = _routing.routes;
+	routing = &r;
+
+	routes = routing->routes;
 	actorSize = _actorSize;
 	VectorCopy(_fromPos, fromPos);
 	crouchingState = _crouchingState;
 	dir = _dir;
+}
+
+/**
+ * @brief Initialize the other Step data
+ * @return false if dir is irrelevant or something went wrong
+ */
+bool Step::init ()
+{
 	flier = false;
 	hasLadderToClimb = false;
 	hasLadderSupport = false;
@@ -558,7 +569,7 @@ void Grid_CalcPathing (const Routing &routing, const actorSizeEnum_t actorSize, 
                 continue;
 
             for (dir = 0; dir < PATHFINDING_DIRECTIONS; dir++) {
-                Step step;
+                Step step(routing, pos, actorSize, amst, dir);
                 /* Directions 12, 14, and 15 are currently undefined. */
                 if (dir == 12 || dir == 14 || dir == 15)
                     continue;
@@ -566,7 +577,7 @@ void Grid_CalcPathing (const Routing &routing, const actorSizeEnum_t actorSize, 
                 if (dir == DIRECTION_STAND_UP || dir == DIRECTION_CROUCH)
                     continue;
 
-                if (!step.init(routing, pos, actorSize, amst, dir))
+                if (!step.init())
                     continue;		/* either dir is irrelevant or something worse happened */
 
                 if (step.isPossible(path)) {
@@ -659,7 +670,7 @@ bool Grid_FindPath (const Routing &routing, const actorSizeEnum_t actorSize, pat
 			continue;
 
 		for (dir = 0; dir < PATHFINDING_DIRECTIONS; dir++) {
-			Step step;
+			Step step(routing, pos, actorSize, crouchingState, dir);
 			/* Directions 12, 14, and 15 are currently undefined. */
 			if (dir == 12 || dir == 14 || dir == 15)
 				continue;
@@ -667,7 +678,7 @@ bool Grid_FindPath (const Routing &routing, const actorSizeEnum_t actorSize, pat
 			if (dir == DIRECTION_STAND_UP || dir == DIRECTION_CROUCH)
 				continue;
 
-			if (!step.init(routing, pos, actorSize, crouchingState, dir))
+			if (!step.init())
 				continue;		/* either dir is irrelevant or something worse happened */
 
 			if (step.isPossible(path)) {
