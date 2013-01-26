@@ -25,6 +25,14 @@
  * That's because the soldiers hidden behind the house are not among the targets of the alien
  * and thus don't receive the bonus when the alien shoots,
  *
+ * There is also a problem at end of turn. Imagine your sniper is set to react with an aimed
+ * shot (18 Tus). An alien steps into his line of sight and fires two snap shots, totalling
+ * 16 TUs. Then the alien decides to do nothing for the rest of his round. You would love to
+ * see your sniper do his aimed shot, right ? But reaction fire rules don't allow that.
+ * On the other hand: if you (were stupid enough to) move one of your soldiers with his last
+ * 2 TUs out from cover and into the sight of an alien on RF with all his TUs still available,
+ * your soldier will receive no RF, due to the same RF rules. You love that, right ?
+ *
  * Reaction fire is involved in the following situations:
  * 1. G_ReactionFireOnMovement()
  *		calls	G_ReactionFireCheckExecution()
