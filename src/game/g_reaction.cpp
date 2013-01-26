@@ -82,6 +82,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MAX_RF_TARGETS 10
 #define MAX_RF_DATA 128
 
+/** @brief A single relation between a shooter and his target. */
 class ReactionFireTarget
 {
 public:
@@ -91,6 +92,7 @@ public:
 
 #define RF_NO_ENTNUM -1
 
+/** @brief A list of relations between a shooter and all his targets. */
 class ReactionFireTargetList
 {
 public:
@@ -112,6 +114,7 @@ public:
 	}
 };
 
+/** @brief A table with all the relations between all shooters and all their targets. */
 class ReactionFireTargets
 {
 public:
