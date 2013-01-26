@@ -1666,7 +1666,7 @@ static int32_t CL_HullForEntity (const le_t *le, int *tile, vec3_t rmaShift, vec
  * @sa CL_Trace
  * @sa SV_ClipMoveToEntities
  */
-static void CL_ClipMoveToLEs (moveclip_t * clip)
+static void CL_ClipMoveToLEs (moveclip_t *clip)
 {
 	le_t *le = NULL;
 

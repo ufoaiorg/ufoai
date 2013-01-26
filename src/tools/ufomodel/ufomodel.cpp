@@ -587,7 +587,7 @@ void R_ReallocateStateArrays(int size)
 	r_state.array_size = size;
 }
 
-void R_ReallocateTexunitArray(gltexunit_t * texunit, int size)
+void R_ReallocateTexunitArray(gltexunit_t *texunit, int size)
 {
 	/* TODO: check if stub without code would be sufficient here */
 	if (size <= texunit->array_size)

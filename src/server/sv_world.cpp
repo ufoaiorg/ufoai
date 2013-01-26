@@ -219,7 +219,7 @@ typedef struct {
  * to be returned that doesn't actually intersect the area on an exact test.
  * @sa SV_AreaEdicts
  */
-static void SV_AreaEdicts_r (worldSector_t * node, areaParms_t *ap)
+static void SV_AreaEdicts_r (worldSector_t *node, areaParms_t *ap)
 {
 	sv_edict_t *check, *next;
 
