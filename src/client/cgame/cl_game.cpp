@@ -847,7 +847,7 @@ void GAME_SetMode (const cgame_export_t *gametype)
 		Com_Printf("Change gametype to '%s'\n", list->name);
 		/* inventory structure switched/initialized */
 		INV_DestroyInventory(&cls.i);
-		INV_InitInventory(list->name, &cls.i, &csi, &inventoryImport);
+		cls.i.InitInventory(list->name, &csi, &inventoryImport);
 		list->Init();
 	}
 }
@@ -1363,7 +1363,7 @@ static bool GAME_Spawn (chrList_t *chrList)
 
 		/* inventory structure switched/initialized */
 		INV_DestroyInventory(&cls.i);
-		INV_InitInventory("client", &cls.i, &csi, &inventoryImport);
+		cls.i.InitInventory("client", &csi, &inventoryImport);
 		GAME_GenerateTeam(teamDefID, ed, size);
 	}
 

@@ -1003,17 +1003,17 @@ int InventoryInterface::GetUsedSlots ()
  * @sa G_Init
  * @sa CL_InitLocal
  */
-void INV_InitInventory (const char *name, inventoryInterface_t *interface, const csi_t* csi, const inventoryImport_t *import)
+void InventoryInterface::InitInventory (const char *name, const csi_t* csi, const inventoryImport_t *import)
 {
 	const item_t item = {NONE_AMMO, NULL, NULL, 0, 0};
 
-	OBJZERO(*interface);
+	OBJZERO(*this);
 
-	interface->import = import;
-	interface->invName = name;
-	interface->cacheItem = item;
-	interface->csi = csi;
-	interface->invList = NULL;
+	this->import = import;
+	this->invName = name;
+	this->cacheItem = item;
+	this->csi = csi;
+	this->invList = NULL;
 }
 
 void INV_DestroyInventory (inventoryInterface_t *interface)

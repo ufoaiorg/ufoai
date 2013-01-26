@@ -262,7 +262,7 @@ static void G_Init (void)
 
 	/* init csi and inventory */
 	INVSH_InitCSI(gi.csi);
-	INV_InitInventory("game", &game.i, gi.csi, &inventoryImport);
+	game.i.InitInventory("game", gi.csi, &inventoryImport);
 
 	if (logstats->integer)
 		logstatsfile = fopen(va("%s/stats.log", gi.FS_Gamedir()), "a");

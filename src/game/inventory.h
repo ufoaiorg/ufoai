@@ -53,6 +53,7 @@ public:
 
 	const char *invName;
 	/* public */
+	void InitInventory (const char *name, const csi_t* csi, const inventoryImport_t *import);
 	bool RemoveFromInventory (inventory_t* const i, const invDef_t *container, invList_t *fItem) __attribute__((warn_unused_result));
 
 	invList_t* AddToInventory (inventory_t *const i, const item_t* const item, const invDef_t *container, int x, int y,
