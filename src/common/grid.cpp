@@ -152,7 +152,7 @@ class Step {
 	int actorHeight;		/**< The actor's height in QUANT units. */
 	int actorCrouchedHeight;
 public:
-	const Routing *routing;
+	const Routing &routing;
 	const routing_t *routes;
 	int dir;
 	pos3_t fromPos;
@@ -179,11 +179,9 @@ public:
  * @param[in] _crouchingState Whether the actor is currently crouching, 1 is yes, 0 is no.
  * @param[in] _dir Direction vector index (see DIRECTIONS and dvecs)
  */
-Step::Step (const Routing &r, const pos3_t _fromPos, const actorSizeEnum_t _actorSize, const byte _crouchingState, const int _dir)
+Step::Step (const Routing &r, const pos3_t _fromPos, const actorSizeEnum_t _actorSize, const byte _crouchingState, const int _dir) : routing(r)
 {
-	routing = &r;
-
-	routes = routing->routes;
+	routes = routing.routes;
 	actorSize = _actorSize;
 	VectorCopy(_fromPos, fromPos);
 	crouchingState = _crouchingState;
