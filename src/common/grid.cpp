@@ -510,7 +510,7 @@ bool Step::isPossible (const pathing_t *path)
  *
  * We calculate the table for ALL possible movement states (atm stand and crouch)
  * to be able to propose smart things like autostand.
- * @param[in] routes Pointer to client or server side routing table (clMap, svMap)
+ * @param[in] routing Reference to client or server side routing table (clMap, svMap)
  * @param[in] actorSize The size of thing to calc the move for (e.g. size=2 means 2x2).
  * The plan is to have the 'origin' in 2x2 units in the bottom-left (towards the lower coordinates) corner of the 2x2 square.
  * @param[in,out] path Pointer to client or server side pathing table (clMap, svMap)
@@ -612,7 +612,7 @@ void Grid_CalcPathing (const Routing &routing, const actorSizeEnum_t actorSize, 
  * all positions reachable from 'from'. Instead it tries to find the shortest/fastest path to
  * the target position. There is no limit to maxTUs.
  *
- * @param[in] routes Pointer to client or server side routing table (clMap, svMap)
+ * @param[in] routing Reference to client or server side routing table (clMap, svMap)
  * @param[in] actorSize The size of thing to calc the move for (e.g. size=2 means 2x2).
  * The plan is to have the 'origin' in 2x2 units in the bottom-left (towards the lower coordinates) corner of the 2x2 square.
  * @param[in,out] path Pointer to client or server side pathing table (clMap, svMap)
@@ -772,7 +772,7 @@ int Grid_MoveNext (const pathing_t *path, const pos3_t toPos, byte crouchingStat
 
 /**
  * @brief Returns the height of the floor in a cell.
- * @param[in] routes Pointer to client or server side routing table (clMap, svMap)
+ * @param[in] routing Reference to client or server side routing table (clMap, svMap)
  * @param[in] actorSize width of the actor in cells
  * @param[in] pos Position in the map to check the height
  * @return The actual model height of the cell's ceiling.
@@ -785,7 +785,7 @@ unsigned int Grid_Ceiling (const Routing &routing, const actorSizeEnum_t actorSi
 
 /**
  * @brief Returns the height of the floor in a cell.
- * @param[in] routes Pointer to client or server side routing table (clMap, svMap)
+ * @param[in] routing Reference to client or server side routing table (clMap, svMap)
  * @param[in] actorSize width of the actor in cells
  * @param[in] pos Position in the map to check the height
  * @return The actual model height of the cell's floor.
@@ -814,7 +814,7 @@ int Grid_GetTUsForDirection (const int dir, const int crouched)
 
 /**
  * @brief Returns non-zero if the cell is filled (solid) and cannot be entered.
- * @param[in] routes Pointer to client or server side routing table (clMap, svMap)
+ * @param[in] routing Reference to client or server side routing table (clMap, svMap)
  * @param[in] actorSize width of the actor in cells
  * @param[in] pos Position in the map to check for filling
  * @return 0 if the cell is vacant (of the world model), non-zero otherwise.
@@ -829,7 +829,7 @@ int Grid_Filled (const Routing &routing, const actorSizeEnum_t actorSize, const 
 
 /**
  * @brief Calculated the new height level when something falls down from a certain position.
- * @param[in] routes Pointer to client or server side routing table (clMap, svMap)
+ * @param[in] routing Reference to client or server side routing table (clMap, svMap)
  * @param[in] pos Position in the map to start the fall (starting height is the z-value in this position)
  * @param[in] actorSize Give the field size of the actor (e.g. for 2x2 units) to check linked fields as well.
  * @return New z (height) value.
@@ -902,7 +902,7 @@ void Grid_PosToVec (const Routing &routing, const actorSizeEnum_t actorSize, con
  * @sa CMod_LoadRouting
  * @sa Grid_RecalcRouting
  * @param[in] mapTiles List of tiles the current (RMA-)map is composed of
- * @param[in] routes The routing map (either server or client map)
+ * @param[in] routing The routing map (either server or client map)
  * @param[in] box The box to recalc routing for
  * @param[in] list The local models list (a local model has a name starting with * followed by the model number)
  */
@@ -977,7 +977,7 @@ void Grid_RecalcBoxRouting (mapTiles_t *mapTiles, Routing &routing, const GridBo
  * @sa CMod_LoadSubmodels
  * @sa Grid_RecalcBoxRouting
  * @param[in] mapTiles List of tiles the current (RMA-)map is composed of
- * @param[in] routes The routing map (either server or client map)
+ * @param[in] routing The routing map (either server or client map)
  * @param[in] name Name of the inline model to compute the mins/maxs for
  * @param[in] box The box around the inline model (alternative to name)
  * @param[in] list The local models list (a local model has a name starting with * followed by the model number)
