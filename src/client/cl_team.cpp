@@ -35,7 +35,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui/ui_nodes.h"
 
 /** @brief List of currently displayed or equipable characters. */
-chrList_t chrDisplayList;
+linkedList_t *chrDisplayList;
 
 /**
  * @brief Allocate a skin from the cls structure
@@ -268,16 +268,15 @@ static void CL_ChangeSkin_f (void)
 {
 	const int sel = cl_selected->integer;
 
-	if (sel >= 0 && sel < chrDisplayList.num) {
-		character_t *chr = chrDisplayList.chr[sel];
-		if (chr) {
-			const int newSkin = CL_FixActorSkinIDX(Cvar_GetInteger("mn_body_skin"));
-			/** @todo Get the skin id from the model by using the actorskin id */
-			/** @todo Or remove skins from models and convert character_t->skin to string */
-			chr->bodySkin = newSkin;
-
-			Cvar_SetValue("mn_body_skin", newSkin);
-		}
+	int i = 0;
+	LIST_Foreach(chrDisplayList, character_t, chr) {
+		if (i++ != sel)
+			continue;
+		const int newSkin = CL_FixActorSkinIDX(Cvar_GetInteger("mn_body_skin"));
+		/** @todo Get the skin id from the model by using the actorskin id */
+		/** @todo Or remove skins from models and convert character_t->skin to string */
+		chr->bodySkin = newSkin;
+		Cvar_SetValue("mn_body_skin", newSkin);
 	}
 }
 
@@ -288,11 +287,9 @@ static void CL_ChangeSkinForWholeTeam_f (void)
 {
 	/* Apply new skin to all (shown/displayed) team-members. */
 	/** @todo What happens if a model of a team member does not have the selected skin? */
-	for (int i = 0; i < chrDisplayList.num; i++) {
+	LIST_Foreach(chrDisplayList, character_t, chr) {
 		/* Get selected skin and fall back to default skin if it is not valid. */
 		const int newSkin = CL_FixActorSkinIDX(Cvar_GetInteger("mn_body_skin"));
-		character_t *chr = chrDisplayList.chr[i];
-		assert(chr);
 		/** @todo Get the skin id from the model by using the actorskin id */
 		/** @todo Or remove skins from models and convert character_t->skin to string */
 		chr->bodySkin = newSkin;

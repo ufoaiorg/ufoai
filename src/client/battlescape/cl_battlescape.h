@@ -83,7 +83,7 @@ typedef struct clientBattleScape_s {
 
 	mapTiles_t *mapTiles;
 
-	chrList_t chrList;	/**< the list of characters that are used as team in the currently running tactical mission */
+	linkedList_t *chrList;	/**< the list of characters that are used as team in the currently running tactical mission */
 } clientBattleScape_t;
 
 extern clientBattleScape_t cl;

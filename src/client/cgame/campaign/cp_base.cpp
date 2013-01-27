@@ -1815,22 +1815,20 @@ static void CL_DoSwapSkills (character_t *cp1, character_t *cp2, const abilitysk
  * @todo This currently always uses exactly the first two firemodes (see fmode1+fmode2) for calculation. This needs to be adapted to support less (1) or more 3+ firemodes. I think the function will even  break on only one firemode .. never tested it.
  * @todo i think currently also the different ammo/firedef types for each weapon (different weaponr_fd_idx and weaponr_fd_idx values) are ignored.
  */
-static void CL_SwapSkills (chrList_t *team)
+static void CL_SwapSkills (linkedList_t *team)
 {
-	int i, j, k;
 	const byte fmode1 = 0;
 	const byte fmode2 = 1;
 
-	i = team->num;
-	while (i--) {
+	for (int i = 0; i < LIST_Count(team); i++) {
 		int x;
 		/* running the loops below is not enough, we need transitive closure */
 		/* I guess num times is enough --- could anybody prove this? */
 		/* or perhaps 2 times is enough as long as weapons have 1 skill? */
 		for (x = ABILITY_NUM_TYPES; x < SKILL_NUM_TYPES; x++) {
 			abilityskills_t skill = (abilityskills_t)x;
-			for (j = 0; j < team->num - 1; j++) {
-				character_t *cp1 = team->chr[j];
+			for (linkedList_t *cp1List = team; cp1List && cp1List->next; cp1List = cp1List->next) {
+				character_t *cp1 = (character_t*)cp1List->data;
 				const fireDef_t *fdRightArray = NULL;
 				const fireDef_t *fdHolsterArray = NULL;
 
@@ -1848,8 +1846,8 @@ static void CL_SwapSkills (chrList_t *team)
 						+ (HOLSTER(cp1) && HOLSTER(cp1)->item.item->reload
 						   && skill == HOLSTER(cp1)->item.ammo->fd[fdHolsterArray->weapFdsIdx][fmode2].weaponSkill);
 
-					for (k = j + 1; k < team->num; k++) {
-						character_t *cp2 = team->chr[k];
+					for (linkedList_t *cp2List = cp1List->next; cp2List; cp2List = cp2List->next) {
+						character_t *cp2 = (character_t*)cp2List->data;
 						fdRightArray = NULL;
 						fdHolsterArray = NULL;
 
@@ -1889,26 +1887,25 @@ static void CL_SwapSkills (chrList_t *team)
 static void B_InitialEquipment (aircraft_t *aircraft, const equipDef_t *ed)
 {
 	base_t *homebase;
-	chrList_t chrListTemp;
+	linkedList_t *chrListTemp = NULL;
 
 	assert(aircraft);
 	homebase = aircraft->homebase;
 	assert(homebase);
 	assert(ed);
 
-	chrListTemp.num = 0;
 	LIST_Foreach(aircraft->acTeam, employee_t, employee) {
 		character_t *chr = &employee->chr;
 
 		/* pack equipment */
 		Com_DPrintf(DEBUG_CLIENT, "B_InitialEquipment: Packing initial equipment for %s.\n", chr->name);
 		cgi->INV_EquipActor(chr, ed, cgi->GAME_GetChrMaxLoad(chr));
-		chrListTemp.chr[chrListTemp.num] = chr;
-		chrListTemp.num++;
+		LIST_AddPointer(&chrListTemp, (void*)chr);
 	}
 
 	AIR_MoveEmployeeInventoryIntoStorage(*aircraft, homebase->storage);
-	CL_SwapSkills(&chrListTemp);
+	CL_SwapSkills(chrListTemp);
+	LIST_Delete(&chrListTemp);
 	CAP_UpdateStorageCap(homebase);
 }
 

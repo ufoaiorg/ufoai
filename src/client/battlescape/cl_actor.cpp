@@ -186,11 +186,9 @@ static int CL_ActorGetNumber (const le_t *le)
  */
 character_t *CL_ActorGetChr (const le_t *le)
 {
-	int i;
-	const chrList_t *chrList = &cl.chrList;
+	const linkedList_t *chrList = cl.chrList;
 
-	for (i = 0; i < chrList->num; i++) {
-		character_t *chr = chrList->chr[i];
+	LIST_Foreach(chrList, character_t, chr) {
 		if (chr->ucn == le->ucn)
 			return chr;
 	}
@@ -2326,8 +2324,10 @@ static void CL_ActorUpdate_f (void)
 	const int num = cl_selected->integer;
 
 	/* We are in the base or multiplayer inventory */
-	if (num < chrDisplayList.num) {
-		const character_t *chr = chrDisplayList.chr[num];
+	int i = 0;
+	LIST_Foreach(chrDisplayList, character_t, chr) {
+		if (i++ != num)
+			continue;
 		CL_UpdateCharacterValues(chr, "mn_");
 	}
 }

@@ -49,13 +49,10 @@ typedef struct teamSaveFileHeader_s {
 
 static void GAME_UpdateActiveTeamList (void)
 {
-	int i;
-
+	const int teamSize = LIST_Count(chrDisplayList);
 	OBJZERO(characterActive);
-	for (i = 0; i < chrDisplayList.num; i++)
+	for (int i = 0; i < teamSize; i++)
 		characterActive[i] = true;
-
-	UI_ExecuteConfunc("team_checkboxes_update %i", chrDisplayList.num);
 }
 
 void GAME_AutoTeam (const char *equipmentDefinitionID, int teamMembers)
@@ -75,7 +72,6 @@ void GAME_AutoTeam_f (void)
 	}
 
 	GAME_AutoTeam(Cmd_Argv(1), GAME_GetCharacterArraySize());
-
 	GAME_UpdateActiveTeamList();
 }
 
@@ -85,20 +81,27 @@ void GAME_AutoTeam_f (void)
  */
 void GAME_ToggleActorForTeam_f (void)
 {
-	int num;
-	int value;
-
 	if (Cmd_Argc() != 3) {
 		Com_Printf("Usage: %s <num> <value>\n", Cmd_Argv(0));
 		return;
 	}
 
-	num = atoi(Cmd_Argv(1));
-	value = atoi(Cmd_Argv(2));
-	if (num < 0 || num >= chrDisplayList.num)
+	int ucn = atoi(Cmd_Argv(1));
+	int value = atoi(Cmd_Argv(2));
+
+	int i = 0;
+	bool found = false;
+	LIST_Foreach(chrDisplayList, character_t, chrTmp) {
+		if (ucn == chrTmp->ucn) {
+			found = true;
+			break;
+		}
+		i++;
+	}
+	if (!found)
 		return;
 
-	characterActive[num] = (value != 0);
+	characterActive[i] = (value != 0);
 }
 
 /**
@@ -107,17 +110,11 @@ void GAME_ToggleActorForTeam_f (void)
  */
 void GAME_SaveTeamState_f (void)
 {
-	int i, num;
-
-	num = 0;
-	for (i = 0; i < chrDisplayList.num; i++) {
-		chrDisplayList.chr[num]->ucn -= (i - num);
-		if (characterActive[i]) {
-			assert(chrDisplayList.chr[i] != NULL);
-			chrDisplayList.chr[num++] = chrDisplayList.chr[i];
-		}
+	int i = 0;
+	LIST_Foreach(chrDisplayList, character_t, chr) {
+		if (!characterActive[i++])
+			LIST_Remove(&chrDisplayList, chr);
 	}
-	chrDisplayList.num = num;
 }
 
 /**
@@ -161,12 +158,7 @@ void GAME_TeamSlotComments_f (void)
  */
 static void GAME_SaveTeamInfo (xmlNode_t *p)
 {
-	int i;
-
-	/* header */
-	Com_DPrintf(DEBUG_CLIENT, "Saving %i teammembers\n", chrDisplayList.num);
-	for (i = 0; i < chrDisplayList.num; i++) {
-		const character_t *chr = chrDisplayList.chr[i];
+	LIST_Foreach(chrDisplayList, character_t, chr) {
 		xmlNode_t *n = XML_AddNode(p, SAVE_TEAM_CHARACTER);
 		GAME_SaveCharacter(n, chr);
 	}
@@ -190,14 +182,10 @@ static void GAME_LoadTeamInfo (xmlNode_t *p)
 	for (i = 0, n = XML_GetNode(p, SAVE_TEAM_CHARACTER); n && i < size; i++, n = XML_GetNextNode(n, p, SAVE_TEAM_CHARACTER)) {
 		character_t *chr = GAME_GetCharacter(i);
 		GAME_LoadCharacter(n, chr);
-		assert(i < lengthof(chrDisplayList.chr));
-		chrDisplayList.chr[i] = chr;
+		LIST_AddPointer(&chrDisplayList, (void*)chr);
 	}
-	chrDisplayList.num = i;
 
 	GAME_UpdateActiveTeamList();
-
-	Com_DPrintf(DEBUG_CLIENT, "Loaded %i teammembers\n", chrDisplayList.num);
 }
 
 /**
@@ -216,7 +204,7 @@ static bool GAME_SaveTeam (const char *filename, const char *name)
 	node = XML_AddNode(topNode, SAVE_TEAM_ROOTNODE);
 	OBJZERO(header);
 	header.version = LittleLong(TEAM_SAVE_FILE_VERSION);
-	header.soldiercount = LittleLong(chrDisplayList.num);
+	header.soldiercount = LittleLong(LIST_Count(chrDisplayList));
 	Q_strncpyz(header.name, name, sizeof(header.name));
 
 	Cvar_Set("mn_teamname", header.name);
@@ -264,7 +252,7 @@ static bool GAME_SaveTeam (const char *filename, const char *name)
  */
 void GAME_SaveTeam_f (void)
 {
-	if (!chrDisplayList.num) {
+	if (LIST_IsEmpty(chrDisplayList)) {
 		UI_Popup(_("Note"), _("Error saving team. Nothing to save yet."));
 		return;
 	} else {
@@ -444,8 +432,8 @@ static void GAME_GetEquipment (void)
 
 void GAME_UpdateInventory (inventory_t *inv, const equipDef_t *ed)
 {
-	if (chrDisplayList.num > 0)
-		ui_inventory = &chrDisplayList.chr[0]->i;
+	if (!LIST_IsEmpty(chrDisplayList))
+		ui_inventory = &((character_t*)chrDisplayList->data)->i;
 	else
 		ui_inventory = NULL;
 
@@ -459,21 +447,16 @@ void GAME_UpdateInventory (inventory_t *inv, const equipDef_t *ed)
  */
 void GAME_UpdateTeamMenuParameters_f (void)
 {
-	int i;
-	const size_t size = lengthof(chrDisplayList.chr);
-
 	/* reset description */
 	Cvar_Set("mn_itemname", "");
 	Cvar_Set("mn_item", "");
 	UI_ResetData(TEXT_STANDARD);
 
-	for (i = 0; i < size; i++) {
-		const char *name;
-		if (i < chrDisplayList.num)
-			name = chrDisplayList.chr[i]->name;
-		else
-			name = "";
-		Cvar_Set(va("mn_name%i", i), name);
+	int i = 0;
+	UI_ExecuteConfunc("team_soldierlist_clear");
+	LIST_Foreach(chrDisplayList, character_t, chr) {
+		UI_ExecuteConfunc("team_soldierlist_add %d %d \"%s\"", chr->ucn, characterActive[i], chr->name);
+		i++;
 	}
 
 	GAME_GetEquipment();
@@ -481,21 +464,23 @@ void GAME_UpdateTeamMenuParameters_f (void)
 
 void GAME_ActorSelect_f (void)
 {
-	const int oldChrIndex = cl_selected->integer;
-	int chrIndex;
-	character_t *chr;
-
 	/* check syntax */
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <num>\n", Cmd_Argv(0));
 		return;
 	}
 
-	chrIndex = atoi(Cmd_Argv(1));
-	if (chrIndex < 0 || chrIndex >= chrDisplayList.num)
+	int ucn = atoi(Cmd_Argv(1));
+	character_t *chr = NULL;
+	LIST_Foreach(chrDisplayList, character_t, chrTmp) {
+		if (ucn == chrTmp->ucn) {
+			chr = chrTmp;
+			break;
+		}
+	}
+	if (!chr)
 		return;
 
-	chr = chrDisplayList.chr[chrIndex];
 	/* update menu inventory */
 	if (ui_inventory && ui_inventory != &chr->i) {
 		CONTAINER(chr, csi.idEquip) = ui_inventory->c[csi.idEquip];
@@ -503,16 +488,6 @@ void GAME_ActorSelect_f (void)
 		ui_inventory->c[csi.idEquip] = NULL;
 	}
 	ui_inventory = &chr->i;
-
-	/* deselect current selected soldier and select the new one */
-	UI_ExecuteConfunc("team_soldier_unselect %i", oldChrIndex);
-	UI_ExecuteConfunc("team_soldier_select %i", chrIndex);
-
-	/* now set the cl_selected cvar to the new actor id */
-	Cvar_ForceSet("cl_selected", va("%i", chrIndex));
-	/** @todo this is campaign only - really needed here? */
-	Cvar_SetValue("mn_ucn", chr->ucn);
-
 	/* set info cvars */
 	CL_UpdateCharacterValues(chr, "mn_");
 }

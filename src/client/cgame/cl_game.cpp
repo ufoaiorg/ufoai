@@ -183,7 +183,7 @@ size_t GAME_GetCharacterArraySize (void)
 void GAME_ResetCharacters (void)
 {
 	OBJZERO(characters);
-	chrDisplayList.num = 0;
+	LIST_Delete(&chrDisplayList);
 }
 
 void GAME_AppendTeamMember (int memberIndex, const char *teamDefID, const equipDef_t *ed)
@@ -199,8 +199,7 @@ void GAME_AppendTeamMember (int memberIndex, const char *teamDefID, const equipD
 	/* pack equipment */
 	cls.i.EquipActor(chr, ed, GAME_GetChrMaxLoad(chr));
 
-	chrDisplayList.chr[memberIndex] = chr;
-	chrDisplayList.num++;
+	LIST_AddPointer(&chrDisplayList, (void*)chr);
 }
 
 void GAME_GenerateTeam (const char *teamDefID, const equipDef_t *ed, int teamMembers)
@@ -319,7 +318,7 @@ void GAME_AddChatMessage (const char *format, ...)
 
 bool GAME_IsTeamEmpty (void)
 {
-	return chrDisplayList.num == 0;
+	return LIST_IsEmpty(chrDisplayList);
 }
 
 static void GAME_NET_OOB_Printf (struct net_stream *s, const char *format, ...)
@@ -825,7 +824,7 @@ void GAME_SetMode (const cgame_export_t *gametype)
 		return;
 
 	GAME_ResetCharacters();
-	OBJZERO(cl.chrList);
+	LIST_Delete(&cl.chrList);
 
 	list = GAME_GetCurrentType();
 	if (list) {
@@ -1309,17 +1308,15 @@ static void GAME_NetSendCharacter (dbuffer * buf, const character_t *chr)
  * @sa MP_SaveTeamMultiplayerInfo
  * @note Called in CL_Precache_f to send the team info to server
  */
-static void GAME_SendCurrentTeamSpawningInfo (dbuffer * buf, chrList_t *team)
+static void GAME_SendCurrentTeamSpawningInfo (dbuffer * buf, linkedList_t *team)
 {
-	int i;
+	const int teamSize = LIST_Count(team);
 
 	/* header */
 	NET_WriteByte(buf, clc_teaminfo);
-	NET_WriteByte(buf, team->num);
+	NET_WriteByte(buf, teamSize);
 
-	Com_DPrintf(DEBUG_CLIENT, "GAME_SendCurrentTeamSpawningInfo: Upload information about %i soldiers to server\n", team->num);
-	for (i = 0; i < team->num; i++) {
-		character_t *chr = team->chr[i];
+	LIST_Foreach(team, character_t, chr) {
 		inventory_t *i = &chr->i;
 		containerIndex_t container;
 
@@ -1331,7 +1328,6 @@ static void GAME_SendCurrentTeamSpawningInfo (dbuffer * buf, chrList_t *team)
 		}
 
 		GAME_NetSendCharacter(buf, chr);
-
 		GAME_NetSendInventory(buf, i);
 	}
 }
@@ -1350,14 +1346,13 @@ const char* GAME_GetTeamDef (void)
 	return teamDefID;
 }
 
-static bool GAME_Spawn (chrList_t *chrList)
+static bool GAME_Spawn (linkedList_t **chrList)
 {
 	const size_t size = GAME_GetCharacterArraySize();
-	int i;
 
 	/* If there is no active gametype we create a team with default values.
 	 * This is e.g. the case when someone starts a map with the map command */
-	if (GAME_GetCurrentType() == NULL || chrDisplayList.num == 0) {
+	if (GAME_GetCurrentType() == NULL || LIST_IsEmpty(chrDisplayList)) {
 		const char *teamDefID = GAME_GetTeamDef();
 		const equipDef_t *ed = INV_GetEquipmentDefinitionByID("multiplayer_initial");
 
@@ -1367,9 +1362,12 @@ static bool GAME_Spawn (chrList_t *chrList)
 		GAME_GenerateTeam(teamDefID, ed, size);
 	}
 
-	for (i = 0; i < size; i++)
-		chrList->chr[i] = chrDisplayList.chr[i];
-	chrList->num = chrDisplayList.num;
+	int count = 0;
+	LIST_Foreach(chrDisplayList, character_t, chr) {
+		if (count > size)
+			break;
+		LIST_AddPointer(chrList, (void*)chr);
+	}
 
 	return true;
 }
@@ -1431,7 +1429,7 @@ void GAME_InitMissionBriefing (const char *title)
  * the server). This callback can e.g. be used to set initial actor states. E.g. request crouch and so on.
  * These events are executed without consuming time
  */
-static void GAME_InitializeBattlescape (chrList_t *team)
+static void GAME_InitializeBattlescape (linkedList_t *team)
 {
 	int i;
 	const size_t size = lengthof(cl.teamList);
@@ -1457,33 +1455,32 @@ void GAME_SpawnSoldiers (void)
 {
 	const cgame_export_t *list = GAME_GetCurrentType();
 	bool spawnStatus;
-	chrList_t *chrList = &cl.chrList;
 
 	/* this callback is responsible to set up the teamlist */
 	if (list && list->Spawn)
-		spawnStatus = list->Spawn(chrList);
+		spawnStatus = list->Spawn(&cl.chrList);
 	else
-		spawnStatus = GAME_Spawn(chrList);
+		spawnStatus = GAME_Spawn(&cl.chrList);
 
 	Com_Printf("Used inventory slots: %i\n", cls.i.GetUsedSlots());
 
-	if (spawnStatus && cl.chrList.num > 0) {
+	if (spawnStatus && !LIST_IsEmpty(cl.chrList)) {
 		/* send team info */
 		dbuffer msg;
-		GAME_SendCurrentTeamSpawningInfo(&msg, chrList);
+		GAME_SendCurrentTeamSpawningInfo(&msg, cl.chrList);
 		NET_WriteMsg(cls.netStream, msg);
 	}
 }
 
 void GAME_StartMatch (void)
 {
-	if (cl.chrList.num > 0) {
+	if (!LIST_IsEmpty(cl.chrList)) {
 		dbuffer msg(12);
 		NET_WriteByte(&msg, clc_stringcmd);
 		NET_WriteString(&msg, "startmatch\n");
 		NET_WriteMsg(cls.netStream, msg);
 
-		GAME_InitializeBattlescape(&cl.chrList);
+		GAME_InitializeBattlescape(cl.chrList);
 	}
 }
 

@@ -321,7 +321,7 @@ void GAME_CP_Results (dbuffer *msg, int winner, int *numSpawned, int *numAlive, 
 	cgi->SV_Shutdown("Mission end", false);
 }
 
-bool GAME_CP_Spawn (chrList_t *chrList)
+bool GAME_CP_Spawn (linkedList_t **chrList)
 {
 	aircraft_t *aircraft = GEO_GetMissionAircraft();
 	base_t *base;
@@ -331,8 +331,7 @@ bool GAME_CP_Spawn (chrList_t *chrList)
 
 	/* convert aircraft team to character list */
 	LIST_Foreach(aircraft->acTeam, employee_t, employee) {
-		chrList->chr[chrList->num] = &employee->chr;
-		chrList->num++;
+		LIST_AddPointer(chrList, (void*)&employee->chr);
 	}
 
 	base = aircraft->homebase;
@@ -599,16 +598,15 @@ void GAME_CP_InitMissionBriefing (const char **title, linkedList_t **victoryCond
  * @brief Changes some actor states for a campaign game
  * @param team The team to change the states for
  */
-dbuffer *GAME_CP_InitializeBattlescape (const chrList_t *team)
+dbuffer *GAME_CP_InitializeBattlescape (const linkedList_t *team)
 {
-	int i;
-	dbuffer *msg = new dbuffer(2 + team->num * 10);
+	const int teamSize = LIST_Count(team);
+	dbuffer *msg = new dbuffer(2 + teamSize * 10);
 
 	NET_WriteByte(msg, clc_initactorstates);
-	NET_WriteByte(msg, team->num);
+	NET_WriteByte(msg, teamSize);
 
-	for (i = 0; i < team->num; i++) {
-		const character_t *chr = team->chr[i];
+	LIST_Foreach(team, character_t, chr) {
 		NET_WriteShort(msg, chr->ucn);
 		NET_WriteShort(msg, chr->state);
 		NET_WriteShort(msg, chr->RFmode.getHand());

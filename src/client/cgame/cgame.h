@@ -39,7 +39,7 @@ typedef struct cgame_export_s {
 	void (EXPORT *Init) (void);
 	void (EXPORT *Shutdown) (void);
 	/** soldier spawn functions may differ between the different gametypes */
-	bool (EXPORT *Spawn) (chrList_t *chrList);
+	bool (EXPORT *Spawn) (linkedList_t **chrList);
 	/** some gametypes only support special maps */
 	const mapDef_t* (EXPORT *MapInfo) (int step);
 	/** some gametypes require extra data in the results parsing (like e.g. campaign mode) */
@@ -61,7 +61,7 @@ typedef struct cgame_export_s {
 	/** called on errors */
 	void (EXPORT *Drop) (void);
 	/** called after the team spawn messages where send, can e.g. be used to set initial actor states */
-	dbuffer *(EXPORT *InitializeBattlescape) (const chrList_t *team);
+	dbuffer *(EXPORT *InitializeBattlescape) (const linkedList_t *team);
 	/** callback that is executed every frame */
 	void (EXPORT *RunFrame) (float secondsSinceLastFrame);
 	void (EXPORT *HandleBaseClick) (int baseIdx, int key, int col, int row);
