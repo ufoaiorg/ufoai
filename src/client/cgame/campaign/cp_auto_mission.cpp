@@ -715,6 +715,10 @@ static void AM_DoFight (autoMissionBattle_t *battle)
 			int aliveUnits;
 			int currentUnit;
 
+			/** @TODO Drop this if and implement correct weapon/attack strength checks */
+			if (team == AUTOMISSION_TEAM_TYPE_CIVILIAN)
+				continue;
+
 			if (battle->actUnits[team] <= 0)
 				continue;
 
