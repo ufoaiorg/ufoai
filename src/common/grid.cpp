@@ -986,12 +986,10 @@ void Grid_RecalcBoxRouting (mapTiles_t *mapTiles, Routing &routing, const GridBo
  */
 void Grid_RecalcRouting (mapTiles_t *mapTiles, Routing &routing, const char *name, const GridBox &box, const char **list)
 {
-	pos3_t min, max;
-	double start, end;
-
-	start = time(NULL);
+	const double start = time(NULL);
 
 	if (box.isZero()) {
+		pos3_t min, max;
 		const cBspModel_t *model;
 		unsigned int i;
 		/* get inline model, if it is one */
@@ -1049,11 +1047,14 @@ void Grid_RecalcRouting (mapTiles_t *mapTiles, Routing &routing, const char *nam
 		/* We now have the dimensions, call the generic rerouting function. */
 		GridBox rerouteBox(min, max);
 		Grid_RecalcBoxRouting(mapTiles, routing, rerouteBox, list);
-	} else
+		const double end = time(NULL);
+		Com_DPrintf(DEBUG_ROUTING, "Retracing for model %s between (%i, %i, %i) and (%i, %i %i) in %5.1fs\n",
+				name, min[0], min[1], min[2], max[0], max[1], max[2], end - start);
+	} else {
 		/* use the passed box */
 		Grid_RecalcBoxRouting(mapTiles, routing, box, list);
-
-	end = time(NULL);
-	Com_DPrintf(DEBUG_ROUTING, "Retracing for model %s between (%i, %i, %i) and (%i, %i %i) in %5.1fs\n",
-			name, min[0], min[1], min[2], max[0], max[1], max[2], end - start);
+		const double end = time(NULL);
+		Com_DPrintf(DEBUG_ROUTING, "Retracing for model %s in %5.1fs\n",
+				name, end - start);
+	}
 }
