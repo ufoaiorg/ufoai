@@ -70,7 +70,6 @@ static void testMapLoading (void)
 
 static void testMove (void)
 {
-	routing_t *routes;
 	vec3_t vec;
 	pos3_t pos;
 	pos_t gridPos;
@@ -94,7 +93,6 @@ static void testMove (void)
 	CU_ASSERT_EQUAL(pos[1], 128);
 	CU_ASSERT_EQUAL(pos[2], 1);
 
-	routes = &mapData.routing.routes[ACTOR_SIZE_NORMAL - 1];
 	gridPos = Grid_Fall(mapData.routing, ACTOR_SIZE_NORMAL, pos);
 	CU_ASSERT_EQUAL(gridPos, 1);
 
