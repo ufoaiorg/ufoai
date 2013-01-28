@@ -156,7 +156,7 @@ window game_team_edit extends objectinfo
 			*node:parent.soldierlist.member<1>.name@color = "1 1 1 1"
 			cmd "game_actorselect <node:root.selected@integer>;"
 			*node:root.load_warnings@integer = 0
-			cmd "mn_updateactorload equip_actorload;"
+			cmd "mn_updateactorload team_actorload;"
 		}
 	}
 

@@ -1631,7 +1631,7 @@ character_t* GAME_GetSelectedChr (void)
 	if (list && list->GetSelectedChr != NULL)
 		return list->GetSelectedChr();
 
-	return GAME_GetCharacter(Cvar_GetInteger("cl_selected"));
+	return GAME_GetCharacter(Cvar_GetInteger("mn_ucn"));
 }
 
 /**
