@@ -251,8 +251,6 @@ void UI_DrawPanel (const vec2_t pos, const vec2_t size, const char *texture, int
 	const int secondPosY = firstPosY + topHeight + marge;
 	const int thirdPosY = secondPosY + midHeight + marge;
 
-	int y, h;
-
 	/* draw top (from left to right) */
 	UI_DrawNormImage(false, pos[0], pos[1], leftWidth, topHeight, texX + firstPos + leftWidth, texY + firstPosY + topHeight,
 		texX + firstPos, texY + firstPosY, image);
@@ -262,22 +260,22 @@ void UI_DrawPanel (const vec2_t pos, const vec2_t size, const char *texture, int
 		texX + thirdPos, texY + firstPosY, image);
 
 	/* draw middle (from left to right) */
-	y = pos[1] + topHeight;
-	h = size[1] - topHeight - bottomHeight; /* height of middle */
-	UI_DrawNormImage(false, pos[0], y, leftWidth, h, texX + firstPos + leftWidth, texY + secondPosY + midHeight,
+	const int yMiddle = pos[1] + topHeight;
+	const int hMiddle = size[1] - topHeight - bottomHeight; /* height of middle */
+	UI_DrawNormImage(false, pos[0], yMiddle, leftWidth, hMiddle, texX + firstPos + leftWidth, texY + secondPosY + midHeight,
 		texX + firstPos, texY + secondPosY, image);
-	UI_DrawNormImage(false, pos[0] + leftWidth, y, size[0] - leftWidth - rightWidth, h, texX + secondPos + midWidth, texY + secondPosY + midHeight,
+	UI_DrawNormImage(false, pos[0] + leftWidth, yMiddle, size[0] - leftWidth - rightWidth, hMiddle, texX + secondPos + midWidth, texY + secondPosY + midHeight,
 		texX + secondPos, texY + secondPosY, image);
-	UI_DrawNormImage(false, pos[0] + size[0] - rightWidth, y, rightWidth, h, texX + thirdPos + rightWidth, texY + secondPosY + midHeight,
+	UI_DrawNormImage(false, pos[0] + size[0] - rightWidth, yMiddle, rightWidth, hMiddle, texX + thirdPos + rightWidth, texY + secondPosY + midHeight,
 		texX + thirdPos, texY + secondPosY, image);
 
 	/* draw bottom (from left to right) */
-	y = pos[1] + size[1] - bottomHeight;
-	UI_DrawNormImage(false, pos[0], y, leftWidth, bottomHeight, texX + firstPos + leftWidth, texY + thirdPosY + bottomHeight,
+	const int yBottom = pos[1] + size[1] - bottomHeight;
+	UI_DrawNormImage(false, pos[0], yBottom, leftWidth, bottomHeight, texX + firstPos + leftWidth, texY + thirdPosY + bottomHeight,
 		texX + firstPos, texY + thirdPosY, image);
-	UI_DrawNormImage(false, pos[0] + leftWidth, y, size[0] - leftWidth - rightWidth, bottomHeight, texX + secondPos + midWidth, texY + thirdPosY + bottomHeight,
+	UI_DrawNormImage(false, pos[0] + leftWidth, yBottom, size[0] - leftWidth - rightWidth, bottomHeight, texX + secondPos + midWidth, texY + thirdPosY + bottomHeight,
 		texX + secondPos, texY + thirdPosY, image);
-	UI_DrawNormImage(false, pos[0] + size[0] - bottomHeight, y, rightWidth, bottomHeight, texX + thirdPos + rightWidth, texY + thirdPosY + bottomHeight,
+	UI_DrawNormImage(false, pos[0] + size[0] - bottomHeight, yBottom, rightWidth, bottomHeight, texX + thirdPos + rightWidth, texY + thirdPosY + bottomHeight,
 		texX + thirdPos, texY + thirdPosY, image);
 }
 
@@ -315,8 +313,6 @@ void UI_DrawBorderedPanel (const vec2_t pos, const vec2_t size, const char *text
 	const int secondPosY = firstPosY + topHeight + marge;
 	const int thirdPosY = secondPosY + midHeight + marge;
 
-	int y, h;
-
 	/* draw top (from left to right) */
 	UI_DrawNormImage(false, pos[0], pos[1], leftWidth, topHeight, firstPos + leftWidth, firstPosY + topHeight,
 		firstPos, firstPosY, image);
@@ -326,22 +322,22 @@ void UI_DrawBorderedPanel (const vec2_t pos, const vec2_t size, const char *text
 		thirdPos, firstPosY, image);
 
 	/* draw middle (from left to right) */
-	y = pos[1] + topHeight;
-	h = size[1] - topHeight - bottomHeight; /* height of middle */
-	UI_DrawNormImage(false, pos[0], y, leftWidth, h, firstPos + leftWidth, secondPosY + midHeight,
+	const int yMiddle = pos[1] + topHeight;
+	const int hMiddle = size[1] - topHeight - bottomHeight; /* height of middle */
+	UI_DrawNormImage(false, pos[0], yMiddle, leftWidth, hMiddle, firstPos + leftWidth, secondPosY + midHeight,
 		firstPos, secondPosY, image);
-	UI_DrawNormImage(false, pos[0] + leftWidth, y, size[0] - leftWidth - rightWidth, h, secondPos + midWidth, secondPosY + midHeight,
+	UI_DrawNormImage(false, pos[0] + leftWidth, yMiddle, size[0] - leftWidth - rightWidth, hMiddle, secondPos + midWidth, secondPosY + midHeight,
 		secondPos, secondPosY, image);
-	UI_DrawNormImage(false, pos[0] + size[0] - rightWidth, y, rightWidth, h, thirdPos + rightWidth, secondPosY + midHeight,
+	UI_DrawNormImage(false, pos[0] + size[0] - rightWidth, yMiddle, rightWidth, hMiddle, thirdPos + rightWidth, secondPosY + midHeight,
 		thirdPos, secondPosY, image);
 
 	/* draw bottom (from left to right) */
-	y = pos[1] + size[1] - bottomHeight;
-	UI_DrawNormImage(false, pos[0], y, leftWidth, bottomHeight, firstPos + leftWidth, thirdPosY + bottomHeight,
+	const int yBottom = pos[1] + size[1] - bottomHeight;
+	UI_DrawNormImage(false, pos[0], yBottom, leftWidth, bottomHeight, firstPos + leftWidth, thirdPosY + bottomHeight,
 		firstPos, thirdPosY, image);
-	UI_DrawNormImage(false, pos[0] + leftWidth, y, size[0] - leftWidth - rightWidth, bottomHeight, secondPos + midWidth, thirdPosY + bottomHeight,
+	UI_DrawNormImage(false, pos[0] + leftWidth, yBottom, size[0] - leftWidth - rightWidth, bottomHeight, secondPos + midWidth, thirdPosY + bottomHeight,
 		secondPos, thirdPosY, image);
-	UI_DrawNormImage(false, pos[0] + size[0] - bottomHeight, y, rightWidth, bottomHeight, thirdPos + rightWidth, thirdPosY + bottomHeight,
+	UI_DrawNormImage(false, pos[0] + size[0] - bottomHeight, yBottom, rightWidth, bottomHeight, thirdPos + rightWidth, thirdPosY + bottomHeight,
 		thirdPos, thirdPosY, image);
 }
 
