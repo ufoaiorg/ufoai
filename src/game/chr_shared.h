@@ -187,8 +187,6 @@ typedef enum {
 	RES_TYPES /**< Max. */
 } reservation_types_t;
 
-typedef int32_t actorSizeEnum_t;
-
 /** @brief Types of actor sounds being issued by CL_ActorPlaySound(). */
 typedef enum {
 	SND_DEATH,	/**< Sound being played on actor death. */
