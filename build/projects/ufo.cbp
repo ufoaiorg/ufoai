@@ -351,6 +351,8 @@
 		<Unit filename="..\..\src\client\cgame\campaign\cp_event_callbacks.h" />
 		<Unit filename="..\..\src\client\cgame\campaign\cp_fightequip_callbacks.cpp" />
 		<Unit filename="..\..\src\client\cgame\campaign\cp_fightequip_callbacks.h" />
+		<Unit filename="..\..\src\client\cgame\campaign\cp_geoscape.cpp" />
+		<Unit filename="..\..\src\client\cgame\campaign\cp_geoscape.h" />
 		<Unit filename="..\..\src\client\cgame\campaign\cp_hospital.cpp" />
 		<Unit filename="..\..\src\client\cgame\campaign\cp_hospital.h" />
 		<Unit filename="..\..\src\client\cgame\campaign\cp_hospital_callbacks.cpp" />
@@ -359,8 +361,6 @@
 		<Unit filename="..\..\src\client\cgame\campaign\cp_installation.h" />
 		<Unit filename="..\..\src\client\cgame\campaign\cp_installation_callbacks.cpp" />
 		<Unit filename="..\..\src\client\cgame\campaign\cp_installation_callbacks.h" />
-		<Unit filename="..\..\src\client\cgame\campaign\cp_geoscape.cpp" />
-		<Unit filename="..\..\src\client\cgame\campaign\cp_geoscape.h" />
 		<Unit filename="..\..\src\client\cgame\campaign\cp_mapfightequip.cpp" />
 		<Unit filename="..\..\src\client\cgame\campaign\cp_mapfightequip.h" />
 		<Unit filename="..\..\src\client\cgame\campaign\cp_market.cpp" />
@@ -829,6 +829,7 @@
 		<Unit filename="..\..\src\shared\images.cpp" />
 		<Unit filename="..\..\src\shared\infostring.cpp" />
 		<Unit filename="..\..\src\shared\infostring.h" />
+		<Unit filename="..\..\src\shared\line.h" />
 		<Unit filename="..\..\src\shared\mathlib.cpp" />
 		<Unit filename="..\..\src\shared\mathlib.h" />
 		<Unit filename="..\..\src\shared\mathlib_extra.cpp" />

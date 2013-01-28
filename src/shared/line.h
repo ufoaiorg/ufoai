@@ -28,20 +28,19 @@ Copyright (C) 2002-2013 UFO: Alien Invasion.
 #include "ufotypes.h"
 #include "vector.h"
 
-/**
- * @brief Axis-aligned bounding box
- */
-const float MWW = MAX_WORLD_WIDTH;
-
 class Line {
 public:
-	Line (const vec3_t _start, const vec3_t _stop) : start(_start), stop(_stop);
-
+//	Line (const vec3_t _start, const vec3_t _stop) : start(_start), stop(_stop);
+	Line (const vec3_t _start, const vec3_t _stop)
+	{
+		VectorCopy(_start, start);
+		VectorCopy(_stop, stop);
+	}
 	/**
 	 * @brief Copies the values from the given Line
 	 * @param[in] other The other Line
 	 */
-	inline void set (const Line& other);
+	inline void set (const Line& other)
 	{
 		VectorCopy(other.start, start);
 		VectorCopy(other.stop, stop);
