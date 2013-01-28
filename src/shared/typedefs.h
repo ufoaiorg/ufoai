@@ -259,10 +259,6 @@ inline byte RT_getCeiling (const routing_t *routes, const int actorSize, const p
 	return routes[actorSize - 1].getCeiling(pos);
 }
 
-inline void RT_setFloor (routing_t *routes, const int actorSize, const int x, const int y, const int z, const int val)
-{
-	routes[actorSize - 1].setFloor(x, y, z, val);
-}
 inline signed char RT_getFloor (const routing_t *routes, const int actorSize, const int x, const int y, const int z)
 {
 	return routes[actorSize - 1].getFloor(x, y, z);
@@ -279,6 +275,10 @@ class Routing
 public:
 	routing_t routes[ACTOR_MAX_SIZE];	/**< routing table */
 
+	inline void setFloor (const int actorSize, const int x, const int y, const int z, const int val)
+	{
+		routes[actorSize - 1].setFloor(x, y, z, val);
+	}
 	inline signed char getFloor (const actorSizeEnum_t actorSize, const pos3_t pos) const
 	{
 		return routes[actorSize - 1].getFloor(pos);
