@@ -367,24 +367,21 @@ trace_t CM_CompleteBoxTrace (mapTiles_t *mapTiles, const vec3_t start, const vec
  * @sa CM_CompleteBoxTrace
  * @sa CM_HintedTransformedBoxTrace
  */
-trace_t CM_EntCompleteBoxTrace (mapTiles_t *mapTiles, const vec3_t start, const vec3_t end, const AABB* traceBox, int levelmask, int brushmask, int brushreject, const char **list)
+trace_t CM_EntCompleteBoxTrace (mapTiles_t *mapTiles, const vec3_t start, const vec3_t end, const AABB *traceBox, int levelmask, int brushmask, int brushreject, const char **list)
 {
 	trace_t trace, newtr;
 	const char **name;
-	vec3_t bmins, bmaxs;
 
 	/* trace against world first */
 	trace = CM_CompleteBoxTrace(mapTiles, start, end, *traceBox, levelmask, brushmask, brushreject);
 	if (!list || trace.fraction == 0.0)
 		return trace;
 
-	/* Find the original bounding box for the tracing line. */
-	VectorSet(bmins, std::min(start[0], end[0]), std::min(start[1], end[1]), std::min(start[2], end[2]));
-	VectorSet(bmaxs, std::max(start[0], end[0]), std::max(start[1], end[1]), std::max(start[2], end[2]));
-	/* Now increase the bounding box by mins and maxs in both directions. */
-	VectorAdd(bmins, traceBox->mins, bmins);
-	VectorAdd(bmaxs, traceBox->maxs, bmaxs);
-	/* Now bmins and bmaxs specify the whole volume to be traced through. */
+
+	Line line(start, end);
+	AABB lineBox(line);		/* Find the original bounding box for the tracing line. */
+	lineBox.add(*traceBox);	/* Now increase the bounding box by traceBox in both directions. */
+	/* Now lineBox specifies the whole volume to be traced through. */
 
 	for (name = list; *name; name++) {
 		vec3_t amins, amaxs;
@@ -402,12 +399,8 @@ trace_t CM_EntCompleteBoxTrace (mapTiles_t *mapTiles, const vec3_t start, const 
 		CM_CalculateBoundingBox(model, amins, amaxs);
 
 		/* If the bounds of the extents box and the line do not overlap, then skip tracing this model. */
-		if (bmins[0] > amaxs[0]
-		 || bmins[1] > amaxs[1]
-		 || bmins[2] > amaxs[2]
-		 || bmaxs[0] < amins[0]
-		 || bmaxs[1] < amins[1]
-		 || bmaxs[2] < amins[2])
+		AABB modelBox(amins, amaxs);
+		if (!lineBox.doesIntersect(modelBox))
 			continue;
 
 		newtr = CM_HintedTransformedBoxTrace(mapTiles->mapTiles[model->tile], start, end, traceBox->mins, traceBox->maxs,
