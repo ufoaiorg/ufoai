@@ -69,11 +69,21 @@ class RtData
 {
 public:
 	mapTiles_t *mapTiles;
+	Routing &routing;
 	routing_t *routes;			/**< The routing table */
 	actorSizeEnum_t actorSize;	/**< The size of the actor, in cells */
 	const char **list;			/**< The local models list */
+
+	RtData (mapTiles_t *mapTiles, Routing &r, actorSizeEnum_t actorSize, const char **list);
 };
 
+RtData::RtData (mapTiles_t *mapTiles, Routing &r, actorSizeEnum_t actorSize, const char **list) : routing(r)
+{
+	this->mapTiles = mapTiles;
+	this->routes = routing.routes;
+	this->actorSize = actorSize;
+	this->list = list;
+}
 static inline void RT_ConnSet (RtData *rtd, const int x, const int y, const int z, const int dir, const int val)
 {
 	RT_setConn(rtd->routes, rtd->actorSize, x, y, z, dir, val);
@@ -1454,7 +1464,8 @@ static int RT_UpdateConnection (RtData *rtd, const int x, const int y, const int
 void RT_UpdateConnectionColumn (mapTiles_t *mapTiles, Routing &routing, const int actorSize, const int x, const int y, const int dir, const char **list)
 {
 	int z = 0; /**< The current z value that we are testing. */
-	RtData rtd;	/* the essential data passed down the calltree */
+	/* the essential data passed down the calltree */
+	RtData rtd(mapTiles, routing, actorSize, list);
 
 	/* get the neighbor cell's coordinates */
 	const int ax = x + dvecs[dir][0];
@@ -1477,12 +1488,6 @@ void RT_UpdateConnectionColumn (mapTiles_t *mapTiles, Routing &routing, const in
 	RT_CONN_TEST(routes, actorSize, x, y, z, dir);
 
 	/* Com_Printf("At (%i, %i, %i) looking in direction %i with size %i\n", x, y, z, dir, actorSize); */
-
-	/* build the param list passed to most of the RT_* functions */
-	rtd.mapTiles = mapTiles;
-	rtd.routes = routing.routes;
-	rtd.actorSize = actorSize;
-	rtd.list = list;
 
 	/* if our destination cell is out of bounds, bail. */
 	if (ax < 0 || ax > PATHFINDING_WIDTH - actorSize || ay < 0 || y > PATHFINDING_WIDTH - actorSize) {
@@ -1614,17 +1619,11 @@ int RT_DebugSpecial (mapTiles_t *mapTiles, Routing &routing, const int actorSize
 {
 	int z = 0; /**< The current z value that we are testing. */
 	int new_z; /**< The last z value processed by the tracing function.  */
-	RtData rtd;	/* the essential data passed down the calltree */
+	RtData rtd(mapTiles, routing, actorSize, list);	/* the essential data passed down the calltree */
 
 	/* get the neighbor cell's coordinates */
 	const int ax = x + dvecs[dir][0];
 	const int ay = y + dvecs[dir][1];
-
-	/* build the param list passed to most of the RT_* functions */
-	rtd.mapTiles = mapTiles;
-	rtd.routes = routing.routes;
-	rtd.actorSize = actorSize;
-	rtd.list = list;
 
 	new_z = RT_UpdateConnection(&rtd, x, y, ax, ay, z, dir);
 	return new_z;
