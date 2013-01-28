@@ -231,6 +231,10 @@ const image_t *UI_DrawNormImageByName (bool flip, float x, float y, float w, flo
  */
 void UI_DrawPanel (const vec2_t pos, const vec2_t size, const char *texture, int texX, int texY, const int panelDef[7])
 {
+	const image_t *image = UI_LoadImage(texture);
+	if (!image)
+		return;
+
 	const int leftWidth = panelDef[0];
 	const int midWidth = panelDef[1];
 	const int rightWidth = panelDef[2];
@@ -248,10 +252,6 @@ void UI_DrawPanel (const vec2_t pos, const vec2_t size, const char *texture, int
 	const int thirdPosY = secondPosY + midHeight + marge;
 
 	int y, h;
-
-	const image_t *image = UI_LoadImage(texture);
-	if (!image)
-		return;
 
 	/* draw top (from left to right) */
 	UI_DrawNormImage(false, pos[0], pos[1], leftWidth, topHeight, texX + firstPos + leftWidth, texY + firstPosY + topHeight,
