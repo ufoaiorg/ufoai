@@ -267,10 +267,6 @@ inline signed char RT_getFloor (const routing_t *routes, const int actorSize, co
 {
 	return routes[actorSize - 1].getFloor(x, y, z);
 }
-inline signed char RT_getFloor (const routing_t *routes, const int actorSize, const pos3_t pos)
-{
-	return routes[actorSize - 1].getFloor(pos);
-}
 
 /** @brief The home of the routing tables
  *
@@ -282,6 +278,11 @@ class Routing
 {
 public:
 	routing_t routes[ACTOR_MAX_SIZE];	/**< routing table */
+
+	inline signed char getFloor (const actorSizeEnum_t actorSize, const pos3_t pos) const
+	{
+		return routes[actorSize - 1].getFloor(pos);
+	}
 };
 
 typedef struct mapData_s {

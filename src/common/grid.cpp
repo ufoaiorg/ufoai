@@ -364,7 +364,7 @@ bool Step::checkWalkingDirections (const pathing_t *path)
 		toPos[2]--;		/* Stepping down into lower cell. */
 	}
 
-	heightChange = RT_getFloor(routing.routes, actorSize, toPos) - RT_getFloor(routing.routes, actorSize, fromPos) + (toPos[2] - fromPos[2]) * CELL_HEIGHT;
+	heightChange = routing.getFloor(actorSize, toPos) - routing.getFloor(actorSize, fromPos) + (toPos[2] - fromPos[2]) * CELL_HEIGHT;
 
 	/* If the actor tries to fall more than falling_height, then prohibit the move. */
 	if (heightChange < -fallingHeight && !hasLadderSupport) {
@@ -376,7 +376,7 @@ bool Step::checkWalkingDirections (const pathing_t *path)
 	 * Set heightChange to 0.
 	 * The actor enters the cell.
 	 * The actor will be forced to fall (dir 13) from the destination cell to the cell below. */
-	if (RT_getFloor(routing.routes, actorSize, toPos) < 0) {
+	if (routing.getFloor(actorSize, toPos) < 0) {
 		/* We cannot fall if STEPDOWN is defined. */
 		if (stepup & PATHFINDING_BIG_STEPDOWN) {
 			return false;		/* There is stepdown from here. */
@@ -400,13 +400,13 @@ bool Step::checkFlyingDirections (void)
 	if (toPos[2] > fromPos[2]) {
 		/* If the actor is moving up, check the passage at the current cell.
 		 * The minimum height is the actor's height plus the distance from the current floor to the top of the cell. */
-		neededHeight = actorHeight + CELL_HEIGHT - std::max((const signed char)0, RT_getFloor(routing.routes, actorSize, fromPos));
+		neededHeight = actorHeight + CELL_HEIGHT - std::max((const signed char)0, routing.getFloor(actorSize, fromPos));
 		RT_CONN_TEST_POS(routes, actorSize, fromPos, coreDir);
 		passageHeight = RT_getConn(routing.routes, actorSize, fromPos, coreDir);
 	} else if (toPos[2] < fromPos[2]) {
 		/* If the actor is moving down, check from the destination cell back. *
 		 * The minimum height is the actor's height plus the distance from the destination floor to the top of the cell. */
-		neededHeight = actorHeight + CELL_HEIGHT - std::max((const signed char)0, RT_getFloor(routing.routes, actorSize, toPos));
+		neededHeight = actorHeight + CELL_HEIGHT - std::max((const signed char)0, routing.getFloor(actorSize, toPos));
 		RT_CONN_TEST_POS(routes, actorSize, toPos, coreDir ^ 1);
 		passageHeight = RT_getConn(routing.routes, actorSize, toPos, coreDir ^ 1);
 	} else {
@@ -430,7 +430,7 @@ bool Step::checkVerticalDirections (void)
 		if (flier) {
 			/* Fliers cannot fall intentionally. */
 			return false;
-		} else if (RT_getFloor(routing.routes, actorSize, fromPos) >= 0) {
+		} else if (routing.getFloor(actorSize, fromPos) >= 0) {
 			/* We cannot fall if there is a floor in this cell. */
 			return false;
 		} else if (hasLadderSupport) {
@@ -447,7 +447,7 @@ bool Step::checkVerticalDirections (void)
 		}
 	} else if (dir == DIRECTION_CLIMB_DOWN) {
 		if (flier) {
-			if (RT_getFloor(routing.routes, actorSize, fromPos) >= 0 ) { /* Can't fly down through a floor. */
+			if (routing.getFloor(actorSize, fromPos) >= 0 ) { /* Can't fly down through a floor. */
 				return false;
 			}
 		} else {
