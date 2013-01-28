@@ -467,8 +467,8 @@ int RT_CheckCell (mapTiles_t *mapTiles, Routing &routing, const int actorSize, c
 			/* Mark all cells to the model base as filled. */
 			for (i = z; i >= 0 ; i--) {
 				/* no floor in this cell, it is bottomless! */
-				routing.setFloor(actorSize, x, y, i, -1 - i * CELL_HEIGHT); /* There is no floor in this cell, place it at -1 below the model. */
-				RT_setCeiling(routes, actorSize, x, y, i, 0); /* There is no ceiling, the true indicator of a filled cell. */
+				routing.setFloor(actorSize, x, y, i, CELL_HEIGHT);	/* There is no floor in this cell. */
+				RT_setCeiling(routes, actorSize, x, y, i, 0);		/* There is no ceiling, the true indicator of a filled cell. */
 			}
 			/* return 0 to indicate we just scanned the model bottom. */
 			return 0;
