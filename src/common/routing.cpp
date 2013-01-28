@@ -360,7 +360,7 @@ NEW MAP TRACING FUNCTIONS
 
 /**
  * @brief Check if pos is on solid ground
- * @param[in] routes The map's routing data
+ * @param[in] routing The map's routing data
  * @param[in] actorSize The size of the actor along the X and Y axis in cell units
  * @param[in] pos The position to check below
  * @return true if solid
@@ -390,7 +390,7 @@ bool RT_AllCellsBelowAreFilled (const Routing &routing, const int actorSize, con
  *  be the top of the model.  This function will also adjust all floor and ceiling values for all cells
  *  between the found floor and ceiling.
  * @param[in] mapTiles List of tiles the current (RMA-)map is composed of
- * @param[in] routes The map's routing data
+ * @param[in] routing The map's routing data
  * @param[in] actorSize The size of the actor along the X and Y axis in cell units
  * @param[in] x The x position in the routing arrays (0 - PATHFINDING_WIDTH-1)
  * @param[in] y The y position in the routing arrays (0 - PATHFINDING_WIDTH-1)
@@ -1454,7 +1454,7 @@ static int RT_UpdateConnection (RoutingData *rtd, const int x, const int y, cons
 /**
  * @brief Routing Function to update the connection between two fields
  * @param[in] mapTiles List of tiles the current (RMA-)map is composed of
- * @param[in] routes Routing table of the current loaded map
+ * @param[in] routing Routing table of the current loaded map
  * @param[in] actorSize The size of the actor, in units
  * @param[in] x The x position in the routing arrays (0 to PATHFINDING_WIDTH - actorSize)
  * @param[in] y The y position in the routing arrays (0 to PATHFINDING_WIDTH - actorSize)

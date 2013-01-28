@@ -877,7 +877,7 @@ bool Grid_ShouldUseAutostand (const pathing_t *path, const pos3_t toPos)
 
 /**
  * @brief Converts a grid position to world coordinates
- * @param[in] routes The routing map
+ * @param[in] routing The routing map
  * @param[in] actorSize width of the actor in cells
  * @param[in] pos The grid position
  * @param[out] vec The world vector
