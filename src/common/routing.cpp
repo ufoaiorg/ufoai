@@ -468,7 +468,7 @@ int RT_CheckCell (mapTiles_t *mapTiles, Routing &routing, const int actorSize, c
 			for (i = z; i >= 0 ; i--) {
 				/* no floor in this cell, it is bottomless! */
 				routing.setFloor(actorSize, x, y, i, CELL_HEIGHT);	/* There is no floor in this cell. */
-				RT_setCeiling(routes, actorSize, x, y, i, 0);		/* There is no ceiling, the true indicator of a filled cell. */
+				routing.setCeiling(actorSize, x, y, i, 0);			/* There is no ceiling, the true indicator of a filled cell. */
 			}
 			/* return 0 to indicate we just scanned the model bottom. */
 			return 0;
@@ -503,7 +503,7 @@ int RT_CheckCell (mapTiles_t *mapTiles, Routing &routing, const int actorSize, c
 				for (i = z; i >= 0 ; i--) {
 					/* no floor in this cell, it is bottomless! */
 					routing.setFloor(actorSize, x, y, i, CELL_HEIGHT);	/* There is no floor in this cell. */
-					RT_setCeiling(routes, actorSize, x, y, i, 0);		/* There is no ceiling, the true indicator of a filled cell. */
+					routing.setCeiling(actorSize, x, y, i, 0);			/* There is no ceiling, the true indicator of a filled cell. */
 				}
 				/* return 0 to indicate we just scanned the model bottom. */
 				return 0;
@@ -531,7 +531,7 @@ int RT_CheckCell (mapTiles_t *mapTiles, Routing &routing, const int actorSize, c
 				for (i = z; i >= 0 ; i--) {
 					/* no floor in this cell, it is bottomless! */
 					routing.setFloor(actorSize, x, y, i, CELL_HEIGHT);	/* There is no floor in this cell. */
-					RT_setCeiling(routes, actorSize, x, y, i, 0);		/* There is no ceiling, the true indicator of a filled cell. */
+					routing.setCeiling(actorSize, x, y, i, 0);			/* There is no ceiling, the true indicator of a filled cell. */
 				}
 				/* return 0 to indicate we just scanned the model bottom. */
 				return 0;
@@ -592,13 +592,13 @@ int RT_CheckCell (mapTiles_t *mapTiles, Routing &routing, const int actorSize, c
 		/* Round up floor to keep feet out of model. */
 		routing.setFloor(actorSize, x, y, i, bottomQ - i * CELL_HEIGHT);
 		/* Round down ceiling to heep head out of model.  Also offset by floor and max at 255. */
-		RT_setCeiling(routes, actorSize, x, y, i, topQ - i * CELL_HEIGHT);
+		routing.setCeiling(actorSize, x, y, i, topQ - i * CELL_HEIGHT);
 	}
 
 	/* Also, update the floors of any filled cells immediately above the ceiling up to our original cell. */
 	for (i = cz + 1; i <= z; i++) {
 		routing.setFloor(actorSize, x, y, i, CELL_HEIGHT);	/* There is no floor in this cell. */
-		RT_setCeiling(routes, actorSize, x, y, i, 0);		/* There is no ceiling, the true indicator of a filled cell. */
+		routing.setCeiling(actorSize, x, y, i, 0);			/* There is no ceiling, the true indicator of a filled cell. */
 	}
 
 	/* Return the lowest z coordinate that we updated floors for. */
