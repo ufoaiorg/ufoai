@@ -30,7 +30,11 @@ Copyright (C) 2002-2013 UFO: Alien Invasion.
 
 class Line {
 public:
-//	Line (const vec3_t _start, const vec3_t _stop) : start(_start), stop(_stop);
+	Line ()
+	{
+		VectorCopy(vec3_origin, start);
+		VectorCopy(vec3_origin, stop);
+	}
 	Line (const vec3_t _start, const vec3_t _stop)
 	{
 		VectorCopy(_start, start);

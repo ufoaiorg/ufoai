@@ -237,7 +237,7 @@ void RT_DumpWholeMap (mapTiles_t *mapTiles, const Routing &routing)
 			PosToVec(end, box.maxs);
 			VectorAdd(box.maxs, normal, box.maxs);
 			/* Test for stuff in a small box, if there is something then exit while */
-			trace = RT_COMPLETEBOXTRACE_SIZE(mapTiles, origin, origin, &box, NULL);
+			trace = RT_COMPLETEBOXTRACE_SIZE(mapTiles, &box, NULL);
 			if (trace.fraction < 1.0)
 				break;
 			/* There is nothing, lower the boundary. */
@@ -255,7 +255,7 @@ void RT_DumpWholeMap (mapTiles_t *mapTiles, const Routing &routing)
 			PosToVec(test, box.maxs);
 			VectorAdd(box.maxs, normal, box.maxs);
 			/* Test for stuff in a small box, if there is something then exit while */
-			trace = RT_COMPLETEBOXTRACE_SIZE(mapTiles, origin, origin, &box, NULL);
+			trace = RT_COMPLETEBOXTRACE_SIZE(mapTiles, &box, NULL);
 			if (trace.fraction < 1.0)
 				break;
 			/* There is nothing, raise the boundary. */
@@ -314,7 +314,7 @@ void RT_GetMapSize (mapTiles_t *mapTiles, vec3_t map_min, vec3_t map_max)
 			PosToVec(end, box.maxs);
 			VectorAdd(box.maxs, normal, box.maxs);
 			/* Test for stuff in a small box, if there is something then exit while */
-			trace = RT_COMPLETEBOXTRACE_SIZE(mapTiles, origin, origin, &box, NULL);
+			trace = RT_COMPLETEBOXTRACE_SIZE(mapTiles, &box, NULL);
 			if (trace.fraction < 1.0)
 				break;
 			/* There is nothing, lower the boundary. */
@@ -332,7 +332,7 @@ void RT_GetMapSize (mapTiles_t *mapTiles, vec3_t map_min, vec3_t map_max)
 			PosToVec(test, box.maxs);
 			VectorAdd(box.maxs, normal, box.maxs);
 			/* Test for stuff in a small box, if there is something then exit while */
-			trace = RT_COMPLETEBOXTRACE_SIZE(mapTiles, origin, origin, &box, NULL);
+			trace = RT_COMPLETEBOXTRACE_SIZE(mapTiles, &box, NULL);
 			if (trace.fraction < 1.0)
 				break;
 			/* There is nothing, raise the boundary. */
