@@ -112,13 +112,13 @@ typedef struct place_s {
 	bool usable;	/**< does an actor fit in here ? */
 } place_t;
 
-static inline void RT_PlaceInit (const routing_t *routes, const actorSizeEnum_t actorSize, place_t *p, const int x, const int y, const int z)
+static inline void RT_PlaceInit (const Routing &routing, const actorSizeEnum_t actorSize, place_t *p, const int x, const int y, const int z)
 {
 	p->cell[0] = x;
 	p->cell[1] = y;
 	p->cell[2] = z;
-	const int relCeiling = routes[actorSize - 1].getCeiling(p->cell);
-	p->floor = RT_getFloor(routes, actorSize, x, y, z) + z * CELL_HEIGHT;
+	const int relCeiling = routing.routes[actorSize - 1].getCeiling(p->cell);
+	p->floor = RT_getFloor(routing.routes, actorSize, x, y, z) + z * CELL_HEIGHT;
 	p->ceiling = relCeiling + z * CELL_HEIGHT;
 	p->floorZ = std::max(0, p->floor / CELL_HEIGHT) ;
 	p->usable = (relCeiling && p->floor > -1 && p->ceiling - p->floor >= PATHFINDING_MIN_OPENING) ? true : false;
@@ -1294,8 +1294,8 @@ static void RT_TracePassage (RoutingData *rtd, const int x, const int y, const i
 	place_t from, to, above;
 	const place_t* placeToCheck = NULL;
 
-	RT_PlaceInit(rtd->routes, rtd->actorSize, &from, x, y, z);
-	RT_PlaceInit(rtd->routes, rtd->actorSize, &to, ax, ay, z);
+	RT_PlaceInit(rtd->routing, rtd->actorSize, &from, x, y, z);
+	RT_PlaceInit(rtd->routing, rtd->actorSize, &to, ax, ay, z);
 
 	aboveCeil = (z < PATHFINDING_HEIGHT - 1) ? RT_getCeiling(rtd->routes, rtd->actorSize, ax, ay, z + 1) + (z + 1) * CELL_HEIGHT : to.ceiling;
 	lowCeil = std::min(from.ceiling, (RT_getCeiling(rtd->routes, rtd->actorSize, ax, ay, z) == 0 || to.ceiling - from.floor < PATHFINDING_MIN_OPENING) ? aboveCeil : to.ceiling);
@@ -1321,7 +1321,7 @@ static void RT_TracePassage (RoutingData *rtd, const int x, const int y, const i
 	if (RT_PlaceIsUsable(&to) && RT_PlaceDoesIntersectEnough(&from, &to)) {
 		placeToCheck = &to;
 	} else if (z < PATHFINDING_HEIGHT - 1) {
-		RT_PlaceInit(rtd->routes, rtd->actorSize, &above, ax, ay, z + 1);
+		RT_PlaceInit(rtd->routing, rtd->actorSize, &above, ax, ay, z + 1);
 		if (RT_PlaceIsUsable(&above) && RT_PlaceDoesIntersectEnough(&from, &above)) {
 			placeToCheck = &above;
 		}
