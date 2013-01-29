@@ -110,6 +110,7 @@ extern const byte dvleft[CORE_DIRECTIONS];
 )
 
 #include "vector.h"
+#include "line.h"
 #include "aabb.h"
 
 class GridBox {

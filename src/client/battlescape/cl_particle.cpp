@@ -390,7 +390,7 @@ static inline void *CL_ParticleCommandGetDataLocation (ptl_t *p, const ptlCmd_t 
 		return (byte*)pcmdData + cmd->ref;
 }
 
-static void CL_ParticleFunction (ptl_t * p, ptlCmd_t * cmd)
+static void CL_ParticleFunction (ptl_t *p, ptlCmd_t *cmd)
 {
 	int stackIdx;
 	ptrdiff_t e;
@@ -1086,7 +1086,7 @@ static void CL_ParticleRunTimed (void)
  * @param[in] afterwards If this is true you can modify the particle after the init
  * function for the particle was already called
  */
-static void CL_ParseMapParticle (ptl_t * ptl, const char *es, bool afterwards)
+static void CL_ParseMapParticle (ptl_t *ptl, const char *es, bool afterwards)
 {
 	char keyname[MAX_VAR];
 	const char *token;

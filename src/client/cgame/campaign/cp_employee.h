@@ -78,7 +78,6 @@ bool E_HireRobot(base_t* base, const struct ugv_s *ugvType);
 bool E_UnhireEmployee(employee_t* employee);
 int E_RefreshUnhiredEmployeeGlobalList(const employeeType_t type, const bool excludeUnhappyNations);
 
-bool E_RemoveEmployeeFromBuildingOrAircraft(employee_t *employee);
 void E_ResetEmployee(employee_t *employee);
 int E_GenerateHiredEmployeesList(const base_t *base);
 bool E_IsAwayFromBase(const employee_t *employee);

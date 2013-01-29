@@ -579,14 +579,11 @@ static void PR_ProductionType_f (void)
 static void PR_ProductionList_f (void)
 {
 	char tmpbuf[MAX_VAR];
-	int numWorkshops;
 	base_t *base = B_GetCurrentSelectedBase();
 
 	/* can be called from everywhere without a started game */
 	if (!base)
 		return;
-
-	numWorkshops = std::max(0, B_GetNumberOfBuildingsInBaseByBuildingType(base, B_WORKSHOP));
 
 	cgi->Cvar_SetValue("mn_production_basecap", CAP_GetMax(base, CAP_WORKSPACE));
 

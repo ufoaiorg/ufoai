@@ -93,7 +93,7 @@ void PQueuePop (priorityQueue_t *pq, pos4_t item)
 {
 	uint32_t i, j;
 	uint32_t child;
-	priorityQueueElement_t * elements = pq->elements;
+	priorityQueueElement_t *elements = pq->elements;
 	uint32_t currentSize = pq->currentSize;
 	priorityQueueElement_t pMaxElement;
 	priorityQueueElement_t pLastElement;

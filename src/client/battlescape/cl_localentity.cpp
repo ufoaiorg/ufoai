@@ -79,7 +79,7 @@ static void CL_GridRecalcRouting (const le_t *le)
 
 	Com_DPrintf(DEBUG_ROUTING, "Rerouting le %i client side\n", le->entnum);
 
-	Grid_RecalcRouting(cl.mapTiles, cl.mapData->routes, le->inlineModelName, reroute, cl.leInlineModelList);
+	Grid_RecalcRouting(cl.mapTiles, cl.mapData->routing, le->inlineModelName, reroute, cl.leInlineModelList);
 }
 
 /**
@@ -539,8 +539,8 @@ int LE_ActorGetStepTime (const le_t *le, const pos3_t pos, const pos3_t oldPos, 
 	} else {
 		vec3_t start, dest;
 		/* This needs to account for the distance of the fall. */
-		Grid_PosToVec(cl.mapData->routes, le->fieldSize, oldPos, start);
-		Grid_PosToVec(cl.mapData->routes, le->fieldSize, pos, dest);
+		Grid_PosToVec(cl.mapData->routing, le->fieldSize, oldPos, start);
+		Grid_PosToVec(cl.mapData->routing, le->fieldSize, pos, dest);
 		/* 1/1000th of a second per model unit in height change */
 		return (start[2] - dest[2]);
 	}
@@ -652,7 +652,7 @@ static void LET_PathMove (le_t *le)
 	/* move ahead */
 	while (cl.time >= le->endTime) {
 		/* Ensure that we are displayed where we are supposed to be, in case the last frame came too quickly. */
-		Grid_PosToVec(cl.mapData->routes, le->fieldSize, le->pos, le->origin);
+		Grid_PosToVec(cl.mapData->routing, le->fieldSize, le->pos, le->origin);
 
 		/* Record the last position of movement calculations. */
 		VectorCopy(le->pos, le->oldPos);
@@ -666,8 +666,8 @@ static void LET_PathMove (le_t *le)
 	}
 
 	/* interpolate the position */
-	Grid_PosToVec(cl.mapData->routes, le->fieldSize, le->oldPos, start);
-	Grid_PosToVec(cl.mapData->routes, le->fieldSize, le->pos, dest);
+	Grid_PosToVec(cl.mapData->routing, le->fieldSize, le->oldPos, start);
+	Grid_PosToVec(cl.mapData->routing, le->fieldSize, le->pos, dest);
 	VectorSubtract(dest, start, delta);
 
 	frac = (float) (cl.time - le->startTime) / (float) (le->endTime - le->startTime);
@@ -869,7 +869,7 @@ void LE_PlaceItem (le_t *le)
 		if (!le->model1)
 			Com_Error(ERR_DROP, "Model for item %s is not precached in the cls.model_weapons array",
 				biggest->id);
-		Grid_PosToVec(cl.mapData->routes, le->fieldSize, le->pos, le->origin);
+		Grid_PosToVec(cl.mapData->routing, le->fieldSize, le->pos, le->origin);
 		VectorSubtract(le->origin, biggest->center, le->origin);
 		le->angles[ROLL] = 90;
 		/*le->angles[YAW] = 10*(int)(le->origin[0] + le->origin[1] + le->origin[2]) % 360; */
@@ -1666,7 +1666,7 @@ static int32_t CL_HullForEntity (const le_t *le, int *tile, vec3_t rmaShift, vec
  * @sa CL_Trace
  * @sa SV_ClipMoveToEntities
  */
-static void CL_ClipMoveToLEs (moveclip_t * clip)
+static void CL_ClipMoveToLEs (moveclip_t *clip)
 {
 	le_t *le = NULL;
 

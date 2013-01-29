@@ -215,8 +215,8 @@ namespace routing
 						clMap[size].setFloor(x, y, z, tempMap[size].getFloor(x - sX, y - sY, z - sZ));
 						clMap[size].setCeiling(x, y, z, tempMap[size].getCeiling(x - sX, y - sY, z - sZ));
 						for (dir = 0; dir < CORE_DIRECTIONS; dir++) {
-							clMap[size].route[z][y][x][dir] = tempMap[size].route[z - sZ][y - sY][x - sX][dir];
-							clMap[size].stepup[z][y][x][dir] = tempMap[size].stepup[z - sZ][y - sY][x - sX][dir];
+							clMap[size].setConn(x, y, z, dir, tempMap[size].getConn(x - sX, y - sY, z - sZ, dir));
+							clMap[size].setStepup(x, y, z, dir, tempMap[size].getStepup(x - sX, y - sY, z - sZ, dir));
 						}
 					}
 					/* Update the reroute table */

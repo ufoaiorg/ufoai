@@ -352,7 +352,7 @@ static const char* R_GetActorSkin (int id)
  * @param outMesh Mesh target of skins
  * @param defaultSkin Default skin of the mesh
  */
-void R_LoadActorSkinsFromModel (mAliasMesh_t *outMesh, image_t * defaultSkin)
+void R_LoadActorSkinsFromModel (mAliasMesh_t *outMesh, image_t *defaultSkin)
 {
 	int i;
 	assert(outMesh);

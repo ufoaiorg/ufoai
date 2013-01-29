@@ -52,6 +52,6 @@ void TEAM_InitStartup(void);
 actorSkin_t* CL_AllocateActorSkin(const char *name);
 unsigned int CL_GetActorSkinCount(void);
 
-extern chrList_t chrDisplayList;
+extern linkedList_t *chrDisplayList;
 
 #endif

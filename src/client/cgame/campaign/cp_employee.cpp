@@ -472,10 +472,36 @@ bool E_HireRobot (base_t* base, const ugv_t *ugvType)
 void E_ResetEmployee (employee_t *employee)
 {
 	assert(employee);
-	assert(E_IsHired(employee));
 
-	/* Remove employee from building (and tech/production). */
-	E_RemoveEmployeeFromBuildingOrAircraft(employee);
+	/* get the base where the employee is hired in */
+	base_t *base = employee->baseHired;
+	if (!base)
+		cgi->Com_Error(ERR_DROP, "Employee (type: %i) is not hired", employee->type);
+
+	/* Remove employee from building/tech/production/aircraft). */
+	switch (employee->type) {
+	case EMPL_SCIENTIST:
+		if (!E_EmployeeIsUnassigned(employee))
+			RS_RemoveFiredScientist(base, employee);
+		break;
+	case EMPL_ROBOT:
+	case EMPL_SOLDIER:
+		/* Remove soldier from aircraft/team if he was assigned to one. */
+		if (AIR_IsEmployeeInAircraft(employee, NULL))
+			AIR_RemoveEmployee(employee, NULL);
+		break;
+	case EMPL_PILOT:
+		AIR_RemovePilotFromAssignedAircraft(base, employee);
+		break;
+	case EMPL_WORKER:
+		/* Update current capacity and production times if worker is being counted there. */
+		/** @TODO doesn't work for unhiring, employee is yet hired therfore will be faultly counted */
+		PR_UpdateProductionCap(base);
+		break;
+	case MAX_EMPL:
+		break;
+	}
+
 	/* Destroy the inventory of the employee (carried items will remain in base->storage) */
 	cgi->INV_DestroyInventory(&employee->chr.i);
 }
@@ -488,7 +514,6 @@ void E_ResetEmployee (employee_t *employee)
  * @sa E_HireEmployeeByType
  * @sa CL_RemoveSoldierFromAircraft
  * @sa E_ResetEmployee
- * @sa E_RemoveEmployeeFromBuildingOrAircraft
  * @todo handle EMPL_ROBOT capacities here?
  */
 bool E_UnhireEmployee (employee_t* employee)
@@ -497,7 +522,7 @@ bool E_UnhireEmployee (employee_t* employee)
 		base_t *base = employee->baseHired;
 
 		/* Any effect of removing an employee (e.g. removing a scientist from a research project)
-		 * should take place in E_RemoveEmployeeFromBuildingOrAircraft */
+		 * should take place in E_ResetEmployee */
 		E_ResetEmployee(employee);
 		/* Set all employee-tags to 'unhired'. */
 		employee->baseHired = NULL;
@@ -747,62 +772,6 @@ int E_RefreshUnhiredEmployeeGlobalList (const employeeType_t type, const bool ex
 	}
 
 	return cnt;
-}
-
-/**
- * @brief Remove one employee from building.
- * @todo Add check for base vs. employee_type and abort if they do not match.
- * @param[in] employee What employee to remove from its building.
- * @return Returns true if removing was possible/sane otherwise false.
- * @sa E_AssignEmployeeToBuilding
- * @todo are soldiers and pilots assigned to a building, too? quarters?
- */
-bool E_RemoveEmployeeFromBuildingOrAircraft (employee_t *employee)
-{
-	base_t *base;
-
-	assert(employee);
-
-	/* not assigned to any building... */
-	if (E_EmployeeIsUnassigned(employee)) {
-		/* ... and no aircraft handling needed? */
-		if (employee->type != EMPL_SOLDIER && employee->type != EMPL_ROBOT
-		 && employee->type != EMPL_PILOT)
-			return false;
-	}
-
-	/* get the base where the employee is hired in */
-	base = employee->baseHired;
-	if (!base)
-		cgi->Com_Error(ERR_DROP, "Employee (type: %i) is not hired", employee->type);
-
-	switch (employee->type) {
-	case EMPL_SCIENTIST:
-		RS_RemoveFiredScientist(base, employee);
-		break;
-
-	case EMPL_ROBOT:
-	case EMPL_SOLDIER:
-		/* Remove soldier from aircraft/team if he was assigned to one. */
-		if (AIR_IsEmployeeInAircraft(employee, NULL))
-			AIR_RemoveEmployee(employee, NULL);
-		break;
-
-	case EMPL_PILOT:
-		AIR_RemovePilotFromAssignedAircraft(base, employee);
-		break;
-
-	case EMPL_WORKER:
-		/* Update current capacity and production times if worker is being counted there. */
-		PR_UpdateProductionCap(base);
-		break;
-
-	/* otherwise the compiler would print a warning */
-	case MAX_EMPL:
-		break;
-	}
-
-	return true;
 }
 
 /**

@@ -304,27 +304,92 @@ window market extends objectinfo {
 			background	"ui/panel_grey_green"
 		}
 
-		// ==================
-		// storage capacity
-		// ==================
-
-		string txt_storage_caption
-		{
-			visiblewhen "*cvar:ui_market_category ne \"aircraft\""	// for everything except aircraft
-			string 		"_Storage (used/all):"
-			pos			"62 50"
-			size		"200 20"
-			font		"f_small"
+		string header_capacity {
+			string 		"_Capacity"
+			pos			"15 20"
+			size		"230 20"
+			font		"f_small_bold"
+			contentalign	ALIGN_CL
+		}
+		string header_free {
+			string 		"_free"
+			pos			"245 20"
+			size		"75 20"
+			font		"f_small_bold"
+			contentalign	ALIGN_CR
+		}
+		string header_all {
+			string 		"_all"
+			pos			"320 20"
+			size		"75 20"
+			font		"f_small_bold"
+			contentalign	ALIGN_CR
 		}
 
-		string txt_storage_value
-		{
-			visiblewhen "*cvar:ui_market_category ne \"aircraft\""	// for everything except aircraft
-			string 		*cvar:mn_bs_storage
-			pos			"267 50"
-			size		"100 20"
+		string storage_caption {
+			string 		"_Storage"
+			pos			"15 40"
+			size		"230 20"
 			font		"f_small"
 		}
+		string storage_free {
+			pos			"245 40"
+			size		"75 20"
+			font		"f_small"
+			contentalign	ALIGN_CR
+		}
+		string storage_all {
+			pos			"320 40"
+			size		"75 20"
+			font		"f_small"
+			contentalign	ALIGN_CR
+		}
+		string interceptor_caption {
+			string 		"_Interceptor Hangar"
+			pos			"15 60"
+			size		"230 20"
+			font		"f_small"
+		}
+		string interceptor_free {
+			pos			"245 60"
+			size		"75 20"
+			font		"f_small"
+			contentalign	ALIGN_CR
+		}
+		string interceptor_all {
+			pos			"320 60"
+			size		"75 20"
+			font		"f_small"
+			contentalign	ALIGN_CR
+		}
+		string dropship_caption {
+			string 		"_Dropship Hangar"
+			pos			"15 80"
+			size		"230 20"
+			font		"f_small"
+		}
+		string dropship_free {
+			pos			"245 80"
+			size		"75 20"
+			font		"f_small"
+			contentalign	ALIGN_CR
+		}
+		string dropship_all {
+			pos			"320 80"
+			size		"75 20"
+			font		"f_small"
+			contentalign	ALIGN_CR
+		}
+
+		confunc ui_market_update_caps {
+			*node:parent.storage_free@string = "<1>"
+			*node:parent.storage_all@string = "<2>"
+			*node:parent.interceptor_free@string = "<3>"
+			*node:parent.interceptor_all@string = "<4>"
+			*node:parent.dropship_free@string = "<5>"
+			*node:parent.dropship_all@string = "<6>"
+		}
+
 	}
 
 	confunc listen_openpedia {

@@ -184,10 +184,24 @@ public:
  *
  */
 typedef struct routing_s {
-	byte stepup[PATHFINDING_HEIGHT][PATHFINDING_WIDTH][PATHFINDING_WIDTH][CORE_DIRECTIONS];
-	byte route[PATHFINDING_HEIGHT][PATHFINDING_WIDTH][PATHFINDING_WIDTH][CORE_DIRECTIONS];
+	byte _stepup[PATHFINDING_HEIGHT][PATHFINDING_WIDTH][PATHFINDING_WIDTH][CORE_DIRECTIONS];
+	byte _route[PATHFINDING_HEIGHT][PATHFINDING_WIDTH][PATHFINDING_WIDTH][CORE_DIRECTIONS];
 	signed char _floor[PATHFINDING_HEIGHT][PATHFINDING_WIDTH][PATHFINDING_WIDTH];
 	byte _ceil[PATHFINDING_HEIGHT][PATHFINDING_WIDTH][PATHFINDING_WIDTH];
+
+	inline void setStepup (const int x, const int y, const int z, const int dir, const int val) {
+		_stepup[z][y][x][dir] = val;
+	}
+	inline byte getStepup (const int x, const int y, const int z, const int dir) const {
+		return _stepup[z][y][x][dir];
+	}
+
+	inline void setConn (const int x, const int y, const int z, const int dir, const int val) {
+		_route[z][y][x][dir] = val;
+	}
+	inline byte getConn (const int x, const int y, const int z, const int dir) const {
+		return _route[z][y][x][dir];
+	}
 
 	inline void setCeiling (const int x, const int y, const int z, const int val) {
 		_ceil[z][y][x] = val;
@@ -210,6 +224,28 @@ typedef struct routing_s {
 	}
 } routing_t;
 
+inline void RT_setStepup (routing_t *routes, const int actorSize, const int x, const int y, const int z, const int dir, const int val)
+{
+	routes[actorSize - 1].setStepup(x, y, z, dir, val);
+}
+inline byte RT_getStepup (const routing_t *routes, const int actorSize, const int x, const int y, const int z, const int dir)
+{
+	return routes[actorSize - 1].getStepup(x, y, z, dir);
+}
+
+inline void RT_setConn (routing_t *routes, const int actorSize, const int x, const int y, const int z, const int dir, const int val)
+{
+	routes[actorSize - 1].setConn(x, y, z, dir, val);
+}
+inline byte RT_getConn (const routing_t *routes, const int actorSize, const int x, const int y, const int z, const int dir)
+{
+	return routes[actorSize - 1].getConn(x, y, z, dir);
+}
+inline byte RT_getConn (const routing_t *routes, const int actorSize, const pos3_t pos, const int dir)
+{
+	return routes[actorSize - 1].getConn(pos[0], pos[1], pos[2], dir);
+}
+
 inline void RT_setCeiling (routing_t *routes, const int actorSize, const int x, const int y, const int z, const int val)
 {
 	routes[actorSize - 1].setCeiling(x, y, z, val);
@@ -223,18 +259,31 @@ inline byte RT_getCeiling (const routing_t *routes, const int actorSize, const p
 	return routes[actorSize - 1].getCeiling(pos);
 }
 
-inline void RT_setFloor (routing_t *routes, const int actorSize, const int x, const int y, const int z, const int val)
-{
-	routes[actorSize - 1].setFloor(x, y, z, val);
-}
 inline signed char RT_getFloor (const routing_t *routes, const int actorSize, const int x, const int y, const int z)
 {
 	return routes[actorSize - 1].getFloor(x, y, z);
 }
-inline signed char RT_getFloor (const routing_t *routes, const int actorSize, const pos3_t pos)
+
+/** @brief The home of the routing tables
+ *
+ * The purpose of this class is
+ * 1. to hide the actual dimensions of the map. Atm we allocate the maximum mapsize, This is about to change.
+ * 2. to hide the way the info for different actor sizes is handled. That will changen in the future.
+ */
+class Routing
 {
-	return routes[actorSize - 1].getFloor(pos);
-}
+public:
+	routing_t routes[ACTOR_MAX_SIZE];	/**< routing table */
+
+	inline void setFloor (const int actorSize, const int x, const int y, const int z, const int val)
+	{
+		routes[actorSize - 1].setFloor(x, y, z, val);
+	}
+	inline signed char getFloor (const actorSizeEnum_t actorSize, const pos3_t pos) const
+	{
+		return routes[actorSize - 1].getFloor(pos);
+	}
+};
 
 typedef struct mapData_s {
 	/** @note holds all entity data as a single parsable string */
@@ -248,8 +297,7 @@ typedef struct mapData_s {
 	/** @brief Used to track where rerouting needs to occur.
 	 * @todo not threadsafe */
 	byte reroute[ACTOR_MAX_SIZE][PATHFINDING_WIDTH][PATHFINDING_WIDTH];
-
-	routing_t routes[ACTOR_MAX_SIZE];	/**< routing table */
+	Routing routing;
 
 	/**
 	 * @note The vectors are from 0 up to 2*MAX_WORLD_WIDTH - but not negative

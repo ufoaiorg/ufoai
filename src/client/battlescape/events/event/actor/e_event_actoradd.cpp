@@ -65,6 +65,6 @@ void CL_ActorAdd (const eventRegister_t *self, dbuffer *msg)
 
 	le->type = ET_ACTORHIDDEN;
 
-	Grid_PosToVec(cl.mapData->routes, le->fieldSize, le->pos, le->origin);
+	Grid_PosToVec(cl.mapData->routing, le->fieldSize, le->pos, le->origin);
 	le->flags = LE_INVISIBLE;
 }

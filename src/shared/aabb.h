@@ -26,6 +26,7 @@ Copyright (C) 2002-2013 UFO: Alien Invasion.
 
 #include "ufotypes.h"
 #include "vector.h"
+#include "line.h"
 #include "defines.h"	/* for MAX_WORLD_WIDTH */
 #include <algorithm>
 
@@ -39,6 +40,7 @@ public:
 	AABB ();
 	AABB (const vec3_t mini, const vec3_t maxi);
 	AABB (const vec_t minX, const vec_t minY, const vec_t minZ, const vec_t maxX, const vec_t maxY, const vec_t maxZ);
+	AABB (const Line &line);
 
 	inline bool isZero () const;
 	void add (const vec3_t point);

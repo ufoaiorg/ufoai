@@ -2,28 +2,43 @@
 // MULTIPLAYER TEAM CREATION MENU
 // ==============================
 
-component gameTeamCheckbox extends checkbox_green
-{
-	size		"20 20"
-	onChange	{ cmd "game_toggleactor <num> <current>;" }
+component teamSoldier extends panel {
+	{
+		size		"260 25"
+	}
+
+	data id {
+		string		""
+	}
+
+	checkbox_green selected {
+		pos			"0 2"
+		size		"20 20"
+		onChange {
+			cmd "team_soldierlist_select <node:parent.id@integer>;"
+			cmd "game_toggleactor <node:parent.id@integer> <current>;"
+		}
+	}
+
+	string name {
+		pos			"20 0"
+		color		"0 .78 0 1"
+		size		"260 25"
+		contentalign	ALIGN_CL
+		onClick {
+			cmd "team_soldierlist_select <node:parent.id@integer>;"
+		}
+	}
 }
+
 
 window game_team_edit extends objectinfo
 {
-	/** @todo Remove me */
-	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
-
-	// ==================
-	// background
-	// ==================
-
-	image background
 	{
-		src	"background/game_team_edit_bg"
-	}
+		background	"background/equipment_bg"
+	} // empty properties to fix parsing problem with "image" token (behaviour or property?)
 
-	string s_backpack
-	{
+	string s_backpack {
 		pos "852 25"
 		contentalign ALIGN_UC
 		string	"_Backpack"
@@ -86,202 +101,63 @@ window game_team_edit extends objectinfo
 	}
 
 	// ==================
-	// checkbox list
+	// Soldier List
 	// ==================
-
-	gameTeamCheckbox bt_actor0
-	{
-		num 0
-		pos	"60 23"
+	data selected {
 	}
 
-	gameTeamCheckbox bt_actor1
-	{
-		num 1
-		pos	"60 64"
-	}
+	panel soldierlist {
+		pos		"55 15"
+		size	"260 320"
+		padding		6
+		layout		LAYOUT_TOP_DOWN_FLOW
+		wheelscrollable	true
 
-	gameTeamCheckbox bt_actor2
-	{
-		num 2
-		pos	"60 105"
-	}
-
-	gameTeamCheckbox bt_actor3
-	{
-		num 3
-		pos	"60 146"
-	}
-
-	gameTeamCheckbox bt_actor4
-	{
-		num 4
-		pos	"60 187"
-	}
-
-	gameTeamCheckbox bt_actor5
-	{
-		num 5
-		pos	"60 228"
-	}
-
-	gameTeamCheckbox bt_actor6
-	{
-		num 6
-		pos	"60 269"
-	}
-
-	gameTeamCheckbox bt_actor7
-	{
-		num 7
-		pos	"60 310"
-	}
-
-	// ==================
-	// names list
-	// ==================
-
-	confunc equipenable {
-		*node:root.bt_actor<1>@disabled = false
-	}
-	confunc equipdisable {
-		*node:root.bt_actor<1>@disabled = true
-		*cvar:mn_name<1> = ""
-	}
-	confunc equipdeselect {
-		*node:root.bt_actor<1>@disabled = false
-		*node:root.txt_actor<1>@color = "0 .78 0 1"
-	}
-	confunc equipselect {
-		*node:root.bt_actor<1>@disabled = false
-		*cvar:selected_actor = <1>
-		*node:root.txt_actor<1>@color = "1 1 1 1"
-	}
-
-	/**
-	 * @param[in] <1> number of soldier in the list
-	 */
-	confunc team_soldier_unselect {
-		*node:root.txt_actor<1>@color = "0 .78 0 1"
-		cmd "equipdeselect <1>;"
-	}
-
-	/**
-	 * @param[in] <1> number of soldier in the list
-	 */
-	confunc team_soldier_select {
-		*node:root.txt_actor<1>@color = "1 1 1 1"
-		*node:root.load_warnings@integer = 0
-		cmd "equipselect <1>;"
-		cmd "mn_updateactorload team_actorload;"
-	}
-
-	/**
-	 * @param[in] <1> amount of soldiers in the list
-	 */
-	confunc team_checkboxes_update {
-		*cvar:tmp = <1>
-		*cvar:i = 0
-		while ( *cvar:i < 8 ) {
-			if ( *cvar:i >= *cvar:tmp ) {
-				*node:root.bt_actor<cvar:i>@invis = true
-			} else {
-				*node:root.bt_actor<cvar:i>@invis = false
-			}
-			*cvar:i = ( *cvar:i + 1 )
+		onViewChange {
+			*node:parent.soldierlist_scroll@fullsize = <fullsize>
+			*node:parent.soldierlist_scroll@current = <viewpos>
+			*node:parent.soldierlist_scroll@viewsize = <viewsize>
 		}
-		delete *cvar:i
-		delete *cvar:tmp
 	}
+	vscrollbar soldierlist_scroll {
+		image		"ui/scrollbar_v_green"
+		pos			"317 18"
+		height		"320"
+		current		0
+		viewsize	8
+		fullsize	50
 
-	func team_checkboxes_set
-	{
-		*cvar:i = 0
-		while ( *cvar:i < 8 ) {
-			if ( *node:root.bt_actor<cvar:i>@current != 1 ) {
-				call *node:root.bt_actor<cvar:i>@toggle
-			}
-			cmd "game_toggleactor <cvar:i> 1;"
-			*cvar:i = ( *cvar:i + 1 )
+		onChange {
+			*node:parent.soldierlist@viewpos = <current>
 		}
-		delete *cvar:i
 	}
 
-	func team_names_clear
-	{
-		*node:root.txt_actor0@color = "0 .78 0 1"
-		*node:root.txt_actor1@color = "0 .78 0 1"
-		*node:root.txt_actor2@color = "0 .78 0 1"
-		*node:root.txt_actor3@color = "0 .78 0 1"
-		*node:root.txt_actor4@color = "0 .78 0 1"
-		*node:root.txt_actor5@color = "0 .78 0 1"
-		*node:root.txt_actor6@color = "0 .78 0 1"
-		*node:root.txt_actor7@color = "0 .78 0 1"
+	confunc team_soldierlist_clear {
+		call *node:parent.soldierlist@removeAllChild
 	}
+	confunc team_soldierlist_add {
+		call *node:parent.soldierlist@createChild("member<1>", "teamSoldier")
+		*node:parent.soldierlist.member<1>.id@integer = <1>
+		*node:parent.soldierlist.member<1>.selected@current = <2>
+		*node:parent.soldierlist.member<1>.name@string = <3>
 
-	string txt_actor0
-	{
-		string	*cvar:mn_name0
-		pos		"90 13"
-		size	"270 40"
-		contentalign ALIGN_CL
-		onClick { cmd "game_actorselect 0;" }
+		if ( *node:root.selected@integer < 0 ) {
+			cmd "team_soldierlist_select <1>;"
+			*node:root.selected@integer = <1>
+		}
 	}
-	string txt_actor1
-	{
-		string	*cvar:mn_name1
-		pos		"90 54"
-		size	"270 40"
-		contentalign ALIGN_CL
-		onClick { cmd "game_actorselect 1;" }
-	}
-	string txt_actor2
-	{
-		string	*cvar:mn_name2
-		pos		"90 95"
-		size	"270 40"
-		contentalign ALIGN_CL
-		onClick { cmd "game_actorselect 2;" }
-	}
-	string txt_actor3
-	{
-		string	*cvar:mn_name3
-		pos		"90 136"
-		size	"270 40"
-		contentalign ALIGN_CL
-		onClick { cmd "game_actorselect 3;" }
-	}
-	string txt_actor4
-	{
-		string	*cvar:mn_name4
-		pos		"90 177"
-		size	"270 40"
-		contentalign ALIGN_CL
-		onClick { cmd "game_actorselect 4;" }
-	}
-	string txt_actor5
-	{
-		string	*cvar:mn_name5
-		pos		"90 218"
-		size	"270 40"
-		contentalign ALIGN_CL
-		onClick { cmd "game_actorselect 5;" }
-	}
-	string txt_actor6
-	{
-		string	*cvar:mn_name6
-		pos		"90 259"
-		size	"270 40"
-		contentalign ALIGN_CL
-		onClick { cmd "game_actorselect 6;" }
-	}
-	string txt_actor7
-	{
-		string	*cvar:mn_name7
-		pos		"90 300"
-		size	"270 40"
-		contentalign ALIGN_CL
-		onClick { cmd "game_actorselect 7;" }
+	confunc team_soldierlist_select {
+		if ( *node:root.selected@integer >= 0 ) {
+			*node:parent.soldierlist.member<node:root.selected@integer>.name@color = "0 .78 0 1"
+		}
+		*node:root.selected@integer = <1>
+		*cvar:mn_ucn = <1>
+		if ( *node:root.selected@integer >= 0 ) {
+			*node:parent.soldierlist.member<1>.name@color = "1 1 1 1"
+			cmd "game_actorselect <node:root.selected@integer>;"
+			*node:root.load_warnings@integer = 0
+			cmd "mn_updateactorload team_actorload;"
+		}
 	}
 
 	// ==================
@@ -575,8 +451,7 @@ window game_team_edit extends objectinfo
 	// ==================
 
 	// @todo merge with confunc weapon_stats?
-	func team_weapon_stats
-	{
+	func team_weapon_stats {
 		if ( *cvar:mn_itemname ne "" ) {
 			*node:root.itemdescription@invis = false
 			*node:root.actor_statpanel@invis = true
@@ -587,8 +462,7 @@ window game_team_edit extends objectinfo
 	}
 
 	// @todo merge with confunc actor_stats?
-	func team_actor_stats
-	{
+	func team_actor_stats {
 		*node:root.itemdescription@invis = true
 		*node:root.actor_statpanel@invis = false
 	}
@@ -678,7 +552,7 @@ window game_team_edit extends objectinfo
 	container armour	{
 		pos "735 100"
 		color "1 1 1 0"		// active, but display it transparent
-		onChange { cmd "actor_updatecurrent;" }
+		onChange { cmd "game_actorselect <node:root.selected@integer>;" }
 		onSelect { cmd "object_update <lastselectedid> team_update_item_list;" }
 	}
 
@@ -770,14 +644,12 @@ window game_team_edit extends objectinfo
 		onClick	{ cmd "ui_pop;" }
 	}
 
-	func onWindowOpened
-	{
-		call *node:root.team_names_clear
+	func onWindowOpened {
 		call *node:root.team_actor_stats
-		call *node:root.team_checkboxes_set
 		*cvar:mn_infotype = 0
 		*cvar:mn_equiptype = 0
-		cmd "team_initskin;team_update_item_list;game_actorselect 0;game_teamupdate;"
+		*node:root.selected@integer = -1
+		cmd "team_initskin;team_update_item_list;game_teamupdate;"
 	}
 
 	func onWindowClosed

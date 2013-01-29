@@ -61,7 +61,7 @@ static const inventoryImport_t inventoryImport = { FreeInventory, FreeAllInvento
 static inline void ResetInventoryList (void)
 {
 	INV_DestroyInventory(&cls.i);
-	INV_InitInventory("testCampaign", &cls.i, &csi, &inventoryImport);
+	cls.i.InitInventory("testCampaign", &csi, &inventoryImport);
 }
 
 static campaign_t *GetCampaign (void)

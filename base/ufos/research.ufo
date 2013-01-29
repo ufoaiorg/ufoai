@@ -5428,6 +5428,18 @@ tech rs_craft_el_alien_ew
 		default "*msgid:craft_electronics_ew_alien_txt"
 	}
 
+	mail_pre {
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		icon	"icons/mail_tech"
+	}
+
+	mail {
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		icon	"icons/mail_tech"
+	}
+
 	require_AND
 	{
 		item (craft_el_alien_ew 1)

@@ -56,8 +56,6 @@ MACROS
  */
 /* route - Used by Grid_* only  */
 /** @note IMPORTANT: actorSize is 1 or greater!!! */
-#define RT_CONN(map, actorSize, x, y, z, dir)			map[(actorSize) - 1].route[(z)][(y)][(x)][(dir)]
-#define RT_CONN_POS(map, actorSize, p, dir)				(int)(map[(actorSize) - 1].route[(p)[2]][(p)[1]][(p)[0]][(dir)])
 #define RT_CONN_TEST(map, actorSize, x, y, z, dir)		assert((actorSize) > ACTOR_SIZE_INVALID); assert((actorSize) <= ACTOR_MAX_SIZE); \
 															assert((z) >= 0); assert((z) < PATHFINDING_HEIGHT);\
 															assert((y) >= 0); assert((y) < PATHFINDING_WIDTH);\
@@ -69,28 +67,25 @@ MACROS
 															/* assuming p is a pos3_t, we don't need to check fo p[n] >= 0 here because it's unsigned.
 															 * also we don't need to check against PATHFINDING_WIDTH because it's always greater than a 'byte' type. */
 
-#define RT_CONN_PX(map, actorSize, x, y, z)		(RT_CONN(map, actorSize, x, y, z, 0))
-#define RT_CONN_NX(map, actorSize, x, y, z)		(RT_CONN(map, actorSize, x, y, z, 1))
-#define RT_CONN_PY(map, actorSize, x, y, z)		(RT_CONN(map, actorSize, x, y, z, 2))
-#define RT_CONN_NY(map, actorSize, x, y, z)		(RT_CONN(map, actorSize, x, y, z, 3))
+#define RT_CONN_PX(map, actorSize, x, y, z)		(RT_getConn(map, actorSize, x, y, z, 0))
+#define RT_CONN_NX(map, actorSize, x, y, z)		(RT_getConn(map, actorSize, x, y, z, 1))
+#define RT_CONN_PY(map, actorSize, x, y, z)		(RT_getConn(map, actorSize, x, y, z, 2))
+#define RT_CONN_NY(map, actorSize, x, y, z)		(RT_getConn(map, actorSize, x, y, z, 3))
 
-#define RT_CONN_PX_PY(map, actorSize, x, y, z)	(RT_CONN(map, actorSize, x, y, z, 4))
-#define RT_CONN_PX_NY(map, actorSize, x, y, z)	(RT_CONN(map, actorSize, x, y, z, 7))
-#define RT_CONN_NX_PY(map, actorSize, x, y, z)	(RT_CONN(map, actorSize, x, y, z, 6))
-#define RT_CONN_NX_NY(map, actorSize, x, y, z)	(RT_CONN(map, actorSize, x, y, z, 5))
+#define RT_CONN_PX_PY(map, actorSize, x, y, z)	(RT_getConn(map, actorSize, x, y, z, 4))
+#define RT_CONN_PX_NY(map, actorSize, x, y, z)	(RT_getConn(map, actorSize, x, y, z, 7))
+#define RT_CONN_NX_PY(map, actorSize, x, y, z)	(RT_getConn(map, actorSize, x, y, z, 6))
+#define RT_CONN_NX_NY(map, actorSize, x, y, z)	(RT_getConn(map, actorSize, x, y, z, 5))
 
-#define RT_STEPUP(map, actorSize, x, y, z, dir)	map[(actorSize) - 1].stepup[(z)][(y)][(x)][(dir)]
-#define RT_STEPUP_POS(map, actorSize, p, dir)	map[(actorSize) - 1].stepup[(p)[2]][(p)[1]][(p)[0]][(dir)]
+#define RT_STEPUP_PX(map, actorSize, x, y, z)		(RT_getStepup(map, actorSize, x, y, z, 0))
+#define RT_STEPUP_NX(map, actorSize, x, y, z)		(RT_getStepup(map, actorSize, x, y, z, 1))
+#define RT_STEPUP_PY(map, actorSize, x, y, z)		(RT_getStepup(map, actorSize, x, y, z, 2))
+#define RT_STEPUP_NY(map, actorSize, x, y, z)		(RT_getStepup(map, actorSize, x, y, z, 3))
 
-#define RT_STEPUP_PX(map, actorSize, x, y, z)		(RT_STEPUP(map, actorSize, x, y, z, 0))
-#define RT_STEPUP_NX(map, actorSize, x, y, z)		(RT_STEPUP(map, actorSize, x, y, z, 1))
-#define RT_STEPUP_PY(map, actorSize, x, y, z)		(RT_STEPUP(map, actorSize, x, y, z, 2))
-#define RT_STEPUP_NY(map, actorSize, x, y, z)		(RT_STEPUP(map, actorSize, x, y, z, 3))
-
-#define RT_STEPUP_PX_PY(map, actorSize, x, y, z)	(RT_STEPUP(map, actorSize, x, y, z, 4))
-#define RT_STEPUP_PX_NY(map, actorSize, x, y, z)	(RT_STEPUP(map, actorSize, x, y, z, 7))
-#define RT_STEPUP_NX_PY(map, actorSize, x, y, z)	(RT_STEPUP(map, actorSize, x, y, z, 6))
-#define RT_STEPUP_NX_NY(map, actorSize, x, y, z)	(RT_STEPUP(map, actorSize, x, y, z, 5))
+#define RT_STEPUP_PX_PY(map, actorSize, x, y, z)	(RT_getStepup(map, actorSize, x, y, z, 4))
+#define RT_STEPUP_PX_NY(map, actorSize, x, y, z)	(RT_getStepup(map, actorSize, x, y, z, 7))
+#define RT_STEPUP_NX_PY(map, actorSize, x, y, z)	(RT_getStepup(map, actorSize, x, y, z, 6))
+#define RT_STEPUP_NX_NY(map, actorSize, x, y, z)	(RT_getStepup(map, actorSize, x, y, z, 5))
 
 #define RT_FILLED(map, actorSize, x, y, z)			(RT_getCeiling(map, actorSize, x, y, z) - RT_getFloor(map, actorSize, x, y, z) < PATHFINDING_MIN_OPENING)
 
@@ -130,11 +125,11 @@ GAME RELATED TRACING
 */
 
 
-int RT_CheckCell(mapTiles_t *mapTiles, routing_t *routes, const int actorSize, const int x, const int y, const int z, const char **list);
-void RT_UpdateConnectionColumn(mapTiles_t *mapTiles, routing_t *routes, const int actorSize, const int x, const int y, const int dir, const char **list);
-bool RT_AllCellsBelowAreFilled(const routing_t *routes, const int actorSize, const pos3_t pos);
+int RT_CheckCell(mapTiles_t *mapTiles, Routing &routing, const int actorSize, const int x, const int y, const int z, const char **list);
+void RT_UpdateConnectionColumn(mapTiles_t *mapTiles, Routing &routing, const int actorSize, const int x, const int y, const int dir, const char **list);
+bool RT_AllCellsBelowAreFilled(const Routing &routing, const int actorSize, const pos3_t pos);
 void RT_GetMapSize(mapTiles_t *mapTiles, vec3_t map_min, vec3_t map_max);
-bool RT_CanActorStandHere(const routing_t *routes, const int actorSize, const pos3_t pos);
+bool RT_CanActorStandHere(const Routing &routing, const int actorSize, const pos3_t pos);
 
 
 /*
@@ -144,8 +139,8 @@ DEBUGGING CODE
 */
 
 #ifdef DEBUG
-void RT_DumpWholeMap(mapTiles_t *mapTiles, const routing_t *routes);
-int RT_DebugSpecial(mapTiles_t *mapTiles, routing_t *routes, const int actorSize, const int x, const int y, const int dir, const char **list);
-void RT_DebugPathDisplay (routing_t *routes, const int actorSize, int x, int y, int z);
+void RT_DumpWholeMap(mapTiles_t *mapTiles, const Routing &routing);
+int RT_DebugSpecial(mapTiles_t *mapTiles, Routing &routing, const int actorSize, const int x, const int y, const int dir, const char **list);
+void RT_DebugPathDisplay (Routing &routing, const int actorSize, int x, int y, int z);
 #endif
-void RT_WriteCSVFiles(const routing_t *routes, const char* baseFilename, const ipos3_t mins, const ipos3_t maxs);
+void RT_WriteCSVFiles(const Routing &routing, const char* baseFilename, const ipos3_t mins, const ipos3_t maxs);

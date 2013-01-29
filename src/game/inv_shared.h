@@ -257,7 +257,7 @@ typedef struct objDef_s {
 	float reloadAttenuation;	/**< Attenuation of reload sound - less louder over distance - */
 	bool oneshot;		/**< This weapon contains its own ammo (it is loaded in the base).
 						 * "int ammo" of objDef_s defines the amount of ammo used in oneshoot weapons. */
-	bool deplete;		/**< This weapon useless after all ("oneshot") ammo is used up.
+	bool deplete;		/**< This weapon is useless after all ("oneshot") ammo is used up.
 						 * If true this item will not be collected on mission-end. (see INV_CollectinItems). */
 
 	int useable;		/**< Defines which team can use this item: TEAM_*.

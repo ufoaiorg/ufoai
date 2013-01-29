@@ -70,5 +70,5 @@ void CL_EntAppear (const eventRegister_t *self, dbuffer *msg)
 		LE_SetInvisible(le);
 
 	VectorCopy(pos, le->pos);
-	Grid_PosToVec(cl.mapData->routes, le->fieldSize, le->pos, le->origin);
+	Grid_PosToVec(cl.mapData->routing, le->fieldSize, le->pos, le->origin);
 }

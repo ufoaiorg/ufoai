@@ -146,8 +146,6 @@ storedUFO_t *US_StoreUFO (const aircraft_t *ufoTemplate, installation_t *install
  */
 void US_RemoveStoredUFO (storedUFO_t *ufo)
 {
-	int ufoCount;
-
 	assert(ufo);
 
 	/* Stop disassembling */
@@ -161,11 +159,6 @@ void US_RemoveStoredUFO (storedUFO_t *ufo)
 		else
 			PR_QueueDelete(prodBase, PR_GetProductionForBase(prodBase), ufo->disassembly->idx);
 	}
-
-	/* Stop running research if this is the only UFO from this type
-	 * also clear collected status */
-	assert(ufo->ufoTemplate);
-	ufoCount = US_UFOsInStorage(ufo->ufoTemplate, NULL);
 
 	/* Check all researches their requirements may broke */
 	RS_CheckRequirements();

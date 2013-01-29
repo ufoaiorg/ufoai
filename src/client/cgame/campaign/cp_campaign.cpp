@@ -1238,7 +1238,7 @@ campaign_t* CP_GetCampaign (const char* name)
 
 /**
  * @brief Will clear most of the parsed singleplayer data
- * @sa INV_InitInventory
+ * @sa InitInventory
  * @sa CP_ParseCampaignData
  */
 void CP_ResetCampaignData (void)

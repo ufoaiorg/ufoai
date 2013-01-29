@@ -284,7 +284,6 @@ typedef int32_t shoot_types_t;
 #define GET_MORALE( ab )        (std::min((100 + (ab) * 150/MAX_SKILL), 255))
 #define GET_TU( ab, md )		(MIN_TU * (md) + (ab) * 20 / MAX_SKILL)
 
-
 #define DOOR_OPEN_REVERSE 4
 #define GET_SLIDING_DOOR_SHIFT_VECTOR(dir, speed, vecout) \
 	do { const bool reverse = (dir) & DOOR_OPEN_REVERSE; VectorClear(vecout); vecout[dir & 3] = reverse ? -speed : speed; } while (0);

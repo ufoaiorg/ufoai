@@ -318,7 +318,7 @@ static void testMapDefsFootSteps (void)
 			if (mapCount >= skipCount + 2) {	// after the first 2 maps, reduce the testing area
 				pos3_t center = {128, 128, 0};
 				mBox.set(center, center);		// the box on the map we're testing
-				mBox.expandXY(5);				// just test a few cells around the center of the map
+				mBox.expandXY(10);				// just test a few cells around the center of the map
 				mBox.maxs[2] = 2;				// and 3 levels high
 			}
 #endif
@@ -327,7 +327,7 @@ static void testMapDefsFootSteps (void)
 			for (x = mBox.mins[0]; x <= mBox.maxs[0] && !done; x++) {
 				for (y = mBox.mins[1]; y <= mBox.maxs[1] && !done; y++) {
 					for (z = mBox.mins[2]; z <= mBox.maxs[2]; z++) {
-						int floor = RT_getFloor(sv->mapData.routes, 1, x, y,z);
+						int floor = RT_getFloor(sv->mapData.routing.routes, 1, x, y,z);
 						if (floor >= 0){						// if we have a floor in that cell
 							AABB noBox(vec3_origin, vec3_origin);	// we're doing a point-trace
 							pos3_t cellPos = {x, y, z};			// the cell inquestion

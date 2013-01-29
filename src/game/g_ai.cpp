@@ -562,7 +562,9 @@ static void AI_SearchBestTarget (aiAction_t *aia, const edict_t *ent, edict_t *c
 					G_GetShotOrigin(ent, fd, dir, origin);
 
 					/* gun-to-target line free? */
-					if (G_TestLine(origin, check->origin))
+					const trace_t trace = G_Trace(origin, check->origin, ent, MASK_SHOT);
+					const edict_t *trEnt = G_EdictsGetByNum(trace.entNum);
+					if (!trEnt || !(trEnt == check || (G_IsBrushModel(trEnt) && G_IsBreakable(trEnt))))
 						return;
 				}
 			}
@@ -1100,7 +1102,8 @@ static aiAction_t AI_PrepBestAction (const Player *player, edict_t *ent)
 		G_ClientStateChange(player, ent, STATE_CROUCHED, true);
 
 	/* do the move */
-	G_ClientMove(player, 0, ent, bestAia.to);
+	while (!G_IsDead(ent) && !G_EdictPosIsSameAs(ent, bestAia.to))
+		G_ClientMove(player, 0, ent, bestAia.to);
 
 	/* test for possible death during move. reset bestAia due to dead status */
 	if (G_IsDead(ent))
@@ -1357,9 +1360,9 @@ static void AI_SetEquipment (edict_t *ent, const equipDef_t *ed)
 	if (ent->chr.teamDef->robot && ent->chr.teamDef->onlyWeapon) {
 		const objDef_t *weapon = ent->chr.teamDef->onlyWeapon;
 		if (weapon->numAmmos > 0)
-			game.i.EquipActorRobot(&game.i, &ent->chr.i, weapon);
+			game.i.EquipActorRobot(&ent->chr.i, weapon);
 		else if (weapon->fireTwoHanded)
-			game.i.EquipActorMelee(&game.i, &ent->chr.i, ent->chr.teamDef);
+			game.i.EquipActorMelee(&ent->chr.i, ent->chr.teamDef);
 		else
 			gi.DPrintf("AI_InitPlayer: weapon %s has no ammo assigned and must not be fired two handed\n", weapon->id);
 	} else if (ent->chr.teamDef->weapons) {

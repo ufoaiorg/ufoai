@@ -65,27 +65,39 @@ static const AABB actor2x2Box(-half2x2Width, -half2x2Width, 0, half2x2Width, hal
 /**
  * @brief RT_data_s contains the essential data that is passed to most of the RT_* functions
  */
-typedef struct RT_data_s {
+class RoutingData
+{
+public:
 	mapTiles_t *mapTiles;
+	Routing &routing;
 	routing_t *routes;			/**< The routing table */
 	actorSizeEnum_t actorSize;	/**< The size of the actor, in cells */
 	const char **list;			/**< The local models list */
-} RT_data_t;
 
-static inline void RT_ConnSet (RT_data_t *rtd, const int x, const int y, const int z, const int dir, const int val)
+	RoutingData (mapTiles_t *mapTiles, Routing &r, actorSizeEnum_t actorSize, const char **list);
+};
+
+RoutingData::RoutingData (mapTiles_t *mapTiles, Routing &r, actorSizeEnum_t actorSize, const char **list) : routing(r)
 {
-	RT_CONN(rtd->routes, rtd->actorSize, x, y, z, dir) = val;
+	this->mapTiles = mapTiles;
+	this->routes = routing.routes;
+	this->actorSize = actorSize;
+	this->list = list;
+}
+static inline void RT_ConnSet (RoutingData *rtd, const int x, const int y, const int z, const int dir, const int val)
+{
+	RT_setConn(rtd->routes, rtd->actorSize, x, y, z, dir, val);
 }
 
-static inline void RT_StepupSet (RT_data_t *rtd, const int x, const int y, const int z, const int dir, const int val)
+static inline void RT_StepupSet (RoutingData *rtd, const int x, const int y, const int z, const int dir, const int val)
 {
-	RT_STEPUP(rtd->routes, rtd->actorSize, x, y, z, dir) = val;
+	RT_setStepup(rtd->routes, rtd->actorSize, x, y, z, dir, val);
 }
 
-static inline void RT_ConnSetNoGo (RT_data_t *rtd, const int x, const int y, const int z, const int dir)
+static inline void RT_ConnSetNoGo (RoutingData *rtd, const int x, const int y, const int z, const int dir)
 {
 	RT_ConnSet(rtd, x, y, z, dir, 0);
-	RT_STEPUP(rtd->routes, rtd->actorSize, x, y, z, dir) = PATHFINDING_NO_STEPUP;
+	RT_setStepup(rtd->routes, rtd->actorSize, x, y, z, dir, PATHFINDING_NO_STEPUP);
 }
 
 /**
@@ -199,7 +211,7 @@ static void RT_DumpMap (const routing_t *routes, actorSizeEnum_t actorSize, int 
  * @brief Dumps contents of the entire client map to console for inspection.
  * @param[in] map A pointer to the map being dumped
  */
-void RT_DumpWholeMap (mapTiles_t *mapTiles, const routing_t *routes)
+void RT_DumpWholeMap (mapTiles_t *mapTiles, const Routing &routing)
 {
 	AABB box;
 	vec3_t normal, origin;
@@ -252,16 +264,16 @@ void RT_DumpWholeMap (mapTiles_t *mapTiles, const routing_t *routes)
 	}
 
 	/* Dump the client map */
-	RT_DumpMap(routes, 0, start[0], start[1], start[2], end[0], end[1], end[2]);
+	RT_DumpMap(routing.routes, 0, start[0], start[1], start[2], end[0], end[1], end[2]);
 }
 #endif
 
 /**
  * @brief Check if an actor can stand(up) in the cell given by pos
  */
-bool RT_CanActorStandHere (const routing_t *routes, const int actorSize, const pos3_t pos)
+bool RT_CanActorStandHere (const Routing &routing, const int actorSize, const pos3_t pos)
 {
-	if (RT_getCeiling(routes, actorSize, pos) - RT_getFloor(routes, actorSize, pos) >= PLAYER_STANDING_HEIGHT / QUANT)
+	if (RT_getCeiling(routing.routes, actorSize, pos) - routing.getFloor(actorSize, pos) >= PLAYER_STANDING_HEIGHT / QUANT)
 		return true;
 	else
 		return false;
@@ -348,14 +360,14 @@ NEW MAP TRACING FUNCTIONS
 
 /**
  * @brief Check if pos is on solid ground
- * @param[in] routes The map's routing data
+ * @param[in] routing The map's routing data
  * @param[in] actorSize The size of the actor along the X and Y axis in cell units
  * @param[in] pos The position to check below
  * @return true if solid
  * @sa CL_AddTargetingBox
  * @todo see CL_ActorMoveMouse
  */
-bool RT_AllCellsBelowAreFilled (const routing_t *routes, const int actorSize, const pos3_t pos)
+bool RT_AllCellsBelowAreFilled (const Routing &routing, const int actorSize, const pos3_t pos)
 {
 	int i;
 
@@ -364,7 +376,7 @@ bool RT_AllCellsBelowAreFilled (const routing_t *routes, const int actorSize, co
 		return true;
 
 	for (i = 0; i < pos[2]; i++) {
-		if (RT_getCeiling(routes, actorSize, pos[0], pos[1], i) != 0)
+		if (RT_getCeiling(routing.routes, actorSize, pos[0], pos[1], i) != 0)
 			return false;
 	}
 	return true;
@@ -378,7 +390,7 @@ bool RT_AllCellsBelowAreFilled (const routing_t *routes, const int actorSize, co
  *  be the top of the model.  This function will also adjust all floor and ceiling values for all cells
  *  between the found floor and ceiling.
  * @param[in] mapTiles List of tiles the current (RMA-)map is composed of
- * @param[in] routes The map's routing data
+ * @param[in] routing The map's routing data
  * @param[in] actorSize The size of the actor along the X and Y axis in cell units
  * @param[in] x The x position in the routing arrays (0 - PATHFINDING_WIDTH-1)
  * @param[in] y The y position in the routing arrays (0 - PATHFINDING_WIDTH-1)
@@ -387,8 +399,9 @@ bool RT_AllCellsBelowAreFilled (const routing_t *routes, const int actorSize, co
  * @return The z value of the next cell to scan, usually the cell with the ceiling.
  * @sa Grid_RecalcRouting
  */
-int RT_CheckCell (mapTiles_t *mapTiles, routing_t *routes, const int actorSize, const int x, const int y, const int z, const char **list)
+int RT_CheckCell (mapTiles_t *mapTiles, Routing &routing, const int actorSize, const int x, const int y, const int z, const char **list)
 {
+	routing_t* routes = routing.routes;
 	/* Width of the box required to stand in a cell by an actor's torso.  */
 	const float halfActorWidth = UNIT_SIZE * actorSize / 2 - WALL_SIZE - DIST_EPSILON;
 	/* This is a template for the extents of the box used by an actor's legs. */
@@ -454,8 +467,8 @@ int RT_CheckCell (mapTiles_t *mapTiles, routing_t *routes, const int actorSize, 
 			/* Mark all cells to the model base as filled. */
 			for (i = z; i >= 0 ; i--) {
 				/* no floor in this cell, it is bottomless! */
-				RT_setFloor(routes, actorSize, x, y, i, -1 - i * CELL_HEIGHT); /* There is no floor in this cell, place it at -1 below the model. */
-				RT_setCeiling(routes, actorSize, x, y, i, 0); /* There is no ceiling, the true indicator of a filled cell. */
+				routing.setFloor(actorSize, x, y, i, CELL_HEIGHT);	/* There is no floor in this cell. */
+				RT_setCeiling(routes, actorSize, x, y, i, 0);		/* There is no ceiling, the true indicator of a filled cell. */
 			}
 			/* return 0 to indicate we just scanned the model bottom. */
 			return 0;
@@ -489,8 +502,8 @@ int RT_CheckCell (mapTiles_t *mapTiles, routing_t *routes, const int actorSize, 
 				/* Mark all cells to the model base as filled. */
 				for (i = z; i >= 0 ; i--) {
 					/* no floor in this cell, it is bottomless! */
-					RT_setFloor(routes, actorSize, x, y, i, CELL_HEIGHT);	/* There is no floor in this cell. */
-					RT_setCeiling(routes, actorSize, x, y, i, 0);			/* There is no ceiling, the true indicator of a filled cell. */
+					routing.setFloor(actorSize, x, y, i, CELL_HEIGHT);	/* There is no floor in this cell. */
+					RT_setCeiling(routes, actorSize, x, y, i, 0);		/* There is no ceiling, the true indicator of a filled cell. */
 				}
 				/* return 0 to indicate we just scanned the model bottom. */
 				return 0;
@@ -517,8 +530,8 @@ int RT_CheckCell (mapTiles_t *mapTiles, routing_t *routes, const int actorSize, 
 				/* Mark all cells to the model base as filled. */
 				for (i = z; i >= 0 ; i--) {
 					/* no floor in this cell, it is bottomless! */
-					RT_setFloor(routes, actorSize, x, y, i, CELL_HEIGHT);	/* There is no floor in this cell. */
-					RT_setCeiling(routes, actorSize, x, y, i, 0);			/* There is no ceiling, the true indicator of a filled cell. */
+					routing.setFloor(actorSize, x, y, i, CELL_HEIGHT);	/* There is no floor in this cell. */
+					RT_setCeiling(routes, actorSize, x, y, i, 0);		/* There is no ceiling, the true indicator of a filled cell. */
 				}
 				/* return 0 to indicate we just scanned the model bottom. */
 				return 0;
@@ -577,15 +590,15 @@ int RT_CheckCell (mapTiles_t *mapTiles, routing_t *routes, const int actorSize, 
 	/* Last, update the floors and ceilings of cells from (x, y, fz) to (x, y, cz) */
 	for (i = fz; i <= cz; i++) {
 		/* Round up floor to keep feet out of model. */
-		RT_setFloor(routes, actorSize, x, y, i, bottomQ - i * CELL_HEIGHT);
+		routing.setFloor(actorSize, x, y, i, bottomQ - i * CELL_HEIGHT);
 		/* Round down ceiling to heep head out of model.  Also offset by floor and max at 255. */
 		RT_setCeiling(routes, actorSize, x, y, i, topQ - i * CELL_HEIGHT);
 	}
 
 	/* Also, update the floors of any filled cells immediately above the ceiling up to our original cell. */
 	for (i = cz + 1; i <= z; i++) {
-		RT_setFloor(routes, actorSize, x, y, i, CELL_HEIGHT);	/* There is no floor in this cell. */
-		RT_setCeiling(routes, actorSize, x, y, i, 0);			/* There is no ceiling, the true indicator of a filled cell. */
+		routing.setFloor(actorSize, x, y, i, CELL_HEIGHT);	/* There is no floor in this cell. */
+		RT_setCeiling(routes, actorSize, x, y, i, 0);		/* There is no ceiling, the true indicator of a filled cell. */
 	}
 
 	/* Return the lowest z coordinate that we updated floors for. */
@@ -604,7 +617,7 @@ int RT_CheckCell (mapTiles_t *mapTiles, routing_t *routes, const int actorSize, 
  * @param[in] openingBase Absolute height in QUANT units of the bottom of the opening.
  * @param[in] stepup Required stepup to travel in this direction.
  */
-static int RT_FillPassageData (RT_data_t *rtd, const int dir, const int  x, const int y, const int z, const int openingSize, const int openingBase, const int stepup)
+static int RT_FillPassageData (RoutingData *rtd, const int dir, const int  x, const int y, const int z, const int openingSize, const int openingBase, const int stepup)
 {
 	const int openingTop = openingBase + openingSize;
 	int fz, cz; /**< Floor and ceiling Z cell coordinates */
@@ -653,13 +666,13 @@ static int RT_FillPassageData (RT_data_t *rtd, const int dir, const int  x, cons
 		/* The stepup is 0 for all cells that are not at the floor. */
 		RT_StepupSet(rtd, x, y, i, dir, 0);
 		if (debugTrace) {
-			Com_Printf("RT_CONN for (%i, %i, %i) as:%i dir:%i = %i\n", x, y, i, rtd->actorSize, dir, RT_CONN(rtd->routes, rtd->actorSize, x, y, i, dir));
+			Com_Printf("RT_getConn for (%i, %i, %i) as:%i dir:%i = %i\n", x, y, i, rtd->actorSize, dir, RT_getConn(rtd->routes, rtd->actorSize, x, y, i, dir));
 		}
 	}
 
 	RT_StepupSet(rtd, x, y, z, dir, stepup);
 	if (debugTrace) {
-		Com_Printf("Final RT_STEPUP for (%i, %i, %i) as:%i dir:%i = %i\n", x, y, z, rtd->actorSize, dir, stepup);
+		Com_Printf("Final STEPUP for (%i, %i, %i) as:%i dir:%i = %i\n", x, y, z, rtd->actorSize, dir, stepup);
 	}
 
 	/*
@@ -679,7 +692,7 @@ static int RT_FillPassageData (RT_data_t *rtd, const int dir, const int  x, cons
  * @param[in] hi The upper height ABOVE THE FLOOR of the bounding box.
  * @param[in] lo The lower height ABOVE THE FLOOR of the bounding box.
  */
-static trace_t RT_ObstructedTrace (const RT_data_t *rtd, const vec3_t start, const vec3_t end, int hi, int lo)
+static trace_t RT_ObstructedTrace (const RoutingData *rtd, const vec3_t start, const vec3_t end, int hi, int lo)
 {
 	AABB box; /**< Tracing box extents */
 	const float halfActorWidth = UNIT_SIZE * rtd->actorSize / 2 - WALL_SIZE - DIST_EPSILON;
@@ -702,7 +715,7 @@ static trace_t RT_ObstructedTrace (const RT_data_t *rtd, const vec3_t start, con
  * @param[in] startingHeight The starting height for this upward trace.
  * @return The absolute height of the found floor in QUANT units.
  */
-static int RT_FindOpeningFloorFrac (const RT_data_t *rtd, const vec3_t start, const vec3_t end, const float frac, const int startingHeight)
+static int RT_FindOpeningFloorFrac (const RoutingData *rtd, const vec3_t start, const vec3_t end, const float frac, const int startingHeight)
 {
 	vec3_t mstart, mend;	/**< Midpoint line to trace across */	/**< Tracing box extents */
 	trace_t tr;
@@ -735,7 +748,7 @@ static int RT_FindOpeningFloorFrac (const RT_data_t *rtd, const vec3_t start, co
  * @param[in] startingHeight The starting height for this upward trace.
  * @return The absolute height of the found ceiling in QUANT units.
  */
-static int RT_FindOpeningCeilingFrac (const RT_data_t *rtd, const vec3_t start, const vec3_t end, const float frac, const int startingHeight)
+static int RT_FindOpeningCeilingFrac (const RoutingData *rtd, const vec3_t start, const vec3_t end, const float frac, const int startingHeight)
 {
 	vec3_t mstart, mend;	/**< Midpoint line to trace across */
 	trace_t tr;
@@ -767,7 +780,7 @@ static int RT_FindOpeningCeilingFrac (const RT_data_t *rtd, const vec3_t start, 
  * @param[in] floorLimit The lowest limit of the found floor.
  * @return The absolute height of the found floor in QUANT units.
  */
-static int RT_FindOpeningFloor (const RT_data_t *rtd, const vec3_t start, const vec3_t end, const int startingHeight, const int floorLimit)
+static int RT_FindOpeningFloor (const RoutingData *rtd, const vec3_t start, const vec3_t end, const int startingHeight, const int floorLimit)
 {
 	/* Look for additional space below init_bottom, down to lowest_bottom. */
 	int midfloor;
@@ -801,7 +814,7 @@ static int RT_FindOpeningFloor (const RT_data_t *rtd, const vec3_t start, const 
  * @param[in] ceilLimit The highest the ceiling may be.
  * @return The absolute height of the found ceiling in QUANT units.
  */
-static int RT_FindOpeningCeiling (const RT_data_t *rtd, const vec3_t start, const vec3_t end, const int startingHeight, const int ceilLimit)
+static int RT_FindOpeningCeiling (const RoutingData *rtd, const vec3_t start, const vec3_t end, const int startingHeight, const int ceilLimit)
 {
 	int midceil;
 
@@ -825,7 +838,7 @@ static int RT_FindOpeningCeiling (const RT_data_t *rtd, const vec3_t start, cons
 }
 
 
-static int RT_CalcNewZ (const RT_data_t *rtd, const int ax, const int ay, const int top, const int hi)
+static int RT_CalcNewZ (const RoutingData *rtd, const int ax, const int ay, const int top, const int hi)
 {
 	int temp_z, adj_lo;
 
@@ -868,7 +881,7 @@ static int RT_CalcNewZ (const RT_data_t *rtd, const int ax, const int ay, const 
  * @param[out] foundHigh Actual height of the top of the found passage.
  * @return The new z value of the actor after traveling in this direction from the starting location.
  */
-static int RT_TraceOpening (const RT_data_t *rtd, const vec3_t start, const vec3_t end, const int ax, const int ay, const int bottom, const int top, int lo, int hi, int *foundLow, int *foundHigh)
+static int RT_TraceOpening (const RoutingData *rtd, const vec3_t start, const vec3_t end, const int ax, const int ay, const int bottom, const int top, int lo, int hi, int *foundLow, int *foundHigh)
 {
 	trace_t tr = RT_ObstructedTrace(rtd, start, end, hi, lo);
 	if (tr.fraction >= 1.0) {
@@ -907,7 +920,7 @@ static int RT_TraceOpening (const RT_data_t *rtd, const vec3_t start, const vec3
  * @param[out] foundHigh Actual height of the top of the found passage.
  * @return The new z value of the actor after traveling in this direction from the starting location.
  */
-static int RT_FindOpening (RT_data_t *rtd, const place_t* from, const int ax, const int ay, const int bottom, const int top, int *foundLow, int *foundHigh)
+static int RT_FindOpening (RoutingData *rtd, const place_t* from, const int ax, const int ay, const int bottom, const int top, int *foundLow, int *foundHigh)
 {
 	vec3_t start, end;
 	pos3_t pos;
@@ -996,7 +1009,7 @@ static int RT_FindOpening (RT_data_t *rtd, const place_t* from, const int ax, co
  * @param[out] opening descriptor of the opening found, if any
  * @return The change in floor height in QUANT units because of the additional trace.
 */
-static int RT_MicroTrace (RT_data_t *rtd, const place_t* from, const int ax, const int ay, const int az, const int stairwaySituation, opening_t* opening)
+static int RT_MicroTrace (RoutingData *rtd, const place_t* from, const int ax, const int ay, const int az, const int stairwaySituation, opening_t* opening)
 {
 	/* OK, now we have a viable shot across.  Run microstep tests now. */
 	/* Now calculate the stepup at the floor using microsteps. */
@@ -1191,7 +1204,7 @@ static int RT_MicroTrace (RT_data_t *rtd, const place_t* from, const int ax, con
  * @param[out] opening descriptor of the opening found, if any
  * @return The size in QUANT units of the detected opening.
  */
-static int RT_TraceOnePassage (RT_data_t *rtd, const place_t* from, const place_t* to, opening_t* opening)
+static int RT_TraceOnePassage (RoutingData *rtd, const place_t* from, const place_t* to, opening_t* opening)
 {
 	int hi; /**< absolute ceiling of the passage found. */
 	const int z = from->cell[2];
@@ -1274,7 +1287,7 @@ static int RT_TraceOnePassage (RT_data_t *rtd, const place_t* from, const place_
  * @param[in] ay Ending y coordinate
  * @param[out] opening descriptor of the opening found, if any
  */
-static void RT_TracePassage (RT_data_t *rtd, const int x, const int y, const int z, const int ax, const int ay, opening_t* opening)
+static void RT_TracePassage (RoutingData *rtd, const int x, const int y, const int z, const int ax, const int ay, opening_t* opening)
 {
 	int aboveCeil, lowCeil;
 	/** we don't need the cell below the adjacent cell because we should have already checked it */
@@ -1355,7 +1368,7 @@ static void RT_TracePassage (RT_data_t *rtd, const int x, const int y, const int
  * @param[in] z The z position in the routing arrays (0 to PATHFINDING_HEIGHT - 1)
  * @param[in] dir The direction to test for a connection through
  */
-static int RT_UpdateConnection (RT_data_t *rtd, const int x, const int y, const int ax, const int ay, const int z, const int dir)
+static int RT_UpdateConnection (RoutingData *rtd, const int x, const int y, const int ax, const int ay, const int z, const int dir)
 {
 	const int ceiling = RT_getCeiling(rtd->routes, rtd->actorSize, x, y, z);
 	const int adjCeiling = RT_getCeiling(rtd->routes, rtd->actorSize, ax, ay, z);
@@ -1411,7 +1424,7 @@ static int RT_UpdateConnection (RT_data_t *rtd, const int x, const int y, const 
 	/** Find an opening. */
 	RT_TracePassage(rtd, x, y, z, ax, ay, &opening);
 	if (debugTrace) {
-		Com_Printf("Final RT_STEPUP for (%i, %i, %i) as:%i dir:%i = %i\n", x, y, z, rtd->actorSize, dir, opening.stepup);
+		Com_Printf("Final STEPUP for (%i, %i, %i) as:%i dir:%i = %i\n", x, y, z, rtd->actorSize, dir, opening.stepup);
 	}
 	/** Apply the data to the routing table.
 	 * We always call the fill function.  If the passage cannot be traveled, the
@@ -1441,24 +1454,25 @@ static int RT_UpdateConnection (RT_data_t *rtd, const int x, const int y, const 
 /**
  * @brief Routing Function to update the connection between two fields
  * @param[in] mapTiles List of tiles the current (RMA-)map is composed of
- * @param[in] routes Routing table of the current loaded map
+ * @param[in] routing Routing table of the current loaded map
  * @param[in] actorSize The size of the actor, in units
  * @param[in] x The x position in the routing arrays (0 to PATHFINDING_WIDTH - actorSize)
  * @param[in] y The y position in the routing arrays (0 to PATHFINDING_WIDTH - actorSize)
  * @param[in] dir The direction to test for a connection through
  * @param[in] list The local models list (a local model has a name starting with * followed by the model number)
  */
-void RT_UpdateConnectionColumn (mapTiles_t *mapTiles, routing_t *routes, const int actorSize, const int x, const int y, const int dir, const char **list)
+void RT_UpdateConnectionColumn (mapTiles_t *mapTiles, Routing &routing, const int actorSize, const int x, const int y, const int dir, const char **list)
 {
 	int z = 0; /**< The current z value that we are testing. */
-	RT_data_t rtd;	/* the essential data passed down the calltree */
+	/* the essential data passed down the calltree */
+	RoutingData rtd(mapTiles, routing, actorSize, list);
 
 	/* get the neighbor cell's coordinates */
 	const int ax = x + dvecs[dir][0];
 	const int ay = y + dvecs[dir][1];
 
 	assert(actorSize > ACTOR_SIZE_INVALID && actorSize <= ACTOR_MAX_SIZE);
-	assert(routes);
+	assert(routing.routes);
 	assert((x >= 0) && (x <= PATHFINDING_WIDTH - actorSize));
 	assert((y >= 0) && (y <= PATHFINDING_WIDTH - actorSize));
 
@@ -1474,12 +1488,6 @@ void RT_UpdateConnectionColumn (mapTiles_t *mapTiles, routing_t *routes, const i
 	RT_CONN_TEST(routes, actorSize, x, y, z, dir);
 
 	/* Com_Printf("At (%i, %i, %i) looking in direction %i with size %i\n", x, y, z, dir, actorSize); */
-
-	/* build the param list passed to most of the RT_* functions */
-	rtd.mapTiles = mapTiles;
-	rtd.routes = routes;
-	rtd.actorSize = actorSize;
-	rtd.list = list;
 
 	/* if our destination cell is out of bounds, bail. */
 	if (ax < 0 || ax > PATHFINDING_WIDTH - actorSize || ay < 0 || y > PATHFINDING_WIDTH - actorSize) {
@@ -1503,8 +1511,9 @@ void RT_UpdateConnectionColumn (mapTiles_t *mapTiles, routing_t *routes, const i
 	}
 }
 
-void RT_WriteCSVFiles (const routing_t *routes, const char* baseFilename, const ipos3_t mins, const ipos3_t maxs)
+void RT_WriteCSVFiles (const Routing &routing, const char* baseFilename, const ipos3_t mins, const ipos3_t maxs)
 {
+	const routing_t* routes = routing.routes;
 	char filename[MAX_OSPATH], ext[MAX_OSPATH];
 	qFILE f;
 	int i, x, y, z;
@@ -1606,21 +1615,15 @@ void RT_WriteCSVFiles (const routing_t *routes, const char* baseFilename, const 
  * @param[in] dir The direction to test for a connection through
  * @param[in] list The local models list (a local model has a name starting with * followed by the model number)
  */
-int RT_DebugSpecial (mapTiles_t *mapTiles, routing_t *routes, const int actorSize, const int x, const int y, const int dir, const char **list)
+int RT_DebugSpecial (mapTiles_t *mapTiles, Routing &routing, const int actorSize, const int x, const int y, const int dir, const char **list)
 {
 	int z = 0; /**< The current z value that we are testing. */
 	int new_z; /**< The last z value processed by the tracing function.  */
-	RT_data_t rtd;	/* the essential data passed down the calltree */
+	RoutingData rtd(mapTiles, routing, actorSize, list);	/* the essential data passed down the calltree */
 
 	/* get the neighbor cell's coordinates */
 	const int ax = x + dvecs[dir][0];
 	const int ay = y + dvecs[dir][1];
-
-	/* build the param list passed to most of the RT_* functions */
-	rtd.mapTiles = mapTiles;
-	rtd.routes = routes;
-	rtd.actorSize = actorSize;
-	rtd.list = list;
 
 	new_z = RT_UpdateConnection(&rtd, x, y, ax, ay, z, dir);
 	return new_z;
@@ -1631,8 +1634,9 @@ int RT_DebugSpecial (mapTiles_t *mapTiles, routing_t *routes, const int actorSiz
  * directly use the debugger on some vital pathfinding functions.
  * Will probably be removed for the release.
  */
-void RT_DebugPathDisplay (routing_t *routes, actorSizeEnum_t actorSize, int x, int y, int z)
+void RT_DebugPathDisplay (Routing &routing, actorSizeEnum_t actorSize, int x, int y, int z)
 {
+	routing_t* routes = routing.routes;
 	Com_Printf("data at cursor XYZ(%i, %i, %i) Floor(%i) Ceiling(%i)\n", x, y, z,
 		RT_getFloor(routes, actorSize, x, y, z),
 		RT_getCeiling(routes, actorSize, x, y, z) );

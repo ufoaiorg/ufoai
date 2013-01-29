@@ -70,7 +70,6 @@ static void testMapLoading (void)
 
 static void testMove (void)
 {
-	routing_t *routing;
 	vec3_t vec;
 	pos3_t pos;
 	pos_t gridPos;
@@ -94,8 +93,7 @@ static void testMove (void)
 	CU_ASSERT_EQUAL(pos[1], 128);
 	CU_ASSERT_EQUAL(pos[2], 1);
 
-	routing = &mapData.routes[ACTOR_SIZE_NORMAL - 1];
-	gridPos = Grid_Fall(routing, ACTOR_SIZE_NORMAL, pos);
+	gridPos = Grid_Fall(mapData.routing, ACTOR_SIZE_NORMAL, pos);
 	CU_ASSERT_EQUAL(gridPos, 1);
 
 	{
@@ -108,7 +106,7 @@ static void testMove (void)
 		VectorSet(vec, 80, 80, 32);
 		VecToPos(vec, pos);
 
-		Grid_CalcPathing(routing, ACTOR_SIZE_NORMAL, path, pos, maxTUs, NULL, 0);
+		Grid_CalcPathing(mapData.routing, ACTOR_SIZE_NORMAL, path, pos, maxTUs, NULL, 0);
 		Grid_MoveStore(path);
 
 		/* move downwards */
@@ -215,7 +213,6 @@ static void testMove (void)
 
 static void testMoveEntities (void)
 {
-	routing_t *routing;
 	pos3_t pos;
 	vec3_t vec;
 	pathing_t *path = Mem_AllocType(pathing_t);
@@ -229,8 +226,6 @@ static void testMoveEntities (void)
 	/* starting point */
 	VectorSet(vec, 240, -144, 32);
 	VecToPos(vec, pos);
-
-	routing = &sv->mapData.routes[ACTOR_SIZE_NORMAL - 1];
 
 	G_CompleteRecalcRouting();
 
@@ -252,7 +247,7 @@ static void testMoveEntities (void)
 		int lengthStored;
 		pos3_t to;
 
-		Grid_CalcPathing(routing, ACTOR_SIZE_NORMAL, path, pos, maxTUs, forbiddenList, forbiddenListLength);
+		Grid_CalcPathing(sv->mapData.routing, ACTOR_SIZE_NORMAL, path, pos, maxTUs, forbiddenList, forbiddenListLength);
 		Grid_MoveStore(path);
 
 		/* walk onto the func_breakable */
@@ -289,7 +284,7 @@ static void testMoveEntities (void)
 		int lengthStored;
 		pos3_t to;
 
-		Grid_CalcPathing(routing, ACTOR_SIZE_NORMAL, path, pos, maxTUs, forbiddenList, forbiddenListLength);
+		Grid_CalcPathing(sv->mapData.routing, ACTOR_SIZE_NORMAL, path, pos, maxTUs, forbiddenList, forbiddenListLength);
 		Grid_MoveStore(path);
 
 		/* walk through the opened door */

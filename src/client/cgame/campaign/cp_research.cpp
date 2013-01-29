@@ -699,7 +699,6 @@ void RS_AssignScientist (technology_t* tech, base_t *base, employee_t *employee)
  * @param[in] employee Employee you want to remove (NULL if you don't care which one should be removed).
  * @sa RS_RemoveScientist_f
  * @sa RS_AssignScientist
- * @sa E_RemoveEmployeeFromBuildingOrAircraft
  */
 void RS_RemoveScientist (technology_t* tech, employee_t *employee)
 {
@@ -737,7 +736,6 @@ void RS_RemoveScientist (technology_t* tech, employee_t *employee)
  * @param[in] base Pointer to base where a scientist should be removed.
  * @param[in] employee Pointer to the employee that is fired.
  * @note used when a scientist is fired.
- * @sa E_RemoveEmployeeFromBuildingOrAircraft
  * @note This function is called before the employee is actually fired.
  */
 void RS_RemoveFiredScientist (base_t *base, employee_t *employee)
@@ -1666,7 +1664,6 @@ technology_t *RS_GetTechByProvided (const char *idProvided)
 /**
  * @brief Searches for the technology that has the most scientists assigned in a given base.
  * @param[in] base In what base the tech should be researched.
- * @sa E_RemoveEmployeeFromBuildingOrAircraft
  */
 technology_t *RS_GetTechWithMostScientists (const struct base_s *base)
 {

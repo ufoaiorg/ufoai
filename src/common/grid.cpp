@@ -152,7 +152,7 @@ class Step {
 	int actorHeight;		/**< The actor's height in QUANT units. */
 	int actorCrouchedHeight;
 public:
-	const routing_t *routes;
+	const Routing &routing;
 	int dir;
 	pos3_t fromPos;
 	pos3_t toPos;	/* The position we are moving to with this step. */
@@ -160,7 +160,8 @@ public:
 	byte crouchingState;
 	byte TUsAfter;
 
-	bool init (const routing_t *routes, const pos3_t fromPos, const actorSizeEnum_t actorSize, const byte crouchingState, const int dir);
+	Step (const Routing &r, const pos3_t fromPos, const actorSizeEnum_t actorSize, const byte crouchingState, const int dir);
+	bool init ();
 	bool calcNewPos (void);
 	void calcNewTUs (const pathing_t *path);
 	bool checkWalkingDirections (const pathing_t *path);
@@ -170,21 +171,27 @@ public:
 };
 
 /**
- * @brief Initialize the Step data
- * @param[in] _routes Pointer to client or server side routing table (clMap, svMap)
+ * @brief Constructor
+ * @param[in] _routes Reference to client or server side routing table (clMap, svMap)
  * @param[in] _fromPos Position where we start this step
  * @param[in] _actorSize Give the field size of the actor (e.g. for 2x2 units) to check linked fields as well.
  * @param[in] _crouchingState Whether the actor is currently crouching, 1 is yes, 0 is no.
  * @param[in] _dir Direction vector index (see DIRECTIONS and dvecs)
- * @return false if dir is irrelevant or something went wrong
  */
-bool Step::init (const routing_t *_routes, const pos3_t _fromPos, const actorSizeEnum_t _actorSize, const byte _crouchingState, const int _dir)
+Step::Step (const Routing &r, const pos3_t _fromPos, const actorSizeEnum_t _actorSize, const byte _crouchingState, const int _dir) : routing(r)
 {
-	routes = _routes;
 	actorSize = _actorSize;
 	VectorCopy(_fromPos, fromPos);
 	crouchingState = _crouchingState;
 	dir = _dir;
+}
+
+/**
+ * @brief Initialize the other Step data
+ * @return false if dir is irrelevant or something went wrong
+ */
+bool Step::init ()
+{
 	flier = false;
 	hasLadderToClimb = false;
 	hasLadderSupport = false;
@@ -265,7 +272,7 @@ bool Step::checkWalkingDirections (const pathing_t *path)
 	int passageHeight;
 	/** @todo falling_height should be replaced with an arbitrary max falling height based on the actor. */
 	const int fallingHeight = PATHFINDING_MAX_FALL;/**<This is the maximum height that an actor can fall. */
-	const int stepup = RT_STEPUP_POS(routes, actorSize, fromPos, dir); /**< The stepup needed to get to/through the passage */
+	const int stepup = RT_getStepup(routing.routes, actorSize, fromPos[0], fromPos[1], fromPos[2], dir); /**< The stepup needed to get to/through the passage */
 	const int stepupHeight = stepup & ~(PATHFINDING_BIG_STEPDOWN | PATHFINDING_BIG_STEPUP); /**< The actual stepup height without the level flags */
 	int heightChange;
 	/** @todo actor_stepup_height should be replaced with an arbitrary max stepup height based on the actor. */
@@ -273,7 +280,7 @@ bool Step::checkWalkingDirections (const pathing_t *path)
 
 	/* This is the standard passage height for all units trying to move horizontally. */
 	RT_CONN_TEST_POS(step->map, actorSize, fromPos, dir);
-	passageHeight = RT_CONN_POS(routes, actorSize, fromPos, dir);
+	passageHeight = RT_getConn(routing.routes, actorSize, fromPos, dir);
 	if (passageHeight < actorHeight) {
 #if 0
 /** I know this code could be streamlined, but until I understand it myself, plz leave it like it is !*/
@@ -353,11 +360,11 @@ bool Step::checkWalkingDirections (const pathing_t *path)
 		 * not be able to use the opening.
 		 */
 	} else if ((stepup & PATHFINDING_BIG_STEPDOWN) && toPos[2] > 0
-		&& actorStepupHeight >= (RT_STEPUP(routes, actorSize, nx, ny, nz - 1, dir ^ 1) & ~(PATHFINDING_BIG_STEPDOWN | PATHFINDING_BIG_STEPUP))) {
+		&& actorStepupHeight >= (RT_getStepup(routing.routes, actorSize, nx, ny, nz - 1, dir ^ 1) & ~(PATHFINDING_BIG_STEPDOWN | PATHFINDING_BIG_STEPUP))) {
 		toPos[2]--;		/* Stepping down into lower cell. */
 	}
 
-	heightChange = RT_getFloor(routes, actorSize, toPos) - RT_getFloor(routes, actorSize, fromPos) + (toPos[2] - fromPos[2]) * CELL_HEIGHT;
+	heightChange = routing.getFloor(actorSize, toPos) - routing.getFloor(actorSize, fromPos) + (toPos[2] - fromPos[2]) * CELL_HEIGHT;
 
 	/* If the actor tries to fall more than falling_height, then prohibit the move. */
 	if (heightChange < -fallingHeight && !hasLadderSupport) {
@@ -369,7 +376,7 @@ bool Step::checkWalkingDirections (const pathing_t *path)
 	 * Set heightChange to 0.
 	 * The actor enters the cell.
 	 * The actor will be forced to fall (dir 13) from the destination cell to the cell below. */
-	if (RT_getFloor(routes, actorSize, toPos) < 0) {
+	if (routing.getFloor(actorSize, toPos) < 0) {
 		/* We cannot fall if STEPDOWN is defined. */
 		if (stepup & PATHFINDING_BIG_STEPDOWN) {
 			return false;		/* There is stepdown from here. */
@@ -393,19 +400,19 @@ bool Step::checkFlyingDirections (void)
 	if (toPos[2] > fromPos[2]) {
 		/* If the actor is moving up, check the passage at the current cell.
 		 * The minimum height is the actor's height plus the distance from the current floor to the top of the cell. */
-		neededHeight = actorHeight + CELL_HEIGHT - std::max((const signed char)0, RT_getFloor(routes, actorSize, fromPos));
+		neededHeight = actorHeight + CELL_HEIGHT - std::max((const signed char)0, routing.getFloor(actorSize, fromPos));
 		RT_CONN_TEST_POS(routes, actorSize, fromPos, coreDir);
-		passageHeight = RT_CONN_POS(routes, actorSize, fromPos, coreDir);
+		passageHeight = RT_getConn(routing.routes, actorSize, fromPos, coreDir);
 	} else if (toPos[2] < fromPos[2]) {
 		/* If the actor is moving down, check from the destination cell back. *
 		 * The minimum height is the actor's height plus the distance from the destination floor to the top of the cell. */
-		neededHeight = actorHeight + CELL_HEIGHT - std::max((const signed char)0, RT_getFloor(routes, actorSize, toPos));
+		neededHeight = actorHeight + CELL_HEIGHT - std::max((const signed char)0, routing.getFloor(actorSize, toPos));
 		RT_CONN_TEST_POS(routes, actorSize, toPos, coreDir ^ 1);
-		passageHeight = RT_CONN_POS(routes, actorSize, toPos, coreDir ^ 1);
+		passageHeight = RT_getConn(routing.routes, actorSize, toPos, coreDir ^ 1);
 	} else {
 		neededHeight = actorHeight;
-		RT_CONN_TEST_POS(routes, actorSize, fromPos, coreDir);
-		passageHeight = RT_CONN_POS(routes, actorSize, fromPos, coreDir);
+		RT_CONN_TEST_POS(routing.routes, actorSize, fromPos, coreDir);
+		passageHeight = RT_getConn(routing.routes, actorSize, fromPos, coreDir);
 	}
 	if (passageHeight < neededHeight) {
 		return false;
@@ -423,7 +430,7 @@ bool Step::checkVerticalDirections (void)
 		if (flier) {
 			/* Fliers cannot fall intentionally. */
 			return false;
-		} else if (RT_getFloor(routes, actorSize, fromPos) >= 0) {
+		} else if (routing.getFloor(actorSize, fromPos) >= 0) {
 			/* We cannot fall if there is a floor in this cell. */
 			return false;
 		} else if (hasLadderSupport) {
@@ -431,7 +438,7 @@ bool Step::checkVerticalDirections (void)
 			return false;
 		}
 	} else if (dir == DIRECTION_CLIMB_UP) {
-		if (flier && QuantToModel(RT_getCeiling(routes, actorSize, fromPos)) < UNIT_HEIGHT * 2 - PLAYER_HEIGHT) { /* Not enough headroom to fly up. */
+		if (flier && QuantToModel(RT_getCeiling(routing.routes, actorSize, fromPos)) < UNIT_HEIGHT * 2 - PLAYER_HEIGHT) { /* Not enough headroom to fly up. */
 			return false;
 		}
 		/* If the actor is not a flyer and tries to move up, there must be a ladder. */
@@ -440,7 +447,7 @@ bool Step::checkVerticalDirections (void)
 		}
 	} else if (dir == DIRECTION_CLIMB_DOWN) {
 		if (flier) {
-			if (RT_getFloor(routes, actorSize, fromPos) >= 0 ) { /* Can't fly down through a floor. */
+			if (routing.getFloor(actorSize, fromPos) >= 0 ) { /* Can't fly down through a floor. */
 				return false;
 			}
 		} else {
@@ -501,7 +508,7 @@ bool Step::isPossible (const pathing_t *path)
  *
  * We calculate the table for ALL possible movement states (atm stand and crouch)
  * to be able to propose smart things like autostand.
- * @param[in] routes Pointer to client or server side routing table (clMap, svMap)
+ * @param[in] routing Reference to client or server side routing table (clMap, svMap)
  * @param[in] actorSize The size of thing to calc the move for (e.g. size=2 means 2x2).
  * The plan is to have the 'origin' in 2x2 units in the bottom-left (towards the lower coordinates) corner of the 2x2 square.
  * @param[in,out] path Pointer to client or server side pathing table (clMap, svMap)
@@ -512,7 +519,7 @@ bool Step::isPossible (const pathing_t *path)
  * @sa G_MoveCalc
  * @sa CL_ConditionalMoveCalc
  */
-void Grid_CalcPathing (const routing_t *routes, const actorSizeEnum_t actorSize, pathing_t *path, const pos3_t from, int maxTUs, byte ** fb_list, int fb_length)
+void Grid_CalcPathing (const Routing &routing, const actorSizeEnum_t actorSize, pathing_t *path, const pos3_t from, int maxTUs, byte ** fb_list, int fb_length)
 {
 	int count;
 	priorityQueue_t pqueue;
@@ -558,7 +565,7 @@ void Grid_CalcPathing (const routing_t *routes, const actorSizeEnum_t actorSize,
                 continue;
 
             for (dir = 0; dir < PATHFINDING_DIRECTIONS; dir++) {
-                Step step;
+                Step step(routing, pos, actorSize, amst, dir);
                 /* Directions 12, 14, and 15 are currently undefined. */
                 if (dir == 12 || dir == 14 || dir == 15)
                     continue;
@@ -566,7 +573,7 @@ void Grid_CalcPathing (const routing_t *routes, const actorSizeEnum_t actorSize,
                 if (dir == DIRECTION_STAND_UP || dir == DIRECTION_CROUCH)
                     continue;
 
-                if (!step.init(routes, pos, actorSize, amst, dir))
+                if (!step.init())
                     continue;		/* either dir is irrelevant or something worse happened */
 
                 if (step.isPossible(path)) {
@@ -603,7 +610,7 @@ void Grid_CalcPathing (const routing_t *routes, const actorSizeEnum_t actorSize,
  * all positions reachable from 'from'. Instead it tries to find the shortest/fastest path to
  * the target position. There is no limit to maxTUs.
  *
- * @param[in] routes Pointer to client or server side routing table (clMap, svMap)
+ * @param[in] routing Reference to client or server side routing table (clMap, svMap)
  * @param[in] actorSize The size of thing to calc the move for (e.g. size=2 means 2x2).
  * The plan is to have the 'origin' in 2x2 units in the bottom-left (towards the lower coordinates) corner of the 2x2 square.
  * @param[in,out] path Pointer to client or server side pathing table (clMap, svMap)
@@ -616,7 +623,7 @@ void Grid_CalcPathing (const routing_t *routes, const actorSizeEnum_t actorSize,
  * @sa G_MoveCalc
  * @sa CL_ConditionalMoveCalc
  */
-bool Grid_FindPath (const routing_t *routes, const actorSizeEnum_t actorSize, pathing_t *path, const pos3_t from, const pos3_t targetPos, byte crouchingState, int maxTUs, byte ** fb_list, int fb_length)
+bool Grid_FindPath (const Routing &routing, const actorSizeEnum_t actorSize, pathing_t *path, const pos3_t from, const pos3_t targetPos, byte crouchingState, int maxTUs, byte ** fb_list, int fb_length)
 {
 	bool found = false;
 	int count;
@@ -659,7 +666,7 @@ bool Grid_FindPath (const routing_t *routes, const actorSizeEnum_t actorSize, pa
 			continue;
 
 		for (dir = 0; dir < PATHFINDING_DIRECTIONS; dir++) {
-			Step step;
+			Step step(routing, pos, actorSize, crouchingState, dir);
 			/* Directions 12, 14, and 15 are currently undefined. */
 			if (dir == 12 || dir == 14 || dir == 15)
 				continue;
@@ -667,7 +674,7 @@ bool Grid_FindPath (const routing_t *routes, const actorSizeEnum_t actorSize, pa
 			if (dir == DIRECTION_STAND_UP || dir == DIRECTION_CROUCH)
 				continue;
 
-			if (!step.init(routes, pos, actorSize, crouchingState, dir))
+			if (!step.init())
 				continue;		/* either dir is irrelevant or something worse happened */
 
 			if (step.isPossible(path)) {
@@ -763,76 +770,29 @@ int Grid_MoveNext (const pathing_t *path, const pos3_t toPos, byte crouchingStat
 
 /**
  * @brief Returns the height of the floor in a cell.
- * @param[in] routes Pointer to client or server side routing table (clMap, svMap)
+ * @param[in] routing Reference to client or server side routing table (clMap, svMap)
  * @param[in] actorSize width of the actor in cells
  * @param[in] pos Position in the map to check the height
  * @return The actual model height of the cell's ceiling.
  */
-unsigned int Grid_Ceiling (const routing_t *routes, const actorSizeEnum_t actorSize, const pos3_t pos)
+unsigned int Grid_Ceiling (const Routing &routing, const actorSizeEnum_t actorSize, const pos3_t pos)
 {
-	/* max 8 levels */
-	if (pos[2] >= PATHFINDING_HEIGHT) {
-		Com_Printf("Grid_Height: Warning: z level is bigger than %i: %i\n",
-			(PATHFINDING_HEIGHT - 1), pos[2]);
-	}
-	return QuantToModel(RT_getCeiling(routes, actorSize, pos[0], pos[1], pos[2] & 7));
+	assert(pos[2] < PATHFINDING_HEIGHT);
+	return QuantToModel(RT_getCeiling(routing.routes, actorSize, pos[0], pos[1], pos[2] & 7));
 }
-
 
 /**
  * @brief Returns the height of the floor in a cell.
- * @param[in] routes Pointer to client or server side routing table (clMap, svMap)
- * @param[in] actorSize width of the actor in cells
- * @param[in] pos Position in the map to check the height
- * @return The actual model height of the cell's ceiling.
- */
-int Grid_Height (const routing_t *routes, const actorSizeEnum_t actorSize, const pos3_t pos)
-{
-	/* max 8 levels */
-	if (pos[2] >= PATHFINDING_HEIGHT) {
-		Com_Printf("Grid_Height: Warning: z level is bigger than %i: %i\n",
-			(PATHFINDING_HEIGHT - 1), pos[2]);
-	}
-	return QuantToModel(RT_getCeiling(routes, actorSize, pos[0], pos[1], pos[2] & (PATHFINDING_HEIGHT - 1))
-		- RT_getFloor(routes, actorSize, pos[0], pos[1], pos[2] & (PATHFINDING_HEIGHT - 1)));
-}
-
-
-/**
- * @brief Returns the height of the floor in a cell.
- * @param[in] routes Pointer to client or server side routing table (clMap, svMap)
+ * @param[in] routing Reference to client or server side routing table (clMap, svMap)
  * @param[in] actorSize width of the actor in cells
  * @param[in] pos Position in the map to check the height
  * @return The actual model height of the cell's floor.
  */
-int Grid_Floor (const routing_t *routes, const actorSizeEnum_t actorSize, const pos3_t pos)
+int Grid_Floor (const Routing &routing, const actorSizeEnum_t actorSize, const pos3_t pos)
 {
-	/* max 8 levels */
-	if (pos[2] >= PATHFINDING_HEIGHT) {
-		Com_Printf("Grid_Floor: Warning: z level is bigger than %i: %i\n",
-			(PATHFINDING_HEIGHT - 1), pos[2]);
-	}
-	return QuantToModel(RT_getFloor(routes, actorSize, pos[0], pos[1], pos[2] & (PATHFINDING_HEIGHT - 1)));
+	assert(pos[2] < PATHFINDING_HEIGHT);
+	return QuantToModel(RT_getFloor(routing.routes, actorSize, pos[0], pos[1], pos[2] & (PATHFINDING_HEIGHT - 1)));
 }
-
-
-/**
- * @brief Returns the maximum height of an obstruction that an actor can travel over.
- * @param[in] routes Pointer to client or server side routing table (clMap, svMap)
- * @param[in] actorSize width of the actor in cells
- * @param[in] pos Position in the map to check the height
- * @param[in] dir the direction in which we are moving
- * @return The actual model height increase needed to move into an adjacent cell.
- */
-pos_t Grid_StepUp (const routing_t *routes, const actorSizeEnum_t actorSize, const pos3_t pos, const int dir)
-{
-	/* max 8 levels */
-	if (pos[2] >= PATHFINDING_HEIGHT) {
-		Com_Printf("Grid_StepUp: Warning: z level is bigger than 7: %i\n", pos[2]);
-	}
-	return QuantToModel(RT_STEPUP(routes, actorSize, pos[0], pos[1], pos[2] & (PATHFINDING_HEIGHT - 1), dir));
-}
-
 
 /**
  * @brief Returns the amounts of TUs that are needed to perform one step into the given direction.
@@ -852,28 +812,28 @@ int Grid_GetTUsForDirection (const int dir, const int crouched)
 
 /**
  * @brief Returns non-zero if the cell is filled (solid) and cannot be entered.
- * @param[in] routes Pointer to client or server side routing table (clMap, svMap)
+ * @param[in] routing Reference to client or server side routing table (clMap, svMap)
  * @param[in] actorSize width of the actor in cells
  * @param[in] pos Position in the map to check for filling
  * @return 0 if the cell is vacant (of the world model), non-zero otherwise.
  */
-int Grid_Filled (const routing_t *routes, const actorSizeEnum_t actorSize, const pos3_t pos)
+int Grid_Filled (const Routing &routing, const actorSizeEnum_t actorSize, const pos3_t pos)
 {
 	/* max 8 levels */
 	assert(pos[2] < PATHFINDING_HEIGHT);
-	return RT_FILLED(routes, pos[0], pos[1], pos[2], actorSize);
+	return RT_FILLED(routing.routes, pos[0], pos[1], pos[2], actorSize);
 }
 
 
 /**
  * @brief Calculated the new height level when something falls down from a certain position.
- * @param[in] routes Pointer to client or server side routing table (clMap, svMap)
+ * @param[in] routing Reference to client or server side routing table (clMap, svMap)
  * @param[in] pos Position in the map to start the fall (starting height is the z-value in this position)
  * @param[in] actorSize Give the field size of the actor (e.g. for 2x2 units) to check linked fields as well.
  * @return New z (height) value.
  * @return 0xFF if an error occurred.
  */
-pos_t Grid_Fall (const routing_t *routes, const actorSizeEnum_t actorSize, const pos3_t pos)
+pos_t Grid_Fall (const Routing &routing, const actorSizeEnum_t actorSize, const pos3_t pos)
 {
 	int z = pos[2], base, diff;
 	bool flier = false; /** @todo if an actor can fly, then set this to true. */
@@ -891,7 +851,7 @@ pos_t Grid_Fall (const routing_t *routes, const actorSizeEnum_t actorSize, const
 	 * If z < 0, we are going down.
 	 * If z >= CELL_HEIGHT, we are going up.
 	 * If 0 <= z <= CELL_HEIGHT, then z / 16 = 0, no change. */
-	base = RT_getFloor(routes, actorSize, pos[0], pos[1], z);
+	base = RT_getFloor(routing.routes, actorSize, pos[0], pos[1], z);
 	/* Hack to deal with negative numbers- otherwise rounds toward 0 instead of down. */
 	diff = base < 0 ? (base - (CELL_HEIGHT - 1)) / CELL_HEIGHT : base / CELL_HEIGHT;
 	z += diff;
@@ -917,13 +877,12 @@ bool Grid_ShouldUseAutostand (const pathing_t *path, const pos3_t toPos)
 
 /**
  * @brief Converts a grid position to world coordinates
- * @sa Grid_Height
- * @param[in] routes The routing map
+ * @param[in] routing The routing map
  * @param[in] actorSize width of the actor in cells
  * @param[in] pos The grid position
  * @param[out] vec The world vector
  */
-void Grid_PosToVec (const routing_t *routes, const actorSizeEnum_t actorSize, const pos3_t pos, vec3_t vec)
+void Grid_PosToVec (const Routing &routing, const actorSizeEnum_t actorSize, const pos3_t pos, vec3_t vec)
 {
 	SizedPosToVec(pos, actorSize, vec);
 #ifdef PARANOID
@@ -931,7 +890,7 @@ void Grid_PosToVec (const routing_t *routes, const actorSizeEnum_t actorSize, co
 		Com_Printf("Grid_PosToVec: Warning - z level bigger than 7 (%i - source: %.02f)\n", pos[2], vec[2]);
 #endif
 	/* Clamp the floor value between 0 and UNIT_HEIGHT */
-	const int gridFloor = Grid_Floor(routes, actorSize, pos);
+	const int gridFloor = Grid_Floor(routing, actorSize, pos);
 	vec[2] += std::max(0, std::min(UNIT_HEIGHT, gridFloor));
 }
 
@@ -941,11 +900,11 @@ void Grid_PosToVec (const routing_t *routes, const actorSizeEnum_t actorSize, co
  * @sa CMod_LoadRouting
  * @sa Grid_RecalcRouting
  * @param[in] mapTiles List of tiles the current (RMA-)map is composed of
- * @param[in] routes The routing map (either server or client map)
+ * @param[in] routing The routing map (either server or client map)
  * @param[in] box The box to recalc routing for
  * @param[in] list The local models list (a local model has a name starting with * followed by the model number)
  */
-void Grid_RecalcBoxRouting (mapTiles_t *mapTiles, routing_t *routes, const GridBox &box, const char **list)
+void Grid_RecalcBoxRouting (mapTiles_t *mapTiles, Routing &routing, const GridBox &box, const char **list)
 {
 	int x, y, z, actorSize, dir;
 
@@ -958,7 +917,7 @@ void Grid_RecalcBoxRouting (mapTiles_t *mapTiles, routing_t *routes, const GridB
 			for (x = rBox.mins[0]; x <= rBox.maxs[0]; x++) {
 				/** @note RT_CheckCell goes from top (7) to bottom (0) */
 				for (z = box.maxs[2]; z >= 0; z--) {
-					const int newZ = RT_CheckCell(mapTiles, routes, actorSize, x, y, z, list);
+					const int newZ = RT_CheckCell(mapTiles, routing, actorSize, x, y, z, list);
 					assert(newZ <= z);
 					z = newZ;
 				}
@@ -1000,7 +959,7 @@ void Grid_RecalcBoxRouting (mapTiles_t *mapTiles, routing_t *routes, const GridB
 						if (y < box.mins[1] - 1 && dir != 2 && dir != 4 && dir != 6)
 							continue;
 					}
-					RT_UpdateConnectionColumn(mapTiles, routes, actorSize, x, y, dir, list);
+					RT_UpdateConnectionColumn(mapTiles, routing, actorSize, x, y, dir, list);
 				}
 			}
 		}
@@ -1016,19 +975,17 @@ void Grid_RecalcBoxRouting (mapTiles_t *mapTiles, routing_t *routes, const GridB
  * @sa CMod_LoadSubmodels
  * @sa Grid_RecalcBoxRouting
  * @param[in] mapTiles List of tiles the current (RMA-)map is composed of
- * @param[in] routes The routing map (either server or client map)
+ * @param[in] routing The routing map (either server or client map)
  * @param[in] name Name of the inline model to compute the mins/maxs for
  * @param[in] box The box around the inline model (alternative to name)
  * @param[in] list The local models list (a local model has a name starting with * followed by the model number)
  */
-void Grid_RecalcRouting (mapTiles_t *mapTiles, routing_t *routes, const char *name, const GridBox &box, const char **list)
+void Grid_RecalcRouting (mapTiles_t *mapTiles, Routing &routing, const char *name, const GridBox &box, const char **list)
 {
-	pos3_t min, max;
-	double start, end;
-
-	start = time(NULL);
+	const double start = time(NULL);
 
 	if (box.isZero()) {
+		pos3_t min, max;
 		const cBspModel_t *model;
 		unsigned int i;
 		/* get inline model, if it is one */
@@ -1085,12 +1042,15 @@ void Grid_RecalcRouting (mapTiles_t *mapTiles, routing_t *routes, const char *na
 
 		/* We now have the dimensions, call the generic rerouting function. */
 		GridBox rerouteBox(min, max);
-		Grid_RecalcBoxRouting(mapTiles, routes, rerouteBox, list);
-	} else
+		Grid_RecalcBoxRouting(mapTiles, routing, rerouteBox, list);
+		const double end = time(NULL);
+		Com_DPrintf(DEBUG_ROUTING, "Retracing for model %s between (%i, %i, %i) and (%i, %i %i) in %5.1fs\n",
+				name, min[0], min[1], min[2], max[0], max[1], max[2], end - start);
+	} else {
 		/* use the passed box */
-		Grid_RecalcBoxRouting(mapTiles, routes, box, list);
-
-	end = time(NULL);
-	Com_DPrintf(DEBUG_ROUTING, "Retracing for model %s between (%i, %i, %i) and (%i, %i %i) in %5.1fs\n",
-			name, min[0], min[1], min[2], max[0], max[1], max[2], end - start);
+		Grid_RecalcBoxRouting(mapTiles, routing, box, list);
+		const double end = time(NULL);
+		Com_DPrintf(DEBUG_ROUTING, "Retracing for model %s in %5.1fs\n",
+				name, end - start);
+	}
 }

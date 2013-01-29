@@ -53,6 +53,7 @@ public:
 
 	const char *invName;
 	/* public */
+	void InitInventory (const char *name, const csi_t* csi, const inventoryImport_t *import);
 	bool RemoveFromInventory (inventory_t* const i, const invDef_t *container, invList_t *fItem) __attribute__((warn_unused_result));
 
 	invList_t* AddToInventory (inventory_t *const i, const item_t* const item, const invDef_t *container, int x, int y,
@@ -69,9 +70,9 @@ public:
 
 	void EquipActor (character_t* const chr, const equipDef_t *ed, int maxWeight);
 
-	void EquipActorMelee (inventoryInterface_t* self, inventory_t* const inv, const teamDef_t* td);
+	void EquipActorMelee (inventory_t* const inv, const teamDef_t* td);
 
-	void EquipActorRobot (inventoryInterface_t* self, inventory_t* const inv, const objDef_t* weapon);
+	void EquipActorRobot (inventory_t* const inv, const objDef_t* weapon);
 
 	int GetUsedSlots ();
 
@@ -91,5 +92,4 @@ protected:
 	int PackAmmoAndWeapon (character_t* const chr, const objDef_t* weapon, int missedPrimary, const equipDef_t *ed, int maxWeight);
 };
 
-void INV_InitInventory(const char *name, inventoryInterface_t *ii, const csi_t* csi, const inventoryImport_t *iimport);
 void INV_DestroyInventory(inventoryInterface_t *ii);

@@ -33,7 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../shared/scopedmutex.h"
 
 serverInstanceStatic_t svs;			/* persistant server info */
-serverInstanceGame_t * sv;					/* local server */
+serverInstanceGame_t *sv;			/* local server */
 
 /**
  * @brief Get the map title for a given map
