@@ -148,8 +148,8 @@ namespace routing
 	static void CMod_LoadRouting (RoutingLump& routingLump, const std::string& name, const lump_t *l,
 			byte* cModelBase, int sX, int sY, int sZ)
 	{
-		static routing_t tempMap[ACTOR_MAX_SIZE];
-		static routing_t clMap[ACTOR_MAX_SIZE];
+		static Routing tempMap;
+		static Routing clMap;
 		static MapTile curTile;
 		byte *source;
 		int length;
@@ -173,7 +173,7 @@ namespace routing
 		length = i;
 		i = CMod_DeCompressRouting(&source, (byte*) curTile.wpMaxs);
 		length += i;
-		i = CMod_DeCompressRouting(&source, (byte*) tempMap);
+		i = CMod_DeCompressRouting(&source, (byte*) tempMap.routes);
 		length += i;
 
 		if (length != targetLength) {
@@ -212,11 +212,11 @@ namespace routing
 					if (x < 0 || y < 0)
 						continue;
 					for (z = minZ; z <= maxZ; z++) {
-						clMap[size].setFloor(x, y, z, tempMap[size].getFloor(x - sX, y - sY, z - sZ));
-						clMap[size].setCeiling(x, y, z, tempMap[size].getCeiling(x - sX, y - sY, z - sZ));
+						clMap.routes[size].setFloor(x, y, z, tempMap.routes[size].getFloor(x - sX, y - sY, z - sZ));
+						clMap.routes[size].setCeiling(x, y, z, tempMap.routes[size].getCeiling(x - sX, y - sY, z - sZ));
 						for (dir = 0; dir < CORE_DIRECTIONS; dir++) {
-							clMap[size].setConn(x, y, z, dir, tempMap[size].getConn(x - sX, y - sY, z - sZ, dir));
-							clMap[size].setStepup(x, y, z, dir, tempMap[size].getStepup(x - sX, y - sY, z - sZ, dir));
+							clMap.routes[size].setConn(x, y, z, dir, tempMap.routes[size].getConn(x - sX, y - sY, z - sZ, dir));
+							clMap.routes[size].setStepup(x, y, z, dir, tempMap.routes[size].getStepup(x - sX, y - sY, z - sZ, dir));
 						}
 					}
 					/* Update the reroute table */
@@ -237,7 +237,7 @@ namespace routing
 						PosToVec(pos,vect);
 						/**@todo add other data to constructor: accessibility + connection states */
 						RoutingLumpEntry entry = RoutingLumpEntry(Vector3(vect), (z + 1));
-						FillRoutingLumpEntry(entry, clMap, pos);
+						FillRoutingLumpEntry(entry, clMap.routes, pos);
 						/**@todo perhaps there is a better way than creating a const object for adding */
 						const RoutingLumpEntry toAdd = RoutingLumpEntry(entry);
 						routingLump.add(toAdd);
