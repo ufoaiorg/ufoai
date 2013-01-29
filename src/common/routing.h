@@ -31,12 +31,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 GLOBAL TYPES
 ==============================================================*/
 #if defined(COMPILE_MAP)
-  #define RT_COMPLETEBOXTRACE_SIZE(mapTiles,s,e,b,list)		TR_SingleTileBoxTrace((mapTiles), (s),(e),(b),TRACING_ALL_VISIBLE_LEVELS, MASK_ALL, 0)
-  #define RT_COMPLETEBOXTRACE_PASSAGE(mapTiles,s,e,b,list)	TR_SingleTileBoxTrace((mapTiles), (s),(e),(b),TRACING_ALL_VISIBLE_LEVELS, MASK_IMPASSABLE, MASK_PASSABLE)
+  #define RT_COMPLETEBOXTRACE_SIZE(mapTiles,s,e,b,list)		TR_SingleTileBoxTrace((mapTiles), Line((s),(e)),(b),TRACING_ALL_VISIBLE_LEVELS, MASK_ALL, 0)
+  #define RT_COMPLETEBOXTRACE_PASSAGE(mapTiles,s,e,b,list)	TR_SingleTileBoxTrace((mapTiles), Line((s),(e)),(b),TRACING_ALL_VISIBLE_LEVELS, MASK_IMPASSABLE, MASK_PASSABLE)
 
 #elif defined(COMPILE_UFO)
-  #define RT_COMPLETEBOXTRACE_SIZE(mapTiles,s,e,b,list)		CM_EntCompleteBoxTrace((mapTiles), (s),(e),(b),TRACING_ALL_VISIBLE_LEVELS, MASK_ALL, 0, (list))
-  #define RT_COMPLETEBOXTRACE_PASSAGE(mapTiles,s,e,b,list)	CM_EntCompleteBoxTrace((mapTiles), (s),(e),(b),TRACING_ALL_VISIBLE_LEVELS, MASK_IMPASSABLE, MASK_PASSABLE, (list))
+  #define RT_COMPLETEBOXTRACE_SIZE(mapTiles,s,e,b,list)		CM_EntCompleteBoxTrace((mapTiles), Line((s),(e)),(b),TRACING_ALL_VISIBLE_LEVELS, MASK_ALL, 0, (list))
+  #define RT_COMPLETEBOXTRACE_PASSAGE(mapTiles,s,e,b,list)	CM_EntCompleteBoxTrace((mapTiles), Line((s),(e)),(b),TRACING_ALL_VISIBLE_LEVELS, MASK_IMPASSABLE, MASK_PASSABLE, (list))
 
 #else
   #error Either COMPILE_MAP or COMPILE_UFO must be defined in order for tracing.c to work.

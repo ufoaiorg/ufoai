@@ -356,8 +356,7 @@ trace_t CM_CompleteBoxTrace (mapTiles_t *mapTiles, const vec3_t start, const vec
 /**
  * @brief Performs box traces against the world and all inline models, gives the hit position back
  * @param[in] mapTiles List of tiles the current (RMA-)map is composed of
- * @param[in] start The position to start the trace.
- * @param[in] end The position where the trace ends.
+ * @param[in] traceLine The start/stop position of the trace.
  * @param[in] traceBox The minimum/maximum extents of the collision box that is projected.
  * @param[in] levelmask A mask of the game levels to trace against. Mask 0x100 filters clips.
  * @param[in] brushmask Any brush detected must at least have one of these contents.
@@ -367,20 +366,18 @@ trace_t CM_CompleteBoxTrace (mapTiles_t *mapTiles, const vec3_t start, const vec
  * @sa CM_CompleteBoxTrace
  * @sa CM_HintedTransformedBoxTrace
  */
-trace_t CM_EntCompleteBoxTrace (mapTiles_t *mapTiles, const vec3_t start, const vec3_t end, const AABB *traceBox, int levelmask, int brushmask, int brushreject, const char **list)
+trace_t CM_EntCompleteBoxTrace (mapTiles_t *mapTiles, const Line &traceLine, const AABB *traceBox, int levelmask, int brushmask, int brushreject, const char **list)
 {
 	trace_t trace, newtr;
 	const char **name;
 
 	/* trace against world first */
-	trace = CM_CompleteBoxTrace(mapTiles, start, end, *traceBox, levelmask, brushmask, brushreject);
+	trace = CM_CompleteBoxTrace(mapTiles, traceLine.start, traceLine.stop, *traceBox, levelmask, brushmask, brushreject);
 	if (!list || trace.fraction == 0.0)
 		return trace;
 
-
-	Line line(start, end);
-	AABB lineBox(line);		/* Find the original bounding box for the tracing line. */
-	lineBox.add(*traceBox);	/* Now increase the bounding box by traceBox in both directions. */
+	AABB lineBox(traceLine);	/* Find the original bounding box for the tracing line. */
+	lineBox.add(*traceBox);		/* Now increase the bounding box by traceBox in both directions. */
 	/* Now lineBox specifies the whole volume to be traced through. */
 
 	for (name = list; *name; name++) {
@@ -403,7 +400,7 @@ trace_t CM_EntCompleteBoxTrace (mapTiles_t *mapTiles, const vec3_t start, const 
 		if (!lineBox.doesIntersect(modelBox))
 			continue;
 
-		newtr = CM_HintedTransformedBoxTrace(mapTiles->mapTiles[model->tile], start, end, traceBox->mins, traceBox->maxs,
+		newtr = CM_HintedTransformedBoxTrace(mapTiles->mapTiles[model->tile], traceLine.start, traceLine.stop, traceBox->mins, traceBox->maxs,
 				model->headnode, brushmask, brushreject, model->origin, model->angles, model->shift, trace.fraction);
 
 		/* memorize the trace with the minimal fraction */
