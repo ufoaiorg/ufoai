@@ -86,7 +86,7 @@ RoutingData::RoutingData (mapTiles_t *mapTiles, Routing &r, actorSizeEnum_t acto
 }
 static inline void RT_ConnSet (RoutingData *rtd, const int x, const int y, const int z, const int dir, const int val)
 {
-	RT_setConn(rtd->routes, rtd->actorSize, x, y, z, dir, val);
+	rtd->routing.setConn(rtd->actorSize, x, y, z, dir, val);
 }
 
 static inline void RT_StepupSet (RoutingData *rtd, const int x, const int y, const int z, const int dir, const int val)
