@@ -667,8 +667,8 @@ window bases
 	confunc current_employees
 	{
 		*node:parent.base_container.cur_employees.soldiers.data@string = "<1>"
-		*node:parent.base_container.cur_employees.scientists.data@string = "<2>"
-		*node:parent.base_container.cur_employees.workers.data@string = "<3>"
+		*node:parent.base_container.cur_employees.scientists.data@string = "<3>"
+		*node:parent.base_container.cur_employees.workers.data@string = "<4>"
 	}
 
 	/*

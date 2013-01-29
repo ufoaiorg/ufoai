@@ -105,6 +105,7 @@ static void RS_UpdateInfo (const base_t* base)
 
 	/* Store scientist limits cvars */
 	cgi->Cvar_SetValue("mn_scientists_hired", E_CountHired(base, EMPL_SCIENTIST));
+	cgi->Cvar_SetValue("mn_scientists_unhired", E_CountUnhired(EMPL_SCIENTIST));
 	cgi->Cvar_SetValue("mn_scientists_available", E_CountUnassigned(base, EMPL_SCIENTIST));
 
 	cgi->Cvar_Set("mn_research_selbase", _("Not researched in any base."));
