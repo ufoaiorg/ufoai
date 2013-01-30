@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
 "POT-Creation-Date: 2012-10-16 10:46+0700\n"
-"PO-Revision-Date: 2013-01-14 21:06+0100\n"
+"PO-Revision-Date: 2013-01-24 14:59+0100\n"
 "Last-Translator: Kostia (Kildor) Romanov <kostia@ngs.ru>\n"
 "Language-Team: inzenir <simon.cedula@guest.arnes.si>\n"
 "Language: sl_SI\n"
@@ -2797,21 +2797,22 @@ msgid ""
 "A farm in a rural area. Lots of land to cover, but few obstacles to impair "
 "line of sight."
 msgstr ""
+"Farma na podeželju. Velike površine, malo objektov, ki omejujejo preglednost."
 
 #: ../base/ufos/maps.ufo:716
 msgid ""
 "A farmhouse surrounded by fields and sheds. A UFO has landed in one of the "
 "fields."
-msgstr ""
+msgstr "Farma obkrožena z polji. NLP je pristal v enem izme polj."
 
 #: ../base/ufos/maps.ufo:769 ../base/ufos/maps.ufo:809
 #: ../base/ufos/maps.ufo:850
 msgid "Aliens are up to no good in this sparsely populated forest region."
-msgstr ""
+msgstr "Nezemljani ne nameravajo nič dobreza v naseljenem predelu gozda."
 
 #: ../base/ufos/maps.ufo:891
 msgid "UFO crashed in this sparsely populated forest region."
-msgstr ""
+msgstr "NLP je pristal v naseljenem predelu gozda."
 
 #: ../base/ufos/maps.ufo:934 ../base/ufos/maps.ufo:987
 #: ../base/ufos/maps.ufo:1040
@@ -2826,7 +2827,7 @@ msgstr "Malo naseljeno področje v mrzli regiji."
 
 #: ../base/ufos/maps.ufo:1247
 msgid "An important container harbour is attacked by alien invaders."
-msgstr ""
+msgstr "Pomembno pristanišče je napadeno s strani nezemljanov."
 
 #: ../base/ufos/maps.ufo:1302 ../base/ufos/maps.ufo:1347
 #: ../base/ufos/maps.ufo:1389
@@ -2849,7 +2850,7 @@ msgstr "klasično vzhodno predmestje."
 
 #: ../base/ufos/maps.ufo:1785
 msgid "A laboratory where they examined found UFO wreck tiles."
-msgstr ""
+msgstr "Laboratorij v katerem se preučujejo najdene NLP razbitine."
 
 #: ../base/ufos/maps.ufo:1841
 msgid "A mansion near the coast."
@@ -2857,16 +2858,16 @@ msgstr "Rezidenca blizu obale."
 
 #: ../base/ufos/maps.ufo:1895 ../base/ufos/maps.ufo:1943
 msgid "A mansion. An important and influential person lives here."
-msgstr ""
+msgstr "Residenca. Pomembna in vplivna oseba živi tukaj."
 
 #: ../base/ufos/maps.ufo:1996 ../base/ufos/maps.ufo:2036
 #: ../base/ufos/maps.ufo:2119
 msgid "A suburban district of an oriental area."
-msgstr ""
+msgstr "Predmestno okrožje v orientalskem predelu."
 
 #: ../base/ufos/maps.ufo:2078
 msgid "Crashed UFO in oriental suburban district."
-msgstr ""
+msgstr "Strmoglavljen NLP v orientalnem okrožju."
 
 #: ../base/ufos/maps.ufo:2171
 msgid "A crashed Scout UFO."
@@ -2875,11 +2876,11 @@ msgstr "Strmoglavljen NLP izvidnik."
 #: ../base/ufos/maps.ufo:2212 ../base/ufos/maps.ufo:2252
 #: ../base/ufos/maps.ufo:2293
 msgid "A cleared stretch of land in the middle of the jungle."
-msgstr ""
+msgstr "Čista raztegnjena pokarajina sredi džungle."
 
 #: ../base/ufos/maps.ufo:2334 ../base/ufos/maps.ufo:2374
 msgid "A river runs through this piece of jungle."
-msgstr ""
+msgstr "Reka teče skozi džunglo."
 
 #: ../base/ufos/maps.ufo:2421
 msgid "UFO Crashsite."
@@ -2888,7 +2889,7 @@ msgstr "NLP mesto strmoglavljenja."
 #: ../base/ufos/maps.ufo:2454 ../base/ufos/maps.ufo:2496
 #: ../base/ufos/maps.ufo:2537 ../base/ufos/maps.ufo:2580
 msgid "A peaceful neighbourhood on the outskirts of a centre of population."
-msgstr ""
+msgstr "Mirna soseščina na obrobju mesta."
 
 #: ../base/ufos/maps.ufo:2627 ../base/ufos/maps.ufo:2662
 #: ../base/ufos/maps.ufo:5073
@@ -2944,11 +2945,11 @@ msgstr ""
 
 #: ../base/ufos/maps.ufo:3282
 msgid "A military convoy has caught the eye of the aliens."
-msgstr ""
+msgstr "Vojaški konvoj je pritegnil pozornost nezemljanov."
 
 #: ../base/ufos/maps.ufo:3330 ../base/ufos/maps.ufo:4581
 msgid "An urban district in an oriental region."
-msgstr ""
+msgstr "Urbano okrožje v orientalskem predelu."
 
 #: ../base/ufos/maps.ufo:3381
 msgid ""
@@ -2978,7 +2979,7 @@ msgstr "Mali bungalov."
 
 #: ../base/ufos/maps.ufo:3731
 msgid "A bunker used in a previous conflict."
-msgstr ""
+msgstr "Bunker uporabljen v prejšnem spopadu."
 
 #: ../base/ufos/maps.ufo:3780
 msgid "A small industry city area."
@@ -2998,7 +2999,7 @@ msgstr "Majhna vas."
 
 #: ../base/ufos/maps.ufo:4016
 msgid "An estate owned by rich and influential people."
-msgstr ""
+msgstr "Posestva od bogatih in vplivnih ljudi."
 
 #: ../base/ufos/maps.ufo:4061
 msgid "An excavation site that has fallen under alien attack."
@@ -3014,7 +3015,7 @@ msgstr "Nezemljani želijo uničiti deponijo."
 
 #: ../base/ufos/maps.ufo:4249
 msgid "A depot with the name 'The Gate' where secret technology is stored."
-msgstr ""
+msgstr "Skladišče imenovano 'Vrata' kjer se skladišči zaupna tehnologija"
 
 #: ../base/ufos/maps.ufo:4297
 msgid "A local harbour."
@@ -3046,7 +3047,7 @@ msgstr "Luksuzna počitniška rezidenca."
 
 #: ../base/ufos/maps.ufo:4721
 msgid "A rather old-fashioned suburban district."
-msgstr ""
+msgstr "Staromodno primestno okrožje."
 
 #: ../base/ufos/maps.ufo:4839
 msgid "A subway station in a suburban part of town."
@@ -22259,7 +22260,7 @@ msgstr "Težka puška Needler"
 #: ../base/ufos/research.ufo:2057 ../base/ufos/research.ufo:2065
 #: ../base/ufos/weapons_human.ufo:429
 msgid "Coilgun"
-msgstr "Cena puška"
+msgstr "Cevna puška"
 
 #: ../base/ufos/research.ufo:2289
 msgid "Anti-Alien Gas"
@@ -22711,15 +22712,16 @@ msgstr "Opremi plovilo z opremo ter vojaki"
 
 #: ../base/ufos/seq_tutorials.ufo:226
 msgid "Speed up time on geoscape until the first alien mission appears"
-msgstr ""
+msgstr "Pospeši čas zemljevida dokles se ne pojavi prvi NLP"
 
 #: ../base/ufos/seq_tutorials.ufo:254
 msgid "Select the mission (doubleclick) and choose aircraft from list"
-msgstr ""
+msgstr "Izberite misijo (dvojni klik) in izberite plovilo iz seznama"
 
 #: ../base/ufos/seq_tutorials.ufo:273
 msgid "Hit the start or auto-mission button to fight the aliens"
 msgstr ""
+"Pritisni gumb začni ali samodejna misija za bojevanje proti nezemljanom"
 
 #: ../base/ufos/seq_tutorials.ufo:298
 msgid "For further instructions watch the tactical mission tutorial"
@@ -22849,6 +22851,8 @@ msgid ""
 "Select dropship\n"
 "(if possible for current map)"
 msgstr ""
+"Izberi transportno plovilo\n"
+"(če je mogoče za trenutno mapo)"
 
 #: ../base/ufos/seq_tutorials.ufo:964
 msgid "Select map to play"
@@ -22893,7 +22897,7 @@ msgstr ""
 
 #: ../base/ufos/seq_tutorials.ufo:1088
 msgid "As a server admin you should consider setting a round time limit."
-msgstr ""
+msgstr "Kot skrbnik strežnika, razmislite ali ne določili čas trajanja potez."
 
 #: ../base/ufos/skins.ufo:19
 msgid "Urban"
@@ -23001,7 +23005,7 @@ msgstr ""
 
 #: ../base/ufos/tips.ufo:11
 msgid "Don't forget to equip your soldiers with enough ammo."
-msgstr "Ne pozabite opremiti vojake z dovolje goriva."
+msgstr "Ne pozabite opremiti vojake z dovolj streliva."
 
 #: ../base/ufos/tips.ufo:12
 msgid "Don't forget to equip your soldiers with armour."
@@ -23035,6 +23039,8 @@ msgid ""
 "Be sure to hire as many scientists as you can. The better you know your "
 "enemy, the easier he is to defeat."
 msgstr ""
+"Bodite prepričani, da ste najeli dovol znanstvenikov. Kajti le tako boste "
+"bolje spoznali sovražnika in ga premagali."
 
 #: ../base/ufos/tips.ufo:18
 msgid ""
@@ -23305,7 +23311,7 @@ msgstr ""
 msgid ""
 "Never risk your soldier's life just to capture an alien alive. There will be "
 "other occasions."
-msgstr ""
+msgstr "Nikoli ne "
 
 #: ../base/ufos/tips.ufo:63
 msgid ""
@@ -24029,7 +24035,7 @@ msgstr "Razširitev"
 #: ../base/ufos/ui/equipment.ufo:78 ../base/ufos/ui/inventory.ufo:105
 #: ../base/ufos/ui/inventory.ufo:113 ../base/ufos/ui/team.ufo:65
 msgid "Headgear"
-msgstr "Predmeti za glavo"
+msgstr "Glava"
 
 #: ../base/ufos/ui/equipment.ufo:87 ../base/ufos/ui/inventory.ufo:122
 #: ../base/ufos/ui/inventory.ufo:130 ../base/ufos/ui/team.ufo:74
@@ -24429,7 +24435,7 @@ msgstr "Pogovor"
 
 #: ../base/ufos/ui/hud_.ufo:613
 msgid "Party chat"
-msgstr ""
+msgstr "Pogovor"
 
 #: ../base/ufos/ui/hud_.ufo:617
 msgid "Global lobby (IRC)"
@@ -24688,7 +24694,7 @@ msgstr ""
 
 #: ../base/ufos/ui/hud_mini.ufo:679
 msgid "Wheel:Select Next/Previous"
-msgstr ""
+msgstr "Kolešček:Izberi Naslednji/Prejšnji"
 
 #: ../base/ufos/ui/hud_mini.ufo:1118
 msgid ""
@@ -24888,7 +24894,7 @@ msgstr "Kapacitete (prosto/skupno)"
 
 #: ../base/ufos/ui/lostwon.ufo:319
 msgid "Recover"
-msgstr "Pobrati"
+msgstr "Poberi"
 
 #: ../base/ufos/ui/lostwon.ufo:320
 msgid "Begin UFO recovery process"
@@ -25523,7 +25529,7 @@ msgstr "Namigi (meni):"
 
 #: ../base/ufos/ui/options.ufo:249
 msgid "Show cursor tooltips in tactical mode."
-msgstr ""
+msgstr "Prikaži namiga v taktičnem načinu."
 
 #: ../base/ufos/ui/options.ufo:250
 msgid "Tooltips (battlescape):"
@@ -25543,7 +25549,7 @@ msgstr "Prednaloži modele:"
 
 #: ../base/ufos/ui/options.ufo:297
 msgid "Precaching of models means having faster menus."
-msgstr ""
+msgstr "Prenačaganje modelov pomeni hitrejše menije."
 
 #: ../base/ufos/ui/options.ufo:315
 msgid "Video Settings"
@@ -25599,7 +25605,7 @@ msgstr "Raztegni zaslo z 4:3 razmerjem:"
 
 #: ../base/ufos/ui/options.ufo:478
 msgid "Prevent the mousepointer from leaving the game window."
-msgstr ""
+msgstr "Prepreči miškinemu kazalcu da zapusti igralno okno."
 
 #: ../base/ufos/ui/options.ufo:479
 msgid "Hint: Press CTRL+G to grab/release the mousepointer."
@@ -26038,7 +26044,7 @@ msgstr "Zvočna vzorčna stopnja:"
 
 #: ../base/ufos/ui/options.ufo:1456
 msgid "Restart the sound-engine and apply your settings."
-msgstr ""
+msgstr "Ponovno zažni zvok in potrdi nastavite."
 
 #: ../base/ufos/ui/options.ufo:1479
 msgid "Gameplay Settings"
@@ -26093,7 +26099,7 @@ msgstr "Nastavitve zemljevida"
 
 #: ../base/ufos/ui/options.ufo:1611
 msgid "Select the Head-Up-Display for the battlescape."
-msgstr ""
+msgstr "Izberi nastavitev zemljevida \"Glavo navzgor\""
 
 #: ../base/ufos/ui/options.ufo:1612
 msgid "HUD Design:"
@@ -26156,6 +26162,8 @@ msgid ""
 "3D or 2D geoscape. To enable this option you have to start a new campaign "
 "first."
 msgstr ""
+"3D ali 2D zemljevid. Da omogočite to opcijo je najprej potrebno začeti novo "
+"kampanjo."
 
 #: ../base/ufos/ui/options.ufo:1710
 msgid "3D Geoscape:"
@@ -26163,7 +26171,7 @@ msgstr "3D Zemljevid"
 
 #: ../base/ufos/ui/options.ufo:1725
 msgid "Show/Hide the panel decoration on the geoscape."
-msgstr ""
+msgstr "Prikaži/Skrij dekoracijo plošče na zemljevidu."
 
 #: ../base/ufos/ui/options.ufo:1726
 msgid "Show decoration:"
@@ -26611,7 +26619,7 @@ msgstr "Izberi naslednje vozlišče"
 
 #: ../base/ufos/ui/sys_editor.ufo:79
 msgid "Extract window"
-msgstr ""
+msgstr "Raztegni okno"
 
 #: ../base/ufos/ui/sys_editor.ufo:80
 msgid "Extract the window of the last/current selected node"
@@ -26868,7 +26876,7 @@ msgstr "Nabojnik ostrostrelske puške"
 
 #: ../base/ufos/weapons_human.ufo:450
 msgid "Coilgun Clip"
-msgstr ""
+msgstr "Nabojnik cevne puške"
 
 #: ../base/ufos/weapons_human.ufo:518
 msgid "7.62mm Pistol"
@@ -27067,11 +27075,11 @@ msgstr "Zaklep"
 
 #: ../base/ufos/weapons_multiplayer.ufo:10
 msgid "Minigun"
-msgstr ""
+msgstr "Mala Mitraljež"
 
 #: ../base/ufos/weapons_multiplayer.ufo:32
 msgid "Minigun Magazine"
-msgstr ""
+msgstr "Mala mitraljez nabojnik"
 
 #: ../base/ufos/weapons_multiplayer.ufo:128
 msgid "Shotgun"
@@ -27131,7 +27139,7 @@ msgstr "4 - Stopenjski rafal"
 
 #: ../base/ufos/weapons_particle.ufo:283
 msgid "Unrestricted Blast"
-msgstr ""
+msgstr "Neomejeni strel"
 
 #: ../base/ufos/weapons_plasma.ufo:6
 msgid "Plasma Pistol"
@@ -27183,7 +27191,7 @@ msgstr "25 - Stopenjski rafal"
 
 #: ../base/ufos/weapons_ugv.ufo:159
 msgid "Autocannon Module"
-msgstr ""
+msgstr "Enota za Samodejno strojnico"
 
 #: client/battlescape/cl_actor.cpp:105
 msgid "Poor"
@@ -27272,7 +27280,7 @@ msgstr "Potrdi dogajane:"
 
 #: client/battlescape/cl_actor.cpp:2561
 msgid "Toggle to the next alien in sight of the selected actor."
-msgstr ""
+msgstr "Preklopi na naslednjega vidnega nezemljana."
 
 #: client/battlescape/cl_actor.cpp:2563
 msgid "Toggle camera to the next visible alien."
@@ -27595,7 +27603,7 @@ msgstr "Končaj trenutno potezo."
 #: client/battlescape/events/event/actor/e_event_actorappear.cpp:167
 #, c-format
 msgid "Enemy spotted: %s!"
-msgstr "NAsprotnik odkrit: %s!"
+msgstr "Nasprotnik odkrit: %s!"
 
 #: client/battlescape/events/event/actor/e_event_actorappear.cpp:170
 msgid "Unknown enemy spotted!"
@@ -27881,6 +27889,9 @@ msgid ""
 "\n"
 "Aircraft can not start.\n"
 msgstr ""
+"Ni operativne komandne centrale v tej bazi.\n"
+"\n"
+"Plovilo ni vzletelo.\n"
 
 #: client/cgame/campaign/cp_aircraft_callbacks.cpp:102
 msgid ""
@@ -27888,6 +27899,9 @@ msgid ""
 "\n"
 "Aircraft can not start.\n"
 msgstr ""
+"V tem plovilu ni pilota.\n"
+"\n"
+"Plovilo ni vzletelo.\n"
 
 #: client/cgame/campaign/cp_aircraft_callbacks.cpp:110
 msgid "Aircraft started"
@@ -27933,7 +27947,7 @@ msgstr "NLP strelja na %s"
 
 #: client/cgame/campaign/cp_airfight.cpp:408
 msgid "Our aircraft has no more ammo left - returning to home base now."
-msgstr ""
+msgstr "Na plovilu ni dovolj streliva - vračam se nazaj v bazo."
 
 #: client/cgame/campaign/cp_airfight.cpp:488
 #: client/cgame/campaign/cp_airfight.cpp:529
@@ -27962,7 +27976,7 @@ msgstr "V bitki si izgubil"
 #: client/cgame/campaign/cp_aliencont.cpp:159
 msgid ""
 "You cannot process aliens yet. Alien Containment not ready in this base."
-msgstr ""
+msgstr "Ne morete še  pridržati nezemljanov. Pripor nezemljanov še ni zgrajen."
 
 #: client/cgame/campaign/cp_aliencont.cpp:186
 msgid "You can't hold live aliens yet. Aliens died."
@@ -29736,7 +29750,7 @@ msgstr "Najprej zgradi laboratorij."
 
 #: client/cgame/campaign/cp_save.cpp:182
 msgid "Error decompressing data"
-msgstr ""
+msgstr "Napaka pri razpakiranju podatkov"
 
 #: client/cgame/campaign/cp_save.cpp:262
 msgid "No campaign active."
@@ -29748,7 +29762,7 @@ msgstr "Nič ni za shraniti."
 
 #: client/cgame/campaign/cp_save.cpp:313
 msgid "Could not allocate enough memory to save this game"
-msgstr ""
+msgstr "Ne najdem dovolj spomina da bi shranil igro"
 
 #: client/cgame/campaign/cp_save.cpp:335
 msgid "Memory error compressing save-game data - set save_compressed cvar to 0"
@@ -29991,7 +30005,7 @@ msgstr "Dec"
 #: client/cgame/campaign/cp_transfer.cpp:56
 #, c-format
 msgid "%s does not have Antimatter Storage, antimatter are removed!"
-msgstr ""
+msgstr "%s nima dovolj skladišč za antimaterijo, antimaterija je odstranjena!"
 
 #: client/cgame/campaign/cp_transfer.cpp:57
 #: client/cgame/campaign/cp_transfer.cpp:70
@@ -30019,7 +30033,7 @@ msgstr "%s nima življenskih prostorov, zaposleni so bili odpuščeni!"
 #: client/cgame/campaign/cp_transfer.cpp:108
 #, c-format
 msgid "%s does not have Alien Containment, Aliens are removed!"
-msgstr ""
+msgstr "%s nima dovolj priporov za nezemljane. Nezemljani so odstranjeni."
 
 #: client/cgame/campaign/cp_transfer.cpp:133
 #, c-format
@@ -30038,7 +30052,7 @@ msgstr "%s nima dovolj prostora. Plovilo je izgubljeno!"
 #: client/cgame/campaign/cp_transfer_callbacks.cpp:191
 #, c-format
 msgid "Transport mission started, cargo is being transported to %s"
-msgstr ""
+msgstr "Prenos se je začel, tovor bo prenešen v %s"
 
 #: client/cgame/campaign/cp_transfer.cpp:251
 msgid ""
@@ -30614,7 +30628,7 @@ msgstr "Največje število igralcev v ekipi:\t%s\n"
 #: client/cgame/multiplayer/mp_serverlist.cpp:335
 #, c-format
 msgid "Max. teams allowed in this map:\t%s\n"
-msgstr ""
+msgstr "Največje dovoljeno število ekip v tej mapi:\t%s\n"
 
 #: client/cgame/multiplayer/mp_serverlist.cpp:336
 #, c-format
@@ -31046,7 +31060,7 @@ msgstr "Trenutno pretresen, še vedno pazljiv."
 #: game/g_cmds.cpp:68
 #, c-format
 msgid "You can't talk for %d more seconds\n"
-msgstr ""
+msgstr "Ne morete se pogovarjati za  %d sekund\n"
 
 #: game/g_cmds.cpp:76
 #, c-format
