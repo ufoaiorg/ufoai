@@ -138,8 +138,6 @@ void CL_ActorSetFireDef (le_t *actor, const fireDef_t *fd)
 	actor->fd = fd;
 }
 
-#define SHOULD_USE_AUTOSTAND(length) ((float) (2.0f * TU_CROUCH) * TU_CROUCH_MOVING_FACTOR / (TU_CROUCH_MOVING_FACTOR - 1.0f) < (float) (length))
-
 /**
  * @brief Decide how the actor will walk, taking into account autostanding.
  * @param[in] le Pointer to an actor for which we set the moving mode.
@@ -155,7 +153,9 @@ int CL_ActorMoveMode (const le_t *le, int length)
 	if (!cl_autostand->integer)
 		return WALKTYPE_CROUCH_WALKING;
 
-	if (SHOULD_USE_AUTOSTAND(length))
+	/* ...and if this is a long walk... */
+	if (RT_CanActorStandHere(cl.mapData->routing, le->fieldSize, le->pos)
+		&& Grid_ShouldUseAutostand(&cl.pathMap, mousePos))
 		return WALKTYPE_AUTOSTAND_BEING_USED;
 
 	return WALKTYPE_AUTOSTAND_BUT_NOT_FAR_ENOUGH;
