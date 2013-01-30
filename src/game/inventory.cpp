@@ -26,7 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 void InventoryInterface::removeInvList (invList_t *invList)
 {
-	Com_DPrintf(DEBUG_SHARED, "I_RemoveInvList: remove one slot (%s)\n", invName);
+	Com_DPrintf(DEBUG_SHARED, "removeInvList: remove one slot (%s)\n", invName);
 
 	/* first entry */
 	if (this->invList == invList) {
@@ -54,7 +54,7 @@ invList_t* InventoryInterface::addInvList (invList_t **invList)
 	invList_t *newEntry;
 	invList_t *list;
 
-	Com_DPrintf(DEBUG_SHARED, "I_AddInvList: add one slot (%s)\n", invName);
+	Com_DPrintf(DEBUG_SHARED, "AddInvList: add one slot (%s)\n", invName);
 
 	/* create the list */
 	if (!*invList) {
@@ -83,7 +83,7 @@ invList_t* InventoryInterface::addInvList (invList_t **invList)
  * @param[in] x The x location in the container.
  * @param[in] y The x location in the container.
  * @param[in] amount How many items of this type should be added. (this will overwrite the amount as defined in "item.amount")
- * @sa I_RemoveFromInventory
+ * @sa removeFromInventory
  * @return the @c invList_t pointer the item was added to, or @c NULL in case of an error (item wasn't added)
  */
 invList_t *InventoryInterface::AddToInventory (inventory_t *const inv, const item_t* const item, const invDef_t *container, int x, int y, int amount)
@@ -108,7 +108,7 @@ invList_t *InventoryInterface::AddToInventory (inventory_t *const inv, const ite
 		for (ic = inv->c[container->id]; ic; ic = ic->next)
 			if (INVSH_CompareItem(&ic->item, item)) {
 				ic->item.amount += amount;
-				Com_DPrintf(DEBUG_SHARED, "I_AddToInventory: Amount of '%s': %i (%s)\n",
+				Com_DPrintf(DEBUG_SHARED, "AddToInventory: Amount of '%s': %i (%s)\n",
 					ic->item.item->name, ic->item.amount, invName);
 				return ic;
 			}
@@ -146,7 +146,7 @@ invList_t *InventoryInterface::AddToInventory (inventory_t *const inv, const ite
  * @param[in] fItem The item to be removed.
  * @return true If removal was successful.
  * @return false If nothing was removed or an error occurred.
- * @sa I_AddToInventory
+ * @sa AddToInventory
  */
 bool InventoryInterface::RemoveFromInventory (inventory_t* const i, const invDef_t *container, invList_t *fItem)
 {
@@ -170,13 +170,13 @@ bool InventoryInterface::RemoveFromInventory (inventory_t* const i, const invDef
 		/* temp container like idEquip and idFloor */
 		if (container->temp && ic->item.amount > 1) {
 			ic->item.amount--;
-			Com_DPrintf(DEBUG_SHARED, "I_RemoveFromInventory: Amount of '%s': %i (%s)\n",
+			Com_DPrintf(DEBUG_SHARED, "RemoveFromInventory: Amount of '%s': %i (%s)\n",
 				ic->item.item->name, ic->item.amount, invName);
 			return true;
 		}
 
 		if (container->single && ic->next)
-			Com_Printf("I_RemoveFromInventory: Error: single container %s has many items. (%s)\n", container->name, invName);
+			Com_Printf("RemoveFromInventory: Error: single container %s has many items. (%s)\n", container->name, invName);
 
 		/* An item in other containers than idFloor or idEquip should
 		 * always have an amount value of 1.
@@ -197,7 +197,7 @@ bool InventoryInterface::RemoveFromInventory (inventory_t* const i, const invDef
 			/* temp container like idEquip and idFloor */
 			if (ic->item.amount > 1 && container->temp) {
 				ic->item.amount--;
-				Com_DPrintf(DEBUG_SHARED, "I_RemoveFromInventory: Amount of '%s': %i (%s)\n",
+				Com_DPrintf(DEBUG_SHARED, "RemoveFromInventory: Amount of '%s': %i (%s)\n",
 					ic->item.item->name, ic->item.amount, invName);
 				return true;
 			}
@@ -337,7 +337,7 @@ inventory_action_t InventoryInterface::MoveInInventory (inventory_t* const inv, 
 			/* Removal successful - store this info. */
 			alreadyRemovedSource = true;
 
-		cacheItem2 = this->cacheItem; /* Save/cache (source) item. The cacheItem is modified in I_MoveInInventory. */
+		cacheItem2 = this->cacheItem; /* Save/cache (source) item. The cacheItem is modified in MoveInInventory. */
 
 		/* Move the destination item to the source. */
 		MoveInInventory(inv, to, icTo, from, cacheFromX, cacheFromY, TU, icp);
@@ -401,11 +401,11 @@ inventory_action_t InventoryInterface::MoveInInventory (inventory_t* const inv, 
 		if (ic && to->temp) {
 			/* We are moving to a blocked location container but it's the base-equipment floor or a battlescape floor.
 			 * We add the item anyway but it'll not be displayed (yet)
-			 * This is then used in I_AddToInventory below.*/
-			/** @todo change the other code to browse trough these things. */
+			 * This is then used in AddToInventory below.*/
+			/** @todo change the other code to browse through these things. */
 			INVSH_FindSpace(inv, &fItem->item, to, &tx, &ty, fItem);
 			if (tx == NONE || ty == NONE) {
-				Com_DPrintf(DEBUG_SHARED, "I_MoveInInventory - item will be added non-visible (%s)\n", invName);
+				Com_DPrintf(DEBUG_SHARED, "MoveInInventory - item will be added non-visible (%s)\n", invName);
 			}
 		} else {
 			/* Impossible move -> abort. */
@@ -420,7 +420,7 @@ inventory_action_t InventoryInterface::MoveInInventory (inventory_t* const inv, 
 	switch (checkedTo) {
 	case INV_DOES_NOT_FIT:
 		/* Impossible move - should be handled above, but add an abort just in case */
-		Com_Printf("I_MoveInInventory: Item doesn't fit into container.");
+		Com_Printf("MoveInInventory: Item doesn't fit into container.");
 		return IA_NONE;
 	case INV_FITS:
 		/* Remove rotated tag */
@@ -467,7 +467,7 @@ inventory_action_t InventoryInterface::MoveInInventory (inventory_t* const inv, 
  * @param[in] item Item to add to inventory.
  * @param[in] container Container id.
  * @sa INVSH_FindSpace
- * @sa I_AddToInventory
+ * @sa AddToInventory
  */
 bool InventoryInterface::TryAddToInventory (inventory_t* const inv, const item_t *const item, const invDef_t *container)
 {
@@ -495,7 +495,7 @@ bool InventoryInterface::TryAddToInventory (inventory_t* const inv, const item_t
  * @brief Clears the linked list of a container - removes all items from this container.
  * @param[in] i The inventory where the container is located.
  * @param[in] container Index of the container which will be cleared.
- * @sa I_DestroyInventory
+ * @sa DestroyInventory
  * @note This should only be called for temp containers if the container is really a temp container
  * e.g. the container of a dropped weapon in tactical mission (ET_ITEM)
  * in every other case just set the pointer to NULL for a temp container like idEquip or idFloor
@@ -519,8 +519,8 @@ void InventoryInterface::EmptyContainer (inventory_t* const i, const invDef_t *c
  * @brief Destroys inventory.
  * @param[in] inv Pointer to the inventory which should be erased.
  * @note Loops through all containers in inventory. @c NULL for temp containers are skipped,
- * for real containers @c I_EmptyContainer is called.
- * @sa I_EmptyContainer
+ * for real containers @c EmptyContainer is called.
+ * @sa EmptyContainer
  */
 void InventoryInterface::DestroyInventory (inventory_t* const inv)
 {
@@ -597,7 +597,7 @@ int InventoryInterface::PackAmmoAndWeapon (character_t* const chr, const objDef_
 		/* The weapon provides its own ammo (i.e. it is charged or loaded in the base.) */
 		item.ammoLeft = weapon->ammo;
 		item.ammo = weapon;
-		Com_DPrintf(DEBUG_SHARED, "I_PackAmmoAndWeapon: oneshot weapon '%s' in equipment '%s' (%s).\n",
+		Com_DPrintf(DEBUG_SHARED, "PackAmmoAndWeapon: oneshot weapon '%s' in equipment '%s' (%s).\n",
 				weapon->id, ed->id, invName);
 	} else if (!weapon->reload) {
 		item.ammo = item.item; /* no ammo needed, so fire definitions are in t */
@@ -627,7 +627,7 @@ int InventoryInterface::PackAmmoAndWeapon (character_t* const chr, const objDef_
 		}
 
 		if (!ammo) {
-			Com_DPrintf(DEBUG_SHARED, "I_PackAmmoAndWeapon: no ammo for sidearm or primary weapon '%s' in equipment '%s' (%s).\n",
+			Com_DPrintf(DEBUG_SHARED, "PackAmmoAndWeapon: no ammo for sidearm or primary weapon '%s' in equipment '%s' (%s).\n",
 					weapon->id, ed->id, invName);
 			return 0;
 		}
@@ -637,7 +637,7 @@ int InventoryInterface::PackAmmoAndWeapon (character_t* const chr, const objDef_
 	}
 
 	if (!item.ammo) {
-		Com_Printf("I_PackAmmoAndWeapon: no ammo for sidearm or primary weapon '%s' in equipment '%s' (%s).\n",
+		Com_Printf("PackAmmoAndWeapon: no ammo for sidearm or primary weapon '%s' in equipment '%s' (%s).\n",
 				weapon->id, ed->id, invName);
 		return 0;
 	}
@@ -645,7 +645,7 @@ int InventoryInterface::PackAmmoAndWeapon (character_t* const chr, const objDef_
 	weight = GetInventoryState(inv, tuNeed) + INVSH_GetItemWeight(item);
 	maxTU = GET_TU(speed, GET_ENCUMBRANCE_PENALTY(weight, chr->score.skills[ABILITY_POWER]));
 	if (weight > maxWeight || tuNeed > maxTU) {
-		Com_DPrintf(DEBUG_SHARED, "I_PackAmmoAndWeapon: weapon too heavy: '%s' in equipment '%s' (%s).\n",
+		Com_DPrintf(DEBUG_SHARED, "PackAmmoAndWeapon: weapon too heavy: '%s' in equipment '%s' (%s).\n",
 				weapon->id, ed->id, invName);
 		return 0;
 	}
