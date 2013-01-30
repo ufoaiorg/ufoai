@@ -181,7 +181,7 @@ typedef struct opening_s {
  * @param[in] hy The high end of the y range updated
  * @param[in] hz The high end of the z range updated
  */
-static void RT_DumpMap (const routing_t *routes, actorSizeEnum_t actorSize, int lx, int ly, int lz, int hx, int hy, int hz)
+static void RT_DumpMap (const Routing &routing, actorSizeEnum_t actorSize, int lx, int ly, int lz, int hx, int hy, int hz)
 {
 	int x, y, z;
 
@@ -196,10 +196,10 @@ static void RT_DumpMap (const routing_t *routes, actorSizeEnum_t actorSize, int 
 			Com_Printf("%3i ", y);
 			for (x = lx; x <= hx; ++x) {
 				Com_Printf("%s%s%s%s "
-					, RT_CONN_NX(routes, actorSize, x, y, z) ? "w" : " "
-					, RT_CONN_PY(routes, actorSize, x, y, z) ? "n" : " "
-					, RT_CONN_NY(routes, actorSize, x, y, z) ? "s" : " "
-					, RT_CONN_PX(routes, actorSize, x, y, z) ? "e" : " "
+					, RT_CONN_NX(routing.routes, actorSize, x, y, z) ? "w" : " "
+					, RT_CONN_PY(routing.routes, actorSize, x, y, z) ? "n" : " "
+					, RT_CONN_NY(routing.routes, actorSize, x, y, z) ? "s" : " "
+					, RT_CONN_PX(routing.routes, actorSize, x, y, z) ? "e" : " "
 					);
 			}
 			Com_Printf("\n");
@@ -264,7 +264,7 @@ void RT_DumpWholeMap (mapTiles_t *mapTiles, const Routing &routing)
 	}
 
 	/* Dump the client map */
-	RT_DumpMap(routing.routes, 0, start[0], start[1], start[2], end[0], end[1], end[2]);
+	RT_DumpMap(routing, 0, start[0], start[1], start[2], end[0], end[1], end[2]);
 }
 #endif
 
