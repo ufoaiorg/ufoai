@@ -172,7 +172,7 @@ public:
 
 /**
  * @brief Constructor
- * @param[in] _routes Reference to client or server side routing table (clMap, svMap)
+ * @param[in] r Reference to client or server side routing table (clMap, svMap)
  * @param[in] _fromPos Position where we start this step
  * @param[in] _actorSize Give the field size of the actor (e.g. for 2x2 units) to check linked fields as well.
  * @param[in] _crouchingState Whether the actor is currently crouching, 1 is yes, 0 is no.
@@ -461,7 +461,6 @@ bool Step::checkVerticalDirections (void)
 }
 
 /**
- * @param[in] step Holds all relevant data to check the step, eg. ptr to routing table
  * @param[in] path Pointer to client or server side pathing table (clMap, svMap)
  */
 bool Step::isPossible (const pathing_t *path)

@@ -997,7 +997,6 @@ int InventoryInterface::GetUsedSlots ()
 /**
  * @brief Initializes the inventory definition by linking the ->next pointers properly.
  * @param[in] name The name that is shown in the output
- * @param[out] interface The inventory interface pointer which should be initialized in this function.
  * @param[in] csi The client-server-information structure
  * @param[in] import Pointers to the lifecycle functions
  * @sa G_Init
