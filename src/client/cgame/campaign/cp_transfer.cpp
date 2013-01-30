@@ -495,7 +495,7 @@ bool TR_LoadXML (xmlNode_t *p)
 				cgi->Com_Error(ERR_DROP, "TR_LoadXML: Cannot create AlienCargo object\n");
 			transfer.alienCargo->load(ss);
 		} else {
-			/** @TODO Remove: Fallback for compatibility */
+			/** @todo Remove: Fallback for compatibility */
 			ss = cgi->XML_GetNode(s, SAVE_TRANSFER_ALIEN);
 			if (ss) {
 				transfer.alienCargo = new AlienCargo();

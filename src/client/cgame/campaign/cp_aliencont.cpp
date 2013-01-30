@@ -218,7 +218,7 @@ void AC_InitStartup (void)
 /**
  * @brief Load callback for savin in XML Format
  * @param[in] parent Parent XML node in the savegame
- * @TODO Remove: Fallback for compatibility
+ * @todo Remove: Fallback for compatibility
  */
 bool AC_LoadXML (xmlNode_t * parent)
 {
