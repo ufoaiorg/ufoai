@@ -92,4 +92,4 @@ protected:
 	int PackAmmoAndWeapon (character_t* const chr, const objDef_t* weapon, int missedPrimary, const equipDef_t *ed, int maxWeight);
 };
 
-void INV_DestroyInventory(inventoryInterface_t *ii);
+void INV_DestroyInventoryInterface(inventoryInterface_t *ii);

@@ -1015,7 +1015,7 @@ void InventoryInterface::InitInventory (const char *name, const csi_t* csi, cons
 	this->invList = NULL;
 }
 
-void INV_DestroyInventory (inventoryInterface_t *interface)
+void INV_DestroyInventoryInterface (inventoryInterface_t *interface)
 {
 	if (interface->import == NULL)
 		return;
