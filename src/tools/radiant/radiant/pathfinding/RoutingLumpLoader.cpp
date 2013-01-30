@@ -58,10 +58,10 @@ namespace routing
 	 * @param pos position to evaluate
 	 * @return access state as enum value for later rendering
 	 */
-	static EAccessState evaluateAccessState (const routing_t routes[ACTOR_MAX_SIZE], const pos3_t pos, const int actorSize)
+	static EAccessState evaluateAccessState (const Routing &routing, const pos3_t pos, const int actorSize)
 	{
-		const int height = QuantToModel(RT_getCeiling(routes, actorSize, pos[0], pos[1], pos[2] & (PATHFINDING_HEIGHT - 1))
-				- RT_getFloor(routes, actorSize, pos[0], pos[1], pos[2] & (PATHFINDING_HEIGHT - 1)));
+		const int height = QuantToModel(RT_getCeiling(routing.routes, actorSize, pos[0], pos[1], pos[2] & (PATHFINDING_HEIGHT - 1))
+				- RT_getFloor(routing.routes, actorSize, pos[0], pos[1], pos[2] & (PATHFINDING_HEIGHT - 1)));
 		if (height >= PLAYER_STANDING_HEIGHT)
 			return ACC_STAND;
 		else if (height >= PLAYER_CROUCHING_HEIGHT)
@@ -70,7 +70,7 @@ namespace routing
 			return ACC_DISABLED;
 	}
 
-	static EConnectionState evaluateConnectionState (const routing_t routes[ACTOR_MAX_SIZE], const pos3_t pos,
+	static EConnectionState evaluateConnectionState (const Routing &routing, const pos3_t pos,
 			const int actorSize, const EDirection direction)
 	{
 		byte route = 0;
@@ -78,36 +78,36 @@ namespace routing
 
 		switch (direction) {
 		case DIR_WEST:
-			route = RT_CONN_NY(routes,actorSize,pos[0],pos[1],pos[2]);
-			stepup = RT_STEPUP_NY(routes,actorSize,pos[0],pos[1],pos[2]);
+			route = RT_CONN_NY(routing.routes,actorSize,pos[0],pos[1],pos[2]);
+			stepup = RT_STEPUP_NY(routing.routes,actorSize,pos[0],pos[1],pos[2]);
 			break;
 		case DIR_NORTHWEST:
-			route = RT_CONN_PX_NY(routes,actorSize,pos[0],pos[1],pos[2]);
-			stepup = RT_STEPUP_PX_NY(routes,actorSize,pos[0],pos[1],pos[2]);
+			route = RT_CONN_PX_NY(routing.routes,actorSize,pos[0],pos[1],pos[2]);
+			stepup = RT_STEPUP_PX_NY(routing.routes,actorSize,pos[0],pos[1],pos[2]);
 			break;
 		case DIR_NORTH:
-			route = RT_CONN_PX(routes,actorSize,pos[0],pos[1],pos[2]);
-			stepup = RT_STEPUP_PX(routes,actorSize,pos[0],pos[1],pos[2]);
+			route = RT_CONN_PX(routing.routes,actorSize,pos[0],pos[1],pos[2]);
+			stepup = RT_STEPUP_PX(routing.routes,actorSize,pos[0],pos[1],pos[2]);
 			break;
 		case DIR_NORTHEAST:
-			route = RT_CONN_PX_PY(routes,actorSize,pos[0],pos[1],pos[2]);
-			stepup = RT_STEPUP_PX_PY(routes,actorSize,pos[0],pos[1],pos[2]);
+			route = RT_CONN_PX_PY(routing.routes,actorSize,pos[0],pos[1],pos[2]);
+			stepup = RT_STEPUP_PX_PY(routing.routes,actorSize,pos[0],pos[1],pos[2]);
 			break;
 		case DIR_EAST:
-			route = RT_CONN_PY(routes,actorSize,pos[0],pos[1],pos[2]);
-			stepup = RT_STEPUP_PY(routes,actorSize,pos[0],pos[1],pos[2]);
+			route = RT_CONN_PY(routing.routes,actorSize,pos[0],pos[1],pos[2]);
+			stepup = RT_STEPUP_PY(routing.routes,actorSize,pos[0],pos[1],pos[2]);
 			break;
 		case DIR_SOUTHEAST:
-			route = RT_CONN_NX_PY(routes,actorSize,pos[0],pos[1],pos[2]);
-			stepup = RT_STEPUP_NX_PY(routes,actorSize,pos[0],pos[1],pos[2]);
+			route = RT_CONN_NX_PY(routing.routes,actorSize,pos[0],pos[1],pos[2]);
+			stepup = RT_STEPUP_NX_PY(routing.routes,actorSize,pos[0],pos[1],pos[2]);
 			break;
 		case DIR_SOUTH:
-			route = RT_CONN_NX(routes,actorSize,pos[0],pos[1],pos[2]);
-			stepup = RT_STEPUP_NX(routes,actorSize,pos[0],pos[1],pos[2]);
+			route = RT_CONN_NX(routing.routes,actorSize,pos[0],pos[1],pos[2]);
+			stepup = RT_STEPUP_NX(routing.routes,actorSize,pos[0],pos[1],pos[2]);
 			break;
 		case DIR_SOUTHWEST:
-			route = RT_CONN_NX_NY(routes,actorSize,pos[0],pos[1],pos[2]);
-			stepup = RT_STEPUP_NX_NY(routes,actorSize,pos[0],pos[1],pos[2]);
+			route = RT_CONN_NX_NY(routing.routes,actorSize,pos[0],pos[1],pos[2]);
+			stepup = RT_STEPUP_NX_NY(routing.routes,actorSize,pos[0],pos[1],pos[2]);
 			break;
 		case MAX_DIRECTIONS:
 			break;
@@ -129,11 +129,11 @@ namespace routing
 	 * @param routes routing data
 	 * @param pos position to evaluate
 	 */
-	static void FillRoutingLumpEntry (RoutingLumpEntry &entry, routing_t routes[ACTOR_MAX_SIZE], pos3_t pos)
+	static void FillRoutingLumpEntry (RoutingLumpEntry &entry, Routing &routing, pos3_t pos)
 	{
-		entry.setAccessState(evaluateAccessState(routes, pos, ACTOR_SIZE_NORMAL));
+		entry.setAccessState(evaluateAccessState(routing, pos, ACTOR_SIZE_NORMAL));
 		for (EDirection direction = DIR_WEST; direction < MAX_DIRECTIONS; direction++) {
-			entry.setConnectionState(direction, evaluateConnectionState(routes, pos, ACTOR_SIZE_NORMAL, direction));
+			entry.setConnectionState(direction, evaluateConnectionState(routing, pos, ACTOR_SIZE_NORMAL, direction));
 		}
 	}
 
@@ -237,7 +237,7 @@ namespace routing
 						PosToVec(pos,vect);
 						/**@todo add other data to constructor: accessibility + connection states */
 						RoutingLumpEntry entry = RoutingLumpEntry(Vector3(vect), (z + 1));
-						FillRoutingLumpEntry(entry, clMap.routes, pos);
+						FillRoutingLumpEntry(entry, clMap, pos);
 						/**@todo perhaps there is a better way than creating a const object for adding */
 						const RoutingLumpEntry toAdd = RoutingLumpEntry(entry);
 						routingLump.add(toAdd);
