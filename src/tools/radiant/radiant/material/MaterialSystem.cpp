@@ -196,6 +196,9 @@ std::string MaterialSystem::getBlock (const std::string& texture)
 		return "";
 
 	const std::string textureDir = GlobalTexturePrefix_get();
+	if (texture.length() < textureDir.length())
+		return "";
+
 	std::string skippedTextureDirectory = texture.substr(textureDir.length());
 
 	if (skippedTextureDirectory.empty())
