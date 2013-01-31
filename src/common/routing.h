@@ -56,11 +56,6 @@ MACROS
  */
 /* route - Used by Grid_* only  */
 /** @note IMPORTANT: actorSize is 1 or greater!!! */
-#define RT_CONN_TEST(map, actorSize, x, y, z, dir)		assert((actorSize) > ACTOR_SIZE_INVALID); assert((actorSize) <= ACTOR_MAX_SIZE); \
-															assert((z) >= 0); assert((z) < PATHFINDING_HEIGHT);\
-															assert((y) >= 0); assert((y) < PATHFINDING_WIDTH);\
-															assert((x) >= 0); assert((x) < PATHFINDING_WIDTH);\
-															assert((dir) >= 0); assert((dir) < CORE_DIRECTIONS);
 #define RT_CONN_TEST_POS(map, actorSize, p, dir)		assert((actorSize) > ACTOR_SIZE_INVALID); assert((actorSize) <= ACTOR_MAX_SIZE); \
 															assert((p)[2] < PATHFINDING_HEIGHT);\
 															assert((dir) >= 0); assert((dir) < CORE_DIRECTIONS);

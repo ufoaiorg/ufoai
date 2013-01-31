@@ -657,7 +657,6 @@ static int RT_FillPassageData (RoutingData *rtd, const int dir, const int  x, co
 	/* Last, update the routes of cells from (x, y, fz) to (x, y, cz) for direction dir */
 	for (i = fz; i <= cz; i++) {
 		int oh;
-		RT_CONN_TEST(rtd->routes, rtd->actorSize, x, y, i, dir);
 		/* Offset from the floor or the bottom of the current cell, whichever is higher. */
 		oh = openingTop - std::max(openingBase, i * CELL_HEIGHT);
 		/* Only if > 0 */
@@ -1484,11 +1483,6 @@ void RT_UpdateConnectionColumn (mapTiles_t *mapTiles, Routing &routing, const in
 	}
 #endif
 
-	/* Ensure that the current coordinates are valid. */
-	RT_CONN_TEST(routes, actorSize, x, y, z, dir);
-
-	/* Com_Printf("At (%i, %i, %i) looking in direction %i with size %i\n", x, y, z, dir, actorSize); */
-
 	/* if our destination cell is out of bounds, bail. */
 	if (ax < 0 || ax > PATHFINDING_WIDTH - actorSize || ay < 0 || y > PATHFINDING_WIDTH - actorSize) {
 		/* We can't go this way. */
@@ -1498,9 +1492,6 @@ void RT_UpdateConnectionColumn (mapTiles_t *mapTiles, Routing &routing, const in
 			Com_Printf("Destination cell non-existant.\n");
 		return;
 	}
-
-	/* Ensure that the destination coordinates are valid. */
-	RT_CONN_TEST(routes, actorSize, ax, ay, z, dir);
 
 	/* Main loop */
 	for (z = 0; z < PATHFINDING_HEIGHT; z++) {
