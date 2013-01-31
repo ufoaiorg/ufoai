@@ -77,8 +77,6 @@ static void CL_GridRecalcRouting (const le_t *le)
 	VectorAdd(model->maxs, model->origin, maxVec);
 	GridBox reroute(minVec, maxVec);
 
-	Com_DPrintf(DEBUG_ROUTING, "Rerouting le %i client side\n", le->entnum);
-
 	Grid_RecalcRouting(cl.mapTiles, cl.mapData->routing, le->inlineModelName, reroute, cl.leInlineModelList);
 }
 
@@ -91,8 +89,6 @@ void CL_CompleteRecalcRouting (void)
 	int i;
 
 	LE_GenerateInlineModelList();
-
-	Com_DPrintf(DEBUG_ROUTING, "Rerouting everything client side\n");
 
 	for (i = 0, le = cl.LEs; i < cl.numLEs; i++, le++)
 		CL_GridRecalcRouting(le);
