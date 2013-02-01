@@ -135,7 +135,7 @@ trace_t CM_HintedTransformedBoxTrace (MapTile &tile, const vec3_t start, const v
 	}
 
 	/* sweep the box through the model */
-	trace = TR_BoxTrace(&tile, start_l, end_l, traceBox.mins, traceBox.maxs, headnode, contentmask, brushrejects, fraction);
+	trace = TR_BoxTrace(&tile, start_l, end_l, traceBox, headnode, contentmask, brushrejects, fraction);
 	trace.mapTile = tile.idx;
 
 	if (rotated && trace.fraction != 1.0) {

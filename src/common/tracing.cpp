@@ -975,8 +975,7 @@ static void TR_RecursiveHullCheck (boxtrace_t *traceData, int32_t nodenum, float
  * There is another special case when mins and maxs are both origin vectors (0, 0, 0).  In this case, the
  * @param[in] start trace start vector
  * @param[in] end trace end vector
- * @param[in] mins box mins
- * @param[in] maxs box maxs
+ * @param[in] traceBox The box we shove through the world
  * @param[in] tile Tile to check (normally 0 - except in assembled maps)
  * @param[in] headnode if < 0 we are in a leaf node
  * @param[in] contentmask brushes the trace should stop at (see MASK_*)
@@ -985,7 +984,7 @@ static void TR_RecursiveHullCheck (boxtrace_t *traceData, int32_t nodenum, float
  * @sa TR_RecursiveHullCheck
  * @sa TR_BoxLeafnums_headnode
  */
-trace_t TR_BoxTrace (TR_TILE_TYPE *tile, const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, const int headnode, const int contentmask, const int brushreject, const float fraction)
+trace_t TR_BoxTrace (TR_TILE_TYPE *tile, const vec3_t start, const vec3_t end, const AABB &traceBox, const int headnode, const int contentmask, const int brushreject, const float fraction)
 {
 	vec3_t offset, amins, amaxs, astart, aend;
 	boxtrace_t traceData;
@@ -1009,12 +1008,12 @@ trace_t TR_BoxTrace (TR_TILE_TYPE *tile, const vec3_t start, const vec3_t end, c
 
 	/* Optimize the trace by moving the line to be traced across into the origin of the box trace. */
 	/* Calculate the offset needed to center the trace about the line */
-	VectorCenterFromMinsMaxs(mins, maxs, offset);
+	VectorCenterFromMinsMaxs(traceBox.mins, traceBox.maxs, offset);
 
 	/* Now remove the offset from bmin and bmax (effectively centering the trace box about the origin of the line)
 	 * and add the offset to the trace line (effectively repositioning the trace box at the desired coordinates) */
-	VectorSubtract(mins, offset, amins);
-	VectorSubtract(maxs, offset, amaxs);
+	VectorSubtract(traceBox.mins, offset, amins);
+	VectorSubtract(traceBox.maxs, offset, amaxs);
 	VectorAdd(start, offset, astart);
 	VectorAdd(end, offset, aend);
 
@@ -1107,7 +1106,7 @@ trace_t TR_TileBoxTrace (TR_TILE_TYPE *myTile, const vec3_t start, const vec3_t 
 			continue;
 
 		assert(h->cnode < myTile->numnodes + 6); /* +6 => bbox */
-		newtr = TR_BoxTrace(myTile, start, end, aabb.mins, aabb.maxs, h->cnode, brushmask, brushreject, tr.fraction);
+		newtr = TR_BoxTrace(myTile, start, end, aabb, h->cnode, brushmask, brushreject, tr.fraction);
 
 		/* memorize the trace with the minimal fraction */
 		if (newtr.fraction == 0.0)

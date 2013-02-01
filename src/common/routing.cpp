@@ -401,7 +401,6 @@ bool RT_AllCellsBelowAreFilled (const Routing &routing, const int actorSize, con
  */
 int RT_CheckCell (mapTiles_t *mapTiles, Routing &routing, const int actorSize, const int x, const int y, const int z, const char **list)
 {
-	routing_t* routes = routing.routes;
 	/* Width of the box required to stand in a cell by an actor's torso.  */
 	const float halfActorWidth = UNIT_SIZE * actorSize / 2 - WALL_SIZE - DIST_EPSILON;
 	/* This is a template for the extents of the box used by an actor's legs. */
@@ -428,7 +427,6 @@ int RT_CheckCell (mapTiles_t *mapTiles, Routing &routing, const int actorSize, c
 	trace_t tr;
 
 	assert(actorSize > ACTOR_SIZE_INVALID && actorSize <= ACTOR_MAX_SIZE);
-	assert(routes);
 	/* x and y cannot exceed PATHFINDING_WIDTH - actorSize */
 	assert((x >= 0) && (x <= PATHFINDING_WIDTH - actorSize));
 	assert((y >= 0) && (y <= PATHFINDING_WIDTH - actorSize));
