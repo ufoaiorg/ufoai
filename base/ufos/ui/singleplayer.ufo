@@ -45,12 +45,13 @@ window singleplayer
 	/**
 	 * @param <1> window id
 	 * @param <2> name
+	 * @param <3> translated name
 	 */
 	confunc game_addmode_singleplayer
 	{
 		call *node:root.gamemodeslistpanel@createChild ( "<1><2>" , "cmpGameModeButton" )
 		*node:root.gamemodeslistpanel.<1><2>.id@string = <1>
-		*node:root.gamemodeslistpanel.<1><2>@string = <2>
+		*node:root.gamemodeslistpanel.<1><2>@string = <3>
 		*node:root.gamemodeslistpanel.<1><2>@onClick = { cmd "ui_push <node:this.id@string>;" }
 	}
 

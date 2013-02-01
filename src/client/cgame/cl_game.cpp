@@ -1724,9 +1724,9 @@ void GAME_InitUIData (void)
 			continue;
 
 		if (e->isMultiplayer)
-			UI_ExecuteConfunc("game_addmode_multiplayer \"%s\" \"%s\"", t->window, t->name);
+			UI_ExecuteConfunc("game_addmode_multiplayer \"%s\" \"%s\" \"%s\"", t->window, t->name, _(t->name));
 		else
-			UI_ExecuteConfunc("game_addmode_singleplayer \"%s\" \"%s\"", t->window, t->name);
+			UI_ExecuteConfunc("game_addmode_singleplayer \"%s\" \"%s\" \"%s\"", t->window, t->name, _(t->name));
 		Com_Printf("added %s\n", t->name);
 		GAME_UnloadGame();
 	}
