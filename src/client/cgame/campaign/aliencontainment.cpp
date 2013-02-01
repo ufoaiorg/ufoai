@@ -23,7 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "aliencontainment.h"
-/** @TODO cp_research.h would be enough but it has an unresolved depenency on cp_camapign.h */
+/** @todo cp_research.h would be enough but it has an unresolved depenency on cp_camapign.h */
 #include "cp_campaign.h"
 #include "cp_research.h"
 
@@ -69,7 +69,7 @@ bool AlienContainment::isLifeSupported(const teamDef_t *team)
 		return true;
 
 	/* Organic aliens need breathing apparatus known */
-	/** @TODO find a way that doesn't need a tech ID hardcoded */
+	/** @todo find a way that doesn't need a tech ID hardcoded */
 	const technology_t *tech = RS_GetTechByID(BREATHINGAPPARATUS_TECH);
 	if (!tech)
 		return false;

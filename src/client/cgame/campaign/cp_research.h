@@ -87,7 +87,7 @@ typedef struct requirements_s {
 	requirement_t links[MAX_TECHLINKS];
 } requirements_t;
 
-/** @TODO MAX_CAMPAIGNS is not defined unless cp_campaign.h is included before */
+/** @todo MAX_CAMPAIGNS is not defined unless cp_campaign.h is included before */
 typedef struct markResearched_s {
 	bool markOnly[MAX_CAMPAIGNS];
 	char *campaign[MAX_CAMPAIGNS];

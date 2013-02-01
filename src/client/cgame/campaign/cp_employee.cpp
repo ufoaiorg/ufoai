@@ -495,7 +495,7 @@ void E_ResetEmployee (employee_t *employee)
 		break;
 	case EMPL_WORKER:
 		/* Update current capacity and production times if worker is being counted there. */
-		/** @TODO doesn't work for unhiring, employee is yet hired therfore will be faultly counted */
+		/** @todo doesn't work for unhiring, employee is yet hired therfore will be faultly counted */
 		PR_UpdateProductionCap(base);
 		break;
 	case MAX_EMPL:

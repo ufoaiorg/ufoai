@@ -288,7 +288,7 @@ window aliencont
 		*node:root.selected@string = "<1>"
 		if ( *node:root.selected@string ne "" ) {
 			// Update alive and dead counters
-			/** @TODO temp-cvar magic was required for a simple assignment as "<foo<bar>>" isn't supported */
+			/** @todo temp-cvar magic was required for a simple assignment as "<foo<bar>>" isn't supported */
 			// Alien name
 			*cvar:ui_aliencont_select_temp = *node:root.ac.species.alien_<1>.name@string
 			*node:root.raceinfo.txt_race_info@string = "<cvar:ui_aliencont_select_temp>"
