@@ -251,11 +251,6 @@ inline byte RT_getCeiling (const routing_t *routes, const int actorSize, const p
 	return routes[actorSize - 1].getCeiling(pos);
 }
 
-inline signed char RT_getFloor (const routing_t *routes, const int actorSize, const int x, const int y, const int z)
-{
-	return routes[actorSize - 1].getFloor(x, y, z);
-}
-
 /** @brief The home of the routing tables
  *
  * The purpose of this class is
@@ -275,6 +270,11 @@ public:
 	{
 		return routes[actorSize - 1].getFloor(pos);
 	}
+	inline signed char getFloor (const actorSizeEnum_t actorSize, const int x, const int y, const int z) const
+	{
+		return routes[actorSize - 1].getFloor(x, y, z);
+	}
+
 
 	inline void setCeiling (const actorSizeEnum_t actorSize, const int x, const int y, const int z, const int val)
 	{

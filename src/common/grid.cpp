@@ -790,7 +790,7 @@ unsigned int Grid_Ceiling (const Routing &routing, const actorSizeEnum_t actorSi
 int Grid_Floor (const Routing &routing, const actorSizeEnum_t actorSize, const pos3_t pos)
 {
 	assert(pos[2] < PATHFINDING_HEIGHT);
-	return QuantToModel(RT_getFloor(routing.routes, actorSize, pos[0], pos[1], pos[2] & (PATHFINDING_HEIGHT - 1)));
+	return QuantToModel(routing.getFloor(actorSize, pos[0], pos[1], pos[2] & (PATHFINDING_HEIGHT - 1)));
 }
 
 /**
@@ -820,7 +820,7 @@ int Grid_Filled (const Routing &routing, const actorSizeEnum_t actorSize, const 
 {
 	/* max 8 levels */
 	assert(pos[2] < PATHFINDING_HEIGHT);
-	return RT_FILLED(routing.routes, pos[0], pos[1], pos[2], actorSize);
+	return RT_FILLED(routing, pos[0], pos[1], pos[2], actorSize);
 }
 
 
@@ -850,7 +850,7 @@ pos_t Grid_Fall (const Routing &routing, const actorSizeEnum_t actorSize, const 
 	 * If z < 0, we are going down.
 	 * If z >= CELL_HEIGHT, we are going up.
 	 * If 0 <= z <= CELL_HEIGHT, then z / 16 = 0, no change. */
-	base = RT_getFloor(routing.routes, actorSize, pos[0], pos[1], z);
+	base = routing.getFloor(actorSize, pos[0], pos[1], z);
 	/* Hack to deal with negative numbers- otherwise rounds toward 0 instead of down. */
 	diff = base < 0 ? (base - (CELL_HEIGHT - 1)) / CELL_HEIGHT : base / CELL_HEIGHT;
 	z += diff;
