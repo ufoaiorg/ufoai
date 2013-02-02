@@ -460,16 +460,9 @@ int RT_CheckCell (mapTiles_t *mapTiles, Routing &routing, const int actorSize, c
 	 */
 	while (true) { /* Loop forever, we will exit if we hit the model bottom or find a valid floor. */
 		tr = RT_COMPLETEBOXTRACE_PASSAGE(mapTiles, start, end, &footBox, list);
-		if (tr.fraction >= 1.0) {
-			/* There is no brush underneath this starting point. */
-			/* Mark all cells to the model base as filled. */
-			for (i = z; i >= 0 ; i--) {
-				/* no floor in this cell, it is bottomless! */
-				routing.setFloor(actorSize, x, y, i, CELL_HEIGHT);	/* There is no floor in this cell. */
-				routing.setCeiling(actorSize, x, y, i, 0);			/* There is no ceiling, the true indicator of a filled cell. */
-			}
-			/* return 0 to indicate we just scanned the model bottom. */
-			return 0;
+		if (tr.fraction >= 1.0) {						/* If there is no brush underneath this starting point, */
+			routing.setFilled(actorSize, x, y, 0, z);	/* mark all cells to the model base as filled. */
+			return 0;									/* return (a z-value of)0 to indicate we just scanned the model bottom. */
 		}
 
 		/* We have hit a brush that faces up and can be stood on. A potential floor. Look for a ceiling. */

@@ -280,6 +280,15 @@ public:
 		return routes[actorSize - 1].getCeiling(x, y, z);
 	}
 
+	inline void setFilled (const actorSizeEnum_t actorSize, const int x, const int y, const int lowZ, const int highZ)
+	{
+		int i;
+		for (i = lowZ; i <= highZ; i++) {
+			routes[actorSize - 1].setFloor(x, y, i, CELL_HEIGHT);	/* There is no floor in this cell. */
+			routes[actorSize - 1].setCeiling(x, y, i, 0);			/* There is no ceiling, the true indicator of a filled cell. */
+		}
+	}
+
 	inline void setConn (const int actorSize, const int x, const int y, const int z, const int dir, const int val)
 	{
 		routes[actorSize - 1].setConn(x, y, z, dir, val);
