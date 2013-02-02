@@ -52,7 +52,6 @@ int Grid_MoveNext(const pathing_t *path, const pos3_t toPos, byte crouchingState
 unsigned int Grid_Ceiling(const Routing &routing, const actorSizeEnum_t actorSize, const pos3_t pos);
 int Grid_Floor(const Routing &routing, const actorSizeEnum_t actorSize, const pos3_t pos);
 int Grid_GetTUsForDirection(const int dir, const int crouched);
-int Grid_Filled(const Routing &routing, const actorSizeEnum_t actorSize, const pos3_t pos);
 pos_t Grid_Fall(const Routing &routing, const actorSizeEnum_t actorSize, const pos3_t pos);
 bool Grid_ShouldUseAutostand (const pathing_t *path, const pos3_t toPos);
 void Grid_PosToVec(const Routing &routing, const actorSizeEnum_t actorSize, const pos3_t pos, vec3_t vec);

@@ -808,22 +808,6 @@ int Grid_GetTUsForDirection (const int dir, const int crouched)
 		return TUsUsed[dir];
 }
 
-
-/**
- * @brief Returns non-zero if the cell is filled (solid) and cannot be entered.
- * @param[in] routing Reference to client or server side routing table (clMap, svMap)
- * @param[in] actorSize width of the actor in cells
- * @param[in] pos Position in the map to check for filling
- * @return 0 if the cell is vacant (of the world model), non-zero otherwise.
- */
-int Grid_Filled (const Routing &routing, const actorSizeEnum_t actorSize, const pos3_t pos)
-{
-	/* max 8 levels */
-	assert(pos[2] < PATHFINDING_HEIGHT);
-	return RT_FILLED(routing, pos[0], pos[1], pos[2], actorSize);
-}
-
-
 /**
  * @brief Calculated the new height level when something falls down from a certain position.
  * @param[in] routing Reference to client or server side routing table (clMap, svMap)
