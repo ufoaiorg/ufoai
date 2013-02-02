@@ -884,7 +884,7 @@ bool UFO_CampaignCheckEvents (void)
  * @brief Notify to UFOs that a Phalanx aircraft has been destroyed.
  * @param[in] aircraft Pointer to the Phalanx aircraft that has been removed.
  */
-void UFO_NotifyPhalanxAircraftRemoved (const aircraft_t * const aircraft)
+void UFO_NotifyPhalanxAircraftRemoved (const aircraft_t *const aircraft)
 {
 	int ufoIdx;
 

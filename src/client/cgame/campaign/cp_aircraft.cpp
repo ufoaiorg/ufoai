@@ -416,7 +416,7 @@ void AII_CollectingItems (aircraft_t *aircraft, int won)
  * @param[in] aircraft Aircraft to translate the status of
  * @return Translation string of given status.
  */
-const char *AIR_AircraftStatusToName (const aircraft_t * aircraft)
+const char *AIR_AircraftStatusToName (const aircraft_t *aircraft)
 {
 	assert(aircraft);
 	assert(aircraft->homebase);
@@ -460,7 +460,7 @@ const char *AIR_AircraftStatusToName (const aircraft_t * aircraft)
  * @return true if given aircraft is in its homebase.
  * @return false if given aircraft is not in its homebase.
  */
-bool AIR_IsAircraftInBase (const aircraft_t * aircraft)
+bool AIR_IsAircraftInBase (const aircraft_t *aircraft)
 {
 	if (aircraft->status == AIR_HOME || aircraft->status == AIR_REFUEL)
 		return true;
