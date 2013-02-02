@@ -296,9 +296,11 @@ bool CP_ChooseMap (mission_t *mission, const vec2_t pos)
 
 /**
  * @brief Function to handle the campaign end
+ * @param[in] won If the player won the game
  */
 void CP_EndCampaign (bool won)
 {
+	cgi->Cmd_ExecuteString("game_save slotend \"End of game\"");
 	cgi->Cmd_ExecuteString("game_exit");
 
 	if (won)
