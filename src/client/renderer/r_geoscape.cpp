@@ -407,13 +407,15 @@ static inline void R_RotateCelestialBody (const vec4_t v, vec4_t r, const vec3_t
 
 /**
  * @brief responsible for drawing the 3d globe on geoscape
- * @param[in] rotate the rotate angle of the globe
- * @param[in] zoom the current globe zoon
- * @param[in] map the prefix of the map to use (image must be at base/pics/menu/\<map\>_[day|night])
+ * param[in] rotate the rotate angle of the globe
+ * param[in] zoom the current globe zoon
+ * param[in] map the prefix of the map to use (image must be at base/pics/menu/\<map\>_[day|night])
  * @sa R_DrawFlatGeoscape
  * @sa R_SphereGenerate
  */
-void R_Draw3DGlobe (const vec2_t pos, const vec2_t size, int day, int second, const vec3_t rotate, float zoom, const char *map, bool disableSolarRender, float ambient, bool overlayNation, bool overlayXVI, bool overlayRadar, image_t *r_xviTexture, image_t *r_radarTexture, bool renderNationGlow)
+void R_Draw3DGlobe (const vec2_t pos, const vec2_t size, int day, int second, const vec3_t rotate, float zoom, const char *map,
+					bool disableSolarRender, float ambient, bool overlayNation, bool overlayXVI, bool overlayRadar, image_t *r_xviTexture,
+					image_t *r_radarTexture, bool renderNationGlow)
 {
 	/* globe scaling */
 	const float fullscale = zoom / STANDARD_3D_ZOOM;
