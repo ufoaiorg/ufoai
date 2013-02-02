@@ -100,6 +100,9 @@ void BATTLE_Start (mission_t* mission, const battleParam_t *battleParameters)
 	 * @sa R_ModLoadTexinfo */
 	cgi->Cvar_Set("sv_mapzone", battleParameters->zoneType);
 
+	/* do a quicksave */
+	cgi->Cmd_ExecuteString("game_quicksave");
+
 	/* base attack maps starts with a dot */
 	if (mission->mapDef->map[0] == '.') {
 		const base_t *base = mission->data.base;
@@ -114,8 +117,6 @@ void BATTLE_Start (mission_t* mission, const battleParam_t *battleParameters)
 
 		return;
 	}
-
-	SAV_QuickSave();
 
 	if (battleParameters->param)
 		param = battleParameters->param;

@@ -39,7 +39,6 @@ typedef struct saveSubsystems_s {
 
 #include <zlib.h>
 
-bool SAV_QuickSave(void);
 void SAV_Init(void);
 bool SAV_AddSubsystem(saveSubsystems_t *subsystem);
 

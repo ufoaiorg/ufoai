@@ -607,8 +607,6 @@ bool B_AssembleMap (const base_t *base)
 		}
 	}
 
-	SAV_QuickSave();
-
 	cgi->Cbuf_AddText(va("map %s \"%s\" \"%s\"\n", (GEO_IsNight(base->pos) ? "night" : "day"), maps, coords));
 
 	return true;

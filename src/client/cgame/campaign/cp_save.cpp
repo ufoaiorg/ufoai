@@ -556,25 +556,6 @@ static void SAV_GameSaveNameCleanup_f (void)
 }
 
 /**
- * @brief Quick save the current campaign
- * @sa BATTLE_Start
- */
-bool SAV_QuickSave (void)
-{
-	char *error = NULL;
-	bool result;
-
-	if (cgi->CL_OnBattlescape())
-		return false;
-
-	result = SAV_GameSave("slotquick", _("QuickSave"), &error);
-	if (!result)
-		Com_Printf("Error saving the xml game: %s\n", error ? error : "");
-
-	return true;
-}
-
-/**
  * @brief Checks whether there is a quicksave file and opens the quickload menu if there is one
  * @note This does not work while we are in the battlescape
  */
@@ -595,15 +576,18 @@ static void SAV_GameQuickLoadInit_f (void)
 
 /**
  * @brief Saves to the quick save slot
- * @sa SAV_GameQuickLoad_f
  */
 static void SAV_GameQuickSave_f (void)
 {
 	if (!CP_IsRunning())
 		return;
+	if (cgi->CL_OnBattlescape())
+		return;
 
-	if (!SAV_QuickSave())
-		Com_Printf("Could not save the campaign\n");
+	char *error = NULL;
+	bool result = SAV_GameSave("slotquick", _("QuickSave"), &error);
+	if (!result)
+		Com_Printf("Error saving the xml game: %s\n", error ? error : "");
 	else
 		MS_AddNewMessage(_("Quicksave"), _("Campaign was successfully saved."), MSG_INFO);
 }
