@@ -273,7 +273,7 @@ void RT_DumpWholeMap (mapTiles_t *mapTiles, const Routing &routing)
  */
 bool RT_CanActorStandHere (const Routing &routing, const int actorSize, const pos3_t pos)
 {
-	if (RT_getCeiling(routing.routes, actorSize, pos) - routing.getFloor(actorSize, pos) >= PLAYER_STANDING_HEIGHT / QUANT)
+	if (routing.getCeiling(actorSize, pos) - routing.getFloor(actorSize, pos) >= PLAYER_STANDING_HEIGHT / QUANT)
 		return true;
 	else
 		return false;
@@ -376,7 +376,7 @@ bool RT_AllCellsBelowAreFilled (const Routing &routing, const int actorSize, con
 		return true;
 
 	for (i = 0; i < pos[2]; i++) {
-		if (RT_getCeiling(routing.routes, actorSize, pos[0], pos[1], i) != 0)
+		if (routing.getCeiling(actorSize, pos[0], pos[1], i) != 0)
 			return false;
 	}
 	return true;
@@ -943,7 +943,7 @@ static int RT_FindOpening (RoutingData *rtd, const place_t* from, const int ax, 
 	/* shortcut: if both ceilings are the sky, we can check for walls
 	 * AND determine the bottom of the passage in just one trace */
 	if (from->ceiling >= PATHFINDING_HEIGHT * CELL_HEIGHT
-	 && from->cell[2] * CELL_HEIGHT + RT_getCeiling(rtd->routes, rtd->actorSize, ax, ay, from->cell[2]) >= PATHFINDING_HEIGHT * CELL_HEIGHT) {
+	 && from->cell[2] * CELL_HEIGHT + rtd->routing.getCeiling(rtd->actorSize, ax, ay, from->cell[2]) >= PATHFINDING_HEIGHT * CELL_HEIGHT) {
 		vec3_t sky, earth;
 		const AABB* box = (rtd->actorSize == ACTOR_SIZE_NORMAL ? &actor1x1Box : &actor2x2Box);
 		trace_t tr;
@@ -1294,8 +1294,8 @@ static void RT_TracePassage (RoutingData *rtd, const int x, const int y, const i
 	RT_PlaceInit(rtd->routing, rtd->actorSize, &from, x, y, z);
 	RT_PlaceInit(rtd->routing, rtd->actorSize, &to, ax, ay, z);
 
-	aboveCeil = (z < PATHFINDING_HEIGHT - 1) ? RT_getCeiling(rtd->routes, rtd->actorSize, ax, ay, z + 1) + (z + 1) * CELL_HEIGHT : to.ceiling;
-	lowCeil = std::min(from.ceiling, (RT_getCeiling(rtd->routes, rtd->actorSize, ax, ay, z) == 0 || to.ceiling - from.floor < PATHFINDING_MIN_OPENING) ? aboveCeil : to.ceiling);
+	aboveCeil = (z < PATHFINDING_HEIGHT - 1) ? rtd->routing.getCeiling(rtd->actorSize, ax, ay, z + 1) + (z + 1) * CELL_HEIGHT : to.ceiling;
+	lowCeil = std::min(from.ceiling, (rtd->routing.getCeiling(rtd->actorSize, ax, ay, z) == 0 || to.ceiling - from.floor < PATHFINDING_MIN_OPENING) ? aboveCeil : to.ceiling);
 
 	/*
 	 * First check the ceiling for the cell beneath the adjacent floor to see
@@ -1367,9 +1367,9 @@ static void RT_TracePassage (RoutingData *rtd, const int x, const int y, const i
  */
 static int RT_UpdateConnection (RoutingData *rtd, const int x, const int y, const int ax, const int ay, const int z, const int dir)
 {
-	const int ceiling = RT_getCeiling(rtd->routes, rtd->actorSize, x, y, z);
-	const int adjCeiling = RT_getCeiling(rtd->routes, rtd->actorSize, ax, ay, z);
-	const int extAdjCeiling = (z < PATHFINDING_HEIGHT - 1) ? RT_getCeiling(rtd->routes, rtd->actorSize, ax, ay, z + 1) : adjCeiling;
+	const int ceiling = rtd->routing.getCeiling(rtd->actorSize, x, y, z);
+	const int adjCeiling = rtd->routing.getCeiling(rtd->actorSize, ax, ay, z);
+	const int extAdjCeiling = (z < PATHFINDING_HEIGHT - 1) ? rtd->routing.getCeiling(rtd->actorSize, ax, ay, z + 1) : adjCeiling;
 	const int absCeiling = ceiling + z * CELL_HEIGHT;
 	const int absAdjCeiling = adjCeiling + z * CELL_HEIGHT;
 	const int absExtAdjCeiling = (z < PATHFINDING_HEIGHT - 1) ? adjCeiling + (z + 1) * CELL_HEIGHT : absCeiling;
@@ -1392,7 +1392,7 @@ static int RT_UpdateConnection (RoutingData *rtd, const int x, const int y, cons
 		RT_ConnSetNoGo(rtd, ax, ay, z, dir ^ 1);
 #endif
 		if (debugTrace)
-			Com_Printf("Current cell filled. c:%i ac:%i\n", RT_getCeiling(rtd->routes, rtd->actorSize, x, y, z), RT_getCeiling(rtd->routes, rtd->actorSize, ax, ay, z));
+			Com_Printf("Current cell filled. c:%i ac:%i\n", rtd->routing.getCeiling(rtd->actorSize, x, y, z), rtd->routing.getCeiling(rtd->actorSize, ax, ay, z));
 		return z;
 	}
 
@@ -1524,7 +1524,7 @@ void RT_WriteCSVFiles (const Routing &routing, const char* baseFilename, const i
 				FS_Printf(&f, "z:%i  y:%i,", z ,y);
 				for (x = mins[0]; x <= maxs[0] - i + 1; x++) {
 					/* compare results */
-					FS_Printf(&f, "h:%i c:%i,", routing.getFloor(i, x, y, z), RT_getCeiling(routes, i, x, y, z));
+					FS_Printf(&f, "h:%i c:%i,", routing.getFloor(i, x, y, z), routing.getCeiling(i, x, y, z));
 				}
 				FS_Printf(&f, "\n");
 			}
@@ -1628,7 +1628,7 @@ void RT_DebugPathDisplay (Routing &routing, actorSizeEnum_t actorSize, int x, in
 	routing_t* routes = routing.routes;
 	Com_Printf("data at cursor XYZ(%i, %i, %i) Floor(%i) Ceiling(%i)\n", x, y, z,
 		routing.getFloor(actorSize, x, y, z),
-		RT_getCeiling(routes, actorSize, x, y, z) );
+		routing.getCeiling(actorSize, x, y, z) );
 	Com_Printf("connections ortho: (PX=%i, NX=%i, PY=%i, NY=%i))\n",
 		RT_CONN_PX(routes, actorSize, x, y, z),		/* dir = 0 */
 		RT_CONN_NX(routes, actorSize, x, y, z),		/* 1 */

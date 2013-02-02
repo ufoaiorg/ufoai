@@ -438,7 +438,7 @@ bool Step::checkVerticalDirections (void)
 			return false;
 		}
 	} else if (dir == DIRECTION_CLIMB_UP) {
-		if (flier && QuantToModel(RT_getCeiling(routing.routes, actorSize, fromPos)) < UNIT_HEIGHT * 2 - PLAYER_HEIGHT) { /* Not enough headroom to fly up. */
+		if (flier && QuantToModel(routing.getCeiling(actorSize, fromPos)) < UNIT_HEIGHT * 2 - PLAYER_HEIGHT) { /* Not enough headroom to fly up. */
 			return false;
 		}
 		/* If the actor is not a flyer and tries to move up, there must be a ladder. */
@@ -777,7 +777,7 @@ int Grid_MoveNext (const pathing_t *path, const pos3_t toPos, byte crouchingStat
 unsigned int Grid_Ceiling (const Routing &routing, const actorSizeEnum_t actorSize, const pos3_t pos)
 {
 	assert(pos[2] < PATHFINDING_HEIGHT);
-	return QuantToModel(RT_getCeiling(routing.routes, actorSize, pos[0], pos[1], pos[2] & 7));
+	return QuantToModel(routing.getCeiling(actorSize, pos[0], pos[1], pos[2] & 7));
 }
 
 /**

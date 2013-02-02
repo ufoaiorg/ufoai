@@ -242,15 +242,6 @@ inline byte RT_getConn (const routing_t *routes, const int actorSize, const pos3
 	return routes[actorSize - 1].getConn(pos[0], pos[1], pos[2], dir);
 }
 
-inline byte RT_getCeiling (const routing_t *routes, const int actorSize, const int x, const int y, const int z)
-{
-	return routes[actorSize - 1].getCeiling(x, y, z);
-}
-inline byte RT_getCeiling (const routing_t *routes, const int actorSize, const pos3_t pos)
-{
-	return routes[actorSize - 1].getCeiling(pos);
-}
-
 /** @brief The home of the routing tables
  *
  * The purpose of this class is
@@ -279,6 +270,14 @@ public:
 	inline void setCeiling (const actorSizeEnum_t actorSize, const int x, const int y, const int z, const int val)
 	{
 		routes[actorSize - 1].setCeiling(x, y, z, val);
+	}
+	inline byte getCeiling (const int actorSize, const pos3_t pos) const
+	{
+		return routes[actorSize - 1].getCeiling(pos);
+	}
+	inline byte getCeiling (const int actorSize, const int x, const int y, const int z) const
+	{
+		return routes[actorSize - 1].getCeiling(x, y, z);
 	}
 
 	inline void setConn (const int actorSize, const int x, const int y, const int z, const int dir, const int val)
