@@ -66,6 +66,8 @@ public:
 
 	void DestroyInventory (inventory_t* const i);
 
+	void DestroyInventoryInterface(void);
+
 	void EmptyContainer (inventory_t* const i, const invDef_t *container);
 
 	void EquipActor (character_t* const chr, const equipDef_t *ed, int maxWeight);
@@ -91,5 +93,3 @@ protected:
 	float GetInventoryState (const inventory_t *inventory, int &slowestFd);
 	int PackAmmoAndWeapon (character_t* const chr, const objDef_t* weapon, int missedPrimary, const equipDef_t *ed, int maxWeight);
 };
-
-void INV_DestroyInventoryInterface(inventoryInterface_t *ii);

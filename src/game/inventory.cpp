@@ -1015,10 +1015,10 @@ void InventoryInterface::InitInventory (const char *name, const csi_t* csi, cons
 	this->invList = NULL;
 }
 
-void INV_DestroyInventoryInterface (inventoryInterface_t *interface)
+void InventoryInterface::DestroyInventoryInterface (void)
 {
-	if (interface->import == NULL)
+	if (this->import == NULL)
 		return;
-	interface->import->FreeAll();
-	OBJZERO(*interface);
+	this->import->FreeAll();
+	OBJZERO(*this);
 }
