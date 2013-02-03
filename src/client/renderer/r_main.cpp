@@ -80,7 +80,6 @@ cvar_t *r_drawbuffer;
 cvar_t *r_driver;
 cvar_t *r_shadows;
 cvar_t *r_stencilshadows;
-cvar_t *r_soften;
 cvar_t *r_swapinterval;
 cvar_t *r_multisample;
 cvar_t *r_wire;
@@ -592,11 +591,9 @@ static void R_RegisterSystemVars (void)
 
 /**
  * @note image cvars
- * @sa R_FilterTexture
  */
 static void R_RegisterImageVars (void)
 {
-	r_soften = Cvar_Get("r_soften", "0", CVAR_ARCHIVE | CVAR_R_IMAGES, "Apply blur to lightmap");
 }
 
 /**

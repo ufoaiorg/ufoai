@@ -236,13 +236,6 @@ static void R_BuildLightmap (mBspSurface_t *surf, byte *sout, byte *dout, int st
 	else
 		surf->color[3] = 1.0;
 
-	/* soften it if it's sufficiently large */
-	if (r_soften->integer && size > 128)
-		for (i = 0; i < 4; i++) {
-			R_SoftenTexture(lightmap, smax, tmax, LIGHTMAP_BLOCK_BYTES);
-			R_SoftenTexture(deluxemap, smax, tmax, DELUXEMAP_BLOCK_BYTES);
-		}
-
 	/* the final lightmap is uploaded to the card via the strided lightmap
 	 * block, and also cached on the surface for fast point lighting lookups */
 

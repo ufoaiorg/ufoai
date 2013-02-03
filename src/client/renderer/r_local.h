@@ -73,7 +73,6 @@ extern cvar_t *r_particles;
 extern cvar_t *r_showbox;
 extern cvar_t *r_shadows;
 extern cvar_t *r_stencilshadows;
-extern cvar_t *r_soften;
 extern cvar_t *r_drawbuffer;
 extern cvar_t *r_driver;
 extern cvar_t *r_swapinterval;

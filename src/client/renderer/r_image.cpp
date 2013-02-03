@@ -338,7 +338,6 @@ void R_UploadTexture (const unsigned *data, int width, int height, image_t* imag
 
 /**
  * @brief Applies blurring to a texture
- * @sa R_BuildLightMap
  */
 void R_SoftenTexture (byte *in, int width, int height, int bpp)
 {
