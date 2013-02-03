@@ -4,22 +4,15 @@
 
 window main
 {
-	/** @todo Remove me */
-	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
-
-	// ==================
-	// background
-	// ==================
-
-	image background
 	{
-		src	"background/main_bg"
+		background	"background/main_bg"
 	}
 
 	string version
 	{
-		string	*cvar:version
-		pos		"10 744"
+		string		*cvar:version
+		pos			"10 744"
+		size		"550 20"
 	}
 
 	// ==================

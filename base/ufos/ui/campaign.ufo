@@ -3,20 +3,14 @@
 // ==================
 
 window campaign {
-	/** @todo Remove me */
-	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
-
-	// ==================
-	// background
-	// ==================
-
-	image background {
-		src			"background/options_bg"
+	{
+		background	"background/options_bg"
 	}
 
 	string version {
 		string		*cvar:version
 		pos			"10 744"
+		size		"550 20"
 	}
 
 	string c_headline {
@@ -25,19 +19,15 @@ window campaign {
 		font		"f_big"
 	}
 
-	// ==================
-	// buttons
-	// ==================
 	cmpMenuButton c_button_start {
 		pos			"80 170"
 		string		"_Start campaign"
 		tooltip		"_Start a new singleplayer campaign."
 
 		onClick	{
-			cmd "cp_start  <cvar:cp_campaign>;"
+			cmd "cp_start <cvar:cp_campaign>;"
 		}
 	}
-
 	cmpMenuButton button_load {
 		string		"_Load"
 		pos			"80 240"
@@ -45,7 +35,6 @@ window campaign {
 			cmd "ui_push load;"
 		}
 	}
-
 	cmpMenuButton button_continue {
 		string		"_Continue"
 		tooltip		"_Load last saved game or continue playing."
@@ -55,7 +44,6 @@ window campaign {
 			cmd "game_continue;"
 		}
 	}
-
 	cmpMenuButton c_button_exit {
 		string		"_Back"
 		pos			"80 470"
@@ -138,66 +126,42 @@ window campaign {
 
 window staticcampaign extends campaign
 {
-	/** @todo Remove me */
-	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
 }
 
 window campaign_main
 {
-	/** @todo Remove me */
-	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
-
-	// ==================
-	// background
-	// ==================
-
-	image background
 	{
-		src		"background/main_bg"
+		background	"background/main_bg"
 	}
 
-	string version
-	{
+	string version {
 		string		*cvar:version
 		pos			"10 744"
 		size		"550 20"
 	}
 
-	// ==================
-	// buttons
-	// ==================
-
-	cmpMenuButton button_continue
-	{
+	cmpMenuButton button_continue {
 		string		"_Continue"
 		tooltip		"_Leave this menu and continue playing."
 		pos			"640 170"
 		onClick		{ cmd "game_continue;" }
 	}
-
-	cmpMenuButton button_load
-	{
+	cmpMenuButton button_load {
 		string		"_Load"
 		pos			"640 240"
 		onClick		{ cmd "ui_push load;" }
 	}
-
-	cmpMenuButton button_save
-	{
+	cmpMenuButton button_save {
 		string		"_Save"
 		pos			"640 310"
 		onClick		{ cmd "ui_push save;" }
 	}
-
-	cmpMenuButton button_options
-	{
+	cmpMenuButton button_options {
 		string		"_Options"
 		pos			"640 380"
 		onClick		{ cmd "ui_push options;" }
 	}
-
-	cmpMenuButton button_back
-	{
+	cmpMenuButton button_back {
 		string		"_Exit"
 		pos			"640 520"
 		onClick {
@@ -225,16 +189,14 @@ window quickload
 		closebutton	true
 	}
 
-	string name_label
-	{
+	string name_label {
 		string		"_Are you sure that you really want to reload the last automatically saved campaign state?"
 		pos			"26 58"
 		size		"440 104"
 		longlines	LONGLINES_WRAP
 	}
 
-	cmpPopupButton button_go
-	{
+	cmpPopupButton button_go {
 		string		"_Load"
 		pos			"266 188"
 		onClick		{ cmd "ui_pop;game_quickload;" *cvar:mn_fastexit = 1; }
@@ -247,27 +209,17 @@ window quickload
 
 window load
 {
-	/** @todo Remove me */
-	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
-
-	// ==================
-	// background
-	// ==================
-
-	image background
 	{
-		src		"background/main_bg"
+		background	"background/main_bg"
 	}
 
-	string version
-	{
+	string version {
 		string		*cvar:version
 		pos			"10 744"
 		size		"550 20"
 	}
 
-	string headline
-	{
+	string headline {
 		string		"_Load"
 		pos			"610 170"
 		size		"310 30"
@@ -275,12 +227,7 @@ window load
 		font		"f_big"
 	}
 
-	// ==================
-	// slots
-	// ==================
-
-	button slot0
-	{
+	button slot0 {
 		string		""
 		background		"ui/button_green_verysmall"
 		pos			"640 200"
@@ -292,8 +239,7 @@ window load
 		padding		8
 		onClick		{ cmd "game_load slot0; game_timestop;" *cvar:mn_fastexit = 1; }
 	}
-	button slot1
-	{
+	button slot1 {
 		string		""
 		background		"ui/button_green_verysmall"
 		pos			"640 235"
@@ -305,8 +251,7 @@ window load
 		padding		8
 		onClick		{ cmd "game_load slot1; game_timestop;" *cvar:mn_fastexit = 1; }
 	}
-	button slot2
-	{
+	button slot2 {
 		string		""
 		background		"ui/button_green_verysmall"
 		pos			"640 270"
@@ -318,8 +263,7 @@ window load
 		padding		8
 		onClick		{ cmd "game_load slot2; game_timestop;" *cvar:mn_fastexit = 1; }
 	}
-	button slot3
-	{
+	button slot3 {
 		string		""
 		background		"ui/button_green_verysmall"
 		pos			"640 305"
@@ -331,8 +275,7 @@ window load
 		padding		8
 		onClick		{ cmd "game_load slot3; game_timestop;" *cvar:mn_fastexit = 1; }
 	}
-	button slot4
-	{
+	button slot4 {
 		string		""
 		background		"ui/button_green_verysmall"
 		pos			"640 340"
@@ -344,8 +287,7 @@ window load
 		padding		8
 		onClick		{ cmd "game_load slot4; game_timestop;" *cvar:mn_fastexit = 1; }
 	}
-	button slot5
-	{
+	button slot5 {
 		string		""
 		background		"ui/button_green_verysmall"
 		pos			"640 375"
@@ -357,8 +299,7 @@ window load
 		padding		8
 		onClick		{ cmd "game_load slot5; game_timestop;" *cvar:mn_fastexit = 1; }
 	}
-	button slot6
-	{
+	button slot6 {
 		string		""
 		background		"ui/button_green_verysmall"
 		pos			"640 410"
@@ -370,8 +311,7 @@ window load
 		padding		8
 		onClick		{ cmd "game_load slot6; game_timestop;" *cvar:mn_fastexit = 1; }
 	}
-	button slot7
-	{
+	button slot7 {
 		string		""
 		background		"ui/button_green_verysmall"
 		pos			"640 445"
@@ -384,10 +324,6 @@ window load
 		onClick		{ cmd "game_load slot7; game_timestop;" *cvar:mn_fastexit = 1; }
 	}
 
-	// ==================
-	// buttons
-	// ==================
-
 	/**
 	 * @param[in] <1> id of the savegame slot
 	 * @param[in] <2> name of the savegame slot
@@ -395,21 +331,25 @@ window load
 	 * @param[in] <4> real date of the savegame slot
 	 */
 	confunc update_save_game_info {
-		*cvar:mn_slot<1> = "<2> - <3>"
+		if ( "<3>" ne "" ) {
+			*cvar:mn_slot<1> = "<2> - <3>"
+		} else {
+			*cvar:mn_slot<1> = "<2>"
+		}
 		*node:root.slot<1>@string = *cvar:mn_slot<1>
 		*node:load.slot<1>@tooltip = "<4>"
 		*node:save.slot<1>@tooltip = "<4>"
 	}
 
-	cmpMenuButton button_back
-	{
+	cmpMenuButton button_back {
 		string		"_Back"
 		pos			"640 520"
-		onClick		{ cmd "ui_pop;" }
+		onClick {
+			cmd "ui_pop;"
+		}
 	}
 
-	func onWindowOpened
-	{
+	func onWindowOpened {
 		cmd "game_comments;"
 	}
 }
@@ -418,29 +358,18 @@ window load
 // SAVE MENU
 // ==================
 
-window save
-{
-	/** @todo Remove me */
-	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
-
-	// ==================
-	// background
-	// ==================
-
-	image background
+window save {
 	{
-		src		"background/main_bg"
+		background	"background/main_bg"
 	}
 
-	string version
-	{
+	string version {
 		string		*cvar:version
 		pos			"10 744"
 		size		"550 20"
 	}
 
-	string headline
-	{
+	string headline {
 		string		"_Save"
 		pos			"610 170"
 		size		"310 30"
@@ -448,12 +377,7 @@ window save
 		font		"f_big"
 	}
 
-	// ==================
-	// slots
-	// ==================
-
-	textentry slot0
-	{
+	textentry slot0 {
 		string		*cvar:mn_slot0
 		pos			"640 200"
 		size		"256 34"
@@ -468,8 +392,7 @@ window save
 		onAbort		{ cmd "game_comments 0;" }
 		clickoutabort	true
 	}
-	textentry slot1
-	{
+	textentry slot1 {
 		string		*cvar:mn_slot1
 		pos			"640 235"
 		size		"256 34"
@@ -484,8 +407,7 @@ window save
 		onAbort		{ cmd "game_comments 1;" }
 		clickoutabort	true
 	}
-	textentry slot2
-	{
+	textentry slot2 {
 		string		*cvar:mn_slot2
 		pos			"640 270"
 		size		"256 34"
@@ -500,8 +422,7 @@ window save
 		onAbort		{ cmd "game_comments 2;" }
 		clickoutabort	true
 	}
-	textentry slot3
-	{
+	textentry slot3 {
 		string		*cvar:mn_slot3
 		pos			"640 305"
 		size		"256 34"
@@ -516,8 +437,7 @@ window save
 		onAbort		{ cmd "game_comments 3;" }
 		clickoutabort	true
 	}
-	textentry slot4
-	{
+	textentry slot4 {
 		string		*cvar:mn_slot4
 		pos			"640 340"
 		size		"256 34"
@@ -532,8 +452,7 @@ window save
 		onAbort		{ cmd "game_comments 4;" }
 		clickoutabort	true
 	}
-	textentry slot5
-	{
+	textentry slot5 {
 		string		*cvar:mn_slot5
 		pos			"640 375"
 		size		"256 34"
@@ -548,8 +467,7 @@ window save
 		onAbort		{ cmd "game_comments 5;" }
 		clickoutabort	true
 	}
-	textentry slot6
-	{
+	textentry slot6 {
 		string		*cvar:mn_slot6
 		pos			"640 410"
 		size		"256 34"
@@ -564,8 +482,7 @@ window save
 		onAbort		{ cmd "game_comments 6;" }
 		clickoutabort	true
 	}
-	textentry slot7
-	{
+	textentry slot7 {
 		string		*cvar:mn_slot7
 		pos			"640 445"
 		size		"256 34"
@@ -581,19 +498,13 @@ window save
 		clickoutabort	true
 	}
 
-	// ==================
-	// buttons
-	// ==================
-
-	cmpMenuButton button_back
-	{
+	cmpMenuButton button_back {
 		string		"_Back"
 		pos			"640 520"
 		onClick		{ cmd "ui_pop;" }
 	}
 
-	func onWindowOpened
-	{
+	func onWindowOpened {
 		cmd "game_comments;"
 	}
 
@@ -605,21 +516,11 @@ window save
 
 window lostgame
 {
-	/** @todo Remove me */
-	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
-
-	image background
 	{
-		src		"background/losegame_bg"
+		background	"background/losegame_bg"
 	}
 
-	func onWindowOpened
-	{
-		cmd "music_stop;snd_music Crystan-LooseGame;"
-	}
-
-	string title
-	{
+	string title {
 		string		"_You've lost the game"
 		pos			"12 20"
 		size		"1000 35"
@@ -628,8 +529,7 @@ window lostgame
 		color		"0 0.8 0 1"
 	}
 
-	string lostgame_click
-	{
+	string lostgame_click {
 		string		"_Click to continue"
 		pos			"814 750"
 		size		"200 20"
@@ -639,8 +539,7 @@ window lostgame
 		ghost		true
 	}
 
-	zone leave
-	{
+	zone leave {
 		pos "0 0"
 		size "1024 768"
 		onClick {
@@ -649,8 +548,7 @@ window lostgame
 	}
 
 	// reason why you've lost
-	text reason
-	{
+	text reason {
 		dataid	TEXT_STANDARD
 		color		"0 0.8 0 0.9"
 		bgcolor		"0.2 0.2 0.2 0.4"
@@ -666,7 +564,6 @@ window lostgame
 			*node:root.reason_scroll@viewsize = <viewsize>
 		}
 	}
-
 	vscrollbar reason_scroll {
 		image		"ui/scrollbar_v_green"
 		pos			"992 600"
@@ -678,6 +575,10 @@ window lostgame
 		onClick		{ call *node:parent.leave@click }
 		onChange	{ *node:root.reason@viewpos = <current> }
 	}
+
+	func onWindowOpened {
+		cmd "music_stop;snd_music Crystan-LooseGame;"
+	}
 }
 
 // ==================
@@ -686,16 +587,11 @@ window lostgame
 
 window endgame
 {
-	/** @todo Remove me */
-	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
-
-	image background
 	{
-		src		"background/wingame_bg"
+		background	"background/wingame_bg"
 	}
 
-	string title
-	{
+	string title {
 		string		"_Thank you for playing UFO: Alien Invasion"
 		pos			"12 20"
 		size		"1000 35"
@@ -704,8 +600,7 @@ window endgame
 		color		"0 0.8 0 1"
 	}
 
-	string endgame_click
-	{
+	string endgame_click {
 		string		"_Click to continue"
 		pos			"814 750"
 		size		"200 20"
@@ -718,8 +613,7 @@ window endgame
 		}
 	}
 
-	zone leave
-	{
+	zone leave {
 		pos "0 0"
 		size "1024 768"
 		onClick {
@@ -727,8 +621,7 @@ window endgame
 		}
 	}
 
-	text reason
-	{
+	text reason {
 		dataid		TEXT_STANDARD
 		color		"0 0.8 0 0.9"
 		bgcolor		"0.2 0.2 0.2 0.4"
@@ -744,7 +637,6 @@ window endgame
 			*node:root.reason_scroll@viewsize = <viewsize>
 		}
 	}
-
 	vscrollbar reason_scroll {
 		image		"ui/scrollbar_v_green"
 		pos			"992 500"

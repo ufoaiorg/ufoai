@@ -415,6 +415,8 @@ static void SAV_GameReadGameComment (const int idx)
 			cgi->UI_ExecuteConfunc("update_save_game_info %i \"%s\" \"%s\" \"%s\"", idx, header.name, header.gameDate, header.realDate);
 
 		FS_CloseFile(&f);
+	} else {
+			cgi->UI_ExecuteConfunc("update_save_game_info %i \"\" \"\" \"\"", idx);
 	}
 }
 
