@@ -41,18 +41,13 @@ class InventoryInterface;
 typedef InventoryInterface inventoryInterface_t;
 class InventoryInterface
 {
-public:
-	/* private */
 	const inventoryImport_t *import;
-
 	invList_t* invList;
-
 	item_t cacheItem;
-
 	const csi_t* csi;
-
 	const char *invName;
-	/* public */
+
+public:
 	void InitInventory (const char *name, const csi_t* csi, const inventoryImport_t *import);
 	bool RemoveFromInventory (inventory_t* const i, const invDef_t *container, invList_t *fItem) __attribute__((warn_unused_result));
 
