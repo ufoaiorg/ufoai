@@ -210,7 +210,7 @@ static void AM_FillTeamFromAircraft (autoMissionBattle_t *battle, const autoMiss
  * @brief Create character for a Unit
  * @param[out] unit The unit to create character for
  * @param[in] teamDef The team definition of the unit
- * @param[in] eq The equipment to use
+ * @param[in] ed The equipment to use
  * @sa AM_DestroyUnitChr
  */
 static void AM_CreateUnitChr (autoUnit_t *unit, const teamDef_t *teamDef, const equipDef_t *ed)
