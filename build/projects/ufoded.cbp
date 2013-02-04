@@ -151,6 +151,7 @@
 		<Unit filename="..\..\src\shared\shared.cpp" />
 		<Unit filename="..\..\src\shared\shared.h" />
 		<Unit filename="..\..\src\shared\stringhunk.cpp" />
+		<Unit filename="..\..\src\shared\typedefs.h" />
 		<Unit filename="..\..\src\shared\ufotypes.h" />
 		<Unit filename="..\..\src\shared\utf8.cpp" />
 		<Unit filename="..\..\src\shared\utf8.h" />
