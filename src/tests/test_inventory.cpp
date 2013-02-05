@@ -28,7 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../common/common.h"
 #include "../game/inventory.h"
 
-static inventoryInterface_t i;
+static InventoryInterface i;
 static const int TAG_INVENTORY = 5546;
 
 static void FreeInventory (void *data)

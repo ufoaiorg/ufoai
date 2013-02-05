@@ -29,7 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #pragma once
 
 #include "q_shared.h"
-#include "inventory.h"				/* for inventoryInterface_t in game_locals_t */
+#include "inventory.h"				/* for InventoryInterface in game_locals_t */
 #include "../shared/infostring.h"
 #include "lua/lua.h"
 
@@ -83,7 +83,7 @@ typedef struct game_locals_s {
 	int sv_maxplayersperteam;
 	int sv_maxentities;
 
-	inventoryInterface_t i;
+	InventoryInterface i;
 } game_locals_t;
 
 /** @brief this structure is cleared as each map is entered */

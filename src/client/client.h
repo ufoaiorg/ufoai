@@ -97,7 +97,7 @@ typedef struct client_static_s {
 	/* unique character id */
 	int nextUniqueCharacterNumber;
 
-	inventoryInterface_t i;
+	InventoryInterface i;
 
 	actorSkin_t actorSkins[MAX_ACTORSKINNAME];
 	unsigned int numActorSkins;

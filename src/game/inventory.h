@@ -37,8 +37,6 @@ typedef struct inventoryImport_s {
 	void *(*Alloc) (size_t size);
 } inventoryImport_t;
 
-class InventoryInterface;
-typedef InventoryInterface inventoryInterface_t;
 class InventoryInterface
 {
 	const inventoryImport_t *import;
