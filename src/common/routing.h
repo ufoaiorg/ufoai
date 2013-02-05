@@ -62,15 +62,15 @@ MACROS
 															/* assuming p is a pos3_t, we don't need to check fo p[n] >= 0 here because it's unsigned.
 															 * also we don't need to check against PATHFINDING_WIDTH because it's always greater than a 'byte' type. */
 
-#define RT_CONN_PX(map, actorSize, x, y, z)		(RT_getConn(map, actorSize, x, y, z, 0))
-#define RT_CONN_NX(map, actorSize, x, y, z)		(RT_getConn(map, actorSize, x, y, z, 1))
-#define RT_CONN_PY(map, actorSize, x, y, z)		(RT_getConn(map, actorSize, x, y, z, 2))
-#define RT_CONN_NY(map, actorSize, x, y, z)		(RT_getConn(map, actorSize, x, y, z, 3))
+#define RT_CONN_PX(r, actorSize, x, y, z)		(RT_getConn(r.routes, actorSize, x, y, z, 0))
+#define RT_CONN_NX(r, actorSize, x, y, z)		(RT_getConn(r.routes, actorSize, x, y, z, 1))
+#define RT_CONN_PY(r, actorSize, x, y, z)		(RT_getConn(r.routes, actorSize, x, y, z, 2))
+#define RT_CONN_NY(r, actorSize, x, y, z)		(RT_getConn(r.routes, actorSize, x, y, z, 3))
 
-#define RT_CONN_PX_PY(map, actorSize, x, y, z)	(RT_getConn(map, actorSize, x, y, z, 4))
-#define RT_CONN_PX_NY(map, actorSize, x, y, z)	(RT_getConn(map, actorSize, x, y, z, 7))
-#define RT_CONN_NX_PY(map, actorSize, x, y, z)	(RT_getConn(map, actorSize, x, y, z, 6))
-#define RT_CONN_NX_NY(map, actorSize, x, y, z)	(RT_getConn(map, actorSize, x, y, z, 5))
+#define RT_CONN_PX_PY(r, actorSize, x, y, z)	(RT_getConn(r.routes, actorSize, x, y, z, 4))
+#define RT_CONN_PX_NY(r, actorSize, x, y, z)	(RT_getConn(r.routes, actorSize, x, y, z, 7))
+#define RT_CONN_NX_PY(r, actorSize, x, y, z)	(RT_getConn(r.routes, actorSize, x, y, z, 6))
+#define RT_CONN_NX_NY(r, actorSize, x, y, z)	(RT_getConn(r.routes, actorSize, x, y, z, 5))
 
 #define RT_STEPUP_PX(map, actorSize, x, y, z)		(RT_getStepup(map, actorSize, x, y, z, 0))
 #define RT_STEPUP_NX(map, actorSize, x, y, z)		(RT_getStepup(map, actorSize, x, y, z, 1))

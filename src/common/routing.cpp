@@ -1535,35 +1535,35 @@ void RT_WriteCSVFiles (const Routing &routing, const char* baseFilename, const i
 					FS_Printf(&f, "\"");
 
 					/* NW corner */
-					FS_Printf(&f, "%3i-%3i ", RT_CONN_NX_PY(routes, i, x, y, z), RT_STEPUP_NX_PY(routes, i, x, y, z));
+					FS_Printf(&f, "%3i-%3i ", RT_CONN_NX_PY(routing, i, x, y, z), RT_STEPUP_NX_PY(routes, i, x, y, z));
 
 					/* N side */
-					FS_Printf(&f, "%3i-%3i ", RT_CONN_PY(routes, i, x, y, z), RT_STEPUP_PY(routes, i, x, y, z));
+					FS_Printf(&f, "%3i-%3i ", RT_CONN_PY(routing, i, x, y, z), RT_STEPUP_PY(routes, i, x, y, z));
 
 					/* NE corner */
-					FS_Printf(&f, "%3i-%3i ", RT_CONN_PX_PY(routes, i, x, y, z), RT_STEPUP_PX_PY(routes, i, x, y, z));
+					FS_Printf(&f, "%3i-%3i ", RT_CONN_PX_PY(routing, i, x, y, z), RT_STEPUP_PX_PY(routes, i, x, y, z));
 
 					FS_Printf(&f, "\n");
 
 					/* W side */
-					FS_Printf(&f, "%3i-%3i ", RT_CONN_NX(routes, i, x, y, z), RT_STEPUP_NX(routes, i, x, y, z));
+					FS_Printf(&f, "%3i-%3i ", RT_CONN_NX(routing, i, x, y, z), RT_STEPUP_NX(routes, i, x, y, z));
 
 					/* Center - display floor height */
 					FS_Printf(&f, "_%+2i_ ", routing.getFloor(i, x, y, z));
 
 					/* E side */
-					FS_Printf(&f, "%3i-%3i ", RT_CONN_PX(routes, i, x, y, z), RT_STEPUP_PX(routes, i, x, y, z));
+					FS_Printf(&f, "%3i-%3i ", RT_CONN_PX(routing, i, x, y, z), RT_STEPUP_PX(routes, i, x, y, z));
 
 					FS_Printf(&f, "\n");
 
 					/* SW corner */
-					FS_Printf(&f, "%3i-%3i ", RT_CONN_NX_NY(routes, i, x, y, z), RT_STEPUP_NX_NY(routes, i, x, y, z));
+					FS_Printf(&f, "%3i-%3i ", RT_CONN_NX_NY(routing, i, x, y, z), RT_STEPUP_NX_NY(routes, i, x, y, z));
 
 					/* S side */
-					FS_Printf(&f, "%3i-%3i ", RT_CONN_NY(routes, i, x, y, z), RT_STEPUP_NY(routes, i, x, y, z));
+					FS_Printf(&f, "%3i-%3i ", RT_CONN_NY(routing, i, x, y, z), RT_STEPUP_NY(routes, i, x, y, z));
 
 					/* SE corner */
-					FS_Printf(&f, "%3i-%3i ", RT_CONN_PX_NY(routes, i, x, y, z), RT_STEPUP_PX_NY(routes, i, x, y, z));
+					FS_Printf(&f, "%3i-%3i ", RT_CONN_PX_NY(routing, i, x, y, z), RT_STEPUP_PX_NY(routes, i, x, y, z));
 
 					FS_Printf(&f, "\",");
 				}
