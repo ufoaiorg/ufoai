@@ -196,10 +196,10 @@ static void RT_DumpMap (const Routing &routing, actorSizeEnum_t actorSize, int l
 			Com_Printf("%3i ", y);
 			for (x = lx; x <= hx; ++x) {
 				Com_Printf("%s%s%s%s "
-					, RT_CONN_NX(routing.routes, actorSize, x, y, z) ? "w" : " "
-					, RT_CONN_PY(routing.routes, actorSize, x, y, z) ? "n" : " "
-					, RT_CONN_NY(routing.routes, actorSize, x, y, z) ? "s" : " "
-					, RT_CONN_PX(routing.routes, actorSize, x, y, z) ? "e" : " "
+					, RT_CONN_NX(routing, actorSize, x, y, z) ? "w" : " "
+					, RT_CONN_PY(routing, actorSize, x, y, z) ? "n" : " "
+					, RT_CONN_NY(routing, actorSize, x, y, z) ? "s" : " "
+					, RT_CONN_PX(routing, actorSize, x, y, z) ? "e" : " "
 					);
 			}
 			Com_Printf("\n");
@@ -1612,15 +1612,15 @@ void RT_DebugPathDisplay (Routing &routing, actorSizeEnum_t actorSize, int x, in
 		routing.getFloor(actorSize, x, y, z),
 		routing.getCeiling(actorSize, x, y, z) );
 	Com_Printf("connections ortho: (PX=%i, NX=%i, PY=%i, NY=%i))\n",
-		RT_CONN_PX(routes, actorSize, x, y, z),		/* dir = 0 */
-		RT_CONN_NX(routes, actorSize, x, y, z),		/* 1 */
-		RT_CONN_PY(routes, actorSize, x, y, z),		/* 2 */
-		RT_CONN_NY(routes, actorSize, x, y, z) );	/* 3 */
+		RT_CONN_PX(routing, actorSize, x, y, z),		/* dir = 0 */
+		RT_CONN_NX(routing, actorSize, x, y, z),		/* 1 */
+		RT_CONN_PY(routing, actorSize, x, y, z),		/* 2 */
+		RT_CONN_NY(routing, actorSize, x, y, z) );	/* 3 */
 	Com_Printf("connections diago: (PX_PY=%i, NX_NY=%i, NX_PY=%i, PX_NY=%i))\n",
-		RT_CONN_PX_PY(routes, actorSize, x, y, z),		/* dir = 4 */
-		RT_CONN_NX_NY(routes, actorSize, x, y, z),		/* 5 */
-		RT_CONN_NX_PY(routes, actorSize, x, y, z),		/* 6 */
-		RT_CONN_PX_NY(routes, actorSize, x, y, z) );	/* 7 */
+		RT_CONN_PX_PY(routing, actorSize, x, y, z),		/* dir = 4 */
+		RT_CONN_NX_NY(routing, actorSize, x, y, z),		/* 5 */
+		RT_CONN_NX_PY(routing, actorSize, x, y, z),		/* 6 */
+		RT_CONN_PX_NY(routing, actorSize, x, y, z) );	/* 7 */
 	Com_Printf("stepup ortho: (PX=%i, NX=%i, PY=%i, NY=%i))\n",
 		RT_STEPUP_PX(routes, actorSize, x, y, z),		/* dir = 0 */
 		RT_STEPUP_NX(routes, actorSize, x, y, z),		/* 1 */
