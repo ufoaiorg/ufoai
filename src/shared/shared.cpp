@@ -605,3 +605,19 @@ bool Com_IsValidName (const char *input)
 		return false;
 	return true;
 }
+
+#ifndef NDEBUG
+void UFO_assert (bool condition, const char *fmt, ...)
+{
+	if (condition) {
+		char msg[1024];
+		va_list argptr;
+
+		va_start(argptr, fmt);
+		Q_vsnprintf(msg, sizeof(msg), fmt, argptr);
+		va_end(argptr);
+
+		Sys_Error("%s", msg);
+	}
+}
+#endif

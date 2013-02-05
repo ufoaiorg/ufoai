@@ -172,3 +172,9 @@ void Com_Error(int code, const char *fmt, ...) __attribute__((noreturn, format(_
 
 #define OBJSET(obj, val) (memset(&(obj), (val), sizeof(obj)))
 #define OBJZERO(obj)     OBJSET((obj), 0)
+
+#ifdef NDEBUG
+#define UFO_assert(condition, ...)
+#else
+void UFO_assert(bool condition, const char *fmt, ...) __attribute__((format(__printf__, 2, 3)));
+#endif
