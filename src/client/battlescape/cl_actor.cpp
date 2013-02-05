@@ -2252,13 +2252,12 @@ static void CL_DebugPath_f (void)
 	const pos_t x = mousePos[0];
 	const pos_t y = mousePos[1];
 	const pos_t z = mousePos[2];
-	int dir;
-	dir = 3;
 
 	if (IN_GetMouseSpace() != MS_WORLD)
 		return;
 
 #if 0
+	int dir = 3;
 	RT_DebugSpecial(cl.mapTiles, cl.mapData->routing, actorSize, x, y, dir, cl.leInlineModelList);
 
 	bool found = Grid_FindPath(cl.mapData->routing.routes, actorSize, &cl.pathMap, selActor->pos, mousePos, 0, 600, NULL, NULL);
