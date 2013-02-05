@@ -172,7 +172,7 @@ bool CP_IsRunning (void)
  * @brief Check if a map may be selected for mission.
  * @param[in] mission Pointer to the mission where mapDef should be added
  * @param[in] pos position of the mission (NULL if the position will be chosen afterwards)
- * @param[in] mapIdx idx of the map in the mapdef array
+ * @param[in] md The map description data (what it is suitable for)
  * @return false if map is not selectable
  */
 static bool CP_MapIsSelectable (const mission_t *mission, const mapDef_t *md, const vec2_t pos)
