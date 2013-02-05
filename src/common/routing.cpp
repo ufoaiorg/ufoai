@@ -551,7 +551,11 @@ int RT_CheckCell (mapTiles_t *mapTiles, Routing &routing, const int actorSize, c
 		break;
 	}
 
-	assert(bottom <= top);
+	if (bottom >= top) {
+		Com_Printf("\nassert(bottom <= top): x=%i y=%i bottom=%f top=%f\n", x, y, bottom, top);
+		assert(bottom <= top);
+	}
+
 
 	/* top and bottom are absolute model heights.  Find the actual cell z coordinates for these heights.
 	 * ...but before rounding, give back the DIST_EPSILON that was added by the trace.
