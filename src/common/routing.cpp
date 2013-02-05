@@ -458,7 +458,7 @@ int RT_CheckCell (mapTiles_t *mapTiles, Routing &routing, const int actorSize, c
 	 * 6. If the opening between the floor and the ceiling is not at least PATHFINDING_MIN_OPENING tall, then
 	 *      restart below the current floor.
 	 */
-	while (true) { /* Loop forever, we will exit if we hit the model bottom or find a valid floor. */
+	for (;;) { /* Loop forever, we will exit if we hit the model bottom or find a valid floor. */
 		tr = RT_COMPLETEBOXTRACE_PASSAGE(mapTiles, start, end, &footBox, list);
 		if (tr.fraction >= 1.0) {						/* If there is no brush underneath this starting point, */
 			routing.setFilled(actorSize, x, y, 0, z);	/* mark all cells to the model base as filled. */
