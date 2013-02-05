@@ -51,7 +51,7 @@ static const inventoryImport_t inventoryImport = { FreeInventory, FreeAllInvento
 static inline void ResetInventoryList (void)
 {
 	i.DestroyInventoryInterface();
-	i.InitInventory("test", &csi, &inventoryImport);
+	i.initInventory("test", &csi, &inventoryImport);
 }
 
 /**
@@ -132,7 +132,7 @@ static void testItemDel (void)
 
 	CU_ASSERT(INVSH_ExistsInInventory(&inv, container, &item) == true);
 
-	CU_ASSERT(i.RemoveFromInventory(&inv, container, addedItem));
+	CU_ASSERT(i.removeFromInventory(&inv, container, addedItem));
 
 	CU_ASSERT(INVSH_ExistsInInventory(&inv, container, &item) == false);
 }

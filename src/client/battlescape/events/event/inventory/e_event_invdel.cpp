@@ -63,7 +63,7 @@ void CL_InvDel (const eventRegister_t *self, dbuffer *msg)
 	if (!ic)
 		return;
 
-	if (!cls.i.RemoveFromInventory(&le->i, INVDEF(container), ic))
+	if (!cls.i.removeFromInventory(&le->i, INVDEF(container), ic))
 		Com_Error(ERR_DROP, "CL_InvDel: No item was removed from container %i", container);
 
 	if (le == selActor)

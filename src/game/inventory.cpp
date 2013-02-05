@@ -148,7 +148,7 @@ invList_t *InventoryInterface::AddToInventory (inventory_t *const inv, const ite
  * @return false If nothing was removed or an error occurred.
  * @sa AddToInventory
  */
-bool InventoryInterface::RemoveFromInventory (inventory_t* const i, const invDef_t *container, invList_t *fItem)
+bool InventoryInterface::removeFromInventory (inventory_t* const i, const invDef_t *container, invList_t *fItem)
 {
 	invList_t *ic, *previous;
 
@@ -170,13 +170,13 @@ bool InventoryInterface::RemoveFromInventory (inventory_t* const i, const invDef
 		/* temp container like idEquip and idFloor */
 		if (container->temp && ic->item.amount > 1) {
 			ic->item.amount--;
-			Com_DPrintf(DEBUG_SHARED, "RemoveFromInventory: Amount of '%s': %i (%s)\n",
+			Com_DPrintf(DEBUG_SHARED, "removeFromInventory: Amount of '%s': %i (%s)\n",
 				ic->item.item->name, ic->item.amount, invName);
 			return true;
 		}
 
 		if (container->single && ic->next)
-			Com_Printf("RemoveFromInventory: Error: single container %s has many items. (%s)\n", container->name, invName);
+			Com_Printf("removeFromInventory: Error: single container %s has many items. (%s)\n", container->name, invName);
 
 		/* An item in other containers than idFloor or idEquip should
 		 * always have an amount value of 1.
@@ -197,7 +197,7 @@ bool InventoryInterface::RemoveFromInventory (inventory_t* const i, const invDef
 			/* temp container like idEquip and idFloor */
 			if (ic->item.amount > 1 && container->temp) {
 				ic->item.amount--;
-				Com_DPrintf(DEBUG_SHARED, "RemoveFromInventory: Amount of '%s': %i (%s)\n",
+				Com_DPrintf(DEBUG_SHARED, "removeFromInventory: Amount of '%s': %i (%s)\n",
 					ic->item.item->name, ic->item.amount, invName);
 				return true;
 			}
@@ -331,7 +331,7 @@ inventory_action_t InventoryInterface::MoveInInventory (inventory_t* const inv, 
 			return IA_NONE;
 
 		/* Actually remove the ammo from the 'from' container. */
-		if (!RemoveFromInventory(inv, from, fItem))
+		if (!removeFromInventory(inv, from, fItem))
 			return IA_NONE;
 		else
 			/* Removal successful - store this info. */
@@ -369,7 +369,7 @@ inventory_action_t InventoryInterface::MoveInInventory (inventory_t* const inv, 
 					const int cacheFromY = INV_IsFloorDef(from) ? NONE : fItem->y;
 
 					/* Actually remove the ammo from the 'from' container. */
-					if (!RemoveFromInventory(inv, from, fItem))
+					if (!removeFromInventory(inv, from, fItem))
 						return IA_NONE;
 
 					/* Add the currently used ammo in place of the new ammo in the "from" container. */
@@ -382,7 +382,7 @@ inventory_action_t InventoryInterface::MoveInInventory (inventory_t* const inv, 
 					return IA_RELOAD_SWAP;
 				} else {
 					/* Actually remove the ammo from the 'from' container. */
-					if (!RemoveFromInventory(inv, from, fItem))
+					if (!removeFromInventory(inv, from, fItem))
 						return IA_NONE;
 
 					ic->item.ammo = this->cacheItem.item;
@@ -437,7 +437,7 @@ inventory_action_t InventoryInterface::MoveInInventory (inventory_t* const inv, 
 
 	/* Actually remove the item from the 'from' container (if it wasn't already removed). */
 	if (!alreadyRemovedSource)
-		if (!RemoveFromInventory(inv, from, fItem))
+		if (!removeFromInventory(inv, from, fItem))
 			return IA_NONE;
 
 	/* successful */
@@ -1002,7 +1002,7 @@ int InventoryInterface::GetUsedSlots ()
  * @sa G_Init
  * @sa CL_InitLocal
  */
-void InventoryInterface::InitInventory (const char *name, const csi_t* csi, const inventoryImport_t *import)
+void InventoryInterface::initInventory (const char *name, const csi_t* csi, const inventoryImport_t *import)
 {
 	const item_t item = {NONE_AMMO, NULL, NULL, 0, 0};
 

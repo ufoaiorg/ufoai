@@ -388,7 +388,7 @@ static void GAME_EquipActorRobot (inventory_t* const inv, const objDef_t* weapon
 
 static bool GAME_RemoveFromInventory (inventory_t* const i, const invDef_t *container, invList_t *fItem)
 {
-	return cls.i.RemoveFromInventory(i, container, fItem);
+	return cls.i.removeFromInventory(i, container, fItem);
 }
 
 static void GAME_SetNextUniqueCharacterNumber (int ucn)
@@ -846,7 +846,7 @@ void GAME_SetMode (const cgame_export_t *gametype)
 		Com_Printf("Change gametype to '%s'\n", list->name);
 		/* inventory structure switched/initialized */
 		cls.i.DestroyInventoryInterface();
-		cls.i.InitInventory(list->name, &csi, &inventoryImport);
+		cls.i.initInventory(list->name, &csi, &inventoryImport);
 		list->Init();
 	}
 }
@@ -1358,7 +1358,7 @@ static bool GAME_Spawn (linkedList_t **chrList)
 
 		/* inventory structure switched/initialized */
 		cls.i.DestroyInventoryInterface();
-		cls.i.InitInventory("client", &csi, &inventoryImport);
+		cls.i.initInventory("client", &csi, &inventoryImport);
 		GAME_GenerateTeam(teamDefID, ed, size);
 	}
 
