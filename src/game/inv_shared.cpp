@@ -151,7 +151,7 @@ static bool INVSH_CheckShapeCollision (const uint32_t *shape, const uint32_t ite
  * @sa INVSH_CheckToInventory
  * @return false if the item does not fit, true if it fits.
  */
-static bool INVSH_CheckToInventory_shape (const inventory_t *const i, const invDef_t *container, const uint32_t itemShape, const int x, const int y, const invList_t *ignoredItem)
+static bool INVSH_CheckToInventory_shape (const inventory_t *const inv, const invDef_t *container, const uint32_t itemShape, const int x, const int y, const invList_t *ignoredItem)
 {
 	invList_t *ic;
 	static uint32_t mask[SHAPE_BIG_MAX_HEIGHT];
@@ -172,7 +172,7 @@ static bool INVSH_CheckToInventory_shape (const inventory_t *const i, const invD
 			mask[j] = ~container->shape[j];
 
 		/* Add other items to mask. (i.e. merge their shapes at their location into the generated mask) */
-		for (ic = i->c[container->id]; ic; ic = ic->next) {
+		for (ic = inv->c[container->id]; ic; ic = ic->next) {
 			if (ignoredItem == ic)
 				continue;
 
@@ -203,10 +203,10 @@ static bool INVSH_CheckToInventory_shape (const inventory_t *const i, const invD
  * @return INV_FITS_ONLY_ROTATED if it fits only when rotated 90 degree (to the left).
  * @return INV_FITS_BOTH if it fits either normally or when rotated 90 degree (to the left).
  */
-int INVSH_CheckToInventory (const inventory_t *const i, const objDef_t *od, const invDef_t *container, const int x, const int y, const invList_t *ignoredItem)
+int INVSH_CheckToInventory (const inventory_t *const inv, const objDef_t *od, const invDef_t *container, const int x, const int y, const invList_t *ignoredItem)
 {
 	int fits;
-	assert(i);
+	assert(inv);
 	assert(container);
 	assert(od);
 
@@ -225,13 +225,13 @@ int INVSH_CheckToInventory (const inventory_t *const i, const objDef_t *od, cons
 
 	/* twohanded item */
 	if (od->holdTwoHanded) {
-		if ((INV_IsRightDef(container) && i->c[CSI->idLeft]) || INV_IsLeftDef(container))
+		if ((INV_IsRightDef(container) && inv->c[CSI->idLeft]) || INV_IsLeftDef(container))
 			return INV_DOES_NOT_FIT;
 	}
 
 	/* left hand is busy if right wields twohanded */
 	if (INV_IsLeftDef(container)) {
-		if (i->c[CSI->idRight] && i->c[CSI->idRight]->item.item->holdTwoHanded)
+		if (inv->c[CSI->idRight] && inv->c[CSI->idRight]->item.item->holdTwoHanded)
 			return INV_DOES_NOT_FIT;
 
 		/* can't put an item that is 'fireTwoHanded' into the left hand */
@@ -241,15 +241,15 @@ int INVSH_CheckToInventory (const inventory_t *const i, const objDef_t *od, cons
 
 	/* Single item containers, e.g. hands, extension or headgear. */
 	if (container->single) {
-		if (i->c[container->id]) {
+		if (inv->c[container->id]) {
 			/* There is already an item. */
 			return INV_DOES_NOT_FIT;
 		} else {
 			fits = INV_DOES_NOT_FIT; /* equals 0 */
 
-			if (INVSH_CheckToInventory_shape(i, container, od->shape, x, y, ignoredItem))
+			if (INVSH_CheckToInventory_shape(inv, container, od->shape, x, y, ignoredItem))
 				fits |= INV_FITS;
-			if (INVSH_CheckToInventory_shape(i, container, INVSH_ShapeRotate(od->shape), x, y, ignoredItem))
+			if (INVSH_CheckToInventory_shape(inv, container, INVSH_ShapeRotate(od->shape), x, y, ignoredItem))
 				fits |= INV_FITS_ONLY_ROTATED;
 
 			if (fits != INV_DOES_NOT_FIT)
@@ -266,11 +266,11 @@ int INVSH_CheckToInventory (const inventory_t *const i, const objDef_t *od, cons
 
 	/* Check 'grid' containers. */
 	fits = INV_DOES_NOT_FIT; /* equals 0 */
-	if (INVSH_CheckToInventory_shape(i, container, od->shape, x, y, ignoredItem))
+	if (INVSH_CheckToInventory_shape(inv, container, od->shape, x, y, ignoredItem))
 		fits |= INV_FITS;
 	/** @todo aren't both (equip and floor) temp container? */
 	if (!INV_IsEquipDef(container) && !INV_IsFloorDef(container)
-	&& INVSH_CheckToInventory_shape(i, container, INVSH_ShapeRotate(od->shape), x, y, ignoredItem))
+	&& INVSH_CheckToInventory_shape(inv, container, INVSH_ShapeRotate(od->shape), x, y, ignoredItem))
 		fits |= INV_FITS_ONLY_ROTATED;
 
 	return fits;	/**< Return INV_FITS_BOTH if both if statements where true above. */
@@ -432,22 +432,22 @@ bool INV_IsBaseDefenceItem (const objDef_t *obj)
  * @param[in] x/y Position in the container that you want to check.
  * @return invList_t Pointer to the invList_t/item that is located at x/y.
  */
-invList_t *INVSH_SearchInInventory (const inventory_t* const i, const invDef_t *container, const int x, const int y)
+invList_t *INVSH_SearchInInventory (const inventory_t* const inv, const invDef_t *container, const int x, const int y)
 {
 	invList_t *ic;
 
-	assert(i);
+	assert(inv);
 	assert(container);
 
 	/* Only a single item. */
 	if (container->single)
-		return i->c[container->id];
+		return inv->c[container->id];
 
 	if (container->scroll)
 		Sys_Error("INVSH_SearchInInventory: Scrollable containers (%i:%s) are not supported by this function.", container->id, container->name);
 
 	/* More than one item - search for the item that is located at location x/y in this container. */
-	for (ic = i->c[container->id]; ic; ic = ic->next)
+	for (ic = inv->c[container->id]; ic; ic = ic->next)
 		if (INVSH_ShapeCheckPosition(ic, x, y))
 			return ic;
 
@@ -462,14 +462,14 @@ invList_t *INVSH_SearchInInventory (const inventory_t* const i, const invDef_t *
  * @param[in] item Look for this kind of item.
  * @return invList_t Pointer to the invList_t/item.
  */
-invList_t *INVSH_SearchInInventoryByItem (const inventory_t* const i, const invDef_t *container, const objDef_t *item)
+invList_t *INVSH_SearchInInventoryByItem (const inventory_t* const inv, const invDef_t *container, const objDef_t *item)
 {
 	invList_t *ic;
 
 	if (item == NULL)
 		return NULL;
 
-	for (ic = i->c[container->id]; ic; ic = ic->next) {
+	for (ic = inv->c[container->id]; ic; ic = ic->next) {
 		if (ic && item == ic->item.item)
 			return ic;
 	}
