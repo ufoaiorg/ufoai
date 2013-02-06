@@ -106,6 +106,7 @@
 // Ufopedia categories
 //========================
 
+up_chapter skill { name "_Skills and Abilities" }
 up_chapter news	{ name "_Background" }
 up_chapter crafts { name "_Aircraft" }
 up_chapter buildings { name "_Base Facilities" }
@@ -117,7 +118,6 @@ up_chapter threat { name "_The Alien Threat" }
 
 // chapter without name are not displayed into ufopedia
 up_chapter damage {}
-up_chapter skill {}
 
 //============================
 // Main Research Technologies
@@ -3128,7 +3128,7 @@ tech rs_skill_accuracy
 	name		"_Accuracy Attribute"
 	up_chapter	skill
 	description {
-		default "*msgid:none"
+		default "*msgid:skill_accuracy_txt"
 	}
 
 	time	0
@@ -3141,7 +3141,7 @@ tech rs_skill_assault
 	name		"_Assault Guns Proficiency"
 	up_chapter	skill
 	description {
-		default "*msgid:none"
+		default "*msgid:skill_assault_txt"
 	}
 
 	time	0
@@ -3154,7 +3154,7 @@ tech rs_skill_close
 	name		"_Close Combat Proficiency"
 	up_chapter	skill
 	description {
-		default "*msgid:none"
+		default "*msgid:skill_close_txt"
 	}
 
 	time	0
@@ -3167,7 +3167,7 @@ tech rs_skill_explosive
 	name		"_High-Explosives Proficiency"
 	up_chapter	skill
 	description {
-		default "*msgid:none"
+		default "*msgid:skill_explosive_txt"
 	}
 
 	time	0
@@ -3180,7 +3180,7 @@ tech rs_skill_heavy
 	name		"_Heavy Weapons Proficiency"
 	up_chapter	skill
 	description {
-		default "*msgid:none"
+		default "*msgid:skill_heavy_txt"
 	}
 
 	time	0
@@ -3193,7 +3193,7 @@ tech rs_skill_mind
 	name		"_Mind Attribute"
 	up_chapter	skill
 	description {
-		default "*msgid:none"
+		default "*msgid:skill_mind_txt"
 	}
 
 	time	0
@@ -3206,7 +3206,7 @@ tech rs_skill_power
 	name		"_Power Attribute"
 	up_chapter	skill
 	description {
-		default "*msgid:none"
+		default "*msgid:skill_power_txt"
 	}
 
 	time	0
@@ -3219,7 +3219,7 @@ tech rs_skill_sniper
 	name		"_Sniper Rifles Proficiency"
 	up_chapter	skill
 	description {
-		default "*msgid:none"
+		default "*msgid:skill_sniper_txt"
 	}
 
 	time	0
@@ -3232,7 +3232,7 @@ tech rs_skill_speed
 	name		"_Speed Attribute"
 	up_chapter	skill
 	description {
-		default "*msgid:none"
+		default "*msgid:skill_speed_txt"
 	}
 
 	time	0
