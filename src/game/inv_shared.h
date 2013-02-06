@@ -405,13 +405,13 @@ bool INV_IsArmourDef(const invDef_t* invDef);
 
 invList_t* INVSH_HasArmour(const inventory_t *inv);
 void INVSH_InitCSI(const struct csi_s * import) __attribute__((nonnull));
-int INVSH_CheckToInventory(const inventory_t* const i, const objDef_t *ob, const invDef_t *container, const int x, const int y, const invList_t *ignoredItem);
+int INVSH_CheckToInventory(const inventory_t* const inv, const objDef_t *ob, const invDef_t *container, const int x, const int y, const invList_t *ignoredItem);
 bool INVSH_CompareItem(const item_t *const item1, const item_t *const item2);
 void INVSH_GetFirstShapePosition(const invList_t *ic, int* const x, int* const y);
 bool INVSH_ExistsInInventory(const inventory_t* const inv, const invDef_t *container, const item_t *item);
 invList_t *INVSH_FindInInventory(const inventory_t* const inv, const invDef_t *container, const item_t *const );
-invList_t *INVSH_SearchInInventory(const inventory_t* const i, const invDef_t *container, const int x, const int y) __attribute__((nonnull(1)));
-invList_t *INVSH_SearchInInventoryByItem(const inventory_t* const i, const invDef_t *container, const objDef_t *item);
+invList_t *INVSH_SearchInInventory(const inventory_t* const inv, const invDef_t *container, const int x, const int y) __attribute__((nonnull(1)));
+invList_t *INVSH_SearchInInventoryByItem(const inventory_t* const inv, const invDef_t *container, const objDef_t *item);
 void INVSH_FindSpace(const inventory_t* const inv, const item_t *item, const invDef_t *container, int * const px, int * const py, const invList_t *ignoredItem) __attribute__((nonnull(1)));
 bool INV_IsCraftItem(const objDef_t *obj);
 bool INV_IsBaseDefenceItem(const objDef_t *item);

@@ -148,15 +148,15 @@ invList_t *InventoryInterface::AddToInventory (inventory_t *const inv, const ite
  * @return false If nothing was removed or an error occurred.
  * @sa AddToInventory
  */
-bool InventoryInterface::removeFromInventory (inventory_t* const i, const invDef_t *container, invList_t *fItem)
+bool InventoryInterface::removeFromInventory (inventory_t* const inv, const invDef_t *container, invList_t *fItem)
 {
 	invList_t *ic, *previous;
 
-	assert(i);
+	assert(inv);
 	assert(container);
 	assert(fItem);
 
-	ic = i->c[container->id];
+	ic = inv->c[container->id];
 	if (!ic)
 		return false;
 
@@ -183,7 +183,7 @@ bool InventoryInterface::removeFromInventory (inventory_t* const i, const invDef
 		 * The other container types do not support stacking.*/
 		assert(ic->item.amount == 1);
 
-		i->c[container->id] = ic->next;
+		inv->c[container->id] = ic->next;
 
 		/* updated invUnused to be able to reuse this space later again */
 		removeInvList(ic);
@@ -191,7 +191,7 @@ bool InventoryInterface::removeFromInventory (inventory_t* const i, const invDef
 		return true;
 	}
 
-	for (previous = i->c[container->id]; ic; ic = ic->next) {
+	for (previous = inv->c[container->id]; ic; ic = ic->next) {
 		if (ic == fItem) {
 			this->cacheItem = ic->item;
 			/* temp container like idEquip and idFloor */
@@ -202,8 +202,8 @@ bool InventoryInterface::removeFromInventory (inventory_t* const i, const invDef
 				return true;
 			}
 
-			if (ic == i->c[container->id])
-				i->c[container->id] = i->c[container->id]->next;
+			if (ic == inv->c[container->id])
+				inv->c[container->id] = inv->c[container->id]->next;
 			else
 				previous->next = ic->next;
 
@@ -500,11 +500,11 @@ bool InventoryInterface::TryAddToInventory (inventory_t* const inv, const item_t
  * e.g. the container of a dropped weapon in tactical mission (ET_ITEM)
  * in every other case just set the pointer to NULL for a temp container like idEquip or idFloor
  */
-void InventoryInterface::EmptyContainer (inventory_t* const i, const invDef_t *container)
+void InventoryInterface::EmptyContainer (inventory_t* const inv, const invDef_t *container)
 {
 	invList_t *ic;
 
-	ic = i->c[container->id];
+	ic = inv->c[container->id];
 
 	while (ic) {
 		invList_t *old = ic;
@@ -512,7 +512,7 @@ void InventoryInterface::EmptyContainer (inventory_t* const i, const invDef_t *c
 		removeInvList(old);
 	}
 
-	i->c[container->id] = NULL;
+	inv->c[container->id] = NULL;
 }
 
 /**

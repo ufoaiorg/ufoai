@@ -47,21 +47,21 @@ class InventoryInterface
 
 public:
 	void initInventory (const char *name, const csi_t* csi, const inventoryImport_t *import);
-	bool removeFromInventory (inventory_t* const i, const invDef_t *container, invList_t *fItem) __attribute__((warn_unused_result));
+	bool removeFromInventory (inventory_t* const inv, const invDef_t *container, invList_t *fItem) __attribute__((warn_unused_result));
 
-	invList_t* AddToInventory (inventory_t *const i, const item_t* const item, const invDef_t *container, int x, int y,
+	invList_t* AddToInventory (inventory_t *const inv, const item_t* const item, const invDef_t *container, int x, int y,
 			int amount) __attribute__((warn_unused_result));
 
-	inventory_action_t MoveInInventory (inventory_t* const i, const invDef_t *from, invList_t *item, const invDef_t *to,
+	inventory_action_t MoveInInventory (inventory_t* const inv, const invDef_t *from, invList_t *item, const invDef_t *to,
 			int tx, int ty, int *TU, invList_t ** icp);
 
 	bool TryAddToInventory (inventory_t* const inv, const item_t *const item, const invDef_t *container);
 
-	void DestroyInventory (inventory_t* const i);
+	void DestroyInventory (inventory_t* const inv);
 
 	void DestroyInventoryInterface(void);
 
-	void EmptyContainer (inventory_t* const i, const invDef_t *container);
+	void EmptyContainer (inventory_t* const inv, const invDef_t *container);
 
 	void EquipActor (character_t* const chr, const equipDef_t *ed, int maxWeight);
 
