@@ -91,13 +91,13 @@ static inline void RT_ConnSet (RoutingData *rtd, const int x, const int y, const
 
 static inline void RT_StepupSet (RoutingData *rtd, const int x, const int y, const int z, const int dir, const int val)
 {
-	RT_setStepup(rtd->routes, rtd->actorSize, x, y, z, dir, val);
+	rtd->routing.setStepup(rtd->actorSize, x, y, z, dir, val);
 }
 
 static inline void RT_ConnSetNoGo (RoutingData *rtd, const int x, const int y, const int z, const int dir)
 {
 	RT_ConnSet(rtd, x, y, z, dir, 0);
-	RT_setStepup(rtd->routes, rtd->actorSize, x, y, z, dir, PATHFINDING_NO_STEPUP);
+	rtd->routing.setStepup(rtd->actorSize, x, y, z, dir, PATHFINDING_NO_STEPUP);
 }
 
 /**

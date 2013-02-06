@@ -224,10 +224,6 @@ typedef struct routing_s {
 	}
 } routing_t;
 
-inline void RT_setStepup (routing_t *routes, const int actorSize, const int x, const int y, const int z, const int dir, const int val)
-{
-	routes[actorSize - 1].setStepup(x, y, z, dir, val);
-}
 inline byte RT_getStepup (const routing_t *routes, const int actorSize, const int x, const int y, const int z, const int dir)
 {
 	return routes[actorSize - 1].getStepup(x, y, z, dir);
@@ -292,6 +288,11 @@ public:
 	inline byte getConn (const actorSizeEnum_t actorSize, const pos3_t pos, const int dir) const
 	{
 		return routes[actorSize - 1].getConn(pos[0], pos[1], pos[2], dir);
+	}
+
+	inline void setStepup (const int actorSize, const int x, const int y, const int z, const int dir, const int val)
+	{
+		routes[actorSize - 1].setStepup(x, y, z, dir, val);
 	}
 };
 
