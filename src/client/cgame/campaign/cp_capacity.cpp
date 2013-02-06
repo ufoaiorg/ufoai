@@ -245,7 +245,7 @@ void CAP_AddCurrent (base_t* base, baseCapacities_t capacity, int value)
 /**
  * @brief Returns the free capacity of a type
  * @param[in] base Pointer to the base to check
- * @param[in] cap Capacity type
+ * @param[in] capacityType Capacity type
  * @sa baseCapacities_t
  */
 int CAP_GetFreeCapacity (const base_t *base, baseCapacities_t capacityType)

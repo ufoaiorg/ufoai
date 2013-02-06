@@ -251,7 +251,7 @@ static void AM_DestroyUnitChr (autoUnit_t *unit)
 /**
  * @brief Creates team data for alien and civilian teams based on the mission parameters data.
  * @param[in,out] battle The auto mission battle to add team data to
- * @param[in] missionParam Mission parameters data to use
+ * @param[in] missionParams Mission parameters data to use
  */
 static void AM_FillTeamFromBattleParams (autoMissionBattle_t *battle, const battleParam_t *missionParams)
 {
