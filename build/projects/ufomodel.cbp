@@ -71,6 +71,7 @@
 			<Add option="-Wreturn-type" />
 			<Add option="-Wwrite-strings" />
 			<Add option="-Wno-format" />
+			<Add option="-Wno-variadic-macros" />
 			<Add option="-D__GNUWIN32__" />
 			<Add option="-DWINVER=0x501" />
 			<Add option="-DCOMPILE_MAP" />
@@ -112,8 +113,8 @@
 		<Unit filename="..\..\src\shared\utf8.cpp" />
 		<Unit filename="..\..\src\shared\utf8.h" />
 		<Unit filename="..\..\src\shared\vector.h" />
-		<Unit filename="..\..\src\tools\ufomodel\ufomodel.cpp" />
 		<Unit filename="..\..\src\tools\ufomodel\md2.cpp" />
+		<Unit filename="..\..\src\tools\ufomodel\ufomodel.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />
