@@ -433,7 +433,7 @@ static void GAME_GetEquipment (void)
 void GAME_UpdateInventory (inventory_t *inv, const equipDef_t *ed)
 {
 	if (!LIST_IsEmpty(chrDisplayList))
-		ui_inventory = &((character_t*)chrDisplayList->data)->i;
+		ui_inventory = &((character_t*)chrDisplayList->data)->inv;
 	else
 		ui_inventory = NULL;
 
@@ -482,12 +482,12 @@ void GAME_ActorSelect_f (void)
 		return;
 
 	/* update menu inventory */
-	if (ui_inventory && ui_inventory != &chr->i) {
+	if (ui_inventory && ui_inventory != &chr->inv) {
 		CONTAINER(chr, csi.idEquip) = ui_inventory->c[csi.idEquip];
 		/* set 'old' idEquip to NULL */
 		ui_inventory->c[csi.idEquip] = NULL;
 	}
-	ui_inventory = &chr->i;
+	ui_inventory = &chr->inv;
 	/* set info cvars */
 	CL_UpdateCharacterValues(chr, "mn_");
 }
@@ -694,7 +694,7 @@ bool GAME_SaveCharacter (xmlNode_t *p, const character_t* chr)
 
 	/* Store inventories */
 	sInventory = XML_AddNode(p, SAVE_INVENTORY_INVENTORY);
-	GAME_SaveInventory(sInventory, &chr->i);
+	GAME_SaveInventory(sInventory, &chr->inv);
 
 	Com_UnregisterConstList(saveCharacterConstants);
 	return true;
@@ -812,9 +812,9 @@ bool GAME_LoadCharacter (xmlNode_t *p, character_t *chr)
 	chr->score.assignedMissions = XML_GetInt(sScore, SAVE_CHARACTER_SCORE_ASSIGNEDMISSIONS, 0);
 	chr->score.rank = XML_GetInt(sScore, SAVE_CHARACTER_SCORE_RANK, -1);
 
-	cls.i.DestroyInventory(&chr->i);
+	cls.i.DestroyInventory(&chr->inv);
 	sInventory = XML_GetNode(p, SAVE_INVENTORY_INVENTORY);
-	GAME_LoadInventory(sInventory, &chr->i, GAME_GetChrMaxLoad(chr));
+	GAME_LoadInventory(sInventory, &chr->inv, GAME_GetChrMaxLoad(chr));
 
 	Com_UnregisterConstList(saveCharacterConstants);
 

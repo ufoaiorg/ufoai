@@ -427,7 +427,7 @@ static void GAME_CollectItems (void *data, int won, void (*item)(void*, const ob
 					item(data, i->item.item, 1);
 			} else if (le->team == cls.team && !LE_IsDead(le)) {
 				/* Finally, the living actor from our team. */
-				ownitems(&le->i);
+				ownitems(&le->inv);
 			}
 		}
 	}
@@ -1317,7 +1317,7 @@ static void GAME_SendCurrentTeamSpawningInfo (dbuffer * buf, linkedList_t *team)
 	NET_WriteByte(buf, teamSize);
 
 	LIST_Foreach(team, character_t, chr) {
-		inventory_t *i = &chr->i;
+		inventory_t *i = &chr->inv;
 		containerIndex_t container;
 
 		/* unlink all temp containers */

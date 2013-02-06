@@ -578,7 +578,7 @@ static void G_SpawnItemOnFloor (const pos3_t pos, const item_t *item)
 	if (floor == NULL) {
 		floor = G_SpawnFloor(pos);
 
-		if (!game.i.TryAddToInventory(&floor->chr.i, item, INVDEF(gi.csi->idFloor))) {
+		if (!game.i.TryAddToInventory(&floor->chr.inv, item, INVDEF(gi.csi->idFloor))) {
 			G_FreeEdict(floor);
 		} else {
 			edict_t *actor = G_EdictsGetLivingActorFromPos(pos);
@@ -590,7 +590,7 @@ static void G_SpawnItemOnFloor (const pos3_t pos, const item_t *item)
 				G_GetFloorItems(actor);
 		}
 	} else {
-		if (game.i.TryAddToInventory(&floor->chr.i, item, INVDEF(gi.csi->idFloor))) {
+		if (game.i.TryAddToInventory(&floor->chr.inv, item, INVDEF(gi.csi->idFloor))) {
 			/* make it invisible to send the inventory in the below vis check */
 			G_EventPerish(floor);
 			G_VisFlagsReset(floor);
@@ -1279,7 +1279,7 @@ bool G_ClientShoot (const Player &player, edict_t *ent, const pos3_t at, shoot_t
 				const invDef_t *invDef = INVDEF(container);
 				assert(invDef->single);
 				itemAlreadyRemoved = true;	/* for assert only */
-				game.i.EmptyContainer(&ent->chr.i, invDef);
+				game.i.EmptyContainer(&ent->chr.inv, invDef);
 				G_EventInventoryDelete(ent, G_VisToPM(ent->visflags), invDef, 0, 0);
 			}
 		}
@@ -1290,7 +1290,7 @@ bool G_ClientShoot (const Player &player, edict_t *ent, const pos3_t at, shoot_t
 			if (itemAlreadyRemoved)
 				gi.Error("Item %s is already removed", weapon->item->id);
 			assert(invDef->single);
-			game.i.EmptyContainer(&ent->chr.i, invDef);
+			game.i.EmptyContainer(&ent->chr.inv, invDef);
 			G_EventInventoryDelete(ent, G_VisToPM(ent->visflags), invDef, 0, 0);
 		}
 	}

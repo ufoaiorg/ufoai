@@ -170,7 +170,7 @@ void CP_CleanupTeam (base_t *base, equipDef_t *ed)
 		if (employee->ugv) {
 			/* Check if there is a weapon and add it if there isn't. */
 			if (!RIGHT(chr) || !RIGHT(chr)->item.item)
-				cgi->INV_EquipActorRobot(&chr->i, INVSH_GetItemByID(employee->ugv->weapon));
+				cgi->INV_EquipActorRobot(&chr->inv, INVSH_GetItemByID(employee->ugv->weapon));
 		}
 	}
 
@@ -194,7 +194,7 @@ void CP_CleanupTeam (base_t *base, equipDef_t *ed)
 					ic->item = CP_AddWeaponAmmo(ed, ic->item);
 				} else {
 					/* Drop ammo used for reloading and sold carried weapons. */
-					if (!cgi->INV_RemoveFromInventory(&chr->i, INVDEF(container), ic))
+					if (!cgi->INV_RemoveFromInventory(&chr->inv, INVDEF(container), ic))
 						cgi->Com_Error(ERR_DROP, "Could not remove item from inventory");
 				}
 			}
@@ -231,7 +231,7 @@ void CP_CleanupAircraftTeam (aircraft_t *aircraft, equipDef_t * ed)
 			if (employee->ugv) {
 				/* Check if there is a weapon and add it if there isn't. */
 				if (!RIGHT(chr) || !RIGHT(chr)->item.item)
-					cgi->INV_EquipActorRobot(&chr->i, INVSH_GetItemByID(employee->ugv->weapon));
+					cgi->INV_EquipActorRobot(&chr->inv, INVSH_GetItemByID(employee->ugv->weapon));
 				continue;
 			}
 
@@ -246,7 +246,7 @@ void CP_CleanupAircraftTeam (aircraft_t *aircraft, equipDef_t * ed)
 					ic->item = CP_AddWeaponAmmo(ed, ic->item);
 				} else {
 					/* Drop ammo used for reloading and sold carried weapons. */
-					if (!cgi->INV_RemoveFromInventory(&chr->i, INVDEF(container), ic))
+					if (!cgi->INV_RemoveFromInventory(&chr->inv, INVDEF(container), ic))
 						cgi->Com_Error(ERR_DROP, "Could not remove item from inventory");
 				}
 			}
@@ -266,7 +266,7 @@ void CP_CleanTempInventory (base_t* base)
 		for (k = 0; k < cgi->csi->numIDs; k++) {
 			/* idFloor and idEquip are temp */
 			if (INVDEF(k)->temp)
-				employee->chr.i.c[k] = NULL;
+				employee->chr.inv.c[k] = NULL;
 		}
 	}
 
@@ -275,7 +275,7 @@ void CP_CleanTempInventory (base_t* base)
 		for (k = 0; k < cgi->csi->numIDs; k++) {
 			/* idFloor and idEquip are temp */
 			if (INVDEF(k)->temp)
-				employee->chr.i.c[k] = NULL;
+				employee->chr.inv.c[k] = NULL;
 		}
 	}
 

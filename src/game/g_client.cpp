@@ -703,7 +703,7 @@ int G_ClientAction (Player &player)
 		} else {
 			const invDef_t *fromPtr = INVDEF(from);
 			const invDef_t *toPtr = INVDEF(to);
-			invList_t *fromItem = INVSH_SearchInInventory(&ent->chr.i, fromPtr, fx, fy);
+			invList_t *fromItem = INVSH_SearchInInventory(&ent->chr.inv, fromPtr, fx, fy);
 			if (fromItem)
 				G_ActorInvMove(ent, fromPtr, fromItem, toPtr, tx, ty, true);
 		}
@@ -1130,9 +1130,9 @@ static void G_ClientReadInventory (edict_t *ent)
 		if (container->temp)
 			gi.Error("G_ClientReadInventory failed, tried to add '%s' to a temp container %i", item.item->id, container->id);
 		/* ignore the overload for now */
-		if (!INVSH_CheckAddingItemToInventory(&ent->chr.i, gi.csi->idEquip, container->id, item, ent->chr.score.skills[ABILITY_POWER]))
+		if (!INVSH_CheckAddingItemToInventory(&ent->chr.inv, gi.csi->idEquip, container->id, item, ent->chr.score.skills[ABILITY_POWER]))
 			Com_Printf("G_ClientReadInventory: Item %s exceeds ent %i weight capacity\n", item.item->id, ent->number);
-		if (!level.noEquipment && game.i.addToInventory(&ent->chr.i, &item, container, x, y, 1) == NULL)
+		if (!level.noEquipment && game.i.addToInventory(&ent->chr.inv, &item, container, x, y, 1) == NULL)
 			gi.Error("G_ClientReadInventory failed, could not add item '%s' to container %i (x:%i,y:%i)",
 					item.item->id, container->id, x, y);
 	}
@@ -1228,7 +1228,7 @@ static void G_ClientAssignDefaultActorValues (edict_t *ent)
 	ent->body = gi.ModelIndex(CHRSH_CharGetBody(&ent->chr));
 	ent->head = gi.ModelIndex(CHRSH_CharGetHead(&ent->chr));
 
-	ent->chr.scoreMission->carriedWeight = INVSH_GetInventoryWeight(&ent->chr.i);
+	ent->chr.scoreMission->carriedWeight = INVSH_GetInventoryWeight(&ent->chr.inv);
 }
 
 /**

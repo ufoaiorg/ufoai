@@ -222,7 +222,7 @@ int HUD_CalcReloadTime (const le_t *le, const objDef_t *weapon, containerIndex_t
 	assert(weapon);
 
 	invList_t *ic;
-	const containerIndex_t container = CL_ActorGetContainerForReload(&ic, &le->i, weapon);
+	const containerIndex_t container = CL_ActorGetContainerForReload(&ic, &le->inv, weapon);
 	if (container == NONE)
 		return -1;
 

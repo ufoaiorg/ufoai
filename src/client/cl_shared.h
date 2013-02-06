@@ -39,7 +39,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define N_(String) gettext_noop (String)
 
 /* Macros for faster access to the inventory-container. */
-#define CONTAINER(e, containerID) ((e)->i.c[(containerID)])
+#define CONTAINER(e, containerID) ((e)->inv.c[(containerID)])
 #define ARMOUR(e) (CONTAINER(e, csi.idArmour))
 #define RIGHT(e) (CONTAINER(e, csi.idRight))
 #define LEFT(e)  (CONTAINER(e, csi.idLeft))

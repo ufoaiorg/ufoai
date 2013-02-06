@@ -351,7 +351,7 @@ static void INV_UpdateActorLoad_f (void)
 
 	const character_t *chr = GAME_GetSelectedChr();
 	if (chr != NULL) {
-		const float invWeight = INVSH_GetInventoryWeight(&chr->i);
+		const float invWeight = INVSH_GetInventoryWeight(&chr->inv);
 		const int maxWeight = GAME_GetChrMaxLoad(chr);
 		const float penalty = GET_ENCUMBRANCE_PENALTY(invWeight, chr->score.skills[ABILITY_POWER]);
 		const int normalTU = GET_TU(chr->score.skills[ABILITY_SPEED], 1.0f - WEIGHT_NORMAL_PENALTY);
@@ -362,7 +362,7 @@ static void INV_UpdateActorLoad_f (void)
 		for (containerIndex_t containerID = 0; containerID < csi.numIDs; containerID++) {
 			if (csi.ids[containerID].temp)
 				continue;
-			for (invList_t *invList = chr->i.c[containerID], *next; invList; invList = next) {
+			for (invList_t *invList = chr->inv.c[containerID], *next; invList; invList = next) {
 				const fireDef_t *fireDef;
 				next = invList->next;
 				fireDef = FIRESH_FiredefForWeapon(&invList->item);

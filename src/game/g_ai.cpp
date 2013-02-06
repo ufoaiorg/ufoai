@@ -1360,9 +1360,9 @@ static void AI_SetEquipment (edict_t *ent, const equipDef_t *ed)
 	if (ent->chr.teamDef->robot && ent->chr.teamDef->onlyWeapon) {
 		const objDef_t *weapon = ent->chr.teamDef->onlyWeapon;
 		if (weapon->numAmmos > 0)
-			game.i.EquipActorRobot(&ent->chr.i, weapon);
+			game.i.EquipActorRobot(&ent->chr.inv, weapon);
 		else if (weapon->fireTwoHanded)
-			game.i.EquipActorMelee(&ent->chr.i, ent->chr.teamDef);
+			game.i.EquipActorMelee(&ent->chr.inv, ent->chr.teamDef);
 		else
 			gi.DPrintf("AI_InitPlayer: weapon %s has no ammo assigned and must not be fired two handed\n", weapon->id);
 	} else if (ent->chr.teamDef->weapons) {

@@ -57,13 +57,13 @@ void CL_InvDel (const eventRegister_t *self, dbuffer *msg)
 	if (le->type == ET_ACTOR || le->type == ET_ACTOR2x2)
 		LE_SetThink(le, LET_StartIdle);
 
-	ic = INVSH_SearchInInventory(&le->i, INVDEF(container), x, y);
+	ic = INVSH_SearchInInventory(&le->inv, INVDEF(container), x, y);
 	/* ic can be null for other team actors - we don't the full inventory of them, only
 	 * the object index */
 	if (!ic)
 		return;
 
-	if (!cls.i.removeFromInventory(&le->i, INVDEF(container), ic))
+	if (!cls.i.removeFromInventory(&le->inv, INVDEF(container), ic))
 		Com_Error(ERR_DROP, "CL_InvDel: No item was removed from container %i", container);
 
 	if (le == selActor)

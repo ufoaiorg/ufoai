@@ -503,7 +503,7 @@ void E_ResetEmployee (employee_t *employee)
 	}
 
 	/* Destroy the inventory of the employee (carried items will remain in base->storage) */
-	cgi->INV_DestroyInventory(&employee->chr.i);
+	cgi->INV_DestroyInventory(&employee->chr.inv);
 }
 
 /**

@@ -281,7 +281,7 @@ void G_ActorSetMaxs (edict_t* ent)
 }
 int G_ActorCalculateMaxTU (const edict_t *ent)
 {
-	const int invWeight = INVSH_GetInventoryWeight(&ent->chr.i);
+	const int invWeight = INVSH_GetInventoryWeight(&ent->chr.inv);
 	const int currentMaxTU = GET_TU(ent->chr.score.skills[ABILITY_SPEED], GET_ENCUMBRANCE_PENALTY(invWeight,
 			ent->chr.score.skills[ABILITY_POWER])) * G_ActorGetInjuryPenalty(ent, MODIFIER_TU);
 
@@ -556,7 +556,7 @@ bool G_ActorInvMove (edict_t *ent, const invDef_t *from, invList_t *fItem, const
 
 	/* Store the location of 'to' BEFORE actually moving items with I_MoveInInventory
 	 * so in case we swap ammo the client can be updated correctly */
-	tc = INVSH_SearchInInventory(&ent->chr.i, to, tx, ty);
+	tc = INVSH_SearchInInventory(&ent->chr.inv, to, tx, ty);
 	if (tc)
 		tItemBackup = *tc;
 	else
@@ -572,7 +572,7 @@ bool G_ActorInvMove (edict_t *ent, const invDef_t *from, invList_t *fItem, const
 	if (checkaction && !G_ActionCheckForCurrentTeam(&player, ent, 1))
 		return false;
 
-	if (!INVSH_CheckAddingItemToInventory(&ent->chr.i, from->id, to->id, fItem->item, ent->chr.score.skills[ABILITY_POWER])) {
+	if (!INVSH_CheckAddingItemToInventory(&ent->chr.inv, from->id, to->id, fItem->item, ent->chr.score.skills[ABILITY_POWER])) {
 		G_ClientPrintf(player, PRINT_HUD, _("This soldier can not carry anything else."));
 		return false;
 	}
@@ -594,9 +594,9 @@ bool G_ActorInvMove (edict_t *ent, const invDef_t *from, invList_t *fItem, const
 
 	/* search for space */
 	if (tx == NONE) {
-		ic = INVSH_SearchInInventory(&ent->chr.i, from, fItem->x, fItem->y);
+		ic = INVSH_SearchInInventory(&ent->chr.inv, from, fItem->x, fItem->y);
 		if (ic)
-			INVSH_FindSpace(&ent->chr.i, &ic->item, to, &tx, &ty, fItem);
+			INVSH_FindSpace(&ent->chr.inv, &ic->item, to, &tx, &ty, fItem);
 		if (tx == NONE)
 			return false;
 	}
@@ -609,7 +609,7 @@ bool G_ActorInvMove (edict_t *ent, const invDef_t *from, invList_t *fItem, const
 	/* Temporary decrease ent->TU to make I_MoveInInventory do what expected. */
 	G_ActorUseTU(ent, reservedTU);
 	/* Try to actually move the item and check the return value after restoring valid ent->TU. */
-	ia = game.i.MoveInInventory(&ent->chr.i, from, fItem, to, tx, ty, checkaction ? &ent->TU : NULL, &ic);
+	ia = game.i.MoveInInventory(&ent->chr.inv, from, fItem, to, tx, ty, checkaction ? &ent->TU : NULL, &ic);
 	/* Now restore the original ent->TU and decrease it for TU used for inventory move. */
 	G_ActorSetTU(ent, originalTU - (originalTU - reservedTU - ent->TU));
 
@@ -682,7 +682,7 @@ bool G_ActorInvMove (edict_t *ent, const invDef_t *from, invList_t *fItem, const
 				/* I_MoveInInventory placed the swapped ammo in an available space, check where it was placed
 				 * so we can place it at the same place in the client, otherwise since fItem hasn't been removed
 				 * this could end in a different place in the client - will cause an error if trying to use it again */
-				ic = INVSH_FindInInventory(&ent->chr.i, to, &item);
+				ic = INVSH_FindInInventory(&ent->chr.inv, to, &item);
 				assert(ic);
 				fItemBackup.item = item;
 				fItemBackup.x = ic->x;

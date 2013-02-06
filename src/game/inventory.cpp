@@ -576,7 +576,7 @@ float InventoryInterface::GetInventoryState (const inventory_t *inventory, int &
  */
 int InventoryInterface::PackAmmoAndWeapon (character_t* const chr, const objDef_t* weapon, int missedPrimary, const equipDef_t *ed, int maxWeight)
 {
-	inventory_t* const inv = &chr->i;
+	inventory_t* const inv = &chr->inv;
 	const int speed = chr->score.skills[ABILITY_SPEED];
 	const objDef_t *ammo = NULL;
 	item_t item = {NONE_AMMO, NULL, NULL, 0, 0};
@@ -764,7 +764,7 @@ typedef enum {
  */
 void InventoryInterface::EquipActor (character_t* const chr, const equipDef_t *ed, int maxWeight)
 {
-	inventory_t* const inv = &chr->i;
+	inventory_t* const inv = &chr->inv;
 	const teamDef_t* td = chr->teamDef;
 	const int speed = chr->score.skills[ABILITY_SPEED];
 	int i;

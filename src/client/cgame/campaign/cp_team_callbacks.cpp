@@ -83,12 +83,12 @@ static void CP_TEAM_AssignSoldierByUCN_f (void)
  */
 static void CP_TEAM_SetEquipContainer (character_t *chr)
 {
-	if (*cgi->ui_inventory && *cgi->ui_inventory != &chr->i) {
+	if (*cgi->ui_inventory && *cgi->ui_inventory != &chr->inv) {
 		CONTAINER(chr, cgi->csi->idEquip) = (*cgi->ui_inventory)->c[cgi->csi->idEquip];
 		/* set 'old' idEquip to NULL */
 		(*cgi->ui_inventory)->c[cgi->csi->idEquip] = NULL;
 	}
-	*cgi->ui_inventory = &chr->i;
+	*cgi->ui_inventory = &chr->inv;
 }
 
 /**
@@ -160,7 +160,7 @@ static void CP_TEAM_DeEquipActor_f (void)
 
 	chr = &employee->chr;
 
-	cgi->INV_DestroyInventory(&chr->i);
+	cgi->INV_DestroyInventory(&chr->inv);
 
 	CP_CleanTempInventory(base);
 	equipDef_t unused = base->storage;

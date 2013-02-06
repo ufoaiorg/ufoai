@@ -381,7 +381,7 @@ void CL_ActorAddToTeamList (le_t *le)
 
 void CL_ActorCleanup (le_t *le)
 {
-	cls.i.DestroyInventory(&le->i);
+	cls.i.DestroyInventory(&le->inv);
 }
 
 /**
@@ -406,7 +406,7 @@ void CL_ActorRemoveFromTeamList (le_t *le)
 			} else {
 				/** @todo why the heck is that needed? the inventory was already dropped to floor. */
 				le->left = le->right = le->extension = le->headgear = NONE;
-				cls.i.DestroyInventory(&le->i);
+				cls.i.DestroyInventory(&le->inv);
 			}
 
 			/* disable hud button */
@@ -463,7 +463,7 @@ bool CL_ActorSelect (le_t *le)
 	mousePosTargettingAlign = 0;
 	selActor = le;
 	selActor->flags |= LE_SELECTED;
-	ui_inventory = &selActor->i;
+	ui_inventory = &selActor->inv;
 
 	if (le->state & RF_IRGOGGLESSHOT)
 		refdef.rendererFlags |= RDF_IRGOGGLES;
@@ -961,7 +961,7 @@ void CL_ActorReload (le_t *le, containerIndex_t containerID)
 		return;
 
 	/* check weapon */
-	inv = &le->i;
+	inv = &le->inv;
 
 	if (inv->c[containerID]) {
 		weapon = inv->c[containerID]->item.item;
@@ -1017,11 +1017,11 @@ void CL_ActorInvMove (const le_t *le, containerIndex_t fromContainer, int fromX,
 	assert(le);
 	assert(LE_IsActor(le));
 
-	const invList_t *item = INVSH_SearchInInventory(&le->i, fromPtr, fromX, fromY);
+	const invList_t *item = INVSH_SearchInInventory(&le->inv, fromPtr, fromX, fromY);
 
 	if (item != NULL) {
 		const character_t *chr = CL_ActorGetChr(le);
-		if (!INVSH_CheckAddingItemToInventory(&le->i, fromContainer, toContainer, item->item, GAME_GetChrMaxLoad(chr))) {
+		if (!INVSH_CheckAddingItemToInventory(&le->inv, fromContainer, toContainer, item->item, GAME_GetChrMaxLoad(chr))) {
 			UI_Popup(_("Warning"), _("This soldier can not carry anything else."));
 			return;
 		}

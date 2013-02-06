@@ -222,9 +222,9 @@ static void AM_CreateUnitChr (autoUnit_t *unit, const teamDef_t *teamDef, const 
 		if (teamDef->robot && teamDef->onlyWeapon) {
 			const objDef_t *weapon = teamDef->onlyWeapon;
 			if (weapon->numAmmos > 0)
-				cgi->INV_EquipActorRobot(&unit->chr->i, weapon);
+				cgi->INV_EquipActorRobot(&unit->chr->inv, weapon);
 			else if (weapon->fireTwoHanded)
-				cgi->INV_EquipActorMelee(&unit->chr->i, teamDef);
+				cgi->INV_EquipActorMelee(&unit->chr->inv, teamDef);
 			else
 				Com_Printf("AM_CreateUnitChr: weapon %s has no ammo assigned and must not be fired two handed\n", weapon->id);
 		} else {
@@ -244,7 +244,7 @@ static void AM_CreateUnitChr (autoUnit_t *unit, const teamDef_t *teamDef, const 
  */
 static void AM_DestroyUnitChr (autoUnit_t *unit)
 {
-	cgi->INV_DestroyInventory(&unit->chr->i);
+	cgi->INV_DestroyInventory(&unit->chr->inv);
 	Mem_Free(unit->chr);
 }
 

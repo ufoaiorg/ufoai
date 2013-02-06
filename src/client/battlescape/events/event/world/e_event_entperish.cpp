@@ -46,7 +46,7 @@ void CL_EntPerish (const eventRegister_t *self, dbuffer *msg)
 
 	switch (le->type) {
 	case ET_ITEM:
-		cls.i.EmptyContainer(&le->i, INVDEF(csi.idFloor));
+		cls.i.EmptyContainer(&le->inv, INVDEF(csi.idFloor));
 
 		/* search owners (there can be many, some of them dead) */
 		actor = NULL;
@@ -60,7 +60,7 @@ void CL_EntPerish (const eventRegister_t *self, dbuffer *msg)
 		break;
 	case ET_ACTOR:
 	case ET_ACTOR2x2:
-		cls.i.DestroyInventory(&le->i);
+		cls.i.DestroyInventory(&le->inv);
 		break;
 #ifdef DEBUG
 	case ET_ACTORHIDDEN:

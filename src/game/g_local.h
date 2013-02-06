@@ -57,7 +57,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define	TAG_LEVEL	766			/* clear when loading a new level */
 
 /** Macros for faster access to the inventory-container. */
-#define CONTAINER(e, containerID) ((e)->chr.i.c[(containerID)])
+#define CONTAINER(e, containerID) ((e)->chr.inv.c[(containerID)])
 #define ARMOUR(e)		(CONTAINER(e, gi.csi->idArmour))
 #define RIGHT(e)		(CONTAINER(e, gi.csi->idRight))
 #define LEFT(e)			(CONTAINER(e, gi.csi->idLeft))

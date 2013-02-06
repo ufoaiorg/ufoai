@@ -141,7 +141,7 @@ static void G_UpdateCarriedWeight (int team)
 
 	while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, team))) {
 		if (ent->chr.scoreMission) {
-			ent->chr.scoreMission->carriedWeight += INVSH_GetInventoryWeight(&ent->chr.i);
+			ent->chr.scoreMission->carriedWeight += INVSH_GetInventoryWeight(&ent->chr.inv);
 		}
 	}
 }
