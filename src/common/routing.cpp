@@ -1480,7 +1480,6 @@ void RT_UpdateConnectionColumn (mapTiles_t *mapTiles, Routing &routing, const in
 
 void RT_WriteCSVFiles (const Routing &routing, const char* baseFilename, const ipos3_t mins, const ipos3_t maxs)
 {
-	const routing_t* routes = routing.routes;
 	char filename[MAX_OSPATH], ext[MAX_OSPATH];
 	qFILE f;
 	int i, x, y, z;
@@ -1531,35 +1530,35 @@ void RT_WriteCSVFiles (const Routing &routing, const char* baseFilename, const i
 					FS_Printf(&f, "\"");
 
 					/* NW corner */
-					FS_Printf(&f, "%3i-%3i ", RT_CONN_NX_PY(routing, i, x, y, z), RT_STEPUP_NX_PY(routes, i, x, y, z));
+					FS_Printf(&f, "%3i-%3i ", RT_CONN_NX_PY(routing, i, x, y, z), RT_STEPUP_NX_PY(routing, i, x, y, z));
 
 					/* N side */
-					FS_Printf(&f, "%3i-%3i ", RT_CONN_PY(routing, i, x, y, z), RT_STEPUP_PY(routes, i, x, y, z));
+					FS_Printf(&f, "%3i-%3i ", RT_CONN_PY(routing, i, x, y, z), RT_STEPUP_PY(routing, i, x, y, z));
 
 					/* NE corner */
-					FS_Printf(&f, "%3i-%3i ", RT_CONN_PX_PY(routing, i, x, y, z), RT_STEPUP_PX_PY(routes, i, x, y, z));
+					FS_Printf(&f, "%3i-%3i ", RT_CONN_PX_PY(routing, i, x, y, z), RT_STEPUP_PX_PY(routing, i, x, y, z));
 
 					FS_Printf(&f, "\n");
 
 					/* W side */
-					FS_Printf(&f, "%3i-%3i ", RT_CONN_NX(routing, i, x, y, z), RT_STEPUP_NX(routes, i, x, y, z));
+					FS_Printf(&f, "%3i-%3i ", RT_CONN_NX(routing, i, x, y, z), RT_STEPUP_NX(routing, i, x, y, z));
 
 					/* Center - display floor height */
 					FS_Printf(&f, "_%+2i_ ", routing.getFloor(i, x, y, z));
 
 					/* E side */
-					FS_Printf(&f, "%3i-%3i ", RT_CONN_PX(routing, i, x, y, z), RT_STEPUP_PX(routes, i, x, y, z));
+					FS_Printf(&f, "%3i-%3i ", RT_CONN_PX(routing, i, x, y, z), RT_STEPUP_PX(routing, i, x, y, z));
 
 					FS_Printf(&f, "\n");
 
 					/* SW corner */
-					FS_Printf(&f, "%3i-%3i ", RT_CONN_NX_NY(routing, i, x, y, z), RT_STEPUP_NX_NY(routes, i, x, y, z));
+					FS_Printf(&f, "%3i-%3i ", RT_CONN_NX_NY(routing, i, x, y, z), RT_STEPUP_NX_NY(routing, i, x, y, z));
 
 					/* S side */
-					FS_Printf(&f, "%3i-%3i ", RT_CONN_NY(routing, i, x, y, z), RT_STEPUP_NY(routes, i, x, y, z));
+					FS_Printf(&f, "%3i-%3i ", RT_CONN_NY(routing, i, x, y, z), RT_STEPUP_NY(routing, i, x, y, z));
 
 					/* SE corner */
-					FS_Printf(&f, "%3i-%3i ", RT_CONN_PX_NY(routing, i, x, y, z), RT_STEPUP_PX_NY(routes, i, x, y, z));
+					FS_Printf(&f, "%3i-%3i ", RT_CONN_PX_NY(routing, i, x, y, z), RT_STEPUP_PX_NY(routing, i, x, y, z));
 
 					FS_Printf(&f, "\",");
 				}
@@ -1619,9 +1618,9 @@ void RT_DebugPathDisplay (Routing &routing, actorSizeEnum_t actorSize, int x, in
 		RT_CONN_PX_NY(routing, actorSize, x, y, z) );	/* 7 */
 	Com_Printf("stepup ortho: (PX=%i, NX=%i, PY=%i, NY=%i))\n",
 		RT_STEPUP_PX(routes, actorSize, x, y, z),		/* dir = 0 */
-		RT_STEPUP_NX(routes, actorSize, x, y, z),		/* 1 */
-		RT_STEPUP_PY(routes, actorSize, x, y, z),		/* 2 */
-		RT_STEPUP_NY(routes, actorSize, x, y, z) );		/* 3 */
+		RT_STEPUP_NX(routing, actorSize, x, y, z),		/* 1 */
+		RT_STEPUP_PY(routing, actorSize, x, y, z),		/* 2 */
+		RT_STEPUP_NY(routing, actorSize, x, y, z) );		/* 3 */
 }
 
 #endif

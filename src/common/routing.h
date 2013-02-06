@@ -72,15 +72,15 @@ MACROS
 #define RT_CONN_NX_PY(r, actorSize, x, y, z)	(RT_getConn(r.routes, actorSize, x, y, z, 6))
 #define RT_CONN_NX_NY(r, actorSize, x, y, z)	(RT_getConn(r.routes, actorSize, x, y, z, 5))
 
-#define RT_STEPUP_PX(map, actorSize, x, y, z)		(RT_getStepup(map, actorSize, x, y, z, 0))
-#define RT_STEPUP_NX(map, actorSize, x, y, z)		(RT_getStepup(map, actorSize, x, y, z, 1))
-#define RT_STEPUP_PY(map, actorSize, x, y, z)		(RT_getStepup(map, actorSize, x, y, z, 2))
-#define RT_STEPUP_NY(map, actorSize, x, y, z)		(RT_getStepup(map, actorSize, x, y, z, 3))
+#define RT_STEPUP_PX(r, actorSize, x, y, z)		(RT_getStepup(r.routes, actorSize, x, y, z, 0))
+#define RT_STEPUP_NX(r, actorSize, x, y, z)		(RT_getStepup(r.routes, actorSize, x, y, z, 1))
+#define RT_STEPUP_PY(r, actorSize, x, y, z)		(RT_getStepup(r.routes, actorSize, x, y, z, 2))
+#define RT_STEPUP_NY(r, actorSize, x, y, z)		(RT_getStepup(r.routes, actorSize, x, y, z, 3))
 
-#define RT_STEPUP_PX_PY(map, actorSize, x, y, z)	(RT_getStepup(map, actorSize, x, y, z, 4))
-#define RT_STEPUP_PX_NY(map, actorSize, x, y, z)	(RT_getStepup(map, actorSize, x, y, z, 7))
-#define RT_STEPUP_NX_PY(map, actorSize, x, y, z)	(RT_getStepup(map, actorSize, x, y, z, 6))
-#define RT_STEPUP_NX_NY(map, actorSize, x, y, z)	(RT_getStepup(map, actorSize, x, y, z, 5))
+#define RT_STEPUP_PX_PY(r, actorSize, x, y, z)	(RT_getStepup(r.routes, actorSize, x, y, z, 4))
+#define RT_STEPUP_PX_NY(r, actorSize, x, y, z)	(RT_getStepup(r.routes, actorSize, x, y, z, 7))
+#define RT_STEPUP_NX_PY(r, actorSize, x, y, z)	(RT_getStepup(r.routes, actorSize, x, y, z, 6))
+#define RT_STEPUP_NX_NY(r, actorSize, x, y, z)	(RT_getStepup(r.routes, actorSize, x, y, z, 5))
 
 #define RT_FILLED(r, actorSize, x, y, z)			(r.getCeiling(actorSize, x, y, z) - r.getFloor(actorSize, x, y, z) < PATHFINDING_MIN_OPENING)
 

@@ -79,35 +79,35 @@ namespace routing
 		switch (direction) {
 		case DIR_WEST:
 			route = RT_CONN_NY(routing,actorSize,pos[0],pos[1],pos[2]);
-			stepup = RT_STEPUP_NY(routing.routes,actorSize,pos[0],pos[1],pos[2]);
+			stepup = RT_STEPUP_NY(routing,actorSize,pos[0],pos[1],pos[2]);
 			break;
 		case DIR_NORTHWEST:
 			route = RT_CONN_PX_NY(routing,actorSize,pos[0],pos[1],pos[2]);
-			stepup = RT_STEPUP_PX_NY(routing.routes,actorSize,pos[0],pos[1],pos[2]);
+			stepup = RT_STEPUP_PX_NY(routing,actorSize,pos[0],pos[1],pos[2]);
 			break;
 		case DIR_NORTH:
 			route = RT_CONN_PX(routing,actorSize,pos[0],pos[1],pos[2]);
-			stepup = RT_STEPUP_PX(routing.routes,actorSize,pos[0],pos[1],pos[2]);
+			stepup = RT_STEPUP_PX(routing,actorSize,pos[0],pos[1],pos[2]);
 			break;
 		case DIR_NORTHEAST:
 			route = RT_CONN_PX_PY(routing,actorSize,pos[0],pos[1],pos[2]);
-			stepup = RT_STEPUP_PX_PY(routing.routes,actorSize,pos[0],pos[1],pos[2]);
+			stepup = RT_STEPUP_PX_PY(routing,actorSize,pos[0],pos[1],pos[2]);
 			break;
 		case DIR_EAST:
 			route = RT_CONN_PY(routing,actorSize,pos[0],pos[1],pos[2]);
-			stepup = RT_STEPUP_PY(routing.routes,actorSize,pos[0],pos[1],pos[2]);
+			stepup = RT_STEPUP_PY(routing,actorSize,pos[0],pos[1],pos[2]);
 			break;
 		case DIR_SOUTHEAST:
 			route = RT_CONN_NX_PY(routing,actorSize,pos[0],pos[1],pos[2]);
-			stepup = RT_STEPUP_NX_PY(routing.routes,actorSize,pos[0],pos[1],pos[2]);
+			stepup = RT_STEPUP_NX_PY(routing,actorSize,pos[0],pos[1],pos[2]);
 			break;
 		case DIR_SOUTH:
 			route = RT_CONN_NX(routing,actorSize,pos[0],pos[1],pos[2]);
-			stepup = RT_STEPUP_NX(routing.routes,actorSize,pos[0],pos[1],pos[2]);
+			stepup = RT_STEPUP_NX(routing,actorSize,pos[0],pos[1],pos[2]);
 			break;
 		case DIR_SOUTHWEST:
 			route = RT_CONN_NX_NY(routing,actorSize,pos[0],pos[1],pos[2]);
-			stepup = RT_STEPUP_NX_NY(routing.routes,actorSize,pos[0],pos[1],pos[2]);
+			stepup = RT_STEPUP_NX_NY(routing,actorSize,pos[0],pos[1],pos[2]);
 			break;
 		case MAX_DIRECTIONS:
 			break;
