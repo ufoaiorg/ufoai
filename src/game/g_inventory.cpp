@@ -277,7 +277,7 @@ void G_InventoryToFloor (edict_t *ent)
 			if (!game.i.removeFromInventory(&ent->chr.i, INVDEF(container), ic))
 				gi.Error("Could not remove item '%s' from inventory %i of entity %i",
 						ic->item.item->id, container, ent->number);
-			if (game.i.AddToInventory(&floor->chr.i, &item, INVDEF(gi.csi->idFloor), NONE, NONE, 1) == NULL)
+			if (game.i.addToInventory(&floor->chr.i, &item, INVDEF(gi.csi->idFloor), NONE, NONE, 1) == NULL)
 				gi.Error("Could not add item '%s' from inventory %i of entity %i to floor container",
 						ic->item.item->id, container, ent->number);
 #ifdef ADJACENT

@@ -611,7 +611,7 @@ static void GAME_LoadInventory (xmlNode_t *p, inventory_t *inv, int maxLoad)
 		if (!INVSH_CheckAddingItemToInventory(inv, csi.idEquip, container, item, maxLoad))
 			Com_Printf("GAME_LoadInventory: Item %s exceeds weight capacity\n", item.item->id);
 
-		if (!cls.i.AddToInventory(inv, &item, INVDEF(container), x, y, 1))
+		if (!cls.i.addToInventory(inv, &item, INVDEF(container), x, y, 1))
 			Com_Printf("Could not add item '%s' to inventory\n", item.item ? item.item->id : "NULL");
 	}
 }

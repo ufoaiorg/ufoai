@@ -86,7 +86,7 @@ invList_t* InventoryInterface::addInvList (invList_t **invList)
  * @sa removeFromInventory
  * @return the @c invList_t pointer the item was added to, or @c NULL in case of an error (item wasn't added)
  */
-invList_t *InventoryInterface::AddToInventory (inventory_t *const inv, const item_t* const item, const invDef_t *container, int x, int y, int amount)
+invList_t *InventoryInterface::addToInventory (inventory_t *const inv, const item_t* const item, const invDef_t *container, int x, int y, int amount)
 {
 	invList_t *ic;
 	int checkedTo;
@@ -108,7 +108,7 @@ invList_t *InventoryInterface::AddToInventory (inventory_t *const inv, const ite
 		for (ic = inv->c[container->id]; ic; ic = ic->next)
 			if (INVSH_CompareItem(&ic->item, item)) {
 				ic->item.amount += amount;
-				Com_DPrintf(DEBUG_SHARED, "AddToInventory: Amount of '%s': %i (%s)\n",
+				Com_DPrintf(DEBUG_SHARED, "addToInventory: Amount of '%s': %i (%s)\n",
 					ic->item.item->name, ic->item.amount, invName);
 				return ic;
 			}
@@ -146,7 +146,7 @@ invList_t *InventoryInterface::AddToInventory (inventory_t *const inv, const ite
  * @param[in] fItem The item to be removed.
  * @return true If removal was successful.
  * @return false If nothing was removed or an error occurred.
- * @sa AddToInventory
+ * @sa addToInventory
  */
 bool InventoryInterface::removeFromInventory (inventory_t* const inv, const invDef_t *container, invList_t *fItem)
 {
@@ -373,7 +373,7 @@ inventory_action_t InventoryInterface::MoveInInventory (inventory_t* const inv, 
 						return IA_NONE;
 
 					/* Add the currently used ammo in place of the new ammo in the "from" container. */
-					if (AddToInventory(inv, &item, from, cacheFromX, cacheFromY, 1) == NULL)
+					if (addToInventory(inv, &item, from, cacheFromX, cacheFromY, 1) == NULL)
 						Sys_Error("Could not reload the weapon - add to inventory failed (%s)", invName);
 
 					ic->item.ammo = this->cacheItem.item;
@@ -401,7 +401,7 @@ inventory_action_t InventoryInterface::MoveInInventory (inventory_t* const inv, 
 		if (ic && to->temp) {
 			/* We are moving to a blocked location container but it's the base-equipment floor or a battlescape floor.
 			 * We add the item anyway but it'll not be displayed (yet)
-			 * This is then used in AddToInventory below.*/
+			 * This is then used in addToInventory below.*/
 			/** @todo change the other code to browse through these things. */
 			INVSH_FindSpace(inv, &fItem->item, to, &tx, &ty, fItem);
 			if (tx == NONE || ty == NONE) {
@@ -445,7 +445,7 @@ inventory_action_t InventoryInterface::MoveInInventory (inventory_t* const inv, 
 		*TU -= time;
 
 	assert(this->cacheItem.item);
-	ic = AddToInventory(inv, &this->cacheItem, to, tx, ty, 1);
+	ic = addToInventory(inv, &this->cacheItem, to, tx, ty, 1);
 
 	/* return data */
 	if (icp) {
@@ -467,7 +467,7 @@ inventory_action_t InventoryInterface::MoveInInventory (inventory_t* const inv, 
  * @param[in] item Item to add to inventory.
  * @param[in] container Container id.
  * @sa INVSH_FindSpace
- * @sa AddToInventory
+ * @sa addToInventory
  */
 bool InventoryInterface::TryAddToInventory (inventory_t* const inv, const item_t *const item, const invDef_t *container)
 {
@@ -487,7 +487,7 @@ bool InventoryInterface::TryAddToInventory (inventory_t* const inv, const item_t
 		item_t itemRotation = *item;
 		itemRotation.rotated = rotated;
 
-		return AddToInventory(inv, &itemRotation, container, x, y, 1) != NULL;
+		return addToInventory(inv, &itemRotation, container, x, y, 1) != NULL;
 	}
 }
 

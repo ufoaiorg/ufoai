@@ -48,8 +48,7 @@ class InventoryInterface
 public:
 	void initInventory (const char *name, const csi_t* csi, const inventoryImport_t *import);
 	bool removeFromInventory (inventory_t* const inv, const invDef_t *container, invList_t *fItem) __attribute__((warn_unused_result));
-
-	invList_t* AddToInventory (inventory_t *const inv, const item_t* const item, const invDef_t *container, int x, int y,
+	invList_t* addToInventory (inventory_t *const inv, const item_t* const item, const invDef_t *container, int x, int y,
 			int amount) __attribute__((warn_unused_result));
 
 	inventory_action_t MoveInInventory (inventory_t* const inv, const invDef_t *from, invList_t *item, const invDef_t *to,

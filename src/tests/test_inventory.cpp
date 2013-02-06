@@ -99,7 +99,7 @@ static void testItemAdd (void)
 
 	CU_ASSERT(INVSH_ExistsInInventory(&inv, container, &item) == false);
 
-	CU_ASSERT_PTR_NOT_NULL(i.AddToInventory(&inv, &item, container, NONE, NONE, 1));
+	CU_ASSERT_PTR_NOT_NULL(i.addToInventory(&inv, &item, container, NONE, NONE, 1));
 
 	CU_ASSERT(INVSH_ExistsInInventory(&inv, container, &item) == true);
 }
@@ -128,7 +128,7 @@ static void testItemDel (void)
 
 	CU_ASSERT(INVSH_ExistsInInventory(&inv, container, &item) == false);
 
-	addedItem = i.AddToInventory(&inv, &item, container, NONE, NONE, 1);
+	addedItem = i.addToInventory(&inv, &item, container, NONE, NONE, 1);
 
 	CU_ASSERT(INVSH_ExistsInInventory(&inv, container, &item) == true);
 
@@ -162,7 +162,7 @@ static void testItemMove (void)
 
 	CU_ASSERT(INVSH_ExistsInInventory(&inv, container, &item) == false);
 
-	addedItem = i.AddToInventory(&inv, &item, container, NONE, NONE, 1);
+	addedItem = i.addToInventory(&inv, &item, container, NONE, NONE, 1);
 	CU_ASSERT_PTR_NOT_NULL(addedItem);
 
 	CU_ASSERT(INVSH_ExistsInInventory(&inv, container, &item) == true);
@@ -200,7 +200,7 @@ static void testItemReload (void)
 
 	CU_ASSERT(INVSH_ExistsInInventory(&inv, container, &item) == false);
 
-	addedItem = i.AddToInventory(&inv, &item, container, NONE, NONE, 1);
+	addedItem = i.addToInventory(&inv, &item, container, NONE, NONE, 1);
 	CU_ASSERT_PTR_NOT_NULL(addedItem);
 
 	CU_ASSERT(INVSH_ExistsInInventory(&inv, container, &item) == true);
@@ -217,7 +217,7 @@ static void testItemReload (void)
 
 	CU_ASSERT(INVSH_ExistsInInventory(&inv, containerFrom, &ammo) == false);
 
-	addedItem = i.AddToInventory(&inv, &ammo, containerFrom, NONE, NONE, 1);
+	addedItem = i.addToInventory(&inv, &ammo, containerFrom, NONE, NONE, 1);
 	CU_ASSERT_PTR_NOT_NULL(addedItem);
 
 	CU_ASSERT(INVSH_ExistsInInventory(&inv, containerFrom, &ammo) == true);
@@ -240,7 +240,7 @@ static void testItemReload (void)
 
 	CU_ASSERT(INVSH_ExistsInInventory(&inv, containerFrom, &ammoFrom) == false);
 
-	addedItem = i.AddToInventory(&inv, &ammoFrom, containerFrom, NONE, NONE, 1);
+	addedItem = i.addToInventory(&inv, &ammoFrom, containerFrom, NONE, NONE, 1);
 	CU_ASSERT_PTR_NOT_NULL(addedItem);
 
 	CU_ASSERT(INVSH_ExistsInInventory(&inv, containerFrom, &ammoFrom) == true);
@@ -353,11 +353,11 @@ static void testItemToHeadgear (void)
 
 	CU_ASSERT_FALSE(INVSH_ExistsInInventory(&inv, container, &item));
 
-	CU_ASSERT_PTR_NOT_NULL(i.AddToInventory(&inv, &item, container, NONE, NONE, 1));
+	CU_ASSERT_PTR_NOT_NULL(i.addToInventory(&inv, &item, container, NONE, NONE, 1));
 
 	CU_ASSERT_TRUE(INVSH_ExistsInInventory(&inv, container, &item));
 
-	CU_ASSERT_PTR_NULL(i.AddToInventory(&inv, &item, container, NONE, NONE, 1));
+	CU_ASSERT_PTR_NULL(i.addToInventory(&inv, &item, container, NONE, NONE, 1));
 }
 
 int UFO_AddInventoryTests (void)
