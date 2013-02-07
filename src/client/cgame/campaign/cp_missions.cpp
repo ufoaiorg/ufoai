@@ -222,7 +222,7 @@ static bool CP_IsAlienEquipmentSelectable (const mission_t *mission, const equip
  */
 static void CP_SetAlienEquipmentByInterest (const mission_t *mission, linkedList_t *equipPack, battleParam_t *battleParameters)
 {
-	int i, randomNum, availableEquipDef = 0;
+	int i, availableEquipDef = 0;
 
 	/* look for all available fitting alien equipment definitions
 	 * use mission->initialOverallInterest and not ccs.overallInterest: the alien equipment should not change depending on
@@ -239,7 +239,7 @@ static void CP_SetAlienEquipmentByInterest (const mission_t *mission, linkedList
 		cgi->Com_Error(ERR_DROP, "CP_SetAlienEquipmentByInterest: no available alien equipment for mission '%s'", mission->id);
 
 	/* Choose an alien equipment definition -- between 0 and availableStage - 1 */
-	randomNum = rand() % availableEquipDef;
+	const int randomNum = rand() % availableEquipDef;
 
 	availableEquipDef = 0;
 	for (i = 0; i < cgi->csi->numEDs; i++) {
@@ -248,8 +248,8 @@ static void CP_SetAlienEquipmentByInterest (const mission_t *mission, linkedList
 			if (availableEquipDef == randomNum) {
 				Com_sprintf(battleParameters->alienEquipment, sizeof(battleParameters->alienEquipment), "%s", ed->id);
 				break;
-			} else
-				availableEquipDef++;
+			}
+			availableEquipDef++;
 		}
 	}
 }
