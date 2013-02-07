@@ -235,7 +235,7 @@ bool InventoryInterface::removeFromInventory (inventory_t* const inv, const invD
  * @return IA_ARMOUR when placing an armour on the actor.
  * @return IA_MOVE when just moving an item.
  */
-inventory_action_t InventoryInterface::MoveInInventory (inventory_t* const inv, const invDef_t *from, invList_t *fItem, const invDef_t *to, int tx, int ty, int *TU, invList_t ** icp)
+inventory_action_t InventoryInterface::moveInInventory (inventory_t* const inv, const invDef_t *from, invList_t *fItem, const invDef_t *to, int tx, int ty, int *TU, invList_t ** icp)
 {
 	invList_t *ic;
 
@@ -340,7 +340,7 @@ inventory_action_t InventoryInterface::MoveInInventory (inventory_t* const inv, 
 		cacheItem2 = this->cacheItem; /* Save/cache (source) item. The cacheItem is modified in MoveInInventory. */
 
 		/* Move the destination item to the source. */
-		MoveInInventory(inv, to, icTo, from, cacheFromX, cacheFromY, TU, icp);
+		moveInInventory(inv, to, icTo, from, cacheFromX, cacheFromY, TU, icp);
 
 		/* Reset the cached item (source) (It'll be move to container emptied by destination item later.) */
 		this->cacheItem = cacheItem2;
@@ -469,7 +469,7 @@ inventory_action_t InventoryInterface::MoveInInventory (inventory_t* const inv, 
  * @sa INVSH_FindSpace
  * @sa addToInventory
  */
-bool InventoryInterface::TryAddToInventory (inventory_t* const inv, const item_t *const item, const invDef_t *container)
+bool InventoryInterface::tryAddToInventory (inventory_t* const inv, const item_t *const item, const invDef_t *container)
 {
 	int x, y;
 
@@ -651,15 +651,15 @@ int InventoryInterface::PackAmmoAndWeapon (character_t* const chr, const objDef_
 	}
 
 	/* now try to pack the weapon */
-	packed = TryAddToInventory(inv, &item, &csi->ids[csi->idRight]);
+	packed = tryAddToInventory(inv, &item, &csi->ids[csi->idRight]);
 	if (packed)
 		ammoMult = 3;
 	if (!packed && allowLeft)
-		packed = TryAddToInventory(inv, &item, &csi->ids[csi->idLeft]);
+		packed = tryAddToInventory(inv, &item, &csi->ids[csi->idLeft]);
 	if (!packed)
-		packed = TryAddToInventory(inv, &item, &csi->ids[csi->idBelt]);
+		packed = tryAddToInventory(inv, &item, &csi->ids[csi->idBelt]);
 	if (!packed)
-		packed = TryAddToInventory(inv, &item, &csi->ids[csi->idHolster]);
+		packed = tryAddToInventory(inv, &item, &csi->ids[csi->idHolster]);
 	if (!packed)
 		return 0;
 
@@ -681,7 +681,7 @@ int InventoryInterface::PackAmmoAndWeapon (character_t* const chr, const objDef_
 			mun.item = ammo;
 			/* ammo to backpack; belt is for knives and grenades */
 			if (weight <= maxWeight && tuNeed <= maxTU)
-					numpacked += TryAddToInventory(inv, &mun, &csi->ids[csi->idBackpack]);
+					numpacked += tryAddToInventory(inv, &mun, &csi->ids[csi->idBackpack]);
 			/* no problem if no space left; one ammo already loaded */
 			if (numpacked > ammoMult || numpacked * weapon->ammo > 11)
 				break;
@@ -716,7 +716,7 @@ void InventoryInterface::EquipActorMelee (inventory_t* const inv, const teamDef_
 	if (!obj->fireTwoHanded)
 		Sys_Error("INVSH_EquipActorMelee: melee weapon %s for team %s is not firetwohanded! (%s)",
 				obj->id, td->id, invName);
-	TryAddToInventory(inv, &item, &this->csi->ids[this->csi->idRight]);
+	tryAddToInventory(inv, &item, &this->csi->ids[this->csi->idRight]);
 }
 
 /**
@@ -739,7 +739,7 @@ void InventoryInterface::EquipActorRobot (inventory_t* const inv, const objDef_t
 	assert(weapon->ammos[0]);
 	item.ammo = weapon->ammos[0];
 
-	TryAddToInventory(inv, &item, &this->csi->ids[this->csi->idRight]);
+	tryAddToInventory(inv, &item, &this->csi->ids[this->csi->idRight]);
 }
 
 /**
@@ -933,7 +933,7 @@ void InventoryInterface::EquipActor (character_t* const chr, const equipDef_t *e
 						const int maxTU = GET_TU(speed, GET_ENCUMBRANCE_PENALTY(weight, chr->score.skills[ABILITY_POWER]));
 						if (weight > maxWeight || tuNeed > maxTU)
 							continue;
-						if (TryAddToInventory(inv, &item, &this->csi->ids[this->csi->idArmour])) {
+						if (tryAddToInventory(inv, &item, &this->csi->ids[this->csi->idArmour])) {
 							repeat = 0;
 							break;
 						}
@@ -970,7 +970,7 @@ void InventoryInterface::EquipActor (character_t* const chr, const equipDef_t *e
 							container = this->csi->idBackpack;
 						if (weight > maxWeight || tuNeed > maxTU || (itemFd && itemFd->time > maxTU))
 							continue;
-						TryAddToInventory(inv, &item, &this->csi->ids[container]);
+						tryAddToInventory(inv, &item, &this->csi->ids[container]);
 					}
 				}
 			}

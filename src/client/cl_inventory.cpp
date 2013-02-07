@@ -77,7 +77,7 @@ bool INV_MoveItem (inventory_t* inv, const invDef_t *toContainer, int px, int py
 	}
 
 	/* move the item */
-	moved = cls.i.MoveInInventory(inv, fromContainer, fItem, toContainer, px, py, NULL, tItem);
+	moved = cls.i.moveInInventory(inv, fromContainer, fItem, toContainer, px, py, NULL, tItem);
 
 	switch (moved) {
 	case IA_MOVE:

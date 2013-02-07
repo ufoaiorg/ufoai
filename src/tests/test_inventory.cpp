@@ -170,7 +170,7 @@ static void testItemMove (void)
 	containerTo = INVSH_GetInventoryDefinitionByID("backpack");
 	CU_ASSERT_PTR_NOT_NULL(containerTo);
 
-	CU_ASSERT_EQUAL(IA_MOVE, i.MoveInInventory(&inv, container, addedItem, containerTo, NONE, NONE, NULL, NULL));
+	CU_ASSERT_EQUAL(IA_MOVE, i.moveInInventory(&inv, container, addedItem, containerTo, NONE, NONE, NULL, NULL));
 
 	CU_ASSERT(INVSH_ExistsInInventory(&inv, container, &item) == false);
 	CU_ASSERT(INVSH_ExistsInInventory(&inv, containerTo, &item) == true);
@@ -222,7 +222,7 @@ static void testItemReload (void)
 
 	CU_ASSERT(INVSH_ExistsInInventory(&inv, containerFrom, &ammo) == true);
 
-	CU_ASSERT_EQUAL(IA_RELOAD, i.MoveInInventory(&inv, containerFrom, addedItem, container, NONE, NONE, NULL, NULL));
+	CU_ASSERT_EQUAL(IA_RELOAD, i.moveInInventory(&inv, containerFrom, addedItem, container, NONE, NONE, NULL, NULL));
 
 	CU_ASSERT(INVSH_ExistsInInventory(&inv, containerFrom, &ammo) == false);
 
@@ -245,7 +245,7 @@ static void testItemReload (void)
 
 	CU_ASSERT(INVSH_ExistsInInventory(&inv, containerFrom, &ammoFrom) == true);
 
-	CU_ASSERT_EQUAL(IA_RELOAD_SWAP, i.MoveInInventory(&inv, containerFrom, addedItem, container, NONE, NONE, NULL, NULL));
+	CU_ASSERT_EQUAL(IA_RELOAD_SWAP, i.moveInInventory(&inv, containerFrom, addedItem, container, NONE, NONE, NULL, NULL));
 
 	CU_ASSERT(INVSH_ExistsInInventory(&inv, containerFrom, &ammoFrom) == false);
 	CU_ASSERT(INVSH_ExistsInInventory(&inv, containerFrom, &ammo) == true);
@@ -263,7 +263,7 @@ static bool testAddSingle (inventory_t *inv, const objDef_t *od, const invDef_t 
 	item.ammo = NULL;
 	item.ammoLeft = 0;
 
-	return i.TryAddToInventory(inv, &item, container);
+	return i.tryAddToInventory(inv, &item, container);
 }
 
 static void testItemMassActions (void)
