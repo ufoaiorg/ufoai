@@ -1617,7 +1617,7 @@ void RT_DebugPathDisplay (Routing &routing, actorSizeEnum_t actorSize, int x, in
 		RT_CONN_NX_PY(routing, actorSize, x, y, z),		/* 6 */
 		RT_CONN_PX_NY(routing, actorSize, x, y, z) );	/* 7 */
 	Com_Printf("stepup ortho: (PX=%i, NX=%i, PY=%i, NY=%i))\n",
-		RT_STEPUP_PX(routes, actorSize, x, y, z),		/* dir = 0 */
+		RT_STEPUP_PX(routing, actorSize, x, y, z),		/* dir = 0 */
 		RT_STEPUP_NX(routing, actorSize, x, y, z),		/* 1 */
 		RT_STEPUP_PY(routing, actorSize, x, y, z),		/* 2 */
 		RT_STEPUP_NY(routing, actorSize, x, y, z) );		/* 3 */
