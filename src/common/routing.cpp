@@ -69,8 +69,7 @@ class RoutingData
 {
 public:
 	mapTiles_t *mapTiles;
-	Routing &routing;
-	routing_t *routes;			/**< The routing table */
+	Routing &routing;			/**< The routing tables */
 	actorSizeEnum_t actorSize;	/**< The size of the actor, in cells */
 	const char **list;			/**< The local models list */
 
@@ -80,7 +79,6 @@ public:
 RoutingData::RoutingData (mapTiles_t *mapTiles, Routing &r, actorSizeEnum_t actorSize, const char **list) : routing(r)
 {
 	this->mapTiles = mapTiles;
-	this->routes = routing.routes;
 	this->actorSize = actorSize;
 	this->list = list;
 }
