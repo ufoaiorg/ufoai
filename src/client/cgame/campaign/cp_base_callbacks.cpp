@@ -826,11 +826,6 @@ static void BaseSummary_Init (const base_t *base)
 	static char textInfoBuffer[256];
 	int i;
 
-	baseCapacities_t cap;
-	const production_queue_t *queue;
-	const technology_t *tech;
-	int tmp;
-
 	/* wipe away old buffers */
 	textStatsBuffer[0] = textInfoBuffer[0] = 0;
 
@@ -850,12 +845,12 @@ static void BaseSummary_Init (const base_t *base)
 	Q_strcat(textInfoBuffer, _("^BEmployees\n"), sizeof(textInfoBuffer));
 	for (i = 0; i < MAX_EMPL; i++) {
 		const employeeType_t emplType = (employeeType_t)i;
-		tmp = E_CountHired(base, emplType);
-
-		if (tmp == 0)
+		const int cnt = E_CountHired(base, emplType);
+		if (cnt == 0)
 			continue;
 
-		Q_strcat(textInfoBuffer, va("\t%s:\t\t\t\t%i\n", E_GetEmployeeString(emplType, tmp), tmp), sizeof(textInfoBuffer));
+		const char *desc = E_GetEmployeeString(emplType, cnt);
+		Q_strcat(textInfoBuffer, va("\t%s:\t\t\t\t%i\n", desc, cnt), sizeof(textInfoBuffer));
 	}
 
 	Q_strcat(textInfoBuffer, "\n", sizeof(textInfoBuffer));
@@ -881,7 +876,7 @@ static void BaseSummary_Init (const base_t *base)
 		if (!RS_IsResearched_ptr(b->tech))
 			continue;
 
-		cap = B_GetCapacityFromBuildingType(b->buildingType);
+		const baseCapacities_t cap = B_GetCapacityFromBuildingType(b->buildingType);
 		if (cap == MAX_CAP)
 			continue;
 
@@ -907,7 +902,8 @@ static void BaseSummary_Init (const base_t *base)
 	Q_strcat(textStatsBuffer, "\n", sizeof(textStatsBuffer));
 
 	Q_strcat(textStatsBuffer, _("^BProduction\t\t\t\t\t\tQuantity\t\t\t\tPercent\n"), sizeof(textStatsBuffer));
-	queue = PR_GetProductionForBase(base);
+
+	const production_queue_t *queue = PR_GetProductionForBase(base);
 	if (queue->numItems > 0) {
 		for (i = 0; i < queue->numItems; i++) {
 			const production_t *production = &queue->items[i];
@@ -923,9 +919,9 @@ static void BaseSummary_Init (const base_t *base)
 	Q_strcat(textStatsBuffer, "\n", sizeof(textStatsBuffer));
 
 	Q_strcat(textStatsBuffer, _("^BResearch\t\t\t\t\t\tScientists\t\t\t\tPercent\n"), sizeof(textStatsBuffer));
-	tmp = 0;
+	int tmp = 0;
 	for (i = 0; i < ccs.numTechnologies; i++) {
-		tech = RS_GetTechByIDX(i);
+		const technology_t *tech = RS_GetTechByIDX(i);
 		if (tech->base == base && (tech->statusResearch == RS_RUNNING || tech->statusResearch == RS_PAUSED)) {
 			Q_strcat(textStatsBuffer, va(_("%s\t\t\t\t\t\t%d\t\t\t\t%1.2f%%\n"), _(tech->name),
 				tech->scientists, (1 - tech->time / tech->overallTime) * 100), sizeof(textStatsBuffer));
