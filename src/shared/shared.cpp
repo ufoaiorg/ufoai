@@ -477,8 +477,7 @@ void Q_strncpyz (char *dest, const char *src, size_t destsize)
  */
 void Q_strcat (char *dest, const char *src, size_t destsize)
 {
-	size_t dest_length;
-	dest_length = strlen(dest);
+	const size_t dest_length = strlen(dest);
 	if (dest_length >= destsize)
 		Sys_Error("Q_strcat: already overflowed");
 	Q_strncpyz(dest + dest_length, src, destsize - dest_length);
