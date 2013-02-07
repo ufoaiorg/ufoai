@@ -82,10 +82,6 @@ RoutingData::RoutingData (mapTiles_t *mapTiles, Routing &r, actorSizeEnum_t acto
 	this->actorSize = actorSize;
 	this->list = list;
 }
-static inline void RT_ConnSet (RoutingData *rtd, const int x, const int y, const int z, const int dir, const int val)
-{
-	rtd->routing.setConn(rtd->actorSize, x, y, z, dir, val);
-}
 
 static inline void RT_StepupSet (RoutingData *rtd, const int x, const int y, const int z, const int dir, const int val)
 {
@@ -94,7 +90,7 @@ static inline void RT_StepupSet (RoutingData *rtd, const int x, const int y, con
 
 static inline void RT_ConnSetNoGo (RoutingData *rtd, const int x, const int y, const int z, const int dir)
 {
-	RT_ConnSet(rtd, x, y, z, dir, 0);
+	rtd->routing.setConn(rtd->actorSize, x, y, z, dir, 0);
 	rtd->routing.setStepup(rtd->actorSize, x, y, z, dir, PATHFINDING_NO_STEPUP);
 }
 
@@ -635,7 +631,7 @@ static int RT_FillPassageData (RoutingData *rtd, const int dir, const int  x, co
 		oh = openingTop - std::max(openingBase, i * CELL_HEIGHT);
 		/* Only if > 0 */
 		assert (oh >= 0);
-		RT_ConnSet(rtd, x, y, i, dir, oh);
+		rtd->routing.setConn(rtd->actorSize, x, y, i, dir, oh);
 		/* The stepup is 0 for all cells that are not at the floor. */
 		RT_StepupSet(rtd, x, y, i, dir, 0);
 		if (debugTrace) {
