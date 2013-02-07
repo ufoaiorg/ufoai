@@ -1602,7 +1602,6 @@ int RT_DebugSpecial (mapTiles_t *mapTiles, Routing &routing, const int actorSize
  */
 void RT_DebugPathDisplay (Routing &routing, actorSizeEnum_t actorSize, int x, int y, int z)
 {
-	routing_t* routes = routing.routes;
 	Com_Printf("data at cursor XYZ(%i, %i, %i) Floor(%i) Ceiling(%i)\n", x, y, z,
 		routing.getFloor(actorSize, x, y, z),
 		routing.getCeiling(actorSize, x, y, z) );
