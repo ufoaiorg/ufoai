@@ -212,11 +212,11 @@ namespace routing
 					if (x < 0 || y < 0)
 						continue;
 					for (z = minZ; z <= maxZ; z++) {
-						clMap.routes[size].setFloor(x, y, z, tempMap.routes[size].getFloor(x - sX, y - sY, z - sZ));
-						clMap.routes[size].setCeiling(x, y, z, tempMap.routes[size].getCeiling(x - sX, y - sY, z - sZ));
+						clMap.setFloor(size + 1, x, y, z, tempMap.routes[size].getFloor(x - sX, y - sY, z - sZ));
+						clMap.setCeiling(size + 1, x, y, z, tempMap.routes[size].getCeiling(x - sX, y - sY, z - sZ));
 						for (dir = 0; dir < CORE_DIRECTIONS; dir++) {
-							clMap.routes[size].setConn(x, y, z, dir, tempMap.routes[size].getConn(x - sX, y - sY, z - sZ, dir));
-							clMap.routes[size].setStepup(x, y, z, dir, tempMap.routes[size].getStepup(x - sX, y - sY, z - sZ, dir));
+							clMap.setConn(size + 1, x, y, z, dir, tempMap.routes[size].getConn(x - sX, y - sY, z - sZ, dir));
+							clMap.setStepup(size + 1, x, y, z, dir, tempMap.routes[size].getStepup(x - sX, y - sY, z - sZ, dir));
 						}
 					}
 					/* Update the reroute table */

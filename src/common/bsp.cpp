@@ -563,11 +563,11 @@ static void CMod_LoadRouting (MapTile &tile, mapData_t *mapData, const byte *bas
 				if (x < 0 || y < 0)
 					continue;
 				for (z = minZ; z <= maxZ; z++) {
-					mapData->routing.routes[size].setFloor(x, y, z, tempMap[size].getFloor(x - sX, y - sY, z - sZ));
-					mapData->routing.routes[size].setCeiling(x, y, z, tempMap[size].getCeiling(x - sX, y - sY, z - sZ));
+					mapData->routing.setFloor(size + 1, x, y, z, tempMap[size].getFloor(x - sX, y - sY, z - sZ));
+					mapData->routing.setCeiling(size + 1, x, y, z, tempMap[size].getCeiling(x - sX, y - sY, z - sZ));
 					for (dir = 0; dir < CORE_DIRECTIONS; dir++) {
-						mapData->routing.routes[size].setConn(x, y, z, dir, tempMap[size].getConn(x - sX, y - sY, z - sZ, dir));
-						mapData->routing.routes[size].setStepup(x, y, z, dir, tempMap[size].getStepup(x - sX, y - sY, z - sZ, dir));
+						mapData->routing.setConn(size + 1, x, y, z, dir, tempMap[size].getConn(x - sX, y - sY, z - sZ, dir));
+						mapData->routing.setStepup(size + 1, x, y, z, dir, tempMap[size].getStepup(x - sX, y - sY, z - sZ, dir));
 					}
 				}
 				/* Update the reroute table */
