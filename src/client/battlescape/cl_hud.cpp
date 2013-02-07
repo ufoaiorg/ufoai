@@ -136,11 +136,11 @@ static void HUD_UpdateAllActors (void)
 			assert(chr);
 
 			invList = RIGHT(le);
-			if ((!invList || !invList->item.item || !invList->item.item->holdTwoHanded) && LEFT(le))
+			if ((!invList || !invList->item.def() || !invList->item.def()->holdTwoHanded) && LEFT(le))
 				invList = LEFT(le);
 
 			tooltip = va(_("%s\nHP: %i/%i TU: %i\n%s"),
-				chr->name, le->HP, le->maxHP, le->TU, (invList && invList->item.item) ? _(invList->item.item->name) : "");
+				chr->name, le->HP, le->maxHP, le->TU, (invList && invList->item.def()) ? _(invList->item.def()->name) : "");
 
 			UI_ExecuteConfunc("updateactorvalues %i \"%s\" \"%i\" \"%i\" \"%i\" \"%i\" \"%i\" \"%i\" \"%i\" \"%s\"",
 					i, le->model2->name, le->HP, le->maxHP, le->TU, le->maxTU, le->morale, le->maxMorale, le->STUN, tooltip);
@@ -471,14 +471,14 @@ static void HUD_DisplayActions (const char* callback, const le_t* actor, bool ri
 		invList_t* weapon = RIGHT(actor);
 
 		/* Reloeadable item in hand. */
-		if (weapon && weapon->item.item && weapon->item.item->reload) {
+		if (weapon && weapon->item.def() && weapon->item.def()->reload) {
 			int tus;
 			containerIndex_t container = csi.idRight;
 			bool noAmmo;
 			bool noTU;
 			const char *actionId = "reload_handr";
 
-			tus = HUD_CalcReloadTime(actor, weapon->item.item, container);
+			tus = HUD_CalcReloadTime(actor, weapon->item.def(), container);
 			noAmmo = tus == -1;
 			noTU = actor->TU < tus;
 			UI_ExecuteConfunc("%s reload %s %c %i %i %i", callback, actionId, 'r', tus, !noAmmo, !noTU);
@@ -508,10 +508,10 @@ static void HUD_DisplayActions (const char* callback, const le_t* actor, bool ri
 		invList_t* weapon = LEFT(actor);
 
 		/* Reloeadable item in hand. */
-		if (weapon && weapon->item.item && weapon->item.item->reload) {
+		if (weapon && weapon->item.def() && weapon->item.def()->reload) {
 			containerIndex_t container = csi.idLeft;
 			const char *actionId = "reload_handl";
-			const int tus = HUD_CalcReloadTime(actor, weapon->item.item, container);
+			const int tus = HUD_CalcReloadTime(actor, weapon->item.def(), container);
 			const bool noAmmo = tus == -1;
 			const bool noTU = actor->TU < tus;
 			UI_ExecuteConfunc("%s reload %s %c %i %i %i", callback, actionId, 'l', tus, !noAmmo, !noTU);
@@ -671,7 +671,7 @@ static int HUD_GetMinimumTUsForUsage (const invList_t *invList)
 	int time = 100;
 	int i;
 
-	assert(invList->item.item);
+	assert(invList->item.def());
 
 	fdArray = FIRESH_FiredefForWeapon(&invList->item);
 	if (fdArray == NULL)
@@ -709,7 +709,7 @@ static int HUD_WeaponCanBeReloaded (const le_t *le, containerIndex_t containerID
 		return -1;
 	}
 
-	weapon = invList->item.item;
+	weapon = invList->item.def();
 	assert(weapon);
 
 	/* This weapon cannot be reloaded. */
@@ -814,7 +814,7 @@ static void HUD_RefreshButtons (const le_t *le)
 	headgear = HEADGEAR(le);
 
 	/* check for two-handed weapon - if not, also define weaponl */
-	if (!weaponr || !weaponr->item.item->holdTwoHanded)
+	if (!weaponr || !weaponr->item.def()->holdTwoHanded)
 		weaponl = LEFT(le);
 	else
 		weaponl = NULL;
@@ -1086,7 +1086,7 @@ static int HUD_UpdateActorFireMode (le_t *actor)
 	if (selWeapon) {
 		static char infoText[UI_MAX_SMALLTEXTLEN];
 
-		if (!selWeapon->item.item) {
+		if (!selWeapon->item.def()) {
 			/* No valid weapon in the hand. */
 			CL_ActorSetFireDef(actor, NULL);
 		} else {
@@ -1095,8 +1095,8 @@ static int HUD_UpdateActorFireMode (le_t *actor)
 				CL_ActorSetFireDef(actor, NULL);
 				/* This item does not use ammo, check for existing firedefs in this item. */
 				/* This is supposed to be a weapon or other usable item. */
-				if (selWeapon->item.item->numWeapons > 0) {
-					if (selWeapon->item.item->weapon || selWeapon->item.item->weapons[0] == selWeapon->item.item) {
+				if (selWeapon->item.def()->numWeapons > 0) {
+					if (selWeapon->item.def()->weapon || selWeapon->item.def()->weapons[0] == selWeapon->item.def()) {
 						const fireDef_t *fdArray = FIRESH_FiredefForWeapon(&selWeapon->item);
 						if (fdArray != NULL) {
 							/* Get firedef from the weapon (or other usable item) entry instead. */

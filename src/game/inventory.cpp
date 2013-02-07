@@ -291,21 +291,21 @@ inventory_action_t InventoryInterface::moveInInventory (inventory_t* const inv, 
 
 	/* If weapon is twohanded and is moved from hand to hand do nothing. */
 	/* Twohanded weapon are only in CSI->idRight. */
-	if (fItem->item.item->fireTwoHanded && INV_IsLeftDef(to) && INV_IsRightDef(from)) {
+	if (fItem->item.def()->fireTwoHanded && INV_IsLeftDef(to) && INV_IsRightDef(from)) {
 		return IA_NONE;
 	}
 
 	/* If non-armour moved to an armour slot then abort.
 	 * Same for non extension items when moved to an extension slot. */
-	if ((to->armour && !INV_IsArmour(fItem->item.item))
-	 || (to->extension && !fItem->item.item->extension)
-	 || (to->headgear && !fItem->item.item->headgear)) {
+	if ((to->armour && !INV_IsArmour(fItem->item.def()))
+	 || (to->extension && !fItem->item.def()->extension)
+	 || (to->headgear && !fItem->item.def()->headgear)) {
 		return IA_NONE;
 	}
 
 	/* Check if the target is a blocked inv-armour and source!=dest. */
 	if (to->single)
-		checkedTo = INVSH_CheckToInventory(inv, fItem->item.item, to, 0, 0, fItem);
+		checkedTo = INVSH_CheckToInventory(inv, fItem->item.def(), to, 0, 0, fItem);
 	else {
 		if (tx == NONE || ty == NONE)
 			INVSH_FindSpace(inv, &fItem->item, to, &tx, &ty, fItem);
@@ -313,7 +313,7 @@ inventory_action_t InventoryInterface::moveInInventory (inventory_t* const inv, 
 		if (tx == NONE || ty == NONE)
 			return IA_NONE;
 
-		checkedTo = INVSH_CheckToInventory(inv, fItem->item.item, to, tx, ty, fItem);
+		checkedTo = INVSH_CheckToInventory(inv, fItem->item.def(), to, tx, ty, fItem);
 	}
 
 	if (to->armour && from != to && !checkedTo) {
@@ -327,7 +327,7 @@ inventory_action_t InventoryInterface::moveInInventory (inventory_t* const inv, 
 		/* Check if destination/blocking item is the same as source/from item.
 		 * In that case the move is not needed -> abort. */
 		icTo = INVSH_SearchInInventory(inv, to, tx, ty);
-		if (fItem->item.item == icTo->item.item)
+		if (fItem->item.def() == icTo->item.def())
 			return IA_NONE;
 
 		/* Actually remove the ammo from the 'from' container. */
@@ -350,18 +350,18 @@ inventory_action_t InventoryInterface::moveInInventory (inventory_t* const inv, 
 		 * scroll because checkedTo is always true here. */
 		ic = INVSH_SearchInInventory(inv, to, tx, ty);
 
-		if (ic && !INV_IsEquipDef(to) && INVSH_LoadableInWeapon(fItem->item.item, ic->item.item)) {
+		if (ic && !INV_IsEquipDef(to) && INVSH_LoadableInWeapon(fItem->item.def(), ic->item.def())) {
 			/* A target-item was found and the dragged item (implicitly ammo)
 			 * can be loaded in it (implicitly weapon). */
-			if (ic->item.ammoLeft >= ic->item.item->ammo && ic->item.ammo == fItem->item.item) {
+			if (ic->item.ammoLeft >= ic->item.def()->ammo && ic->item.ammo == fItem->item.def()) {
 				/* Weapon already fully loaded with the same ammunition -> abort */
 				return IA_NORELOAD;
 			}
-			time += ic->item.item->reload;
+			time += ic->item.def()->reload;
 			if (!TU || *TU >= time) {
 				if (TU)
 					*TU -= time;
-				if (ic->item.ammoLeft >= ic->item.item->ammo) {
+				if (ic->item.ammoLeft >= ic->item.def()->ammo) {
 					/* exchange ammo */
 					const item_t item = {NONE_AMMO, NULL, ic->item.ammo, 0, 0};
 					/* Put current ammo in place of the new ammo unless floor - there can be more than 1 item */
@@ -387,7 +387,7 @@ inventory_action_t InventoryInterface::moveInInventory (inventory_t* const inv, 
 
 					ic->item.ammo = this->cacheItem.item;
 					/* loose ammo of type ic->item.m saved on server side */
-					ic->item.ammoLeft = ic->item.item->ammo;
+					ic->item.ammoLeft = ic->item.def()->ammo;
 					if (icp)
 						*icp = ic;
 					return IA_RELOAD;
@@ -414,7 +414,7 @@ inventory_action_t InventoryInterface::moveInInventory (inventory_t* const inv, 
 	}
 
 	/* twohanded exception - only CSI->idRight is allowed for fireTwoHanded weapons */
-	if (fItem->item.item->fireTwoHanded && INV_IsLeftDef(to))
+	if (fItem->item.def()->fireTwoHanded && INV_IsLeftDef(to))
 		to = &this->csi->ids[this->csi->idRight];
 
 	switch (checkedTo) {
@@ -591,7 +591,7 @@ int InventoryInterface::PackAmmoAndWeapon (character_t* const chr, const objDef_
 	item.item = weapon;
 
 	/* are we going to allow trying the left hand */
-	allowLeft = !(inv->c[csi->idRight] && inv->c[csi->idRight]->item.item->fireTwoHanded);
+	allowLeft = !(inv->c[csi->idRight] && inv->c[csi->idRight]->item.def()->fireTwoHanded);
 
 	if (weapon->oneshot) {
 		/* The weapon provides its own ammo (i.e. it is charged or loaded in the base.) */
@@ -600,7 +600,7 @@ int InventoryInterface::PackAmmoAndWeapon (character_t* const chr, const objDef_
 		Com_DPrintf(DEBUG_SHARED, "PackAmmoAndWeapon: oneshot weapon '%s' in equipment '%s' (%s).\n",
 				weapon->id, ed->id, invName);
 	} else if (!weapon->reload) {
-		item.ammo = item.item; /* no ammo needed, so fire definitions are in t */
+		item.ammo = item.def(); /* no ammo needed, so fire definitions are in t */
 	} else {
 		/* find some suitable ammo for the weapon (we will have at least one if there are ammos for this
 		 * weapon in equipment definition) */
@@ -710,7 +710,7 @@ void InventoryInterface::EquipActorMelee (inventory_t* const inv, const teamDef_
 
 	/* Prepare item. This kind of item has no ammo, fire definitions are in item.t. */
 	item.item = obj;
-	item.ammo = item.item;
+	item.ammo = item.def();
 	item.ammoLeft = NONE_AMMO;
 	/* Every melee actor weapon definition is firetwohanded, add to right hand. */
 	if (!obj->fireTwoHanded)

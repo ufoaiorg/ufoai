@@ -931,7 +931,7 @@ int CL_ActorGetContainerForReload (invList_t **invList, const inventory_t *inv, 
 			 * to retrieve the ammo from them than the one
 			 * we've already found. */
 			for (ic = inv->c[container]; ic; ic = ic->next) {
-				const objDef_t *od = ic->item.item;
+				const objDef_t *od = ic->item.def();
 				if (INVSH_LoadableInWeapon(od, weapon) && GAME_ItemIsUseable(od)) {
 					tu = INVDEF(container)->out;
 					bestContainer = container;
@@ -964,11 +964,11 @@ void CL_ActorReload (le_t *le, containerIndex_t containerID)
 	inv = &le->inv;
 
 	if (inv->c[containerID]) {
-		weapon = inv->c[containerID]->item.item;
-	} else if (containerID == csi.idLeft && inv->c[csi.idRight]->item.item->holdTwoHanded) {
+		weapon = inv->c[containerID]->item.def();
+	} else if (containerID == csi.idLeft && inv->c[csi.idRight]->item.def()->holdTwoHanded) {
 		/* Check for two-handed weapon */
 		containerID = csi.idRight;
-		weapon = inv->c[containerID]->item.item;
+		weapon = inv->c[containerID]->item.def();
 	} else {
 		/* no weapon in the reloadable containers found */
 		return;
