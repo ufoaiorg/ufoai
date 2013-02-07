@@ -51,7 +51,7 @@ GLOBAL TYPES
 MACROS
 ==============================================================*/
 /**
- * @brief Some macros to access routing_t values as described above.
+ * @brief Some macros to access routing table values as described above.
  * @note P/N = positive/negative; X/Y =direction
  */
 /* route - Used by Grid_* only  */
