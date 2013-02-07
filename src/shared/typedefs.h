@@ -229,11 +229,6 @@ inline byte RT_getStepup (const routing_t *routes, const int actorSize, const in
 	return routes[actorSize - 1].getStepup(x, y, z, dir);
 }
 
-inline byte RT_getConn (const routing_t *routes, const int actorSize, const int x, const int y, const int z, const int dir)
-{
-	return routes[actorSize - 1].getConn(x, y, z, dir);
-}
-
 /** @brief The home of the routing tables
  *
  * The purpose of this class is
@@ -284,6 +279,10 @@ public:
 	inline void setConn (const int actorSize, const int x, const int y, const int z, const int dir, const int val)
 	{
 		routes[actorSize - 1].setConn(x, y, z, dir, val);
+	}
+	inline byte getConn (const int actorSize, const int x, const int y, const int z, const int dir) const
+	{
+		return routes[actorSize - 1].getConn(x, y, z, dir);
 	}
 	inline byte getConn (const actorSizeEnum_t actorSize, const pos3_t pos, const int dir) const
 	{

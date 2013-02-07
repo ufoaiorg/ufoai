@@ -641,7 +641,7 @@ static int RT_FillPassageData (RoutingData *rtd, const int dir, const int  x, co
 		/* The stepup is 0 for all cells that are not at the floor. */
 		RT_StepupSet(rtd, x, y, i, dir, 0);
 		if (debugTrace) {
-			Com_Printf("RT_getConn for (%i, %i, %i) as:%i dir:%i = %i\n", x, y, i, rtd->actorSize, dir, RT_getConn(rtd->routes, rtd->actorSize, x, y, i, dir));
+			Com_Printf("getConn for (%i, %i, %i) as:%i dir:%i = %i\n", x, y, i, rtd->actorSize, dir, rtd->routing.getConn(rtd->actorSize, x, y, i, dir));
 		}
 	}
 
