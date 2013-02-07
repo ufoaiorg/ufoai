@@ -1,41 +1,6 @@
 // ==================
 // HUD INTERFACE
 // ==================
-// Components for the soldier decoration panel
-
-component cmp_bar_teambox_deco extends image
-{
-	src		"minihud/bar_teambox_deco"
-	ghost	true
-	size	"64 128"
-}
-component cmp_bar_teamsep_deco extends image
-{
-	src		"minihud/bar_teamsep_deco"
-	ghost	true
-	size	"16 128"
-}
-
-// Components for the soldier selection panel
-
-component cmp_bar_teambox_disabled extends image
-{
-	src		"minihud/bar_teambox_disabled"
-	size		"87 98"
-	texh		"87 98"
-	onWheelUp	{ cmd "actor_next;"}
-	onWheelDown	{ cmd "actor_prev;"}
-	tooltip		"_Wheel:Select Next/Prev"
-}
-
-component cmp_bar_teambox extends image
-{
-	src		"minihud/bar_teambox_full"
-	size		"87 98"
-	texh		"87 98"
-	onWheelUp	{ cmd "actor_next;"}
-	onWheelDown	{ cmd "actor_prev;"}
-}
 
 // Components for the soldier number strings
 
@@ -94,7 +59,6 @@ component cmp_bar_time extends bar
 component cmp_str_numspotted extends string
 {
 	string		*cvar:mn_numaliensspotted
-	tooltip		"_LMB:Next visible enemy\nRMB:Previous visible enemy\nWheel:Cycle visible enemies"
 	onClick		{ cmd "nextalien;" }
 	onRClick	{ cmd "prevalien;" }
 	onWheelUp	{ cmd "nextalien;" }

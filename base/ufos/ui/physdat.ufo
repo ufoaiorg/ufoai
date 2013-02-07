@@ -253,9 +253,8 @@ window physdata
 	string	kills_lbl { pos "37 465" size "180 20" string *cvar:mn_kills_label_string }
 	string	kills_val { pos "240 465" size "165 20" string *cvar:mn_chrkillalien contentalign ALIGN_UR }
 
-	// drag controls extended over the whole window, LMB:drag, RMB:close
+	// drag controls extended over the whole window
 	controls drag {
-		tooltip	"_LMB:Drag/RMB:Close\nWheel:Next/Previous Soldier"
 		pos		"10 10"
 		size	"492 492"
 		OnRClick { cmd "ui_pop;" }
@@ -385,11 +384,6 @@ window physdata
 		} else {
 			if ( exists *cvar:mn_chrmis ) { delete *cvar:mn_chrmis }
 			if ( exists *cvar:mn_chrkillalien ) { delete *cvar:mn_chrkillalien }
-		}
-		// the ability to hide the deco is needed for the MiniHUD only
-		if ( *cvar:mn_minihud_enabled == 1 ) {
-			if ( *cvar:mn_minihud_deco == 0 ) { *node:root.bar_physdata_deco@invis = true }
-			else { *node:root.bar_physdata_deco@invis = false }
 		}
 		// the inventory window will automatically be closed if open
 		if ( *cvar:inventory_window_open == 1 ) { cmd "ui_close hudinv;" }

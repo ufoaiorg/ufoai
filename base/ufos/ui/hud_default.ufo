@@ -822,23 +822,6 @@ window hud_default extends hud
 			onClick	{ cmd "hud_togglereaction;" }
 		}
 
-		image minihud_bt_help
-		{
-			tooltip		"_Keyinfo/General Help window"
-			src			"minihud/bt_help"
-			mousefx		true
-			pos			"46 74"
-			size		"16 16"
-			onClick
-			{
-				cmd "ui_push popup_keyinfo;"
-			}
-			onRClick
-			{
-				if ( exists *cvar:help_window_open ) { cmd "ui_close popup_keyinfo;" }
-			}
-		}
-
 		string tus
 		{
 			string	*cvar:mn_tu
@@ -855,7 +838,7 @@ window hud_default extends hud
 			contentalign	ALIGN_UR
 		}
 
-		//todo: make this into a "zone" node (which currently doesn't seem to support tooltips) See also menu_althud.
+		//todo: make this into a "zone" node (which currently doesn't seem to support tooltips).
 		string tu_tooltips
 		{
 			string	" "

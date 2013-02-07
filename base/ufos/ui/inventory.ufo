@@ -208,9 +208,8 @@ window inventory
 		}
 	}
 
-	// drag controls, extended over the whole window, LMB:drag, RMB:close
+	// drag controls, extended over the whole window
 	controls drag {
-		tooltip	"_LMB:Drag/RMB:Close\nWheel:Next/Previous Soldier"
 		pos		"10 10"
 		size	"492 492"
 		OnRClick { cmd "ui_pop;" }
@@ -271,11 +270,6 @@ window inventory
 		*cvar:inventory_window_open = 1
 		// make sure mn_chrrankprefix is cleared when we are not in campaign anymore
 		if ( *cvar:mn_base_count > 0 ) { } else { *cvar:mn_chrrankprefix = "" }
-		// the ability to hide the deco is needed for the MiniHUD only
-		if ( *cvar:mn_minihud_enabled == 1 ) {
-			if ( *cvar:mn_minihud_deco == 0 ) { *node:root.bar_inventory_deco@invis = true }
-			else { *node:root.bar_inventory_deco@invis = false }
-		}
 		// the physdat window will automatically be closed if open
 		if ( *cvar:physdat_window_open == 1 ) { cmd "ui_close hudphysdat;" }
 		cmd "ui_addcvarlistener cl_selected hud_updateactorload;"
