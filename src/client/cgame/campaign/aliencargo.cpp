@@ -66,12 +66,9 @@ bool AlienCargo::add(const teamDef_t *team, int alive, int dead)
 	if (alive < 0 || dead < 0)
 		return false;
 
-	alienCargo_t cargoItem;
-	cargoItem.teamDef = team;
-	cargoItem.alive = alive;
-	cargoItem.dead = dead;
+	const alienCargo_t cargoItem = { team, alive, dead };
 
-	if (cgi->LIST_Add(&this->cargo, (void*)&cargoItem, sizeof(cargoItem))) {
+	if (cgi->LIST_Add(&this->cargo, (const void*)&cargoItem, sizeof(cargoItem))) {
 		this->sumAlive += alive;
 		this->sumDead += dead;
 		return true;
