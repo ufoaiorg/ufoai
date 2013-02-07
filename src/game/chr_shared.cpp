@@ -148,7 +148,7 @@ const char *CHRSH_CharGetBody (const character_t *const chr)
 
 	/* models of UGVs don't change - because they are already armoured */
 	if (INVSH_HasArmour(&chr->inv) && !CHRSH_IsTeamDefRobot(chr->teamDef)) {
-		const objDef_t *od = INVSH_HasArmour(&chr->inv)->item.item;
+		const objDef_t *od = INVSH_HasArmour(&chr->inv)->item.def();
 		const char *id = od->armourPath;
 		if (!INV_IsArmour(od))
 			Sys_Error("CHRSH_CharGetBody: Item is no armour");
@@ -170,7 +170,7 @@ const char *CHRSH_CharGetHead (const character_t *const chr)
 
 	/* models of UGVs don't change - because they are already armoured */
 	if (INVSH_HasArmour(&chr->inv) && !chr->teamDef->robot) {
-		const objDef_t *od = INVSH_HasArmour(&chr->inv)->item.item;
+		const objDef_t *od = INVSH_HasArmour(&chr->inv)->item.def();
 		const char *id = od->armourPath;
 		if (!INV_IsArmour(od))
 			Sys_Error("CHRSH_CharGetBody: Item is no armour");

@@ -268,11 +268,11 @@ static bool AI_HideNeeded (const edict_t *ent)
 			if (G_IsVisibleForTeam(from, ent->team)) {
 				const invList_t *invlist = RIGHT(from);
 				const fireDef_t *fd = NULL;
-				if (invlist && invlist->item.item) {
+				if (invlist && invlist->item.def()) {
 					fd = FIRESH_FiredefForWeapon(&invlist->item);
 				} else {
 					invlist = LEFT(from);
-					if (invlist && invlist->item.item)
+					if (invlist && invlist->item.def())
 						fd = FIRESH_FiredefForWeapon(&invlist->item);
 				}
 				/* search the (visible) inventory (by just checking the weapon in the hands of the enemy */
@@ -579,7 +579,7 @@ static void AI_SearchBestTarget (aiAction_t *aia, const edict_t *ent, edict_t *c
 
 			/* take into account armour */
 			if (CONTAINER(check, gi.csi->idArmour)) {
-				const objDef_t *ad = CONTAINER(check, gi.csi->idArmour)->item.item;
+				const objDef_t *ad = CONTAINER(check, gi.csi->idArmour)->item.def();
 				dmg *= 1.0 - ad->protection[fd->dmgweight] * 0.01;
 			}
 
@@ -1178,9 +1178,9 @@ void AI_ActorThink (Player *player, edict_t *ent)
 
 	/* if a weapon can be reloaded we attempt to do so if TUs permit, otherwise drop it */
 	if (!G_IsPanicked(ent)) {
-		if (RIGHT(ent) && RIGHT(ent)->item.item->reload && RIGHT(ent)->item.ammoLeft == 0)
+		if (RIGHT(ent) && RIGHT(ent)->item.def()->reload && RIGHT(ent)->item.ammoLeft == 0)
 			AI_TryToReloadWeapon(ent, gi.csi->idRight);
-		if (LEFT(ent) && LEFT(ent)->item.item->reload && LEFT(ent)->item.ammoLeft == 0)
+		if (LEFT(ent) && LEFT(ent)->item.def()->reload && LEFT(ent)->item.ammoLeft == 0)
 			AI_TryToReloadWeapon(ent, gi.csi->idLeft);
 	}
 

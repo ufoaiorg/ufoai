@@ -545,11 +545,11 @@ bool G_ClientCanReload (edict_t *ent, containerIndex_t containerID)
 	const objDef_t *weapon;
 
 	if (CONTAINER(ent, containerID)) {
-		weapon = CONTAINER(ent, containerID)->item.item;
-	} else if (containerID == gi.csi->idLeft && RIGHT(ent)->item.item->holdTwoHanded) {
+		weapon = CONTAINER(ent, containerID)->item.def();
+	} else if (containerID == gi.csi->idLeft && RIGHT(ent)->item.def()->holdTwoHanded) {
 		/* Check for two-handed weapon */
 		containerID = gi.csi->idRight;
-		weapon = CONTAINER(ent, containerID)->item.item;
+		weapon = CONTAINER(ent, containerID)->item.def();
 	} else
 		return false;
 
@@ -558,7 +558,7 @@ bool G_ClientCanReload (edict_t *ent, containerIndex_t containerID)
 	/* also try the temp containers */
 	for (container = 0; container < gi.csi->numIDs; container++)
 		for (ic = CONTAINER(ent, container); ic; ic = ic->next)
-			if (INVSH_LoadableInWeapon(ic->item.item, weapon))
+			if (INVSH_LoadableInWeapon(ic->item.def(), weapon))
 				return true;
 	return false;
 }
@@ -596,8 +596,8 @@ void G_ClientGetWeaponFromInventory (edict_t *ent)
 			 * to retrieve the ammo from them than the one
 			 * we've already found. */
 			for (ic = CONTAINER(ent, container); ic; ic = ic->next) {
-				assert(ic->item.item);
-				if (ic->item.item->weapon && (ic->item.ammoLeft > 0 || !ic->item.item->reload)) {
+				assert(ic->item.def());
+				if (ic->item.def()->weapon && (ic->item.ammoLeft > 0 || !ic->item.def()->reload)) {
 					icFinal = ic;
 					bestContainer = INVDEF(container);
 					tu = bestContainer->out;
@@ -1128,13 +1128,13 @@ static void G_ClientReadInventory (edict_t *ent)
 		int x, y;
 		G_ReadItem(&item, &container, &x, &y);
 		if (container->temp)
-			gi.Error("G_ClientReadInventory failed, tried to add '%s' to a temp container %i", item.item->id, container->id);
+			gi.Error("G_ClientReadInventory failed, tried to add '%s' to a temp container %i", item.def()->id, container->id);
 		/* ignore the overload for now */
 		if (!INVSH_CheckAddingItemToInventory(&ent->chr.inv, gi.csi->idEquip, container->id, item, ent->chr.score.skills[ABILITY_POWER]))
-			Com_Printf("G_ClientReadInventory: Item %s exceeds ent %i weight capacity\n", item.item->id, ent->number);
+			Com_Printf("G_ClientReadInventory: Item %s exceeds ent %i weight capacity\n", item.def()->id, ent->number);
 		if (!level.noEquipment && game.i.addToInventory(&ent->chr.inv, &item, container, x, y, 1) == NULL)
 			gi.Error("G_ClientReadInventory failed, could not add item '%s' to container %i (x:%i,y:%i)",
-					item.item->id, container->id, x, y);
+					item.def()->id, container->id, x, y);
 	}
 }
 

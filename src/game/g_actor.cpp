@@ -160,7 +160,7 @@ int G_ActorGetTUForReactionFire (const edict_t *ent)
 
 	invlistWeapon = ACTOR_GET_INV(ent, fm->getHand());
 	assert(invlistWeapon);
-	assert(invlistWeapon->item.item);
+	assert(invlistWeapon->item.def());
 
 	fd = FIRESH_FiredefForWeapon(&invlistWeapon->item);
 	assert(fd);
@@ -549,7 +549,7 @@ bool G_ActorInvMove (edict_t *ent, const invDef_t *from, invList_t *fItem, const
 	Player &player = G_PLAYER_FROM_ENT(ent);
 
 	assert(fItem);
-	assert(fItem->item.item);
+	assert(fItem->item.def());
 
 	/* Store the location/item of 'from' BEFORE actually moving items with I_MoveInInventory. */
 	fItemBackup = *fItem;
@@ -761,11 +761,11 @@ void G_ActorReload (edict_t* ent, const invDef_t *invDef)
 	bestContainer = NULL;
 
 	if (CONTAINER(ent, invDef->id)) {
-		weapon = CONTAINER(ent, invDef->id)->item.item;
-	} else if (INV_IsLeftDef(invDef) && RIGHT(ent)->item.item->holdTwoHanded) {
+		weapon = CONTAINER(ent, invDef->id)->item.def();
+	} else if (INV_IsLeftDef(invDef) && RIGHT(ent)->item.def()->holdTwoHanded) {
 		/* Check for two-handed weapon */
 		invDef = INVDEF(gi.csi->idRight);
-		weapon = CONTAINER(ent, invDef->id)->item.item;
+		weapon = CONTAINER(ent, invDef->id)->item.def();
 	} else
 		return;
 
@@ -783,7 +783,7 @@ void G_ActorReload (edict_t* ent, const invDef_t *invDef)
 			 * to retrieve the ammo from them than the one
 			 * we've already found. */
 			for (ic = CONTAINER(ent, containerID); ic; ic = ic->next)
-				if (INVSH_LoadableInWeapon(ic->item.item, weapon)) {
+				if (INVSH_LoadableInWeapon(ic->item.def(), weapon)) {
 					icFinal = ic;
 					bestContainer = INVDEF(containerID);
 					tu = bestContainer->out;
