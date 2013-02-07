@@ -224,11 +224,6 @@ typedef struct routing_s {
 	}
 } routing_t;
 
-inline byte RT_getStepup (const routing_t *routes, const int actorSize, const int x, const int y, const int z, const int dir)
-{
-	return routes[actorSize - 1].getStepup(x, y, z, dir);
-}
-
 /** @brief The home of the routing tables
  *
  * The purpose of this class is
@@ -293,6 +288,11 @@ public:
 	{
 		routes[actorSize - 1].setStepup(x, y, z, dir, val);
 	}
+	inline byte getStepup (const int actorSize, const int x, const int y, const int z, const int dir) const
+	{
+		return routes[actorSize - 1].getStepup(x, y, z, dir);
+	}
+
 };
 
 typedef struct mapData_s {

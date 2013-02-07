@@ -72,15 +72,15 @@ MACROS
 #define RT_CONN_NX_PY(r, actorSize, x, y, z)	(r.getConn(actorSize, x, y, z, 6))
 #define RT_CONN_NX_NY(r, actorSize, x, y, z)	(r.getConn(actorSize, x, y, z, 5))
 
-#define RT_STEPUP_PX(r, actorSize, x, y, z)		(RT_getStepup(r.routes, actorSize, x, y, z, 0))
-#define RT_STEPUP_NX(r, actorSize, x, y, z)		(RT_getStepup(r.routes, actorSize, x, y, z, 1))
-#define RT_STEPUP_PY(r, actorSize, x, y, z)		(RT_getStepup(r.routes, actorSize, x, y, z, 2))
-#define RT_STEPUP_NY(r, actorSize, x, y, z)		(RT_getStepup(r.routes, actorSize, x, y, z, 3))
+#define RT_STEPUP_PX(r, actorSize, x, y, z)		(r.getStepup(actorSize, x, y, z, 0))
+#define RT_STEPUP_NX(r, actorSize, x, y, z)		(r.getStepup(actorSize, x, y, z, 1))
+#define RT_STEPUP_PY(r, actorSize, x, y, z)		(r.getStepup(actorSize, x, y, z, 2))
+#define RT_STEPUP_NY(r, actorSize, x, y, z)		(r.getStepup(actorSize, x, y, z, 3))
 
-#define RT_STEPUP_PX_PY(r, actorSize, x, y, z)	(RT_getStepup(r.routes, actorSize, x, y, z, 4))
-#define RT_STEPUP_PX_NY(r, actorSize, x, y, z)	(RT_getStepup(r.routes, actorSize, x, y, z, 7))
-#define RT_STEPUP_NX_PY(r, actorSize, x, y, z)	(RT_getStepup(r.routes, actorSize, x, y, z, 6))
-#define RT_STEPUP_NX_NY(r, actorSize, x, y, z)	(RT_getStepup(r.routes, actorSize, x, y, z, 5))
+#define RT_STEPUP_PX_PY(r, actorSize, x, y, z)	(r.getStepup(actorSize, x, y, z, 4))
+#define RT_STEPUP_PX_NY(r, actorSize, x, y, z)	(r.getStepup(actorSize, x, y, z, 7))
+#define RT_STEPUP_NX_PY(r, actorSize, x, y, z)	(r.getStepup(actorSize, x, y, z, 6))
+#define RT_STEPUP_NX_NY(r, actorSize, x, y, z)	(r.getStepup(actorSize, x, y, z, 5))
 
 
 /** @brief  These macros are meant to correctly convert from model units to QUANT units and back. */
