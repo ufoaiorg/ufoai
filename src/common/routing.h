@@ -82,8 +82,6 @@ MACROS
 #define RT_STEPUP_NX_PY(r, actorSize, x, y, z)	(RT_getStepup(r.routes, actorSize, x, y, z, 6))
 #define RT_STEPUP_NX_NY(r, actorSize, x, y, z)	(RT_getStepup(r.routes, actorSize, x, y, z, 5))
 
-#define RT_FILLED(r, actorSize, x, y, z)			(r.getCeiling(actorSize, x, y, z) - r.getFloor(actorSize, x, y, z) < PATHFINDING_MIN_OPENING)
-
 
 /** @brief  These macros are meant to correctly convert from model units to QUANT units and back. */
 /* Surfaces used as floors are rounded up. */
