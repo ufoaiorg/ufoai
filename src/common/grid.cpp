@@ -289,7 +289,7 @@ bool Step::checkWalkingDirections (const pathing_t *path)
 		 && passageHeight >= actorCrouchedHeight) {			/* and passage is tall enough for crouching ? */
 															/* we should try autocrouching */
 			int dvFlagsOld = getDVflags(RT_AREA_POS(path, fromPos, crouchingState));
-			int toHeight = RT_getCeiling(routes, actorSize, toPos) - RT_getFloor(routes, actorSize, toPos);
+			int toHeight = routing.getCeiling(actorSize, toPos) - routing.getFloor(actorSize, toPos);
 			int tuCr = Grid_GetTUsForDirection(dir, 1);		/* 1 means crouched */
 			int newTUs = 0;
 
