@@ -58,7 +58,7 @@ bool AlienCargo::add(const teamDef_t *team, int alive, int dead)
 		this->sumDead += dead;
 
 		if (item->alive == 0 && item->dead == 0)
-			LIST_Remove(&this->cargo, (void*)item);
+			cgi->LIST_Remove(&this->cargo, (void*)item);
 
 		return true;
 	}
@@ -71,7 +71,7 @@ bool AlienCargo::add(const teamDef_t *team, int alive, int dead)
 	cargoItem.alive = alive;
 	cargoItem.dead = dead;
 
-	if (LIST_Add(&this->cargo, (void*)&cargoItem, sizeof(cargoItem))) {
+	if (cgi->LIST_Add(&this->cargo, (void*)&cargoItem, sizeof(cargoItem))) {
 		this->sumAlive += alive;
 		this->sumDead += dead;
 		return true;
@@ -155,8 +155,8 @@ linkedList_t *AlienCargo::list(void) const
 	linkedList_t *listing = 0;
 
 	LIST_Foreach(this->cargo, alienCargo_t, item) {
-		if (!LIST_Add(&listing, (void*)item, sizeof(*item))) {
-			LIST_Delete(&listing);
+		if (!cgi->LIST_Add(&listing, (void*)item, sizeof(*item))) {
+			cgi->LIST_Delete(&listing);
 			return 0;
 		}
 	}
@@ -219,12 +219,12 @@ AlienCargo::AlienCargo(AlienCargo& alienCargo) : cargo (0), sumAlive (0), sumDea
 	linkedList_t *list = alienCargo.list();
 
 	LIST_Foreach(list, alienCargo_t, cargoItem) {
-		if (LIST_Add(&this->cargo, (void*)cargoItem, sizeof(*cargoItem))) {
+		if (cgi->LIST_Add(&this->cargo, (void*)cargoItem, sizeof(*cargoItem))) {
 			this->sumAlive += cargoItem->alive;
 			this->sumDead += cargoItem->dead;
 		}
 	}
-	LIST_Delete(&list);
+	cgi->LIST_Delete(&list);
 }
 
 /**
@@ -232,5 +232,5 @@ AlienCargo::AlienCargo(AlienCargo& alienCargo) : cargo (0), sumAlive (0), sumDea
  */
 AlienCargo::~AlienCargo(void)
 {
-	LIST_Delete(&this->cargo);
+	cgi->LIST_Delete(&this->cargo);
 }
