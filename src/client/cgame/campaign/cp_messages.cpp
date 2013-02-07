@@ -289,8 +289,7 @@ bool MS_LoadXML (xmlNode_t *p)
 		/* event and not mail means, dynamic mail - we don't save or load them */
 		if (mtype == MSG_EVENT && !mail)
 			continue;
-		/** @todo is this really meant to depend on DEBUG_ALL with NO individual bit like DEBUG_MSG ?? */
-		if (mtype == MSG_DEBUG && developer->integer != 1)
+		if (mtype == MSG_DEBUG && developer->integer == 0)
 			continue;
 
 		Q_strncpyz(id, cgi->XML_GetString(sn, SAVE_MESSAGES_PEDIAID), sizeof(id));
