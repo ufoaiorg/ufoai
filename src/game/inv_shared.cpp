@@ -177,9 +177,9 @@ static bool INVSH_CheckToInventory_shape (const inventory_t *const inv, const in
 				continue;
 
 			if (ic->item.rotated)
-				INVSH_MergeShapes(mask, INVSH_ShapeRotate(ic->item.item->shape), ic->x, ic->y);
+				INVSH_MergeShapes(mask, INVSH_ShapeRotate(ic->item.def()->shape), ic->x, ic->y);
 			else
-				INVSH_MergeShapes(mask, ic->item.item->shape, ic->x, ic->y);
+				INVSH_MergeShapes(mask, ic->item.def()->shape, ic->x, ic->y);
 		}
 	}
 
@@ -231,7 +231,7 @@ int INVSH_CheckToInventory (const inventory_t *const inv, const objDef_t *od, co
 
 	/* left hand is busy if right wields twohanded */
 	if (INV_IsLeftDef(container)) {
-		if (inv->c[CSI->idRight] && inv->c[CSI->idRight]->item.item->holdTwoHanded)
+		if (inv->c[CSI->idRight] && inv->c[CSI->idRight]->item.def()->holdTwoHanded)
 			return INV_DOES_NOT_FIT;
 
 		/* can't put an item that is 'fireTwoHanded' into the left hand */
@@ -326,9 +326,9 @@ static bool INVSH_ShapeCheckPosition (const invList_t *ic, const int x, const in
 
 	/* Check if the position is inside the shape (depending on rotation value) of the item. */
 	if (ic->item.rotated) {
-		shape = INVSH_ShapeRotate(ic->item.item->shape);
+		shape = INVSH_ShapeRotate(ic->item.def()->shape);
 	} else {
-		shape = ic->item.item->shape;
+		shape = ic->item.def()->shape;
 	}
 
 	return INVSH_CheckShapeSmall(shape, x - ic->x, y - ic->y);
@@ -470,7 +470,7 @@ invList_t *INVSH_SearchInInventoryByItem (const inventory_t* const inv, const in
 		return NULL;
 
 	for (ic = inv->c[container->id]; ic; ic = ic->next) {
-		if (ic && item == ic->item.item)
+		if (ic && item == ic->item.def())
 			return ic;
 	}
 
@@ -625,8 +625,8 @@ bool INVSH_LoadableInWeapon (const objDef_t *od, const objDef_t *weapon)
  */
 float INVSH_GetItemWeight (const item_t &item)
 {
-	float weight = item.item->weight;
-	if (item.ammo && item.ammo != item.item && item.ammoLeft > 0) {
+	float weight = item.def()->weight;
+	if (item.ammo && item.ammo != item.def() && item.ammoLeft > 0) {
 		weight += item.ammo->weight;
 	}
 	return weight;
@@ -646,7 +646,7 @@ bool INVSH_CheckAddingItemToInventory (const inventory_t *inv, containerIndex_t 
 	if (CSI->ids[to].temp || !CSI->ids[from].temp)
 		return true;
 
-	const bool swapArmour = INV_IsArmour(item.item) && inv->c[CSI->idArmour];
+	const bool swapArmour = INV_IsArmour(item.def()) && inv->c[CSI->idArmour];
 	const float invWeight = INVSH_GetInventoryWeight(inv) - (swapArmour ? INVSH_GetItemWeight(inv->c[CSI->idArmour]->item) : 0);
 	float itemWeight = INVSH_GetItemWeight(item);
 
@@ -735,10 +735,10 @@ const objDef_t* INVSH_HasReactionFireEnabledWeapon (const invList_t *invList)
 		return NULL;
 
 	while (invList) {
-		if (invList->item.item) {
+		if (invList->item.def()) {
 			const fireDef_t *fd = FIRESH_FiredefForWeapon(&invList->item);
 			if (fd && fd->reaction)
-				return invList->item.item;
+				return invList->item.def();
 		}
 		invList = invList->next;
 	}

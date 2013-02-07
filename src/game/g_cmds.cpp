@@ -307,7 +307,7 @@ void G_InvList_f (const Player &player)
 			const invList_t *ic = CONTAINER(ent, container);
 			Com_Printf("Container: %i\n", container);
 			while (ic) {
-				Com_Printf(".. item.item: %i, item.ammo: %i, item.ammoLeft: %i, x: %i, y: %i\n",
+				Com_Printf(".. item.def(): %i, item.ammo: %i, item.ammoLeft: %i, x: %i, y: %i\n",
 						(ic->item.def() ? ic->item.def()->idx : NONE), (ic->item.ammo ? ic->item.ammo->idx : NONE),
 						ic->item.ammoLeft, ic->x, ic->y);
 				if (ic->item.def())

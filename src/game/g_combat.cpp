@@ -307,7 +307,7 @@ int G_ApplyProtection (const edict_t *target, const byte dmgWeight, int damage)
 {
 	const int naturalProtection = target->chr.teamDef->resistance[dmgWeight];
 	if (CONTAINER(target, gi.csi->idArmour)) {
-		const objDef_t *armourDef = CONTAINER(target, gi.csi->idArmour)->item.item;
+		const objDef_t *armourDef = CONTAINER(target, gi.csi->idArmour)->item.def();
 		const short armourProtection = armourDef->protection[dmgWeight];
 		const short totalProtection = armourProtection + naturalProtection;
 		damage = std::min(std::max(0, damage - armourProtection), std::max(1, damage - totalProtection));

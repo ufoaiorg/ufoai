@@ -81,7 +81,7 @@ bool G_MissionTouch (edict_t *self, edict_t *activator)
 						if (invDef->temp)
 							continue;
 						for (ic = CONTAINER(activator, container); ic; ic = ic->next) {
-							const objDef_t *od = ic->item.item;
+							const objDef_t *od = ic->item.def();
 							/* check whether we found the searched item in the
 							 * actor's inventory */
 							if (Q_streq(od->id, self->owner->item)) {
@@ -176,7 +176,7 @@ void G_MissionThink (edict_t *self)
 					return;
 				}
 				for (; ic; ic = ic->next) {
-					const objDef_t *od = ic->item.item;
+					const objDef_t *od = ic->item.def();
 					assert(od);
 					/* not the item we are looking for */
 					if (Q_streq(od->id, chain->item))

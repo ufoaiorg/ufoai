@@ -82,12 +82,12 @@ bool G_InventoryRemoveItemByID (const char *itemID, edict_t *ent, containerIndex
 {
 	invList_t *ic = CONTAINER(ent, container);
 	while (ic) {
-		const objDef_t *item = ic->item.item;
+		const objDef_t *item = ic->item.def();
 		if (item != NULL && Q_streq(item->id, itemID)) {
 			/* remove the virtual item to update the inventory lists */
 			if (!game.i.removeFromInventory(&ent->chr.inv, INVDEF(container), ic))
 				gi.Error("Could not remove item '%s' from inventory %i",
-						ic->item.item->id, container);
+						ic->item.def()->id, container);
 			G_EventInventoryDelete(ent, G_VisToPM(ent->visflags), INVDEF(container), ic->x, ic->y);
 			return true;
 		}
@@ -115,13 +115,13 @@ static bool G_InventoryDropToFloorCheck (edict_t* ent, containerIndex_t containe
 	if (ic) {
 		bool check = false;
 		while (ic) {
-			assert(ic->item.item);
-			if (ic->item.item->isVirtual) {
+			assert(ic->item.def());
+			if (ic->item.def()->isVirtual) {
 				invList_t *next = ic->next;
 				/* remove the virtual item to update the inventory lists */
 				if (!game.i.removeFromInventory(&ent->chr.inv, INVDEF(container), ic))
 					gi.Error("Could not remove virtual item '%s' from inventory %i",
-							ic->item.item->id, container);
+							ic->item.def()->id, container);
 				ic = next;
 			} else {
 				/* there are none virtual items left that should be send to the client */
@@ -276,10 +276,10 @@ void G_InventoryToFloor (edict_t *ent)
 			assert(item.amount == 1);
 			if (!game.i.removeFromInventory(&ent->chr.inv, INVDEF(container), ic))
 				gi.Error("Could not remove item '%s' from inventory %i of entity %i",
-						ic->item.item->id, container, ent->number);
+						ic->item.def()->id, container, ent->number);
 			if (game.i.addToInventory(&floor->chr.inv, &item, INVDEF(gi.csi->idFloor), NONE, NONE, 1) == NULL)
 				gi.Error("Could not add item '%s' from inventory %i of entity %i to floor container",
-						ic->item.item->id, container, ent->number);
+						ic->item.def()->id, container, ent->number);
 #ifdef ADJACENT
 			G_InventoryPlaceItemAdjacent(ent);
 #endif
@@ -378,7 +378,7 @@ void G_SendInventory (playermask_t playerMask, const edict_t *ent)
 			continue;
 		for (ic = CONTAINER(ent, container); ic; ic = ic->next) {
 			/* send a single item */
-			assert(ic->item.item);
+			assert(ic->item.def());
 			G_WriteItem(&ic->item, INVDEF(container), ic->x, ic->y);
 		}
 	}

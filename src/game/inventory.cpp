@@ -109,7 +109,7 @@ invList_t *InventoryInterface::addToInventory (inventory_t *const inv, const ite
 			if (INVSH_CompareItem(&ic->item, item)) {
 				ic->item.amount += amount;
 				Com_DPrintf(DEBUG_SHARED, "addToInventory: Amount of '%s': %i (%s)\n",
-					ic->item.item->name, ic->item.amount, invName);
+					ic->item.def()->name, ic->item.amount, invName);
 				return ic;
 			}
 	}
@@ -171,7 +171,7 @@ bool InventoryInterface::removeFromInventory (inventory_t* const inv, const invD
 		if (container->temp && ic->item.amount > 1) {
 			ic->item.amount--;
 			Com_DPrintf(DEBUG_SHARED, "removeFromInventory: Amount of '%s': %i (%s)\n",
-				ic->item.item->name, ic->item.amount, invName);
+				ic->item.def()->name, ic->item.amount, invName);
 			return true;
 		}
 
@@ -198,7 +198,7 @@ bool InventoryInterface::removeFromInventory (inventory_t* const inv, const invD
 			if (ic->item.amount > 1 && container->temp) {
 				ic->item.amount--;
 				Com_DPrintf(DEBUG_SHARED, "removeFromInventory: Amount of '%s': %i (%s)\n",
-					ic->item.item->name, ic->item.amount, invName);
+					ic->item.def()->name, ic->item.amount, invName);
 				return true;
 			}
 
@@ -275,7 +275,7 @@ inventory_action_t InventoryInterface::moveInInventory (inventory_t* const inv, 
 		for (; ic; ic = ic->next) {
 			if (ic == fItem) {
 				if (ic->item.amount > 1) {
-					checkedTo = INVSH_CheckToInventory(inv, ic->item.item, to, tx, ty, fItem);
+					checkedTo = INVSH_CheckToInventory(inv, ic->item.def(), to, tx, ty, fItem);
 					if (checkedTo & INV_FITS) {
 						ic->x = tx;
 						ic->y = ty;
