@@ -674,7 +674,7 @@ bool G_ActorInvMove (edict_t *ent, const invDef_t *from, invList_t *fItem, const
 		} else { /* ia == IA_RELOAD_SWAP */
 			item.ammoLeft = NONE_AMMO;
 			item.ammo = NULL;
-			item.item = tItemBackup.item.ammo;
+			item.setDef(tItemBackup.item.ammo);
 			item.rotated = fItemBackup.item.rotated;
 			item.amount = tItemBackup.item.amount;
 			to = from;

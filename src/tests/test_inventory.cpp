@@ -93,7 +93,7 @@ static void testItemAdd (void)
 	container = INVSH_GetInventoryDefinitionByID("right");
 	CU_ASSERT_PTR_NOT_NULL(container);
 
-	item.item = od;
+	item.setDef(od);
 	item.ammo = NULL;
 	item.ammoLeft = 0;
 
@@ -122,7 +122,7 @@ static void testItemDel (void)
 	container = INVSH_GetInventoryDefinitionByID("right");
 	CU_ASSERT_PTR_NOT_NULL(container);
 
-	item.item = od;
+	item.setDef(od);
 	item.ammo = NULL;
 	item.ammoLeft = 0;
 
@@ -156,7 +156,7 @@ static void testItemMove (void)
 	container = INVSH_GetInventoryDefinitionByID("right");
 	CU_ASSERT_PTR_NOT_NULL(container);
 
-	item.item = od;
+	item.setDef(od);
 	item.ammo = NULL;
 	item.ammoLeft = 0;
 
@@ -194,7 +194,7 @@ static void testItemReload (void)
 	container = INVSH_GetInventoryDefinitionByID("right");
 	CU_ASSERT_PTR_NOT_NULL(container);
 
-	item.item = od;
+	item.setDef(od);
 	item.ammo = NULL;
 	item.ammoLeft = 0;
 
@@ -259,7 +259,7 @@ static bool testAddSingle (inventory_t *inv, const objDef_t *od, const invDef_t 
 {
 	item_t item;
 
-	item.item = od;
+	item.setDef(od);
 	item.ammo = NULL;
 	item.ammoLeft = 0;
 
@@ -347,7 +347,7 @@ static void testItemToHeadgear (void)
 	container = INVSH_GetInventoryDefinitionByID("headgear");
 	CU_ASSERT_PTR_NOT_NULL_FATAL(container);
 
-	item.item = od;
+	item.setDef(od);
 	item.ammo = NULL;
 	item.ammoLeft = 0;
 

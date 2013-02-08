@@ -588,7 +588,7 @@ int InventoryInterface::PackAmmoAndWeapon (character_t* const chr, const objDef_
 	float weight;
 
 	assert(!INV_IsArmour(weapon));
-	item.item = weapon;
+	item.setDef(weapon);
 
 	/* are we going to allow trying the left hand */
 	allowLeft = !(inv->c[csi->idRight] && inv->c[csi->idRight]->item.def()->fireTwoHanded);
@@ -709,7 +709,7 @@ void InventoryInterface::EquipActorMelee (inventory_t* const inv, const teamDef_
 	obj = td->onlyWeapon;
 
 	/* Prepare item. This kind of item has no ammo, fire definitions are in item.t. */
-	item.item = obj;
+	item.setDef(obj);
 	item.ammo = item.def();
 	item.ammoLeft = NONE_AMMO;
 	/* Every melee actor weapon definition is firetwohanded, add to right hand. */
@@ -731,7 +731,7 @@ void InventoryInterface::EquipActorRobot (inventory_t* const inv, const objDef_t
 	assert(weapon);
 
 	/* Prepare weapon in item. */
-	item.item = weapon;
+	item.setDef(weapon);
 	item.ammoLeft = weapon->ammo;
 
 	/* Get ammo for item/weapon. */

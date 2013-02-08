@@ -156,7 +156,7 @@ bool G_AddItemToFloor (const pos3_t pos, const char *itemID)
 	if (!floor)
 		floor = G_SpawnFloor(pos);
 
-	item.item = od;
+	item.setDef(od);
 	return game.i.tryAddToInventory(&floor->chr.inv, &item, INVDEF(gi.csi->idFloor));
 }
 
