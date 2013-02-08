@@ -2260,14 +2260,14 @@ static void CL_DebugPath_f (void)
 	int dir = 3;
 	RT_DebugSpecial(cl.mapTiles, cl.mapData->routing, actorSize, x, y, dir, cl.leInlineModelList);
 
-	bool found = Grid_FindPath(cl.mapData->routing.routes, actorSize, &cl.pathMap, selActor->pos, mousePos, 0, 600, NULL, NULL);
+	bool found = Grid_FindPath(cl.mapData->routing, actorSize, &cl.pathMap, selActor->pos, mousePos, 0, 600, NULL, NULL);
 	if (found)
 		Com_Printf("found the path !\n");
 	{
 //	pos3_t boxmin = {134,128,0};
 //	pos3_t boxmax = {136,130,1};
 //	GridBox myBox(boxmin, boxmax);
-//	Grid_RecalcBoxRouting(cl.mapTiles, cl.mapData->routes, myBox, cl.leInlineModelList);
+//	Grid_RecalcBoxRouting(cl.mapTiles, cl.mapData->routing, myBox, cl.leInlineModelList);
 	}
 #endif
 
