@@ -111,7 +111,7 @@ static inline void RT_PlaceInit (const Routing &routing, const actorSizeEnum_t a
 	p->cell[0] = x;
 	p->cell[1] = y;
 	p->cell[2] = z;
-	const int relCeiling = routing.routes[actorSize - 1].getCeiling(p->cell);
+	const int relCeiling = routing.getCeiling(actorSize, p->cell);
 	p->floor = routing.getFloor(actorSize, x, y, z) + z * CELL_HEIGHT;
 	p->ceiling = relCeiling + z * CELL_HEIGHT;
 	p->floorZ = std::max(0, p->floor / CELL_HEIGHT) ;
@@ -165,8 +165,7 @@ typedef struct opening_s {
 #ifdef DEBUG
 /**
  * @brief Dumps contents of a map to console for inspection.
- * @sa Grid_RecalcRouting
- * @param[in] routes The routing map (either server or client map)
+ * @param[in] routing The routing maps (either server or client map)
  * @param[in] actorSize The size of the actor along the X and Y axis in cell units
  * @param[in] lx The low end of the x range updated
  * @param[in] ly The low end of the y range updated
@@ -624,7 +623,7 @@ static int RT_FillPassageData (RoutingData *rtd, const int dir, const int  x, co
 
 	assert(fz <= z && z <= cz);
 
-	/* Last, update the routes of cells from (x, y, fz) to (x, y, cz) for direction dir */
+	/* Last, update the connections of cells from (x, y, fz) to (x, y, cz) for direction dir */
 	for (i = fz; i <= cz; i++) {
 		int oh;
 		/* Offset from the floor or the bottom of the current cell, whichever is higher. */
@@ -1371,7 +1370,7 @@ static int RT_UpdateConnection (RoutingData *rtd, const int x, const int y, cons
 #if RT_IS_BIDIRECTIONAL == 1
 	/** In case the adjacent floor has no ceiling, swap the current and adjacent cells. */
 	if (ceiling == 0 && adjCeiling != 0) {
-		return RT_UpdateConnection(rtd->routes, actorSize, ax, ay, x, y, z, dir ^ 1);
+		return RT_UpdateConnection(rtd, ax, ay, x, y, z, dir ^ 1);
 	}
 #endif
 
@@ -1568,7 +1567,7 @@ void RT_WriteCSVFiles (const Routing &routing, const char* baseFilename, const i
 /**
  * @brief A debug function to be called from CL_DebugPath_f
  * @param[in] mapTiles List of tiles the current (RMA-)map is composed of
- * @param[in] routes Routing table of the current loaded map
+ * @param[in] routing Routing table of the current loaded map
  * @param[in] actorSize The size of the actor, in units
  * @param[in] x The x position in the routing arrays (0 to PATHFINDING_WIDTH - actorSize)
  * @param[in] y The y position in the routing arrays (0 to PATHFINDING_WIDTH - actorSize)
