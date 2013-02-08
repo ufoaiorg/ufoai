@@ -240,12 +240,12 @@ static void testInventoryForDiedAlien (void)
 			int tx, ty;
 			INVSH_FindSpace(&ent->chr.inv, &entryToMove->item, INVDEF(csi.idBackpack), &tx, &ty, entryToMove);
 			if (tx != NONE) {
-				Com_Printf("trying to move item %s from floor into backpack to pos %i:%i\n", entryToMove->item.item->name, tx, ty);
+				Com_Printf("trying to move item %s from floor into backpack to pos %i:%i\n", entryToMove->item.def()->name, tx, ty);
 				CU_ASSERT_TRUE(G_ActorInvMove(ent, INVDEF(csi.idFloor), entryToMove, INVDEF(csi.idBackpack), tx, ty, false));
-				UFO_CU_ASSERT_EQUAL_INT_MSG_FATAL(GAMETEST_GetItemCount(ent, csi.idFloor), count - 1, va("item %s could not get moved successfully from floor into backpack", entryToMove->item.item->name));
-				Com_Printf("item %s was removed from floor\n", entryToMove->item.item->name);
-				UFO_CU_ASSERT_EQUAL_INT_MSG_FATAL(GAMETEST_GetItemCount(ent, csi.idBackpack), 1, va("item %s could not get moved successfully from floor into backpack", entryToMove->item.item->name));
-				Com_Printf("item %s was moved successfully into the backpack\n", entryToMove->item.item->name);
+				UFO_CU_ASSERT_EQUAL_INT_MSG_FATAL(GAMETEST_GetItemCount(ent, csi.idFloor), count - 1, va("item %s could not get moved successfully from floor into backpack", entryToMove->item.def()->name));
+				Com_Printf("item %s was removed from floor\n", entryToMove->item.def()->name);
+				UFO_CU_ASSERT_EQUAL_INT_MSG_FATAL(GAMETEST_GetItemCount(ent, csi.idBackpack), 1, va("item %s could not get moved successfully from floor into backpack", entryToMove->item.def()->name));
+				Com_Printf("item %s was moved successfully into the backpack\n", entryToMove->item.def()->name);
 				invlist = CONTAINER(ent, csi.idBackpack);
 				CU_ASSERT_PTR_NOT_NULL_FATAL(invlist);
 			}
@@ -320,12 +320,12 @@ static void testInventoryWithTwoDiedAliensOnTheSameGridTile (void)
 			int tx, ty;
 			INVSH_FindSpace(&ent->chr.inv, &entryToMove->item, INVDEF(csi.idBackpack), &tx, &ty, entryToMove);
 			if (tx != NONE) {
-				Com_Printf("trying to move item %s from floor into backpack to pos %i:%i\n", entryToMove->item.item->name, tx, ty);
+				Com_Printf("trying to move item %s from floor into backpack to pos %i:%i\n", entryToMove->item.def()->name, tx, ty);
 				CU_ASSERT_TRUE(G_ActorInvMove(ent, INVDEF(csi.idFloor), entryToMove, INVDEF(csi.idBackpack), tx, ty, false));
-				UFO_CU_ASSERT_EQUAL_INT_MSG_FATAL(GAMETEST_GetItemCount(ent, csi.idFloor), count - 1, va("item %s could not get moved successfully from floor into backpack", entryToMove->item.item->name));
-				Com_Printf("item %s was removed from floor\n", entryToMove->item.item->name);
-				UFO_CU_ASSERT_EQUAL_INT_MSG_FATAL(GAMETEST_GetItemCount(ent, csi.idBackpack), 1, va("item %s could not get moved successfully from floor into backpack", entryToMove->item.item->name));
-				Com_Printf("item %s was moved successfully into the backpack\n", entryToMove->item.item->name);
+				UFO_CU_ASSERT_EQUAL_INT_MSG_FATAL(GAMETEST_GetItemCount(ent, csi.idFloor), count - 1, va("item %s could not get moved successfully from floor into backpack", entryToMove->item.def()->name));
+				Com_Printf("item %s was removed from floor\n", entryToMove->item.def()->name);
+				UFO_CU_ASSERT_EQUAL_INT_MSG_FATAL(GAMETEST_GetItemCount(ent, csi.idBackpack), 1, va("item %s could not get moved successfully from floor into backpack", entryToMove->item.def()->name));
+				Com_Printf("item %s was moved successfully into the backpack\n", entryToMove->item.def()->name);
 				invlist = CONTAINER(ent, csi.idBackpack);
 				CU_ASSERT_PTR_NOT_NULL_FATAL(invlist);
 			}
