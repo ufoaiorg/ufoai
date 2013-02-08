@@ -1147,11 +1147,11 @@ void E_RemoveInventoryFromStorage (employee_t *employee)
 
 		while (invList) {
 			/* Remove ammo */
-			if (invList->item.ammo && invList->item.ammo != invList->item.item)
+			if (invList->item.ammo && invList->item.ammo != invList->item.def())
 				B_UpdateStorageAndCapacity(employee->baseHired, invList->item.ammo, -1, false);
 			/* Remove Item */
-			if (invList->item.item)
-				B_UpdateStorageAndCapacity(employee->baseHired, invList->item.item, -1, false);
+			if (invList->item.def())
+				B_UpdateStorageAndCapacity(employee->baseHired, invList->item.def(), -1, false);
 
 			invList = invList->next;
 		}

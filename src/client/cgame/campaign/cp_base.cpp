@@ -1832,16 +1832,16 @@ static void CL_SwapSkills (linkedList_t *team)
 
 				if (RIGHT(cp1) && RIGHT(cp1)->item.ammo && RIGHT(cp1)->item.def())
 					fdRightArray = FIRESH_FiredefForWeapon(&RIGHT(cp1)->item);
-				if (HOLSTER(cp1) && HOLSTER(cp1)->item.ammo && HOLSTER(cp1)->item.item)
+				if (HOLSTER(cp1) && HOLSTER(cp1)->item.ammo && HOLSTER(cp1)->item.def())
 					fdHolsterArray = FIRESH_FiredefForWeapon(&HOLSTER(cp1)->item);
 				/* disregard left hand, or dual-wielding guys are too good */
 
 				if (fdHolsterArray != NULL && fdRightArray != NULL) {
 					const int no1 = 2 * (RIGHT(cp1) && skill == RIGHT(cp1)->item.ammo->fd[fdRightArray->weapFdsIdx][fmode1].weaponSkill)
 						+ 2 * (RIGHT(cp1) && skill == RIGHT(cp1)->item.ammo->fd[fdRightArray->weapFdsIdx][fmode2].weaponSkill)
-						+ (HOLSTER(cp1) && HOLSTER(cp1)->item.item->reload
+						+ (HOLSTER(cp1) && HOLSTER(cp1)->item.def()->reload
 						   && skill == HOLSTER(cp1)->item.ammo->fd[fdHolsterArray->weapFdsIdx][fmode1].weaponSkill)
-						+ (HOLSTER(cp1) && HOLSTER(cp1)->item.item->reload
+						+ (HOLSTER(cp1) && HOLSTER(cp1)->item.def()->reload
 						   && skill == HOLSTER(cp1)->item.ammo->fd[fdHolsterArray->weapFdsIdx][fmode2].weaponSkill);
 
 					for (linkedList_t *cp2List = cp1List->next; cp2List; cp2List = cp2List->next) {
@@ -1849,17 +1849,17 @@ static void CL_SwapSkills (linkedList_t *team)
 						fdRightArray = NULL;
 						fdHolsterArray = NULL;
 
-						if (RIGHT(cp2) && RIGHT(cp2)->item.ammo && RIGHT(cp2)->item.item)
+						if (RIGHT(cp2) && RIGHT(cp2)->item.ammo && RIGHT(cp2)->item.def())
 							fdRightArray = FIRESH_FiredefForWeapon(&RIGHT(cp2)->item);
-						if (HOLSTER(cp2) && HOLSTER(cp2)->item.ammo && HOLSTER(cp2)->item.item)
+						if (HOLSTER(cp2) && HOLSTER(cp2)->item.ammo && HOLSTER(cp2)->item.def())
 							fdHolsterArray = FIRESH_FiredefForWeapon(&HOLSTER(cp2)->item);
 
 						if (fdHolsterArray != NULL && fdRightArray != NULL) {
 							const int no2 = 2 * (RIGHT(cp2) && skill == RIGHT(cp2)->item.ammo->fd[fdRightArray->weapFdsIdx][fmode1].weaponSkill)
 								+ 2 * (RIGHT(cp2) && skill == RIGHT(cp2)->item.ammo->fd[fdRightArray->weapFdsIdx][fmode2].weaponSkill)
-								+ (HOLSTER(cp2) && HOLSTER(cp2)->item.item->reload
+								+ (HOLSTER(cp2) && HOLSTER(cp2)->item.def()->reload
 								   && skill == HOLSTER(cp2)->item.ammo->fd[fdHolsterArray->weapFdsIdx][fmode1].weaponSkill)
-								+ (HOLSTER(cp2) && HOLSTER(cp2)->item.item->reload
+								+ (HOLSTER(cp2) && HOLSTER(cp2)->item.def()->reload
 								   && skill == HOLSTER(cp2)->item.ammo->fd[fdHolsterArray->weapFdsIdx][fmode2].weaponSkill);
 
 							if (no1 > no2 /* more use of this skill */

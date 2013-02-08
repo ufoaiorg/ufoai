@@ -39,7 +39,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 item_t CP_AddWeaponAmmo (equipDef_t *ed, item_t item)
 {
 	int i;
-	const objDef_t *type = item.item;
+	const objDef_t *type = item.def();
 
 	assert(ed->numItems[type->idx] > 0);
 	ed->numItems[type->idx]--;
@@ -49,7 +49,7 @@ item_t CP_AddWeaponAmmo (equipDef_t *ed, item_t item)
 		if (type->oneshot) {
 			/* "Recharge" the oneshot weapon. */
 			item.ammoLeft = type->ammo;
-			item.ammo = item.item; /* Just in case this hasn't been done yet. */
+			item.ammo = item.def(); /* Just in case this hasn't been done yet. */
 			Com_DPrintf(DEBUG_CLIENT, "CL_AddWeaponAmmo: oneshot weapon '%s'.\n", type->id);
 			return item;
 		} else {
@@ -59,7 +59,7 @@ item_t CP_AddWeaponAmmo (equipDef_t *ed, item_t item)
 	} else if (!type->reload) {
 		/* The given item is a weapon but no ammo is needed,
 		 * so fire definitions are in t (the weapon). Setting equal. */
-		item.ammo = item.item;
+		item.ammo = item.def();
 		return item;
 	} else if (item.ammoLeft) {
 		assert(item.ammo);
@@ -169,7 +169,7 @@ void CP_CleanupTeam (base_t *base, equipDef_t *ed)
 		/* This is an UGV */
 		if (employee->ugv) {
 			/* Check if there is a weapon and add it if there isn't. */
-			if (!RIGHT(chr) || !RIGHT(chr)->item.item)
+			if (!RIGHT(chr) || !RIGHT(chr)->item.def())
 				cgi->INV_EquipActorRobot(&chr->inv, INVSH_GetItemByID(employee->ugv->weapon));
 		}
 	}
@@ -190,7 +190,7 @@ void CP_CleanupTeam (base_t *base, equipDef_t *ed)
 #endif
 			for (ic = CONTAINER(chr, container); ic; ic = next) {
 				next = ic->next;
-				if (ed->numItems[ic->item.item->idx] > 0) {
+				if (ed->numItems[ic->item.def()->idx] > 0) {
 					ic->item = CP_AddWeaponAmmo(ed, ic->item);
 				} else {
 					/* Drop ammo used for reloading and sold carried weapons. */
@@ -230,7 +230,7 @@ void CP_CleanupAircraftTeam (aircraft_t *aircraft, equipDef_t * ed)
 			/* Auto-assign weapons to UGVs/Robots if they have no weapon yet. */
 			if (employee->ugv) {
 				/* Check if there is a weapon and add it if there isn't. */
-				if (!RIGHT(chr) || !RIGHT(chr)->item.item)
+				if (!RIGHT(chr) || !RIGHT(chr)->item.def())
 					cgi->INV_EquipActorRobot(&chr->inv, INVSH_GetItemByID(employee->ugv->weapon));
 				continue;
 			}
@@ -242,7 +242,7 @@ void CP_CleanupAircraftTeam (aircraft_t *aircraft, equipDef_t * ed)
 #endif
 			for (ic = CONTAINER(chr, container); ic; ic = next) {
 				next = ic->next;
-				if (ed->numItems[ic->item.item->idx] > 0) {
+				if (ed->numItems[ic->item.def()->idx] > 0) {
 					ic->item = CP_AddWeaponAmmo(ed, ic->item);
 				} else {
 					/* Drop ammo used for reloading and sold carried weapons. */

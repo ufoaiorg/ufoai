@@ -372,7 +372,7 @@ static void INV_UpdateActorLoad_f (void)
 					if (fireDef[i].time > 0 && fireDef[i].time > tus) {
 						if (count <= 0)
 							Com_sprintf(popupText, sizeof(popupText), _("This soldier no longer has enough TUs to use the following items:\n\n"));
-						Q_strcat(popupText, va("%s: %s (%i)\n", _(invList->item.item->name), _(fireDef[i].name), fireDef[i].time), sizeof(popupText));
+						Q_strcat(popupText, va("%s: %s (%i)\n", _(invList->item.def()->name), _(fireDef[i].name), fireDef[i].time), sizeof(popupText));
 						++count;
 					}
 			}

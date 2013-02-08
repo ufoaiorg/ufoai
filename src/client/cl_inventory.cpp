@@ -105,7 +105,7 @@ bool INV_LoadWeapon (const invList_t *weaponList, inventory_t *inv, const invDef
 
 	assert(weaponList);
 
-	weapon = weaponList->item.item;
+	weapon = weaponList->item.def();
 	INVSH_GetFirstShapePosition(weaponList, &x, &y);
 	x += weaponList->x;
 	y += weaponList->y;
@@ -371,9 +371,9 @@ invList_t *INV_SearchInInventoryWithFilter (const inventory_t* const i, const in
 
 	for (ic = i->c[container->id]; ic; ic = ic->next) {
 		/* Search only in the items that could get displayed. */
-		if (ic && ic->item.item && (filterType == MAX_FILTERTYPES || INV_ItemMatchesFilter(ic->item.item, filterType))) {
+		if (ic && ic->item.def() && (filterType == MAX_FILTERTYPES || INV_ItemMatchesFilter(ic->item.def(), filterType))) {
 			/* We search _everything_, no matter what location it is (i.e. x/y are ignored). */
-			if (item == ic->item.item)
+			if (item == ic->item.def())
 				return ic;
 		}
 	}
