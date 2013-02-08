@@ -1100,7 +1100,7 @@ static int HUD_UpdateActorFireMode (le_t *actor)
 						const fireDef_t *fdArray = FIRESH_FiredefForWeapon(&selWeapon->item);
 						if (fdArray != NULL) {
 							/* Get firedef from the weapon (or other usable item) entry instead. */
-							const fireDef_t *old = FIRESH_GetFiredef(selWeapon->item.item, fdArray->weapFdsIdx, actor->currentSelectedFiremode);
+							const fireDef_t *old = FIRESH_GetFiredef(selWeapon->item.def(), fdArray->weapFdsIdx, actor->currentSelectedFiremode);
 							CL_ActorSetFireDef(actor, old);
 						}
 					}
@@ -1115,7 +1115,7 @@ static int HUD_UpdateActorFireMode (le_t *actor)
 			}
 		}
 
-		if (!GAME_ItemIsUseable(selWeapon->item.item)) {
+		if (!GAME_ItemIsUseable(selWeapon->item.def())) {
 			HUD_DisplayMessage(_("You cannot use this unknown item.\nYou need to research it first."));
 			CL_ActorSetMode(actor, M_MOVE);
 		} else if (actor->fd) {
@@ -1123,7 +1123,7 @@ static int HUD_UpdateActorFireMode (le_t *actor)
 			static char mouseText[UI_MAX_SMALLTEXTLEN];
 
 			Com_sprintf(infoText, lengthof(infoText),
-						"%s\n%s (%i) [%i%%] %i\n", _(selWeapon->item.item->name), _(actor->fd->name),
+						"%s\n%s (%i) [%i%%] %i\n", _(selWeapon->item.def()->name), _(actor->fd->name),
 						actor->fd->ammo, hitProbability, CL_ActorTimeForFireDef(actor, actor->fd));
 
 			/* Save the text for later display next to the cursor. */
@@ -1134,10 +1134,10 @@ static int HUD_UpdateActorFireMode (le_t *actor)
 			/* if no TUs left for this firing action
 			 * or if the weapon is reloadable and out of ammo,
 			 * then change to move mode */
-			if ((selWeapon->item.item->reload && selWeapon->item.ammoLeft <= 0) || CL_ActorUsableTUs(actor) < time)
+			if ((selWeapon->item.def()->reload && selWeapon->item.ammoLeft <= 0) || CL_ActorUsableTUs(actor) < time)
 				CL_ActorSetMode(actor, M_MOVE);
 		} else if (selWeapon) {
-			Com_sprintf(infoText, lengthof(infoText), _("%s\n(empty)\n"), _(selWeapon->item.item->name));
+			Com_sprintf(infoText, lengthof(infoText), _("%s\n(empty)\n"), _(selWeapon->item.def()->name));
 		}
 
 		UI_RegisterText(TEXT_STANDARD, infoText);
@@ -1212,16 +1212,16 @@ static void HUD_UpdateActorCvar (const le_t *actor, const char *cvarPrefix)
 		Cvar_Set(va("%s%s", cvarPrefix, "anim"), animName);
 	if (RIGHT(actor)) {
 		const invList_t *i = RIGHT(actor);
-		Cvar_Set(va("%s%s", cvarPrefix, "rweapon"), i->item.item->model);
-		Cvar_Set(va("%s%s", cvarPrefix, "rweapon_item"), i->item.item->id);
+		Cvar_Set(va("%s%s", cvarPrefix, "rweapon"), i->item.def()->model);
+		Cvar_Set(va("%s%s", cvarPrefix, "rweapon_item"), i->item.def()->id);
 	} else {
 		Cvar_Set(va("%s%s", cvarPrefix, "rweapon"), "");
 		Cvar_Set(va("%s%s", cvarPrefix, "rweapon_item"), "");
 	}
 	if (LEFT(actor)) {
 		const invList_t *i = LEFT(actor);
-		Cvar_Set(va("%s%s", cvarPrefix, "lweapon"), i->item.item->model);
-		Cvar_Set(va("%s%s", cvarPrefix, "lweapon_item"), i->item.item->id);
+		Cvar_Set(va("%s%s", cvarPrefix, "lweapon"), i->item.def()->model);
+		Cvar_Set(va("%s%s", cvarPrefix, "lweapon_item"), i->item.def()->id);
 	} else {
 		Cvar_Set(va("%s%s", cvarPrefix, "lweapon"), "");
 		Cvar_Set(va("%s%s", cvarPrefix, "lweapon_item"), "");
@@ -1364,7 +1364,7 @@ static void HUD_UpdateActorLoad_f (void)
 					if (fireDef[i].time > 0 && fireDef[i].time > tus) {
 						if (count <= 0)
 							Com_sprintf(popupText, sizeof(popupText), _("This soldier no longer has enough TUs to use the following items:\n\n"));
-						Q_strcat(popupText, va("%s: %s (%i)\n", _(invList->item.item->name), _(fireDef[i].name), fireDef[i].time), sizeof(popupText));
+						Q_strcat(popupText, va("%s: %s (%i)\n", _(invList->item.def()->name), _(fireDef[i].name), fireDef[i].time), sizeof(popupText));
 						++count;
 					}
 			}
@@ -1415,8 +1415,8 @@ static void HUD_UpdateActor (le_t *actor)
 			invList = NULL;
 		}
 
-		if (invList && invList->item.item && invList->item.ammo && invList->item.item->reload) {
-			const int reloadtime = HUD_CalcReloadTime(actor, invList->item.item, container);
+		if (invList && invList->item.def() && invList->item.ammo && invList->item.def()->reload) {
+			const int reloadtime = HUD_CalcReloadTime(actor, invList->item.def(), container);
 			if (reloadtime != -1 && reloadtime <= CL_ActorUsableTUs(actor))
 				time = reloadtime;
 		}

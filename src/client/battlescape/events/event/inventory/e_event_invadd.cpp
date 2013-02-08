@@ -96,16 +96,16 @@ void CL_InvAdd (const eventRegister_t *self, dbuffer *msg)
 
 		if (cls.i.addToInventory(&le->inv, &item, INVDEF(container), x, y, item.amount) == NULL)
 			Com_Error(ERR_DROP, "InvAdd failed - could not add %i item(s) of %s to container %i",
-					item.amount, item.item->id, container);
+					item.amount, item.def()->id, container);
 
 		if (container == csi.idRight)
-			le->right = item.item->idx;
+			le->right = item.def()->idx;
 		else if (container == csi.idLeft)
-			le->left = item.item->idx;
+			le->left = item.def()->idx;
 		else if (container == csi.idExtension)
-			le->extension = item.item->idx;
+			le->extension = item.def()->idx;
 		else if (container == csi.idHeadgear)
-			le->headgear = item.item->idx;
+			le->headgear = item.def()->idx;
 	}
 
 	switch (le->type) {

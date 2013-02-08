@@ -270,9 +270,9 @@ static void AII_CollectingAmmo (void *data, const invList_t *magazine)
 	aircraft_t *aircraft = (aircraft_t *)data;
 	/* Let's add remaining ammo to market. */
 	eTempEq.numItemsLoose[magazine->item.ammo->idx] += magazine->item.ammoLeft;
-	if (eTempEq.numItemsLoose[magazine->item.ammo->idx] >= magazine->item.item->ammo) {
+	if (eTempEq.numItemsLoose[magazine->item.ammo->idx] >= magazine->item.def()->ammo) {
 		/* There are more or equal ammo on the market than magazine needs - collect magazine. */
-		eTempEq.numItemsLoose[magazine->item.ammo->idx] -= magazine->item.item->ammo;
+		eTempEq.numItemsLoose[magazine->item.ammo->idx] -= magazine->item.def()->ammo;
 		AII_CollectItem(aircraft, magazine->item.ammo, 1);
 	}
 }
@@ -330,7 +330,7 @@ static void AII_CarriedItems (const inventory_t *soldierInventory)
 		if (INVDEF(container)->temp)
 			continue;
 		for (invList = soldierInventory->c[container]; invList; invList = invList->next) {
-			const objDef_t *item = invList->item.item;
+			const objDef_t *item = invList->item.def();
 			const objDef_t *ammo = invList->item.ammo;
 			technology_t *tech = RS_GetTechForItem(item);
 			ed->numItems[item->idx]++;
@@ -833,7 +833,7 @@ static int AIR_GetStorageRoom (const aircraft_t *aircraft)
 				continue;
 #endif
 			for (ic = CONTAINER(&employee->chr, container); ic; ic = ic->next) {
-				const objDef_t *obj = ic->item.item;
+				const objDef_t *obj = ic->item.def();
 				size += obj->size;
 
 				obj = ic->item.ammo;
@@ -886,7 +886,7 @@ static void AIR_TransferItemsCarriedByCharacterToBase (character_t *chr, base_t 
 			continue;
 #endif
 		for (ic = CONTAINER(chr, container); ic; ic = ic->next) {
-			const objDef_t *obj = ic->item.item;
+			const objDef_t *obj = ic->item.def();
 			B_UpdateStorageAndCapacity(sourceBase, obj, -1, false);
 			B_UpdateStorageAndCapacity(destBase, obj, 1, false);
 
@@ -3055,7 +3055,7 @@ void AIR_MoveEmployeeInventoryIntoStorage (const aircraft_t &aircraft, equipDef_
 #endif
 			while (ic) {
 				const item_t item = ic->item;
-				const objDef_t *type = item.item;
+				const objDef_t *type = item.def();
 				invList_t *next = ic->next;
 
 				ed.numItems[type->idx]++;

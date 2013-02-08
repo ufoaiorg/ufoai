@@ -1830,7 +1830,7 @@ static void CL_SwapSkills (linkedList_t *team)
 				const fireDef_t *fdRightArray = NULL;
 				const fireDef_t *fdHolsterArray = NULL;
 
-				if (RIGHT(cp1) && RIGHT(cp1)->item.ammo && RIGHT(cp1)->item.item)
+				if (RIGHT(cp1) && RIGHT(cp1)->item.ammo && RIGHT(cp1)->item.def())
 					fdRightArray = FIRESH_FiredefForWeapon(&RIGHT(cp1)->item);
 				if (HOLSTER(cp1) && HOLSTER(cp1)->item.ammo && HOLSTER(cp1)->item.item)
 					fdHolsterArray = FIRESH_FiredefForWeapon(&HOLSTER(cp1)->item);
