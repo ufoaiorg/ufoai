@@ -368,7 +368,7 @@ static void GAME_Free (void *ptr)
 
 static void GAME_DestroyInventory (inventory_t * const inv)
 {
-	cls.i.DestroyInventory(inv);
+	cls.i.destroyInventory(inv);
 }
 
 static void GAME_EquipActor (character_t* const chr, const equipDef_t *ed, int maxWeight)
@@ -845,7 +845,7 @@ void GAME_SetMode (const cgame_export_t *gametype)
 	if (list) {
 		Com_Printf("Change gametype to '%s'\n", list->name);
 		/* inventory structure switched/initialized */
-		cls.i.DestroyInventoryInterface();
+		cls.i.destroyInventoryInterface();
 		cls.i.initInventory(list->name, &csi, &inventoryImport);
 		list->Init();
 	}
@@ -1357,7 +1357,7 @@ static bool GAME_Spawn (linkedList_t **chrList)
 		const equipDef_t *ed = INV_GetEquipmentDefinitionByID("multiplayer_initial");
 
 		/* inventory structure switched/initialized */
-		cls.i.DestroyInventoryInterface();
+		cls.i.destroyInventoryInterface();
 		cls.i.initInventory("client", &csi, &inventoryImport);
 		GAME_GenerateTeam(teamDefID, ed, size);
 	}

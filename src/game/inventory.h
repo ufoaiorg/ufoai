@@ -55,12 +55,9 @@ public:
 			int tx, int ty, int *TU, invList_t ** icp);
 
 	bool tryAddToInventory (inventory_t* const inv, const item_t *const item, const invDef_t *container);
-
-	void DestroyInventory (inventory_t* const inv);
-
-	void DestroyInventoryInterface(void);
-
-	void EmptyContainer (inventory_t* const inv, const invDef_t *container);
+	void destroyInventory (inventory_t* const inv);
+	void destroyInventoryInterface(void);
+	void emptyContainer (inventory_t* const inv, const invDef_t *container);
 
 	void EquipActor (character_t* const chr, const equipDef_t *ed, int maxWeight);
 

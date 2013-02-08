@@ -50,7 +50,7 @@ static const inventoryImport_t inventoryImport = { FreeInventory, FreeAllInvento
 
 static inline void ResetInventoryList (void)
 {
-	i.DestroyInventoryInterface();
+	i.destroyInventoryInterface();
 	i.initInventory("test", &csi, &inventoryImport);
 }
 

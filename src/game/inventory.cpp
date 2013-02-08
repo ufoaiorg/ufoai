@@ -495,12 +495,12 @@ bool InventoryInterface::tryAddToInventory (inventory_t* const inv, const item_t
  * @brief Clears the linked list of a container - removes all items from this container.
  * @param[in] i The inventory where the container is located.
  * @param[in] container Index of the container which will be cleared.
- * @sa DestroyInventory
+ * @sa destroyInventory
  * @note This should only be called for temp containers if the container is really a temp container
  * e.g. the container of a dropped weapon in tactical mission (ET_ITEM)
  * in every other case just set the pointer to NULL for a temp container like idEquip or idFloor
  */
-void InventoryInterface::EmptyContainer (inventory_t* const inv, const invDef_t *container)
+void InventoryInterface::emptyContainer (inventory_t* const inv, const invDef_t *container)
 {
 	invList_t *ic;
 
@@ -519,10 +519,10 @@ void InventoryInterface::EmptyContainer (inventory_t* const inv, const invDef_t 
  * @brief Destroys inventory.
  * @param[in] inv Pointer to the inventory which should be erased.
  * @note Loops through all containers in inventory. @c NULL for temp containers are skipped,
- * for real containers @c EmptyContainer is called.
- * @sa EmptyContainer
+ * for real containers @c emptyContainer is called.
+ * @sa emptyContainer
  */
-void InventoryInterface::DestroyInventory (inventory_t* const inv)
+void InventoryInterface::destroyInventory (inventory_t* const inv)
 {
 	containerIndex_t container;
 
@@ -532,7 +532,7 @@ void InventoryInterface::DestroyInventory (inventory_t* const inv)
 	for (container = 0; container < this->csi->numIDs; container++) {
 		const invDef_t *invDef = &this->csi->ids[container];
 		if (!invDef->temp)
-			EmptyContainer(inv, invDef);
+			emptyContainer(inv, invDef);
 	}
 
 	OBJZERO(*inv);
@@ -1015,7 +1015,7 @@ void InventoryInterface::initInventory (const char *name, const csi_t* csi, cons
 	this->invList = NULL;
 }
 
-void InventoryInterface::DestroyInventoryInterface (void)
+void InventoryInterface::destroyInventoryInterface (void)
 {
 	if (this->import == NULL)
 		return;

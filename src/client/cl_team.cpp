@@ -198,7 +198,7 @@ void CL_GenerateCharacter (character_t *chr, const char *teamDefName)
 	OBJZERO(*chr);
 
 	/* link inventory */
-	cls.i.DestroyInventory(&chr->inv);
+	cls.i.destroyInventory(&chr->inv);
 
 	/* get ucn */
 	chr->ucn = cls.nextUniqueCharacterNumber++;
