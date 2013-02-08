@@ -478,7 +478,7 @@ static void CM_MakeTracingNodes (MapTile &tile)
 static void CMod_LoadRouting (MapTile &tile, mapData_t *mapData, const byte *base, const char *name, const lump_t *l, const int sX, const int sY, const int sZ)
 {
 	/** @todo this eats a lot of memory - load directory into mapData->map */
-	routing_t *tempMap = (routing_t *)Mem_Alloc(sizeof(routing_t) * ACTOR_MAX_SIZE);
+	Routing *tempMap = (Routing *)Mem_Alloc(sizeof(Routing));
 	const byte *source;
 	int length;
 	int x, y, z, size, dir;
@@ -486,7 +486,7 @@ static void CMod_LoadRouting (MapTile &tile, mapData_t *mapData, const byte *bas
 	int maxX, maxY, maxZ;
 	unsigned int i;
 	double start, end;
-	const int targetLength = sizeof(tile.wpMins) + sizeof(tile.wpMaxs) + sizeof(routing_t) * ACTOR_MAX_SIZE;
+	const int targetLength = sizeof(tile.wpMins) + sizeof(tile.wpMaxs) + sizeof(Routing);
 
 	start = time(NULL);
 
@@ -563,11 +563,11 @@ static void CMod_LoadRouting (MapTile &tile, mapData_t *mapData, const byte *bas
 				if (x < 0 || y < 0)
 					continue;
 				for (z = minZ; z <= maxZ; z++) {
-					mapData->routing.setFloor(size + 1, x, y, z, tempMap[size].getFloor(x - sX, y - sY, z - sZ));
-					mapData->routing.setCeiling(size + 1, x, y, z, tempMap[size].getCeiling(x - sX, y - sY, z - sZ));
+					mapData->routing.setFloor(size + 1, x, y, z, tempMap->getFloor(size + 1, x - sX, y - sY, z - sZ));
+					mapData->routing.setCeiling(size + 1, x, y, z, tempMap->getCeiling(size + 1, x - sX, y - sY, z - sZ));
 					for (dir = 0; dir < CORE_DIRECTIONS; dir++) {
-						mapData->routing.setConn(size + 1, x, y, z, dir, tempMap[size].getConn(x - sX, y - sY, z - sZ, dir));
-						mapData->routing.setStepup(size + 1, x, y, z, dir, tempMap[size].getStepup(x - sX, y - sY, z - sZ, dir));
+						mapData->routing.setConn(size + 1, x, y, z, dir, tempMap->getConn(size + 1, x - sX, y - sY, z - sZ, dir));
+						mapData->routing.setStepup(size + 1, x, y, z, dir, tempMap->getStepup(size + 1, x - sX, y - sY, z - sZ, dir));
 					}
 				}
 				/* Update the reroute table */
