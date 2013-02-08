@@ -279,7 +279,6 @@ bool Step::checkWalkingDirections (const pathing_t *path)
 	int actorStepupHeight = PATHFINDING_MAX_STEPUP;
 
 	/* This is the standard passage height for all units trying to move horizontally. */
-	RT_CONN_TEST_POS(step->map, actorSize, fromPos, dir);
 	passageHeight = routing.getConn(actorSize, fromPos, dir);
 	if (passageHeight < actorHeight) {
 #if 0
@@ -401,17 +400,14 @@ bool Step::checkFlyingDirections (void)
 		/* If the actor is moving up, check the passage at the current cell.
 		 * The minimum height is the actor's height plus the distance from the current floor to the top of the cell. */
 		neededHeight = actorHeight + CELL_HEIGHT - std::max((const signed char)0, routing.getFloor(actorSize, fromPos));
-		RT_CONN_TEST_POS(routes, actorSize, fromPos, coreDir);
 		passageHeight = routing.getConn(actorSize, fromPos, coreDir);
 	} else if (toPos[2] < fromPos[2]) {
 		/* If the actor is moving down, check from the destination cell back. *
 		 * The minimum height is the actor's height plus the distance from the destination floor to the top of the cell. */
 		neededHeight = actorHeight + CELL_HEIGHT - std::max((const signed char)0, routing.getFloor(actorSize, toPos));
-		RT_CONN_TEST_POS(routes, actorSize, toPos, coreDir ^ 1);
 		passageHeight = routing.getConn(actorSize, toPos, coreDir ^ 1);
 	} else {
 		neededHeight = actorHeight;
-		RT_CONN_TEST_POS(routing.routes, actorSize, fromPos, coreDir);
 		passageHeight = routing.getConn(actorSize, fromPos, coreDir);
 	}
 	if (passageHeight < neededHeight) {

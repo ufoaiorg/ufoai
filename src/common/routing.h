@@ -56,11 +56,6 @@ MACROS
  */
 /* route - Used by Grid_* only  */
 /** @note IMPORTANT: actorSize is 1 or greater!!! */
-#define RT_CONN_TEST_POS(map, actorSize, p, dir)		assert((actorSize) > ACTOR_SIZE_INVALID); assert((actorSize) <= ACTOR_MAX_SIZE); \
-															assert((p)[2] < PATHFINDING_HEIGHT);\
-															assert((dir) >= 0); assert((dir) < CORE_DIRECTIONS);
-															/* assuming p is a pos3_t, we don't need to check fo p[n] >= 0 here because it's unsigned.
-															 * also we don't need to check against PATHFINDING_WIDTH because it's always greater than a 'byte' type. */
 
 #define RT_CONN_PX(r, actorSize, x, y, z)		(r.getConn(actorSize, x, y, z, 0))
 #define RT_CONN_NX(r, actorSize, x, y, z)		(r.getConn(actorSize, x, y, z, 1))
