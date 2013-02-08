@@ -162,7 +162,7 @@ void UI_ContainerNodeUpdateEquipment (inventory_t *inv, const equipDef_t *ed)
  */
 void UI_DrawItem (uiNode_t *node, const vec3_t org, const item_t *item, int x, int y, const vec3_t scale, const vec4_t color)
 {
-	const objDef_t *od = item->item;
+	const objDef_t *od = item->def();
 	vec4_t col;
 	vec3_t origin;
 
@@ -463,10 +463,10 @@ static void UI_ContainerNodeDrawSingle (uiNode_t *node, const objDef_t *highligh
 		if (ui_inventory->c[csi.idRight]) {
 			const item_t *item = &ui_inventory->c[csi.idRight]->item;
 			assert(item);
-			assert(item->item);
+			assert(item->def());
 
-			if (item->item->holdTwoHanded) {
-				if (highlightType && INVSH_LoadableInWeapon(highlightType, item->item))
+			if (item->def()->holdTwoHanded) {
+				if (highlightType && INVSH_LoadableInWeapon(highlightType, item->def()))
 					memcpy(color, colorLoadable, sizeof(vec4_t));
 				else
 					memcpy(color, colorDefault, sizeof(vec4_t));
@@ -484,8 +484,8 @@ static void UI_ContainerNodeDrawSingle (uiNode_t *node, const objDef_t *highligh
 			 * and there is a weapon in the left, then draw a disabled marker for the
 			 * fireTwoHanded weapon. */
 			assert(item);
-			assert(item->item);
-			if (INV_IsRightDef(EXTRADATA(node).container) && item->item->fireTwoHanded && ui_inventory->c[csi.idLeft]) {
+			assert(item->def());
+			if (INV_IsRightDef(EXTRADATA(node).container) && item->def()->fireTwoHanded && ui_inventory->c[csi.idLeft]) {
 				disabled = true;
 				UI_DrawDisabled(node);
 			}
@@ -493,8 +493,8 @@ static void UI_ContainerNodeDrawSingle (uiNode_t *node, const objDef_t *highligh
 
 		item = &ui_inventory->c[EXTRADATA(node).container->id]->item;
 		assert(item);
-		assert(item->item);
-		if (highlightType && INVSH_LoadableInWeapon(highlightType, item->item)) {
+		assert(item->def());
+		if (highlightType && INVSH_LoadableInWeapon(highlightType, item->def())) {
 			if (disabled)
 				Vector4Copy(colorDisabledLoadable, color);
 			else

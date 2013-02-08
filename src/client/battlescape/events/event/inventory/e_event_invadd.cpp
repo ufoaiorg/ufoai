@@ -45,7 +45,7 @@ static void CL_NetReceiveItem (dbuffer *buf, item_t *item, containerIndex_t *con
 	item->item = INVSH_GetItemByIDX(t);
 	item->ammo = INVSH_GetItemByIDX(m);
 
-	if (!item->item)
+	if (!item->def())
 		Com_Error(ERR_DROP, "no weapon given for item");
 }
 

@@ -303,7 +303,7 @@ static inline const item_t* AI_GetItemFromInventory (const invList_t *ic)
 {
 	if (ic != NULL) {
 		const item_t *item = &ic->item;
-		if (item->ammo && item->item->weapon && (!item->item->reload || item->ammoLeft > 0))
+		if (item->ammo && item->def()->weapon && (!item->def()->reload || item->ammoLeft > 0))
 			return item;
 	}
 	return NULL;
@@ -544,7 +544,7 @@ static void AI_SearchBestTarget (aiAction_t *aia, const edict_t *ent, edict_t *c
 		const int shots = tu / time;
 		if (shots) {
 			float dmg;
-			if (G_IsStunned(check) && (item->item->dmgtype == gi.csi->damStunElectro || item->item->dmgtype == gi.csi->damStunGas))
+			if (G_IsStunned(check) && (item->def()->dmgtype == gi.csi->damStunElectro || item->def()->dmgtype == gi.csi->damStunGas))
 				return;
 			if (!AI_FighterCheckShoot(ent, check, fd, &dist))
 				continue;

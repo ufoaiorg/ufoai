@@ -340,8 +340,8 @@ void G_ReadItem (item_t *item, const invDef_t **container, int *x, int *y)
 void G_WriteItem (const item_t *item, const invDef_t *container, int x, int y)
 {
 	assert(item);
-	assert(item->item);
-	gi.WriteFormat("sbsbbbbs", item->item->idx, item->ammoLeft, item->ammo ? item->ammo->idx : NONE, container->id, x, y, item->rotated, item->amount);
+	assert(item->def());
+	gi.WriteFormat("sbsbbbbs", item->def()->idx, item->ammoLeft, item->ammo ? item->ammo->idx : NONE, container->id, x, y, item->rotated, item->amount);
 }
 
 /**

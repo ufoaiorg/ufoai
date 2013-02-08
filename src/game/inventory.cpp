@@ -91,7 +91,7 @@ invList_t *InventoryInterface::addToInventory (inventory_t *const inv, const ite
 	invList_t *ic;
 	int checkedTo;
 
-	if (!item->item)
+	if (!item->def())
 		return NULL;
 
 	if (amount <= 0)
@@ -121,7 +121,7 @@ invList_t *InventoryInterface::addToInventory (inventory_t *const inv, const ite
 			return NULL;
 	}
 
-	checkedTo = INVSH_CheckToInventory(inv, item->item, container, x, y, NULL);
+	checkedTo = INVSH_CheckToInventory(inv, item->def(), container, x, y, NULL);
 	assert(checkedTo);
 
 	/* not found - add a new one */
@@ -479,7 +479,7 @@ bool InventoryInterface::tryAddToInventory (inventory_t* const inv, const item_t
 		assert(y == NONE);
 		return false;
 	} else {
-		const int checkedTo = INVSH_CheckToInventory(inv, item->item, container, x, y, NULL);
+		const int checkedTo = INVSH_CheckToInventory(inv, item->def(), container, x, y, NULL);
 		if (!checkedTo)
 			return false;
 

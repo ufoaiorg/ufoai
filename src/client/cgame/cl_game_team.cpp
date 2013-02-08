@@ -503,13 +503,13 @@ void GAME_ActorSelect_f (void)
  */
 static void GAME_SaveItem (xmlNode_t *p, const item_t *item, containerIndex_t container, int x, int y)
 {
-	assert(item->item != NULL);
+	assert(item->def() != NULL);
 
 	XML_AddString(p, SAVE_INVENTORY_CONTAINER, INVDEF(container)->name);
 	XML_AddInt(p, SAVE_INVENTORY_X, x);
 	XML_AddInt(p, SAVE_INVENTORY_Y, y);
 	XML_AddIntValue(p, SAVE_INVENTORY_ROTATED, item->rotated);
-	XML_AddString(p, SAVE_INVENTORY_WEAPONID, item->item->id);
+	XML_AddString(p, SAVE_INVENTORY_WEAPONID, item->def()->id);
 	/** @todo: is there any case when amount != 1 for soldier inventory item? */
 	XML_AddInt(p, SAVE_INVENTORY_AMOUNT, item->amount);
 	if (item->ammoLeft > NONE_AMMO) {

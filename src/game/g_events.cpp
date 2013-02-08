@@ -362,7 +362,7 @@ void G_EventEndRound (void)
 void G_EventInventoryReload (const edict_t* ent, playermask_t playerMask, const item_t* item, const invDef_t* invDef, const invList_t* ic)
 {
 	G_EventAdd(playerMask, EV_INV_RELOAD, ent->number);
-	gi.WriteByte(item->item->ammo);
+	gi.WriteByte(item->def()->ammo);
 	gi.WriteByte(item->ammo->idx);
 	gi.WriteByte(invDef->id);
 	gi.WriteByte(ic->x);

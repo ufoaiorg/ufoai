@@ -507,7 +507,7 @@ void INVSH_FindSpace (const inventory_t* const inv, const item_t *item, const in
 
 	for (y = 0; y < SHAPE_BIG_MAX_HEIGHT; y++) {
 		for (x = 0; x < SHAPE_BIG_MAX_WIDTH; x++) {
-			const int checkedTo = INVSH_CheckToInventory(inv, item->item, container, x, y, ignoredItem);
+			const int checkedTo = INVSH_CheckToInventory(inv, item->def(), container, x, y, ignoredItem);
 			if (checkedTo) {
 				cacheCheckToInventory = INV_DOES_NOT_FIT;
 				*px = x;
@@ -522,7 +522,7 @@ void INVSH_FindSpace (const inventory_t* const inv, const item_t *item, const in
 
 #ifdef PARANOID
 	Com_DPrintf(DEBUG_SHARED, "INVSH_FindSpace: no space for %s: %s in %s\n",
-		item->item->type, item->item->id, container->name);
+		item->def()->type, item->def()->id, container->name);
 #endif
 	*px = *py = NONE;
 }
@@ -686,12 +686,12 @@ const fireDef_t *FIRESH_FiredefForWeapon (const item_t *item)
 {
 	int i;
 	const objDef_t *ammo = item->ammo;
-	const objDef_t *weapon = item->item;
+	const objDef_t *weapon = item->def();
 
 	/* this weapon does not use ammo, check for
 	 * existing firedefs in the weapon. */
 	if (weapon->numWeapons > 0)
-		ammo = item->item;
+		ammo = item->def();
 
 	if (!ammo)
 		return NULL;
