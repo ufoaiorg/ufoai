@@ -1440,7 +1440,6 @@ void RT_UpdateConnectionColumn (mapTiles_t *mapTiles, Routing &routing, const in
 	const int ay = y + dvecs[dir][1];
 
 	assert(actorSize > ACTOR_SIZE_INVALID && actorSize <= ACTOR_MAX_SIZE);
-	assert(routing.routes);
 	assert((x >= 0) && (x <= PATHFINDING_WIDTH - actorSize));
 	assert((y >= 0) && (y <= PATHFINDING_WIDTH - actorSize));
 
