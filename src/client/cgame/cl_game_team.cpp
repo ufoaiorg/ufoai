@@ -570,7 +570,7 @@ static void GAME_LoadItem (xmlNode_t *n, item_t *item, containerIndex_t *contain
 	}
 	*container = i;
 
-	item->item = INVSH_GetItemByID(itemID);
+	item->setDef(INVSH_GetItemByID(itemID));
 	*x = XML_GetInt(n, SAVE_INVENTORY_X, 0);
 	*y = XML_GetInt(n, SAVE_INVENTORY_Y, 0);
 	item->rotated = XML_GetInt(n, SAVE_INVENTORY_ROTATED, 0);

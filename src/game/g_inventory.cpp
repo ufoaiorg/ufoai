@@ -312,7 +312,7 @@ void G_ReadItem (item_t *item, const invDef_t **container, int *x, int *y)
 
 	if (t < 0 || t >= gi.csi->numODs)
 		gi.Error("Item index out of bounds: %i", t);
-	item->item = &gi.csi->ods[t];
+	item->setDef(&gi.csi->ods[t]);
 
 	if (m != NONE) {
 		if (m < 0 || m >= gi.csi->numODs)
