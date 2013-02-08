@@ -54,7 +54,7 @@ namespace routing
 
 	/**
 	 * @brief evaluate access state for given position for given routing data
-	 * @param routes routing data
+	 * @param routing The routing tables
 	 * @param pos position to evaluate
 	 * @return access state as enum value for later rendering
 	 */
@@ -126,7 +126,7 @@ namespace routing
 	/**
 	 * @brief evaluate map data to set access and connectivity state to given lump entry.
 	 * @param entry entry to fill values into
-	 * @param routes routing data
+	 * @param routing The routing tables
 	 * @param pos position to evaluate
 	 */
 	static void FillRoutingLumpEntry (RoutingLumpEntry &entry, Routing &routing, pos3_t pos)
