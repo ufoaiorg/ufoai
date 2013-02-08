@@ -344,7 +344,7 @@ inventory_action_t InventoryInterface::moveInInventory (inventory_t* const inv, 
 
 		/* Reset the cached item (source) (It'll be move to container emptied by destination item later.) */
 		this->cacheItem = cacheItem2;
-		checkedTo = INVSH_CheckToInventory(inv, this->cacheItem.item, to, 0, 0, fItem);
+		checkedTo = INVSH_CheckToInventory(inv, this->cacheItem.def(), to, 0, 0, fItem);
 	} else if (!checkedTo) {
 		/* Get the target-invlist (e.g. a weapon). We don't need to check for
 		 * scroll because checkedTo is always true here. */
@@ -376,7 +376,7 @@ inventory_action_t InventoryInterface::moveInInventory (inventory_t* const inv, 
 					if (addToInventory(inv, &item, from, cacheFromX, cacheFromY, 1) == NULL)
 						Sys_Error("Could not reload the weapon - add to inventory failed (%s)", invName);
 
-					ic->item.ammo = this->cacheItem.item;
+					ic->item.ammo = this->cacheItem.def();
 					if (icp)
 						*icp = ic;
 					return IA_RELOAD_SWAP;
@@ -385,7 +385,7 @@ inventory_action_t InventoryInterface::moveInInventory (inventory_t* const inv, 
 					if (!removeFromInventory(inv, from, fItem))
 						return IA_NONE;
 
-					ic->item.ammo = this->cacheItem.item;
+					ic->item.ammo = this->cacheItem.def();
 					/* loose ammo of type ic->item.m saved on server side */
 					ic->item.ammoLeft = ic->item.def()->ammo;
 					if (icp)
@@ -444,7 +444,7 @@ inventory_action_t InventoryInterface::moveInInventory (inventory_t* const inv, 
 	if (TU)
 		*TU -= time;
 
-	assert(this->cacheItem.item);
+	assert(this->cacheItem.def());
 	ic = addToInventory(inv, &this->cacheItem, to, tx, ty, 1);
 
 	/* return data */
@@ -454,7 +454,7 @@ inventory_action_t InventoryInterface::moveInInventory (inventory_t* const inv, 
 	}
 
 	if (INV_IsArmourDef(to)) {
-		assert(INV_IsArmour(this->cacheItem.item));
+		assert(INV_IsArmour(this->cacheItem.def()));
 		return IA_ARMOUR;
 	}
 
@@ -678,7 +678,7 @@ int InventoryInterface::PackAmmoAndWeapon (character_t* const chr, const objDef_
 			weight = GetInventoryState(inv, tuNeed) + INVSH_GetItemWeight(item);
 			maxTU = GET_TU(speed, GET_ENCUMBRANCE_PENALTY(weight, chr->score.skills[ABILITY_POWER]));
 
-			mun.item = ammo;
+			mun.setDef(ammo);
 			/* ammo to backpack; belt is for knives and grenades */
 			if (weight <= maxWeight && tuNeed <= maxTU)
 					numpacked += tryAddToInventory(inv, &mun, &csi->ids[csi->idBackpack]);

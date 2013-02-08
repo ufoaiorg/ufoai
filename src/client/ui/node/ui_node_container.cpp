@@ -348,7 +348,7 @@ static void UI_DrawFree (containerIndex_t container, const uiNode_t *node, int p
  */
 static void UI_ContainerNodeDrawFreeSpace (uiNode_t *node, inventory_t *inv)
 {
-	const objDef_t *od = UI_DNDGetItem()->item;	/**< Get the 'type' of the dragged item. */
+	const objDef_t *od = UI_DNDGetItem()->def();	/**< Get the 'type' of the dragged item. */
 	vec2_t nodepos;
 
 	/* Draw only in dragging-mode and not for the equip-floor */
@@ -547,7 +547,7 @@ static void UI_ContainerNodeDrawDropPreview (uiNode_t *target)
 	/* copy the DND item to not change the original one */
 	previewItem = *UI_DNDGetItem();
 	previewItem.rotated = false;
-	checkedTo = INVSH_CheckToInventory(ui_inventory, previewItem.item, EXTRADATA(target).container, dragInfoToX, dragInfoToY, dragInfoIC);
+	checkedTo = INVSH_CheckToInventory(ui_inventory, previewItem.def(), EXTRADATA(target).container, dragInfoToX, dragInfoToY, dragInfoIC);
 	switch (checkedTo) {
 	case INV_DOES_NOT_FIT:
 		return;
@@ -562,7 +562,7 @@ static void UI_ContainerNodeDrawDropPreview (uiNode_t *target)
 	}
 
 	/* Hack, no preview for armour, we don't want it out of the armour container (and armour container is not visible) */
-	if (INV_IsArmour(previewItem.item))
+	if (INV_IsArmour(previewItem.def()))
 		return;
 
 	UI_GetNodeAbsPos(target, origine);
@@ -605,7 +605,7 @@ void uiContainerNode::draw (uiNode_t *node)
 
 	/* Highlight weapons that the dragged ammo (if it is one) can be loaded into. */
 	if (UI_DNDIsDragging() && UI_DNDGetType() == DND_ITEM) {
-		highlightType = UI_DNDGetItem()->item;
+		highlightType = UI_DNDGetItem()->def();
 	}
 
 	if (EXTRADATA(node).container->single) {
@@ -911,8 +911,8 @@ bool uiContainerNode::onDndMove (uiNode_t *target, int x, int y)
 	 * location to the middle of the top-left square of the item.
 	 * @sa UI_LeftClick */
 	if (dragItem->item) {
-		itemX = C_UNIT * dragItem->item->sx / 2;	/* Half item-width. */
-		itemY = C_UNIT * dragItem->item->sy / 2;	/* Half item-height. */
+		itemX = C_UNIT * dragItem->def()->sx / 2;	/* Half item-width. */
+		itemY = C_UNIT * dragItem->def()->sy / 2;	/* Half item-height. */
 
 		/* Place relative center in the middle of the square. */
 		itemX -= C_UNIT / 2;

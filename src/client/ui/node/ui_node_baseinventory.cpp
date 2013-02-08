@@ -379,15 +379,15 @@ static int UI_BaseInventoryNodeDrawItems (uiNode_t *node, const objDef_t *highli
 				tempItem.item = obj->ammos[ammoIdx];
 
 				/* skip weapos that are their own ammo -- oneshot and such */
-				if (obj == tempItem.item)
+				if (obj == tempItem.def())
 					continue;
 
 				/* skip unusable ammo */
-				if (!GAME_ItemIsUseable(tempItem.item))
+				if (!GAME_ItemIsUseable(tempItem.def()))
 					continue;
 
 				/* find and skip none existing ammo */
-				icItem = UI_ContainerNodeGetExistingItem(node, tempItem.item, (itemFilterTypes_t) EXTRADATA(node).filterEquipType);
+				icItem = UI_ContainerNodeGetExistingItem(node, tempItem.def(), (itemFilterTypes_t) EXTRADATA(node).filterEquipType);
 				if (!icItem)
 					continue;
 
@@ -488,7 +488,7 @@ void uiBaseInventoryNode::draw (uiNode_t *node)
 
 	/* Highlight weapons that the dragged ammo (if it is one) can be loaded into. */
 	if (UI_DNDIsDragging() && UI_DNDGetType() == DND_ITEM) {
-		highlightType = UI_DNDGetItem()->item;
+		highlightType = UI_DNDGetItem()->def();
 	}
 
 	UI_BaseInventoryNodeDraw2(node, highlightType);

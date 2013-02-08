@@ -290,7 +290,7 @@ bool INVSH_CompareItem (const item_t *const item1, const item_t *const item2)
 	if (item1 == NULL || item2 == NULL)
 		return false;
 
-	if (item1->item == item2->item && item1->ammo == item2->ammo && item1->ammoLeft == item2->ammoLeft)
+	if (item1->def() == item2->def() && item1->ammo == item2->ammo && item1->ammoLeft == item2->ammoLeft)
 		return true;
 
 	return false;
