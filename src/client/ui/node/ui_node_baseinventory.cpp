@@ -376,7 +376,7 @@ static int UI_BaseInventoryNodeDrawItems (uiNode_t *node, const objDef_t *highli
 		if (obj->weapon && EXTRADATA(node).displayAmmoOfWeapon) {
 			int ammoIdx;
 			for (ammoIdx = 0; ammoIdx < obj->numAmmos; ammoIdx++) {
-				tempItem.item = obj->ammos[ammoIdx];
+				tempItem.setDef(obj->ammos[ammoIdx]);
 
 				/* skip weapos that are their own ammo -- oneshot and such */
 				if (obj == tempItem.def())

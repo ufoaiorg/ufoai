@@ -208,7 +208,7 @@ static void testItemReload (void)
 	ad = INVSH_GetItemByIDSilent("rpg_ammo");
 	CU_ASSERT_PTR_NOT_NULL(ad);
 
-	ammo.item = ad;
+	ammo.setDef(ad);
 	ammo.ammo = NULL;
 	ammo.ammoLeft = 0;
 
@@ -234,7 +234,7 @@ static void testItemReload (void)
 	ad = INVSH_GetItemByIDSilent("rpg_incendiary_ammo");
 	CU_ASSERT_PTR_NOT_NULL(ad);
 
-	ammoFrom.item = ad;
+	ammoFrom.setDef(ad);
 	ammoFrom.ammo = NULL;
 	ammoFrom.ammoLeft = 0;
 

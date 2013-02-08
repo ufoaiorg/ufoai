@@ -577,11 +577,11 @@ static void UI_ContainerNodeDrawDropPreview (uiNode_t *target)
 	 * calculated rotation info. */
 	} else {
 		if (previewItem.rotated) {
-			origine[0] += (dragInfoToX + previewItem.item->sy / 2.0) * C_UNIT;
-			origine[1] += (dragInfoToY + previewItem.item->sx / 2.0) * C_UNIT;
+			origine[0] += (dragInfoToX + previewItem.def()->sy / 2.0) * C_UNIT;
+			origine[1] += (dragInfoToY + previewItem.def()->sx / 2.0) * C_UNIT;
 		} else {
-			origine[0] += (dragInfoToX + previewItem.item->sx / 2.0) * C_UNIT;
-			origine[1] += (dragInfoToY + previewItem.item->sy / 2.0) * C_UNIT;
+			origine[0] += (dragInfoToX + previewItem.def()->sx / 2.0) * C_UNIT;
+			origine[1] += (dragInfoToY + previewItem.def()->sy / 2.0) * C_UNIT;
 		}
 	}
 
@@ -910,7 +910,7 @@ bool uiContainerNode::onDndMove (uiNode_t *target, int x, int y)
 	 * Or to be more exact, we calculate the relative offset from the cursor
 	 * location to the middle of the top-left square of the item.
 	 * @sa UI_LeftClick */
-	if (dragItem->item) {
+	if (dragItem->def()) {
 		itemX = C_UNIT * dragItem->def()->sx / 2;	/* Half item-width. */
 		itemY = C_UNIT * dragItem->def()->sy / 2;	/* Half item-height. */
 
@@ -932,7 +932,7 @@ bool uiContainerNode::onDndMove (uiNode_t *target, int x, int y)
 
 	/* Search for a suitable position to render the item at if
 	 * the container is "single", the cursor is out of bound of the container. */
-	if (!exists && dragItem->item && (EXTRADATA(target).container->single
+	if (!exists && dragItem->def() && (EXTRADATA(target).container->single
 		|| dragInfoToX < 0 || dragInfoToY < 0
 		|| dragInfoToX >= SHAPE_BIG_MAX_WIDTH || dragInfoToY >= SHAPE_BIG_MAX_HEIGHT)) {
 #if 0
@@ -952,7 +952,7 @@ bool uiContainerNode::onDndMove (uiNode_t *target, int x, int y)
 		invList_t *fItem;
 
 		/* is there empty slot? */
-		const int checkedTo = INVSH_CheckToInventory(ui_inventory, dragItem->item, EXTRADATA(target).container, dragInfoToX, dragInfoToY, dragInfoIC);
+		const int checkedTo = INVSH_CheckToInventory(ui_inventory, dragItem->def(), EXTRADATA(target).container, dragInfoToX, dragInfoToY, dragInfoIC);
 		if (checkedTo != INV_DOES_NOT_FIT)
 			return true;
 
@@ -962,7 +962,7 @@ bool uiContainerNode::onDndMove (uiNode_t *target, int x, int y)
 			return false;
 		if (EXTRADATA(target).container->single)
 			return true;
-		return INVSH_LoadableInWeapon(dragItem->item, fItem->item.def());
+		return INVSH_LoadableInWeapon(dragItem->def(), fItem->item.def());
 	}
 }
 
@@ -1006,7 +1006,7 @@ bool uiContainerNode::onDndFinished (uiNode_t *source, bool isDropped)
 			const invDef_t *targetContainer = EXTRADATACONST(target).container;
 			assert(targetContainer);
 			if (UI_IsScrollContainerNode(source)) {
-				fItem = UI_ContainerNodeGetExistingItem(sourceContainer, dragItem->item, MAX_FILTERTYPES);
+				fItem = UI_ContainerNodeGetExistingItem(sourceContainer, dragItem->def(), MAX_FILTERTYPES);
 			} else
 				fItem = INVSH_SearchInInventory(ui_inventory, sourceContainer, dragInfoFromX, dragInfoFromY);
 			assert(fItem);
