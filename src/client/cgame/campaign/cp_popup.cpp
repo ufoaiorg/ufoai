@@ -237,8 +237,7 @@ void CL_DisplayPopupAircraft (aircraft_t* aircraft)
 			if (tempMission->pos) {
 				popupAircraft.itemsId[popupAircraft.numItems] = MIS_GetIdx(tempMission);
 				popupAircraft.itemsAction[popupAircraft.numItems++] = POPUP_AIRCRAFT_ACTION_MOVETOMISSION;
-				Q_strcat(popupAircraft.textPopup, va(_("Mission\t%s (%s)\n"),
-					CP_MissionToTypeString(tempMission), _(tempMission->location)), lengthof(popupAircraft.textPopup));
+				Q_strcat(popupAircraft.textPopup, va(_("Mission\t%s\n"), MIS_GetName(tempMission)), lengthof(popupAircraft.textPopup));
 			}
 		}
 	}

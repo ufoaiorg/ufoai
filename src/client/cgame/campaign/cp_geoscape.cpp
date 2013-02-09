@@ -301,8 +301,7 @@ bool GEO_Click (const uiNode_t* node, int x, int y, const vec2_t pos)
 		if (tempMission->stage == STAGE_NOT_ACTIVE || !tempMission->onGeoscape)
 			continue;
 		if (tempMission->pos && GEO_IsPositionSelected(node, tempMission->pos, x, y))
-			GEO_MultiSelectListAddItem(MULTISELECT_TYPE_MISSION, MIS_GetIdx(tempMission),
-				CP_MissionToTypeString(tempMission), _(tempMission->location));
+			GEO_MultiSelectListAddItem(MULTISELECT_TYPE_MISSION, MIS_GetIdx(tempMission), _("Mission"), MIS_GetName(tempMission));
 	}
 
 	/* Get selected aircraft which belong */
@@ -1221,7 +1220,7 @@ static void GEO_DrawMapOneMission (const uiNode_t* node, const mission_t *missio
 		GEO_RenderImage(x, y, "pics/geoscape/mission");
 	}
 
-	cgi->UI_DrawString("f_verysmall", ALIGN_UL, x + 10, y, _(mission->location));
+	cgi->UI_DrawString("f_verysmall", ALIGN_UL, x + 10, y, MIS_GetName(mission));
 }
 
 /**
@@ -1495,25 +1494,8 @@ static void GEO_DrawMapOnePhalanxAircraft (const uiNode_t* node, aircraft_t *air
 static const char *GEO_GetMissionText (char *buffer, size_t size, const mission_t *mission)
 {
 	assert(mission);
-	Com_sprintf(buffer, size, _("Location: %s\nType: %s\nObjective: %s"), mission->location,
-			CP_MissionToTypeString(mission), (mission->mapDef) ? _(mission->mapDef->description) : _("Unknown"));
-	return buffer;
-}
-
-/**
- * @brief Assembles a short string for a mission that is on the geoscape
- * @param[in] mission The mission to get the description for
- * @param[out] buffer The target buffer to store the text in
- * @param[in] size The size of the target buffer
- * @return A pointer to the buffer that was given to this function
- */
-static const char *GEO_GetShortMissionText (char *buffer, size_t size, const mission_t *mission)
-{
-	assert(mission);
-	Com_sprintf(buffer, size, _("%s (%s)\n%s"),
-			CP_MissionToTypeString(mission),
-			mission->location,
-			(mission->mapDef) ? _(mission->mapDef->description) : _("Unknown"));
+	Com_sprintf(buffer, size, _("Location: %s\nName: %s\nObjective: %s"), mission->location,
+		MIS_GetName(mission), (mission->mapDef) ? _(mission->mapDef->description) : _("Unknown"));
 	return buffer;
 }
 
@@ -1582,8 +1564,9 @@ void GEO_UpdateGeoscapeDock (void)
 	MIS_Foreach(mission) {
 		if (!mission->onGeoscape)
 			continue;
-		cgi->UI_ExecuteConfunc("add_geoscape_object mission %i \"%s\" %s \"%s\"",
-				mission->idx, mission->location, MIS_GetModel(mission), GEO_GetShortMissionText(buf, sizeof(buf), mission));
+		cgi->UI_ExecuteConfunc("add_geoscape_object mission %i \"%s\" %s \"%s\n%s\"",
+			mission->idx, mission->location, MIS_GetModel(mission), MIS_GetName(mission),
+			(mission->mapDef) ? _(mission->mapDef->description) : "");
 	}
 
 	/* draws ufos */

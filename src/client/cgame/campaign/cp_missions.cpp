@@ -437,28 +437,51 @@ int MIS_GetIdx (const mission_t *mis)
 }
 
 /**
- * @brief Return the type of mission.
+ * @brief Returns a short translated name for a mission
+ * @param[in] mission Pointer to the mission to get name for
  */
-const char* CP_MissionToTypeString (const mission_t *mission)
+const char* MIS_GetName (const mission_t *mission)
 {
-	if (mission->category == INTERESTCATEGORY_RESCUE)
-		return _("Crashed aircraft");
+	assert(mission);
 
+	if (mission->category == INTERESTCATEGORY_RESCUE)
+		if (mission->data.aircraft)
+			return va(_("Crashed %s"), mission->data.aircraft->name);
+
+	const nation_t *nation = GEO_GetNation(mission->pos);
 	switch (mission->stage) {
-	case STAGE_RECON_GROUND:
-	case STAGE_SPREAD_XVI:
-		return _("Landed UFO");
 	case STAGE_TERROR_MISSION:
-		return _("Terror mission");
+		if (nation)
+			return va(_("Alien terror in %s"), _(nation->name));
+		else
+			return _("Alien terror");
 	case STAGE_BASE_ATTACK:
-		return _("Base attack");
+		if (mission->data.base)
+			return va(_("Base attacked: %s"), mission->data.base->name);
 	case STAGE_BASE_DISCOVERED:
-		return _("Alien base");
-	case STAGE_HARVEST:
-		return _("Harvesting mission");
+		if (nation)
+			return va(_("Alien base in %s"), _(nation->name));
+		else
+			return _("Alien base");
 	default:
-		return _("Crashed UFO");
+		break;
 	}
+
+	/* mission has an ufo */
+	if (mission->ufo) {
+		/* which is crashed */
+		if (mission->crashed)
+			return va(_("Crashed %s"), UFO_AircraftToIDOnGeoscape(mission->ufo));
+		/* not crashed but detected */
+		if (mission->ufo->detected && mission->ufo->landed)
+			return va(_("Landed %s"), UFO_AircraftToIDOnGeoscape(mission->ufo));
+	}
+
+	/* we know nothing about the mission, maybe only it's location */
+	if (nation)
+		return va(_("Alien activity in %s"), _(nation->name));
+	else
+		return _("Alien activity");
 }
 
 #ifdef DEBUG
@@ -728,16 +751,12 @@ bool CP_CheckNewMissionDetectedOnGeoscape (void)
 		assert(!mission->ufo || !mission->ufo->detected);
 
 		if (frand() <= missionDetectionProbability) {
-			/* mission is detected */
-			CP_MissionAddToGeoscape(mission, true);
-
-			/* maybe radar is not activated yet (as ufo wasn't detected before) */
-			if (!GEO_IsRadarOverlayActivated())
-				GEO_SetOverlay("radar");
-
 			/* if mission has a UFO, detect the UFO when it takes off */
 			if (mission->ufo)
-				mission->ufo->detected = true;
+				UFO_DetectNewUFO(mission->ufo);
+
+			/* mission is detected */
+			CP_MissionAddToGeoscape(mission, true);
 
 			newDetection = true;
 		}

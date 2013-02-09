@@ -758,25 +758,34 @@ window popup_intercept_ready
 		size		"75 20"
 		font		"f_small_bold"
 	}
-
 	string craftname {
 		pos			"101 58"
+		size		"350 20"
+	}
+	string missionname_label {
+		string		"_Mission:"
+		pos			"26 78"
+		size		"75 20"
+		font		"f_small_bold"
+	}
+	string missionname {
+		pos			"101 78"
 		size		"350 20"
 	}
 
 	string message {
 		string		"_Aircraft reached desired location - what to do?"
-		pos			"26 78"
-		size		"450 40"
+		pos			"26 110"
+		size		"450 20"
 		longlines	LONGLINES_WRAP
 	}
 
 	confunc pop_intready_aircraft {
 		*node:parent.craftname@string = <1>
+		*node:parent.missionname@string = <2>
 	}
 
-	cmpCancelButton bt_cancel
-	{
+	cmpCancelButton bt_cancel {
 		pos			"259 188"
 		onClick		{ cmd "ui_pop;mn_mapaction_reset;" }
 	}
@@ -788,7 +797,7 @@ window popup_intercept_ready
 	{
 		string		"_Enter"
 		tooltip		"_Enter the battlefield"
-		pos			"66 125"
+		pos			"66 145"
 		onClick		{ cmd "game_go;" }
 	}
 
@@ -796,7 +805,7 @@ window popup_intercept_ready
 	{
 		string		"_Auto mission"
 		tooltip		"_Automatically finish mission"
-		pos			"259 125"
+		pos			"259 145"
 		onClick		{ cmd "cp_mission_autogo;" }
 	}
 
