@@ -192,7 +192,7 @@ void DoRouting (void)
 	for (i = 0; i < 3; i++)
 		wpMaxs[i] = LittleLong(wpMaxs[i]);
 	data = CompressRouting((byte*)wpMaxs, data, sizeof(wpMaxs));
-	data = CompressRouting((byte*)Nmap.routes, data, sizeof(Nmap));
+	data = CompressRouting((byte*)&Nmap, data, sizeof(Nmap));
 
 	curTile->routedatasize = data - curTile->routedata;
 
