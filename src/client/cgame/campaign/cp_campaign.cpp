@@ -1201,6 +1201,7 @@ void CP_Shutdown (void)
 		TR_Shutdown();
 		UR_Shutdown();
 		AM_Shutdown();
+		E_Shutdown();
 
 		/** @todo Where does this belong? */
 		for (i = 0; i < ccs.numAlienCategories; i++) {
@@ -1257,7 +1258,6 @@ void CP_ResetCampaignData (void)
 	/* called to flood the hash list - because the parse tech function
 	 * was maybe already called */
 	RS_ResetTechs();
-	E_ResetEmployees();
 
 	OBJZERO(ccs);
 
@@ -1407,16 +1407,6 @@ bool CP_GetRandomPosOnGeoscapeWithParameters (vec2_t pos, const linkedList_t* te
 	assert(pos[1] <= 90);
 
 	return true;
-}
-
-const city_t * CP_GetCity (const char *id)
-{
-	LIST_Foreach(ccs.cities, city_t, city) {
-		if (Q_streq(city->id, id))
-			return city;
-	}
-
-	return NULL;
 }
 
 int CP_GetSalaryAdministrative (const salary_t *salary)

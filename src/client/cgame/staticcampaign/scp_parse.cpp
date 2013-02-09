@@ -107,7 +107,7 @@ static void SCP_ParseMission (const char *name, const char **text)
 				token = Com_EParse(text, errhead, ms->id);
 				if (text[0] == '\0')
 					return;
-				city = CP_GetCity(token);
+				city = CITY_GetById(token);
 				if (city == NULL)
 					Com_Printf("SCP_ParseMission: unknown city \"%s\" ignored (mission %s)\n", token, ms->id);
 				else

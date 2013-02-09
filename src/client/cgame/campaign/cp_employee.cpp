@@ -252,20 +252,6 @@ employeeType_t E_GetEmployeeType (const char* type)
 }
 
 /**
- * @brief Clears the employees list for loaded and new games
- * @sa CP_ResetCampaignData
- * @sa E_DeleteEmployee
- */
-void E_ResetEmployees (void)
-{
-	int i;
-
-	Com_DPrintf(DEBUG_CLIENT, "E_ResetEmployees: Delete all employees\n");
-	for (i = EMPL_SOLDIER; i < MAX_EMPL; i++)
-		cgi->LIST_Delete(&ccs.employees[i]);
-}
-
-/**
  * @brief Return a "not hired" ugv-employee pointer of a given ugv-type.
  * @param[in] ugvType What type of robot we want.
  * @return employee_t pointer on success or NULL on error.
@@ -638,7 +624,6 @@ employee_t* E_CreateEmployee (employeeType_t type, const nation_t *nation, const
  * @param[in] employee The pointer to the employee you want to remove.
  * @return True if the employee was removed successfully, otherwise false.
  * @sa E_CreateEmployee
- * @sa E_ResetEmployees
  * @sa E_UnhireEmployee
  * @note This function has the side effect, that the global employee number for
  * the given employee type is reduced by one, also the ccs.employees pointers are
