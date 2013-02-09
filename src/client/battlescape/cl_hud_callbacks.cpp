@@ -87,7 +87,7 @@ static bool HUD_CheckShooting (const le_t* le, invList_t *weapon)
 		return false;
 	}
 	/* Cannot shoot because of lack of ammo. */
-	if (weapon->item.ammoLeft <= 0 && weapon->item.def()->reload) {
+	if (weapon->item.ammoLeft <= 0 && weapon->item.isReloadable()) {
 		HUD_DisplayMessage(_("Can't perform action - no ammo!"));
 		return false;
 	}
@@ -252,7 +252,7 @@ static bool HUD_CheckReload (const le_t* le, const invList_t *weapon, containerI
 	}
 
 	/* Cannot reload because this item is not reloadable. */
-	if (!weapon->item.def()->reload) {
+	if (!weapon->item.isReloadable()) {
 		HUD_DisplayMessage(_("Can't perform action - this item is not reloadable!"));
 		return false;
 	}

@@ -1178,9 +1178,9 @@ void AI_ActorThink (Player *player, edict_t *ent)
 
 	/* if a weapon can be reloaded we attempt to do so if TUs permit, otherwise drop it */
 	if (!G_IsPanicked(ent)) {
-		if (RIGHT(ent) && RIGHT(ent)->item.def()->reload && RIGHT(ent)->item.ammoLeft == 0)
+		if (RIGHT(ent) && RIGHT(ent)->item.isReloadable() && RIGHT(ent)->item.ammoLeft == 0)
 			AI_TryToReloadWeapon(ent, gi.csi->idRight);
-		if (LEFT(ent) && LEFT(ent)->item.def()->reload && LEFT(ent)->item.ammoLeft == 0)
+		if (LEFT(ent) && LEFT(ent)->item.isReloadable() && LEFT(ent)->item.ammoLeft == 0)
 			AI_TryToReloadWeapon(ent, gi.csi->idLeft);
 	}
 

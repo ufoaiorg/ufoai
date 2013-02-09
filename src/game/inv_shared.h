@@ -349,6 +349,10 @@ typedef struct item_s {
 	{
 		return _itemDef;
 	}
+	inline bool isReloadable() const
+	{
+		return _itemDef->reload > 0;
+	}
 } item_t;
 
 /** @brief container/inventory list (linked list) with items. */

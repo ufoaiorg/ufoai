@@ -413,7 +413,7 @@ static void GAME_CollectItems (void *data, int won, void (*item)(void*, const ob
 				invList_t *i;
 				for (i = FLOOR(le); i; i = i->next) {
 					item(data, i->item.def(), 1);
-					if (i->item.def()->reload && i->item.ammoLeft > 0)
+					if (i->item.isReloadable() && i->item.ammoLeft > 0)
 						ammo(data, i);
 				}
 			}

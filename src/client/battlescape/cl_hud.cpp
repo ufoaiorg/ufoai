@@ -471,7 +471,7 @@ static void HUD_DisplayActions (const char* callback, const le_t* actor, bool ri
 		invList_t* weapon = RIGHT(actor);
 
 		/* Reloeadable item in hand. */
-		if (weapon && weapon->item.def() && weapon->item.def()->reload) {
+		if (weapon && weapon->item.def() && weapon->item.isReloadable()) {
 			int tus;
 			containerIndex_t container = csi.idRight;
 			bool noAmmo;
@@ -508,7 +508,7 @@ static void HUD_DisplayActions (const char* callback, const le_t* actor, bool ri
 		invList_t* weapon = LEFT(actor);
 
 		/* Reloeadable item in hand. */
-		if (weapon && weapon->item.def() && weapon->item.def()->reload) {
+		if (weapon && weapon->item.def() && weapon->item.isReloadable()) {
 			containerIndex_t container = csi.idLeft;
 			const char *actionId = "reload_handl";
 			const int tus = HUD_CalcReloadTime(actor, weapon->item.def(), container);
@@ -1134,7 +1134,7 @@ static int HUD_UpdateActorFireMode (le_t *actor)
 			/* if no TUs left for this firing action
 			 * or if the weapon is reloadable and out of ammo,
 			 * then change to move mode */
-			if ((selWeapon->item.def()->reload && selWeapon->item.ammoLeft <= 0) || CL_ActorUsableTUs(actor) < time)
+			if ((selWeapon->item.isReloadable() && selWeapon->item.ammoLeft <= 0) || CL_ActorUsableTUs(actor) < time)
 				CL_ActorSetMode(actor, M_MOVE);
 		} else if (selWeapon) {
 			Com_sprintf(infoText, lengthof(infoText), _("%s\n(empty)\n"), _(selWeapon->item.def()->name));
@@ -1415,7 +1415,7 @@ static void HUD_UpdateActor (le_t *actor)
 			invList = NULL;
 		}
 
-		if (invList && invList->item.def() && invList->item.ammo && invList->item.def()->reload) {
+		if (invList && invList->item.def() && invList->item.ammo && invList->item.isReloadable()) {
 			const int reloadtime = HUD_CalcReloadTime(actor, invList->item.def(), container);
 			if (reloadtime != -1 && reloadtime <= CL_ActorUsableTUs(actor))
 				time = reloadtime;
