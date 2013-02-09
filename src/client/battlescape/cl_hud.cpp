@@ -1096,7 +1096,7 @@ static int HUD_UpdateActorFireMode (le_t *actor)
 				/* This item does not use ammo, check for existing firedefs in this item. */
 				/* This is supposed to be a weapon or other usable item. */
 				if (selWeapon->item.def()->numWeapons > 0) {
-					if (selWeapon->item.def()->weapon || selWeapon->item.def()->weapons[0] == selWeapon->item.def()) {
+					if (selWeapon->item.isWeapon() || selWeapon->item.def()->weapons[0] == selWeapon->item.def()) {
 						const fireDef_t *fdArray = FIRESH_FiredefForWeapon(&selWeapon->item);
 						if (fdArray != NULL) {
 							/* Get firedef from the weapon (or other usable item) entry instead. */

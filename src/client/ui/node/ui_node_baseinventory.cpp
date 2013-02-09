@@ -226,7 +226,7 @@ static void UI_GetItemTooltip (item_t item, char *tooltipText, size_t stringMaxL
 
 	/* Only display further info if item.t is researched */
 	if (GAME_ItemIsUseable(item.def())) {
-		if (item.def()->weapon) {
+		if (item.isWeapon()) {
 			/* Get info about used ammo (if there is any) */
 			if (item.def() == item.ammo) {
 				/* Item has no ammo but might have shot-count */

@@ -353,6 +353,10 @@ typedef struct item_s {
 	{
 		return _itemDef->reload > 0;
 	}
+	inline bool isWeapon() const
+	{
+		return _itemDef->weapon;
+	}
 } item_t;
 
 /** @brief container/inventory list (linked list) with items. */

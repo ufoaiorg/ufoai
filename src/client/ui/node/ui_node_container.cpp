@@ -269,7 +269,7 @@ static void UI_GetItemTooltip (item_t item, char *tooltipText, size_t stringMaxL
 
 	/* Only display further info if item.t is researched */
 	if (GAME_ItemIsUseable(item.def())) {
-		if (item.def()->weapon) {
+		if (item.isWeapon()) {
 			/* Get info about used ammo (if there is any) */
 			if (item.def() == item.ammo) {
 				/* Item has no ammo but might have shot-count */
@@ -759,7 +759,7 @@ void UI_ContainerNodeAutoPlaceItem (uiNode_t* node, invList_t *ic)
 					target = idxArray[i];
 					packed = UI_ContainerNodeAddItem(container, ic, target, &tItem);
 					if (packed) {
-						if ((ic->item.def()->weapon && !ic->item.ammoLeft) || ic->item.def()->oneshot)
+						if ((ic->item.isWeapon() && !ic->item.ammoLeft) || ic->item.def()->oneshot)
 							ammoChanged = INV_LoadWeapon(tItem, ui_inventory, container, INVDEF(target));
 						break;
 					}
@@ -1033,7 +1033,7 @@ bool uiContainerNode::onDndFinished (uiNode_t *source, bool isDropped)
 			}
 
 			/* Add ammo on adding weapon to a soldier */
-			if (UI_IsScrollContainerNode(source) && ((fItem->item.def()->weapon && !fItem->item.ammoLeft) || fItem->item.def()->oneshot))
+			if (UI_IsScrollContainerNode(source) && ((fItem->item.isWeapon() && !fItem->item.ammoLeft) || fItem->item.def()->oneshot))
 				INV_LoadWeapon(tItem, ui_inventory, sourceContainer, targetContainer);
 
 			/* Run onChange events */
