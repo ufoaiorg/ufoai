@@ -110,9 +110,9 @@ static void UR_DialogInit_f (void)
 
 	if (ufoCraft) {
 		if (cond < 1.0)
-			cgi->Cvar_Set("mn_uforecovery_actualufo", va(_("\nSecured crashed %s (%.0f%%)\n"), UFO_AircraftToIDOnGeoscape(ufoCraft), cond * 100));
+			cgi->Cvar_Set("mn_uforecovery_actualufo", va(_("\nSecured crashed %s (%.0f%%)\n"), UFO_GetName(ufoCraft), cond * 100));
 		else
-			cgi->Cvar_Set("mn_uforecovery_actualufo", va(_("\nSecured landed %s\n"), UFO_AircraftToIDOnGeoscape(ufoCraft)));
+			cgi->Cvar_Set("mn_uforecovery_actualufo", va(_("\nSecured landed %s\n"), UFO_GetName(ufoCraft)));
 
 		cgi->UI_PushWindow("uforecovery");
 	}
@@ -191,7 +191,7 @@ static void UR_DialogStartStore_f (void)
 		return;
 
 	Com_sprintf(cp_messageBuffer, lengthof(cp_messageBuffer), _("Recovered %s from the battlefield. UFO is being transported to %s."),
-			UFO_AircraftToIDOnGeoscape(ufoRecovery.ufoTemplate), installation->name);
+			UFO_GetName(ufoRecovery.ufoTemplate), installation->name);
 	MS_AddNewMessage(_("UFO Recovery"), cp_messageBuffer);
 	date = ccs.date;
 	date.day += (int) RECOVERY_DELAY;
@@ -478,7 +478,7 @@ static void UR_DialogStartSell_f (void)
 	} else
 #endif
 	{
-		Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Recovered %s from the battlefield. UFO sold to nation %s, gained %i credits."), UFO_AircraftToIDOnGeoscape(ufoRecovery.ufoTemplate), _(nation->name), price);
+		Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Recovered %s from the battlefield. UFO sold to nation %s, gained %i credits."), UFO_GetName(ufoRecovery.ufoTemplate), _(nation->name), price);
 	}
 	MS_AddNewMessage(_("UFO Recovery"), cp_messageBuffer);
 	CP_UpdateCredits(ccs.credits + price);
@@ -538,7 +538,7 @@ static void US_SelectStoredUfo_f (void)
 		return;
 	}
 
-	const char *ufoName = UFO_AircraftToIDOnGeoscape(ufo->ufoTemplate);
+	const char *ufoName = UFO_GetName(ufo->ufoTemplate);
 	const char *status = US_StoredUFOStatus(ufo);
 	const char *eta;
 

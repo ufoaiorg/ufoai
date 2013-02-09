@@ -329,7 +329,7 @@ bool GEO_Click (const uiNode_t* node, int x, int y, const vec2_t pos)
 	ufo = NULL;
 	while ((ufo = UFO_GetNextOnGeoscape(ufo)) != NULL)
 		if (AIR_IsAircraftOnGeoscape(ufo) && GEO_IsPositionSelected(node, ufo->pos, x, y))
-			GEO_MultiSelectListAddItem(MULTISELECT_TYPE_UFO, UFO_GetGeoscapeIDX(ufo), _("UFO Sighting"), UFO_AircraftToIDOnGeoscape(ufo));
+			GEO_MultiSelectListAddItem(MULTISELECT_TYPE_UFO, UFO_GetGeoscapeIDX(ufo), _("UFO Sighting"), UFO_GetName(ufo));
 
 	if (multiSelect.nbSelect == 1) {
 		/* Execute directly action for the only one element selected */
@@ -1545,7 +1545,7 @@ static const char *GEO_GetAircraftText (char *buffer, size_t size, const aircraf
  */
 static const char *GEO_GetUFOText (char *buffer, size_t size, const aircraft_t* ufo)
 {
-	Com_sprintf(buffer, size, "%s\n", UFO_AircraftToIDOnGeoscape(ufo));
+	Com_sprintf(buffer, size, "%s\n", UFO_GetName(ufo));
 	Q_strcat(buffer, va(_("Speed: %i km/h\n"), AIR_AircraftMenuStatsValues(ufo->stats[AIR_STATS_SPEED], AIR_STATS_SPEED)), size);
 	return buffer;
 }

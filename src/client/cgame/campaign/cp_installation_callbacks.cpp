@@ -240,7 +240,7 @@ static void INS_FillUFOYardData_f (void)
 			if (ufo->installation != ins)
 				continue;
 
-			const char *ufoName = UFO_AircraftToIDOnGeoscape(ufo->ufoTemplate);
+			const char *ufoName = UFO_GetName(ufo->ufoTemplate);
 			const char *condition = va(_("Condition: %3.0f%%"), ufo->condition * 100);
 			const char *status = US_StoredUFOStatus(ufo);
 			cgi->UI_ExecuteConfunc("ufolist_addufo %d \"%s\" \"%s\" \"%s\" \"%s\"", ufo->idx, ufoName, condition, ufo->ufoTemplate->model, status);

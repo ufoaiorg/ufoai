@@ -471,10 +471,10 @@ const char* MIS_GetName (const mission_t *mission)
 	if (mission->ufo) {
 		/* which is crashed */
 		if (mission->crashed)
-			return va(_("Crashed %s"), UFO_AircraftToIDOnGeoscape(mission->ufo));
+			return va(_("Crashed %s"), UFO_GetName(mission->ufo));
 		/* not crashed but detected */
 		if (mission->ufo->detected && mission->ufo->landed)
-			return va(_("Landed %s"), UFO_AircraftToIDOnGeoscape(mission->ufo));
+			return va(_("Landed %s"), UFO_GetName(mission->ufo));
 	}
 
 	/* we know nothing about the mission, maybe only it's location */

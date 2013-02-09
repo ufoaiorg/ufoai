@@ -148,7 +148,7 @@ const char* UFO_TypeToName (const ufoType_t type)
  * @brief Returns names of the UFO is UFO has been researched.
  * @param[in] ufocraft Pointer to the UFO.
  */
-const char* UFO_AircraftToIDOnGeoscape (const aircraft_t *ufocraft)
+const char* UFO_GetName (const aircraft_t *ufocraft)
 {
 	const technology_t *tech = ufocraft->tech;
 
@@ -857,15 +857,15 @@ bool UFO_CampaignCheckEvents (void)
 				/* if UFO is aiming a PHALANX aircraft, warn player */
 				if (ufo->aircraftTarget) {
 					/* stop time and notify */
-					MSO_CheckAddNewMessage(NT_UFO_ATTACKING, _("Notice"), va(_("%s is flying toward %s"), UFO_AircraftToIDOnGeoscape(ufo), ufo->aircraftTarget->name));
+					MSO_CheckAddNewMessage(NT_UFO_ATTACKING, _("Notice"), va(_("%s is flying toward %s"), UFO_GetName(ufo), ufo->aircraftTarget->name));
 					/** @todo present a popup with possible orders like: return to base, attack the ufo, try to flee the rockets
 					 * @sa UFO_SearchAircraftTarget */
 				} else {
-					MSO_CheckAddNewMessage(NT_UFO_SPOTTED, _("Notice"), va(_("Our radar detected %s near %s"), UFO_AircraftToIDOnGeoscape(ufo), detectedBy), MSG_UFOSPOTTED);
+					MSO_CheckAddNewMessage(NT_UFO_SPOTTED, _("Notice"), va(_("Our radar detected %s near %s"), UFO_GetName(ufo), detectedBy), MSG_UFOSPOTTED);
 				}
 				newDetection = true;
 			} else if (!detected) {
-				MSO_CheckAddNewMessage(NT_UFO_SIGNAL_LOST, _("Notice"), va(_("Our radar has lost the tracking on %s"), UFO_AircraftToIDOnGeoscape(ufo)), MSG_UFOLOST);
+				MSO_CheckAddNewMessage(NT_UFO_SIGNAL_LOST, _("Notice"), va(_("Our radar has lost the tracking on %s"), UFO_GetName(ufo)), MSG_UFOLOST);
 				/* Make this UFO undetected */
 				ufo->detected = false;
 				/* Notify that ufo disappeared */
