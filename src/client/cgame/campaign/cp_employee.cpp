@@ -450,14 +450,12 @@ bool E_HireRobot (base_t* base, const ugv_t *ugvType)
 
 /**
  * @brief Removes the inventory of the employee and also removes him from buildings
- * @note This is used in the transfer start function (when you transfer an employee
- * this must be called for him to make him no longer useable in the current base)
- * and is also used when you completely unhire an employee.
- * @sa E_UnhireEmployee
+ * @param[in,out] employee Employe to unassign from aircraft/buildings
  */
-void E_ResetEmployee (employee_t *employee)
+void E_Unassign (employee_t *employee)
 {
-	assert(employee);
+	if (!employee)
+		return;
 
 	/* get the base where the employee is hired in */
 	base_t *base = employee->baseHired;
@@ -481,10 +479,9 @@ void E_ResetEmployee (employee_t *employee)
 		break;
 	case EMPL_WORKER:
 		/* Update current capacity and production times if worker is being counted there. */
-		/** @todo doesn't work for unhiring, employee is yet hired therfore will be faultly counted */
-		PR_UpdateProductionCap(base);
+		PR_UpdateProductionCap(base, -1);
 		break;
-	case MAX_EMPL:
+	default:
 		break;
 	}
 
@@ -499,7 +496,6 @@ void E_ResetEmployee (employee_t *employee)
  * @sa E_HireEmployee
  * @sa E_HireEmployeeByType
  * @sa CL_RemoveSoldierFromAircraft
- * @sa E_ResetEmployee
  * @todo handle EMPL_ROBOT capacities here?
  */
 bool E_UnhireEmployee (employee_t* employee)
@@ -507,9 +503,7 @@ bool E_UnhireEmployee (employee_t* employee)
 	if (employee && E_IsHired(employee) && !employee->transfer) {
 		base_t *base = employee->baseHired;
 
-		/* Any effect of removing an employee (e.g. removing a scientist from a research project)
-		 * should take place in E_ResetEmployee */
-		E_ResetEmployee(employee);
+		E_Unassign(employee);
 		/* Set all employee-tags to 'unhired'. */
 		employee->baseHired = NULL;
 

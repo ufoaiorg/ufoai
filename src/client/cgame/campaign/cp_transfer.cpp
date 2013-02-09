@@ -214,7 +214,7 @@ transfer_t* TR_TransferStart (base_t *srcBase, transferData_t &transData)
 			assert(E_IsInBase(employee, srcBase));
 
 			transfer.hasEmployees = true;
-			E_ResetEmployee(employee);
+			E_Unassign(employee);
 			cgi->LIST_AddPointer(&transfer.employees[i], (void*) employee);
 			employee->baseHired = NULL;
 			employee->transfer = true;

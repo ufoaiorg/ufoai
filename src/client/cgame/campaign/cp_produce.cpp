@@ -723,8 +723,9 @@ void PR_ProductionInit (void)
 /**
  * @brief Update the current capacity of Workshop
  * @param[in] base Pointer to the base containing workshop.
+ * @param[in] workerChange Number of workers going to be hired/fired
  */
-void PR_UpdateProductionCap (base_t *base)
+void PR_UpdateProductionCap (base_t *base, int workerChange)
 {
 	capacities_t *workspaceCapacity = CAP_Get(base, CAP_WORKSPACE);
 	int workers;
@@ -733,7 +734,7 @@ void PR_UpdateProductionCap (base_t *base)
 	if (workspaceCapacity->max <= 0)
 		PR_EmptyQueue(base);
 
-	workers = E_CountHired(base, EMPL_WORKER);
+	workers = E_CountHired(base, EMPL_WORKER) + workerChange;
 	if (workspaceCapacity->max >= workers)
 		workspaceCapacity->cur = workers;
 	else

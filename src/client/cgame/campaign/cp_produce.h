@@ -117,7 +117,7 @@ int PR_DecreaseProduction(production_t *prod, int amount);
 const char* PR_GetName(const productionData_t *data);
 technology_t* PR_GetTech(const productionData_t *data);
 
-void PR_UpdateProductionCap(struct base_s *base);
+void PR_UpdateProductionCap(struct base_s *base, int workerChange = 0);
 
 void PR_UpdateRequiredItemsInBasestorage(struct base_s *base, int amount, const requirements_t *reqs);
 int PR_RequirementsMet(int amount, const requirements_t *reqs, struct base_s *base);
