@@ -40,7 +40,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SAVE_MISSIONS_BASEINDEX "baseIDX"
 #define SAVE_MISSIONS_INSTALLATIONINDEX "installationIDX"
 #define SAVE_MISSIONS_ALIENBASEINDEX "alienbaseIDX"
-#define SAVE_MISSIONS_LOCATION "location"
 #define SAVE_MISSIONS_INITIALOVERALLINTEREST "initialOverallInterest"
 #define SAVE_MISSIONS_INITIALINDIVIDUALINTEREST "initialIndividualInterest"
 #define SAVE_MISSIONS_STARTDATE "startDate"
@@ -105,7 +104,6 @@ DTD:
 	baseIDX						CDATA	#IMPLIED
 	installationIDX				CDATA	#IMPLIED
 	alienBaseIDX				CDATA	#IMPLIED
-	location					CDATA	#IMPLIED
 	initialOverallInterest		CDATA	'0'
 	initialIndividualInterest	CDATA	'0'
 	UFO							CDATA	#IMPLIED

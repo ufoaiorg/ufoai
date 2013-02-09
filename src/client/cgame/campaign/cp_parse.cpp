@@ -639,7 +639,7 @@ static void CP_ParseScriptFirst (const char *type, const char *name, const char 
 	else if (Q_streq(type, "nation"))
 		CL_ParseNations(name, text);
 	else if (Q_streq(type, "city"))
-		CL_ParseCities(name, text);
+		CITY_Parse(name, text);
 	else if (Q_streq(type, "rank"))
 		CL_ParseRanks(name, text);
 	else if (Q_streq(type, "aircraft"))

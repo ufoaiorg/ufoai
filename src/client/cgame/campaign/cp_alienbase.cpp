@@ -152,8 +152,6 @@ void CP_SpawnAlienBaseMission (alienBase_t *alienBase)
 	Vector2Copy(alienBase->pos, mission->pos);
 	mission->posAssigned = true;
 
-	Com_sprintf(mission->location, sizeof(mission->location), _("Alien base"));
-
 	/* Alien base stay until it's destroyed */
 	CP_MissionDisableTimeLimit(mission);
 	/* mission appears on geoscape, player can go there */

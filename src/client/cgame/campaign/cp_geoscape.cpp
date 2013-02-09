@@ -1494,7 +1494,7 @@ static void GEO_DrawMapOnePhalanxAircraft (const uiNode_t* node, aircraft_t *air
 static const char *GEO_GetMissionText (char *buffer, size_t size, const mission_t *mission)
 {
 	assert(mission);
-	Com_sprintf(buffer, size, _("Location: %s\nName: %s\nObjective: %s"), mission->location,
+	Com_sprintf(buffer, size, _("Name: %s\nObjective: %s"),
 		MIS_GetName(mission), (mission->mapDef) ? _(mission->mapDef->description) : _("Unknown"));
 	return buffer;
 }
@@ -1564,8 +1564,8 @@ void GEO_UpdateGeoscapeDock (void)
 	MIS_Foreach(mission) {
 		if (!mission->onGeoscape)
 			continue;
-		cgi->UI_ExecuteConfunc("add_geoscape_object mission %i \"%s\" %s \"%s\n%s\"",
-			mission->idx, mission->location, MIS_GetModel(mission), MIS_GetName(mission),
+		cgi->UI_ExecuteConfunc("add_geoscape_object mission %i \"%s\" \"%s\n%s\"",
+			mission->idx, MIS_GetModel(mission), MIS_GetName(mission),
 			(mission->mapDef) ? _(mission->mapDef->description) : "");
 	}
 
@@ -1573,8 +1573,8 @@ void GEO_UpdateGeoscapeDock (void)
 	ufo = NULL;
 	while ((ufo = UFO_GetNextOnGeoscape(ufo)) != NULL) {
 		const unsigned int ufoIDX = UFO_GetGeoscapeIDX(ufo);
-		cgi->UI_ExecuteConfunc("add_geoscape_object ufo %i %i %s \"%s\"",
-				ufoIDX, ufoIDX, ufo->model, GEO_GetUFOText(buf, sizeof(buf), ufo));
+		cgi->UI_ExecuteConfunc("add_geoscape_object ufo %i %s \"%s\"",
+				ufoIDX, ufo->model, GEO_GetUFOText(buf, sizeof(buf), ufo));
 	}
 }
 

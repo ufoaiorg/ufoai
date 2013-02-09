@@ -122,7 +122,6 @@ void CP_ReconMissionAerial (mission_t *mission)
  */
 void CP_ReconMissionGroundGo (mission_t *mission)
 {
-	const nation_t *nation;
 
 	mission->stage = STAGE_MISSION_GOTO;
 
@@ -152,13 +151,6 @@ void CP_ReconMissionGroundGo (mission_t *mission)
 		Com_Printf("CP_ReconMissionGroundGo: No map found, remove mission.\n");
 		CP_MissionRemove(mission);
 		return;
-	}
-
-	nation = GEO_GetNation(mission->pos);
-	if (nation) {
-		Com_sprintf(mission->location, sizeof(mission->location), "%s", _(nation->name));
-	} else {
-		Com_sprintf(mission->location, sizeof(mission->location), "%s", _("No nation"));
 	}
 
 	if (mission->ufo) {

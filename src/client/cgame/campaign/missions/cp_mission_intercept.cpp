@@ -184,8 +184,6 @@ void CP_InterceptGoToInstallation (mission_t *mission)
 	Vector2Copy(installation->pos, mission->pos);
 	mission->posAssigned = true;
 
-	Com_sprintf(mission->location, sizeof(mission->location), "%s", installation->name);
-
 	CP_MissionDisableTimeLimit(mission);
 	UFO_SendToDestination(mission->ufo, mission->pos);
 }

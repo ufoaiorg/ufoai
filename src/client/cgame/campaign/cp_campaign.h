@@ -246,8 +246,8 @@ typedef struct mission_s {
 		aircraft_t *aircraft;
 		installation_t *installation;
 		alienBase_t *alienBase;
+		city_t *city;
 	} data;							/**< may be related to mission type (like pointer to base attacked, or to alien base) */
-	char location[MAX_VAR];			/**< The name of the ground mission that will appear on geoscape */
 	interestCategory_t category;	/**< The category of the event */
 	missionStage_t stage;			/**< in which stage is this event? */
 	int initialOverallInterest;		/**< The overall interest value when this event has been created */

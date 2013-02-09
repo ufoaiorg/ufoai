@@ -91,7 +91,7 @@ void CP_TerrorMissionStart (mission_t *mission)
  * @brief Choose a city for terror mission.
  * @return chosen city in ccs.cities
  */
-static const city_t* CP_ChooseCity (void)
+static city_t* CP_ChooseCity (void)
 {
 	if (ccs.numCities > 0) {
 		const int randnumber = rand() % ccs.numCities;
@@ -129,7 +129,7 @@ static void CP_TerrorMissionGo (mission_t *mission)
 
 	/* Choose a map */
 	for (counter = 0; counter < MAX_POS_LOOP; counter++) {
-		const city_t *city = CP_ChooseCity();
+		city_t *city = CP_ChooseCity();
 
 		if (!city)
 			continue;
@@ -144,8 +144,8 @@ static void CP_TerrorMissionGo (mission_t *mission)
 			continue;
 
 		Vector2Copy(city->pos, mission->pos);
+		mission->data.city = city;
 		mission->posAssigned = true;
-		Com_sprintf(mission->location, sizeof(mission->location), "%s", _(city->name));
 		break;
 	}
 	if (counter >= MAX_POS_LOOP) {

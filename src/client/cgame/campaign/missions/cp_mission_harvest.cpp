@@ -134,8 +134,6 @@ static bool CP_ChooseNation (const mission_t *mission, linkedList_t **nationList
  */
 void CP_HarvestMissionGo (mission_t *mission)
 {
-	const nation_t *nation;
-
 	mission->stage = STAGE_MISSION_GOTO;
 
 	/* Choose a map */
@@ -161,13 +159,6 @@ void CP_HarvestMissionGo (mission_t *mission)
 		Com_Printf("CP_HarvestMissionGo: No map found, remove mission.\n");
 		CP_MissionRemove(mission);
 		return;
-	}
-
-	nation = GEO_GetNation(mission->pos);
-	if (nation) {
-		Com_sprintf(mission->location, sizeof(mission->location), "%s", _(nation->name));
-	} else {
-		Com_sprintf(mission->location, sizeof(mission->location), "%s", _("No nation"));
 	}
 
 	if (mission->ufo) {

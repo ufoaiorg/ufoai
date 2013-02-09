@@ -303,8 +303,6 @@ static void CP_BaseAttackGoToBase (mission_t *mission)
 	Vector2Copy(base->pos, mission->pos);
 	mission->posAssigned = true;
 
-	Com_sprintf(mission->location, sizeof(mission->location), "%s", base->name);
-
 	if (mission->ufo) {
 		CP_MissionDisableTimeLimit(mission);
 		UFO_SendToDestination(mission->ufo, mission->pos);

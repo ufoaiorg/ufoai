@@ -333,6 +333,32 @@ void CL_ParseNations (const char *name, const char **text)
 	}
 }
 
+/**
+ * @brief Finds a city by it's scripted identifier
+ * @param[in] cityID Scripted ID of the city
+ */
+city_t *CITY_GetById (const char *cityId)
+{
+	LIST_Foreach(ccs.cities, city_t, city) {
+		if (Q_streq(cityId, city->id))
+			return city;
+	}
+	return NULL;
+}
+
+/**
+ * @brief Finds a city by it's geoscape coordinates
+ * @param[in] pos Position of the city
+ */
+city_t *CITY_GetByPos (vec2_t pos)
+{
+	LIST_Foreach(ccs.cities, city_t, city) {
+		if (Vector2Equal(pos, city->pos))
+			return city;
+	}
+	return NULL;
+}
+
 static const value_t city_vals[] = {
 	{"name", V_TRANSLATION_STRING, offsetof(city_t, name), 0},
 	{"pos", V_POS, offsetof(city_t, pos), MEMBER_SIZEOF(city_t, pos)},
@@ -344,29 +370,22 @@ static const value_t city_vals[] = {
  * @brief Parse the city data from script file
  * @param[in] name ID of the found nation
  * @param[in] text The text of the nation node
- * @sa city_vals
- * @sa CL_ParseScriptFirst
- * @note write into cp_campaignPool - free on every game restart and reparse
  */
-void CL_ParseCities (const char *name, const char **text)
+void CITY_Parse (const char *name, const char **text)
 {
 	city_t newCity;
 
 	/* search for cities with same name */
-	LIST_Foreach(ccs.cities, city_t, city) {
-		if (Q_streq(name, city->id)) {
-			Com_Printf("CL_ParseCities: city def \"%s\" with same name found, second ignored\n", name);
-			return;
-		}
+	if (CITY_GetById(name)) {
+		Com_Printf("CITY_Parse: city def \"%s\" with same name found, second ignored\n", name);
+		return;
 	}
 
-	/* initialize the nation */
 	OBJZERO(newCity);
 	newCity.idx = ccs.numCities;
 
 	if (Com_ParseBlock(name, text, &newCity, city_vals, cp_campaignPool)) {
 		ccs.numCities++;
-		Com_DPrintf(DEBUG_CLIENT, "...found city %s\n", name);
 		newCity.id = Mem_PoolStrDup(name, cp_campaignPool, 0);
 		/* Add city to the list */
 		LIST_Add(&ccs.cities, newCity);

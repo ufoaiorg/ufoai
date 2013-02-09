@@ -168,7 +168,6 @@ static void SCP_CampaignAddMission (setState_t *set)
 {
 	actMis_t *mis;
 	mission_t * mission;
-	const nation_t *nation;
 
 	/* add mission */
 	if (scd->numActiveMissions >= MAX_ACTMISSIONS) {
@@ -206,12 +205,6 @@ static void SCP_CampaignAddMission (setState_t *set)
 	}
 	Vector2Copy(mis->def->pos, mission->pos);
 	mission->posAssigned = true;
-	nation = GEO_GetNation(mission->pos);
-	if (nation) {
-		Com_sprintf(mission->location, sizeof(mission->location), "%s", _(nation->name));
-	} else {
-		Com_sprintf(mission->location, sizeof(mission->location), "%s", _("No nation"));
-	}
 	CP_TerrorMissionStart(mission);
 	mission->finalDate = mis->expire;
 	mis->mission = mission;

@@ -451,10 +451,8 @@ const char* MIS_GetName (const mission_t *mission)
 	const nation_t *nation = GEO_GetNation(mission->pos);
 	switch (mission->stage) {
 	case STAGE_TERROR_MISSION:
-		if (nation)
-			return va(_("Alien terror in %s"), _(nation->name));
-		else
-			return _("Alien terror");
+		if (mission->data.city)
+			return va(_("Alien terror in %s"), _(mission->data.city->name));
 	case STAGE_BASE_ATTACK:
 		if (mission->data.base)
 			return va(_("Base attacked: %s"), mission->data.base->name);
@@ -689,11 +687,15 @@ static inline messageType_t CP_MissionGetMessageLevel (const mission_t *mission)
  */
 static inline const char *CP_MissionGetMessage (const mission_t *mission)
 {
-	if (mission->category == INTERESTCATEGORY_RESCUE)
-		Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Go on a rescue mission at %s to save your soldiers, some of whom may still be alive."), mission->location);
-	else
-		Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Alien activity has been detected in %s."), mission->location);
-
+	if (mission->category == INTERESTCATEGORY_RESCUE) {
+		Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Go on a rescue mission for %s to save your soldiers, some of whom may still be alive."), mission->data.aircraft->name);
+	} else {
+		const nation_t *nation = GEO_GetNation(mission->pos);
+		if (nation)
+			Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Alien activity has been detected in %s."), _(nation->name));
+		else
+			Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Alien activity has been detected."));
+	}
 	return cp_messageBuffer;
 }
 
@@ -1195,7 +1197,6 @@ void CP_SpawnCrashSiteMission (aircraft_t *ufo)
 	const date_t minCrashDelay = {7, 0};
 	/* How long the crash mission will stay before aliens leave / die */
 	const date_t crashDelay = {14, 0};
-	const nation_t *nation;
 	mission_t *mission;
 
 	mission = ufo->mission;
@@ -1214,13 +1215,6 @@ void CP_SpawnCrashSiteMission (aircraft_t *ufo)
 
 	Vector2Copy(ufo->pos, mission->pos);
 	mission->posAssigned = true;
-
-	nation = GEO_GetNation(mission->pos);
-	if (nation) {
-		Com_sprintf(mission->location, sizeof(mission->location), "%s", _(nation->name));
-	} else {
-		Com_sprintf(mission->location, sizeof(mission->location), "%s", _("No nation"));
-	}
 
 	mission->finalDate = Date_Add(ccs.date, Date_Random(minCrashDelay, crashDelay));
 	/* ufo becomes invisible on geoscape, but don't remove it from ufo global array
@@ -1307,7 +1301,6 @@ void CP_SpawnRescueMission (aircraft_t *aircraft, aircraft_t *ufo)
 	}
 
 	mission->data.aircraft = aircraft;
-	Com_sprintf(mission->location, sizeof(mission->location), "%s %s", _("Crashed"), aircraft->name);
 
 	/* UFO drops it's previous mission and goes for the crashed aircraft */
 	oldMission = ufo->mission;
@@ -1766,7 +1759,6 @@ static void MIS_MissionList_f (void)
 		Com_Printf("...category %i. '%s' -- stage %i. '%s'\n", mission->category,
 			INT_InterestCategoryToName(mission->category), mission->stage, CP_MissionStageToName(mission->stage));
 		Com_Printf("...mapDef: '%s'\n", mission->mapDef ? mission->mapDef->id : "No mapDef defined");
-		Com_Printf("...location: '%s'\n", mission->location);
 		Com_Printf("...start (day = %i, sec = %i), ends (day = %i, sec = %i)\n",
 			mission->startDate.day, mission->startDate.sec, mission->finalDate.day, mission->finalDate.sec);
 		Com_Printf("...pos (%.02f, %.02f)%s -- mission %son Geoscape\n", mission->pos[0], mission->pos[1], mission->posAssigned ? "(assigned Pos)" : "", mission->onGeoscape ? "" : "not ");
@@ -1877,7 +1869,6 @@ bool MIS_SaveXML (xmlNode_t *parent)
 		default:
 			break;
 		}
-		cgi->XML_AddString(missionNode, SAVE_MISSIONS_LOCATION, mission->location);
 		cgi->XML_AddShort(missionNode, SAVE_MISSIONS_INITIALOVERALLINTEREST, mission->initialOverallInterest);
 		cgi->XML_AddShort(missionNode, SAVE_MISSIONS_INITIALINDIVIDUALINTEREST, mission->initialIndividualInterest);
 		cgi->XML_AddDate(missionNode, SAVE_MISSIONS_STARTDATE, mission->startDate.day, mission->startDate.sec);
@@ -1948,6 +1939,8 @@ bool MIS_LoadXML (xmlNode_t *parent)
 		mission.initialOverallInterest = cgi->XML_GetInt(node, SAVE_MISSIONS_INITIALOVERALLINTEREST, 0);
 		mission.initialIndividualInterest = cgi->XML_GetInt(node, SAVE_MISSIONS_INITIALINDIVIDUALINTEREST, 0);
 
+		cgi->XML_GetPos2(node, SAVE_MISSIONS_POS, mission.pos);
+
 		switch (mission.category) {
 		case INTERESTCATEGORY_BASE_ATTACK:
 			if (mission.stage == STAGE_MISSION_GOTO || mission.stage == STAGE_BASE_ATTACK) {
@@ -1988,6 +1981,10 @@ bool MIS_LoadXML (xmlNode_t *parent)
 				}
 			}
 			break;
+		case INTERESTCATEGORY_TERROR_ATTACK:
+			if (mission.stage == STAGE_MISSION_GOTO || mission.stage == STAGE_TERROR_MISSION)
+				mission.data.city = CITY_GetByPos(mission.pos);;
+			break;
 		case INTERESTCATEGORY_ALIENBASE:
 		case INTERESTCATEGORY_BUILDING:
 		case INTERESTCATEGORY_SUPPLY:
@@ -2007,8 +2004,6 @@ bool MIS_LoadXML (xmlNode_t *parent)
 		default:
 			break;
 		}
-
-		Q_strncpyz(mission.location, cgi->XML_GetString(node, SAVE_MISSIONS_LOCATION), sizeof(mission.location));
 
 		cgi->XML_GetDate(node, SAVE_MISSIONS_STARTDATE, &mission.startDate.day, &mission.startDate.sec);
 		cgi->XML_GetDate(node, SAVE_MISSIONS_FINALDATE, &mission.finalDate.day, &mission.finalDate.sec);

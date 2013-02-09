@@ -74,17 +74,16 @@ window geoscape
 	/**
 	 * @param<1> type [mission|ufo]
 	 * @param<2> id (internal, to identify the docklet object)
-	 * @param<3> id (external, to identify the linked object)
-	 * @param<4> model
-	 * @param<5> text
+	 * @param<3> model
+	 * @param<4> text
 	 */
 	confunc add_geoscape_object
 	{
 		call *node:root.messages.dock@createChild ( "<1><2>" , "cmpGeoscapeDocklet" )
 		*node:root.messages.dock.<1><2>.type@string = <1>
 		*node:root.messages.dock.<1><2>.id@string = <2>
-		*node:root.messages.dock.<1><2>.siteModel@src = <4>
-		*node:root.messages.dock.<1><2>.message@string = <5>
+		*node:root.messages.dock.<1><2>.siteModel@src = <3>
+		*node:root.messages.dock.<1><2>.message@string = <4>
 	}
 
 	confunc messagesystem_changemode
