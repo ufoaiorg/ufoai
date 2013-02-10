@@ -231,7 +231,7 @@ int INVSH_CheckToInventory (const inventory_t *const inv, const objDef_t *od, co
 
 	/* left hand is busy if right wields twohanded */
 	if (INV_IsLeftDef(container)) {
-		if (inv->c[CSI->idRight] && inv->c[CSI->idRight]->item.def()->holdTwoHanded)
+		if (inv->c[CSI->idRight] && inv->c[CSI->idRight]->item.isHeldTwoHanded())
 			return INV_DOES_NOT_FIT;
 
 		/* can't put an item that is 'fireTwoHanded' into the left hand */

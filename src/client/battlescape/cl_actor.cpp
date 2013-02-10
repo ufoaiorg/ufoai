@@ -965,7 +965,7 @@ void CL_ActorReload (le_t *le, containerIndex_t containerID)
 
 	if (inv->c[containerID]) {
 		weapon = inv->c[containerID]->item.def();
-	} else if (containerID == csi.idLeft && inv->c[csi.idRight]->item.def()->holdTwoHanded) {
+	} else if (containerID == csi.idLeft && inv->c[csi.idRight]->item.isHeldTwoHanded()) {
 		/* Check for two-handed weapon */
 		containerID = csi.idRight;
 		weapon = inv->c[containerID]->item.def();

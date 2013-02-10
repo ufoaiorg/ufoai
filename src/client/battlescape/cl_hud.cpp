@@ -136,7 +136,7 @@ static void HUD_UpdateAllActors (void)
 			assert(chr);
 
 			invList = RIGHT(le);
-			if ((!invList || !invList->item.def() || !invList->item.def()->holdTwoHanded) && LEFT(le))
+			if ((!invList || !invList->item.def() || !invList->item.isHeldTwoHanded()) && LEFT(le))
 				invList = LEFT(le);
 
 			tooltip = va(_("%s\nHP: %i/%i TU: %i\n%s"),
@@ -814,7 +814,7 @@ static void HUD_RefreshButtons (const le_t *le)
 	headgear = HEADGEAR(le);
 
 	/* check for two-handed weapon - if not, also define weaponl */
-	if (!weaponr || !weaponr->item.def()->holdTwoHanded)
+	if (!weaponr || !weaponr->item.isHeldTwoHanded())
 		weaponl = LEFT(le);
 	else
 		weaponl = NULL;

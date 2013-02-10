@@ -39,7 +39,7 @@ invList_t* HUD_GetLeftHandWeapon (const le_t *actor, containerIndex_t *container
 
 	if (!invList) {
 		invList = RIGHT(actor);
-		if (invList == NULL || !invList->item.def()->holdTwoHanded)
+		if (invList == NULL || !invList->item.isHeldTwoHanded())
 			invList = NULL;
 		else if (container != NULL)
 			*container = csi.idRight;

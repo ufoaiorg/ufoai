@@ -349,6 +349,10 @@ typedef struct item_s {
 	{
 		return _itemDef;
 	}
+	inline bool isHeldTwoHanded() const
+	{
+		return _itemDef->holdTwoHanded;
+	}
 	inline bool isReloadable() const
 	{
 		return _itemDef->reload > 0;

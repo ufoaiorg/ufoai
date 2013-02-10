@@ -465,7 +465,7 @@ static void UI_ContainerNodeDrawSingle (uiNode_t *node, const objDef_t *highligh
 			assert(item);
 			assert(item->def());
 
-			if (item->def()->holdTwoHanded) {
+			if (item->isHeldTwoHanded()) {
 				if (highlightType && INVSH_LoadableInWeapon(highlightType, item->def()))
 					memcpy(color, colorLoadable, sizeof(vec4_t));
 				else
