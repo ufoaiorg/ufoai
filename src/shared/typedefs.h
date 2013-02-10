@@ -232,8 +232,8 @@ typedef struct routing_s {
  */
 class Routing
 {
-public:
 	routing_t routes[ACTOR_MAX_SIZE];	/**< routing table */
+public:
 
 	inline void setFloor (const int actorSize, const int x, const int y, const int z, const int val)
 	{
