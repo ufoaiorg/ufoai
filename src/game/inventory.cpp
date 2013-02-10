@@ -141,7 +141,7 @@ invList_t *InventoryInterface::addToInventory (inventory_t *const inv, const ite
 }
 
 /**
- * @param[in] i The inventory the container is in.
+ * @param[in] inv The inventory the container is in.
  * @param[in] container The container where the item should be removed.
  * @param[in] fItem The item to be removed.
  * @return true If removal was successful.
@@ -493,7 +493,7 @@ bool InventoryInterface::tryAddToInventory (inventory_t* const inv, const item_t
 
 /**
  * @brief Clears the linked list of a container - removes all items from this container.
- * @param[in] i The inventory where the container is located.
+ * @param[in] inv The inventory where the container is located.
  * @param[in] container Index of the container which will be cleared.
  * @sa destroyInventory
  * @note This should only be called for temp containers if the container is really a temp container
