@@ -173,7 +173,7 @@ namespace routing
 		length = i;
 		i = CMod_DeCompressRouting(&source, (byte*) curTile.wpMaxs);
 		length += i;
-		i = CMod_DeCompressRouting(&source, (byte*) tempMap.routes);
+		i = CMod_DeCompressRouting(&source, (byte*) &tempMap);
 		length += i;
 
 		if (length != targetLength) {
@@ -212,11 +212,11 @@ namespace routing
 					if (x < 0 || y < 0)
 						continue;
 					for (z = minZ; z <= maxZ; z++) {
-						clMap.setFloor(size + 1, x, y, z, tempMap.routes[size].getFloor(x - sX, y - sY, z - sZ));
-						clMap.setCeiling(size + 1, x, y, z, tempMap.routes[size].getCeiling(x - sX, y - sY, z - sZ));
+						clMap.setFloor(size + 1, x, y, z, tempMap.getFloor(size + 1, x - sX, y - sY, z - sZ));
+						clMap.setCeiling(size + 1, x, y, z, tempMap.getCeiling(size + 1, x - sX, y - sY, z - sZ));
 						for (dir = 0; dir < CORE_DIRECTIONS; dir++) {
-							clMap.setConn(size + 1, x, y, z, dir, tempMap.routes[size].getConn(x - sX, y - sY, z - sZ, dir));
-							clMap.setStepup(size + 1, x, y, z, dir, tempMap.routes[size].getStepup(x - sX, y - sY, z - sZ, dir));
+							clMap.setConn(size + 1, x, y, z, dir, tempMap.getConn(size + 1, x - sX, y - sY, z - sZ, dir));
+							clMap.setStepup(size + 1, x, y, z, dir, tempMap.getStepup(size + 1, x - sX, y - sY, z - sZ, dir));
 						}
 					}
 					/* Update the reroute table */
