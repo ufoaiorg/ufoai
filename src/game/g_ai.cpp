@@ -303,7 +303,7 @@ static inline const item_t* AI_GetItemFromInventory (const invList_t *ic)
 {
 	if (ic != NULL) {
 		const item_t *item = &ic->item;
-		if (item->ammo && item->isWeapon() && (!item->def()->reload || item->ammoLeft > 0))
+		if (item->ammo && item->isWeapon() && (!item->isReloadable() || item->ammoLeft > 0))
 			return item;
 	}
 	return NULL;
