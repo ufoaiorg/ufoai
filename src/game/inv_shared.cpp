@@ -142,7 +142,7 @@ static bool INVSH_CheckShapeCollision (const uint32_t *shape, const uint32_t ite
 
 /**
  * @brief Checks if an item-shape can be put into a container at a certain position... ignores any 'special' types of containers.
- * @param[in] i
+ * @param[in] inv The inventory
  * @param[in] container The container (index) to look into.
  * @param[in] itemShape The shape info of an item to fit into the container.
  * @param[in] x The x value in the container (1 << x in the shape bitmask)
@@ -192,7 +192,7 @@ static bool INVSH_CheckToInventory_shape (const inventory_t *const inv, const in
 }
 
 /**
- * @param[in] i The inventory to check the item in.
+ * @param[in] inv The inventory to check the item in.
  * @param[in] od The item to check in the inventory.
  * @param[in] container The index of the container in the inventory to check the item in.
  * @param[in] x The x value in the container (1 << x in the shape bitmask)
@@ -427,7 +427,7 @@ bool INV_IsBaseDefenceItem (const objDef_t *obj)
 
 /**
  * @brief Searches if there is an item at location (x,y) in a container.
- * @param[in] i Pointer to the inventory where we will search.
+ * @param[in] inv The inventory where we will search.
  * @param[in] container Container in the inventory.
  * @param[in] x/y Position in the container that you want to check.
  * @return invList_t Pointer to the invList_t/item that is located at x/y.
@@ -457,7 +457,7 @@ invList_t *INVSH_SearchInInventory (const inventory_t* const inv, const invDef_t
 
 /**
  * @brief Searches if there is an item of the given type in a container.
- * @param[in] i Pointer to the inventory where we will search.
+ * @param[in] inv The inventory where we will search.
  * @param[in] container Container in the inventory.
  * @param[in] item Look for this kind of item.
  * @return invList_t Pointer to the invList_t/item.
