@@ -1186,7 +1186,7 @@ static inline void GEO_RenderImage (int x, int y, const char *image)
 /**
  * @brief Draws one mission on the geoscape map (2D and 3D)
  * @param[in] node The menu node which will be used for drawing markers.
- * @param[in] ms Pointer to the mission to draw.
+ * @param[in] mission Pointer to the mission to draw.
  */
 static void GEO_DrawMapOneMission (const uiNode_t* node, const mission_t *mission)
 {

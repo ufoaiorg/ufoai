@@ -224,7 +224,7 @@ static void BS_ProcessCraftItemSale (const objDef_t *craftitem, const int numIte
 
 /**
  * @brief Buys an aircraft
- * @param[in] aircraft The aircraft template to buy
+ * @param[in] aircraftTemplate The aircraft template to buy
  * @param[out] base Base to buy at
  * @return @c true if the aircraft could get bought, @c false otherwise
  */
