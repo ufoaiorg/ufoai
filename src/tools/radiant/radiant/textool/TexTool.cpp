@@ -166,14 +166,14 @@ void TexTool::shutdown() {
 	// De-register this as selectionsystem observer
 	GlobalSelectionSystem().removeObserver(this);
 
-	// Tell the position tracker to save the information
-	_windowPosition.saveToPath(RKEY_WINDOW_STATE);
-
 	// Delete all the current window states from the registry
 	GlobalRegistry().deleteXPath(RKEY_WINDOW_STATE);
 
 	// Create a new node
-	xml::Node node(GlobalRegistry().createKey(RKEY_WINDOW_STATE));
+	GlobalRegistry().createKey(RKEY_WINDOW_STATE);
+
+	// Tell the position tracker to save the information
+	_windowPosition.saveToPath(RKEY_WINDOW_STATE);
 
 	GlobalEventManager().disconnect(GTK_OBJECT(_glWidget));
 	GlobalEventManager().disconnect(GTK_OBJECT(getWindow()));
