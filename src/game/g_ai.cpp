@@ -1107,8 +1107,16 @@ static aiAction_t AI_PrepBestAction (const Player *player, edict_t *ent)
 		G_ClientStateChange(player, ent, STATE_CROUCHED, true);
 
 	/* do the move */
-	while (!G_IsDead(ent) && !G_EdictPosIsSameAs(ent, bestAia.to))
+	for (;;) {
+		if (G_IsDead(ent))
+			break;
 		G_ClientMove(player, 0, ent, bestAia.to);
+		if (G_EdictPosIsSameAs(ent, bestAia.to))
+			break;
+		const pos_t length = G_ActorMoveLength(ent, level.pathingMap, bestAia.to, false);
+		if (length && length >= ROUTING_NOT_REACHABLE)
+			break;
+	}
 
 	/* test for possible death during move. reset bestAia due to dead status */
 	if (G_IsDead(ent))
