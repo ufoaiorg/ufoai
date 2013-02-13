@@ -109,9 +109,9 @@ void UI_Node_Draw(uiNode_t* node)
 	b->draw(node);
 }
 
-void UI_Node_DrawTooltip(uiNode_t* node, int x, int y)
+void UI_Node_DrawTooltip(const uiNode_t* node, int x, int y)
 {
-	uiLocatedNode *b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager.get());
+	const uiLocatedNode *b = dynamic_cast<const uiLocatedNode*>(node->behaviour->manager.get());
 	b->drawTooltip(node, x, y);
 }
 

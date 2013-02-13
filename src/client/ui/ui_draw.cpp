@@ -336,16 +336,12 @@ static void UI_DrawNotice (void)
  */
 void UI_Draw (void)
 {
-	uiNode_t *hoveredNode;
-	int pos;
-	bool mouseMoved = false;
-
 	UI_HandleTimers();
 
 	assert(ui_global.windowStackPos >= 0);
 
-	mouseMoved = UI_CheckMouseMove();
-	hoveredNode = UI_GetHoveredNode();
+	const bool mouseMoved = UI_CheckMouseMove();
+	uiNode_t *hoveredNode = UI_GetHoveredNode();
 
 	/* handle delay time for tooltips */
 	if (mouseMoved && tooltipVisible) {
@@ -356,7 +352,7 @@ void UI_Draw (void)
 	}
 
 	/* under a fullscreen, windows should not be visible */
-	pos = UI_GetLastFullScreenWindow();
+	int pos = UI_GetLastFullScreenWindow();
 	if (pos < 0)
 		return;
 

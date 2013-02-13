@@ -287,7 +287,7 @@ void uiTabNode::draw (uiNode_t *node)
  * @param[in] x Position x of the mouse
  * @param[in] y Position y of the mouse
  */
-void uiTabNode::drawTooltip (uiNode_t *node, int x, int y)
+void uiTabNode::drawTooltip (const uiNode_t *node, int x, int y) const
 {
 	uiNode_t *option;
 	const int tooltipWidth = 250;

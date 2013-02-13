@@ -88,7 +88,7 @@ void uiStringNode::draw (uiNode_t *node)
  * @param[in] x Position x of the mouse
  * @param[in] y Position y of the mouse
  */
-void uiStringNode::drawTooltip (uiNode_t *node, int x, int y)
+void uiStringNode::drawTooltip (const uiNode_t *node, int x, int y) const
 {
 	if (node->tooltip) {
 		UI_Tooltip(node, x, y);

@@ -37,9 +37,9 @@ public:
 	void onLeftClick(uiNode_t* node, int x, int y) OVERRIDE;
 	void onRightClick(uiNode_t* node, int x, int y) OVERRIDE;
 	void onMiddleClick(uiNode_t* node, int x, int y) OVERRIDE;
-	void drawTooltip(uiNode_t* node, int x, int y) OVERRIDE;
+	void drawTooltip(const uiNode_t* node, int x, int y) const OVERRIDE;
 protected:
-	void getCellAtPos(const uiNode_t *node, int x, int y, int *col, int *row);
+	void getCellAtPos(const uiNode_t *node, int x, int y, int *col, int *row) const;
 };
 
 class uiBaseLayoutNode : public uiAbstractBaseNode {

@@ -43,7 +43,7 @@ const char* UI_Node_GetWidgetName (uiNode_t const* node);
 intptr_t UI_Node_GetMemorySize (uiNode_t const* node);
 
 void UI_Node_Draw (uiNode_t* node);
-void UI_Node_DrawTooltip (uiNode_t* node, int x, int y);
+void UI_Node_DrawTooltip (const uiNode_t* node, int x, int y);
 void UI_Node_DrawOverWindow (uiNode_t* node);
 void UI_Node_LeftClick (uiNode_t* node, int x, int y);
 void UI_Node_RightClick (uiNode_t* node, int x, int y);

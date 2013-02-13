@@ -276,7 +276,7 @@ bool uiLocatedNode::onScroll (uiNode_t *node, int deltaX, int deltaY)
 	return false;
 }
 
-void uiLocatedNode::drawTooltip(uiNode_t* node, int x, int y)
+void uiLocatedNode::drawTooltip(const uiNode_t* node, int x, int y) const
 {
 	UI_Tooltip(node, x, y);
 }

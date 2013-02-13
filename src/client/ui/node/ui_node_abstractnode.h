@@ -67,7 +67,7 @@ public:
 	/** How to draw a node */
 	virtual void draw(uiNode_t* node) {}
 	/** Allow to draw a custom tooltip */
-	virtual void drawTooltip(uiNode_t* node, int x, int y);
+	virtual void drawTooltip(const uiNode_t* node, int x, int y) const;
 	/** Callback to draw content over the window @sa UI_CaptureDrawOver */
 	virtual void drawOverWindow(uiNode_t* node) {}
 

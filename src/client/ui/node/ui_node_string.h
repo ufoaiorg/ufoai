@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 class uiStringNode : public uiLocatedNode {
 	void draw(uiNode_t* node) OVERRIDE;
-	void drawTooltip(uiNode_t* node, int x, int y) OVERRIDE;
+	void drawTooltip(const uiNode_t* node, int x, int y) const OVERRIDE;
 	void onLoading(uiNode_t* node) OVERRIDE;
 };
 

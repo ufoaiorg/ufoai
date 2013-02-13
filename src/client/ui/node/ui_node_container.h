@@ -34,8 +34,9 @@ struct uiBehaviour_t;
 struct uiNode_t;
 
 class uiContainerNode : public uiLocatedNode {
+public:
 	void draw(uiNode_t* node) OVERRIDE;
-	void drawTooltip(uiNode_t* node, int x, int y) OVERRIDE;
+	void drawTooltip(const uiNode_t* node, int x, int y) const OVERRIDE;
 	void onMouseDown(uiNode_t* node, int x, int y, int button) OVERRIDE;
 	void onMouseUp(uiNode_t* node, int x, int y, int button) OVERRIDE;
 	void onCapturedMouseMove(uiNode_t* node, int x, int y) OVERRIDE;

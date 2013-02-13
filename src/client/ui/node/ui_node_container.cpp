@@ -669,7 +669,7 @@ static invList_t *UI_ContainerNodeGetItemAtPosition (const uiNode_t* const node,
  * @param[in] x Position x of the mouse
  * @param[in] y Position y of the mouse
  */
-void uiContainerNode::drawTooltip (uiNode_t *node, int x, int y)
+void uiContainerNode::drawTooltip (const uiNode_t *node, int x, int y) const
 {
 	const invList_t *itemHover;
 	vec2_t nodepos;

@@ -629,7 +629,7 @@ static invList_t *UI_BaseInventoryNodeGetItem (const uiNode_t* const node, int m
  * @param[in] x Position x of the mouse
  * @param[in] y Position y of the mouse
  */
-void uiBaseInventoryNode::drawTooltip (uiNode_t *node, int x, int y)
+void uiBaseInventoryNode::drawTooltip (const uiNode_t *node, int x, int y) const
 {
 	const invList_t *itemHover;
 	vec2_t nodepos;
