@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
 "POT-Creation-Date: 2013-02-07 18:29+0100\n"
-"PO-Revision-Date: 2013-02-11 08:13+0100\n"
+"PO-Revision-Date: 2013-02-13 08:53+0100\n"
 "Last-Translator: Maciej Wierzbicki <voovoos@killfile.pl>\n"
 "Language-Team:  <radius75@interia.pl>\n"
 "Language: pl_PL\n"
@@ -4393,7 +4393,7 @@ msgstr ""
 "myśliwce prędkość, choć zatrważająca jak na Ziemskie warunki, nie jest wcale "
 "tak spora, jak na statki z silnikami na antymaterię. Z tego, co wiemy o "
 "materiałach, z których wykonano kadłub statku, UFO bez problemu byłby w "
-"stanie wytrzymać większe przeciążenia. obcy byliby też w stanie zbudować "
+"stanie wytrzymać większe przeciążenia. Obcy byliby też w stanie zbudować "
 "większe i mocniejsze silniki z technologią, którą dysponują. Przypuszczamy "
 "obecnie, że źródłem tej dość zaskakującej taktyki obcych jest wysoka "
 "niestabilność paliwa zasilającego silniki ich statków, czyli antymaterii. "
@@ -10361,7 +10361,7 @@ msgstr ""
 "Sugerowana Doktryna Postępowania\n"
 "\n"
 "Ze względu na swoją lokalizację, Wejście jest jedną z najbardziej "
-"zagrożonych struktur w bazie. obcy będą z pewnością próbować się tutaj "
+"zagrożonych struktur w bazie. Obcy będą z pewnością próbować się tutaj "
 "dostać. W związku z tym budynek ten powinien znajdować się w odpowiednio "
 "dużej odległości od Centrum Dowodzenia, tak by żołnierze będący na służbie "
 "mogli odpowiedzieć na atak z pełnym zaangażowaniem, nie wystawiając "
@@ -10857,7 +10857,7 @@ msgstr ""
 "wpływ na jego morale.\n"
 "\n"
 "Z punktu widzenia strategicznego, Szpital należy do miejsc średnio "
-"zagrożonych podczas ataku na bazę. obcy mogą próbować zabić naszych rannych "
+"zagrożonych podczas ataku na bazę. Obcy mogą próbować zabić naszych rannych "
 "i pozbawić nas odpowiedniego sprzętu medycznego, ale mało prawdopodobne "
 "jest, że Szpital będzie ich głównym celem. Mimo wszystko, jeśli zostaniemy "
 "zaatakowani, do Szpitala powinna zostać wysłana odpowiednia ochrona.\n"
@@ -12117,7 +12117,6 @@ msgstr ""
 "Brak."
 
 #: ../base/ufos/msgid/campaigns.ufo:4
-#, fuzzy
 msgid ""
 "This is an extremely difficult version of the Standard Campaign. In this "
 "scenario, all the odds will be stacked against you, you will receive few "
@@ -12128,16 +12127,14 @@ msgid ""
 "for those who have managed to beat the Hard campaign and still feel the need "
 "to further punish themselves."
 msgstr ""
-"To jest ekstremalnie trudna wersja Normalnej Kampanii. W tym scenariuszu "
-"wszystkio będzie działało na twoją niekorzyść. Otrzymasz kilku rekrutów, a "
-"narody będą niesamowicie wymagające. obcy nie okażą ci żadnej litości.\n"
+"To jest ekstremalnie trudna wersja Standardowej Kampanii. W tym scenariuszu "
+"wszystkio będzie działało na twoją niekorzyść. Otrzymasz kilku rekrutów a "
+"narody będą niesamowicie wymagające. Obcy nie okażą ci żadnej litości.\n"
 "\n"
 "Ta opcja reprezentuje Poziom Bardzo Trudny i jest zalecana dla tych, którzy "
-"ukończyli Poziom Trudny, a wciąż czują potrzebę dalszego[still feel the need "
-"to further punish themselves.]"
+"ukończyli Poziom Trudny a czują potrzebę dalszego siebie ukarania."
 
 #: ../base/ufos/msgid/campaigns.ufo:10
-#, fuzzy
 msgid ""
 "This is a more difficult version of the Standard Campaign. You will receive "
 "fewer soldiers, engineers and scientists, nations will be more difficult to "
@@ -12147,15 +12144,14 @@ msgid ""
 "This option represents the Hard difficulty level, and is recommended for "
 "expert players."
 msgstr ""
-"To jest trudniejsza wersja Normalnej Kampanii. Otrzymasz mniej żołnieży, "
+"To jest trudniejsza wersja Standardowej Kampanii. Otrzymasz mniej żołnieży, "
 "inżynierów i naukowców, narody trudniej będzie zadowolić, badania będą miały "
-"większe wymagania i będą trwały dłużej, a obcy będą wytrzymalsi.\n"
+"większe wymagania i będą trwały dłużej a obcy będą wytrzymalsi.\n"
 "\n"
 "Ta opcja reprezentuje Poziom Trudny i jest zalecana dla doświadczonych "
 "graczy."
 
 #: ../base/ufos/msgid/campaigns.ufo:16
-#, fuzzy
 msgid ""
 "This is a single-player, military-themed invasion scenario. The player "
 "assumes command of Project PHALANX, Earth's response to the alien threat, "
@@ -12168,15 +12164,14 @@ msgid ""
 msgstr ""
 "To jest militarny scenariusz inwazji, przeznaczony dla jednego gracza. Gracz "
 "obejmuje kontolę nad Projektem PHALANX, odpowiedzią Ziemii na zagrożenie ze "
-"strony obcych, i bierze udział w dynamicznej rozgrywce zawierającej zarówno "
+"strony obcych i bierze udział w dynamicznej rozgrywce zawierającej zarówno "
 "ważne elementy losowe, jak i najważniejszą fabułę.\n"
 "\n"
 "Ta kampania jest dostępna na kilku poziomach trudności. Ta opcja "
-"reprezentuje Normalny poziom trudności i jest zalecana dla początkujących "
+"reprezentuje Standardowy poziom trudności i jest zalecana dla początkujących "
 "graczy, którzy lubią wyzwania."
 
 #: ../base/ufos/msgid/campaigns.ufo:22
-#, fuzzy
 msgid ""
 "This is a more forgiving version of the Standard Campaign. The aliens will "
 "be less tough, UFO incursions will be less frequent, and you will receive "
@@ -12186,15 +12181,14 @@ msgid ""
 "first-time players who prefer smoother sailing than the Standard Campaign "
 "might offer."
 msgstr ""
-"To jest mniej wymagająca wersja Normalnej Kampanii. obcy będą mniej groźnie, "
-"ataki UFO żadsze, a ty otrzymasz więcej nowych rerutów do uzupełniania strat "
-"po walce.\n"
+"To jest mniej wymagająca wersja Standardowej Kampanii. Obcy będą mniej "
+"groźni, ataki UFO żadsze a ty otrzymasz więcej nowych rerutów do "
+"uzupełniania strat po walce.\n"
 "\n"
 "Ta kampania reprezentuje Poziom Łatwy i jest to opcja dla początkujących "
-"graczy, którzy wolą grę łagodniejszą niż w Normalnej Kampanii."
+"graczy, którzy wolą grę łagodniejszą niż w Standardowej Kampanii."
 
 #: ../base/ufos/msgid/campaigns.ufo:28
-#, fuzzy
 msgid ""
 "This is a very forgiving version of the Standard Campaign. Your forces will "
 "be more powerful, the aliens less dangerous, and you will experience few "
@@ -12203,8 +12197,8 @@ msgid ""
 "This campaign represents the Very Easy difficulty level, and is an option "
 "for first-time players who are only just testing the waters of UFO: AI."
 msgstr ""
-"To jest najłatwiejsza wersja Normalnej Kampanii. Twoje siły będą "
-"potężniejsze, obcy mniej groźni, a ty doznasz podczas kampanii niewielu "
+"To jest najłatwiejsza wersja Standardowej Kampanii. Twoje siły będą "
+"potężniejsze, obcy mniej groźni a ty doznasz podczas kampanii niewielu "
 "strat.\n"
 "\n"
 "Ta kampania reprezentuje Poziom Bardzo Łatwy i jest zalecana dla "
@@ -12267,6 +12261,30 @@ msgid ""
 "For help with setting up multiplayer games, see http://ufoai.org/wiki/index."
 "php/Multiplayer"
 msgstr ""
+"Witaj w holu gry wieloosobowej UFO: Alien Invasion.\n"
+"Jeżeli szukasz graczy, upewnij się aby pozostawać podłączonym.\n"
+"NIE każdy kogo widzisz na liście użytkowników jest graczem!\n"
+"Szukaj użytkowników którzy podłączeni są poprzez klienta gry.\n"
+"\n"
+"ZABRANIA SIĘ:\n"
+"- Spamowania.\n"
+"- Używania ordynarnego języka.\n"
+"- Używania języka innego niż Angielski.\n"
+"- Okazywania zniecierpliwienia. Nim ktoś odpowie może upłynąć kilka minut.\n"
+"\n"
+"Możesz zamknąć to okno a potem je otworzyć klawiszem F10, nawet w misji dla "
+"jednego gracza.\n"
+"Możesz wysłać bezpośrednie wiadomości do graczy, dodając imię gracza na "
+"początku wiadomości.\n"
+"Jeżeli gracz wyśle ci wiadomość, ta ukaże się w wyskakującym oknie.\n"
+"\n"
+"Jeżeli chcesz stworzyć grę, upewnij się że port TCP 27910 w zaporze jest "
+"otwarty.\n"
+"Jeżeli chcesz dołączyć do kanału zwykłym klientem IRC, połącz się z irc."
+"freenode.net i dołącz do #ufoai\n"
+"\n"
+"Pomoc w ustawieniach rozgrywki wieloosobowej, zobacz na http://ufoai.org/"
+"wiki/index.php/Multiplayer"
 
 #: ../base/ufos/msgid/mails.ufo:2
 msgid "SecGen. Mahouf Serra, United Nations, New York City"
@@ -13482,7 +13500,7 @@ msgstr ""
 "inteligentnych obcych we Wszechświecie nie było więcej kwestią wiary. Nie "
 "tylko istnieli – nawiązali kontakt w sposób najgorszy z możliwych. Masakra "
 "była zbyt duża i widoczna, aby rządy mogły ją utrzymać w tajemnicy. Nagrania "
-"spalonego, zatopionego we krwi miasta obiegły całą Ziemię. obcy nie "
+"spalonego, zatopionego we krwi miasta obiegły całą Ziemię. Obcy nie "
 "zostawili żadnych innych śladów wizyty. Pilnie zebrali ciała swoich zabitych "
 "i każdy upuszczony sprzętu przed odlotem.\n"
 "\n"
@@ -14171,7 +14189,7 @@ msgstr ""
 "wynikami, z których trudno wyciągnąć jakiekolwiek sensowne wnioski. Pomimo "
 "istniejącego i sprawnego aparatu wokalnego umożliwiającego wydawanie "
 "dźwięków u przedstawicieli wszystkich przebadanych przez nas ras obcych, nie "
-"zaobserwowaliśmy żadnych przejawów prób komunikacji werbalnej. obcy nie "
+"zaobserwowaliśmy żadnych przejawów prób komunikacji werbalnej. Obcy nie "
 "posługują się także pismem ani gestami – wszystkie nasze wysiłki prowadzące "
 "do nawiązania porozumienia czy chociaż szczątkowej formy \"dyskusji\" "
 "spełzły na niczym.\n"
@@ -14485,12 +14503,12 @@ msgstr ""
 "\n"
 "Z radością informuję, że udało nam się osiągnąć obiecujące wyniki w kwestii "
 "przesłuchiwania obcych trzymanych w kwarantannie. Podejście doktora Yamamury "
-"powoli daje rezultaty. obcy nauczyli się porozumiewać zarówno w kodzie "
+"powoli daje rezultaty. Obcy nauczyli się porozumiewać zarówno w kodzie "
 "dwójkowym, jak i za pomocą języka migowego; zdają się rozumieć szeroki "
 "wachlarz pytań i poleceń. Yamamura i jego asystenci pracują obecnie nad "
 "ulepszeniem stosowanego przez nas języka migowego, podczas gdy reszta mojego "
 "zespołu skoncentrowała się na wydobyciu jakichś użytecznych informacji od "
-"„roju”. Nie jest to takie proste. obcy zdecydowanie nie chcą mówić; "
+"„roju”. Nie jest to takie proste. Obcy zdecydowanie nie chcą mówić; "
 "potrzebowaliśmy sporo środków odurzających, by wprowadzić ich w bardziej "
 "pomocny nastrój. Wiele z nich nie przeżyło tego.\n"
 "\n"
@@ -17738,7 +17756,6 @@ msgid ""
 msgstr ""
 
 #: ../base/ufos/msgid/weapons.ufo:549 ../base/ufos/msgid/weapons.ufo:1535
-#, fuzzy
 msgid ""
 "Technical Specifications: CRC-212 Riot Shotgun\n"
 "\n"
@@ -17824,7 +17841,7 @@ msgid ""
 "Addenda\n"
 "\n"
 "None."
-msgstr "W trakcie tłumaczenia."
+msgstr ""
 
 #: ../base/ufos/msgid/weapons.ufo:567
 #, fuzzy
@@ -21340,12 +21357,17 @@ msgid ""
 msgstr ""
 
 #: ../base/ufos/msgid/weapons.ufo:1465
+#, fuzzy
 msgid ""
 "Commander, we've recovered a new alien weapon that appears to be a larger "
 "version of the Needler. Please let my men take a look as soon as possible.\n"
 "\n"
 "Cdr. Navarre"
 msgstr ""
+"Dowódco, zdobyliśmy nową broń obcych, która wygląda jak większa wersja "
+"Igłowca. Pozwól moim ludziom zająć się tym jak tylko będzie to mozliwe.\n"
+"\n"
+"--mjr. Navarre"
 
 #: ../base/ufos/msgid/weapons.ufo:1479
 #, fuzzy
@@ -21431,7 +21453,7 @@ msgstr ""
 "\n"
 "Sugeruję pozostawienie SR-1 jako lekkiej broni snajperskiej do celów "
 "przeciwpiechotnych i wysuwanie na pierwszy plan Karabinów Gaussa jako "
-"głównej broni dalekiego zasięgu. obcy z pewnością zaczną się jej obawiać.\n"
+"głównej broni dalekiego zasięgu. Obcy z pewnością zaczną się jej obawiać.\n"
 "\n"
 "--mjr Paul Navarre"
 
@@ -23740,7 +23762,7 @@ msgstr "Ludzka Szczepionka"
 
 #: ../base/ufos/seq_credits.ufo:44
 msgid "http://www.ufoai.org"
-msgstr ""
+msgstr "http://www.ufoai.org"
 
 #: ../base/ufos/seq_credits.ufo:56
 msgid "Project lead"
@@ -23756,23 +23778,23 @@ msgstr "Członkowie zespołu"
 
 #: ../base/ufos/seq_credits.ufo:87
 msgid "aDuke"
-msgstr ""
+msgstr "aDuke"
 
 #: ../base/ufos/seq_credits.ufo:97
 msgid "Alexander Tishin (Sandro)"
-msgstr ""
+msgstr "Alexander Tishin (Sandro)"
 
 #: ../base/ufos/seq_credits.ufo:107
 msgid "bayo"
-msgstr ""
+msgstr "bayo"
 
 #: ../base/ufos/seq_credits.ufo:117
 msgid "Christian Hoffmann (crystan)"
-msgstr ""
+msgstr "Christian Hoffmann (crystan)"
 
 #: ../base/ufos/seq_credits.ufo:127
 msgid "DarkRain"
-msgstr ""
+msgstr "DarkRain"
 
 #: ../base/ufos/seq_credits.ufo:137
 msgid "Tamas Fehervari (geever)"
@@ -23780,15 +23802,15 @@ msgstr "Tamas Fehervari (geever)"
 
 #: ../base/ufos/seq_credits.ufo:147
 msgid "Nate Wright (H-Hour)"
-msgstr ""
+msgstr "Nate Wright (H-Hour)"
 
 #: ../base/ufos/seq_credits.ufo:157
 msgid "Pawel Michalkiewicz"
-msgstr ""
+msgstr "Pawel Michalkiewicz"
 
 #: ../base/ufos/seq_credits.ufo:167
 msgid "Holger Gellrich (ShipIt)"
-msgstr ""
+msgstr "Holger Gellrich (ShipIt)"
 
 #: ../base/ufos/seq_credits.ufo:181
 msgid "Other contributors"
@@ -23800,7 +23822,7 @@ msgstr "Bas Fournier (BTAxis)"
 
 #: ../base/ufos/seq_credits.ufo:201
 msgid "Werner Hohrer (Hoehrer)"
-msgstr ""
+msgstr "Werner Hohrer (Hoehrer)"
 
 #: ../base/ufos/seq_credits.ufo:211
 msgid "Kostia Romanov (Kildor)"
@@ -23808,7 +23830,7 @@ msgstr "Kostia Romanov (Kildor)"
 
 #: ../base/ufos/seq_credits.ufo:221
 msgid "Olivier Alloschery (Kracken)"
-msgstr ""
+msgstr "Olivier Alloschery (Kracken)"
 
 #: ../base/ufos/seq_credits.ufo:231
 msgid "Forest Hale (LordHavoc)"
@@ -23816,7 +23838,7 @@ msgstr "Forest Hale (LordHavoc)"
 
 #: ../base/ufos/seq_credits.ufo:241
 msgid "Christoph Mallon (Tron)"
-msgstr ""
+msgstr "Christoph Mallon (Tron)"
 
 #: ../base/ufos/seq_credits.ufo:251
 msgid "Ryan A. Span. (Winter)"
@@ -23836,7 +23858,7 @@ msgstr "Herby"
 
 #: ../base/ufos/seq_credits.ufo:295
 msgid "SparXX"
-msgstr ""
+msgstr "SparXX"
 
 #: ../base/ufos/seq_credits.ufo:305
 msgid "Rastaman"
@@ -23856,11 +23878,11 @@ msgstr "Specjalne podziękowania dla"
 
 #: ../base/ufos/seq_credits.ufo:349
 msgid "id Software for the Quake 2 engine"
-msgstr ""
+msgstr "id Software za silnik Quake 2"
 
 #: ../base/ufos/seq_credits.ufo:359
 msgid "NineX for hosting us"
-msgstr ""
+msgstr "NineX za hosting"
 
 #: ../base/ufos/seq_credits.ufo:369
 msgid "To the community and everyone who supported us"
@@ -23924,7 +23946,7 @@ msgstr ""
 "wiadomości w tysiącach różnych języków do obcych plądrujących ich tereny. "
 "Ich próby pozostają bez odpowiedzi. Po kilku godzinach w żadnym z trzech "
 "miast nie pozostaje przy życiu ani jeden człowiek. Ataki kończą się, zanim "
-"siły wojskowe mają szansę wykonać kontruderzenie. obcy nie pozostawiają za "
+"siły wojskowe mają szansę wykonać kontruderzenie. Obcy nie pozostawiają za "
 "sobą niczego poza krwią i betonową pustynią. Wszystkie statki obcych znikają "
 "bez śladu - choć nikt już nie wątpi, że pojawią się ponownie."
 
@@ -24752,7 +24774,7 @@ msgid ""
 "Hint: Press CTRL+G to grab/release the mousepointer."
 msgstr ""
 "Odwiedź nasze forum i przyłącz się do społeczności na http://ufoai.org.\n"
-"Podpowiedź: Kombinacja CTRL+G blokuje/uwalnia wskaźnik myszy w oknie gry."
+"Podpowiedź: CTRL+G blokuje/uwalnia wskaźnik myszy w oknie gry."
 
 #: ../base/ufos/ui/_menu.ufo:614
 msgid "Visit our forums and join the community at http://ufoai.org."
@@ -24766,7 +24788,7 @@ msgid ""
 msgstr ""
 "Adnotacja: Specyficzne skróty klawiszowe są widoczne jedynie w trybie "
 "Kampanii.\n"
-"Podpowiedź: Kombinacja CTRL+G blokuje/uwalnia wskaźnik myszy w oknie gry."
+"Podpowiedź: CTRL+G blokuje/uwalnia wskaźnik myszy w oknie gry."
 
 #: ../base/ufos/ui/_menu.ufo:621
 msgid "Note: Campaign-specific keybindings visible in Campaign mode only."
@@ -25440,7 +25462,7 @@ msgstr "Zmień nazwę jednostki"
 #: ../base/ufos/ui/equipment.ufo:692 ../base/ufos/ui/inventory.ufo:252
 #: ../base/ufos/ui/team.ufo:622
 msgid "0/0 Kg"
-msgstr ""
+msgstr "0/0 Kg"
 
 #: ../base/ufos/ui/equipment.ufo:718 ../base/ufos/ui/team.ufo:639
 msgid "Done"
@@ -26351,7 +26373,7 @@ msgstr "LAN"
 
 #: ../base/ufos/ui/multiplayer.ufo:151 ../base/ufos/ui/multiplayer.ufo:266
 msgid "Bookmark"
-msgstr "Dodaj"
+msgstr "Ulubione"
 
 #: ../base/ufos/ui/multiplayer.ufo:188
 msgid "Userlist"
@@ -26367,15 +26389,15 @@ msgstr "Dodaj serwer do ulubionych"
 
 #: ../base/ufos/ui/multiplayer.ufo:301
 msgid "All"
-msgstr "Wszyscy"
+msgstr "Wszystkie"
 
 #: ../base/ufos/ui/multiplayer.ufo:303
 msgid "Free"
-msgstr "Wolni"
+msgstr "Wolne"
 
 #: ../base/ufos/ui/multiplayer.ufo:305
 msgid "Playing"
-msgstr "Grają"
+msgstr "Rozgrywane"
 
 #: ../base/ufos/ui/multiplayer.ufo:307
 msgid "Invalid"
@@ -26654,13 +26676,12 @@ msgid "Menu Options"
 msgstr "Opcje menu"
 
 #: ../base/ufos/ui/options.ufo:291
-#, fuzzy
 msgid "Precache Models:"
-msgstr "Użyj pamięci podręcznej dla modeli:"
+msgstr "Ładowanie modeli z wyprzedzeniem:"
 
 #: ../base/ufos/ui/options.ufo:297
 msgid "Precaching of models means having faster menus."
-msgstr ""
+msgstr "Ładowanie modeli z wyprzedzeniem skutkuje szybszym działaniem menu."
 
 #: ../base/ufos/ui/options.ufo:315
 msgid "Video Settings"
@@ -26720,8 +26741,7 @@ msgstr "Zapobiega temu by wskaźnik myszy opuszczał okno gry."
 
 #: ../base/ufos/ui/options.ufo:479
 msgid "Hint: Press CTRL+G to grab/release the mousepointer."
-msgstr ""
-"Podpowiedź: Kombinacja CTRL+G blokuje/uwalnia wskaźnik myszy w oknie gry."
+msgstr "Podpowiedź: CTRL+G blokuje/uwalnia wskaźnik myszy w oknie gry."
 
 #: ../base/ufos/ui/options.ufo:490
 msgid "Calibrate your display here."
@@ -26829,11 +26849,11 @@ msgstr "Ekstramalny"
 
 #: ../base/ufos/ui/options.ufo:715
 msgid "Sets the texture filtering and mipmapping method."
-msgstr ""
+msgstr "Ustaw filtrowanie tekstur i metodę mip-mapowania."
 
 #: ../base/ufos/ui/options.ufo:716
 msgid "Filtering:"
-msgstr ""
+msgstr "Filtrowanie:"
 
 #: ../base/ufos/ui/options.ufo:729
 msgid "No filtering, no mipmaps"
@@ -26868,9 +26888,8 @@ msgstr ""
 "jakości renderowania."
 
 #: ../base/ufos/ui/options.ufo:760
-#, fuzzy
 msgid "Compression:"
-msgstr "Kompresja tekstur:"
+msgstr "Kompresja:"
 
 #: ../base/ufos/ui/options.ufo:775
 msgid ""
@@ -26890,17 +26909,21 @@ msgid ""
 "textures appear more sharp. Very high ratios are only recommended when "
 "playing in high resolutions."
 msgstr ""
+"Stopień lub wskaźnik filtrowania anizotropicznego. Wysoki wskaźnik sprawi że "
+"dalsze obiekty będą bardziej ostre. Bardzo wysoki wskaźnik jest polecany "
+"jedynie grając w wysokich rozdzielczościach."
 
 #: ../base/ufos/ui/options.ufo:792
-#, fuzzy
 msgid "Anisotropy Level:"
-msgstr "Stopień anizotropii tekstur:"
+msgstr "Stopień anizotropi:"
 
 #: ../base/ufos/ui/options.ufo:805
 msgid ""
 "Very high values are only recommended when playing in very high screen "
 "resolutions."
 msgstr ""
+"Bardzo duże wartości są polecane jedynie przy grze w bardzo wysokiej "
+"rozdzielczości."
 
 #: ../base/ufos/ui/options.ufo:818
 msgid "OpenGL Settings"
@@ -27144,11 +27167,11 @@ msgstr "Efekty Dźwiękowe:"
 
 #: ../base/ufos/ui/options.ufo:1395
 msgid "Menu Sounds:"
-msgstr "Menu Dźwięku:"
+msgstr "Dźwięki w Menu:"
 
 #: ../base/ufos/ui/options.ufo:1401
 msgid "Turn the menu sounds on or off."
-msgstr "Załącza lub wyłącza dźwięk w menu."
+msgstr "Załącza lub wyłącza dźwięki w menu."
 
 #: ../base/ufos/ui/options.ufo:1411
 msgid "Advanced Audio Options"
@@ -27190,6 +27213,8 @@ msgid ""
 "want smoother camera movement, increase it if you want cameramovement to "
 "decelerate faster or stop immediately."
 msgstr ""
+"Obniż tę wartość dla płynnego ruchu kamery. Zwiększ ją jeżeli chcesz by ruch "
+"kamery zwalniał szybciej, lub zatrzymywał się natychmiast."
 
 #: ../base/ufos/ui/options.ufo:1545
 msgid "Move Deceleration:"
@@ -27200,6 +27225,8 @@ msgid ""
 "Isometric Mode means the 3D world will be rendered without perspective "
 "correction."
 msgstr ""
+"Tryb Izometryczny oznacza że świat 3D będzie przedstawiony bez korygowania "
+"perspektywy."
 
 #: ../base/ufos/ui/options.ufo:1570
 msgid "Isometric Mode:"
@@ -27210,6 +27237,8 @@ msgid ""
 "Center the camera view automatically at the soldier when selecting it, or at "
 "the enemy when he is shooting or appearing."
 msgstr ""
+"Centruje automatycznie widok kamery na wybranym żołnierzu, lub na wrogu "
+"kiedy strzela albo pojawia się."
 
 #: ../base/ufos/ui/options.ufo:1586
 msgid "Center View:"
@@ -27232,6 +27261,8 @@ msgid ""
 "Enabling this will give you a preview of your actions on the battlescape "
 "which you then have to confirm."
 msgstr ""
+"Załączenie tej opcji daje ci możliwość podglądu zaplanowanej w trybie "
+"taktycznym akcji, której wykonanie musisz potem potwierdzać."
 
 #: ../base/ufos/ui/options.ufo:1629
 msgid "Confirm Actions:"
@@ -28689,7 +28720,7 @@ msgstr ""
 
 #: client/battlescape/cl_hud.cpp:1378 client/cl_inventory_callbacks.cpp:386
 msgid "Kg"
-msgstr ""
+msgstr "Kg"
 
 #: client/battlescape/cl_hud.cpp:1398
 msgid "Currently panics!\n"
@@ -31280,7 +31311,7 @@ msgstr ""
 #: client/cgame/campaign/cp_transfer.cpp:155
 #, c-format
 msgid "Transport mission ended, unloading cargo in %s"
-msgstr "Zakończono misje transportowa, wyładunek w %s"
+msgstr "Zakończono misję transportową, wyładunek w %s"
 
 #: client/cgame/campaign/cp_transfer_callbacks.cpp:83
 #, c-format
@@ -34615,12 +34646,12 @@ msgstr "Zrzut ekranu [Screenshot]"
 #~ "\n"
 #~ "Z radością informuję, że udało nam się osiągnąć obiecujące wyniki w "
 #~ "kwestii przesłuchiwania obcych trzymanych w kwarantannie. Podejście "
-#~ "doktora Yamamury powoli daje rezultaty. obcy nauczyli się porozumiewać "
+#~ "doktora Yamamury powoli daje rezultaty. Obcy nauczyli się porozumiewać "
 #~ "zarówno w kodzie dwójkowym, jak i za pomocą języka migowego; zdają się "
 #~ "rozumieć szeroki wachlarz pytań i poleceń. Yamamura i jego asystenci "
 #~ "pracują obecnie nad ulepszeniem stosowanego przez nas języka migowego, "
 #~ "podczas gdy reszta mojego zespołu skoncentrowała się na wydobyciu jakichś "
-#~ "użytecznych informacji od „roju”. Nie jest to takie proste. obcy "
+#~ "użytecznych informacji od „roju”. Nie jest to takie proste. Obcy "
 #~ "zdecydowanie nie chcą mówić; potrzebowaliśmy sporo środków odurzających, "
 #~ "by wprowadzić ich w bardziej pomocny nastrój. Wiele z nich nie przeżyło "
 #~ "tego.\n"
