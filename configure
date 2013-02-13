@@ -315,7 +315,7 @@ check_ccache() {
 check_program() {
 	HAVE=PROGRAM_`echo $1 | tr '[a-z]' '[A-Z]'`
 	$1 --help > /dev/null 2>&1
-	if [ $? -eq 0 ]; then
+	if [ $? -ne 127 ]; then
 		echo "Found $1"
 		set_var $HAVE $1
 	else
