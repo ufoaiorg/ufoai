@@ -318,7 +318,7 @@ void G_EdictSetOrigin (edict_t* ent, const pos3_t newPos)
  * @param cmpPos The grid position to compare to
  * @return true if positions are equal
  */
-bool G_EdictPosIsSameAs (edict_t* ent, const pos3_t cmpPos)
+bool G_EdictPosIsSameAs (const edict_t* ent, const pos3_t cmpPos)
 {
 	return VectorCompare(cmpPos, ent->pos);
 }

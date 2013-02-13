@@ -273,7 +273,7 @@ bool SV_FilterPacket(const char *from);
 /** Functions to handle single edicts, trying to encapsulate edict->pos in the first place. */
 void G_EdictCalcOrigin(edict_t *ent);
 void G_EdictSetOrigin(edict_t *ent, const pos3_t newPos);
-bool G_EdictPosIsSameAs(edict_t *ent, const pos3_t cmpPos);
+bool G_EdictPosIsSameAs(const edict_t *ent, const pos3_t cmpPos);
 
 #include "g_events.h"
 

@@ -559,7 +559,7 @@ void Grid_CalcPathing (const Routing &routing, const actorSizeEnum_t actorSize, 
             if (usedTUs >= maxTUs)
                 continue;
 
-            for (dir = 0; dir < PATHFINDING_DIRECTIONS; dir++) {
+            for (dir = 0; dir < PATHFINDING_DIRECTIONS; ++dir) {
                 Step step(routing, pos, actorSize, amst, dir);
                 /* Directions 12, 14, and 15 are currently undefined. */
                 if (dir == 12 || dir == 14 || dir == 15)
