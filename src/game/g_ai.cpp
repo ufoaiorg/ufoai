@@ -1063,24 +1063,29 @@ static aiAction_t AI_PrepBestAction (const Player *player, edict_t *ent)
 
 	/* evaluate moving to every possible location in the search area,
 	 * including combat considerations */
-	for (to[2] = 0; to[2] < PATHFINDING_HEIGHT; to[2]++)
-		for (to[1] = yl; to[1] < yh; to[1]++)
-			for (to[0] = xl; to[0] < xh; to[0]++) {
+	for (to[2] = 0; to[2] < PATHFINDING_HEIGHT; ++to[2]) {
+		for (to[1] = yl; to[1] < yh; ++to[1]) {
+			for (to[0] = xl; to[0] < xh; ++to[0]) {
 				const pos_t move = G_ActorMoveLength(ent, level.pathingMap, to, true);
-				if (move != ROUTING_NOT_REACHABLE && move <= G_ActorUsableTUs(ent)) {
-					if (G_IsCivilian(ent))
-						bestActionScore = AI_CivilianCalcActionScore(ent, to, &aia);
-					else if (G_IsPanicked(ent))
-						bestActionScore = AI_PanicCalcActionScore(ent, to, &aia);
-					else
-						bestActionScore = AI_FighterCalcActionScore(ent, to, &aia);
+				if (move && move >= ROUTING_NOT_REACHABLE)
+					continue;
+				if (move > G_ActorUsableTUs(ent))
+					continue;
 
-					if (bestActionScore > best) {
-						bestAia = aia;
-						best = bestActionScore;
-					}
+				if (G_IsCivilian(ent))
+					bestActionScore = AI_CivilianCalcActionScore(ent, to, &aia);
+				else if (G_IsPanicked(ent))
+					bestActionScore = AI_PanicCalcActionScore(ent, to, &aia);
+				else
+					bestActionScore = AI_FighterCalcActionScore(ent, to, &aia);
+
+				if (bestActionScore > best) {
+					bestAia = aia;
+					best = bestActionScore;
 				}
 			}
+		}
+	}
 
 	VectorCopy(oldPos, ent->pos);
 	VectorCopy(oldOrigin, ent->origin);
