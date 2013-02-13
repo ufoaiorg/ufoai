@@ -4,14 +4,14 @@
 #include "math/frustum.h"
 
 template<typename Element>
-inline Vector3 triangle_cross (const BasicVector3<Element>& x, const BasicVector3<Element> y, const BasicVector3<
+inline Vector3 triangle_cross (const BasicVector3<Element>& x, const BasicVector3<Element>& y, const BasicVector3<
 		Element>& z)
 {
 	return vector3_cross(y - x, z - x);
 }
 template<typename Element>
-inline bool triangles_same_winding (const BasicVector3<Element>& x1, const BasicVector3<Element> y1,
-		const BasicVector3<Element>& z1, const BasicVector3<Element>& x2, const BasicVector3<Element> y2,
+inline bool triangles_same_winding (const BasicVector3<Element>& x1, const BasicVector3<Element>& y1,
+		const BasicVector3<Element>& z1, const BasicVector3<Element>& x2, const BasicVector3<Element>& y2,
 		const BasicVector3<Element>& z2)
 {
 	return triangle_cross(x1, y1, z1).dot(triangle_cross(x2, y2, z2)) > 0;
