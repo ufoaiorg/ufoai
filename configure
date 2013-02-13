@@ -319,7 +319,8 @@ check_program() {
 		echo "Found $1"
 		set_var $HAVE $1
 	else
-		set_var $HAVE 0
+		echo "Could not find $1"
+		set_var $HAVE
 	fi
 }
 
