@@ -100,8 +100,6 @@ static bool Grid_CheckForbidden (const pos3_t exclude, const actorSizeEnum_t act
 	pos_t **p;
 	int i;
 	actorSizeEnum_t size;
-	int fx, fy, fz; /**< Holding variables for the forbidden x and y */
-	byte *forbiddenSize;
 
 	for (i = 0, p = path->fblist; i < path->fblength / 2; i++, p += 2) {
 		/* Skip initial position. */
@@ -109,19 +107,19 @@ static bool Grid_CheckForbidden (const pos3_t exclude, const actorSizeEnum_t act
 			continue;
 		}
 
-		forbiddenSize = *(p + 1);
+		/* extract the forbidden coordinates */
+		byte *forbiddenSize = *(p + 1);
 		memcpy(&size, forbiddenSize, sizeof(size));
-		fx = (*p)[0];
-		fy = (*p)[1];
-		fz = (*p)[2];
+		const int fx = (*p)[0];
+		const int fy = (*p)[1];
+		const int fz = (*p)[2];
 
 		if (fx + size <= x || x + actorSize <= fx)
 			continue; /* x bounds do not intersect */
 		if (fy + size <= y || y + actorSize <= fy)
 			continue; /* y bounds do not intersect */
-		if (z == fz) {
+		if (z == fz)
 			return true; /* confirmed intersection */
-		}
 	}
 	return false;
 }
@@ -151,13 +149,13 @@ class Step {
 
 	int actorHeight;		/**< The actor's height in QUANT units. */
 	int actorCrouchedHeight;
-public:
 	const Routing &routing;
-	int dir;
+public:
+	const int dir;
 	pos3_t fromPos;
 	pos3_t toPos;	/* The position we are moving to with this step. */
 	actorSizeEnum_t actorSize;
-	byte crouchingState;
+	const byte crouchingState;
 	byte TUsAfter;
 
 	Step (const Routing &r, const pos3_t fromPos, const actorSizeEnum_t actorSize, const byte crouchingState, const int dir);
@@ -178,12 +176,10 @@ public:
  * @param[in] _crouchingState Whether the actor is currently crouching, 1 is yes, 0 is no.
  * @param[in] _dir Direction vector index (see DIRECTIONS and dvecs)
  */
-Step::Step (const Routing &r, const pos3_t _fromPos, const actorSizeEnum_t _actorSize, const byte _crouchingState, const int _dir) : routing(r)
+Step::Step (const Routing &r, const pos3_t _fromPos, const actorSizeEnum_t _actorSize, const byte _crouchingState, const int _dir) :
+		routing(r), dir(_dir), actorSize(_actorSize), crouchingState(_crouchingState)
 {
-	actorSize = _actorSize;
 	VectorCopy(_fromPos, fromPos);
-	crouchingState = _crouchingState;
-	dir = _dir;
 }
 
 /**
