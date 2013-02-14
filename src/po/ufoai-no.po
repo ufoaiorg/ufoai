@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: UFO: Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
 "POT-Creation-Date: 2013-02-07 18:29+0100\n"
-"PO-Revision-Date: 2013-02-02 08:07+0100\n"
+"PO-Revision-Date: 2013-02-14 07:31+0100\n"
 "Last-Translator: Johnny A. Solbu <johnny@solbu.net>\n"
 "Language-Team: Norwegian Bokmal\n"
 "Language: nb_NO\n"
@@ -56,9 +56,8 @@ msgid "Small cemetery"
 msgstr "Liten kirkegård"
 
 #: ../base/maps/city3.ump:199
-#, fuzzy
 msgid "The outscirt of a big city."
-msgstr "Et sykehus i utkanten av en by."
+msgstr "Utkanten av en stor by."
 
 #: ../base/maps/city_disco.ump:65
 msgid "City_disco"
@@ -150,9 +149,8 @@ msgstr "Ufo landet"
 #: ../base/maps/industrial.ump:363 ../base/ufos/maps.ufo:1745
 #: ../base/ufos/maps.ufo:1788 ../base/ufos/maps.ufo:1832
 #: ../base/ufos/maps.ufo:1875
-#, fuzzy
 msgid "Industrial Site"
-msgstr "Industri-tema"
+msgstr "Industriområde"
 
 #: ../base/maps/italy.ump:61
 msgid "Italy"
@@ -470,7 +468,6 @@ msgid "Alien Aircraft Plating"
 msgstr "Romskipspanser"
 
 #: ../base/ufos/aircraftmanagement.ufo:1165 ../base/ufos/research.ufo:4810
-#, fuzzy
 msgid "Alien Polymer Armour"
 msgstr "Romvesenstridsrustning"
 
@@ -487,9 +484,8 @@ msgid "Alien Propulsion"
 msgstr "Utenomjordisk fremdrift"
 
 #: ../base/ufos/aircraftmanagement.ufo:1208 ../base/ufos/research.ufo:4928
-#, fuzzy
 msgid "Advanced Alien Propulsion"
-msgstr "Utenomjordisk fremdrift"
+msgstr "Utenomjordisk fremdriftssystem"
 
 #: ../base/ufos/aircraftmanagement.ufo:1217 ../base/ufos/research.ufo:4967
 msgid "Alien Detection"
@@ -2806,11 +2802,11 @@ msgstr "Intet språk"
 #: ../base/ufos/maps.ufo:161 ../base/ufos/maps.ufo:213
 #: ../base/ufos/maps.ufo:267 ../base/ufos/maps.ufo:319
 msgid "African Village"
-msgstr ""
+msgstr "Afrikansk landsby"
 
 #: ../base/ufos/maps.ufo:368
 msgid "Coastal Crash Site"
-msgstr ""
+msgstr "Krasjsted ved kysten"
 
 #: ../base/ufos/maps.ufo:409
 #, fuzzy
@@ -2819,10 +2815,9 @@ msgstr "Bybomber"
 
 #: ../base/ufos/maps.ufo:562
 msgid "Urban Periphery"
-msgstr ""
+msgstr "Urban periferi"
 
 #: ../base/ufos/maps.ufo:603
-#, fuzzy
 msgid "Country Desert"
 msgstr "Ørken"
 
@@ -2831,289 +2826,253 @@ msgid "Some houses in the desert."
 msgstr "Noen hus i ørkenen."
 
 #: ../base/ufos/maps.ufo:688
-#, fuzzy
 msgid "Country Desert (Crashed Harvester)"
-msgstr "Styrtet forhøster"
+msgstr "Ørken (Ufo-krasjsted)"
 
 #: ../base/ufos/maps.ufo:738 ../base/ufos/maps.ufo:780
 #: ../base/ufos/maps.ufo:819 ../base/ufos/maps.ufo:862
 msgid "Farm"
-msgstr ""
+msgstr "Gård"
 
 #: ../base/ufos/maps.ufo:914 ../base/ufos/maps.ufo:954
 #: ../base/ufos/maps.ufo:995 ../base/ufos/maps.ufo:1035
-#, fuzzy
 msgid "Forest"
-msgstr "Lagerrom"
+msgstr "Skog"
 
 #: ../base/ufos/maps.ufo:1080 ../base/ufos/maps.ufo:1133
 #: ../base/ufos/maps.ufo:1186 ../base/ufos/maps.ufo:1237
 #: ../base/ufos/maps.ufo:1287 ../base/ufos/maps.ufo:1338
-#, fuzzy
 msgid "Arctic Industrial Site"
-msgstr "Industri-tema"
+msgstr "Arktisk industriområde"
 
 #: ../base/ufos/maps.ufo:1448 ../base/ufos/maps.ufo:1492
 #: ../base/ufos/maps.ufo:1534
 msgid "Suburban Housing"
-msgstr ""
+msgstr "Forstadsboliger"
 
 #: ../base/ufos/maps.ufo:1581 ../base/ufos/maps.ufo:1621
 #: ../base/ufos/maps.ufo:1662 ../base/ufos/maps.ufo:1701
 msgid "Frozen Landscape"
-msgstr ""
+msgstr "Frossent landskap"
 
 #: ../base/ufos/maps.ufo:1921 ../base/ufos/maps.ufo:1969
 #: ../base/ufos/maps.ufo:3336
 msgid "East Asian Village"
-msgstr ""
+msgstr "Østasiatisk landsby"
 
 #: ../base/ufos/maps.ufo:2279 ../base/ufos/maps.ufo:2319
 #: ../base/ufos/maps.ufo:2360 ../base/ufos/maps.ufo:2402
 #: ../base/ufos/maps.ufo:3488 ../base/ufos/maps.ufo:4783
 msgid "Middle Eastern Suburb"
-msgstr ""
+msgstr "Forstad i Midtøsten"
 
 #: ../base/ufos/maps.ufo:2455
-#, fuzzy
 msgid "Crashed Scout"
 msgstr "krasjet spaningsufo."
 
 #: ../base/ufos/maps.ufo:2497 ../base/ufos/maps.ufo:2537
 #: ../base/ufos/maps.ufo:2578 ../base/ufos/maps.ufo:2619
 #: ../base/ufos/maps.ufo:2659
-#, fuzzy
 msgid "Tropical Jungle"
-msgstr "Tropisk medisin"
+msgstr "Tropisk jungel"
 
 #: ../base/ufos/maps.ufo:2705
-#, fuzzy
 msgid "UFO Crash Site"
-msgstr "Ufo krasjsted"
+msgstr "Ufo-krasjsted"
 
 #: ../base/ufos/maps.ufo:2737 ../base/ufos/maps.ufo:2778
 #: ../base/ufos/maps.ufo:5088
-#, fuzzy
 msgid "Suburban City"
-msgstr "En forstad."
+msgstr "Forstadsby"
 
 #: ../base/ufos/maps.ufo:2827 ../base/ufos/maps.ufo:2862
 #: ../base/ufos/maps.ufo:5277
-#, fuzzy
 msgid "PHALANX Base Under Attack"
-msgstr "Basen blir angrepet"
+msgstr "Falanks-basen blir angrepet"
 
 #: ../base/ufos/maps.ufo:2901
-#, fuzzy
 msgid "Cemetery"
-msgstr "Liten kirkegård"
+msgstr "Kirkegård"
 
 #: ../base/ufos/maps.ufo:2943
-#, fuzzy
 msgid "City High-Rise"
-msgstr "En skyskraper i byen."
+msgstr "Høyblokker"
 
 #: ../base/ufos/maps.ufo:2983
-#, fuzzy
 msgid "Urban Disco"
-msgstr "urban"
+msgstr "Urban Disco"
 
 #: ../base/ufos/maps.ufo:3032
-#, fuzzy
 msgid "Community Centre"
 msgstr "Forsamlingshus"
 
 #: ../base/ufos/maps.ufo:3084
-#, fuzzy
 msgid "Construction Site"
-msgstr "Konstruksjon"
+msgstr "Byggeplass"
 
 #: ../base/ufos/maps.ufo:3138
-#, fuzzy
 msgid "Tropical Jungle Estate"
-msgstr "Tropisk medisin"
+msgstr "Tropisk jungeleiendom"
 
 #: ../base/ufos/maps.ufo:3197
-#, fuzzy
 msgid "Mountain Estate"
-msgstr "Rocky Mountains"
+msgstr "Fjelleiendom"
 
 #: ../base/ufos/maps.ufo:3238
-#, fuzzy
 msgid "Gas Station"
 msgstr "Bensinstasjon"
 
 #: ../base/ufos/maps.ufo:3286
 msgid "Luxury House"
-msgstr ""
+msgstr "Luksushus"
 
 #: ../base/ufos/maps.ufo:3388
-#, fuzzy
 msgid "Supermarket"
-msgstr "Overmenneskelig"
+msgstr "Supermarked"
 
 #: ../base/ufos/maps.ufo:3440
-#, fuzzy
 msgid "Military Convoy Ambush Site"
-msgstr "Militærkonvoi"
+msgstr "Militærkonvoi bakholdssted"
 
 #: ../base/ufos/maps.ufo:3539
 msgid "Military Shelter"
-msgstr ""
+msgstr "Militært tilfluktsrom"
 
 #: ../base/ufos/maps.ufo:3596
-#, fuzzy
 msgid "Solar Power Plant"
-msgstr "Kraftverk"
+msgstr "Solkraftverk"
 
 #: ../base/ufos/maps.ufo:3688
 msgid "Basketball Stadium"
-msgstr ""
+msgstr "Basketballstadion"
 
 #: ../base/ufos/maps.ufo:3739 ../base/ufos/maps.ufo:4737
 msgid "Office Complex"
-msgstr ""
+msgstr "Kontorkompleks"
 
 #: ../base/ufos/maps.ufo:3793
 msgid "Warehouse"
-msgstr ""
+msgstr "Varehus"
 
 #: ../base/ufos/maps.ufo:3841
-#, fuzzy
 msgid "Bungalow"
-msgstr "Bangalore"
+msgstr "Hytte"
 
 #: ../base/ufos/maps.ufo:3885
-#, fuzzy
 msgid "House"
-msgstr "Houston"
+msgstr "Hus"
 
 #: ../base/ufos/maps.ufo:3931
-#, fuzzy
 msgid "Military Bunker"
-msgstr "Militærkonvoi"
+msgstr "Militærbunker"
 
 #: ../base/ufos/maps.ufo:3980
 msgid "Urban Warehouse"
-msgstr ""
+msgstr "Urbant varehus"
 
 #: ../base/ufos/maps.ufo:4025
-#, fuzzy
 msgid "Rural Village"
-msgstr "En liten landsby."
+msgstr "Landsby."
 
 #: ../base/ufos/maps.ufo:4073
-#, fuzzy
 msgid "Corrupter UFO Crash Site"
-msgstr "Ufo krasjsted"
+msgstr "Ufo-krasjsted"
 
 #: ../base/ufos/maps.ufo:4119
 msgid "Hydroelectric Dam"
-msgstr ""
+msgstr "Demning (Vannkraft)"
 
 #: ../base/ufos/maps.ufo:4167
-#, fuzzy
 msgid "Small Village"
-msgstr "En liten landsby."
+msgstr "Liten landsby."
 
 #: ../base/ufos/maps.ufo:4216
-#, fuzzy
 msgid "Estate"
-msgstr "Roter"
+msgstr "Eiendom"
 
 #: ../base/ufos/maps.ufo:4261
 msgid "Archaeological Dig"
-msgstr ""
+msgstr "Arkeologisk utgraving"
 
 #: ../base/ufos/maps.ufo:4311
-#, fuzzy
 msgid "Ferry"
-msgstr "En ferge"
+msgstr "Ferge"
 
 #: ../base/ufos/maps.ufo:4361
-#, fuzzy
 msgid "Fighter UFO Crash Site"
-msgstr "Ufo krasjsted"
+msgstr "Ufo-krasjsted"
 
 #: ../base/ufos/maps.ufo:4409
-#, fuzzy
 msgid "Fuel Depot"
-msgstr "Drivstofftank"
+msgstr "Drivstoffdeponi"
 
 #: ../base/ufos/maps.ufo:4451
 msgid "Secret Depot"
-msgstr ""
+msgstr "Hemmelig lager"
 
 #: ../base/ufos/maps.ufo:4499
-#, fuzzy
 msgid "Port"
-msgstr "Portland"
+msgstr "Havn"
 
 #: ../base/ufos/maps.ufo:4545 ../base/ufos/maps.ufo:4591
 msgid "Snowy Logging Site"
-msgstr ""
+msgstr "Snødekt hogstfelt"
 
 #: ../base/ufos/maps.ufo:4640
 msgid "Old Mine"
-msgstr ""
+msgstr "Gammel gruve"
 
 #: ../base/ufos/maps.ufo:4693
-#, fuzzy
 msgid "Residential Neighbourhood"
 msgstr "Nabolag"
 
 #: ../base/ufos/maps.ufo:4830
-#, fuzzy
 msgid "Sewerage Construction Site"
-msgstr "Underjordisk rørbyggeplass."
+msgstr "Avløpsbyggeplass"
 
 #: ../base/ufos/maps.ufo:4877
-#, fuzzy
 msgid "Luxurious Resort"
-msgstr "Et luksuriøst feriested."
+msgstr "Luksuriøst feriested."
 
 #: ../base/ufos/maps.ufo:4923
 msgid "Old Town Center"
-msgstr ""
+msgstr "Gammelt bysentrum"
 
 #: ../base/ufos/maps.ufo:4975
-#, fuzzy
 msgid "Small House"
-msgstr "Liten"
+msgstr "Lite hus"
 
 #: ../base/ufos/maps.ufo:5008
 msgid "Small Suburban Street"
-msgstr ""
+msgstr "Liten forstadsgate"
 
 #: ../base/ufos/maps.ufo:5041
-#, fuzzy
 msgid "Subway Station"
-msgstr "Metning:"
+msgstr "T-banestasjon"
 
 #: ../base/ufos/maps.ufo:5134
 msgid "Wilderness"
-msgstr ""
+msgstr "Ødemark"
 
 #: ../base/ufos/maps.ufo:5183
 msgid "City High-Rise (MP)"
-msgstr ""
+msgstr "City High-Rise (MP)"
 
 #: ../base/ufos/maps.ufo:5211
 msgid "Frozen Industrial Site (Coop)"
-msgstr ""
+msgstr "Frossent industriområde (Coop)"
 
 #: ../base/ufos/maps.ufo:5229
 msgid "Frozen Industrial Site (MP)"
-msgstr ""
+msgstr "Frossent industriområde (MP)"
 
 #: ../base/ufos/maps.ufo:5255
-#, fuzzy
 msgid "Alien Base"
-msgstr "Fremmed base"
+msgstr "Romvesen-base"
 
 #: ../base/ufos/maps.ufo:5289
 msgid "PHALANX Craft Crash Site"
-msgstr ""
+msgstr "Falanks krasjsted"
 
 #: ../base/ufos/maps.ufo:5318
 msgid "Training Zone: Alpha"
@@ -8708,12 +8667,11 @@ msgstr ""
 
 #: ../base/ufos/msgid/missionbriefing.ufo:2
 msgid "Good luck commander. Bring our soldiers back alive."
-msgstr ""
+msgstr "Lykke til sjef. Bring våre soldater tilbake i live."
 
 #: ../base/ufos/msgid/missionbriefing.ufo:5
-#, fuzzy
 msgid "Kill all the aliens."
-msgstr "Spill som romvesen"
+msgstr "Drep alle romvesen"
 
 #: ../base/ufos/msgid/missionbriefing.ufo:8
 msgid ""
@@ -8734,13 +8692,12 @@ msgid ""
 msgstr ""
 
 #: ../base/ufos/msgid/missionbriefing.ufo:17
-#, fuzzy
 msgid "Kill all the aliens to secure the base."
-msgstr "Drep alle romvesener på denne base"
+msgstr "Drep alle romvesener for å sikre basen."
 
 #: ../base/ufos/msgid/missionbriefing.ufo:20
 msgid "The dropship has arrived at the crash site."
-msgstr ""
+msgstr "Transportflyet har ankommet krasjstedet."
 
 #: ../base/ufos/msgid/news.ufo:16
 msgid ""
@@ -15401,9 +15358,8 @@ msgid "gettext_text2"
 msgstr ""
 
 #: ../base/ufos/research.ufo:109
-#, fuzzy
 msgid "Skills and Abilities"
-msgstr "Soldatevner"
+msgstr "Evner og ferdigheter"
 
 #: ../base/ufos/research.ufo:110
 msgid "Background"
@@ -15493,9 +15449,8 @@ msgid "Electromagnetic Rifle Magazine"
 msgstr "Elektromagnetisk geværmagasin"
 
 #: ../base/ufos/research.ufo:1057 ../base/ufos/weapons_human.ufo:1806
-#, fuzzy
 msgid "Electromagnetic Rifle Antimatter Magazine"
-msgstr "Elektromagnetisk geværmagasin"
+msgstr "Elektromagnetisk antimaterie-geværmagasin"
 
 #: ../base/ufos/research.ufo:1123
 msgid "Monomolecular Blades"
@@ -15532,7 +15487,7 @@ msgstr "Romvesengjenstand - Plasmarifle"
 #: ../base/ufos/research.ufo:1997 ../base/ufos/research.ufo:2035
 #: ../base/ufos/research.ufo:2058 ../base/ufos/research.ufo:2081
 msgid "Encased Plasma Rounds"
-msgstr ""
+msgstr "Innkapslede Plasmakuler"
 
 #: ../base/ufos/research.ufo:2104 ../base/ufos/research.ufo:2196
 #: ../base/ufos/weapons_aliens.ufo:6
@@ -15733,44 +15688,40 @@ msgid "Human Vaccine"
 msgstr "Menneskelig vaksine"
 
 #: ../base/ufos/seq_credits.ufo:44
-#, fuzzy
 msgid "http://www.ufoai.org"
-msgstr "http://ufoai.sf.net"
+msgstr "http://www.ufoai.org"
 
 #: ../base/ufos/seq_credits.ufo:56
-#, fuzzy
 msgid "Project lead"
 msgstr "Prosjektleder"
 
 #: ../base/ufos/seq_credits.ufo:66
-#, fuzzy
 msgid "Martin Gerhardy (mattn)"
-msgstr "Martin Gerhardy (mattn/tlh2000)"
+msgstr "Martin Gerhardy (mattn)"
 
 #: ../base/ufos/seq_credits.ufo:77
-#, fuzzy
 msgid "Team members"
-msgstr "Teammedlemmer:"
+msgstr "Teammedlemmer"
 
 #: ../base/ufos/seq_credits.ufo:87
 msgid "aDuke"
-msgstr ""
+msgstr "aDuke"
 
 #: ../base/ufos/seq_credits.ufo:97
 msgid "Alexander Tishin (Sandro)"
-msgstr ""
+msgstr "Alexander Tishin (Sandro)"
 
 #: ../base/ufos/seq_credits.ufo:107
 msgid "bayo"
-msgstr ""
+msgstr "bayo"
 
 #: ../base/ufos/seq_credits.ufo:117
 msgid "Christian Hoffmann (crystan)"
-msgstr ""
+msgstr "Christian Hoffmann (crystan)"
 
 #: ../base/ufos/seq_credits.ufo:127
 msgid "DarkRain"
-msgstr ""
+msgstr "DarkRain"
 
 #: ../base/ufos/seq_credits.ufo:137
 msgid "Tamas Fehervari (geever)"
@@ -15778,28 +15729,27 @@ msgstr "Tamas Fehervari (geever)"
 
 #: ../base/ufos/seq_credits.ufo:147
 msgid "Nate Wright (H-Hour)"
-msgstr ""
+msgstr "Nate Wright (H-Hour)"
 
 #: ../base/ufos/seq_credits.ufo:157
 msgid "Pawel Michalkiewicz"
-msgstr ""
+msgstr "Pawel Michalkiewicz"
 
 #: ../base/ufos/seq_credits.ufo:167
 msgid "Holger Gellrich (ShipIt)"
-msgstr ""
+msgstr "Holger Gellrich (ShipIt)"
 
 #: ../base/ufos/seq_credits.ufo:181
 msgid "Other contributors"
-msgstr ""
+msgstr "Andre bidragsytere"
 
 #: ../base/ufos/seq_credits.ufo:191
 msgid "Bas Fournier (BTAxis)"
 msgstr "Bas Fournier (BTAxis)"
 
 #: ../base/ufos/seq_credits.ufo:201
-#, fuzzy
 msgid "Werner Hohrer (Hoehrer)"
-msgstr "Werner Hoehrer (hoehrer)"
+msgstr "Werner Hohrer (Hoehrer)"
 
 #: ../base/ufos/seq_credits.ufo:211
 msgid "Kostia Romanov (Kildor)"
@@ -15807,7 +15757,7 @@ msgstr "Kostia Romanov (Kildor)"
 
 #: ../base/ufos/seq_credits.ufo:221
 msgid "Olivier Alloschery (Kracken)"
-msgstr ""
+msgstr "Olivier Alloschery (Kracken)"
 
 #: ../base/ufos/seq_credits.ufo:231
 msgid "Forest Hale (LordHavoc)"
@@ -15815,30 +15765,27 @@ msgstr "Forest Hale (LordHavoc)"
 
 #: ../base/ufos/seq_credits.ufo:241
 msgid "Christoph Mallon (Tron)"
-msgstr ""
+msgstr "Christoph Mallon (Tron)"
 
 #: ../base/ufos/seq_credits.ufo:251
 msgid "Ryan A. Span. (Winter)"
 msgstr "Ryan A. Span. (Winter)"
 
 #: ../base/ufos/seq_credits.ufo:261
-#, fuzzy
 msgid "Maciej Wierzbicki (Zenerka)"
-msgstr "Maciej Wierzbicki (Zenerka/Voovoos)"
+msgstr "Maciej Wierzbicki (Zenerka)"
 
 #: ../base/ufos/seq_credits.ufo:275
-#, fuzzy
 msgid "Original team"
-msgstr "Original HUD"
+msgstr "Opprinnelig team"
 
 #: ../base/ufos/seq_credits.ufo:285
 msgid "Herby"
 msgstr "Herby"
 
 #: ../base/ufos/seq_credits.ufo:295
-#, fuzzy
 msgid "SparXX"
-msgstr "SparX"
+msgstr "SparXX"
 
 #: ../base/ufos/seq_credits.ufo:305
 msgid "Rastaman"
@@ -15853,17 +15800,17 @@ msgid "Vanethian"
 msgstr "Vanethian"
 
 #: ../base/ufos/seq_credits.ufo:339
-#, fuzzy
 msgid "Special thanks to"
 msgstr "Spesiell takk til"
 
 #: ../base/ufos/seq_credits.ufo:349
 msgid "id Software for the Quake 2 engine"
-msgstr ""
+msgstr "id Software for Quake 2-motoren"
 
 #: ../base/ufos/seq_credits.ufo:359
+#, fuzzy
 msgid "NineX for hosting us"
-msgstr ""
+msgstr "NineX for hosting"
 
 #: ../base/ufos/seq_credits.ufo:369
 #, fuzzy
@@ -16235,7 +16182,7 @@ msgstr "Hode"
 
 #: ../base/ufos/tips.ufo:4
 msgid "Use the [Shift] key to aim higher or lower at your target."
-msgstr ""
+msgstr "Bruk [Shift]-tasten for å sikte høyere eller lavere på målet ditt."
 
 #: ../base/ufos/tips.ufo:5
 #, fuzzy
@@ -16567,16 +16514,14 @@ msgstr ""
 "musehjulet."
 
 #: ../base/ufos/tips.ufo:49
-#, fuzzy
 msgid ""
 "Beware of friendly fire! Lobbing a grenade among your own troops will do the "
 "aliens' work for them. The same can be said for bullets. Make sure you're "
 "not hitting your own troops behind your target."
 msgstr ""
-"Pass opp for vennlig ild! Mens lobbing en granat mot en fiende som snek seg "
-"opp på troppene dine kan være et lett drepe, sjansene er du vil gjøre de "
-"utenomjordiske 'arbeid for dem. Det samme kan sies om kuler, sørg for når "
-"fienden er død at du ikke skyter dine egne tropper bak ham."
+"Pass opp for vennlig ild! Lobbing av en granat kan gjøre romvesenes arbeid "
+"for dem. Det samme kan sies om kuler, sørg for at du ikke skyter dine egne "
+"tropper bak målet."
 
 #: ../base/ufos/tips.ufo:50
 msgid ""
@@ -16622,15 +16567,14 @@ msgstr ""
 "finnes andre anledninger."
 
 #: ../base/ufos/tips.ufo:55
-#, fuzzy
 msgid ""
 "Wounded aliens are easier to stun. If an alien has been already attacked "
 "with a stun rod or electrolaser, lethal weapons may just knock it "
 "unconscious."
 msgstr ""
-"Sårede romvesener er lettere å svimeslå. Likeledes, hvis en fremmed allerede "
-"er angrepet med en elektrisk stav eller elektrolaser kan normalt dødelige "
-"våpen bare slå det bevisstløs"
+"Sårede romvesener er lettere å svimeslå. Hvis et romvesen allerede er "
+"angrepet med en elektrisk stav eller elektrolaser kan dødelige våpen også "
+"slå de bevisstløse"
 
 #: ../base/ufos/ui/_menu.ufo:122 ../base/ufos/ui/geoscape.ufo:192
 msgid "CREDITS"
@@ -17361,9 +17305,8 @@ msgid "Belt"
 msgstr "Belte"
 
 #: ../base/ufos/ui/equipment.ufo:169
-#, fuzzy
 msgid "Remove all"
-msgstr "Fjern"
+msgstr "Fjern alt"
 
 #: ../base/ufos/ui/equipment.ufo:223 ../base/ufos/ui/market.ufo:114
 #: ../base/ufos/ui/production.ufo:56 ../base/ufos/ui/team.ufo:203
@@ -17420,7 +17363,7 @@ msgstr "Nytt navn på enhet"
 #: ../base/ufos/ui/equipment.ufo:692 ../base/ufos/ui/inventory.ufo:252
 #: ../base/ufos/ui/team.ufo:622
 msgid "0/0 Kg"
-msgstr ""
+msgstr "0/0 Kg"
 
 #: ../base/ufos/ui/equipment.ufo:718 ../base/ufos/ui/team.ufo:639
 msgid "Done"
@@ -18023,9 +17966,8 @@ msgid "Tutorials"
 msgstr "Øvelsesspill"
 
 #: ../base/ufos/ui/main.ufo:58
-#, fuzzy
 msgid "Developers"
-msgstr "Revelstoke"
+msgstr "Utviklere"
 
 #: ../base/ufos/ui/main.ufo:94
 msgid "Initial settings"
@@ -18131,9 +18073,8 @@ msgid "Price"
 msgstr "Pris"
 
 #: ../base/ufos/ui/market.ufo:308
-#, fuzzy
 msgid "Capacity"
-msgstr "Kapasitet:"
+msgstr "Kapasitet"
 
 #: ../base/ufos/ui/market.ufo:315 ../base/ufos/ui/popup_installations.ufo:287
 #: ../base/ufos/ui/popup_installations.ufo:888
@@ -18291,20 +18232,17 @@ msgstr ""
 "Venstreklikk aktiverer alle lyder, høyreklikk deaktiverer."
 
 #: ../base/ufos/ui/missionbriefing.ufo:59
-#, fuzzy
 msgid "Victory conditions:"
-msgstr "Betingelse:"
+msgstr "Seiersvilkår"
 
 # Begynn kampanje er en bokstav for langt
 #: ../base/ufos/ui/missionbriefing.ufo:73
-#, fuzzy
 msgid "Start"
-msgstr "Start spill"
+msgstr "Start"
 
 #: ../base/ufos/ui/missionbriefing.ufo:74
-#, fuzzy
 msgid "Start the match"
-msgstr "Start spillet!"
+msgstr "Start spillet"
 
 #: ../base/ufos/ui/multiplayer.ufo:9
 msgid "Connect to this server"
@@ -19813,23 +19751,20 @@ msgid "Aliens"
 msgstr "romvesener"
 
 #: ../base/ufos/ui/transfer.ufo:193
-#, fuzzy
 msgid "From"
-msgstr "Fra:"
+msgstr "Fra"
 
 #: ../base/ufos/ui/transfer.ufo:200
-#, fuzzy
 msgid "To"
-msgstr "Til:"
+msgstr "Til"
 
 #: ../base/ufos/ui/transfer.ufo:279
-#, fuzzy
 msgid "Cargo"
-msgstr "Fargo"
+msgstr "Last"
 
 #: ../base/ufos/ui/transfer.ufo:287
 msgid "Amount"
-msgstr ""
+msgstr "Mengde"
 
 #: ../base/ufos/ui/transfer.ufo:339
 msgid "Destination base"
@@ -19861,11 +19796,11 @@ msgstr "Vis aktive overføringer"
 
 #: ../base/ufos/ui/transfer.ufo:489
 msgid "Clear"
-msgstr ""
+msgstr "Tøm"
 
 #: ../base/ufos/ui/transfer.ufo:490
 msgid "Clear cargo"
-msgstr ""
+msgstr "Tøm last"
 
 #: ../base/ufos/ui/transfer.ufo:530
 msgid "Select base to transfer to"
@@ -19905,7 +19840,7 @@ msgstr "Medikit"
 
 #: ../base/ufos/weapons.ufo:28
 msgid "First Aid"
-msgstr ""
+msgstr "Førstehjelp"
 
 #: ../base/ufos/weapons.ufo:44
 msgid "Stimulants"
@@ -20145,9 +20080,8 @@ msgid "IC Rocket"
 msgstr "IC-rakett"
 
 #: ../base/ufos/weapons_human.ufo:1204
-#, fuzzy
 msgid "Hybrid Rocket"
-msgstr "HE-rakett"
+msgstr "Hybrid-rakett"
 
 #: ../base/ufos/weapons_human.ufo:1251
 msgid "Grenade Launcher"
@@ -20365,15 +20299,15 @@ msgstr "Kule"
 
 #: ../base/ufos/weapons_plasma.ufo:369
 msgid "Encased Plasma Ammo - Assault Rifle"
-msgstr ""
+msgstr "Innkapslet Plasma-ammo - angrepsrifle"
 
 #: ../base/ufos/weapons_plasma.ufo:476
 msgid "Machine Gun - Encased Plasma Ammo"
-msgstr ""
+msgstr "Maskinpistol - Innkapslet Plasma-ammo"
 
 #: ../base/ufos/weapons_plasma.ufo:567
 msgid "Encased Plasma Ammo - Sniper Rifle"
-msgstr ""
+msgstr "Innkapslet Plasma-ammo - snikskytterrifle"
 
 #: ../base/ufos/weapons_ugv.ufo:22
 msgid "ugv_ares_w"
@@ -20451,13 +20385,12 @@ msgstr "Du kan ikke lade om dette ukjente elementet."
 #: client/battlescape/cl_actor.cpp:1025 client/cl_inventory.cpp:75
 #: game/g_actor.cpp:576
 msgid "This soldier can not carry anything else."
-msgstr ""
+msgstr "Denne soldaten kan ikke bære noe annet."
 
 #: client/battlescape/cl_actor.cpp:1025 client/battlescape/cl_hud.cpp:1374
 #: client/cl_inventory.cpp:75 client/cl_inventory_callbacks.cpp:382
-#, fuzzy
 msgid "Warning"
-msgstr "Nanning"
+msgstr "Advarsel"
 
 #: client/battlescape/cl_actor.cpp:1874
 msgid "Unknown alien race"
@@ -20734,10 +20667,12 @@ msgid ""
 "This soldier no longer has enough TUs to use the following items:\n"
 "\n"
 msgstr ""
+"Denne soldaten har ikke lenger nok TE til å bruke følgende elementer:\n"
+"\n"
 
 #: client/battlescape/cl_hud.cpp:1378 client/cl_inventory_callbacks.cpp:386
 msgid "Kg"
-msgstr ""
+msgstr "Kg"
 
 # # in game
 #: client/battlescape/cl_hud.cpp:1398
@@ -20848,9 +20783,9 @@ msgid "%s was stunned\n"
 msgstr "%s ble bedøvet\n"
 
 #: client/battlescape/events/event/actor/e_event_actordie.cpp:96
-#, fuzzy, c-format
+#, c-format
 msgid "%s has died\n"
-msgstr "%s ble såret!"
+msgstr "%s døde\n"
 
 #: client/battlescape/events/event/actor/e_event_actordie.cpp:98
 #, c-format
@@ -20862,9 +20797,8 @@ msgid "A civilian was stunned."
 msgstr "En civil blev bedøvet."
 
 #: client/battlescape/events/event/actor/e_event_actordie.cpp:109
-#, fuzzy
 msgid "A civilian has died."
-msgstr "En sivilperson ble drept."
+msgstr "En sivilperson døde."
 
 #: client/battlescape/events/event/actor/e_event_actordie.cpp:111
 msgid "A civilian was killed."
@@ -20875,9 +20809,8 @@ msgid "An alien was stunned."
 msgstr "Et romvesen ble bedøvet."
 
 #: client/battlescape/events/event/actor/e_event_actordie.cpp:117
-#, fuzzy
 msgid "An alien has died."
-msgstr "Et romvesen ble drept."
+msgstr "Et romvesen døde."
 
 #: client/battlescape/events/event/actor/e_event_actordie.cpp:119
 msgid "An alien was killed."
@@ -20888,9 +20821,8 @@ msgid "A soldier was stunned."
 msgstr "En soldat ble bedøvet."
 
 #: client/battlescape/events/event/actor/e_event_actordie.cpp:125
-#, fuzzy
 msgid "A soldier has died."
-msgstr "En soldat ble drept."
+msgstr "En soldat døde."
 
 #: client/battlescape/events/event/actor/e_event_actordie.cpp:127
 msgid "A soldier was killed."
@@ -20902,9 +20834,9 @@ msgid "A member of team %i was stunned."
 msgstr "Et medlem av gruppen %i ble bedøvet."
 
 #: client/battlescape/events/event/actor/e_event_actordie.cpp:133
-#, fuzzy, c-format
+#, c-format
 msgid "A member of team %i has died."
-msgstr "Et medlem av gruppen %i ble drept."
+msgstr "Et medlem av gruppen %i døde."
 
 #: client/battlescape/events/event/actor/e_event_actordie.cpp:135
 #, c-format
@@ -20934,9 +20866,9 @@ msgid "A member of team %i was revitalised."
 msgstr "Et medlem av gruppen %i ble revitalisert."
 
 #: client/battlescape/events/event/actor/e_event_actorwound.cpp:60
-#, fuzzy, c-format
+#, c-format
 msgid "%s has been wounded"
-msgstr "%s ble såret!"
+msgstr "%s ble såret"
 
 # # in-game (hud)
 #: client/battlescape/events/event/player/e_event_doendround.cpp:57
@@ -22428,9 +22360,8 @@ msgid "Alien survivors"
 msgstr "Overlevende romvesener"
 
 #: client/cgame/campaign/cp_mission_callbacks.cpp:123
-#, fuzzy
 msgid "PHALANX soldiers killed in action"
-msgstr "FALANKS-soldater savnet i strid"
+msgstr "FALANKS-soldater drept i strid"
 
 #: client/cgame/campaign/cp_mission_callbacks.cpp:128
 msgid "PHALANX soldiers missing in action"
@@ -22445,9 +22376,8 @@ msgid "PHALANX survivors"
 msgstr "FALANKS-overlevende"
 
 #: client/cgame/campaign/cp_mission_callbacks.cpp:133
-#, fuzzy
 msgid "Civilians killed"
-msgstr "Sivile drept:"
+msgstr "Sivile drept"
 
 #: client/cgame/campaign/cp_mission_callbacks.cpp:134
 msgid "Civilians killed by friendly fire"
@@ -23967,9 +23897,9 @@ msgstr "Størrelse:\t%i\n"
 #: client/cl_inventory_callbacks.cpp:132 client/cl_inventory_callbacks.cpp:158
 #: client/cl_inventory_callbacks.cpp:185 client/cl_inventory_callbacks.cpp:189
 #: client/cl_inventory_callbacks.cpp:193
-#, fuzzy, c-format
+#, c-format
 msgid "Weight:\t%g Kg\n"
-msgstr "Vekt:\t%s\n"
+msgstr "Vekt:\t%g Kg\n"
 
 #: client/cl_inventory_callbacks.cpp:134
 msgid "^BDamage type:\tProtection:\n"
@@ -24048,11 +23978,8 @@ msgid "Unknown - not useable"
 msgstr "Ukjent - ikke brukbart"
 
 #: client/cl_inventory_callbacks.cpp:387
-#, fuzzy
 msgid "Warning: Not enough TUs..."
-msgstr ""
-"Kan ikke utføre aksjon:\n"
-"Ikke nok TE-er."
+msgstr "Advarsel: Ikke nok TE-er."
 
 #: client/cl_irc.cpp:1437
 msgid "Server closed connection"
