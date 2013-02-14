@@ -166,7 +166,7 @@ int CL_ActorMoveMode (const le_t *le, int length)
  * @param[in] le The actor to search.
  * @return The number of the actor in the teamlist. Or @c -1 if the given entity is not in the team list.
  */
-static int CL_ActorGetNumber (const le_t *le)
+int CL_ActorGetNumber (const le_t *le)
 {
 	int actorIdx;
 

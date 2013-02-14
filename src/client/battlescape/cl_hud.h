@@ -42,6 +42,7 @@ void HUD_InitStartup(void);
 void HUD_InitUI(const char *optionWindowName, bool popAll);
 void HUD_DisplayMessage(const char * text);
 void HUD_Update(void);
+void HUD_UpdateActorStats(const struct le_s *le);
 void HUD_UpdateCursor(void);
 
 #endif

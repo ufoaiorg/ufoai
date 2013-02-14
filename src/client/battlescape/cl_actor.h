@@ -99,6 +99,8 @@ void CL_BattlescapeMouseDragging(void);
 bool CL_AddActor(le_t *le, entity_t *ent);
 bool CL_AddUGV(le_t *le, entity_t *ent);
 
+int CL_ActorGetNumber(const le_t *le);
+
 void CL_AddTargeting(void);
 void CL_AddPathing(void);
 void CL_AddActorPathing(void);

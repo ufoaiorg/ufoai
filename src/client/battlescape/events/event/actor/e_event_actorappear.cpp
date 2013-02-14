@@ -150,6 +150,7 @@ void CL_ActorAppear (const eventRegister_t *self, dbuffer *msg)
 
 	/* count spotted aliens (also stunned) */
 	cl.numEnemiesSpotted = CL_CountVisibleEnemies();
+	Cvar_SetValue("mn_numaliensspotted", cl.numEnemiesSpotted);
 
 	if (LE_IsLivingActor(le)) {
 		if (cl.actTeam != cls.team) {

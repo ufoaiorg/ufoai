@@ -123,6 +123,25 @@ void HUD_DisplayMessage (const char *text)
 	UI_DisplayNotice(text, cl_hud_message_timeout->integer, cl_hud->string);
 }
 
+void HUD_UpdateActorStats (const le_t *le)
+{
+	if (LE_IsDead(le))
+		return;
+
+	const invList_t *invList = RIGHT(le);
+	if ((!invList || !invList->item.def() || !invList->item.isHeldTwoHanded()) && LEFT(le))
+		invList = LEFT(le);
+
+	const character_t *chr = CL_ActorGetChr(le);
+	assert(chr);
+	const char* tooltip = va(_("%s\nHP: %i/%i TU: %i\n%s"),
+		chr->name, le->HP, le->maxHP, le->TU, (invList && invList->item.def()) ? _(invList->item.def()->name) : "");
+
+	const int idx = CL_ActorGetNumber(le);
+	UI_ExecuteConfunc("updateactorvalues %i \"%s\" \"%i\" \"%i\" \"%i\" \"%i\" \"%i\" \"%i\" \"%i\" \"%s\"",
+			idx, le->model2->name, le->HP, le->maxHP, le->TU, le->maxTU, le->morale, le->maxMorale, le->STUN, tooltip);
+}
+
 /**
  * @brief Updates the global character cvars for battlescape.
  * @note This is only called when we are in battlescape rendering mode
@@ -133,25 +152,12 @@ static void HUD_UpdateAllActors (void)
 	int i;
 	const size_t size = lengthof(cl.teamList);
 
-	Cvar_SetValue("mn_numaliensspotted", cl.numEnemiesSpotted);
 	for (i = 0; i < size; i++) {
 		const le_t *le = cl.teamList[i];
-		if (le && !LE_IsDead(le)) {
-			const invList_t *invList;
-			const char* tooltip;
-			const character_t *chr = CL_ActorGetChr(le);
-			assert(chr);
+		if (!le)
+			continue;
 
-			invList = RIGHT(le);
-			if ((!invList || !invList->item.def() || !invList->item.isHeldTwoHanded()) && LEFT(le))
-				invList = LEFT(le);
-
-			tooltip = va(_("%s\nHP: %i/%i TU: %i\n%s"),
-				chr->name, le->HP, le->maxHP, le->TU, (invList && invList->item.def()) ? _(invList->item.def()->name) : "");
-
-			UI_ExecuteConfunc("updateactorvalues %i \"%s\" \"%i\" \"%i\" \"%i\" \"%i\" \"%i\" \"%i\" \"%i\" \"%s\"",
-					i, le->model2->name, le->HP, le->maxHP, le->TU, le->maxTU, le->morale, le->maxMorale, le->STUN, tooltip);
-		}
+		HUD_UpdateActorStats(le);
 	}
 }
 

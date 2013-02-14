@@ -73,6 +73,7 @@ void CL_ActorDie (const eventRegister_t *self, dbuffer *msg)
 
 	/* count spotted aliens */
 	cl.numEnemiesSpotted = CL_CountVisibleEnemies();
+	Cvar_SetValue("mn_numaliensspotted", cl.numEnemiesSpotted);
 
 	/* play animation */
 	LE_SetThink(le, NULL);
