@@ -460,8 +460,10 @@ static void HUD_DisplayActions (const char* callback, const le_t* actor, actionT
 	case FIRE_RIGHT: {
 		const actorHands_t hand = ACTOR_HAND_RIGHT;
 		const fireDef_t *fd = HUD_GetFireDefinitionForHand(actor, hand);
-		if (fd == NULL)
+		if (fd == NULL) {
+			UI_PopWindow(false);
 			return;
+		}
 
 		const objDef_t *ammo = fd->obj;
 		if (!ammo) {
@@ -498,8 +500,10 @@ static void HUD_DisplayActions (const char* callback, const le_t* actor, actionT
 	case FIRE_LEFT: {
 		const actorHands_t hand = ACTOR_HAND_LEFT;
 		const fireDef_t *fd = HUD_GetFireDefinitionForHand(actor, hand);
-		if (fd == NULL)
+		if (fd == NULL) {
+			UI_PopWindow(false);
 			return;
+		}
 
 		const objDef_t *ammo = fd->obj;
 		if (!ammo) {
