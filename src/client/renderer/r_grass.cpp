@@ -44,15 +44,14 @@ struct Clump {
 static int clumpCount = 0;
 static Clump clumps[MAX_CLUMPS];
 
-static int clumpsForLevel[8] = {0};
-static int clumpTrianglesForLevel[8] = {0};
+static int clumpsForLevel[PATHFINDING_HEIGHT] = {0};
+static int clumpTrianglesForLevel[PATHFINDING_HEIGHT] = {0};
 
 static int clumpTriangleCount = 0;
 
 /* gfv -- grass fragment vertex */
-vec3_t gfv_pos[MAX_CLUMP_TRIS * 3];
-vec2_t gfv_texcoord[MAX_CLUMP_TRIS * 3];
-
+static vec3_t gfv_pos[MAX_CLUMP_TRIS * 3];
+static vec2_t gfv_texcoord[MAX_CLUMP_TRIS * 3];
 
 void R_ClearGrass ()
 {
@@ -119,7 +118,7 @@ static void R_PlantGrass (Clump &clump)
 #else
 	/* programmatically generated clump */
 	CrossProduct(zt, xt, yt);
-	for (int i = 0; i <TRIS_PER_CLUMP; i += 2) {
+	for (int i = 0; i < TRIS_PER_CLUMP; i += 2) {
 		vec3_t sdir, tdir;
 		vec2_t sprrot;
 		vec3_t tmp;
@@ -152,6 +151,7 @@ static void R_PlantGrass (Clump &clump)
 		/* billboard sprite */
 		vec_t *ptr = gfv_pos[clumpTriangleCount * 3];
 		VectorCopy(clump.position, ptr);
+		/** @todo use UNIT_SIZE and co defines here */
 		VectorMA(clump.position, -24, sdir, ptr); /* quad vertex 0 */
 		VectorMA(ptr, 32, tdir, ptr + 3); /* quad vertex 1 */
 		VectorMA(ptr + 3, 48, sdir, ptr + 6); /* quad vertex 2 */
@@ -205,7 +205,7 @@ static int ClumpOrder (const void *a, const void *b)
 		return pa->level - pb->level;
 
 	/** @todo Morton order comparison to improve clusterization after sorting (beware the black magic) */
-	 return 0;
+	return 0;
 }
 
 static void R_OrganizeClumps ()
@@ -219,7 +219,7 @@ static void R_OrganizeClumps ()
 			lastLevel++;
 		}
 
-	while (lastLevel < 8) {
+	while (lastLevel < PATHFINDING_HEIGHT) {
 		clumpsForLevel[lastLevel] = i;
 		lastLevel++;
 	}
@@ -263,10 +263,10 @@ void R_GenerateGrass ()
 				double surfArea = 0.0;
 
 				for (int k = 0; k < surf->numTriangles; k++) {
-					int vofs = (k + surf->firstTriangle) * 3;
-					int indo = bspModel->indexes[vofs]  & 0xffff;
-					int inda = bspModel->indexes[vofs + 1]  & 0xffff;
-					int indb = bspModel->indexes[vofs + 2] & 0xffff;
+					const int vofs = (k + surf->firstTriangle) * 3;
+					const int indo = bspModel->indexes[vofs]  & 0xffff;
+					const int inda = bspModel->indexes[vofs + 1]  & 0xffff;
+					const int indb = bspModel->indexes[vofs + 2] & 0xffff;
 					vec3_t vo, va, vb;
 					vec3_t cross;
 
@@ -310,7 +310,7 @@ void R_GenerateGrass ()
 
 			int level;
 
-			for (level = 0; level < 7; level++)
+			for (level = 0; level < PATHFINDING_HEIGHT - 1; level++)
 				if ((1 << level) & i)
 					break;
 
@@ -376,13 +376,13 @@ void R_GenerateGrass ()
 
 	if (clumpTriangleCount <= 0) {
 		/* no grass geometry generated, so zero triangle counts */
-		for (int i = 0; i < 8; i++)
+		for (int i = 0; i < PATHFINDING_HEIGHT; i++)
 			clumpTrianglesForLevel[i] = 0;
 	} else {
 		/* generate triangle counts to render the grass in a single OpenGL call */
 		int lastClumpCount = 0;
 		int triangles = 0;
-		for (int i = 0; i < 8; i++) {
+		for (int i = 0; i < PATHFINDING_HEIGHT; i++) {
 			if (clumpsForLevel[i] > lastClumpCount) {
 				lastClumpCount = clumpsForLevel[i];
 				Clump &clump = clumps[lastClumpCount - 1];
