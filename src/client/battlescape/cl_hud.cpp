@@ -67,6 +67,13 @@ typedef enum {
 	BT_NUM_TYPES
 } buttonTypes_t;
 
+typedef enum {
+	FIRE_RIGHT,
+	FIRE_LEFT,
+	RELOAD_RIGHT,
+	RELOAD_LEFT
+} actionType_t;
+
 /** @brief a cbuf string for each button_types_t */
 static char const* const shootTypeStrings[] = {
 	"primaryright",
@@ -426,13 +433,9 @@ static void HUD_DisplayFiremodeEntry (const char* callback, const le_t* actor, c
  * @brief List actions from a soldier to a callback confunc
  * @param callback confunc callback
  * @param actor actor who can do the actions
- * @param right if true, list right firemode
- * @param left if true, list left firemode
- * @param reloadRight if true, list right weapon reload actions
- * @param reloadLeft if true, list left weapon reload actions
- * @todo we can extend it with short cut equip action, more reload, action on the map (like open doors)...
+ * @param type The action to display
  */
-static void HUD_DisplayActions (const char* callback, const le_t* actor, bool right, bool left, bool reloadRight, bool reloadLeft)
+static void HUD_DisplayActions (const char* callback, const le_t* actor, actionType_t type)
 {
 	int i;
 
@@ -445,7 +448,8 @@ static void HUD_DisplayActions (const char* callback, const le_t* actor, bool ri
 
 	const ScopedCommand c(callback, "begin", "end");
 
-	if (right) {
+	switch (type) {
+	case FIRE_RIGHT: {
 		const actorHands_t hand = ACTOR_HAND_RIGHT;
 		const fireDef_t *fd = HUD_GetFireDefinitionForHand(actor, hand);
 		if (fd == NULL)
@@ -462,8 +466,9 @@ static void HUD_DisplayActions (const char* callback, const le_t* actor, bool ri
 			HUD_DisplayFiremodeEntry(callback, actor, ammo, fd->weapFdsIdx, hand, i);
 		}
 	}
+	break;
 
-	if (reloadRight) {
+	case RELOAD_RIGHT: {
 		invList_t* weapon = RIGHT(actor);
 
 		/* Reloeadable item in hand. */
@@ -480,8 +485,9 @@ static void HUD_DisplayActions (const char* callback, const le_t* actor, bool ri
 			UI_ExecuteConfunc("%s reload %s %c %i %i %i", callback, actionId, 'r', tus, !noAmmo, !noTU);
 		}
 	}
+	break;
 
-	if (left) {
+	case FIRE_LEFT: {
 		const actorHands_t hand = ACTOR_HAND_LEFT;
 		const fireDef_t *fd = HUD_GetFireDefinitionForHand(actor, hand);
 		if (fd == NULL)
@@ -498,8 +504,9 @@ static void HUD_DisplayActions (const char* callback, const le_t* actor, bool ri
 			HUD_DisplayFiremodeEntry(callback, actor, ammo, fd->weapFdsIdx, hand, i);
 		}
 	}
+	break;
 
-	if (reloadLeft) {
+	case RELOAD_LEFT: {
 		invList_t* weapon = LEFT(actor);
 
 		/* Reloadable item in hand. */
@@ -512,24 +519,35 @@ static void HUD_DisplayActions (const char* callback, const le_t* actor, bool ri
 			UI_ExecuteConfunc("%s reload %s %c %i %i %i", callback, actionId, 'l', tus, !noAmmo, !noTU);
 		}
 	}
+	break;
+	}
 }
 
 /**
  * @brief Displays the firemodes for the given hand.
+ * @todo we can extend it with short cut equip action, more reload, action on the map (like open doors)...
  */
 static void HUD_DisplayActions_f (void)
 {
 	if (!selActor)
 		return;
 
-	const bool right = strchr(Cmd_Argv(2), 'r') != NULL;
-	const bool left = strchr(Cmd_Argv(2), 'l') != NULL;
-	const bool rightReload = strchr(Cmd_Argv(2), 'R') != NULL;
-	const bool leftReload = strchr(Cmd_Argv(2), 'L') != NULL;
+	actionType_t type;
+	if (strchr(Cmd_Argv(2), 'r') != NULL) {
+		type = FIRE_RIGHT;
+	} else if (strchr(Cmd_Argv(2), 'l') != NULL) {
+		type = FIRE_LEFT;
+	} else if (strchr(Cmd_Argv(2), 'R') != NULL) {
+		type = RELOAD_RIGHT;
+	} else if (strchr(Cmd_Argv(2), 'L') != NULL) {
+		type = RELOAD_LEFT;
+	} else {
+		return;
+	}
 
 	char callback[32];
 	Q_strncpyz(callback, Cmd_Argv(1), sizeof(callback));
-	HUD_DisplayActions(callback, selActor, right, left, rightReload, leftReload);
+	HUD_DisplayActions(callback, selActor, type);
 }
 
 /**
@@ -537,41 +555,20 @@ static void HUD_DisplayActions_f (void)
  */
 static void HUD_DisplayFiremodes_f (void)
 {
-	actorHands_t hand;
-	char callback[32];
-
 	if (!selActor)
 		return;
 
+	actorHands_t hand;
 	if (Cmd_Argc() < 3)
 		/* no argument given */
 		hand = ACTOR_HAND_RIGHT;
 	else
 		hand = ACTOR_GET_HAND_INDEX(Cmd_Argv(2)[0]);
 
+	const actionType_t type = hand == ACTOR_HAND_RIGHT ? FIRE_RIGHT : FIRE_LEFT;
+	char callback[32];
 	Q_strncpyz(callback, Cmd_Argv(1), sizeof(callback));
-	HUD_DisplayActions(callback, selActor, hand == ACTOR_HAND_RIGHT, hand == ACTOR_HAND_LEFT, false, false);
-}
-
-/**
- * @brief Changes the display of the firemode-list to a given hand, but only if the list is visible already.
- * @todo Delete that function: Should be done from within the scripts
- */
-static void HUD_SwitchFiremodeList_f (void)
-{
-	/* no argument given */
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s callback [l|r]\n", Cmd_Argv(0));
-		return;
-	}
-
-	{
-		char callback[32];
-		actorHands_t hand;
-		hand = ACTOR_GET_HAND_INDEX(Cmd_Argv(2)[0]);
-		Q_strncpyz(callback, Cmd_Argv(1), sizeof(callback));
-		HUD_DisplayActions(callback, selActor, hand == ACTOR_HAND_RIGHT, hand == ACTOR_HAND_LEFT, false, false);
-	}
+	HUD_DisplayActions(callback, selActor, type);
 }
 
 /**
@@ -1613,7 +1610,6 @@ void HUD_InitStartup (void)
 	Cmd_AddCommand("hud_remainingtus", HUD_RemainingTUs_f, "Define if remaining TUs should be displayed in the TU-bar for some hovered-over button.");
 	Cmd_AddCommand("hud_shotreserve", HUD_ShotReserve_f, "Reserve TUs for the selected entry in the popup.");
 	Cmd_AddCommand("hud_shotreservationpopup", HUD_PopupFiremodeReservation_f, "Pop up a list of possible firemodes for reservation in the current turn.");
-	Cmd_AddCommand("hud_switchfiremodelist", HUD_SwitchFiremodeList_f, "Switch firemode-list to one for the given hand, but only if the list is visible already.");
 	Cmd_AddCommand("hud_selectreactionfiremode", HUD_SelectReactionFiremode_f, "Change/Select firemode used for reaction fire.");
 	Cmd_AddCommand("hud_listfiremodes", HUD_DisplayFiremodes_f, "Display a list of firemodes for a weapon+ammo.");
 	Cmd_AddCommand("hud_listactions", HUD_DisplayActions_f, "Display a list of action from the selected soldier.");
