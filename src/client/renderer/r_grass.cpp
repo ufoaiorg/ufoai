@@ -325,10 +325,10 @@ void R_GenerateGrass ()
 
 				/* walk triangle list and plant grass */
 				for (int k = 0; k < surf->numTriangles; k++) {
-					int vofs = (k + surf->firstTriangle) * 3;
-					int indo = bspModel->indexes[vofs]  & 0xffff;
-					int inda = bspModel->indexes[vofs + 1]  & 0xffff;
-					int indb = bspModel->indexes[vofs + 2] & 0xffff;
+					const int vofs = (k + surf->firstTriangle) * 3;
+					const int indo = bspModel->indexes[vofs]  & 0xffff;
+					const int inda = bspModel->indexes[vofs + 1]  & 0xffff;
+					const int indb = bspModel->indexes[vofs + 2] & 0xffff;
 					vec3_t vo, va, vb;
 					vec3_t cross;
 
