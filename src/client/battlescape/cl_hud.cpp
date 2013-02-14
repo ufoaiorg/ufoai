@@ -529,6 +529,11 @@ static void HUD_DisplayActions (const char* callback, const le_t* actor, actionT
  */
 static void HUD_DisplayActions_f (void)
 {
+	if (Cmd_Argc() < 3) {
+		Com_Printf("Usage: %s callback [l|r|L|R]\n", Cmd_Argv(0));
+		return;
+	}
+
 	if (!selActor)
 		return;
 
@@ -555,16 +560,15 @@ static void HUD_DisplayActions_f (void)
  */
 static void HUD_DisplayFiremodes_f (void)
 {
+	if (Cmd_Argc() < 3) {
+		Com_Printf("Usage: %s callback [l|r]\n", Cmd_Argv(0));
+		return;
+	}
+
 	if (!selActor)
 		return;
 
-	actorHands_t hand;
-	if (Cmd_Argc() < 3)
-		/* no argument given */
-		hand = ACTOR_HAND_RIGHT;
-	else
-		hand = ACTOR_GET_HAND_INDEX(Cmd_Argv(2)[0]);
-
+	const actorHands_t hand = ACTOR_GET_HAND_INDEX(Cmd_Argv(2)[0]);
 	const actionType_t type = hand == ACTOR_HAND_RIGHT ? FIRE_RIGHT : FIRE_LEFT;
 	char callback[32];
 	Q_strncpyz(callback, Cmd_Argv(1), sizeof(callback));
