@@ -143,25 +143,6 @@ void HUD_UpdateActorStats (const le_t *le)
 }
 
 /**
- * @brief Updates the global character cvars for battlescape.
- * @note This is only called when we are in battlescape rendering mode
- * It's assumed that every living actor - @c le_t - has a character assigned, too
- */
-static void HUD_UpdateAllActors (void)
-{
-	int i;
-	const size_t size = lengthof(cl.teamList);
-
-	for (i = 0; i < size; i++) {
-		const le_t *le = cl.teamList[i];
-		if (!le)
-			continue;
-
-		HUD_UpdateActorStats(le);
-	}
-}
-
-/**
  * @brief Sets the display for a single weapon/reload HUD button.
  * @todo This should be a confunc which also sets the tooltips
  */
@@ -1449,9 +1430,6 @@ void HUD_Update (void)
 		}
 		cl_worldlevel->modified = false;
 	}
-
-	/* set Cvars for all actors */
-	HUD_UpdateAllActors();
 
 	/* force them empty first */
 	Cvar_Set("mn_anim", "stand0");

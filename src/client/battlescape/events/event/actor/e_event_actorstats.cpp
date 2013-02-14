@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../../../client.h"
 #include "../../../cl_localentity.h"
 #include "../../../cl_actor.h"
+#include "../../../cl_hud.h"
 #include "e_event_actorstats.h"
 
 /**
@@ -67,4 +68,6 @@ void CL_ActorStats (const eventRegister_t *self, dbuffer *msg)
 	/* if selActor's timeunits have changed, update movelength */
 	if (le->TU != oldTUs && LE_IsSelected(le))
 		CL_ActorResetMoveLength(le);
+
+	HUD_UpdateActorStats(le);
 }
