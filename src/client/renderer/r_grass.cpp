@@ -385,7 +385,7 @@ void R_GenerateGrass ()
 		for (int i = 0; i < PATHFINDING_HEIGHT; i++) {
 			if (clumpsForLevel[i] > lastClumpCount) {
 				lastClumpCount = clumpsForLevel[i];
-				Clump &clump = clumps[lastClumpCount - 1];
+				const Clump &clump = clumps[lastClumpCount - 1];
 				triangles = clump.firstTriangle + clump.numTriangles;
 			}
 			clumpTrianglesForLevel[i] = triangles;
