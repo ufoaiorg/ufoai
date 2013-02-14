@@ -606,9 +606,6 @@ static void HUD_UpdateReactionFiremodes (const le_t *actor, const actorHands_t h
  */
 static void HUD_SelectReactionFiremode_f (void)
 {
-	actorHands_t hand;
-	fireDefIndex_t firemode;
-
 	if (Cmd_Argc() < 3) { /* no argument given */
 		Com_Printf("Usage: %s [l|r] <num>   num=firemode number\n", Cmd_Argv(0));
 		return;
@@ -617,14 +614,13 @@ static void HUD_SelectReactionFiremode_f (void)
 	if (!selActor)
 		return;
 
-	hand = ACTOR_GET_HAND_INDEX(Cmd_Argv(1)[0]);
-	firemode = atoi(Cmd_Argv(2));
-
+	const fireDefIndex_t firemode = atoi(Cmd_Argv(2));
 	if (firemode >= MAX_FIREDEFS_PER_WEAPON || firemode < 0) {
 		Com_Printf("HUD_SelectReactionFiremode_f: Firemode out of bounds (%i).\n", firemode);
 		return;
 	}
 
+	const actorHands_t hand = ACTOR_GET_HAND_INDEX(Cmd_Argv(1)[0]);
 	HUD_UpdateReactionFiremodes(selActor, hand, firemode);
 }
 
@@ -634,16 +630,13 @@ static void HUD_SelectReactionFiremode_f (void)
  */
 static void HUD_RemainingTUs_f (void)
 {
-	bool state;
-	const char *type;
-
 	if (Cmd_Argc() < 3) {
 		Com_Printf("Usage: %s <type> <popupindex>\n", Cmd_Argv(0));
 		return;
 	}
 
-	type = Cmd_Argv(1);
-	state = Com_ParseBoolean(Cmd_Argv(2));
+	const char *type = Cmd_Argv(1);
+	const bool state = Com_ParseBoolean(Cmd_Argv(2));
 
 	OBJZERO(displayRemainingTus);
 
@@ -661,18 +654,17 @@ static void HUD_RemainingTUs_f (void)
  */
 static int HUD_GetMinimumTUsForUsage (const invList_t *invList)
 {
-	const fireDef_t *fdArray;
+	/** @todo what is this 100? replace with constant please - MAX_TUS? */
 	int time = 100;
-	int i;
 
 	assert(invList->item.def());
 
-	fdArray = FIRESH_FiredefForWeapon(&invList->item);
+	const fireDef_t *fdArray = FIRESH_FiredefForWeapon(&invList->item);
 	if (fdArray == NULL)
 		return time;
 
 	/* Search for the smallest TU needed to shoot. */
-	for (i = 0; i < MAX_FIREDEFS_PER_WEAPON; i++) {
+	for (int i = 0; i < MAX_FIREDEFS_PER_WEAPON; i++) {
 		if (!fdArray[i].time)
 			continue;
 		if (fdArray[i].time < time)
@@ -691,11 +683,7 @@ static int HUD_GetMinimumTUsForUsage (const invList_t *invList)
  */
 static int HUD_WeaponCanBeReloaded (const le_t *le, containerIndex_t containerID, const char **reason)
 {
-	const int tu = CL_ActorUsableTUs(le);
 	const invList_t *invList = CONTAINER(le, containerID);
-	const objDef_t *weapon;
-
-	assert(le);
 
 	/* No weapon in hand. */
 	if (!invList) {
@@ -703,7 +691,7 @@ static int HUD_WeaponCanBeReloaded (const le_t *le, containerIndex_t containerID
 		return -1;
 	}
 
-	weapon = invList->item.def();
+	const objDef_t *weapon = invList->item.def();
 	assert(weapon);
 
 	/* This weapon cannot be reloaded. */
@@ -722,6 +710,7 @@ static int HUD_WeaponCanBeReloaded (const le_t *le, containerIndex_t containerID
 	if (!invList->item.ammo || weapon->ammo > invList->item.ammoLeft) {
 		const int tuCosts = HUD_CalcReloadTime(le, weapon, containerID);
 		if (tuCosts >= 0) {
+			const int tu = CL_ActorUsableTUs(le);
 			if (tu >= tuCosts)
 				return tuCosts;
 			*reason = _("Not enough TUs for reloading weapon.");
@@ -793,26 +782,20 @@ static void HUD_DisplayPossibleReaction (const le_t *actor)
  */
 static void HUD_RefreshButtons (const le_t *le)
 {
-	invList_t *weaponr;
-	invList_t *weaponl;
-	invList_t *headgear;
-	int rightCanBeReloaded, leftCanBeReloaded;
-	const int time = CL_ActorUsableTUs(le);
-	const char *reason;
-	const float shootingPenalty = CL_ActorInjuryModifier(le, MODIFIER_SHOOTING);
-
 	if (!le)
 		return;
 
-	weaponr = RIGHT(le);
-	headgear = HEADGEAR(le);
+	invList_t *weaponr = RIGHT(le);
+	invList_t *headgear = HEADGEAR(le);
 
+	invList_t *weaponl;
 	/* check for two-handed weapon - if not, also define weaponl */
 	if (!weaponr || !weaponr->item.isHeldTwoHanded())
 		weaponl = LEFT(le);
 	else
 		weaponl = NULL;
 
+	const int time = CL_ActorUsableTUs(le);
 	/* Crouch/stand button. */
 	if (LE_IsCrouched(le)) {
 		if (time + CL_ActorReservedTUs(le, RES_CROUCH) < TU_CROUCH) {
@@ -872,8 +855,10 @@ static void HUD_RefreshButtons (const le_t *le)
 		}
 	}
 
+	const char *reason;
+
 	/* Reload buttons */
-	rightCanBeReloaded = HUD_WeaponCanBeReloaded(le, csi.idRight, &reason);
+	const bool rightCanBeReloaded = HUD_WeaponCanBeReloaded(le, csi.idRight, &reason);
 	if (rightCanBeReloaded != -1) {
 		HUD_SetWeaponButton(BT_RIGHT_RELOAD, BT_STATE_DESELECT);
 		Cvar_Set("mn_reloadright_tt", va(_("Reload weapon (%i TU)."), rightCanBeReloaded));
@@ -882,7 +867,7 @@ static void HUD_RefreshButtons (const le_t *le)
 		HUD_SetWeaponButton(BT_RIGHT_RELOAD, BT_STATE_DISABLE);
 	}
 
-	leftCanBeReloaded = HUD_WeaponCanBeReloaded(le, csi.idLeft, &reason);
+	const bool leftCanBeReloaded = HUD_WeaponCanBeReloaded(le, csi.idLeft, &reason);
 	if (leftCanBeReloaded != -1) {
 		HUD_SetWeaponButton(BT_LEFT_RELOAD, BT_STATE_DESELECT);
 		Cvar_Set("mn_reloadleft_tt", va(_("Reload weapon (%i TU)."), leftCanBeReloaded));
@@ -891,6 +876,7 @@ static void HUD_RefreshButtons (const le_t *le)
 		HUD_SetWeaponButton(BT_LEFT_RELOAD, BT_STATE_DISABLE);
 	}
 
+	const float shootingPenalty = CL_ActorInjuryModifier(le, MODIFIER_SHOOTING);
 	/* Headgear button */
 	if (headgear) {
 		const int minheadgeartime = HUD_GetMinimumTUsForUsage(headgear) * shootingPenalty;
@@ -1030,31 +1016,30 @@ void HUD_UpdateCursor (void)
  */
 static void HUD_MapDebugCursor (const le_t *le)
 {
-	if (cl_map_debug->integer & MAPDEBUG_TEXT) {
-		int dvec;
+	if (!(cl_map_debug->integer & MAPDEBUG_TEXT))
+		return;
 
-		static char topText[UI_MAX_SMALLTEXTLEN];
-		static char bottomText[UI_MAX_SMALLTEXTLEN];
-		static char leftText[UI_MAX_SMALLTEXTLEN];
+	static char topText[UI_MAX_SMALLTEXTLEN];
+	static char bottomText[UI_MAX_SMALLTEXTLEN];
+	static char leftText[UI_MAX_SMALLTEXTLEN];
 
-		/* Display the floor and ceiling values for the current cell. */
-		Com_sprintf(topText, lengthof(topText), "%u-(%i,%i,%i)\n",
-				Grid_Ceiling(cl.mapData->routing, ACTOR_GET_FIELDSIZE(le), truePos), truePos[0], truePos[1], truePos[2]);
-		/* Save the text for later display next to the cursor. */
-		UI_RegisterText(TEXT_MOUSECURSOR_TOP, topText);
+	/* Display the floor and ceiling values for the current cell. */
+	Com_sprintf(topText, lengthof(topText), "%u-(%i,%i,%i)\n",
+			Grid_Ceiling(cl.mapData->routing, ACTOR_GET_FIELDSIZE(le), truePos), truePos[0], truePos[1], truePos[2]);
+	/* Save the text for later display next to the cursor. */
+	UI_RegisterText(TEXT_MOUSECURSOR_TOP, topText);
 
-		/* Display the floor and ceiling values for the current cell. */
-		Com_sprintf(bottomText, lengthof(bottomText), "%i-(%i,%i,%i)\n",
-				Grid_Floor(cl.mapData->routing, ACTOR_GET_FIELDSIZE(le), truePos), mousePos[0], mousePos[1], mousePos[2]);
-		/* Save the text for later display next to the cursor. */
-		UI_RegisterText(TEXT_MOUSECURSOR_BOTTOM, bottomText);
+	/* Display the floor and ceiling values for the current cell. */
+	Com_sprintf(bottomText, lengthof(bottomText), "%i-(%i,%i,%i)\n",
+			Grid_Floor(cl.mapData->routing, ACTOR_GET_FIELDSIZE(le), truePos), mousePos[0], mousePos[1], mousePos[2]);
+	/* Save the text for later display next to the cursor. */
+	UI_RegisterText(TEXT_MOUSECURSOR_BOTTOM, bottomText);
 
-		/* Display the floor and ceiling values for the current cell. */
-		dvec = Grid_MoveNext(&cl.pathMap, mousePos, 0);
-		Com_sprintf(leftText, lengthof(leftText), "%i-%i\n", getDVdir(dvec), getDVz(dvec));
-		/* Save the text for later display next to the cursor. */
-		UI_RegisterText(TEXT_MOUSECURSOR_LEFT, leftText);
-	}
+	/* Display the floor and ceiling values for the current cell. */
+	const int dvec = Grid_MoveNext(&cl.pathMap, mousePos, 0);
+	Com_sprintf(leftText, lengthof(leftText), "%i-%i\n", getDVdir(dvec), getDVz(dvec));
+	/* Save the text for later display next to the cursor. */
+	UI_RegisterText(TEXT_MOUSECURSOR_LEFT, leftText);
 }
 
 /**
@@ -1064,7 +1049,6 @@ static void HUD_MapDebugCursor (const le_t *le)
 static int HUD_UpdateActorFireMode (le_t *actor)
 {
 	const invList_t *selWeapon;
-	int time = 0;
 
 	/* get weapon */
 	if (IS_MODE_FIRE_HEADGEAR(actor->actorMode)) {
@@ -1077,68 +1061,69 @@ static int HUD_UpdateActorFireMode (le_t *actor)
 
 	UI_ResetData(TEXT_MOUSECURSOR_RIGHT);
 
-	if (selWeapon) {
-		static char infoText[UI_MAX_SMALLTEXTLEN];
-
-		if (!selWeapon->item.def()) {
-			/* No valid weapon in the hand. */
-			CL_ActorSetFireDef(actor, NULL);
-		} else {
-			/* Check whether this item uses/has ammo. */
-			if (!selWeapon->item.ammo) {
-				CL_ActorSetFireDef(actor, NULL);
-				/* This item does not use ammo, check for existing firedefs in this item. */
-				/* This is supposed to be a weapon or other usable item. */
-				if (selWeapon->item.def()->numWeapons > 0) {
-					if (selWeapon->item.isWeapon() || selWeapon->item.def()->weapons[0] == selWeapon->item.def()) {
-						const fireDef_t *fdArray = FIRESH_FiredefForWeapon(&selWeapon->item);
-						if (fdArray != NULL) {
-							/* Get firedef from the weapon (or other usable item) entry instead. */
-							const fireDef_t *old = FIRESH_GetFiredef(selWeapon->item.def(), fdArray->weapFdsIdx, actor->currentSelectedFiremode);
-							CL_ActorSetFireDef(actor, old);
-						}
-					}
-				}
-			} else {
-				const fireDef_t *fdArray = FIRESH_FiredefForWeapon(&selWeapon->item);
-				if (fdArray != NULL) {
-					const fireDef_t *old = FIRESH_GetFiredef(selWeapon->item.ammo, fdArray->weapFdsIdx, actor->currentSelectedFiremode);
-					/* reset the align if we switched the firemode */
-					CL_ActorSetFireDef(actor, old);
-				}
-			}
-		}
-
-		if (!GAME_ItemIsUseable(selWeapon->item.def())) {
-			HUD_DisplayMessage(_("You cannot use this unknown item.\nYou need to research it first."));
-			CL_ActorSetMode(actor, M_MOVE);
-		} else if (actor->fd) {
-			const int hitProbability = CL_GetHitProbability(actor);
-			static char mouseText[UI_MAX_SMALLTEXTLEN];
-
-			Com_sprintf(infoText, lengthof(infoText),
-						"%s\n%s (%i) [%i%%] %i\n", _(selWeapon->item.def()->name), _(actor->fd->name),
-						actor->fd->ammo, hitProbability, CL_ActorTimeForFireDef(actor, actor->fd));
-
-			/* Save the text for later display next to the cursor. */
-			Q_strncpyz(mouseText, infoText, lengthof(mouseText));
-			UI_RegisterText(TEXT_MOUSECURSOR_RIGHT, mouseText);
-
-			time = CL_ActorTimeForFireDef(actor, actor->fd);
-			/* if no TUs left for this firing action
-			 * or if the weapon is reloadable and out of ammo,
-			 * then change to move mode */
-			if ((selWeapon->item.isReloadable() && selWeapon->item.ammoLeft <= 0) || CL_ActorUsableTUs(actor) < time)
-				CL_ActorSetMode(actor, M_MOVE);
-		} else if (selWeapon) {
-			Com_sprintf(infoText, lengthof(infoText), _("%s\n(empty)\n"), _(selWeapon->item.def()->name));
-		}
-
-		UI_RegisterText(TEXT_STANDARD, infoText);
-	} else {
+	if (!selWeapon) {
 		CL_ActorSetMode(actor, M_MOVE);
+		return 0;
 	}
 
+	static char infoText[UI_MAX_SMALLTEXTLEN];
+	int time = 0;
+	const objDef_t* def = selWeapon->item.def();
+	if (!def) {
+		/* No valid weapon in the hand. */
+		CL_ActorSetFireDef(actor, NULL);
+	} else {
+		/* Check whether this item uses/has ammo. */
+		if (!selWeapon->item.ammo) {
+			CL_ActorSetFireDef(actor, NULL);
+			/* This item does not use ammo, check for existing firedefs in this item. */
+			/* This is supposed to be a weapon or other usable item. */
+			if (def->numWeapons > 0) {
+				if (selWeapon->item.isWeapon() || def->weapons[0] == def) {
+					const fireDef_t *fdArray = FIRESH_FiredefForWeapon(&selWeapon->item);
+					if (fdArray != NULL) {
+						/* Get firedef from the weapon (or other usable item) entry instead. */
+						const fireDef_t *old = FIRESH_GetFiredef(def, fdArray->weapFdsIdx, actor->currentSelectedFiremode);
+						CL_ActorSetFireDef(actor, old);
+					}
+				}
+			}
+		} else {
+			const fireDef_t *fdArray = FIRESH_FiredefForWeapon(&selWeapon->item);
+			if (fdArray != NULL) {
+				const fireDef_t *old = FIRESH_GetFiredef(selWeapon->item.ammo, fdArray->weapFdsIdx, actor->currentSelectedFiremode);
+				/* reset the align if we switched the firemode */
+				CL_ActorSetFireDef(actor, old);
+			}
+		}
+	}
+
+	if (!GAME_ItemIsUseable(def)) {
+		HUD_DisplayMessage(_("You cannot use this unknown item.\nYou need to research it first."));
+		CL_ActorSetMode(actor, M_MOVE);
+	} else if (actor->fd) {
+		const int hitProbability = CL_GetHitProbability(actor);
+		static char mouseText[UI_MAX_SMALLTEXTLEN];
+
+		Com_sprintf(infoText, lengthof(infoText),
+					"%s\n%s (%i) [%i%%] %i\n", _(def->name), _(actor->fd->name),
+					actor->fd->ammo, hitProbability, CL_ActorTimeForFireDef(actor, actor->fd));
+
+		/* Save the text for later display next to the cursor. */
+		Q_strncpyz(mouseText, infoText, lengthof(mouseText));
+		UI_RegisterText(TEXT_MOUSECURSOR_RIGHT, mouseText);
+
+		time = CL_ActorTimeForFireDef(actor, actor->fd);
+		/* if no TUs left for this firing action
+		 * or if the weapon is reloadable and out of ammo,
+		 * then change to move mode */
+		if ((selWeapon->item.isReloadable() && selWeapon->item.ammoLeft <= 0) || CL_ActorUsableTUs(actor) < time)
+			CL_ActorSetMode(actor, M_MOVE);
+	} else if (selWeapon) {
+		Com_sprintf(infoText, lengthof(infoText), _("%s\n(empty)\n"), _(def->name));
+	}
+
+	UI_RegisterText(TEXT_STANDARD, infoText);
 	return time;
 }
 
@@ -1182,8 +1167,6 @@ static int HUD_UpdateActorMove (const le_t *actor)
 
 static void HUD_UpdateActorCvar (const le_t *actor, const char *cvarPrefix)
 {
-	const invList_t* invList;
-	const char *animName;
 	static char tuTooltipText[UI_MAX_SMALLTEXTLEN];
 
 	Cvar_SetValue(va("%s%s", cvarPrefix, "hp"), actor->HP);
@@ -1201,7 +1184,7 @@ static void HUD_UpdateActorCvar (const le_t *actor, const char *cvarPrefix)
 	Cvar_Set(va("%s%s", cvarPrefix, "tu_tooltips"), tuTooltipText);
 
 	/* animation and weapons */
-	animName = R_AnimGetName(&actor->as, actor->model1);
+	const char *animName = R_AnimGetName(&actor->as, actor->model1);
 	if (animName)
 		Cvar_Set(va("%s%s", cvarPrefix, "anim"), animName);
 	if (RIGHT(actor)) {
@@ -1222,15 +1205,15 @@ static void HUD_UpdateActorCvar (const le_t *actor, const char *cvarPrefix)
 	}
 
 	/* print ammo */
-	invList = RIGHT(actor);
-	if (invList)
-		Cvar_SetValue(va("%s%s", cvarPrefix, "ammoright"), invList->item.ammoLeft);
+	const invList_t* invListRight = RIGHT(actor);
+	if (invListRight)
+		Cvar_SetValue(va("%s%s", cvarPrefix, "ammoright"), invListRight->item.ammoLeft);
 	else
 		Cvar_Set(va("%s%s", cvarPrefix, "ammoright"), "");
 
-	invList = HUD_GetLeftHandWeapon(actor, NULL);
-	if (invList)
-		Cvar_SetValue(va("%s%s", cvarPrefix, "ammoleft"), invList->item.ammoLeft);
+	const invList_t* invListLeft = HUD_GetLeftHandWeapon(actor, NULL);
+	if (invListLeft)
+		Cvar_SetValue(va("%s%s", cvarPrefix, "ammoleft"), invListLeft->item.ammoLeft);
 	else
 		Cvar_Set(va("%s%s", cvarPrefix, "ammoleft"), "");
 }
@@ -1248,25 +1231,23 @@ static void HUD_ActorGetCvarData_f (void)
 	/* check whether we are connected (tactical mission) */
 	if (CL_BattlescapeRunning()) {
 		const int num = atoi(Cmd_Argv(1));
-		const char *cvarPrefix = Cmd_Argv(2);
-		le_t *le;
-		character_t *chr;
 
 		/* check if actor exists */
 		if (num >= cl.numTeamList || num < 0)
 			return;
 
 		/* select actor */
-		le = cl.teamList[num];
+		le_t *le = cl.teamList[num];
 		if (!le)
 			return;
 
-		chr = CL_ActorGetChr(le);
+		character_t *chr = CL_ActorGetChr(le);
 		if (!chr) {
 			Com_Error(ERR_DROP, "No character given for local entity");
 			return;
 		}
 
+		const char *cvarPrefix = Cmd_Argv(2);
 		CL_UpdateCharacterValues(chr, cvarPrefix);
 
 		/* override some cvar with HUD data */
@@ -1300,28 +1281,29 @@ static void HUD_ActorWoundData_f (void)
 		return;
 
 	/* check if actor exists */
-	if (selActor) {
-		int bodyPart;
-		woundInfo_t *wounds = &selActor->wounds;
-		const character_t *chr = CL_ActorGetChr(selActor);
-		const BodyData *bodyData = chr->teamDef->bodyTemplate;
+	if (!selActor)
+		return;
 
-		for (bodyPart = 0; bodyPart < bodyData->numBodyParts(); ++bodyPart) {
-			const int woundThreshold = selActor->maxHP * bodyData->woundThreshold(bodyPart);
+	int bodyPart;
+	woundInfo_t *wounds = &selActor->wounds;
+	const character_t *chr = CL_ActorGetChr(selActor);
+	const BodyData *bodyData = chr->teamDef->bodyTemplate;
 
-			if (wounds->woundLevel[bodyPart] + wounds->treatmentLevel[bodyPart] * 0.5 > woundThreshold) {
-				const int bleeding = wounds->woundLevel[bodyPart] * (wounds->woundLevel[bodyPart] > woundThreshold
-									 ? bodyData->bleedingFactor(bodyPart) : 0);
-				char text[256];
-				int penalty;
+	for (bodyPart = 0; bodyPart < bodyData->numBodyParts(); ++bodyPart) {
+		const int woundThreshold = selActor->maxHP * bodyData->woundThreshold(bodyPart);
 
-				Com_sprintf(text, lengthof(text), CHRSH_IsTeamDefRobot(chr->teamDef) ?
-						_("Damaged %s (deterioration: %i)\n") : _("Wounded %s (bleeding: %i)\n"), _(bodyData->name(bodyPart)), bleeding);
-				for (penalty = MODIFIER_ACCURACY; penalty < MODIFIER_MAX; penalty++)
-					if (bodyData->penalty(bodyPart, static_cast<modifier_types_t>(penalty)) != 0)
-						Q_strcat(text, va(_("- Reduced %s\n"), HUD_GetPenaltyString(penalty)), lengthof(text));
-				UI_ExecuteConfunc("actor_wounds %s %i \"%s\"", bodyData->id(bodyPart), bleeding, text);
-			}
+		if (wounds->woundLevel[bodyPart] + wounds->treatmentLevel[bodyPart] * 0.5 > woundThreshold) {
+			const int bleeding = wounds->woundLevel[bodyPart] * (wounds->woundLevel[bodyPart] > woundThreshold
+								 ? bodyData->bleedingFactor(bodyPart) : 0);
+			char text[256];
+			int penalty;
+
+			Com_sprintf(text, lengthof(text), CHRSH_IsTeamDefRobot(chr->teamDef) ?
+					_("Damaged %s (deterioration: %i)\n") : _("Wounded %s (bleeding: %i)\n"), _(bodyData->name(bodyPart)), bleeding);
+			for (penalty = MODIFIER_ACCURACY; penalty < MODIFIER_MAX; penalty++)
+				if (bodyData->penalty(bodyPart, static_cast<modifier_types_t>(penalty)) != 0)
+					Q_strcat(text, va(_("- Reduced %s\n"), HUD_GetPenaltyString(penalty)), lengthof(text));
+			UI_ExecuteConfunc("actor_wounds %s %i \"%s\"", bodyData->id(bodyPart), bleeding, text);
 		}
 	}
 }
@@ -1335,44 +1317,45 @@ static void HUD_UpdateActorLoad_f (void)
 		return;
 
 	/* check if actor exists */
-	if (selActor) {
-		const character_t *chr = CL_ActorGetChr(selActor);
-		const float invWeight = INVSH_GetInventoryWeight(&selActor->inv);
-		const int maxWeight = GAME_GetChrMaxLoad(chr);
-		const float penalty = GET_ENCUMBRANCE_PENALTY(invWeight, chr->score.skills[ABILITY_POWER]);
-		const int normalTU = GET_TU(chr->score.skills[ABILITY_SPEED], 1.0f - WEIGHT_NORMAL_PENALTY);
-		const int tus = GET_TU(chr->score.skills[ABILITY_SPEED], penalty);
-		const int tuPenalty = tus - normalTU;
-		int count = 0;
+	if (!selActor)
+		return;
 
-		for (containerIndex_t containerID = 0; containerID < csi.numIDs; containerID++) {
-			if (csi.ids[containerID].temp)
+	const character_t *chr = CL_ActorGetChr(selActor);
+	const float invWeight = INVSH_GetInventoryWeight(&selActor->inv);
+	const int maxWeight = GAME_GetChrMaxLoad(chr);
+	const float penalty = GET_ENCUMBRANCE_PENALTY(invWeight, chr->score.skills[ABILITY_POWER]);
+	const int normalTU = GET_TU(chr->score.skills[ABILITY_SPEED], 1.0f - WEIGHT_NORMAL_PENALTY);
+	const int tus = GET_TU(chr->score.skills[ABILITY_SPEED], penalty);
+	const int tuPenalty = tus - normalTU;
+	int count = 0;
+
+	for (containerIndex_t containerID = 0; containerID < csi.numIDs; containerID++) {
+		if (csi.ids[containerID].temp)
+			continue;
+		for (invList_t *invList = chr->inv.c[containerID], *next; invList; invList = next) {
+			const fireDef_t *fireDef;
+			next = invList->next;
+			fireDef = FIRESH_FiredefForWeapon(&invList->item);
+			if (fireDef == NULL)
 				continue;
-			for (invList_t *invList = chr->inv.c[containerID], *next; invList; invList = next) {
-				const fireDef_t *fireDef;
-				next = invList->next;
-				fireDef = FIRESH_FiredefForWeapon(&invList->item);
-				if (fireDef == NULL)
-					continue;
-				for (int i = 0; i < MAX_FIREDEFS_PER_WEAPON; i++)
-					if (fireDef[i].time > 0 && fireDef[i].time > tus) {
-						if (count <= 0)
-							Com_sprintf(popupText, sizeof(popupText), _("This soldier no longer has enough TUs to use the following items:\n\n"));
-						Q_strcat(popupText, va("%s: %s (%i)\n", _(invList->item.def()->name), _(fireDef[i].name), fireDef[i].time), sizeof(popupText));
-						++count;
-					}
-			}
+			for (int i = 0; i < MAX_FIREDEFS_PER_WEAPON; i++)
+				if (fireDef[i].time > 0 && fireDef[i].time > tus) {
+					if (count <= 0)
+						Com_sprintf(popupText, sizeof(popupText), _("This soldier no longer has enough TUs to use the following items:\n\n"));
+					Q_strcat(popupText, va("%s: %s (%i)\n", _(invList->item.def()->name), _(fireDef[i].name), fireDef[i].time), sizeof(popupText));
+					++count;
+				}
 		}
-
-		if (count > 0)
-			UI_Popup(_("Warning"), popupText);
-
-		char label[MAX_VAR];
-		char tooltip[MAX_VAR];
-		Com_sprintf(label, sizeof(label), "%g/%i %s", invWeight, maxWeight, _("Kg"));
-		Com_sprintf(tooltip, sizeof(tooltip), "%s %i (%+i)", _("TU:"), tus, tuPenalty);
-		UI_ExecuteConfunc("inv_actorload \"%s\" \"%s\" %f %i", label, tooltip, WEIGHT_NORMAL_PENALTY - (1.0f - penalty), count);
 	}
+
+	if (count > 0)
+		UI_Popup(_("Warning"), popupText);
+
+	char label[MAX_VAR];
+	char tooltip[MAX_VAR];
+	Com_sprintf(label, sizeof(label), "%g/%i %s", invWeight, maxWeight, _("Kg"));
+	Com_sprintf(tooltip, sizeof(tooltip), "%s %i (%+i)", _("TU:"), tus, tuPenalty);
+	UI_ExecuteConfunc("inv_actorload \"%s\" \"%s\" %f %i", label, tooltip, WEIGHT_NORMAL_PENALTY - (1.0f - penalty), count);
 }
 
 /**
@@ -1562,7 +1545,7 @@ static bool CL_CvarWorldLevel (cvar_t *cvar)
  */
 static bool HUD_CheckCLHud (cvar_t *cvar)
 {
-	uiNode_t *window = UI_GetWindow(cvar->string);
+	const uiNode_t *window = UI_GetWindow(cvar->string);
 	if (window == NULL) {
 		return false;
 	}
