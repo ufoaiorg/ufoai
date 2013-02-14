@@ -470,7 +470,7 @@ void GAME_ActorSelect_f (void)
 		return;
 	}
 
-	int ucn = atoi(Cmd_Argv(1));
+	const int ucn = atoi(Cmd_Argv(1));
 	character_t *chr = NULL;
 	LIST_Foreach(chrDisplayList, character_t, chrTmp) {
 		if (ucn == chrTmp->ucn) {
