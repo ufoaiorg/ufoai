@@ -182,3 +182,5 @@ void Cmd_WriteAliases(qFILE *f);
  * @brief Dummy binding if you don't want unknown commands forwarded to the server
  */
 void Cmd_Dummy_f(void);
+
+#include "ScopedCommand.h"

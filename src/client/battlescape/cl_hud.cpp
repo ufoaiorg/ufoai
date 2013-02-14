@@ -443,7 +443,7 @@ static void HUD_DisplayActions (const char* callback, const le_t* actor, bool ri
 		return;
 	}
 
-	UI_ExecuteConfunc("%s begin", callback);
+	const ScopedCommand c(callback, "begin", "end");
 
 	if (right) {
 		const actorHands_t hand = ACTOR_HAND_RIGHT;
@@ -512,8 +512,6 @@ static void HUD_DisplayActions (const char* callback, const le_t* actor, bool ri
 			UI_ExecuteConfunc("%s reload %s %c %i %i %i", callback, actionId, 'l', tus, !noAmmo, !noTU);
 		}
 	}
-
-	UI_ExecuteConfunc("%s end", callback);
 }
 
 /**
