@@ -32,27 +32,27 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 void AI_Init(void);
 void AI_CheckRespawn(int team);
-extern edict_t *ai_waypointList;
-void G_AddToWayPointList(edict_t *ent);
+extern Edict *ai_waypointList;
+void G_AddToWayPointList(Edict *ent);
 void AI_Run(void);
-void AI_ActorThink(Player *player, edict_t *ent);
+void AI_ActorThink(Player *player, Edict *ent);
 Player *AI_CreatePlayer(int team);
-bool AI_CheckUsingDoor(const edict_t *ent, const edict_t *door);
+bool AI_CheckUsingDoor(const Edict *ent, const Edict *door);
 
 /*
  * Shared functions (between C AI and LUA AI)
  */
-void AI_TurnIntoDirection(edict_t *ent, const pos3_t pos);
-bool AI_FindHidingLocation(int team, edict_t *ent, const pos3_t from, int *tuLeft);
-bool AI_FindHerdLocation(edict_t *ent, const pos3_t from, const vec3_t target, int tu);
-int AI_GetHidingTeam(const edict_t *ent);
-const item_t *AI_GetItemForShootType(shoot_types_t shootType, const edict_t *ent);
+void AI_TurnIntoDirection(Edict *ent, const pos3_t pos);
+bool AI_FindHidingLocation(int team, Edict *ent, const pos3_t from, int *tuLeft);
+bool AI_FindHerdLocation(Edict *ent, const pos3_t from, const vec3_t target, int tu);
+int AI_GetHidingTeam(const Edict *ent);
+const item_t *AI_GetItemForShootType(shoot_types_t shootType, const Edict *ent);
 
 /*
  * LUA functions
  */
-void AIL_ActorThink(Player &player, edict_t *ent);
-int AIL_InitActor(edict_t *ent, const char *type, const char *subtype);
+void AIL_ActorThink(Player &player, Edict *ent);
+int AIL_InitActor(Edict *ent, const char *type, const char *subtype);
 void AIL_Cleanup(void);
 void AIL_Init(void);
 void AIL_Shutdown(void);

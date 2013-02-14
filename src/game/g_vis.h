@@ -63,16 +63,16 @@ typedef unsigned int vischeckflags_t;
 #define ACTOR_VIS_10	0.1
 #define ACTOR_VIS_0		0.0
 
-bool G_FrustumVis(const edict_t *from, const vec3_t point);
-float G_ActorVis(const vec3_t from, const edict_t *ent, const edict_t *check, bool full);
+bool G_FrustumVis(const Edict *from, const vec3_t point);
+float G_ActorVis(const vec3_t from, const Edict *ent, const Edict *check, bool full);
 void G_VisFlagsClear(int team);
-void G_VisFlagsAdd(edict_t *ent, teammask_t teamMask);
-void G_VisFlagsSwap(edict_t *ent, teammask_t teamMask);
-void G_VisFlagsReset(edict_t *ent);
+void G_VisFlagsAdd(Edict *ent, teammask_t teamMask);
+void G_VisFlagsSwap(Edict *ent, teammask_t teamMask);
+void G_VisFlagsReset(Edict *ent);
 void G_VisMakeEverythingVisible(void);
-void G_CheckVis(edict_t *check, const vischeckflags_t visFlags = VT_PERISHCHK);
+void G_CheckVis(Edict *check, const vischeckflags_t visFlags = VT_PERISHCHK);
 void G_CheckVisPlayer(Player &player, const vischeckflags_t visFlags);
-int G_CheckVisTeamAll(const int team, const vischeckflags_t visFlags, const edict_t *ent);
-int G_TestVis(const int team, edict_t *check, const vischeckflags_t flags);
-bool G_Vis(const int team, const edict_t *from, const edict_t *check, const vischeckflags_t flags);
-int G_VisCheckDist(const edict_t *const ent);
+int G_CheckVisTeamAll(const int team, const vischeckflags_t visFlags, const Edict *ent);
+int G_TestVis(const int team, Edict *check, const vischeckflags_t flags);
+bool G_Vis(const int team, const Edict *from, const Edict *check, const vischeckflags_t flags);
+int G_VisCheckDist(const Edict *const ent);

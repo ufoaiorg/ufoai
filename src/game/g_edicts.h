@@ -30,20 +30,20 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "g_local.h"
 
-edict_t* G_EdictsInit(void);
+Edict* G_EdictsInit(void);
 void G_EdictsReset(void);
-edict_t* G_EdictsGetNewEdict(void);
-edict_t* G_EdictDuplicate(const edict_t *edict);
-int G_EdictsGetNumber(const edict_t *ent);
+Edict* G_EdictsGetNewEdict(void);
+Edict* G_EdictDuplicate(const Edict *edict);
+int G_EdictsGetNumber(const Edict *ent);
 bool G_EdictsIsValidNum(const int idx);
-edict_t* G_EdictsGetByNum(const int num);
-edict_t* G_EdictsGetFirst(void);
-edict_t* G_EdictsGetNext(edict_t *lastEnt);
-edict_t* G_EdictsGetNextInUse(edict_t *lastEnt);
-edict_t* G_EdictsGetNextActor(edict_t *lastEnt);
-edict_t* G_EdictsGetNextLivingActor(edict_t *lastEnt);
-edict_t* G_EdictsGetNextLivingActorOfTeam(edict_t *lastEnt, const int team);
-edict_t* G_EdictsGetActorByUCN(const int ucn, const int team);
-edict_t* G_EdictsGetTriggerNextMaps(edict_t *lastEnt);
-edict_t* G_EdictsGetLivingActorFromPos(const pos3_t pos);
-edict_t* G_EdictsFindTargetEntity(const char *target);
+Edict* G_EdictsGetByNum(const int num);
+Edict* G_EdictsGetFirst(void);
+Edict* G_EdictsGetNext(Edict *lastEnt);
+Edict* G_EdictsGetNextInUse(Edict *lastEnt);
+Edict* G_EdictsGetNextActor(Edict *lastEnt);
+Edict* G_EdictsGetNextLivingActor(Edict *lastEnt);
+Edict* G_EdictsGetNextLivingActorOfTeam(Edict *lastEnt, const int team);
+Edict* G_EdictsGetActorByUCN(const int ucn, const int team);
+Edict* G_EdictsGetTriggerNextMaps(Edict *lastEnt);
+Edict* G_EdictsGetLivingActorFromPos(const pos3_t pos);
+Edict* G_EdictsFindTargetEntity(const char *target);

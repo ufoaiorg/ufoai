@@ -43,9 +43,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @return @c true if the activator is already in the list of recognized edicts or no activator
  * was given, @c false if the activator is not yet part of the list
  */
-bool G_TriggerIsInList (edict_t *self, edict_t *activator)
+bool G_TriggerIsInList (Edict *self, Edict *activator)
 {
-	edict_t *e = self->touchedNext;
+	Edict *e = self->touchedNext;
 
 	if (activator == NULL)
 		return true;
@@ -64,9 +64,9 @@ bool G_TriggerIsInList (edict_t *self, edict_t *activator)
  * @param self The trigger self pointer
  * @param activator The activating edict (might be NULL)
  */
-void G_TriggerAddToList (edict_t *self, edict_t *activator)
+void G_TriggerAddToList (Edict *self, Edict *activator)
 {
-	edict_t *e = self->touchedNext;
+	Edict *e = self->touchedNext;
 
 	if (activator == NULL)
 		return;
@@ -84,10 +84,10 @@ void G_TriggerAddToList (edict_t *self, edict_t *activator)
  * @param activator The activating edict (might be NULL)
  * @return @c true if removal was successful or not needed, @c false if the activator wasn't found in the list
  */
-bool G_TriggerRemoveFromList (edict_t *self, edict_t *activator)
+bool G_TriggerRemoveFromList (Edict *self, Edict *activator)
 {
-	edict_t *prev = self;
-	edict_t *e = self->touchedNext;
+	Edict *prev = self;
+	Edict *e = self->touchedNext;
 
 	if (activator == NULL)
 		return true;
@@ -105,9 +105,9 @@ bool G_TriggerRemoveFromList (edict_t *self, edict_t *activator)
 	return false;
 }
 
-edict_t* G_TriggerSpawn (edict_t *owner)
+Edict* G_TriggerSpawn (Edict *owner)
 {
-	edict_t* trigger = G_Spawn("trigger");
+	Edict* trigger = G_Spawn("trigger");
 	trigger->type = ET_TRIGGER;
 	/* set the owner, e.g. link the door into the trigger */
 	trigger->owner = owner;
@@ -131,7 +131,7 @@ edict_t* G_TriggerSpawn (edict_t *owner)
  * @brief Next map trigger that is going to get active once all opponents are killed
  * @sa SP_trigger_nextmap
  */
-static bool Touch_NextMapTrigger (edict_t *self, edict_t *activator)
+static bool Touch_NextMapTrigger (Edict *self, Edict *activator)
 {
 	if (activator != NULL && activator->team == self->team) {
 		char command[MAX_VAR];
@@ -153,7 +153,7 @@ static bool Touch_NextMapTrigger (edict_t *self, edict_t *activator)
  * This think function will register the touch callback and spawns the particles for
  * the client to see the next map trigger.
  */
-void Think_NextMapTrigger (edict_t *self)
+void Think_NextMapTrigger (Edict *self)
 {
 	vec3_t center;
 	pos3_t centerPos;
@@ -171,7 +171,7 @@ void Think_NextMapTrigger (edict_t *self)
 	self->think = NULL;
 }
 
-void SP_trigger_nextmap (edict_t *ent)
+void SP_trigger_nextmap (Edict *ent)
 {
 	/* only used in single player */
 	if (sv_maxclients->integer > 1) {
@@ -212,7 +212,7 @@ void SP_trigger_nextmap (edict_t *ent)
  * @brief Hurt trigger
  * @sa SP_trigger_hurt
  */
-bool Touch_HurtTrigger (edict_t *self, edict_t *activator)
+bool Touch_HurtTrigger (Edict *self, Edict *activator)
 {
 	const int damage = G_ApplyProtection(activator, self->dmgtype, self->dmg);
 	const bool stunEl = (self->dmgtype == gi.csi->damStunElectro);
@@ -240,7 +240,7 @@ bool Touch_HurtTrigger (edict_t *self, edict_t *activator)
  * @note Called once for every step
  * @sa Touch_HurtTrigger
  */
-void SP_trigger_hurt (edict_t *ent)
+void SP_trigger_hurt (Edict *ent)
 {
 	ent->classname = "trigger_hurt";
 	ent->type = ET_TRIGGER_HURT;
@@ -265,7 +265,7 @@ void SP_trigger_hurt (edict_t *ent)
  * @brief Touch trigger
  * @sa SP_trigger_touch
  */
-static bool Touch_TouchTrigger (edict_t *self, edict_t *activator)
+static bool Touch_TouchTrigger (Edict *self, Edict *activator)
 {
 	/* these actors should really not be able to trigger this - they don't move anymore */
 	assert(!G_IsDead(activator));
@@ -291,7 +291,7 @@ static bool Touch_TouchTrigger (edict_t *self, edict_t *activator)
 	return false;
 }
 
-static void Reset_TouchTrigger (edict_t *self, edict_t *activator)
+static void Reset_TouchTrigger (Edict *self, Edict *activator)
 {
 	/* fire the use function on leaving the trigger area */
 	if (activator != NULL && (self->owner->flags & FL_CLIENTACTION))
@@ -305,7 +305,7 @@ static void Reset_TouchTrigger (edict_t *self, edict_t *activator)
  * @note Called once for every step
  * @sa Touch_TouchTrigger
  */
-void SP_trigger_touch (edict_t *ent)
+void SP_trigger_touch (Edict *ent)
 {
 	ent->classname = "trigger_touch";
 	ent->type = ET_TRIGGER_TOUCH;
@@ -330,7 +330,7 @@ void SP_trigger_touch (edict_t *ent)
  * @brief Rescue trigger
  * @sa SP_trigger_resuce
  */
-static bool Touch_RescueTrigger (edict_t *self, edict_t *activator)
+static bool Touch_RescueTrigger (Edict *self, Edict *activator)
 {
 	/* these actors should really not be able to trigger this - they don't move anymore */
 	assert(!G_IsDead(activator));
@@ -341,7 +341,7 @@ static bool Touch_RescueTrigger (edict_t *self, edict_t *activator)
 	return false;
 }
 
-static void Reset_RescueTrigger (edict_t *self, edict_t *activator)
+static void Reset_RescueTrigger (Edict *self, Edict *activator)
 {
 	if (self->team == activator->team)
 		G_ActorSetInRescueZone(activator, false);
@@ -354,7 +354,7 @@ static void Reset_RescueTrigger (edict_t *self, edict_t *activator)
  * @note Called once for every step
  * @sa Touch_RescueTrigger
  */
-void SP_trigger_rescue (edict_t *ent)
+void SP_trigger_rescue (Edict *ent)
 {
 	/* only used in single player */
 	if (sv_maxclients->integer > 1) {

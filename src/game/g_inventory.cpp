@@ -46,7 +46,7 @@ const equipDef_t *G_GetEquipDefByID (const char *equipID)
  * @param[in] pos A position for which items are wanted.
  * @sa G_GetFloorItems
  */
-edict_t *G_GetFloorItemsFromPos (const pos3_t pos)
+Edict *G_GetFloorItemsFromPos (const pos3_t pos)
 {
 	return G_GetEdictFromPos(pos, ET_ITEM);
 }
@@ -54,12 +54,12 @@ edict_t *G_GetFloorItemsFromPos (const pos3_t pos)
 /**
  * @brief Prepares a list of items on the floor at given entity position.
  * @param[in] ent Pointer to an entity being an actor.
- * @return pointer to edict_t being a floor (with items) or @c NULL in case no items were found
+ * @return pointer to Edict being a floor (with items) or @c NULL in case no items were found
  * on the edict grid position.
  */
-edict_t *G_GetFloorItems (edict_t *ent)
+Edict *G_GetFloorItems (Edict *ent)
 {
-	edict_t *floor = G_GetFloorItemsFromPos(ent->pos);
+	Edict *floor = G_GetFloorItemsFromPos(ent->pos);
 	/* found items */
 	if (floor) {
 		FLOOR(ent) = FLOOR(floor);
@@ -78,7 +78,7 @@ edict_t *G_GetFloorItems (edict_t *ent)
  * @param container The container in the inventory of the edict to remove the searched item from.
  * @return @c true if the removal was successful, @c false otherwise.
  */
-bool G_InventoryRemoveItemByID (const char *itemID, edict_t *ent, containerIndex_t container)
+bool G_InventoryRemoveItemByID (const char *itemID, Edict *ent, containerIndex_t container)
 {
 	invList_t *ic = CONTAINER(ent, container);
 	while (ic) {
@@ -105,7 +105,7 @@ bool G_InventoryRemoveItemByID (const char *itemID, edict_t *ent, containerIndex
  * @param[in] container The container of the entity inventory to check
  * @return @c true if there are items that should be dropped to floor, @c false otherwise
  */
-static bool G_InventoryDropToFloorCheck (edict_t* ent, containerIndex_t container)
+static bool G_InventoryDropToFloorCheck (Edict* ent, containerIndex_t container)
 {
 	invList_t* ic = CONTAINER(ent, container);
 
@@ -142,7 +142,7 @@ static bool G_InventoryDropToFloorCheck (edict_t* ent, containerIndex_t containe
  */
 bool G_AddItemToFloor (const pos3_t pos, const char *itemID)
 {
-	edict_t *floor;
+	Edict *floor;
 	item_t item = {NONE_AMMO, NULL, NULL, 0, 0};
 	const objDef_t *od = INVSH_GetItemByIDSilent(itemID);
 	if (!od) {
@@ -165,10 +165,10 @@ bool G_AddItemToFloor (const pos3_t pos, const char *itemID)
 /* #define ADJACENT */
 
 #ifdef ADJACENT
-static bool G_InventoryPlaceItemAdjacent (edict_t *ent)
+static bool G_InventoryPlaceItemAdjacent (Edict *ent)
 {
 	vec2_t oldPos; /* if we have to place it to adjacent  */
-	edict_t *floorAdjacent;
+	Edict *floorAdjacent;
 	int i;
 
 	Vector2Copy(ent->pos, oldPos);
@@ -219,14 +219,14 @@ static bool G_InventoryPlaceItemAdjacent (edict_t *ent)
 
 /**
  * @brief Move the whole given inventory to the floor and destroy the items that do not fit there.
- * @param[in] ent Pointer to an edict_t being an actor.
+ * @param[in] ent Pointer to an Edict being an actor.
  * @sa G_ActorDie
  */
-void G_InventoryToFloor (edict_t *ent)
+void G_InventoryToFloor (Edict *ent)
 {
 	invList_t *ic, *next;
 	containerIndex_t container;
-	edict_t *floor;
+	Edict *floor;
 	item_t item;
 
 	/* check for items */
@@ -351,7 +351,7 @@ void G_WriteItem (const item_t *item, const invDef_t *container, int x, int y)
  * @sa G_AppearPerishEvent
  * @sa CL_InvAdd
  */
-void G_SendInventory (playermask_t playerMask, const edict_t *ent)
+void G_SendInventory (playermask_t playerMask, const Edict *ent)
 {
 	invList_t *ic;
 	int nr = 0;

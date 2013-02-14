@@ -30,7 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "g_match.h"
 #include "g_utils.h"
 
-static byte G_GetImpactDirection(const edict_t *const target, const vec3_t impact)
+static byte G_GetImpactDirection(const Edict *const target, const vec3_t impact)
 {
 	vec3_t vec1, vec2;
 
@@ -49,7 +49,7 @@ static byte G_GetImpactDirection(const edict_t *const target, const vec3_t impac
  * @param[in] damage The value of the damage.
  * @param[in] impact Impact location @c NULL for splash damage.
  */
-void G_DamageActor (edict_t *target, const int damage, const vec3_t impact)
+void G_DamageActor (Edict *target, const int damage, const vec3_t impact)
 {
 	assert(target->chr.teamDef);
 
@@ -85,7 +85,7 @@ void G_DamageActor (edict_t *target, const int damage, const vec3_t impact)
  * @param[in] heal The value of the damage to heal.
  * @param[in] healerTeam The index of the team of the healer.
  */
-void G_TreatActor (edict_t *target, const fireDef_t *const fd, const int heal, const int healerTeam)
+void G_TreatActor (Edict *target, const fireDef_t *const fd, const int heal, const int healerTeam)
 {
 	assert(target->chr.teamDef);
 
@@ -136,7 +136,7 @@ void G_TreatActor (edict_t *target, const fireDef_t *const fd, const int heal, c
  */
 void G_BleedWounds (const int team)
 {
-	edict_t *ent = NULL;
+	Edict *ent = NULL;
 
 	while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, team))) {
 		int bodyPart, damage = 0;
@@ -161,7 +161,7 @@ void G_BleedWounds (const int team)
  * @brief Send wound stats to network buffer
  * @sa G_SendStats
  */
-void G_SendWoundStats (edict_t *const ent)
+void G_SendWoundStats (Edict *const ent)
 {
 	int i;
 	for (i = 0; i < ent->chr.teamDef->bodyTemplate->numBodyParts(); ++i) {
@@ -182,7 +182,7 @@ void G_SendWoundStats (edict_t *const ent)
  * @param[in] type The stat we want to calculate the penalty for.
  * @return The given penalty for this actor.
  */
-float G_ActorGetInjuryPenalty (const edict_t *const ent, const modifier_types_t type)
+float G_ActorGetInjuryPenalty (const Edict *const ent, const modifier_types_t type)
 {
 	int bodyPart;
 	float penalty = 0;
@@ -219,7 +219,7 @@ float G_ActorGetInjuryPenalty (const edict_t *const ent, const modifier_types_t 
 	return penalty;
 }
 
-bool G_IsActorWounded (const edict_t *ent)
+bool G_IsActorWounded (const Edict *ent)
 {
 	if (ent == NULL || !G_IsLivingActor(ent) || ent->chr.teamDef == NULL)
 		return false;

@@ -50,7 +50,7 @@ typedef enum {
  */
 static bool G_TeamPointVis (int team, const vec3_t point)
 {
-	edict_t *from = NULL;
+	Edict *from = NULL;
 	vec3_t eye;
 
 	/* test if point is visible from team */
@@ -82,9 +82,9 @@ static bool G_TeamPointVis (int team, const vec3_t point)
  * @param[in] param Used to modify morale changes, for G_Damage() it is value of damage.
  * @sa G_Damage
  */
-static void G_Morale (int type, const edict_t *victim, const edict_t *attacker, int param)
+static void G_Morale (int type, const Edict *victim, const Edict *attacker, int param)
 {
-	edict_t *ent = NULL;
+	Edict *ent = NULL;
 	int newMorale;
 	float mod;
 
@@ -163,7 +163,7 @@ static void G_Morale (int type, const edict_t *victim, const edict_t *attacker, 
  * @note Called only from G_Damage().
  * @sa G_Damage
  */
-static void G_UpdateShotMock (shot_mock_t *mock, const edict_t *shooter, const edict_t *struck, int damage)
+static void G_UpdateShotMock (shot_mock_t *mock, const Edict *shooter, const Edict *struck, int damage)
 {
 	assert(struck->number != shooter->number || mock->allow_self);
 
@@ -193,7 +193,7 @@ static void G_UpdateShotMock (shot_mock_t *mock, const edict_t *shooter, const e
  * @param[in] target Pointer to target.
  * @sa G_UpdateCharacterSkills
  */
-static void G_UpdateCharacterBodycount (edict_t *attacker, const fireDef_t *fd, const edict_t *target)
+static void G_UpdateCharacterBodycount (Edict *attacker, const fireDef_t *fd, const Edict *target)
 {
 	chrScoreMission_t *scoreMission;
 	chrScoreGlobal_t *scoreGlobal;
@@ -243,7 +243,7 @@ static void G_UpdateCharacterBodycount (edict_t *attacker, const fireDef_t *fd, 
  * @param[in] fd the used fire definition.
  * @param[in] splashDamage Do we count it as splashdamage? If this value is not zero the stats well be counted as splashdamage and the value will be added to the overall splash-damage count.
  */
-static void G_UpdateHitScore (edict_t *attacker, const edict_t *target, const fireDef_t *fd, const int splashDamage)
+static void G_UpdateHitScore (Edict *attacker, const Edict *target, const fireDef_t *fd, const int splashDamage)
 {
 	chrScoreMission_t *score;
 	killtypes_t type;
@@ -303,7 +303,7 @@ static void G_UpdateHitScore (edict_t *attacker, const edict_t *target, const fi
  * @param[in] damage The value of the damage.
  * @return The new amount of damage after applying armour and resistance.
  */
-int G_ApplyProtection (const edict_t *target, const byte dmgWeight, int damage)
+int G_ApplyProtection (const Edict *target, const byte dmgWeight, int damage)
 {
 	const int naturalProtection = target->chr.teamDef->resistance[dmgWeight];
 	if (CONTAINER(target, gi.csi->idArmour)) {
@@ -328,7 +328,7 @@ int G_ApplyProtection (const edict_t *target, const byte dmgWeight, int damage)
  * @sa G_TakeDamage
  * @sa G_PrintActorStats
  */
-static void G_Damage (edict_t *target, const fireDef_t *fd, int damage, edict_t *attacker, shot_mock_t *mock, const vec3_t impact)
+static void G_Damage (Edict *target, const fireDef_t *fd, int damage, Edict *attacker, shot_mock_t *mock, const vec3_t impact)
 {
 	const bool stunEl = (fd->obj->dmgtype == gi.csi->damStunElectro);
 	const bool stunGas = (fd->obj->dmgtype == gi.csi->damStunGas);
@@ -434,7 +434,7 @@ static void G_Damage (edict_t *target, const fireDef_t *fd, int damage, edict_t 
 	G_CheckDeathOrKnockout(target, attacker, fd, damage);
 }
 
-void G_CheckDeathOrKnockout (edict_t *target, edict_t *attacker, const fireDef_t *fd, int damage)
+void G_CheckDeathOrKnockout (Edict *target, Edict *attacker, const fireDef_t *fd, int damage)
 {
 	/* Check death/knockout. */
 	if (target->HP == 0 || target->HP <= target->STUN) {
@@ -496,9 +496,9 @@ static inline bool G_FireAffectedSurface (const cBspSurface_t *surface, const fi
  * @param[in,out] mock pseudo shooting - only for calculating mock values - NULL for real shots
  * @param[in] tr The trace where the grenade hits something (or not)
  */
-static void G_SplashDamage (edict_t *ent, const fireDef_t *fd, vec3_t impact, shot_mock_t *mock, const trace_t* tr)
+static void G_SplashDamage (Edict *ent, const fireDef_t *fd, vec3_t impact, shot_mock_t *mock, const trace_t* tr)
 {
-	edict_t *check = NULL;
+	Edict *check = NULL;
 	vec3_t center;
 	float dist;
 	int damage;
@@ -572,7 +572,7 @@ static void G_SplashDamage (edict_t *ent, const fireDef_t *fd, vec3_t impact, sh
  */
 static void G_SpawnItemOnFloor (const pos3_t pos, const item_t *item)
 {
-	edict_t *floor;
+	Edict *floor;
 
 	floor = G_GetFloorItemsFromPos(pos);
 	if (floor == NULL) {
@@ -581,7 +581,7 @@ static void G_SpawnItemOnFloor (const pos3_t pos, const item_t *item)
 		if (!game.i.tryAddToInventory(&floor->chr.inv, item, INVDEF(gi.csi->idFloor))) {
 			G_FreeEdict(floor);
 		} else {
-			edict_t *actor = G_EdictsGetLivingActorFromPos(pos);
+			Edict *actor = G_EdictsGetLivingActorFromPos(pos);
 
 			/* send the inventory */
 			G_CheckVis(floor);
@@ -616,7 +616,7 @@ static void G_SpawnItemOnFloor (const pos3_t pos, const item_t *item)
  * @param[in] z_align This value may change the target z height
  * @param[out] impact The location of the target (-center?)
  */
-static void G_ShootGrenade (const Player &player, edict_t *ent, const fireDef_t *fd,
+static void G_ShootGrenade (const Player &player, Edict *ent, const fireDef_t *fd,
 	const vec3_t from, const pos3_t at, int mask, const item_t *weapon, shot_mock_t *mock, int z_align, vec3_t impact)
 {
 	vec3_t last, target, temp;
@@ -680,7 +680,7 @@ static void G_ShootGrenade (const Player &player, edict_t *ent, const fireDef_t 
 		/* trace */
 		trace_t tr = G_Trace(oldPos, newPos, ent, MASK_SHOT);
 		if (tr.fraction < 1.0 || time + dt > 4.0) {
-			edict_t *trEnt = G_EdictsGetByNum(tr.entNum);	/* the ent possibly hit by the trace */
+			Edict *trEnt = G_EdictsGetByNum(tr.entNum);	/* the ent possibly hit by the trace */
 			const float bounceFraction = tr.surface ? gi.GetBounceFraction(tr.surface->name) : 1.0f;
 			int i;
 
@@ -769,7 +769,7 @@ static void DumpTrace (vec3_t start, const trace_t &tr)
 		tr.allsolid ? "true" : "false",
 		tr.startsolid ? "true" : "false",
 		tr.fraction, tr.contentFlags);
-	edict_t *trEnt = G_EdictsGetByNum(tr.entNum);	/* the ent possibly hit by the trace */
+	Edict *trEnt = G_EdictsGetByNum(tr.entNum);	/* the ent possibly hit by the trace */
 	Com_DPrintf(DEBUG_GAME, "is entity:%s %s %i\n",
 		trEnt ? "yes" : "no",
 		trEnt ? trEnt->classname : "",
@@ -782,7 +782,7 @@ static void DumpTrace (vec3_t start, const trace_t &tr)
 static void DumpAllEntities (void)
 {
 	int i = 0;
-	edict_t *check = NULL;
+	Edict *check = NULL;
 
 	while ((check = G_EdictsGetNext(check))) {
 		Com_DPrintf(DEBUG_GAME, "%i %s %s %s (%i, %i, %i) (%i, %i, %i) [%i, %i, %i] [%i, %i, %i]\n", i,
@@ -813,7 +813,7 @@ static void DumpAllEntities (void)
  * @param[out] impact The location of the target (-center?)
  * @sa CL_TargetingStraight
  */
-static void G_ShootSingle (edict_t *ent, const fireDef_t *fd, const vec3_t from, const pos3_t at,
+static void G_ShootSingle (Edict *ent, const fireDef_t *fd, const vec3_t from, const pos3_t at,
 	int mask, const item_t *weapon, shot_mock_t *mock, int z_align, int i, shoot_types_t shootType, vec3_t impact)
 {
 	vec3_t dir;			/* Direction from the location of the gun muzzle ("from") to the target ("at") */
@@ -893,7 +893,7 @@ static void G_ShootSingle (edict_t *ent, const fireDef_t *fd, const vec3_t from,
 
 	VectorMA(cur_loc, UNIT_SIZE, dir, impact);
 	tr = G_Trace(cur_loc, impact, ent, MASK_SHOT);
-	edict_t *trEnt = G_EdictsGetByNum(tr.entNum);	/* the ent possibly hit by the trace */
+	Edict *trEnt = G_EdictsGetByNum(tr.entNum);	/* the ent possibly hit by the trace */
 	if (trEnt && (trEnt->team == ent->team || G_IsCivilian(trEnt)) && G_IsCrouched(trEnt) && !FIRESH_IsMedikit(fd))
 		VectorMA(cur_loc, UNIT_SIZE * 1.4, dir, cur_loc);
 
@@ -1016,7 +1016,7 @@ static void G_ShootSingle (edict_t *ent, const fireDef_t *fd, const vec3_t from,
 	}
 }
 
-void G_GetShotOrigin (const edict_t *shooter, const fireDef_t *fd, const vec3_t dir, vec3_t shotOrigin)
+void G_GetShotOrigin (const Edict *shooter, const fireDef_t *fd, const vec3_t dir, vec3_t shotOrigin)
 {
 	/* get weapon position */
 	gi.GridPosToVec(shooter->fieldSize, shooter->pos, shotOrigin);
@@ -1045,7 +1045,7 @@ void G_GetShotOrigin (const edict_t *shooter, const fireDef_t *fd, const vec3_t 
  * @return true if function is able to check and set everything correctly.
  * @sa G_ClientShoot
  */
-static bool G_PrepareShot (edict_t *ent, shoot_types_t shootType, fireDefIndex_t firemode, item_t **weapon, containerIndex_t *container, const fireDef_t **fd)
+static bool G_PrepareShot (Edict *ent, shoot_types_t shootType, fireDefIndex_t firemode, item_t **weapon, containerIndex_t *container, const fireDef_t **fd)
 {
 	const fireDef_t *fdArray;
 	item_t *item;
@@ -1098,7 +1098,7 @@ static bool G_PrepareShot (edict_t *ent, shoot_types_t shootType, fireDefIndex_t
  * victim. That way you don't need a 100 percent chance to hit your target. Even if you don't hit it, the splash
  * damage might reduce the health of your target.
  */
-bool G_ClientShoot (const Player &player, edict_t *ent, const pos3_t at, shoot_types_t shootType,
+bool G_ClientShoot (const Player &player, Edict *ent, const pos3_t at, shoot_types_t shootType,
 		fireDefIndex_t firemode, shot_mock_t *mock, bool allowReaction, int z_align)
 {
 	const fireDef_t *fd;
@@ -1142,7 +1142,7 @@ bool G_ClientShoot (const Player &player, edict_t *ent, const pos3_t at, shoot_t
 	/* Don't allow to shoot yourself */
 	if (!fd->irgoggles && G_EdictPosIsSameAs(ent, at))
 		return false;
-	const edict_t *targetEnt = NULL;
+	const Edict *targetEnt = NULL;
 	if (FIRESH_IsMedikit(fd)) {
 		targetEnt = G_EdictsGetLivingActorFromPos(at);
 		if (!targetEnt)
@@ -1324,7 +1324,7 @@ bool G_ClientShoot (const Player &player, edict_t *ent, const pos3_t at, shoot_t
 		 * its use here implies that may not always be the case (it does make sense that they would affected
 		 * by fire fields and similar triggers after all) */
 		/* @todo decide if stunned should be able to touch some triggers and adjust accordingly */
-		edict_t *closeActor = NULL;
+		Edict *closeActor = NULL;
 		while ((closeActor = G_FindRadius(closeActor, impact, fd->splrad, ET_ACTOR))) {
 			G_TouchTriggers(closeActor);
 		}

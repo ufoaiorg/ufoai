@@ -224,7 +224,7 @@ void G_ClientPrintf (const Player &player, int printLevel, const char *fmt, ...)
  */
 void G_GiveTimeUnits (int team)
 {
-	edict_t *ent = NULL;
+	Edict *ent = NULL;
 
 	while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, team))) {
 		G_ActorGiveTimeUnits(ent);
@@ -243,7 +243,7 @@ void G_GiveTimeUnits (int team)
  * or perish. Might be @c NULL.
  * @sa CL_ActorAppear
  */
-void G_AppearPerishEvent (playermask_t playerMask, bool appear, edict_t *check, const edict_t *ent)
+void G_AppearPerishEvent (playermask_t playerMask, bool appear, Edict *check, const Edict *ent)
 {
 	teammask_t teamMaskDiff;
 
@@ -306,7 +306,7 @@ void G_SendInvisible (const Player &player)
 
 	assert(team != TEAM_NO_ACTIVE);
 	if (level.num_alive[team]) {
-		edict_t* ent = NULL;
+		Edict* ent = NULL;
 		/* check visibility */
 		while ((ent = G_EdictsGetNextActor(ent))) {
 			if (ent->team != team) {
@@ -334,7 +334,7 @@ int G_GetActiveTeam (void)
  * @param[in] player Which player (human player) is trying to do the action
  * @param[in] ent Which of his units is trying to do the action.
  */
-static bool G_ActionCheck (const Player *player, edict_t *ent)
+static bool G_ActionCheck (const Player *player, Edict *ent)
 {
 	/* don't check for a player - but maybe a server action */
 	if (!player)
@@ -381,7 +381,7 @@ static bool G_ActionCheck (const Player *player, edict_t *ent)
  * @param[in] TU The time units to check against the ones ent has.
  * the action with
  */
-bool G_ActionCheckForCurrentTeam (const Player *player, edict_t *ent, int TU)
+bool G_ActionCheckForCurrentTeam (const Player *player, Edict *ent, int TU)
 {
 	/* don't check for a player - but maybe a server action */
 	if (!player)
@@ -408,7 +408,7 @@ bool G_ActionCheckForCurrentTeam (const Player *player, edict_t *ent, int TU)
  * the action with
  * @sa G_ActionCheck
  */
-bool G_ActionCheckForReaction (const Player *player, edict_t *ent, int TU)
+bool G_ActionCheckForReaction (const Player *player, Edict *ent, int TU)
 {
 	if (TU > ent->TU) {
 		return false;
@@ -420,7 +420,7 @@ bool G_ActionCheckForReaction (const Player *player, edict_t *ent, int TU)
 /**
  * @brief Sends the actual actor turn event over the netchannel
  */
-static void G_ClientTurn (Player *player, edict_t* ent, dvec_t dvec)
+static void G_ClientTurn (Player *player, Edict* ent, dvec_t dvec)
 {
 	const int dir = getDVdir(dvec);
 
@@ -452,7 +452,7 @@ static void G_ClientTurn (Player *player, edict_t* ent, dvec_t dvec)
  * are seeing him already.
  * @param ent The actor edict
  */
-static void G_ClientStateChangeUpdate (edict_t *ent)
+static void G_ClientStateChangeUpdate (Edict *ent)
 {
 	/* Send the state change. */
 	G_EventSendState(G_VisToPM(ent->visflags), ent);
@@ -479,7 +479,7 @@ static void G_ClientStateChangeUpdate (edict_t *ent)
  * don't even use the G_ActionCheckForCurrentTeam function
  * @note Use checkaction true only for e.g. spawning values
  */
-void G_ClientStateChange (const Player *player, edict_t* ent, int reqState, bool checkaction)
+void G_ClientStateChange (const Player *player, Edict* ent, int reqState, bool checkaction)
 {
 	/* Check if any action is possible. */
 	if (checkaction && !G_ActionCheckForCurrentTeam(player, ent, 0))
@@ -538,7 +538,7 @@ void G_ClientStateChange (const Player *player, edict_t* ent, int reqState, bool
  * @brief Returns true if actor can reload weapon
  * @sa AI_ActorThink
  */
-bool G_ClientCanReload (edict_t *ent, containerIndex_t containerID)
+bool G_ClientCanReload (Edict *ent, containerIndex_t containerID)
 {
 	invList_t *ic;
 	containerIndex_t container;
@@ -569,7 +569,7 @@ bool G_ClientCanReload (edict_t *ent, containerIndex_t containerID)
  * is standing on a given point.
  * @sa AI_ActorThink
  */
-void G_ClientGetWeaponFromInventory (edict_t *ent)
+void G_ClientGetWeaponFromInventory (Edict *ent)
 {
 	invList_t *ic;
 	invList_t *icFinal;
@@ -622,7 +622,7 @@ void G_ClientGetWeaponFromInventory (edict_t *ent)
  * @sa CL_ActorUse
  * @sa G_UseEdict
  */
-bool G_ClientUseEdict (const Player *player, edict_t *actor, edict_t *edict)
+bool G_ClientUseEdict (const Player *player, Edict *actor, Edict *edict)
 {
 	/* check whether the actor has sufficient TUs to 'use' this edicts */
 	if (!G_ActionCheckForCurrentTeam(player, actor, edict->TU))
@@ -657,7 +657,7 @@ int G_ClientAction (Player &player)
 	actorHands_t hand;
 	int fmIdx, objIdx;
 	int resCrouch, resShot;
-	edict_t *ent;
+	Edict *ent;
 	const char *format;
 
 	/* read the header */
@@ -711,7 +711,7 @@ int G_ClientAction (Player &player)
 
 	case PA_USE:
 		if (ent->clientAction) {
-			edict_t *actionEnt;
+			Edict *actionEnt;
 
 			/* read the door the client wants to open */
 			gi.ReadFormat(format, &i);
@@ -980,9 +980,9 @@ static void G_GetStartingTeam (const Player &player)
  * @param[in] spawnType The type of spawn-point so search for (ET_ACTORSPAWN or ET_ACTOR2x2SPAWN)
  * @return A pointer to a found spawn point or NULL if nothing was found or on error.
  */
-static edict_t *G_ClientGetFreeSpawnPoint (const Player &player, int spawnType)
+static Edict *G_ClientGetFreeSpawnPoint (const Player &player, int spawnType)
 {
-	edict_t *ent = NULL;
+	Edict *ent = NULL;
 
 	/* Abort for non-spawnpoints */
 	assert(spawnType == ET_ACTORSPAWN || spawnType == ET_ACTOR2x2SPAWN);
@@ -995,7 +995,7 @@ static edict_t *G_ClientGetFreeSpawnPoint (const Player &player, int spawnType)
 				return ent;
 			}
 	} else {
-		edict_t *list[MAX_EDICTS];
+		Edict *list[MAX_EDICTS];
 		int count = 0;
 		while ((ent = G_EdictsGetNextInUse(ent)))
 			if (ent->type == spawnType && player.getTeam() == ent->team) {
@@ -1032,7 +1032,7 @@ static inline bool G_ActorSpawnIsAllowed (const int num, const int team)
  * @brief Think function for actors that spawn dead
  * @param ent The actor
  */
-static void G_ThinkActorDieAfterSpawn (edict_t *ent)
+static void G_ThinkActorDieAfterSpawn (Edict *ent)
 {
 	G_ActorDieOrStun(ent, NULL);
 	ent->think = NULL;
@@ -1042,7 +1042,7 @@ static void G_ThinkActorDieAfterSpawn (edict_t *ent)
  * @brief Think function for actors that spawn crouched
  * @param ent The actor
  */
-static void G_ThinkActorGoCrouch (edict_t *ent)
+static void G_ThinkActorGoCrouch (Edict *ent)
 {
 	G_ClientStateChange(&G_PLAYER_FROM_ENT(ent), ent, STATE_CROUCHED, true);
 	ent->think = NULL;
@@ -1054,15 +1054,15 @@ static void G_ThinkActorGoCrouch (edict_t *ent)
  * @param[in] actorSize The actor size to get a spawning point for
  * @return An actor edict or @c NULL if no free spawning point was found
  */
-edict_t* G_ClientGetFreeSpawnPointForActorSize (const Player &player, const actorSizeEnum_t actorSize)
+Edict* G_ClientGetFreeSpawnPointForActorSize (const Player &player, const actorSizeEnum_t actorSize)
 {
-	edict_t *ent;
+	Edict *ent;
 
 	if (actorSize == ACTOR_SIZE_NORMAL) {
 		/* Find valid actor spawn fields for this player. */
 		ent = G_ClientGetFreeSpawnPoint(player, ET_ACTORSPAWN);
 		if (ent) {
-			edict_t *copy = G_EdictDuplicate(ent);
+			Edict *copy = G_EdictDuplicate(ent);
 			if (copy != NULL)
 				copy->type = ET_ACTOR;
 			ent = copy;
@@ -1071,7 +1071,7 @@ edict_t* G_ClientGetFreeSpawnPointForActorSize (const Player &player, const acto
 		/* Find valid actor spawn fields for this player. */
 		ent = G_ClientGetFreeSpawnPoint(player, ET_ACTOR2x2SPAWN);
 		if (ent) {
-			edict_t *copy = G_EdictDuplicate(ent);
+			Edict *copy = G_EdictDuplicate(ent);
 			if (copy != NULL) {
 				copy->type = ET_ACTOR2x2;
 				copy->morale = 100;
@@ -1117,7 +1117,7 @@ edict_t* G_ClientGetFreeSpawnPointForActorSize (const Player &player, const acto
  * @brief Read the inventory from the clients team data
  * @param ent The actor's entity that should receive the items.
  */
-static void G_ClientReadInventory (edict_t *ent)
+static void G_ClientReadInventory (Edict *ent)
 {
 	/* inventory */
 	int nr = gi.ReadShort();
@@ -1142,7 +1142,7 @@ static void G_ClientReadInventory (edict_t *ent)
  * @brief Reads the character data from the netchannel that is needed to spawn an actor.
  * @param ent The actor entity to save the read data in.
  */
-static void G_ClientReadCharacter (edict_t *ent)
+static void G_ClientReadCharacter (Edict *ent)
 {
 	int k;
 	int teamDefIdx;
@@ -1190,7 +1190,7 @@ static void G_ClientReadCharacter (edict_t *ent)
 static void G_ClientSkipActorInfo (void)
 {
 	int i, n;
-	edict_t ent;
+	Edict ent;
 	invDef_t container;
 	item_t item;
 	int x, y;
@@ -1210,7 +1210,7 @@ static void G_ClientSkipActorInfo (void)
  * network event.
  * @param ent The actor edict to set the values for.
  */
-static void G_ClientAssignDefaultActorValues (edict_t *ent)
+static void G_ClientAssignDefaultActorValues (Edict *ent)
 {
 	/* Mission Scores */
 	OBJZERO(scoreMission[scoreMissionNum]);
@@ -1245,7 +1245,7 @@ void G_ClientInitActorStates (const Player &player)
 		int saveTU;
 		actorHands_t hand;
 		int fmIdx, objIdx;
-		edict_t *ent = G_EdictsGetActorByUCN(ucn, player.getTeam());
+		Edict *ent = G_EdictsGetActorByUCN(ucn, player.getTeam());
 		if (!ent)
 			gi.Error("Could not find character on team %i with unique character number %i", player.getTeam(), ucn);
 
@@ -1280,7 +1280,7 @@ void G_ClientTeamInfo (const Player &player)
 		if (player.getTeam() == TEAM_NO_ACTIVE || !G_ActorSpawnIsAllowed(i, player.getTeam()))
 			G_ClientSkipActorInfo();
 		else {
-			edict_t *ent = G_ClientGetFreeSpawnPointForActorSize(player, actorFieldSize);
+			Edict *ent = G_ClientGetFreeSpawnPointForActorSize(player, actorFieldSize);
 			if (ent) {
 				Com_DPrintf(DEBUG_GAME, "Player: %i - team %i - size: %i\n", player.getNum(), ent->team, ent->fieldSize);
 
@@ -1314,7 +1314,7 @@ static void G_ClientSendEdictsAndBrushModels (const Player &player)
 {
 	const int mask = G_PlayerToPM(player);
 	/* skip the world */
-	edict_t *ent = G_EdictsGetFirst();
+	Edict *ent = G_EdictsGetFirst();
 
 	/* make SOLID_BSP edicts visible to the client */
 	while ((ent = G_EdictsGetNextInUse(ent))) {
@@ -1496,7 +1496,7 @@ bool G_ClientConnect (Player *player, char *userinfo, size_t userinfoSize)
 void G_ClientDisconnect (Player &player)
 {
 #if 0
-	edict_t *ent = NULL;
+	Edict *ent = NULL;
 #endif
 
 	/* only if the player already sent his began */

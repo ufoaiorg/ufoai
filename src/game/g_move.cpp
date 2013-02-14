@@ -57,9 +57,9 @@ static int forbiddenListLength;
  * @note This is used for pathfinding.
  * It is a list of where the selected unit can not move to because others are standing there already.
  */
-static void G_BuildForbiddenList (int team, const edict_t *movingActor)
+static void G_BuildForbiddenList (int team, const Edict *movingActor)
 {
-	edict_t *ent = NULL;
+	Edict *ent = NULL;
 	teammask_t teamMask;
 
 	forbiddenListLength = 0;
@@ -99,7 +99,7 @@ static void G_BuildForbiddenList (int team, const edict_t *movingActor)
  * @sa G_BuildForbiddenList
  * @sa G_MoveCalcLocal
  */
-void G_MoveCalc (int team, const edict_t *movingActor, const pos3_t from, int distance)
+void G_MoveCalc (int team, const Edict *movingActor, const pos3_t from, int distance)
 {
 	G_MoveCalcLocal(level.pathingMap, team, movingActor, from, distance);
 }
@@ -114,7 +114,7 @@ void G_MoveCalc (int team, const edict_t *movingActor, const pos3_t from, int di
  * @sa G_MoveCalc
  * @sa G_BuildForbiddenList
  */
-void G_MoveCalcLocal (pathing_t *pt, int team, const edict_t *movingActor, const pos3_t from, int distance)
+void G_MoveCalcLocal (pathing_t *pt, int team, const Edict *movingActor, const pos3_t from, int distance)
 {
 	G_BuildForbiddenList(team, movingActor);
 	gi.GridCalcPathing(movingActor->fieldSize, pt, from, distance, forbiddenList, forbiddenListLength);
@@ -125,9 +125,9 @@ void G_MoveCalcLocal (pathing_t *pt, int team, const edict_t *movingActor, const
  * @param[in,out] ent The actor that should fall down
  * @todo Handle cases where the grid position the actor would fall to is occupied by another actor already.
  */
-void G_ActorFall (edict_t *ent)
+void G_ActorFall (Edict *ent)
 {
-	edict_t* entAtPos;
+	Edict* entAtPos;
 	const int oldZ = ent->pos[2];
 
 	ent->pos[2] = gi.GridFall(ent->fieldSize, ent->pos);
@@ -159,7 +159,7 @@ void G_ActorFall (edict_t *ent)
  * @param max The index of the next step in dvtab
  * @return @c true if the actor should stop movement, @c false otherwise
  */
-static bool G_ActorShouldStopInMidMove (const edict_t *ent, int visState, dvec_t* dvtab, int max)
+static bool G_ActorShouldStopInMidMove (const Edict *ent, int visState, dvec_t* dvtab, int max)
 {
 	if (visState & VIS_STOP)
 		 return true;
@@ -171,7 +171,7 @@ static bool G_ActorShouldStopInMidMove (const edict_t *ent, int visState, dvec_t
 		 VectorCopy(ent->pos, pos);
 		 while (max >= 0) {
 			 int tmp = 0;
-			 const edict_t *blockEdict;
+			 const Edict *blockEdict;
 
 			 PosAddDV(pos, tmp, dvtab[max]);
 			 max--;
@@ -194,7 +194,7 @@ static bool G_ActorShouldStopInMidMove (const edict_t *ent, int visState, dvec_t
  * @param[in] dvec The direction vector for the step to be added
  * @param[in] contentFlags The material we are walking over
  */
-static void G_WriteStep (edict_t* ent, byte** stepAmount, const int dvec, const int contentFlags)
+static void G_WriteStep (Edict* ent, byte** stepAmount, const int dvec, const int contentFlags)
 {
 	/* write move header if not yet done */
 	if (gi.GetEvent() != EV_ACTOR_MOVE) {
@@ -244,7 +244,7 @@ static int G_FillDirectionTable (dvec_t *dvtab, size_t size, byte crouchingState
 * @param stored Use the stored mask (the cached move) of the routing data
 * @return ROUTING_NOT_REACHABLE if the move isn't possible, length of move otherwise (TUs)
 */
-pos_t G_ActorMoveLength (const edict_t *ent, const pathing_t *path, const pos3_t to, bool stored)
+pos_t G_ActorMoveLength (const Edict *ent, const pathing_t *path, const pos3_t to, bool stored)
 {
 	byte crouchingState = G_IsCrouched(ent) ? 1 : 0;
 	const pos_t length = gi.MoveLength(path, to, crouchingState, stored);
@@ -277,7 +277,7 @@ pos_t G_ActorMoveLength (const edict_t *ent, const pathing_t *path, const pos3_t
  * @sa CL_ActorStartMove
  * @sa PA_MOVE
  */
-void G_ClientMove (const Player *player, int visTeam, edict_t *ent, const pos3_t to)
+void G_ClientMove (const Player *player, int visTeam, Edict *ent, const pos3_t to)
 {
 	int status;
 	pos3_t pos;
@@ -419,7 +419,7 @@ void G_ClientMove (const Player *player, int visTeam, edict_t *ent, const pos3_t
 				/* Set ent->TU because the reaction code relies on ent->TU being accurate. */
 				G_ActorSetTU(ent, initTU - usedTUs);
 
-				edict_t* clientAction = ent->clientAction;
+				Edict* clientAction = ent->clientAction;
 				oldState = ent->state;
 				oldHP = ent->HP;
 				oldSTUN = ent->STUN;

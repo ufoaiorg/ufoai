@@ -313,7 +313,7 @@ static void CheckNeedPass (void)
 static void G_SendBoundingBoxes (void)
 {
 	if (sv_send_edicts->integer) {
-		edict_t *ent = G_EdictsGetFirst();	/* skip the world */
+		Edict *ent = G_EdictsGetFirst();	/* skip the world */
 		while ((ent = G_EdictsGetNextInUse(ent)))
 			G_EventSendEdict(ent);
 	}
@@ -407,7 +407,7 @@ game_export_t *GetGameAPI (game_import_t *import)
 
 	globals.ServerCommand = G_ServerCommand;
 
-	globals.edict_size = sizeof(edict_t);
+	globals.edict_size = sizeof(Edict);
 	globals.player_size = sizeof(player_t);
 
 	return &globals;

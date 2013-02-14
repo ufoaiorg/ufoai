@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "g_utils.h"
 #include "g_vis.h"
 
-static bool G_CameraUse (edict_t *self, edict_t *activator)
+static bool G_CameraUse (Edict *self, Edict *activator)
 {
 	if (!activator || !G_IsActor(activator)) {
 		return false;
@@ -38,7 +38,7 @@ static bool G_CameraUse (edict_t *self, edict_t *activator)
 	return false;
 }
 
-static bool Destroy_Camera (edict_t *self)
+static bool Destroy_Camera (Edict *self)
 {
 	G_SpawnParticle(self->origin, self->spawnflags, self->particle);
 	G_FreeEdict(self);
@@ -47,7 +47,7 @@ static bool Destroy_Camera (edict_t *self)
 
 #define CAMERAMODEL(X, IDX) case X: ent->model = "models/objects/cameras/camera" STRINGIFY(IDX); break
 
-void G_InitCamera (edict_t *ent, camera_type_t cameraType, float angle, bool rotate)
+void G_InitCamera (Edict *ent, camera_type_t cameraType, float angle, bool rotate)
 {
 	switch (cameraType) {
 	CAMERAMODEL(CAMERA_MOBILE, 0);
@@ -85,9 +85,9 @@ void G_InitCamera (edict_t *ent, camera_type_t cameraType, float angle, bool rot
 	}
 }
 
-edict_t *G_SpawnCamera (const vec3_t origin, int team, camera_type_t cameraType)
+Edict *G_SpawnCamera (const vec3_t origin, int team, camera_type_t cameraType)
 {
-	edict_t* ent = G_Spawn();
+	Edict* ent = G_Spawn();
 	VectorCopy(origin, ent->origin);
 	ent->team = team;
 

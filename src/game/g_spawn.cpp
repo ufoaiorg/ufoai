@@ -48,7 +48,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /**
  * @brief this is only used to hold entity field values that can be set from
- * the editor, but aren't actually present in edict_t during gameplay
+ * the editor, but aren't actually present in Edict during gameplay
  */
 typedef struct spawn_temp_s {
 	/* world vars */
@@ -58,28 +58,28 @@ typedef struct spawn_temp_s {
 
 static spawn_temp_t st;
 
-static void SP_light(edict_t *ent);
-static void SP_dummy(edict_t *ent);
-static void SP_player_start(edict_t *ent);
-static void SP_human_start(edict_t *ent);
-static void SP_alien_start(edict_t *ent);
-static void SP_civilian_start(edict_t *ent);
-static void SP_worldspawn(edict_t *ent);
-static void SP_2x2_start(edict_t *ent);
-static void SP_civilian_target(edict_t *ent);
-static void SP_misc_model(edict_t *ent);
-static void SP_misc_item(edict_t *ent);
-static void SP_misc_mission(edict_t *ent);
-static void SP_misc_mission_aliens(edict_t *ent);
-static void SP_misc_message(edict_t *ent);
-static void SP_misc_smoke(edict_t *ent);
-static void SP_misc_fire(edict_t *ent);
-static void SP_misc_camera(edict_t *ent);
-static void SP_misc_smokestun(edict_t *ent);
+static void SP_light(Edict *ent);
+static void SP_dummy(Edict *ent);
+static void SP_player_start(Edict *ent);
+static void SP_human_start(Edict *ent);
+static void SP_alien_start(Edict *ent);
+static void SP_civilian_start(Edict *ent);
+static void SP_worldspawn(Edict *ent);
+static void SP_2x2_start(Edict *ent);
+static void SP_civilian_target(Edict *ent);
+static void SP_misc_model(Edict *ent);
+static void SP_misc_item(Edict *ent);
+static void SP_misc_mission(Edict *ent);
+static void SP_misc_mission_aliens(Edict *ent);
+static void SP_misc_message(Edict *ent);
+static void SP_misc_smoke(Edict *ent);
+static void SP_misc_fire(Edict *ent);
+static void SP_misc_camera(Edict *ent);
+static void SP_misc_smokestun(Edict *ent);
 
 typedef struct spawn_s {
 	const char *name;
-	void (*spawn) (edict_t *ent);
+	void (*spawn) (Edict *ent);
 } spawn_t;
 
 static const spawn_t spawns[] = {
@@ -118,7 +118,7 @@ static const spawn_t spawns[] = {
 /**
  * @brief Finds the spawn function for the entity and calls it
  */
-static void ED_CallSpawn (edict_t *ent)
+static void ED_CallSpawn (Edict *ent)
 {
 	const spawn_t *s;
 
@@ -169,7 +169,7 @@ static char *ED_NewString (const char *string)
 /**
  * @brief Takes a key/value pair and sets the binary values in an edict
  */
-static void ED_ParseField (const char *key, const char *value, edict_t *ent)
+static void ED_ParseField (const char *key, const char *value, Edict *ent)
 {
 	KeyValuePair kvp(key, value);
 
@@ -247,7 +247,7 @@ static void ED_ParseField (const char *key, const char *value, edict_t *ent)
  * @param[in] data The string to parse from
  * @param[in] ent should be a properly initialized empty edict.
  */
-static const char *ED_ParseEdict (const char *data, edict_t *ent)
+static const char *ED_ParseEdict (const char *data, Edict *ent)
 {
 	bool init;
 	char keyname[MAX_VAR];
@@ -297,28 +297,32 @@ static const char *ED_ParseEdict (const char *data, edict_t *ent)
  */
 static void G_FindEdictGroups (void)
 {
-	edict_t *ent = G_EdictsGetFirst(); /* the first edict is always a world edict that can be skipped */
+	Edict *ent = G_EdictsGetFirst(); /* the first edict is always a world edict that can be skipped */
 
 	while ((ent = G_EdictsGetNextInUse(ent))) {
-		edict_t *ent2, *chain;
-
+		/* no group at all */
 		if (!ent->group)
 			continue;
+		/* already marked as slave in another group */
 		if (ent->flags & FL_GROUPSLAVE)
 			continue;
-		chain = ent;
+		Edict *chain = ent;
 		ent->groupMaster = ent;
-		ent2 = ent;			/* search only the remainder of the entities */
-		while ((ent2 = G_EdictsGetNextInUse(ent2))) {
-			if (!ent2->group)
+		Edict *groupMember = ent;
+		/* search only the remainder of the entities */
+		while ((groupMember = G_EdictsGetNextInUse(groupMember))) {
+			/* no group at all */
+			if (!groupMember->group)
 				continue;
-			if (ent2->flags & FL_GROUPSLAVE)
+			/* already marked as slave in another group */
+			if (groupMember->flags & FL_GROUPSLAVE)
 				continue;
-			if (Q_streq(ent->group, ent2->group)) {
-				chain->groupChain = ent2;
-				ent2->groupMaster = ent;
-				chain = ent2;
-				ent2->flags |= FL_GROUPSLAVE;
+			/* same group as the master? */
+			if (Q_streq(ent->group, groupMember->group)) {
+				chain->groupChain = groupMember;
+				groupMember->groupMaster = ent;
+				chain = groupMember;
+				groupMember->flags |= FL_GROUPSLAVE;
 			}
 		}
 	}
@@ -357,7 +361,7 @@ void G_SpawnEntities (const char *mapname, bool day, const char *entities)
 	/* parse ents */
 	entnum = 0;
 	while (1) {
-		edict_t *ent;
+		Edict *ent;
 		/* parse the opening brace */
 		const char *token = Com_Parse(&entities);
 		if (!entities)
@@ -406,9 +410,9 @@ void G_SpawnEntities (const char *mapname, bool day, const char *entities)
  * angles and bad trails.
  * @sa G_FreeEdict
  */
-edict_t *G_Spawn (const char *classname)
+Edict *G_Spawn (const char *classname)
 {
-	edict_t *ent = G_EdictsGetNewEdict();
+	Edict *ent = G_EdictsGetNewEdict();
 
 	if (!ent)
 		gi.Error("G_Spawn: no free edicts");
@@ -424,7 +428,7 @@ edict_t *G_Spawn (const char *classname)
 	return ent;
 }
 
-static void Think_SmokeAndFire (edict_t *self)
+static void Think_SmokeAndFire (Edict *self)
 {
 	const int endRound = self->time + self->count;
 	const int spawnIndex = (self->team + level.teamOfs) % MAX_TEAMS;
@@ -442,7 +446,7 @@ static void Think_SmokeAndFire (edict_t *self)
 static void G_SpawnSmoke (const vec3_t vec, const char *particle, int rounds)
 {
 	pos3_t pos;
-	edict_t *ent;
+	Edict *ent;
 
 	VecToPos(vec, pos);
 
@@ -501,7 +505,7 @@ void G_SpawnSmokeField (const vec3_t vec, const char *particle, int rounds, vec_
 static void G_SpawnFire (const vec3_t vec, const char *particle, int rounds, int damage)
 {
 	pos3_t pos;
-	edict_t *ent;
+	Edict *ent;
 
 	VecToPos(vec, pos);
 
@@ -552,7 +556,7 @@ void G_SpawnFireField (const vec3_t vec, const char *particle, int rounds, int d
 static void G_SpawnStunSmoke (const vec3_t vec, const char *particle, int rounds, int damage)
 {
 	pos3_t pos;
-	edict_t *ent;
+	Edict *ent;
 
 	VecToPos(vec, pos);
 
@@ -604,9 +608,9 @@ void G_SpawnStunSmokeField (const vec3_t vec, const char *particle, int rounds, 
  * @brief Spawns a new entity at the floor
  * @note This is e.g. used to place dropped weapons/items at the floor
  */
-edict_t *G_SpawnFloor (const pos3_t pos)
+Edict *G_SpawnFloor (const pos3_t pos)
 {
-	edict_t *floor;
+	Edict *floor;
 
 	floor = G_Spawn("item");
 	floor->type = ET_ITEM;
@@ -622,9 +626,9 @@ edict_t *G_SpawnFloor (const pos3_t pos)
  * This is only for particles that are spawned during a match - not for map particles.
  * @return A particle edict
  */
-edict_t *G_SpawnParticle (const vec3_t origin, int spawnflags, const char *particle)
+Edict *G_SpawnParticle (const vec3_t origin, int spawnflags, const char *particle)
 {
-	edict_t *ent = G_Spawn("particle");
+	Edict *ent = G_Spawn("particle");
 	ent->type = ET_PARTICLE;
 	VectorCopy(origin, ent->origin);
 
@@ -642,7 +646,7 @@ edict_t *G_SpawnParticle (const vec3_t origin, int spawnflags, const char *parti
 /**
  * @brief Spawn point for a 1x1 unit.
  */
-static void G_ActorSpawn (edict_t *ent)
+static void G_ActorSpawn (Edict *ent)
 {
 	/* set properties */
 	level.num_spawnpoints[ent->team]++;
@@ -675,7 +679,7 @@ static void G_ActorSpawn (edict_t *ent)
 /**
  * @brief Spawn a singleplayer 2x2 unit.
  */
-static void G_Actor2x2Spawn (edict_t *ent)
+static void G_Actor2x2Spawn (Edict *ent)
 {
 	/* set properties */
 	level.num_2x2spawnpoints[ent->team]++;
@@ -706,7 +710,7 @@ static void G_Actor2x2Spawn (edict_t *ent)
 /**
  * @brief light (0 1 0) (-8 -8 -8) (8 8 8)
  */
-static void SP_light (edict_t *ent)
+static void SP_light (Edict *ent)
 {
 	/* lights aren't client-server communicated items */
 	/* they are completely client side */
@@ -719,7 +723,7 @@ static void SP_light (edict_t *ent)
  * "team"	the number of the team for this player starting point
  * "0" is reserved for civilians and critters (use info_civilian_start instead)
  */
-static void SP_player_start (edict_t *ent)
+static void SP_player_start (Edict *ent)
 {
 	/* only used in multi player */
 	if (sv_maxclients->integer == 1) {
@@ -741,7 +745,7 @@ static void SP_player_start (edict_t *ent)
  * @brief info_human_start (1 0 0) (-16 -16 -24) (16 16 32)
  * Starting point for a single player human.
  */
-static void SP_human_start (edict_t *ent)
+static void SP_human_start (Edict *ent)
 {
 	/* only used in single player */
 	if (sv_maxclients->integer > 1) {
@@ -759,7 +763,7 @@ static void SP_human_start (edict_t *ent)
  * @brief info_2x2_start (1 1 0) (-32 -32 -24) (32 32 32)
  * Starting point for a 2x2 unit.
  */
-static void SP_2x2_start (edict_t *ent)
+static void SP_2x2_start (Edict *ent)
 {
 	/* no 2x2 unit in multiplayer */
 	if (sv_maxclients->integer > 1) {
@@ -785,7 +789,7 @@ static void SP_2x2_start (edict_t *ent)
  * @brief info_alien_start (1 0 0) (-16 -16 -24) (16 16 32)
  * Starting point for a single player alien.
  */
-static void SP_alien_start (edict_t *ent)
+static void SP_alien_start (Edict *ent)
 {
 	/* deactivateable in multiplayer */
 	if (sv_maxclients->integer > 1 && !ai_numactors->integer) {
@@ -805,7 +809,7 @@ static void SP_alien_start (edict_t *ent)
  * @brief info_civilian_start (0 1 1) (-16 -16 -24) (16 16 32)
  * Starting point for a civilian.
  */
-static void SP_civilian_start (edict_t *ent)
+static void SP_civilian_start (Edict *ent)
 {
 	/* deactivateable in multiplayer */
 	if (sv_maxclients->integer > 1 && !ai_numcivilians->integer) {
@@ -827,7 +831,7 @@ static void SP_civilian_start (edict_t *ent)
  * @todo These waypoints should be placeable by the human player (e.g. spawn a special particle on the waypoint)
  * to direct the civilians to a special location
  */
-static void SP_civilian_target (edict_t *ent)
+static void SP_civilian_target (Edict *ent)
 {
 	/* target point for which team */
 	ent->team = TEAM_CIVILIAN;
@@ -848,9 +852,9 @@ static void SP_civilian_target (edict_t *ent)
 /**
  * @brief Initializes the human/phalanx mission entity
  */
-static void SP_misc_mission (edict_t *ent)
+static void SP_misc_mission (Edict *ent)
 {
-	edict_t *other;
+	Edict *other;
 
 	ent->classname = "misc_mission";
 	ent->type = ET_MISSION;
@@ -898,9 +902,9 @@ static void SP_misc_mission (edict_t *ent)
 /**
  * @brief Initializes the alien mission entity
  */
-static void SP_misc_mission_aliens (edict_t *ent)
+static void SP_misc_mission_aliens (Edict *ent)
 {
-	edict_t *other;
+	Edict *other;
 
 	ent->classname = "mission";
 	ent->type = ET_MISSION;
@@ -927,7 +931,7 @@ static void SP_misc_mission_aliens (edict_t *ent)
  * split for each level anyway.
  * @param ent The edict to fill the forbidden list for
  */
-static void G_BuildForbiddenListForEntity (edict_t *ent)
+static void G_BuildForbiddenListForEntity (Edict *ent)
 {
 	pos3_t mins, maxs, origin;
 	vec3_t center, shiftedMins, shiftedMaxs;
@@ -962,7 +966,7 @@ static void G_BuildForbiddenListForEntity (edict_t *ent)
 /**
  * @brief Spawns a misc_model if there is a solid state
  */
-static void SP_misc_model (edict_t *ent)
+static void SP_misc_model (Edict *ent)
 {
 	if (ent->spawnflags & MISC_MODEL_SOLID) {
 		if (ent->model && ent->model[0] != '\0') {
@@ -994,7 +998,7 @@ static void SP_misc_model (edict_t *ent)
 /**
  * @brief Spawns an item to the ground container
  */
-static void SP_misc_item (edict_t *ent)
+static void SP_misc_item (Edict *ent)
 {
 	if (!ent->item) {
 		gi.DPrintf("No item defined in misc_item\n");
@@ -1008,7 +1012,7 @@ static void SP_misc_item (edict_t *ent)
 	G_FreeEdict(ent);
 }
 
-static bool Message_Use (edict_t *self, edict_t *activator)
+static bool Message_Use (Edict *self, Edict *activator)
 {
 	if (!activator || !G_IsActor(activator)) {
 		return false;
@@ -1027,7 +1031,7 @@ static bool Message_Use (edict_t *self, edict_t *activator)
 	}
 }
 
-static void G_SpawnField (edict_t *ent, const char *classname, entity_type_t type, solid_t solid)
+static void G_SpawnField (Edict *ent, const char *classname, entity_type_t type, solid_t solid)
 {
 	vec3_t particleOrigin;
 
@@ -1050,27 +1054,27 @@ static void G_SpawnField (edict_t *ent, const char *classname, entity_type_t typ
 	ent->particleLink = G_SpawnParticle(particleOrigin, ent->spawnflags, ent->particle);
 }
 
-static void SP_misc_smoke (edict_t *ent)
+static void SP_misc_smoke (Edict *ent)
 {
 	G_SpawnField(ent, "smoke", ET_SMOKE, SOLID_NOT);
 	G_CheckVis(NULL);
 }
 
-static void SP_misc_fire (edict_t *ent)
+static void SP_misc_fire (Edict *ent)
 {
 	G_SpawnField(ent, "fire", ET_FIRE, SOLID_TRIGGER);
 	ent->dmgtype = gi.csi->damIncendiary;
 	ent->touch = Touch_HurtTrigger;
 }
 
-static void SP_misc_smokestun (edict_t *ent)
+static void SP_misc_smokestun (Edict *ent)
 {
 	G_SpawnField(ent, "stunsmoke", ET_SMOKESTUN, SOLID_TRIGGER);
 	ent->dmgtype = gi.csi->damStunGas;
 	ent->touch = Touch_HurtTrigger;
 }
 
-static void SP_misc_message (edict_t *ent)
+static void SP_misc_message (Edict *ent)
 {
 	if (!ent->message) {
 		G_FreeEdict(ent);
@@ -1087,7 +1091,7 @@ static void SP_misc_message (edict_t *ent)
 
 #define CAMERA_ROTATE (1 << 8)
 
-static void SP_misc_camera (edict_t *ent)
+static void SP_misc_camera (Edict *ent)
 {
 	/* only used in single player */
 	if (sv_maxclients->integer != 1) {
@@ -1102,7 +1106,7 @@ static void SP_misc_camera (edict_t *ent)
 /**
  * @brief a dummy to get rid of local entities
  */
-static void SP_dummy (edict_t *ent)
+static void SP_dummy (Edict *ent)
 {
 	/* particles aren't client-server communicated items
 	 * they are completely client side */
@@ -1117,7 +1121,7 @@ static void SP_dummy (edict_t *ent)
  * "maxlevel"	max. level to use in the map
  * "maxteams"	max team amount for multiplayergames for the current map
  */
-static void SP_worldspawn (edict_t *ent)
+static void SP_worldspawn (Edict *ent)
 {
 	ent->solid = SOLID_BSP;
 	/* since the world doesn't use G_Spawn() */

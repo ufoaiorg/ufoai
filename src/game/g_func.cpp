@@ -44,7 +44,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @note This touch function is only executed if the func_breakable edict has a HP level of 0 (e.g. it is already destroyed)
  * @return false because this is no client action
  */
-static bool Touch_Breakable (edict_t *self, edict_t *activator)
+static bool Touch_Breakable (Edict *self, Edict *activator)
 {
 	/* not yet broken */
 	if (self->HP != 0)
@@ -57,7 +57,7 @@ static bool Touch_Breakable (edict_t *self, edict_t *activator)
 	return false;
 }
 
-static bool Destroy_Breakable (edict_t *self)
+static bool Destroy_Breakable (Edict *self)
 {
 	vec3_t origin;
 	const char *model = self->model;
@@ -109,7 +109,7 @@ static bool Destroy_Breakable (edict_t *self)
 	return true;
 }
 
-static bool Use_Breakable (edict_t *self, edict_t *activator)
+static bool Use_Breakable (Edict *self, Edict *activator)
 {
 	return Destroy_Breakable(self);
 }
@@ -125,7 +125,7 @@ static bool Use_Breakable (edict_t *self, edict_t *activator)
  * @sa SV_SetModel
  * @sa G_SendEdictsAndBrushModels
  */
-void SP_func_breakable (edict_t *ent)
+void SP_func_breakable (Edict *ent)
 {
 	ent->classname = "breakable";
 	ent->type = ET_BREAKABLE;
@@ -160,7 +160,7 @@ DOOR FUNCTIONS
  * in this function to reflect the new door position in the world
  * @sa LET_SlideDoor
  */
-static void Door_SlidingUse (edict_t *door)
+static void Door_SlidingUse (Edict *door)
 {
 	const bool open = door->doorState == STATE_OPENED;
 	vec3_t moveAngles, moveDir, distanceVec;
@@ -198,7 +198,7 @@ static void Door_SlidingUse (edict_t *door)
  * @todo Check if the door can be opened or closed - there should not be
  * anything in the way (e.g. an actor)
  */
-static bool Door_Use (edict_t *door, edict_t *activator)
+static bool Door_Use (Edict *door, Edict *activator)
 {
 	int opening = 1;
 
@@ -268,7 +268,7 @@ static bool Door_Use (edict_t *door, edict_t *activator)
  * @sa CL_ActorDoorAction
  * @sa AI_CheckUsingDoor
  */
-static bool Touch_DoorTrigger (edict_t *self, edict_t *activator)
+static bool Touch_DoorTrigger (Edict *self, Edict *activator)
 {
 	if (self->owner && self->owner->inuse) {
 		if (G_IsAI(activator)) {
@@ -293,7 +293,7 @@ static bool Touch_DoorTrigger (edict_t *self, edict_t *activator)
  * @param self The trigger
  * @param activator The edict that left the trigger zone
  */
-static void Reset_DoorTrigger (edict_t *self, edict_t *activator)
+static void Reset_DoorTrigger (Edict *self, Edict *activator)
 {
 	if (activator->clientAction == self->owner)
 		G_ActorSetClientAction(activator, NULL);
@@ -308,9 +308,9 @@ static void Reset_DoorTrigger (edict_t *self, edict_t *activator)
  * @sa LM_AddModel
  * @sa G_SendEdictsAndBrushModels
  */
-void SP_func_door (edict_t *ent)
+void SP_func_door (Edict *ent)
 {
-	edict_t *other;
+	Edict *other;
 
 	ent->classname = "door";
 	ent->type = ET_DOOR;
@@ -349,7 +349,7 @@ void SP_func_door (edict_t *ent)
 	ent->destroy = Destroy_Breakable;
 }
 
-void SP_func_door_sliding (edict_t *ent)
+void SP_func_door_sliding (Edict *ent)
 {
 	ent->classname = "doorsliding";
 	ent->type = ET_DOOR_SLIDING;
@@ -380,7 +380,7 @@ void SP_func_door_sliding (edict_t *ent)
  * @sa SV_SetModel
  * @sa LM_AddModel
  */
-void SP_func_rotating (edict_t *ent)
+void SP_func_rotating (Edict *ent)
 {
 	ent->classname = "rotating";
 	ent->type = ET_ROTATING;

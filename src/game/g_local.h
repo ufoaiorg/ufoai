@@ -38,7 +38,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define ngettext(x, y, cnt) x
 
 /** @note define GAME_INCLUDE so that game.h does not define the
- * short, server-visible player_t and edict_t structures,
+ * short, server-visible player_t and Edict structures,
  * because we define the full size ones in this file */
 #define	GAME_INCLUDE
 #include "game.h"
@@ -241,8 +241,8 @@ extern cvar_t *flood_waitdelay;
 extern cvar_t *g_difficulty;
 
 /* g_camera */
-void G_InitCamera(edict_t *ent, camera_type_t cameraType, float angle, bool rotate);
-edict_t *G_SpawnCamera(const vec3_t origin, int team, camera_type_t cameraType);
+void G_InitCamera(Edict *ent, camera_type_t cameraType, float angle, bool rotate);
+Edict *G_SpawnCamera(const vec3_t origin, int team, camera_type_t cameraType);
 
 /* g_cmds.c */
 void G_ClientCommand(Player &player);
@@ -256,14 +256,14 @@ void G_MoraleBehaviour(int team);
 
 /* g_phys */
 void G_PhysicsRun(void);
-void G_PhysicsStep(edict_t *ent);
+void G_PhysicsStep(Edict *ent);
 
 /* g_round */
 void G_CheckForceEndRound(void);
 void G_ClientEndRound(Player &player);
 
 /* g_stats */
-void G_SendStats(edict_t *ent) __attribute__((nonnull));
+void G_SendStats(Edict *ent) __attribute__((nonnull));
 void G_SendPlayerStats(const Player &player);
 
 /* g_svcmds.c */
@@ -271,9 +271,9 @@ void G_ServerCommand(void);
 bool SV_FilterPacket(const char *from);
 
 /** Functions to handle single edicts, trying to encapsulate edict->pos in the first place. */
-void G_EdictCalcOrigin(edict_t *ent);
-void G_EdictSetOrigin(edict_t *ent, const pos3_t newPos);
-bool G_EdictPosIsSameAs(const edict_t *ent, const pos3_t cmpPos);
+void G_EdictCalcOrigin(Edict *ent);
+void G_EdictSetOrigin(Edict *ent, const pos3_t newPos);
+bool G_EdictPosIsSameAs(const Edict *ent, const pos3_t cmpPos);
 
 #include "g_events.h"
 

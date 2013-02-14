@@ -278,7 +278,7 @@ static void SVCmd_Win_f (void)
 #ifdef DEBUG
 static void SVCmd_ShowAll_f (void)
 {
-	edict_t *ent = NULL;
+	Edict *ent = NULL;
 
 	/* Make everything visible to anyone who can't already see it */
 	while ((ent = G_EdictsGetNextInUse(ent))) {
@@ -291,7 +291,7 @@ static void SVCmd_ShowAll_f (void)
 static void SVCmd_AddItem_f (void)
 {
 	const int team = TEAM_DEFAULT;
-	edict_t *ent = G_EdictsGetNextLivingActorOfTeam(NULL, team);
+	Edict *ent = G_EdictsGetNextLivingActorOfTeam(NULL, team);
 
 	if (gi.Cmd_Argc() < 3) {
 		gi.DPrintf("Usage: %s <item-id>\n", gi.Cmd_Argv(1));
@@ -324,7 +324,7 @@ static void SVCmd_ActorInvList_f (void)
 
 static void SVCmd_ListEdicts_f (void)
 {
-	edict_t *ent = NULL;
+	Edict *ent = NULL;
 	int i = 0;
 	Com_Printf("number | entnum | mapnum | type | inuse | pnum | team | size |  HP | state | classname      | model/ptl             | pos\n");
 	while ((ent = G_EdictsGetNext(ent))) {

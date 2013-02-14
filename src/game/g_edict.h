@@ -59,8 +59,8 @@ public:
 	vec3_t absmin, absmax;	/**< position of min and max points - relative to world's origin */
 	vec3_t size;
 
-	edict_t *child;	/**< e.g. the trigger for this edict */
-	edict_t *owner;	/**< e.g. the door model in case of func_door */
+	Edict *child;	/**< e.g. the trigger for this edict */
+	Edict *owner;	/**< e.g. the door model in case of func_door */
 	int modelindex;	/**< inline model index */
 	const char *classname;
 #endif
@@ -74,8 +74,8 @@ public:
 
 	/** only used locally in game, not by server */
 
-	edict_t *particleLink;
-	const edict_t *link;		/**< can be used to store another edict that e.g. interacts with the current one */
+	Edict *particleLink;
+	const Edict *link;		/**< can be used to store another edict that e.g. interacts with the current one */
 	entity_type_t type;
 	teammask_t visflags;		/**< bitmask of teams that can see this edict */
 
@@ -106,7 +106,7 @@ public:
 								 * when the mission is aborted the actor will not die */
 
 	/** client actions - interact with the world */
-	edict_t *clientAction;
+	Edict *clientAction;
 
 	/** here are the character values */
 	character_t chr;
@@ -138,18 +138,18 @@ public:
 
 	/** function to call when triggered - this function should only return true when there is
 	 * a client action associated with it */
-	bool (*touch)(edict_t *self, edict_t *activator);
+	bool (*touch)(Edict *self, Edict *activator);
 	/** reset function that is called before the touch triggers are called */
-	void (*reset)(edict_t *self, edict_t *activator);
+	void (*reset)(Edict *self, Edict *activator);
 	float nextthink;
-	void (*think)(edict_t *self);
+	void (*think)(Edict *self);
 	/** general use function that is called when the triggered client action is executed
 	 * or when the server has to 'use' the entity
 	 * @param activator Might be @c NULL if there is no activator */
-	bool (*use)(edict_t *self, edict_t *activator);
-	bool (*destroy)(edict_t *self);
+	bool (*use)(Edict *self, Edict *activator);
+	bool (*destroy)(Edict *self);
 
-	edict_t *touchedNext;		/**< entity list of edict that are currently touching the trigger_touch */
+	Edict *touchedNext;		/**< entity list of edict that are currently touching the trigger_touch */
 	int doorState;				/**< open or closed */
 
 	moveinfo_t		moveinfo;
@@ -159,8 +159,8 @@ public:
 	 * edicts in the particular chain - and start out for the on that doesn't
 	 * have the above mentioned flag set.
 	 * @sa G_FindEdictGroups */
-	edict_t *groupChain;
-	edict_t *groupMaster;		/**< first entry in the list */
+	Edict *groupChain;
+	Edict *groupMaster;		/**< first entry in the list */
 	int flags;					/**< FL_* */
 
 	AI_t AI; 					/**< The character's artificial intelligence */

@@ -35,7 +35,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @brief Checks whether a point is "visible" from the edicts position
  * @sa FrustumVis
  */
-bool G_FrustumVis (const edict_t *from, const vec3_t point)
+bool G_FrustumVis (const Edict *from, const vec3_t point)
 {
 	if (G_IsActiveCamera(from)) {
 		/* it's a 360 degree camera */
@@ -73,7 +73,7 @@ static bool G_LineVis (const vec3_t from, const vec3_t to)
  * particular actor.
  * @sa CL_ActorVis
  */
-float G_ActorVis (const vec3_t from, const edict_t *ent, const edict_t *check, bool full)
+float G_ActorVis (const vec3_t from, const Edict *ent, const Edict *check, bool full)
 {
 	vec3_t test, dir;
 	float delta;
@@ -83,7 +83,7 @@ float G_ActorVis (const vec3_t from, const edict_t *ent, const edict_t *check, b
 	/* units that are very close are visible in the smoke */
 	if (distance > UNIT_SIZE * 1.5f) {
 		vec3_t eyeEnt;
-		edict_t *e = NULL;
+		Edict *e = NULL;
 
 		G_ActorGetEyeVector(ent, eyeEnt);
 
@@ -151,7 +151,7 @@ float G_ActorVis (const vec3_t from, const edict_t *ent, const edict_t *check, b
 	}
 }
 
-int G_VisCheckDist (const edict_t *const ent)
+int G_VisCheckDist (const Edict *const ent)
 {
 	if (G_IsActiveCamera(ent))
 		return MAX_SPOT_DIST_CAMERA;
@@ -171,7 +171,7 @@ int G_VisCheckDist (const edict_t *const ent)
  * @param[in] check The edict we want to get the visibility for
  * @param[in] flags @c VT_NOFRUSTUM, ...
  */
-bool G_Vis (const int team, const edict_t *from, const edict_t *check, const vischeckflags_t flags)
+bool G_Vis (const int team, const Edict *from, const Edict *check, const vischeckflags_t flags)
 {
 	vec3_t eye;
 
@@ -244,9 +244,9 @@ bool G_Vis (const int team, const edict_t *from, const edict_t *check, const vis
  * (invisible to visible or vice versa) VS_YES means the edict is visible for the
  * given team
  */
-int G_TestVis (const int team, edict_t *check, const vischeckflags_t flags)
+int G_TestVis (const int team, Edict *check, const vischeckflags_t flags)
 {
-	edict_t *from = NULL;
+	Edict *from = NULL;
 	/* store old flag */
 	const int old = G_IsVisibleForTeam(check, team) ? VS_CHANGE : 0;
 
@@ -266,7 +266,7 @@ int G_TestVis (const int team, edict_t *check, const vischeckflags_t flags)
 	return old;
 }
 
-static bool G_VisShouldStop (const edict_t *ent)
+static bool G_VisShouldStop (const Edict *ent)
 {
 	return G_IsLivingActor(ent) && !G_IsCivilian(ent);
 }
@@ -279,7 +279,7 @@ static bool G_VisShouldStop (const edict_t *ent)
  * are not sent - we only update the visflags of the edict
  * @param[in] ent The edict that was responsible for letting the check edict appear and is looking
  */
-static int G_DoTestVis (const int team, edict_t *check, const vischeckflags_t visFlags, playermask_t playerMask, const edict_t *ent)
+static int G_DoTestVis (const int team, Edict *check, const vischeckflags_t visFlags, playermask_t playerMask, const Edict *ent)
 {
 	int status = 0;
 	const int vis = G_TestVis(team, check, visFlags);
@@ -318,7 +318,7 @@ static int G_DoTestVis (const int team, edict_t *check, const vischeckflags_t vi
  */
 void G_CheckVisPlayer (Player &player, const vischeckflags_t visFlags)
 {
-	edict_t* ent = NULL;
+	Edict* ent = NULL;
 
 	/* check visibility */
 	while ((ent = G_EdictsGetNextInUse(ent))) {
@@ -348,7 +348,7 @@ void G_CheckVisPlayer (Player &player, const vischeckflags_t visFlags)
  * @note If something appears, the needed information for those clients that are affected
  * are also send in @c G_AppearPerishEvent
  */
-static int G_CheckVisTeam (const int team, edict_t *check, const vischeckflags_t visFlags, const edict_t *ent)
+static int G_CheckVisTeam (const int team, Edict *check, const vischeckflags_t visFlags, const Edict *ent)
 {
 	int status = 0;
 
@@ -365,9 +365,9 @@ static int G_CheckVisTeam (const int team, edict_t *check, const vischeckflags_t
  * @brief Do @c G_CheckVisTeam for all entities
  * ent is the one that is looking at the others
  */
-int G_CheckVisTeamAll (const int team, const vischeckflags_t visFlags, const edict_t *ent)
+int G_CheckVisTeamAll (const int team, const vischeckflags_t visFlags, const Edict *ent)
 {
-	edict_t *chk = NULL;
+	Edict *chk = NULL;
 	int status = 0;
 
 	while ((chk = G_EdictsGetNextInUse(chk))) {
@@ -381,7 +381,7 @@ int G_CheckVisTeamAll (const int team, const vischeckflags_t visFlags, const edi
  */
 void G_VisMakeEverythingVisible (void)
 {
-	edict_t *ent = NULL;
+	Edict *ent = NULL;
 	while ((ent = G_EdictsGetNextInUse(ent))) {
 		const int playerMask = G_VisToPM(ent->visflags);
 		G_AppearPerishEvent(~playerMask, true, ent, NULL);
@@ -398,7 +398,7 @@ void G_VisMakeEverythingVisible (void)
  * @param visFlags Modifiers for the checks
  * @sa G_CheckVisTeam
  */
-void G_CheckVis (edict_t *check, const vischeckflags_t visFlags)
+void G_CheckVis (Edict *check, const vischeckflags_t visFlags)
 {
 	int team;
 
@@ -417,24 +417,24 @@ void G_CheckVis (edict_t *check, const vischeckflags_t visFlags)
  */
 void G_VisFlagsClear (int team)
 {
-	edict_t *ent = NULL;
+	Edict *ent = NULL;
 	const teammask_t teamMask = ~G_TeamToVisMask(team);
 	while ((ent = G_EdictsGetNextInUse(ent))) {
 		ent->visflags &= teamMask;
 	}
 }
 
-void G_VisFlagsAdd (edict_t *ent, teammask_t teamMask)
+void G_VisFlagsAdd (Edict *ent, teammask_t teamMask)
 {
 	ent->visflags |= teamMask;
 }
 
-void G_VisFlagsReset (edict_t *ent)
+void G_VisFlagsReset (Edict *ent)
 {
 	ent->visflags = 0;
 }
 
-void G_VisFlagsSwap (edict_t *ent, teammask_t teamMask)
+void G_VisFlagsSwap (Edict *ent, teammask_t teamMask)
 {
 	ent->visflags ^= teamMask;
 }

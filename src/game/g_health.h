@@ -26,9 +26,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "g_local.h"
 
-void G_DamageActor(edict_t *target, const int damage, const vec3_t impact);
-void G_TreatActor(edict_t *target, const fireDef_t *const fd, const int heal, const int healerTeam);
+void G_DamageActor(Edict *target, const int damage, const vec3_t impact);
+void G_TreatActor(Edict *target, const fireDef_t *const fd, const int heal, const int healerTeam);
 void G_BleedWounds(const int team);
-void G_SendWoundStats(edict_t *const ent);
-float G_ActorGetInjuryPenalty(const edict_t *const ent, const modifier_types_t type);
-bool G_IsActorWounded(const edict_t *ent);
+void G_SendWoundStats(Edict *const ent);
+float G_ActorGetInjuryPenalty(const Edict *const ent, const modifier_types_t type);
+bool G_IsActorWounded(const Edict *ent);
