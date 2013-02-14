@@ -311,7 +311,7 @@ void R_GenerateGrass ()
 			int level;
 
 			for (level = 0; level < PATHFINDING_HEIGHT - 1; level++)
-				if ((1 << level) & i)
+				if (!i || ((1 << level) & i))
 					break;
 
 			for (int j = 0; j < header->numfaces; j++) {
