@@ -502,7 +502,7 @@ static void HUD_DisplayActions (const char* callback, const le_t* actor, bool ri
 	if (reloadLeft) {
 		invList_t* weapon = LEFT(actor);
 
-		/* Reloeadable item in hand. */
+		/* Reloadable item in hand. */
 		if (weapon && weapon->item.def() && weapon->item.isReloadable()) {
 			containerIndex_t container = csi.idLeft;
 			const char *actionId = "reload_handl";
