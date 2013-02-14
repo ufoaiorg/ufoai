@@ -1505,6 +1505,9 @@ static void HUD_RightHandChangeListener (const char *cvarName, const char *oldVa
 	if (!CL_OnBattlescape())
 		return;
 
+	if (Q_streq(oldValue, newValue))
+		return;
+
 	HUD_RefreshButtons(selActor);
 }
 
@@ -1520,6 +1523,9 @@ static void HUD_LeftHandChangeListener (const char *cvarName, const char *oldVal
 	if (!CL_OnBattlescape())
 		return;
 
+	if (Q_streq(oldValue, newValue))
+		return;
+
 	HUD_RefreshButtons(selActor);
 }
 
@@ -1533,6 +1539,9 @@ static void HUD_LeftHandChangeListener (const char *cvarName, const char *oldVal
 static void HUD_TUChangeListener (const char *cvarName, const char *oldValue, const char *newValue, void *data)
 {
 	if (!CL_OnBattlescape())
+		return;
+
+	if (Q_streq(oldValue, newValue))
 		return;
 
 	HUD_RefreshButtons(selActor);
