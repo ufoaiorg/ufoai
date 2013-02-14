@@ -710,16 +710,13 @@ static void UI_DebugTree (const uiNode_t *node, int depth)
 
 static void UI_DebugTree_f (void)
 {
-	const char *window;
-	const uiNode_t *node;
-
 	if (Cmd_Argc() != 2) {
 		Com_Printf("Usage: %s <mainwindow>\n", Cmd_Argv(0));
 		return;
 	}
 
-	window = Cmd_Argv(1);
-	node = UI_GetWindow(window);
+	const char *window = Cmd_Argv(1);
+	const uiNode_t *node = UI_GetWindow(window);
 	UI_DebugTree(node, 0);
 }
 

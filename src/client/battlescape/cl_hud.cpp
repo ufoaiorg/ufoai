@@ -384,19 +384,12 @@ static void HUD_ShotReserve_f (void)
  */
 static void HUD_DisplayFiremodeEntry (const char* callback, const le_t* actor, const objDef_t* ammo, const weaponFireDefIndex_t weapFdsIdx, const actorHands_t hand, const int index)
 {
-	int time;
-	char tuString[MAX_VAR];
-	const fireDef_t *fd;
-	const char *tooltip;
-	char id[32];
-
-	if (index < ammo->numFiredefs[weapFdsIdx]) {
-		/* We have a defined fd ... */
-		fd = &ammo->fd[weapFdsIdx][index];
-		time = CL_ActorTimeForFireDef(actor, fd);
-	} else {
+	if (index >= ammo->numFiredefs[weapFdsIdx])
 		return;
-	}
+
+	/* We have a defined fd ... */
+	const fireDef_t *fd = &ammo->fd[weapFdsIdx][index];
+	const int time = CL_ActorTimeForFireDef(actor, fd);
 
 	assert(actor);
 	assert(hand == ACTOR_HAND_RIGHT || hand == ACTOR_HAND_LEFT);
@@ -404,6 +397,8 @@ static void HUD_DisplayFiremodeEntry (const char* callback, const le_t* actor, c
 	const bool status = time <= CL_ActorUsableTUs(actor);
 	const int usableTusForRF = HUD_UsableReactionTUs(actor);
 
+	char tuString[MAX_VAR];
+	const char *tooltip;
 	if (usableTusForRF > time) {
 		Com_sprintf(tuString, sizeof(tuString), _("Remaining TUs: %i"), usableTusForRF - time);
 		tooltip = tuString;
@@ -412,6 +407,7 @@ static void HUD_DisplayFiremodeEntry (const char* callback, const le_t* actor, c
 
 	/* unique identifier of the action */
 	/* @todo use this id as action callback instead of hand and index (we can extend it with any other soldier action we need (open door, reload...)) */
+	char id[32];
 	Com_sprintf(id, sizeof(id), "fire_hand%c_i%i", ACTOR_GET_HAND_CHAR(hand), index);
 
 	UI_ExecuteConfunc("%s firemode %s %c %i %i %i \"%s\" \"%i\" \"%i\" \"%s\"", callback, id, ACTOR_GET_HAND_CHAR(hand),
@@ -502,7 +498,6 @@ static void HUD_DisplayActions (const char* callback, const le_t* actor, bool ri
 			HUD_DisplayFiremodeEntry(callback, actor, ammo, fd->weapFdsIdx, hand, i);
 		}
 	}
-
 
 	if (reloadLeft) {
 		invList_t* weapon = LEFT(actor);
