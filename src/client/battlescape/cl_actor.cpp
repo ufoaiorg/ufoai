@@ -180,6 +180,20 @@ int CL_ActorGetNumber (const le_t *le)
 }
 
 /**
+ * @brief Returns the local entity information for a character in the team list
+ * @param[in] chr The character to search the local entity for.
+ * @return A pointer to a le_t struct.
+ */
+le_t *CL_ActorGetFromCharacter (const character_t *chr)
+{
+	for (int i = 0; i < cl.numTeamList; ++i) {
+		if (cl.teamList[i] && cl.teamList[i]->ucn == chr->ucn)
+			return cl.teamList[i];
+	}
+	return NULL;
+}
+
+/**
  * @brief Returns the character information for an actor in the teamlist.
  * @param[in] le The actor to search.
  * @return A pointer to a character struct.

@@ -57,6 +57,7 @@ const char *CL_ActorGetSkillString(const int skill);
 int CL_ActorCheckAction(const le_t *le);
 void CL_ActorInvMove(const le_t *le, containerIndex_t fromContainer, int fromX, int fromY, containerIndex_t toContainer, int toX, int toY);
 
+le_t *CL_ActorGetFromCharacter(const character_t *chr);
 character_t *CL_ActorGetChr(const le_t *le);
 int CL_ActorUsableTUs(const le_t *le);
 int CL_ActorReservedTUs(const le_t *le, reservation_types_t type);
