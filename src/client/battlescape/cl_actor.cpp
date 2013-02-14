@@ -486,7 +486,7 @@ bool CL_ActorSelect (le_t *le)
 	if (!chr)
 		Com_Error(ERR_DROP, "No character given for local entity!");
 
-	CL_UpdateCharacterValues(chr, "mn_");
+	CL_UpdateCharacterValues(chr);
 
 	CL_ActorConditionalMoveCalc(le);
 
@@ -2329,7 +2329,7 @@ static void CL_ActorUpdate_f (void)
 	LIST_Foreach(chrDisplayList, character_t, chr) {
 		if (i++ != num)
 			continue;
-		CL_UpdateCharacterValues(chr, "mn_");
+		CL_UpdateCharacterValues(chr);
 	}
 }
 

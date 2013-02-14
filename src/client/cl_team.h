@@ -45,7 +45,7 @@ typedef struct actorSkin_s {
 } actorSkin_t;
 
 void CL_GenerateCharacter(character_t *chr, const char *teamDefName);
-void CL_UpdateCharacterValues(const character_t *chr, const char *cvarPrefix);
+void CL_UpdateCharacterValues(const character_t *chr);
 
 void TEAM_InitStartup(void);
 

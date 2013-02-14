@@ -489,7 +489,7 @@ void GAME_ActorSelect_f (void)
 	}
 	ui_inventory = &chr->inv;
 	/* set info cvars */
-	CL_UpdateCharacterValues(chr, "mn_");
+	CL_UpdateCharacterValues(chr);
 }
 
 /**

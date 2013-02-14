@@ -10,7 +10,6 @@ component actorButton extends radiobutton
 	onClick		{ cmd "actor_select <value>;" }
 	onWheelUp	{ cmd "actor_next;"}
 	onWheelDown	{ cmd "actor_prev;"}
-	onMouseEnter { call *node:root.popup_soldier_hovered.select ( <value> ) }
 }
 
 window hud_default extends hud
@@ -296,188 +295,6 @@ window hud_default extends hud
 		}
 	}
 
-	/**
-	 * TODO update hovered actor content
-	 *
-	 */
-	panel popup_soldier_hovered {
-		{
-			align	LAYOUTALIGN_TOP
-			size	"520 300"
-			ghost	true
-			invis	true
-		}
-
-		image cursor
-		{
-			src			"hud/popup_cursor"
-			pos				"106 56"
-			size 			"47 24"
-			texh 			"47 24"
-		}
-
-		/**
-		 * @param <1> number of the soldier from 0..7
-		 */
-		func select
-		{
-			cmd "hud_getactorcvar <1> mn_hovered_;"
-			*node:parent.cursor@left = ( 141 + ( 30 * <1> ) )
-			*node:root.popup_soldier_hovered@invis = false
-		}
-
-		panel bg {
-			{
-				pos		"0 80"
-				size	"520 200"
-				background	"ui/panel_rounded_green"
-			}
-
-			image right_bg
-			{
-				src			"hud/weapon_box"
-				pos				"106 103"
-				size 			"150 80"
-				texh 			"150 80"
-			}
-
-			item right
-			{
-				pos				"106 103"
-				size 			"150 80"
-				scale			"3.5 3.5 3.5"
-				src				*cvar:mn_hovered_rweapon_item
-				containerLike	true
-			}
-
-			image left_bg
-			{
-				src			"hud/weapon_box"
-				pos				"285 103"
-				size 			"150 80"
-				texh 			"150 80"
-			}
-
-			item left
-			{
-				pos				"285 103"
-				size 			"150 80"
-				scale			"3.5 3.5 3.5"
-				src				*cvar:mn_hovered_lweapon_item
-				containerLike	true
-			}
-
-			image head_bg
-			{
-				src		"hud/head_box"
-				pos			"20 16"
-				size 		"87 79"
-			}
-
-			model head
-			{
-				src			*cvar:mn_hovered_head
-				skin		*cvar:mn_hovered_head_skin
-				angles		"0 60 90"
-				autoscale	true
-				pos			"26 22"
-				size		"74 66"
-				origin		"0 0 0"
-			}
-
-			string actorname
-			{
-				string		*cvar:mn_hovered_name
-				pos			"150 14"
-				size		"255 20"
-			}
-
-			string tus
-			{
-				string		*cvar:mn_hovered_tu
-				pos			"105 35"
-				size		"40 20"
-				contentalign	ALIGN_UR
-			}
-
-			bar timeall
-			{
-				pos			"150 40"
-				size		"298 10"
-				color		".1 .1 .7 1"
-				current		*cvar:mn_hovered_tu
-				max			*cvar:mn_hovered_tumax
-				readonly	true
-			}
-
-			bar timeremain
-			{
-				pos			"150 40"
-				size		"298 10"
-				color		".2 .2 1 1"
-				current		*cvar:mn_hovered_turemain
-				max			*cvar:mn_hovered_tumax
-				readonly	true
-			}
-
-			bar timereserved
-			{
-				pos			"150 45"
-				size		"298 5"
-				color		"0 .5 0 1"
-				current		*cvar:mn_hovered_tureserved
-				max			*cvar:mn_hovered_tumax
-				readonly	true
-			}
-
-			string hp
-			{
-				string		*cvar:mn_hovered_hp
-				pos			"105 50"
-				size		"40 20"
-				contentalign	ALIGN_UR
-			}
-
-			bar health
-			{
-				pos			"150 55"
-				size		"298 10"
-				color		"1 0 0 1"
-				current		*cvar:mn_hovered_hp
-				max			*cvar:mn_hovered_hpmax
-				readonly	true
-			}
-
-			bar stun
-			{
-				pos			"150 55"
-				size		"298 10"
-				color		".3 .3 .3 .9"
-				current		*cvar:mn_hovered_stun
-				max			*cvar:mn_hovered_hpmax
-				readonly	true
-			}
-
-			string moral_text
-			{
-				string		*cvar:mn_hovered_morale
-				pos			"105 65"
-				size		"40 20"
-				contentalign	ALIGN_UR
-			}
-
-			bar morale
-			{
-				pos			"150 70"
-				size		"298 10"
-				color		"1 1 0.5 1"
-				current		*cvar:mn_hovered_morale
-				max			*cvar:mn_hovered_moralemax
-				readonly	true
-			}
-		}
-	}
-
 	panel team_selection {
 		{
 			pos		"465 0"
@@ -498,7 +315,6 @@ window hud_default extends hud
 			{
 				pos "49 10"
 				size "395 35"
-				onMouseLeave { *node:root.popup_soldier_hovered@invis = true }
 			}
 
 			actorButton bt_actor0

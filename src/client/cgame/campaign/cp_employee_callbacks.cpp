@@ -77,7 +77,7 @@ static void E_EmployeeSelect (employee_t *employee)
 		cgi->Cvar_SetValue("mn_ucn", chr->ucn);
 
 		/* set info cvars */
-		CL_UpdateCharacterValues(chr, "mn_");
+		CL_UpdateCharacterValues(chr);
 	}
 }
 

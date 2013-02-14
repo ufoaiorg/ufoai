@@ -126,7 +126,7 @@ static void CP_TEAM_SelectActorByUCN_f (void)
 	CP_TEAM_SetEquipContainer(chr);
 
 	/* set info cvars */
-	CL_UpdateCharacterValues(chr, "mn_");
+	CL_UpdateCharacterValues(chr);
 }
 
 /**
@@ -168,7 +168,7 @@ static void CP_TEAM_DeEquipActor_f (void)
 	cgi->UI_ContainerNodeUpdateEquipment(&base->bEquipment, &unused);
 
 	/* set info cvars */
-	CL_UpdateCharacterValues(chr, "mn_");
+	CL_UpdateCharacterValues(chr);
 }
 
 #ifdef DEBUG

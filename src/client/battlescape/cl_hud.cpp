@@ -1152,94 +1152,57 @@ static int HUD_UpdateActorMove (const le_t *actor)
 	return actor->actorMoveLength;
 }
 
-static void HUD_UpdateActorCvar (const le_t *actor, const char *cvarPrefix)
+static void HUD_UpdateActorCvar (const le_t *actor)
 {
 	static char tuTooltipText[UI_MAX_SMALLTEXTLEN];
 
-	Cvar_SetValue(va("%s%s", cvarPrefix, "hp"), actor->HP);
-	Cvar_SetValue(va("%s%s", cvarPrefix, "hpmax"), actor->maxHP);
-	Cvar_SetValue(va("%s%s", cvarPrefix, "tu"), actor->TU);
-	Cvar_SetValue(va("%s%s", cvarPrefix, "tumax"), actor->maxTU);
-	Cvar_SetValue(va("%s%s", cvarPrefix, "tureserved"), CL_ActorReservedTUs(actor, RES_ALL_ACTIVE));
-	Cvar_SetValue(va("%s%s", cvarPrefix, "morale"), actor->morale);
-	Cvar_SetValue(va("%s%s", cvarPrefix, "moralemax"), actor->maxMorale);
-	Cvar_SetValue(va("%s%s", cvarPrefix, "stun"), actor->STUN);
+	Cvar_SetValue("mn_hp", actor->HP);
+	Cvar_SetValue("mn_hpmax", actor->maxHP);
+	Cvar_SetValue("mn_tu", actor->TU);
+	Cvar_SetValue("mn_tumax", actor->maxTU);
+	Cvar_SetValue("mn_tureserved", CL_ActorReservedTUs(actor, RES_ALL_ACTIVE));
+	Cvar_SetValue("mn_morale", actor->morale);
+	Cvar_SetValue("mn_moralemax", actor->maxMorale);
+	Cvar_SetValue("mn_stun", actor->STUN);
 
 	Com_sprintf(tuTooltipText, lengthof(tuTooltipText),
 		_("Time Units\n- Available: %i (of %i)\n- Reserved:  %i\n- Remaining: %i\n"),
 				actor->TU, actor->maxTU, CL_ActorReservedTUs(actor, RES_ALL_ACTIVE), CL_ActorUsableTUs(actor));
-	Cvar_Set(va("%s%s", cvarPrefix, "tu_tooltips"), tuTooltipText);
+	Cvar_Set("mn_tu_tooltips", tuTooltipText);
 
 	/* animation and weapons */
 	const char *animName = R_AnimGetName(&actor->as, actor->model1);
 	if (animName)
-		Cvar_Set(va("%s%s", cvarPrefix, "anim"), animName);
+		Cvar_Set("mn_anim", animName);
 	if (RIGHT(actor)) {
 		const invList_t *i = RIGHT(actor);
-		Cvar_Set(va("%s%s", cvarPrefix, "rweapon"), i->item.def()->model);
-		Cvar_Set(va("%s%s", cvarPrefix, "rweapon_item"), i->item.def()->id);
+		Cvar_Set("mn_rweapon", i->item.def()->model);
+		Cvar_Set("mn_rweapon_item", i->item.def()->id);
 	} else {
-		Cvar_Set(va("%s%s", cvarPrefix, "rweapon"), "");
-		Cvar_Set(va("%s%s", cvarPrefix, "rweapon_item"), "");
+		Cvar_Set("mn_rweapon", "");
+		Cvar_Set("mn_rweapon_item", "");
 	}
 	if (LEFT(actor)) {
 		const invList_t *i = LEFT(actor);
-		Cvar_Set(va("%s%s", cvarPrefix, "lweapon"), i->item.def()->model);
-		Cvar_Set(va("%s%s", cvarPrefix, "lweapon_item"), i->item.def()->id);
+		Cvar_Set("mn_lweapon", i->item.def()->model);
+		Cvar_Set("mn_lweapon_item", i->item.def()->id);
 	} else {
-		Cvar_Set(va("%s%s", cvarPrefix, "lweapon"), "");
-		Cvar_Set(va("%s%s", cvarPrefix, "lweapon_item"), "");
+		Cvar_Set("mn_lweapon", "");
+		Cvar_Set("mn_lweapon_item", "");
 	}
 
 	/* print ammo */
 	const invList_t* invListRight = RIGHT(actor);
 	if (invListRight)
-		Cvar_SetValue(va("%s%s", cvarPrefix, "ammoright"), invListRight->item.ammoLeft);
+		Cvar_SetValue("mn_ammoright", invListRight->item.ammoLeft);
 	else
-		Cvar_Set(va("%s%s", cvarPrefix, "ammoright"), "");
+		Cvar_Set("mn_ammoright", "");
 
 	const invList_t* invListLeft = HUD_GetLeftHandWeapon(actor, NULL);
 	if (invListLeft)
-		Cvar_SetValue(va("%s%s", cvarPrefix, "ammoleft"), invListLeft->item.ammoLeft);
+		Cvar_SetValue("mn_ammoleft", invListLeft->item.ammoLeft);
 	else
-		Cvar_Set(va("%s%s", cvarPrefix, "ammoleft"), "");
-}
-
-/**
- * @brief Update cvars according to a soldier from a list while we are on battlescape
- */
-static void HUD_ActorGetCvarData_f (void)
-{
-	if (Cmd_Argc() < 3) {
-		Com_Printf("Usage: %s <soldiernum> <cvarprefix>\n", Cmd_Argv(0));
-		return;
-	}
-
-	/* check whether we are connected (tactical mission) */
-	if (CL_BattlescapeRunning()) {
-		const int num = atoi(Cmd_Argv(1));
-
-		/* check if actor exists */
-		if (num >= cl.numTeamList || num < 0)
-			return;
-
-		/* select actor */
-		le_t *le = cl.teamList[num];
-		if (!le)
-			return;
-
-		character_t *chr = CL_ActorGetChr(le);
-		if (!chr) {
-			Com_Error(ERR_DROP, "No character given for local entity");
-			return;
-		}
-
-		const char *cvarPrefix = Cmd_Argv(2);
-		CL_UpdateCharacterValues(chr, cvarPrefix);
-
-		/* override some cvar with HUD data */
-		HUD_UpdateActorCvar(le, cvarPrefix);
-	}
+		Cvar_Set("mn_ammoleft", "");
 }
 
 static const char *HUD_GetPenaltyString (const int type)
@@ -1353,7 +1316,7 @@ static void HUD_UpdateActor (le_t *actor)
 {
 	int time;
 
-	HUD_UpdateActorCvar(actor, "mn_");
+	HUD_UpdateActorCvar(actor);
 	/* write info */
 	time = 0;
 
@@ -1593,7 +1556,6 @@ void HUD_InitStartup (void)
 	Cmd_AddCommand("hud_selectreactionfiremode", HUD_SelectReactionFiremode_f, "Change/Select firemode used for reaction fire.");
 	Cmd_AddCommand("hud_listfiremodes", HUD_DisplayFiremodes_f, "Display a list of firemodes for a weapon+ammo.");
 	Cmd_AddCommand("hud_listactions", HUD_DisplayActions_f, "Display a list of action from the selected soldier.");
-	Cmd_AddCommand("hud_getactorcvar", HUD_ActorGetCvarData_f, "Update cvars from actor from list.");
 	Cmd_AddCommand("hud_updateactorwounds", HUD_ActorWoundData_f, "Update info on actor wounds.");
 	Cmd_AddCommand("hud_updateactorload", HUD_UpdateActorLoad_f, "Update the HUD with the selected actor inventory load.");
 

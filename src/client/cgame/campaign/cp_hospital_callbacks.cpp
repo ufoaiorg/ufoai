@@ -254,7 +254,7 @@ static void HOS_EmployeeInit_f (void)
 	cgi->UI_ResetData(TEXT_STANDARD);
 
 	c = &currentEmployeeInHospital->chr;
-	CL_UpdateCharacterValues(c, "mn_");
+	CL_UpdateCharacterValues(c);
 
 	cgi->Cvar_SetValue("mn_hp", c->HP);
 	cgi->Cvar_SetValue("mn_hpmax", c->maxHP);
