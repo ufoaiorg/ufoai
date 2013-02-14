@@ -405,6 +405,7 @@ entity misc_sound {
 		volume	"Relative volume - value between 0.0 and 1.0"
 		attenuation	"3.0 is only audible when the sound source is very close to the camera, 0.0 is audible everywhere."
 		targetname	"The id of this entity"
+		group		"The trigger group"
 	}
 
 	range {
@@ -559,6 +560,7 @@ entity func_breakable {
 		particle	"Particle id to be spawned after object is destroyed"
 		material	"Material id MAT_GLASS = 0 (default), MAT_METAL = 1, MAT_ELECTRICAL = 2, MAT_WOOD = 3"
 		targetname	"The name that is used when this should be e.g. destroyed by a trigger - see e.g. trigger_hurt target"
+		group		"The trigger group"
 	}
 
 	mandatory {
@@ -579,6 +581,7 @@ entity func_rotating {
 		speed		"Rotation speed"
 		angle		"Rotate around this angle - pitch = 0, yaw = 1, roll = 2"
 		targetname	"The id of this entity"
+		group		"The trigger group"
 	}
 
 	mandatory {
@@ -596,6 +599,7 @@ entity trigger_hurt {
 
 	optional {
 		targetname	"The id of this entity"
+		group		"The trigger group"
 	}
 
 	mandatory {
@@ -614,6 +618,7 @@ entity trigger_touch {
 	optional {
 		targetname	"The id of this entity"
 		spawnflags	"If once is set, this trigger is only activated once if someone is standing inside it (useful for e.g. doors)"
+		group		"The trigger group"
 	}
 
 	mandatory {
@@ -627,6 +632,7 @@ entity trigger_nextmap {
 
 	optional {
 		targetname	"The id of this entity"
+		group		"The trigger group"
 	}
 
 	mandatory {
@@ -652,6 +658,7 @@ entity trigger_rescue {
 	optional {
 		particle	"Display a particle"
 		targetname	"The id of this entity"
+		group		"The trigger group"
 	}
 
 	mandatory {
@@ -679,6 +686,7 @@ entity misc_message {
 
 	optional {
 		targetname	"The id of this entity"
+		group		"The trigger group"
 	}
 
 	mandatory {
@@ -700,6 +708,10 @@ entity misc_item {
 		targetname	"The id of this entity"
 	}
 
+	optional {
+		group		"The trigger group"
+	}
+
 	type {
 		origin	"V_FLOAT 3"
 	}
@@ -717,6 +729,7 @@ entity misc_smoke {
 
 	optional {
 		targetname	"The id of this entity"
+		group		"The trigger group"
 	}
 
 	mandatory {
@@ -746,6 +759,7 @@ entity misc_fire {
 
 	optional {
 		targetname	"The id of this entity"
+		group		"The trigger group"
 	}
 
 	mandatory {
@@ -777,6 +791,7 @@ entity misc_smokestun {
 
 	optional {
 		targetname	"The id of this entity"
+		group		"The trigger group"
 	}
 
 	mandatory {
@@ -809,6 +824,7 @@ entity misc_camera {
 
 	optional {
 		targetname	"The id of this entity"
+		group		"The trigger group"
 	}
 
 	mandatory {

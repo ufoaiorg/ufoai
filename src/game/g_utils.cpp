@@ -111,7 +111,7 @@ Edict *G_GetEdictFromPosExcluding (const pos3_t pos, const int n, ...)
  * @brief Call the 'use' function for the given edict and all its group members
  * @param[in] ent The edict to call the use function for
  * @param[in] activator The edict that uses ent
- * @return true when there is possibility to use edict being parameter.
+ * @return true when triggering the use function was successful.
  * @sa G_ClientUseEdict
  */
 bool G_UseEdict (Edict *ent, Edict* activator)
@@ -119,23 +119,25 @@ bool G_UseEdict (Edict *ent, Edict* activator)
 	if (!ent)
 		return false;
 
+	if (ent->groupMaster)
+		ent = ent->groupMaster;
+
+	bool status = true;
 	/* no use function assigned */
-	if (!ent->use)
-		return false;
-
-	if (!ent->use(ent, activator))
-		return false;
-
-	/* only the master edict is calling the opening for the other group parts */
-	if (!(ent->flags & FL_GROUPSLAVE)) {
-		Edict* chain = ent->groupChain;
-		while (chain) {
-			G_UseEdict(chain, activator);
-			chain = chain->groupChain;
-		}
+	if (!ent->use) {
+		status = false;
+	} else if (!ent->use(ent, activator)) {
+		status = false;
 	}
 
-	return true;
+	Edict* chain = ent->groupChain;
+	while (chain) {
+		if (chain->use)
+			chain->use(chain, activator);
+		chain = chain->groupChain;
+	}
+
+	return status;
 }
 
 /**
