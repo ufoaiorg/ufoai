@@ -92,6 +92,7 @@ CASSERT(lengthof(shootTypeStrings) == BT_NUM_TYPES);
  * @note Not all buttons do have all of these states (e.g. "unusable" is not very common).
  */
 typedef enum {
+	BT_STATE_UNINITIALZED,
 	BT_STATE_DISABLE,		/**< 'Disabled' display (grey) */
 	BT_STATE_DESELECT		/**< Normal display (blue) */
 } weaponButtonState_t;
@@ -111,6 +112,22 @@ typedef struct reserveShot_s {
 	int weaponIndex;
 	int TUs;
 } reserveShot_t;
+
+typedef enum {
+	BUTTON_TURESERVE_UNINITIALIZED,
+
+	BUTTON_TURESERVE_SHOT_RESERVED,
+	BUTTON_TURESERVE_SHOT_DISABLED,
+	BUTTON_TURESERVE_SHOT_CLEAR,
+
+	BUTTON_TURESERVE_CROUCH_RESERVED,
+	BUTTON_TURESERVE_CROUCH_DISABLED,
+	BUTTON_TURESERVE_CROUCH_CLEAR
+} reserveButtonState_t;
+
+static weaponButtonState_t buttonStates[BT_NUM_TYPES];
+static reserveButtonState_t shotReserveButtonState;
+static reserveButtonState_t crouchReserveButtonState;
 
 /**
  * @brief Displays a message on the hud.
@@ -148,6 +165,9 @@ void HUD_UpdateActorStats (const le_t *le)
  */
 static void HUD_SetWeaponButton (buttonTypes_t button, weaponButtonState_t state)
 {
+	if (buttonStates[button] == state)
+		return;
+
 	const char *prefix;
 
 	switch (state) {
@@ -164,6 +184,7 @@ static void HUD_SetWeaponButton (buttonTypes_t button, weaponButtonState_t state
 
 	/* Connect confunc strings to the ones as defined in "menu hud_nohud". */
 	UI_ExecuteConfunc("%s%s", prefix, shootTypeStrings[button]);
+	buttonStates[button] = state;
 }
 
 /**
@@ -804,28 +825,46 @@ static void HUD_RefreshButtons (const le_t *le)
 
 	/* Crouch/stand reservation checkbox. */
 	if (CL_ActorReservedTUs(le, RES_CROUCH) >= TU_CROUCH) {
-		UI_ExecuteConfunc("crouch_checkbox_check");
-		Cvar_Set("mn_crouch_reservation_tt", va(_("%i TUs reserved for crouching/standing up.\nClick to clear."),
-				CL_ActorReservedTUs(le, RES_CROUCH)));
+		if (crouchReserveButtonState != BUTTON_TURESERVE_CROUCH_RESERVED) {
+			UI_ExecuteConfunc("crouch_checkbox_check");
+			Cvar_Set("mn_crouch_reservation_tt", va(_("%i TUs reserved for crouching/standing up.\nClick to clear."),
+					CL_ActorReservedTUs(le, RES_CROUCH)));
+			crouchReserveButtonState = BUTTON_TURESERVE_CROUCH_RESERVED;
+		}
 	} else if (time >= TU_CROUCH) {
-		UI_ExecuteConfunc("crouch_checkbox_clear");
-		Cvar_Set("mn_crouch_reservation_tt", va(_("Reserve %i TUs for crouching/standing up."), TU_CROUCH));
+		if (crouchReserveButtonState != BUTTON_TURESERVE_CROUCH_CLEAR) {
+			UI_ExecuteConfunc("crouch_checkbox_clear");
+			Cvar_Set("mn_crouch_reservation_tt", va(_("Reserve %i TUs for crouching/standing up."), TU_CROUCH));
+			crouchReserveButtonState = BUTTON_TURESERVE_CROUCH_CLEAR;
+		}
 	} else {
-		UI_ExecuteConfunc("crouch_checkbox_disable");
-		Cvar_Set("mn_crouch_reservation_tt", _("Not enough TUs left to reserve for crouching/standing up."));
+		if (crouchReserveButtonState != BUTTON_TURESERVE_CROUCH_DISABLED) {
+			UI_ExecuteConfunc("crouch_checkbox_disable");
+			Cvar_Set("mn_crouch_reservation_tt", _("Not enough TUs left to reserve for crouching/standing up."));
+			crouchReserveButtonState = BUTTON_TURESERVE_CROUCH_DISABLED;
+		}
 	}
 
 	/* Shot reservation button. mn_shot_reservation_tt is the tooltip text */
 	if (CL_ActorReservedTUs(le, RES_SHOT)) {
-		UI_ExecuteConfunc("reserve_shot_check");
-		Cvar_Set("mn_shot_reservation_tt", va(_("%i TUs reserved for shooting.\nClick to change.\nRight-Click to clear."),
-				CL_ActorReservedTUs(le, RES_SHOT)));
+		if (shotReserveButtonState != BUTTON_TURESERVE_SHOT_RESERVED) {
+			UI_ExecuteConfunc("reserve_shot_check");
+			Cvar_Set("mn_shot_reservation_tt", va(_("%i TUs reserved for shooting.\nClick to change.\nRight-Click to clear."),
+					CL_ActorReservedTUs(le, RES_SHOT)));
+			shotReserveButtonState = BUTTON_TURESERVE_SHOT_RESERVED;
+		}
 	} else if (HUD_CheckFiremodeReservation()) {
-		UI_ExecuteConfunc("reserve_shot_clear");
-		Cvar_Set("mn_shot_reservation_tt", _("Reserve TUs for shooting."));
+		if (shotReserveButtonState != BUTTON_TURESERVE_SHOT_CLEAR) {
+			UI_ExecuteConfunc("reserve_shot_clear");
+			Cvar_Set("mn_shot_reservation_tt", _("Reserve TUs for shooting."));
+			shotReserveButtonState = BUTTON_TURESERVE_SHOT_CLEAR;
+		}
 	} else {
-		UI_ExecuteConfunc("reserve_shot_disable");
-		Cvar_Set("mn_shot_reservation_tt", _("Reserving TUs for shooting not possible."));
+		if (shotReserveButtonState != BUTTON_TURESERVE_SHOT_DISABLED) {
+			UI_ExecuteConfunc("reserve_shot_disable");
+			Cvar_Set("mn_shot_reservation_tt", _("Reserving TUs for shooting not possible."));
+			shotReserveButtonState = BUTTON_TURESERVE_SHOT_DISABLED;
+		}
 	}
 
 	/* reaction-fire button */
@@ -1524,6 +1563,7 @@ static bool HUD_CheckCLHud (cvar_t *cvar)
  */
 void HUD_InitUI (const char *optionWindowName, bool popAll)
 {
+	OBJZERO(buttonStates);
 	if (!HUD_CheckCLHud(cl_hud)) {
 		Cvar_Set("cl_hud", "hud_default");
 	}
