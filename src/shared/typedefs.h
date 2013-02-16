@@ -295,7 +295,7 @@ public:
 
 	/** note: not sure if this function qualifies for being inlined. But if we didn't,
 	* we'd have to link routing.cpp to radiant, which is probably worse. */
-	void copyPosData (const Routing &other, actorSizeEnum_t actorSize, const int x, const int y, const int z, const int sX, const int sY, const int sZ)
+	inline void copyPosData (const Routing &other, actorSizeEnum_t actorSize, const int x, const int y, const int z, const int sX, const int sY, const int sZ)
 	{
 		setFloor(actorSize, x, y, z, other.getFloor(actorSize, x - sX, y - sY, z - sZ));
 		setCeiling(actorSize, x, y, z, other.getCeiling(actorSize, x - sX, y - sY, z - sZ));
