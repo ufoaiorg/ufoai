@@ -220,7 +220,7 @@ void AC_InitStartup (void)
  * @param[in] parent Parent XML node in the savegame
  * @todo Remove: Fallback for compatibility
  */
-bool AC_LoadXML (xmlNode_t * parent)
+bool AC_LoadXML (xmlNode_t *parent)
 {
 	xmlNode_t *aliencont = cgi->XML_GetNode(parent, SAVE_ALIENCONT_ALIENCONT);
 	if (!aliencont)

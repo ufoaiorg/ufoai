@@ -341,7 +341,7 @@ typedef struct item_s {
 	int rotated;	/**< If the item is currently displayed rotated (true or 1) or not (false or 0)
 					 * @note don't change this to anything smaller than 4 bytes - the network
 					 * parsing functions are expecting this to be at least 4 bytes */
-	inline void setDef(const objDef_t * objDef)
+	inline void setDef(const objDef_t *objDef)
 	{
 		_itemDef = objDef;
 	}

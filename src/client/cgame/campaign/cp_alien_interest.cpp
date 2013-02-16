@@ -118,7 +118,7 @@ bool INT_SaveXML (xmlNode_t *parent)
 	cgi->XML_AddShortValue(interestsNode, SAVE_INTERESTS_OVERALL, ccs.overallInterest);
 	cgi->Com_RegisterConstList(saveInterestConstants);
 	for (i = 0; i < INTERESTCATEGORY_MAX; i++) {
-		xmlNode_t * interestNode = cgi->XML_AddNode(interestsNode, SAVE_INTERESTS_INTEREST);
+		xmlNode_t *interestNode = cgi->XML_AddNode(interestsNode, SAVE_INTERESTS_INTEREST);
 		cgi->XML_AddString(interestNode, SAVE_INTERESTS_ID, cgi->Com_GetConstVariable(SAVE_INTERESTCAT_NAMESPACE, i));
 		cgi->XML_AddShort(interestNode, SAVE_INTERESTS_VAL, ccs.interest[i]);
 	}

@@ -2467,7 +2467,7 @@ static bool AIR_SaveAircraftXML (xmlNode_t *p, const aircraft_t* const aircraft,
 bool AIR_SaveXML (xmlNode_t *parent)
 {
 	int i;
-	xmlNode_t * node, *snode;
+	xmlNode_t *node, *snode;
 
 	/* save phalanx aircraft */
 	snode = cgi->XML_AddNode(parent, SAVE_AIRCRAFT_PHALANX);
