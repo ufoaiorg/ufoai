@@ -634,37 +634,6 @@ tileset rock_a		"0 1"
 *rm_ufo +craft_ufo_scout "1 1"
 }
 
-assembly small_crash
-{
-size "8 5"
-title "_Africa"
-multiplayer +mp_team2
-+empty1		"0 1"
-+empty2		"0 1"
-+empty3		"0 1"
-+empty4		"0 1"
-+empty6		"0 99"
-+house1		"0 1"
-+house1a	"0 1"
-+house2		"0 1"
-+house2a	"0 1"
-+house3		"0 1"
-+house3a	"0 1"
-+house6		"0 1"
-+house6a	"0 1"
-+house6b	"0 1"
-+fence1		"0 1"
-+fence2		"0 1"
-+fence3		"0 1"
-+misc1		"0 1"
-+well1		"0 1"
-tileset cowshed		"1 1"
-tileset filler_a	"1 4"
-tileset rock_a		"0 1"
-*rm_drop +craft_drop_firebird "1 1"
-*rm_ufo +craft_crash_fighter "1 1"
-}
-
 assembly medium
 {
 size "10 8"

@@ -313,7 +313,7 @@ tileset aliens	"1 1"
 *rm_drop +craft_drop_firebird "1 1"
 }
 
-assembly alienlandingnature
+assembly nature_small
 {
 size "6 6"
 title "_Alien landing - Snow"
@@ -351,10 +351,10 @@ multiplayer +mp_team2
 *rm_drop +craft_drop_firebird "1 1"
 }
 
-assembly alienlandingindustrial
+assembly industrial_medium
 {
 size "8 8"
-title "_Alien landing - Industrial"
+title "_Arctic Industrial Site"
 multiplayer +mp_team2
 +n01 "0 8"
 +n02 "0 8"
@@ -373,32 +373,10 @@ multiplayer +mp_team2
 *rm_drop +craft_drop_firebird "1 1"
 }
 
-assembly crash_medium_industrial
+assembly nature_medium
 {
 size "8 8"
-title "_A UFO crashed into the snow here."
-multiplayer +mp_team2
-+n01 "0 8"
-+n02 "0 8"
-+n03 "0 8"
-+n04 "0 8"
-+n05 "0 8"
-+h02 "0 2"
-+i01 "1 1"
-+i02 "1 4"
-+i03 "0 2"
-+i04 "1 3"
-+i05 "0 2"
-+i06 "0 3"
-+i07 "0 1"
-*rm_ufo +craft_crash_supply "1 1"
-*rm_drop +craft_drop_firebird "1 1"
-}
-
-assembly crash_medium_nature
-{
-size "8 8"
-title "_A UFO crashed into the snow here."
+title "_Arctic"
 multiplayer +mp_team2
 +n01 "0 8"
 +n02 "0 8"

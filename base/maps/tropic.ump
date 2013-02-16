@@ -370,7 +370,7 @@ title "_Tropical river"
 +h04 "0 1"
 
 +f01 "0 1"
- +f02 "0 5"
++f02 "0 5"
 +f03 "0 5"
 +f04 "0 5"
 +f05 "0 3"
@@ -382,38 +382,6 @@ title "_Tropical river"
 
 *rm_drop +craft_drop_firebird       "1 1"
 *rm_ufo +craft_ufo_scout      "1 1"
-
-}
-
-assembly river_crash
-{
-size "8 7"
-title "_Tropical river"
-
-+r01 "1 1"
-+r02 "0 8"
-+r03 "0 8"
-+r04 "1 1"
-+r05 "1 3"
-
-+h01 "0 1"
-+h02 "0 1"
-+h03 "1 1"
-+h04 "0 1"
-
-+f01 "0 1"
- +f02 "0 5"
-+f03 "0 5"
-+f04 "0 5"
-+f05 "0 3"
-+f06 "0 3"
-+f07 "0 3"
-
-+p01 "0 3"
-+p02 "0 3"
-
-*rm_drop +craft_drop_firebird       "1 1"
-*rm_ufo +craft_crash_scout     "1 1"
 
 }
 
@@ -440,31 +408,6 @@ title "_Tropical drug"
 
 *rm_drop +craft_drop_firebird       "1 1"
 *rm_ufo  +craft_ufo_scout     "1 1"
-}
-
-assembly drug_crash
-{
-size "6 7"
-title "_Tropical drug"
-
-+h01 "1 2"
-+h02 "1 1"
-+h03 "1 2"
-+h04 "1 2"
-
-+f01 "0 10"
-+f02 "0 10"
-+f03 "0 10"
-+f04 "0 10"
-+f05 "0 5"
-+f06 "0 3"
-+f07 "0 3"
-
-+p01 "0 8"
-+p02 "0 8"
-
-*rm_drop +craft_drop_firebird       "1 1"
-*rm_ufo  +craft_crash_scout     "1 1"
 }
 
 assembly bigufo

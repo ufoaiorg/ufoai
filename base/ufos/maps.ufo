@@ -78,59 +78,8 @@ mapdef africa_large
 	ufos
 	(
 		craft_ufo_bomber
-		craft_ufo_corrupter
-	)
-
-	terrains
-	(
-		"grass"
-		"tropical"
-		"desert"
-		"mountain"
-	)
-
-	cultures
-	(
-		"african"
-	)
-
-	populations
-	(
-		"village"
-		"suburban"
-		"urban"
-	)
-}
-
-mapdef africa_large_crash
-{
-	map				"+africa"
-	param			"large"
-	description		"_African Village"
-	multiplayer		true
-	teams			2
-	gametypes (
-		fight1on1
-		fight2on2
-		coop2
-		coop3
-		coop4
-	)
-	maxaliens		30
-	hurtaliens		true
-
-	civilianteam	africa
-
-	aircraft
-	(
-		craft_drop_firebird
-		craft_drop_herakles
-		craft_drop_raptor
-	)
-
-	ufos
-	(
 		craft_crash_bomber
+		craft_ufo_corrupter
 	)
 
 	terrains
@@ -182,59 +131,8 @@ mapdef africa_medium
 	ufos
 	(
 		craft_ufo_gunboat
-		craft_ufo_harvester
-	)
-
-	terrains
-	(
-		"grass"
-		"tropical"
-		"desert"
-		"mountain"
-	)
-
-	cultures
-	(
-		"african"
-	)
-
-	populations
-	(
-		"village"
-		"suburban"
-		"urban"
-	)
-}
-
-mapdef africa_medium_crash
-{
-	map				"+africa"
-	param			"medium"
-	description		"_African Village"
-	multiplayer		true
-	teams			2
-	gametypes (
-		fight1on1
-		fight2on2
-		coop2
-		coop3
-		coop4
-	)
-	maxaliens		24
-	hurtaliens		true
-
-	civilianteam	africa
-
-	aircraft
-	(
-		craft_drop_firebird
-		craft_drop_herakles
-		craft_drop_raptor
-	)
-
-	ufos
-	(
 		craft_crash_gunboat
+		craft_ufo_harvester
 		craft_crash_harvester
 		craft_crash_supply
 	)
@@ -288,53 +186,9 @@ mapdef africa_small
 	ufos
 	(
 		craft_ufo_scout
-		craft_ufo_fighter
-	)
-
-	terrains
-	(
-		"grass"
-		"tropical"
-		"desert"
-		"mountain"
-	)
-
-	cultures
-	(
-		"african"
-	)
-
-	populations
-	(
-		"village"
-		"suburban"
-		"urban"
-	)
-}
-
-mapdef africa_small_crash
-{
-	map			"+africa"
-	param		"small_crash"
-	description		"_African Village"
-	civilianteam	africa
-	campaign	true
-	multiplayer	false
-	hurtaliens	true
-	size		"small"
-	maxaliens	8
-
-	aircraft
-	(
-		craft_drop_firebird
-		craft_drop_raptor
-		craft_drop_herakles
-	)
-
-	ufos
-	(
-		craft_crash_fighter
 		craft_crash_scout
+		craft_ufo_fighter
+		craft_crash_fighter
 	)
 
 	terrains
@@ -1073,10 +927,10 @@ mapdef forest_small_crash
 // FROZEN RANDOM MAPS //
 ////////////////////////
 
-mapdef frozen_alienlandingindustrial
+mapdef frozen_industrial_medium
 {
 	map				"+frozen"
-	param			"alienlandingindustrial"
+	param			"industrial_medium"
 	description		"_Arctic Industrial Site"
 	maxaliens		14
 	multiplayer		true
@@ -1104,6 +958,7 @@ mapdef frozen_alienlandingindustrial
 		craft_ufo_harvester
 		craft_ufo_fighter
 		craft_ufo_supply
+		craft_crash_supply
 	)
 
 	terrains
@@ -1126,12 +981,12 @@ mapdef frozen_alienlandingindustrial
 	)
 }
 
-mapdef frozen_alienlandingnature
+mapdef frozen_nature_medium
 {
 	map			"+frozen"
-	param		"alienlandingnature"
-	description	"_Arctic Industrial Site"
-	maxaliens	8
+	param		"nature_medium"
+	description	"_Arctic"
+	maxaliens	14
 	multiplayer		true
 	teams			2
 	gametypes
@@ -1157,6 +1012,59 @@ mapdef frozen_alienlandingnature
 		craft_ufo_scout
 		craft_ufo_fighter
 		craft_ufo_supply
+		craft_crash_supply
+	)
+
+	terrains
+	(
+		"arctic"
+		"cold"
+	)
+
+	cultures
+	(
+		// any
+	)
+
+	populations
+	(
+		"nopopulation"
+		"rural"
+		"village"
+		"suburban"
+	)
+}
+
+mapdef frozen_nature_small
+{
+	map			"+frozen"
+	param		"nature_small"
+	description	"_Arctic"
+	maxaliens	8
+	multiplayer		true
+	teams			2
+	gametypes
+	(
+		fight1on1
+		fight2on2
+		fight3on3
+		fight4on4
+		coop2
+		coop3
+		coop4
+	)
+
+	aircraft
+	(
+		craft_drop_firebird
+		craft_drop_raptor
+		craft_drop_herakles
+	)
+
+	ufos
+	(
+		craft_ufo_scout
+		craft_ufo_fighter
 	)
 
 	terrains
@@ -1274,109 +1182,6 @@ mapdef frozen_small
 
 	populations
 	(
-		"rural"
-		"village"
-		"suburban"
-	)
-}
-
-mapdef frozen_crash_medium_industrial
-{
-	map			"+frozen"
-	param		"crash_medium_industrial"
-	description	"_Arctic Industrial Site"
-	maxaliens	12 //TODO: This is an arbitrary value right now.
-	hurtaliens	true
-	multiplayer		true
-	teams			2
-	gametypes
-	(
-		fight1on1
-		fight2on2
-		fight3on3
-		fight4on4
-		coop2
-		coop3
-		coop4
-	)
-
-	aircraft
-	(
-		craft_drop_firebird
-		craft_drop_raptor
-		craft_drop_herakles
-	)
-
-	ufos
-	(
-		craft_crash_supply
-	)
-
-	terrains
-	(
-		"arctic"
-		"cold"
-	)
-
-	cultures
-	(
-		// any
-	)
-
-	populations
-	(
-		"rural"
-		"village"
-		"suburban"
-	)
-}
-
-mapdef frozen_crash_medium_nature
-{
-	map			"+frozen"
-	param		"crash_medium_nature"
-	description	"_Arctic Industrial Site"
-	maxaliens	12 //TODO: This is an arbitrary value right now.
-	hurtaliens	true
-	multiplayer		true
-	teams			2
-	gametypes
-	(
-		fight1on1
-		fight2on2
-		fight3on3
-		fight4on4
-		coop2
-		coop3
-		coop4
-	)
-
-	aircraft
-	(
-		craft_drop_firebird
-		craft_drop_raptor
-		craft_drop_herakles
-	)
-
-	ufos
-	(
-		craft_crash_supply
-	)
-
-	terrains
-	(
-		"arctic"
-		"cold"
-	)
-
-	cultures
-	(
-		// any
-	)
-
-	populations
-	(
-		"nopopulation"
 		"rural"
 		"village"
 		"suburban"
@@ -1594,49 +1399,11 @@ mapdef ice_medium
 	ufos
 	(
 		craft_ufo_supply
-		craft_ufo_harvester
-		craft_ufo_gunboat
-	)
-
-	terrains
-	(
-		"arctic"
-	)
-
-	cultures
-	(
-		// any
-	)
-
-	populations
-	(
-		"nopopulation"
-	)
-}
-
-mapdef ice_crash_medium
-{
-	map				"+ice"
-	param			"medium"
-	description		"_Frozen Landscape"
-	campaign		true
-	singleplayer	true
-	multiplayer		false
-	maxaliens		12
-	hurtaliens		true
-
-	aircraft
-	(
-		craft_drop_firebird
-		craft_drop_raptor
-		craft_drop_herakles
-	)
-
-	ufos
-	(
-		craft_crash_gunboat
-		craft_crash_harvester
 		craft_crash_supply
+		craft_ufo_harvester
+		craft_crash_harvester
+		craft_ufo_gunboat
+		craft_crash_gunboat
 	)
 
 	terrains
@@ -1675,46 +1442,8 @@ mapdef ice_small
 	ufos
 	(
 		craft_ufo_fighter
-		craft_ufo_scout
-	)
-
-	terrains
-	(
-		"arctic"
-	)
-
-	cultures
-	(
-		// any
-	)
-
-	populations
-	(
-		"nopopulation"
-	)
-}
-
-mapdef ice_crash_small
-{
-	map				"+ice"
-	param			"small"
-	description		"_Frozen Landscape"
-	campaign 		true
-	singleplayer	true
-	multiplayer		false
-	maxaliens		5
-	hurtaliens		true
-
-	aircraft
-	(
-		craft_drop_firebird
-		craft_drop_raptor
-		craft_drop_herakles
-	)
-
-	ufos
-	(
 		craft_crash_fighter
+		craft_ufo_scout
 		craft_crash_scout
 	)
 
@@ -2332,49 +2061,9 @@ mapdef oriental_medium
 	ufos
 	(
 		craft_ufo_scout
-		craft_ufo_fighter
-	)
-
-	terrains
-	(
-		"desert"
-	)
-
-	cultures
-	(
-		"oriental"
-	)
-
-	populations
-	(
-		"urban"
-		"suburban"
-		"village"
-	)
-}
-
-mapdef oriental_medium_crash
-{
-	map			"+oriental"
-	param		"medium_crash"
-	description	"_Middle Eastern Suburb"
-	multiplayer	false
-	hurtaliens	true
-	size		"small"
-	maxaliens	8
-	civilianteam	middle
-
-	aircraft
-	(
-		craft_drop_firebird
-		craft_drop_raptor
-		craft_drop_herakles
-	)
-
-	ufos
-	(
-		craft_crash_fighter
 		craft_crash_scout
+		craft_ufo_fighter
+		craft_crash_fighter
 	)
 
 	terrains
@@ -2415,7 +2104,9 @@ mapdef oriental_small
 	ufos
 	(
 		craft_ufo_scout
+		craft_crash_scout
 		craft_ufo_fighter
+		craft_crash_fighter
 	)
 
 	terrains
@@ -2442,7 +2133,6 @@ mapdef scout_crash
 {
 	map				"+scout_crash"
 	multiplayer		true
-	hurtaliens		true
 	teams			2
 	gametypes (
 		fight1on1
@@ -2548,49 +2238,10 @@ mapdef tropic_drug
 	ufos
 	(
 		craft_ufo_scout
-		craft_ufo_fighter
-		craft_ufo_harvester
-	)
-
-	terrains
-	(
-		"tropical"
-	)
-
-	cultures
-	(
-		//any
-	)
-
-	populations
-	(
-		"nopopulation"
-		"rural"
-		"village"
-		"suburban"
-	)
-}
-
-mapdef tropic_drug_crash
-{
-	map			"+tropic"
-	param		"drug_crash"
-	description	"_Tropical Jungle"
-	multiplayer	false
-	maxaliens	14
-	hurtaliens	true
-
-	aircraft
-	(
-		craft_drop_firebird
-		craft_drop_raptor
-		craft_drop_herakles
-	)
-
-	ufos
-	(
 		craft_crash_scout
+		craft_ufo_fighter
 		craft_crash_fighter
+		craft_ufo_harvester
 	)
 
 	terrains
@@ -2630,47 +2281,8 @@ mapdef tropic_river
 	ufos
 	(
 		craft_ufo_scout
-		craft_ufo_fighter
-	)
-
-	terrains
-	(
-		"tropical"
-	)
-
-	cultures
-	(
-		//any
-	)
-
-	populations
-	(
-		"nopopulation"
-		"rural"
-		"village"
-		"suburban"
-	)
-}
-
-mapdef tropic_river_crash
-{
-	map			"+tropic"
-	param		"river_crash"
-	description	"_Tropical Jungle"
-	hurtaliens	true
-	multiplayer	false
-	maxaliens	6
-
-	aircraft
-	(
-		craft_drop_firebird
-		craft_drop_raptor
-		craft_drop_herakles
-	)
-
-	ufos
-	(
 		craft_crash_scout
+		craft_ufo_fighter
 		craft_crash_fighter
 	)
 
