@@ -153,7 +153,7 @@ namespace routing
 		static MapTile curTile;
 		byte *source;
 		int length;
-		int x, y, z, size, dir;
+		int x, y, z, size;
 		int minX, minY, minZ;
 		int maxX, maxY, maxZ;
 		unsigned int i;
@@ -212,12 +212,7 @@ namespace routing
 					if (x < 0 || y < 0)
 						continue;
 					for (z = minZ; z <= maxZ; z++) {
-						clMap.setFloor(size + 1, x, y, z, tempMap.getFloor(size + 1, x - sX, y - sY, z - sZ));
-						clMap.setCeiling(size + 1, x, y, z, tempMap.getCeiling(size + 1, x - sX, y - sY, z - sZ));
-						for (dir = 0; dir < CORE_DIRECTIONS; dir++) {
-							clMap.setConn(size + 1, x, y, z, dir, tempMap.getConn(size + 1, x - sX, y - sY, z - sZ, dir));
-							clMap.setStepup(size + 1, x, y, z, dir, tempMap.getStepup(size + 1, x - sX, y - sY, z - sZ, dir));
-						}
+						clMap.copyPosData(tempMap, size + 1, x, y, z, sX, sY, sZ);
 					}
 					/* Update the reroute table */
 					/*if (!reroute[size][y][x]) {

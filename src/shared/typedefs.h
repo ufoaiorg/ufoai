@@ -293,6 +293,18 @@ public:
 		return routes[actorSize - 1].getStepup(x, y, z, dir);
 	}
 
+	/** note: not sure if this function qualifies for being inlined. But if we didn't,
+	* we'd have to link routing.cpp to radiant, which is probably worse. */
+	void copyPosData (const Routing &other, actorSizeEnum_t actorSize, const int x, const int y, const int z, const int sX, const int sY, const int sZ)
+	{
+		setFloor(actorSize, x, y, z, other.getFloor(actorSize, x - sX, y - sY, z - sZ));
+		setCeiling(actorSize, x, y, z, other.getCeiling(actorSize, x - sX, y - sY, z - sZ));
+		int dir;
+		for (dir = 0; dir < CORE_DIRECTIONS; dir++) {
+			setConn(actorSize, x, y, z, dir, other.getConn(actorSize, x - sX, y - sY, z - sZ, dir));
+			setStepup(actorSize, x, y, z, dir, other.getStepup(actorSize, x - sX, y - sY, z - sZ, dir));
+		}
+	}
 };
 
 typedef struct mapData_s {

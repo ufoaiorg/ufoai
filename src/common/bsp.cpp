@@ -481,7 +481,8 @@ static void CMod_LoadRouting (MapTile &tile, mapData_t *mapData, const byte *bas
 	Routing *tempMap = (Routing *)Mem_Alloc(sizeof(Routing));
 	const byte *source;
 	int length;
-	int x, y, z, size, dir;
+	int x, y, z;
+	actorSizeEnum_t size;
 	int minX, minY, minZ;
 	int maxX, maxY, maxZ;
 	unsigned int i;
@@ -563,12 +564,7 @@ static void CMod_LoadRouting (MapTile &tile, mapData_t *mapData, const byte *bas
 				if (x < 0 || y < 0)
 					continue;
 				for (z = minZ; z <= maxZ; z++) {
-					mapData->routing.setFloor(size + 1, x, y, z, tempMap->getFloor(size + 1, x - sX, y - sY, z - sZ));
-					mapData->routing.setCeiling(size + 1, x, y, z, tempMap->getCeiling(size + 1, x - sX, y - sY, z - sZ));
-					for (dir = 0; dir < CORE_DIRECTIONS; dir++) {
-						mapData->routing.setConn(size + 1, x, y, z, dir, tempMap->getConn(size + 1, x - sX, y - sY, z - sZ, dir));
-						mapData->routing.setStepup(size + 1, x, y, z, dir, tempMap->getStepup(size + 1, x - sX, y - sY, z - sZ, dir));
-					}
+					mapData->routing.copyPosData(*tempMap, size + 1, x, y, z, sX, sY, sZ);
 				}
 				/* Update the reroute table */
 				if (!mapData->reroute[size][y][x]) {
