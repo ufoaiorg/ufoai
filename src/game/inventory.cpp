@@ -156,7 +156,7 @@ bool InventoryInterface::removeFromInventory (inventory_t* const inv, const invD
 	assert(container);
 	assert(fItem);
 
-	ic = inv->c[container->id];
+	ic = inv->cont(container->id);
 	if (!ic)
 		return false;
 
@@ -191,7 +191,7 @@ bool InventoryInterface::removeFromInventory (inventory_t* const inv, const invD
 		return true;
 	}
 
-	for (previous = inv->c[container->id]; ic; ic = ic->next) {
+	for (previous = inv->cont(container->id); ic; ic = ic->next) {
 		if (ic == fItem) {
 			this->cacheItem = ic->item;
 			/* temp container like idEquip and idFloor */
@@ -202,8 +202,8 @@ bool InventoryInterface::removeFromInventory (inventory_t* const inv, const invD
 				return true;
 			}
 
-			if (ic == inv->c[container->id])
-				inv->c[container->id] = inv->c[container->id]->next;
+			if (ic == inv->cont(container->id))
+				inv->c[container->id] = inv->cont(container->id)->next;
 			else
 				previous->next = ic->next;
 
@@ -271,7 +271,7 @@ inventory_action_t InventoryInterface::moveInInventory (inventory_t* const inv, 
 		if (from->scroll)
 			return IA_NONE;
 
-		ic = inv->c[from->id];
+		ic = inv->cont(from->id);
 		for (; ic; ic = ic->next) {
 			if (ic == fItem) {
 				if (ic->item.amount > 1) {
@@ -504,7 +504,7 @@ void InventoryInterface::emptyContainer (inventory_t* const inv, const invDef_t 
 {
 	invList_t *ic;
 
-	ic = inv->c[container->id];
+	ic = inv->cont(container->id);
 
 	while (ic) {
 		invList_t *old = ic;
@@ -591,7 +591,7 @@ int InventoryInterface::PackAmmoAndWeapon (character_t* const chr, const objDef_
 	item.setDef(weapon);
 
 	/* are we going to allow trying the left hand */
-	allowLeft = !(inv->c[csi->idRight] && inv->c[csi->idRight]->item.def()->fireTwoHanded);
+	allowLeft = !(inv->cont(csi->idRight) && inv->cont(csi->idRight)->item.def()->fireTwoHanded);
 
 	if (weapon->oneshot) {
 		/* The weapon provides its own ammo (i.e. it is charged or loaded in the base.) */
