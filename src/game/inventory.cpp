@@ -183,7 +183,7 @@ bool InventoryInterface::removeFromInventory (inventory_t* const inv, const invD
 		 * The other container types do not support stacking.*/
 		assert(ic->item.amount == 1);
 
-		inv->c[container->id] = ic->next;
+		inv->setCont(container->id, ic->next);
 
 		/* updated invUnused to be able to reuse this space later again */
 		removeInvList(ic);
@@ -203,7 +203,7 @@ bool InventoryInterface::removeFromInventory (inventory_t* const inv, const invD
 			}
 
 			if (ic == inv->cont(container->id))
-				inv->c[container->id] = inv->cont(container->id)->next;
+				inv->setCont(container->id, inv->cont(container->id)->next);
 			else
 				previous->next = ic->next;
 
@@ -512,7 +512,7 @@ void InventoryInterface::emptyContainer (inventory_t* const inv, const invDef_t 
 		removeInvList(old);
 	}
 
-	inv->c[container->id] = NULL;
+	inv->setCont(container->id, NULL);
 }
 
 /**
