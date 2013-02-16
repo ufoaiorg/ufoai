@@ -104,6 +104,11 @@ typedef struct place_s {
 	int ceiling;	/**< The ceiling of it, given in absolute QUANTs. */
 	int floorZ;		/**< The level (0-7) of the floor. */
 	bool usable;	/**< does an actor fit in here ? */
+
+	inline bool isUsable (void) const
+	{
+		return usable;
+	}
 } place_t;
 
 static inline void RT_PlaceInit (const Routing &routing, const actorSizeEnum_t actorSize, place_t *p, const int x, const int y, const int z)
@@ -116,11 +121,6 @@ static inline void RT_PlaceInit (const Routing &routing, const actorSizeEnum_t a
 	p->ceiling = relCeiling + z * CELL_HEIGHT;
 	p->floorZ = std::max(0, p->floor / CELL_HEIGHT) ;
 	p->usable = (relCeiling && p->floor > -1 && p->ceiling - p->floor >= PATHFINDING_MIN_OPENING) ? true : false;
-}
-
-static inline bool RT_PlaceIsUsable (const place_t* p)
-{
-	return p->usable;
 }
 
 static inline bool RT_PlaceDoesIntersectEnough (const place_t* p, const place_t* other)
@@ -136,7 +136,7 @@ static inline bool RT_PlaceDoesIntersectEnough (const place_t* p, const place_t*
  */
 static inline int RT_PlaceIsShifted (const place_t* p, const place_t* other)
 {
-	if (!RT_PlaceIsUsable(p) || !RT_PlaceIsUsable(other))
+	if (!p->isUsable() || !other->isUsable())
 		return 0;
 	if (p->floor < other->floor && p->ceiling < other->ceiling)
 		return 1;	/* stepping up */
@@ -1286,11 +1286,11 @@ static void RT_TracePassage (RoutingData *rtd, const int x, const int y, const i
 	 * If there is no passage, then the obstruction may be used as steps to
 	 * climb up to the adjacent floor.
 	 */
-	if (RT_PlaceIsUsable(&to) && RT_PlaceDoesIntersectEnough(&from, &to)) {
+	if (to.isUsable() && RT_PlaceDoesIntersectEnough(&from, &to)) {
 		placeToCheck = &to;
 	} else if (z < PATHFINDING_HEIGHT - 1) {
 		RT_PlaceInit(rtd->routing, rtd->actorSize, &above, ax, ay, z + 1);
-		if (RT_PlaceIsUsable(&above) && RT_PlaceDoesIntersectEnough(&from, &above)) {
+		if (above.isUsable() && RT_PlaceDoesIntersectEnough(&from, &above)) {
 			placeToCheck = &above;
 		}
 	}
