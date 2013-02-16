@@ -83,10 +83,12 @@ static void CP_TEAM_AssignSoldierByUCN_f (void)
  */
 static void CP_TEAM_SetEquipContainer (character_t *chr)
 {
-	if (*cgi->ui_inventory && *cgi->ui_inventory != &chr->inv) {
-		CONTAINER(chr, cgi->csi->idEquip) = (*cgi->ui_inventory)->c[cgi->csi->idEquip];
+	const int idEquip = cgi->csi->idEquip;
+	inventory_t *uiInv = *cgi->ui_inventory;
+	if (uiInv && uiInv != &chr->inv) {
+		CONTAINER(chr, idEquip) = uiInv->c[idEquip];
 		/* set 'old' idEquip to NULL */
-		(*cgi->ui_inventory)->c[cgi->csi->idEquip] = NULL;
+		uiInv->c[idEquip] = NULL;
 	}
 	*cgi->ui_inventory = &chr->inv;
 }
