@@ -902,14 +902,10 @@ void Grid_RecalcBoxRouting (mapTiles_t *mapTiles, Routing &routing, const GridBo
 
 	/* check connections */
 	for (actorSize = 1; actorSize <= ACTOR_MAX_SIZE; actorSize++) {
-		const int minX = std::max(box.mins[0] - actorSize, 0);
-		const int minY = std::max(box.mins[1] - actorSize, 0);
-		const int maxX = std::min(box.maxs[0] + actorSize, PATHFINDING_WIDTH - 1);
-		const int maxY = std::min(box.maxs[1] + actorSize, PATHFINDING_WIDTH - 1);
-		/* Offset the initial X and Y to compensate for larger actors when needed.
-		 * Also sweep further out to catch the walls back into our box. */
-		for (y = minY; y <= maxY; y++) {
-			for (x = minX; x <= maxX; x++) {
+		GridBox rBox(box);			/* the box we will actually reroute */
+		rBox.expandXY(actorSize);	/* for connections, expand by the full size of the actor */
+		for (y = rBox.mins[1]; y <= rBox.maxs[1]; y++) {
+			for (x = rBox.mins[0]; x <= rBox.maxs[0]; x++) {
 				for (dir = 0; dir < CORE_DIRECTIONS; dir++) {
 					/** @note The new version of RT_UpdateConnectionColumn can work bidirectional, so we can
 					 * trace every other dir, unless we are on the edge. */
