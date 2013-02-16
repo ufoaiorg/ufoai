@@ -100,12 +100,12 @@ invList_t *InventoryInterface::addToInventory (inventory_t *const inv, const ite
 	assert(inv);
 	assert(container);
 
-	if (container->single && inv->c[container->id])
+	if (container->single && inv->cont(container->id))
 		return NULL;
 
 	/* idEquip and idFloor */
 	if (container->temp) {
-		for (ic = inv->c[container->id]; ic; ic = ic->next)
+		for (ic = inv->cont(container->id); ic; ic = ic->next)
 			if (INVSH_CompareItem(&ic->item, item)) {
 				ic->item.amount += amount;
 				Com_DPrintf(DEBUG_SHARED, "addToInventory: Amount of '%s': %i (%s)\n",

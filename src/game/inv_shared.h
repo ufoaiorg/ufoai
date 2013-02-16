@@ -375,6 +375,15 @@ typedef struct invList_s {
 /** @brief inventory definition with all its containers */
 typedef struct inventory_s {
 	invList_t *c[MAX_CONTAINERS];
+
+	inline invList_t *cont(const containerIndex_t idx) const
+	{
+		return c[idx];
+	}
+	inline void setCont(const containerIndex_t idx, invList_t *cont)
+	{
+		c[idx] = cont;
+	}
 } inventory_t;
 
 #define MAX_EQUIPDEFS   64
