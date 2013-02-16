@@ -1357,7 +1357,7 @@
 // entity 25
 {
 "classname" "info_human_start"
-"origin" "336 112 92"
+"origin" "304 112 92"
 "angle" "-135"
 }
 // entity 26
@@ -2291,8 +2291,9 @@
 "origin" "80 80 112"
 "spawnflags" "258"
 "team" "1"
-"active" "1"
+"active" "0"
 "targetname" "basecam"
+"group" "basecam"
 }
 // entity 64
 {
@@ -2300,8 +2301,9 @@
 "origin" "432 432 112"
 "spawnflags" "258"
 "team" "1"
-"active" "1"
+"active" "0"
 "targetname" "basecam"
+"group" "basecam"
 }
 // entity 65
 {

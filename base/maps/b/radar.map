@@ -2507,7 +2507,8 @@
 "spawnflags" "504"
 "team" "1"
 "targetname" "basecam"
-"active" "1"
+"active" "0"
+"group" "basecam"
 }
 // entity 47
 {
@@ -2516,7 +2517,8 @@
 "spawnflags" "504"
 "team" "1"
 "targetname" "basecam"
-"active" "1"
+"active" "0"
+"group" "basecam"
 }
 // entity 48
 {

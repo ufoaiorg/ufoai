@@ -6058,7 +6058,8 @@
 "spawnflags" "496"
 "team" "1"
 "targetname" "basecam"
-"active" "1"
+"active" "0"
+"group" "basecam"
 }
 // entity 67
 {
@@ -6067,7 +6068,8 @@
 "spawnflags" "496"
 "team" "1"
 "targetname" "basecam"
-"active" "1"
+"active" "0"
+"group" "basecam"
 }
 // entity 68
 {
@@ -6076,7 +6078,8 @@
 "spawnflags" "508"
 "team" "1"
 "targetname" "basecam"
-"active" "1"
+"active" "0"
+"group" "basecam"
 }
 // entity 69
 {
@@ -6084,6 +6087,7 @@
 "origin" "912 80 112"
 "spawnflags" "258"
 "team" "1"
-"targetname" "basecam1"
+"targetname" "basecam"
 "active" "0"
+"group" "basecam"
 }
