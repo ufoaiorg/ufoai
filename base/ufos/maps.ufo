@@ -2440,6 +2440,7 @@ mapdef base_initial
 	campaign	false
 	multiplayer	false
 	maxaliens	14
+	missionbriefing		"*msgid:mission_briefing_baseattack"
 
 	aircraft
 	(
@@ -2475,6 +2476,7 @@ mapdef base_random
 	campaign	false
 	multiplayer	false
 	maxaliens	16
+	missionbriefing		"*msgid:mission_briefing_baseattack"
 
 	aircraft
 	(
@@ -4888,6 +4890,7 @@ mapdef baseattack
 	storyrelated	true
 	description	"_PHALANX Base Under Attack"
 	maxaliens	16
+	missionbriefing		"*msgid:mission_briefing_baseattack"
 }
 
 ////////////////////////
