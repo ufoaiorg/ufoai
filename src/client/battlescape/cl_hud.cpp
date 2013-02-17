@@ -580,6 +580,9 @@ static void HUD_DisplayFiremodes_f (void)
 	if (!selActor)
 		return;
 
+	if (selActor->isMoving())
+		return;
+
 	const actorHands_t hand = ACTOR_GET_HAND_INDEX(Cmd_Argv(2)[0]);
 	const actionType_t type = hand == ACTOR_HAND_RIGHT ? FIRE_RIGHT : FIRE_LEFT;
 	char callback[32];
