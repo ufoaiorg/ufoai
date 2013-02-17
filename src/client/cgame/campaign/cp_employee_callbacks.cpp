@@ -355,6 +355,97 @@ static void E_EmployeeHire_f (void)
 }
 
 /**
+ * @brief Callback for employee_hire_first command
+ */
+static void E_EmployeeHireFirst_f (void)
+{
+    int num;
+    const char *arg;
+	base_t *base = B_GetCurrentSelectedBase();
+
+	if (!base)
+		return;
+
+	/* Check syntax. */
+	if (cgi->Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <num>\n", cgi->Cmd_Argv(0));
+		return;
+	}
+
+	num = atoi(cgi->Cmd_Argv(1));
+
+	if(cgi->Cmd_Argc() == 3)
+        arg = cgi->Cmd_Argv(2); //callback function
+
+	E_Foreach(num, e)
+	{
+		if (!E_IsHired(e))
+		{
+		    if (!E_HireEmployee(base, e))
+		    {
+                Com_DPrintf(DEBUG_CLIENT, "Couldn't hire employee\n");
+                cgi->UI_DisplayNotice(_("Could not hire employee"), 2000, "employees");
+            }
+            else if(arg)
+            {
+                cgi->UI_ExecuteConfunc(arg);
+            }
+		    break;
+		}
+	}
+}
+
+/**
+ * @brief Callback for employee_fire_last command
+ */
+static void E_EmployeeFireLast_f (void)
+{
+    int num;
+    const char *arg;
+    employee_t* employee;
+	base_t *base = B_GetCurrentSelectedBase();
+
+	if (!base)
+		return;
+
+	/* Check syntax. */
+	if (cgi->Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <num>\n", cgi->Cmd_Argv(0));
+		return;
+	}
+
+	num = atoi(cgi->Cmd_Argv(1));
+
+	if(cgi->Cmd_Argc() == 3)
+        arg = cgi->Cmd_Argv(2); //callback function
+
+	E_Foreach(num, e) {
+		/* don't show employees of other bases */
+		if (!E_IsHired(e) && !E_IsInBase(e, base))
+			continue;
+		/* don't show employees being transfered to other bases */
+		if (e->transfer)
+			continue;
+
+        employee = e;
+	}
+
+    if(employee)
+    {
+		if (!E_UnhireEmployee(employee))
+		{
+			cgi->UI_DisplayNotice(_("Could not fire employee"), 2000, "employees");
+			Com_DPrintf(DEBUG_CLIENT, "Couldn't fire employee\n");
+			return;
+		}
+		else if(arg)
+		{
+		    cgi->UI_ExecuteConfunc(arg);
+		}
+	}
+}
+
+/**
  * @brief Callback function that updates the character cvars when calling employee_select
  */
 static void E_EmployeeSelect_f (void)
@@ -383,6 +474,8 @@ void E_InitCallbacks (void)
 	cgi->Cmd_AddCommand("employee_select", E_EmployeeSelect_f, NULL);
 	cgi->Cmd_AddCommand("employee_changename", E_ChangeName_f, "Change the name of an employee");
 	cgi->Cmd_AddCommand("employee_scroll", E_EmployeeListScroll_f, "Scroll callback for employee list");
+	cgi->Cmd_AddCommand("employee_hire_first", E_EmployeeHireFirst_f, "Hire first unhired employee");
+	cgi->Cmd_AddCommand("employee_fire_last", E_EmployeeFireLast_f, "Fire last hired employee");
 }
 
 void E_ShutdownCallbacks (void)
@@ -394,4 +487,6 @@ void E_ShutdownCallbacks (void)
 	cgi->Cmd_RemoveCommand("employee_select");
 	cgi->Cmd_RemoveCommand("employee_changename");
 	cgi->Cmd_RemoveCommand("employee_scroll");
+	cgi->Cmd_RemoveCommand("employee_hire_first");
+	cgi->Cmd_RemoveCommand("employee_fire_last");
 }

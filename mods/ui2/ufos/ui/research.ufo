@@ -194,8 +194,8 @@ window research
 						pos			"43 29"
 						size		"282 8"
 						color		"0.56 0.81 0.76 1"
-						current		0
-						max			1
+						current		*cvar:mn_scientists_hired
+						max			*cvar:mn_total_scientists
 						ghost		true
 					}
 					MainMenu3Btn hire
@@ -206,7 +206,7 @@ window research
 						font			"f_small_bold"
 						color			"0 0 0 0.9"
 						selectcolor		"0 0 0 1"
-						onClick			{ cmd "echo hire_clicked;" }
+						onClick			{ cmd "hire_last_scientist;" }
 					}
 					MainMenuExitBtn fire
 					{
@@ -216,7 +216,7 @@ window research
 						font			"f_small_bold"
 						color			"0 0 0 0.9"
 						selectcolor		"0 0 0 1"
-						onClick			{ cmd "echo fire_clicked;" }
+						onClick			{ cmd "fire_last_scientist;" }
 					}
 				}
 				panel lab_space
@@ -436,8 +436,37 @@ window research
 	 */
 	confunc available_scientists
 	{
-		*cvar:mn_total_scientists = ( <1> + <2> )
-		*cvar:mn_scientists_available_string = "<1> / <cvar:mn_total_scientists> scientists hired"
+		*cvar:mn_total_scientists = ( *cvar:mn_scientists_hired + *cvar:mn_scientists_unhired )
+		*cvar:mn_scientists_available_string = "<cvar:mn_scientists_hired> / <cvar:mn_total_scientists> scientists hired"
+	}
+
+	// Fire last scientist
+	confunc fire_last_scientist
+	{
+		cmd "employee_fire_last 1 on_fire_last_scientist;"
+	}
+	
+	// Hire first scientist
+	confunc hire_last_scientist
+	{
+		*cvar:mn_temp = ( *cvar:mn_scientists_hired + 1 )
+		cmd "employee_hire_first 1 on_hire_last_scientist;"
+	}
+	
+	confunc on_fire_last_scientist
+	{
+		*cvar:mn_scientists_hired = ( *cvar:mn_scientists_hired - 1 )
+		*cvar:mn_scientists_unhired = ( *cvar:mn_scientists_unhired + 1 )
+		*cvar:mn_total_scientists = ( *cvar:mn_scientists_hired + *cvar:mn_scientists_unhired )
+		*cvar:mn_scientists_available_string = "<cvar:mn_scientists_hired> / <cvar:mn_total_scientists> scientists hired"
+	}
+
+	confunc on_hire_last_scientist
+	{
+		*cvar:mn_scientists_hired = ( *cvar:mn_scientists_hired + 1 )
+		*cvar:mn_scientists_unhired = ( *cvar:mn_scientists_unhired - 1 )
+		*cvar:mn_total_scientists = ( *cvar:mn_scientists_hired + *cvar:mn_scientists_unhired )
+		*cvar:mn_scientists_available_string = "<cvar:mn_scientists_hired> / <cvar:mn_total_scientists> scientists hired"
 	}
 
 	// Clear temp cvars not needed after init
@@ -468,6 +497,7 @@ window research
 		if ( exists *cvar:mn_research_scis ) { delete *cvar:mn_research_scis }
 		if ( exists *cvar:mn_scientists_available ) { delete *cvar:mn_scientists_available }
 		if ( exists *cvar:mn_scientists_hired ) { delete *cvar:mn_scientists_hired }
+		if ( exists *cvar:mn_scientists_unhired ) { delete *cvar:mn_scientists_unhired }
 	}
 
 	func onWindowOpened
@@ -477,6 +507,7 @@ window research
 
 		// Concatenate the string for the lab space
 		cmd "get_lab_space_string;"
+		cmd "available_scientists;"
 	}
 
 	func onWindowClosed
