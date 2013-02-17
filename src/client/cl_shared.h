@@ -23,8 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CL_SHARED_H
-#define CL_SHARED_H
+#pragma once
 
 #include "../common/common.h"
 
@@ -94,5 +93,3 @@ typedef enum {
 mapDef_t* Com_GetMapDefinitionByID(const char *mapDefID);
 
 extern memPool_t *cl_genericPool;
-
-#endif
