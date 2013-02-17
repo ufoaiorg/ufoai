@@ -100,12 +100,12 @@ invList_t *InventoryInterface::addToInventory (inventory_t *const inv, const ite
 	assert(inv);
 	assert(container);
 
-	if (container->single && inv->cont(container->id))
+	if (container->single && inv->getContainer(container->id))
 		return NULL;
 
 	/* idEquip and idFloor */
 	if (container->temp) {
-		for (ic = inv->cont(container->id); ic; ic = ic->next)
+		for (ic = inv->getContainer(container->id); ic; ic = ic->next)
 			if (INVSH_CompareItem(&ic->item, item)) {
 				ic->item.amount += amount;
 				Com_DPrintf(DEBUG_SHARED, "addToInventory: Amount of '%s': %i (%s)\n",
@@ -156,7 +156,7 @@ bool InventoryInterface::removeFromInventory (inventory_t* const inv, const invD
 	assert(container);
 	assert(fItem);
 
-	ic = inv->cont(container->id);
+	ic = inv->getContainer(container->id);
 	if (!ic)
 		return false;
 
@@ -183,7 +183,7 @@ bool InventoryInterface::removeFromInventory (inventory_t* const inv, const invD
 		 * The other container types do not support stacking.*/
 		assert(ic->item.amount == 1);
 
-		inv->setCont(container->id, ic->next);
+		inv->setContainer(container->id, ic->next);
 
 		/* updated invUnused to be able to reuse this space later again */
 		removeInvList(ic);
@@ -191,7 +191,7 @@ bool InventoryInterface::removeFromInventory (inventory_t* const inv, const invD
 		return true;
 	}
 
-	for (previous = inv->cont(container->id); ic; ic = ic->next) {
+	for (previous = inv->getContainer(container->id); ic; ic = ic->next) {
 		if (ic == fItem) {
 			this->cacheItem = ic->item;
 			/* temp container like idEquip and idFloor */
@@ -202,8 +202,8 @@ bool InventoryInterface::removeFromInventory (inventory_t* const inv, const invD
 				return true;
 			}
 
-			if (ic == inv->cont(container->id))
-				inv->setCont(container->id, inv->cont(container->id)->next);
+			if (ic == inv->getContainer(container->id))
+				inv->setContainer(container->id, inv->getContainer(container->id)->next);
 			else
 				previous->next = ic->next;
 
@@ -271,7 +271,7 @@ inventory_action_t InventoryInterface::moveInInventory (inventory_t* const inv, 
 		if (from->scroll)
 			return IA_NONE;
 
-		ic = inv->cont(from->id);
+		ic = inv->getContainer(from->id);
 		for (; ic; ic = ic->next) {
 			if (ic == fItem) {
 				if (ic->item.amount > 1) {
@@ -504,7 +504,7 @@ void InventoryInterface::emptyContainer (inventory_t* const inv, const invDef_t 
 {
 	invList_t *ic;
 
-	ic = inv->cont(container->id);
+	ic = inv->getContainer(container->id);
 
 	while (ic) {
 		invList_t *old = ic;
@@ -512,7 +512,7 @@ void InventoryInterface::emptyContainer (inventory_t* const inv, const invDef_t 
 		removeInvList(old);
 	}
 
-	inv->setCont(container->id, NULL);
+	inv->setContainer(container->id, NULL);
 }
 
 /**
@@ -591,7 +591,7 @@ int InventoryInterface::PackAmmoAndWeapon (character_t* const chr, const objDef_
 	item.setDef(weapon);
 
 	/* are we going to allow trying the left hand */
-	allowLeft = !(inv->cont(csi->idRight) && inv->cont(csi->idRight)->item.def()->fireTwoHanded);
+	allowLeft = !(inv->getContainer(csi->idRight) && inv->getContainer(csi->idRight)->item.def()->fireTwoHanded);
 
 	if (weapon->oneshot) {
 		/* The weapon provides its own ammo (i.e. it is charged or loaded in the base.) */

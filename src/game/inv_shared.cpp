@@ -93,7 +93,7 @@ bool INV_IsArmourDef (const invDef_t* invDef)
 
 invList_t* INVSH_HasArmour (const inventory_t *inv)
 {
-	return inv->cont(CSI->idArmour);
+	return inv->getContainer(CSI->idArmour);
 }
 
 static int cacheCheckToInventory = INV_DOES_NOT_FIT;
@@ -172,7 +172,7 @@ static bool INVSH_CheckToInventory_shape (const inventory_t *const inv, const in
 			mask[j] = ~container->shape[j];
 
 		/* Add other items to mask. (i.e. merge their shapes at their location into the generated mask) */
-		for (ic = inv->cont(container->id); ic; ic = ic->next) {
+		for (ic = inv->getContainer(container->id); ic; ic = ic->next) {
 			if (ignoredItem == ic)
 				continue;
 
@@ -225,13 +225,13 @@ int INVSH_CheckToInventory (const inventory_t *const inv, const objDef_t *od, co
 
 	/* twohanded item */
 	if (od->holdTwoHanded) {
-		if ((INV_IsRightDef(container) && inv->cont(CSI->idLeft)) || INV_IsLeftDef(container))
+		if ((INV_IsRightDef(container) && inv->getContainer(CSI->idLeft)) || INV_IsLeftDef(container))
 			return INV_DOES_NOT_FIT;
 	}
 
 	/* left hand is busy if right wields twohanded */
 	if (INV_IsLeftDef(container)) {
-		if (inv->cont(CSI->idRight) && inv->cont(CSI->idRight)->item.isHeldTwoHanded())
+		if (inv->getContainer(CSI->idRight) && inv->getContainer(CSI->idRight)->item.isHeldTwoHanded())
 			return INV_DOES_NOT_FIT;
 
 		/* can't put an item that is 'fireTwoHanded' into the left hand */
@@ -241,7 +241,7 @@ int INVSH_CheckToInventory (const inventory_t *const inv, const objDef_t *od, co
 
 	/* Single item containers, e.g. hands, extension or headgear. */
 	if (container->single) {
-		if (inv->cont(container->id)) {
+		if (inv->getContainer(container->id)) {
 			/* There is already an item. */
 			return INV_DOES_NOT_FIT;
 		} else {
@@ -370,7 +370,7 @@ bool INVSH_ExistsInInventory (const inventory_t* const inv, const invDef_t *cont
 {
 	invList_t *ic;
 
-	for (ic = inv->cont(container->id); ic; ic = ic->next)
+	for (ic = inv->getContainer(container->id); ic; ic = ic->next)
 		if (INVSH_CompareItem(&ic->item, item)) {
 			return true;
 		}
@@ -389,7 +389,7 @@ invList_t *INVSH_FindInInventory (const inventory_t* const inv, const invDef_t *
 {
 	invList_t *ic;
 
-	for (ic = inv->cont(container->id); ic; ic = ic->next)
+	for (ic = inv->getContainer(container->id); ic; ic = ic->next)
 		if (INVSH_CompareItem(&ic->item, item)) {
 			return ic;
 		}
@@ -441,13 +441,13 @@ invList_t *INVSH_SearchInInventory (const inventory_t* const inv, const invDef_t
 
 	/* Only a single item. */
 	if (container->single)
-		return inv->cont(container->id);
+		return inv->getContainer(container->id);
 
 	if (container->scroll)
 		Sys_Error("INVSH_SearchInInventory: Scrollable containers (%i:%s) are not supported by this function.", container->id, container->name);
 
 	/* More than one item - search for the item that is located at location x/y in this container. */
-	for (ic = inv->cont(container->id); ic; ic = ic->next)
+	for (ic = inv->getContainer(container->id); ic; ic = ic->next)
 		if (INVSH_ShapeCheckPosition(ic, x, y))
 			return ic;
 
@@ -469,7 +469,7 @@ invList_t *INVSH_SearchInInventoryByItem (const inventory_t* const inv, const in
 	if (item == NULL)
 		return NULL;
 
-	for (ic = inv->cont(container->id); ic; ic = ic->next) {
+	for (ic = inv->getContainer(container->id); ic; ic = ic->next) {
 		if (ic && item == ic->item.def())
 			return ic;
 	}
@@ -646,8 +646,8 @@ bool INVSH_CheckAddingItemToInventory (const inventory_t *inv, containerIndex_t 
 	if (CSI->ids[to].temp || !CSI->ids[from].temp)
 		return true;
 
-	const bool swapArmour = INV_IsArmour(item.def()) && inv->cont(CSI->idArmour);
-	const float invWeight = INVSH_GetInventoryWeight(inv) - (swapArmour ? INVSH_GetItemWeight(inv->cont(CSI->idArmour)->item) : 0);
+	const bool swapArmour = INV_IsArmour(item.def()) && inv->getContainer(CSI->idArmour);
+	const float invWeight = INVSH_GetInventoryWeight(inv) - (swapArmour ? INVSH_GetItemWeight(inv->getContainer(CSI->idArmour)->item) : 0);
 	float itemWeight = INVSH_GetItemWeight(item);
 
 	return (maxWeight < 0 || maxWeight >= invWeight + itemWeight);
@@ -872,4 +872,9 @@ float INVSH_GetInventoryWeight (const inventory_t *inventory)
 		}
 	}
 	return weight;
+}
+
+invList_t *inventory_t::getFloorContainer () const
+{
+	return getContainer(CSI->idFloor);
 }
