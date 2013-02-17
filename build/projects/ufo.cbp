@@ -46,6 +46,7 @@
 				<Option projectLibDirsRelation="1" />
 				<Compiler>
 					<Add option="-pg" />
+					<Add option="-g" />
 					<Add option="-DDEBUG" />
 					<Add option="-DHAVE_VORBIS_CODEC_H" />
 					<Add option="-DHAVE_XVID_H" />
@@ -442,7 +443,29 @@
 		<Unit filename="..\..\src\client\cgame\campaign\missions\cp_mission_ufocarrier.cpp" />
 		<Unit filename="..\..\src\client\cgame\campaign\missions\cp_mission_ufocarrier.h" />
 		<Unit filename="..\..\src\client\cgame\campaign\missions\cp_mission_xvi.cpp" />
+		<Unit filename="..\..\src\client\cgame\campaign\save\save.h" />
+		<Unit filename="..\..\src\client\cgame\campaign\save\save_aircraft.h" />
+		<Unit filename="..\..\src\client\cgame\campaign\save\save_airfight.h" />
+		<Unit filename="..\..\src\client\cgame\campaign\save\save_alienbase.h" />
+		<Unit filename="..\..\src\client\cgame\campaign\save\save_aliencont.h" />
+		<Unit filename="..\..\src\client\cgame\campaign\save\save_base.h" />
+		<Unit filename="..\..\src\client\cgame\campaign\save\save_campaign.h" />
+		<Unit filename="..\..\src\client\cgame\campaign\save\save_employee.h" />
+		<Unit filename="..\..\src\client\cgame\campaign\save\save_fightequip.h" />
+		<Unit filename="..\..\src\client\cgame\campaign\save\save_installation.h" />
+		<Unit filename="..\..\src\client\cgame\campaign\save\save_interest.h" />
+		<Unit filename="..\..\src\client\cgame\campaign\save\save_market.h" />
+		<Unit filename="..\..\src\client\cgame\campaign\save\save_messageoptions.h" />
+		<Unit filename="..\..\src\client\cgame\campaign\save\save_messages.h" />
+		<Unit filename="..\..\src\client\cgame\campaign\save\save_missions.h" />
+		<Unit filename="..\..\src\client\cgame\campaign\save\save_nation.h" />
+		<Unit filename="..\..\src\client\cgame\campaign\save\save_produce.h" />
+		<Unit filename="..\..\src\client\cgame\campaign\save\save_research.h" />
+		<Unit filename="..\..\src\client\cgame\campaign\save\save_statistics.h" />
 		<Unit filename="..\..\src\client\cgame\campaign\save\save_transfer.h" />
+		<Unit filename="..\..\src\client\cgame\campaign\save\save_triggerevents.h" />
+		<Unit filename="..\..\src\client\cgame\campaign\save\save_uforecovery.h" />
+		<Unit filename="..\..\src\client\cgame\campaign\save\save_xvi.h" />
 		<Unit filename="..\..\src\client\cgame\cl_game.cpp" />
 		<Unit filename="..\..\src\client\cgame\cl_game.h" />
 		<Unit filename="..\..\src\client\cgame\cl_game_team.cpp" />
