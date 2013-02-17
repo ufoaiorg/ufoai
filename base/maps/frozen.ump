@@ -7,6 +7,7 @@ base frozen/st_
 // Tiles without buildings on them ---------------------------------*
 
 tile +n01
+	// two small trees
 {
 4 3
 0		a		a		0
@@ -15,6 +16,7 @@ a		+a		+a		a
 }
 
 tile +n02
+	// L-shaped, six small trees
 {
 4 4
 0		a		0		0
@@ -24,6 +26,7 @@ a		+a		+a		a
 }
 
 tile +n03
+	// four small trees
 {
 3 4
 0		a		0
@@ -34,6 +37,7 @@ a		+a		a
 
 
 tile +n04
+	// a single small tree in the middle
 {
 3 3
 0		a		0
@@ -50,9 +54,20 @@ a		+a		a
 0		a		0
 }
 
+tile +n06
+	// a hill
+{
+5 4
+0		a		a		a		0
+a		+a		+a		+a		a
+a		+a		+a		+a		a
+0		a		a		a		0
+}
+
 // Tiles with houses on them ---------------------------------------*
 
 tile +h01
+	// a house in the wilderness, A4, C3
 {
 4 4
 0		a		a		0
@@ -62,6 +77,7 @@ a		+a		+a		a
 }
 
 tile +h02
+	// two small storehouses, some trees, A5
 {
 5 4
 0		a		a		a		0
@@ -71,6 +87,7 @@ a		+a		+a		+a		a
 }
 
 tile +h03
+	// a pile of strains and three small trees, no house
 {
 4 3
 0		a		a		0
@@ -79,6 +96,7 @@ a		+a		+a		a
 }
 
 tile +h04
+	// a small, abandoned house, some trees, A3
 {
 3 4
 0		a		0
@@ -88,6 +106,7 @@ a		+a		a
 }
 
 tile +h05
+	// the ruin of a small house, A3
 {
 3 4
 0		a		0
@@ -98,6 +117,7 @@ a		+a		a
 
 // Tiles with industrial facilitys ---------------------------------*
 tile +i01
+	// a big factory building, A7, C1
 {
 6 4
 0		a		a		a		a		0
@@ -107,6 +127,7 @@ a		+a		+a		+a		+a		a
 }
 
 tile +i02
+	// industrial facility, looks like three tall tanks
 {
 3 4
 0		a		0
@@ -116,6 +137,7 @@ a		+a		a
 }
 
 tile +i03
+	// an L-shaped factory building
 {
 4 4
 0		0		a		0
@@ -126,6 +148,7 @@ a		+a		+a		a
 
 
 tile +i04
+	// a storehouse, three blue containers inside, A1, C2
 {
 4 4
 0		a		a		0
@@ -136,6 +159,7 @@ a		+a		+a		a
 
 
 tile +i05
+	// industrial facility, looks like a miniature gas station, A1, C1
 {
 3 3
 0		a		0
@@ -146,6 +170,7 @@ a		+a		a
 
 
 tile +i06
+	// two brown containers and some barrels
 {
 4 3
 0		a		a		0
