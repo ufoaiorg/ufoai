@@ -610,16 +610,16 @@ void G_SpawnStunSmokeField (const vec3_t vec, const char *particle, int rounds, 
  */
 Edict *G_SpawnFloor (const pos3_t pos)
 {
-	Edict *floor;
+	Edict *floorItem;
 
-	floor = G_Spawn("item");
-	floor->type = ET_ITEM;
+	floorItem = G_Spawn("item");
+	floorItem->type = ET_ITEM;
 	/* make sure that the item is always on a field that even the smallest actor can reach */
-	floor->fieldSize = ACTOR_SIZE_NORMAL;
-	VectorCopy(pos, floor->pos);
-	floor->pos[2] = gi.GridFall(floor->fieldSize, floor->pos);
-	G_EdictCalcOrigin(floor);
-	return floor;
+	floorItem->fieldSize = ACTOR_SIZE_NORMAL;
+	VectorCopy(pos, floorItem->pos);
+	floorItem->pos[2] = gi.GridFall(floorItem->fieldSize, floorItem->pos);
+	G_EdictCalcOrigin(floorItem);
+	return floorItem;
 }
 
 /**
