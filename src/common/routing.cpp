@@ -452,7 +452,7 @@ int RT_CheckCell (mapTiles_t *mapTiles, Routing &routing, const int actorSize, c
 	 *      restart below the current floor.
 	 */
 	for (;;) { /* Loop forever, we will exit if we hit the model bottom or find a valid floor. */
-		tr = RT_COMPLETEBOXTRACE_PASSAGE(mapTiles, start, end, &footBox, list);
+		tr = RT_COMPLETEBOXTRACE_PASSAGE(mapTiles, Line(start, end), &footBox, list);
 		if (tr.fraction >= 1.0) {						/* If there is no brush underneath this starting point, */
 			routing.setFilled(actorSize, x, y, 0, z);	/* mark all cells to the model base as filled. */
 			return 0;									/* return (a z-value of)0 to indicate we just scanned the model bottom. */
@@ -472,7 +472,7 @@ int RT_CheckCell (mapTiles_t *mapTiles, Routing &routing, const int actorSize, c
 		box.set(legBox);
 		box.shift(tstart);	/* Now box has the lower and upper required foot space extent */
 
-		tr = RT_COMPLETEBOXTRACE_PASSAGE(mapTiles, vec3_origin, vec3_origin, &box, list);
+		tr = RT_COMPLETEBOXTRACE_PASSAGE(mapTiles, Line(), &box, list);
 		if (tr.fraction < 1.0) {
 			/*
 			 * There is a premature obstruction.  We can't use this as a floor.
@@ -494,7 +494,7 @@ int RT_CheckCell (mapTiles_t *mapTiles, Routing &routing, const int actorSize, c
 		box.set(torsoBox);
 		box.shift(tstart);	/* Now box has the lower and upper required torso space extent */
 
-		tr = RT_COMPLETEBOXTRACE_PASSAGE(mapTiles, vec3_origin, vec3_origin, &box, list);
+		tr = RT_COMPLETEBOXTRACE_PASSAGE(mapTiles, Line(), &box, list);
 		if (tr.fraction < 1.0) {
 			/*
 			 * There is a premature obstruction.  We can't use this as a floor.
@@ -521,7 +521,7 @@ int RT_CheckCell (mapTiles_t *mapTiles, Routing &routing, const int actorSize, c
 		VectorCopy(tstart, tend);
 		tend[2] = PATHFINDING_HEIGHT * UNIT_HEIGHT; /* tend now reaches the model ceiling. */
 
-		tr = RT_COMPLETEBOXTRACE_PASSAGE(mapTiles, tstart, tend, &ceilBox, list);
+		tr = RT_COMPLETEBOXTRACE_PASSAGE(mapTiles, Line(tstart, tend), &ceilBox, list);
 
 		/* We found the ceiling. */
 		top = tr.endpos[2];
@@ -670,7 +670,7 @@ static trace_t RT_ObstructedTrace (const RoutingData *rtd, const vec3_t start, c
 	VectorSet(box.mins, -halfActorWidth, -halfActorWidth, QuantToModel(lo)  + DIST_EPSILON);
 
 	/* perform the trace, then return true if the trace was obstructed. */
-	return RT_COMPLETEBOXTRACE_PASSAGE(rtd->mapTiles, start, end, &box, rtd->list);
+	return RT_COMPLETEBOXTRACE_PASSAGE(rtd->mapTiles, Line(start, end), &box, rtd->list);
 }
 
 
@@ -695,7 +695,7 @@ static int RT_FindOpeningFloorFrac (const RoutingData *rtd, const vec3_t start, 
 	mstart[2] = QuantToModel(startingHeight) + (QUANT / 2); /* Set at the starting height, plus a little more to keep us off a potential surface. */
 	mend[2] = -QUANT;  /* Set below the model. */
 
-	tr = RT_COMPLETEBOXTRACE_PASSAGE(rtd->mapTiles, mstart, mend, box, rtd->list);
+	tr = RT_COMPLETEBOXTRACE_PASSAGE(rtd->mapTiles, Line(mstart, mend), box, rtd->list);
 
 	if (debugTrace)
 		Com_Printf("Brush found at %f.\n", tr.endpos[2]);
@@ -728,7 +728,7 @@ static int RT_FindOpeningCeilingFrac (const RoutingData *rtd, const vec3_t start
 	mstart[2] = QuantToModel(startingHeight) - (QUANT / 2); /* Set at the starting height, minus a little more to keep us off a potential surface. */
 	mend[2] = UNIT_HEIGHT * PATHFINDING_HEIGHT + QUANT;  /* Set above the model. */
 
-	tr = RT_COMPLETEBOXTRACE_PASSAGE(rtd->mapTiles, mstart, mend, box, rtd->list);
+	tr = RT_COMPLETEBOXTRACE_PASSAGE(rtd->mapTiles, Line(mstart, mend), box, rtd->list);
 
 	if (debugTrace)
 		Com_Printf("Brush found at %f.\n", tr.endpos[2]);
@@ -925,7 +925,7 @@ static int RT_FindOpening (RoutingData *rtd, const place_t* from, const int ax, 
 		sky[2] = UNIT_HEIGHT * PATHFINDING_HEIGHT;  /* Set to top of model. */
 		earth[2] = QuantToModel(bottom);
 
-		tr = RT_COMPLETEBOXTRACE_PASSAGE(rtd->mapTiles, sky, earth, box, rtd->list);
+		tr = RT_COMPLETEBOXTRACE_PASSAGE(rtd->mapTiles, Line(sky, earth), box, rtd->list);
 		tempBottom = ModelFloorToQuant(tr.endpos[2]);
 		if (tempBottom <= bottom + PATHFINDING_MIN_STEPUP) {
 			const int hi = bottom + PATHFINDING_MIN_OPENING;
@@ -1021,7 +1021,7 @@ static int RT_MicroTrace (RoutingData *rtd, const place_t* from, const int ax, c
 		start[1] = end[1] = sy + (ey - sy) * (i / (float)steps);
 
 		/* perform the trace, then return true if the trace was obstructed. */
-		tr = RT_COMPLETEBOXTRACE_PASSAGE(rtd->mapTiles, start, end, &footBox, rtd->list);
+		tr = RT_COMPLETEBOXTRACE_PASSAGE(rtd->mapTiles, Line(start, end), &footBox, rtd->list);
 		if (tr.fraction >= 1.0) {
 			bases[i] = -1;
 		} else {
