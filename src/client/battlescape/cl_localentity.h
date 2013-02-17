@@ -125,6 +125,11 @@ typedef struct le_s {
 	float rotationSpeed;
 	int slidingSpeed;
 
+	inline bool isMoving () const
+	{
+		return pathLength > 0;
+	}
+
 	/** sound effects */
 	int sampleIdx;
 	float attenuation;		/**< attenuation value for local entity sounds */

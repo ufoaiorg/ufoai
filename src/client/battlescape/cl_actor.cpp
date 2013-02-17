@@ -729,8 +729,7 @@ int CL_ActorCheckAction (const le_t *le)
 	if (!le)
 		return false;
 
-	/* already moving */
-	if (le->pathLength)
+	if (le->isMoving())
 		return false;
 
 	if (!cls.isOurRound()) {

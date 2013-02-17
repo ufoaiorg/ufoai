@@ -99,10 +99,9 @@ void CL_ActorDoMove (const eventRegister_t *self, dbuffer *msg)
 
 	/* lock this le for other events, the corresponding unlock is in LE_DoEndPathMove() */
 	LE_Lock(le);
-	if (le->pathLength > 0) {
+	if (le->isMoving()) {
 		if (le->pathLength == le->pathPos) {
 			LE_DoEndPathMove(le);
-			le->pathLength = le->pathPos = 0;
 		} else {
 			Com_Error(ERR_DROP, "Actor (entnum: %i) on team %i is still moving (%i steps left).  Times: %i, %i, %i",
 					le->entnum, le->team, le->pathLength - le->pathPos, le->startTime, le->endTime, cl.time);
