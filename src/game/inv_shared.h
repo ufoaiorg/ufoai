@@ -387,6 +387,7 @@ typedef struct inventory_s {
 	{
 		c[idx] = cont;
 	}
+	invList_t* getArmourCont (void) const;
 } inventory_t;
 
 #define MAX_EQUIPDEFS   64
@@ -435,7 +436,6 @@ bool INV_IsArmourDef(const invDef_t* invDef);
 /*  INVENTORY MANAGEMENT FUNCTIONS  */
 /* ================================ */
 
-invList_t* INVSH_HasArmour(const inventory_t *inv);
 void INVSH_InitCSI(const struct csi_s * import) __attribute__((nonnull));
 int INVSH_CheckToInventory(const inventory_t* const inv, const objDef_t *ob, const invDef_t *container, const int x, const int y, const invList_t *ignoredItem);
 bool INVSH_CompareItem(const item_t *const item1, const item_t *const item2);

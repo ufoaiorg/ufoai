@@ -91,9 +91,9 @@ bool INV_IsArmourDef (const invDef_t* invDef)
 	return invDef->id == CSI->idArmour;
 }
 
-invList_t* INVSH_HasArmour (const inventory_t *inv)
+invList_t* inventory_t::getArmourCont (void) const
 {
-	return inv->getContainer(CSI->idArmour);
+	return getContainer(CSI->idArmour);
 }
 
 static int cacheCheckToInventory = INV_DOES_NOT_FIT;
