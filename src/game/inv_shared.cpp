@@ -278,19 +278,18 @@ int INVSH_CheckToInventory (const inventory_t *const inv, const objDef_t *od, co
 
 /**
  * @brief Check if the (physical) information of 2 items is exactly the same.
- * @param[in] item1 First item to compare.
- * @param[in] item2 Second item to compare.
+ * @param[in] other Second item to compare.
  * @return true if they are identical or false otherwise.
  */
-bool INVSH_CompareItem (const item_t *const item1, const item_t *const item2)
+bool item_t::isSameAs (const item_t *const other) const
 {
-	if (item1 == item2)
+	if (this == other)
 		return true;
 
-	if (item1 == NULL || item2 == NULL)
+	if (this == NULL || other == NULL)
 		return false;
 
-	if (item1->def() == item2->def() && item1->ammo == item2->ammo && item1->ammoLeft == item2->ammoLeft)
+	if (this->def() == other->def() && this->ammo == other->ammo && this->ammoLeft == other->ammoLeft)
 		return true;
 
 	return false;
@@ -371,7 +370,7 @@ bool INVSH_ExistsInInventory (const inventory_t* const inv, const invDef_t *cont
 	invList_t *ic;
 
 	for (ic = inv->getContainer(container->id); ic; ic = ic->next)
-		if (INVSH_CompareItem(&ic->item, item)) {
+		if (ic->item.isSameAs(item)) {
 			return true;
 		}
 
@@ -389,7 +388,7 @@ invList_t *inventory_t::findInContainer (const invDef_t *container, const item_t
 	invList_t *ic;
 
 	for (ic = getContainer(container->id); ic; ic = ic->next)
-		if (INVSH_CompareItem(&ic->item, item)) {
+		if (ic->item.isSameAs(item)) {
 			return ic;
 		}
 

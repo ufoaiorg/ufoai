@@ -106,7 +106,7 @@ invList_t *InventoryInterface::addToInventory (inventory_t *const inv, const ite
 	/* idEquip and idFloor */
 	if (container->temp) {
 		for (ic = inv->getContainer(container->id); ic; ic = ic->next)
-			if (INVSH_CompareItem(&ic->item, item)) {
+			if (ic->item.isSameAs(item)) {
 				ic->item.amount += amount;
 				Com_DPrintf(DEBUG_SHARED, "addToInventory: Amount of '%s': %i (%s)\n",
 					ic->item.def()->name, ic->item.amount, invName);

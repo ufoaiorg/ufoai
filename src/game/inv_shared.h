@@ -361,6 +361,7 @@ typedef struct item_s {
 	{
 		return _itemDef->weapon;
 	}
+	bool isSameAs (const item_s *const other) const;
 } item_t;
 
 /** @brief container/inventory list (linked list) with items. */
@@ -439,7 +440,6 @@ bool INV_IsArmourDef(const invDef_t* invDef);
 
 void INVSH_InitCSI(const struct csi_s * import) __attribute__((nonnull));
 int INVSH_CheckToInventory(const inventory_t* const inv, const objDef_t *ob, const invDef_t *container, const int x, const int y, const invList_t *ignoredItem);
-bool INVSH_CompareItem(const item_t *const item1, const item_t *const item2);
 void INVSH_GetFirstShapePosition(const invList_t *ic, int* const x, int* const y);
 bool INVSH_ExistsInInventory(const inventory_t* const inv, const invDef_t *container, const item_t *item);
 invList_t *INVSH_SearchInInventory(const inventory_t* const inv, const invDef_t *container, const int x, const int y) __attribute__((nonnull(1)));
