@@ -200,7 +200,7 @@ static void SCR_DrawCursor (void)
 		const char *pic;
 		image_t *image;
 
-		if (cls.team != cl.actTeam && CL_BattlescapeRunning())
+		if (!cls.isOurRound() && CL_BattlescapeRunning())
 			pic = "pics/cursors/wait";
 		else
 			pic = cursorImage;

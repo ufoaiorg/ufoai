@@ -58,7 +58,7 @@ int CL_ActorDoShootTime (const eventRegister_t *self, dbuffer *msg, eventTiming_
 		} else {
 			eventTiming->impactTime = eventTiming->shootTime;
 		}
-		if (cl.actTeam != cls.team)
+		if (!cls.isOurRound())
 			eventTiming->nextTime = CL_GetNextTime(self, eventTiming, eventTiming->impactTime + 1400);
 		else
 			eventTiming->nextTime = CL_GetNextTime(self, eventTiming, eventTiming->impactTime + 400);

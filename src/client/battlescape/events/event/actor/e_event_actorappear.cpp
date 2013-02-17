@@ -40,7 +40,7 @@ int CL_ActorAppearTime (const eventRegister_t *self, dbuffer *msg, eventTiming_t
 	const int eventTime = eventTiming->nextTime;
 
 	/* delay following events */
-	if (cl.actTeam != cls.team)
+	if (!cls.isOurRound())
 		eventTiming->nextTime += 600;
 
 	return eventTime;
@@ -153,7 +153,7 @@ void CL_ActorAppear (const eventRegister_t *self, dbuffer *msg)
 	Cvar_SetValue("mn_numaliensspotted", cl.numEnemiesSpotted);
 
 	if (LE_IsLivingActor(le)) {
-		if (cl.actTeam != cls.team) {
+		if (!cls.isOurRound()) {
 			/* center view (if wanted) */
 			LE_CenterView(le);
 		}

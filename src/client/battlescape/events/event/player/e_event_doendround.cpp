@@ -39,7 +39,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 void CL_DoEndRound (const eventRegister_t *self, dbuffer *msg)
 {
 	/* hud changes */
-	if (cls.team == cl.actTeam)
+	if (cls.isOurRound())
 		UI_ExecuteConfunc("endround");
 
 	refdef.rendererFlags &= ~RDF_IRGOGGLES;
@@ -50,7 +50,7 @@ void CL_DoEndRound (const eventRegister_t *self, dbuffer *msg)
 	Com_Printf("Team %i's round started!\n", cl.actTeam);
 
 	/* hud changes */
-	if (cls.team == cl.actTeam) {
+	if (cls.isOurRound()) {
 		/* check whether a particle has to go */
 		CL_ParticleCheckRounds();
 		UI_ExecuteConfunc("startround");

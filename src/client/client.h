@@ -102,6 +102,11 @@ typedef struct client_static_s {
 	actorSkin_t actorSkins[MAX_ACTORSKINNAME];
 	unsigned int numActorSkins;
 
+	inline bool isOurRound () const
+	{
+		return team == cl.actTeam;
+	}
+
 #ifndef HARD_LINKED_CGAME
 	void *cgameLibrary;
 #endif

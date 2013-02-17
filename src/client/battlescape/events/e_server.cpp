@@ -36,7 +36,7 @@ static void CL_NextRound_f (void)
 		return;
 
 	/* can't end round if we're not active */
-	if (cls.team != cl.actTeam) {
+	if (!cls.isOurRound()) {
 		HUD_DisplayMessage(_("It is not your turn!"));
 		return;
 	}

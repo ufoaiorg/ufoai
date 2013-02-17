@@ -450,7 +450,7 @@ static void HUD_DisplayActions (const char* callback, const le_t* actor, actionT
 	if (!actor)
 		return;
 
-	if (cls.team != cl.actTeam) {	/**< Not our turn */
+	if (!cls.isOurRound()) {	/**< Not our turn */
 		return;
 	}
 

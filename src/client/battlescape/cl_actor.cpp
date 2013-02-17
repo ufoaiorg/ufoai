@@ -733,7 +733,7 @@ int CL_ActorCheckAction (const le_t *le)
 	if (le->pathLength)
 		return false;
 
-	if (cls.team != cl.actTeam) {
+	if (!cls.isOurRound()) {
 		HUD_DisplayMessage(_("It is not your turn!"));
 		return false;
 	}
@@ -1204,7 +1204,7 @@ static void CL_ActorMoveMouse (void)
 	} else {
 		/* either we want to confirm every move, or it's not our round and we prepare the
 		 * movement for the next round */
-		if (confirm_actions->integer || cls.team != cl.actTeam) {
+		if (confirm_actions->integer || !cls.isOurRound()) {
 			/* Set our mode to pending move. */
 			VectorCopy(mousePos, selActor->mousePendPos);
 

@@ -47,7 +47,7 @@ void CL_Reset (const eventRegister_t *self, dbuffer *msg)
 
 	UI_ExecuteConfunc("disable_rescuezone");
 
-	if (cls.team == cl.actTeam)
+	if (cls.isOurRound())
 		UI_ExecuteConfunc("startround");
 	else
 		Com_Printf("You lost the coin-toss for first-turn.\n");
