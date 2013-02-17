@@ -380,16 +380,15 @@ bool INVSH_ExistsInInventory (const inventory_t* const inv, const invDef_t *cont
 
 /**
  * @brief Searches a specific item in the inventory&container.
- * @param[in] inv Pointer to the inventory where we will search.
  * @param[in] container Container in the inventory.
  * @param[in] item The item to search for.
  * @return Pointer to the first item of this type found, otherwise @c NULL.
  */
-invList_t *INVSH_FindInInventory (const inventory_t* const inv, const invDef_t *container, const item_t *const item)
+invList_t *inventory_t::findInContainer (const invDef_t *container, const item_t *const item) const
 {
 	invList_t *ic;
 
-	for (ic = inv->getContainer(container->id); ic; ic = ic->next)
+	for (ic = getContainer(container->id); ic; ic = ic->next)
 		if (INVSH_CompareItem(&ic->item, item)) {
 			return ic;
 		}

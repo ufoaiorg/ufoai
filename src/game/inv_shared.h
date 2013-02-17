@@ -387,7 +387,8 @@ typedef struct inventory_s {
 	{
 		c[idx] = cont;
 	}
-	invList_t* getArmourCont (void) const;
+	invList_t *getArmourCont (void) const;
+	invList_t *findInContainer (const invDef_t *container, const item_t *const item) const;
 } inventory_t;
 
 #define MAX_EQUIPDEFS   64
@@ -441,7 +442,6 @@ int INVSH_CheckToInventory(const inventory_t* const inv, const objDef_t *ob, con
 bool INVSH_CompareItem(const item_t *const item1, const item_t *const item2);
 void INVSH_GetFirstShapePosition(const invList_t *ic, int* const x, int* const y);
 bool INVSH_ExistsInInventory(const inventory_t* const inv, const invDef_t *container, const item_t *item);
-invList_t *INVSH_FindInInventory(const inventory_t* const inv, const invDef_t *container, const item_t *const );
 invList_t *INVSH_SearchInInventory(const inventory_t* const inv, const invDef_t *container, const int x, const int y) __attribute__((nonnull(1)));
 invList_t *INVSH_SearchInInventoryByItem(const inventory_t* const inv, const invDef_t *container, const objDef_t *item);
 void INVSH_FindSpace(const inventory_t* const inv, const item_t *item, const invDef_t *container, int * const px, int * const py, const invList_t *ignoredItem) __attribute__((nonnull(1)));
