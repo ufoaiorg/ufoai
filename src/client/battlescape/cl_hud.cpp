@@ -208,7 +208,7 @@ static int HUD_UsableReactionTUs (const le_t *le)
 /**
  * @brief Check if at least one firemode is available for reservation.
  * @return true if there is at least one firemode - false otherwise.
- * @sa HUD_RefreshButtons
+ * @sa HUD_UpdateButtons
  * @sa HUD_PopupFiremodeReservation_f
  */
 static bool HUD_CheckFiremodeReservation (void)
@@ -792,7 +792,7 @@ static void HUD_DisplayPossibleReaction (const le_t *actor)
  * @brief Refreshes the weapon/reload buttons on the HUD.
  * @param[in] le Pointer to local entity for which we refresh HUD buttons.
  */
-static void HUD_RefreshButtons (const le_t *le)
+static void HUD_UpdateButtons (const le_t *le)
 {
 	if (!le)
 		return;
@@ -1492,7 +1492,7 @@ static void HUD_RightHandChangeListener (const char *cvarName, const char *oldVa
 	if (Q_streq(oldValue, newValue))
 		return;
 
-	HUD_RefreshButtons(selActor);
+	HUD_UpdateButtons(selActor);
 }
 
 /**
@@ -1510,7 +1510,7 @@ static void HUD_LeftHandChangeListener (const char *cvarName, const char *oldVal
 	if (Q_streq(oldValue, newValue))
 		return;
 
-	HUD_RefreshButtons(selActor);
+	HUD_UpdateButtons(selActor);
 }
 
 /**
@@ -1528,7 +1528,7 @@ static void HUD_TUChangeListener (const char *cvarName, const char *oldValue, co
 	if (Q_streq(oldValue, newValue))
 		return;
 
-	HUD_RefreshButtons(selActor);
+	HUD_UpdateButtons(selActor);
 }
 
 static bool CL_CvarWorldLevel (cvar_t *cvar)
