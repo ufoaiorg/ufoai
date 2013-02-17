@@ -1561,125 +1561,13 @@
 }
 // entity 14
 {
-"classname" "info_player_start"
-"origin" "16 272 28"
-"team" "2"
-"angle" "-90"
-}
-// entity 15
-{
-"classname" "info_player_start"
-"origin" "144 208 28"
-"team" "2"
-"angle" "-90"
-}
-// entity 16
-{
-"classname" "info_player_start"
-"origin" "272 240 44"
-"team" "2"
-"angle" "-90"
-}
-// entity 17
-{
-"classname" "info_player_start"
-"origin" "304 176 44"
-"team" "2"
-"angle" "-135"
-}
-// entity 18
-{
-"classname" "info_player_start"
-"origin" "272 208 44"
-"team" "2"
-"angle" "-135"
-}
-// entity 19
-{
-"classname" "info_player_start"
-"origin" "144 112 28"
-"team" "2"
-"angle" "-135"
-}
-// entity 20
-{
-"classname" "info_player_start"
-"origin" "16 80 28"
-"team" "2"
-"angle" "-135"
-}
-// entity 21
-{
-"classname" "info_player_start"
-"origin" "656 112 28"
-"team" "2"
-"angle" "-135"
-}
-// entity 22
-{
-"classname" "info_player_start"
-"origin" "464 80 24"
-"team" "2"
-"angle" "45"
-}
-// entity 23
-{
-"classname" "info_player_start"
-"origin" "432 112 24"
-"team" "2"
-"angle" "45"
-}
-// entity 24
-{
-"classname" "info_player_start"
-"origin" "656 80 28"
-"team" "2"
-"angle" "45"
-}
-// entity 25
-{
-"classname" "info_player_start"
-"origin" "336 240 44"
-"team" "2"
-"angle" "-90"
-}
-// entity 26
-{
-"classname" "info_player_start"
-"origin" "368 176 44"
-"team" "2"
-"angle" "-135"
-}
-// entity 27
-{
-"classname" "info_player_start"
-"origin" "464 240 48"
-"team" "2"
-"angle" "-90"
-}
-// entity 28
-{
-"classname" "info_player_start"
-"origin" "528 240 48"
-"team" "2"
-"angle" "-90"
-}
-// entity 29
-{
-"classname" "info_player_start"
-"origin" "560 240 48"
-"team" "2"
-"angle" "45"
-}
-// entity 30
-{
 "classname" "light"
 "origin" "358 80 56"
 "spawnflags" "1"
 "_color" "1 1 0.9"
 "light" "180"
 }
-// entity 31
+// entity 15
 {
 "classname" "light"
 "origin" "414 256 56"
@@ -1687,7 +1575,7 @@
 "_color" "1 1 0.9"
 "light" "160"
 }
-// entity 32
+// entity 16
 {
 "classname" "func_group"
 // brush 0
@@ -1774,7 +1662,7 @@
 ( 592 220 34 ) ( 592 192 34 ) ( 590 192 30 ) tex_material/metall006 198 109 0 -0.1 0.109375 256 0 0
 }
 }
-// entity 33
+// entity 17
 {
 "classname" "func_group"
 // brush 0
@@ -1895,7 +1783,7 @@
 ( 510 44 20 ) ( 510 36 20 ) ( 510 36 12 ) tex_material/wood005 166 240 0 -0.382813 0.2 256 0 0
 }
 }
-// entity 34
+// entity 18
 {
 "classname" "func_group"
 // brush 0
@@ -2247,7 +2135,7 @@
 ( 110 312 22 ) ( 110 292 22 ) ( 110 292 14 ) tex_common/nodraw 58 74 0 -0.25 0.1875 65280 128 0
 }
 }
-// entity 35
+// entity 19
 {
 "classname" "func_group"
 // brush 0
@@ -2707,14 +2595,14 @@
 ( 176 276 50 ) ( 176 228 50 ) ( 176 228 10 ) tex_material/c_black 8 4 0 0.5 0.5 65280 0 0
 }
 }
-// entity 36
+// entity 20
 {
 "classname" "misc_model"
 "origin" "432 464 18"
 "model" "models/objects/vegi/tree02/tree2_b.md2"
 "spawnflags" "255"
 }
-// entity 37
+// entity 21
 {
 "classname" "misc_model"
 "origin" "432 464 18"
@@ -2722,7 +2610,7 @@
 "spawnflags" "255"
 "skin" "1"
 }
-// entity 38
+// entity 22
 {
 "classname" "light"
 "origin" "638 256 56"
@@ -2730,42 +2618,42 @@
 "_color" "1 1 0.9"
 "light" "160"
 }
-// entity 39
+// entity 23
 {
 "classname" "misc_particle"
 "origin" "480 64 368"
 "particle" "weather_snow"
 "spawnflags" "255"
 }
-// entity 40
+// entity 24
 {
 "classname" "misc_particle"
 "origin" "480 448 368"
 "particle" "weather_snow"
 "spawnflags" "255"
 }
-// entity 41
+// entity 25
 {
 "classname" "misc_particle"
 "origin" "160 64 368"
 "particle" "weather_snow"
 "spawnflags" "255"
 }
-// entity 42
+// entity 26
 {
 "classname" "misc_particle"
 "origin" "160 448 368"
 "particle" "weather_snow"
 "spawnflags" "255"
 }
-// entity 43
+// entity 27
 {
 "classname" "misc_particle"
 "origin" "800 64 368"
 "particle" "weather_snow"
 "spawnflags" "255"
 }
-// entity 44
+// entity 28
 {
 "classname" "misc_particle"
 "origin" "800 448 368"
