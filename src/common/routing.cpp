@@ -660,7 +660,7 @@ static int RT_FillPassageData (RoutingData *rtd, const int dir, const int  x, co
  * @param[in] hi The upper height ABOVE THE FLOOR of the bounding box.
  * @param[in] lo The lower height ABOVE THE FLOOR of the bounding box.
  */
-static trace_t RT_ObstructedTrace (const RoutingData *rtd, const vec3_t start, const vec3_t end, int hi, int lo)
+static trace_t RT_ObstructedTrace (const RoutingData *rtd, const Line &traceLine, int hi, int lo)
 {
 	AABB box; /**< Tracing box extents */
 	const float halfActorWidth = UNIT_SIZE * rtd->actorSize / 2 - WALL_SIZE - DIST_EPSILON;
@@ -670,7 +670,7 @@ static trace_t RT_ObstructedTrace (const RoutingData *rtd, const vec3_t start, c
 	VectorSet(box.mins, -halfActorWidth, -halfActorWidth, QuantToModel(lo)  + DIST_EPSILON);
 
 	/* perform the trace, then return true if the trace was obstructed. */
-	return RT_COMPLETEBOXTRACE_PASSAGE(rtd->mapTiles, Line(start, end), &box, rtd->list);
+	return RT_COMPLETEBOXTRACE_PASSAGE(rtd->mapTiles, traceLine, &box, rtd->list);
 }
 
 
@@ -851,7 +851,7 @@ static int RT_CalcNewZ (const RoutingData *rtd, const int ax, const int ay, cons
  */
 static int RT_TraceOpening (const RoutingData *rtd, const vec3_t start, const vec3_t end, const int ax, const int ay, const int bottom, const int top, int lo, int hi, int *foundLow, int *foundHigh)
 {
-	trace_t tr = RT_ObstructedTrace(rtd, start, end, hi, lo);
+	trace_t tr = RT_ObstructedTrace(rtd, Line(start, end), hi, lo);
 	if (tr.fraction >= 1.0) {
 		lo = RT_FindOpeningFloor(rtd, start, end, lo, bottom);
 		hi = RT_FindOpeningCeiling(rtd, start, end, hi, top);
