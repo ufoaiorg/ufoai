@@ -344,8 +344,6 @@ static int MSO_ParseOption (const char *blockName, const char **text)
 
 /**
  * @brief Parses a messagecategory script section. These categories are used to group notification types.
- * @param name
- * @param text
  * @sa MSO_InitTextList
  */
 static bool MSO_ParseCategory (const char *blockName, const char **text)
