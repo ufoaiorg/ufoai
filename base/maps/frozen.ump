@@ -188,6 +188,16 @@ a		+a		+a		+a		+a		a
 0		a		a		a		a		0
 }
 
+tile +i08
+	// a windmill, A4, C2
+{
+4 4
+0		a		a		0
+a		+a		+a		a
+a		+a		+a		a
+0		a		a		0
+}
+
 // Dropship tiles --------------------------------------------------*
 
 tile +craft_drop_firebird
@@ -294,6 +304,9 @@ tileset aliens
 
 // Map assemblies --------------------------------------------------*
 
+// TODO integrate and test the n06 tile
+// TODO assemblies should be nature (nopoulation), industrial and civ (populated)
+
 assembly industrial_small_noufo
 {
 size "6 6"
@@ -311,6 +324,7 @@ multiplayer +mp_team2
 +i05 "1 2"
 +i06 "0 3"
 +i07 "0 1"
++i08 "0 1"
 *rm_drop +craft_drop_firebird "1 1"
 }
 
@@ -324,6 +338,7 @@ tileset aliens	"1 1"
 +n02 "0 4"
 +n03 "0 4"
 +n04 "0 4"
+//+n06 "0 1"
 +h03 "0 2"
 +h04 "0 2"
 +h05 "0 1"
@@ -339,6 +354,7 @@ multiplayer +mp_team2
 +n02 "0 8"
 +n03 "0 8"
 +n04 "0 8"
+//+n06 "0 1"
 +h01 "1 1"
 +h02 "0 1"
 +h03 "1 2"
@@ -366,6 +382,7 @@ multiplayer +mp_team2
 +i05 "0 2"
 +i06 "0 3"
 +i07 "0 1"
++i08 "0 1"
 *rm_ufo +craft_ufo_fighter "1 1"
 *rm_drop +craft_drop_firebird "1 1"
 }
@@ -379,6 +396,7 @@ multiplayer +mp_team2
 +n02 "0 8"
 +n03 "0 8"
 +n04 "0 8"
+//+n06 "0 1"
 +h01 "1 1"
 +h02 "0 1"
 +h03 "1 2"
@@ -398,6 +416,7 @@ multiplayer +mp_team2
 +n03 "0 8"
 +n04 "0 8"
 +n05 "0 8"
+//+n06 "0 1"
 +h02 "0 2"
 +i01 "1 1"
 +i02 "1 4"
@@ -419,6 +438,7 @@ multiplayer +mp_team2
 +n03 "0 8"
 +n04 "0 8"
 +n05 "0 8"
+//+n06 "0 1"
 +h02 "0 2"
 +i01 "1 1"
 +i02 "1 4"
