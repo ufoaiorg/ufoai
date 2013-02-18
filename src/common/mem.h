@@ -23,8 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef _COMMON_MEM_H
-#define _COMMON_MEM_H
+#pragma once
 
 struct memPool_t;
 
@@ -75,5 +74,3 @@ bool _Mem_AllocatedInPool(memPool_t *pool, const void *pointer);
 
 void Mem_Init(void);
 void Mem_Shutdown(void);
-
-#endif

@@ -1,5 +1,4 @@
-#ifndef SHARED_TYPEDEFS_H
-#define SHARED_TYPEDEFS_H
+#pragma once
 
 #include "defines.h"
 #include "mathlib.h"
@@ -493,5 +492,3 @@ typedef struct {
 	int				numbrushsides;
 	dBspBrushSide_t	brushsides[MAX_MAP_BRUSHSIDES];
 } dMapTile_t;
-
-#endif /* SHARED_TYPEDEFS_H */

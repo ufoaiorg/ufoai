@@ -25,8 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef SHARED_DEFINES_H
-#define SHARED_DEFINES_H
+#pragma once
 
 /**
  * @note The comment line specifying files has the following syntax:
@@ -397,5 +396,3 @@ COLLISION DETECTION
 #define MAX_MAP_LIGHTMAP	(512 * 512)
 
 #define MAP_SIZE_OFFSET 100
-
-#endif /* SHARED_DEFINES_H */

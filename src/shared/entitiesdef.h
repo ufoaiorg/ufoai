@@ -25,8 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef ENITIESDEF_H
-# define ENITIESDEF_H
+#pragma once
 
 # define	ED_MAX_DEFS		64
 
@@ -89,5 +88,3 @@ void ED_Free(void);
 
 extern int numEntityDefs;
 extern entityDef_t entityDefs[ED_MAX_DEFS + 1];
-
-#endif
