@@ -644,8 +644,8 @@ bool INVSH_CheckAddingItemToInventory (const inventory_t *inv, containerIndex_t 
 	if (CSI->ids[to].temp || !CSI->ids[from].temp)
 		return true;
 
-	const bool swapArmour = INV_IsArmour(item.def()) && inv->getContainer(CSI->idArmour);
-	const float invWeight = INVSH_GetInventoryWeight(inv) - (swapArmour ? INVSH_GetItemWeight(inv->getContainer(CSI->idArmour)->item) : 0);
+	const bool swapArmour = INV_IsArmour(item.def()) && inv->getArmourCont();
+	const float invWeight = INVSH_GetInventoryWeight(inv) - (swapArmour ? INVSH_GetItemWeight(inv->getArmourCont()->item) : 0);
 	float itemWeight = INVSH_GetItemWeight(item);
 
 	return (maxWeight < 0 || maxWeight >= invWeight + itemWeight);
