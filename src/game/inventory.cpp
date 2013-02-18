@@ -554,7 +554,7 @@ float InventoryInterface::GetInventoryState (const inventory_t *inventory, int &
 			continue;
 		for (invList_t *ic = inventory->c[containerID], *next; ic; ic = next) {
 			next = ic->next;
-			weight += INVSH_GetItemWeight(ic->item);
+			weight += ic->item.getWeight();
 			const fireDef_t *fireDef = FIRESH_SlowestFireDef(ic->item);
 			if (slowestFd == 0 || (fireDef && fireDef->time > slowestFd))
 					slowestFd = fireDef->time;
@@ -642,7 +642,7 @@ int InventoryInterface::PackAmmoAndWeapon (character_t* const chr, const objDef_
 		return 0;
 	}
 
-	weight = GetInventoryState(inv, tuNeed) + INVSH_GetItemWeight(item);
+	weight = GetInventoryState(inv, tuNeed) + item.getWeight();
 	maxTU = GET_TU(speed, GET_ENCUMBRANCE_PENALTY(weight, chr->score.skills[ABILITY_POWER]));
 	if (weight > maxWeight || tuNeed > maxTU) {
 		Com_DPrintf(DEBUG_SHARED, "PackAmmoAndWeapon: weapon too heavy: '%s' in equipment '%s' (%s).\n",
@@ -675,7 +675,7 @@ int InventoryInterface::PackAmmoAndWeapon (character_t* const chr, const objDef_
 		/* pack some ammo */
 		while (num--) {
 			item_t mun = {NONE_AMMO, NULL, NULL, 0, 0};
-			weight = GetInventoryState(inv, tuNeed) + INVSH_GetItemWeight(item);
+			weight = GetInventoryState(inv, tuNeed) + item.getWeight();
 			maxTU = GET_TU(speed, GET_ENCUMBRANCE_PENALTY(weight, chr->score.skills[ABILITY_POWER]));
 
 			mun.setDef(ammo);
@@ -929,7 +929,7 @@ void InventoryInterface::EquipActor (character_t* const chr, const equipDef_t *e
 					if (randNumber < 0) {
 						const item_t item = {NONE_AMMO, NULL, armour, 0, 0};
 						int tuNeed = 0;
-						const float weight = GetInventoryState(inv, tuNeed) + INVSH_GetItemWeight(item);
+						const float weight = GetInventoryState(inv, tuNeed) + item.getWeight();
 						const int maxTU = GET_TU(speed, GET_ENCUMBRANCE_PENALTY(weight, chr->score.skills[ABILITY_POWER]));
 						if (weight > maxWeight || tuNeed > maxTU)
 							continue;
@@ -959,7 +959,7 @@ void InventoryInterface::EquipActor (character_t* const chr, const equipDef_t *e
 						containerIndex_t container;
 						int tuNeed;
 						const fireDef_t *itemFd = FIRESH_SlowestFireDef(item);
-						const float weight = GetInventoryState(inv, tuNeed) + INVSH_GetItemWeight(item);
+						const float weight = GetInventoryState(inv, tuNeed) + item.getWeight();
 						const int maxTU = GET_TU(speed, GET_ENCUMBRANCE_PENALTY(weight, chr->score.skills[ABILITY_POWER]));
 
 						if (miscItem->headgear)

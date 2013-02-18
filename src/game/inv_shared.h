@@ -362,6 +362,7 @@ typedef struct item_s {
 		return _itemDef->weapon;
 	}
 	bool isSameAs (const item_s *const other) const;
+	float getWeight () const;
 } item_t;
 
 /** @brief container/inventory list (linked list) with items. */
@@ -452,7 +453,6 @@ const objDef_t *INVSH_GetItemByID(const char *id);
 const objDef_t *INVSH_GetItemByIDX(int index);
 const objDef_t *INVSH_GetItemByIDSilent(const char *id);
 bool INVSH_LoadableInWeapon(const objDef_t *od, const objDef_t *weapon);
-float INVSH_GetItemWeight(const item_t &item);
 bool INVSH_CheckAddingItemToInventory(const inventory_t *inv, containerIndex_t from, containerIndex_t to, const item_t &item, int maxWeight);
 float INVSH_GetInventoryWeight(const inventory_t *inventory);
 

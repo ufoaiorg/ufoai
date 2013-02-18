@@ -598,11 +598,11 @@ bool INVSH_LoadableInWeapon (const objDef_t *od, const objDef_t *weapon)
  * @param[in] item The item to find the weight for.
  * @return The weight of the given item including any ammo loaded.
  */
-float INVSH_GetItemWeight (const item_t &item)
+float item_t::getWeight () const
 {
-	float weight = item.def()->weight;
-	if (item.ammo && item.ammo != item.def() && item.ammoLeft > 0) {
-		weight += item.ammo->weight;
+	float weight = def()->weight;
+	if (ammo && ammo != def() && ammoLeft > 0) {
+		weight += ammo->weight;
 	}
 	return weight;
 }
@@ -622,8 +622,8 @@ bool INVSH_CheckAddingItemToInventory (const inventory_t *inv, containerIndex_t 
 		return true;
 
 	const bool swapArmour = INV_IsArmour(item.def()) && inv->getArmourCont();
-	const float invWeight = INVSH_GetInventoryWeight(inv) - (swapArmour ? INVSH_GetItemWeight(inv->getArmourCont()->item) : 0);
-	float itemWeight = INVSH_GetItemWeight(item);
+	const float invWeight = INVSH_GetInventoryWeight(inv) - (swapArmour ? inv->getArmourCont()->item.getWeight() : 0);
+	float itemWeight = item.getWeight();
 
 	return (maxWeight < 0 || maxWeight >= invWeight + itemWeight);
 }
@@ -843,7 +843,7 @@ float INVSH_GetInventoryWeight (const inventory_t *inventory)
 			continue;
 		for (invList_t *ic = inventory->c[containerID], *next; ic; ic = next) {
 			next = ic->next;
-			weight += INVSH_GetItemWeight(ic->item);
+			weight += ic->item.getWeight();
 		}
 	}
 	return weight;
