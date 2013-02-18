@@ -655,8 +655,7 @@ static int RT_FillPassageData (RoutingData *rtd, const int dir, const int  x, co
 /**
  * @brief Helper function to trace for walls
  * @param[in] rtd The essential routing data with map, actorsize, ents
- * @param[in] start The starting point of the trace, at the FLOOR'S CENTER.
- * @param[in] end The end point of the trace, centered x and y at the destination but at the same height as start.
+ * @param[in] traceLine The starting point of the trace is at the FLOOR'S CENTER. The end point of the trace is centered x and y at the destination but at the same height as start.
  * @param[in] hi The upper height ABOVE THE FLOOR of the bounding box.
  * @param[in] lo The lower height ABOVE THE FLOOR of the bounding box.
  */
