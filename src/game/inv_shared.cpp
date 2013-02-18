@@ -91,11 +91,6 @@ bool INV_IsArmourDef (const invDef_t* invDef)
 	return invDef->id == CSI->idArmour;
 }
 
-invList_t* inventory_t::getArmourCont (void) const
-{
-	return getContainer(CSI->idArmour);
-}
-
 static int cacheCheckToInventory = INV_DOES_NOT_FIT;
 
 /**
@@ -375,24 +370,6 @@ bool INVSH_ExistsInInventory (const inventory_t* const inv, const invDef_t *cont
 		}
 
 	return false;
-}
-
-/**
- * @brief Searches a specific item in the inventory&container.
- * @param[in] container Container in the inventory.
- * @param[in] item The item to search for.
- * @return Pointer to the first item of this type found, otherwise @c NULL.
- */
-invList_t *inventory_t::findInContainer (const invDef_t *container, const item_t *const item) const
-{
-	invList_t *ic;
-
-	for (ic = getContainer(container->id); ic; ic = ic->next)
-		if (ic->item.isSameAs(item)) {
-			return ic;
-		}
-
-	return NULL;
 }
 
 /**
@@ -875,4 +852,27 @@ float INVSH_GetInventoryWeight (const inventory_t *inventory)
 invList_t *inventory_t::getFloorContainer () const
 {
 	return getContainer(CSI->idFloor);
+}
+
+invList_t *inventory_t::getArmourCont (void) const
+{
+	return getContainer(CSI->idArmour);
+}
+
+/**
+ * @brief Searches a specific item in the inventory&container.
+ * @param[in] container Container in the inventory.
+ * @param[in] item The item to search for.
+ * @return Pointer to the first item of this type found, otherwise @c NULL.
+ */
+invList_t *inventory_t::findInContainer (const invDef_t *container, const item_t *const item) const
+{
+	invList_t *ic;
+
+	for (ic = getContainer(container->id); ic; ic = ic->next)
+		if (ic->item.isSameAs(item)) {
+			return ic;
+		}
+
+	return NULL;
 }
