@@ -101,7 +101,7 @@ typedef struct mBspSurface_s {
 	vec3_t maxs;
 
 	vec3_t center;
-	vec4_t color;
+	vec4_t lightColor; /**< average lightmap color for the surface */
 	vec3_t normal;
 
 	int light_s, light_t;		/**< gl lightmap coordinates */

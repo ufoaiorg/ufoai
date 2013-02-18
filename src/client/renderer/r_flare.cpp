@@ -52,7 +52,7 @@ void R_CreateSurfaceFlare (mBspSurface_t *surf)
 	if (s->flags & STAGE_COLOR)
 		VectorCopy(s->color, surf->flare->color);
 	else
-		VectorCopy(surf->color, surf->flare->color);
+		VectorCopy(surf->lightColor, surf->flare->color);
 
 	/* and scaled radius */
 	if (s->flags & (STAGE_SCALE_S | STAGE_SCALE_T))

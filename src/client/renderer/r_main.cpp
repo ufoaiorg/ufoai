@@ -468,11 +468,11 @@ static bool R_CvarCheckMaxLightmap (cvar_t *cvar)
 
 	if (!Q_IsPowerOfTwo(cvar->integer)) {
 		Com_Printf("%s must be power of two\n", cvar->name);
-		Cvar_SetValue(cvar->name, LIGHTMAP_BLOCK_WIDTH);
+		Cvar_SetValue(cvar->name, LIGHTMAP_DEFAULT_PAGE_SIZE);
 		return false;
 	}
 
-	return Cvar_AssertValue(cvar, 128, LIGHTMAP_BLOCK_WIDTH, true);
+	return Cvar_AssertValue(cvar, 128, LIGHTMAP_DEFAULT_PAGE_SIZE, true);
 }
 
 static bool R_CvarCheckDynamicLights (cvar_t *cvar)

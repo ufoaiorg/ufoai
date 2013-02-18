@@ -324,7 +324,7 @@ static void R_SetSurfaceStageState (const mBspSurface_t *surf, const materialSta
 			VectorCopy(stage->color, color);
 
 		else if (stage->flags & STAGE_ENVMAP)  /* implied */
-			VectorCopy(surf->color, color);
+			VectorCopy(surf->lightColor, color); /** @todo WTF? surely it was supposed to use the specular color */
 
 		else  /* default */
 			VectorSet(color, 1.0, 1.0, 1.0);

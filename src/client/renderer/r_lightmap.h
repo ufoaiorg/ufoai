@@ -28,22 +28,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "r_entity.h"
 
-#define	LIGHTMAP_BLOCK_WIDTH	4096
-#define	LIGHTMAP_BLOCK_HEIGHT	4096
-#define LIGHTMAP_BLOCK_BYTES	3 /* bytes RGB */
-#define DELUXEMAP_BLOCK_BYTES	3 /* bytes RGB */
+#define LIGHTMAP_DEFAULT_PAGE_SIZE 4096
 
-#define LIGHTMAP_BYTES			3 /* RGB */
+#define LIGHTMAP_SAMPLE_SIZE 3 /* RGB */
+#define DELUXEMAP_SAMPLE_SIZE 3 /* XYZ */
 
 void R_CreateSurfaceLightmap(mBspSurface_t * surf);
 void R_EndBuildingLightmaps(void);
 void R_BeginBuildingLightmaps(void);
 
 void R_Trace(const vec3_t start, const vec3_t end, float size, int contentmask);
-
-/** in the bsp, they are just rgb, and we work with floats */
-#define LIGHTMAP_FBUFFER_SIZE \
-	(MAX_MAP_LIGHTMAP * LIGHTMAP_BYTES)
 
 typedef struct lightmaps_s {
 	GLuint lightmap_texnums[MAX_GL_LIGHTMAPS];
@@ -54,13 +48,12 @@ typedef struct lightmaps_s {
 
 	bool incomplete_atlas;
 
-	int size;  /**< lightmap block size (NxN) */
+	int size;  /**< lightmap atlas page (NxN) */
 
-	unsigned *allocated; /**< block availability */
+	unsigned *allocated; /**< current atlas page heightmap */
 
-	byte *sample_buffer; /**< RGBA buffers for uploading */
+	byte *sample_buffer; /**< RGB buffers for uploading */
 	byte *direction_buffer;
-	float fbuffer[LIGHTMAP_FBUFFER_SIZE]; /**< RGB buffer for bsp loading */
 } lightmaps_t;
 
 extern lightmaps_t r_lightmaps;
