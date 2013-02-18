@@ -166,68 +166,47 @@ static void R_BuildDefaultLightmap (mBspSurface_t *surf, byte *sout, byte *dout,
 }
 
 /**
- * @brief Compute the surface's average color.
- */
-static void R_GetAverageSurfaceColor (const byte *in, int width, int height, vec3_t color, int bpp)
-{
-	unsigned col[3];
-	const byte *p = in;
-	const byte *end = p + width * height * bpp;
-	int i;
-
-	VectorClear(col);
-
-	for (; p != end; p += bpp) {
-		int j;
-		for (j = 0; j < 3; j++) {
-			/* accumulate color */
-			col[j] += p[j];
-		}
-	}
-
-	/* average accumulated colors */
-	for (i = 0; i < 3; i++)
-		col[i] /= (width * height);
-
-	for (i = 0; i < 3; i++)
-		color[i] = col[i] / 255.0;
-}
-
-/**
  * @brief Consume raw lightmap and deluxemap RGB/XYZ data from the surface samples,
- * writing processed lightmap and deluxemap RGBA to the specified destinations.
+ * and write them into the strided block in the atlas page
  * @sa R_BuildDefaultLightmap
  */
 static void R_BuildLightmap (mBspSurface_t *surf, byte *sout, byte *dout, int stride)
 {
-	unsigned int i, j;
-	byte *lm, *l, *dm;
-
 	const int smax = (surf->stextents[0] / surf->lightmap_scale) + 1;
 	const int tmax = (surf->stextents[1] / surf->lightmap_scale) + 1;
-	const int size = smax * tmax;
-	stride -= (smax * LIGHTMAP_SAMPLE_SIZE);
+	const int area = smax * tmax;
 
-	byte* const lightmap = Mem_PoolAllocTypeN(byte, size * LIGHTMAP_SAMPLE_SIZE, vid_lightPool);
-	lm = lightmap;
+	int color[3] = {0, 0, 0};
+	byte *src = surf->samples;
 
-	byte* const deluxemap = Mem_PoolAllocTypeN(byte, size * DELUXEMAP_SAMPLE_SIZE, vid_lightPool);
-	dm = deluxemap;
+	/* Allocatate attached-to-surface cache for fast point lighting lookups and keep the pointer to fill it  a bit later */
+	byte *l = surf->lightmap = Mem_PoolAllocTypeN(byte, area * LIGHTMAP_SAMPLE_SIZE, vid_lightPool);
 
-	/* convert the raw lightmap samples to floating point and scale them */
-	for (i = j = 0; i < size; i++, lm += LIGHTMAP_SAMPLE_SIZE, dm += DELUXEMAP_SAMPLE_SIZE) {
-		lm[0] = surf->samples[j++];
-		lm[1] = surf->samples[j++];
-		lm[2] = surf->samples[j++];
-
-		/* read in directional samples for deluxe mapping as well */
-		dm[0] = surf->samples[j++];
-		dm[1] = surf->samples[j++];
-		dm[2] = surf->samples[j++];
+	for (int t = 0; t < tmax; t++) {
+		byte *lmPtr = sout, *dmPtr = dout;
+		for (int s = 0; s < smax; s++) {
+			/* process lightmap samples and accumulate the average color */
+			color[0] += l[0] = lmPtr[0] = src[0];
+			color[1] += l[1] = lmPtr[1] = src[1];
+			color[2] += l[2] = lmPtr[2] = src[2];
+			/* process deluxemap samples */
+			dmPtr[0] = src[3];
+			dmPtr[1] = src[4];
+			dmPtr[2] = src[5];
+			/* advance pointers */
+			lmPtr += LIGHTMAP_SAMPLE_SIZE;
+			dmPtr += DELUXEMAP_SAMPLE_SIZE;
+			l += LIGHTMAP_SAMPLE_SIZE;
+			src += 6;
+		}
+		sout += stride;
+		dout += stride;
 	}
 
-	/* apply modulate, contrast, resolve average surface color, etc.. */
-	R_GetAverageSurfaceColor(lightmap, smax, tmax, surf->lightColor, LIGHTMAP_SAMPLE_SIZE);
+	/* store average lightmap color and surface alpha */
+	surf->lightColor[0] = color[0] / (255.0 * area);
+	surf->lightColor[1] = color[1] / (255.0 * area);
+	surf->lightColor[2] = color[2] / (255.0 * area);
 
 	if (surf->texinfo->flags & (SURF_BLEND33 | SURF_ALPHATEST))
 		surf->lightColor[3] = 0.25;
@@ -235,43 +214,6 @@ static void R_BuildLightmap (mBspSurface_t *surf, byte *sout, byte *dout, int st
 		surf->lightColor[3] = 0.50;
 	else
 		surf->lightColor[3] = 1.0;
-
-	/* the final lightmap is uploaded to the card via the strided lightmap
-	 * block, and also cached on the surface for fast point lighting lookups */
-
-	surf->lightmap = Mem_PoolAllocTypeN(byte, size * LIGHTMAP_SAMPLE_SIZE, vid_lightPool);
-	l = surf->lightmap;
-	lm = lightmap;
-	dm = deluxemap;
-
-	for (i = 0; i < tmax; i++, sout += stride, dout += stride) {
-		for (j = 0; j < smax; j++) {
-			/* copy the lightmap to the strided block */
-			sout[0] = lm[0];
-			sout[1] = lm[1];
-			sout[2] = lm[2];
-			sout += LIGHTMAP_SAMPLE_SIZE;
-
-			/* and to the surface, discarding alpha */
-			l[0] = lm[0];
-			l[1] = lm[1];
-			l[2] = lm[2];
-			l += LIGHTMAP_SAMPLE_SIZE;
-
-			lm += LIGHTMAP_SAMPLE_SIZE;
-
-			/* lastly copy the deluxemap to the strided block */
-			dout[0] = dm[0];
-			dout[1] = dm[1];
-			dout[2] = dm[2];
-			dout += DELUXEMAP_SAMPLE_SIZE;
-
-			dm += DELUXEMAP_SAMPLE_SIZE;
-		}
-	}
-
-	Mem_Free(lightmap);
-	Mem_Free(deluxemap);
 }
 
 /**
