@@ -556,7 +556,7 @@ bool G_ActorInvMove (Edict *ent, const invDef_t *from, invList_t *fItem, const i
 
 	/* Store the location of 'to' BEFORE actually moving items with I_MoveInInventory
 	 * so in case we swap ammo the client can be updated correctly */
-	tc = INVSH_SearchInInventory(&ent->chr.inv, to, tx, ty);
+	tc = ent->chr.inv.getItemAtPos(to, tx, ty);
 	if (tc)
 		tItemBackup = *tc;
 	else
@@ -594,7 +594,7 @@ bool G_ActorInvMove (Edict *ent, const invDef_t *from, invList_t *fItem, const i
 
 	/* search for space */
 	if (tx == NONE) {
-		ic = INVSH_SearchInInventory(&ent->chr.inv, from, fItem->x, fItem->y);
+		ic = ent->chr.inv.getItemAtPos(from, fItem->x, fItem->y);
 		if (ic)
 			INVSH_FindSpace(&ent->chr.inv, &ic->item, to, &tx, &ty, fItem);
 		if (tx == NONE)

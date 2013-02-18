@@ -89,7 +89,7 @@ static const invList_t *dragInfoIC;
  * @param[in] filterType Filter used.
  * @todo Remove filter it is not a generic concept, and here it mean nothing
  * @return invList_t Pointer to the invList_t/item that is located at x/y or equals "item".
- * @sa INVSH_SearchInInventory
+ * @sa inventory_t::getItemAtPos
  */
 static invList_t *UI_ContainerNodeGetExistingItem (const invDef_t *container, const objDef_t *item, const itemFilterTypes_t filterType)
 {
@@ -658,7 +658,7 @@ static invList_t *UI_ContainerNodeGetItemAtPosition (const uiNode_t* const node,
 		if (contY)
 			*contY = fromY;
 
-		result = INVSH_SearchInInventory(ui_inventory, EXTRADATACONST(node).container, fromX, fromY);
+		result = ui_inventory->getItemAtPos(EXTRADATACONST(node).container, fromX, fromY);
 	}
 	return result;
 }
@@ -957,7 +957,7 @@ bool uiContainerNode::onDndMove (uiNode_t *target, int x, int y)
 			return true;
 
 		/* can we equip dragging item into the target item? */
-		fItem = INVSH_SearchInInventory(ui_inventory, EXTRADATA(target).container, dragInfoToX, dragInfoToY);
+		fItem = ui_inventory->getItemAtPos(EXTRADATA(target).container, dragInfoToX, dragInfoToY);
 		if (!fItem)
 			return false;
 		if (EXTRADATA(target).container->single)
@@ -1008,7 +1008,7 @@ bool uiContainerNode::onDndFinished (uiNode_t *source, bool isDropped)
 			if (UI_IsScrollContainerNode(source)) {
 				fItem = UI_ContainerNodeGetExistingItem(sourceContainer, dragItem->def(), MAX_FILTERTYPES);
 			} else
-				fItem = INVSH_SearchInInventory(ui_inventory, sourceContainer, dragInfoFromX, dragInfoFromY);
+				fItem = ui_inventory->getItemAtPos(sourceContainer, dragInfoFromX, dragInfoFromY);
 			assert(fItem);
 
 			/** @todo We must split the move in two. Here, we should not know how to add the item to the target (see dndDrop) */

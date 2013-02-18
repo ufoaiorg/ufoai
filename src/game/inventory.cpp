@@ -326,7 +326,7 @@ inventory_action_t InventoryInterface::moveInInventory (inventory_t* const inv, 
 
 		/* Check if destination/blocking item is the same as source/from item.
 		 * In that case the move is not needed -> abort. */
-		icTo = INVSH_SearchInInventory(inv, to, tx, ty);
+		icTo = inv->getItemAtPos(to, tx, ty);
 		if (fItem->item.def() == icTo->item.def())
 			return IA_NONE;
 
@@ -348,7 +348,7 @@ inventory_action_t InventoryInterface::moveInInventory (inventory_t* const inv, 
 	} else if (!checkedTo) {
 		/* Get the target-invlist (e.g. a weapon). We don't need to check for
 		 * scroll because checkedTo is always true here. */
-		ic = INVSH_SearchInInventory(inv, to, tx, ty);
+		ic = inv->getItemAtPos(to, tx, ty);
 
 		if (ic && !INV_IsEquipDef(to) && INVSH_LoadableInWeapon(fItem->item.def(), ic->item.def())) {
 			/* A target-item was found and the dragged item (implicitly ammo)

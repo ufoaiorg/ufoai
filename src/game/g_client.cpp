@@ -703,7 +703,7 @@ int G_ClientAction (Player &player)
 		} else {
 			const invDef_t *fromPtr = INVDEF(from);
 			const invDef_t *toPtr = INVDEF(to);
-			invList_t *fromItem = INVSH_SearchInInventory(&ent->chr.inv, fromPtr, fx, fy);
+			invList_t *fromItem = ent->chr.inv.getItemAtPos(fromPtr, fx, fy);
 			if (fromItem)
 				G_ActorInvMove(ent, fromPtr, fromItem, toPtr, tx, ty, true);
 		}

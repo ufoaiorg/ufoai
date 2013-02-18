@@ -402,27 +402,24 @@ bool INV_IsBaseDefenceItem (const objDef_t *obj)
 
 /**
  * @brief Searches if there is an item at location (x,y) in a container.
- * @param[in] inv The inventory where we will search.
  * @param[in] container Container in the inventory.
  * @param[in] x/y Position in the container that you want to check.
  * @return invList_t Pointer to the invList_t/item that is located at x/y.
  */
-invList_t *INVSH_SearchInInventory (const inventory_t* const inv, const invDef_t *container, const int x, const int y)
+invList_t *inventory_t::getItemAtPos (const invDef_t *container, const int x, const int y) const
 {
-	invList_t *ic;
-
-	assert(inv);
 	assert(container);
 
 	/* Only a single item. */
 	if (container->single)
-		return inv->getContainer(container->id);
+		return getContainer(container->id);
 
 	if (container->scroll)
-		Sys_Error("INVSH_SearchInInventory: Scrollable containers (%i:%s) are not supported by this function.", container->id, container->name);
+		Sys_Error("getItemAtPos: Scrollable containers (%i:%s) are not supported by this function.", container->id, container->name);
 
 	/* More than one item - search for the item that is located at location x/y in this container. */
-	for (ic = inv->getContainer(container->id); ic; ic = ic->next)
+	invList_t *ic;
+	for (ic = getContainer(container->id); ic; ic = ic->next)
 		if (INVSH_ShapeCheckPosition(ic, x, y))
 			return ic;
 

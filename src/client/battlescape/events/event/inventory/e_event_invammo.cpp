@@ -48,7 +48,7 @@ void CL_InvAmmo (const eventRegister_t *self, dbuffer *msg)
 
 	assert(container >= 0);
 	assert(container < MAX_INVDEFS);
-	ic = INVSH_SearchInInventory(&le->inv, INVDEF(container), x, y);
+	ic = le->inv.getItemAtPos(INVDEF(container), x, y);
 	if (!ic)
 		return;
 

@@ -110,7 +110,7 @@ bool INV_LoadWeapon (const invList_t *weaponList, inventory_t *inv, const invDef
 	x += weaponList->x;
 	y += weaponList->y;
 	if (weapon->oneshot) {
-		ic = INVSH_SearchInInventory(inv, destContainer, x, y);
+		ic = inv->getItemAtPos(destContainer, x, y);
 		if (ic) {
 			ic->item.ammoLeft = weapon->ammo;
 			ic->item.ammo = weapon;
@@ -357,7 +357,7 @@ bool INV_ItemMatchesFilter (const objDef_t *obj, const itemFilterTypes_t filterT
  * @param[in] item The item to search. Will ignore "x" and "y" if set, it'll also search invisible items.
  * @param[in] filterType Enum definition of type (types of items for filtering purposes).
  * @return @c invList_t Pointer to the invList_t/item that is located at x/y or equals "item".
- * @sa INVSH_SearchInInventory
+ * @sa inventory_t::getItemAtPos
  */
 invList_t *INV_SearchInInventoryWithFilter (const inventory_t* const i, const invDef_t *container, const objDef_t *item,  const itemFilterTypes_t filterType)
 {
