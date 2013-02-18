@@ -444,7 +444,6 @@ int INVSH_CheckToInventory(const inventory_t* const inv, const objDef_t *ob, con
 void INVSH_GetFirstShapePosition(const invList_t *ic, int* const x, int* const y);
 bool INVSH_ExistsInInventory(const inventory_t* const inv, const invDef_t *container, const item_t *item);
 invList_t *INVSH_SearchInInventory(const inventory_t* const inv, const invDef_t *container, const int x, const int y) __attribute__((nonnull(1)));
-invList_t *INVSH_SearchInInventoryByItem(const inventory_t* const inv, const invDef_t *container, const objDef_t *item);
 void INVSH_FindSpace(const inventory_t* const inv, const item_t *item, const invDef_t *container, int * const px, int * const py, const invList_t *ignoredItem) __attribute__((nonnull(1)));
 bool INV_IsCraftItem(const objDef_t *obj);
 bool INV_IsBaseDefenceItem(const objDef_t *item);

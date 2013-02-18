@@ -431,29 +431,6 @@ invList_t *INVSH_SearchInInventory (const inventory_t* const inv, const invDef_t
 }
 
 /**
- * @brief Searches if there is an item of the given type in a container.
- * @param[in] inv The inventory where we will search.
- * @param[in] container Container in the inventory.
- * @param[in] item Look for this kind of item.
- * @return invList_t Pointer to the invList_t/item.
- */
-invList_t *INVSH_SearchInInventoryByItem (const inventory_t* const inv, const invDef_t *container, const objDef_t *item)
-{
-	invList_t *ic;
-
-	if (item == NULL)
-		return NULL;
-
-	for (ic = inv->getContainer(container->id); ic; ic = ic->next) {
-		if (ic && item == ic->item.def())
-			return ic;
-	}
-
-	/* No matching item found. */
-	return NULL;
-}
-
-/**
  * @brief Finds space for item in inv at container
  * @param[in] inv The inventory to search space in
  * @param[in] item The item to check the space for
