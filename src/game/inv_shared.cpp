@@ -595,7 +595,6 @@ bool INVSH_LoadableInWeapon (const objDef_t *od, const objDef_t *weapon)
 
 /**
  * @brief Return the weight of an item.
- * @param[in] item The item to find the weight for.
  * @return The weight of the given item including any ammo loaded.
  */
 float item_t::getWeight () const
