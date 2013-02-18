@@ -399,11 +399,11 @@ entity misc_sound {
 	mandatory {
 		origin	"position"
 		noise	"Sound file name relative to sound/"
+		volume	"Relative volume - value between 0.0 and 1.0"
+		attenuation	"3.0 is only audible when the sound source is very close to the camera, 0.0 is audible everywhere."
 	}
 
 	optional {
-		volume	"Relative volume - value between 0.0 and 1.0"
-		attenuation	"3.0 is only audible when the sound source is very close to the camera, 0.0 is audible everywhere."
 		targetname	"The id of this entity"
 		group		"The trigger group"
 	}
@@ -421,6 +421,8 @@ entity misc_sound {
 
 	default {
 		spawnflags	"255"
+		volume		"0.7"
+		attenuation	"2.5"
 	}
 }
 
