@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: UFO: Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
 "POT-Creation-Date: 2013-02-07 18:29+0100\n"
-"PO-Revision-Date: 2013-02-14 07:31+0100\n"
+"PO-Revision-Date: 2013-02-18 06:33+0100\n"
 "Last-Translator: Johnny A. Solbu <johnny@solbu.net>\n"
 "Language-Team: Norwegian Bokmal\n"
 "Language: nb_NO\n"
@@ -2809,9 +2809,8 @@ msgid "Coastal Crash Site"
 msgstr "Krasjsted ved kysten"
 
 #: ../base/ufos/maps.ufo:409
-#, fuzzy
 msgid "Bomber in the City"
-msgstr "Bybomber"
+msgstr "Ufo-bomber i byen"
 
 #: ../base/ufos/maps.ufo:562
 msgid "Urban Periphery"
@@ -7049,6 +7048,22 @@ msgid ""
 "\n"
 "Cdr. Navarre"
 msgstr ""
+"Kommandant, det våpen de fremmede bruker i kamp blir stadig mer ødeleggende "
+"for hver uke. Vi trenger et soldatstøttesystem som kan utjevne kamparenaen "
+"og gi våre menn en sjanse. Våre verksteder er i stand til å produsere de "
+"tette nanorørvever vi oppdaget i de nyeste prøvene av romvesenes armering. "
+"Men dette betyr ikke at vi ikke vil finne en løsning.\n"
+"\n"
+"Med din tillatelse vil jeg gjerne sette teamet i arbeid for å undersøke en "
+"strømdrevet rustning som vil tillate oss å støtte tyngre nanokomposittplater "
+"ved å bygge vektstøtte inn i drakten. Strømforsynt rustning har blitt sett "
+"brukt i nyere konflikter, men dagens generasjon militære varianter har mer "
+"til felles med stridsvogner enn infanteri og kan ikke på noen måte møte vår "
+"mobilitet og plassbehov. Vi tror den innsikten vi har fått fra å studere "
+"servoer av det nyeste utenomjordisk panseret kan brukes til å utvikle en "
+"kraftdrakt som blir slankere og tøffere enn noe vi har sett\n"
+"\n"
+"Cdr. Navarre"
 
 #: ../base/ufos/msgid/armour.ufo:112
 msgid ""
@@ -8490,6 +8505,25 @@ msgid ""
 "\n"
 "-- UFO: Alien Invasion Development Team"
 msgstr ""
+"Flott arbeid, Kommandant. Vi har bekjempet romvesenene og holdt jorden "
+"trygt, inntil videre.\n"
+"\n"
+"Men vi kan ikke hvile på våre laurbær lenge. Romvesenene kan returnere hvert "
+"øyeblikk.\n"
+"De må ha mange flere transporter der oppe, utenfor vår rekkevidde. Jeg er "
+"sikker på at de vil være \n"
+"tilbake like fort som spillets utviklingsteam kan bygge et transportoppdrag. "
+"Jeg venter på dine\n"
+"ordre.\n"
+"\n"
+"Inntil da kan du besøke ufoai.org for å finne ut når neste versjon kommer "
+"ut. Hvis \n"
+"det ikke kommer raskt nok for deg, gi en hjelpende hånd. Vi er gratis. Vi er "
+"fri programvare \n"
+"og åpen kildekode. Vi er underbemannet. Inntil neste gang, takk for at du "
+"spiller\n"
+"\n"
+"-- UFO: Alien Invasions utviklingsteam"
 
 #: ../base/ufos/msgid/irc.ufo:20
 msgid ""
@@ -8678,10 +8712,14 @@ msgid ""
 "The aliens have barricaded themselves inside this fuel dump. Find a bomb "
 "nearby to destroy the gate and gain entry."
 msgstr ""
+"Romvesenene har barrikadert seg inne i denne drivstoffylling. Finn en bombe "
+"i nærheten for å ødelegge porten og få innpass."
 
 #: ../base/ufos/msgid/missionbriefing.ufo:11
 msgid "Kill all the aliens or hold the point in the fuel depot for some time."
 msgstr ""
+"Drep alle romvesener eller hold på det punktet i drivstoffdepotet for en "
+"stund."
 
 #: ../base/ufos/msgid/missionbriefing.ufo:14
 msgid ""
@@ -8690,6 +8728,10 @@ msgid ""
 "you'll need to clear out the alien presence so that our analysts can "
 "investigate the technology on-site."
 msgstr ""
+"Vi har lokalisert en inngangsport til romvesenbasen, som synes å være et "
+"stort underjordisk anlegg. Når mennene dine har gått ned inngangssjakten må "
+"du rydde ut romvesennærværet slik at våre analytikere kan undersøke "
+"teknologien på stedet."
 
 #: ../base/ufos/msgid/missionbriefing.ufo:17
 msgid "Kill all the aliens to secure the base."
@@ -9855,6 +9897,8 @@ msgid ""
 "Determines a soldier's accuracy with any weapon. Soldiers will increase "
 "their accuracy when they use weapons effectively in battle."
 msgstr ""
+"Fastsetter en soldats nøyaktighet med enhver våpen. Soldater øker "
+"nøyaktigheten når de bruker våpen effektivt i kamp."
 
 #: ../base/ufos/msgid/skills.ufo:5
 msgid ""
@@ -9862,6 +9906,8 @@ msgid ""
 "their assault proficiency when they use assault weapons effectively in "
 "battle."
 msgstr ""
+"Fastsetter en soldats nøyaktighet med angrepsvåpen. Soldater øker sine "
+"angrepsferdigheter når de bruker angrepsvåpnene effektivt i kamp."
 
 #: ../base/ufos/msgid/skills.ufo:8
 msgid ""
@@ -9869,6 +9915,8 @@ msgid ""
 "increase their close proficiency when they use close-quarters weapons "
 "effectively in battle."
 msgstr ""
+"Fastsetter en soldats nøyaktighet med nærkampvåpen. Soldater øker sine "
+"nærkampferdigheter når de bruker nærkampvåpen effektivt i kamp."
 
 #: ../base/ufos/msgid/skills.ufo:11
 msgid ""
@@ -9876,12 +9924,16 @@ msgid ""
 "increase their explosive proficiency when they use explosive weapons "
 "effectively in battle."
 msgstr ""
+"Fastsetter en soldats nøyaktighet med eksplosive våpen. Soldater vil øke "
+"sine eksplosive ferdigheter når de bruker eksplosive våpen effektivt i kamp."
 
 #: ../base/ufos/msgid/skills.ufo:14
 msgid ""
 "Determines a soldier's accuracy with heavy weapons. Soldiers will increase "
 "their heavy proficiency when they use heavy weapons effectively in battle."
 msgstr ""
+"Fastsetter en soldats nøyaktighet med tunge våpen. Soldater øker sine tunge "
+"ferdigheter når de bruker tunge våpen effektivt i kamp."
 
 #: ../base/ufos/msgid/skills.ufo:17
 msgid ""
@@ -9889,6 +9941,8 @@ msgid ""
 "increase their mental strength when they engage in effective combat "
 "operations."
 msgstr ""
+"Fastsetter en soldats mentale utholdenhet og ytelse. Soldater øker sin "
+"mentale styrke når de deltar i effektive kampoperasjoner."
 
 #: ../base/ufos/msgid/skills.ufo:20
 msgid ""
@@ -9896,12 +9950,17 @@ msgid ""
 "battlefield. Soldiers will increase their strength on the battlefield and "
 "will do so more quickly if they carry more weight in battle."
 msgstr ""
+"Fastsetter vekten en soldat kan bære før han blir nedtynget på slagmarken. "
+"Soldater styrker sine krefter på slagmarken og vil gjøre det raskere hvis de "
+"bærer mer vekt i kamp."
 
 #: ../base/ufos/msgid/skills.ufo:23
 msgid ""
 "Determines a soldier's accuracy with sniper weapons. Soldiers will increase "
 "their sniper proficiency when they use sniper weapons effectively in battle."
 msgstr ""
+"Fastsetter en soldats nøyaktighet med snikskyttervåpen. Soldater vil øke sin "
+"snikskytterferdigheter når de bruker snikskyttervåpen effektivt i kamp."
 
 #: ../base/ufos/msgid/skills.ufo:26
 msgid ""
@@ -9909,6 +9968,8 @@ msgid ""
 "increase their speed engaging in standard fire and movement procedures on "
 "the battlefield."
 msgstr ""
+"Fastsetter hvor mye tidsenheter en soldat har hver runde. Soldater vil øke "
+"sine hastigheter i standard-ild og bevegelsesprosedyrer på slagmarken."
 
 #: ../base/ufos/msgid/story.ufo:16
 msgid ""
@@ -13877,7 +13938,6 @@ msgid ""
 msgstr ""
 
 #: ../base/ufos/msgid/weapons.ufo:1329
-#, fuzzy
 msgid ""
 "Commander, we've recovered an alien plasma blaster from the field. This is "
 "an extremely powerful new plasma weapon that warrants immediate research.\n"
@@ -13887,9 +13947,7 @@ msgid ""
 "Cdr. Navarre"
 msgstr ""
 "Kommandant, vi gar berget en plasmablaster fra feltet. Dette er et ekstremt "
-"kraftig nytt plasmavåpen som berettiger umiddelbar forskning. Foreløpige "
-"tester bekrefter at blasterskudd river rett gjennom vår kamprustning og har "
-"en langt større rekkevidde enn de andre plasmavåpen vi har berget.\n"
+"kraftig nytt plasmavåpen som berettiger umiddelbar forskning.\n"
 "\n"
 "Vennligst godkjenn dette forskningsprogrammet så snart som mulig.\n"
 "\n"
@@ -14186,7 +14244,6 @@ msgid ""
 msgstr ""
 
 #: ../base/ufos/msgid/weapons.ufo:1447
-#, fuzzy
 msgid ""
 "Commander, it seems we've recovered a new alien weapon, some kind of fully-"
 "automatic rifle that fires masses of paper-thin needles made from silicon "
@@ -14199,10 +14256,10 @@ msgid ""
 "\n"
 "Cdr. Navarre"
 msgstr ""
-"Kommandant, det synes vi har funnet et nytt fremmed våpen, en slags "
-"helautomatisk snikskytterrifle som skyter masser av papir-tynne nåler laget "
-"av silisiumstål. Foreløpige tester viser at nålene er tilnærmet upåvirket av "
-"ordinær rustning og vil passere gjennom de fleste overflater uten engang å "
+"Kommandant, det ser ut til at vi har funnet et nytt fremmed våpen, en slags "
+"helautomatisk rifle som skyter masser av papir-tynne nåler laget av "
+"silisiumstål. Foreløpige tester viser at nålene er tilnærmet upåvirket av "
+"ordinær pansring og vil passere gjennom de fleste overflater uten engang å "
 "bremse ned. Det er et veldig interessant design og vi vil gjerne finne ut "
 "nøyaktig hvordan det er ment å fungere.\n"
 "\n"
@@ -14245,6 +14302,11 @@ msgid ""
 "\n"
 "Cdr. Navarre"
 msgstr ""
+"Kommandant, vi har funnet et nytt fremmed våpen som ser ut til å være en "
+"større versjon av tennålsvåpenet. Vennligst la mine menn tar en titt så "
+"snart som mulig.\n"
+"\n"
+"Cdr. Navarre"
 
 #: ../base/ufos/msgid/weapons.ufo:1479
 msgid ""
@@ -15808,14 +15870,12 @@ msgid "id Software for the Quake 2 engine"
 msgstr "id Software for Quake 2-motoren"
 
 #: ../base/ufos/seq_credits.ufo:359
-#, fuzzy
 msgid "NineX for hosting us"
-msgstr "NineX for hosting"
+msgstr "NineX som huser oss"
 
 #: ../base/ufos/seq_credits.ufo:369
-#, fuzzy
 msgid "To the community and everyone who supported us"
-msgstr "Alle som har støttet oss"
+msgstr "Til fellesskapet og alle som har støttet oss"
 
 #: ../base/ufos/seq_intro.ufo:36
 msgid "intro_sentence1"
@@ -16185,12 +16245,11 @@ msgid "Use the [Shift] key to aim higher or lower at your target."
 msgstr "Bruk [Shift]-tasten for å sikte høyere eller lavere på målet ditt."
 
 #: ../base/ufos/tips.ufo:5
-#, fuzzy
 msgid ""
 "Use [F5] key to quick save the game. Use [F9] key to quick load the game. "
 "Also, the game saves your state to the quick save before each mission."
 msgstr ""
-"Bruk [F1] for å hurtiglagre spillet. Bruk [F2] for å hurtiglaste spillet. "
+"Bruk [F5] for å hurtiglagre spillet. Bruk [F9] for å hurtiglaste spillet. "
 "Spillet lagrer også tilstanden før hvert oppdrag, i hurtiglagringen."
 
 #: ../base/ufos/tips.ufo:6
@@ -16214,19 +16273,20 @@ msgstr ""
 "vil soldatene på toppen av listen bli  brukt i spillet."
 
 #: ../base/ufos/tips.ufo:8
-#, fuzzy
 msgid ""
 "Before you shoot, you may want to make sure that you will have enough Time "
 "Units (TUs) left to take cover."
 msgstr ""
-"Pass alltid på at du har nok tidsenheter (TUs) igjen til å gjemme deg etter "
-"at du har skutt."
+"Før du skyter bør du passe på at du vil ha nok tidsenheter (TUs) igjen til å "
+"ta dekning."
 
 #: ../base/ufos/tips.ufo:9
 msgid ""
 "Choose which fire mode to use in reaction fire by ticking the button on the "
 "fire mode panel. Quick fire modes will react faster."
 msgstr ""
+"Velg hvilken ildmodus som skal brukes i reaksjonild ved å krysse av på "
+"knappen i ildmoduspanelet. Raske ildmoduser vil reagere raskere."
 
 #: ../base/ufos/tips.ufo:10
 msgid ""
@@ -16245,17 +16305,18 @@ msgid "Don't forget to equip your soldiers with armour."
 msgstr "Glem ikke å utstyre dine soldater med vester."
 
 #: ../base/ufos/tips.ufo:13
-#, fuzzy
 msgid ""
 "Don't forget to equip your soldiers with smoke grenades and flashbangs to "
 "keep the enemy at bay."
-msgstr "Glem ikke å utstyre dine soldater med nok ammo."
+msgstr "Ikke glem å utstyre dine soldater med røykgranater og flashbangs."
 
 #: ../base/ufos/tips.ufo:14
 msgid ""
 "Soldiers can pull an item from their belt or holster very quickly, so equip "
 "grenades and other emergency items there."
 msgstr ""
+"Soldater kan trekke et objekt fra sitt belte eller hylster svært raskt, så "
+"utstyr granater og andre nødobjekter der."
 
 #: ../base/ufos/tips.ufo:15
 msgid ""
@@ -16267,20 +16328,21 @@ msgstr ""
 "hans neste runde."
 
 #: ../base/ufos/tips.ufo:16
-#, fuzzy
 msgid ""
 "To make a soldier face a certain direction (i.e. to turn him/her) place the "
 "cursor and press the right mouse button. This will cost you Time Units (TUs)."
 msgstr ""
 "For å få en soldat til å stå i en bestemt retning (dvs. å snu ham/henne) "
-"plasser markøren og trykk høyre musetast eller [Ctrl]-tasten. Dette vil "
-"koste deg tidsenheter (TUs)."
+"plasser markøren og trykk høyre musetast. Dette vil koste deg tidsenheter "
+"(TE)."
 
 #: ../base/ufos/tips.ufo:17
 msgid ""
 "When a soldier is standing next to a door, you can open it by clicking on "
 "the soldier. Move the cursor over the soldier and a hand icon will appear."
 msgstr ""
+"Når en soldat står ved siden av en dør, kan du åpne den ved å klikke på "
+"soldaten. Flytt markøren over soldaten og et håndikon vises."
 
 #: ../base/ufos/tips.ufo:18
 msgid ""
@@ -16299,19 +16361,16 @@ msgstr ""
 "produksjonslinjer, jo raskere har du tilgang til bedre utstyr og forsyninger."
 
 #: ../base/ufos/tips.ufo:20
-#, fuzzy
 msgid ""
 "Visit us at ufoai.org or drop by our community channel, #ufoai on irc."
 "freenode.net."
 msgstr ""
-"Husk å besøke vår hjemmeside, http://ufoai.sourceforge.net/, og stik innom "
-"vår community-kanal, #ufoai på irc.freenode.net."
+"Besøk vår hjemmeside, ufoai.org, eller stikk innom vår kanal #ufoai på irc."
+"freenode.net."
 
 #: ../base/ufos/tips.ufo:21
-#, fuzzy
 msgid "You need an active Command Centre to launch interceptors."
-msgstr ""
-"Husk at du trenger et aktivt kommando senter for å sende avskjæringsjagere."
+msgstr "Du trenger et aktivt kommandosenter for å sende opp luftfartøyer."
 
 #: ../base/ufos/tips.ufo:22
 msgid ""
@@ -16333,6 +16392,9 @@ msgid ""
 "UFO Yard. You can build a UFO Yard by accessing the installations button on "
 "the global view."
 msgstr ""
+"Til å lagre og demontere ufoer trenger du et verksted på basen og et ufo-"
+"verft. Du kan bygge en ufo-verft ved å gå til installasjonsknappen på den "
+"globale visningen."
 
 #: ../base/ufos/tips.ufo:25
 msgid ""
@@ -16345,13 +16407,12 @@ msgstr ""
 "man kneler koster mer TUs enn å gå normalt."
 
 #: ../base/ufos/tips.ufo:26
-#, fuzzy
 msgid ""
 "Have your soldiers crouch when they can. Crouching makes some weapons "
 "considerably more precise. It also makes your soldier a smaller target."
 msgstr ""
-"Bruk [c] for å knele. Knelende soldater gjør noen våpen meget mer presise. "
-"Det gjør også din soldat til et mindre mål."
+"La soldater sitte på huk når de kan. Det gjør noen våpen mye mer presise og "
+"soldaten til et mindre, vanskeligere mål."
 
 #: ../base/ufos/tips.ufo:27
 msgid ""
@@ -16366,12 +16427,17 @@ msgid ""
 "Keep soldiers close so that they can support each other. A lone gunner is "
 "easily killed."
 msgstr ""
+"Hold soldater nære slik at de kan støtte hverandre. En ensom skytter blir "
+"lett drept."
 
 #: ../base/ufos/tips.ufo:29
 msgid ""
 "Life is precious, but some lives are more precious than others. Always keep "
 "a disposable soldier or two to handle very risky situations."
 msgstr ""
+"Livet er dyrebart, men noen liv er mer verdifullt enn andre. Ha en "
+"engangssoldat eller to i bakhånd til å håndtere svært risikofylte "
+"situasjoner."
 
 #: ../base/ufos/tips.ufo:30
 msgid ""
@@ -16382,16 +16448,14 @@ msgstr ""
 "Husk at du må utforske det først!"
 
 #: ../base/ufos/tips.ufo:31
-#, fuzzy
 msgid ""
 "The Grenade Launcher's Impact fire mode will explode when it reaches its "
 "target, useful for hitting enemies at the edge of the map or on a ledge."
 msgstr ""
-"AirBurst fra granatkasteren lar deg detonere granatene på et bestemt sted. "
-"Svært nyttig når du sikter mot noe nær kanten av kartet, eller på en avsats."
+"Granatkasterens treff-avfyringsmodus detonerer granatene når dce når målet, "
+"nyttig når du sikter mot noe nær kanten av kartet, eller på en avsats."
 
 #: ../base/ufos/tips.ufo:32
-#, fuzzy
 msgid ""
 "When throwing grenades, try to avoid throwing straight along the grid. With "
 "a little bit of an angle, it's less likely to bounce back at you if your aim "
@@ -16399,7 +16463,7 @@ msgid ""
 msgstr ""
 "Når du kaster granater, prøv å unngå rette kast langs rutenettet. Med den "
 "minste lille vinkel blir sjansene for at den spretter tilbake til deg selv "
-"mye mindre på et 'tapt' kast."
+"mye mindre om du sikter dårlig."
 
 #: ../base/ufos/tips.ufo:33
 msgid ""
@@ -16418,6 +16482,7 @@ msgid ""
 "You can create your own maps or customize your campaigns. Learn more at "
 "ufoai.org."
 msgstr ""
+"Du kan lage dine egne kart eller tilpasse kampanjene. Les mer på ufoai.org."
 
 #: ../base/ufos/tips.ufo:36
 msgid "You can use [space] to cycle between all geoscape items."
@@ -16432,6 +16497,8 @@ msgid ""
 "Some items will slow an aircraft down. Read the equipment specs closely when "
 "equipping your interceptors."
 msgstr ""
+"Noen elementer vil bremse et fly ned. Les utstyrsspesifikasjoner nøye når du "
+"utstyrer avskjærere."
 
 #: ../base/ufos/tips.ufo:39
 msgid "Build an alien containment to be able to imprison live aliens."
@@ -16439,68 +16506,61 @@ msgstr ""
 "Bygg et romvesenoppbevaringsrom for å kunne fengsel levende romvesener."
 
 #: ../base/ufos/tips.ufo:40
-#, fuzzy
 msgid ""
 "Spotted enemies: While on a ground mission you can press [Space] to cycle "
 "through all spotted enemies."
 msgstr ""
-"Fiender oppdaget: På bakkeoppdrag kan du taste [mellomrom] for å veksle "
-"mellom alle oppdagede fiender. Tasten [t] vil tegne en linje til hver enkelt "
-"fiende den valgte soldaten kan se."
+"Oppdagede fiender: På bakkeoppdrag kan du taste [mellomrom] for å veksle "
+"mellom alle oppdagede fiender."
 
 #: ../base/ufos/tips.ufo:41
-#, fuzzy
 msgid ""
 "You can use the right mouse button in the soldier equipment screen to equip "
 "or unequip weapons, ammo and armour. This won't work during a ground battle, "
 "when it costs TUs to pick up or drop an item."
 msgstr ""
 "Du kan bruke den høyre museknappen i soldatens utstyrsvindu for å velge "
-"eller fravelge våpen, ammunisjon og vester. Dette virker kun i basen, ikke "
-"under et taktisk oppdrag hvor slike handlinger ville koste TUs."
+"eller fravelge våpen, ammunisjon og vester. Dette virker ikke under et "
+"taktisk oppdrag hvor slike handlinger ville koste TE-er."
 
 #: ../base/ufos/tips.ufo:42
 msgid ""
 "Don't let too many civilians die during battles. If you don't keep the "
 "nations happy they could pull the plug on your program."
 msgstr ""
+"Ikke la for mange sivile dø under kamp. Hvis du ikke holder nasjonene "
+"fornøyde kan de trekke seg fra programmet."
 
 #: ../base/ufos/tips.ufo:43
-#, fuzzy
 msgid ""
 "You should never kill civilians. Soldiers who kill civilians will not be "
 "promoted to high ranks."
 msgstr ""
-"Du bør aldri drepe sivile. Soldatene som drepte sivile vil ikke bli "
-"forfremmet til høye grader."
+"Du bør aldri drepe sivile. Soldatene som drepte sivile blir ikke forfremmet "
+"til høye grader."
 
 #: ../base/ufos/tips.ufo:44
-#, fuzzy
 msgid ""
 "Consider launching interceptors to catch a faster UFO when it's close to "
 "your base to avoid a lengthy chase."
 msgstr ""
 "Vurder å starte avskjæringsjagere for å fange en raskere UFO når det er "
-"veldig nær basen for å unngå jakt slik at avskjæringsjagere allerede er i "
-"våpenrekkevidde når de starter."
+"veldig nær basen for å unngå en lengre jakt."
 
 #: ../base/ufos/tips.ufo:45
-#, fuzzy
 msgid ""
 "Consider stunning the civilians to keep them from running around. Aliens "
 "seem to ignore unconcious civilians."
 msgstr ""
-"Vurdere å svimeslå de sivile under Terror nettstedet oppdrag for å også "
-"holde dem fra å løpe rundt. Romvesener synes å foretrekke drepe bevisste "
-"sivile snarere enn bevisstløse."
+"Vurdere å svimeslå sivile for å hindre de fra å løpe rundt. Romvesener synes "
+"å ignorere bevisstløse personer."
 
 #: ../base/ufos/tips.ufo:46
-#, fuzzy
 msgid ""
 "Don't forget to install missile launchers and missiles in your missile "
 "batteries."
 msgstr ""
-"Ikke glem å installere raketterstartere og missiler i dine missilbatterier."
+"Ikke glem å installere rakettkastere og missiler i dine missilbatterier."
 
 #: ../base/ufos/tips.ufo:47
 msgid "To catch fast UFOs send interceptors in from several directions."
@@ -23837,7 +23897,7 @@ msgstr ""
 "Ingen overlevende igjen."
 
 #: client/cgame/skirmish/cl_game_skirmish.cpp:228
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "\n"
 "%i of %i enemies killed, %i stunned, %i survived.\n"
@@ -23846,8 +23906,8 @@ msgid ""
 msgstr ""
 "\n"
 "%i av %i fiender drept, %i lamslått, %i overlevde.\n"
-"%i av %i teammedlemmer overlevde, %i fiendedrap, %i vennlig ild-drap.\n"
-"%i av %i sivile reddet, %i fiendedrap, %i vennlig ild-drap."
+"%i av %i teammedlemmer overlevde, %i tapt i aksjon, %i vennlig ild-tap.\n"
+"%i av %i sivile reddet, %i sivile tap, %i vennlig ild-tap."
 
 #: client/cgame/skirmish/cl_game_skirmish.cpp:235
 msgid "Congratulations"
@@ -24255,9 +24315,8 @@ msgid "Can't perform action - object not activatable!"
 msgstr "Kan ikke utføre handling - objekt kan ikke aktiveres!"
 
 #: game/g_combat.cpp:1152
-#, fuzzy
 msgid "Can't perform action - target is not wounded!"
-msgstr "Kan ikke utføre handling - mål utenfor rekkevidde!"
+msgstr "Kan ikke utføre handling - målet er ikke såret!"
 
 #: game/g_combat.cpp:1175
 msgid "Can't perform action - target out of range!"
