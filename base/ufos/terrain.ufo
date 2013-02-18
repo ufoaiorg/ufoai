@@ -359,12 +359,12 @@ terrain tex_nature/soil001 {
 //==========================
 
 terrain tex_material/window_grey {
-	footstepsound "misc/breakglass2"
+	footstepsound "misc/breakglass02"
 	bouncefraction "0.5"
 }
 
 terrain tex_ufo/ufo2_16 {
-	footstepsound "misc/breakglass2"
+	footstepsound "misc/breakglass02"
 	bouncefraction "0.5"
 }
 
