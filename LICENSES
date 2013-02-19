@@ -304,7 +304,6 @@ base/maps/frozen/st_craft_ufo_harvester.map | GNU General Public License 2.0 or 
 base/maps/frozen/st_craft_ufo_scout.map | GNU General Public License 2.0 or later
 base/maps/frozen/st_craft_ufo_supply.map | GNU General Public License 2.0 or later
 base/maps/frozen/st_h01.map | GNU General Public License 2.0 or later
-base/maps/frozen/st_h02.map | GNU General Public License 2.0 or later
 base/maps/frozen/st_h04.map | GNU General Public License 2.0 or later
 base/maps/frozen/st_h05.map | GNU General Public License 2.0 or later
 base/maps/frozen/st_i01.map | GNU General Public License 2.0 or later
@@ -315,6 +314,7 @@ base/maps/frozen/st_i05.map | GNU General Public License 2.0 or later
 base/maps/frozen/st_i06.map | GNU General Public License 2.0 or later
 base/maps/frozen/st_i07.map | GNU General Public License 2.0 or later
 base/maps/frozen/st_i08.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/frozen/st_i09.map | GNU General Public License 2.0 or later | | maps/frozen/st_h02.map
 base/maps/frozen/st_mp_team2.map | GNU General Public License 2.0 or later
 base/maps/frozen/st_n01.map | GNU General Public License 2.0 or later
 base/maps/frozen/st_n02.map | GNU General Public License 2.0 or later
