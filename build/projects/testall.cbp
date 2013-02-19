@@ -126,6 +126,7 @@
 		<Unit filename="..\..\src\client\battlescape\cl_hud.cpp" />
 		<Unit filename="..\..\src\client\battlescape\cl_hud_callbacks.cpp" />
 		<Unit filename="..\..\src\client\battlescape\cl_localentity.cpp" />
+		<Unit filename="..\..\src\client\battlescape\cl_localentity.h" />
 		<Unit filename="..\..\src\client\battlescape\cl_parse.cpp" />
 		<Unit filename="..\..\src\client\battlescape\cl_particle.cpp" />
 		<Unit filename="..\..\src\client\battlescape\cl_radar.cpp" />
