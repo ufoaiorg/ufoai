@@ -1579,7 +1579,7 @@
 // entity 14
 {
 "classname" "info_alien_start"
-"origin" "176 400 92"
+"origin" "304 400 92"
 }
 // entity 15
 {
@@ -1751,4 +1751,44 @@
 "origin" "160 448 368"
 "particle" "weather_snow"
 "spawnflags" "255"
+}
+// entity 28
+{
+"classname" "info_alien_start"
+"origin" "144 400 92"
+"angle" "180"
+}
+// entity 29
+{
+"classname" "info_alien_start"
+"origin" "144 176 28"
+"angle" "180"
+}
+// entity 30
+{
+"classname" "info_alien_start"
+"origin" "304 112 28"
+"angle" "-90"
+}
+// entity 31
+{
+"classname" "info_alien_start"
+"origin" "432 176 28"
+"angle" "90"
+}
+// entity 32
+{
+"classname" "info_alien_start"
+"origin" "336 432 28"
+}
+// entity 33
+{
+"classname" "info_alien_start"
+"origin" "304 496 28"
+"angle" "180"
+}
+// entity 34
+{
+"classname" "info_alien_start"
+"origin" "112 16 28"
 }

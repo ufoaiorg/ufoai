@@ -1313,3 +1313,43 @@
 "spawnflags" "1"
 "skin" "0"
 }
+// entity 18
+{
+"classname" "info_alien_start"
+"origin" "240 48 28"
+}
+// entity 19
+{
+"classname" "info_alien_start"
+"origin" "496 144 28"
+"angle" "90"
+}
+// entity 20
+{
+"classname" "info_alien_start"
+"origin" "496 368 28"
+}
+// entity 21
+{
+"classname" "info_alien_start"
+"origin" "400 464 28"
+"angle" "180"
+}
+// entity 22
+{
+"classname" "info_alien_start"
+"origin" "208 240 28"
+"angle" "180"
+}
+// entity 23
+{
+"classname" "info_alien_start"
+"origin" "208 144 28"
+"angle" "180"
+}
+// entity 24
+{
+"classname" "info_alien_start"
+"origin" "432 176 28"
+"angle" "-90"
+}
