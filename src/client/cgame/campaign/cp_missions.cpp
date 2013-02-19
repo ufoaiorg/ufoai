@@ -1080,7 +1080,7 @@ void CP_MissionEndActions (mission_t *mission, aircraft_t *aircraft, bool won)
  * @param[in] campaign The capmaign we play
  * @param[in, out] mission The mission the battle was on
  * @param[in] battleParameters Parameters of the battle
- * @param[in] if PHALANX won
+ * @param[in] won if PHALANX won
  * @note both manual and automatic missions call this through won/lost UI screen
  */
 void CP_MissionEnd (const campaign_t *campaign, mission_t* mission, const battleParam_t* battleParameters, bool won)

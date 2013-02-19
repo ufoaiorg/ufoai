@@ -105,7 +105,7 @@ static void AM_Check_f (void)
 
 /**
  * @brief Updates mission result menu text with appropriate values
- * @param[in] missionResults Initialized mission results
+ * @param[in] results Initialized mission results
  */
 void MIS_InitResultScreen (const missionResults_t *results)
 {

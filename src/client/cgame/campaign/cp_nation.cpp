@@ -335,7 +335,7 @@ void CL_ParseNations (const char *name, const char **text)
 
 /**
  * @brief Finds a city by it's scripted identifier
- * @param[in] cityID Scripted ID of the city
+ * @param[in] cityId Scripted ID of the city
  */
 city_t *CITY_GetById (const char *cityId)
 {
