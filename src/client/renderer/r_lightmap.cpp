@@ -83,8 +83,8 @@ static void R_UploadLightmapPage (void)
 
 	/* clear the allocation heightmap and buffers */
 	memset(r_lightmaps.allocated, 0, r_lightmaps.size * sizeof(unsigned));
-	memset(r_lightmaps.sample_buffer, 0, r_lightmaps.size * r_lightmaps.size * sizeof(unsigned));
-	memset(r_lightmaps.direction_buffer, 0, r_lightmaps.size * r_lightmaps.size * sizeof(unsigned));
+	memset(r_lightmaps.sample_buffer, 0, r_lightmaps.size * r_lightmaps.size * LIGHTMAP_SAMPLE_SIZE);
+	memset(r_lightmaps.direction_buffer, 0, r_lightmaps.size * r_lightmaps.size * DELUXEMAP_SAMPLE_SIZE);
 
 	r_lightmaps.incomplete_atlas = false;
 }
@@ -284,8 +284,8 @@ void R_BeginBuildingLightmaps (void)
 	r_lightmaps.size = r_maxlightmap->integer;
 
 	r_lightmaps.allocated        = Mem_PoolAllocTypeN(unsigned, r_lightmaps.size, vid_lightPool);
-	r_lightmaps.sample_buffer    = Mem_PoolAllocTypeN(byte, r_lightmaps.size * r_lightmaps.size * sizeof(unsigned), vid_lightPool);
-	r_lightmaps.direction_buffer = Mem_PoolAllocTypeN(byte, r_lightmaps.size * r_lightmaps.size * sizeof(unsigned), vid_lightPool);
+	r_lightmaps.sample_buffer    = Mem_PoolAllocTypeN(byte, r_lightmaps.size * r_lightmaps.size * LIGHTMAP_SAMPLE_SIZE, vid_lightPool);
+	r_lightmaps.direction_buffer = Mem_PoolAllocTypeN(byte, r_lightmaps.size * r_lightmaps.size * DELUXEMAP_SAMPLE_SIZE, vid_lightPool);
 
 	r_lightmaps.lightmap_count = 0;
 	r_lightmaps.deluxemap_count = 0;
