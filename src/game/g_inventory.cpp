@@ -46,7 +46,7 @@ const equipDef_t *G_GetEquipDefByID (const char *equipID)
  * @param[in] pos A position for which items are wanted.
  * @sa G_GetFloorItems
  */
-Edict *G_GetFloorItemsFromPos (const pos3_t pos)
+Edict *G_GetFloorItemFromPos (const pos3_t pos)
 {
 	return G_GetEdictFromPos(pos, ET_ITEM);
 }
@@ -59,7 +59,7 @@ Edict *G_GetFloorItemsFromPos (const pos3_t pos)
  */
 Edict *G_GetFloorItems (Edict *ent)
 {
-	Edict *floor = G_GetFloorItemsFromPos(ent->pos);
+	Edict *floor = G_GetFloorItemFromPos(ent->pos);
 	/* found items */
 	if (floor) {
 		FLOOR(ent) = floor->chr.inv.getFloorContainer();
@@ -151,7 +151,7 @@ bool G_AddItemToFloor (const pos3_t pos, const char *itemID)
 	}
 
 	/* Also sets FLOOR(ent) to correct value. */
-	floor = G_GetFloorItemsFromPos(pos);
+	floor = G_GetFloorItemFromPos(pos);
 	/* nothing on the ground yet? */
 	if (!floor)
 		floor = G_SpawnFloor(pos);

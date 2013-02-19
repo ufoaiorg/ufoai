@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "g_local.h"
 
 const equipDef_t *G_GetEquipDefByID(const char *equipID);
-Edict *G_GetFloorItemsFromPos(const pos3_t pos);
+Edict *G_GetFloorItemFromPos(const pos3_t pos);
 Edict *G_GetFloorItems(Edict *ent) __attribute__((nonnull));
 bool G_InventoryRemoveItemByID(const char *itemID, Edict *ent, containerIndex_t index);
 bool G_AddItemToFloor(const pos3_t pos, const char *itemID);

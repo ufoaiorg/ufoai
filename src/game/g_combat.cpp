@@ -574,7 +574,7 @@ static void G_SpawnItemOnFloor (const pos3_t pos, const item_t *item)
 {
 	Edict *floor;
 
-	floor = G_GetFloorItemsFromPos(pos);
+	floor = G_GetFloorItemFromPos(pos);
 	if (floor == NULL) {
 		floor = G_SpawnFloor(pos);
 

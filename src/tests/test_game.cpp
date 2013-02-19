@@ -365,7 +365,7 @@ static void testInventoryTempContainerLinks (void)
 		CU_ASSERT_PTR_NULL(FLOOR(ent));
 		G_InventoryToFloor(ent);
 		CU_ASSERT_PTR_NOT_NULL(FLOOR(ent));
-		CU_ASSERT_PTR_EQUAL(FLOOR(G_GetFloorItemsFromPos(ent->pos)), FLOOR(ent));
+		CU_ASSERT_PTR_EQUAL(FLOOR(G_GetFloorItemFromPos(ent->pos)), FLOOR(ent));
 
 		nr = 0;
 		for (container = 0; container < gi.csi->numIDs; container++) {
