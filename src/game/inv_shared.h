@@ -381,14 +381,24 @@ typedef struct inventory_s {
 	invList_t *getFloorContainer() const;
 	void setFloorContainer(invList_t *cont);
 
-	inline invList_t *getContainer(const containerIndex_t idx) const
+	inline invList_t *getContainer (const containerIndex_t idx) const
 	{
 		return c[idx];
 	}
 
-	inline void setContainer(const containerIndex_t idx, invList_t *cont)
+	inline void setContainer (const containerIndex_t idx, invList_t *cont)
 	{
 		c[idx] = cont;
+	}
+	/**
+	 * @brief Searches if there is a specific item already in the inventory&container.
+	 * @param[in] container Container in the inventory.
+	 * @param[in] item The item to search for.
+	 * @return true if there already is at least one item of this type, otherwise false.
+	 */
+	inline bool containsItem (const invDef_t *container, const item_t *const item) const
+	{
+		return findInContainer(container, item) ? true : false;
 	}
 	invList_t *getArmourCont (void) const;
 	invList_t *findInContainer (const invDef_t *container, const item_t *const item) const;
@@ -445,7 +455,6 @@ bool INV_IsArmourDef(const invDef_t* invDef);
 void INVSH_InitCSI(const struct csi_s * import) __attribute__((nonnull));
 int INVSH_CheckToInventory(const inventory_t* const inv, const objDef_t *ob, const invDef_t *container, const int x, const int y, const invList_t *ignoredItem);
 void INVSH_GetFirstShapePosition(const invList_t *ic, int* const x, int* const y);
-bool INVSH_ExistsInInventory(const inventory_t* const inv, const invDef_t *container, const item_t *item);
 void INVSH_FindSpace(const inventory_t* const inv, const item_t *item, const invDef_t *container, int * const px, int * const py, const invList_t *ignoredItem) __attribute__((nonnull(1)));
 bool INV_IsCraftItem(const objDef_t *obj);
 bool INV_IsBaseDefenceItem(const objDef_t *item);

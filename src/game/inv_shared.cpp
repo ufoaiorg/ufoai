@@ -354,25 +354,6 @@ void INVSH_GetFirstShapePosition (const invList_t *ic, int* const x, int* const 
 }
 
 /**
- * @brief Searches if there is a specific item already in the inventory&container.
- * @param[in] inv Pointer to the inventory where we will search.
- * @param[in] container Container in the inventory.
- * @param[in] item The item to search for.
- * @return true if there already is at least one item of this type, otherwise false.
- */
-bool INVSH_ExistsInInventory (const inventory_t* const inv, const invDef_t *container, const item_t *item)
-{
-	invList_t *ic;
-
-	for (ic = inv->getContainer(container->id); ic; ic = ic->next)
-		if (ic->item.isSameAs(item)) {
-			return true;
-		}
-
-	return false;
-}
-
-/**
  * @brief Checks whether a given item is an aircraftitem item
  * @note This is done by checking whether it's a craftitem and not
  * marked as a dummy item - the combination of both means, that it's a
