@@ -634,9 +634,9 @@ bool G_ActorInvMove (Edict *ent, const invDef_t *from, invList_t *fItem, const i
 		/* We removed an item from the floor - check how the client
 		 * needs to be updated. */
 		assert(!newFloor);
-		if (FLOOR(ent)) {
+		if (ent->chr.inv.getFloorContainer()) {
 			/* There is still something on the floor. */
-			FLOOR(floor) = FLOOR(ent);
+			FLOOR(floor) = ent->chr.inv.getFloorContainer();
 			/* Delay this if swapping ammo, otherwise the le will be removed in the client before we can add back
 			 * the current ammo because removeNextFrame is set in LE_PlaceItem() if the floor le has no items */
 			if (ia != IA_RELOAD_SWAP)
@@ -699,7 +699,7 @@ bool G_ActorInvMove (Edict *ent, const invDef_t *from, invList_t *fItem, const i
 		 * the item to an already existing floor edict - the floor container that
 		 * is already linked might be from a different entity (this might happen
 		 * in case of a throw by another actor) */
-		FLOOR(floor) = FLOOR(ent);
+		FLOOR(floor) = ent->chr.inv.getFloorContainer();
 
 		/* A new container was created for the floor. */
 		if (newFloor) {

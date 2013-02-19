@@ -169,7 +169,7 @@ void G_MissionThink (Edict *self)
 			if (chain->item) {
 				const invList_t *ic;
 				G_GetFloorItems(chain);
-				ic = FLOOR(chain);
+				ic = chain->chr.inv.getFloorContainer();
 				if (!ic) {
 					/* reset the counter if there is no item */
 					chain->count = 0;
