@@ -28,7 +28,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "r_entity.h"
 
-#define LIGHTMAP_DEFAULT_PAGE_SIZE 4096
+#define LIGHTMAP_DEFAULT_PAGE_SIZE 1024
+#define LIGHTMAP_MAX_PAGE_SIZE 4096
 
 #define LIGHTMAP_SAMPLE_SIZE 3 /* RGB */
 #define DELUXEMAP_SAMPLE_SIZE 3 /* XYZ */

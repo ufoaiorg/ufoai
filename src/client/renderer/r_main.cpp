@@ -460,9 +460,11 @@ static const cmdList_t r_commands[] = {
 
 static bool R_CvarCheckMaxLightmap (cvar_t *cvar)
 {
-	if (r_config.maxTextureSize && cvar->integer > r_config.maxTextureSize) {
+	int maxSize = !r_config.maxTextureSize || LIGHTMAP_MAX_PAGE_SIZE < r_config.maxTextureSize ? LIGHTMAP_MAX_PAGE_SIZE : r_config.maxTextureSize;
+
+	if (cvar->integer > maxSize) {
 		Com_Printf("%s exceeded max supported texture size\n", cvar->name);
-		Cvar_SetValue(cvar->name, r_config.maxTextureSize);
+		Cvar_SetValue(cvar->name, maxSize);
 		return false;
 	}
 
@@ -472,7 +474,7 @@ static bool R_CvarCheckMaxLightmap (cvar_t *cvar)
 		return false;
 	}
 
-	return Cvar_AssertValue(cvar, 128, LIGHTMAP_DEFAULT_PAGE_SIZE, true);
+	return Cvar_AssertValue(cvar, 128, LIGHTMAP_MAX_PAGE_SIZE, true);
 }
 
 static bool R_CvarCheckDynamicLights (cvar_t *cvar)
