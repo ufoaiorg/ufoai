@@ -138,28 +138,30 @@ static bool R_AllocLightmapBlock (int w, int h, int *x, int *y)
  */
 static void R_BuildDefaultLightmap (mBspSurface_t *surf, byte *sout, byte *dout, int stride)
 {
-	int i, j;
-
 	const int smax = (surf->stextents[0] / surf->lightmap_scale) + 1;
 	const int tmax = (surf->stextents[1] / surf->lightmap_scale) + 1;
 
-	/* this works because the byte count per sample for the deluxemap is the same as for the lightmap */
-	stride -= (smax * LIGHTMAP_SAMPLE_SIZE);
+	/* Allocatate attached-to-surface cache for fast point lighting lookups */
+	byte *l = surf->lightmap = Mem_PoolAllocTypeN(byte, smax * tmax * LIGHTMAP_SAMPLE_SIZE, vid_lightPool);
 
-	for (i = 0; i < tmax; i++, sout += stride, dout += stride) {
-		for (j = 0; j < smax; j++) {
-			sout[0] = 255;
-			sout[1] = 255;
-			sout[2] = 255;
-
-			sout += LIGHTMAP_SAMPLE_SIZE;
-
-			dout[0] = 127;
-			dout[1] = 127;
-			dout[2] = 255;
-
-			dout += DELUXEMAP_SAMPLE_SIZE;
+	for (int t = 0; t < tmax; t++) {
+		byte *lmPtr = sout, *dmPtr = dout;
+		for (int s = 0; s < smax; s++) {
+			/* fill lightmap samples */
+			l[0] = lmPtr[0] = 255;
+			l[1] = lmPtr[1] = 255;
+			l[2] = lmPtr[2] = 255;
+			/* fill deluxemap samples */
+			dmPtr[0] = 127;
+			dmPtr[1] = 127;
+			dmPtr[2] = 255;
+			/* advance pointers */
+			lmPtr += LIGHTMAP_SAMPLE_SIZE;
+			dmPtr += DELUXEMAP_SAMPLE_SIZE;
+			l += LIGHTMAP_SAMPLE_SIZE;
 		}
+		sout += stride * LIGHTMAP_SAMPLE_SIZE;
+		dout += stride * DELUXEMAP_SAMPLE_SIZE;
 	}
 
 	Vector4Set(surf->lightColor, 1.0, 1.0, 1.0, 1.0);
@@ -199,8 +201,8 @@ static void R_BuildLightmap (mBspSurface_t *surf, byte *sout, byte *dout, int st
 			l += LIGHTMAP_SAMPLE_SIZE;
 			src += 6;
 		}
-		sout += stride;
-		dout += stride;
+		sout += stride * LIGHTMAP_SAMPLE_SIZE;
+		dout += stride * DELUXEMAP_SAMPLE_SIZE;
 	}
 
 	/* store average lightmap color and surface alpha */
@@ -248,9 +250,9 @@ void R_CreateSurfaceLightmap (mBspSurface_t * surf)
 	directions += (surf->light_t * r_lightmaps.size + surf->light_s) * DELUXEMAP_SAMPLE_SIZE;
 
 	if (!surf->samples)  /* make it fullbright */
-		R_BuildDefaultLightmap(surf, samples, directions, r_lightmaps.size * LIGHTMAP_SAMPLE_SIZE);
+		R_BuildDefaultLightmap(surf, samples, directions, r_lightmaps.size);
 	else  /* or light it properly */
-		R_BuildLightmap(surf, samples, directions, r_lightmaps.size * LIGHTMAP_SAMPLE_SIZE);
+		R_BuildLightmap(surf, samples, directions, r_lightmaps.size);
 }
 
 static void R_DisposeLightmaps (void)
