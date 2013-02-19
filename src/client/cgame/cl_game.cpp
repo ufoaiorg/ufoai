@@ -694,7 +694,6 @@ static const cgame_import_t* GAME_GetImportData (const cgameType_t *t)
 		cgi->INV_RemoveFromInventory = GAME_RemoveFromInventory;
 
 		cgi->INV_ItemDescription = INV_ItemDescription;
-		cgi->INVSH_GetInventoryWeight = INVSH_GetInventoryWeight;
 
 		cgi->Sys_Error = Sys_Error;
 

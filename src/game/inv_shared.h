@@ -393,6 +393,7 @@ typedef struct inventory_s {
 	invList_t *getArmourCont (void) const;
 	invList_t *findInContainer (const invDef_t *container, const item_t *const item) const;
 	invList_t *getItemAtPos (const invDef_t *container, const int x, const int y) const;
+	float getWeight () const;
 } inventory_t;
 
 #define MAX_EQUIPDEFS   64
@@ -454,7 +455,6 @@ const objDef_t *INVSH_GetItemByIDX(int index);
 const objDef_t *INVSH_GetItemByIDSilent(const char *id);
 bool INVSH_LoadableInWeapon(const objDef_t *od, const objDef_t *weapon);
 bool INVSH_CheckAddingItemToInventory(const inventory_t *inv, containerIndex_t from, containerIndex_t to, const item_t &item, int maxWeight);
-float INVSH_GetInventoryWeight(const inventory_t *inventory);
 
 const invDef_t *INVSH_GetInventoryDefinitionByID(const char *id);
 

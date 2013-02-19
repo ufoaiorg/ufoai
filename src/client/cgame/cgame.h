@@ -336,7 +336,6 @@ typedef struct cgame_import_s {
 	bool (IMPORT *INV_RemoveFromInventory) (inventory_t* const i, const invDef_t * container, invList_t *fItem);
 
 	void (IMPORT *INV_ItemDescription) (const objDef_t *od);
-	float (IMPORT *INVSH_GetInventoryWeight) (const inventory_t *inventory);
 
 	/** @todo: remove me */
 	byte *r_xviAlpha;

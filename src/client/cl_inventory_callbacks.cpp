@@ -351,7 +351,7 @@ static void INV_UpdateActorLoad_f (void)
 
 	const character_t *chr = GAME_GetSelectedChr();
 	if (chr != NULL) {
-		const float invWeight = INVSH_GetInventoryWeight(&chr->inv);
+		const float invWeight = chr->inv.getWeight();
 		const int maxWeight = GAME_GetChrMaxLoad(chr);
 		const float penalty = GET_ENCUMBRANCE_PENALTY(invWeight, chr->score.skills[ABILITY_POWER]);
 		const int normalTU = GET_TU(chr->score.skills[ABILITY_SPEED], 1.0f - WEIGHT_NORMAL_PENALTY);

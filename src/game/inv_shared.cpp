@@ -595,7 +595,7 @@ bool INVSH_CheckAddingItemToInventory (const inventory_t *inv, containerIndex_t 
 		return true;
 
 	const bool swapArmour = INV_IsArmour(item.def()) && inv->getArmourCont();
-	const float invWeight = INVSH_GetInventoryWeight(inv) - (swapArmour ? inv->getArmourCont()->item.getWeight() : 0);
+	const float invWeight = inv->getWeight() - (swapArmour ? inv->getArmourCont()->item.getWeight() : 0);
 	float itemWeight = item.getWeight();
 
 	return (maxWeight < 0 || maxWeight >= invWeight + itemWeight);
@@ -804,17 +804,16 @@ uint32_t INVSH_ShapeRotate (const uint32_t shape)
 
 /**
  * @brief Get the weight of the items in the given inventory (excluding those in temp containers).
- * @param[in] inventory The inventory to get the items weight.
  * @return The total weight of the inventory items (excluding those in temp containers)
  */
-float INVSH_GetInventoryWeight (const inventory_t *inventory)
+float inventory_t::getWeight () const
 {
 	float weight = 0;
 
 	for (int containerID = 0; containerID < CSI->numIDs; containerID++) {
 		if (CSI->ids[containerID].temp)
 			continue;
-		for (invList_t *ic = inventory->c[containerID], *next; ic; ic = next) {
+		for (invList_t *ic = c[containerID], *next; ic; ic = next) {
 			next = ic->next;
 			weight += ic->item.getWeight();
 		}
