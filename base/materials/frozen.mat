@@ -9,7 +9,7 @@
 	}
 }
 
-/* Rotating fan blades for the generator cooling system (on tile st_i01) */
+/* Rotating fan blades for the generator cooling system (on tile st_i01, st_i08) */
 {
 	material tex_base/vent_round2
 	bump 1.0
@@ -23,6 +23,7 @@
 	}
 }
 
+/* blend some snow onto the wooden roof of st_h01 */
 {
 	material tex_mattn/roof001
 		bump 2.0
@@ -34,4 +35,15 @@
 				dirtmap 1.0
 				lightmap
 			}
+}
+
+/* flare for the warning light on top of the windmill */
+{
+	material tex_lights/light004
+	{
+		flare 2
+		scale.s 2.0
+		color 1.0 0.0 0.0
+		lightmap
+	}
 }
