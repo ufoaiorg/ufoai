@@ -52,7 +52,7 @@ bool B_IsBuildingBuiltUp (const building_t *building)
  * @brief Returns the time remaining time of a building construction
  * @param[in] building Pointer to the building to check
  */
-float B_GetConstructionTimeRemain (const building_t * building)
+float B_GetConstructionTimeRemain (const building_t *building)
 {
 	date_t diff = Date_Substract(building->timeStart, ccs.date);
 	diff.day += building->buildTime;
@@ -344,7 +344,7 @@ bool B_CheckBuildingDependencesStatus (const building_t* building)
  * @param[in] eventType Type of the event to run
  * @return @c true if an event was fired @c false otherwise (the building may not have one)
  */
-bool B_FireEvent (const building_t * buildingTemplate, const base_t * base, buildingEvent_t eventType)
+bool B_FireEvent (const building_t *buildingTemplate, const base_t *base, buildingEvent_t eventType)
 {
 	const char *command = NULL;
 

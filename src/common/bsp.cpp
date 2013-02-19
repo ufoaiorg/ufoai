@@ -1029,7 +1029,7 @@ cBspModel_t *CM_InlineModel (const mapTiles_t *mapTiles, const char *name)
  * @sa LE_DoorAction
  * @sa G_ClientUseEdict
  */
-cBspModel_t * CM_SetInlineModelOrientation (mapTiles_t *mapTiles, const char *name, const vec3_t origin, const vec3_t angles)
+cBspModel_t *CM_SetInlineModelOrientation (mapTiles_t *mapTiles, const char *name, const vec3_t origin, const vec3_t angles)
 {
 	cBspModel_t *model = CM_InlineModel(mapTiles, name);
 	assert(model);

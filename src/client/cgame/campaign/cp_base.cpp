@@ -2545,7 +2545,7 @@ bool B_SaveXML (xmlNode_t *parent)
 		for (row = 0; row < BASE_SIZE; row++) {
 			int column;
 			for (column = 0; column < BASE_SIZE; column++) {
-				xmlNode_t * snode = cgi->XML_AddNode(node, SAVE_BASES_BUILDING);
+				xmlNode_t *snode = cgi->XML_AddNode(node, SAVE_BASES_BUILDING);
 				/** @todo save it as vec2t if needed, also it's opposite */
 				cgi->XML_AddInt(snode, SAVE_BASES_X, row);
 				cgi->XML_AddInt(snode, SAVE_BASES_Y, column);
@@ -2558,7 +2558,7 @@ bool B_SaveXML (xmlNode_t *parent)
 		node = cgi->XML_AddNode(act_base, SAVE_BASES_BUILDINGS);
 		building = NULL;
 		while ((building = B_GetNextBuilding(b, building))) {
-			xmlNode_t * snode;
+			xmlNode_t *snode;
 
 			if (!building->tpl)
 				continue;
@@ -2679,7 +2679,7 @@ bool B_LoadXML (xmlNode_t *parent)
 
 	cgi->Com_RegisterConstList(saveBaseConstants);
 	for (base = cgi->XML_GetNode(bases, SAVE_BASES_BASE), i = 0; i < MAX_BASES && base; i++, base = cgi->XML_GetNextNode(base, bases, SAVE_BASES_BASE)) {
-		xmlNode_t * node, * snode;
+		xmlNode_t *node, *snode;
 		base_t *const b = B_GetBaseByIDX(i);
 		const char *str = cgi->XML_GetString(base, SAVE_BASES_BASESTATUS);
 		int j;

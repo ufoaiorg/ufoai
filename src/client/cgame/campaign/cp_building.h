@@ -138,8 +138,8 @@ building_t *B_GetBuildingTemplateSilent(const char *buildingName);
 buildingType_t B_GetBuildingTypeByBuildingID(const char *buildingID);
 bool B_CheckBuildingDependencesStatus(const building_t* building);
 bool B_IsBuildingBuiltUp(const building_t *building);
-float B_GetConstructionTimeRemain(const building_t * building);
+float B_GetConstructionTimeRemain(const building_t *building);
 
-bool B_FireEvent(const building_t * buildingTemplate, const struct base_s * base, buildingEvent_t eventType);
+bool B_FireEvent(const building_t *buildingTemplate, const struct base_s *base, buildingEvent_t eventType);
 
 #endif
