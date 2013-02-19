@@ -60,7 +60,7 @@ void CL_ActorStateChange (const eventRegister_t *self, dbuffer *msg)
 	/* killed by the server: no animation is played, etc. */
 	if ((state & STATE_DEAD) && LE_IsLivingActor(le)) {
 		le->state = state;
-		FLOOR(le) = NULL;
+		le->setFloorContainer(NULL);
 		LE_SetThink(le, NULL);
 		VectorCopy(player_dead_maxs, le->maxs);
 		CL_ActorRemoveFromTeamList(le);

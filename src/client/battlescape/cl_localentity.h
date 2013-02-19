@@ -154,6 +154,11 @@ typedef struct le_s {
 
 	/** is called before adding a le to scene */
 	localEntitiyAddFunc_t addFunc;
+
+	inline void setFloorContainer (invList_t *il)
+	{
+		inv.setFloorContainer(il);
+	}
 } le_t;
 
 #define MAX_LOCALMODELS		1024

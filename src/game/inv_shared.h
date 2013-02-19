@@ -379,6 +379,7 @@ typedef struct inventory_s {
 	invList_t *c[MAX_CONTAINERS];
 
 	invList_t *getFloorContainer() const;
+	void setFloorContainer(invList_t *cont);
 
 	inline invList_t *getContainer(const containerIndex_t idx) const
 	{

@@ -130,7 +130,7 @@ void CL_ActorDoMove (const eventRegister_t *self, dbuffer *msg)
 		Com_Error(ERR_DROP, "start and end pos are the same (entnum: %i)", number);
 
 	/* activate PathMove function */
-	FLOOR(le) = NULL;
+	le->setFloorContainer(NULL);
 	LE_SetThink(le, LET_StartPathMove);
 	le->pathPos = 0;
 	le->startTime = cl.time;

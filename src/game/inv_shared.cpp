@@ -822,6 +822,11 @@ float INVSH_GetInventoryWeight (const inventory_t *inventory)
 	return weight;
 }
 
+void inventory_t::setFloorContainer(invList_t *cont)
+{
+	setContainer(CSI->idFloor, cont);
+}
+
 invList_t *inventory_t::getFloorContainer () const
 {
 	return getContainer(CSI->idFloor);
