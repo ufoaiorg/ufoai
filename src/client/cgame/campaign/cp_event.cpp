@@ -204,6 +204,22 @@ static int CP_CheckTriggerEvent (const char *expression, const void* userdata)
 		return 0;
 	}
 
+	/* check that the given tech is already researched */
+	type = Q_strstart(expression, "researched");
+	if (type != 0) {
+		if (strlen(type) <= 1)
+			return -1;
+		char value[MAX_VAR];
+		Q_strncpyz(value, type + 1, sizeof(value));
+		value[strlen(value) - 1] = '\0';
+		technology_t *tech = RS_GetTechByID(value);
+		if (tech == NULL)
+			return -1;
+		if (RS_IsResearched_ptr(tech))
+			return 1;
+		return 0;
+	}
+
 	/* check for nation happiness - also see the lost conditions in the campaign */
 	type = Q_strstart(expression, "nationhappiness");
 	if (type != 0) {
