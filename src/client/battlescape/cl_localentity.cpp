@@ -851,7 +851,7 @@ void LE_PlaceItem (le_t *le)
 	while ((actor = LE_GetNextInUse(actor))) {
 		if ((actor->type == ET_ACTOR || actor->type == ET_ACTOR2x2)
 		 && VectorCompare(actor->pos, le->pos)) {
-			if (FLOOR(le))
+			if (le->getFloorContainer())
 				FLOOR(actor) = FLOOR(le);
 		}
 	}
@@ -859,8 +859,9 @@ void LE_PlaceItem (le_t *le)
 	/* the le is an ET_ITEM entity, this entity is there to render dropped items
 	 * if there are no items in the floor container, this entity can be
 	 * deactivated */
-	if (FLOOR(le)) {
-		const objDef_t *biggest = LE_BiggestItem(FLOOR(le));
+	invList_t *floorCont = le->getFloorContainer();
+	if (floorCont) {
+		const objDef_t *biggest = LE_BiggestItem(floorCont);
 		le->model1 = cls.modelPool[biggest->idx];
 		if (!le->model1)
 			Com_Error(ERR_DROP, "Model for item %s is not precached in the cls.model_weapons array",

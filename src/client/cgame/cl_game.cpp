@@ -410,8 +410,8 @@ static void GAME_CollectItems (void *data, int won, void (*item)(void*, const ob
 		 * members carry. */
 		if (LE_IsItem(le)) {
 			if (won) {
-				invList_t *i;
-				for (i = FLOOR(le); i; i = i->next) {
+				invList_t *i = le->getFloorContainer();
+				for ( ; i; i = i->next) {
 					item(data, i->item.def(), 1);
 					if (i->item.isReloadable() && i->item.ammoLeft > 0)
 						ammo(data, i);
