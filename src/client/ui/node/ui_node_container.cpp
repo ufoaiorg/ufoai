@@ -376,7 +376,7 @@ static void UI_ContainerNodeDrawFreeSpace (uiNode_t *node, inventory_t *inv)
 				/* Add '1's to each position the item is 'blocking'. */
 				const int checkedTo = INVSH_CheckToInventory(inv, od, EXTRADATA(node).container, x, y, dragInfoIC);
 				if (checkedTo & INV_FITS)				/* Item can be placed normally. */
-					INVSH_MergeShapes(free, (uint32_t)od->shape, x, y);
+					INVSH_MergeShapes(free, od->shape, x, y);
 				if (checkedTo & INV_FITS_ONLY_ROTATED)	/* Item can be placed rotated. */
 					INVSH_MergeShapes(free, od->getShapeRotated(), x, y);
 
