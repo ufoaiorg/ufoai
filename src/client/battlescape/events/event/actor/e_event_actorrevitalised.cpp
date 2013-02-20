@@ -55,7 +55,7 @@ void CL_ActorRevitalised (const eventRegister_t *self, dbuffer *msg)
 	/* link any floor container into the actor temp floor container */
 	floor = LE_Find(ET_ITEM, le->pos);
 	if (floor)
-		FLOOR(le) = FLOOR(floor);
+		le->setFloor(floor);
 
 	le->state = state;
 

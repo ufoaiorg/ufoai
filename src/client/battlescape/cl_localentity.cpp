@@ -199,9 +199,9 @@ static inline localModel_t *LM_Find (int entnum)
  */
 void LE_LinkFloorContainer (le_t *le)
 {
-	le_t *floor = LE_Find(ET_ITEM, le->pos);
-	if (floor)
-		FLOOR(le) = FLOOR(floor);
+	le_t *floorItem = LE_Find(ET_ITEM, le->pos);
+	if (floorItem)
+		le->setFloor(floorItem);
 	else
 		le->setFloorContainer(NULL);
 }
@@ -852,7 +852,7 @@ void LE_PlaceItem (le_t *le)
 		if ((actor->type == ET_ACTOR || actor->type == ET_ACTOR2x2)
 		 && VectorCompare(actor->pos, le->pos)) {
 			if (le->getFloorContainer())
-				FLOOR(actor) = FLOOR(le);
+				actor->setFloor(le);
 		}
 	}
 

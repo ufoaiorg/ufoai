@@ -163,6 +163,10 @@ typedef struct le_s {
 	{
 		inv.setFloorContainer(il);
 	}
+	inline void setFloor (le_s *other)
+	{
+		inv.setFloorContainer(other->getFloorContainer());
+	}
 } le_t;
 
 #define MAX_LOCALMODELS		1024
