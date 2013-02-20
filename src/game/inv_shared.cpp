@@ -293,8 +293,8 @@ bool item_t::isSameAs (const item_t *const other) const
 /**
  * @brief Checks the shape if there is a 1-bit on the position x/y.
  * @param[in] shape The shape to check in. (8x4)
- * @param[in] x The x value in the container (1 << x in the shape bitmask)
- * @param[in] y The y value in the container (SHAPE_SMALL_MAX_HEIGHT is the max)
+ * @param[in] x The x value in the shape (1 << x in the shape bitmask)
+ * @param[in] y The y value in the shape (SHAPE_SMALL_MAX_HEIGHT is the max)
  */
 static bool INVSH_CheckShapeSmall (const uint32_t shape, const int x, const int y)
 {
