@@ -378,7 +378,7 @@ static void UI_ContainerNodeDrawFreeSpace (uiNode_t *node, inventory_t *inv)
 				if (checkedTo & INV_FITS)				/* Item can be placed normally. */
 					INVSH_MergeShapes(free, (uint32_t)od->shape, x, y);
 				if (checkedTo & INV_FITS_ONLY_ROTATED)	/* Item can be placed rotated. */
-					INVSH_MergeShapes(free, INVSH_ShapeRotate((uint32_t)od->shape), x, y);
+					INVSH_MergeShapes(free, od->getShapeRotated(), x, y);
 
 				/* Only draw on existing positions. */
 				if (INVSH_CheckShape(EXTRADATA(node).container->shape, x, y)) {

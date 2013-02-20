@@ -293,6 +293,8 @@ typedef struct objDef_s {
 	int size;				/**< Size of an item, used in storage capacities. */
 	float weight;			/**< The weight of the item */
 	bool notOnMarket;		/**< True if this item should not be available on market. */
+
+	uint32_t getShapeRotated () const;
 } objDef_t;
 
 /**
@@ -483,6 +485,5 @@ const fireDef_t *FIRESH_SlowestFireDef(const item_t &item);
 void INVSH_MergeShapes(uint32_t *shape, const uint32_t itemShape, const int x, const int y);
 bool INVSH_CheckShape(const uint32_t *shape, const int x, const int y);
 int INVSH_ShapeSize(const uint32_t shape);
-uint32_t INVSH_ShapeRotate(const uint32_t shape);
 
 const objDef_t* INVSH_HasReactionFireEnabledWeapon(const invList_t *invList);

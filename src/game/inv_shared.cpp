@@ -95,7 +95,7 @@ static int cacheCheckToInventory = INV_DOES_NOT_FIT;
 
 /**
  * @brief Will check if the item-shape is colliding with something else in the container-shape at position x/y.
- * @note The function expects an already rotated shape for itemShape. Use INVSH_ShapeRotate if needed.
+ * @note The function expects an already rotated shape for itemShape. Use getShapeRotated() if needed.
  * @param[in] shape The shape of the container [SHAPE_BIG_MAX_HEIGHT]
  * @param[in] itemShape The shape of the item [SHAPE_SMALL_MAX_HEIGHT]
  * @param[in] x The x value in the container (1 << x in the shape bitmask)
@@ -172,7 +172,7 @@ static bool INVSH_CheckToInventory_shape (const inventory_t *const inv, const in
 				continue;
 
 			if (ic->item.rotated)
-				INVSH_MergeShapes(mask, INVSH_ShapeRotate(ic->item.def()->shape), ic->x, ic->y);
+				INVSH_MergeShapes(mask, ic->item.def()->getShapeRotated(), ic->x, ic->y);
 			else
 				INVSH_MergeShapes(mask, ic->item.def()->shape, ic->x, ic->y);
 		}
@@ -244,7 +244,7 @@ int INVSH_CheckToInventory (const inventory_t *const inv, const objDef_t *od, co
 
 			if (INVSH_CheckToInventory_shape(inv, container, od->shape, x, y, ignoredItem))
 				fits |= INV_FITS;
-			if (INVSH_CheckToInventory_shape(inv, container, INVSH_ShapeRotate(od->shape), x, y, ignoredItem))
+			if (INVSH_CheckToInventory_shape(inv, container, od->getShapeRotated(), x, y, ignoredItem))
 				fits |= INV_FITS_ONLY_ROTATED;
 
 			if (fits != INV_DOES_NOT_FIT)
@@ -265,7 +265,7 @@ int INVSH_CheckToInventory (const inventory_t *const inv, const objDef_t *od, co
 		fits |= INV_FITS;
 	/** @todo aren't both (equip and floor) temp container? */
 	if (!INV_IsEquipDef(container) && !INV_IsFloorDef(container)
-	&& INVSH_CheckToInventory_shape(inv, container, INVSH_ShapeRotate(od->shape), x, y, ignoredItem))
+	&& INVSH_CheckToInventory_shape(inv, container, od->getShapeRotated(), x, y, ignoredItem))
 		fits |= INV_FITS_ONLY_ROTATED;
 
 	return fits;	/**< Return INV_FITS_BOTH if both if statements where true above. */
@@ -320,7 +320,7 @@ static bool INVSH_ShapeCheckPosition (const invList_t *ic, const int x, const in
 
 	/* Check if the position is inside the shape (depending on rotation value) of the item. */
 	if (ic->item.rotated) {
-		shape = INVSH_ShapeRotate(ic->item.def()->shape);
+		shape = ic->item.def()->getShapeRotated();
 	} else {
 		shape = ic->item.def()->shape;
 	}
@@ -677,7 +677,7 @@ const objDef_t* INVSH_HasReactionFireEnabledWeapon (const invList_t *invList)
 
 /**
  * @brief Will merge the second shape (=itemShape) into the first one (=big container shape) on the position x/y.
- * @note The function expects an already rotated shape for itemShape. Use INVSH_ShapeRotate if needed.
+ * @note The function expects an already rotated shape for itemShape. Use getShapeRotated() if needed.
  * @param[in] shape The shape of the container [SHAPE_BIG_MAX_HEIGHT]'
  * @param[in] itemShape The shape of the item [SHAPE_SMALL_MAX_HEIGHT]
  * @param[in] x The x value in the container (1 << x in the shape bitmask)
@@ -758,7 +758,7 @@ static uint32_t INVSH_ShapeSetBit (uint32_t shape, const int x, const int y)
  * @param[in] shape The shape to rotate.
  * @return The new shape.
  */
-uint32_t INVSH_ShapeRotate (const uint32_t shape)
+uint32_t objDef_t::getShapeRotated () const
 {
 	int h, w;
 	uint32_t shapeNew = 0;
