@@ -322,6 +322,12 @@ base/maps/frozen/st_n04.map | GNU General Public License 2.0 or later
 base/maps/frozen/st_n05.map | GNU General Public License 2.0 or later
 base/maps/frozen/st_n06.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | lake_ice_big.map
 base/maps/frozen/st_n07.map | GNU General Public License 2.0 or later | | base/maps/frozen/st_h03.map
+base/maps/frozen/st_n08.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | lake_ice_big.map
+base/maps/frozen/st_river_h_1.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | lake_ice_big.map
+base/maps/frozen/st_river_h_2.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | lake_ice_big.map
+base/maps/frozen/st_river_se.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | lake_ice_big.map
+base/maps/frozen/st_river_v_1.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | lake_ice_big.map
+base/maps/frozen/st_river_v_2.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | lake_ice_big.map
 base/maps/fueldump.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/gasstation.ump | GNU General Public License 2.0 or later
 base/maps/gasstation/gas_craft_drop_firebird.map | GNU General Public License 2.0 or later
