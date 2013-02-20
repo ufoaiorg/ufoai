@@ -794,8 +794,7 @@ float inventory_t::getWeight () const
 	for (int containerID = 0; containerID < CSI->numIDs; containerID++) {
 		if (CSI->ids[containerID].temp)
 			continue;
-		for (invList_t *ic = c[containerID], *next; ic; ic = next) {
-			next = ic->next;
+		for (invList_t *ic = c[containerID]; ic; ic = ic->next) {
 			weight += ic->item.getWeight();
 		}
 	}
