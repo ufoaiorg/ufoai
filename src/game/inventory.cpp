@@ -116,7 +116,7 @@ invList_t *InventoryInterface::addToInventory (inventory_t *const inv, const ite
 
 	if (x < 0 || y < 0 || x >= SHAPE_BIG_MAX_WIDTH || y >= SHAPE_BIG_MAX_HEIGHT) {
 		/* No (sane) position in container given as parameter - find free space on our own. */
-		INVSH_FindSpace(inv, item, container, &x, &y, NULL);
+		inv->findSpace(container, item, &x, &y, NULL);
 		if (x == NONE)
 			return NULL;
 	}
@@ -308,7 +308,7 @@ inventory_action_t InventoryInterface::moveInInventory (inventory_t* const inv, 
 		checkedTo = INVSH_CheckToInventory(inv, fItem->item.def(), to, 0, 0, fItem);
 	else {
 		if (tx == NONE || ty == NONE)
-			INVSH_FindSpace(inv, &fItem->item, to, &tx, &ty, fItem);
+			inv->findSpace(to, &fItem->item, &tx, &ty, fItem);
 		/* still no valid location found */
 		if (tx == NONE || ty == NONE)
 			return IA_NONE;
@@ -403,7 +403,7 @@ inventory_action_t InventoryInterface::moveInInventory (inventory_t* const inv, 
 			 * We add the item anyway but it'll not be displayed (yet)
 			 * This is then used in addToInventory below.*/
 			/** @todo change the other code to browse through these things. */
-			INVSH_FindSpace(inv, &fItem->item, to, &tx, &ty, fItem);
+			inv->findSpace(to, &fItem->item, &tx, &ty, fItem);
 			if (tx == NONE || ty == NONE) {
 				Com_DPrintf(DEBUG_SHARED, "MoveInInventory - item will be added non-visible (%s)\n", invName);
 			}
@@ -466,14 +466,14 @@ inventory_action_t InventoryInterface::moveInInventory (inventory_t* const inv, 
  * @param[in] inv Inventory pointer to add the item.
  * @param[in] item Item to add to inventory.
  * @param[in] container Container id.
- * @sa INVSH_FindSpace
+ * @sa findSpace
  * @sa addToInventory
  */
 bool InventoryInterface::tryAddToInventory (inventory_t* const inv, const item_t *const item, const invDef_t *container)
 {
 	int x, y;
 
-	INVSH_FindSpace(inv, item, container, &x, &y, NULL);
+	inv->findSpace(container, item, &x, &y, NULL);
 
 	if (x == NONE) {
 		assert(y == NONE);

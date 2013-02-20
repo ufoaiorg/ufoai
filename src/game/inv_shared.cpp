@@ -419,11 +419,10 @@ invList_t *inventory_t::getItemAtPos (const invDef_t *container, const int x, co
  * @sa INVSH_CheckToInventory
  * @note x and y are NONE if no free space is available
  */
-void INVSH_FindSpace (const inventory_t* const inv, const item_t *item, const invDef_t *container, int* const px, int* const py, const invList_t *ignoredItem)
+void inventory_t::findSpace (const invDef_t *container, const item_t *item, int* const px, int* const py, const invList_t *ignoredItem) const
 {
 	int x, y;
 
-	assert(inv);
 	assert(container);
 	assert(!cacheCheckToInventory);
 
@@ -437,7 +436,7 @@ void INVSH_FindSpace (const inventory_t* const inv, const item_t *item, const in
 
 	for (y = 0; y < SHAPE_BIG_MAX_HEIGHT; y++) {
 		for (x = 0; x < SHAPE_BIG_MAX_WIDTH; x++) {
-			const int checkedTo = INVSH_CheckToInventory(inv, item->def(), container, x, y, ignoredItem);
+			const int checkedTo = INVSH_CheckToInventory(this, item->def(), container, x, y, ignoredItem);
 			if (checkedTo) {
 				cacheCheckToInventory = INV_DOES_NOT_FIT;
 				*px = x;
@@ -451,7 +450,7 @@ void INVSH_FindSpace (const inventory_t* const inv, const item_t *item, const in
 	cacheCheckToInventory = INV_DOES_NOT_FIT;
 
 #ifdef PARANOID
-	Com_DPrintf(DEBUG_SHARED, "INVSH_FindSpace: no space for %s: %s in %s\n",
+	Com_DPrintf(DEBUG_SHARED, "findSpace: no space for %s: %s in %s\n",
 		item->def()->type, item->def()->id, container->name);
 #endif
 	*px = *py = NONE;

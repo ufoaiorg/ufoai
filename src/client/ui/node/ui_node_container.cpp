@@ -697,7 +697,7 @@ static bool UI_ContainerNodeAddItem (const invDef_t *container, invList_t *ic, c
 {
 	int px, py;
 	const invDef_t *target = INVDEF(containerID);
-	INVSH_FindSpace(ui_inventory, &ic->item, target, &px, &py, NULL);
+	ui_inventory->findSpace(target, &ic->item, &px, &py, NULL);
 	return INV_MoveItem(ui_inventory, target, px, py, container, ic, icp);
 }
 
@@ -940,7 +940,7 @@ bool uiContainerNode::onDndMove (uiNode_t *target, int x, int y)
 /* We would need to check for weapon/ammo as well here, otherwise a preview would be drawn as well when hovering over the correct weapon to reload. */
 		|| (INVSH_CheckToInventory(ui_inventory, dragItem->item, EXTRADATA(target).container, dragInfoToX, dragInfoToY) == INV_DOES_NOT_FIT)) {
 #endif
-		INVSH_FindSpace(ui_inventory, dragItem, EXTRADATA(target).container, &dragInfoToX, &dragInfoToY, dragInfoIC);
+		ui_inventory->findSpace(EXTRADATA(target).container, dragItem, &dragInfoToX, &dragInfoToY, dragInfoIC);
 	}
 
 	/* we can drag every thing */

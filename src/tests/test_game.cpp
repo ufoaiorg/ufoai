@@ -238,7 +238,7 @@ static void testInventoryForDiedAlien (void)
 		if (count > 0) {
 			invList_t *entryToMove = FLOOR(ent);
 			int tx, ty;
-			INVSH_FindSpace(&ent->chr.inv, &entryToMove->item, INVDEF(csi.idBackpack), &tx, &ty, entryToMove);
+			ent->chr.inv.findSpace(INVDEF(csi.idBackpack), &entryToMove->item, &tx, &ty, entryToMove);
 			if (tx != NONE) {
 				Com_Printf("trying to move item %s from floor into backpack to pos %i:%i\n", entryToMove->item.def()->name, tx, ty);
 				CU_ASSERT_TRUE(G_ActorInvMove(ent, INVDEF(csi.idFloor), entryToMove, INVDEF(csi.idBackpack), tx, ty, false));
@@ -318,7 +318,7 @@ static void testInventoryWithTwoDiedAliensOnTheSameGridTile (void)
 		if (count > 0) {
 			invList_t *entryToMove = FLOOR(ent);
 			int tx, ty;
-			INVSH_FindSpace(&ent->chr.inv, &entryToMove->item, INVDEF(csi.idBackpack), &tx, &ty, entryToMove);
+			ent->chr.inv.findSpace(INVDEF(csi.idBackpack), &entryToMove->item, &tx, &ty, entryToMove);
 			if (tx != NONE) {
 				Com_Printf("trying to move item %s from floor into backpack to pos %i:%i\n", entryToMove->item.def()->name, tx, ty);
 				CU_ASSERT_TRUE(G_ActorInvMove(ent, INVDEF(csi.idFloor), entryToMove, INVDEF(csi.idBackpack), tx, ty, false));

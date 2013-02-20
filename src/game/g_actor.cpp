@@ -596,7 +596,7 @@ bool G_ActorInvMove (Edict *ent, const invDef_t *from, invList_t *fItem, const i
 	if (tx == NONE) {
 		ic = ent->chr.inv.getItemAtPos(from, fItem->x, fItem->y);
 		if (ic)
-			INVSH_FindSpace(&ent->chr.inv, &ic->item, to, &tx, &ty, fItem);
+			ent->chr.inv.findSpace(to, &ic->item, &tx, &ty, fItem);
 		if (tx == NONE)
 			return false;
 	}

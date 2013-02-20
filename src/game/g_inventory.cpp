@@ -190,7 +190,7 @@ static bool G_InventoryPlaceItemAdjacent (Edict *ent)
 			G_VisFlagsReset(floorAdjacent);
 		}
 
-		INVSH_FindSpace(&floorAdjacent->i, &ic->item, INVDEF(gi.csi->idFloor), &x, &y, ic);
+		floorAdjacent->i.findSpace(INVDEF(gi.csi->idFloor), &ic->item, &x, &y, ic);
 		if (x != NONE) {
 			ic->x = x;
 			ic->y = y;
