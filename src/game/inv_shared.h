@@ -295,6 +295,7 @@ typedef struct objDef_s {
 	bool notOnMarket;		/**< True if this item should not be available on market. */
 
 	uint32_t getShapeRotated () const;
+	bool isCraftItem () const;
 } objDef_t;
 
 /**

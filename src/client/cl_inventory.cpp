@@ -323,7 +323,7 @@ bool INV_ItemMatchesFilter (const objDef_t *obj, const itemFilterTypes_t filterT
 
 	case FILTER_CRAFTITEM:
 		/** @todo Should we handle FILTER_AIRCRAFT here as well? */
-		return INV_IsCraftItem(obj);
+		return obj->isCraftItem();
 
 	case FILTER_UGVITEM:
 		return obj->isUGVitem;
