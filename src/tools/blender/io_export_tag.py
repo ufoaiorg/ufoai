@@ -17,7 +17,7 @@
 # ***** END GPL LICENCE BLOCK *****
 
 """
-This script exports a Quake 2 tag file as used in UFO:AI (MD2 tags).
+This script exports a Quake 2 tag file as used in UFO:AI (md2 TAGs).
 
 This file format equals the _parts_ of the MD3 format used for animated tags, but nothing more. i.e tagnames+positions
 
@@ -26,12 +26,12 @@ Base code taken from the md2 exporter by Bob Holcomb. Many thanks.
 
 #New Header Data
 bl_info = {
-    "name": "UFO:AI MD2 tags (.tag)",
-    "description": "Export to MD2 tag file format used by UFO:AI (.tag).",
+    "name": "UFO:AI md2 TAGs (.tag)",
+    "description": "Export to md2 TAG file format used by UFO:AI (.tag).",
     "author": "DarkRain, based on the initial exporter of Werner Hoehrer",
     "version": (1, 0),
     "blender": (2, 63, 0),
-    "location": "File > Export > UFO:AI MD2 tags",
+    "location": "File > Export > UFO:AI md2 TAGs",
     "warning": '', # used for warning icon and text in addons panel
     "support": 'COMMUNITY',
     "category": "Import-Export"}
@@ -48,17 +48,14 @@ import struct
 import string
 from types import *
 
-
 MD2_MAX_TAGS=4096
-MD2_MAX_FRAMES=512
-
+MD2_MAX_FRAMES=1024
 
 def asciiz (s):
 	n = 0
 	while (ord(s[n]) != 0):
 		n = n + 1
 	return s[0:n]
-
 
 class md2_tagname:
 	name=""
@@ -72,7 +69,7 @@ class md2_tagname:
 		data=struct.pack(self.binary_format, bytes(temp_data[0:63], encoding='utf8'))
 		file.write(data)
 	def dump (self):
-		print ("MD2 tagname")
+		print ("md2 tagname")
 		print ("tag: ",self.name)
 		print ("")
 
@@ -83,7 +80,6 @@ class md2_tag:
 	origin	= []
 
 	binary_format="<12f"	#little-endian (<), 12 floats (12f)	| See http://docs.python.org/lib/module-struct.html for more info.
-
 
 	def __init__(self):
 		origin	= mathutils.Vector((0.0, 0.0, 0.0))
@@ -187,52 +183,56 @@ class md2_tags_obj:
 		print ("offset extract end: ",	self.offset_extract_end)
 		print ("")
 
-def fill_md2_tags(md2_tags, object):
+def add_frame(tag_frames, matrix, frame_counter):
+	tag_frames.append(md2_tag())
+
+	# Set first coordiantes to the location of the empty.
+	tag_frames[frame_counter].origin = matrix.translation.copy()
+	# Useful for DEBUG (slowdown!)
+	# print (tag_frames[frame_counter].origin[0], " ",tag_frames[frame_counter].origin[1]," ",tag_frames[frame_counter].origin[2])
+
+	tag_frames[frame_counter].axis1 = matrix.col[0].copy()
+	tag_frames[frame_counter].axis2 = matrix.col[1].copy()
+	tag_frames[frame_counter].axis3 = matrix.col[2].copy()
+
+def fill_md2_tags(md2_tags, object, options):
 	# Set header information.
 	md2_tags.ident=844121162
 	md2_tags.version=1
 	md2_tags.num_tags+=1
+	frame_counter = 0
 
 	# Add a name node to the tagnames data structure.
-	md2_tags.names.append(md2_tagname(object.name))	# TODO: cut to 64 chars
+	md2_tags.names.append(md2_tagname(object.name))
 
 	# Add a (empty) list of tags-positions (for each frame).
 	tag_frames = []
 
-	# Store currently set frame
-	previous_curframe = bpy.context.scene.frame_current
+	if options.bExportAnimation:
+		# Store currently set frame
+		previous_curframe = bpy.context.scene.frame_current
 
-	frame_counter = 0
-	# Fill in each tag with its positions per frame
-	print("Blender startframe:", bpy.context.scene.frame_start)
-	print("Blender endframe:", bpy.context.scene.frame_end)
-	for current_frame in range(bpy.context.scene.frame_start , bpy.context.scene.frame_end + 1):
-		#print(current_frame, "(", frame_counter, ")") # DEBUG
-		#add a frame
-		tag_frames.append(md2_tag())
-
-		#set blender to the correct frame (so the objects have their new positions)
-		bpy.context.scene.frame_set(current_frame)
-
-		# Set first coordiantes to the location of the empty.
-		tag_frames[frame_counter].origin = object.matrix_world.translation.copy()
-		# print (tag_frames[frame_counter].origin[0], " ",tag_frames[frame_counter].origin[1]," ",tag_frames[frame_counter].origin[2]) # Useful for DEBUG (slowdown!)
-
-		matrix = object.matrix_world
-		tag_frames[frame_counter].axis1 = (matrix[0][0], matrix[1][0], matrix[2][0])
-		tag_frames[frame_counter].axis2 = (matrix[0][1], matrix[1][1], matrix[2][1])
-		tag_frames[frame_counter].axis3 = (matrix[0][2], matrix[1][2], matrix[2][2])
-		frame_counter += 1
-
-	# Restore curframe from before the calculation.
-	bpy.context.scene.frame_set(previous_curframe)
+		# Fill in each tag with its positions per frame
+		print("Blender startframe:", bpy.context.scene.frame_start)
+		print("Blender endframe:", bpy.context.scene.frame_end)
+		for current_frame in range(bpy.context.scene.frame_start , bpy.context.scene.frame_end + 1):
+			#set blender to the correct frame (so the objects have their new positions)
+			bpy.context.scene.frame_set(current_frame)
+			#print(current_frame, "(", frame_counter, ")") # DEBUG
+			#add a frame
+			add_frame(tag_frames, object.matrix_world, frame_counter)
+			frame_counter += 1
+		# Restore curframe from before the calculation.
+		bpy.context.scene.frame_set(previous_curframe)
+	else:
+		add_frame(tag_frames, object.matrix_world, frame_counter)
 
 	md2_tags.tags.append(tag_frames)
 
-class Export_MD2(bpy.types.Operator, ExportHelper):
-	"""Export to MD2 tag format used by UFO:AI (.tag)"""
+class Export_TAG(bpy.types.Operator, ExportHelper):
+	"""Export to md2 TAG format used by UFO:AI (.tag)"""
 	bl_idname = "export_md2.tag"
-	bl_label = "Export to MD2 tag format used by UFO:AI (.tag)"
+	bl_label = "Export to md2 TAG format used by UFO:AI (.tag)"
 
 	filename = StringProperty(name="File Path",
 		description="Filepath used for processing the script",
@@ -240,21 +240,20 @@ class Export_MD2(bpy.types.Operator, ExportHelper):
 
 	filename_ext = ".tag"
 
+	bExportAnimation = BoolProperty(name="Export animation",
+							description="default: False",
+							default=False)
+
 	def __init__(self):
 		try:
 			self.objects = bpy.context.selected_objects
 		except:
 			self.objects = None
 
-		# go into object mode before we start the actual export procedure
-		bpy.ops.object.mode_set( mode="OBJECT" , toggle = False )
-
 	######################################################
-	# Save MD2 TAGs Format
+	# Save md2 TAGs Format
 	######################################################
 	def execute(self, context):
-
-		#props = self.properties
 		filepath = self.filepath
 		filepath = bpy.path.ensure_ext(filepath, self.filename_ext)
 		md2_tags = md2_tags_obj()
@@ -262,14 +261,20 @@ class Export_MD2(bpy.types.Operator, ExportHelper):
 		if len(bpy.context.selected_objects[:]) == 0:
 			raise NameError('Please, select one object!')
 
-		md2_tags.num_frames = 1 + bpy.context.scene.frame_end - bpy.context.scene.frame_start
+		# go into object mode before we start the actual export procedure
+		bpy.ops.object.mode_set( mode="OBJECT" , toggle = False )
+
+		md2_tags.num_frames = 1
+		if self.bExportAnimation:
+			md2_tags.num_frames = 1 + bpy.context.scene.frame_end - bpy.context.scene.frame_start
+
 		for object in self.objects:
 			#check if it's an "Empty" mesh object
 			if object.type != 'EMPTY':
-				self.report({'INFO'}, "Ignoring non-'Empty' object: " + object.type)
+				print("Ignoring non-'Empty' object: " + object.type)
 			else:
-				self.report({'INFO'}, "Found Empty: " + object.name)
-				fill_md2_tags(md2_tags, object)
+				print("Found Empty: " + object.name)
+				fill_md2_tags(md2_tags, object, self)
 
 		# Set offset of names
 		temp_header = md2_tags_obj();
@@ -284,7 +289,7 @@ class Export_MD2(bpy.types.Operator, ExportHelper):
 		md2_tags.offset_end = md2_tags.offset_tags + (48 * md2_tags.num_frames * md2_tags.num_tags)
 		md2_tags.offset_extract_end = md2_tags.offset_tags + (64 * md2_tags.num_frames * md2_tags.num_tags)
 
-		md2_tags.dump()
+		# md2_tags.dump()
 
 		# Actually write it to disk.
 		file_export=open(filepath,"wb")
@@ -302,7 +307,7 @@ class Export_MD2(bpy.types.Operator, ExportHelper):
 		return {'RUNNING_MODAL'}
 
 def menuCB(self, context):
-	self.layout.operator(Export_MD2.bl_idname, text="UFO:AI MD2 tags (.tag)")
+	self.layout.operator(Export_TAG.bl_idname, text="UFO:AI md2 TAGs (.tag)")
 
 def register():
 	bpy.utils.register_module(__name__)
