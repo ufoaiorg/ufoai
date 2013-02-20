@@ -329,8 +329,8 @@ static bool INVSH_ShapeCheckPosition (const invList_t *ic, const int x, const in
 }
 
 /**
- * @brief Calculates the first "true" bit in the shape and returns its position in the container.
- * @note Use this to get the first "grab-able" grid-location (in the container) of an item.
+ * @brief Calculates the first "true" bit in the shape and returns its position in the item.
+ * @note Use this to get the first "grab-able" grid-location of an item (not in the container !).
  * @param[in] ic A pointer to an invList_t struct.
  * @param[out] x The x location inside the item.
  * @param[out] y The x location inside the item.
