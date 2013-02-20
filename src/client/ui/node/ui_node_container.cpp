@@ -902,6 +902,7 @@ bool uiContainerNode::onDndMove (uiNode_t *target, int x, int y)
 
 	/* we already check it when the node accept the DND */
 	assert(EXTRADATA(target).container);
+	const invDef_t *containerType = EXTRADATA(target).container;
 
 	UI_GetNodeAbsPos(target, nodepos);
 
@@ -924,23 +925,23 @@ bool uiContainerNode::onDndMove (uiNode_t *target, int x, int y)
 
 	/* Check if the items already exists in the container. i.e. there is already at least one item. */
 	exists = false;
-	if ((INV_IsFloorDef(EXTRADATA(target).container) || INV_IsEquipDef(EXTRADATA(target).container))
+	if ((INV_IsFloorDef(containerType) || INV_IsEquipDef(containerType))
 		&& (dragInfoToX < 0 || dragInfoToY < 0 || dragInfoToX >= SHAPE_BIG_MAX_WIDTH || dragInfoToY >= SHAPE_BIG_MAX_HEIGHT)
-		&& ui_inventory->containsItem(EXTRADATA(target).container, dragItem)) {
+		&& ui_inventory->containsItem(containerType, dragItem)) {
 		exists = true;
 	}
 
 	/* Search for a suitable position to render the item at if
 	 * the container is "single", the cursor is out of bound of the container. */
-	if (!exists && dragItem->def() && (EXTRADATA(target).container->single
+	if (!exists && dragItem->def() && (containerType->single
 		|| dragInfoToX < 0 || dragInfoToY < 0
 		|| dragInfoToX >= SHAPE_BIG_MAX_WIDTH || dragInfoToY >= SHAPE_BIG_MAX_HEIGHT)) {
 #if 0
 /* ... or there is something in the way. */
 /* We would need to check for weapon/ammo as well here, otherwise a preview would be drawn as well when hovering over the correct weapon to reload. */
-		|| (INVSH_CheckToInventory(ui_inventory, dragItem->item, EXTRADATA(target).container, dragInfoToX, dragInfoToY) == INV_DOES_NOT_FIT)) {
+		|| (INVSH_CheckToInventory(ui_inventory, dragItem->item, containerType, dragInfoToX, dragInfoToY) == INV_DOES_NOT_FIT)) {
 #endif
-		ui_inventory->findSpace(EXTRADATA(target).container, dragItem, &dragInfoToX, &dragInfoToY, dragInfoIC);
+		ui_inventory->findSpace(containerType, dragItem, &dragInfoToX, &dragInfoToY, dragInfoIC);
 	}
 
 	/* we can drag every thing */
@@ -952,15 +953,15 @@ bool uiContainerNode::onDndMove (uiNode_t *target, int x, int y)
 		invList_t *fItem;
 
 		/* is there empty slot? */
-		const int checkedTo = INVSH_CheckToInventory(ui_inventory, dragItem->def(), EXTRADATA(target).container, dragInfoToX, dragInfoToY, dragInfoIC);
+		const int checkedTo = INVSH_CheckToInventory(ui_inventory, dragItem->def(), containerType, dragInfoToX, dragInfoToY, dragInfoIC);
 		if (checkedTo != INV_DOES_NOT_FIT)
 			return true;
 
 		/* can we equip dragging item into the target item? */
-		fItem = ui_inventory->getItemAtPos(EXTRADATA(target).container, dragInfoToX, dragInfoToY);
+		fItem = ui_inventory->getItemAtPos(containerType, dragInfoToX, dragInfoToY);
 		if (!fItem)
 			return false;
-		if (EXTRADATA(target).container->single)
+		if (containerType->single)
 			return true;
 		return INVSH_LoadableInWeapon(dragItem->def(), fItem->item.def());
 	}
