@@ -931,15 +931,14 @@ mapdef forest_small_crash
 // FROZEN RANDOM MAPS //
 ////////////////////////
 
-mapdef frozen_nature_small
+mapdef frozen_industrial_medium
 {
 	map				"+frozen"
-	param			"nature_small"
+	param			"industrial_medium"
 	description		"_Snow"
-	maxaliens		9
+	maxaliens		14
 	multiplayer		true
 	teams			2
-
 	gametypes
 	(
 		fight1on1
@@ -960,8 +959,9 @@ mapdef frozen_nature_small
 
 	ufos
 	(
-		craft_ufo_scout
-		craft_ufo_fighter
+		craft_ufo_harvester
+		craft_ufo_supply
+		craft_crash_supply
 	)
 
 	terrains
@@ -976,7 +976,10 @@ mapdef frozen_nature_small
 
 	populations
 	(
-		"nopopulation"
+		"rural"
+		"village"
+		"suburban"
+		"urban"
 	)
 }
 
@@ -1081,105 +1084,6 @@ mapdef frozen_industrial_small_noufo
 	)
 }
 
-mapdef frozen_nature_small_noufo
-{
-	map				"+frozen"
-	param			"nature_small_noufo"
-	description		"_Snow"
-	maxaliens		9
-	multiplayer		true
-	teams			2
-	gametypes
-	(
-		fight1on1
-		fight2on2
-		fight3on3
-		fight4on4
-		coop2
-		coop3
-		coop4
-	)
-
-	aircraft
-	(
-		craft_drop_firebird
-		craft_drop_raptor
-		craft_drop_herakles
-	)
-
-	ufos
-	(
-		// any
-	)
-
-	terrains
-	(
-		"cold"
-	)
-
-	cultures
-	(
-		// any
-	)
-
-	populations
-	(
-		"nopopulation"
-	)
-}
-
-mapdef frozen_industrial_medium
-{
-	map				"+frozen"
-	param			"industrial_medium"
-	description		"_Snow"
-	maxaliens		14
-	multiplayer		true
-	teams			2
-	gametypes
-	(
-		fight1on1
-		fight2on2
-		fight3on3
-		fight4on4
-		coop2
-		coop3
-		coop4
-	)
-
-	aircraft
-	(
-		craft_drop_firebird
-		craft_drop_raptor
-		craft_drop_herakles
-	)
-
-	ufos
-	(
-		craft_ufo_harvester
-		craft_ufo_supply
-		craft_crash_supply
-	)
-
-	terrains
-	(
-		"cold"
-	)
-
-	cultures
-	(
-		// any
-	)
-
-	populations
-	(
-		"rural"
-		"village"
-		"suburban"
-		"urban"
-	)
-}
-
 mapdef frozen_nature_medium
 {
 	map				"+frozen"
@@ -1211,6 +1115,102 @@ mapdef frozen_nature_medium
 		craft_ufo_harvester
 		craft_ufo_supply
 		craft_crash_supply
+	)
+
+	terrains
+	(
+		"cold"
+	)
+
+	cultures
+	(
+		// any
+	)
+
+	populations
+	(
+		"nopopulation"
+	)
+}
+
+mapdef frozen_nature_small
+{
+	map				"+frozen"
+	param			"nature_small"
+	description		"_Snow"
+	maxaliens		9
+	multiplayer		true
+	teams			2
+
+	gametypes
+	(
+		fight1on1
+		fight2on2
+		fight3on3
+		fight4on4
+		coop2
+		coop3
+		coop4
+	)
+
+	aircraft
+	(
+		craft_drop_firebird
+		craft_drop_raptor
+		craft_drop_herakles
+	)
+
+	ufos
+	(
+		craft_ufo_scout
+		craft_ufo_fighter
+	)
+
+	terrains
+	(
+		"cold"
+	)
+
+	cultures
+	(
+		// any
+	)
+
+	populations
+	(
+		"nopopulation"
+	)
+}
+
+mapdef frozen_nature_small_noufo
+{
+	map				"+frozen"
+	param			"nature_small_noufo"
+	description		"_Snow"
+	maxaliens		9
+	multiplayer		true
+	teams			2
+	gametypes
+	(
+		fight1on1
+		fight2on2
+		fight3on3
+		fight4on4
+		coop2
+		coop3
+		coop4
+	)
+
+	aircraft
+	(
+		craft_drop_firebird
+		craft_drop_raptor
+		craft_drop_herakles
+	)
+
+	ufos
+	(
+		// any
 	)
 
 	terrains

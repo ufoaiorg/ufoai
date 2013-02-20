@@ -283,83 +283,9 @@ a		+a		a
 0		a		0
 }
 
-// Map assemblies --------------------------------------------------*
+// Map assemblies for campaign / skirmish --------------------------*
 
 // TODO assemblies should be nature (nopoulation), industrial and civ (populated)
-
-assembly industrial_small_noufo
-{
-size "6 6"
-title "_Frozen"
-multiplayer +mp_team2
-+n01 "0 1"
-+n02 "0 1"
-+n03 "0 1"
-+n04 "0 1"
-+i01 "1 1"
-+i02 "0 2"
-+i03 "0 1"
-+i04 "0 1"
-+i05 "0 2"
-+i06 "0 2"
-+i07 "0 1"
-+i08 "1 1"
-+i09 "0 1"
-*rm_drop +craft_drop_firebird "1 1"
-}
-
-assembly industrial_small
-{
-size "6 6"
-title "_Frozen"
-multiplayer +mp_team2
-+n01 "0 1"
-+n02 "0 1"
-+n03 "0 1"
-+n04 "0 1"
-+i01 "0 1"
-+i02 "0 2"
-+i03 "0 1"
-+i04 "0 1"
-+i05 "0 2"
-+i06 "0 2"
-+i07 "0 1"
-+i08 "0 1"
-+i09 "0 1"
-*rm_drop +craft_drop_firebird "1 1"
-*rm_ufo +craft_ufo_scout "1 1"
-}
-
-assembly nature_small_noufo
-{
-size "6 6"
-title "_Frozen"
-multiplayer +mp_team2
-+h02 "1 1"
-+n01 "0 4"
-+n02 "0 4"
-+n03 "0 4"
-+n04 "0 4"
-+n06 "0 1"
-+n07 "0 3"
-*rm_drop +craft_drop_firebird "1 1"
-}
-
-assembly nature_small
-{
-size "6 6"
-title "_Frozen"
-multiplayer +mp_team2
-+h02 "0 1"
-+n01 "0 2"
-+n02 "0 2"
-+n03 "0 2"
-+n04 "0 2"
-+n06 "0 1"
-+n07 "0 2"
-*rm_drop +craft_drop_firebird "1 1"
-*rm_ufo +craft_ufo_scout "1 1"
-}
 
 assembly industrial_medium
 {
@@ -384,6 +310,49 @@ multiplayer +mp_team2
 *rm_ufo +craft_ufo_harvester "1 1"
 }
 
+assembly industrial_small
+{
+size "6 6"
+title "_Frozen"
+multiplayer +mp_team2
++n01 "0 1"
++n02 "0 1"
++n03 "0 1"
++n04 "0 1"
++i01 "0 1"
++i02 "0 2"
++i03 "0 1"
++i04 "0 1"
++i05 "0 2"
++i06 "0 2"
++i07 "0 1"
++i08 "0 1"
++i09 "0 1"
+*rm_drop +craft_drop_firebird "1 1"
+*rm_ufo +craft_ufo_scout "1 1"
+}
+
+assembly industrial_small_noufo
+{
+size "6 6"
+title "_Frozen"
+multiplayer +mp_team2
++n01 "0 1"
++n02 "0 1"
++n03 "0 1"
++n04 "0 1"
++i01 "1 1"
++i02 "0 2"
++i03 "0 1"
++i04 "0 1"
++i05 "0 2"
++i06 "0 2"
++i07 "0 1"
++i08 "1 1"
++i09 "0 1"
+*rm_drop +craft_drop_firebird "1 1"
+}
+
 assembly nature_medium
 {
 size "8 7"
@@ -400,6 +369,39 @@ multiplayer +mp_team2
 *rm_drop +craft_drop_firebird "1 1"
 *rm_ufo +craft_ufo_harvester "1 1"
 }
+
+assembly nature_small
+{
+size "6 6"
+title "_Frozen"
+multiplayer +mp_team2
++h02 "0 1"
++n01 "0 2"
++n02 "0 2"
++n03 "0 2"
++n04 "0 2"
++n06 "0 1"
++n07 "0 2"
+*rm_drop +craft_drop_firebird "1 1"
+*rm_ufo +craft_ufo_scout "1 1"
+}
+
+assembly nature_small_noufo
+{
+size "6 6"
+title "_Frozen"
+multiplayer +mp_team2
++h02 "1 1"
++n01 "0 4"
++n02 "0 4"
++n03 "0 4"
++n04 "0 4"
++n06 "0 1"
++n07 "0 3"
+*rm_drop +craft_drop_firebird "1 1"
+}
+
+// Map assemblies multiplayer only ---------------------------------*
 
 assembly multiplayercoop
 {
