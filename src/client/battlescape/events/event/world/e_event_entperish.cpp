@@ -54,7 +54,7 @@ void CL_EntPerish (const eventRegister_t *self, dbuffer *msg)
 			if ((actor->type == ET_ACTOR || actor->type == ET_ACTOR2x2)
 			 && VectorCompare(actor->pos, le->pos)) {
 				Com_DPrintf(DEBUG_CLIENT, "CL_EntPerish: le of type ET_ITEM hidden\n");
-				actor->setFloorContainer(NULL);
+				actor->resetFloor();
 			}
 		}
 		break;

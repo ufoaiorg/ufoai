@@ -203,7 +203,7 @@ void LE_LinkFloorContainer (le_t *le)
 	if (floorItem)
 		le->setFloor(floorItem);
 	else
-		le->setFloorContainer(NULL);
+		le->resetFloor();
 }
 
 /**

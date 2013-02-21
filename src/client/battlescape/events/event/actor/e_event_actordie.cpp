@@ -67,7 +67,7 @@ void CL_ActorDie (const eventRegister_t *self, dbuffer *msg)
 	LE_Lock(le);
 
 	/* set relevant vars */
-	le->setFloorContainer(NULL);
+	le->resetFloor();
 	le->state = state;
 
 	/* count spotted aliens */
