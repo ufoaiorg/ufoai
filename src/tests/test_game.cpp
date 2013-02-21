@@ -226,7 +226,7 @@ static void testInventoryForDiedAlien (void)
 
 		floorItems = G_GetFloorItems(ent);
 		CU_ASSERT_PTR_NOT_NULL_FATAL(floorItems);
-		CU_ASSERT_PTR_EQUAL(FLOOR(floorItems), FLOOR(ent));
+		CU_ASSERT_PTR_EQUAL(floorItems->getFloor(), ent->getFloor());
 
 		/* drop everything to floor to make sure we have space in the backpack */
 		G_InventoryToFloor(ent);
@@ -236,7 +236,7 @@ static void testInventoryForDiedAlien (void)
 		CU_ASSERT_PTR_NULL_FATAL(invlist);
 		count = GAMETEST_GetItemCount(ent, csi.idFloor);
 		if (count > 0) {
-			invList_t *entryToMove = FLOOR(ent);
+			invList_t *entryToMove = ent->getFloor();
 			int tx, ty;
 			ent->chr.inv.findSpace(INVDEF(csi.idBackpack), &entryToMove->item, &tx, &ty, entryToMove);
 			if (tx != NONE) {
@@ -305,7 +305,7 @@ static void testInventoryWithTwoDiedAliensOnTheSameGridTile (void)
 
 		floorItems = G_GetFloorItems(ent);
 		CU_ASSERT_PTR_NOT_NULL_FATAL(floorItems);
-		CU_ASSERT_PTR_EQUAL(FLOOR(floorItems), FLOOR(ent));
+		CU_ASSERT_PTR_EQUAL(floorItems->getFloor(), ent->getFloor());
 
 		/* drop everything to floor to make sure we have space in the backpack */
 		G_InventoryToFloor(ent);
@@ -316,7 +316,7 @@ static void testInventoryWithTwoDiedAliensOnTheSameGridTile (void)
 
 		count = GAMETEST_GetItemCount(ent, csi.idFloor);
 		if (count > 0) {
-			invList_t *entryToMove = FLOOR(ent);
+			invList_t *entryToMove = ent->getFloor();
 			int tx, ty;
 			ent->chr.inv.findSpace(INVDEF(csi.idBackpack), &entryToMove->item, &tx, &ty, entryToMove);
 			if (tx != NONE) {
@@ -362,10 +362,10 @@ static void testInventoryTempContainerLinks (void)
 		}
 		CU_ASSERT_TRUE(nr > 0);
 
-		CU_ASSERT_PTR_NULL(FLOOR(ent));
+		CU_ASSERT_PTR_NULL(ent->getFloor());
 		G_InventoryToFloor(ent);
-		CU_ASSERT_PTR_NOT_NULL(FLOOR(ent));
-		CU_ASSERT_PTR_EQUAL(FLOOR(G_GetFloorItemFromPos(ent->pos)), FLOOR(ent));
+		CU_ASSERT_PTR_NOT_NULL(ent->getFloor());
+		CU_ASSERT_PTR_EQUAL(G_GetFloorItemFromPos(ent->pos)->getFloor(), ent->getFloor());
 
 		nr = 0;
 		for (container = 0; container < gi.csi->numIDs; container++) {
