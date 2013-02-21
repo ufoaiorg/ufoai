@@ -175,6 +175,10 @@ public:
 	{
 		return chr.inv.getFloorContainer();
 	}
+	inline void setFloor (const Edict *other)
+	{
+		chr.inv.setFloorContainer(other->getFloor());
+	}
 	inline void resetFloor ()
 	{
 		chr.inv.setFloorContainer(NULL);

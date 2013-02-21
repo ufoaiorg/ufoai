@@ -62,7 +62,7 @@ Edict *G_GetFloorItems (Edict *ent)
 	Edict *floor = G_GetFloorItemFromPos(ent->pos);
 	/* found items */
 	if (floor) {
-		FLOOR(ent) = floor->getFloor();
+		ent->setFloor(floor);
 		return floor;
 	}
 
@@ -195,7 +195,7 @@ static bool G_InventoryPlaceItemAdjacent (Edict *ent)
 			ic->x = x;
 			ic->y = y;
 			ic->next = floorAdjacent->getFloor());
-			FLOOR(floorAdjacent) = ic;
+			floorAdjacent->chr.inv.setFloorContainer(ic);
 			break;
 		}
 		/* restore original pos */
@@ -288,7 +288,7 @@ void G_InventoryToFloor (Edict *ent)
 		CONTAINER(ent, container) = NULL;
 	}
 
-	FLOOR(ent) = floor->getFloor();
+	ent->setFloor(floor);
 
 	/* send item info to the clients */
 	G_CheckVis(floor);
