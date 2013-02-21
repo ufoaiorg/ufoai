@@ -1147,7 +1147,6 @@ static void CL_ActorStandCrouch_f (void)
  */
 static void CL_ActorUseHeadgear_f (void)
 {
-	invList_t* headgear;
 	const mouseSpace_t tmpMouseSpace = IN_GetMouseSpace();
 
 	/* this can be executed by a click on a hud button
@@ -1158,7 +1157,7 @@ static void CL_ActorUseHeadgear_f (void)
 	if (!CL_ActorCheckAction(selActor))
 		return;
 
-	headgear = HEADGEAR(selActor);
+	invList_t *headgear = selActor->inv.getHeadgearContainer();
 	if (!headgear)
 		return;
 

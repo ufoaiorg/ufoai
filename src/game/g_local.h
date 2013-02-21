@@ -63,7 +63,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define RIGHT(e)		(CONTAINER(e, gi.csi->idRight))
 #define LEFT(e)			(CONTAINER(e, gi.csi->idLeft))
 //#define EXTENSION(e)	(CONTAINER(e, gi.csi->idExtension))
-#define HEADGEAR(e)		(CONTAINER(e, gi.csi->idHeadgear))
+//#define HEADGEAR(e)		(CONTAINER(e, gi.csi->idHeadgear))
 //#define FLOOR(e)		(CONTAINER(e, gi.csi->idFloor))
 //#define EQUIP(e)		(CONTAINER(e, gi.csi->idEquip))
 
