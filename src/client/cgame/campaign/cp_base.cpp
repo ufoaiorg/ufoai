@@ -1829,38 +1829,40 @@ static void CL_SwapSkills (linkedList_t *team)
 				character_t *cp1 = (character_t*)cp1List->data;
 				const fireDef_t *fdRightArray = NULL;
 				const fireDef_t *fdHolsterArray = NULL;
+				const invList_t *holsterCharOne = HOLSTER(cp1);
 
 				if (RIGHT(cp1) && RIGHT(cp1)->item.ammo && RIGHT(cp1)->item.def())
 					fdRightArray = FIRESH_FiredefForWeapon(&RIGHT(cp1)->item);
-				if (HOLSTER(cp1) && HOLSTER(cp1)->item.ammo && HOLSTER(cp1)->item.def())
-					fdHolsterArray = FIRESH_FiredefForWeapon(&HOLSTER(cp1)->item);
+				if (holsterCharOne && holsterCharOne->item.ammo && holsterCharOne->item.def())
+					fdHolsterArray = FIRESH_FiredefForWeapon(&holsterCharOne->item);
 				/* disregard left hand, or dual-wielding guys are too good */
 
 				if (fdHolsterArray != NULL && fdRightArray != NULL) {
 					const int no1 = 2 * (RIGHT(cp1) && skill == RIGHT(cp1)->item.ammo->fd[fdRightArray->weapFdsIdx][fmode1].weaponSkill)
 						+ 2 * (RIGHT(cp1) && skill == RIGHT(cp1)->item.ammo->fd[fdRightArray->weapFdsIdx][fmode2].weaponSkill)
-						+ (HOLSTER(cp1) && HOLSTER(cp1)->item.isReloadable()
-						   && skill == HOLSTER(cp1)->item.ammo->fd[fdHolsterArray->weapFdsIdx][fmode1].weaponSkill)
-						+ (HOLSTER(cp1) && HOLSTER(cp1)->item.isReloadable()
-						   && skill == HOLSTER(cp1)->item.ammo->fd[fdHolsterArray->weapFdsIdx][fmode2].weaponSkill);
+						+ (holsterCharOne && holsterCharOne->item.isReloadable()
+						   && skill == holsterCharOne->item.ammo->fd[fdHolsterArray->weapFdsIdx][fmode1].weaponSkill)
+						+ (holsterCharOne && holsterCharOne->item.isReloadable()
+						   && skill == holsterCharOne->item.ammo->fd[fdHolsterArray->weapFdsIdx][fmode2].weaponSkill);
 
 					for (linkedList_t *cp2List = cp1List->next; cp2List; cp2List = cp2List->next) {
 						character_t *cp2 = (character_t*)cp2List->data;
 						fdRightArray = NULL;
 						fdHolsterArray = NULL;
+						const invList_t *holsterCharTwo = HOLSTER(cp2);
 
 						if (RIGHT(cp2) && RIGHT(cp2)->item.ammo && RIGHT(cp2)->item.def())
 							fdRightArray = FIRESH_FiredefForWeapon(&RIGHT(cp2)->item);
-						if (HOLSTER(cp2) && HOLSTER(cp2)->item.ammo && HOLSTER(cp2)->item.def())
-							fdHolsterArray = FIRESH_FiredefForWeapon(&HOLSTER(cp2)->item);
+						if (holsterCharTwo && holsterCharTwo->item.ammo && holsterCharTwo->item.def())
+							fdHolsterArray = FIRESH_FiredefForWeapon(&holsterCharTwo->item);
 
 						if (fdHolsterArray != NULL && fdRightArray != NULL) {
 							const int no2 = 2 * (RIGHT(cp2) && skill == RIGHT(cp2)->item.ammo->fd[fdRightArray->weapFdsIdx][fmode1].weaponSkill)
 								+ 2 * (RIGHT(cp2) && skill == RIGHT(cp2)->item.ammo->fd[fdRightArray->weapFdsIdx][fmode2].weaponSkill)
-								+ (HOLSTER(cp2) && HOLSTER(cp2)->item.isReloadable()
-								   && skill == HOLSTER(cp2)->item.ammo->fd[fdHolsterArray->weapFdsIdx][fmode1].weaponSkill)
-								+ (HOLSTER(cp2) && HOLSTER(cp2)->item.isReloadable()
-								   && skill == HOLSTER(cp2)->item.ammo->fd[fdHolsterArray->weapFdsIdx][fmode2].weaponSkill);
+								+ (holsterCharTwo && holsterCharTwo->item.isReloadable()
+								   && skill == holsterCharTwo->item.ammo->fd[fdHolsterArray->weapFdsIdx][fmode1].weaponSkill)
+								+ (holsterCharTwo && holsterCharTwo->item.isReloadable()
+								   && skill == holsterCharTwo->item.ammo->fd[fdHolsterArray->weapFdsIdx][fmode2].weaponSkill);
 
 							if (no1 > no2 /* more use of this skill */
 								 || (no1 && no1 == no2)) { /* or earlier on list */
