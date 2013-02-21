@@ -504,7 +504,7 @@ bool G_ActorDieOrStun (Edict *ent, Edict *attacker)
 	G_CheckVisTeamAll(ent->team, 0, attacker);
 
 	/* unlink the floor container */
-	FLOOR(ent) = NULL;
+	ent->resetFloor();
 
 	return true;
 }

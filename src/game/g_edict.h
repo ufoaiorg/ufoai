@@ -170,4 +170,9 @@ public:
 	int forbiddenListSize;		/**< amount of entries in the forbiddenListPos */
 
 	bool active;
+
+	inline void resetFloor ()
+	{
+		chr.inv.setFloorContainer(NULL);
+	}
 };

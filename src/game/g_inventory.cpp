@@ -67,7 +67,7 @@ Edict *G_GetFloorItems (Edict *ent)
 	}
 
 	/* no items on ground found */
-	FLOOR(ent) = NULL;
+	ent->resetFloor();
 	return NULL;
 }
 

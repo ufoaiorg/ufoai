@@ -339,7 +339,7 @@ void G_ClientMove (const Player *player, int visTeam, Edict *ent, const pos3_t t
 		byte* stepAmount = NULL;
 		int usedTUs = 0;
 		/* no floor inventory at this point */
-		FLOOR(ent) = NULL;
+		ent->resetFloor();
 		const int movingModifier = G_ActorGetInjuryPenalty(ent, MODIFIER_MOVEMENT);
 
 		while (numdv > 0) {
