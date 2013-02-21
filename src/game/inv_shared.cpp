@@ -805,6 +805,11 @@ void inventory_t::setFloorContainer(invList_t *cont)
 	setContainer(CSI->idFloor, cont);
 }
 
+invList_t *inventory_t::getHeadgearContainer () const
+{
+	return getContainer(CSI->idHeadgear);
+}
+
 invList_t *inventory_t::getFloorContainer () const
 {
 	return getContainer(CSI->idFloor);

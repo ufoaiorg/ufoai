@@ -381,6 +381,7 @@ typedef struct invList_s {
 typedef struct inventory_s {
 	invList_t *c[MAX_CONTAINERS];
 
+	invList_t *getHeadgearContainer() const;
 	invList_t *getFloorContainer() const;
 	void setFloorContainer(invList_t *cont);
 
