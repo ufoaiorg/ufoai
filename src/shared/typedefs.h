@@ -291,6 +291,11 @@ public:
 	{
 		return routes[actorSize - 1].getStepup(x, y, z, dir);
 	}
+	/** @brief return the value without the flags for z-level change */
+	inline byte getStepupHeight (const int actorSize, const int x, const int y, const int z, const int dir) const
+	{
+		return routes[actorSize - 1].getStepup(x, y, z, dir) & ~(PATHFINDING_BIG_STEPDOWN | PATHFINDING_BIG_STEPUP);
+	}
 
 	/** note: not sure if this function qualifies for being inlined. But if we didn't,
 	* we'd have to link routing.cpp to radiant, which is probably worse. */
