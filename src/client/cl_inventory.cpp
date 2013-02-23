@@ -71,7 +71,7 @@ bool INV_MoveItem (inventory_t* inv, const invDef_t *toContainer, int px, int py
 
 	if (!fItem)
 		return false;
-	if (!INVSH_CheckAddingItemToInventory(inv, fromContainer->id, toContainer->id, fItem->item, GAME_GetChrMaxLoad(GAME_GetSelectedChr()))) {
+	if (!inv->canHoldItemWeight(fromContainer->id, toContainer->id, fItem->item, GAME_GetChrMaxLoad(GAME_GetSelectedChr()))) {
 		UI_Popup(_("Warning"), _("This soldier can not carry anything else."));
 		return false;
 	}

@@ -569,13 +569,13 @@ float item_t::getWeight () const
  * @param[in] maxWeight The max permitted weight.
  * @return @c true if it is Ok to add the item @c false otherwise.
  */
-bool INVSH_CheckAddingItemToInventory (const inventory_t *inv, containerIndex_t from, containerIndex_t to, const item_t &item, int maxWeight)
+bool inventory_t::canHoldItemWeight (containerIndex_t from, containerIndex_t to, const item_t &item, int maxWeight) const
 {
 	if (CSI->ids[to].temp || !CSI->ids[from].temp)
 		return true;
 
-	const bool swapArmour = INV_IsArmour(item.def()) && inv->getArmourCont();
-	const float invWeight = inv->getWeight() - (swapArmour ? inv->getArmourCont()->item.getWeight() : 0);
+	const bool swapArmour = INV_IsArmour(item.def()) && getArmourCont();
+	const float invWeight = getWeight() - (swapArmour ? getArmourCont()->item.getWeight() : 0);
 	float itemWeight = item.getWeight();
 
 	return (maxWeight < 0 || maxWeight >= invWeight + itemWeight);

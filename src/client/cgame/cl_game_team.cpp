@@ -608,7 +608,7 @@ static void GAME_LoadInventory (xmlNode_t *p, inventory_t *inv, int maxLoad)
 		if (INVDEF(container)->temp)
 			Com_Error(ERR_DROP, "GAME_LoadInventory failed, tried to add '%s' to a temp container %i", item.def()->id, container);
 		/* ignore the overload for now */
-		if (!INVSH_CheckAddingItemToInventory(inv, csi.idEquip, container, item, maxLoad))
+		if (!inv->canHoldItemWeight(csi.idEquip, container, item, maxLoad))
 			Com_Printf("GAME_LoadInventory: Item %s exceeds weight capacity\n", item.def()->id);
 
 		if (!cls.i.addToInventory(inv, &item, INVDEF(container), x, y, 1))

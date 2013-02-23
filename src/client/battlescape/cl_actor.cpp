@@ -1034,7 +1034,7 @@ void CL_ActorInvMove (const le_t *le, containerIndex_t fromContainer, int fromX,
 
 	if (invList != NULL) {
 		const character_t *chr = CL_ActorGetChr(le);
-		if (!INVSH_CheckAddingItemToInventory(&le->inv, fromContainer, toContainer, invList->item, GAME_GetChrMaxLoad(chr))) {
+		if (!le->inv.canHoldItemWeight(fromContainer, toContainer, invList->item, GAME_GetChrMaxLoad(chr))) {
 			UI_Popup(_("Warning"), _("This soldier can not carry anything else."));
 			return;
 		}

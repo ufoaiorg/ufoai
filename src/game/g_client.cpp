@@ -1130,7 +1130,7 @@ static void G_ClientReadInventory (Edict *ent)
 		if (container->temp)
 			gi.Error("G_ClientReadInventory failed, tried to add '%s' to a temp container %i", item.def()->id, container->id);
 		/* ignore the overload for now */
-		if (!INVSH_CheckAddingItemToInventory(&ent->chr.inv, gi.csi->idEquip, container->id, item, ent->chr.score.skills[ABILITY_POWER]))
+		if (!ent->chr.inv.canHoldItemWeight(gi.csi->idEquip, container->id, item, ent->chr.score.skills[ABILITY_POWER]))
 			Com_Printf("G_ClientReadInventory: Item %s exceeds ent %i weight capacity\n", item.def()->id, ent->number);
 		if (!level.noEquipment && game.i.addToInventory(&ent->chr.inv, &item, container, x, y, 1) == NULL)
 			gi.Error("G_ClientReadInventory failed, could not add item '%s' to container %i (x:%i,y:%i)",
