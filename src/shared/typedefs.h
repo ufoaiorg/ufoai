@@ -229,6 +229,11 @@ typedef struct routing_s {
  * 1. to hide the actual dimensions of the map. Atm we allocate the maximum mapsize, This is about to change.
  * 2. to hide the way the info for different actor sizes is handled. That will changen in the future.
  */
+/* A special bit mask indicating that the stepup causes the actor to rise a cell. */
+#define	PATHFINDING_BIG_STEPUP		0x80
+/* A special bit mask indicating that the stepup causes the actor to walk down a cell. */
+#define	PATHFINDING_BIG_STEPDOWN		0x40
+
 class Routing
 {
 	routing_t routes[ACTOR_MAX_SIZE];	/**< routing table */

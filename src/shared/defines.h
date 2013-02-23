@@ -323,10 +323,6 @@ COLLISION DETECTION
 #define	PATHFINDING_MAX_STEPUP		4
 /* A stepup value indicating that there is no way to enter the cell. */
 #define	PATHFINDING_NO_STEPUP		(2 * CELL_HEIGHT)
-/* A special bit mask indicating that the stepup causes the actor to rise a cell. */
-#define	PATHFINDING_BIG_STEPUP		0x80
-/* A special bit mask indicating that the stepup causes the actor to walk down a cell. */
-#define	PATHFINDING_BIG_STEPDOWN		0x40
 /* Minimum height for an opening to be an opening in step units (model units/QUANT)
  * Must be larger than PATHFINDING_MAX_STEPUP!!
  */
