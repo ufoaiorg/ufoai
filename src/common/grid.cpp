@@ -268,7 +268,6 @@ bool Step::checkWalkingDirections (const pathing_t *path)
 	int passageHeight;
 	/** @todo falling_height should be replaced with an arbitrary max falling height based on the actor. */
 	const int fallingHeight = PATHFINDING_MAX_FALL;/**<This is the maximum height that an actor can fall. */
-	const int stepup = routing.getStepup(actorSize, fromPos[0], fromPos[1], fromPos[2], dir);	/**< The stepup needed to get to/through the passage */
 	const int stepupHeight = routing.getStepupHeight(actorSize, fromPos[0], fromPos[1], fromPos[2], dir);		/**< The actual stepup height without the level flags */
 	int heightChange;
 	/** @todo actor_stepup_height should be replaced with an arbitrary max stepup height based on the actor. */
@@ -327,7 +326,7 @@ bool Step::checkWalkingDirections (const pathing_t *path)
 	ny = toPos[1];
 	nz = toPos[2];
 
-	if ((stepup & PATHFINDING_BIG_STEPUP) && toPos[2] < PATHFINDING_HEIGHT - 1) {
+	if (routing.isStepUpLevel(actorSize, fromPos, dir) && toPos[2] < PATHFINDING_HEIGHT - 1) {
 		toPos[2]++;
 		/**
 		 * @note If you need to know about how pathfinding works,  you need to understand the
