@@ -359,7 +359,7 @@ static void UI_ContainerNodeDrawFreeSpace (uiNode_t *node, inventory_t *inv)
 	/* if single container (hands, extension, headgear) */
 	if (EXTRADATA(node).container->single) {
 		/* if container is free or the dragged-item is in it */
-		if (UI_DNDIsSourceNode(node) || INVSH_CheckToInventory(inv, od, EXTRADATA(node).container, 0, 0, dragInfoIC))
+		if (UI_DNDIsSourceNode(node) || inv->canHoldItem(EXTRADATA(node).container, od, 0, 0, dragInfoIC))
 			UI_DrawFree(EXTRADATA(node).container->id, node, nodepos[0], nodepos[1], node->box.size[0], node->box.size[1], true);
 	} else {
 		/* The shape of the free positions. */
@@ -374,7 +374,7 @@ static void UI_ContainerNodeDrawFreeSpace (uiNode_t *node, inventory_t *inv)
 				/* Check if the current position is usable (topleft of the item). */
 
 				/* Add '1's to each position the item is 'blocking'. */
-				const int checkedTo = INVSH_CheckToInventory(inv, od, EXTRADATA(node).container, x, y, dragInfoIC);
+				const int checkedTo = inv->canHoldItem(EXTRADATA(node).container, od, x, y, dragInfoIC);
 				if (checkedTo & INV_FITS)				/* Item can be placed normally. */
 					INVSH_MergeShapes(free, od->shape, x, y);
 				if (checkedTo & INV_FITS_ONLY_ROTATED)	/* Item can be placed rotated. */
@@ -547,7 +547,7 @@ static void UI_ContainerNodeDrawDropPreview (uiNode_t *target)
 	/* copy the DND item to not change the original one */
 	previewItem = *UI_DNDGetItem();
 	previewItem.rotated = false;
-	checkedTo = INVSH_CheckToInventory(ui_inventory, previewItem.def(), EXTRADATA(target).container, dragInfoToX, dragInfoToY, dragInfoIC);
+	checkedTo = ui_inventory->canHoldItem(EXTRADATA(target).container, previewItem.def(), dragInfoToX, dragInfoToY, dragInfoIC);
 	switch (checkedTo) {
 	case INV_DOES_NOT_FIT:
 		return;
@@ -939,7 +939,7 @@ bool uiContainerNode::onDndMove (uiNode_t *target, int x, int y)
 #if 0
 /* ... or there is something in the way. */
 /* We would need to check for weapon/ammo as well here, otherwise a preview would be drawn as well when hovering over the correct weapon to reload. */
-		|| (INVSH_CheckToInventory(ui_inventory, dragItem->item, containerType, dragInfoToX, dragInfoToY) == INV_DOES_NOT_FIT)) {
+		|| (ui_inventory->canHoldItem(containerType, dragItem->item, dragInfoToX, dragInfoToY) == INV_DOES_NOT_FIT)) {
 #endif
 		ui_inventory->findSpace(containerType, dragItem, &dragInfoToX, &dragInfoToY, dragInfoIC);
 	}
@@ -953,7 +953,7 @@ bool uiContainerNode::onDndMove (uiNode_t *target, int x, int y)
 		invList_t *fItem;
 
 		/* is there empty slot? */
-		const int checkedTo = INVSH_CheckToInventory(ui_inventory, dragItem->def(), containerType, dragInfoToX, dragInfoToY, dragInfoIC);
+		const int checkedTo = ui_inventory->canHoldItem(containerType, dragItem->def(), dragInfoToX, dragInfoToY, dragInfoIC);
 		if (checkedTo != INV_DOES_NOT_FIT)
 			return true;
 

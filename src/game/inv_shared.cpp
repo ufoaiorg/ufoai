@@ -143,7 +143,7 @@ static bool INVSH_CheckShapeCollision (const uint32_t *shape, const uint32_t ite
  * @param[in] x The x value in the container (1 << x in the shape bitmask)
  * @param[in] y The y value in the container (SHAPE_BIG_MAX_HEIGHT is the max)
  * @param[in] ignoredItem You can ignore one item in the container (most often the currently dragged one). Use NULL if you want to check against all items in the container.
- * @sa INVSH_CheckToInventory
+ * @sa canHoldItem
  * @return false if the item does not fit, true if it fits.
  */
 static bool INVSH_CheckToInventory_shape (const inventory_t *const inv, const invDef_t *container, const uint32_t itemShape, const int x, const int y, const invList_t *ignoredItem)
@@ -188,8 +188,8 @@ static bool INVSH_CheckToInventory_shape (const inventory_t *const inv, const in
 
 /**
  * @param[in] inv The inventory to check the item in.
- * @param[in] od The item to check in the inventory.
  * @param[in] container The index of the container in the inventory to check the item in.
+ * @param[in] od The type of item to check in the inventory.
  * @param[in] x The x value in the container (1 << x in the shape bitmask)
  * @param[in] y The y value in the container (SHAPE_BIG_MAX_HEIGHT is the max)
  * @param[in] ignoredItem You can ignore one item in the container (most often the currently dragged one). Use NULL if you want to check against all items in the container.
@@ -198,10 +198,10 @@ static bool INVSH_CheckToInventory_shape (const inventory_t *const inv, const in
  * @return INV_FITS_ONLY_ROTATED if it fits only when rotated 90 degree (to the left).
  * @return INV_FITS_BOTH if it fits either normally or when rotated 90 degree (to the left).
  */
-int INVSH_CheckToInventory (const inventory_t *const inv, const objDef_t *od, const invDef_t *container, const int x, const int y, const invList_t *ignoredItem)
+int inventory_t::canHoldItem (const invDef_t *container, const objDef_t *od, const int x, const int y, const invList_t *ignoredItem) const
 {
 	int fits;
-	assert(inv);
+	assert(this);
 	assert(container);
 	assert(od);
 
@@ -220,13 +220,13 @@ int INVSH_CheckToInventory (const inventory_t *const inv, const objDef_t *od, co
 
 	/* twohanded item */
 	if (od->holdTwoHanded) {
-		if ((INV_IsRightDef(container) && inv->getContainer(CSI->idLeft)) || INV_IsLeftDef(container))
+		if ((INV_IsRightDef(container) && getContainer(CSI->idLeft)) || INV_IsLeftDef(container))
 			return INV_DOES_NOT_FIT;
 	}
 
 	/* left hand is busy if right wields twohanded */
 	if (INV_IsLeftDef(container)) {
-		if (inv->getContainer(CSI->idRight) && inv->getContainer(CSI->idRight)->item.isHeldTwoHanded())
+		if (getContainer(CSI->idRight) && getContainer(CSI->idRight)->item.isHeldTwoHanded())
 			return INV_DOES_NOT_FIT;
 
 		/* can't put an item that is 'fireTwoHanded' into the left hand */
@@ -236,21 +236,21 @@ int INVSH_CheckToInventory (const inventory_t *const inv, const objDef_t *od, co
 
 	/* Single item containers, e.g. hands, extension or headgear. */
 	if (container->single) {
-		if (inv->getContainer(container->id)) {
+		if (getContainer(container->id)) {
 			/* There is already an item. */
 			return INV_DOES_NOT_FIT;
 		} else {
 			fits = INV_DOES_NOT_FIT; /* equals 0 */
 
-			if (INVSH_CheckToInventory_shape(inv, container, od->shape, x, y, ignoredItem))
+			if (INVSH_CheckToInventory_shape(this, container, od->shape, x, y, ignoredItem))
 				fits |= INV_FITS;
-			if (INVSH_CheckToInventory_shape(inv, container, od->getShapeRotated(), x, y, ignoredItem))
+			if (INVSH_CheckToInventory_shape(this, container, od->getShapeRotated(), x, y, ignoredItem))
 				fits |= INV_FITS_ONLY_ROTATED;
 
 			if (fits != INV_DOES_NOT_FIT)
 				return fits;	/**< Return INV_FITS_BOTH if both if statements where true above. */
 
-			Com_DPrintf(DEBUG_SHARED, "INVSH_CheckToInventory: INFO: Moving to 'single' container but item would not fit normally.\n");
+			Com_DPrintf(DEBUG_SHARED, "canHoldItem: INFO: Moving to 'single' container but item would not fit normally.\n");
 			return INV_FITS; /**< We are returning with status true (1) if the item does not fit at all - unlikely but not impossible. */
 		}
 	}
@@ -261,11 +261,11 @@ int INVSH_CheckToInventory (const inventory_t *const inv, const objDef_t *od, co
 
 	/* Check 'grid' containers. */
 	fits = INV_DOES_NOT_FIT; /* equals 0 */
-	if (INVSH_CheckToInventory_shape(inv, container, od->shape, x, y, ignoredItem))
+	if (INVSH_CheckToInventory_shape(this, container, od->shape, x, y, ignoredItem))
 		fits |= INV_FITS;
 	/** @todo aren't both (equip and floor) temp container? */
 	if (!INV_IsEquipDef(container) && !INV_IsFloorDef(container)
-	&& INVSH_CheckToInventory_shape(inv, container, od->getShapeRotated(), x, y, ignoredItem))
+	&& INVSH_CheckToInventory_shape(this, container, od->getShapeRotated(), x, y, ignoredItem))
 		fits |= INV_FITS_ONLY_ROTATED;
 
 	return fits;	/**< Return INV_FITS_BOTH if both if statements where true above. */
@@ -334,7 +334,7 @@ static bool INVSH_ShapeCheckPosition (const invList_t *ic, const int x, const in
  * @param[in] ic A pointer to an invList_t struct.
  * @param[out] x The x location inside the item.
  * @param[out] y The x location inside the item.
- * @sa INVSH_CheckToInventory
+ * @sa canHoldItem
  */
 void INVSH_GetFirstShapePosition (const invList_t *ic, int* const x, int* const y)
 {
@@ -416,7 +416,7 @@ invList_t *inventory_t::getItemAtPos (const invDef_t *container, const int x, co
  * @param[out] px The x position in the container
  * @param[out] py The y position in the container
  * @param[in] ignoredItem You can ignore one item in the container (most often the currently dragged one). Use NULL if you want to check against all items in the container.
- * @sa INVSH_CheckToInventory
+ * @sa canHoldItem
  * @note x and y are NONE if no free space is available
  */
 void inventory_t::findSpace (const invDef_t *container, const item_t *item, int* const px, int* const py, const invList_t *ignoredItem) const
@@ -436,7 +436,7 @@ void inventory_t::findSpace (const invDef_t *container, const item_t *item, int*
 
 	for (y = 0; y < SHAPE_BIG_MAX_HEIGHT; y++) {
 		for (x = 0; x < SHAPE_BIG_MAX_WIDTH; x++) {
-			const int checkedTo = INVSH_CheckToInventory(this, item->def(), container, x, y, ignoredItem);
+			const int checkedTo = canHoldItem(container, item->def(), x, y, ignoredItem);
 			if (checkedTo) {
 				cacheCheckToInventory = INV_DOES_NOT_FIT;
 				*px = x;

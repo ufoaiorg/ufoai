@@ -121,7 +121,7 @@ invList_t *InventoryInterface::addToInventory (inventory_t *const inv, const ite
 			return NULL;
 	}
 
-	checkedTo = INVSH_CheckToInventory(inv, item->def(), container, x, y, NULL);
+	checkedTo = inv->canHoldItem(container, item->def(), x, y, NULL);
 	assert(checkedTo);
 
 	/* not found - add a new one */
@@ -275,7 +275,7 @@ inventory_action_t InventoryInterface::moveInInventory (inventory_t* const inv, 
 		for (; ic; ic = ic->next) {
 			if (ic == fItem) {
 				if (ic->item.amount > 1) {
-					checkedTo = INVSH_CheckToInventory(inv, ic->item.def(), to, tx, ty, fItem);
+					checkedTo = inv->canHoldItem(to, ic->item.def(), tx, ty, fItem);
 					if (checkedTo & INV_FITS) {
 						ic->x = tx;
 						ic->y = ty;
@@ -305,7 +305,7 @@ inventory_action_t InventoryInterface::moveInInventory (inventory_t* const inv, 
 
 	/* Check if the target is a blocked inv-armour and source!=dest. */
 	if (to->single)
-		checkedTo = INVSH_CheckToInventory(inv, fItem->item.def(), to, 0, 0, fItem);
+		checkedTo = inv->canHoldItem(to, fItem->item.def(), 0, 0, fItem);
 	else {
 		if (tx == NONE || ty == NONE)
 			inv->findSpace(to, &fItem->item, &tx, &ty, fItem);
@@ -313,7 +313,7 @@ inventory_action_t InventoryInterface::moveInInventory (inventory_t* const inv, 
 		if (tx == NONE || ty == NONE)
 			return IA_NONE;
 
-		checkedTo = INVSH_CheckToInventory(inv, fItem->item.def(), to, tx, ty, fItem);
+		checkedTo = inv->canHoldItem(to, fItem->item.def(), tx, ty, fItem);
 	}
 
 	if (to->armour && from != to && !checkedTo) {
@@ -344,7 +344,7 @@ inventory_action_t InventoryInterface::moveInInventory (inventory_t* const inv, 
 
 		/* Reset the cached item (source) (It'll be move to container emptied by destination item later.) */
 		this->cacheItem = cacheItem2;
-		checkedTo = INVSH_CheckToInventory(inv, this->cacheItem.def(), to, 0, 0, fItem);
+		checkedTo = inv->canHoldItem(to, this->cacheItem.def(), 0, 0, fItem);
 	} else if (!checkedTo) {
 		/* Get the target-invlist (e.g. a weapon). We don't need to check for
 		 * scroll because checkedTo is always true here. */
@@ -479,7 +479,7 @@ bool InventoryInterface::tryAddToInventory (inventory_t* const inv, const item_t
 		assert(y == NONE);
 		return false;
 	} else {
-		const int checkedTo = INVSH_CheckToInventory(inv, item->def(), container, x, y, NULL);
+		const int checkedTo = inv->canHoldItem(container, item->def(), x, y, NULL);
 		if (!checkedTo)
 			return false;
 

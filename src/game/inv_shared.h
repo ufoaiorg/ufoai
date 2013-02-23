@@ -299,8 +299,7 @@ typedef struct objDef_s {
 } objDef_t;
 
 /**
- * @brief Return values for INVSH_CheckToInventory.
- * @sa INVSH_CheckToInventory
+ * @brief Return values for canHoldItem.
  */
 enum {
 	INV_DOES_NOT_FIT		= 0,	/**< Item does not fit. */
@@ -409,6 +408,7 @@ typedef struct inventory_s {
 	invList_t *findInContainer (const invDef_t *container, const item_t *const item) const;
 	invList_t *getItemAtPos (const invDef_t *container, const int x, const int y) const;
 	float getWeight () const;
+	int canHoldItem (const invDef_t *container, const objDef_t *od, const int x, const int y, const invList_t *ignoredItem) const;
 } inventory_t;
 
 #define MAX_EQUIPDEFS   64
@@ -458,7 +458,6 @@ bool INV_IsArmourDef(const invDef_t* invDef);
 /* ================================ */
 
 void INVSH_InitCSI(const struct csi_s * import) __attribute__((nonnull));
-int INVSH_CheckToInventory(const inventory_t* const inv, const objDef_t *ob, const invDef_t *container, const int x, const int y, const invList_t *ignoredItem);
 void INVSH_GetFirstShapePosition(const invList_t *ic, int* const x, int* const y);
 bool INV_IsCraftItem(const objDef_t *obj);
 bool INV_IsBaseDefenceItem(const objDef_t *item);
