@@ -354,7 +354,7 @@ bool Step::checkWalkingDirections (const pathing_t *path)
 		 * to the floor beneath.  They will need to be able to step down into the cell or will
 		 * not be able to use the opening.
 		 */
-	} else if ((stepup & PATHFINDING_BIG_STEPDOWN) && toPos[2] > 0
+	} else if (routing.isStepDownLevel(actorSize, fromPos, dir) && toPos[2] > 0
 		&& actorStepupHeight >= routing.getStepupHeight(actorSize, nx, ny, nz - 1, dir ^ 1)) {
 		toPos[2]--;		/* Stepping down into lower cell. */
 	}
@@ -373,7 +373,7 @@ bool Step::checkWalkingDirections (const pathing_t *path)
 	 * The actor will be forced to fall (dir 13) from the destination cell to the cell below. */
 	if (routing.getFloor(actorSize, toPos) < 0) {
 		/* We cannot fall if STEPDOWN is defined. */
-		if (stepup & PATHFINDING_BIG_STEPDOWN) {
+		if (routing.isStepDownLevel(actorSize, fromPos, dir)) {
 			return false;		/* There is stepdown from here. */
 		}
 		heightChange = 0;
