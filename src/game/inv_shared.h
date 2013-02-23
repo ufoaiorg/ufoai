@@ -446,7 +446,6 @@ typedef enum {
 
 #define ACTOR_GET_INV(actor, hand) (((hand) == ACTOR_HAND_RIGHT) ? RIGHT(actor) : (((hand) == ACTOR_HAND_LEFT) ? LEFT(actor) : NULL))
 /** @param[in] hand Hand index (ACTOR_HAND_RIGHT, ACTOR_HAND_LEFT) */
-#define ACTOR_SWAP_HAND(hand) ((hand) == ACTOR_HAND_RIGHT ? ACTOR_HAND_LEFT : ACTOR_HAND_RIGHT)
 
 bool INV_IsFloorDef(const invDef_t* invDef);
 bool INV_IsRightDef(const invDef_t* invDef);
