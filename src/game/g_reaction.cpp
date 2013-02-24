@@ -312,19 +312,19 @@ void G_ReactionFireTargetsCreate (const Edict *shooter)
  * @param[in] shooter The reaction firing actor
  * @param[in] target The target to check reaction fire for (e.g. check whether the weapon that was marked for
  * using in reaction fire situations can handle the distance between the shooter and the target)
- * @param[in] invList The items that are checked for reaction fire
  * @note This does 'not' return the weapon (lowest TU costs, highest damage, highest accuracy) but the first weapon that
  * would fit for reaction fire.
  */
-static int G_ReactionFireGetTUsForItem (const Edict *shooter, const Edict *target, const invList_t *invList)
+static int G_ReactionFireGetTUsForItem (const Edict *shooter, const Edict *target)
 {
+	const FiremodeSettings *fmSetting = &shooter->chr.RFmode;
+	const invList_t *invList = ACTOR_GET_INV(shooter, fmSetting->getHand());
+
 	if (invList && invList->item.ammo && invList->item.isWeapon() && !invList->item.mustReload()) {
 		const fireDef_t *fdArray = FIRESH_FiredefForWeapon(&invList->item);
-		const FiremodeSettings *fmSetting;
 		if (fdArray == NULL)
 			return -1;
 
-		fmSetting = &shooter->chr.RFmode;
 		if (fmSetting->getHand() == ACTOR_HAND_RIGHT && fmSetting->getFmIdx() >= 0
 		 && fmSetting->getFmIdx() < MAX_FIREDEFS_PER_WEAPON) { /* If a right-hand firemode is selected and sane. */
 			const fireDefIndex_t fmIdx = fmSetting->getFmIdx();
@@ -580,7 +580,7 @@ static void G_ReactionFireTargetsUpdateAll (const Edict *target)
 	while ((shooter = G_EdictsGetNextLivingActor(shooter))) {
 		/* check whether reaction fire is possible (friend/foe, LoS */
 		if (G_ReactionFireIsPossible(shooter, target)) {
-			const int TUs = G_ReactionFireGetTUsForItem(shooter, target, shooter->getRightHand());
+			const int TUs = G_ReactionFireGetTUsForItem(shooter, target);
 			if (TUs < 0)
 				continue;	/* no suitable weapon */
 			rft.add(shooter, target, TUs);
@@ -676,7 +676,7 @@ static bool G_ReactionFireCheckExecution (const Edict *target)
 
 	/* check all possible shooters */
 	while ((shooter = G_EdictsGetNextLivingActor(shooter))) {
-		const int tus = G_ReactionFireGetTUsForItem(shooter, target, shooter->getRightHand());
+		const int tus = G_ReactionFireGetTUsForItem(shooter, target);
 		if (tus > 1) {	/* indicates an RF weapon is there */
 			if (rft.hasExpired(shooter, target, 0)) {
 				if (G_ReactionFireTryToShoot(shooter, target)) {
@@ -726,7 +726,7 @@ void G_ReactionFirePreShot (const Edict *target, const int fdTime)
 		repeat = false;
 		/* check all ents to see who wins and who loses a draw */
 		while ((shooter = G_EdictsGetNextLivingActor(shooter))) {
-			const int entTUs = G_ReactionFireGetTUsForItem(shooter, target, RIGHT(shooter));
+			const int entTUs = G_ReactionFireGetTUsForItem(shooter, target);
 			if (entTUs > 1) {	/* indicates an RF weapon is there */
 				if (rft.hasExpired(shooter, target, fdTime)) {
 					if (G_ReactionFireTryToShoot(shooter, target)) {
