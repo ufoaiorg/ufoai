@@ -187,91 +187,6 @@ static bool INVSH_CheckToInventory_shape (const inventory_t *const inv, const in
 }
 
 /**
- * @param[in] inv The inventory to check the item in.
- * @param[in] container The index of the container in the inventory to check the item in.
- * @param[in] od The type of item to check in the inventory.
- * @param[in] x The x value in the container (1 << x in the shape bitmask)
- * @param[in] y The y value in the container (SHAPE_BIG_MAX_HEIGHT is the max)
- * @param[in] ignoredItem You can ignore one item in the container (most often the currently dragged one). Use NULL if you want to check against all items in the container.
- * @return INV_DOES_NOT_FIT if the item does not fit
- * @return INV_FITS if it fits and
- * @return INV_FITS_ONLY_ROTATED if it fits only when rotated 90 degree (to the left).
- * @return INV_FITS_BOTH if it fits either normally or when rotated 90 degree (to the left).
- */
-int inventory_t::canHoldItem (const invDef_t *container, const objDef_t *od, const int x, const int y, const invList_t *ignoredItem) const
-{
-	int fits;
-	assert(this);
-	assert(container);
-	assert(od);
-
-	/* armour vs item */
-	if (INV_IsArmour(od)) {
-		if (!container->armour && !container->all) {
-			return INV_DOES_NOT_FIT;
-		}
-	} else if (!od->extension && container->extension) {
-		return INV_DOES_NOT_FIT;
-	} else if (!od->headgear && container->headgear) {
-		return INV_DOES_NOT_FIT;
-	} else if (container->armour) {
-		return INV_DOES_NOT_FIT;
-	}
-
-	/* twohanded item */
-	if (od->holdTwoHanded) {
-		if ((INV_IsRightDef(container) && getContainer(CSI->idLeft)) || INV_IsLeftDef(container))
-			return INV_DOES_NOT_FIT;
-	}
-
-	/* left hand is busy if right wields twohanded */
-	if (INV_IsLeftDef(container)) {
-		if (getContainer(CSI->idRight) && getContainer(CSI->idRight)->item.isHeldTwoHanded())
-			return INV_DOES_NOT_FIT;
-
-		/* can't put an item that is 'fireTwoHanded' into the left hand */
-		if (od->fireTwoHanded)
-			return INV_DOES_NOT_FIT;
-	}
-
-	/* Single item containers, e.g. hands, extension or headgear. */
-	if (container->single) {
-		if (getContainer(container->id)) {
-			/* There is already an item. */
-			return INV_DOES_NOT_FIT;
-		} else {
-			fits = INV_DOES_NOT_FIT; /* equals 0 */
-
-			if (INVSH_CheckToInventory_shape(this, container, od->shape, x, y, ignoredItem))
-				fits |= INV_FITS;
-			if (INVSH_CheckToInventory_shape(this, container, od->getShapeRotated(), x, y, ignoredItem))
-				fits |= INV_FITS_ONLY_ROTATED;
-
-			if (fits != INV_DOES_NOT_FIT)
-				return fits;	/**< Return INV_FITS_BOTH if both if statements where true above. */
-
-			Com_DPrintf(DEBUG_SHARED, "canHoldItem: INFO: Moving to 'single' container but item would not fit normally.\n");
-			return INV_FITS; /**< We are returning with status true (1) if the item does not fit at all - unlikely but not impossible. */
-		}
-	}
-
-	/* Scrolling container have endless room, the item always fits. */
-	if (container->scroll)
-		return INV_FITS;
-
-	/* Check 'grid' containers. */
-	fits = INV_DOES_NOT_FIT; /* equals 0 */
-	if (INVSH_CheckToInventory_shape(this, container, od->shape, x, y, ignoredItem))
-		fits |= INV_FITS;
-	/** @todo aren't both (equip and floor) temp container? */
-	if (!INV_IsEquipDef(container) && !INV_IsFloorDef(container)
-	&& INVSH_CheckToInventory_shape(this, container, od->getShapeRotated(), x, y, ignoredItem))
-		fits |= INV_FITS_ONLY_ROTATED;
-
-	return fits;	/**< Return INV_FITS_BOTH if both if statements where true above. */
-}
-
-/**
  * @brief Check if the (physical) information of 2 items is exactly the same.
  * @param[in] other Second item to compare.
  * @return true if they are identical or false otherwise.
@@ -382,81 +297,6 @@ bool INV_IsBaseDefenceItem (const objDef_t *obj)
 }
 
 /**
- * @brief Searches if there is an item at location (x,y) in a container.
- * @param[in] container Container in the inventory.
- * @param[in] x/y Position in the container that you want to check.
- * @return invList_t Pointer to the invList_t/item that is located at x/y.
- */
-invList_t *inventory_t::getItemAtPos (const invDef_t *container, const int x, const int y) const
-{
-	assert(container);
-
-	/* Only a single item. */
-	if (container->single)
-		return getContainer(container->id);
-
-	if (container->scroll)
-		Sys_Error("getItemAtPos: Scrollable containers (%i:%s) are not supported by this function.", container->id, container->name);
-
-	/* More than one item - search for the item that is located at location x/y in this container. */
-	invList_t *ic;
-	for (ic = getContainer(container->id); ic; ic = ic->next)
-		if (INVSH_ShapeCheckPosition(ic, x, y))
-			return ic;
-
-	/* Found nothing. */
-	return NULL;
-}
-
-/**
- * @brief Finds space for item in inv at container
- * @param[in] inv The inventory to search space in
- * @param[in] item The item to check the space for
- * @param[in] container The container to search in
- * @param[out] px The x position in the container
- * @param[out] py The y position in the container
- * @param[in] ignoredItem You can ignore one item in the container (most often the currently dragged one). Use NULL if you want to check against all items in the container.
- * @sa canHoldItem
- * @note x and y are NONE if no free space is available
- */
-void inventory_t::findSpace (const invDef_t *container, const item_t *item, int* const px, int* const py, const invList_t *ignoredItem) const
-{
-	int x, y;
-
-	assert(container);
-	assert(!cacheCheckToInventory);
-
-	/* Scrollable container always have room. We return a dummy location. */
-	if (container->scroll) {
-		*px = *py = 0;
-		return;
-	}
-
-	/** @todo optimize for single containers */
-
-	for (y = 0; y < SHAPE_BIG_MAX_HEIGHT; y++) {
-		for (x = 0; x < SHAPE_BIG_MAX_WIDTH; x++) {
-			const int checkedTo = canHoldItem(container, item->def(), x, y, ignoredItem);
-			if (checkedTo) {
-				cacheCheckToInventory = INV_DOES_NOT_FIT;
-				*px = x;
-				*py = y;
-				return;
-			} else {
-				cacheCheckToInventory = INV_FITS;
-			}
-		}
-	}
-	cacheCheckToInventory = INV_DOES_NOT_FIT;
-
-#ifdef PARANOID
-	Com_DPrintf(DEBUG_SHARED, "findSpace: no space for %s: %s in %s\n",
-		item->def()->type, item->def()->id, container->name);
-#endif
-	*px = *py = NONE;
-}
-
-/**
  * @brief Returns the index of this item in the inventory.
  * @note check that id is a none empty string
  * @note previously known as RS_GetItem
@@ -558,27 +398,6 @@ float item_t::getWeight () const
 		weight += ammo->weight;
 	}
 	return weight;
-}
-
-/**
- * @brief Check that adding an item to the inventory won't exceed the max permitted weight.
- * @param[in] inv The inventory the item is added to.
- * @param[in] from Index of the container the item comes from.
- * @param[in] to Index of the container the item is being placed.
- * @param[in] item The item that is being added.
- * @param[in] maxWeight The max permitted weight.
- * @return @c true if it is Ok to add the item @c false otherwise.
- */
-bool inventory_t::canHoldItemWeight (containerIndex_t from, containerIndex_t to, const item_t &item, int maxWeight) const
-{
-	if (CSI->ids[to].temp || !CSI->ids[from].temp)
-		return true;
-
-	const bool swapArmour = INV_IsArmour(item.def()) && getArmourCont();
-	const float invWeight = getWeight() - (swapArmour ? getArmourCont()->item.getWeight() : 0);
-	float itemWeight = item.getWeight();
-
-	return (maxWeight < 0 || maxWeight >= invWeight + itemWeight);
 }
 
 /*
@@ -781,6 +600,187 @@ uint32_t objDef_t::getShapeRotated () const
 	}
 
 	return shapeNew;
+}
+
+/**
+ * @param[in] inv The inventory to check the item in.
+ * @param[in] container The index of the container in the inventory to check the item in.
+ * @param[in] od The type of item to check in the inventory.
+ * @param[in] x The x value in the container (1 << x in the shape bitmask)
+ * @param[in] y The y value in the container (SHAPE_BIG_MAX_HEIGHT is the max)
+ * @param[in] ignoredItem You can ignore one item in the container (most often the currently dragged one). Use NULL if you want to check against all items in the container.
+ * @return INV_DOES_NOT_FIT if the item does not fit
+ * @return INV_FITS if it fits and
+ * @return INV_FITS_ONLY_ROTATED if it fits only when rotated 90 degree (to the left).
+ * @return INV_FITS_BOTH if it fits either normally or when rotated 90 degree (to the left).
+ */
+int inventory_t::canHoldItem (const invDef_t *container, const objDef_t *od, const int x, const int y, const invList_t *ignoredItem) const
+{
+	int fits;
+	assert(this);
+	assert(container);
+	assert(od);
+
+	/* armour vs item */
+	if (INV_IsArmour(od)) {
+		if (!container->armour && !container->all) {
+			return INV_DOES_NOT_FIT;
+		}
+	} else if (!od->extension && container->extension) {
+		return INV_DOES_NOT_FIT;
+	} else if (!od->headgear && container->headgear) {
+		return INV_DOES_NOT_FIT;
+	} else if (container->armour) {
+		return INV_DOES_NOT_FIT;
+	}
+
+	/* twohanded item */
+	if (od->holdTwoHanded) {
+		if ((INV_IsRightDef(container) && getContainer(CSI->idLeft)) || INV_IsLeftDef(container))
+			return INV_DOES_NOT_FIT;
+	}
+
+	/* left hand is busy if right wields twohanded */
+	if (INV_IsLeftDef(container)) {
+		if (getContainer(CSI->idRight) && getContainer(CSI->idRight)->item.isHeldTwoHanded())
+			return INV_DOES_NOT_FIT;
+
+		/* can't put an item that is 'fireTwoHanded' into the left hand */
+		if (od->fireTwoHanded)
+			return INV_DOES_NOT_FIT;
+	}
+
+	/* Single item containers, e.g. hands, extension or headgear. */
+	if (container->single) {
+		if (getContainer(container->id)) {
+			/* There is already an item. */
+			return INV_DOES_NOT_FIT;
+		} else {
+			fits = INV_DOES_NOT_FIT; /* equals 0 */
+
+			if (INVSH_CheckToInventory_shape(this, container, od->shape, x, y, ignoredItem))
+				fits |= INV_FITS;
+			if (INVSH_CheckToInventory_shape(this, container, od->getShapeRotated(), x, y, ignoredItem))
+				fits |= INV_FITS_ONLY_ROTATED;
+
+			if (fits != INV_DOES_NOT_FIT)
+				return fits;	/**< Return INV_FITS_BOTH if both if statements where true above. */
+
+			Com_DPrintf(DEBUG_SHARED, "canHoldItem: INFO: Moving to 'single' container but item would not fit normally.\n");
+			return INV_FITS; /**< We are returning with status true (1) if the item does not fit at all - unlikely but not impossible. */
+		}
+	}
+
+	/* Scrolling container have endless room, the item always fits. */
+	if (container->scroll)
+		return INV_FITS;
+
+	/* Check 'grid' containers. */
+	fits = INV_DOES_NOT_FIT; /* equals 0 */
+	if (INVSH_CheckToInventory_shape(this, container, od->shape, x, y, ignoredItem))
+		fits |= INV_FITS;
+	/** @todo aren't both (equip and floor) temp container? */
+	if (!INV_IsEquipDef(container) && !INV_IsFloorDef(container)
+	&& INVSH_CheckToInventory_shape(this, container, od->getShapeRotated(), x, y, ignoredItem))
+		fits |= INV_FITS_ONLY_ROTATED;
+
+	return fits;	/**< Return INV_FITS_BOTH if both if statements where true above. */
+}
+
+/**
+ * @brief Searches if there is an item at location (x,y) in a container.
+ * @param[in] container Container in the inventory.
+ * @param[in] x/y Position in the container that you want to check.
+ * @return invList_t Pointer to the invList_t/item that is located at x/y.
+ */
+invList_t *inventory_t::getItemAtPos (const invDef_t *container, const int x, const int y) const
+{
+	assert(container);
+
+	/* Only a single item. */
+	if (container->single)
+		return getContainer(container->id);
+
+	if (container->scroll)
+		Sys_Error("getItemAtPos: Scrollable containers (%i:%s) are not supported by this function.", container->id, container->name);
+
+	/* More than one item - search for the item that is located at location x/y in this container. */
+	invList_t *ic;
+	for (ic = getContainer(container->id); ic; ic = ic->next)
+		if (INVSH_ShapeCheckPosition(ic, x, y))
+			return ic;
+
+	/* Found nothing. */
+	return NULL;
+}
+
+/**
+ * @brief Finds space for item in inv at container
+ * @param[in] inv The inventory to search space in
+ * @param[in] item The item to check the space for
+ * @param[in] container The container to search in
+ * @param[out] px The x position in the container
+ * @param[out] py The y position in the container
+ * @param[in] ignoredItem You can ignore one item in the container (most often the currently dragged one). Use NULL if you want to check against all items in the container.
+ * @sa canHoldItem
+ * @note x and y are NONE if no free space is available
+ */
+void inventory_t::findSpace (const invDef_t *container, const item_t *item, int* const px, int* const py, const invList_t *ignoredItem) const
+{
+	int x, y;
+
+	assert(container);
+	assert(!cacheCheckToInventory);
+
+	/* Scrollable container always have room. We return a dummy location. */
+	if (container->scroll) {
+		*px = *py = 0;
+		return;
+	}
+
+	/** @todo optimize for single containers */
+
+	for (y = 0; y < SHAPE_BIG_MAX_HEIGHT; y++) {
+		for (x = 0; x < SHAPE_BIG_MAX_WIDTH; x++) {
+			const int checkedTo = canHoldItem(container, item->def(), x, y, ignoredItem);
+			if (checkedTo) {
+				cacheCheckToInventory = INV_DOES_NOT_FIT;
+				*px = x;
+				*py = y;
+				return;
+			} else {
+				cacheCheckToInventory = INV_FITS;
+			}
+		}
+	}
+	cacheCheckToInventory = INV_DOES_NOT_FIT;
+
+#ifdef PARANOID
+	Com_DPrintf(DEBUG_SHARED, "findSpace: no space for %s: %s in %s\n",
+		item->def()->type, item->def()->id, container->name);
+#endif
+	*px = *py = NONE;
+}
+
+/**
+ * @brief Check that adding an item to the inventory won't exceed the max permitted weight.
+ * @param[in] inv The inventory the item is added to.
+ * @param[in] from Index of the container the item comes from.
+ * @param[in] to Index of the container the item is being placed.
+ * @param[in] item The item that is being added.
+ * @param[in] maxWeight The max permitted weight.
+ * @return @c true if it is Ok to add the item @c false otherwise.
+ */
+bool inventory_t::canHoldItemWeight (containerIndex_t from, containerIndex_t to, const item_t &item, int maxWeight) const
+{
+	if (CSI->ids[to].temp || !CSI->ids[from].temp)
+		return true;
+
+	const bool swapArmour = INV_IsArmour(item.def()) && getArmourCont();
+	const float invWeight = getWeight() - (swapArmour ? getArmourCont()->item.getWeight() : 0);
+	float itemWeight = item.getWeight();
+
+	return (maxWeight < 0 || maxWeight >= invWeight + itemWeight);
 }
 
 /**
