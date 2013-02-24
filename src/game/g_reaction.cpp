@@ -325,8 +325,7 @@ static int G_ReactionFireGetTUsForItem (const Edict *shooter, const Edict *targe
 		if (fdArray == NULL)
 			return -1;
 
-		if (fmSetting->getHand() == ACTOR_HAND_RIGHT && fmSetting->getFmIdx() >= 0
-		 && fmSetting->getFmIdx() < MAX_FIREDEFS_PER_WEAPON) { /* If a right-hand firemode is selected and sane. */
+		if (fmSetting->getFmIdx() >= 0 && fmSetting->getFmIdx() < MAX_FIREDEFS_PER_WEAPON) { /* If firemode is sane. */
 			const fireDefIndex_t fmIdx = fmSetting->getFmIdx();
 			const int reactionFire = G_PLAYER_FROM_ENT(shooter).reactionLeftover;
 			const fireDef_t *fd = &fdArray[fmIdx];
