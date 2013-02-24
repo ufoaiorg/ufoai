@@ -327,7 +327,7 @@ static int G_ReactionFireGetTUsForItem (const Edict *ent, const Edict *target, c
 
 		fmSetting = &ent->chr.RFmode;
 		if (fmSetting->getHand() == ACTOR_HAND_RIGHT && fmSetting->getFmIdx() >= 0
-		 && fmSetting->getFmIdx() < MAX_FIREDEFS_PER_WEAPON) { /* If a RIGHT-hand firemode is selected and sane. */
+		 && fmSetting->getFmIdx() < MAX_FIREDEFS_PER_WEAPON) { /* If a right-hand firemode is selected and sane. */
 			const fireDefIndex_t fmIdx = fmSetting->getFmIdx();
 			const int reactionFire = G_PLAYER_FROM_ENT(ent).reactionLeftover;
 			const fireDef_t *fd = &fdArray[fmIdx];
@@ -349,7 +349,7 @@ static int G_ReactionFireGetTUsForItem (const Edict *ent, const Edict *target, c
  */
 static bool G_ActorHasReactionFireEnabledWeapon (const Edict *ent)
 {
-	const objDef_t *weapon = INVSH_HasReactionFireEnabledWeapon(RIGHT(ent));
+	const objDef_t *weapon = INVSH_HasReactionFireEnabledWeapon(ent->getRightHand());
 	if (weapon)
 		return true;
 	return INVSH_HasReactionFireEnabledWeapon(LEFT(ent)) != NULL;
@@ -581,7 +581,7 @@ static void G_ReactionFireTargetsUpdateAll (const Edict *target)
 	while ((shooter = G_EdictsGetNextLivingActor(shooter))) {
 		/* check whether reaction fire is possible (friend/foe, LoS */
 		if (G_ReactionFireIsPossible(shooter, target)) {
-			const int TUs = G_ReactionFireGetTUsForItem(shooter, target, RIGHT(shooter));
+			const int TUs = G_ReactionFireGetTUsForItem(shooter, target, shooter->getRightHand());
 			if (TUs < 0)
 				continue;	/* no suitable weapon */
 			rft.add(shooter, target, TUs);
@@ -677,7 +677,7 @@ static bool G_ReactionFireCheckExecution (const Edict *target)
 
 	/* check all possible shooters */
 	while ((shooter = G_EdictsGetNextLivingActor(shooter))) {
-		const int tus = G_ReactionFireGetTUsForItem(shooter, target, RIGHT(shooter));
+		const int tus = G_ReactionFireGetTUsForItem(shooter, target, shooter->getRightHand());
 		if (tus > 1) {	/* indicates an RF weapon is there */
 			if (rft.hasExpired(shooter, target, 0)) {
 				if (G_ReactionFireTryToShoot(shooter, target)) {

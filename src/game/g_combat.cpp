@@ -1060,9 +1060,9 @@ static bool G_PrepareShot (Edict *ent, shoot_types_t shootType, fireDefIndex_t f
 		item = &hgc->item;
 		*container = gi.csi->idHeadgear;
 	} else if (IS_SHOT_RIGHT(shootType)) {
-		if (!RIGHT(ent))
+		if (!ent->getRightHand())
 			return false;
-		item = &RIGHT(ent)->item;
+		item = &ent->getRightHand()->item;
 		*container = gi.csi->idRight;
 	} else {
 		if (!LEFT(ent))

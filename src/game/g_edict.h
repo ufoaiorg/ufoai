@@ -171,6 +171,10 @@ public:
 
 	bool active;
 
+	inline invList_t *getRightHand () const
+	{
+		return RIGHT(this);
+	}
 	inline invList_t *getFloor () const
 	{
 		return chr.inv.getFloorContainer();

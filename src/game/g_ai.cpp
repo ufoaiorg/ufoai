@@ -266,7 +266,7 @@ static bool AI_HideNeeded (const Edict *ent)
 				continue;
 
 			if (G_IsVisibleForTeam(from, ent->team)) {
-				const invList_t *invlist = RIGHT(from);
+				const invList_t *invlist = from->getRightHand();
 				const fireDef_t *fd = NULL;
 				if (invlist && invlist->item.def()) {
 					fd = FIRESH_FiredefForWeapon(&invlist->item);
@@ -325,7 +325,7 @@ const item_t *AI_GetItemForShootType (shoot_types_t shootType, const Edict *ent)
 	/* check that the current selected shoot type also has a valid item in its
 	 * corresponding hand slot of the inventory. */
 	if (IS_SHOT_RIGHT(shootType)) {
-		const invList_t *ic = RIGHT(ent);
+		const invList_t *ic = ent->getRightHand();
 		return AI_GetItemFromInventory(ic);
 	} else if (IS_SHOT_LEFT(shootType)) {
 		const invList_t *ic = LEFT(ent);
@@ -1199,7 +1199,7 @@ void AI_ActorThink (Player *player, Edict *ent)
 
 	/* if both hands are empty, attempt to get a weapon out of backpack or the
 	 * floor (if TUs permit) */
-	if (!LEFT(ent) && !RIGHT(ent))
+	if (!LEFT(ent) && !ent->getRightHand())
 		G_ClientGetWeaponFromInventory(ent);
 
 	bestAia = AI_PrepBestAction(player, ent);

@@ -546,7 +546,7 @@ bool G_ClientCanReload (Edict *ent, containerIndex_t containerID)
 
 	if (CONTAINER(ent, containerID)) {
 		weapon = CONTAINER(ent, containerID)->item.def();
-	} else if (containerID == gi.csi->idLeft && RIGHT(ent)->item.isHeldTwoHanded()) {
+	} else if (containerID == gi.csi->idLeft && ent->getRightHand()->item.isHeldTwoHanded()) {
 		/* Check for two-handed weapon */
 		containerID = gi.csi->idRight;
 		weapon = CONTAINER(ent, containerID)->item.def();

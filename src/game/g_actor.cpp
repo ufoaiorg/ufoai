@@ -762,7 +762,7 @@ void G_ActorReload (Edict* ent, const invDef_t *invDef)
 
 	if (CONTAINER(ent, invDef->id)) {
 		weapon = CONTAINER(ent, invDef->id)->item.def();
-	} else if (INV_IsLeftDef(invDef) && RIGHT(ent)->item.isHeldTwoHanded()) {
+	} else if (INV_IsLeftDef(invDef) && ent->getRightHand()->item.isHeldTwoHanded()) {
 		/* Check for two-handed weapon */
 		invDef = INVDEF(gi.csi->idRight);
 		weapon = CONTAINER(ent, invDef->id)->item.def();
