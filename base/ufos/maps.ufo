@@ -223,6 +223,7 @@ mapdef africa_small
 mapdef beach
 {
 	map				"+beach"
+	param			"default"
 	description		"_Coastal Crash Site"
 	campaign		false
 	multiplayer		false
@@ -263,6 +264,7 @@ mapdef beach
 mapdef bomber_city
 {
 	map				"+bomber_city"
+	param			"default"
 	description		"_Bomber in the City"
 	multiplayer		true
 	teams			4
@@ -711,6 +713,7 @@ mapdef farm_small
 mapdef farm2
 {
 	map				"+farm2"
+	param			"standard"
 	description		"_Farm"
 	size			"medium"
 	teams			2
@@ -1225,9 +1228,61 @@ mapdef frozen_nature_small_noufo
 // HARBOUR RANDOM MAPS //
 /////////////////////////
 
-mapdef harbour2
+mapdef harbour2_a
 {
 	map			"+harbour2"
+	param		"harbour"
+	description	"_Harbour"
+	size		"large"
+	multiplayer	true
+	teams		2
+	gametypes
+	(
+		fight1on1
+		fight2on2
+		fight3on3
+		fight4on4
+		coop2
+		coop3
+		coop4
+	)
+	maxaliens	16
+	civilianteam	worker
+	campaign	true
+	aircraft
+	(
+		craft_drop_firebird
+		craft_drop_raptor
+		craft_drop_herakles
+	)
+
+	ufos
+	(
+		// any
+	)
+
+	terrains
+	(
+		"coast"
+	)
+
+	cultures
+	(
+		// any
+	)
+
+	populations
+	(
+		"urban"
+		"suburban"
+		"village"
+	)
+}
+
+mapdef harbour2_b
+{
+	map			"+harbour2"
+	param		"pier"
 	description	"_Harbour"
 	size		"large"
 	multiplayer	true
@@ -2165,6 +2220,7 @@ mapdef oriental_small
 mapdef scout_crash
 {
 	map				"+scout_crash"
+	param			"standard"
 	multiplayer		true
 	teams			2
 	gametypes (
@@ -2626,6 +2682,7 @@ mapdef city2
 mapdef city_disco
 {
 	map				"+city_disco"
+	param			"default"
 	description		"_Urban Disco"
 	multiplayer		true
 	teams			2
@@ -2675,6 +2732,7 @@ mapdef city_disco
 mapdef community_centre
 {
 	map				"+community_centre"
+	param			"default"
 	description		"_Community Centre"
 	multiplayer		true
 	teams			3
@@ -2781,6 +2839,7 @@ mapdef construction
 mapdef druglord
 {
 	map				"+druglord"
+	param			"default"
 	description		"_Tropical Jungle Estate"
 	multiplayer		true
 	teams			2
@@ -2829,6 +2888,7 @@ mapdef druglord
 mapdef eaglenest
 {
 	map				"+eaglenest"
+	param			"default"
 	multiplayer		true
 	teams			2
 	gametypes (
@@ -2881,6 +2941,7 @@ mapdef eaglenest
 mapdef gasstation
 {
 	map				"+gasstation"
+	param			"default"
 	description		"_Gas Station"
 	multiplayer		true
 	teams			2
@@ -2929,6 +2990,7 @@ mapdef gasstation
 mapdef italy
 {
 	map			"+italy"
+	param		"default"
 	description	"_Luxury House"
 	teams		2
 	multiplayer	true
@@ -3031,6 +3093,7 @@ mapdef japan_default
 mapdef mart
 {
 	map			"+mart"
+	param		"default"
 	description	"_Supermarket"
 	multiplayer	true
 	teams		2
@@ -3083,6 +3146,7 @@ mapdef mart
 mapdef military_convoy
 {
 	map				"+military_convoy"
+	param			"default"
 	description		"_Military Convoy Ambush Site"
 	multiplayer		true
 	teams			2
@@ -3131,6 +3195,7 @@ mapdef military_convoy
 mapdef oriental_mosque
 {
 	map				"+oriental_mosque"
+	param			"standard"
 	description		"_Middle Eastern Suburb"
 	multiplayer		true
 	teams			2
@@ -3182,6 +3247,7 @@ mapdef oriental_mosque
 mapdef shelter
 {
 	map				"+shelter"
+	param			"standard"
 	description		"_Military Shelter"
 	size			"medium"
 	teams			4
@@ -3281,6 +3347,7 @@ mapdef solarplant
 mapdef spedition
 {
 	map			"+spedition"
+	param		"default"
 	description	"_Workshop"
 	multiplayer	true
 	teams		2
@@ -3331,6 +3398,7 @@ mapdef spedition
 mapdef stadium
 {
 	map				"+stadium"
+	param			"default"
 	description		"_Basketball Stadium"
 	multiplayer		true
 	teams			2
@@ -3382,6 +3450,7 @@ mapdef stadium
 mapdef tower
 {
 	map				"+tower"
+	param			"default"
 	description		"_Office Complex"
 	multiplayer		true
 	teams			3
@@ -3436,6 +3505,7 @@ mapdef tower
 mapdef transport
 {
 	map			"+transport"
+	param		"default"
 	description	"_Warehouse"
 	multiplayer	true
 	teams		2
