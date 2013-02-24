@@ -226,7 +226,6 @@ mapdef beach
 	description		"_Coastal Crash Site"
 	campaign		false
 	multiplayer		false
-	hurtaliens		true
 	maxaliens		8
 
 	aircraft
@@ -327,8 +326,6 @@ mapdef bridge
 	gametypes ( )
 	maxaliens		30
 
-	hurtaliens		true
-
 	aircraft
 	(
 		craft_drop_firebird
@@ -375,8 +372,6 @@ mapdef bridge_mp
 	)
 
 	maxaliens		30
-
-	hurtaliens		true
 
 	aircraft
 	(
@@ -546,7 +541,6 @@ mapdef desert_harvester_crash
 	description		"_Country Desert (Crashed Harvester)"
 	multiplayer		true
 	teams			2
-	hurtaliens		true
 	gametypes (
 		fight1on1
 		fight2on2
@@ -813,7 +807,6 @@ mapdef forest_large_crash
 	multiplayer	false
 	size		"large"
 	maxaliens	15
-	hurtaliens	true
 
 	aircraft
 	(
@@ -892,7 +885,6 @@ mapdef forest_small_crash
 	param		"small_crash"
 	description	"_Forest"
 	multiplayer	false
-	hurtaliens	true
 	size		"small"
 	maxaliens	6
 
@@ -2358,7 +2350,6 @@ mapdef ufocrash
 	description		"_UFO Crash Site"
 	storyrelated	true
 	maxaliens		30
-	hurtaliens		true
 	ufos
 	(
 		craft_crash_scout
@@ -4017,7 +4008,6 @@ mapdef fighter_crash
 	multiplayer		true
 	teams			2
 	maxaliens		6 //info_alien_start spawnpoints:19
-	hurtaliens		true
 
 	gametypes (
 		fight1on1
