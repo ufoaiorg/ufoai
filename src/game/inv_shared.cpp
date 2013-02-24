@@ -654,6 +654,7 @@ const fireDef_t *FIRESH_SlowestFireDef (const item_t &item)
 
 /**
  * @brief Checks whether the given list contains a reaction fire enabled weapon.
+ * @param invList The item container, supposed to be the right or left hand
  * @return @c NULL if no reaction fire enabled weapon was found in the given list, the
  * reaction fire enabled object otherwise.
  */
