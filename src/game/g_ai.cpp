@@ -303,7 +303,7 @@ static inline const item_t* AI_GetItemFromInventory (const invList_t *ic)
 {
 	if (ic != NULL) {
 		const item_t *item = &ic->item;
-		if (item->ammo && item->isWeapon() && (!item->isReloadable() || item->ammoLeft > 0))
+		if (item->ammo && item->isWeapon() && !item->mustReload())
 			return item;
 	}
 	return NULL;
@@ -1191,9 +1191,9 @@ void AI_ActorThink (Player *player, Edict *ent)
 
 	/* if a weapon can be reloaded we attempt to do so if TUs permit, otherwise drop it */
 	if (!G_IsPanicked(ent)) {
-		if (RIGHT(ent) && RIGHT(ent)->item.isReloadable() && RIGHT(ent)->item.ammoLeft == 0)
+		if (RIGHT(ent) && RIGHT(ent)->item.mustReload())
 			AI_TryToReloadWeapon(ent, gi.csi->idRight);
-		if (LEFT(ent) && LEFT(ent)->item.isReloadable() && LEFT(ent)->item.ammoLeft == 0)
+		if (LEFT(ent) && LEFT(ent)->item.mustReload())
 			AI_TryToReloadWeapon(ent, gi.csi->idLeft);
 	}
 

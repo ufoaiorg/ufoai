@@ -318,8 +318,7 @@ void G_ReactionFireTargetsCreate (const Edict *shooter)
  */
 static int G_ReactionFireGetTUsForItem (const Edict *ent, const Edict *target, const invList_t *invList)
 {
-	if (invList && invList->item.ammo && invList->item.isWeapon()
-	 && (!invList->item.isReloadable() || invList->item.ammoLeft > 0)) {
+	if (invList && invList->item.ammo && invList->item.isWeapon() && !invList->item.mustReload()) {
 		const fireDef_t *fdArray = FIRESH_FiredefForWeapon(&invList->item);
 		const FiremodeSettings *fmSetting;
 		if (fdArray == NULL)

@@ -1150,7 +1150,7 @@ static int HUD_UpdateActorFireMode (le_t *actor)
 		/* if no TUs left for this firing action
 		 * or if the weapon is reloadable and out of ammo,
 		 * then change to move mode */
-		if ((selWeapon->item.isReloadable() && selWeapon->item.ammoLeft <= 0) || CL_ActorUsableTUs(actor) < time)
+		if (selWeapon->item.mustReload() || CL_ActorUsableTUs(actor) < time)
 			CL_ActorSetMode(actor, M_MOVE);
 	} else if (selWeapon) {
 		Com_sprintf(infoText, lengthof(infoText), _("%s\n(empty)\n"), _(def->name));

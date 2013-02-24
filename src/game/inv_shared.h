@@ -359,6 +359,11 @@ typedef struct item_s {
 	{
 		return _itemDef->reload > 0;
 	}
+	/** @todo is !mustReload() equivalent to 'usable ?? e.g. grenades are certainly not reloadable, but do they have ammo ??? */
+	inline bool mustReload() const
+	{
+		return isReloadable() && ammoLeft <= 0;
+	}
 	inline bool isWeapon() const
 	{
 		return _itemDef->weapon;

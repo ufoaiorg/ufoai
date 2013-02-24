@@ -87,7 +87,7 @@ static bool HUD_CheckShooting (const le_t* le, invList_t *weapon)
 		return false;
 	}
 	/* Cannot shoot because of lack of ammo. */
-	if (weapon->item.ammoLeft <= 0 && weapon->item.isReloadable()) {
+	if (weapon->item.mustReload()) {
 		HUD_DisplayMessage(_("Can't perform action - no ammo!"));
 		return false;
 	}

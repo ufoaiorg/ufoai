@@ -597,7 +597,7 @@ void G_ClientGetWeaponFromInventory (Edict *ent)
 			 * we've already found. */
 			for (ic = CONTAINER(ent, container); ic; ic = ic->next) {
 				assert(ic->item.def());
-				if (ic->item.isWeapon() && (ic->item.ammoLeft > 0 || !ic->item.isReloadable())) {
+				if (ic->item.isWeapon() && !ic->item.mustReload()) {
 					icFinal = ic;
 					bestContainer = INVDEF(container);
 					tu = bestContainer->out;
