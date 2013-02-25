@@ -1829,7 +1829,7 @@ static void CL_SwapSkills (linkedList_t *team)
 				character_t *cp1 = (character_t*)cp1List->data;
 				const fireDef_t *fdRightArray = NULL;
 				const fireDef_t *fdHolsterArray = NULL;
-				const invList_t *rightHandCharOne = RIGHT(cp1);
+				const invList_t *rightHandCharOne = cp1->inv.getRightHandContainer();
 				const invList_t *holsterCharOne = HOLSTER(cp1);
 
 				if (rightHandCharOne && rightHandCharOne->item.ammo && rightHandCharOne->item.def())
@@ -1850,7 +1850,7 @@ static void CL_SwapSkills (linkedList_t *team)
 						character_t *cp2 = (character_t*)cp2List->data;
 						fdRightArray = NULL;
 						fdHolsterArray = NULL;
-						const invList_t *rightHandCharTwo = RIGHT(cp2);
+						const invList_t *rightHandCharTwo = cp2->inv.getRightHandContainer();
 						const invList_t *holsterCharTwo = HOLSTER(cp2);
 
 						if (rightHandCharTwo && rightHandCharTwo->item.ammo && rightHandCharTwo->item.def())

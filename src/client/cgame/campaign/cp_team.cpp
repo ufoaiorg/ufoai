@@ -169,7 +169,8 @@ void CP_CleanupTeam (base_t *base, equipDef_t *ed)
 		/* This is an UGV */
 		if (employee->ugv) {
 			/* Check if there is a weapon and add it if there isn't. */
-			if (!RIGHT(chr) || !RIGHT(chr)->item.def())
+			invList_t* rightH = chr->inv.getRightHandContainer();
+			if (!rightH || !rightH->item.def())
 				cgi->INV_EquipActorRobot(&chr->inv, INVSH_GetItemByID(employee->ugv->weapon));
 		}
 	}
@@ -230,7 +231,8 @@ void CP_CleanupAircraftTeam (aircraft_t *aircraft, equipDef_t * ed)
 			/* Auto-assign weapons to UGVs/Robots if they have no weapon yet. */
 			if (employee->ugv) {
 				/* Check if there is a weapon and add it if there isn't. */
-				if (!RIGHT(chr) || !RIGHT(chr)->item.def())
+				invList_t* rightH = chr->inv.getRightHandContainer();
+				if (!rightH || !rightH->item.def())
 					cgi->INV_EquipActorRobot(&chr->inv, INVSH_GetItemByID(employee->ugv->weapon));
 				continue;
 			}

@@ -147,7 +147,7 @@ static void CL_ActorCvars (const character_t *chr)
 	assert(chr);
 
 	/* visible equipment */
-	weapon = RIGHT(chr);
+	weapon = chr->inv.getRightHandContainer();
 	if (weapon)
 		Cvar_Set("mn_rweapon", weapon->item.def()->model);
 	else
