@@ -600,12 +600,12 @@ int CP_TerrorMissionAvailableUFOs(const mission_t *mission, ufoType_t *ufoTypes)
 bool AIR_SendAircraftToMission(aircraft_t *aircraft, mission_t *mission);
 void AIR_AircraftsNotifyMissionRemoved(const mission_t *mission);
 
-void CP_UFOProceedMission(const campaign_t* campaign, aircraft_t *ufocraft);
+void CP_UFOProceedMission(const campaign_t *campaign, aircraft_t *ufocraft);
 mission_t *CP_CreateNewMission(interestCategory_t category, bool beginNow);
 bool CP_ChooseMap(mission_t *mission, const vec2_t pos);
 void CP_StartSelectedMission(void);
 
-void CP_HandleNationData(float minHappiness, mission_t * mis, const nation_t *nation, const missionResults_t *results);
+void CP_HandleNationData(float minHappiness, mission_t *mis, const nation_t *nation, const missionResults_t *results);
 void CP_UpdateCharacterStats(const base_t *base, const aircraft_t *aircraft);
 
 /* Credits management */
@@ -618,7 +618,7 @@ void CP_UpdateCharacterData(linkedList_t *updateCharacters);
 void CP_ParseCharacterData(dbuffer *msg, linkedList_t **updateCharacters);
 bool CP_CheckNextStageDestination(const campaign_t* campaign, aircraft_t *ufo);
 
-aircraft_t* AIR_NewAircraft(base_t * base, const aircraft_t *aircraftTemplate);
+aircraft_t* AIR_NewAircraft(base_t *base, const aircraft_t *aircraftTemplate);
 
 void CP_GetRandomPosOnGeoscape(vec2_t pos, bool noWater);
 bool CP_GetRandomPosOnGeoscapeWithParameters(vec2_t pos, const linkedList_t *terrainTypes, const linkedList_t *cultureTypes, const linkedList_t *populationTypes, const linkedList_t *nations);

@@ -383,7 +383,7 @@ void CP_CheckLostCondition (const campaign_t *campaign)
  * @todo Scoring should eventually be expanded to include such elements as
  * infected humans and mission objectives other than xenocide.
  */
-void CP_HandleNationData (float minHappiness, mission_t * mis, const nation_t *affectedNation, const missionResults_t *results)
+void CP_HandleNationData (float minHappiness, mission_t *mis, const nation_t *affectedNation, const missionResults_t *results)
 {
 	int i;
 	const float civilianSum = (float) (results->civiliansSurvived + results->civiliansKilled + results->civiliansKilledFriendlyFire);

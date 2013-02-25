@@ -100,7 +100,7 @@ bool E_IsAwayFromBase (const employee_t *employee)
  * @param[in] num how many employees, if -1, hire building->maxEmployees
  * @sa B_SetUpBase
  */
-void E_HireForBuilding (base_t* base, building_t * building, int num)
+void E_HireForBuilding (base_t *base, building_t *building, int num)
 {
 	if (num < 0)
 		num = building->maxEmployees;
@@ -336,7 +336,7 @@ employee_t* E_GetHiredRobot (const base_t* const base, const ugv_t *ugvType)
  * @return bool
  * @sa E_EmployeeIsFree
  */
-static inline bool E_EmployeeIsUnassigned (const employee_t * employee)
+static inline bool E_EmployeeIsUnassigned (const employee_t *employee)
 {
 	if (!employee)
 		cgi->Com_Error(ERR_DROP, "E_EmployeeIsUnassigned: Employee is NULL.\n");
@@ -1004,7 +1004,7 @@ bool E_SaveXML (xmlNode_t *p)
 
 		cgi->XML_AddString(snode, SAVE_EMPLOYEE_TYPE, cgi->Com_GetConstVariable(SAVE_EMPLOYEETYPE_NAMESPACE, emplType));
 		E_Foreach(emplType, employee) {
-			xmlNode_t * chrNode;
+			xmlNode_t *chrNode;
 			xmlNode_t *ssnode = cgi->XML_AddNode(snode, SAVE_EMPLOYEE_EMPLOYEE);
 
 			/** @note e->transfer is not saved here because it'll be restored via TR_Load. */
@@ -1034,7 +1034,7 @@ bool E_SaveXML (xmlNode_t *p)
  */
 bool E_LoadXML (xmlNode_t *p)
 {
-	xmlNode_t * snode;
+	xmlNode_t *snode;
 	bool success = true;
 
 	cgi->Com_RegisterConstList(saveEmployeeConstants);

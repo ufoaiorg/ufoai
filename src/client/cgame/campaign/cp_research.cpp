@@ -1591,7 +1591,7 @@ bool RS_IsResearched_idx (int techIdx)
  * @sa RS_IsResearched_idx
  * Call this function if you already hold a tech pointer
  */
-bool RS_IsResearched_ptr (const technology_t * tech)
+bool RS_IsResearched_ptr (const technology_t *tech)
 {
 	if (tech && tech->statusResearch == RS_FINISH)
 		return true;
