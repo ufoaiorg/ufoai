@@ -1600,7 +1600,7 @@ void RT_DebugPathDisplay (Routing &routing, actorSizeEnum_t actorSize, int x, in
 		RT_CONN_PX(routing, actorSize, x, y, z),		/* dir = 0 */
 		RT_CONN_NX(routing, actorSize, x, y, z),		/* 1 */
 		RT_CONN_PY(routing, actorSize, x, y, z),		/* 2 */
-		RT_CONN_NY(routing, actorSize, x, y, z) );	/* 3 */
+		RT_CONN_NY(routing, actorSize, x, y, z) );		/* 3 */
 	Com_Printf("connections diago: (PX_PY=%i, NX_NY=%i, NX_PY=%i, PX_NY=%i))\n",
 		RT_CONN_PX_PY(routing, actorSize, x, y, z),		/* dir = 4 */
 		RT_CONN_NX_NY(routing, actorSize, x, y, z),		/* 5 */
@@ -1610,7 +1610,7 @@ void RT_DebugPathDisplay (Routing &routing, actorSizeEnum_t actorSize, int x, in
 		RT_STEPUP_PX(routing, actorSize, x, y, z),		/* dir = 0 */
 		RT_STEPUP_NX(routing, actorSize, x, y, z),		/* 1 */
 		RT_STEPUP_PY(routing, actorSize, x, y, z),		/* 2 */
-		RT_STEPUP_NY(routing, actorSize, x, y, z) );		/* 3 */
+		RT_STEPUP_NY(routing, actorSize, x, y, z) );	/* 3 */
 }
 
 #endif
