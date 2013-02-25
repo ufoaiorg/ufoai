@@ -549,10 +549,10 @@ bool G_ActorInvMove (Edict *ent, const invDef_t *from, invList_t *fItem, const i
 	assert(fItem);
 	assert(fItem->item.def());
 
-	/* Store the location/item of 'from' BEFORE actually moving items with I_MoveInInventory. */
+	/* Store the location/item of 'from' BEFORE actually moving items with moveInInventory. */
 	fItemBackup = *fItem;
 
-	/* Store the location of 'to' BEFORE actually moving items with I_MoveInInventory
+	/* Store the location of 'to' BEFORE actually moving items with moveInInventory
 	 * so in case we swap ammo the client can be updated correctly */
 	tc = ent->chr.inv.getItemAtPos(to, tx, ty);
 	if (tc)
@@ -600,11 +600,11 @@ bool G_ActorInvMove (Edict *ent, const invDef_t *from, invList_t *fItem, const i
 	}
 
 	/** @todo what if we don't have enough TUs after subtracting the reserved ones? */
-	/* Because I_MoveInInventory don't know anything about character_t and it updates ent->TU,
+	/* Because moveInInventory don't know anything about character_t and it updates ent->TU,
 	 * we need to save original ent->TU for the sake of checking TU reservations. */
 	originalTU = ent->TU;
 	reservedTU = G_ActorGetReservedTUs(ent);
-	/* Temporary decrease ent->TU to make I_MoveInInventory do what expected. */
+	/* Temporary decrease ent->TU to make moveInInventory do what expected. */
 	G_ActorUseTU(ent, reservedTU);
 	/* Try to actually move the item and check the return value after restoring valid ent->TU. */
 	ia = game.i.moveInInventory(&ent->chr.inv, from, fItem, to, tx, ty, checkaction ? &ent->TU : NULL, &ic);
@@ -677,7 +677,7 @@ bool G_ActorInvMove (Edict *ent, const invDef_t *from, invList_t *fItem, const i
 			item.amount = tItemBackup.item.amount;
 			to = from;
 			if (INV_IsFloorDef(to)) {
-				/* I_MoveInInventory placed the swapped ammo in an available space, check where it was placed
+				/* moveInInventory placed the swapped ammo in an available space, check where it was placed
 				 * so we can place it at the same place in the client, otherwise since fItem hasn't been removed
 				 * this could end in a different place in the client - will cause an error if trying to use it again */
 				ic = ent->chr.inv.findInContainer(to, &item);
