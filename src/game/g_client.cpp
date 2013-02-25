@@ -420,12 +420,12 @@ bool G_ActionCheckForReaction (const Player *player, Edict *ent, int TU)
 /**
  * @brief Sends the actual actor turn event over the netchannel
  */
-static void G_ClientTurn (Player *player, Edict* ent, dvec_t dvec)
+static void G_ClientTurn (Player &player, Edict* ent, dvec_t dvec)
 {
 	const int dir = getDVdir(dvec);
 
 	/* check if action is possible */
-	if (!G_ActionCheckForCurrentTeam(player, ent, TU_TURN))
+	if (!G_ActionCheckForCurrentTeam(&player, ent, TU_TURN))
 		return;
 
 	/* check if we're already facing that direction */
@@ -677,12 +677,12 @@ int G_ClientAction (Player &player)
 
 	case PA_TURN:
 		gi.ReadFormat(format, &i);
-		G_ClientTurn(&player, ent, (dvec_t) i);
+		G_ClientTurn(player, ent, (dvec_t) i);
 		break;
 
 	case PA_MOVE:
 		gi.ReadFormat(format, &pos);
-		G_ClientMove(&player, player.getTeam(), ent, pos);
+		G_ClientMove(player, player.getTeam(), ent, pos);
 		break;
 
 	case PA_STATE:

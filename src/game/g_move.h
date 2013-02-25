@@ -30,4 +30,4 @@ void G_MoveCalc(int team, const Edict *movingActor, const pos3_t from, int dista
 void G_MoveCalcLocal(pathing_t *pt, int team, const Edict *movingActor, const pos3_t from, int distance);
 void G_ActorFall(Edict *ent);
 pos_t G_ActorMoveLength(const Edict *ent, const pathing_t *path, const pos3_t to, bool stored);
-void G_ClientMove(const Player *player, int visTeam, Edict *ent, const pos3_t to);
+void G_ClientMove(const Player &player, int visTeam, Edict *ent, const pos3_t to);

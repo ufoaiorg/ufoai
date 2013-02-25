@@ -221,7 +221,7 @@ static void testInventoryForDiedAlien (void)
 		/* move to the location of the first died alien to drop the inventory into the same floor container */
 		Player& player = G_PLAYER_FROM_ENT(ent);
 		CU_ASSERT_TRUE_FATAL(G_IsAIPlayer(&player));
-		G_ClientMove(&player, 0, ent, diedEnt->pos);
+		G_ClientMove(player, 0, ent, diedEnt->pos);
 		CU_ASSERT_TRUE_FATAL(VectorCompare(ent->pos, diedEnt->pos));
 
 		floorItems = G_GetFloorItems(ent);
@@ -286,7 +286,7 @@ static void testInventoryWithTwoDiedAliensOnTheSameGridTile (void)
 		/* move to the location of the first died alien to drop the inventory into the same floor container */
 		Player &player = G_PLAYER_FROM_ENT(diedEnt2);
 		CU_ASSERT_TRUE_FATAL(G_IsAIPlayer(&player));
-		G_ClientMove(&player, 0, diedEnt2, diedEnt->pos);
+		G_ClientMove(player, 0, diedEnt2, diedEnt->pos);
 		CU_ASSERT_TRUE_FATAL(VectorCompare(diedEnt2->pos, diedEnt->pos));
 
 		diedEnt2->HP = 0;
@@ -300,7 +300,7 @@ static void testInventoryWithTwoDiedAliensOnTheSameGridTile (void)
 		player = G_PLAYER_FROM_ENT(ent);
 		CU_ASSERT_TRUE_FATAL(G_IsAIPlayer(&player));
 
-		G_ClientMove(&player, 0, ent, diedEnt->pos);
+		G_ClientMove(player, 0, ent, diedEnt->pos);
 		CU_ASSERT_TRUE_FATAL(VectorCompare(ent->pos, diedEnt->pos));
 
 		floorItems = G_GetFloorItems(ent);

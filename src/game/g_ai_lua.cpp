@@ -499,7 +499,7 @@ static int pos3L_goto (lua_State *L)
 
 	/* Move. */
 	pos = lua_topos3(L, 1);
-	G_ClientMove(AIL_player, 0, AIL_ent, *pos);
+	G_ClientMove(*AIL_player, 0, AIL_ent, *pos);
 
 	lua_pushboolean(L, 1);
 	return 1;

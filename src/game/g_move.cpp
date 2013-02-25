@@ -277,7 +277,7 @@ pos_t G_ActorMoveLength (const Edict *ent, const pathing_t *path, const pos3_t t
  * @sa CL_ActorStartMove
  * @sa PA_MOVE
  */
-void G_ClientMove (const Player *player, int visTeam, Edict *ent, const pos3_t to)
+void G_ClientMove (const Player &player, int visTeam, Edict *ent, const pos3_t to)
 {
 	int status;
 	pos3_t pos;
@@ -290,7 +290,7 @@ void G_ClientMove (const Player *player, int visTeam, Edict *ent, const pos3_t t
 		return;
 
 	/* check if action is possible */
-	if (!G_ActionCheckForCurrentTeam(player, ent, TU_MOVE_STRAIGHT))
+	if (!G_ActionCheckForCurrentTeam(&player, ent, TU_MOVE_STRAIGHT))
 		return;
 
 	byte crouchingState = G_IsCrouched(ent) ? 1 : 0;
@@ -305,7 +305,7 @@ void G_ClientMove (const Player *player, int visTeam, Edict *ent, const pos3_t t
 		return;
 
 	/* Autostand: check if the actor is crouched and player wants autostanding...*/
-	if (crouchingState && player->autostand) {
+	if (crouchingState && player.autostand) {
 		/* ...and if this is a long walk... */
 		if (gi.CanActorStandHere(ent->fieldSize, ent->pos)
 			&& gi.GridShouldUseAutostand(level.pathingMap, to)) {
@@ -313,7 +313,7 @@ void G_ClientMove (const Player *player, int visTeam, Edict *ent, const pos3_t t
 			 * way crouched, he can move the actor in several stages.
 			 * Uses the threshold at which standing, moving and crouching again takes
 			 * fewer TU than just crawling while crouched. */
-			G_ClientStateChange(player, ent, STATE_CROUCHED, true); /* change to stand state */
+			G_ClientStateChange(&player, ent, STATE_CROUCHED, true); /* change to stand state */
 			crouchingState = G_IsCrouched(ent) ? 1 : 0;
 			if (!crouchingState)
 				autoCrouchRequired = true;
@@ -442,10 +442,10 @@ void G_ClientMove (const Player *player, int visTeam, Edict *ent, const pos3_t t
 					status |= VIS_STOP;
 			} else if (crouchFlag == 1) {
 				/* Actor is standing */
-				G_ClientStateChange(player, ent, STATE_CROUCHED, true);
+				G_ClientStateChange(&player, ent, STATE_CROUCHED, true);
 			} else if (crouchFlag == -1) {
 				/* Actor is crouching and should stand up */
-				G_ClientStateChange(player, ent, STATE_CROUCHED, false);
+				G_ClientStateChange(&player, ent, STATE_CROUCHED, false);
 			}
 
 			/* check for reaction fire */
@@ -488,6 +488,6 @@ void G_ClientMove (const Player *player, int visTeam, Edict *ent, const pos3_t t
 
 	if (autoCrouchRequired) {
 		/* toggle back to crouched state */
-		G_ClientStateChange(player, ent, STATE_CROUCHED, true);
+		G_ClientStateChange(&player, ent, STATE_CROUCHED, true);
 	}
 }

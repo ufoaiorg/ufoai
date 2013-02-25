@@ -1110,7 +1110,7 @@ static aiAction_t AI_PrepBestAction (const Player *player, Edict *ent)
 	for (;;) {
 		if (G_IsDead(ent))
 			break;
-		G_ClientMove(player, 0, ent, bestAia.to);
+		G_ClientMove(*player, 0, ent, bestAia.to);
 		if (G_EdictPosIsSameAs(ent, bestAia.to))
 			break;
 		const pos_t length = G_ActorMoveLength(ent, level.pathingMap, bestAia.to, false);
@@ -1227,7 +1227,7 @@ void AI_ActorThink (Player *player, Edict *ent)
 
 		/* now hide - for this we use the team of the alien actor because a phalanx soldier
 		 * might become visible during the hide movement */
-		G_ClientMove(player, ent->team, ent, bestAia.stop);
+		G_ClientMove(*player, ent->team, ent, bestAia.stop);
 		/* no shots left, but possible targets left - maybe they shoot back
 		 * or maybe they are still close after hiding */
 
