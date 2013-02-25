@@ -303,11 +303,11 @@ public:
 	}
 	inline byte isStepDownLevel (const actorSizeEnum_t actorSize, const pos3_t pos, const int dir) const
 	{
-		return routes[actorSize - 1].getConn(pos[0], pos[1], pos[2], dir) & PATHFINDING_BIG_STEPDOWN;
+		return routes[actorSize - 1].getStepup(pos[0], pos[1], pos[2], dir) & PATHFINDING_BIG_STEPDOWN;
 	}
 	inline byte isStepUpLevel (const actorSizeEnum_t actorSize, const pos3_t pos, const int dir) const
 	{
-		return routes[actorSize - 1].getConn(pos[0], pos[1], pos[2], dir) & PATHFINDING_BIG_STEPUP;
+		return routes[actorSize - 1].getStepup(pos[0], pos[1], pos[2], dir) & PATHFINDING_BIG_STEPUP;
 	}
 
 	/** note: not sure if this function qualifies for being inlined. But if we didn't,
