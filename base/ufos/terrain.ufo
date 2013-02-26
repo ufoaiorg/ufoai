@@ -93,6 +93,11 @@ terrain tex_base/vent003 {
 	bouncefraction "0.6"
 }
 
+terrain tex_base/vent004 {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.6"
+}
+
 terrain tex_base/wall001 {
 	footstepsound "footsteps/stone1"
 	bouncefraction "1.0"
@@ -843,6 +848,11 @@ terrain tex_material/c_black {
 	bouncefraction "0.5"
 }
 
+terrain tex_material/c_blue {
+	footstepsound "footsteps/softrug1"
+	bouncefraction "0.5"
+}
+
 terrain tex_material/c_brown {
 	footstepsound "footsteps/softrug1"
 	bouncefraction "0.5"
@@ -863,7 +873,27 @@ terrain tex_material/c_gray255 {
 	bouncefraction "0.5"
 }
 
+terrain tex_material/c_green1 {
+	footstepsound "footsteps/softrug1"
+	bouncefraction "0.5"
+}
+
 terrain tex_material/c_orange {
+	footstepsound "footsteps/softrug1"
+	bouncefraction "0.5"
+}
+
+terrain tex_material/c_orange3 {
+	footstepsound "footsteps/softrug1"
+	bouncefraction "0.5"
+}
+
+terrain tex_material/c_red {
+	footstepsound "footsteps/softrug1"
+	bouncefraction "0.5"
+}
+
+terrain tex_material/circle_gray {
 	footstepsound "footsteps/softrug1"
 	bouncefraction "0.5"
 }
@@ -2002,11 +2032,3 @@ terrain tex_vehicles/truck_d {
 	footstepsound "footsteps/metal1"
 	bouncefraction "0.7"
 }
-
-// Added by updatesounds.py
-//
-// Could not add tex_material/c_blue - no template available.
-// Could not add tex_material/c_green1 - no template available.
-// Could not add tex_material/c_orange3 - no template available.
-// Could not add tex_material/c_red - no template available.
-// Could not add tex_material/circle_gray - no template available.
