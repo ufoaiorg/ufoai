@@ -347,6 +347,15 @@ typedef struct mapData_s {
 	 * @sa SV_ClearWorld
 	 */
 	vec3_t mapMin, mapMax;
+
+	inline float getWidthX () const
+	{
+		return mapMax[0] - mapMin[0];
+	}
+	inline float getWidthY () const
+	{
+		return mapMax[1] - mapMin[1];
+	}
 } mapData_t;
 
 typedef struct {

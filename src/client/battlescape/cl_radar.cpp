@@ -58,8 +58,8 @@ static void CL_BattlescapeRadarMapInFrameBuffer (int *x, int *y, int *width, int
 {
 	/* Coefficient come from metric (Bunker map, and game with resolution 1024x1024) == 0.350792947 */
 	static const float magicCoef =  0.351f;
-	const float mapWidth = cl.mapData->mapMax[0] - cl.mapData->mapMin[0];
-	const float mapHeight = cl.mapData->mapMax[1] - cl.mapData->mapMin[1];
+	const float mapWidth = cl.mapData->getWidthX();
+	const float mapHeight = cl.mapData->getWidthY();
 
 	/* compute width and height with the same round error on both sides */
 	/** @todo viddef.context should be removed */

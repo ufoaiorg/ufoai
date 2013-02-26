@@ -102,7 +102,7 @@ static void UI_FreeRadarImages (void)
  */
 static void UI_BuildRadarImageList (const char *tiles, const char *pos)
 {
-	const float mapMidX = (cl.mapData->mapMax[0] + cl.mapData->mapMin[0]) * 0.5;
+	const float mapMidX = cl.mapData->getWidthX() * 0.5;
 	const float mapMidY = (cl.mapData->mapMax[1] + cl.mapData->mapMin[1]) * 0.5;
 
 	/* load tiles */
@@ -314,8 +314,8 @@ static void UI_InitRadar (const uiNode_t *node)
 			} else {
 				tile->mapX = cl.mapData->mapMin[0];
 				tile->mapY = cl.mapData->mapMin[1];
-				tile->mapWidth = cl.mapData->mapMax[0] - cl.mapData->mapMin[0];
-				tile->mapHeight = cl.mapData->mapMax[1] - cl.mapData->mapMin[1];
+				tile->mapWidth = cl.mapData->getWidthX();
+				tile->mapHeight = cl.mapData->getWidthY();
 			}
 		}
 		if (tile->isTile) {
@@ -338,8 +338,8 @@ static void UI_InitRadar (const uiNode_t *node)
 			max[1] = tile->mapY + tile->mapHeight;
 	}
 	/* compute translation */
-	min[0] = cl.mapData->mapMin[0] + (cl.mapData->mapMax[0] - cl.mapData->mapMin[0] - (max[0] - min[0])) * 0.5 - min[0];
-	min[1] = cl.mapData->mapMin[1] + (cl.mapData->mapMax[1] - cl.mapData->mapMin[1] - (max[1] - min[1])) * 0.5 - min[1];
+	min[0] = cl.mapData->mapMin[0] + (cl.mapData->getWidthX() - (max[0] - min[0])) * 0.5 - min[0];
+	min[1] = cl.mapData->mapMin[1] + (cl.mapData->getWidthY() - (max[1] - min[1])) * 0.5 - min[1];
 	for (j = 0; j < radar.numImages; j++) {
 		hudRadarImage_t *tile = &radar.images[j];
 		tile->mapX += min[0];
@@ -521,8 +521,8 @@ void uiRadarNode::draw (uiNode_t *node)
 #endif
 
 	static const vec4_t backgroundColor = {0.0, 0.0, 0.0, 1};
-	const float mapWidth = cl.mapData->mapMax[0] - cl.mapData->mapMin[0];
-	const float mapHeight = cl.mapData->mapMax[1] - cl.mapData->mapMin[1];
+	const float mapWidth = cl.mapData->getWidthX();
+	const float mapHeight = cl.mapData->getWidthY();
 
 	/** @todo use the same coef for x and y */
 	const float mapCoefX = (float) node->box.size[0] / (float) mapWidth;
@@ -629,8 +629,8 @@ void uiRadarNode::draw (uiNode_t *node)
  */
 void uiRadarNode::onCapturedMouseMove (uiNode_t *node, int x, int y)
 {
-	const float mapWidth = cl.mapData->mapMax[0] - cl.mapData->mapMin[0];
-	const float mapHeight = cl.mapData->mapMax[1] - cl.mapData->mapMin[1];
+	const float mapWidth = cl.mapData->getWidthX();
+	const float mapHeight = cl.mapData->getWidthY();
 	const float mapCoefX = (float) node->box.size[0] / (float) mapWidth;
 	const float mapCoefY = (float) node->box.size[1] / (float) mapHeight;
 	vec3_t pos;
