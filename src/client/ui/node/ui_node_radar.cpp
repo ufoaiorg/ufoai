@@ -631,8 +631,8 @@ void uiRadarNode::onCapturedMouseMove (uiNode_t *node, int x, int y)
 {
 	const float mapWidth = cl.mapData->getWidthX();
 	const float mapHeight = cl.mapData->getWidthY();
-	const float mapCoefX = (float) node->box.size[0] / (float) mapWidth;
-	const float mapCoefY = (float) node->box.size[1] / (float) mapHeight;
+	const float mapCoefX = node->box.size[0] / mapWidth;
+	const float mapCoefY = node->box.size[1] / mapHeight;
 	vec3_t pos;
 
 	/* from absolute to relative to node */
