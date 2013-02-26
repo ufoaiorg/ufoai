@@ -251,15 +251,15 @@ static bool INVSH_ShapeCheckPosition (const invList_t *ic, const int x, const in
  * @param[out] y The x location inside the item.
  * @sa canHoldItem
  */
-void INVSH_GetFirstShapePosition (const invList_t *ic, int* const x, int* const y)
+void invList_t::getFirstShapePosition (int* const x, int* const y) const
 {
 	int tempX, tempY;
 
-	assert(ic);
+	assert(this);
 
 	for (tempX = 0; tempX < SHAPE_SMALL_MAX_HEIGHT; tempX++)
 		for (tempY = 0; tempY < SHAPE_SMALL_MAX_HEIGHT; tempY++)
-			if (INVSH_ShapeCheckPosition(ic, ic->x + tempX, ic->y + tempY)) {
+			if (INVSH_ShapeCheckPosition(this, this->x + tempX, this->y + tempY)) {
 				*x = tempX;
 				*y = tempY;
 				return;

@@ -1004,7 +1004,7 @@ void CL_ActorReload (le_t *le, containerIndex_t containerID)
 	if (bestContainer != NONE) {
 		int x, y;
 
-		INVSH_GetFirstShapePosition(ic, &x, &y);
+		ic->getFirstShapePosition(&x, &y);
 		x += ic->x;
 		y += ic->y;
 

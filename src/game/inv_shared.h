@@ -379,6 +379,8 @@ typedef struct invList_s {
 					 * @note ATTENTION Do not use this to get an item by comparing it against a x/y value.
 					 * The shape as defined in the item_t may be empty at this location! */
 	struct invList_s *next;		/**< Next entry in this list. */
+
+	void getFirstShapePosition (int* const x, int* const y) const;
 } invList_t;
 
 /** @brief inventory definition with all its containers */
@@ -464,7 +466,6 @@ bool INV_IsArmourDef(const invDef_t* invDef);
 /* ================================ */
 
 void INVSH_InitCSI(const struct csi_s * import) __attribute__((nonnull));
-void INVSH_GetFirstShapePosition(const invList_t *ic, int* const x, int* const y);
 bool INV_IsCraftItem(const objDef_t *obj);
 bool INV_IsBaseDefenceItem(const objDef_t *item);
 
