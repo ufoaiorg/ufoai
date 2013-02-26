@@ -891,7 +891,7 @@ static void HUD_UpdateButtons (const le_t *le)
 	const char *reason;
 
 	/* Reload buttons */
-	const bool rightCanBeReloaded = HUD_WeaponCanBeReloaded(le, csi.idRight, &reason);
+	const int rightCanBeReloaded = HUD_WeaponCanBeReloaded(le, csi.idRight, &reason);
 	if (rightCanBeReloaded != -1) {
 		HUD_SetWeaponButton(BT_RIGHT_RELOAD, BT_STATE_DESELECT);
 		Cvar_Set("mn_reloadright_tt", va(_("Reload weapon (%i TU)."), rightCanBeReloaded));
@@ -900,7 +900,7 @@ static void HUD_UpdateButtons (const le_t *le)
 		HUD_SetWeaponButton(BT_RIGHT_RELOAD, BT_STATE_DISABLE);
 	}
 
-	const bool leftCanBeReloaded = HUD_WeaponCanBeReloaded(le, csi.idLeft, &reason);
+	const int leftCanBeReloaded = HUD_WeaponCanBeReloaded(le, csi.idLeft, &reason);
 	if (leftCanBeReloaded != -1) {
 		HUD_SetWeaponButton(BT_LEFT_RELOAD, BT_STATE_DESELECT);
 		Cvar_Set("mn_reloadleft_tt", va(_("Reload weapon (%i TU)."), leftCanBeReloaded));
