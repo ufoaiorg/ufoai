@@ -373,7 +373,7 @@ bool GAME_CP_TeamIsKnown (const teamDef_t *teamDef)
  */
 character_t* GAME_CP_GetSelectedChr (void)
 {
-	employee_t *employee = E_GetEmployeeFromChrUCN( cgi->Cvar_GetInteger("mn_ucn"));
+	employee_t *employee = E_GetEmployeeFromChrUCN(cgi->Cvar_GetInteger("mn_ucn"));
 	if (employee)
 		return &employee->chr;
 	return NULL;

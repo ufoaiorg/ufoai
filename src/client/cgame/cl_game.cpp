@@ -1630,7 +1630,15 @@ character_t* GAME_GetSelectedChr (void)
 	if (list && list->GetSelectedChr != NULL)
 		return list->GetSelectedChr();
 
-	return GAME_GetCharacter(Cvar_GetInteger("mn_ucn"));
+	const int ucn = Cvar_GetInteger("mn_ucn");
+	character_t *chr = NULL;
+	LIST_Foreach(chrDisplayList, character_t, chrTmp) {
+		if (ucn == chrTmp->ucn) {
+			chr = chrTmp;
+			break;
+		}
+	}
+	return chr;
 }
 
 /**
