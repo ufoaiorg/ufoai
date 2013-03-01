@@ -156,7 +156,7 @@ int G_ActorGetTUForReactionFire (const Edict *ent)
 {
 	const FiremodeSettings *fm = &ent->chr.RFmode;
 
-	const invList_t *invlistWeapon = ACTOR_GET_INV(ent, fm->getHand());
+	const invList_t *invlistWeapon = ent->getHand(fm->getHand());
 	assert(invlistWeapon);
 	assert(invlistWeapon->item.def());
 

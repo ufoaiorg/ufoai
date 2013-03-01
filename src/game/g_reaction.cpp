@@ -318,7 +318,7 @@ void G_ReactionFireTargetsCreate (const Edict *shooter)
 static int G_ReactionFireGetTUsForItem (const Edict *shooter, const Edict *target)
 {
 	const FiremodeSettings *fmSetting = &shooter->chr.RFmode;
-	const invList_t *invList = ACTOR_GET_INV(shooter, fmSetting->getHand());
+	const invList_t *invList = shooter->getHand(fmSetting->getHand());
 
 	if (invList && invList->item.ammo && invList->item.isWeapon() && !invList->item.mustReload()) {
 		const fireDef_t *fdArray = FIRESH_FiredefForWeapon(&invList->item);
@@ -363,7 +363,7 @@ static bool G_ActorHasWorkingFireModeSet (const Edict *actor)
 	if (!fmSettings->isSaneFiremode())	/* just checks for valid values */
 		return false;
 
-	const invList_t* invList = ACTOR_GET_INV(actor, fmSettings->getHand());
+	const invList_t* invList = actor->getHand(fmSettings->getHand());
 	if (!invList)
 		return false;
 	const fireDef_t *fd = FIRESH_FiredefForWeapon(&invList->item);
@@ -427,10 +427,10 @@ static bool G_ReactionFireSettingsSetDefault (Edict *ent)
 		return true;
 
 	actorHands_t hand = ACTOR_HAND_RIGHT;
-	const invList_t *invList = ACTOR_GET_INV(ent, hand);
+	const invList_t *invList = ent->getHand(hand);
 	if (!invList) {
 		hand = ACTOR_HAND_LEFT;
-		invList = ACTOR_GET_INV(ent, hand);
+		invList = ent->getHand(hand);
 	}
 
 	const objDef_t *weapon = INVSH_IsReactionFireEnabled(invList);
@@ -532,7 +532,7 @@ static bool G_ReactionFireIsPossible (Edict *ent, const Edict *target)
 		return false;
 
 	/* check ent has weapon in RF hand */
-	if (!ACTOR_GET_INV(ent, ent->chr.RFmode.getHand())) {
+	if (!ent->getHand(ent->chr.RFmode.getHand())) {
 		/* print character info if this happens, for now */
 		gi.DPrintf("Reaction fire enabled but no weapon for hand (name=%s,entnum=%i,hand=%i,fmIdx=%i)\n",
 				ent->chr.name, ent->number, ent->chr.RFmode.getHand(), ent->chr.RFmode.getFmIdx());
