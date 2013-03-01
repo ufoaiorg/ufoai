@@ -246,7 +246,6 @@ static bool INVSH_ShapeCheckPosition (const invList_t *ic, const int x, const in
 /**
  * @brief Calculates the first "true" bit in the shape and returns its position in the item.
  * @note Use this to get the first "grab-able" grid-location of an item (not in the container !).
- * @param[in] ic A pointer to an invList_t struct.
  * @param[out] x The x location inside the item.
  * @param[out] y The x location inside the item.
  * @sa canHoldItem
@@ -273,7 +272,6 @@ void invList_t::getFirstShapePosition (int* const x, int* const y) const
  * @note This is done by checking whether it's a craftitem and not
  * marked as a dummy item - the combination of both means, that it's a
  * basedefence item.
- * @param[in] obj pointer to item definition to check whether it's an aircraftitem item
  * @return true if the given item is an aircraftitem item
  * @sa isBaseDefenceItem
  */
@@ -574,7 +572,6 @@ static uint32_t INVSH_ShapeSetBit (uint32_t shape, const int x, const int y)
 /**
  * @brief Rotates a shape definition 90 degree to the left (CCW)
  * @note Only works for V_SHAPE_SMALL!
- * @param[in] shape The shape to rotate.
  * @return The new shape.
  */
 uint32_t objDef_t::getShapeRotated () const
@@ -603,7 +600,6 @@ uint32_t objDef_t::getShapeRotated () const
 }
 
 /**
- * @param[in] inv The inventory to check the item in.
  * @param[in] container The index of the container in the inventory to check the item in.
  * @param[in] od The type of item to check in the inventory.
  * @param[in] x The x value in the container (1 << x in the shape bitmask)
@@ -716,7 +712,6 @@ invList_t *inventory_t::getItemAtPos (const invDef_t *container, const int x, co
 
 /**
  * @brief Finds space for item in inv at container
- * @param[in] inv The inventory to search space in
  * @param[in] item The item to check the space for
  * @param[in] container The container to search in
  * @param[out] px The x position in the container
@@ -764,7 +759,6 @@ void inventory_t::findSpace (const invDef_t *container, const item_t *item, int*
 
 /**
  * @brief Check that adding an item to the inventory won't exceed the max permitted weight.
- * @param[in] inv The inventory the item is added to.
  * @param[in] from Index of the container the item comes from.
  * @param[in] to Index of the container the item is being placed.
  * @param[in] item The item that is being added.
