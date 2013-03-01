@@ -1065,9 +1065,9 @@ static bool G_PrepareShot (Edict *ent, shoot_types_t shootType, fireDefIndex_t f
 		item = &ent->getRightHand()->item;
 		*container = gi.csi->idRight;
 	} else {
-		if (!LEFT(ent))
+		if (!ent->getLeftHand())
 			return false;
-		item = &LEFT(ent)->item;
+		item = &ent->getLeftHand()->item;
 		*container = gi.csi->idLeft;
 	}
 
@@ -1156,7 +1156,7 @@ bool G_ClientShoot (const Player &player, Edict *ent, const pos3_t at, shoot_typ
 	}
 
 	/* check that we're not firing a twohanded weapon with one hand! */
-	if (weapon->def()->fireTwoHanded && LEFT(ent)) {
+	if (weapon->def()->fireTwoHanded && ent->getLeftHand()) {
 		if (!quiet)
 			G_ClientPrintf(player, PRINT_HUD, _("Can't perform action - weapon cannot be fired one handed!"));
 		return false;

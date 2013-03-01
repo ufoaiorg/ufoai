@@ -751,8 +751,9 @@ static int AIL_roundsleft (lua_State *L)
 		lua_pushnil(L);
 
 	/* Left hand */
-	if (LEFT(AIL_ent) && LEFT(AIL_ent)->item.isReloadable())
-		lua_pushnumber(L, LEFT(AIL_ent)->item.ammoLeft);
+	invList_t* leftHand = AIL_ent->getLeftHand();
+	if (leftHand && leftHand->item.isReloadable())
+		lua_pushnumber(L, leftHand->item.ammoLeft);
 	else
 		lua_pushnil(L);
 	return 2;

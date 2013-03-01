@@ -271,7 +271,7 @@ static bool AI_HideNeeded (const Edict *ent)
 				if (invlist && invlist->item.def()) {
 					fd = FIRESH_FiredefForWeapon(&invlist->item);
 				} else {
-					invlist = LEFT(from);
+					invlist = from->getLeftHand();
 					if (invlist && invlist->item.def())
 						fd = FIRESH_FiredefForWeapon(&invlist->item);
 				}
@@ -328,7 +328,7 @@ const item_t *AI_GetItemForShootType (shoot_types_t shootType, const Edict *ent)
 		const invList_t *ic = ent->getRightHand();
 		return AI_GetItemFromInventory(ic);
 	} else if (IS_SHOT_LEFT(shootType)) {
-		const invList_t *ic = LEFT(ent);
+		const invList_t *ic = ent->getLeftHand();
 		return AI_GetItemFromInventory(ic);
 	} else if (IS_SHOT_HEADGEAR(shootType)) {
 		return NULL;
@@ -1191,16 +1191,17 @@ void AI_ActorThink (Player *player, Edict *ent)
 
 	/* if a weapon can be reloaded we attempt to do so if TUs permit, otherwise drop it */
 	invList_t *rightH = ent->getRightHand();
+	invList_t *leftH = ent->getLeftHand();
 	if (!G_IsPanicked(ent)) {
 		if (rightH && rightH->item.mustReload())
 			AI_TryToReloadWeapon(ent, gi.csi->idRight);
-		if (LEFT(ent) && LEFT(ent)->item.mustReload())
+		if (leftH && leftH->item.mustReload())
 			AI_TryToReloadWeapon(ent, gi.csi->idLeft);
 	}
 
 	/* if both hands are empty, attempt to get a weapon out of backpack or the
 	 * floor (if TUs permit) */
-	if (!LEFT(ent) && !rightH)
+	if (!leftH && !rightH)
 		G_ClientGetWeaponFromInventory(ent);
 
 	bestAia = AI_PrepBestAction(player, ent);

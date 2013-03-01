@@ -350,7 +350,7 @@ static bool G_ActorHasReactionFireEnabledWeapon (const Edict *ent)
 	const objDef_t *weapon = INVSH_IsReactionFireEnabled(ent->getRightHand());
 	if (weapon)
 		return true;
-	return INVSH_IsReactionFireEnabled(LEFT(ent)) != NULL;
+	return INVSH_IsReactionFireEnabled(ent->getLeftHand()) != NULL;
 }
 
 /**
