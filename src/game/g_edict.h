@@ -177,16 +177,14 @@ public:
 	}
 	inline invList_t *getLeftHand () const
 	{
-	//	return chr.inv.getLeftHandContainer();
-		return LEFT(this);
+		return chr.inv.getLeftHandContainer();
 	}
 	inline invList_t *getHand (actorHands_t hand) const
 	{
 		if (hand == ACTOR_HAND_RIGHT)
 			return chr.inv.getRightHandContainer();
 		else if (hand == ACTOR_HAND_LEFT)
-		//	return chr.inv.getLeftHandContainer();
-			return LEFT(this);
+			return chr.inv.getLeftHandContainer();
 		else return NULL;
 	}
 	inline invList_t *getFloor () const
