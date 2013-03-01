@@ -449,7 +449,7 @@ static bool SV_ParseMapTile (const char *filename, const char **text, MapInfo *m
  * @param errhead Error header
  * @return @c NULL if file has invalid format, @c the tilename of the cvar otherwise.
  */
-static const char *SV_GetCvarToken (const Assembly *a, const char* token, const char *filename, const char **text, const char *errhead)
+static const char *SV_GetCvarToken (const MapInfo *map, const Assembly *a, const char* token, const char *filename, const char **text, const char *errhead)
 {
 	const cvar_t *cvar;
 
@@ -469,11 +469,28 @@ static const char *SV_GetCvarToken (const Assembly *a, const char* token, const 
 		Com_Printf("SV_ParseAssembly: warning - cvar '%s' value doesn't seam to be a valid tile id '%s' - set to default '%s'\n",
 				cvar->name, cvar->string, token);
 		Cvar_Set(cvar->name, token);
-		if (token[0] != '+')
+		if (token[0] != '+' && !strchr(token, '/'))
 			Com_Error(ERR_DROP, "SV_ParseAssembly: wrong tile id in assembly '%s'", a->id);
 
 		return token;
 	}
+
+	/*
+	 * Allow cvar replacement to use inherited tiles - see FR #3446
+	 * @todo a better way to do this?
+	 */
+	const char *tokenTile = strrchr(token, '/');
+	if (tokenTile) {
+		const char *cvarTile = cvar->string + 1;
+		for (int i = 0; i < map->numTiles; i++) {
+			const char *tileId = map->mTile[i].id;
+			const char *tileName = strrchr(tileId, '/');
+			if (tileName && Q_streq(strstr(tileName, cvarTile), cvarTile) &&
+					!Q_strncasecmp(tileId, token, tokenTile - token))
+				return tileId;
+		}
+	}
+
 	return cvar->string;
 }
 
@@ -681,7 +698,7 @@ static bool SV_ParseAssembly (MapInfo *map, const char *filename, const char **t
 				break;
 
 			if (token[0] == '*') {
-				token = SV_GetCvarToken(a, token + 1, filename, text, errhead);
+				token = SV_GetCvarToken(map, a, token + 1, filename, text, errhead);
 				if (token == NULL)
 					break;
 			} else if (Q_streq(token, "tileset")) {
@@ -716,7 +733,7 @@ static bool SV_ParseAssembly (MapInfo *map, const char *filename, const char **t
 			continue;
 		/* <format>*cvarname <defaultvalue> "min max"</format> */
 		} else if (token[0] == '*') {
-			token = SV_GetCvarToken(a, token + 1, filename, text, errhead);
+			token = SV_GetCvarToken(map, a, token + 1, filename, text, errhead);
 			if (token == NULL)
 				break;
 		}
