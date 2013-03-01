@@ -173,7 +173,7 @@ public:
 
 	inline invList_t *getRightHand () const
 	{
-		return RIGHT(this);
+		return chr.inv.getRightHandContainer();
 	}
 	inline invList_t *getFloor () const
 	{

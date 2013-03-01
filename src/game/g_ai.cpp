@@ -1190,8 +1190,9 @@ void AI_ActorThink (Player *player, Edict *ent)
 	aiAction_t bestAia;
 
 	/* if a weapon can be reloaded we attempt to do so if TUs permit, otherwise drop it */
+	invList_t *rightH = ent->getRightHand();
 	if (!G_IsPanicked(ent)) {
-		if (RIGHT(ent) && RIGHT(ent)->item.mustReload())
+		if (rightH && rightH->item.mustReload())
 			AI_TryToReloadWeapon(ent, gi.csi->idRight);
 		if (LEFT(ent) && LEFT(ent)->item.mustReload())
 			AI_TryToReloadWeapon(ent, gi.csi->idLeft);
@@ -1199,7 +1200,7 @@ void AI_ActorThink (Player *player, Edict *ent)
 
 	/* if both hands are empty, attempt to get a weapon out of backpack or the
 	 * floor (if TUs permit) */
-	if (!LEFT(ent) && !ent->getRightHand())
+	if (!LEFT(ent) && !rightH)
 		G_ClientGetWeaponFromInventory(ent);
 
 	bestAia = AI_PrepBestAction(player, ent);
