@@ -466,7 +466,6 @@ bool INV_IsArmourDef(const invDef_t* invDef);
 /* ================================ */
 
 void INVSH_InitCSI(const struct csi_s * import) __attribute__((nonnull));
-bool INV_IsCraftItem(const objDef_t *obj);
 bool INV_IsBaseDefenceItem(const objDef_t *item);
 
 const objDef_t *INVSH_GetItemByID(const char *id);
