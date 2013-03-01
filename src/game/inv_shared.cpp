@@ -275,7 +275,7 @@ void invList_t::getFirstShapePosition (int* const x, int* const y) const
  * basedefence item.
  * @param[in] obj pointer to item definition to check whether it's an aircraftitem item
  * @return true if the given item is an aircraftitem item
- * @sa INV_IsBaseDefenceItem
+ * @sa isBaseDefenceItem
  */
 bool objDef_t::isCraftItem () const
 {
@@ -291,9 +291,9 @@ bool objDef_t::isCraftItem () const
  * @return true if the given item is a basedefence item
  * @sa isCraftItem
  */
-bool INV_IsBaseDefenceItem (const objDef_t *obj)
+bool objDef_t::isBaseDefenceItem () const
 {
-	return obj->craftitem.type != MAX_ACITEMS && obj->isDummy;
+	return craftitem.type != MAX_ACITEMS && isDummy;
 }
 
 /**
