@@ -326,6 +326,8 @@ typedef struct invDef_s {
 	bool scroll;	/**< Set if the container is scrollable */
 	uint32_t shape[SHAPE_BIG_MAX_HEIGHT];	/**< The inventory form/shape. */
 	int in, out;	/**< parsed: TU costs for moving items in and out. */
+
+	bool isFloorDef () const;
 } invDef_t;
 
 #define MAX_CONTAINERS	MAX_INVDEFS
@@ -456,7 +458,6 @@ typedef enum {
 #define ACTOR_GET_INV(actor, hand) (((hand) == ACTOR_HAND_RIGHT) ? RIGHT(actor) : (((hand) == ACTOR_HAND_LEFT) ? LEFT(actor) : NULL))
 /** @param[in] hand Hand index (ACTOR_HAND_RIGHT, ACTOR_HAND_LEFT) */
 
-bool INV_IsFloorDef(const invDef_t* invDef);
 bool INV_IsRightDef(const invDef_t* invDef);
 bool INV_IsLeftDef(const invDef_t* invDef);
 bool INV_IsEquipDef(const invDef_t* invDef);

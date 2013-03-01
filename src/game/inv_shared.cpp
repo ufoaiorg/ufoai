@@ -46,9 +46,9 @@ void INVSH_InitCSI (const csi_t *import)
  * @param invDef The inventory definition to check
  * @return @c true if the given inventory definition is of type floor
  */
-bool INV_IsFloorDef (const invDef_t *invDef)
+bool invDef_t::isFloorDef () const
 {
-	return invDef->id == CSI->idFloor;
+	return id == CSI->idFloor;
 }
 
 /**
@@ -680,7 +680,7 @@ int inventory_t::canHoldItem (const invDef_t *container, const objDef_t *od, con
 	if (INVSH_CheckToInventory_shape(this, container, od->shape, x, y, ignoredItem))
 		fits |= INV_FITS;
 	/** @todo aren't both (equip and floor) temp container? */
-	if (!INV_IsEquipDef(container) && !INV_IsFloorDef(container)
+	if (!INV_IsEquipDef(container) && !container->isFloorDef()
 	&& INVSH_CheckToInventory_shape(this, container, od->getShapeRotated(), x, y, ignoredItem))
 		fits |= INV_FITS_ONLY_ROTATED;
 

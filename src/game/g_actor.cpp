@@ -577,11 +577,11 @@ bool G_ActorInvMove (Edict *ent, const invDef_t *from, invList_t *fItem, const i
 
 	/* "get floor ready" - searching for existing floor-edict */
 	floor = G_GetFloorItems(ent);
-	if (INV_IsFloorDef(to) && !floor) {
+	if (to->isFloorDef() && !floor) {
 		/* We are moving to the floor, but no existing edict for this floor-tile found -> create new one */
 		floor = G_SpawnFloor(ent->pos);
 		newFloor = true;
-	} else if (INV_IsFloorDef(from) && !floor) {
+	} else if (from->isFloorDef() && !floor) {
 		/* We are moving from the floor, but no existing edict for this floor-tile found -> this should never be the case. */
 		gi.DPrintf("G_ClientInvMove: No source-floor found.\n");
 		return false;
@@ -628,7 +628,7 @@ bool G_ActorInvMove (Edict *ent, const invDef_t *from, invList_t *fItem, const i
 	}
 
 	/* successful inventory change; remove the item in clients */
-	if (INV_IsFloorDef(from)) {
+	if (from->isFloorDef()) {
 		/* We removed an item from the floor - check how the client
 		 * needs to be updated. */
 		assert(!newFloor);
@@ -642,7 +642,7 @@ bool G_ActorInvMove (Edict *ent, const invDef_t *from, invList_t *fItem, const i
 		} else {
 			/* Floor is empty, remove the edict (from server + client) if we are
 			 * not moving to it. */
-			if (!INV_IsFloorDef(to)) {
+			if (!to->isFloorDef()) {
 				G_EventPerish(floor);
 				G_FreeEdict(floor);
 			} else
@@ -660,12 +660,12 @@ bool G_ActorInvMove (Edict *ent, const invDef_t *from, invList_t *fItem, const i
 
 	if (ia == IA_RELOAD || ia == IA_RELOAD_SWAP) {
 		/* reload */
-		if (INV_IsFloorDef(to))
+		if (to->isFloorDef())
 			mask = G_VisToPM(floor->visflags);
 		else
 			mask = G_TeamToPM(ent->team);
 
-		G_EventInventoryReload(INV_IsFloorDef(to) ? floor : ent, mask, &item, to, ic);
+		G_EventInventoryReload(to->isFloorDef() ? floor : ent, mask, &item, to, ic);
 
 		if (ia == IA_RELOAD) {
 			return true;
@@ -676,7 +676,7 @@ bool G_ActorInvMove (Edict *ent, const invDef_t *from, invList_t *fItem, const i
 			item.rotated = fItemBackup.item.rotated;
 			item.amount = tItemBackup.item.amount;
 			to = from;
-			if (INV_IsFloorDef(to)) {
+			if (to->isFloorDef()) {
 				/* moveInInventory placed the swapped ammo in an available space, check where it was placed
 				 * so we can place it at the same place in the client, otherwise since fItem hasn't been removed
 				 * this could end in a different place in the client - will cause an error if trying to use it again */
@@ -692,7 +692,7 @@ bool G_ActorInvMove (Edict *ent, const invDef_t *from, invList_t *fItem, const i
 	}
 
 	/* We moved an item to the floor - check how the client needs to be updated. */
-	if (INV_IsFloorDef(to)) {
+	if (to->isFloorDef()) {
 		/* we have to link the temp floor container to the new floor edict or add
 		 * the item to an already existing floor edict - the floor container that
 		 * is already linked might be from a different entity (this might happen

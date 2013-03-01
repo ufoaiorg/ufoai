@@ -254,7 +254,7 @@ inventory_action_t InventoryInterface::moveInInventory (inventory_t* const inv, 
 
 	time = from->out + to->in;
 	if (from == to) {
-		if (INV_IsFloorDef(from))
+		if (from->isFloorDef())
 			time = 0;
 		else
 			time /= 2;
@@ -365,8 +365,8 @@ inventory_action_t InventoryInterface::moveInInventory (inventory_t* const inv, 
 					/* exchange ammo */
 					const item_t item = {NONE_AMMO, NULL, ic->item.ammo, 0, 0};
 					/* Put current ammo in place of the new ammo unless floor - there can be more than 1 item */
-					const int cacheFromX = INV_IsFloorDef(from) ? NONE : fItem->x;
-					const int cacheFromY = INV_IsFloorDef(from) ? NONE : fItem->y;
+					const int cacheFromX = from->isFloorDef() ? NONE : fItem->x;
+					const int cacheFromY = from->isFloorDef() ? NONE : fItem->y;
 
 					/* Actually remove the ammo from the 'from' container. */
 					if (!removeFromInventory(inv, from, fItem))
