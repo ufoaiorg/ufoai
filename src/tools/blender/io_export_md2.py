@@ -35,7 +35,7 @@ Thanks to David Henry for the documentation about the MD2 file format.
 
 bl_info = {
     "name": "Quake2 MD2 format",
-    "description": "Export to Quake2 file format for UFO:AI (.md2)",
+    "description": "Export to Quake2 file format (.md2)",
     "author": "DarkRain, based on the work of Sebastian Lieberknecht/Dao Nguyen/Bernd Meyer and Damien Thebault/Erwan Mathieu",
     "version": (1, 2),
     "blender": (2, 63, 0),
@@ -229,7 +229,6 @@ class MD2:
 	def __init__(self, options):
 		self.options = options
 		self.object = None
-		self.progressBarDisplayed = -10
 		return
 
 	def setObject(self, object):
@@ -247,7 +246,15 @@ class MD2:
 
 		self.num_skins = len(skins)
 		self.num_xyz = len(mesh.vertices)
-		self.num_st = len(mesh.tessfaces)*3
+
+		#define meshTextureFaces
+		if len(mesh.tessface_uv_textures) != 0:
+			meshTextureFaces = mesh.tessface_uv_textures.active.data
+		else:
+			print("WARNING: The Object lacks uv data")
+			meshTextureFaces = mesh.tessfaces
+
+		self.num_st, uvList, uvDict = self.buildTexCoord(meshTextureFaces)
 		self.num_tris = len(mesh.tessfaces)
 		if self.options.fSkipGLCommands:
 			self.num_glcmds = 0
@@ -317,30 +324,13 @@ class MD2:
 				file.write(data) # skin name
 
 
-			#define meshTextureFaces
-			if len(mesh.tessface_uv_textures) != 0:
-				meshTextureFaces = mesh.tessface_uv_textures.active.data
-			else:
-				print("WARNING: The Object lacks uv data")
-				meshTextureFaces = mesh.tessfaces
-
-			for meshTextureFace in meshTextureFaces:
-				try:
-					uvs = meshTextureFace.uv
-				except:
-					uvs = ([0,0],[0,0],[0,0])
-
-				# (u,v) in blender -> (u,1-v)
-				data = struct.pack('<6h',
-								  int(uvs[0][0]*self.skinwidth),
-								  int((1-uvs[0][1])*self.skinheight),
-								  int(uvs[1][0]*self.skinwidth),
-								  int((1-uvs[1][1])*self.skinheight),
-								  int(uvs[2][0]*self.skinwidth),
-								  int((1-uvs[2][1])*self.skinheight),
+			for uv in uvList:
+				data = struct.pack('<2h',
+								  int(uv[0]*self.skinwidth),
+								  int((1-uv[1])*self.skinheight)
 								  )
 				file.write(data) # uv
-				# (uv index is : face.index*3+i)
+			del uvList
 
 			for face in mesh.tessfaces:
 				# 0,2,1 for good cw/ccw
@@ -350,13 +340,17 @@ class MD2:
 				                  face.vertices[1]
 				                )
 				file.write(data) # vert index
+				try:
+					uvs = meshTextureFaces[face.index].uv
+				except:
+					uvs = [(0.0, 0.0), (0.0, 0.0), (0.0, 0.0)]
 				data = struct.pack('<3H',
-				                  face.index*3 + 0,
-				                  face.index*3 + 2,
-				                  face.index*3 + 1,
+				                  uvDict[(uvs[0][0], uvs[0][1])],
+				                  uvDict[(uvs[2][0], uvs[2][1])],
+				                  uvDict[(uvs[1][0], uvs[1][1])],
 				                  )
-
 				file.write(data) # uv index
+			del uvDict
 
 			if self.options.fExportAnimation:
 				min = None
@@ -380,19 +374,11 @@ class MD2:
 						else:
 							markerFrame = timeLineMarkers[i].frame
 
-				# BL: to fix: 1 is assumed to be the frame start (this is
-				# hardcoded sometimes...)
 				for frame in range(bpy.context.scene.frame_start , bpy.context.scene.frame_end + 1):
-					frameIdx = frame - bpy.context.scene.frame_start
+					frameIdx = frame - bpy.context.scene.frame_start + 1
 					#Display the progress status of the export in the console
 					progressStatus = math.floor(frameIdx / self.num_frames * 100)
-					if progressStatus - self.progressBarDisplayed >= 10:
-						# only show major updates (>=10%)
-						print("Export progress: %3i%%\r" % int(progressStatus), end=' ')
-						self.progressBarDisplayed = progressStatus
-
-					if frameIdx + 1 == self.num_frames:
-						print("Export progress: %3i%% - Model exported." % 100)
+					print("Export progress: %3i%%\r" % int(progressStatus), end='')
 
 					bpy.context.scene.frame_set(frame)
 
@@ -408,7 +394,7 @@ class MD2:
 			else:
 				self.outFrame(file)
 
-			# gl commands TODO: implement me
+			# gl commands TODO: implement me - this just dumps tris one by one
 			if not self.options.fSkipGLCommands:
 				for meshTextureFace in meshTextureFaces:
 					try:
@@ -431,6 +417,7 @@ class MD2:
 				file.write(data)
 		finally:
 			file.close()
+		print("Export progress: 100% - Model exported.")
 
 	def outFrame(self, file, frameName = 'frame'):
 		mesh = self.object.to_mesh(bpy.context.scene, True, 'PREVIEW')
@@ -499,6 +486,24 @@ class MD2:
 			                  bestNormalIndex)
 
 			file.write(data) # write vertex and normal
+
+	def buildTexCoord(self, meshTextureFaces):
+		# Create an UV coord dictionary to avoid duplicate entries and save space
+		uvList = []
+		uvDict = {}
+		uvCount = 0
+		try:
+			for uv in [(uvs[0], uvs[1]) for meshTextureFace in meshTextureFaces for uvs in meshTextureFace.uv]:
+				if uv not in uvDict.keys():
+					uvList.append(uv)
+					uvDict[uv] = uvCount
+					uvCount+=1
+		except:
+			uvList.append((0.0, 0.0))
+			uvDict[(0.0, 0.0)] = 0
+			uvCount = 1
+
+		return uvCount, uvList, uvDict
 
 class Util:
 	@staticmethod
@@ -588,11 +593,20 @@ class Util:
 		# make the object the active object!
 		bpy.context.scene.objects.active = object
 
-		bpy.ops.object.mode_set( mode="EDIT" , toggle = False )
-		bpy.ops.mesh.select_all(action="SELECT")
-
-		bpy.ops.mesh.quads_convert_to_tris()
-		bpy.ops.object.mode_set( mode="OBJECT" , toggle = False )
+		try:
+			bpy.ops.object.modifier_add(type='TRIANGULATE')
+			for i, modifier in enumerate(object.modifiers):
+				if modifier.type == 'TRIANGULATE':
+					for _ in range(i):
+						bpy.ops.object.modifier_move_up(modifier=modifier.name)
+					bpy.ops.object.modifier_apply(modifier=modifier.name)
+					break;
+		except:
+			bpy.ops.object.mode_set(mode="EDIT", toggle = False)
+			bpy.ops.mesh.select_all(action="SELECT")
+			# Beauty causes Blender 2.66 to freeze sometimes
+			bpy.ops.mesh.quads_convert_to_tris(use_beauty=False)
+			bpy.ops.object.mode_set(mode="OBJECT", toggle = False)
 
 		mesh.update(calc_tessface=True)
 		return mesh
@@ -632,14 +646,18 @@ class ObjectInfo:
 			tmpObjectName = Util.pickName()
 			try:
 				# apply the modifiers
+				for modifier in object.modifiers:
+					if modifier.type == 'TRIANGULATE':
+						self.triang = False
 				object = Util.applyModifiers(object, tmpObjectName)
 
-				if object.name != tmpObjectName: # not yet copied: do it now.
-					object = Util.duplicateObject(object, tmpObjectName)
-				mesh = Util.triangulateMesh(object)
+				if self.triang:
+					if object.name != tmpObjectName: # not yet copied: do it now.
+						object = Util.duplicateObject(object, tmpObjectName)
+					mesh = Util.triangulateMesh(object)
 
 				self.status = (str(len(mesh.vertices)) + ' vertices', str(len(mesh.tessfaces)) + ' faces')
-				self.cTessFaces = len(mesh.tessfaces)
+				self.faces = len(mesh.tessfaces)
 				self.vertices = len(mesh.vertices)
 
 			finally:
@@ -647,7 +665,7 @@ class ObjectInfo:
 					originalObject.select = True
 					bpy.context.scene.objects.active = originalObject
 					Util.deleteObject(object)
-		print(self.status)
+		print(originalObject.name+': ', self.status)
 
 class Export_MD2(bpy.types.Operator, ExportHelper):
 	"""Export selection to Quake2 file format (.md2)"""
@@ -681,13 +699,6 @@ class Export_MD2(bpy.types.Operator, ExportHelper):
 							description="default: False",
 							default=False)
 
-	# id_export   = 1
-	# id_cancel   = 2
-	# id_anim     = 3
-	# id_update   = 4
-	# id_help     = 5
-	# id_basename = 6
-
 	def __init__(self):
 		try:
 			self.object = bpy.context.selected_objects[0]
@@ -712,8 +723,6 @@ class Export_MD2(bpy.types.Operator, ExportHelper):
 		tmpObjectName = Util.pickName()
 
 		object = Util.applyModifiers(object, tmpObjectName)
-
-		mesh = object.data
 
 		if self.info.triang:
 			if object.name != tmpObjectName: # not yet copied: do it now.
@@ -742,11 +751,10 @@ class Export_MD2(bpy.types.Operator, ExportHelper):
 			if self.fExportAnimation:
 				bpy.context.scene.frame_set(frame)
 
-			self.report({'INFO'},  "Model '"+originalObject.name+"' exported")
+		self.report({'INFO'},  "Model '"+originalObject.name+"' exported")
 		return {'FINISHED'}
 
 	def invoke(self, context, event):
-
 		if not context.selected_objects:
 			self.report({'ERROR'}, "Please, select an object to export!")
 			return {'CANCELLED'}
@@ -767,10 +775,6 @@ class Export_MD2(bpy.types.Operator, ExportHelper):
 		if info.vertices > MD2_MAX_VERTS:
 			self.report({'ERROR'},
 			   "Object has too many vertices (%i), at most %i are supported in md2" % (info.vertices, MD2_MAX_VERTS))
-			return {'CANCELLED'}
-		if info.frames > MD2_MAX_FRAMES:
-			self.report({'ERROR'},
-			   "There are too many frames (%i), at most %i are supported in md2" % (info.frames, MD2_MAX_FRAMES))
 			return {'CANCELLED'}
 
 		wm = context.window_manager
