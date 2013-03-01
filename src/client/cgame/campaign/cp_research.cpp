@@ -1760,7 +1760,7 @@ bool RS_SaveXML (xmlNode_t *parent)
 		int j;
 		const technology_t *t = RS_GetTechByIDX(i);
 
-		xmlNode_t * snode = cgi->XML_AddNode(node, SAVE_RESEARCH_TECH);
+		xmlNode_t *snode = cgi->XML_AddNode(node, SAVE_RESEARCH_TECH);
 		cgi->XML_AddString(snode, SAVE_RESEARCH_ID, t->id);
 		cgi->XML_AddBoolValue(snode, SAVE_RESEARCH_STATUSCOLLECTED, t->statusCollected);
 		cgi->XML_AddFloatValue(snode, SAVE_RESEARCH_TIME, t->time);
@@ -1777,7 +1777,7 @@ bool RS_SaveXML (xmlNode_t *parent)
 		/** @todo this should be handled by the mail system */
 		for (j = 0; j < TECHMAIL_MAX; j++) {
 			if (t->mail[j].read) {
-				xmlNode_t * ssnode = cgi->XML_AddNode(snode, SAVE_RESEARCH_MAIL);
+				xmlNode_t *ssnode = cgi->XML_AddNode(snode, SAVE_RESEARCH_MAIL);
 				cgi->XML_AddInt(ssnode, SAVE_RESEARCH_MAIL_ID, j);
 			}
 		}
@@ -1805,7 +1805,7 @@ bool RS_LoadXML (xmlNode_t *parent)
 	cgi->Com_RegisterConstList(saveResearchConstants);
 	for (snode = cgi->XML_GetNode(topnode, SAVE_RESEARCH_TECH); snode; snode = cgi->XML_GetNextNode(snode, topnode, "tech")) {
 		const char *techString = cgi->XML_GetString(snode, SAVE_RESEARCH_ID);
-		xmlNode_t * ssnode;
+		xmlNode_t *ssnode;
 		int baseIdx;
 		technology_t *t = RS_GetTechByID(techString);
 		const char *type = cgi->XML_GetString(snode, SAVE_RESEARCH_STATUSRESEARCH);

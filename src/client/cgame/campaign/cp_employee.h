@@ -97,7 +97,7 @@ bool E_IsInBase(const employee_t* empl, const base_t* const base);
 
 void E_DeleteEmployeesExceedingCapacity(base_t *base);
 
-void E_HireForBuilding(base_t* base, building_t * building, int num);
+void E_HireForBuilding(base_t* base, building_t *building, int num);
 void E_InitialEmployees(const struct campaign_s *campaign);
 
 bool E_MoveIntoNewBase(employee_t *employee, base_t *newBase);

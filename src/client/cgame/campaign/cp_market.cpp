@@ -457,7 +457,7 @@ bool BS_SaveXML (xmlNode_t *parent)
 	for (i = 0; i < cgi->csi->numODs; i++) {
 		const objDef_t *od = INVSH_GetItemByIDX(i);
 		if (BS_IsOnMarket(od)) {
-			xmlNode_t * snode = cgi->XML_AddNode(node, SAVE_MARKET_ITEM);
+			xmlNode_t *snode = cgi->XML_AddNode(node, SAVE_MARKET_ITEM);
 			cgi->XML_AddString(snode, SAVE_MARKET_ID, od->id);
 			cgi->XML_AddIntValue(snode, SAVE_MARKET_NUM, market->numItems[i]);
 			cgi->XML_AddIntValue(snode, SAVE_MARKET_BID, market->bidItems[i]);
@@ -468,7 +468,7 @@ bool BS_SaveXML (xmlNode_t *parent)
 	}
 	for (i = 0; i < AIRCRAFTTYPE_MAX; i++) {
 		if (market->bidAircraft[i] > 0 || market->askAircraft[i] > 0) {
-			xmlNode_t * snode = cgi->XML_AddNode(node, SAVE_MARKET_AIRCRAFT);
+			xmlNode_t *snode = cgi->XML_AddNode(node, SAVE_MARKET_AIRCRAFT);
 			const char *shortName = cgi->Com_DropShipTypeToShortName((humanAircraftType_t)i);
 			cgi->XML_AddString(snode, SAVE_MARKET_ID, shortName);
 			cgi->XML_AddIntValue(snode, SAVE_MARKET_NUM, market->numAircraft[i]);

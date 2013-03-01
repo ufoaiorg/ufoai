@@ -804,7 +804,7 @@ bool PR_SaveXML (xmlNode_t *p)
 
 		for (j = 0; j < pq->numItems; j++) {
 			const production_t *prod = &pq->items[j];
-			xmlNode_t * ssnode = cgi->XML_AddNode(snode, SAVE_PRODUCE_ITEM);
+			xmlNode_t *ssnode = cgi->XML_AddNode(snode, SAVE_PRODUCE_ITEM);
 			if (PR_IsItem(prod))
 				cgi->XML_AddString(ssnode, SAVE_PRODUCE_ITEMID, prod->data.data.item->id);
 			else if (PR_IsAircraft(prod))

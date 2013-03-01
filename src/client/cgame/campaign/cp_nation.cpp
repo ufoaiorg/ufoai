@@ -239,7 +239,7 @@ bool NAT_SaveXML (xmlNode_t *p)
  * @brief Nation loading xml callback
  * @param[in] p XML Node structure, where we get the information from
  */
-bool NAT_LoadXML (xmlNode_t * p)
+bool NAT_LoadXML (xmlNode_t *p)
 {
 	xmlNode_t *n;
 	xmlNode_t *s;

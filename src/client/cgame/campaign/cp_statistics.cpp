@@ -155,7 +155,7 @@ void CP_StatsUpdate_f (void)
  */
 bool STATS_SaveXML (xmlNode_t *parent)
 {
-	xmlNode_t * stats;
+	xmlNode_t *stats;
 
 	stats = cgi->XML_AddNode(parent, SAVE_STATS_STATS);
 
@@ -190,7 +190,7 @@ bool STATS_SaveXML (xmlNode_t *parent)
  */
 bool STATS_LoadXML (xmlNode_t *parent)
 {
-	xmlNode_t * stats;
+	xmlNode_t *stats;
 	bool success = true;
 
 	stats = cgi->XML_GetNode(parent, SAVE_STATS_STATS);

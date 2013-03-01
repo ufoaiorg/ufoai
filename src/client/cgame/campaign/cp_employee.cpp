@@ -1040,7 +1040,7 @@ bool E_LoadXML (xmlNode_t *p)
 	cgi->Com_RegisterConstList(saveEmployeeConstants);
 	for (snode = cgi->XML_GetNode(p, SAVE_EMPLOYEE_EMPLOYEES); snode;
 			snode = cgi->XML_GetNextNode(snode, p , SAVE_EMPLOYEE_EMPLOYEES)) {
-		xmlNode_t * ssnode;
+		xmlNode_t *ssnode;
 		employeeType_t emplType;
 		const char *type = cgi->XML_GetString(snode, SAVE_EMPLOYEE_TYPE);
 
@@ -1053,7 +1053,7 @@ bool E_LoadXML (xmlNode_t *p)
 		for (ssnode = cgi->XML_GetNode(snode, SAVE_EMPLOYEE_EMPLOYEE); ssnode;
 				ssnode = cgi->XML_GetNextNode(ssnode, snode, SAVE_EMPLOYEE_EMPLOYEE)) {
 			int baseIDX;
-			xmlNode_t * chrNode;
+			xmlNode_t *chrNode;
 			employee_t e;
 
 			OBJZERO(e);
