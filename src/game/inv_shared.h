@@ -456,8 +456,6 @@ typedef enum {
 #define foreachhand(hand) for (int hand##__loop = 0; hand##__loop < 2; ++hand##__loop) \
 	if (hand = (hand##__loop == 0 ? ACTOR_HAND_RIGHT : ACTOR_HAND_LEFT), false) {} else
 
-#define ACTOR_GET_INV(actor, hand) (((hand) == ACTOR_HAND_RIGHT) ? RIGHT(actor) : (((hand) == ACTOR_HAND_LEFT) ? LEFT(actor) : NULL))
-/** @param[in] hand Hand index (ACTOR_HAND_RIGHT, ACTOR_HAND_LEFT) */
 
 bool INV_IsRightDef(const invDef_t* invDef);
 bool INV_IsLeftDef(const invDef_t* invDef);

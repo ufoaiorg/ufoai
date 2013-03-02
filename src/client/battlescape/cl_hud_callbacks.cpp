@@ -61,7 +61,7 @@ const fireDef_t *HUD_GetFireDefinitionForHand (const le_t *actor, const actorHan
 	if (!actor)
 		return NULL;
 
-	invlistWeapon = ACTOR_GET_INV(actor, hand);
+	invlistWeapon = actor->getHand(hand);
 	if (!invlistWeapon || !invlistWeapon->item.def())
 		return NULL;
 
@@ -129,7 +129,7 @@ static void HUD_FireWeapon_f (void)
 	const objDef_t *ammo = fd->obj;
 
 	/* Let's check if shooting is possible. */
-	if (!HUD_CheckShooting(actor, ACTOR_GET_INV(actor, hand)))
+	if (!HUD_CheckShooting(actor, actor->getHand(hand)))
 		return;
 
 	if (CL_ActorTimeForFireDef(actor, &ammo->fd[fd->weapFdsIdx][firemode]) <= CL_ActorUsableTUs(actor)) {
