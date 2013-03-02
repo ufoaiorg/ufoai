@@ -251,7 +251,7 @@ void G_EventShoot (const Edict* ent, teammask_t teamMask, const fireDef_t* fd, b
 
 void G_EventReactionFireChange (const Edict* ent)
 {
-	const objDef_t *od = ent->chr.RFmode.weapon;
+	const objDef_t *od = ent->chr.RFmode.getWeapon();
 
 	G_EventAdd(G_PlayerToPM(G_PLAYER_FROM_ENT(ent)), EV_ACTOR_REACTIONFIRECHANGE, ent->number);
 	gi.WriteByte(ent->chr.RFmode.getFmIdx());

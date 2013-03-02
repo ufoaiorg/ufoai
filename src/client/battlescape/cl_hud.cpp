@@ -316,7 +316,7 @@ static void HUD_PopupFiremodeReservation (const le_t *le, bool popupReload)
 				/* Remember the line that is currently selected (if any). */
 				if (chr->reservedTus.shotSettings.getHand() == hand
 				 && chr->reservedTus.shotSettings.getFmIdx() == i
-				 && chr->reservedTus.shotSettings.weapon == ammo->weapons[fd->weapFdsIdx])
+				 && chr->reservedTus.shotSettings.getWeapon() == ammo->weapons[fd->weapFdsIdx])
 					selectedEntry = LIST_Count(popupListData) - 1;
 			}
 		}

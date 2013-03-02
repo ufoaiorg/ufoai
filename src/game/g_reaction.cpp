@@ -370,7 +370,7 @@ static bool G_ActorHasWorkingFireModeSet (const Edict *actor)
 	if (fd == NULL)
 		return false;
 
-	if (fd->obj->weapons[fd->weapFdsIdx] == fmSettings->weapon
+	if (fd->obj->weapons[fd->weapFdsIdx] == fmSettings->getWeapon()
 		&& fmSettings->getFmIdx() < fd->obj->numFiredefs[fd->weapFdsIdx]) {
 		return true;
 	}
