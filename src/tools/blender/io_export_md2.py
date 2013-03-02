@@ -42,7 +42,7 @@ bl_info = {
     "location": "File > Export > Quake2 MD2",
     "warning": '', # used for warning icon and text in addons panel
     "support": 'COMMUNITY',
-    "category": "Import-Export"}
+    "category": "Export"}
 
 import bpy
 from bpy.props import *
