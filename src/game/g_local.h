@@ -60,7 +60,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /** These macros are deprecated. Please use the appropriate inline functions */
 #define CONTAINER(e, containerID) ((e)->chr.inv.c[(containerID)])
 //#define ARMOUR(e)		(CONTAINER(e, gi.csi->idArmour))
-#define RIGHT(e)		(CONTAINER(e, gi.csi->idRight))
+//#define RIGHT(e)		(CONTAINER(e, gi.csi->idRight))
 #define LEFT(e)			(CONTAINER(e, gi.csi->idLeft))
 //#define EXTENSION(e)	(CONTAINER(e, gi.csi->idExtension))
 //#define HEADGEAR(e)		(CONTAINER(e, gi.csi->idHeadgear))

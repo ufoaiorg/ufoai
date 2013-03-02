@@ -38,7 +38,7 @@ invList_t* HUD_GetLeftHandWeapon (const le_t *actor, containerIndex_t *container
 	invList_t *invList = LEFT(actor);
 
 	if (!invList) {
-		invList = RIGHT(actor);
+		invList = actor->getRightHand();
 		if (invList == NULL || !invList->item.isHeldTwoHanded())
 			invList = NULL;
 		else if (container != NULL)
@@ -296,7 +296,7 @@ static void HUD_ReloadRight_f (void)
 {
 	le_t *actor = selActor;
 
-	if (!actor || !HUD_CheckReload(actor, RIGHT(actor), csi.idRight))
+	if (!actor || !HUD_CheckReload(actor, actor->getRightHand(), csi.idRight))
 		return;
 	CL_ActorReload(actor, csi.idRight);
 	HUD_DisplayMessage(_("Right hand weapon reloaded."));

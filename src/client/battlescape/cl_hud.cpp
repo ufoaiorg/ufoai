@@ -1238,7 +1238,7 @@ static void HUD_UpdateActorCvar (const le_t *actor)
 	}
 
 	/* print ammo */
-	const invList_t* invListRight = RIGHT(actor);
+	const invList_t* invListRight = actor->getRightHand();
 	if (invListRight)
 		Cvar_SetValue("mn_ammoright", invListRight->item.ammoLeft);
 	else
