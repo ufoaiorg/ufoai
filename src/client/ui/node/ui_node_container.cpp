@@ -562,7 +562,7 @@ static void UI_ContainerNodeDrawDropPreview (uiNode_t *target)
 	}
 
 	/* Hack, no preview for armour, we don't want it out of the armour container (and armour container is not visible) */
-	if (INV_IsArmour(previewItem.def()))
+	if (previewItem.def()->isArmour())
 		return;
 
 	UI_GetNodeAbsPos(target, origine);
@@ -729,7 +729,7 @@ void UI_ContainerNodeAutoPlaceItem (uiNode_t* node, invList_t *ic)
 		bool packed = false;
 		assert(ic->item.def());
 		/* armour can only have one target */
-		if (INV_IsArmour(ic->item.def())) {
+		if (ic->item.def()->isArmour()) {
 			target = csi.idArmour;
 			packed = INV_MoveItem(ui_inventory, INVDEF(target), 0, 0, container, ic, NULL);
 		/* ammo or item */

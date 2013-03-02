@@ -38,7 +38,7 @@ bool CHRSH_IsTeamDefAlien (const teamDef_t* const td)
 bool CHRSH_IsArmourUseableForTeam (const objDef_t *od, const teamDef_t *teamDef)
 {
 	assert(teamDef);
-	assert(INV_IsArmour(od));
+	assert(od->isArmour());
 
 	if (!teamDef->armour)
 		return false;
@@ -150,7 +150,7 @@ const char *CHRSH_CharGetBody (const character_t *const chr)
 	if (chr->inv.getArmourContainer() && !CHRSH_IsTeamDefRobot(chr->teamDef)) {
 		const objDef_t *od = chr->inv.getArmourContainer()->item.def();
 		const char *id = od->armourPath;
-		if (!INV_IsArmour(od))
+		if (!od->isArmour())
 			Sys_Error("CHRSH_CharGetBody: Item is no armour");
 
 		Com_sprintf(returnModel, sizeof(returnModel), "%s%s/%s", chr->path, id, chr->body);
@@ -172,7 +172,7 @@ const char *CHRSH_CharGetHead (const character_t *const chr)
 	if (chr->inv.getArmourContainer() && !chr->teamDef->robot) {
 		const objDef_t *od = chr->inv.getArmourContainer()->item.def();
 		const char *id = od->armourPath;
-		if (!INV_IsArmour(od))
+		if (!od->isArmour())
 			Sys_Error("CHRSH_CharGetBody: Item is no armour");
 
 		Com_sprintf(returnModel, sizeof(returnModel), "%s%s/%s", chr->path, id, chr->head);

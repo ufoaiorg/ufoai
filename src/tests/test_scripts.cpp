@@ -156,7 +156,7 @@ static void testTeamDefsModelScriptData (void)
 
 		for (j = 0; j < csi.numODs; j++) {
 			const objDef_t *od = INVSH_GetItemByIDX(j);
-			if (!INV_IsArmour(od))
+			if (!od->isArmour())
 				continue;
 
 			/* not for this team */

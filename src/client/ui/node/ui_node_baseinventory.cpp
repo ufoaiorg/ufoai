@@ -128,7 +128,7 @@ static void UI_ContainerItemIteratorNext (containerItemIterator_t *iterator)
 
 			/* type filter */
 			/** @todo not sure its the right check */
-			isArmour = INV_IsArmour(obj);
+			isArmour = obj->isArmour();
 			isAmmo = obj->numWeapons != 0 && INV_IsAmmo(obj);
 			isWeapon = obj->weapon || obj->isMisc || isArmour;
 

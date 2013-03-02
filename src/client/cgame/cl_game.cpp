@@ -1173,7 +1173,7 @@ bool GAME_ItemIsUseable (const objDef_t *od)
 {
 	const cgame_export_t *list = GAME_GetCurrentType();
 
-	if (INV_IsArmour(od)) {
+	if (od->isArmour()) {
 		const char *teamDefID = GAME_GetTeamDef();
 		const teamDef_t *teamDef = Com_GetTeamDefinitionByID(teamDefID);
 

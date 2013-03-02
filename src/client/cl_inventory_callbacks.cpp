@@ -127,7 +127,7 @@ void INV_ItemDescription (const objDef_t *od)
 		int numFiredefs = 0;
 
 		*itemText = '\0';
-		if (INV_IsArmour(od)) {
+		if (od->isArmour()) {
 			Com_sprintf(itemText, sizeof(itemText), _("Size:\t%i\n"), od->size);
 			Q_strcat(itemText, va(_("Weight:\t%g Kg\n"), od->weight), sizeof(itemText));
 			Q_strcat(itemText, "\n", sizeof(itemText));

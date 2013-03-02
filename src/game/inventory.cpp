@@ -297,7 +297,7 @@ inventory_action_t InventoryInterface::moveInInventory (inventory_t* const inv, 
 
 	/* If non-armour moved to an armour slot then abort.
 	 * Same for non extension items when moved to an extension slot. */
-	if ((to->armour && !INV_IsArmour(fItem->item.def()))
+	if ((to->armour && !fItem->item.def()->isArmour())
 	 || (to->extension && !fItem->item.def()->extension)
 	 || (to->headgear && !fItem->item.def()->headgear)) {
 		return IA_NONE;
@@ -454,7 +454,7 @@ inventory_action_t InventoryInterface::moveInInventory (inventory_t* const inv, 
 	}
 
 	if (INV_IsArmourDef(to)) {
-		assert(INV_IsArmour(this->cacheItem.def()));
+		assert(this->cacheItem.def()->isArmour());
 		return IA_ARMOUR;
 	}
 
@@ -587,7 +587,7 @@ int InventoryInterface::PackAmmoAndWeapon (character_t* const chr, const objDef_
 	int maxTU;
 	float weight;
 
-	assert(!INV_IsArmour(weapon));
+	assert(!weapon->isArmour());
 	item.setDef(weapon);
 
 	/* are we going to allow trying the left hand */
@@ -924,7 +924,7 @@ void InventoryInterface::EquipActor (character_t* const chr, const equipDef_t *e
 			int randNumber = rand() % 100;
 			for (i = 0; i < this->csi->numODs; i++) {
 				const objDef_t *armour = INVSH_GetItemByIDX(i);
-				if (ed->numItems[i] && INV_IsArmour(armour)) {
+				if (ed->numItems[i] && armour->isArmour()) {
 					randNumber -= ed->numItems[i];
 					if (randNumber < 0) {
 						const item_t item = {NONE_AMMO, NULL, armour, 0, 0};

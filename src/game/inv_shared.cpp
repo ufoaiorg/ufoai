@@ -618,7 +618,7 @@ int inventory_t::canHoldItem (const invDef_t *container, const objDef_t *od, con
 	assert(od);
 
 	/* armour vs item */
-	if (INV_IsArmour(od)) {
+	if (od->isArmour()) {
 		if (!container->armour && !container->all) {
 			return INV_DOES_NOT_FIT;
 		}
@@ -770,7 +770,7 @@ bool inventory_t::canHoldItemWeight (containerIndex_t from, containerIndex_t to,
 	if (CSI->ids[to].temp || !CSI->ids[from].temp)
 		return true;
 
-	const bool swapArmour = INV_IsArmour(item.def()) && getArmourContainer();
+	const bool swapArmour = item.def()->isArmour() && getArmourContainer();
 	const float invWeight = getWeight() - (swapArmour ? getArmourContainer()->item.getWeight() : 0);
 	float itemWeight = item.getWeight();
 

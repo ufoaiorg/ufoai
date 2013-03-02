@@ -258,7 +258,7 @@ itemFilterTypes_t INV_GetFilterFromItem (const objDef_t *obj)
 		return FILTER_S_SECONDARY;
 	else if (obj->isMisc)
 		return FILTER_S_MISC;
-	else if (INV_IsArmour(obj))
+	else if (obj->isArmour())
 		return FILTER_S_ARMOUR;
 
 	/** @todo need to implement everything */
@@ -316,7 +316,7 @@ bool INV_ItemMatchesFilter (const objDef_t *obj, const itemFilterTypes_t filterT
 		break;
 
 	case FILTER_S_ARMOUR:
-		return INV_IsArmour(obj);
+		return obj->isArmour();
 
 	case FILTER_S_MISC:
 		return obj->isMisc;
