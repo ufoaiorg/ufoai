@@ -35,7 +35,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 invList_t* HUD_GetLeftHandWeapon (const le_t *actor, containerIndex_t *container)
 {
-	invList_t *invList = LEFT(actor);
+	invList_t *invList = actor->getLeftHand();
 
 	if (!invList) {
 		invList = actor->getRightHand();
@@ -92,7 +92,7 @@ static bool HUD_CheckShooting (const le_t* le, invList_t *weapon)
 		return false;
 	}
 	/* Cannot shoot because weapon is fireTwoHanded, yet both hands handle items. */
-	if (weapon->item.def()->fireTwoHanded && LEFT(le)) {
+	if (weapon->item.def()->fireTwoHanded && le->getLeftHand()) {
 		HUD_DisplayMessage(_("Can't perform action - weapon cannot be fired one handed!"));
 		return false;
 	}

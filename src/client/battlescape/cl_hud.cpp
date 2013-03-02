@@ -146,8 +146,8 @@ void HUD_UpdateActorStats (const le_t *le)
 		return;
 
 	const invList_t *invList = le->getRightHand();
-	if ((!invList || !invList->item.def() || !invList->item.isHeldTwoHanded()) && LEFT(le))
-		invList = LEFT(le);
+	if ((!invList || !invList->item.def() || !invList->item.isHeldTwoHanded()) && le->getLeftHand())
+		invList = le->getLeftHand();
 
 	const character_t *chr = CL_ActorGetChr(le);
 	assert(chr);
@@ -519,7 +519,7 @@ static void HUD_DisplayActions (const char* callback, const le_t* actor, actionT
 	break;
 
 	case RELOAD_LEFT: {
-		invList_t* weapon = LEFT(actor);
+		invList_t* weapon = actor->getLeftHand();
 
 		/* Reloadable item in hand. */
 		if (weapon && weapon->item.def() && weapon->item.isReloadable()) {
@@ -747,7 +747,7 @@ static bool HUD_WeaponWithReaction (const le_t *actor)
 	const objDef_t *weapon = INVSH_IsReactionFireEnabled(actor->getRightHand());
 	if (weapon)
 		return true;
-	return INVSH_IsReactionFireEnabled(LEFT(actor)) != NULL;
+	return INVSH_IsReactionFireEnabled(actor->getLeftHand()) != NULL;
 }
 
 /**
@@ -806,7 +806,7 @@ static void HUD_UpdateButtons (const le_t *le)
 	invList_t *weaponl;
 	/* check for two-handed weapon - if not, also define weaponl */
 	if (!weaponr || !weaponr->item.isHeldTwoHanded())
-		weaponl = LEFT(le);
+		weaponl = le->getLeftHand();
 	else
 		weaponl = NULL;
 
@@ -1228,8 +1228,8 @@ static void HUD_UpdateActorCvar (const le_t *actor)
 		Cvar_Set("mn_rweapon", "");
 		Cvar_Set("mn_rweapon_item", "");
 	}
-	if (LEFT(actor)) {
-		const invList_t *i = LEFT(actor);
+	if (actor->getLeftHand()) {
+		const invList_t *i = actor->getLeftHand();
 		Cvar_Set("mn_lweapon", i->item.def()->model);
 		Cvar_Set("mn_lweapon_item", i->item.def()->id);
 	} else {
@@ -1380,7 +1380,7 @@ static void HUD_UpdateActor (le_t *actor)
 		if (displayRemainingTus[REMAINING_TU_RELOAD_RIGHT] && actor->getRightHand()) {
 			container = csi.idRight;
 			invList = actor->getRightHand();
-		} else if (displayRemainingTus[REMAINING_TU_RELOAD_LEFT] && LEFT(actor)) {
+		} else if (displayRemainingTus[REMAINING_TU_RELOAD_LEFT] && actor->getLeftHand()) {
 			container = NONE;
 			invList = HUD_GetLeftHandWeapon(actor, &container);
 		} else {

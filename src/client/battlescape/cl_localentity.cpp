@@ -817,10 +817,11 @@ void LE_AddProjectile (const fireDef_t *fd, int flags, const vec3_t muzzle, cons
  * @note This item is the only one that will be drawn when lying at the floor
  * @sa LE_PlaceItem
  * @return the item index in the @c csi.ods array
- * @note Only call this for none empty invList_t - see FLOOR, LEFT, RIGHT and so on macros
+ * @note Only call this for none empty invList_t
  */
 static const objDef_t *LE_BiggestItem (const invList_t *ic)
 {
+	assert(ic);
 	const objDef_t *max;
 	int maxSize = 0;
 

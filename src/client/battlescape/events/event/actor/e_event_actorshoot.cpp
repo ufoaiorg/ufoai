@@ -103,7 +103,7 @@ static void CL_ActorGetMuzzle (const le_t* actor, vec3_t muzzle, shoot_types_t s
 		invlistWeapon = actor->getRightHand();
 	} else {
 		tag = "tag_lweapon";
-		invlistWeapon = LEFT(actor);
+		invlistWeapon = actor->getLeftHand();
 	}
 
 	if (!invlistWeapon || !invlistWeapon->item.def())

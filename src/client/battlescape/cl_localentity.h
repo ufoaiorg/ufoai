@@ -159,6 +159,10 @@ typedef struct le_s {
 	{
 		return inv.getRightHandContainer();
 	}
+	inline invList_t *getLeftHand () const
+	{
+		return inv.getLeftHandContainer();
+	}
 	inline invList_t *getHand (actorHands_t hand) const
 	{
 		if (hand == ACTOR_HAND_RIGHT)
