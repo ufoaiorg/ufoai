@@ -770,7 +770,7 @@ bool inventory_t::canHoldItemWeight (containerIndex_t from, containerIndex_t to,
 	if (CSI->ids[to].temp || !CSI->ids[from].temp)
 		return true;
 
-	const bool swapArmour = item.def()->isArmour() && getArmourContainer();
+	const bool swapArmour = item.isArmour() && getArmourContainer();
 	const float invWeight = getWeight() - (swapArmour ? getArmourContainer()->item.getWeight() : 0);
 	float itemWeight = item.getWeight();
 

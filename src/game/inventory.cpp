@@ -297,7 +297,7 @@ inventory_action_t InventoryInterface::moveInInventory (inventory_t* const inv, 
 
 	/* If non-armour moved to an armour slot then abort.
 	 * Same for non extension items when moved to an extension slot. */
-	if ((to->armour && !fItem->item.def()->isArmour())
+	if ((to->armour && !fItem->item.isArmour())
 	 || (to->extension && !fItem->item.def()->extension)
 	 || (to->headgear && !fItem->item.def()->headgear)) {
 		return IA_NONE;
@@ -454,7 +454,7 @@ inventory_action_t InventoryInterface::moveInInventory (inventory_t* const inv, 
 	}
 
 	if (INV_IsArmourDef(to)) {
-		assert(this->cacheItem.def()->isArmour());
+		assert(this->cacheItem.isArmour());
 		return IA_ARMOUR;
 	}
 

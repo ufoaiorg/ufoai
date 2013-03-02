@@ -376,6 +376,10 @@ typedef struct item_s {
 	{
 		return _itemDef->weapon;
 	}
+	inline bool isArmour() const
+	{
+		return _itemDef->isArmour();
+	}
 	bool isSameAs (const item_s *const other) const;
 	float getWeight () const;
 } item_t;
