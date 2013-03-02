@@ -770,8 +770,8 @@ bool inventory_t::canHoldItemWeight (containerIndex_t from, containerIndex_t to,
 	if (CSI->ids[to].temp || !CSI->ids[from].temp)
 		return true;
 
-	const bool swapArmour = INV_IsArmour(item.def()) && getArmourCont();
-	const float invWeight = getWeight() - (swapArmour ? getArmourCont()->item.getWeight() : 0);
+	const bool swapArmour = INV_IsArmour(item.def()) && getArmourContainer();
+	const float invWeight = getWeight() - (swapArmour ? getArmourContainer()->item.getWeight() : 0);
 	float itemWeight = item.getWeight();
 
 	return (maxWeight < 0 || maxWeight >= invWeight + itemWeight);
@@ -820,7 +820,7 @@ invList_t *inventory_t::getFloorContainer () const
 	return getContainer(CSI->idFloor);
 }
 
-invList_t *inventory_t::getArmourCont (void) const
+invList_t *inventory_t::getArmourContainer (void) const
 {
 	return getContainer(CSI->idArmour);
 }

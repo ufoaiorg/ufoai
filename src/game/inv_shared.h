@@ -390,12 +390,6 @@ typedef struct invList_s {
 typedef struct inventory_s {
 	invList_t *c[MAX_CONTAINERS];
 
-	invList_t *getRightHandContainer() const;
-	invList_t *getLeftHandContainer () const;
-	invList_t *getHeadgearContainer() const;
-	invList_t *getFloorContainer() const;
-	void setFloorContainer(invList_t *cont);
-
 	inline invList_t *getContainer (const containerIndex_t idx) const
 	{
 		return c[idx];
@@ -415,7 +409,13 @@ typedef struct inventory_s {
 	{
 		return findInContainer(container, item) ? true : false;
 	}
-	invList_t *getArmourCont (void) const;
+	invList_t *getArmourContainer () const;
+	invList_t *getRightHandContainer() const;
+	invList_t *getLeftHandContainer () const;
+	invList_t *getHeadgearContainer() const;
+	invList_t *getFloorContainer() const;
+	void setFloorContainer(invList_t *cont);
+
 	void findSpace (const invDef_t *container, const item_t *item, int* const px, int* const py, const invList_t *ignoredItem) const;
 	invList_t *findInContainer (const invDef_t *container, const item_t *const item) const;
 	invList_t *getItemAtPos (const invDef_t *container, const int x, const int y) const;

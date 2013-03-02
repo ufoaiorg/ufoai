@@ -422,7 +422,7 @@ static void GAME_CollectItems (void *data, int won, void (*item)(void*, const ob
 			 * as ET_ITEM if the actor is dead; or the actor is not ours. */
 			/* First of all collect armour of dead or stunned actors (if won). */
 			if (won && LE_IsDead(le)) {
-				invList_t *i = le->inv.getArmourCont();
+				invList_t *i = le->inv.getArmourContainer();
 				if (i)
 					item(data, i->item.def(), 1);
 			} else if (le->team == cls.team && !LE_IsDead(le)) {
