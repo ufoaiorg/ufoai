@@ -37,7 +37,7 @@ particle firefield_fire
 		rand  vector "8 8 35"	// variance velocity
 		add    *v
 		pop    *v
-		physics true
+		physics false
 	}
 	run
 	{
