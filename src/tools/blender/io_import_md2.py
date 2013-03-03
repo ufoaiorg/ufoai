@@ -230,6 +230,7 @@ class Import_MD2(bpy.types.Operator, ImportHelper):
 		md2.read()
 		md2.makeObject()
 
+		bpy.context.scene.frame_set(bpy.context.scene.frame_current)
 		bpy.context.scene.update()
 		self.report({'INFO'},  "File '" + self.filepath + "' imported")
 		return {'FINISHED'}

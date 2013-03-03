@@ -24,7 +24,6 @@ This file format equals the _parts_ of the MD3 format used for animated tags, bu
 Base code taken from the md2 exporter by Bob Holcomb. Many thanks.
 """
 
-#New Header Data
 bl_info = {
     "name": "UFO:AI md2 TAGs (.tag)",
     "description": "Export to md2 TAG file format used by UFO:AI (.tag).",
@@ -34,7 +33,7 @@ bl_info = {
     "location": "File > Export > UFO:AI md2 TAGs",
     "warning": '', # used for warning icon and text in addons panel
     "support": 'COMMUNITY',
-    "category": "Import-Export"}
+    "category": "Export"}
 
 import bpy
 from bpy.props import *
@@ -47,15 +46,6 @@ import mathutils
 import struct
 import string
 from types import *
-
-MD2_MAX_TAGS=4096
-MD2_MAX_FRAMES=1024
-
-def asciiz (s):
-	n = 0
-	while (ord(s[n]) != 0):
-		n = n + 1
-	return s[0:n]
 
 class md2_tagname:
 	name=""
