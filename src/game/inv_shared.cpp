@@ -186,25 +186,6 @@ static bool INVSH_CheckToInventory_shape (const inventory_t *const inv, const in
 }
 
 /**
- * @brief Check if the (physical) information of 2 items is exactly the same.
- * @param[in] other Second item to compare.
- * @return true if they are identical or false otherwise.
- */
-bool item_t::isSameAs (const item_t *const other) const
-{
-	if (this == other)
-		return true;
-
-	if (this == NULL || other == NULL)
-		return false;
-
-	if (this->def() == other->def() && this->ammo == other->ammo && this->ammoLeft == other->ammoLeft)
-		return true;
-
-	return false;
-}
-
-/**
  * @brief Checks the shape if there is a 1-bit on the position x/y.
  * @param[in] shape The shape to check in. (8x4)
  * @param[in] x The x value in the shape (1 << x in the shape bitmask)
@@ -240,30 +221,6 @@ static bool INVSH_ShapeCheckPosition (const invList_t *ic, const int x, const in
 	}
 
 	return INVSH_CheckShapeSmall(shape, x - ic->x, y - ic->y);
-}
-
-/**
- * @brief Calculates the first "true" bit in the shape and returns its position in the item.
- * @note Use this to get the first "grab-able" grid-location of an item (not in the container !).
- * @param[out] x The x location inside the item.
- * @param[out] y The x location inside the item.
- * @sa canHoldItem
- */
-void invList_t::getFirstShapePosition (int* const x, int* const y) const
-{
-	int tempX, tempY;
-
-	assert(this);
-
-	for (tempX = 0; tempX < SHAPE_SMALL_MAX_HEIGHT; tempX++)
-		for (tempY = 0; tempY < SHAPE_SMALL_MAX_HEIGHT; tempY++)
-			if (INVSH_ShapeCheckPosition(this, this->x + tempX, this->y + tempY)) {
-				*x = tempX;
-				*y = tempY;
-				return;
-			}
-
-	*x = *y = NONE;
 }
 
 /**
@@ -381,19 +338,6 @@ bool INVSH_LoadableInWeapon (const objDef_t *od, const objDef_t *weapon)
 			return true;
 
 	return false;
-}
-
-/**
- * @brief Return the weight of an item.
- * @return The weight of the given item including any ammo loaded.
- */
-float item_t::getWeight () const
-{
-	float weight = def()->weight;
-	if (ammo && ammo != def() && ammoLeft > 0) {
-		weight += ammo->weight;
-	}
-	return weight;
 }
 
 /*
@@ -595,6 +539,62 @@ uint32_t objDef_t::getShapeRotated () const
 	}
 
 	return shapeNew;
+}
+
+/**
+ * @brief Return the weight of an item.
+ * @return The weight of the given item including any ammo loaded.
+ */
+float item_t::getWeight () const
+{
+	float weight = def()->weight;
+	if (ammo && ammo != def() && ammoLeft > 0) {
+		weight += ammo->weight;
+	}
+	return weight;
+}
+
+/**
+ * @brief Check if the (physical) information of 2 items is exactly the same.
+ * @param[in] other Second item to compare.
+ * @return true if they are identical or false otherwise.
+ */
+bool item_t::isSameAs (const item_t *const other) const
+{
+	if (this == other)
+		return true;
+
+	if (this == NULL || other == NULL)
+		return false;
+
+	if (this->def() == other->def() && this->ammo == other->ammo && this->ammoLeft == other->ammoLeft)
+		return true;
+
+	return false;
+}
+
+/**
+ * @brief Calculates the first "true" bit in the shape and returns its position in the item.
+ * @note Use this to get the first "grab-able" grid-location of an item (not in the container !).
+ * @param[out] x The x location inside the item.
+ * @param[out] y The x location inside the item.
+ * @sa canHoldItem
+ */
+void invList_t::getFirstShapePosition (int* const x, int* const y) const
+{
+	int tempX, tempY;
+
+	assert(this);
+
+	for (tempX = 0; tempX < SHAPE_SMALL_MAX_HEIGHT; tempX++)
+		for (tempY = 0; tempY < SHAPE_SMALL_MAX_HEIGHT; tempY++)
+			if (INVSH_ShapeCheckPosition(this, this->x + tempX, this->y + tempY)) {
+				*x = tempX;
+				*y = tempY;
+				return;
+			}
+
+	*x = *y = NONE;
 }
 
 /**
