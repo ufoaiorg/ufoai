@@ -306,8 +306,8 @@ static void G_UpdateHitScore (Edict *attacker, const Edict *target, const fireDe
 int G_ApplyProtection (const Edict *target, const byte dmgWeight, int damage)
 {
 	const int naturalProtection = target->chr.teamDef->resistance[dmgWeight];
-	if (CONTAINER(target, gi.csi->idArmour)) {
-		const objDef_t *armourDef = CONTAINER(target, gi.csi->idArmour)->item.def();
+	if (target->getArmour()) {
+		const objDef_t *armourDef = target->getArmour()->item.def();
 		const short armourProtection = armourDef->protection[dmgWeight];
 		const short totalProtection = armourProtection + naturalProtection;
 		damage = std::min(std::max(0, damage - armourProtection), std::max(1, damage - totalProtection));

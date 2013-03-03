@@ -171,6 +171,10 @@ public:
 
 	bool active;
 
+	inline invList_t *getArmour () const
+	{
+		return chr.inv.getArmourContainer();
+	}
 	inline invList_t *getRightHand () const
 	{
 		return chr.inv.getRightHandContainer();

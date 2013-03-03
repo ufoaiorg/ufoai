@@ -578,8 +578,8 @@ static void AI_SearchBestTarget (aiAction_t *aia, const Edict *ent, Edict *check
 				dmg *= nspread / dist;
 
 			/* take into account armour */
-			if (CONTAINER(check, gi.csi->idArmour)) {
-				const objDef_t *ad = CONTAINER(check, gi.csi->idArmour)->item.def();
+			if (check->getArmour()) {
+				const objDef_t *ad = check->getArmour()->item.def();
 				dmg *= 1.0 - ad->protection[fd->dmgweight] * 0.01;
 			}
 
