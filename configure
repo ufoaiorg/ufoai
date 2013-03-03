@@ -176,6 +176,9 @@ check_headers() {
 	check_header "picomodel.h"
 	check_header "gtk/gtk.h" "gtk+-2.0"
 	check_header "gtksourceview/gtksourceview.h" "gtksourceview-2.0"
+	check_header "libxml/parser.h" "libxml-2.0"
+	#check_header "jpeglib.h"
+	check_header "AL/al.h" "openal"
 	check_header "gtk/gtkglwidget.h" "gtkglext-1.0"
 	if [ "$HAVE_CUNIT_BASIC_H" != "1" ]; then
 		set_var "testall_DISABLE" "yes"
