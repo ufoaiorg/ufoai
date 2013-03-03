@@ -42,8 +42,7 @@ void INVSH_InitCSI (const csi_t *import)
 }
 
 /**
- * @brief Checks whether a given inventory definition is of special type
- * @param invDef The inventory definition to check
+ * @brief Checks whether the inventory definition is of special type
  * @return @c true if the given inventory definition is of type floor
  */
 bool invDef_t::isFloorDef () const
@@ -281,11 +280,10 @@ bool objDef_t::isCraftItem () const
 }
 
 /**
- * @brief Checks whether a given item is a basedefence item
+ * @brief Checks whether the item is a basedefence item
  * @note This is done by checking whether it's a craftitem and whether it's
  * marked as a dummy item - the combination of both means, that it's a
  * basedefence item.
- * @param[in] obj pointer to item definition to check whether it's a basedefence item
  * @return true if the given item is a basedefence item
  * @sa isCraftItem
  */
