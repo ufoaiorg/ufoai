@@ -37,6 +37,9 @@ extern const pos3_t pos3_origin;
 #define EQUAL(a,b) (fabs((a)-(b))<0.0000000001)
 #endif
 
+#define Vector2FromInt(x, y) { static_cast<float>(x), static_cast<float>(y) }
+#define Vector3FromInt(x, y, z) { static_cast<float>(x), static_cast<float>(y), static_cast<float>(z) }
+
 /** @brief Returns the distance between two 3-dimensional vectors */
 #define DotProduct(x,y)         ((x)[0]*(y)[0]+(x)[1]*(y)[1]+(x)[2]*(y)[2])
 #define VectorSubtract(a,b,dest)   ((dest)[0]=(a)[0]-(b)[0],(dest)[1]=(a)[1]-(b)[1],(dest)[2]=(a)[2]-(b)[2])
