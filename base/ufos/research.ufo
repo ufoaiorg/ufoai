@@ -2636,7 +2636,6 @@ tech rs_weapon_pbeampistol
 	provides	pbeampistol
 	time		5000
 	producetime	140
-	image		"techs/particle_beam_weapon"
 }
 
 tech rs_weapon_pbeampistol_ammo
@@ -2702,7 +2701,6 @@ tech rs_weapon_pbeamcannon
 	provides	pbeamcannon
 	time		6000
 	producetime	200
-	image		"techs/particle_beam_weapon"
 }
 
 tech rs_weapon_pbeamcannon_ammo
@@ -2767,7 +2765,6 @@ tech rs_weapon_pbeamrifle
 	provides	pbeamrifle
 	time		6000
 	producetime	180
-	image		"techs/particle_beam_weapon"
 }
 
 tech rs_weapon_pbeamrifle_ammo
@@ -2828,6 +2825,7 @@ tech rs_weapon_pbeam_ammo
 
 	time		1000
 	producetime	-1
+	image		"techs/particle_beam_weapon"
 }
 
 //========================
