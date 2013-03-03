@@ -97,7 +97,7 @@ void CP_SpawnUFOCarrier_f (void)
 		return;
 
 	if (cgi->Cmd_Argc() == 3) {
-		const vec2_t pos = { atof(cgi->Cmd_Argv(1)), atof(cgi->Cmd_Argv(2)) };
+		const vec2_t pos = Vector2FromInt(atof(cgi->Cmd_Argv(1)), atof(cgi->Cmd_Argv(2)));
 		if (!MapIsWater(GEO_GetColor(pos, MAPTYPE_TERRAIN, NULL))) {
 			INS_Build(installationTemplate, pos, _(installationTemplate->name));
 			GEO_CenterPosition(pos);

@@ -1919,7 +1919,7 @@ nation_t* GEO_GetNation (const vec2_t pos)
 {
 	int i;
 	const byte* color = GEO_GetColor(pos, MAPTYPE_NATIONS, NULL);
-	const vec3_t fcolor = {color[0] / 255.0, color[1] / 255.0, color[2] / 255.0};
+	const vec3_t fcolor = {color[0] / 255.0f, color[1] / 255.0f, color[2] / 255.0f};
 #ifdef PARANOID
 	Com_DPrintf(DEBUG_CLIENT, "GEO_GetNation: color value for %.0f:%.0f is r:%i, g:%i, b: %i\n", pos[0], pos[1], color[0], color[1], color[2]);
 #endif

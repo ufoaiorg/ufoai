@@ -233,7 +233,7 @@ void R_Draw3DMapMarkers (const vec2_t nodePos, const vec2_t nodeSize, const vec3
 
 	/* Earth center is in the middle of node.
 	 * Due to Orthographic view, this is also camera position */
-	const vec3_t earthPos = {nx + nw / 2.0, ny + nh / 2.0, 0.0};
+	const vec3_t earthPos = {nx + nw / 2.0f, ny + nh / 2.0f, 0.0f};
 
 	modelInfo_t mi;
 	vec2_t size;
@@ -450,7 +450,7 @@ void R_Draw3DGlobe (const vec2_t pos, const vec2_t size, int day, int second, co
 
 	/* Earth center is in the middle of node.
 	 * Due to Orthographic view, this is also camera position */
-	const vec3_t earthPos = { nx + nw / 2.0, ny + nh / 2.0, 0.0 };
+	const vec3_t earthPos = { nx + nw / 2.0f, ny + nh / 2.0f, 0.0f };
 
 	/* estimate the progress through the current season so we can do
 	 * smooth transitions between textures.  Currently there are 12
@@ -461,14 +461,14 @@ void R_Draw3DGlobe (const vec2_t pos, const vec2_t size, int day, int second, co
 	const float seasonProgress = season - (float) currSeason;
 
 	/* Compute sun position in absolute frame */
-	const float q = (day % DAYS_PER_YEAR * SECONDS_PER_DAY + second) * (2 * M_PI / (SECONDS_PER_DAY * DAYS_PER_YEAR));	/* sun rotation (year) */
+	const float q = (day % DAYS_PER_YEAR * SECONDS_PER_DAY + second) * (2.0f * M_PI / (SECONDS_PER_DAY * DAYS_PER_YEAR));	/* sun rotation (year) */
 	const float a = cos(q) * SIN_ALPHA;	/* due to earth obliquity */
 	const float sqrta = sqrt(0.5f * (1 - a * a));
 
 	/* earth rotation (day) */
-	const float p = (second - SECONDS_PER_DAY / 4) * (2.0 * M_PI / SECONDS_PER_DAY);
+	const float p = (second - SECONDS_PER_DAY / 4) * (2.0f * M_PI / SECONDS_PER_DAY);
 	/* lunar orbit */
-	const float m = p + (((double)((10 * day % 249) / 10.0) + ((double)second / (double)SECONDS_PER_DAY)) / 24.9) * (2.0 * M_PI);
+	const float m = p + (((double)((10 * day % 249) / 10.0f) + ((double)second / (double)SECONDS_PER_DAY)) / 24.9f) * (2.0f * M_PI);
 
 	glPushMatrix();
 	glMatrixMode(GL_TEXTURE);
@@ -487,15 +487,15 @@ void R_Draw3DGlobe (const vec2_t pos, const vec2_t size, int day, int second, co
 	Vector4Set(antiSunPos, -cos(p) * sqrta, sin(p) * sqrta, -a, 0);
 
 	/* Rotate the sun in the relative frame of player view, to get sun location */
-	R_RotateCelestialBody(sunPos, sunLoc, rotate, earthPos, 1.0);
+	R_RotateCelestialBody(sunPos, sunLoc, rotate, earthPos, 1.0f);
 	/* load sun texture image */
 	sun = R_FindImage(va("pics/geoscape/%s_sun", map), it_wrappic);
 	sunOverlay = R_FindImage(va("pics/geoscape/%s_sun_overlay", map), it_pic);
 	if (sun != r_noTexture && sunOverlay != r_noTexture && sunLoc[2] > 0 && !disableSolarRender) {
-		const int sunx = earthPos[0] + viddef.rx * (-128.0 + celestialDist * (sunLoc[0] - earthPos[0]));
-		const int suny = earthPos[1] + viddef.ry * (-128.0 + celestialDist * (sunLoc[1] - earthPos[1]));
+		const int sunx = earthPos[0] + viddef.rx * (-128.0f + celestialDist * (sunLoc[0] - earthPos[0]));
+		const int suny = earthPos[1] + viddef.ry * (-128.0f + celestialDist * (sunLoc[1] - earthPos[1]));
 
-		R_DrawTexture(sunOverlay->texnum, sunx, suny, 256.0 * viddef.rx, 256.0 * viddef.ry);
+		R_DrawTexture(sunOverlay->texnum, sunx, suny, 256.0f * viddef.rx, 256.0f * viddef.ry);
 		R_DrawBuffers(2);
 		R_DrawTexture(sun->texnum, sunx, suny, 256.0 * viddef.rx, 256.0 * viddef.ry);
 		R_DrawBuffers(1);
@@ -539,7 +539,7 @@ void R_Draw3DGlobe (const vec2_t pos, const vec2_t size, int day, int second, co
 		glLightfv(GL_LIGHT1, GL_DIFFUSE, brightDiffuseLightColor);
 		glLightfv(GL_LIGHT1, GL_SPECULAR, darknessLightColor);
 
-		r_globeEarth.glowScale = 0.7;
+		r_globeEarth.glowScale = 0.7f;
 	}
 
 	/* load moon texture image */
@@ -548,7 +548,7 @@ void R_Draw3DGlobe (const vec2_t pos, const vec2_t size, int day, int second, co
 	/* globe texture scaling */
 	glMatrixMode(GL_TEXTURE);
 	glLoadIdentity();
-	glScalef(2, 1, 1);
+	glScalef(2.0f, 1.0f, 1.0f);
 	glMatrixMode(GL_MODELVIEW);
 
 	/* enable the lighting */
@@ -619,14 +619,14 @@ void R_Draw3DGlobe (const vec2_t pos, const vec2_t size, int day, int second, co
 		halo = R_FindImage("pics/geoscape/map_earth_halo", it_pic);
 		if (halo != r_noTexture) {
 			/** @todo Replace this magic number with some speaking constant */
-			const float earthSizeX = fullscale * 20500.0 * viddef.rx;
-			const float earthSizeY = fullscale * 20500.0 * viddef.ry;
+			const float earthSizeX = fullscale * 20500.0f * viddef.rx;
+			const float earthSizeY = fullscale * 20500.0f * viddef.ry;
 			glMatrixMode(GL_TEXTURE);
 			glPushMatrix();
 			glLoadIdentity();
 			glDisable(GL_LIGHTING);
 
-			R_DrawTexture(halo->texnum, earthPos[0] - earthSizeX * 0.5, earthPos[1] - earthSizeY * 0.5, earthSizeX, earthSizeY);
+			R_DrawTexture(halo->texnum, earthPos[0] - earthSizeX * 0.5f, earthPos[1] - earthSizeY * 0.5f, earthSizeX, earthSizeY);
 			glEnable(GL_LIGHTING);
 			glPopMatrix();
 			glMatrixMode(GL_MODELVIEW);
@@ -691,8 +691,8 @@ void R_Draw3DGlobe (const vec2_t pos, const vec2_t size, int day, int second, co
 static inline void R_DrawQuad (void)
 {
 	/** @todo use default_texcoords */
-	const vec2_t texcoord[] = { { 0.0, 1.0 }, { 1.0, 1.0 }, { 1.0, 0.0 }, { 0.0, 0.0 } };
-	const vec2_t verts[] = { { 0.0, 0.0 }, { fbo_render->width, 0.0 }, { fbo_render->width, fbo_render->height }, { 0.0, fbo_render->height } };
+	const vec2_t texcoord[] = { { 0.0f, 1.0f }, { 1.0f, 1.0f }, { 1.0f, 0.0f }, { 0.0f, 0.0f } };
+	const vec2_t verts[] = { { 0.0f, 0.0f }, Vector2FromInt(fbo_render->width, 0.0f), Vector2FromInt(fbo_render->width, fbo_render->height), Vector2FromInt(0.0f, fbo_render->height) };
 
 	glVertexPointer(2, GL_FLOAT, 0, verts);
 	R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, texcoord);

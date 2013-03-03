@@ -456,7 +456,7 @@ void GAME_CP_DrawBase (int baseIdx, int x, int y, int w, int h, int col, int row
 	for (baseRow = 0; baseRow < BASE_SIZE; baseRow++) {
 		const char *image = NULL;
 		for (baseCol = 0; baseCol < BASE_SIZE; baseCol++) {
-			const vec2_t pos = { x + baseCol * w, y + baseRow * (h - overlap) };
+			const vec2_t pos = Vector2FromInt(x + baseCol * w, y + baseRow * (h - overlap));
 			const building_t *building;
 			/* base tile */
 			if (B_IsTileBlocked(base, baseCol, baseRow)) {

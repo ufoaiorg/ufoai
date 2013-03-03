@@ -516,7 +516,7 @@ void R_EnableBlur (r_program_t *program, bool enable, r_framebuffer_t *source, r
 	R_SelectTexture(&texunit_lightmap);
 
 	if (enable) {
-		float userdata[] = { source->width, dir };
+		float userdata[] = { static_cast<float>(source->width), static_cast<float>(dir) };
 		R_UseFramebuffer(dest);
 		program->userdata = userdata;
 		R_UseProgram(program);

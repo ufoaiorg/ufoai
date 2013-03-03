@@ -332,7 +332,7 @@ int R_UploadData (const char *name, unsigned *frame, int width, int height)
  */
 void R_DrawTexture (int texnum, int x, int y, int w, int h)
 {
-	const vec2_t vertexes[] = {{x, y}, {x + w, y}, {x + w, y + h}, {x, y + h}};
+	const vec2_t vertexes[] = {Vector2FromInt(x, y), Vector2FromInt(x + w, y), Vector2FromInt(x + w, y + h), Vector2FromInt(x, y + h)};
 
 	R_BindTexture(texnum);
 	R_DrawImageArray(default_texcoords, vertexes, NULL);
@@ -605,12 +605,12 @@ void R_PopClipRect (void)
  */
 void R_CleanupDepthBuffer (int x, int y, int width, int height)
 {
-	const int nx = x * viddef.rx;
-	const int ny = y * viddef.ry;
+	const float nx = x * viddef.rx;
+	const float ny = y * viddef.ry;
 	const int nwidth = width * viddef.rx;
 	const int nheight = height * viddef.ry;
 	const GLboolean hasDepthTest = glIsEnabled(GL_DEPTH_TEST);
-	const GLfloat bigZ = 2000;
+	const GLfloat bigZ = 2000.0f;
 	const vec3_t points [] = { { nx, ny, bigZ }, { nx + nwidth, ny, bigZ }, { nx + nwidth, ny + nheight, bigZ }, { nx, ny + nheight, bigZ } };
 
 	GLint depthFunc;
