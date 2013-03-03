@@ -333,6 +333,7 @@ typedef struct invDef_s {
 	int in, out;	/**< parsed: TU costs for moving items in and out. */
 
 	bool isFloorDef () const;
+	bool isRightDef () const;
 } invDef_t;
 
 #define MAX_CONTAINERS	MAX_INVDEFS
@@ -467,7 +468,6 @@ typedef enum {
 	if (hand = (hand##__loop == 0 ? ACTOR_HAND_RIGHT : ACTOR_HAND_LEFT), false) {} else
 
 
-bool INV_IsRightDef(const invDef_t* invDef);
 bool INV_IsLeftDef(const invDef_t* invDef);
 bool INV_IsEquipDef(const invDef_t* invDef);
 bool INV_IsArmourDef(const invDef_t* invDef);

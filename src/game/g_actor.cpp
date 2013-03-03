@@ -725,10 +725,10 @@ bool G_ActorInvMove (Edict *ent, const invDef_t *from, invList_t *fItem, const i
 	/* Other players receive weapon info only. */
 	mask = G_VisToPM(ent->visflags) & ~G_TeamToPM(ent->team);
 	if (mask) {
-		if (INV_IsRightDef(from) || INV_IsLeftDef(from)) {
+		if (from->isRightDef() || INV_IsLeftDef(from)) {
 			G_EventInventoryDelete(ent, mask, from, fx, fy);
 		}
-		if (INV_IsRightDef(to) || INV_IsLeftDef(to)) {
+		if (to->isRightDef() || INV_IsLeftDef(to)) {
 			G_EventInventoryAdd(ent, mask, 1);
 			G_WriteItem(&item, to, tx, ty);
 			G_EventEnd();

@@ -42,7 +42,7 @@ void INVSH_InitCSI (const csi_t *import)
 }
 
 /**
- * @brief Checks whether the inventory definition is of special type
+ * @brief Checks whether the inventory definition is the floor
  * @return @c true if the given inventory definition is of type floor
  */
 bool invDef_t::isFloorDef () const
@@ -51,13 +51,13 @@ bool invDef_t::isFloorDef () const
 }
 
 /**
- * @brief Checks whether a given inventory definition is of special type
+ * @brief Checks whether the inventory definition is the right Hand
  * @param invDef The inventory definition to check
  * @return @c true if the given inventory definition is of type right
  */
-bool INV_IsRightDef (const invDef_t *invDef)
+bool invDef_t::isRightDef () const
 {
-	return invDef->id == CSI->idRight;
+	return id == CSI->idRight;
 }
 
 /**
@@ -630,7 +630,7 @@ int inventory_t::canHoldItem (const invDef_t *container, const objDef_t *od, con
 
 	/* twohanded item */
 	if (od->holdTwoHanded) {
-		if ((INV_IsRightDef(container) && getContainer(CSI->idLeft)) || INV_IsLeftDef(container))
+		if ((container->isRightDef() && getContainer(CSI->idLeft)) || INV_IsLeftDef(container))
 			return INV_DOES_NOT_FIT;
 	}
 

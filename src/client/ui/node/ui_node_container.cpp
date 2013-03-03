@@ -485,7 +485,7 @@ static void UI_ContainerNodeDrawSingle (uiNode_t *node, const objDef_t *highligh
 			 * fireTwoHanded weapon. */
 			assert(item);
 			assert(item->def());
-			if (INV_IsRightDef(EXTRADATA(node).container) && item->def()->fireTwoHanded && ui_inventory->c[csi.idLeft]) {
+			if (EXTRADATA(node).container->isRightDef() && item->def()->fireTwoHanded && ui_inventory->c[csi.idLeft]) {
 				disabled = true;
 				UI_DrawDisabled(node);
 			}
