@@ -592,7 +592,7 @@ void NET_WriteConstMsg (struct net_stream *s, const dbuffer &buf)
 	char tmp[256];
 	const int len = LittleLong(buf.length());
 	int pos = 0;
-	NET_StreamEnqueue(s, (char *)&len, 4);
+	NET_StreamEnqueue(s, (const char *)&len, 4);
 
 	while (pos < buf.length()) {
 		const int x = buf.getAt(pos, tmp, sizeof(tmp));
