@@ -110,7 +110,7 @@ event capturelivealien
 {
 	type	"new_day"
 	// after 30 days and if no alive aliens were captured yet
-	require "days[30] & !alienscaptured & researched[rs_weapon_stunrod]"
+	require "days[45] & !alienscaptured"
 	once	true // remove this event after it triggers
 	command	"addeventmail tip_capturelivealien"
 }
