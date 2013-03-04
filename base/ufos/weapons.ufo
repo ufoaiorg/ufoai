@@ -658,7 +658,7 @@ item plasmagrenade
 			delaybetweenshots		1
 			time	8
 			spldmg	"160 20"
-			splrad	6
+			splrad	5
 			dmgweight "plasma_heavy"
 		}
 		firedef
@@ -684,7 +684,7 @@ item plasmagrenade
 			delaybetweenshots		1
 			time	8
 			spldmg	"160 20"
-			splrad	6
+			splrad	5
 			dmgweight "plasma_heavy"
 		}
 	}
