@@ -129,7 +129,7 @@ static void UI_ContainerItemIteratorNext (containerItemIterator_t *iterator)
 			/* type filter */
 			/** @todo not sure its the right check */
 			isArmour = obj->isArmour();
-			isAmmo = obj->numWeapons != 0 && INV_IsAmmo(obj);
+			isAmmo = obj->numWeapons != 0 && obj->isAmmo();
 			isWeapon = obj->weapon || obj->isMisc || isArmour;
 
 			if ((filter & CII_WEAPONONLY) && !isWeapon)
@@ -326,7 +326,7 @@ static int UI_BaseInventoryNodeDrawItems (uiNode_t *node, const objDef_t *highli
 		pos[2] = 0;
 
 		if (highlightType) {
-			if (INV_IsAmmo(obj))
+			if (obj->isAmmo())
 				isHighlight = INVSH_LoadableInWeapon(obj, highlightType);
 			else
 				isHighlight = INVSH_LoadableInWeapon(highlightType, obj);

@@ -84,7 +84,7 @@ void INV_ItemDescription (const objDef_t *od)
 	Cvar_Set("mn_item", od->id);
 
 	count = 0;
-	if (INV_IsAmmo(od)) {
+	if (od->isAmmo()) {
 		/* We display the pre/next buttons for changing weapon only if there are at least 2 researched weapons
 		 * we are counting the number of weapons that are usable with this ammo */
 		for (i = 0; i < od->numWeapons; i++)
@@ -138,7 +138,7 @@ void INV_ItemDescription (const objDef_t *od)
 					continue;
 				Q_strcat(itemText, va(_("%s\t%i\n"), _(dt->id), od->ratings[i]), sizeof(itemText));
 			}
-		} else if ((od->weapon && od->numAmmos) || INV_IsAmmo(od)) {
+		} else if ((od->weapon && od->numAmmos) || od->isAmmo()) {
 			const objDef_t *odAmmo;
 
 			if (count > 0) {
@@ -181,7 +181,7 @@ void INV_ItemDescription (const objDef_t *od)
 					Q_strcat(itemText, va(_("Spreads:\t%g\n"), (fd->spread[0] + fd->spread[1]) / 2), sizeof(itemText));
 				}
 			} else {
-				Com_sprintf(itemText, sizeof(itemText), _("%s. No detailed info available.\n"), INV_IsAmmo(od) ? _("Ammunition") : _("Weapon"));
+				Com_sprintf(itemText, sizeof(itemText), _("%s. No detailed info available.\n"), od->isAmmo() ? _("Ammunition") : _("Weapon"));
 				Q_strcat(itemText, va(_("Weight:\t%g Kg\n"), od->weight), sizeof(itemText));
 			}
 		} else if (od->weapon) {

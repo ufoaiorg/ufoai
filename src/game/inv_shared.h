@@ -297,6 +297,10 @@ typedef struct objDef_s {
 	uint32_t getShapeRotated () const;
 	bool isCraftItem () const;
 	bool isBaseDefenceItem () const;
+	inline bool isAmmo ()	const
+	{
+		return Q_streq(this->type, "ammo");
+	}
 	inline bool isArmour ()	const
 	{
 		return Q_streq(this->type, "armour");
@@ -486,8 +490,6 @@ bool INVSH_LoadableInWeapon(const objDef_t *od, const objDef_t *weapon);
 const invDef_t *INVSH_GetInventoryDefinitionByID(const char *id);
 
 #define THIS_FIREMODE(fm, HAND, fdIdx)	((fm)->getHand() == (HAND) && (fm)->getFmIdx() == (fdIdx))
-
-#define INV_IsAmmo(od)		(Q_streq((od)->type, "ammo"))
 
 /* =============================== */
 /*  FIREMODE MANAGEMENT FUNCTIONS  */
