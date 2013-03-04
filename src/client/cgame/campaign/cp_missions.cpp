@@ -266,17 +266,20 @@ static void MIS_CreateAlienTeam (mission_t *mission, battleParam_t *battleParam)
 
 	assert(mission->posAssigned);
 
-	numAliens = 4 + (int) ccs.overallInterest / 50 + (rand() % 3) - 1;
-	numAliens = std::max(4, numAliens);
+	CP_SetAlienTeamByInterest(mission, battleParam);
+	CP_SetAlienEquipmentByInterest(mission, ccs.alienCategories[battleParam->alienTeamGroup->categoryIdx].equipment, battleParam);
+
+	const int min = battleParam->alienTeamGroup->minAlienCount;
+	const int max = battleParam->alienTeamGroup->maxAlienCount;
+	const int diff = max - min;
+
+	numAliens = min + rand() % (diff + 1);
+	numAliens = std::max(1, numAliens);
 	if (mission->ufo && mission->ufo->maxTeamSize && numAliens > mission->ufo->maxTeamSize)
 		numAliens = mission->ufo->maxTeamSize;
 	if (numAliens > mission->mapDef->maxAliens)
 		numAliens = mission->mapDef->maxAliens;
 	battleParam->aliens = numAliens;
-
-	CP_SetAlienTeamByInterest(mission, battleParam);
-
-	CP_SetAlienEquipmentByInterest(mission, ccs.alienCategories[battleParam->alienTeamGroup->categoryIdx].equipment, battleParam);
 }
 
 /**

@@ -66,6 +66,8 @@ static interestCategory_t CP_GetAlienMissionTypeByID (const char *type)
 static const value_t alien_group_vals[] = {
 	{"mininterest", V_INT, offsetof(alienTeamGroup_t, minInterest), 0},
 	{"maxinterest", V_INT, offsetof(alienTeamGroup_t, maxInterest), 0},
+	{"minaliencount", V_INT, offsetof(alienTeamGroup_t, minAlienCount), 0},
+	{"maxaliencount", V_INT, offsetof(alienTeamGroup_t, maxAlienCount), 0},
 	{NULL, V_NULL, 0, 0}
 };
 
@@ -173,6 +175,13 @@ static void CP_ParseAlienTeam (const char *name, const char **text)
 					}
 				}
 			} while (*text);
+
+			if (group->minAlienCount > group->maxAlienCount) {
+				Com_Printf("CP_ParseAlienTeam: Minimum number of aliens is greater than maximum value! Swapped.\n");
+				const int swap = group->minAlienCount;
+				group->minAlienCount = group->maxAlienCount;
+				group->maxAlienCount = swap;
+			}
 		} else {
 			Com_Printf("CP_ParseAlienTeam: unknown token \"%s\" ignored (category %s)\n", token, name);
 			continue;

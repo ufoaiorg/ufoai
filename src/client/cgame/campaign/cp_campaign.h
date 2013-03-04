@@ -208,6 +208,8 @@ typedef struct alienTeamGroup_s {
 	int categoryIdx;	/**< idx of category it's used in */
 	int minInterest;	/**< Minimum interest value this group should be used with. */
 	int maxInterest;	/**< Maximum interest value this group should be used with. */
+	int minAlienCount;	/**< Minimum number of aliens in this group */
+	int maxAlienCount;	/**< Maximum number of aliens in this group */
 
 	const teamDef_t *alienTeams[MAX_TEAMS_PER_MISSION];	/**< different alien teams available
 													 * that will be used in mission */

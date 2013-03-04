@@ -21,45 +21,59 @@ alienteam scouts
 	equipment ("alien_workers")
 	teaminterest
 	{
-		mininterest 0
-		maxinterest 49
-		team (taman_light)
+		mininterest 	0
+		maxinterest 	49
+		minaliencount	3
+		maxaliencount	4
+		team 			(taman_light)
 	}
 	teaminterest
 	{
-		mininterest 50
-		maxinterest 79
-		team (taman_light)
+		mininterest 	50
+		maxinterest 	79
+		minaliencount	4
+		maxaliencount	6
+		team 			(taman_light)
 	}
 	teaminterest
 	{
-		mininterest 80
-		maxinterest 109
-		team (taman_light shevaar)
+		mininterest 	80
+		maxinterest 	109
+		minaliencount	4
+		maxaliencount	8
+		team 			(taman_light shevaar)
 	}
 	teaminterest
 	{
-		mininterest 109
-		maxinterest 199
-		team (taman shevaar)
+		mininterest 	109
+		maxinterest 	199
+		minaliencount	4
+		maxaliencount	8
+		team 			(taman shevaar)
 	}
 	teaminterest
 	{
-		mininterest 200
-		maxinterest 279
-		team (taman shevaar)
+		mininterest 	200
+		maxinterest 	279
+		minaliencount	4
+		maxaliencount	8
+		team 			(taman shevaar)
 	}
 	teaminterest
 	{
-		mininterest 280
-		maxinterest 309
-		team (taman shevaar)
+		mininterest 	280
+		maxinterest 	309
+		minaliencount	4
+		maxaliencount	8
+		team 			(taman shevaar)
 	}
 	teaminterest
 	{
-		mininterest 310
-		maxinterest 10000
-		team (taman_heavy shevaar)
+		mininterest 	310
+		maxinterest 	10000
+		minaliencount	4
+		maxaliencount	8
+		team 			(taman_heavy shevaar)
 	}
 }
 
@@ -69,39 +83,51 @@ alienteam workers
 	equipment ("alien_workers")
 	teaminterest
 	{
-		mininterest 0
-		maxinterest 49
-		team (taman_light)
+		mininterest 	0
+		maxinterest 	49
+		minaliencount	4
+		maxaliencount	6
+		team 			(taman_light)
 	}
 	teaminterest
 	{
-		mininterest 50
-		maxinterest 79
-		team (taman_light)
+		mininterest 	50
+		maxinterest 	79
+		minaliencount	4
+		maxaliencount	6
+		team 			(taman_light)
 	}
 	teaminterest
 	{
-		mininterest 80
-		maxinterest 109
-		team (taman_light shevaar)
+		mininterest 	80
+		maxinterest 	109
+		minaliencount	6
+		maxaliencount	8
+		team 			(taman_light shevaar)
 	}
 	teaminterest
 	{
 		mininterest 109
 		maxinterest 249
-		team (taman shevaar)
+		minaliencount	8
+		maxaliencount	10
+		team 			(taman shevaar)
 	}
 	teaminterest
 	{
-		mininterest 250
-		maxinterest 309
-		team (taman shevaar ortnok)
+		mininterest 	250
+		maxinterest 	309
+		minaliencount	8
+		maxaliencount	12
+		team 			(taman shevaar ortnok)
 	}
 	teaminterest
 	{
-		mininterest 310
-		maxinterest 10000
-		team (taman_heavy shevaar ortnok)
+		mininterest 	310
+		maxinterest 	10000
+		minaliencount	8
+		maxaliencount	12
+		team 			(taman_heavy shevaar ortnok)
 	}
 }
 
@@ -111,45 +137,59 @@ alienteam terror
 	equipment ("alien_soldiers")
 	teaminterest
 	{
-		mininterest 0
-		maxinterest 49
-		team (taman_light bloodspider)
+		mininterest 	0
+		maxinterest 	49
+		minaliencount	4
+		maxaliencount	6
+		team 			(taman_light bloodspider)
 	}
 	teaminterest
 	{
-		mininterest 50
-		maxinterest 79
-		team (taman_light bloodspider hovernet)
+		mininterest 	50
+		maxinterest 	79
+		minaliencount	6
+		maxaliencount	8
+		team 			(taman_light bloodspider hovernet)
 	}
 	teaminterest
 	{
-		mininterest 80
-		maxinterest 109
-		team (taman_light shevaar bloodspider hovernet)
+		mininterest 	80
+		maxinterest 	109
+		minaliencount	8
+		maxaliencount	10
+		team 			(taman_light shevaar bloodspider hovernet)
 	}
 	teaminterest
 	{
-		mininterest 110
-		maxinterest 199
-		team (taman shevaar bloodspider hovernet)
+		mininterest 	110
+		maxinterest 	199
+		minaliencount	8
+		maxaliencount	10
+		team 			(taman shevaar bloodspider hovernet)
 	}
 	teaminterest
 	{
-		mininterest 200
-		maxinterest 249
-		team (taman shevaar bloodspider_adv hovernet)
+		mininterest 	200
+		maxinterest 	249
+		minaliencount	10
+		maxaliencount	12
+		team 			(taman shevaar bloodspider_adv hovernet)
 	}
 	teaminterest
 	{
-		mininterest 250
-		maxinterest 279
-		team (shevaar ortnok bloodspider_adv hovernet)
+		mininterest 	250
+		maxinterest 	279
+		minaliencount	10
+		maxaliencount	14
+		team 			(shevaar ortnok bloodspider_adv hovernet)
 	}
 	teaminterest
 	{
-		mininterest 280
-		maxinterest 10000
-		team (shevaar ortnok bloodspider_adv hovernet_adv)
+		mininterest 	280
+		maxinterest 	10000
+		minaliencount	10
+		maxaliencount	18
+		team 			(shevaar ortnok bloodspider_adv hovernet_adv)
 	}
 }
 
@@ -159,39 +199,51 @@ alienteam soldiers
 	equipment ("alien_soldiers")
 	teaminterest
 	{
-		mininterest 0
-		maxinterest 49
-		team (taman_light bloodspider)
+		mininterest 	0
+		maxinterest 	49
+		minaliencount	4
+		maxaliencount	8
+		team 			(taman_light bloodspider)
 	}
 	teaminterest
 	{
-		mininterest 50
-		maxinterest 79
-		team (taman_light hovernet)
+		mininterest 	50
+		maxinterest 	79
+		minaliencount	6
+		maxaliencount	8
+		team 			(taman_light hovernet)
 	}
 	teaminterest
 	{
-		mininterest 80
-		maxinterest 109
+		mininterest 	80
+		maxinterest 	109
+		minaliencount	6
+		maxaliencount	8
 		team (taman_light shevaar hovernet)
 	}
 	teaminterest
 	{
-		mininterest 110
-		maxinterest 249
-		team (taman shevaar hovernet)
+		mininterest 	110
+		maxinterest 	249
+		minaliencount	6
+		maxaliencount	10
+		team 			(taman shevaar hovernet)
 	}
 	teaminterest
 	{
-		mininterest 250
-		maxinterest 279
-		team (shevaar ortnok hovernet)
+		mininterest 	250
+		maxinterest 	279
+		minaliencount	8
+		maxaliencount	12
+		team 			(shevaar ortnok hovernet)
 	}
 	teaminterest
 	{
-		mininterest 280
-		maxinterest 10000
-		team (shevaar ortnok hovernet_adv)
+		mininterest 	280
+		maxinterest 	10000
+		minaliencount	10
+		maxaliencount	18
+		team 			(shevaar ortnok hovernet_adv)
 	}
 }
 
@@ -202,38 +254,50 @@ alienteam full
 
 	teaminterest
 	{
-		mininterest 0 // TODO: set to 0 for debugging purpose, but this shouldn't be used before alien bases are spawned
-		maxinterest 109
-		team ( taman_light shevaar hovernet bloodspider )
+		mininterest 	0 // TODO: set to 0 for debugging purpose, but this shouldn't be used before alien bases are spawned
+		maxinterest 	109
+		minaliencount	10
+		maxaliencount	16
+		team 			( taman_light shevaar hovernet bloodspider )
 	}
 	teaminterest
 	{
-		mininterest 110
-		maxinterest 199
-		team ( taman shevaar hovernet bloodspider )
+		mininterest 	110
+		maxinterest 	199
+		minaliencount	10
+		maxaliencount	16
+		team 			( taman shevaar hovernet bloodspider )
 	}
 	teaminterest
 	{
-		mininterest 200
-		maxinterest 249
-		team ( taman shevaar hovernet bloodspider_adv )
+		mininterest 	200
+		maxinterest 	249
+		minaliencount	12
+		maxaliencount	18
+		team 			( taman shevaar hovernet bloodspider_adv )
 	}
 	teaminterest
 	{
-		mininterest 250
-		maxinterest 279
-		team ( taman shevaar ortnok hovernet bloodspider_adv )
+		mininterest 	250
+		maxinterest 	279
+		minaliencount	14
+		maxaliencount	20
+		team 			( taman shevaar ortnok hovernet bloodspider_adv )
 	}
 	teaminterest
 	{
-		mininterest 280
-		maxinterest 309
-		team ( taman shevaar ortnok hovernet_adv bloodspider_adv )
+		mininterest 	280
+		maxinterest 	309
+		minaliencount	16
+		maxaliencount	20
+		team 			( taman shevaar ortnok hovernet_adv bloodspider_adv )
 	}
 	teaminterest
 	{
-		mininterest 310
-		maxinterest 10000
-		team ( taman_heavy shevaar ortnok hovernet_adv bloodspider_adv )
+		mininterest 	310
+		maxinterest 	10000
+		minaliencount	20
+		maxaliencount	24
+		team 			( taman_heavy shevaar ortnok hovernet_adv bloodspider_adv )
 	}
 }
