@@ -758,12 +758,12 @@ void G_ActorReload (Edict* ent, const invDef_t *invDef)
 	tu = 100;
 	bestContainer = NULL;
 
-	if (CONTAINER(ent, invDef->id)) {
-		weapon = CONTAINER(ent, invDef->id)->item.def();
+	if (ent->getContainer(invDef->id)) {
+		weapon = ent->getContainer(invDef->id)->item.def();
 	} else if (INV_IsLeftDef(invDef) && ent->getRightHand()->item.isHeldTwoHanded()) {
 		/* Check for two-handed weapon */
 		invDef = INVDEF(gi.csi->idRight);
-		weapon = CONTAINER(ent, invDef->id)->item.def();
+		weapon = ent->getRightHand()->item.def();
 	} else
 		return;
 
@@ -780,7 +780,7 @@ void G_ActorReload (Edict* ent, const invDef_t *invDef)
 			 * searching other containers if it would take longer
 			 * to retrieve the ammo from them than the one
 			 * we've already found. */
-			for (ic = CONTAINER(ent, containerID); ic; ic = ic->next)
+			for (ic = ent->getContainer(containerID); ic; ic = ic->next)
 				if (INVSH_LoadableInWeapon(ic->item.def(), weapon)) {
 					icFinal = ic;
 					bestContainer = INVDEF(containerID);

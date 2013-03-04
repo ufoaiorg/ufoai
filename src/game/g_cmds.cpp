@@ -304,7 +304,7 @@ void G_InvList_f (const Player &player)
 		gi.DPrintf("actor: '%s'\n", ent->chr.name);
 
 		for (container = 0; container < gi.csi->numIDs; container++) {
-			const invList_t *ic = CONTAINER(ent, container);
+			const invList_t *ic = ent->getContainer(container);
 			Com_Printf("Container: %i\n", container);
 			while (ic) {
 				Com_Printf(".. item.def(): %i, item.ammo: %i, item.ammoLeft: %i, x: %i, y: %i\n",

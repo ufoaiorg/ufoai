@@ -80,7 +80,7 @@ Edict *G_GetFloorItems (Edict *ent)
  */
 bool G_InventoryRemoveItemByID (const char *itemID, Edict *ent, containerIndex_t container)
 {
-	invList_t *ic = CONTAINER(ent, container);
+	invList_t *ic = ent->getContainer(container);
 	while (ic) {
 		const objDef_t *item = ic->item.def();
 		if (item != NULL && Q_streq(item->id, itemID)) {
@@ -107,7 +107,7 @@ bool G_InventoryRemoveItemByID (const char *itemID, Edict *ent, containerIndex_t
  */
 static bool G_InventoryDropToFloorCheck (Edict* ent, containerIndex_t container)
 {
-	invList_t* ic = CONTAINER(ent, container);
+	invList_t* ic = ent->getContainer(container);
 
 	if (container == gi.csi->idArmour)
 		return false;
@@ -265,7 +265,7 @@ void G_InventoryToFloor (Edict *ent)
 			continue;
 
 		/* now cycle through all items for the container of the character (or the entity) */
-		for (ic = CONTAINER(ent, container); ic; ic = next) {
+		for (ic = ent->getContainer(container); ic; ic = next) {
 			/* Save the next inv-list before it gets overwritten below.
 			 * Do not put this in the "for" statement,
 			 * unless you want an endless loop. ;) */
@@ -364,7 +364,7 @@ void G_SendInventory (playermask_t playerMask, const Edict *ent)
 	for (container = 0; container < gi.csi->numIDs; container++) {
 		if (!G_IsItem(ent) && INVDEF(container)->temp)
 			continue;
-		for (ic = CONTAINER(ent, container); ic; ic = ic->next)
+		for (ic = ent->getContainer(container); ic; ic = ic->next)
 			nr++;
 	}
 
@@ -376,7 +376,7 @@ void G_SendInventory (playermask_t playerMask, const Edict *ent)
 	for (container = 0; container < gi.csi->numIDs; container++) {
 		if (!G_IsItem(ent) && INVDEF(container)->temp)
 			continue;
-		for (ic = CONTAINER(ent, container); ic; ic = ic->next) {
+		for (ic = ent->getContainer(container); ic; ic = ic->next) {
 			/* send a single item */
 			assert(ic->item.def());
 			G_WriteItem(&ic->item, INVDEF(container), ic->x, ic->y);

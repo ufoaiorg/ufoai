@@ -171,6 +171,10 @@ public:
 
 	bool active;
 
+	inline invList_t *getContainer (const containerIndex_t idx) const
+	{
+		return chr.inv.getContainer(idx);
+	}
 	inline invList_t *getArmour () const
 	{
 		return chr.inv.getArmourContainer();

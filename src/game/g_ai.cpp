@@ -1172,7 +1172,7 @@ static void AI_TryToReloadWeapon (Edict *ent, containerIndex_t containerID)
 	if (G_ClientCanReload(ent, containerID)) {
 		G_ActorReload(ent, INVDEF(containerID));
 	} else {
-		G_ActorInvMove(ent, INVDEF(containerID), CONTAINER(ent, containerID), INVDEF(gi.csi->idFloor), NONE, NONE, true);
+		G_ActorInvMove(ent, INVDEF(containerID), ent->getContainer(containerID), INVDEF(gi.csi->idFloor), NONE, NONE, true);
 	}
 }
 
