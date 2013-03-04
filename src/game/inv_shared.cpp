@@ -52,7 +52,6 @@ bool invDef_t::isFloorDef () const
 
 /**
  * @brief Checks whether the inventory definition is the right Hand
- * @param invDef The inventory definition to check
  * @return @c true if the given inventory definition is of type right
  */
 bool invDef_t::isRightDef () const
