@@ -1176,7 +1176,7 @@ static int HUD_UpdateActorMove (const le_t *actor)
 			Com_sprintf(infoText, lengthof(infoText), _("Morale  %i"), actor->morale);
 	} else {
 		static char mouseText[UI_MAX_SMALLTEXTLEN];
-		const int moveMode = CL_ActorMoveMode(actor, actor->actorMoveLength);
+		const int moveMode = CL_ActorMoveMode(actor);
 		if (reservedTUs > 0)
 			Com_sprintf(infoText, lengthof(infoText), _("Morale  %i | Reserved TUs: %i\n%s %i (%i|%i TUs left)\n"),
 				actor->morale, reservedTUs, _(moveModeDescriptions[moveMode]), actor->actorMoveLength,

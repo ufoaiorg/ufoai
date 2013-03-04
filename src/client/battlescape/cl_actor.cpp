@@ -143,7 +143,7 @@ void CL_ActorSetFireDef (le_t *actor, const fireDef_t *fd)
  * @param[in] le Pointer to an actor for which we set the moving mode.
  * @param[in] length The distance to move: units are TU required assuming actor is standing.
  */
-int CL_ActorMoveMode (const le_t *le, int length)
+int CL_ActorMoveMode (const le_t *le)
 {
 	assert(le);
 	if (!LE_IsCrouched(le))
