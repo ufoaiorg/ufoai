@@ -857,6 +857,22 @@ tech rs_weapon_rpg_hybrid_ammo
 		default "*msgid:rpg_hybrid_ammo_pre_txt"
 	}
 
+	mail_pre
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+
+	mail
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+
 	require_AND
 	{
 		tech rs_craft_ammo_hybrid_missile
@@ -5351,22 +5367,6 @@ tech rs_craft_ammo_hybrid_missile
 	}
 
 	provides	craft_ammo_hybrid_missile
-
-	mail_pre
-	{
-		from	"*msgid:mail_from_paul_navarre"
-		to		"*msgid:mail_to_base_commander"
-		// subject	defined by "name"
-		icon	"icons/mail_tech"
-	}
-
-	mail
-	{
-		from	"*msgid:mail_from_paul_navarre"
-		to		"*msgid:mail_to_base_commander"
-		// subject	defined by "name"
-		icon	"icons/mail_tech"
-	}
 
 	require_AND
 	{
