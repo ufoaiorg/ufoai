@@ -347,7 +347,7 @@ window aliencont
 			*node:root.ac.species.alien_<3>.autopsy_zone@invis = true
 		} else {
 			*node:root.ac.species.alien_<3>.icon@icon = "icons/alien_surgery"
-			*node:root.ac.species.alien_<3>.icon@tooltip = "_Start autopsy"
+			*node:root.ac.species.alien_<3>.icon@tooltip = "_Autopsy"
 			*node:root.ac.species.alien_<3>.kill_zone@invis = true
 			*node:root.ac.species.alien_<3>.autopsy_zone@invis = false
 		}
