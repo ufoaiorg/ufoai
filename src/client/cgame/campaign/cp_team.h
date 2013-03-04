@@ -26,10 +26,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CP_TEAM_H
 #define CP_TEAM_H
 
-void CP_CleanTempInventory(base_t* base);
+void CP_CleanTempInventory(base_t *base);
 void CP_UpdateActorAircraftVar(aircraft_t *aircraft, employeeType_t employeeType);
-void CP_CleanupAircraftTeam(aircraft_t *aircraft, equipDef_t * ed);
-void CP_CleanupTeam(base_t *base, equipDef_t * ed);
-item_t CP_AddWeaponAmmo(equipDef_t * ed, item_t item);
+void CP_CleanupAircraftTeam(aircraft_t *aircraft, equipDef_t *ed);
+void CP_CleanupTeam(base_t *base, equipDef_t *ed);
+item_t CP_AddWeaponAmmo(equipDef_t *ed, item_t item);
 
 #endif

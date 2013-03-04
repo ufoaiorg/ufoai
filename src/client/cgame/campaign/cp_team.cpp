@@ -217,7 +217,7 @@ void CP_CleanupTeam (base_t *base, equipDef_t *ed)
  * the first person in the squad filling their backpack with spare ammo
  * leaving others with unloaded guns in their hands...
  */
-void CP_CleanupAircraftTeam (aircraft_t *aircraft, equipDef_t * ed)
+void CP_CleanupAircraftTeam (aircraft_t *aircraft, equipDef_t *ed)
 {
 	containerIndex_t container;
 
