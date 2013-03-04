@@ -118,7 +118,7 @@ void G_EventActorSendReservations (const Edict *ent)
  * @param[in] x Position of item in container.
  * @param[in] y Position of item in container.
  */
-void G_EventInventoryDelete (const Edict* ent, playermask_t playerMask, const invDef_t* invDef, int x, int y)
+void G_EventInventoryDelete (const Edict *ent, playermask_t playerMask, const invDef_t *invDef, int x, int y)
 {
 	G_EventAdd(playerMask, EV_INV_DEL, ent->number);
 	gi.WriteByte(invDef->id);
@@ -134,7 +134,7 @@ void G_EventInventoryDelete (const Edict* ent, playermask_t playerMask, const in
  * @param[in] itemAmount How many items to add.
  * @note This event must be followed by a @c G_WriteItem call
  */
-void G_EventInventoryAdd (const Edict* ent, playermask_t playerMask, int itemAmount)
+void G_EventInventoryAdd (const Edict *ent, playermask_t playerMask, int itemAmount)
 {
 	G_EventAdd(playerMask, EV_INV_ADD, ent->number);
 	gi.WriteShort(itemAmount);
@@ -154,7 +154,7 @@ void G_EventPerish (const Edict* ent)
  * @brief Unregister an edict at the client
  * @param ent The edict to unregister
  */
-void G_EventDestroyEdict (const Edict* ent)
+void G_EventDestroyEdict (const Edict *ent)
 {
 	assert(ent->inuse);
 	G_EventAdd(PM_ALL, EV_ENT_DESTROY, ent->number);
@@ -168,7 +168,7 @@ void G_EventDestroyEdict (const Edict* ent)
  * @param amount The new amount of the left ammo
  * @param shootType The shooting type to determine which container to use
  */
-void G_EventInventoryAmmo (const Edict* ent, const objDef_t* ammo, int amount, shoot_types_t shootType)
+void G_EventInventoryAmmo (const Edict *ent, const objDef_t *ammo, int amount, shoot_types_t shootType)
 {
 	G_EventAdd(G_VisToPM(ent->visflags), EV_INV_AMMO, ent->number);
 	gi.WriteByte(amount);
@@ -190,7 +190,7 @@ void G_EventInventoryAmmo (const Edict* ent, const objDef_t* ammo, int amount, s
  * @param shootType The type of the shoot
  * @param at The grid position to target to
  */
-void G_EventStartShoot (const Edict* ent, teammask_t teamMask, shoot_types_t shootType, const pos3_t at)
+void G_EventStartShoot (const Edict *ent, teammask_t teamMask, shoot_types_t shootType, const pos3_t at)
 {
 	G_EventAdd(G_VisToPM(teamMask), EV_ACTOR_START_SHOOT, ent->number);
 	gi.WriteByte(shootType);
@@ -205,7 +205,7 @@ void G_EventStartShoot (const Edict* ent, teammask_t teamMask, shoot_types_t sho
  * @param fd The firedefinition to use for the shoot
  * @param firstShoot Is this the first shoot
  */
-void G_EventShootHidden (teammask_t teamMask, const fireDef_t* fd, bool firstShoot)
+void G_EventShootHidden (teammask_t teamMask, const fireDef_t *fd, bool firstShoot)
 {
 	G_EventAdd(~G_VisToPM(teamMask), EV_ACTOR_SHOOT_HIDDEN, -1);
 	gi.WriteByte(firstShoot);
@@ -227,7 +227,7 @@ void G_EventShootHidden (teammask_t teamMask, const fireDef_t* fd, bool firstSho
  * @param from The position the entity shoots from
  * @param impact The impact world vector for the shot
  */
-void G_EventShoot (const Edict* ent, teammask_t teamMask, const fireDef_t* fd, bool firstShoot, shoot_types_t shootType, int flags, const trace_t* trace, const vec3_t from, const vec3_t impact)
+void G_EventShoot (const Edict *ent, teammask_t teamMask, const fireDef_t *fd, bool firstShoot, shoot_types_t shootType, int flags, const trace_t *trace, const vec3_t from, const vec3_t impact)
 {
 	const Edict *targetEdict = G_EdictsGetByNum(trace->entNum);	/* the ent possibly hit by the trace */
 
@@ -249,7 +249,7 @@ void G_EventShoot (const Edict* ent, teammask_t teamMask, const fireDef_t* fd, b
 	G_EventEnd();
 }
 
-void G_EventReactionFireChange (const Edict* ent)
+void G_EventReactionFireChange (const Edict *ent)
 {
 	const objDef_t *od = ent->chr.RFmode.getWeapon();
 
@@ -359,7 +359,7 @@ void G_EventEndRound (void)
 	G_EventEnd();
 }
 
-void G_EventInventoryReload (const Edict* ent, playermask_t playerMask, const item_t* item, const invDef_t* invDef, const invList_t* ic)
+void G_EventInventoryReload (const Edict *ent, playermask_t playerMask, const item_t *item, const invDef_t *invDef, const invList_t *ic)
 {
 	G_EventAdd(playerMask, EV_INV_RELOAD, ent->number);
 	gi.WriteByte(item->def()->ammo);

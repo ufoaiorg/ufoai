@@ -496,7 +496,7 @@ static inline bool G_FireAffectedSurface (const cBspSurface_t *surface, const fi
  * @param[in,out] mock pseudo shooting - only for calculating mock values - NULL for real shots
  * @param[in] tr The trace where the grenade hits something (or not)
  */
-static void G_SplashDamage (Edict *ent, const fireDef_t *fd, vec3_t impact, shot_mock_t *mock, const trace_t* tr)
+static void G_SplashDamage (Edict *ent, const fireDef_t *fd, vec3_t impact, shot_mock_t *mock, const trace_t *tr)
 {
 	Edict *check = NULL;
 	vec3_t center;
