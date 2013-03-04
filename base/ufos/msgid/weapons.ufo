@@ -1926,7 +1926,7 @@ Dr. Connor"
 msgid pbeampistol_txt {
 text "_Commander, I've got the specs of the new alien pistol for you, and they're not good.
 
-We've always suspected that a real alien army would field more than just plasma weapons and Kerrblades. Now they've gone and proved us right. This particle beam weaponry is extremely advanced, a quantum leap above the plasma weapons, miniaturised far beyond our ability to duplicate.
+We've always suspected that a real alien army would field more powerful weaponry. Now they've gone and proved us right. This particle beam weaponry is extremely advanced, a quantum leap above the arsenal we've seen, miniaturised far beyond our ability to duplicate.
 
 Particle-beam weaponry is designed to hit a target object with a stream of accelerated particles moving at near-light velocities, therefore carrying tremendous kinetic energy. Until now we've only seen the aliens use this technology in large UFO weapons. Now, however, they're using it on the ground in the worst way.
 
@@ -1940,7 +1940,7 @@ Cdr. Navarre"
 }
 
 msgid pbeampistol_pre_txt {
-text "_Commander, we've recovered a dangerous new alien pistol that seems to fire high-energy particle beams -- more deadly than lasers, more accurate than plasma weapons, and an extremely nasty new threat to our troops on the battlefield. Preliminary tests against our armour have produced distressing results. We need to perform more research on these weapons immediately.
+text "_Commander, we've recovered a dangerous new alien pistol that seems to fire high-energy particle beams -- an extremely nasty new threat to our troops on the battlefield. Preliminary tests against our armour have produced distressing results. We need to perform more research on these weapons immediately.
 
 Please authorise this program at your earliest convenience.
 
@@ -1950,7 +1950,7 @@ Cdr. Navarre"
 msgid pbeamcannon_txt {
 text "_Commander, we've finished work on this big damned cannon we brought back.
 
-This particle beam weaponry is extremely advanced, a quantum leap above the plasma weapons, miniaturised far beyond our ability to duplicate.
+This particle beam weaponry is extremely advanced, a quantum leap above the alien's existing arsenal, miniaturised far beyond our ability to duplicate.
 
 Particle-beam weaponry is designed to hit a target object with a stream of accelerated particles moving at near-light velocities, therefore carrying tremendous kinetic energy. Until now we've only seen the aliens use this technology in large UFO weapons. Now, however, they're using it on the ground in the worst way.
 
@@ -1976,7 +1976,7 @@ Cdr. Navarre"
 msgid pbeamrifle_txt {
 text "_Commander, we've gotten all the info we can from this new alien rifle. It's more bad news, I'm afraid.
 
-We've always suspected that a real alien army would field more than just plasma weapons and Kerrblades. Now they've gone and proved us right. This particle beam weaponry is extremely advanced, a quantum leap above the plasma weapons, miniaturised far beyond our ability to duplicate.
+We've always suspected that a real alien army would field more deadly weaponry. Now they've gone and proved us right. This particle beam weaponry is extremely advanced, a quantum leap above the arsenal we've seen, miniaturised far beyond our ability to duplicate.
 
 Particle-beam weaponry is designed to hit a target object with a stream of accelerated particles moving at near-light velocities, therefore carrying tremendous kinetic energy. Until now we've only seen the aliens use this technology in large UFO weapons. Now, however, they're using it on the ground in the worst way.
 
@@ -1992,7 +1992,7 @@ Cdr. Navarre"
 }
 
 msgid pbeamrifle_pre_txt {
-text "_Commander, we've recovered an alien rifle that fires high-energy particle beams. It's more deadly than lasers, more accurate than plasma weapons, and an extremely nasty new threat to our troops on the battlefield. Preliminary tests against our armour confirm that the aliens have seriously upgunned their troops. We need to perform more research on these weapons immediately.
+text "_Commander, we've recovered an alien rifle that fires high-energy particle beams. It's more deadly than anything we've seen -- an extremely nasty new threat to our troops on the battlefield. Preliminary tests against our armour confirm that the aliens have seriously upgunned their troops. We need to perform more research on these weapons immediately.
 
 Please authorise this program at your earliest convenience.
 
