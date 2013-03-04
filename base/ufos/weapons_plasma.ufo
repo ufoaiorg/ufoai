@@ -373,7 +373,7 @@ item encased_plasma_assault_ammo
 	shape			"0 0 1 2"
 	center			"0 0 0"
 	scale			1.25
-	price			1500
+	price			1000
 	size			3
 	is_primary		true
 	dmgtype			"plasma"
@@ -480,7 +480,7 @@ item encased_plasma_mg_ammo
 	shape			"0 0 2 2"
 	center			"0 0 0"
 	scale			1.9
-	price			65
+	price			1000
 	size			6
 	is_primary		true
 	is_heavy		true
@@ -571,7 +571,7 @@ item encased_plasma_sniper_ammo
 	shape			"0 0 1 2"
 	center			"0 0 0"
 	scale			1.15
-	price			85
+	price			1000
 	size			8
 	is_primary		true
 	dmgtype			"plasma"
