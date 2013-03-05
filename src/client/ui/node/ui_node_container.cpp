@@ -459,7 +459,8 @@ static void UI_ContainerNodeDrawSingle (uiNode_t *node, const objDef_t *highligh
 	pos[2] = 0;
 
 	/* Single item container (special case for left hand). */
-	if (EXTRADATA(node).container->isLeftDef() && !ui_inventory->c[csi.idLeft]) {
+	const invDef_t *contType = EXTRADATA(node).container;
+	if (contType->isLeftDef() && !ui_inventory->c[csi.idLeft]) {
 		if (ui_inventory->c[csi.idRight]) {
 			const item_t *item = &ui_inventory->c[csi.idRight]->item;
 			assert(item);
@@ -474,7 +475,7 @@ static void UI_ContainerNodeDrawSingle (uiNode_t *node, const objDef_t *highligh
 				UI_DrawItem(node, pos, item, -1, -1, scale, color);
 			}
 		}
-	} else if (ui_inventory->c[EXTRADATA(node).container->id]) {
+	} else if (ui_inventory->c[contType->id]) {
 		bool disabled = false;
 		const item_t *item;
 
@@ -485,13 +486,13 @@ static void UI_ContainerNodeDrawSingle (uiNode_t *node, const objDef_t *highligh
 			 * fireTwoHanded weapon. */
 			assert(item);
 			assert(item->def());
-			if (EXTRADATA(node).container->isRightDef() && item->def()->fireTwoHanded && ui_inventory->c[csi.idLeft]) {
+			if (contType->isRightDef() && item->def()->fireTwoHanded && ui_inventory->c[csi.idLeft]) {
 				disabled = true;
 				UI_DrawDisabled(node);
 			}
 		}
 
-		item = &ui_inventory->c[EXTRADATA(node).container->id]->item;
+		item = &ui_inventory->c[contType->id]->item;
 		assert(item);
 		assert(item->def());
 		if (highlightType && INVSH_LoadableInWeapon(highlightType, item->def())) {
