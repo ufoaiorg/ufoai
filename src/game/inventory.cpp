@@ -291,7 +291,7 @@ inventory_action_t InventoryInterface::moveInInventory (inventory_t* const inv, 
 
 	/* If weapon is twohanded and is moved from hand to hand do nothing. */
 	/* Twohanded weapon are only in CSI->idRight. */
-	if (fItem->item.def()->fireTwoHanded && INV_IsLeftDef(to) && from->isRightDef()) {
+	if (fItem->item.def()->fireTwoHanded && to->isLeftDef() && from->isRightDef()) {
 		return IA_NONE;
 	}
 
@@ -414,7 +414,7 @@ inventory_action_t InventoryInterface::moveInInventory (inventory_t* const inv, 
 	}
 
 	/* twohanded exception - only CSI->idRight is allowed for fireTwoHanded weapons */
-	if (fItem->item.def()->fireTwoHanded && INV_IsLeftDef(to))
+	if (fItem->item.def()->fireTwoHanded && to->isLeftDef())
 		to = &this->csi->ids[this->csi->idRight];
 
 	switch (checkedTo) {

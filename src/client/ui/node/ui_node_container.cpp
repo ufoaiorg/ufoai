@@ -459,7 +459,7 @@ static void UI_ContainerNodeDrawSingle (uiNode_t *node, const objDef_t *highligh
 	pos[2] = 0;
 
 	/* Single item container (special case for left hand). */
-	if (INV_IsLeftDef(EXTRADATA(node).container) && !ui_inventory->c[csi.idLeft]) {
+	if (EXTRADATA(node).container->isLeftDef() && !ui_inventory->c[csi.idLeft]) {
 		if (ui_inventory->c[csi.idRight]) {
 			const item_t *item = &ui_inventory->c[csi.idRight]->item;
 			assert(item);

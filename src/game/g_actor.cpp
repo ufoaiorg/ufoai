@@ -726,10 +726,10 @@ bool G_ActorInvMove (Edict *ent, const invDef_t *from, invList_t *fItem, const i
 	/* Other players receive weapon info only. */
 	mask = G_VisToPM(ent->visflags) & ~G_TeamToPM(ent->team);
 	if (mask) {
-		if (from->isRightDef() || INV_IsLeftDef(from)) {
+		if (from->isRightDef() || from->isLeftDef()) {
 			G_EventInventoryDelete(ent, mask, from, fx, fy);
 		}
-		if (to->isRightDef() || INV_IsLeftDef(to)) {
+		if (to->isRightDef() || to->isLeftDef()) {
 			G_EventInventoryAdd(ent, mask, 1);
 			G_WriteItem(&item, to, tx, ty);
 			G_EventEnd();
@@ -761,7 +761,7 @@ void G_ActorReload (Edict* ent, const invDef_t *invDef)
 
 	if (ent->getContainer(invDef->id)) {
 		weapon = ent->getContainer(invDef->id)->item.def();
-	} else if (INV_IsLeftDef(invDef) && ent->getRightHand()->item.isHeldTwoHanded()) {
+	} else if (invDef->isLeftDef() && ent->getRightHand()->item.isHeldTwoHanded()) {
 		/* Check for two-handed weapon */
 		invDef = INVDEF(gi.csi->idRight);
 		weapon = ent->getRightHand()->item.def();

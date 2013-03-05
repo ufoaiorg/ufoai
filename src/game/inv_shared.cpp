@@ -61,12 +61,11 @@ bool invDef_t::isRightDef () const
 
 /**
  * @brief Checks whether a given inventory definition is of special type
- * @param invDef The inventory definition to check
  * @return @c true if the given inventory definition is of type left
  */
-bool INV_IsLeftDef (const invDef_t* invDef)
+bool invDef_t::isLeftDef () const
 {
-	return invDef->id == CSI->idLeft;
+	return id == CSI->idLeft;
 }
 
 /**
@@ -629,12 +628,12 @@ int inventory_t::canHoldItem (const invDef_t *container, const objDef_t *od, con
 
 	/* twohanded item */
 	if (od->holdTwoHanded) {
-		if ((container->isRightDef() && getContainer(CSI->idLeft)) || INV_IsLeftDef(container))
+		if ((container->isRightDef() && getContainer(CSI->idLeft)) || container->isLeftDef())
 			return INV_DOES_NOT_FIT;
 	}
 
 	/* left hand is busy if right wields twohanded */
-	if (INV_IsLeftDef(container)) {
+	if (container->isLeftDef()) {
 		if (getContainer(CSI->idRight) && getContainer(CSI->idRight)->item.isHeldTwoHanded())
 			return INV_DOES_NOT_FIT;
 
