@@ -47,6 +47,7 @@ static void G_MoralePanic (Edict *ent, bool sanity)
 		if (ent->getLeftHand())
 			G_ActorInvMove(ent, INVDEF(gi.csi->idLeft), ent->getLeftHand(),
 					INVDEF(gi.csi->idFloor), NONE, NONE, true);
+		G_ClientStateChange(&G_PLAYER_FROM_ENT(ent), ent, ~STATE_REACTION, false);
 	}
 
 	/* get up */

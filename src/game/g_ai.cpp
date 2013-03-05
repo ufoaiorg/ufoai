@@ -33,6 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "g_move.h"
 #include "g_utils.h"
 #include "g_vis.h"
+#include "g_reaction.h"
 
 typedef struct aiAction_s {
 	pos3_t to;			/**< grid pos to walk to for performing the action */
@@ -1173,6 +1174,7 @@ static void AI_TryToReloadWeapon (Edict *ent, containerIndex_t containerID)
 		G_ActorReload(ent, INVDEF(containerID));
 	} else {
 		G_ActorInvMove(ent, INVDEF(containerID), ent->getContainer(containerID), INVDEF(gi.csi->idFloor), NONE, NONE, true);
+		G_ReactionFireSettingsUpdate(ent, ent->chr.RFmode.getFmIdx(), ent->chr.RFmode.getHand(), ent->chr.RFmode.getWeapon());
 	}
 }
 
