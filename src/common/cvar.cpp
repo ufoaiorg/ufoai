@@ -417,8 +417,7 @@ void Cvar_RegisterCvarListener (CvarListenerPtr listener)
 
 /**
  * @brief Unregisters a cvar listener
- * @param varName The cvar name to register the listener for
- * @param listenerFunc The listener callback to unregister
+ * @param listener The listener callback to unregister
  */
 void Cvar_UnRegisterCvarListener (CvarListenerPtr listener)
 {
