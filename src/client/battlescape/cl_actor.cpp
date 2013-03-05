@@ -750,7 +750,10 @@ int CL_ActorCheckAction (const le_t *le)
  */
 static byte CL_ActorMoveLength (const le_t *le, const pos3_t to)
 {
-	byte crouchingState = LE_IsCrouched(le) ? 1 : 0;
+	const bool useAutostand = LE_IsCrouched(le) && cl_autostand->integer
+				&& Grid_ShouldUseAutostand(&cl.pathMap, to);
+	const int autostandTU = useAutostand ? 2 * TU_CROUCH : 0;
+	byte crouchingState = LE_IsCrouched(le) && !useAutostand ? 1 : 0;
 	const int length = Grid_MoveLength(&cl.pathMap, to, crouchingState, false);
 	int dvec, numSteps = 0;
 	pos3_t pos;
@@ -765,7 +768,7 @@ static byte CL_ActorMoveLength (const le_t *le, const pos3_t to)
 	}
 
 	return std::min(ROUTING_NOT_REACHABLE, length + static_cast<int>(numSteps
-			* CL_ActorInjuryModifier(le, MODIFIER_MOVEMENT)));
+			* CL_ActorInjuryModifier(le, MODIFIER_MOVEMENT)) + autostandTU);
 }
 
 /**

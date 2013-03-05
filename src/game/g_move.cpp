@@ -298,11 +298,6 @@ void G_ClientMove (const Player &player, int visTeam, Edict *ent, const pos3_t t
 
 	/* calculate move table */
 	G_MoveCalc(visTeam, ent, ent->pos, ent->TU);
-	const pos_t length = G_ActorMoveLength(ent, level.pathingMap, to, false);
-
-	/* length of ROUTING_NOT_REACHABLE means not reachable */
-	if (length && length >= ROUTING_NOT_REACHABLE)
-		return;
 
 	/* Autostand: check if the actor is crouched and player wants autostanding...*/
 	if (crouchingState && player.autostand) {
@@ -319,6 +314,12 @@ void G_ClientMove (const Player &player, int visTeam, Edict *ent, const pos3_t t
 				autoCrouchRequired = true;
 		}
 	}
+
+	const pos_t length = std::min(G_ActorMoveLength(ent, level.pathingMap, to, false)
+				+ (autoCrouchRequired ? TU_CROUCH : 0), ROUTING_NOT_REACHABLE);
+	/* length of ROUTING_NOT_REACHABLE means not reachable */
+	if (length && (length >= ROUTING_NOT_REACHABLE || length > G_ActorUsableTUs(ent)))
+		return;
 
 	/* this let the footstep sounds play even over network */
 	ent->think = G_PhysicsStep;
