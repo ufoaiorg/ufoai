@@ -245,7 +245,7 @@ item armour_power
 		laser				15
 		particlebeam		0
 		stun_electro		20
-		stun_gas			20
+		stun_gas			100
 	}
 }
 
