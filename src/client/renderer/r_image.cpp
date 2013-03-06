@@ -239,7 +239,10 @@ void R_GetScaledTextureSize (int width, int height, int *scaledWidth, int *scale
 		*scaledHeight = 1;
 }
 
-#define R_IsClampedImageType(type) ((type) == it_pic || (type) == it_worldrelated)
+inline static bool R_IsClampedImageType (imagetype_t type)
+{
+	return type == it_pic || type == it_worldrelated;
+}
 
 /**
  * @brief Uploads the opengl texture to the server
