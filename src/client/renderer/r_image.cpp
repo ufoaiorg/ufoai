@@ -255,21 +255,26 @@ void R_UploadTexture (const unsigned *data, int width, int height, image_t* imag
 {
 	unsigned *scaled = 0;
 	int scaledWidth, scaledHeight;
-	int texFormat = r_config.gl_compressed_solid_format ? r_config.gl_compressed_solid_format : r_config.gl_solid_format;
+#ifdef GL_VERSION_ES_CM_1_0
+	GLint texFormat = GL_RGB;
+#else
+	GLint texFormat = r_config.gl_compressed_solid_format ? r_config.gl_compressed_solid_format : r_config.gl_solid_format;
+#endif
 	int i, c;
 	const byte *scan;
 	const bool mipmap = (image->type != it_pic && image->type != it_worldrelated && image->type != it_chars);
 	const bool clamp = R_IsClampedImageType(image->type);
-#ifdef GL_VERSION_ES_CM_1_0
-	texFormat = GL_RGBA;
-#endif
 
 	/* scan the texture for any non-255 alpha */
 	c = width * height;
 	/* set scan to the first alpha byte */
 	for (i = 0, scan = ((const byte *) data) + 3; i < c; i++, scan += 4) {
 		if (*scan != 255) {
+#ifdef GL_VERSION_ES_CM_1_0
+			texFormat = GL_RGBA;
+#else
 			texFormat = r_config.gl_compressed_alpha_format ? r_config.gl_compressed_alpha_format : r_config.gl_alpha_format;
+#endif
 			image->has_alpha = true;
 			break;
 		}
