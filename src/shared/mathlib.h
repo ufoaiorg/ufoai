@@ -144,6 +144,9 @@ public:
 		maxs[0] = std::min(maxs[0] + byVal, PATHFINDING_WIDTH - 1);
 		maxs[1] = std::min(maxs[1] + byVal, PATHFINDING_WIDTH - 1);
 	}
+	inline void addOneZ () {
+		maxs[2] = std::min(maxs[2] + 1, PATHFINDING_HEIGHT - 1);
+	}
 	inline void clipToMaxBoundaries() {
 		return;	/* do nothing, see above */
 	}
