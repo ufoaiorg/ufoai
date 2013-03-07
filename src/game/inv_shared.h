@@ -339,6 +339,7 @@ typedef struct invDef_s {
 	bool isFloorDef () const;
 	bool isRightDef () const;
 	bool isLeftDef () const;
+	bool isEquipDef () const;
 } invDef_t;
 
 #define MAX_CONTAINERS	MAX_INVDEFS

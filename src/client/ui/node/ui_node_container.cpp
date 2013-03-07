@@ -926,7 +926,7 @@ bool uiContainerNode::onDndMove (uiNode_t *target, int x, int y)
 
 	/* Check if the items already exists in the container. i.e. there is already at least one item. */
 	exists = false;
-	if ((containerType->isFloorDef() || INV_IsEquipDef(containerType))
+	if ((containerType->isFloorDef() || containerType->isEquipDef())
 		&& (dragInfoToX < 0 || dragInfoToY < 0 || dragInfoToX >= SHAPE_BIG_MAX_WIDTH || dragInfoToY >= SHAPE_BIG_MAX_HEIGHT)
 		&& ui_inventory->containsItem(containerType, dragItem)) {
 		exists = true;

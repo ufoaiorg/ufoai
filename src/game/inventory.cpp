@@ -350,7 +350,7 @@ inventory_action_t InventoryInterface::moveInInventory (inventory_t* const inv, 
 		 * scroll because checkedTo is always true here. */
 		ic = inv->getItemAtPos(to, tx, ty);
 
-		if (ic && !INV_IsEquipDef(to) && INVSH_LoadableInWeapon(fItem->item.def(), ic->item.def())) {
+		if (ic && !to->isEquipDef() && INVSH_LoadableInWeapon(fItem->item.def(), ic->item.def())) {
 			/* A target-item was found and the dragged item (implicitly ammo)
 			 * can be loaded in it (implicitly weapon). */
 			if (ic->item.ammoLeft >= ic->item.def()->ammo && ic->item.ammo == fItem->item.def()) {
