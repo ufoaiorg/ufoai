@@ -32,7 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define G_IsPanicked(ent)		G_IsState(ent, STATE_PANIC)
 #define G_IsReaction(ent)		G_IsState(ent, STATE_REACTION)
 #define G_IsRaged(ent)			G_IsState(ent, STATE_RAGE)
-#define G_IsInsane(ent)			G_IsState(ent, STATE_INSANE)
+#define G_IsInsane(ent)			(G_IsState(ent, STATE_INSANE) & ~STATE_RAGE)
 #define G_IsDazed(ent)			G_IsState(ent, STATE_DAZED)
 #define G_IsCrouched(ent)		G_IsState(ent, STATE_CROUCHED)
 /** @note This check also includes the IsStunned check - see the STATE_* bitmasks */
