@@ -79,7 +79,7 @@ bool AlienCargo::add(const teamDef_t *team, int alive, int dead)
 
 /**
  * @brief Add aliens to the cargo by team Id
- * @param[in] team Scripted Id of an alien Team
+ * @param[in] teamId Scripted Id of an alien Team
  * @param[in] alive Number of alive aliens
  * @param[in] dead Number of dead aliens
  */

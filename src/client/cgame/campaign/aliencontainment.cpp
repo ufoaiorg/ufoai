@@ -31,7 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /**
  * @brief Returns the number of capacity needed for an alien in the containment
- * @param[in] team Pointer to the alien Team Definition
+ * @param[in] teamDef Pointer to the alien Team Definition
  * @param[in] isDead If the alien to calculate for is dead
  */
 int AlienContainment::getCapacityNeedForAlien(const teamDef_t *teamDef, const bool isDead) const
