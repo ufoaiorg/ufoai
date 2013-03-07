@@ -152,7 +152,7 @@ static void testShooting (void)
 
 static int GAMETEST_GetItemCount (const edict_t *ent, containerIndex_t container)
 {
-	const invList_t *invlist = CONTAINER(ent, container);
+	const invList_t *invlist = ent->getContainer(container);
 	int count = 0;
 	while (invlist != NULL) {
 		count += invlist->item.amount;
@@ -232,7 +232,7 @@ static void testInventoryForDiedAlien (void)
 		G_InventoryToFloor(ent);
 		CU_ASSERT_EQUAL(GAMETEST_GetItemCount(ent, csi.idBackpack), 0);
 
-		invlist = CONTAINER(ent, csi.idBackpack);
+		invlist = ent->getContainer(csi.idBackpack);
 		CU_ASSERT_PTR_NULL_FATAL(invlist);
 		count = GAMETEST_GetItemCount(ent, csi.idFloor);
 		if (count > 0) {
@@ -246,7 +246,7 @@ static void testInventoryForDiedAlien (void)
 				Com_Printf("item %s was removed from floor\n", entryToMove->item.def()->name);
 				UFO_CU_ASSERT_EQUAL_INT_MSG_FATAL(GAMETEST_GetItemCount(ent, csi.idBackpack), 1, va("item %s could not get moved successfully from floor into backpack", entryToMove->item.def()->name));
 				Com_Printf("item %s was moved successfully into the backpack\n", entryToMove->item.def()->name);
-				invlist = CONTAINER(ent, csi.idBackpack);
+				invlist = ent->getContainer(csi.idBackpack);
 				CU_ASSERT_PTR_NOT_NULL_FATAL(invlist);
 			}
 		}
@@ -311,7 +311,7 @@ static void testInventoryWithTwoDiedAliensOnTheSameGridTile (void)
 		G_InventoryToFloor(ent);
 		CU_ASSERT_EQUAL(GAMETEST_GetItemCount(ent, csi.idBackpack), 0);
 
-		invlist = CONTAINER(ent, csi.idBackpack);
+		invlist = ent->getContainer(csi.idBackpack);
 		CU_ASSERT_PTR_NULL_FATAL(invlist);
 
 		count = GAMETEST_GetItemCount(ent, csi.idFloor);
@@ -326,7 +326,7 @@ static void testInventoryWithTwoDiedAliensOnTheSameGridTile (void)
 				Com_Printf("item %s was removed from floor\n", entryToMove->item.def()->name);
 				UFO_CU_ASSERT_EQUAL_INT_MSG_FATAL(GAMETEST_GetItemCount(ent, csi.idBackpack), 1, va("item %s could not get moved successfully from floor into backpack", entryToMove->item.def()->name));
 				Com_Printf("item %s was moved successfully into the backpack\n", entryToMove->item.def()->name);
-				invlist = CONTAINER(ent, csi.idBackpack);
+				invlist = ent->getContainer(csi.idBackpack);
 				CU_ASSERT_PTR_NOT_NULL_FATAL(invlist);
 			}
 		}
@@ -357,7 +357,7 @@ static void testInventoryTempContainerLinks (void)
 		for (container = 0; container < gi.csi->numIDs; container++) {
 			if (container == gi.csi->idArmour || container == gi.csi->idFloor)
 				continue;
-			for (ic = CONTAINER(ent, container); ic; ic = ic->next)
+			for (ic = ent->getContainer(container); ic; ic = ic->next)
 				nr++;
 		}
 		CU_ASSERT_TRUE(nr > 0);
@@ -371,7 +371,7 @@ static void testInventoryTempContainerLinks (void)
 		for (container = 0; container < gi.csi->numIDs; container++) {
 			if (container == gi.csi->idArmour || container == gi.csi->idFloor)
 				continue;
-			for (ic = CONTAINER(ent, container); ic; ic = ic->next)
+			for (ic = ent->getContainer(container); ic; ic = ic->next)
 				nr++;
 		}
 		CU_ASSERT_EQUAL(nr, 0);
