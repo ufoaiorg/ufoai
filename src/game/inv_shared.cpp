@@ -420,13 +420,10 @@ const objDef_t* INVSH_IsReactionFireEnabled (const invList_t *invList)
 	if (!invList)
 		return NULL;
 
-	while (invList) {
-		if (invList->item.def()) {
-			const fireDef_t *fd = FIRESH_FiredefForWeapon(&invList->item);
-			if (fd && fd->reaction)
-				return invList->item.def();
-		}
-		invList = invList->next;
+	if (invList->item.def()) {
+		const fireDef_t *fd = FIRESH_FiredefForWeapon(&invList->item);
+		if (fd && fd->reaction)
+			return invList->item.def();
 	}
 
 	return NULL;
