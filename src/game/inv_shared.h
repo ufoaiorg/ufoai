@@ -504,4 +504,4 @@ void INVSH_MergeShapes(uint32_t *shape, const uint32_t itemShape, const int x, c
 bool INVSH_CheckShape(const uint32_t *shape, const int x, const int y);
 int INVSH_ShapeSize(const uint32_t shape);
 
-const objDef_t* INVSH_IsReactionFireEnabled(const invList_t *invList);
+const objDef_t *INVSH_IsReactionFireEnabled(const invList_t *invList);

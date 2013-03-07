@@ -574,7 +574,7 @@ float InventoryInterface::GetInventoryState (const inventory_t *inventory, int &
  * @param[in] maxWeight The max weight this actor is allowed to carry.
  * @sa INVSH_LoadableInWeapon
  */
-int InventoryInterface::PackAmmoAndWeapon (character_t* const chr, const objDef_t* weapon, int missedPrimary, const equipDef_t *ed, int maxWeight)
+int InventoryInterface::PackAmmoAndWeapon (character_t* const chr, const objDef_t *weapon, int missedPrimary, const equipDef_t *ed, int maxWeight)
 {
 	inventory_t* const inv = &chr->inv;
 	const int speed = chr->score.skills[ABILITY_SPEED];
@@ -724,7 +724,7 @@ void InventoryInterface::EquipActorMelee (inventory_t* const inv, const teamDef_
  * @param[in] inv The inventory that will get the weapon.
  * @param[in] weapon Pointer to the item which being added to robot's inventory.
  */
-void InventoryInterface::EquipActorRobot (inventory_t* const inv, const objDef_t* weapon)
+void InventoryInterface::EquipActorRobot (inventory_t* const inv, const objDef_t *weapon)
 {
 	item_t item;
 

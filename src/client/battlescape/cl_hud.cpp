@@ -397,7 +397,7 @@ static void HUD_ShotReserve_f (void)
  * @param actor The actor local entity
  * @param hand What list to display
  */
-static void HUD_DisplayFiremodeEntry (const char* callback, const le_t* actor, const objDef_t* ammo, const weaponFireDefIndex_t weapFdsIdx, const actorHands_t hand, const int index)
+static void HUD_DisplayFiremodeEntry (const char* callback, const le_t* actor, const objDef_t *ammo, const weaponFireDefIndex_t weapFdsIdx, const actorHands_t hand, const int index)
 {
 	if (index >= ammo->numFiredefs[weapFdsIdx])
 		return;
@@ -1101,7 +1101,7 @@ static int HUD_UpdateActorFireMode (le_t *actor)
 
 	static char infoText[UI_MAX_SMALLTEXTLEN];
 	int time = 0;
-	const objDef_t* def = selWeapon->item.def();
+	const objDef_t *def = selWeapon->item.def();
 	if (!def) {
 		/* No valid weapon in the hand. */
 		CL_ActorSetFireDef(actor, NULL);

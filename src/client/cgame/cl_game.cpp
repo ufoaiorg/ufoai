@@ -381,7 +381,7 @@ static void GAME_EquipActorMelee (inventory_t* const inv, const teamDef_t* td)
 	cls.i.EquipActorMelee(inv, td);
 }
 
-static void GAME_EquipActorRobot (inventory_t* const inv, const objDef_t* weapon)
+static void GAME_EquipActorRobot (inventory_t* const inv, const objDef_t *weapon)
 {
 	cls.i.EquipActorRobot(inv, weapon);
 }

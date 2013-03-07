@@ -63,7 +63,7 @@ public:
 
 	void EquipActorMelee (inventory_t* const inv, const teamDef_t* td);
 
-	void EquipActorRobot (inventory_t* const inv, const objDef_t* weapon);
+	void EquipActorRobot (inventory_t* const inv, const objDef_t *weapon);
 
 	int GetUsedSlots ();
 
@@ -80,5 +80,5 @@ protected:
 	void removeInvList (invList_t *invList);
 	invList_t* addInvList (invList_t **invList);
 	float GetInventoryState (const inventory_t *inventory, int &slowestFd);
-	int PackAmmoAndWeapon (character_t* const chr, const objDef_t* weapon, int missedPrimary, const equipDef_t *ed, int maxWeight);
+	int PackAmmoAndWeapon (character_t* const chr, const objDef_t *weapon, int missedPrimary, const equipDef_t *ed, int maxWeight);
 };

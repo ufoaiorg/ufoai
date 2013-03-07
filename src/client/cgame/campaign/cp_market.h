@@ -45,7 +45,7 @@ int BS_GetAircraftBuyingPrice(const aircraft_t *aircraft);
 bool BS_BuyAircraft(const aircraft_t *aircraftTemplate, base_t *base);
 bool BS_SellAircraft(aircraft_t *aircraft);
 
-bool BS_IsOnMarket(const objDef_t* item);
+bool BS_IsOnMarket(const objDef_t *item);
 int BS_GetItemOnMarket(const objDef_t *od);
 int BS_GetItemSellingPrice(const objDef_t *od);
 int BS_GetItemBuyingPrice(const objDef_t *od);

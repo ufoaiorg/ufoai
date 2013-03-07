@@ -92,7 +92,7 @@ static void CL_ActorGetMuzzle (const le_t* actor, vec3_t muzzle, shoot_types_t s
 	const model_t *model;
 	const char *tag;
 	float matrix[16], mc[16], modifiedMatrix[16];
-	const objDef_t* od;
+	const objDef_t *od;
 	const invList_t *invlistWeapon;
 
 	if (actor == NULL)
