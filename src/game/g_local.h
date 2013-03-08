@@ -56,17 +56,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define	TAG_GAME	765			/* clear when unloading the game library */
 #define	TAG_LEVEL	766			/* clear when loading a new level */
 
-/** Macros for faster access to the inventory-container. */
-/** These macros are deprecated. Please use the appropriate inline functions */
-#define CONTAINER(e, containerID) ((e)->chr.inv.c[(containerID)])
-//#define ARMOUR(e)		(CONTAINER(e, gi.csi->idArmour))
-//#define RIGHT(e)		(CONTAINER(e, gi.csi->idRight))
-//#define LEFT(e)			(CONTAINER(e, gi.csi->idLeft))
-//#define EXTENSION(e)	(CONTAINER(e, gi.csi->idExtension))
-//#define HEADGEAR(e)		(CONTAINER(e, gi.csi->idHeadgear))
-//#define FLOOR(e)		(CONTAINER(e, gi.csi->idFloor))
-//#define EQUIP(e)		(CONTAINER(e, gi.csi->idEquip))
-
 #define INVDEF(containerID) (&gi.csi->ids[(containerID)])
 
 #define G_FreeTags(tag) gi.FreeTags((tag), __FILE__, __LINE__)
