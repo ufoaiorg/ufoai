@@ -744,10 +744,7 @@ static int HUD_WeaponCanBeReloaded (const le_t *le, containerIndex_t containerID
  */
 static bool HUD_WeaponWithReaction (const le_t *actor)
 {
-	const objDef_t *weapon = actor->getRightHand()->getReactionFireWeaponType();
-	if (weapon)
-		return true;
-	return actor->getLeftHand()->getReactionFireWeaponType() != NULL;
+	return actor->inv.holdsReactionFireWeapon();
 }
 
 /**

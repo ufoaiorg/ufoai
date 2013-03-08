@@ -440,6 +440,7 @@ typedef struct inventory_s {
 	float getWeight () const;
 	int canHoldItem (const invDef_t *container, const objDef_t *od, const int x, const int y, const invList_t *ignoredItem) const;
 	bool canHoldItemWeight (containerIndex_t from, containerIndex_t to, const item_t &item, int maxWeight) const;
+	bool holdsReactionFireWeapon () const;
 } inventory_t;
 
 #define MAX_EQUIPDEFS   64

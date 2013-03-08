@@ -840,3 +840,15 @@ invList_t *inventory_t::findInContainer (const invDef_t *container, const item_t
 
 	return NULL;
 }
+
+/**
+ * @brief Checks if there is a weapon in the hands that can be used for reaction fire.
+ */
+bool inventory_t::holdsReactionFireWeapon () const
+{
+	if (getRightHandContainer()->getReactionFireWeaponType())
+		return true;
+	if (getLeftHandContainer()->getReactionFireWeaponType())
+		return true;
+	return false;
+}
