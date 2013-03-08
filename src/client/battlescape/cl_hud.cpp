@@ -479,7 +479,7 @@ static void HUD_DisplayActions (const char* callback, const le_t* actor, actionT
 	break;
 
 	case RELOAD_RIGHT: {
-		invList_t* weapon = actor->getRightHand();
+		invList_t *weapon = actor->getRightHand();
 
 		/* Reloeadable item in hand. */
 		if (weapon && weapon->item.def() && weapon->item.isReloadable()) {
@@ -519,7 +519,7 @@ static void HUD_DisplayActions (const char* callback, const le_t* actor, actionT
 	break;
 
 	case RELOAD_LEFT: {
-		invList_t* weapon = actor->getLeftHand();
+		invList_t *weapon = actor->getLeftHand();
 
 		/* Reloadable item in hand. */
 		if (weapon && weapon->item.def() && weapon->item.isReloadable()) {
@@ -1226,13 +1226,13 @@ static void HUD_UpdateActorCvar (const le_t *actor)
 	}
 
 	/* print ammo */
-	const invList_t* invListRight = actor->getRightHand();
+	const invList_t *invListRight = actor->getRightHand();
 	if (invListRight)
 		Cvar_SetValue("mn_ammoright", invListRight->item.ammoLeft);
 	else
 		Cvar_Set("mn_ammoright", "");
 
-	const invList_t* invListLeft = HUD_GetLeftHandWeapon(actor, NULL);
+	const invList_t *invListLeft = HUD_GetLeftHandWeapon(actor, NULL);
 	if (invListLeft)
 		Cvar_SetValue("mn_ammoleft", invListLeft->item.ammoLeft);
 	else

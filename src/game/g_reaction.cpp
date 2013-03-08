@@ -350,7 +350,7 @@ static bool G_ActorHasWorkingFireModeSet (const Edict *actor)
 	if (!fmSettings->isSaneFiremode())	/* just checks for valid values */
 		return false;
 
-	const invList_t* invList = actor->getHand(fmSettings->getHand());
+	const invList_t *invList = actor->getHand(fmSettings->getHand());
 	if (!invList)
 		return false;
 	const fireDef_t *fd = FIRESH_FiredefForWeapon(&invList->item);

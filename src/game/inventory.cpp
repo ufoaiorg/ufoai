@@ -35,7 +35,7 @@ void InventoryInterface::removeInvList (invList_t *invList)
 		free(ic);
 	} else {
 		invList_t *ic = this->invList;
-		invList_t* prev = NULL;
+		invList_t *prev = NULL;
 		while (ic) {
 			if (ic == invList) {
 				if (prev)
@@ -49,7 +49,7 @@ void InventoryInterface::removeInvList (invList_t *invList)
 	}
 }
 
-invList_t* InventoryInterface::addInvList (invList_t **invList)
+invList_t *InventoryInterface::addInvList (invList_t **invList)
 {
 	invList_t *newEntry;
 	invList_t *list;
@@ -985,7 +985,7 @@ void InventoryInterface::EquipActor (character_t* const chr, const equipDef_t *e
 int InventoryInterface::GetUsedSlots ()
 {
 	int i = 0;
-	const invList_t* slot = invList;
+	const invList_t *slot = invList;
 	while (slot) {
 		slot = slot->next;
 		i++;

@@ -327,7 +327,7 @@ static void UI_DrawDisabled (const uiNode_t* node)
 static void UI_DrawFree (containerIndex_t container, const uiNode_t *node, int posx, int posy, int sizex, int sizey, bool showTUs)
 {
 	const vec4_t color = { 0.0f, 1.0f, 0.0f, 0.7f };
-	invDef_t* inv = INVDEF(container);
+	invDef_t *inv = INVDEF(container);
 	vec2_t nodepos;
 
 	UI_GetNodeAbsPos(node, nodepos);

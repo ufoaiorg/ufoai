@@ -107,7 +107,7 @@ bool G_InventoryRemoveItemByID (const char *itemID, Edict *ent, containerIndex_t
  */
 static bool G_InventoryDropToFloorCheck (Edict *ent, containerIndex_t container)
 {
-	invList_t* ic = ent->getContainer(container);
+	invList_t *ic = ent->getContainer(container);
 
 	if (container == gi.csi->idArmour)
 		return false;
