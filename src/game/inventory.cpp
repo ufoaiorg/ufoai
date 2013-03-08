@@ -512,7 +512,7 @@ void InventoryInterface::emptyContainer (inventory_t* const inv, const invDef_t 
 		removeInvList(old);
 	}
 
-	inv->setContainer(container->id, NULL);
+	inv->resetContainer(container->id);
 }
 
 /**

@@ -485,7 +485,7 @@ void GAME_ActorSelect_f (void)
 	if (ui_inventory && ui_inventory != &chr->inv) {
 		CONTAINER(chr, csi.idEquip) = ui_inventory->c[csi.idEquip];
 		/* set 'old' idEquip to NULL */
-		ui_inventory->c[csi.idEquip] = NULL;
+		ui_inventory->resetContainer(csi.idEquip);
 	}
 	ui_inventory = &chr->inv;
 	/* set info cvars */

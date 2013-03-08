@@ -177,7 +177,7 @@ public:
 	}
 	inline void resetContainer (const containerIndex_t idx)
 	{
-		chr.inv.setContainer(idx, NULL);
+		chr.inv.resetContainer(idx);
 	}
 	inline invList_t *getArmour () const
 	{

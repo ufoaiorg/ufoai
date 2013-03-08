@@ -417,6 +417,10 @@ typedef struct inventory_s {
 	{
 		c[idx] = cont;
 	}
+	inline void resetContainer (const containerIndex_t idx)
+	{
+		c[idx] = NULL;
+	}
 	/**
 	 * @brief Searches if there is a specific item already in the inventory&container.
 	 * @param[in] container Container in the inventory.

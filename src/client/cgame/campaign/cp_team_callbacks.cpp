@@ -88,7 +88,7 @@ static void CP_TEAM_SetEquipContainer (character_t *chr)
 	if (uiInv && uiInv != &chr->inv) {
 		CONTAINER(chr, idEquip) = uiInv->getContainer(idEquip);
 		/* set 'old' idEquip to NULL */
-		uiInv->c[idEquip] = NULL;
+		uiInv->resetContainer(idEquip);
 	}
 	*cgi->ui_inventory = &chr->inv;
 }

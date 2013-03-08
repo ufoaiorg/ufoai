@@ -1323,7 +1323,7 @@ static void GAME_SendCurrentTeamSpawningInfo (dbuffer * buf, linkedList_t *team)
 		for (container = 0; container < csi.numIDs; container++) {
 			if (!INVDEF(container)->temp)
 				continue;
-			i->c[container] = NULL;
+			i->resetContainer(container);
 		}
 
 		GAME_NetSendCharacter(buf, chr);
