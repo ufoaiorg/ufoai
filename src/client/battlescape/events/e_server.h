@@ -23,9 +23,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef E_SERVER_H_
-#define E_SERVER_H_
+#pragma once
 
 void CL_ServerEventsInit(void);
-
-#endif /* E_SERVER_H_ */

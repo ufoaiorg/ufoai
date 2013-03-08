@@ -22,12 +22,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef E_EVENT_ACTORMOVE_H_
-#define E_EVENT_ACTORMOVE_H_
+#pragma once
 
 #include "../../e_main.h"
 
 int CL_ActorDoMoveTime(const eventRegister_t *self, dbuffer *msg, eventTiming_t *eventTiming);
 void CL_ActorDoMove(const eventRegister_t *self, dbuffer *msg);
-
-#endif

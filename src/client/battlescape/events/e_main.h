@@ -22,8 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef E_MAIN_H_
-#define E_MAIN_H_
+#pragma once
 
 class dbuffer;
 
@@ -76,5 +75,3 @@ typedef struct eventRegister_s {
 
 const eventRegister_t *CL_GetEvent(const event_t eType);
 int CL_GetNextTime(const eventRegister_t *event, eventTiming_t *eventTiming, int nextTime);
-
-#endif
