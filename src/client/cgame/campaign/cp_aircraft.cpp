@@ -329,7 +329,7 @@ static void AII_CarriedItems (const inventory_t *soldierInventory)
 		/* Items on the ground are collected as ET_ITEM */
 		if (INVDEF(container)->temp)
 			continue;
-		for (invList = soldierInventory->c[container]; invList; invList = invList->next) {
+		for (invList = soldierInventory->getContainer(container); invList; invList = invList->next) {
 			const objDef_t *item = invList->item.def();
 			const objDef_t *ammo = invList->item.ammo;
 			technology_t *tech = RS_GetTechForItem(item);

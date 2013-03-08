@@ -523,7 +523,7 @@ static void UI_ContainerNodeDrawGrid (uiNode_t *node, const objDef_t *highlightT
 	UI_GetNodeAbsPos(node, pos);
 	pos[2] = 0;
 
-	for (ic = ui_inventory->c[EXTRADATA(node).container->id]; ic; ic = ic->next) {
+	for (ic = ui_inventory->getContainer(EXTRADATA(node).container->id); ic; ic = ic->next) {
 		assert(ic->item.def());
 		if (highlightType && INVSH_LoadableInWeapon(highlightType, ic->item.def()))
 			UI_DrawItem(node, pos, &ic->item, ic->x, ic->y, scale, colorLoadable);
