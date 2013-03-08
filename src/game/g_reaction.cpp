@@ -341,16 +341,6 @@ static int G_ReactionFireGetTUsForItem (const Edict *shooter, const Edict *targe
 }
 
 /**
- * @brief Checks whether the actor has a reaction fire enabled weapon in one of his hands.
- * @param[in] ent The actor to check the weapons for
- * @return @c true if the actor has reaction fire enabled weapons
- */
-static bool G_ActorHasReactionFireEnabledWeapon (const Edict *ent)
-{
-	return ent->chr.inv.holdsReactionFireWeapon();
-}
-
-/**
  * @brief Checks if the currently selected firemode is usable with the defined weapon.
  * @param[in] actor The actor to check the firemode for.
  */
@@ -464,7 +454,7 @@ static bool G_ReactionFireCanBeEnabled (const Edict *ent)
 	if (!ent->chr.teamDef->weapons)
 		return false;
 
-	if (!G_ActorHasReactionFireEnabledWeapon(ent)) {
+	if (!ent->chr.inv.holdsReactionFireWeapon()) {
 		G_ClientPrintf(G_PLAYER_FROM_ENT(ent), PRINT_HUD, _("No reaction fire enabled weapon."));
 		return false;
 	}
