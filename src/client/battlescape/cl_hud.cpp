@@ -739,15 +739,6 @@ static int HUD_WeaponCanBeReloaded (const le_t *le, containerIndex_t containerID
 }
 
 /**
- * @brief Checks if there is a weapon in the hand that can be used for reaction fire.
- * @param[in] actor What actor to check.
- */
-static bool HUD_WeaponWithReaction (const le_t *actor)
-{
-	return actor->inv.holdsReactionFireWeapon();
-}
-
-/**
  * @brief Display 'impossible" (red) reaction buttons.
  * @param[in] actor the actor to check for his reaction state.
  * @return true if nothing changed message was sent otherwise false.
@@ -873,12 +864,12 @@ static void HUD_UpdateButtons (const le_t *le)
 
 	/* reaction-fire button */
 	if (!(le->state & STATE_REACTION)) {
-		if (time >= CL_ActorReservedTUs(le, RES_REACTION) && HUD_WeaponWithReaction(le))
+		if (time >= CL_ActorReservedTUs(le, RES_REACTION) && le->inv.holdsReactionFireWeapon())
 			HUD_SetWeaponButton(BT_REACTION, BT_STATE_DESELECT);
 		else
 			HUD_SetWeaponButton(BT_REACTION, BT_STATE_DISABLE);
 	} else {
-		if (HUD_WeaponWithReaction(le)) {
+		if (le->inv.holdsReactionFireWeapon()) {
 			HUD_DisplayPossibleReaction(le);
 		} else {
 			HUD_DisplayImpossibleReaction(le);
