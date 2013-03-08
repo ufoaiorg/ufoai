@@ -285,7 +285,7 @@ void G_InventoryToFloor (Edict *ent)
 #endif
 		}
 		/* destroy link */
-		CONTAINER(ent, container) = NULL;
+		ent->resetContainer(container);
 	}
 
 	ent->setFloor(floor);
