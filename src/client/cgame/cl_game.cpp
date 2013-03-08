@@ -1257,7 +1257,7 @@ static void GAME_NetSendInventory (dbuffer *buf, const inventory_t *inv)
  * @param[out] buf The net channel buffer to write the character data into.
  * @param[in] chr The character to get the data from.
  */
-static void GAME_NetSendCharacter (dbuffer * buf, const character_t *chr)
+static void GAME_NetSendCharacter (dbuffer *buf, const character_t *chr)
 {
 	int j;
 
@@ -1307,7 +1307,7 @@ static void GAME_NetSendCharacter (dbuffer * buf, const character_t *chr)
  * @sa MP_SaveTeamMultiplayerInfo
  * @note Called in CL_Precache_f to send the team info to server
  */
-static void GAME_SendCurrentTeamSpawningInfo (dbuffer * buf, linkedList_t *team)
+static void GAME_SendCurrentTeamSpawningInfo (dbuffer *buf, linkedList_t *team)
 {
 	const int teamSize = LIST_Count(team);
 

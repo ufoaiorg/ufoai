@@ -46,7 +46,7 @@ static bool CL_AddEdictFunc (le_t *le, entity_t *ent)
  * @sa EV_ADD_EDICT
  * @sa CL_EntAppear
  */
-void CL_AddEdict (const eventRegister_t *self, dbuffer * msg)
+void CL_AddEdict (const eventRegister_t *self, dbuffer *msg)
 {
 	le_t *le;
 	int entnum;
