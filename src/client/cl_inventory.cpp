@@ -369,7 +369,7 @@ invList_t *INV_SearchInInventoryWithFilter (const inventory_t* const inv, const 
 	if (item == NULL)
 		return NULL;
 
-	for (ic = inv->c[container->id]; ic; ic = ic->next) {
+	for (ic = inv->getContainer(container->id); ic; ic = ic->next) {
 		/* Search only in the items that could get displayed. */
 		if (ic && ic->item.def() && (filterType == MAX_FILTERTYPES || INV_ItemMatchesFilter(ic->item.def(), filterType))) {
 			/* We search _everything_, no matter what location it is (i.e. x/y are ignored). */

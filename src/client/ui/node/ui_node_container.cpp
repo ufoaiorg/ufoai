@@ -475,7 +475,7 @@ static void UI_ContainerNodeDrawSingle (uiNode_t *node, const objDef_t *highligh
 				UI_DrawItem(node, pos, item, -1, -1, scale, color);
 			}
 		}
-	} else if (ui_inventory->c[contType->id]) {
+	} else if (ui_inventory->getContainer(contType->id)) {
 		bool disabled = false;
 		const item_t *item;
 
@@ -492,7 +492,7 @@ static void UI_ContainerNodeDrawSingle (uiNode_t *node, const objDef_t *highligh
 			}
 		}
 
-		item = &ui_inventory->c[contType->id]->item;
+		item = &ui_inventory->getContainer(contType->id)->item;
 		assert(item);
 		assert(item->def());
 		if (highlightType && INVSH_LoadableInWeapon(highlightType, item->def())) {

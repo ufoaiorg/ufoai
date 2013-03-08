@@ -1237,7 +1237,7 @@ static void GAME_NetSendInventory (dbuffer *buf, const inventory_t *inv)
 	for (container = 0; container < csi.numIDs; container++) {
 		if (INVDEF(container)->temp)
 			continue;
-		for (ic = inv->c[container]; ic; ic = ic->next) {
+		for (ic = inv->getContainer(container); ic; ic = ic->next) {
 			nr++;
 		}
 	}
@@ -1246,7 +1246,7 @@ static void GAME_NetSendInventory (dbuffer *buf, const inventory_t *inv)
 	for (container = 0; container < csi.numIDs; container++) {
 		if (INVDEF(container)->temp)
 			continue;
-		for (ic = inv->c[container]; ic; ic = ic->next) {
+		for (ic = inv->getContainer(container); ic; ic = ic->next) {
 			GAME_NetSendItem(buf, ic->item, container, ic->x, ic->y);
 		}
 	}
