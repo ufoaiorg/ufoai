@@ -105,9 +105,9 @@ bool G_TriggerRemoveFromList (Edict *self, Edict *activator)
 	return false;
 }
 
-Edict* G_TriggerSpawn (Edict *owner)
+Edict *G_TriggerSpawn (Edict *owner)
 {
-	Edict* trigger = G_Spawn("trigger");
+	Edict *trigger = G_Spawn("trigger");
 	trigger->type = ET_TRIGGER;
 	/* set the owner, e.g. link the door into the trigger */
 	trigger->owner = owner;

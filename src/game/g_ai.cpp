@@ -432,8 +432,8 @@ bool AI_FindHerdLocation (Edict *ent, const pos3_t from, const vec3_t target, in
 	const int distance = std::min(tu, HERD_DIST * 2);
 	vec_t bestlength = 0.0f;
 	pos3_t bestpos;
-	Edict* next = NULL;
-	Edict* enemy = NULL;
+	Edict *next = NULL;
+	Edict *enemy = NULL;
 
 	if (!herdPathingTable)
 		herdPathingTable = (pathing_t *) G_TagMalloc(sizeof(*herdPathingTable), TAG_LEVEL);
@@ -1441,7 +1441,7 @@ static const equipDef_t *G_GetEquipmentForAISpawn (int team)
 	return NULL;
 }
 
-static Edict* G_SpawnAIPlayer (const Player &player, const equipDef_t *ed)
+static Edict *G_SpawnAIPlayer (const Player &player, const equipDef_t *ed)
 {
 	Edict *ent = G_ClientGetFreeSpawnPointForActorSize(player, ACTOR_SIZE_NORMAL);
 	if (!ent) {

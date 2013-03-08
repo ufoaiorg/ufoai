@@ -208,7 +208,7 @@ void G_MatchEndTrigger (int team, int timeGap)
  * @sa GAME_SendCurrentTeamSpawningInfo
  * @note you also have to update the pascal string size in G_MatchSendResults if you change the buffer here
  */
-static void G_SendCharacterData (const Edict* ent)
+static void G_SendCharacterData (const Edict *ent)
 {
 	int k;
 

@@ -36,7 +36,7 @@ static Edict *g_edicts;
  * @brief Allocate space for the entity pointers.
  * @note No need to set it to zero, G_TagMalloc will do that for us
  */
-Edict* G_EdictsInit (void)
+Edict *G_EdictsInit (void)
 {
 	g_edicts = (Edict *)G_TagMalloc(game.sv_maxentities * sizeof(g_edicts[0]), TAG_GAME);
 	return g_edicts;
@@ -56,7 +56,7 @@ void G_EdictsReset (void)
  * @return the entity's ID number, currently the index in the array
  * @note DO NOT use this number as anything other than an identifier !
  */
-int G_EdictsGetNumber (const Edict* ent)
+int G_EdictsGetNumber (const Edict *ent)
 {
 	int idx = ent - g_edicts;
 	assert(idx >= 0 && idx < globals.num_edicts);
@@ -79,7 +79,7 @@ bool G_EdictsIsValidNum (const int num)
  * @brief Get an entity by it's number
  * @param[in] num The entity's index in the array of entities
  */
-Edict* G_EdictsGetByNum (const int num)
+Edict *G_EdictsGetByNum (const int num)
 {
 	if (!G_EdictsIsValidNum(num)) {
 		gi.DPrintf("Invalid edict num %i\n", num);
@@ -94,7 +94,7 @@ Edict* G_EdictsGetByNum (const int num)
  * @note This is always a world edict - but in case of rma there might be several parts
  * of the world spread all over the array.
  */
-Edict* G_EdictsGetFirst (void)
+Edict *G_EdictsGetFirst (void)
 {
 	return &g_edicts[0];
 }
@@ -103,10 +103,10 @@ Edict* G_EdictsGetFirst (void)
  * @brief Iterate through the list of entities
  * @param lastEnt The entity found in the previous iteration; if NULL, we start at the beginning
  */
-Edict* G_EdictsGetNext (Edict* lastEnt)
+Edict *G_EdictsGetNext (Edict *lastEnt)
 {
-	Edict* endOfEnts = &g_edicts[globals.num_edicts];
-	Edict* ent;
+	Edict *endOfEnts = &g_edicts[globals.num_edicts];
+	Edict *ent;
 
 	if (!globals.num_edicts)
 		return NULL;
@@ -125,7 +125,7 @@ Edict* G_EdictsGetNext (Edict* lastEnt)
 	return ent;
 }
 
-Edict* G_EdictDuplicate (const Edict *edict)
+Edict *G_EdictDuplicate (const Edict *edict)
 {
 	Edict *duplicate = G_EdictsGetNewEdict();
 	if (duplicate == NULL)
@@ -138,9 +138,9 @@ Edict* G_EdictDuplicate (const Edict *edict)
 /**
  * @brief Find an entity that is not in use
  */
-Edict* G_EdictsGetNewEdict (void)
+Edict *G_EdictsGetNewEdict (void)
 {
-	Edict* ent = NULL;
+	Edict *ent = NULL;
 
 	/* try to recycle an edict */
 	while ((ent = G_EdictsGetNext(ent))) {
@@ -163,9 +163,9 @@ Edict* G_EdictsGetNewEdict (void)
  * to iterate through entities that are NOT in use
  * @param lastEnt The entity found in the previous iteration; if NULL, we start at the beginning
  */
-Edict* G_EdictsGetNextInUse (Edict* lastEnt)
+Edict *G_EdictsGetNextInUse (Edict *lastEnt)
 {
-	Edict* ent = lastEnt;
+	Edict *ent = lastEnt;
 
 	while ((ent = G_EdictsGetNext(ent))) {
 		if (ent->inuse)
@@ -178,9 +178,9 @@ Edict* G_EdictsGetNextInUse (Edict* lastEnt)
  * @brief Iterator through all the trigger_nextmap edicts
  * @param lastEnt The entity found in the previous iteration; if NULL, we start at the beginning
  */
-Edict* G_EdictsGetTriggerNextMaps (Edict* lastEnt)
+Edict *G_EdictsGetTriggerNextMaps (Edict *lastEnt)
 {
-	Edict* ent = lastEnt;
+	Edict *ent = lastEnt;
 
 	while ((ent = G_EdictsGetNextInUse(ent))) {
 		if (G_IsTriggerNextMap(ent))
@@ -193,9 +193,9 @@ Edict* G_EdictsGetTriggerNextMaps (Edict* lastEnt)
  * @brief Iterate through the living actor entities
  * @param lastEnt The entity found in the previous iteration; if NULL, we start at the beginning
  */
-Edict* G_EdictsGetNextLivingActor (Edict* lastEnt)
+Edict *G_EdictsGetNextLivingActor (Edict *lastEnt)
 {
-	Edict* ent = lastEnt;
+	Edict *ent = lastEnt;
 
 	while ((ent = G_EdictsGetNextInUse(ent))) {
 		if (G_IsLivingActor(ent))
@@ -209,9 +209,9 @@ Edict* G_EdictsGetNextLivingActor (Edict* lastEnt)
  * @param lastEnt The entity found in the previous iteration; if NULL, we start at the beginning
  * @param team The team we are looking for
  */
-Edict* G_EdictsGetNextLivingActorOfTeam (Edict* lastEnt, const int team)
+Edict *G_EdictsGetNextLivingActorOfTeam (Edict *lastEnt, const int team)
 {
-	Edict* ent = lastEnt;
+	Edict *ent = lastEnt;
 
 	while ((ent = G_EdictsGetNextLivingActor(ent))) {
 		if (ent->team == team)
@@ -224,9 +224,9 @@ Edict* G_EdictsGetNextLivingActorOfTeam (Edict* lastEnt, const int team)
  * @brief Iterate through the actor entities (even the dead! - but skips the invisible)
  * @param lastEnt The entity found in the previous iteration; if NULL, we start at the beginning
  */
-Edict* G_EdictsGetNextActor (Edict* lastEnt)
+Edict *G_EdictsGetNextActor (Edict *lastEnt)
 {
-	Edict* ent = lastEnt;
+	Edict *ent = lastEnt;
 
 	assert(lastEnt < &g_edicts[globals.num_edicts]);
 
@@ -296,7 +296,7 @@ Edict *G_EdictsFindTargetEntity (const char *target)
  * @brief Calculate the edict's origin vector from it's grid position
  * @param ent The entity
  */
-void G_EdictCalcOrigin (Edict* ent)
+void G_EdictCalcOrigin (Edict *ent)
 {
 	gi.GridPosToVec(ent->fieldSize, ent->pos, ent->origin);
 }
@@ -306,7 +306,7 @@ void G_EdictCalcOrigin (Edict* ent)
  * @param ent The entity
  * @param newPos The new grid position
  */
-void G_EdictSetOrigin (Edict* ent, const pos3_t newPos)
+void G_EdictSetOrigin (Edict *ent, const pos3_t newPos)
 {
 	VectorCopy(newPos, ent->pos);
 	gi.GridPosToVec(ent->fieldSize, ent->pos, ent->origin);
@@ -318,7 +318,7 @@ void G_EdictSetOrigin (Edict* ent, const pos3_t newPos)
  * @param cmpPos The grid position to compare to
  * @return true if positions are equal
  */
-bool G_EdictPosIsSameAs (const Edict* ent, const pos3_t cmpPos)
+bool G_EdictPosIsSameAs (const Edict *ent, const pos3_t cmpPos)
 {
 	return VectorCompare(cmpPos, ent->pos);
 }

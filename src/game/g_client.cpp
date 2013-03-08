@@ -306,7 +306,7 @@ void G_SendInvisible (const Player &player)
 
 	assert(team != TEAM_NO_ACTIVE);
 	if (level.num_alive[team]) {
-		Edict* ent = NULL;
+		Edict *ent = NULL;
 		/* check visibility */
 		while ((ent = G_EdictsGetNextActor(ent))) {
 			if (ent->team != team) {
@@ -420,7 +420,7 @@ bool G_ActionCheckForReaction (const Player *player, Edict *ent, int TU)
 /**
  * @brief Sends the actual actor turn event over the netchannel
  */
-static void G_ClientTurn (Player &player, Edict* ent, dvec_t dvec)
+static void G_ClientTurn (Player &player, Edict *ent, dvec_t dvec)
 {
 	const int dir = getDVdir(dvec);
 
@@ -479,7 +479,7 @@ static void G_ClientStateChangeUpdate (Edict *ent)
  * don't even use the G_ActionCheckForCurrentTeam function
  * @note Use checkaction true only for e.g. spawning values
  */
-void G_ClientStateChange (const Player *player, Edict* ent, int reqState, bool checkaction)
+void G_ClientStateChange (const Player *player, Edict *ent, int reqState, bool checkaction)
 {
 	/* Check if any action is possible. */
 	if (checkaction && !G_ActionCheckForCurrentTeam(player, ent, 0))
@@ -1053,7 +1053,7 @@ static void G_ThinkActorGoCrouch (Edict *ent)
  * @param[in] actorSize The actor size to get a spawning point for
  * @return An actor edict or @c NULL if no free spawning point was found
  */
-Edict* G_ClientGetFreeSpawnPointForActorSize (const Player &player, const actorSizeEnum_t actorSize)
+Edict *G_ClientGetFreeSpawnPointForActorSize (const Player &player, const actorSizeEnum_t actorSize)
 {
 	Edict *ent;
 

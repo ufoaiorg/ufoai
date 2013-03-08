@@ -79,7 +79,7 @@ void G_ActorUseDoor (Edict *actor, Edict *door)
  * @param[in] actor The actor to check
  * @return @c true if the actor is standing in a rescue zone, @c false otherwise.
  */
-bool G_ActorIsInRescueZone (const Edict* actor)
+bool G_ActorIsInRescueZone (const Edict *actor)
 {
 	return actor->inRescueZone;
 }
@@ -89,7 +89,7 @@ bool G_ActorIsInRescueZone (const Edict* actor)
  * @param[out] actor The actor to set the rescue zone flag for
  * @param[in] inRescueZone @c true if the actor is in the rescue zone, @c false otherwise
  */
-void G_ActorSetInRescueZone (Edict* actor, bool inRescueZone)
+void G_ActorSetInRescueZone (Edict *actor, bool inRescueZone)
 {
 	if (inRescueZone == G_ActorIsInRescueZone(actor))
 		return;
@@ -265,7 +265,7 @@ int G_ActorDoTurn (Edict *ent, byte dir)
  * @note Also re-links the actor edict - because the server must know about the
  * changed bounding box for tracing to work.
  */
-void G_ActorSetMaxs (Edict* ent)
+void G_ActorSetMaxs (Edict *ent)
 {
 	if (G_IsCrouched(ent))
 		VectorSet(ent->maxs, PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_CROUCH);
@@ -745,7 +745,7 @@ bool G_ActorInvMove (Edict *ent, const invDef_t *from, invList_t *fItem, const i
  * @param[in] invDef Reloading weapon in right or left hand.
  * @sa AI_ActorThink
  */
-void G_ActorReload (Edict* ent, const invDef_t *invDef)
+void G_ActorReload (Edict *ent, const invDef_t *invDef)
 {
 	invList_t *ic;
 	invList_t *icFinal;

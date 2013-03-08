@@ -127,7 +127,7 @@ void G_MoveCalcLocal (pathing_t *pt, int team, const Edict *movingActor, const p
  */
 void G_ActorFall (Edict *ent)
 {
-	Edict* entAtPos;
+	Edict *entAtPos;
 	const int oldZ = ent->pos[2];
 
 	ent->pos[2] = gi.GridFall(ent->fieldSize, ent->pos);
@@ -194,7 +194,7 @@ static bool G_ActorShouldStopInMidMove (const Edict *ent, int visState, dvec_t* 
  * @param[in] dvec The direction vector for the step to be added
  * @param[in] contentFlags The material we are walking over
  */
-static void G_WriteStep (Edict* ent, byte** stepAmount, const int dvec, const int contentFlags)
+static void G_WriteStep (Edict *ent, byte** stepAmount, const int dvec, const int contentFlags)
 {
 	/* write move header if not yet done */
 	if (gi.GetEvent() != EV_ACTOR_MOVE) {
@@ -420,7 +420,7 @@ void G_ClientMove (const Player &player, int visTeam, Edict *ent, const pos3_t t
 				/* Set ent->TU because the reaction code relies on ent->TU being accurate. */
 				G_ActorSetTU(ent, initTU - usedTUs);
 
-				Edict* clientAction = ent->clientAction;
+				Edict *clientAction = ent->clientAction;
 				oldState = ent->state;
 				oldHP = ent->HP;
 				oldSTUN = ent->STUN;

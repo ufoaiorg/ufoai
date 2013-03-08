@@ -38,7 +38,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * choose a random sound. See the event function for more information.
  * of the path, a random sound will be taken.
  */
-void G_EventSpawnSound (playermask_t playerMask, bool instant, const Edict* ent, const vec3_t origin, const char *sound)
+void G_EventSpawnSound (playermask_t playerMask, bool instant, const Edict *ent, const vec3_t origin, const char *sound)
 {
 	G_EventAdd(playerMask, EV_SOUND | (instant ? EVENT_INSTANTLY : 0), ent->number);
 
@@ -65,7 +65,7 @@ void G_EventSpawnSound (playermask_t playerMask, bool instant, const Edict* ent,
  * @note Every player that can see this ent will reveive the turn event data
  * @note Make sure that the direction to turn into is already set
  */
-void G_EventActorTurn (const Edict* ent)
+void G_EventActorTurn (const Edict *ent)
 {
 	G_EventAdd(G_VisToPM(ent->visflags), EV_ACTOR_TURN, ent->number);
 	gi.WriteByte(ent->dir);
@@ -76,7 +76,7 @@ void G_EventActorTurn (const Edict* ent)
  * @brief Announce the actor die event for the clients that are seeing the actor
  * @param[in] ent The actor that is dying
  */
-void G_EventActorDie (const Edict* ent, bool attacker)
+void G_EventActorDie (const Edict *ent, bool attacker)
 {
 	G_EventAdd(G_VisToPM(ent->visflags), EV_ACTOR_DIE, ent->number);
 	gi.WriteShort(ent->state);
@@ -89,7 +89,7 @@ void G_EventActorDie (const Edict* ent, bool attacker)
  * @brief Announce the actor die event for the clients that are seeing the actor
  * @param[in] ent The actor that was healed and woke up again
  */
-void G_EventActorRevitalise (const Edict* ent)
+void G_EventActorRevitalise (const Edict *ent)
 {
 	G_EventAdd(G_VisToPM(ent->visflags), EV_ACTOR_REVITALISED, ent->number);
 	gi.WriteShort(ent->state);
@@ -145,7 +145,7 @@ void G_EventInventoryAdd (const Edict *ent, playermask_t playerMask, int itemAmo
  * @brief Send an event to all clients that are seeing the given edict, that it just has disappeared
  * @param ent The edict that disappeared
  */
-void G_EventPerish (const Edict* ent)
+void G_EventPerish (const Edict *ent)
 {
 	G_EventEdictPerish(G_VisToPM(ent->visflags), ent);
 }
@@ -281,7 +281,7 @@ void G_EventParticleSpawn (playermask_t playerMask, const char *name, int levelF
 	G_EventEnd();
 }
 
-void G_EventActorFall (const Edict* ent)
+void G_EventActorFall (const Edict *ent)
 {
 	G_EventAdd(G_VisToPM(ent->visflags), EV_ACTOR_MOVE, ent->number);
 	gi.WriteByte(1);
@@ -315,14 +315,14 @@ void G_EventSetClientAction (const Edict *ent)
  * @param[in] ent The entity to reset the client action for
  * @note This event is send to the player this edict belongs to
  */
-void G_EventResetClientAction (const Edict* ent)
+void G_EventResetClientAction (const Edict *ent)
 {
 	const int playerMask = G_PlayerToPM(G_PLAYER_FROM_ENT(ent));
 	G_EventAdd(playerMask, EV_RESET_CLIENT_ACTION, ent->number);
 	G_EventEnd();
 }
 
-void G_EventActorStats (const Edict* ent, playermask_t playerMask)
+void G_EventActorStats (const Edict *ent, playermask_t playerMask)
 {
 	G_EventAdd(playerMask, EV_ACTOR_STATS, ent->number);
 	gi.WriteByte(ent->TU);

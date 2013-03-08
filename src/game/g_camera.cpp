@@ -87,7 +87,7 @@ void G_InitCamera (Edict *ent, camera_type_t cameraType, float angle, bool rotat
 
 Edict *G_SpawnCamera (const vec3_t origin, int team, camera_type_t cameraType)
 {
-	Edict* ent = G_Spawn();
+	Edict *ent = G_Spawn();
 	VectorCopy(origin, ent->origin);
 	ent->team = team;
 

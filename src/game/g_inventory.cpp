@@ -105,7 +105,7 @@ bool G_InventoryRemoveItemByID (const char *itemID, Edict *ent, containerIndex_t
  * @param[in] container The container of the entity inventory to check
  * @return @c true if there are items that should be dropped to floor, @c false otherwise
  */
-static bool G_InventoryDropToFloorCheck (Edict* ent, containerIndex_t container)
+static bool G_InventoryDropToFloorCheck (Edict *ent, containerIndex_t container)
 {
 	invList_t* ic = ent->getContainer(container);
 
