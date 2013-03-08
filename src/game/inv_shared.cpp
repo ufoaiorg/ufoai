@@ -83,9 +83,9 @@ bool invDef_t::isEquipDef () const
  * @param invDef The inventory definition to check
  * @return @c true if the given inventory definition is of type armour
  */
-bool INV_IsArmourDef (const invDef_t* invDef)
+bool invDef_t::isArmourDef () const
 {
-	return invDef->id == CSI->idArmour;
+	return id == CSI->idArmour;
 }
 
 static int cacheCheckToInventory = INV_DOES_NOT_FIT;

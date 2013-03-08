@@ -453,7 +453,7 @@ inventory_action_t InventoryInterface::moveInInventory (inventory_t* const inv, 
 		*icp = ic;
 	}
 
-	if (INV_IsArmourDef(to)) {
+	if (to->isArmourDef()) {
 		assert(this->cacheItem.isArmour());
 		return IA_ARMOUR;
 	}

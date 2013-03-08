@@ -336,6 +336,7 @@ typedef struct invDef_s {
 	uint32_t shape[SHAPE_BIG_MAX_HEIGHT];	/**< The inventory form/shape. */
 	int in, out;	/**< parsed: TU costs for moving items in and out. */
 
+	bool isArmourDef () const;
 	bool isFloorDef () const;
 	bool isRightDef () const;
 	bool isLeftDef () const;
@@ -475,9 +476,6 @@ typedef enum {
 #define foreachhand(hand) for (int hand##__loop = 0; hand##__loop < 2; ++hand##__loop) \
 	if (hand = (hand##__loop == 0 ? ACTOR_HAND_RIGHT : ACTOR_HAND_LEFT), false) {} else
 
-
-bool INV_IsEquipDef(const invDef_t* invDef);
-bool INV_IsArmourDef(const invDef_t* invDef);
 
 /* ================================ */
 /*  INVENTORY MANAGEMENT FUNCTIONS  */
