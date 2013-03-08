@@ -521,16 +521,16 @@ static void GAME_SaveItem (xmlNode_t *p, const item_t *item, containerIndex_t co
 /**
  * @brief Save callback for savegames in XML Format
  * @param[out] p XML Node structure, where we write the information to
- * @param[in] i Pointer to the inventory to save
+ * @param[in] inv Pointer to the inventory to save
  * @sa GAME_SaveItem
  * @sa GAME_LoadInventory
  */
-static void GAME_SaveInventory (xmlNode_t *p, const inventory_t *i)
+static void GAME_SaveInventory (xmlNode_t *p, const inventory_t *inv)
 {
 	containerIndex_t container;
 
 	for (container = 0; container < csi.numIDs; container++) {
-		invList_t *ic = i->c[container];
+		invList_t *ic = inv->c[container];
 
 		/* ignore items linked from any temp container */
 		if (INVDEF(container)->temp)

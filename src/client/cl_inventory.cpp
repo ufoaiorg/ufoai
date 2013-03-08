@@ -352,24 +352,24 @@ bool INV_ItemMatchesFilter (const objDef_t *obj, const itemFilterTypes_t filterT
 /**
  * @brief Searches if there is an item at location (x/y) in a scrollable container. You can also provide an item to search for directly (x/y is ignored in that case).
  * @note x = x-th item in a row, y = row. i.e. x/y does not equal the "grid" coordinates as used in those containers.
- * @param[in] i Pointer to the inventory where we will search.
+ * @param[in] inv Pointer to the inventory where we will search.
  * @param[in] container Container in the inventory.
  * @param[in] item The item to search. Will ignore "x" and "y" if set, it'll also search invisible items.
  * @param[in] filterType Enum definition of type (types of items for filtering purposes).
  * @return @c invList_t Pointer to the invList_t/item that is located at x/y or equals "item".
  * @sa inventory_t::getItemAtPos
  */
-invList_t *INV_SearchInInventoryWithFilter (const inventory_t* const i, const invDef_t *container, const objDef_t *item,  const itemFilterTypes_t filterType)
+invList_t *INV_SearchInInventoryWithFilter (const inventory_t* const inv, const invDef_t *container, const objDef_t *item,  const itemFilterTypes_t filterType)
 {
 	invList_t *ic;
 
-	if (i == NULL)
+	if (inv == NULL)
 		return NULL;
 
 	if (item == NULL)
 		return NULL;
 
-	for (ic = i->c[container->id]; ic; ic = ic->next) {
+	for (ic = inv->c[container->id]; ic; ic = ic->next) {
 		/* Search only in the items that could get displayed. */
 		if (ic && ic->item.def() && (filterType == MAX_FILTERTYPES || INV_ItemMatchesFilter(ic->item.def(), filterType))) {
 			/* We search _everything_, no matter what location it is (i.e. x/y are ignored). */

@@ -1228,7 +1228,7 @@ static void GAME_NetSendItem (dbuffer *buf, item_t item, containerIndex_t contai
 /**
  * @sa G_SendInventory
  */
-static void GAME_NetSendInventory (dbuffer *buf, const inventory_t *i)
+static void GAME_NetSendInventory (dbuffer *buf, const inventory_t *inv)
 {
 	containerIndex_t container;
 	int nr = 0;
@@ -1237,7 +1237,7 @@ static void GAME_NetSendInventory (dbuffer *buf, const inventory_t *i)
 	for (container = 0; container < csi.numIDs; container++) {
 		if (INVDEF(container)->temp)
 			continue;
-		for (ic = i->c[container]; ic; ic = ic->next) {
+		for (ic = inv->c[container]; ic; ic = ic->next) {
 			nr++;
 		}
 	}
@@ -1246,7 +1246,7 @@ static void GAME_NetSendInventory (dbuffer *buf, const inventory_t *i)
 	for (container = 0; container < csi.numIDs; container++) {
 		if (INVDEF(container)->temp)
 			continue;
-		for (ic = i->c[container]; ic; ic = ic->next) {
+		for (ic = inv->c[container]; ic; ic = ic->next) {
 			GAME_NetSendItem(buf, ic->item, container, ic->x, ic->y);
 		}
 	}
