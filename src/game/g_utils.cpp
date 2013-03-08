@@ -114,7 +114,7 @@ Edict *G_GetEdictFromPosExcluding (const pos3_t pos, const int n, ...)
  * @return true when triggering the use function was successful.
  * @sa G_ClientUseEdict
  */
-bool G_UseEdict (Edict *ent, Edict* activator)
+bool G_UseEdict (Edict *ent, Edict *activator)
 {
 	if (!ent)
 		return false;
@@ -130,7 +130,7 @@ bool G_UseEdict (Edict *ent, Edict* activator)
 		status = false;
 	}
 
-	Edict* chain = ent->groupChain;
+	Edict *chain = ent->groupChain;
 	while (chain) {
 		if (chain->use)
 			chain->use(chain, activator);
@@ -405,7 +405,7 @@ void G_PrintActorStats (const Edict *victim, const Edict *attacker, const fireDe
  * @param[in] rad radius to search an edict in.
  * @param[in] type Type of entity. @c ET_NULL to ignore the type.
  * @code
- * Edict* ent = NULL;
+ * Edict *ent = NULL;
  * while ((ent = G_FindRadius(ent, origin, rad, type)) != NULL) {
  *   [...]
  * }
@@ -599,7 +599,7 @@ int G_TouchSolids (Edict *ent, float extend)
 	/* be careful, it is possible to have an entity in this
 	 * list removed before we get to it (killtriggered) */
 	for (i = 0; i < num; i++) {
-		Edict* hit = touch[i];
+		Edict *hit = touch[i];
 		if (hit->solid == SOLID_TRIGGER)
 			continue;
 		if (!hit->inuse)
@@ -636,7 +636,7 @@ void G_TouchEdicts (Edict *ent, float extend)
 	/* be careful, it is possible to have an entity in this
 	 * list removed before we get to it (killtriggered) */
 	for (i = 0; i < num; i++) {
-		Edict* hit = touched[i];
+		Edict *hit = touched[i];
 		if (!hit->inuse)
 			continue;
 		if (ent->touch)

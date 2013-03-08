@@ -33,7 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 bool G_TriggerIsInList(Edict *self, Edict *activator);
 void G_TriggerAddToList(Edict *self, Edict *activator);
 bool G_TriggerRemoveFromList(Edict *self, Edict *activator);
-Edict* G_TriggerSpawn(Edict *owner);
+Edict *G_TriggerSpawn(Edict *owner);
 void Think_NextMapTrigger(Edict *self);
 void SP_trigger_nextmap(Edict *ent);
 bool Touch_HurtTrigger(Edict *self, Edict *activator);

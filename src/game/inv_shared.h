@@ -481,7 +481,7 @@ typedef enum {
 /*  INVENTORY MANAGEMENT FUNCTIONS  */
 /* ================================ */
 
-void INVSH_InitCSI(const struct csi_s * import) __attribute__((nonnull));
+void INVSH_InitCSI(const struct csi_s *import) __attribute__((nonnull));
 
 const objDef_t *INVSH_GetItemByID(const char *id);
 const objDef_t *INVSH_GetItemByIDX(int index);

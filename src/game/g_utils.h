@@ -33,7 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 void G_FreeEdict(Edict *e);
 Edict *G_GetEdictFromPos(const pos3_t pos, const entity_type_t type);
 Edict *G_GetEdictFromPosExcluding(const pos3_t pos, const int n, ...);
-bool G_UseEdict(Edict *ent, Edict* activator);
+bool G_UseEdict(Edict *ent, Edict *activator);
 const char* G_GetWeaponNameForFiredef(const fireDef_t *fd);
 Player* G_GetPlayerForTeam(int team);
 void G_TakeDamage(Edict *ent, int damage);

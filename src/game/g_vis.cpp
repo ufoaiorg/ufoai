@@ -318,7 +318,7 @@ static int G_DoTestVis (const int team, Edict *check, const vischeckflags_t visF
  */
 void G_CheckVisPlayer (Player &player, const vischeckflags_t visFlags)
 {
-	Edict* ent = NULL;
+	Edict *ent = NULL;
 
 	/* check visibility */
 	while ((ent = G_EdictsGetNextInUse(ent))) {
