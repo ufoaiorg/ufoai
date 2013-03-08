@@ -415,15 +415,15 @@ const fireDef_t *FIRESH_SlowestFireDef (const item_t &item)
  * @return @c NULL if no reaction fire enabled weapon was found in the given list, the
  * reaction fire enabled object otherwise.
  */
-const objDef_t *INVSH_IsReactionFireEnabled (const invList_t *invList)
+const objDef_t *invList_t::getReactionFireWeaponType () const
 {
-	if (!invList)
+	if (!this)
 		return NULL;
 
-	if (invList->item.def()) {
-		const fireDef_t *fd = FIRESH_FiredefForWeapon(&invList->item);
+	if (item.def()) {
+		const fireDef_t *fd = FIRESH_FiredefForWeapon(&item);
 		if (fd && fd->reaction)
-			return invList->item.def();
+			return item.def();
 	}
 
 	return NULL;

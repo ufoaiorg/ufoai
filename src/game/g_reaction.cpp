@@ -347,10 +347,10 @@ static int G_ReactionFireGetTUsForItem (const Edict *shooter, const Edict *targe
  */
 static bool G_ActorHasReactionFireEnabledWeapon (const Edict *ent)
 {
-	const objDef_t *weapon = INVSH_IsReactionFireEnabled(ent->getRightHand());
+	const objDef_t *weapon = ent->getRightHand()->getReactionFireWeaponType();
 	if (weapon)
 		return true;
-	return INVSH_IsReactionFireEnabled(ent->getLeftHand()) != NULL;
+	return ent->getLeftHand()->getReactionFireWeaponType() != NULL;
 }
 
 /**
@@ -433,7 +433,7 @@ static bool G_ReactionFireSettingsSetDefault (Edict *ent)
 		invList = ent->getHand(hand);
 	}
 
-	const objDef_t *weapon = INVSH_IsReactionFireEnabled(invList);
+	const objDef_t *weapon = invList->getReactionFireWeaponType();
 	if (!weapon)
 		return false;
 

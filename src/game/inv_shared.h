@@ -400,6 +400,7 @@ typedef struct invList_s {
 	struct invList_s *next;		/**< Next entry in this list. */
 
 	void getFirstShapePosition (int* const x, int* const y) const;
+	const objDef_t *getReactionFireWeaponType () const;
 } invList_t;
 
 /** @brief inventory definition with all its containers */
@@ -503,5 +504,3 @@ const fireDef_t *FIRESH_SlowestFireDef(const item_t &item);
 void INVSH_MergeShapes(uint32_t *shape, const uint32_t itemShape, const int x, const int y);
 bool INVSH_CheckShape(const uint32_t *shape, const int x, const int y);
 int INVSH_ShapeSize(const uint32_t shape);
-
-const objDef_t *INVSH_IsReactionFireEnabled(const invList_t *invList);
