@@ -308,7 +308,7 @@ bool US_SaveXML (xmlNode_t *p)
 
 	cgi->Com_RegisterConstList(saveStoredUFOConstants);
 	US_Foreach(ufo) {
-		xmlNode_t * snode = cgi->XML_AddNode(node, SAVE_UFORECOVERY_UFO);
+		xmlNode_t *snode = cgi->XML_AddNode(node, SAVE_UFORECOVERY_UFO);
 
 		cgi->XML_AddInt(snode, SAVE_UFORECOVERY_UFOIDX, ufo->idx);
 		cgi->XML_AddString(snode, SAVE_UFORECOVERY_UFOID, ufo->id);

@@ -206,7 +206,7 @@ void R_DrawBspNormals (int tile)
  * @param[in] node The bsp node to mark
  * @param[in] tile The maptile (map assembly)
  */
-static void R_RecursiveVisibleWorldNode (const mBspNode_t * node, int tile)
+static void R_RecursiveVisibleWorldNode (const mBspNode_t *node, int tile)
 {
 	int i;
 	mBspSurface_t *surf;

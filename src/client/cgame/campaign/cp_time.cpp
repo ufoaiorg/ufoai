@@ -69,7 +69,7 @@ const char* CP_SecondConvert (int second)
  * @param[in] date Contains the date to be converted.
  * @param[out] dateLong The converted date.
   */
-void CP_DateConvertLong (const date_t * date, dateLong_t * dateLong)
+void CP_DateConvertLong (const date_t *date, dateLong_t *dateLong)
 {
 	byte i;
 	int d;

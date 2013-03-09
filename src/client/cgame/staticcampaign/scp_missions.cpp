@@ -167,7 +167,7 @@ static staticMission_t* SCP_GetMission (setState_t *set)
 static void SCP_CampaignAddMission (setState_t *set)
 {
 	actMis_t *mis;
-	mission_t * mission;
+	mission_t *mission;
 
 	/* add mission */
 	if (scd->numActiveMissions >= MAX_ACTMISSIONS) {

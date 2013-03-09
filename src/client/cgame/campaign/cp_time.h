@@ -41,7 +41,7 @@ typedef struct dateLong_s {
 	byte sec;	/**< Second of the minute. */
 } dateLong_t;
 
-void CP_DateConvertLong(const date_t * date, dateLong_t * dateLong);
+void CP_DateConvertLong(const date_t *date, dateLong_t *dateLong);
 const char* CP_SecondConvert(int second);
 
 void CP_UpdateTime(void);
