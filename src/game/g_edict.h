@@ -211,4 +211,9 @@ public:
 	{
 		chr.inv.setFloorContainer(NULL);
 	}
+	inline Player &getPlayer () const
+	{
+		return game.players[this->pnum];
+
+	}
 };

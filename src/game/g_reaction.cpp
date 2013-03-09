@@ -327,7 +327,7 @@ static int G_ReactionFireGetTUsForItem (const Edict *shooter, const Edict *targe
 
 		if (fmSetting->getFmIdx() >= 0 && fmSetting->getFmIdx() < MAX_FIREDEFS_PER_WEAPON) { /* If firemode is sane. */
 			const fireDefIndex_t fmIdx = fmSetting->getFmIdx();
-			const int reactionFire = G_PLAYER_FROM_ENT(shooter).reactionLeftover;
+			const int reactionFire = shooter->getPlayer().reactionLeftover;
 			const fireDef_t *fd = &fdArray[fmIdx];
 			const int tus = G_ActorGetTimeForFiredef(shooter, fd, true) + reactionFire;
 
@@ -455,17 +455,17 @@ static bool G_ReactionFireCanBeEnabled (const Edict *ent)
 		return false;
 
 	if (!ent->chr.inv.holdsReactionFireWeapon()) {
-		G_ClientPrintf(G_PLAYER_FROM_ENT(ent), PRINT_HUD, _("No reaction fire enabled weapon."));
+		G_ClientPrintf(ent->getPlayer(), PRINT_HUD, _("No reaction fire enabled weapon."));
 		return false;
 	}
 
 	if (!G_ActorHasWorkingFireModeSet(ent)) {
-		G_ClientPrintf(G_PLAYER_FROM_ENT(ent), PRINT_HUD, _("No fire mode selected for reaction fire."));
+		G_ClientPrintf(ent->getPlayer(), PRINT_HUD, _("No fire mode selected for reaction fire."));
 		return false;
 	}
 
 	if (!G_ActorHasEnoughTUsReactionFire(ent)) {
-		G_ClientPrintf(G_PLAYER_FROM_ENT(ent), PRINT_HUD, _("Not enough TUs left for activating reaction fire."));
+		G_ClientPrintf(ent->getPlayer(), PRINT_HUD, _("Not enough TUs left for activating reaction fire."));
 		return false;
 	}
 

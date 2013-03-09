@@ -137,7 +137,7 @@ extern game_export_t globals;
 #define G_IsBrushModel(ent)		((ent)->type == ET_BREAKABLE || G_IsDoor(ent) || (ent)->type == ET_ROTATING)
 /** @note Every none solid (none-bmodel) edict that is visible for the client */
 #define G_IsVisibleOnBattlefield(ent)	(G_IsActor((ent)) || G_IsItem(ent) || G_IsCamera(ent) || (ent)->type == ET_PARTICLE)
-#define G_IsAI(ent)				(G_PLAYER_FROM_ENT((ent)).pers.ai)
+#define G_IsAI(ent)				((ent)->getPlayer().pers.ai)
 #define G_IsAIPlayer(player)	((player)->pers.ai)
 #define G_TeamToVisMask(team)	(1 << (team))
 #define G_IsVisibleForTeam(ent, team) ((ent)->visflags & G_TeamToVisMask(team))

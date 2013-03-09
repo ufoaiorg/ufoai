@@ -219,7 +219,7 @@ static void testInventoryForDiedAlien (void)
 		CU_ASSERT_PTR_NOT_NULL_FATAL(ent);
 
 		/* move to the location of the first died alien to drop the inventory into the same floor container */
-		Player& player = G_PLAYER_FROM_ENT(ent);
+		Player& player = ent->getPlayer();
 		CU_ASSERT_TRUE_FATAL(G_IsAIPlayer(&player));
 		G_ClientMove(player, 0, ent, diedEnt->pos);
 		CU_ASSERT_TRUE_FATAL(VectorCompare(ent->pos, diedEnt->pos));
@@ -297,7 +297,7 @@ static void testInventoryWithTwoDiedAliensOnTheSameGridTile (void)
 		ent = G_EdictsGetNextLivingActorOfTeam(NULL, TEAM_ALIEN);
 		CU_ASSERT_PTR_NOT_NULL_FATAL(ent);
 
-		player = G_PLAYER_FROM_ENT(ent);
+		player = ent->getPlayer();
 		CU_ASSERT_TRUE_FATAL(G_IsAIPlayer(&player));
 
 		G_ClientMove(player, 0, ent, diedEnt->pos);

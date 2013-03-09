@@ -37,7 +37,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 static void G_MoralePanic (Edict *ent, bool sanity)
 {
-	G_ClientPrintf(G_PLAYER_FROM_ENT(ent), PRINT_HUD, _("%s panics!"), ent->chr.name);
+	G_ClientPrintf(ent->getPlayer(), PRINT_HUD, _("%s panics!"), ent->chr.name);
 	G_PrintStats("%s panics (entnum %i).", ent->chr.name, ent->number);
 	/* drop items in hands */
 	if (!sanity && ent->chr.teamDef->weapons) {
@@ -180,7 +180,7 @@ void G_MoraleBehaviour (int team)
 				G_SetShaken(ent);
 				G_ClientStateChange(&G_PLAYER_FROM_ENT(ent), ent, STATE_REACTION, false);
 				G_EventSendState(G_VisToPM(ent->visflags), ent);
-				G_ClientPrintf(G_PLAYER_FROM_ENT(ent), PRINT_HUD, _("%s is currently shaken."),
+				G_ClientPrintf(ent->getPlayer(), PRINT_HUD, _("%s is currently shaken."),
 						ent->chr.name);
 				G_PrintStats("%s is shaken (entnum %i).", ent->chr.name, ent->number);
 			}
