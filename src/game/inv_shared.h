@@ -297,6 +297,7 @@ typedef struct objDef_s {
 	uint32_t getShapeRotated () const;
 	bool isCraftItem () const;
 	bool isBaseDefenceItem () const;
+	bool isLoadableInWeapon (const objDef_s *weapon) const;
 	inline bool isAmmo ()	const
 	{
 		return Q_streq(this->type, "ammo");
@@ -490,7 +491,6 @@ void INVSH_InitCSI(const struct csi_s *import) __attribute__((nonnull));
 const objDef_t *INVSH_GetItemByID(const char *id);
 const objDef_t *INVSH_GetItemByIDX(int index);
 const objDef_t *INVSH_GetItemByIDSilent(const char *id);
-bool INVSH_LoadableInWeapon(const objDef_t *od, const objDef_t *weapon);
 
 const invDef_t *INVSH_GetInventoryDefinitionByID(const char *id);
 

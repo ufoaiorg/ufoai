@@ -88,7 +88,7 @@ item_t CP_AddWeaponAmmo (equipDef_t *ed, item_t item)
 	/** @todo We may want to change this to use the type->ammo[] info. */
 	for (i = 0; i < cgi->csi->numODs; i++) {
 		const objDef_t *od = INVSH_GetItemByIDX(i);
-		if (INVSH_LoadableInWeapon(od, type)) {
+		if (od->isLoadableInWeapon(type)) {
 			if (ed->numItems[i] > 0) {
 				ed->numItems[i]--;
 				item.ammoLeft = type->ammo;
@@ -117,7 +117,7 @@ item_t CP_AddWeaponAmmo (equipDef_t *ed, item_t item)
 	item.ammoLeft = NONE_AMMO;
 	for (i = 0; i < cgi->csi->numODs; i++) {
 		const objDef_t *od = INVSH_GetItemByIDX(i);
-		if (INVSH_LoadableInWeapon(od, type) && ed->numItemsLoose[i] > item.ammoLeft) {
+		if (od->isLoadableInWeapon(type) && ed->numItemsLoose[i] > item.ammoLeft) {
 			if (item.ammoLeft > 0) {
 				/* We previously found some ammo, but we've now found other
 				 * loose ammo of a different (but appropriate) type with

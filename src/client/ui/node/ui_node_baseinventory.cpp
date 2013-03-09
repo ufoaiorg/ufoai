@@ -327,9 +327,9 @@ static int UI_BaseInventoryNodeDrawItems (uiNode_t *node, const objDef_t *highli
 
 		if (highlightType) {
 			if (obj->isAmmo())
-				isHighlight = INVSH_LoadableInWeapon(obj, highlightType);
+				isHighlight = obj->isLoadableInWeapon(highlightType);
 			else
-				isHighlight = INVSH_LoadableInWeapon(highlightType, obj);
+				isHighlight = highlightType->isLoadableInWeapon(obj);
 		}
 
 		if (icItem != NULL) {

@@ -947,7 +947,7 @@ int CL_ActorGetContainerForReload (invList_t **invList, const inventory_t *inv, 
 			 * we've already found. */
 			for (ic = inv->getContainer(container); ic; ic = ic->next) {
 				const objDef_t *od = ic->item.def();
-				if (INVSH_LoadableInWeapon(od, weapon) && GAME_ItemIsUseable(od)) {
+				if (od->isLoadableInWeapon(weapon) && GAME_ItemIsUseable(od)) {
 					tu = INVDEF(container)->out;
 					bestContainer = container;
 					*invList = ic;

@@ -314,23 +314,22 @@ const invDef_t *INVSH_GetInventoryDefinitionByID (const char *id)
 
 /**
  * @brief Checks if an item can be used to reload a weapon.
- * @param[in] od The object definition of the ammo. Might not be @c NULL.
  * @param[in] weapon The weapon (in the inventory) to check the item with. Might not be @c NULL.
  * @return @c true if the item can be used in the given weapon, otherwise @c false.
  */
-bool INVSH_LoadableInWeapon (const objDef_t *od, const objDef_t *weapon)
+bool objDef_t::isLoadableInWeapon (const objDef_t *weapon) const
 {
 	int i;
 
-	assert(od);
+	assert(this);
 	assert(weapon);
 
 	/* check whether the weapon is only linked to itself. */
-	if (od->numWeapons == 1 && od->weapons[0] == od)
+	if (this->numWeapons == 1 && this->weapons[0] == this)
 		return false;
 
-	for (i = 0; i < od->numWeapons; i++)
-		if (weapon == od->weapons[i])
+	for (i = 0; i < this->numWeapons; i++)
+		if (weapon == this->weapons[i])
 			return true;
 
 	return false;

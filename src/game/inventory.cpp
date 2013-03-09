@@ -350,7 +350,7 @@ inventory_action_t InventoryInterface::moveInInventory (inventory_t* const inv, 
 		 * scroll because checkedTo is always true here. */
 		ic = inv->getItemAtPos(to, tx, ty);
 
-		if (ic && !to->isEquipDef() && INVSH_LoadableInWeapon(fItem->item.def(), ic->item.def())) {
+		if (ic && !to->isEquipDef() && fItem->item.def()->isLoadableInWeapon(ic->item.def())) {
 			/* A target-item was found and the dragged item (implicitly ammo)
 			 * can be loaded in it (implicitly weapon). */
 			if (ic->item.ammoLeft >= ic->item.def()->ammo && ic->item.ammo == fItem->item.def()) {
@@ -572,7 +572,7 @@ float InventoryInterface::GetInventoryState (const inventory_t *inventory, int &
  * @param[in] ed The equipment for debug messages
  * @param[in] missedPrimary if actor didn't get primary weapon, this is 0-100 number to increase ammo number.
  * @param[in] maxWeight The max weight this actor is allowed to carry.
- * @sa INVSH_LoadableInWeapon
+ * @sa isLoadableInWeapon()
  */
 int InventoryInterface::PackAmmoAndWeapon (character_t* const chr, const objDef_t *weapon, int missedPrimary, const equipDef_t *ed, int maxWeight)
 {
@@ -608,7 +608,7 @@ int InventoryInterface::PackAmmoAndWeapon (character_t* const chr, const objDef_
 		int i;
 		for (i = 0; i < csi->numODs; i++) {
 			const objDef_t *obj = INVSH_GetItemByIDX(i);
-			if (ed->numItems[i] && INVSH_LoadableInWeapon(obj, weapon)) {
+			if (ed->numItems[i] && obj->isLoadableInWeapon(weapon)) {
 				totalAvailableAmmo++;
 			}
 		}
@@ -616,7 +616,7 @@ int InventoryInterface::PackAmmoAndWeapon (character_t* const chr, const objDef_
 			int randNumber = rand() % totalAvailableAmmo;
 			for (i = 0; i < csi->numODs; i++) {
 				const objDef_t *obj = INVSH_GetItemByIDX(i);
-				if (ed->numItems[i] && INVSH_LoadableInWeapon(obj, weapon)) {
+				if (ed->numItems[i] && obj->isLoadableInWeapon(weapon)) {
 					randNumber--;
 					if (randNumber < 0) {
 						ammo = obj;
@@ -798,7 +798,7 @@ void InventoryInterface::EquipActor (character_t* const chr, const equipDef_t *e
 
 				/* Find the first possible ammo to check damage type. */
 				for (ammo = 0; ammo < this->csi->numODs; ammo++)
-					if (ed->numItems[ammo] && INVSH_LoadableInWeapon(&this->csi->ods[ammo], primaryWeapon))
+					if (ed->numItems[ammo] && this->csi->ods[ammo].isLoadableInWeapon(primaryWeapon))
 						break;
 				if (ammo < this->csi->numODs) {
 					if (/* To avoid two particle weapons. */

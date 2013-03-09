@@ -467,7 +467,7 @@ static void UI_ContainerNodeDrawSingle (uiNode_t *node, const objDef_t *highligh
 			assert(item->def());
 
 			if (item->isHeldTwoHanded()) {
-				if (highlightType && INVSH_LoadableInWeapon(highlightType, item->def()))
+				if (highlightType && highlightType->isLoadableInWeapon(item->def()))
 					memcpy(color, colorLoadable, sizeof(vec4_t));
 				else
 					memcpy(color, colorDefault, sizeof(vec4_t));
@@ -495,7 +495,7 @@ static void UI_ContainerNodeDrawSingle (uiNode_t *node, const objDef_t *highligh
 		item = &ui_inventory->getContainer(contType->id)->item;
 		assert(item);
 		assert(item->def());
-		if (highlightType && INVSH_LoadableInWeapon(highlightType, item->def())) {
+		if (highlightType && highlightType->isLoadableInWeapon(item->def())) {
 			if (disabled)
 				Vector4Copy(colorDisabledLoadable, color);
 			else
@@ -525,7 +525,7 @@ static void UI_ContainerNodeDrawGrid (uiNode_t *node, const objDef_t *highlightT
 
 	for (ic = ui_inventory->getContainer(EXTRADATA(node).container->id); ic; ic = ic->next) {
 		assert(ic->item.def());
-		if (highlightType && INVSH_LoadableInWeapon(highlightType, ic->item.def()))
+		if (highlightType && highlightType->isLoadableInWeapon(ic->item.def()))
 			UI_DrawItem(node, pos, &ic->item, ic->x, ic->y, scale, colorLoadable);
 		else
 			UI_DrawItem(node, pos, &ic->item, ic->x, ic->y, scale, colorDefault);
@@ -964,7 +964,7 @@ bool uiContainerNode::onDndMove (uiNode_t *target, int x, int y)
 			return false;
 		if (containerType->single)
 			return true;
-		return INVSH_LoadableInWeapon(dragItem->def(), fItem->item.def());
+		return dragItem->def()->isLoadableInWeapon(fItem->item.def());
 	}
 }
 

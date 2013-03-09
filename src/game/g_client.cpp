@@ -557,7 +557,7 @@ bool G_ClientCanReload (Edict *ent, containerIndex_t containerID)
 	/* also try the temp containers */
 	for (container = 0; container < gi.csi->numIDs; container++)
 		for (ic = ent->getContainer(container); ic; ic = ic->next)
-			if (INVSH_LoadableInWeapon(ic->item.def(), weapon))
+			if (ic->item.def()->isLoadableInWeapon(weapon))
 				return true;
 	return false;
 }
