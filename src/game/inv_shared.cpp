@@ -70,7 +70,6 @@ bool invDef_t::isLeftDef () const
 
 /**
  * @brief Checks whether a given inventory definition is of special type
- * @param invDef The inventory definition to check
  * @return @c true if the given inventory definition is of type equip
  */
 bool invDef_t::isEquipDef () const
@@ -80,7 +79,6 @@ bool invDef_t::isEquipDef () const
 
 /**
  * @brief Checks whether a given inventory definition is of special type
- * @param invDef The inventory definition to check
  * @return @c true if the given inventory definition is of type armour
  */
 bool invDef_t::isArmourDef () const
@@ -410,8 +408,8 @@ const fireDef_t *FIRESH_SlowestFireDef (const item_t &item)
 }
 
 /**
- * @brief Checks whether the given list contains a reaction fire enabled weapon.
- * @param invList The item container, supposed to be the right or left hand
+ * @brief Checks whether this list is a reaction fire enabled weapon.
+ * @note The invList is supposed to be the right or left hand
  * @return @c NULL if no reaction fire enabled weapon was found in the given list, the
  * reaction fire enabled object otherwise.
  */
