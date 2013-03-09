@@ -461,8 +461,8 @@ static void UI_ContainerNodeDrawSingle (uiNode_t *node, const objDef_t *highligh
 	/* Single item container (special case for left hand). */
 	const invDef_t *contType = EXTRADATA(node).container;
 	if (contType->isLeftDef() && !ui_inventory->c[csi.idLeft]) {
-		if (ui_inventory->c[csi.idRight]) {
-			const item_t *item = &ui_inventory->c[csi.idRight]->item;
+		if (ui_inventory->getRightHandContainer()) {
+			const item_t *item = &ui_inventory->getRightHandContainer()->item;
 			assert(item);
 			assert(item->def());
 
@@ -479,8 +479,8 @@ static void UI_ContainerNodeDrawSingle (uiNode_t *node, const objDef_t *highligh
 		bool disabled = false;
 		const item_t *item;
 
-		if (ui_inventory->c[csi.idRight]) {
-			item = &ui_inventory->c[csi.idRight]->item;
+		if (ui_inventory->getRightHandContainer()) {
+			item = &ui_inventory->getRightHandContainer()->item;
 			/* If there is a weapon in the right hand that needs two hands to shoot it
 			 * and there is a weapon in the left, then draw a disabled marker for the
 			 * fireTwoHanded weapon. */
