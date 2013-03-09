@@ -45,7 +45,7 @@ bool G_ActionCheckForReaction(const Player *player, Edict *ent, int TU);
 void G_ClientStateChange(const Player *player, Edict *ent, int reqState, bool checkaction);
 bool G_ClientCanReload(Edict *ent, containerIndex_t containerID);
 void G_ClientGetWeaponFromInventory(Edict *ent);
-bool G_ClientUseEdict(const Player *player, Edict *actor, Edict *door);
+bool G_ClientUseEdict(const Player &player, Edict *actor, Edict *door);
 int G_ClientAction(Player &player);
 bool G_SetTeamForPlayer(Player &player, const int team);
 int G_ClientGetTeamNum(const Player &player);

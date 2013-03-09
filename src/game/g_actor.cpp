@@ -58,7 +58,7 @@ void G_ActorUseDoor (Edict *actor, Edict *door)
 	if (door->flags & FL_GROUPSLAVE)
 		door = door->groupMaster;
 
-	if (!G_ClientUseEdict(&G_PLAYER_FROM_ENT(actor), actor, door))
+	if (!G_ClientUseEdict(actor->getPlayer(), actor, door))
 		return;
 
 	/* end this loop here, for the AI this is a) not interesting,
