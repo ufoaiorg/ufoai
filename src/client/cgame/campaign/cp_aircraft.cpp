@@ -832,7 +832,7 @@ static int AIR_GetStorageRoom (const aircraft_t *aircraft)
 			if (INVDEF(container)->temp)
 				continue;
 #endif
-			for (ic = CONTAINER(&employee->chr, container); ic; ic = ic->next) {
+			for (ic = employee->chr.inv.getContainer(container); ic; ic = ic->next) {
 				const objDef_t *obj = ic->item.def();
 				size += obj->size;
 
@@ -885,7 +885,7 @@ static void AIR_TransferItemsCarriedByCharacterToBase (character_t *chr, base_t 
 		if (INVDEF(container)->temp)
 			continue;
 #endif
-		for (ic = CONTAINER(chr, container); ic; ic = ic->next) {
+		for (ic = chr->inv.getContainer(container); ic; ic = ic->next) {
 			const objDef_t *obj = ic->item.def();
 			B_UpdateStorageAndCapacity(sourceBase, obj, -1, false);
 			B_UpdateStorageAndCapacity(destBase, obj, 1, false);
@@ -3049,7 +3049,7 @@ void AIR_MoveEmployeeInventoryIntoStorage (const aircraft_t &aircraft, equipDef_
 	for (container = 0; container < cgi->csi->numIDs; container++) {
 		LIST_Foreach(aircraft.acTeam, employee_t, employee) {
 			character_t *chr = &employee->chr;
-			invList_t *ic = CONTAINER(chr, container);
+			invList_t *ic = chr->inv.getContainer(container);
 #if 0
 			if (INVDEF(container)->temp)
 				continue;

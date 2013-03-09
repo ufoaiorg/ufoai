@@ -189,7 +189,7 @@ void CP_CleanupTeam (base_t *base, equipDef_t *ed)
 			if (INVDEF(container)->temp)
 				continue;
 #endif
-			for (ic = CONTAINER(chr, container); ic; ic = next) {
+			for (ic = chr->inv.getContainer(container); ic; ic = next) {
 				next = ic->next;
 				if (ed->numItems[ic->item.def()->idx] > 0) {
 					ic->item = CP_AddWeaponAmmo(ed, ic->item);
@@ -242,7 +242,7 @@ void CP_CleanupAircraftTeam (aircraft_t *aircraft, equipDef_t *ed)
 			if (INVDEF(container)->temp)
 				continue;
 #endif
-			for (ic = CONTAINER(chr, container); ic; ic = next) {
+			for (ic = chr->inv.getContainer(container); ic; ic = next) {
 				next = ic->next;
 				if (ed->numItems[ic->item.def()->idx] > 0) {
 					ic->item = CP_AddWeaponAmmo(ed, ic->item);
