@@ -22,9 +22,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef TEST_UI_LEVEL2_H_
-#define TEST_UI_LEVEL2_H_
+#pragma once
 
 int UFO_AddUILevel2Tests(void);
-
-#endif
