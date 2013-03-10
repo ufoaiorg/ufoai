@@ -483,7 +483,7 @@ void GAME_ActorSelect_f (void)
 
 	/* update menu inventory */
 	if (ui_inventory && ui_inventory != &chr->inv) {
-		chr->inv.setContainer(csi.idEquip, ui_inventory->c[csi.idEquip]);
+		chr->inv.setContainer(csi.idEquip, ui_inventory->getEquipContainer());
 		/* set 'old' idEquip to NULL */
 		ui_inventory->resetContainer(csi.idEquip);
 	}

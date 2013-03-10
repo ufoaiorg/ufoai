@@ -142,8 +142,8 @@ void UI_ContainerNodeUpdateEquipment (inventory_t *inv, const equipDef_t *ed)
 	Mem_Free(numItems);
 
 	/* First-time linking of ui_inventory. */
-	if (ui_inventory && !ui_inventory->c[csi.idEquip]) {
-		ui_inventory->c[csi.idEquip] = inv->getContainer(csi.idEquip);
+	if (ui_inventory && !ui_inventory->getEquipContainer()) {
+		ui_inventory->c[csi.idEquip] = inv->getEquipContainer();
 	}
 }
 

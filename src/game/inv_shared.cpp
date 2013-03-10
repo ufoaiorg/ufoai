@@ -815,6 +815,11 @@ invList_t *inventory_t::getFloorContainer () const
 	return getContainer(CSI->idFloor);
 }
 
+invList_t *inventory_t::getEquipContainer () const
+{
+	return getContainer(CSI->idEquip);
+}
+
 invList_t *inventory_t::getArmourContainer (void) const
 {
 	return getContainer(CSI->idArmour);
