@@ -952,22 +952,18 @@ void B_Destroy (base_t *base)
  */
 static void B_Destroy_f (void)
 {
-	int baseIdx;
-	base_t *base;
-
 	if (cgi->Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <baseIdx>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
-	baseIdx = atoi(cgi->Cmd_Argv(1));
-
+	const int baseIdx = atoi(cgi->Cmd_Argv(1));
 	if (baseIdx < 0 || baseIdx >= MAX_BASES) {
 		Com_Printf("B_Destroy_f: baseIdx %i is outside bounds\n", baseIdx);
 		return;
 	}
 
-	base = B_GetFoundedBaseByIDX(baseIdx);
+	base_t *base = B_GetFoundedBaseByIDX(baseIdx);
 	if (!base) {
 		Com_Printf("B_Destroy_f: Base %i not founded\n", baseIdx);
 		return;
@@ -985,18 +981,17 @@ static void B_Destroy_f (void)
  */
 void B_BuildingStatus (const building_t* building)
 {
-	int numberOfBuildings = 0;
-
 	assert(building);
 
 	cgi->Cvar_Set("mn_building_status", _("Not set"));
 
 	switch (building->buildingStatus) {
-	case B_STATUS_NOT_SET:
-		numberOfBuildings = B_GetNumberOfBuildingsInBaseByTemplate(B_GetCurrentSelectedBase(), building->tpl);
+	case B_STATUS_NOT_SET: {
+		const int numberOfBuildings = B_GetNumberOfBuildingsInBaseByTemplate(B_GetCurrentSelectedBase(), building->tpl);
 		if (numberOfBuildings >= 0)
 			cgi->Cvar_Set("mn_building_status", va(_("Already %i in base"), numberOfBuildings));
 		break;
+	}
 	case B_STATUS_UNDER_CONSTRUCTION:
 		cgi->Cvar_Set("mn_building_status", "");
 		break;
