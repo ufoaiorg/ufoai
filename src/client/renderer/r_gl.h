@@ -23,8 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef __R_GL_H__
-#define __R_GL_H__
+#pragma once
 
 #ifdef ANDROID
 #include "../../ports/android/r_gles_android.h"
@@ -188,5 +187,3 @@ typedef void (APIENTRY *GetFramebufferAttachmentParameterivEXT_t) (GLenum, GLenu
 typedef void (APIENTRY *GenerateMipmapEXT_t) (GLenum);
 typedef void (APIENTRY *DrawBuffers_t) (GLsizei, const GLenum *);
 typedef void (APIENTRY *BlitFramebuffer_t)( GLint, GLint, GLint, GLint, GLint, GLint, GLint, GLint, GLbitfield, GLenum);
-
-#endif

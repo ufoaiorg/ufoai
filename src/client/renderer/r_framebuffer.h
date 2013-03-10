@@ -21,8 +21,7 @@
  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
-#ifndef R_FRAMEBUFFER_H_
-#define R_FRAMEBUFFER_H_
+#pragma once
 
 typedef struct {
 	int x;
@@ -62,5 +61,3 @@ void R_DrawBuffers(unsigned int n);
 void R_BindColorAttachments(unsigned int n, unsigned int *attachments);
 bool R_EnableRenderbuffer(bool enable);
 bool R_RenderbufferEnabled(void);
-
-#endif /* R_FRAMEBUFFER_H_ */

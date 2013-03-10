@@ -22,12 +22,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef E_EVENT_PARTICLEAPPEAR_H_
-#define E_EVENT_PARTICLEAPPEAR_H_
+#pragma once
 
 #include "../../e_main.h"
 
 int CL_ParticleAppearTime(const struct eventRegister_s *self, dbuffer *msg, eventTiming_t *eventTiming);
 void CL_ParticleAppear(const eventRegister_t *self, dbuffer *msg);
-
-#endif
