@@ -1030,23 +1030,19 @@ void B_BuildingStatus (const building_t* building)
  */
 static void B_UpdateAllBaseBuildingStatus (building_t* building, buildingStatus_t status)
 {
-	bool test;
-	buildingStatus_t oldStatus;
 	base_t* base = building->base;
 
 	assert(base);
 
-	oldStatus = building->buildingStatus;
+	const buildingStatus_t oldStatus = building->buildingStatus;
 	building->buildingStatus = status;
 
 	/* we update the status of the building (we'll call this building building 1) */
-	test = B_CheckUpdateBuilding(building);
-	if (test)
-		B_FireEvent(building, base, B_ONENABLE);
-
-	/* now, the status of this building may have changed the status of other building.
-	 * We check that, but only for buildings which needed building 1 */
+	const bool test = B_CheckUpdateBuilding(building);
 	if (test) {
+		B_FireEvent(building, base, B_ONENABLE);
+		/* now, the status of this building may have changed the status of other building.
+		 * We check that, but only for buildings which needed building 1 */
 		B_UpdateStatusBuilding(base, building->buildingType, true);
 		/* we may have changed status of several building: update all capacities */
 		B_UpdateBaseCapacities(MAX_CAP, base);
