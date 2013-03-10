@@ -364,7 +364,7 @@ bool B_FireEvent (const building_t *buildingTemplate, const base_t *base, buildi
 			cgi->Com_Error(ERR_DROP, "B_FireEvent: Invalid Event\n");
 	}
 
-	if (command && command[0] != '\0') {
+	if (Q_strvalid(command)) {
 		cgi->Cmd_ExecuteString(va("%s %i %i", command, base->idx, buildingTemplate->buildingType));
 		return true;
 	}
