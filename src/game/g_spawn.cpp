@@ -1017,7 +1017,7 @@ static bool Message_Use (Edict *self, Edict *activator)
 	if (!activator || !G_IsActor(activator)) {
 		return false;
 	} else {
-		Player &player = G_PLAYER_FROM_ENT(activator);
+		Player &player = activator->getPlayer();
 		const char *msg = self->message;
 		/* remove gettext marker */
 		if (msg[0] == '_')

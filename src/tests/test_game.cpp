@@ -284,7 +284,7 @@ static void testInventoryWithTwoDiedAliensOnTheSameGridTile (void)
 		CU_ASSERT_PTR_NOT_NULL_FATAL(diedEnt2);
 
 		/* move to the location of the first died alien to drop the inventory into the same floor container */
-		Player &player = G_PLAYER_FROM_ENT(diedEnt2);
+		Player &player = diedEnt2->getPlayer();
 		CU_ASSERT_TRUE_FATAL(G_IsAIPlayer(&player));
 		G_ClientMove(player, 0, diedEnt2, diedEnt->pos);
 		CU_ASSERT_TRUE_FATAL(VectorCompare(diedEnt2->pos, diedEnt->pos));
