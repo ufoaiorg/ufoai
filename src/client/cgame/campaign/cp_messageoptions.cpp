@@ -104,14 +104,14 @@ void MSO_Set (const int listIndex, const notify_t type, const int optionType, co
 		cgi->UI_ExecuteConfunc("ms_btnstate %i %i %i %i", listIndex, settings->doPause, settings->doNotify, settings->doSound);
 	else
 		/* ensure that message buttons will be initialized correctly if menu is shown next time */
-		MSO_SetMenuState(MSO_MSTATE_PREPARED,false, false);
+		MSO_SetMenuState(MSO_MSTATE_PREPARED, false, false);
 }
 
 /**
  * @brief Parse notify type
  * @return A NT_ number, else return -1
  */
-static int MSO_ParseNotifyType(const char* name)
+static int MSO_ParseNotifyType (const char* name)
 {
 	for (int idx = 0; idx < NT_NUM_NOTIFYTYPE; idx ++) {
 		if (Q_streq(name, nt_strings[idx])) {
@@ -125,7 +125,7 @@ static int MSO_ParseNotifyType(const char* name)
  * @brief Parse option type
  * @return A MSO value, else 0
  */
-static int MSO_ParseOptionType(const char* type)
+static int MSO_ParseOptionType (const char* type)
 {
 	if (Q_strcaseeq(type, "pause"))
 		return MSO_PAUSE;
@@ -133,10 +133,9 @@ static int MSO_ParseOptionType(const char* type)
 		return MSO_NOTIFY;
 	else if (Q_strcaseeq(type, "sound"))
 		return MSO_SOUND;
-	else {
-		Com_Printf("Unrecognized optionstype during set '%s' ignored\n", type);
-		return 0;
-	}
+
+	Com_Printf("Unrecognized optionstype during set '%s' ignored\n", type);
+	return 0;
 }
 
 /**
@@ -227,7 +226,7 @@ bool MSO_SaveXML (xmlNode_t *p)
 	xmlNode_t *n = cgi->XML_AddNode(p, SAVE_MESSAGEOPTIONS_MESSAGEOPTIONS);
 
 	/* save positive values */
-	for (type = 0; type < NT_NUM_NOTIFYTYPE; type++) {
+	for (type = 0; type < NT_NUM_NOTIFYTYPE; ++type) {
 		messageSettings_t actualSetting = messageSettings[type];
 		xmlNode_t *s = cgi->XML_AddNode(n, SAVE_MESSAGEOPTIONS_TYPE);
 
@@ -252,7 +251,7 @@ bool MSO_LoadXML (xmlNode_t *p)
 	if (!n)
 		return false;
 
-	for (s = cgi->XML_GetNode(n, SAVE_MESSAGEOPTIONS_TYPE); s; s = cgi->XML_GetNextNode(s,n, SAVE_MESSAGEOPTIONS_TYPE)) {
+	for (s = cgi->XML_GetNode(n, SAVE_MESSAGEOPTIONS_TYPE); s; s = cgi->XML_GetNextNode(s, n, SAVE_MESSAGEOPTIONS_TYPE)) {
 		const char *messagetype = cgi->XML_GetString(s, SAVE_MESSAGEOPTIONS_NAME);
 		int type;
 
@@ -271,7 +270,7 @@ bool MSO_LoadXML (xmlNode_t *p)
 		MSO_Set(0, (notify_t)type, MSO_SOUND, cgi->XML_GetBool(s, SAVE_MESSAGEOPTIONS_SOUND, false), false);
 	}
 
-	MSO_SetMenuState(MSO_MSTATE_REINIT,false, false);
+	MSO_SetMenuState(MSO_MSTATE_REINIT, false, false);
 	return true;
 }
 
@@ -327,8 +326,8 @@ static int MSO_ParseOption (const char *blockName, const char **text)
 	}
 
 	for (linkedList_t *element = status; element != NULL; element = element->next) {
-		const char* value = (char*)element->data;
-		int optionType = MSO_ParseOptionType(value);
+		const char* value = (const char*)element->data;
+		const int optionType = MSO_ParseOptionType(value);
 		if (optionType == 0) {
 			Com_Printf("MSO_ParseOption: message option type \"%s\" undefined.\n", value);
 			continue;
@@ -337,7 +336,7 @@ static int MSO_ParseOption (const char *blockName, const char **text)
 	}
 
 	/* reset menu state, was updated by msgoptions_set */
-	MSO_SetMenuState(MSO_MSTATE_REINIT,false,false);
+	MSO_SetMenuState(MSO_MSTATE_REINIT, false, false);
 
 	return messageType;
 }
@@ -435,7 +434,7 @@ static bool MSO_ParseCategory (const char *blockName, const char **text)
 	}
 
 	ccs.numMsgCategories++;
-	MSO_SetMenuState(MSO_MSTATE_REINIT,false,false);
+	MSO_SetMenuState(MSO_MSTATE_REINIT, false, false);
 	return true;
 }
 
