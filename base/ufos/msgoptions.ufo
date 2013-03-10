@@ -151,4 +151,12 @@ msgoptions default
 			status (NOTIFY SOUND PAUSE)
 		}
 	}
+
+	category {
+		name "_buildings"
+		option {
+			type "building_finished"
+			status (NOTIFY SOUND PAUSE)
+		}
+	}
 }

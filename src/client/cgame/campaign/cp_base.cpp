@@ -1024,16 +1024,12 @@ void B_BuildingStatus (const building_t* building)
  */
 static void B_UpdateAllBaseBuildingStatus (building_t* building, buildingStatus_t status)
 {
-	base_t* base = building->base;
-
-	assert(base);
-
-	const buildingStatus_t oldStatus = building->buildingStatus;
 	building->buildingStatus = status;
 
 	/* we update the status of the building (we'll call this building building 1) */
 	const bool test = B_CheckUpdateBuilding(building);
 	if (test) {
+		base_t* base = building->base;
 		B_FireEvent(building, base, B_ONENABLE);
 		/* now, the status of this building may have changed the status of other building.
 		 * We check that, but only for buildings which needed building 1 */
@@ -1044,16 +1040,10 @@ static void B_UpdateAllBaseBuildingStatus (building_t* building, buildingStatus_
 		/* no other status than status of building 1 has been modified
 		 * update only status of building 1 */
 		const baseCapacities_t cap = B_GetCapacityFromBuildingType(building->buildingType);
-		if (cap != MAX_CAP)
+		if (cap != MAX_CAP) {
+			base_t* base = building->base;
 			B_UpdateBaseCapacities(cap, base);
-	}
-
-	/** @todo this should be an user option defined in Game Options. */
-	if (oldStatus == B_STATUS_UNDER_CONSTRUCTION && (status == B_STATUS_CONSTRUCTION_FINISHED || status == B_STATUS_WORKING)) {
-		if (B_CheckBuildingDependencesStatus(building))
-			CP_GameTimeStop();
-	} else {
-		CP_GameTimeStop();
+		}
 	}
 }
 
@@ -2231,11 +2221,12 @@ void B_UpdateBaseData (void)
 	while ((base = B_GetNext(base)) != NULL) {
 		building_t *building = NULL;
 		while ((building = B_GetNextBuilding(base, building))) {
-			if (B_CheckBuildingConstruction(building)) {
-				Com_sprintf(cp_messageBuffer, lengthof(cp_messageBuffer),
-						_("Construction of %s building finished in %s."), _(building->name), base->name);
-				MS_AddNewMessage(_("Building finished"), cp_messageBuffer, MSG_CONSTRUCTION);
-			}
+			if (!B_CheckBuildingConstruction(building))
+				continue;
+
+			Com_sprintf(cp_messageBuffer, lengthof(cp_messageBuffer),
+					_("Construction of %s building finished in %s."), _(building->name), base->name);
+			MSO_CheckAddNewMessage(NT_BUILDING_FINISHED,_("Building finished"), cp_messageBuffer);
 		}
 	}
 }
