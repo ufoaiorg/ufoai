@@ -460,7 +460,7 @@ static void UI_ContainerNodeDrawSingle (uiNode_t *node, const objDef_t *highligh
 
 	/* Single item container (special case for left hand). */
 	const invDef_t *contType = EXTRADATA(node).container;
-	if (contType->isLeftDef() && !ui_inventory->c[csi.idLeft]) {
+	if (contType->isLeftDef() && !ui_inventory->getLeftHandContainer()) {
 		if (ui_inventory->getRightHandContainer()) {
 			const item_t *item = &ui_inventory->getRightHandContainer()->item;
 			assert(item);
@@ -486,7 +486,7 @@ static void UI_ContainerNodeDrawSingle (uiNode_t *node, const objDef_t *highligh
 			 * fireTwoHanded weapon. */
 			assert(item);
 			assert(item->def());
-			if (contType->isRightDef() && item->def()->fireTwoHanded && ui_inventory->c[csi.idLeft]) {
+			if (contType->isRightDef() && item->def()->fireTwoHanded && ui_inventory->getLeftHandContainer()) {
 				disabled = true;
 				UI_DrawDisabled(node);
 			}
