@@ -889,28 +889,30 @@ bool B_BuildingDestroy (building_t* building)
 static void B_MoveAircraftOnGeoscapeToOtherBases (const base_t *base)
 {
 	AIR_ForeachFromBase(aircraft, base) {
-		if (AIR_IsAircraftOnGeoscape(aircraft)) {
-			base_t *newbase = NULL;
-			bool moved = false;
-			while ((newbase = B_GetNext(newbase)) != NULL) {
-				/* found a new homebase? */
-				if (base != newbase && AIR_MoveAircraftIntoNewHomebase(aircraft, newbase)) {
-					moved = true;
-					break;
-				}
+		if (!AIR_IsAircraftOnGeoscape(aircraft))
+			continue;
+		base_t *newbase = NULL;
+		bool moved = false;
+		while ((newbase = B_GetNext(newbase)) != NULL) {
+			/* found a new homebase? */
+			if (base != newbase && AIR_MoveAircraftIntoNewHomebase(aircraft, newbase)) {
+				moved = true;
+				break;
 			}
-			if (!moved) {
-				/* No base can hold this aircraft */
-				UFO_NotifyPhalanxAircraftRemoved(aircraft);
-				if (!MapIsWater(GEO_GetColor(aircraft->pos, MAPTYPE_TERRAIN, NULL))) {
-					CP_SpawnRescueMission(aircraft, NULL);
-				} else {
-					/* Destroy the aircraft and everything onboard - the aircraft pointer
-					 * is no longer valid after this point */
-					/** @todo Pilot skills; really kill pilot in this case? */
-					AIR_DestroyAircraft(aircraft);
-				}
-			}
+		}
+
+		if (moved)
+			continue;
+
+		/* No base can hold this aircraft */
+		UFO_NotifyPhalanxAircraftRemoved(aircraft);
+		if (!MapIsWater(GEO_GetColor(aircraft->pos, MAPTYPE_TERRAIN, NULL))) {
+			CP_SpawnRescueMission(aircraft, NULL);
+		} else {
+			/* Destroy the aircraft and everything onboard - the aircraft pointer
+			 * is no longer valid after this point */
+			/** @todo Pilot skills; really kill pilot in this case? */
+			AIR_DestroyAircraft(aircraft);
 		}
 	}
 }
