@@ -144,27 +144,27 @@ static int MSO_ParseOptionType (const char* type)
  */
 static void MSO_Set_f (void)
 {
-	if (cgi->Cmd_Argc() != 4)
+	if (cgi->Cmd_Argc() != 4) {
 		Com_Printf("Usage: %s <messagetypename> <pause|notify|sound> <0|1>\n", cgi->Cmd_Argv(0));
-	else {
-		int type;
-		const char *messagetype = cgi->Cmd_Argv(1);
-		const int optionsType = MSO_ParseOptionType(cgi->Cmd_Argv(1));
-		if (optionsType == 0) {
-			return;
-		}
-
-		for (type = 0; type < NT_NUM_NOTIFYTYPE; type++) {
-			if (Q_streq(nt_strings[type], messagetype))
-				break;
-		}
-		if (type == NT_NUM_NOTIFYTYPE) {
-			Com_Printf("Unrecognized messagetype during set '%s' ignored\n", messagetype);
-			return;
-		}
-
-		MSO_Set(0, (notify_t)type, optionsType, atoi(cgi->Cmd_Argv(3)), false);
+		return;
 	}
+
+	const int optionsType = MSO_ParseOptionType(cgi->Cmd_Argv(1));
+	if (optionsType == 0)
+		return;
+
+	const char *messagetype = cgi->Cmd_Argv(1);
+	int type;
+	for (type = 0; type < NT_NUM_NOTIFYTYPE; type++) {
+		if (Q_streq(nt_strings[type], messagetype))
+			break;
+	}
+	if (type == NT_NUM_NOTIFYTYPE) {
+		Com_Printf("Unrecognized messagetype during set '%s' ignored\n", messagetype);
+		return;
+	}
+
+	MSO_Set(0, (notify_t)type, optionsType, atoi(cgi->Cmd_Argv(3)), false);
 }
 
 /**
@@ -172,24 +172,24 @@ static void MSO_Set_f (void)
  * @sa MSO_Set
  * @sa MSO_Init_f
  */
-static void MSO_SetAll_f(void)
+static void MSO_SetAll_f (void)
 {
-	if (cgi->Cmd_Argc() != 3)
+	if (cgi->Cmd_Argc() != 3) {
 		Com_Printf("Usage: %s <pause|notify|sound> <0|1>\n", cgi->Cmd_Argv(0));
-	else {
-		int type;
-		bool activate = atoi(cgi->Cmd_Argv(2));
-		const int optionsType = MSO_ParseOptionType(cgi->Cmd_Argv(1));
-		if (optionsType == 0) {
-			return;
-		}
-		/* update settings for chosen type */
-		for (type = 0; type < NT_NUM_NOTIFYTYPE; type ++) {
-			MSO_Set(0, (notify_t)type, optionsType, activate, false);
-		}
-		/* reinit menu */
-		MSO_SetMenuState(MSO_MSTATE_PREPARED,true,true);
+		return;
 	}
+
+	const bool activate = atoi(cgi->Cmd_Argv(2));
+	const int optionsType = MSO_ParseOptionType(cgi->Cmd_Argv(1));
+	if (optionsType == 0)
+		return;
+
+	/* update settings for chosen type */
+	for (int type = 0; type < NT_NUM_NOTIFYTYPE; ++type) {
+		MSO_Set(0, (notify_t)type, optionsType, activate, false);
+	}
+	/* reinit menu */
+	MSO_SetMenuState(MSO_MSTATE_PREPARED, true, true);
 }
 
 /**
