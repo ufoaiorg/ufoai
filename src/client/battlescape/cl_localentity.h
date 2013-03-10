@@ -98,7 +98,7 @@ typedef struct le_s {
 	struct le_s *clientAction;	/**< entity from server that is currently triggered and wait for client action */
 
 	int contents;				/**< content flags for this LE - used for tracing */
-	vec3_t mins, maxs;
+	AABB aabb;					/**< the bounding box */
 	vec3_t size;
 
 	char inlineModelName[8];	/**< for bmodels */

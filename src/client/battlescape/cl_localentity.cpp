@@ -941,8 +941,8 @@ bool LE_BrushModelAction (le_t *le, entity_t *ent)
 	case ET_ROTATING:
 	case ET_DOOR:
 		/* These cause the model to render correctly */
-		VectorCopy(ent->mins, le->mins);
-		VectorCopy(ent->maxs, le->maxs);
+		VectorCopy(ent->mins, le->aabb.mins);
+		VectorCopy(ent->maxs, le->aabb.maxs);
 		VectorCopy(ent->origin, le->origin);
 		VectorCopy(ent->angles, le->angles);
 		break;
@@ -968,18 +968,18 @@ bool LE_BrushModelAction (le_t *le, entity_t *ent)
 			ent->texture = R_FindPics("sfx/misc/rescue");
 			VectorSet(ent->color, 1, 1, 1);
 		}
-		VectorCopy(le->mins, ent->mins);
-		VectorCopy(le->maxs, ent->maxs);
+		VectorCopy(le->aabb.mins, ent->mins);
+		VectorCopy(le->aabb.maxs, ent->maxs);
 
 		if (!(drawFlags & DRAW_CIRCLES))
 			return false;
 
 		/* There should be an easier way than calculating the grid coords back from the world coords */
-		z = roundf(le->mins[2] / UNIT_HEIGHT) * UNIT_HEIGHT + UNIT_HEIGHT / 8.0f;
-		xmax = roundf(le->maxs[0] / UNIT_SIZE) * UNIT_SIZE - 0.1f;
-		for (x = roundf(le->mins[0] / UNIT_SIZE) * UNIT_SIZE; x < xmax; x += UNIT_SIZE) {
-			const float ymax = roundf(le->maxs[1] / UNIT_SIZE) * UNIT_SIZE - 0.1f;
-			for (y = roundf(le->mins[1] / UNIT_SIZE) * UNIT_SIZE; y < ymax; y += UNIT_SIZE) {
+		z = roundf(le->aabb.mins[2] / UNIT_HEIGHT) * UNIT_HEIGHT + UNIT_HEIGHT / 8.0f;
+		xmax = roundf(le->aabb.maxs[0] / UNIT_SIZE) * UNIT_SIZE - 0.1f;
+		for (x = roundf(le->aabb.mins[0] / UNIT_SIZE) * UNIT_SIZE; x < xmax; x += UNIT_SIZE) {
+			const float ymax = roundf(le->aabb.maxs[1] / UNIT_SIZE) * UNIT_SIZE - 0.1f;
+			for (y = roundf(le->aabb.mins[1] / UNIT_SIZE) * UNIT_SIZE; y < ymax; y += UNIT_SIZE) {
 				const vec3_t pos = {x + UNIT_SIZE / 4.0f, y + UNIT_SIZE / 4.0f, z};
 				entity_t circle;
 
@@ -1373,7 +1373,7 @@ le_t *LE_FindRadius (le_t *from, const vec3_t org, float rad, entity_type_t type
 		int j;
 		vec3_t eorg;
 		for (j = 0; j < 3; j++)
-			eorg[j] = org[j] - (le->origin[j] + (le->mins[j] + le->maxs[j]) * 0.5);
+			eorg[j] = org[j] - (le->origin[j] + (le->aabb.mins[j] + le->aabb.maxs[j]) * 0.5);
 		if (VectorLength(eorg) > rad)
 			continue;
 		if (type != ET_NULL && le->type != type)
@@ -1655,7 +1655,7 @@ static int32_t CL_HullForEntity (const le_t *le, int *tile, vec3_t rmaShift, vec
 		*tile = 0;
 		VectorCopy(vec3_origin, angles);
 		VectorCopy(vec3_origin, rmaShift);
-		return CM_HeadnodeForBox(cl.mapTiles->mapTiles[*tile], le->mins, le->maxs);
+		return CM_HeadnodeForBox(cl.mapTiles->mapTiles[*tile], le->aabb.mins, le->aabb.maxs);
 	}
 }
 

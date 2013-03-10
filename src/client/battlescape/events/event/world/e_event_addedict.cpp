@@ -35,8 +35,8 @@ static bool CL_AddEdictFunc (le_t *le, entity_t *ent)
 	ent->flags = RF_BOX;
 	VectorSet(ent->color, 1, 1, 1);
 	ent->alpha = 1.0;
-	VectorCopy(le->mins, ent->mins);
-	VectorCopy(le->maxs, ent->maxs);
+	VectorCopy(le->aabb.mins, ent->mins);
+	VectorCopy(le->aabb.maxs, ent->maxs);
 	R_EntitySetOrigin(ent, le->origin);
 	return true;
 }
@@ -64,8 +64,8 @@ void CL_AddEdict (const eventRegister_t *self, dbuffer *msg)
 		le->inuse = true;
 	}
 
-	VectorCopy(mins, le->mins);
-	VectorCopy(maxs, le->maxs);
+	VectorCopy(mins, le->aabb.mins);
+	VectorCopy(maxs, le->aabb.maxs);
 	le->addFunc = CL_AddEdictFunc;
 	le->type = type;
 

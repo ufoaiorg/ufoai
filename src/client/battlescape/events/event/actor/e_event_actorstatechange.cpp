@@ -62,7 +62,7 @@ void CL_ActorStateChange (const eventRegister_t *self, dbuffer *msg)
 		le->state = state;
 		le->resetFloor();
 		LE_SetThink(le, NULL);
-		VectorCopy(player_dead_maxs, le->maxs);
+		VectorCopy(player_dead_maxs, le->aabb.maxs);
 		CL_ActorRemoveFromTeamList(le);
 		return;
 	} else {
