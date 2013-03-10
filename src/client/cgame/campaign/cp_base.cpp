@@ -665,14 +665,14 @@ static bool B_UpdateStatusBuilding (base_t* base, buildingType_t buildingType, b
 		if (dependsBuilding && buildingType == dependsBuilding->buildingType) {
 			/* ccs.buildings[base->idx][i] needs built/removed building */
 			if (onBuilt && !B_GetBuildingStatus(base, building->buildingType)) {
-				/* we can only activate a non operationnal building */
+				/* we can only activate a non operational building */
 				if (B_CheckUpdateBuilding(building)) {
 					B_FireEvent(building, base, B_ONENABLE);
 					test = true;
 					returnValue = true;
 				}
 			} else if (!onBuilt && B_GetBuildingStatus(base, building->buildingType)) {
-				/* we can only deactivate an operationnal building */
+				/* we can only deactivate an operational building */
 				if (B_CheckUpdateBuilding(building)) {
 					B_FireEvent(building, base, B_ONDISABLE);
 					test = true;
