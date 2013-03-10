@@ -64,8 +64,7 @@ void CL_AddEdict (const eventRegister_t *self, dbuffer *msg)
 		le->inuse = true;
 	}
 
-	VectorCopy(mins, le->aabb.mins);
-	VectorCopy(maxs, le->aabb.maxs);
+	le->aabb.set(mins, maxs);
 	le->addFunc = CL_AddEdictFunc;
 	le->type = type;
 

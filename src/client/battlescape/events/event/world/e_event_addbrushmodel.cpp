@@ -80,8 +80,7 @@ void CL_AddBrushModel (const eventRegister_t *self, dbuffer *msg)
 		Com_Error(ERR_DROP, "CL_AddBrushModel: Could not register inline model %i", le->modelnum1);
 
 	/* Transfer model mins and maxs to entity */
-	VectorCopy(model->mins, le->aabb.mins);
-	VectorCopy(model->maxs, le->aabb.maxs);
+	le->aabb.set(model->mins, model->maxs);
 	VectorSubtract(le->aabb.maxs, le->aabb.mins, le->size);
 	VecToPos(le->origin, le->pos);
 

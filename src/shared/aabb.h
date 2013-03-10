@@ -51,6 +51,7 @@ public:
 	 * @param[in] other The other aabb
 	 */
 	inline void set (const AABB& other);
+	inline void set (const vec3_t mini, const vec3_t maxi);
 
 	/**
 	 * @brief Checks if the aabb touches or intersects with the given aabb
@@ -100,6 +101,12 @@ inline void AABB::set (const AABB& other)
 {
 	VectorCopy(other.mins, mins);
 	VectorCopy(other.maxs, maxs);
+}
+
+inline void AABB::set (const vec3_t mini, const vec3_t maxi)
+{
+	VectorCopy(mini, mins);
+	VectorCopy(maxi, maxs);
 }
 
 inline bool AABB::isZero () const

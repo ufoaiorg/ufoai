@@ -941,8 +941,7 @@ bool LE_BrushModelAction (le_t *le, entity_t *ent)
 	case ET_ROTATING:
 	case ET_DOOR:
 		/* These cause the model to render correctly */
-		VectorCopy(ent->mins, le->aabb.mins);
-		VectorCopy(ent->maxs, le->aabb.maxs);
+		le->aabb.set(ent->mins, ent->maxs);
 		VectorCopy(ent->origin, le->origin);
 		VectorCopy(ent->angles, le->angles);
 		break;
