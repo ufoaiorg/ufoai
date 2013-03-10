@@ -230,7 +230,7 @@ a		+c		+c		+c		a
 tile +craft_ufo_fighter
 {
 4 4
-0		a		0		0
+0		0		0		0
 0		+c		+c		0
 0		+c		+c		0
 0		0		0		0
