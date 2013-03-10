@@ -143,7 +143,7 @@ void CL_ActorDie (const eventRegister_t *self, dbuffer *msg)
 
 	CL_ActorPlaySound(le, SND_DEATH);
 
-	VectorCopy(player_dead_maxs, le->aabb.maxs);
+	le->aabb.setMaxs(player_dead_maxs);
 	if (!LE_IsStunned(le))
 		le->contents = CONTENTS_DEADACTOR;
 	CL_ActorRemoveFromTeamList(le);

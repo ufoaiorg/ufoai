@@ -52,6 +52,8 @@ public:
 	 */
 	inline void set (const AABB& other);
 	inline void set (const vec3_t mini, const vec3_t maxi);
+	inline void setMins (const vec3_t mini);
+	inline void setMaxs (const vec3_t maxi);
 
 	/**
 	 * @brief Checks if the aabb touches or intersects with the given aabb
@@ -106,6 +108,16 @@ inline void AABB::set (const AABB& other)
 inline void AABB::set (const vec3_t mini, const vec3_t maxi)
 {
 	VectorCopy(mini, mins);
+	VectorCopy(maxi, maxs);
+}
+
+inline void AABB::setMins (const vec3_t mini)
+{
+	VectorCopy(mini, mins);
+}
+
+inline void AABB::setMaxs (const vec3_t maxi)
+{
 	VectorCopy(maxi, maxs);
 }
 

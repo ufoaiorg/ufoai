@@ -140,11 +140,11 @@ void CL_ActorAppear (const eventRegister_t *self, dbuffer *msg)
 		le->contents = CONTENTS_DEADACTOR;
 	else
 		le->contents = CONTENTS_ACTOR;
-	VectorCopy(player_mins, le->aabb.mins);
+	le->aabb.setMins(player_mins);
 	if (LE_IsDead(le))
-		VectorCopy(player_dead_maxs, le->aabb.maxs);
+		le->aabb.setMaxs(player_dead_maxs);
 	else
-		VectorCopy(player_maxs, le->aabb.maxs);
+		le->aabb.setMaxs(player_maxs);
 
 	LE_SetThink(le, LET_StartIdle);
 

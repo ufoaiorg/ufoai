@@ -87,7 +87,7 @@ void CL_ActorRevitalised (const eventRegister_t *self, dbuffer *msg)
 		}
 	}
 
-	VectorCopy(player_maxs, le->aabb.maxs);
+	le->aabb.setMaxs(player_maxs);
 
 	if (le->ptl) {
 		CL_ParticleFree(le->ptl);
