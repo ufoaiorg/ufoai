@@ -2209,27 +2209,24 @@ void B_InitStartup (void)
  * @brief Checks whether the construction of a building is finished.
  * Calls the onEnable functions and assign workers, too.
  */
-static int B_CheckBuildingConstruction (building_t *building)
+static bool B_CheckBuildingConstruction (building_t *building)
 {
-	int newBuilding = 0;
+	if (building->buildingStatus != B_STATUS_UNDER_CONSTRUCTION)
+		return false;
 
-	if (building->buildingStatus == B_STATUS_UNDER_CONSTRUCTION) {
-		if (B_IsBuildingBuiltUp(building)) {
-			base_t *base = building->base;
-			base->buildingCurrent = building;
+	if (!B_IsBuildingBuiltUp(building))
+		return false;
 
-			B_UpdateAllBaseBuildingStatus(building, B_STATUS_WORKING);
-			if (B_FireEvent(building, base, B_ONENABLE))
-				Com_DPrintf(DEBUG_CLIENT, "B_CheckBuildingConstruction: %s %i;\n", building->onEnable, base->idx);
+	base_t *base = building->base;
+	base->buildingCurrent = building;
 
-			newBuilding++;
-		}
-	}
+	B_UpdateAllBaseBuildingStatus(building, B_STATUS_WORKING);
+	if (B_FireEvent(building, base, B_ONENABLE))
+		Com_DPrintf(DEBUG_CLIENT, "B_CheckBuildingConstruction: %s %i;\n", building->onEnable, base->idx);
 
-	if (newBuilding)
-		cgi->Cmd_ExecuteString("building_init");
+	cgi->Cmd_ExecuteString("building_init");
 
-	return newBuilding;
+	return true;
 }
 
 /**
