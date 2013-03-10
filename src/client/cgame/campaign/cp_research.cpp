@@ -142,8 +142,7 @@ void RS_MarkOneResearchable (technology_t* tech)
 /**
  * @brief Checks if all requirements of a tech have been met so that it becomes researchable.
  * @note If there are NO requirements defined at all it will always return true.
- * @param[in] requiredAND Pointer to a list of AND-related requirements.
- * @param[in] requiredOR Pointer to a list of OR-related requirements.
+ * @param[in] tech The technology we want to research
  * @param[in] base In what base to check the "collected" items etc..
  * @return @c true if all requirements are satisfied otherwise @c false.
  * @todo Add support for the "delay" value.
@@ -153,8 +152,8 @@ bool RS_RequirementsMet (const technology_t *tech, const base_t *base)
 	int i;
 	bool metAND = false;
 	bool metOR = false;
-	const requirements_t *requiredAND = &tech->requireAND;
-	const requirements_t *requiredOR = &tech->requireOR;
+	const requirements_t *requiredAND = &tech->requireAND;	/* a list of AND-related requirements */
+	const requirements_t *requiredOR = &tech->requireOR;	/* a list of OR-related requirements */
 
 	if (!requiredAND && !requiredOR) {
 		Com_Printf("RS_RequirementsMet: No requirement list(s) given as parameter.\n");
