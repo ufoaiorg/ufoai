@@ -74,10 +74,7 @@ static void GAME_SK_SetMissionParameters (const mapDef_t *md)
 	else
 		cgi->Cvar_Set("ai_civilian", "europe");
 
-	if (md->hurtAliens)
-		cgi->Cvar_Set("sv_hurtaliens", "1");
-	else
-		cgi->Cvar_Set("sv_hurtaliens", "0");
+	cgi->Cvar_Set("sv_hurtaliens", "0");
 
 	/* now store the alien teams in the shared csi struct to let the game dll
 	 * have access to this data, too */

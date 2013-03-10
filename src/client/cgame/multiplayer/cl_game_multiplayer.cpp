@@ -89,11 +89,7 @@ static void GAME_MP_StartServer_f (void)
 	/** @todo implement different ufo and dropship support for multiplayer, too (see skirmish) */
 	cgi->Cvar_Set("rm_drop", "");
 	cgi->Cvar_Set("rm_ufo", "");
-
-	if (md->hurtAliens)
-		cgi->Cvar_Set("sv_hurtaliens", "1");
-	else
-		cgi->Cvar_Set("sv_hurtaliens", "0");
+	cgi->Cvar_Set("sv_hurtaliens", "0");
 
 	if (md->teams)
 		cgi->Cvar_SetValue("sv_maxteams", md->teams);
