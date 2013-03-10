@@ -35,17 +35,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 bool B_IsBuildingBuiltUp (const building_t *building)
 {
-	date_t due;
-
 	if (!building)
 		return false;
 	if (building->timeStart.day == 0 && building->timeStart.sec == 0)
 		return true;
-	due = building->timeStart;
+	date_t due = building->timeStart;
 	due.day += building->buildTime;
-	if (Date_IsDue(&due))
-		return true;
-	return false;
+	return Date_IsDue(&due);
 }
 
 /**
