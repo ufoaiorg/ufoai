@@ -190,8 +190,8 @@ static const int tile_template_popup[] = {
  */
 void UI_DrawSpriteInBox (bool flip, const uiSprite_t* sprite, uiSpriteStatus_t status, int posX, int posY, int sizeX, int sizeY)
 {
-	int texX;
-	int texY;
+	float texX;
+	float texY;
 	const char* image;
 
 	/** @todo Add warning */
@@ -225,26 +225,25 @@ void UI_DrawSpriteInBox (bool flip, const uiSprite_t* sprite, uiSpriteStatus_t s
 		return;
 
 	if (sprite->blend) {
-		const vec_t *color;
-		color = sprite->color[status];
+		const vec_t *color = sprite->color[status];
 		R_Color(color);
 	}
 
 	if (sprite->tiled_17_1_3) {
-		vec2_t pos = {posX, posY};
-		vec2_t size = {sizeX, sizeY};
+		const vec2_t pos = Vector2FromInt(posX, posY);
+		const vec2_t size = Vector2FromInt(sizeX, sizeY);
 		UI_DrawPanel(pos, size, image, texX, texY, tile_template_17_1_3);
 	} else if (sprite->tiled_25_1_3) {
-		vec2_t pos = {posX, posY};
-		vec2_t size = {sizeX, sizeY};
+		const vec2_t pos = Vector2FromInt(posX, posY);
+		const vec2_t size = Vector2FromInt(sizeX, sizeY);
 		UI_DrawPanel(pos, size, image, texX, texY, tile_template_25_1_3);
 	} else if (sprite->tiled_popup) {
-		vec2_t pos = {posX, posY};
-		vec2_t size = {sizeX, sizeY};
+		const vec2_t pos = Vector2FromInt(posX, posY);
+		const vec2_t size = Vector2FromInt(sizeX, sizeY);
 		UI_DrawPanel(pos, size, image, texX, texY, tile_template_popup);
 	} else if (sprite->border != 0) {
-		vec2_t pos = {posX, posY};
-		vec2_t size = {sizeX, sizeY};
+		const vec2_t pos = Vector2FromInt(posX, posY);
+		const vec2_t size = Vector2FromInt(sizeX, sizeY);
 		UI_DrawBorderedPanel(pos, size, image, texX, texY, sprite->size[0], sprite->size[1], sprite->border);
 	} else {
 		posX += (sizeX - sprite->size[0]) / 2;
