@@ -821,34 +821,33 @@ bool B_BuildingDestroy (building_t* building)
 	else if (base->buildingCurrent == building)
 		base->buildingCurrent = NULL;
 
-	{
-		int const baseIDX = base->idx;
-		building_t* const buildings = ccs.buildings[baseIDX];
-		int const idx = building->idx;
-		int cntBldgs;
-		int i;
-		int y, x;
+	int const baseIDX = base->idx;
+	building_t* const buildings = ccs.buildings[baseIDX];
+	int const idx = building->idx;
+	int cntBldgs;
+	int i;
+	int y, x;
 
-		for (y = building->pos[1]; y < building->pos[1] + building->size[1]; y++)
-			for (x = building->pos[0]; x < building->pos[0] + building->size[0]; x++)
-				base->map[y][x].building = NULL;
+	for (y = building->pos[1]; y < building->pos[1] + building->size[1]; y++)
+		for (x = building->pos[0]; x < building->pos[0] + building->size[0]; x++)
+			base->map[y][x].building = NULL;
 
-		REMOVE_ELEM(buildings, idx, ccs.numBuildings[baseIDX]);
+	REMOVE_ELEM(buildings, idx, ccs.numBuildings[baseIDX]);
 
-		/* Update the link of other buildings */
-		cntBldgs = ccs.numBuildings[baseIDX];
-		for (i = 0; i < cntBldgs; i++) {
-			building_t *bldg = &buildings[i];
-			if (bldg->idx >= idx) {
-				bldg->idx--;
+	/* Update the link of other buildings */
+	cntBldgs = ccs.numBuildings[baseIDX];
+	for (i = 0; i < cntBldgs; i++) {
+		building_t *bldg = &buildings[i];
+		if (bldg->idx >= idx) {
+			bldg->idx--;
 
-				for (y = bldg->pos[1]; y < bldg->pos[1] + bldg->size[1]; y++)
-					for (x = (int)bldg->pos[0]; x < bldg->pos[0] + bldg->size[0]; x++)
-						base->map[y][x].building = bldg;
-			}
+			for (y = bldg->pos[1]; y < bldg->pos[1] + bldg->size[1]; y++)
+				for (x = (int)bldg->pos[0]; x < bldg->pos[0] + bldg->size[0]; x++)
+					base->map[y][x].building = bldg;
 		}
-		building = NULL;
 	}
+	building = NULL;
+
 	/* Don't use the building pointer after this point - it's zeroed. */
 
 	if (buildingType != B_MISC && buildingType != MAX_BUILDING_TYPE) {
