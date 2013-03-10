@@ -221,7 +221,7 @@ static void R_BuildLightmap (mBspSurface_t *surf, byte *sout, byte *dout, int st
 /**
  * @sa R_ModLoadSurfaces
  */
-void R_CreateSurfaceLightmap (mBspSurface_t * surf)
+void R_CreateSurfaceLightmap (mBspSurface_t *surf)
 {
 	int smax, tmax;
 	byte *samples, *directions;

@@ -37,7 +37,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static const float MESH_SHADOW_MAX_DISTANCE = 512.0;
 static const float MESH_SHADOW_ALPHA = 0.3;
 
-static void R_TransformModelDirect (modelInfo_t * mi)
+static void R_TransformModelDirect (modelInfo_t *mi)
 {
 	/* translate and rotate */
 	glTranslatef(mi->origin[0], mi->origin[1], mi->origin[2]);
@@ -308,7 +308,7 @@ void R_ModelAutoScale (const vec2_t boxSize, modelInfo_t *mi, vec3_t scale, vec3
  * @c tagname of tag_rweapon will transform the location to the right hand of an actor.
  * @sa R_DrawAliasModel
  */
-void R_DrawModelDirect (modelInfo_t * mi, modelInfo_t * pmi, const char *tagname)
+void R_DrawModelDirect (modelInfo_t *mi, modelInfo_t *pmi, const char *tagname)
 {
 	image_t *skin;
 	mAliasMesh_t *mesh;
@@ -395,7 +395,7 @@ void R_DrawModelDirect (modelInfo_t * mi, modelInfo_t * pmi, const char *tagname
  * @param[in,out] mi The model information that is used to render the particle model.
  * @sa R_DrawPtlModel
  */
-void R_DrawModelParticle (modelInfo_t * mi)
+void R_DrawModelParticle (modelInfo_t *mi)
 {
 	image_t *skin;
 	mAliasMesh_t *mesh;

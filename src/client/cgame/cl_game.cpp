@@ -376,7 +376,7 @@ static void GAME_EquipActor (character_t* const chr, const equipDef_t *ed, int m
 	cls.i.EquipActor(chr, ed, maxWeight);
 }
 
-static void GAME_EquipActorMelee (inventory_t* const inv, const teamDef_t* td)
+static void GAME_EquipActorMelee (inventory_t* const inv, const teamDef_t *td)
 {
 	cls.i.EquipActorMelee(inv, td);
 }

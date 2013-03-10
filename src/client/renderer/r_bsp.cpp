@@ -236,7 +236,7 @@ static void R_RecursiveVisibleWorldNode (const mBspNode_t *node, int tile)
  * @param[in] node The bsp node to check
  * @param[in] tile The maptile (map assembly)
  */
-static void R_RecursiveWorldNode (const mBspNode_t * node, int tile)
+static void R_RecursiveWorldNode (const mBspNode_t *node, int tile)
 {
 	int i;
 	int cullState;
@@ -278,7 +278,7 @@ static void R_RecursiveWorldNode (const mBspNode_t * node, int tile)
  * @param[in] tile The maptile (map assembly)
  * @sa R_ModLoadNodes about pathfinding nodes
  */
-static void R_RecurseWorld (const mBspNode_t * node, int tile)
+static void R_RecurseWorld (const mBspNode_t *node, int tile)
 {
 	/* skip special pathfinding nodes */
 	if (node->contents == CONTENTS_PATHFINDING_NODE) {

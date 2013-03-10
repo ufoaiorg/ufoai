@@ -73,7 +73,7 @@ void R_DrawAliasModel(entity_t *e);
 void R_ShutdownModels(bool complete);
 void R_ModReloadSurfacesArrays(void);
 int R_ModAllocateActorSkin(const char* name);
-void R_LoadActorSkinsFromModel(mAliasMesh_t *outMesh, image_t * defaultSkin);
+void R_LoadActorSkinsFromModel(mAliasMesh_t *outMesh, image_t *defaultSkin);
 bool R_UseActorSkin(void);
 
 model_t *R_FindModel(const char *name);

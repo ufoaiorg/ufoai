@@ -709,7 +709,7 @@ static inline void R_DrawQuad (void)
  * @brief does 1D filter convolution to blur a framebuffer texture.
  * dir=0 for horizontal, dir=1 for vertical
  */
-static void R_Blur (r_framebuffer_t * source, r_framebuffer_t * dest, int tex, int dir)
+static void R_Blur (r_framebuffer_t *source, r_framebuffer_t *dest, int tex, int dir)
 {
 	R_EnableBlur(r_state.convolve_program, true, source, dest, dir);
 
@@ -724,7 +724,7 @@ static void R_Blur (r_framebuffer_t * source, r_framebuffer_t * dest, int tex, i
 /**
  * @brief blur from the source image pyramid into the dest image pyramid
  */
-static void R_BlurStack (int levels, r_framebuffer_t ** sources, r_framebuffer_t ** dests)
+static void R_BlurStack (int levels, r_framebuffer_t **sources, r_framebuffer_t **dests)
 {
 	int i;
 

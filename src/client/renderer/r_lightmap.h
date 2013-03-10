@@ -34,7 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define LIGHTMAP_SAMPLE_SIZE 3 /* RGB */
 #define DELUXEMAP_SAMPLE_SIZE 3 /* XYZ */
 
-void R_CreateSurfaceLightmap(mBspSurface_t * surf);
+void R_CreateSurfaceLightmap(mBspSurface_t *surf);
 void R_EndBuildingLightmaps(void);
 void R_BeginBuildingLightmaps(void);
 

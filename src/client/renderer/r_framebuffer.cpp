@@ -176,7 +176,7 @@ void R_ShutdownFBObjects (void)
  * @param[in] halfFloat Use half float pixel format
  * @param[in] filters Filters for the textures. Must have @c ntextures entries
  */
-r_framebuffer_t * R_CreateFramebuffer (int width, int height, int ntextures, bool depth, bool halfFloat, unsigned int *filters)
+r_framebuffer_t *R_CreateFramebuffer (int width, int height, int ntextures, bool depth, bool halfFloat, unsigned int *filters)
 {
 	r_framebuffer_t *buf;
 	int i;
