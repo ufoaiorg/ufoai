@@ -37,18 +37,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define gettext_noop(String) String
 #define N_(String) gettext_noop (String)
 
-/* Macros for faster access to the inventory-container. */
-/** These macros are deprecated. Please use the appropriate inline functions */
-#define CONTAINER(e, containerID) ((e)->inv.c[(containerID)])
-//#define ARMOUR(e) (CONTAINER(e, csi.idArmour))
-//#define RIGHT(e) (CONTAINER(e, csi.idRight))
-//#define LEFT(e)  (CONTAINER(e, csi.idLeft))
-//#define FLOOR(e) (CONTAINER(e, csi.idFloor))
-//#define HEADGEAR(e) (CONTAINER(e, csi.idHeadgear))
-//#define EXTENSION(e) (CONTAINER(e, csi.idExtension))
-//#define HOLSTER(e) (CONTAINER(e, csi.idHolster))
-//#define EQUIP(e) (CONTAINER(e, csi.idEquip))
-
 #define INVDEF(containerID) (&csi.ids[(containerID)])
 
 #define OVERLAY_NATION		(1<<0)

@@ -86,7 +86,7 @@ static void CP_TEAM_SetEquipContainer (character_t *chr)
 	const int idEquip = cgi->csi->idEquip;
 	inventory_t *uiInv = *cgi->ui_inventory;
 	if (uiInv && uiInv != &chr->inv) {
-		CONTAINER(chr, idEquip) = uiInv->getContainer(idEquip);
+		chr->inv.setContainer(idEquip, uiInv->getContainer(idEquip));
 		/* set 'old' idEquip to NULL */
 		uiInv->resetContainer(idEquip);
 	}
