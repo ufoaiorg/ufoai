@@ -824,8 +824,6 @@ bool B_BuildingDestroy (building_t* building)
 	int const baseIDX = base->idx;
 	building_t* const buildings = ccs.buildings[baseIDX];
 	int const idx = building->idx;
-	int cntBldgs;
-	int i;
 	int y, x;
 
 	for (y = building->pos[1]; y < building->pos[1] + building->size[1]; y++)
@@ -835,8 +833,8 @@ bool B_BuildingDestroy (building_t* building)
 	REMOVE_ELEM(buildings, idx, ccs.numBuildings[baseIDX]);
 
 	/* Update the link of other buildings */
-	cntBldgs = ccs.numBuildings[baseIDX];
-	for (i = 0; i < cntBldgs; i++) {
+	const int cntBldgs = ccs.numBuildings[baseIDX];
+	for (int i = 0; i < cntBldgs; i++) {
 		building_t *bldg = &buildings[i];
 		if (bldg->idx >= idx) {
 			bldg->idx--;
