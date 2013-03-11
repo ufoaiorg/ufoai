@@ -58,7 +58,7 @@ invList_t *InventoryInterface::addInvList (invList_t **invList)
 
 	/* create the list */
 	if (!*invList) {
-		*invList = (invList_t*)alloc(sizeof(**invList));
+		*invList = (invList_t*)alloc(sizeof(invList_t));
 		(*invList)->next = NULL; /* not really needed - but for better readability */
 		return *invList;
 	} else
@@ -67,7 +67,7 @@ invList_t *InventoryInterface::addInvList (invList_t **invList)
 	while (list->next)
 		list = list->next;
 
-	newEntry = (invList_t*)alloc(sizeof(*newEntry));
+	newEntry = (invList_t*)alloc(sizeof(invList_t));
 	list->next = newEntry;
 	newEntry->next = NULL; /* not really needed - but for better readability */
 
