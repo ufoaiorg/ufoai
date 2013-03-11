@@ -56,7 +56,7 @@ static inline void R_AnimAdd (animState_t *as, const model_t *mod, const mAliasA
  * @param[in] name The animation name (from the *.anm file) to search
  * @return @c NULL if not found, otherwise the animation data
  */
-static const mAliasAnim_t *R_AnimGet (const model_t * mod, const char *name)
+static const mAliasAnim_t *R_AnimGet (const model_t *mod, const char *name)
 {
 	mAliasAnim_t *anim;
 	int i;
@@ -81,7 +81,7 @@ static const mAliasAnim_t *R_AnimGet (const model_t * mod, const char *name)
  * @param[in] mod The model to append the animation for
  * @param[in] name The animation name (from the *.anm file) to append
  */
-void R_AnimAppend (animState_t * as, const model_t * mod, const char *name)
+void R_AnimAppend (animState_t *as, const model_t *mod, const char *name)
 {
 	const mAliasAnim_t *anim;
 
@@ -131,7 +131,7 @@ void R_AnimAppend (animState_t * as, const model_t * mod, const char *name)
  * @param[in] mod Model structure to change the animation for
  * @param[in] name Animation state name to switch to
  */
-void R_AnimChange (animState_t * as, const model_t * mod, const char *name)
+void R_AnimChange (animState_t *as, const model_t *mod, const char *name)
 {
 	const mAliasAnim_t *anim;
 
@@ -189,7 +189,7 @@ void R_AnimChange (animState_t * as, const model_t * mod, const char *name)
  * @param[in] mod The model to run the animation for
  * @param[in] msec The milliseconds since this was called last
  */
-void R_AnimRun (animState_t * as, const model_t * mod, int msec)
+void R_AnimRun (animState_t *as, const model_t *mod, int msec)
 {
 	assert(as->lcur < MAX_ANIMLIST);
 
@@ -239,7 +239,7 @@ void R_AnimRun (animState_t * as, const model_t * mod, int msec)
  * @param[in] mod The model to check
  * @return @c NULL if no animation is set or running or the name of the current running animation otherwise.
  */
-const char *R_AnimGetName (const animState_t * as, const model_t * mod)
+const char *R_AnimGetName (const animState_t *as, const model_t *mod)
 {
 	const mAliasAnim_t *anim;
 
