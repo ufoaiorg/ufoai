@@ -268,7 +268,7 @@ void CP_CleanTempInventory (base_t* base)
 		for (k = 0; k < cgi->csi->numIDs; k++) {
 			/* idFloor and idEquip are temp */
 			if (INVDEF(k)->temp)
-				employee->chr.inv.c[k] = NULL;
+				employee->chr.inv.resetContainer(k);
 		}
 	}
 
@@ -277,7 +277,7 @@ void CP_CleanTempInventory (base_t* base)
 		for (k = 0; k < cgi->csi->numIDs; k++) {
 			/* idFloor and idEquip are temp */
 			if (INVDEF(k)->temp)
-				employee->chr.inv.c[k] = NULL;
+				employee->chr.inv.resetContainer(k);
 		}
 	}
 

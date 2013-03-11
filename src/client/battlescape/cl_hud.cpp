@@ -1316,7 +1316,7 @@ static void HUD_UpdateActorLoad_f (void)
 	for (containerIndex_t containerID = 0; containerID < csi.numIDs; containerID++) {
 		if (csi.ids[containerID].temp)
 			continue;
-		for (invList_t *invList = chr->inv.c[containerID], *next; invList; invList = next) {
+		for (invList_t *invList = chr->inv.getContainer(containerID), *next; invList; invList = next) {
 			const fireDef_t *fireDef;
 			next = invList->next;
 			fireDef = FIRESH_FiredefForWeapon(&invList->item);
