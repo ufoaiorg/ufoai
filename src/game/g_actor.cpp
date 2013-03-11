@@ -490,7 +490,7 @@ bool G_ActorDieOrStun (Edict *ent, Edict *attacker)
 
 	/* handle inventory - drop everything but the armour to the floor */
 	G_InventoryToFloor(ent);
-	G_ClientStateChange(&G_PLAYER_FROM_ENT(ent), ent, ~STATE_REACTION, false);
+	G_ClientStateChange(G_PLAYER_FROM_ENT(ent), ent, ~STATE_REACTION, false);
 
 	/* check if the player appears/perishes, seen from other teams */
 	G_CheckVis(ent);

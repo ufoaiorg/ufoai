@@ -479,10 +479,10 @@ static void G_ClientStateChangeUpdate (Edict *ent)
  * don't even use the G_ActionCheckForCurrentTeam function
  * @note Use checkaction true only for e.g. spawning values
  */
-void G_ClientStateChange (const Player *player, Edict *ent, int reqState, bool checkaction)
+void G_ClientStateChange (const Player &player, Edict *ent, int reqState, bool checkaction)
 {
 	/* Check if any action is possible. */
-	if (checkaction && !G_ActionCheckForCurrentTeam(player, ent, 0))
+	if (checkaction && !G_ActionCheckForCurrentTeam(&player, ent, 0))
 		return;
 
 	if (!reqState)
@@ -491,7 +491,7 @@ void G_ClientStateChange (const Player *player, Edict *ent, int reqState, bool c
 	switch (reqState) {
 	case STATE_CROUCHED: /* Toggle between crouch/stand. */
 		/* Check if player has enough TUs (TU_CROUCH TUs for crouch/uncrouch). */
-		if (!checkaction || G_ActionCheckForCurrentTeam(player, ent, TU_CROUCH)) {
+		if (!checkaction || G_ActionCheckForCurrentTeam(&player, ent, TU_CROUCH)) {
 			if (G_IsCrouched(ent)) {
 				if (!gi.CanActorStandHere(ent->fieldSize, ent->pos))
 					break;
@@ -504,7 +504,7 @@ void G_ClientStateChange (const Player *player, Edict *ent, int reqState, bool c
 	case ~STATE_REACTION: /* Request to turn off reaction fire. */
 		if (G_IsReaction(ent)) {
 			if (G_IsShaken(ent)) {
-				G_ClientPrintf(*player, PRINT_HUD, _("Currently shaken, won't let their guard down."));
+				G_ClientPrintf(player, PRINT_HUD, _("Currently shaken, won't let their guard down."));
 			} else {
 				/* Turn off reaction fire. */
 				G_RemoveReaction(ent);
@@ -686,7 +686,7 @@ int G_ClientAction (Player &player)
 
 	case PA_STATE:
 		gi.ReadFormat(format, &i);
-		G_ClientStateChange(&player, ent, i, true);
+		G_ClientStateChange(player, ent, i, true);
 		break;
 
 	case PA_SHOOT:
@@ -1043,7 +1043,7 @@ static void G_ThinkActorDieAfterSpawn (Edict *ent)
  */
 static void G_ThinkActorGoCrouch (Edict *ent)
 {
-	G_ClientStateChange(&G_PLAYER_FROM_ENT(ent), ent, STATE_CROUCHED, true);
+	G_ClientStateChange(G_PLAYER_FROM_ENT(ent), ent, STATE_CROUCHED, true);
 	ent->think = NULL;
 }
 
@@ -1250,7 +1250,7 @@ void G_ClientInitActorStates (const Player &player)
 
 		/* these state changes are not consuming any TUs */
 		saveTU = ent->TU;
-		G_ClientStateChange(&player, ent, gi.ReadShort(), false);
+		G_ClientStateChange(player, ent, gi.ReadShort(), false);
 		hand = (actorHands_t)gi.ReadShort();
 		fmIdx = gi.ReadShort();
 		objIdx = gi.ReadShort();

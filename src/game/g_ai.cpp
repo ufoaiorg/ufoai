@@ -1105,7 +1105,7 @@ static aiAction_t AI_PrepBestAction (const Player *player, Edict *ent)
 
 	/* check if the actor is in crouched state and try to stand up before doing the move */
 	if (G_IsCrouched(ent))
-		G_ClientStateChange(player, ent, STATE_CROUCHED, true);
+		G_ClientStateChange(*player, ent, STATE_CROUCHED, true);
 
 	/* do the move */
 	for (;;) {
@@ -1237,7 +1237,7 @@ void AI_ActorThink (Player *player, Edict *ent)
 
 		/* decide whether the actor wants to crouch */
 		if (AI_CheckCrouch(ent))
-			G_ClientStateChange(player, ent, STATE_CROUCHED, true);
+			G_ClientStateChange(*player, ent, STATE_CROUCHED, true);
 
 		/* actor is still alive - try to turn into the appropriate direction to see the target
 		 * actor once he sees the ai, too */
@@ -1416,7 +1416,7 @@ static void AI_InitPlayer (const Player &player, Edict *ent, const equipDef_t *e
 
 	/* no need to call G_SendStats for the AI - reaction fire is serverside only for the AI */
 	if (frand() < 0.75f) {
-		G_ClientStateChange(&player, ent, STATE_REACTION, false);
+		G_ClientStateChange(player, ent, STATE_REACTION, false);
 	}
 
 	/* initialize the LUA AI now */
