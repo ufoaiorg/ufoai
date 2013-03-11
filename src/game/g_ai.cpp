@@ -1122,7 +1122,7 @@ static aiAction_t AI_PrepBestAction (const Player *player, Edict *ent)
 		if (G_EdictPosIsSameAs(ent, bestAia.to))
 			break;
 		const pos_t length = G_ActorMoveLength(ent, level.pathingMap, bestAia.to, false);
-		if (length && length >= ROUTING_NOT_REACHABLE)
+		if (length > G_ActorUsableTUs(ent) || length >= ROUTING_NOT_REACHABLE)
 			break;
 	}
 
