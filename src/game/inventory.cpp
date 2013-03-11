@@ -51,25 +51,22 @@ void InventoryInterface::removeInvList (invList_t *invList)
 
 invList_t *InventoryInterface::addInvList (invList_t **invList)
 {
-	invList_t *newEntry;
-	invList_t *list;
+	invList_t *newEntry = (invList_t*)alloc(sizeof(invList_t));
+	newEntry->next = NULL; /* not really needed - but for better readability */
 
 	Com_DPrintf(DEBUG_SHARED, "AddInvList: add one slot (%s)\n", invName);
 
 	/* create the list */
 	if (!*invList) {
-		*invList = (invList_t*)alloc(sizeof(invList_t));
-		(*invList)->next = NULL; /* not really needed - but for better readability */
-		return *invList;
-	} else
-		list = *invList;
-
-	while (list->next)
-		list = list->next;
-
-	newEntry = (invList_t*)alloc(sizeof(invList_t));
-	list->next = newEntry;
-	newEntry->next = NULL; /* not really needed - but for better readability */
+		*invList = newEntry;
+	} else {
+		/* read up to the end of the list */
+		invList_t *list = *invList;
+		while (list->next)
+			list = list->next;
+		/* append our new item as the last in the list */
+		list->next = newEntry;
+	}
 
 	return newEntry;
 }
