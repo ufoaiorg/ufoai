@@ -105,6 +105,7 @@ static void G_MoraleRage (Edict *ent, bool sanity)
 		G_PrintStats("%s is consumed by mad rage (entnum %i).", ent->chr.name, ent->number);
 	}
 	G_EventSendState(G_VisToPM(ent->visflags), ent);
+	G_ClientStateChange(G_PLAYER_FROM_ENT(ent), ent, ~STATE_REACTION, false);
 
 	AI_ActorThink(&G_PLAYER_FROM_ENT(ent), ent);
 }

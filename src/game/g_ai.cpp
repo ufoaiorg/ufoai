@@ -52,6 +52,7 @@ typedef struct aiAction_s {
 #define SCORE_REACTION_ERADICATION 30
 #define SCORE_REACTION_FEAR_FACTOR 20
 #define SCORE_NONHIDING_PLACE_PENALTY 25
+#define SCORE_RAGE			40
 #define SCORE_CIV_FACTOR	0.25
 #define SCORE_DISABLED_FACTOR 0.25
 
@@ -745,6 +746,11 @@ static float AI_FighterCalcActionScore (Edict *ent, pos3_t to, aiAction_t *aia)
 				 * and a huge malus if more than 1 move under reaction */
 			}
 		}
+	} else {
+		if (aia->target)
+			bestActionScore += aia->shots * SCORE_RAGE - move;
+		else
+			bestActionScore += move;
 	}
 
 	/* reward closing in */
@@ -1254,7 +1260,7 @@ void AI_ActorThink (Player *player, Edict *ent)
 
 static void AI_PlayerRun (Player &player)
 {
-	if (level.activeTeam == player.getTeam()) {
+	if (level.activeTeam == player.getTeam() && !player.roundDone) {
 		/* find next actor to handle */
 		Edict *ent = player.pers.last;
 
