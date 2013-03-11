@@ -739,6 +739,7 @@ static float AI_FighterCalcActionScore (Edict *ent, pos3_t to, aiAction_t *aia)
 			} else {
 				/* found a hiding spot */
 				VectorCopy(ent->pos, aia->stop);
+				G_EdictCalcOrigin(ent);
 				bestActionScore += SCORE_HIDE;
 				/** @todo also add bonus for fleeing from reaction fire
 				 * and a huge malus if more than 1 move under reaction */
