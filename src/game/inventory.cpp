@@ -29,12 +29,12 @@ void InventoryInterface::removeInvList (invList_t *invList)
 	Com_DPrintf(DEBUG_SHARED, "removeInvList: remove one slot (%s)\n", invName);
 
 	/* first entry */
-	if (this->invList == invList) {
-		invList_t *ic = this->invList;
-		this->invList = ic->next;
+	if (this->_invList == invList) {
+		invList_t *ic = this->_invList;
+		this->_invList = ic->next;
 		free(ic);
 	} else {
-		invList_t *ic = this->invList;
+		invList_t *ic = this->_invList;
 		invList_t *prev = NULL;
 		while (ic) {
 			if (ic == invList) {
@@ -985,7 +985,7 @@ void InventoryInterface::EquipActor (character_t* const chr, const equipDef_t *e
 int InventoryInterface::GetUsedSlots ()
 {
 	int i = 0;
-	const invList_t *slot = invList;
+	const invList_t *slot = _invList;
 	while (slot) {
 		slot = slot->next;
 		i++;
@@ -1012,7 +1012,7 @@ void InventoryInterface::initInventory (const char *name, const csi_t* csi, cons
 	this->invName = name;
 	this->cacheItem = item;
 	this->csi = csi;
-	this->invList = NULL;
+	this->_invList = NULL;
 }
 
 void InventoryInterface::destroyInventoryInterface (void)

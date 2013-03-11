@@ -40,7 +40,7 @@ typedef struct inventoryImport_s {
 class InventoryInterface
 {
 	const inventoryImport_t *import;
-	invList_t *invList;
+	invList_t *_invList;	/* @todo figure out WTF this is good for (Duke, 11.3.2013) */
 	item_t cacheItem;
 	const csi_t* csi;
 	const char *invName;
