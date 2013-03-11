@@ -41,6 +41,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @param[in] cy The y texture coordinate
  * @param[in] iz The zoomlevel of the geoscape - see ccs.zoom
  * @param[in] map The geoscape map to draw (can be changed in the campaign definition)
+ * @param[in] overlayNation,overlayXVI,overlayRadar Whether these overlays should be drawn or not
  */
 void R_DrawFlatGeoscape (const vec2_t nodePos, const vec2_t nodeSize, float p, float cx, float cy, float iz, const char *map, bool overlayNation, bool overlayXVI, bool overlayRadar, image_t *r_dayandnightTexture, image_t *r_xviTexture, image_t *r_radarTexture)
 {
