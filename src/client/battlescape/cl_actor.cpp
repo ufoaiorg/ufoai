@@ -1725,7 +1725,7 @@ static void CL_TargetingStraight (const pos3_t fromPos, actorSizeEnum_t fromActo
 	 * cl_worldlevel->integer should be enough here */
 	tr = CL_Trace(temp, mid, AABB(), selActor, target, MASK_SHOT, cl.mapMaxLevel - 1);
 
-	if (tr.fraction < 1.0 && (!tr.le || !VectorCompare(tr.le->pos, toPos))) {
+	if (tr.fraction < 1.0 && (!tr.le || (!LE_IsInvisible(tr.le) && !VectorCompare(tr.le->pos, toPos)))) {
 		const float d = VectorDist(temp, mid);
 		VectorMA(start, tr.fraction * d, dir, mid);
 		crossNo = true;
@@ -1810,7 +1810,7 @@ static void CL_TargetingGrenade (const pos3_t fromPos, actorSizeEnum_t fromActor
 		tr = CL_Trace(from, next, AABB(), selActor, target, MASK_SHOT, cl.mapMaxLevel - 1);
 
 		/* something was hit */
-		if (tr.fraction < 1.0 && (!tr.le || !VectorCompare(tr.le->pos, toPos))) {
+		if (tr.fraction < 1.0 && (!tr.le || (!LE_IsInvisible(tr.le) && !VectorCompare(tr.le->pos, toPos)))) {
 			obstructed = true;
 		}
 

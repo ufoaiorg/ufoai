@@ -196,6 +196,10 @@ int CL_GetHitProbability (const le_t* actor)
 	if (!le)
 		return 0;
 
+	/* Target is not visible */
+	if  (LE_IsInvisible(le))
+		return 0;
+
 	/* or suicide attempted */
 	if (LE_IsSelected(le) && !FIRESH_IsMedikit(le->fd))
 		return 0;
