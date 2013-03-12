@@ -170,7 +170,7 @@ void R_SetDefaultState(void);
 void R_Setup2D(void);
 void R_Setup3D(void);
 void R_ReallocateStateArrays(int size);
-void R_ReallocateTexunitArray(gltexunit_t * texunit, int size);
+void R_ReallocateTexunitArray(gltexunit_t *texunit, int size);
 
 void R_TexEnv(GLenum value);
 void R_TexOverride (vec4_t rgba);

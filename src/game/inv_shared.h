@@ -501,7 +501,7 @@ const invDef_t *INVSH_GetInventoryDefinitionByID(const char *id);
 /*  FIREMODE MANAGEMENT FUNCTIONS  */
 /* =============================== */
 
-const fireDef_t* FIRESH_GetFiredef(const objDef_t *obj, const weaponFireDefIndex_t weapFdsIdx, const fireDefIndex_t fdIdx);
+const fireDef_t *FIRESH_GetFiredef(const objDef_t *obj, const weaponFireDefIndex_t weapFdsIdx, const fireDefIndex_t fdIdx);
 const fireDef_t *FIRESH_FiredefForWeapon(const item_t *item);
 const fireDef_t *FIRESH_SlowestFireDef(const item_t &item);
 #define FIRESH_IsMedikit(firedef) ((firedef)->damage[0] < 0)

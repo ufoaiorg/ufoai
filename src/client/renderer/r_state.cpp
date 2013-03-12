@@ -1038,7 +1038,7 @@ void R_ReallocateStateArrays (int size)
  * @note Also resets active texunit
  * @sa R_ReallocateStateArrays
 */
-void R_ReallocateTexunitArray (gltexunit_t * texunit, int size)
+void R_ReallocateTexunitArray (gltexunit_t *texunit, int size)
 {
 	if (size <= texunit->array_size)
 		return;

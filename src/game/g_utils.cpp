@@ -145,7 +145,7 @@ bool G_UseEdict (Edict *ent, Edict *activator)
  * @param[in] fd Pointer to fire definition, for which item is wanted.
  * @return @c od to which fire definition belongs or @c NULL when no object found.
  */
-static const objDef_t *G_GetObjectForFiredef (const fireDef_t* fd)
+static const objDef_t *G_GetObjectForFiredef (const fireDef_t *fd)
 {
 	int i, j, k;
 

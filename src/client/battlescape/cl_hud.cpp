@@ -297,7 +297,7 @@ static void HUD_PopupFiremodeReservation (const le_t *le, bool popupReload)
 
 		const objDef_t *ammo = fd->obj;
 		for (i = 0; i < ammo->numFiredefs[fd->weapFdsIdx]; i++) {
-			const fireDef_t* ammoFD = &ammo->fd[fd->weapFdsIdx][i];
+			const fireDef_t *ammoFD = &ammo->fd[fd->weapFdsIdx][i];
 			const int time = CL_ActorTimeForFireDef(le, ammoFD);
 			if (CL_ActorUsableTUs(le) + CL_ActorReservedTUs(le, RES_SHOT) >= time) {
 				/* Get firemode name and TUs. */

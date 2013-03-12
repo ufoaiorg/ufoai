@@ -98,7 +98,7 @@ static inline void R_SpriteTexcoords (const ptl_t *p, float out[8])
 /**
  * @sa R_DrawParticles
  */
-static void R_DrawSprite (const ptl_t * p)
+static void R_DrawSprite (const ptl_t *p)
 {
 	const ptl_t *q;
 	vec3_t up, right;
@@ -161,7 +161,7 @@ static void R_DrawSprite (const ptl_t * p)
 /**
  * @sa R_DrawParticles
  */
-static void R_DrawParticleModel (ptl_t * p)
+static void R_DrawParticleModel (ptl_t *p)
 {
 	modelInfo_t mi;
 
@@ -198,7 +198,7 @@ static void R_DrawPtlCircle (const ptl_t* p)
 /**
  * @sa R_DrawParticles
  */
-static void R_DrawPtlLine (const ptl_t * p)
+static void R_DrawPtlLine (const ptl_t *p)
 {
 	const vec3_t points[] = { { p->s[0], p->s[1], p->s[2] }, { p->v[0], p->v[1], p->v[2] } };
 
