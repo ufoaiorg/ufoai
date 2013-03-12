@@ -78,7 +78,7 @@ protected:
 		import->Free(data);
 	}
 	void removeInvList (invList_t *invList);
-	invList_t *addInvList (invList_t **invList);
+	invList_t *addInvList (inventory_t *const inv, const invDef_t *container);
 	float GetInventoryState (const inventory_t *inventory, int &slowestFd);
 	int PackAmmoAndWeapon (character_t* const chr, const objDef_t *weapon, int missedPrimary, const equipDef_t *ed, int maxWeight);
 };
