@@ -84,15 +84,15 @@ typedef struct mBspFlare_s {
 typedef struct mBspSurface_s {
 	cBspPlane_t *plane;
 	int flags;
-	int tile;				/**< index in r_mapTiles (loaded bsp map index) this surface belongs, to */
+	int tile;					/**< index in r_mapTiles (loaded bsp map index) this surface belongs, to */
 
-	int frame;	/**< used to decide whether this surface should be drawn */
+	int frame;					/**< used to decide whether this surface should be drawn */
 
 	/** look up in model->surfedges[], negative numbers are backwards edges */
 	int firstedge;
 	int numedges;
 
-	short stmins[2];		/**< st min coordinates */
+	short stmins[2];			/**< st min coordinates */
 	short stmaxs[2];			/**< st max coordinates */
 	vec2_t stcenter;
 	vec2_t stextents;
@@ -101,14 +101,14 @@ typedef struct mBspSurface_s {
 	vec3_t maxs;
 
 	vec3_t center;
-	vec4_t lightColor; /**< average lightmap color for the surface */
+	vec4_t lightColor;			/**< average lightmap color for the surface */
 	vec3_t normal;
 
 	int light_s, light_t;		/**< gl lightmap coordinates */
 	int lightmap_scale;
 
-	unsigned int index; /**< of the first vertex in the vertex array */
-	int firstTriangle; /* -1 means no triangles are generated for this surface yet */
+	unsigned int index;			/**< of the first vertex in the vertex array */
+	int firstTriangle;			/** -1 means no triangles are generated for this surface yet */
 	unsigned int numTriangles;
 
 	int tracenum;
