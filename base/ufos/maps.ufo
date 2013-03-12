@@ -1083,7 +1083,7 @@ mapdef frozen_lake
 {
 	map				"+frozen"
 	param			"lake_ice"
-	description		"_Snow"
+	description		"_Snowy Logging Site"
 	maxaliens		9
 
 	aircraft
@@ -4282,101 +4282,6 @@ mapdef harbour
 		"village"
 		"suburban"
 		"urban"
-	)
-}
-
-// LAKE_ICE MAP //
-
-mapdef lake_ice
-{
-	map				"lake_ice"
-	description		"_Snowy Logging Site"
-	multiplayer		true
-	teams			2
-	gametypes (
-		fight1on1
-		fight2on2
-		coop2
-		coop3
-		coop4
-	)
-	maxaliens		16
-
-	aircraft
-	(
-		// any
-	)
-
-	ufos
-	(
-		// any
-	)
-
-	terrains
-	(
-		"cold"
-		"arctic"
-	)
-
-	cultures
-	(
-		// any
-	)
-
-	populations
-	(
-		// any
-	)
-}
-
-// LAKE_ICE_BIG MAP //
-
-mapdef lake_ice_big
-{
-	map				"lake_ice_big"
-	multiplayer		true
-	teams			3
-	description		"_Snowy Logging Site"
-	maxaliens		28
-
-	gametypes (
-		fight1on1
-		fight1on1on1
-		fight2on2
-		fight2on2on2
-		fight3on3
-		fight3on3on3
-		coop2
-		coop3
-		coop4
-	)
-
-	aircraft
-	(
-		// any
-	)
-
-	ufos
-	(
-		craft_ufo_fighter
-	)
-
-	terrains
-	(
-		"cold"
-		"arctic"
-	)
-
-	cultures
-	(
-		// any
-	)
-
-	populations
-	(
-		"suburban"
-		"village"
-		"rural"
 	)
 }
 
