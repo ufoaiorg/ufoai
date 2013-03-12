@@ -238,8 +238,6 @@ static void AM_CreateUnitChr (autoUnit_t *unit, const teamDef_t *teamDef, const 
 /**
  * @brief Destroys character of a Unit
  * @param[out] unit The unit to create character for
- * @param[in] teamDef The team definition of the unit
- * @param[in] eq The equipment to use in case the @c type is @c AUTOMISSION_TEAM_TYPE_ALIEN
  * @sa AM_CreateUnitChr
  */
 static void AM_DestroyUnitChr (autoUnit_t *unit)
@@ -563,8 +561,6 @@ static autoUnit_t *AM_GetRandomActiveUnit (autoMissionBattle_t *battle, int curr
 /**
  * @brief Check and do attack on a team
  * @param[in, out] battle The battle we fight
- * @param[in] eTeam Team idx to attack
- * @param[in] currTeam Team idx that attacks
  * @param[in] currUnit Soldier idx who attacks
  * @param[in] effective Effectiveness of the attack
  */
