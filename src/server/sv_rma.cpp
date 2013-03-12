@@ -485,8 +485,7 @@ static const char *SV_GetCvarToken (const MapInfo *map, const Assembly *a, const
 		for (int i = 0; i < map->numTiles; i++) {
 			const char *tileId = map->mTile[i].id;
 			const char *tileName = strrchr(tileId, '/');
-			if (tileName && Q_streq(strstr(tileName, cvarTile), cvarTile) &&
-					!Q_strncasecmp(tileId, token, tokenTile - token))
+			if (tileName && strstr(tileName, cvarTile) && !Q_strncasecmp(tileId, token, tokenTile - token))
 				return tileId;
 		}
 	}
