@@ -109,7 +109,7 @@ static void UI_CheckBoxNodeCallActivate (uiNode_t *node, const uiCallContext_t *
 /**
  * @brief Handles checkboxes clicks
  */
-void uiCheckBoxNode::onLeftClick (uiNode_t * node, int x, int y)
+void uiCheckBoxNode::onLeftClick (uiNode_t *node, int x, int y)
 {
 	if (node->onClick)
 		UI_ExecuteEventActions(node, node->onClick);

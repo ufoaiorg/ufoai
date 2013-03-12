@@ -168,7 +168,7 @@ void uiOptionListNode::draw (uiNode_t *node)
 	UI_OptionListNodeUpdateScroll(node);
 }
 
-static uiNode_t* UI_OptionListNodeGetOptionAtPosition (uiNode_t * node, int x, int y)
+static uiNode_t* UI_OptionListNodeGetOptionAtPosition (uiNode_t *node, int x, int y)
 {
 	uiNode_t* option;
 	vec2_t pos;
@@ -205,7 +205,7 @@ static uiNode_t* UI_OptionListNodeGetOptionAtPosition (uiNode_t * node, int x, i
 /**
  * @brief Handles selectboxes clicks
  */
-void uiOptionListNode::onLeftClick (uiNode_t * node, int x, int y)
+void uiOptionListNode::onLeftClick (uiNode_t *node, int x, int y)
 {
 	uiNode_t* option;
 

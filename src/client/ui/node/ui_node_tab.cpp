@@ -123,7 +123,7 @@ static uiNode_t* UI_TabNodeTabAtPosition (const uiNode_t *node, int x, int y)
 /**
  * @brief Handles tab clicks
  */
-void uiTabNode::onLeftClick (uiNode_t * node, int x, int y)
+void uiTabNode::onLeftClick (uiNode_t *node, int x, int y)
 {
 	uiNode_t* option;
 

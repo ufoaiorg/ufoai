@@ -283,7 +283,7 @@ void uiText2Node::draw (uiNode_t *node)
  * @brief Calls the script command for a text node that is clickable
  * @sa UI_TextNodeRightClick
  */
-void uiText2Node::onLeftClick (uiNode_t * node, int x, int y)
+void uiText2Node::onLeftClick (uiNode_t *node, int x, int y)
 {
 	int line = UI_TextNodeGetLine(node, x, y);
 
@@ -300,7 +300,7 @@ void uiText2Node::onLeftClick (uiNode_t * node, int x, int y)
  * @brief Calls the script command for a text node that is clickable via right mouse button
  * @sa UI_TextNodeClick
  */
-void uiText2Node::onRightClick (uiNode_t * node, int x, int y)
+void uiText2Node::onRightClick (uiNode_t *node, int x, int y)
 {
 	int line = UI_TextNodeGetLine(node, x, y);
 

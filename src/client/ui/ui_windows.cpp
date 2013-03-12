@@ -70,7 +70,7 @@ int UI_GetLastFullScreenWindow (void)
  * with the same window parent.
  * @param window Window we want to move
  */
-void UI_MoveWindowOnTop (uiNode_t * window)
+void UI_MoveWindowOnTop (uiNode_t *window)
 {
 	int i, j;
 

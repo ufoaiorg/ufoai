@@ -51,7 +51,7 @@ void UI_OptionNodeSortOptions (uiNode_t *node)
 	node->lastChild = option;
 }
 
-const char *UI_AbstractOptionGetCurrentValue (uiNode_t * node)
+const char *UI_AbstractOptionGetCurrentValue (uiNode_t *node)
 {
 	/* no cvar given? */
 	if (!EXTRADATA(node).cvar || !*EXTRADATA(node).cvar) {
@@ -66,7 +66,7 @@ const char *UI_AbstractOptionGetCurrentValue (uiNode_t * node)
 	return UI_GetReferenceString(node, EXTRADATA(node).cvar);
 }
 
-void UI_AbstractOptionSetCurrentValue(uiNode_t * node, const char *value)
+void UI_AbstractOptionSetCurrentValue(uiNode_t *node, const char *value)
 {
 	const char *cvarName = &EXTRADATA(node).cvar[6];
 	Cvar_Set(cvarName, value);
@@ -97,7 +97,7 @@ void uiAbstractOptionNode::doLayout (uiNode_t *node)
  * @brief Return the first option of the node
  * @todo check versionId and update cached data, and fire events
  */
-uiNode_t* UI_AbstractOptionGetFirstOption (uiNode_t * node)
+uiNode_t* UI_AbstractOptionGetFirstOption (uiNode_t *node)
 {
 	if (node->firstChild && node->firstChild->behaviour == ui_optionBehaviour) {
 		return node->firstChild;

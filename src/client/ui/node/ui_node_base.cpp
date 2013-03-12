@@ -45,7 +45,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /** 20 is the height of the part where the images overlap */
 #define BASE_IMAGE_OVERLAY 20
 
-void uiAbstractBaseNode::onLoading (uiNode_t * node)
+void uiAbstractBaseNode::onLoading (uiNode_t *node)
 {
 	EXTRADATA(node).baseid = -1;
 }
@@ -53,14 +53,14 @@ void uiAbstractBaseNode::onLoading (uiNode_t * node)
 /**
  * @brief Called after the node is completely loaded from the ufo-script (all data and/or children are set)
  */
-void uiAbstractBaseNode::onLoaded (uiNode_t * node)
+void uiAbstractBaseNode::onLoaded (uiNode_t *node)
 {
 }
 
 /**
  * @brief Draw a small square with the layout of the given base
  */
-void uiBaseLayoutNode::draw (uiNode_t * node)
+void uiBaseLayoutNode::draw (uiNode_t *node)
 {
 	const int totalMarge = node->padding * (BASE_SIZE + 1);
 	const int width = (node->box.size[0] - totalMarge) / BASE_SIZE;
@@ -99,7 +99,7 @@ void uiBaseMapNode::getCellAtPos (const uiNode_t *node, int x, int y, int *col, 
 /**
  * @brief Draws a base.
  */
-void uiBaseMapNode::draw (uiNode_t * node)
+void uiBaseMapNode::draw (uiNode_t *node)
 {
 	int col, row;
 	bool hover = node->state;

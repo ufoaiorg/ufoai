@@ -44,12 +44,12 @@ static inline void UI_InitCvarOrFloat (float** adress, float defaultValue)
 	}
 }
 
-void uiAbstractValueNode::onLoading (uiNode_t * node)
+void uiAbstractValueNode::onLoading (uiNode_t *node)
 {
 	EXTRADATA(node).shiftIncreaseFactor = 2.0F;
 }
 
-void uiAbstractValueNode::onLoaded (uiNode_t * node)
+void uiAbstractValueNode::onLoaded (uiNode_t *node)
 {
 	UI_InitCvarOrFloat((float**)&EXTRADATA(node).value, 0);
 	UI_InitCvarOrFloat((float**)&EXTRADATA(node).delta, 1);
@@ -57,7 +57,7 @@ void uiAbstractValueNode::onLoaded (uiNode_t * node)
 	UI_InitCvarOrFloat((float**)&EXTRADATA(node).min, 0);
 }
 
-void uiAbstractValueNode::newNode (uiNode_t * node)
+void uiAbstractValueNode::newNode (uiNode_t *node)
 {
 	EXTRADATA(node).value = Mem_PoolAllocType(float, ui_dynPool);
 	EXTRADATA(node).delta = Mem_PoolAllocType(float, ui_dynPool);
@@ -65,7 +65,7 @@ void uiAbstractValueNode::newNode (uiNode_t * node)
 	EXTRADATA(node).min   = Mem_PoolAllocType(float, ui_dynPool);
 }
 
-void uiAbstractValueNode::deleteNode (uiNode_t * node)
+void uiAbstractValueNode::deleteNode (uiNode_t *node)
 {
 	Mem_Free(EXTRADATA(node).value);
 	Mem_Free(EXTRADATA(node).delta);

@@ -77,9 +77,9 @@ static void UI_OptionTreeNodeUpdateScroll (uiNode_t *node)
 }
 
 /** @todo we should remove this call loop */
-static uiNode_t* UI_OptionTreeNodeGetFirstOption(uiNode_t * node);
+static uiNode_t* UI_OptionTreeNodeGetFirstOption(uiNode_t *node);
 
-static void UI_OptionTreeNodeUpdateCache (uiNode_t * node)
+static void UI_OptionTreeNodeUpdateCache (uiNode_t *node)
 {
 	uiNode_t* option = UI_OptionTreeNodeGetFirstOption(node);
 	if (option)
@@ -90,7 +90,7 @@ static void UI_OptionTreeNodeUpdateCache (uiNode_t * node)
  * @brief Return the first option of the node
  * @todo check versionId and update cached data, and fire events
  */
-static uiNode_t* UI_OptionTreeNodeGetFirstOption (uiNode_t * node)
+static uiNode_t* UI_OptionTreeNodeGetFirstOption (uiNode_t *node)
 {
 	if (node->firstChild) {
 		/** @todo FIXME it MUST be an option behaviour */
@@ -210,7 +210,7 @@ void uiOptionTreeNode::draw (uiNode_t *node)
 	R_Color(NULL);
 }
 
-static uiNode_t* UI_OptionTreeNodeGetOptionAtPosition (uiNode_t * node, int x, int y, int *depth)
+static uiNode_t* UI_OptionTreeNodeGetOptionAtPosition (uiNode_t *node, int x, int y, int *depth)
 {
 	uiNode_t* option;
 	const char *font;
@@ -235,7 +235,7 @@ static uiNode_t* UI_OptionTreeNodeGetOptionAtPosition (uiNode_t * node, int x, i
 /**
  * @brief Handles selectboxes clicks
  */
-void uiOptionTreeNode::onLeftClick (uiNode_t * node, int x, int y)
+void uiOptionTreeNode::onLeftClick (uiNode_t *node, int x, int y)
 {
 	uiNode_t* option;
 	int depth;

@@ -48,7 +48,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @brief Handles Button clicks
  * @todo it is useless !
  */
-void uiButtonNode::onLeftClick (uiNode_t * node, int x, int y)
+void uiButtonNode::onLeftClick (uiNode_t *node, int x, int y)
 {
 	if (node->onClick) {
 		UI_ExecuteEventActions(node, node->onClick);
