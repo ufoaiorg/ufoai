@@ -47,7 +47,7 @@ static void G_MoralePanic (Edict *ent, bool sanity)
 		if (ent->getLeftHand())
 			G_ActorInvMove(ent, INVDEF(gi.csi->idLeft), ent->getLeftHand(),
 					INVDEF(gi.csi->idFloor), NONE, NONE, true);
-		G_ClientStateChange(G_PLAYER_FROM_ENT(ent), ent, ~STATE_REACTION, false);
+		G_ClientStateChange(ent->getPlayer(), ent, ~STATE_REACTION, false);
 	}
 
 	/* get up */
@@ -105,7 +105,7 @@ static void G_MoraleRage (Edict *ent, bool sanity)
 		G_PrintStats("%s is consumed by mad rage (entnum %i).", ent->chr.name, ent->number);
 	}
 	G_EventSendState(G_VisToPM(ent->visflags), ent);
-	G_ClientStateChange(G_PLAYER_FROM_ENT(ent), ent, ~STATE_REACTION, false);
+	G_ClientStateChange(ent->getPlayer(), ent, ~STATE_REACTION, false);
 
 	AI_ActorThink(&G_PLAYER_FROM_ENT(ent), ent);
 }
@@ -179,7 +179,7 @@ void G_MoraleBehaviour (int team)
 			} else if (ent->morale <= mor_shaken->integer) {
 				/* shaken is later reset along with reaction fire */
 				G_SetShaken(ent);
-				G_ClientStateChange(G_PLAYER_FROM_ENT(ent), ent, STATE_REACTION, false);
+				G_ClientStateChange(ent->getPlayer(), ent, STATE_REACTION, false);
 				G_EventSendState(G_VisToPM(ent->visflags), ent);
 				G_ClientPrintf(ent->getPlayer(), PRINT_HUD, _("%s is currently shaken."),
 						ent->chr.name);

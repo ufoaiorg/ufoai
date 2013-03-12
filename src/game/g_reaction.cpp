@@ -379,7 +379,7 @@ void G_ReactionFireSettingsUpdate (Edict *ent, fireDefIndex_t fmIdx, actorHands_
 
 	if (!G_ActorHasWorkingFireModeSet(ent)) {
 		/* Disable reaction fire if no valid firemode was found. */
-		G_ClientStateChange(G_PLAYER_FROM_ENT(ent), ent, ~STATE_REACTION, true);
+		G_ClientStateChange(ent->getPlayer(), ent, ~STATE_REACTION, true);
 		return;
 	}
 
