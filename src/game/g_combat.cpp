@@ -57,15 +57,25 @@ static bool G_TeamPointVis (int team, const vec3_t point)
 	while ((from = G_EdictsGetNextLivingActorOfTeam(from, team))) {
 		if (G_FrustumVis(from, point)) {
 			/* get viewers eye height */
-			VectorCopy(from->origin, eye);
-			if (G_IsCrouched(from))
-				eye[2] += EYE_CROUCH;
-			else
-				eye[2] += EYE_STAND;
+			G_ActorGetEyeVector(from, eye);
 
 			/* line of sight */
-			if (!G_TestLine(eye, point))
-				return true;
+			if (!G_TestLine(eye, point)) {
+				const float distance = VectorDist(from->origin, point);
+				bool blocked = false;
+				/* check visibility in the smoke */
+				if (distance >= UNIT_SIZE) {
+					Edict *e = NULL;
+					while ((e = G_EdictsGetNextInUse(e))) {
+						if (G_IsSmoke(e) && RayIntersectAABB(eye, point, e->absmin, e->absmax)) {
+								blocked = true;
+								break;
+						}
+					}
+				}
+				if (!blocked)
+					return true;
+			}
 		}
 	}
 
