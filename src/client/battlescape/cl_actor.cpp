@@ -1739,8 +1739,12 @@ static void CL_TargetingStraight (const pos3_t fromPos, actorSizeEnum_t fromActo
 	} else {
 		CL_ParticleSpawn("cross", 0, end);
 	}
-}
 
+	if (selActor->fd->splrad > 0.0) {
+		Grid_PosToVec(cl.mapData->routing, toActorSize, toPos, end);
+		CL_TargetingRadius(end, selActor->fd->splrad);
+	}
+}
 
 #define GRENADE_PARTITIONS	20
 
