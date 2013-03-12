@@ -1079,6 +1079,41 @@ mapdef frozen_industrial_small_noufo
 	)
 }
 
+mapdef frozen_lake
+{
+	map				"+frozen"
+	param			"lake_ice"
+	description		"_Snow"
+	maxaliens		9
+
+	aircraft
+	(
+		// any
+	)
+
+	ufos
+	(
+		// any
+	)
+
+	terrains
+	(
+		"cold"
+	)
+
+	cultures
+	(
+		// any
+	)
+
+	populations
+	(
+		"suburban"
+		"village"
+		"rural"
+	)
+}
+
 mapdef frozen_nature_medium
 {
 	map				"+frozen"

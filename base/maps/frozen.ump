@@ -8,6 +8,9 @@
 // 0 : always means no restrictions
 // a : common tile
 // c : craft, like dropship or UFO
+// h : river horizontally
+// r : a huge rock
+// v : river vertically
 
 base frozen/st_
 
@@ -80,6 +83,78 @@ tile +n07
 0		0		0		0
 }
 
+tile +n08
+	// a huge rock, eastern part, A-
+{
+4 5
+0		0		0		0
+r		+ar		+ar		0
+r		+ar		+ar		0
+r		+ar		+ar		0
+0		0		0		0
+}
+
+// River Tiles -----------------------------------------------------*
+
+tile +river_lake
+	// the ice lake
+{
+8 3
+0		0		0		v		0		0		0		0
+0		+a		+a		+a		+a		+a		+a		0
+0		x		x		x		x		x		x		x
+}
+
+tile +river_h_1
+{
+3 3
+0		0		0
+h		+ah		h
+0		0		0
+}
+
+tile +river_h_2
+{
+3 3
+0		0		0
+h		+ah		h
+0		0		0
+}
+
+tile +river_v_1
+{
+3 3
+0		v		0
+0		+av		0
+0		v		0
+}
+
+tile +river_v_2
+{
+3 3
+0		v		0
+0		+av		0
+0		v		0
+}
+
+tile +river_se
+	// river turning
+{
+3 3
+0		0		0
+0		+avh	h
+0		v		0
+}
+
+tile +river_sw
+	// river turning
+{
+3 3
+0		0		0
+h		+avh	0
+0		v		0
+}
+
 // Tiles with houses on them ---------------------------------------*
 
 tile +h01
@@ -102,7 +177,17 @@ tile +h02
 0		0		0		0		0
 }
 
+tile +h03
+	// an abandoned house
+{
+3 3
+0		0		0
+0		+a		0
+0		0		0
+}
+
 // Tiles with industrial facilitys ---------------------------------*
+
 tile +i01
 	// a big factory building, A7, C1
 {
@@ -200,29 +285,38 @@ tile +i09
 tile +craft_drop_firebird
 {
 5 4
-0		a		a		a		0
-a		+c		+c		+c		a
-a		+c		+c		+c		a
-0		a		a		a		0
+0		0		0		0		0
+0		+c		+c		+c		0
+0		+c		+c		+c		0
+0		0		0		0		0
 }
 
 tile +craft_drop_herakles
 {
 5 4
-0		a		a		a		0
-a		+c		+c		+c		a
-a		+c		+c		+c		a
-0		a		a		a		0
+0		0		0		0		0
+0		+c		+c		+c		0
+0		+c		+c		+c		0
+0		0		0		0		0
 }
 
 tile +craft_drop_raptor
 {
 5 5
-0		a		a		a		0
-a		+c		+c		+c		a
-a		+c		+c		+c		a
-a		+c		+c		+c		a
-0		a		a		a		0
+0		0		0		0		0
+0		+c		+c		+c		0
+0		+c		+c		+c		0
+0		+c		+c		+c		0
+0		0		0		0		0
+}
+
+tile +start
+	// starting point for Phalanx in case we do not use a dropship
+{
+3 3
+0		0		0
+0		+a		0
+0		0		0
 }
 
 // UFO tiles -------------------------------------------------------*
@@ -230,40 +324,40 @@ a		+c		+c		+c		a
 tile +craft_ufo_fighter
 {
 4 4
-0		0		0		0
-0		+c		+c		0
-0		+c		+c		0
-0		0		0		0
+0		a		a		0
+a		+c		+c		a
+a		+c		+c		a
+0		a		a		0
 }
 
 tile +craft_ufo_scout
 {
 4 4
-0		0		0		0
-0		+c		+c		0
-0		+c		+c		0
-0		0		0		0
+0		a		a		0
+a		+c		+c		a
+a		+c		+c		a
+0		a		a		0
 }
 
 tile +craft_ufo_harvester
 {
 7 6
-0		0		0		0		0		0		0
-0		+c		+c		+c		+c		+c		0
-0		+c		+c		+c		+c		+c		0
-0		+c		+c		+c		+c		+c		0
-0		+c		+c		+c		+c		+c		0
-0		0		0		0		0		0		0
+0		a		a		a		a		a		0
+a		+c		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		+c		a
+0		a		a		a		a		a		0
 }
 
 tile +craft_ufo_supply
 {
 6 5
-0		0		0		0		0		0
-0		+c		+c		+c		+c		0
-0		+c		+c		+c		+c		0
-0		+c		+c		+c		+c		0
-0		0		0		0		0		0
+0		a		a		a		a		0
+a		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		a
+0		a		a		a		a		0
 }
 
 // Crashed UFOs ----------------------------------------------------*
@@ -271,11 +365,11 @@ tile +craft_ufo_supply
 tile +craft_crash_supply
 {
 6 5
-0		0		0		0		0		0
-0		+c		+c		+c		+c		0
-0		+c		+c		+c		+c		0
-0		+c		+c		+c		+c		0
-0		0		0		0		0		0
+0		a		a		a		a		0
+a		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		a
+0		a		a		a		a		0
 }
 
 // multiplayer tiles -----------------------------------------------*
@@ -357,6 +451,32 @@ multiplayer +mp_team2
 +i08 "1 1"
 +i09 "0 1"
 *rm_drop +craft_drop_firebird "1 1"
+}
+
+assembly lake_ice
+{
+size "6 7"
+title "_Frozen"
+fix +h01		"0 1"
+fix +h03		"4 1"
+fix +i07		"2 5"
+fix +n06		"3 2"
+fix +n08		"0 3"
+fix +river_lake	"0 0"
+fix +river_v_1	"2 1"
+fix +river_v_2	"2 2"
+fix +river_v_1	"2 3"
+fix +river_se	"2 4"
+fix +river_h_1	"3 4"
+fix +river_h_1	"4 4"
+fix +river_h_1	"5 4"
+fix +start		"5 1"
++n01 "0 4"
++n02 "0 1"
++n03 "0 4"
++n04 "0 5"
++n05 "0 5"
++n07 "0 1"
 }
 
 assembly nature_medium

@@ -305,6 +305,7 @@ base/maps/frozen/st_craft_ufo_scout.map | GNU General Public License 2.0 or late
 base/maps/frozen/st_craft_ufo_supply.map | GNU General Public License 2.0 or later
 base/maps/frozen/st_h01.map | GNU General Public License 2.0 or later
 base/maps/frozen/st_h02.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | frozen/st_h04.map, frozen/st_h05.map
+base/maps/frozen/st_h03.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | lake_ice_big.map
 base/maps/frozen/st_i01.map | GNU General Public License 2.0 or later
 base/maps/frozen/st_i02.map | GNU General Public License 2.0 or later
 base/maps/frozen/st_i03.map | GNU General Public License 2.0 or later
@@ -325,9 +326,12 @@ base/maps/frozen/st_n07.map | GNU General Public License 2.0 or later | | base/m
 base/maps/frozen/st_n08.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | lake_ice_big.map
 base/maps/frozen/st_river_h_1.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | lake_ice_big.map
 base/maps/frozen/st_river_h_2.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | lake_ice_big.map
+base/maps/frozen/st_river_lake.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | lake_ice_big.map
 base/maps/frozen/st_river_se.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | lake_ice_big.map
+base/maps/frozen/st_river_sw.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | lake_ice_big.map
 base/maps/frozen/st_river_v_1.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | lake_ice_big.map
 base/maps/frozen/st_river_v_2.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | lake_ice_big.map
+base/maps/frozen/st_start.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
 base/maps/fueldump.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/gasstation.ump | GNU General Public License 2.0 or later
 base/maps/gasstation/gas_craft_drop_firebird.map | GNU General Public License 2.0 or later
