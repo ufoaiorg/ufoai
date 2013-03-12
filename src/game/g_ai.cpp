@@ -1290,14 +1290,12 @@ static void AI_PlayerRun (Player &player)
  */
 void AI_Run (void)
 {
-	Player *player;
-
 	/* don't run this too often to prevent overflows */
 	if (level.framenum % 10)
 		return;
 
 	/* set players to ai players and cycle over all of them */
-	player = NULL;
+	Player *player = NULL;
 	while ((player = G_PlayerGetNextActiveAI(player))) {
 		AI_PlayerRun(*player);
 	}

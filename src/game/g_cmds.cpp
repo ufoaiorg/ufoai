@@ -38,12 +38,11 @@ static void G_Players_f (const Player &player)
 	int count = 0;
 	char smallBuf[64];
 	char largeBuf[1280];
-	Player *p;
 
 	/* print information */
 	largeBuf[0] = 0;
 
-	p = NULL;
+	Player *p = NULL;
 	while ((p = G_PlayerGetNextActiveHuman(p))) {
 		Com_sprintf(smallBuf, sizeof(smallBuf), "(%i) Team %i %s status: %s\n", p->getNum(),
 				p->getTeam(), p->pers.netname, (p->roundDone ? "waiting" : "playing"));

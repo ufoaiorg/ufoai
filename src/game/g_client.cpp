@@ -751,9 +751,6 @@ int G_ClientAction (Player &player)
  */
 static void G_GetTeam (Player &player)
 {
-	Player *p;
-	int playersInGame = 0;
-
 	/* player has already a team */
 	if (player.getTeam() > 0) {
 		Com_DPrintf(DEBUG_GAME, "Player %s is already on team %i\n", player.pers.netname, player.getTeam());
@@ -761,7 +758,8 @@ static void G_GetTeam (Player &player)
 	}
 
 	/* number of currently connected players (no ai players) */
-	p = NULL;
+	int playersInGame = 0;
+	Player *p = NULL;
 	while ((p = G_PlayerGetNextActiveHuman(p)))
 		playersInGame++;
 
