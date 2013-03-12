@@ -684,7 +684,7 @@ bool G_ActorInvMove (Edict *ent, const invDef_t *from, invList_t *fItem, const i
 				ic = ent->chr.inv.findInContainer(to, &item);
 				assert(ic);
 				fItemBackup.item = item;
-				fItemBackup.x = ic->getX();
+				fItemBackup.setX(ic->getX());
 				fItemBackup.y = ic->y;
 			}
 			tx = fItemBackup.getX();
