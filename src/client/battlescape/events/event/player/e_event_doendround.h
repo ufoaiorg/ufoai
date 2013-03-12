@@ -22,11 +22,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef E_EVENT_DOENDROUND_H_
-#define E_EVENT_DOENDROUND_H_
+#pragma once
 
 #include "../../e_main.h"
 
 void CL_DoEndRound(const eventRegister_t *self, dbuffer *msg);
-
-#endif

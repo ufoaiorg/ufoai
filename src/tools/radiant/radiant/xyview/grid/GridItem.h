@@ -1,5 +1,4 @@
-#ifndef GRIDITEM_H_
-#define GRIDITEM_H_
+#pragma once
 
 #include "igrid.h"
 
@@ -43,5 +42,3 @@ class GridItem
 		typedef MemberCaller<GridItem, &GridItem::activate> ActivateCaller;
 
 }; // class GridItem
-
-#endif /*GRIDITEM_H_*/
