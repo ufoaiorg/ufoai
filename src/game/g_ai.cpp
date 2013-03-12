@@ -1194,7 +1194,7 @@ static void AI_TryToReloadWeapon (Edict *ent, containerIndex_t containerID)
  * @sa G_ClientMove
  * @sa G_ClientShoot
  */
-void AI_ActorThink (Player *player, Edict *ent)
+void AI_ActorThink (Player &player, Edict *ent)
 {
 	aiAction_t bestAia;
 
@@ -1213,14 +1213,14 @@ void AI_ActorThink (Player *player, Edict *ent)
 	if (!leftH && !rightH)
 		G_ClientGetWeaponFromInventory(ent);
 
-	bestAia = AI_PrepBestAction(*player, ent);
+	bestAia = AI_PrepBestAction(player, ent);
 
 	/* shoot and hide */
 	if (bestAia.target) {
 		const fireDefIndex_t fdIdx = bestAia.fd ? bestAia.fd->fdIdx : 0;
 		/* shoot until no shots are left or target died */
 		while (bestAia.shots) {
-			G_ClientShoot(*player, ent, bestAia.target->pos, bestAia.shootType, fdIdx, NULL, true, bestAia.z_align);
+			G_ClientShoot(player, ent, bestAia.target->pos, bestAia.shootType, fdIdx, NULL, true, bestAia.z_align);
 			bestAia.shots--;
 			/* died by our own shot? */
 			if (G_IsDead(ent))
@@ -1228,7 +1228,7 @@ void AI_ActorThink (Player *player, Edict *ent)
 			/* check for target's death */
 			if (G_IsDead(bestAia.target)) {
 				/* search another target now */
-				bestAia = AI_PrepBestAction(*player, ent);
+				bestAia = AI_PrepBestAction(player, ent);
 				/* no other target found - so no need to hide */
 				if (!bestAia.target)
 					return;
@@ -1238,13 +1238,13 @@ void AI_ActorThink (Player *player, Edict *ent)
 
 		/* now hide - for this we use the team of the alien actor because a phalanx soldier
 		 * might become visible during the hide movement */
-		G_ClientMove(*player, ent->team, ent, bestAia.stop);
+		G_ClientMove(player, ent->team, ent, bestAia.stop);
 		/* no shots left, but possible targets left - maybe they shoot back
 		 * or maybe they are still close after hiding */
 
 		/* decide whether the actor wants to crouch */
 		if (AI_CheckCrouch(ent))
-			G_ClientStateChange(*player, ent, STATE_CROUCHED, true);
+			G_ClientStateChange(player, ent, STATE_CROUCHED, true);
 
 		/* actor is still alive - try to turn into the appropriate direction to see the target
 		 * actor once he sees the ai, too */
@@ -1270,7 +1270,7 @@ static void AI_PlayerRun (Player &player)
 				if (g_ailua->integer)
 					AIL_ActorThink(player, ent);
 				else
-					AI_ActorThink(&player, ent);
+					AI_ActorThink(player, ent);
 				player.pers.last = ent;
 
 				if (beforeTUs > ent->TU)
