@@ -1007,7 +1007,7 @@ void CL_ActorReload (le_t *le, containerIndex_t containerID)
 		int x, y;
 
 		ic->getFirstShapePosition(&x, &y);
-		x += ic->x;
+		x += ic->getX();
 		y += ic->y;
 
 		CL_ActorInvMove(le, bestContainer, x, y, containerID, 0, 0);

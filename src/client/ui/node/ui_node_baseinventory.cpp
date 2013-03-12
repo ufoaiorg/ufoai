@@ -555,7 +555,7 @@ static invList_t *UI_BaseInventoryNodeGetItem (const uiNode_t* const node, int m
 		if (mouseX >= pos[0] && mouseX < pos[0] + obj->sx * C_UNIT
 		 && mouseY >= pos[1] && mouseY < pos[1] + obj->sy * C_UNIT) {
 			if (icItem) {
-				*contX = icItem->x;
+				*contX = icItem->getX();
 				*contY = icItem->y;
 				return icItem;
 			}
@@ -593,7 +593,7 @@ static invList_t *UI_BaseInventoryNodeGetItem (const uiNode_t* const node, int m
 					break;
 				if (mouseX >= ammopos[0] && mouseX < ammopos[0] + objammo->sx * C_UNIT
 				 && mouseY >= ammopos[1] - objammo->sy * C_UNIT && mouseY < ammopos[1]) {
-					*contX = icItem->x;
+					*contX = icItem->getX();
 					*contY = icItem->y;
 					return icItem;
 				}

@@ -247,7 +247,7 @@ inventory_action_t InventoryInterface::moveInInventory (inventory_t* const inv, 
 	if (icp)
 		*icp = NULL;
 
-	if (from == to && fItem->x == tx && fItem->y == ty)
+	if (from == to && fItem->getX() == tx && fItem->y == ty)
 		return IA_NONE;
 
 	time = from->out + to->in;
@@ -319,7 +319,7 @@ inventory_action_t InventoryInterface::moveInInventory (inventory_t* const inv, 
 		invList_t *icTo;
 		/* Store x/y origin coordinates of removed (source) item.
 		 * When we re-add it we can use this. */
-		const int cacheFromX = fItem->x;
+		const int cacheFromX = fItem->getX();
 		const int cacheFromY = fItem->y;
 
 		/* Check if destination/blocking item is the same as source/from item.
@@ -363,7 +363,7 @@ inventory_action_t InventoryInterface::moveInInventory (inventory_t* const inv, 
 					/* exchange ammo */
 					const item_t item = {NONE_AMMO, NULL, ic->item.ammo, 0, 0};
 					/* Put current ammo in place of the new ammo unless floor - there can be more than 1 item */
-					const int cacheFromX = from->isFloorDef() ? NONE : fItem->x;
+					const int cacheFromX = from->isFloorDef() ? NONE : fItem->getX();
 					const int cacheFromY = from->isFloorDef() ? NONE : fItem->y;
 
 					/* Actually remove the ammo from the 'from' container. */

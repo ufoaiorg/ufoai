@@ -167,9 +167,9 @@ static bool INVSH_CheckToInventory_shape (const inventory_t *const inv, const in
 				continue;
 
 			if (ic->item.rotated)
-				INVSH_MergeShapes(mask, ic->item.def()->getShapeRotated(), ic->x, ic->y);
+				INVSH_MergeShapes(mask, ic->item.def()->getShapeRotated(), ic->getX(), ic->y);
 			else
-				INVSH_MergeShapes(mask, ic->item.def()->shape, ic->x, ic->y);
+				INVSH_MergeShapes(mask, ic->item.def()->shape, ic->getX(), ic->y);
 		}
 	}
 
@@ -216,7 +216,7 @@ static bool INVSH_ShapeCheckPosition (const invList_t *ic, const int x, const in
 		shape = ic->item.def()->shape;
 	}
 
-	return INVSH_CheckShapeSmall(shape, x - ic->x, y - ic->y);
+	return INVSH_CheckShapeSmall(shape, x - ic->getX(), y - ic->y);
 }
 
 /**
@@ -580,7 +580,7 @@ void invList_t::getFirstShapePosition (int* const x, int* const y) const
 
 	for (tempX = 0; tempX < SHAPE_SMALL_MAX_HEIGHT; tempX++)
 		for (tempY = 0; tempY < SHAPE_SMALL_MAX_HEIGHT; tempY++)
-			if (INVSH_ShapeCheckPosition(this, this->x + tempX, this->y + tempY)) {
+			if (INVSH_ShapeCheckPosition(this, this->getX() + tempX, this->y + tempY)) {
 				*x = tempX;
 				*y = tempY;
 				return;

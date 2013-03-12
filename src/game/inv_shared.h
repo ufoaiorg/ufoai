@@ -401,6 +401,10 @@ typedef struct invList_s {
 					 * The shape as defined in the item_t may be empty at this location! */
 	struct invList_s *next;		/**< Next entry in this list. */
 
+	inline int getX () const
+	{
+		return x;
+	}
 	void getFirstShapePosition (int* const x, int* const y) const;
 	const objDef_t *getReactionFireWeaponType () const;
 } invList_t;

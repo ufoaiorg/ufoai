@@ -88,7 +88,7 @@ bool G_InventoryRemoveItemByID (const char *itemID, Edict *ent, containerIndex_t
 			if (!game.i.removeFromInventory(&ent->chr.inv, INVDEF(container), ic))
 				gi.Error("Could not remove item '%s' from inventory %i",
 						ic->item.def()->id, container);
-			G_EventInventoryDelete(ent, G_VisToPM(ent->visflags), INVDEF(container), ic->x, ic->y);
+			G_EventInventoryDelete(ent, G_VisToPM(ent->visflags), INVDEF(container), ic->getX(), ic->y);
 			return true;
 		}
 		ic = ic->next;
@@ -379,7 +379,7 @@ void G_SendInventory (playermask_t playerMask, const Edict *ent)
 		for (ic = ent->getContainer(container); ic; ic = ic->next) {
 			/* send a single item */
 			assert(ic->item.def());
-			G_WriteItem(&ic->item, INVDEF(container), ic->x, ic->y);
+			G_WriteItem(&ic->item, INVDEF(container), ic->getX(), ic->y);
 		}
 	}
 	G_EventEnd();

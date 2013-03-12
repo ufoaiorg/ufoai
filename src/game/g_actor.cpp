@@ -563,7 +563,7 @@ bool G_ActorInvMove (Edict *ent, const invDef_t *from, invList_t *fItem, const i
 
 	/* Get first used bit in item. */
 	fItem->getFirstShapePosition(&fx, &fy);
-	fx += fItem->x;
+	fx += fItem->getX();
 	fy += fItem->y;
 
 	/* Check if action is possible */
@@ -593,7 +593,7 @@ bool G_ActorInvMove (Edict *ent, const invDef_t *from, invList_t *fItem, const i
 
 	/* search for space */
 	if (tx == NONE) {
-		ic = ent->chr.inv.getItemAtPos(from, fItem->x, fItem->y);
+		ic = ent->chr.inv.getItemAtPos(from, fItem->getX(), fItem->y);
 		if (ic)
 			ent->chr.inv.findSpace(to, &ic->item, &tx, &ty, fItem);
 		if (tx == NONE)
@@ -684,10 +684,10 @@ bool G_ActorInvMove (Edict *ent, const invDef_t *from, invList_t *fItem, const i
 				ic = ent->chr.inv.findInContainer(to, &item);
 				assert(ic);
 				fItemBackup.item = item;
-				fItemBackup.x = ic->x;
+				fItemBackup.x = ic->getX();
 				fItemBackup.y = ic->y;
 			}
-			tx = fItemBackup.x;
+			tx = fItemBackup.getX();
 			ty = fItemBackup.y;
 		}
 	}
