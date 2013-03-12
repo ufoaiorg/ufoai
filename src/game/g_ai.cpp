@@ -1044,7 +1044,7 @@ static int AI_CheckForMissionTargets (const Player &player, Edict *ent, aiAction
  * @param[in] player The AI player
  * @param[in] ent The AI actor
  */
-static aiAction_t AI_PrepBestAction (const Player *player, Edict *ent)
+static aiAction_t AI_PrepBestAction (const Player &player, Edict *ent)
 {
 	aiAction_t aia, bestAia;
 	pos3_t oldPos, to;
@@ -1098,7 +1098,7 @@ static aiAction_t AI_PrepBestAction (const Player *player, Edict *ent)
 	VectorCopy(oldPos, ent->pos);
 	VectorCopy(oldOrigin, ent->origin);
 
-	bestActionScore = AI_CheckForMissionTargets(*player, ent, &aia);
+	bestActionScore = AI_CheckForMissionTargets(player, ent, &aia);
 	if (bestActionScore > best) {
 		bestAia = aia;
 		best = bestActionScore;
@@ -1112,13 +1112,13 @@ static aiAction_t AI_PrepBestAction (const Player *player, Edict *ent)
 
 	/* check if the actor is in crouched state and try to stand up before doing the move */
 	if (G_IsCrouched(ent))
-		G_ClientStateChange(*player, ent, STATE_CROUCHED, true);
+		G_ClientStateChange(player, ent, STATE_CROUCHED, true);
 
 	/* do the move */
 	for (;;) {
 		if (G_IsDead(ent))
 			break;
-		G_ClientMove(*player, 0, ent, bestAia.to);
+		G_ClientMove(player, 0, ent, bestAia.to);
 		if (G_EdictPosIsSameAs(ent, bestAia.to))
 			break;
 		const pos_t length = G_ActorMoveLength(ent, level.pathingMap, bestAia.to, false);
@@ -1213,7 +1213,7 @@ void AI_ActorThink (Player *player, Edict *ent)
 	if (!leftH && !rightH)
 		G_ClientGetWeaponFromInventory(ent);
 
-	bestAia = AI_PrepBestAction(player, ent);
+	bestAia = AI_PrepBestAction(*player, ent);
 
 	/* shoot and hide */
 	if (bestAia.target) {
@@ -1228,7 +1228,7 @@ void AI_ActorThink (Player *player, Edict *ent)
 			/* check for target's death */
 			if (G_IsDead(bestAia.target)) {
 				/* search another target now */
-				bestAia = AI_PrepBestAction(player, ent);
+				bestAia = AI_PrepBestAction(*player, ent);
 				/* no other target found - so no need to hide */
 				if (!bestAia.target)
 					return;
