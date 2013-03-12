@@ -62,8 +62,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define G_TagMalloc(size, tag) gi.TagMalloc((size), (tag), __FILE__, __LINE__)
 #define G_MemFree(ptr) gi.TagFree((ptr), __FILE__, __LINE__)
 
-#define G_PLAYER_FROM_ENT(ent) (game.players[(ent)->pnum])
-
 /** @brief this structure is left intact through an entire game
  * it should be initialized at game library load time */
 typedef struct game_locals_s {
