@@ -1942,11 +1942,3 @@
 "_color" "1 1 1"
 "light" "120"
 }
-// entity 26
-{
-"classname" "light"
-"origin" "64 208 148"
-"spawnflags" "1"
-"_color" "1 1 1"
-"light" "120"
-}

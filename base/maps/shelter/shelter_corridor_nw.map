@@ -2008,11 +2008,3 @@
 "_color" "1 1 1"
 "light" "120"
 }
-// entity 26
-{
-"classname" "light"
-"origin" "304 64 148"
-"spawnflags" "1"
-"_color" "1 1 1"
-"light" "120"
-}
