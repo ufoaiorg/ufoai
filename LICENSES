@@ -601,9 +601,7 @@ base/maps/scout_crash/sc_main.map | GNU General Public License 2.0 or later
 base/maps/shelter.ump | GNU General Public License 2.0 or later | Bas Fournier
 base/maps/shelter/shelter_corridor_ne.map | GNU General Public License 2.0 or later | Bas Fournier
 base/maps/shelter/shelter_corridor_nw.map | GNU General Public License 2.0 or later | Bas Fournier
-base/maps/shelter/shelter_craft_drop_firebird.map | GNU General Public License 2.0 or later | Bas Fournier
-base/maps/shelter/shelter_craft_drop_herakles.map | GNU General Public License 2.0 or later | Bas Fournier; Holger 'ShipIt' Gellrich
-base/maps/shelter/shelter_craft_drop_raptor.map | GNU General Public License 2.0 or later | Bas Fournier; Holger 'ShipIt' Gellrich
+base/maps/shelter/shelter_entrance.map | GNU General Public License 2.0 or later | Bas Fournier; Holger 'ShipIt' Gellrich | maps/shelter/shelter_craft_drop_raptor.map
 base/maps/shelter/shelter_hallnorth_a.map | GNU General Public License 2.0 or later | Bas Fournier
 base/maps/shelter/shelter_hallnorth_b.map | GNU General Public License 2.0 or later | Bas Fournier
 base/maps/shelter/shelter_hallsouth_a.map | GNU General Public License 2.0 or later | Bas Fournier

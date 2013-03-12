@@ -3271,9 +3271,7 @@ mapdef shelter
 
 	aircraft
 	(
-		craft_drop_firebird
-		craft_drop_herakles
-		craft_drop_raptor
+		// any
 	)
 
 	ufos

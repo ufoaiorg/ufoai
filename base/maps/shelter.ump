@@ -6,35 +6,16 @@
 // ----------
 // +: tile contains something
 // a: common / generic tiles
-// c: craft tiles
+// c: entrance
 // n: main hall north
 // s: main hall south
 // x: outside
 
 base shelter/shelter_
 
-// Dropship tiles --------------------------------------------------*
+// Map Tiles -------------------------------------------------------*
 
-// Shelter entrance
-tile +craft_drop_firebird
-{
-6 4
-0		s		s		s		s		0
-a		+c		+c		+c		+c		a
-a		+c		+c		+c		+c		a
-0		x		x		x		x		0
-}
-
-tile +craft_drop_herakles
-{
-6 4
-0		s		s		s		s		0
-a		+c		+c		+c		+c		a
-a		+c		+c		+c		+c		a
-0		x		x		x		x		0
-}
-
-tile +craft_drop_raptor
+tile +entrance
 {
 6 4
 0		s		s		s		s		0
@@ -202,6 +183,7 @@ fix +solid				"0 0"
 fix tileset room_west	"0 2"
 fix tileset room_west	"0 4"
 fix +corridor_nw		"0 6"
+fix +entrance			"2 0"
 fix tileset hall_south	"2 2"
 fix tileset hall_north	"2 4"
 fix tileset room_north	"2 6"
@@ -210,7 +192,6 @@ fix +solid				"6 0"
 fix tileset room_east	"6 2"
 fix tileset room_east	"6 4"
 fix +corridor_ne		"6 6"
-fix *rm_drop +craft_drop_firebird "2 0"
 }
 
 /*
@@ -231,6 +212,6 @@ grid "2 2"
 +room_n_b		"0 2"
 +room_e_a		"0 2"
 +room_e_b		"0 2"
-*rm_drop +craft_drop_firebird	"1 1"
++entrance		"1 1"
 }
 */
