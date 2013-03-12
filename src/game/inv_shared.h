@@ -407,20 +407,19 @@ typedef struct invList_s {
 
 /** @brief inventory definition with all its containers */
 typedef struct inventory_s {
-	invList_t *c[MAX_CONTAINERS];
+	invList_t *containers[MAX_CONTAINERS];
 
 	inline invList_t *getContainer (const containerIndex_t idx) const
 	{
-		return c[idx];
+		return containers[idx];
 	}
-
 	inline void setContainer (const containerIndex_t idx, invList_t *cont)
 	{
-		c[idx] = cont;
+		containers[idx] = cont;
 	}
 	inline void resetContainer (const containerIndex_t idx)
 	{
-		c[idx] = NULL;
+		containers[idx] = NULL;
 	}
 	/**
 	 * @brief Searches if there is a specific item already in the inventory&container.
