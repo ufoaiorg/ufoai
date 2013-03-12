@@ -28,10 +28,10 @@
 
 #include "g_local.h"
 
-Player* G_PlayerGetNextHuman(Player *lastPlayer);
-Player* G_PlayerGetNextAI(Player *lastPlayer);
-Player* G_PlayerGetNextActiveHuman(Player *lastPlayer);
-Player* G_PlayerGetNextActiveAI(Player *lastPlayer);
+Player *G_PlayerGetNextHuman(Player *lastPlayer);
+Player *G_PlayerGetNextAI(Player *lastPlayer);
+Player *G_PlayerGetNextActiveHuman(Player *lastPlayer);
+Player *G_PlayerGetNextActiveAI(Player *lastPlayer);
 playermask_t G_TeamToPM(int team);
 teammask_t G_PMToVis(playermask_t playerMask);
 playermask_t G_VisToPM(teammask_t teamMask);

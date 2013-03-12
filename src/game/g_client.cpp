@@ -55,7 +55,7 @@ static int scoreMissionNum = 0;
  * @brief Iterate through the list of players
  * @param lastPlayer The player found in the previous iteration; if NULL, we start at the beginning
  */
-Player* G_PlayerGetNextHuman (Player *lastPlayer)
+Player *G_PlayerGetNextHuman (Player *lastPlayer)
 {
 	Player *endOfPlayers = &game.players[game.sv_maxplayersperteam];
 	Player *player;
@@ -81,7 +81,7 @@ Player* G_PlayerGetNextHuman (Player *lastPlayer)
  * @brief Iterate through the list of players
  * @param lastPlayer The player found in the previous iteration; if NULL, we start at the beginning
  */
-Player* G_PlayerGetNextAI (Player *lastPlayer)
+Player *G_PlayerGetNextAI (Player *lastPlayer)
 {
 	Player *endOfPlayers = &game.players[game.sv_maxplayersperteam * 2];
 	Player *player;
@@ -107,7 +107,7 @@ Player* G_PlayerGetNextAI (Player *lastPlayer)
  * @brief Iterate through the list of players
  * @param lastPlayer The player found in the previous iteration; if NULL, we start at the beginning
  */
-Player* G_PlayerGetNextActiveHuman (Player *lastPlayer)
+Player *G_PlayerGetNextActiveHuman (Player *lastPlayer)
 {
 	Player *player = lastPlayer;
 
@@ -123,7 +123,7 @@ Player* G_PlayerGetNextActiveHuman (Player *lastPlayer)
  * @brief Iterate through the list of players
  * @param lastPlayer The player found in the previous iteration; if NULL, we start at the beginning
  */
-Player* G_PlayerGetNextActiveAI (Player *lastPlayer)
+Player *G_PlayerGetNextActiveAI (Player *lastPlayer)
 {
 	Player *player = lastPlayer;
 
