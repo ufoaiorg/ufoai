@@ -260,12 +260,12 @@ void CP_ChangeXVILevel (const vec2_t pos, float factor)
 
 /**
  * @brief Initialize XVI overlay on geoscape.
- * @param[in] data Pointer to the data containing values to store in XVI map. Can be NULL for new games.
- * This is only the alpha channel of the xvi map
  * @note xvi rate is null when alpha = 0, max when alpha = maxAlpha
  */
 void CP_InitializeXVIOverlay (void)
 {
+	/* data Pointer to the data containing values to store in XVI map. Can be NULL for new games.
+	 * This is only the alpha channel of the xvi map */
 	memset(cgi->r_xviAlpha, 0, XVI_WIDTH * XVI_HEIGHT);
 	CP_UploadXVI();
 }

@@ -854,7 +854,7 @@ static void TR_CountAircraftInList (linkedList_t *aircraftList, int capacity[])
 
 /**
  * @brief Callback for assemble destination base capacity list
- * @note called via ui_trans_caplist <destbasidx>
+ * @note called via "ui_trans_caplist <destbasidx>"
  */
 static void TR_DestinationCapacityList_f (void)
 {
