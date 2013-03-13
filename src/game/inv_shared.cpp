@@ -589,6 +589,12 @@ void invList_t::getFirstShapePosition (int* const x, int* const y) const
 	*x = *y = NONE;
 }
 
+Container::Container (containerIndex_t idx)
+{
+	_def = &CSI->ids[idx];	/* container attributes (invDef_t) */
+	_invList = NULL;		/* start of the list of items */
+}
+
 /**
  * @param[in] container The index of the container in the inventory to check the item in.
  * @param[in] od The type of item to check in the inventory.

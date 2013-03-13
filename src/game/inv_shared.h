@@ -422,6 +422,14 @@ typedef struct invList_s {
 	const objDef_t *getReactionFireWeaponType () const;
 } invList_t;
 
+class Container
+{
+	const invDef_t *_def;	/* container attributes (invDef_t) */
+	invList_t *_invList;	/* start of the list of items */
+public:
+	Container (containerIndex_t idx);
+};
+
 /** @brief inventory definition with all its containers */
 typedef struct inventory_s {
 	invList_t *containers[MAX_CONTAINERS];
