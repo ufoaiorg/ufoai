@@ -135,9 +135,9 @@ bool INV_LoadWeapon (const invList_t *weaponList, inventory_t *inv, const invDef
 
 /**
  * @brief Unload a weapon and put the ammo in a container.
- * @param[in,out] weapon Pointer (invList_t) to weapon to unload ammo.
- * @param[in,out] inv Pointer (inventory_t) to inventory where the change happen.
- * @param[in] container Pointer (invDef_t) to inventorydef where to put the removed ammo.
+ * @param[in,out] weapon The weapon to unload ammo.
+ * @param[in,out] inv inventory where the change happen.
+ * @param[in] container Inventory definition where to put the removed ammo.
  * @return @c true if the unload was successful, @c false otherwise
  */
 bool INV_UnloadWeapon (invList_t *weapon, inventory_t *inv, const invDef_t *container)
