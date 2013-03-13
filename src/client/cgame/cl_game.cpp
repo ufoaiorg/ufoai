@@ -1316,18 +1316,18 @@ static void GAME_SendCurrentTeamSpawningInfo (dbuffer *buf, linkedList_t *team)
 	NET_WriteByte(buf, teamSize);
 
 	LIST_Foreach(team, character_t, chr) {
-		inventory_t *i = &chr->inv;
+		inventory_t *inv = &chr->inv;
 		containerIndex_t container;
 
 		/* unlink all temp containers */
 		for (container = 0; container < csi.numIDs; container++) {
 			if (!INVDEF(container)->temp)
 				continue;
-			i->resetContainer(container);
+			inv->resetContainer(container);
 		}
 
 		GAME_NetSendCharacter(buf, chr);
-		GAME_NetSendInventory(buf, i);
+		GAME_NetSendInventory(buf, inv);
 	}
 }
 
