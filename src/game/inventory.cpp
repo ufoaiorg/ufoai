@@ -133,7 +133,7 @@ invList_t *InventoryInterface::addToInventory (inventory_t *const inv, const ite
 	if (checkedTo == INV_FITS_ONLY_ROTATED)
 		ic->item.rotated = true;
 	ic->setX(x);
-	ic->y = y;
+	ic->setY(y);
 
 	return ic;
 }
@@ -276,7 +276,7 @@ inventory_action_t InventoryInterface::moveInInventory (inventory_t* const inv, 
 					checkedTo = inv->canHoldItem(to, ic->item.def(), tx, ty, fItem);
 					if (checkedTo & INV_FITS) {
 						ic->setX(tx);
-						ic->y = ty;
+						ic->setY(ty);
 						if (icp)
 							*icp = ic;
 						return IA_MOVE;

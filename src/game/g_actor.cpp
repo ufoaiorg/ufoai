@@ -685,7 +685,7 @@ bool G_ActorInvMove (Edict *ent, const invDef_t *from, invList_t *fItem, const i
 				assert(ic);
 				fItemBackup.item = item;
 				fItemBackup.setX(ic->getX());
-				fItemBackup.y = ic->getY();
+				fItemBackup.setY(ic->getY());
 			}
 			tx = fItemBackup.getX();
 			ty = fItemBackup.getY();

@@ -396,7 +396,7 @@ typedef struct item_s {
 /** @brief container/inventory list (linked list) with items. */
 typedef struct invList_s {
 	item_t item;	/**< Which item */
-	int _x, y;		/**< Position (aka origin location) of the item in the container/invlist.
+	int _x, _y;		/**< Position (aka origin location) of the item in the container/invlist.
 					 * @note ATTENTION Do not use this to get an item by comparing it against a x/y value.
 					 * The shape as defined in the item_t may be empty at this location! */
 	struct invList_s *next;		/**< Next entry in this list. */
@@ -411,8 +411,13 @@ typedef struct invList_s {
 	}
 	inline int getY () const
 	{
-		return y;
+		return _y;
 	}
+	inline void setY (const int val)
+	{
+		_y = val;
+	}
+
 	void getFirstShapePosition (int* const x, int* const y) const;
 	const objDef_t *getReactionFireWeaponType () const;
 } invList_t;

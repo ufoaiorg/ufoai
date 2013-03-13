@@ -647,7 +647,7 @@ void uiBaseInventoryNode::drawTooltip (const uiNode_t *node, int x, int y) const
 		UI_GetItemTooltip(itemHover->item, tooltiptext, sizeof(tooltiptext));
 #ifdef DEBUG
 		/* Display stored container-coordinates of the item. */
-		Q_strcat(tooltiptext, va("\n%i/%i", itemHover->getX(), itemHover->y), sizeof(tooltiptext));
+		Q_strcat(tooltiptext, va("\n%i/%i", itemHover->getX(), itemHover->getY()), sizeof(tooltiptext));
 #endif
 		UI_DrawTooltip(tooltiptext, x, y, itemToolTipWidth);
 	}
