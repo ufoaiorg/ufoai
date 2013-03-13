@@ -384,6 +384,7 @@ static bool G_ActionCheck (const Player *player, Edict *ent)
 bool G_ActionCheckForCurrentTeam (const Player *player, Edict *ent, int TU)
 {
 	/* don't check for a player - but maybe a server action */
+	assert(player);	/* let's see if this ever happens...(Duke) */
 	if (!player)
 		return true;
 
