@@ -357,7 +357,7 @@ typedef struct character_s {
 
 	actorSizeEnum_t fieldSize;
 
-	inventory_t inv;				/**< Inventory definition. */
+	inventory_t inv;				/**< the inventory */
 
 	const teamDef_t *teamDef;		/**< Pointer to team definition. */
 	int gender;						/**< Gender index. */

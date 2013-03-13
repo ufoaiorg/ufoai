@@ -216,7 +216,7 @@ bool InventoryInterface::removeFromInventory (inventory_t* const inv, const invD
 
 /**
  * @brief Conditions for moving items between containers.
- * @param[in] inv Inventory to move in.
+ * @param[in] inv The inventory to move in.
  * @param[in] from Source container.
  * @param[in] fItem The item to be moved.
  * @param[in] to Destination container.
@@ -461,7 +461,7 @@ inventory_action_t InventoryInterface::moveInInventory (inventory_t* const inv, 
 
 /**
  * @brief Tries to add an item to a container (in the inventory inv).
- * @param[in] inv Inventory pointer to add the item.
+ * @param[in] inv The inventory to add the item to.
  * @param[in] item Item to add to inventory.
  * @param[in] container Container id.
  * @sa findSpace
