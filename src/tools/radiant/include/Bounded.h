@@ -1,5 +1,4 @@
-#ifndef BOUNDED_H_
-#define BOUNDED_H_
+#pragma once
 
 #include "generic/constant.h"
 
@@ -21,5 +20,3 @@ class Bounded
 		 */
 		virtual const AABB& localAABB () const = 0;
 };
-
-#endif /*BOUNDED_H_*/

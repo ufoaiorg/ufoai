@@ -23,8 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef SYSTEM_H_
-#define SYSTEM_H_
+#pragma once
 
 #include "../common/list.h"
 
@@ -66,6 +65,3 @@ char *Sys_Cwd(void);
 void Sys_SetAffinityAndPriority(void);
 int Sys_Milliseconds(void);
 void Sys_Backtrace(void);
-
-
-#endif

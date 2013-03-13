@@ -1,5 +1,4 @@
-#ifndef XYWND_H_
-#define XYWND_H_
+#pragma once
 
 #include "../clipper/Clipper.h"
 
@@ -221,5 +220,3 @@ class XYWnd: public CameraObserver, public scene::Graph::Observer
 		// greebo: CameraObserver implementation; gets called when the camera is moved
 		void cameraMoved();
 }; // class XYWnd
-
-#endif /*XYWND_H_*/

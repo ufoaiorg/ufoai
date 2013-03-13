@@ -3,8 +3,7 @@
  * @note SharedPointer implementation taken from ScummVM
  */
 
-#ifndef SHAREDPTR_H_
-#define SHAREDPTR_H_
+#pragma once
 
 #include <assert.h>
 
@@ -269,5 +268,3 @@ private:
 	SharedPtrDeletionInternal *_deletion;
 	PointerType _pointer;
 };
-
-#endif

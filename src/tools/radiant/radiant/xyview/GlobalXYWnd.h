@@ -1,5 +1,4 @@
-#ifndef GLOBALXYWND_H_
-#define GLOBALXYWND_H_
+#pragma once
 
 #include <list>
 
@@ -166,5 +165,3 @@ class XYWndManager: public RegistryKeyObserver, public PreferenceConstructor
 
 // Use this method to access the global XYWnd manager class
 XYWndManager& GlobalXYWnd ();
-
-#endif /*GLOBALXYWND_H_*/

@@ -1,5 +1,4 @@
-#ifndef XYRENDERER_H_
-#define XYRENDERER_H_
+#pragma once
 
 #include "irender.h"
 #include <vector>
@@ -60,5 +59,3 @@ class XYRenderer: public Renderer {
 		RenderStateFlags m_globalstate;
 		Shader* m_state_selected;
 };
-
-#endif /* XYRENDERER_H_ */
