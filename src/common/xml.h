@@ -47,23 +47,23 @@ void XML_AddShortValue(xmlNode_t *parent, const char *name, short value);
 void XML_AddIntValue(xmlNode_t *parent, const char *name, int value);
 void XML_AddLongValue(xmlNode_t *parent, const char *name, long value);
 
-xmlNode_t * XML_AddNode(xmlNode_t *parent, const char *name);
+xmlNode_t *XML_AddNode(xmlNode_t *parent, const char *name);
 
 bool XML_GetBool(xmlNode_t *parent, const char *name, const bool defaultval);
 int XML_GetInt(xmlNode_t *parent, const char *name, const int defaultval);
 short XML_GetShort(xmlNode_t *parent, const char *name, const short defaultval);
 long XML_GetLong(xmlNode_t *parent, const char *name, const long defaultval);
-const char * XML_GetString(xmlNode_t *parent, const char *name);
+const char *XML_GetString(xmlNode_t *parent, const char *name);
 float XML_GetFloat(xmlNode_t *parent, const char *name, const float defaultval);
 double XML_GetDouble(xmlNode_t *parent, const char *name, const double defaultval);
-xmlNode_t * XML_GetPos2(xmlNode_t *parent, const char *name, vec2_t pos);
-xmlNode_t * XML_GetNextPos2(xmlNode_t *actual, xmlNode_t *parent, const char *name, vec2_t pos);
-xmlNode_t * XML_GetPos3(xmlNode_t *parent, const char *name, vec3_t pos);
-xmlNode_t * XML_GetNextPos3(xmlNode_t *actual, xmlNode_t *parent, const char *name, vec3_t pos);
-xmlNode_t * XML_GetDate(xmlNode_t *parent, const char *name, int *day, int *sec);
+xmlNode_t *XML_GetPos2(xmlNode_t *parent, const char *name, vec2_t pos);
+xmlNode_t *XML_GetNextPos2(xmlNode_t *actual, xmlNode_t *parent, const char *name, vec2_t pos);
+xmlNode_t *XML_GetPos3(xmlNode_t *parent, const char *name, vec3_t pos);
+xmlNode_t *XML_GetNextPos3(xmlNode_t *actual, xmlNode_t *parent, const char *name, vec3_t pos);
+xmlNode_t *XML_GetDate(xmlNode_t *parent, const char *name, int *day, int *sec);
 
-xmlNode_t * XML_GetNode(xmlNode_t *parent, const char *name);
-xmlNode_t * XML_GetNextNode(xmlNode_t *current, xmlNode_t *parent, const char *name);
+xmlNode_t *XML_GetNode(xmlNode_t *parent, const char *name);
+xmlNode_t *XML_GetNextNode(xmlNode_t *current, xmlNode_t *parent, const char *name);
 
 xmlNode_t *XML_Parse(const char *buffer);
 

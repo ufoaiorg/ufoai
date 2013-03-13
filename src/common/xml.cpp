@@ -277,7 +277,7 @@ void XML_AddDate (xmlNode_t *parent, const char *name, const int day, const int 
  * @param[in] name Name of the new node
  * return pointer to the new XML Node structure
  */
-xmlNode_t * XML_AddNode (xmlNode_t *parent, const char *name)
+xmlNode_t *XML_AddNode (xmlNode_t *parent, const char *name)
 {
 	return mxmlNewElement(parent,name);
 }
@@ -400,7 +400,7 @@ double XML_GetDouble (xmlNode_t *parent, const char *name, const double defaultv
  * @return pointer to the node the data was retrieved from
  * @return NULL if no node with name found
  */
-xmlNode_t * XML_GetPos2 (xmlNode_t *parent, const char *name, vec2_t pos)
+xmlNode_t *XML_GetPos2 (xmlNode_t *parent, const char *name, vec2_t pos)
 {
 	xmlNode_t *p = XML_GetNode(parent, name);
 	if (!p)
@@ -419,7 +419,7 @@ xmlNode_t * XML_GetPos2 (xmlNode_t *parent, const char *name, vec2_t pos)
  * @return pointer to the node the data was retrieved from
  * @return NULL if no Node with name found
  */
-xmlNode_t * XML_GetNextPos2 (xmlNode_t *actual, xmlNode_t *parent, const char *name, vec2_t pos)
+xmlNode_t *XML_GetNextPos2 (xmlNode_t *actual, xmlNode_t *parent, const char *name, vec2_t pos)
 {
 	xmlNode_t *p = XML_GetNextNode(actual, parent, name);
 	if (!p)
@@ -437,7 +437,7 @@ xmlNode_t * XML_GetNextPos2 (xmlNode_t *actual, xmlNode_t *parent, const char *n
  * @return pointer to the node the data was retrieved from
  * @return NULL if no node with name found
  */
-xmlNode_t * XML_GetPos3 (xmlNode_t *parent, const char *name, vec3_t pos)
+xmlNode_t *XML_GetPos3 (xmlNode_t *parent, const char *name, vec3_t pos)
 {
 	xmlNode_t *p = XML_GetNode(parent, name);
 	if (!p)
@@ -457,7 +457,7 @@ xmlNode_t * XML_GetPos3 (xmlNode_t *parent, const char *name, vec3_t pos)
  * @return pointer to the node the data was retrieved from
  * @return NULL if no Node with name found
  */
-xmlNode_t * XML_GetNextPos3 (xmlNode_t *actual, xmlNode_t *parent, const char *name, vec3_t pos)
+xmlNode_t *XML_GetNextPos3 (xmlNode_t *actual, xmlNode_t *parent, const char *name, vec3_t pos)
 {
 	xmlNode_t *p = XML_GetNextNode(actual, parent, name);
 	if (!p)
@@ -477,7 +477,7 @@ xmlNode_t * XML_GetNextPos3 (xmlNode_t *actual, xmlNode_t *parent, const char *n
  * @return pointer to the node the data was retrieved from
  * @return NULL if no node with name found
  */
-xmlNode_t * XML_GetDate (xmlNode_t *parent, const char *name, int *day, int *sec)
+xmlNode_t *XML_GetDate (xmlNode_t *parent, const char *name, int *day, int *sec)
 {
 	xmlNode_t *p = XML_GetNode(parent, name);
 	if (!p)
@@ -493,7 +493,7 @@ xmlNode_t * XML_GetDate (xmlNode_t *parent, const char *name, int *day, int *sec
  * @param[in] name Name of the node to retrieve
  * @return pointer to the found XML Node structure or NULL
  */
-xmlNode_t * XML_GetNode (xmlNode_t *parent, const char *name)
+xmlNode_t *XML_GetNode (xmlNode_t *parent, const char *name)
 {
 	return mxmlFindElement(parent, parent, name, NULL, NULL, MXML_DESCEND_FIRST);
 }
@@ -505,7 +505,7 @@ xmlNode_t * XML_GetNode (xmlNode_t *parent, const char *name)
  * @param[in] name Name of the node to retrieve
  * @return pointer to the found XML Node structure or NULL
  */
-xmlNode_t * XML_GetNextNode (xmlNode_t *current, xmlNode_t *parent, const char *name)
+xmlNode_t *XML_GetNextNode (xmlNode_t *current, xmlNode_t *parent, const char *name)
 {
 	return mxmlFindElement(current, parent, name, NULL, NULL, MXML_NO_DESCEND);
 }
