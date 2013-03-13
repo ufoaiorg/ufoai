@@ -538,7 +538,7 @@ static void GAME_SaveInventory (xmlNode_t *p, const inventory_t *inv)
 
 		for (; ic; ic = ic->next) {
 			xmlNode_t *s = XML_AddNode(p, SAVE_INVENTORY_ITEM);
-			GAME_SaveItem(s, &ic->item, container, ic->getX(), ic->y);
+			GAME_SaveItem(s, &ic->item, container, ic->getX(), ic->getY());
 		}
 	}
 }

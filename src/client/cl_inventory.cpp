@@ -108,7 +108,7 @@ bool INV_LoadWeapon (const invList_t *weaponList, inventory_t *inv, const invDef
 	weapon = weaponList->item.def();
 	weaponList->getFirstShapePosition(&x, &y);
 	x += weaponList->getX();
-	y += weaponList->y;
+	y += weaponList->getY();
 	if (weapon->oneshot) {
 		ic = inv->getItemAtPos(destContainer, x, y);
 		if (ic) {

@@ -564,7 +564,7 @@ bool G_ActorInvMove (Edict *ent, const invDef_t *from, invList_t *fItem, const i
 	/* Get first used bit in item. */
 	fItem->getFirstShapePosition(&fx, &fy);
 	fx += fItem->getX();
-	fy += fItem->y;
+	fy += fItem->getY();
 
 	/* Check if action is possible */
 	/* TUs are 1 here - but this is only a dummy - the real TU check is done in the inventory functions below */
@@ -593,7 +593,7 @@ bool G_ActorInvMove (Edict *ent, const invDef_t *from, invList_t *fItem, const i
 
 	/* search for space */
 	if (tx == NONE) {
-		ic = ent->chr.inv.getItemAtPos(from, fItem->getX(), fItem->y);
+		ic = ent->chr.inv.getItemAtPos(from, fItem->getX(), fItem->getY());
 		if (ic)
 			ent->chr.inv.findSpace(to, &ic->item, &tx, &ty, fItem);
 		if (tx == NONE)
@@ -685,10 +685,10 @@ bool G_ActorInvMove (Edict *ent, const invDef_t *from, invList_t *fItem, const i
 				assert(ic);
 				fItemBackup.item = item;
 				fItemBackup.setX(ic->getX());
-				fItemBackup.y = ic->y;
+				fItemBackup.y = ic->getY();
 			}
 			tx = fItemBackup.getX();
-			ty = fItemBackup.y;
+			ty = fItemBackup.getY();
 		}
 	}
 

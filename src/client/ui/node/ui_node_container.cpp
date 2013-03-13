@@ -526,9 +526,9 @@ static void UI_ContainerNodeDrawGrid (uiNode_t *node, const objDef_t *highlightT
 	for (ic = ui_inventory->getContainer(EXTRADATA(node).container->id); ic; ic = ic->next) {
 		assert(ic->item.def());
 		if (highlightType && highlightType->isLoadableInWeapon(ic->item.def()))
-			UI_DrawItem(node, pos, &ic->item, ic->getX(), ic->y, scale, colorLoadable);
+			UI_DrawItem(node, pos, &ic->item, ic->getX(), ic->getY(), scale, colorLoadable);
 		else
-			UI_DrawItem(node, pos, &ic->item, ic->getX(), ic->y, scale, colorDefault);
+			UI_DrawItem(node, pos, &ic->item, ic->getX(), ic->getY(), scale, colorDefault);
 	}
 }
 

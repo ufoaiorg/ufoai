@@ -409,6 +409,10 @@ typedef struct invList_s {
 	{
 		_x = val;
 	}
+	inline int getY () const
+	{
+		return y;
+	}
 	void getFirstShapePosition (int* const x, int* const y) const;
 	const objDef_t *getReactionFireWeaponType () const;
 } invList_t;
