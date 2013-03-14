@@ -5,12 +5,11 @@
 // Tiletypes:
 // ----------
 // +: tile contains something
-// a: any
-// b: street horizontal
-// c: street vertical
+// 0 : always means no restrictions
+// a: common tile
+// c: craft tile, contains UFO or dropship
 // d: destroyed tile (put it 'behind' the crashed ufo)
 // h: destroyed tile for harvester (put it 'behind' the crashed harvester)
-// u: crashed ufo
 
 base ufocrash/uc_
 
@@ -24,28 +23,29 @@ base ufocrash/uc_
 tile +craft_drop_firebird
 {
 5 4
-0      audbh     audbh      audbh      0
-audc      +a        +a         +a   audc
-audc      +a        +a         +a   audc
-0      audbh     audbh      audbh      0
+0		0		0		0		0
+0		+c		+c		+c		0
+0		+c		+c		+c		0
+0		0		0		0		0
 }
 
 tile +craft_drop_herakles
 {
 5 4
-0      audbh     audbh      audbh      0
-audc      +a        +a         +a   audc
-audc      +a        +a         +a   audc
-0      audbh     audbh      audbh      0
+0		0		0		0		0
+0		+c		+c		+c		0
+0		+c		+c		+c		0
+0		0		0		0		0
 }
 
 tile +craft_drop_raptor
 {
-5 4
-0      audbh     audbh      audbh      0
-audc      +a        +a         +a   audc
-audc      +a        +a         +a   audc
-0      audbh     audbh      audbh      0
+5 5
+0		0		0		0		0
+0		+c		+c		+c		0
+0		+c		+c		+c		0
+0		+c		+c		+c		0
+0		0		0		0		0
 }
 
 // ---------------------------------
@@ -54,11 +54,10 @@ audc      +a        +a         +a   audc
 tile +d01
 {
 4 4
-
-0      audbh     audbh      0
-audc      +d        +d   audc
-audc      +d        +d   audc
-0      audbh     audbh      0
+0		0		0		0
+0		+a		+a		0
+0		+a		+a		0
+0		0		0		0
 }
 
 // ---------------------------------
@@ -67,40 +66,39 @@ audc      +d        +d   audc
 tile +d03
 {
 4 4
-
-0      audbh     audbh      0
-audc      +d        +d   audc
-audc      +d        +d   audc
-0      audbh     audbh      0
+0		0		0		0
+0		+a		+a		0
+0		+a		+a		0
+0		0		0		0
 }
 
 // ---------------------------------
 // harvester destroyed tile
 // ---------------------------------
+
 tile +d02_harvester
 {
 3 6
 
-0      adb          0
-u       +h        adc
-u       +h        adc
-u       +h        adc
-u       +h        adc
-0      adb          0
+0		0		0
+h		+ah		x
+h		+ah		x
+h		+ah		x
+h		+ah		x
+0		0		0
 }
 
 // ---------------------------------
 // house #1
 // ---------------------------------
+
 tile +h01
 {
 4 3
-
-0      audbh     audbh      0
-audc      +a        +a   audc
-0      audbh     audbh      0
+0		0		0		0
+0		+a		+a		0
+0		0		0		0
 }
-
 
 // ---------------------------------
 // house #2 (same as house #1 but smaller ground tile)
@@ -108,10 +106,9 @@ audc      +a        +a   audc
 tile +h02
 {
 3 3
-
-0      audbh      0
-audc      +a   audc
-0      audbh      0
+0		0		0
+0		+a		0
+0		0		0
 }
 
 // ---------------------------------
@@ -120,11 +117,10 @@ audc      +a   audc
 tile +h03
 {
 4 4
-
-0      audbh     audbh      0
-audc      +a        +a   audc
-audc      +a        +a   audc
-0      audbh     audbh      0
+0		0		0		0
+0		+a		+a		0
+0		+a		+a		0
+0		0		0		0
 }
 
 // ---------------------------------
@@ -133,12 +129,11 @@ audc      +a        +a   audc
 tile +h04
 {
 5 5
-
-0      audbh     audbh     audbh      0
-audc      +a        +a        +a   audc
-audc      +a        +a        +a   audc
-audc      +a        au     audbh      0
-0      audbh         0         0      0
+0		0		0		0		0
+0		+a		+a		+a		0
+0		+a		+a		+a		0
+0		+a		0		0		0
+0		0		0		0		0
 }
 
 // ---------------------------------
@@ -147,11 +142,10 @@ audc      +a        au     audbh      0
 tile +h05
 {
 3 4
-
-0      audbh      0
-audc      +a   audc
-audc      +a   audc
-0      audbh      0
+0		0		0
+0		+a		0
+0		+a		0
+0		0		0
 }
 
 // ---------------------------------
@@ -160,11 +154,10 @@ audc      +a   audc
 tile +h06
 {
 4 4
-
-0      audbh     audbh      0
-audc      +a        +a   audc
-audc      +a        +a   audc
-0      audbh     audbh      0
+0		0		0		0
+0		+a		+a		0
+0		+a		+a		0
+0		0		0		0
 }
 
 // --------------------------------------------
@@ -173,11 +166,10 @@ audc      +a        +a   audc
 tile +h07
 {
 5 4
-
-0      audbh     audbh      audbh      0
-audc      +a        +a         +a   audc
-audc      +a        +a         +a   audc
-0      audbh     audbh      audbh      0
+0		0		0		0		0
+0		+a		+a		+a		0
+0		+a		+a		+a		0
+0		0		0		0		0
 }
 
 // ---------------------------------
@@ -186,10 +178,9 @@ audc      +a        +a         +a   audc
 tile +h08
 {
 4 3
-
-0      audbh     audbh      0
-audc      +a        +a   audc
-0      audbh     audbh      0
+0		0		0		0
+0		+a		+a		0
+0		0		0		0
 }
 
 // ---------------------------------
@@ -198,10 +189,9 @@ audc      +a        +a   audc
 tile +h09
 {
 4 3
-
-0      audbh     audbh      0
-audc      +a        +a   audc
-0      audbh     audbh      0
+0		0		0		0
+0		+a		+a		0
+0		0		0		0
 }
 
 // ---------------------------------
@@ -226,31 +216,16 @@ tile +e01
 tile +craft_crash_bomber
 {
 6 10
-
-0      ad     ad    ad    ad    0
-x      +u     +u    +u    +u    ad
-x      +u     +u    +u    +u    ad
-x      +u     +u    +u    +u    ad
-x      +u     +u    +u    +u    ad
-x      +u     +u    +u    +u    ad
-x      +u     +u    +u    +u    ad
-x      +u     +u    +u    +u    ad
-x      +u     +u    +u    +u    ad
-0      ad     ad    ad    ad    0
-}
-
-// ---------------------------------
-// carrier
-// ---------------------------------
-tile +craft_crash_carrier
-{
-7 5
-
-0      0      0     ab    ab    ab    0
-0      ab     a     +u    +u    +u    adc
-ac     +u     +u    +u    +u    +u    adc
-ac     +u     +u    +u    ad    adb   0
-0      ab     ab    ab    0     0     0
+0		a		a		a		a		0
+a		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		a
+0		a		a		a		a		0
 }
 
 // ---------------------------------
@@ -259,15 +234,14 @@ ac     +u     +u    +u    ad    adb   0
 tile +craft_crash_corrupter
 {
 10 8
-
-0      0      0     0     ab    ab    ab    ab    ab    0
-0      0      0     ac    +u    +u    +u    +u    +u    adc
-0      ab     ab    a     +u    +u    +u    +u    +u    adc
-ac     +u     +u    +u    +u    +u    +u    +u    ad    adc
-ac     +u     +u    +u    +u    +u    +u    +u    ad    adc
-0      ab     ab    a     +u    +u    +u    +u    +u    adc
-0      0      0     ac    +u    +u    +u    +u    +u    adc
-0      0      0     0     ab    ab    ab    ab    ab    0
+0		0		0		0		a		a		a		a		a		0
+0		0		0		0		+c		+c		+c		+c		+c		a
+a		a		a		a		+c		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		+c		+c		+c		a		0
+a		+c		+c		+c		+c		+c		+c		+c		a		0
+a		a		a		a		+c		+c		+c		+c		+c		a
+0		0		0		a		+c		+c		+c		+c		+c		a
+0		0		0		0		a		a		a		a		a		0
 }
 
 // ---------------------------------
@@ -276,12 +250,11 @@ ac     +u     +u    +u    +u    +u    +u    +u    ad    adc
 tile +craft_crash_fighter
 {
 7 5
-
-0      0      0     ab    ab    ab    0
-0      ab     a     +u    +u    +u    adc
-ac     +u     +u    +u    +u    +u    adc
-ac     +u     +u    +u    ad    adb   0
-0      ab     ab    ab    0     0     0
+0		0		0		a		a		a		0
+0		a		a		+c		+c		+c		a
+0		+c		+c		+c		+c		+c		a
+0		+c		+c		+c		a		a		0
+0		a		a		a		0		0		0
 }
 
 // ---------------------------------
@@ -290,13 +263,12 @@ ac     +u     +u    +u    ad    adb   0
 tile +craft_crash_harvester
 {
 8 6
-
-0      0      ab     ab     ab     ab     ab     0
-0      a      +u     +u     +u     +u     +u     h
-ac     +u     +u     +u     +u     +u     +u     h
-0      ab     ab     a      +u     +u     +u     h
-0      0      0      ac     +u     +u     +u     h
-0      0      0      0      ab     ab     ab     0
+0		0		a		a		a		a		a		0
+0		a		+c		+c		+c		+c		+ch		h
+a		+c		+c		+c		+c		+c		+ch		h
+0		a		a		a		+c		+c		+ch		h
+0		0		0		a		+c		+c		+ch		h
+0		0		0		0		a		a		a		0
 }
 
 // ---------------------------------
@@ -305,12 +277,11 @@ ac     +u     +u     +u     +u     +u     +u     h
 tile +craft_crash_scout
 {
 4 5
-
-0      ab     ab     0
-ac     +u     +u     adc
-ac     +u     +u     adc
-ac     +u     +u     adc
-0      ab     ab     0
+0		a		a		0
+a		+c		+c		a
+a		+c		+c		a
+a		+c		+c		a
+0		a		a		0
 }
 
 // ---------------------------------
@@ -319,14 +290,13 @@ ac     +u     +u     adc
 tile +craft_crash_supply
 {
 6 7
-
-0      ab     ab     0      0     0
-ac     +u     +u     ad     0     0
-ac     +u     +u     +u     adc   0
-ac     +u     +u     +u     ad    0
-ac     +u     +u     +u     +u    adc
-ac     +u     +u     +u     ad    0
-0      ab     ab     ab     0     0
+0		a		a		0		0		0
+a		+c		+c		a		0		0
+a		+c		+c		+c		a		0
+a		+c		+c		+c		a		0
+a		+c		+c		+c		+c		a
+a		+c		+c		+c		a		0
+0		a		a		a		a		0
 }
 
 // ---------------------------------
@@ -335,30 +305,12 @@ ac     +u     +u     +u     ad    0
 tile +craft_crash_gunboat
 {
 7 6
-
-0      0      ad    ad    ad    0     0
-0      ad     +u    +u    +u    ad    0
-ad     +u     +u    +u    +u    +u    ad
-ad     +u     +u    +u    +u    +u    ad
-0      ad     +u    +u    +u    ad    0
-0      0      ad    ad    ad    0     0
-}
-
-// TODO:
-// ---------------------------------
-// mothership
-// ---------------------------------
-tile +craft_crash_mothership
-{
-6 7
-
-0      ab     ab     0      0     0
-ac     +u     +u     ad     0     0
-ac     +u     +u     +u     adc   0
-ac     +u     +u     +u     ad    0
-ac     +u     +u     +u     +u    adc
-ac     +u     +u     +u     ad    0
-0      ab     ab     ab     0     0
+0		0		a		a		a		0		0
+0		a		+c		+c		+c		a		0
+a		+c		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		+c		a
+0		a		+c		+c		+c		a		0
+0		0		a		a		a		0		0
 }
 
 // *********************************
@@ -391,7 +343,7 @@ size "7 5"
 assembly craft_crash_fighter
 {
 title "_Crashed UFO"
-size "7 5"
+size "7 6"
 +h01 "0 3"
 +h02 "0 3"
 +h03 "0 3"
@@ -488,7 +440,7 @@ size "8 8"
 assembly craft_crash_gunboat
 {
 title "_Crashed UFO"
-size "7 6"
+size "7 8"
 +h01 "0 3"
 +h02 "0 3"
 +h03 "0 3"
@@ -502,5 +454,5 @@ size "7 6"
 +d03 "0 2"
 +e01 "0 9"
 *rm_ufo +craft_crash_gunboat "1 1"
-*rm_drop +craft_drop_firebird "1 1"
+*rm_drop +craft_drop_raptor "1 1"
 }
