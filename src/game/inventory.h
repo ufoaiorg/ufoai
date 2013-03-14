@@ -42,11 +42,11 @@ class InventoryInterface
 	const inventoryImport_t *import;
 	invList_t *_invList;	/* @todo figure out WTF this is good for (Duke, 11.3.2013) */
 	item_t cacheItem;
-	const csi_t* csi;
+	const csi_t *csi;
 	const char *invName;
 
 public:
-	void initInventory (const char *name, const csi_t* csi, const inventoryImport_t *import);
+	void initInventory (const char *name, const csi_t *csi, const inventoryImport_t *import);
 	bool removeFromInventory (inventory_t* const inv, const invDef_t *container, invList_t *fItem) __attribute__((warn_unused_result));
 	invList_t *addToInventory (inventory_t *const inv, const item_t* const item, const invDef_t *container, int x, int y,
 			int amount) __attribute__((warn_unused_result));
@@ -61,7 +61,7 @@ public:
 
 	void EquipActor (character_t* const chr, const equipDef_t *ed, int maxWeight);
 
-	void EquipActorMelee (inventory_t* const inv, const teamDef_t* td);
+	void EquipActorMelee (inventory_t* const inv, const teamDef_t *td);
 
 	void EquipActorRobot (inventory_t* const inv, const objDef_t *weapon);
 

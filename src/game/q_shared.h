@@ -375,8 +375,8 @@ typedef struct mapDef_s {
 		if ((var) = &csi.mds[var##__loopvar], !(condition)) {} else
 
 #define MapDef_Foreach(var) MapDef_ForeachCondition(var, 1)
-mapDef_t* Com_GetMapDefByIDX(int index);
-mapDef_t* Com_GetMapDefinitionByID(const char *mapDefID);
+mapDef_t *Com_GetMapDefByIDX(int index);
+mapDef_t *Com_GetMapDefinitionByID(const char *mapDefID);
 
 /**
  * @brief The csi structure is the client-server-information structure

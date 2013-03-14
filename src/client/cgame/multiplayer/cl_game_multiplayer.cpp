@@ -228,7 +228,7 @@ static void GAME_MP_Results (dbuffer *msg, int winner, int *numSpawned, int *num
 	}
 }
 
-static const mapDef_t* GAME_MP_MapInfo (int step)
+static const mapDef_t *GAME_MP_MapInfo (int step)
 {
 	const mapDef_t *md;
 	int i = 0;

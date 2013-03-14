@@ -88,7 +88,7 @@ char posStr[MAX_TOKEN_CHARS * MAX_TILESTRINGS];
 static void testMapDefsMassRMA (void)
 {
 	const char *filterId = TEST_GetStringProperty("mapdef-id");
-	const mapDef_t* md;
+	const mapDef_t *md;
 	int mapCount = 0;
 
 	CU_ASSERT_TRUE(csi.numMDs > 0);
@@ -210,7 +210,7 @@ static void testMapDefStatistic (void)
 	int j, k;
 	int required, solids;
 	const char *filterId = TEST_GetStringProperty("mapdef-id");
-	const mapDef_t* md;
+	const mapDef_t *md;
 
 	CU_ASSERT_TRUE(csi.numMDs > 0);
 
@@ -274,7 +274,7 @@ static void testMapDefStatistic (void)
 static void testMapDefsFootSteps (void)
 {
 	const char *filterId = TEST_GetStringProperty("mapdef-id");
-	const mapDef_t* md;
+	const mapDef_t *md;
 	int count = 0;
 	int mapCount = 0;				// the number of maps read
 	int badMapCount = 0;
@@ -393,7 +393,7 @@ static void testMapDefsFootSteps (void)
 static void testMapDefsSingleplayer (void)
 {
 	const char *filterId = TEST_GetStringProperty("mapdef-id");
-	const mapDef_t* md;
+	const mapDef_t *md;
 
 	CU_ASSERT_TRUE(csi.numMDs > 0);
 
@@ -425,7 +425,7 @@ static void testMapDefsMultiplayer (void)
 {
 	const char *filterId = TEST_GetStringProperty("mapdef-id");
 	char userinfo[MAX_INFO_STRING];
-	const mapDef_t* md;
+	const mapDef_t *md;
 
 	CU_ASSERT_TRUE(csi.numMDs > 0);
 

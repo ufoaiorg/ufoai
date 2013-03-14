@@ -784,7 +784,7 @@ void GAME_SwitchCurrentSelectedMap (int step)
 	cls.currentSelectedMap %= csi.numMDs;
 }
 
-const mapDef_t* GAME_GetCurrentSelectedMap (void)
+const mapDef_t *GAME_GetCurrentSelectedMap (void)
 {
 	return Com_GetMapDefByIDX(cls.currentSelectedMap);
 }

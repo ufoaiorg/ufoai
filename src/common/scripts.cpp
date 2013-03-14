@@ -3384,12 +3384,12 @@ static void Com_ParseMapDefinition (const char *name, const char **text)
 	}
 }
 
-mapDef_t* Com_GetMapDefByIDX (int index)
+mapDef_t *Com_GetMapDefByIDX (int index)
 {
 	return &csi.mds[index];
 }
 
-mapDef_t* Com_GetMapDefinitionByID (const char *mapDefID)
+mapDef_t *Com_GetMapDefinitionByID (const char *mapDefID)
 {
 	mapDef_t *md;
 

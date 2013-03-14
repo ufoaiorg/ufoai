@@ -278,7 +278,7 @@ static inline void GAME_SK_HideUFOs (const linkedList_t *ufos)
 	cgi->Cvar_Set("rm_crashed", "");
 }
 
-static const mapDef_t* GAME_SK_MapInfo (int step)
+static const mapDef_t *GAME_SK_MapInfo (int step)
 {
 	const mapDef_t *md;
 	int i = 0;

@@ -696,7 +696,7 @@ int InventoryInterface::PackAmmoAndWeapon (character_t* const chr, const objDef_
  * @param[in] td Pointer to a team definition.
  * @note Weapons assigned here cannot be collected in any case. These are dummy "actor weapons".
  */
-void InventoryInterface::EquipActorMelee (inventory_t* const inv, const teamDef_t* td)
+void InventoryInterface::EquipActorMelee (inventory_t* const inv, const teamDef_t *td)
 {
 	const objDef_t *obj;
 	item_t item;

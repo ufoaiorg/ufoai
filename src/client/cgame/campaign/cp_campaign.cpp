@@ -218,7 +218,7 @@ bool CP_ChooseMap (mission_t *mission, const vec2_t pos)
 
 	int countMinimal = 0;	/**< Number of maps fulfilling mission conditions and appeared less often during game. */
 	int minMapDefAppearance = -1;
-	mapDef_t* md = NULL;
+	mapDef_t *md = NULL;
 	MapDef_ForeachSingleplayerCampaign(md) {
 		/* Check if mission fulfill conditions */
 		if (!CP_MapIsSelectable(mission, md, pos))

@@ -241,7 +241,7 @@ typedef struct alienTeamCategory_s {
 typedef struct mission_s {
 	int idx;						/**< unique id of this mission */
 	char id[MAX_VAR];				/**< script id */
-	mapDef_t* mapDef;				/**< mapDef used for this mission */
+	mapDef_t *mapDef;				/**< mapDef used for this mission */
 	bool active;				/**< aircraft at place? */
 	union missionData_t {
 		base_t *base;
