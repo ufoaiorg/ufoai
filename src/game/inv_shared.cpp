@@ -589,10 +589,10 @@ void invList_t::getFirstShapePosition (int* const x, int* const y) const
 	*x = *y = NONE;
 }
 
-Container::Container (containerIndex_t idx)
+inventory_s::inventory_s ()
 {
-	_def = &CSI->ids[idx];	/* container attributes (invDef_t) */
-	_invList = NULL;		/* start of the list of items */
+// This (prototype-)constructor does not work as intended. Seems like the first inventory is created before CSI is set.
+//	containers[CSI->idRight]._invList = NULL;
 }
 
 /**

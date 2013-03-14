@@ -424,27 +424,27 @@ typedef struct invList_s {
 
 class Container
 {
-	const invDef_t *_def;	/* container attributes (invDef_t) */
-	invList_t *_invList;	/* start of the list of items */
 public:
-	Container (containerIndex_t idx);
+//	const invDef_t *_def;	/* container attributes (invDef_t) */
+	invList_t *_invList;	/* start of the list of items */
 };
 
 /** @brief inventory definition with all its containers */
 typedef struct inventory_s {
-	invList_t *containers[MAX_CONTAINERS];
+	Container containers[MAX_CONTAINERS];
 
+	inventory_s ();
 	inline invList_t *getContainer (const containerIndex_t idx) const
 	{
-		return containers[idx];
+		return containers[idx]._invList;
 	}
 	inline void setContainer (const containerIndex_t idx, invList_t *cont)
 	{
-		containers[idx] = cont;
+		containers[idx]._invList = cont;
 	}
 	inline void resetContainer (const containerIndex_t idx)
 	{
-		containers[idx] = NULL;
+		containers[idx]._invList = NULL;
 	}
 	/**
 	 * @brief Searches if there is a specific item already in the inventory&container.
