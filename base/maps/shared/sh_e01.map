@@ -4,12 +4,12 @@
 "classname" "worldspawn"
 // brush 0
 {
-( 264 256 4 ) ( 264 0 4 ) ( 8 256 4 ) tex_terrain/dummy 0 0 0 0.5 0.5
-( 264 256 24 ) ( 8 256 24 ) ( 264 256 -232 ) tex_terrain/dummy 0 0 0 0.5 0.5
-( 256 256 256 ) ( 256 256 0 ) ( 256 0 256 ) tex_terrain/dummy 0 0 0 0.5 0.5
+( 264 256 4 ) ( 264 0 4 ) ( 8 256 4 ) tex_terrain/dummy 0 0 0 0.25 0.25
+( 264 256 24 ) ( 8 256 24 ) ( 264 256 -232 ) tex_terrain/dummy 0 0 0 0.25 0.25
+( 256 256 256 ) ( 256 256 0 ) ( 256 0 256 ) tex_terrain/dummy 0 0 0 0.25 0.25
 ( 0 0 0 ) ( 256 0 0 ) ( 0 256 0 ) tex_common/nodraw 0 0 0 0.25 0.25
-( 0 0 0 ) ( 0 0 256 ) ( 256 0 0 ) tex_terrain/dummy 0 0 0 0.5 0.5
-( 0 0 0 ) ( 0 256 0 ) ( 0 0 256 ) tex_terrain/dummy 0 0 0 0.5 0.5
+( 0 0 0 ) ( 0 0 256 ) ( 256 0 0 ) tex_terrain/dummy 0 0 0 0.25 0.25
+( 0 0 0 ) ( 0 256 0 ) ( 0 0 256 ) tex_terrain/dummy 0 0 0 0.25 0.25
 }
 }
 // entity 1
