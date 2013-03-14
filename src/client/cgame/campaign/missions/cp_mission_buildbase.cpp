@@ -260,6 +260,7 @@ int CP_BuildBaseMissionAvailableUFOs (const mission_t *mission, ufoType_t *ufoTy
 
 /**
  * @brief Determine what action should be performed when a Build Base mission stage ends.
+ * @param[in] campaign The campaign data structure
  * @param[in] mission Pointer to the mission which stage ended.
  */
 void CP_BuildBaseMissionNextStage (const campaign_t *campaign, mission_t *mission)

@@ -922,6 +922,7 @@ void CP_MissionNotifyInstallationDestroyed (const installation_t *installation)
 
 /**
  * @brief Determine what action should be performed when a mission stage ends.
+ * @param[in] campaign The campaign data structure
  * @param[in] mission Pointer to the mission which stage ended.
  */
 void CP_MissionStageEnd (const campaign_t* campaign, mission_t *mission)

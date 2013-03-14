@@ -1220,6 +1220,7 @@ void B_SetName (base_t *base, const char *name)
 
 /**
  * @brief Build new base, uses template for the first base
+ * @param[in] campaign The campaign data structure
  * @param[in] pos Position (on Geoscape) the base built at
  * @param[in] name The name of the new base, this string might already be in utf-8
  */
