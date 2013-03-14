@@ -15,36 +15,16 @@
 // C: Civilian spawnpoint(s)
 
 base industrial/ind_
+extends shared
 
 // Dropships --------------------------------------------------------
 
-tile +craft_drop_firebird
-{
-5 3
-0		0		0		0		0
-0		+c		+c		+c		0
-0		0		0		0		0
-}
+// are now inherited from +shared
+// this is still experimental, because of a problem
+// were the blending creates black seams at tile borders
+// so I did not remove the ind_craft_drop_* maps yet
 
-tile +craft_drop_herakles
-{
-5 4
-0		0		0		0		0
-0		+c		+c		+c		0
-0		+c		+c		+c		0
-0		0		0		0		0
-}
-
-
-tile +craft_drop_raptor
-{
-5 5
-0		0		0		0		0
-0		+c		+c		+c		0
-0		+c		+c		+c		0
-0		+c		+c		+c		0
-0		0		0		0		0
-}
+// TODO remove the dropship maps from +industrial once this solution is final
 
 // UFOs -------------------------------------------------------------
 
@@ -306,8 +286,8 @@ size "6 6"
 +fr14_1x3	"0 1"	// A(1) C(1)
 +fr15_2x1	"0 1"	// A(1)
 +fr16_5x1	"0 1"	// A(2) C(1)
+*rm_drop shared/sh_craft_drop_firebird	"1 1"
 *rm_ufo +craft_ufo_scout		"1 1"
-*rm_drop +craft_drop_firebird	"1 1"
 }
 
 assembly medium
@@ -330,7 +310,7 @@ size "7 8"
 +fr14_1x3	"0 1"	// A(1) C(1)
 +fr15_2x1	"0 1"	// A(1)
 +fr16_5x1	"0 1"	// A(2) C(1)
-*rm_drop +craft_drop_firebird "1 1"
+*rm_drop shared/sh_craft_drop_firebird	"1 1"
 *rm_ufo +craft_ufo_supply "1 1" //Enough Alien spawnpoints for Max Crew capacity
 }
 
@@ -354,7 +334,7 @@ size "9 8"
 +fr14_1x3	"0 1"	// A(1) C(1)
 +fr15_2x1	"0 1"	// A(1)
 +fr16_5x1	"0 1"	// A(2) C(1)
-*rm_drop +craft_drop_firebird "1 1"
+*rm_drop shared/sh_craft_drop_firebird	"1 1"
 *rm_ufo +craft_ufo_bomber "1 1"
 }
 
@@ -378,5 +358,5 @@ size "7 7"
 +fr14_1x3	"0 1"	// A(1) C(1)
 +fr15_2x1	"0 1"	// A(1)
 +fr16_5x1	"1 1"	// A(2) C(1)
-*rm_drop +craft_drop_firebird "1 1"
+*rm_drop shared/sh_craft_drop_firebird	"1 1"
 }

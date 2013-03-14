@@ -16,3 +16,14 @@
 		anim 6 48
 	}
 }
+
+/* Blending for the inherited template tiles */
+
+{
+	material tex_terrain/dummy
+	{
+		texture tex_buildings/floor015
+		blend GL_ONE GL_ZERO
+		lightmap
+	}
+}
