@@ -586,17 +586,40 @@ base/maps/oriental/or_trees_b.map | GNU General Public License 2.0 or later
 base/maps/oriental/or_well.map | GNU General Public License 2.0 or later
 base/maps/oriental_mosque/om_main.map | GNU General Public License 2.0 or later | "SparX" Beyeler
 base/maps/pipes_const.map | GNU General Public License 2.0 or later | Martin Gerhardy
-base/maps/rescue/r_craft_crash_drop_firebird.map | GNU General Public License 2.0 or later | Martin Gerhardy
-base/maps/rescue/r_craft_crash_drop_herakles.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
-base/maps/rescue/r_craft_crash_drop_raptor.map | GNU General Public License 2.0 or later | Martin Gerhardy
-base/maps/rescue/r_craft_crash_inter_dragon.map | GNU General Public License 2.0 or later | Martin Gerhardy
-base/maps/rescue/r_craft_crash_inter_saracen.map | GNU General Public License 2.0 or later | Martin Gerhardy
-base/maps/rescue/r_craft_crash_inter_starchaser.map | GNU General Public License 2.0 or later | Martin Gerhardy
-base/maps/rescue/r_craft_crash_inter_stiletto.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
-base/maps/rescue/r_craft_crash_inter_stingray.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
 base/maps/resort.map | GNU General Public License 2.0 or later | "SparX" Beyeler
 base/maps/rivertown.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/scout_crash/sc_main.map | GNU General Public License 2.0 or later
+base/maps/shared/sh_craft_crash_bomber.map | GNU General Public License 2.0 or later
+base/maps/shared/sh_craft_crash_corrupter.map | GNU General Public License 2.0 or later
+base/maps/shared/sh_craft_crash_drop_firebird.map | GNU General Public License 2.0 or later | Martin Gerhardy
+base/maps/shared/sh_craft_crash_drop_herakles.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/shared/sh_craft_crash_drop_raptor.map | GNU General Public License 2.0 or later | Martin Gerhardy
+base/maps/shared/sh_craft_crash_fighter.map | GNU General Public License 2.0 or later | Martin Gerhardy
+base/maps/shared/sh_craft_crash_gunboat.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | af_craft_crash_gunboat.map
+base/maps/shared/sh_craft_crash_harvester.map | GNU General Public License 2.0 or later | Martin Gerhardy
+base/maps/shared/sh_craft_crash_inter_dragon.map | GNU General Public License 2.0 or later | Martin Gerhardy
+base/maps/shared/sh_craft_crash_inter_saracen.map | GNU General Public License 2.0 or later | Martin Gerhardy
+base/maps/shared/sh_craft_crash_inter_starchaser.map | GNU General Public License 2.0 or later | Martin Gerhardy
+base/maps/shared/sh_craft_crash_inter_stiletto.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/shared/sh_craft_crash_inter_stingray.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/shared/sh_craft_crash_scout.map | GNU General Public License 2.0 or later | Martin Gerhardy | prefab_ufo_scout
+base/maps/shared/sh_craft_crash_supply.map | GNU General Public License 2.0 or later | Martin Gerhardy | prefab_ufo_supply and terrain08
+base/maps/shared/sh_craft_drop_firebird.map | GNU General Public License 2.0 or later | Martin Gerhardy
+base/maps/shared/sh_craft_drop_herakles.map | GNU General Public License 2.0 or later
+base/maps/shared/sh_craft_drop_raptor.map | GNU General Public License 2.0 or later
+base/maps/shared/sh_d01.map | GNU General Public License 2.0 or later
+base/maps/shared/sh_d02_harvester.map | GNU General Public License 2.0 or later
+base/maps/shared/sh_d03.map | GNU General Public License 2.0 or later
+base/maps/shared/sh_e01.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/shared/sh_h01.map | GNU General Public License 2.0 or later | Martin Gerhardy
+base/maps/shared/sh_h02.map | GNU General Public License 2.0 or later | Martin Gerhardy
+base/maps/shared/sh_h03.map | GNU General Public License 2.0 or later | Martin Gerhardy | Based on city04 house
+base/maps/shared/sh_h04.map | GNU General Public License 2.0 or later | Martin Gerhardy
+base/maps/shared/sh_h05.map | GNU General Public License 2.0 or later | Martin Gerhardy
+base/maps/shared/sh_h06.map | GNU General Public License 2.0 or later | Martin Gerhardy
+base/maps/shared/sh_h07.map | GNU General Public License 2.0 or later
+base/maps/shared/sh_h08.map | GNU General Public License 2.0 or later | tilmanuwe
+base/maps/shared/sh_h09.map | GNU General Public License 2.0 or later | tilmanuwe
 base/maps/shelter.ump | GNU General Public License 2.0 or later | Bas Fournier
 base/maps/shelter/shelter_corridor_ne.map | GNU General Public License 2.0 or later | Bas Fournier
 base/maps/shelter/shelter_corridor_nw.map | GNU General Public License 2.0 or later | Bas Fournier
@@ -668,29 +691,6 @@ base/maps/tropic/tr_r03.map | GNU General Public License 2.0 or later
 base/maps/tropic/tr_r04.map | GNU General Public License 2.0 or later
 base/maps/tropic/tr_r05.map | GNU General Public License 2.0 or later
 base/maps/ufocrash.ump | GNU General Public License 2.0 or later
-base/maps/ufocrash/uc_craft_crash_bomber.map | GNU General Public License 2.0 or later
-base/maps/ufocrash/uc_craft_crash_corrupter.map | GNU General Public License 2.0 or later
-base/maps/ufocrash/uc_craft_crash_fighter.map | GNU General Public License 2.0 or later | Martin Gerhardy
-base/maps/ufocrash/uc_craft_crash_gunboat.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | af_craft_crash_gunboat.map
-base/maps/ufocrash/uc_craft_crash_harvester.map | GNU General Public License 2.0 or later | Martin Gerhardy
-base/maps/ufocrash/uc_craft_crash_scout.map | GNU General Public License 2.0 or later | Martin Gerhardy | prefab_ufo_scout
-base/maps/ufocrash/uc_craft_crash_supply.map | GNU General Public License 2.0 or later | Martin Gerhardy | prefab_ufo_supply and terrain08
-base/maps/ufocrash/uc_craft_drop_firebird.map | GNU General Public License 2.0 or later | Martin Gerhardy
-base/maps/ufocrash/uc_craft_drop_herakles.map | GNU General Public License 2.0 or later
-base/maps/ufocrash/uc_craft_drop_raptor.map | GNU General Public License 2.0 or later
-base/maps/ufocrash/uc_d01.map | GNU General Public License 2.0 or later
-base/maps/ufocrash/uc_d02_harvester.map | GNU General Public License 2.0 or later
-base/maps/ufocrash/uc_d03.map | GNU General Public License 2.0 or later
-base/maps/ufocrash/uc_e01.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
-base/maps/ufocrash/uc_h01.map | GNU General Public License 2.0 or later | Martin Gerhardy
-base/maps/ufocrash/uc_h02.map | GNU General Public License 2.0 or later | Martin Gerhardy
-base/maps/ufocrash/uc_h03.map | GNU General Public License 2.0 or later | Martin Gerhardy | Based on city04 house
-base/maps/ufocrash/uc_h04.map | GNU General Public License 2.0 or later | Martin Gerhardy
-base/maps/ufocrash/uc_h05.map | GNU General Public License 2.0 or later | Martin Gerhardy
-base/maps/ufocrash/uc_h06.map | GNU General Public License 2.0 or later | Martin Gerhardy
-base/maps/ufocrash/uc_h07.map | GNU General Public License 2.0 or later
-base/maps/ufocrash/uc_h08.map | GNU General Public License 2.0 or later | tilmanuwe
-base/maps/ufocrash/uc_h09.map | GNU General Public License 2.0 or later | tilmanuwe
 base/maps/village.map | GNU General Public License 2.0 or later | "SparX" Beyeler
 base/maps/village.ump | GNU General Public License 2.0 or later
 base/maps/village/vil_c01.map | GNU General Public License 2.0 or later

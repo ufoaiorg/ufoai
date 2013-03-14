@@ -3,118 +3,190 @@
 // *********************************
 
 base rescue/r_
+extends shared
 
-extends ufocrash
-
-// ---------------------------------
-// Crashed dropships
-// ---------------------------------
-
-tile +craft_crash_drop_firebird
-{
-6 5
-0		0		0		0		0		0
-0		+c		+c		+c		+c		0
-0		+c		+c		+c		+c		0
-0		+c		+c		+c		+c		0
-0		0		0		0		0		0
-}
-
-tile +craft_crash_drop_herakles
-	// TODO make a proper tile
-{
-3 3
-0		0		0
-0		+c		0
-0		0		0
-}
-
-tile +craft_crash_drop_raptor
-{
-6 6
-0		0		0		0		0		0
-0		+c		+c		+c		+c		0
-0		+c		+c		+c		+c		0
-0		+c		+c		+c		+c		0
-0		+c		+c		+c		+c		0
-0		0		0		0		0		0
-}
-
-// ---------------------------------
-// Crashed interceptors
-// ---------------------------------
-
-tile +craft_crash_inter_dragon
-{
-6 6
-0		0		0		0		0		0
-0		+c		+c		+c		+c		0
-0		+c		+c		+c		+c		0
-0		+c		+c		+c		+c		0
-0		+c		+c		+c		+c		0
-0		0		0		0		0		0
-}
-
-tile +craft_crash_inter_saracen
-{
-6 6
-0		0		0		0		0		0
-0		+c		+c		+c		+c		0
-0		+c		+c		+c		+c		0
-0		+c		+c		+c		+c		0
-0		+c		+c		+c		+c		0
-0		0		0		0		0		0
-}
-
-tile +craft_crash_inter_starchaser
-{
-6 6
-0		0		0		0		0		0
-0		+c		+c		+c		+c		0
-0		+c		+c		+c		+c		0
-0		+c		+c		+c		+c		0
-0		+c		+c		+c		+c		0
-0		0		0		0		0		0
-}
-
-tile +craft_crash_inter_stiletto
-	// TODO make a proper tile
-{
-3 3
-0		0		0
-0		+c		0
-0		0		0
-}
-
-tile +craft_crash_inter_stingray
-	// TODO make a proper tile
-{
-3 3
-0		0		0
-0		+c		0
-0		0		0
-}
-
-// *********************************
-// Assemblies
-// *********************************
+// Map assemblies --------------------------------------------------*
 
 assembly default
 {
 title "_Rescue mission"
 size "7 7"
-ufocrash/uc_e01 "0 9"
-ufocrash/uc_h01 "0 2"
-ufocrash/uc_h02 "0 2"
-ufocrash/uc_h03 "0 2"
-ufocrash/uc_h04 "0 1"
-ufocrash/uc_h05 "0 2"
-ufocrash/uc_h06 "0 2"
-ufocrash/uc_h07 "0 2"
-ufocrash/uc_h08 "0 2"
-ufocrash/uc_h09 "0 2"
-ufocrash/uc_d01 "0 2"
-ufocrash/uc_d03 "0 2"
-*rm_drop ufocrash/uc_craft_drop_firebird "1 1"
-*rm_crashed +craft_crash_drop_firebird "1 1"
+shared/sh_e01 "0 9"
+shared/sh_h01 "0 2"
+shared/sh_h02 "0 2"
+shared/sh_h03 "0 2"
+shared/sh_h04 "0 1"
+shared/sh_h05 "0 2"
+shared/sh_h06 "0 2"
+shared/sh_h07 "0 2"
+shared/sh_h08 "0 2"
+shared/sh_h09 "0 2"
+shared/sh_d01 "0 2"
+shared/sh_d03 "0 2"
+*rm_drop shared/sh_craft_drop_firebird "1 1"
+*rm_crashed shared/sh_craft_crash_drop_firebird "1 1"
 }
+
+/*
+// Testing assemblies ----------------------------------------------*
+
+assembly firebird
+{
+title "_Rescue mission"
+size "7 7"
+shared/sh_e01 "0 9"
+shared/sh_h01 "0 2"
+shared/sh_h02 "0 2"
+shared/sh_h03 "0 2"
+shared/sh_h04 "0 1"
+shared/sh_h05 "0 2"
+shared/sh_h06 "0 2"
+shared/sh_h07 "0 2"
+shared/sh_h08 "0 2"
+shared/sh_h09 "0 2"
+shared/sh_d01 "0 2"
+shared/sh_d03 "0 2"
+*rm_drop shared/sh_craft_drop_raptor "1 1"
+shared/sh_craft_crash_drop_firebird "1 1"
+}
+
+assembly herakles
+{
+title "_Rescue mission"
+size "7 7"
+shared/sh_e01 "0 9"
+shared/sh_h01 "0 2"
+shared/sh_h02 "0 2"
+shared/sh_h03 "0 2"
+shared/sh_h04 "0 1"
+shared/sh_h05 "0 2"
+shared/sh_h06 "0 2"
+shared/sh_h07 "0 2"
+shared/sh_h08 "0 2"
+shared/sh_h09 "0 2"
+shared/sh_d01 "0 2"
+shared/sh_d03 "0 2"
+*rm_drop shared/sh_craft_drop_raptor "1 1"
+shared/sh_craft_crash_drop_herakles "1 1"
+}
+
+assembly raptor
+{
+title "_Rescue mission"
+size "7 7"
+shared/sh_e01 "0 9"
+shared/sh_h01 "0 2"
+shared/sh_h02 "0 2"
+shared/sh_h03 "0 2"
+shared/sh_h04 "0 1"
+shared/sh_h05 "0 2"
+shared/sh_h06 "0 2"
+shared/sh_h07 "0 2"
+shared/sh_h08 "0 2"
+shared/sh_h09 "0 2"
+shared/sh_d01 "0 2"
+shared/sh_d03 "0 2"
+*rm_drop shared/sh_craft_drop_raptor "1 1"
+shared/sh_craft_crash_drop_raptor "1 1"
+}
+
+assembly dragon
+{
+title "_Rescue mission"
+size "7 7"
+shared/sh_e01 "0 9"
+shared/sh_h01 "0 2"
+shared/sh_h02 "0 2"
+shared/sh_h03 "0 2"
+shared/sh_h04 "0 1"
+shared/sh_h05 "0 2"
+shared/sh_h06 "0 2"
+shared/sh_h07 "0 2"
+shared/sh_h08 "0 2"
+shared/sh_h09 "0 2"
+shared/sh_d01 "0 2"
+shared/sh_d03 "0 2"
+*rm_drop shared/sh_craft_drop_raptor "1 1"
+shared/sh_craft_crash_inter_dragon "1 1"
+}
+
+assembly saracen
+{
+title "_Rescue mission"
+size "7 7"
+shared/sh_e01 "0 9"
+shared/sh_h01 "0 2"
+shared/sh_h02 "0 2"
+shared/sh_h03 "0 2"
+shared/sh_h04 "0 1"
+shared/sh_h05 "0 2"
+shared/sh_h06 "0 2"
+shared/sh_h07 "0 2"
+shared/sh_h08 "0 2"
+shared/sh_h09 "0 2"
+shared/sh_d01 "0 2"
+shared/sh_d03 "0 2"
+*rm_drop shared/sh_craft_drop_raptor "1 1"
+shared/sh_craft_crash_inter_saracen "1 1"
+}
+
+assembly starchaser
+{
+title "_Rescue mission"
+size "7 7"
+shared/sh_e01 "0 9"
+shared/sh_h01 "0 2"
+shared/sh_h02 "0 2"
+shared/sh_h03 "0 2"
+shared/sh_h04 "0 1"
+shared/sh_h05 "0 2"
+shared/sh_h06 "0 2"
+shared/sh_h07 "0 2"
+shared/sh_h08 "0 2"
+shared/sh_h09 "0 2"
+shared/sh_d01 "0 2"
+shared/sh_d03 "0 2"
+*rm_drop shared/sh_craft_drop_raptor "1 1"
+shared/sh_craft_crash_inter_starchaser "1 1"
+}
+
+assembly stiletto
+{
+title "_Rescue mission"
+size "7 7"
+shared/sh_e01 "0 9"
+shared/sh_h01 "0 2"
+shared/sh_h02 "0 2"
+shared/sh_h03 "0 2"
+shared/sh_h04 "0 1"
+shared/sh_h05 "0 2"
+shared/sh_h06 "0 2"
+shared/sh_h07 "0 2"
+shared/sh_h08 "0 2"
+shared/sh_h09 "0 2"
+shared/sh_d01 "0 2"
+shared/sh_d03 "0 2"
+*rm_drop shared/sh_craft_drop_raptor "1 1"
+shared/sh_craft_crash_inter_stiletto "1 1"
+}
+
+assembly stingray
+{
+title "_Rescue mission"
+size "7 7"
+shared/sh_e01 "0 9"
+shared/sh_h01 "0 2"
+shared/sh_h02 "0 2"
+shared/sh_h03 "0 2"
+shared/sh_h04 "0 1"
+shared/sh_h05 "0 2"
+shared/sh_h06 "0 2"
+shared/sh_h07 "0 2"
+shared/sh_h08 "0 2"
+shared/sh_h09 "0 2"
+shared/sh_d01 "0 2"
+shared/sh_d03 "0 2"
+*rm_drop shared/sh_craft_drop_raptor "1 1"
+shared/sh_craft_crash_inter_stingray "1 1"
+}
+*/

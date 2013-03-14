@@ -1,0 +1,382 @@
+// *********************************
+// Shared Map Tiles
+// *********************************
+
+// Tiletypes:
+// ----------
+// +: tile contains something
+// 0: always means no restrictions
+// a: common tile
+// c: craft tile, contains UFO or dropship
+// d: destroyed tile (put it 'behind' the crashed ufo)
+// h: destroyed tile for harvester (put it 'behind' the crashed harvester)
+
+base shared/sh_
+
+// Phalanx dropships -----------------------------------------------*
+// used in +rescue, +ufocrash
+
+tile +craft_drop_firebird
+{
+5 4
+0		0		0		0		0
+0		+c		+c		+c		0
+0		+c		+c		+c		0
+0		0		0		0		0
+}
+
+tile +craft_drop_herakles
+{
+5 4
+0		0		0		0		0
+0		+c		+c		+c		0
+0		+c		+c		+c		0
+0		0		0		0		0
+}
+
+tile +craft_drop_raptor
+{
+5 5
+0		0		0		0		0
+0		+c		+c		+c		0
+0		+c		+c		+c		0
+0		+c		+c		+c		0
+0		0		0		0		0
+}
+
+// UFOs ------------------------------------------------------------*
+
+
+// Crashed UFOs ----------------------------------------------------*
+// used in +ufocrash
+
+tile +craft_crash_bomber
+{
+6 10
+0		a		a		a		a		0
+a		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		a
+0		a		a		a		a		0
+}
+
+tile +craft_crash_corrupter
+{
+10 8
+0		0		0		0		a		a		a		a		a		0
+0		0		0		0		+c		+c		+c		+c		+c		a
+a		a		a		a		+c		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		+c		+c		+c		a		0
+a		+c		+c		+c		+c		+c		+c		+c		a		0
+a		a		a		a		+c		+c		+c		+c		+c		a
+0		0		0		a		+c		+c		+c		+c		+c		a
+0		0		0		0		a		a		a		a		a		0
+}
+
+tile +craft_crash_fighter
+{
+7 5
+0		0		0		a		a		a		0
+0		a		a		+c		+c		+c		a
+0		+c		+c		+c		+c		+c		a
+0		+c		+c		+c		a		a		0
+0		a		a		a		0		0		0
+}
+
+tile +craft_crash_gunboat
+{
+7 6
+0		0		a		a		a		0		0
+0		a		+c		+c		+c		a		0
+a		+c		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		+c		a
+0		a		+c		+c		+c		a		0
+0		0		a		a		a		0		0
+}
+
+tile +craft_crash_harvester
+{
+8 6
+0		0		a		a		a		a		a		0
+0		a		+c		+c		+c		+c		+ch		h
+a		+c		+c		+c		+c		+c		+ch		h
+0		a		a		a		+c		+c		+ch		h
+0		0		0		a		+c		+c		+ch		h
+0		0		0		0		a		a		a		0
+}
+
+tile +craft_crash_scout
+{
+4 5
+0		a		a		0
+a		+c		+c		a
+a		+c		+c		a
+a		+c		+c		a
+0		a		a		0
+}
+
+tile +craft_crash_supply
+{
+6 7
+0		a		a		0		0		0
+a		+c		+c		a		0		0
+a		+c		+c		+c		a		0
+a		+c		+c		+c		a		0
+a		+c		+c		+c		+c		a
+a		+c		+c		+c		a		0
+0		a		a		a		a		0
+}
+
+// Crashed Phalanx dropships ---------------------------------------*
+// used in +rescue
+
+tile +craft_crash_drop_firebird
+{
+6 5
+0		0		0		0		0		0
+0		+c		+c		+c		+c		0
+0		+c		+c		+c		+c		0
+0		+c		+c		+c		+c		0
+0		0		0		0		0		0
+}
+
+tile +craft_crash_drop_herakles
+	// TODO make a proper tile
+{
+3 3
+0		0		0
+0		+c		0
+0		0		0
+}
+
+tile +craft_crash_drop_raptor
+{
+6 6
+0		0		0		0		0		0
+0		+c		+c		+c		+c		0
+0		+c		+c		+c		+c		0
+0		+c		+c		+c		+c		0
+0		+c		+c		+c		+c		0
+0		0		0		0		0		0
+}
+
+// Crashed Phalanx interceptors ------------------------------------*
+// used in +rescue
+
+tile +craft_crash_inter_dragon
+{
+6 6
+0		0		0		0		0		0
+0		+c		+c		+c		+c		0
+0		+c		+c		+c		+c		0
+0		+c		+c		+c		+c		0
+0		+c		+c		+c		+c		0
+0		0		0		0		0		0
+}
+
+tile +craft_crash_inter_saracen
+{
+6 6
+0		0		0		0		0		0
+0		+c		+c		+c		+c		0
+0		+c		+c		+c		+c		0
+0		+c		+c		+c		+c		0
+0		+c		+c		+c		+c		0
+0		0		0		0		0		0
+}
+
+tile +craft_crash_inter_starchaser
+{
+6 6
+0		0		0		0		0		0
+0		+c		+c		+c		+c		0
+0		+c		+c		+c		+c		0
+0		+c		+c		+c		+c		0
+0		+c		+c		+c		+c		0
+0		0		0		0		0		0
+}
+
+tile +craft_crash_inter_stiletto
+	// TODO make a proper tile
+{
+3 3
+0		0		0
+0		+c		0
+0		0		0
+}
+
+tile +craft_crash_inter_stingray
+	// TODO make a proper tile
+{
+3 3
+0		0		0
+0		+c		0
+0		0		0
+}
+
+
+// Tiles used on +ufocrash and +rescue map themes ------------------*
+// used in +rescue, +ufocrash
+
+// ---------------------------------
+// destroyed houses #1
+// ---------------------------------
+tile +d01
+{
+4 4
+0		0		0		0
+0		+a		+a		0
+0		+a		+a		0
+0		0		0		0
+}
+
+// ---------------------------------
+// destroyed house #2
+// ---------------------------------
+tile +d03
+{
+4 4
+0		0		0		0
+0		+a		+a		0
+0		+a		+a		0
+0		0		0		0
+}
+
+// ---------------------------------
+// harvester destroyed tile
+// ---------------------------------
+
+tile +d02_harvester
+{
+3 6
+
+0		0		0
+h		+ah		x
+h		+ah		x
+h		+ah		x
+h		+ah		x
+0		0		0
+}
+
+// ---------------------------------
+// house #1
+// ---------------------------------
+
+tile +h01
+{
+4 3
+0		0		0		0
+0		+a		+a		0
+0		0		0		0
+}
+
+// ---------------------------------
+// house #2 (same as house #1 but smaller ground tile)
+// ---------------------------------
+tile +h02
+{
+3 3
+0		0		0
+0		+a		0
+0		0		0
+}
+
+// ---------------------------------
+// house #3 (shop)
+// ---------------------------------
+tile +h03
+{
+4 4
+0		0		0		0
+0		+a		+a		0
+0		+a		+a		0
+0		0		0		0
+}
+
+// ---------------------------------
+// house #4 (farm)
+// ---------------------------------
+tile +h04
+{
+5 5
+0		0		0		0		0
+0		+a		+a		+a		0
+0		+a		+a		+a		0
+0		+a		0		0		0
+0		0		0		0		0
+}
+
+// ---------------------------------
+// house #5 (farm 2)
+// ---------------------------------
+tile +h05
+{
+3 4
+0		0		0
+0		+a		0
+0		+a		0
+0		0		0
+}
+
+// ---------------------------------
+// house #6 (farm 3)
+// ---------------------------------
+tile +h06
+{
+4 4
+0		0		0		0
+0		+a		+a		0
+0		+a		+a		0
+0		0		0		0
+}
+
+// --------------------------------------------
+// house #7 (house, village, 2 floors, balcony)
+// --------------------------------------------
+tile +h07
+{
+5 4
+0		0		0		0		0
+0		+a		+a		+a		0
+0		+a		+a		+a		0
+0		0		0		0		0
+}
+
+// ---------------------------------
+// house #8 (house, plants)
+// ---------------------------------
+tile +h08
+{
+4 3
+0		0		0		0
+0		+a		+a		0
+0		0		0		0
+}
+
+// ---------------------------------
+// house #9 (two small houses)
+// ---------------------------------
+tile +h09
+{
+4 3
+0		0		0		0
+0		+a		+a		0
+0		0		0		0
+}
+
+// ---------------------------------
+// empty
+// ---------------------------------
+tile +e01
+{
+3 3
+
+0		0		0
+0		+a		0
+0		0		0
+}
