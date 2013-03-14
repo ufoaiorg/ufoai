@@ -420,6 +420,9 @@ static bool G_ReactionFireSettingsSetDefault (Edict *ent)
 		invList = ent->getHand(hand);
 	}
 
+	if (!invList)
+		return false;
+
 	const objDef_t *weapon = invList->item.getReactionFireWeaponType();
 	if (!weapon)
 		return false;
