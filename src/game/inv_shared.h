@@ -357,9 +357,28 @@ typedef struct item_s {
 	const objDef_t *ammo;		/**< Pointer to ammo definition. */
 	const objDef_t *_itemDef;	/**< Pointer to weapon definition. */
 	int amount;		/**< The amount of items of this type on the same x and y location in the container */
+	int _x, _y;		/**< Position (aka origin location) of the item in the container/invlist.
+					 * @note ATTENTION Do not use this to get an item by comparing it against a x/y value.
+					 * The shape as defined in the item_t may be empty at this location! */
 	int rotated;	/**< If the item is currently displayed rotated (true or 1) or not (false or 0)
 					 * @note don't change this to anything smaller than 4 bytes - the network
 					 * parsing functions are expecting this to be at least 4 bytes */
+	inline int getX () const
+	{
+		return _x;
+	}
+	inline void setX (const int val)
+	{
+		_x = val;
+	}
+	inline int getY () const
+	{
+		return _y;
+	}
+	inline void setY (const int val)
+	{
+		_y = val;
+	}
 	inline void setDef(const objDef_t *objDef)
 	{
 		_itemDef = objDef;
@@ -396,26 +415,23 @@ typedef struct item_s {
 /** @brief container/inventory list (linked list) with items. */
 typedef struct invList_s {
 	item_t item;	/**< Which item */
-	int _x, _y;		/**< Position (aka origin location) of the item in the container/invlist.
-					 * @note ATTENTION Do not use this to get an item by comparing it against a x/y value.
-					 * The shape as defined in the item_t may be empty at this location! */
 	struct invList_s *next;		/**< Next entry in this list. */
 
 	inline int getX () const
 	{
-		return _x;
+		return item.getX();
 	}
 	inline void setX (const int val)
 	{
-		_x = val;
+		item.setX(val);
 	}
 	inline int getY () const
 	{
-		return _y;
+		return item.getY();
 	}
 	inline void setY (const int val)
 	{
-		_y = val;
+		item.setY(val);
 	}
 
 	void getFirstShapePosition (int* const x, int* const y) const;

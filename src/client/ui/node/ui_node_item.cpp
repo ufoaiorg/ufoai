@@ -54,7 +54,7 @@ void uiItemNode::draw (uiNode_t *node)
 
 	od = INVSH_GetItemByIDSilent(ref);
 	if (od) {
-		item_t item = {1, NULL, NULL, 0, 0}; /* 1 so it's not reddish; fake item anyway */
+		item_t item = {1, NULL, NULL, 0, 0, 0, 0}; /* 1 so it's not reddish; fake item anyway */
 		item.setDef(INVSH_GetItemByIDX(od->idx));
 
 		if (EXTRADATA(node).containerLike || item.isArmour()) {
