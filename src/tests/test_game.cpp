@@ -341,7 +341,7 @@ static void testInventoryTempContainerLinks (void)
 {
 	const char *mapName = "test_game";
 	if (FS_CheckFile("maps/%s.bsp", mapName) != -1) {
-		edict_t* ent;
+		edict_t *ent;
 		int nr;
 		containerIndex_t container;
 		const invList_t *ic;

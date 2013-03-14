@@ -445,7 +445,7 @@ static int SV_GetEvent (void)
 	return p->type;
 }
 
-static edict_t* SV_GetEventEdict (void)
+static edict_t *SV_GetEventEdict (void)
 {
 	const pending_event_t *p = &sv->pendingEvent;
 	if (!p->pending)

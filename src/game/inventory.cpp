@@ -763,7 +763,7 @@ typedef enum {
 void InventoryInterface::EquipActor (character_t* const chr, const equipDef_t *ed, int maxWeight)
 {
 	inventory_t* const inv = &chr->inv;
-	const teamDef_t* td = chr->teamDef;
+	const teamDef_t *td = chr->teamDef;
 	const int speed = chr->score.skills[ABILITY_SPEED];
 	int i;
 	const int numEquip = lengthof(ed->numItems);
@@ -1000,7 +1000,7 @@ int InventoryInterface::GetUsedSlots ()
  * @sa G_Init
  * @sa CL_InitLocal
  */
-void InventoryInterface::initInventory (const char *name, const csi_t* csi, const inventoryImport_t *import)
+void InventoryInterface::initInventory (const char *name, const csi_t *csi, const inventoryImport_t *import)
 {
 	const item_t item = {NONE_AMMO, NULL, NULL, 0, 0, 0, 0};
 

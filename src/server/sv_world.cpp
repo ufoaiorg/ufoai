@@ -87,7 +87,7 @@ void SV_ClearWorld (void)
 	SV_CreateWorldSector(0, sv->mapData.mapMin, sv->mapData.mapMax);
 }
 
-static inline sv_edict_t* SV_GetServerDataForEdict (const edict_t *ent)
+static inline sv_edict_t *SV_GetServerDataForEdict (const edict_t *ent)
 {
 	if (!ent || ent->number < 0 || ent->number >= lengthof(sv->edicts))
 		Com_Error(ERR_DROP, "SV_GetServerDataForEdict: bad game ent");

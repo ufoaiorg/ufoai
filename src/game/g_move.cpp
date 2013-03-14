@@ -159,7 +159,7 @@ void G_ActorFall (Edict *ent)
  * @param max The index of the next step in dvtab
  * @return @c true if the actor should stop movement, @c false otherwise
  */
-static bool G_ActorShouldStopInMidMove (const Edict *ent, int visState, dvec_t* dvtab, int max)
+static bool G_ActorShouldStopInMidMove (const Edict *ent, int visState, dvec_t *dvtab, int max)
 {
 	if (visState & VIS_STOP)
 		 return true;
