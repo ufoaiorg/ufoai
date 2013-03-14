@@ -411,11 +411,12 @@ typedef struct item_s {
 	bool isSameAs (const item_s *const other) const;
 	float getWeight () const;
 	void getFirstShapePosition (int* const x, int* const y) const;
+	const objDef_t *getReactionFireWeaponType () const;
 } item_t;
 
 /** @brief container/inventory list (linked list) with items. */
 typedef struct invList_s {
-	item_t item;	/**< Which item */
+	item_t item;				/**< Which item */
 	struct invList_s *next;		/**< Next entry in this list. */
 
 	inline int getX () const
@@ -435,7 +436,6 @@ typedef struct invList_s {
 		item.setY(val);
 	}
 
-	const objDef_t *getReactionFireWeaponType () const;
 } invList_t;
 
 class Container
