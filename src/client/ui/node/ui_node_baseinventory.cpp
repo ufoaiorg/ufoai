@@ -291,7 +291,7 @@ static int UI_BaseInventoryNodeDrawItems (uiNode_t *node, const objDef_t *highli
 	for (; iterator.itemID < csi.numODs; UI_ContainerItemIteratorNext(&iterator)) {
 		const int id = iterator.itemID;
 		const objDef_t *obj = INVSH_GetItemByIDX(id);
-		item_t tempItem = {1, NULL, obj, 0, 0, 0, 0};
+		item_t tempItem(1, NULL, obj);
 		vec3_t pos;
 		vec3_t ammopos;
 		const float *color;

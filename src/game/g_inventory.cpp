@@ -143,7 +143,7 @@ static bool G_InventoryDropToFloorCheck (Edict *ent, containerIndex_t container)
 bool G_AddItemToFloor (const pos3_t pos, const char *itemID)
 {
 	Edict *floor;
-	item_t item = {NONE_AMMO, NULL, NULL, 0, 0, 0, 0};
+	item_t item;
 	const objDef_t *od = INVSH_GetItemByIDSilent(itemID);
 	if (!od) {
 		gi.DPrintf("Could not find item '%s'\n", itemID);

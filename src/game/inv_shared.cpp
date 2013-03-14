@@ -533,6 +533,24 @@ uint32_t objDef_t::getShapeRotated () const
 	return shapeNew;
 }
 
+/** @brief item_t constructor with all default values */
+item_s::item_s ()
+{
+	ammoLeft = NONE_AMMO;
+	ammo = NULL;
+	_itemDef = NULL;
+	amount = _x = _y = rotated = 0;
+}
+
+/** @brief item_t constructor with the 3 most often changed attributes */
+item_s::item_s (int _ammoLeft, const objDef_t *_ammo, const objDef_t *itemDef)
+{
+	ammoLeft = _ammoLeft;
+	ammo = _ammo;
+	_itemDef = itemDef;
+	amount = _x = _y = rotated = 0;
+}
+
 /**
  * @brief Return the weight of an item.
  * @return The weight of the given item including any ammo loaded.

@@ -363,6 +363,10 @@ typedef struct item_s {
 	int rotated;	/**< If the item is currently displayed rotated (true or 1) or not (false or 0)
 					 * @note don't change this to anything smaller than 4 bytes - the network
 					 * parsing functions are expecting this to be at least 4 bytes */
+
+	item_s ();
+	item_s (int ammoLeft, const objDef_t *ammo=NULL, const objDef_t *_itemDef=NULL);
+
 	inline int getX () const
 	{
 		return _x;
