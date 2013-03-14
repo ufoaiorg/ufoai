@@ -417,11 +417,15 @@ typedef struct item_s {
 /** @brief container/inventory list (linked list) with items. */
 typedef struct invList_s {
 	item_t item;				/**< Which item */
-	struct invList_s *next;		/**< Next entry in this list. */
+	struct invList_s *next;	/**< Next entry in this list. */
 
 	inline struct invList_s *getNext () const
 	{
 		return next;
+	}
+	inline void setNext (struct invList_s *nx)
+	{
+		next = nx;
 	}
 	inline int getX () const
 	{

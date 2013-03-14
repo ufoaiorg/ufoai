@@ -39,7 +39,7 @@ void InventoryInterface::removeInvList (invList_t *invList)
 		while (ic) {
 			if (ic == invList) {
 				if (prev)
-					prev->next = ic->getNext();
+					prev->setNext(ic->getNext());
 				free(ic);
 				break;
 			}
@@ -52,7 +52,7 @@ void InventoryInterface::removeInvList (invList_t *invList)
 invList_t *InventoryInterface::addInvList (inventory_t *const inv, const invDef_t *container)
 {
 	invList_t *newEntry = (invList_t*)alloc(sizeof(invList_t));
-	newEntry->next = NULL; /* not really needed - but for better readability */
+	newEntry->setNext(NULL);	/* not really needed - but for better readability */
 
 	Com_DPrintf(DEBUG_SHARED, "AddInvList: add one slot (%s)\n", invName);
 
@@ -66,7 +66,7 @@ invList_t *InventoryInterface::addInvList (inventory_t *const inv, const invDef_
 		while (list->getNext())
 			list = list->getNext();
 		/* append our new item as the last in the list */
-		list->next = newEntry;
+		list->setNext(newEntry);
 	}
 
 	return newEntry;
@@ -203,7 +203,7 @@ bool InventoryInterface::removeFromInventory (inventory_t* const inv, const invD
 			if (ic == inv->getContainer(container->id))
 				inv->setContainer(container->id, inv->getContainer(container->id)->getNext());
 			else
-				previous->next = ic->getNext();
+				previous->setNext(ic->getNext());
 
 			removeInvList(ic);
 
