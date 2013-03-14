@@ -1,5 +1,4 @@
-#ifndef IOVERLAY_H_
-#define IOVERLAY_H_
+#pragma once
 
 #include "generic/constant.h"
 #include <string>
@@ -49,5 +48,3 @@ typedef GlobalModuleRef<IOverlay> GlobalOverlayModuleRef;
 inline IOverlay& GlobalOverlay() {
 	return GlobalOverlayModule::getTable();
 }
-
-#endif /*IOVERLAY_H_*/

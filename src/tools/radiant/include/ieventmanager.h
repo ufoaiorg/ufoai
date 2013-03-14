@@ -1,5 +1,4 @@
-#ifndef IEVENTMANAGER_H_
-#define IEVENTMANAGER_H_
+#pragma once
 
 #include <list>
 #include <map>
@@ -259,5 +258,3 @@ typedef GlobalModuleRef<IEventManager> GlobalEventManagerModuleRef;
 inline IEventManager& GlobalEventManager() {
 	return GlobalEventManagerModule::getTable();
 }
-
-#endif /*IEVENTMANAGER_H_*/

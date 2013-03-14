@@ -24,8 +24,7 @@
  * as function pointers. The class RadiantCoreAPI in plugin.cpp makes sure
  * that these variables are pointing to the correct functions. */
 
-#ifndef IRADIANT_H__
-#define IRADIANT_H__
+#pragma once
 
 #include "generic/constant.h"
 #include "iclipper.h"
@@ -164,5 +163,3 @@ inline IRadiant& GlobalRadiant ()
 {
 	return GlobalRadiantModule::getTable();
 }
-
-#endif

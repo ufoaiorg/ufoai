@@ -22,8 +22,7 @@
 
  */
 
-#ifndef IPARTICLES_H_
-#define IPARTICLES_H_
+#pragma once
 
 #include "generic/constant.h"
 #include <map>
@@ -102,5 +101,3 @@ inline IParticleSystem& GlobalParticleSystem ()
 {
 	return GlobalParticleModule::getTable();
 }
-
-#endif

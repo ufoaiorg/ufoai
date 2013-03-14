@@ -1,5 +1,4 @@
-#ifndef VOLUMEINTERSECTIONVALUE_H_
-#define VOLUMEINTERSECTIONVALUE_H_
+#pragma once
 
 /**
  * \brief
@@ -8,5 +7,3 @@
 enum VolumeIntersectionValue {
 	VOLUME_OUTSIDE, VOLUME_INSIDE, VOLUME_PARTIAL
 };
-
-#endif /* VOLUMEINTERSECTIONVALUE_H_ */

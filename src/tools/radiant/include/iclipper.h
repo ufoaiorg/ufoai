@@ -1,5 +1,4 @@
-#ifndef ICLIPPER_H_
-#define ICLIPPER_H_
+#pragma once
 
 #include <string>
 #include "generic/constant.h"
@@ -108,5 +107,3 @@ typedef GlobalModuleRef<Clipper> GlobalClipperModuleRef;
 inline Clipper& GlobalClipper() {
 	return GlobalClipperModule::getTable();
 }
-
-#endif /*ICLIPPER_H_*/

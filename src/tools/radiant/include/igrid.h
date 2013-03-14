@@ -1,5 +1,4 @@
-#ifndef IGRID_H_
-#define IGRID_H_
+#pragma once
 
 /* greebo: The interface of the grid system
  *
@@ -75,5 +74,3 @@ typedef GlobalModuleRef<IGridManager> GlobalGridModuleRef;
 inline IGridManager& GlobalGrid() {
 	return GlobalGridModule::getTable();
 }
-
-#endif /*IGRID_H_*/
