@@ -106,7 +106,7 @@ bool INV_LoadWeapon (const invList_t *weaponList, inventory_t *inv, const invDef
 	assert(weaponList);
 
 	weapon = weaponList->item.def();
-	weaponList->getFirstShapePosition(&x, &y);
+	weaponList->item.getFirstShapePosition(&x, &y);
 	x += weaponList->getX();
 	y += weaponList->getY();
 	if (weapon->oneshot) {

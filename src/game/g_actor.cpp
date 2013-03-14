@@ -562,7 +562,7 @@ bool G_ActorInvMove (Edict *ent, const invDef_t *from, invList_t *fItem, const i
 		tItemBackup = *fItem;
 
 	/* Get first used bit in item. */
-	fItem->getFirstShapePosition(&fx, &fy);
+	fItem->item.getFirstShapePosition(&fx, &fy);
 	fx += fItem->getX();
 	fy += fItem->getY();
 

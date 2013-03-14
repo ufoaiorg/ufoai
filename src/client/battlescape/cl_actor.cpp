@@ -1006,7 +1006,7 @@ void CL_ActorReload (le_t *le, containerIndex_t containerID)
 	if (bestContainer != NONE) {
 		int x, y;
 
-		ic->getFirstShapePosition(&x, &y);
+		ic->item.getFirstShapePosition(&x, &y);
 		x += ic->getX();
 		y += ic->getY();
 

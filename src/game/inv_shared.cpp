@@ -572,7 +572,7 @@ bool item_t::isSameAs (const item_t *const other) const
  * @param[out] y The x location inside the item.
  * @sa canHoldItem
  */
-void invList_t::getFirstShapePosition (int* const x, int* const y) const
+void item_t::getFirstShapePosition (int* const x, int* const y) const
 {
 	int tempX, tempY;
 
@@ -580,7 +580,7 @@ void invList_t::getFirstShapePosition (int* const x, int* const y) const
 
 	for (tempX = 0; tempX < SHAPE_SMALL_MAX_HEIGHT; tempX++)
 		for (tempY = 0; tempY < SHAPE_SMALL_MAX_HEIGHT; tempY++)
-			if (INVSH_ShapeCheckPosition(&this->item, this->getX() + tempX, this->getY() + tempY)) {
+			if (INVSH_ShapeCheckPosition(this, this->getX() + tempX, this->getY() + tempY)) {
 				*x = tempX;
 				*y = tempY;
 				return;
