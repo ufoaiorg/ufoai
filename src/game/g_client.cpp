@@ -557,7 +557,7 @@ bool G_ClientCanReload (Edict *ent, containerIndex_t containerID)
 
 	/* also try the temp containers */
 	for (container = 0; container < gi.csi->numIDs; container++)
-		for (ic = ent->getContainer(container); ic; ic = ic->next)
+		for (ic = ent->getContainer(container); ic; ic = ic->getNext())
 			if (ic->item.def()->isLoadableInWeapon(weapon))
 				return true;
 	return false;
@@ -595,7 +595,7 @@ void G_ClientGetWeaponFromInventory (Edict *ent)
 			 * searching other containers if it would take longer
 			 * to retrieve the ammo from them than the one
 			 * we've already found. */
-			for (ic = ent->getContainer(container); ic; ic = ic->next) {
+			for (ic = ent->getContainer(container); ic; ic = ic->getNext()) {
 				assert(ic->item.def());
 				if (ic->item.isWeapon() && !ic->item.mustReload()) {
 					icFinal = ic;

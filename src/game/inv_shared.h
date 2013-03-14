@@ -419,6 +419,10 @@ typedef struct invList_s {
 	item_t item;				/**< Which item */
 	struct invList_s *next;		/**< Next entry in this list. */
 
+	inline struct invList_s *getNext () const
+	{
+		return next;
+	}
 	inline int getX () const
 	{
 		return item.getX();

@@ -31,7 +31,7 @@ void InventoryInterface::removeInvList (invList_t *invList)
 	/* first entry */
 	if (this->_invList == invList) {
 		invList_t *ic = this->_invList;
-		this->_invList = ic->next;
+		this->_invList = ic->getNext();
 		free(ic);
 	} else {
 		invList_t *ic = this->_invList;
@@ -39,12 +39,12 @@ void InventoryInterface::removeInvList (invList_t *invList)
 		while (ic) {
 			if (ic == invList) {
 				if (prev)
-					prev->next = ic->next;
+					prev->next = ic->getNext();
 				free(ic);
 				break;
 			}
 			prev = ic;
-			ic = ic->next;
+			ic = ic->getNext();
 		}
 	}
 }
@@ -63,8 +63,8 @@ invList_t *InventoryInterface::addInvList (inventory_t *const inv, const invDef_
 	} else {
 		/* read up to the end of the list */
 		invList_t *list = firstEntry;
-		while (list->next)
-			list = list->next;
+		while (list->getNext())
+			list = list->getNext();
 		/* append our new item as the last in the list */
 		list->next = newEntry;
 	}
@@ -103,7 +103,7 @@ invList_t *InventoryInterface::addToInventory (inventory_t *const inv, const ite
 
 	/* idEquip and idFloor */
 	if (container->temp) {
-		for (ic = inv->getContainer(container->id); ic; ic = ic->next)
+		for (ic = inv->getContainer(container->id); ic; ic = ic->getNext())
 			if (ic->item.isSameAs(item)) {
 				ic->item.amount += amount;
 				Com_DPrintf(DEBUG_SHARED, "addToInventory: Amount of '%s': %i (%s)\n",
@@ -173,7 +173,7 @@ bool InventoryInterface::removeFromInventory (inventory_t* const inv, const invD
 			return true;
 		}
 
-		if (container->single && ic->next)
+		if (container->single && ic->getNext())
 			Com_Printf("removeFromInventory: Error: single container %s has many items. (%s)\n", container->name, invName);
 
 		/* An item in other containers than idFloor or idEquip should
@@ -181,7 +181,7 @@ bool InventoryInterface::removeFromInventory (inventory_t* const inv, const invD
 		 * The other container types do not support stacking.*/
 		assert(ic->item.amount == 1);
 
-		inv->setContainer(container->id, ic->next);
+		inv->setContainer(container->id, ic->getNext());
 
 		/* updated invUnused to be able to reuse this space later again */
 		removeInvList(ic);
@@ -189,7 +189,7 @@ bool InventoryInterface::removeFromInventory (inventory_t* const inv, const invD
 		return true;
 	}
 
-	for (previous = inv->getContainer(container->id); ic; ic = ic->next) {
+	for (previous = inv->getContainer(container->id); ic; ic = ic->getNext()) {
 		if (ic == fItem) {
 			this->cacheItem = ic->item;
 			/* temp container like idEquip and idFloor */
@@ -201,9 +201,9 @@ bool InventoryInterface::removeFromInventory (inventory_t* const inv, const invD
 			}
 
 			if (ic == inv->getContainer(container->id))
-				inv->setContainer(container->id, inv->getContainer(container->id)->next);
+				inv->setContainer(container->id, inv->getContainer(container->id)->getNext());
 			else
-				previous->next = ic->next;
+				previous->next = ic->getNext();
 
 			removeInvList(ic);
 
@@ -270,7 +270,7 @@ inventory_action_t InventoryInterface::moveInInventory (inventory_t* const inv, 
 			return IA_NONE;
 
 		ic = inv->getContainer(from->id);
-		for (; ic; ic = ic->next) {
+		for (; ic; ic = ic->getNext()) {
 			if (ic == fItem) {
 				if (ic->item.amount > 1) {
 					checkedTo = inv->canHoldItem(to, ic->item.def(), tx, ty, fItem);
@@ -506,7 +506,7 @@ void InventoryInterface::emptyContainer (inventory_t* const inv, const invDef_t 
 
 	while (ic) {
 		invList_t *old = ic;
-		ic = ic->next;
+		ic = ic->getNext();
 		removeInvList(old);
 	}
 
@@ -551,7 +551,7 @@ float InventoryInterface::GetInventoryState (const inventory_t *inventory, int &
 		if (this->csi->ids[containerID].temp)
 			continue;
 		for (invList_t *ic = inventory->getContainer(containerID), *next; ic; ic = next) {
-			next = ic->next;
+			next = ic->getNext();
 			weight += ic->item.getWeight();
 			const fireDef_t *fireDef = FIRESH_SlowestFireDef(ic->item);
 			if (slowestFd == 0 || (fireDef && fireDef->time > slowestFd))
@@ -985,7 +985,7 @@ int InventoryInterface::GetUsedSlots ()
 	int i = 0;
 	const invList_t *slot = _invList;
 	while (slot) {
-		slot = slot->next;
+		slot = slot->getNext();
 		i++;
 	}
 	Com_DPrintf(DEBUG_SHARED, "Used inventory slots %i (%s)\n", i, invName);

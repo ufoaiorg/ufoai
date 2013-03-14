@@ -313,7 +313,7 @@ void G_InvList_f (const Player &player)
 					Com_Printf(".... weapon: %s\n", ic->item.def()->id);
 				if (ic->item.ammo)
 					Com_Printf(".... ammo:   %s (%i)\n", ic->item.ammo->id, ic->item.ammoLeft);
-				ic = ic->next;
+				ic = ic->getNext();
 			}
 		}
 	}

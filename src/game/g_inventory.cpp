@@ -91,7 +91,7 @@ bool G_InventoryRemoveItemByID (const char *itemID, Edict *ent, containerIndex_t
 			G_EventInventoryDelete(ent, G_VisToPM(ent->visflags), INVDEF(container), ic->getX(), ic->getY());
 			return true;
 		}
-		ic = ic->next;
+		ic = ic->getNext();
 	}
 
 	return false;
@@ -117,7 +117,7 @@ static bool G_InventoryDropToFloorCheck (Edict *ent, containerIndex_t container)
 		while (ic) {
 			assert(ic->item.def());
 			if (ic->item.def()->isVirtual) {
-				invList_t *next = ic->next;
+				invList_t *next = ic->getNext();
 				/* remove the virtual item to update the inventory lists */
 				if (!game.i.removeFromInventory(&ent->chr.inv, INVDEF(container), ic))
 					gi.Error("Could not remove virtual item '%s' from inventory %i",
@@ -126,7 +126,7 @@ static bool G_InventoryDropToFloorCheck (Edict *ent, containerIndex_t container)
 			} else {
 				/* there are none virtual items left that should be send to the client */
 				check = true;
-				ic = ic->next;
+				ic = ic->getNext();
 			}
 		}
 		return check;
@@ -269,7 +269,7 @@ void G_InventoryToFloor (Edict *ent)
 			/* Save the next inv-list before it gets overwritten below.
 			 * Do not put this in the "for" statement,
 			 * unless you want an endless loop. ;) */
-			next = ic->next;
+			next = ic->getNext();
 			item = ic->item;
 
 			/* only floor can summarize, so everything on the actor must have amount=1 */
@@ -364,7 +364,7 @@ void G_SendInventory (playermask_t playerMask, const Edict *ent)
 	for (container = 0; container < gi.csi->numIDs; container++) {
 		if (!G_IsItem(ent) && INVDEF(container)->temp)
 			continue;
-		for (ic = ent->getContainer(container); ic; ic = ic->next)
+		for (ic = ent->getContainer(container); ic; ic = ic->getNext())
 			nr++;
 	}
 
@@ -376,7 +376,7 @@ void G_SendInventory (playermask_t playerMask, const Edict *ent)
 	for (container = 0; container < gi.csi->numIDs; container++) {
 		if (!G_IsItem(ent) && INVDEF(container)->temp)
 			continue;
-		for (ic = ent->getContainer(container); ic; ic = ic->next) {
+		for (ic = ent->getContainer(container); ic; ic = ic->getNext()) {
 			/* send a single item */
 			assert(ic->item.def());
 			G_WriteItem(&ic->item, INVDEF(container), ic->getX(), ic->getY());

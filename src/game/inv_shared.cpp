@@ -162,7 +162,7 @@ static bool INVSH_CheckToInventory_shape (const inventory_t *const inv, const in
 			mask[j] = ~container->shape[j];
 
 		/* Add other items to mask. (i.e. merge their shapes at their location into the generated mask) */
-		for (ic = inv->getContainer(container->id); ic; ic = ic->next) {
+		for (ic = inv->getContainer(container->id); ic; ic = ic->getNext()) {
 			if (ignoredItem == ic)
 				continue;
 
@@ -698,7 +698,7 @@ invList_t *inventory_t::getItemAtPos (const invDef_t *container, const int x, co
 
 	/* More than one item - search for the item that is located at location x/y in this container. */
 	invList_t *ic;
-	for (ic = getContainer(container->id); ic; ic = ic->next)
+	for (ic = getContainer(container->id); ic; ic = ic->getNext())
 		if (INVSH_ShapeCheckPosition(&ic->item, x, y))
 			return ic;
 
@@ -784,7 +784,7 @@ float inventory_t::getWeight () const
 	for (int containerID = 0; containerID < CSI->numIDs; containerID++) {
 		if (CSI->ids[containerID].temp)
 			continue;
-		for (invList_t *ic = getContainer(containerID); ic; ic = ic->next) {
+		for (invList_t *ic = getContainer(containerID); ic; ic = ic->getNext()) {
 			weight += ic->item.getWeight();
 		}
 	}
@@ -841,7 +841,7 @@ invList_t *inventory_t::findInContainer (const invDef_t *container, const item_t
 {
 	invList_t *ic;
 
-	for (ic = getContainer(container->id); ic; ic = ic->next)
+	for (ic = getContainer(container->id); ic; ic = ic->getNext())
 		if (ic->item.isSameAs(item)) {
 			return ic;
 		}

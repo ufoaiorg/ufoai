@@ -80,7 +80,7 @@ bool G_MissionTouch (Edict *self, Edict *activator)
 						 * must have this in his hands */
 						if (invDef->temp)
 							continue;
-						for (ic = activator->getContainer(container); ic; ic = ic->next) {
+						for (ic = activator->getContainer(container); ic; ic = ic->getNext()) {
 							const objDef_t *od = ic->item.def();
 							/* check whether we found the searched item in the
 							 * actor's inventory */
@@ -175,7 +175,7 @@ void G_MissionThink (Edict *self)
 					chain->count = 0;
 					return;
 				}
-				for (; ic; ic = ic->next) {
+				for (; ic; ic = ic->getNext()) {
 					const objDef_t *od = ic->item.def();
 					assert(od);
 					/* not the item we are looking for */
