@@ -203,20 +203,20 @@ static bool INVSH_CheckShapeSmall (const uint32_t shape, const int x, const int 
  * @param[in] x The x location in the container.
  * @param[in] y The y location in the container.
  */
-static bool INVSH_ShapeCheckPosition (const invList_t *ic, const int x, const int y)
+static bool INVSH_ShapeCheckPosition (const item_t *item, const int x, const int y)
 {
 	uint32_t shape;
 
-	assert(ic);
+	assert(item);
 
 	/* Check if the position is inside the shape (depending on rotation value) of the item. */
-	if (ic->item.rotated) {
-		shape = ic->item.def()->getShapeRotated();
+	if (item->rotated) {
+		shape = item->def()->getShapeRotated();
 	} else {
-		shape = ic->item.def()->shape;
+		shape = item->def()->shape;
 	}
 
-	return INVSH_CheckShapeSmall(shape, x - ic->getX(), y - ic->getY());
+	return INVSH_CheckShapeSmall(shape, x - item->getX(), y - item->getY());
 }
 
 /**
@@ -580,7 +580,7 @@ void invList_t::getFirstShapePosition (int* const x, int* const y) const
 
 	for (tempX = 0; tempX < SHAPE_SMALL_MAX_HEIGHT; tempX++)
 		for (tempY = 0; tempY < SHAPE_SMALL_MAX_HEIGHT; tempY++)
-			if (INVSH_ShapeCheckPosition(this, this->getX() + tempX, this->getY() + tempY)) {
+			if (INVSH_ShapeCheckPosition(&this->item, this->getX() + tempX, this->getY() + tempY)) {
 				*x = tempX;
 				*y = tempY;
 				return;
@@ -699,7 +699,7 @@ invList_t *inventory_t::getItemAtPos (const invDef_t *container, const int x, co
 	/* More than one item - search for the item that is located at location x/y in this container. */
 	invList_t *ic;
 	for (ic = getContainer(container->id); ic; ic = ic->next)
-		if (INVSH_ShapeCheckPosition(ic, x, y))
+		if (INVSH_ShapeCheckPosition(&ic->item, x, y))
 			return ic;
 
 	/* Found nothing. */
