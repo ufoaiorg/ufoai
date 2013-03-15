@@ -56,16 +56,14 @@ invList_t *HUD_GetLeftHandWeapon (const le_t *actor, containerIndex_t *container
  */
 const fireDef_t *HUD_GetFireDefinitionForHand (const le_t *actor, const actorHands_t hand)
 {
-	const invList_t *invlistWeapon;
-
 	if (!actor)
 		return NULL;
 
-	invlistWeapon = actor->getHand(hand);
-	if (!invlistWeapon || !invlistWeapon->def())
+	const Item *weapon = actor->getHand(hand);
+	if (!weapon || !weapon->def())
 		return NULL;
 
-	return FIRESH_FiredefForWeapon(invlistWeapon);
+	return FIRESH_FiredefForWeapon(weapon);
 }
 
 /**
@@ -76,7 +74,7 @@ const fireDef_t *HUD_GetFireDefinitionForHand (const le_t *actor, const actorHan
  * @sa HUD_FireWeapon_f
  * @return false when action is not possible, otherwise true
  */
-static bool HUD_CheckShooting (const le_t* le, invList_t *weapon)
+static bool HUD_CheckShooting (const le_t* le, Item *weapon)
 {
 	if (!le)
 		return false;
