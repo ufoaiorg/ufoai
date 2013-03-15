@@ -789,7 +789,7 @@ static void AM_MoveCharacterInventoryIntoItemCargo (aircraft_t *aircraft, charac
 		const invList_t *ic = chr->inv.getContainer(container);
 
 		while (ic) {
-			const item_t *item = &ic->item;
+			const item_t *item = ic;
 			const invList_t *next = ic->next;
 
 			if (item->def()) {

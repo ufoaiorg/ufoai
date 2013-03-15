@@ -946,7 +946,7 @@ int CL_ActorGetContainerForReload (invList_t **invList, const inventory_t *inv, 
 			 * to retrieve the ammo from them than the one
 			 * we've already found. */
 			for (ic = inv->getContainer(container); ic; ic = ic->next) {
-				const objDef_t *od = ic->item.def();
+				const objDef_t *od = ic->def();
 				if (od->isLoadableInWeapon(weapon) && GAME_ItemIsUseable(od)) {
 					tu = INVDEF(container)->out;
 					bestContainer = container;
@@ -979,11 +979,11 @@ void CL_ActorReload (le_t *le, containerIndex_t containerID)
 	inv = &le->inv;
 
 	if (inv->getContainer(containerID)) {
-		weapon = inv->getContainer(containerID)->item.def();
-	} else if (containerID == csi.idLeft && inv->getContainer(csi.idRight)->item.isHeldTwoHanded()) {
+		weapon = inv->getContainer(containerID)->def();
+	} else if (containerID == csi.idLeft && inv->getContainer(csi.idRight)->isHeldTwoHanded()) {
 		/* Check for two-handed weapon */
 		containerID = csi.idRight;
-		weapon = inv->getContainer(containerID)->item.def();
+		weapon = inv->getContainer(containerID)->def();
 	} else {
 		/* no weapon in the reloadable containers found */
 		return;
@@ -1006,7 +1006,7 @@ void CL_ActorReload (le_t *le, containerIndex_t containerID)
 	if (bestContainer != NONE) {
 		int x, y;
 
-		ic->item.getFirstShapePosition(&x, &y);
+		ic->getFirstShapePosition(&x, &y);
 		x += ic->getX();
 		y += ic->getY();
 
@@ -1036,7 +1036,7 @@ void CL_ActorInvMove (const le_t *le, containerIndex_t fromContainer, int fromX,
 
 	if (invList != NULL) {
 		const character_t *chr = CL_ActorGetChr(le);
-		if (!le->inv.canHoldItemWeight(fromContainer, toContainer, invList->item, GAME_GetChrMaxLoad(chr))) {
+		if (!le->inv.canHoldItemWeight(fromContainer, toContainer, *invList, GAME_GetChrMaxLoad(chr))) {
 			UI_Popup(_("Warning"), _("This soldier can not carry anything else."));
 			return;
 		}

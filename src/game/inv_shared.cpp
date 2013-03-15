@@ -166,10 +166,10 @@ static bool INVSH_CheckToInventory_shape (const inventory_t *const inv, const in
 			if (ignoredItem == ic)
 				continue;
 
-			if (ic->item.rotated)
-				INVSH_MergeShapes(mask, ic->item.def()->getShapeRotated(), ic->getX(), ic->getY());
+			if (ic->rotated)
+				INVSH_MergeShapes(mask, ic->def()->getShapeRotated(), ic->getX(), ic->getY());
 			else
-				INVSH_MergeShapes(mask, ic->item.def()->shape, ic->getX(), ic->getY());
+				INVSH_MergeShapes(mask, ic->def()->shape, ic->getX(), ic->getY());
 		}
 	}
 
@@ -540,6 +540,7 @@ item_s::item_s ()
 	ammo = NULL;
 	_itemDef = NULL;
 	amount = _x = _y = rotated = 0;
+	next = NULL;
 }
 
 /** @brief item_t constructor with the 3 most often changed attributes */
@@ -549,6 +550,7 @@ item_s::item_s (int _ammoLeft, const objDef_t *_ammo, const objDef_t *itemDef)
 	ammo = _ammo;
 	_itemDef = itemDef;
 	amount = _x = _y = rotated = 0;
+	next = NULL;
 }
 
 /**
@@ -652,7 +654,7 @@ int inventory_t::canHoldItem (const invDef_t *container, const objDef_t *od, con
 
 	/* left hand is busy if right wields twohanded */
 	if (container->isLeftDef()) {
-		if (getContainer(CSI->idRight) && getContainer(CSI->idRight)->item.isHeldTwoHanded())
+		if (getContainer(CSI->idRight) && getContainer(CSI->idRight)->isHeldTwoHanded())
 			return INV_DOES_NOT_FIT;
 
 		/* can't put an item that is 'fireTwoHanded' into the left hand */
@@ -717,7 +719,7 @@ invList_t *inventory_t::getItemAtPos (const invDef_t *container, const int x, co
 	/* More than one item - search for the item that is located at location x/y in this container. */
 	invList_t *ic;
 	for (ic = getContainer(container->id); ic; ic = ic->getNext())
-		if (INVSH_ShapeCheckPosition(&ic->item, x, y))
+		if (INVSH_ShapeCheckPosition(ic, x, y))
 			return ic;
 
 	/* Found nothing. */
@@ -785,7 +787,7 @@ bool inventory_t::canHoldItemWeight (containerIndex_t from, containerIndex_t to,
 		return true;
 
 	const bool swapArmour = item.isArmour() && getArmourContainer();
-	const float invWeight = getWeight() - (swapArmour ? getArmourContainer()->item.getWeight() : 0);
+	const float invWeight = getWeight() - (swapArmour ? getArmourContainer()->getWeight() : 0);
 	float itemWeight = item.getWeight();
 
 	return (maxWeight < 0 || maxWeight >= invWeight + itemWeight);
@@ -803,7 +805,7 @@ float inventory_t::getWeight () const
 		if (CSI->ids[containerID].temp)
 			continue;
 		for (invList_t *ic = getContainer(containerID); ic; ic = ic->getNext()) {
-			weight += ic->item.getWeight();
+			weight += ic->getWeight();
 		}
 	}
 	return weight;
@@ -860,7 +862,7 @@ invList_t *inventory_t::findInContainer (const invDef_t *container, const item_t
 	invList_t *ic;
 
 	for (ic = getContainer(container->id); ic; ic = ic->getNext())
-		if (ic->item.isSameAs(item)) {
+		if (ic->isSameAs(item)) {
 			return ic;
 		}
 
@@ -872,9 +874,9 @@ invList_t *inventory_t::findInContainer (const invDef_t *container, const item_t
  */
 bool inventory_t::holdsReactionFireWeapon () const
 {
-	if (getRightHandContainer()->item.getReactionFireWeaponType())
+	if (getRightHandContainer()->getReactionFireWeaponType())
 		return true;
-	if (getLeftHandContainer()->item.getReactionFireWeaponType())
+	if (getLeftHandContainer()->getReactionFireWeaponType())
 		return true;
 	return false;
 }

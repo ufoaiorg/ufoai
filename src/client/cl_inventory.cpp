@@ -71,7 +71,7 @@ bool INV_MoveItem (inventory_t* inv, const invDef_t *toContainer, int px, int py
 
 	if (!fItem)
 		return false;
-	if (!inv->canHoldItemWeight(fromContainer->id, toContainer->id, fItem->item, GAME_GetChrMaxLoad(GAME_GetSelectedChr()))) {
+	if (!inv->canHoldItemWeight(fromContainer->id, toContainer->id, *fItem, GAME_GetChrMaxLoad(GAME_GetSelectedChr()))) {
 		UI_Popup(_("Warning"), _("This soldier can not carry anything else."));
 		return false;
 	}
@@ -105,15 +105,15 @@ bool INV_LoadWeapon (const invList_t *weaponList, inventory_t *inv, const invDef
 
 	assert(weaponList);
 
-	weapon = weaponList->item.def();
-	weaponList->item.getFirstShapePosition(&x, &y);
+	weapon = weaponList->def();
+	weaponList->getFirstShapePosition(&x, &y);
 	x += weaponList->getX();
 	y += weaponList->getY();
 	if (weapon->oneshot) {
 		ic = inv->getItemAtPos(destContainer, x, y);
 		if (ic) {
-			ic->item.ammoLeft = weapon->ammo;
-			ic->item.ammo = weapon;
+			ic->ammoLeft = weapon->ammo;
+			ic->ammo = weapon;
 			return true;
 		}
 	} else if (weapon->reload) {
@@ -144,10 +144,10 @@ bool INV_UnloadWeapon (invList_t *weapon, inventory_t *inv, const invDef_t *cont
 {
 	assert(weapon);
 	if (container && inv) {
-		const item_t item(NONE_AMMO, NULL, weapon->item.ammo);
+		const item_t item(NONE_AMMO, NULL, weapon->ammo);
 		if (cls.i.addToInventory(inv, &item, container, NONE, NONE, 1) != NULL) {
-			weapon->item.ammo = NULL;
-			weapon->item.ammoLeft = 0;
+			weapon->ammo = NULL;
+			weapon->ammoLeft = 0;
 			return true;
 		}
 	}
@@ -371,9 +371,9 @@ invList_t *INV_SearchInInventoryWithFilter (const inventory_t* const inv, const 
 
 	for (ic = inv->getContainer(container->id); ic; ic = ic->next) {
 		/* Search only in the items that could get displayed. */
-		if (ic && ic->item.def() && (filterType == MAX_FILTERTYPES || INV_ItemMatchesFilter(ic->item.def(), filterType))) {
+		if (ic && ic->def() && (filterType == MAX_FILTERTYPES || INV_ItemMatchesFilter(ic->def(), filterType))) {
 			/* We search _everything_, no matter what location it is (i.e. x/y are ignored). */
-			if (item == ic->item.def())
+			if (item == ic->def())
 				return ic;
 		}
 	}

@@ -412,8 +412,8 @@ static void GAME_CollectItems (void *data, int won, void (*item)(void*, const ob
 			if (won) {
 				invList_t *i = le->getFloorContainer();
 				for ( ; i; i = i->next) {
-					item(data, i->item.def(), 1);
-					if (i->item.isReloadable() && i->item.ammoLeft > 0)
+					item(data, i->def(), 1);
+					if (i->isReloadable() && i->ammoLeft > 0)
 						ammo(data, i);
 				}
 			}
@@ -424,7 +424,7 @@ static void GAME_CollectItems (void *data, int won, void (*item)(void*, const ob
 			if (won && LE_IsDead(le)) {
 				invList_t *i = le->inv.getArmourContainer();
 				if (i)
-					item(data, i->item.def(), 1);
+					item(data, i->def(), 1);
 			} else if (le->team == cls.team && !LE_IsDead(le)) {
 				/* Finally, the living actor from our team. */
 				ownitems(&le->inv);
@@ -1247,7 +1247,7 @@ static void GAME_NetSendInventory (dbuffer *buf, const inventory_t *inv)
 		if (INVDEF(container)->temp)
 			continue;
 		for (ic = inv->getContainer(container); ic; ic = ic->next) {
-			GAME_NetSendItem(buf, ic->item, container, ic->getX(), ic->getY());
+			GAME_NetSendItem(buf, *ic, container, ic->getX(), ic->getY());
 		}
 	}
 }

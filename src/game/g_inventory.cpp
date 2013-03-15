@@ -82,12 +82,12 @@ bool G_InventoryRemoveItemByID (const char *itemID, Edict *ent, containerIndex_t
 {
 	invList_t *ic = ent->getContainer(container);
 	while (ic) {
-		const objDef_t *item = ic->item.def();
+		const objDef_t *item = ic->def();
 		if (item != NULL && Q_streq(item->id, itemID)) {
 			/* remove the virtual item to update the inventory lists */
 			if (!game.i.removeFromInventory(&ent->chr.inv, INVDEF(container), ic))
 				gi.Error("Could not remove item '%s' from inventory %i",
-						ic->item.def()->id, container);
+						ic->def()->id, container);
 			G_EventInventoryDelete(ent, G_VisToPM(ent->visflags), INVDEF(container), ic->getX(), ic->getY());
 			return true;
 		}
@@ -115,13 +115,13 @@ static bool G_InventoryDropToFloorCheck (Edict *ent, containerIndex_t container)
 	if (ic) {
 		bool check = false;
 		while (ic) {
-			assert(ic->item.def());
-			if (ic->item.def()->isVirtual) {
+			assert(ic->def());
+			if (ic->def()->isVirtual) {
 				invList_t *next = ic->getNext();
 				/* remove the virtual item to update the inventory lists */
 				if (!game.i.removeFromInventory(&ent->chr.inv, INVDEF(container), ic))
 					gi.Error("Could not remove virtual item '%s' from inventory %i",
-							ic->item.def()->id, container);
+							ic->def()->id, container);
 				ic = next;
 			} else {
 				/* there are none virtual items left that should be send to the client */
@@ -270,16 +270,16 @@ void G_InventoryToFloor (Edict *ent)
 			 * Do not put this in the "for" statement,
 			 * unless you want an endless loop. ;) */
 			next = ic->getNext();
-			item = ic->item;
+			item = *ic;
 
 			/* only floor can summarize, so everything on the actor must have amount=1 */
 			assert(item.amount == 1);
 			if (!game.i.removeFromInventory(&ent->chr.inv, INVDEF(container), ic))
 				gi.Error("Could not remove item '%s' from inventory %i of entity %i",
-						ic->item.def()->id, container, ent->number);
+						ic->def()->id, container, ent->number);
 			if (game.i.addToInventory(&floor->chr.inv, &item, INVDEF(gi.csi->idFloor), NONE, NONE, 1) == NULL)
 				gi.Error("Could not add item '%s' from inventory %i of entity %i to floor container",
-						ic->item.def()->id, container, ent->number);
+						ic->def()->id, container, ent->number);
 #ifdef ADJACENT
 			G_InventoryPlaceItemAdjacent(ent);
 #endif
@@ -378,8 +378,8 @@ void G_SendInventory (playermask_t playerMask, const Edict *ent)
 			continue;
 		for (ic = ent->getContainer(container); ic; ic = ic->getNext()) {
 			/* send a single item */
-			assert(ic->item.def());
-			G_WriteItem(&ic->item, INVDEF(container), ic->getX(), ic->getY());
+			assert(ic->def());
+			G_WriteItem(ic, INVDEF(container), ic->getX(), ic->getY());
 		}
 	}
 	G_EventEnd();

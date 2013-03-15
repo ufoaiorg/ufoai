@@ -146,13 +146,13 @@ void HUD_UpdateActorStats (const le_t *le)
 		return;
 
 	const invList_t *invList = le->getRightHand();
-	if ((!invList || !invList->item.def() || !invList->item.isHeldTwoHanded()) && le->getLeftHand())
+	if ((!invList || !invList->def() || !invList->isHeldTwoHanded()) && le->getLeftHand())
 		invList = le->getLeftHand();
 
 	const character_t *chr = CL_ActorGetChr(le);
 	assert(chr);
 	const char* tooltip = va(_("%s\nHP: %i/%i TU: %i\n%s"),
-		chr->name, le->HP, le->maxHP, le->TU, (invList && invList->item.def()) ? _(invList->item.def()->name) : "");
+		chr->name, le->HP, le->maxHP, le->TU, (invList && invList->def()) ? _(invList->def()->name) : "");
 
 	const int idx = CL_ActorGetNumber(le);
 	UI_ExecuteConfunc("updateactorvalues %i \"%s\" \"%i\" \"%i\" \"%i\" \"%i\" \"%i\" \"%i\" \"%i\" \"%s\"",
@@ -482,14 +482,14 @@ static void HUD_DisplayActions (const char* callback, const le_t* actor, actionT
 		invList_t *weapon = actor->getRightHand();
 
 		/* Reloeadable item in hand. */
-		if (weapon && weapon->item.def() && weapon->item.isReloadable()) {
+		if (weapon && weapon->def() && weapon->isReloadable()) {
 			int tus;
 			containerIndex_t container = csi.idRight;
 			bool noAmmo;
 			bool noTU;
 			const char *actionId = "reload_handr";
 
-			tus = HUD_CalcReloadTime(actor, weapon->item.def(), container);
+			tus = HUD_CalcReloadTime(actor, weapon->def(), container);
 			noAmmo = tus == -1;
 			noTU = actor->TU < tus;
 			UI_ExecuteConfunc("%s reload %s %c %i %i %i", callback, actionId, 'r', tus, !noAmmo, !noTU);
@@ -522,10 +522,10 @@ static void HUD_DisplayActions (const char* callback, const le_t* actor, actionT
 		invList_t *weapon = actor->getLeftHand();
 
 		/* Reloadable item in hand. */
-		if (weapon && weapon->item.def() && weapon->item.isReloadable()) {
+		if (weapon && weapon->def() && weapon->isReloadable()) {
 			containerIndex_t container = csi.idLeft;
 			const char *actionId = "reload_handl";
-			const int tus = HUD_CalcReloadTime(actor, weapon->item.def(), container);
+			const int tus = HUD_CalcReloadTime(actor, weapon->def(), container);
 			const bool noAmmo = tus == -1;
 			const bool noTU = actor->TU < tus;
 			UI_ExecuteConfunc("%s reload %s %c %i %i %i", callback, actionId, 'l', tus, !noAmmo, !noTU);
@@ -672,9 +672,9 @@ static int HUD_GetMinimumTUsForUsage (const invList_t *invList)
 	/** @todo what is this 100? replace with constant please - MAX_TUS? */
 	int time = 100;
 
-	assert(invList->item.def());
+	assert(invList->def());
 
-	const fireDef_t *fdArray = FIRESH_FiredefForWeapon(&invList->item);
+	const fireDef_t *fdArray = FIRESH_FiredefForWeapon(invList);
 	if (fdArray == NULL)
 		return time;
 
@@ -706,7 +706,7 @@ static int HUD_WeaponCanBeReloaded (const le_t *le, containerIndex_t containerID
 		return -1;
 	}
 
-	const objDef_t *weapon = invList->item.def();
+	const objDef_t *weapon = invList->def();
 	assert(weapon);
 
 	/* This weapon cannot be reloaded. */
@@ -716,13 +716,13 @@ static int HUD_WeaponCanBeReloaded (const le_t *le, containerIndex_t containerID
 	}
 
 	/* Weapon is fully loaded. */
-	if (invList->item.ammo && weapon->ammo == invList->item.ammoLeft) {
+	if (invList->ammo && weapon->ammo == invList->ammoLeft) {
 		*reason = _("No reload possible, already fully loaded.");
 		return -1;
 	}
 
 	/* Weapon is empty or not fully loaded, find ammo of any type loadable to this weapon. */
-	if (!invList->item.ammo || weapon->ammo > invList->item.ammoLeft) {
+	if (!invList->ammo || weapon->ammo > invList->ammoLeft) {
 		const int tuCosts = HUD_CalcReloadTime(le, weapon, containerID);
 		if (tuCosts >= 0) {
 			const int tu = CL_ActorUsableTUs(le);
@@ -793,7 +793,7 @@ static void HUD_UpdateButtons (const le_t *le)
 
 	invList_t *weaponl;
 	/* check for two-handed weapon - if not, also define weaponl */
-	if (!weaponr || !weaponr->item.isHeldTwoHanded())
+	if (!weaponr || !weaponr->isHeldTwoHanded())
 		weaponl = le->getLeftHand();
 	else
 		weaponl = NULL;
@@ -1089,19 +1089,19 @@ static int HUD_UpdateActorFireMode (le_t *actor)
 
 	static char infoText[UI_MAX_SMALLTEXTLEN];
 	int time = 0;
-	const objDef_t *def = selWeapon->item.def();
+	const objDef_t *def = selWeapon->def();
 	if (!def) {
 		/* No valid weapon in the hand. */
 		CL_ActorSetFireDef(actor, NULL);
 	} else {
 		/* Check whether this item uses/has ammo. */
-		if (!selWeapon->item.ammo) {
+		if (!selWeapon->ammo) {
 			CL_ActorSetFireDef(actor, NULL);
 			/* This item does not use ammo, check for existing firedefs in this item. */
 			/* This is supposed to be a weapon or other usable item. */
 			if (def->numWeapons > 0) {
-				if (selWeapon->item.isWeapon() || def->weapons[0] == def) {
-					const fireDef_t *fdArray = FIRESH_FiredefForWeapon(&selWeapon->item);
+				if (selWeapon->isWeapon() || def->weapons[0] == def) {
+					const fireDef_t *fdArray = FIRESH_FiredefForWeapon(selWeapon);
 					if (fdArray != NULL) {
 						/* Get firedef from the weapon (or other usable item) entry instead. */
 						const fireDef_t *old = FIRESH_GetFiredef(def, fdArray->weapFdsIdx, actor->currentSelectedFiremode);
@@ -1110,9 +1110,9 @@ static int HUD_UpdateActorFireMode (le_t *actor)
 				}
 			}
 		} else {
-			const fireDef_t *fdArray = FIRESH_FiredefForWeapon(&selWeapon->item);
+			const fireDef_t *fdArray = FIRESH_FiredefForWeapon(selWeapon);
 			if (fdArray != NULL) {
-				const fireDef_t *old = FIRESH_GetFiredef(selWeapon->item.ammo, fdArray->weapFdsIdx, actor->currentSelectedFiremode);
+				const fireDef_t *old = FIRESH_GetFiredef(selWeapon->ammo, fdArray->weapFdsIdx, actor->currentSelectedFiremode);
 				/* reset the align if we switched the firemode */
 				CL_ActorSetFireDef(actor, old);
 			}
@@ -1138,7 +1138,7 @@ static int HUD_UpdateActorFireMode (le_t *actor)
 		/* if no TUs left for this firing action
 		 * or if the weapon is reloadable and out of ammo,
 		 * then change to move mode */
-		if (selWeapon->item.mustReload() || CL_ActorUsableTUs(actor) < time)
+		if (selWeapon->mustReload() || CL_ActorUsableTUs(actor) < time)
 			CL_ActorSetMode(actor, M_MOVE);
 	} else if (selWeapon) {
 		Com_sprintf(infoText, lengthof(infoText), _("%s\n(empty)\n"), _(def->name));
@@ -1210,16 +1210,16 @@ static void HUD_UpdateActorCvar (const le_t *actor)
 		Cvar_Set("mn_anim", animName);
 	if (actor->getRightHand()) {
 		const invList_t *i = actor->getRightHand();
-		Cvar_Set("mn_rweapon", i->item.def()->model);
-		Cvar_Set("mn_rweapon_item", i->item.def()->id);
+		Cvar_Set("mn_rweapon", i->def()->model);
+		Cvar_Set("mn_rweapon_item", i->def()->id);
 	} else {
 		Cvar_Set("mn_rweapon", "");
 		Cvar_Set("mn_rweapon_item", "");
 	}
 	if (actor->getLeftHand()) {
 		const invList_t *i = actor->getLeftHand();
-		Cvar_Set("mn_lweapon", i->item.def()->model);
-		Cvar_Set("mn_lweapon_item", i->item.def()->id);
+		Cvar_Set("mn_lweapon", i->def()->model);
+		Cvar_Set("mn_lweapon_item", i->def()->id);
 	} else {
 		Cvar_Set("mn_lweapon", "");
 		Cvar_Set("mn_lweapon_item", "");
@@ -1228,13 +1228,13 @@ static void HUD_UpdateActorCvar (const le_t *actor)
 	/* print ammo */
 	const invList_t *invListRight = actor->getRightHand();
 	if (invListRight)
-		Cvar_SetValue("mn_ammoright", invListRight->item.ammoLeft);
+		Cvar_SetValue("mn_ammoright", invListRight->ammoLeft);
 	else
 		Cvar_Set("mn_ammoright", "");
 
 	const invList_t *invListLeft = HUD_GetLeftHandWeapon(actor, NULL);
 	if (invListLeft)
-		Cvar_SetValue("mn_ammoleft", invListLeft->item.ammoLeft);
+		Cvar_SetValue("mn_ammoleft", invListLeft->ammoLeft);
 	else
 		Cvar_Set("mn_ammoleft", "");
 }
@@ -1319,14 +1319,14 @@ static void HUD_UpdateActorLoad_f (void)
 		for (invList_t *invList = chr->inv.getContainer(containerID), *next; invList; invList = next) {
 			const fireDef_t *fireDef;
 			next = invList->next;
-			fireDef = FIRESH_FiredefForWeapon(&invList->item);
+			fireDef = FIRESH_FiredefForWeapon(invList);
 			if (fireDef == NULL)
 				continue;
 			for (int i = 0; i < MAX_FIREDEFS_PER_WEAPON; i++)
 				if (fireDef[i].time > 0 && fireDef[i].time > tus) {
 					if (count <= 0)
 						Com_sprintf(popupText, sizeof(popupText), _("This soldier no longer has enough TUs to use the following items:\n\n"));
-					Q_strcat(popupText, va("%s: %s (%i)\n", _(invList->item.def()->name), _(fireDef[i].name), fireDef[i].time), sizeof(popupText));
+					Q_strcat(popupText, va("%s: %s (%i)\n", _(invList->def()->name), _(fireDef[i].name), fireDef[i].time), sizeof(popupText));
 					++count;
 				}
 		}
@@ -1376,8 +1376,8 @@ static void HUD_UpdateActor (le_t *actor)
 			invList = NULL;
 		}
 
-		if (invList && invList->item.def() && invList->item.ammo && invList->item.isReloadable()) {
-			const int reloadtime = HUD_CalcReloadTime(actor, invList->item.def(), container);
+		if (invList && invList->def() && invList->ammo && invList->isReloadable()) {
+			const int reloadtime = HUD_CalcReloadTime(actor, invList->def(), container);
 			if (reloadtime != -1 && reloadtime <= CL_ActorUsableTUs(actor))
 				time = reloadtime;
 		}

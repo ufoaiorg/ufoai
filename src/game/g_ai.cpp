@@ -270,12 +270,12 @@ static bool AI_HideNeeded (const Edict *ent)
 			if (G_IsVisibleForTeam(from, ent->team)) {
 				const invList_t *invlist = from->getRightHand();
 				const fireDef_t *fd = NULL;
-				if (invlist && invlist->item.def()) {
-					fd = FIRESH_FiredefForWeapon(&invlist->item);
+				if (invlist && invlist->def()) {
+					fd = FIRESH_FiredefForWeapon(invlist);
 				} else {
 					invlist = from->getLeftHand();
-					if (invlist && invlist->item.def())
-						fd = FIRESH_FiredefForWeapon(&invlist->item);
+					if (invlist && invlist->def())
+						fd = FIRESH_FiredefForWeapon(invlist);
 				}
 				/* search the (visible) inventory (by just checking the weapon in the hands of the enemy */
 				if (fd != NULL && fd->range * fd->range >= VectorDistSqr(ent->origin, from->origin)) {
@@ -304,7 +304,7 @@ static bool AI_HideNeeded (const Edict *ent)
 static inline const item_t *AI_GetItemFromInventory (const invList_t *ic)
 {
 	if (ic != NULL) {
-		const item_t *item = &ic->item;
+		const item_t *item = ic;
 		if (item->ammo && item->isWeapon() && !item->mustReload())
 			return item;
 	}
@@ -581,7 +581,7 @@ static void AI_SearchBestTarget (aiAction_t *aia, const Edict *ent, Edict *check
 
 			/* take into account armour */
 			if (check->getArmour()) {
-				const objDef_t *ad = check->getArmour()->item.def();
+				const objDef_t *ad = check->getArmour()->def();
 				dmg *= 1.0 - ad->protection[fd->dmgweight] * 0.01;
 			}
 
@@ -1202,9 +1202,9 @@ void AI_ActorThink (Player &player, Edict *ent)
 	invList_t *rightH = ent->getRightHand();
 	invList_t *leftH = ent->getLeftHand();
 	if (!G_IsPanicked(ent)) {
-		if (rightH && rightH->item.mustReload())
+		if (rightH && rightH->mustReload())
 			AI_TryToReloadWeapon(ent, gi.csi->idRight);
-		if (leftH && leftH->item.mustReload())
+		if (leftH && leftH->mustReload())
 			AI_TryToReloadWeapon(ent, gi.csi->idLeft);
 	}
 

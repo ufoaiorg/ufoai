@@ -158,9 +158,9 @@ int G_ActorGetTUForReactionFire (const Edict *ent)
 
 	const invList_t *invlistWeapon = ent->getHand(fm->getHand());
 	assert(invlistWeapon);
-	assert(invlistWeapon->item.def());
+	assert(invlistWeapon->def());
 
-	const fireDef_t *fd = FIRESH_FiredefForWeapon(&invlistWeapon->item);
+	const fireDef_t *fd = FIRESH_FiredefForWeapon(invlistWeapon);
 	assert(fd);
 	return G_ActorGetTimeForFiredef(ent, &fd[fm->getFmIdx()], true);
 }
@@ -548,7 +548,7 @@ bool G_ActorInvMove (Edict *ent, const invDef_t *from, invList_t *fItem, const i
 	Player &player = ent->getPlayer();
 
 	assert(fItem);
-	assert(fItem->item.def());
+	assert(fItem->def());
 
 	/* Store the location/item of 'from' BEFORE actually moving items with moveInInventory. */
 	fItemBackup = *fItem;
@@ -562,7 +562,7 @@ bool G_ActorInvMove (Edict *ent, const invDef_t *from, invList_t *fItem, const i
 		tItemBackup = *fItem;
 
 	/* Get first used bit in item. */
-	fItem->item.getFirstShapePosition(&fx, &fy);
+	fItem->getFirstShapePosition(&fx, &fy);
 	fx += fItem->getX();
 	fy += fItem->getY();
 
@@ -571,7 +571,7 @@ bool G_ActorInvMove (Edict *ent, const invDef_t *from, invList_t *fItem, const i
 	if (checkaction && !G_ActionCheckForCurrentTeam(&player, ent, 1))
 		return false;
 
-	if (!ent->chr.inv.canHoldItemWeight(from->id, to->id, fItem->item, ent->chr.score.skills[ABILITY_POWER])) {
+	if (!ent->chr.inv.canHoldItemWeight(from->id, to->id, *fItem, ent->chr.score.skills[ABILITY_POWER])) {
 		G_ClientPrintf(player, PRINT_HUD, _("This soldier can not carry anything else."));
 		return false;
 	}
@@ -595,7 +595,7 @@ bool G_ActorInvMove (Edict *ent, const invDef_t *from, invList_t *fItem, const i
 	if (tx == NONE) {
 		ic = ent->chr.inv.getItemAtPos(from, fItem->getX(), fItem->getY());
 		if (ic)
-			ent->chr.inv.findSpace(to, &ic->item, &tx, &ty, fItem);
+			ent->chr.inv.findSpace(to, ic, &tx, &ty, fItem);
 		if (tx == NONE)
 			return false;
 	}
@@ -657,7 +657,7 @@ bool G_ActorInvMove (Edict *ent, const invDef_t *from, invList_t *fItem, const i
 	G_SendStats(ent);
 
 	assert(ic);
-	item = ic->item;
+	item = *ic;
 
 	if (ia == IA_RELOAD || ia == IA_RELOAD_SWAP) {
 		/* reload */
@@ -673,9 +673,9 @@ bool G_ActorInvMove (Edict *ent, const invDef_t *from, invList_t *fItem, const i
 		} else { /* ia == IA_RELOAD_SWAP */
 			item.ammoLeft = NONE_AMMO;
 			item.ammo = NULL;
-			item.setDef(tItemBackup.item.ammo);
-			item.rotated = fItemBackup.item.rotated;
-			item.amount = tItemBackup.item.amount;
+			item.setDef(tItemBackup.ammo);
+			item.rotated = fItemBackup.rotated;
+			item.amount = tItemBackup.amount;
 			to = from;
 			if (to->isFloorDef()) {
 				/* moveInInventory placed the swapped ammo in an available space, check where it was placed
@@ -683,7 +683,7 @@ bool G_ActorInvMove (Edict *ent, const invDef_t *from, invList_t *fItem, const i
 				 * this could end in a different place in the client - will cause an error if trying to use it again */
 				ic = ent->chr.inv.findInContainer(to, &item);
 				assert(ic);
-				fItemBackup.item = item;
+				fItemBackup = item;
 				fItemBackup.setX(ic->getX());
 				fItemBackup.setY(ic->getY());
 			}
@@ -708,7 +708,7 @@ bool G_ActorInvMove (Edict *ent, const invDef_t *from, invList_t *fItem, const i
 			/* use the backup item to use the old amount values, because the clients have to use the same actions
 			 * on the original amount. Otherwise they would end in a different amount of items as the server (+1) */
 			G_EventInventoryAdd(floor, G_VisToPM(floor->visflags), 1);
-			G_WriteItem(&fItemBackup.item, to, tx, ty);
+			G_WriteItem(&fItemBackup, to, tx, ty);
 			G_EventEnd();
 			/* Couldn't remove it before because that would remove the le from the client and would cause battlescape to crash
 			 * when trying to add back the swapped ammo above */
@@ -760,11 +760,11 @@ void G_ActorReload (Edict *ent, const invDef_t *invDef)
 	bestContainer = NULL;
 
 	if (ent->getContainer(invDef->id)) {
-		weapon = ent->getContainer(invDef->id)->item.def();
-	} else if (invDef->isLeftDef() && ent->getRightHand()->item.isHeldTwoHanded()) {
+		weapon = ent->getContainer(invDef->id)->def();
+	} else if (invDef->isLeftDef() && ent->getRightHand()->isHeldTwoHanded()) {
 		/* Check for two-handed weapon */
 		invDef = INVDEF(gi.csi->idRight);
-		weapon = ent->getRightHand()->item.def();
+		weapon = ent->getRightHand()->def();
 	} else
 		return;
 
@@ -782,7 +782,7 @@ void G_ActorReload (Edict *ent, const invDef_t *invDef)
 			 * to retrieve the ammo from them than the one
 			 * we've already found. */
 			for (ic = ent->getContainer(containerID); ic; ic = ic->getNext())
-				if (ic->item.def()->isLoadableInWeapon(weapon)) {
+				if (ic->def()->isLoadableInWeapon(weapon)) {
 					icFinal = ic;
 					bestContainer = INVDEF(containerID);
 					tu = bestContainer->out;

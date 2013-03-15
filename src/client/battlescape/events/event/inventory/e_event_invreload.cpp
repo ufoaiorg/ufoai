@@ -59,24 +59,24 @@ void CL_InvReload (const eventRegister_t *self, dbuffer *msg)
 	if (!ic)
 		return;
 
-	S_LoadAndPlaySample(ic->item.def()->reloadSound, le->origin, ic->item.def()->reloadAttenuation, SND_VOLUME_WEAPONS);
+	S_LoadAndPlaySample(ic->def()->reloadSound, le->origin, ic->def()->reloadAttenuation, SND_VOLUME_WEAPONS);
 
 	/* if the displaced clip had any remaining bullets
 	 * store them as loose, unless the removed clip was full */
 	ed = GAME_GetEquipmentDefinition();
-	if (ed && ic->item.ammoLeft > 0 && ic->item.ammoLeft != ic->item.def()->ammo) {
-		assert(ammo == ic->item.def()->ammo);
-		ed->numItemsLoose[ic->item.ammo->idx] += ic->item.ammoLeft;
+	if (ed && ic->ammoLeft > 0 && ic->ammoLeft != ic->def()->ammo) {
+		assert(ammo == ic->def()->ammo);
+		ed->numItemsLoose[ic->ammo->idx] += ic->ammoLeft;
 		/* Accumulate loose ammo into clips (only accessible post-mission) */
-		if (ed->numItemsLoose[ic->item.ammo->idx] >= ic->item.def()->ammo) {
-			ed->numItemsLoose[ic->item.ammo->idx] -= ic->item.def()->ammo;
-			ed->numItems[ic->item.ammo->idx]++;
+		if (ed->numItemsLoose[ic->ammo->idx] >= ic->def()->ammo) {
+			ed->numItemsLoose[ic->ammo->idx] -= ic->def()->ammo;
+			ed->numItems[ic->ammo->idx]++;
 		}
 	}
 
 	/* set new ammo */
-	ic->item.ammoLeft = ammo;
-	ic->item.ammo = INVSH_GetItemByIDX(type);
+	ic->ammoLeft = ammo;
+	ic->ammo = INVSH_GetItemByIDX(type);
 
 	if (le == selActor)
 		Cmd_ExecuteString("hud_updateactorload");

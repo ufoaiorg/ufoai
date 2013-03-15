@@ -269,11 +269,11 @@ static void AII_CollectingAmmo (void *data, const invList_t *magazine)
 {
 	aircraft_t *aircraft = (aircraft_t *)data;
 	/* Let's add remaining ammo to market. */
-	eTempEq.numItemsLoose[magazine->item.ammo->idx] += magazine->item.ammoLeft;
-	if (eTempEq.numItemsLoose[magazine->item.ammo->idx] >= magazine->item.def()->ammo) {
+	eTempEq.numItemsLoose[magazine->ammo->idx] += magazine->ammoLeft;
+	if (eTempEq.numItemsLoose[magazine->ammo->idx] >= magazine->def()->ammo) {
 		/* There are more or equal ammo on the market than magazine needs - collect magazine. */
-		eTempEq.numItemsLoose[magazine->item.ammo->idx] -= magazine->item.def()->ammo;
-		AII_CollectItem(aircraft, magazine->item.ammo, 1);
+		eTempEq.numItemsLoose[magazine->ammo->idx] -= magazine->def()->ammo;
+		AII_CollectItem(aircraft, magazine->ammo, 1);
 	}
 }
 
@@ -330,16 +330,16 @@ static void AII_CarriedItems (const inventory_t *soldierInventory)
 		if (INVDEF(container)->temp)
 			continue;
 		for (invList = soldierInventory->getContainer(container); invList; invList = invList->next) {
-			const objDef_t *item = invList->item.def();
-			const objDef_t *ammo = invList->item.ammo;
+			const objDef_t *item = invList->def();
+			const objDef_t *ammo = invList->ammo;
 			technology_t *tech = RS_GetTechForItem(item);
 			ed->numItems[item->idx]++;
 			RS_MarkCollected(tech);
 
-			if (!item->reload || invList->item.ammoLeft == 0)
+			if (!item->reload || invList->ammoLeft == 0)
 				continue;
 
-			ed->numItemsLoose[ammo->idx] += invList->item.ammoLeft;
+			ed->numItemsLoose[ammo->idx] += invList->ammoLeft;
 			if (ed->numItemsLoose[ammo->idx] >= item->ammo) {
 				ed->numItemsLoose[ammo->idx] -= item->ammo;
 				ed->numItems[ammo->idx]++;
@@ -833,10 +833,10 @@ static int AIR_GetStorageRoom (const aircraft_t *aircraft)
 				continue;
 #endif
 			for (ic = employee->chr.inv.getContainer(container); ic; ic = ic->next) {
-				const objDef_t *obj = ic->item.def();
+				const objDef_t *obj = ic->def();
 				size += obj->size;
 
-				obj = ic->item.ammo;
+				obj = ic->ammo;
 				if (obj)
 					size += obj->size;
 			}
@@ -886,11 +886,11 @@ static void AIR_TransferItemsCarriedByCharacterToBase (character_t *chr, base_t 
 			continue;
 #endif
 		for (ic = chr->inv.getContainer(container); ic; ic = ic->next) {
-			const objDef_t *obj = ic->item.def();
+			const objDef_t *obj = ic->def();
 			B_UpdateStorageAndCapacity(sourceBase, obj, -1, false);
 			B_UpdateStorageAndCapacity(destBase, obj, 1, false);
 
-			obj = ic->item.ammo;
+			obj = ic->ammo;
 			if (obj) {
 				B_UpdateStorageAndCapacity(sourceBase, obj, -1, false);
 				B_UpdateStorageAndCapacity(destBase, obj, 1, false);
@@ -3055,7 +3055,7 @@ void AIR_MoveEmployeeInventoryIntoStorage (const aircraft_t &aircraft, equipDef_
 				continue;
 #endif
 			while (ic) {
-				const item_t item = ic->item;
+				const item_t item = *ic;
 				const objDef_t *type = item.def();
 				invList_t *next = ic->next;
 

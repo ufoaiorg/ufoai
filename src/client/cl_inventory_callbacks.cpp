@@ -365,14 +365,14 @@ static void INV_UpdateActorLoad_f (void)
 			for (invList_t *invList = chr->inv.getContainer(containerID), *next; invList; invList = next) {
 				const fireDef_t *fireDef;
 				next = invList->next;
-				fireDef = FIRESH_FiredefForWeapon(&invList->item);
+				fireDef = FIRESH_FiredefForWeapon(invList);
 				if (fireDef == NULL)
 					continue;
 				for (int i = 0; i < MAX_FIREDEFS_PER_WEAPON; i++)
 					if (fireDef[i].time > 0 && fireDef[i].time > tus) {
 						if (count <= 0)
 							Com_sprintf(popupText, sizeof(popupText), _("This soldier no longer has enough TUs to use the following items:\n\n"));
-						Q_strcat(popupText, va("%s: %s (%i)\n", _(invList->item.def()->name), _(fireDef[i].name), fireDef[i].time), sizeof(popupText));
+						Q_strcat(popupText, va("%s: %s (%i)\n", _(invList->def()->name), _(fireDef[i].name), fireDef[i].time), sizeof(popupText));
 						++count;
 					}
 			}

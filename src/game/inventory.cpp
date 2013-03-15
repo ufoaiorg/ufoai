@@ -104,10 +104,10 @@ invList_t *InventoryInterface::addToInventory (inventory_t *const inv, const ite
 	/* idEquip and idFloor */
 	if (container->temp) {
 		for (ic = inv->getContainer(container->id); ic; ic = ic->getNext())
-			if (ic->item.isSameAs(item)) {
-				ic->item.amount += amount;
+			if (ic->isSameAs(item)) {
+				ic->amount += amount;
 				Com_DPrintf(DEBUG_SHARED, "addToInventory: Amount of '%s': %i (%s)\n",
-					ic->item.def()->name, ic->item.amount, invName);
+					ic->def()->name, ic->amount, invName);
 				return ic;
 			}
 	}
@@ -126,12 +126,12 @@ invList_t *InventoryInterface::addToInventory (inventory_t *const inv, const ite
 	ic = addInvList(inv, container);
 
 	/* Set the data in the new entry to the data we got via function-parameters.*/
-	ic->item = *item;
-	ic->item.amount = amount;
+	*ic = *item;
+	ic->amount = amount;
 
 	/* don't reset an already applied rotation */
 	if (checkedTo == INV_FITS_ONLY_ROTATED)
-		ic->item.rotated = true;
+		ic->rotated = true;
 	ic->setX(x);
 	ic->setY(y);
 
@@ -164,12 +164,12 @@ bool InventoryInterface::removeFromInventory (inventory_t* const inv, const invD
 	 * to check for this case of move and only update the x and y coordinates instead
 	 * of calling the add and remove functions */
 	if (container->single || ic == fItem) {
-		this->cacheItem = ic->item;
+		this->cacheItem = *ic;
 		/* temp container like idEquip and idFloor */
-		if (container->temp && ic->item.amount > 1) {
-			ic->item.amount--;
+		if (container->temp && ic->amount > 1) {
+			ic->amount--;
 			Com_DPrintf(DEBUG_SHARED, "removeFromInventory: Amount of '%s': %i (%s)\n",
-				ic->item.def()->name, ic->item.amount, invName);
+				ic->def()->name, ic->amount, invName);
 			return true;
 		}
 
@@ -179,7 +179,7 @@ bool InventoryInterface::removeFromInventory (inventory_t* const inv, const invD
 		/* An item in other containers than idFloor or idEquip should
 		 * always have an amount value of 1.
 		 * The other container types do not support stacking.*/
-		assert(ic->item.amount == 1);
+		assert(ic->amount == 1);
 
 		inv->setContainer(container->id, ic->getNext());
 
@@ -191,12 +191,12 @@ bool InventoryInterface::removeFromInventory (inventory_t* const inv, const invD
 
 	for (previous = inv->getContainer(container->id); ic; ic = ic->getNext()) {
 		if (ic == fItem) {
-			this->cacheItem = ic->item;
+			this->cacheItem = *ic;
 			/* temp container like idEquip and idFloor */
-			if (ic->item.amount > 1 && container->temp) {
-				ic->item.amount--;
+			if (ic->amount > 1 && container->temp) {
+				ic->amount--;
 				Com_DPrintf(DEBUG_SHARED, "removeFromInventory: Amount of '%s': %i (%s)\n",
-					ic->item.def()->name, ic->item.amount, invName);
+					ic->def()->name, ic->amount, invName);
 				return true;
 			}
 
@@ -272,8 +272,8 @@ inventory_action_t InventoryInterface::moveInInventory (inventory_t* const inv, 
 		ic = inv->getContainer(from->id);
 		for (; ic; ic = ic->getNext()) {
 			if (ic == fItem) {
-				if (ic->item.amount > 1) {
-					checkedTo = inv->canHoldItem(to, ic->item.def(), tx, ty, fItem);
+				if (ic->amount > 1) {
+					checkedTo = inv->canHoldItem(to, ic->def(), tx, ty, fItem);
 					if (checkedTo & INV_FITS) {
 						ic->setX(tx);
 						ic->setY(ty);
@@ -289,29 +289,29 @@ inventory_action_t InventoryInterface::moveInInventory (inventory_t* const inv, 
 
 	/* If weapon is twohanded and is moved from hand to hand do nothing. */
 	/* Twohanded weapon are only in CSI->idRight. */
-	if (fItem->item.def()->fireTwoHanded && to->isLeftDef() && from->isRightDef()) {
+	if (fItem->def()->fireTwoHanded && to->isLeftDef() && from->isRightDef()) {
 		return IA_NONE;
 	}
 
 	/* If non-armour moved to an armour slot then abort.
 	 * Same for non extension items when moved to an extension slot. */
-	if ((to->armour && !fItem->item.isArmour())
-	 || (to->extension && !fItem->item.def()->extension)
-	 || (to->headgear && !fItem->item.def()->headgear)) {
+	if ((to->armour && !fItem->isArmour())
+	 || (to->extension && !fItem->def()->extension)
+	 || (to->headgear && !fItem->def()->headgear)) {
 		return IA_NONE;
 	}
 
 	/* Check if the target is a blocked inv-armour and source!=dest. */
 	if (to->single)
-		checkedTo = inv->canHoldItem(to, fItem->item.def(), 0, 0, fItem);
+		checkedTo = inv->canHoldItem(to, fItem->def(), 0, 0, fItem);
 	else {
 		if (tx == NONE || ty == NONE)
-			inv->findSpace(to, &fItem->item, &tx, &ty, fItem);
+			inv->findSpace(to, fItem, &tx, &ty, fItem);
 		/* still no valid location found */
 		if (tx == NONE || ty == NONE)
 			return IA_NONE;
 
-		checkedTo = inv->canHoldItem(to, fItem->item.def(), tx, ty, fItem);
+		checkedTo = inv->canHoldItem(to, fItem->def(), tx, ty, fItem);
 	}
 
 	if (to->armour && from != to && !checkedTo) {
@@ -325,7 +325,7 @@ inventory_action_t InventoryInterface::moveInInventory (inventory_t* const inv, 
 		/* Check if destination/blocking item is the same as source/from item.
 		 * In that case the move is not needed -> abort. */
 		icTo = inv->getItemAtPos(to, tx, ty);
-		if (fItem->item.def() == icTo->item.def())
+		if (fItem->def() == icTo->def())
 			return IA_NONE;
 
 		/* Actually remove the ammo from the 'from' container. */
@@ -348,20 +348,20 @@ inventory_action_t InventoryInterface::moveInInventory (inventory_t* const inv, 
 		 * scroll because checkedTo is always true here. */
 		ic = inv->getItemAtPos(to, tx, ty);
 
-		if (ic && !to->isEquipDef() && fItem->item.def()->isLoadableInWeapon(ic->item.def())) {
+		if (ic && !to->isEquipDef() && fItem->def()->isLoadableInWeapon(ic->def())) {
 			/* A target-item was found and the dragged item (implicitly ammo)
 			 * can be loaded in it (implicitly weapon). */
-			if (ic->item.ammoLeft >= ic->item.def()->ammo && ic->item.ammo == fItem->item.def()) {
+			if (ic->ammoLeft >= ic->def()->ammo && ic->ammo == fItem->def()) {
 				/* Weapon already fully loaded with the same ammunition -> abort */
 				return IA_NORELOAD;
 			}
-			time += ic->item.def()->reload;
+			time += ic->def()->reload;
 			if (!TU || *TU >= time) {
 				if (TU)
 					*TU -= time;
-				if (ic->item.ammoLeft >= ic->item.def()->ammo) {
+				if (ic->ammoLeft >= ic->def()->ammo) {
 					/* exchange ammo */
-					const item_t item(NONE_AMMO, NULL, ic->item.ammo);
+					const item_t item(NONE_AMMO, NULL, ic->ammo);
 					/* Put current ammo in place of the new ammo unless floor - there can be more than 1 item */
 					const int cacheFromX = from->isFloorDef() ? NONE : fItem->getX();
 					const int cacheFromY = from->isFloorDef() ? NONE : fItem->getY();
@@ -374,7 +374,7 @@ inventory_action_t InventoryInterface::moveInInventory (inventory_t* const inv, 
 					if (addToInventory(inv, &item, from, cacheFromX, cacheFromY, 1) == NULL)
 						Sys_Error("Could not reload the weapon - add to inventory failed (%s)", invName);
 
-					ic->item.ammo = this->cacheItem.def();
+					ic->ammo = this->cacheItem.def();
 					if (icp)
 						*icp = ic;
 					return IA_RELOAD_SWAP;
@@ -383,9 +383,9 @@ inventory_action_t InventoryInterface::moveInInventory (inventory_t* const inv, 
 					if (!removeFromInventory(inv, from, fItem))
 						return IA_NONE;
 
-					ic->item.ammo = this->cacheItem.def();
-					/* loose ammo of type ic->item.m saved on server side */
-					ic->item.ammoLeft = ic->item.def()->ammo;
+					ic->ammo = this->cacheItem.def();
+					/* loose ammo of type ic->m saved on server side */
+					ic->ammoLeft = ic->def()->ammo;
 					if (icp)
 						*icp = ic;
 					return IA_RELOAD;
@@ -401,7 +401,7 @@ inventory_action_t InventoryInterface::moveInInventory (inventory_t* const inv, 
 			 * We add the item anyway but it'll not be displayed (yet)
 			 * This is then used in addToInventory below.*/
 			/** @todo change the other code to browse through these things. */
-			inv->findSpace(to, &fItem->item, &tx, &ty, fItem);
+			inv->findSpace(to, fItem, &tx, &ty, fItem);
 			if (tx == NONE || ty == NONE) {
 				Com_DPrintf(DEBUG_SHARED, "MoveInInventory - item will be added non-visible (%s)\n", invName);
 			}
@@ -412,7 +412,7 @@ inventory_action_t InventoryInterface::moveInInventory (inventory_t* const inv, 
 	}
 
 	/* twohanded exception - only CSI->idRight is allowed for fireTwoHanded weapons */
-	if (fItem->item.def()->fireTwoHanded && to->isLeftDef())
+	if (fItem->def()->fireTwoHanded && to->isLeftDef())
 		to = &this->csi->ids[this->csi->idRight];
 
 	switch (checkedTo) {
@@ -422,11 +422,11 @@ inventory_action_t InventoryInterface::moveInInventory (inventory_t* const inv, 
 		return IA_NONE;
 	case INV_FITS:
 		/* Remove rotated tag */
-		fItem->item.rotated = false;
+		fItem->rotated = false;
 		break;
 	case INV_FITS_ONLY_ROTATED:
 		/* Set rotated tag */
-		fItem->item.rotated = true;
+		fItem->rotated = true;
 		break;
 	case INV_FITS_BOTH:
 		/* Leave rotated tag as-is */
@@ -552,8 +552,8 @@ float InventoryInterface::GetInventoryState (const inventory_t *inventory, int &
 			continue;
 		for (invList_t *ic = inventory->getContainer(containerID), *next; ic; ic = next) {
 			next = ic->getNext();
-			weight += ic->item.getWeight();
-			const fireDef_t *fireDef = FIRESH_SlowestFireDef(ic->item);
+			weight += ic->getWeight();
+			const fireDef_t *fireDef = FIRESH_SlowestFireDef(*ic);
 			if (slowestFd == 0 || (fireDef && fireDef->time > slowestFd))
 					slowestFd = fireDef->time;
 		}
@@ -589,7 +589,7 @@ int InventoryInterface::PackAmmoAndWeapon (character_t* const chr, const objDef_
 	item.setDef(weapon);
 
 	/* are we going to allow trying the left hand */
-	allowLeft = !(inv->getContainer(csi->idRight) && inv->getContainer(csi->idRight)->item.def()->fireTwoHanded);
+	allowLeft = !(inv->getContainer(csi->idRight) && inv->getContainer(csi->idRight)->def()->fireTwoHanded);
 
 	if (weapon->oneshot) {
 		/* The weapon provides its own ammo (i.e. it is charged or loaded in the base.) */

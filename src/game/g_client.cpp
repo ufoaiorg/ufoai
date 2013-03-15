@@ -546,10 +546,10 @@ bool G_ClientCanReload (Edict *ent, containerIndex_t containerID)
 	const objDef_t *weapon;
 
 	if (ent->getContainer(containerID)) {
-		weapon = ent->getContainer(containerID)->item.def();
-	} else if (containerID == gi.csi->idLeft && ent->getRightHand()->item.isHeldTwoHanded()) {
+		weapon = ent->getContainer(containerID)->def();
+	} else if (containerID == gi.csi->idLeft && ent->getRightHand()->isHeldTwoHanded()) {
 		/* Check for two-handed weapon */
-		weapon = ent->getRightHand()->item.def();
+		weapon = ent->getRightHand()->def();
 	} else
 		return false;
 
@@ -558,7 +558,7 @@ bool G_ClientCanReload (Edict *ent, containerIndex_t containerID)
 	/* also try the temp containers */
 	for (container = 0; container < gi.csi->numIDs; container++)
 		for (ic = ent->getContainer(container); ic; ic = ic->getNext())
-			if (ic->item.def()->isLoadableInWeapon(weapon))
+			if (ic->def()->isLoadableInWeapon(weapon))
 				return true;
 	return false;
 }
@@ -596,8 +596,8 @@ void G_ClientGetWeaponFromInventory (Edict *ent)
 			 * to retrieve the ammo from them than the one
 			 * we've already found. */
 			for (ic = ent->getContainer(container); ic; ic = ic->getNext()) {
-				assert(ic->item.def());
-				if (ic->item.isWeapon() && !ic->item.mustReload()) {
+				assert(ic->def());
+				if (ic->isWeapon() && !ic->mustReload()) {
 					icFinal = ic;
 					bestContainer = INVDEF(container);
 					tu = bestContainer->out;

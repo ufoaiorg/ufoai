@@ -170,7 +170,7 @@ void CP_CleanupTeam (base_t *base, equipDef_t *ed)
 		if (employee->ugv) {
 			/* Check if there is a weapon and add it if there isn't. */
 			invList_t *rightH = chr->inv.getRightHandContainer();
-			if (!rightH || !rightH->item.def())
+			if (!rightH || !rightH->def())
 				cgi->INV_EquipActorRobot(&chr->inv, INVSH_GetItemByID(employee->ugv->weapon));
 		}
 	}
@@ -191,8 +191,8 @@ void CP_CleanupTeam (base_t *base, equipDef_t *ed)
 #endif
 			for (ic = chr->inv.getContainer(container); ic; ic = next) {
 				next = ic->next;
-				if (ed->numItems[ic->item.def()->idx] > 0) {
-					ic->item = CP_AddWeaponAmmo(ed, ic->item);
+				if (ed->numItems[ic->def()->idx] > 0) {
+					*ic = CP_AddWeaponAmmo(ed, *ic);
 				} else {
 					/* Drop ammo used for reloading and sold carried weapons. */
 					if (!cgi->INV_RemoveFromInventory(&chr->inv, INVDEF(container), ic))
@@ -232,7 +232,7 @@ void CP_CleanupAircraftTeam (aircraft_t *aircraft, equipDef_t *ed)
 			if (employee->ugv) {
 				/* Check if there is a weapon and add it if there isn't. */
 				invList_t *rightH = chr->inv.getRightHandContainer();
-				if (!rightH || !rightH->item.def())
+				if (!rightH || !rightH->def())
 					cgi->INV_EquipActorRobot(&chr->inv, INVSH_GetItemByID(employee->ugv->weapon));
 				continue;
 			}
@@ -244,8 +244,8 @@ void CP_CleanupAircraftTeam (aircraft_t *aircraft, equipDef_t *ed)
 #endif
 			for (ic = chr->inv.getContainer(container); ic; ic = next) {
 				next = ic->next;
-				if (ed->numItems[ic->item.def()->idx] > 0) {
-					ic->item = CP_AddWeaponAmmo(ed, ic->item);
+				if (ed->numItems[ic->def()->idx] > 0) {
+					*ic = CP_AddWeaponAmmo(ed, *ic);
 				} else {
 					/* Drop ammo used for reloading and sold carried weapons. */
 					if (!cgi->INV_RemoveFromInventory(&chr->inv, INVDEF(container), ic))

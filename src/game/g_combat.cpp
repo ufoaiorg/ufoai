@@ -317,7 +317,7 @@ int G_ApplyProtection (const Edict *target, const byte dmgWeight, int damage)
 {
 	const int naturalProtection = target->chr.teamDef->resistance[dmgWeight];
 	if (target->getArmour()) {
-		const objDef_t *armourDef = target->getArmour()->item.def();
+		const objDef_t *armourDef = target->getArmour()->def();
 		const short armourProtection = armourDef->protection[dmgWeight];
 		const short totalProtection = armourProtection + naturalProtection;
 		damage = std::min(std::max(0, damage - armourProtection), std::max(1, damage - totalProtection));
@@ -1067,17 +1067,17 @@ static bool G_PrepareShot (Edict *ent, shoot_types_t shootType, fireDefIndex_t f
 		invList_t *hgc = ent->chr.inv.getHeadgearContainer();
 		if (!hgc)
 			return false;
-		item = &hgc->item;
+		item = hgc;
 		*container = gi.csi->idHeadgear;
 	} else if (IS_SHOT_RIGHT(shootType)) {
 		if (!ent->getRightHand())
 			return false;
-		item = &ent->getRightHand()->item;
+		item = ent->getRightHand();
 		*container = gi.csi->idRight;
 	} else {
 		if (!ent->getLeftHand())
 			return false;
-		item = &ent->getLeftHand()->item;
+		item = ent->getLeftHand();
 		*container = gi.csi->idLeft;
 	}
 

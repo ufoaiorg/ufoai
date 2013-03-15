@@ -345,7 +345,7 @@ static int UI_BaseInventoryNodeDrawItems (uiNode_t *node, const objDef_t *highli
 		}
 
 		if (icItem)
-			amount = icItem->item.amount;
+			amount = icItem->amount;
 		else
 			amount = 0;
 
@@ -392,15 +392,15 @@ static int UI_BaseInventoryNodeDrawItems (uiNode_t *node, const objDef_t *highli
 					continue;
 
 				/* Calculate the center of the item model/image. */
-				ammopos[0] += icItem->item.def()->sx * C_UNIT / 2.0;
-				ammopos[1] -= icItem->item.def()->sy * C_UNIT / 2.0;
+				ammopos[0] += icItem->def()->sx * C_UNIT / 2.0;
+				ammopos[1] -= icItem->def()->sy * C_UNIT / 2.0;
 				UI_DrawItem(node, ammopos, &tempItem, -1, -1, scale, colorDefault);
 				UI_DrawString("f_verysmall", ALIGN_LC,
-					ammopos[0] + icItem->item.def()->sx * C_UNIT / 2.0, ammopos[1] + icItem->item.def()->sy * C_UNIT / 2.0,
-					ammopos[0] + icItem->item.def()->sx * C_UNIT / 2.0, cellWidth - 5 - ammopos[0],	/* maxWidth */
-					0, va("x%i", icItem->item.amount));
-				ammopos[0] += icItem->item.def()->sx * C_UNIT / 2.0;
-				ammopos[1] += icItem->item.def()->sy * C_UNIT / 2.0;
+					ammopos[0] + icItem->def()->sx * C_UNIT / 2.0, ammopos[1] + icItem->def()->sy * C_UNIT / 2.0,
+					ammopos[0] + icItem->def()->sx * C_UNIT / 2.0, cellWidth - 5 - ammopos[0],	/* maxWidth */
+					0, va("x%i", icItem->amount));
+				ammopos[0] += icItem->def()->sx * C_UNIT / 2.0;
+				ammopos[1] += icItem->def()->sy * C_UNIT / 2.0;
 			}
 		}
 		cellHeight += 10;
@@ -644,7 +644,7 @@ void uiBaseInventoryNode::drawTooltip (const uiNode_t *node, int x, int y) const
 		const int itemToolTipWidth = 250;
 
 		/* Get name and info about item */
-		UI_GetItemTooltip(itemHover->item, tooltiptext, sizeof(tooltiptext));
+		UI_GetItemTooltip(*itemHover, tooltiptext, sizeof(tooltiptext));
 #ifdef DEBUG
 		/* Display stored container-coordinates of the item. */
 		Q_strcat(tooltiptext, va("\n%i/%i", itemHover->getX(), itemHover->getY()), sizeof(tooltiptext));
@@ -696,7 +696,7 @@ void uiBaseInventoryNode::onCapturedMouseMove (uiNode_t *node, int x, int y)
 {
 	const int delta = abs(oldMouseX - x) + abs(oldMouseY - y);
 	if (delta > 15) {
-		UI_DNDDragItem(node, &(dragInfoIC->item));
+		UI_DNDDragItem(node, dragInfoIC);
 		UI_MouseRelease();
 	}
 }
@@ -715,7 +715,7 @@ void uiBaseInventoryNode::onMouseDown (uiNode_t *node, int x, int y, int button)
 			oldMouseX = x;
 			oldMouseY = y;
 			UI_SetMouseCapture(node);
-			EXTRADATA(node).super.lastSelectedId = dragInfoIC->item.def()->idx;
+			EXTRADATA(node).super.lastSelectedId = dragInfoIC->def()->idx;
 			if (EXTRADATA(node).super.onSelect) {
 				UI_ExecuteEventActions(node, EXTRADATA(node).super.onSelect);
 			}

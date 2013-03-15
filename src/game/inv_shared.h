@@ -364,6 +364,16 @@ struct item_s {
 					 * @note don't change this to anything smaller than 4 bytes - the network
 					 * parsing functions are expecting this to be at least 4 bytes */
 
+	struct item_s *next;	/**< Next entry in this list. */
+
+	inline struct item_s *getNext () const
+	{
+		return next;
+	}
+	inline void setNext (struct item_s *nx)
+	{
+		next = nx;
+	}
 	item_s ();
 	item_s (int ammoLeft, const objDef_t *ammo=NULL, const objDef_t *_itemDef=NULL);
 
@@ -450,7 +460,7 @@ struct invList_s {
 	}
 
 };
-typedef invList_s invList_t;
+typedef item_s invList_t;
 
 class Container
 {

@@ -462,7 +462,7 @@ static void UI_ContainerNodeDrawSingle (uiNode_t *node, const objDef_t *highligh
 	const invDef_t *contType = EXTRADATA(node).container;
 	if (contType->isLeftDef() && !ui_inventory->getLeftHandContainer()) {
 		if (ui_inventory->getRightHandContainer()) {
-			const item_t *item = &ui_inventory->getRightHandContainer()->item;
+			const item_t *item = ui_inventory->getRightHandContainer();
 			assert(item);
 			assert(item->def());
 
@@ -480,7 +480,7 @@ static void UI_ContainerNodeDrawSingle (uiNode_t *node, const objDef_t *highligh
 		const item_t *item;
 
 		if (ui_inventory->getRightHandContainer()) {
-			item = &ui_inventory->getRightHandContainer()->item;
+			item = ui_inventory->getRightHandContainer();
 			/* If there is a weapon in the right hand that needs two hands to shoot it
 			 * and there is a weapon in the left, then draw a disabled marker for the
 			 * fireTwoHanded weapon. */
@@ -492,7 +492,7 @@ static void UI_ContainerNodeDrawSingle (uiNode_t *node, const objDef_t *highligh
 			}
 		}
 
-		item = &ui_inventory->getContainer(contType->id)->item;
+		item = ui_inventory->getContainer(contType->id);
 		assert(item);
 		assert(item->def());
 		if (highlightType && highlightType->isLoadableInWeapon(item->def())) {
@@ -524,11 +524,11 @@ static void UI_ContainerNodeDrawGrid (uiNode_t *node, const objDef_t *highlightT
 	pos[2] = 0;
 
 	for (ic = ui_inventory->getContainer(EXTRADATA(node).container->id); ic; ic = ic->next) {
-		assert(ic->item.def());
-		if (highlightType && highlightType->isLoadableInWeapon(ic->item.def()))
-			UI_DrawItem(node, pos, &ic->item, ic->getX(), ic->getY(), scale, colorLoadable);
+		assert(ic->def());
+		if (highlightType && highlightType->isLoadableInWeapon(ic->def()))
+			UI_DrawItem(node, pos, ic, ic->getX(), ic->getY(), scale, colorLoadable);
 		else
-			UI_DrawItem(node, pos, &ic->item, ic->getX(), ic->getY(), scale, colorDefault);
+			UI_DrawItem(node, pos, ic, ic->getX(), ic->getY(), scale, colorDefault);
 	}
 }
 
@@ -685,7 +685,7 @@ void uiContainerNode::drawTooltip (const uiNode_t *node, int x, int y) const
 		const int itemToolTipWidth = 250;
 
 		/* Get name and info about item */
-		UI_GetItemTooltip(itemHover->item, tooltiptext, sizeof(tooltiptext));
+		UI_GetItemTooltip(*itemHover, tooltiptext, sizeof(tooltiptext));
 #ifdef DEBUG
 		/* Display stored container-coordinates of the item. */
 		Q_strcat(tooltiptext, va("\n%i/%i", itemHover->getX(), itemHover->getY()), sizeof(tooltiptext));
@@ -698,7 +698,7 @@ static bool UI_ContainerNodeAddItem (const invDef_t *container, invList_t *ic, c
 {
 	int px, py;
 	const invDef_t *target = INVDEF(containerID);
-	ui_inventory->findSpace(target, &ic->item, &px, &py, NULL);
+	ui_inventory->findSpace(target, ic, &px, &py, NULL);
 	return INV_MoveItem(ui_inventory, target, px, py, container, ic, icp);
 }
 
@@ -717,7 +717,7 @@ void UI_ContainerNodeAutoPlaceItem (uiNode_t* node, invList_t *ic)
 
 	/* Right click: automatic item assignment/removal. */
 	if (container->id != csi.idEquip) {
-		if (ic->item.ammo && ic->item.ammo != ic->item.def() && ic->item.ammoLeft) {
+		if (ic->ammo && ic->ammo != ic->def() && ic->ammoLeft) {
 			/* Remove ammo on removing weapon from a soldier */
 			target = csi.idEquip;
 			ammoChanged = INV_UnloadWeapon(ic, ui_inventory, INVDEF(target));
@@ -728,13 +728,13 @@ void UI_ContainerNodeAutoPlaceItem (uiNode_t* node, invList_t *ic)
 		}
 	} else {
 		bool packed = false;
-		assert(ic->item.def());
+		assert(ic->def());
 		/* armour can only have one target */
-		if (ic->item.isArmour()) {
+		if (ic->isArmour()) {
 			target = csi.idArmour;
 			packed = INV_MoveItem(ui_inventory, INVDEF(target), 0, 0, container, ic, NULL);
 		/* ammo or item */
-		} else if (ic->item.def()->isAmmo()) {
+		} else if (ic->def()->isAmmo()) {
 			/* Finally try left and right hand. There is no other place to put it now. */
 			const containerIndex_t idxArray[] = { csi.idBelt, csi.idHolster, csi.idBackpack, csi.idLeft, csi.idRight };
 			const size_t size = lengthof(idxArray);
@@ -746,7 +746,7 @@ void UI_ContainerNodeAutoPlaceItem (uiNode_t* node, invList_t *ic)
 					break;
 			}
 		} else {
-			if (ic->item.def()->headgear) {
+			if (ic->def()->headgear) {
 				target = csi.idHeadgear;
 				packed = UI_ContainerNodeAddItem(container, ic, target, NULL);
 			} else {
@@ -760,7 +760,7 @@ void UI_ContainerNodeAutoPlaceItem (uiNode_t* node, invList_t *ic)
 					target = idxArray[i];
 					packed = UI_ContainerNodeAddItem(container, ic, target, &tItem);
 					if (packed) {
-						if ((ic->item.isWeapon() && !ic->item.ammoLeft) || ic->item.def()->oneshot)
+						if ((ic->isWeapon() && !ic->ammoLeft) || ic->def()->oneshot)
 							ammoChanged = INV_LoadWeapon(tItem, ui_inventory, container, INVDEF(target));
 						break;
 					}
@@ -780,7 +780,7 @@ void UI_ContainerNodeAutoPlaceItem (uiNode_t* node, invList_t *ic)
 		UI_ExecuteEventActions(targetNode, targetNode->onChange);
 	/* Also call onChange for equip_ammo if ammo moved
 	 * Maybe there's a better way to do this? */
-	if (ic->item.def()->isAmmo() || ammoChanged) {
+	if (ic->def()->isAmmo() || ammoChanged) {
 		/** @todo hard coded node name, remove it when it is possible */
 		uiNode_t *ammoNode = UI_GetNode(node->root, "equip_ammo");
 		if (ammoNode != NULL && node != ammoNode && ammoNode->onChange)
@@ -823,7 +823,7 @@ void uiContainerNode::onCapturedMouseMove (uiNode_t *node, int x, int y)
 {
 	const int delta = abs(oldMouseX - x) + abs(oldMouseY - y);
 	if (delta > 15) {
-		UI_DNDDragItem(node, &(dragInfoIC->item));
+		UI_DNDDragItem(node, dragInfoIC);
 		UI_MouseRelease();
 	}
 }
@@ -842,7 +842,7 @@ void uiContainerNode::onMouseDown (uiNode_t *node, int x, int y, int button)
 			oldMouseX = x;
 			oldMouseY = y;
 			UI_SetMouseCapture(node);
-			EXTRADATA(node).lastSelectedId = dragInfoIC->item.def()->idx;
+			EXTRADATA(node).lastSelectedId = dragInfoIC->def()->idx;
 			if (EXTRADATA(node).onSelect) {
 				UI_ExecuteEventActions(node, EXTRADATA(node).onSelect);
 			}
@@ -964,7 +964,7 @@ bool uiContainerNode::onDndMove (uiNode_t *target, int x, int y)
 			return false;
 		if (containerType->single)
 			return true;
-		return dragItem->def()->isLoadableInWeapon(fItem->item.def());
+		return dragItem->def()->isLoadableInWeapon(fItem->def());
 	}
 }
 
@@ -1015,27 +1015,27 @@ bool uiContainerNode::onDndFinished (uiNode_t *source, bool isDropped)
 
 			/** @todo We must split the move in two. Here, we should not know how to add the item to the target (see dndDrop) */
 			/* Remove ammo on removing weapon from a soldier */
-			if (UI_IsScrollContainerNode(target) && fItem->item.ammo && fItem->item.ammo != fItem->item.def() && fItem->item.ammoLeft)
+			if (UI_IsScrollContainerNode(target) && fItem->ammo && fItem->ammo != fItem->def() && fItem->ammoLeft)
 				INV_UnloadWeapon(fItem, ui_inventory, targetContainer);
 
 			/* Save rotation: in case the move fails we don't want the item overlapping other items or
 			 * ending partially out of the container due to changed rotation */
-			bool rotated = fItem->item.rotated;
+			bool rotated = fItem->rotated;
 			/* rotate on Shift */
 			/** @todo enable Shift-rotate for battlescape too when issues are solved */
-			fItem->item.rotated = Key_IsDown(K_SHIFT) && !CL_BattlescapeRunning();
+			fItem->rotated = Key_IsDown(K_SHIFT) && !CL_BattlescapeRunning();
 
 			/* move the item */
 			moved = INV_MoveItem(ui_inventory, targetContainer, dragInfoToX, dragInfoToY, sourceContainer, fItem, &tItem);
 
 			/* No need to continue move wasn't successful */
 			if (!moved) {
-				fItem->item.rotated = rotated;
+				fItem->rotated = rotated;
 				return false;
 			}
 
 			/* Add ammo on adding weapon to a soldier */
-			if (UI_IsScrollContainerNode(source) && ((fItem->item.isWeapon() && !fItem->item.ammoLeft) || fItem->item.def()->oneshot))
+			if (UI_IsScrollContainerNode(source) && ((fItem->isWeapon() && !fItem->ammoLeft) || fItem->def()->oneshot))
 				INV_LoadWeapon(tItem, ui_inventory, sourceContainer, targetContainer);
 
 			/* Run onChange events */
