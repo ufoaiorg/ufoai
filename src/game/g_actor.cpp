@@ -156,11 +156,11 @@ int G_ActorGetTUForReactionFire (const Edict *ent)
 {
 	const FiremodeSettings *fm = &ent->chr.RFmode;
 
-	const invList_t *invlistWeapon = ent->getHand(fm->getHand());
-	assert(invlistWeapon);
-	assert(invlistWeapon->def());
+	const Item *weapon = ent->getHand(fm->getHand());
+	assert(weapon);
+	assert(weapon->def());
 
-	const fireDef_t *fd = FIRESH_FiredefForWeapon(invlistWeapon);
+	const fireDef_t *fd = FIRESH_FiredefForWeapon(weapon);
 	assert(fd);
 	return G_ActorGetTimeForFiredef(ent, &fd[fm->getFmIdx()], true);
 }

@@ -318,10 +318,10 @@ void G_ReactionFireTargetsCreate (const Edict *shooter)
 static int G_ReactionFireGetTUsForItem (const Edict *shooter, const Edict *target)
 {
 	const FiremodeSettings *fmSetting = &shooter->chr.RFmode;
-	const invList_t *invList = shooter->getHand(fmSetting->getHand());
+	const Item *weapon = shooter->getHand(fmSetting->getHand());
 
-	if (invList && invList->ammo && invList->isWeapon() && !invList->mustReload()) {
-		const fireDef_t *fdArray = FIRESH_FiredefForWeapon(invList);
+	if (weapon && weapon->ammo && weapon->isWeapon() && !weapon->mustReload()) {
+		const fireDef_t *fdArray = FIRESH_FiredefForWeapon(weapon);
 		if (fdArray == NULL)
 			return -1;
 
@@ -350,10 +350,10 @@ static bool G_ActorHasWorkingFireModeSet (const Edict *actor)
 	if (!fmSettings->isSaneFiremode())	/* just checks for valid values */
 		return false;
 
-	const invList_t *invList = actor->getHand(fmSettings->getHand());
-	if (!invList)
+	const Item *weapon = actor->getHand(fmSettings->getHand());
+	if (!weapon)
 		return false;
-	const fireDef_t *fd = FIRESH_FiredefForWeapon(invList);
+	const fireDef_t *fd = FIRESH_FiredefForWeapon(weapon);
 	if (fd == NULL)
 		return false;
 
@@ -414,16 +414,16 @@ static bool G_ReactionFireSettingsSetDefault (Edict *ent)
 		return true;
 
 	actorHands_t hand = ACTOR_HAND_RIGHT;
-	const invList_t *invList = ent->getHand(hand);
-	if (!invList) {
+	const Item *item = ent->getHand(hand);
+	if (!item) {
 		hand = ACTOR_HAND_LEFT;
-		invList = ent->getHand(hand);
+		item = ent->getHand(hand);
 	}
 
-	if (!invList)
+	if (!item)
 		return false;
 
-	const objDef_t *weapon = invList->getReactionFireWeaponType();
+	const objDef_t *weapon = item->getReactionFireWeaponType();
 	if (!weapon)
 		return false;
 
