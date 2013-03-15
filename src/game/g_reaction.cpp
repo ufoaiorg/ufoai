@@ -318,7 +318,7 @@ void G_ReactionFireTargetsCreate (const Edict *shooter)
 static int G_ReactionFireGetTUsForItem (const Edict *shooter, const Edict *target)
 {
 	const FiremodeSettings *fmSetting = &shooter->chr.RFmode;
-	const Item *weapon = shooter->getHand(fmSetting->getHand());
+	const Item *weapon = shooter->getHandItem(fmSetting->getHand());
 
 	if (weapon && weapon->ammo && weapon->isWeapon() && !weapon->mustReload()) {
 		const fireDef_t *fdArray = FIRESH_FiredefForWeapon(weapon);
@@ -350,7 +350,7 @@ static bool G_ActorHasWorkingFireModeSet (const Edict *actor)
 	if (!fmSettings->isSaneFiremode())	/* just checks for valid values */
 		return false;
 
-	const Item *weapon = actor->getHand(fmSettings->getHand());
+	const Item *weapon = actor->getHandItem(fmSettings->getHand());
 	if (!weapon)
 		return false;
 	const fireDef_t *fd = FIRESH_FiredefForWeapon(weapon);
@@ -414,10 +414,10 @@ static bool G_ReactionFireSettingsSetDefault (Edict *ent)
 		return true;
 
 	actorHands_t hand = ACTOR_HAND_RIGHT;
-	const Item *item = ent->getHand(hand);
+	const Item *item = ent->getHandItem(hand);
 	if (!item) {
 		hand = ACTOR_HAND_LEFT;
-		item = ent->getHand(hand);
+		item = ent->getHandItem(hand);
 	}
 
 	if (!item)
@@ -522,7 +522,7 @@ static bool G_ReactionFireIsPossible (Edict *ent, const Edict *target)
 		return false;
 
 	/* check ent has weapon in RF hand */
-	if (!ent->getHand(ent->chr.RFmode.getHand())) {
+	if (!ent->getHandItem(ent->chr.RFmode.getHand())) {
 		/* print character info if this happens, for now */
 		gi.DPrintf("Reaction fire enabled but no weapon for hand (name=%s,entnum=%i,hand=%i,fmIdx=%i)\n",
 				ent->chr.name, ent->number, ent->chr.RFmode.getHand(), ent->chr.RFmode.getFmIdx());
