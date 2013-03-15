@@ -46,6 +46,23 @@ tile +craft_drop_raptor
 
 // UFOs ------------------------------------------------------------*
 
+tile +craft_ufo_fighter
+{
+4 4
+0		a		a		0
+a		+c		+c		a
+a		+c		+c		a
+0		a		a		0
+}
+
+tile +craft_ufo_scout
+{
+4 4
+0		a		a		0
+a		+c		+c		a
+a		+c		+c		a
+0		a		a		0
+}
 
 // Crashed UFOs ----------------------------------------------------*
 // used in +ufocrash

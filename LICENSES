@@ -607,6 +607,8 @@ base/maps/shared/sh_craft_crash_supply.map | GNU General Public License 2.0 or l
 base/maps/shared/sh_craft_drop_firebird.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/shared/sh_craft_drop_herakles.map | GNU General Public License 2.0 or later
 base/maps/shared/sh_craft_drop_raptor.map | GNU General Public License 2.0 or later
+base/maps/shared/sh_craft_ufo_fighter.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/shared/sh_craft_ufo_scout.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
 base/maps/shared/sh_d01.map | GNU General Public License 2.0 or later
 base/maps/shared/sh_d02_harvester.map | GNU General Public License 2.0 or later
 base/maps/shared/sh_d03.map | GNU General Public License 2.0 or later
