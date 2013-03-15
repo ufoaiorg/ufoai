@@ -352,7 +352,8 @@ typedef struct invDef_s {
  * that there is no item - e.g. a value of NONE for m means, that there is no
  * ammo loaded or assigned to this weapon
  */
-struct item_s {
+class Item {
+public:
 	int ammoLeft;				/**< Number of ammo rounds left - see NONE_AMMO */
 	const objDef_t *ammo;		/**< Pointer to ammo definition. */
 	const objDef_t *_itemDef;	/**< Pointer to weapon definition. */
@@ -364,18 +365,18 @@ struct item_s {
 					 * @note don't change this to anything smaller than 4 bytes - the network
 					 * parsing functions are expecting this to be at least 4 bytes */
 
-	struct item_s *next;	/**< Next entry in this list. */
+	Item *next;	/**< Next entry in this list. */
 
-	inline struct item_s *getNext () const
+	inline Item *getNext () const
 	{
 		return next;
 	}
-	inline void setNext (struct item_s *nx)
+	inline void setNext (Item *nx)
 	{
 		next = nx;
 	}
-	item_s ();
-	item_s (int ammoLeft, const objDef_t *ammo=NULL, const objDef_t *_itemDef=NULL);
+	Item ();
+	Item (int ammoLeft, const objDef_t *ammo=NULL, const objDef_t *_itemDef=NULL);
 
 	inline int getX () const
 	{
@@ -422,14 +423,14 @@ struct item_s {
 	{
 		return _itemDef->isArmour();
 	}
-	bool isSameAs (const item_s *const other) const;
+	bool isSameAs (const Item *const other) const;
 	float getWeight () const;
 	void getFirstShapePosition (int* const x, int* const y) const;
 	const objDef_t *getReactionFireWeaponType () const;
 };
-typedef item_s item_t;
+typedef Item item_t;
 /** the old linked list type, deprecated, but neede for compatibility */
-typedef item_s invList_t;
+typedef Item invList_t;
 
 class Container
 {

@@ -28,7 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../shared/ufotypes.h"
 
 struct uiNode_t;
-struct item_s;
+class Item;
 
 typedef enum {
 	DND_NOTHING,
@@ -40,7 +40,7 @@ typedef enum {
 void UI_DrawDragAndDrop(int mousePosX, int mousePosY);
 
 /* command */
-void UI_DNDDragItem(uiNode_t* node, const struct item_s *item);
+void UI_DNDDragItem(uiNode_t* node, const Item *item);
 void UI_DNDDrop(void);
 void UI_DNDAbort(void);
 
@@ -51,6 +51,6 @@ bool UI_DNDIsSourceNode(uiNode_t* node);
 uiNode_t* UI_DNDGetTargetNode(void);
 uiNode_t* UI_DNDGetSourceNode(void);
 int UI_DNDGetType(void);
-struct item_s *UI_DNDGetItem(void);
+Item *UI_DNDGetItem(void);
 
 #endif
