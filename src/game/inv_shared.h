@@ -352,7 +352,7 @@ typedef struct invDef_s {
  * that there is no item - e.g. a value of NONE for m means, that there is no
  * ammo loaded or assigned to this weapon
  */
-typedef struct item_s {
+struct item_s {
 	int ammoLeft;				/**< Number of ammo rounds left - see NONE_AMMO */
 	const objDef_t *ammo;		/**< Pointer to ammo definition. */
 	const objDef_t *_itemDef;	/**< Pointer to weapon definition. */
@@ -416,10 +416,11 @@ typedef struct item_s {
 	float getWeight () const;
 	void getFirstShapePosition (int* const x, int* const y) const;
 	const objDef_t *getReactionFireWeaponType () const;
-} item_t;
+};
+typedef item_s item_t;
 
 /** @brief container/inventory list (linked list) with items. */
-typedef struct invList_s {
+struct invList_s {
 	item_t item;				/**< Which item */
 	struct invList_s *next;	/**< Next entry in this list. */
 
@@ -448,7 +449,8 @@ typedef struct invList_s {
 		item.setY(val);
 	}
 
-} invList_t;
+};
+typedef invList_s invList_t;
 
 class Container
 {
