@@ -276,15 +276,15 @@ typedef struct mission_s {
 typedef struct battleParam_s {
 	mission_t *mission;
 	alienTeamGroup_t *alienTeamGroup;	/**< Races of aliens present in battle */
-	char *param;					/**< in case of a random map assembly we can't use the param from mapDef - because
-									 * this is global for the mapDef - but we need a local mission param */
-	char alienEquipment[MAX_VAR];					/**< Equipment of alien team */
-	char civTeam[MAX_VAR];							/**< Type of civilian (European, ...) */
-	bool day;									/**< Mission is played during day */
-	const char *zoneType;							/**< Terrain type (used for texture replacement in some missions (base, ufocrash)) */
-	int aliens, civilians;			/**< number of aliens and civilians in that particular mission */
-	struct nation_s *nation;		/**< nation where the mission takes place */
-	bool retriable;					/**< if the battle can be retried */
+	char *param;						/**< in case of a random map assembly we can't use the param from mapDef - because
+										 * this is global for the mapDef - but we need a local mission param */
+	char alienEquipment[MAX_VAR];		/**< Equipment of alien team */
+	char civTeam[MAX_VAR];				/**< Type of civilian (European, ...) */
+	bool day;							/**< Mission is played during day */
+	const char *zoneType;				/**< Terrain type (used for texture replacement in some missions (base, ufocrash)) */
+	int aliens, civilians;				/**< number of aliens and civilians in that particular mission */
+	struct nation_s *nation;			/**< nation where the mission takes place */
+	bool retriable;						/**< if the battle can be retried */
 } battleParam_t;
 
 typedef enum {
