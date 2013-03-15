@@ -80,6 +80,7 @@ void BATTLE_SetVars (const battleParam_t *battleParameters)
 /**
  * @brief Select the mission type and start the map from mission definition
  * @param[in] mission Mission definition to start the map from
+ * @param[in] battleParameters Context data of the battle
  * @sa CP_StartSelectedMission
  * @note Also sets the terrain textures
  * @sa Mod_LoadTexinfo
@@ -218,6 +219,7 @@ static bool CP_IsAlienEquipmentSelectable (const mission_t *mission, const equip
  * @note This function is used to know which equipment pack described in equipment_missions.ufo should be used
  * @pre Alien team must be already chosen
  * @param[in] equipPack Equipment definitions that may be used
+ * @param[in] battleParameters Context data of the battle
  * @sa CP_SetAlienTeamByInterest
  */
 static void CP_SetAlienEquipmentByInterest (const mission_t *mission, linkedList_t *equipPack, battleParam_t *battleParameters)
