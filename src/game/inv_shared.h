@@ -428,38 +428,7 @@ struct item_s {
 	const objDef_t *getReactionFireWeaponType () const;
 };
 typedef item_s item_t;
-
-/** @brief container/inventory list (linked list) with items. */
-struct invList_s {
-	item_t item;				/**< Which item */
-	struct invList_s *next;	/**< Next entry in this list. */
-
-	inline struct invList_s *getNext () const
-	{
-		return next;
-	}
-	inline void setNext (struct invList_s *nx)
-	{
-		next = nx;
-	}
-	inline int getX () const
-	{
-		return item.getX();
-	}
-	inline void setX (const int val)
-	{
-		item.setX(val);
-	}
-	inline int getY () const
-	{
-		return item.getY();
-	}
-	inline void setY (const int val)
-	{
-		item.setY(val);
-	}
-
-};
+/** the old linked list type, deprecated, but neede for compatibility */
 typedef item_s invList_t;
 
 class Container
