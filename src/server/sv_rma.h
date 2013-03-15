@@ -29,7 +29,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #pragma once
 
 #define MAX_MAPASSEMBLIES 32
-#define MAX_TILETYPES 64
+/** note: MAX_TILETYPES mostly limits the # of tiles that can be *parsed*.
+ * The # *used* in an assemly is roughly limited to RMA2_MAX_REC. */
+#define MAX_TILETYPES 128
 #define MAX_TILESETS 16
 #define MAX_TILESETTILES 8
 #define MAX_TILESIZE 16
