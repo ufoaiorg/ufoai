@@ -825,7 +825,7 @@ static const objDef_t *LE_BiggestItem (const invList_t *ic)
 	const objDef_t *max;
 	int maxSize = 0;
 
-	for (max = ic->def(); ic; ic = ic->next) {
+	for (max = ic->def(); ic; ic = ic->getNext()) {
 		const int size = INVSH_ShapeSize(ic->def()->shape);
 		if (size > maxSize) {
 			max = ic->def();

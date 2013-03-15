@@ -329,7 +329,7 @@ static void AII_CarriedItems (const inventory_t *soldierInventory)
 		/* Items on the ground are collected as ET_ITEM */
 		if (INVDEF(container)->temp)
 			continue;
-		for (invList = soldierInventory->getContainer(container); invList; invList = invList->next) {
+		for (invList = soldierInventory->getContainer(container); invList; invList = invList->getNext()) {
 			const objDef_t *item = invList->def();
 			const objDef_t *ammo = invList->ammo;
 			technology_t *tech = RS_GetTechForItem(item);
@@ -832,7 +832,7 @@ static int AIR_GetStorageRoom (const aircraft_t *aircraft)
 			if (INVDEF(container)->temp)
 				continue;
 #endif
-			for (ic = employee->chr.inv.getContainer(container); ic; ic = ic->next) {
+			for (ic = employee->chr.inv.getContainer(container); ic; ic = ic->getNext()) {
 				const objDef_t *obj = ic->def();
 				size += obj->size;
 
@@ -885,7 +885,7 @@ static void AIR_TransferItemsCarriedByCharacterToBase (character_t *chr, base_t 
 		if (INVDEF(container)->temp)
 			continue;
 #endif
-		for (ic = chr->inv.getContainer(container); ic; ic = ic->next) {
+		for (ic = chr->inv.getContainer(container); ic; ic = ic->getNext()) {
 			const objDef_t *obj = ic->def();
 			B_UpdateStorageAndCapacity(sourceBase, obj, -1, false);
 			B_UpdateStorageAndCapacity(destBase, obj, 1, false);
@@ -3057,7 +3057,7 @@ void AIR_MoveEmployeeInventoryIntoStorage (const aircraft_t &aircraft, equipDef_
 			while (ic) {
 				const item_t item = *ic;
 				const objDef_t *type = item.def();
-				invList_t *next = ic->next;
+				invList_t *next = ic->getNext();
 
 				ed.numItems[type->idx]++;
 				if (item.ammoLeft && type->reload) {

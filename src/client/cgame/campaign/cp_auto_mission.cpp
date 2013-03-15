@@ -790,7 +790,7 @@ static void AM_MoveCharacterInventoryIntoItemCargo (aircraft_t *aircraft, charac
 
 		while (ic) {
 			const item_t *item = ic;
-			const invList_t *next = ic->next;
+			const invList_t *next = ic->getNext();
 
 			if (item->def()) {
 				AII_CollectItem(aircraft, item->def(), 1);

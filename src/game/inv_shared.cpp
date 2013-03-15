@@ -540,7 +540,7 @@ Item::Item ()
 	ammo = NULL;
 	_itemDef = NULL;
 	amount = _x = _y = rotated = 0;
-	next = NULL;
+	_next = NULL;
 }
 
 /** @brief item_t constructor with the 3 most often changed attributes */
@@ -550,7 +550,7 @@ Item::Item (int _ammoLeft, const objDef_t *_ammo, const objDef_t *itemDef)
 	ammo = _ammo;
 	_itemDef = itemDef;
 	amount = _x = _y = rotated = 0;
-	next = NULL;
+	_next = NULL;
 }
 
 /**

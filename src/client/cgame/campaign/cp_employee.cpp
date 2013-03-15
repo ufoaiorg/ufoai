@@ -1132,7 +1132,7 @@ void E_RemoveInventoryFromStorage (employee_t *employee)
 			if (invList->def())
 				B_UpdateStorageAndCapacity(employee->baseHired, invList->def(), -1, false);
 
-			invList = invList->next;
+			invList = invList->getNext();
 		}
 	}
 }

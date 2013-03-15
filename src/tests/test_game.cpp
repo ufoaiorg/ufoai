@@ -156,7 +156,7 @@ static int GAMETEST_GetItemCount (const edict_t *ent, containerIndex_t container
 	int count = 0;
 	while (invlist != NULL) {
 		count += invlist->amount;
-		invlist = invlist->next;
+		invlist = invlist->getNext();
 	}
 
 	return count;
@@ -357,7 +357,7 @@ static void testInventoryTempContainerLinks (void)
 		for (container = 0; container < gi.csi->numIDs; container++) {
 			if (container == gi.csi->idArmour || container == gi.csi->idFloor)
 				continue;
-			for (ic = ent->getContainer(container); ic; ic = ic->next)
+			for (ic = ent->getContainer(container); ic; ic = ic->getNext())
 				nr++;
 		}
 		CU_ASSERT_TRUE(nr > 0);
@@ -371,7 +371,7 @@ static void testInventoryTempContainerLinks (void)
 		for (container = 0; container < gi.csi->numIDs; container++) {
 			if (container == gi.csi->idArmour || container == gi.csi->idFloor)
 				continue;
-			for (ic = ent->getContainer(container); ic; ic = ic->next)
+			for (ic = ent->getContainer(container); ic; ic = ic->getNext())
 				nr++;
 		}
 		CU_ASSERT_EQUAL(nr, 0);

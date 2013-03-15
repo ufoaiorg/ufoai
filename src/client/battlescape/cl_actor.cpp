@@ -945,7 +945,7 @@ int CL_ActorGetContainerForReload (invList_t **invList, const inventory_t *inv, 
 			 * searching other containers if it would take longer
 			 * to retrieve the ammo from them than the one
 			 * we've already found. */
-			for (ic = inv->getContainer(container); ic; ic = ic->next) {
+			for (ic = inv->getContainer(container); ic; ic = ic->getNext()) {
 				const objDef_t *od = ic->def();
 				if (od->isLoadableInWeapon(weapon) && GAME_ItemIsUseable(od)) {
 					tu = INVDEF(container)->out;

@@ -411,7 +411,7 @@ static void GAME_CollectItems (void *data, int won, void (*item)(void*, const ob
 		if (LE_IsItem(le)) {
 			if (won) {
 				invList_t *i = le->getFloorContainer();
-				for ( ; i; i = i->next) {
+				for ( ; i; i = i->getNext()) {
 					item(data, i->def(), 1);
 					if (i->isReloadable() && i->ammoLeft > 0)
 						ammo(data, i);
@@ -1237,7 +1237,7 @@ static void GAME_NetSendInventory (dbuffer *buf, const inventory_t *inv)
 	for (container = 0; container < csi.numIDs; container++) {
 		if (INVDEF(container)->temp)
 			continue;
-		for (ic = inv->getContainer(container); ic; ic = ic->next) {
+		for (ic = inv->getContainer(container); ic; ic = ic->getNext()) {
 			nr++;
 		}
 	}
@@ -1246,7 +1246,7 @@ static void GAME_NetSendInventory (dbuffer *buf, const inventory_t *inv)
 	for (container = 0; container < csi.numIDs; container++) {
 		if (INVDEF(container)->temp)
 			continue;
-		for (ic = inv->getContainer(container); ic; ic = ic->next) {
+		for (ic = inv->getContainer(container); ic; ic = ic->getNext()) {
 			GAME_NetSendItem(buf, *ic, container, ic->getX(), ic->getY());
 		}
 	}
