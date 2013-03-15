@@ -450,6 +450,7 @@ mapdef city3_small_noufo
 // COUNTRY RANDOM MAPS //
 /////////////////////////
 
+/*
 mapdef country_large
 {
 	map			"+country"
@@ -491,6 +492,8 @@ mapdef country_large
 		"nopopulation"
 	)
 }
+*/
+
 /* disabled for now because it can break MAX_MAPTILES 64
 mapdef country_street
 {
