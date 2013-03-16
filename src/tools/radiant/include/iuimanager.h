@@ -1,5 +1,4 @@
-#ifndef INCLUDE_UIMANAGER_H_
-#define INCLUDE_UIMANAGER_H_
+#pragma once
 
 #include <string>
 #include "generic/constant.h"
@@ -117,5 +116,3 @@ typedef GlobalModuleRef<IUIManager> GlobalUIManagerModuleRef;
 inline IUIManager& GlobalUIManager() {
 	return GlobalUIManagerModule::getTable();
 }
-
-#endif /*INCLUDE_UIMANAGER_H_*/

@@ -1,5 +1,4 @@
-#ifndef ISHADER_H_
-#define ISHADER_H_
+#pragma once
 
 #include "texturelib.h"
 #include "ishaderlayer.h"
@@ -87,5 +86,3 @@ class IShader
 		 */
 		virtual ECull getCull () = 0;
 };
-
-#endif /* ISHADER_H_ */

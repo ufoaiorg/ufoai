@@ -1,5 +1,4 @@
-#ifndef IREGISTRY_H_
-#define IREGISTRY_H_
+#pragma once
 
 #include <string>
 #include "xmlutil/Document.h"
@@ -185,5 +184,3 @@ typedef GlobalModuleRef<Registry> GlobalRegistryModuleRef;
 inline Registry& GlobalRegistry() {
 	return GlobalRegistryModule::getTable();
 }
-
-#endif /*IREGISTRY_H_*/

@@ -1,5 +1,4 @@
-#ifndef ISHADERLAYER_H_
-#define ISHADERLAYER_H_
+#pragma once
 
 #include "generic/callback.h"
 
@@ -103,5 +102,3 @@ class ShaderLayer
 };
 
 typedef Callback1<const ShaderLayer&> ShaderLayerCallback;
-
-#endif /* ISHADERLAYER_H_ */

@@ -1,5 +1,4 @@
-#ifndef _GTKUTIL_COMBOBOX_H_
-#define _GTKUTIL_COMBOBOX_H_
+#pragma once
 
 #include <string>
 #include <gtk/gtkcombobox.h>
@@ -28,5 +27,3 @@ namespace gtkutil
 	};
 
 } // namespace gtkutil
-
-#endif /* _GTKUTIL_COMBOBOX_H_ */

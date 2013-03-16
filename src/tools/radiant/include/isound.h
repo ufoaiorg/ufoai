@@ -1,5 +1,4 @@
-#ifndef ISOUND_H_
-#define ISOUND_H_
+#pragma once
 
 #include "modulesystem.h"
 #include "modulesystem/moduleregistry.h"
@@ -112,5 +111,3 @@ inline ISoundManager& GlobalSoundManager ()
 {
 	return GlobalSoundManagerModule::getTable();
 }
-
-#endif /*ISOUND_H_*/

@@ -126,4 +126,4 @@ template<typename Type>
 class ModulesRef;
 typedef ModulesRef<ModelLoader> ModelModulesRef;
 
-#endif /* _IMODEL_H_ */
+#endif /* INCLUDED_IMODEL_H */
