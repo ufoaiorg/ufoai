@@ -143,7 +143,7 @@ static void CL_CharacterSkillAndScoreCvars (const character_t *chr)
  */
 static void CL_ActorCvars (const character_t *chr)
 {
-	invList_t *weapon;
+	Item *weapon;
 	assert(chr);
 
 	/* visible equipment */

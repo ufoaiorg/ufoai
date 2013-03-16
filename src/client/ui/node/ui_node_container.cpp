@@ -462,7 +462,7 @@ static void UI_ContainerNodeDrawSingle (uiNode_t *node, const objDef_t *highligh
 	const invDef_t *contType = EXTRADATA(node).container;
 	if (contType->isLeftDef() && !ui_inventory->getLeftHandContainer()) {
 		if (ui_inventory->getRightHandContainer()) {
-			const item_t *item = ui_inventory->getRightHandContainer();
+			const Item *item = ui_inventory->getRightHandContainer();
 			assert(item);
 			assert(item->def());
 
@@ -477,7 +477,7 @@ static void UI_ContainerNodeDrawSingle (uiNode_t *node, const objDef_t *highligh
 		}
 	} else if (ui_inventory->getContainer(contType->id)) {
 		bool disabled = false;
-		const item_t *item;
+		const Item *item;
 
 		if (ui_inventory->getRightHandContainer()) {
 			item = ui_inventory->getRightHandContainer();

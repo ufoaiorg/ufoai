@@ -169,7 +169,7 @@ void CP_CleanupTeam (base_t *base, equipDef_t *ed)
 		/* This is an UGV */
 		if (employee->ugv) {
 			/* Check if there is a weapon and add it if there isn't. */
-			invList_t *rightH = chr->inv.getRightHandContainer();
+			Item *rightH = chr->inv.getRightHandContainer();
 			if (!rightH || !rightH->def())
 				cgi->INV_EquipActorRobot(&chr->inv, INVSH_GetItemByID(employee->ugv->weapon));
 		}

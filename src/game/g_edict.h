@@ -179,7 +179,7 @@ public:
 	{
 		chr.inv.resetContainer(idx);
 	}
-	inline invList_t *getArmour () const
+	inline Item *getArmour () const
 	{
 		return chr.inv.getArmourContainer();
 	}

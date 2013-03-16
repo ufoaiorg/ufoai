@@ -1810,8 +1810,8 @@ static void CL_SwapSkills (linkedList_t *team)
 				character_t *cp1 = (character_t*)cp1List->data;
 				const fireDef_t *fdRightArray = NULL;
 				const fireDef_t *fdHolsterArray = NULL;
-				const invList_t *rightHandCharOne = cp1->inv.getRightHandContainer();
-				const invList_t *holsterCharOne = cp1->inv.getHolsterContainer();
+				const Item *rightHandCharOne = cp1->inv.getRightHandContainer();
+				const Item *holsterCharOne = cp1->inv.getHolsterContainer();
 
 				if (rightHandCharOne && rightHandCharOne->ammo && rightHandCharOne->def())
 					fdRightArray = FIRESH_FiredefForWeapon(rightHandCharOne);
@@ -1831,8 +1831,8 @@ static void CL_SwapSkills (linkedList_t *team)
 						character_t *cp2 = (character_t*)cp2List->data;
 						fdRightArray = NULL;
 						fdHolsterArray = NULL;
-						const invList_t *rightHandCharTwo = cp2->inv.getRightHandContainer();
-						const invList_t *holsterCharTwo = cp2->inv.getHolsterContainer();
+						const Item *rightHandCharTwo = cp2->inv.getRightHandContainer();
+						const Item *holsterCharTwo = cp2->inv.getHolsterContainer();
 
 						if (rightHandCharTwo && rightHandCharTwo->ammo && rightHandCharTwo->def())
 							fdRightArray = FIRESH_FiredefForWeapon(rightHandCharTwo);
