@@ -1215,14 +1215,14 @@ void GAME_HandleResults (dbuffer *msg, int winner, int *numSpawned, int *numAliv
  * @note The amount of the item_t struct should not be needed here - because
  * the amount is only valid for idFloor and idEquip
  */
-static void GAME_NetSendItem (dbuffer *buf, item_t item, containerIndex_t container, int x, int y)
+static void GAME_NetSendItem (dbuffer *buf, const Item *item, containerIndex_t container, int x, int y)
 {
-	const int ammoIdx = item.ammo ? item.ammo->idx : NONE;
+	const int ammoIdx = item->ammo ? item->ammo->idx : NONE;
 	const eventRegister_t *eventData = CL_GetEvent(EV_INV_TRANSFER);
-	assert(item.def());
+	assert(item->def());
 	Com_DPrintf(DEBUG_CLIENT, "GAME_NetSendItem: Add item %s to container %i (t=%i:a=%i:m=%i) (x=%i:y=%i)\n",
-		item.def()->id, container, item.def()->idx, item.ammoLeft, ammoIdx, x, y);
-	NET_WriteFormat(buf, eventData->formatString, item.def()->idx, item.ammoLeft, ammoIdx, container, x, y, item.rotated, item.amount);
+		item->def()->id, container, item->def()->idx, item->ammoLeft, ammoIdx, x, y);
+	NET_WriteFormat(buf, eventData->formatString, item->def()->idx, item->ammoLeft, ammoIdx, container, x, y, item->rotated, item->amount);
 }
 
 /**
@@ -1247,7 +1247,7 @@ static void GAME_NetSendInventory (dbuffer *buf, const inventory_t *inv)
 		if (INVDEF(container)->temp)
 			continue;
 		for (ic = inv->getContainer(container); ic; ic = ic->getNext()) {
-			GAME_NetSendItem(buf, *ic, container, ic->getX(), ic->getY());
+			GAME_NetSendItem(buf, ic, container, ic->getX(), ic->getY());
 		}
 	}
 }
