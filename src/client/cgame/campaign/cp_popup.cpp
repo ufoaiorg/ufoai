@@ -83,7 +83,7 @@ static popup_intercept_t popupIntercept;	/**< Data about popup_intercept */
 
 /** Reservation-popup info */
 static int popupNum;							/**< Number of entries in the popup list */
-static linkedList_t* popupListData = NULL;		/**< Further datas needed when popup is clicked */
+static linkedList_t *popupListData = NULL;		/**< Further datas needed when popup is clicked */
 static uiNode_t* popupListNode = NULL;		/**< Node used for popup */
 
 static int INVALID_BASE = -1;
@@ -103,7 +103,7 @@ bool CL_DisplayHomebasePopup (aircraft_t *aircraft, bool alwaysDisplay)
 	int homebase;
 	int numAvailableBases = 0;
 	baseCapacities_t capacity;
-	linkedList_t* popupListText = NULL;
+	linkedList_t *popupListText = NULL;
 	base_t *base;
 
 	assert(aircraft);
@@ -159,7 +159,7 @@ bool CL_DisplayHomebasePopup (aircraft_t *aircraft, bool alwaysDisplay)
  */
 static void CL_PopupChangeHomebase_f (void)
 {
-	linkedList_t* data = popupListData;	/**< Use this so we do not change the original popupListData pointer. */
+	linkedList_t *data = popupListData;	/**< Use this so we do not change the original popupListData pointer. */
 	int selectedPopupIndex;
 	int i;
 	base_t *base;

@@ -59,7 +59,7 @@ void UI_Popup (const char *title, const char *text)
  * @param[in] entries List of the selectables choices.
  * @param[in] clickAction Action to perform when one clicked on the popup.
  */
-uiNode_t *UI_PopupList (const char *title, const char *headline, linkedList_t* entries, const char *clickAction)
+uiNode_t *UI_PopupList (const char *title, const char *headline, linkedList_t *entries, const char *clickAction)
 {
 	uiNode_t* window;
 	uiNode_t* listNode;

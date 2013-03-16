@@ -2249,7 +2249,7 @@ base_t* GEO_PositionCloseToBase (const vec2_t pos)
  * @return true if a location was found, otherwise false. If the map is over water, return false
  * @note The name TCPNTypes comes from terrain, culture, population, nation types
  */
-bool GEO_PositionFitsTCPNTypes (const vec2_t pos, const linkedList_t* terrainTypes, const linkedList_t* cultureTypes, const linkedList_t* populationTypes, const linkedList_t* nations)
+bool GEO_PositionFitsTCPNTypes (const vec2_t pos, const linkedList_t *terrainTypes, const linkedList_t *cultureTypes, const linkedList_t *populationTypes, const linkedList_t *nations)
 {
 	bool coast = false;
 	const char *terrainType = GEO_GetTerrainTypeByPos(pos, &coast);

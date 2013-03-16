@@ -69,7 +69,7 @@ void uiTextListNode::onMouseMove (uiNode_t *node, int x, int y)
  * @param[in] node The context node
  * @param[in] list The text list to draw
  */
-void uiTextListNode::drawText (uiNode_t* node, const linkedList_t* list)
+void uiTextListNode::drawText (uiNode_t* node, const linkedList_t *list)
 {
 	vec4_t colorHover;
 	vec4_t colorSelectedHover;

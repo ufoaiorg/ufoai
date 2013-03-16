@@ -478,7 +478,7 @@ typedef struct ccs_s {
 	int numProjectiles;
 
 	/* == Transfers == */
-	linkedList_t* transfers;
+	linkedList_t *transfers;
 
 	/* UFO components. */
 	int numComponents;
@@ -523,7 +523,7 @@ typedef struct ccs_s {
 	int numInstallationTemplates;
 
 	/* A list of _all_ installations */
-	linkedList_t* installations;
+	linkedList_t *installations;
 
 	/* UFOs on geoscape */
 	aircraft_t ufos[MAX_UFOONGEOSCAPE];

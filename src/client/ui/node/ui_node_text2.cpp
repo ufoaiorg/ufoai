@@ -140,7 +140,7 @@ void uiText2Node::onMouseMove (uiNode_t *node, int x, int y)
  * @param[in] list The test to draw else NULL
  * @param[in] noDraw If true, calling of this function only update the cache (real number of lines)
  */
-void uiText2Node::drawText (uiNode_t* node, const linkedList_t* list, bool noDraw)
+void uiText2Node::drawText (uiNode_t* node, const linkedList_t *list, bool noDraw)
 {
 	char newFont[MAX_VAR];
 	const char* oldFont = NULL;

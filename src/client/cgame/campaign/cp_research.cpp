@@ -424,7 +424,7 @@ static void RS_AssignTechLinks (requirements_t *reqs)
  */
 void RS_RequiredLinksAssign (void)
 {
-	linkedList_t* ll = redirectedTechs;	/**< Use this so we do not change the original redirectedTechs pointer. */
+	linkedList_t *ll = redirectedTechs;	/**< Use this so we do not change the original redirectedTechs pointer. */
 	technology_t *redirectedTech;
 	int i;
 

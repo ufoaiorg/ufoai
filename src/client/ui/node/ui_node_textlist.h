@@ -32,7 +32,7 @@ class uiTextListNode : public uiTextNode {
 	void onMouseMove(uiNode_t* node, int x, int y) OVERRIDE;
 	void onLoading(uiNode_t* node) OVERRIDE;
 protected:
-	void drawText (uiNode_t* node, const linkedList_t* list);
+	void drawText (uiNode_t* node, const linkedList_t *list);
 };
 
 struct uiBehaviour_t;

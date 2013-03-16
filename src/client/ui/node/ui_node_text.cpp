@@ -153,7 +153,7 @@ void uiTextNode::onMouseMove (uiNode_t *node, int x, int y)
  * @param[in] noDraw If true, calling of this function only update the cache (real number of lines)
  * @note text or list but be used, not both
  */
-void uiTextNode::drawText (uiNode_t* node, const char *text, const linkedList_t* list, bool noDraw)
+void uiTextNode::drawText (uiNode_t* node, const char *text, const linkedList_t *list, bool noDraw)
 {
 	static char textCopy[UI_TEXTNODE_BUFFERSIZE];
 	char newFont[MAX_VAR];

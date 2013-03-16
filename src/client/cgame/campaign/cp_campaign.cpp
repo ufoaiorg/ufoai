@@ -1331,7 +1331,7 @@ void CP_GetRandomPosOnGeoscape (vec2_t pos, bool noWater)
  * @note When all parameters are NULL, the algorithm assumes that it does not need to include "water" terrains when determining a random position
  * @note You should rather use CP_GetRandomPosOnGeoscape if there are no parameters (except water) to choose a random position
  */
-bool CP_GetRandomPosOnGeoscapeWithParameters (vec2_t pos, const linkedList_t* terrainTypes, const linkedList_t* cultureTypes, const linkedList_t* populationTypes, const linkedList_t* nations)
+bool CP_GetRandomPosOnGeoscapeWithParameters (vec2_t pos, const linkedList_t *terrainTypes, const linkedList_t *cultureTypes, const linkedList_t *populationTypes, const linkedList_t *nations)
 {
 	float x, y;
 	int num;

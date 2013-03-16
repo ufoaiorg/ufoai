@@ -2084,7 +2084,7 @@ NAME AND TEAM DEFINITION INTERPRETER
 static const char *Com_GiveName (int gender, const teamDef_t *td)
 {
 	int j, name = 0;
-	linkedList_t* list;
+	linkedList_t *list;
 
 #ifdef DEBUG
 	for (j = 0; j < NAME_NUM_TYPES; j++)
@@ -2119,7 +2119,7 @@ static const char *Com_GiveName (int gender, const teamDef_t *td)
  */
 static teamDef_t::model_t const* Com_GiveModel (int gender, const teamDef_t *td)
 {
-	const linkedList_t* list;
+	const linkedList_t *list;
 
 	/* found category */
 	if (!td->numModels[gender]) {
@@ -2150,7 +2150,7 @@ static teamDef_t::model_t const* Com_GiveModel (int gender, const teamDef_t *td)
 const char* Com_GetActorSound (teamDef_t* td, int gender, actorSound_t soundType)
 {
 	int random, j;
-	linkedList_t* list;
+	linkedList_t *list;
 
 	if (!td)
 		return NULL;

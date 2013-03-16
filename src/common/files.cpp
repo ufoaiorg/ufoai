@@ -517,7 +517,7 @@ void FS_AddGameDirectory (const char *dir, bool write)
 	int pakfile_count = 0;
 	char pattern[MAX_OSPATH];
 
-	for (searchpath_t* search = fs_searchpaths; search; search = search->next) {
+	for (searchpath_t *search = fs_searchpaths; search; search = search->next) {
 		if (Q_streq(search->filename, dir))
 			return;
 		if (write && search->write) {
@@ -786,7 +786,7 @@ static void FS_Link_f (void)
 
 	/* see if the link already exists */
 	prev = &fs_links;
-	for (filelink_t* l = fs_links; l; l = l->next) {
+	for (filelink_t *l = fs_links; l; l = l->next) {
 		if (Q_streq(l->from, Cmd_Argv(1))) {
 			Mem_Free(l->to);
 			if (!strlen(Cmd_Argv(2))) {	/* delete it */

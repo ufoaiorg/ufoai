@@ -253,7 +253,7 @@ static void HUD_SetShootReservation (const le_t* le, const int tus, const actorH
 	chr->reservedTus.shotSettings.set(hand, fireModeIndex, weapon);
 }
 
-static linkedList_t* popupListData;
+static linkedList_t *popupListData;
 static uiNode_t* popupListNode;
 
 /**
@@ -270,7 +270,7 @@ static void HUD_PopupFiremodeReservation (const le_t *le, bool popupReload)
 	int i;
 	static char text[MAX_VAR];
 	int selectedEntry;
-	linkedList_t* popupListText = NULL;
+	linkedList_t *popupListText = NULL;
 	reserveShot_t reserveShotData;
 
 	/* reset the list */

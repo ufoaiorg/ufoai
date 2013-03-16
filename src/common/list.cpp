@@ -29,7 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <assert.h>
 #include <string.h>
 
-static linkedList_t* LIST_AllocateEntry(void* const data, linkedList_t* const next = 0)
+static linkedList_t *LIST_AllocateEntry(void* const data, linkedList_t* const next = 0)
 {
 	linkedList_t* const e = Mem_PoolAllocType(linkedList_t, com_genericPool);
 	e->data = data;
@@ -38,7 +38,7 @@ static linkedList_t* LIST_AllocateEntry(void* const data, linkedList_t* const ne
 }
 
 /** Append entry to end of list. */
-static void LIST_AppendEntry(linkedList_t** list, linkedList_t* const entry)
+static void LIST_AppendEntry(linkedList_t **list, linkedList_t* const entry)
 {
 	while (*list) list = &(*list)->next;
 	*list = entry;
@@ -51,7 +51,7 @@ static void LIST_AppendEntry(linkedList_t** list, linkedList_t* const entry)
  * @return Returns a pointer to the data that has been added, wrapped in a linkedList_t
  * @todo Optimize this to not allocate memory for every entry - but use a hunk
  */
-linkedList_t* LIST_Add (linkedList_t** listDest, void const* data, size_t length)
+linkedList_t *LIST_Add (linkedList_t** listDest, void const* data, size_t length)
 {
 	assert(listDest);
 	assert(data);
@@ -70,7 +70,7 @@ linkedList_t* LIST_Add (linkedList_t** listDest, void const* data, size_t length
  * @note if string is @c NULL, the function returns @c NULL
  * @sa LIST_AddString
  */
-const linkedList_t* LIST_ContainsString (const linkedList_t* list, const char* string)
+const linkedList_t *LIST_ContainsString (const linkedList_t *list, const char* string)
 {
 	while ((string != NULL) && (list != NULL)) {
 		if (Q_streq(static_cast<char const*>(list->data), string))
@@ -88,7 +88,7 @@ const linkedList_t* LIST_ContainsString (const linkedList_t* list, const char* s
  * @note O(n)
  * @note Only use this for small linked lists
  */
-linkedList_t* LIST_GetPointer (linkedList_t* list, const void* data)
+linkedList_t *LIST_GetPointer (linkedList_t *list, const void* data)
 {
 	while ((data != NULL) && (list != NULL)) {
 		if (list->data == data)
@@ -99,7 +99,7 @@ linkedList_t* LIST_GetPointer (linkedList_t* list, const void* data)
 	return NULL;
 }
 
-static linkedList_t* LIST_AllocateString(char const* data, linkedList_t* const next = 0)
+static linkedList_t *LIST_AllocateString(char const* data, linkedList_t* const next = 0)
 {
 	return LIST_AllocateEntry(Mem_StrDup(data), next);
 }
@@ -321,7 +321,7 @@ void LIST_Sort (linkedList_t **list, linkedListSort_t sorter, const void* userDa
  * @brief Copies the list structure data - but not the content from the original list.
  * We are only using pointers here.
  */
-linkedList_t *LIST_CopyStructure (linkedList_t* src)
+linkedList_t *LIST_CopyStructure (linkedList_t *src)
 {
 	linkedList_t *dest = NULL;
 	LIST_Foreach(src, void, data) {

@@ -37,7 +37,7 @@ class uiText2Node : public uiTextNode {
 	void onLoaded(uiNode_t* node) OVERRIDE;
 	void updateCache (uiNode_t* node) OVERRIDE;
 protected:
-	void drawText (uiNode_t* node, const linkedList_t* list, bool noDraw);
+	void drawText (uiNode_t* node, const linkedList_t *list, bool noDraw);
 };
 
 struct uiBehaviour_t;

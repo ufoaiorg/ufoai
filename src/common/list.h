@@ -29,7 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 struct linkedList_t {
 	void*         data;
-	linkedList_t* next;
+	linkedList_t *next;
 	bool      ptr; /**< don't call Mem_Free for data if this is @c true */
 };
 
@@ -56,14 +56,14 @@ void LIST_PrependString(linkedList_t** listDest, const char* data);
 void LIST_AddString(linkedList_t** list, const char* data);
 void LIST_AddStringSorted(linkedList_t** listDest, const char* data);
 void LIST_AddPointer(linkedList_t** listDest, void* data);
-linkedList_t* LIST_Add(linkedList_t** list, void const* data, size_t length);
-const linkedList_t* LIST_ContainsString(const linkedList_t* list, const char* string);
-linkedList_t* LIST_GetPointer(linkedList_t* list, const void* data);
+linkedList_t *LIST_Add(linkedList_t** list, void const* data, size_t length);
+const linkedList_t *LIST_ContainsString(const linkedList_t *list, const char* string);
+linkedList_t *LIST_GetPointer(linkedList_t *list, const void* data);
 void LIST_Delete(linkedList_t **list);
 bool LIST_RemoveEntry(linkedList_t **list, linkedList_t *entry);
 bool LIST_IsEmpty(const linkedList_t *list);
 int LIST_Count(const linkedList_t *list);
-linkedList_t *LIST_CopyStructure(linkedList_t* src);
+linkedList_t *LIST_CopyStructure(linkedList_t *src);
 void *LIST_GetByIdx(linkedList_t *list, int index);
 bool LIST_Remove(linkedList_t **list, const void *data);
 void LIST_Sort(linkedList_t **list, linkedListSort_t sorter, const void* userData);
