@@ -533,16 +533,15 @@ int G_ActorGetContentFlags (const vec3_t origin)
  * @sa event PA_INVMOVE
  * @sa AI_ActorThink
  */
-bool G_ActorInvMove (Edict *ent, const invDef_t *from, invList_t *fItem, const invDef_t *to, int tx,
-		int ty, bool checkaction)
+bool G_ActorInvMove (Edict *ent, const invDef_t *from, invList_t *fItem, const invDef_t *to, int tx, int ty, bool checkaction)
 {
 	Edict *floor;
 	bool newFloor;
-	invList_t *ic, *tc;
+	invList_t *tc;
 	item_t item;
 	playermask_t mask;
 	inventory_action_t ia;
-	invList_t fItemBackup, tItemBackup;
+	Item fromItemBackup, toItemBackup;
 	int fx, fy;
 	int originalTU, reservedTU = 0;
 	Player &player = ent->getPlayer();
@@ -551,15 +550,15 @@ bool G_ActorInvMove (Edict *ent, const invDef_t *from, invList_t *fItem, const i
 	assert(fItem->def());
 
 	/* Store the location/item of 'from' BEFORE actually moving items with moveInInventory. */
-	fItemBackup = *fItem;
+	fromItemBackup = *fItem;
 
 	/* Store the location of 'to' BEFORE actually moving items with moveInInventory
 	 * so in case we swap ammo the client can be updated correctly */
 	tc = ent->chr.inv.getItemAtPos(to, tx, ty);
 	if (tc)
-		tItemBackup = *tc;
+		toItemBackup = *tc;
 	else
-		tItemBackup = *fItem;
+		toItemBackup = *fItem;
 
 	/* Get first used bit in item. */
 	fItem->getFirstShapePosition(&fx, &fy);
@@ -592,10 +591,11 @@ bool G_ActorInvMove (Edict *ent, const invDef_t *from, invList_t *fItem, const i
 	}
 
 	/* search for space */
+	Item *item2;
 	if (tx == NONE) {
-		ic = ent->chr.inv.getItemAtPos(from, fItem->getX(), fItem->getY());
-		if (ic)
-			ent->chr.inv.findSpace(to, ic, &tx, &ty, fItem);
+		item2 = ent->chr.inv.getItemAtPos(from, fItem->getX(), fItem->getY());
+		if (item2)
+			ent->chr.inv.findSpace(to, item2, &tx, &ty, fItem);
 		if (tx == NONE)
 			return false;
 	}
@@ -608,7 +608,7 @@ bool G_ActorInvMove (Edict *ent, const invDef_t *from, invList_t *fItem, const i
 	/* Temporary decrease ent->TU to make moveInInventory do what expected. */
 	G_ActorUseTU(ent, reservedTU);
 	/* Try to actually move the item and check the return value after restoring valid ent->TU. */
-	ia = game.i.moveInInventory(&ent->chr.inv, from, fItem, to, tx, ty, checkaction ? &ent->TU : NULL, &ic);
+	ia = game.i.moveInInventory(&ent->chr.inv, from, fItem, to, tx, ty, checkaction ? &ent->TU : NULL, &item2);
 	/* Now restore the original ent->TU and decrease it for TU used for inventory move. */
 	G_ActorSetTU(ent, originalTU - (originalTU - reservedTU - ent->TU));
 
@@ -656,8 +656,8 @@ bool G_ActorInvMove (Edict *ent, const invDef_t *from, invList_t *fItem, const i
 	/* send tu's */
 	G_SendStats(ent);
 
-	assert(ic);
-	item = *ic;
+	assert(item2);
+	item = *item2;
 
 	if (ia == IA_RELOAD || ia == IA_RELOAD_SWAP) {
 		/* reload */
@@ -666,29 +666,29 @@ bool G_ActorInvMove (Edict *ent, const invDef_t *from, invList_t *fItem, const i
 		else
 			mask = G_TeamToPM(ent->team);
 
-		G_EventInventoryReload(to->isFloorDef() ? floor : ent, mask, &item, to, ic);
+		G_EventInventoryReload(to->isFloorDef() ? floor : ent, mask, &item, to, item2);
 
 		if (ia == IA_RELOAD) {
 			return true;
 		} else { /* ia == IA_RELOAD_SWAP */
 			item.ammoLeft = NONE_AMMO;
 			item.ammo = NULL;
-			item.setDef(tItemBackup.ammo);
-			item.rotated = fItemBackup.rotated;
-			item.amount = tItemBackup.amount;
+			item.setDef(toItemBackup.ammo);
+			item.rotated = fromItemBackup.rotated;
+			item.amount = toItemBackup.amount;
 			to = from;
 			if (to->isFloorDef()) {
 				/* moveInInventory placed the swapped ammo in an available space, check where it was placed
 				 * so we can place it at the same place in the client, otherwise since fItem hasn't been removed
 				 * this could end in a different place in the client - will cause an error if trying to use it again */
-				ic = ent->chr.inv.findInContainer(to, &item);
-				assert(ic);
-				fItemBackup = item;
-				fItemBackup.setX(ic->getX());
-				fItemBackup.setY(ic->getY());
+				item2 = ent->chr.inv.findInContainer(to, &item);
+				assert(item2);
+				fromItemBackup = item;
+				fromItemBackup.setX(item2->getX());
+				fromItemBackup.setY(item2->getY());
 			}
-			tx = fItemBackup.getX();
-			ty = fItemBackup.getY();
+			tx = fromItemBackup.getX();
+			ty = fromItemBackup.getY();
 		}
 	}
 
@@ -708,7 +708,7 @@ bool G_ActorInvMove (Edict *ent, const invDef_t *from, invList_t *fItem, const i
 			/* use the backup item to use the old amount values, because the clients have to use the same actions
 			 * on the original amount. Otherwise they would end in a different amount of items as the server (+1) */
 			G_EventInventoryAdd(floor, G_VisToPM(floor->visflags), 1);
-			G_WriteItem(&fItemBackup, to, tx, ty);
+			G_WriteItem(&fromItemBackup, to, tx, ty);
 			G_EventEnd();
 			/* Couldn't remove it before because that would remove the le from the client and would cause battlescape to crash
 			 * when trying to add back the swapped ammo above */
