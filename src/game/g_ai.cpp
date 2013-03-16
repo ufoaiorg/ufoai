@@ -327,11 +327,11 @@ const item_t *AI_GetItemForShootType (shoot_types_t shootType, const Edict *ent)
 	/* check that the current selected shoot type also has a valid item in its
 	 * corresponding hand slot of the inventory. */
 	if (IS_SHOT_RIGHT(shootType)) {
-		const invList_t *ic = ent->getRightHand();
-		return AI_GetItemFromInventory(ic);
+		const Item *item = ent->getRightHand();
+		return AI_GetItemFromInventory(item);
 	} else if (IS_SHOT_LEFT(shootType)) {
-		const invList_t *ic = ent->getLeftHand();
-		return AI_GetItemFromInventory(ic);
+		const Item *item = ent->getLeftHand();
+		return AI_GetItemFromInventory(item);
 	} else if (IS_SHOT_HEADGEAR(shootType)) {
 		return NULL;
 	}
@@ -1199,8 +1199,8 @@ void AI_ActorThink (Player &player, Edict *ent)
 	aiAction_t bestAia;
 
 	/* if a weapon can be reloaded we attempt to do so if TUs permit, otherwise drop it */
-	invList_t *rightH = ent->getRightHand();
-	invList_t *leftH = ent->getLeftHand();
+	Item *rightH = ent->getRightHand();
+	Item *leftH = ent->getLeftHand();
 	if (!G_IsPanicked(ent)) {
 		if (rightH && rightH->mustReload())
 			AI_TryToReloadWeapon(ent, gi.csi->idRight);

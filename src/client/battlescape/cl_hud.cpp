@@ -479,7 +479,7 @@ static void HUD_DisplayActions (const char* callback, const le_t* actor, actionT
 	break;
 
 	case RELOAD_RIGHT: {
-		invList_t *weapon = actor->getRightHand();
+		Item *weapon = actor->getRightHand();
 
 		/* Reloeadable item in hand. */
 		if (weapon && weapon->def() && weapon->isReloadable()) {
