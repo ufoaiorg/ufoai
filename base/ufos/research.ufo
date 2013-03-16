@@ -2048,11 +2048,15 @@ tech rs_weapon_encased_plasma
 
 tech rs_weapon_encased_plasma_assault_ammo
 {
-	name	"_Encased Plasma Rounds"
 	type	"weapon"
 	up_chapter	equipment
 
-	redirect	rs_weapon_encased_plasma
+	description {
+		default "*msgid:encased_plasma_txt"
+	}
+	pre_description {
+		default "*msgid:encased_plasma_pre_txt"
+	}
 
 	require_AND
 	{
@@ -2071,11 +2075,15 @@ tech rs_weapon_encased_plasma_assault_ammo
 
 tech rs_weapon_encased_plasma_mg_ammo
 {
-	name	"_Encased Plasma Rounds"
 	type	"weapon"
 	up_chapter	equipment
 
-	redirect	rs_weapon_encased_plasma
+	description {
+		default "*msgid:encased_plasma_txt"
+	}
+	pre_description {
+		default "*msgid:encased_plasma_pre_txt"
+	}
 
 	require_AND
 	{
@@ -2094,11 +2102,15 @@ tech rs_weapon_encased_plasma_mg_ammo
 
 tech rs_weapon_encased_plasma_sniper_ammo
 {
-	name	"_Encased Plasma Rounds"
 	type	"weapon"
 	up_chapter	equipment
 
-	redirect	rs_weapon_encased_plasma
+	description {
+		default "*msgid:encased_plasma_txt"
+	}
+	pre_description {
+		default "*msgid:encased_plasma_pre_txt"
+	}
 
 	require_AND
 	{

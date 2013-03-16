@@ -366,7 +366,7 @@ item plasblaster_ammo
 // =======================
 item encased_plasma_assault_ammo
 {
-	name			"_Encased Plasma Ammo - Assault Rifle"
+	name			"_Assault Rifle EP Magazine"
 	model			"weapons/assault/enc_plasma_clip"
 	type			"ammo"
 	animationindex	0
@@ -473,7 +473,7 @@ item encased_plasma_assault_ammo
 
 item encased_plasma_mg_ammo
 {
-	name			"_Machine Gun - Encased Plasma Ammo"
+	name			"_Machine Gun EP Magazine"
 	model			"weapons/machinegun/enc_plasma_clip_mg"
 	type			"ammo"
 	animationindex	0
@@ -564,7 +564,7 @@ item encased_plasma_mg_ammo
 
 item encased_plasma_sniper_ammo
 {
-	name			"_Encased Plasma Ammo - Sniper Rifle"
+	name			"_Sniper Rifle EP Magazine"
 	model			"weapons/sniper/enc_plasma_clip_snp"
 	type			"ammo"
 	animationindex	0
