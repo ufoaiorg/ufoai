@@ -2,813 +2,742 @@
 // COUNTRY SIDE
 // ********************
 
-base country/c_
+base country/cy_
+extends shared
 
-// a = empty place
-// b = street horizontal
-// c = street vertical
-// d = street cross/end
-// e = vertical cave
-// f = unused
-// g = unused
-// h = unused
-// i = rock horizontal back
-// j = rock end horizontal back left
-// k = rock end horizontal back right
-// l = rock horizontal front
-// m = rock end horizontal front left
-// n = rock end horizontal front right
-// o = rock vertical back
-// p = rock end vertical back left
-// q = rock end vertical back right
-// r = rock vertical front
-// s = rock end vertical front left
-// t = rock end vertical front right
+// Tiletypes:
+// ----------
+// +: tile contains something
+// 0: always means no restrictions
+// a: common tile
+// c: craft tile, contains UFO or dropship
+// h: road horizontally
+// v: road vertically
+// 1: mountain
 
-// horizontal first row - abdlmn
-// horizontal last row - abdijk
-// vertical first col - acdrst
-// vertical last col - acdopq
 
-//--------------------------------------------------
-// AIRCRAFT
-//--------------------------------------------------
+// Farm tiles ------------------------------------------------------*
 
-// Dropship
-tile +craft_drop_firebird
-{
-5 4
-
-0       abdlmn   abdlmn   abdlmn   0
-acdrst  +a       +a       +a       acdopq
-acdrst  +a       +a       +a       acdopq
-0       abdijk   abdijk   abdijk   0
-}
-
-tile +craft_drop_herakles
-{
-5 4
-
-0       abdlmn   abdlmn   abdlmn   0
-acdrst  +a       +a       +a       acdopq
-acdrst  +a       +a       +a       acdopq
-0       abdijk   abdijk   abdijk   0
-}
-
-tile +craft_drop_raptor
-{
-5 4
-
-0       abdlmn   abdlmn   abdlmn   0
-acdrst  +a       +a       +a       acdopq
-acdrst  +a       +a       +a       acdopq
-0       abdijk   abdijk   abdijk   0
-}
-
-//--
-
-// UFO - Harvester
-tile +craft_ufo_harvester
-{
-8 6
-
-0       abdlmn   abdlmn   abdlmn   abdlmn   abdlmn   abdlmn   0
-acdrst  +a       +a       +a       +a       +a       +a       acdopq
-acdrst  +a       +a       +a       +a       +a       +a       acdopq
-acdrst  +a       +a       +a       +a       +a       +a       acdopq
-acdrst  +a       +a       +a       +a       +a       +a       acdopq
-0       abdijk   abdijk   abdijk   abdijk   abdijk   abdijk   0
-}
-//--
-
-// UFO - Fighter
-tile +craft_ufo_fighter
-{
-5 4
-
-0       abdlmn   abdlmn  abdlmn  0
-acdrst  +a       +a      +a      acdopq
-acdrst  +a       +a      +a      acdopq
-0       abdijk   abdijk  abdijk  0
-}
-//--
-
-//--------------------------------------------------
-// END AIRCRAFT
-//--------------------------------------------------
-
-// old fallen house
-tile +c01
+tile +farm_01
+	// shed and watertower
 {
 4 5
-
-0       abdlmn   abdlmn  0
-acdrst  +a       +a      acdopq
-acdrst  +a       +a      acdopq
-acdrst  +a       +a      acdopq
-0       abdijk   abdijk  0
+0		0		0		0
+0		+a		+a		0
+0		+a		+a		0
+0		+a		+a		0
+0		0		0		0
 }
-//--
 
-// house + watertower
-tile +c02
-{
-4 5
-
-0       abdlmn   abdlmn  0
-acdrst  +a       +a      acdopq
-acdrst  +a       +a      acdopq
-acdrst  +a       +a      acdopq
-0       abdijk   abdijk  0
-}
-//--
-
-// just a little rock
-tile +d01
+tile +farm_02
+	// empty fencing, straw bales
 {
 4 4
-
-0       abdlmn   abdlmn  0
-acdrst  +a       +a      acdopq
-acdrst  +a       +a      acdopq
-0       abdijk   abdijk  0
+0		0		0		0
+0		+a		+a		0
+0		+a		+a		0
+0		0		0		0
 }
-//--
 
-// cactus
-tile +d02
+tile +farm_03
+	// well
 {
 3 3
-
-0       abdlmn  0
-acdrst  +a      acdopq
-0       abdijk  0
+0		0		0
+0		+a		0
+0		0		0
 }
-//--
 
-// cactus and plant
-tile +d03
-{
-3 3
-
-0       abdlmn  0
-acdrst  +a      acdopq
-0       abdijk  0
-}
-//--
-
-// cactus and waste
-tile +d04
-{
-3 3
-
-0       abdlmn  0
-acdrst  +a      acdopq
-0       abdijk  0
-}
-//--
-
-// a rock
-tile +d05
-{
-4 5
-
-0       abdlmn   abdlmn  0
-acdrst  +a       +a      acdopq
-acdrst  +a       +a      acdopq
-acdrst  +a       +a      acdopq
-0       abdijk   abdijk  0
-}
-//--
-
-// cows
-tile +d06
+tile +farm_04
+	// bales of straw, top of a barrel and some planks
 {
 4 4
-
-0       abdlmn   abdlmn  0
-acdrst  +a       +a      acdopq
-acdrst  +a       +a      acdopq
-0       abdijk   abdijk  0
+0		0		0		0
+0		+a		+a		0
+0		+a		+a		0
+0		0		0		0
 }
-//--
 
-// fountain
-tile +d07
-{
-3 3
-
-0       abdlmn  0
-acdrst  +a      acdopq
-0       abdijk  0
-}
-//--
-
-// bales of straw
-tile +d08
-{
-4 4
-
-0       abdlmn   abdlmn  0
-acdrst  +a       +a      acdopq
-acdrst  +a       +a      acdopq
-0       abdijk   abdijk  0
-}
-//--
-
-//
-tile +d09
-{
-4 4
-
-0       abdlmn   abdlmn  0
-acdrst  +a       +a      acdopq
-acdrst  +a       +a      acdopq
-0       abdijk   abdijk  0
-}
-//--
-
-// plants/small hills
-tile +d10
-{
-3 3
-
-0       abdlmn  0
-acdrst  +a      acdopq
-0       abdijk  0
-}
-//--
-
-//--------------------------------------------------
-// MOUNTAINS
-//--------------------------------------------------
-
-// cave entry vertical back
-tile +v01
-{
-4 4
-
-0   eo   abdlmn  0
-e   +e   +a      acdopq
-e   +e   +a      acdopq
-0   eo   abdijk  0
-}
-//--
-
-// cave entry vertical front
-tile +v01_2
-{
-4 4
-
-0       abdlmn   er   0
-acdrst  +a       +e   e
-acdrst  +a       +e   e
-0       abdijk   er   0
-}
-//--
-
-// rock vertical back
-tile +r01
-{
-4 5
-
-0  eo   abdlmn  0
-r  +o   +a      acdopq
-r  +o   +a      acdopq
-r  +o   +a      acdopq
-0  eo   abdijk  0
-}
-//--
-
-// rock vertical front
-tile +r01_2
-{
-4 5
-
-0       abdlmn   er   0
-acdrst  +a       +r   o
-acdrst  +a       +r   o
-acdrst  +a       +r   o
-0       abdijk   er   0
-}
-//--
-
-// rock vertical back
-tile +r02
-{
-4 5
-
-0  eo   abdlmn  0
-r  +o   +a      acdopq
-r  +o   +a      acdopq
-r  +o   +a      acdopq
-0  eo   abdijk  0
-}
-//--
-
-// rock vertical front
-tile +r02_2
-{
-4 5
-
-0       abdlmn   er   0
-acdrst  +a       +r   o
-acdrst  +a       +r   o
-acdrst  +a       +r   o
-0       abdijk   er   0
-}
-//--
-
-// rock vertical back
-tile +r03
-{
-4 5
-
-0  eo   abdlmn  0
-z  +o   +a      acdopq
-z  +o   +a      acdopq
-z  +o   +a      acdopq
-0  eo   abdijk  0
-}
-//--
-
-// rock vertical front
-tile +r03_2
-{
-4 5
-
-0       abdlmn   er   0
-acdrst  +a       +r   z
-acdrst  +a       +r   z
-acdrst  +a       +r   z
-0       abdijk   er   0
-}
-//--
-
-// rock vertical back
-tile +r04
-{
-4 4
-
-0  eo   abdlmn  0
-r  +o   +a      acdopq
-r  +o   +a      acdopq
-0  eo   abdijk  0
-}
-//--
-
-// rock vertical front
-tile +r04_2
-{
-4 4
-
-0       abdlmn   er   0
-acdrst  +a       +r   o
-acdrst  +a       +r   o
-0       abdijk   er   0
-}
-//--
-
-// rock vertical back
-tile +r05
+tile +farm_05
+	// an empty barn
+	// this building seems to be unique
 {
 4 3
-
-0  eo   abdlmn  0
-r  +o   +a      acdopq
-0  eo   abdijk  0
-}
-//--
-
-// rock vertical front
-tile +r05_2
-{
-4 3
-
-0       abdlmn   er   0
-acdrst  +a       +r   o
-0       abdijk   er   0
-}
-//--
-
-// rock end vertical back right
-tile +re01
-{
-4 5
-
-0         abdlmn   abdlmn  0
-acdrst    +a       +a      acdopq
-it        +q       +a      acdopq
-r         +o       +a      acdopq
-0         eo       abdijk  0
-}
-//--
-
-// rock end vertical front right
-tile +re01_2
-{
-4 5
-
-0       abdlmn   abdlmn   0
-acdrst  +a       +a       acdopq
-acdrst  +a       +t       qi
-acdrst  +a       +r       o
-0       abdijk   er       0
-}
-//--
-
-// rock end vertical back left
-tile +re02
-{
-4 5
-
-0       eo        abdlmn  0
-r       +o       +a      acdopq
-sl      +p       +a      acdopq
-acdrst  +a       +a      acdopq
-0       abdijk   abdijk  0
-}
-//--
-
-// rock end vertical front left
-tile +re02_2
-{
-4 5
-
-0       abdlmn   er       0
-acdrst  +a       +r       o
-acdrst  +a       +s       pl
-acdrst  +a       +a       acdopq
-0       abdijk   abdijk   0
+0		0		0		0
+0		+a		+a		0
+0		0		0		0
 }
 
-// rock end vertical back right
-tile +re03
+tile +farm_06
+	// an empty barn and water tanks
+	// the tanks can also be found on farm2/f2_main and farm/f_
 {
 4 4
-
-0         abdlmn   abdlmn  0
-acdrst    +a       +a      acdopq
-it        +q       +a      acdopq
-0         po       abdijk  0
+0		0		0		0
+0		+a		+a		0
+0		+a		+a		0
+0		0		0		0
 }
-//--
 
-// rock end vertical front right
-tile +re03_2
+tile +farm_07
+	// a large barn to store straw bales
+	// farm/f_barn_a is (nearly) the same tile
+	// shared/sh_h06 is the same tile but has a broken roof there
+	// TODO fix map compiler warning
 {
 4 4
-
-0       abdlmn   abdlmn   0
-acdrst  +a       +a       acdopq
-acdrst  +a       +t       qi
-0       abdijk   rs       0
+0		0		0		0
+0		+a		+a		0
+0		+a		+a		0
+0		0		0		0
 }
-//--
 
-// rock end vertical back left
-tile +re04
-{
-4 4
-
-0       qo       abdlmn  0
-sl      +p       +a      acdopq
-acdrst  +a       +a      acdopq
-0       abdijk   abdijk  0
-}
-//--
-
-// rock end vertical front left
-tile +re04_2
-{
-4 4
-
-0       abdlmn   rt       0
-acdrst  +a       +s       pl
-acdrst  +a       +a       acdopq
-0       abdijk   abdijk   0
-}
-//--
-
-//--------------------------------------------------
-// END MOUNTAINS
-//--------------------------------------------------
-
-
-// house
-tile +h01
-{
-4 3
-
-0       abdlmn   abdlmn  0
-acdrst  +a       +a      acdopq
-0       abdijk   abdijk  0
-}
-//--
-
-// house
-tile +h02
-{
-4 3
-
-0       abdlmn   abdlmn  0
-acdrst  +a       +a      acdopq
-0       abdijk   abdijk  0
-}
-//--
-
-// house
-tile +h03
-{
-4 4
-
-0         abdlmn  abdlmn  0
-acdrst  +a       +a       acdopq
-acdrst  +a       +a       acdopq
-0         abdijk  abdijk  0
-}
-//--
-
-// ---------------------------------
-// farm 1
-// ---------------------------------
-tile +h04
-{
-4 4
-
-0      abdlmn     abdlmn     0
-acdrst     +a      +a      acdopq
-acdrst     +a      +a      acdopq
-0      abdijk     abdijk     0
-}
-//--
-
-// ---------------------------------
-// farm 2
-// ---------------------------------
-tile +h05
+tile +farm_08
+	// wooden cowshed, slighly damaged
+	// farm/f_stables_b is a slightly larger version of this one
+	// shared/sh_h05 is an even more damaged version of the same tile
 {
 3 4
-
-0      abdlmn     0
-acdrst     +a     acdopq
-acdrst     +a     acdopq
-0      abdijk     0
+0		0		0
+0		+a		0
+0		+a		0
+0		0		0
 }
-//--
 
-// ---------------------------------
-// farm 3
-// ---------------------------------
-tile +h06
+tile +farm_09
+	// large barn + wooden cowshed
+	// also included in farm2/f2_main
 {
 5 5
-
-0       abdlmn  abdlmn  abdlmn    0
-acdrst  +a      +a      +a      acdopq
-acdrst  +a      +a      +a      acdopq
-acdrst  +a      ad      abdijk  0
-0       abdijk  0       0       0
+0		0		0		0		0
+0		+a		+a		+a		0
+0		+a		+a		+a		0
+0		+a		0		0		0
+0		0		0		0		0
 }
-//--
 
-//--------------------------------------------------
-// STREETS
-//--------------------------------------------------
 
-// street horizontal
-tile +s01
+
+// Nature tiles ----------------------------------------------------*
+
+tile +nature_01
+	// an abandoned house in the wilderness
+{
+4 5
+0		0		0		0
+0		+a		+a		0
+0		+a		+a		0
+0		+a		+a		0
+0		0		0		0
+}
+
+tile +nature_02
+	// just a little rock
+	// TODO the top part is hoovering
+{
+4 4
+0		0		0		0
+0		+a		+a		0
+0		+a		+a		0
+0		0		0		0
+}
+
+tile +nature_03
+	// terrain slightly raised, a cactus, a plant
 {
 3 3
-
-0    ablmn   0
-bd  +b       bd
-0    abijk   0
+0		0		0
+0		+a		0
+0		0		0
 }
-//--
 
-// street vertical
-tile +s01_2
+tile +nature_04
+	// terrain slightly raised, a cactus
 {
 3 3
-
-0      cd   0
-acrst  +c   acopq
-0      cd   0
+0		0		0
+0		+a		0
+0		0		0
 }
-//--
 
-// street end horizontal right
-tile +s02
+tile +nature_05
+	// terrain slightly raised, a cactus, top of a barrel and some planks
 {
 3 3
-
-0    ablmn  0
-bd  +d       aopq
-0    abijk  0
+0		0		0
+0		+a		0
+0		0		0
 }
-//--
 
-// street end vertical up
-tile +s02_2
+tile +nature_06
+	// terrain slightly raised, a plant
+{
+4 5
+0		0		0		0
+0		+a		+a		0
+0		+a		+a		0
+0		+a		+a		0
+0		0		0		0
+}
+
+tile +nature_07
+	// terrain slightly raised, some plants, top of a barrel and some planks
+{
+4 4
+0		0		0		0
+0		+a		+a		0
+0		+a		+a		0
+0		0		0		0
+}
+
+tile +nature_08
+	// terrain slightly raised, plants, some planks
 {
 3 3
-
-0      almn    0
-acrst  +d      acopq
-0      cd      0
+0		0		0
+0		+a		0
+0		0		0
 }
-//--
 
-// street end horizontal left
-tile +s03
+// Mountain tiles --------------------------------------------------*
+
+tile +mountain_e_01
+	// the 'cave', a tunnel through the mountain, eastern part
 {
-3 3
-
-0      ablmn  0
-arst  +d     bd
-0      abijk  0
+4 4
+0		1		a		0
+1		+1		+a		0
+1		+1		+a		0
+0		1		a		0
 }
-//--
 
-// street end vertical down
-tile +s03_2
+tile +mountain_w_01
+	// the 'cave', a tunnel through the mountain, western part
 {
-3 3
-
-0      cd     0
-acrst  +d	  acopq
-0      aijk   0
+4 4
+0		a		1		0
+0		+a		+1		1
+0		+a		+1		1
+0		a		1		0
 }
-//--
 
-// street horizontal
-tile +s04
+tile +mountain_e_02
+	// eastern part (1) of mountain
+{
+4 5
+0		1		a		0
+1		+1		+a		0
+1		+1		+a		0
+1		+1		+a		0
+0		1		a		0
+}
+
+tile +mountain_w_02
+	// western part (1) of mountain
+{
+4 5
+0		a		1		0
+0		+a		+1		1
+0		+a		+1		1
+0		+a		+1		1
+0		a		1		0
+}
+
+tile +mountain_e_03
+	// eastern part (2) of mountain
+{
+4 5
+0		1		a		0
+1		+1		+a		0
+1		+1		+a		0
+1		+1		+a		0
+0		1		a		0
+}
+
+tile +mountain_w_03
+	// western part (2) of mountain
+{
+4 5
+0		a		1		0
+0		+a		+1		1
+0		+a		+1		1
+0		+a		+1		1
+0		a		1		0
+}
+
+tile +mountain_e_04
+	// eastern part (3) of mountain
+{
+4 5
+0		1		a		0
+1		+1		+a		0
+1		+1		+a		0
+1		+1		+a		0
+0		1		a		0
+}
+
+tile +mountain_w_04
+	// western part (3) of mountain
+{
+4 5
+0		a		1		0
+0		+a		+1		1
+0		+a		+1		1
+0		+a		+1		1
+0		a		1		0
+}
+
+tile +mountain_e_05
+	// eastern part (4) of mountain
+{
+4 4
+0		1		a		0
+1		+1		+a		0
+1		+1		+a		0
+0		1		a		0
+}
+
+tile +mountain_w_05
+	// western part (4) of mountain
+{
+4 4
+0		a		1		0
+0		+a		+1		1
+0		+a		+1		1
+0		a		1		0
+}
+
+tile +mountain_e_06
+	// eastern part (5) of mountain
 {
 4 3
-
-0    ablmn  ablmn  0
-bd   +b     +b     bd
-0    abijk  abijk  0
+0		1		a		0
+1		+1		+a		0
+0		1		a		0
 }
 
-// street vertical
-tile +s04_2
+
+tile +mountain_w_06
+	// western part (5) of mountain
+{
+4 3
+0		a		1		0
+0		+a		+1		1
+0		a		1		0
+}
+
+tile +mountain_ne_01
+	// mountain ends north, eastern part
+{
+4 5
+0		0		0		0
+0		+a		+a		0
+0		+a		+a		0
+1		+1		+a		0
+0		1		a		0
+}
+
+tile +mountain_nw_01
+	// mountain ends north, western part
+{
+4 5
+0		0		0		0
+0		+a		+a		0
+0		+a		+a		0
+0		+a		+1		1
+0		0		1		0
+}
+
+tile +mountain_se_01
+	// mountain ends south, eastern part, TODO 2x2 would be enough
+{
+4 5
+0		1		a		0
+1		+1		+a		0
+0		+a		+a		0
+0		+a		+a		0
+0		0		0		0
+}
+
+tile +mountain_sw_01
+	// mountain ends south, western part, TODO 2x2 would be enough
+{
+4 5
+0		a		1		0
+0		+a		+1		1
+0		+a		+a		0
+0		+a		+a		0
+0		0		0		0
+}
+
+tile +mountain_ne_02
+	// mountain ends north, eastern part
+{
+4 4
+0		0		0		0
+0		+a		+a		0
+1		+1		+a		0
+0		1		a		0
+}
+
+tile +mountain_nw_02
+	// mountain ends north, western part
+{
+4 4
+0		0		0		0
+0		+a		+a		0
+0		+a		+1		1
+0		0		1		0
+}
+
+tile +mountain_se_02
+	// mountain ends south, eastern part, TODO does not line up
+{
+4 4
+0		1		a		0
+1		+1		+a		0
+0		+a		+a		0
+0		0		0		0
+}
+
+tile +mountain_sw_02
+	// mountain ends south, western part, TODO does not line up
+{
+4 4
+0		a		1		0
+0		+a		+1		1
+0		+a		+a		0
+0		0		0		0
+}
+
+
+// Road Tiles ------------------------------------------------------*
+
+tile +road_h_01
+	// road horizontally
+{
+3 3
+0		ac1		0
+h		+ah		h
+0		ac1		0
+}
+
+tile +road_v_01
+	// road vertically
+{
+3 3
+0		v		0
+ac1		+av		ac1
+0		v		0
+}
+
+// TODO the end tiles can be attached to the wrong side
+// TODO a 2x1 size could solve that
+
+tile +road_end_e_01
+	// horizontal road end east
+{
+3 3
+0		ac1		0
+h		+ah		ac1
+0		ac1		0
+}
+
+tile +road_end_n_01
+	// vertical road end north
+{
+3 3
+0		ac1		0
+ac1		+av		ac1
+0		v		0
+}
+
+tile +road_end_w_01
+	// horizontal road end west
+{
+3 3
+0		ac1		0
+ac1		+ah		h
+0		ac1		0
+}
+
+tile +road_end_s_01
+	// vertical road end south
+{
+3 3
+0		v		0
+ac1		+av		ac1
+0		ac1		0
+}
+
+tile +road_h_02
+	// horizontal road ends twice
+{
+4 3
+0		ac1		ac1		0
+h		+ah		+ah		h
+0		ac1		ac1		0
+}
+
+tile +road_v_02
+	// vertical road ends twice
 {
 3 4
-
-0      cd  	0
-acrst  +c   acopq
-acrst  +c   acopq
-0      cd  	0
+0		v		0
+ac1		+av		ac1
+ac1		+av		ac1
+0		v		0
 }
 
-// street cross 1 (not build in / set up)
-tile +s05
+tile +road_junction_n
+	// horizontal road junction north _|_
 {
 3 3
-
-0   c  	   0
-b  	+d     b
-0   aijk   0
+0		v		0
+h		+ahv	h
+0		ac1		0
 }
 
-// street cross 2 (not build in / set up)
-tile +s06
+tile +road_junction_w
+	// vertical road junction west -|
 {
 3 3
-
-0      almn   0
-b  	   +d     b
-0      c      0
+0		v		0
+h		+ahv	ac1
+0		v		0
 }
 
-// street cross full (4 sides)
-tile +s07
+tile +road_junction_s
+	// horizontal road junction south
 {
 3 3
-
-0   c  0
-b  +d  b
-0   c  0
+0		ac1		0
+h		+ahv	h
+0		v		0
 }
 
-//--------------------------------------------------
-// END STREETS
-//--------------------------------------------------
+tile +road_junction_e
+	// vertical road junction west -|
+	// this is a duplication of +road_junction_w
+{
+3 3
+0		v		0
+h		+ahv	ac1
+0		v		0
+}
+
+tile +road_crossing
+	// road crossing X
+{
+3 3
+0		v		0
+h		+hv		h
+0		v		0
+}
+
+// Tilesets --------------------------------------------------------*
+
+tileset nature_1x1 {
+	+nature_03
+	+nature_04
+	+nature_05
+	+nature_08
+}
+
+tileset mountain_se {
+	+mountain_se_01
+	+mountain_se_02
+}
+
+tileset mountain_sw {
+	+mountain_sw_01
+	+mountain_sw_02
+}
+
+tileset mountain_ne {
+	+mountain_ne_01
+	+mountain_ne_02
+}
+
+tileset mountain_nw {
+	+mountain_nw_01
+	+mountain_nw_02
+}
+
+tileset mountain_e {
+	+mountain_e_01
+	+mountain_e_02
+	+mountain_e_03
+	+mountain_e_04
+}
+
+tileset mountain_w {
+	+mountain_w_01
+	+mountain_w_02
+	+mountain_w_03
+	+mountain_w_04
+}
+
+// Map assemblies --------------------------------------------------*
+
+assembly test
+{
+size "9 9"
++mountain_e_06			"0 1"
++mountain_w_06			"0 1"
+tileset mountain_ne		"0 2"
+tileset mountain_nw		"0 2"
+tileset mountain_se		"0 2"
+tileset mountain_sw		"0 2"
+tileset mountain_e		"0 1"
+tileset mountain_w		"0 1"
++farm_01				"0 1"
++farm_02				"0 1"
++farm_03				"0 1"
++farm_04				"0 1"
++farm_05				"0 1"
++farm_06				"0 1"
++farm_07				"0 1"
++farm_08				"0 1"
++farm_09				"0 1"
+tileset nature_1x1		"0 20"
+*rm_drop shared/sh_craft_drop_firebird "1 1"
+*rm_ufo shared/sh_craft_ufo_fighter "1 1"
+}
+
+assembly test_nature
+{
+size "9 9"
++mountain_e_06			"0 1"
++mountain_w_06			"0 1"
+tileset mountain_ne		"0 2"
+tileset mountain_nw		"0 2"
+tileset mountain_se		"0 2"
+tileset mountain_sw		"0 2"
+tileset mountain_e		"0 1"
+tileset mountain_w		"0 1"
++nature_01				"0 1"
++nature_02				"0 1"
++nature_06				"0 1"
++nature_07				"0 1"
+tileset nature_1x1		"0 40"
+*rm_drop shared/sh_craft_drop_firebird "1 1"
+*rm_ufo shared/sh_craft_ufo_fighter "1 1"
+}
+
+/* untestet assemblies outcommented --------------------------------*
 
 assembly cave
 {
 size "7 8"
-+c01 "0 1"
-+c02 "0 1"
-+d01 "0 5"
-+d02 "0 5"
-+d03 "0 5"
-+d04 "0 5"
-+d05 "0 2"
-+d06 "0 3"
-+d07 "0 3"
-+d08 "0 3"
-+d09 "0 3"
-+d10 "0 8"
-+h01 "0 1"
-+h02 "1 1"
-+h03 "0 1"
-+r01 "0 2"
-+r02 "0 2"
-+r03 "0 2"
-+r04 "0 2"
-+r05 "0 3"
-+r01_2 "0 2"
-+r02_2 "0 2"
-+r03_2 "0 2"
-+r04_2 "0 2"
-+r05_2 "0 3"
-+v01 "0 1"
-+v01_2 "1 1"
-+re01 "0 1"
-+re02 "0 1"
-+re03 "0 1"
-+re04 "0 1"
-+re01_2 "0 1"
-+re02_2 "0 1"
-+re03_2 "0 1"
-+re04_2 "0 1"
-*rm_drop +craft_drop_firebird "1 1"
-*rm_ufo +craft_ufo_fighter "1 1"
++nature_01 "0 1"
++farm_01 "0 1"
++nature_02 "0 5"
++nature_03 "0 5"
++nature_04 "0 5"
++nature_05 "0 5"
++nature_06 "0 2"
++farm_02 "0 3"
++farm_03 "0 3"
++farm_04 "0 3"
++nature_07 "0 3"
++nature_08 "0 8"
++farm_05 "1 1"
++farm_06 "0 1"
++mountain_e_02 "0 2"
++mountain_e_03 "0 2"
++mountain_e_04 "0 2"
++mountain_e_05 "0 2"
++mountain_e_06 "0 3"
++mountain_w_02 "0 2"
++mountain_w_03 "0 2"
++mountain_w_04 "0 2"
++mountain_w_05 "0 2"
++mountain_w_06 "0 3"
++mountain_e_01 "0 1"
++mountain_w_01 "1 1"
++mountain_ne_01 "0 1"
++mountain_se_01 "0 1"
++mountain_ne_02 "0 1"
++mountain_se_02 "0 1"
++mountain_nw_01 "0 1"
++mountain_sw_01 "0 1"
++mountain_nw_02 "0 1"
++mountain_sw_02 "0 1"
+*rm_drop shared/sh_craft_drop_firebird "1 1"
+*rm_ufo shared/sh_craft_ufo_fighter "1 1"
 }
 
 assembly large
 {
 size "7 7"
-+c01 "0 1"
-+c02 "0 1"
-+d01 "0 8"
-+d02 "0 8"
-+d03 "0 8"
-+d04 "0 8"
-+d05 "0 2"
-+d06 "0 3"
-+d07 "0 3"
-+d08 "0 3"
-+d09 "0 3"
-+d10 "0 6"
-+h01 "0 2"
-+h02 "0 5"
-+h03 "0 2"
-+h04 "0 1"
-+h05 "0 1"
-+h06 "0 1"
-+r01 "0 2"
-+r02 "0 2"
-+r03 "0 2"
-+r04 "0 2"
-+r05 "0 2"
-+r01_2 "0 2"
-+r02_2 "0 2"
-+r03_2 "0 2"
-+r04_2 "0 2"
-+r05_2 "0 2"
-+v01 "0 1"
-+v01_2 "0 1"
-+re01 "0 1"
-+re02 "0 1"
-+re03 "0 1"
-+re04 "0 1"
-+re01_2 "0 1"
-+re02_2 "0 1"
-+re03_2 "0 1"
-+re04_2 "0 1"
-*rm_drop +craft_drop_firebird "1 1"
-*rm_ufo +craft_ufo_fighter "1 1"
++nature_01 "0 1"
++farm_01 "0 1"
++nature_02 "0 8"
++nature_03 "0 8"
++nature_04 "0 8"
++nature_05 "0 8"
++nature_06 "0 2"
++farm_02 "0 3"
++farm_03 "0 3"
++farm_04 "0 3"
++nature_07 "0 3"
++nature_08 "0 6"
++farm_05 "0 5"
++farm_06 "0 2"
++farm_07 "0 1"
++farm_08 "0 1"
++farm_09 "0 1"
++mountain_e_02 "0 2"
++mountain_e_03 "0 2"
++mountain_e_04 "0 2"
++mountain_e_05 "0 2"
++mountain_e_06 "0 2"
++mountain_w_02 "0 2"
++mountain_w_03 "0 2"
++mountain_w_04 "0 2"
++mountain_w_05 "0 2"
++mountain_w_06 "0 2"
++mountain_e_01 "0 1"
++mountain_w_01 "0 1"
++mountain_ne_01 "0 1"
++mountain_se_01 "0 1"
++mountain_ne_02 "0 1"
++mountain_se_02 "0 1"
++mountain_nw_01 "0 1"
++mountain_sw_01 "0 1"
++mountain_nw_02 "0 1"
++mountain_sw_02 "0 1"
+*rm_drop shared/sh_craft_drop_firebird "1 1"
+*rm_ufo shared/sh_craft_ufo_fighter "1 1"
 }
 
 assembly street
 {
 size "10 10"
-+s01 "1 20"
-+s01_2 "1 20"
-+s02 "0 20"
-+s02_2 "0 20"
-+s03 "0 20"
-+s03_2 "0 20"
-+s04 "0 20"
-+s04_2 "0 20"
-+s05 "1 20"
-+s06 "1 20"
-+s07 "1 20"
-+c01 "0 2"
-+d01 "0 4"
-+d02 "0 20"
-+d03 "0 20"
-+d04 "0 20"
-+d05 "0 2"
-+d06 "0 2"
-+d07 "0 2"
-+d08 "0 2"
-+d09 "0 2"
-+d10 "0 20"
-*rm_drop +craft_drop_firebird "1 1"
-*rm_ufo +craft_ufo_harvester "1 1"
++road_h_01 "1 20"
++road_v_01 "1 20"
++road_end_e_01 "0 20"
++road_end_n_01 "0 20"
++road_end_w_01 "0 20"
++road_end_s_01 "0 20"
++road_h_02 "0 20"
++road_v_02 "0 20"
++road_junction_n "1 20"
++road_junction_s "1 20"
++road_crossing "1 20"
++nature_01 "0 2"
++nature_02 "0 4"
++nature_03 "0 20"
++nature_04 "0 20"
++nature_05 "0 20"
++nature_06 "0 2"
++farm_02 "0 2"
++farm_03 "0 2"
++farm_04 "0 2"
++nature_07 "0 2"
++nature_08 "0 20"
+*rm_drop shared/sh_craft_drop_firebird "1 1"
+*rm_ufo shared/sh_craft_ufo_fighter "1 1"
 }
+*/

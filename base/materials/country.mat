@@ -1,3 +1,15 @@
+/* Blending for the inherited template tiles */
+
+{
+	material tex_terrain/dummy
+	{
+		texture tex_nature/dirt_se01
+		blend GL_ONE GL_ZERO
+		lightmap
+	}
+}
+
+/*
 {
 	// glass of the ufo window
 	material tex_material/c_gray050
@@ -19,3 +31,4 @@
 	specular 2.0
 	bump 2.0
 }
+*/
