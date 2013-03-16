@@ -544,7 +544,7 @@ Item::Item ()
 }
 
 /** @brief item_t constructor with the 3 most often changed attributes */
-Item::Item (int _ammoLeft, const objDef_t *_ammo, const objDef_t *itemDef)
+Item::Item (const objDef_t *itemDef, const objDef_t *_ammo, int _ammoLeft)
 {
 	ammoLeft = _ammoLeft;
 	ammo = _ammo;

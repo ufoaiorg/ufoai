@@ -362,7 +362,7 @@ inventory_action_t InventoryInterface::moveInInventory (inventory_t* const inv, 
 					*TU -= time;
 				if (ic->ammoLeft >= ic->def()->ammo) {
 					/* exchange ammo */
-					const item_t item(NONE_AMMO, NULL, ic->ammo);
+					const item_t item(ic->ammo);
 					/* Put current ammo in place of the new ammo unless floor - there can be more than 1 item */
 					const int cacheFromX = from->isFloorDef() ? NONE : fItem->getX();
 					const int cacheFromY = from->isFloorDef() ? NONE : fItem->getY();
@@ -926,7 +926,7 @@ void InventoryInterface::EquipActor (character_t* const chr, const equipDef_t *e
 				if (ed->numItems[i] && armour->isArmour()) {
 					randNumber -= ed->numItems[i];
 					if (randNumber < 0) {
-						const item_t item(NONE_AMMO, NULL, armour);
+						const item_t item(armour);
 						int tuNeed = 0;
 						const float weight = GetInventoryState(inv, tuNeed) + item.getWeight();
 						const int maxTU = GET_TU(speed, GET_ENCUMBRANCE_PENALTY(weight, chr->score.skills[ABILITY_POWER]));
@@ -954,7 +954,7 @@ void InventoryInterface::EquipActor (character_t* const chr, const equipDef_t *e
 					randNumber -= ed->numItems[i];
 					if (randNumber < 0) {
 						const bool oneShot = miscItem->oneshot;
-						const item_t item(oneShot ? miscItem->ammo : NONE_AMMO, oneShot ? miscItem : NULL, miscItem);
+						const item_t item(miscItem, oneShot ? miscItem : NULL, oneShot ? miscItem->ammo : NONE_AMMO);
 						containerIndex_t container;
 						int tuNeed;
 						const fireDef_t *itemFd = FIRESH_SlowestFireDef(item);

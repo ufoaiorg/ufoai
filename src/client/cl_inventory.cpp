@@ -144,7 +144,7 @@ bool INV_UnloadWeapon (invList_t *weapon, inventory_t *inv, const invDef_t *cont
 {
 	assert(weapon);
 	if (container && inv) {
-		const item_t item(NONE_AMMO, NULL, weapon->ammo);
+		const item_t item(weapon->ammo);
 		if (cls.i.addToInventory(inv, &item, container, NONE, NONE, 1) != NULL) {
 			weapon->ammo = NULL;
 			weapon->ammoLeft = 0;
