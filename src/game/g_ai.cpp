@@ -259,7 +259,7 @@ static bool AI_HideNeeded (const Edict *ent)
 	/* aliens will consider hiding if they are not brave, or there is a dangerous enemy in sight */
 	if (ent->morale > mor_brave->integer) {
 		Edict *from = NULL;
-		/* test if check is visible */
+		/* test if ent is visible */
 		while ((from = G_EdictsGetNextLivingActor(from))) {
 			if (from->team == ent->team)
 				continue;
@@ -268,7 +268,7 @@ static bool AI_HideNeeded (const Edict *ent)
 				continue;
 
 			if (G_IsVisibleForTeam(from, ent->team)) {
-				const Item *item = from->getRightHand();
+				const Item *item = from->getRightHandItem();
 				const fireDef_t *fd = NULL;
 				if (item && item->def()) {
 					fd = FIRESH_FiredefForWeapon(item);
@@ -327,7 +327,7 @@ const item_t *AI_GetItemForShootType (shoot_types_t shootType, const Edict *ent)
 	/* check that the current selected shoot type also has a valid item in its
 	 * corresponding hand slot of the inventory. */
 	if (IS_SHOT_RIGHT(shootType)) {
-		const Item *item = ent->getRightHand();
+		const Item *item = ent->getRightHandItem();
 		return AI_GetItemFromInventory(item);
 	} else if (IS_SHOT_LEFT(shootType)) {
 		const Item *item = ent->getLeftHand();
@@ -1199,7 +1199,7 @@ void AI_ActorThink (Player &player, Edict *ent)
 	aiAction_t bestAia;
 
 	/* if a weapon can be reloaded we attempt to do so if TUs permit, otherwise drop it */
-	Item *rightH = ent->getRightHand();
+	Item *rightH = ent->getRightHandItem();
 	Item *leftH = ent->getLeftHand();
 	if (!G_IsPanicked(ent)) {
 		if (rightH && rightH->mustReload())

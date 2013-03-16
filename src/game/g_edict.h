@@ -183,7 +183,7 @@ public:
 	{
 		return chr.inv.getArmourContainer();
 	}
-	inline invList_t *getRightHand () const
+	inline Item *getRightHandItem () const
 	{
 		return chr.inv.getRightHandContainer();
 	}

@@ -511,8 +511,8 @@ void G_EventActorAppear (playermask_t playerMask, const Edict *check, const Edic
 	gi.WriteByte(check->pnum);
 	gi.WriteGPos(check->pos);
 	gi.WriteByte(check->dir);
-	if (check->getRightHand()) {
-		gi.WriteShort(check->getRightHand()->def()->idx);
+	if (check->getRightHandItem()) {
+		gi.WriteShort(check->getRightHandItem()->def()->idx);
 	} else {
 		gi.WriteShort(NONE);
 	}

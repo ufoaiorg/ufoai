@@ -41,8 +41,8 @@ static void G_MoralePanic (Edict *ent, bool sanity)
 	G_PrintStats("%s panics (entnum %i).", ent->chr.name, ent->number);
 	/* drop items in hands */
 	if (!sanity && ent->chr.teamDef->weapons) {
-		if (ent->getRightHand())
-			G_ActorInvMove(ent, INVDEF(gi.csi->idRight), ent->getRightHand(),
+		if (ent->getRightHandItem())
+			G_ActorInvMove(ent, INVDEF(gi.csi->idRight), ent->getRightHandItem(),
 					INVDEF(gi.csi->idFloor), NONE, NONE, true);
 		if (ent->getLeftHand())
 			G_ActorInvMove(ent, INVDEF(gi.csi->idLeft), ent->getLeftHand(),

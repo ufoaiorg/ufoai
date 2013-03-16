@@ -744,7 +744,7 @@ static int AIL_reactionfire (lua_State *L)
 static int AIL_roundsleft (lua_State *L)
 {
 	/* Right hand */
-	Item *rightHand = AIL_ent->getRightHand();
+	Item *rightHand = AIL_ent->getRightHandItem();
 	if (rightHand && rightHand->isReloadable())
 		lua_pushnumber(L, rightHand->ammoLeft);
 	else
