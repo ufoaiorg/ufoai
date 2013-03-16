@@ -35,17 +35,17 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 invList_t *HUD_GetLeftHandWeapon (const le_t *actor, containerIndex_t *container)
 {
-	invList_t *invList = actor->getLeftHand();
+	Item *item = actor->getLeftHand();
 
-	if (!invList) {
-		invList = actor->getRightHand();
-		if (invList == NULL || !invList->isHeldTwoHanded())
-			invList = NULL;
+	if (!item) {
+		item = actor->getRightHand();
+		if (item == NULL || !item->isHeldTwoHanded())
+			item = NULL;
 		else if (container != NULL)
 			*container = csi.idRight;
 	}
 
-	return invList;
+	return item;
 }
 
 /**

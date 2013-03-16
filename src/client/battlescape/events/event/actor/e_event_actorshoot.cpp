@@ -93,23 +93,23 @@ static void CL_ActorGetMuzzle (const le_t* actor, vec3_t muzzle, shoot_types_t s
 	const char *tag;
 	float matrix[16], mc[16], modifiedMatrix[16];
 	const objDef_t *od;
-	const invList_t *invlistWeapon;
+	const Item *weapon;
 
 	if (actor == NULL)
 		return;
 
 	if (IS_SHOT_RIGHT(shootType)) {
 		tag = "tag_rweapon";
-		invlistWeapon = actor->getRightHand();
+		weapon = actor->getRightHand();
 	} else {
 		tag = "tag_lweapon";
-		invlistWeapon = actor->getLeftHand();
+		weapon = actor->getLeftHand();
 	}
 
-	if (!invlistWeapon || !invlistWeapon->def())
+	if (!weapon || !weapon->def())
 		return;
 
-	od = invlistWeapon->def();
+	od = weapon->def();
 
 	model = cls.modelPool[od->idx];
 	if (!model)

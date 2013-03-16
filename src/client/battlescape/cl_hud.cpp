@@ -788,15 +788,15 @@ static void HUD_UpdateButtons (const le_t *le)
 	if (!le)
 		return;
 
-	invList_t *weaponr = le->getRightHand();
-	invList_t *headgear = le->inv.getHeadgearContainer();
+	Item *weaponR = le->getRightHand();
+	Item *headgear = le->inv.getHeadgearContainer();
 
-	invList_t *weaponl;
-	/* check for two-handed weapon - if not, also define weaponl */
-	if (!weaponr || !weaponr->isHeldTwoHanded())
-		weaponl = le->getLeftHand();
+	Item *weaponL;
+	/* check for two-handed weapon - if not, also define weaponL */
+	if (!weaponR || !weaponR->isHeldTwoHanded())
+		weaponL = le->getLeftHand();
 	else
-		weaponl = NULL;
+		weaponL = NULL;
 
 	const int time = CL_ActorUsableTUs(le);
 	/* Crouch/stand button. */
@@ -910,8 +910,8 @@ static void HUD_UpdateButtons (const le_t *le)
 	}
 
 	/* Weapon firing buttons. */
-	if (weaponr) {
-		const int minweaponrtime = HUD_GetMinimumTUsForUsage(weaponr) * shootingPenalty;
+	if (weaponR) {
+		const int minweaponrtime = HUD_GetMinimumTUsForUsage(weaponR) * shootingPenalty;
 		if (time < minweaponrtime)
 			HUD_SetWeaponButton(BT_RIGHT_FIRE, BT_STATE_DISABLE);
 		else
@@ -920,8 +920,8 @@ static void HUD_UpdateButtons (const le_t *le)
 		HUD_SetWeaponButton(BT_RIGHT_FIRE, BT_STATE_DISABLE);
 	}
 
-	if (weaponl) {
-		const int minweaponltime = HUD_GetMinimumTUsForUsage(weaponl) * shootingPenalty;
+	if (weaponL) {
+		const int minweaponltime = HUD_GetMinimumTUsForUsage(weaponL) * shootingPenalty;
 		if (time < minweaponltime)
 			HUD_SetWeaponButton(BT_LEFT_FIRE, BT_STATE_DISABLE);
 		else
@@ -1209,32 +1209,32 @@ static void HUD_UpdateActorCvar (const le_t *actor)
 	if (animName)
 		Cvar_Set("mn_anim", animName);
 	if (actor->getRightHand()) {
-		const invList_t *i = actor->getRightHand();
-		Cvar_Set("mn_rweapon", i->def()->model);
-		Cvar_Set("mn_rweapon_item", i->def()->id);
+		const Item *item = actor->getRightHand();
+		Cvar_Set("mn_rweapon", item->def()->model);
+		Cvar_Set("mn_rweapon_item", item->def()->id);
 	} else {
 		Cvar_Set("mn_rweapon", "");
 		Cvar_Set("mn_rweapon_item", "");
 	}
 	if (actor->getLeftHand()) {
-		const invList_t *i = actor->getLeftHand();
-		Cvar_Set("mn_lweapon", i->def()->model);
-		Cvar_Set("mn_lweapon_item", i->def()->id);
+		const Item *item = actor->getLeftHand();
+		Cvar_Set("mn_lweapon", item->def()->model);
+		Cvar_Set("mn_lweapon_item", item->def()->id);
 	} else {
 		Cvar_Set("mn_lweapon", "");
 		Cvar_Set("mn_lweapon_item", "");
 	}
 
 	/* print ammo */
-	const invList_t *invListRight = actor->getRightHand();
-	if (invListRight)
-		Cvar_SetValue("mn_ammoright", invListRight->ammoLeft);
+	const Item *itemRight = actor->getRightHand();
+	if (itemRight)
+		Cvar_SetValue("mn_ammoright", itemRight->ammoLeft);
 	else
 		Cvar_Set("mn_ammoright", "");
 
-	const invList_t *invListLeft = HUD_GetLeftHandWeapon(actor, NULL);
-	if (invListLeft)
-		Cvar_SetValue("mn_ammoleft", invListLeft->ammoLeft);
+	const Item *itemLeft = HUD_GetLeftHandWeapon(actor, NULL);
+	if (itemLeft)
+		Cvar_SetValue("mn_ammoleft", itemLeft->ammoLeft);
 	else
 		Cvar_Set("mn_ammoleft", "");
 }
@@ -1362,22 +1362,22 @@ static void HUD_UpdateActor (le_t *actor)
 			time = TU_CROUCH;
 	} else if (displayRemainingTus[REMAINING_TU_RELOAD_RIGHT]
 	 || displayRemainingTus[REMAINING_TU_RELOAD_LEFT]) {
-		const invList_t *invList;
+		const Item *item;
 		containerIndex_t container;
 
 		if (displayRemainingTus[REMAINING_TU_RELOAD_RIGHT] && actor->getRightHand()) {
 			container = csi.idRight;
-			invList = actor->getRightHand();
+			item = actor->getRightHand();
 		} else if (displayRemainingTus[REMAINING_TU_RELOAD_LEFT] && actor->getLeftHand()) {
 			container = NONE;
-			invList = HUD_GetLeftHandWeapon(actor, &container);
+			item = HUD_GetLeftHandWeapon(actor, &container);
 		} else {
 			container = NONE;
-			invList = NULL;
+			item = NULL;
 		}
 
-		if (invList && invList->def() && invList->ammo && invList->isReloadable()) {
-			const int reloadtime = HUD_CalcReloadTime(actor, invList->def(), container);
+		if (item && item->def() && item->ammo && item->isReloadable()) {
+			const int reloadtime = HUD_CalcReloadTime(actor, item->def(), container);
 			if (reloadtime != -1 && reloadtime <= CL_ActorUsableTUs(actor))
 				time = reloadtime;
 		}
