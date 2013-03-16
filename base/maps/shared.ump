@@ -100,8 +100,8 @@ tile +craft_crash_fighter
 7 5
 0		0		0		a		a		a		0
 0		a		a		+c		+c		+c		a
-0		+c		+c		+c		+c		+c		a
-0		+c		+c		+c		a		a		0
+a		+c		+c		+c		+c		+c		a
+a		+c		+c		+c		a		a		0
 0		a		a		a		0		0		0
 }
 
