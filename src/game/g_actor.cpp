@@ -747,7 +747,6 @@ bool G_ActorInvMove (Edict *ent, const invDef_t *from, invList_t *fItem, const i
  */
 void G_ActorReload (Edict *ent, const invDef_t *invDef)
 {
-	invList_t *ic;
 	invList_t *icFinal;
 	const objDef_t *weapon;
 	int tu;
@@ -781,9 +780,10 @@ void G_ActorReload (Edict *ent, const invDef_t *invDef)
 			 * searching other containers if it would take longer
 			 * to retrieve the ammo from them than the one
 			 * we've already found. */
-			for (ic = ent->getContainer(containerID); ic; ic = ic->getNext())
-				if (ic->def()->isLoadableInWeapon(weapon)) {
-					icFinal = ic;
+			Item *item;
+			for (item = ent->getContainer(containerID); item; item = item->getNext())
+				if (item->def()->isLoadableInWeapon(weapon)) {
+					icFinal = item;
 					bestContainer = INVDEF(containerID);
 					tu = bestContainer->out;
 					break;
