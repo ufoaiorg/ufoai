@@ -580,7 +580,7 @@ static void G_SplashDamage (Edict *ent, const fireDef_t *fd, vec3_t impact, shot
  * @param[in] pos The grid position to spawn the item at
  * @param[in] item The item to spawn
  */
-static void G_SpawnItemOnFloor (const pos3_t pos, const item_t *item)
+static void G_SpawnItemOnFloor (const pos3_t pos, const Item *item)
 {
 	Edict *floor;
 
@@ -627,7 +627,7 @@ static void G_SpawnItemOnFloor (const pos3_t pos, const item_t *item)
  * @param[out] impact The location of the target (-center?)
  */
 static void G_ShootGrenade (const Player &player, Edict *ent, const fireDef_t *fd,
-	const vec3_t from, const pos3_t at, int mask, const item_t *weapon, shot_mock_t *mock, int z_align, vec3_t impact)
+	const vec3_t from, const pos3_t at, int mask, const Item *weapon, shot_mock_t *mock, int z_align, vec3_t impact)
 {
 	vec3_t last, target, temp;
 	vec3_t startV, curV, oldPos, newPos;
@@ -824,7 +824,7 @@ static void DumpAllEntities (void)
  * @sa CL_TargetingStraight
  */
 static void G_ShootSingle (Edict *ent, const fireDef_t *fd, const vec3_t from, const pos3_t at,
-	int mask, const item_t *weapon, shot_mock_t *mock, int z_align, int i, shoot_types_t shootType, vec3_t impact)
+	int mask, const Item *weapon, shot_mock_t *mock, int z_align, int i, shoot_types_t shootType, vec3_t impact)
 {
 	vec3_t dir;			/* Direction from the location of the gun muzzle ("from") to the target ("at") */
 	vec3_t angles;		/** @todo The random dir-modifier? */
@@ -1058,7 +1058,7 @@ void G_GetShotOrigin (const Edict *shooter, const fireDef_t *fd, const vec3_t di
 static bool G_PrepareShot (Edict *ent, shoot_types_t shootType, fireDefIndex_t firemode, item_t **weapon, containerIndex_t *container, const fireDef_t **fd)
 {
 	const fireDef_t *fdArray;
-	item_t *item;
+	Item *item;
 
 	if (shootType >= ST_NUM_SHOOT_TYPES)
 		gi.Error("G_GetShotFromType: unknown shoot type %i.\n", shootType);

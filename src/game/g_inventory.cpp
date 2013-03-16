@@ -303,7 +303,7 @@ void G_InventoryToFloor (Edict *ent)
  * @sa CL_NetReceiveItem
  * @sa EV_INV_TRANSFER
  */
-void G_ReadItem (item_t *item, const invDef_t **container, int *x, int *y)
+void G_ReadItem (Item *item, const invDef_t **container, int *x, int *y)
 {
 	int t, m;
 	containerIndex_t containerID;
@@ -337,7 +337,7 @@ void G_ReadItem (item_t *item, const invDef_t **container, int *x, int *y)
  * @sa CL_NetReceiveItem
  * @sa EV_INV_TRANSFER
  */
-void G_WriteItem (const item_t *item, const invDef_t *container, int x, int y)
+void G_WriteItem (const Item *item, const invDef_t *container, int x, int y)
 {
 	assert(item);
 	assert(item->def());

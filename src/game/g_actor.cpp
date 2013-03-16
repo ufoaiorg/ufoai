@@ -538,7 +538,6 @@ bool G_ActorInvMove (Edict *ent, const invDef_t *from, invList_t *fItem, const i
 	Edict *floor;
 	bool newFloor;
 	invList_t *tc;
-	item_t item;
 	playermask_t mask;
 	inventory_action_t ia;
 	Item fromItemBackup, toItemBackup;
@@ -657,7 +656,7 @@ bool G_ActorInvMove (Edict *ent, const invDef_t *from, invList_t *fItem, const i
 	G_SendStats(ent);
 
 	assert(item2);
-	item = *item2;
+	Item item = *item2;
 
 	if (ia == IA_RELOAD || ia == IA_RELOAD_SWAP) {
 		/* reload */

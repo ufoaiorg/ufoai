@@ -304,7 +304,6 @@ static int actorL_shoot (lua_State *L)
 {
 	int tu, shots;
 	shoot_types_t shootType;
-	const item_t *item;
 	const fireDef_t *fdArray;
 
 	assert(lua_isactor(L, 1));
@@ -322,7 +321,7 @@ static int actorL_shoot (lua_State *L)
 	}
 
 	shootType = ST_RIGHT;
-	item = AI_GetItemForShootType(shootType, AIL_ent);
+	const Item *item = AI_GetItemForShootType(shootType, AIL_ent);
 	if (item == NULL) {
 		shootType = ST_LEFT;
 		item = AI_GetItemForShootType(shootType, AIL_ent);

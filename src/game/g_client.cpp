@@ -1122,7 +1122,7 @@ static void G_ClientReadInventory (Edict *ent)
 
 	for (; nr-- > 0;) {
 		const invDef_t *container;
-		item_t item;
+		Item item;
 		int x, y;
 		G_ReadItem(&item, &container, &x, &y);
 		if (container->temp)
@@ -1190,7 +1190,7 @@ static void G_ClientSkipActorInfo (void)
 	int i, n;
 	Edict ent;
 	invDef_t container;
-	item_t item;
+	Item item;
 	int x, y;
 	const invDef_t *c = &container;
 

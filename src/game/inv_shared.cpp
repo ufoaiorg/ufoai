@@ -203,7 +203,7 @@ static bool INVSH_CheckShapeSmall (const uint32_t shape, const int x, const int 
  * @param[in] x The x location in the container.
  * @param[in] y The y location in the container.
  */
-static bool INVSH_ShapeCheckPosition (const item_t *item, const int x, const int y)
+static bool INVSH_ShapeCheckPosition (const Item *item, const int x, const int y)
 {
 	uint32_t shape;
 
@@ -364,7 +364,7 @@ const fireDef_t *FIRESH_GetFiredef (const objDef_t *obj, const weaponFireDefInde
  * doesn't support the given weapon
  * @sa FIRESH_GetFiredef
  */
-const fireDef_t *FIRESH_FiredefForWeapon (const item_t *item)
+const fireDef_t *FIRESH_FiredefForWeapon (const Item *item)
 {
 	int i;
 	const objDef_t *ammo = item->ammo;
@@ -412,7 +412,7 @@ const fireDef_t *FIRESH_SlowestFireDef (const item_t &item)
  * @return @c NULL if no reaction fire enabled weapon was found in the given list, the
  * reaction fire enabled object otherwise.
  */
-const objDef_t *item_t::getReactionFireWeaponType () const
+const objDef_t *Item::getReactionFireWeaponType () const
 {
 	if (!this)
 		return NULL;
@@ -533,7 +533,7 @@ uint32_t objDef_t::getShapeRotated () const
 	return shapeNew;
 }
 
-/** @brief item_t constructor with all default values */
+/** @brief Item constructor with all default values */
 Item::Item ()
 {
 	ammoLeft = NONE_AMMO;
@@ -543,7 +543,7 @@ Item::Item ()
 	_next = NULL;
 }
 
-/** @brief item_t constructor with the 3 most often changed attributes */
+/** @brief Item constructor with the 3 most often changed attributes */
 Item::Item (const objDef_t *itemDef, const objDef_t *_ammo, int _ammoLeft)
 {
 	ammoLeft = _ammoLeft;
@@ -557,7 +557,7 @@ Item::Item (const objDef_t *itemDef, const objDef_t *_ammo, int _ammoLeft)
  * @brief Return the weight of an item.
  * @return The weight of the given item including any ammo loaded.
  */
-float item_t::getWeight () const
+float Item::getWeight () const
 {
 	float weight = def()->weight;
 	if (ammo && ammo != def() && ammoLeft > 0) {
@@ -571,7 +571,7 @@ float item_t::getWeight () const
  * @param[in] other Second item to compare.
  * @return true if they are identical or false otherwise.
  */
-bool item_t::isSameAs (const item_t *const other) const
+bool Item::isSameAs (const Item *const other) const
 {
 	if (this == other)
 		return true;
@@ -592,7 +592,7 @@ bool item_t::isSameAs (const item_t *const other) const
  * @param[out] y The x location inside the item.
  * @sa canHoldItem
  */
-void item_t::getFirstShapePosition (int* const x, int* const y) const
+void Item::getFirstShapePosition (int* const x, int* const y) const
 {
 	int tempX, tempY;
 
@@ -736,7 +736,7 @@ invList_t *inventory_t::getItemAtPos (const invDef_t *container, const int x, co
  * @sa canHoldItem
  * @note x and y are NONE if no free space is available
  */
-void inventory_t::findSpace (const invDef_t *container, const item_t *item, int* const px, int* const py, const invList_t *ignoredItem) const
+void inventory_t::findSpace (const invDef_t *container, const Item *item, int* const px, int* const py, const invList_t *ignoredItem) const
 {
 	int x, y;
 
@@ -781,7 +781,7 @@ void inventory_t::findSpace (const invDef_t *container, const item_t *item, int*
  * @param[in] maxWeight The max permitted weight.
  * @return @c true if it is Ok to add the item @c false otherwise.
  */
-bool inventory_t::canHoldItemWeight (containerIndex_t from, containerIndex_t to, const item_t &item, int maxWeight) const
+bool inventory_t::canHoldItemWeight (containerIndex_t from, containerIndex_t to, const Item &item, int maxWeight) const
 {
 	if (CSI->ids[to].temp || !CSI->ids[from].temp)
 		return true;
@@ -857,7 +857,7 @@ invList_t *inventory_t::getArmourContainer (void) const
  * @param[in] item The item to search for.
  * @return Pointer to the first item of this type found, otherwise @c NULL.
  */
-invList_t *inventory_t::findInContainer (const invDef_t *container, const item_t *const item) const
+invList_t *inventory_t::findInContainer (const invDef_t *container, const Item *const item) const
 {
 	invList_t *ic;
 

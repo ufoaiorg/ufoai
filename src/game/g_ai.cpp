@@ -301,10 +301,10 @@ static bool AI_HideNeeded (const Edict *ent)
  * @param ic The inventory to search a useable weapon in.
  * @return Ready to fire weapon.
  */
-static inline const item_t *AI_GetItemFromInventory (const invList_t *ic)
+static inline const Item *AI_GetItemFromInventory (const invList_t *ic)
 {
 	if (ic != NULL) {
-		const item_t *item = ic;
+		const Item *item = ic;
 		if (item->ammo && item->isWeapon() && !item->mustReload())
 			return item;
 	}
@@ -318,7 +318,7 @@ static inline const item_t *AI_GetItemFromInventory (const invList_t *ic)
  * @return The item that was selected for the given shoot type. This might be @c NULL if
  * no item was found.
  */
-const item_t *AI_GetItemForShootType (shoot_types_t shootType, const Edict *ent)
+const Item *AI_GetItemForShootType (shoot_types_t shootType, const Edict *ent)
 {
 	/* optimization: reaction fire is automatic */
 	if (IS_SHOT_REACTION(shootType))
@@ -529,7 +529,7 @@ static Edict *AI_SearchDestroyableObject (const Edict *ent, const fireDef_t *fd)
 /**
  * @todo timed firedefs that bounce around should not be thrown/shoot about the whole distance
  */
-static void AI_SearchBestTarget (aiAction_t *aia, const Edict *ent, Edict *check, const item_t *item, shoot_types_t shootType, int tu, float *maxDmg, int *bestTime, const fireDef_t *fdArray)
+static void AI_SearchBestTarget (aiAction_t *aia, const Edict *ent, Edict *check, const Item *item, shoot_types_t shootType, int tu, float *maxDmg, int *bestTime, const fireDef_t *fdArray)
 {
 	float vis = ACTOR_VIS_0;
 	bool visChecked = false;	/* only check visibily once for an actor */
@@ -695,7 +695,7 @@ static float AI_FighterCalcActionScore (Edict *ent, pos3_t to, aiAction_t *aia)
 		/* shooting */
 		maxDmg = 0.0;
 		for (shootType = ST_RIGHT; shootType < ST_NUM_SHOOT_TYPES; shootType++) {
-			const item_t *item = AI_GetItemForShootType(shootType, ent);
+			const Item *item = AI_GetItemForShootType(shootType, ent);
 			if (!item)
 				continue;
 
