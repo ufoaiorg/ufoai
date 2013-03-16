@@ -268,14 +268,14 @@ static bool AI_HideNeeded (const Edict *ent)
 				continue;
 
 			if (G_IsVisibleForTeam(from, ent->team)) {
-				const invList_t *invlist = from->getRightHand();
+				const Item *item = from->getRightHand();
 				const fireDef_t *fd = NULL;
-				if (invlist && invlist->def()) {
-					fd = FIRESH_FiredefForWeapon(invlist);
+				if (item && item->def()) {
+					fd = FIRESH_FiredefForWeapon(item);
 				} else {
-					invlist = from->getLeftHand();
-					if (invlist && invlist->def())
-						fd = FIRESH_FiredefForWeapon(invlist);
+					item = from->getLeftHand();
+					if (item && item->def())
+						fd = FIRESH_FiredefForWeapon(item);
 				}
 				/* search the (visible) inventory (by just checking the weapon in the hands of the enemy */
 				if (fd != NULL && fd->range * fd->range >= VectorDistSqr(ent->origin, from->origin)) {

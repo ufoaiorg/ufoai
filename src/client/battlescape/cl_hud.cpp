@@ -145,14 +145,14 @@ void HUD_UpdateActorStats (const le_t *le)
 	if (LE_IsDead(le))
 		return;
 
-	const invList_t *invList = le->getRightHand();
-	if ((!invList || !invList->def() || !invList->isHeldTwoHanded()) && le->getLeftHand())
-		invList = le->getLeftHand();
+	const Item *item = le->getRightHand();
+	if ((!item || !item->def() || !item->isHeldTwoHanded()) && le->getLeftHand())
+		item = le->getLeftHand();
 
 	const character_t *chr = CL_ActorGetChr(le);
 	assert(chr);
 	const char* tooltip = va(_("%s\nHP: %i/%i TU: %i\n%s"),
-		chr->name, le->HP, le->maxHP, le->TU, (invList && invList->def()) ? _(invList->def()->name) : "");
+		chr->name, le->HP, le->maxHP, le->TU, (item && item->def()) ? _(item->def()->name) : "");
 
 	const int idx = CL_ActorGetNumber(le);
 	UI_ExecuteConfunc("updateactorvalues %i \"%s\" \"%i\" \"%i\" \"%i\" \"%i\" \"%i\" \"%i\" \"%i\" \"%s\"",
