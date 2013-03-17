@@ -36,10 +36,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @sa CP_CleanupAircraftCrew
  * @todo remove return value and make item a pointer
  */
-item_t CP_AddWeaponAmmo (equipDef_t *ed, item_t item)
+void CP_AddWeaponAmmo (equipDef_t *ed, Item *item)
 {
 	int i;
-	const objDef_t *type = item.def();
+	const objDef_t *type = item->def();
 
 	assert(ed->numItems[type->idx] > 0);
 	ed->numItems[type->idx]--;
@@ -48,40 +48,39 @@ item_t CP_AddWeaponAmmo (equipDef_t *ed, item_t item)
 		/* The given item is ammo or self-contained weapon (i.e. It has firedefinitions. */
 		if (type->oneshot) {
 			/* "Recharge" the oneshot weapon. */
-			item.ammoLeft = type->ammo;
-			item.ammo = item.def(); /* Just in case this hasn't been done yet. */
+			item->ammoLeft = type->ammo;
+			item->ammo = item->def(); /* Just in case this hasn't been done yet. */
 			Com_DPrintf(DEBUG_CLIENT, "CL_AddWeaponAmmo: oneshot weapon '%s'.\n", type->id);
-			return item;
+			return;
 		} else {
 			/* No change, nothing needs to be done to this item. */
-			return item;
+			return;
 		}
 	} else if (!type->reload) {
 		/* The given item is a weapon but no ammo is needed,
 		 * so fire definitions are in t (the weapon). Setting equal. */
-		item.ammo = item.def();
-		return item;
-	} else if (item.ammoLeft) {
-		assert(item.ammo);
+		item->ammo = item->def();
+		return;
+	} else if (item->ammoLeft) {
+		assert(item->ammo);
 		/* The item is a weapon and it was reloaded one time. */
-		if (item.ammoLeft == type->ammo) {
+		if (item->ammoLeft == type->ammo) {
 			/* Fully loaded, no need to reload, but mark the ammo as used. */
-			if (ed->numItems[item.ammo->idx] > 0) {
-				ed->numItems[item.ammo->idx]--;
-				return item;
+			if (ed->numItems[item->ammo->idx] > 0) {
+				ed->numItems[item->ammo->idx]--;
 			} else {
 				/* Your clip has been sold; give it back. */
-				item.ammoLeft = NONE_AMMO;
-				return item;
+				item->ammoLeft = NONE_AMMO;
 			}
+			return;
 		}
 	}
 
 	/* Check for complete clips of the same kind */
-	if (item.ammo && ed->numItems[item.ammo->idx] > 0) {
-		ed->numItems[item.ammo->idx]--;
-		item.ammoLeft = type->ammo;
-		return item;
+	if (item->ammo && ed->numItems[item->ammo->idx] > 0) {
+		ed->numItems[item->ammo->idx]--;
+		item->ammoLeft = type->ammo;
+		return;
 	}
 
 	/* Search for any complete clips. */
@@ -91,9 +90,9 @@ item_t CP_AddWeaponAmmo (equipDef_t *ed, item_t item)
 		if (od->isLoadableInWeapon(type)) {
 			if (ed->numItems[i] > 0) {
 				ed->numItems[i]--;
-				item.ammoLeft = type->ammo;
-				item.ammo = od;
-				return item;
+				item->ammoLeft = type->ammo;
+				item->ammo = od;
+				return;
 			}
 		}
 	}
@@ -106,35 +105,34 @@ item_t CP_AddWeaponAmmo (equipDef_t *ed, item_t item)
 
 	/* Failed to find a complete clip - see if there's any loose ammo
 	 * of the same kind; if so, gather it all in this weapon. */
-	if (item.ammo && ed->numItemsLoose[item.ammo->idx] > 0) {
-		item.ammoLeft = ed->numItemsLoose[item.ammo->idx];
-		ed->numItemsLoose[item.ammo->idx] = 0;
-		return item;
+	if (item->ammo && ed->numItemsLoose[item->ammo->idx] > 0) {
+		item->ammoLeft = ed->numItemsLoose[item->ammo->idx];
+		ed->numItemsLoose[item->ammo->idx] = 0;
+		return;
 	}
 
 	/* See if there's any loose ammo */
 	/** @todo We may want to change this to use the type->ammo[] info. */
-	item.ammoLeft = NONE_AMMO;
+	item->ammoLeft = NONE_AMMO;
 	for (i = 0; i < cgi->csi->numODs; i++) {
 		const objDef_t *od = INVSH_GetItemByIDX(i);
-		if (od->isLoadableInWeapon(type) && ed->numItemsLoose[i] > item.ammoLeft) {
-			if (item.ammoLeft > 0) {
+		if (od->isLoadableInWeapon(type) && ed->numItemsLoose[i] > item->ammoLeft) {
+			if (item->ammoLeft > 0) {
 				/* We previously found some ammo, but we've now found other
 				 * loose ammo of a different (but appropriate) type with
 				 * more bullets.  Put the previously found ammo back, so
 				 * we'll take the new type. */
-				assert(item.ammo);
-				ed->numItemsLoose[item.ammo->idx] = item.ammoLeft;
+				assert(item->ammo);
+				ed->numItemsLoose[item->ammo->idx] = item->ammoLeft;
 				/* We don't have to accumulate loose ammo into clips
 				 * because we did it previously and we create no new ammo */
 			}
 			/* Found some loose ammo to load the weapon with */
-			item.ammoLeft = ed->numItemsLoose[i];
+			item->ammoLeft = ed->numItemsLoose[i];
 			ed->numItemsLoose[i] = 0;
-			item.ammo = od;
+			item->ammo = od;
 		}
 	}
-	return item;
 }
 
 /**
@@ -192,7 +190,7 @@ void CP_CleanupTeam (base_t *base, equipDef_t *ed)
 			for (ic = chr->inv.getContainer(container); ic; ic = next) {
 				next = ic->getNext();
 				if (ed->numItems[ic->def()->idx] > 0) {
-					*ic = CP_AddWeaponAmmo(ed, *ic);
+					CP_AddWeaponAmmo(ed, ic);
 				} else {
 					/* Drop ammo used for reloading and sold carried weapons. */
 					if (!cgi->INV_RemoveFromInventory(&chr->inv, INVDEF(container), ic))
@@ -245,7 +243,7 @@ void CP_CleanupAircraftTeam (aircraft_t *aircraft, equipDef_t *ed)
 			for (ic = chr->inv.getContainer(container); ic; ic = next) {
 				next = ic->getNext();
 				if (ed->numItems[ic->def()->idx] > 0) {
-					*ic = CP_AddWeaponAmmo(ed, *ic);
+					CP_AddWeaponAmmo(ed, ic);
 				} else {
 					/* Drop ammo used for reloading and sold carried weapons. */
 					if (!cgi->INV_RemoveFromInventory(&chr->inv, INVDEF(container), ic))
