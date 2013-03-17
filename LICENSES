@@ -191,10 +191,10 @@ base/maps/country/cy_nature_06.map | GNU General Public License 2.0 or later | M
 base/maps/country/cy_nature_07.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/country/cy_nature_08.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/country/cy_road_crossing.map | GNU General Public License 2.0 or later | Martin Gerhardy
-base/maps/country/cy_road_end_e.map | GNU General Public License 2.0 or later | Martin Gerhardy
-base/maps/country/cy_road_end_n.map | GNU General Public License 2.0 or later | Martin Gerhardy
-base/maps/country/cy_road_end_s.map | GNU General Public License 2.0 or later | Martin Gerhardy
-base/maps/country/cy_road_end_w.map | GNU General Public License 2.0 or later | Martin Gerhardy
+base/maps/country/cy_road_end_e_01.map | GNU General Public License 2.0 or later | Martin Gerhardy
+base/maps/country/cy_road_end_n_01.map | GNU General Public License 2.0 or later | Martin Gerhardy
+base/maps/country/cy_road_end_s_01.map | GNU General Public License 2.0 or later | Martin Gerhardy
+base/maps/country/cy_road_end_w_01.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/country/cy_road_h_01.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/country/cy_road_h_02.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/country/cy_road_junction_e.map | GNU General Public License 2.0 or later | Martin Gerhardy
