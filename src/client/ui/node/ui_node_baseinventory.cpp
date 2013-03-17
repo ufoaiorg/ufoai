@@ -208,54 +208,6 @@ static void UI_BaseInventoryNodeUpdateScroll (uiNode_t* node)
 }
 
 /**
- * @brief Generate tooltip text for an item.
- * @param[in] item The item we want to generate the tooltip text for.
- * @param[in,out] tooltipText Pointer to a string the information should be written into.
- * @param[in] stringMaxLength Max. string size of @c tooltipText.
- * @return Number of lines
- * @todo Merge it with node container -- copy-paste of it
- */
-static void UI_GetItemTooltip (item_t item, char *tooltipText, size_t stringMaxLength)
-{
-	assert(item.def());
-
-	if (item.amount > 1)
-		Com_sprintf(tooltipText, stringMaxLength, "%i x %s\n", item.amount, _(item.def()->name));
-	else
-		Com_sprintf(tooltipText, stringMaxLength, "%s\n", _(item.def()->name));
-
-	/* Only display further info if item.t is researched */
-	if (GAME_ItemIsUseable(item.def())) {
-		if (item.isWeapon()) {
-			/* Get info about used ammo (if there is any) */
-			if (item.def() == item.ammo) {
-				/* Item has no ammo but might have shot-count */
-				if (item.ammoLeft) {
-					Q_strcat(tooltipText, va(_("Ammo: %i\n"), item.ammoLeft), stringMaxLength);
-				}
-			} else if (item.ammo) {
-				/* Search for used ammo and display name + ammo count */
-				Q_strcat(tooltipText, va(_("%s loaded\n"), _(item.ammo->name)), stringMaxLength);
-				Q_strcat(tooltipText, va(_("Ammo: %i\n"),  item.ammoLeft), stringMaxLength);
-			}
-		} else if (item.def()->numWeapons) {
-			/* Check if this is a non-weapon and non-ammo item */
-			if (!(item.def()->numWeapons == 1 && item.def()->weapons[0] == item.def())) {
-				int i;
-				/* If it's ammo get the weapon names it can be used in */
-				Q_strcat(tooltipText, _("Usable in:\n"), stringMaxLength);
-				for (i = 0; i < item.def()->numWeapons; i++) {
-					const objDef_t *weapon = item.def()->weapons[i];
-					if (GAME_ItemIsUseable(weapon)) {
-						Q_strcat(tooltipText, va("* %s\n", _(weapon->name)), stringMaxLength);
-					}
-				}
-			}
-		}
-	}
-}
-
-/**
  * @brief Calculates the size of a container node and links the container
  * into the node (uses the @c invDef_t shape bitmask to determine the size)
  * @param[in,out] node The node to get the size for
