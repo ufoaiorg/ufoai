@@ -140,11 +140,11 @@ bool INV_LoadWeapon (const invList_t *weaponList, inventory_t *inv, const invDef
  * @param[in] container Inventory definition where to put the removed ammo.
  * @return @c true if the unload was successful, @c false otherwise
  */
-bool INV_UnloadWeapon (invList_t *weapon, inventory_t *inv, const invDef_t *container)
+bool INV_UnloadWeapon (Item *weapon, inventory_t *inv, const invDef_t *container)
 {
 	assert(weapon);
 	if (container && inv) {
-		const item_t item(weapon->ammo);
+		const Item item(weapon->ammo);
 		if (cls.i.addToInventory(inv, &item, container, NONE, NONE, 1) != NULL) {
 			weapon->ammo = NULL;
 			weapon->ammoLeft = 0;

@@ -501,7 +501,7 @@ void GAME_ActorSelect_f (void)
  * @param[in] y Vertical coordinate of the item in the container
  * @sa GAME_LoadItem
  */
-static void GAME_SaveItem (xmlNode_t *p, const item_t *item, containerIndex_t container, int x, int y)
+static void GAME_SaveItem (xmlNode_t *p, const Item *item, containerIndex_t container, int x, int y)
 {
 	assert(item->def() != NULL);
 
@@ -552,7 +552,7 @@ static void GAME_SaveInventory (xmlNode_t *p, const inventory_t *inv)
  * @param[out] y Vertical coordinate of the item in the container
  * @sa GAME_SaveItem
  */
-static void GAME_LoadItem (xmlNode_t *n, item_t *item, containerIndex_t *container, int *x, int *y)
+static void GAME_LoadItem (xmlNode_t *n, Item *item, containerIndex_t *container, int *x, int *y)
 {
 	const char *itemID = XML_GetString(n, SAVE_INVENTORY_WEAPONID);
 	const char *contID = XML_GetString(n, SAVE_INVENTORY_CONTAINER);
@@ -600,7 +600,7 @@ static void GAME_LoadInventory (xmlNode_t *p, inventory_t *inv, int maxLoad)
 	xmlNode_t *s;
 
 	for (s = XML_GetNode(p, SAVE_INVENTORY_ITEM); s; s = XML_GetNextNode(s, p, SAVE_INVENTORY_ITEM)) {
-		item_t item;
+		Item item;
 		containerIndex_t container;
 		int x, y;
 

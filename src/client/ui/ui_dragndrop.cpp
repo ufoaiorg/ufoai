@@ -121,7 +121,7 @@ static void UI_DNDDrag (uiNode_t *node)
  * @sa UI_DNDDrop
  * @sa UI_DNDAbort
  */
-void UI_DNDDragItem (uiNode_t *node, const item_t *item)
+void UI_DNDDragItem (uiNode_t *node, const Item *item)
 {
 	UI_DNDDrag(node);
 	assert(UI_DNDIsDragging());
@@ -187,7 +187,7 @@ void UI_DNDDrop (void)
 	UI_InvalidateMouse();
 }
 
-item_t *UI_DNDGetItem (void)
+Item *UI_DNDGetItem (void)
 {
 	assert(objectType == DND_ITEM);
 	return &draggingItem;

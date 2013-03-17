@@ -80,7 +80,7 @@ static void testItemAdd (void)
 {
 	inventory_t inv;
 	const objDef_t *od;
-	item_t item;
+	Item item;
 	const invDef_t *container;
 
 	ResetInventoryList();
@@ -108,7 +108,7 @@ static void testItemDel (void)
 {
 	inventory_t inv;
 	const objDef_t *od;
-	item_t item;
+	Item item;
 	const invDef_t *container;
 	invList_t *addedItem;
 
@@ -141,7 +141,7 @@ static void testItemMove (void)
 {
 	inventory_t inv;
 	const objDef_t *od;
-	item_t item;
+	Item item;
 	const invDef_t *container, *containerTo;
 	invList_t *addedItem;
 
@@ -180,7 +180,7 @@ static void testItemReload (void)
 {
 	inventory_t inv;
 	const objDef_t *od, *ad;
-	item_t item, ammo, ammoFrom;
+	Item item, ammo, ammoFrom;
 	const invDef_t *container, *containerFrom;
 	invList_t *addedItem;
 
@@ -257,7 +257,7 @@ static void testItemReload (void)
 
 static bool testAddSingle (inventory_t *inv, const objDef_t *od, const invDef_t *container)
 {
-	item_t item;
+	Item item;
 
 	item.setDef(od);
 	item.ammo = NULL;
@@ -335,7 +335,7 @@ static void testItemToHeadgear (void)
 	inventory_t inv;
 	const objDef_t *od;
 	const invDef_t *container;
-	item_t item;
+	Item item;
 
 	ResetInventoryList();
 

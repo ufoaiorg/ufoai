@@ -1212,7 +1212,7 @@ void GAME_HandleResults (dbuffer *msg, int winner, int *numSpawned, int *numAliv
 /**
  * @sa G_WriteItem
  * @sa G_ReadItem
- * @note The amount of the item_t struct should not be needed here - because
+ * @note The amount of the Item should not be needed here - because
  * the amount is only valid for idFloor and idEquip
  */
 static void GAME_NetSendItem (dbuffer *buf, const Item *item, containerIndex_t container, int x, int y)

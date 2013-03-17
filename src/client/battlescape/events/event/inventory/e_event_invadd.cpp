@@ -29,10 +29,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /**
  * @sa G_WriteItem
  * @sa G_ReadItem
- * @note The amount of the item_t struct should not be needed here - because
+ * @note The amount of the Item should not be needed here - because
  * the amount is only valid for idFloor and idEquip
  */
-static void CL_NetReceiveItem (dbuffer *buf, item_t *item, containerIndex_t *container, int *x, int *y)
+static void CL_NetReceiveItem (dbuffer *buf, Item *item, containerIndex_t *container, int *x, int *y)
 {
 	const eventRegister_t *eventData = CL_GetEvent(EV_INV_TRANSFER);
 
@@ -83,7 +83,7 @@ void CL_InvAdd (const eventRegister_t *self, dbuffer *msg)
 	le->flags &= ~LE_REMOVE_NEXT_FRAME;
 
 	for (; nr-- > 0;) {
-		item_t item;
+		Item item;
 		containerIndex_t container;
 		int x, y;
 		CL_NetReceiveItem(msg, &item, &container, &x, &y);

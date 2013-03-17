@@ -130,7 +130,7 @@ void UI_ContainerNodeUpdateEquipment (inventory_t *inv, const equipDef_t *ed)
 			continue;
 
 		while (numItems[i]) {
-			const item_t item(od);
+			const Item item(od);
 			if (!cls.i.addToInventory(inv, &item, INVDEF(csi.idEquip), NONE, NONE, 1)) {
 				/* no space left in the inventory */
 				break;
@@ -160,7 +160,7 @@ void UI_ContainerNodeUpdateEquipment (inventory_t *inv, const equipDef_t *ed)
  * Used to draw an item to the equipment containers. First look whether the objDef_t
  * includes an image - if there is none then draw the model
  */
-void UI_DrawItem (uiNode_t *node, const vec3_t org, const item_t *item, int x, int y, const vec3_t scale, const vec4_t color)
+void UI_DrawItem (uiNode_t *node, const vec3_t org, const Item *item, int x, int y, const vec3_t scale, const vec4_t color)
 {
 	const objDef_t *od = item->def();
 	vec4_t col;
@@ -537,7 +537,7 @@ static void UI_ContainerNodeDrawGrid (uiNode_t *node, const objDef_t *highlightT
  */
 static void UI_ContainerNodeDrawDropPreview (uiNode_t *target)
 {
-	item_t previewItem;
+	Item previewItem;
 	int checkedTo;
 	vec3_t origine;
 
@@ -899,7 +899,7 @@ bool uiContainerNode::onDndMove (uiNode_t *target, int x, int y)
 	bool exists;
 	int itemX = 0;
 	int itemY = 0;
-	item_t *dragItem = UI_DNDGetItem();
+	Item *dragItem = UI_DNDGetItem();
 
 	/* we already check it when the node accept the DND */
 	assert(EXTRADATA(target).container);
@@ -982,7 +982,7 @@ void uiContainerNode::onDndLeave (uiNode_t *node)
  */
 bool uiContainerNode::onDndFinished (uiNode_t *source, bool isDropped)
 {
-	item_t *dragItem = UI_DNDGetItem();
+	Item *dragItem = UI_DNDGetItem();
 	const invDef_t *sourceContainer = EXTRADATACONST(source).container;
 
 	/* if the target can't finalize the DND we stop */
