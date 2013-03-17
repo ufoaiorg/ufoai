@@ -54,8 +54,7 @@ void uiItemNode::draw (uiNode_t *node)
 
 	od = INVSH_GetItemByIDSilent(ref);
 	if (od) {
-		item_t item(NULL, NULL, 1); /* 1 so it's not reddish; fake item anyway */
-		item.setDef(INVSH_GetItemByIDX(od->idx));
+		Item item(od, NULL, 1); /* 1 so it's not reddish; fake item anyway */
 
 		if (EXTRADATA(node).containerLike || item.isArmour()) {
 			const vec4_t color = {1, 1, 1, 1};
