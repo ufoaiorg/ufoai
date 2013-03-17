@@ -155,7 +155,7 @@ typedef struct le_s {
 	/** is called before adding a le to scene */
 	localEntitiyAddFunc_t addFunc;
 
-	inline invList_t *getRightHand () const
+	inline Item *getRightHandItem () const
 	{
 		return inv.getRightHandContainer();
 	}

@@ -145,7 +145,7 @@ void HUD_UpdateActorStats (const le_t *le)
 	if (LE_IsDead(le))
 		return;
 
-	const Item *item = le->getRightHand();
+	const Item *item = le->getRightHandItem();
 	if ((!item || !item->def() || !item->isHeldTwoHanded()) && le->getLeftHand())
 		item = le->getLeftHand();
 
@@ -479,7 +479,7 @@ static void HUD_DisplayActions (const char* callback, const le_t* actor, actionT
 	break;
 
 	case RELOAD_RIGHT: {
-		Item *weapon = actor->getRightHand();
+		Item *weapon = actor->getRightHandItem();
 
 		/* Reloeadable item in hand. */
 		if (weapon && weapon->def() && weapon->isReloadable()) {
@@ -788,7 +788,7 @@ static void HUD_UpdateButtons (const le_t *le)
 	if (!le)
 		return;
 
-	Item *weaponR = le->getRightHand();
+	Item *weaponR = le->getRightHandItem();
 	Item *headgear = le->inv.getHeadgearContainer();
 
 	Item *weaponL;
@@ -1077,7 +1077,7 @@ static int HUD_UpdateActorFireMode (le_t *actor)
 	} else if (IS_MODE_FIRE_LEFT(actor->actorMode)) {
 		selWeapon = HUD_GetLeftHandWeapon(actor, NULL);
 	} else {
-		selWeapon = actor->getRightHand();
+		selWeapon = actor->getRightHandItem();
 	}
 
 	UI_ResetData(TEXT_MOUSECURSOR_RIGHT);
@@ -1208,8 +1208,8 @@ static void HUD_UpdateActorCvar (const le_t *actor)
 	const char *animName = R_AnimGetName(&actor->as, actor->model1);
 	if (animName)
 		Cvar_Set("mn_anim", animName);
-	if (actor->getRightHand()) {
-		const Item *item = actor->getRightHand();
+	if (actor->getRightHandItem()) {
+		const Item *item = actor->getRightHandItem();
 		Cvar_Set("mn_rweapon", item->def()->model);
 		Cvar_Set("mn_rweapon_item", item->def()->id);
 	} else {
@@ -1226,7 +1226,7 @@ static void HUD_UpdateActorCvar (const le_t *actor)
 	}
 
 	/* print ammo */
-	const Item *itemRight = actor->getRightHand();
+	const Item *itemRight = actor->getRightHandItem();
 	if (itemRight)
 		Cvar_SetValue("mn_ammoright", itemRight->ammoLeft);
 	else
@@ -1365,9 +1365,9 @@ static void HUD_UpdateActor (le_t *actor)
 		const Item *item;
 		containerIndex_t container;
 
-		if (displayRemainingTus[REMAINING_TU_RELOAD_RIGHT] && actor->getRightHand()) {
+		if (displayRemainingTus[REMAINING_TU_RELOAD_RIGHT] && actor->getRightHandItem()) {
 			container = csi.idRight;
-			item = actor->getRightHand();
+			item = actor->getRightHandItem();
 		} else if (displayRemainingTus[REMAINING_TU_RELOAD_LEFT] && actor->getLeftHand()) {
 			container = NONE;
 			item = HUD_GetLeftHandWeapon(actor, &container);
