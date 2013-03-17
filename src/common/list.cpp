@@ -104,7 +104,7 @@ static linkedList_t *LIST_AllocateString(char const* data, linkedList_t* const n
 	return LIST_AllocateEntry(Mem_StrDup(data), next);
 }
 
-void LIST_AddStringSorted (linkedList_t** listDest, const char* data)
+void LIST_AddStringSorted (linkedList_t** listDest, const char *data)
 {
 	assert(listDest);
 	assert(data);

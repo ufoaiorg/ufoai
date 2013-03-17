@@ -123,7 +123,7 @@ static inline void RT_PlaceInit (const Routing &routing, const actorSizeEnum_t a
 	p->usable = (relCeiling && p->floor > -1 && p->ceiling - p->floor >= PATHFINDING_MIN_OPENING) ? true : false;
 }
 
-static inline bool RT_PlaceDoesIntersectEnough (const place_t* p, const place_t* other)
+static inline bool RT_PlaceDoesIntersectEnough (const place_t *p, const place_t *other)
 {
 	return (std::min(p->ceiling, other->ceiling) - std::max(p->floor, other->floor) >= PATHFINDING_MIN_OPENING);
 }
@@ -134,7 +134,7 @@ static inline bool RT_PlaceDoesIntersectEnough (const place_t* p, const place_t*
  * The other place has the beginning of the stairway, so the floor is at eg. 6
  * and the ceiling is that of the higher level, eg. 32.
  */
-static inline int RT_PlaceIsShifted (const place_t* p, const place_t* other)
+static inline int RT_PlaceIsShifted (const place_t *p, const place_t *other)
 {
 	if (!p->isUsable() || !other->isUsable())
 		return 0;
@@ -887,7 +887,7 @@ static int RT_TraceOpening (const RoutingData *rtd, const vec3_t start, const ve
  * @param[out] foundHigh Actual height of the top of the found passage.
  * @return The new z value of the actor after traveling in this direction from the starting location.
  */
-static int RT_FindOpening (RoutingData *rtd, const place_t* from, const int ax, const int ay, const int bottom, const int top, int *foundLow, int *foundHigh)
+static int RT_FindOpening (RoutingData *rtd, const place_t *from, const int ax, const int ay, const int bottom, const int top, int *foundLow, int *foundHigh)
 {
 	vec3_t start, end;
 	pos3_t pos;
@@ -976,7 +976,7 @@ static int RT_FindOpening (RoutingData *rtd, const place_t* from, const int ax, 
  * @param[out] opening descriptor of the opening found, if any
  * @return The change in floor height in QUANT units because of the additional trace.
 */
-static int RT_MicroTrace (RoutingData *rtd, const place_t* from, const int ax, const int ay, const int az, const int stairwaySituation, opening_t* opening)
+static int RT_MicroTrace (RoutingData *rtd, const place_t *from, const int ax, const int ay, const int az, const int stairwaySituation, opening_t* opening)
 {
 	/* OK, now we have a viable shot across.  Run microstep tests now. */
 	/* Now calculate the stepup at the floor using microsteps. */
@@ -1171,7 +1171,7 @@ static int RT_MicroTrace (RoutingData *rtd, const place_t* from, const int ax, c
  * @param[out] opening descriptor of the opening found, if any
  * @return The size in QUANT units of the detected opening.
  */
-static int RT_TraceOnePassage (RoutingData *rtd, const place_t* from, const place_t* to, opening_t* opening)
+static int RT_TraceOnePassage (RoutingData *rtd, const place_t *from, const place_t *to, opening_t* opening)
 {
 	int hi; /**< absolute ceiling of the passage found. */
 	const int z = from->cell[2];
@@ -1259,7 +1259,7 @@ static void RT_TracePassage (RoutingData *rtd, const int x, const int y, const i
 	int aboveCeil, lowCeil;
 	/** we don't need the cell below the adjacent cell because we should have already checked it */
 	place_t from, to, above;
-	const place_t* placeToCheck = NULL;
+	const place_t *placeToCheck = NULL;
 
 	RT_PlaceInit(rtd->routing, rtd->actorSize, &from, x, y, z);
 	RT_PlaceInit(rtd->routing, rtd->actorSize, &to, ax, ay, z);

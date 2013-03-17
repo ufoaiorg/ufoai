@@ -37,7 +37,7 @@ struct memBlockFoot_t {
 };
 
 struct memBlock_t {
-	memBlock_t* next;
+	memBlock_t *next;
 
 	uint32_t topSentinel; /**< For memory integrity checking */
 
@@ -56,7 +56,7 @@ struct memPool_t {
 	char name[MEM_MAX_POOLNAME]; /**< Name of pool */
 	bool inUse; /**< Slot in use? */
 
-	memBlock_t* blocks[MEM_HASH]; /**< Allocated blocks */
+	memBlock_t *blocks[MEM_HASH]; /**< Allocated blocks */
 
 	uint32_t blockCount; /**< Total allocated blocks */
 	uint32_t byteCount; /**< Total allocated bytes */
@@ -162,7 +162,7 @@ void _Mem_DeletePool (memPool_t *pool, const char *fileName, const int fileLine)
 POOL AND TAG MEMORY ALLOCATION
 ==============================================================================*/
 
-static memBlock_t* Mem_PtrToBlock(void* const ptr)
+static memBlock_t *Mem_PtrToBlock(void* const ptr)
 {
 	return static_cast<memBlock_t*>(ptr) - 1;
 }
@@ -172,7 +172,7 @@ static void* Mem_BlockToPtr(memBlock_t* const mem)
 	return mem + 1;
 }
 
-static memBlockFoot_t* Mem_BlockToFooter(memBlock_t* const mem)
+static memBlockFoot_t *Mem_BlockToFooter(memBlock_t* const mem)
 {
 	return reinterpret_cast<memBlockFoot_t*>(reinterpret_cast<byte*>(Mem_BlockToPtr(mem)) + mem->memSize);
 }
