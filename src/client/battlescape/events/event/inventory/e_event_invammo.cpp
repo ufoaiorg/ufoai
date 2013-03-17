@@ -29,7 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 void CL_InvAmmo (const eventRegister_t *self, dbuffer *msg)
 {
-	invList_t	*ic;
+	Item	*item;
 	le_t	*le;
 	int		number;
 	int		ammo, type, x, y;
@@ -48,11 +48,11 @@ void CL_InvAmmo (const eventRegister_t *self, dbuffer *msg)
 
 	assert(container >= 0);
 	assert(container < MAX_INVDEFS);
-	ic = le->inv.getItemAtPos(INVDEF(container), x, y);
-	if (!ic)
+	item = le->inv.getItemAtPos(INVDEF(container), x, y);
+	if (!item)
 		return;
 
 	/* set new ammo */
-	ic->ammoLeft = ammo;
-	ic->ammo = INVSH_GetItemByIDX(type);
+	item->ammoLeft = ammo;
+	item->ammo = INVSH_GetItemByIDX(type);
 }

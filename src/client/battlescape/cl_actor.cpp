@@ -1032,11 +1032,11 @@ void CL_ActorInvMove (const le_t *le, containerIndex_t fromContainer, int fromX,
 	assert(le);
 	assert(LE_IsActor(le));
 
-	const invList_t *invList = le->inv.getItemAtPos(fromPtr, fromX, fromY);
+	const Item *item = le->inv.getItemAtPos(fromPtr, fromX, fromY);
 
-	if (invList != NULL) {
+	if (item != NULL) {
 		const character_t *chr = CL_ActorGetChr(le);
-		if (!le->inv.canHoldItemWeight(fromContainer, toContainer, *invList, GAME_GetChrMaxLoad(chr))) {
+		if (!le->inv.canHoldItemWeight(fromContainer, toContainer, *item, GAME_GetChrMaxLoad(chr))) {
 			UI_Popup(_("Warning"), _("This soldier can not carry anything else."));
 			return;
 		}
@@ -1159,7 +1159,7 @@ static void CL_ActorUseHeadgear_f (void)
 	if (!CL_ActorCheckAction(selActor))
 		return;
 
-	invList_t *headgear = selActor->inv.getHeadgearContainer();
+	Item *headgear = selActor->inv.getHeadgearContainer();
 	if (!headgear)
 		return;
 

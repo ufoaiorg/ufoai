@@ -665,16 +665,16 @@ static void HUD_RemainingTUs_f (void)
 }
 
 /**
- * @return The minimum time needed to fire the weapons in the given @c invList
+ * @return The minimum time needed to fire the weapon
  */
-static int HUD_GetMinimumTUsForUsage (const invList_t *invList)
+static int HUD_GetMinimumTUsForUsage (const Item *item)
 {
 	/** @todo what is this 100? replace with constant please - MAX_TUS? */
 	int time = 100;
 
-	assert(invList->def());
+	assert(item->def());
 
-	const fireDef_t *fdArray = FIRESH_FiredefForWeapon(invList);
+	const fireDef_t *fdArray = FIRESH_FiredefForWeapon(item);
 	if (fdArray == NULL)
 		return time;
 
@@ -1069,7 +1069,7 @@ static void HUD_MapDebugCursor (const le_t *le)
  */
 static int HUD_UpdateActorFireMode (le_t *actor)
 {
-	const invList_t *selWeapon;
+	const Item *selWeapon;
 
 	/* get weapon */
 	if (IS_MODE_FIRE_HEADGEAR(actor->actorMode)) {

@@ -36,7 +36,7 @@ void CL_InvDel (const eventRegister_t *self, dbuffer *msg)
 	int		number;
 	int		x, y;
 	containerIndex_t container;
-	invList_t	*ic;
+	Item	*item;
 
 	NET_ReadFormat(msg, self->formatString, &number, &container, &x, &y);
 
@@ -57,13 +57,13 @@ void CL_InvDel (const eventRegister_t *self, dbuffer *msg)
 	if (le->type == ET_ACTOR || le->type == ET_ACTOR2x2)
 		LE_SetThink(le, LET_StartIdle);
 
-	ic = le->inv.getItemAtPos(INVDEF(container), x, y);
+	item = le->inv.getItemAtPos(INVDEF(container), x, y);
 	/* ic can be null for other team actors - we don't the full inventory of them, only
 	 * the object index */
-	if (!ic)
+	if (!item)
 		return;
 
-	if (!cls.i.removeFromInventory(&le->inv, INVDEF(container), ic))
+	if (!cls.i.removeFromInventory(&le->inv, INVDEF(container), item))
 		Com_Error(ERR_DROP, "CL_InvDel: No item was removed from container %i", container);
 
 	if (le == selActor)
