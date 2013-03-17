@@ -1,5 +1,4 @@
-#ifndef ICONMENULABEL_H_
-#define ICONMENULABEL_H_
+#pragma once
 
 #include "gtkutil/image.h"
 
@@ -52,5 +51,3 @@ namespace gtkutil
 	};
 
 } // namespace gtkutil
-
-#endif /*ICONMENULABEL_H_*/

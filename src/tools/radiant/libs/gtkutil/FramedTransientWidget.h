@@ -1,5 +1,4 @@
-#ifndef FRAMEDTRANSIENTWIDGET_H_
-#define FRAMEDTRANSIENTWIDGET_H_
+#pragma once
 
 #include <string>
 #include <gtk/gtkwindow.h>
@@ -64,5 +63,3 @@ public:
 };
 
 } // namespace gtkutil
-
-#endif /*FRAMEDTRANSIENTWIDGET_H_*/

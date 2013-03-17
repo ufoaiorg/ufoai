@@ -1,5 +1,4 @@
-#ifndef CONTROLBUTTON_H_
-#define CONTROLBUTTON_H_
+#pragma once
 
 #include "image.h"
 #include "Timer.h"
@@ -90,5 +89,3 @@ public:
 };
 
 } // namespace gtkutil
-
-#endif /*CONTROLBUTTON_H_*/

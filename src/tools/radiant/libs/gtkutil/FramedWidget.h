@@ -1,5 +1,4 @@
-#ifndef FRAMEDWIDGET_H_
-#define FRAMEDWIDGET_H_
+#pragma once
 
 #include <gtk/gtkframe.h>
 #include <gtk/gtkwidget.h>
@@ -72,5 +71,3 @@ namespace gtkutil
 	};
 
 } // namespace gtkutil
-
-#endif /*FRAMEDWIDGET_H_*/

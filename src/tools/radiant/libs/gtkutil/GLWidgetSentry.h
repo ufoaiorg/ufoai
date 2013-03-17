@@ -1,5 +1,4 @@
-#ifndef GLWIDGETSENTRY_H_
-#define GLWIDGETSENTRY_H_
+#pragma once
 
 #include "glwidget.h"
 
@@ -33,5 +32,3 @@ namespace gtkutil
 			}
 	};
 }
-
-#endif /*GLWIDGETSENTRY_H_*/

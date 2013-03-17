@@ -1,5 +1,4 @@
-#ifndef ICONTEXTBUTTON_H_
-#define ICONTEXTBUTTON_H_
+#pragma once
 
 #include <gtk/gtklabel.h>
 #include <gtk/gtkvbox.h>
@@ -68,5 +67,3 @@ namespace gtkutil
 	};
 
 }
-
-#endif /*ICONTEXTBUTTON_H_*/
