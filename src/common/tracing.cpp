@@ -462,7 +462,7 @@ static bool TR_TileTestLineDM (TR_TILE_TYPE *tile, const vec3_t start, const vec
  * @sa CL_ActorMouseTrace
  * @return false if no connection between start and end - 1 otherwise
  */
-bool TR_TestLineDM (mapTiles_t* mapTiles, const vec3_t start, const vec3_t end, vec3_t hit, const int levelmask)
+bool TR_TestLineDM (mapTiles_t *mapTiles, const vec3_t start, const vec3_t end, vec3_t hit, const int levelmask)
 {
 	int tile;
 	vec3_t t_end;

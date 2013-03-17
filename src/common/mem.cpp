@@ -41,7 +41,7 @@ struct memBlock_t {
 
 	uint32_t topSentinel; /**< For memory integrity checking */
 
-	memPool_t* pool; /**< Owner pool */
+	memPool_t *pool; /**< Owner pool */
 	int tagNum; /**< For group free */
 
 	char const* allocFile; /**< File the memory was allocated in */
@@ -167,7 +167,7 @@ static memBlock_t *Mem_PtrToBlock(void* const ptr)
 	return static_cast<memBlock_t*>(ptr) - 1;
 }
 
-static void* Mem_BlockToPtr(memBlock_t* const mem)
+static void *Mem_BlockToPtr(memBlock_t* const mem)
 {
 	return mem + 1;
 }

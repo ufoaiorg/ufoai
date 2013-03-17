@@ -976,7 +976,7 @@ static int RT_FindOpening (RoutingData *rtd, const place_t *from, const int ax, 
  * @param[out] opening descriptor of the opening found, if any
  * @return The change in floor height in QUANT units because of the additional trace.
 */
-static int RT_MicroTrace (RoutingData *rtd, const place_t *from, const int ax, const int ay, const int az, const int stairwaySituation, opening_t* opening)
+static int RT_MicroTrace (RoutingData *rtd, const place_t *from, const int ax, const int ay, const int az, const int stairwaySituation, opening_t *opening)
 {
 	/* OK, now we have a viable shot across.  Run microstep tests now. */
 	/* Now calculate the stepup at the floor using microsteps. */
@@ -1171,7 +1171,7 @@ static int RT_MicroTrace (RoutingData *rtd, const place_t *from, const int ax, c
  * @param[out] opening descriptor of the opening found, if any
  * @return The size in QUANT units of the detected opening.
  */
-static int RT_TraceOnePassage (RoutingData *rtd, const place_t *from, const place_t *to, opening_t* opening)
+static int RT_TraceOnePassage (RoutingData *rtd, const place_t *from, const place_t *to, opening_t *opening)
 {
 	int hi; /**< absolute ceiling of the passage found. */
 	const int z = from->cell[2];
@@ -1254,7 +1254,7 @@ static int RT_TraceOnePassage (RoutingData *rtd, const place_t *from, const plac
  * @param[in] ay Ending y coordinate
  * @param[out] opening descriptor of the opening found, if any
  */
-static void RT_TracePassage (RoutingData *rtd, const int x, const int y, const int z, const int ax, const int ay, opening_t* opening)
+static void RT_TracePassage (RoutingData *rtd, const int x, const int y, const int z, const int ax, const int ay, opening_t *opening)
 {
 	int aboveCeil, lowCeil;
 	/** we don't need the cell below the adjacent cell because we should have already checked it */
