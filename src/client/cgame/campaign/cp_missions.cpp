@@ -218,6 +218,7 @@ static bool CP_IsAlienEquipmentSelectable (const mission_t *mission, const equip
  * @brief Set alien equipment for a mission (depends on the interest values)
  * @note This function is used to know which equipment pack described in equipment_missions.ufo should be used
  * @pre Alien team must be already chosen
+ * @param[in] mission Pointer to the mission that generates the battle.
  * @param[in] equipPack Equipment definitions that may be used
  * @param[in] battleParameters Context data of the battle
  * @sa CP_SetAlienTeamByInterest
