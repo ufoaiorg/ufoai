@@ -159,7 +159,7 @@ typedef struct le_s {
 	{
 		return inv.getRightHandContainer();
 	}
-	inline invList_t *getLeftHand () const
+	inline Item *getLeftHandItem () const
 	{
 		return inv.getLeftHandContainer();
 	}

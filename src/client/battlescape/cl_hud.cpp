@@ -146,8 +146,8 @@ void HUD_UpdateActorStats (const le_t *le)
 		return;
 
 	const Item *item = le->getRightHandItem();
-	if ((!item || !item->def() || !item->isHeldTwoHanded()) && le->getLeftHand())
-		item = le->getLeftHand();
+	if ((!item || !item->def() || !item->isHeldTwoHanded()) && le->getLeftHandItem())
+		item = le->getLeftHandItem();
 
 	const character_t *chr = CL_ActorGetChr(le);
 	assert(chr);
@@ -519,7 +519,7 @@ static void HUD_DisplayActions (const char* callback, const le_t* actor, actionT
 	break;
 
 	case RELOAD_LEFT: {
-		Item *weapon = actor->getLeftHand();
+		Item *weapon = actor->getLeftHandItem();
 
 		/* Reloadable item in hand. */
 		if (weapon && weapon->def() && weapon->isReloadable()) {
@@ -794,7 +794,7 @@ static void HUD_UpdateButtons (const le_t *le)
 	Item *weaponL;
 	/* check for two-handed weapon - if not, also define weaponL */
 	if (!weaponR || !weaponR->isHeldTwoHanded())
-		weaponL = le->getLeftHand();
+		weaponL = le->getLeftHandItem();
 	else
 		weaponL = NULL;
 
@@ -1216,8 +1216,8 @@ static void HUD_UpdateActorCvar (const le_t *actor)
 		Cvar_Set("mn_rweapon", "");
 		Cvar_Set("mn_rweapon_item", "");
 	}
-	if (actor->getLeftHand()) {
-		const Item *item = actor->getLeftHand();
+	if (actor->getLeftHandItem()) {
+		const Item *item = actor->getLeftHandItem();
 		Cvar_Set("mn_lweapon", item->def()->model);
 		Cvar_Set("mn_lweapon_item", item->def()->id);
 	} else {
@@ -1368,7 +1368,7 @@ static void HUD_UpdateActor (le_t *actor)
 		if (displayRemainingTus[REMAINING_TU_RELOAD_RIGHT] && actor->getRightHandItem()) {
 			container = csi.idRight;
 			item = actor->getRightHandItem();
-		} else if (displayRemainingTus[REMAINING_TU_RELOAD_LEFT] && actor->getLeftHand()) {
+		} else if (displayRemainingTus[REMAINING_TU_RELOAD_LEFT] && actor->getLeftHandItem()) {
 			container = NONE;
 			item = HUD_GetLeftHandWeapon(actor, &container);
 		} else {
