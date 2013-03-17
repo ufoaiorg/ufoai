@@ -29,15 +29,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 void CL_InvAmmo (const eventRegister_t *self, dbuffer *msg)
 {
-	Item	*item;
-	le_t	*le;
 	int		number;
 	int		ammo, type, x, y;
 	containerIndex_t container;
 
 	NET_ReadFormat(msg, self->formatString, &number, &ammo, &type, &container, &x, &y);
 
-	le = LE_Get(number);
+	le_t *le = LE_Get(number);
 	if (!le) {
 		Com_DPrintf(DEBUG_CLIENT, "InvAmmo message ignored... LE not found\n");
 		return;
@@ -48,7 +46,7 @@ void CL_InvAmmo (const eventRegister_t *self, dbuffer *msg)
 
 	assert(container >= 0);
 	assert(container < MAX_INVDEFS);
-	item = le->inv.getItemAtPos(INVDEF(container), x, y);
+	Item *item = le->inv.getItemAtPos(INVDEF(container), x, y);
 	if (!item)
 		return;
 

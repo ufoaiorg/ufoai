@@ -32,15 +32,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 void CL_InvDel (const eventRegister_t *self, dbuffer *msg)
 {
-	le_t	*le;
 	int		number;
 	int		x, y;
 	containerIndex_t container;
-	Item	*item;
 
 	NET_ReadFormat(msg, self->formatString, &number, &container, &x, &y);
 
-	le = LE_Get(number);
+	le_t *le = LE_Get(number);
 	if (!le)
 		Com_Error(ERR_DROP, "InvDel message ignored... LE not found\n");
 
@@ -57,7 +55,7 @@ void CL_InvDel (const eventRegister_t *self, dbuffer *msg)
 	if (le->type == ET_ACTOR || le->type == ET_ACTOR2x2)
 		LE_SetThink(le, LET_StartIdle);
 
-	item = le->inv.getItemAtPos(INVDEF(container), x, y);
+	Item *item = le->inv.getItemAtPos(INVDEF(container), x, y);
 	/* ic can be null for other team actors - we don't the full inventory of them, only
 	 * the object index */
 	if (!item)

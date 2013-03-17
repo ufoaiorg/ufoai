@@ -37,8 +37,6 @@ int CL_InvReloadTime (const eventRegister_t *self, dbuffer *msg, eventTiming_t *
 
 void CL_InvReload (const eventRegister_t *self, dbuffer *msg)
 {
-	invList_t	*ic;
-	le_t	*le;
 	int		number;
 	int		ammo, type, x, y;
 	containerIndex_t container;
@@ -46,7 +44,7 @@ void CL_InvReload (const eventRegister_t *self, dbuffer *msg)
 
 	NET_ReadFormat(msg, self->formatString, &number, &ammo, &type, &container, &x, &y);
 
-	le = LE_Get(number);
+	le_t *le = LE_Get(number);
 	if (!le)
 		return;
 
@@ -55,7 +53,7 @@ void CL_InvReload (const eventRegister_t *self, dbuffer *msg)
 
 	assert(container >= 0);
 	assert(container < MAX_INVDEFS);
-	ic = le->inv.getItemAtPos(INVDEF(container), x, y);
+	invList_t *ic = le->inv.getItemAtPos(INVDEF(container), x, y);
 	if (!ic)
 		return;
 
