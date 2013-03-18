@@ -970,6 +970,12 @@ void Grid_RecalcRouting (mapTiles_t *mapTiles, Routing &routing, const char *nam
 			return;
 		}
 
+#if 1
+		/* An attempt to fix the 'doors starting opened' bug (# 3456).
+		 * The main difference is the (missing) rotation of the halfVec.
+		 * The results are better, but do not fix the problem. */
+		CalculateMinsMaxs(model->angles, model->mins, model->maxs, model->origin, absmin, absmax);
+#else
 		/* get the target model's dimensions */
 		if (VectorNotEmpty(model->angles)) {
 			vec3_t minVec, maxVec;
@@ -998,6 +1004,7 @@ void Grid_RecalcRouting (mapTiles_t *mapTiles, Routing &routing, const char *nam
 			VectorAdd(model->mins, model->origin, absmin);
 			VectorAdd(model->maxs, model->origin, absmax);
 		}
+#endif
 		VecToPos(absmin, min);
 		VecToPos(absmax, max);
 
