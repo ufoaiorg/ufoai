@@ -59,7 +59,7 @@ typedef enum {
 
 bool INV_MoveItem(inventory_t* inv, const invDef_t *toContainer, int px, int py, const invDef_t *fromContainer, invList_t *fItem, invList_t **tItem);
 bool INV_LoadWeapon(const invList_t *weapon, inventory_t *inv, const invDef_t *srcContainer, const invDef_t *destContainer);
-bool INV_UnloadWeapon(invList_t *weapon, inventory_t *inv, const invDef_t *container);
+bool INV_UnloadWeapon(Item *weapon, inventory_t *inv, const invDef_t *container);
 const equipDef_t *INV_GetEquipmentDefinitionByID(const char *name);
 void INV_InitStartup(void);
 itemFilterTypes_t INV_GetFilterFromItem(const objDef_t *obj);

@@ -263,9 +263,9 @@ static equipDef_t eTempEq;		/**< Used to count ammo in magazines. */
 /**
  * @brief Count and collect ammo from gun magazine.
  * @param[in] data Pointer to aircraft used in this mission.
- * @param[in] magazine Pointer to invList_t being magazine.
+ * @param[in] magazine Pointer to Item being magazine.
  */
-static void AII_CollectingAmmo (void *data, const invList_t *magazine)
+static void AII_CollectingAmmo (void *data, const Item *magazine)
 {
 	aircraft_t *aircraft = (aircraft_t *)data;
 	/* Let's add remaining ammo to market. */
@@ -322,26 +322,26 @@ static inline void AII_CollectItem_ (void *data, const objDef_t *item, int amoun
 static void AII_CarriedItems (const inventory_t *soldierInventory)
 {
 	containerIndex_t container;
-	invList_t *invList;
+	Item *item;
 	equipDef_t *ed = &ccs.eMission;
 
 	for (container = 0; container < cgi->csi->numIDs; container++) {
 		/* Items on the ground are collected as ET_ITEM */
 		if (INVDEF(container)->temp)
 			continue;
-		for (invList = soldierInventory->getContainer(container); invList; invList = invList->getNext()) {
-			const objDef_t *item = invList->def();
-			const objDef_t *ammo = invList->ammo;
-			technology_t *tech = RS_GetTechForItem(item);
-			ed->numItems[item->idx]++;
+		for (item = soldierInventory->getContainer(container); item; item = item->getNext()) {
+			const objDef_t *itemType = item->def();
+			const objDef_t *ammo = item->ammo;
+			technology_t *tech = RS_GetTechForItem(itemType);
+			ed->numItems[itemType->idx]++;
 			RS_MarkCollected(tech);
 
-			if (!item->reload || invList->ammoLeft == 0)
+			if (!itemType->reload || item->ammoLeft == 0)
 				continue;
 
-			ed->numItemsLoose[ammo->idx] += invList->ammoLeft;
-			if (ed->numItemsLoose[ammo->idx] >= item->ammo) {
-				ed->numItemsLoose[ammo->idx] -= item->ammo;
+			ed->numItemsLoose[ammo->idx] += item->ammoLeft;
+			if (ed->numItemsLoose[ammo->idx] >= itemType->ammo) {
+				ed->numItemsLoose[ammo->idx] -= itemType->ammo;
 				ed->numItems[ammo->idx]++;
 			}
 			/* The guys keep their weapons (half-)loaded. Auto-reload

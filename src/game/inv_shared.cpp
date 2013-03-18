@@ -141,7 +141,7 @@ static bool INVSH_CheckShapeCollision (const uint32_t *shape, const uint32_t ite
  * @sa canHoldItem
  * @return false if the item does not fit, true if it fits.
  */
-static bool INVSH_CheckToInventory_shape (const inventory_t *const inv, const invDef_t *container, const uint32_t itemShape, const int x, const int y, const invList_t *ignoredItem)
+static bool INVSH_CheckToInventory_shape (const inventory_t *const inv, const invDef_t *container, const uint32_t itemShape, const int x, const int y, const Item *ignoredItem)
 {
 	invList_t *ic;
 	static uint32_t mask[SHAPE_BIG_MAX_HEIGHT];
@@ -626,7 +626,7 @@ inventory_s::inventory_s ()
  * @return INV_FITS_ONLY_ROTATED if it fits only when rotated 90 degree (to the left).
  * @return INV_FITS_BOTH if it fits either normally or when rotated 90 degree (to the left).
  */
-int inventory_t::canHoldItem (const invDef_t *container, const objDef_t *od, const int x, const int y, const invList_t *ignoredItem) const
+int inventory_t::canHoldItem (const invDef_t *container, const objDef_t *od, const int x, const int y, const Item *ignoredItem) const
 {
 	int fits;
 	assert(this);
@@ -736,7 +736,7 @@ invList_t *inventory_t::getItemAtPos (const invDef_t *container, const int x, co
  * @sa canHoldItem
  * @note x and y are NONE if no free space is available
  */
-void inventory_t::findSpace (const invDef_t *container, const Item *item, int* const px, int* const py, const invList_t *ignoredItem) const
+void inventory_t::findSpace (const invDef_t *container, const Item *item, int* const px, int* const py, const Item *ignoredItem) const
 {
 	int x, y;
 
