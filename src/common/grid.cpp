@@ -956,6 +956,7 @@ void Grid_RecalcRouting (mapTiles_t *mapTiles, Routing &routing, const char *nam
 {
 	if (box.isZero()) {
 		pos3_t min, max;
+		vec3_t absmin, absmax;
 		const cBspModel_t *model;
 		unsigned int i;
 		/* get inline model, if it is one */
@@ -990,18 +991,15 @@ void Grid_RecalcRouting (mapTiles_t *mapTiles, Routing &routing, const char *nam
 			VectorAdd(newCenterVec, halfVec, maxVec);
 
 			/* Now offset by origin then convert to position (Doors do not have 0 origins) */
-			VectorAdd(minVec, model->origin, minVec);
-			VecToPos(minVec, min);
-			VectorAdd(maxVec, model->origin, maxVec);
-			VecToPos(maxVec, max);
+			VectorAdd(minVec, model->origin, absmin);
+			VectorAdd(maxVec, model->origin, absmax);
 		} else {  /* normal */
-			vec3_t temp;
 			/* Now offset by origin then convert to position (Doors do not have 0 origins) */
-			VectorAdd(model->mins, model->origin, temp);
-			VecToPos(temp, min);
-			VectorAdd(model->maxs, model->origin, temp);
-			VecToPos(temp, max);
+			VectorAdd(model->mins, model->origin, absmin);
+			VectorAdd(model->maxs, model->origin, absmax);
 		}
+		VecToPos(absmin, min);
+		VecToPos(absmax, max);
 
 		/* fit min/max into the world size */
 		max[0] = std::min(max[0], (pos_t)(PATHFINDING_WIDTH - 1));
