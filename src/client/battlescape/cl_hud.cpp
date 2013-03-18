@@ -395,7 +395,10 @@ static void HUD_ShotReserve_f (void)
  * @brief Sets the display for a single weapon/reload HUD button.
  * @param callback confunc callback
  * @param actor The actor local entity
+ * @param ammo The ammo used by this firemode
+ * @param weapFdsIdx the weapon index in the fire definition array
  * @param hand What list to display
+ * @param index Index of the actual firemode
  */
 static void HUD_DisplayFiremodeEntry (const char* callback, const le_t* actor, const objDef_t *ammo, const weaponFireDefIndex_t weapFdsIdx, const actorHands_t hand, const int index)
 {
