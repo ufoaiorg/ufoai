@@ -54,7 +54,7 @@ public:
 	inventory_action_t moveInInventory (inventory_t* const inv, const invDef_t *from, invList_t *item, const invDef_t *to,
 			int tx, int ty, int *TU, invList_t ** icp);
 
-	bool tryAddToInventory (inventory_t* const inv, const item_t *const item, const invDef_t *container);
+	bool tryAddToInventory (inventory_t* const inv, const Item *const item, const invDef_t *container);
 	void destroyInventory (inventory_t* const inv);
 	void destroyInventoryInterface(void);
 	void emptyContainer (inventory_t* const inv, const invDef_t *container);
