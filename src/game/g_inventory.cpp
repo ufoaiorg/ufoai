@@ -223,12 +223,9 @@ static bool G_InventoryPlaceItemAdjacent (Edict *ent)
  */
 void G_InventoryToFloor (Edict *ent)
 {
-	invList_t *ic, *next;
 	containerIndex_t container;
-	Edict *floor;
-	item_t item;
 
-	/* check for items */
+	/* check for items that should be dropped */
 	for (container = 0; container < gi.csi->numIDs; container++) {
 		/* ignore items linked from any temp container */
 		if (INVDEF(container)->temp)
@@ -242,7 +239,7 @@ void G_InventoryToFloor (Edict *ent)
 		return;
 
 	/* find the floor */
-	floor = G_GetFloorItems(ent);
+	Edict *floor = G_GetFloorItems(ent);
 	if (!floor) {
 		floor = G_SpawnFloor(ent->pos);
 	} else {
@@ -264,12 +261,13 @@ void G_InventoryToFloor (Edict *ent)
 			continue;
 
 		/* now cycle through all items for the container of the character (or the entity) */
+		invList_t *ic, *next;
 		for (ic = ent->getContainer(container); ic; ic = next) {
 			/* Save the next inv-list before it gets overwritten below.
 			 * Do not put this in the "for" statement,
 			 * unless you want an endless loop. ;) */
 			next = ic->getNext();
-			item = *ic;
+			Item item = *ic;
 
 			/* only floor can summarize, so everything on the actor must have amount=1 */
 			assert(item.amount == 1);
