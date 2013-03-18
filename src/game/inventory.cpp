@@ -578,7 +578,6 @@ int InventoryInterface::PackAmmoAndWeapon (character_t* const chr, const objDef_
 	inventory_t* const inv = &chr->inv;
 	const int speed = chr->score.skills[ABILITY_SPEED];
 	const objDef_t *ammo = NULL;
-	item_t item;
 	bool allowLeft;
 	bool packed;
 	int ammoMult = 1;
@@ -587,7 +586,7 @@ int InventoryInterface::PackAmmoAndWeapon (character_t* const chr, const objDef_
 	float weight;
 
 	assert(!weapon->isArmour());
-	item.setDef(weapon);
+	Item item(weapon);
 
 	/* are we going to allow trying the left hand */
 	allowLeft = !(inv->getContainer(csi->idRight) && inv->getContainer(csi->idRight)->def()->fireTwoHanded);
@@ -673,11 +672,10 @@ int InventoryInterface::PackAmmoAndWeapon (character_t* const chr, const objDef_
 
 		/* pack some ammo */
 		while (num--) {
-			item_t mun;
 			weight = GetInventoryState(inv, tuNeed) + item.getWeight();
 			maxTU = GET_TU(speed, GET_ENCUMBRANCE_PENALTY(weight, chr->score.skills[ABILITY_POWER]));
 
-			mun.setDef(ammo);
+			Item mun(ammo);
 			/* ammo to backpack; belt is for knives and grenades */
 			if (weight <= maxWeight && tuNeed <= maxTU)
 					numpacked += tryAddToInventory(inv, &mun, &csi->ids[csi->idBackpack]);
@@ -699,16 +697,13 @@ int InventoryInterface::PackAmmoAndWeapon (character_t* const chr, const objDef_
  */
 void InventoryInterface::EquipActorMelee (inventory_t* const inv, const teamDef_t *td)
 {
-	const objDef_t *obj;
-	item_t item;
-
 	assert(td->onlyWeapon);
 
-	/* Get weapon */
-	obj = td->onlyWeapon;
+	/* Get weapon def */
+	const objDef_t *obj = td->onlyWeapon;
 
 	/* Prepare item. This kind of item has no ammo, fire definitions are in item.t. */
-	item.setDef(obj);
+	Item item(obj);
 	item.ammo = item.def();
 	item.ammoLeft = NONE_AMMO;
 	/* Every melee actor weapon definition is firetwohanded, add to right hand. */
@@ -725,12 +720,10 @@ void InventoryInterface::EquipActorMelee (inventory_t* const inv, const teamDef_
  */
 void InventoryInterface::EquipActorRobot (inventory_t* const inv, const objDef_t *weapon)
 {
-	item_t item;
-
 	assert(weapon);
 
 	/* Prepare weapon in item. */
-	item.setDef(weapon);
+	Item item(weapon);
 	item.ammoLeft = weapon->ammo;
 
 	/* Get ammo for item/weapon. */
