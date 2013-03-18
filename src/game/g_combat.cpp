@@ -1064,10 +1064,9 @@ static bool G_PrepareShot (Edict *ent, shoot_types_t shootType, fireDefIndex_t f
 		gi.Error("G_GetShotFromType: unknown shoot type %i.\n", shootType);
 
 	if (IS_SHOT_HEADGEAR(shootType)) {
-		invList_t *hgc = ent->chr.inv.getHeadgearContainer();
-		if (!hgc)
+		item = ent->chr.inv.getHeadgearContainer();
+		if (!item)
 			return false;
-		item = hgc;
 		*container = gi.csi->idHeadgear;
 	} else if (IS_SHOT_RIGHT(shootType)) {
 		item = ent->getRightHandItem();
