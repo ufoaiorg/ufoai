@@ -1055,7 +1055,7 @@ void G_GetShotOrigin (const Edict *shooter, const fireDef_t *fd, const vec3_t di
  * @return true if function is able to check and set everything correctly.
  * @sa G_ClientShoot
  */
-static bool G_PrepareShot (Edict *ent, shoot_types_t shootType, fireDefIndex_t firemode, item_t **weapon, containerIndex_t *container, const fireDef_t **fd)
+static bool G_PrepareShot (Edict *ent, shoot_types_t shootType, fireDefIndex_t firemode, Item **weapon, containerIndex_t *container, const fireDef_t **fd)
 {
 	const fireDef_t *fdArray;
 	Item *item;
@@ -1113,7 +1113,7 @@ bool G_ClientShoot (const Player &player, Edict *ent, const pos3_t at, shoot_typ
 		fireDefIndex_t firemode, shot_mock_t *mock, bool allowReaction, int z_align)
 {
 	const fireDef_t *fd;
-	item_t *weapon;
+	Item *weapon;
 	vec3_t dir, center, target, shotOrigin;
 	int i, ammo, prevDir, reactionLeftover, shots;
 	containerIndex_t container;

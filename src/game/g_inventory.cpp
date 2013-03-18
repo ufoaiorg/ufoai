@@ -143,7 +143,6 @@ static bool G_InventoryDropToFloorCheck (Edict *ent, containerIndex_t container)
 bool G_AddItemToFloor (const pos3_t pos, const char *itemID)
 {
 	Edict *floor;
-	item_t item;
 	const objDef_t *od = INVSH_GetItemByIDSilent(itemID);
 	if (!od) {
 		gi.DPrintf("Could not find item '%s'\n", itemID);
@@ -156,7 +155,7 @@ bool G_AddItemToFloor (const pos3_t pos, const char *itemID)
 	if (!floor)
 		floor = G_SpawnFloor(pos);
 
-	item.setDef(od);
+	Item item(od);
 	return game.i.tryAddToInventory(&floor->chr.inv, &item, INVDEF(gi.csi->idFloor));
 }
 
@@ -296,7 +295,7 @@ void G_InventoryToFloor (Edict *ent)
 
 /**
  * @brief Read item from the network buffer
- * @param[in,out] item @c item_t being send through net.
+ * @param[in,out] item The Item being send through net.
  * @param[in,out] container Container which is being updated with item sent.
  * @param[in] x Position of item in given container.
  * @param[in] y Position of item in given container.
@@ -330,7 +329,7 @@ void G_ReadItem (Item *item, const invDef_t **container, int *x, int *y)
 
 /**
  * @brief Write an item to the network buffer
- * @param[in,out] item @c item_t being send through net.
+ * @param[in,out] item The Item being send through net.
  * @param[in,out] container Container which is being updated with item sent.
  * @param[in] x Position of item in given container.
  * @param[in] y Position of item in given container.

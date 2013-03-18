@@ -463,12 +463,12 @@ inventory_action_t InventoryInterface::moveInInventory (inventory_t* const inv, 
 /**
  * @brief Tries to add an item to a container (in the inventory inv).
  * @param[in] inv The inventory to add the item to.
- * @param[in] item Item to add to inventory.
+ * @param[in] item Item to add to inventory (actually a copy of it).
  * @param[in] container Container id.
  * @sa findSpace
  * @sa addToInventory
  */
-bool InventoryInterface::tryAddToInventory (inventory_t* const inv, const item_t *const item, const invDef_t *container)
+bool InventoryInterface::tryAddToInventory (inventory_t* const inv, const Item *const item, const invDef_t *container)
 {
 	int x, y;
 
@@ -483,7 +483,7 @@ bool InventoryInterface::tryAddToInventory (inventory_t* const inv, const item_t
 			return false;
 
 		const bool rotated = checkedTo == INV_FITS_ONLY_ROTATED;
-		item_t itemRotation = *item;
+		Item itemRotation = *item;
 		itemRotation.rotated = rotated;
 
 		return addToInventory(inv, &itemRotation, container, x, y, 1) != NULL;
