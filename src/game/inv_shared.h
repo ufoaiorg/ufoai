@@ -429,6 +429,7 @@ public:
 	void getFirstShapePosition (int* const x, int* const y) const;
 	const objDef_t *getReactionFireWeaponType () const;
 	const fireDef_t *getFiredefs () const;
+	const fireDef_t *getSlowestFireDef () const;
 };
 typedef Item item_t;
 /** the old linked list type, deprecated, but neede for compatibility */
@@ -538,7 +539,6 @@ const invDef_t *INVSH_GetInventoryDefinitionByID(const char *id);
 /* =============================== */
 
 const fireDef_t *FIRESH_GetFiredef(const objDef_t *obj, const weaponFireDefIndex_t weapFdsIdx, const fireDefIndex_t fdIdx);
-const fireDef_t *FIRESH_SlowestFireDef(const item_t &item);
 #define FIRESH_IsMedikit(firedef) ((firedef)->damage[0] < 0)
 void INVSH_MergeShapes(uint32_t *shape, const uint32_t itemShape, const int x, const int y);
 bool INVSH_CheckShape(const uint32_t *shape, const int x, const int y);

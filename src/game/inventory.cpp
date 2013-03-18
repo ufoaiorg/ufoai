@@ -554,7 +554,7 @@ float InventoryInterface::GetInventoryState (const inventory_t *inventory, int &
 		for (invList_t *ic = inventory->getContainer(containerID), *next; ic; ic = next) {
 			next = ic->getNext();
 			weight += ic->getWeight();
-			const fireDef_t *fireDef = FIRESH_SlowestFireDef(*ic);
+			const fireDef_t *fireDef = (*ic).getSlowestFireDef();
 			if (slowestFd == 0 || (fireDef && fireDef->time > slowestFd))
 					slowestFd = fireDef->time;
 		}
@@ -957,7 +957,7 @@ void InventoryInterface::EquipActor (character_t* const chr, const equipDef_t *e
 						const item_t item(miscItem, oneShot ? miscItem : NULL, oneShot ? miscItem->ammo : NONE_AMMO);
 						containerIndex_t container;
 						int tuNeed;
-						const fireDef_t *itemFd = FIRESH_SlowestFireDef(item);
+						const fireDef_t *itemFd = item.getSlowestFireDef();
 						const float weight = GetInventoryState(inv, tuNeed) + item.getWeight();
 						const int maxTU = GET_TU(speed, GET_ENCUMBRANCE_PENALTY(weight, chr->score.skills[ABILITY_POWER]));
 
