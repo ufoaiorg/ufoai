@@ -84,7 +84,7 @@ invList_t *InventoryInterface::addInvList (inventory_t *const inv, const invDef_
  * @sa removeFromInventory
  * @return the @c invList_t pointer the item was added to, or @c NULL in case of an error (item wasn't added)
  */
-invList_t *InventoryInterface::addToInventory (inventory_t *const inv, const item_t* const item, const invDef_t *container, int x, int y, int amount)
+invList_t *InventoryInterface::addToInventory (inventory_t *const inv, const Item* const item, const invDef_t *container, int x, int y, int amount)
 {
 	invList_t *ic;
 	int checkedTo;

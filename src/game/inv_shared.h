@@ -357,7 +357,7 @@ class Item {
 	Item *_next;				/**< Next entry in this list. */
 	int _x, _y;					/**< Position (aka origin location) of the item in the container/invlist.
 								 * @note ATTENTION Do not use this to get an item by comparing it against a x/y value.
-								 * The shape as defined in the item_t may be empty at this location! */
+								 * The shape as defined in the Item may be empty at this location! */
 public:
 	int ammoLeft;				/**< Number of ammo rounds left - see NONE_AMMO */
 	const objDef_t *ammo;		/**< Pointer to ammo definition. */
@@ -464,7 +464,7 @@ typedef struct inventory_s {
 	 * @param[in] item The item to search for.
 	 * @return true if there already is at least one item of this type, otherwise false.
 	 */
-	inline bool containsItem (const invDef_t *container, const item_t *const item) const
+	inline bool containsItem (const invDef_t *container, const Item *const item) const
 	{
 		return findInContainer(container, item) ? true : false;
 	}
@@ -477,12 +477,12 @@ typedef struct inventory_s {
 	invList_t *getFloorContainer() const;
 	void setFloorContainer(invList_t *cont);
 
-	void findSpace (const invDef_t *container, const item_t *item, int* const px, int* const py, const invList_t *ignoredItem) const;
-	invList_t *findInContainer (const invDef_t *container, const item_t *const item) const;
+	void findSpace (const invDef_t *container, const Item *item, int* const px, int* const py, const Item *ignoredItem) const;
+	Item *findInContainer (const invDef_t *container, const Item *const item) const;
 	invList_t *getItemAtPos (const invDef_t *container, const int x, const int y) const;
 	float getWeight () const;
 	int canHoldItem (const invDef_t *container, const objDef_t *od, const int x, const int y, const invList_t *ignoredItem) const;
-	bool canHoldItemWeight (containerIndex_t from, containerIndex_t to, const item_t &item, int maxWeight) const;
+	bool canHoldItemWeight (containerIndex_t from, containerIndex_t to, const Item &item, int maxWeight) const;
 	bool holdsReactionFireWeapon () const;
 } inventory_t;
 

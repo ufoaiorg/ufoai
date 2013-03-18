@@ -391,7 +391,7 @@ const fireDef_t *Item::getFiredefs () const
  * @param[in] item The item for which we want to find the slowest fireDef.
  * @return The firedef that uses the most TU for this item or @c NULL.
  */
-const fireDef_t *FIRESH_SlowestFireDef (const item_t &item)
+const fireDef_t *FIRESH_SlowestFireDef (const Item &item)
 {
 	const fireDef_t *fdArray = item.getFiredefs();
 	int slowest = 0;
@@ -857,7 +857,7 @@ invList_t *inventory_t::getArmourContainer (void) const
  * @param[in] item The item to search for.
  * @return Pointer to the first item of this type found, otherwise @c NULL.
  */
-invList_t *inventory_t::findInContainer (const invDef_t *container, const Item *const item) const
+Item *inventory_t::findInContainer (const invDef_t *container, const Item *const item) const
 {
 	invList_t *ic;
 
