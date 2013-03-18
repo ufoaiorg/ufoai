@@ -187,7 +187,7 @@ public:
 	{
 		return chr.inv.getRightHandContainer();
 	}
-	inline invList_t *getLeftHand () const
+	inline Item *getLeftHandItem () const
 	{
 		return chr.inv.getLeftHandContainer();
 	}

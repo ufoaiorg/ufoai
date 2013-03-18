@@ -750,7 +750,7 @@ static int AIL_roundsleft (lua_State *L)
 		lua_pushnil(L);
 
 	/* Left hand */
-	Item *leftHand = AIL_ent->getLeftHand();
+	Item *leftHand = AIL_ent->getLeftHandItem();
 	if (leftHand && leftHand->isReloadable())
 		lua_pushnumber(L, leftHand->ammoLeft);
 	else

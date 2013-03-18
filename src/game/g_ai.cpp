@@ -273,7 +273,7 @@ static bool AI_HideNeeded (const Edict *ent)
 				if (item && item->def()) {
 					fd = FIRESH_FiredefForWeapon(item);
 				} else {
-					item = from->getLeftHand();
+					item = from->getLeftHandItem();
 					if (item && item->def())
 						fd = FIRESH_FiredefForWeapon(item);
 				}
@@ -330,7 +330,7 @@ const Item *AI_GetItemForShootType (shoot_types_t shootType, const Edict *ent)
 		const Item *item = ent->getRightHandItem();
 		return AI_GetItemFromInventory(item);
 	} else if (IS_SHOT_LEFT(shootType)) {
-		const Item *item = ent->getLeftHand();
+		const Item *item = ent->getLeftHandItem();
 		return AI_GetItemFromInventory(item);
 	} else if (IS_SHOT_HEADGEAR(shootType)) {
 		return NULL;
@@ -1200,7 +1200,7 @@ void AI_ActorThink (Player &player, Edict *ent)
 
 	/* if a weapon can be reloaded we attempt to do so if TUs permit, otherwise drop it */
 	Item *rightH = ent->getRightHandItem();
-	Item *leftH = ent->getLeftHand();
+	Item *leftH = ent->getLeftHandItem();
 	if (!G_IsPanicked(ent)) {
 		if (rightH && rightH->mustReload())
 			AI_TryToReloadWeapon(ent, gi.csi->idRight);
