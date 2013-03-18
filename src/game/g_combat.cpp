@@ -1081,7 +1081,7 @@ static bool G_PrepareShot (Edict *ent, shoot_types_t shootType, fireDefIndex_t f
 	}
 
 	/* Get firedef from the weapon entry instead */
-	fdArray = FIRESH_FiredefForWeapon(item);
+	fdArray = item->getFiredefs();
 	if (fdArray == NULL)
 		return false;
 

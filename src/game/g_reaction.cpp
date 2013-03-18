@@ -321,7 +321,7 @@ static int G_ReactionFireGetTUsForItem (const Edict *shooter, const Edict *targe
 	const Item *weapon = shooter->getHandItem(fmSetting->getHand());
 
 	if (weapon && weapon->ammo && weapon->isWeapon() && !weapon->mustReload()) {
-		const fireDef_t *fdArray = FIRESH_FiredefForWeapon(weapon);
+		const fireDef_t *fdArray = weapon->getFiredefs();
 		if (fdArray == NULL)
 			return -1;
 
@@ -353,7 +353,7 @@ static bool G_ActorHasWorkingFireModeSet (const Edict *actor)
 	const Item *weapon = actor->getHandItem(fmSettings->getHand());
 	if (!weapon)
 		return false;
-	const fireDef_t *fd = FIRESH_FiredefForWeapon(weapon);
+	const fireDef_t *fd = weapon->getFiredefs();
 	if (fd == NULL)
 		return false;
 

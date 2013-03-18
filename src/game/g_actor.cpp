@@ -160,7 +160,7 @@ int G_ActorGetTUForReactionFire (const Edict *ent)
 	assert(weapon);
 	assert(weapon->def());
 
-	const fireDef_t *fd = FIRESH_FiredefForWeapon(weapon);
+	const fireDef_t *fd = weapon->getFiredefs();
 	assert(fd);
 	return G_ActorGetTimeForFiredef(ent, &fd[fm->getFmIdx()], true);
 }

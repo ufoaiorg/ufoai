@@ -334,7 +334,7 @@ static int actorL_shoot (lua_State *L)
 	}
 
 	/** @todo Choose fire mode based on TU available - currently the first one is used. */
-	fdArray = FIRESH_FiredefForWeapon(item);
+	fdArray = item->getFiredefs();
 	if (fdArray == NULL) {
 		/* Failure - no weapon. */
 		lua_pushboolean(L, 0);

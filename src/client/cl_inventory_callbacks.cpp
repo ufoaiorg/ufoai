@@ -363,9 +363,8 @@ static void INV_UpdateActorLoad_f (void)
 			if (csi.ids[containerID].temp)
 				continue;
 			for (invList_t *invList = chr->inv.getContainer(containerID), *next; invList; invList = next) {
-				const fireDef_t *fireDef;
 				next = invList->getNext();
-				fireDef = FIRESH_FiredefForWeapon(invList);
+				const fireDef_t *fireDef = invList->getFiredefs();
 				if (fireDef == NULL)
 					continue;
 				for (int i = 0; i < MAX_FIREDEFS_PER_WEAPON; i++)

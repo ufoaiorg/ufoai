@@ -267,9 +267,9 @@ typedef struct objDef_s {
 	int numAmmos;		/**< Number of ammos this weapon can be used with, which is <= MAX_AMMOS_PER_OBJDEF. */
 
 	/* Firemodes (per weapon). */
-	const struct objDef_s *weapons[MAX_WEAPONS_PER_OBJDEF];		/**< List of weapon-object pointers where this item can be used in.
+	const struct objDef_s *weapons[MAX_WEAPONS_PER_OBJDEF];	/**< List of weapon-object pointers where this item can be used in.
 															 * Correct index for this array can be get from fireDef_t.weapFdsIdx. or
-															 * FIRESH_FiredefForWeapon. */
+															 * getFiredefs(). */
 	fireDef_t fd[MAX_WEAPONS_PER_OBJDEF][MAX_FIREDEFS_PER_WEAPON];	/**< List of firemodes per weapon (the ammo can be used in). */
 	fireDefIndex_t numFiredefs[MAX_WEAPONS_PER_OBJDEF];	/**< Number of firemodes per weapon.
 												 * Maximum value for fireDef_t.fdIdx <= MAX_FIREDEFS_PER_WEAPON. */
@@ -428,6 +428,7 @@ public:
 	float getWeight () const;
 	void getFirstShapePosition (int* const x, int* const y) const;
 	const objDef_t *getReactionFireWeaponType () const;
+	const fireDef_t *getFiredefs () const;
 };
 typedef Item item_t;
 /** the old linked list type, deprecated, but neede for compatibility */
@@ -537,7 +538,6 @@ const invDef_t *INVSH_GetInventoryDefinitionByID(const char *id);
 /* =============================== */
 
 const fireDef_t *FIRESH_GetFiredef(const objDef_t *obj, const weaponFireDefIndex_t weapFdsIdx, const fireDefIndex_t fdIdx);
-const fireDef_t *FIRESH_FiredefForWeapon(const item_t *item);
 const fireDef_t *FIRESH_SlowestFireDef(const item_t &item);
 #define FIRESH_IsMedikit(firedef) ((firedef)->damage[0] < 0)
 void INVSH_MergeShapes(uint32_t *shape, const uint32_t itemShape, const int x, const int y);

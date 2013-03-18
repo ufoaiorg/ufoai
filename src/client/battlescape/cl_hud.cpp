@@ -677,7 +677,7 @@ static int HUD_GetMinimumTUsForUsage (const Item *item)
 
 	assert(item->def());
 
-	const fireDef_t *fdArray = FIRESH_FiredefForWeapon(item);
+	const fireDef_t *fdArray = item->getFiredefs();
 	if (fdArray == NULL)
 		return time;
 
@@ -1104,7 +1104,7 @@ static int HUD_UpdateActorFireMode (le_t *actor)
 			/* This is supposed to be a weapon or other usable item. */
 			if (def->numWeapons > 0) {
 				if (selWeapon->isWeapon() || def->weapons[0] == def) {
-					const fireDef_t *fdArray = FIRESH_FiredefForWeapon(selWeapon);
+					const fireDef_t *fdArray = selWeapon->getFiredefs();
 					if (fdArray != NULL) {
 						/* Get firedef from the weapon (or other usable item) entry instead. */
 						const fireDef_t *old = FIRESH_GetFiredef(def, fdArray->weapFdsIdx, actor->currentSelectedFiremode);
@@ -1113,7 +1113,7 @@ static int HUD_UpdateActorFireMode (le_t *actor)
 				}
 			}
 		} else {
-			const fireDef_t *fdArray = FIRESH_FiredefForWeapon(selWeapon);
+			const fireDef_t *fdArray = selWeapon->getFiredefs();
 			if (fdArray != NULL) {
 				const fireDef_t *old = FIRESH_GetFiredef(selWeapon->ammo, fdArray->weapFdsIdx, actor->currentSelectedFiremode);
 				/* reset the align if we switched the firemode */
@@ -1320,9 +1320,8 @@ static void HUD_UpdateActorLoad_f (void)
 		if (csi.ids[containerID].temp)
 			continue;
 		for (invList_t *invList = chr->inv.getContainer(containerID), *next; invList; invList = next) {
-			const fireDef_t *fireDef;
 			next = invList->getNext();
-			fireDef = FIRESH_FiredefForWeapon(invList);
+			const fireDef_t *fireDef = invList->getFiredefs();
 			if (fireDef == NULL)
 				continue;
 			for (int i = 0; i < MAX_FIREDEFS_PER_WEAPON; i++)

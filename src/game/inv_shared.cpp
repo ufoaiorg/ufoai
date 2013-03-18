@@ -347,7 +347,7 @@ FIREMODE MANAGEMENT FUNCTIONS
  * @param[in] weapFdsIdx the weapon index in the fire definition array
  * @param[in] fdIdx the fire definition index for the weapon (given by @c weapFdsIdx)
  * @return Will never return NULL
- * @sa FIRESH_FiredefForWeapon
+ * @sa getFiredefs
  */
 const fireDef_t *FIRESH_GetFiredef (const objDef_t *obj, const weaponFireDefIndex_t weapFdsIdx, const fireDefIndex_t fdIdx)
 {
@@ -364,23 +364,23 @@ const fireDef_t *FIRESH_GetFiredef (const objDef_t *obj, const weaponFireDefInde
  * doesn't support the given weapon
  * @sa FIRESH_GetFiredef
  */
-const fireDef_t *FIRESH_FiredefForWeapon (const Item *item)
+const fireDef_t *Item::getFiredefs () const
 {
 	int i;
-	const objDef_t *ammo = item->ammo;
-	const objDef_t *weapon = item->def();
+	const objDef_t *ammoDef = ammo;
+	const objDef_t *weapon = def();
 
 	/* this weapon does not use ammo, check for
 	 * existing firedefs in the weapon. */
 	if (weapon->numWeapons > 0)
-		ammo = item->def();
+		ammoDef = def();
 
 	if (!ammo)
 		return NULL;
 
-	for (i = 0; i < ammo->numWeapons; i++) {
-		if (weapon == ammo->weapons[i])
-			return &ammo->fd[i][0];
+	for (i = 0; i < ammoDef->numWeapons; i++) {
+		if (weapon == ammoDef->weapons[i])
+			return &ammoDef->fd[i][0];
 	}
 
 	return NULL;
@@ -393,7 +393,7 @@ const fireDef_t *FIRESH_FiredefForWeapon (const Item *item)
  */
 const fireDef_t *FIRESH_SlowestFireDef (const item_t &item)
 {
-	const fireDef_t *fdArray = FIRESH_FiredefForWeapon(&item);
+	const fireDef_t *fdArray = item.getFiredefs();
 	int slowest = 0;
 
 	if (fdArray == NULL)
@@ -418,7 +418,7 @@ const objDef_t *Item::getReactionFireWeaponType () const
 		return NULL;
 
 	if (def()) {
-		const fireDef_t *fd = FIRESH_FiredefForWeapon(this);
+		const fireDef_t *fd = getFiredefs();
 		if (fd && fd->reaction)
 			return def();
 	}

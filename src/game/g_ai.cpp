@@ -271,11 +271,11 @@ static bool AI_HideNeeded (const Edict *ent)
 				const Item *item = from->getRightHandItem();
 				const fireDef_t *fd = NULL;
 				if (item && item->def()) {
-					fd = FIRESH_FiredefForWeapon(item);
+					fd = item->getFiredefs();
 				} else {
 					item = from->getLeftHandItem();
 					if (item && item->def())
-						fd = FIRESH_FiredefForWeapon(item);
+						fd = item->getFiredefs();
 				}
 				/* search the (visible) inventory (by just checking the weapon in the hands of the enemy */
 				if (fd != NULL && fd->range * fd->range >= VectorDistSqr(ent->origin, from->origin)) {
@@ -699,7 +699,7 @@ static float AI_FighterCalcActionScore (Edict *ent, pos3_t to, aiAction_t *aia)
 			if (!item)
 				continue;
 
-			const fireDef_t *fdArray = FIRESH_FiredefForWeapon(item);
+			const fireDef_t *fdArray = item->getFiredefs();
 			if (fdArray == NULL)
 				continue;
 

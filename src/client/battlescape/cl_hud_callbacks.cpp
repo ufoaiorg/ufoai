@@ -63,7 +63,7 @@ const fireDef_t *HUD_GetFireDefinitionForHand (const le_t *actor, const actorHan
 	if (!weapon || !weapon->def())
 		return NULL;
 
-	return FIRESH_FiredefForWeapon(weapon);
+	return weapon->getFiredefs();
 }
 
 /**

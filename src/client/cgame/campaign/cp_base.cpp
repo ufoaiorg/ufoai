@@ -1814,9 +1814,9 @@ static void CL_SwapSkills (linkedList_t *team)
 				const Item *holsterCharOne = cp1->inv.getHolsterContainer();
 
 				if (rightHandCharOne && rightHandCharOne->ammo && rightHandCharOne->def())
-					fdRightArray = FIRESH_FiredefForWeapon(rightHandCharOne);
+					fdRightArray = rightHandCharOne->getFiredefs();
 				if (holsterCharOne && holsterCharOne->ammo && holsterCharOne->def())
-					fdHolsterArray = FIRESH_FiredefForWeapon(holsterCharOne);
+					fdHolsterArray = holsterCharOne->getFiredefs();
 				/* disregard left hand, or dual-wielding guys are too good */
 
 				if (fdHolsterArray != NULL && fdRightArray != NULL) {
@@ -1835,9 +1835,9 @@ static void CL_SwapSkills (linkedList_t *team)
 						const Item *holsterCharTwo = cp2->inv.getHolsterContainer();
 
 						if (rightHandCharTwo && rightHandCharTwo->ammo && rightHandCharTwo->def())
-							fdRightArray = FIRESH_FiredefForWeapon(rightHandCharTwo);
+							fdRightArray = rightHandCharTwo->getFiredefs();
 						if (holsterCharTwo && holsterCharTwo->ammo && holsterCharTwo->def())
-							fdHolsterArray = FIRESH_FiredefForWeapon(holsterCharTwo);
+							fdHolsterArray = holsterCharTwo->getFiredefs();
 
 						if (fdHolsterArray != NULL && fdRightArray != NULL) {
 							const int no2 = 2 * (rightHandCharTwo && skill == rightHandCharTwo->ammo->fd[fdRightArray->weapFdsIdx][fmode1].weaponSkill)
