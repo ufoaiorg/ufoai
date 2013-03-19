@@ -1,5 +1,4 @@
-#ifndef _GTKUTIL_MULTIMON_H_
-#define _GTKUTIL_MULTIMON_H_
+#pragma once
 
 #include <gtk/gtkwindow.h>
 #include <gdk/gdkscreen.h>
@@ -72,5 +71,3 @@ class MultiMonitor
 };
 
 } // namespace gtkutil
-
-#endif /* _GTKUTIL_MULTIMON_H_ */

@@ -1,5 +1,4 @@
-#ifndef RIGHTALIGNEDLABEL_H_
-#define RIGHTALIGNEDLABEL_H_
+#pragma once
 
 #include <gtk/gtklabel.h>
 #include "RightAlignment.h"
@@ -36,5 +35,3 @@ namespace gtkutil
 	};
 
 }
-
-#endif /*RIGHTALIGNEDLABEL_H_*/

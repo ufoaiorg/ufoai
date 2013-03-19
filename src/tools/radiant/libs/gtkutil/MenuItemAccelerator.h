@@ -1,5 +1,4 @@
-#ifndef MENUITEMACCELERATOR_H_
-#define MENUITEMACCELERATOR_H_
+#pragma once
 
 #include <string>
 #include <gtk/gtkwidget.h>
@@ -56,5 +55,3 @@ namespace gtkutil
 	};
 
 }
-
-#endif /*MENUITEMACCELERATOR_H_*/

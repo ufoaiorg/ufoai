@@ -1,5 +1,4 @@
-#ifndef ICONTEXTMENUTOGGLE_H_
-#define ICONTEXTMENUTOGGLE_H_
+#pragma once
 
 #include "gtkutil/image.h"
 
@@ -48,5 +47,3 @@ namespace gtkutil
 	};
 
 } // namespace gtkutil
-
-#endif /*ICONTEXTMENUTOGGLE_H_*/

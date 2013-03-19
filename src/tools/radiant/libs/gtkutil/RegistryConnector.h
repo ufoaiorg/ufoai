@@ -1,5 +1,4 @@
-#ifndef REGISTRYCONNECTOR_H_
-#define REGISTRYCONNECTOR_H_
+#pragma once
 
 #include <map>
 #include <string>
@@ -54,5 +53,3 @@ class RegistryConnector
 }; // class RegistryConnector
 
 } // namespace xml
-
-#endif /* REGISTRYCONNECTOR_H_ */

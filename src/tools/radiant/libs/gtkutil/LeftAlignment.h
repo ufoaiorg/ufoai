@@ -1,5 +1,4 @@
-#ifndef LEFTALIGNMENT_H_
-#define LEFTALIGNMENT_H_
+#pragma once
 
 #include <gtk/gtkalignment.h>
 
@@ -60,5 +59,3 @@ namespace gtkutil
 	};
 
 }
-
-#endif /*LEFTALIGNMENT_H_*/

@@ -1,5 +1,4 @@
-#ifndef LEFTALIGNEDLABEL_H_
-#define LEFTALIGNEDLABEL_H_
+#pragma once
 
 #include <string>
 #include <gtk/gtklabel.h>
@@ -34,5 +33,3 @@ namespace gtkutil
 			}
 	};
 }
-
-#endif /*LEFTALIGNEDLABEL_H_*/
