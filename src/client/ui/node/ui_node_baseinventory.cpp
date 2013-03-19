@@ -583,13 +583,12 @@ static invList_t *UI_BaseInventoryNodeGetItem (const uiNode_t* const node, int m
  */
 void uiBaseInventoryNode::drawTooltip (const uiNode_t *node, int x, int y) const
 {
-	const invList_t *itemHover;
 	vec2_t nodepos;
 
 	UI_GetNodeAbsPos(node, nodepos);
 
 	/* Find out where the mouse is. */
-	itemHover = UI_BaseInventoryNodeGetItem(node, x, y, NULL, NULL);
+	const Item *itemHover = UI_BaseInventoryNodeGetItem(node, x, y, NULL, NULL);
 
 	if (itemHover) {
 		static char tooltiptext[MAX_VAR * 2];

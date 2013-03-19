@@ -243,7 +243,7 @@ void UI_DrawItem (uiNode_t *node, const vec3_t org, const Item *item, int x, int
  * @param[in] stringMaxLength Max. string size of @c tooltipText.
  * @return Number of lines
  */
-void UI_GetItemTooltip (item_t item, char *tooltipText, size_t stringMaxLength)
+void UI_GetItemTooltip (const Item &item, char *tooltipText, size_t stringMaxLength)
 {
 	assert(item.def());
 
@@ -657,13 +657,12 @@ static invList_t *UI_ContainerNodeGetItemAtPosition (const uiNode_t* const node,
  */
 void uiContainerNode::drawTooltip (const uiNode_t *node, int x, int y) const
 {
-	const invList_t *itemHover;
 	vec2_t nodepos;
 
 	UI_GetNodeAbsPos(node, nodepos);
 
 	/* Find out where the mouse is. */
-	itemHover = UI_ContainerNodeGetItemAtPosition(node, x, y);
+	const Item *itemHover = UI_ContainerNodeGetItemAtPosition(node, x, y);
 
 	if (itemHover) {
 		static char tooltiptext[MAX_VAR * 2];
