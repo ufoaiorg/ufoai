@@ -388,7 +388,6 @@ const fireDef_t *Item::getFiredefs () const
 
 /**
  * @brief Get the firedef that uses the most TU for this item.
- * @param[in] item The item for which we want to find the slowest fireDef.
  * @return The firedef that uses the most TU for this item or @c NULL.
  */
 const fireDef_t *Item::getSlowestFireDef () const
