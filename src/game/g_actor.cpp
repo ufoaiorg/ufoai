@@ -746,14 +746,12 @@ bool G_ActorInvMove (Edict *ent, const invDef_t *from, invList_t *fItem, const i
  */
 void G_ActorReload (Edict *ent, const invDef_t *invDef)
 {
-	invList_t *icFinal;
 	const objDef_t *weapon;
 	int tu;
 	containerIndex_t containerID;
 	const invDef_t *bestContainer;
 
 	/* search for clips and select the one that is available easily */
-	icFinal = NULL;
 	tu = 100;
 	bestContainer = NULL;
 
@@ -773,6 +771,7 @@ void G_ActorReload (Edict *ent, const invDef_t *invDef)
 	 * network buffer, and in multiplayer everything is researched */
 
 	/* also try the temp containers */
+	Item *ammoItem = NULL;
 	for (containerID = 0; containerID < gi.csi->numIDs; containerID++) {
 		if (INVDEF(containerID)->out < tu) {
 			/* Once we've found at least one clip, there's no point
@@ -782,7 +781,7 @@ void G_ActorReload (Edict *ent, const invDef_t *invDef)
 			Item *item;
 			for (item = ent->getContainer(containerID); item; item = item->getNext())
 				if (item->def()->isLoadableInWeapon(weapon)) {
-					icFinal = item;
+					ammoItem = item;
 					bestContainer = INVDEF(containerID);
 					tu = bestContainer->out;
 					break;
@@ -792,7 +791,7 @@ void G_ActorReload (Edict *ent, const invDef_t *invDef)
 
 	/* send request */
 	if (bestContainer)
-		G_ActorInvMove(ent, bestContainer, icFinal, invDef, 0, 0, true);
+		G_ActorInvMove(ent, bestContainer, ammoItem, invDef, 0, 0, true);
 }
 
 int G_ActorGetTimeForFiredef (const Edict *const ent, const fireDef_t *const fd, const bool reaction)
