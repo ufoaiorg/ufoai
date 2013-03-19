@@ -564,41 +564,31 @@ bool G_ClientCanReload (Edict *ent, containerIndex_t containerID)
 }
 
 /**
- * @brief Retrieve or collect weapon from any linked container for the actor
+ * @brief Retrieve or collect weapon from any linked container for the actor's right hand
  * @note This function will also collect items from floor containers when the actor
  * is standing on a given point.
  * @sa AI_ActorThink
  */
 void G_ClientGetWeaponFromInventory (Edict *ent)
 {
-	invList_t *ic;
-	invList_t *icFinal;
-	const invDef_t *invDef;
-	int tu;
-	containerIndex_t container;
-	const invDef_t *bestContainer;
-
 	/* e.g. bloodspiders are not allowed to carry or collect weapons */
 	if (!ent->chr.teamDef->weapons)
 		return;
 
 	/* search for weapons and select the one that is available easily */
-	tu = 100;
-	invDef = INVDEF(gi.csi->idRight);
-	bestContainer = NULL;
-	icFinal = NULL;
-
-	/* also try the temp containers */
+	containerIndex_t container;
+	int tu = 100;
+	const invDef_t *bestContainer = NULL;
+	invList_t *theWeapon = NULL;
 	for (container = 0; container < gi.csi->numIDs; container++) {
 		if (INVDEF(container)->out < tu) {
-			/* Once we've found at least one clip, there's no point
-			 * searching other containers if it would take longer
-			 * to retrieve the ammo from them than the one
-			 * we've already found. */
+			/* We are looking for the *fastest* way to get a weapon,
+			 * no matter what kind of weapon it is. */
+			Item *ic;
 			for (ic = ent->getContainer(container); ic; ic = ic->getNext()) {
 				assert(ic->def());
 				if (ic->isWeapon() && !ic->mustReload()) {
-					icFinal = ic;
+					theWeapon = ic;
 					bestContainer = INVDEF(container);
 					tu = bestContainer->out;
 					break;
@@ -608,8 +598,9 @@ void G_ClientGetWeaponFromInventory (Edict *ent)
 	}
 
 	/* send request */
+	const invDef_t *invDef = INVDEF(gi.csi->idRight);
 	if (bestContainer)
-		G_ActorInvMove(ent, bestContainer, icFinal, invDef, 0, 0, true);
+		G_ActorInvMove(ent, bestContainer, theWeapon, invDef, 0, 0, true);
 }
 
 /**
