@@ -83,7 +83,7 @@ void CL_ActorShoot(const le_t *le, const pos3_t at);
 int CL_ActorGetContainerForReload(invList_t **ic, const inventory_t *inv, const objDef_t *weapon);
 void CL_ActorPlaySound(const le_t *le, actorSound_t soundType);
 float CL_ActorInjuryModifier(const le_t *le, const modifier_types_t type);
-int CL_ActorTimeForFireDef(const le_t *le, const fireDef_t *fd);
+int CL_ActorTimeForFireDef(const le_t *le, const fireDef_t *fd, bool reaction = false);
 
 void CL_ActorActionMouse(void);
 void CL_ActorSetFireDef(le_t *actor, const fireDef_t *fd);

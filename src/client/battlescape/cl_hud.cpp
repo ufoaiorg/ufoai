@@ -94,7 +94,8 @@ CASSERT(lengthof(shootTypeStrings) == BT_NUM_TYPES);
 typedef enum {
 	BT_STATE_UNINITIALZED,
 	BT_STATE_DISABLE,		/**< 'Disabled' display (grey) */
-	BT_STATE_DESELECT		/**< Normal display (blue) */
+	BT_STATE_DESELECT,		/**< Normal display (blue) */
+	BT_STATE_SELECT			/**< Selected display (blue) */
 } weaponButtonState_t;
 
 /** @note Order of elements here must correspond to order of elements in walkType_t. */
@@ -742,9 +743,12 @@ static int HUD_WeaponCanBeReloaded (const le_t *le, containerIndex_t containerID
 }
 
 /**
- * @brief Display 'impossible" (red) reaction buttons.
+ * @brief Display 'impossible' (red) reaction buttons.
  * @param[in] actor the actor to check for his reaction state.
  * @return true if nothing changed message was sent otherwise false.
+ * @note this is called when reaction is enabled with no suitable weapon.
+ * @todo at the moment of writing, this should be impossible: reaction
+ * should be disabled whenever the actor loses its reaction weapon.
  */
 static bool HUD_DisplayImpossibleReaction (const le_t *actor)
 {
@@ -755,9 +759,14 @@ static bool HUD_DisplayImpossibleReaction (const le_t *actor)
 	if (!LE_IsSelected(actor))
 		return false;
 
+	if (buttonStates[BT_REACTION] == BT_STATE_UNINITIALZED)
+		return false;
+
 	/* Display 'impossible" (red) reaction buttons */
 	if (actor->state & STATE_REACTION) {
+		Com_Printf("HUD_DisplayImpossibleReaction: Warning reaction fire enable and no suitable weapon found!\n");
 		UI_ExecuteConfunc("startreaction_impos");
+		buttonStates[BT_REACTION] = BT_STATE_UNINITIALZED;
 		return false;
 	}
 
@@ -765,21 +774,59 @@ static bool HUD_DisplayImpossibleReaction (const le_t *actor)
 }
 
 /**
- * @brief Display 'usable" (blue) reaction buttons.
+ * @brief Display 'usable' (blue) reaction buttons.
  * @param[in] actor the actor to check for his reaction state.
  */
 static void HUD_DisplayPossibleReaction (const le_t *actor)
 {
 	if (!actor)
 		return;
-
 	/* Given actor does not equal the currently selected actor. This normally only happens on game-start. */
 	if (!LE_IsSelected(actor))
 		return;
 
+	if (buttonStates[BT_REACTION] == BT_STATE_SELECT)
+		return;
+
 	/* Display 'usable" (blue) reaction buttons */
-	if (actor->state & STATE_REACTION)
+	if (actor->state & STATE_REACTION) {
 		UI_ExecuteConfunc("startreaction");
+		buttonStates[BT_REACTION] = BT_STATE_SELECT;
+	}
+}
+
+/**
+ * @brief Get the weapon firing TUs for reaction fire.
+ * @param[in] actor the actor to check for his reaction TUs.
+ * @return The TUs needed for the reaction fireDef for this actor or -1 if no valid reaction settings
+ */
+static int HUD_ReactionFireGetTUs (const le_t *actor)
+{
+	if (!actor)
+		return -1;
+
+	const FiremodeSettings &fmSetting = CL_ActorGetChr(actor)->RFmode;
+	const Item *weapon = actor->getHand(fmSetting.getHand());
+
+	if (!weapon)
+		weapon = actor->getRightHandItem();
+	if (!weapon)
+		weapon = actor->getLeftHandItem();
+
+	if (weapon && weapon->ammo && weapon->isWeapon()) {
+		const fireDef_t *fdArray = weapon->getFiredefs();
+		if (fdArray == NULL)
+			return -1;
+
+		const fireDefIndex_t fmIdx = fmSetting.getFmIdx();
+		if (fmIdx >= 0 && fmIdx < MAX_FIREDEFS_PER_WEAPON) {
+			return CL_ActorTimeForFireDef(actor, &fdArray[fmIdx], true)
+					/* @todo this cvar seems to be unused */
+					+ Cvar_GetInteger("cl_reactionleftover");
+		}
+	}
+
+	return -1;
 }
 
 /**
@@ -804,6 +851,7 @@ static void HUD_UpdateButtons (const le_t *le)
 	const int time = CL_ActorUsableTUs(le);
 	/* Crouch/stand button. */
 	if (LE_IsCrouched(le)) {
+		buttonStates[BT_STAND] =  BT_STATE_UNINITIALZED;
 		if (time + CL_ActorReservedTUs(le, RES_CROUCH) < TU_CROUCH) {
 			Cvar_Set("mn_crouchstand_tt", _("Not enough TUs for standing up."));
 			HUD_SetWeaponButton(BT_CROUCH, BT_STATE_DISABLE);
@@ -812,6 +860,7 @@ static void HUD_UpdateButtons (const le_t *le)
 			HUD_SetWeaponButton(BT_CROUCH, BT_STATE_DESELECT);
 		}
 	} else {
+		buttonStates[BT_CROUCH] =  BT_STATE_UNINITIALZED;
 		if (time + CL_ActorReservedTUs(le, RES_CROUCH) < TU_CROUCH) {
 			Cvar_Set("mn_crouchstand_tt", _("Not enough TUs for crouching."));
 			HUD_SetWeaponButton(BT_STAND, BT_STATE_DISABLE);
@@ -867,7 +916,7 @@ static void HUD_UpdateButtons (const le_t *le)
 
 	/* reaction-fire button */
 	if (!(le->state & STATE_REACTION)) {
-		if (time >= CL_ActorReservedTUs(le, RES_REACTION) && le->inv.holdsReactionFireWeapon())
+		if (le->inv.holdsReactionFireWeapon() && time >= HUD_ReactionFireGetTUs(le))
 			HUD_SetWeaponButton(BT_REACTION, BT_STATE_DESELECT);
 		else
 			HUD_SetWeaponButton(BT_REACTION, BT_STATE_DISABLE);

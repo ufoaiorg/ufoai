@@ -324,6 +324,9 @@ float CL_ActorInjuryModifier (const le_t *le, const modifier_types_t type)
 		}
 
 		switch (type) {
+		case MODIFIER_REACTION:
+			mod += CL_ActorInjuryModifier(le, MODIFIER_SHOOTING);
+			break;
 		case MODIFIER_ACCURACY:
 		case MODIFIER_SHOOTING:
 			++mod;
@@ -346,9 +349,12 @@ float CL_ActorInjuryModifier (const le_t *le, const modifier_types_t type)
  * @param[in] fd The fire definition.
  * @return The TUs needed for the fireDef for this actor.
  */
-int CL_ActorTimeForFireDef (const le_t *le, const fireDef_t *fd)
+int CL_ActorTimeForFireDef (const le_t *le, const fireDef_t *fd, bool reaction)
 {
-	return (fd ? fd->time * CL_ActorInjuryModifier(le, MODIFIER_SHOOTING) : 0);
+	if (!fd)
+		return -1;
+
+	return fd->time * CL_ActorInjuryModifier(le, reaction ? MODIFIER_REACTION : MODIFIER_SHOOTING);
 }
 
 /*
