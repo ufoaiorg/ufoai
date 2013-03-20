@@ -92,7 +92,7 @@ typedef int SOCKET;
 
 #define dbuffer_len(dbuf) (dbuf ? (dbuf)->length() : 0)
 
-static cvar_t* net_ipv4;
+static cvar_t *net_ipv4;
 static SDL_mutex *netMutex;
 
 struct net_stream {

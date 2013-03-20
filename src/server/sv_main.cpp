@@ -763,7 +763,7 @@ void SV_UserinfoChanged (client_t *cl)
 	Com_DPrintf(DEBUG_SERVER, "SV_UserinfoChanged: Changed userinfo for player %s\n", cl->name);
 }
 
-static bool SV_CheckMaxSoldiersPerPlayer (cvar_t* cvar)
+static bool SV_CheckMaxSoldiersPerPlayer (cvar_t *cvar)
 {
 	const int max = MAX_ACTIVETEAM;
 	return Cvar_AssertValue(cvar, 1, max, true);

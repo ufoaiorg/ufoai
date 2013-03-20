@@ -66,6 +66,6 @@ extern cvar_t *cl_isometric;
 #define MAPDEBUG_CELLS		(1<<2) /* Creates arrows pointing at floors and ceilings at mouse cursor */
 #define MAPDEBUG_WALLS		(1<<3) /* Creates arrows pointing at obstructions in the 8 primary directions */
 
-extern cvar_t* cl_map_debug;
+extern cvar_t *cl_map_debug;
 
 #endif

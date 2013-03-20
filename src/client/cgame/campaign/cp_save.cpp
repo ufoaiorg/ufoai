@@ -47,7 +47,7 @@ typedef struct saveFileHeader_s {
 
 static saveSubsystems_t saveSubsystems[MAX_SAVESUBSYSTEMS];
 static int saveSubsystemsAmount;
-static cvar_t* save_compressed;
+static cvar_t *save_compressed;
 static cvar_t *cl_lastsave;
 
 /**

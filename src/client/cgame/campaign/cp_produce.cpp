@@ -36,9 +36,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /** @note producetime for technology entries is the time for PRODUCE_WORKERS amount of workers. */
 static const int PRODUCE_WORKERS = 10;
 
-static cvar_t* mn_production_limit;		/**< Maximum items in queue. */
-static cvar_t* mn_production_workers;		/**< Amount of hired workers in base. */
-static cvar_t* mn_production_amount;	/**< Amount of the current production; if no production, an invalid value */
+static cvar_t *mn_production_limit;		/**< Maximum items in queue. */
+static cvar_t *mn_production_workers;		/**< Amount of hired workers in base. */
+static cvar_t *mn_production_amount;	/**< Amount of the current production; if no production, an invalid value */
 
 /**
  * @brief Calculates the fraction (percentage) of production of an item in 1 minute.

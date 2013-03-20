@@ -55,9 +55,9 @@ cvar_t *s_language;
 cvar_t *sv_gametype;
 cvar_t *masterserver_url;
 cvar_t *port;
-cvar_t* sys_priority;
-cvar_t* sys_affinity;
-cvar_t* sys_os;
+cvar_t *sys_priority;
+cvar_t *sys_affinity;
+cvar_t *sys_os;
 
 static qFILE logfile;
 static qFILE pipefile;

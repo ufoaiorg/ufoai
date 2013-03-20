@@ -130,7 +130,7 @@ float Cvar_GetValue (const char *varName)
  * @sa Cvar_FindVar
  * @return true if set
  */
-bool Cvar_SetCheckFunction (const char *varName, bool (*check) (cvar_t* cvar))
+bool Cvar_SetCheckFunction (const char *varName, bool (*check) (cvar_t *cvar))
 {
 	cvar_t *var;
 
@@ -428,7 +428,7 @@ void Cvar_UnRegisterCvarListener (CvarListenerPtr listener)
  * @brief Executes the change listeners for a cvar
  * @param cvar The cvar which change listeners are executed
  */
-static void Cvar_ExecuteChangeListener (const cvar_t* cvar)
+static void Cvar_ExecuteChangeListener (const cvar_t *cvar)
 {
 	const cvarChangeListener_t *listener = cvar->changeListener;
 	while (listener) {

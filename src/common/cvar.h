@@ -192,7 +192,7 @@ bool Cvar_AssertValue(cvar_t *cvar, float minVal, float maxVal, bool shouldBeInt
 /**
  * @brief Sets the check functions for a cvar (e.g. Cvar_Assert)
  */
-bool Cvar_SetCheckFunction(const char *varName, bool (*check) (cvar_t* cvar));
+bool Cvar_SetCheckFunction(const char *varName, bool (*check) (cvar_t *cvar));
 
 /**
  * @brief Registers a listener that is executed each time a cvar changed its value.

@@ -38,9 +38,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../renderer/r_main.h"
 #include "../renderer/r_entity.h"
 
-cvar_t* cl_map_debug;
+cvar_t *cl_map_debug;
 static cvar_t *cl_precache;
-static cvar_t* cl_map_displayavailablecells;
+static cvar_t *cl_map_displayavailablecells;
 
 /**
  * @brief Call before entering a new level, or after vid_restart

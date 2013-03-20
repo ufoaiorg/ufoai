@@ -37,7 +37,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 cvar_t *cl_le_debug;
 cvar_t *cl_trace_debug;
-cvar_t* cl_map_draw_rescue_zone;
+cvar_t *cl_map_draw_rescue_zone;
 
 /*===========================================================================
 Local Model (LM) handling
