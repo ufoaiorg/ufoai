@@ -717,6 +717,7 @@ void AIRFIGHT_CampaignRunProjectiles (const campaign_t* campaign, int dt)
  * @brief Check if one type of battery (missile or laser) can shoot now.
  * @param[in] base Pointer to the firing base.
  * @param[in] weapons The base weapon to check and fire.
+ * @param[in] maxWeapons The number of weapons in that base.
  */
 static void AIRFIGHT_BaseShoot (const base_t *base, baseWeapon_t *weapons, int maxWeapons)
 {
@@ -771,7 +772,8 @@ static void AIRFIGHT_BaseShoot (const base_t *base, baseWeapon_t *weapons, int m
 /**
  * @brief Check if one type of battery (missile or laser) can shoot now.
  * @param[in] installation Pointer to the firing intallation.
- * @param[in] weapons The installation weapon to check and fire.
+ * @param[in] weapons The installation weapons to check and fire.
+ * @param[in] maxWeapons The number of weapons in that installation.
  */
 static void AIRFIGHT_InstallationShoot (const installation_t *installation, baseWeapon_t *weapons, int maxWeapons)
 {
