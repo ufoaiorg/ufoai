@@ -547,7 +547,8 @@ void gaussrand (float *gauss1, float *gauss2)
 	*gauss1 = x1 * w;
 	*gauss2 = x2 * w;
 }
-
+/** @brief Calculates the bounding box in absolute coordinates, also for rotating objects.
+ * WARNING: do not use this for angles other than 90, 180 or 270 !! */
 void CalculateMinsMaxs (const vec3_t angles, const vec3_t mins, const vec3_t maxs, const vec3_t origin, vec3_t absmin, vec3_t absmax)
 {
 	/* expand for rotation */
