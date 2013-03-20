@@ -687,6 +687,13 @@ static void G_Actor2x2Spawn (Edict *ent)
 	ent->type = ET_ACTOR2x2SPAWN;
 	ent->fieldSize = ACTOR_SIZE_2x2;
 
+	/* Spawning has already calculated the pos from the origin ( = center of the cell). Perfect for normal size actors.
+	 * For 2x2 actors, the origin(of the info_ box) is in the middle of the four cells. Using VecToPos on that origin
+	 * results in the upper right cell being the pos of the actor. But we want the lower left cell to be the pos of the
+	 * 2x2 actor because routing and pathfinding rely on that. So compensate for that. */
+	ent->pos[0]--;
+	ent->pos[1]--;
+
 	/* Fall to ground */
 	if (ent->pos[2] >= PATHFINDING_HEIGHT)
 		ent->pos[2] = PATHFINDING_HEIGHT - 1;
