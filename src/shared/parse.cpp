@@ -260,3 +260,21 @@ void Com_SkipBlock (const char **text)
 			depth--;
 	} while (depth && *text);
 }
+
+/**
+ * @brief Get the start and end point of a block in the given text
+ * @param[in,out] text The text pointer to get the start and end for. The pointer is set to the end of the block in this function.
+ * @param[out] start The pointer to the beginning of the block
+ * @param[out] end The pointer to the end of the block
+ * @return The amount of characters in the block, or -1 if the text does not start with the script block character '{'
+ */
+int Com_GetBlock (const char **text, const char **start)
+{
+	const char *token = Com_Parse(text);
+	if (*token != '{')
+		return -1;
+	*start = *text;
+	Com_SkipBlock(text);
+	const char *end = *text - 1;
+	return end - *start;
+}

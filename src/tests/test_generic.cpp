@@ -29,6 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../common/binaryexpressionparser.h"
 #include "../shared/utf8.h"
 #include "../shared/shared.h"
+#include "../shared/parse.h"
 #include "../shared/infostring.h"
 #include "../shared/stringhunk.h"
 #include "../shared/entitiesdef.h"
@@ -600,6 +601,25 @@ static void testEntitiesDef (void)
 	ED_Free();
 }
 
+static void testGetBlock (void)
+{
+	{
+		const char *test = "invalid block";
+		const int length = Com_GetBlock(&test, NULL);
+		UFO_CU_ASSERT_EQUAL_INT_MSG(length, -1, NULL);
+	}
+	{
+		const char *test = "{the block length  }";
+		const char *buf = test;
+		const size_t expected = strlen(test) - 2;
+		const char *start = NULL;
+		const int length = Com_GetBlock(&buf, &start);
+		UFO_CU_ASSERT_EQUAL_INT_MSG(length, expected, NULL);
+		UFO_CU_ASSERT_EQUAL_INT_MSG(strncmp(start, test + 1, length), 0,
+				va("%s and %s should match on the first %i characters", start, test + 1, length));
+	}
+}
+
 static void testComFilePath (void)
 {
 	char buf[32];
@@ -685,6 +705,9 @@ int UFO_AddGenericTests (void)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(GenericSuite, testEntitiesDef) == NULL)
+		return CU_get_error();
+
+	if (CU_ADD_TEST(GenericSuite, testGetBlock) == NULL)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(GenericSuite, testComFilePath) == NULL)

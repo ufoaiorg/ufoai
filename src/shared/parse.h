@@ -50,3 +50,4 @@ const char *Com_Parse(const char **data_p, char *target = 0, size_t size = 0);
 int Com_CountTokensInBuffer(const char *buffer);
 void Com_UnParseLastToken(void);
 void Com_SkipBlock(const char **text);
+int Com_GetBlock(const char **text, const char **start);
