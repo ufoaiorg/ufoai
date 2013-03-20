@@ -240,6 +240,11 @@ skipwhite:
 	return target;
 }
 
+/**
+ * @brief Skips a block of {} in our script files
+ * @param[in,out] text The text pointer to skip the block in. This pointer is set to the end of the block
+ * @note Even multiple depth levels are supported. Skipping a block with nested blocks works, too.
+ */
 void Com_SkipBlock (const char **text)
 {
 	const char *token;
