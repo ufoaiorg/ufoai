@@ -551,7 +551,7 @@ static bool CL_CanMultiplayerStart (void)
 	if (Com_GetScriptChecksum() != CL_GetConfigStringInteger(CS_UFOCHECKSUM))
 		Com_Printf("You are using modified ufo script files - might produce problems\n");
 
-	CM_LoadMap(CL_GetConfigString(CS_TILES), day, CL_GetConfigString(CS_POSITIONS), cl.mapData, cl.mapTiles);
+	CM_LoadMap(CL_GetConfigString(CS_TILES), day, CL_GetConfigString(CS_POSITIONS), CL_GetConfigString(CS_ENTITYSTRING), cl.mapData, cl.mapTiles);
 
 	if (cl.mapData->mapChecksum != CL_GetConfigStringInteger(CS_MAPCHECKSUM)) {
 		UI_Popup(_("Error"), _("Local map version differs from server"));

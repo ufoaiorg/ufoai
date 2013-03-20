@@ -36,8 +36,8 @@ void PrintBSPFileSizes(void);
  */
 typedef struct epair_s {
 	struct epair_s	*next;	/**< the next entry in the key, value list */
-	char	*key;			/**< the name of the parameter */
-	char	*value;			/**< the value of the parameter */
+	const char	*key;			/**< the name of the parameter */
+	const char	*value;			/**< the value of the parameter */
 } epair_t;
 
 /**
@@ -67,6 +67,7 @@ vec_t FloatForKey(const entity_t *ent, const char *key);
 void GetVectorFromString(const char *value, vec3_t vec);
 void GetVectorForKey(const entity_t *ent, const char *key, vec3_t vec);
 epair_t *ParseEpair(void);
+epair_t *AddEpair(const char *key, const char *value);
 byte *CompressRouting(byte *dataStart, byte *destStart, int l);
 
 #endif /* _BSP_FILE */

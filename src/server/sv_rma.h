@@ -144,11 +144,14 @@ public:
 
 	int retryCnt;								/**< amount of retries in case the assembly didn't assemble and we are using the defined seeds */
 
-	inline const Assembly* getCurrentAssembly() const {return &assemblies[asmIdx];}
+	inline const Assembly* getCurrentAssembly () const
+	{
+		return &assemblies[asmIdx];
+	}
 };
 
-MapInfo* SV_AssembleMap(const char *name, const char *assembly, char *asmMap, char *asmPos, const unsigned int seed);
+MapInfo* SV_AssembleMap(const char *name, const char *assembly, char *asmMap, char *asmPos, char *entityString, const unsigned int seed);
 
 /* the next two functions are only exported for cunits tests */
-void SV_ParseUMP(const char *name, MapInfo *map, bool inherit);
-void SV_PrepareTilesToPlace (MapInfo *map);
+void SV_ParseUMP(const char *name, char *entityString, MapInfo *map, bool inherit);
+void SV_PrepareTilesToPlace(MapInfo *map);

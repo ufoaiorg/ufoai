@@ -29,6 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "check/check.h"
 #include "check/checkentities.h"
 #include "common/aselib.h"
+#include "../../shared/parse.h"
 
 mapbrush_t mapbrushes[MAX_MAP_BRUSHES];
 int nummapbrushes;
@@ -947,7 +948,7 @@ entity_t *FindTargetEntity (const char *target)
  * @sa ParseBrush
  * @param[in] filename The map filename
  */
-static bool ParseMapEntity (const char *filename)
+static bool ParseMapEntity (const char *filename, const char *entityString)
 {
 	entity_t *mapent;
 	const char *entName;
@@ -984,8 +985,6 @@ static bool ParseMapEntity (const char *filename)
 
 	GetVectorForKey(mapent, "origin", mapent->origin);
 
-	/* group entities are just for editor convenience
-	 * toss all brushes into the world entity */
 	entName = ValueForKey(mapent, "classname");
 
 	/* offset all of the planes and texinfo if needed */
@@ -995,6 +994,8 @@ static bool ParseMapEntity (const char *filename)
 	if (num_entities == 1 && !Q_streq("worldspawn", entName))
 		Sys_Error("The first entity must be worldspawn, it is: %s", entName);
 	if (notCheckOrFix && Q_streq("func_group", entName)) {
+		/* group entities are just for editor convenience
+		 * toss all brushes into the world entity */
 		MoveBrushesToWorld(mapent);
 		num_entities--;
 	} else if (IsInlineModelEntity(entName)) {
@@ -1006,6 +1007,21 @@ static bool ParseMapEntity (const char *filename)
 		worldspawnCount++;
 		if (worldspawnCount > 1)
 			Com_Printf("Warning: more than one %s in one map\n", entName);
+
+		do {
+			const char *text = entityString;
+			const char *token = Com_Parse(&text);
+			if (Q_strnull(token))
+				break;
+			const char *key = Mem_StrDup(token);
+			token = Com_Parse(&text);
+			if (Q_strnull(token))
+				break;
+			const char *value = Mem_StrDup(token);
+			epair_t *e = AddEpair(key, value);
+			e->next = mapent->epairs;
+			mapent->epairs = e;
+		} while (true);
 	}
 	return true;
 }
@@ -1116,6 +1132,86 @@ void WriteMapFile (const char *filename)
 }
 
 /**
+ * @brief Parses an ump file that contains the random map definition
+ * @param[in] name The basename of the ump file (without extension)
+ * @param[in] inherit When @c true, this is called to inherit tile definitions
+ * @param[out] entityString An entity string that is used for all map tiles. Parsed from the ump.
+ * from another ump file (no assemblies)
+ */
+static void ParseUMP (const char *name, char *entityString, bool inherit)
+{
+	char filename[MAX_QPATH];
+	byte *buf;
+	const char *text, *token;
+
+	*entityString = '\0';
+
+	/* load the map info */
+	Com_sprintf(filename, sizeof(filename), "maps/%s.ump", name);
+	FS_LoadFile(filename, &buf);
+	if (!buf)
+		return;
+
+	/* parse it */
+	text = (const char*)buf;
+	do {
+		token = Com_Parse(&text);
+		if (!text)
+			break;
+
+		if (Q_streq(token, "extends")) {
+			token = Com_Parse(&text);
+			if (inherit)
+				Com_Printf("ParseUMP: Too many extends in %s 'extends %s' ignored\n", filename, token);
+			else
+				ParseUMP(token, entityString, true);
+		} else if (Q_streq(token, "worldspawn")) {
+			const char *start = NULL;
+			const int length = Com_GetBlock(&text, &start);
+			if (length == -1) {
+				Com_Printf("ParseUMP: Not a valid worldspawn block in '%s'\n", filename);
+			} else {
+				if (length >= MAX_TOKEN_CHARS) {
+					Com_Printf("worldspawn is too big - only %i characters are allowed", MAX_TOKEN_CHARS);
+				} else if (length == 0) {
+					Com_Printf("no worldspawn settings in ump file\n");
+				} else {
+					Q_strncpyz(entityString, start, length);
+					Com_Printf("use worldspawn settings from ump file\n");
+				}
+			}
+		} else if (token[0] == '{') {
+			/* ignore unknown block */
+			text = strchr(text, '}') + 1;
+			if (!text)
+				break;
+		}
+	} while (text);
+
+	/* free the file */
+	FS_FreeFile(buf);
+}
+
+/**
+ * @brief The contract is that the directory name is equal to the base of the ump filename
+ */
+static const char *GetUMPName (const char *mapFilename)
+{
+	static char name[MAX_QPATH];
+	const char *filename = Com_SkipPath(mapFilename);
+	/* if we are in no subdir, we don't have any ump */
+	if (filename == NULL)
+		return NULL;
+
+	const char *mapsDir = "maps/";
+	const int lMaps = strlen(mapsDir);
+	const int l = strlen(filename);
+	Q_strncpyz(name, mapFilename + lMaps, strlen(mapFilename) - lMaps - l);
+	Com_Printf("...ump: '%s%s.ump'\n", mapsDir, name);
+	return name;
+}
+
+/**
  * @sa WriteMapFile
  * @sa ParseMapEntity
  */
@@ -1143,7 +1239,12 @@ void LoadMapFile (const char *filename)
 	/* Set the number of tiles to 1. This is fix for ufo2map right now. */
 	mapTiles.numTiles = 1;
 
-	while (ParseMapEntity(filename));
+	char entityString[MAX_TOKEN_CHARS];
+	const char *ump = GetUMPName(filename);
+	if (ump != NULL)
+		ParseUMP(ump, entityString, false);
+
+	while (ParseMapEntity(filename, entityString));
 
 	subdivide = atoi(ValueForKey(&entities[0], "subdivide"));
 	if (subdivide >= 256 && subdivide <= 2048) {

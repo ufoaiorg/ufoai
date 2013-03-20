@@ -61,8 +61,9 @@ static const char *mapName = "test_routing";
 static void testMapLoading (void)
 {
 	if (FS_CheckFile("maps/%s.bsp", mapName) != -1) {
-		CM_LoadMap(mapName, true, "", &mapData, &mapTiles);
-		CM_LoadMap(mapName, true, "", &mapData, &mapTiles);
+		char entityString[MAX_TOKEN_CHARS];
+		CM_LoadMap(mapName, true, "", entityString, &mapData, &mapTiles);
+		CM_LoadMap(mapName, true, "", entityString, &mapData, &mapTiles);
 	} else {
 		UFO_CU_FAIL_MSG(va("Map resource '%s.bsp' for test is missing.", mapName));
 	}
@@ -75,8 +76,9 @@ static void testMove (void)
 	pos_t gridPos;
 
 	if (FS_CheckFile("maps/%s.bsp", mapName) != -1) {
-		CM_LoadMap(mapName, true, "", &mapData, &mapTiles);
-		CM_LoadMap(mapName, true, "", &mapData, &mapTiles);
+		char entityString[MAX_TOKEN_CHARS];
+		CM_LoadMap(mapName, true, "", entityString, &mapData, &mapTiles);
+		CM_LoadMap(mapName, true, "", entityString, &mapData, &mapTiles);
 	} else {
 		UFO_CU_FAIL_MSG_FATAL(va("Map resource '%s.bsp' for test is missing.", mapName));
 	}

@@ -307,6 +307,7 @@ typedef int32_t shoot_types_t;
 #define CS_LIGHTMAP			12		/**< which lightmap to use */
 #define CS_MAPZONE			13		/**< for terrain texture replacement */
 #define CS_VICTORY_CONDITIONS	14	/**< a list of msgids seperated by , */
+#define CS_ENTITYSTRING		15		/**< additional worldspawn settings */
 #define CS_TILES			16
 #define CS_POSITIONS		(CS_TILES+MAX_TILESTRINGS)
 #define CS_MODELS			(CS_POSITIONS+MAX_TILESTRINGS)

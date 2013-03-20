@@ -593,7 +593,7 @@ static void CMod_LoadRouting (MapTile &tile, mapData_t *mapData, const byte *bas
  * loaded map tiles.
  * @sa CM_AddMapTile
  */
-static void CMod_LoadEntityString (MapTile &tile, mapData_t *mapData, const byte *base, const lump_t *l, const vec3_t shift)
+static void CMod_LoadEntityString (MapTile &tile, const char *entityString, mapData_t *mapData, const byte *base, const lump_t *l, const vec3_t shift)
 {
 	const char *token;
 	const char *es;
@@ -665,6 +665,10 @@ static void CMod_LoadEntityString (MapTile &tile, mapData_t *mapData, const byte
 			} else if (Q_streq(keyname, "targetname") || Q_streq(keyname, "target")) {
 				Q_strcat(mapData->mapEntityString, va("%s \"%s-%i\" ", keyname, token, tile.idx), sizeof(mapData->mapEntityString));
 			} else {
+				if (Q_streq(keyname, "classname") && Q_streq(token, "worldspawn")) {
+					if (Q_strvalid(entityString))
+						Q_strcat(mapData->mapEntityString, entityString, sizeof(mapData->mapEntityString));
+				}
 				/* just store key and value */
 				Q_strcat(mapData->mapEntityString, va("%s \"%s\" ", keyname, token), sizeof(mapData->mapEntityString));
 			}
@@ -768,7 +772,7 @@ static void CM_InitBoxHull (MapTile &tile)
  * @sa CM_LoadMap
  * @sa R_ModAddMapTile
  */
-static void CM_AddMapTile (const char *name, const bool day, const int sX, const int sY, const byte sZ, mapData_t *mapData, mapTiles_t *mapTiles)
+static void CM_AddMapTile (const char *name, const char *entityString, const bool day, const int sX, const int sY, const byte sZ, mapData_t *mapData, mapTiles_t *mapTiles)
 {
 	char filename[MAX_QPATH];
 	unsigned checksum;
@@ -824,7 +828,7 @@ static void CM_AddMapTile (const char *name, const bool day, const int sX, const
 	CMod_LoadBrushSides(tile, base, &header.lumps[LUMP_BRUSHSIDES]);
 	CMod_LoadSubmodels(tile, base, &header.lumps[LUMP_MODELS], shift);
 	CMod_LoadNodes(tile, base, &header.lumps[LUMP_NODES], shift);
-	CMod_LoadEntityString(tile, mapData, base, &header.lumps[LUMP_ENTITIES], shift);
+	CMod_LoadEntityString(tile, entityString, mapData, base, &header.lumps[LUMP_ENTITIES], shift);
 	if (day)
 		CMod_LoadLighting(tile, base, &header.lumps[LUMP_LIGHTING_DAY]);
 	else
@@ -916,10 +920,11 @@ static void CMod_RerouteMap (mapTiles_t *mapTiles, mapData_t *mapData)
  * have to provide the positions where those tiles should be placed at.
  * @param[out] mapData The loaded data is stored here.
  * @param[in] mapTiles List of tiles the current (RMA-)map is composed of
+ * @param[in] entityString An entity string that is used for all map tiles. Might be @c NULL.
  * @sa CM_AddMapTile
  * @sa R_ModBeginLoading
  */
-void CM_LoadMap (const char *tiles, bool day, const char *pos, mapData_t *mapData, mapTiles_t *mapTiles)
+void CM_LoadMap (const char *tiles, bool day, const char *pos, const char *entityString, mapData_t *mapData, mapTiles_t *mapTiles)
 {
 	const char *token;
 	char name[MAX_VAR];
@@ -975,10 +980,10 @@ void CM_LoadMap (const char *tiles, bool day, const char *pos, mapData_t *mapDat
 				Com_Error(ERR_DROP, "CM_LoadMap: invalid y position given: %i\n", sh[1]);
 			if (sh[2] >= PATHFINDING_HEIGHT)
 				Com_Error(ERR_DROP, "CM_LoadMap: invalid z position given: %i\n", sh[2]);
-			CM_AddMapTile(name, day, sh[0], sh[1], sh[2], mapData, mapTiles);
+			CM_AddMapTile(name, entityString, day, sh[0], sh[1], sh[2], mapData, mapTiles);
 		} else {
 			/* load only a single tile, if no positions are specified */
-			CM_AddMapTile(name, day, 0, 0, 0, mapData, mapTiles);
+			CM_AddMapTile(name, entityString, day, 0, 0, 0, mapData, mapTiles);
 			return;
 		}
 	}

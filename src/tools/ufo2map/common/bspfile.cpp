@@ -413,6 +413,20 @@ static void StripTrailingWhitespaces (char *str)
 	}
 }
 
+epair_t *AddEpair (const char *key, const char *value)
+{
+	epair_t	*e = Mem_AllocType(epair_t);
+
+	if (strlen(key) >= MAX_KEY - 1)
+		Sys_Error("ParseEpar: token too long");
+	e->key = key;
+	if (strlen(value) >= MAX_VALUE - 1)
+		Sys_Error("ParseEpar: token too long");
+	e->value = value;
+
+	return e;
+}
+
 /**
  * @brief Parses one key and value for an entity from the current tokens
  * @sa parsedToken
@@ -422,25 +436,13 @@ static void StripTrailingWhitespaces (char *str)
  */
 epair_t *ParseEpair (void)
 {
-	epair_t	*e;
-
-	e = Mem_AllocType(epair_t);
-
-	if (strlen(parsedToken) >= MAX_KEY - 1)
-		Sys_Error("ParseEpar: token too long");
-	e->key = Mem_StrDup(parsedToken);
+	StripTrailingWhitespaces(parsedToken);
+	const char *key = Mem_StrDup(parsedToken);
 	GetToken(false);
-	if (strlen(parsedToken) >= MAX_VALUE - 1)
-		Sys_Error("ParseEpar: token too long");
-	e->value = Mem_StrDup(parsedToken);
-
-	/* strip trailing spaces */
-	StripTrailingWhitespaces(e->key);
-	StripTrailingWhitespaces(e->value);
-
-	return e;
+	StripTrailingWhitespaces(parsedToken);
+	const char *value = Mem_StrDup(parsedToken);
+	return AddEpair(key, value);
 }
-
 
 /**
  * @sa ParseEntities
@@ -490,7 +492,6 @@ void ParseEntities (void)
 	}
 }
 
-
 /**
  * @brief Generates the curTile->entdata string from all the entities
  * @sa ParseEntities
@@ -531,7 +532,6 @@ void SetKeyValue (entity_t *ent, const char *key, const char *value)
 
 	for (ep = ent->epairs; ep; ep = ep->next)
 		if (Q_streq(ep->key, key)) {
-			Mem_Free(ep->value);
 			ep->value = Mem_StrDup(value);
 			return;
 		}

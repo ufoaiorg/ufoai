@@ -62,9 +62,10 @@ char posStr[MAX_TOKEN_CHARS * MAX_TILESTRINGS];
 static void testUMPExtends (void)
 {
 	MapInfo *randomMap;
+	char entityString[MAX_TOKEN_CHARS];
 
 	srand(0);
-	randomMap = SV_AssembleMap("test_extends", "default", mapStr, posStr, 0);
+	randomMap = SV_AssembleMap("test_extends", "default", mapStr, posStr, entityString, 0);
 	CU_ASSERT(randomMap != NULL);
 	Mem_Free(randomMap);
 }
@@ -72,9 +73,10 @@ static void testUMPExtends (void)
 static void testAssembly (void)
 {
 	MapInfo *randomMap;
+	char entityString[MAX_TOKEN_CHARS];
 
 	srand(0);
-	randomMap = SV_AssembleMap("forest", "large", mapStr, posStr, 0);
+	randomMap = SV_AssembleMap("forest", "large", mapStr, posStr, entityString, 0);
 	CU_ASSERT(randomMap != NULL);
 	Mem_Free(randomMap);
 }
@@ -85,13 +87,14 @@ static void testMassAssemblyTimeout (void)
 	int i;
 	long time;
 	MapInfo *randomMap;
+	char entityString[MAX_TOKEN_CHARS];
 
 	sv_threads->integer = 1;
 	for (i = 0; i < 10; i++) {
 		/** @todo the assemble thread sets a different seed */
 		srand(i);
 		time = Sys_Milliseconds();
-		randomMap = SV_AssembleMap("forest", "large", mapStr, posStr, i);
+		randomMap = SV_AssembleMap("forest", "large", mapStr, posStr, entityString, i);
 		CU_ASSERT(randomMap != NULL);
 		time = Sys_Milliseconds() - time;
 		UFO_CU_ASSERT_TRUE_MSG(time < MAX_ALLOWED_TIME_TO_ASSEMBLE,
@@ -106,13 +109,14 @@ static void testMassAssemblyParallel (void)
 	int i;
 	long time;
 	MapInfo *randomMap;
+	char entityString[MAX_TOKEN_CHARS];
 
 	sv_threads->integer = 2;
 	for (i = 0; i < 10; i++) {
 		/** @todo the assemble thread sets a different seed */
 		srand(i);
 		time = Sys_Milliseconds();
-		randomMap = SV_AssembleMap("forest", "large", mapStr, posStr, i);
+		randomMap = SV_AssembleMap("forest", "large", mapStr, posStr, entityString, i);
 		CU_ASSERT(randomMap != NULL);
 		time = Sys_Milliseconds() - time;
 		UFO_CU_ASSERT_TRUE_MSG(time < MAX_ALLOWED_TIME_TO_ASSEMBLE,
@@ -128,12 +132,13 @@ static void testMassAssemblySequential (void)
 	int i;
 	long time;
 	MapInfo *randomMap;
+	char entityString[MAX_TOKEN_CHARS];
 
 	sv_threads->integer = 0;
 	for (i = 0; i < 10; i++) {
 		srand(i);
 		time = Sys_Milliseconds();
-		randomMap = SV_AssembleMap("forest", "large", mapStr, posStr, i);
+		randomMap = SV_AssembleMap("forest", "large", mapStr, posStr, entityString, i);
 		CU_ASSERT_PTR_NOT_NULL(randomMap);
 		time = Sys_Milliseconds() - time;
 		UFO_CU_ASSERT_TRUE_MSG(time < MAX_ALLOWED_TIME_TO_ASSEMBLE,
@@ -160,6 +165,7 @@ static void testSeedlists (void)
 		{"village", "small"}
 	};
 	length = sizeof(assNames) / (2 * sizeof(char *));
+	char entityString[MAX_TOKEN_CHARS];
 
 	sv_threads->integer = 0;
 	for (n = 0; n < length; n++) {
@@ -167,7 +173,7 @@ static void testSeedlists (void)
 			srand(i);
 			time = Sys_Milliseconds();
 			Com_Printf("Seed: %i\n", i);
-			randomMap = SV_AssembleMap(assNames[n][0], assNames[n][1], mapStr, posStr, i);
+			randomMap = SV_AssembleMap(assNames[n][0], assNames[n][1], mapStr, posStr, entityString, i);
 			CU_ASSERT(randomMap != NULL);
 			time = Sys_Milliseconds() - time;
 			timeSum += time;
@@ -192,6 +198,7 @@ static void testNewSeedlists (void)
 	int i;
 	long time, timeSum = 0;
 	MapInfo *randomMap;
+	char entityString[MAX_TOKEN_CHARS];
 
 	sv_threads->integer = 0;
 	for (i = 0; i < RMA_HIGHEST_SUPPORTED_SEED; i++) {
@@ -200,9 +207,9 @@ static void testNewSeedlists (void)
 		Com_Printf("Seed: %i\n", i);
 		Cvar_Set("rm_drop", Com_GetRandomMapAssemblyNameForCraft("craft_drop_herakles"));
 		Cvar_Set("rm_ufo", Com_GetRandomMapAssemblyNameForCraft("craft_ufo_fighter"));
-		randomMap = SV_AssembleMap("mm_harbour", "mini", mapStr, posStr, i);
+		randomMap = SV_AssembleMap("mm_harbour", "mini", mapStr, posStr, entityString, i);
 #if 0
-		randomMap = SV_AssembleMap("forest", "large", mapStr, posStr, i);
+		randomMap = SV_AssembleMap("forest", "large", mapStr, posStr, entityString, i);
 #endif
 		CU_ASSERT(randomMap != NULL);
 		time = Sys_Milliseconds() - time;

@@ -1853,9 +1853,10 @@ static int SV_ParallelSearch (MapInfo *map)
  * @param[in] name The basename of the ump file (without extension)
  * @param[out] map The data structure to store the parsed data in
  * @param[in] inherit When @c true, this is called to inherit tile definitions
+ * @param[out] entityString An entity string that is used for all map tiles. Parsed from the ump.
  * from another ump file (no assemblies)
  */
-void SV_ParseUMP (const char *name, MapInfo *map, bool inherit)
+void SV_ParseUMP (const char *name, char *entityString, MapInfo *map, bool inherit)
 {
 	char filename[MAX_QPATH];
 	byte *buf;
@@ -1879,7 +1880,7 @@ void SV_ParseUMP (const char *name, MapInfo *map, bool inherit)
 			if (inherit || map->inheritBasePath[0] != '\0')
 				Com_Printf("SV_ParseUMP: Too many extends in %s 'extends %s' ignored\n", filename, token);
 			else
-				SV_ParseUMP(token, map, true);
+				SV_ParseUMP(token, entityString, map, true);
 		} else if (Q_streq(token, "base")) {
 			token = Com_Parse(&text);
 			if (inherit)
@@ -1899,6 +1900,17 @@ void SV_ParseUMP (const char *name, MapInfo *map, bool inherit)
 				Com_Printf("SV_ParseUMP: Too many map tileset found in (%s)\n", filename);
 			else if (SV_ParseMapTileSet(filename, &text, map, inherit))
 				map->numTileSets++;
+		} else if (Q_streq(token, "worldspawn")) {
+			const char *start = NULL;
+			const int length = Com_GetBlock(&text, &start);
+			if (length == -1) {
+				Com_Printf("SV_ParseUMP: Not a valid worldspawn block in '%s'\n", filename);
+			} else {
+				if (length >= MAX_TOKEN_CHARS)
+					Com_Printf("worldspawn is too big - only %i characters are allowed", MAX_TOKEN_CHARS);
+				else
+					Q_strncpyz(entityString, start, length);
+			}
 		} else if (Q_streq(token, "tile")) {
 			if (map->numTiles >= MAX_TILETYPES)
 				Com_Printf("SV_ParseUMP: Too many map tile types (%s)\n", filename);
@@ -2039,20 +2051,21 @@ static MapInfo* SV_DoMapAssemble (MapInfo *map, const char *assembly, char *asmM
  * @param[out] asmPos The pos string for the assembly. For each tile from the @c asmMap
  * string this string contains three coordinates for shifting the given tile names.
  * @param[in] seed random seed to use (for cunit tests). If 0, the called functions can use their own seed setting.
+ * @param[out] entityString An entity string that is used for all map tiles. Parsed from the ump.
  * @sa B_AssembleMap_f
  * @sa SV_AddTile
  * @sa SV_ParseAssembly
  * @sa SV_ParseMapTile
  * @note Make sure to free the returned pointer
  */
-MapInfo* SV_AssembleMap (const char *name, const char *assembly, char *asmMap, char *asmPos, const unsigned int seed)
+MapInfo* SV_AssembleMap (const char *name, const char *assembly, char *asmMap, char *asmPos, char *entityString, const unsigned int seed)
 {
 	MapInfo *map;
 
 	map = Mem_AllocType(MapInfo);
 	Q_strncpyz(map->name, name, sizeof(map->name));
 
-	SV_ParseUMP(name, map, false);
+	SV_ParseUMP(name, entityString, map, false);
 
 	/* check for parsed tiles and assemblies */
 	if (!map->numTiles)
