@@ -49,3 +49,4 @@ Com_TokenType_t Com_NextToken(const char **data_p);
 const char *Com_Parse(const char **data_p, char *target = 0, size_t size = 0);
 int Com_CountTokensInBuffer(const char *buffer);
 void Com_UnParseLastToken(void);
+void Com_SkipBlock(const char **text);

@@ -1224,22 +1224,6 @@ const char *FS_GetFileData (const char *files)
 	return NULL;
 }
 
-void FS_SkipBlock (const char **text)
-{
-	const char *token;
-	int depth;
-
-	depth = 1;
-
-	do {
-		token = Com_Parse(text);
-		if (*token == '{')
-			depth++;
-		else if (*token == '}')
-			depth--;
-	} while (depth && *text);
-}
-
 char *FS_NextScriptHeader (const char *files, const char **name, const char **text)
 {
 	static char lastList[MAX_QPATH];
@@ -1287,7 +1271,7 @@ char *FS_NextScriptHeader (const char *files, const char **name, const char **te
 			if (*text) {
 				token = Com_Parse(text);
 				if (*token == '{') {
-					FS_SkipBlock(text);
+					Com_SkipBlock(text);
 					continue;
 				}
 

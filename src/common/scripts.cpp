@@ -2551,7 +2551,7 @@ static void Com_ParseTeam (const char *name, const char **text)
 		}
 	} else {
 		Com_Printf("CL_ParseTeam: Team with same name found, second ignored '%s'\n", name);
-		FS_SkipBlock(text);
+		Com_SkipBlock(text);
 		return;
 	}
 
@@ -3040,7 +3040,7 @@ static void Com_ParseGameTypes (const char *name, const char **text)
 		} while (*text);
 	} else {
 		Com_Printf("Com_ParseGameTypes: gametype \"%s\" with same already exists - ignore the second one\n", name);
-		FS_SkipBlock(text);
+		Com_SkipBlock(text);
 	}
 }
 

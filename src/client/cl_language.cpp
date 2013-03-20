@@ -108,7 +108,7 @@ static void CL_ParseMessageID (const char *name, const char **text)
 		} while (*text);
 	} else {
 		Com_Printf("CL_ParseMessageID: msgid \"%s\" with same already exists - ignore the second one\n", name);
-		FS_SkipBlock(text);
+		Com_SkipBlock(text);
 	}
 }
 

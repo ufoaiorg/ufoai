@@ -138,7 +138,6 @@ int FS_GetModList(struct linkedList_t **mods);
 const char *FS_GetCwd(void);
 void FS_NormPath(char *path);
 bool FS_FileExists(const char *filename);
-void FS_SkipBlock(const char **text);
 
 void FS_GetMaps(bool reset);
 

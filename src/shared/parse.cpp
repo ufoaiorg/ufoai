@@ -239,3 +239,19 @@ skipwhite:
 	type = TT_WORD;
 	return target;
 }
+
+void Com_SkipBlock (const char **text)
+{
+	const char *token;
+	int depth;
+
+	depth = 1;
+
+	do {
+		token = Com_Parse(text);
+		if (*token == '{')
+			depth++;
+		else if (*token == '}')
+			depth--;
+	} while (depth && *text);
+}

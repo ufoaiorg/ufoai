@@ -1525,7 +1525,7 @@ void AIR_ParseAircraft (const char *name, const char **text, bool assignAircraft
 			/* write into cp_campaignPool - this data is reparsed on every new game */
 			/* blocks like param { [..] } - otherwise we would leave the loop too early */
 			if (*token == '{') {
-				FS_SkipBlock(text);
+				Com_SkipBlock(text);
 			} else if (Q_streq(token, "shield")) {
 				token = cgi->Com_EParse(text, errhead, name);
 				if (!*text)
@@ -1670,7 +1670,7 @@ void AIR_ParseAircraft (const char *name, const char **text, bool assignAircraft
 					Com_Printf("AIR_ParseAircraft: Invalid slot value for aircraft: %s\n", name);
 					return;
 				}
-				FS_SkipBlock(text);
+				Com_SkipBlock(text);
 			} else if (Q_streq(token, "param")) {
 				token = cgi->Com_EParse(text, errhead, name);
 				if (!*text || *token != '{') {

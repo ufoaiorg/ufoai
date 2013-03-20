@@ -1906,7 +1906,7 @@ void SV_ParseUMP (const char *name, MapInfo *map, bool inherit)
 				map->numTiles++;
 		} else if (Q_streq(token, "assembly")) {
 			if (inherit) {
-				FS_SkipBlock(&text);
+				Com_SkipBlock(&text);
 			} else {
 				if (map->numAssemblies >= MAX_MAPASSEMBLIES)
 					Com_Printf("SV_ParseUMP: Too many map assemblies (%s)\n", filename);
