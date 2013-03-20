@@ -253,7 +253,7 @@ item flashbang
 			delaybetweenshots		1
 			time	6
 			spldmg	"999 0"	// TODO: needed at all?
-			splrad	3
+			splrad	5
 			dmgweight "shock"
 		}
 		firedef
@@ -280,7 +280,7 @@ item flashbang
 			delaybetweenshots		1
 			time	6
 			spldmg	"999 0"	// TODO: needed at all?
-			splrad	3
+			splrad	5
 			dmgweight "shock"
 		}
 	}
