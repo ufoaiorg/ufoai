@@ -1380,6 +1380,11 @@ tech rs_weapon_grenl_plasma_ammo
 		icon	"icons/mail_tech"
 	}
 
+	require_for_production
+	{
+	    item (alienmaterials 5)
+	}
+
 	require_AND
 	{
 		tech rs_damage_plasma
