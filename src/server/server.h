@@ -225,7 +225,7 @@ int SV_AreaEdicts(const vec3_t mins, const vec3_t maxs, edict_t **list, int maxc
 /*=================================================================== */
 
 /* returns the CONTENTS_* value from the world at the given point. */
-int SV_PointContents(vec3_t p);
+int SV_PointContents(const vec3_t p);
 const char *SV_GetFootstepSound(const char *texture);
 float SV_GetBounceFraction(const char *texture);
 bool SV_LoadModelAABB(const char *model, int frame, AABB& aabb);

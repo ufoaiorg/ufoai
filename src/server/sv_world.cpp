@@ -408,7 +408,7 @@ static void SV_ClipMoveToEntities (moveclip_t *clip)
  * @sa CM_TestBoxInBrush
  * @sa CM_CompleteBoxTrace
  */
-int SV_PointContents (vec3_t p)
+int SV_PointContents (const vec3_t p)
 {
 	/* clip to all world levels */
 	trace_t trace = CM_CompleteBoxTrace(&sv->mapTiles, p, p, AABB(), TRACING_ALL_VISIBLE_LEVELS, MASK_ALL, 0);

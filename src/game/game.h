@@ -198,7 +198,7 @@ typedef struct game_import_s {
 	 */
 	trace_t (IMPORT *Trace) (const vec3_t start, const AABB &box, const vec3_t end, const edict_t *passent, int contentmask);
 
-	int (IMPORT *PointContents) (vec3_t point);
+	int (IMPORT *PointContents) (const vec3_t point);
 	const char* (IMPORT *GetFootstepSound) (const char* texture);
 	float (IMPORT *GetBounceFraction) (const char *texture);
 	bool (IMPORT *LoadModelAABB) (const char *model, int frame, AABB& aabb);
