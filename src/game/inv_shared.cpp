@@ -375,7 +375,7 @@ const fireDef_t *Item::getFiredefs () const
 	if (weapon->numWeapons > 0)
 		ammoDef = def();
 
-	if (!ammo)
+	if (!ammoDef)
 		return NULL;
 
 	for (i = 0; i < ammoDef->numWeapons; i++) {
