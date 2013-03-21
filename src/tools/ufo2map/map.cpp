@@ -1206,7 +1206,10 @@ static const char *GetUMPName (const char *mapFilename)
 	const char *mapsDir = "maps/";
 	const int lMaps = strlen(mapsDir);
 	const int l = strlen(filename);
-	Q_strncpyz(name, mapFilename + lMaps, strlen(mapFilename) - lMaps - l);
+	const int targetLength = strlen(mapFilename) - lMaps - l;
+	if (targetLength <= 0)
+		return NULL;
+	Q_strncpyz(name, mapFilename + lMaps, targetLength);
 	Com_Printf("...ump: '%s%s.ump'\n", mapsDir, name);
 	return name;
 }
