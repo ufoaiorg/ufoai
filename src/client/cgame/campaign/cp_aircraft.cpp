@@ -269,7 +269,7 @@ static void AII_CollectingAmmo (void *data, const Item *magazine)
 {
 	aircraft_t *aircraft = (aircraft_t *)data;
 	/* Let's add remaining ammo to market. */
-	eTempEq.numItemsLoose[magazine->ammo->idx] += magazine->ammoLeft;
+	eTempEq.numItemsLoose[magazine->ammo->idx] += magazine->getAmmoLeft();
 	if (eTempEq.numItemsLoose[magazine->ammo->idx] >= magazine->def()->ammo) {
 		/* There are more or equal ammo on the market than magazine needs - collect magazine. */
 		eTempEq.numItemsLoose[magazine->ammo->idx] -= magazine->def()->ammo;
@@ -336,10 +336,10 @@ static void AII_CarriedItems (const inventory_t *soldierInventory)
 			ed->numItems[itemType->idx]++;
 			RS_MarkCollected(tech);
 
-			if (!itemType->reload || item->ammoLeft == 0)
+			if (!itemType->reload || item->getAmmoLeft() == 0)
 				continue;
 
-			ed->numItemsLoose[ammo->idx] += item->ammoLeft;
+			ed->numItemsLoose[ammo->idx] += item->getAmmoLeft();
 			if (ed->numItemsLoose[ammo->idx] >= itemType->ammo) {
 				ed->numItemsLoose[ammo->idx] -= itemType->ammo;
 				ed->numItems[ammo->idx]++;
@@ -3060,9 +3060,9 @@ void AIR_MoveEmployeeInventoryIntoStorage (const aircraft_t &aircraft, equipDef_
 				invList_t *next = ic->getNext();
 
 				ed.numItems[type->idx]++;
-				if (item.ammoLeft && type->reload) {
+				if (item.getAmmoLeft() && type->reload) {
 					assert(item.ammo);
-					ed.numItemsLoose[item.ammo->idx] += item.ammoLeft;
+					ed.numItemsLoose[item.ammo->idx] += item.getAmmoLeft();
 					/* Accumulate loose ammo into clips */
 					if (ed.numItemsLoose[item.ammo->idx] >= type->ammo) {
 						ed.numItemsLoose[item.ammo->idx] -= type->ammo;

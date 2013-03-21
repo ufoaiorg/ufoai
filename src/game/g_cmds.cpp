@@ -308,11 +308,11 @@ void G_InvList_f (const Player &player)
 			while (ic) {
 				Com_Printf(".. item.def(): %i, item.ammo: %i, item.ammoLeft: %i, x: %i, y: %i\n",
 						(ic->def() ? ic->def()->idx : NONE), (ic->ammo ? ic->ammo->idx : NONE),
-						ic->ammoLeft, ic->getX(), ic->getY());
+						ic->getAmmoLeft(), ic->getX(), ic->getY());
 				if (ic->def())
 					Com_Printf(".... weapon: %s\n", ic->def()->id);
 				if (ic->ammo)
-					Com_Printf(".... ammo:   %s (%i)\n", ic->ammo->id, ic->ammoLeft);
+					Com_Printf(".... ammo:   %s (%i)\n", ic->ammo->id, ic->getAmmoLeft());
 				ic = ic->getNext();
 			}
 		}

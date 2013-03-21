@@ -720,13 +720,13 @@ static int HUD_WeaponCanBeReloaded (const le_t *le, containerIndex_t containerID
 	}
 
 	/* Weapon is fully loaded. */
-	if (invList->ammo && weapon->ammo == invList->ammoLeft) {
+	if (invList->ammo && weapon->ammo == invList->getAmmoLeft()) {
 		*reason = _("No reload possible, already fully loaded.");
 		return -1;
 	}
 
 	/* Weapon is empty or not fully loaded, find ammo of any type loadable to this weapon. */
-	if (!invList->ammo || weapon->ammo > invList->ammoLeft) {
+	if (!invList->ammo || weapon->ammo > invList->getAmmoLeft()) {
 		const int tuCosts = HUD_CalcReloadTime(le, weapon, containerID);
 		if (tuCosts >= 0) {
 			const int tu = CL_ActorUsableTUs(le);
@@ -1280,13 +1280,13 @@ static void HUD_UpdateActorCvar (const le_t *actor)
 	/* print ammo */
 	const Item *itemRight = actor->getRightHandItem();
 	if (itemRight)
-		Cvar_SetValue("mn_ammoright", itemRight->ammoLeft);
+		Cvar_SetValue("mn_ammoright", itemRight->getAmmoLeft());
 	else
 		Cvar_Set("mn_ammoright", "");
 
 	const Item *itemLeft = HUD_GetLeftHandWeapon(actor, NULL);
 	if (itemLeft)
-		Cvar_SetValue("mn_ammoleft", itemLeft->ammoLeft);
+		Cvar_SetValue("mn_ammoleft", itemLeft->getAmmoLeft());
 	else
 		Cvar_Set("mn_ammoleft", "");
 }

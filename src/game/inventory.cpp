@@ -352,7 +352,7 @@ inventory_action_t InventoryInterface::moveInInventory (inventory_t* const inv, 
 		if (ic && !to->isEquipDef() && fItem->def()->isLoadableInWeapon(ic->def())) {
 			/* A target-item was found and the dragged item (implicitly ammo)
 			 * can be loaded in it (implicitly weapon). */
-			if (ic->ammoLeft >= ic->def()->ammo && ic->ammo == fItem->def()) {
+			if (ic->getAmmoLeft() >= ic->def()->ammo && ic->ammo == fItem->def()) {
 				/* Weapon already fully loaded with the same ammunition -> abort */
 				return IA_NORELOAD;
 			}
@@ -360,7 +360,7 @@ inventory_action_t InventoryInterface::moveInInventory (inventory_t* const inv, 
 			if (!TU || *TU >= time) {
 				if (TU)
 					*TU -= time;
-				if (ic->ammoLeft >= ic->def()->ammo) {
+				if (ic->getAmmoLeft() >= ic->def()->ammo) {
 					/* exchange ammo */
 					const Item item(ic->ammo);
 					/* Put current ammo in place of the new ammo unless floor - there can be more than 1 item */

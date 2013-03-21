@@ -559,7 +559,7 @@ Item::Item (const objDef_t *itemDef, const objDef_t *_ammo, int _ammoLeft)
 float Item::getWeight () const
 {
 	float weight = def()->weight;
-	if (ammo && ammo != def() && ammoLeft > 0) {
+	if (ammo && ammo != def() && getAmmoLeft() > 0) {
 		weight += ammo->weight;
 	}
 	return weight;
@@ -578,7 +578,7 @@ bool Item::isSameAs (const Item *const other) const
 	if (this == NULL || other == NULL)
 		return false;
 
-	if (this->def() == other->def() && this->ammo == other->ammo && this->ammoLeft == other->ammoLeft)
+	if (this->def() == other->def() && this->ammo == other->ammo && this->getAmmoLeft() == other->getAmmoLeft())
 		return true;
 
 	return false;
