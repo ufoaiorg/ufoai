@@ -226,7 +226,7 @@ void G_InventoryToFloor (Edict *ent)
 	containerIndex_t container;
 
 	/* check for items that should be dropped */
-	for (container = 0; container < gi.csi->numIDs; container++) {
+	for (container = 0; container < CID_MAX; container++) {
 		/* ignore items linked from any temp container */
 		if (INVDEF(container)->temp)
 			continue;
@@ -235,7 +235,7 @@ void G_InventoryToFloor (Edict *ent)
 	}
 
 	/* edict is not carrying any items */
-	if (container >= gi.csi->numIDs)
+	if (container >= CID_MAX)
 		return;
 
 	/* find the floor */
@@ -250,7 +250,7 @@ void G_InventoryToFloor (Edict *ent)
 
 	/* drop items */
 	/* cycle through all containers */
-	for (container = 0; container < gi.csi->numIDs; container++) {
+	for (container = 0; container < CID_MAX; container++) {
 		/* skip floor - we want to drop to floor */
 		if (container == gi.csi->idFloor)
 			continue;
@@ -319,7 +319,7 @@ void G_ReadItem (Item *item, const invDef_t **container, int *x, int *y)
 		item->ammo = NULL;
 	}
 
-	if (containerID >= 0 && containerID < gi.csi->numIDs)
+	if (containerID >= 0 && containerID < CID_MAX)
 		*container = INVDEF(containerID);
 	else
 		gi.Error("container id is out of bounds: %i", containerID);
@@ -358,7 +358,7 @@ void G_SendInventory (playermask_t playerMask, const Edict *ent)
 	if (!playerMask)
 		return;
 
-	for (container = 0; container < gi.csi->numIDs; container++) {
+	for (container = 0; container < CID_MAX; container++) {
 		if (!G_IsItem(ent) && INVDEF(container)->temp)
 			continue;
 		for (ic = ent->getContainer(container); ic; ic = ic->getNext())
@@ -370,7 +370,7 @@ void G_SendInventory (playermask_t playerMask, const Edict *ent)
 		return;
 
 	G_EventInventoryAdd(ent, playerMask, nr);
-	for (container = 0; container < gi.csi->numIDs; container++) {
+	for (container = 0; container < CID_MAX; container++) {
 		if (!G_IsItem(ent) && INVDEF(container)->temp)
 			continue;
 		for (ic = ent->getContainer(container); ic; ic = ic->getNext()) {

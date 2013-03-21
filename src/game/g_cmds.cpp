@@ -302,7 +302,7 @@ void G_InvList_f (const Player &player)
 		containerIndex_t container;
 		gi.DPrintf("actor: '%s'\n", ent->chr.name);
 
-		for (container = 0; container < gi.csi->numIDs; container++) {
+		for (container = 0; container < CID_MAX; container++) {
 			const invList_t *ic = ent->getContainer(container);
 			Com_Printf("Container: %i\n", container);
 			while (ic) {

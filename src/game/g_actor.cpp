@@ -772,7 +772,7 @@ void G_ActorReload (Edict *ent, const invDef_t *invDef)
 
 	/* also try the temp containers */
 	Item *ammoItem = NULL;
-	for (containerID = 0; containerID < gi.csi->numIDs; containerID++) {
+	for (containerID = 0; containerID < CID_MAX; containerID++) {
 		if (INVDEF(containerID)->out < tu) {
 			/* Once we've found at least one clip, there's no point
 			 * searching other containers if it would take longer

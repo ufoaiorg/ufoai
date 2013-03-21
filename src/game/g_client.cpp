@@ -556,7 +556,7 @@ bool G_ClientCanReload (Edict *ent, containerIndex_t containerID)
 	assert(weapon);
 
 	/* also try the temp containers */
-	for (container = 0; container < gi.csi->numIDs; container++)
+	for (container = 0; container < CID_MAX; container++)
 		for (ic = ent->getContainer(container); ic; ic = ic->getNext())
 			if (ic->def()->isLoadableInWeapon(weapon))
 				return true;
@@ -580,7 +580,7 @@ void G_ClientGetWeaponFromInventory (Edict *ent)
 	int tu = 100;
 	const invDef_t *bestContainer = NULL;
 	invList_t *theWeapon = NULL;
-	for (container = 0; container < gi.csi->numIDs; container++) {
+	for (container = 0; container < CID_MAX; container++) {
 		if (INVDEF(container)->out < tu) {
 			/* We are looking for the *fastest* way to get a weapon,
 			 * no matter what kind of weapon it is. */
@@ -689,7 +689,7 @@ int G_ClientAction (Player &player)
 	case PA_INVMOVE:
 		gi.ReadFormat(format, &from, &fx, &fy, &to, &tx, &ty);
 
-		if (from < 0 || from >= gi.csi->numIDs || to < 0 || to >= gi.csi->numIDs) {
+		if (from < 0 || from >= CID_MAX || to < 0 || to >= CID_MAX) {
 			gi.DPrintf("G_ClientAction: PA_INVMOVE Container index out of range. (from: %i, to: %i)\n", from, to);
 		} else {
 			const invDef_t *fromPtr = INVDEF(from);

@@ -73,7 +73,7 @@ bool G_MissionTouch (Edict *self, Edict *activator)
 					/* search the item in the activator's inventory */
 					containerIndex_t container;
 
-					for (container = 0; container < gi.csi->numIDs; container++) {
+					for (container = 0; container < CID_MAX; container++) {
 						const invDef_t *invDef = INVDEF(container);
 						invList_t *ic;
 						/* ignore items linked from any temp container the actor

@@ -354,7 +354,7 @@ static void testInventoryTempContainerLinks (void)
 		/* first alien that should die and drop its inventory */
 		ent = G_EdictsGetNextLivingActorOfTeam(NULL, TEAM_ALIEN);
 		nr = 0;
-		for (container = 0; container < gi.csi->numIDs; container++) {
+		for (container = 0; container < CID_MAX; container++) {
 			if (container == CID_ARMOUR || container == gi.csi->idFloor)
 				continue;
 			for (ic = ent->getContainer(container); ic; ic = ic->getNext())
@@ -368,7 +368,7 @@ static void testInventoryTempContainerLinks (void)
 		CU_ASSERT_PTR_EQUAL(G_GetFloorItemFromPos(ent->pos)->getFloor(), ent->getFloor());
 
 		nr = 0;
-		for (container = 0; container < gi.csi->numIDs; container++) {
+		for (container = 0; container < CID_MAX; container++) {
 			if (container == CID_ARMOUR || container == gi.csi->idFloor)
 				continue;
 			for (ic = ent->getContainer(container); ic; ic = ic->getNext())
