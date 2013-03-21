@@ -678,7 +678,7 @@ int InventoryInterface::PackAmmoAndWeapon (character_t* const chr, const objDef_
 			Item mun(ammo);
 			/* ammo to backpack; belt is for knives and grenades */
 			if (weight <= maxWeight && tuNeed <= maxTU)
-					numpacked += tryAddToInventory(inv, &mun, &csi->ids[csi->idBackpack]);
+					numpacked += tryAddToInventory(inv, &mun, &csi->ids[CID_BACKPACK]);
 			/* no problem if no space left; one ammo already loaded */
 			if (numpacked > ammoMult || numpacked * weapon->ammo > 11)
 				break;
@@ -959,7 +959,7 @@ void InventoryInterface::EquipActor (character_t* const chr, const equipDef_t *e
 						else if (miscItem->extension)
 							container = this->csi->idExtension;
 						else
-							container = this->csi->idBackpack;
+							container = CID_BACKPACK;
 						if (weight > maxWeight || tuNeed > maxTU || (itemFd && itemFd->time > maxTU))
 							continue;
 						tryAddToInventory(inv, &item, &this->csi->ids[container]);
