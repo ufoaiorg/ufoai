@@ -512,9 +512,9 @@ static void GAME_SaveItem (xmlNode_t *p, const Item *item, containerIndex_t cont
 	XML_AddString(p, SAVE_INVENTORY_WEAPONID, item->def()->id);
 	/** @todo: is there any case when amount != 1 for soldier inventory item? */
 	XML_AddInt(p, SAVE_INVENTORY_AMOUNT, item->amount);
-	if (item->ammoLeft > NONE_AMMO) {
+	if (item->getAmmoLeft() > NONE_AMMO) {
 		XML_AddString(p, SAVE_INVENTORY_MUNITIONID, item->ammo->id);
-		XML_AddInt(p, SAVE_INVENTORY_AMMO, item->ammoLeft);
+		XML_AddInt(p, SAVE_INVENTORY_AMMO, item->getAmmoLeft());
 	}
 }
 
@@ -576,7 +576,7 @@ static void GAME_LoadItem (xmlNode_t *n, Item *item, containerIndex_t *container
 	item->rotated = XML_GetInt(n, SAVE_INVENTORY_ROTATED, 0);
 	item->amount = XML_GetInt(n, SAVE_INVENTORY_AMOUNT, 1);
 	item->ammoLeft = XML_GetInt(n, SAVE_INVENTORY_AMMO, NONE_AMMO);
-	if (item->ammoLeft > NONE_AMMO) {
+	if (item->getAmmoLeft() > NONE_AMMO) {
 		itemID = XML_GetString(n, SAVE_INVENTORY_MUNITIONID);
 		item->ammo = INVSH_GetItemByID(itemID);
 

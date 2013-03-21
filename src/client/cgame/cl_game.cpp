@@ -413,7 +413,7 @@ static void GAME_CollectItems (void *data, int won, void (*item)(void*, const ob
 				invList_t *i = le->getFloorContainer();
 				for ( ; i; i = i->getNext()) {
 					item(data, i->def(), 1);
-					if (i->isReloadable() && i->ammoLeft > 0)
+					if (i->isReloadable() && i->getAmmoLeft() > 0)
 						ammo(data, i);
 				}
 			}
@@ -1221,8 +1221,8 @@ static void GAME_NetSendItem (dbuffer *buf, const Item *item, containerIndex_t c
 	const eventRegister_t *eventData = CL_GetEvent(EV_INV_TRANSFER);
 	assert(item->def());
 	Com_DPrintf(DEBUG_CLIENT, "GAME_NetSendItem: Add item %s to container %i (t=%i:a=%i:m=%i) (x=%i:y=%i)\n",
-		item->def()->id, container, item->def()->idx, item->ammoLeft, ammoIdx, x, y);
-	NET_WriteFormat(buf, eventData->formatString, item->def()->idx, item->ammoLeft, ammoIdx, container, x, y, item->rotated, item->amount);
+		item->def()->id, container, item->def()->idx, item->getAmmoLeft(), ammoIdx, x, y);
+	NET_WriteFormat(buf, eventData->formatString, item->def()->idx, item->getAmmoLeft(), ammoIdx, container, x, y, item->rotated, item->amount);
 }
 
 /**

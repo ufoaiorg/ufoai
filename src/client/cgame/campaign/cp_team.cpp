@@ -61,10 +61,10 @@ void CP_AddWeaponAmmo (equipDef_t *ed, Item *item)
 		 * so fire definitions are in t (the weapon). Setting equal. */
 		item->ammo = item->def();
 		return;
-	} else if (item->ammoLeft) {
+	} else if (item->getAmmoLeft()) {
 		assert(item->ammo);
 		/* The item is a weapon and it was reloaded one time. */
-		if (item->ammoLeft == type->ammo) {
+		if (item->getAmmoLeft() == type->ammo) {
 			/* Fully loaded, no need to reload, but mark the ammo as used. */
 			if (ed->numItems[item->ammo->idx] > 0) {
 				ed->numItems[item->ammo->idx]--;
@@ -116,14 +116,14 @@ void CP_AddWeaponAmmo (equipDef_t *ed, Item *item)
 	item->ammoLeft = NONE_AMMO;
 	for (i = 0; i < cgi->csi->numODs; i++) {
 		const objDef_t *od = INVSH_GetItemByIDX(i);
-		if (od->isLoadableInWeapon(type) && ed->numItemsLoose[i] > item->ammoLeft) {
-			if (item->ammoLeft > 0) {
+		if (od->isLoadableInWeapon(type) && ed->numItemsLoose[i] > item->getAmmoLeft()) {
+			if (item->getAmmoLeft() > 0) {
 				/* We previously found some ammo, but we've now found other
 				 * loose ammo of a different (but appropriate) type with
 				 * more bullets.  Put the previously found ammo back, so
 				 * we'll take the new type. */
 				assert(item->ammo);
-				ed->numItemsLoose[item->ammo->idx] = item->ammoLeft;
+				ed->numItemsLoose[item->ammo->idx] = item->getAmmoLeft();
 				/* We don't have to accumulate loose ammo into clips
 				 * because we did it previously and we create no new ammo */
 			}

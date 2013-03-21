@@ -156,7 +156,7 @@ void UI_DrawItem (uiNode_t *node, const vec3_t org, const Item *item, int x, int
 
 	Vector4Copy(color, col);
 	/* no ammo in this weapon - highlight this item */
-	if (od->weapon && od->reload && !item->ammoLeft) {
+	if (od->weapon && od->reload && !item->getAmmoLeft()) {
 		col[1] *= 0.5;
 		col[2] *= 0.5;
 	}
@@ -258,13 +258,13 @@ void UI_GetItemTooltip (const Item &item, char *tooltipText, size_t stringMaxLen
 			/* Get info about used ammo (if there is any) */
 			if (item.def() == item.ammo) {
 				/* Item has no ammo but might have shot-count */
-				if (item.ammoLeft) {
-					Q_strcat(tooltipText, va(_("Ammo: %i\n"), item.ammoLeft), stringMaxLength);
+				if (item.getAmmoLeft()) {
+					Q_strcat(tooltipText, va(_("Ammo: %i\n"), item.getAmmoLeft()), stringMaxLength);
 				}
 			} else if (item.ammo) {
 				/* Search for used ammo and display name + ammo count */
 				Q_strcat(tooltipText, va(_("%s loaded\n"), _(item.ammo->name)), stringMaxLength);
-				Q_strcat(tooltipText, va(_("Ammo: %i\n"), item.ammoLeft), stringMaxLength);
+				Q_strcat(tooltipText, va(_("Ammo: %i\n"), item.getAmmoLeft()), stringMaxLength);
 			}
 		} else if (item.def()->numWeapons) {
 			/* Check if this is a non-weapon and non-ammo item */
@@ -701,7 +701,7 @@ void UI_ContainerNodeAutoPlaceItem (uiNode_t* node, invList_t *ic)
 
 	/* Right click: automatic item assignment/removal. */
 	if (container->id != csi.idEquip) {
-		if (ic->ammo && ic->ammo != ic->def() && ic->ammoLeft) {
+		if (ic->ammo && ic->ammo != ic->def() && ic->getAmmoLeft()) {
 			/* Remove ammo on removing weapon from a soldier */
 			target = csi.idEquip;
 			ammoChanged = INV_UnloadWeapon(ic, ui_inventory, INVDEF(target));
@@ -744,7 +744,7 @@ void UI_ContainerNodeAutoPlaceItem (uiNode_t* node, invList_t *ic)
 					target = idxArray[i];
 					packed = UI_ContainerNodeAddItem(container, ic, target, &tItem);
 					if (packed) {
-						if ((ic->isWeapon() && !ic->ammoLeft) || ic->def()->oneshot)
+						if ((ic->isWeapon() && !ic->getAmmoLeft()) || ic->def()->oneshot)
 							ammoChanged = INV_LoadWeapon(tItem, ui_inventory, container, INVDEF(target));
 						break;
 					}
@@ -999,7 +999,7 @@ bool uiContainerNode::onDndFinished (uiNode_t *source, bool isDropped)
 
 			/** @todo We must split the move in two. Here, we should not know how to add the item to the target (see dndDrop) */
 			/* Remove ammo on removing weapon from a soldier */
-			if (UI_IsScrollContainerNode(target) && fItem->ammo && fItem->ammo != fItem->def() && fItem->ammoLeft)
+			if (UI_IsScrollContainerNode(target) && fItem->ammo && fItem->ammo != fItem->def() && fItem->getAmmoLeft())
 				INV_UnloadWeapon(fItem, ui_inventory, targetContainer);
 
 			/* Save rotation: in case the move fails we don't want the item overlapping other items or
@@ -1019,7 +1019,7 @@ bool uiContainerNode::onDndFinished (uiNode_t *source, bool isDropped)
 			}
 
 			/* Add ammo on adding weapon to a soldier */
-			if (UI_IsScrollContainerNode(source) && ((fItem->isWeapon() && !fItem->ammoLeft) || fItem->def()->oneshot))
+			if (UI_IsScrollContainerNode(source) && ((fItem->isWeapon() && !fItem->getAmmoLeft()) || fItem->def()->oneshot))
 				INV_LoadWeapon(tItem, ui_inventory, sourceContainer, targetContainer);
 
 			/* Run onChange events */
