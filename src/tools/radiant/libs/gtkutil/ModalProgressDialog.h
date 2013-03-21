@@ -1,5 +1,4 @@
-#ifndef MODALINFODIALOG_H_
-#define MODALINFODIALOG_H_
+#pragma once
 
 #include <gtk/gtkwidget.h>
 #include <gtk/gtkwindow.h>
@@ -55,5 +54,3 @@ namespace gtkutil
 			void setText (const std::string& text) const;
 	};
 }
-
-#endif /*MODALINFODIALOG_H_*/

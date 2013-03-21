@@ -1,5 +1,4 @@
-#ifndef MODALINFODIALOG_H_
-#define MODALINFODIALOG_H_
+#pragma once
 
 #include <gtk/gtkwindow.h>
 #include <gtk/gtklabel.h>
@@ -75,5 +74,3 @@ namespace gtkutil
 	};
 
 }
-
-#endif /*MODALINFODIALOG_H_*/
