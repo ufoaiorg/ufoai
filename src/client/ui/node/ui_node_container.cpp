@@ -156,7 +156,7 @@ void UI_DrawItem (uiNode_t *node, const vec3_t org, const Item *item, int x, int
 
 	Vector4Copy(color, col);
 	/* no ammo in this weapon - highlight this item */
-	if (od->weapon && od->reload && !item->getAmmoLeft()) {
+	if (od->weapon && item->mustReload()) {
 		col[1] *= 0.5;
 		col[2] *= 0.5;
 	}
