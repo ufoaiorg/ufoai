@@ -386,7 +386,7 @@ inventory_action_t InventoryInterface::moveInInventory (inventory_t* const inv, 
 
 					ic->ammo = this->cacheItem.def();
 					/* loose ammo of type ic->m saved on server side */
-					ic->ammoLeft = ic->def()->ammo;
+					ic->setAmmoLeft(ic->def()->ammo);
 					if (icp)
 						*icp = ic;
 					return IA_RELOAD;
@@ -593,7 +593,7 @@ int InventoryInterface::PackAmmoAndWeapon (character_t* const chr, const objDef_
 
 	if (weapon->oneshot) {
 		/* The weapon provides its own ammo (i.e. it is charged or loaded in the base.) */
-		item.ammoLeft = weapon->ammo;
+		item.setAmmoLeft(weapon->ammo);
 		item.ammo = weapon;
 		Com_DPrintf(DEBUG_SHARED, "PackAmmoAndWeapon: oneshot weapon '%s' in equipment '%s' (%s).\n",
 				weapon->id, ed->id, invName);
@@ -630,7 +630,7 @@ int InventoryInterface::PackAmmoAndWeapon (character_t* const chr, const objDef_
 			return 0;
 		}
 		/* load ammo */
-		item.ammoLeft = weapon->ammo;
+		item.setAmmoLeft(weapon->ammo);
 		item.ammo = ammo;
 	}
 
@@ -705,7 +705,7 @@ void InventoryInterface::EquipActorMelee (inventory_t* const inv, const teamDef_
 	/* Prepare item. This kind of item has no ammo, fire definitions are in item.t. */
 	Item item(obj);
 	item.ammo = item.def();
-	item.ammoLeft = NONE_AMMO;
+	item.setAmmoLeft(NONE_AMMO);
 	/* Every melee actor weapon definition is firetwohanded, add to right hand. */
 	if (!obj->fireTwoHanded)
 		Sys_Error("INVSH_EquipActorMelee: melee weapon %s for team %s is not firetwohanded! (%s)",
@@ -724,7 +724,7 @@ void InventoryInterface::EquipActorRobot (inventory_t* const inv, const objDef_t
 
 	/* Prepare weapon in item. */
 	Item item(weapon);
-	item.ammoLeft = weapon->ammo;
+	item.setAmmoLeft(weapon->ammo);
 
 	/* Get ammo for item/weapon. */
 	assert(weapon->numAmmos > 0);	/* There _has_ to be at least one ammo-type. */

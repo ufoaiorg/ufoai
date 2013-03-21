@@ -73,7 +73,7 @@ void CL_InvReload (const eventRegister_t *self, dbuffer *msg)
 	}
 
 	/* set new ammo */
-	ic->ammoLeft = ammo;
+	ic->setAmmoLeft(ammo);
 	ic->ammo = INVSH_GetItemByIDX(type);
 
 	if (le == selActor)

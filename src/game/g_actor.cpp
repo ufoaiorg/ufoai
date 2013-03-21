@@ -670,7 +670,7 @@ bool G_ActorInvMove (Edict *ent, const invDef_t *from, invList_t *fItem, const i
 		if (ia == IA_RELOAD) {
 			return true;
 		} else { /* ia == IA_RELOAD_SWAP */
-			item.ammoLeft = NONE_AMMO;
+			item.setAmmoLeft(NONE_AMMO);
 			item.ammo = NULL;
 			item.setDef(toItemBackup.ammo);
 			item.rotated = fromItemBackup.rotated;

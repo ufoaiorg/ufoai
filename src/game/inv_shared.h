@@ -382,6 +382,10 @@ public:
 	{
 		return ammoLeft;
 	}
+	inline void setAmmoLeft (int value)
+	{
+		ammoLeft = value;
+	}
 	inline Item *getNext () const
 	{
 		return _next;

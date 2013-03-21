@@ -51,6 +51,6 @@ void CL_InvAmmo (const eventRegister_t *self, dbuffer *msg)
 		return;
 
 	/* set new ammo */
-	item->ammoLeft = ammo;
+	item->setAmmoLeft(ammo);
 	item->ammo = INVSH_GetItemByIDX(type);
 }

@@ -535,7 +535,7 @@ uint32_t objDef_t::getShapeRotated () const
 /** @brief Item constructor with all default values */
 Item::Item ()
 {
-	ammoLeft = NONE_AMMO;
+	setAmmoLeft(NONE_AMMO);
 	ammo = NULL;
 	_itemDef = NULL;
 	amount = _x = _y = rotated = 0;
@@ -543,9 +543,9 @@ Item::Item ()
 }
 
 /** @brief Item constructor with the 3 most often changed attributes */
-Item::Item (const objDef_t *itemDef, const objDef_t *_ammo, int _ammoLeft)
+Item::Item (const objDef_t *itemDef, const objDef_t *_ammo, int ammoLeft)
 {
-	ammoLeft = _ammoLeft;
+	setAmmoLeft(ammoLeft);
 	ammo = _ammo;
 	_itemDef = itemDef;
 	amount = _x = _y = rotated = 0;

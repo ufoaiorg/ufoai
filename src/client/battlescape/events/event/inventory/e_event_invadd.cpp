@@ -40,7 +40,7 @@ static void CL_NetReceiveItem (dbuffer *buf, Item *item, containerIndex_t *conta
 	int t, m;
 	item->setDef(NULL);
 	item->ammo = NULL;
-	item->ammoLeft = NONE_AMMO;
+	item->setAmmoLeft(NONE_AMMO);
 	NET_ReadFormat(buf, eventData->formatString, &t, &item->ammoLeft, &m, container, x, y, &item->rotated, &item->amount);
 
 	item->setDef(INVSH_GetItemByIDX(t));
