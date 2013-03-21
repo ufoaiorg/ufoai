@@ -394,7 +394,6 @@ public:
 	{
 		_next = nx;
 	}
-#define DUMMY3 ((objDef_t *)9)
 	Item ();
 	Item (const objDef_t *_itemDef, const objDef_t *ammo=NULL, int ammoLeft=0);
 
