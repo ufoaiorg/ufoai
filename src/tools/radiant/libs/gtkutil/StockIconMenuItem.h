@@ -1,5 +1,4 @@
-#ifndef STOCKICONMENUITEM_H_
-#define STOCKICONMENUITEM_H_
+#pragma once
 
 #include <gtk/gtklabel.h>
 #include <gtk/gtkmenuitem.h>
@@ -45,5 +44,3 @@ namespace gtkutil
 	};
 
 } // namespace gtkutil
-
-#endif /*STOCKICONMENUITEM_H_*/

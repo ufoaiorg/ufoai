@@ -1,5 +1,4 @@
-#ifndef TEXTCOLUMN_H_
-#define TEXTCOLUMN_H_
+#pragma once
 
 #include <gtk/gtktreeviewcolumn.h>
 #include <gtk/gtkcellrenderertext.h>
@@ -53,5 +52,3 @@ namespace gtkutil
 			}
 	};
 }
-
-#endif /*TEXTCOLUMN_H_*/

@@ -1,5 +1,4 @@
-#ifndef SCROLLEDFRAME_H_
-#define SCROLLEDFRAME_H_
+#pragma once
 
 #include <gtk/gtkscrolledwindow.h>
 #include <gtk/gtkframe.h>
@@ -38,5 +37,3 @@ namespace gtkutil
 	};
 
 }
-
-#endif /*SCROLLEDFRAME_H_*/

@@ -1,5 +1,4 @@
-#ifndef ICONTEXTBUTTON_H_
-#define ICONTEXTBUTTON_H_
+#pragma once
 
 #include <gtk/gtkbutton.h>
 
@@ -40,5 +39,3 @@ class TextButton
 };
 
 }
-
-#endif /*ICONTEXTBUTTON_H_*/

@@ -1,5 +1,4 @@
-#ifndef SEPARATORMENUITEM_H_
-#define SEPARATORMENUITEM_H_
+#pragma once
 
 #include <gtk/gtkseparatormenuitem.h>
 #include <string>
@@ -26,5 +25,3 @@ public:
 };
 
 }
-
-#endif /*SEPARATORMENUITEM_H_*/

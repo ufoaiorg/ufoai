@@ -1,5 +1,4 @@
-#ifndef GTKUTIL_SOURCEVIEW_H_
-#define GTKUTIL_SOURCEVIEW_H_
+#pragma once
 
 #include <string>
 #include "gtkutil/ifc/Widget.h"
@@ -57,5 +56,3 @@ namespace gtkutil
 	};
 
 } // namespace gtkutil
-
-#endif /* GTKUTIL_SOURCEVIEW_H_ */

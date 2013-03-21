@@ -1,5 +1,4 @@
-#ifndef RIGHTALIGNMENT_H_
-#define RIGHTALIGNMENT_H_
+#pragma once
 
 #include <gtk/gtkalignment.h>
 
@@ -33,5 +32,3 @@ namespace gtkutil
 	};
 
 }
-
-#endif /*RIGHTALIGNMENT_H_*/
