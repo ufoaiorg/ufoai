@@ -806,7 +806,7 @@ static int HUD_ReactionFireGetTUs (const le_t *actor)
 		return -1;
 
 	const FiremodeSettings &fmSetting = CL_ActorGetChr(actor)->RFmode;
-	const Item *weapon = actor->getHand(fmSetting.getHand());
+	const Item *weapon = actor->getHandItem(fmSetting.getHand());
 
 	if (!weapon)
 		weapon = actor->getRightHandItem();

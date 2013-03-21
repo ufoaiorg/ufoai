@@ -59,7 +59,7 @@ const fireDef_t *HUD_GetFireDefinitionForHand (const le_t *actor, const actorHan
 	if (!actor)
 		return NULL;
 
-	const Item *weapon = actor->getHand(hand);
+	const Item *weapon = actor->getHandItem(hand);
 	if (!weapon || !weapon->def())
 		return NULL;
 
@@ -127,7 +127,7 @@ static void HUD_FireWeapon_f (void)
 	const objDef_t *ammo = fd->obj;
 
 	/* Let's check if shooting is possible. */
-	if (!HUD_CheckShooting(actor, actor->getHand(hand)))
+	if (!HUD_CheckShooting(actor, actor->getHandItem(hand)))
 		return;
 
 	if (CL_ActorTimeForFireDef(actor, &ammo->fd[fd->weapFdsIdx][firemode]) <= CL_ActorUsableTUs(actor)) {
