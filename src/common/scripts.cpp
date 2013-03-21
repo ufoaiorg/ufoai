@@ -1891,62 +1891,59 @@ static const value_t idps[] = {
 
 static void Com_ParseInventory (const char *name, const char **text)
 {
-	invDef_t *id;
-	int i;
+	containerIndex_t cid;
+
+	/* Special IDs for container. These are also used elsewhere, so be careful. */
+	if (Q_streq(name, "right")) {
+		csi.idRight = CID_RIGHT;
+		cid = CID_RIGHT;
+	} else if (Q_streq(name, "left")) {
+		csi.idLeft = CID_LEFT;
+		cid = CID_LEFT;
+	} else if (Q_streq(name, "extension")) {
+		csi.idExtension = CID_EXTENSION;
+		cid = CID_EXTENSION;
+	} else if (Q_streq(name, "belt")) {
+		csi.idBelt = CID_BELT;
+		cid = CID_BELT;
+	} else if (Q_streq(name, "holster")) {
+		csi.idHolster = CID_HOLSTER;
+		cid = CID_HOLSTER;
+	} else if (Q_streq(name, "backpack")) {
+		csi.idBackpack = CID_BACKPACK;
+		cid = CID_BACKPACK;
+	} else if (Q_streq(name, "armour")) {
+		csi.idArmour = CID_ARMOUR;
+		cid = CID_ARMOUR;
+	} else if (Q_streq(name, "floor")) {
+		csi.idFloor = CID_FLOOR;
+		cid = CID_FLOOR;
+	} else if (Q_streq(name, "equip")) {
+		csi.idEquip = CID_EQUIP;
+		cid = CID_EQUIP;
+	} else if (Q_streq(name, "headgear")) {
+		csi.idHeadgear = CID_HEADGEAR;
+		cid = CID_HEADGEAR;
+	} else {
+		Sys_Error("Unknown inventory definition \"%s\". Aborting.\n", name);
+		return; /* never reached */
+	}
 
 	/* search for containers with same name */
-	for (i = 0; i < csi.numIDs; i++)
-		if (!strncmp(name, csi.ids[i].name, sizeof(csi.ids[i].name)))
-			break;
-
-	if (i < csi.numIDs) {
+	if (!strncmp(name, csi.ids[cid].name, sizeof(csi.ids[cid].name))) {
 		Com_Printf("Com_ParseInventory: inventory def \"%s\" with same name found, second ignored\n", name);
 		return;
 	}
 
-	if (i >= MAX_INVDEFS) {
-		Sys_Error("Too many inventory definitions - max allowed: %i\n", MAX_INVDEFS);
-		return; /* never reached */
-	}
-
 	/* initialize the inventory definition */
-	id = &csi.ids[csi.numIDs];
+	invDef_t *id = &csi.ids[cid];
 	OBJZERO(*id);
 
 	if (!Com_ParseBlock(name, text, id, idps, NULL))
 		return;
 
 	Q_strncpyz(id->name, name, sizeof(id->name));
-	id->id = csi.numIDs;
-
-	/* Special IDs for container. These are also used elsewhere, so be careful. */
-	if (Q_streq(name, "right")) {
-		csi.idRight = csi.numIDs;
-	} else if (Q_streq(name, "left")) {
-		csi.idLeft = csi.numIDs;
-	} else if (Q_streq(name, "extension")) {
-		csi.idExtension = csi.numIDs;
-	} else if (Q_streq(name, "belt")) {
-		csi.idBelt = csi.numIDs;
-	} else if (Q_streq(name, "holster")) {
-		csi.idHolster = csi.numIDs;
-	} else if (Q_streq(name, "backpack")) {
-		csi.idBackpack = csi.numIDs;
-	} else if (Q_streq(name, "armour")) {
-		csi.idArmour = csi.numIDs;
-	} else if (Q_streq(name, "floor")) {
-		csi.idFloor = csi.numIDs;
-	} else if (Q_streq(name, "equip")) {
-		csi.idEquip = csi.numIDs;;
-	} else if (Q_streq(name, "headgear")) {
-		csi.idHeadgear = csi.numIDs;;
-	} else {
-		id->id = -1;
-	}
-
-	if (id->id != -1) {
-		Com_Printf("...%3i: %s\n", id->id, name);
-	}
+	id->id = cid;
 
 	csi.numIDs++;
 }
