@@ -1234,7 +1234,7 @@ static void GAME_NetSendInventory (dbuffer *buf, const inventory_t *inv)
 	int nr = 0;
 	const invList_t *ic;
 
-	for (container = 0; container < csi.numIDs; container++) {
+	for (container = 0; container < CID_MAX; container++) {
 		if (INVDEF(container)->temp)
 			continue;
 		for (ic = inv->getContainer(container); ic; ic = ic->getNext()) {
@@ -1243,7 +1243,7 @@ static void GAME_NetSendInventory (dbuffer *buf, const inventory_t *inv)
 	}
 
 	NET_WriteShort(buf, nr);
-	for (container = 0; container < csi.numIDs; container++) {
+	for (container = 0; container < CID_MAX; container++) {
 		if (INVDEF(container)->temp)
 			continue;
 		for (ic = inv->getContainer(container); ic; ic = ic->getNext()) {
@@ -1320,7 +1320,7 @@ static void GAME_SendCurrentTeamSpawningInfo (dbuffer *buf, linkedList_t *team)
 		containerIndex_t container;
 
 		/* unlink all temp containers */
-		for (container = 0; container < csi.numIDs; container++) {
+		for (container = 0; container < CID_MAX; container++) {
 			if (!INVDEF(container)->temp)
 				continue;
 			inv->resetContainer(container);

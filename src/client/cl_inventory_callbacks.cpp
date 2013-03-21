@@ -359,7 +359,7 @@ static void INV_UpdateActorLoad_f (void)
 		const int tuPenalty = tus - normalTU;
 		int count = 0;
 
-		for (containerIndex_t containerID = 0; containerID < csi.numIDs; containerID++) {
+		for (containerIndex_t containerID = 0; containerID < CID_MAX; containerID++) {
 			if (csi.ids[containerID].temp)
 				continue;
 			for (invList_t *invList = chr->inv.getContainer(containerID), *next; invList; invList = next) {

@@ -944,7 +944,7 @@ int CL_ActorGetContainerForReload (invList_t **invList, const inventory_t *inv, 
 	containerIndex_t bestContainer = NONE;
 
 	/* also search the linked ground floor tile (temp container) */
-	for (container = 0; container < csi.numIDs; container++) {
+	for (container = 0; container < CID_MAX; container++) {
 		if (INVDEF(container)->out < tu) {
 			invList_t *ic;
 			/* Once we've found at least one clip, there's no point

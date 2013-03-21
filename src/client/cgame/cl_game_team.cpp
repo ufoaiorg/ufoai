@@ -529,7 +529,7 @@ static void GAME_SaveInventory (xmlNode_t *p, const inventory_t *inv)
 {
 	containerIndex_t container;
 
-	for (container = 0; container < csi.numIDs; container++) {
+	for (container = 0; container < CID_MAX; container++) {
 		invList_t *ic = inv->getContainer(container);
 
 		/* ignore items linked from any temp container */
@@ -561,11 +561,11 @@ static void GAME_LoadItem (xmlNode_t *n, Item *item, containerIndex_t *container
 	/* reset */
 	OBJZERO(*item);
 
-	for (i = 0; i < csi.numIDs; i++) {
+	for (i = 0; i < CID_MAX; i++) {
 		if (Q_streq(csi.ids[i].name, contID))
 			break;
 	}
-	if (i >= csi.numIDs) {
+	if (i >= CID_MAX) {
 		Com_Printf("Invalid container id '%s'\n", contID);
 	}
 	*container = i;

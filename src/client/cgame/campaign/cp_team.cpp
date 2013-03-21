@@ -173,7 +173,7 @@ void CP_CleanupTeam (base_t *base, equipDef_t *ed)
 		}
 	}
 
-	for (container = 0; container < cgi->csi->numIDs; container++) {
+	for (container = 0; container < CID_MAX; container++) {
 		E_Foreach(EMPL_SOLDIER, employee) {
 			if (!E_IsInBase(employee, base))
 				continue;
@@ -221,7 +221,7 @@ void CP_CleanupAircraftTeam (aircraft_t *aircraft, equipDef_t *ed)
 
 	assert(aircraft);
 
-	for (container = 0; container < cgi->csi->numIDs; container++) {
+	for (container = 0; container < CID_MAX; container++) {
 		LIST_Foreach(aircraft->acTeam, employee_t, employee) {
 			invList_t *ic, *next;
 			character_t *chr = &employee->chr;
@@ -263,7 +263,7 @@ void CP_CleanTempInventory (base_t* base)
 {
 	E_Foreach(EMPL_SOLDIER, employee) {
 		int k;
-		for (k = 0; k < cgi->csi->numIDs; k++) {
+		for (k = 0; k < CID_MAX; k++) {
 			/* idFloor and idEquip are temp */
 			if (INVDEF(k)->temp)
 				employee->chr.inv.resetContainer(k);
@@ -272,7 +272,7 @@ void CP_CleanTempInventory (base_t* base)
 
 	E_Foreach(EMPL_ROBOT, employee) {
 		int k;
-		for (k = 0; k < cgi->csi->numIDs; k++) {
+		for (k = 0; k < CID_MAX; k++) {
 			/* idFloor and idEquip are temp */
 			if (INVDEF(k)->temp)
 				employee->chr.inv.resetContainer(k);

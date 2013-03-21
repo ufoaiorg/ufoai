@@ -305,7 +305,7 @@ const invDef_t *INVSH_GetInventoryDefinitionByID (const char *id)
 	containerIndex_t i;
 	const invDef_t *container;
 
-	for (i = 0, container = CSI->ids; i < CSI->numIDs; container++, i++)
+	for (i = 0, container = CSI->ids; i < CID_MAX; container++, i++)
 		if (Q_streq(id, container->name))
 			return container;
 
@@ -800,7 +800,7 @@ float inventory_t::getWeight () const
 {
 	float weight = 0;
 
-	for (int containerID = 0; containerID < CSI->numIDs; containerID++) {
+	for (int containerID = 0; containerID < CID_MAX; containerID++) {
 		if (CSI->ids[containerID].temp)
 			continue;
 		for (invList_t *ic = getContainer(containerID); ic; ic = ic->getNext()) {

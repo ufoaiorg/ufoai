@@ -528,7 +528,7 @@ void InventoryInterface::destroyInventory (inventory_t* const inv)
 	if (!inv)
 		return;
 
-	for (container = 0; container < this->csi->numIDs; container++) {
+	for (container = 0; container < CID_MAX; container++) {
 		const invDef_t *invDef = &this->csi->ids[container];
 		if (!invDef->temp)
 			emptyContainer(inv, invDef);
@@ -548,7 +548,7 @@ float InventoryInterface::GetInventoryState (const inventory_t *inventory, int &
 	float weight = 0;
 
 	slowestFd = 0;
-	for (int containerID = 0; containerID < this->csi->numIDs; containerID++) {
+	for (int containerID = 0; containerID < CID_MAX; containerID++) {
 		if (this->csi->ids[containerID].temp)
 			continue;
 		for (invList_t *ic = inventory->getContainer(containerID), *next; ic; ic = next) {
