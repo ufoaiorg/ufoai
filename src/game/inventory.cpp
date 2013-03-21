@@ -925,7 +925,7 @@ void InventoryInterface::EquipActor (character_t* const chr, const equipDef_t *e
 						const int maxTU = GET_TU(speed, GET_ENCUMBRANCE_PENALTY(weight, chr->score.skills[ABILITY_POWER]));
 						if (weight > maxWeight || tuNeed > maxTU)
 							continue;
-						if (tryAddToInventory(inv, &item, &this->csi->ids[this->csi->idArmour])) {
+						if (tryAddToInventory(inv, &item, &this->csi->ids[CID_ARMOUR])) {
 							repeat = 0;
 							break;
 						}

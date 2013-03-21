@@ -109,7 +109,7 @@ static bool G_InventoryDropToFloorCheck (Edict *ent, containerIndex_t container)
 {
 	invList_t *ic = ent->getContainer(container);
 
-	if (container == gi.csi->idArmour)
+	if (container == CID_ARMOUR)
 		return false;
 
 	if (ic) {
@@ -255,9 +255,9 @@ void G_InventoryToFloor (Edict *ent)
 		if (container == gi.csi->idFloor)
 			continue;
 
-		/* skip csi->idArmour, we will collect armours using idArmour container,
+		/* skip CID_ARMOUR, we will collect armours using armour container,
 		 * not idFloor */
-		if (container == gi.csi->idArmour)
+		if (container == CID_ARMOUR)
 			continue;
 
 		/* now cycle through all items for the container of the character (or the entity) */

@@ -715,7 +715,7 @@ void UI_ContainerNodeAutoPlaceItem (uiNode_t* node, invList_t *ic)
 		assert(ic->def());
 		/* armour can only have one target */
 		if (ic->isArmour()) {
-			target = csi.idArmour;
+			target = CID_ARMOUR;
 			packed = INV_MoveItem(ui_inventory, INVDEF(target), 0, 0, container, ic, NULL);
 		/* ammo or item */
 		} else if (ic->def()->isAmmo()) {

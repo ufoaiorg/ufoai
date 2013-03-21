@@ -83,7 +83,7 @@ bool invDef_t::isEquipDef () const
  */
 bool invDef_t::isArmourDef () const
 {
-	return id == CSI->idArmour;
+	return id == CID_ARMOUR;
 }
 
 static int cacheCheckToInventory = INV_DOES_NOT_FIT;
@@ -847,7 +847,7 @@ invList_t *inventory_t::getEquipContainer () const
 
 invList_t *inventory_t::getArmourContainer (void) const
 {
-	return getContainer(CSI->idArmour);
+	return getContainer(CID_ARMOUR);
 }
 
 /**
