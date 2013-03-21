@@ -54,6 +54,17 @@ typedef enum {
 #define INJURY_THRESHOLD 0.5f /* HP / maxHP > INJURY_THRESHOLD no penalty is incurred */
 
 typedef int32_t containerIndex_t;
+#define CID_RIGHT		0
+#define CID_LEFT		1
+#define CID_EXTENSION	2
+#define CID_HEADGEAR	3
+#define CID_BACKPACK	4
+#define CID_BELT		5
+#define CID_HOLSTER		6
+#define CID_ARMOUR		7
+#define CID_FLOOR		8
+#define CID_EQUIP		9
+#define CID_MAX			10
 
 /** @brief Possible inventory actions for moving items between containers */
 typedef enum {
