@@ -26,7 +26,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define HTTP_H
 
 #include "common.h"
+#ifndef CURL_STATICLIB
 #define CURL_STATICLIB
+#endif
 #include <curl/curl.h>
 
 typedef enum {
