@@ -32,9 +32,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 uiGlobal_t ui_global;
 
-memPool_t* ui_dynStringPool;
-memPool_t* ui_dynPool;
-memPool_t* ui_sysPool;
+memPool_t *ui_dynStringPool;
+memPool_t *ui_dynPool;
+memPool_t *ui_sysPool;
 
 #ifdef DEBUG
 static cvar_t *ui_debug;

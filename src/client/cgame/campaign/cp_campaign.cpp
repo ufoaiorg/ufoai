@@ -55,7 +55,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "save/save_campaign.h"
 #include "cp_auto_mission.h"
 
-memPool_t* cp_campaignPool;		/**< reset on every game restart */
+memPool_t *cp_campaignPool;		/**< reset on every game restart */
 ccs_t ccs;
 cvar_t *cp_campaign;
 cvar_t *cp_start_employees;

@@ -62,13 +62,13 @@ cvar_t *sys_os;
 static qFILE logfile;
 static qFILE pipefile;
 
-memPool_t* com_aliasSysPool;
-memPool_t* com_cmdSysPool;
-memPool_t* com_cmodelSysPool;
-memPool_t* com_cvarSysPool;
-memPool_t* com_fileSysPool;
-memPool_t* com_genericPool;
-memPool_t* com_networkPool;
+memPool_t *com_aliasSysPool;
+memPool_t *com_cmdSysPool;
+memPool_t *com_cmodelSysPool;
+memPool_t *com_cvarSysPool;
+memPool_t *com_fileSysPool;
+memPool_t *com_genericPool;
+memPool_t *com_networkPool;
 
 #define TIMER_CHECK_INTERVAL 100
 #define TIMER_CHECK_LAG 3

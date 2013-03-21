@@ -82,11 +82,11 @@ cvar_t *cl_teamnum;
 client_static_t cls;
 static bool isdown;
 
-memPool_t* cl_genericPool;	/**< permanent client data - menu, fonts */
-memPool_t* vid_genericPool;	/**< also holds all the static models */
-memPool_t* vid_imagePool;
-memPool_t* vid_lightPool;	/**< lightmap - wiped with every new map */
-memPool_t* vid_modelPool;	/**< modeldata - wiped with every new map */
+memPool_t *cl_genericPool;	/**< permanent client data - menu, fonts */
+memPool_t *vid_genericPool;	/**< also holds all the static models */
+memPool_t *vid_imagePool;
+memPool_t *vid_lightPool;	/**< lightmap - wiped with every new map */
+memPool_t *vid_modelPool;	/**< modeldata - wiped with every new map */
 /*====================================================================== */
 
 /**

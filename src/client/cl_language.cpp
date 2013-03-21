@@ -33,7 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui/node/ui_node_abstractoption.h"
 
 static cvar_t *fs_i18ndir;
-static memPool_t* cl_msgidPool;
+static memPool_t *cl_msgidPool;
 
 #define MAX_MSGIDS 512
 /**
