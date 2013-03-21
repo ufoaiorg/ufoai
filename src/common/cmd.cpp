@@ -782,7 +782,7 @@ void Cmd_AddCommand (const char *cmd_name, xcommand_t function, const char *desc
 
 	/* fail if the command already exists */
 	hash = Com_HashKey(cmd_name, CMD_HASH_SIZE);
-	for (cmd_function_t* cmd = cmd_functions_hash[hash]; cmd; cmd = cmd->hash_next) {
+	for (cmd_function_t *cmd = cmd_functions_hash[hash]; cmd; cmd = cmd->hash_next) {
 		if (Q_streq(cmd_name, cmd->name)) {
 			Com_DPrintf(DEBUG_COMMANDS, "Cmd_AddCommand: %s already defined\n", cmd_name);
 			return;

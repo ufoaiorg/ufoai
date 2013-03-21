@@ -355,7 +355,7 @@ void R_DrawOpaqueMeshEntities (entity_t *ents)
 /**
  * Merge sort merge helper function.
  */
-static entity_t* R_MergeSortMerge (entity_t *a, entity_t *b)
+static entity_t *R_MergeSortMerge (entity_t *a, entity_t *b)
 {
 	entity_t *c;
 
@@ -384,7 +384,7 @@ static entity_t* R_MergeSortMerge (entity_t *a, entity_t *b)
  *
  * @return the first entity to render
  */
-static entity_t* R_MergeSortEntList (entity_t *c)
+static entity_t *R_MergeSortEntList (entity_t *c)
 {
 	entity_t *a, *b;
 

@@ -67,7 +67,7 @@ static void CMod_LoadSubmodels (MapTile &tile, const byte *base, const lump_t *l
 	if (count > MAX_MAP_MODELS)
 		Com_Error(ERR_DROP, "Map has too many models: %i", count);
 
-	cBspModel_t* out = Mem_PoolAllocTypeN(cBspModel_t, count + 6, com_cmodelSysPool);
+	cBspModel_t *out = Mem_PoolAllocTypeN(cBspModel_t, count + 6, com_cmodelSysPool);
 	tile.models = out;
 	tile.nummodels = count;
 
@@ -110,7 +110,7 @@ static void CMod_LoadSurfaces (MapTile &tile, const byte *base, const lump_t *l)
 	if (count > MAX_MAP_TEXINFO)
 		Com_Error(ERR_DROP, "Map has too many surfaces");
 
-	cBspSurface_t* out = Mem_PoolAllocTypeN(cBspSurface_t, count, com_cmodelSysPool);
+	cBspSurface_t *out = Mem_PoolAllocTypeN(cBspSurface_t, count, com_cmodelSysPool);
 
 	tile.surfaces = out;
 	tile.numtexinfo = count;
@@ -152,7 +152,7 @@ static void CMod_LoadNodes (MapTile &tile, const byte *base, const lump_t *l, co
 		Com_Error(ERR_DROP, "Map has too many nodes");
 
 	/* add some for the box */
-	cBspNode_t* out = Mem_PoolAllocTypeN(cBspNode_t, count + 6, com_cmodelSysPool);
+	cBspNode_t *out = Mem_PoolAllocTypeN(cBspNode_t, count + 6, com_cmodelSysPool);
 
 	tile.numnodes = count;
 	tile.nodes = out;
@@ -200,7 +200,7 @@ static void CMod_LoadBrushes (MapTile &tile, const byte *base, const lump_t *l)
 		Com_Error(ERR_DROP, "Map has too many brushes");
 
 	/* add some for the box */
-	cBspBrush_t* out = Mem_PoolAllocTypeN(cBspBrush_t, count + 1, com_cmodelSysPool);
+	cBspBrush_t *out = Mem_PoolAllocTypeN(cBspBrush_t, count + 1, com_cmodelSysPool);
 
 	tile.numbrushes = count;
 	tile.brushes = out;
@@ -240,7 +240,7 @@ static void CMod_LoadLeafs (MapTile &tile, const byte *base, const lump_t *l)
 		Com_Error(ERR_DROP, "Map has too many leafs");
 
 	/* add some for the box */
-	cBspLeaf_t* out = Mem_PoolAllocTypeN(cBspLeaf_t, count + 1, com_cmodelSysPool);
+	cBspLeaf_t *out = Mem_PoolAllocTypeN(cBspLeaf_t, count + 1, com_cmodelSysPool);
 
 	tile.numleafs = count;
 	tile.leafs = out;
@@ -294,7 +294,7 @@ static void CMod_LoadPlanes (MapTile &tile, const byte *base, const lump_t *l, c
 		Com_Error(ERR_DROP, "Map has too many planes");
 
 	/* add some for the box */
-	cBspPlane_t* out = Mem_PoolAllocTypeN(cBspPlane_t, count + 12, com_cmodelSysPool);
+	cBspPlane_t *out = Mem_PoolAllocTypeN(cBspPlane_t, count + 12, com_cmodelSysPool);
 
 	tile.numplanes = count;
 	tile.planes = out;
@@ -374,7 +374,7 @@ static void CMod_LoadBrushSides (MapTile &tile, const byte *base, const lump_t *
 		Com_Error(ERR_DROP, "Map has too many brushsides");
 
 	/* add some for the box */
-	cBspBrushSide_t* out = Mem_PoolAllocTypeN(cBspBrushSide_t, count + 6, com_cmodelSysPool);
+	cBspBrushSide_t *out = Mem_PoolAllocTypeN(cBspBrushSide_t, count + 6, com_cmodelSysPool);
 
 	tile.numbrushsides = count;
 	tile.brushsides = out;
@@ -442,7 +442,7 @@ static void CM_MakeTracingNodes (MapTile &tile)
 {
 	int i;
 
-	tnode_t* tnode = tile.tnodes = Mem_PoolAllocTypeN(tnode_t, tile.numnodes + 6, com_cmodelSysPool);
+	tnode_t *tnode = tile.tnodes = Mem_PoolAllocTypeN(tnode_t, tile.numnodes + 6, com_cmodelSysPool);
 
 	tile.numtheads = 0;
 	tile.numcheads = 0;

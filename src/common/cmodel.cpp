@@ -39,7 +39,7 @@ GAME RELATED TRACING USING ENTITIES
  * @param[out] mins The maxs of the bbox
  * @param[out] maxs The mins of the bbox
  */
-static void CM_CalculateBoundingBox (const cBspModel_t* model, vec3_t mins, vec3_t maxs)
+static void CM_CalculateBoundingBox (const cBspModel_t *model, vec3_t mins, vec3_t maxs)
 {
 	/* Quickly calculate the bounds of this model to see if they can overlap. */
 	VectorAdd(model->origin, model->mins, mins);

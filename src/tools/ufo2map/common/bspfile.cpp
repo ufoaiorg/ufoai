@@ -447,7 +447,7 @@ epair_t *ParseEpair (void)
 /**
  * @sa ParseEntities
  */
-static entity_t* ParseEntity (void)
+static entity_t *ParseEntity (void)
 {
 	entity_t *mapent;
 
