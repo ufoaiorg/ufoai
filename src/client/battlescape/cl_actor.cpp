@@ -347,6 +347,7 @@ float CL_ActorInjuryModifier (const le_t *le, const modifier_types_t type)
  * @brief Find the TUs needed for the given fireDef taking into account the actor wound penalties.
  * @param[in] le The actor.
  * @param[in] fd The fire definition.
+ * @param[in] reaction Whether this is a normal or reaction fire shot.
  * @return The TUs needed for the fireDef for this actor.
  */
 int CL_ActorTimeForFireDef (const le_t *le, const fireDef_t *fd, bool reaction)
