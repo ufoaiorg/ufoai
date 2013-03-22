@@ -37,22 +37,22 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 class KeyValuePair {
 private:
-	const char* _keyStr;
-	const char* _valStr;
+	const char *_keyStr;
+	const char *_valStr;
 public:
-	KeyValuePair (const char* keyStr, const char* valStr)
+	KeyValuePair (const char *keyStr, const char *valStr)
 	{
 		_keyStr = keyStr;
 		_valStr = valStr;
 	}
 
-	inline void set (const char* keyStr, const char* valStr)
+	inline void set (const char *keyStr, const char *valStr)
 	{
 		_keyStr = keyStr;
 		_valStr = valStr;
 	}
 
-	inline bool isKey(const char* name) const
+	inline bool isKey(const char *name) const
 	{
 		return !strcmp(_keyStr, name);
 	}
@@ -72,7 +72,7 @@ public:
 		return asInt() != 0 ? true : false;
 	}
 
-	inline const char* asString () const
+	inline const char *asString () const
 	{
 		return _valStr;
 	}

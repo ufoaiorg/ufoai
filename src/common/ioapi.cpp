@@ -30,10 +30,10 @@
 #endif
 
 
-static voidpf ZCALLBACK fopen_file_func (voidpf opaque, const char* filename, int mode)
+static voidpf ZCALLBACK fopen_file_func (voidpf opaque, const char *filename, int mode)
 {
     FILE* file = NULL;
-    const char* mode_fopen = NULL;
+    const char *mode_fopen = NULL;
     if ((mode & ZLIB_FILEFUNC_MODE_READWRITEFILTER)==ZLIB_FILEFUNC_MODE_READ)
         mode_fopen = "rb";
     else

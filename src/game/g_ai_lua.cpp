@@ -720,7 +720,7 @@ static int AIL_reactionfire (lua_State *L)
 
 		if (lua_isstring(L, 1)) {
 			/* get reaction fire mode */
-			const char* cmd = lua_tostring(L, 1);
+			const char *cmd = lua_tostring(L, 1);
 			reactionState = Q_streq(cmd, "disable") ? ~STATE_REACTION : STATE_REACTION;
 		}
 
@@ -884,7 +884,7 @@ static int AIL_positionhide (lua_State *L)
 	/* parse parameter */
 	if (lua_gettop(L)) {
 		if (lua_isstring(L, 1)) {
-			const char* s = lua_tostring(L, 1);
+			const char *s = lua_tostring(L, 1);
 			hidingTeam = AIL_toTeamInt(s);
 			if (hidingTeam == TEAM_ALL)
 				AIL_invalidparameter(1);

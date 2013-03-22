@@ -199,7 +199,7 @@ typedef struct game_import_s {
 	trace_t (IMPORT *Trace) (const vec3_t start, const AABB &box, const vec3_t end, const edict_t *passent, int contentmask);
 
 	int (IMPORT *PointContents) (const vec3_t point);
-	const char* (IMPORT *GetFootstepSound) (const char* texture);
+	const char *(IMPORT *GetFootstepSound) (const char *texture);
 	float (IMPORT *GetBounceFraction) (const char *texture);
 	bool (IMPORT *LoadModelAABB) (const char *model, int frame, AABB& aabb);
 
@@ -268,7 +268,7 @@ typedef struct game_import_s {
 
 	bool (IMPORT *GetConstInt) (const char *name, int *value);
 	bool (IMPORT *GetConstIntFromNamespace) (const char *space, const char *name, int *value);
-	const char* (IMPORT *GetConstVariable) (const char *space, int value);
+	const char *(IMPORT *GetConstVariable) (const char *space, int value);
 	void (IMPORT *RegisterConstInt) (const char *name, int value);
 	bool (IMPORT *UnregisterConstVariable) (const char *name);
 
@@ -281,7 +281,7 @@ typedef struct game_import_s {
 	void (IMPORT *FreeTags) (int tag, const char *file, int line);
 
 	/* console variable interaction */
-	cvar_t *(IMPORT *Cvar_Get) (const char *varName, const char *value, int flags, const char* desc);
+	cvar_t *(IMPORT *Cvar_Get) (const char *varName, const char *value, int flags, const char *desc);
 	cvar_t *(IMPORT *Cvar_Set) (const char *varName, const char *value);
 	const char *(IMPORT *Cvar_String) (const char *varName);
 
@@ -323,7 +323,7 @@ typedef struct game_export_s {
 	bool (EXPORT *ClientIsReady) (const player_t *client);	/* assert ! */
 
 	int (EXPORT *ClientGetActiveTeam) (void);
-	const char* (EXPORT *ClientGetName) (int pnum);
+	const char *(EXPORT *ClientGetName) (int pnum);
 
 	bool (EXPORT *RunFrame) (void);
 

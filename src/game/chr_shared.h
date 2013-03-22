@@ -292,9 +292,9 @@ typedef struct teamDef_s {
 	const int *numNames;	/**< Amount of names in this list for all different genders. */
 
 	struct model_t {
-		char* path;
-		char* body;
-		char* head;
+		char *path;
+		char *body;
+		char *head;
 		int   bodySkin;
 		int   headSkin;
 	};

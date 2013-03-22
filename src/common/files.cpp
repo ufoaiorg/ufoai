@@ -976,7 +976,7 @@ static listBlock_t *fs_blocklist = NULL;
  * @note also checks for duplicates
  * @sa FS_BuildFileList
  */
-static void _AddToListBlock (linkedList_t** fl, const char* name, bool stripPath)
+static void _AddToListBlock (linkedList_t** fl, const char *name, bool stripPath)
 {
 	const char *f;
 
@@ -1109,7 +1109,7 @@ int FS_BuildFileList (const char *fileList)
 	return LIST_Count(block->files);
 }
 
-const char* FS_NextFileFromFileList (const char *files)
+const char *FS_NextFileFromFileList (const char *files)
 {
 	static linkedList_t *listEntry = NULL;
 	static listBlock_t *_block = NULL;

@@ -352,7 +352,7 @@ unsigned int Com_HashKey (const char *name, int hashsize)
  * @param ts ptr to the resulting string
  * @param tslen length of target buffer
  */
-void Com_MakeTimestamp (char* ts, const size_t tslen)
+void Com_MakeTimestamp (char *ts, const size_t tslen)
 {
 	struct tm *t;
 	time_t aclock;
@@ -436,7 +436,7 @@ LIBRARY REPLACEMENT FUNCTIONS
 
 char *Q_strlwr (char *str)
 {
-	char* origs = str;
+	char *origs = str;
 	while (*str) {
 		*str = tolower(*str);
 		str++;

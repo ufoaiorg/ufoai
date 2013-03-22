@@ -172,7 +172,7 @@ static const objDef_t *G_GetObjectForFiredef (const fireDef_t *fd)
  * @return id of the item to which fire definition belongs or "unknown" when no object found.
  * @sa G_GetObjectForFiredef
  */
-const char* G_GetWeaponNameForFiredef (const fireDef_t *fd)
+const char *G_GetWeaponNameForFiredef (const fireDef_t *fd)
 {
 	const objDef_t *obj = G_GetObjectForFiredef(fd);
 	if (!obj)
@@ -277,7 +277,7 @@ trace_t G_Trace (const vec3_t start, const vec3_t end, const Edict *passent, int
 /**
  * @brief Returns the player name for a give player number
  */
-const char* G_GetPlayerName (int pnum)
+const char *G_GetPlayerName (int pnum)
 {
 	if (pnum >= game.sv_maxplayersperteam)
 		return "";
@@ -454,7 +454,7 @@ void G_GenerateEntList (const char *entList[MAX_EDICTS])
  * @sa G_CompleteRecalcRouting
  * @sa Grid_RecalcRouting
  */
-void G_RecalcRouting (const char* model, const GridBox& box)
+void G_RecalcRouting (const char *model, const GridBox& box)
 {
 	const char *entList[MAX_EDICTS];
 	/* generate entity list */

@@ -70,7 +70,7 @@ linkedList_t *LIST_Add (linkedList_t** listDest, void const* data, size_t length
  * @note if string is @c NULL, the function returns @c NULL
  * @sa LIST_AddString
  */
-const linkedList_t *LIST_ContainsString (const linkedList_t *list, const char* string)
+const linkedList_t *LIST_ContainsString (const linkedList_t *list, const char *string)
 {
 	while ((string != NULL) && (list != NULL)) {
 		if (Q_streq(static_cast<char const*>(list->data), string))
@@ -124,7 +124,7 @@ void LIST_AddStringSorted (linkedList_t** listDest, const char *data)
  * @sa LIST_AddString
  * @todo Optimize this to not allocate memory for every entry - but use a hunk
  */
-void LIST_PrependString (linkedList_t** listDest, const char* data)
+void LIST_PrependString (linkedList_t** listDest, const char *data)
 {
 	*listDest = LIST_AllocateString(data, *listDest);
 }
@@ -136,7 +136,7 @@ void LIST_PrependString (linkedList_t** listDest, const char* data)
  * @see LIST_PrependString
  * @todo Optimize this to not allocate memory for every entry - but use a hunk
  */
-void LIST_AddString (linkedList_t** listDest, const char* data)
+void LIST_AddString (linkedList_t** listDest, const char *data)
 {
 	assert(listDest);
 	assert(data);
