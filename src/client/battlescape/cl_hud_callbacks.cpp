@@ -280,7 +280,7 @@ static void HUD_ReloadLeft_f (void)
 	if (actor == NULL)
 		return;
 
-	containerIndex_t container = csi.idLeft;
+	containerIndex_t container = CID_LEFT;
 	if (!HUD_CheckReload(actor, HUD_GetLeftHandWeapon(actor, &container), container))
 		return;
 	CL_ActorReload(actor, container);

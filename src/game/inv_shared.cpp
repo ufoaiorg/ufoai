@@ -65,7 +65,7 @@ bool invDef_t::isRightDef () const
  */
 bool invDef_t::isLeftDef () const
 {
-	return id == CSI->idLeft;
+	return id == CID_LEFT;
 }
 
 /**
@@ -647,7 +647,7 @@ int inventory_t::canHoldItem (const invDef_t *container, const objDef_t *od, con
 
 	/* twohanded item */
 	if (od->holdTwoHanded) {
-		if ((container->isRightDef() && getContainer(CSI->idLeft)) || container->isLeftDef())
+		if ((container->isRightDef() && getContainer(CID_LEFT)) || container->isLeftDef())
 			return INV_DOES_NOT_FIT;
 	}
 
@@ -822,7 +822,7 @@ invList_t *inventory_t::getRightHandContainer () const
 
 invList_t *inventory_t::getLeftHandContainer () const
 {
-	return getContainer(CSI->idLeft);
+	return getContainer(CID_LEFT);
 }
 
 invList_t *inventory_t::getHeadgearContainer () const

@@ -1077,7 +1077,7 @@ static bool G_PrepareShot (Edict *ent, shoot_types_t shootType, fireDefIndex_t f
 		item = ent->getLeftHandItem();
 		if (!item)
 			return false;
-		*container = gi.csi->idLeft;
+		*container = CID_LEFT;
 	}
 
 	/* Get firedef from the weapon entry instead */

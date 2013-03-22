@@ -45,7 +45,7 @@ void CL_InvDel (const eventRegister_t *self, dbuffer *msg)
 	/* update the local entity to ensure that the correct weapon/item is rendered in the battlescape */
 	if (container == csi.idRight)
 		le->right = NONE;
-	else if (container == csi.idLeft)
+	else if (container == CID_LEFT)
 		le->left = NONE;
 	else if (container == csi.idExtension)
 		le->extension = NONE;

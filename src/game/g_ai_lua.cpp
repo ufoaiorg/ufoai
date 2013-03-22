@@ -764,7 +764,7 @@ static int AIL_roundsleft (lua_State *L)
 static int AIL_canreload (lua_State *L)
 {
 	lua_pushboolean(L, G_ClientCanReload(AIL_ent, gi.csi->idRight));
-	lua_pushboolean(L, G_ClientCanReload(AIL_ent, gi.csi->idLeft));
+	lua_pushboolean(L, G_ClientCanReload(AIL_ent, CID_LEFT));
 	return 2;
 }
 
@@ -782,7 +782,7 @@ static int AIL_reload (lua_State *L)
 			if (Q_streq(s, "right"))
 				container = gi.csi->idRight;
 			else if (Q_streq(s, "left"))
-				container = gi.csi->idLeft;
+				container = CID_LEFT;
 			else
 				return 0;
 		} else {

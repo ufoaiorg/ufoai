@@ -653,7 +653,7 @@ int InventoryInterface::PackAmmoAndWeapon (character_t* const chr, const objDef_
 	if (packed)
 		ammoMult = 3;
 	if (!packed && allowLeft)
-		packed = tryAddToInventory(inv, &item, &csi->ids[csi->idLeft]);
+		packed = tryAddToInventory(inv, &item, &csi->ids[CID_LEFT]);
 	if (!packed)
 		packed = tryAddToInventory(inv, &item, &csi->ids[csi->idBelt]);
 	if (!packed)

@@ -527,7 +527,7 @@ static void HUD_DisplayActions (const char* callback, const le_t* actor, actionT
 
 		/* Reloadable item in hand. */
 		if (weapon && weapon->def() && weapon->isReloadable()) {
-			containerIndex_t container = csi.idLeft;
+			containerIndex_t container = CID_LEFT;
 			const char *actionId = "reload_handl";
 			const int tus = HUD_CalcReloadTime(actor, weapon->def(), container);
 			const bool noAmmo = tus == -1;
@@ -940,7 +940,7 @@ static void HUD_UpdateButtons (const le_t *le)
 		HUD_SetWeaponButton(BT_RIGHT_RELOAD, BT_STATE_DISABLE);
 	}
 
-	const int leftCanBeReloaded = HUD_WeaponCanBeReloaded(le, csi.idLeft, &reason);
+	const int leftCanBeReloaded = HUD_WeaponCanBeReloaded(le, CID_LEFT, &reason);
 	if (leftCanBeReloaded != -1) {
 		HUD_SetWeaponButton(BT_LEFT_RELOAD, BT_STATE_DESELECT);
 		Cvar_Set("mn_reloadleft_tt", va(_("Reload weapon (%i TU)."), leftCanBeReloaded));

@@ -176,7 +176,7 @@ void G_EventInventoryAmmo (const Edict *ent, const objDef_t *ammo, int amount, s
 	if (IS_SHOT_RIGHT(shootType))
 		gi.WriteByte(gi.csi->idRight);
 	else
-		gi.WriteByte(gi.csi->idLeft);
+		gi.WriteByte(CID_LEFT);
 	/* x and y value */
 	gi.WriteByte(0);
 	gi.WriteByte(0);

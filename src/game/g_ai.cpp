@@ -1205,7 +1205,7 @@ void AI_ActorThink (Player &player, Edict *ent)
 		if (rightH && rightH->mustReload())
 			AI_TryToReloadWeapon(ent, gi.csi->idRight);
 		if (leftH && leftH->mustReload())
-			AI_TryToReloadWeapon(ent, gi.csi->idLeft);
+			AI_TryToReloadWeapon(ent, CID_LEFT);
 	}
 
 	/* if both hands are empty, attempt to get a weapon out of backpack or the

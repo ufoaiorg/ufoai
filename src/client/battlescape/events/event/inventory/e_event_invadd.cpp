@@ -102,7 +102,7 @@ void CL_InvAdd (const eventRegister_t *self, dbuffer *msg)
 
 		if (container == csi.idRight)
 			le->right = item.def()->idx;
-		else if (container == csi.idLeft)
+		else if (container == CID_LEFT)
 			le->left = item.def()->idx;
 		else if (container == csi.idExtension)
 			le->extension = item.def()->idx;
