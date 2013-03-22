@@ -575,7 +575,7 @@ static void GAME_LoadItem (xmlNode_t *n, Item *item, containerIndex_t *container
 	*y = XML_GetInt(n, SAVE_INVENTORY_Y, 0);
 	item->rotated = XML_GetInt(n, SAVE_INVENTORY_ROTATED, 0);
 	item->amount = XML_GetInt(n, SAVE_INVENTORY_AMOUNT, 1);
-	item->ammoLeft = XML_GetInt(n, SAVE_INVENTORY_AMMO, NONE_AMMO);
+	item->setAmmoLeft(XML_GetInt(n, SAVE_INVENTORY_AMMO, NONE_AMMO));
 	if (item->getAmmoLeft() > NONE_AMMO) {
 		itemID = XML_GetString(n, SAVE_INVENTORY_MUNITIONID);
 		item->ammo = INVSH_GetItemByID(itemID);

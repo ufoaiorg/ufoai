@@ -112,7 +112,7 @@ bool INV_LoadWeapon (const invList_t *weaponList, inventory_t *inv, const invDef
 	if (weapon->oneshot) {
 		ic = inv->getItemAtPos(destContainer, x, y);
 		if (ic) {
-			ic->ammoLeft = weapon->ammo;
+			ic->setAmmoLeft(weapon->ammo);
 			ic->ammo = weapon;
 			return true;
 		}
@@ -147,7 +147,7 @@ bool INV_UnloadWeapon (Item *weapon, inventory_t *inv, const invDef_t *container
 		const Item item(weapon->ammo);
 		if (cls.i.addToInventory(inv, &item, container, NONE, NONE, 1) != NULL) {
 			weapon->ammo = NULL;
-			weapon->ammoLeft = 0;
+			weapon->setAmmoLeft(0);
 			return true;
 		}
 	}

@@ -48,7 +48,7 @@ void CP_AddWeaponAmmo (equipDef_t *ed, Item *item)
 		/* The given item is ammo or self-contained weapon (i.e. It has firedefinitions. */
 		if (type->oneshot) {
 			/* "Recharge" the oneshot weapon. */
-			item->ammoLeft = type->ammo;
+			item->setAmmoLeft(type->ammo);
 			item->ammo = item->def(); /* Just in case this hasn't been done yet. */
 			Com_DPrintf(DEBUG_CLIENT, "CL_AddWeaponAmmo: oneshot weapon '%s'.\n", type->id);
 			return;
@@ -70,7 +70,7 @@ void CP_AddWeaponAmmo (equipDef_t *ed, Item *item)
 				ed->numItems[item->ammo->idx]--;
 			} else {
 				/* Your clip has been sold; give it back. */
-				item->ammoLeft = NONE_AMMO;
+				item->setAmmoLeft(NONE_AMMO);
 			}
 			return;
 		}
@@ -79,7 +79,7 @@ void CP_AddWeaponAmmo (equipDef_t *ed, Item *item)
 	/* Check for complete clips of the same kind */
 	if (item->ammo && ed->numItems[item->ammo->idx] > 0) {
 		ed->numItems[item->ammo->idx]--;
-		item->ammoLeft = type->ammo;
+		item->setAmmoLeft(type->ammo);
 		return;
 	}
 
@@ -90,7 +90,7 @@ void CP_AddWeaponAmmo (equipDef_t *ed, Item *item)
 		if (od->isLoadableInWeapon(type)) {
 			if (ed->numItems[i] > 0) {
 				ed->numItems[i]--;
-				item->ammoLeft = type->ammo;
+				item->setAmmoLeft(type->ammo);
 				item->ammo = od;
 				return;
 			}
@@ -106,14 +106,14 @@ void CP_AddWeaponAmmo (equipDef_t *ed, Item *item)
 	/* Failed to find a complete clip - see if there's any loose ammo
 	 * of the same kind; if so, gather it all in this weapon. */
 	if (item->ammo && ed->numItemsLoose[item->ammo->idx] > 0) {
-		item->ammoLeft = ed->numItemsLoose[item->ammo->idx];
+		item->setAmmoLeft(ed->numItemsLoose[item->ammo->idx]);
 		ed->numItemsLoose[item->ammo->idx] = 0;
 		return;
 	}
 
 	/* See if there's any loose ammo */
 	/** @todo We may want to change this to use the type->ammo[] info. */
-	item->ammoLeft = NONE_AMMO;
+	item->setAmmoLeft(NONE_AMMO);
 	for (i = 0; i < cgi->csi->numODs; i++) {
 		const objDef_t *od = INVSH_GetItemByIDX(i);
 		if (od->isLoadableInWeapon(type) && ed->numItemsLoose[i] > item->getAmmoLeft()) {
@@ -128,7 +128,7 @@ void CP_AddWeaponAmmo (equipDef_t *ed, Item *item)
 				 * because we did it previously and we create no new ammo */
 			}
 			/* Found some loose ammo to load the weapon with */
-			item->ammoLeft = ed->numItemsLoose[i];
+			item->setAmmoLeft(ed->numItemsLoose[i]);
 			ed->numItemsLoose[i] = 0;
 			item->ammo = od;
 		}

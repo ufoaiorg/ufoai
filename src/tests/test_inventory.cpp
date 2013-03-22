@@ -95,7 +95,7 @@ static void testItemAdd (void)
 
 	item.setDef(od);
 	item.ammo = NULL;
-	item.ammoLeft = 0;
+	item.setAmmoLeft(0);
 
 	CU_ASSERT(inv.containsItem(container, &item) == false);
 
@@ -124,7 +124,7 @@ static void testItemDel (void)
 
 	item.setDef(od);
 	item.ammo = NULL;
-	item.ammoLeft = 0;
+	item.setAmmoLeft(0);
 
 	CU_ASSERT(inv.containsItem(container, &item) == false);
 
@@ -158,7 +158,7 @@ static void testItemMove (void)
 
 	item.setDef(od);
 	item.ammo = NULL;
-	item.ammoLeft = 0;
+	item.setAmmoLeft(0);
 
 	CU_ASSERT(inv.containsItem(container, &item) == false);
 
@@ -196,7 +196,7 @@ static void testItemReload (void)
 
 	item.setDef(od);
 	item.ammo = NULL;
-	item.ammoLeft = 0;
+	item.setAmmoLeft(0);
 
 	CU_ASSERT(inv.containsItem(container, &item) == false);
 
@@ -210,7 +210,7 @@ static void testItemReload (void)
 
 	ammo.setDef(ad);
 	ammo.ammo = NULL;
-	ammo.ammoLeft = 0;
+	ammo.setAmmoLeft(0);
 
 	containerFrom = INVSH_GetInventoryDefinitionByID("backpack");
 	CU_ASSERT_PTR_NOT_NULL(containerFrom);
@@ -227,7 +227,7 @@ static void testItemReload (void)
 	CU_ASSERT(inv.containsItem(containerFrom, &ammo) == false);
 
 	item.ammo = ad;
-	item.ammoLeft = 1;
+	item.setAmmoLeft(1);
 
 	CU_ASSERT(inv.containsItem(container, &item) == true);
 
@@ -236,7 +236,7 @@ static void testItemReload (void)
 
 	ammoFrom.setDef(ad);
 	ammoFrom.ammo = NULL;
-	ammoFrom.ammoLeft = 0;
+	ammoFrom.setAmmoLeft(0);
 
 	CU_ASSERT(inv.containsItem(containerFrom, &ammoFrom) == false);
 
@@ -261,7 +261,7 @@ static bool testAddSingle (inventory_t *inv, const objDef_t *od, const invDef_t 
 
 	item.setDef(od);
 	item.ammo = NULL;
-	item.ammoLeft = 0;
+	item.setAmmoLeft(0);
 
 	return i.tryAddToInventory(inv, &item, container);
 }
@@ -349,7 +349,7 @@ static void testItemToHeadgear (void)
 
 	item.setDef(od);
 	item.ammo = NULL;
-	item.ammoLeft = 0;
+	item.setAmmoLeft(0);
 
 	CU_ASSERT_FALSE(inv.containsItem(container, &item));
 
