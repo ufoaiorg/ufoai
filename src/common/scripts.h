@@ -226,7 +226,7 @@ typedef struct terrainType_s {
 	struct terrainType_s *hash_next;	/**< next entry in the hash list */
 } terrainType_t;
 
-const terrainType_t* Com_GetTerrainType(const char *textureName);
+const terrainType_t *Com_GetTerrainType(const char *textureName);
 
 /**
  * @brief list of script aliases to register
@@ -266,6 +266,6 @@ void Com_GetCharacterValues(const char *teamDefition, character_t *chr);
 bool Com_GetCharacterModel(character_t *chr);
 const char* Com_GetActorSound(teamDef_t* td, int gender, actorSound_t soundType);
 const teamDef_t* Com_GetTeamDefinitionByID(const char *team);
-const chrTemplate_t* Com_GetCharacterTemplateByID(const char *chrTemplate);
+const chrTemplate_t *Com_GetCharacterTemplateByID(const char *chrTemplate);
 
 #endif /* SCRIPTS_H */

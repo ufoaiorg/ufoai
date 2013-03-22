@@ -349,8 +349,8 @@ void SV_Clear(void);
 void SV_Shutdown(const char *finalmsg, bool reconnect);
 void SV_ShutdownWhenEmpty(void);
 void SV_Frame(int now, void *);
-mapData_t* SV_GetMapData(void);
-mapTiles_t* SV_GetMapTiles(void);
+mapData_t *SV_GetMapData(void);
+mapTiles_t *SV_GetMapTiles(void);
 
 /*============================================================================ */
 

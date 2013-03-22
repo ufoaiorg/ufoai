@@ -234,7 +234,7 @@ static void SV_ParseMapcycle (void)
 static void SV_MapcycleList_f (void)
 {
 	int i;
-	const mapcycle_t* mapcycle;
+	const mapcycle_t *mapcycle;
 
 	mapcycle = mapcycleList;
 	Com_Printf("current mapcycle has %i entries\n", mapcycleCount);

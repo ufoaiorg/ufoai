@@ -265,8 +265,8 @@ static void CalcPoints (lightinfo_t *l, float sofs, float tofs)
 /** @brief buckets for sample accumulation - clipped by the surface */
 typedef struct facelight_s {
 	int numsamples;
-	vec3_t* samples;    /**< lightmap samples */
-	vec3_t* directions; /**< for specular lighting/bumpmapping */
+	vec3_t *samples;    /**< lightmap samples */
+	vec3_t *directions; /**< for specular lighting/bumpmapping */
 } facelight_t;
 
 static facelight_t facelight[LIGHTMAP_MAX][MAX_MAP_FACES];

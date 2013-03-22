@@ -769,12 +769,12 @@ static bool SV_CheckMaxSoldiersPerPlayer (cvar_t *cvar)
 	return Cvar_AssertValue(cvar, 1, max, true);
 }
 
-mapData_t* SV_GetMapData (void)
+mapData_t *SV_GetMapData (void)
 {
 	return &sv->mapData;
 }
 
-mapTiles_t* SV_GetMapTiles (void)
+mapTiles_t *SV_GetMapTiles (void)
 {
 	return &sv->mapTiles;
 }

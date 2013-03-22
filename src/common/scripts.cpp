@@ -2647,7 +2647,7 @@ static void Com_ParseTeam (const char *name, const char **text)
  * array
  * @param[in] chrTemplate The character template id (given in ufo-script files)
  */
-const chrTemplate_t* Com_GetCharacterTemplateByID (const char *chrTemplate)
+const chrTemplate_t *Com_GetCharacterTemplateByID (const char *chrTemplate)
 {
 	int i;
 
@@ -2911,7 +2911,7 @@ static const value_t terrainTypeValues[] = {
  * @param[in] textureName The terrain definition id from script files
  * which is the texture name relative to base/textures
  */
-const terrainType_t* Com_GetTerrainType (const char *textureName)
+const terrainType_t *Com_GetTerrainType (const char *textureName)
 {
 	unsigned hash;
 	const terrainType_t *t;
@@ -2972,8 +2972,8 @@ static void Com_ParseGameTypes (const char *name, const char **text)
 	const char *errhead = "Com_ParseGameTypes: unexpected end of file (gametype ";
 	const char *token;
 	int i;
-	gametype_t* gt;
-	cvarlist_t* cvarlist;
+	gametype_t *gt;
+	cvarlist_t *cvarlist;
 
 	/* get it's body */
 	token = Com_Parse(text);
