@@ -325,7 +325,7 @@ entity worldspawn {
 		maxteams		"Max. teams for multiplayer"
 		maxlevel		"Highest selectable level [1-8]"
 		noequipment		"Don't spawn the actors with equipment assigned, it must be collected in the map"
-		norandomspawn		"Don't use random spawn positions for the actors to spawn them - deactivate random spawn by setting this to 1"
+		norandomspawn	"Don't use random spawn positions for the actors to spawn them - deactivate random spawn by setting this to 1"
 		light_night		"Controls sunlight intensity. All positive values are valid, values from 80 to 300 typically produce good results."
 		angles_night	"Controls sunlight direction, specified as pitch and yaw in degrees, e.g. -80 220."
 		color_night		"Controls sunlight colour, specified as rgb floating point values, e.g. 1.0 0.9 0.8."
@@ -357,7 +357,7 @@ entity worldspawn {
 		color_day		"V_FLOAT 3"
 		light_night		"V_INT"
 		light_day		"V_INT"
-		randomspawn		"V_INT"
+		norandomspawn	"V_INT"
 		noequipment		"V_INT"
 	}
 
@@ -377,6 +377,7 @@ entity worldspawn {
 		contrast		"1.0"
 		brightness		"1.0"
 		maxlevel		"5"
+		norandomspawn	"1"
 	}
 
 	range {
@@ -384,7 +385,7 @@ entity worldspawn {
 		angles_night	"-90 - 360"
 		ambient_day		"0.0 - 1.0"
 		ambient_night	"0.0 - 1.0"
-		randomspawn		"0 - 1"
+		norandomspawn	"0 - 1"
 		noequipment		"0 - 1"
 		maxlevel		"1 2 3 4 5 6 7 8"
 	}
