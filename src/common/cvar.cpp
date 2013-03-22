@@ -346,7 +346,7 @@ bool Cvar_Delete (const char *varName)
  * If the variable already exists, the value will not be set
  * The flags will be or'ed in if the variable exists.
  */
-cvar_t *Cvar_Get (const char *var_name, const char *var_value, int flags, const char* desc)
+cvar_t *Cvar_Get (const char *var_name, const char *var_value, int flags, const char *desc)
 {
 	const unsigned hash = Com_HashKey(var_name, CVAR_HASH_SIZE);
 

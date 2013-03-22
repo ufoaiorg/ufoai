@@ -977,7 +977,7 @@ void Com_SetRandomSeed (unsigned int seed)
 	/*Com_Printf("setting random seed to %i\n", seed);*/
 }
 
-const char* Com_ByteToBinary (byte x)
+const char *Com_ByteToBinary (byte x)
 {
 	static char buf[9];
 	int cnt, mask = 1 << 7;
@@ -993,7 +993,7 @@ const char* Com_ByteToBinary (byte x)
 	return buf;
 }
 
-const char* Com_UnsignedIntToBinary (uint32_t x)
+const char *Com_UnsignedIntToBinary (uint32_t x)
 {
 	static char buf[37];
 	int cnt, mask = 1 << 31;

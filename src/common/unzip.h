@@ -124,8 +124,8 @@ typedef struct unz_file_info_s
     tm_unz tmu_date;
 } unz_file_info;
 
-extern int ZEXPORT unzStringFileNameCompare OF ((const char* fileName1,
-                                                 const char* fileName2,
+extern int ZEXPORT unzStringFileNameCompare OF ((const char *fileName1,
+                                                 const char *fileName2,
                                                  int iCaseSensitivity));
 /*
    Compare two filename (fileName1,fileName2).
@@ -275,7 +275,7 @@ extern int ZEXPORT unzOpenCurrentFile OF((unzFile file));
 */
 
 extern int ZEXPORT unzOpenCurrentFilePassword OF((unzFile file,
-                                                  const char* password));
+                                                  const char *password));
 /*
   Open for reading data the current file in the zipfile.
   password is a crypting password
@@ -299,7 +299,7 @@ extern int ZEXPORT unzOpenCurrentFile3 OF((unzFile file,
                                            int* method,
                                            int* level,
                                            int raw,
-                                           const char* password));
+                                           const char *password));
 /*
   Same than unzOpenCurrentFile, but open for read raw the file (not uncompress)
     if raw==1

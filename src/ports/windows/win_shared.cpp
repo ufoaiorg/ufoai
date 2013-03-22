@@ -378,7 +378,7 @@ char *Sys_Cwd (void)
 /**
  * @brief Normalize path (remove all \\ )
  */
-void Sys_NormPath (char* path)
+void Sys_NormPath (char *path)
 {
 	char *tmp = path;
 

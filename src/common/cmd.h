@@ -165,7 +165,7 @@ void Cmd_ForwardToServer(void);
 /**
  * @brief Searches for the description of a given command
  */
-const char* Cmd_GetCommandDesc(const char* command);
+const char *Cmd_GetCommandDesc(const char *command);
 
 /**
  * @brief Clears the command execution buffer

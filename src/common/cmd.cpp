@@ -631,7 +631,7 @@ void Cmd_TokenizeString (const char *text, bool macroExpand)
  * @note never returns a NULL pointer
  * @todo - search alias, too
  */
-const char* Cmd_GetCommandDesc (const char* cmd_name)
+const char *Cmd_GetCommandDesc (const char *cmd_name)
 {
 	cmd_function_t *cmd;
 	char *sep = NULL;
@@ -670,7 +670,7 @@ bool Cmd_GenericCompleteFunction(char const* candidate, char const* partial, cha
 		*match = matchString;
 	} else {
 		/* Subsequent match, determine common prefix with previous match(es). */
-		char*       dst = matchString;
+		char *      dst = matchString;
 		char const* src = candidate;
 		while (*dst == *src) {
 			++dst;
@@ -1062,7 +1062,7 @@ static void Cmd_Test_f (void)
 void Cmd_PrintDebugCommands (void)
 {
 	const cmd_function_t *cmd;
-	const char* otherCommands[] = {"mem_stats", "cl_configstrings", "cl_userinfo", "devmap"};
+	const char *otherCommands[] = {"mem_stats", "cl_configstrings", "cl_userinfo", "devmap"};
 	int num = lengthof(otherCommands);
 
 	Com_Printf("Debug commands:\n");
