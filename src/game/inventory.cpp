@@ -957,7 +957,7 @@ void InventoryInterface::EquipActor (character_t* const chr, const equipDef_t *e
 						if (miscItem->headgear)
 							container = this->csi->idHeadgear;
 						else if (miscItem->extension)
-							container = this->csi->idExtension;
+							container = CID_EXTENSION;
 						else
 							container = CID_BACKPACK;
 						if (weight > maxWeight || tuNeed > maxTU || (itemFd && itemFd->time > maxTU))
