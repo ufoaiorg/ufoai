@@ -5734,6 +5734,15 @@ tech rs_orbital_ufo_activity
 		default "*msgid:orbital_ufo_activity_pre_txt"
 	}
 
+	mail_pre
+	{
+		from	"*msgid:mail_from_col_falkland"
+		to	"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		model	"characters/falkland"
+		icon	"icons/mail_intelligence"
+	}
+
 	mail
 	{
 		from	"*msgid:mail_from_col_falkland"
@@ -5742,6 +5751,7 @@ tech rs_orbital_ufo_activity
 		model	"characters/falkland"
 		icon	"icons/mail_intelligence"
 	}
+
 	require_AND
 	{
 		tech	rs_craft_ufo_bomber
