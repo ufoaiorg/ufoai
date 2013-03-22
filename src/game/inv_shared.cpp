@@ -589,9 +589,9 @@ const fireDef_t *Item::getSlowestFireDef () const
 }
 
 /**
- * @brief Checks whether this list is a reaction fire enabled weapon.
- * @note The invList is supposed to be the right or left hand
- * @return @c NULL if no reaction fire enabled weapon was found in the given list, the
+ * @brief Checks whether this item is a reaction fire enabled weapon.
+ * @note The item is supposed to be in the right or left hand
+ * @return @c NULL if no reaction fire enabled weapon, the
  * reaction fire enabled object otherwise.
  */
 const objDef_t *Item::getReactionFireWeaponType () const
