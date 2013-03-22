@@ -856,11 +856,11 @@ invList_t *inventory_t::getArmourContainer (void) const
  * @param[in] item The item to search for.
  * @return Pointer to the first item of this type found, otherwise @c NULL.
  */
-Item *inventory_t::findInContainer (const invDef_t *container, const Item *const item) const
+Item *inventory_t::findInContainer (const containerIndex_t contId, const Item *const item) const
 {
 	invList_t *ic;
 
-	for (ic = getContainer(container->id); ic; ic = ic->getNext())
+	for (ic = getContainer(contId); ic; ic = ic->getNext())
 		if (ic->isSameAs(item)) {
 			return ic;
 		}

@@ -912,7 +912,7 @@ bool uiContainerNode::onDndMove (uiNode_t *target, int x, int y)
 	exists = false;
 	if ((containerType->isFloorDef() || containerType->isEquipDef())
 		&& (dragInfoToX < 0 || dragInfoToY < 0 || dragInfoToX >= SHAPE_BIG_MAX_WIDTH || dragInfoToY >= SHAPE_BIG_MAX_HEIGHT)
-		&& ui_inventory->containsItem(containerType, dragItem)) {
+		&& ui_inventory->containsItem(containerType->id, dragItem)) {
 		exists = true;
 	}
 

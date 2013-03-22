@@ -483,9 +483,9 @@ typedef struct inventory_s {
 	 * @param[in] item The item to search for.
 	 * @return true if there already is at least one item of this type, otherwise false.
 	 */
-	inline bool containsItem (const invDef_t *container, const Item *const item) const
+	inline bool containsItem (const containerIndex_t contId, const Item *const item) const
 	{
-		return findInContainer(container, item) ? true : false;
+		return findInContainer(contId, item) ? true : false;
 	}
 	invList_t *getArmourContainer () const;
 	invList_t *getRightHandContainer() const;
@@ -497,7 +497,7 @@ typedef struct inventory_s {
 	void setFloorContainer(invList_t *cont);
 
 	void findSpace (const invDef_t *container, const Item *item, int* const px, int* const py, const Item *ignoredItem) const;
-	Item *findInContainer (const invDef_t *container, const Item *const item) const;
+	Item *findInContainer (const containerIndex_t contId, const Item * const item) const;
 	invList_t *getItemAtPos (const invDef_t *container, const int x, const int y) const;
 	float getWeight () const;
 	int canHoldItem (const invDef_t *container, const objDef_t *od, const int x, const int y, const invList_t *ignoredItem) const;

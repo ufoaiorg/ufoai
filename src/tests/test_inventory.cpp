@@ -97,11 +97,11 @@ static void testItemAdd (void)
 	item.ammo = NULL;
 	item.setAmmoLeft(0);
 
-	CU_ASSERT(inv.containsItem(container, &item) == false);
+	CU_ASSERT(inv.containsItem(container->id, &item) == false);
 
 	CU_ASSERT_PTR_NOT_NULL(i.addToInventory(&inv, &item, container, NONE, NONE, 1));
 
-	CU_ASSERT(inv.containsItem(container, &item) == true);
+	CU_ASSERT(inv.containsItem(container->id, &item) == true);
 }
 
 static void testItemDel (void)
@@ -126,15 +126,15 @@ static void testItemDel (void)
 	item.ammo = NULL;
 	item.setAmmoLeft(0);
 
-	CU_ASSERT(inv.containsItem(container, &item) == false);
+	CU_ASSERT(inv.containsItem(container->id, &item) == false);
 
 	addedItem = i.addToInventory(&inv, &item, container, NONE, NONE, 1);
 
-	CU_ASSERT(inv.containsItem(container, &item) == true);
+	CU_ASSERT(inv.containsItem(container->id, &item) == true);
 
 	CU_ASSERT(i.removeFromInventory(&inv, container, addedItem));
 
-	CU_ASSERT(inv.containsItem(container, &item) == false);
+	CU_ASSERT(inv.containsItem(container->id, &item) == false);
 }
 
 static void testItemMove (void)
@@ -160,20 +160,20 @@ static void testItemMove (void)
 	item.ammo = NULL;
 	item.setAmmoLeft(0);
 
-	CU_ASSERT(inv.containsItem(container, &item) == false);
+	CU_ASSERT(inv.containsItem(container->id, &item) == false);
 
 	addedItem = i.addToInventory(&inv, &item, container, NONE, NONE, 1);
 	CU_ASSERT_PTR_NOT_NULL(addedItem);
 
-	CU_ASSERT(inv.containsItem(container, &item) == true);
+	CU_ASSERT(inv.containsItem(container->id, &item) == true);
 
 	containerTo = INVSH_GetInventoryDefinitionByID("backpack");
 	CU_ASSERT_PTR_NOT_NULL(containerTo);
 
 	CU_ASSERT_EQUAL(IA_MOVE, i.moveInInventory(&inv, container, addedItem, containerTo, NONE, NONE, NULL, NULL));
 
-	CU_ASSERT(inv.containsItem(container, &item) == false);
-	CU_ASSERT(inv.containsItem(containerTo, &item) == true);
+	CU_ASSERT(inv.containsItem(container->id, &item) == false);
+	CU_ASSERT(inv.containsItem(containerTo->id, &item) == true);
 }
 
 static void testItemReload (void)
@@ -198,12 +198,12 @@ static void testItemReload (void)
 	item.ammo = NULL;
 	item.setAmmoLeft(0);
 
-	CU_ASSERT(inv.containsItem(container, &item) == false);
+	CU_ASSERT(inv.containsItem(container->id, &item) == false);
 
 	addedItem = i.addToInventory(&inv, &item, container, NONE, NONE, 1);
 	CU_ASSERT_PTR_NOT_NULL(addedItem);
 
-	CU_ASSERT(inv.containsItem(container, &item) == true);
+	CU_ASSERT(inv.containsItem(container->id, &item) == true);
 
 	ad = INVSH_GetItemByIDSilent("rpg_ammo");
 	CU_ASSERT_PTR_NOT_NULL(ad);
@@ -215,21 +215,21 @@ static void testItemReload (void)
 	containerFrom = INVSH_GetInventoryDefinitionByID("backpack");
 	CU_ASSERT_PTR_NOT_NULL(containerFrom);
 
-	CU_ASSERT(inv.containsItem(containerFrom, &ammo) == false);
+	CU_ASSERT(inv.containsItem(containerFrom->id, &ammo) == false);
 
 	addedItem = i.addToInventory(&inv, &ammo, containerFrom, NONE, NONE, 1);
 	CU_ASSERT_PTR_NOT_NULL(addedItem);
 
-	CU_ASSERT(inv.containsItem(containerFrom, &ammo) == true);
+	CU_ASSERT(inv.containsItem(containerFrom->id, &ammo) == true);
 
 	CU_ASSERT_EQUAL(IA_RELOAD, i.moveInInventory(&inv, containerFrom, addedItem, container, NONE, NONE, NULL, NULL));
 
-	CU_ASSERT(inv.containsItem(containerFrom, &ammo) == false);
+	CU_ASSERT(inv.containsItem(containerFrom->id, &ammo) == false);
 
 	item.ammo = ad;
 	item.setAmmoLeft(1);
 
-	CU_ASSERT(inv.containsItem(container, &item) == true);
+	CU_ASSERT(inv.containsItem(container->id, &item) == true);
 
 	ad = INVSH_GetItemByIDSilent("rpg_incendiary_ammo");
 	CU_ASSERT_PTR_NOT_NULL(ad);
@@ -238,21 +238,21 @@ static void testItemReload (void)
 	ammoFrom.ammo = NULL;
 	ammoFrom.setAmmoLeft(0);
 
-	CU_ASSERT(inv.containsItem(containerFrom, &ammoFrom) == false);
+	CU_ASSERT(inv.containsItem(containerFrom->id, &ammoFrom) == false);
 
 	addedItem = i.addToInventory(&inv, &ammoFrom, containerFrom, NONE, NONE, 1);
 	CU_ASSERT_PTR_NOT_NULL(addedItem);
 
-	CU_ASSERT(inv.containsItem(containerFrom, &ammoFrom) == true);
+	CU_ASSERT(inv.containsItem(containerFrom->id, &ammoFrom) == true);
 
 	CU_ASSERT_EQUAL(IA_RELOAD_SWAP, i.moveInInventory(&inv, containerFrom, addedItem, container, NONE, NONE, NULL, NULL));
 
-	CU_ASSERT(inv.containsItem(containerFrom, &ammoFrom) == false);
-	CU_ASSERT(inv.containsItem(containerFrom, &ammo) == true);
+	CU_ASSERT(inv.containsItem(containerFrom->id, &ammoFrom) == false);
+	CU_ASSERT(inv.containsItem(containerFrom->id, &ammo) == true);
 
 	item.ammo = ad;
 
-	CU_ASSERT(inv.containsItem(container, &item) == true);
+	CU_ASSERT(inv.containsItem(container->id, &item) == true);
 }
 
 static bool testAddSingle (inventory_t *inv, const objDef_t *od, const invDef_t *container)
@@ -351,11 +351,11 @@ static void testItemToHeadgear (void)
 	item.ammo = NULL;
 	item.setAmmoLeft(0);
 
-	CU_ASSERT_FALSE(inv.containsItem(container, &item));
+	CU_ASSERT_FALSE(inv.containsItem(container->id, &item));
 
 	CU_ASSERT_PTR_NOT_NULL(i.addToInventory(&inv, &item, container, NONE, NONE, 1));
 
-	CU_ASSERT_TRUE(inv.containsItem(container, &item));
+	CU_ASSERT_TRUE(inv.containsItem(container->id, &item));
 
 	CU_ASSERT_PTR_NULL(i.addToInventory(&inv, &item, container, NONE, NONE, 1));
 }
