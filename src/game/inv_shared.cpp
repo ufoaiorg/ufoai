@@ -359,73 +359,6 @@ const fireDef_t *FIRESH_GetFiredef (const objDef_t *obj, const weaponFireDefInde
 }
 
 /**
- * @brief Returns the firedefinitions for a given weapon/ammo
- * @return The array (one-dimensional) of the firedefs of the ammo for a given weapon, or @c NULL if the ammo
- * doesn't support the given weapon
- * @sa FIRESH_GetFiredef
- */
-const fireDef_t *Item::getFiredefs () const
-{
-	int i;
-	const objDef_t *ammoDef = ammo;
-	const objDef_t *weapon = def();
-
-	/* this weapon does not use ammo, check for
-	 * existing firedefs in the weapon. */
-	if (weapon->numWeapons > 0)
-		ammoDef = def();
-
-	if (!ammoDef)
-		return NULL;
-
-	for (i = 0; i < ammoDef->numWeapons; i++) {
-		if (weapon == ammoDef->weapons[i])
-			return &ammoDef->fd[i][0];
-	}
-
-	return NULL;
-}
-
-/**
- * @brief Get the firedef that uses the most TU for this item.
- * @return The firedef that uses the most TU for this item or @c NULL.
- */
-const fireDef_t *Item::getSlowestFireDef () const
-{
-	const fireDef_t *fdArray = getFiredefs();
-	int slowest = 0;
-
-	if (fdArray == NULL)
-		return NULL;
-
-	for (int i = 0; i < MAX_FIREDEFS_PER_WEAPON; i++)
-		if (fdArray[i].time > fdArray[slowest].time)
-			slowest = i;
-
-	return &fdArray[slowest];
-}
-
-/**
- * @brief Checks whether this list is a reaction fire enabled weapon.
- * @note The invList is supposed to be the right or left hand
- * @return @c NULL if no reaction fire enabled weapon was found in the given list, the
- * reaction fire enabled object otherwise.
- */
-const objDef_t *Item::getReactionFireWeaponType () const
-{
-	if (!this)
-		return NULL;
-
-	if (def()) {
-		const fireDef_t *fd = getFiredefs();
-		if (fd && fd->reaction)
-			return def();
-	}
-
-	return NULL;
-}
-
-/**
  * @brief Will merge the second shape (=itemShape) into the first one (=big container shape) on the position x/y.
  * @note The function expects an already rotated shape for itemShape. Use getShapeRotated() if needed.
  * @param[in] shape The shape of the container [SHAPE_BIG_MAX_HEIGHT]'
@@ -606,6 +539,73 @@ void Item::getFirstShapePosition (int* const x, int* const y) const
 			}
 
 	*x = *y = NONE;
+}
+
+/**
+ * @brief Returns the firedefinitions for a given weapon/ammo
+ * @return The array (one-dimensional) of the firedefs of the ammo for a given weapon, or @c NULL if the ammo
+ * doesn't support the given weapon
+ * @sa FIRESH_GetFiredef
+ */
+const fireDef_t *Item::getFiredefs () const
+{
+	int i;
+	const objDef_t *ammoDef = ammo;
+	const objDef_t *weapon = def();
+
+	/* this weapon does not use ammo, check for
+	 * existing firedefs in the weapon. */
+	if (weapon->numWeapons > 0)
+		ammoDef = def();
+
+	if (!ammoDef)
+		return NULL;
+
+	for (i = 0; i < ammoDef->numWeapons; i++) {
+		if (weapon == ammoDef->weapons[i])
+			return &ammoDef->fd[i][0];
+	}
+
+	return NULL;
+}
+
+/**
+ * @brief Get the firedef that uses the most TU for this item.
+ * @return The firedef that uses the most TU for this item or @c NULL.
+ */
+const fireDef_t *Item::getSlowestFireDef () const
+{
+	const fireDef_t *fdArray = getFiredefs();
+	int slowest = 0;
+
+	if (fdArray == NULL)
+		return NULL;
+
+	for (int i = 0; i < MAX_FIREDEFS_PER_WEAPON; i++)
+		if (fdArray[i].time > fdArray[slowest].time)
+			slowest = i;
+
+	return &fdArray[slowest];
+}
+
+/**
+ * @brief Checks whether this list is a reaction fire enabled weapon.
+ * @note The invList is supposed to be the right or left hand
+ * @return @c NULL if no reaction fire enabled weapon was found in the given list, the
+ * reaction fire enabled object otherwise.
+ */
+const objDef_t *Item::getReactionFireWeaponType () const
+{
+	if (!this)
+		return NULL;
+
+	if (def()) {
+		const fireDef_t *fd = getFiredefs();
+		if (fd && fd->reaction)
+			return def();
+	}
+
+	return NULL;
 }
 
 inventory_s::inventory_s ()
