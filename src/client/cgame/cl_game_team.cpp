@@ -582,7 +582,7 @@ static void GAME_LoadItem (xmlNode_t *n, Item *item, containerIndex_t *container
 
 		/* reset ammo count if ammunition (item) not found */
 		if (!item->ammo)
-			item->ammoLeft = NONE_AMMO;
+			item->setAmmoLeft(NONE_AMMO);
 	}
 }
 

@@ -303,9 +303,11 @@ void G_InventoryToFloor (Edict *ent)
 void G_ReadItem (Item *item, const invDef_t **container, int *x, int *y)
 {
 	int t, m;
+	int ammoleft;
 	containerIndex_t containerID;
 
-	gi.ReadFormat("sbsbbbbs", &t, &item->ammoLeft, &m, &containerID, x, y, &item->rotated, &item->amount);
+	gi.ReadFormat("sbsbbbbs", &t, &ammoleft, &m, &containerID, x, y, &item->rotated, &item->amount);
+	item->setAmmoLeft(ammoleft);
 
 	if (t < 0 || t >= gi.csi->numODs)
 		gi.Error("Item index out of bounds: %i", t);
