@@ -1,5 +1,4 @@
-#ifndef TEXTMENUITEMTOGGLE_H_
-#define TEXTMENUITEMTOGGLE_H_
+#pragma once
 
 #include "TextMenuItem.h"
 
@@ -29,5 +28,3 @@ namespace gtkutil
 	};
 
 } // namespace gtkutil
-
-#endif /*TEXTMENUITEMTOGGLE_H_*/

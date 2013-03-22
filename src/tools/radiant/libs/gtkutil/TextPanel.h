@@ -1,5 +1,4 @@
-#ifndef TEXTPANEL_H_
-#define TEXTPANEL_H_
+#pragma once
 
 #include "ifc/EditorWidget.h"
 
@@ -33,5 +32,3 @@ namespace gtkutil
 			std::string getValue () const;
 	};
 }
-
-#endif /*TEXTPANEL_H_*/

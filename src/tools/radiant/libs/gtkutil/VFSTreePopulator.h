@@ -1,5 +1,4 @@
-#ifndef VFSTREEPOPULATOR_H_
-#define VFSTREEPOPULATOR_H_
+#pragma once
 
 #include <gtk/gtktreestore.h>
 
@@ -109,5 +108,3 @@ namespace gtkutil
 	};
 
 }
-
-#endif /*VFSTREEPOPULATOR_H_*/

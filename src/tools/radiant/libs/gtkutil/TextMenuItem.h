@@ -1,5 +1,4 @@
-#ifndef TEXTMENUITEM_H_
-#define TEXTMENUITEM_H_
+#pragma once
 
 #include <gtk/gtklabel.h>
 #include <gtk/gtkmenuitem.h>
@@ -52,5 +51,3 @@ namespace gtkutil
 			}
 	};
 }
-
-#endif /*TEXTMENUITEM_H_*/

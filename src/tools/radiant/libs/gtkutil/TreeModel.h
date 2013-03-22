@@ -1,5 +1,4 @@
-#ifndef TREEMODEL_H_
-#define TREEMODEL_H_
+#pragma once
 
 #include <string>
 
@@ -215,5 +214,3 @@ namespace gtkutil
 	};
 
 } // namespace gtkutil
-
-#endif /*TREEMODEL_H_*/
