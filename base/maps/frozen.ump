@@ -415,6 +415,11 @@ tileset river_bend {
 	+river_sw
 }
 
+tileset rock {
+	+n08
+	+n09
+	}
+
 // Map assemblies for campaign / skirmish --------------------------*
 
 // TODO assemblies should be nature (nopoulation), industrial and civ (populated)
@@ -438,6 +443,7 @@ multiplayer +mp_team2
 +i07 "0 1"
 +i08 "1 1"
 +i09 "0 1"
+tileset rock "0 1"
 *rm_drop +craft_drop_firebird "1 1"
 *rm_ufo +craft_ufo_harvester "1 1"
 }
@@ -459,6 +465,7 @@ multiplayer +mp_team2
 +i07 "0 1"
 +i08 "0 1"
 +i09 "0 1"
+tileset rock "0 1"
 *rm_drop +craft_drop_firebird "1 1"
 *rm_ufo +craft_ufo_scout "1 1"
 }
@@ -481,6 +488,7 @@ multiplayer +mp_team2
 +i07 "0 1"
 +i08 "1 1"
 +i09 "0 1"
+tileset rock "0 1"
 *rm_drop +craft_drop_firebird "1 1"
 }
 
