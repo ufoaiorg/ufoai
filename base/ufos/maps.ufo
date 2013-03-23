@@ -929,6 +929,56 @@ mapdef forest_small_crash
 // FROZEN RANDOM MAPS //
 ////////////////////////
 
+mapdef frozen_industrial_large
+{
+	map				"+frozen"
+	param			"industrial_large"
+	description		"_Snow"
+	maxaliens		30
+	multiplayer		true
+	teams			2
+	gametypes
+	(
+		fight1on1
+		fight2on2
+		fight3on3
+		fight4on4
+		coop2
+		coop3
+		coop4
+	)
+
+	aircraft
+	(
+		craft_drop_firebird
+		craft_drop_raptor
+		craft_drop_herakles
+	)
+
+	ufos
+	(
+		craft_ufo_bomber
+	)
+
+	terrains
+	(
+		"cold"
+	)
+
+	cultures
+	(
+		// any
+	)
+
+	populations
+	(
+		"rural"
+		"village"
+		"suburban"
+		"urban"
+	)
+}
+
 mapdef frozen_industrial_medium
 {
 	map				"+frozen"
@@ -1115,6 +1165,53 @@ mapdef frozen_lake
 		"suburban"
 		"village"
 		"rural"
+	)
+}
+
+mapdef frozen_nature_large
+{
+	map				"+frozen"
+	param			"nature_large"
+	description		"_Snow"
+	maxaliens		30
+	multiplayer		true
+	teams			2
+	gametypes
+	(
+		fight1on1
+		fight2on2
+		fight3on3
+		fight4on4
+		coop2
+		coop3
+		coop4
+	)
+
+	aircraft
+	(
+		craft_drop_firebird
+		craft_drop_raptor
+		craft_drop_herakles
+	)
+
+	ufos
+	(
+		craft_ufo_bomber
+	)
+
+	terrains
+	(
+		"cold"
+	)
+
+	cultures
+	(
+		// any
+	)
+
+	populations
+	(
+		"nopopulation"
 	)
 }
 
