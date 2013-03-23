@@ -395,7 +395,7 @@ typedef struct csi_s {
 
 	/** Special container ids */
 	containerIndex_t idRight;
-	containerIndex_t idHeadgear, idBelt, idHolster;
+	containerIndex_t idHeadgear, idHolster;
 	containerIndex_t idFloor, idEquip;
 
 	/** Damage type ids */
