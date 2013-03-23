@@ -1009,6 +1009,7 @@ mapdef frozen_industrial_small
 
 	ufos
 	(
+		craft_crash_scout
 		craft_ufo_scout
 		craft_ufo_fighter
 	)
@@ -1195,6 +1196,7 @@ mapdef frozen_nature_small
 
 	ufos
 	(
+		craft_crash_scout
 		craft_ufo_scout
 		craft_ufo_fighter
 	)

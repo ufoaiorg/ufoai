@@ -37,6 +37,16 @@
 			}
 }
 
+/* blend some snow onto the crashed fighter tile */
+{
+	material tex_nature/desert007
+			{
+				texture tex_nature/snow003
+				dirtmap 1.0
+				lightmap
+			}
+}
+
 /* flare for the warning light on top of the windmill */
 {
 	material tex_lights/light004
