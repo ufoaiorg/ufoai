@@ -392,10 +392,10 @@ tile +mp_team2
 	// Small building (multiplayer team 2)
 {
 3 4
-0		a		0
-a		+c		a
-a		+c		a
-0		a		0
+0		0		0
+0		+a		0
+0		+a		0
+0		0		0
 }
 
 // tilesets --------------------------------------------------------*
