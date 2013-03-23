@@ -614,6 +614,32 @@ inventory_s::inventory_s ()
 //	containers[CSI->idRight]._invList = NULL;
 }
 
+const Container *inventory_t::_getNextCont (const Container *prev) const
+{
+	if (!prev)
+		return &containers[0];	/* the first one */
+	else if (prev >= &containers[CID_MAX - 1])
+		return NULL;			/* prev was the last one */
+	else
+		prev++;
+
+	return prev;
+}
+const Container *inventory_t::getNextCont (const Container *prev, bool inclTemp) const
+{
+	const Container *cont = prev;
+
+	while ((cont = _getNextCont(cont))) {
+		if (!inclTemp) {						/* if we don't want to inlude the temp containers ... */
+			if (cont == &containers[CID_FLOOR])
+				continue;						/* ...skip them ! */
+			if (cont == &containers[CID_EQUIP])
+				continue;
+		}
+		return cont;
+	}
+	return cont;
+}
 /**
  * @param[in] container The index of the container in the inventory to check the item in.
  * @param[in] od The type of item to check in the inventory.
@@ -799,11 +825,9 @@ bool inventory_t::canHoldItemWeight (containerIndex_t from, containerIndex_t to,
 float inventory_t::getWeight () const
 {
 	float weight = 0;
-
-	for (int containerID = 0; containerID < CID_MAX; containerID++) {
-		if (CSI->ids[containerID].temp)
-			continue;
-		for (invList_t *ic = getContainer(containerID); ic; ic = ic->getNext()) {
+	const Container *cont = NULL;
+	while ((cont = getNextCont(cont))) {
+		for (invList_t *ic = cont->_invList; ic; ic = ic->getNext()) {
 			weight += ic->getWeight();
 		}
 	}

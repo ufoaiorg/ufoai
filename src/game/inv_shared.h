@@ -503,6 +503,8 @@ typedef struct inventory_s {
 	int canHoldItem (const invDef_t *container, const objDef_t *od, const int x, const int y, const invList_t *ignoredItem) const;
 	bool canHoldItemWeight (containerIndex_t from, containerIndex_t to, const Item &item, int maxWeight) const;
 	bool holdsReactionFireWeapon () const;
+	const Container *_getNextCont (const Container *prev) const;
+	const Container *getNextCont (const Container *prev, bool inclTemp = false) const;
 } inventory_t;
 
 #define MAX_EQUIPDEFS   64
