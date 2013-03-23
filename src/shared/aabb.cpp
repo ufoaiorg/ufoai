@@ -110,6 +110,7 @@ void AABB::rotateAround (vec3_t origin, vec3_t angles) {
 	VectorRotate(m, center, newCenter);
 
 	/* short-circuit calculation of the rotated box half-extents */
+	/* shortcut is: instead of calculating all 8 AABB corners, use the symmetry by rotating box around it's center. */
 	VectorAbs(m[0]);
 	VectorAbs(m[1]);
 	VectorAbs(m[2]);
