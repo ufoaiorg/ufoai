@@ -126,6 +126,7 @@ void CP_UpdateCharacterData (linkedList_t *updateCharacters)
  * @param[in] msg The network buffer message. If this is NULL the character is updated, if this
  * is not NULL the data is stored in a temp buffer because the player can choose to retry
  * the mission and we have to catch this situation to not update the character data in this case.
+ * @param updateCharacters A LinkedList where to store the character data. One listitem per character.
  * @sa G_SendCharacterData
  * @sa GAME_SendCurrentTeamSpawningInfo
  * @sa E_Save
