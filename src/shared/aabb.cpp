@@ -24,6 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "aabb.h"
+#include "mathlib.h"
 
 AABB::AABB ()
 {
@@ -81,4 +82,45 @@ void AABB::add (const AABB& other)
 		if (other.maxs[i] > maxs[i])
 			maxs[i] = other.maxs[i];
 	}
+}
+
+/**
+ * @brief Rotates AABB around given origin point; note that it will expand the box unless all angles are multiples of 90 degrees
+ * @note Not fully verified so far
+ */
+void AABB::rotateAround (vec3_t origin, vec3_t angles) {
+	/* reject non-rotations */
+	if VectorEmpty(angles)
+		return;
+
+	/* construct box-centered coordinates (center and corners) */
+	vec3_t center, halfDiagonal;
+
+	VectorInterpolation(mins, maxs, 0.5, center);
+	VectorSubtract(maxs, center, halfDiagonal);
+
+	/* offset coordinate frame to rotation origin */
+	VectorSubtract(center, origin, center);
+
+	/* rotate center by given angles */
+	vec3_t m[3];
+	VectorCreateRotationMatrix(angles, m);
+
+	vec3_t newCenter;
+	VectorRotate(m, center, newCenter);
+
+	/* short-circuit calculation of the rotated box half-extents */
+	VectorAbs(m[0]);
+	VectorAbs(m[1]);
+	VectorAbs(m[2]);
+
+	vec3_t newHalfDiagonal;
+	VectorRotate(m, halfDiagonal, newHalfDiagonal);
+
+	/* de-offset coordinate frame from rotation origin */
+	VectorAdd(newCenter, origin, newCenter);
+
+	/* finally, combine results into new AABB */
+	VectorAdd(newCenter, newHalfDiagonal, maxs);
+	VectorSubtract(newCenter, newHalfDiagonal, mins);
 }

@@ -56,6 +56,12 @@ public:
 	inline void setMaxs (const vec3_t maxi);
 
 	/**
+	 * @brief Rotates bounding box around given origin point; note that it will expand the box unless all angles are multiples of 90 degrees
+	 * @note Not fully verified so far
+	 */
+	void rotateAround(vec3_t origin, vec3_t angles);
+
+	/**
 	 * @brief Checks if the aabb touches or intersects with the given aabb
 	 * @param[in] other The other aabb
 	 */
