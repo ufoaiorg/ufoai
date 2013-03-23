@@ -321,15 +321,13 @@ static inline void AII_CollectItem_ (void *data, const objDef_t *item, int amoun
  */
 static void AII_CarriedItems (const inventory_t *soldierInventory)
 {
-	containerIndex_t container;
 	Item *item;
 	equipDef_t *ed = &ccs.eMission;
 
-	for (container = 0; container < CID_MAX; container++) {
+	const Container *cont = NULL;
+	while ((cont = soldierInventory->getNextCont(cont))) {
 		/* Items on the ground are collected as ET_ITEM */
-		if (INVDEF(container)->temp)
-			continue;
-		for (item = soldierInventory->getContainer(container); item; item = item->getNext()) {
+		for (item = cont->_invList; item; item = item->getNext()) {
 			const objDef_t *itemType = item->def();
 			const objDef_t *ammo = item->ammo;
 			technology_t *tech = RS_GetTechForItem(itemType);
