@@ -145,7 +145,7 @@ void *_pico_realloc (void **ptr, size_t oldSize, size_t newSize)
  */
 char *_pico_clone_alloc (const char *str)
 {
-	char* cloned;
+	char *cloned;
 
 	/* sanity check */
 	if (str == NULL)

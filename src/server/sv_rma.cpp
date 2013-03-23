@@ -449,7 +449,7 @@ static bool SV_ParseMapTile (const char *filename, const char **text, MapInfo *m
  * @param errhead Error header
  * @return @c NULL if file has invalid format, @c the tilename of the cvar otherwise.
  */
-static const char *SV_GetCvarToken (const MapInfo *map, const Assembly *a, const char* token, const char *filename, const char **text, const char *errhead)
+static const char *SV_GetCvarToken (const MapInfo *map, const Assembly *a, const char *token, const char *filename, const char **text, const char *errhead)
 {
 	const cvar_t *cvar;
 

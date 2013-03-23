@@ -109,7 +109,7 @@ void PicoSetPrintFunc (void (*func) (int, const char*))
 		_pico_ptr_print = func;
 }
 
-static picoModel_t *PicoModuleLoadModel (const picoModule_t* pm, const char* fileName, picoByte_t* buffer, int bufSize,
+static picoModel_t *PicoModuleLoadModel (const picoModule_t* pm, const char *fileName, picoByte_t* buffer, int bufSize,
 		int frameNum)
 {
 	/* see whether this module can load the model file or not */

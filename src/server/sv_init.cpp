@@ -40,7 +40,7 @@ serverInstanceGame_t *sv;			/* local server */
  * @note the title string must be translated client side
  * @return Never NULL - mapname or maptitle (if defined in assembly)
  */
-static const char* SV_GetMapTitle (const MapInfo *map, const char* const mapname)
+static const char *SV_GetMapTitle (const MapInfo *map, const char* const mapname)
 {
 	assert(mapname);
 

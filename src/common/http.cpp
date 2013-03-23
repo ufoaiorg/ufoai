@@ -166,7 +166,7 @@ static void HTTP_ResolvURL (const char *url, char *buf, size_t size)
  * @brief Gets a specific url
  * @note Make sure, that you free the string that is returned by this function
  */
-static char* HTTP_GetURLInternal (const char *url)
+static char *HTTP_GetURLInternal (const char *url)
 {
 	dlhandle_t dl;
 	char buf[576];

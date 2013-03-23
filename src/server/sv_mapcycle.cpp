@@ -162,7 +162,7 @@ void SV_MapcycleClear (void)
  * @todo check for maps and valid gametypes here
  * @sa SV_MapcycleClear
  */
-static void SV_MapcycleAdd (const char* mapName, bool day, const char* gameType)
+static void SV_MapcycleAdd (const char *mapName, bool day, const char *gameType)
 {
 	mapcycle_t* const mapcycle = Mem_PoolAllocType(mapcycle_t, sv_genericPool);
 	mapcycle->map  = Mem_PoolStrDup(mapName, sv_genericPool, 0);

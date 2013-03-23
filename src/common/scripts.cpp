@@ -122,7 +122,7 @@ bool Com_GetConstIntFromNamespace (const char *space, const char *variable, int 
  * @sa Com_RegisterConstInt
  * @sa Com_ParseValue
  */
-const char* Com_GetConstVariable (const char *space, int value)
+const char *Com_GetConstVariable (const char *space, int value)
 {
 	com_constNameInt_t *a;
 	const size_t namespaceLength = strlen(space);
@@ -272,7 +272,7 @@ void Com_RegisterConstList (const constListEntry_t constList[])
  * Find name type id by is name
  * @return id of the name type, else -1 if not found
  */
-static int Com_FindNameType (const char* nameType)
+static int Com_FindNameType (const char *nameType)
 {
 	int i;
 	for (i = 0; i < NAME_NUM_TYPES; i++) {
@@ -443,7 +443,7 @@ static char parseErrorMessage[256];
  * Returns the last error message
  * @return string that contains the last error message
  */
-const char* Com_GetLastParseError (void)
+const char *Com_GetLastParseError (void)
 {
 	return parseErrorMessage;
 }
@@ -2018,8 +2018,8 @@ static void Com_ParseEquipment (const char *name, const char **text)
 				if (LIST_Count(list) != 2) {
 					Com_Error(ERR_DROP, "Com_ParseEquipment: equipment item tuple must contains 2 elements (id amount)");
 				}
-				const char* itemToken = (char*)list->data;
-				const char* amountToken = (char*)list->next->data;
+				const char *itemToken = (char*)list->data;
+				const char *amountToken = (char*)list->next->data;
 
 				const objDef_t *od;
 				od = INVSH_GetItemByID(itemToken);
@@ -2042,8 +2042,8 @@ static void Com_ParseEquipment (const char *name, const char **text)
 				if (LIST_Count(list) != 2) {
 					Com_Error(ERR_DROP, "Com_ParseEquipment: equipment aircraft tuple must contains 2 elements (id amount)");
 				}
-				const char* aircraftToken = (char*)list->data;
-				const char* amountToken = (char*)list->next->data;
+				const char *aircraftToken = (char*)list->data;
+				const char *amountToken = (char*)list->next->data;
 
 				humanAircraftType_t type;
 				type = Com_DropShipShortNameToID(aircraftToken);
@@ -2139,7 +2139,7 @@ static teamDef_t::model_t const* Com_GiveModel (int gender, const teamDef_t *td)
  * @param[in] gender The gender of the actor
  * @param[in] soundType Which sound category (actorSound_t)
  */
-const char* Com_GetActorSound (teamDef_t* td, int gender, actorSound_t soundType)
+const char *Com_GetActorSound (teamDef_t* td, int gender, actorSound_t soundType)
 {
 	int random, j;
 	linkedList_t *list;
@@ -2393,15 +2393,15 @@ static void Com_ParseActorModels (const char *name, const char **text, teamDef_t
 		}
 
 		linkedList_t *element = list;
-		const char* pathToken = (const char*)element->data;
+		const char *pathToken = (const char*)element->data;
 		element = element->next;
-		const char* bodyToken = (const char*)element->data;
+		const char *bodyToken = (const char*)element->data;
 		element = element->next;
-		const char* headToken = (const char*)element->data;
+		const char *headToken = (const char*)element->data;
 		element = element->next;
-		const char* bodySkinToken = (const char*)element->data;
+		const char *bodySkinToken = (const char*)element->data;
 		element = element->next;
-		const char* headSkinToken = (const char*)element->data;
+		const char *headSkinToken = (const char*)element->data;
 
 		teamDef_t::model_t model;
 		model.path = Mem_StrDup(pathToken);
@@ -3168,7 +3168,7 @@ humanAircraftType_t Com_DropShipShortNameToID (const char *token)
  * @brief Translate DropShip type to short name.
  * @sa Com_DropShipShortNameToID
  */
-const char* Com_DropShipTypeToShortName (humanAircraftType_t type)
+const char *Com_DropShipTypeToShortName (humanAircraftType_t type)
 {
 	return Com_ValueToStr(&type, V_AIRCRAFTTYPE, 0);
 }
@@ -3191,7 +3191,7 @@ ufoType_t Com_UFOShortNameToID (const char *token)
  * @sa UFO_TypeToName
  * @sa Com_UFOShortNameToID
  */
-const char* Com_UFOTypeToShortName (ufoType_t type)
+const char *Com_UFOTypeToShortName (ufoType_t type)
 {
 	return Com_ValueToStr(&type, V_UFO, 0);
 }
@@ -3200,7 +3200,7 @@ const char* Com_UFOTypeToShortName (ufoType_t type)
  * @brief Translate UFO type to short name when UFO is crashed.
  * @sa Com_UFOTypeToShortName
  */
-const char* Com_UFOCrashedTypeToShortName (ufoType_t type)
+const char *Com_UFOCrashedTypeToShortName (ufoType_t type)
 {
 	return Com_ValueToStr(&type, V_UFOCRASHED, 0);
 }
