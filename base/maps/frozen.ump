@@ -65,7 +65,7 @@ tile +n05
 }
 
 tile +n06
-	// a hill
+	// a hill, A9
 {
 5 4
 0		0		0		0		0
@@ -75,7 +75,7 @@ tile +n06
 }
 
 tile +n07
-	// a pile of strains and three small trees, A9
+	// a pile of strains and three small trees
 {
 4 3
 0		0		0		0
@@ -101,7 +101,7 @@ tile +river_lake
 {
 8 3
 0		0		0		v		0		0		0		0
-0		+a		+a		+a		+a		+a		+a		0
+0		+a		+a		+v		+a		+a		+a		0
 0		x		x		x		x		x		x		x
 }
 
@@ -140,19 +140,21 @@ tile +river_v_2
 tile +river_se
 	// river turning
 {
-3 3
-0		0		0
-0		+avh	h
-0		v		0
+4 4
+0		0		0		0
+0		+a		+ah		h
+0		+av		0		0
+0		v		0		0
 }
 
 tile +river_sw
 	// river turning
 {
-3 3
-0		0		0
-h		+avh	0
-0		v		0
+4 4
+0		0		0		0
+h		+ah		+a		0
+0		0		+av		0
+0		0		v		0
 }
 
 // Tiles with houses on them ---------------------------------------*
@@ -169,12 +171,13 @@ tile +h01
 
 tile +h02
 	// two small, abandoned houses in the wilderness, some trees, A12
+	// in case there is no UFO, this is used for providing alien spawnpoints in the map
 {
 5 4
-0		0		0		0		0
-0		+a		+a		+a		0
-0		+a		0		+a		0
-0		0		0		0		0
+0		a		a		a		0
+a		+c		+c		+c		a
+a		+c		a		+c		a
+0		a		0		a		0
 }
 
 tile +h03
@@ -378,10 +381,27 @@ tile +mp_team2
 	// Small building (multiplayer team 2)
 {
 3 4
-0		0		0
-0		+a		0
-0		+a		0
-0		0		0
+0		a		0
+a		+c		a
+a		+c		a
+0		a		0
+}
+
+// tilesets --------------------------------------------------------*
+
+tileset river_h {
+	+river_h_1
+	+river_h_2
+}
+
+tileset river_v {
+	+river_v_1
+	+river_v_2
+}
+
+tileset river_bend {
+	+river_se
+	+river_sw
 }
 
 // Map assemblies for campaign / skirmish --------------------------*
@@ -457,20 +477,20 @@ assembly lake_ice
 {
 size "6 7"
 title "_Frozen"
-fix +h01		"0 1"
-fix +h03		"4 1"
-fix +i07		"2 5"
-fix +n06		"3 2"
-fix +n08		"0 3"
-fix +river_lake	"0 0"
-fix +river_v_1	"2 1"
-fix +river_v_2	"2 2"
-fix +river_v_1	"2 3"
-fix +river_se	"2 4"
-fix +river_h_1	"3 4"
-fix +river_h_1	"4 4"
-fix +river_h_1	"5 4"
-fix +start		"5 1"
+fix +h01 "0 1"
+fix +h03 "4 1"
+fix +i07 "2 5"
+fix +n06 "3 2"
+fix +n08 "0 3"
+fix +river_lake "0 0"
+fix +river_v_1 "2 1"
+fix +river_v_2 "2 2"
+fix +river_v_1 "2 3"
+fix +river_se "2 4"
+fix +river_h_1 "3 4"
+fix +river_h_1 "4 4"
+fix +river_h_1 "5 4"
+fix +start "5 1"
 +n01 "0 4"
 +n02 "0 1"
 +n03 "0 4"
@@ -481,7 +501,7 @@ fix +start		"5 1"
 
 assembly nature_medium
 {
-size "8 7"
+size "9 8"
 title "_Frozen"
 multiplayer +mp_team2
 +h02 "0 1"
@@ -492,13 +512,18 @@ multiplayer +mp_team2
 +n05 "0 4"
 +n06 "0 1"
 +n07 "0 1"
++n08 "0 1"
++river_lake "0 1"
+tileset river_bend "0 1"
+tileset river_h "0 9"
+tileset river_v "0 8"
 *rm_drop +craft_drop_firebird "1 1"
 *rm_ufo +craft_ufo_harvester "1 1"
 }
 
 assembly nature_small
 {
-size "6 6"
+size "7 7"
 title "_Frozen"
 multiplayer +mp_team2
 +h02 "0 1"
@@ -508,6 +533,11 @@ multiplayer +mp_team2
 +n04 "0 2"
 +n06 "0 1"
 +n07 "0 2"
++n08 "0 1"
++river_lake "0 1"
+tileset river_bend "0 1"
+tileset river_h "0 6"
+tileset river_v "0 6"
 *rm_drop +craft_drop_firebird "1 1"
 *rm_ufo +craft_ufo_scout "1 1"
 }
@@ -517,13 +547,23 @@ assembly nature_small_noufo
 size "6 6"
 title "_Frozen"
 multiplayer +mp_team2
+size "7 7"
+title "_Frozen"
+multiplayer +mp_team2
 +h02 "1 1"
++h03 "0 1"
 +n01 "0 4"
 +n02 "0 4"
 +n03 "0 4"
 +n04 "0 4"
++n05 "0 4"
 +n06 "0 1"
 +n07 "0 3"
++n08 "0 1"
++river_lake "0 1"
+tileset river_bend "0 1"
+tileset river_h "0 6"
+tileset river_v "0 6"
 *rm_drop +craft_drop_firebird "1 1"
 }
 
@@ -569,5 +609,29 @@ multiplayer +mp_team2
 +i05 "0 2"
 +i06 "0 3"
 +i09 "0 2"
+*rm_drop +craft_drop_firebird "1 1"
+}
+
+// Map test assembly -----------------------------------------------*
+
+assembly test
+{
+size "7 7"
+title "_Frozen"
+multiplayer +mp_team2
++h02 "1 1"
++h03 "0 1"
++n01 "0 4"
++n02 "0 4"
++n03 "0 4"
++n04 "0 4"
++n05 "0 4"
++n06 "0 1"
++n07 "0 3"
++n08 "0 1"
++river_lake "0 1"
+tileset river_bend "0 1"
+tileset river_h "0 6"
+tileset river_v "0 6"
 *rm_drop +craft_drop_firebird "1 1"
 }
