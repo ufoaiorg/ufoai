@@ -94,6 +94,17 @@ r		+ar		+ar		0
 0		0		0		0
 }
 
+tile +n09
+	// a huge rock, western part, A-
+{
+4 5
+0		0		0		0
+0		+ar		+ar		r
+0		+ar		+ar		r
+0		+ar		+ar		r
+0		0		0		0
+}
+
 // River Tiles -----------------------------------------------------*
 
 tile +river_lake
@@ -513,6 +524,7 @@ multiplayer +mp_team2
 +n06 "0 1"
 +n07 "0 1"
 +n08 "0 1"
++n09 "0 1"
 +river_lake "0 1"
 tileset river_bend "0 1"
 tileset river_h "0 9"
@@ -534,6 +546,7 @@ multiplayer +mp_team2
 +n06 "0 1"
 +n07 "0 2"
 +n08 "0 1"
++n09 "0 1"
 +river_lake "0 1"
 tileset river_bend "0 1"
 tileset river_h "0 6"
@@ -560,6 +573,7 @@ multiplayer +mp_team2
 +n06 "0 1"
 +n07 "0 3"
 +n08 "0 1"
++n09 "0 1"
 +river_lake "0 1"
 tileset river_bend "0 1"
 tileset river_h "0 6"

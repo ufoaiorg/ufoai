@@ -318,6 +318,7 @@ base/maps/frozen/st_n05.map | GNU General Public License 2.0 or later
 base/maps/frozen/st_n06.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | lake_ice_big.map
 base/maps/frozen/st_n07.map | GNU General Public License 2.0 or later | | base/maps/frozen/st_h03.map
 base/maps/frozen/st_n08.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | lake_ice_big.map
+base/maps/frozen/st_n09.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | base/maps/frozen/st_n08.map
 base/maps/frozen/st_river_h_1.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | lake_ice_big.map
 base/maps/frozen/st_river_h_2.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | lake_ice_big.map
 base/maps/frozen/st_river_lake.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | lake_ice_big.map
