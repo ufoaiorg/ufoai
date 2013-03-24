@@ -46,7 +46,7 @@ void CL_EntPerish (const eventRegister_t *self, dbuffer *msg)
 
 	switch (le->type) {
 	case ET_ITEM:
-		cls.i.emptyContainer(&le->inv, INVDEF(CID_FLOOR));
+		cls.i.emptyContainer(&le->inv, CID_FLOOR);
 
 		/* search owners (there can be many, some of them dead) */
 		actor = NULL;

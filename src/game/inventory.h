@@ -57,7 +57,7 @@ public:
 	bool tryAddToInventory (inventory_t* const inv, const Item *const item, const invDef_t *container);
 	void destroyInventory (inventory_t* const inv);
 	void destroyInventoryInterface(void);
-	void emptyContainer (inventory_t* const inv, const invDef_t *container);
+	void emptyContainer (inventory_t* const inv, const containerIndex_t container);
 
 	void EquipActor (character_t* const chr, const equipDef_t *ed, int maxWeight);
 

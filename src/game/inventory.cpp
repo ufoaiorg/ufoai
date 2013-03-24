@@ -499,11 +499,11 @@ bool InventoryInterface::tryAddToInventory (inventory_t* const inv, const Item *
  * e.g. the container of a dropped weapon in tactical mission (ET_ITEM)
  * in every other case just set the pointer to NULL for a temp container like idEquip or CID_FLOOR
  */
-void InventoryInterface::emptyContainer (inventory_t* const inv, const invDef_t *container)
+void InventoryInterface::emptyContainer (inventory_t* const inv, const containerIndex_t containerId)
 {
 	invList_t *ic;
 
-	ic = inv->getContainer(container->id);
+	ic = inv->getContainer(containerId);
 
 	while (ic) {
 		invList_t *old = ic;
@@ -511,7 +511,7 @@ void InventoryInterface::emptyContainer (inventory_t* const inv, const invDef_t 
 		removeInvList(old);
 	}
 
-	inv->resetContainer(container->id);
+	inv->resetContainer(containerId);
 }
 
 /**
@@ -531,7 +531,7 @@ void InventoryInterface::destroyInventory (inventory_t* const inv)
 	for (container = 0; container < CID_MAX; container++) {
 		const invDef_t *invDef = &this->csi->ids[container];
 		if (!invDef->temp)
-			emptyContainer(inv, invDef);
+			emptyContainer(inv, invDef->id);
 	}
 
 	OBJZERO(*inv);
