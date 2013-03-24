@@ -636,7 +636,7 @@ const Container *inventory_t::getNextCont (const Container *prev, bool inclTemp)
 			if (cont == &containers[CID_EQUIP])
 				continue;
 		}
-		return cont;
+		break;
 	}
 	return cont;
 }
