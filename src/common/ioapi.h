@@ -40,8 +40,8 @@ extern "C" {
 #endif
 
 typedef voidpf (ZCALLBACK *open_file_func) OF((voidpf opaque, const char *filename, int mode));
-typedef uLong  (ZCALLBACK *read_file_func) OF((voidpf opaque, voidpf stream, void* buf, uLong size));
-typedef uLong  (ZCALLBACK *write_file_func) OF((voidpf opaque, voidpf stream, const void* buf, uLong size));
+typedef uLong  (ZCALLBACK *read_file_func) OF((voidpf opaque, voidpf stream, void *buf, uLong size));
+typedef uLong  (ZCALLBACK *write_file_func) OF((voidpf opaque, voidpf stream, const void *buf, uLong size));
 typedef long   (ZCALLBACK *tell_file_func) OF((voidpf opaque, voidpf stream));
 typedef long   (ZCALLBACK *seek_file_func) OF((voidpf opaque, voidpf stream, uLong offset, int origin));
 typedef int    (ZCALLBACK *close_file_func) OF((voidpf opaque, voidpf stream));

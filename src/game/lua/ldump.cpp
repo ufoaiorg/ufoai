@@ -18,7 +18,7 @@
 typedef struct DumpState_s {
  lua_State* L;
  lua_Writer writer;
- void* data;
+ void *data;
  int strip;
  int status;
 } DumpState;
@@ -26,7 +26,7 @@ typedef struct DumpState_s {
 #define DumpMem(b,n,size,D)	DumpBlock(b,(n)*(size),D)
 #define DumpVar(x,D)	 	DumpMem(&x,1,sizeof(x),D)
 
-static void DumpBlock(const void* b, size_t size, DumpState* D)
+static void DumpBlock(const void *b, size_t size, DumpState* D)
 {
  if (D->status==0)
  {
@@ -52,7 +52,7 @@ static void DumpNumber(lua_Number x, DumpState* D)
  DumpVar(x,D);
 }
 
-static void DumpVector(const void* b, int n, size_t size, DumpState* D)
+static void DumpVector(const void *b, int n, size_t size, DumpState* D)
 {
  DumpInt(n,D);
  DumpMem(b,n,size,D);
@@ -150,7 +150,7 @@ static void DumpHeader(DumpState* D)
 /*
 ** dump Lua function as precompiled chunk
 */
-int luaU_dump (lua_State* L, const Proto* f, lua_Writer w, void* data, int strip)
+int luaU_dump (lua_State* L, const Proto* f, lua_Writer w, void *data, int strip)
 {
  DumpState D;
  D.L=L;

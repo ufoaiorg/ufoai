@@ -49,7 +49,7 @@ static voidpf ZCALLBACK fopen_file_func (voidpf opaque, const char *filename, in
 }
 
 
-static uLong ZCALLBACK fread_file_func (voidpf opaque, voidpf stream, void* buf, uLong size)
+static uLong ZCALLBACK fread_file_func (voidpf opaque, voidpf stream, void *buf, uLong size)
 {
     uLong ret;
     ret = (uLong)fread(buf, 1, (size_t)size, (FILE *)stream);
@@ -57,7 +57,7 @@ static uLong ZCALLBACK fread_file_func (voidpf opaque, voidpf stream, void* buf,
 }
 
 
-static uLong ZCALLBACK fwrite_file_func (voidpf opaque, voidpf stream, const void* buf, uLong size)
+static uLong ZCALLBACK fwrite_file_func (voidpf opaque, voidpf stream, const void *buf, uLong size)
 {
     uLong ret;
     ret = (uLong)fwrite(buf, 1, (size_t)size, (FILE *)stream);

@@ -46,7 +46,7 @@ static void error(LoadState* S, const char *why)
 #define LoadVar(S,x)		LoadMem(S,&x,1,sizeof(x))
 #define LoadVector(S,b,n,size)	LoadMem(S,b,n,size)
 
-static void LoadBlock(LoadState* S, void* b, size_t size)
+static void LoadBlock(LoadState* S, void *b, size_t size)
 {
  size_t r=luaZ_read(S->Z,b,size);
  IF (r!=0, "unexpected end");

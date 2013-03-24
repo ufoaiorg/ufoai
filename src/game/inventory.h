@@ -30,7 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "q_shared.h"
 
 typedef struct inventoryImport_s {
-	void (*Free) (void* data);
+	void (*Free) (void *data);
 
 	void (*FreeAll) (void);
 

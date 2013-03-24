@@ -497,7 +497,7 @@ typedef struct cmd_function_s {
 	const char *description;
 	xcommand_t function;
 	int (*completeParam) (const char *partial, const char **match);
-	void* userdata;
+	void *userdata;
 } cmd_function_t;
 
 static int cmd_argc;
@@ -714,7 +714,7 @@ void Cmd_AddParamCompleteFunction (const char *cmd_name, int (*function)(const c
  * @sa Cmd_CompleteCommandParameters
  * @sa Cmd_AddUserdata
  */
-void* Cmd_GetUserdata (const char *cmd_name)
+void *Cmd_GetUserdata (const char *cmd_name)
 {
 	cmd_function_t *cmd;
 	unsigned int hash;
@@ -743,7 +743,7 @@ void* Cmd_GetUserdata (const char *cmd_name)
  * @sa Cmd_CompleteCommandParameters
  * @sa Cmd_GetUserdata
  */
-void Cmd_AddUserdata (const char *cmd_name, void* userdata)
+void Cmd_AddUserdata (const char *cmd_name, void *userdata)
 {
 	cmd_function_t *cmd;
 	unsigned int hash;

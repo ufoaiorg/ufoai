@@ -341,7 +341,7 @@ void *_Mem_Alloc (size_t size, bool zeroFill, memPool_t *pool, const int tagNum,
 	return Mem_BlockToPtr(mem);
 }
 
-void* _Mem_ReAlloc (void *ptr, size_t size, const char *fileName, const int fileLine)
+void *_Mem_ReAlloc (void *ptr, size_t size, const char *fileName, const int fileLine)
 {
 	memPool_t *pool;
 	void *newPtr;
