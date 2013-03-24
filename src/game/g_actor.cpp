@@ -533,7 +533,7 @@ int G_ActorGetContentFlags (const vec3_t origin)
  * @sa event PA_INVMOVE
  * @sa AI_ActorThink
  */
-bool G_ActorInvMove (Edict *ent, const invDef_t *from, invList_t *fItem, const invDef_t *to, int tx, int ty, bool checkaction)
+bool G_ActorInvMove (Edict *ent, const invDef_t *from, invList_t *fItem, const invDef_t *toContType, int tx, int ty, bool checkaction)
 {
 	Edict *floor;
 	bool newFloor;
@@ -553,7 +553,7 @@ bool G_ActorInvMove (Edict *ent, const invDef_t *from, invList_t *fItem, const i
 
 	/* Store the location of 'to' BEFORE actually moving items with moveInInventory
 	 * so in case we swap ammo the client can be updated correctly */
-	tc = ent->chr.inv.getItemAtPos(to, tx, ty);
+	tc = ent->chr.inv.getItemAtPos(toContType, tx, ty);
 	if (tc)
 		toItemBackup = *tc;
 	else
@@ -569,14 +569,14 @@ bool G_ActorInvMove (Edict *ent, const invDef_t *from, invList_t *fItem, const i
 	if (checkaction && !G_ActionCheckForCurrentTeam(&player, ent, 1))
 		return false;
 
-	if (!ent->chr.inv.canHoldItemWeight(from->id, to->id, *fItem, ent->chr.score.skills[ABILITY_POWER])) {
+	if (!ent->chr.inv.canHoldItemWeight(from->id, toContType->id, *fItem, ent->chr.score.skills[ABILITY_POWER])) {
 		G_ClientPrintf(player, PRINT_HUD, _("This soldier can not carry anything else."));
 		return false;
 	}
 
 	/* "get floor ready" - searching for existing floor-edict */
 	floor = G_GetFloorItems(ent);
-	if (to->isFloorDef() && !floor) {
+	if (toContType->isFloorDef() && !floor) {
 		/* We are moving to the floor, but no existing edict for this floor-tile found -> create new one */
 		floor = G_SpawnFloor(ent->pos);
 		newFloor = true;
@@ -594,7 +594,7 @@ bool G_ActorInvMove (Edict *ent, const invDef_t *from, invList_t *fItem, const i
 	if (tx == NONE) {
 		item2 = ent->chr.inv.getItemAtPos(from, fItem->getX(), fItem->getY());
 		if (item2)
-			ent->chr.inv.findSpace(to, item2, &tx, &ty, fItem);
+			ent->chr.inv.findSpace(toContType, item2, &tx, &ty, fItem);
 		if (tx == NONE)
 			return false;
 	}
@@ -607,7 +607,7 @@ bool G_ActorInvMove (Edict *ent, const invDef_t *from, invList_t *fItem, const i
 	/* Temporary decrease ent->TU to make moveInInventory do what expected. */
 	G_ActorUseTU(ent, reservedTU);
 	/* Try to actually move the item and check the return value after restoring valid ent->TU. */
-	ia = game.i.moveInInventory(&ent->chr.inv, from, fItem, to, tx, ty, checkaction ? &ent->TU : NULL, &item2);
+	ia = game.i.moveInInventory(&ent->chr.inv, from, fItem, toContType, tx, ty, checkaction ? &ent->TU : NULL, &item2);
 	/* Now restore the original ent->TU and decrease it for TU used for inventory move. */
 	G_ActorSetTU(ent, originalTU - (originalTU - reservedTU - ent->TU));
 
@@ -642,7 +642,7 @@ bool G_ActorInvMove (Edict *ent, const invDef_t *from, invList_t *fItem, const i
 		} else {
 			/* Floor is empty, remove the edict (from server + client) if we are
 			 * not moving to it. */
-			if (!to->isFloorDef()) {
+			if (!toContType->isFloorDef()) {
 				G_EventPerish(floor);
 				G_FreeEdict(floor);
 			} else
@@ -660,12 +660,12 @@ bool G_ActorInvMove (Edict *ent, const invDef_t *from, invList_t *fItem, const i
 
 	if (ia == IA_RELOAD || ia == IA_RELOAD_SWAP) {
 		/* reload */
-		if (to->isFloorDef())
+		if (toContType->isFloorDef())
 			mask = G_VisToPM(floor->visflags);
 		else
 			mask = G_TeamToPM(ent->team);
 
-		G_EventInventoryReload(to->isFloorDef() ? floor : ent, mask, &item, to, item2);
+		G_EventInventoryReload(toContType->isFloorDef() ? floor : ent, mask, &item, toContType, item2);
 
 		if (ia == IA_RELOAD) {
 			return true;
@@ -675,12 +675,12 @@ bool G_ActorInvMove (Edict *ent, const invDef_t *from, invList_t *fItem, const i
 			item.setDef(toItemBackup.ammo);
 			item.rotated = fromItemBackup.rotated;
 			item.amount = toItemBackup.amount;
-			to = from;
-			if (to->isFloorDef()) {
+			toContType = from;
+			if (toContType->isFloorDef()) {
 				/* moveInInventory placed the swapped ammo in an available space, check where it was placed
 				 * so we can place it at the same place in the client, otherwise since fItem hasn't been removed
 				 * this could end in a different place in the client - will cause an error if trying to use it again */
-				item2 = ent->chr.inv.findInContainer(to->id, &item);
+				item2 = ent->chr.inv.findInContainer(toContType->id, &item);
 				assert(item2);
 				fromItemBackup = item;
 				fromItemBackup.setX(item2->getX());
@@ -692,7 +692,7 @@ bool G_ActorInvMove (Edict *ent, const invDef_t *from, invList_t *fItem, const i
 	}
 
 	/* We moved an item to the floor - check how the client needs to be updated. */
-	if (to->isFloorDef()) {
+	if (toContType->isFloorDef()) {
 		/* we have to link the temp floor container to the new floor edict or add
 		 * the item to an already existing floor edict - the floor container that
 		 * is already linked might be from a different entity (this might happen
@@ -707,7 +707,7 @@ bool G_ActorInvMove (Edict *ent, const invDef_t *from, invList_t *fItem, const i
 			/* use the backup item to use the old amount values, because the clients have to use the same actions
 			 * on the original amount. Otherwise they would end in a different amount of items as the server (+1) */
 			G_EventInventoryAdd(floor, G_VisToPM(floor->visflags), 1);
-			G_WriteItem(&fromItemBackup, to, tx, ty);
+			G_WriteItem(&fromItemBackup, toContType, tx, ty);
 			G_EventEnd();
 			/* Couldn't remove it before because that would remove the le from the client and would cause battlescape to crash
 			 * when trying to add back the swapped ammo above */
@@ -716,7 +716,7 @@ bool G_ActorInvMove (Edict *ent, const invDef_t *from, invList_t *fItem, const i
 		}
 	} else {
 		G_EventInventoryAdd(ent, G_TeamToPM(ent->team), 1);
-		G_WriteItem(&item, to, tx, ty);
+		G_WriteItem(&item, toContType, tx, ty);
 		G_EventEnd();
 	}
 
@@ -728,9 +728,9 @@ bool G_ActorInvMove (Edict *ent, const invDef_t *from, invList_t *fItem, const i
 		if (from->isRightDef() || from->isLeftDef()) {
 			G_EventInventoryDelete(ent, mask, from, fx, fy);
 		}
-		if (to->isRightDef() || to->isLeftDef()) {
+		if (toContType->isRightDef() || toContType->isLeftDef()) {
 			G_EventInventoryAdd(ent, mask, 1);
-			G_WriteItem(&item, to, tx, ty);
+			G_WriteItem(&item, toContType, tx, ty);
 			G_EventEnd();
 		}
 	}
