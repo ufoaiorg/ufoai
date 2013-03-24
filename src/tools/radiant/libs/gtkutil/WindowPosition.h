@@ -1,5 +1,4 @@
-#ifndef WINDOWPOSITION_H_
-#define WINDOWPOSITION_H_
+#pragma once
 
 #include <gtk/gtkwindow.h>
 #include "math/Vector2.h"
@@ -76,5 +75,3 @@ private:
 }; // class WindowPosition
 
 } // namespace gtkutil
-
-#endif /*WINDOWPOSITION_H_*/

@@ -1,5 +1,4 @@
-#ifndef BLOCKINGTRANSIENTDIALOG_H_
-#define BLOCKINGTRANSIENTDIALOG_H_
+#pragma once
 
 #include "TransientWindow.h"
 
@@ -63,5 +62,3 @@ class BlockingTransientWindow: public TransientWindow {
 };
 
 }
-
-#endif /*BLOCKINGTRANSIENTDIALOG_H_*/

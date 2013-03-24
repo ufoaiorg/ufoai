@@ -1,5 +1,4 @@
-#ifndef EDITORWIDGET_H_
-#define EDITORWIDGET_H_
+#pragma once
 
 #include "Widget.h"
 
@@ -46,5 +45,3 @@ namespace gtkutil
 	};
 
 }
-
-#endif

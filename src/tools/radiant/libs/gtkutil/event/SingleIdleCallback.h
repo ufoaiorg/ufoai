@@ -1,5 +1,4 @@
-#ifndef SINGLEIDLECALLBACK_H_
-#define SINGLEIDLECALLBACK_H_
+#pragma once
 
 #include <glib.h>
 
@@ -99,5 +98,3 @@ class SingleIdleCallback {
 };
 
 }
-
-#endif /*SINGLEIDLECALLBACK_H_*/

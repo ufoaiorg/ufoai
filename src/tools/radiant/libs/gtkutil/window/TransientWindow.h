@@ -1,5 +1,4 @@
-#ifndef TRANSIENTDIALOG_H_
-#define TRANSIENTDIALOG_H_
+#pragma once
 
 #include <gtk/gtkwindow.h>
 #include "gtkutil/pointer.h"
@@ -208,5 +207,3 @@ class TransientWindow {
 };
 
 }
-
-#endif /*TRANSIENTDIALOG_H_*/

@@ -1,5 +1,4 @@
-#ifndef FLOATTOOLS_H_
-#define FLOATTOOLS_H_
+#pragma once
 
 /*	greebo: this contains some handy (?) functions for manipulating float variables
  */
@@ -62,5 +61,3 @@ inline Element float_mod (const Element& self, const ModulusElement& modulus)
 {
 	return float_mod_range(Element(fmod(static_cast<double> (self), static_cast<double> (modulus))), modulus);
 }
-
-#endif /*FLOATTOOLS_H_*/

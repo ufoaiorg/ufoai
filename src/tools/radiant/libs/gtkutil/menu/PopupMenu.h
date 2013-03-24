@@ -1,5 +1,4 @@
-#ifndef POPUPMENU_H_
-#define POPUPMENU_H_
+#pragma once
 
 #include <gtk/gtkwidget.h>
 #include <gtk/gtkmenuitem.h>
@@ -114,5 +113,3 @@ namespace gtkutil
 			}
 	};
 } // namespace gtkutil
-
-#endif /*POPUPMENU_H_*/

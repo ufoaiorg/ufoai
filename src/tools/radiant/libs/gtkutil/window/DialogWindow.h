@@ -1,5 +1,4 @@
-#ifndef DIALOGWINDOW_H_
-#define DIALOGWINDOW_H_
+#pragma once
 
 #include "TransientWindow.h"
 
@@ -58,5 +57,3 @@ class DialogWindow: public TransientWindow
 }; // class DialogWindow
 
 } // namespace ui
-
-#endif /*DIALOGWINDOW_H_*/
