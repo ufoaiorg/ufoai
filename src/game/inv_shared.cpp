@@ -856,7 +856,7 @@ invList_t *inventory_t::getHeadgearContainer () const
 
 invList_t *inventory_t::getHolsterContainer () const
 {
-	return getContainer(CSI->idHolster);
+	return getContainer(CID_HOLSTER);
 }
 
 invList_t *inventory_t::getFloorContainer () const

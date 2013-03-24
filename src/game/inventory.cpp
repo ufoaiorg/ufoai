@@ -656,7 +656,7 @@ int InventoryInterface::PackAmmoAndWeapon (character_t* const chr, const objDef_
 	if (!packed)
 		packed = tryAddToInventory(inv, &item, &csi->ids[CID_BELT]);
 	if (!packed)
-		packed = tryAddToInventory(inv, &item, &csi->ids[csi->idHolster]);
+		packed = tryAddToInventory(inv, &item, &csi->ids[CID_HOLSTER]);
 	if (!packed)
 		return 0;
 

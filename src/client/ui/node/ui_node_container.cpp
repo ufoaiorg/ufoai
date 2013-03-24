@@ -720,7 +720,7 @@ void UI_ContainerNodeAutoPlaceItem (uiNode_t* node, invList_t *ic)
 		/* ammo or item */
 		} else if (ic->def()->isAmmo()) {
 			/* Finally try left and right hand. There is no other place to put it now. */
-			const containerIndex_t idxArray[] = { CID_BELT, csi.idHolster, CID_BACKPACK, CID_LEFT, csi.idRight };
+			const containerIndex_t idxArray[] = { CID_BELT, CID_HOLSTER, CID_BACKPACK, CID_LEFT, csi.idRight };
 			const size_t size = lengthof(idxArray);
 			unsigned int i;
 			for (i = 0; i < size; i++) {
@@ -736,7 +736,7 @@ void UI_ContainerNodeAutoPlaceItem (uiNode_t* node, invList_t *ic)
 			} else {
 				/* left and right are single containers, but this might change - it's cleaner to check
 				 * for available space here, too */
-				const containerIndex_t idxArray[] = { csi.idRight, CID_BELT, csi.idHolster, CID_BACKPACK, CID_LEFT };
+				const containerIndex_t idxArray[] = { csi.idRight, CID_BELT, CID_HOLSTER, CID_BACKPACK, CID_LEFT };
 				const size_t size = lengthof(idxArray);
 				invList_t *tItem = NULL;
 				unsigned int i;
