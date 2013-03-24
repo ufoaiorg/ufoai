@@ -30,7 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @brief alien cargo entry
  */
 typedef struct alienCargo_s {
-	const teamDef_t* teamDef;		/**< Pointer to type (team) of alien race in global csi.teamDef array. */
+	const teamDef_t *teamDef;		/**< Pointer to type (team) of alien race in global csi.teamDef array. */
 	int alive;						/**< Amount of live captured aliens. */
 	int dead;						/**< Amount of alien corpses. */
 } alienCargo_t;

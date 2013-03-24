@@ -2137,7 +2137,7 @@ static teamDef_t::model_t const* Com_GiveModel (int gender, const teamDef_t *td)
  * @param[in] gender The gender of the actor
  * @param[in] soundType Which sound category (actorSound_t)
  */
-const char *Com_GetActorSound (teamDef_t* td, int gender, actorSound_t soundType)
+const char *Com_GetActorSound (teamDef_t *td, int gender, actorSound_t soundType)
 {
 	int random, j;
 	linkedList_t *list;
@@ -2171,7 +2171,7 @@ const char *Com_GetActorSound (teamDef_t* td, int gender, actorSound_t soundType
  * found in the teamDef array
  * @param[in] team The team id (given in ufo-script files)
  */
-const teamDef_t* Com_GetTeamDefinitionByID (const char *team)
+const teamDef_t *Com_GetTeamDefinitionByID (const char *team)
 {
 	int i;
 
@@ -2355,7 +2355,7 @@ static void Com_ParseActorNames (const char *name, const char **text)
  * @sa Com_ParseNames
  * @sa Com_ParseScripts
  */
-static void Com_ParseActorModels (const char *name, const char **text, teamDef_t* td)
+static void Com_ParseActorModels (const char *name, const char **text, teamDef_t *td)
 {
 	const char *errhead = "Com_ParseActorModels: unexpected end of file (actors ";
 	const char *token;
@@ -2420,7 +2420,7 @@ static void Com_ParseActorModels (const char *name, const char **text, teamDef_t
  * @sa Com_ParseNames
  * @sa Com_ParseScripts
  */
-static void Com_ParseActorSounds (const char *name, const char **text, teamDef_t* td)
+static void Com_ParseActorSounds (const char *name, const char **text, teamDef_t *td)
 {
 	const char *const errhead = "Com_ParseActorSounds: unexpected end of file (actorsounds ";
 	const char *token;

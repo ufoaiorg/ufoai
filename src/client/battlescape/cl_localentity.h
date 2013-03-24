@@ -148,7 +148,7 @@ typedef struct le_s {
 
 	lighting_t lighting;
 
-	teamDef_t* teamDef;
+	teamDef_t *teamDef;
 	int gender;	/**< @sa @c nametypes_t */
 	const fireDef_t *fd;	/**< in case this is a projectile or an actor */
 

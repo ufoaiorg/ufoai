@@ -80,7 +80,7 @@ static void GAME_SK_SetMissionParameters (const mapDef_t *md)
 	 * have access to this data, too */
 	cgi->csi->numAlienTeams = 0;
 	for (i = 0; i < cgi->csi->numTeamDefs; i++) {
-		const teamDef_t* td = &cgi->csi->teamDef[i];
+		const teamDef_t *td = &cgi->csi->teamDef[i];
 		if (CHRSH_IsTeamDefAlien(td))
 			cgi->csi->alienTeams[cgi->csi->numAlienTeams++] = td;
 		if (cgi->csi->numAlienTeams >= MAX_TEAMS_PER_MISSION)
