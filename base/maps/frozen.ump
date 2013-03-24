@@ -374,6 +374,18 @@ a		+c		+c		a
 0		a		a		0
 }
 
+tile +craft_ufo_gunboat
+{
+6 7
+0		0		a		a		0		0
+a		a		+b		+b		a		0
+a		+b		+b		+b		+b		a
+a		+b		+b		+b		+b		a
+a		+b		+b		+b		+b		a
+a		a		+b		+b		a		0
+0		0		a		a		0		0
+}
+
 tile +craft_ufo_scout
 {
 4 4
