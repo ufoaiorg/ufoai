@@ -1008,6 +1008,7 @@ mapdef frozen_industrial_medium
 
 	ufos
 	(
+		craft_crash_gunboat
 		craft_crash_harvester
 		craft_ufo_gunboat
 		craft_ufo_harvester
@@ -1248,6 +1249,7 @@ mapdef frozen_nature_medium
 
 	ufos
 	(
+		craft_crash_gunboat
 		craft_crash_harvester
 		craft_ufo_gunboat
 		craft_ufo_harvester
