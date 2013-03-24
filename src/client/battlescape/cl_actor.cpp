@@ -1426,7 +1426,7 @@ bool CL_ActorMouseTrace (void)
 	pA[2] += UNIT_HEIGHT;
 	pB[2] -= UNIT_HEIGHT;
 	/** @todo Shouldn't we check the return value of CM_TestLineDM here - maybe
-	 * we don't have to do the second Grid_Fall call at all and can safe a lot
+	 * we don't have to do the second Grid_Fall call at all and can save a lot
 	 * of traces */
 	pos_t restingLevel = Grid_Fall(cl.mapData->routing, ACTOR_GET_FIELDSIZE(selActor), testPos);
 	CM_EntTestLineDM(cl.mapTiles, pA, pB, pC, TL_FLAG_ACTORCLIP, cl.leInlineModelList);
