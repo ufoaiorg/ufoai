@@ -418,6 +418,15 @@ a		+c		+c		+c		+c		a
 
 // Crashed UFOs ----------------------------------------------------*
 
+tile +craft_crash_fighter
+{
+4 4
+0		a		a		0
+a		+b		+b		a
+a		+b		+b		a
+0		x		x		0
+}
+
 tile +craft_crash_scout
 {
 4 5
