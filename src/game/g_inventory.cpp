@@ -256,7 +256,7 @@ void G_InventoryToFloor (Edict *ent)
 			continue;
 
 		/* skip CID_ARMOUR, we will collect armours using armour container,
-		 * not idFloor */
+		 * not CID_FLOOR */
 		if (container == CID_ARMOUR)
 			continue;
 

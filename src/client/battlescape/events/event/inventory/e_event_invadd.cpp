@@ -30,7 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @sa G_WriteItem
  * @sa G_ReadItem
  * @note The amount of the Item should not be needed here - because
- * the amount is only valid for idFloor and idEquip
+ * the amount is only valid for CID_FLOOR and idEquip
  */
 static void CL_NetReceiveItem (dbuffer *buf, Item *item, containerIndex_t *container, int *x, int *y)
 {
@@ -90,7 +90,7 @@ void CL_InvAdd (const eventRegister_t *self, dbuffer *msg)
 		CL_NetReceiveItem(msg, &item, &container, &x, &y);
 
 		if (LE_IsItem(le)) {
-			if (container != csi.idFloor)
+			if (container != CID_FLOOR)
 				Com_Error(ERR_DROP, "InvAdd for ET_ITEM but target container is not the floor but %i", container);
 		} else if (INVDEF(container)->temp) {
 			Com_Error(ERR_DROP, "InvAdd for %i to temp container %i", le->type, container);

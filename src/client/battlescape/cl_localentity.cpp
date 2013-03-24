@@ -1538,7 +1538,7 @@ void LE_Cleanup (void)
 		if (LE_IsActor(le))
 			CL_ActorCleanup(le);
 		else if (LE_IsItem(le))
-			cls.i.emptyContainer(&le->inv, INVDEF(csi.idFloor));
+			cls.i.emptyContainer(&le->inv, INVDEF(CID_FLOOR));
 
 		le->inuse = false;
 	}

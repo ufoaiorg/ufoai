@@ -101,7 +101,7 @@ invList_t *InventoryInterface::addToInventory (inventory_t *const inv, const Ite
 	if (container->single && inv->getContainer(container->id))
 		return NULL;
 
-	/* idEquip and idFloor */
+	/* idEquip and CID_FLOOR */
 	if (container->temp) {
 		for (ic = inv->getContainer(container->id); ic; ic = ic->getNext())
 			if (ic->isSameAs(item)) {
@@ -166,7 +166,7 @@ bool InventoryInterface::removeFromInventory (inventory_t* const inv, const invD
 	 * of calling the add and remove functions */
 	if (container->single || ic == fItem) {
 		this->cacheItem = *ic;
-		/* temp container like idEquip and idFloor */
+		/* temp container like idEquip and CID_FLOOR */
 		if (container->temp && ic->amount > 1) {
 			ic->amount--;
 			Com_DPrintf(DEBUG_SHARED, "removeFromInventory: Amount of '%s': %i (%s)\n",
@@ -177,7 +177,7 @@ bool InventoryInterface::removeFromInventory (inventory_t* const inv, const invD
 		if (container->single && ic->getNext())
 			Com_Printf("removeFromInventory: Error: single container %s has many items. (%s)\n", container->name, invName);
 
-		/* An item in other containers than idFloor or idEquip should
+		/* An item in other containers than CID_FLOOR or idEquip should
 		 * always have an amount value of 1.
 		 * The other container types do not support stacking.*/
 		assert(ic->amount == 1);
@@ -193,7 +193,7 @@ bool InventoryInterface::removeFromInventory (inventory_t* const inv, const invD
 	for (previous = inv->getContainer(container->id); ic; ic = ic->getNext()) {
 		if (ic == fItem) {
 			this->cacheItem = *ic;
-			/* temp container like idEquip and idFloor */
+			/* temp container like idEquip and CID_FLOOR */
 			if (ic->amount > 1 && container->temp) {
 				ic->amount--;
 				Com_DPrintf(DEBUG_SHARED, "removeFromInventory: Amount of '%s': %i (%s)\n",
@@ -396,7 +396,7 @@ inventory_action_t InventoryInterface::moveInInventory (inventory_t* const inv, 
 			return IA_NOTIME;
 		}
 
-		/* temp container like idEquip and idFloor */
+		/* temp container like idEquip and CID_FLOOR */
 		if (ic && to->temp) {
 			/* We are moving to a blocked location container but it's the base-equipment floor or a battlescape floor.
 			 * We add the item anyway but it'll not be displayed (yet)
@@ -497,7 +497,7 @@ bool InventoryInterface::tryAddToInventory (inventory_t* const inv, const Item *
  * @sa destroyInventory
  * @note This should only be called for temp containers if the container is really a temp container
  * e.g. the container of a dropped weapon in tactical mission (ET_ITEM)
- * in every other case just set the pointer to NULL for a temp container like idEquip or idFloor
+ * in every other case just set the pointer to NULL for a temp container like idEquip or CID_FLOOR
  */
 void InventoryInterface::emptyContainer (inventory_t* const inv, const invDef_t *container)
 {

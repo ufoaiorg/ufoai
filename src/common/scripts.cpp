@@ -1910,7 +1910,6 @@ static void Com_ParseInventory (const char *name, const char **text)
 	} else if (Q_streq(name, "armour")) {
 		cid = CID_ARMOUR;
 	} else if (Q_streq(name, "floor")) {
-		csi.idFloor = CID_FLOOR;
 		cid = CID_FLOOR;
 	} else if (Q_streq(name, "equip")) {
 		csi.idEquip = CID_EQUIP;
@@ -3409,7 +3408,7 @@ void Com_ParseScripts (bool onlyServer)
 
 	/* reset csi basic info */
 	INVSH_InitCSI(&csi);
-	csi.idRight = csi.idFloor = csi.idEquip = csi.idHeadgear = NONE;
+	csi.idRight = csi.idEquip = csi.idHeadgear = NONE;
 	csi.damNormal = csi.damBlast = csi.damFire = csi.damShock = csi.damLaser = csi.damPlasma = csi.damParticle = csi.damStunElectro = csi.damStunGas = NONE;
 	csi.damSmoke = csi.damIncendiary = NONE;
 

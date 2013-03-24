@@ -47,7 +47,7 @@ void INVSH_InitCSI (const csi_t *import)
  */
 bool invDef_t::isFloorDef () const
 {
-	return id == CSI->idFloor;
+	return id == CID_FLOOR;
 }
 
 /**
@@ -836,7 +836,7 @@ float inventory_t::getWeight () const
 
 void inventory_t::setFloorContainer(invList_t *cont)
 {
-	setContainer(CSI->idFloor, cont);
+	setContainer(CID_FLOOR, cont);
 }
 
 invList_t *inventory_t::getRightHandContainer () const
@@ -861,7 +861,7 @@ invList_t *inventory_t::getHolsterContainer () const
 
 invList_t *inventory_t::getFloorContainer () const
 {
-	return getContainer(CSI->idFloor);
+	return getContainer(CID_FLOOR);
 }
 
 invList_t *inventory_t::getEquipContainer () const
