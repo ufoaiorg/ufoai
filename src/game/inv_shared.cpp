@@ -876,7 +876,7 @@ invList_t *inventory_t::getArmourContainer (void) const
 
 /**
  * @brief Searches a specific item in the inventory&container.
- * @param[in] container Container in the inventory.
+ * @param[in] contId Container in the inventory.
  * @param[in] item The item to search for.
  * @return Pointer to the first item of this type found, otherwise @c NULL.
  */

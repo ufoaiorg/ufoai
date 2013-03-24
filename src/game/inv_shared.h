@@ -479,7 +479,7 @@ typedef struct inventory_s {
 	}
 	/**
 	 * @brief Searches if there is a specific item already in the inventory&container.
-	 * @param[in] container Container in the inventory.
+	 * @param[in] contId Container in the inventory.
 	 * @param[in] item The item to search for.
 	 * @return true if there already is at least one item of this type, otherwise false.
 	 */
