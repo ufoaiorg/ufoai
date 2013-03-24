@@ -1113,16 +1113,13 @@ bool E_HireAllowed (const base_t* base)
  */
 void E_RemoveInventoryFromStorage (employee_t *employee)
 {
-	containerIndex_t container;
 	const character_t *chr = &employee->chr;
 
 	assert(employee->baseHired);
 
-	for (container = 0; container < CID_MAX; container++) {
-		const invList_t *invList = chr->inv.getContainer(container);
-
-		if (INVDEF(container)->temp)
-			continue;
+	const Container *cont = NULL;
+	while ((cont = chr->inv.getNextCont(cont))) {
+		const invList_t *invList = cont->_invList;
 
 		while (invList) {
 			/* Remove ammo */

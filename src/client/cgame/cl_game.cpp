@@ -1234,10 +1234,9 @@ static void GAME_NetSendInventory (dbuffer *buf, const inventory_t *inv)
 	int nr = 0;
 	const invList_t *ic;
 
-	for (container = 0; container < CID_MAX; container++) {
-		if (INVDEF(container)->temp)
-			continue;
-		for (ic = inv->getContainer(container); ic; ic = ic->getNext()) {
+	const Container *cont = NULL;
+	while ((cont = inv->getNextCont(cont))) {
+		for (ic = cont->_invList; ic; ic = ic->getNext()) {
 			nr++;
 		}
 	}
