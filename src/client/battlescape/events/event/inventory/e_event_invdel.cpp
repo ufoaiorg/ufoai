@@ -49,7 +49,7 @@ void CL_InvDel (const eventRegister_t *self, dbuffer *msg)
 		le->left = NONE;
 	else if (container == CID_EXTENSION)
 		le->extension = NONE;
-	else if (container == csi.idHeadgear)
+	else if (container == CID_HEADGEAR)
 		le->headgear = NONE;
 
 	if (le->type == ET_ACTOR || le->type == ET_ACTOR2x2)

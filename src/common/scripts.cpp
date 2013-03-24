@@ -1915,7 +1915,6 @@ static void Com_ParseInventory (const char *name, const char **text)
 		csi.idEquip = CID_EQUIP;
 		cid = CID_EQUIP;
 	} else if (Q_streq(name, "headgear")) {
-		csi.idHeadgear = CID_HEADGEAR;
 		cid = CID_HEADGEAR;
 	} else {
 		Sys_Error("Unknown inventory definition \"%s\". Aborting.\n", name);
@@ -3408,7 +3407,7 @@ void Com_ParseScripts (bool onlyServer)
 
 	/* reset csi basic info */
 	INVSH_InitCSI(&csi);
-	csi.idRight = csi.idEquip = csi.idHeadgear = NONE;
+	csi.idRight = csi.idEquip = NONE;
 	csi.damNormal = csi.damBlast = csi.damFire = csi.damShock = csi.damLaser = csi.damPlasma = csi.damParticle = csi.damStunElectro = csi.damStunGas = NONE;
 	csi.damSmoke = csi.damIncendiary = NONE;
 

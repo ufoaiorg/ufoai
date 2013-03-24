@@ -731,7 +731,7 @@ void UI_ContainerNodeAutoPlaceItem (uiNode_t* node, invList_t *ic)
 			}
 		} else {
 			if (ic->def()->headgear) {
-				target = csi.idHeadgear;
+				target = CID_HEADGEAR;
 				packed = UI_ContainerNodeAddItem(container, ic, target, NULL);
 			} else {
 				/* left and right are single containers, but this might change - it's cleaner to check

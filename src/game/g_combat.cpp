@@ -1067,7 +1067,7 @@ static bool G_PrepareShot (Edict *ent, shoot_types_t shootType, fireDefIndex_t f
 		item = ent->chr.inv.getHeadgearContainer();
 		if (!item)
 			return false;
-		*container = gi.csi->idHeadgear;
+		*container = CID_HEADGEAR;
 	} else if (IS_SHOT_RIGHT(shootType)) {
 		item = ent->getRightHandItem();
 		if (!item)

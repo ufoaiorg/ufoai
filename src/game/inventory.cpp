@@ -954,7 +954,7 @@ void InventoryInterface::EquipActor (character_t* const chr, const equipDef_t *e
 						const int maxTU = GET_TU(speed, GET_ENCUMBRANCE_PENALTY(weight, chr->score.skills[ABILITY_POWER]));
 
 						if (miscItem->headgear)
-							container = this->csi->idHeadgear;
+							container = CID_HEADGEAR;
 						else if (miscItem->extension)
 							container = CID_EXTENSION;
 						else
