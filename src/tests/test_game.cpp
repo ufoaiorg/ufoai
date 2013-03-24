@@ -355,7 +355,7 @@ static void testInventoryTempContainerLinks (void)
 		ent = G_EdictsGetNextLivingActorOfTeam(NULL, TEAM_ALIEN);
 		nr = 0;
 		for (container = 0; container < CID_MAX; container++) {
-			if (container == CID_ARMOUR || container == gi.csi->idFloor)
+			if (container == CID_ARMOUR || container == CID_FLOOR)
 				continue;
 			for (ic = ent->getContainer(container); ic; ic = ic->getNext())
 				nr++;
@@ -369,7 +369,7 @@ static void testInventoryTempContainerLinks (void)
 
 		nr = 0;
 		for (container = 0; container < CID_MAX; container++) {
-			if (container == CID_ARMOUR || container == gi.csi->idFloor)
+			if (container == CID_ARMOUR || container == CID_FLOOR)
 				continue;
 			for (ic = ent->getContainer(container); ic; ic = ic->getNext())
 				nr++;

@@ -43,10 +43,10 @@ static void G_MoralePanic (Edict *ent, bool sanity)
 	if (!sanity && ent->chr.teamDef->weapons) {
 		if (ent->getRightHandItem())
 			G_ActorInvMove(ent, INVDEF(gi.csi->idRight), ent->getRightHandItem(),
-					INVDEF(gi.csi->idFloor), NONE, NONE, true);
+					INVDEF(CID_FLOOR), NONE, NONE, true);
 		if (ent->getLeftHandItem())
 			G_ActorInvMove(ent, INVDEF(CID_LEFT), ent->getLeftHandItem(),
-					INVDEF(gi.csi->idFloor), NONE, NONE, true);
+					INVDEF(CID_FLOOR), NONE, NONE, true);
 		G_ClientStateChange(ent->getPlayer(), ent, ~STATE_REACTION, false);
 	}
 

@@ -86,7 +86,7 @@ bool G_MissionTouch (Edict *self, Edict *activator)
 							 * actor's inventory */
 							if (Q_streq(od->id, self->owner->item)) {
 								/* drop the weapon - even if out of TUs */
-								G_ActorInvMove(activator, invDef, ic, INVDEF(gi.csi->idFloor),
+								G_ActorInvMove(activator, invDef, ic, INVDEF(CID_FLOOR),
 									NONE, NONE, false);
 								gi.BroadcastPrintf(PRINT_HUD, _("Item was placed."));
 								self->owner->count = level.actualRound;
@@ -218,7 +218,7 @@ void G_MissionThink (Edict *self)
 		if (chain->item != NULL) {
 			Edict *item = G_GetEdictFromPos(chain->pos, ET_ITEM);
 			if (item != NULL) {
-				if (!G_InventoryRemoveItemByID(chain->item, item, gi.csi->idFloor)) {
+				if (!G_InventoryRemoveItemByID(chain->item, item, CID_FLOOR)) {
 					Com_Printf("Could not remove item '%s' from floor edict %i\n",
 							chain->item, item->number);
 				} else {

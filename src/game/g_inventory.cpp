@@ -156,7 +156,7 @@ bool G_AddItemToFloor (const pos3_t pos, const char *itemID)
 		floor = G_SpawnFloor(pos);
 
 	Item item(od);
-	return game.i.tryAddToInventory(&floor->chr.inv, &item, INVDEF(gi.csi->idFloor));
+	return game.i.tryAddToInventory(&floor->chr.inv, &item, INVDEF(CID_FLOOR));
 }
 
 /** @brief Move items to adjacent locations if the containers on the current
@@ -189,7 +189,7 @@ static bool G_InventoryPlaceItemAdjacent (Edict *ent)
 			G_VisFlagsReset(floorAdjacent);
 		}
 
-		floorAdjacent->i.findSpace(INVDEF(gi.csi->idFloor), &ic->item, &x, &y, ic);
+		floorAdjacent->i.findSpace(INVDEF(CID_FLOOR), &ic->item, &x, &y, ic);
 		if (x != NONE) {
 			ic->x = x;
 			ic->y = y;
@@ -252,7 +252,7 @@ void G_InventoryToFloor (Edict *ent)
 	/* cycle through all containers */
 	for (container = 0; container < CID_MAX; container++) {
 		/* skip floor - we want to drop to floor */
-		if (container == gi.csi->idFloor)
+		if (container == CID_FLOOR)
 			continue;
 
 		/* skip CID_ARMOUR, we will collect armours using armour container,
@@ -274,7 +274,7 @@ void G_InventoryToFloor (Edict *ent)
 			if (!game.i.removeFromInventory(&ent->chr.inv, INVDEF(container), ic))
 				gi.Error("Could not remove item '%s' from inventory %i of entity %i",
 						ic->def()->id, container, ent->number);
-			if (game.i.addToInventory(&floor->chr.inv, &item, INVDEF(gi.csi->idFloor), NONE, NONE, 1) == NULL)
+			if (game.i.addToInventory(&floor->chr.inv, &item, INVDEF(CID_FLOOR), NONE, NONE, 1) == NULL)
 				gi.Error("Could not add item '%s' from inventory %i of entity %i to floor container",
 						ic->def()->id, container, ent->number);
 #ifdef ADJACENT
