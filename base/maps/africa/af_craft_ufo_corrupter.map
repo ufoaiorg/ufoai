@@ -12740,7 +12740,7 @@
 // entity 140
 {
 "classname" "misc_sound"
-"origin" "188 256 100"
+"origin" "1340 1792 100"
 "noise" "ambience/alien_engine"
 "volume" "1.0"
 "attenuation" "2.8"
