@@ -438,6 +438,7 @@ a		+c		+c		+c		+c		a
 a		+c		+c		+c		+c		a
 0		a		+c		+c		a		0
 0		0		x		x		0		0
+}
 
 tile +craft_crash_scout
 {
