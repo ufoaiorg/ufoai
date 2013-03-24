@@ -198,6 +198,7 @@ static inline void AL_AddAlienTypeToAircraftCargo_ (void *data, const teamDef_t 
  * @param numKilled The amount of killed actors for all teams. The first dimension contains
  * the attacker team, the second the victim team
  * @param numStunned The amount of stunned actors for all teams. The first dimension contains
+ * @param nextmap If it was a follow-up map of the same mission
  * the attacker team, the second the victim team
  */
 void GAME_CP_Results (dbuffer *msg, int winner, int *numSpawned, int *numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS], bool nextmap)
