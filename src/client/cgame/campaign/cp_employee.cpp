@@ -191,6 +191,7 @@ bool E_MoveIntoNewBase (employee_t *employee, base_t *newBase)
 /**
  * @brief Convert employeeType_t to translated string
  * @param type employeeType_t value
+ * @param n number of persons of that kind (for plural detection)
  * @return translated employee string
  */
 const char* E_GetEmployeeString (employeeType_t type, int n)
