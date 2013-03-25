@@ -394,9 +394,6 @@ typedef struct csi_s {
 	invDef_t ids[MAX_INVDEFS];
 	int numIDs;
 
-	/** Special container ids */
-	containerIndex_t idEquip;
-
 	/** Damage type ids */
 	int damNormal, damBlast, damFire;
 	int damShock;	/**< Flashbang-type 'damage' (i.e. Blinding). */

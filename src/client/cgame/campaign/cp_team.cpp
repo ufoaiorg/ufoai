@@ -264,7 +264,7 @@ void CP_CleanTempInventory (base_t* base)
 	E_Foreach(EMPL_SOLDIER, employee) {
 		int k;
 		for (k = 0; k < CID_MAX; k++) {
-			/* CID_FLOOR and idEquip are temp */
+			/* CID_FLOOR and CID_EQUIP are temp */
 			if (INVDEF(k)->temp)
 				employee->chr.inv.resetContainer(k);
 		}
@@ -273,7 +273,7 @@ void CP_CleanTempInventory (base_t* base)
 	E_Foreach(EMPL_ROBOT, employee) {
 		int k;
 		for (k = 0; k < CID_MAX; k++) {
-			/* CID_FLOOR and idEquip are temp */
+			/* CID_FLOOR and CID_EQUIP are temp */
 			if (INVDEF(k)->temp)
 				employee->chr.inv.resetContainer(k);
 		}

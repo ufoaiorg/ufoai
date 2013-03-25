@@ -74,7 +74,7 @@ bool invDef_t::isLeftDef () const
  */
 bool invDef_t::isEquipDef () const
 {
-	return id == CSI->idEquip;
+	return id == CID_EQUIP;
 }
 
 /**
@@ -866,7 +866,7 @@ invList_t *inventory_t::getFloorContainer () const
 
 invList_t *inventory_t::getEquipContainer () const
 {
-	return getContainer(CSI->idEquip);
+	return getContainer(CID_EQUIP);
 }
 
 invList_t *inventory_t::getArmourContainer (void) const

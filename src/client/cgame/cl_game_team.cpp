@@ -483,9 +483,9 @@ void GAME_ActorSelect_f (void)
 
 	/* update menu inventory */
 	if (ui_inventory && ui_inventory != &chr->inv) {
-		chr->inv.setContainer(csi.idEquip, ui_inventory->getEquipContainer());
-		/* set 'old' idEquip to NULL */
-		ui_inventory->resetContainer(csi.idEquip);
+		chr->inv.setContainer(CID_EQUIP, ui_inventory->getEquipContainer());
+		/* set 'old' CID_EQUIP to NULL */
+		ui_inventory->resetContainer(CID_EQUIP);
 	}
 	ui_inventory = &chr->inv;
 	/* set info cvars */
@@ -608,7 +608,7 @@ static void GAME_LoadInventory (xmlNode_t *p, inventory_t *inv, int maxLoad)
 		if (INVDEF(container)->temp)
 			Com_Error(ERR_DROP, "GAME_LoadInventory failed, tried to add '%s' to a temp container %i", item.def()->id, container);
 		/* ignore the overload for now */
-		if (!inv->canHoldItemWeight(csi.idEquip, container, item, maxLoad))
+		if (!inv->canHoldItemWeight(CID_EQUIP, container, item, maxLoad))
 			Com_Printf("GAME_LoadInventory: Item %s exceeds weight capacity\n", item.def()->id);
 
 		if (!cls.i.addToInventory(inv, &item, INVDEF(container), x, y, 1))

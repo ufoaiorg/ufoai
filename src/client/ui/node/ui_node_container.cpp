@@ -116,7 +116,7 @@ void UI_ContainerNodeUpdateEquipment (inventory_t *inv, const equipDef_t *ed)
 
 		while (numItems[i]) {
 			const Item item(od);
-			if (!cls.i.addToInventory(inv, &item, INVDEF(csi.idEquip), NONE, NONE, 1)) {
+			if (!cls.i.addToInventory(inv, &item, INVDEF(CID_EQUIP), NONE, NONE, 1)) {
 				/* no space left in the inventory */
 				break;
 			}
@@ -128,7 +128,7 @@ void UI_ContainerNodeUpdateEquipment (inventory_t *inv, const equipDef_t *ed)
 
 	/* First-time linking of ui_inventory. */
 	if (ui_inventory && !ui_inventory->getEquipContainer()) {
-		ui_inventory->setContainer(csi.idEquip, inv->getEquipContainer());
+		ui_inventory->setContainer(CID_EQUIP, inv->getEquipContainer());
 	}
 }
 
@@ -604,8 +604,8 @@ void uiContainerNode::draw (uiNode_t *node)
 		}
 	}
 
-	/* Draw free space if dragging - but not for idEquip */
-	if (UI_DNDIsDragging() && EXTRADATA(node).container->id != csi.idEquip)
+	/* Draw free space if dragging - but not for CID_EQUIP */
+	if (UI_DNDIsDragging() && EXTRADATA(node).container->id != CID_EQUIP)
 		UI_ContainerNodeDrawFreeSpace(node, ui_inventory);
 
 	if (UI_DNDIsTargetNode(node))
@@ -700,14 +700,14 @@ void UI_ContainerNodeAutoPlaceItem (uiNode_t* node, invList_t *ic)
 	const invDef_t *container = EXTRADATA(node).container;
 
 	/* Right click: automatic item assignment/removal. */
-	if (container->id != csi.idEquip) {
+	if (container->id != CID_EQUIP) {
 		if (ic->ammo && ic->ammo != ic->def() && ic->getAmmoLeft()) {
 			/* Remove ammo on removing weapon from a soldier */
-			target = csi.idEquip;
+			target = CID_EQUIP;
 			ammoChanged = INV_UnloadWeapon(ic, ui_inventory, INVDEF(target));
 		} else {
-			/* Move back to idEquip (ground, floor) container. */
-			target = csi.idEquip;
+			/* Move back to CID_EQUIP (ground, floor) container. */
+			target = CID_EQUIP;
 			INV_MoveItem(ui_inventory, INVDEF(target), NONE, NONE, container, ic, NULL);
 		}
 	} else {
