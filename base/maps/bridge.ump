@@ -11,6 +11,13 @@
 
 base bridge/br_
 
+worldspawn {
+	"maxteams"		"2"
+	"maxlevel"		"5"
+	"saturation"	"0.6"
+	"brightness"	"0.8"
+}
+
 // Large bridge tile
 tile +bridge
 {

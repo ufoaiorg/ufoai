@@ -2,10 +2,6 @@
 // entity 0
 {
 "classname" "worldspawn"
-"saturation" "0.6"
-"brightness" "0.8"
-"maxteams" "2"
-"maxlevel" "5"
 // brush 0
 {
 ( 992.625 900 61 ) ( 988.625 892 61 ) ( 988.625 900 61 ) tex_material/wood001 0 8 0 0.25 0.25 65280 0 0
