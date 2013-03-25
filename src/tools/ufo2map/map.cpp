@@ -1008,8 +1008,8 @@ static bool ParseMapEntity (const char *filename, const char *entityString)
 		if (worldspawnCount > 1)
 			Com_Printf("Warning: more than one %s in one map\n", entName);
 
+		const char *text = entityString;
 		do {
-			const char *text = entityString;
 			const char *token = Com_Parse(&text);
 			if (Q_strnull(token))
 				break;
