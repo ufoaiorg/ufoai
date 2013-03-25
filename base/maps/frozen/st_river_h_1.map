@@ -2,8 +2,6 @@
 // entity 0
 {
 "classname" "worldspawn"
-"maxteams" "3"
-"maxlevel" "5"
 // brush 0
 {
 ( 128 96 4 ) ( 128 76 4 ) ( 96 64 4 ) tex_nature/ice002 0 0 0 0.5 0.5 65280 0 0

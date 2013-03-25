@@ -2,8 +2,7 @@
 // entity 0
 {
 "classname" "worldspawn"
-"maxteams" "3"
-"maxlevel" "5"
+"norandomspawn" "1"
 // brush 0
 {
 ( 438 0 48 ) ( 502 0 48 ) ( 502 0 20 ) tex_nature/snow002 0 0 0 0.5 0.5 65280 0 0
@@ -119,5 +118,61 @@
 "classname" "info_2x2_start"
 "origin" "32 32 28"
 "team" "1"
+"angle" "180"
+}
+// entity 18
+{
+"classname" "info_player_start"
+"team" "1"
+"origin" "80 144 28"
+"angle" "180"
+}
+// entity 19
+{
+"classname" "info_player_start"
+"team" "1"
+"origin" "80 112 28"
+"angle" "180"
+}
+// entity 20
+{
+"classname" "info_player_start"
+"team" "1"
+"origin" "112 144 28"
+"angle" "180"
+}
+// entity 21
+{
+"classname" "info_player_start"
+"team" "1"
+"origin" "112 112 28"
+"angle" "180"
+}
+// entity 22
+{
+"classname" "info_player_start"
+"team" "1"
+"origin" "144 144 28"
+"angle" "180"
+}
+// entity 23
+{
+"classname" "info_player_start"
+"team" "1"
+"origin" "144 112 28"
+"angle" "180"
+}
+// entity 24
+{
+"classname" "info_player_start"
+"team" "1"
+"origin" "176 144 28"
+"angle" "180"
+}
+// entity 25
+{
+"classname" "info_player_start"
+"team" "1"
+"origin" "176 112 28"
 "angle" "180"
 }

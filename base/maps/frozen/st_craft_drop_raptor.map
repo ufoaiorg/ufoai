@@ -2,6 +2,7 @@
 // entity 0
 {
 "classname" "worldspawn"
+"norandomspawn" "1"
 // brush 0
 {
 ( 64 672 0 ) ( 64 512 0 ) ( 192 672 0 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
@@ -1426,123 +1427,46 @@
 // entity 21
 {
 "classname" "misc_particle"
-"origin" "480 64 368"
+"origin" "640 128 368"
 "spawnflags" "255"
 "particle" "weather_snow"
 }
 // entity 22
-{
-"classname" "misc_particle"
-"origin" "480 448 368"
-"spawnflags" "255"
-"particle" "weather_snow"
-}
-// entity 23
-{
-"classname" "misc_particle"
-"origin" "160 64 368"
-"spawnflags" "255"
-"particle" "weather_snow"
-}
-// entity 24
-{
-"classname" "misc_particle"
-"origin" "160 448 368"
-"spawnflags" "255"
-"particle" "weather_snow"
-}
-// entity 25
-{
-"classname" "misc_particle"
-"origin" "800 64 368"
-"spawnflags" "255"
-"particle" "weather_snow"
-}
-// entity 26
-{
-"classname" "misc_particle"
-"origin" "800 448 368"
-"spawnflags" "255"
-"particle" "weather_snow"
-}
-// entity 27
-{
-"classname" "misc_particle"
-"origin" "368 144 368"
-"spawnflags" "255"
-"particle" "weather_snow"
-}
-// entity 28
-{
-"classname" "misc_particle"
-"origin" "368 528 368"
-"spawnflags" "255"
-"particle" "weather_snow"
-}
-// entity 29
-{
-"classname" "misc_particle"
-"origin" "48 144 368"
-"spawnflags" "255"
-"particle" "weather_snow"
-}
-// entity 30
-{
-"classname" "misc_particle"
-"origin" "48 528 368"
-"spawnflags" "255"
-"particle" "weather_snow"
-}
-// entity 31
-{
-"classname" "misc_particle"
-"origin" "688 144 368"
-"spawnflags" "255"
-"particle" "weather_snow"
-}
-// entity 32
-{
-"classname" "misc_particle"
-"origin" "688 528 368"
-"spawnflags" "255"
-"particle" "weather_snow"
-}
-// entity 33
 {
 "classname" "misc_model"
 "model" "models/aircraft/drop_raptor/drop_raptor_landed.md2"
 "origin" "383 352 70"
 "spawnflags" "254"
 }
-// entity 34
+// entity 23
 {
 "classname" "light"
 "_color" "0 0.8 1"
 "light" "100"
 "origin" "573 183 77"
 }
-// entity 35
+// entity 24
 {
 "classname" "light"
 "_color" "0 0.8 1"
 "light" "100"
 "origin" "573 231 77"
 }
-// entity 36
+// entity 25
 {
 "classname" "light"
 "_color" "0 0.8 1"
 "light" "100"
 "origin" "573 471 77"
 }
-// entity 37
+// entity 26
 {
 "classname" "light"
 "_color" "0 0.8 1"
 "light" "100"
 "origin" "573 519 77"
 }
-// entity 38
+// entity 27
 {
 "classname" "misc_model"
 "model" "models/aircraft/drop_raptor/drop_raptor_gear.md2"
@@ -1550,7 +1474,7 @@
 "spawnflags" "255"
 "angles" "0 2.50448e-006 0"
 }
-// entity 39
+// entity 28
 {
 "classname" "trigger_rescue"
 "team" "1"
@@ -1565,155 +1489,211 @@
 ( 176 272 0 ) ( 176 400 0 ) ( 176 272 96 ) tex_common/trigger 0 0 0 0.25 0.25 65280 0 0
 }
 }
-// entity 40
+// entity 29
 {
 "classname" "info_human_start"
 "origin" "176 272 28"
 "angle" "180"
 }
-// entity 41
+// entity 30
 {
 "classname" "info_human_start"
 "origin" "176 176 28"
 "angle" "-135"
 }
-// entity 42
+// entity 31
 {
 "classname" "info_human_start"
 "origin" "272 176 28"
 "angle" "-90"
 }
-// entity 43
+// entity 32
 {
 "classname" "info_human_start"
 "origin" "368 176 28"
 "angle" "-45"
 }
-// entity 44
+// entity 33
 {
 "classname" "info_human_start"
 "origin" "176 432 28"
 "angle" "180"
 }
-// entity 45
+// entity 34
 {
 "classname" "info_human_start"
 "origin" "176 528 28"
 "angle" "135"
 }
-// entity 46
+// entity 35
 {
 "classname" "info_human_start"
 "origin" "272 528 28"
 "angle" "90"
 }
-// entity 47
+// entity 36
 {
 "classname" "info_human_start"
 "origin" "368 528 28"
 "angle" "45"
 }
-// entity 48
+// entity 37
 {
 "classname" "info_human_start"
 "origin" "272 272 28"
 }
-// entity 49
+// entity 38
 {
 "classname" "info_human_start"
 "origin" "272 432 28"
 }
-// entity 50
+// entity 39
 {
 "classname" "info_2x2_start"
 "origin" "704 224 28"
 "team" "1"
 }
-// entity 51
+// entity 40
 {
 "classname" "info_2x2_start"
 "origin" "704 480 28"
 "team" "1"
 }
-// entity 52
+// entity 41
 {
 "classname" "info_2x2_start"
 "origin" "224 608 28"
 "team" "1"
 "angle" "180"
 }
-// entity 53
+// entity 42
 {
 "classname" "info_2x2_start"
 "origin" "256 64 28"
 "team" "1"
 "angle" "-90"
 }
-// entity 54
+// entity 43
 {
 "classname" "info_player_start"
 "team" "1"
 "origin" "272 272 28"
 }
-// entity 55
+// entity 44
 {
 "classname" "info_player_start"
 "team" "1"
 "origin" "176 528 28"
 "angle" "135"
 }
-// entity 56
+// entity 45
 {
 "classname" "info_player_start"
 "team" "1"
 "origin" "176 176 28"
 "angle" "-135"
 }
-// entity 57
+// entity 46
 {
 "classname" "info_player_start"
 "team" "1"
 "origin" "272 528 28"
 "angle" "90"
 }
-// entity 58
+// entity 47
 {
 "classname" "info_player_start"
 "team" "1"
 "origin" "272 176 28"
 "angle" "-90"
 }
-// entity 59
+// entity 48
 {
 "classname" "info_player_start"
 "team" "1"
 "origin" "272 432 28"
 }
-// entity 60
+// entity 49
 {
 "classname" "info_player_start"
 "team" "1"
 "origin" "368 176 28"
 "angle" "-45"
 }
-// entity 61
+// entity 50
 {
 "classname" "info_player_start"
 "team" "1"
 "origin" "368 528 28"
 "angle" "45"
 }
-// entity 62
+// entity 51
 {
 "classname" "info_player_start"
 "team" "1"
 "origin" "176 272 28"
 "angle" "180"
 }
-// entity 63
+// entity 52
 {
 "classname" "info_player_start"
 "team" "1"
 "origin" "176 432 28"
 "angle" "180"
+}
+// entity 53
+{
+"classname" "misc_particle"
+"origin" "640 384 368"
+"spawnflags" "255"
+"particle" "weather_snow"
+}
+// entity 54
+{
+"classname" "misc_particle"
+"origin" "640 640 368"
+"spawnflags" "255"
+"particle" "weather_snow"
+}
+// entity 55
+{
+"classname" "misc_particle"
+"origin" "384 128 368"
+"spawnflags" "255"
+"particle" "weather_snow"
+}
+// entity 56
+{
+"classname" "misc_particle"
+"origin" "384 384 368"
+"spawnflags" "255"
+"particle" "weather_snow"
+}
+// entity 57
+{
+"classname" "misc_particle"
+"origin" "384 640 368"
+"spawnflags" "255"
+"particle" "weather_snow"
+}
+// entity 58
+{
+"classname" "misc_particle"
+"origin" "128 128 368"
+"spawnflags" "255"
+"particle" "weather_snow"
+}
+// entity 59
+{
+"classname" "misc_particle"
+"origin" "128 384 368"
+"spawnflags" "255"
+"particle" "weather_snow"
+}
+// entity 60
+{
+"classname" "misc_particle"
+"origin" "128 640 368"
+"spawnflags" "255"
+"particle" "weather_snow"
 }
