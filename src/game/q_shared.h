@@ -353,6 +353,7 @@ typedef struct mapDef_s {
 	/* singleplayer */
 	bool campaign;			/**< available in campaign mode? */
 	bool singleplayer;		/**< is this map available in singleplayer games? */
+	bool nocunit;			/**< skip this map in cunit tests */
 	int maxAliens;			/**< Number of spawning points on the map */
 	bool hurtAliens;		/**< hurt the aliens on spawning them - e.g. for ufocrash missions */
 

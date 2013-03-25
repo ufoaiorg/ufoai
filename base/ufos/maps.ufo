@@ -15,6 +15,7 @@
 //
 // singleplayer: available for single player games (default true)
 // multiplayer: available for multiplayer games (default false)
+// nocunit: map is WIP and therefore excluded from the tests (default false)
 // campaign: available in campaign games (default true)
 //
 // Triggers:

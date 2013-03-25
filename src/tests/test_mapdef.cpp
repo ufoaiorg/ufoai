@@ -96,6 +96,8 @@ static void testMapDefsMassRMA (void)
 	MapDef_Foreach(md) {
 		if (md->map[0] == '.')
 			continue;
+		if (md->nocunit)	/* map is WIP and therefore excluded fro the tests */
+			continue;
 		if (filterId && strcmp(filterId, md->id) != 0)
 			continue;
 		if (++mapCount <= 0)		/* change 0 to n to skip the first n assemblies */
@@ -217,6 +219,8 @@ static void testMapDefStatistic (void)
 	MapDef_Foreach(md) {
 		if (md->map[0] == '.')
 			continue;
+		if (md->nocunit)	/* map is WIP and therefore excluded fro the tests */
+			continue;
 		if (filterId && !Q_streq(filterId, md->id))
 			continue;
 
@@ -291,6 +295,8 @@ static void testMapDefsFootSteps (void)
 
 	MapDef_Foreach(md) {
 		if (md->map[0] == '.')
+			continue;
+		if (md->nocunit)	/* map is WIP and therefore excluded fro the tests */
 			continue;
 		if (filterId && strcmp(filterId, md->id) != 0)
 			continue;
@@ -400,6 +406,8 @@ static void testMapDefsSingleplayer (void)
 	MapDef_Foreach(md) {
 		if (md->map[0] == '.')
 			continue;
+		if (md->nocunit)	/* map is WIP and therefore excluded fro the tests */
+			continue;
 		if (filterId && strcmp(filterId, md->id) != 0)
 			continue;
 
@@ -435,6 +443,8 @@ static void testMapDefsMultiplayer (void)
 		unsigned int seed;
 		SrvPlayer *player;
 
+		if (md->nocunit)	/* map is WIP and therefore excluded fro the tests */
+			continue;
 		if (filterId && strcmp(filterId, md->id) != 0)
 			continue;
 
