@@ -253,7 +253,7 @@ namespace gtkutil
 		if (self->_preview == NULL)
 			return;
 
-		char* sel = gtk_file_chooser_get_preview_filename(GTK_FILE_CHOOSER(self->_dialog));
+		char *sel = gtk_file_chooser_get_preview_filename(GTK_FILE_CHOOSER(self->_dialog));
 
 		std::string previewFileName = (sel != NULL) ? sel : "";
 

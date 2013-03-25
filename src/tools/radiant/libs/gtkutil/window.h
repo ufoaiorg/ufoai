@@ -81,7 +81,7 @@ inline void window_set_position (GtkWindow* window, const WindowPosition& positi
 	gtk_window_set_default_size(window, position.w, position.h);
 }
 
-inline void WindowPosition_Parse (WindowPosition& position, const char* value)
+inline void WindowPosition_Parse (WindowPosition& position, const char *value)
 {
 	if (sscanf(value, "%d %d %d %d", &position.x, &position.y, &position.w, &position.h) != 4) {
 		position = WindowPosition(c_default_window_pos); // ensure sane default value for window position
@@ -137,7 +137,7 @@ class WindowPositionTracker
 		}
 };
 
-inline void WindowPositionTracker_importString (WindowPositionTracker& self, const char* value)
+inline void WindowPositionTracker_importString (WindowPositionTracker& self, const char *value)
 {
 	WindowPosition position;
 	WindowPosition_Parse(position, value);

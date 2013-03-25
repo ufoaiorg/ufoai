@@ -35,7 +35,7 @@ static GtkWidget* create_padding (int width, int height)
 	return widget;
 }
 
-static const char* messagebox_stock_icon (EMessageBoxIcon type)
+static const char *messagebox_stock_icon (EMessageBoxIcon type)
 {
 	switch (type) {
 	default:
