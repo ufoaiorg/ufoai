@@ -11,14 +11,12 @@
 
 base bridge/br_
 
-/* outcommented because this causes an error on compiling
 worldspawn {
-	"maxteams" "2"
-	"maxlevel" "5"
-	"saturation" "0.6"
-	"brightness" "0.8"
+	"maxteams"		"2"
+	"maxlevel"		"5"
+	"saturation"	"0.6"
+	"brightness"	"0.8"
 }
-*/
 
 // Large bridge tile
 tile +bridge
