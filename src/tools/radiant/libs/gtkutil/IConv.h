@@ -72,7 +72,7 @@ namespace gtkutil
 				// NULL for anything but inbuf; work around that. (NULL outbuf
 				// or NULL *outbuf is allowed by Unix98.)
 
-				char* outbuf = 0;
+				char *outbuf = 0;
 				gsize inbytes_left = 0;
 				gsize outbytes_left = 0;
 

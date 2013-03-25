@@ -42,7 +42,7 @@ class TextInputStream
 
 		/// \brief Attempts to read the next \p length characters from the stream to \p buffer.
 		/// Returns the number of characters actually stored in \p buffer.
-		virtual std::size_t read (char* buffer, std::size_t length) = 0;
+		virtual std::size_t read (char *buffer, std::size_t length) = 0;
 };
 
 /// \brief A write-only character-stream.
@@ -55,7 +55,7 @@ class TextOutputStream
 
 		/// \brief Attempts to write \p length characters to the stream from \p buffer.
 		/// Returns the number of characters actually read from \p buffer.
-		virtual std::size_t write (const char* buffer, std::size_t length) = 0;
+		virtual std::size_t write (const char *buffer, std::size_t length) = 0;
 };
 
 /// \brief Calls the overloaded function ostream_write() to perform text formatting specific to the type being written.

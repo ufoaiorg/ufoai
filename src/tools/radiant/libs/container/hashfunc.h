@@ -301,11 +301,11 @@ inline hash_t pod_hash(const POD& pod) {
 	return hash_ub1(reinterpret_cast<const ub1*>(&pod), sizeof(POD));
 }
 
-inline hash_t string_hash(const char* string, hash_t previous = 0) {
+inline hash_t string_hash(const char *string, hash_t previous = 0) {
 	return hash_ub1(reinterpret_cast<const ub1*>(string), string_length(string), previous);
 }
 
-inline hash_t string_hash_nocase(const char* string, hash_t previous = 0) {
+inline hash_t string_hash_nocase(const char *string, hash_t previous = 0) {
 	return hash_ub1_nocase(reinterpret_cast<const ub1*>(string), string_length(string), previous);
 }
 
@@ -334,7 +334,7 @@ struct HashStringNoCase {
 /// "wibble" (6) gives 2,
 /// "and" (3) gives 1,
 /// "bleh" (4) gives 2
-inline std::size_t string_length_ub4(const char* string) {
+inline std::size_t string_length_ub4(const char *string) {
 	return ((string_length(string) >> 2) + 1) << 2;
 }
 
@@ -349,7 +349,7 @@ class HashKey {
 		std::copy(other.m_key.begin(), other.m_key.end(), m_key.begin());
 		m_hash = other.m_hash;
 	}
-	void copy(const char* string) {
+	void copy(const char *string) {
 		strncpy(reinterpret_cast<char*>(m_key.data()), string, m_key.size());
 		for (Array<ub4>::iterator i = m_key.begin(); i != m_key.end(); ++i) {
 			*i = UB4Traits::as_ub4(*i);
@@ -365,10 +365,10 @@ public:
 	HashKey(const HashKey& other) : m_key(other.m_key.size()) {
 		copy(other);
 	}
-	HashKey(const char* string) : m_key(string_length_ub4(string)) {
+	HashKey(const char *string) : m_key(string_length_ub4(string)) {
 		copy(string);
 	}
-	HashKey& operator=(const char* string) {
+	HashKey& operator=(const char *string) {
 		m_key.resize(string_length_ub4(string));
 		copy(string);
 		return *this;
