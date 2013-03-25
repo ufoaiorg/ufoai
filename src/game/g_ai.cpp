@@ -1203,7 +1203,7 @@ void AI_ActorThink (Player &player, Edict *ent)
 	Item *leftH = ent->getLeftHandItem();
 	if (!G_IsPanicked(ent)) {
 		if (rightH && rightH->mustReload())
-			AI_TryToReloadWeapon(ent, gi.csi->idRight);
+			AI_TryToReloadWeapon(ent, CID_RIGHT);
 		if (leftH && leftH->mustReload())
 			AI_TryToReloadWeapon(ent, CID_LEFT);
 	}

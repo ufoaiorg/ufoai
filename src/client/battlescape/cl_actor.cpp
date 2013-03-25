@@ -987,9 +987,9 @@ void CL_ActorReload (le_t *le, containerIndex_t containerID)
 
 	if (inv->getContainer(containerID)) {
 		weapon = inv->getContainer(containerID)->def();
-	} else if (containerID == CID_LEFT && inv->getContainer(csi.idRight)->isHeldTwoHanded()) {
+	} else if (containerID == CID_LEFT && inv->getContainer(CID_RIGHT)->isHeldTwoHanded()) {
 		/* Check for two-handed weapon */
-		containerID = csi.idRight;
+		containerID = CID_RIGHT;
 		weapon = inv->getContainer(containerID)->def();
 	} else {
 		/* no weapon in the reloadable containers found */

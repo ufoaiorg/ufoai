@@ -43,7 +43,7 @@ void CL_InvDel (const eventRegister_t *self, dbuffer *msg)
 		Com_Error(ERR_DROP, "InvDel message ignored... LE not found\n");
 
 	/* update the local entity to ensure that the correct weapon/item is rendered in the battlescape */
-	if (container == csi.idRight)
+	if (container == CID_RIGHT)
 		le->right = NONE;
 	else if (container == CID_LEFT)
 		le->left = NONE;

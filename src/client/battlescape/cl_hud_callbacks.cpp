@@ -42,7 +42,7 @@ Item *HUD_GetLeftHandWeapon (const le_t *actor, containerIndex_t *container)
 		if (item == NULL || !item->isHeldTwoHanded())
 			item = NULL;
 		else if (container != NULL)
-			*container = csi.idRight;
+			*container = CID_RIGHT;
 	}
 
 	return item;
@@ -294,9 +294,9 @@ static void HUD_ReloadRight_f (void)
 {
 	le_t *actor = selActor;
 
-	if (!actor || !HUD_CheckReload(actor, actor->getRightHandItem(), csi.idRight))
+	if (!actor || !HUD_CheckReload(actor, actor->getRightHandItem(), CID_RIGHT))
 		return;
-	CL_ActorReload(actor, csi.idRight);
+	CL_ActorReload(actor, CID_RIGHT);
 	HUD_DisplayMessage(_("Right hand weapon reloaded."));
 }
 

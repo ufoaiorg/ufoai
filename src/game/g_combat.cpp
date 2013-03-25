@@ -1072,7 +1072,7 @@ static bool G_PrepareShot (Edict *ent, shoot_types_t shootType, fireDefIndex_t f
 		item = ent->getRightHandItem();
 		if (!item)
 			return false;
-		*container = gi.csi->idRight;
+		*container = CID_RIGHT;
 	} else {
 		item = ent->getLeftHandItem();
 		if (!item)

@@ -598,7 +598,7 @@ void G_ClientGetWeaponFromInventory (Edict *ent)
 	}
 
 	/* send request */
-	const invDef_t *invDef = INVDEF(gi.csi->idRight);
+	const invDef_t *invDef = INVDEF(CID_RIGHT);
 	if (bestContainer)
 		G_ActorInvMove(ent, bestContainer, theWeapon, invDef, 0, 0, true);
 }

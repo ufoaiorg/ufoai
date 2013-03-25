@@ -395,7 +395,6 @@ typedef struct csi_s {
 	int numIDs;
 
 	/** Special container ids */
-	containerIndex_t idRight;
 	containerIndex_t idEquip;
 
 	/** Damage type ids */

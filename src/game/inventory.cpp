@@ -289,7 +289,7 @@ inventory_action_t InventoryInterface::moveInInventory (inventory_t* const inv, 
 	}
 
 	/* If weapon is twohanded and is moved from hand to hand do nothing. */
-	/* Twohanded weapon are only in CSI->idRight. */
+	/* Twohanded weapon are only in CID_RIGHT. */
 	if (fItem->def()->fireTwoHanded && to->isLeftDef() && from->isRightDef()) {
 		return IA_NONE;
 	}
@@ -412,9 +412,9 @@ inventory_action_t InventoryInterface::moveInInventory (inventory_t* const inv, 
 		}
 	}
 
-	/* twohanded exception - only CSI->idRight is allowed for fireTwoHanded weapons */
+	/* twohanded exception - only CID_RIGHT is allowed for fireTwoHanded weapons */
 	if (fItem->def()->fireTwoHanded && to->isLeftDef())
-		to = &this->csi->ids[this->csi->idRight];
+		to = &this->csi->ids[CID_RIGHT];
 
 	switch (checkedTo) {
 	case INV_DOES_NOT_FIT:
@@ -588,7 +588,7 @@ int InventoryInterface::PackAmmoAndWeapon (character_t* const chr, const objDef_
 	Item item(weapon);
 
 	/* are we going to allow trying the left hand */
-	allowLeft = !(inv->getContainer(csi->idRight) && inv->getContainer(csi->idRight)->def()->fireTwoHanded);
+	allowLeft = !(inv->getContainer(CID_RIGHT) && inv->getContainer(CID_RIGHT)->def()->fireTwoHanded);
 
 	if (weapon->oneshot) {
 		/* The weapon provides its own ammo (i.e. it is charged or loaded in the base.) */
@@ -648,7 +648,7 @@ int InventoryInterface::PackAmmoAndWeapon (character_t* const chr, const objDef_
 	}
 
 	/* now try to pack the weapon */
-	packed = tryAddToInventory(inv, &item, &csi->ids[csi->idRight]);
+	packed = tryAddToInventory(inv, &item, &csi->ids[CID_RIGHT]);
 	if (packed)
 		ammoMult = 3;
 	if (!packed && allowLeft)
@@ -709,7 +709,7 @@ void InventoryInterface::EquipActorMelee (inventory_t* const inv, const teamDef_
 	if (!obj->fireTwoHanded)
 		Sys_Error("INVSH_EquipActorMelee: melee weapon %s for team %s is not firetwohanded! (%s)",
 				obj->id, td->id, invName);
-	tryAddToInventory(inv, &item, &this->csi->ids[this->csi->idRight]);
+	tryAddToInventory(inv, &item, &this->csi->ids[CID_RIGHT]);
 }
 
 /**
@@ -730,7 +730,7 @@ void InventoryInterface::EquipActorRobot (inventory_t* const inv, const objDef_t
 	assert(weapon->ammos[0]);
 	item.ammo = weapon->ammos[0];
 
-	tryAddToInventory(inv, &item, &this->csi->ids[this->csi->idRight]);
+	tryAddToInventory(inv, &item, &this->csi->ids[CID_RIGHT]);
 }
 
 /**

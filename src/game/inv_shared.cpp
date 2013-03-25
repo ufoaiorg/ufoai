@@ -56,7 +56,7 @@ bool invDef_t::isFloorDef () const
  */
 bool invDef_t::isRightDef () const
 {
-	return id == CSI->idRight;
+	return id == CID_RIGHT;
 }
 
 /**
@@ -611,7 +611,7 @@ const objDef_t *Item::getReactionFireWeaponType () const
 inventory_s::inventory_s ()
 {
 // This (prototype-)constructor does not work as intended. Seems like the first inventory is created before CSI is set.
-//	containers[CSI->idRight]._invList = NULL;
+//	containers[CID_RIGHT]._invList = NULL;
 }
 
 const Container *inventory_t::_getNextCont (const Container *prev) const
@@ -679,7 +679,7 @@ int inventory_t::canHoldItem (const invDef_t *container, const objDef_t *od, con
 
 	/* left hand is busy if right wields twohanded */
 	if (container->isLeftDef()) {
-		if (getContainer(CSI->idRight) && getContainer(CSI->idRight)->isHeldTwoHanded())
+		if (getContainer(CID_RIGHT) && getContainer(CID_RIGHT)->isHeldTwoHanded())
 			return INV_DOES_NOT_FIT;
 
 		/* can't put an item that is 'fireTwoHanded' into the left hand */
@@ -841,7 +841,7 @@ void inventory_t::setFloorContainer(invList_t *cont)
 
 invList_t *inventory_t::getRightHandContainer () const
 {
-	return getContainer(CSI->idRight);
+	return getContainer(CID_RIGHT);
 }
 
 invList_t *inventory_t::getLeftHandContainer () const

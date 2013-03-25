@@ -488,7 +488,7 @@ static void HUD_DisplayActions (const char* callback, const le_t* actor, actionT
 		/* Reloeadable item in hand. */
 		if (weapon && weapon->def() && weapon->isReloadable()) {
 			int tus;
-			containerIndex_t container = csi.idRight;
+			containerIndex_t container = CID_RIGHT;
 			bool noAmmo;
 			bool noTU;
 			const char *actionId = "reload_handr";
@@ -931,7 +931,7 @@ static void HUD_UpdateButtons (const le_t *le)
 	const char *reason;
 
 	/* Reload buttons */
-	const int rightCanBeReloaded = HUD_WeaponCanBeReloaded(le, csi.idRight, &reason);
+	const int rightCanBeReloaded = HUD_WeaponCanBeReloaded(le, CID_RIGHT, &reason);
 	if (rightCanBeReloaded != -1) {
 		HUD_SetWeaponButton(BT_RIGHT_RELOAD, BT_STATE_DESELECT);
 		Cvar_Set("mn_reloadright_tt", va(_("Reload weapon (%i TU)."), rightCanBeReloaded));
@@ -1416,7 +1416,7 @@ static void HUD_UpdateActor (le_t *actor)
 		containerIndex_t container;
 
 		if (displayRemainingTus[REMAINING_TU_RELOAD_RIGHT] && actor->getRightHandItem()) {
-			container = csi.idRight;
+			container = CID_RIGHT;
 			item = actor->getRightHandItem();
 		} else if (displayRemainingTus[REMAINING_TU_RELOAD_LEFT] && actor->getLeftHandItem()) {
 			container = NONE;

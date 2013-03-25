@@ -100,7 +100,7 @@ void CL_InvAdd (const eventRegister_t *self, dbuffer *msg)
 			Com_Error(ERR_DROP, "InvAdd failed - could not add %i item(s) of %s to container %i",
 					item.amount, item.def()->id, container);
 
-		if (container == csi.idRight)
+		if (container == CID_RIGHT)
 			le->right = item.def()->idx;
 		else if (container == CID_LEFT)
 			le->left = item.def()->idx;

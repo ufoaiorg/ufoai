@@ -1895,7 +1895,6 @@ static void Com_ParseInventory (const char *name, const char **text)
 
 	/* Special IDs for container. These are also used elsewhere, so be careful. */
 	if (Q_streq(name, "right")) {
-		csi.idRight = CID_RIGHT;
 		cid = CID_RIGHT;
 	} else if (Q_streq(name, "left")) {
 		cid = CID_LEFT;
@@ -3408,7 +3407,7 @@ void Com_ParseScripts (bool onlyServer)
 
 	/* reset csi basic info */
 	INVSH_InitCSI(&csi);
-	csi.idRight = csi.idEquip = NONE;
+	csi.idEquip = NONE;
 	csi.damNormal = csi.damBlast = csi.damFire = csi.damShock = csi.damLaser = csi.damPlasma = csi.damParticle = csi.damStunElectro = csi.damStunGas = NONE;
 	csi.damSmoke = csi.damIncendiary = NONE;
 
