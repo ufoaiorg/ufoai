@@ -1,5 +1,4 @@
-#ifndef VECTOR2_H_
-#define VECTOR2_H_
+#pragma once
 
 /* greebo: This file contains the templated class definition of the two-component vector
  *
@@ -283,5 +282,3 @@ class BasicVector2
 
 // A 2-element vector stored in single-precision floating-point.
 typedef BasicVector2<float> Vector2;
-
-#endif /*VECTOR2_H_*/

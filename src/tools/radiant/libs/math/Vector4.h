@@ -1,5 +1,4 @@
-#ifndef VECTOR4_H_
-#define VECTOR4_H_
+#pragma once
 
 /* greebo: This file contains the templated class definition of the three-component vector
  *
@@ -334,5 +333,3 @@ inline bool vector4_equal_epsilon (const BasicVector4<Element>& self, const Basi
 	return float_equal_epsilon(self.x(), other.x(), epsilon) && float_equal_epsilon(self.y(), other.y(), epsilon)
 			&& float_equal_epsilon(self.z(), other.z(), epsilon) && float_equal_epsilon(self.w(), other.w(), epsilon);
 }
-
-#endif /*VECTOR4_H_*/

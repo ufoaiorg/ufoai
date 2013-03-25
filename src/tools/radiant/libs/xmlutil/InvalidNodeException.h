@@ -1,5 +1,4 @@
-#ifndef INVALIDNODEEXCEPTION_H_
-#define INVALIDNODEEXCEPTION_H_
+#pragma once
 
 #include <stdexcept>
 #include <string>
@@ -21,5 +20,3 @@ public:
 };
 
 }
-
-#endif /*INVALIDNODEEXCEPTION_H_*/

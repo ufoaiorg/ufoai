@@ -1,5 +1,4 @@
-#ifndef VECTOR3_H_
-#define VECTOR3_H_
+#pragma once
 
 /* greebo: This file contains the templated class definition of the three-component vector
  *
@@ -496,5 +495,3 @@ inline Vector3 vector3_for_spherical (double theta, double phi)
 	return Vector3(static_cast<float> (cos(theta) * cos(phi)), static_cast<float> (sin(theta) * cos(phi)),
 			static_cast<float> (sin(phi)));
 }
-
-#endif /*VECTOR3_H_*/

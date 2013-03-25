@@ -1,5 +1,4 @@
-#ifndef DOCUMENT_H_
-#define DOCUMENT_H_
+#pragma once
 
 #include "Node.h"
 
@@ -70,5 +69,3 @@ public:
 };
 
 }
-
-#endif /*DOCUMENT_H_*/

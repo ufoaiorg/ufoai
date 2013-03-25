@@ -1,5 +1,4 @@
-#ifndef RENDERABLEPICOSURFACE_H_
-#define RENDERABLEPICOSURFACE_H_
+#pragma once
 
 #include <picomodel.h>
 #include "irender.h"
@@ -122,5 +121,3 @@ namespace model
 			void applySkin (const std::string& skin);
 	};
 }
-
-#endif /*RENDERABLEPICOSURFACE_H_*/

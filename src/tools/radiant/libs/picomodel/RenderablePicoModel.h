@@ -1,5 +1,4 @@
-#ifndef RENDERABLEPICOMODEL_H_
-#define RENDERABLEPICOMODEL_H_
+#pragma once
 
 #include <string>
 #include <vector>
@@ -159,5 +158,3 @@ namespace model
 			}
 	};
 }
-
-#endif /*RENDERABLEPICOMODEL_H_*/
