@@ -96,9 +96,9 @@ void CL_InvAdd (const eventRegister_t *self, dbuffer *msg)
 			Com_Error(ERR_DROP, "InvAdd for %i to temp container %i", le->type, container);
 		}
 
-		if (cls.i.addToInventory(&le->inv, &item, INVDEF(container), x, y, item.amount) == NULL)
+		if (cls.i.addToInventory(&le->inv, &item, INVDEF(container), x, y, item.getAmount()) == NULL)
 			Com_Error(ERR_DROP, "InvAdd failed - could not add %i item(s) of %s to container %i",
-					item.amount, item.def()->id, container);
+					item.getAmount(), item.def()->id, container);
 
 		if (container == CID_RIGHT)
 			le->right = item.def()->idx;

@@ -378,6 +378,10 @@ public:
 					 * parsing functions are expecting this to be at least 4 bytes */
 
 
+	inline int getAmount () const
+	{
+		return amount;
+	}
 	inline int getAmmoLeft () const
 	{
 		return _ammoLeft;

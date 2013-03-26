@@ -270,7 +270,7 @@ void G_InventoryToFloor (Edict *ent)
 			Item item = *ic;
 
 			/* only floor can summarize, so everything on the actor must have amount=1 */
-			assert(item.amount == 1);
+			assert(item.getAmount() == 1);
 			if (!game.i.removeFromInventory(&ent->chr.inv, INVDEF(container), ic))
 				gi.Error("Could not remove item '%s' from inventory %i of entity %i",
 						ic->def()->id, container, ent->number);
@@ -340,7 +340,7 @@ void G_WriteItem (const Item *item, const containerIndex_t contId, int x, int y)
 {
 	assert(item);
 	assert(item->def());
-	gi.WriteFormat("sbsbbbbs", item->def()->idx, item->getAmmoLeft(), item->ammo ? item->ammo->idx : NONE, contId, x, y, item->rotated, item->amount);
+	gi.WriteFormat("sbsbbbbs", item->def()->idx, item->getAmmoLeft(), item->ammo ? item->ammo->idx : NONE, contId, x, y, item->rotated, item->getAmount());
 }
 
 /**
