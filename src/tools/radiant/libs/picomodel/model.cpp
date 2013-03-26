@@ -147,7 +147,7 @@ void PicoModelNode::skinChanged (const std::string& newSkinName)
 	m_picomodel.applySkin(newSkinName);
 }
 
-inline size_t picoInputStreamReam (void* inputStream, unsigned char *buffer, size_t length)
+inline size_t picoInputStreamReam (void *inputStream, unsigned char *buffer, size_t length)
 {
 	return reinterpret_cast<InputStream*> (inputStream)->read(buffer, length);
 }

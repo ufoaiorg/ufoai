@@ -23,7 +23,7 @@
 #define INCLUDED_GTKUTIL_POINTER_H
 
 typedef int gint;
-typedef void* gpointer;
+typedef void *gpointer;
 
 #include <cstddef>
 

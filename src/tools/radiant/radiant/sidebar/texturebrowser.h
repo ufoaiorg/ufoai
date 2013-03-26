@@ -58,9 +58,9 @@ class TextureLayout {
 class DeferredAdjustment {
 		gdouble m_value;
 		guint m_handler;
-		typedef void (*ValueChangedFunction)(void* data, gdouble value);
+		typedef void (*ValueChangedFunction)(void *data, gdouble value);
 		ValueChangedFunction m_function;
-		void* m_data;
+		void *m_data;
 
 		static gboolean deferred_value_changed(gpointer data) {
 			reinterpret_cast<DeferredAdjustment*> (data)->m_function(
@@ -71,7 +71,7 @@ class DeferredAdjustment {
 			return FALSE;
 		}
 	public:
-		DeferredAdjustment(ValueChangedFunction function, void* data) :
+		DeferredAdjustment(ValueChangedFunction function, void *data) :
 			m_value(0), m_handler(0), m_function(function), m_data(data) {
 		}
 		void flush() {

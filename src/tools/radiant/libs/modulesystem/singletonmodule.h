@@ -114,7 +114,7 @@ class SingletonModule: public APIConstructor, public Module, public ModuleRegist
 		{
 			return *m_dependencies;
 		}
-		void* getTable ()
+		void *getTable ()
 		{
 			if (m_api != 0) {
 				return m_api->getTable();

@@ -98,7 +98,7 @@ public:
 
 // --------------- Callbacks ---------------------------------------------------------
 
-static void selection_motion(gdouble x, gdouble y, guint state, void* data) {
+static void selection_motion(gdouble x, gdouble y, guint state, void *data) {
 	//globalOutputStream() << "motion... ";
 	reinterpret_cast<WindowObserver*>(data)->onMouseMotion(WindowVector(x, y), state);
 }
@@ -127,7 +127,7 @@ gboolean CamWnd::camera_expose(GtkWidget* widget, GdkEventExpose* event, gpointe
 	return FALSE;
 }
 
-static void Camera_motionDelta(int x, int y, unsigned int state, void* data) {
+static void Camera_motionDelta(int x, int y, unsigned int state, void *data) {
 	Camera* cam = reinterpret_cast<Camera*>(data);
 
 	cam->m_mouseMove.motion_delta(x, y, state);

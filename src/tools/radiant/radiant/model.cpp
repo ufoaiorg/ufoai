@@ -81,7 +81,7 @@ static void PicoLoadFileFunc (char *name, byte **buffer, int *bufSize)
 	*bufSize = static_cast<int> (GlobalFileSystem().loadFile(name, (void **)buffer));
 }
 
-static void PicoFreeFileFunc (void* file)
+static void PicoFreeFileFunc (void *file)
 {
 	GlobalFileSystem().freeFile(file);
 }

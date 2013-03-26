@@ -24,6 +24,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include <string>
 
 class Image;
-Image* QERApp_LoadImage(void* environment, const std::string& name);
+Image* QERApp_LoadImage(void *environment, const std::string& name);
 
 #endif

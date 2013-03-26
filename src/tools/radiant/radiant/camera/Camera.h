@@ -41,7 +41,7 @@ class Camera
 		View* m_view;
 		Callback m_update;
 
-		static void motionDelta (int x, int y, void* data);
+		static void motionDelta (int x, int y, void *data);
 		static gboolean camera_keymove (gpointer data);
 
 		void moveUpdateAxes ();
