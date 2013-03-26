@@ -57,7 +57,7 @@ std::string Environment::getHomeDir ()
 	return cleaned + RADIANT_HOME + RADIANT_DIRECTORY;
 }
 
-void Environment::init(int argc, char* argv[])
+void Environment::init(int argc, char *argv[])
 {
 	_homePath = getHomeDir();
 
@@ -73,7 +73,7 @@ void Environment::init(int argc, char* argv[])
 	initPaths();
 }
 
-void Environment::initArgs(int argc, char* argv[]) {
+void Environment::initArgs(int argc, char *argv[]) {
 	int i, j, k;
 
 	for (i = 1; i < argc; i++) {

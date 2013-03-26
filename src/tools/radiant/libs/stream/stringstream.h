@@ -42,7 +42,7 @@ class StringBuffer
 			m_string.reserve(capacity);
 			m_string.push_back('\0');
 		}
-		explicit StringBuffer (const char* string) :
+		explicit StringBuffer (const char *string) :
 			m_string(string, string + string_length(string) + 1)
 		{
 		}
@@ -81,19 +81,19 @@ class StringBuffer
 			return std::string(c_str());
 		}
 
-		void push_range (const char* first, const char* last)
+		void push_range (const char *first, const char *last)
 		{
 			m_string.insert(end(), first, last);
 		}
-		void push_string (const char* string)
+		void push_string (const char *string)
 		{
 			push_range(string, string + string_length(string));
 		}
-		char* c_str ()
+		char *c_str ()
 		{
 			return &(*m_string.begin());
 		}
-		const char* c_str () const
+		const char *c_str () const
 		{
 			return &(*m_string.begin());
 		}
@@ -137,7 +137,7 @@ class StringOutputStream: public TextOutputStream
 		{
 		}
 
-		std::size_t write (const char* buffer, std::size_t length)
+		std::size_t write (const char *buffer, std::size_t length)
 		{
 			m_string.push_range(buffer, buffer + length);
 			return length;
@@ -169,11 +169,11 @@ class StringOutputStream: public TextOutputStream
 		{
 			return m_string.empty();
 		}
-		char* c_str ()
+		char *c_str ()
 		{
 			return m_string.c_str();
 		}
-		const char* c_str () const
+		const char *c_str () const
 		{
 			return m_string.c_str();
 		}
@@ -197,7 +197,7 @@ class StringInputStream : public TextInputStream
 		StringInputStream(const std::string& string) : _string(string) {
 		}
 
-		std::size_t read (char* buffer, std::size_t length) {
+		std::size_t read (char *buffer, std::size_t length) {
 			const std::size_t written = std::min(length, _string.length());
 			memcpy(buffer, _string.c_str(), written);
 			_string.erase(0, written);

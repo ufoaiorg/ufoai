@@ -103,7 +103,7 @@ class DialogSpinnerRow
 		GtkSpinButton* m_spin;
 };
 
-static DialogSpinnerRow DialogSpinnerRow_new (const char* name, double value, double lower, double upper, int fraction)
+static DialogSpinnerRow DialogSpinnerRow_new (const char *name, double value, double lower, double upper, int fraction)
 {
 	GtkWidget* alignment = gtk_alignment_new(0.0, 0.5, 0.0, 0.0);
 	gtk_widget_show(alignment);

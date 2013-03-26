@@ -39,7 +39,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "generic/arrayrange.h"
 
 namespace TextOutputDetail {
-inline char* write_unsigned_nonzero_decimal_backward(char* ptr, unsigned int decimal) {
+inline char *write_unsigned_nonzero_decimal_backward(char *ptr, unsigned int decimal) {
 	for (; decimal != 0; decimal /= 10) {
 		*--ptr = char('0' + int(decimal % 10));
 	}
@@ -47,7 +47,7 @@ inline char* write_unsigned_nonzero_decimal_backward(char* ptr, unsigned int dec
 }
 
 #if defined (_WIN64) || defined (__LP64__) || defined (__APPLE__)
-inline char* write_size_t_nonzero_decimal_backward(char* ptr, size_t decimal) {
+inline char *write_size_t_nonzero_decimal_backward(char *ptr, size_t decimal) {
 	for (; decimal != 0; decimal /= 10) {
 		*--ptr = char('0' + (size_t)(decimal % 10));
 	}
@@ -55,7 +55,7 @@ inline char* write_size_t_nonzero_decimal_backward(char* ptr, size_t decimal) {
 }
 #endif
 
-inline char* write_signed_nonzero_decimal_backward(char* ptr, int decimal, bool show_positive) {
+inline char *write_signed_nonzero_decimal_backward(char *ptr, int decimal, bool show_positive) {
 	const bool negative = decimal < 0 ;
 	ptr = write_unsigned_nonzero_decimal_backward(ptr, negative ? -decimal : decimal);
 	if (negative) {
@@ -66,7 +66,7 @@ inline char* write_signed_nonzero_decimal_backward(char* ptr, int decimal, bool 
 	return ptr;
 }
 
-inline char* write_unsigned_nonzero_decimal_backward(char* ptr, unsigned int decimal, bool show_positive) {
+inline char *write_unsigned_nonzero_decimal_backward(char *ptr, unsigned int decimal, bool show_positive) {
 	ptr = write_unsigned_nonzero_decimal_backward(ptr, decimal);
 	if (show_positive) {
 		*--ptr = '+';
@@ -75,7 +75,7 @@ inline char* write_unsigned_nonzero_decimal_backward(char* ptr, unsigned int dec
 }
 
 #if defined (_WIN64) || defined (__LP64__) || defined (__APPLE__)
-inline char* write_size_t_nonzero_decimal_backward(char* ptr, size_t decimal, bool show_positive) {
+inline char *write_size_t_nonzero_decimal_backward(char *ptr, size_t decimal, bool show_positive) {
 	ptr = write_size_t_nonzero_decimal_backward(ptr, decimal);
 	if (show_positive) {
 		*--ptr = '+';
@@ -84,7 +84,7 @@ inline char* write_size_t_nonzero_decimal_backward(char* ptr, size_t decimal, bo
 }
 #endif
 
-inline char* write_signed_decimal_backward(char* ptr, int decimal, bool show_positive) {
+inline char *write_signed_decimal_backward(char *ptr, int decimal, bool show_positive) {
 	if (decimal == 0) {
 		*--ptr = '0';
 	} else {
@@ -93,7 +93,7 @@ inline char* write_signed_decimal_backward(char* ptr, int decimal, bool show_pos
 	return ptr;
 }
 
-inline char* write_unsigned_decimal_backward(char* ptr, unsigned int decimal, bool show_positive) {
+inline char *write_unsigned_decimal_backward(char *ptr, unsigned int decimal, bool show_positive) {
 	if (decimal == 0) {
 		*--ptr = '0';
 	} else {
@@ -103,7 +103,7 @@ inline char* write_unsigned_decimal_backward(char* ptr, unsigned int decimal, bo
 }
 
 #if defined (_WIN64) || defined (__LP64__) || defined (__APPLE__)
-inline char* write_size_t_decimal_backward(char* ptr, size_t decimal, bool show_positive) {
+inline char *write_size_t_decimal_backward(char *ptr, size_t decimal, bool show_positive) {
 	if (decimal == 0) {
 		*--ptr = '0';
 	} else {
@@ -146,7 +146,7 @@ template<typename TextOutputStreamType>
 inline TextOutputStreamType& ostream_write(TextOutputStreamType& ostream, const int i) {
 	const std::size_t bufferSize = 16;
 	char buf[bufferSize];
-	char* begin = TextOutputDetail::write_signed_decimal_backward(buf + bufferSize, i, false);
+	char *begin = TextOutputDetail::write_signed_decimal_backward(buf + bufferSize, i, false);
 	ostream.write(begin, (buf + bufferSize) - begin);
 	return ostream;
 }
@@ -158,7 +158,7 @@ template<typename TextOutputStreamType>
 inline TextOutputStreamType& ostream_write(TextOutputStreamType& ostream, const Unsigned i) {
 	const std::size_t bufferSize = 16;
 	char buf[bufferSize];
-	char* begin = TextOutputDetail::write_unsigned_decimal_backward(buf + bufferSize, i, false);
+	char *begin = TextOutputDetail::write_unsigned_decimal_backward(buf + bufferSize, i, false);
 	ostream.write(begin, (buf + bufferSize) - begin);
 	return ostream;
 }
@@ -171,7 +171,7 @@ inline TextOutputStreamType& ostream_write(TextOutputStreamType& ostream, const 
 	// max is 18446744073709551615, buffer of 32 chars should always be enough
 	const std::size_t bufferSize = 32;
 	char buf[bufferSize];
-	char* begin = TextOutputDetail::write_size_t_decimal_backward(buf + bufferSize, i, false);
+	char *begin = TextOutputDetail::write_size_t_decimal_backward(buf + bufferSize, i, false);
 	ostream.write(begin, (buf + bufferSize) - begin);
 	return ostream;
 }
@@ -180,7 +180,7 @@ inline TextOutputStreamType& ostream_write(TextOutputStreamType& ostream, const 
 
 /// \brief Writes a null-terminated \p string to \p ostream.
 template<typename TextOutputStreamType>
-inline TextOutputStreamType& ostream_write(TextOutputStreamType& ostream, const char* string) {
+inline TextOutputStreamType& ostream_write(TextOutputStreamType& ostream, const char *string) {
 	ostream.write(string, strlen(string));
 	return ostream;
 }
@@ -278,15 +278,15 @@ inline TextOutputStreamType& ostream_write(TextOutputStreamType& ostream, const 
 
 class LowerCase {
 public:
-	const char* m_string;
-	LowerCase(const char* string) : m_string(string) {
+	const char *m_string;
+	LowerCase(const char *string) : m_string(string) {
 	}
 };
 
 /// \brief Writes a string to \p ostream converted to lower-case.
 template<typename TextOutputStreamType>
 inline TextOutputStreamType& ostream_write(TextOutputStreamType& ostream, const LowerCase& lower) {
-	for (const char* p = lower.m_string; *p != '\0'; ++p) {
+	for (const char *p = lower.m_string; *p != '\0'; ++p) {
 		ostream << static_cast<char>(std::tolower(*p));
 	}
 	return ostream;
@@ -298,8 +298,8 @@ template < typename TextInputStreamType, int SIZE = 1024 >
 class SingleCharacterInputStream {
 	TextInputStreamType& m_inputStream;
 	char m_buffer[SIZE];
-	char* m_cur;
-	char* m_end;
+	char *m_cur;
+	char *m_end;
 
 	bool fillBuffer() {
 		m_end = m_buffer + m_inputStream.read(m_buffer, SIZE);
@@ -325,10 +325,10 @@ class SingleCharacterOutputStream : public TextOutputStream {
 	enum unnamed0 { m_bufsize = 1024 };
 	TextOutputStream& m_ostream;
 	char m_buffer[m_bufsize];
-	char* m_pos;
-	const char* m_end;
+	char *m_pos;
+	const char *m_end;
 
-	const char* end() const {
+	const char *end() const {
 		return m_end;
 	}
 	void reset() {
@@ -350,9 +350,9 @@ public:
 		}
 		*m_pos++ = c;
 	}
-	std::size_t write(const char* buffer, std::size_t length) {
+	std::size_t write(const char *buffer, std::size_t length) {
 		const char*const end = buffer + length;
-		for (const char* p = buffer; p != end; ++p) {
+		for (const char *p = buffer; p != end; ++p) {
 			write(*p);
 		}
 		return length;
@@ -364,7 +364,7 @@ template < typename TextOutputStreamType, int SIZE = 1024 >
 class BufferedTextOutputStream : public TextOutputStream {
 	TextOutputStreamType outputStream;
 	char m_buffer[SIZE];
-	char* m_cur;
+	char *m_cur;
 
 public:
 	BufferedTextOutputStream(TextOutputStreamType& outputStream) : outputStream(outputStream), m_cur(m_buffer) {
@@ -372,7 +372,7 @@ public:
 	~BufferedTextOutputStream() {
 		outputStream.write(m_buffer, m_cur - m_buffer);
 	}
-	std::size_t write(const char* buffer, std::size_t length) {
+	std::size_t write(const char *buffer, std::size_t length) {
 		std::size_t remaining = length;
 		for (;;) {
 			std::size_t n = std::min(remaining, std::size_t((m_buffer + SIZE) - m_cur));

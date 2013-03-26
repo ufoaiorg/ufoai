@@ -39,7 +39,7 @@ class Postfix
 		{
 			return m_value;
 		}
-		void write (char* buffer)
+		void write (char *buffer)
 		{
 			sprintf(buffer, "%u", m_value);
 		}
@@ -64,7 +64,7 @@ class Postfix
 
 typedef std::pair<std::string, Postfix> name_t;
 
-inline void name_write (char* buffer, name_t name)
+inline void name_write (char *buffer, name_t name)
 {
 	strcpy(buffer, name.first.c_str());
 	name.second.write(buffer + name.first.length());

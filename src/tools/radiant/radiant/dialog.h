@@ -80,7 +80,7 @@ inline void FloatExport (float& self, const FloatImportCallback& importCallback)
 }
 typedef ReferenceCaller1<float, const FloatImportCallback&, FloatExport> FloatExportCaller;
 
-inline void StringImport (std::string& self, const char* value)
+inline void StringImport (std::string& self, const char *value)
 {
 	self = value;
 }

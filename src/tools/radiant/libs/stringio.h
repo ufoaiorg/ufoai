@@ -46,7 +46,7 @@ inline int buffer_parse_unsigned_decimal_integer_literal (const char*& buffer)
 }
 
 // [+|-][nnnnn][.nnnnn][e|E[+|-]nnnnn]
-inline bool string_parse_float (const char* string, float& f)
+inline bool string_parse_float (const char *string, float& f)
 {
 	if (string_empty(string)) {
 		return false;
@@ -56,7 +56,7 @@ inline bool string_parse_float (const char* string, float& f)
 }
 
 // format same as float
-inline bool string_parse_double (const char* string, double& f)
+inline bool string_parse_double (const char *string, double& f)
 {
 	if (string_empty(string)) {
 		return false;
@@ -144,7 +144,7 @@ inline bool Tokeniser_getSize (Tokeniser& tokeniser, std::size_t& i)
 	return false;
 }
 
-inline bool Tokeniser_parseToken (Tokeniser& tokeniser, const char* expected)
+inline bool Tokeniser_parseToken (Tokeniser& tokeniser, const char *expected)
 {
 	const std::string token = tokeniser.getToken();
 	if (token.length() && string_equal(token, expected)) {
@@ -171,7 +171,7 @@ inline TextOutputStreamType& ostream_write (TextOutputStreamType& outputStream, 
 	return outputStream << "(" << v.x() << " " << v.y() << " " << v.z() << ")";
 }
 
-inline void StdString_importString (std::string& self, const char* string)
+inline void StdString_importString (std::string& self, const char *string)
 {
 	self = string;
 }
@@ -183,7 +183,7 @@ inline void StdString_exportString (const std::string& self, const StringImportC
 typedef ConstReferenceCaller1<std::string, const StringImportCallback&, StdString_exportString>
 		StringExportStringCaller;
 
-inline void Bool_importString (bool& self, const char* string)
+inline void Bool_importString (bool& self, const char *string)
 {
 	self = string_equal(string, "true");
 }
@@ -194,7 +194,7 @@ inline void Bool_exportString (const bool& self, const StringImportCallback& imp
 }
 typedef ConstReferenceCaller1<bool, const StringImportCallback&, Bool_exportString> BoolExportStringCaller;
 
-inline void Int_importString (int& self, const char* string)
+inline void Int_importString (int& self, const char *string)
 {
 	if (!string_parse_int(string, self)) {
 		self = 0;
@@ -209,7 +209,7 @@ inline void Int_exportString (const int& self, const StringImportCallback& impor
 }
 typedef ConstReferenceCaller1<int, const StringImportCallback&, Int_exportString> IntExportStringCaller;
 
-inline void Size_importString (std::size_t& self, const char* string)
+inline void Size_importString (std::size_t& self, const char *string)
 {
 	int i;
 	if (string_parse_int(string, i) && i >= 0) {
@@ -227,7 +227,7 @@ inline void Size_exportString (const std::size_t& self, const StringImportCallba
 }
 typedef ConstReferenceCaller1<std::size_t, const StringImportCallback&, Size_exportString> SizeExportStringCaller;
 
-inline void Float_importString (float& self, const char* string)
+inline void Float_importString (float& self, const char *string)
 {
 	if (!string_parse_float(string, self)) {
 		self = 0;
@@ -242,7 +242,7 @@ inline void Float_exportString (const float& self, const StringImportCallback& i
 }
 typedef ConstReferenceCaller1<float, const StringImportCallback&, Float_exportString> FloatExportStringCaller;
 
-inline void Vector3_importString (Vector3& self, const char* string)
+inline void Vector3_importString (Vector3& self, const char *string)
 {
 	//self(std::string(string));
 	if (!string_parse_vector3(string, self)) {
@@ -272,7 +272,7 @@ class BoolFromString
 {
 		bool m_value;
 	public:
-		BoolFromString (const char* string)
+		BoolFromString (const char *string)
 		{
 			Bool_importString(m_value, string);
 		}
@@ -306,7 +306,7 @@ class IntFromString
 {
 		int m_value;
 	public:
-		IntFromString (const char* string)
+		IntFromString (const char *string)
 		{
 			Int_importString(m_value, string);
 		}
@@ -340,7 +340,7 @@ class SizeFromString
 {
 		std::size_t m_value;
 	public:
-		SizeFromString (const char* string)
+		SizeFromString (const char *string)
 		{
 			Size_importString(m_value, string);
 		}
