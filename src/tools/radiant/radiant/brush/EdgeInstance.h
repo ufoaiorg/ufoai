@@ -1,5 +1,4 @@
-#ifndef EDGEINSTANCE_H_
-#define EDGEINSTANCE_H_
+#pragma once
 
 #include "FaceInstance.h"
 
@@ -63,5 +62,3 @@ class EdgeInstance: public Selectable
 			}
 		}
 };
-
-#endif /*EDGEINSTANCE_H_*/

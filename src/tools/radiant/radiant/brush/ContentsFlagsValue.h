@@ -1,5 +1,4 @@
-#ifndef CONTENTSFLAGSVALUE_H_
-#define CONTENTSFLAGSVALUE_H_
+#pragma once
 
 class ContentsFlagsValue
 {
@@ -57,5 +56,3 @@ class ContentsFlagsValue
 		 */
 		void mergeFlags (ContentsFlagsValue& flags);
 }; // class ContentsFlagsValue
-
-#endif /*CONTENTSFLAGSVALUE_H_*/

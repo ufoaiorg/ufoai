@@ -1,5 +1,4 @@
-#ifndef XPATHEXCEPTION_H_
-#define XPATHEXCEPTION_H_
+#pragma once
 
 #include <stdexcept>
 #include <string>
@@ -21,5 +20,3 @@ public:
 };
 
 }
-
-#endif /*XPATHEXCEPTION_H_*/

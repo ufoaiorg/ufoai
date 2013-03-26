@@ -1,5 +1,4 @@
-#ifndef FACE_H_
-#define FACE_H_
+#pragma once
 
 #include "irender.h"
 #include "iundo.h"
@@ -182,5 +181,3 @@ class Face: public OpenGLRenderable, public Undoable, public FaceShaderObserver
 
 typedef SmartPointer<Face> FaceSmartPointer;
 typedef std::vector<FaceSmartPointer> Faces;
-
-#endif /*FACE_H_*/

@@ -1,5 +1,4 @@
-#ifndef BRUSHCLIPPLANE_H_
-#define BRUSHCLIPPLANE_H_
+#pragma once
 
 #include "math/Plane3.h"
 #include "irender.h"
@@ -21,5 +20,3 @@ class BrushClipPlane: public OpenGLRenderable
 
 		void render (Renderer& renderer, const VolumeTest& volume, const Matrix4& localToWorld) const;
 }; // class BrushClipPlane
-
-#endif /*BRUSHCLIPPLANE_H_*/

@@ -1,5 +1,4 @@
-#ifndef BRUSH_BRUSH_H_
-#define BRUSH_BRUSH_H_
+#pragma once
 
 #include "scenelib.h"
 #include "cullable.h"
@@ -306,5 +305,3 @@ class Brush: public TransformNode,
 		/// \brief Constructs the face windings and updates anything that depends on them.
 		void buildBRep ();
 }; // class Brush
-
-#endif /*BRUSH_BRUSH_H_*/

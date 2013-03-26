@@ -1,5 +1,4 @@
-#ifndef BRUSHINSTANCE_H_
-#define BRUSHINSTANCE_H_
+#pragma once
 
 #include "renderable.h"
 #include "irender.h"
@@ -151,5 +150,3 @@ inline BrushInstance* Instance_getBrush (scene::Instance& instance)
 {
 	return dynamic_cast<BrushInstance*>(&instance);
 }
-
-#endif /*BRUSHINSTANCE_H_*/

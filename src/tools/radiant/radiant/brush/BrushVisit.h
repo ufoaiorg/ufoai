@@ -1,5 +1,4 @@
-#ifndef BRUSHVISIT_H_
-#define BRUSHVISIT_H_
+#pragma once
 
 #include "iselection.h"
 #include "BrushInstance.h"
@@ -190,5 +189,3 @@ inline const Functor& Scene_ForEachSelectedBrushFace (const Functor& functor)
 	g_SelectedFaceInstances.foreach(FaceVisitorWrapper<Functor> (functor));
 	return functor;
 }
-
-#endif /*BRUSHVISIT_H_*/

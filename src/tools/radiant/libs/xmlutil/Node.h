@@ -1,5 +1,4 @@
-#ifndef NODE_H_
-#define NODE_H_
+#pragma once
 
 // Forward declaration to avoid including the whole libxml2 headers
 typedef struct _xmlNode xmlNode;
@@ -74,5 +73,3 @@ public:
 
 
 } // namespace xml
-
-#endif /*NODE_H_*/
