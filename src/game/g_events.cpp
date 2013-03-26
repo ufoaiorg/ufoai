@@ -114,14 +114,14 @@ void G_EventActorSendReservations (const Edict *ent)
  * @brief Tell the client to remove the item from the container
  * @param[in] ent Pointer to entity having given inventory.
  * @param[in] playerMask The player mask to determine which clients should receive the event (e.g. @c G_VisToPM(ent->visflags))
- * @param[in] invDef Pointer to inventory definition having given container.
+ * @param[in] containerId Id of the container the item is in.
  * @param[in] x Position of item in container.
  * @param[in] y Position of item in container.
  */
-void G_EventInventoryDelete (const Edict *ent, playermask_t playerMask, const invDef_t *invDef, int x, int y)
+void G_EventInventoryDelete (const Edict *ent, playermask_t playerMask, const containerIndex_t containerId, int x, int y)
 {
 	G_EventAdd(playerMask, EV_INV_DEL, ent->number);
-	gi.WriteByte(invDef->id);
+	gi.WriteByte(containerId);
 	gi.WriteByte(x);
 	gi.WriteByte(y);
 	G_EventEnd();

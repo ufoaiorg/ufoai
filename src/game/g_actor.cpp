@@ -638,7 +638,7 @@ bool G_ActorInvMove (Edict *ent, const invDef_t *from, invList_t *fItem, const i
 			/* Delay this if swapping ammo, otherwise the le will be removed in the client before we can add back
 			 * the current ammo because removeNextFrame is set in LE_PlaceItem() if the floor le has no items */
 			if (ia != IA_RELOAD_SWAP)
-				G_EventInventoryDelete(floor, G_VisToPM(floor->visflags), from, fx, fy);
+				G_EventInventoryDelete(floor, G_VisToPM(floor->visflags), from->id, fx, fy);
 		} else {
 			/* Floor is empty, remove the edict (from server + client) if we are
 			 * not moving to it. */
@@ -646,10 +646,10 @@ bool G_ActorInvMove (Edict *ent, const invDef_t *from, invList_t *fItem, const i
 				G_EventPerish(floor);
 				G_FreeEdict(floor);
 			} else
-				G_EventInventoryDelete(floor, G_VisToPM(floor->visflags), from, fx, fy);
+				G_EventInventoryDelete(floor, G_VisToPM(floor->visflags), from->id, fx, fy);
 		}
 	} else {
-		G_EventInventoryDelete(ent, G_TeamToPM(ent->team), from, fx, fy);
+		G_EventInventoryDelete(ent, G_TeamToPM(ent->team), from->id, fx, fy);
 	}
 
 	/* send tu's */
@@ -712,7 +712,7 @@ bool G_ActorInvMove (Edict *ent, const invDef_t *from, invList_t *fItem, const i
 			/* Couldn't remove it before because that would remove the le from the client and would cause battlescape to crash
 			 * when trying to add back the swapped ammo above */
 			if (ia == IA_RELOAD_SWAP)
-				G_EventInventoryDelete(floor, G_VisToPM(floor->visflags), from, fx, fy);
+				G_EventInventoryDelete(floor, G_VisToPM(floor->visflags), from->id, fx, fy);
 		}
 	} else {
 		G_EventInventoryAdd(ent, G_TeamToPM(ent->team), 1);
@@ -726,7 +726,7 @@ bool G_ActorInvMove (Edict *ent, const invDef_t *from, invList_t *fItem, const i
 	mask = G_VisToPM(ent->visflags) & ~G_TeamToPM(ent->team);
 	if (mask) {
 		if (from->isRightDef() || from->isLeftDef()) {
-			G_EventInventoryDelete(ent, mask, from, fx, fy);
+			G_EventInventoryDelete(ent, mask, from->id, fx, fy);
 		}
 		if (toContType->isRightDef() || toContType->isLeftDef()) {
 			G_EventInventoryAdd(ent, mask, 1);
