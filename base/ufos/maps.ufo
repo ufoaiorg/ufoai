@@ -958,6 +958,7 @@ mapdef frozen_industrial_large
 
 	ufos
 	(
+		craft_crash_bomber
 		craft_ufo_bomber
 		craft_ufo_corrupter
 	)
@@ -1202,6 +1203,7 @@ mapdef frozen_nature_large
 
 	ufos
 	(
+		craft_crash_bomber
 		craft_ufo_bomber
 		craft_ufo_corrupter
 	)

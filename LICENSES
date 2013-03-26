@@ -291,6 +291,7 @@ base/maps/forest/fr_w6.map | GNU General Public License 2.0 or later
 base/maps/forest/fr_w7.map | GNU General Public License 2.0 or later
 base/maps/forest/fr_w8.map | GNU General Public License 2.0 or later
 base/maps/frozen.ump | GNU General Public License 2.0 or later
+base/maps/frozen/st_craft_crash_bomber.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | crashed_bomber prefab
 base/maps/frozen/st_craft_crash_fighter.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | base/maps/africa/af_craft_crash_fighter.map
 base/maps/frozen/st_craft_crash_gunboat.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | crashed_gunboat prefab
 base/maps/frozen/st_craft_crash_harvester.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | base/maps/ice/ice_craft_crash_harvester.map
