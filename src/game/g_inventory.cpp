@@ -336,11 +336,11 @@ void G_ReadItem (Item *item, const invDef_t **container, int *x, int *y)
  * @sa CL_NetReceiveItem
  * @sa EV_INV_TRANSFER
  */
-void G_WriteItem (const Item *item, const invDef_t *container, int x, int y)
+void G_WriteItem (const Item *item, const containerIndex_t contId, int x, int y)
 {
 	assert(item);
 	assert(item->def());
-	gi.WriteFormat("sbsbbbbs", item->def()->idx, item->getAmmoLeft(), item->ammo ? item->ammo->idx : NONE, container->id, x, y, item->rotated, item->amount);
+	gi.WriteFormat("sbsbbbbs", item->def()->idx, item->getAmmoLeft(), item->ammo ? item->ammo->idx : NONE, contId, x, y, item->rotated, item->amount);
 }
 
 /**
@@ -378,7 +378,7 @@ void G_SendInventory (playermask_t playerMask, const Edict *ent)
 		for (ic = ent->getContainer(container); ic; ic = ic->getNext()) {
 			/* send a single item */
 			assert(ic->def());
-			G_WriteItem(ic, INVDEF(container), ic->getX(), ic->getY());
+			G_WriteItem(ic, container, ic->getX(), ic->getY());
 		}
 	}
 	G_EventEnd();

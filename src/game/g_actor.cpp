@@ -707,7 +707,7 @@ bool G_ActorInvMove (Edict *ent, const invDef_t *from, invList_t *fItem, const i
 			/* use the backup item to use the old amount values, because the clients have to use the same actions
 			 * on the original amount. Otherwise they would end in a different amount of items as the server (+1) */
 			G_EventInventoryAdd(floor, G_VisToPM(floor->visflags), 1);
-			G_WriteItem(&fromItemBackup, toContType, tx, ty);
+			G_WriteItem(&fromItemBackup, toContType->id, tx, ty);
 			G_EventEnd();
 			/* Couldn't remove it before because that would remove the le from the client and would cause battlescape to crash
 			 * when trying to add back the swapped ammo above */
@@ -716,7 +716,7 @@ bool G_ActorInvMove (Edict *ent, const invDef_t *from, invList_t *fItem, const i
 		}
 	} else {
 		G_EventInventoryAdd(ent, G_TeamToPM(ent->team), 1);
-		G_WriteItem(&item, toContType, tx, ty);
+		G_WriteItem(&item, toContType->id, tx, ty);
 		G_EventEnd();
 	}
 
@@ -730,7 +730,7 @@ bool G_ActorInvMove (Edict *ent, const invDef_t *from, invList_t *fItem, const i
 		}
 		if (toContType->isRightDef() || toContType->isLeftDef()) {
 			G_EventInventoryAdd(ent, mask, 1);
-			G_WriteItem(&item, toContType, tx, ty);
+			G_WriteItem(&item, toContType->id, tx, ty);
 			G_EventEnd();
 		}
 	}

@@ -33,5 +33,5 @@ bool G_InventoryRemoveItemByID(const char *itemID, Edict *ent, containerIndex_t 
 bool G_AddItemToFloor(const pos3_t pos, const char *itemID);
 void G_InventoryToFloor(Edict *ent);
 void G_ReadItem(Item *item, const invDef_t **container, int *x, int *y);
-void G_WriteItem(const Item *item, const invDef_t *container, int x, int y);
+void G_WriteItem(const Item *item, const containerIndex_t contId, int x, int y);
 void G_SendInventory(playermask_t player_mask, const Edict *ent);
