@@ -779,14 +779,13 @@ static void AM_DisplayResults (const autoMissionBattle_t *battle)
  */
 static void AM_MoveCharacterInventoryIntoItemCargo (aircraft_t *aircraft, character_t *chr)
 {
-	containerIndex_t container;
-
 	assert(aircraft != NULL);
 	assert(chr != NULL);
 
 	/* add items to itemcargo */
-	for (container = 0; container < CID_MAX; container++) {
-		const invList_t *ic = chr->inv.getContainer(container);
+	const Container *cont = NULL;
+	while ((cont = chr->inv.getNextCont(cont))) {
+		const invList_t *ic = cont->_invList;
 
 		while (ic) {
 			const item_t *item = ic;
