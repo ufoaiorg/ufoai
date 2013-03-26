@@ -2010,6 +2010,7 @@ static const char* GEO_GetPopulationType (const byte* color)
  * @brief Determine the terrain type under a given position
  * @sa GEO_GetColor
  * @param[in] pos Map Coordinates to get the terrain type from
+ * @param[out] coast GEO_GetColor will set this to true if the given position is a coast line.
  * @return returns the zone name
  */
 static inline const char* GEO_GetTerrainTypeByPos (const vec2_t pos, bool *coast)
