@@ -193,8 +193,8 @@ const picoModule_t **PicoModuleList (int *numModules);
 
 picoModel_t *PicoLoadModel (char *name, int frameNum);
 
-typedef size_t (*PicoInputStreamReadFunc) (void* inputStream, unsigned char *buffer, size_t length);
-picoModel_t* PicoModuleLoadModelStream (const picoModule_t* module, const char *fileName, void* inputStream,
+typedef size_t (*PicoInputStreamReadFunc) (void *inputStream, unsigned char *buffer, size_t length);
+picoModel_t* PicoModuleLoadModelStream (const picoModule_t* module, const char *fileName, void *inputStream,
 		PicoInputStreamReadFunc inputStreamRead, size_t streamLength, int frameNum);
 
 /* model functions */

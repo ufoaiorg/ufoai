@@ -50,13 +50,13 @@ class Module
 		}
 		virtual void capture () = 0;
 		virtual void release () = 0;
-		virtual void* getTable () = 0;
+		virtual void *getTable () = 0;
 };
 
 /**
  * @brief Shorthand to call the getTable method on module
  */
-inline void* Module_getTable (Module& module)
+inline void *Module_getTable (Module& module)
 {
 	return module.getTable();
 }

@@ -1726,7 +1726,7 @@ void SV_PrepareTilesToPlace (MapInfo *map)
  * @return 0 on success, -1 if it was interrupted via the @c mapSem semaphore, signaling that
  *  someone else has finished first, or timeout occurred.
  */
-static int SV_AssemblyThread (void* data)
+static int SV_AssemblyThread (void *data)
 {
 	MapInfo *map = (MapInfo*) data;
 

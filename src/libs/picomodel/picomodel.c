@@ -188,7 +188,7 @@ picoModel_t *PicoLoadModel (char *fileName, int frameNum)
 	return model;
 }
 
-picoModel_t *PicoModuleLoadModelStream (const picoModule_t* module, const char *fileName, void* inputStream,
+picoModel_t *PicoModuleLoadModelStream (const picoModule_t* module, const char *fileName, void *inputStream,
 		PicoInputStreamReadFunc inputStreamRead, size_t streamLength, int frameNum)
 {
 	picoModel_t *model;
@@ -1364,7 +1364,7 @@ typedef struct _UniqueIndices {
 	BinaryTree tree;
 	IndexArray indices;
 	LessFunc lessFunc;
-	void* lessData;
+	void *lessData;
 } UniqueIndices;
 
 static size_t UniqueIndices_size (UniqueIndices* self)
@@ -1378,7 +1378,7 @@ static void UniqueIndices_reserve (UniqueIndices* self, size_t size)
 	indexarray_reserve(&self->indices, size);
 }
 
-static void UniqueIndices_init (UniqueIndices* self, LessFunc lessFunc, void* lessData)
+static void UniqueIndices_init (UniqueIndices* self, LessFunc lessFunc, void *lessData)
 {
 	self->lessFunc = lessFunc;
 	self->lessData = lessData;
@@ -1440,7 +1440,7 @@ typedef struct picoSmoothVertices_s {
 	picoIndex_t* smoothingGroups;
 } picoSmoothVertices_t;
 
-static int lessSmoothVertex (void* data, picoIndex_t first, picoIndex_t second)
+static int lessSmoothVertex (void *data, picoIndex_t first, picoIndex_t second)
 {
 	picoSmoothVertices_t* smoothVertices = data;
 

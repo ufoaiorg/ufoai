@@ -30,12 +30,12 @@ class GLTexture;
 class LoadImageCallback
 {
 		// The type of a load function
-		typedef Image* (*LoadFunc) (void* environment, const std::string& name);
+		typedef Image* (*LoadFunc) (void *environment, const std::string& name);
 	public:
-		void* m_environment;
+		void *m_environment;
 		LoadFunc m_func;
 
-		LoadImageCallback (void* environment, LoadFunc func) :
+		LoadImageCallback (void *environment, LoadFunc func) :
 			m_environment(environment), m_func(func)
 		{
 		}
