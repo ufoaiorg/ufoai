@@ -2239,14 +2239,56 @@ mapdef mansion_small
 // ORIENTAL RANDOM MAPS //
 //////////////////////////
 
+/* TODO
 mapdef oriental_large
 {
-	map			"+oriental"
-	param		"large"
-	description	"_Middle Eastern Suburb"
-	multiplayer	false
-	size		"small"
-	maxaliens	14
+	map				"+oriental"
+	param			"large"
+	description		"_Middle Eastern Suburb"
+	multiplayer		false
+	size			"small"
+	maxaliens		30
+	civilianteam	middle
+
+	aircraft
+	(
+		craft_drop_firebird
+		craft_drop_raptor
+		craft_drop_herakles
+	)
+
+	ufos
+	(
+		craft_ufo_bomber
+	)
+
+	terrains
+	(
+		"desert"
+	)
+
+	cultures
+	(
+		"oriental"
+	)
+
+	populations
+	(
+		"urban"
+		"suburban"
+		"village"
+	)
+}
+*/
+
+mapdef oriental_medium
+{
+	map				"+oriental"
+	param			"medium"
+	description		"_Middle Eastern Suburb"
+	multiplayer		false
+	size			"small"
+	maxaliens		14
 	civilianteam	middle
 
 	aircraft
@@ -2279,57 +2321,14 @@ mapdef oriental_large
 	)
 }
 
-mapdef oriental_medium
-{
-	map			"+oriental"
-	param		"medium"
-	description	"_Middle Eastern Suburb"
-	multiplayer	false
-	size		"small"
-	maxaliens	8
-	civilianteam	middle
-
-	aircraft
-	(
-		craft_drop_firebird
-		craft_drop_raptor
-		craft_drop_herakles
-	)
-
-	ufos
-	(
-		craft_ufo_scout
-		craft_crash_scout
-		craft_ufo_fighter
-		craft_crash_fighter
-	)
-
-	terrains
-	(
-		"desert"
-	)
-
-	cultures
-	(
-		"oriental"
-	)
-
-	populations
-	(
-		"urban"
-		"suburban"
-		"village"
-	)
-}
-
 mapdef oriental_small
 {
-	map			"+oriental"
-	param		"small"
-	description	"_Middle Eastern Suburb"
-	multiplayer	false
-	size		"small"
-	maxaliens	8
+	map				"+oriental"
+	param			"small"
+	description		"_Middle Eastern Suburb"
+	multiplayer		false
+	size			"small"
+	maxaliens		9
 	civilianteam	middle
 
 	aircraft
