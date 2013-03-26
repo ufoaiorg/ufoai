@@ -128,7 +128,7 @@ invList_t *InventoryInterface::addToInventory (inventory_t *const inv, const Ite
 	/* Set the data in the new entry to the data we got via function-parameters.*/
 	*ic = *item;
 	ic->setNext(NULL);
-	ic->amount = amount;
+	ic->setAmount(amount);
 
 	/* don't reset an already applied rotation */
 	if (checkedTo == INV_FITS_ONLY_ROTATED)

@@ -674,7 +674,7 @@ bool G_ActorInvMove (Edict *ent, const invDef_t *from, invList_t *fItem, const i
 			item.ammo = NULL;
 			item.setDef(toItemBackup.ammo);
 			item.rotated = fromItemBackup.rotated;
-			item.amount = toItemBackup.getAmount();
+			item.setAmount(toItemBackup.getAmount());
 			toContType = from;
 			if (toContType->isFloorDef()) {
 				/* moveInInventory placed the swapped ammo in an available space, check where it was placed

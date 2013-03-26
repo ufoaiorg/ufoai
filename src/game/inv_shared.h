@@ -382,6 +382,10 @@ public:
 	{
 		return amount;
 	}
+	inline void setAmount (int value)
+	{
+		amount = value;
+	}
 	inline int getAmmoLeft () const
 	{
 		return _ammoLeft;

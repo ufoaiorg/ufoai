@@ -304,10 +304,12 @@ void G_ReadItem (Item *item, const invDef_t **container, int *x, int *y)
 {
 	int t, m;
 	int ammoleft;
+	int amount;
 	containerIndex_t containerID;
 
-	gi.ReadFormat("sbsbbbbs", &t, &ammoleft, &m, &containerID, x, y, &item->rotated, &item->amount);
+	gi.ReadFormat("sbsbbbbs", &t, &ammoleft, &m, &containerID, x, y, &item->rotated, &amount);
 	item->setAmmoLeft(ammoleft);
+	item->setAmount(amount);
 
 	if (t < 0 || t >= gi.csi->numODs)
 		gi.Error("Item index out of bounds: %i", t);

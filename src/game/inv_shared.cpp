@@ -469,9 +469,10 @@ uint32_t objDef_t::getShapeRotated () const
 Item::Item ()
 {
 	setAmmoLeft(NONE_AMMO);
+	setAmount(0);
 	ammo = NULL;
 	_itemDef = NULL;
-	amount = _x = _y = rotated = 0;
+	_x = _y = rotated = 0;
 	_next = NULL;
 }
 
@@ -479,9 +480,10 @@ Item::Item ()
 Item::Item (const objDef_t *itemDef, const objDef_t *_ammo, int ammoLeft)
 {
 	setAmmoLeft(ammoLeft);
+	setAmount(0);
 	ammo = _ammo;
 	_itemDef = itemDef;
-	amount = _x = _y = rotated = 0;
+	_x = _y = rotated = 0;
 	_next = NULL;
 }
 
