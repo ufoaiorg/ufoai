@@ -747,13 +747,6 @@ bool G_ActorInvMove (Edict *ent, const invDef_t *from, invList_t *fItem, const i
 void G_ActorReload (Edict *ent, const invDef_t *invDef)
 {
 	const objDef_t *weapon;
-	int tu;
-	containerIndex_t containerID;
-	const invDef_t *bestContainer;
-
-	/* search for clips and select the one that is available easily */
-	tu = 100;
-	bestContainer = NULL;
 
 	if (ent->getContainer(invDef->id)) {
 		weapon = ent->getContainer(invDef->id)->def();
@@ -770,19 +763,23 @@ void G_ActorReload (Edict *ent, const invDef_t *invDef)
 	 * cheat issue as in singleplayer there is no way to inject fake client commands in the virtual
 	 * network buffer, and in multiplayer everything is researched */
 
+	/* search for clips and select the one that is available easily */
 	/* also try the temp containers */
+	containerIndex_t contId;
+	const invDef_t *bestContainer = NULL;
 	Item *ammoItem = NULL;
-	for (containerID = 0; containerID < CID_MAX; containerID++) {
-		if (INVDEF(containerID)->out < tu) {
+	int tu = 100;
+	for (contId = 0; contId < CID_MAX; contId++) {
+		if (INVDEF(contId)->out < tu) {
 			/* Once we've found at least one clip, there's no point
 			 * searching other containers if it would take longer
 			 * to retrieve the ammo from them than the one
 			 * we've already found. */
 			Item *item;
-			for (item = ent->getContainer(containerID); item; item = item->getNext())
+			for (item = ent->getContainer(contId); item; item = item->getNext())
 				if (item->def()->isLoadableInWeapon(weapon)) {
 					ammoItem = item;
-					bestContainer = INVDEF(containerID);
+					bestContainer = INVDEF(contId);
 					tu = bestContainer->out;
 					break;
 				}
