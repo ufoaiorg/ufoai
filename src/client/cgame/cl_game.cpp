@@ -1320,9 +1320,8 @@ static void GAME_SendCurrentTeamSpawningInfo (dbuffer *buf, linkedList_t *team)
 
 		/* unlink all temp containers */
 		for (container = 0; container < CID_MAX; container++) {
-			if (!INVDEF(container)->temp)
-				continue;
-			inv->resetContainer(container);
+			if (INVDEF(container)->temp)
+				inv->resetContainer(container);
 		}
 
 		GAME_NetSendCharacter(buf, chr);
