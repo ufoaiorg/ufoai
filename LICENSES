@@ -571,7 +571,10 @@ base/maps/oriental/or_craft_crash_scout.map | GNU General Public License 2.0 or 
 base/maps/oriental/or_craft_drop_firebird.map | GNU General Public License 2.0 or later
 base/maps/oriental/or_craft_drop_herakles.map | GNU General Public License 2.0 or later
 base/maps/oriental/or_craft_drop_raptor.map | GNU General Public License 2.0 or later
+base/maps/oriental/or_craft_ufo_bomber.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | ufo_bomber prefab
+base/maps/oriental/or_craft_ufo_corrupter.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | ufo_corrupter prefab
 base/maps/oriental/or_craft_ufo_fighter.map | GNU General Public License 2.0 or later
+base/maps/oriental/or_craft_ufo_gunboat.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | ufo_gunboat prefab
 base/maps/oriental/or_craft_ufo_harvester.map | GNU General Public License 2.0 or later
 base/maps/oriental/or_craft_ufo_scout.map | GNU General Public License 2.0 or later
 base/maps/oriental/or_house_a.map | GNU General Public License 2.0 or later

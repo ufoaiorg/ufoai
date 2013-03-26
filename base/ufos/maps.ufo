@@ -2239,7 +2239,6 @@ mapdef mansion_small
 // ORIENTAL RANDOM MAPS //
 //////////////////////////
 
-/* TODO
 mapdef oriental_large
 {
 	map				"+oriental"
@@ -2260,6 +2259,7 @@ mapdef oriental_large
 	ufos
 	(
 		craft_ufo_bomber
+		craft_ufo_corrupter
 	)
 
 	terrains
@@ -2279,7 +2279,6 @@ mapdef oriental_large
 		"village"
 	)
 }
-*/
 
 mapdef oriental_medium
 {
@@ -2300,6 +2299,7 @@ mapdef oriental_medium
 
 	ufos
 	(
+		craft_ufo_gunboat
 		craft_ufo_harvester
 	)
 
