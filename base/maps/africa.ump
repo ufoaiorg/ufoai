@@ -2,15 +2,45 @@
 // Africa
 // *********************************
 
-base africa/af_
-
 // Tiletypes:
 // ----------
-// +: tile contains something
-// a: main
-// b: dropship, ufo
+// + : tile contains something
+// 0 : always means no restrictions
+// a : common tile
+// c : craft, like dropship or UFO
+// 1-4 : small hill parts
 
-// 1-4 (trbl)
+base africa/af_
+
+// Dropships -------------------------------------------------------*
+
+tile +craft_drop_firebird
+{
+5 4
+0		0		0		0		0
+0		+c		+c		+c		0
+0		+c		+c		+c		0
+0		0		0		0		0
+}
+
+tile +craft_drop_herakles
+{
+5 4
+0		0		0		0		0
+0		+c		+c		+c		0
+0		+c		+c		+c		0
+0		0		0		0		0
+}
+
+tile +craft_drop_raptor
+{
+5 5
+0		0		0		0		0
+0		+c		+c		+c		0
+0		+c		+c		+c		0
+0		+c		+c		+c		0
+0		0		0		0		0
+}
 
 // UFOs -------------------------------------------------------------
 
@@ -18,8 +48,8 @@ tile +craft_ufo_scout
 {
 4 4
 0		a		a		0
-a		+b		+b		a
-a		+b		+b		a
+a		+c		+c		a
+a		+c		+c		a
 0		a		a		0
 }
 
@@ -27,9 +57,9 @@ tile +craft_crash_scout
 {
 4 5
 0		a		a		0
-a		+b		+b		a
-a		+b		+b		a
-a		+b		+b		a
+a		+c		+c		a
+a		+c		+c		a
+a		+c		+c		a
 0		a		a		0
 }
 
@@ -37,9 +67,9 @@ tile +craft_ufo_fighter
 {
 5 5
 0		a		a		a		0
-0		a		+b		+b		a
-a		+b		+b		+b		a
-0		a		+b		+b		a
+0		a		+c		+c		a
+a		+c		+c		+c		a
+0		a		+c		+c		a
 0		0		a		a		0
 }
 
@@ -47,8 +77,8 @@ tile +craft_crash_fighter
 {
 4 4
 0		a		a		0
-a		+b		+b		a
-a		+b		+b		a
+a		+c		+c		a
+a		+c		+c		a
 0		a		a		0
 }
 
@@ -56,11 +86,11 @@ tile +craft_ufo_gunboat
 {
 6 7
 0		0		a		a		0		0
-a		a		+b		+b		a		0
-a		+b		+b		+b		+b		0
-a		+b		+b		+b		+b		0
-a		+b		+b		+b		+b		0
-a		a		+b		+b		a		0
+a		a		+c		+c		a		0
+a		+c		+c		+c		+c		0
+a		+c		+c		+c		+c		0
+a		+c		+c		+c		+c		0
+a		a		+c		+c		a		0
 0		0		a		a		0		0
 }
 
@@ -68,10 +98,10 @@ tile +craft_crash_gunboat
 {
 9 6
 0		0		a		a		a		0		0		a		0
-0		a		+b		+b		+b		a		a		+b		a
-a		+b		+b		+b		+b		+b		a		a		0
-a		+b		+b		+b		+b		+b		a		0		0
-0		a		+b		+b		+b		a		0		0		0
+0		a		+c		+c		+c		a		a		+c		a
+a		+c		+c		+c		+c		+c		a		a		0
+a		+c		+c		+c		+c		+c		a		0		0
+0		a		+c		+c		+c		a		0		0		0
 0		0		a		a		a		0		0		0		0
 }
 
@@ -79,10 +109,10 @@ tile +craft_ufo_harvester
 {
 7 6
 0		0		0		a		a		a		0
-a		a		a		+b		+b		+b		0
-a		+b		+b		+b		+b		+b		0
-a		+b		+b		+b		+b		+b		0
-a		a		a		+b		+b		+b		0
+a		a		a		+c		+c		+c		0
+a		+c		+c		+c		+c		+c		0
+a		+c		+c		+c		+c		+c		0
+a		a		a		+c		+c		+c		0
 0		0		0		a		a		a		0
 }
 
@@ -90,102 +120,67 @@ tile +craft_crash_harvester
 {
 7 6
 0		a		a		a		a		a		0
-a		+b		+b		+b		+b		+b		a
-a		+b		+b		+b		+b		+b		a
-a		+b		+b		+b		+b		+b		a
-a		+b		+b		+b		+b		+b		a
+a		+c		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		+c		a
 0		a		a		a		a		a		0
 }
 
 tile +craft_crash_supply
 {
 7 6
-0		0		0		0		0		0		0
-0		+b		+b		0		+b		0		0
-0		+b		+b		+b		+b		+b		0
-0		0		+b		+b		+b		+b		0
-0		0		+b		+b		+b		+b		0
-0		0		0		0		0		0		0
+0		a		a		a		a		0		0
+a		+c		+c		0		+c		a		0
+a		+c		+c		+c		+c		+c		a
+0		a		+c		+c		+c		+c		a
+0		a		+c		+c		+c		+c		a
+0		0		a		a		a		a		0
 }
 
 tile +craft_ufo_bomber
 {
 6 10
-0		0		0		0		0		0
-0		+b		+b		+b		+b		0
-0		+b		+b		+b		+b		0
-0		+b		+b		+b		+b		0
-0		+b		+b		+b		+b		0
-0		+b		+b		+b		+b		0
-0		+b		+b		+b		+b		0
-0		+b		+b		+b		+b		0
-0		+b		+b		+b		+b		0
-0		0		0		0		0		0
+0		a		a		a		a		0
+a		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		0
+0		a		a		a		a		0
 }
 
 tile +craft_crash_bomber
 {
 6 10
-0		0		0		0		0		0
-0		+b		+b		+b		+b		0
-0		+b		+b		+b		+b		0
-0		+b		+b		+b		+b		0
-0		+b		+b		+b		+b		0
-0		+b		+b		+b		+b		0
-0		+b		+b		+b		+b		0
-0		+b		+b		+b		+b		0
-0		+b		+b		+b		+b		0
-0		0		0		0		0		0
+0		a		a		a		a		0
+a		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		0
+0		a		a		a		a		0
 }
 
 tile +craft_ufo_corrupter
 {
 8 10
-0		0		0		0		0		0		0		0
-0		+b		+b		+b		+b		+b		+b		0
-0		+b		+b		+b		+b		+b		+b		0
-0		+b		+b		+b		+b		+b		+b		0
-0		+b		+b		+b		+b		+b		+b		0
-0		+b		+b		+b		+b		+b		+b		0
-0		0		0		+b		+b		0		0		0
-0		0		0		+b		+b		0		0		0
-0		0		0		+b		+b		0		0		0
-0		0		0		0		0		0		0		0
-}
-
-// dropships --------------------------------------------------------
-
-tile +craft_drop_firebird
-	// 2x info_civilian_start
-{
-5 5
-0		a		a		a		0
-a		+b		+b		+b		a
-a		+b		+b		+b		a
-a		+b		+b		+b		a
-0		a		a		a		0
-}
-
-tile +craft_drop_herakles
-{
-5 6
-0		a		a		a		0
-a		+b		+b		+b		a
-a		+b		+b		+b		a
-a		+b		+b		a		0
-a		+b		+b		a		0
-0		a		a		0		0
-}
-
-tile +craft_drop_raptor
-{
-6 6
-0		0		0		a		a		0
-0		a		a		+b		+b		a
-a		a		+b		+b		+b		a
-a		+b		+b		+b		+b		a
-a		+b		+b		+b		+b		a
-0		a		a		a		a		0
+0		a		a		a		a		a		a		0
+a		+c		+c		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		+c		+c		a
+0		a		a		+c		+c		a		a		0
+0		0		a		+c		+c		a		0		0
+0		0		a		+c		+c		a		0		0
+0		0		0		a		a		0		0		0
 }
 
 // common tiles -----------------------------------------------------
@@ -200,8 +195,8 @@ tile +empty1
 {
 3 3
 0		4		0
-2		+a1		ab
-0		ab		0
+2		+a1		0
+0		0		0
 }
 
 tile +empty2
@@ -211,8 +206,8 @@ tile +empty2
 {
 3 3
 0		3		0
-ab		+a2		1
-0		ab		0
+0		+a2		1
+0		0		0
 }
 
 tile +empty3
@@ -221,8 +216,8 @@ tile +empty3
 	// 1x info_alien_start
 {
 3 3
-0		ab		0
-ab		+a3		4
+0		0		0
+0		+a3		4
 0		2		0
 }
 
@@ -232,8 +227,8 @@ tile +empty4
 	// 1x info_alien_start
 {
 3 3
-0		ab		0
-3		+a4		ab
+0		0		0
+3		+a4		0
 0		1		0
 }
 
@@ -241,45 +236,45 @@ tile +empty6
 	// plain
 {
 3 3
-0		ab		0
-ab		+a		ab
-0		ab		0
+0		0		0
+0		+a		0
+0		0		0
 }
 
 tile +empty6a
 	// a single palm
 {
 3 3
-0		ab		0
-ab		+a		ab
-0		ab		0
+0		0		0
+0		+a		0
+0		0		0
 }
 
 tile +empty6b
 	// a single palm
 {
 3 3
-0		ab		0
-ab		+a		ab
-0		ab		0
+0		0		0
+0		+a		0
+0		0		0
 }
 
 tile +empty6c
 	// a single palm
 {
 3 3
-0		ab		0
-ab		+a		ab
-0		ab		0
+0		0		0
+0		+a		0
+0		0		0
 }
 
 tile +empty6d
 	// a group of three palms
 {
 3 3
-0		ab		0
-ab		+a		ab
-0		ab		0
+0		0		0
+0		+a		0
+0		0		0
 }
 
 tile +fence1
@@ -287,9 +282,9 @@ tile +fence1
 	// 2x info_player_start
 {
 3 3
-0		ab		0
-ab		+a		ab
-0		ab		0
+0		0		0
+0		+a		0
+0		0		0
 }
 
 tile +fence2
@@ -297,9 +292,9 @@ tile +fence2
 	// 3x info_alien_start
 {
 4 3
-0		ab		ab		0
-ab		+a		+a		ab
-0		ab		ab		0
+0		0		0		0
+0		+a		+a		0
+0		0		0		0
 }
 
 tile +fence3
@@ -307,18 +302,18 @@ tile +fence3
 	// 2x info_alien_start
 {
 3 3
-0		ab		0
-ab		+a		ab
-0		ab		0
+0		0		0
+0		+a		0
+0		0		0
 }
 
 tile +misc1
 	// fire with shed
 {
 3 3
-0		ab		0
-ab		+a		ab
-0		ab		0
+0		0		0
+0		+a		0
+0		0		0
 }
 
 tile +misc2
@@ -326,10 +321,10 @@ tile +misc2
 	// 2x info_alien_start
 {
 4 4
-0		ab		ab		0
-ab		+a		+a		ab
-ab		+a		+a		ab
-0		ab		ab		0
+0		0		0		0
+0		+a		+a		0
+0		+a		+a		0
+0		0		0		0
 }
 
 tile +house1
@@ -338,9 +333,9 @@ tile +house1
 	// 1x info_civilian_start
 {
 3 3
-0		ab		0
-ab		+a		ab
-0		ab		0
+0		0		0
+0		+a		0
+0		0		0
 }
 
 tile +house1a
@@ -349,10 +344,10 @@ tile +house1a
 	// 1x info_civilian_start
 {
 3 4
-0		ab		0
-ab		+a		ab
-ab		+a		ab
-0		ab		0
+0		0		0
+0		+a		0
+0		+a		0
+0		0		0
 }
 
 tile +house2
@@ -360,9 +355,9 @@ tile +house2
 	// 1x info_alien_start
 {
 3 3
-0		ab		0
-ab		+a		ab
-0		ab		0
+0		0		0
+0		+a		0
+0		0		0
 }
 
 tile +house2a
@@ -370,9 +365,9 @@ tile +house2a
 	// 1x info_alien_start
 {
 4 3
-0		ab		ab		0
-ab		+a		+a		ab
-0		ab		ab		0
+0		0		0		0
+0		+a		+a		0
+0		0		0		0
 }
 
 tile +house3
@@ -381,9 +376,9 @@ tile +house3
 	// 2x info_civilian_start
 {
 3 3
-0		ab		0
-ab		+a		ab
-0		ab		0
+0		0		0
+0		+a		0
+0		0		0
 }
 
 tile +house3a
@@ -392,9 +387,9 @@ tile +house3a
 	// 2x info_civilian_start
 {
 4 3
-0		ab		ab		0
-ab		+a		+a		ab
-0		ab		ab		0
+0		0		0		0
+0		+a		+a		0
+0		0		0		0
 }
 
 tile +house4
@@ -404,9 +399,9 @@ tile +house4
 	// 3x info_civilian_start
 {
 4 3
-0		ab		ab		0
-ab		+a		+a		ab
-0		ab		ab		0
+0		0		0		0
+0		+a		+a		0
+0		0		0		0
 }
 
 tile +house4a
@@ -416,10 +411,10 @@ tile +house4a
 	// 3x info_civilian_start
 {
 3 4
-0		ab		0
-ab		+a		ab
-ab		+a		ab
-0		ab		0
+0		0		0
+0		+a		0
+0		+a		0
+0		0		0
 }
 
 tile +house5
@@ -427,9 +422,9 @@ tile +house5
 	// 2x info_alien_start
 {
 4 3
-0		ab		ab		0
-ab		+a		+a		ab
-0		ab		ab		0
+0		0		0		0
+0		+a		+a		0
+0		0		0		0
 }
 
 tile +house5a
@@ -437,10 +432,10 @@ tile +house5a
 	// 2x info_alien_start
 {
 3 4
-0		ab		0
-ab		+a		ab
-ab		+a		ab
-0		ab		0
+0		0		0
+0		+a		0
+0		+a		0
+0		0		0
 }
 
 tile +house6
@@ -448,19 +443,19 @@ tile +house6
 	// 1x info_civilian_start
 {
 3 3
-0		ab		0
-ab		+a		ab
-0		ab		0
+0		0		0
+0		+a		0
+0		0		0
 }
 tile +house6a
 	// honeycombed house 6x6, a carpet, entrance east
 	// 1x info_alien_start
 {
 3 4
-0		ab		0
-ab		+a		ab
-ab		+a		ab
-0		ab		0
+0		0		0
+0		+a		0
+0		+a		0
+0		0		0
 }
 
 tile +house6b
@@ -468,10 +463,21 @@ tile +house6b
 	// 1x info_alien_start
 {
 4 4
-0		ab		ab		0
-ab		+a		+a		ab
-ab		+a		+a		ab
-0		ab		ab		0
+0		0		0		0
+0		+a		+a		0
+0		+a		+a		0
+0		0		0		0
+}
+
+tile +house7
+	// three houses, palms, fireplace
+{
+4 5
+0		0		0		0
+0		+a		+a		0
+0		+a		+a		0
+0		+a		+a		0
+0		0		0		0
 }
 
 tile +mountain1a
@@ -479,11 +485,11 @@ tile +mountain1a
 	// 4x info_alien_start
 {
 7 5
-0		a		a		a		a		a		0
-a		+b		+b		+b		+b		+b		0
-a		+b		+b		+b		+b		+b		0
-a		a		+b		+b		+b		a		0
-0		0		a		a		a		0		0
+0		0		0		0		0		0		0
+0		+a		+a		+a		+a		+a		0
+0		+a		+a		+a		+a		+a		0
+0		0		+a		+a		+a		0		0
+0		0		0		0		0		0		0
 }
 
 tile +mountain1b
@@ -491,13 +497,23 @@ tile +mountain1b
 	// 4x info_alien_start
 {
 5 7
-0		a		a		a		0
-0		a		+b		+b		0
-a		+b		+b		+b		0
-a		+b		+b		+b		0
-a		+b		+b		+b		0
-0		a		+b		+b		0
-0		a		a		a		0
+0		0		0		0		0
+0		0		+a		+a		0
+0		+a		+a		+a		0
+0		+a		+a		+a		0
+0		+a		+a		+a		0
+0		0		+a		+a		0
+0		0		0		0		0
+}
+
+tile +nature_01
+	// raised ground
+{
+4 4
+0		0		0		0
+0		+a		+a		0
+0		+a		+a		0
+0		0		0		0
 }
 
 tile +rock1a
@@ -505,10 +521,10 @@ tile +rock1a
 	// 3x info_alien_start
 {
 4 4
-0		ab		ab		0
-ab		+a		+a		ab
-ab		+a		+a		ab
-0		ab		ab		0
+0		0		0		0
+0		+a		+a		0
+0		+a		+a		0
+0		0		0		0
 }
 
 tile +rock1b
@@ -516,10 +532,10 @@ tile +rock1b
 	// 3x info_alien_start
 {
 4 4
-0		ab		ab		0
-ab		+a		+a		ab
-ab		+a		+a		ab
-0		ab		ab		0
+0		0		0		0
+0		+a		+a		0
+0		+a		+a		0
+0		0		0		0
 }
 
 tile +rock2a
@@ -527,10 +543,10 @@ tile +rock2a
 	// 2x info_alien_start
 {
 4 4
-0		ab		ab		0
-ab		+a		+a		ab
-ab		+a		+a		ab
-0		ab		ab		0
+0		0		0		0
+0		+a		+a		0
+0		+a		+a		0
+0		0		0		0
 }
 
 tile +rock2b
@@ -538,18 +554,18 @@ tile +rock2b
 	// 2x info_alien_start
 {
 4 4
-0		ab		ab		0
-ab		+a		+a		ab
-ab		+a		+a		ab
-0		ab		ab		0
+0		0		0		0
+0		+a		+a		0
+0		+a		+a		0
+0		0		0		0
 }
 
 tile +well1
 {
 3 3
-0		ab		0
-ab		+a		ab
-0		ab		0
+0		0		0
+0		+a		0
+0		0		0
 }
 
 // multiplayer tiles ------------------------------------------------
@@ -558,10 +574,10 @@ tile +mp_team2
 	//a house and starting positions for team no 2
 {
 4 4
-0		a		a		0
-a		+b		+b		a
-a		+b		+b		a
-0		a		a		0
+0		0		0		0
+0		+a		+a		0
+0		+a		+a		0
+0		0		0		0
 }
 
 // tilesets ---------------------------------------------------------
@@ -621,10 +637,12 @@ multiplayer +mp_team2
 +house6		"0 1"
 +house6a	"0 1"
 +house6b	"0 1"
++house7		"0 1"
 +fence1		"0 1"
 +fence2		"0 1"
 +fence3		"0 1"
 +misc1		"0 1"
++nature_01	"0 1"
 +well1		"0 1"
 tileset cowshed		"1 1"
 tileset filler_a	"1 4"
@@ -649,11 +667,13 @@ multiplayer +mp_team2
 +house6		"0 2"
 +house6a	"0 1"
 +house6b	"0 1"
++house7		"0 1"
 +fence1		"0 2"
 +fence2		"0 2"
 +fence3		"0 2"
 +misc1		"0 1"
 +misc2		"0 1"
++nature_01	"0 1"
 +well1		"0 1"
 tileset cowshed		"0 1"
 tileset filler_a	"0 4"
@@ -679,11 +699,13 @@ multiplayer +mp_team2
 +house6		"0 2"
 +house6a	"0 1"
 +house6b	"0 1"
++house7		"0 1"
 +fence1		"0 2"
 +fence2		"0 2"
 +fence3		"0 2"
 +misc1		"0 1"
 +misc2		"0 1"
++nature_01	"0 1"
 +well1		"0 1"
 tileset cowshed		"0 1"
 tileset filler_a	"0 4"
