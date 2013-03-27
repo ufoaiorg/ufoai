@@ -493,7 +493,7 @@ bool InventoryInterface::tryAddToInventory (inventory_t* const inv, const Item *
 /**
  * @brief Clears the linked list of a container - removes all items from this container.
  * @param[in] inv The inventory where the container is located.
- * @param[in] container Index of the container which will be cleared.
+ * @param[in] containerId Index of the container which will be cleared.
  * @sa destroyInventory
  * @note This should only be called for temp containers if the container is really a temp container
  * e.g. the container of a dropped weapon in tactical mission (ET_ITEM)

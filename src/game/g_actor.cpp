@@ -526,7 +526,7 @@ int G_ActorGetContentFlags (const vec3_t origin)
  * @param[in] ent The pointer to the selected/used edict/soldier.
  * @param[in] from The container (-id) the item should be moved from.
  * @param[in] fItem The item you want to move.
- * @param[in] to The container (-id) the item should be moved to.
+ * @param[in] toContType The container (-def) the item should be moved to.
  * @param[in] tx x position where you want the item to go in the destination container
  * @param[in] ty y position where you want the item to go in the destination container
  * @param[in] checkaction Set this to true if you want to check for TUs, otherwise false.

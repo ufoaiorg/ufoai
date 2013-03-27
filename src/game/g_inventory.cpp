@@ -332,7 +332,7 @@ void G_ReadItem (Item *item, const invDef_t **container, int *x, int *y)
 /**
  * @brief Write an item to the network buffer
  * @param[in,out] item The Item being send through net.
- * @param[in,out] container Container which is being updated with item sent.
+ * @param[in,out] contId Container which is being updated with item sent.
  * @param[in] x Position of item in given container.
  * @param[in] y Position of item in given container.
  * @sa CL_NetReceiveItem
