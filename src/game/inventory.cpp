@@ -105,7 +105,7 @@ invList_t *InventoryInterface::addToInventory (inventory_t *const inv, const Ite
 	if (container->temp) {
 		for (ic = inv->getContainer(container->id); ic; ic = ic->getNext())
 			if (ic->isSameAs(item)) {
-				ic->amount += amount;
+				ic->addAmount(amount);
 				Com_DPrintf(DEBUG_SHARED, "addToInventory: Amount of '%s': %i (%s)\n",
 					ic->def()->name, ic->amount, invName);
 				return ic;
@@ -168,7 +168,7 @@ bool InventoryInterface::removeFromInventory (inventory_t* const inv, const invD
 		this->cacheItem = *ic;
 		/* temp container like CID_EQUIP and CID_FLOOR */
 		if (container->temp && ic->amount > 1) {
-			ic->amount--;
+			ic->addAmount(-1);
 			Com_DPrintf(DEBUG_SHARED, "removeFromInventory: Amount of '%s': %i (%s)\n",
 				ic->def()->name, ic->amount, invName);
 			return true;
@@ -195,7 +195,7 @@ bool InventoryInterface::removeFromInventory (inventory_t* const inv, const invD
 			this->cacheItem = *ic;
 			/* temp container like CID_EQUIP and CID_FLOOR */
 			if (ic->amount > 1 && container->temp) {
-				ic->amount--;
+				ic->addAmount(-1);
 				Com_DPrintf(DEBUG_SHARED, "removeFromInventory: Amount of '%s': %i (%s)\n",
 					ic->def()->name, ic->amount, invName);
 				return true;
