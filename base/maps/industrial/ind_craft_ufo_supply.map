@@ -2267,3 +2267,13 @@
 "origin" "516 208 104"
 "spawnflags" "1"
 }
+// entity 30
+{
+"classname" "info_alien_start"
+"origin" "48 496 28"
+}
+// entity 31
+{
+"classname" "info_alien_start"
+"origin" "208 656 28"
+}

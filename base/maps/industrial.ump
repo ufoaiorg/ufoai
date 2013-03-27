@@ -20,8 +20,9 @@ base industrial/ind_
 
 tile +craft_drop_firebird
 {
-5 3
+5 4
 0		0		0		0		0
+0		+c		+c		+c		0
 0		+c		+c		+c		0
 0		0		0		0		0
 }
@@ -66,16 +67,16 @@ a		+c		+c		+c		+c		a
 tile +craft_ufo_corrupter
 {
 8 10
-0		0		0		0		0		0		0		0
-0		0		0		+c		+c		0		0		0
-0		0		0		+c		+c		0		0		0
-0		0		0		+c		+c		0		0		0
-0		+c		+c		+c		+c		+c		+c		0
-0		+c		+c		+c		+c		+c		+c		0
-0		+c		+c		+c		+c		+c		+c		0
-0		+c		+c		+c		+c		+c		+c		0
-0		+c		+c		+c		+c		+c		+c		0
-0		0		0		0		0		0		0		0
+0		0		0		a		a		0		0		0
+0		0		a		+c		+c		a		0		0
+0		0		a		+c		+c		a		0		0
+0		a		a		+c		+c		a		a		0
+a		+c		+c		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		+c		+c		a
+0		a		a		a		a		a		a		0
 }
 
 tile +craft_ufo_fighter //A(5)
@@ -91,24 +92,24 @@ tile +craft_ufo_gunboat
 {
 6 7
 0		a		a		a		a		0
-0		+c		+c		+c		+c		0
-0		+c		+c		+c		+c		0
-0		+c		+c		+c		+c		0
-0		+c		+c		+c		+c		0
-0		+c		+c		+c		+c		0
+a		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		a
 0		a		a		a		a		0
 }
 
 tile +craft_ufo_harvester
 {
 6 7
-0		0		0		0		0		0
-0		0		+c		+c		+c		0
-0		0		+c		+c		+c		0
-0		+c		+c		+c		+c		0
-0		+c		+c		+c		+c		0
-0		+c		+c		+c		+c		0
-0		0		0		0		0		0
+0		0		a		a		a		0
+0		a		+c		+c		+c		a
+0		a		+c		+c		+c		a
+a		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		a
+0		a		a		a		a		0
 }
 
 tile +craft_ufo_scout //A(3)
@@ -294,17 +295,17 @@ size "6 6"
 +fr02		"0 1"
 +fr03		"0 1"	// C(1)
 +fr04		"0 1"
-+fr05		"0 1"	// A(1)
++fr05		"0 3"	// A(1)
 +fr06_3x2	"1 1"	// A(2) C(2)
 +fr07 		"0 1"	// A(1)
 +fr08		"0 1"
 +fr09		"0 1"	// A(1)
-+fr10		"0 10"
++fr10		"0 5"
 +fr11_1x2	"0 1"	// A(1) C(1)
-+fr12_3x3	"1 1"	// A(3) C(3)
-+fr13_2x1	"0 1"	// A(1) C(1)
-+fr14_1x3	"0 1"	// A(1) C(1)
-+fr15_2x1	"0 1"	// A(1)
++fr12_3x3	"0 1"	// A(3) C(3)
++fr13_2x1	"0 2"	// A(1) C(1)
++fr14_1x3	"0 4"	// A(1) C(1)
++fr15_2x1	"0 5"	// A(1)
 +fr16_5x1	"0 1"	// A(2) C(1)
 *rm_ufo +craft_ufo_scout		"1 1"
 *rm_drop +craft_drop_firebird	"1 1"
@@ -313,22 +314,22 @@ size "6 6"
 assembly medium
 {
 title "_UFO Landed"
-size "7 8"
+size "8 8"
 +fr01		"0 1"	// A(1)
 +fr02		"0 1"
 +fr03		"0 1"	// C(1)
 +fr04		"0 1"
-+fr05		"0 1"	// A(1)
++fr05		"0 3"	// A(1)
 +fr06_3x2	"1 1"	// A(2) C(2)
 +fr07		"0 1"	// A(1)
 +fr08		"0 1"
 +fr09		"0 1"	// A(1)
-+fr10		"0 15"
++fr10		"0 5"
 +fr11_1x2	"0 1"	// A(1) C(1)
-+fr12_3x3	"1 1"	// A(3) C(3)
-+fr13_2x1	"0 1"	// A(1) C(1)
-+fr14_1x3	"0 1"	// A(1) C(1)
-+fr15_2x1	"0 1"	// A(1)
++fr12_3x3	"0 1"	// A(3) C(3)
++fr13_2x1	"0 2"	// A(1) C(1)
++fr14_1x3	"0 2"	// A(1) C(1)
++fr15_2x1	"0 2"	// A(1)
 +fr16_5x1	"0 1"	// A(2) C(1)
 *rm_drop +craft_drop_firebird "1 1"
 *rm_ufo +craft_ufo_supply "1 1" //Enough Alien spawnpoints for Max Crew capacity
@@ -337,22 +338,22 @@ size "7 8"
 assembly large
 {
 title "_UFO Landed"
-size "9 8"
+size "10 8"
 +fr01		"0 1"	// A(1)
 +fr02		"0 1"
 +fr03		"0 1"	// C(1)
 +fr04		"0 1"
-+fr05		"0 1"	// A(1)
++fr05		"0 3"	// A(1)
 +fr06_3x2	"1 1"	// A(2) C(2)
 +fr07		"0 1"	// A(1)
 +fr08		"0 1"
 +fr09		"0 1"	// A(1)
-+fr10		"0 15"
++fr10		"0 5"
 +fr11_1x2	"0 1"	// A(1) C(1)
 +fr12_3x3	"1 1"	// A(3) C(3)
-+fr13_2x1	"0 1"	// A(1) C(1)
-+fr14_1x3	"0 1"	// A(1) C(1)
-+fr15_2x1	"0 1"	// A(1)
++fr13_2x1	"0 2"	// A(1) C(1)
++fr14_1x3	"0 2"	// A(1) C(1)
++fr15_2x1	"0 2"	// A(1)
 +fr16_5x1	"0 1"	// A(2) C(1)
 *rm_drop +craft_drop_firebird "1 1"
 *rm_ufo +craft_ufo_bomber "1 1"
@@ -366,17 +367,17 @@ size "7 7"
 +fr02		"0 1"
 +fr03		"0 1"	// C(1)
 +fr04		"0 1"
-+fr05		"0 1"	// A(1)
++fr05		"0 3"	// A(1)
 +fr06_3x2	"1 1"	// A(2) C(2)
 +fr07		"0 1"	// A(1)
 +fr08		"0 1"
 +fr09		"0 1"	// A(1)
-+fr10		"0 15"
++fr10		"0 5"
 +fr11_1x2	"0 1"	// A(1) C(1)
 +fr12_3x3	"1 1"	// A(3) C(3)
-+fr13_2x1	"0 1"	// A(1) C(1)
-+fr14_1x3	"0 1"	// A(1) C(1)
-+fr15_2x1	"0 1"	// A(1)
++fr13_2x1	"0 2"	// A(1) C(1)
++fr14_1x3	"0 2"	// A(1) C(1)
++fr15_2x1	"0 2"	// A(1)
 +fr16_5x1	"1 1"	// A(2) C(1)
 *rm_drop +craft_drop_firebird "1 1"
 }

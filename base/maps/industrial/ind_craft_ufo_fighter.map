@@ -4846,3 +4846,8 @@
 ( 398 441 72 ) ( 354 456 98 ) ( 398 462 100 ) tex_common/lightclip 0 0 0 0.2 0.2 589312 0 0
 }
 }
+// entity 33
+{
+"classname" "info_alien_start"
+"origin" "720 208 28"
+}

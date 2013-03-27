@@ -1801,7 +1801,7 @@ mapdef industrial_small
 	description		"_Industrial Site"
 	size			"small"
 	multiplayer		false
-	maxaliens		8
+	maxaliens		9
 	civilianteam	worker
 
 	aircraft
