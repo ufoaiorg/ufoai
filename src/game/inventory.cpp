@@ -107,7 +107,7 @@ invList_t *InventoryInterface::addToInventory (inventory_t *const inv, const Ite
 			if (ic->isSameAs(item)) {
 				ic->addAmount(amount);
 				Com_DPrintf(DEBUG_SHARED, "addToInventory: Amount of '%s': %i (%s)\n",
-					ic->def()->name, ic->amount, invName);
+					ic->def()->name, ic->getAmount(), invName);
 				return ic;
 			}
 	}
@@ -167,10 +167,10 @@ bool InventoryInterface::removeFromInventory (inventory_t* const inv, const invD
 	if (container->single || ic == fItem) {
 		this->cacheItem = *ic;
 		/* temp container like CID_EQUIP and CID_FLOOR */
-		if (container->temp && ic->amount > 1) {
+		if (container->temp && ic->getAmount() > 1) {
 			ic->addAmount(-1);
 			Com_DPrintf(DEBUG_SHARED, "removeFromInventory: Amount of '%s': %i (%s)\n",
-				ic->def()->name, ic->amount, invName);
+				ic->def()->name, ic->getAmount(), invName);
 			return true;
 		}
 
@@ -180,7 +180,7 @@ bool InventoryInterface::removeFromInventory (inventory_t* const inv, const invD
 		/* An item in other containers than CID_FLOOR or CID_EQUIP should
 		 * always have an amount value of 1.
 		 * The other container types do not support stacking.*/
-		assert(ic->amount == 1);
+		assert(ic->getAmount() == 1);
 
 		inv->setContainer(container->id, ic->getNext());
 
@@ -194,10 +194,10 @@ bool InventoryInterface::removeFromInventory (inventory_t* const inv, const invD
 		if (ic == fItem) {
 			this->cacheItem = *ic;
 			/* temp container like CID_EQUIP and CID_FLOOR */
-			if (ic->amount > 1 && container->temp) {
+			if (ic->getAmount() > 1 && container->temp) {
 				ic->addAmount(-1);
 				Com_DPrintf(DEBUG_SHARED, "removeFromInventory: Amount of '%s': %i (%s)\n",
-					ic->def()->name, ic->amount, invName);
+					ic->def()->name, ic->getAmount(), invName);
 				return true;
 			}
 
@@ -273,7 +273,7 @@ inventory_action_t InventoryInterface::moveInInventory (inventory_t* const inv, 
 		ic = inv->getContainer(from->id);
 		for (; ic; ic = ic->getNext()) {
 			if (ic == fItem) {
-				if (ic->amount > 1) {
+				if (ic->getAmount() > 1) {
 					checkedTo = inv->canHoldItem(to, ic->def(), tx, ty, fItem);
 					if (checkedTo & INV_FITS) {
 						ic->setX(tx);
