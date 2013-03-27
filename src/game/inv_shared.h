@@ -470,6 +470,7 @@ class Container
 public:
 //	const invDef_t *_def;	/* container attributes (invDef_t) */
 	invList_t *_invList;	/* start of the list of items */
+	Item *getNextItem (const Item *prev) const;
 };
 
 /** @brief inventory definition with all its containers */

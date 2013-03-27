@@ -610,6 +610,15 @@ const objDef_t *Item::getReactionFireWeaponType () const
 	return NULL;
 }
 
+Item *Container::getNextItem (const Item *prev) const
+{
+	if (!prev)
+		return _invList;	/* the first one */
+
+	return prev->getNext();
+}
+
+
 inventory_s::inventory_s ()
 {
 // This (prototype-)constructor does not work as intended. Seems like the first inventory is created before CSI is set.
@@ -829,8 +838,9 @@ float inventory_t::getWeight () const
 	float weight = 0;
 	const Container *cont = NULL;
 	while ((cont = getNextCont(cont))) {
-		for (invList_t *ic = cont->_invList; ic; ic = ic->getNext()) {
-			weight += ic->getWeight();
+		Item *item = NULL;
+		while ((item = cont->getNextItem(item))) {
+			weight += item->getWeight();
 		}
 	}
 	return weight;
