@@ -247,8 +247,8 @@ void UI_GetItemTooltip (const Item &item, char *tooltipText, size_t stringMaxLen
 {
 	assert(item.def());
 
-	if (item.amount > 1)
-		Com_sprintf(tooltipText, stringMaxLength, "%i x %s\n", item.amount, _(item.def()->name));
+	if (item.getAmount() > 1)
+		Com_sprintf(tooltipText, stringMaxLength, "%i x %s\n", item.getAmount(), _(item.def()->name));
 	else
 		Com_sprintf(tooltipText, stringMaxLength, "%s\n", _(item.def()->name));
 

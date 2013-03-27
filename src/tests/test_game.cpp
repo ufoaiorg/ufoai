@@ -155,7 +155,7 @@ static int GAMETEST_GetItemCount (const edict_t *ent, containerIndex_t container
 	const invList_t *invlist = ent->getContainer(container);
 	int count = 0;
 	while (invlist != NULL) {
-		count += invlist->amount;
+		count += invlist->getAmount();
 		invlist = invlist->getNext();
 	}
 

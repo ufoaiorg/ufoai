@@ -297,7 +297,7 @@ static int UI_BaseInventoryNodeDrawItems (uiNode_t *node, const objDef_t *highli
 		}
 
 		if (icItem)
-			amount = icItem->amount;
+			amount = icItem->getAmount();
 		else
 			amount = 0;
 
@@ -350,7 +350,7 @@ static int UI_BaseInventoryNodeDrawItems (uiNode_t *node, const objDef_t *highli
 				UI_DrawString("f_verysmall", ALIGN_LC,
 					ammopos[0] + icItem->def()->sx * C_UNIT / 2.0, ammopos[1] + icItem->def()->sy * C_UNIT / 2.0,
 					ammopos[0] + icItem->def()->sx * C_UNIT / 2.0, cellWidth - 5 - ammopos[0],	/* maxWidth */
-					0, va("x%i", icItem->amount));
+					0, va("x%i", icItem->getAmount()));
 				ammopos[0] += icItem->def()->sx * C_UNIT / 2.0;
 				ammopos[1] += icItem->def()->sy * C_UNIT / 2.0;
 			}

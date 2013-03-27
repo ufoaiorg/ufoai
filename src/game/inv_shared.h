@@ -369,10 +369,10 @@ class Item {
 	int _x, _y;					/**< Position (aka origin location) of the item in the container/invlist.
 								 * @note ATTENTION Do not use this to get an item by comparing it against a x/y value.
 								 * The shape as defined in the Item may be empty at this location! */
+	int _amount;				/**< The amount of items of this type on the same x and y location in the container */
 	int _ammoLeft;				/**< Number of ammo rounds left - see NONE_AMMO */
 public:
 	const objDef_t *ammo;		/**< Pointer to ammo definition. */
-	int amount;		/**< The amount of items of this type on the same x and y location in the container */
 	int rotated;	/**< If the item is currently displayed rotated (true or 1) or not (false or 0)
 					 * @note don't change this to anything smaller than 4 bytes - the network
 					 * parsing functions are expecting this to be at least 4 bytes */
@@ -380,15 +380,15 @@ public:
 
 	inline int getAmount () const
 	{
-		return amount;
+		return _amount;
 	}
 	inline void setAmount (int value)
 	{
-		amount = value;
+		_amount = value;
 	}
 	inline void addAmount (int value)
 	{
-		amount += value;
+		_amount += value;
 	}
 	inline int getAmmoLeft () const
 	{
