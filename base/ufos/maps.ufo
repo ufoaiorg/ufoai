@@ -1619,6 +1619,45 @@ mapdef hills_small
 // ICE RANDOM MAPS //
 /////////////////////
 
+mapdef ice_large
+{
+	map				"+ice"
+	param			"large"
+	description		"_Frozen Landscape"
+	campaign 		true
+	singleplayer	true
+	multiplayer		false
+	maxaliens		30
+
+	aircraft
+	(
+		craft_drop_firebird
+		craft_drop_raptor
+		craft_drop_herakles
+	)
+
+	ufos
+	(
+		craft_crash_bomber
+		craft_crash_corrupter
+	)
+
+	terrains
+	(
+		"arctic"
+	)
+
+	cultures
+	(
+		// any
+	)
+
+	populations
+	(
+		"nopopulation"
+	)
+}
+
 mapdef ice_medium
 {
 	map				"+ice"

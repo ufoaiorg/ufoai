@@ -4,10 +4,10 @@
 
 // Tiletypes:
 // ----------
-// +: tile contains something
-// a: common
-// d: dropship tile
-// u: UFO tile
+// + : tile contains something
+// 0 : always means no restrictions
+// a : common tile
+// c : craft, like dropship or UFO
 
 base ice/ice_
 
@@ -16,144 +16,174 @@ base ice/ice_
 tile +craft_drop_firebird
 {
 5 5
-0      a      a     a     0
-a     +d     +d     +d    a
-a     +d     +d     +d    a
-a     +d     +d     +d    a
-0      a      a     a     0
+0		0		0		0		0
+0		+c		+c		+c		0
+0		+c		+c		+c		0
+0		+c		+c		+c		0
+0		0		0		0		0
 }
 
 tile +craft_drop_herakles
 {
 5 5
-0      a      a     a     0
-a     +d     +d     +d    a
-a     +d     +d     +d    a
-a     +d     +d     +d    a
-0      a      a     a     0
+0		0		0		0		0
+0		+c		+c		+c		0
+0		+c		+c		+c		0
+0		+c		+c		+c		0
+0		0		0		0		0
 }
 
 tile +craft_drop_raptor
 {
 5 5
-0      a      a     a     0
-a     +d     +d     +d    a
-a     +d     +d     +d    a
-a     +d     +d     +d    a
-0      a      a     a     0
+0		0		0		0		0
+0		+c		+c		+c		0
+0		+c		+c		+c		0
+0		+c		+c		+c		0
+0		0		0		0		0
 }
 
 // UFOs ------------------------------------------------------------
 
-tile +craft_ufo_scout
-{
-5 5
-0      a      a     a     0
-a     +d     +d     +d    a
-a     +d     +d     +d    a
-a     +d     +d     +d    a
-0      a      a     a     0
-}
-
 tile +craft_ufo_fighter
 {
 5 5
-0      a      a     a     0
-a     +d     +d     +d    a
-a     +d     +d     +d    a
-a     +d     +d     +d    a
-0      a      a     a     0
-}
-
-tile +craft_ufo_harvester
-{
-7 6
-0      a      a     a     a     a     0
-a     +d     +d     +d    +d    +d    a
-a     +d     +d     +d    +d    +d    a
-a     +d     +d     +d    +d    +d    a
-a     +d     +d     +d    +d    +d    a
-0      a      a     a     a     a     0
+0		a		a		a		0
+a		+c		+c		+c		a
+a		+c		+c		+c		a
+a		+c		+c		+c		a
+0		a		a		a		0
 }
 
 tile +craft_ufo_gunboat
 {
 6 7
-0      a      a     a     a     0
-a     +d     +d     +d    +d    a
-a     +d     +d     +d    +d    a
-a     +d     +d     +d    +d    a
-a     +d     +d     +d    +d    a
-a     +d     +d     +d    +d    a
-0      a      a     a     a     0
+0		a		a		a		a		0
+a		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		a
+0		a		a		a		a		0
+}
+
+tile +craft_ufo_harvester
+{
+7 6
+0		a		a		a		a		a		0
+a		+c		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		+c		a
+0		a		a		a		a		a		0
+}
+
+tile +craft_ufo_scout
+{
+5 5
+0		a		a		a		0
+a		+c		+c		+c		a
+a		+c		+c		+c		a
+a		+c		+c		+c		a
+0		a		a		a		0
 }
 
 tile +craft_ufo_supply
 {
 6 7
-0      a      a     a     a     0
-a     +d     +d     +d    +d    a
-a     +d     +d     +d    +d    a
-a     +d     +d     +d    +d    a
-a     +d     +d     +d    +d    a
-a     +d     +d     +d    +d    a
-0      a      a     a     a     0
+0		a		a		a		a		0
+a		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		a
+0		a		a		a		a		0
 }
 
 // crashed UFOs ----------------------------------------------------
 
-tile +craft_crash_scout
+tile +craft_crash_bomber
 {
-5 5
-0      a      a     a     0
-a     +d     +d     +d    a
-a     +d     +d     +d    a
-a     +d     +d     +d    a
-0      a      a     a     0
+6 10
+0		a		a		a		0		0
+a		+c		+c		+c		a		0
+a		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		0
+0		a		a		a		a		0
+}
+
+tile +craft_crash_corrupter
+{
+8 10
+0		a		a		a		a		a		a		0
+a		+c		+c		+c		+c		+c		+c		a
+a		+c		0		+c		+c		0		+c		a
+a		+c		0		+c		+c		0		+c		a
+a		+c		+c		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		+c		+c		a
+0		a		a		a		a		a		a		0
 }
 
 tile +craft_crash_fighter
 {
 5 5
-0      a      a     a     0
-a     +d     +d     +d    a
-a     +d     +d     +d    a
-a     +d     +d     +d    a
-0      a      a     a     0
+0		a		a		a		0
+a		+c		+c		+c		a
+a		+c		+c		+c		a
+a		+c		+c		+c		a
+0		a		a		a		0
 }
 
 tile +craft_crash_gunboat
 {
 7 6
-0      a      a     a     a     a     0
-a     +d     +d     +d    +d    +d    a
-a     +d     +d     +d    +d    +d    a
-a     +d     +d     +d    +d    +d    a
-a     +d     +d     +d    +d    +d    a
-0      a      a     a     a     a     0
+0		a		a		a		a		a		0
+a		+c		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		+c		a
+0		a		a		a		a		a		0
 }
 
 tile +craft_crash_harvester
 {
 7 6
-0      a      a     a     a     a     0
-a     +d     +d     +d    +d    +d    a
-a     +d     +d     +d    +d    +d    a
-a     +d     +d     +d    +d    +d    a
-a     +d     +d     +d    +d    +d    a
-0      a      a     a     a     a     0
+0		a		a		a		a		a		0
+a		+c		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		+c		a
+0		a		a		a		a		a		0
+}
+
+tile +craft_crash_scout
+{
+5 5
+0		a		a		a		0
+a		+c		+c		+c		a
+a		+c		+c		+c		a
+a		+c		+c		+c		a
+0		a		a		a		0
 }
 
 tile +craft_crash_supply
 {
 8 7
-0      a      a     a     a     a     a     0
-a     +d     +d     +d    +d    +d    +d    a
-a     +d     +d     +d    +d    +d    +d    a
-a     +d     +d     +d    +d    +d    +d    a
-a     +d     +d     +d    +d    +d    +d    a
-a     +d     +d     +d    +d    +d    +d    a
-0      a      a     a     a     a     a     0
+0		a		a		a		a		a		a		0
+a		+c		+c		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		+c		+c		a
+0		a		a		a		a		a		a		0
 }
 
 // Common tiles -----------------------------------------------------
@@ -163,10 +193,10 @@ tile +r01
 	// 4 x info_alien_start
 {
 4 4
-0      adu     adu      0
-adu     +a     +a       adu
-adu     +a     +a       adu
-0      adu     adu      0
+0		0		0		0
+0		+a		+a		0
+0		+a		+a		0
+0		0		0		0
 }
 
 tile +r02
@@ -174,10 +204,10 @@ tile +r02
 	// 4 x info_alien_start
 {
 4 4
-0      adu     adu      0
-adu     +a     +a       adu
-adu     +a     +a       adu
-0      adu     adu      0
+0		0		0		0
+0		+a		+a		0
+0		+a		+a		0
+0		0		0		0
 }
 
 tile +r03
@@ -185,10 +215,10 @@ tile +r03
 	// 4 x info_alien_start
 {
 4 4
-0      adu     adu      0
-adu     +a     +a       adu
-adu     +a     +a       adu
-0      adu     adu      0
+0		0		0		0
+0		+a		+a		0
+0		+a		+a		0
+0		0		0		0
 }
 
 tile +r04
@@ -196,10 +226,10 @@ tile +r04
 	// 4 x info_alien_start
 {
 4 4
-0      adu     adu      0
-adu     +a     +a       adu
-adu     +a     +a       adu
-0      adu     adu      0
+0		0		0		0
+0		+a		+a		0
+0		+a		+a		0
+0		0		0		0
 }
 
 
@@ -207,76 +237,76 @@ tile +r05
 	// ice block with niche
 {
 4 4
-0      adu     adu      0
-adu     +a     +a       adu
-adu     +a     +a       adu
-0      adu     adu      0
+0		0		0		0
+0		+a		+a		0
+0		+a		+a		0
+0		0		0		0
 }
 
 tile +r06
 	// an ice block
 {
 3 3
-0      adu     0
-adu     +a     adu
-0      adu     0
+0		0		0
+0		+a		0
+0		0		0
 }
 
 tile +r06_a
 	// an ice block
 {
 4 3
-0      adu     adu    0
-adu     +a     +a     adu
-0      adu     adu    0
+0		0		0		0
+0		+a		+a		0
+0		0		0		0
 }
 
 tile +r06_b
 	// a plateau
 {
 5 3
-0      adu     adu    adu    0
-adu     +a     +a     +a     adu
-0      adu     adu    adu    0
+0		0		0		0		0
+0		+a		+a		+a		0
+0		0		0		0		0
 }
 
 tile +r07
 	// plain
 {
 3 3
-0      adu     0
-adu     +a     adu
-0      adu     0
+0		0		0
+0		+a		0
+0		0		0
 }
 
 tile +r08
 	// an ice block
 {
 3 4
-0      adu     0
-adu     +a     adu
-adu     +a     adu
-0      adu     0
+0		0		0
+0		+a		0
+0		+a		0
+0		0		0
 }
 
 tile +r09
 	// the ships bridge
 {
 3 4
-0      adu     0
-adu     +a     adu
-adu     +a     adu
-0      adu     0
+0		0		0
+0		+a		0
+0		+a		0
+0		0		0
 }
 
 tile +r10
 	// 3 x info_alien_start
 {
 5 4
-0      adu     adu      adu		0
-adu     +a     +a       +a		adu
-adu     +a     +a       +a		adu
-0      adu     adu      adu		0
+0		0		0		0		0
+0		+a		+a		+a		0
+0		+a		+a		+a		0
+0		0		0		0		0
 }
 
 tile +r11_a
@@ -284,11 +314,11 @@ tile +r11_a
 	// 2 x info_alien_start
 {
 3 5
-0      adu     0
-adu     +a     adu
-adu     +a     adu
-adu     +a     adu
-0      adu     0
+0		0		0
+0		+a		0
+0		+a		0
+0		+a		0
+0		0		0
 }
 
 tile +r11_b
@@ -296,11 +326,11 @@ tile +r11_b
 	// 2 x info_alien_start
 {
 3 5
-0      adu     0
-adu     +a     adu
-adu     +a     adu
-adu     +a     adu
-0      adu     0
+0		0		0
+0		+a		0
+0		+a		0
+0		+a		0
+0		0		0
 }
 
 tile +r11_c
@@ -308,9 +338,9 @@ tile +r11_c
 	// 2 x info_alien_start
 {
 5 3
-0      adu     adu     adu	   0
-adu     +a     +a	   +a	   adu
-0      adu     adu     adu	   0
+0		0		0		0		0
+0		+a		+a		+a		0
+0		0		0		0		0
 }
 
 tile +r11_d
@@ -318,16 +348,16 @@ tile +r11_d
 	// 2 x info_alien_start
 {
 5 3
-0      adu     adu     adu	   0
-adu     +a     +a	   +a	   adu
-0      adu     adu     adu	   0
+0		0		0		0		0
+0		+a		+a		+a		0
+0		0		0		0		0
 }
 
 // map assemblies ---------------------------------------------------
 
 assembly small
 {
-size "8 5"
+size "7 7"
 title "_Ice"
 +r01	"0 1"
 +r02	"0 1"
@@ -369,5 +399,29 @@ title "_Ice"
 +r11_c	"0 1"
 +r11_d	"0 1"
 *rm_ufo +craft_ufo_harvester "1 1"
+*rm_drop +craft_drop_firebird "1 1"
+}
+
+assembly large
+{
+size "10 8"
+title "_Ice"
++r01	"0 1"
++r02	"0 1"
++r03	"0 1"
++r04	"0 1"
++r05	"0 1"
++r06	"0 1"
++r06_a	"0 1"
++r06_b  "0 1"
++r07	"0 99"
++r08	"0 1"
++r09	"0 1"
++r10	"0 1"
++r11_a	"0 1"
++r11_b	"0 1"
++r11_c	"0 1"
++r11_d	"0 1"
+*rm_ufo +craft_crash_bomber "1 1"
 *rm_drop +craft_drop_firebird "1 1"
 }

@@ -417,6 +417,8 @@ base/maps/hills/road_2h2.map | GNU General Public License 2.0 or later | Kostia 
 base/maps/hills/road_2v1.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
 base/maps/hills/road_2v2.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
 base/maps/ice.ump | GNU General Public License 2.0 or later
+base/maps/ice/ice_craft_crash_bomber.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | crashed_bomber prefab
+base/maps/ice/ice_craft_crash_corrupter.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | crashed_corrupter prefab
 base/maps/ice/ice_craft_crash_fighter.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
 base/maps/ice/ice_craft_crash_gunboat.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
 base/maps/ice/ice_craft_crash_harvester.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
