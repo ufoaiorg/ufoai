@@ -1,5 +1,4 @@
-#ifndef FACESHADER_H_
-#define FACESHADER_H_
+#pragma once
 
 #include <string>
 #include "container/container.h"
@@ -101,5 +100,3 @@ class FaceShader: public ModuleObserver
 		std::size_t height () const;
 		unsigned int shaderFlags () const;
 }; // class FaceShader
-
-#endif /*FACESHADER_H_*/

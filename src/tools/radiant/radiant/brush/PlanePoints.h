@@ -1,5 +1,4 @@
-#ifndef PLANEPOINTS_H_
-#define PLANEPOINTS_H_
+#pragma once
 
 #include "math/Vector3.h"
 
@@ -76,5 +75,3 @@ inline void planepts_snap (PlanePoints planepts, double snap)
 		}
 	}
 }
-
-#endif /*PLANEPOINTS_H_*/

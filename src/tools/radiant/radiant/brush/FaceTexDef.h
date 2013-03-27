@@ -1,5 +1,4 @@
-#ifndef FACETEXDEF_H_
-#define FACETEXDEF_H_
+#pragma once
 
 #include "winding.h"
 #include "math/matrix.h"
@@ -60,5 +59,3 @@ class FaceTexdef: public FaceShaderObserver
 
 		TextureProjection normalised () const;
 }; // class FaceTexDef
-
-#endif /*FACETEXDEF_H_*/

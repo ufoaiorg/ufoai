@@ -1,5 +1,4 @@
-#ifndef FACEINSTANCE_H_
-#define FACEINSTANCE_H_
+#pragma once
 
 #include "math/Plane3.h"
 #include "math/line.h"
@@ -150,5 +149,3 @@ class FaceInstanceSet
 };
 
 extern FaceInstanceSet g_SelectedFaceInstances;
-
-#endif /*FACEINSTANCE_H_*/

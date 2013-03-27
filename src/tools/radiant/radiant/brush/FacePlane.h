@@ -1,5 +1,4 @@
-#ifndef FACEPLANE_H_
-#define FACEPLANE_H_
+#pragma once
 
 #include "math/Plane3.h"
 #include "math/Vector3.h"
@@ -128,5 +127,3 @@ class FacePlane
 			MakePlane();
 		}
 }; // class FacePlane
-
-#endif /*FACEPLANE_H_*/

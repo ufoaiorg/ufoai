@@ -1,5 +1,4 @@
-#ifndef SELECTABLECOMPONENTS_H_
-#define SELECTABLECOMPONENTS_H_
+#pragma once
 
 #include "winding.h"
 #include "Face.h"
@@ -94,5 +93,3 @@ class SelectableVertex
 			test.TestPoint(getVertex(), best);
 		}
 };
-
-#endif /*SELECTABLECOMPONENTS_H_*/

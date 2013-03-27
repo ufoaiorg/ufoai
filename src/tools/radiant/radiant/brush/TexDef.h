@@ -1,5 +1,4 @@
-#ifndef TEXDEF_H_
-#define TEXDEF_H_
+#pragma once
 
 #include "itexdef.h"
 #include "math/matrix.h"
@@ -36,5 +35,3 @@ class TexDef: public GenericTextureDefinition
 		 * This would really make more sense if it was inverseof(shift*rotate*scale).. oh well.*/
 		Matrix4 getTransform (float width, float height) const;
 };
-
-#endif /*TEXDEF_H_*/

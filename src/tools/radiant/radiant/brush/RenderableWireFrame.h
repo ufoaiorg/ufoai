@@ -1,5 +1,4 @@
-#ifndef RENDERABLEWIREFRAME_H_
-#define RENDERABLEWIREFRAME_H_
+#pragma once
 
 #include "render.h"
 
@@ -32,5 +31,3 @@ class RenderableWireframe: public OpenGLRenderable
 		std::size_t m_size;
 		const PointVertex* m_vertices;
 };
-
-#endif /*RENDERABLEWIREFRAME_H_*/
