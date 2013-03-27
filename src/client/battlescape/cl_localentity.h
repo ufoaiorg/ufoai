@@ -169,7 +169,7 @@ typedef struct le_s {
 			return inv.getRightHandContainer();
 		else if (hand == ACTOR_HAND_LEFT)
 			return inv.getLeftHandContainer();
-		else return NULL;
+		return NULL;
 	}
 	inline invList_t *getFloorContainer () const
 	{
