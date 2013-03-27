@@ -480,7 +480,7 @@ void G_ClientMove (const Player &player, int visTeam, Edict *ent, const pos3_t t
 		/* submit the TUs / round down */
 		G_ActorSetTU(ent, initTU - usedTUs);
 
-		G_SendStats(ent);
+		G_SendStats(*ent);
 
 		/* end the move */
 		G_GetFloorItems(ent);

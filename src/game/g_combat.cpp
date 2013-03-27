@@ -159,7 +159,7 @@ static void G_Morale (int type, const Edict *victim, const Edict *attacker, int 
 				ent->morale = newMorale;
 
 			/* send phys data */
-			G_SendStats(ent);
+			G_SendStats(*ent);
 		}
 	}
 }
@@ -418,7 +418,7 @@ static void G_Damage (Edict *target, const fireDef_t *fd, int damage, Edict *att
 				G_ActorReserveTUs(target, 0, target->chr.reservedTus.shot, target->chr.reservedTus.crouch);
 				/* flashbangs kill TUs */
 				G_ActorSetTU(target, 0);
-				G_SendStats(target);
+				G_SendStats(*target);
 				/* entity is dazed */
 				G_SetDazed(target);
 				G_ClientPrintf(target->getPlayer(), PRINT_HUD, _("Soldier is dazed!\nEnemy used flashbang!"));
@@ -448,7 +448,7 @@ void G_CheckDeathOrKnockout (Edict *target, Edict *attacker, const fireDef_t *fd
 {
 	/* Check death/knockout. */
 	if (target->HP == 0 || target->HP <= target->STUN) {
-		G_SendStats(target);
+		G_SendStats(*target);
 
 		if (G_ActorDieOrStun(target, attacker)) {
 			G_PrintActorStats(target, attacker, fd);
@@ -471,7 +471,7 @@ void G_CheckDeathOrKnockout (Edict *target, Edict *attacker, const fireDef_t *fd
 				target->HP = std::min(std::max(hp, 0), target->chr.maxHP);
 			}
 		}
-		G_SendStats(target);
+		G_SendStats(*target);
 	}
 }
 
@@ -1346,7 +1346,7 @@ bool G_ClientShoot (const Player &player, Edict *ent, const pos3_t at, shoot_typ
 		/* send TUs if ent still alive */
 		if (ent->inuse && !G_IsDead(ent)) {
 			G_ActorSetTU(ent, ent->TU - tusNeeded);
-			G_SendStats(ent);
+			G_SendStats(*ent);
 		}
 
 		/* end events */

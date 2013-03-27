@@ -251,7 +251,7 @@ void G_CheckForceEndRound(void);
 void G_ClientEndRound(Player &player);
 
 /* g_stats */
-void G_SendStats(Edict *ent) __attribute__((nonnull));
+void G_SendStats(Edict &ent);
 void G_SendPlayerStats(const Player &player);
 
 /* g_svcmds.c */

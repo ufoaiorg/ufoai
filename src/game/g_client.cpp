@@ -228,7 +228,7 @@ void G_GiveTimeUnits (int team)
 
 	while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, team))) {
 		G_ActorGiveTimeUnits(ent);
-		G_SendStats(ent);
+		G_SendStats(*ent);
 	}
 }
 
@@ -441,7 +441,7 @@ static void G_ClientTurn (Player &player, Edict *ent, dvec_t dvec)
 	G_EventActorTurn(ent);
 
 	/* send the new TUs */
-	G_SendStats(ent);
+	G_SendStats(*ent);
 
 	/* end the event */
 	G_EventEnd();
@@ -465,7 +465,7 @@ static void G_ClientStateChangeUpdate (Edict *ent)
 	G_CheckVisTeamAll(ent->team, 0, ent);
 
 	/* Send the new TUs. */
-	G_SendStats(ent);
+	G_SendStats(*ent);
 
 	/* End the event. */
 	G_EventEnd();
@@ -625,7 +625,7 @@ bool G_ClientUseEdict (const Player &player, Edict *actor, Edict *edict)
 	/* using a group of edicts only costs TUs once (for the master) */
 	G_ActorUseTU(actor, edict->TU);
 	/* send the new TUs */
-	G_SendStats(actor);
+	G_SendStats(*actor);
 
 	G_EventEnd();
 

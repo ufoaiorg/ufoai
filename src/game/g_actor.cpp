@@ -433,7 +433,7 @@ void G_ActorCheckRevitalise (Edict *ent)
 
 		G_ActorRevitalise(ent);
 		G_EventActorRevitalise(ent);
-		G_SendStats(ent);
+		G_SendStats(*ent);
 	}
 }
 
@@ -653,7 +653,7 @@ bool G_ActorInvMove (Edict *ent, const invDef_t *from, invList_t *fItem, const i
 	}
 
 	/* send tu's */
-	G_SendStats(ent);
+	G_SendStats(*ent);
 
 	assert(item2);
 	Item item = *item2;

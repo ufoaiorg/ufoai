@@ -31,15 +31,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @brief Send stats to network buffer
  * @sa CL_ActorStats
  */
-void G_SendStats (Edict *ent)
+void G_SendStats (Edict &ent)
 {
 	/* extra sanity checks */
-	assert(ent->TU >= 0);
-	ent->HP = std::max(ent->HP, 0);
-	ent->STUN = std::min(ent->STUN, 255);
-	ent->morale = std::max(ent->morale, 0);
+	assert(ent.TU >= 0);
+	ent.HP = std::max(ent.HP, 0);
+	ent.STUN = std::min(ent.STUN, 255);
+	ent.morale = std::max(ent.morale, 0);
 
-	G_EventActorStats(ent, G_TeamToPM(ent->team));
+	G_EventActorStats(&ent, G_TeamToPM(ent.team));
 }
 
 /**

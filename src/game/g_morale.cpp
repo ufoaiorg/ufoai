@@ -203,6 +203,6 @@ void G_MoraleBehaviour (int team)
 			ent->morale = newMorale;
 
 		/* send phys data and state: */
-		G_SendStats(ent);
+		G_SendStats(*ent);
 	}
 }
