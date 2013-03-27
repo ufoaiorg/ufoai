@@ -651,6 +651,22 @@ const Container *inventory_t::getNextCont (const Container *prev, bool inclTemp)
 	}
 	return cont;
 }
+
+/** @brief Count the number of items in the inventory (without temp containers) */
+int inventory_t::countItems () const
+{
+	int nr = 0;
+
+	const Container *cont = NULL;
+	while ((cont = getNextCont(cont))) {
+		Item *item = NULL;
+		while ((item = cont->getNextItem(item))) {
+			/** As we skip the temp containers, we can neglect Item::amount. */
+			nr++;
+		}
+	}
+	return nr;
+}
 /**
  * @param[in] container The index of the container in the inventory to check the item in.
  * @param[in] od The type of item to check in the inventory.

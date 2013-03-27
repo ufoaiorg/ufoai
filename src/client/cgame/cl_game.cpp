@@ -1230,21 +1230,15 @@ static void GAME_NetSendItem (dbuffer *buf, const Item *item, containerIndex_t c
  */
 static void GAME_NetSendInventory (dbuffer *buf, const inventory_t *inv)
 {
-	containerIndex_t container;
-	int nr = 0;
-	const invList_t *ic;
-
-	const Container *cont = NULL;
-	while ((cont = inv->getNextCont(cont))) {
-		for (ic = cont->_invList; ic; ic = ic->getNext()) {
-			nr++;
-		}
-	}
+	int nr = inv->countItems();
 
 	NET_WriteShort(buf, nr);
+
+	containerIndex_t container;
 	for (container = 0; container < CID_MAX; container++) {
 		if (INVDEF(container)->temp)
 			continue;
+		const invList_t *ic;
 		for (ic = inv->getContainer(container); ic; ic = ic->getNext()) {
 			GAME_NetSendItem(buf, ic, container, ic->getX(), ic->getY());
 		}

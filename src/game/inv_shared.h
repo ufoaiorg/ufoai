@@ -518,6 +518,7 @@ typedef struct inventory_s {
 	bool holdsReactionFireWeapon () const;
 	const Container *_getNextCont (const Container *prev) const;
 	const Container *getNextCont (const Container *prev, bool inclTemp = false) const;
+	int countItems () const;
 } inventory_t;
 
 #define MAX_EQUIPDEFS   64
