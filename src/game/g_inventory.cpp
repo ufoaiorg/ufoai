@@ -342,7 +342,7 @@ void G_WriteItem (const Item *item, const containerIndex_t contId, int x, int y)
 {
 	assert(item);
 	assert(item->def());
-	gi.WriteFormat("sbsbbbbs", item->def()->idx, item->getAmmoLeft(), item->ammo ? item->ammo->idx : NONE, contId, x, y, item->rotated, item->getAmount());
+	gi.WriteFormat("sbsbbbbs", item->def()->idx, item->getAmmoLeft(), item->ammoDef() ? item->ammoDef()->idx : NONE, contId, x, y, item->rotated, item->getAmount());
 }
 
 /**

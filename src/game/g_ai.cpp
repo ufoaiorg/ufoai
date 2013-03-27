@@ -305,7 +305,7 @@ static inline const Item *AI_GetItemFromInventory (const invList_t *ic)
 {
 	if (ic != NULL) {
 		const Item *item = ic;
-		if (item->ammo && item->isWeapon() && !item->mustReload())
+		if (item->ammoDef() && item->isWeapon() && !item->mustReload())
 			return item;
 	}
 	return NULL;
@@ -536,7 +536,7 @@ static void AI_SearchBestTarget (aiAction_t *aia, const Edict *ent, Edict *check
 	fireDefIndex_t fdIdx;
 	float dist;
 
-	for (fdIdx = 0; fdIdx < item->ammo->numFiredefs[fdArray->weapFdsIdx]; fdIdx++) {
+	for (fdIdx = 0; fdIdx < item->ammoDef()->numFiredefs[fdArray->weapFdsIdx]; fdIdx++) {
 		const fireDef_t *fd = &fdArray[fdIdx];
 		const float acc = GET_ACC(ent->chr.score.skills[ABILITY_ACCURACY], fd->weaponSkill) *
 				G_ActorGetInjuryPenalty(ent, MODIFIER_ACCURACY);

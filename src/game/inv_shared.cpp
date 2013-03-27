@@ -494,8 +494,8 @@ Item::Item (const objDef_t *itemDef, const objDef_t *_ammo, int ammoLeft)
 float Item::getWeight () const
 {
 	float weight = def()->weight;
-	if (ammo && ammo != def() && getAmmoLeft() > 0) {
-		weight += ammo->weight;
+	if (ammoDef() && ammoDef() != def() && getAmmoLeft() > 0) {
+		weight += ammoDef()->weight;
 	}
 	return weight;
 }
@@ -513,7 +513,7 @@ bool Item::isSameAs (const Item *const other) const
 	if (this == NULL || other == NULL)
 		return false;
 
-	if (this->def() == other->def() && this->ammo == other->ammo && this->getAmmoLeft() == other->getAmmoLeft())
+	if (this->def() == other->def() && this->ammoDef() == other->ammoDef() && this->getAmmoLeft() == other->getAmmoLeft())
 		return true;
 
 	return false;
@@ -552,20 +552,20 @@ void Item::getFirstShapePosition (int* const x, int* const y) const
 const fireDef_t *Item::getFiredefs () const
 {
 	int i;
-	const objDef_t *ammoDef = ammo;
+	const objDef_t *ammodef = ammoDef();
 	const objDef_t *weapon = def();
 
 	/* this weapon does not use ammo, check for
 	 * existing firedefs in the weapon. */
 	if (weapon->numWeapons > 0)
-		ammoDef = def();
+		ammodef = def();
 
-	if (!ammoDef)
+	if (!ammodef)
 		return NULL;
 
-	for (i = 0; i < ammoDef->numWeapons; i++) {
-		if (weapon == ammoDef->weapons[i])
-			return &ammoDef->fd[i][0];
+	for (i = 0; i < ammodef->numWeapons; i++) {
+		if (weapon == ammodef->weapons[i])
+			return &ammodef->fd[i][0];
 	}
 
 	return NULL;

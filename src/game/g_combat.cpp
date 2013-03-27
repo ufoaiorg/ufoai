@@ -1283,7 +1283,7 @@ bool G_ClientShoot (const Player &player, Edict *ent, const pos3_t at, shoot_typ
 		/* ammo... */
 		if (fd->ammo) {
 			if (ammo > 0 || !weapon->def()->thrown) {
-				G_EventInventoryAmmo(ent, weapon->ammo, ammo, shootType);
+				G_EventInventoryAmmo(ent, weapon->ammoDef(), ammo, shootType);
 				weapon->setAmmoLeft(ammo);
 			} else { /* delete the knife or the rifle without ammo */
 				const invDef_t *invDef = INVDEF(container);
