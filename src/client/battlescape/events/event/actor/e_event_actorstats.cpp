@@ -35,13 +35,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 void CL_ActorStats (const eventRegister_t *self, dbuffer *msg)
 {
-	le_t *le;
-	int entnum, oldTUs = 0;
-
-	entnum = NET_ReadShort(msg);
-	le = LE_Get(entnum);
+	const int entnum = NET_ReadShort(msg);
+	le_t *le = LE_Get(entnum);
 	if (!le)
 		LE_NotFoundError(entnum);
+
+	if (le->pnum != cl.pnum) {
+		Com_Printf("CL_ActorStats: stats for a player that is not controlled by us but by: %i (entnum: %i)\n",
+				le->pnum, le->entnum);
+		return;
+	}
 
 	switch (le->type) {
 	case ET_ACTORHIDDEN:
@@ -53,6 +56,7 @@ void CL_ActorStats (const eventRegister_t *self, dbuffer *msg)
 		return;
 	}
 
+	int oldTUs = 0;
 	if (LE_IsSelected(le))
 		oldTUs = le->TU;
 
