@@ -1877,8 +1877,8 @@ void SV_ParseUMP (const char *name, char *entityString, MapInfo *map, bool inher
 
 		if (Q_streq(token, "extends")) {
 			token = Com_Parse(&text);
-			if (inherit || map->inheritBasePath[0] != '\0')
-				Com_Printf("SV_ParseUMP: Too many extends in %s 'extends %s' ignored\n", filename, token);
+			if (inherit)
+				Com_Printf("SV_ParseUMP: Nested extends in %s 'extends %s' ignored\n", filename, token);
 			else
 				SV_ParseUMP(token, entityString, map, true);
 		} else if (Q_streq(token, "base")) {
