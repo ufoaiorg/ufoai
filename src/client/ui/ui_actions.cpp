@@ -702,7 +702,7 @@ bool UI_IsInjectedString (const char *string)
  * @param[in,out] pointer The pointer to the data that should be freed
  * @sa ui_dynStringPool
  */
-void UI_FreeStringProperty (void* pointer)
+void UI_FreeStringProperty (void *pointer)
 {
 	/* skip const string */
 	if ((uintptr_t)ui_global.adata <= (uintptr_t)pointer && (uintptr_t)pointer < (uintptr_t)ui_global.adata + (uintptr_t)ui_global.adataize)

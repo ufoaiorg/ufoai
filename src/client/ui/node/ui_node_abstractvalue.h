@@ -51,10 +51,10 @@ protected:
  * edit a value (scrollbar, spinner, and more)
  */
 typedef struct abstractValueExtraData_s {
-	void* min;	/**< Min value can take the value field */
-	void* max;	/**< Max value can take the value field */
-	void* value;	/**< Current value */
-	void* delta;	/**< Quantity the control add or remove in one step */
+	void *min;	/**< Min value can take the value field */
+	void *max;	/**< Max value can take the value field */
+	void *value;	/**< Current value */
+	void *delta;	/**< Quantity the control add or remove in one step */
 	float lastdiff;	/**< Different of the value from the last update. Its more an event property than a node property */
 	float shiftIncreaseFactor;
 } abstractValueExtraData_t;

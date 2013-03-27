@@ -33,7 +33,7 @@
 #include "../../../common/binaryexpressionparser.h"
 #include "save/save_staticcampaign.h"
 
-static int SCP_StageSetDone (const char *name, const void* userdata)
+static int SCP_StageSetDone (const char *name, const void *userdata)
 {
 	setState_t *set;
 	int i;

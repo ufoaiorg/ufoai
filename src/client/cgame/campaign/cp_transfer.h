@@ -119,7 +119,7 @@ typedef struct transferData_s {
 #define TR_ForeachEmployee(var, transfer, employeeType) LIST_Foreach(transfer->employees[employeeType], employee_t, var)
 #define TR_ForeachAircraft(var, transfer) LIST_Foreach(transfer->aircraft, aircraft_t, var)
 
-bool TR_AddData(transferData_t *transferData, transferCargoType_t type, const void* data);
+bool TR_AddData(transferData_t *transferData, transferCargoType_t type, const void *data);
 void TR_TransferRun(void);
 void TR_NotifyAircraftRemoved(const aircraft_t *aircraft);
 

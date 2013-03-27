@@ -123,8 +123,8 @@ typedef union {
 	int integer;
 	float number;
 	const char* constString;
-	void* data;
-	const void* constData;
+	void *data;
+	const void *constData;
 } uiTerminalActionData_t;
 
 /**
@@ -218,7 +218,7 @@ void UI_ExecuteEventActions(uiNode_t* source, const uiAction_t* firstAction);
 void UI_ExecuteConFuncActions(uiNode_t* source, const uiAction_t* firstAction);
 void UI_ExecuteEventActionsEx (uiNode_t* source, const uiAction_t* firstAction, linkedList_t *params);
 bool UI_IsInjectedString(const char *string);
-void UI_FreeStringProperty(void* pointer);
+void UI_FreeStringProperty(void *pointer);
 const char* UI_GenInjectedString(const char* input, bool addNewLine, const uiCallContext_t *context);
 int UI_GetActionTokenType(const char* token, int group);
 uiValue_t* UI_GetVariable (const uiCallContext_t *context, int relativeVarId);

@@ -30,7 +30,7 @@
 void write_stack_trace (TextOutputStream& outputStream)
 {
 	const unsigned int MAX_SYMBOLS = 256;
-	void* symbols[MAX_SYMBOLS];
+	void *symbols[MAX_SYMBOLS];
 
 	// get return addresses
 	int symbol_count = backtrace(symbols, MAX_SYMBOLS);

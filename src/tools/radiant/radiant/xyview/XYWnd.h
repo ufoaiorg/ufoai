@@ -162,7 +162,7 @@ class XYWnd: public CameraObserver, public scene::Graph::Observer
 		void OriginalButtonUp (guint32 nFlags, int point, int pointy);
 		void OriginalButtonDown (guint32 nFlags, int point, int pointy);
 
-		static void callbackMoveDelta (int x, int y, unsigned int state, void* data);
+		static void callbackMoveDelta (int x, int y, unsigned int state, void *data);
 		static gboolean callbackMoveFocusOut (GtkWidget* widget, GdkEventFocus* event, XYWnd* xywnd);
 
 		void onContextMenu ();
@@ -180,14 +180,14 @@ class XYWnd: public CameraObserver, public scene::Graph::Observer
 		// GTK callbacks
 		static gboolean callbackButtonPress (GtkWidget* widget, GdkEventButton* event, XYWnd* xywnd);
 		static gboolean callbackButtonRelease (GtkWidget* widget, GdkEventButton* event, XYWnd* xywnd);
-		static void callbackMouseMotion (gdouble x, gdouble y, guint state, void* data);
+		static void callbackMouseMotion (gdouble x, gdouble y, guint state, void *data);
 		static gboolean callbackMouseWheelScroll (GtkWidget* widget, GdkEventScroll* event, XYWnd* xywnd);
 		static gboolean callbackSizeAllocate (GtkWidget* widget, GtkAllocation* allocation, XYWnd* xywnd);
 		static gboolean callbackExpose (GtkWidget* widget, GdkEventExpose* event, XYWnd* xywnd);
 		static gboolean onFocusOut (GtkWidget* widget, GdkEventFocus* event, XYWnd* xywnd);
 
 		static gboolean xywnd_chasemouse (gpointer data);
-		static void zoomDelta (int x, int y, unsigned int state, void* data);
+		static void zoomDelta (int x, int y, unsigned int state, void *data);
 		Vector4 getWindowCoordinates();
 	public:
 		void EntityCreate_MouseDown (int x, int y);

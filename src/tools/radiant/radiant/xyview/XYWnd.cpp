@@ -395,7 +395,7 @@ void XYWnd::zoomOut ()
 	}
 }
 
-void XYWnd::zoomDelta (int x, int y, unsigned int state, void* data)
+void XYWnd::zoomDelta (int x, int y, unsigned int state, void *data)
 {
 	if (y != 0) {
 		XYWnd *xywnd = reinterpret_cast<XYWnd*> (data);
@@ -541,7 +541,7 @@ gboolean XYWnd::callbackButtonRelease (GtkWidget* widget, GdkEventButton* event,
 }
 
 // greebo: This is the GTK callback for mouse movement.
-void XYWnd::callbackMouseMotion (gdouble x, gdouble y, guint state, void* data)
+void XYWnd::callbackMouseMotion (gdouble x, gdouble y, guint state, void *data)
 {
 	// Convert the passed pointer into a XYWnd pointer
 	XYWnd* xywnd = reinterpret_cast<XYWnd*> (data);
@@ -664,7 +664,7 @@ void XYWnd::onContextMenu (void)
 	ui::OrthoContextMenu::displayInstance(point);
 }
 
-void XYWnd::callbackMoveDelta (int x, int y, unsigned int state, void* data)
+void XYWnd::callbackMoveDelta (int x, int y, unsigned int state, void *data)
 {
 	reinterpret_cast<XYWnd*> (data)->EntityCreate_MouseMove(x, y);
 	reinterpret_cast<XYWnd*> (data)->scroll(-x, y);
