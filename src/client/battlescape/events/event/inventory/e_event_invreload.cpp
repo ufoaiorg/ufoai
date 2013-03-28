@@ -66,9 +66,10 @@ void CL_InvReload (const eventRegister_t *self, dbuffer *msg)
 		assert(ammo == ic->def()->ammo);
 		ed->numItemsLoose[ic->ammoDef()->idx] += ic->getAmmoLeft();
 		/* Accumulate loose ammo into clips (only accessible post-mission) */
-		if (ed->numItemsLoose[ic->ammoDef()->idx] >= ic->def()->ammo) {
-			ed->numItemsLoose[ic->ammoDef()->idx] -= ic->def()->ammo;
-			ed->numItems[ic->ammoDef()->idx]++;
+		int aidx = ic->ammoDef()->idx;
+		if (ed->numItemsLoose[aidx] >= ic->def()->ammo) {
+			ed->numItemsLoose[aidx] -= ic->def()->ammo;
+			ed->numItems[aidx]++;
 		}
 	}
 
