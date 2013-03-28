@@ -3297,6 +3297,7 @@ static const value_t mapdef_vals[] = {
 	{"civilianteam", V_HUNK_STRING, offsetof(mapDef_t, civTeam), 0},
 
 	{"maxaliens", V_INT, offsetof(mapDef_t, maxAliens), MEMBER_SIZEOF(mapDef_t, maxAliens)},
+	{"hwclass", V_INT, offsetof(mapDef_t, hwclass), MEMBER_SIZEOF(mapDef_t, hwclass)},
 	{"storyrelated", V_BOOL, offsetof(mapDef_t, storyRelated), MEMBER_SIZEOF(mapDef_t, storyRelated)},
 	{"nocunit", V_BOOL, offsetof(mapDef_t, nocunit), MEMBER_SIZEOF(mapDef_t, nocunit)},
 

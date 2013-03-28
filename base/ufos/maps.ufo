@@ -16,6 +16,11 @@
 // singleplayer: available for single player games (default true)
 // multiplayer: available for multiplayer games (default false)
 // nocunit: map is WIP and therefore excluded from the tests (default false)
+// hwclass: skip this map everywhere if hwclass is higher than that of the pc (default 0).
+//			5 is an i7 with a medium gfx-card
+//			3 a dual core with 2 GB of RAM
+//			2 EeePc with 1 GB
+//			1 Android Smartphone
 // campaign: available in campaign games (default true)
 //
 // Triggers:
@@ -3496,8 +3501,8 @@ mapdef solarplant
 	description		"_Solar Power Plant"
 	param			"default"
 	maxaliens		16
-	
-	aircraft 
+
+	aircraft
 	(
 		craft_drop_firebird
 		craft_drop_herakles
