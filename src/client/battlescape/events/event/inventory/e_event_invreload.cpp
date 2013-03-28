@@ -75,7 +75,7 @@ void CL_InvReload (const eventRegister_t *self, dbuffer *msg)
 
 	/* set new ammo */
 	ic->setAmmoLeft(ammo);
-	ic->ammo = INVSH_GetItemByIDX(type);
+	ic->setAmmoDef(INVSH_GetItemByIDX(type));
 
 	if (le == selActor)
 		Cmd_ExecuteString("hud_updateactorload");

@@ -41,12 +41,12 @@ static void CL_NetReceiveItem (dbuffer *buf, Item *item, containerIndex_t *conta
 	int ammoleft = NONE_AMMO;
 	int amount = 0;
 	item->setDef(NULL);
-	item->ammo = NULL;
+	item->setAmmoDef(NULL);
 	NET_ReadFormat(buf, eventData->formatString, &t, &ammoleft, &m, container, x, y, &item->rotated, &amount);
 	item->setAmmoLeft(ammoleft);
 	item->setAmount(amount);
 	item->setDef(INVSH_GetItemByIDX(t));
-	item->ammo = INVSH_GetItemByIDX(m);
+	item->setAmmoDef(INVSH_GetItemByIDX(m));
 
 	if (!item->def())
 		Com_Error(ERR_DROP, "no weapon given for item");
