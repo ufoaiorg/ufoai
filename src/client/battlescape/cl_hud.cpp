@@ -720,13 +720,13 @@ static int HUD_WeaponCanBeReloaded (const le_t *le, containerIndex_t containerID
 	}
 
 	/* Weapon is fully loaded. */
-	if (invList->ammo && weapon->ammo == invList->getAmmoLeft()) {
+	if (invList->ammoDef() && weapon->ammo == invList->getAmmoLeft()) {
 		*reason = _("No reload possible, already fully loaded.");
 		return -1;
 	}
 
 	/* Weapon is empty or not fully loaded, find ammo of any type loadable to this weapon. */
-	if (!invList->ammo || weapon->ammo > invList->getAmmoLeft()) {
+	if (!invList->ammoDef() || weapon->ammo > invList->getAmmoLeft()) {
 		const int tuCosts = HUD_CalcReloadTime(le, weapon, containerID);
 		if (tuCosts >= 0) {
 			const int tu = CL_ActorUsableTUs(le);
@@ -813,7 +813,7 @@ static int HUD_ReactionFireGetTUs (const le_t *actor)
 	if (!weapon)
 		weapon = actor->getLeftHandItem();
 
-	if (weapon && weapon->ammo && weapon->isWeapon()) {
+	if (weapon && weapon->ammoDef() && weapon->isWeapon()) {
 		const fireDef_t *fdArray = weapon->getFiredefs();
 		if (fdArray == NULL)
 			return -1;
@@ -1147,7 +1147,7 @@ static int HUD_UpdateActorFireMode (le_t *actor)
 		CL_ActorSetFireDef(actor, NULL);
 	} else {
 		/* Check whether this item uses/has ammo. */
-		if (!selWeapon->ammo) {
+		if (!selWeapon->ammoDef()) {
 			CL_ActorSetFireDef(actor, NULL);
 			/* This item does not use ammo, check for existing firedefs in this item. */
 			/* This is supposed to be a weapon or other usable item. */
@@ -1164,7 +1164,7 @@ static int HUD_UpdateActorFireMode (le_t *actor)
 		} else {
 			const fireDef_t *fdArray = selWeapon->getFiredefs();
 			if (fdArray != NULL) {
-				const fireDef_t *old = FIRESH_GetFiredef(selWeapon->ammo, fdArray->weapFdsIdx, actor->currentSelectedFiremode);
+				const fireDef_t *old = FIRESH_GetFiredef(selWeapon->ammoDef(), fdArray->weapFdsIdx, actor->currentSelectedFiremode);
 				/* reset the align if we switched the firemode */
 				CL_ActorSetFireDef(actor, old);
 			}
@@ -1426,7 +1426,7 @@ static void HUD_UpdateActor (le_t *actor)
 			item = NULL;
 		}
 
-		if (item && item->def() && item->ammo && item->isReloadable()) {
+		if (item && item->def() && item->ammoDef() && item->isReloadable()) {
 			const int reloadtime = HUD_CalcReloadTime(actor, item->def(), container);
 			if (reloadtime != -1 && reloadtime <= CL_ActorUsableTUs(actor))
 				time = reloadtime;

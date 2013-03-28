@@ -320,7 +320,7 @@ static int G_ReactionFireGetTUsForItem (const Edict *shooter, const Edict *targe
 	const FiremodeSettings *fmSetting = &shooter->chr.RFmode;
 	const Item *weapon = shooter->getHandItem(fmSetting->getHand());
 
-	if (weapon && weapon->ammo && weapon->isWeapon() && !weapon->mustReload()) {
+	if (weapon && weapon->ammoDef() && weapon->isWeapon() && !weapon->mustReload()) {
 		const fireDef_t *fdArray = weapon->getFiredefs();
 		if (fdArray == NULL)
 			return -1;

@@ -352,7 +352,7 @@ inventory_action_t InventoryInterface::moveInInventory (inventory_t* const inv, 
 		if (ic && !to->isEquipDef() && fItem->def()->isLoadableInWeapon(ic->def())) {
 			/* A target-item was found and the dragged item (implicitly ammo)
 			 * can be loaded in it (implicitly weapon). */
-			if (ic->getAmmoLeft() >= ic->def()->ammo && ic->ammo == fItem->def()) {
+			if (ic->getAmmoLeft() >= ic->def()->ammo && ic->ammoDef() == fItem->def()) {
 				/* Weapon already fully loaded with the same ammunition -> abort */
 				return IA_NORELOAD;
 			}
@@ -362,7 +362,7 @@ inventory_action_t InventoryInterface::moveInInventory (inventory_t* const inv, 
 					*TU -= time;
 				if (ic->getAmmoLeft() >= ic->def()->ammo) {
 					/* exchange ammo */
-					const Item item(ic->ammo);
+					const Item item(ic->ammoDef());
 					/* Put current ammo in place of the new ammo unless floor - there can be more than 1 item */
 					const int cacheFromX = from->isFloorDef() ? NONE : fItem->getX();
 					const int cacheFromY = from->isFloorDef() ? NONE : fItem->getY();
@@ -633,7 +633,7 @@ int InventoryInterface::PackAmmoAndWeapon (character_t* const chr, const objDef_
 		item.setAmmoDef(ammo);
 	}
 
-	if (!item.ammo) {
+	if (!item.ammoDef()) {
 		Com_Printf("PackAmmoAndWeapon: no ammo for sidearm or primary weapon '%s' in equipment '%s' (%s).\n",
 				weapon->id, ed->id, invName);
 		return 0;
