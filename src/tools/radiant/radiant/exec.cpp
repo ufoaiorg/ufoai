@@ -96,9 +96,9 @@ static gboolean exec_channel_callback (GIOChannel *channel, GIOCondition conditi
 			cont = FALSE;
 		} else if (cmd->read_proc) {
 			GError *error = NULL;
-			const gchar* to_codeset = "UTF-8";
-			const gchar* from_codeset = "ISO-8859-1";
-			gchar* fallback = NULL;
+			const gchar *to_codeset = "UTF-8";
+			const gchar *from_codeset = "ISO-8859-1";
+			gchar *fallback = NULL;
 			gchar *converted = g_convert_with_fallback(buffer, bytes, to_codeset, from_codeset, fallback, NULL, NULL,
 					&error);
 			if (converted != NULL) {

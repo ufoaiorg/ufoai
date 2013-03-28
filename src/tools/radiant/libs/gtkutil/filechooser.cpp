@@ -180,7 +180,7 @@ namespace gtkutil
 	std::string FileChooser::getSelectedFileName ()
 	{
 		// Load the filename from the dialog
-		const gchar* fileNameRaw = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(_dialog));
+		const gchar *fileNameRaw = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(_dialog));
 		if (!fileNameRaw)
 			return "";
 

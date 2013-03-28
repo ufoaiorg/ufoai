@@ -14,7 +14,7 @@ namespace gtkutil
 			// GTK requires the returned string to be freed to prevent memory leaks
 			static std::string getActiveText (GtkComboBox* comboBox)
 			{
-				gchar* text = gtk_combo_box_get_active_text(comboBox);
+				gchar *text = gtk_combo_box_get_active_text(comboBox);
 
 				if (text != NULL) {
 					std::string returnValue(text);
