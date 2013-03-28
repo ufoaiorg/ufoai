@@ -104,7 +104,7 @@ extern memPool_t *ui_dynPool;
  */
 #define STRUCT_MEMORY_ALIGN	8
 
-void* UI_AllocHunkMemory(size_t size, int align, bool reset);
+void *UI_AllocHunkMemory(size_t size, int align, bool reset);
 
 void UI_FinishInit(void);
 void UI_FinishWindowsInit(void);
