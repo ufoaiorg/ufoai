@@ -318,9 +318,9 @@ void G_ReadItem (Item *item, const invDef_t **container, int *x, int *y)
 	if (m != NONE) {
 		if (m < 0 || m >= gi.csi->numODs)
 			gi.Error("Ammo index out of bounds: %i", m);
-		item->ammo = &gi.csi->ods[m];
+		item->setAmmoDef(&gi.csi->ods[m]);
 	} else {
-		item->ammo = NULL;
+		item->setAmmoDef(NULL);
 	}
 
 	if (containerID >= 0 && containerID < CID_MAX)

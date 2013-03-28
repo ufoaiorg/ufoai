@@ -375,7 +375,7 @@ inventory_action_t InventoryInterface::moveInInventory (inventory_t* const inv, 
 					if (addToInventory(inv, &item, from, cacheFromX, cacheFromY, 1) == NULL)
 						Sys_Error("Could not reload the weapon - add to inventory failed (%s)", invName);
 
-					ic->ammo = this->cacheItem.def();
+					ic->setAmmoDef(this->cacheItem.def());
 					if (icp)
 						*icp = ic;
 					return IA_RELOAD_SWAP;
@@ -384,7 +384,7 @@ inventory_action_t InventoryInterface::moveInInventory (inventory_t* const inv, 
 					if (!removeFromInventory(inv, from, fItem))
 						return IA_NONE;
 
-					ic->ammo = this->cacheItem.def();
+					ic->setAmmoDef(this->cacheItem.def());
 					/* loose ammo of type ic->m saved on server side */
 					ic->setAmmoLeft(ic->def()->ammo);
 					if (icp)
@@ -593,11 +593,11 @@ int InventoryInterface::PackAmmoAndWeapon (character_t* const chr, const objDef_
 	if (weapon->oneshot) {
 		/* The weapon provides its own ammo (i.e. it is charged or loaded in the base.) */
 		item.setAmmoLeft(weapon->ammo);
-		item.ammo = weapon;
+		item.setAmmoDef(weapon);
 		Com_DPrintf(DEBUG_SHARED, "PackAmmoAndWeapon: oneshot weapon '%s' in equipment '%s' (%s).\n",
 				weapon->id, ed->id, invName);
 	} else if (!weapon->reload) {
-		item.ammo = item.def(); /* no ammo needed, so fire definitions are in t */
+		item.setAmmoDef(item.def());	/* no ammo needed, so fire definitions are in item */
 	} else {
 		/* find some suitable ammo for the weapon (we will have at least one if there are ammos for this
 		 * weapon in equipment definition) */
@@ -630,7 +630,7 @@ int InventoryInterface::PackAmmoAndWeapon (character_t* const chr, const objDef_
 		}
 		/* load ammo */
 		item.setAmmoLeft(weapon->ammo);
-		item.ammo = ammo;
+		item.setAmmoDef(ammo);
 	}
 
 	if (!item.ammo) {
@@ -703,7 +703,7 @@ void InventoryInterface::EquipActorMelee (inventory_t* const inv, const teamDef_
 
 	/* Prepare item. This kind of item has no ammo, fire definitions are in item.t. */
 	Item item(obj);
-	item.ammo = item.def();
+	item.setAmmoDef(item.def());
 	item.setAmmoLeft(NONE_AMMO);
 	/* Every melee actor weapon definition is firetwohanded, add to right hand. */
 	if (!obj->fireTwoHanded)
@@ -728,7 +728,7 @@ void InventoryInterface::EquipActorRobot (inventory_t* const inv, const objDef_t
 	/* Get ammo for item/weapon. */
 	assert(weapon->numAmmos > 0);	/* There _has_ to be at least one ammo-type. */
 	assert(weapon->ammos[0]);
-	item.ammo = weapon->ammos[0];
+	item.setAmmoDef(weapon->ammos[0]);
 
 	tryAddToInventory(inv, &item, &this->csi->ids[CID_RIGHT]);
 }

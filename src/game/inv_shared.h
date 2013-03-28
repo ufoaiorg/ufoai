@@ -382,6 +382,10 @@ public:
 	{
 		return ammo;
 	}
+	inline void setAmmoDef (const objDef_t *od)
+	{
+		ammo = od;
+	}
 	inline int getAmount () const
 	{
 		return _amount;

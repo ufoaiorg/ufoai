@@ -470,18 +470,18 @@ Item::Item ()
 {
 	setAmmoLeft(NONE_AMMO);
 	setAmount(0);
-	ammo = NULL;
+	setAmmoDef(NULL);
 	_itemDef = NULL;
 	_x = _y = rotated = 0;
 	_next = NULL;
 }
 
 /** @brief Item constructor with the 3 most often changed attributes */
-Item::Item (const objDef_t *itemDef, const objDef_t *_ammo, int ammoLeft)
+Item::Item (const objDef_t *itemDef, const objDef_t *ammo, int ammoLeft)
 {
 	setAmmoLeft(ammoLeft);
 	setAmount(0);
-	ammo = _ammo;
+	setAmmoDef(ammo);
 	_itemDef = itemDef;
 	_x = _y = rotated = 0;
 	_next = NULL;
