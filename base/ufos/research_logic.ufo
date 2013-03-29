@@ -32,8 +32,6 @@ tech rs_contained_organic_alien
 		alien (taman 1)
 		alien (ortnok 1)
 		alien (shevaar 1)
-		alien (taman_light 1)
-		alien (taman_heavy 1)
 	}
 }
 

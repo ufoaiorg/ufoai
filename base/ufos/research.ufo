@@ -4462,9 +4462,7 @@ tech rs_alien_taman_autopsy
 
 	require_OR
 	{
-		alien_dead (taman_light 1)
 		alien_dead (taman 1)
-		alien_dead (taman_heavy 1)
 	}
 	time	1500
 
