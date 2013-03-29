@@ -486,9 +486,9 @@ typedef struct inventory_s {
 	Container containers[MAX_CONTAINERS];
 
 	inventory_s ();
-	inline invList_t *getContainer1 (const containerIndex_t idx) const
+	inline const Container *getContainer (const containerIndex_t idx) const
 	{
-		return containers[idx]._invList;
+		return &containers[idx];
 	}
 	/** temporary naming while migrating !!
 	 * getContainer2 will return an item, while

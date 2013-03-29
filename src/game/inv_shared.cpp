@@ -143,7 +143,6 @@ static bool INVSH_CheckShapeCollision (const uint32_t *shape, const uint32_t ite
  */
 static bool INVSH_CheckToInventory_shape (const inventory_t *const inv, const invDef_t *container, const uint32_t itemShape, const int x, const int y, const Item *ignoredItem)
 {
-	invList_t *ic;
 	static uint32_t mask[SHAPE_BIG_MAX_HEIGHT];
 
 	assert(container);
@@ -162,14 +161,16 @@ static bool INVSH_CheckToInventory_shape (const inventory_t *const inv, const in
 			mask[j] = ~container->shape[j];
 
 		/* Add other items to mask. (i.e. merge their shapes at their location into the generated mask) */
-		for (ic = inv->getContainer3(container->id); ic; ic = ic->getNext()) {
-			if (ignoredItem == ic)
+		const Container *cont = inv->getContainer(container->id);
+		Item *item = NULL;
+		while ((item = cont->getNextItem(item))) {
+			if (ignoredItem == item)
 				continue;
 
-			if (ic->rotated)
-				INVSH_MergeShapes(mask, ic->def()->getShapeRotated(), ic->getX(), ic->getY());
+			if (item->rotated)
+				INVSH_MergeShapes(mask, item->def()->getShapeRotated(), item->getX(), item->getY());
 			else
-				INVSH_MergeShapes(mask, ic->def()->shape, ic->getX(), ic->getY());
+				INVSH_MergeShapes(mask, item->def()->shape, item->getX(), item->getY());
 		}
 	}
 
@@ -769,10 +770,11 @@ invList_t *inventory_t::getItemAtPos (const invDef_t *container, const int x, co
 		Sys_Error("getItemAtPos: Scrollable containers (%i:%s) are not supported by this function.", container->id, container->name);
 
 	/* More than one item - search for the item that is located at location x/y in this container. */
-	invList_t *ic;
-	for (ic = getContainer3(container->id); ic; ic = ic->getNext())
-		if (INVSH_ShapeCheckPosition(ic, x, y))
-			return ic;
+	const Container *cont = getContainer(container->id);
+	Item *item = NULL;
+	while ((item = cont->getNextItem(item)))
+		if (INVSH_ShapeCheckPosition(item, x, y))
+			return item;
 
 	/* Found nothing. */
 	return NULL;
@@ -905,16 +907,16 @@ invList_t *inventory_t::getArmourContainer (void) const
 /**
  * @brief Searches a specific item in the inventory&container.
  * @param[in] contId Container in the inventory.
- * @param[in] item The item to search for.
+ * @param[in] searchItem The item to search for.
  * @return Pointer to the first item of this type found, otherwise @c NULL.
  */
-Item *inventory_t::findInContainer (const containerIndex_t contId, const Item *const item) const
+Item *inventory_t::findInContainer (const containerIndex_t contId, const Item *const searchItem) const
 {
-	invList_t *ic;
-
-	for (ic = getContainer3(contId); ic; ic = ic->getNext())
-		if (ic->isSameAs(item)) {
-			return ic;
+	const Container *cont = getContainer(contId);
+	Item *item = NULL;
+	while ((item = cont->getNextItem(item)))
+		if (item->isSameAs(searchItem)) {
+			return item;
 		}
 
 	return NULL;
