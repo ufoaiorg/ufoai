@@ -23,7 +23,7 @@ Our soldiers have dubbed the creature 'Bloodspider', and the name has stuck.
 
 Ballistics testing on samples of the Bloodspider's armour plating reveal that it is very tough and has excellent insulating properties, making it effective against a wide variety of weapons.
 
--- The armour is highly resistant to lasers, electricity and incendiary ammunition, but it can be penetrated by high-velocity armour-piercing rounds.
+-- The armour is highly resistant to electricity, but it can be penetrated by high-velocity armour-piercing rounds.
 
 -- High explosives also achieve good results, as they tend to damage the vulnerable leg joints. This may be the most effective way to take these creatures out.
 
@@ -49,9 +49,9 @@ text "_Commander,
 
 My team has analysed the remains of the arachnid machine our operatives brought back, and we have prepared a summary for your review.
 
-This creature is similar in many ways to the Bloodspider we have faced before on the battlefield, but it has undergone upgrades to make it much more deadly. It's razor-sharp blades are longer and its armour plating has undergone significant revisions. These creatures are terrifying on the battlefield if they get close, and this new variant is much more likely to survive a few rounds from our soldiers and keep coming. We will need to hunt the Combat Bloodspider in packs.
+This robotic creature has razor-sharp blades and has been observed dissecting its victims before storing organic material in internal cavities. For this reason, we believe the alien serves some kind of scientific role by harvesting biomass, but it is truly brutal in pursuit of its target.
 
-We can't be certain, but we fear that the armour upgrades may have been designed in response to battlefield experience with us. If that's true, it means the aliens may be upgrading other combat systems as well.
+These creatures are terrifying on the battlefield if they get close and thick, heavy armour plating increases the chances it will  survive a few rounds from our soldiers and keep coming. We will need to hunt the Combat Bloodspider in packs.
 
 Sincerely,
 
@@ -61,7 +61,7 @@ Dr. Connor"
 msgid bloodspider_adv_autopsy_pre_txt {
 text "_Commander,
 
-We've recovered a new alien corpse from the battlefield. It appears to be a more deadly variant of the Bloodspider with which we are familiar. Dissection and assessment could give us insights into the alien's new capabilities.
+We've recovered a new alien corpse from the battlefield. Dissection and assessment could give us insights into the new alien's capabilities.
 
 Sincerely,
 
@@ -373,9 +373,9 @@ text "_Commander,
 
 My team has completed its analysis of the alien creature we recovered.
 
-As we suspected, this is a more advanced and deadly version of the Hovernet. The plasma weaponry has been upgraded considerably. The Combat Hovernet can fire three-round bursts with an accuracy we're not accustomed to from the erratic ammunition.
+We're calling this alien the Combat Hovernet, an acknowledgment of its clear combat-oriented mechanical augmentations. But a small biomass, including a \"brain\" of sorts, lies at its core and appears to control the machine.
 
-The entire creature has been wrapped in advanced armour plating and the stabilisers which keep it afloat and on-target are much more powerful. These guys won't be so easy to knock down and, until they're destroyed, they'll prove to be a serious threat to our troops.
+The entire creature has been wrapped in advanced armour plating and the stabilisers which keep it afloat and on-target are more powerful than we would expect necessary in a non-combat role. The plasma weaponry installed on the alien is capable of firing three-round bursts with an accuracy we're not accustomed to from the erratic ammunition. These guys won't be easy to knock down and, until they're destroyed, they'll prove to be a serious threat to our troops.
 
 Because they're wrapped in the alien armour worn by other units they're resistant to normal and plasma weaponry. But they also share the alien armour's vulnerabilities to laser and strong fire-based weapons.
 
@@ -389,7 +389,7 @@ Dr. Connor"
 msgid hovernet_adv_autopsy_pre_txt {
 text "_Commander,
 
-We've recovered a new alien corpse from the battlefield. It appears to be a more deadly variant of the Hovernet with which we are familiar. Dissection and assessment could give us insights into the alien's new capabilities.
+We've recovered a new alien corpse from the battlefield. Dissection and assessment could give us insights into the new alien's capabilities.
 
 Sincerely,
 
