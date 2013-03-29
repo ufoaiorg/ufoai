@@ -392,7 +392,7 @@ trace_t CM_EntCompleteBoxTrace (mapTiles_t *mapTiles, const Line &traceLine, con
 		if (!lineBox.doesIntersect(modelBox))
 			continue;
 
-		trace_t newtr = CM_HintedTransformedBoxTrace(mapTiles->mapTiles[model->tile], traceLine.start, traceLine.stop, *traceBox,
+		const trace_t newtr = CM_HintedTransformedBoxTrace(mapTiles->mapTiles[model->tile], traceLine.start, traceLine.stop, *traceBox,
 				model->headnode, brushmask, brushreject, model->origin, model->angles, model->shift, trace.fraction);
 
 		/* memorize the trace with the minimal fraction */
