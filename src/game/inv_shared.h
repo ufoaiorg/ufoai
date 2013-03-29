@@ -532,13 +532,15 @@ typedef struct inventory_s {
 #define MAX_EQUIPDEFS   64
 
 typedef struct equipDef_s {
-	char id[MAX_VAR];		/**< script id of the equipment definition */
-	const char *name;		/**< translatable name of the equipment definition */
+	char id[MAX_VAR];			/**< script id of the equipment definition */
+	const char *name;			/**< translatable name of the equipment definition */
 	int numItems[MAX_OBJDEFS];	/**< Number of item for each item type (see equipment_missions.ufo for more info) */
 	byte numItemsLoose[MAX_OBJDEFS];	/**< currently only used for weapon ammo */
 	int numAircraft[AIRCRAFTTYPE_MAX];
-	int minInterest;		/**< Minimum overall interest to use this equipment definition (only for alien) */
-	int maxInterest;		/**< Maximum overall interest to use this equipment definition (only for alien) */
+	int minInterest;			/**< Minimum overall interest to use this equipment definition (only for alien) */
+	int maxInterest;			/**< Maximum overall interest to use this equipment definition (only for alien) */
+
+	void addClip(const Item *item);	/** Combine the rounds of partially used clips. */
 } equipDef_t;
 
 /* Maximum number of alien teams per alien group */

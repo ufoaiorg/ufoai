@@ -931,3 +931,17 @@ bool inventory_t::holdsReactionFireWeapon () const
 		return true;
 	return false;
 }
+
+/**
+ * @brief Combine the rounds of partially used clips.
+ */
+void equipDef_t::addClip(const Item *item)
+{
+	int aidx = item->ammoDef()->idx;
+	numItemsLoose[aidx] += item->getAmmoLeft();
+	/* Accumulate loose ammo into clips */
+	if (numItemsLoose[aidx] >= item->def()->ammo) {
+		numItemsLoose[aidx] -= item->def()->ammo;
+		numItems[aidx]++;
+	}
+}

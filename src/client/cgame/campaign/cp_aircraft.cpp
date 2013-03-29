@@ -329,7 +329,6 @@ static void AII_CarriedItems (const inventory_t *soldierInventory)
 		/* Items on the ground are collected as ET_ITEM */
 		for (item = cont->_invList; item; item = item->getNext()) {
 			const objDef_t *itemType = item->def();
-			const objDef_t *ammo = item->ammo;
 			technology_t *tech = RS_GetTechForItem(itemType);
 			ed->numItems[itemType->idx]++;
 			RS_MarkCollected(tech);
@@ -337,11 +336,7 @@ static void AII_CarriedItems (const inventory_t *soldierInventory)
 			if (!itemType->reload || item->getAmmoLeft() == 0)
 				continue;
 
-			ed->numItemsLoose[ammo->idx] += item->getAmmoLeft();
-			if (ed->numItemsLoose[ammo->idx] >= itemType->ammo) {
-				ed->numItemsLoose[ammo->idx] -= itemType->ammo;
-				ed->numItems[ammo->idx]++;
-			}
+			ed->addClip(item);
 			/* The guys keep their weapons (half-)loaded. Auto-reload
 			 * will happen at equip screen or at the start of next mission,
 			 * but fully loaded weapons will not be reloaded even then. */
@@ -3060,12 +3055,8 @@ void AIR_MoveEmployeeInventoryIntoStorage (const aircraft_t &aircraft, equipDef_
 				ed.numItems[type->idx]++;
 				if (item.getAmmoLeft() && type->reload) {
 					assert(item.ammo);
-					ed.numItemsLoose[item.ammo->idx] += item.getAmmoLeft();
 					/* Accumulate loose ammo into clips */
-					if (ed.numItemsLoose[item.ammo->idx] >= type->ammo) {
-						ed.numItemsLoose[item.ammo->idx] -= type->ammo;
-						ed.numItems[item.ammo->idx]++;
-					}
+					ed.addClip(&item);
 				}
 				ic = next;
 			}
