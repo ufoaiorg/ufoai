@@ -285,7 +285,7 @@ bool Cvar_Delete (const char *varName)
 	unsigned hash;
 
 	hash = Com_HashKey(varName, CVAR_HASH_SIZE);
-	for (cvar_t** anchor = &cvarVarsHash[hash]; *anchor; anchor = &(*anchor)->hash_next) {
+	for (cvar_t **anchor = &cvarVarsHash[hash]; *anchor; anchor = &(*anchor)->hash_next) {
 		cvar_t* const var = *anchor;
 		if (!Q_strcasecmp(varName, var->name)) {
 			cvarChangeListener_t *changeListener;
@@ -499,7 +499,7 @@ void Cvar_UnRegisterChangeListener (const char *varName, cvarChangeListenerFunc_
 		return;
 	}
 
-	for (cvarChangeListener_t** anchor = &var->changeListener; *anchor; anchor = &(*anchor)->next) {
+	for (cvarChangeListener_t **anchor = &var->changeListener; *anchor; anchor = &(*anchor)->next) {
 		cvarChangeListener_t* const l = *anchor;
 		if (l->exec == listenerFunc) {
 			*anchor = l->next;

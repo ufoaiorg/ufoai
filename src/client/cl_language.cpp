@@ -115,7 +115,7 @@ static void CL_ParseMessageID (const char *name, const char **text)
 static const char* CL_GetMessageID (const char* id)
 {
 	const unsigned int hash = Com_HashKey(id, MAX_MSGIDHASH);
-	for (msgid_t** anchor = &msgIDHash[hash]; *anchor; anchor = &(*anchor)->hash_next) {
+	for (msgid_t **anchor = &msgIDHash[hash]; *anchor; anchor = &(*anchor)->hash_next) {
 		if (Q_streq(id, (*anchor)->id))
 			return (*anchor)->text;
 	}

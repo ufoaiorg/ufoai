@@ -976,7 +976,7 @@ static listBlock_t *fs_blocklist = NULL;
  * @note also checks for duplicates
  * @sa FS_BuildFileList
  */
-static void _AddToListBlock (linkedList_t** fl, const char *name, bool stripPath)
+static void _AddToListBlock (linkedList_t **fl, const char *name, bool stripPath)
 {
 	const char *f;
 
@@ -1010,7 +1010,7 @@ int FS_BuildFileList (const char *fileList)
 
 	/* check the blocklist for older searches
 	 * and do a new one after deleting them */
-	for (listBlock_t** anchor = &fs_blocklist; *anchor;) {
+	for (listBlock_t **anchor = &fs_blocklist; *anchor;) {
 		listBlock_t* const block = *anchor;
 		if (Q_streq(block->path, files)) {
 			*anchor = block->next;

@@ -1595,7 +1595,7 @@ void GAME_HandleBaseClick (int baseIdx, int key, int col, int row)
  * @param[out] uiModel The menu model pointer.
  * @return The model path for the item. Never @c NULL.
  */
-const char* GAME_GetModelForItem (const objDef_t *od, uiModel_t** uiModel)
+const char* GAME_GetModelForItem (const objDef_t *od, uiModel_t **uiModel)
 {
 	const cgame_export_t *list = GAME_GetCurrentType();
 	if (list && list->GetModelForItem != NULL) {

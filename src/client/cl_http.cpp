@@ -295,7 +295,7 @@ bool CL_QueueHTTPDownload (const char *ufoPath)
 	if (!cls.downloadServer[0] || abortDownloads || !cl_http_downloads->integer)
 		return false;
 
-	dlqueue_t** anchor = &cls.downloadQueue;
+	dlqueue_t **anchor = &cls.downloadQueue;
 	for (; *anchor; anchor = &(*anchor)->next) {
 		/* avoid sending duplicate requests */
 		if (Q_streq(ufoPath, (*anchor)->ufoPath))
@@ -475,7 +475,7 @@ static void CL_CheckAndQueueDownload (char *path)
 				 * this prevents someone on 28k dialup trying to do both the main .pk3
 				 * and referenced configstrings data at once. */
 				if (pak) {
-					dlqueue_t** anchor = &cls.downloadQueue;
+					dlqueue_t **anchor = &cls.downloadQueue;
 					while ((*anchor)->next) anchor = &(*anchor)->next;
 					/* Remove the last element from the end of the list ... */
 					dlqueue_t* const d = *anchor;

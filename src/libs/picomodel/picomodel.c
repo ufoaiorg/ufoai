@@ -1584,7 +1584,7 @@ void PicoFixSurfaceNormals (picoSurface_t* surface)
  * @brief A nice way to add individual triangles to the model.
  * Chooses an appropriate surface based on the shader, or adds a new surface if necessary
  */
-void PicoAddTriangleToModel (picoModel_t *model, picoVec3_t** xyz, picoVec3_t** normals, int numSTs, picoVec2_t **st,
+void PicoAddTriangleToModel (picoModel_t *model, picoVec3_t **xyz, picoVec3_t **normals, int numSTs, picoVec2_t **st,
 		int numColors, picoColor_t **colors, picoShader_t* shader, picoIndex_t* smoothingGroup)
 {
 	int i, j;

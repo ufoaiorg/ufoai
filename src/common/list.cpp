@@ -51,7 +51,7 @@ static void LIST_AppendEntry(linkedList_t **list, linkedList_t* const entry)
  * @return Returns a pointer to the data that has been added, wrapped in a linkedList_t
  * @todo Optimize this to not allocate memory for every entry - but use a hunk
  */
-linkedList_t *LIST_Add (linkedList_t** listDest, void const* data, size_t length)
+linkedList_t *LIST_Add (linkedList_t **listDest, void const* data, size_t length)
 {
 	assert(listDest);
 	assert(data);
@@ -104,7 +104,7 @@ static linkedList_t *LIST_AllocateString(char const* data, linkedList_t* const n
 	return LIST_AllocateEntry(Mem_StrDup(data), next);
 }
 
-void LIST_AddStringSorted (linkedList_t** listDest, const char *data)
+void LIST_AddStringSorted (linkedList_t **listDest, const char *data)
 {
 	assert(listDest);
 	assert(data);
@@ -124,7 +124,7 @@ void LIST_AddStringSorted (linkedList_t** listDest, const char *data)
  * @sa LIST_AddString
  * @todo Optimize this to not allocate memory for every entry - but use a hunk
  */
-void LIST_PrependString (linkedList_t** listDest, const char *data)
+void LIST_PrependString (linkedList_t **listDest, const char *data)
 {
 	*listDest = LIST_AllocateString(data, *listDest);
 }
@@ -136,7 +136,7 @@ void LIST_PrependString (linkedList_t** listDest, const char *data)
  * @see LIST_PrependString
  * @todo Optimize this to not allocate memory for every entry - but use a hunk
  */
-void LIST_AddString (linkedList_t** listDest, const char *data)
+void LIST_AddString (linkedList_t **listDest, const char *data)
 {
 	assert(listDest);
 	assert(data);
@@ -150,7 +150,7 @@ void LIST_AddString (linkedList_t** listDest, const char *data)
  * @sa LIST_RemoveEntry
  * @todo Optimize this to not allocate memory for every entry - but use a hunk
  */
-void LIST_AddPointer (linkedList_t** listDest, void *data)
+void LIST_AddPointer (linkedList_t **listDest, void *data)
 {
 	assert(listDest);
 	assert(data);
