@@ -153,7 +153,6 @@ static void CP_ParseAlienTeam (const char *name, const char **text)
 				token = cgi->Com_EParse(text, errhead, name);
 
 				if (!Com_ParseBlockToken(name, text, group, alien_group_vals, cp_campaignPool, token)) {
-					const teamDef_t *teamDef;
 					if (!*text || *token == '}')
 						break;
 
@@ -165,9 +164,13 @@ static void CP_ParseAlienTeam (const char *name, const char **text)
 						for (linkedList_t *element = list; element != NULL; element = element->next) {
 							if (group->numAlienTeams >= MAX_TEAMS_PER_MISSION)
 								cgi->Com_Error(ERR_DROP, "CL_ParseAlienTeam: MAX_TEAMS_PER_MISSION hit");
-							teamDef = cgi->Com_GetTeamDefinitionByID((char*)element->data);
-							if (teamDef)
-								group->alienTeams[group->numAlienTeams++] = teamDef;
+							const teamDef_t *teamDef = cgi->Com_GetTeamDefinitionByID(strtok((char*)element->data, "/"));
+							if (teamDef) {
+								group->alienTeams[group->numAlienTeams] = teamDef;
+								const chrTemplate_t *chrTemplate = CHRSH_GetTemplateByID(teamDef, strtok(NULL, ""));
+								group->alienChrTemplates[group->numAlienTeams] = chrTemplate;
+								++group->numAlienTeams;
+							}
 						}
 						cgi->LIST_Delete(&list);
 					} else {

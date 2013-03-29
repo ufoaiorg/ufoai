@@ -55,71 +55,79 @@ bool CHRSH_IsTeamDefRobot (const teamDef_t* const td)
 	return td->robot;
 }
 
+const chrTemplate_t *CHRSH_GetTemplateByID (const teamDef_t *teamDef, const char *templateId) {
+	if (!Q_strnull(templateId))
+		for (int i = 0; i < teamDef->numTemplates; i++)
+			if (Q_streq(teamDef->characterTemplates[i]->id, templateId))
+				return teamDef->characterTemplates[i];
+
+	return NULL;
+}
+
 /**
  * @brief Generates a skill and ability set for any character.
  * @param[in] chr Pointer to the character, for which we generate stats.
  * @param[in] multiplayer If this is true we use the skill values from @c soldier_mp
- * mulitplayer is a special case here
+ * @note mulitplayer is a special case here
+ * @todo Add modifiers for difficulty setting here!
  */
-void CHRSH_CharGenAbilitySkills (character_t *chr, bool multiplayer)
+void CHRSH_CharGenAbilitySkills (character_t *chr, bool multiplayer, const char *templateId)
 {
 	int i;
-	const int (*chrTemplate)[2];
-	const teamDef_t *td;
-	const chrTemplate_t *ct;
+	const chrTemplate_t *chrTemplate;
+	const teamDef_t *teamDef = chr->teamDef;
 
-	td = chr->teamDef;
+	if (multiplayer && teamDef->team == TEAM_PHALANX)
+		/* @todo Hard coded template id, remove when possible */
+		templateId = "soldier_mp";
 
-	/* Add modifiers for difficulty setting here! */
-	if (multiplayer && td->team == TEAM_PHALANX) {
-		for (i = 0; i < td->numTemplates; i++) {
-			if (Q_streq(td->characterTemplates[i]->id, "soldier_mp")) {
-				ct = td->characterTemplates[i];
-				break;
-			}
-		}
-		if (i >= td->numTemplates)
-			Sys_Error("CHRSH_CharGenAbilitySkills: No multiplayer character template found (soldier_mp)");
-	} else if (td->characterTemplates[0]) {
-		if (td->numTemplates > 1) {
+	if (!Q_strnull(templateId)) {
+		chrTemplate = CHRSH_GetTemplateByID(teamDef, templateId);
+		if (!chrTemplate)
+			Sys_Error("CHRSH_CharGenAbilitySkills: Character template not found (%s) in %s", templateId, teamDef->id);
+	} else if (teamDef->characterTemplates[0]) {
+		if (teamDef->numTemplates > 1) {
 			float sumRate = 0.0;
-			for (i = 0; i < td->numTemplates; i++) {
-				ct = td->characterTemplates[i];
-				sumRate += ct->rate;
+			for (i = 0; i < teamDef->numTemplates; i++) {
+				chrTemplate = teamDef->characterTemplates[i];
+				sumRate += chrTemplate->rate;
 			}
 			if (sumRate) {
 				const float soldierRoll = frand();
 				float curRate = 0.0;
-				for (ct = td->characterTemplates[0]; ct->id; ct++) {
-					curRate += ct->rate;
+				for (chrTemplate = teamDef->characterTemplates[0]; chrTemplate->id; chrTemplate++) {
+					curRate += chrTemplate->rate;
 					if (curRate && soldierRoll <= (curRate / sumRate))
 						break;
 				}
-			} else
+			} else {
 				/* No rates or all set to 0 default to first template */
-				ct = td->characterTemplates[0];
-		} else
+				chrTemplate = teamDef->characterTemplates[0];
+			}
+		} else {
 			/* Only one template */
-			ct = td->characterTemplates[0];
-	} else
-		Sys_Error("CHRSH_CharGenAbilitySkills: No character template for team %s!", td->id);
-	chrTemplate = ct->skills;
+			chrTemplate = teamDef->characterTemplates[0];
+		}
+	} else {
+		Sys_Error("CHRSH_CharGenAbilitySkills: No character template for team %s!", teamDef->id);
+	}
 
 	assert(chrTemplate);
+	const int (*skillsTemplate)[2] = chrTemplate->skills;
 
 	/* Abilities and skills -- random within the range */
 	for (i = 0; i < SKILL_NUM_TYPES; i++) {
-		const int abilityWindow = chrTemplate[i][1] - chrTemplate[i][0];
+		const int abilityWindow = skillsTemplate[i][1] - skillsTemplate[i][0];
 		/* Reminder: In case if abilityWindow==0 the ability will be set to the lower limit. */
-		const int temp = (frand() * abilityWindow) + chrTemplate[i][0];
+		const int temp = (frand() * abilityWindow) + skillsTemplate[i][0];
 		chr->score.skills[i] = temp;
 		chr->score.initialSkills[i] = temp;
 	}
 
 	{
 		/* Health. */
-		const int abilityWindow = chrTemplate[i][1] - chrTemplate[i][0];
-		const int temp = (frand() * abilityWindow) + chrTemplate[i][0];
+		const int abilityWindow = skillsTemplate[i][1] - skillsTemplate[i][0];
+		const int temp = (frand() * abilityWindow) + skillsTemplate[i][0];
 		chr->score.initialSkills[SKILL_NUM_TYPES] = temp;
 		chr->maxHP = temp;
 		chr->HP = temp;

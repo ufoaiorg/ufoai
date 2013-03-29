@@ -213,6 +213,7 @@ typedef struct alienTeamGroup_s {
 
 	const teamDef_t *alienTeams[MAX_TEAMS_PER_MISSION];	/**< different alien teams available
 													 * that will be used in mission */
+	const chrTemplate_t *alienChrTemplates[MAX_TEAMS_PER_MISSION];
 	int numAlienTeams;		/**< Number of alienTeams defined in this group. */
 } alienTeamGroup_t;
 

@@ -71,6 +71,7 @@ void BATTLE_SetVars (const battleParam_t *battleParameters)
 	cgi->csi->numAlienTeams = 0;
 	for (i = 0; i < battleParameters->alienTeamGroup->numAlienTeams; i++) {
 		cgi->csi->alienTeams[i] = battleParameters->alienTeamGroup->alienTeams[i];
+		cgi->csi->alienChrTemplates[i] = battleParameters->alienTeamGroup->alienChrTemplates[i];
 		cgi->csi->numAlienTeams++;
 		if (cgi->csi->numAlienTeams >= MAX_TEAMS_PER_MISSION)
 			break;

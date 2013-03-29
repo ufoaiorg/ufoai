@@ -422,6 +422,7 @@ typedef struct csi_s {
 	/** the current assigned teams for this mission
 	 * @todo this does not belong here - this is only static data that is shared */
 	const teamDef_t *alienTeams[MAX_TEAMS_PER_MISSION];
+	const chrTemplate_t *alienChrTemplates[MAX_TEAMS_PER_MISSION];
 	int numAlienTeams;
 
 	/** character templates */

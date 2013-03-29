@@ -2643,6 +2643,9 @@ const chrTemplate_t *Com_GetCharacterTemplateByID (const char *chrTemplate)
 {
 	int i;
 
+	if (Q_strnull(chrTemplate))
+		return NULL;
+
 	/* get character template */
 	for (i = 0; i < csi.numChrTemplates; i++)
 		if (Q_streq(chrTemplate, csi.chrTemplates[i].id))

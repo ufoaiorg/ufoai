@@ -1312,9 +1312,17 @@ void AI_Run (void)
  * @brief Initializes the actor's stats like morals, strength and so on.
  * @param ent Actor to set the stats for.
  */
-static void AI_SetStats (Edict *ent)
+static void AI_SetStats (Edict *ent, int team)
 {
-	CHRSH_CharGenAbilitySkills(&ent->chr, sv_maxclients->integer >= 2);
+	const char *templateId = "";
+	if (team != TEAM_CIVILIAN && gi.csi->numAlienTeams)
+		for (int i = 0; i < gi.csi->numAlienTeams; ++i)
+			if (gi.csi->alienTeams[i] == ent->chr.teamDef && gi.csi->alienChrTemplates[i]) {
+				templateId = gi.csi->alienChrTemplates[i]->id;
+				break;
+			}
+
+	CHRSH_CharGenAbilitySkills(&ent->chr, sv_maxclients->integer >= 2, templateId);
 
 	ent->HP = ent->chr.HP;
 	ent->morale = ent->chr.morale;
@@ -1409,7 +1417,7 @@ static void AI_InitPlayer (const Player &player, Edict *ent, const equipDef_t *e
 	AI_SetCharacterValues(ent, team);
 
 	/* Calculate stats. */
-	AI_SetStats(ent);
+	AI_SetStats(ent, team);
 
 	/* Give equipment. */
 	if (ed != NULL)
