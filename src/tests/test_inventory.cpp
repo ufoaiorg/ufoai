@@ -80,7 +80,6 @@ static void testItemAdd (void)
 {
 	inventory_t inv;
 	const objDef_t *od;
-	Item item;
 	const invDef_t *container;
 
 	ResetInventoryList();
@@ -93,9 +92,7 @@ static void testItemAdd (void)
 	container = INVSH_GetInventoryDefinitionByID("right");
 	CU_ASSERT_PTR_NOT_NULL(container);
 
-	item.setDef(od);
-	item.setAmmoDef(NULL);
-	item.setAmmoLeft(0);
+	Item item(od);
 
 	CU_ASSERT(inv.containsItem(container->id, &item) == false);
 
@@ -108,7 +105,6 @@ static void testItemDel (void)
 {
 	inventory_t inv;
 	const objDef_t *od;
-	Item item;
 	const invDef_t *container;
 	invList_t *addedItem;
 
@@ -122,9 +118,7 @@ static void testItemDel (void)
 	container = INVSH_GetInventoryDefinitionByID("right");
 	CU_ASSERT_PTR_NOT_NULL(container);
 
-	item.setDef(od);
-	item.ammo = NULL;
-	item.setAmmoLeft(0);
+	Item item(od);
 
 	CU_ASSERT(inv.containsItem(container->id, &item) == false);
 
@@ -141,14 +135,12 @@ static void testItemMove (void)
 {
 	inventory_t inv;
 	const objDef_t *od;
-	Item item;
 	const invDef_t *container, *containerTo;
 	invList_t *addedItem;
 
 	ResetInventoryList();
 
 	OBJZERO(inv);
-	OBJZERO(item);
 
 	od = INVSH_GetItemByIDSilent("assault");
 	CU_ASSERT_PTR_NOT_NULL(od);
@@ -156,9 +148,7 @@ static void testItemMove (void)
 	container = INVSH_GetInventoryDefinitionByID("right");
 	CU_ASSERT_PTR_NOT_NULL(container);
 
-	item.setDef(od);
-	item.ammo = NULL;
-	item.setAmmoLeft(0);
+	Item item(od);
 
 	CU_ASSERT(inv.containsItem(container->id, &item) == false);
 
@@ -180,7 +170,6 @@ static void testItemReload (void)
 {
 	inventory_t inv;
 	const objDef_t *od, *ad;
-	Item item, ammo, ammoFrom;
 	const invDef_t *container, *containerFrom;
 	invList_t *addedItem;
 
@@ -194,9 +183,7 @@ static void testItemReload (void)
 	container = INVSH_GetInventoryDefinitionByID("right");
 	CU_ASSERT_PTR_NOT_NULL(container);
 
-	item.setDef(od);
-	item.ammo = NULL;
-	item.setAmmoLeft(0);
+	Item item(od);
 
 	CU_ASSERT(inv.containsItem(container->id, &item) == false);
 
@@ -208,9 +195,7 @@ static void testItemReload (void)
 	ad = INVSH_GetItemByIDSilent("rpg_ammo");
 	CU_ASSERT_PTR_NOT_NULL(ad);
 
-	ammo.setDef(ad);
-	ammo.ammo = NULL;
-	ammo.setAmmoLeft(0);
+	Item ammo(ad);
 
 	containerFrom = INVSH_GetInventoryDefinitionByID("backpack");
 	CU_ASSERT_PTR_NOT_NULL(containerFrom);
@@ -234,9 +219,7 @@ static void testItemReload (void)
 	ad = INVSH_GetItemByIDSilent("rpg_incendiary_ammo");
 	CU_ASSERT_PTR_NOT_NULL(ad);
 
-	ammoFrom.setDef(ad);
-	ammoFrom.ammo = NULL;
-	ammoFrom.setAmmoLeft(0);
+	Item ammoFrom(ad);
 
 	CU_ASSERT(inv.containsItem(containerFrom->id, &ammoFrom) == false);
 
@@ -257,11 +240,7 @@ static void testItemReload (void)
 
 static bool testAddSingle (inventory_t *inv, const objDef_t *od, const invDef_t *container)
 {
-	Item item;
-
-	item.setDef(od);
-	item.ammo = NULL;
-	item.setAmmoLeft(0);
+	Item item(od);
 
 	return i.tryAddToInventory(inv, &item, container);
 }
@@ -335,7 +314,6 @@ static void testItemToHeadgear (void)
 	inventory_t inv;
 	const objDef_t *od;
 	const invDef_t *container;
-	Item item;
 
 	ResetInventoryList();
 
@@ -347,9 +325,7 @@ static void testItemToHeadgear (void)
 	container = INVSH_GetInventoryDefinitionByID("headgear");
 	CU_ASSERT_PTR_NOT_NULL_FATAL(container);
 
-	item.setDef(od);
-	item.ammo = NULL;
-	item.setAmmoLeft(0);
+	Item item(od);
 
 	CU_ASSERT_FALSE(inv.containsItem(container->id, &item));
 
