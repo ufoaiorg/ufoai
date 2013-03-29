@@ -332,7 +332,7 @@ bool GAME_CP_Spawn (linkedList_t **chrList)
 
 	/* convert aircraft team to character list */
 	LIST_Foreach(aircraft->acTeam, employee_t, employee) {
-		LIST_AddPointer(chrList, (void*)&employee->chr);
+		cgi->LIST_AddPointer(chrList, (void*)&employee->chr);
 	}
 
 	base = aircraft->homebase;
@@ -341,7 +341,7 @@ bool GAME_CP_Spawn (linkedList_t **chrList)
 	CP_CleanTempInventory(base);
 
 	/* activate hud */
-	HUD_InitUI(NULL, false);
+	cgi->HUD_InitUI(NULL, false);
 
 	return true;
 }
@@ -385,7 +385,7 @@ void GAME_CP_Drop (void)
 	/** @todo maybe create a savegame? */
 	cgi->UI_InitStack("geoscape", "campaign_main", true, true);
 
-	SV_Shutdown("Mission end", false);
+	cgi->SV_Shutdown("Mission end", false);
 	cgi->CL_Disconnect();
 }
 
@@ -601,7 +601,7 @@ void GAME_CP_InitMissionBriefing (const char **title, linkedList_t **victoryCond
  */
 dbuffer *GAME_CP_InitializeBattlescape (const linkedList_t *team)
 {
-	const int teamSize = LIST_Count(team);
+	const int teamSize = cgi->LIST_Count(team);
 	dbuffer *msg = new dbuffer(2 + teamSize * 10);
 
 	NET_WriteByte(msg, clc_initactorstates);

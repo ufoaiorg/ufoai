@@ -862,7 +862,7 @@ static void BaseSummary_Init (const base_t *base)
 			Q_strcat(textInfoBuffer, va("\t%s:\t\t\t\t%i/%i\n",
 				_(item->teamDef->name), item->alive, item->dead), sizeof(textInfoBuffer));
 		}
-		LIST_Delete(&list);
+		cgi->LIST_Delete(&list);
 	}
 
 	/* link into the menu */

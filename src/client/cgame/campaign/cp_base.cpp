@@ -1799,7 +1799,7 @@ static void CL_SwapSkills (linkedList_t *team)
 	const byte fmode1 = 0;
 	const byte fmode2 = 1;
 
-	for (int i = 0; i < LIST_Count(team); i++) {
+	for (int i = 0; i < cgi->LIST_Count(team); i++) {
 		int x;
 		/* running the loops below is not enough, we need transitive closure */
 		/* I guess num times is enough --- could anybody prove this? */
@@ -1883,12 +1883,12 @@ static void B_InitialEquipment (aircraft_t *aircraft, const equipDef_t *ed)
 		/* pack equipment */
 		Com_DPrintf(DEBUG_CLIENT, "B_InitialEquipment: Packing initial equipment for %s.\n", chr->name);
 		cgi->INV_EquipActor(chr, ed, cgi->GAME_GetChrMaxLoad(chr));
-		LIST_AddPointer(&chrListTemp, (void*)chr);
+		cgi->LIST_AddPointer(&chrListTemp, (void*)chr);
 	}
 
 	AIR_MoveEmployeeInventoryIntoStorage(*aircraft, homebase->storage);
 	CL_SwapSkills(chrListTemp);
-	LIST_Delete(&chrListTemp);
+	cgi->LIST_Delete(&chrListTemp);
 	CAP_UpdateStorageCap(homebase);
 }
 

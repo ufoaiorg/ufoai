@@ -252,7 +252,7 @@ void AIR_ListAircraft_f (void)
 			LIST_Foreach(cargo, alienCargo_t, item) {
 				Com_Printf("......team: %s alive: %d dead: %d\n", item->teamDef->id, item->alive, item->dead);
 			}
-			LIST_Delete(&cargo);
+			cgi->LIST_Delete(&cargo);
 		}
 	}
 }
