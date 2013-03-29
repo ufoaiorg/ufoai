@@ -373,7 +373,7 @@ trace_t CM_EntCompleteBoxTrace (mapTiles_t *mapTiles, const Line &traceLine, con
 	lineBox.add(*traceBox);		/* Now increase the bounding box by traceBox in both directions. */
 	/* Now lineBox specifies the whole volume to be traced through. */
 
-	trace_t trace;
+	trace_t trace = tr;
 	for (const char **name = list; *name; name++) {
 		/* check whether this is really an inline model */
 		if (*name[0] != '*')
