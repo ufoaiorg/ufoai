@@ -33,7 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @brief Set the client state
  * @sa client_state_t
  */
-void SV_SetClientState (client_t* client, client_state_t state)
+void SV_SetClientState (client_t *client, client_state_t state)
 {
 	assert(client);
 	Com_DPrintf(DEBUG_SERVER, "Set state for client '%s' to %i\n", client->name, state);

@@ -98,9 +98,9 @@ static void pico_initialise (void)
 
 class PicoModelLoader: public ModelLoader
 {
-		const picoModule_t* m_module;
+		const picoModule_t *m_module;
 	public:
-		PicoModelLoader (const picoModule_t* module) :
+		PicoModelLoader (const picoModule_t *module) :
 			m_module(module)
 		{
 		}
@@ -139,7 +139,7 @@ class ModelPicoAPI
 	public:
 		typedef ModelLoader Type;
 
-		ModelPicoAPI (const std::string& extension, const picoModule_t* module) :
+		ModelPicoAPI (const std::string& extension, const picoModule_t *module) :
 			m_modelLoader(module)
 		{
 			std::string filter = "*." + extension;
@@ -155,9 +155,9 @@ class ModelPicoAPI
 class PicoModelAPIConstructor
 {
 		std::string m_extension;
-		const picoModule_t* m_module;
+		const picoModule_t *m_module;
 	public:
-		PicoModelAPIConstructor (const char* extension, const picoModule_t* module) :
+		PicoModelAPIConstructor (const char* extension, const picoModule_t *module) :
 			m_extension(extension), m_module(module)
 		{
 		}
@@ -182,7 +182,7 @@ void ModelModules_Init (void)
 	pico_initialise();
 	const picoModule_t** modules = PicoModuleList(0);
 	while (*modules != 0) {
-		const picoModule_t* module = *modules++;
+		const picoModule_t *module = *modules++;
 		if (module->canload && module->load) {
 			for (const char* const * ext = module->defaultExts; *ext != 0; ++ext) {
 				PicoModelModule *picomodule = new PicoModelModule(PicoModelAPIConstructor(*ext, module));

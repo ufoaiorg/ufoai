@@ -155,7 +155,7 @@ inline size_t picoInputStreamReam (void *inputStream, unsigned char *buffer, siz
 /* Use the picomodel library to load the contents of the given file
  * and return a Node containing the model.
  */
-scene::Node& loadPicoModel (const picoModule_t* module, ArchiveFile& file)
+scene::Node& loadPicoModel (const picoModule_t *module, ArchiveFile& file)
 {
 
 	//Determine the file extension (ASE or LWO) to pass down to the PicoModel
@@ -172,7 +172,7 @@ scene::Node& loadPicoModel (const picoModule_t* module, ArchiveFile& file)
 /* Load the provided file as a model object and return as an IModel
  * shared pointer.
  */
-model::IModelPtr loadIModel (const picoModule_t* module, ArchiveFile& file)
+model::IModelPtr loadIModel (const picoModule_t *module, ArchiveFile& file)
 {
 	picoModel_t* model = PicoModuleLoadModelStream(module, file.getName().c_str(), &file.getInputStream(), picoInputStreamReam,
 			file.size(), 0);

@@ -527,7 +527,7 @@ float SV_GetBounceFraction (const char *texture)
  * @param[in,out] mod The server side model struct to store the results in
  * @param[in] buffer The mesh model buffer
  */
-static void SV_ModLoadAliasMD2Model (sv_model_t* mod, const byte *buffer)
+static void SV_ModLoadAliasMD2Model (sv_model_t *mod, const byte *buffer)
 {
 	const dMD2Model_t *md2 = (const dMD2Model_t *)buffer;
 	const int num_frames = LittleLong(md2->num_frames);
@@ -554,7 +554,7 @@ static void SV_ModLoadAliasMD2Model (sv_model_t* mod, const byte *buffer)
  * @param[in,out] mod The server side model struct to store the results in
  * @param[in] buffer The mesh model buffer
  */
-static void SV_ModLoadAliasMD3Model (sv_model_t* mod, const byte *buffer)
+static void SV_ModLoadAliasMD3Model (sv_model_t *mod, const byte *buffer)
 {
 	const dmd3_t *md3 = (const dmd3_t *)buffer;
 	const dmd3frame_t *frame = (const dmd3frame_t *)((const byte *)md3 + LittleLong(md3->ofs_frames));
@@ -580,7 +580,7 @@ static void SV_ModLoadAliasMD3Model (sv_model_t* mod, const byte *buffer)
  * @param[in] buffer The mesh model buffer
  * @param[in] bufferLength The mesh model buffer length
  */
-static void SV_ModLoadObjModel (sv_model_t* mod, const byte *buffer, int bufferLength)
+static void SV_ModLoadObjModel (sv_model_t *mod, const byte *buffer, int bufferLength)
 {
 	/** @todo implement me */
 }

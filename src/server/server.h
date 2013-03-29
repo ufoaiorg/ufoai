@@ -183,7 +183,7 @@ int SV_GetConfigStringInteger(int index);
 char *SV_SetConfigString(int index, ...);
 /* ensure that always two parameters are used */
 #define SV_SetConfigString(index, value) SV_SetConfigString(index, value)
-client_t* SV_GetNextClient(client_t *lastClient);
+client_t *SV_GetNextClient(client_t *lastClient);
 client_t *SV_GetClient(int index);
 
 /* sv_mapcycle.c */
@@ -201,7 +201,7 @@ void SV_BroadcastPrintf(int level, const char *fmt, ...) __attribute__((format(_
 
 /* sv_user.c */
 void SV_ExecuteClientMessage(client_t *cl, int cmd, dbuffer *msg);
-void SV_SetClientState(client_t* client, client_state_t state);
+void SV_SetClientState(client_t *client, client_state_t state);
 
 /* sv_ccmds.c */
 void SV_SetMaster_f(void);

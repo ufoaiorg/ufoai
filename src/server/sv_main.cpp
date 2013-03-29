@@ -105,10 +105,10 @@ char *SV_SetConfigString (int index, ...)
  * @brief Iterates through clients
  * @param[in] lastClient Pointer of the client to iterate from. call with NULL to get the first one.
  */
-client_t* SV_GetNextClient (client_t *lastClient)
+client_t *SV_GetNextClient (client_t *lastClient)
 {
 	client_t *endOfClients = &svs.clients[sv_maxclients->integer];
-	client_t* client;
+	client_t *client;
 
 	if (!sv_maxclients->integer)
 		return NULL;

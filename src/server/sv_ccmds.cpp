@@ -65,7 +65,7 @@ void SV_SetMaster_f (void)
  * @param[in] s Either the numeric id of the player, or the player name
  * @return the client structure
  */
-static client_t* SV_GetPlayerClientStructure (const char *s)
+static client_t *SV_GetPlayerClientStructure (const char *s)
 {
 	/* numeric values are just slot numbers */
 	if (s[0] >= '0' && s[0] <= '9') {
@@ -213,7 +213,7 @@ static void SV_Kick_f (void)
  */
 static void SV_StartGame_f (void)
 {
-	client_t* cl = NULL;
+	client_t *cl = NULL;
 	int cnt = 0;
 	while ((cl = SV_GetNextClient(cl)) != NULL) {
 		if (cl->state != cs_free) {
