@@ -530,7 +530,7 @@ static void GAME_SaveInventory (xmlNode_t *p, const inventory_t *inv)
 	containerIndex_t container;
 
 	for (container = 0; container < CID_MAX; container++) {
-		invList_t *ic = inv->getContainer(container);
+		invList_t *ic = inv->getContainer3(container);
 
 		/* ignore items linked from any temp container */
 		if (INVDEF(container)->temp)

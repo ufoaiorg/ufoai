@@ -162,7 +162,7 @@ static bool INVSH_CheckToInventory_shape (const inventory_t *const inv, const in
 			mask[j] = ~container->shape[j];
 
 		/* Add other items to mask. (i.e. merge their shapes at their location into the generated mask) */
-		for (ic = inv->getContainer(container->id); ic; ic = ic->getNext()) {
+		for (ic = inv->getContainer3(container->id); ic; ic = ic->getNext()) {
 			if (ignoredItem == ic)
 				continue;
 
@@ -700,13 +700,13 @@ int inventory_t::canHoldItem (const invDef_t *container, const objDef_t *od, con
 
 	/* twohanded item */
 	if (od->holdTwoHanded) {
-		if ((container->isRightDef() && getContainer(CID_LEFT)) || container->isLeftDef())
+		if ((container->isRightDef() && getContainer2(CID_LEFT)) || container->isLeftDef())
 			return INV_DOES_NOT_FIT;
 	}
 
 	/* left hand is busy if right wields twohanded */
 	if (container->isLeftDef()) {
-		if (getContainer(CID_RIGHT) && getContainer(CID_RIGHT)->isHeldTwoHanded())
+		if (getContainer2(CID_RIGHT) && getContainer2(CID_RIGHT)->isHeldTwoHanded())
 			return INV_DOES_NOT_FIT;
 
 		/* can't put an item that is 'fireTwoHanded' into the left hand */
@@ -716,7 +716,7 @@ int inventory_t::canHoldItem (const invDef_t *container, const objDef_t *od, con
 
 	/* Single item containers, e.g. hands, extension or headgear. */
 	if (container->single) {
-		if (getContainer(container->id)) {
+		if (getContainer2(container->id)) {
 			/* There is already an item. */
 			return INV_DOES_NOT_FIT;
 		} else {
@@ -763,14 +763,14 @@ invList_t *inventory_t::getItemAtPos (const invDef_t *container, const int x, co
 
 	/* Only a single item. */
 	if (container->single)
-		return getContainer(container->id);
+		return getContainer2(container->id);
 
 	if (container->scroll)
 		Sys_Error("getItemAtPos: Scrollable containers (%i:%s) are not supported by this function.", container->id, container->name);
 
 	/* More than one item - search for the item that is located at location x/y in this container. */
 	invList_t *ic;
-	for (ic = getContainer(container->id); ic; ic = ic->getNext())
+	for (ic = getContainer3(container->id); ic; ic = ic->getNext())
 		if (INVSH_ShapeCheckPosition(ic, x, y))
 			return ic;
 
@@ -869,37 +869,37 @@ void inventory_t::setFloorContainer(invList_t *cont)
 
 invList_t *inventory_t::getRightHandContainer () const
 {
-	return getContainer(CID_RIGHT);
+	return getContainer2(CID_RIGHT);
 }
 
 invList_t *inventory_t::getLeftHandContainer () const
 {
-	return getContainer(CID_LEFT);
+	return getContainer2(CID_LEFT);
 }
 
 invList_t *inventory_t::getHeadgearContainer () const
 {
-	return getContainer(CID_HEADGEAR);
+	return getContainer2(CID_HEADGEAR);
 }
 
 invList_t *inventory_t::getHolsterContainer () const
 {
-	return getContainer(CID_HOLSTER);
+	return getContainer3(CID_HOLSTER);
 }
 
 invList_t *inventory_t::getFloorContainer () const
 {
-	return getContainer(CID_FLOOR);
+	return getContainer3(CID_FLOOR);
 }
 
 invList_t *inventory_t::getEquipContainer () const
 {
-	return getContainer(CID_EQUIP);
+	return getContainer3(CID_EQUIP);
 }
 
 invList_t *inventory_t::getArmourContainer (void) const
 {
-	return getContainer(CID_ARMOUR);
+	return getContainer2(CID_ARMOUR);
 }
 
 /**
@@ -912,7 +912,7 @@ Item *inventory_t::findInContainer (const containerIndex_t contId, const Item *c
 {
 	invList_t *ic;
 
-	for (ic = getContainer(contId); ic; ic = ic->getNext())
+	for (ic = getContainer3(contId); ic; ic = ic->getNext())
 		if (ic->isSameAs(item)) {
 			return ic;
 		}

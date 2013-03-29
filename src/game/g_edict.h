@@ -173,7 +173,7 @@ public:
 
 	inline invList_t *getContainer (const containerIndex_t idx) const
 	{
-		return chr.inv.getContainer(idx);
+		return chr.inv.getContainer3(idx);
 	}
 	inline void resetContainer (const containerIndex_t idx)
 	{

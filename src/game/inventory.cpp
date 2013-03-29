@@ -56,7 +56,7 @@ invList_t *InventoryInterface::addInvList (inventory_t *const inv, const invDef_
 
 	Com_DPrintf(DEBUG_SHARED, "AddInvList: add one slot (%s)\n", invName);
 
-	invList_t *firstEntry = inv->getContainer(container->id);
+	invList_t *firstEntry = inv->getContainer2(container->id);
 	if (!firstEntry) {
 		/* create the list */
 		inv->setContainer(container->id, newEntry);
@@ -98,12 +98,12 @@ invList_t *InventoryInterface::addToInventory (inventory_t *const inv, const Ite
 	assert(inv);
 	assert(container);
 
-	if (container->single && inv->getContainer(container->id))
+	if (container->single && inv->getContainer2(container->id))
 		return NULL;
 
 	/* CID_EQUIP and CID_FLOOR */
 	if (container->temp) {
-		for (ic = inv->getContainer(container->id); ic; ic = ic->getNext())
+		for (ic = inv->getContainer3(container->id); ic; ic = ic->getNext())
 			if (ic->isSameAs(item)) {
 				ic->addAmount(amount);
 				Com_DPrintf(DEBUG_SHARED, "addToInventory: Amount of '%s': %i (%s)\n",
@@ -155,7 +155,7 @@ bool InventoryInterface::removeFromInventory (inventory_t* const inv, const invD
 	assert(container);
 	assert(fItem);
 
-	ic = inv->getContainer(container->id);
+	ic = inv->getContainer2(container->id);
 	if (!ic)
 		return false;
 
@@ -190,7 +190,7 @@ bool InventoryInterface::removeFromInventory (inventory_t* const inv, const invD
 		return true;
 	}
 
-	for (previous = inv->getContainer(container->id); ic; ic = ic->getNext()) {
+	for (previous = inv->getContainer3(container->id); ic; ic = ic->getNext()) {
 		if (ic == fItem) {
 			this->cacheItem = *ic;
 			/* temp container like CID_EQUIP and CID_FLOOR */
@@ -201,8 +201,8 @@ bool InventoryInterface::removeFromInventory (inventory_t* const inv, const invD
 				return true;
 			}
 
-			if (ic == inv->getContainer(container->id))
-				inv->setContainer(container->id, inv->getContainer(container->id)->getNext());
+			if (ic == inv->getContainer2(container->id))
+				inv->setContainer(container->id, inv->getContainer2(container->id)->getNext());
 			else
 				previous->setNext(ic->getNext());
 
@@ -270,7 +270,7 @@ inventory_action_t InventoryInterface::moveInInventory (inventory_t* const inv, 
 		if (from->scroll)
 			return IA_NONE;
 
-		ic = inv->getContainer(from->id);
+		ic = inv->getContainer3(from->id);
 		for (; ic; ic = ic->getNext()) {
 			if (ic == fItem) {
 				if (ic->getAmount() > 1) {
@@ -503,7 +503,7 @@ void InventoryInterface::emptyContainer (inventory_t* const inv, const container
 {
 	invList_t *ic;
 
-	ic = inv->getContainer(containerId);
+	ic = inv->getContainer3(containerId);
 
 	while (ic) {
 		invList_t *old = ic;
@@ -588,7 +588,7 @@ int InventoryInterface::PackAmmoAndWeapon (character_t* const chr, const objDef_
 	Item item(weapon);
 
 	/* are we going to allow trying the left hand */
-	allowLeft = !(inv->getContainer(CID_RIGHT) && inv->getContainer(CID_RIGHT)->def()->fireTwoHanded);
+	allowLeft = !(inv->getContainer2(CID_RIGHT) && inv->getContainer2(CID_RIGHT)->def()->fireTwoHanded);
 
 	if (weapon->oneshot) {
 		/* The weapon provides its own ammo (i.e. it is charged or loaded in the base.) */

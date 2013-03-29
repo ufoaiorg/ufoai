@@ -460,7 +460,7 @@ static void UI_ContainerNodeDrawSingle (uiNode_t *node, const objDef_t *highligh
 				UI_DrawItem(node, pos, item, -1, -1, scale, color);
 			}
 		}
-	} else if (ui_inventory->getContainer(contType->id)) {
+	} else if (ui_inventory->getContainer2(contType->id)) {
 		bool disabled = false;
 		const Item *item;
 
@@ -477,7 +477,7 @@ static void UI_ContainerNodeDrawSingle (uiNode_t *node, const objDef_t *highligh
 			}
 		}
 
-		item = ui_inventory->getContainer(contType->id);
+		item = ui_inventory->getContainer2(contType->id);
 		assert(item);
 		assert(item->def());
 		if (highlightType && highlightType->isLoadableInWeapon(item->def())) {
@@ -508,7 +508,7 @@ static void UI_ContainerNodeDrawGrid (uiNode_t *node, const objDef_t *highlightT
 	UI_GetNodeAbsPos(node, pos);
 	pos[2] = 0;
 
-	for (ic = ui_inventory->getContainer(EXTRADATA(node).container->id); ic; ic = ic->getNext()) {
+	for (ic = ui_inventory->getContainer3(EXTRADATA(node).container->id); ic; ic = ic->getNext()) {
 		assert(ic->def());
 		if (highlightType && highlightType->isLoadableInWeapon(ic->def()))
 			UI_DrawItem(node, pos, ic, ic->getX(), ic->getY(), scale, colorLoadable);
