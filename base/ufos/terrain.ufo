@@ -1218,6 +1218,11 @@ terrain tex_material/wood008 {
 	bouncefraction "0.7"
 }
 
+terrain tex_material/wood009 {
+	footstepsound "footsteps/wood1"
+	bouncefraction "0.7"
+}
+
 terrain tex_material/wood011 {
 	footstepsound "footsteps/wood1"
 	bouncefraction "0.7"
@@ -1753,6 +1758,11 @@ terrain tex_misc/wood_palet {
 	bouncefraction "0.7"
 }
 
+terrain tex_nature/desert001 {
+	footstepsound "footsteps/dirt2"
+	bouncefraction "0.4"
+}
+
 terrain tex_nature/desert002 {
 	footstepsound "footsteps/gravel2"
 	bouncefraction "0.8"
@@ -2011,6 +2021,11 @@ terrain tex_nature/water2 {
 terrain tex_nature/water_dark {
 	footstepsound "footsteps/water_in"
 	bouncefraction "0.0"
+}
+
+terrain tex_shop/cashreg_a {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.7"
 }
 
 terrain tex_shop/cashreg_c {
@@ -2382,3 +2397,9 @@ terrain tex_vehicles/truck_d {
 	footstepsound "footsteps/metal1"
 	bouncefraction "0.7"
 }
+
+// Added by updatesounds.py
+//
+// Could not add tex_material/c_orange2 - no template available.
+// Could not add tex_material/c_white - no template available.
+// Could not add tex_mattn/street011 - no template available.
