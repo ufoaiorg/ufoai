@@ -236,11 +236,11 @@ class LineLimitedTextOutputStream: public TextOutputStream
 			outputStream(outputStream), count(count)
 		{
 		}
-		std::size_t write (const char* buffer, std::size_t length)
+		std::size_t write (const char *buffer, std::size_t length)
 		{
 			if (count != 0) {
-				const char* p = buffer;
-				const char* end = buffer + length;
+				const char *p = buffer;
+				const char *end = buffer + length;
 				for (;;) {
 					p = std::find(p, end, '\n');
 					if (p == end) {
@@ -351,7 +351,7 @@ static void remove_local_pid (void)
 	file_remove(g_pidGameFile);
 }
 
-int main (int argc, char* argv[])
+int main (int argc, char *argv[])
 {
 	streams_init();
 

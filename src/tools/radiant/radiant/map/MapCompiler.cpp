@@ -45,7 +45,7 @@ int MapCompiler::run(const std::string& mapName, const std::string& parameters, 
 	std::string relativeMapName = GlobalFileSystem().getRelative(mapName);
 
 	const std::string workingDir = os::stripFilename(_compilerBinary);
-	char* output = NULL;
+	char *output = NULL;
 
 	int exitCode = exec_run_cmd(_compilerBinary + " " + parameters + " " + relativeMapName, &output, workingDir);
 	if (exitCode == -1)

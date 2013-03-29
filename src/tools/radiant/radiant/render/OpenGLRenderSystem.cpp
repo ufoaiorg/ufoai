@@ -76,7 +76,7 @@ static char const* qgluErrorString (GLenum const errCode)
 	}
 }
 
-bool QGL_ExtensionSupported (const char* extension)
+bool QGL_ExtensionSupported (const char *extension)
 {
 	// Extension names should not have spaces.
 	if (strchr(extension, ' ') || *extension == '\0')
@@ -107,7 +107,7 @@ bool QGL_ExtensionSupported (const char* extension)
 }
 
 template<typename Func>
-bool QGL_constructExtensionFunc (Func& func, const char* symbol)
+bool QGL_constructExtensionFunc (Func& func, const char *symbol)
 {
 	func = reinterpret_cast<Func>(
 #if defined(__linux__) || defined (__FreeBSD__) || defined(__APPLE__)
@@ -141,7 +141,7 @@ static void QGL_InitVersion (OpenGLBinding& table)
 	sscanf(version, "%d.%d", &table.major_version, &table.minor_version);
 }
 
-inline void extension_not_implemented (const char* extension)
+inline void extension_not_implemented (const char *extension)
 {
 	g_warning("OpenGL driver reports support for %s but does not implement it\n", extension);
 }

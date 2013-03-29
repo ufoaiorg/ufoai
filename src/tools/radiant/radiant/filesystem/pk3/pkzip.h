@@ -240,7 +240,7 @@ inline SeekableStream::position_type pkzip_find_disk_trailer (SeekableInputStrea
 			istream.seek(position);
 			StreamBase::size_type size = istream.read(buffer, to_read);
 
-			unsigned char* p = buffer + size;
+			unsigned char *p = buffer + size;
 			while (p != buffer) {
 				--p;
 				magic.m_value[3] = magic.m_value[2];

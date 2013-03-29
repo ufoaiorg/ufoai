@@ -85,7 +85,7 @@ void FileSystem::initDirectory (const std::string& directory)
 
 			Archives archives;
 			for (;;) {
-				const char* name = g_dir_read_name(dir);
+				const char *name = g_dir_read_name(dir);
 				if (name == 0)
 					break;
 

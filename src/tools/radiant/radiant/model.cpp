@@ -157,11 +157,11 @@ class PicoModelAPIConstructor
 		std::string m_extension;
 		const picoModule_t *m_module;
 	public:
-		PicoModelAPIConstructor (const char* extension, const picoModule_t *module) :
+		PicoModelAPIConstructor (const char *extension, const picoModule_t *module) :
 			m_extension(extension), m_module(module)
 		{
 		}
-		const char* getName ()
+		const char *getName ()
 		{
 			return m_extension.c_str();
 		}

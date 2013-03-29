@@ -25,7 +25,7 @@
 struct OpenGLBinding;
 void QGL_sharedContextCreated (OpenGLBinding& table);
 
-bool QGL_ExtensionSupported (const char* extension);
+bool QGL_ExtensionSupported (const char *extension);
 
 int QGL_maxTextureAnisotropy ();
 
