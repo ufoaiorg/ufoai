@@ -94,7 +94,7 @@ static void testItemAdd (void)
 	CU_ASSERT_PTR_NOT_NULL(container);
 
 	item.setDef(od);
-	item.ammo = NULL;
+	item.setAmmoDef(NULL);
 	item.setAmmoLeft(0);
 
 	CU_ASSERT(inv.containsItem(container->id, &item) == false);

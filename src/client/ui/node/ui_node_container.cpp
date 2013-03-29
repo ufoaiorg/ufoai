@@ -256,14 +256,14 @@ void UI_GetItemTooltip (const Item &item, char *tooltipText, size_t stringMaxLen
 	if (GAME_ItemIsUseable(item.def())) {
 		if (item.isWeapon()) {
 			/* Get info about used ammo (if there is any) */
-			if (item.def() == item.ammo) {
+			if (item.def() == item.ammoDef()) {
 				/* Item has no ammo but might have shot-count */
 				if (item.getAmmoLeft()) {
 					Q_strcat(tooltipText, va(_("Ammo: %i\n"), item.getAmmoLeft()), stringMaxLength);
 				}
-			} else if (item.ammo) {
+			} else if (item.ammoDef()) {
 				/* Search for used ammo and display name + ammo count */
-				Q_strcat(tooltipText, va(_("%s loaded\n"), _(item.ammo->name)), stringMaxLength);
+				Q_strcat(tooltipText, va(_("%s loaded\n"), _(item.ammoDef()->name)), stringMaxLength);
 				Q_strcat(tooltipText, va(_("Ammo: %i\n"), item.getAmmoLeft()), stringMaxLength);
 			}
 		} else if (item.def()->numWeapons) {
@@ -701,7 +701,7 @@ void UI_ContainerNodeAutoPlaceItem (uiNode_t* node, invList_t *ic)
 
 	/* Right click: automatic item assignment/removal. */
 	if (container->id != CID_EQUIP) {
-		if (ic->ammo && ic->ammo != ic->def() && ic->getAmmoLeft()) {
+		if (ic->ammoDef() && ic->ammoDef() != ic->def() && ic->getAmmoLeft()) {
 			/* Remove ammo on removing weapon from a soldier */
 			target = CID_EQUIP;
 			ammoChanged = INV_UnloadWeapon(ic, ui_inventory, INVDEF(target));
@@ -999,7 +999,7 @@ bool uiContainerNode::onDndFinished (uiNode_t *source, bool isDropped)
 
 			/** @todo We must split the move in two. Here, we should not know how to add the item to the target (see dndDrop) */
 			/* Remove ammo on removing weapon from a soldier */
-			if (UI_IsScrollContainerNode(target) && fItem->ammo && fItem->ammo != fItem->def() && fItem->getAmmoLeft())
+			if (UI_IsScrollContainerNode(target) && fItem->ammoDef() && fItem->ammoDef() != fItem->def() && fItem->getAmmoLeft())
 				INV_UnloadWeapon(fItem, ui_inventory, targetContainer);
 
 			/* Save rotation: in case the move fails we don't want the item overlapping other items or

@@ -49,7 +49,7 @@ void CP_AddWeaponAmmo (equipDef_t *ed, Item *item)
 		if (type->oneshot) {
 			/* "Recharge" the oneshot weapon. */
 			item->setAmmoLeft(type->ammo);
-			item->ammo = item->def(); /* Just in case this hasn't been done yet. */
+			item->setAmmoDef(item->def()); /* Just in case this hasn't been done yet. */
 			Com_DPrintf(DEBUG_CLIENT, "CL_AddWeaponAmmo: oneshot weapon '%s'.\n", type->id);
 			return;
 		} else {
@@ -59,7 +59,7 @@ void CP_AddWeaponAmmo (equipDef_t *ed, Item *item)
 	} else if (!type->reload) {
 		/* The given item is a weapon but no ammo is needed,
 		 * so fire definitions are in t (the weapon). Setting equal. */
-		item->ammo = item->def();
+		item->setAmmoDef(item->def());
 		return;
 	} else if (item->getAmmoLeft()) {
 		assert(item->ammoDef());
@@ -91,7 +91,7 @@ void CP_AddWeaponAmmo (equipDef_t *ed, Item *item)
 			if (ed->numItems[i] > 0) {
 				ed->numItems[i]--;
 				item->setAmmoLeft(type->ammo);
-				item->ammo = od;
+				item->setAmmoDef(od);
 				return;
 			}
 		}
@@ -130,7 +130,7 @@ void CP_AddWeaponAmmo (equipDef_t *ed, Item *item)
 			/* Found some loose ammo to load the weapon with */
 			item->setAmmoLeft(ed->numItemsLoose[i]);
 			ed->numItemsLoose[i] = 0;
-			item->ammo = od;
+			item->setAmmoDef(od);
 		}
 	}
 }

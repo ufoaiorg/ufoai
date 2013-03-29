@@ -1217,7 +1217,7 @@ void GAME_HandleResults (dbuffer *msg, int winner, int *numSpawned, int *numAliv
  */
 static void GAME_NetSendItem (dbuffer *buf, const Item *item, containerIndex_t container, int x, int y)
 {
-	const int ammoIdx = item->ammo ? item->ammo->idx : NONE;
+	const int ammoIdx = item->ammoDef() ? item->ammoDef()->idx : NONE;
 	const eventRegister_t *eventData = CL_GetEvent(EV_INV_TRANSFER);
 	assert(item->def());
 	Com_DPrintf(DEBUG_CLIENT, "GAME_NetSendItem: Add item %s to container %i (t=%i:a=%i:m=%i) (x=%i:y=%i)\n",
