@@ -288,7 +288,6 @@ void RT_GetMapSize (mapTiles_t *mapTiles, vec3_t map_min, vec3_t map_max)
 	pos3_t start, end, test;
 	vec3_t origin;
 	int i;
-	trace_t trace;
 
 	/* Initialize start, end, and normal */
 	VectorSet(start, 0, 0, 0);
@@ -307,7 +306,7 @@ void RT_GetMapSize (mapTiles_t *mapTiles, vec3_t map_min, vec3_t map_max)
 			PosToVec(end, box.maxs);
 			VectorAdd(box.maxs, normal, box.maxs);
 			/* Test for stuff in a small box, if there is something then exit while */
-			trace = RT_COMPLETEBOXTRACE_SIZE(mapTiles, &box, NULL);
+			const trace_t trace = RT_COMPLETEBOXTRACE_SIZE(mapTiles, &box, NULL);
 			if (trace.fraction < 1.0)
 				break;
 			/* There is nothing, lower the boundary. */
@@ -325,7 +324,7 @@ void RT_GetMapSize (mapTiles_t *mapTiles, vec3_t map_min, vec3_t map_max)
 			PosToVec(test, box.maxs);
 			VectorAdd(box.maxs, normal, box.maxs);
 			/* Test for stuff in a small box, if there is something then exit while */
-			trace = RT_COMPLETEBOXTRACE_SIZE(mapTiles, &box, NULL);
+			const trace_t trace = RT_COMPLETEBOXTRACE_SIZE(mapTiles, &box, NULL);
 			if (trace.fraction < 1.0)
 				break;
 			/* There is nothing, raise the boundary. */
@@ -417,7 +416,6 @@ int RT_CheckCell (mapTiles_t *mapTiles, Routing &routing, const int actorSize, c
 	int bottomQ, topQ; /* The floor and ceiling in QUANTs */
 	int i;
 	int fz, cz; /* Floor and ceiling Z cell coordinates */
-	trace_t tr;
 
 	assert(actorSize > ACTOR_SIZE_INVALID && actorSize <= ACTOR_MAX_SIZE);
 	/* x and y cannot exceed PATHFINDING_WIDTH - actorSize */
@@ -452,7 +450,7 @@ int RT_CheckCell (mapTiles_t *mapTiles, Routing &routing, const int actorSize, c
 	 *      restart below the current floor.
 	 */
 	for (;;) { /* Loop forever, we will exit if we hit the model bottom or find a valid floor. */
-		tr = RT_COMPLETEBOXTRACE_PASSAGE(mapTiles, Line(start, end), &footBox, list);
+		trace_t tr = RT_COMPLETEBOXTRACE_PASSAGE(mapTiles, Line(start, end), &footBox, list);
 		if (tr.fraction >= 1.0) {						/* If there is no brush underneath this starting point, */
 			routing.setFilled(actorSize, x, y, 0, z);	/* mark all cells to the model base as filled. */
 			return 0;									/* return (a z-value of)0 to indicate we just scanned the model bottom. */
@@ -685,7 +683,6 @@ static trace_t RT_ObstructedTrace (const RoutingData *rtd, const Line &traceLine
 static int RT_FindOpeningFloorFrac (const RoutingData *rtd, const vec3_t start, const vec3_t end, const float frac, const int startingHeight)
 {
 	vec3_t mstart, mend;	/**< Midpoint line to trace across */	/**< Tracing box extents */
-	trace_t tr;
 	const AABB* box = (rtd->actorSize == ACTOR_SIZE_NORMAL ? &actor1x1Box : &actor2x2Box);
 
 	/* Position mstart and mend at the fraction point */
@@ -694,7 +691,7 @@ static int RT_FindOpeningFloorFrac (const RoutingData *rtd, const vec3_t start, 
 	mstart[2] = QuantToModel(startingHeight) + (QUANT / 2); /* Set at the starting height, plus a little more to keep us off a potential surface. */
 	mend[2] = -QUANT;  /* Set below the model. */
 
-	tr = RT_COMPLETEBOXTRACE_PASSAGE(rtd->mapTiles, Line(mstart, mend), box, rtd->list);
+	const trace_t tr = RT_COMPLETEBOXTRACE_PASSAGE(rtd->mapTiles, Line(mstart, mend), box, rtd->list);
 
 	if (debugTrace)
 		Com_Printf("Brush found at %f.\n", tr.endpos[2]);
@@ -718,7 +715,6 @@ static int RT_FindOpeningFloorFrac (const RoutingData *rtd, const vec3_t start, 
 static int RT_FindOpeningCeilingFrac (const RoutingData *rtd, const vec3_t start, const vec3_t end, const float frac, const int startingHeight)
 {
 	vec3_t mstart, mend;	/**< Midpoint line to trace across */
-	trace_t tr;
 	const AABB* box = (rtd->actorSize == ACTOR_SIZE_NORMAL ? &actor1x1Box : &actor2x2Box);	/**< Tracing box extents */
 
 	/* Position mstart and mend at the midpoint */
@@ -727,7 +723,7 @@ static int RT_FindOpeningCeilingFrac (const RoutingData *rtd, const vec3_t start
 	mstart[2] = QuantToModel(startingHeight) - (QUANT / 2); /* Set at the starting height, minus a little more to keep us off a potential surface. */
 	mend[2] = UNIT_HEIGHT * PATHFINDING_HEIGHT + QUANT;  /* Set above the model. */
 
-	tr = RT_COMPLETEBOXTRACE_PASSAGE(rtd->mapTiles, Line(mstart, mend), box, rtd->list);
+	const trace_t tr = RT_COMPLETEBOXTRACE_PASSAGE(rtd->mapTiles, Line(mstart, mend), box, rtd->list);
 
 	if (debugTrace)
 		Com_Printf("Brush found at %f.\n", tr.endpos[2]);
@@ -850,7 +846,7 @@ static int RT_CalcNewZ (const RoutingData *rtd, const int ax, const int ay, cons
  */
 static int RT_TraceOpening (const RoutingData *rtd, const vec3_t start, const vec3_t end, const int ax, const int ay, const int bottom, const int top, int lo, int hi, int *foundLow, int *foundHigh)
 {
-	trace_t tr = RT_ObstructedTrace(rtd, Line(start, end), hi, lo);
+	const trace_t tr = RT_ObstructedTrace(rtd, Line(start, end), hi, lo);
 	if (tr.fraction >= 1.0) {
 		lo = RT_FindOpeningFloor(rtd, start, end, lo, bottom);
 		hi = RT_FindOpeningCeiling(rtd, start, end, hi, top);
@@ -916,7 +912,6 @@ static int RT_FindOpening (RoutingData *rtd, const place_t *from, const int ax, 
 	 && from->cell[2] * CELL_HEIGHT + rtd->routing.getCeiling(rtd->actorSize, ax, ay, from->cell[2]) >= PATHFINDING_HEIGHT * CELL_HEIGHT) {
 		vec3_t sky, earth;
 		const AABB* box = (rtd->actorSize == ACTOR_SIZE_NORMAL ? &actor1x1Box : &actor2x2Box);
-		trace_t tr;
 		int tempBottom;
 
 		VectorInterpolation(start, end, 0.5, sky);	/* center it halfway between the cells */
@@ -924,7 +919,7 @@ static int RT_FindOpening (RoutingData *rtd, const place_t *from, const int ax, 
 		sky[2] = UNIT_HEIGHT * PATHFINDING_HEIGHT;  /* Set to top of model. */
 		earth[2] = QuantToModel(bottom);
 
-		tr = RT_COMPLETEBOXTRACE_PASSAGE(rtd->mapTiles, Line(sky, earth), box, rtd->list);
+		const trace_t tr = RT_COMPLETEBOXTRACE_PASSAGE(rtd->mapTiles, Line(sky, earth), box, rtd->list);
 		tempBottom = ModelFloorToQuant(tr.endpos[2]);
 		if (tempBottom <= bottom + PATHFINDING_MIN_STEPUP) {
 			const int hi = bottom + PATHFINDING_MIN_OPENING;
@@ -985,7 +980,6 @@ static int RT_MicroTrace (RoutingData *rtd, const place_t *from, const int ax, c
 	float sx, sy, ex, ey;
 	/* Shortcut the value of UNIT_SIZE / PATHFINDING_MICROSTEP_SIZE. */
 	const int steps = UNIT_SIZE / PATHFINDING_MICROSTEP_SIZE;
-	trace_t tr;
 	int i, current_h, highest_h, highest_i = 0, skipped, newBottom;
 	vec3_t start, end;
 	pos3_t pos;
@@ -1020,7 +1014,7 @@ static int RT_MicroTrace (RoutingData *rtd, const place_t *from, const int ax, c
 		start[1] = end[1] = sy + (ey - sy) * (i / (float)steps);
 
 		/* perform the trace, then return true if the trace was obstructed. */
-		tr = RT_COMPLETEBOXTRACE_PASSAGE(rtd->mapTiles, Line(start, end), &footBox, rtd->list);
+		const trace_t tr = RT_COMPLETEBOXTRACE_PASSAGE(rtd->mapTiles, Line(start, end), &footBox, rtd->list);
 		if (tr.fraction >= 1.0) {
 			bases[i] = -1;
 		} else {

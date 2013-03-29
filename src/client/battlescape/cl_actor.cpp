@@ -1684,7 +1684,6 @@ static void CL_TargetingStraight (const pos3_t fromPos, actorSizeEnum_t fromActo
 {
 	vec3_t start, end;
 	vec3_t dir, mid, temp;
-	trace_t tr;
 	bool crossNo;
 	le_t *target = NULL;
 	actorSizeEnum_t toActorSize;
@@ -1722,7 +1721,7 @@ static void CL_TargetingStraight (const pos3_t fromPos, actorSizeEnum_t fromActo
 	/* switch up to top level, this is needed to make sure our trace doesn't go through ceilings ... */
 	/** @todo is this really needed for straight targetting? - for grenades, yes, but not for straight no?
 	 * cl_worldlevel->integer should be enough here */
-	tr = CL_Trace(start, temp, AABB(), selActor, NULL, MASK_SHOT, cl.mapMaxLevel - 1);
+	trace_t tr = CL_Trace(start, temp, AABB(), selActor, NULL, MASK_SHOT, cl.mapMaxLevel - 1);
 	if (tr.le && (tr.le->team == cls.team || LE_IsCivilian(tr.le)) && LE_IsCrouched(tr.le))
 		VectorMA(start, UNIT_SIZE * 1.4, dir, temp);
 	else
@@ -1767,7 +1766,6 @@ static void CL_TargetingGrenade (const pos3_t fromPos, actorSizeEnum_t fromActor
 	vec3_t from, at, cross;
 	float vz, dt;
 	vec3_t v0, ds, next;
-	trace_t tr;
 	bool obstructed = false;
 	int i;
 	le_t *target = NULL;
@@ -1818,7 +1816,7 @@ static void CL_TargetingGrenade (const pos3_t fromPos, actorSizeEnum_t fromActor
 
 		/* trace for obstacles. Switch up to top level, to make sure our trace
 		 * doesn't go through ceilings ... */
-		tr = CL_Trace(from, next, AABB(), selActor, target, MASK_SHOT, cl.mapMaxLevel - 1);
+		const trace_t tr = CL_Trace(from, next, AABB(), selActor, target, MASK_SHOT, cl.mapMaxLevel - 1);
 
 		/* something was hit */
 		if (tr.fraction < 1.0 && (!tr.le || (!LE_IsInvisible(tr.le) && !VectorCompare(tr.le->pos, toPos)))) {

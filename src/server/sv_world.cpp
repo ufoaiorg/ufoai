@@ -337,7 +337,6 @@ static void SV_ClipMoveToEntities (moveclip_t *clip)
 {
 	int i;
 	edict_t *touchlist[MAX_EDICTS];
-	trace_t trace;
 	const float *angles;
 	int headnode = 0;
 	const int num = SV_AreaEdicts(clip->boxmins, clip->boxmaxs, touchlist, MAX_EDICTS);
@@ -373,7 +372,7 @@ static void SV_ClipMoveToEntities (moveclip_t *clip)
 			angles = touch->angles;
 
 		assert(headnode < MAX_MAP_NODES);
-		trace = CM_HintedTransformedBoxTrace(sv->mapTiles.mapTiles[tile], clip->start, clip->end, AABB(clip->mins, clip->maxs), headnode,
+		trace_t trace = CM_HintedTransformedBoxTrace(sv->mapTiles.mapTiles[tile], clip->start, clip->end, AABB(clip->mins, clip->maxs), headnode,
 				clip->contentmask, 0, touch->origin, angles, rmaShift, 1.0);
 
 #ifdef PARANOID
@@ -411,7 +410,7 @@ static void SV_ClipMoveToEntities (moveclip_t *clip)
 int SV_PointContents (const vec3_t p)
 {
 	/* clip to all world levels */
-	trace_t trace = CM_CompleteBoxTrace(&sv->mapTiles, p, p, AABB(), TRACING_ALL_VISIBLE_LEVELS, MASK_ALL, 0);
+	const trace_t trace = CM_CompleteBoxTrace(&sv->mapTiles, p, p, AABB(), TRACING_ALL_VISIBLE_LEVELS, MASK_ALL, 0);
 	if (trace.fraction == 0)
 		return trace.contentFlags;		/* blocked by the world */
 	return 0;

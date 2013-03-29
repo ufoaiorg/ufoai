@@ -931,7 +931,6 @@ static void CL_ParticleRun2 (ptl_t *p)
 
 	/* basic 'physics' for particles */
 	if (p->physics) {
-		trace_t tr;
 		vec3_t mins, maxs;
 		const float size = std::max(p->size[0], p->size[1]);
 
@@ -948,7 +947,7 @@ static void CL_ParticleRun2 (ptl_t *p)
 
 		VectorSet(mins, -size, -size, -size);
 		VectorSet(maxs, size, size, size);
-		tr = PTL_Trace(p, mins, maxs);
+		const trace_t tr = PTL_Trace(p, mins, maxs);
 
 		/* hit something solid */
 		if (tr.fraction < 1.0 || tr.startsolid) {

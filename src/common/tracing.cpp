@@ -1088,9 +1088,9 @@ trace_t TR_BoxTrace (TR_TILE_TYPE *tile, const vec3_t start, const vec3_t end, c
  */
 trace_t TR_TileBoxTrace (TR_TILE_TYPE *myTile, const vec3_t start, const vec3_t end, const AABB &aabb, const int levelmask, const int brushmask, const int brushreject)
 {
-	trace_t newtr, tr;
 	int i;
 	cBspHead_t *h;
+	trace_t tr;
 
 	OBJZERO(tr);
 	/* ensure that the first trace is set in every case */
@@ -1106,7 +1106,7 @@ trace_t TR_TileBoxTrace (TR_TILE_TYPE *myTile, const vec3_t start, const vec3_t 
 			continue;
 
 		assert(h->cnode < myTile->numnodes + 6); /* +6 => bbox */
-		newtr = TR_BoxTrace(myTile, start, end, aabb, h->cnode, brushmask, brushreject, tr.fraction);
+		const trace_t newtr = TR_BoxTrace(myTile, start, end, aabb, h->cnode, brushmask, brushreject, tr.fraction);
 
 		/* memorize the trace with the minimal fraction */
 		if (newtr.fraction == 0.0)

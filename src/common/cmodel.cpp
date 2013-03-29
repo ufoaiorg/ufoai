@@ -95,7 +95,6 @@ static bool CM_LineMissesModel (const vec3_t start, const vec3_t stop, const cBs
  */
 trace_t CM_HintedTransformedBoxTrace (MapTile &tile, const vec3_t start, const vec3_t end, const AABB &traceBox, const int headnode, const int contentmask, const int brushrejects, const vec3_t origin, const vec3_t angles, const vec3_t rmaShift, const float fraction)
 {
-	trace_t trace;
 	vec3_t start_l, end_l;
 	vec3_t forward, right, up;
 	vec3_t temp;
@@ -134,7 +133,7 @@ trace_t CM_HintedTransformedBoxTrace (MapTile &tile, const vec3_t start, const v
 	}
 
 	/* sweep the box through the model */
-	trace = TR_BoxTrace(&tile, start_l, end_l, traceBox, headnode, contentmask, brushrejects, fraction);
+	trace_t trace = TR_BoxTrace(&tile, start_l, end_l, traceBox, headnode, contentmask, brushrejects, fraction);
 	trace.mapTile = tile.idx;
 
 	if (rotated && trace.fraction != 1.0) {
@@ -194,7 +193,6 @@ int32_t CM_HeadnodeForBox (MapTile &tile, const vec3_t mins, const vec3_t maxs)
  */
 bool CM_EntTestLine (mapTiles_t *mapTiles, const vec3_t start, const vec3_t stop, const int levelmask, const char **entlist)
 {
-	trace_t trace;
 	const char **name;
 
 	/* trace against world first */
@@ -220,7 +218,7 @@ bool CM_EntTestLine (mapTiles_t *mapTiles, const vec3_t start, const vec3_t stop
 		if (CM_LineMissesModel(start, stop, model))
 			continue;
 
-		trace = CM_HintedTransformedBoxTrace(mapTiles->mapTiles[model->tile], start, stop, AABB(),
+		const trace_t trace = CM_HintedTransformedBoxTrace(mapTiles->mapTiles[model->tile], start, stop, AABB(),
 				model->headnode, MASK_VISIBILILITY, 0, model->origin, model->angles, model->shift, 1.0);
 		/* if we started the trace in a wall */
 		/* or the trace is not finished */
@@ -245,7 +243,6 @@ bool CM_EntTestLine (mapTiles_t *mapTiles, const vec3_t start, const vec3_t stop
  */
 bool CM_EntTestLineDM (mapTiles_t *mapTiles, const vec3_t start, const vec3_t stop, vec3_t end, const int levelmask, const char **entlist)
 {
-	trace_t trace;
 	const char **name;
 	bool blocked;
 	float fraction = 2.0f;
@@ -272,7 +269,7 @@ bool CM_EntTestLineDM (mapTiles_t *mapTiles, const vec3_t start, const vec3_t st
 		if (CM_LineMissesModel(start, stop, model))
 			continue;
 
-		trace = CM_HintedTransformedBoxTrace(mapTiles->mapTiles[model->tile], start, end, AABB(),
+		const trace_t trace = CM_HintedTransformedBoxTrace(mapTiles->mapTiles[model->tile], start, end, AABB(),
 				model->headnode, MASK_ALL, 0, model->origin, model->angles, vec3_origin, fraction);
 		/* if we started the trace in a wall */
 		if (trace.startsolid) {
@@ -303,11 +300,11 @@ bool CM_EntTestLineDM (mapTiles_t *mapTiles, const vec3_t start, const vec3_t st
  */
 trace_t CM_CompleteBoxTrace (mapTiles_t *mapTiles, const vec3_t start, const vec3_t end, const AABB &box, int levelmask, int brushmask, int brushreject)
 {
-	trace_t newtr, tr;
 	int tile, i;
 	vec3_t smin, smax, emin, emax, wpmins, wpmaxs;
 	const vec3_t offset = {UNIT_SIZE / 2, UNIT_SIZE / 2, UNIT_HEIGHT / 2};
 
+	trace_t tr;
 	OBJZERO(tr);
 	tr.fraction = 2.0f;
 
@@ -339,7 +336,7 @@ trace_t CM_CompleteBoxTrace (mapTiles_t *mapTiles, const vec3_t start, const vec
 			continue;
 		if (smin[2] > wpmaxs[2] && emin[2] > wpmaxs[2])
 			continue;
-		newtr = TR_TileBoxTrace(&myTile, start, end, box, levelmask, brushmask, brushreject);
+		trace_t newtr = TR_TileBoxTrace(&myTile, start, end, box, levelmask, brushmask, brushreject);
 		newtr.mapTile = tile;
 
 		/* memorize the trace with the minimal fraction */
@@ -367,30 +364,26 @@ trace_t CM_CompleteBoxTrace (mapTiles_t *mapTiles, const vec3_t start, const vec
  */
 trace_t CM_EntCompleteBoxTrace (mapTiles_t *mapTiles, const Line &traceLine, const AABB *traceBox, int levelmask, int brushmask, int brushreject, const char **list)
 {
-	trace_t trace, newtr;
-	const char **name;
-
 	/* trace against world first */
-	trace = CM_CompleteBoxTrace(mapTiles, traceLine.start, traceLine.stop, *traceBox, levelmask, brushmask, brushreject);
-	if (!list || trace.fraction == 0.0)
-		return trace;
+	const trace_t tr = CM_CompleteBoxTrace(mapTiles, traceLine.start, traceLine.stop, *traceBox, levelmask, brushmask, brushreject);
+	if (!list || tr.fraction == 0.0)
+		return tr;
 
 	AABB lineBox(traceLine);	/* Find the original bounding box for the tracing line. */
 	lineBox.add(*traceBox);		/* Now increase the bounding box by traceBox in both directions. */
 	/* Now lineBox specifies the whole volume to be traced through. */
 
-	for (name = list; *name; name++) {
-		vec3_t amins, amaxs;
-		const cBspModel_t *model;
-
+	trace_t trace;
+	for (const char **name = list; *name; name++) {
 		/* check whether this is really an inline model */
 		if (*name[0] != '*')
 			Com_Error(ERR_DROP, "name in the inlineList is no inline model: '%s'", *name);
-		model = CM_InlineModel(mapTiles, *name);
+		const cBspModel_t *model = CM_InlineModel(mapTiles, *name);
 		assert(model);
 		if (model->headnode >= mapTiles->mapTiles[model->tile].numnodes + 6)
 			continue;
 
+		vec3_t amins, amaxs;
 		/* Quickly calculate the bounds of this model to see if they can overlap. */
 		CM_CalculateBoundingBox(model, amins, amaxs);
 
@@ -399,7 +392,7 @@ trace_t CM_EntCompleteBoxTrace (mapTiles_t *mapTiles, const Line &traceLine, con
 		if (!lineBox.doesIntersect(modelBox))
 			continue;
 
-		newtr = CM_HintedTransformedBoxTrace(mapTiles->mapTiles[model->tile], traceLine.start, traceLine.stop, *traceBox,
+		trace_t newtr = CM_HintedTransformedBoxTrace(mapTiles->mapTiles[model->tile], traceLine.start, traceLine.stop, *traceBox,
 				model->headnode, brushmask, brushreject, model->origin, model->angles, model->shift, trace.fraction);
 
 		/* memorize the trace with the minimal fraction */

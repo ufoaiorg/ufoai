@@ -320,7 +320,6 @@ void R_Trace (const vec3_t start, const vec3_t end, float size, int contentmask)
 {
 	vec3_t mins, maxs;
 	float frac;
-	trace_t tr;
 	int i;
 
 	r_locals.tracenum++;
@@ -345,7 +344,7 @@ void R_Trace (const vec3_t start, const vec3_t end, float size, int contentmask)
 		if (!m || m->type != mod_bsp_submodel)
 			continue;
 
-		tr = CM_TransformedBoxTrace(refdef.mapTiles->mapTiles[m->bsp.maptile], start, end, box, m->bsp.firstnode,
+		trace_t tr = CM_TransformedBoxTrace(refdef.mapTiles->mapTiles[m->bsp.maptile], start, end, box, m->bsp.firstnode,
 				contentmask, 0, ent->origin, ent->angles);
 
 		if (tr.fraction < frac) {

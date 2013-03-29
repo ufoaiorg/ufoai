@@ -550,7 +550,6 @@ static void LE_PlayFootStepSound (le_t *le)
 	}
 	/* walking in water will not play the normal footstep sounds */
 	if (!le->pathContents[le->pathPos]) {
-		trace_t trace;
 		vec3_t from, to;
 
 		/* prepare trace vectors */
@@ -559,7 +558,7 @@ static void LE_PlayFootStepSound (le_t *le)
 		/* we should really hit the ground with this */
 		to[2] -= UNIT_HEIGHT;
 
-		trace = CL_Trace(from, to, AABB(), NULL, NULL, MASK_SOLID, cl_worldlevel->integer);
+		const trace_t trace = CL_Trace(from, to, AABB(), NULL, NULL, MASK_SOLID, cl_worldlevel->integer);
 		if (trace.surface)
 			LE_PlaySoundFileAndParticleForSurface(le, trace.surface->name);
 	} else
@@ -1672,7 +1671,6 @@ static void CL_ClipMoveToLEs (moveclip_t *clip)
 
 	while ((le = LE_GetNextInUse(le))) {
 		int tile = 0;
-		trace_t trace;
 		int32_t headnode;
 		vec3_t angles;
 		vec3_t origin, shift;
@@ -1687,7 +1685,7 @@ static void CL_ClipMoveToLEs (moveclip_t *clip)
 
 		VectorCopy(le->origin, origin);
 
-		trace = CM_HintedTransformedBoxTrace(cl.mapTiles->mapTiles[tile], clip->start, clip->end, AABB(clip->mins, clip->maxs),
+		trace_t trace = CM_HintedTransformedBoxTrace(cl.mapTiles->mapTiles[tile], clip->start, clip->end, AABB(clip->mins, clip->maxs),
 				headnode, clip->contentmask, 0, origin, angles, shift, 1.0);
 
 		if (trace.fraction < clip->trace.fraction) {

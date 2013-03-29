@@ -144,14 +144,11 @@ static void ED_CallSpawn (Edict *ent)
  */
 static char *ED_NewString (const char *string)
 {
-	char *newb, *new_p;
-	int i;
 	const size_t l = strlen(string) + 1;
+	char *newb = (char*)G_TagMalloc(l, TAG_LEVEL);
+	char *new_p = newb;
 
-	newb = (char*)G_TagMalloc(l, TAG_LEVEL);
-	new_p = newb;
-
-	for (i = 0; i < l; i++) {
+	for (int i = 0; i < l; i++) {
 		/* check for special chars and convert them */
 		if (string[i] == '\\' && i < l - 1) {
 			i++;
@@ -485,14 +482,13 @@ void G_SpawnSmokeField (const vec3_t vec, const char *particle, int rounds, vec_
 	for (x = vec[0] - radius; x <= vec[0] + radius; x += UNIT_SIZE) {
 		for (y = vec[1] - radius; y <= vec[1] + radius; y += UNIT_SIZE) {
 			vec3_t end;
-			trace_t tr;
 
 			VectorSet(end, x, y, vec[2]);
 
 			/* cut off the edges of the square to resemble a circle */
 			if (VectorDist(end, vec) > radius)
 				continue;
-			tr = G_Trace(vec, end, NULL, MASK_SMOKE_AND_FIRE);
+			const trace_t tr = G_Trace(vec, end, NULL, MASK_SMOKE_AND_FIRE);
 			/* trace didn't reach the target - something was hit before */
 			if (tr.fraction < 1.0 || (tr.contentFlags & CONTENTS_WATER)) {
 				continue;
@@ -536,13 +532,11 @@ void G_SpawnFireField (const vec3_t vec, const char *particle, int rounds, int d
 	for (x = vec[0] - radius; x <= vec[0] + radius; x += UNIT_SIZE) {
 		for (y = vec[1] - radius; y <= vec[1] + radius; y += UNIT_SIZE) {
 			vec3_t end;
-			trace_t tr;
-
 			VectorSet(end, x, y, vec[2]);
 
 			if (VectorDist(end, vec) > radius)
 				continue;
-			tr = G_Trace(vec, end, NULL, MASK_SMOKE_AND_FIRE);
+			const trace_t tr = G_Trace(vec, end, NULL, MASK_SMOKE_AND_FIRE);
 			/* trace didn't reach the target - something was hit before */
 			if (tr.fraction < 1.0 || (tr.contentFlags & CONTENTS_WATER)) {
 				continue;
@@ -587,13 +581,11 @@ void G_SpawnStunSmokeField (const vec3_t vec, const char *particle, int rounds, 
 	for (x = vec[0] - radius; x <= vec[0] + radius; x += UNIT_SIZE) {
 		for (y = vec[1] - radius; y <= vec[1] + radius; y += UNIT_SIZE) {
 			vec3_t end;
-			trace_t tr;
-
 			VectorSet(end, x, y, vec[2]);
 
 			if (VectorDist(end, vec) > radius)
 				continue;
-			tr = G_Trace(vec, end, NULL, MASK_SMOKE_AND_FIRE);
+			const trace_t tr = G_Trace(vec, end, NULL, MASK_SMOKE_AND_FIRE);
 			/* trace didn't reach the target - something was hit before */
 			if (tr.fraction < 1.0 || (tr.contentFlags & CONTENTS_WATER)) {
 				continue;
