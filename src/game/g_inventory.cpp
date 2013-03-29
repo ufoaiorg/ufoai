@@ -88,7 +88,7 @@ bool G_InventoryRemoveItemByID (const char *itemID, Edict *ent, containerIndex_t
 			if (!game.i.removeFromInventory(&ent->chr.inv, INVDEF(container), ic))
 				gi.Error("Could not remove item '%s' from inventory %i",
 						ic->def()->id, container);
-			G_EventInventoryDelete(ent, G_VisToPM(ent->visflags), container, ic->getX(), ic->getY());
+			G_EventInventoryDelete(*ent, G_VisToPM(ent->visflags), container, ic->getX(), ic->getY());
 			return true;
 		}
 		ic = ic->getNext();
@@ -244,8 +244,8 @@ void G_InventoryToFloor (Edict *ent)
 		floor = G_SpawnFloor(ent->pos);
 	} else {
 		/* destroy this edict (send this event to all clients that see the edict) */
-		G_EventPerish(floor);
-		G_VisFlagsReset(floor);
+		G_EventPerish(*floor);
+		G_VisFlagsReset(*floor);
 	}
 
 	/* drop items */
@@ -338,11 +338,10 @@ void G_ReadItem (Item *item, const invDef_t **container, int *x, int *y)
  * @sa CL_NetReceiveItem
  * @sa EV_INV_TRANSFER
  */
-void G_WriteItem (const Item *item, const containerIndex_t contId, int x, int y)
+void G_WriteItem (const Item &item, const containerIndex_t contId, int x, int y)
 {
-	assert(item);
-	assert(item->def());
-	gi.WriteFormat("sbsbbbbs", item->def()->idx, item->getAmmoLeft(), item->ammoDef() ? item->ammoDef()->idx : NONE, contId, x, y, item->rotated, item->getAmount());
+	assert(item.def());
+	gi.WriteFormat("sbsbbbbs", item.def()->idx, item.getAmmoLeft(), item.ammoDef() ? item.ammoDef()->idx : NONE, contId, x, y, item.rotated, item.getAmount());
 }
 
 /**
@@ -352,7 +351,7 @@ void G_WriteItem (const Item *item, const containerIndex_t contId, int x, int y)
  * @sa G_AppearPerishEvent
  * @sa CL_InvAdd
  */
-void G_SendInventory (playermask_t playerMask, const Edict *ent)
+void G_SendInventory (playermask_t playerMask, const Edict &ent)
 {
 	invList_t *ic;
 	int nr = 0;
@@ -363,9 +362,9 @@ void G_SendInventory (playermask_t playerMask, const Edict *ent)
 		return;
 
 	for (container = 0; container < CID_MAX; container++) {
-		if (!G_IsItem(ent) && INVDEF(container)->temp)
+		if (!G_IsItem(&ent) && INVDEF(container)->temp)
 			continue;
-		for (ic = ent->getContainer(container); ic; ic = ic->getNext())
+		for (ic = ent.getContainer(container); ic; ic = ic->getNext())
 			nr++;
 	}
 
@@ -375,12 +374,12 @@ void G_SendInventory (playermask_t playerMask, const Edict *ent)
 
 	G_EventInventoryAdd(ent, playerMask, nr);
 	for (container = 0; container < CID_MAX; container++) {
-		if (!G_IsItem(ent) && INVDEF(container)->temp)
+		if (!G_IsItem(&ent) && INVDEF(container)->temp)
 			continue;
-		for (ic = ent->getContainer(container); ic; ic = ic->getNext()) {
+		for (ic = ent.getContainer(container); ic; ic = ic->getNext()) {
 			/* send a single item */
 			assert(ic->def());
-			G_WriteItem(ic, container, ic->getX(), ic->getY());
+			G_WriteItem(*ic, container, ic->getX(), ic->getY());
 		}
 	}
 	G_EventEnd();

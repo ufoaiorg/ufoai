@@ -68,25 +68,25 @@ static bool Destroy_Breakable (Edict *self)
 	 * call during a fight - a triggered call will be handled differently in
 	 * terms of timing and the related particle effects in the client code */
 	if (self->HP == 0)
-		G_EventModelExplodeTriggered(self);
+		G_EventModelExplodeTriggered(*self);
 	else
-		G_EventModelExplode(self);
+		G_EventModelExplode(*self);
 
 	if (self->particle)
 		G_SpawnParticle(origin, self->spawnflags, self->particle);
 
 	switch (self->material) {
 	case MAT_GLASS:
-		G_EventSpawnSound(PM_ALL, false, self, origin, "misc/breakglass+");
+		G_EventSpawnSound(PM_ALL, false, *self, origin, "misc/breakglass+");
 		break;
 	case MAT_METAL:
-		G_EventSpawnSound(PM_ALL, false, self, origin, "misc/breakmetal+");
+		G_EventSpawnSound(PM_ALL, false, *self, origin, "misc/breakmetal+");
 		break;
 	case MAT_ELECTRICAL:
-		G_EventSpawnSound(PM_ALL, false, self, origin, "misc/breakelectric+");
+		G_EventSpawnSound(PM_ALL, false, *self, origin, "misc/breakelectric+");
 		break;
 	case MAT_WOOD:
-		G_EventSpawnSound(PM_ALL, false, self, origin, "misc/breakwood+");
+		G_EventSpawnSound(PM_ALL, false, *self, origin, "misc/breakwood+");
 		break;
 	case MAT_MAX:
 		break;
@@ -230,12 +230,12 @@ static bool Door_Use (Edict *door, Edict *activator)
 	if (G_MatchIsRunning()) {
 		/* let everybody know, that the door moves */
 		if (door->doorState == STATE_OPENED)
-			G_EventDoorOpen(door);
+			G_EventDoorOpen(*door);
 		else
-			G_EventDoorClose(door);
+			G_EventDoorClose(*door);
 		if (door->noise[0] != '\0') {
 			const playermask_t playerMask = G_GetClosePlayerMask(door->origin, UNIT_SIZE * 10);
-			G_EventSpawnSound(playerMask, false, door, door->origin, door->noise);
+			G_EventSpawnSound(playerMask, false, *door, door->origin, door->noise);
 		}
 	}
 

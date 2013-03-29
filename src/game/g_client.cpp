@@ -243,7 +243,7 @@ void G_GiveTimeUnits (int team)
  * or perish. Might be @c NULL.
  * @sa CL_ActorAppear
  */
-void G_AppearPerishEvent (playermask_t playerMask, bool appear, Edict *check, const Edict *ent)
+void G_AppearPerishEvent (playermask_t playerMask, bool appear, Edict &check, const Edict *ent)
 {
 	teammask_t teamMaskDiff;
 
@@ -256,7 +256,7 @@ void G_AppearPerishEvent (playermask_t playerMask, bool appear, Edict *check, co
 
 	if (appear) {
 		/* appear */
-		switch (check->type) {
+		switch (check.type) {
 		case ET_ACTOR:
 		case ET_ACTOR2x2:
 			G_EventActorAppear(playerMask, check, ent);
@@ -281,11 +281,11 @@ void G_AppearPerishEvent (playermask_t playerMask, bool appear, Edict *check, co
 			break;
 
 		default:
-			if (G_IsVisibleOnBattlefield(check))
-				gi.Error("Missing edict type %i in G_AppearPerishEvent", check->type);
+			if (G_IsVisibleOnBattlefield(&check))
+				gi.Error("Missing edict type %i in G_AppearPerishEvent", check.type);
 			break;
 		}
-	} else if (G_IsVisibleOnBattlefield(check)) {
+	} else if (G_IsVisibleOnBattlefield(&check)) {
 		G_EventEdictPerish(playerMask, check);
 	}
 }
@@ -312,7 +312,7 @@ void G_SendInvisible (const Player &player)
 			if (ent->team != team) {
 				/* not visible for this team - so add the le only */
 				if (!G_IsVisibleForTeam(ent, team)) {
-					G_EventActorAdd(G_PlayerToPM(player), ent);
+					G_EventActorAdd(G_PlayerToPM(player), *ent);
 				}
 			}
 		}
@@ -438,7 +438,7 @@ static void G_ClientTurn (Player &player, Edict *ent, dvec_t dvec)
 	G_ActorUseTU(ent, TU_TURN);
 
 	/* send the turn */
-	G_EventActorTurn(ent);
+	G_EventActorTurn(*ent);
 
 	/* send the new TUs */
 	G_SendStats(*ent);
@@ -453,19 +453,19 @@ static void G_ClientTurn (Player &player, Edict *ent, dvec_t dvec)
  * are seeing him already.
  * @param ent The actor edict
  */
-static void G_ClientStateChangeUpdate (Edict *ent)
+static void G_ClientStateChangeUpdate (Edict &ent)
 {
 	/* Send the state change. */
-	G_EventSendState(G_VisToPM(ent->visflags), ent);
+	G_EventSendState(G_VisToPM(ent.visflags), ent);
 
 	/* Check if the player appears/perishes, seen from other teams. */
-	G_CheckVis(ent);
+	G_CheckVis(&ent);
 
 	/* Calc new vis for this player. */
-	G_CheckVisTeamAll(ent->team, 0, ent);
+	G_CheckVisTeamAll(ent.team, 0, &ent);
 
 	/* Send the new TUs. */
-	G_SendStats(*ent);
+	G_SendStats(ent);
 
 	/* End the event. */
 	G_EventEnd();
@@ -532,7 +532,7 @@ void G_ClientStateChange (const Player &player, Edict *ent, int reqState, bool c
 	if (!checkaction)
 		return;
 
-	G_ClientStateChangeUpdate(ent);
+	G_ClientStateChangeUpdate(*ent);
 }
 
 /**
@@ -1080,7 +1080,7 @@ Edict *G_ClientGetFreeSpawnPointForActorSize (const Player &player, const actorS
 	ent->chr.fieldSize = actorSize;
 	ent->fieldSize = ent->chr.fieldSize;
 	ent->flags |= FL_DESTROYABLE;
-	G_VisFlagsReset(ent);
+	G_VisFlagsReset(*ent);
 	gi.LinkEdict(ent);
 
 	if (ent->spawnflags & STATE_CROUCHED) {
@@ -1248,7 +1248,7 @@ void G_ClientInitActorStates (const Player &player)
 		if (objIdx != NONE) {
 			G_ReactionFireSettingsUpdate(ent, fmIdx, hand, INVSH_GetItemByIDX(objIdx));
 		}
-		G_ClientStateChangeUpdate(ent);
+		G_ClientStateChangeUpdate(*ent);
 	}
 }
 
@@ -1315,8 +1315,8 @@ static void G_ClientSendEdictsAndBrushModels (const Player &player)
 
 		/* skip the world(s) in case of map assembly */
 		if (ent->type > ET_NULL) {
-			G_EventAddBrushModel(mask, ent);
-			G_VisFlagsAdd(ent, ~ent->visflags);
+			G_EventAddBrushModel(mask, *ent);
+			G_VisFlagsAdd(*ent, ~ent->visflags);
 		}
 	}
 }

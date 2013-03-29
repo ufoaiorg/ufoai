@@ -39,7 +39,7 @@ void G_SendStats (Edict &ent)
 	ent.STUN = std::min(ent.STUN, 255);
 	ent.morale = std::max(ent.morale, 0);
 
-	G_EventActorStats(&ent, G_TeamToPM(ent.team));
+	G_EventActorStats(ent, G_TeamToPM(ent.team));
 }
 
 /**
@@ -52,7 +52,7 @@ void G_SendPlayerStats (const Player &player)
 
 	while ((ent = G_EdictsGetNextActor(ent)))
 		if (ent->team == player.getTeam()) {
-			G_EventActorStats(ent, G_PlayerToPM(player));
+			G_EventActorStats(*ent, G_PlayerToPM(player));
 			G_SendWoundStats(ent);
 		}
 }

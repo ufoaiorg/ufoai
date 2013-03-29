@@ -40,7 +40,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 void G_FreeEdict (Edict *ent)
 {
-	G_EventDestroyEdict(ent);
+	G_EventDestroyEdict(*ent);
 
 	/* unlink from world */
 	gi.UnlinkEdict(ent);

@@ -222,7 +222,7 @@ void G_MissionThink (Edict *self)
 					Com_Printf("Could not remove item '%s' from floor edict %i\n",
 							chain->item, item->number);
 				} else {
-					G_AppearPerishEvent(G_VisToPM(item->visflags), false, item, NULL);
+					G_AppearPerishEvent(G_VisToPM(item->visflags), false, *item, NULL);
 				}
 			}
 		}
@@ -230,7 +230,7 @@ void G_MissionThink (Edict *self)
 			/** @todo not yet working - particle stays active */
 			Edict *particle = G_GetEdictFromPos(chain->pos, ET_PARTICLE);
 			if (particle != NULL) {
-				G_AppearPerishEvent(PM_ALL, false, particle, NULL);
+				G_AppearPerishEvent(PM_ALL, false, *particle, NULL);
 				G_FreeEdict(particle);
 			}
 		}

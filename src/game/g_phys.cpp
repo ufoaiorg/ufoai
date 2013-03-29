@@ -73,7 +73,7 @@ void G_PhysicsStep (Edict *ent)
 				}
 			}
 			if (snd)
-				G_EventSpawnSound(playerMask, true, ent, ent->origin, snd);
+				G_EventSpawnSound(playerMask, true, *ent, ent->origin, snd);
 		}
 
 		/* and now save the new contents */

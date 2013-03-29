@@ -435,7 +435,7 @@ static void Think_SmokeAndFire (Edict *self)
 	const int currentIndex = (level.activeTeam + level.teamOfs) % MAX_TEAMS;
 	if (endRound < level.actualRound || (endRound == level.actualRound && spawnIndex <= currentIndex)) {
 		const bool checkVis = self->type == ET_SMOKE;
-		G_EventEdictPerish(G_VisToPM(self->particleLink->visflags), self->particleLink);
+		G_EventEdictPerish(G_VisToPM(self->particleLink->visflags), *self->particleLink);
 		G_FreeEdict(self->particleLink);
 		G_FreeEdict(self);
 		if (checkVis)

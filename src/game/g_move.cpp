@@ -146,7 +146,7 @@ void G_ActorFall (Edict *ent)
 
 	G_CheckVis(ent);
 
-	G_EventActorFall(ent);
+	G_EventActorFall(*ent);
 
 	G_EventEnd();
 }
@@ -369,7 +369,7 @@ void G_ClientMove (const Player &player, int visTeam, Edict *ent, const pos3_t t
 				/* if something appears on our route that didn't trigger a VIS_STOP, we have to
 				 * send the turn event if this is our first step */
 				if (oldDir != ent->dir && ent->moveinfo.steps == 0) {
-					G_EventActorTurn(ent);
+					G_EventActorTurn(*ent);
 					usedTUs += TU_TURN;
 				}
 				break;

@@ -172,7 +172,7 @@ void G_SendWoundStats (Edict *const ent)
 		wounds.woundLevel[i] = std::min(255, wounds.woundLevel[i]);
 		wounds.treatmentLevel[i] = std::min(255, wounds.treatmentLevel[i]);
 		if (wounds.woundLevel[i] + wounds.treatmentLevel[i] > 0)
-			G_EventActorWound(ent, i);
+			G_EventActorWound(*ent, i);
 	}
 }
 

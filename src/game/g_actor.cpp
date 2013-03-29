@@ -115,9 +115,9 @@ void G_ActorSetClientAction (Edict *actor, Edict *ent)
 	assert(ent == NULL || (ent->flags & FL_CLIENTACTION));
 	actor->clientAction = ent;
 	if (ent == NULL) {
-		G_EventResetClientAction(actor);
+		G_EventResetClientAction(*actor);
 	} else {
-		G_EventSetClientAction(actor);
+		G_EventSetClientAction(*actor);
 	}
 }
 
@@ -180,7 +180,7 @@ void G_ActorReserveTUs (Edict *ent, int resReaction, int resShot, int resCrouch)
 		ent->chr.reservedTus.crouch = resCrouch;
 	}
 
-	G_EventActorSendReservations(ent);
+	G_EventActorSendReservations(*ent);
 }
 
 /**
@@ -253,7 +253,7 @@ int G_ActorDoTurn (Edict *ent, byte dir)
 
 	if (status & VIS_STOP) {
 		/* send the turn */
-		G_EventActorTurn(ent);
+		G_EventActorTurn(*ent);
 	}
 
 	return status;
@@ -277,6 +277,7 @@ void G_ActorSetMaxs (Edict *ent)
 	/* Link it. */
 	gi.LinkEdict(ent);
 }
+
 int G_ActorCalculateMaxTU (const Edict *ent)
 {
 	const int invWeight = ent->chr.inv.getWeight();
@@ -432,7 +433,7 @@ void G_ActorCheckRevitalise (Edict *ent)
 		}
 
 		G_ActorRevitalise(ent);
-		G_EventActorRevitalise(ent);
+		G_EventActorRevitalise(*ent);
 		G_SendStats(*ent);
 	}
 }
@@ -486,7 +487,7 @@ bool G_ActorDieOrStun (Edict *ent, Edict *attacker)
 		ent->solid = SOLID_NOT;
 
 	/* send death */
-	G_EventActorDie(ent, attacker != NULL);
+	G_EventActorDie(*ent, attacker != NULL);
 
 	/* handle inventory - drop everything but the armour to the floor */
 	G_InventoryToFloor(ent);
@@ -638,18 +639,18 @@ bool G_ActorInvMove (Edict *ent, const invDef_t *from, invList_t *fItem, const i
 			/* Delay this if swapping ammo, otherwise the le will be removed in the client before we can add back
 			 * the current ammo because removeNextFrame is set in LE_PlaceItem() if the floor le has no items */
 			if (ia != IA_RELOAD_SWAP)
-				G_EventInventoryDelete(floor, G_VisToPM(floor->visflags), from->id, fx, fy);
+				G_EventInventoryDelete(*floor, G_VisToPM(floor->visflags), from->id, fx, fy);
 		} else {
 			/* Floor is empty, remove the edict (from server + client) if we are
 			 * not moving to it. */
 			if (!toContType->isFloorDef()) {
-				G_EventPerish(floor);
+				G_EventPerish(*floor);
 				G_FreeEdict(floor);
 			} else
-				G_EventInventoryDelete(floor, G_VisToPM(floor->visflags), from->id, fx, fy);
+				G_EventInventoryDelete(*floor, G_VisToPM(floor->visflags), from->id, fx, fy);
 		}
 	} else {
-		G_EventInventoryDelete(ent, G_TeamToPM(ent->team), from->id, fx, fy);
+		G_EventInventoryDelete(*ent, G_TeamToPM(ent->team), from->id, fx, fy);
 	}
 
 	/* send tu's */
@@ -665,7 +666,7 @@ bool G_ActorInvMove (Edict *ent, const invDef_t *from, invList_t *fItem, const i
 		else
 			mask = G_TeamToPM(ent->team);
 
-		G_EventInventoryReload(toContType->isFloorDef() ? floor : ent, mask, &item, toContType, item2);
+		G_EventInventoryReload(toContType->isFloorDef() ? *floor : *ent, mask, &item, toContType, item2);
 
 		if (ia == IA_RELOAD) {
 			return true;
@@ -706,17 +707,17 @@ bool G_ActorInvMove (Edict *ent, const invDef_t *from, invList_t *fItem, const i
 		} else {
 			/* use the backup item to use the old amount values, because the clients have to use the same actions
 			 * on the original amount. Otherwise they would end in a different amount of items as the server (+1) */
-			G_EventInventoryAdd(floor, G_VisToPM(floor->visflags), 1);
-			G_WriteItem(&fromItemBackup, toContType->id, tx, ty);
+			G_EventInventoryAdd(*floor, G_VisToPM(floor->visflags), 1);
+			G_WriteItem(fromItemBackup, toContType->id, tx, ty);
 			G_EventEnd();
 			/* Couldn't remove it before because that would remove the le from the client and would cause battlescape to crash
 			 * when trying to add back the swapped ammo above */
 			if (ia == IA_RELOAD_SWAP)
-				G_EventInventoryDelete(floor, G_VisToPM(floor->visflags), from->id, fx, fy);
+				G_EventInventoryDelete(*floor, G_VisToPM(floor->visflags), from->id, fx, fy);
 		}
 	} else {
-		G_EventInventoryAdd(ent, G_TeamToPM(ent->team), 1);
-		G_WriteItem(&item, toContType->id, tx, ty);
+		G_EventInventoryAdd(*ent, G_TeamToPM(ent->team), 1);
+		G_WriteItem(item, toContType->id, tx, ty);
 		G_EventEnd();
 	}
 
@@ -726,11 +727,11 @@ bool G_ActorInvMove (Edict *ent, const invDef_t *from, invList_t *fItem, const i
 	mask = G_VisToPM(ent->visflags) & ~G_TeamToPM(ent->team);
 	if (mask) {
 		if (from->isRightDef() || from->isLeftDef()) {
-			G_EventInventoryDelete(ent, mask, from->id, fx, fy);
+			G_EventInventoryDelete(*ent, mask, from->id, fx, fy);
 		}
 		if (toContType->isRightDef() || toContType->isLeftDef()) {
-			G_EventInventoryAdd(ent, mask, 1);
-			G_WriteItem(&item, toContType->id, tx, ty);
+			G_EventInventoryAdd(*ent, mask, 1);
+			G_WriteItem(item, toContType->id, tx, ty);
 			G_EventEnd();
 		}
 	}

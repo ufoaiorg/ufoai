@@ -56,10 +56,10 @@ static void G_MoralePanic (Edict *ent, bool sanity)
 
 	/* send panic */
 	G_SetPanic(ent);
-	G_EventSendState(G_VisToPM(ent->visflags), ent);
+	G_EventSendState(G_VisToPM(ent->visflags), *ent);
 
 	/* center view */
-	G_EventCenterView(ent);
+	G_EventCenterView(*ent);
 
 	/* move around a bit, try to avoid opponents */
 	AI_ActorThink(ent->getPlayer(), ent);
@@ -81,7 +81,7 @@ static void G_MoraleStopPanic (Edict *ent)
 	if (ent->morale / mor_panic->value > m_panic_stop->value * frand()) {
 		G_RemovePanic(ent);
 		G_PrintStats("%s is no longer panicked (entnum %i).", ent->chr.name, ent->number);
-		G_EventSendState(G_VisToPM(ent->visflags), ent);
+		G_EventSendState(G_VisToPM(ent->visflags), *ent);
 	} else {
 		G_MoralePanic(ent, true);
 	}
@@ -104,7 +104,7 @@ static void G_MoraleRage (Edict *ent, bool sanity)
 		gi.BroadcastPrintf(PRINT_HUD, _("%s is consumed by mad rage!"), ent->chr.name);
 		G_PrintStats("%s is consumed by mad rage (entnum %i).", ent->chr.name, ent->number);
 	}
-	G_EventSendState(G_VisToPM(ent->visflags), ent);
+	G_EventSendState(G_VisToPM(ent->visflags), *ent);
 	G_ClientStateChange(ent->getPlayer(), ent, ~STATE_REACTION, false);
 
 	AI_ActorThink(ent->getPlayer(), ent);
@@ -122,7 +122,7 @@ static void G_MoraleStopRage (Edict *ent)
 {
 	if (ent->morale / mor_panic->value > m_rage_stop->value * frand()) {
 		G_RemoveInsane(ent);
-		G_EventSendState(G_VisToPM(ent->visflags), ent);
+		G_EventSendState(G_VisToPM(ent->visflags), *ent);
 		G_PrintStats("%s is no longer insane (entnum %i).", ent->chr.name, ent->number);
 	} else {
 		G_MoralePanic(ent, true); /* regains sanity */
@@ -180,7 +180,7 @@ void G_MoraleBehaviour (int team)
 				/* shaken is later reset along with reaction fire */
 				G_SetShaken(ent);
 				G_ClientStateChange(ent->getPlayer(), ent, STATE_REACTION, false);
-				G_EventSendState(G_VisToPM(ent->visflags), ent);
+				G_EventSendState(G_VisToPM(ent->visflags), *ent);
 				G_ClientPrintf(ent->getPlayer(), PRINT_HUD, _("%s is currently shaken."),
 						ent->chr.name);
 				G_PrintStats("%s is shaken (entnum %i).", ent->chr.name, ent->number);

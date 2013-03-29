@@ -37,7 +37,7 @@ teammask_t G_PMToVis(playermask_t playerMask);
 playermask_t G_VisToPM(teammask_t teamMask);
 void G_ClientPrintf(const Player &player, int printlevel, const char *fmt, ...) __attribute__((format(__printf__, 3, 4)));
 void G_GiveTimeUnits(int team);
-void G_AppearPerishEvent(playermask_t player_mask, bool appear, Edict *check, const Edict *ent);
+void G_AppearPerishEvent(playermask_t player_mask, bool appear, Edict &check, const Edict *ent);
 void G_SendInvisible(const Player &player);
 int G_GetActiveTeam(void);
 bool G_ActionCheckForCurrentTeam(const Player *player, Edict *ent, int TU);

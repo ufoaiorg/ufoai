@@ -1520,8 +1520,8 @@ void AI_CheckRespawn (int team)
 			break;
 
 		const playermask_t playerMask = G_VisToPM(ent->visflags);
-		G_AppearPerishEvent(playerMask, true, ent, NULL);
-		G_EventActorAdd(~playerMask, ent);
+		G_AppearPerishEvent(playerMask, true, *ent, NULL);
+		G_EventActorAdd(~playerMask, *ent);
 
 		diff--;
 	}

@@ -383,7 +383,7 @@ void G_ReactionFireSettingsUpdate (Edict *ent, fireDefIndex_t fmIdx, actorHands_
 		return;
 	}
 
-	G_EventReactionFireChange(ent);
+	G_EventReactionFireChange(*ent);
 
 	/* If reaction fire is active, update the reserved TUs */
 	if (G_IsReaction(ent)) {
@@ -433,7 +433,7 @@ static bool G_ReactionFireSettingsSetDefault (Edict *ent)
 		return false;
 
 	if (!G_IsAI(ent))
-		G_EventReactionFireChange(ent);
+		G_EventReactionFireChange(*ent);
 
 	return true;
 }

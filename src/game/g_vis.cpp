@@ -289,9 +289,9 @@ static int G_DoTestVis (const int team, Edict *check, const vischeckflags_t visF
 		/* swap the vis mask for the given team */
 		const bool appear = (vis & VS_YES) == VS_YES;
 		if (playerMask == 0) {
-			G_VisFlagsSwap(check, G_TeamToVisMask(team));
+			G_VisFlagsSwap(*check, G_TeamToVisMask(team));
 		} else {
-			G_AppearPerishEvent(playerMask, appear, check, ent);
+			G_AppearPerishEvent(playerMask, appear, *check, ent);
 		}
 
 		/* ... to visible */
@@ -304,7 +304,7 @@ static int G_DoTestVis (const int team, Edict *check, const vischeckflags_t visF
 		}
 	} else if (vis == 0 && (visFlags & VT_NEW)) {
 		if (G_IsActor(check)) {
-			G_EventActorAdd(playerMask, check);
+			G_EventActorAdd(playerMask, *check);
 		}
 	}
 	return status;
@@ -384,9 +384,9 @@ void G_VisMakeEverythingVisible (void)
 	Edict *ent = NULL;
 	while ((ent = G_EdictsGetNextInUse(ent))) {
 		const int playerMask = G_VisToPM(ent->visflags);
-		G_AppearPerishEvent(~playerMask, true, ent, NULL);
+		G_AppearPerishEvent(~playerMask, true, *ent, NULL);
 		if (G_IsActor(ent))
-			G_SendInventory(~G_TeamToPM(ent->team), ent);
+			G_SendInventory(~G_TeamToPM(ent->team), *ent);
 	}
 }
 
@@ -424,17 +424,17 @@ void G_VisFlagsClear (int team)
 	}
 }
 
-void G_VisFlagsAdd (Edict *ent, teammask_t teamMask)
+void G_VisFlagsAdd (Edict &ent, teammask_t teamMask)
 {
-	ent->visflags |= teamMask;
+	ent.visflags |= teamMask;
 }
 
-void G_VisFlagsReset (Edict *ent)
+void G_VisFlagsReset (Edict &ent)
 {
-	ent->visflags = 0;
+	ent.visflags = 0;
 }
 
-void G_VisFlagsSwap (Edict *ent, teammask_t teamMask)
+void G_VisFlagsSwap (Edict &ent, teammask_t teamMask)
 {
-	ent->visflags ^= teamMask;
+	ent.visflags ^= teamMask;
 }

@@ -542,8 +542,8 @@ static void G_SplashDamage (Edict *ent, const fireDef_t *fd, vec3_t impact, shot
 				if (G_FrustumVis(ent, check->origin)) {
 					if (!mock) {
 						const unsigned int playerMask = G_TeamToPM(ent->team) ^ G_VisToPM(check->visflags);
-						G_AppearPerishEvent(playerMask, true, check, ent);
-						G_VisFlagsAdd(check, G_PMToVis(playerMask));
+						G_AppearPerishEvent(playerMask, true, *check, ent);
+						G_VisFlagsAdd(*check, G_PMToVis(playerMask));
 					}
 				}
 			}
@@ -602,8 +602,8 @@ static void G_SpawnItemOnFloor (const pos3_t pos, const Item *item)
 	} else {
 		if (game.i.tryAddToInventory(&floor->chr.inv, item, INVDEF(CID_FLOOR))) {
 			/* make it invisible to send the inventory in the below vis check */
-			G_EventPerish(floor);
-			G_VisFlagsReset(floor);
+			G_EventPerish(*floor);
+			G_VisFlagsReset(*floor);
 			G_CheckVis(floor, true);
 		}
 	}
@@ -951,7 +951,7 @@ static void G_ShootSingle (Edict *ent, const fireDef_t *fd, const vec3_t from, c
 		if (!mock) {
 			/* send shot */
 			const bool firstShot = (i == 0);
-			G_EventShoot(ent, mask, fd, firstShot, shootType, flags, &tr, tracefrom, impact);
+			G_EventShoot(*ent, mask, fd, firstShot, shootType, flags, &tr, tracefrom, impact);
 
 			/* send shot sound to the others */
 			G_EventShootHidden(mask, fd, false);
@@ -1246,7 +1246,7 @@ bool G_ClientShoot (const Player &player, Edict *ent, const pos3_t at, shoot_typ
 
 		if (!mock) {
 			G_CheckVisTeamAll(ent->team, 0, ent);
-			G_EventActorTurn(ent);
+			G_EventActorTurn(*ent);
 		}
 	}
 
@@ -1274,7 +1274,7 @@ bool G_ClientShoot (const Player &player, Edict *ent, const pos3_t at, shoot_typ
 			return false;
 
 		/* start shoot */
-		G_EventStartShoot(ent, mask, shootType, at);
+		G_EventStartShoot(*ent, mask, shootType, at);
 
 		/* send shot sound to the others */
 		G_EventShootHidden(mask, fd, true);
@@ -1282,14 +1282,14 @@ bool G_ClientShoot (const Player &player, Edict *ent, const pos3_t at, shoot_typ
 		/* ammo... */
 		if (fd->ammo) {
 			if (ammo > 0 || !weapon->def()->thrown) {
-				G_EventInventoryAmmo(ent, weapon->ammoDef(), ammo, shootType);
+				G_EventInventoryAmmo(*ent, weapon->ammoDef(), ammo, shootType);
 				weapon->setAmmoLeft(ammo);
 			} else { /* delete the knife or the rifle without ammo */
 				const invDef_t *invDef = INVDEF(container);
 				assert(invDef->single);
 				itemAlreadyRemoved = true;	/* for assert only */
 				game.i.emptyContainer(&ent->chr.inv, invDef->id);
-				G_EventInventoryDelete(ent, G_VisToPM(ent->visflags), invDef->id, 0, 0);
+				G_EventInventoryDelete(*ent, G_VisToPM(ent->visflags), invDef->id, 0, 0);
 				G_ReactionFireSettingsUpdate(ent, ent->chr.RFmode.getFmIdx(), ent->chr.RFmode.getHand(),
 						ent->chr.RFmode.getWeapon());
 			}
@@ -1302,7 +1302,7 @@ bool G_ClientShoot (const Player &player, Edict *ent, const pos3_t at, shoot_typ
 				gi.Error("Item %s is already removed", weapon->def()->id);
 			assert(invDef->single);
 			game.i.emptyContainer(&ent->chr.inv, invDef->id);
-			G_EventInventoryDelete(ent, G_VisToPM(ent->visflags), invDef->id, 0, 0);
+			G_EventInventoryDelete(*ent, G_VisToPM(ent->visflags), invDef->id, 0, 0);
 			G_ReactionFireSettingsUpdate(ent, ent->chr.RFmode.getFmIdx(), ent->chr.RFmode.getHand(),
 					ent->chr.RFmode.getWeapon());
 		}
