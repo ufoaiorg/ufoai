@@ -62,12 +62,12 @@ void CP_AddWeaponAmmo (equipDef_t *ed, Item *item)
 		item->ammo = item->def();
 		return;
 	} else if (item->getAmmoLeft()) {
-		assert(item->ammo);
+		assert(item->ammoDef());
 		/* The item is a weapon and it was reloaded one time. */
 		if (item->getAmmoLeft() == type->ammo) {
 			/* Fully loaded, no need to reload, but mark the ammo as used. */
-			if (ed->numItems[item->ammo->idx] > 0) {
-				ed->numItems[item->ammo->idx]--;
+			if (ed->numItems[item->ammoDef()->idx] > 0) {
+				ed->numItems[item->ammoDef()->idx]--;
 			} else {
 				/* Your clip has been sold; give it back. */
 				item->setAmmoLeft(NONE_AMMO);
@@ -77,8 +77,8 @@ void CP_AddWeaponAmmo (equipDef_t *ed, Item *item)
 	}
 
 	/* Check for complete clips of the same kind */
-	if (item->ammo && ed->numItems[item->ammo->idx] > 0) {
-		ed->numItems[item->ammo->idx]--;
+	if (item->ammoDef() && ed->numItems[item->ammoDef()->idx] > 0) {
+		ed->numItems[item->ammoDef()->idx]--;
 		item->setAmmoLeft(type->ammo);
 		return;
 	}
@@ -105,9 +105,9 @@ void CP_AddWeaponAmmo (equipDef_t *ed, Item *item)
 
 	/* Failed to find a complete clip - see if there's any loose ammo
 	 * of the same kind; if so, gather it all in this weapon. */
-	if (item->ammo && ed->numItemsLoose[item->ammo->idx] > 0) {
-		item->setAmmoLeft(ed->numItemsLoose[item->ammo->idx]);
-		ed->numItemsLoose[item->ammo->idx] = 0;
+	if (item->ammoDef() && ed->numItemsLoose[item->ammoDef()->idx] > 0) {
+		item->setAmmoLeft(ed->numItemsLoose[item->ammoDef()->idx]);
+		ed->numItemsLoose[item->ammoDef()->idx] = 0;
 		return;
 	}
 
@@ -122,8 +122,8 @@ void CP_AddWeaponAmmo (equipDef_t *ed, Item *item)
 				 * loose ammo of a different (but appropriate) type with
 				 * more bullets.  Put the previously found ammo back, so
 				 * we'll take the new type. */
-				assert(item->ammo);
-				ed->numItemsLoose[item->ammo->idx] = item->getAmmoLeft();
+				assert(item->ammoDef());
+				ed->numItemsLoose[item->ammoDef()->idx] = item->getAmmoLeft();
 				/* We don't have to accumulate loose ammo into clips
 				 * because we did it previously and we create no new ammo */
 			}

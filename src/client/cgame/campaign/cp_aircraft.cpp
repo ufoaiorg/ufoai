@@ -269,11 +269,11 @@ static void AII_CollectingAmmo (void *data, const Item *magazine)
 {
 	aircraft_t *aircraft = (aircraft_t *)data;
 	/* Let's add remaining ammo to market. */
-	eTempEq.numItemsLoose[magazine->ammo->idx] += magazine->getAmmoLeft();
-	if (eTempEq.numItemsLoose[magazine->ammo->idx] >= magazine->def()->ammo) {
+	eTempEq.numItemsLoose[magazine->ammoDef()->idx] += magazine->getAmmoLeft();
+	if (eTempEq.numItemsLoose[magazine->ammoDef()->idx] >= magazine->def()->ammo) {
 		/* There are more or equal ammo on the market than magazine needs - collect magazine. */
-		eTempEq.numItemsLoose[magazine->ammo->idx] -= magazine->def()->ammo;
-		AII_CollectItem(aircraft, magazine->ammo, 1);
+		eTempEq.numItemsLoose[magazine->ammoDef()->idx] -= magazine->def()->ammo;
+		AII_CollectItem(aircraft, magazine->ammoDef(), 1);
 	}
 }
 
@@ -829,7 +829,7 @@ static int AIR_GetStorageRoom (const aircraft_t *aircraft)
 				const objDef_t *obj = ic->def();
 				size += obj->size;
 
-				obj = ic->ammo;
+				obj = ic->ammoDef();
 				if (obj)
 					size += obj->size;
 			}
@@ -883,7 +883,7 @@ static void AIR_TransferItemsCarriedByCharacterToBase (character_t *chr, base_t 
 			B_UpdateStorageAndCapacity(sourceBase, obj, -1, false);
 			B_UpdateStorageAndCapacity(destBase, obj, 1, false);
 
-			obj = ic->ammo;
+			obj = ic->ammoDef();
 			if (obj) {
 				B_UpdateStorageAndCapacity(sourceBase, obj, -1, false);
 				B_UpdateStorageAndCapacity(destBase, obj, 1, false);
@@ -3054,7 +3054,7 @@ void AIR_MoveEmployeeInventoryIntoStorage (const aircraft_t &aircraft, equipDef_
 
 				ed.numItems[type->idx]++;
 				if (item.getAmmoLeft() && type->reload) {
-					assert(item.ammo);
+					assert(item.ammoDef());
 					/* Accumulate loose ammo into clips */
 					ed.addClip(&item);
 				}

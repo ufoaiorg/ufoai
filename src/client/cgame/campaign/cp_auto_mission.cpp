@@ -794,8 +794,8 @@ static void AM_MoveCharacterInventoryIntoItemCargo (aircraft_t *aircraft, charac
 			if (item->def()) {
 				AII_CollectItem(aircraft, item->def(), 1);
 
-				if (item->getAmmoLeft() && item->ammo)
-					AII_CollectItem(aircraft, item->ammo, 1);
+				if (item->getAmmoLeft() && item->ammoDef())
+					AII_CollectItem(aircraft, item->ammoDef(), 1);
 			}
 			ic = next;
 		}
