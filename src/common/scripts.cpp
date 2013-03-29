@@ -150,42 +150,40 @@ const char *Com_GetConstVariable (const char *space, int value)
  */
 bool Com_UnregisterConstVariable (const char *name)
 {
-	com_constNameInt_t *a;
 	com_constNameInt_t *prev = NULL;
 
-	a = com_constNameInt;
+	com_constNameInt_t *a = com_constNameInt;
 	while (a) {
-		if (a->fullname) {
-			if (Q_streq(a->fullname, name)) {
-				const char *variable = Com_ConstIntGetVariable(name);
-				const unsigned int hash = Com_HashKey(variable, CONSTNAMEINT_HASH_SIZE);
-				com_constNameInt_t *b;
-
-				if (prev)
-					prev->next = a->next;
-				else
-					com_constNameInt = a->next;
-
-				prev = NULL;
-
-				for (b = com_constNameInt_hash[hash]; b; prev = b, b = b->hash_next) {
-					if (b->fullname) {
-						if (Q_streq(name, b->fullname)) {
-							if (prev)
-								prev->hash_next = b->hash_next;
-							else
-								com_constNameInt_hash[hash] = com_constNameInt_hash[hash]->hash_next;
-							break;
-						}
-					}
-				}
-				Mem_Free(a->fullname);
-				Mem_Free(a);
-				return true;
-			}
+		if (!a->fullname || !Q_streq(a->fullname, name)) {
+			prev = a;
+			a = a->next;
+			continue;
 		}
-		prev = a;
-		a = a->next;
+
+		if (prev)
+			prev->next = a->next;
+		else
+			com_constNameInt = a->next;
+
+		prev = NULL;
+
+		const char *variable = Com_ConstIntGetVariable(name);
+		const unsigned int hash = Com_HashKey(variable, CONSTNAMEINT_HASH_SIZE);
+		for (com_constNameInt_t *b = com_constNameInt_hash[hash]; b; prev = b, b = b->hash_next) {
+			if (!b->fullname)
+				continue;
+			if (!Q_streq(name, b->fullname))
+				continue;
+
+			if (prev)
+				prev->hash_next = b->hash_next;
+			else
+				com_constNameInt_hash[hash] = com_constNameInt_hash[hash]->hash_next;
+			break;
+		}
+		Mem_Free(a->fullname);
+		Mem_Free(a);
+		return true;
 	}
 	return false;
 }
