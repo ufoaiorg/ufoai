@@ -1631,14 +1631,14 @@ static void Com_ParseArmourOrResistance (const char *name, const char **text, sh
 			return;
 
 		for (i = 0; i < csi.numDTs; i++) {
-			damageType_t *dt = &csi.dts[i];
-			if (Q_streq(token, dt->id)) {
+			const damageType_t &dt = csi.dts[i];
+			if (Q_streq(token, dt.id)) {
 				token = Com_EParse(text, errhead, name);
 				if (!*text)
 					return;
-				if (rating && !dt->showInMenu)
+				if (rating && !dt.showInMenu)
 					Sys_Error("Com_ParseArmourOrResistance: You try to set a rating value for a none menu displayed damage type '%s'",
-							dt->id);
+							dt.id);
 				/* protection or rating values */
 				ad[i] = atoi(token);
 				break;
