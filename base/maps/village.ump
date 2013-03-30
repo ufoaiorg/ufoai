@@ -2,21 +2,13 @@
 // MIDDLE EUROPEAN VILLAGE
 // *********************************
 
-base village/vil_
-
-// Legend:
-// ------
-// +s: street tiles (road)
-// +r: recreational tiles (fountain, park)
-// +c: commercial tiles
-// +d: dummy tiles (to fill gaps)
-// +h: house tiles
-
 // Tiletypes
 // ------
 // a: common tile
-// b: street horizontal connection
-// c: street vertical connection
+// b: street horizontally
+// c: street vertically
+
+base village/vil_
 
 
 // dropship tiles --------------------------------------------------*
@@ -189,9 +181,9 @@ h		+ah		+a		0
 0		0		v		0
 }
 
-// nature ----------------------------------------------------------*
+// miscellaneous ---------------------------------------------------*
 
-tile +d01
+tile +misc_01
 	// a small garden, a bench, A- C2
 {
 3 3
@@ -200,25 +192,7 @@ tile +d01
 0		0		0
 }
 
-tile +d02
-	// a single tree, A- C-
-{
-3 3
-0		0		0
-0		+a		0
-0		0		0
-}
-
-tile +d03
-	// a single tree, ground slightly raised, two plants, A- C-
-{
-4 3
-0		0		0		0
-0		+a		+a		0
-0		0		0		0
-}
-
-tile +d04
+tile +misc_02
 	// two barrels, two boxes, adverts, A- C-
 {
 3 3
@@ -227,7 +201,9 @@ tile +d04
 0		0		0
 }
 
-tile +d05
+// nature ----------------------------------------------------------*
+
+tile +nature_01
 	// a single tree, A- C-
 {
 3 3
@@ -236,7 +212,25 @@ tile +d05
 0		0		0
 }
 
-tile +d06
+tile +nature_02
+	// a single tree, ground slightly raised, two plants, A- C-
+{
+4 3
+0		0		0		0
+0		+a		+a		0
+0		0		0		0
+}
+
+tile +nature_03
+	// a single tree, A- C-
+{
+3 3
+0		0		0
+0		+a		0
+0		0		0
+}
+
+tile +nature_04
 	// a single fir, a bench, A- C-
 {
 3 3
@@ -245,7 +239,7 @@ tile +d06
 0		0		0
 }
 
-tile +d07
+tile +nature_05
 	// plain, some plants
 {
 3 3
@@ -254,7 +248,7 @@ tile +d07
 0		0		0
 }
 
-tile +nature_08
+tile +nature_06
 	// raised ground
 {
 4 4
@@ -266,8 +260,8 @@ tile +nature_08
 
 // buildings -------------------------------------------------------*
 
-tile +h01
-	// big house with wooden roof, wooden fence, A3 C3
+tile +diner_01
+	// diner, A2 C3
 {
 4 4
 0		0		0		0
@@ -276,7 +270,7 @@ tile +h01
 0		h		h		0
 }
 
-tile +h02
+tile +garage_01
 	// garage at vertical street
 {
 4 3
@@ -285,18 +279,7 @@ tile +h02
 0		v		0		0
 }
 
-tile +h03
-	// L-shaped house known from +eaglenest map, A2 C1
-	// does not fit the theme at all
-{
-4 4
-0		0		0		0
-0		+a		+a		0
-0		0		+a		0
-0		0		0		0
-}
-
-tile +h04
+tile +garage_02
 	// garage at horizontal street
 {
 3 4
@@ -306,28 +289,7 @@ h		+ah		h
 0		0		0
 }
 
-tile +h05
-	// modern house, A3 C1
-{
-4 4
-0		0		0		0
-v		+a		+a		0
-v		+a		+a		0
-0		0		0		0
-}
-
-tile +c01
-	// small market, A3, C2
-	// TODO connect to street, add parking site
-{
-4 4
-0		h		h		0
-0		+a		+a		0
-0		+a		+a		0
-0		0		0		0
-}
-
-tile +c02
+tile +gasstation_01
 	// gas station, A3, C1
 {
 4 5
@@ -338,8 +300,8 @@ tile +c02
 0		0		0		0
 }
 
-tile +c04
-	// diner, A2 C3
+tile +house_01
+	// big house with wooden roof, wooden fence, A3 C3
 {
 4 4
 0		0		0		0
@@ -348,19 +310,41 @@ tile +c04
 0		h		h		0
 }
 
-// recreational ----------------------------------------------------*
-
-tile +r01
-	// playground, A3 C2
+tile +house_02
+	// L-shaped house known from +eaglenest map, A2 C1
+	// does not fit the theme at all
 {
 4 4
 0		0		0		0
-r		+ar		+ar		0
-r		+ar		+ar		0
+0		+a		+a		0
+0		0		+a		0
 0		0		0		0
 }
 
-tile +r02
+tile +house_03
+	// modern house, A3 C1
+{
+4 4
+0		0		0		0
+v		+a		+a		0
+v		+a		+a		0
+0		0		0		0
+}
+
+tile +mart_01
+	// small market, A3, C2
+	// TODO connect to street, add parking site
+{
+4 4
+0		h		h		0
+0		+a		+a		0
+0		+a		+a		0
+0		0		0		0
+}
+
+// recreational ----------------------------------------------------*
+
+tile +park_01
 	// park, A5 C1
 	// TODO move hedges away from tile borders
 {
@@ -371,7 +355,17 @@ tile +r02
 0		0		0		0		0
 }
 
-tile +r03
+tile +playground_01
+	// playground, A3 C2
+{
+4 4
+0		0		0		0
+r		+ar		+ar		0
+r		+ar		+ar		0
+0		0		0		0
+}
+
+tile +fountain_01
 	// a fountain, A- C-
 {
 3 3
@@ -383,15 +377,15 @@ v		+a		0
 // tilesets --------------------------------------------------------*
 
 tileset garage {
-	+h02
-	+h04
+	+garage_01
+	+garage_02
 }
 
-tileset generic {
-	+d02
-	+d05
-	+d06
-	+d07
+tileset nature {
+	+nature_01
+	+nature_03
+	+nature_04
+	+nature_05
 }
 
 tileset street_01 {
@@ -435,24 +429,23 @@ assembly medium
 {
 size "9 9"
 title "_Village"
-+c01			"0 1"
-+c02			"0 1"
-+c04			"0 1"
-+h01			"0 1"
-+h03			"0 1"
-+h05			"0 1"
-+d01			"0 1"
-+d02			"0 1"
-+d03			"0 1"
-+d04			"0 1"
-+d05			"0 1"
-+d06			"0 1"
-+d07			"0 15"
-+nature_08		"0 1"
-+r01			"0 1"
-+r02			"0 1"
-+r03			"0 1"
+
+
++diner_01			"0 1"
++fountain_01		"0 1"
++gasstation_01		"0 1"
++house_01			"0 1"
++house_02			"0 1"
++house_03			"0 1"
++mart_01			"0 1"
++misc_01			"0 1"
++misc_02			"0 1"
++nature_02			"0 1"
++nature_06			"0 1"
++park_01			"0 1"
++playground_01		"0 1"
 tileset garage		"0 1"
+tileset nature		"0 18"
 tileset street_h	"0 5"
 tileset street_v	"0 5"
 *rm_drop +craft_drop_firebird "1 1"
@@ -463,23 +456,23 @@ assembly medium_noufo
 {
 size "8 8"
 title "_Village"
-+c01			"0 1"
-+c02			"0 1"
-+c04			"0 1"
-+h01			"0 1"
-+h03			"0 1"
-+h05			"0 1"
-+d01			"0 1"
-+d02			"0 1"
-+d03			"0 1"
-+d04			"0 1"
-+d05			"0 1"
-+d06			"0 1"
-+d07			"0 15"
-+nature_08		"0 1"
-+r01			"0 1"
-+r02			"0 1"
-+r03			"0 1"
++diner_01			"0 1"
++fountain_01		"0 1"
++gasstation_01		"0 1"
++house_01			"0 1"
++house_02			"0 1"
++house_03			"0 1"
++misc_01			"0 1"
++misc_02			"0 1"
++mart_01			"0 1"
++nature_01			"0 1"
++nature_02			"0 1"
++nature_03			"0 1"
++nature_04			"0 1"
++nature_05			"0 15"
++nature_06			"0 1"
++park_01			"0 1"
++playground_01		"0 1"
 tileset garage		"0 1"
 tileset street_02	"0 1"
 tileset street_03	"0 1"
@@ -492,22 +485,23 @@ assembly small
 {
 size "7 7"
 title "_Village"
-+c01			"0 1"
-+c02			"0 1"
-+c04			"0 1"
-+h01			"0 1"
-+h03			"0 1"
-+h05			"0 1"
-+d01			"0 1"
-+d02			"0 1"
-+d03			"0 1"
-+d04			"0 1"
-+d05			"0 1"
-+d06			"0 1"
-+d07			"0 7"
-+r01			"0 1"
-+r02			"0 1"
-+r03			"0 1"
+
++diner_01			"0 1"
++fountain_01		"0 1"
++gasstation_01		"0 1"
++house_01			"0 1"
++house_02			"0 1"
++house_03			"0 1"
++mart_01			"0 1"
++misc_01			"0 1"
++misc_02			"0 1"
++nature_01			"0 1"
++nature_02			"0 1"
++nature_03			"0 1"
++nature_04			"0 1"
++nature_05			"0 7"
++park_01			"0 1"
++playground_01		"0 1"
 tileset garage		"0 1"
 tileset street_h	"0 5"
 tileset street_v	"0 5"
@@ -521,23 +515,23 @@ assembly test
 {
 size "8 8"
 title "_Village"
-+c01			"0 1"
-+c02			"0 1"
-+c04			"0 1"
-+h01			"0 1"
-+h03			"0 1"
-+h05			"0 1"
-+d01			"0 1"
-+d02			"0 1"
-+d03			"0 1"
-+d04			"0 1"
-+d05			"0 1"
-+d06			"0 1"
-+d07			"0 15"
-+nature_08		"0 1"
-+r01			"0 1"
-+r02			"0 1"
-+r03			"0 1"
++mart_01			"0 1"
++gasstation_01		"0 1"
++diner_01			"0 1"
++house_01			"0 1"
++house_02			"0 1"
++house_03			"0 1"
++misc_01			"0 1"
++nature_01			"0 1"
++nature_02			"0 1"
++misc_02			"0 1"
++nature_03			"0 1"
++nature_04			"0 1"
++nature_05			"0 15"
++nature_06			"0 1"
++playground_01		"0 1"
++park_01			"0 1"
++fountain_01		"0 1"
 tileset garage		"0 1"
 tileset street_02	"0 1"
 tileset street_03	"0 1"

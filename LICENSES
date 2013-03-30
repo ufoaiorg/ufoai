@@ -706,31 +706,31 @@ base/maps/tropic/tr_r05.map | GNU General Public License 2.0 or later
 base/maps/ufocrash.ump | GNU General Public License 2.0 or later
 base/maps/village.map | GNU General Public License 2.0 or later | "SparX" Beyeler
 base/maps/village.ump | GNU General Public License 2.0 or later
-base/maps/village/vil_c01.map | GNU General Public License 2.0 or later
-base/maps/village/vil_c02.map | GNU General Public License 2.0 or later
-base/maps/village/vil_c04.map | GNU General Public License 2.0 or later
 base/maps/village/vil_craft_drop_firebird.map | GNU General Public License 2.0 or later
 base/maps/village/vil_craft_drop_herakles.map | GNU General Public License 2.0 or later
 base/maps/village/vil_craft_drop_raptor.map | GNU General Public License 2.0 or later
 base/maps/village/vil_craft_ufo_fighter.map | GNU General Public License 2.0 or later
 base/maps/village/vil_craft_ufo_harvester.map | GNU General Public License 2.0 or later
 base/maps/village/vil_craft_ufo_scout.map | GNU General Public License 2.0 or later
-base/maps/village/vil_d01.map | GNU General Public License 2.0 or later
-base/maps/village/vil_d02.map | GNU General Public License 2.0 or later
-base/maps/village/vil_d03.map | GNU General Public License 2.0 or later
-base/maps/village/vil_d04.map | GNU General Public License 2.0 or later
-base/maps/village/vil_d05.map | GNU General Public License 2.0 or later
-base/maps/village/vil_d06.map | GNU General Public License 2.0 or later
-base/maps/village/vil_d07.map | GNU General Public License 2.0 or later
-base/maps/village/vil_h01.map | GNU General Public License 2.0 or later
-base/maps/village/vil_h02.map | GNU General Public License 2.0 or later
-base/maps/village/vil_h03.map | GNU General Public License 2.0 or later
-base/maps/village/vil_h04.map | GNU General Public License 2.0 or later
-base/maps/village/vil_h05.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
-base/maps/village/vil_nature_08.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
-base/maps/village/vil_r01.map | GNU General Public License 2.0 or later
-base/maps/village/vil_r02.map | GNU General Public License 2.0 or later
-base/maps/village/vil_r03.map | GNU General Public License 2.0 or later
+base/maps/village/vil_diner_01.map | GNU General Public License 2.0 or later
+base/maps/village/vil_fountain_01.map | GNU General Public License 2.0 or later
+base/maps/village/vil_garage_01.map | GNU General Public License 2.0 or later
+base/maps/village/vil_garage_02.map | GNU General Public License 2.0 or later
+base/maps/village/vil_gasstation_01.map | GNU General Public License 2.0 or later
+base/maps/village/vil_house_01.map | GNU General Public License 2.0 or later
+base/maps/village/vil_house_02.map | GNU General Public License 2.0 or later
+base/maps/village/vil_house_03.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/village/vil_mart_01.map | GNU General Public License 2.0 or later
+base/maps/village/vil_misc_01.map | GNU General Public License 2.0 or later
+base/maps/village/vil_misc_02.map | GNU General Public License 2.0 or later
+base/maps/village/vil_nature_01.map | GNU General Public License 2.0 or later
+base/maps/village/vil_nature_02.map | GNU General Public License 2.0 or later
+base/maps/village/vil_nature_03.map | GNU General Public License 2.0 or later
+base/maps/village/vil_nature_04.map | GNU General Public License 2.0 or later
+base/maps/village/vil_nature_05.map | GNU General Public License 2.0 or later
+base/maps/village/vil_nature_06.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/village/vil_park_01.map | GNU General Public License 2.0 or later
+base/maps/village/vil_playground_01.map | GNU General Public License 2.0 or later
 base/maps/village/vil_street_crossing.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
 base/maps/village/vil_street_h_01.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
 base/maps/village/vil_street_junction_e.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
