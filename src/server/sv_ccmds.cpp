@@ -130,11 +130,6 @@ bool SV_CheckMap (const char *map, const char *assembly)
  */
 static void SV_Map_f (void)
 {
-	const char *assembly = NULL;
-	char bufMap[MAX_TOKEN_CHARS * MAX_TILESTRINGS];
-	char bufAssembly[MAX_TOKEN_CHARS * MAX_TILESTRINGS];
-	bool day;
-
 	if (Cmd_Argc() < 3) {
 		Com_Printf("Usage: %s <day|night> <mapname> [<assembly>]\n", Cmd_Argv(0));
 		Com_Printf("Use 'maplist' to get a list of all installed maps\n");
@@ -155,6 +150,7 @@ static void SV_Map_f (void)
 		Cvar_SetValue("g_nospawn", 0);
 	}
 
+	bool day;
 	if (Q_streq(Cmd_Argv(1), "day")) {
 		day = true;
 	} else if (Q_streq(Cmd_Argv(1), "night")) {
@@ -163,21 +159,22 @@ static void SV_Map_f (void)
 		Com_Printf("Invalid lightmap parameter - use day or night\n");
 		return;
 	}
-	/* we copy them to buffers because the command pointers might be invalid soon */
 
+	/* we copy them to buffers because the command pointers might be invalid soon */
+	char bufMap[MAX_QPATH];
+	char bufAssembly[MAX_QPATH] = "";
 	Q_strncpyz(bufMap, Cmd_Argv(2), sizeof(bufMap));
 	/* assembled maps uses position strings */
 	if (Cmd_Argc() == 4) {
-		assembly = bufAssembly;
 		Q_strncpyz(bufAssembly, Cmd_Argv(3), sizeof(bufAssembly));
 	}
 
 	/* check to make sure the level exists */
-	if (!SV_CheckMap(bufMap, assembly))
+	if (!SV_CheckMap(bufMap, bufAssembly))
 		return;
 
 	/* start up the next map */
-	SV_Map(day, bufMap, assembly);
+	SV_Map(day, bufMap, bufAssembly);
 }
 
 /**

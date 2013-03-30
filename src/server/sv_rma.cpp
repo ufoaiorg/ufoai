@@ -1979,7 +1979,7 @@ static MapInfo* SV_DoMapAssemble (MapInfo *map, const char *assembly, char *asmM
 		SV_AddTile(map, &map->mTile[mAsm->fT[i]], mAsm->fX[i], mAsm->fY[i], -1, -1);
 
 	if (sv_threads->integer && sv_rma->integer == 1) {
-		int oldCount = map->retryCnt;
+		const int oldCount = map->retryCnt;
 		if (SV_ParallelSearch(map) < 0) {
 			if (oldCount < map->retryCnt && mAsm->numSeeds > 0) {
 				/* if we are allowed to restart the search with a fixed seed
