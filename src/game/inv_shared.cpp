@@ -840,8 +840,8 @@ bool inventory_t::canHoldItemWeight (containerIndex_t from, containerIndex_t to,
 	if (CSI->ids[to].temp || !CSI->ids[from].temp)
 		return true;
 
-	const bool swapArmour = item.isArmour() && getArmourContainer();
-	const float invWeight = getWeight() - (swapArmour ? getArmourContainer()->getWeight() : 0);
+	const bool swapArmour = item.isArmour() && getArmour();
+	const float invWeight = getWeight() - (swapArmour ? getArmour()->getWeight() : 0);
 	float itemWeight = item.getWeight();
 
 	return (maxWeight < 0 || maxWeight >= invWeight + itemWeight);
@@ -899,7 +899,7 @@ invList_t *inventory_t::getEquipContainer () const
 	return getContainer3(CID_EQUIP);
 }
 
-invList_t *inventory_t::getArmourContainer (void) const
+Item *inventory_t::getArmour () const
 {
 	return getContainer2(CID_ARMOUR);
 }

@@ -519,7 +519,7 @@ typedef struct inventory_s {
 	{
 		return findInContainer(contId, item) ? true : false;
 	}
-	invList_t *getArmourContainer () const;
+	Item *getArmour () const;
 	invList_t *getRightHandContainer() const;
 	invList_t *getLeftHandContainer () const;
 	invList_t *getHeadgearContainer() const;

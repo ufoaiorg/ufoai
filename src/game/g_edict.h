@@ -181,7 +181,7 @@ public:
 	}
 	inline Item *getArmour () const
 	{
-		return chr.inv.getArmourContainer();
+		return chr.inv.getArmour();
 	}
 	inline Item *getRightHandItem () const
 	{
