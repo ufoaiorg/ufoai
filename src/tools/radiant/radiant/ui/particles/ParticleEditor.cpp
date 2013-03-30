@@ -8,7 +8,7 @@ namespace ui
 
 	namespace
 	{
-		const char* PARTICLEEDITOR_TITLE = _("Particle Editor");
+		const char *PARTICLEEDITOR_TITLE = _("Particle Editor");
 	}
 
 	ParticleEditor::ParticleEditor () :

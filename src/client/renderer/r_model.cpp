@@ -147,7 +147,7 @@ static bool R_LoadModel (model_t *mod, const char *filename)
 
 	default:
 	{
-		const char* ext = Com_GetExtension(filename);
+		const char *ext = Com_GetExtension(filename);
 		if (ext != NULL && !Q_strcasecmp(ext, "obj"))
 			R_LoadObjModel(mod, buf, modfilelen);
 		else
@@ -326,7 +326,7 @@ void R_SwitchModelMemPoolTag (void)
  * @brief Register an actorskin name
  * @return The id where the actorskin is registered
  */
-int R_ModAllocateActorSkin (const char* name)
+int R_ModAllocateActorSkin (const char *name)
 {
 	if (r_numActorSkinName >= lengthof(r_actorSkinNames))
 		return -1;
@@ -341,7 +341,7 @@ bool R_UseActorSkin (void)
 	return r_numActorSkinName != 0;
 }
 
-static const char* R_GetActorSkin (int id)
+static const char *R_GetActorSkin (int id)
 {
 	assert(id >= 0 && id < r_numActorSkinName);
 	return r_actorSkinNames[id];

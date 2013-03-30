@@ -152,7 +152,7 @@ void HUD_UpdateActorStats (const le_t *le)
 
 	const character_t *chr = CL_ActorGetChr(le);
 	assert(chr);
-	const char* tooltip = va(_("%s\nHP: %i/%i TU: %i\n%s"),
+	const char *tooltip = va(_("%s\nHP: %i/%i TU: %i\n%s"),
 		chr->name, le->HP, le->maxHP, le->TU, (item && item->def()) ? _(item->def()->name) : "");
 
 	const int idx = CL_ActorGetNumber(le);
@@ -401,7 +401,7 @@ static void HUD_ShotReserve_f (void)
  * @param hand What list to display
  * @param index Index of the actual firemode
  */
-static void HUD_DisplayFiremodeEntry (const char* callback, const le_t* actor, const objDef_t *ammo, const weaponFireDefIndex_t weapFdsIdx, const actorHands_t hand, const int index)
+static void HUD_DisplayFiremodeEntry (const char *callback, const le_t* actor, const objDef_t *ammo, const weaponFireDefIndex_t weapFdsIdx, const actorHands_t hand, const int index)
 {
 	if (index >= ammo->numFiredefs[weapFdsIdx])
 		return;
@@ -447,7 +447,7 @@ static void HUD_DisplayFiremodeEntry (const char* callback, const le_t* actor, c
  * @param actor actor who can do the actions
  * @param type The action to display
  */
-static void HUD_DisplayActions (const char* callback, const le_t* actor, actionType_t type)
+static void HUD_DisplayActions (const char *callback, const le_t* actor, actionType_t type)
 {
 	int i;
 
@@ -984,7 +984,7 @@ static void HUD_UpdateButtons (const le_t *le)
 
 	/* Check if the firemode reservation popup is shown and refresh its content. (i.e. close&open it) */
 	{
-		const char* menuName = UI_GetActiveWindowName();
+		const char *menuName = UI_GetActiveWindowName();
 		if (menuName[0] != '\0' && strstr(UI_GetActiveWindowName(), POPUPLIST_NODE_NAME)) {
 			/* Update firemode reservation popup. */
 			/** @todo this is called every frames... is this really needed? */

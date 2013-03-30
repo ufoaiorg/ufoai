@@ -28,11 +28,11 @@ namespace ui
 
 	namespace
 	{
-		const char* MODELSELECTOR_TITLE = _("Choose model");
+		const char *MODELSELECTOR_TITLE = _("Choose model");
 		const std::string MODELS_FOLDER = "models";
-		const char* MD2_EXTENSION = "md2";
-		const char* MD3_EXTENSION = "md3";
-		const char* OBJ_EXTENSION = "obj";
+		const char *MD2_EXTENSION = "md2";
+		const char *MD3_EXTENSION = "md3";
+		const char *OBJ_EXTENSION = "obj";
 
 		// Treestore enum
 		enum
