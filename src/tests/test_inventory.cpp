@@ -211,7 +211,7 @@ static void testItemReload (void)
 
 	CU_ASSERT(inv.containsItem(containerFrom->id, &ammo) == false);
 
-	item.ammo = ad;
+	item.setAmmoDef(ad);
 	item.setAmmoLeft(1);
 
 	CU_ASSERT(inv.containsItem(container->id, &item) == true);
@@ -233,7 +233,7 @@ static void testItemReload (void)
 	CU_ASSERT(inv.containsItem(containerFrom->id, &ammoFrom) == false);
 	CU_ASSERT(inv.containsItem(containerFrom->id, &ammo) == true);
 
-	item.ammo = ad;
+	item.setAmmoDef(ad);
 
 	CU_ASSERT(inv.containsItem(container->id, &item) == true);
 }

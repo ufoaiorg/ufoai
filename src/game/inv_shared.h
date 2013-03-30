@@ -365,6 +365,7 @@ typedef struct invDef_s {
  */
 class Item {
 	const objDef_t *_itemDef;	/**< The weapon definition. */
+	const objDef_t *_ammoDef;	/**< Pointer to ammo definition. */
 	Item *_next;				/**< Next entry in this list. */
 	int _x, _y;					/**< Position (aka origin location) of the item in the container/invlist.
 								 * @note ATTENTION Do not use this to get an item by comparing it against a x/y value.
@@ -372,7 +373,6 @@ class Item {
 	int _amount;				/**< The amount of items of this type on the same x and y location in the container */
 	int _ammoLeft;				/**< Number of ammo rounds left - see NONE_AMMO */
 public:
-	const objDef_t *ammo;		/**< Pointer to ammo definition. */
 	int rotated;	/**< If the item is currently displayed rotated (true or 1) or not (false or 0)
 					 * @note don't change this to anything smaller than 4 bytes - the network
 					 * parsing functions are expecting this to be at least 4 bytes */
@@ -380,11 +380,11 @@ public:
 
 	inline const objDef_t *ammoDef (void) const
 	{
-		return ammo;
+		return _ammoDef;
 	}
 	inline void setAmmoDef (const objDef_t *od)
 	{
-		ammo = od;
+		_ammoDef = od;
 	}
 	inline int getAmount () const
 	{
