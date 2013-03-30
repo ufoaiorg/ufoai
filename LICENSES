@@ -708,7 +708,6 @@ base/maps/village.map | GNU General Public License 2.0 or later | "SparX" Beyele
 base/maps/village.ump | GNU General Public License 2.0 or later
 base/maps/village/vil_c01.map | GNU General Public License 2.0 or later
 base/maps/village/vil_c02.map | GNU General Public License 2.0 or later
-base/maps/village/vil_c03.map | GNU General Public License 2.0 or later
 base/maps/village/vil_c04.map | GNU General Public License 2.0 or later
 base/maps/village/vil_craft_drop_firebird.map | GNU General Public License 2.0 or later
 base/maps/village/vil_craft_drop_herakles.map | GNU General Public License 2.0 or later
@@ -728,18 +727,21 @@ base/maps/village/vil_h02.map | GNU General Public License 2.0 or later
 base/maps/village/vil_h03.map | GNU General Public License 2.0 or later
 base/maps/village/vil_h04.map | GNU General Public License 2.0 or later
 base/maps/village/vil_h05.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/village/vil_nature_08.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
 base/maps/village/vil_r01.map | GNU General Public License 2.0 or later
 base/maps/village/vil_r02.map | GNU General Public License 2.0 or later
 base/maps/village/vil_r03.map | GNU General Public License 2.0 or later
-base/maps/village/vil_s01.map | GNU General Public License 2.0 or later
-base/maps/village/vil_s02.map | GNU General Public License 2.0 or later
-base/maps/village/vil_s03.map | GNU General Public License 2.0 or later
-base/maps/village/vil_s04.map | GNU General Public License 2.0 or later
-base/maps/village/vil_s05.map | GNU General Public License 2.0 or later
-base/maps/village/vil_s06.map | GNU General Public License 2.0 or later
-base/maps/village/vil_s07.map | GNU General Public License 2.0 or later
-base/maps/village/vil_s08.map | GNU General Public License 2.0 or later
-base/maps/village/vil_s15.map | GNU General Public License 2.0 or later
+base/maps/village/vil_street_crossing.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/village/vil_street_h_01.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/village/vil_street_junction_e.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/village/vil_street_junction_n.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/village/vil_street_junction_s.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/village/vil_street_junction_w.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/village/vil_street_ne.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/village/vil_street_nw.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/village/vil_street_se.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/village/vil_street_sw.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/village/vil_street_v_01.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
 base/maps/wilderness.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/media/DejaVuSans.ttf | Public Domain | http://dejavu-fonts.org | http://dejavu.sourceforge.net/
 base/media/FreeMono.ttf | GNU General Public License 3.0 or later | http://savannah.nongnu.org/projects/freefont/ | http://savannah.nongnu.org/projects/freefont/
@@ -4693,6 +4695,9 @@ base/textures/tex_buildings/floor_gray_nm.png | GNU General Public License 2.0
 base/textures/tex_buildings/floor_se01.png | GNU General Public License 2.0 or later | FWishbringer
 base/textures/tex_buildings/floor_se02.png | GNU General Public License 2.0 or later | FWishbringer
 base/textures/tex_buildings/floor_se03.png | Creative Commons Attribution-Share Alike 3.0 Unported | Saroman | http://opengameart.org/content/stone-pavement-ground-tile
+base/textures/tex_buildings/floor_se04.png | Creative Commons Attribution-Share Alike 3.0 | AGF81 | http://agf81.deviantart.com/art/Seamless-Cobblestone-181707969
+base/textures/tex_buildings/floor_se04_nm.png | Creative Commons Attribution-Share Alike 3.0 | AGF81 | http://agf81.deviantart.com/art/Seamless-Cobblestone-181707969
+base/textures/tex_buildings/floor_se04_sm.png | Creative Commons Attribution-Share Alike 3.0 | AGF81 | http://agf81.deviantart.com/art/Seamless-Cobblestone-181707969
 base/textures/tex_buildings/ground_dirt1.png | Creative Commons Attribution-Share Alike 3.0 | hullbr3ach
 base/textures/tex_buildings/ind05_pipe.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_buildings/ind05_pipe_nm.png | GNU General Public License 2.0 or later | Nate Wright

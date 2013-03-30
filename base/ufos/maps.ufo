@@ -2625,13 +2625,14 @@ mapdef ufocrash
 // VILLAGE RANDOM MAPS //
 /////////////////////////
 
-mapdef village_commercial
+mapdef village_medium
 {
-	map			"+village"
-	param		"commercial"
-	description	"_Suburban City"
-	multiplayer	false
-	maxaliens	16
+	map				"+village"
+	param			"medium"
+	description		"_Suburban City"
+	multiplayer		false
+	size			"medium"
+	maxaliens		16
 
 	aircraft
 	(
@@ -2642,21 +2643,55 @@ mapdef village_commercial
 
 	ufos
 	(
-		craft_ufo_scout
-		craft_ufo_fighter
 		craft_ufo_harvester
 	)
 
 	terrains
 	(
-		"grass"
-		"cold"
-		"tropical"
+		// any
 	)
 
 	cultures
 	(
-		//any
+		"western"
+	)
+
+	populations
+	(
+		"village"
+		"suburban"
+	)
+}
+
+mapdef village_medium_noufo
+{
+	map				"+village"
+	param			"medium_noufo"
+	description		"_Suburban City"
+	multiplayer		false
+	size			"medium"
+	maxaliens		16
+
+	aircraft
+	(
+		craft_drop_firebird
+		craft_drop_raptor
+		craft_drop_herakles
+	)
+
+	ufos
+	(
+		// any
+	)
+
+	terrains
+	(
+		// any
+	)
+
+	cultures
+	(
+		"western"
 	)
 
 	populations
@@ -2668,12 +2703,12 @@ mapdef village_commercial
 
 mapdef village_small
 {
-	map			"+village"
-	param		"small"
-	description	"_Suburban City"
-	multiplayer	false
-	size "small"
-	maxaliens	6
+	map				"+village"
+	param			"small"
+	description		"_Suburban City"
+	multiplayer		false
+	size			"small"
+	maxaliens		9
 
 	aircraft
 	(
@@ -2690,14 +2725,12 @@ mapdef village_small
 
 	terrains
 	(
-		"grass"
-		"cold"
-		"tropical"
+		// any
 	)
 
 	cultures
 	(
-		//any
+		"western"
 	)
 
 	populations

@@ -19,532 +19,529 @@ base village/vil_
 // c: street vertical connection
 
 
-// ---------------------------------
-tile +s01
-{
-4 5
+// dropship tiles --------------------------------------------------*
 
-0      0      c      0
-0      a      +c     a
-0      a      +a     a
-b      +b     +a     a
-0      a      a      0
-}
-
-// ---------------------------------
-tile +s02
-{
-3 3
-
-0      a      0
-b      +b     b
-0      a      0
-}
-
-// ---------------------------------
-tile +s03
-{
-3 3
-
-0      c      0
-a      +c     a
-0      c      0
-}
-
-// ---------------------------------
-tile +s04
-{
-3 3
-
-0      a      0
-a      +bc    b
-0      c      0
-}
-
-// ---------------------------------
-tile +s05
-{
-3 3
-
-0      c      0
-b      +bc    a
-0      a      0
-}
-
-// ---------------------------------
-tile +s06
-{
-3 3
-
-0      c      0
-b      +bc    a
-0      c      0
-}
-
-// ---------------------------------
-tile +s07
-{
-3 3
-
-0      a      0
-b      +b     b
-0      a      0
-}
-
-// ---------------------------------
-tile +s08
-{
-3 3
-
-0      c      0
-a      +c     a
-0      c      0
-}
-
-// cross street connection
-tile +s15
-{
-3 3
-
-0      c      0
-b      +bc    b
-0      c      0
-}
-
-// ---------------------------------
-tile +d01
-{
-3 3
-
-0      ab     0
-ac     +a     ac
-0      ab     0
-}
-
-// ---------------------------------
-tile +d02
-{
-3 3
-
-0      ab     0
-ac     +a     ac
-0      ab     0
-}
-
-// ---------------------------------
-tile +d03
-{
-3 3
-
-0      ab     0
-ac     +a     ac
-0      ab     0
-}
-
-// ---------------------------------
-tile +d04
-{
-3 3
-
-0      ab     0
-ac     +a     ac
-0      ab     0
-}
-
-// ---------------------------------
-tile +d05
-{
-3 3
-
-0      ab     0
-ac     +a     ac
-0      ab     0
-}
-
-// ---------------------------------
-tile +d06
-{
-3 3
-
-0      ab     0
-ac     +a     ac
-0      ab     0
-}
-
-// ---------------------------------
-tile +d07
-{
-3 3
-
-0      ab     0
-ac     +a     ac
-0      ab     0
-}
-
-
-// ---------------------------------
-tile +r01
-{
-4 4
-
-0      ab     ab     0
-ac     +a     +a     ac
-ac     +a     +a     ac
-0      ab     ab     0
-}
-
-// ---------------------------------
-tile +r02
-{
-5 4
-
-0      ab     ab     ab     0
-ac     +a     +a     +a     ac
-ac     +a     +a     +a     ac
-0      ab     ab     ab     0
-}
-
-// ---------------------------------
-tile +r03
-{
-3 3
-
-0      ab     0
-ac     +a     ac
-0      ab     0
-}
-
-// ---------------------------------
-tile +h01
-{
-4 4
-
-0      ab     ab     0
-ac     +a     +a     ac
-ac     +a     +a     ac
-0      ab     ab     0
-}
-
-// ---------------------------------
-tile +h02
-{
-4 3
-
-0      c      a      0
-a      +c     +a     ac
-0      c      a      0
-}
-
-// ---------------------------------
-tile +h03
-{
-4 4
-
-0      ab     ab     0
-ac     +a     +a     ac
-0      a      +a     ac
-0      0      ab     0
-}
-
-// Empty garage at horizontal street
-tile +h04
-{
-3 4
-
-0      ab     0
-a      +a     a
-b      +b     b
-0      a      0
-}
-
-// ---------------------------------
-tile +h05
-{
-4 4
-
-0      0      0      0
-c      +a     +a     ac
-0      +a     +a     ac
-0      0      0      0
-}
-
-// ---------------------------------
-tile +c01
-{
-4 5
-
-0      ab     ab     0
-a      +a     +a     a
-a      +a     +a     a
-b      +b     +b     b
-0      a      a      0
-}
-
-// ---------------------------------
-tile +c02
-{
-5 5
-
-0      c      a      ab     0
-a      +c     +a     a      ac
-a      +c     +a     +a     ac
-a      +c     +a     +a     ac
-0      c      a      ab     0
-}
-
-// ---------------------------------
-tile +c03
-{
-5 5
-
-0      c      a      ab     0
-a      +c     +a     a      ac
-a      +c     +a     +a     ac
-a      +c     +a     +a     ac
-0      c      a      ab     0
-}
-
-// ---------------------------------
-tile +c04
-{
-4 4
-
-0     ab     ab     0
-ac    +a     +a     ac
-ac    +a     +a     ac
-0     ab     ab     0
-}
-
-// ---------------------------------
 tile +craft_drop_firebird
 {
 5 4
-
-0      ab     ab     ab     0
-ac     +a     +a     +a     ac
-ac     +a     +a     +a     ac
-0      ab     ab     ab     0
+0		0		0		0		0
+0		+c		+c		+c		0
+0		+c		+c		+c		0
+0		0		0		0		0
 }
 
-// ---------------------------------
 tile +craft_drop_herakles
 {
 5 4
-
-0      ab     ab     ab     0
-ac     +a     +a     +a     ac
-ac     +a     +a     +a     ac
-0      ab     ab     ab     0
+0		0		0		0		0
+0		+c		+c		+c		0
+0		+c		+c		+c		0
+0		0		0		0		0
 }
 
-// ---------------------------------
 tile +craft_drop_raptor
 {
 5 5
-
-0      ab     ab     ab     0
-ac     +a     +a     +a     ac
-ac     +a     +a     +a     ac
-ac     +a     +a     +a     ac
-0      ab     ab     ab     0
+0		0		0		0		0
+0		+c		+c		+c		0
+0		+c		+c		+c		0
+0		+c		+c		+c		0
+0		0		0		0		0
 }
 
-// ---------------------------------
+// UFOs ------------------------------------------------------------*
+
 tile +craft_ufo_fighter
 {
-4 5
-
-0      ab      ab      0
-ac     +a      +a      ac
-ac     +a      +a      ac
-ac     +a      +a      ac
-0      ab      ab      0
-}
-
-// ---------------------------------
-tile +craft_ufo_scout
-{
-4 5
-
-0      a      c      0
-a      +a     +c     a
-a      +a     +a     a
-b      +b     +a     a
-0      a      a      0
+5 4
+0		a		a		a		0
+h		+h		+c		+h		h
+a		+c		+v		+c		a
+0		a		v		a		0
 }
 
 tile +craft_ufo_harvester
 {
-7 6
-0        0       0      ab     ab     ab     0
-ac       a       a      +a     +a     +a     ac
-ac      +a      +a      +a     +a     +a     ac
-ac      +a      +a      +a     +a     +a     ac
-0        b      +b      +b     +b     +b     b
-0        0       a       a      c      a     0
+7 7
+0		0		0		x		x		x		0
+0		a		a		+c		+c		+c		a
+a		+c		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		+c		a
+0		h		+ch		+c		+c		+ch		h
+0		a		a		a		+av		a		0
+0		0		0		0		v		0		0
 }
 
-// *********************************
-
-tileset filler_01{
-+d01
-+d02
-+d03
-+d04
-+d05
-+d06
-+d07
-}
-
-// *********************************
-assembly small
+tile +craft_ufo_scout
 {
-size "7 8"
-title "_Village residential"
-
-+s02 "0 4"
-+s03 "0 4"
-+s04 "0 4"
-+s05 "0 4"
-+s06 "0 4"
-+s07 "0 1"
-+s08 "0 1"
-+s15 "0 2"
-tileset filler_01 "0 21"
-+r01 "0 2"
-+r02 "0 2"
-+r03 "0 2"
-+h01 "0 2"
-+h02 "0 2"
-+h03 "1 2"
-+h04 "0 2"
-+h05 "0 1"
-+c01 "0 1"
-+c02 "0 1"
-+c03 "0 1"
-*rm_ufo +craft_ufo_scout "1 1"
-*rm_drop +craft_drop_firebird "1 1"
+4 5
+0		v		0		0
+a		+cv		a		0
+a		+c		+ch		h
+a		+cv		a		0
+0		v		0		0
 }
-/*
-assembly residential
-{
-size "8 8"
-title "_Village residential"
-+s02 "0 4"
-+s03 "0 4"
-+s04 "0 4"
-+s05 "0 4"
-+s06 "0 4"
-+s07 "0 1"
-+s08 "0 1"
-+s15 "0 2"
-+d01 "0 1"
-+d02 "0 2"
-+d03 "0 2"
-+d04 "0 2"
-+d05 "0 2"
-+d06 "0 1"
-+d07 "0 1"
-+r01 "0 2"
-+r02 "0 2"
-+r03 "0 2"
-+h01 "0 2"
-+h02 "0 2"
-+h03 "1 2"
-+c01 "0 1"
-+c02 "0 1"
-+c03 "0 1"
-*rm_ufo +craft_ufo_scout "1 1"
-*rm_drop +craft_drop_firebird "1 1"
-}
-*/
-assembly commercial
-{
-size "8 8"
-title "_Village commercial"
 
-+s01 "0 2"
-+s02 "0 5"
-+s03 "0 4"
-+s04 "0 4"
-+s05 "0 4"
-+s06 "0 4"
-+s07 "0 4"
-+s08 "0 2"
-+s15 "0 2"
-tileset filler_01 "0 26"
-+r01 "0 1"
-+r02 "0 1"
-+r03 "0 1"
-+h01 "0 1"
-+h02 "0 1"
-+h03 "0 1"
-+c01 "1 2"
-+c02 "0 2"
-+c03 "0 1"
-+c04 "1 1"
+// street tiles -----------------------------------------------------*
+
+
+tile +street_h_01
+{
+3 3
+0		0		0
+h		+ah		h
+0		0		0
+}
+
+tile +street_v_01
+{
+3 3
+0		v		0
+0		+av		0
+0		v		0
+}
+
+tile +street_ne
+	// street turning
+{
+4 4
+0		v		0		0
+0		+av		0		0
+0		+a		+ah		h
+0		0		0		0
+}
+
+tile +street_nw
+	// street turning
+{
+4 4
+0		0		v		0
+0		0		+av		0
+h		+ah		+a		0
+0		0		0		0
+}
+
+tile +street_se
+	// street turning
+{
+4 4
+0		0		0		0
+0		+a		+ah		h
+0		+av		0		0
+0		v		0		0
+}
+
+tile +street_sw
+	// street turning
+{
+4 4
+0		0		0		0
+h		+ah		+a		0
+0		0		+av		0
+0		0		v		0
+}
+
+tile +street_crossing
+{
+5 5
+0		0		v		0		0
+0		0		+av		0		0
+h		+ah		+a		+ah		h
+0		0		+av		0		0
+0		0		v		0		0
+}
+
+tile +street_junction_e
+{
+4 5
+0		v		0		0
+0		+av		0		0
+0		+a		+ah		h
+0		+av		0		0
+0		v		0		0
+}
+
+tile +street_junction_n
+{
+5 4
+0		0		v		0		0
+0		0		+av		0		0
+h		+ah		+a		+ah		h
+0		0		0		0		0
+}
+
+tile +street_junction_s
+{
+5 4
+0		0		0		0		0
+h		+ah		+a		+ah		h
+0		0		+av		0		0
+0		0		v		0		0
+}
+
+tile +street_junction_w
+{
+4 5
+0		0		v		0
+0		0		+av		0
+h		+ah		+a		0
+0		0		+av		0
+0		0		v		0
+}
+
+// nature ----------------------------------------------------------*
+
+tile +d01
+	// a small garden, a bench, A- C2
+{
+3 3
+0		0		0
+0		+a		0
+0		0		0
+}
+
+tile +d02
+	// a single tree, A- C-
+{
+3 3
+0		0		0
+0		+a		0
+0		0		0
+}
+
+tile +d03
+	// a single tree, ground slightly raised, two plants, A- C-
+{
+4 3
+0		0		0		0
+0		+a		+a		0
+0		0		0		0
+}
+
+tile +d04
+	// two barrels, two boxes, adverts, A- C-
+{
+3 3
+0		h		0
+0		+a		0
+0		0		0
+}
+
+tile +d05
+	// a single tree, A- C-
+{
+3 3
+0		0		0
+0		+a		0
+0		0		0
+}
+
+tile +d06
+	// a single fir, a bench, A- C-
+{
+3 3
+0		0		0
+0		+a		0
+0		0		0
+}
+
+tile +d07
+	// plain, some plants
+{
+3 3
+0		0		0
+0		+a		0
+0		0		0
+}
+
+tile +nature_08
+	// raised ground
+{
+4 4
+0		0		0		0
+0		+a		+a		0
+0		+a		+a		0
+0		0		0		0
+}
+
+// buildings -------------------------------------------------------*
+
+tile +h01
+	// big house with wooden roof, wooden fence, A3 C3
+{
+4 4
+0		0		0		0
+0		+a		+a		0
+0		+a		+a		0
+0		h		h		0
+}
+
+tile +h02
+	// garage at vertical street
+{
+4 3
+0		v		0		0
+0		+av		+a		0
+0		v		0		0
+}
+
+tile +h03
+	// L-shaped house known from +eaglenest map, A2 C1
+	// does not fit the theme at all
+{
+4 4
+0		0		0		0
+0		+a		+a		0
+0		0		+a		0
+0		0		0		0
+}
+
+tile +h04
+	// garage at horizontal street
+{
+3 4
+0		0		0
+0		+a		0
+h		+ah		h
+0		0		0
+}
+
+tile +h05
+	// modern house, A3 C1
+{
+4 4
+0		0		0		0
+v		+a		+a		0
+v		+a		+a		0
+0		0		0		0
+}
+
+tile +c01
+	// small market, A3, C2
+	// TODO connect to street, add parking site
+{
+4 4
+0		h		h		0
+0		+a		+a		0
+0		+a		+a		0
+0		0		0		0
+}
+
+tile +c02
+	// gas station, A3, C1
+{
+4 5
+0		0		0		0
+0		0		+a		v
+0		+a		+a		v
+0		+a		+a		v
+0		0		0		0
+}
+
+tile +c04
+	// diner, A2 C3
+{
+4 4
+0		0		0		0
+0		+a		+a		0
+0		+a		+a		0
+0		h		h		0
+}
+
+// recreational ----------------------------------------------------*
+
+tile +r01
+	// playground, A3 C2
+{
+4 4
+0		0		0		0
+r		+ar		+ar		0
+r		+ar		+ar		0
+0		0		0		0
+}
+
+tile +r02
+	// park, A5 C1
+	// TODO move hedges away from tile borders
+{
+5 4
+0		0		0		0		0
+0		+ar		+ar		+ar		0
+0		+ar		+ar		+ar		0
+0		0		0		0		0
+}
+
+tile +r03
+	// a fountain, A- C-
+{
+3 3
+0		0		0
+v		+a		0
+0		h		0
+}
+
+// tilesets --------------------------------------------------------*
+
+tileset garage {
+	+h02
+	+h04
+}
+
+tileset generic {
+	+d02
+	+d05
+	+d06
+	+d07
+}
+
+tileset street_01 {
+	+street_ne
+	+street_nw
+	+street_se
+	+street_sw
+	+street_junction_e
+	+street_junction_n
+	+street_junction_s
+	+street_junction_w
+}
+
+tileset street_02 {
+	+street_ne
+	+street_nw
+	+street_se
+	+street_sw
+}
+
+tileset street_03 {
+	+street_crossing
+	+street_junction_e
+	+street_junction_n
+	+street_junction_s
+	+street_junction_w
+}
+
+tileset street_h {
+	+street_h_01
+}
+
+tileset street_v {
+	+street_v_01
+}
+
+
+// map assemblies --------------------------------------------------*
+
+assembly medium
+{
+size "9 9"
+title "_Village"
++c01			"0 1"
++c02			"0 1"
++c04			"0 1"
++h01			"0 1"
++h03			"0 1"
++h05			"0 1"
++d01			"0 1"
++d02			"0 1"
++d03			"0 1"
++d04			"0 1"
++d05			"0 1"
++d06			"0 1"
++d07			"0 15"
++nature_08		"0 1"
++r01			"0 1"
++r02			"0 1"
++r03			"0 1"
+tileset garage		"0 1"
+tileset street_h	"0 5"
+tileset street_v	"0 5"
 *rm_drop +craft_drop_firebird "1 1"
 *rm_ufo +craft_ufo_harvester "1 1"
 }
-/*
-assembly recreational
+
+assembly medium_noufo
 {
 size "8 8"
-title "_Village recreational"
-+s01 "0 1"
-+s02 "0 4"
-+s03 "0 4"
-+s04 "0 4"
-+s05 "0 4"
-+s06 "0 4"
-+s15 "0 2"
-+d01 "0 1"
-+d02 "0 2"
-+d03 "0 2"
-+d04 "0 2"
-+d05 "0 2"
-+d06 "0 1"
-+d07 "0 1"
-+r01 "1 2"
-+r02 "1 2"
-+r03 "0 4"
-+h01 "0 1"
-+h02 "0 1"
-+h03 "0 1"
-+c01 "0 1"
-+c02 "0 1"
-+c03 "0 1"
+title "_Village"
++c01			"0 1"
++c02			"0 1"
++c04			"0 1"
++h01			"0 1"
++h03			"0 1"
++h05			"0 1"
++d01			"0 1"
++d02			"0 1"
++d03			"0 1"
++d04			"0 1"
++d05			"0 1"
++d06			"0 1"
++d07			"0 15"
++nature_08		"0 1"
++r01			"0 1"
++r02			"0 1"
++r03			"0 1"
+tileset garage		"0 1"
+tileset street_02	"0 1"
+tileset street_03	"0 1"
+tileset street_h	"0 5"
+tileset street_v	"0 5"
 *rm_drop +craft_drop_firebird "1 1"
 }
-*/
-/*
-assembly large
+
+assembly small
 {
-size "12 12"
-title "_Village large"
-+s01 "0 8"
-+s02 "0 32"
-+s03 "0 32"
-+s04 "0 32"
-+s05 "0 32"
-+s06 "0 8"
-+s07 "0 3"
-+s08 "0 3"
-+s15 "0 2"
-+d01 "0 8"
-+d02 "0 8"
-+d03 "0 8"
-+d04 "0 8"
-+d05 "0 8"
-+r01 "1 4"
-+r02 "1 4"
-+h01 "0 4"
-+h02 "0 4"
-+h03 "0 4"
-+c01 "0 4"
-+c02 "0 2"
-+c03 "0 2"
-+c04 "0 2"
+size "7 7"
+title "_Village"
++c01			"0 1"
++c02			"0 1"
++c04			"0 1"
++h01			"0 1"
++h03			"0 1"
++h05			"0 1"
++d01			"0 1"
++d02			"0 1"
++d03			"0 1"
++d04			"0 1"
++d05			"0 1"
++d06			"0 1"
++d07			"0 7"
++r01			"0 1"
++r02			"0 1"
++r03			"0 1"
+tileset garage		"0 1"
+tileset street_h	"0 5"
+tileset street_v	"0 5"
+*rm_drop +craft_drop_firebird "1 1"
+*rm_ufo +craft_ufo_fighter "1 1"
+}
+
+// test assemblies --------------------------------------------------*
+
+assembly test
+{
+size "8 8"
+title "_Village"
++c01			"0 1"
++c02			"0 1"
++c04			"0 1"
++h01			"0 1"
++h03			"0 1"
++h05			"0 1"
++d01			"0 1"
++d02			"0 1"
++d03			"0 1"
++d04			"0 1"
++d05			"0 1"
++d06			"0 1"
++d07			"0 15"
++nature_08		"0 1"
++r01			"0 1"
++r02			"0 1"
++r03			"0 1"
+tileset garage		"0 1"
+tileset street_02	"0 1"
+tileset street_03	"0 1"
+tileset street_h	"0 5"
+tileset street_v	"0 5"
 *rm_drop +craft_drop_firebird "1 1"
 }
-*/

@@ -256,10 +256,10 @@
 }
 // brush 28
 {
-( 0 256 4 ) ( 0 0 4 ) ( 0 0 -4 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 128 0
-( 256 0 4 ) ( 256 256 4 ) ( 256 256 -4 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 128 0
-( 0 0 4 ) ( 256 0 4 ) ( 256 0 -4 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 128 0
-( 256 256 4 ) ( 0 256 4 ) ( 0 256 -4 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 128 0
+( 0 256 4 ) ( 0 0 4 ) ( 0 0 -4 ) tex_nature/grass001 0 0 0 0.5 0.5 65280 0 0
+( 256 0 4 ) ( 256 256 4 ) ( 256 256 -4 ) tex_nature/grass001 0 0 0 0.5 0.5 65280 0 0
+( 0 0 4 ) ( 256 0 4 ) ( 256 0 -4 ) tex_nature/grass001 0 0 0 0.5 0.5 65280 0 0
+( 256 256 4 ) ( 0 256 4 ) ( 0 256 -4 ) tex_nature/grass001 0 0 0 0.5 0.5 65280 0 0
 ( 256 256 0 ) ( 0 256 0 ) ( 0 0 0 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 128 0
 ( 0 0 4 ) ( 0 256 4 ) ( 256 256 4 ) tex_nature/grass001 0 0 0 0.5 0.5 65280 0 0
 }
@@ -271,6 +271,7 @@
 "model" "models/objects/vegi/chestnut/chestnut_blaetter3.md2"
 "spawnflags" "252"
 "origin" "140 108 64"
+"skin" "2"
 }
 // entity 2
 {
@@ -279,6 +280,7 @@
 "model" "models/objects/vegi/chestnut/chestnut_blaetter2.md2"
 "spawnflags" "2"
 "origin" "140 108 64"
+"skin" "2"
 }
 // entity 3
 {
