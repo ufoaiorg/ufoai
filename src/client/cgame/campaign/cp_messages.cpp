@@ -52,6 +52,7 @@ static void MS_TimestampedText (char *text, uiMessageListNodeMessage_t *message,
  * @param[in] popup Show this as a popup, too?
  * @param[in] type The message type
  * @param[in] pedia Pointer to technology (only if needed)
+ * @param[in] playSound Whether the sound associated with the message type should be played
  * @return message_t pointer
  * @sa UP_OpenMail_f
  * @sa CL_EventAddMail_f
