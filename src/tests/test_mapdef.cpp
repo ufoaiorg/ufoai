@@ -282,7 +282,7 @@ static void testMapDefsFootSteps (void)
 	int count = 0;
 	int mapCount = 0;				// the number of maps read
 	int badMapCount = 0;
-	const int skipCount = 6;		// to skip the first n mapDefs
+	const int skipCount = 8;		// to skip the first n mapDefs
 	const int badMapCountMax = 25;	// # of maps with missing sounds before this test stops
 	const int mapCountMax = 150;	// should of cause be higher than skip + bad
 	const int texCountMax = 30;
@@ -321,7 +321,7 @@ static void testMapDefsFootSteps (void)
 			int x, y, z;
 			GridBox mBox(sv->mapData.mapMin, sv->mapData.mapMax);	// test ALL the cells
 #if !FOOTSTEPS_FULL
-			if (mapCount >= skipCount + 2) {	// after the first 2 maps, reduce the testing area
+			if (mapCount >= skipCount + 4) {	// after the first 4 maps, reduce the testing area
 				pos3_t center = {148, 148, 0};
 				mBox.set(center, center);		// the box on the map we're testing
 				mBox.expandXY(10);				// just test a few cells around the center of the map
