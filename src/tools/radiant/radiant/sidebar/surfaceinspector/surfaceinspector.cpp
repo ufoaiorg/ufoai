@@ -48,22 +48,22 @@ const std::string LABEL_VSHIFT = _("Vert. Shift:");
 const std::string LABEL_HSCALE = _("Horiz. Scale:");
 const std::string LABEL_VSCALE = _("Vert. Scale:");
 const std::string LABEL_ROTATION = _("Rotation:");
-const char* LABEL_SHADER = _("Shader:");
-const char* FOLDER_ICON = "folder16.png";
-const char* LABEL_STEP = _("Step:");
+const char *LABEL_SHADER = _("Shader:");
+const char *FOLDER_ICON = "folder16.png";
+const char *LABEL_STEP = _("Step:");
 
-const char* LABEL_FIT_TEXTURE = _("Fit Texture:");
-const char* LABEL_FIT = _("Fit");
+const char *LABEL_FIT_TEXTURE = _("Fit Texture:");
+const char *LABEL_FIT = _("Fit");
 
-const char* LABEL_FLIP_TEXTURE = _("Flip Texture:");
-const char* LABEL_FLIPX = _("Flip Horizontal");
-const char* LABEL_FLIPY = _("Flip Vertical");
+const char *LABEL_FLIP_TEXTURE = _("Flip Texture:");
+const char *LABEL_FLIPX = _("Flip Horizontal");
+const char *LABEL_FLIPY = _("Flip Vertical");
 
-const char* LABEL_APPLY_TEXTURE = _("Modify Texture:");
-const char* LABEL_NATURAL = _("Natural");
+const char *LABEL_APPLY_TEXTURE = _("Modify Texture:");
+const char *LABEL_NATURAL = _("Natural");
 
-const char* LABEL_DEFAULT_SCALE = _("Default Scale:");
-const char* LABEL_TEXTURE_LOCK = _("Texture Lock");
+const char *LABEL_DEFAULT_SCALE = _("Default Scale:");
+const char *LABEL_TEXTURE_LOCK = _("Texture Lock");
 
 const std::string RKEY_TEXTURES_SKIPCOMMON = "user/ui/textures/skipCommon";
 const std::string RKEY_ENABLE_TEXTURE_LOCK = "user/ui/brush/textureLock";
@@ -80,12 +80,12 @@ const std::string RKEY_WINDOW_STATE = RKEY_ROOT + "window";
 
 const double MAX_FLOAT_RESOLUTION = 1.0E-5;
 
-const char* contentflagNamesDefault[32] = { "cont1", "cont2", "cont3", "cont4", "cont5", "cont6", "cont7", "cont8",
+const char *contentflagNamesDefault[32] = { "cont1", "cont2", "cont3", "cont4", "cont5", "cont6", "cont7", "cont8",
 		"cont9", "cont10", "cont11", "cont12", "cont13", "cont14", "cont15", "cont16", "cont17", "cont18", "cont19",
 		"cont20", "cont21", "cont22", "cont23", "cont24", "cont25", "cont26", "cont27", "cont28", "cont29", "cont30",
 		"cont31", "cont32" };
 
-const char* surfaceflagNamesDefault[32] = { "surf1", "surf2", "surf3", "surf4", "surf5", "surf6", "surf7", "surf8",
+const char *surfaceflagNamesDefault[32] = { "surf1", "surf2", "surf3", "surf4", "surf5", "surf6", "surf7", "surf8",
 		"surf9", "surf10", "surf11", "surf12", "surf13", "surf14", "surf15", "surf16", "surf17", "surf18", "surf19",
 		"surf20", "surf21", "surf22", "surf23", "surf24", "surf25", "surf26", "surf27", "surf28", "surf29", "surf30",
 		"surf31", "surf32" };

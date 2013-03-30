@@ -52,7 +52,7 @@ static Image* LoadImageGDK (ArchiveFile& file)
 		RGBAImage* image = new RGBAImage(gdk_pixbuf_get_width(img), gdk_pixbuf_get_height(img), false);
 
 		// Initialise the source buffer pointers
-		guchar* gdkStart = gdk_pixbuf_get_pixels(img);
+		guchar *gdkStart = gdk_pixbuf_get_pixels(img);
 		int rowstride = gdk_pixbuf_get_rowstride(img);
 		int numChannels = gdk_pixbuf_get_n_channels(img);
 
@@ -62,7 +62,7 @@ static Image* LoadImageGDK (ArchiveFile& file)
 		// Now do an unelegant cycle over all the pixels and move them into the target
 		for (unsigned int y = 0; y < image->height; y++) {
 			for (unsigned int x = 0; x < image->width; x++) {
-				guchar* gdkPixel = gdkStart + y * rowstride + x * numChannels;
+				guchar *gdkPixel = gdkStart + y * rowstride + x * numChannels;
 
 				// Copy the values from the GdkPixel
 				targetPixel->red = gdkPixel[0];

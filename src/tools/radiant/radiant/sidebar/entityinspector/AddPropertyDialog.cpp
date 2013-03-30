@@ -28,9 +28,9 @@ enum
 };
 
 // CONSTANTS
-const char* ADDPROPERTY_TITLE = _("Add property");
-const char* FOLDER_ICON = "folder16.png";
-const char* CUSTOM_PROPERTY_TEXT = _("Custom properties defined for this entity class, if any");
+const char *ADDPROPERTY_TITLE = _("Add property");
+const char *FOLDER_ICON = "folder16.png";
+const char *CUSTOM_PROPERTY_TEXT = _("Custom properties defined for this entity class, if any");
 }
 
 // Constructor creates GTK widgets

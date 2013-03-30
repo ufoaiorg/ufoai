@@ -388,7 +388,7 @@ void Map::free ()
 Entity* Map::findPlayerStart ()
 {
 	// TODO: get this list from entities.ufo
-	typedef const char* StaticString;
+	typedef const char *StaticString;
 	StaticString strings[] = { "info_alien_start", "info_human_start", "info_civilian_start", "info_player_start" };
 	typedef const StaticString* StaticStringIterator;
 	for (StaticStringIterator i = strings, end = strings + (sizeof(strings) / sizeof(StaticString)); i != end; ++i) {
