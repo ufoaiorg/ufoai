@@ -502,18 +502,19 @@ static void UI_ContainerNodeDrawSingle (uiNode_t *node, const objDef_t *highligh
  */
 static void UI_ContainerNodeDrawGrid (uiNode_t *node, const objDef_t *highlightType)
 {
-	const invList_t *ic;
 	vec3_t pos;
 
 	UI_GetNodeAbsPos(node, pos);
 	pos[2] = 0;
 
-	for (ic = ui_inventory->getContainer3(EXTRADATA(node).container->id); ic; ic = ic->getNext()) {
-		assert(ic->def());
-		if (highlightType && highlightType->isLoadableInWeapon(ic->def()))
-			UI_DrawItem(node, pos, ic, ic->getX(), ic->getY(), scale, colorLoadable);
+	const Container *cont = ui_inventory->getContainer(EXTRADATA(node).container->id);
+	Item *item = NULL;
+	while ((item = cont->getNextItem(item))) {
+		assert(item->def());
+		if (highlightType && highlightType->isLoadableInWeapon(item->def()))
+			UI_DrawItem(node, pos, item, item->getX(), item->getY(), scale, colorLoadable);
 		else
-			UI_DrawItem(node, pos, ic, ic->getX(), ic->getY(), scale, colorDefault);
+			UI_DrawItem(node, pos, item, item->getX(), item->getY(), scale, colorDefault);
 	}
 }
 
