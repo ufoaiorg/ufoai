@@ -401,7 +401,7 @@ static int GAME_GetNextUniqueCharacterNumber (void)
 	return cls.nextUniqueCharacterNumber;
 }
 
-static void GAME_CollectItems (void *data, int won, void (*item)(void*, const objDef_t*, int), void (*ammo) (void *, const invList_t *), void (*ownitems) (const inventory_t *))
+static void GAME_CollectItems (void *data, int won, void (*collectItem)(void*, const objDef_t*, int), void (*collectAmmo) (void *, const invList_t *), void (*ownitems) (const inventory_t *))
 {
 	le_t *le = NULL;
 	while ((le = LE_GetNextInUse(le))) {
@@ -412,9 +412,9 @@ static void GAME_CollectItems (void *data, int won, void (*item)(void*, const ob
 			if (won) {
 				invList_t *i = le->getFloorContainer();
 				for ( ; i; i = i->getNext()) {
-					item(data, i->def(), 1);
+					collectItem(data, i->def(), 1);
 					if (i->isReloadable() && i->getAmmoLeft() > 0)
-						ammo(data, i);
+						collectAmmo(data, i);
 				}
 			}
 		} else if (LE_IsActor(le)) {
@@ -422,9 +422,9 @@ static void GAME_CollectItems (void *data, int won, void (*item)(void*, const ob
 			 * as ET_ITEM if the actor is dead; or the actor is not ours. */
 			/* First of all collect armour of dead or stunned actors (if won). */
 			if (won && LE_IsDead(le)) {
-				invList_t *i = le->inv.getArmour();
-				if (i)
-					item(data, i->def(), 1);
+				Item *item = le->inv.getArmour();
+				if (item)
+					collectItem(data, item->def(), 1);
 			} else if (le->team == cls.team && !LE_IsDead(le)) {
 				/* Finally, the living actor from our team. */
 				ownitems(&le->inv);
