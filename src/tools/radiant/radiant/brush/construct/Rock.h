@@ -1,5 +1,4 @@
-#ifndef ROCK_H_
-#define ROCK_H_
+#pragma once
 
 #include "BrushConstructor.h"
 
@@ -24,4 +23,3 @@ namespace brushconstruct
 			}
 	};
 }
-#endif /* ROCK_H_ */

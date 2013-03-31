@@ -1,5 +1,4 @@
-#ifndef CONE_H_
-#define CONE_H_
+#pragma once
 
 #include "BrushConstructor.h"
 
@@ -24,4 +23,3 @@ namespace brushconstruct
 			}
 	};
 }
-#endif /* CONE_H_ */

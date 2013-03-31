@@ -1,5 +1,4 @@
-#ifndef BRUSHCONSTRUCTOR_H_
-#define BRUSHCONSTRUCTOR_H_
+#pragma once
 
 #include <string>
 #include "../Brush.h"
@@ -30,4 +29,3 @@ namespace brushconstruct
 			virtual const std::string getName () const = 0;
 	};
 }
-#endif /* BRUSHCONSTRUCTOR_H_ */

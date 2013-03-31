@@ -1,5 +1,4 @@
-#ifndef CUBOID_H_
-#define CUBOID_H_
+#pragma once
 
 #include "BrushConstructor.h"
 
@@ -20,4 +19,3 @@ namespace brushconstruct
 			}
 	};
 }
-#endif /* CUBOID_H_ */

@@ -1,5 +1,4 @@
-#ifndef VERTEXINSTANCE_H_
-#define VERTEXINSTANCE_H_
+#pragma once
 
 #include "FaceInstance.h"
 
@@ -61,5 +60,3 @@ class VertexInstance: public Selectable
 			}
 		}
 };
-
-#endif /*VERTEXINSTANCE_H_*/

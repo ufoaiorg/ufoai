@@ -1,5 +1,4 @@
-#ifndef PRISM_H_
-#define PRISM_H_
+#pragma once
 
 #include "BrushConstructor.h"
 #include "../../xyview/GlobalXYWnd.h"
@@ -52,4 +51,3 @@ namespace brushconstruct
 			}
 	};
 }
-#endif /* PRISM_H_ */

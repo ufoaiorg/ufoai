@@ -1,5 +1,4 @@
-#ifndef TEXTUREPROJECTION_H_
-#define TEXTUREPROJECTION_H_
+#pragma once
 
 #include "itextstream.h"
 #include "TexDef.h"
@@ -57,5 +56,3 @@ class TextureProjection
 		void emitTextureCoordinates (std::size_t width, std::size_t height, Winding& w, const Vector3& normal,
 				const Matrix4& localToWorld);
 };
-
-#endif /*TEXTUREPROJECTION_H_*/

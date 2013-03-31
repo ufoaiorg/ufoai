@@ -1,5 +1,4 @@
-#ifndef VERTEXSELECTION_H_
-#define VERTEXSELECTION_H_
+#pragma once
 
 #include <list>
 
@@ -32,5 +31,3 @@ inline void VertexSelection_erase (VertexSelection& self, std::size_t value)
 		self.erase(i);
 	}
 }
-
-#endif /*VERTEXSELECTION_H_*/
