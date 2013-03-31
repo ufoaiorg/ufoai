@@ -541,8 +541,6 @@ void G_ClientStateChange (const Player &player, Edict *ent, int reqState, bool c
  */
 bool G_ClientCanReload (Edict *ent, containerIndex_t containerID)
 {
-	invList_t *ic;
-	containerIndex_t container;
 	const objDef_t *weapon;
 
 	if (ent->getContainer(containerID)) {
@@ -556,10 +554,14 @@ bool G_ClientCanReload (Edict *ent, containerIndex_t containerID)
 	assert(weapon);
 
 	/* also try the temp containers */
-	for (container = 0; container < CID_MAX; container++)
-		for (ic = ent->getContainer(container); ic; ic = ic->getNext())
-			if (ic->def()->isLoadableInWeapon(weapon))
+	const Container *cont = NULL;
+	while ((cont = ent->chr.inv.getNextCont(cont, true))) {
+		Item *item = NULL;
+		while ((item = cont->getNextItem(item))) {
+			if (item->def()->isLoadableInWeapon(weapon))
 				return true;
+		}
+	}
 	return false;
 }
 
