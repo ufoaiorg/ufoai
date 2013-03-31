@@ -289,6 +289,7 @@ static void MIS_CreateAlienTeam (mission_t *mission, battleParam_t *battleParam)
 /**
  * @brief Create civilian team.
  * @param[in] mission Pointer to the mission that generates the battle
+ * @param[out] param The battlescape parameter container
  */
 static void CP_CreateCivilianTeam (const mission_t *mission, battleParam_t *param)
 {
