@@ -691,7 +691,7 @@ int G_ClientAction (Player &player)
 	case PA_INVMOVE:
 		gi.ReadFormat(format, &from, &fx, &fy, &to, &tx, &ty);
 
-		if (from < 0 || from >= CID_MAX || to < 0 || to >= CID_MAX) {
+		if (!isValidContId(from) || !isValidContId(to)) {
 			gi.DPrintf("G_ClientAction: PA_INVMOVE Container index out of range. (from: %i, to: %i)\n", from, to);
 		} else {
 			const invDef_t *fromPtr = INVDEF(from);

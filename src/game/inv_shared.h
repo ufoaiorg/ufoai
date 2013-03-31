@@ -66,6 +66,11 @@ typedef int32_t containerIndex_t;
 #define CID_EQUIP		9
 #define CID_MAX			10
 
+inline bool isValidContId(const containerIndex_t id)
+{
+	return (id >= 0 && id < CID_MAX);
+}
+
 /** @brief Possible inventory actions for moving items between containers */
 typedef enum {
 	IA_NONE,			/**< no move possible */

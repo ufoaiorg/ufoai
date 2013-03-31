@@ -323,7 +323,7 @@ void G_ReadItem (Item *item, const invDef_t **container, int *x, int *y)
 		item->setAmmoDef(NULL);
 	}
 
-	if (containerID >= 0 && containerID < CID_MAX)
+	if (isValidContId(containerID))
 		*container = INVDEF(containerID);
 	else
 		gi.Error("container id is out of bounds: %i", containerID);
