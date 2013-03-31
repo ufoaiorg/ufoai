@@ -766,24 +766,25 @@ void G_ActorReload (Edict *ent, const invDef_t *invDef)
 
 	/* search for clips and select the one that is available easily */
 	/* also try the temp containers */
-	containerIndex_t contId;
 	const invDef_t *bestContainer = NULL;
 	Item *ammoItem = NULL;
 	int tu = 100;
-	for (contId = 0; contId < CID_MAX; contId++) {
-		if (INVDEF(contId)->out < tu) {
+	const Container *cont = NULL;
+	while ((cont = ent->chr.inv.getNextCont(cont, true))) {
+		if (INVDEF(cont->id)->out < tu) {
 			/* Once we've found at least one clip, there's no point
 			 * searching other containers if it would take longer
 			 * to retrieve the ammo from them than the one
 			 * we've already found. */
 			Item *item;
-			for (item = ent->getContainer(contId); item; item = item->getNext())
+			while ((item = cont->getNextItem(item))) {
 				if (item->def()->isLoadableInWeapon(weapon)) {
 					ammoItem = item;
-					bestContainer = INVDEF(contId);
+					bestContainer = INVDEF(cont->id);
 					tu = bestContainer->out;
 					break;
 				}
+			}
 		}
 	}
 
