@@ -738,7 +738,7 @@ uiAction_t* UI_AllocStaticCommandAction (const char *command)
  * @todo we should create a function to free the memory. We can use a tag in the Mem_PoolAlloc
  * calls and use use Mem_FreeTag.
  */
-void UI_PoolAllocAction (uiAction_t** action, int type, const void *data)
+void UI_PoolAllocAction (uiAction_t **action, int type, const void *data)
 {
 	if (*action)
 		Com_Error(ERR_FATAL, "There is already an action assigned");
@@ -782,7 +782,7 @@ void UI_AddListener (uiNode_t *node, const value_t *property, const uiNode_t *fu
 	action->next = NULL;
 
 	/* insert the action */
-	uiAction_t** anchor = &Com_GetValue<uiAction_t*>(node, property);
+	uiAction_t **anchor = &Com_GetValue<uiAction_t*>(node, property);
 	while (*anchor)
 		anchor = &(*anchor)->next;
 	*anchor = action;

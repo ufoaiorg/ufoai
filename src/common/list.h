@@ -52,11 +52,11 @@ typedef int (*linkedListSort_t) (linkedList_t *entry1, linkedList_t *entry2, con
 	LIST_Sort(&sortedlist, sorter, userdata); \
 	LIST_Foreach(sortedlist, type, var)
 
-void LIST_PrependString(linkedList_t** listDest, const char* data);
-void LIST_AddString(linkedList_t** list, const char* data);
-void LIST_AddStringSorted(linkedList_t** listDest, const char* data);
-void LIST_AddPointer(linkedList_t** listDest, void *data);
-linkedList_t *LIST_Add(linkedList_t** list, void const* data, size_t length);
+void LIST_PrependString(linkedList_t **listDest, const char* data);
+void LIST_AddString(linkedList_t **list, const char* data);
+void LIST_AddStringSorted(linkedList_t **listDest, const char* data);
+void LIST_AddPointer(linkedList_t **listDest, void *data);
+linkedList_t *LIST_Add(linkedList_t **list, void const* data, size_t length);
 const linkedList_t *LIST_ContainsString(const linkedList_t *list, const char* string);
 linkedList_t *LIST_GetPointer(linkedList_t *list, const void *data);
 void LIST_Delete(linkedList_t **list);

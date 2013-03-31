@@ -631,7 +631,7 @@ static bool UI_ParseExcludeRect (uiNode_t *node, const char **text, const char *
 static bool UI_ParseEventProperty (uiNode_t *node, const value_t *event, const char **text, const char **token, const char *errhead)
 {
 	/* add new actions to end of list */
-	uiAction_t** action = &Com_GetValue<uiAction_t*>(node, event);
+	uiAction_t **action = &Com_GetValue<uiAction_t*>(node, event);
 	for (; *action; action = &(*action)->next) {}
 
 	/* get the action body */

@@ -214,7 +214,7 @@ uiNode_t* UI_PushWindow (const char *name, const char *parentName, linkedList_t 
 int UI_CompleteWithWindow (const char *partial, const char **match)
 {
 	int n = 0;
-	for (uiNode_t** i = ui_global.windows, ** const end = i + ui_global.numWindows; i != end; ++i) {
+	for (uiNode_t **i = ui_global.windows, ** const end = i + ui_global.numWindows; i != end; ++i) {
 		char const* const name = (*i)->name;
 		if (Cmd_GenericCompleteFunction(name, partial, match)) {
 			Com_Printf("%s\n", name);

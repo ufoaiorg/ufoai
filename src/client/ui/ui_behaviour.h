@@ -49,7 +49,7 @@ struct uiBehaviour_t {
 	bool focusEnabled;			/**< true if the node can win the focus (should be use when type TAB) */
 	bool drawItselfChild;		/**< if true, the node draw function must draw child, the core code will not do it */
 
-	const value_t** localProperties;	/**< list of properties of the node */
+	const value_t **localProperties;	/**< list of properties of the node */
 	int propertyCount;				/**< number of the properties into the propertiesList. Cache value to speedup search */
 	intptr_t extraDataSize;			/**< Size of the extra data used (it come from "u" attribute) @note use intptr_t because we use the virtual inheritance function (see virtualFunctions) */
 	uiBehaviour_t *super;	/**< link to the extended node */

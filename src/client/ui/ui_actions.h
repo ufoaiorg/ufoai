@@ -223,7 +223,7 @@ const char* UI_GenInjectedString(const char* input, bool addNewLine, const uiCal
 int UI_GetActionTokenType(const char* token, int group);
 uiValue_t* UI_GetVariable (const uiCallContext_t *context, int relativeVarId);
 
-void UI_PoolAllocAction(uiAction_t** action, int type, const void *data);
+void UI_PoolAllocAction(uiAction_t **action, int type, const void *data);
 uiAction_t* UI_AllocStaticCommandAction(const char *command);
 void UI_InitActions(void);
 void UI_AddListener(uiNode_t* node, const value_t *property, uiNode_t const* functionNode);

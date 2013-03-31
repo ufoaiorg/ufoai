@@ -195,7 +195,7 @@ int UI_GetDataVersion (int textId)
  * @param[in] value value used when this option is selected
  * @return The new option
  */
-uiNode_t* UI_AddOption (uiNode_t** tree, const char* name, const char* label, const char* value)
+uiNode_t* UI_AddOption (uiNode_t **tree, const char* name, const char* label, const char* value)
 {
 	uiNode_t *last;
 	uiNode_t *option;

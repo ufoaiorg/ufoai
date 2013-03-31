@@ -167,7 +167,7 @@ void UI_InitializeNodeBehaviour (uiBehaviour_t* behaviour)
 	if (behaviour->localProperties) {
 		int i = 0;
 		const value_t* previous;
-		const value_t** oldmemory = behaviour->localProperties;
+		const value_t **oldmemory = behaviour->localProperties;
 		behaviour->localProperties = (const value_t**) UI_AllocHunkMemory(sizeof(value_t*) * (behaviour->propertyCount+1), STRUCT_MEMORY_ALIGN, false);
 		if (behaviour->localProperties == NULL) {
 			Com_Error(ERR_FATAL, "UI_InitializeNodeBehaviour: UI memory hunk exceeded - increase the size");
@@ -176,7 +176,7 @@ void UI_InitializeNodeBehaviour (uiBehaviour_t* behaviour)
 		previous = NULL;
 		for (i = 0; i < behaviour->propertyCount; i++) {
 			const value_t* better = NULL;
-			const value_t** current;
+			const value_t **current;
 			/* search the next element after previous */
 			for (current = oldmemory; *current != NULL; current++) {
 				if (previous != NULL && Q_strcasecmp(previous->string, (*current)->string) >= 0) {
@@ -195,7 +195,7 @@ void UI_InitializeNodeBehaviour (uiBehaviour_t* behaviour)
 
 	/* property must not overwrite another property */
 	if (behaviour->super && behaviour->localProperties) {
-		const value_t** property = behaviour->localProperties;
+		const value_t **property = behaviour->localProperties;
 		while (*property) {
 			const value_t *p = UI_GetPropertyFromBehaviour(behaviour->super, (*property)->string);
 #if 0	/**< @todo not possible at the moment, not sure its the right way */
@@ -214,7 +214,7 @@ void UI_InitializeNodeBehaviour (uiBehaviour_t* behaviour)
 	/* Sanity: A property must not be outside the node memory */
 	if (behaviour->localProperties) {
 		const int size = sizeof(uiNode_t) + behaviour->extraDataSize;
-		const value_t** property = behaviour->localProperties;
+		const value_t **property = behaviour->localProperties;
 		while (*property) {
 			if ((*property)->type != V_UI_NODEMETHOD && (*property)->ofs + (*property)->size > size)
 				Com_Error(ERR_FATAL, "UI_InitializeNodeBehaviour: property '%s' from node behaviour '%s' is outside the node memory. The C code need a fix.", (*property)->string, behaviour->name);
