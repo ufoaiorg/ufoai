@@ -771,7 +771,7 @@ void G_ActorReload (Edict *ent, const invDef_t *invDef)
 	int tu = 100;
 	const Container *cont = NULL;
 	while ((cont = ent->chr.inv.getNextCont(cont, true))) {
-		if (INVDEF(cont->id)->out < tu) {
+		if (cont->def()->out < tu) {
 			/* Once we've found at least one clip, there's no point
 			 * searching other containers if it would take longer
 			 * to retrieve the ammo from them than the one
