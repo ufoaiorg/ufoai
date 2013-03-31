@@ -3039,9 +3039,9 @@ void AIR_MoveEmployeeInventoryIntoStorage (const aircraft_t &aircraft, equipDef_
 		return;
 	}
 
-	for (container = 0; container < CID_MAX; container++) {
-		LIST_Foreach(aircraft.acTeam, employee_t, employee) {
-			character_t *chr = &employee->chr;
+	LIST_Foreach(aircraft.acTeam, employee_t, employee) {
+		character_t *chr = &employee->chr;
+		for (container = 0; container < CID_MAX; container++) {
 			invList_t *ic = chr->inv.getContainer3(container);
 #if 0
 			if (INVDEF(container)->temp)
