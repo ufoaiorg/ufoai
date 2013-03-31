@@ -173,20 +173,20 @@ void CP_CleanupTeam (base_t *base, equipDef_t *ed)
 		}
 	}
 
-	E_Foreach(EMPL_SOLDIER, employee) {
-		if (!E_IsInBase(employee, base))
-			continue;
-		if (employee->transfer)
-			continue;
+	for (container = 0; container < CID_MAX; container++) {
+		E_Foreach(EMPL_SOLDIER, employee) {
+			if (!E_IsInBase(employee, base))
+				continue;
+			if (employee->transfer)
+				continue;
 
-		character_t *chr = &employee->chr;
-		for (container = 0; container < CID_MAX; container++) {
+			invList_t *ic, *next;
+			character_t *chr = &employee->chr;
 #if 0
 			/* ignore items linked from any temp container */
 			if (INVDEF(container)->temp)
 				continue;
 #endif
-			invList_t *ic, *next;
 			for (ic = chr->inv.getContainer3(container); ic; ic = next) {
 				next = ic->getNext();
 				if (ed->numItems[ic->def()->idx] > 0) {
@@ -221,24 +221,25 @@ void CP_CleanupAircraftTeam (aircraft_t *aircraft, equipDef_t *ed)
 
 	assert(aircraft);
 
-	LIST_Foreach(aircraft->acTeam, employee_t, employee) {
-		character_t *chr = &employee->chr;
-		/* Auto-assign weapons to UGVs/Robots if they have no weapon yet. */
-		if (employee->ugv) {
-			/* Check if there is a weapon and add it if there isn't. */
-			invList_t *rightH = chr->inv.getRightHandContainer();
-			if (!rightH || !rightH->def())
-				cgi->INV_EquipActorRobot(&chr->inv, INVSH_GetItemByID(employee->ugv->weapon));
-			continue;
-		}
+	for (container = 0; container < CID_MAX; container++) {
+		LIST_Foreach(aircraft->acTeam, employee_t, employee) {
+			invList_t *ic, *next;
+			character_t *chr = &employee->chr;
 
-		for (container = 0; container < CID_MAX; container++) {
+			/* Auto-assign weapons to UGVs/Robots if they have no weapon yet. */
+			if (employee->ugv) {
+				/* Check if there is a weapon and add it if there isn't. */
+				invList_t *rightH = chr->inv.getRightHandContainer();
+				if (!rightH || !rightH->def())
+					cgi->INV_EquipActorRobot(&chr->inv, INVSH_GetItemByID(employee->ugv->weapon));
+				continue;
+			}
+
 #if 0
 			/* ignore items linked from any temp container */
 			if (INVDEF(container)->temp)
 				continue;
 #endif
-			invList_t *ic, *next;
 			for (ic = chr->inv.getContainer3(container); ic; ic = next) {
 				next = ic->getNext();
 				if (ed->numItems[ic->def()->idx] > 0) {
