@@ -43,16 +43,16 @@ window popup_assembleteam
 	}
 
 	rows soldierlist_lines {
-		pos				"35 76"
-		size			"310 294"
+		pos				"35 66"
+		size			"310 299"
 		color1			"0 0.08 0 1"
 		color2			"0 0.16 0 1"
 		lineheight		25
 	}
 	panel soldierlist {
 		{
-			pos			"35 70"
-			size		"310 300"
+			pos			"35 60"
+			size		"310 312"
 			layout		LAYOUT_TOP_DOWN_FLOW
 			padding		6
 			wheelscrollable	true
@@ -66,8 +66,8 @@ window popup_assembleteam
 	}
 	vscrollbar soldierlist_scroll {
 		image		"ui/scrollbar_v_green"
-		pos			"350 70"
-		height		"300"
+		pos			"350 60"
+		height		"312"
 		hidewhenunused	true
 		onChange	{
 			*node:parent.soldierlist@viewpos = <current>
