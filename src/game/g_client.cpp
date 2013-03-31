@@ -578,20 +578,20 @@ void G_ClientGetWeaponFromInventory (Edict *ent)
 		return;
 
 	/* search for weapons and select the one that is available easily */
-	containerIndex_t container;
-	int tu = 100;
 	const invDef_t *bestContainer = NULL;
 	invList_t *theWeapon = NULL;
-	for (container = 0; container < CID_MAX; container++) {
-		if (INVDEF(container)->out < tu) {
-			/* We are looking for the *fastest* way to get a weapon,
-			 * no matter what kind of weapon it is. */
-			Item *ic;
-			for (ic = ent->getContainer(container); ic; ic = ic->getNext()) {
-				assert(ic->def());
-				if (ic->isWeapon() && !ic->mustReload()) {
-					theWeapon = ic;
-					bestContainer = INVDEF(container);
+	int tu = 100;
+	const Container *cont = NULL;
+	while ((cont = ent->chr.inv.getNextCont(cont, true))) {
+		if (cont->def()->out < tu) {
+			Item *item = NULL;
+			while ((item = cont->getNextItem(item))) {
+				/* We are looking for the *fastest* way to get a weapon,
+				 * no matter what kind of weapon it is. */
+				assert(item->def());
+				if (item->isWeapon() && !item->mustReload()) {
+					theWeapon = item;
+					bestContainer = cont->def();
 					tu = bestContainer->out;
 					break;
 				}
