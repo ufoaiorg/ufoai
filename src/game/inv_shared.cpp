@@ -623,7 +623,14 @@ Item *Container::getNextItem (const Item *prev) const
 inventory_s::inventory_s ()
 {
 // This (prototype-)constructor does not work as intended. Seems like the first inventory is created before CSI is set.
-//	containers[CID_RIGHT]._invList = NULL;
+// There is the static game_inventory, static character_t, static le_t ...
+//	containers[CID_LEFT]._invList = NULL;
+//	containers[CID_LEFT]._def = &CSI->ids[CID_LEFT];
+
+// Plan B: add an 'id' member to class Container and init it here
+	int i;
+	for (i = 0; i < CID_MAX; i++)
+		containers[i].id = i;
 }
 
 const Container *inventory_t::_getNextCont (const Container *prev) const

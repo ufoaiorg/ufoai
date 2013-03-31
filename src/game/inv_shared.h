@@ -475,9 +475,11 @@ typedef Item invList_t;
 
 class Container
 {
+	const invDef_t *_def;	/* container attributes (invDef_t) */
 public:
-//	const invDef_t *_def;	/* container attributes (invDef_t) */
+	int id;
 	invList_t *_invList;	/* start of the list of items */
+
 	Item *getNextItem (const Item *prev) const;
 };
 
