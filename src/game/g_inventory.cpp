@@ -223,19 +223,16 @@ static bool G_InventoryPlaceItemAdjacent (Edict *ent)
  */
 void G_InventoryToFloor (Edict *ent)
 {
-	containerIndex_t container;
-
 	/* check for items that should be dropped */
-	for (container = 0; container < CID_MAX; container++) {
-		/* ignore items linked from any temp container */
-		if (INVDEF(container)->temp)
-			continue;
-		if (G_InventoryDropToFloorCheck(ent, container))
-			break;
+	/* ignore items linked from any temp container */
+	const Container *cont = NULL;
+	while ((cont = ent->chr.inv.getNextCont(cont))) {
+		if (G_InventoryDropToFloorCheck(ent, cont->id))
+			break;	/* found at least one item */
 	}
 
 	/* edict is not carrying any items */
-	if (container >= CID_MAX)
+	if (!cont)
 		return;
 
 	/* find the floor */
@@ -250,6 +247,7 @@ void G_InventoryToFloor (Edict *ent)
 
 	/* drop items */
 	/* cycle through all containers */
+	containerIndex_t container;
 	for (container = 0; container < CID_MAX; container++) {
 		/* skip floor - we want to drop to floor */
 		if (container == CID_FLOOR)
