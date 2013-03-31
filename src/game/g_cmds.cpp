@@ -299,21 +299,20 @@ void G_InvList_f (const Player &player)
 
 	gi.DPrintf("Print inventory for '%s'\n", player.pers.netname);
 	while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, player.getTeam()))) {
-		containerIndex_t container;
 		gi.DPrintf("actor: '%s'\n", ent->chr.name);
 
-		for (container = 0; container < CID_MAX; container++) {
-			const invList_t *ic = ent->getContainer(container);
-			Com_Printf("Container: %i\n", container);
-			while (ic) {
+		const Container *cont = NULL;
+		while ((cont = ent->chr.inv.getNextCont(cont, true))) {
+			Com_Printf("Container: %i\n", cont->id);
+			Item *item = NULL;
+			while ((item = cont->getNextItem(item))) {
 				Com_Printf(".. item.def(): %i, item.ammo: %i, item.ammoLeft: %i, x: %i, y: %i\n",
-						(ic->def() ? ic->def()->idx : NONE), (ic->ammoDef() ? ic->ammoDef()->idx : NONE),
-						ic->getAmmoLeft(), ic->getX(), ic->getY());
-				if (ic->def())
-					Com_Printf(".... weapon: %s\n", ic->def()->id);
-				if (ic->ammoDef())
-					Com_Printf(".... ammo:   %s (%i)\n", ic->ammoDef()->id, ic->getAmmoLeft());
-				ic = ic->getNext();
+						(item->def() ? item->def()->idx : NONE), (item->ammoDef() ? item->ammoDef()->idx : NONE),
+						item->getAmmoLeft(), item->getX(), item->getY());
+				if (item->def())
+					Com_Printf(".... weapon: %s\n", item->def()->id);
+				if (item->ammoDef())
+					Com_Printf(".... ammo:   %s (%i)\n", item->ammoDef()->id, item->getAmmoLeft());
 			}
 		}
 	}
