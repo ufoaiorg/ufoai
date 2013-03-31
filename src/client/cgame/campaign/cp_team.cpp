@@ -38,15 +38,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 void CP_AddWeaponAmmo (equipDef_t *ed, Item *item)
 {
-	int i;
 	const objDef_t *type = item->def();
 
 	assert(ed->numItems[type->idx] > 0);
 	ed->numItems[type->idx]--;
+	if (type->isArmour())
+		return;
 
 	if (type->weapons[0]) {
 		/* The given item is ammo or self-contained weapon (i.e. It has firedefinitions. */
-		if (type->oneshot) {
+		if (!type->isAmmo()) {
 			/* "Recharge" the oneshot weapon. */
 			item->setAmmoLeft(type->ammo);
 			item->setAmmoDef(item->def()); /* Just in case this hasn't been done yet. */
@@ -85,7 +86,7 @@ void CP_AddWeaponAmmo (equipDef_t *ed, Item *item)
 
 	/* Search for any complete clips. */
 	/** @todo We may want to change this to use the type->ammo[] info. */
-	for (i = 0; i < cgi->csi->numODs; i++) {
+	for (int i = 0; i < cgi->csi->numODs; i++) {
 		const objDef_t *od = INVSH_GetItemByIDX(i);
 		if (od->isLoadableInWeapon(type)) {
 			if (ed->numItems[i] > 0) {
@@ -114,7 +115,7 @@ void CP_AddWeaponAmmo (equipDef_t *ed, Item *item)
 	/* See if there's any loose ammo */
 	/** @todo We may want to change this to use the type->ammo[] info. */
 	item->setAmmoLeft(NONE_AMMO);
-	for (i = 0; i < cgi->csi->numODs; i++) {
+	for (int i = 0; i < cgi->csi->numODs; i++) {
 		const objDef_t *od = INVSH_GetItemByIDX(i);
 		if (od->isLoadableInWeapon(type) && ed->numItemsLoose[i] > item->getAmmoLeft()) {
 			if (item->getAmmoLeft() > 0) {

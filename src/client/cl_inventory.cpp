@@ -99,18 +99,16 @@ bool INV_MoveItem (inventory_t* inv, const invDef_t *toContainer, int px, int py
  */
 bool INV_LoadWeapon (const invList_t *weaponList, inventory_t *inv, const invDef_t *srcContainer, const invDef_t *destContainer)
 {
-	invList_t *ic = NULL;
-	const objDef_t *weapon;
-	int x, y;
-
 	assert(weaponList);
 
-	weapon = weaponList->def();
+	int x, y;
 	weaponList->getFirstShapePosition(&x, &y);
 	x += weaponList->getX();
 	y += weaponList->getY();
-	if (weapon->oneshot) {
-		ic = inv->getItemAtPos(destContainer, x, y);
+
+	const objDef_t *weapon = weaponList->def();
+	if (weapon->weapons[0]) {
+		invList_t *ic = inv->getItemAtPos(destContainer, x, y);
 		if (ic) {
 			ic->setAmmoLeft(weapon->ammo);
 			ic->setAmmoDef(weapon);
@@ -119,6 +117,7 @@ bool INV_LoadWeapon (const invList_t *weaponList, inventory_t *inv, const invDef
 	} else if (weapon->reload) {
 		const itemFilterTypes_t equipType = INV_GetFilterFromItem(weapon);
 		int i = 0;
+		invList_t *ic = NULL;
 		/* search an ammo */
 		while (i < weapon->numAmmos && !ic) {
 			const objDef_t *ammo = weapon->ammos[i];
@@ -138,17 +137,21 @@ bool INV_LoadWeapon (const invList_t *weaponList, inventory_t *inv, const invDef
  * @param[in,out] weapon The weapon to unload ammo.
  * @param[in,out] inv inventory where the change happen.
  * @param[in] container Inventory definition where to put the removed ammo.
- * @return @c true if the unload was successful, @c false otherwise
+ * @return @c true if the ammo was moved to the container, @c false otherwise
  */
 bool INV_UnloadWeapon (Item *weapon, inventory_t *inv, const invDef_t *container)
 {
 	assert(weapon);
 	if (container && inv) {
-		const Item item(weapon->ammoDef());
-		if (cls.i.addToInventory(inv, &item, container, NONE, NONE, 1) != NULL) {
+		bool moved = false;
+		if (weapon->def() != weapon->ammoDef() && weapon->getAmmoLeft() > 0) {
+			const Item item(weapon->ammoDef());
+			moved = cls.i.addToInventory(inv, &item, container, NONE, NONE, 1) != NULL;
+		}
+		if (moved || weapon->def() == weapon->ammoDef()) {
 			weapon->setAmmoDef(NULL);
 			weapon->setAmmoLeft(0);
-			return true;
+			return moved;
 		}
 	}
 	return false;

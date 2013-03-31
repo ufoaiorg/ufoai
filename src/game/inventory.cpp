@@ -86,9 +86,6 @@ invList_t *InventoryInterface::addInvList (inventory_t *const inv, const invDef_
  */
 invList_t *InventoryInterface::addToInventory (inventory_t *const inv, const Item* const item, const invDef_t *container, int x, int y, int amount)
 {
-	invList_t *ic;
-	int checkedTo;
-
 	if (!item->def())
 		return NULL;
 
@@ -101,6 +98,7 @@ invList_t *InventoryInterface::addToInventory (inventory_t *const inv, const Ite
 	if (container->single && inv->getContainer2(container->id))
 		return NULL;
 
+	invList_t *ic;
 	/* CID_EQUIP and CID_FLOOR */
 	if (container->temp) {
 		for (ic = inv->getContainer3(container->id); ic; ic = ic->getNext())
@@ -119,7 +117,7 @@ invList_t *InventoryInterface::addToInventory (inventory_t *const inv, const Ite
 			return NULL;
 	}
 
-	checkedTo = inv->canHoldItem(container, item->def(), x, y, NULL);
+	const int checkedTo = inv->canHoldItem(container, item->def(), x, y, NULL);
 	assert(checkedTo);
 
 	/* not found - add a new one */
@@ -149,13 +147,11 @@ invList_t *InventoryInterface::addToInventory (inventory_t *const inv, const Ite
  */
 bool InventoryInterface::removeFromInventory (inventory_t* const inv, const invDef_t *container, invList_t *fItem)
 {
-	invList_t *ic, *previous;
-
 	assert(inv);
 	assert(container);
 	assert(fItem);
 
-	ic = inv->getContainer2(container->id);
+	invList_t *ic = inv->getContainer2(container->id);
 	if (!ic)
 		return false;
 
@@ -190,7 +186,7 @@ bool InventoryInterface::removeFromInventory (inventory_t* const inv, const invD
 		return true;
 	}
 
-	for (previous = inv->getContainer3(container->id); ic; ic = ic->getNext()) {
+	for (invList_t *previous = inv->getContainer3(container->id); ic; ic = ic->getNext()) {
 		if (ic == fItem) {
 			this->cacheItem = *ic;
 			/* temp container like CID_EQUIP and CID_FLOOR */

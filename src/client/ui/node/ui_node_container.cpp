@@ -696,19 +696,18 @@ static bool UI_ContainerNodeAddItem (const invDef_t *container, invList_t *ic, c
 void UI_ContainerNodeAutoPlaceItem (uiNode_t* node, invList_t *ic)
 {
 	containerIndex_t target;
-	uiNode_t *targetNode;
 	bool ammoChanged = false;
 	const invDef_t *container = EXTRADATA(node).container;
 
 	/* Right click: automatic item assignment/removal. */
 	if (container->id != CID_EQUIP) {
-		if (ic->ammoDef() && ic->ammoDef() != ic->def() && ic->getAmmoLeft()) {
+		target = CID_EQUIP;
+		if (ic->ammoDef()) {
 			/* Remove ammo on removing weapon from a soldier */
-			target = CID_EQUIP;
 			ammoChanged = INV_UnloadWeapon(ic, ui_inventory, INVDEF(target));
-		} else {
+		}
+		if (!ammoChanged && !ic->ammoDef()) {
 			/* Move back to CID_EQUIP (ground, floor) container. */
-			target = CID_EQUIP;
 			INV_MoveItem(ui_inventory, INVDEF(target), NONE, NONE, container, ic, NULL);
 		}
 	} else {
@@ -758,7 +757,7 @@ void UI_ContainerNodeAutoPlaceItem (uiNode_t* node, invList_t *ic)
 	}
 
 	/* Run onChange events */
-	targetNode = UI_GetContainerNodeByContainerIDX(node->parent, target);
+	uiNode_t *targetNode = UI_GetContainerNodeByContainerIDX(node->parent, target);
 	if (node->onChange)
 		UI_ExecuteEventActions(node, node->onChange);
 	if (targetNode != NULL && node != targetNode && targetNode->onChange)
@@ -1000,12 +999,12 @@ bool uiContainerNode::onDndFinished (uiNode_t *source, bool isDropped)
 
 			/** @todo We must split the move in two. Here, we should not know how to add the item to the target (see dndDrop) */
 			/* Remove ammo on removing weapon from a soldier */
-			if (UI_IsScrollContainerNode(target) && fItem->ammoDef() && fItem->ammoDef() != fItem->def() && fItem->getAmmoLeft())
+			if (UI_IsScrollContainerNode(target) && fItem->ammoDef())
 				INV_UnloadWeapon(fItem, ui_inventory, targetContainer);
 
 			/* Save rotation: in case the move fails we don't want the item overlapping other items or
 			 * ending partially out of the container due to changed rotation */
-			bool rotated = fItem->rotated;
+			const bool rotated = fItem->rotated;
 			/* rotate on Shift */
 			/** @todo enable Shift-rotate for battlescape too when issues are solved */
 			fItem->rotated = Key_IsDown(K_SHIFT) && !CL_BattlescapeRunning();
