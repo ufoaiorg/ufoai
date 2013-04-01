@@ -161,6 +161,7 @@ const char* NAT_GetHappinessString (const nation_t* nation)
 
 /**
  * @brief Updates the nation happiness
+ * @param[in] minhappiness Minimum value of mean happiness before the game is lost
  * @param[in] nation The nation to update the happiness for
  * @param[in] happiness The new happiness value to set for the given nation
  */
