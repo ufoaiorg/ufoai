@@ -49,12 +49,10 @@ int CL_ActorDoThrowTime (const eventRegister_t *self, dbuffer *msg, eventTiming_
  */
 void CL_ActorDoThrow (const eventRegister_t *self, dbuffer *msg)
 {
-	const fireDef_t *fd;
 	vec3_t muzzle, v0;
 	int flags;
 	int dtime;
 	int objIdx;
-	const objDef_t *obj;
 	weaponFireDefIndex_t weapFdsIdx;
 	fireDefIndex_t fdIdx;
 
@@ -62,8 +60,8 @@ void CL_ActorDoThrow (const eventRegister_t *self, dbuffer *msg)
 	NET_ReadFormat(msg, self->formatString, &dtime, &objIdx, &weapFdsIdx, &fdIdx, &flags, &muzzle, &v0);
 
 	/* get the fire def */
-	obj = INVSH_GetItemByIDX(objIdx);
-	fd = FIRESH_GetFiredef(obj, weapFdsIdx, fdIdx);
+	const objDef_t *obj = INVSH_GetItemByIDX(objIdx);
+	const fireDef_t *fd = FIRESH_GetFiredef(obj, weapFdsIdx, fdIdx);
 
 	/* add effect le (local entity) */
 	/** @todo add victim support for blood and hurt sounds */

@@ -39,17 +39,6 @@ int CL_ParseResultsTime (const struct eventRegister_s *self, dbuffer *msg, event
  */
 void CL_ParseResults (const eventRegister_t *self, dbuffer *msg)
 {
-	int num_spawned[MAX_TEAMS];
-	int num_alive[MAX_TEAMS];
-	/* the first dimension contains the attacker team, the second the victim team */
-	int num_kills[MAX_TEAMS + 1][MAX_TEAMS];
-	int num_stuns[MAX_TEAMS + 1][MAX_TEAMS];
-
-	OBJZERO(num_spawned);
-	OBJZERO(num_alive);
-	OBJZERO(num_kills);
-	OBJZERO(num_stuns);
-
 	/* get number of teams */
 	const int num = NET_ReadByte(msg);
 	if (num > MAX_TEAMS)
@@ -65,17 +54,26 @@ void CL_ParseResults (const eventRegister_t *self, dbuffer *msg)
 		Com_Error(ERR_DROP, "Team number %d too high (only %d teams)", cls.team, num);
 
 	/* get spawn and alive count */
+	int num_spawned[MAX_TEAMS];
+	int num_alive[MAX_TEAMS];
+	OBJZERO(num_spawned);
+	OBJZERO(num_alive);
 	for (int i = 0; i < num; i++) {
 		num_spawned[i] = NET_ReadByte(msg);
 		num_alive[i] = NET_ReadByte(msg);
 	}
 
 	/* get kills */
+	/* the first dimension contains the attacker team, the second the victim team */
+	int num_kills[MAX_TEAMS + 1][MAX_TEAMS];
+	OBJZERO(num_kills);
 	for (int i = 0; i <= num; i++)
 		for (int j = 0; j < num; j++)
 			num_kills[i][j] = NET_ReadByte(msg);
 
 	/* get stuns */
+	int num_stuns[MAX_TEAMS + 1][MAX_TEAMS];
+	OBJZERO(num_stuns);
 	for (int i = 0; i <= num; i++)
 		for (int j = 0; j < num; j++)
 			num_stuns[i][j] = NET_ReadByte(msg);

@@ -35,21 +35,20 @@ void CL_EntPerish (const eventRegister_t *self, dbuffer *msg)
 {
 	int		entnum;
 	int		type;
-	le_t	*le, *actor;
 
 	NET_ReadFormat(msg, self->formatString, &entnum, &type);
 
-	le = LE_Get(entnum);
+	le_t *le = LE_Get(entnum);
 
 	if (!le)
 		LE_NotFoundWithTypeError(entnum, type);
 
+	le_t *actor = NULL;
 	switch (le->type) {
 	case ET_ITEM:
 		cls.i.emptyContainer(&le->inv, CID_FLOOR);
 
 		/* search owners (there can be many, some of them dead) */
-		actor = NULL;
 		while ((actor = LE_GetNextInUse(actor))) {
 			if ((actor->type == ET_ACTOR || actor->type == ET_ACTOR2x2)
 			 && VectorCompare(actor->pos, le->pos)) {

@@ -50,12 +50,11 @@ void CL_ParticleAppear (const eventRegister_t *self, dbuffer *msg)
 	char particle[MAX_VAR];
 	int entnum, levelflags;
 	vec3_t origin;
-	le_t* le;
 
 	/* read data */
 	NET_ReadFormat(msg, self->formatString, &entnum, &levelflags, origin, particle, sizeof(particle));
 
-	le = LE_Get(entnum);
+	le_t *le = LE_Get(entnum);
 	if (!le)
 		LE_NotFoundError(entnum);
 

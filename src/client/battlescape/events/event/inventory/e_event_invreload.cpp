@@ -40,7 +40,6 @@ void CL_InvReload (const eventRegister_t *self, dbuffer *msg)
 	int		number;
 	int		ammo, type, x, y;
 	containerIndex_t container;
-	equipDef_t *ed;
 
 	NET_ReadFormat(msg, self->formatString, &number, &ammo, &type, &container, &x, &y);
 
@@ -61,7 +60,7 @@ void CL_InvReload (const eventRegister_t *self, dbuffer *msg)
 
 	/* if the displaced clip had any remaining bullets
 	 * store them as loose, unless the removed clip was full */
-	ed = GAME_GetEquipmentDefinition();
+	equipDef_t *ed = GAME_GetEquipmentDefinition();
 	if (ed && ic->getAmmoLeft() > 0 && ic->getAmmoLeft() != ic->def()->ammo) {
 		assert(ammo == ic->def()->ammo);
 		/* Accumulate loose ammo into clips (only accessible post-mission) */

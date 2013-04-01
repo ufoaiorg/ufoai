@@ -46,7 +46,6 @@ int CL_EntAppearTime (const struct eventRegister_s *self, dbuffer *msg, eventTim
  */
 void CL_EntAppear (const eventRegister_t *self, dbuffer *msg)
 {
-	le_t	*le;
 	int		entnum;
 	entity_type_t type;
 	pos3_t	pos;
@@ -54,7 +53,7 @@ void CL_EntAppear (const eventRegister_t *self, dbuffer *msg)
 	NET_ReadFormat(msg, self->formatString, &entnum, &type, &pos);
 
 	/* check if the ent is already visible */
-	le = LE_Get(entnum);
+	le_t *le = LE_Get(entnum);
 	if (!le) {
 		le = LE_Add(entnum);
 	} else {

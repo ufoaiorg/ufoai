@@ -36,14 +36,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 void CL_ActorRevitalised (const eventRegister_t *self, dbuffer *msg)
 {
-	le_t *le, *floor;
 	int entnum, state;
-
 	NET_ReadFormat(msg, self->formatString, &entnum, &state);
 
 	/* get les */
-	le = LE_Get(entnum);
-
+	le_t *le = LE_Get(entnum);
 	if (!le)
 		LE_NotFoundError(entnum);
 
@@ -53,7 +50,7 @@ void CL_ActorRevitalised (const eventRegister_t *self, dbuffer *msg)
 	LE_Lock(le);
 
 	/* link any floor container into the actor temp floor container */
-	floor = LE_Find(ET_ITEM, le->pos);
+	le_t *floor = LE_Find(ET_ITEM, le->pos);
 	if (floor)
 		le->setFloor(floor);
 

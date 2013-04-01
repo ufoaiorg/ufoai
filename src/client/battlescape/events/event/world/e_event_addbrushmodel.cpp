@@ -36,7 +36,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 void CL_AddBrushModel (const eventRegister_t *self, dbuffer *msg)
 {
-	le_t *le;
 	int entnum, modelnum1, levelflags, speed, dir;
 	entity_type_t type;
 	const cBspModel_t *model;
@@ -51,7 +50,7 @@ void CL_AddBrushModel (const eventRegister_t *self, dbuffer *msg)
 		Com_Error(ERR_DROP, "Invalid le modelnum1 announced via EV_ADD_BRUSH_MODEL\n");
 
 	/* check if the ent is already visible */
-	le = LE_Get(entnum);
+	le_t *le = LE_Get(entnum);
 	if (le)
 		Com_Error(ERR_DROP, "le announced a second time - le for entnum %i (type: %i) already exists (via EV_ADD_BRUSH_MODEL)\n", entnum, type);
 

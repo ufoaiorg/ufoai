@@ -47,13 +47,12 @@ int CL_ActorDieTime (const struct eventRegister_s *self, dbuffer *msg, eventTimi
  */
 void CL_ActorDie (const eventRegister_t *self, dbuffer *msg)
 {
-	le_t *le;
 	int entnum, state, playerNum, attacker;
 
 	NET_ReadFormat(msg, self->formatString, &entnum, &state, &playerNum, &attacker);
 
 	/* get les */
-	le = LE_Get(entnum);
+	le_t *le = LE_Get(entnum);
 
 	if (!le)
 		LE_NotFoundError(entnum);

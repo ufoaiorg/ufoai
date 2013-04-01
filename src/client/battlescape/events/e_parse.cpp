@@ -184,7 +184,6 @@ int CL_ClearBattlescapeEvents (void)
 static int CL_GetEventTime (const event_t eType, dbuffer *msg, eventTiming_t *eventTiming)
 {
 	const eventRegister_t *eventData = CL_GetEvent(eType);
-	int eventTime;
 
 	/* get event time */
 	if (eventTiming->nextTime < cl.time)
@@ -192,6 +191,7 @@ static int CL_GetEventTime (const event_t eType, dbuffer *msg, eventTiming_t *ev
 	if (eventTiming->impactTime < cl.time)
 		eventTiming->impactTime = cl.time;
 
+	int eventTime;
 	if (!eventData->timeCallback)
 		eventTime = eventTiming->nextTime;
 	else

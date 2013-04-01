@@ -38,27 +38,20 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 void CL_ActorReactionFireChange (const eventRegister_t *self, dbuffer *msg)
 {
-	le_t *le;
 	actorHands_t hand;
 	int entnum, fmIdx, odIdx;
-	character_t *chr;
-	const objDef_t *od;
 
 	NET_ReadFormat(msg, self->formatString, &entnum, &fmIdx, &hand, &odIdx);
 
-	le = LE_Get(entnum);
+	const le_t *le = LE_Get(entnum);
 	if (!le)
 		LE_NotFoundError(entnum);
 
-	chr = CL_ActorGetChr(le);
+	character_t *chr = CL_ActorGetChr(le);
 	if (!chr)
 		return;
 
-	if (odIdx != NONE)
-		od = INVSH_GetItemByIDX(odIdx);
-	else
-		od = NULL;
-
+	const objDef_t *od = INVSH_GetItemByIDX(odIdx);
 	chr->RFmode.set(hand, fmIdx, od);
 
 	UI_ExecuteConfunc("reactionfire_updated");

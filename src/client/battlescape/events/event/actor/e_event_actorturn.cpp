@@ -33,13 +33,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 void CL_ActorDoTurn (const eventRegister_t *self, dbuffer *msg)
 {
-	le_t *le;
 	int entnum, dir;
-
 	NET_ReadFormat(msg, self->formatString, &entnum, &dir);
 
 	/* get le */
-	le = LE_Get(entnum);
+	le_t *le = LE_Get(entnum);
 	if (!le)
 		LE_NotFoundError(entnum);
 

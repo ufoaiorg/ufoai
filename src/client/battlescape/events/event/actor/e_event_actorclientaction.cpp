@@ -36,14 +36,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 void CL_ActorClientAction (const eventRegister_t *self, dbuffer *msg)
 {
-	le_t* le;
 	int number, actionEntityNumber;
 
 	/* read data */
 	NET_ReadFormat(msg, self->formatString, &number, &actionEntityNumber);
 
 	/* get actor le */
-	le = LE_Get(number);
+	le_t *le = LE_Get(number);
 	if (!le)
 		LE_NotFoundError(number);
 

@@ -33,11 +33,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 void CL_EntDestroy (const eventRegister_t *self, dbuffer *msg)
 {
 	int entnum;
-	le_t *le;
 
 	NET_ReadFormat(msg, self->formatString, &entnum);
 
-	le = LE_Get(entnum);
+	le_t *le = LE_Get(entnum);
 	if (!le)
 		return;
 

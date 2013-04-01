@@ -51,20 +51,18 @@ int CL_ActorAppearTime (const eventRegister_t *self, dbuffer *msg, eventTiming_t
  */
 static void CL_DrawLineOfSight (const le_t *watcher, const le_t *target)
 {
-	ptl_t *ptl;
-	vec3_t eyes;
-
 	if (!watcher || !target)
 		return;
 
 	/* start is the watchers origin */
+	vec3_t eyes;
 	VectorCopy(watcher->origin, eyes);
 	if (LE_IsCrouched(watcher))
 		eyes[2] += EYE_HT_CROUCH;
 	else
 		eyes[2] += EYE_HT_STAND;
 
-	ptl = CL_ParticleSpawn("fadeTracer", 0, eyes, target->origin);
+	ptl_t *ptl = CL_ParticleSpawn("fadeTracer", 0, eyes, target->origin);
 	if (ptl == NULL)
 		return;
 
@@ -80,15 +78,12 @@ static void CL_DrawLineOfSight (const le_t *watcher, const le_t *target)
  */
 void CL_ActorAppear (const eventRegister_t *self, dbuffer *msg)
 {
-	le_t *le, *leResponsible;
-	int entnum, entnumResponsible, modelnum1, modelnum2;
-	int teamDefID = -1;
 
 	/* check if the actor is already visible */
-	entnum = NET_ReadShort(msg);
-	entnumResponsible = NET_ReadShort(msg);
-	le = LE_Get(entnum);
-	leResponsible = LE_Get(entnumResponsible);
+	const int entnum = NET_ReadShort(msg);
+	const int entnumResponsible = NET_ReadShort(msg);
+	le_t *le = LE_Get(entnum);
+	le_t *leResponsible = LE_Get(entnumResponsible);
 
 	if (entnumResponsible != SKIP_LOCAL_ENTITY && !leResponsible)
 		LE_NotFoundError(entnumResponsible);
@@ -105,6 +100,8 @@ void CL_ActorAppear (const eventRegister_t *self, dbuffer *msg)
 	le->flags &= ~LE_INVISIBLE;
 
 	/* get the info */
+	int teamDefID = -1;
+	int modelnum1, modelnum2;
 	NET_ReadFormat(msg, self->formatString,
 			&le->team, &teamDefID, &le->gender, &le->ucn, &le->pnum, &le->pos,
 			&le->angle, &le->right, &le->left,

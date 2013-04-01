@@ -35,10 +35,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 int CL_ActorDoShootTime (const eventRegister_t *self, dbuffer *msg, eventTiming_t *eventTiming)
 {
-	const fireDef_t *fd;
 	int flags, dummy;
 	int objIdx, surfaceFlags;
-	const objDef_t *obj;
 	int weap_fds_idx, fd_idx;
 	shoot_types_t shootType;
 	vec3_t muzzle, impact;
@@ -48,8 +46,8 @@ int CL_ActorDoShootTime (const eventRegister_t *self, dbuffer *msg, eventTiming_
 	NET_ReadFormat(msg, self->formatString, &dummy, &dummy, &dummy, &objIdx, &weap_fds_idx, &fd_idx, &shootType, &flags,
 			&surfaceFlags, &muzzle, &impact, &dummy);
 
-	obj = INVSH_GetItemByIDX(objIdx);
-	fd = FIRESH_GetFiredef(obj, weap_fds_idx, fd_idx);
+	const objDef_t *obj = INVSH_GetItemByIDX(objIdx);
+	const fireDef_t *fd = FIRESH_GetFiredef(obj, weap_fds_idx, fd_idx);
 
 	if (!(flags & SF_BOUNCED)) {
 		/* shooting */
@@ -89,15 +87,12 @@ int CL_ActorDoShootTime (const eventRegister_t *self, dbuffer *msg, eventTiming_
  */
 static void CL_ActorGetMuzzle (const le_t* actor, vec3_t muzzle, shoot_types_t shootType)
 {
-	const model_t *model;
-	const char *tag;
-	float matrix[16], mc[16], modifiedMatrix[16];
-	const objDef_t *od;
-	const Item *weapon;
 
 	if (actor == NULL)
 		return;
 
+	const Item *weapon;
+	const char *tag;
 	if (IS_SHOT_RIGHT(shootType)) {
 		tag = "tag_rweapon";
 		weapon = actor->getRightHandItem();
@@ -109,9 +104,8 @@ static void CL_ActorGetMuzzle (const le_t* actor, vec3_t muzzle, shoot_types_t s
 	if (!weapon || !weapon->def())
 		return;
 
-	od = weapon->def();
-
-	model = cls.modelPool[od->idx];
+	const objDef_t *od = weapon->def();
+	const model_t *model = cls.modelPool[od->idx];
 	if (!model)
 		Com_Error(ERR_DROP, "Model for item %s is not precached", od->id);
 
@@ -119,11 +113,14 @@ static void CL_ActorGetMuzzle (const le_t* actor, vec3_t muzzle, shoot_types_t s
 	if (R_GetTagIndexByName(model, "tag_muzzle") == -1)
 		return;
 
+	float modifiedMatrix[16];
 	if (!R_GetTagMatrix(actor->model1, tag, actor->as.frame, modifiedMatrix))
 		Com_Error(ERR_DROP, "Could not find tag %s for actor model %s", tag, actor->model1->name);
 
+	float mc[16];
 	GLMatrixAssemble(actor->origin, actor->angles, mc);
 
+	float matrix[16];
 	GLMatrixMultiply(mc, modifiedMatrix, matrix);
 
 	R_GetTagMatrix(model, "tag_muzzle", 0, modifiedMatrix);
@@ -143,13 +140,10 @@ static void CL_ActorGetMuzzle (const le_t* actor, vec3_t muzzle, shoot_types_t s
  */
 void CL_ActorDoShoot (const eventRegister_t *self, dbuffer *msg)
 {
-	const fireDef_t *fd;
-	le_t *leShooter, *leVictim;
 	vec3_t muzzle, impact;
 	int flags, normal, shooterEntnum, victimEntnum;
 	int objIdx;
 	int first;
-	const objDef_t *obj;
 	weaponFireDefIndex_t weapFdsIdx;
 	fireDefIndex_t fdIdx;
 	int surfaceFlags;
@@ -158,6 +152,7 @@ void CL_ActorDoShoot (const eventRegister_t *self, dbuffer *msg)
 	/* read data */
 	NET_ReadFormat(msg, self->formatString, &shooterEntnum, &victimEntnum, &first, &objIdx, &weapFdsIdx, &fdIdx, &shootType, &flags, &surfaceFlags, &muzzle, &impact, &normal);
 
+	le_t *leVictim;
 	if (victimEntnum != SKIP_LOCAL_ENTITY) {
 		leVictim = LE_Get(victimEntnum);
 		if (!leVictim)
@@ -167,11 +162,11 @@ void CL_ActorDoShoot (const eventRegister_t *self, dbuffer *msg)
 	}
 
 	/* get shooter le */
-	leShooter = LE_Get(shooterEntnum);
+	le_t *leShooter = LE_Get(shooterEntnum);
 
 	/* get the fire def */
-	obj = INVSH_GetItemByIDX(objIdx);
-	fd = FIRESH_GetFiredef(obj, weapFdsIdx, fdIdx);
+	const objDef_t *obj = INVSH_GetItemByIDX(objIdx);
+	const fireDef_t *fd = FIRESH_GetFiredef(obj, weapFdsIdx, fdIdx);
 
 	CL_ActorGetMuzzle(leShooter, muzzle, shootType);
 

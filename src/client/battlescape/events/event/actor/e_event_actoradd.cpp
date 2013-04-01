@@ -36,13 +36,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 void CL_ActorAdd (const eventRegister_t *self, dbuffer *msg)
 {
-	le_t *le;
-	int entnum;
-	int teamDefID;
-
 	/* check if the actor is already visible */
-	entnum = NET_ReadShort(msg);
-	le = LE_Get(entnum);
+	const int entnum = NET_ReadShort(msg);
+	le_t *le = LE_Get(entnum);
 	if (le) {
 		Com_Printf("CL_ActorAdd: Actor with number %i already exists\n", entnum);
 		NET_SkipFormat(msg, self->formatString);
@@ -51,6 +47,7 @@ void CL_ActorAdd (const eventRegister_t *self, dbuffer *msg)
 	le = LE_Add(entnum);
 
 	/* get the info */
+	int teamDefID;
 	NET_ReadFormat(msg, self->formatString,
 				&le->team, &teamDefID,
 				&le->gender, &le->pnum, &le->pos,

@@ -32,14 +32,13 @@ int CL_ActorShootHiddenTime (const eventRegister_t *self, dbuffer *msg, eventTim
 {
 	int first;
 	int objIdx;
-	const objDef_t *obj;
 	weaponFireDefIndex_t weapFdsIdx;
 	fireDefIndex_t fireDefIndex;
 	const int eventTime = eventTiming->shootTime;
 
 	NET_ReadFormat(msg, self->formatString, &first, &objIdx, &weapFdsIdx, &fireDefIndex);
 
-	obj = INVSH_GetItemByIDX(objIdx);
+	const objDef_t *obj = INVSH_GetItemByIDX(objIdx);
 	if (first) {
 		eventTiming->nextTime += 500;
 		eventTiming->impactTime = eventTiming->shootTime = eventTiming->nextTime;
@@ -63,18 +62,16 @@ int CL_ActorShootHiddenTime (const eventRegister_t *self, dbuffer *msg, eventTim
  */
 void CL_ActorShootHidden (const eventRegister_t *self, dbuffer *msg)
 {
-	const fireDef_t *fd;
 	int first;
 	int objIdx;
-	const objDef_t *obj;
 	weaponFireDefIndex_t weapFdsIdx;
 	fireDefIndex_t fdIdx;
 
 	NET_ReadFormat(msg, self->formatString, &first, &objIdx, &weapFdsIdx, &fdIdx);
 
 	/* get the fire def */
-	obj = INVSH_GetItemByIDX(objIdx);
-	fd = FIRESH_GetFiredef(obj, weapFdsIdx, fdIdx);
+	const objDef_t *obj = INVSH_GetItemByIDX(objIdx);
+	const fireDef_t *fd = FIRESH_GetFiredef(obj, weapFdsIdx, fdIdx);
 
 	/* start the sound */
 	if ((first || !fd->soundOnce) && fd->fireSound != NULL)

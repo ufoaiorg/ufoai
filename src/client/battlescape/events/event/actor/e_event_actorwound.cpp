@@ -34,12 +34,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 void CL_ActorWound (const eventRegister_t *self, dbuffer *msg)
 {
-	le_t *le;
 	int entnum, bodyPart, wounds, treatment;
-
 	NET_ReadFormat(msg, self->formatString, &entnum, &bodyPart, &wounds, &treatment);
 
-	le = LE_Get(entnum);
+	le_t *le = LE_Get(entnum);
 	if (!le)
 		LE_NotFoundError(entnum);
 

@@ -46,11 +46,10 @@ void CL_DoorOpen (const eventRegister_t *self, dbuffer *msg)
 {
 	/* get local entity */
 	int number;
-	le_t *le;
 
 	NET_ReadFormat(msg, self->formatString, &number);
 
-	le = LE_Get(number);
+	le_t *le = LE_Get(number);
 	if (!le)
 		LE_NotFoundError(number);
 

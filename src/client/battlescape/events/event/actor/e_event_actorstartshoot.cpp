@@ -52,7 +52,6 @@ int CL_ActorStartShootTime (const eventRegister_t *self, dbuffer *msg, eventTimi
  */
 void CL_ActorStartShoot (const eventRegister_t *self, dbuffer *msg)
 {
-	le_t *le;
 	pos3_t from, target;
 	int entnum;
 	shoot_types_t shootType;
@@ -60,7 +59,7 @@ void CL_ActorStartShoot (const eventRegister_t *self, dbuffer *msg)
 	NET_ReadFormat(msg, self->formatString, &entnum, &shootType, &from, &target);
 
 	/* shooting actor */
-	le = LE_Get(entnum);
+	le_t *le = LE_Get(entnum);
 
 	/* center view (if wanted) */
 	if (!cls.isOurRound())

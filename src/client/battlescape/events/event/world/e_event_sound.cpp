@@ -40,13 +40,11 @@ void CL_SoundEvent (const eventRegister_t *self, dbuffer *msg)
 	char sound[MAX_QPATH];
 	vec3_t origin;
 	int number;
-	le_t *le;
-	size_t length;
 
 	/* read data */
 	NET_ReadFormat(msg, self->formatString, &number, &origin, &sound, sizeof(sound));
 
-	le = LE_Get(number);
+	le_t *le = LE_Get(number);
 	if (le) {
 		if (LE_IsLivingActor(le) && le->team != cls.team) {
 			/** @todo render */
@@ -55,7 +53,7 @@ void CL_SoundEvent (const eventRegister_t *self, dbuffer *msg)
 		}
 	}
 
-	length = strlen(sound) - 1;
+	size_t length = strlen(sound) - 1;
 	if (sound[length] == '+') {
 		int i;
 
