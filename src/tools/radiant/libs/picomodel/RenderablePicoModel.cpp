@@ -10,7 +10,7 @@ namespace model
 {
 	// Constructor
 
-	RenderablePicoModel::RenderablePicoModel (picoModel_t* mod)
+	RenderablePicoModel::RenderablePicoModel (picoModel_t *mod)
 	{
 		// Get the number of surfaces to create
 		const int nSurf = PicoGetModelNumSurfaces(mod);

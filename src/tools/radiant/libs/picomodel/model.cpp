@@ -115,7 +115,7 @@ void PicoModelInstance::testSelect (Selector& selector, SelectionTest& test)
 /** Construct a PicoModelNode with the parsed picoModel_t struct and the
  * provided file extension.
  */
-PicoModelNode::PicoModelNode (picoModel_t* model, const std::string& ext) :
+PicoModelNode::PicoModelNode (picoModel_t *model, const std::string& ext) :
 	m_picomodel(model)
 {
 }
@@ -162,7 +162,7 @@ scene::Node& loadPicoModel (const picoModule_t *module, ArchiveFile& file)
 	std::string fName = file.getName();
 	std::string fExt = string::toLower(os::getExtension(fName));
 
-	picoModel_t* model = PicoModuleLoadModelStream(module, file.getName().c_str(), &file.getInputStream(), picoInputStreamReam,
+	picoModel_t *model = PicoModuleLoadModelStream(module, file.getName().c_str(), &file.getInputStream(), picoInputStreamReam,
 			file.size(), 0);
 	PicoModelNode* modelNode = new PicoModelNode(model, fExt);
 	PicoFreeModel(model);
@@ -174,7 +174,7 @@ scene::Node& loadPicoModel (const picoModule_t *module, ArchiveFile& file)
  */
 model::IModelPtr loadIModel (const picoModule_t *module, ArchiveFile& file)
 {
-	picoModel_t* model = PicoModuleLoadModelStream(module, file.getName().c_str(), &file.getInputStream(), picoInputStreamReam,
+	picoModel_t *model = PicoModuleLoadModelStream(module, file.getName().c_str(), &file.getInputStream(), picoInputStreamReam,
 			file.size(), 0);
 	model::IModelPtr modelObj(new model::RenderablePicoModel(model));
 	PicoFreeModel(model);

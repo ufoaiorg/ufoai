@@ -256,7 +256,7 @@ typedef aseFace_t* aseFacesIter_t;
  * indexes 3 4 5 = st indexes
  * indexes 6 7 8 = color indexes (new)
  */
-static void _ase_submit_triangles (picoModel_t* model, aseMaterial_t* materials, aseVertex_t* vertices,
+static void _ase_submit_triangles (picoModel_t *model, aseMaterial_t* materials, aseVertex_t* vertices,
 		aseTexCoord_t* texcoords, aseColor_t* colors, aseFace_t* faces, int numFaces)
 {
 	aseFacesIter_t i = faces, end = faces + numFaces;

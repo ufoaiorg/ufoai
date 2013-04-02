@@ -40,7 +40,7 @@ namespace model
 			/** Constructor. Accepts a picoModel_t struct containing the raw model data
 			 * loaded from picomodel
 			 */
-			RenderablePicoModel (picoModel_t* mod);
+			RenderablePicoModel (picoModel_t *mod);
 
 			/** Virtual render function from OpenGLRenderable.
 			 */
