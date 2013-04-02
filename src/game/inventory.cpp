@@ -519,15 +519,12 @@ void InventoryInterface::emptyContainer (inventory_t* const inv, const container
  */
 void InventoryInterface::destroyInventory (inventory_t* const inv)
 {
-	containerIndex_t container;
-
 	if (!inv)
 		return;
 
-	for (container = 0; container < CID_MAX; container++) {
-		const invDef_t *invDef = &this->csi->ids[container];
-		if (!invDef->temp)
-			emptyContainer(inv, invDef->id);
+	const Container *cont = NULL;
+	while ((cont = inv->getNextCont(cont))) {
+		emptyContainer(inv, cont->id);
 	}
 
 	OBJZERO(*inv);
