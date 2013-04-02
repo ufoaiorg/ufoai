@@ -41,6 +41,15 @@ tile +craft_drop_raptor
 0		0		0		0		0
 }
 
+tile +start
+	// starting point for Phalanx in case we do not use a dropship
+{
+3 3
+0		0		0
+0		+a		0
+0		0		0
+}
+
 // UFOs ------------------------------------------------------------*
 
 tile +craft_ufo_fighter
@@ -55,7 +64,7 @@ a		+c		+v		+c		a
 tile +craft_ufo_harvester
 {
 7 7
-0		0		0		x		x		x		0
+0		0		0		a		a		a		0
 0		a		a		+c		+c		+c		a
 a		+c		+c		+c		+c		+c		a
 a		+c		+c		+c		+c		+c		a
@@ -260,6 +269,18 @@ tile +nature_06
 
 // buildings -------------------------------------------------------*
 
+tile +bungalow
+	// large house, A6 C3
+{
+5 6
+0		0		0		0		0
+0		+a		+a		+a		0
+0		+a		+a		+a		0
+0		+a		+a		+a		0
+0		+a		+a		+a		0
+0		h		h		h		0
+}
+
 tile +diner_01
 	// diner, A2 C3
 {
@@ -429,8 +450,7 @@ assembly medium
 {
 size "9 9"
 title "_Village"
-
-
++bungalow			"0 1"
 +diner_01			"0 1"
 +fountain_01		"0 1"
 +gasstation_01		"0 1"
@@ -456,6 +476,7 @@ assembly medium_noufo
 {
 size "8 8"
 title "_Village"
++bungalow			"0 1"
 +diner_01			"0 1"
 +fountain_01		"0 1"
 +gasstation_01		"0 1"
@@ -465,15 +486,12 @@ title "_Village"
 +misc_01			"0 1"
 +misc_02			"0 1"
 +mart_01			"0 1"
-+nature_01			"0 1"
 +nature_02			"0 1"
-+nature_03			"0 1"
-+nature_04			"0 1"
-+nature_05			"0 15"
 +nature_06			"0 1"
 +park_01			"0 1"
 +playground_01		"0 1"
 tileset garage		"0 1"
+tileset nature		"0 18"
 tileset street_02	"0 1"
 tileset street_03	"0 1"
 tileset street_h	"0 5"
@@ -485,7 +503,7 @@ assembly small
 {
 size "7 7"
 title "_Village"
-
++bungalow			"0 1"
 +diner_01			"0 1"
 +fountain_01		"0 1"
 +gasstation_01		"0 1"
@@ -515,6 +533,7 @@ assembly test
 {
 size "8 8"
 title "_Village"
++bungalow			"1 1"
 +mart_01			"0 1"
 +gasstation_01		"0 1"
 +diner_01			"0 1"
@@ -538,4 +557,12 @@ tileset street_03	"0 1"
 tileset street_h	"0 5"
 tileset street_v	"0 5"
 *rm_drop +craft_drop_firebird "1 1"
+}
+
+assembly bungalow
+{
+size "4 4"
+fix +bungalow		"1 0"
+fix +start			"0 0"
+tileset nature		"0 3"
 }

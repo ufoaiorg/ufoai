@@ -706,6 +706,7 @@ base/maps/tropic/tr_r05.map | GNU General Public License 2.0 or later
 base/maps/ufocrash.ump | GNU General Public License 2.0 or later
 base/maps/village.map | GNU General Public License 2.0 or later | "SparX" Beyeler
 base/maps/village.ump | GNU General Public License 2.0 or later
+base/maps/village/vil_bungalow.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | base/maps/bungalow.map
 base/maps/village/vil_craft_drop_firebird.map | GNU General Public License 2.0 or later
 base/maps/village/vil_craft_drop_herakles.map | GNU General Public License 2.0 or later
 base/maps/village/vil_craft_drop_raptor.map | GNU General Public License 2.0 or later
