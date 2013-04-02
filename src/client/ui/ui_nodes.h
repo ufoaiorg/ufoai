@@ -80,15 +80,15 @@ struct uiNode_t {
 	char name[MAX_VAR];			/**< name from the script files */
 	uiBehaviour_t *behaviour;
 	uiNode_t const* super;      /**< Node inherited, else NULL */
-	bool dynamic;			/** If true, it use dynamic memory */
-	bool indexed;			/** If true, the node name indexed into his window */
+	bool dynamic;				/** If true, it use dynamic memory */
+	bool indexed;				/** If true, the node name indexed into his window */
 
 	/* common navigation */
-	uiNode_t* firstChild; /**< first element of linked list of child */
-	uiNode_t* lastChild;  /**< last element of linked list of child */
-	uiNode_t* next;       /**< Next element into linked list */
-	uiNode_t* parent;     /**< Parent window, else NULL */
-	uiNode_t* root;       /**< Shortcut to the root node */
+	uiNode_t* firstChild; 		/**< first element of linked list of child */
+	uiNode_t* lastChild;  		/**< last element of linked list of child */
+	uiNode_t* next;      		/**< Next element into linked list */
+	uiNode_t* parent;     		/**< Parent window, else NULL */
+	uiNode_t* root;       		/**< Shortcut to the root node */
 
 	/* common pos */
 	uiBox_t box;
@@ -96,13 +96,13 @@ struct uiNode_t {
 	/* common attributes */
 	const char* tooltip;		/**< holds the tooltip */
 	struct uiKeyBinding_s *key;	/**< key bindings - used as tooltip */
-	bool invis;				/**< true if the node is invisible */
-	bool disabled;			/**< true if the node is inactive */
-	bool invalidated;		/**< true if we need to update the layout */
-	bool ghost;				/**< true if the node is not tangible */
-	bool state;				/**< is node hovered */
-	bool flash;				/**< is node flashing */
-	float flashSpeed;		/**< speed of the flashing effect */
+	bool invis;					/**< true if the node is invisible */
+	bool disabled;				/**< true if the node is inactive */
+	bool invalidated;			/**< true if we need to update the layout */
+	bool ghost;					/**< true if the node is not tangible */
+	bool state;					/**< is node hovered */
+	bool flash;					/**< is node flashing */
+	float flashSpeed;			/**< speed of the flashing effect */
 	int padding;				/**< padding for this node - default 3 - see bgcolor */
 	int align;					/**< used to identify node position into a parent using a layout manager. Else it do nothing. */
 	int num;					/**< used to identify child into a parent; not sure it is need @todo delete it */
@@ -122,7 +122,7 @@ struct uiNode_t {
 	vec4_t bordercolor;			/**< rgba - see border and padding */
 	vec4_t color;				/**< rgba */
 	vec4_t selectedColor;		/**< rgba The color to draw the line specified by textLineSelected in. */
-	vec4_t flashColor;		/**< rgbx The color of the flashing effect. */
+	vec4_t flashColor;			/**< rgbx The color of the flashing effect. */
 
 	/* common events */
 	struct uiAction_s *onClick;
