@@ -266,16 +266,17 @@ inventory_action_t InventoryInterface::moveInInventory (inventory_t* const inv, 
 		if (from->scroll)
 			return IA_NONE;
 
-		ic = inv->getContainer3(from->id);
-		for (; ic; ic = ic->getNext()) {
-			if (ic == fItem) {
-				if (ic->getAmount() > 1) {
-					checkedTo = inv->canHoldItem(to, ic->def(), tx, ty, fItem);
+		const Container *cont = inv->getContainer(from->id);
+		Item *item = NULL;
+		while ((item = cont->getNextItem(item))) {
+			if (item == fItem) {
+				if (item->getAmount() > 1) {
+					checkedTo = inv->canHoldItem(to, item->def(), tx, ty, fItem);
 					if (checkedTo & INV_FITS) {
-						ic->setX(tx);
-						ic->setY(ty);
+						item->setX(tx);
+						item->setY(ty);
 						if (icp)
-							*icp = ic;
+							*icp = item;
 						return IA_MOVE;
 					}
 					return IA_NONE;
