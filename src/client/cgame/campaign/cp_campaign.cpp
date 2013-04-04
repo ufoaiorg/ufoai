@@ -1231,7 +1231,7 @@ void CP_Shutdown (void)
  * @param name Name of the campaign
  * @return campaign_t pointer to campaign with name or NULL if not found
  */
-campaign_t* CP_GetCampaign (const char* name)
+campaign_t* CP_GetCampaign (const char *name)
 {
 	campaign_t* campaign;
 	int i;

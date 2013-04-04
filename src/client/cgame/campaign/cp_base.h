@@ -148,7 +148,7 @@ typedef struct base_s {
 
 /** @brief template for creating a base */
 typedef struct baseTemplate_s {
-	char* id;			/**< ID of the base template */
+	char *id;			/**< ID of the base template */
 	baseBuildingTile_t buildings[MAX_BASEBUILDINGS]; /**< the buildings to be built for this template. */
 	int numBuildings;		/**< Number of buildings in this template. */
 } baseTemplate_t;

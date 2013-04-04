@@ -1487,7 +1487,7 @@ static void PTL_DebugList_f (void)
 		Com_Printf("particle %i\n", i);
 		Com_Printf(" name: %s\n", def->name);
 		for (pp = pps; pp->string; pp++) {
-			const char* value = "";
+			const char *value = "";
 			if (Q_streq(pp->string, "image") && p->pic) {
 				value = p->pic->name;
 			} else if (Q_streq(pp->string, "model") && p->model) {

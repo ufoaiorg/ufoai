@@ -194,7 +194,7 @@ bool E_MoveIntoNewBase (employee_t *employee, base_t *newBase)
  * @param n number of persons of that kind (for plural detection)
  * @return translated employee string
  */
-const char* E_GetEmployeeString (employeeType_t type, int n)
+const char *E_GetEmployeeString (employeeType_t type, int n)
 {
 	switch (type) {
 	case EMPL_SOLDIER:
@@ -218,7 +218,7 @@ const char* E_GetEmployeeString (employeeType_t type, int n)
  * @return employeeType_t
  * @todo use cgi->Com_ConstInt*
  */
-employeeType_t E_GetEmployeeType (const char* type)
+employeeType_t E_GetEmployeeType (const char *type)
 {
 	if (!type)
 		return MAX_EMPL;
@@ -561,7 +561,7 @@ employee_t* E_CreateEmployee (employeeType_t type, const nation_t *nation, const
 	employee_t employee;
 	const char *teamID;
 	char teamDefName[MAX_VAR];
-	const char* rank;
+	const char *rank;
 
 	if (type >= MAX_EMPL)
 		return NULL;

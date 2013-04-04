@@ -395,8 +395,8 @@ const char *LE_GetAnim (const char *anim, int right, int left, int state)
 		return "";
 
 	static char retAnim[MAX_VAR];
-	char*       mod    = retAnim;
-	size_t      length = sizeof(retAnim);
+	char *mod = retAnim;
+	size_t length = sizeof(retAnim);
 
 	/* add crouched flag */
 	if (state & STATE_CROUCHED) {

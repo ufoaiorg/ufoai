@@ -1602,8 +1602,8 @@ void B_ParseBaseTemplate (const char *name, const char **text)
 			cgi->Com_Error(ERR_DROP, "B_ParseBaseTemplate: building tuple must contains 2 elements (id pos)");
 		}
 
-		const char* buildingToken = (char*)list->data;
-		const char* positionToken = (char*)list->next->data;
+		const char *buildingToken = (char*)list->data;
+		const char *positionToken = (char*)list->next->data;
 
 		if (baseTemplate->numBuildings >= MAX_BASEBUILDINGS)
 			cgi->Com_Error(ERR_DROP, "B_ParseBaseTemplate: too many buildings");

@@ -160,7 +160,7 @@ bool INT_LoadXML (xmlNode_t *parent)
 /**
  * @brief Return Name of the category of a mission.
  */
-const char* INT_InterestCategoryToName (interestCategory_t category)
+const char *INT_InterestCategoryToName (interestCategory_t category)
 {
 	switch (category) {
 	case INTERESTCATEGORY_NONE:

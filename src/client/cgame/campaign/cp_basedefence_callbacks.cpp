@@ -576,7 +576,7 @@ static void BDEF_AddBattery_f (void)
 {
 	basedefenceType_t basedefType;
 	base_t *base;
-	const char* type;
+	const char *type;
 
 	if (cgi->Cmd_Argc() < 3) {
 		Com_Printf("Usage: %s <basedefType> <baseIdx>", cgi->Cmd_Argv(0));
@@ -626,7 +626,7 @@ static void BDEF_SetAutoFire (baseWeapon_t *weapon, bool state)
 static void BDEF_UpdateActiveBattery_f (void)
 {
 	base_t *base;
-	const char* type;
+	const char *type;
 	int count;
 
 	if (cgi->Cmd_Argc() < 3) {
