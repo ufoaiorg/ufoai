@@ -51,12 +51,13 @@ const equipDef_t *INV_GetEquipmentDefinitionByID (const char *name)
 
 /**
  * @brief Move item between containers.
- * @param[in] inv Pointer to the list where the item is currently in.
+ * @param[in] inv Pointer to the inventory we are working on.
  * @param[in] toContainer Pointer to target container, to place the item in.
  * @param[in] px target x position in the toContainer container.
  * @param[in] py target y position in the toContainer container.
  * @param[in] fromContainer Pointer to source container, the item is in.
  * @param[in] fItem Pointer to item being moved.
+ * @param[out] tItem The item the moving item is eventually dropped upon.
  * @note If you set px or py to -1/NONE the item is automatically placed on
  * @note a free spot in the targetContainer
  * @return true if the move was successful.
