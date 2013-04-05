@@ -869,21 +869,15 @@ const char *AIR_CheckMoveIntoNewHomebase (const aircraft_t *aircraft, const base
  */
 static void AIR_TransferItemsCarriedByCharacterToBase (character_t *chr, base_t *sourceBase, base_t* destBase)
 {
-	const invList_t *ic;
-	containerIndex_t container;
-
-	for (container = 0; container < CID_MAX; container++) {
-#if 0
-		/* ignore items linked from any temp container */
-		if (INVDEF(container)->temp)
-			continue;
-#endif
-		for (ic = chr->inv.getContainer3(container); ic; ic = ic->getNext()) {
-			const objDef_t *obj = ic->def();
+	const Container *cont = NULL;
+	while ((cont = chr->inv.getNextCont(cont, true))) {
+		Item *item = NULL;
+		while ((item = cont->getNextItem(item))) {
+			const objDef_t *obj = item->def();
 			B_UpdateStorageAndCapacity(sourceBase, obj, -1, false);
 			B_UpdateStorageAndCapacity(destBase, obj, 1, false);
 
-			obj = ic->ammoDef();
+			obj = item->ammoDef();
 			if (obj) {
 				B_UpdateStorageAndCapacity(sourceBase, obj, -1, false);
 				B_UpdateStorageAndCapacity(destBase, obj, 1, false);
@@ -3032,21 +3026,15 @@ void AIR_RemoveEmployees (aircraft_t &aircraft)
  */
 void AIR_MoveEmployeeInventoryIntoStorage (const aircraft_t &aircraft, equipDef_t &ed)
 {
-	containerIndex_t container;
-
 	if (AIR_GetTeamSize(&aircraft) == 0) {
 		Com_DPrintf(DEBUG_CLIENT, "AIR_MoveEmployeeInventoryIntoStorage: No team to remove equipment from.\n");
 		return;
 	}
 
 	LIST_Foreach(aircraft.acTeam, employee_t, employee) {
-		character_t *chr = &employee->chr;
-		for (container = 0; container < CID_MAX; container++) {
-			invList_t *ic = chr->inv.getContainer3(container);
-#if 0
-			if (INVDEF(container)->temp)
-				continue;
-#endif
+		const Container *cont = NULL;
+		while ((cont = employee->chr.inv.getNextCont(cont, true))) {
+			Item *ic = cont->getNextItem(NULL);
 			while (ic) {
 				const item_t item = *ic;
 				const objDef_t *type = item.def();
@@ -3056,7 +3044,7 @@ void AIR_MoveEmployeeInventoryIntoStorage (const aircraft_t &aircraft, equipDef_
 				if (item.getAmmoLeft() && type->reload) {
 					assert(item.ammoDef());
 					/* Accumulate loose ammo into clips */
-					ed.addClip(&item);
+					ed.addClip(&item);	/* does not delete the item */
 				}
 				ic = next;
 			}
