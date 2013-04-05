@@ -250,6 +250,12 @@ void CP_DecreaseXVILevelEverywhere (void)
 	CP_UploadXVI();
 }
 
+/**
+ * @brief Convert the pos into degrees and increase XVI there.
+ * @param pos The x/y-location in the flat XVI map
+ * @param factor The factor of the XVI raise
+ * @note xvi rate is null when alpha = 0, max when alpha = maxAlpha
+ */
 void CP_ChangeXVILevel (const vec2_t pos, float factor)
 {
 	const int xCenter = round((180 - pos[0]) * XVI_WIDTH / 360.0f);
