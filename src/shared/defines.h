@@ -79,8 +79,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define	TU_CROUCH_MOVING_FACTOR	1.5	/**< The factor the normal movement is multiplied when in crouching mode */
 #define	TU_FLYING_MOVING_FACTOR	2	/**< The factor the normal movement is multiplied when flying */
 
-#define TU_GET_RELOAD(containerOut, containerIn, weapon) (csi.ids[(containerOut)].out + (weapon)->getReloadTime() + csi.ids[(containerIn)].in)
-
 /* Move/Routing values */
 #define MAX_ROUTE			32
 #define	MAX_ROUTE_TUS		50

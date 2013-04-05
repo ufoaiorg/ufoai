@@ -226,7 +226,7 @@ int HUD_CalcReloadTime (const le_t *le, const objDef_t *weapon, containerIndex_t
 
 	/* total TU cost is the sum of 3 numbers:
 	 * TU for weapon reload + TU to get ammo out + TU to put ammo in hands */
-	return TU_GET_RELOAD(container, toContainer, weapon);
+	return INVDEF(container)->out + INVDEF(toContainer)->in + weapon->getReloadTime();
 }
 
 /**
