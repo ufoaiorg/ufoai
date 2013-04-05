@@ -57,7 +57,7 @@ static picoColor_t white = { 255, 255, 255, 255 };
 typedef struct aseSubMaterial_s {
 	struct aseSubMaterial_s* next;
 	int subMtlId;
-	picoShader_t* shader;
+	picoShader_t *shader;
 
 } aseSubMaterial_t;
 
@@ -130,7 +130,7 @@ static aseMaterial_t* _ase_add_material (aseMaterial_t **list, int mtlIdParent)
 }
 
 static aseSubMaterial_t* _ase_add_submaterial (aseMaterial_t **list, int mtlIdParent, int subMtlId,
-		picoShader_t* shader)
+		picoShader_t *shader)
 {
 	aseMaterial_t *parent = _ase_get_material(*list, mtlIdParent);
 	aseSubMaterial_t *subMtl = _pico_calloc(1, sizeof(aseSubMaterial_t));
@@ -267,8 +267,8 @@ static void _ase_submit_triangles (picoModel_t *model, aseMaterial_t* materials,
 			return;
 
 		{
-			picoVec3_t* xyz[3];
-			picoVec3_t* normal[3];
+			picoVec3_t *xyz[3];
+			picoVec3_t *normal[3];
 			picoVec2_t* st[3];
 			picoColor_t* color[3];
 			picoIndex_t smooth[3];

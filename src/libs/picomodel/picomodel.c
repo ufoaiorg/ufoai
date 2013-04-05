@@ -1307,8 +1307,8 @@ int PicoFindSurfaceVertexNum (picoSurface_t *surface, picoVec3_t xyz, picoVec3_t
 }
 
 typedef struct _IndexArray {
-	picoIndex_t* data;
-	picoIndex_t* last;
+	picoIndex_t *data;
+	picoIndex_t *last;
 } IndexArray;
 
 static void indexarray_push_back (IndexArray* self, picoIndex_t value)
@@ -1436,13 +1436,13 @@ static picoIndex_t UniqueIndices_insert (UniqueIndices* self, picoIndex_t value)
 }
 
 typedef struct picoSmoothVertices_s {
-	picoVec3_t* xyz;
-	picoIndex_t* smoothingGroups;
+	picoVec3_t *xyz;
+	picoIndex_t *smoothingGroups;
 } picoSmoothVertices_t;
 
 static int lessSmoothVertex (void *data, picoIndex_t first, picoIndex_t second)
 {
-	picoSmoothVertices_t* smoothVertices = data;
+	picoSmoothVertices_t *smoothVertices = data;
 
 	if (smoothVertices->xyz[first][0] != smoothVertices->xyz[second][0])
 		return smoothVertices->xyz[first][0] < smoothVertices->xyz[second][0];
@@ -1455,7 +1455,7 @@ static int lessSmoothVertex (void *data, picoIndex_t first, picoIndex_t second)
 	return 0;
 }
 
-static void _pico_vertices_combine_shared_normals (picoVec3_t* xyz, picoIndex_t* smoothingGroups, picoVec3_t* normals,
+static void _pico_vertices_combine_shared_normals (picoVec3_t *xyz, picoIndex_t *smoothingGroups, picoVec3_t *normals,
 		picoIndex_t numVertices)
 {
 	UniqueIndices vertices;
@@ -1480,7 +1480,7 @@ static void _pico_vertices_combine_shared_normals (picoVec3_t* xyz, picoIndex_t*
 
 	{
 		picoIndex_t maxIndex = 0;
-		picoIndex_t* i = indices.data;
+		picoIndex_t *i = indices.data;
 		for (; i != indices.last; ++i) {
 			if (*i <= maxIndex) {
 				_pico_copy_vec(normals[vertices.indices.data[*i]], normals[i - indices.data]);
@@ -1494,11 +1494,11 @@ static void _pico_vertices_combine_shared_normals (picoVec3_t* xyz, picoIndex_t*
 	indexarray_clear(&indices);
 }
 
-typedef picoVec3_t* picoNormalIter_t;
-typedef picoIndex_t* picoIndexIter_t;
+typedef picoVec3_t *picoNormalIter_t;
+typedef picoIndex_t *picoIndexIter_t;
 
-static void _pico_triangles_generate_weighted_normals (picoIndexIter_t first, picoIndexIter_t end, picoVec3_t* xyz,
-		picoVec3_t* normals)
+static void _pico_triangles_generate_weighted_normals (picoIndexIter_t first, picoIndexIter_t end, picoVec3_t *xyz,
+		picoVec3_t *normals)
 {
 	for (; first != end; first += 3) {
 		picoVec3_t weightedNormal;
@@ -1563,9 +1563,9 @@ static void _pico_normals_assign_generated_normals (picoNormalIter_t first, pico
 	}
 }
 
-void PicoFixSurfaceNormals (picoSurface_t* surface)
+void PicoFixSurfaceNormals (picoSurface_t *surface)
 {
-	picoVec3_t* normals = (picoVec3_t*) _pico_calloc(surface->numVertexes, sizeof(picoVec3_t));
+	picoVec3_t *normals = (picoVec3_t*) _pico_calloc(surface->numVertexes, sizeof(picoVec3_t));
 
 	_pico_normals_zero(normals, normals + surface->numVertexes);
 
@@ -1585,11 +1585,11 @@ void PicoFixSurfaceNormals (picoSurface_t* surface)
  * Chooses an appropriate surface based on the shader, or adds a new surface if necessary
  */
 void PicoAddTriangleToModel (picoModel_t *model, picoVec3_t **xyz, picoVec3_t **normals, int numSTs, picoVec2_t **st,
-		int numColors, picoColor_t **colors, picoShader_t* shader, picoIndex_t* smoothingGroup)
+		int numColors, picoColor_t **colors, picoShader_t *shader, picoIndex_t *smoothingGroup)
 {
 	int i, j;
 	int vertDataIndex;
-	picoSurface_t* workSurface = NULL;
+	picoSurface_t *workSurface = NULL;
 
 	/* see if a surface already has the shader */
 	for (i = 0; i < model->numSurfaces; i++) {

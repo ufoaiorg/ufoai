@@ -4,11 +4,11 @@
 namespace model
 {
 	// Constructor. Copy the provided picoSurface_t structure into this object
-	RenderablePicoSurface::RenderablePicoSurface (picoSurface_t* surf) :
+	RenderablePicoSurface::RenderablePicoSurface (picoSurface_t *surf) :
 		_originalShaderName(""), _mappedShaderName("")
 	{
 		// Get the shader from the picomodel struct.
-		picoShader_t* shader = PicoGetSurfaceShader(surf);
+		picoShader_t *shader = PicoGetSurfaceShader(surf);
 		if (shader != 0) {
 			_originalShaderName = PicoGetShaderName(shader);
 		}
@@ -36,7 +36,7 @@ namespace model
 		}
 
 		// Stream in the index data
-		picoIndex_t* ind = PicoGetSurfaceIndexes(surf, 0);
+		picoIndex_t *ind = PicoGetSurfaceIndexes(surf, 0);
 		for (unsigned int i = 0; i < _nIndices; i++)
 			_indices[i] = ind[i];
 	}

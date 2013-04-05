@@ -18,7 +18,7 @@ namespace model
 		// Create a RenderablePicoSurface for each surface in the structure
 		for (int n = 0; n < nSurf; ++n) {
 			// Retrieve the surface, discarding it if it is null or non-triangulated (?)
-			picoSurface_t* surf = PicoGetModelSurface(mod, n);
+			picoSurface_t *surf = PicoGetModelSurface(mod, n);
 			if (surf == 0 || PicoGetSurfaceType(surf) != PICO_TRIANGLES)
 				continue;
 

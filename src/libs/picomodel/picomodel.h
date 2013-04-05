@@ -308,7 +308,7 @@ int PicoFindSurfaceVertexNum (picoSurface_t *surface, picoVec3_t xyz, picoVec3_t
 void PicoFixSurfaceNormals (picoSurface_t *surface);
 
 void PicoAddTriangleToModel (picoModel_t *model, picoVec3_t **xyz, picoVec3_t **normals, int numSTs, picoVec2_t **st,
-		int numColors, picoColor_t **colors, picoShader_t* shader, picoIndex_t* smoothingGroup);
+		int numColors, picoColor_t **colors, picoShader_t *shader, picoIndex_t *smoothingGroup);
 
 /* end marker */
 #ifdef __cplusplus

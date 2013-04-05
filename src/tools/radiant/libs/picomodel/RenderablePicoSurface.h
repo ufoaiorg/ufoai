@@ -46,7 +46,7 @@ namespace model
 			/** Constructor. Accepts a picoSurface_t struct and the file extension to determine
 			 * how to assign materials.
 			 */
-			RenderablePicoSurface (picoSurface_t* surf);
+			RenderablePicoSurface (picoSurface_t *surf);
 
 			/** copy constructor
 			 */
