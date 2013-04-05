@@ -113,7 +113,6 @@ bool INV_LoadWeapon (const invList_t *weaponList, inventory_t *inv, const invDef
 		if (ic) {
 			ic->setAmmoLeft(weapon->ammo);
 			ic->setAmmoDef(weapon);
-			return true;
 		}
 	} else if (weapon->reload) {
 		const itemFilterTypes_t equipType = INV_GetFilterFromItem(weapon);

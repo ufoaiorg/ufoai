@@ -744,7 +744,7 @@ void UI_ContainerNodeAutoPlaceItem (uiNode_t* node, invList_t *ic)
 					target = idxArray[i];
 					packed = UI_ContainerNodeAddItem(container, ic, target, &tItem);
 					if (packed) {
-						if ((ic->isWeapon() && !ic->getAmmoLeft()) || ic->def()->oneshot)
+						if ((ic->isWeapon() && !ic->getAmmoLeft()) || ic->def()->weapons[0])
 							ammoChanged = INV_LoadWeapon(tItem, ui_inventory, container, INVDEF(target));
 						break;
 					}
@@ -1019,7 +1019,7 @@ bool uiContainerNode::onDndFinished (uiNode_t *source, bool isDropped)
 			}
 
 			/* Add ammo on adding weapon to a soldier */
-			if (UI_IsScrollContainerNode(source) && ((fItem->isWeapon() && !fItem->getAmmoLeft()) || fItem->def()->oneshot))
+			if (UI_IsScrollContainerNode(source) && ((fItem->isWeapon() && !fItem->getAmmoLeft()) || fItem->def()->weapons[0]))
 				INV_LoadWeapon(tItem, ui_inventory, sourceContainer, targetContainer);
 
 			/* Run onChange events */
