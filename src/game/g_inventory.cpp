@@ -351,19 +351,16 @@ void G_WriteItem (const Item &item, const containerIndex_t contId, int x, int y)
  */
 void G_SendInventory (playermask_t playerMask, const Edict &ent)
 {
-	invList_t *ic;
-	int nr = 0;
-	containerIndex_t container;
-
 	/* test for pointless player mask */
 	if (!playerMask)
 		return;
 
-	for (container = 0; container < CID_MAX; container++) {
-		if (!G_IsItem(&ent) && INVDEF(container)->temp)
+	int nr = 0;
+	const Container *cont = NULL;
+	while ((cont = ent.chr.inv.getNextCont(cont, true))) {
+		if (!G_IsItem(&ent) && cont->def()->temp)
 			continue;
-		for (ic = ent.getContainer(container); ic; ic = ic->getNext())
-			nr++;
+		nr += cont->countItems();
 	}
 
 	/* return if no inventory items to send */
@@ -371,13 +368,16 @@ void G_SendInventory (playermask_t playerMask, const Edict &ent)
 		return;
 
 	G_EventInventoryAdd(ent, playerMask, nr);
-	for (container = 0; container < CID_MAX; container++) {
-		if (!G_IsItem(&ent) && INVDEF(container)->temp)
+
+	cont = NULL;
+	while ((cont = ent.chr.inv.getNextCont(cont, true))) {
+		if (!G_IsItem(&ent) && cont->def()->temp)
 			continue;
-		for (ic = ent.getContainer(container); ic; ic = ic->getNext()) {
+		Item *item = NULL;
+		while ((item = cont->getNextItem(item))) {
 			/* send a single item */
-			assert(ic->def());
-			G_WriteItem(*ic, container, ic->getX(), ic->getY());
+			assert(item->def());
+			G_WriteItem(*item, cont->def()->id, item->getX(), item->getY());
 		}
 	}
 	G_EventEnd();
