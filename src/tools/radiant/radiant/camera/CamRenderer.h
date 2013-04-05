@@ -1,5 +1,4 @@
-#ifndef CAMRENDERER_H_
-#define CAMRENDERER_H_
+#pragma once
 
 #include "irender.h"
 #include "renderable.h"
@@ -73,6 +72,3 @@ class CamRenderer: public Renderer
 			GlobalShaderCache().render(m_globalstate, modelview, projection, m_viewer);
 		}
 }; // class CamRenderer
-
-
-#endif /*CAMRENDERER_H_*/

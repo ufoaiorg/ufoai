@@ -1,5 +1,4 @@
-#ifndef GLOBALCAMERA_H_
-#define GLOBALCAMERA_H_
+#pragma once
 
 #include <list>
 #include "icamera.h"
@@ -113,5 +112,3 @@ class GlobalCameraManager
 
 // The accessor function that contains the static instance of the GlobalCameraManager class
 GlobalCameraManager& GlobalCamera ();
-
-#endif /*GLOBALCAMERA_H_*/

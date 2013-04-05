@@ -1,5 +1,4 @@
-#ifndef EXPORTER_H_
-#define EXPORTER_H_
+#pragma once
 
 #include "iselection.h"
 
@@ -26,5 +25,3 @@ class CExporter: public SelectionSystem::Visitor
 	private:
 		mutable TExporterFormat m_exporter;
 }; // class CExporter
-
-#endif /*EXPORTER_H_*/

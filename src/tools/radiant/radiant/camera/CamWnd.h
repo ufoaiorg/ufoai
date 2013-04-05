@@ -1,5 +1,4 @@
-#ifndef CAMWND_H_
-#define CAMWND_H_
+#pragma once
 
 #include "RadiantCameraView.h"
 #include "irender.h"
@@ -114,5 +113,3 @@ class CamWnd : public scene::Graph::Observer
 
 typedef MemberCaller<CamWnd, &CamWnd::queueDraw> CamWndQueueDraw;
 typedef MemberCaller<CamWnd, &CamWnd::update> CamWndUpdate;
-
-#endif /*CAMWND_H_*/

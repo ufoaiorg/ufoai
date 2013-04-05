@@ -1,5 +1,4 @@
-#ifndef CAMERA_H_
-#define CAMERA_H_
+#pragma once
 
 #include "icamera.h"
 #include "math/Vector3.h"
@@ -100,5 +99,3 @@ class Camera
 		void moveForwardDiscrete ();
 
 }; // class Camera
-
-#endif /*CAMERA_H_*/

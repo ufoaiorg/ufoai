@@ -1,5 +1,4 @@
-#ifndef TERRAIN_H_
-#define TERRAIN_H_
+#pragma once
 
 #include "BrushConstructor.h"
 
@@ -23,4 +22,3 @@ namespace brushconstruct
 			}
 	};
 }
-#endif /* TERRAIN_H_ */

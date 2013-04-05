@@ -1,5 +1,4 @@
-#ifndef CAMERAOBSERVER_H_
-#define CAMERAOBSERVER_H_
+#pragma once
 
 #include <list>
 
@@ -14,5 +13,3 @@ class CameraObserver
 }; // class CameraObserver
 
 typedef std::list<CameraObserver*> CameraObserverList;
-
-#endif /*CAMERAOBSERVER_H_*/

@@ -1,5 +1,4 @@
-#ifndef CAMERASETTINGS_H_
-#define CAMERASETTINGS_H_
+#pragma once
 
 #include <string>
 #include "iregistry.h"
@@ -78,5 +77,3 @@ class CameraSettings: public RegistryKeyObserver, public PreferenceConstructor
 }; // class CameraSettings
 
 CameraSettings* getCameraSettings ();
-
-#endif /*CAMERASETTINGS_H_*/

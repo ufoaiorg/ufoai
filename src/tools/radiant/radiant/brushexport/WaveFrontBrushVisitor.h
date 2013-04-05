@@ -1,5 +1,4 @@
-#ifndef WAVEFRONTBRUSHVISITOR_H_
-#define WAVEFRONTBRUSHVISITOR_H_
+#pragma once
 
 /* greebo: This visits every brush/face and exports it into the given TextFileOutputStream
  *
@@ -73,5 +72,3 @@ class CExportFormatWavefront: public BrushVisitor
 				facebuffer << " " << i + 1 << "/" << i + 1;
 		}
 }; // class CExportFormatWavefront
-
-#endif /*WAVEFRONTBRUSHVISITOR_H_*/
