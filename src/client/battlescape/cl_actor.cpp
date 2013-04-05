@@ -1000,7 +1000,7 @@ void CL_ActorReload (le_t *le, containerIndex_t containerID)
 		return;
 
 	/* return if the weapon is not reloadable */
-	if (!weapon->reload)
+	if (!weapon->isReloadable())
 		return;
 
 	if (!GAME_ItemIsUseable(weapon)) {

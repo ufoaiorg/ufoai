@@ -268,7 +268,7 @@ typedef struct objDef_s {
 	int ammo;			/**< This value is set for weapon and it says how many bullets currently loaded clip would
 					     have, if that clip would be full. In other words, max bullets for this type of
 					     weapon with currently loaded type of ammo. */
-	int reload;			/**< Time units (TUs) for reloading the weapon. */
+	int _reload;			/**< Time units (TUs) for reloading the weapon. */
 	const char *reloadSound;	/**< Sound played when weapon is reloaded */
 	float reloadAttenuation;	/**< Attenuation of reload sound - less louder over distance - */
 	bool oneshot;		/**< This weapon contains its own ammo (it is loaded in the base).
@@ -322,9 +322,13 @@ typedef struct objDef_s {
 	{
 		return Q_streq(this->type, "armour");
 	}
-	inline int getReloadTime() const
+	inline int getReloadTime () const
 	{
-		return reload;
+		return _reload;
+	}
+	inline bool isReloadable () const
+	{
+		return getReloadTime() > 0;
 	}
 
 } objDef_t;

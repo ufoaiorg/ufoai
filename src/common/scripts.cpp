@@ -1455,7 +1455,7 @@ static const value_t od_vals[] = {
 	{"ammo", V_INT, offsetof(objDef_t, ammo), MEMBER_SIZEOF(objDef_t, ammo)},
 	{"oneshot", V_BOOL, offsetof(objDef_t, oneshot), MEMBER_SIZEOF(objDef_t, oneshot)},
 	{"deplete", V_BOOL, offsetof(objDef_t, deplete), MEMBER_SIZEOF(objDef_t, deplete)},
-	{"reload", V_INT, offsetof(objDef_t, reload), MEMBER_SIZEOF(objDef_t, reload)},
+	{"reload", V_INT, offsetof(objDef_t, _reload), MEMBER_SIZEOF(objDef_t, _reload)},
 	{"reloadattenuation", V_FLOAT, offsetof(objDef_t, reloadAttenuation), MEMBER_SIZEOF(objDef_t, reloadAttenuation)},
 	{"size", V_INT, offsetof(objDef_t, size), MEMBER_SIZEOF(objDef_t, size)},
 	{"weight", V_FLOAT, offsetof(objDef_t, weight), MEMBER_SIZEOF(objDef_t, weight)},

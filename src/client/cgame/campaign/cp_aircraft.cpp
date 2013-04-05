@@ -333,7 +333,7 @@ static void AII_CarriedItems (const inventory_t *soldierInventory)
 			ed->numItems[itemType->idx]++;
 			RS_MarkCollected(tech);
 
-			if (!itemType->reload || item->getAmmoLeft() == 0)
+			if (!itemType->isReloadable() || item->getAmmoLeft() == 0)
 				continue;
 
 			ed->addClip(item);
@@ -3041,7 +3041,7 @@ void AIR_MoveEmployeeInventoryIntoStorage (const aircraft_t &aircraft, equipDef_
 				invList_t *next = ic->getNext();
 
 				ed.numItems[type->idx]++;
-				if (item.getAmmoLeft() && type->reload) {
+				if (item.getAmmoLeft() && type->isReloadable()) {
 					assert(item.ammoDef());
 					/* Accumulate loose ammo into clips */
 					ed.addClip(&item);	/* does not delete the item */

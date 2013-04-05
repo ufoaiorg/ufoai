@@ -114,7 +114,7 @@ bool INV_LoadWeapon (const invList_t *weaponList, inventory_t *inv, const invDef
 			ic->setAmmoLeft(weapon->ammo);
 			ic->setAmmoDef(weapon);
 		}
-	} else if (weapon->reload) {
+	} else if (weapon->isReloadable()) {
 		const itemFilterTypes_t equipType = INV_GetFilterFromItem(weapon);
 		int i = 0;
 		invList_t *ic = NULL;
@@ -222,7 +222,7 @@ static bool INV_EquipmentDefSanityCheck (void)
 		sum = 0;
 		for (j = 0; j < csi.numODs; j++) {
 			const objDef_t *const obj = INVSH_GetItemByIDX(j);
-			if (obj->weapon && obj->reload && !obj->deplete && INV_ItemMatchesFilter(obj, FILTER_S_SECONDARY))
+			if (obj->weapon && obj->isReloadable() && !obj->deplete && INV_ItemMatchesFilter(obj, FILTER_S_SECONDARY))
 				sum += ed->numItems[j];
 		}
 		if (sum > 100) {

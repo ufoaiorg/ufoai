@@ -590,7 +590,7 @@ int InventoryInterface::PackAmmoAndWeapon (character_t* const chr, const objDef_
 		item.setAmmoDef(weapon);
 		Com_DPrintf(DEBUG_SHARED, "PackAmmoAndWeapon: oneshot weapon '%s' in equipment '%s' (%s).\n",
 				weapon->id, ed->id, invName);
-	} else if (!weapon->reload) {
+	} else if (!weapon->isReloadable()) {
 		item.setAmmoDef(item.def());	/* no ammo needed, so fire definitions are in item */
 	} else {
 		/* find some suitable ammo for the weapon (we will have at least one if there are ammos for this
@@ -810,7 +810,7 @@ void InventoryInterface::EquipActor (character_t* const chr, const equipDef_t *e
 			const objDef_t *secondaryWeapon = NULL;
 			for (i = 0; i < this->csi->numODs; i++) {
 				const objDef_t *obj = INVSH_GetItemByIDX(i);
-				if (ed->numItems[i] && obj->weapon && obj->reload && !obj->deplete && obj->isSecondary) {
+				if (ed->numItems[i] && obj->weapon && obj->isReloadable() && !obj->deplete && obj->isSecondary) {
 					randNumber -= ed->numItems[i] / (primary == WEAPON_PARTICLE_OR_NORMAL ? 2 : 1);
 					if (randNumber < 0) {
 						secondaryWeapon = obj;
@@ -843,7 +843,7 @@ void InventoryInterface::EquipActor (character_t* const chr, const equipDef_t *e
 		for (i = 0; i < this->csi->numODs; i++) {
 			const objDef_t *obj = INVSH_GetItemByIDX(i);
 			if (ed->numItems[i] && ((obj->weapon && obj->isSecondary
-			 && (!obj->reload || obj->deplete)) || obj->isMisc)) {
+			 && (!obj->isReloadable() || obj->deplete)) || obj->isMisc)) {
 				/* if ed->num[i] is greater than 100, the first number is the number of items you'll get:
 				 * don't take it into account for probability
 				 * Make sure that the probability is at least one if an item can be selected */
@@ -857,7 +857,7 @@ void InventoryInterface::EquipActor (character_t* const chr, const equipDef_t *e
 				for (i = 0; i < this->csi->numODs; i++) {
 					const objDef_t *obj = INVSH_GetItemByIDX(i);
 					if (ed->numItems[i] && ((obj->weapon && obj->isSecondary
-					 && (!obj->reload || obj->deplete)) || obj->isMisc)) {
+					 && (!obj->isReloadable() || obj->deplete)) || obj->isMisc)) {
 						randNumber -= ed->numItems[i] ? std::max(ed->numItems[i] % 100, 1) : 0;
 						if (randNumber < 0) {
 							secondaryWeapon = obj;
@@ -883,7 +883,7 @@ void InventoryInterface::EquipActor (character_t* const chr, const equipDef_t *e
 					ed->id, invName);
 			for (i = 0; i < this->csi->numODs; i++) {
 				const objDef_t *obj = INVSH_GetItemByIDX(i);
-				if (ed->numItems[i] && obj->weapon && obj->isSecondary && !obj->reload) {
+				if (ed->numItems[i] && obj->weapon && obj->isSecondary && !obj->isReloadable()) {
 					if (obj->price > maxPrice) {
 						maxPrice = obj->price;
 						blade = obj;

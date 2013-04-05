@@ -1029,7 +1029,7 @@ static void UP_ResearchedLinkClick_f (void)
 		const technology_t *t = RS_GetTechForItem(od->weapons[0]);
 		if (UP_TechGetsDisplayed(t))
 			UP_OpenWith(t->id);
-	} else if (od->weapon && od->reload) {
+	} else if (od->weapon && od->isReloadable()) {
 		const technology_t *t = RS_GetTechForItem(od->ammos[0]);
 		if (UP_TechGetsDisplayed(t))
 			UP_OpenWith(t->id);

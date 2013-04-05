@@ -714,7 +714,7 @@ static int HUD_WeaponCanBeReloaded (const le_t *le, containerIndex_t containerID
 	assert(weapon);
 
 	/* This weapon cannot be reloaded. */
-	if (!weapon->reload) {
+	if (!weapon->isReloadable()) {
 		*reason = _("Weapon cannot be reloaded.");
 		return -1;
 	}
