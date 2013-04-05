@@ -34,14 +34,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @param[in] item An item to update.
  * @return Updated item in any case, even if there was no update.
  * @sa CP_CleanupAircraftCrew
- * @todo remove return value and make item a pointer
  */
 void CP_AddWeaponAmmo (equipDef_t *ed, Item *item)
 {
 	const objDef_t *type = item->def();
 
 	assert(ed->numItems[type->idx] > 0);
-	ed->numItems[type->idx]--;
+	--ed->numItems[type->idx];
 	if (type->isArmour())
 		return;
 
@@ -57,18 +56,13 @@ void CP_AddWeaponAmmo (equipDef_t *ed, Item *item)
 			/* No change, nothing needs to be done to this item. */
 			return;
 		}
-	} else if (!type->reload) {
-		/* The given item is a weapon but no ammo is needed,
-		 * so fire definitions are in t (the weapon). Setting equal. */
-		item->setAmmoDef(item->def());
-		return;
 	} else if (item->getAmmoLeft()) {
 		assert(item->ammoDef());
 		/* The item is a weapon and it was reloaded one time. */
 		if (item->getAmmoLeft() == type->ammo) {
 			/* Fully loaded, no need to reload, but mark the ammo as used. */
 			if (ed->numItems[item->ammoDef()->idx] > 0) {
-				ed->numItems[item->ammoDef()->idx]--;
+				--ed->numItems[item->ammoDef()->idx];
 			} else {
 				/* Your clip has been sold; give it back. */
 				item->setAmmoLeft(NONE_AMMO);
@@ -79,7 +73,7 @@ void CP_AddWeaponAmmo (equipDef_t *ed, Item *item)
 
 	/* Check for complete clips of the same kind */
 	if (item->ammoDef() && ed->numItems[item->ammoDef()->idx] > 0) {
-		ed->numItems[item->ammoDef()->idx]--;
+		--ed->numItems[item->ammoDef()->idx];
 		item->setAmmoLeft(type->ammo);
 		return;
 	}
@@ -90,7 +84,7 @@ void CP_AddWeaponAmmo (equipDef_t *ed, Item *item)
 		const objDef_t *od = INVSH_GetItemByIDX(i);
 		if (od->isLoadableInWeapon(type)) {
 			if (ed->numItems[i] > 0) {
-				ed->numItems[i]--;
+				--ed->numItems[i];
 				item->setAmmoLeft(type->ammo);
 				item->setAmmoDef(od);
 				return;
