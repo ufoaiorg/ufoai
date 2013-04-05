@@ -53,21 +53,21 @@ const equipDef_t *INV_GetEquipmentDefinitionByID (const char *name)
  * @brief Move item between containers.
  * @param[in] inv Pointer to the inventory we are working on.
  * @param[in] toContainer Pointer to target container, to place the item in.
- * @param[in] px target x position in the toContainer container.
- * @param[in] py target y position in the toContainer container.
+ * @param[in] toX target x position in the toContainer container.
+ * @param[in] toY target y position in the toContainer container.
  * @param[in] fromContainer Pointer to source container, the item is in.
  * @param[in] fItem Pointer to item being moved.
- * @param[out] tItem The item the moving item is eventually dropped upon.
- * @note If you set px or py to -1/NONE the item is automatically placed on
+ * @param[out] uponItem The item the moving item is eventually dropped upon.
+ * @note If you set toX or toY to -1/NONE the item is automatically placed on
  * @note a free spot in the targetContainer
  * @return true if the move was successful.
  */
-bool INV_MoveItem (inventory_t* inv, const invDef_t *toContainer, int px, int py,
-	const invDef_t *fromContainer, invList_t *fItem, invList_t **tItem)
+bool INV_MoveItem (inventory_t* inv, const invDef_t *toContainer, int toX, int toY,
+	const invDef_t *fromContainer, invList_t *fItem, invList_t **uponItem)
 {
 	int moved;
 
-	if (px >= SHAPE_BIG_MAX_WIDTH || py >= SHAPE_BIG_MAX_HEIGHT)
+	if (toX >= SHAPE_BIG_MAX_WIDTH || toY >= SHAPE_BIG_MAX_HEIGHT)
 		return false;
 
 	if (!fItem)
@@ -78,7 +78,7 @@ bool INV_MoveItem (inventory_t* inv, const invDef_t *toContainer, int px, int py
 	}
 
 	/* move the item */
-	moved = cls.i.moveInInventory(inv, fromContainer, fItem, toContainer, px, py, NULL, tItem);
+	moved = cls.i.moveInInventory(inv, fromContainer, fItem, toContainer, toX, toY, NULL, uponItem);
 
 	switch (moved) {
 	case IA_MOVE:

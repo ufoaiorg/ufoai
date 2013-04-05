@@ -221,7 +221,7 @@ bool InventoryInterface::removeFromInventory (inventory_t* const inv, const invD
  * @param[in] ty Y coordinate in destination container.
  * @param[in,out] TU pointer to entity available TU at this moment
  * or @c NULL if TU doesn't matter (outside battlescape)
- * @param[out] icp
+ * @param[out] uponItem The item fItem is evetually dropped upon
  * @return IA_NOTIME when not enough TU.
  * @return IA_NONE if no action possible.
  * @return IA_NORELOAD if you cannot reload a weapon.
@@ -230,7 +230,7 @@ bool InventoryInterface::removeFromInventory (inventory_t* const inv, const invD
  * @return IA_ARMOUR when placing an armour on the actor.
  * @return IA_MOVE when just moving an item.
  */
-inventory_action_t InventoryInterface::moveInInventory (inventory_t* const inv, const invDef_t *from, invList_t *fItem, const invDef_t *to, int tx, int ty, int *TU, invList_t ** icp)
+inventory_action_t InventoryInterface::moveInInventory (inventory_t* const inv, const invDef_t *from, invList_t *fItem, const invDef_t *to, int tx, int ty, int *TU, invList_t ** uponItem)
 {
 	invList_t *ic;
 
@@ -241,8 +241,8 @@ inventory_action_t InventoryInterface::moveInInventory (inventory_t* const inv, 
 	assert(to);
 	assert(from);
 
-	if (icp)
-		*icp = NULL;
+	if (uponItem)
+		*uponItem = NULL;
 
 	if (from == to && fItem->getX() == tx && fItem->getY() == ty)
 		return IA_NONE;
@@ -275,8 +275,8 @@ inventory_action_t InventoryInterface::moveInInventory (inventory_t* const inv, 
 					if (checkedTo & INV_FITS) {
 						item->setX(tx);
 						item->setY(ty);
-						if (icp)
-							*icp = item;
+						if (uponItem)
+							*uponItem = item;
 						return IA_MOVE;
 					}
 					return IA_NONE;
@@ -336,7 +336,7 @@ inventory_action_t InventoryInterface::moveInInventory (inventory_t* const inv, 
 		cacheItem2 = this->cacheItem; /* Save/cache (source) item. The cacheItem is modified in MoveInInventory. */
 
 		/* Move the destination item to the source. */
-		moveInInventory(inv, to, icTo, from, cacheFromX, cacheFromY, TU, icp);
+		moveInInventory(inv, to, icTo, from, cacheFromX, cacheFromY, TU, uponItem);
 
 		/* Reset the cached item (source) (It'll be move to container emptied by destination item later.) */
 		this->cacheItem = cacheItem2;
@@ -373,8 +373,8 @@ inventory_action_t InventoryInterface::moveInInventory (inventory_t* const inv, 
 						Sys_Error("Could not reload the weapon - add to inventory failed (%s)", invName);
 
 					ic->setAmmoDef(this->cacheItem.def());
-					if (icp)
-						*icp = ic;
+					if (uponItem)
+						*uponItem = ic;
 					return IA_RELOAD_SWAP;
 				} else {
 					/* Actually remove the ammo from the 'from' container. */
@@ -384,8 +384,8 @@ inventory_action_t InventoryInterface::moveInInventory (inventory_t* const inv, 
 					ic->setAmmoDef(this->cacheItem.def());
 					/* loose ammo of type ic->m saved on server side */
 					ic->setAmmoLeft(ic->def()->ammo);
-					if (icp)
-						*icp = ic;
+					if (uponItem)
+						*uponItem = ic;
 					return IA_RELOAD;
 				}
 			}
@@ -444,9 +444,9 @@ inventory_action_t InventoryInterface::moveInInventory (inventory_t* const inv, 
 	ic = addToInventory(inv, &this->cacheItem, to, tx, ty, 1);
 
 	/* return data */
-	if (icp) {
+	if (uponItem) {
 		assert(ic);
-		*icp = ic;
+		*uponItem = ic;
 	}
 
 	if (to->isArmourDef()) {
