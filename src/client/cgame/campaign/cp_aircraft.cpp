@@ -817,19 +817,14 @@ static int AIR_GetStorageRoom (const aircraft_t *aircraft)
 	int size = 0;
 
 	LIST_Foreach(aircraft->acTeam, employee_t, employee) {
-		containerIndex_t container;
-		for (container = 0; container < CID_MAX; container++) {
-			invList_t *ic;
-#if 0
-			/* ignore items linked from any temp container */
-			if (INVDEF(container)->temp)
-				continue;
-#endif
-			for (ic = employee->chr.inv.getContainer3(container); ic; ic = ic->getNext()) {
-				const objDef_t *obj = ic->def();
+		const Container *cont = NULL;
+		while ((cont = employee->chr.inv.getNextCont(cont, true))) {
+			Item *item = NULL;
+			while ((item = cont->getNextItem(item))) {
+				const objDef_t *obj = item->def();
 				size += obj->size;
 
-				obj = ic->ammoDef();
+				obj = item->ammoDef();
 				if (obj)
 					size += obj->size;
 			}
