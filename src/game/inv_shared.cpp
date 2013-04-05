@@ -628,6 +628,18 @@ Item *Container::getNextItem (const Item *prev) const
 	return prev->getNext();
 }
 
+/** @brief Count the number of items in the Container
+ * @note For temp containers we count the number of different items */
+int Container::countItems () const
+{
+	int nr = 0;
+	Item *item = NULL;
+	while ((item = getNextItem(item))) {
+		/** For temp containers, we neglect Item::amount. */
+		nr++;
+	}
+	return nr;
+}
 
 inventory_s::inventory_s ()
 {
@@ -673,14 +685,9 @@ const Container *inventory_t::getNextCont (const Container *prev, bool inclTemp)
 int inventory_t::countItems () const
 {
 	int nr = 0;
-
 	const Container *cont = NULL;
-	while ((cont = getNextCont(cont))) {
-		Item *item = NULL;
-		while ((item = cont->getNextItem(item))) {
-			/** As we skip the temp containers, we can neglect Item::amount. */
-			nr++;
-		}
+	while ((cont = getNextCont(cont))) {	/* skips the temp containers */
+		nr += cont->countItems();
 	}
 	return nr;
 }

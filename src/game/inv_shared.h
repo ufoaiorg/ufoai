@@ -487,6 +487,7 @@ public:
 
 	const invDef_t *def () const;
 	Item *getNextItem (const Item *prev) const;
+	int countItems () const;
 };
 
 /** @brief inventory definition with all its containers */
