@@ -448,7 +448,7 @@ int MIS_GetIdx (const mission_t *mis)
  * @brief Returns a short translated name for a mission
  * @param[in] mission Pointer to the mission to get name for
  */
-const char* MIS_GetName (const mission_t *mission)
+const char *MIS_GetName (const mission_t *mission)
 {
 	assert(mission);
 
@@ -495,7 +495,7 @@ const char* MIS_GetName (const mission_t *mission)
  * @brief Return Name of the category of a mission.
  * @note Not translated yet - only for console usage
  */
-static const char* CP_MissionStageToName (const missionStage_t stage)
+static const char *CP_MissionStageToName (const missionStage_t stage)
 {
 	switch (stage) {
 	case STAGE_NOT_ACTIVE:
@@ -564,7 +564,7 @@ int CP_CountMissionOnGeoscape (void)
  * @param[in] mission Pointer to the mission drawn on geoscape
  * @sa GEO_DrawMarkers
  */
-const char* MIS_GetModel (const mission_t *mission)
+const char *MIS_GetModel (const mission_t *mission)
 {
 	/* Mission shouldn't be drawn on geoscape if mapDef is not defined */
 	assert(mission->mapDef);

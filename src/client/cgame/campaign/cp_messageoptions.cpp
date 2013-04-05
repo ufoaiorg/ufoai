@@ -112,7 +112,7 @@ void MSO_Set (const int listIndex, const notify_t type, const int optionType, co
  * @brief Parse notify type
  * @return A NT_ number, else return -1
  */
-static int MSO_ParseNotifyType (const char* name)
+static int MSO_ParseNotifyType (const char *name)
 {
 	for (int idx = 0; idx < NT_NUM_NOTIFYTYPE; idx ++) {
 		if (Q_streq(name, nt_strings[idx])) {
@@ -126,7 +126,7 @@ static int MSO_ParseNotifyType (const char* name)
  * @brief Parse option type
  * @return A MSO value, else 0
  */
-static int MSO_ParseOptionType (const char* type)
+static int MSO_ParseOptionType (const char *type)
 {
 	if (Q_strcaseeq(type, "pause"))
 		return MSO_PAUSE;
@@ -327,7 +327,7 @@ static int MSO_ParseOption (const char *blockName, const char **text)
 	}
 
 	for (linkedList_t *element = status; element != NULL; element = element->next) {
-		const char* value = (const char*)element->data;
+		const char *value = (const char*)element->data;
 		const int optionType = MSO_ParseOptionType(value);
 		if (optionType == 0) {
 			Com_Printf("MSO_ParseOption: message option type \"%s\" undefined.\n", value);

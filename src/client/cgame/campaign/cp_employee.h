@@ -75,8 +75,8 @@ void E_Unassign(employee_t *employee);
 int E_GenerateHiredEmployeesList(const base_t *base);
 bool E_IsAwayFromBase(const employee_t *employee);
 
-employeeType_t E_GetEmployeeType(const char* type);
-extern const char* E_GetEmployeeString(employeeType_t type, int n);
+employeeType_t E_GetEmployeeType(const char *type);
+extern const char *E_GetEmployeeString(employeeType_t type, int n);
 
 employee_t* E_GetUnhired(employeeType_t type);
 employee_t* E_GetUnhiredRobot(const struct ugv_s *ugvType);

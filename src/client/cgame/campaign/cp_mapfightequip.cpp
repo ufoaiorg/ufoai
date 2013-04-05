@@ -1335,7 +1335,7 @@ void BDEF_AutoSelectTarget (void)
  * @sa itemWeight_t
  * @sa AII_GetItemWeightBySize
  */
-const char* AII_WeightToName (itemWeight_t weight)
+const char *AII_WeightToName (itemWeight_t weight)
 {
 	switch (weight) {
 	case ITEM_LIGHT:

@@ -181,7 +181,7 @@ static int CP_CheckTriggerEvent (const char *expression, const void *userdata)
 		char value[MAX_VAR];
 		Q_strncpyz(value, type + 1, sizeof(value));
 		value[strlen(value) - 1] = '\0';
-		const char* detectedUFO = static_cast<const char*>(userdata);
+		const char *detectedUFO = static_cast<const char*>(userdata);
 		if (Q_strnull(detectedUFO))
 			return -1;
 		return Q_streq(detectedUFO, value);

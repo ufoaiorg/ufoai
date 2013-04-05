@@ -554,7 +554,7 @@ void BS_InitMarket (const campaign_t *campaign)
 	}
 
 	for (i = 0; i < AIRCRAFTTYPE_MAX; i++) {
-		const char* name = cgi->Com_DropShipTypeToShortName((humanAircraftType_t)i);
+		const char *name = cgi->Com_DropShipTypeToShortName((humanAircraftType_t)i);
 		const aircraft_t *aircraft = AIR_GetAircraft(name);
 		if (market->askAircraft[i] == 0) {
 			market->askAircraft[i] = aircraft->price;

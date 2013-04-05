@@ -125,7 +125,7 @@ CLICK ON MAP and MULTI SELECTION FUNCTIONS
  * @brief Add an element in the multiselection list
  */
 static void GEO_MultiSelectListAddItem (multiSelectType_t itemType, int itemID,
-	const char* itemDescription, const char* itemName)
+	const char *itemDescription, const char *itemName)
 {
 	Q_strcat(multiSelect.popupText, va("%s\t%s\n", itemDescription, itemName), sizeof(multiSelect.popupText));
 	multiSelect.selectType[multiSelect.nbSelect] = itemType;
@@ -1289,7 +1289,7 @@ static void GEO_DrawRadarInMap (const uiNode_t *node, const radar_t *radar, cons
  * @pre installation is not NULL.
  */
 static void GEO_DrawMapOneInstallation (const uiNode_t* node, const installation_t *installation,
-	bool oneUFOVisible, const char* font)
+	bool oneUFOVisible, const char *font)
 {
 	const installationTemplate_t *tpl = installation->installationTemplate;
 	int x, y;
@@ -1330,7 +1330,7 @@ static void GEO_DrawMapOneInstallation (const uiNode_t* node, const installation
  * @param[in] font Default font.
  */
 static void GEO_DrawMapOneBase (const uiNode_t* node, const base_t *base,
-	bool oneUFOVisible, const char* font)
+	bool oneUFOVisible, const char *font)
 {
 	int x, y;
 
@@ -1590,7 +1590,7 @@ void GEO_UpdateGeoscapeDock (void)
 void GEO_DrawMarkers (const uiNode_t* node)
 {
 	int i;
-	const char* font;
+	const char *font;
 	aircraft_t *ufo;
 	base_t *base;
 
@@ -1943,7 +1943,7 @@ nation_t* GEO_GetNation (const vec2_t pos)
  * @note never may return a null pointer or an empty string
  * @note Make sure, that there are textures with the same name in base/textures/tex_terrain
  */
-const char* GEO_GetTerrainType (const byte* const color)
+const char *GEO_GetTerrainType (const byte* const color)
 {
 	if (MapIsDesert(color))
 		return "desert";
@@ -1969,7 +1969,7 @@ const char* GEO_GetTerrainType (const byte* const color)
  * @return returns the zone name
  * @note never may return a null pointer or an empty string
  */
-static const char* GEO_GetCultureType (const byte* color)
+static const char *GEO_GetCultureType (const byte* color)
 {
 	if (MapIsWater(color))
 		return "water";
@@ -1991,7 +1991,7 @@ static const char* GEO_GetCultureType (const byte* color)
  * @return returns the zone name
  * @note never may return a null pointer or an empty string
  */
-static const char* GEO_GetPopulationType (const byte* color)
+static const char *GEO_GetPopulationType (const byte* color)
 {
 	if (MapIsWater(color))
 		return "water";
@@ -2013,7 +2013,7 @@ static const char* GEO_GetPopulationType (const byte* color)
  * @param[out] coast GEO_GetColor will set this to true if the given position is a coast line.
  * @return returns the zone name
  */
-static inline const char* GEO_GetTerrainTypeByPos (const vec2_t pos, bool *coast)
+static inline const char *GEO_GetTerrainTypeByPos (const vec2_t pos, bool *coast)
 {
 	const byte* color = GEO_GetColor(pos, MAPTYPE_TERRAIN, coast);
 	return GEO_GetTerrainType(color);
@@ -2025,7 +2025,7 @@ static inline const char* GEO_GetTerrainTypeByPos (const vec2_t pos, bool *coast
  * @param[in] pos Map Coordinates to get the culture type from
  * @return returns the zone name
  */
-static inline const char* GEO_GetCultureTypeByPos (const vec2_t pos)
+static inline const char *GEO_GetCultureTypeByPos (const vec2_t pos)
 {
 	const byte* color = GEO_GetColor(pos, MAPTYPE_CULTURE, NULL);
 	return GEO_GetCultureType(color);
@@ -2037,7 +2037,7 @@ static inline const char* GEO_GetCultureTypeByPos (const vec2_t pos)
  * @param[in] pos Map Coordinates to get the population type from
  * @return returns the zone name
  */
-static inline const char* GEO_GetPopulationTypeByPos (const vec2_t pos)
+static inline const char *GEO_GetPopulationTypeByPos (const vec2_t pos)
 {
 	const byte* color = GEO_GetColor(pos, MAPTYPE_POPULATION, NULL);
 	return GEO_GetPopulationType(color);
