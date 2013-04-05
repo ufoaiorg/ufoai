@@ -353,7 +353,7 @@ inventory_action_t InventoryInterface::moveInInventory (inventory_t* const inv, 
 				/* Weapon already fully loaded with the same ammunition -> abort */
 				return IA_NORELOAD;
 			}
-			time += ic->def()->reload;
+			time += ic->def()->getReloadTime();
 			if (!TU || *TU >= time) {
 				if (TU)
 					*TU -= time;

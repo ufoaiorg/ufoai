@@ -322,6 +322,10 @@ typedef struct objDef_s {
 	{
 		return Q_streq(this->type, "armour");
 	}
+	inline int getReloadTime() const
+	{
+		return reload;
+	}
 
 } objDef_t;
 
@@ -452,7 +456,7 @@ public:
 	}
 	inline bool isReloadable() const
 	{
-		return _itemDef->reload > 0;
+		return _itemDef->getReloadTime() > 0;
 	}
 	/** @todo is !mustReload() equivalent to 'usable ?? e.g. grenades are certainly not reloadable, but do they have ammo ??? */
 	inline bool mustReload() const
