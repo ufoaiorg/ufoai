@@ -83,7 +83,7 @@ char posStr[MAX_TOKEN_CHARS * MAX_TILESTRINGS];
 
 /**
  * @brief This test cycles through the list of map definitions found in the maps.ufo script
- * and builds each map mutiple times with different seeds.
+ * and builds each map multiple times with different seeds.
  */
 static void testMapDefsMassRMA (void)
 {
