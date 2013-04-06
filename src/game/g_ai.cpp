@@ -664,7 +664,7 @@ static inline bool AI_IsValidTarget (const Edict *ent, const Edict *target)
  * @todo fill z_align values
  * @todo optimize this
  */
-static float AI_FighterCalcActionScore (Edict *ent, pos3_t to, aiAction_t *aia)
+static float AI_FighterCalcActionScore (Edict *ent, const pos3_t to, aiAction_t *aia)
 {
 	Edict *check = NULL;
 	shoot_types_t shootType;
@@ -783,7 +783,7 @@ static float AI_FighterCalcActionScore (Edict *ent, pos3_t to, aiAction_t *aia)
  * @sa AI_ActorThink
  * @note Even civilians can use weapons if the teamdef allows this
  */
-static float AI_CivilianCalcActionScore (Edict *ent, pos3_t to, aiAction_t *aia)
+static float AI_CivilianCalcActionScore (Edict *ent, const pos3_t to, aiAction_t *aia)
 {
 	Edict *check = NULL;
 	float minDist, minDistCivilian, minDistFighter;
@@ -799,7 +799,6 @@ static float AI_CivilianCalcActionScore (Edict *ent, pos3_t to, aiAction_t *aia)
 	VectorCopy(to, aia->to);
 	VectorCopy(to, aia->stop);
 	G_EdictSetOrigin(ent, to);
-
 
 	/* test for time */
 	if (tu < 0 || move == ROUTING_NOT_REACHABLE)
@@ -904,7 +903,7 @@ static float AI_CivilianCalcActionScore (Edict *ent, pos3_t to, aiAction_t *aia)
  * @sa AI_ActorThink
  * @note Panicking units will run away from everyone other than their own team (e.g. aliens will run away even from civilians)
  */
-static float AI_PanicCalcActionScore (Edict *ent, pos3_t to, aiAction_t *aia)
+static float AI_PanicCalcActionScore (Edict *ent, const pos3_t to, aiAction_t *aia)
 {
 	Edict *check = NULL;
 	float minDistFriendly, minDistOthers;
