@@ -156,9 +156,13 @@ static void testMapDefsMassRMA (void)
 						/* if we have known problems with some combinations, we can skip them */
 						skip_info const skip_list[] = {
 							/* examples: */
-							{ 20, "forest",   "large",      "craft_drop_raptor",   0                     },
-							{ 12, "forest",   "large",      "craft_drop_herakles", "craft_ufo_harvester" },
-							{ -1, "ufocrash", 0,            0,                     0                     },
+						//	{ 20, "forest",		"large",		"craft_drop_raptor",   0                     },
+						//	{ 12, "forest",		"large"			"craft_drop_herakles", "craft_ufo_harvester" },
+							{ -1, "frozen",		"nature_medium",0,                     0                     },
+							{ 11, "village",	"medium",		0,                     0					 },
+							{ 19, "village",	"medium",		0,                     0					 },
+							{ -1, "village",	"medium_noufo",	0,                     0					 },
+							{ -1, "village",	"small",		0,                     0					 },
 						};
 
 						bool skip = false;
