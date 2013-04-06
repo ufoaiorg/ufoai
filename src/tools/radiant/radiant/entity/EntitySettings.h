@@ -1,5 +1,4 @@
-#ifndef _ENTITY_SETTINGS_H_
-#define _ENTITY_SETTINGS_H_
+#pragma once
 
 #include "iregistry.h"
 #include "preferencesystem.h"
@@ -60,5 +59,3 @@ class EntitySettings: public RegistryKeyObserver, public PreferenceConstructor
 };
 
 } // namespace entity
-
-#endif /* _ENTITY_SETTINGS_H_ */

@@ -1,5 +1,4 @@
-#ifndef REGISTRYTOGGLE_H_
-#define REGISTRYTOGGLE_H_
+#pragma once
 
 #include "ieventmanager.h"
 #include "iregistry.h"
@@ -68,5 +67,3 @@ public:
 	}
 
 }; // class RegistryTogle
-
-#endif /*REGISTRYTOGGLE_H_*/

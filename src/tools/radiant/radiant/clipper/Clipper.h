@@ -1,5 +1,4 @@
-#ifndef GLOBALCLIPPOINTS_H_
-#define GLOBALCLIPPOINTS_H_
+#pragma once
 
 #include "ClipPoint.h"
 #include "math/aabb.h"
@@ -97,5 +96,3 @@ class BrushClipper: public Clipper, public RegistryKeyObserver, public Preferenc
 		// The method that is passed to the preference system
 		void constructPreferencePage (PreferenceGroup& group);
 };
-
-#endif /*GLOBALCLIPPOINTS_H_*/

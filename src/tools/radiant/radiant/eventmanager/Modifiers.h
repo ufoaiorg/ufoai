@@ -1,5 +1,4 @@
-#ifndef MODIFIERS_H_
-#define MODIFIERS_H_
+#pragma once
 
 #include <map>
 #include <vector>
@@ -61,5 +60,3 @@ public:
 	 */
 	void updateState(GdkEventKey* event, bool keyPress);
 }; // class Modifiers
-
-#endif /*MODIFIERS_H_*/

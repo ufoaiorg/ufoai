@@ -1,5 +1,4 @@
-#ifndef MOUSEEVENTS_H_
-#define MOUSEEVENTS_H_
+#pragma once
 
 #include "ieventmanager.h"
 #include "iselection.h"
@@ -114,5 +113,3 @@ private:
 	bool matchObserverEvent(const ui::ObserverEvent& observerEvent, const unsigned int& button, const unsigned int& modifierFlags);
 	bool matchCameraViewEvent(const ui::CamViewEvent& camViewEvent, const unsigned int& button, const unsigned int& modifierFlags);
 }; // class MouseEvents
-
-#endif /*MOUSEEVENTS_H_*/

@@ -1,5 +1,4 @@
-#ifndef RADIANTCAMERAVIEW_H_
-#define RADIANTCAMERAVIEW_H_
+#pragma once
 
 #include "icamera.h"
 #include "math/frustum.h"
@@ -64,5 +63,3 @@ public:
     update();
   }
 };
-
-#endif /*RADIANTCAMERAVIEW_H_*/

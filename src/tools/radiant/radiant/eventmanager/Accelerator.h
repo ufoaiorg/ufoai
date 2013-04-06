@@ -1,5 +1,4 @@
-#ifndef ACCELERATOR_H_
-#define ACCELERATOR_H_
+#pragma once
 
 #include "ieventmanager.h"
 
@@ -59,5 +58,3 @@ public:
 	void keyDown();
 
 }; // class Accelerator
-
-#endif /*ACCELERATOR_H_*/

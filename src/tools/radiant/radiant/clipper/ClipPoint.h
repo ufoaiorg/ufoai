@@ -1,5 +1,4 @@
-#ifndef CLIPPOINT_H_
-#define CLIPPOINT_H_
+#pragma once
 
 #include "iradiant.h"
 #include "math/Vector3.h"
@@ -35,5 +34,3 @@ class ClipPoint {
 		/*! Draw clip/path point with rasterized string label */
 		void Draw(const std::string& label, float scale);
 }; // class ClipPoint
-
-#endif /* CLIPPOINT_H_ */

@@ -1,5 +1,4 @@
-#ifndef EVENT_H_
-#define EVENT_H_
+#pragma once
 
 /* The base class for an Event.
  *
@@ -44,5 +43,3 @@ public:
 	virtual void connectWidget(GtkWidget* widget) {}
 
 }; // class Event
-
-#endif /*EVENT_H_*/

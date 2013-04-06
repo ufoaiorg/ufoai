@@ -1,5 +1,4 @@
-#ifndef EMCOMMAND_H_
-#define EMCOMMAND_H_
+#pragma once
 
 #include "ieventmanager.h"
 #include "generic/callback.h"
@@ -46,5 +45,3 @@ class Command: public Event
 		static gboolean onMenuItemClicked (GtkMenuItem* menuitem, gpointer data);
 
 }; // class Command
-
-#endif /*EMCOMMAND_H_*/

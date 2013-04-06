@@ -1,5 +1,4 @@
-#ifndef KEYEVENT_H_
-#define KEYEVENT_H_
+#pragma once
 
 #include "ieventmanager.h"
 #include "generic/callback.h"
@@ -45,5 +44,3 @@ public:
 	}
 
 }; // class KeyEvent
-
-#endif /*KEYEVENT_H_*/
