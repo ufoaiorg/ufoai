@@ -265,9 +265,9 @@ static void testMapDefStatistic (void)
 }
 #endif
 
+#define FOOSTEP_TEST 0
+#if FOOSTEP_TEST
 #define FOOTSTEPS_FULL 0
-#if !MAP_STATISTIC
-#if !SEED_TEST
 /**
  * @brief This test cycles through the list of map definitions found in the maps.ufo script
  * and tries to find surfaces to stand on with no sound assigned to them.
@@ -392,7 +392,11 @@ static void testMapDefsFootSteps (void)
 			break;
 	}
 }
+#endif
 
+#if !MAP_STATISTIC
+#if !SEED_TEST
+#if !FOOTSTEP_TEST
 /**
  * @brief This test cycles through the list of map definitions found in the maps.ufo script
  * and tries to load (and build in case of RMA) each map once (with a random seed).
@@ -470,6 +474,7 @@ static void testMapDefsMultiplayer (void)
 }
 #endif
 #endif
+#endif
 
 int UFO_AddMapDefTests (void)
 {
@@ -489,14 +494,17 @@ int UFO_AddMapDefTests (void)
 	if (CU_ADD_TEST(mapDefSuite, testMapDefsMassRMA) == NULL)
 		return CU_get_error();
 #else
+#if FOOSTEP_TEST
 	if (CU_ADD_TEST(mapDefSuite, testMapDefsFootSteps) == NULL)
 		return CU_get_error();
 
+#else
 	if (CU_ADD_TEST(mapDefSuite, testMapDefsSingleplayer) == NULL)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(mapDefSuite, testMapDefsMultiplayer) == NULL)
 		return CU_get_error();
+#endif
 #endif
 #endif
 	return CUE_SUCCESS;
