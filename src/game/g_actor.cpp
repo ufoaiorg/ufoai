@@ -776,7 +776,7 @@ void G_ActorReload (Edict *ent, const invDef_t *invDef)
 			 * searching other containers if it would take longer
 			 * to retrieve the ammo from them than the one
 			 * we've already found. */
-			Item *item;
+			Item *item = NULL;
 			while ((item = cont->getNextItem(item))) {
 				if (item->def()->isLoadableInWeapon(weapon)) {
 					ammoItem = item;
