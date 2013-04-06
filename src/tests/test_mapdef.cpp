@@ -180,7 +180,8 @@ static void testMapDefsMassRMA (void)
 						else
 							ass = md->param;
 
-						randomMap = SV_AssembleMap(p, ass, mapStr, posStr, i);
+						char *entityString = SV_GetConfigString(CS_ENTITYSTRING);
+						randomMap = SV_AssembleMap(p, ass, mapStr, posStr, entityString, i);
 						CU_ASSERT(randomMap != NULL);
 						time = (Sys_Milliseconds() - time);
 						CU_ASSERT(time < 30000);
