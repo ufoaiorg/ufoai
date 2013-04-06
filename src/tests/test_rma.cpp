@@ -56,8 +56,8 @@ static int UFO_CleanSuiteRandomMapAssembly (void)
 	return 0;
 }
 
-char mapStr[MAX_TOKEN_CHARS * MAX_TILESTRINGS];
-char posStr[MAX_TOKEN_CHARS * MAX_TILESTRINGS];
+static char mapStr[MAX_TOKEN_CHARS * MAX_TILESTRINGS];
+static char posStr[MAX_TOKEN_CHARS * MAX_TILESTRINGS];
 
 static void testUMPExtends (void)
 {
