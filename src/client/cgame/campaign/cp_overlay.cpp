@@ -197,13 +197,14 @@ static void CP_DrawXVIOverlayRow (float latMin, float latMax, const vec2_t cente
 
 /**
  * @brief Applies spreading on xvi transparency channel centered on a given pos
- * @param[in] xCenter X Position of the center of XVI spreading
- * @param[in] yCenter Y Position of the center of XVI spreading
+ * @param pos The x/y-location in the flat XVI map
+ * @param[in] xCenter X Position of the center of XVI spreading (in degrees)
+ * @param[in] yCenter Y Position of the center of XVI spreading (in degrees)
+ * @param factor The factor of the XVI raise
  * @sa R_DecreaseXVILevel
  * @note xvi rate is null when alpha = 0, max when alpha = maxAlpha
  * XVI spreads in circle, and the alpha value of one pixel indicates the XVI level of infection.
  * This is necessary to take into account a new event that would spread in the zone where XVI is already spread.
- * @return the radius of the new XVI level
  */
 static void CP_IncreaseXVILevel (const vec2_t pos, int xCenter, int yCenter, float factor)
 {
