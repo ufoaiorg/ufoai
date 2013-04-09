@@ -1134,7 +1134,7 @@ bool G_ClientShoot (const Player &player, Edict *ent, const pos3_t at, shoot_typ
 	}
 
 	ammo = weapon->getAmmoLeft();
-	tusNeeded = G_ActorGetTimeForFiredef(ent, fd, IS_SHOT_REACTION(shootType));
+	tusNeeded = G_ActorGetModifiedTimeForFiredef(ent, fd, IS_SHOT_REACTION(shootType));
 	/* if this is reaction fire, don't keep trying to reserve TUs for reaction fire */
 	reactionLeftover = IS_SHOT_REACTION(shootType) ? std::max(0, player.reactionLeftover - ent->chr.reservedTus.reaction) : 0;
 

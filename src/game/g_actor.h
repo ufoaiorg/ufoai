@@ -84,4 +84,4 @@ bool G_ActorDieOrStun(Edict *ent, Edict *attacker);
 int G_ActorGetContentFlags(const vec3_t origin);
 bool G_ActorInvMove(Edict *ent, const invDef_t *from, invList_t *fItem, const invDef_t *to, int tx, int ty, bool checkaction);
 void G_ActorReload(Edict *ent, const invDef_t *invDef);
-int G_ActorGetTimeForFiredef(const Edict *ent, const fireDef_t *const fd, bool reaction);
+int G_ActorGetModifiedTimeForFiredef(const Edict *ent, const fireDef_t *const fd, bool reaction);

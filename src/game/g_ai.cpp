@@ -541,7 +541,7 @@ static void AI_SearchBestTarget (aiAction_t *aia, const Edict *ent, Edict *check
 		const float acc = GET_ACC(ent->chr.score.skills[ABILITY_ACCURACY], fd->weaponSkill) *
 				G_ActorGetInjuryPenalty(ent, MODIFIER_ACCURACY);
 		const float nspread = SPREAD_NORM((fd->spread[0] + fd->spread[1]) * 0.5 + acc);
-		const int time = G_ActorGetTimeForFiredef(ent, fd, false);
+		const int time = G_ActorGetModifiedTimeForFiredef(ent, fd, false);
 		/* how many shoots can this actor do */
 		const int shots = tu / time;
 		if (shots) {
