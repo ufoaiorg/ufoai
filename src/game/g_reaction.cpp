@@ -678,6 +678,33 @@ static bool G_ReactionFireCheckExecution (const Edict *target)
 	return fired;
 }
 
+#define DEBUG_RF 0
+#if DEBUG_RF
+/**
+ * @brief Prints some reaction fire data to the console
+ * @param[in] target The target entity
+ */
+static void G_ReactionFirePrintSituation (Edict *target)
+{
+	if (G_IsAlien(target))
+		return;
+
+	Com_Printf("Alien %i at %i/%i/%i TU:%i\n", target->number, target->pos[0], target->pos[1], target->pos[2], target->TU);
+
+	Edict *shooter = NULL;
+	/* check all possible shooters */
+	while ((shooter = G_EdictsGetNextLivingActor(shooter))) {
+		if (G_IsAlien(shooter) || G_IsCivilian(shooter))
+			continue;
+		Com_Printf("S%i: at %i/%i/%i RF: ", shooter->number, shooter->pos[0], shooter->pos[1], shooter->pos[2]);
+		if (rft.hasExpired(shooter, target, 0))
+			Com_Printf("expired\n");
+		else
+			Com_Printf("not yet\n");
+	}
+}
+#endif
+
 /**
  * @brief Called when 'target' moves, possibly triggering or resolving reaction fire
  * @param[in] target The target entity
@@ -686,6 +713,9 @@ static bool G_ReactionFireCheckExecution (const Edict *target)
  */
 bool G_ReactionFireOnMovement (Edict *target)
 {
+#if DEBUG_RF
+	G_ReactionFirePrintSituation (target);
+#endif
 	/* Check to see whether this resolves any reaction fire */
 	const bool fired = G_ReactionFireCheckExecution(target);
 
