@@ -122,6 +122,7 @@ public:
 	void add (const Edict *shooter, const Edict *target, const int tusForShot);
 	void remove (Edict *shooter, const Edict *target);
 	bool hasExpired (const Edict *shooter, const Edict *target, const int tusTarget);
+	int getTriggerTUs (const Edict *shooter, const Edict *target);
 	void advance (const Edict *shooter, const int tusShot);
 	void reset();
 	void create (const Edict *shooter);
@@ -245,6 +246,31 @@ void ReactionFireTargets::remove (Edict *shooter, const Edict *target)
 		}
 	}
 }
+
+/**
+ * @brief Check if the given shooter is ready to reaction fire at the given target.
+ * @param[in] shooter The reaction firing actor
+ * @param[in] target The potential reaction fire victim
+ * @return The TUs the target will need to reach until the RF shot goes off.
+ */
+int ReactionFireTargets::getTriggerTUs (const Edict *shooter, const Edict *target)
+{
+	int i;
+	const ReactionFireTargetList *rfts = find(shooter);
+
+	if (!rfts)
+		return -2;	/* the shooter doesn't aim at anything */
+
+	assert(target);
+
+	for (i = 0; i < rfts->count; i++) {
+		if (rfts->targets[i].target == target)	/* found it ? */
+			return rfts->targets[i].triggerTUs;
+	}
+
+	return -1;	/* the shooter doesn't aim at this target */
+}
+
 
 /**
  * @brief Check if the given shooter is ready to reaction fire at the given target.
@@ -697,10 +723,15 @@ static void G_ReactionFirePrintSituation (Edict *target)
 		if (G_IsAlien(shooter) || G_IsCivilian(shooter))
 			continue;
 		Com_Printf("S%i: at %i/%i/%i RF: ", shooter->number, shooter->pos[0], shooter->pos[1], shooter->pos[2]);
-		if (rft.hasExpired(shooter, target, 0))
+		int ttus = rft.getTriggerTUs(shooter, target);
+		if (ttus == -2)
+			Com_Printf("not initialized\n");
+		if (ttus == -1)
+			Com_Printf("not aiming\n");
+		else if (rft.hasExpired(shooter, target, 0))
 			Com_Printf("expired\n");
 		else
-			Com_Printf("not yet\n");
+			Com_Printf("not yet: %i\n", ttus);
 	}
 }
 #endif
