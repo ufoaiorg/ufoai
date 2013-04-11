@@ -82,6 +82,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MAX_RF_TARGETS 10
 #define MAX_RF_DATA 128
 
+#define DEBUG_RF 0
+
 /** @brief A single relation between a shooter and his target. */
 class ReactionFireTarget
 {
@@ -221,6 +223,10 @@ void ReactionFireTargets::add (const Edict *shooter, const Edict *target, const 
 	rfts->targets[i].target = target;
 	rfts->targets[i].triggerTUs = target->TU - tusForShot;
 	rfts->count++;
+#if DEBUG_RF
+	if (!(G_IsAlien(shooter) || G_IsCivilian(shooter)))
+		Com_Printf("S%i: added\n", shooter->number);
+#endif
 }
 
 /**
@@ -243,6 +249,10 @@ void ReactionFireTargets::remove (Edict *shooter, const Edict *target)
 				rfts->targets[i].triggerTUs = rfts->targets[rfts->count - 1].triggerTUs;
 			}
 			rfts->count--;
+#if DEBUG_RF
+			if (!(G_IsAlien(shooter) || G_IsCivilian(shooter)))
+				Com_Printf("S%i: removed\n", shooter->number);
+#endif
 		}
 	}
 }
@@ -705,7 +715,6 @@ static bool G_ReactionFireCheckExecution (const Edict *target)
 	return fired;
 }
 
-#define DEBUG_RF 0
 #if DEBUG_RF
 /**
  * @brief Prints some reaction fire data to the console
@@ -713,7 +722,7 @@ static bool G_ReactionFireCheckExecution (const Edict *target)
  */
 static void G_ReactionFirePrintSituation (Edict *target)
 {
-	if (G_IsAlien(target))
+	if (!G_IsAlien(target))
 		return;
 
 	Com_Printf("Alien %i at %i/%i/%i TU:%i\n", target->number, target->pos[0], target->pos[1], target->pos[2], target->TU);
@@ -723,16 +732,17 @@ static void G_ReactionFirePrintSituation (Edict *target)
 	while ((shooter = G_EdictsGetNextLivingActor(shooter))) {
 		if (G_IsAlien(shooter) || G_IsCivilian(shooter))
 			continue;
-		Com_Printf("S%i: at %i/%i/%i RF: ", shooter->number, shooter->pos[0], shooter->pos[1], shooter->pos[2]);
+		char msgHdr[100];
+		sprintf(msgHdr, "S%i: at %i/%i/%i RF: ", shooter->number, shooter->pos[0], shooter->pos[1], shooter->pos[2]);
 		int ttus = rft.getTriggerTUs(shooter, target);
 		if (ttus == -2)
-			Com_Printf("not initialized\n");
+			Com_Printf("%s not initialized\n", msgHdr);
 		if (ttus == -1)
-			Com_Printf("not aiming\n");
+			Com_Printf("%s not aiming\n", msgHdr);
 		else if (rft.hasExpired(shooter, target, 0))
-			Com_Printf("expired\n");
+			Com_Printf("expired\n", msgHdr);
 		else
-			Com_Printf("not yet: %i\n", ttus);
+			Com_Printf("%s not yet: %i\n", msgHdr, ttus);
 	}
 }
 #endif
