@@ -118,7 +118,7 @@ event capturelivealien
 event samsitearm
 {
 	type	"new_day"
-	// if there is a samite that is not yet armed
+	// if there is a samsite that is not yet armed
 	require "!samsitearmed"
 	once	true // remove this event after it triggers
 	command	"addeventmail tip_samsitearm"
