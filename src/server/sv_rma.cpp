@@ -1011,13 +1011,13 @@ static void SV_RemoveTile (MapInfo *map, int* idx, int* pos)
  * @brief Prints the mapstrings as known from the ufoconsole.log
  * This can also be used to dump the progress of the RMA process.
  * @param[in,out] map All we know about the map to assemble
- * @param[out] asmMap The output string of the random map assembly that contains all the
+ * @param[out] asmTiles The output string of the random map assembly that contains all the
  * map tiles that should be assembled. The order is the same as in the @c asmPos string.
  * Each of the map tiles in this string has a corresponding entry in the pos string, too.
- * @param[out] asmPos The pos string for the assembly. For each tile from the @c asmMap
+ * @param[out] asmPos The pos string for the assembly. For each tile from the @c asmTiles
  * string this string contains three coordinates for shifting the given tile names.
  */
-static void SV_PrintMapStrings (const MapInfo *map, char *asmMap, char *asmPos)
+static void SV_PrintMapStrings (const MapInfo *map, char *asmTiles, char *asmPos)
 {
 	int i;
 	const Assembly *mAsm;
@@ -1029,16 +1029,16 @@ static void SV_PrintMapStrings (const MapInfo *map, char *asmMap, char *asmPos)
 		if (sv_dumpmapassembly->integer)
 			SV_DumpPlaced(map, i);
 
-		if (asmMap[0])
-			Q_strcat(asmMap, " ", MAX_TOKEN_CHARS * MAX_TILESTRINGS);
+		if (asmTiles[0])
+			Q_strcat(asmTiles, " ", MAX_TOKEN_CHARS * MAX_TILESTRINGS);
 		if (asmPos[0])
 			Q_strcat(asmPos, " ", MAX_TOKEN_CHARS * MAX_TILESTRINGS);
 
-		Q_strcat(asmMap, va("%s", pl->tile->id), MAX_TOKEN_CHARS * MAX_TILESTRINGS);
+		Q_strcat(asmTiles, va("%s", pl->tile->id), MAX_TOKEN_CHARS * MAX_TILESTRINGS);
 		Q_strcat(asmPos, va("%i %i %i", (pl->x - mAsm->width / 2) * 8, (pl->y - mAsm->height / 2) * 8, 0), MAX_TOKEN_CHARS * MAX_TILESTRINGS);
 	}
 
-	Com_Printf("tiles: %s\n", asmMap);
+	Com_Printf("tiles: %s\n", asmTiles);
 	Com_Printf("pos: %s\n", asmPos);
 	Com_Printf("tiles: %i\n", map->numPlaced);
 }
@@ -1950,7 +1950,7 @@ static int cmpTileAreaSize (const void * a, const void * b)
 }
 #endif
 
-static MapInfo* SV_DoMapAssemble (MapInfo *map, const char *assembly, char *asmMap, char *asmPos, const unsigned int seed)
+static MapInfo* SV_DoMapAssemble (MapInfo *map, const char *assembly, char *asmTiles, char *asmPos, const unsigned int seed)
 {
 	int i;
 	const Assembly *mAsm = map->getCurrentAssembly();
@@ -1985,7 +1985,7 @@ static MapInfo* SV_DoMapAssemble (MapInfo *map, const char *assembly, char *asmM
 				/* if we are allowed to restart the search with a fixed seed
 				 * from the assembly definition, do so */
 				Com_SetRandomSeed(mAsm->seeds[rand() % mAsm->numSeeds]);
-				return SV_DoMapAssemble(map, assembly, asmMap, asmPos, seed);
+				return SV_DoMapAssemble(map, assembly, asmTiles, asmPos, seed);
 			}
 			Mem_Free(map);
 			return NULL;
@@ -2021,7 +2021,7 @@ static MapInfo* SV_DoMapAssemble (MapInfo *map, const char *assembly, char *asmM
 				/* if we are allowed to restart the search with a fixed seed
 				 * from the assembly definition, do so */
 				Com_SetRandomSeed(mAsm->seeds[seed % mAsm->numSeeds]);
-				return SV_DoMapAssemble(map, assembly, asmMap, asmPos, seed);
+				return SV_DoMapAssemble(map, assembly, asmTiles, asmPos, seed);
 			}
 			return NULL;
 		}
@@ -2029,12 +2029,12 @@ static MapInfo* SV_DoMapAssemble (MapInfo *map, const char *assembly, char *asmM
 
 	/* prepare map and pos strings */
 	if (map->basePath[0])
-		Com_sprintf(asmMap, sizeof(map->basePath) + 1, "-%s", map->basePath);
+		Com_sprintf(asmTiles, sizeof(map->basePath) + 1, "-%s", map->basePath);
 
 	asmPos[0] = 0;
 
 	/* generate the strings */
-	SV_PrintMapStrings(map, asmMap, asmPos);
+	SV_PrintMapStrings(map, asmTiles, asmPos);
 
 	return map;
 }
@@ -2043,12 +2043,12 @@ static MapInfo* SV_DoMapAssemble (MapInfo *map, const char *assembly, char *asmM
  * @brief Assembles a "random" map
  * and parses the *.ump files for assembling the "random" maps and places the 'fixed' tiles.
  * For a more detailed description of the whole algorithm see SV_AddMapTiles.
- * @param[in] name The name of the map (ump) file to parse
+ * @param[in] mapName The name of the map (ump) file to parse
  * @param[in] assembly The random map assembly that should be used from the given rma
- * @param[out] asmMap The output string of the random map assembly that contains all the
+ * @param[out] asmTiles The output string of the random map assembly that contains all the
  * map tiles that should be assembled. The order is the same as in the @c asmPos string.
  * Each of the map tiles in this string has a corresponding entry in the pos string, too.
- * @param[out] asmPos The pos string for the assembly. For each tile from the @c asmMap
+ * @param[out] asmPos The pos string for the assembly. For each tile from the @c asmTiles
  * string this string contains three coordinates for shifting the given tile names.
  * @param[in] seed random seed to use (for cunit tests). If 0, the called functions can use their own seed setting.
  * @param[out] entityString An entity string that is used for all map tiles. Parsed from the ump.
@@ -2058,14 +2058,14 @@ static MapInfo* SV_DoMapAssemble (MapInfo *map, const char *assembly, char *asmM
  * @sa SV_ParseMapTile
  * @note Make sure to free the returned pointer
  */
-MapInfo* SV_AssembleMap (const char *name, const char *assembly, char *asmMap, char *asmPos, char *entityString, const unsigned int seed)
+MapInfo* SV_AssembleMap (const char *mapName, const char *assembly, char *asmTiles, char *asmPos, char *entityString, const unsigned int seed)
 {
 	MapInfo *map;
 
 	map = Mem_AllocType(MapInfo);
-	Q_strncpyz(map->name, name, sizeof(map->name));
+	Q_strncpyz(map->name, mapName, sizeof(map->name));
 
-	SV_ParseUMP(name, entityString, map, false);
+	SV_ParseUMP(mapName, entityString, map, false);
 
 	/* check for parsed tiles and assemblies */
 	if (!map->numTiles)
@@ -2098,7 +2098,7 @@ MapInfo* SV_AssembleMap (const char *name, const char *assembly, char *asmMap, c
 		}
 	}
 
-	SV_DoMapAssemble(map, assembly, asmMap, asmPos, seed);
+	SV_DoMapAssemble(map, assembly, asmTiles, asmPos, seed);
 
 	return map;
 }
