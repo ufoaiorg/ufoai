@@ -352,7 +352,7 @@ typedef struct campaign_s {
 	float minhappiness;			/**< minimum value of mean happiness before the game is lost */
 	int negativeCreditsUntilLost;	/**< bankrupt - negative credits until you've lost the game */
 	int maxAllowedXVIRateUntilLost;	/**< 0 - 100 - the average rate of XVI over all nations before you've lost the game */
-	bool visible;			/**< visible in campaign menu? */
+	bool visible;				/**< visible in campaign menu? */
 	date_t date;				/**< starting date for this campaign */
 	int basecost;				/**< base building cost for empty base */
 	char firstBaseTemplate[MAX_VAR];	/**< template to use for setting up the first base */
