@@ -437,7 +437,7 @@ bool E_HireRobot (base_t* base, const ugv_t *ugvType)
 
 /**
  * @brief Removes the inventory of the employee and also removes him from buildings
- * @param[in,out] employee Employe to unassign from aircraft/buildings
+ * @param[in,out] employee Employee to unassign from aircraft/buildings
  */
 void E_Unassign (Employee *employee)
 {
