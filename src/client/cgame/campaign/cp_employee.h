@@ -40,6 +40,14 @@ typedef enum {
 /** The definition of an employee */
 class employee_t {
 public:
+	/**
+	 * @brief Returns true if the employee is _only_ listed in the global list.
+	 * @sa E_EmployeeIsFree
+	 */
+	inline bool isUnassigned () const {
+		return !assigned;
+	}
+
 	base_t *baseHired;				/**< Base where the soldier is hired it atm. */
 	bool assigned;				/**< Assigned to a building */
 	bool transfer;				/**< Is this employee currently transferred? */

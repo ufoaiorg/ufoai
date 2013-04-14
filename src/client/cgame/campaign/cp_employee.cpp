@@ -332,20 +332,6 @@ employee_t* E_GetHiredRobot (const base_t* const base, const ugv_t *ugvType)
 }
 
 /**
- * @brief Returns true if the employee is _only_ listed in the global list.
- * @param[in] employee The employee_t pointer to check
- * @return bool
- * @sa E_EmployeeIsFree
- */
-static bool E_EmployeeIsUnassigned (const employee_t *employee)
-{
-	if (!employee)
-		cgi->Com_Error(ERR_DROP, "E_EmployeeIsUnassigned: Employee is NULL.\n");
-
-	return !employee->assigned;
-}
-
-/**
  * @brief Gets an unassigned employee of a given type from the given base.
  * @param[in] base Which base the employee should be hired in.
  * @param[in] type The type of employee to search.
@@ -358,7 +344,7 @@ employee_t* E_GetAssignedEmployee (const base_t* const base, const employeeType_
 	E_Foreach(type, employee) {
 		if (!E_IsInBase(employee, base))
 			continue;
-		if (!E_EmployeeIsUnassigned(employee))
+		if (!employee->isUnassigned())
 			return employee;
 	}
 	return NULL;
@@ -377,7 +363,7 @@ employee_t* E_GetUnassignedEmployee (const base_t* const base, const employeeTyp
 	E_Foreach(type, employee) {
 		if (!E_IsInBase(employee, base))
 			continue;
-		if (E_EmployeeIsUnassigned(employee))
+		if (employee->isUnassigned())
 			return employee;
 	}
 	return NULL;
@@ -466,7 +452,7 @@ void E_Unassign (employee_t *employee)
 	/* Remove employee from building/tech/production/aircraft). */
 	switch (employee->type) {
 	case EMPL_SCIENTIST:
-		if (!E_EmployeeIsUnassigned(employee))
+		if (!employee->isUnassigned())
 			RS_RemoveFiredScientist(base, employee);
 		break;
 	case EMPL_ROBOT:
@@ -865,7 +851,7 @@ int E_CountUnassigned (const base_t* const base, employeeType_t type)
 	E_Foreach(type, employee) {
 		if (!E_IsInBase(employee, base))
 			continue;
-		if (E_EmployeeIsUnassigned(employee))
+		if (employee->isUnassigned())
 			count++;
 	}
 	return count;
