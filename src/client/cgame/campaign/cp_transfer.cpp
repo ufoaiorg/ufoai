@@ -335,13 +335,13 @@ static void TR_ListTransfers_f (void)
 			for (i = EMPL_SOLDIER; i < MAX_EMPL; i++) {
 				const employeeType_t emplType = (employeeType_t)i;
 				TR_ForeachEmployee(employee, transfer, emplType) {
-					if (employee->ugv) {
+					if (employee->getUGV()) {
 						/** @todo: improve ugv listing when they're implemented */
-						Com_Printf("......ugv: %s [ucn: %i]\n", employee->ugv->id, employee->chr.ucn);
+						Com_Printf("......ugv: %s [ucn: %i]\n", employee->getUGV()->id, employee->chr.ucn);
 					} else {
 						Com_Printf("......%s (%s) / %s [ucn: %i]\n", employee->chr.name,
 							E_GetEmployeeString(employee->getType(), 1),
-							(employee->nation) ? employee->nation->id : "(nonation)",
+							(employee->getNation()) ? employee->getNation()->id : "(nonation)",
 							employee->chr.ucn);
 						if (!employee->isHired())
 							Com_Printf("Warning: employee^ not hired!\n");

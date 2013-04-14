@@ -235,7 +235,7 @@ void AIR_ListAircraft_f (void)
 		}
 		Com_Printf("\n");
 		Com_Printf("...name %s\n", aircraft->id);
-		Com_Printf("...type %i\n", aircraft->getType);
+		Com_Printf("...type %i\n", aircraft->type);
 		Com_Printf("...size %i\n", aircraft->maxTeamSize);
 		Com_Printf("...fuel %i\n", aircraft->fuel);
 		Com_Printf("...status %s\n", (aircraft->status == AIR_CRASHED) ? "crashed" : AIR_AircraftStatusToName(aircraft));
