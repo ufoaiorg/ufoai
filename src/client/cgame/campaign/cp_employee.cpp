@@ -61,32 +61,26 @@ Employee* E_GetUnhired (employeeType_t type)
  * @param[in] employee Pointer to the employee.
  * @return bool true if the employee is away in mission, false if he is not or he is unhired.
  */
-bool E_IsAwayFromBase (const Employee *employee)
+bool Employee::isAwayFromBase () const
 {
-	const base_t *base;
-
-	assert(employee);
-
 	/* Check that employee is hired */
-	if (!employee->isHired())
+	if (!isHired())
 		return false;
 
 	/* Check if employee is currently transferred. */
-	if (employee->transfer)
+	if (transfer)
 		return true;
 
 	/* for now only soldiers, ugvs and pilots can be assigned to an aircraft */
-	if (!employee->isSoldier() && !employee->isRobot() && !employee->isPilot())
+	if (!isSoldier() && !isRobot() && !isPilot())
 		return false;
-
-	base = employee->baseHired;
 
 	/* Crashed aircraft no longer belongs to any base but poor pilot/soldiers assigned
 	 * to it are definetly away from the base so we need to iterate trought all aircraft */
 	AIR_Foreach(aircraft) {
-		if (aircraft->homebase != base)
+		if (aircraft->homebase != baseHired)
 			continue;
-		if (!AIR_IsAircraftInBase(aircraft) && AIR_IsEmployeeInAircraft(employee, aircraft))
+		if (!AIR_IsAircraftInBase(aircraft) && AIR_IsEmployeeInAircraft(this, aircraft))
 			return true;
 	}
 	return false;
@@ -133,22 +127,6 @@ void E_HireForBuilding (base_t *base, building_t *building, int num)
 			}
 		}
 	}
-}
-
-/**
- * @brief Checks whether the given employee is in the given base
- * @sa E_EmployeeIsCurrentlyInBase
- */
-bool E_IsInBase (const Employee* empl, const base_t* const base)
-{
-	assert(empl != NULL);
-	assert(base != NULL);
-
-	if (!empl->isHired())
-		return false;
-	if (empl->baseHired == base)
-		return true;
-	return false;
 }
 
 /**
@@ -290,7 +268,7 @@ int E_GetHiredEmployees (const base_t* const base, employeeType_t type, linkedLi
 	E_Foreach(type, employee) {
 		if (!employee->isHired())
 			continue;
-		if (!employee->transfer && (!base || E_IsInBase(employee, base))) {
+		if (!employee->transfer && (!base || employee->isHiredInBase(base))) {
 			cgi->LIST_AddPointer(hiredEmployees, employee);
 		}
 	}
@@ -315,7 +293,7 @@ Employee* E_GetHiredRobot (const base_t* const base, const ugv_t *ugvType)
 	employee = NULL;
 	LIST_Foreach(hiredEmployees, Employee, e) {
 		if ((e->getUGV() == ugvType || !ugvType)	/* If no type was given we return the first ugv we find. */
-		 && E_IsInBase(e, base)) {		/* It has to be in the defined base. */
+		 && e->isHiredInBase(base)) {		/* It has to be in the defined base. */
 			assert(e->isHired());
 			employee = e;
 			break;
@@ -341,7 +319,7 @@ Employee* E_GetHiredRobot (const base_t* const base, const ugv_t *ugvType)
 Employee* E_GetAssignedEmployee (const base_t* const base, const employeeType_t type)
 {
 	E_Foreach(type, employee) {
-		if (!E_IsInBase(employee, base))
+		if (!employee->isHiredInBase(base))
 			continue;
 		if (employee->isAssigned())
 			return employee;
@@ -360,7 +338,7 @@ Employee* E_GetAssignedEmployee (const base_t* const base, const employeeType_t 
 Employee* E_GetUnassignedEmployee (const base_t* const base, const employeeType_t type)
 {
 	E_Foreach(type, employee) {
-		if (!E_IsInBase(employee, base))
+		if (!employee->isHiredInBase(base))
 			continue;
 		if (!employee->isAssigned())
 			return employee;
@@ -528,7 +506,7 @@ void E_UnhireAllEmployees (base_t* base, employeeType_t type)
 	assert(type < MAX_EMPL);
 
 	E_Foreach(type, employee) {
-		if (!E_IsInBase(employee, base))
+		if (!employee->isHiredInBase(base))
 			continue;
 		E_UnhireEmployee(employee);
 	}
@@ -640,7 +618,7 @@ void E_DeleteAllEmployees (base_t* base)
 	for (i = EMPL_SOLDIER; i < MAX_EMPL; i++) {
 		const employeeType_t type = (employeeType_t)i;
 		E_Foreach(type, employee) {
-			if (base == NULL || E_IsInBase(employee, base))
+			if (base == NULL || employee->isHiredInBase(base))
 				E_DeleteEmployee(employee);
 		}
 	}
@@ -671,7 +649,7 @@ void E_DeleteEmployeesExceedingCapacity (base_t *base)
 			continue;
 
 		E_Foreach(type, employee) {
-			if (E_IsInBase(employee, base))
+			if (employee->isHiredInBase(base))
 				E_DeleteEmployee(employee);
 
 			if (CAP_GetFreeCapacity(base, CAP_EMPLOYEES) >= 0)
@@ -746,7 +724,7 @@ int E_CountHired (const base_t* const base, employeeType_t type)
 	E_Foreach(type, employee) {
 		if (!employee->isHired())
 			continue;
-		if (!base || E_IsInBase(employee, base))
+		if (!base || employee->isHiredInBase(base))
 			count++;
 	}
 	return count;
@@ -765,7 +743,7 @@ int E_CountHiredRobotByType (const base_t* const base, const ugv_t *ugvType)
 	E_Foreach(EMPL_ROBOT, employee) {
 		if (!employee->isHired())
 			continue;
-		if (employee->getUGV() == ugvType && (!base || E_IsInBase(employee, base)))
+		if (employee->getUGV() == ugvType && (!base || employee->isHiredInBase(base)))
 			count++;
 	}
 	return count;
@@ -837,7 +815,7 @@ int E_CountUnassigned (const base_t* const base, employeeType_t type)
 
 	int count = 0;
 	E_Foreach(type, employee) {
-		if (!E_IsInBase(employee, base))
+		if (!employee->isHiredInBase(base))
 			continue;
 		if (!employee->isAssigned())
 			count++;

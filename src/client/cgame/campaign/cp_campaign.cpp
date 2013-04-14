@@ -915,7 +915,7 @@ void CP_UpdateCharacterStats (const base_t *base, const aircraft_t *aircraft)
 
 	/* only soldiers have stats and ranks, ugvs not */
 	E_Foreach(EMPL_SOLDIER, employee) {
-		if (!E_IsInBase(employee, aircraft->homebase))
+		if (!employee->isHiredInBase(aircraft->homebase))
 			continue;
 		if (!AIR_IsEmployeeInAircraft(employee, aircraft))
 			continue;
@@ -1292,7 +1292,7 @@ static void CP_DebugChangeCharacterStats_f (void)
 	E_Foreach(EMPL_SOLDIER, employee) {
 		character_t *chr;
 
-		if (!E_IsInBase(employee, base))
+		if (!employee->isHiredInBase(base))
 			continue;
 
 		chr = &(employee->chr);

@@ -1133,7 +1133,7 @@ void CP_MissionEnd (const campaign_t *campaign, mission_t* mission, const battle
 			numberOfSoldiers++;
 
 		/** @todo replace HP check with some CHRSH->IsDead() function */
-		if (E_IsInBase(employee, base) && (employee->chr.HP <= 0))
+		if (employee->isHiredInBase(base) && (employee->chr.HP <= 0))
 			E_DeleteEmployee(employee);
 	}
 	Com_DPrintf(DEBUG_CLIENT, "CP_MissionEnd - num %i\n", numberOfSoldiers);

@@ -269,7 +269,7 @@ static void TR_FillEmployees (const base_t *srcBase, const base_t *destBase)
 			E_Foreach(emplType, employee) {
 				char str[128];
 
-				if (!E_IsInBase(employee, srcBase))
+				if (!employee->isHiredInBase(srcBase))
 					continue;
 
 				/* Skip if already on transfer list. */
@@ -453,7 +453,7 @@ static void TR_Add_f (void)
 		if (!employee)
 			return;
 		if (amount > 0) {
-			if (!E_IsInBase(employee, base))
+			if (!employee->isHiredInBase(base))
 				return;
 			if (cgi->LIST_GetPointer(td.trEmployeesTmp[employee->getType()], (void*)employee))
 				return;
@@ -469,7 +469,7 @@ static void TR_Add_f (void)
 			E_Foreach(EMPL_SCIENTIST, employee) {
 				if (amount == 0)
 					break;
-				if (!E_IsInBase(employee, base))
+				if (!employee->isHiredInBase(base))
 					continue;
 				/* Already on transfer list. */
 				if (cgi->LIST_GetPointer(td.trEmployeesTmp[EMPL_SCIENTIST], (void*)employee))
@@ -490,7 +490,7 @@ static void TR_Add_f (void)
 			E_Foreach(EMPL_WORKER, employee) {
 				if (amount == 0)
 					break;
-				if (!E_IsInBase(employee, base))
+				if (!employee->isHiredInBase(base))
 					continue;
 				/* Already on transfer list. */
 				if (cgi->LIST_GetPointer(td.trEmployeesTmp[EMPL_WORKER], (void*)employee))

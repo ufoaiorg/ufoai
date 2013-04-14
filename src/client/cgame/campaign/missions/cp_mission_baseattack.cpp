@@ -214,9 +214,9 @@ void CP_BaseAttackStartMission (mission_t *mission)
 
 	soldiers = 0;
 	E_Foreach(EMPL_SOLDIER, employee) {
-		if (!E_IsInBase(employee, base))
+		if (!employee->isHiredInBase(base))
 			continue;
-		if (E_IsAwayFromBase(employee))
+		if (employee->isAwayFromBase())
 			continue;
 		soldiers++;
 	}

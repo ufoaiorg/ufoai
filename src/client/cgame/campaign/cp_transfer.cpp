@@ -211,7 +211,7 @@ transfer_t* TR_TransferStart (base_t *srcBase, transferData_t &transData)
 	 * it takes Living Quarters capacity, etc, but it cannot be used anywhere. */
 	for (i = 0; i < MAX_EMPL; i++) {		/* Employees. */
 		LIST_Foreach(transData.trEmployeesTmp[i], Employee, employee) {
-			assert(E_IsInBase(employee, srcBase));
+			assert(employee->isHiredInBase(srcBase));
 
 			transfer.hasEmployees = true;
 			E_Unassign(employee);

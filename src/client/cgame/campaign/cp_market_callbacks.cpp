@@ -387,10 +387,10 @@ static void BS_FillMarket_f (void)
 			const ugv_t *ugv = robot->getUGV();
 			const technology_t* tech = RS_GetTechByProvided(ugv->id);
 
-			if (!E_IsInBase(robot, base))
+			if (!robot->isHiredInBase(base))
 				continue;
 
-			cgi->UI_ExecuteConfunc("ui_market_add \"ugv-%d\" \"%s\" 1 0 0 %d - \"%s\"", robot->chr.ucn, _(tech->name), ugv->price, E_IsAwayFromBase(robot) ? _("UGV is away from home") : "-");
+			cgi->UI_ExecuteConfunc("ui_market_add \"ugv-%d\" \"%s\" 1 0 0 %d - \"%s\"", robot->chr.ucn, _(tech->name), ugv->price, robot->isAwayFromBase() ? _("UGV is away from home") : "-");
 		}
 		/* show buyable UGV */
 		for (int i = 0; i < cgi->csi->numUGV; i++) {

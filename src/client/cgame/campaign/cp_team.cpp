@@ -152,7 +152,7 @@ void CP_CleanupTeam (base_t *base, equipDef_t *ed)
 
 	/* Auto-assign weapons to UGVs/Robots if they have no weapon yet. */
 	E_Foreach(EMPL_ROBOT, employee) {
-		if (!E_IsInBase(employee, base))
+		if (!employee->isHiredInBase(base))
 			continue;
 		if (employee->transfer)
 			continue;
@@ -170,7 +170,7 @@ void CP_CleanupTeam (base_t *base, equipDef_t *ed)
 
 	for (container = 0; container < CID_MAX; container++) {
 		E_Foreach(EMPL_SOLDIER, employee) {
-			if (!E_IsInBase(employee, base))
+			if (!employee->isHiredInBase(base))
 				continue;
 			if (employee->transfer)
 				continue;

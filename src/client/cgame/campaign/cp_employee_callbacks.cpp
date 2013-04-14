@@ -101,7 +101,7 @@ static void E_EmployeeListScroll_f (void)
 
 	E_Foreach(employeeCategory, employee) {
 		/* don't show employees of other bases */
-		if (employee->isHired() && !E_IsInBase(employee, base))
+		if (employee->isHired() && !employee->isHiredInBase(base))
 			continue;
 		/* don't show employees being transfered to other bases */
 		if (employee->transfer)
@@ -114,7 +114,7 @@ static void E_EmployeeListScroll_f (void)
 		}
 		/* change the buttons */
 		if (employee->isHired()) {
-			if (E_IsAwayFromBase(employee))
+			if (employee->isAwayFromBase())
 				cgi->UI_ExecuteConfunc("employeedisable %i", cnt);
 			else
 				cgi->UI_ExecuteConfunc("employeefire %i", cnt);
@@ -175,7 +175,7 @@ static void E_EmployeeList_f (void)
 
 	E_Foreach(employeeCategory, e) {
 		/* don't show employees of other bases */
-		if (e->isHired() && !E_IsInBase(e, base))
+		if (e->isHired() && !e->isHiredInBase(base))
 			continue;
 		/* don't show employees being transfered to other bases */
 		if (e->transfer)

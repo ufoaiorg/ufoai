@@ -89,6 +89,15 @@ public:
 		return baseHired != NULL;
 	}
 
+	/**
+	 * @brief Checks whether the given employee is in the given base
+	 * @param[in] base The base the employee must be hired in for this function to return @c true.
+	 */
+	inline bool isHiredInBase (const base_t* const base) const {
+		assert(base != NULL);
+		return baseHired == base;
+	}
+
 	inline employeeType_t getType() const {
 		return _type;
 	}
@@ -100,6 +109,8 @@ public:
 	inline const struct ugv_s* getUGV() const {
 		return _ugv;
 	}
+
+	bool isAwayFromBase () const;
 
 	base_t *baseHired;				/**< Base where the soldier is hired it atm. */
 	bool transfer;				/**< Is this employee currently transferred? */
@@ -120,7 +131,6 @@ int E_CountUnhired(employeeType_t type);
 int E_CountUnhiredRobotsByType(const struct ugv_s *ugvType);
 int E_CountUnassigned(const base_t* const base, employeeType_t type);
 
-
 bool E_HireEmployee(base_t* base, Employee* employee);
 bool E_HireEmployeeByType(base_t* base, employeeType_t type);
 bool E_HireRobot(base_t* base, const struct ugv_s *ugvType);
@@ -130,7 +140,6 @@ int E_RefreshUnhiredEmployeeGlobalList(const employeeType_t type, const bool exc
 
 void E_Unassign(Employee *employee);
 int E_GenerateHiredEmployeesList(const base_t *base);
-bool E_IsAwayFromBase(const Employee *employee);
 
 employeeType_t E_GetEmployeeType(const char *type);
 extern const char *E_GetEmployeeString(employeeType_t type, int n);
@@ -150,7 +159,6 @@ Employee* E_GetEmployeeByTypeFromChrUCN(employeeType_t type, int uniqueCharacter
 Employee* E_GetEmployeeByMenuIndex(int num);
 void E_UnhireAllEmployees(base_t* base, employeeType_t type);
 void E_DeleteAllEmployees(base_t* base);
-bool E_IsInBase(const Employee* empl, const base_t* const base);
 
 void E_DeleteEmployeesExceedingCapacity(base_t *base);
 

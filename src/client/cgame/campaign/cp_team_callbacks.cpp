@@ -242,7 +242,7 @@ static void CP_TEAM_FillEmployeeList_f (void)
 		const aircraft_t *assignedCraft;
 		const char *tooltip;
 
-		if (!E_IsInBase(employee, base))
+		if (!employee->isHiredInBase(base))
 			continue;
 		if (employee->transfer)
 			continue;
@@ -309,11 +309,11 @@ static void CP_TEAM_FillEquipSoldierList_f (void)
 		}
 	} else {
 		E_Foreach(EMPL_SOLDIER, employee) {
-			if (!E_IsInBase(employee, base))
+			if (!employee->isHiredInBase(base))
 				continue;
 			if (employee->transfer)
 				continue;
-			if (E_IsAwayFromBase(employee))
+			if (employee->isAwayFromBase())
 				continue;
 			character_t *chr = &employee->chr;
 			CP_TEAM_SetEquipContainer(chr);
@@ -347,14 +347,14 @@ static void CP_TEAM_FillBDEFEmployeeList_f (void)
 	const int teamSize = AIR_GetTeamSize(aircraft);
 	const int maxTeamSize = aircraft->maxTeamSize;
 	E_Foreach(EMPL_SOLDIER, employee) {
-		if (!E_IsInBase(employee, base))
+		if (!employee->isHiredInBase(base))
 			continue;
 		if (employee->transfer)
 			continue;
 
 		const char *tooltip;
 		const bool isInTeam = AIR_IsEmployeeInAircraft(employee, aircraft) != NULL;
-		if (E_IsAwayFromBase(employee))
+		if (employee->isAwayFromBase())
 			tooltip = _("Employee is away from base");
 		else if (!isInTeam && teamSize >= maxTeamSize)
 			tooltip = _("No more employee can be assigned to this team");

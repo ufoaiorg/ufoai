@@ -92,10 +92,10 @@ static void HOS_UpdateMenu (void)
 	for (type = 0, j = 0, entry = 0; type < MAX_EMPL; type++) {
 		E_Foreach(type, employee) {
 			float injuryLevel = HOS_InjuryLevel(&employee->chr);
-			if (!E_IsInBase(employee, base))
+			if (!employee->isHiredInBase(base))
 				continue;
 			/* Don't show soldiers who are gone in mission */
-			if (E_IsAwayFromBase(employee))
+			if (employee->isAwayFromBase())
 				continue;
 			/* Don't show healthy employees */
 			if (employee->chr.HP >= employee->chr.maxHP && injuryLevel <= 0)
@@ -215,13 +215,13 @@ static void HOS_ListClick_f (void)
 
 	for (type = 0; type < MAX_EMPL; type++) {
 		E_Foreach(type, employee) {
-			if (!E_IsInBase(employee, base))
+			if (!employee->isHiredInBase(base))
 				continue;
 			/* only those that need healing */
 			if (employee->chr.HP >= employee->chr.maxHP && HOS_InjuryLevel(&employee->chr) <= 0)
 				continue;
 			/* Don't select soldiers that are gone to a mission */
-			if (E_IsAwayFromBase(employee))
+			if (employee->isAwayFromBase())
 				continue;
 			if (!num) {
 				currentEmployeeInHospital = employee;
