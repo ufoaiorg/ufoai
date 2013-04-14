@@ -107,7 +107,7 @@ void uiStringNode::drawTooltip (const uiNode_t *node, int x, int y) const
 		return;
 
 	const int tooltipWidth = 250;
-	static char tooltiptext[MAX_VAR * 4];
+	static char tooltiptext[256];
 	tooltiptext[0] = '\0';
 	Q_strcat(tooltiptext, text, sizeof(tooltiptext));
 	UI_DrawTooltip(tooltiptext, x, y, tooltipWidth);
