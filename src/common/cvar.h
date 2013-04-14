@@ -102,7 +102,7 @@ public:
 	virtual void onDelete (const struct cvar_s *cvar) = 0;
 };
 
-typedef struct SharedPtr<CvarListener> CvarListenerPtr;
+typedef SharedPtr<CvarListener> CvarListenerPtr;
 
 /**
  * @brief Return the first cvar of the cvar list
