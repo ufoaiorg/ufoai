@@ -1374,28 +1374,24 @@ const char *UI_GetReferenceString (const uiNode_t* const node, const char *ref)
 		return NULL;
 
 	/* its a cvar */
-	if (ref[0] == '*') {
-		const char *token;
+	if (ref[0] != '*')
+		return CL_Translate(ref);
 
-		/* get the reference and the name */
-		token = Com_MacroExpandString(ref);
-		if (token) {
-			return CL_Translate(token);
-		}
+	/* get the reference and the name */
+	const char *token = Com_MacroExpandString(ref);
+	if (token)
+		return CL_Translate(token);
 
-		/* skip the star */
-		token = ref + 1;
-		if (token[0] == '\0')
-			return NULL;
+	/* skip the star */
+	token = ref + 1;
+	if (token[0] == '\0')
+		return NULL;
 
-		if (char const* const binding = Q_strstart(token, "binding:")) {
-			return Key_GetBinding(binding, cls.state != ca_active ? KEYSPACE_UI : KEYSPACE_GAME);
-		}
-
-		Sys_Error("UI_GetReferenceString: unknown reference %s", token);
+	if (char const* const binding = Q_strstart(token, "binding:")) {
+		return Key_GetBinding(binding, cls.state != ca_active ? KEYSPACE_UI : KEYSPACE_GAME);
 	}
 
-	return CL_Translate(ref);
+	Sys_Error("UI_GetReferenceString: unknown reference %s", token);
 }
 
 float UI_GetReferenceFloat (const uiNode_t* const node, const void *ref)
