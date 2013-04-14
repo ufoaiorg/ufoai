@@ -781,13 +781,11 @@ int E_CountHiredRobotByType (const base_t* const base, const ugv_t *ugvType)
  */
 int E_CountAllHired (const base_t* const base)
 {
-	int count, i;
-
 	if (!base)
 		return 0;
 
-	count = 0;
-	for (i = 0; i < MAX_EMPL; i++) {
+	int count = 0;
+	for (int i = 0; i < MAX_EMPL; i++) {
 		const employeeType_t type = (employeeType_t)i;
 		count += E_CountHired(base, type);
 	}
@@ -834,13 +832,10 @@ int E_CountUnhiredRobotsByType (const ugv_t *ugvType)
  */
 int E_CountUnassigned (const base_t* const base, employeeType_t type)
 {
-	int count;
-
 	if (!base)
 		return 0;
 
-	count = 0;
-
+	int count = 0;
 	E_Foreach(type, employee) {
 		if (!E_IsInBase(employee, base))
 			continue;
