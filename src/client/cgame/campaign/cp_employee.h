@@ -85,6 +85,10 @@ public:
 		return _type == EMPL_SOLDIER;
 	}
 
+	inline bool isHired () const {
+		return baseHired != NULL;
+	}
+
 	inline employeeType_t getType() const {
 		return _type;
 	}
@@ -103,7 +107,6 @@ public:
 };
 
 #define E_Foreach(employeeType, var) LIST_Foreach(ccs.employees[employeeType], Employee, var)
-#define E_IsHired(employee)	((employee)->baseHired != NULL)
 
 Employee* E_CreateEmployee(employeeType_t type, const struct nation_s *nation, const struct ugv_s *ugvType);
 bool E_DeleteEmployee(Employee *employee);

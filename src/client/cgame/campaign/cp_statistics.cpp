@@ -82,7 +82,7 @@ void CP_StatsUpdate_f (void)
 	for (i = 0; i < MAX_EMPL; i++) {
 		E_Foreach(i, employee) {
 			const employeeType_t type = (employeeType_t)i;
-			if (!E_IsHired(employee))
+			if (!employee->isHired())
 				continue;
 			rank = CL_GetRankByIdx(employee->chr.score.rank);
 			costs += CP_GetSalaryBaseEmployee(salary, type) + rank->level * CP_GetSalaryRankBonusEmployee(salary, type);

@@ -831,7 +831,7 @@ void NAT_HandleBudget (const campaign_t *campaign)
 	for (i = 0; i < MAX_EMPL; i++) {
 		cost = 0;
 		E_Foreach(i, employee) {
-			if (!E_IsHired(employee))
+			if (!employee->isHired())
 				continue;
 			rank = CL_GetRankByIdx(employee->chr.score.rank);
 			cost += CP_GetSalaryBaseEmployee(salary, employee->getType())

@@ -1115,7 +1115,7 @@ static void testHospital (void)
 	for (i = 0; i < MAX_EMPL; i++) {
 		employeeType_t type = (employeeType_t)i;
 		E_Foreach(type, employee) {
-			if (!E_IsHired(employee))
+			if (!employee->isHired())
 				continue;
 			employee->chr.HP = employee->chr.maxHP - 10;
 			n++;
@@ -1128,7 +1128,7 @@ static void testHospital (void)
 	for (i = 0; i < MAX_EMPL; i++) {
 		employeeType_t type = (employeeType_t)i;
 		E_Foreach(type, employee) {
-			if (!E_IsHired(employee))
+			if (!employee->isHired())
 				continue;
 			if (employee->chr.HP == employee->chr.maxHP - 10)
 				UFO_CU_FAIL_MSG_FATAL(va("%i/%i", employee->chr.HP, employee->chr.maxHP));

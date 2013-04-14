@@ -49,7 +49,7 @@ int E_CountByType (employeeType_t type)
 Employee* E_GetUnhired (employeeType_t type)
 {
 	E_Foreach(type, employee) {
-		if (!E_IsHired(employee))
+		if (!employee->isHired())
 			return employee;
 	}
 
@@ -68,7 +68,7 @@ bool E_IsAwayFromBase (const Employee *employee)
 	assert(employee);
 
 	/* Check that employee is hired */
-	if (!E_IsHired(employee))
+	if (!employee->isHired())
 		return false;
 
 	/* Check if employee is currently transferred. */
@@ -144,7 +144,7 @@ bool E_IsInBase (const Employee* empl, const base_t* const base)
 	assert(empl != NULL);
 	assert(base != NULL);
 
-	if (!E_IsHired(empl))
+	if (!empl->isHired())
 		return false;
 	if (empl->baseHired == base)
 		return true;
@@ -260,7 +260,7 @@ employeeType_t E_GetEmployeeType (const char *type)
 Employee* E_GetUnhiredRobot (const ugv_t *ugvType)
 {
 	E_Foreach(EMPL_ROBOT, employee) {
-		if (!E_IsHired(employee)) {
+		if (!employee->isHired()) {
 			/* If no type was given we return the first ugv we find. */
 			if (!ugvType || employee->getUGV() == ugvType)
 				return employee;
@@ -288,7 +288,7 @@ int E_GetHiredEmployees (const base_t* const base, employeeType_t type, linkedLi
 	cgi->LIST_Delete(hiredEmployees);
 
 	E_Foreach(type, employee) {
-		if (!E_IsHired(employee))
+		if (!employee->isHired())
 			continue;
 		if (!employee->transfer && (!base || E_IsInBase(employee, base))) {
 			cgi->LIST_AddPointer(hiredEmployees, employee);
@@ -316,7 +316,7 @@ Employee* E_GetHiredRobot (const base_t* const base, const ugv_t *ugvType)
 	LIST_Foreach(hiredEmployees, Employee, e) {
 		if ((e->getUGV() == ugvType || !ugvType)	/* If no type was given we return the first ugv we find. */
 		 && E_IsInBase(e, base)) {		/* It has to be in the defined base. */
-			assert(E_IsHired(e));
+			assert(e->isHired());
 			employee = e;
 			break;
 		}
@@ -487,7 +487,7 @@ void E_Unassign (Employee *employee)
  */
 bool E_UnhireEmployee (Employee* employee)
 {
-	if (employee && E_IsHired(employee) && !employee->transfer) {
+	if (employee && employee->isHired() && !employee->transfer) {
 		base_t *base = employee->baseHired;
 
 		E_Unassign(employee);
@@ -716,7 +716,7 @@ int E_RefreshUnhiredEmployeeGlobalList (const employeeType_t type, const bool ex
 	 * between nations in the happyNations list */
 	E_Foreach(type, employee) {
 		/* we don't want to overwrite employees that have already been hired */
-		if (!E_IsHired(employee)) {
+		if (!employee->isHired()) {
 			E_DeleteEmployee(employee);
 			idx++;
 		}
@@ -744,7 +744,7 @@ int E_CountHired (const base_t* const base, employeeType_t type)
 	int count = 0;
 
 	E_Foreach(type, employee) {
-		if (!E_IsHired(employee))
+		if (!employee->isHired())
 			continue;
 		if (!base || E_IsInBase(employee, base))
 			count++;
@@ -763,7 +763,7 @@ int E_CountHiredRobotByType (const base_t* const base, const ugv_t *ugvType)
 	int count = 0;
 
 	E_Foreach(EMPL_ROBOT, employee) {
-		if (!E_IsHired(employee))
+		if (!employee->isHired())
 			continue;
 		if (employee->getUGV() == ugvType && (!base || E_IsInBase(employee, base)))
 			count++;
@@ -805,7 +805,7 @@ int E_CountUnhired (employeeType_t type)
 	int count = 0;
 
 	E_Foreach(type, employee) {
-		if (!E_IsHired(employee))
+		if (!employee->isHired())
 			count++;
 	}
 	return count;
@@ -821,7 +821,7 @@ int E_CountUnhiredRobotsByType (const ugv_t *ugvType)
 	int count = 0;
 
 	E_Foreach(EMPL_ROBOT, employee) {
-		if (!E_IsHired(employee) && employee->getUGV() == ugvType)
+		if (!employee->isHired() && employee->getUGV() == ugvType)
 			count++;
 	}
 	return count;

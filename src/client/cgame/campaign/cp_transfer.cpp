@@ -343,7 +343,7 @@ static void TR_ListTransfers_f (void)
 							E_GetEmployeeString(employee->getType(), 1),
 							(employee->nation) ? employee->nation->id : "(nonation)",
 							employee->chr.ucn);
-						if (!E_IsHired(employee))
+						if (!employee->isHired())
 							Com_Printf("Warning: employee^ not hired!\n");
 						if (!employee->transfer)
 							Com_Printf("Warning: employee^ not marked as being transfered!\n");

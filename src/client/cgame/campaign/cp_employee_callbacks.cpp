@@ -73,7 +73,7 @@ static void E_EmployeeSelect (Employee *employee)
 	if (selectedEmployee) {
 		const character_t *chr = &selectedEmployee->chr;
 		/* mn_employee_hired is needed to allow renaming */
-		cgi->Cvar_SetValue("mn_employee_hired", E_IsHired(selectedEmployee) ? 1 : 0);
+		cgi->Cvar_SetValue("mn_employee_hired", selectedEmployee->isHired() ? 1 : 0);
 		cgi->Cvar_SetValue("mn_ucn", chr->ucn);
 
 		/* set info cvars */
@@ -101,7 +101,7 @@ static void E_EmployeeListScroll_f (void)
 
 	E_Foreach(employeeCategory, employee) {
 		/* don't show employees of other bases */
-		if (E_IsHired(employee) && !E_IsInBase(employee, base))
+		if (employee->isHired() && !E_IsInBase(employee, base))
 			continue;
 		/* don't show employees being transfered to other bases */
 		if (employee->transfer)
@@ -113,7 +113,7 @@ static void E_EmployeeListScroll_f (void)
 			continue;
 		}
 		/* change the buttons */
-		if (E_IsHired(employee)) {
+		if (employee->isHired()) {
 			if (E_IsAwayFromBase(employee))
 				cgi->UI_ExecuteConfunc("employeedisable %i", cnt);
 			else
@@ -175,7 +175,7 @@ static void E_EmployeeList_f (void)
 
 	E_Foreach(employeeCategory, e) {
 		/* don't show employees of other bases */
-		if (E_IsHired(e) && !E_IsInBase(e, base))
+		if (e->isHired() && !E_IsInBase(e, base))
 			continue;
 		/* don't show employees being transfered to other bases */
 		if (e->transfer)
@@ -280,7 +280,7 @@ static void E_EmployeeDelete_f (void)
 	if (!employee)
 		return;
 
-	if (E_IsHired(employee)) {
+	if (employee->isHired()) {
 		if (!E_UnhireEmployee(employee)) {
 			cgi->UI_DisplayNotice(_("Could not fire employee"), 2000, "employees");
 			Com_DPrintf(DEBUG_CLIENT, "Couldn't fire employee\n");
@@ -333,7 +333,7 @@ static void E_EmployeeHire_f (void)
 	if (!employee)
 		return;
 
-	if (E_IsHired(employee)) {
+	if (employee->isHired()) {
 		if (!E_UnhireEmployee(employee)) {
 			Com_DPrintf(DEBUG_CLIENT, "Couldn't fire employee\n");
 			cgi->UI_DisplayNotice(_("Could not fire employee"), 2000, "employees");

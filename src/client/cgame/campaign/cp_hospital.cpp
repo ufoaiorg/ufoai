@@ -87,7 +87,7 @@ void HOS_HospitalRun (void)
 	for (i = 0; i < MAX_EMPL; i++) {
 		employeeType_t type = (employeeType_t)i;
 		E_Foreach(type, employee) {
-			if (!E_IsHired(employee))
+			if (!employee->isHired())
 				continue;
 			if (B_GetBuildingStatus(employee->baseHired, B_HOSPITAL))
 				HOS_HealCharacter(&(employee->chr), true);
