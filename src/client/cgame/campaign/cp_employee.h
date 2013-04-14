@@ -39,22 +39,67 @@ typedef enum {
 
 /** The definition of an employee */
 class Employee {
+private:
+	const employeeType_t _type;			/**< employee type */
+	bool _assigned;				/**< Assigned to a building - currently only used for scientists */
+	const struct nation_s *_nation;	/**< What nation this employee came from. This is NULL if the nation is unknown for some (code-related) reason. */
+	const struct ugv_s *_ugv;		/**< if this is an employee of type EMPL_ROBOT then this is a pointer to the matching ugv_t struct. For normal employees this is NULL. */
+
 public:
+	Employee (employeeType_t type, const struct nation_s *nation, const struct ugv_s *ugv) :
+			_type(type), _assigned(false), _nation(nation), _ugv(ugv), baseHired(NULL), transfer(false) {
+		OBJZERO(chr);
+	}
+
+	virtual ~Employee () {
+	}
+
 	/**
-	 * @brief Returns true if the employee is _only_ listed in the global list.
-	 * @sa E_EmployeeIsFree
+	 * @return @c true if the employee is not yet assigned to a building
 	 */
-	inline bool isUnassigned () const {
-		return !assigned;
+	inline bool isAssigned () const {
+		return _assigned;
+	}
+
+	inline void setAssigned(bool assigned) {
+		_assigned = assigned;
+	}
+
+	inline bool isPilot () const {
+		return _type == EMPL_PILOT;
+	}
+
+	inline bool isRobot () const {
+		return _type == EMPL_ROBOT;
+	}
+
+	inline bool isScientist () const {
+		return _type == EMPL_SCIENTIST;
+	}
+
+	inline bool isWorker () const {
+		return _type == EMPL_WORKER;
+	}
+
+	inline bool isSoldier () const {
+		return _type == EMPL_SOLDIER;
+	}
+
+	inline employeeType_t getType() const {
+		return _type;
+	}
+
+	inline const struct nation_s* getNation() const {
+		return _nation;
+	}
+
+	inline const struct ugv_s* getUGV() const {
+		return _ugv;
 	}
 
 	base_t *baseHired;				/**< Base where the soldier is hired it atm. */
-	bool assigned;				/**< Assigned to a building */
 	bool transfer;				/**< Is this employee currently transferred? */
 	character_t chr;				/**< employee stats */
-	employeeType_t type;			/**< employee type */
-	const struct nation_s *nation;	/**< What nation this employee came from. This is NULL if the nation is unknown for some (code-related) reason. */
-	const struct ugv_s *ugv;		/**< if this is an employee of type EMPL_ROBOT then this is a pointer to the matching ugv_t struct. For normal employees this is NULL. */
 };
 
 #define E_Foreach(employeeType, var) LIST_Foreach(ccs.employees[employeeType], Employee, var)

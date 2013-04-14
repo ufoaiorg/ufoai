@@ -66,7 +66,7 @@ static void CP_TEAM_AssignSoldierByUCN_f (void)
 	if (AIR_IsEmployeeInAircraft(employee, aircraft)) {
 		AIR_RemoveEmployee(employee, aircraft);
 	} else {
-		if (employee->type == EMPL_PILOT)
+		if (employee->isPilot())
 			AIR_SetPilot(aircraft, employee);
 		else
 			AIR_AddToAircraftTeam(aircraft, employee);
@@ -379,7 +379,7 @@ static void CP_TEAM_ChangeSkin_f (void)
 	int bodySkinIdx = atoi(cgi->Cmd_Argv(2));
 
 	Employee *soldier = E_GetEmployeeFromChrUCN(ucn);
-	if (soldier == NULL|| soldier->type != EMPL_SOLDIER) {
+	if (soldier == NULL || !soldier->isSoldier()) {
 		Com_Printf("Invalid soldier UCN: %i\n", ucn);
 		return;
 	}

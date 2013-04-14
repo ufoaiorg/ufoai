@@ -834,8 +834,8 @@ void NAT_HandleBudget (const campaign_t *campaign)
 			if (!E_IsHired(employee))
 				continue;
 			rank = CL_GetRankByIdx(employee->chr.score.rank);
-			cost += CP_GetSalaryBaseEmployee(salary, employee->type)
-					+ rank->level * CP_GetSalaryRankBonusEmployee(salary, employee->type);
+			cost += CP_GetSalaryBaseEmployee(salary, employee->getType())
+					+ rank->level * CP_GetSalaryRankBonusEmployee(salary, employee->getType());
 		}
 		totalExpenditure += cost;
 

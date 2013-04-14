@@ -110,7 +110,7 @@ static bool TR_CheckEmployee (const Employee *employee, const base_t *destbase)
 {
 	assert(employee && destbase);
 
-	switch (employee->type) {
+	switch (employee->getType()) {
 	case EMPL_SOLDIER:
 		/* Is this a soldier assigned to aircraft? */
 		if (AIR_IsEmployeeInAircraft(employee, NULL)) {
@@ -455,14 +455,14 @@ static void TR_Add_f (void)
 		if (amount > 0) {
 			if (!E_IsInBase(employee, base))
 				return;
-			if (cgi->LIST_GetPointer(td.trEmployeesTmp[employee->type], (void*)employee))
+			if (cgi->LIST_GetPointer(td.trEmployeesTmp[employee->getType()], (void*)employee))
 				return;
 			if (!TR_CheckEmployee(employee, td.transferBase))
 				return;
 
-			cgi->LIST_AddPointer(&td.trEmployeesTmp[employee->type], (void*)employee);
+			cgi->LIST_AddPointer(&td.trEmployeesTmp[employee->getType()], (void*)employee);
 		} else if (amount < 0) {
-			cgi->LIST_Remove(&td.trEmployeesTmp[employee->type], (void*)employee);
+			cgi->LIST_Remove(&td.trEmployeesTmp[employee->getType()], (void*)employee);
 		}
 	} else if (Q_streq(itemId, "scientist")) {
 		if (amount > 0) {
@@ -777,10 +777,10 @@ static void TR_List_f (void)
 			for (j = EMPL_SOLDIER; j < MAX_EMPL; j++) {
 				const employeeType_t emplType = (employeeType_t)j;
 				TR_ForeachEmployee(employee, transfer, emplType) {
-					if (employee->ugv) {
+					if (employee->getUGV()) {
 						/** @todo: add ugv listing when they're implemented */
 					} else {
-						cgi->UI_ExecuteConfunc("tr_listaddcargo %d \"%s\" \"%s\" \"%s\"", i, "tr_cargo.employee", va("ucn%i", employee->chr.ucn), va("%s %s", E_GetEmployeeString(employee->type, 1), employee->chr.name));
+						cgi->UI_ExecuteConfunc("tr_listaddcargo %d \"%s\" \"%s\" \"%s\"", i, "tr_cargo.employee", va("ucn%i", employee->chr.ucn), va("%s %s", E_GetEmployeeString(employee->getType(), 1), employee->chr.name));
 					}
 				}
 			}

@@ -86,7 +86,7 @@ void CP_StatsUpdate_f (void)
 				continue;
 			rank = CL_GetRankByIdx(employee->chr.score.rank);
 			costs += CP_GetSalaryBaseEmployee(salary, type) + rank->level * CP_GetSalaryRankBonusEmployee(salary, type);
-			hired[employee->type]++;
+			hired[employee->getType()]++;
 		}
 	}
 

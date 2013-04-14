@@ -235,7 +235,7 @@ void AIR_ListAircraft_f (void)
 		}
 		Com_Printf("\n");
 		Com_Printf("...name %s\n", aircraft->id);
-		Com_Printf("...type %i\n", aircraft->type);
+		Com_Printf("...type %i\n", aircraft->getType);
 		Com_Printf("...size %i\n", aircraft->maxTeamSize);
 		Com_Printf("...fuel %i\n", aircraft->fuel);
 		Com_Printf("...status %s\n", (aircraft->status == AIR_CRASHED) ? "crashed" : AIR_AircraftStatusToName(aircraft));
@@ -2160,7 +2160,7 @@ Employee* AIR_GetPilot (const aircraft_t *aircraft)
 	if (!e)
 		return NULL;
 
-	return E_GetEmployeeByTypeFromChrUCN(e->type, e->chr.ucn);
+	return E_GetEmployeeByTypeFromChrUCN(e->getType(), e->chr.ucn);
 }
 
 /**
@@ -2949,7 +2949,7 @@ bool AIR_RemoveEmployee (Employee *employee, aircraft_t *aircraft)
 
 	if (AIR_GetPilot(aircraft) == employee) {
 #ifdef DEBUG
-		if (employee->type != EMPL_PILOT)
+		if (employee->getType() != EMPL_PILOT)
 			Com_Printf("Warning: pilot of aircraf %i is not a qualified pilot (ucn: %i)\n", aircraft->idx, employee->chr.ucn);
 #endif
 		return AIR_SetPilot(aircraft, NULL);
@@ -2982,7 +2982,7 @@ const aircraft_t *AIR_IsEmployeeInAircraft (const Employee *employee, const airc
 		return NULL;
 	}
 
-	if (employee->type == EMPL_PILOT) {
+	if (employee->isPilot()) {
 		if (AIR_GetPilot(aircraft) == employee)
 			return aircraft;
 		return NULL;

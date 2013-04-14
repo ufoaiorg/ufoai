@@ -328,7 +328,7 @@ static void BS_ShowInfo_f (void)
 		}
 
 		/** @todo show specialized info about PHLANX UGVs */
-		UP_UGVDescription(robot->ugv);
+		UP_UGVDescription(robot->getUGV());
 		return;
 	}
 
@@ -384,7 +384,7 @@ static void BS_FillMarket_f (void)
 	case FILTER_UGVITEM:
 		/* show own UGV */
 		E_Foreach(EMPL_ROBOT, robot) {
-			const ugv_t *ugv = robot->ugv;
+			const ugv_t *ugv = robot->getUGV();
 			const technology_t* tech = RS_GetTechByProvided(ugv->id);
 
 			if (!E_IsInBase(robot, base))

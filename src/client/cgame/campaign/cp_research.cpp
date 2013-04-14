@@ -688,7 +688,7 @@ void RS_AssignScientist (technology_t* tech, base_t *base, Employee *employee)
 	tech->scientists++;
 	tech->base = base;
 	CAP_AddCurrent(base, CAP_LABSPACE, 1);
-	employee->assigned = true;
+	employee->setAssigned(true);
 	tech->statusResearch = RS_RUNNING;
 }
 
@@ -719,7 +719,7 @@ void RS_RemoveScientist (technology_t* tech, Employee *employee)
 	tech->scientists--;
 	/* Update capacity. */
 	CAP_AddCurrent(tech->base, CAP_LABSPACE, -1);
-	employee->assigned = false;
+	employee->setAssigned(false);
 
 	assert(tech->scientists >= 0);
 

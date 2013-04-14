@@ -356,9 +356,9 @@ bool BS_SellUGV (Employee *robot)
 
 	if (!robot)
 		cgi->Com_Error(ERR_DROP, "Selling NULL UGV!");
-	if (!robot->ugv)
+	if (!robot->getUGV())
 		cgi->Com_Error(ERR_DROP, "Selling invalid UGV with UCN: %i", robot->chr.ucn);
-	ugv = robot->ugv;
+	ugv = robot->getUGV();
 	base = robot->baseHired;
 
 	/* Check if we have a weapon for this ugv in the market to sell it. */

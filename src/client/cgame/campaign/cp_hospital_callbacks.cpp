@@ -109,7 +109,7 @@ static void HOS_UpdateMenu (void)
 					const rank_t *rankPtr = CL_GetRankByIdx(employee->chr.score.rank);
 					Q_strncpyz(rank, _(rankPtr->name), sizeof(rank));
 				} else
-					Q_strncpyz(rank, E_GetEmployeeString(employee->type, 1), sizeof(rank));
+					Q_strncpyz(rank, E_GetEmployeeString(employee->getType(), 1), sizeof(rank));
 				Com_DPrintf(DEBUG_CLIENT, "%s ucn: %i entry: %i\n", name, employee->chr.ucn, entry);
 				/* If the employee is seriously wounded (HP <= 50% maxHP), make him red. */
 				if (employee->chr.HP <= (int) (employee->chr.maxHP * 0.5) || injuryLevel >= 0.5)

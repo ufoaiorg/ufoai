@@ -76,8 +76,7 @@ bool E_IsAwayFromBase (const Employee *employee)
 		return true;
 
 	/* for now only soldiers, ugvs and pilots can be assigned to an aircraft */
-	if (employee->type != EMPL_SOLDIER && employee->type != EMPL_ROBOT
-	 && employee->type != EMPL_PILOT)
+	if (!employee->isSoldier() && !employee->isRobot() && !employee->isPilot())
 		return false;
 
 	base = employee->baseHired;
@@ -167,7 +166,7 @@ bool E_MoveIntoNewBase (Employee *employee, base_t *newBase)
 		assert(oldBase);
 		employee->baseHired = newBase;
 		/* Remove employee from corresponding capacity */
-		switch (employee->type) {
+		switch (employee->getType()) {
 		case EMPL_PILOT:
 		case EMPL_WORKER:
 		case EMPL_SCIENTIST:
@@ -263,7 +262,7 @@ Employee* E_GetUnhiredRobot (const ugv_t *ugvType)
 	E_Foreach(EMPL_ROBOT, employee) {
 		if (!E_IsHired(employee)) {
 			/* If no type was given we return the first ugv we find. */
-			if (!ugvType || employee->ugv == ugvType)
+			if (!ugvType || employee->getUGV() == ugvType)
 				return employee;
 		}
 	}
@@ -315,7 +314,7 @@ Employee* E_GetHiredRobot (const base_t* const base, const ugv_t *ugvType)
 
 	employee = NULL;
 	LIST_Foreach(hiredEmployees, Employee, e) {
-		if ((e->ugv == ugvType || !ugvType)	/* If no type was given we return the first ugv we find. */
+		if ((e->getUGV() == ugvType || !ugvType)	/* If no type was given we return the first ugv we find. */
 		 && E_IsInBase(e, base)) {		/* It has to be in the defined base. */
 			assert(E_IsHired(e));
 			employee = e;
@@ -344,7 +343,7 @@ Employee* E_GetAssignedEmployee (const base_t* const base, const employeeType_t 
 	E_Foreach(type, employee) {
 		if (!E_IsInBase(employee, base))
 			continue;
-		if (!employee->isUnassigned())
+		if (employee->isAssigned())
 			return employee;
 	}
 	return NULL;
@@ -363,7 +362,7 @@ Employee* E_GetUnassignedEmployee (const base_t* const base, const employeeType_
 	E_Foreach(type, employee) {
 		if (!E_IsInBase(employee, base))
 			continue;
-		if (employee->isUnassigned())
+		if (!employee->isAssigned())
 			return employee;
 	}
 	return NULL;
@@ -388,13 +387,14 @@ bool E_HireEmployee (base_t* base, Employee* employee)
 		/* Now uses quarter space. */
 		employee->baseHired = base;
 		/* Update other capacities */
-		switch (employee->type) {
+		switch (employee->getType()) {
 		case EMPL_WORKER:
 			CAP_AddCurrent(base, CAP_EMPLOYEES, 1);
 			PR_UpdateProductionCap(base);
 			break;
 		case EMPL_PILOT:
 			AIR_AutoAddPilotToAircraft(base, employee);
+			/* fall through */
 		case EMPL_SCIENTIST:
 		case EMPL_SOLDIER:
 			CAP_AddCurrent(base, CAP_EMPLOYEES, 1);
@@ -447,12 +447,12 @@ void E_Unassign (Employee *employee)
 	/* get the base where the employee is hired in */
 	base_t *base = employee->baseHired;
 	if (!base)
-		cgi->Com_Error(ERR_DROP, "Employee (type: %i) is not hired", employee->type);
+		cgi->Com_Error(ERR_DROP, "Employee (type: %i) is not hired", employee->getType());
 
 	/* Remove employee from building/tech/production/aircraft). */
-	switch (employee->type) {
+	switch (employee->getType()) {
 	case EMPL_SCIENTIST:
-		if (!employee->isUnassigned())
+		if (employee->isAssigned())
 			RS_RemoveFiredScientist(base, employee);
 		break;
 	case EMPL_ROBOT:
@@ -495,7 +495,7 @@ bool E_UnhireEmployee (Employee* employee)
 		employee->baseHired = NULL;
 
 		/* Remove employee from corresponding capacity */
-		switch (employee->type) {
+		switch (employee->getType()) {
 		case EMPL_PILOT:
 		case EMPL_WORKER:
 		case EMPL_SCIENTIST:
@@ -544,7 +544,6 @@ void E_UnhireAllEmployees (base_t* base, employeeType_t type)
  */
 Employee* E_CreateEmployee (employeeType_t type, const nation_t *nation, const ugv_t *ugvType)
 {
-	Employee employee;
 	const char *teamID;
 	char teamDefName[MAX_VAR];
 	const char *rank;
@@ -552,13 +551,7 @@ Employee* E_CreateEmployee (employeeType_t type, const nation_t *nation, const u
 	if (type >= MAX_EMPL)
 		return NULL;
 
-	OBJZERO(employee);
-
-	employee.baseHired = NULL;
-	employee.assigned = false;
-	employee.type = type;
-	employee.nation = nation;
-	employee.ugv = ugvType;
+	Employee employee(type, nation, ugvType);
 
 	teamID = GAME_GetTeamDef();
 
@@ -619,7 +612,7 @@ bool E_DeleteEmployee (Employee *employee)
 	if (!employee)
 		return false;
 
-	type = employee->type;
+	type = employee->getType();
 
 	/* Fire the employee. This will also:
 	 * 1) remove him from buildings&work
@@ -772,7 +765,7 @@ int E_CountHiredRobotByType (const base_t* const base, const ugv_t *ugvType)
 	E_Foreach(EMPL_ROBOT, employee) {
 		if (!E_IsHired(employee))
 			continue;
-		if (employee->ugv == ugvType && (!base || E_IsInBase(employee, base)))
+		if (employee->getUGV() == ugvType && (!base || E_IsInBase(employee, base)))
 			count++;
 	}
 	return count;
@@ -828,7 +821,7 @@ int E_CountUnhiredRobotsByType (const ugv_t *ugvType)
 	int count = 0;
 
 	E_Foreach(EMPL_ROBOT, employee) {
-		if (!E_IsHired(employee) && employee->ugv == ugvType)
+		if (!E_IsHired(employee) && employee->getUGV() == ugvType)
 			count++;
 	}
 	return count;
@@ -851,7 +844,7 @@ int E_CountUnassigned (const base_t* const base, employeeType_t type)
 	E_Foreach(type, employee) {
 		if (!E_IsInBase(employee, base))
 			continue;
-		if (employee->isUnassigned())
+		if (!employee->isAssigned())
 			count++;
 	}
 	return count;
@@ -902,10 +895,10 @@ static void E_ListHired_f (void)
 	for (i = 0; i < MAX_EMPL; i++) {
 		const employeeType_t emplType = (employeeType_t)i;
 		E_Foreach(emplType, employee) {
-			Com_Printf("Employee: %s (ucn: %i) %s at %s\n", E_GetEmployeeString(employee->type, 1), employee->chr.ucn,
+			Com_Printf("Employee: %s (ucn: %i) %s at %s\n", E_GetEmployeeString(employee->getType(), 1), employee->chr.ucn,
 					employee->chr.name, employee->baseHired->name);
-			if (employee->type != emplType)
-				Com_Printf("Warning: EmployeeType mismatch: %i != %i\n", emplType, employee->type);
+			if (employee->getType() != emplType)
+				Com_Printf("Warning: EmployeeType mismatch: %i != %i\n", emplType, employee->getType());
 		}
 	}
 }
@@ -997,14 +990,14 @@ bool E_SaveXML (xmlNode_t *p)
 			/** @note e->transfer is not saved here because it'll be restored via TR_Load. */
 			if (employee->baseHired)
 				cgi->XML_AddInt(ssnode, SAVE_EMPLOYEE_BASEHIRED, employee->baseHired->idx);
-			if (employee->assigned)
-				cgi->XML_AddBool(ssnode, SAVE_EMPLOYEE_ASSIGNED, employee->assigned);
+			if (employee->isAssigned())
+				cgi->XML_AddBool(ssnode, SAVE_EMPLOYEE_ASSIGNED, employee->isAssigned());
 			/* Store the nations identifier string. */
-			assert(employee->nation);
-			cgi->XML_AddString(ssnode, SAVE_EMPLOYEE_NATION, employee->nation->id);
+			assert(employee->getNation());
+			cgi->XML_AddString(ssnode, SAVE_EMPLOYEE_NATION, employee->getNation()->id);
 			/* Store the ugv-type identifier string. (Only exists for EMPL_ROBOT). */
-			if (employee->ugv)
-				cgi->XML_AddString(ssnode, SAVE_EMPLOYEE_UGV, employee->ugv->id);
+			if (employee->getUGV())
+				cgi->XML_AddString(ssnode, SAVE_EMPLOYEE_UGV, employee->getUGV()->id);
 			/* Character Data */
 			chrNode = cgi->XML_AddNode(ssnode, SAVE_EMPLOYEE_CHR);
 			GAME_SaveCharacter(chrNode, &employee->chr);
@@ -1041,26 +1034,24 @@ bool E_LoadXML (xmlNode_t *p)
 				ssnode = cgi->XML_GetNextNode(ssnode, snode, SAVE_EMPLOYEE_EMPLOYEE)) {
 			int baseIDX;
 			xmlNode_t *chrNode;
-			Employee e;
 
-			OBJZERO(e);
-			/** @note e->transfer is restored in cl_transfer.c:TR_Load */
-			e.type = emplType;
-			/* base */
-			assert(B_AtLeastOneExists());	/* Just in case the order is ever changed. */
-			baseIDX = cgi->XML_GetInt(ssnode, SAVE_EMPLOYEE_BASEHIRED, -1);
-			e.baseHired = B_GetBaseByIDX(baseIDX);
-			/* assigned to a building? */
-			e.assigned = cgi->XML_GetBool(ssnode, SAVE_EMPLOYEE_ASSIGNED, false);
 			/* nation */
-			e.nation = NAT_GetNationByID(cgi->XML_GetString(ssnode, SAVE_EMPLOYEE_NATION));
-			if (!e.nation) {
+			const nation_t *nation = NAT_GetNationByID(cgi->XML_GetString(ssnode, SAVE_EMPLOYEE_NATION));
+			if (!nation) {
 				Com_Printf("No nation defined for employee\n");
 				success = false;
 				break;
 			}
 			/* UGV-Type */
-			e.ugv = cgi->Com_GetUGVByIDSilent(cgi->XML_GetString(ssnode, SAVE_EMPLOYEE_UGV));
+			const ugv_t *ugv = cgi->Com_GetUGVByIDSilent(cgi->XML_GetString(ssnode, SAVE_EMPLOYEE_UGV));
+			Employee e(emplType, nation, ugv);
+			/** @note e->transfer is restored in cl_transfer.c:TR_Load */
+			/* base */
+			assert(B_AtLeastOneExists());	/* Just in case the order is ever changed. */
+			baseIDX = cgi->XML_GetInt(ssnode, SAVE_EMPLOYEE_BASEHIRED, -1);
+			e.baseHired = B_GetBaseByIDX(baseIDX);
+			/* assigned to a building? */
+			e.setAssigned(cgi->XML_GetBool(ssnode, SAVE_EMPLOYEE_ASSIGNED, false));
 			/* Character Data */
 			chrNode = cgi->XML_GetNode(ssnode, SAVE_EMPLOYEE_CHR);
 			if (!chrNode) {
