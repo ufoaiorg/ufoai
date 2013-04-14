@@ -417,30 +417,27 @@ bool E_HireRobot (base_t* base, const ugv_t *ugvType)
  * @brief Removes the inventory of the employee and also removes him from buildings
  * @param[in,out] employee Employee to unassign from aircraft/buildings
  */
-void E_Unassign (Employee *employee)
+base_t *Employee::unassign ()
 {
-	if (!employee)
-		return;
-
 	/* get the base where the employee is hired in */
-	base_t *base = employee->baseHired;
+	base_t *base = baseHired;
 	if (!base)
-		cgi->Com_Error(ERR_DROP, "Employee (type: %i) is not hired", employee->getType());
+		return base;
 
 	/* Remove employee from building/tech/production/aircraft). */
-	switch (employee->getType()) {
+	switch (_type) {
 	case EMPL_SCIENTIST:
-		if (employee->isAssigned())
-			RS_RemoveFiredScientist(base, employee);
+		if (isAssigned())
+			RS_RemoveFiredScientist(base, this);
 		break;
 	case EMPL_ROBOT:
 	case EMPL_SOLDIER:
 		/* Remove soldier from aircraft/team if he was assigned to one. */
-		if (AIR_IsEmployeeInAircraft(employee, NULL))
-			AIR_RemoveEmployee(employee, NULL);
+		if (AIR_IsEmployeeInAircraft(this, NULL))
+			AIR_RemoveEmployee(this, NULL);
 		break;
 	case EMPL_PILOT:
-		AIR_RemovePilotFromAssignedAircraft(base, employee);
+		AIR_RemovePilotFromAssignedAircraft(base, this);
 		break;
 	case EMPL_WORKER:
 		/* Update current capacity and production times if worker is being counted there. */
@@ -451,7 +448,12 @@ void E_Unassign (Employee *employee)
 	}
 
 	/* Destroy the inventory of the employee (carried items will remain in base->storage) */
-	cgi->INV_DestroyInventory(&employee->chr.inv);
+	cgi->INV_DestroyInventory(&chr.inv);
+
+	/* Set all employee-tags to 'unhired'. */
+	baseHired = NULL;
+
+	return base;
 }
 
 /**
@@ -463,34 +465,31 @@ void E_Unassign (Employee *employee)
  * @sa CL_RemoveSoldierFromAircraft
  * @todo handle EMPL_ROBOT capacities here?
  */
-bool E_UnhireEmployee (Employee* employee)
+bool Employee::unhire ()
 {
-	if (employee && employee->isHired() && !employee->transfer) {
-		base_t *base = employee->baseHired;
-
-		E_Unassign(employee);
-		/* Set all employee-tags to 'unhired'. */
-		employee->baseHired = NULL;
-
-		/* Remove employee from corresponding capacity */
-		switch (employee->getType()) {
-		case EMPL_PILOT:
-		case EMPL_WORKER:
-		case EMPL_SCIENTIST:
-		case EMPL_SOLDIER:
-			CAP_AddCurrent(base, CAP_EMPLOYEES, -1);
-			break;
-		case EMPL_ROBOT:
-			CAP_AddCurrent(base, CAP_ITEMS, -UGV_SIZE);
-			break;
-		case MAX_EMPL:
-			break;
-		}
-
-		return true;
-	} else
+	if (!isHired() || transfer) {
 		Com_DPrintf(DEBUG_CLIENT, "Could not fire employee\n");
-	return false;
+		return false;
+	}
+
+	base_t *base = unassign();
+
+	/* Remove employee from corresponding capacity */
+	switch (_type) {
+	case EMPL_PILOT:
+	case EMPL_WORKER:
+	case EMPL_SCIENTIST:
+	case EMPL_SOLDIER:
+		CAP_AddCurrent(base, CAP_EMPLOYEES, -1);
+		break;
+	case EMPL_ROBOT:
+		CAP_AddCurrent(base, CAP_ITEMS, -UGV_SIZE);
+		break;
+	case MAX_EMPL:
+		break;
+	}
+
+	return true;
 }
 
 /**
@@ -508,7 +507,7 @@ void E_UnhireAllEmployees (base_t* base, employeeType_t type)
 	E_Foreach(type, employee) {
 		if (!employee->isHiredInBase(base))
 			continue;
-		E_UnhireEmployee(employee);
+		employee->unhire();
 	}
 }
 
@@ -599,7 +598,7 @@ bool E_DeleteEmployee (Employee *employee)
 	if (employee->baseHired) {
 		/* make sure that this employee is really unhired */
 		employee->transfer = false;
-		E_UnhireEmployee(employee);
+		employee->unhire();
 	}
 
 	/* Remove the employee from the global list. */

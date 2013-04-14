@@ -366,7 +366,7 @@ bool BS_SellUGV (Employee *robot)
 	if (!ugvWeapon)
 		cgi->Com_Error(ERR_DROP, "BS_BuyItem_f: Could not get wepaon '%s' for ugv/tank '%s'.", ugv->weapon, ugv->id);
 
-	if (!E_UnhireEmployee(robot)) {
+	if (!robot->unhire()) {
 		/** @todo message - Couldn't fire employee. */
 		Com_DPrintf(DEBUG_CLIENT, "Couldn't sell/fire robot/ugv.\n");
 		return false;

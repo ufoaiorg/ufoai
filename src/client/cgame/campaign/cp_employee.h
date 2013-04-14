@@ -111,6 +111,8 @@ public:
 	}
 
 	bool isAwayFromBase () const;
+	base_t *unassign ();
+	bool unhire ();
 
 	base_t *baseHired;				/**< Base where the soldier is hired it atm. */
 	bool transfer;				/**< Is this employee currently transferred? */
@@ -138,7 +140,7 @@ bool E_UnhireEmployee(Employee* employee);
 
 int E_RefreshUnhiredEmployeeGlobalList(const employeeType_t type, const bool excludeUnhappyNations);
 
-void E_Unassign(Employee *employee);
+base_t *E_Unassign(Employee *employee);
 int E_GenerateHiredEmployeesList(const base_t *base);
 
 employeeType_t E_GetEmployeeType(const char *type);

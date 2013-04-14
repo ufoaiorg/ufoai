@@ -88,7 +88,7 @@ static void TR_EmptyTransferCargo (base_t *destination, transfer_t *transfer, bo
 				TR_ForeachEmployee(employee, transfer, type) {
 					employee->baseHired = transfer->srcBase;	/* Restore back the original baseid. */
 					employee->transfer = false;
-					E_UnhireEmployee(employee);
+					employee->unhire();
 				}
 			}
 		} else {
@@ -98,7 +98,7 @@ static void TR_EmptyTransferCargo (base_t *destination, transfer_t *transfer, bo
 				TR_ForeachEmployee(employee, transfer, type) {
 					employee->baseHired = transfer->srcBase;	/* Restore back the original baseid. */
 					employee->transfer = false;
-					E_UnhireEmployee(employee);
+					employee->unhire();
 					E_HireEmployee(destination, employee);
 				}
 			}
@@ -214,9 +214,8 @@ transfer_t* TR_TransferStart (base_t *srcBase, transferData_t &transData)
 			assert(employee->isHiredInBase(srcBase));
 
 			transfer.hasEmployees = true;
-			E_Unassign(employee);
+			employee->unassign();
 			cgi->LIST_AddPointer(&transfer.employees[i], (void*) employee);
-			employee->baseHired = NULL;
 			employee->transfer = true;
 			count++;
 		}

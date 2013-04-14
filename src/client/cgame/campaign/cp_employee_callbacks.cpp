@@ -281,7 +281,7 @@ static void E_EmployeeDelete_f (void)
 		return;
 
 	if (employee->isHired()) {
-		if (!E_UnhireEmployee(employee)) {
+		if (!employee->unhire()) {
 			cgi->UI_DisplayNotice(_("Could not fire employee"), 2000, "employees");
 			Com_DPrintf(DEBUG_CLIENT, "Couldn't fire employee\n");
 			return;
@@ -334,7 +334,7 @@ static void E_EmployeeHire_f (void)
 		return;
 
 	if (employee->isHired()) {
-		if (!E_UnhireEmployee(employee)) {
+		if (!employee->unhire()) {
 			Com_DPrintf(DEBUG_CLIENT, "Couldn't fire employee\n");
 			cgi->UI_DisplayNotice(_("Could not fire employee"), 2000, "employees");
 		} else {
