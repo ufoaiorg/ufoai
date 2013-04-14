@@ -43,7 +43,7 @@ static void CP_TEAM_AssignSoldierByUCN_f (void)
 	aircraft_t *aircraft;
 	int ucn;
 	const employeeType_t employeeType = EMPL_SOLDIER;
-	employee_t *employee;
+	Employee *employee;
 
 	/* check syntax */
 	if (cgi->Cmd_Argc() < 1 ) {
@@ -97,7 +97,7 @@ static void CP_TEAM_SetEquipContainer (character_t *chr)
  */
 static void CP_TEAM_SelectActorByUCN_f (void)
 {
-	employee_t *employee;
+	Employee *employee;
 	character_t *chr;
 	int ucn;
 	base_t *base = B_GetCurrentSelectedBase();
@@ -135,7 +135,7 @@ static void CP_TEAM_SelectActorByUCN_f (void)
  */
 static void CP_TEAM_DeEquipActor_f (void)
 {
-	employee_t *employee;
+	Employee *employee;
 	character_t *chr;
 	int ucn;
 	base_t *base = B_GetCurrentSelectedBase();
@@ -196,7 +196,7 @@ static void CP_TeamListDebug_f (void)
 
 	Com_Printf("%i members in the current team", AIR_GetTeamSize(aircraft));
 	for (l = aircraft->acTeam; l != NULL; l = l->next) {
-		const employee_t *employee = (const employee_t *)l->data;
+		const Employee *employee = (const Employee *)l->data;
 		Com_Printf("ucn %i - name: %s\n", employee->chr.ucn, employee->chr.name);
 	}
 }
@@ -301,7 +301,7 @@ static void CP_TEAM_FillEquipSoldierList_f (void)
 	int count = 0;
 	cgi->UI_ExecuteConfunc("equipment_soldierlist_clear");
 	if (aircraft) {
-		LIST_Foreach(aircraft->acTeam, employee_t, employee) {
+		LIST_Foreach(aircraft->acTeam, Employee, employee) {
 			character_t *chr = &employee->chr;
 			CP_TEAM_SetEquipContainer(chr);
 			cgi->UI_ExecuteConfunc("equipment_soldierlist_add %d \"%s\"", chr->ucn, chr->name);
@@ -378,7 +378,7 @@ static void CP_TEAM_ChangeSkin_f (void)
 	int ucn = atoi(cgi->Cmd_Argv(1));
 	int bodySkinIdx = atoi(cgi->Cmd_Argv(2));
 
-	employee_t *soldier = E_GetEmployeeFromChrUCN(ucn);
+	Employee *soldier = E_GetEmployeeFromChrUCN(ucn);
 	if (soldier == NULL|| soldier->type != EMPL_SOLDIER) {
 		Com_Printf("Invalid soldier UCN: %i\n", ucn);
 		return;

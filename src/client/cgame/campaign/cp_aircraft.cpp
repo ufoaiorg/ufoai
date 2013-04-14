@@ -241,7 +241,7 @@ void AIR_ListAircraft_f (void)
 		Com_Printf("...status %s\n", (aircraft->status == AIR_CRASHED) ? "crashed" : AIR_AircraftStatusToName(aircraft));
 		Com_Printf("...pos %.0f:%.0f\n", aircraft->pos[0], aircraft->pos[1]);
 		Com_Printf("...team: (%i/%i)\n", cgi->LIST_Count(aircraft->acTeam), aircraft->maxTeamSize);
-		LIST_Foreach(aircraft->acTeam, employee_t, employee) {
+		LIST_Foreach(aircraft->acTeam, Employee, employee) {
 			character_t *chr = &employee->chr;
 			Com_Printf(".........name: %s (ucn: %i)\n", chr->name, chr->ucn);
 		}
@@ -816,7 +816,7 @@ static int AIR_GetStorageRoom (const aircraft_t *aircraft)
 {
 	int size = 0;
 
-	LIST_Foreach(aircraft->acTeam, employee_t, employee) {
+	LIST_Foreach(aircraft->acTeam, Employee, employee) {
 		const Container *cont = NULL;
 		while ((cont = employee->chr.inv.getNextCont(cont, true))) {
 			Item *item = NULL;
@@ -915,7 +915,7 @@ bool AIR_MoveAircraftIntoNewHomebase (aircraft_t *aircraft, base_t *base)
 	/* Transfer employees */
 	E_MoveIntoNewBase(AIR_GetPilot(aircraft), base);
 
-	LIST_Foreach(aircraft->acTeam, employee_t, employee) {
+	LIST_Foreach(aircraft->acTeam, Employee, employee) {
 		E_MoveIntoNewBase(employee, base);
 		/* Transfer items carried by soldiers from oldBase to base */
 		AIR_TransferItemsCarriedByCharacterToBase(&employee->chr, oldBase, base);
@@ -1016,11 +1016,11 @@ void AIR_DeleteAircraft (aircraft_t *aircraft)
  */
 void AIR_DestroyAircraft (aircraft_t *aircraft, bool killPilot)
 {
-	employee_t *pilot;
+	Employee *pilot;
 
 	assert(aircraft);
 
-	LIST_Foreach(aircraft->acTeam, employee_t, employee) {
+	LIST_Foreach(aircraft->acTeam, Employee, employee) {
 		E_RemoveInventoryFromStorage(employee);
 		E_DeleteEmployee(employee);
 	}
@@ -2090,7 +2090,7 @@ void AIR_ResetAircraftTeam (aircraft_t *aircraft)
  * @param[in] employee The employee to add to the aircraft.
  * @note this is responsible for adding soldiers to a team in dropship
  */
-bool AIR_AddToAircraftTeam (aircraft_t *aircraft, employee_t* employee)
+bool AIR_AddToAircraftTeam (aircraft_t *aircraft, Employee* employee)
 {
 	if (!employee)
 		return false;
@@ -2112,7 +2112,7 @@ bool AIR_AddToAircraftTeam (aircraft_t *aircraft, employee_t* employee)
  * @param[in] employee Employee to check.
  * @return @c true if the given employee is assigned to the given aircraft.
  */
-bool AIR_IsInAircraftTeam (const aircraft_t *aircraft, const employee_t *employee)
+bool AIR_IsInAircraftTeam (const aircraft_t *aircraft, const Employee *employee)
 {
 	assert(aircraft);
 	assert(employee);
@@ -2138,7 +2138,7 @@ int AIR_GetTeamSize (const aircraft_t *aircraft)
  * assigned), @c false if there was already a pilot assigned and we tried
  * to assign a new one (@c pilot isn't @c NULL).
  */
-bool AIR_SetPilot (aircraft_t *aircraft, employee_t *pilot)
+bool AIR_SetPilot (aircraft_t *aircraft, Employee *pilot)
 {
 	if (aircraft->pilot == NULL || pilot == NULL) {
 		aircraft->pilot = pilot;
@@ -2153,9 +2153,9 @@ bool AIR_SetPilot (aircraft_t *aircraft, employee_t *pilot)
  * @param[in] aircraft Pointer to the aircraft
  * @return @c NULL if there is no pilot assigned to this craft, the employee pointer otherwise
  */
-employee_t* AIR_GetPilot (const aircraft_t *aircraft)
+Employee* AIR_GetPilot (const aircraft_t *aircraft)
 {
-	const employee_t *e = aircraft->pilot;
+	const Employee *e = aircraft->pilot;
 
 	if (!e)
 		return NULL;
@@ -2216,7 +2216,7 @@ bool AIR_PilotSurvivedCrash (const aircraft_t* aircraft)
  * @param[in] base Which base has aircraft to add the pilot to.
  * @param[in] pilot Which pilot to add.
  */
-void AIR_AutoAddPilotToAircraft (const base_t* base, employee_t* pilot)
+void AIR_AutoAddPilotToAircraft (const base_t* base, Employee* pilot)
 {
 	AIR_ForeachFromBase(aircraft, base) {
 		if (AIR_SetPilot(aircraft, pilot))
@@ -2230,7 +2230,7 @@ void AIR_AutoAddPilotToAircraft (const base_t* base, employee_t* pilot)
  * @param[in] base Which base has the aircraft to search for the employee in.
  * @param[in] pilot Which pilot to search for.
  */
-void AIR_RemovePilotFromAssignedAircraft (const base_t* base, const employee_t* pilot)
+void AIR_RemovePilotFromAssignedAircraft (const base_t* base, const Employee* pilot)
 {
 	AIR_ForeachFromBase(aircraft, base) {
 		if (AIR_GetPilot(aircraft) == pilot) {
@@ -2332,7 +2332,7 @@ static bool AIR_SaveAircraftXML (xmlNode_t *p, const aircraft_t* const aircraft,
 	xmlNode_t *node;
 	xmlNode_t *subnode;
 	int l;
-	const employee_t *pilot;
+	const Employee *pilot;
 
 	cgi->Com_RegisterConstList(saveAircraftConstants);
 
@@ -2411,7 +2411,7 @@ static bool AIR_SaveAircraftXML (xmlNode_t *p, const aircraft_t* const aircraft,
 	cgi->XML_AddInt(node, SAVE_AIRCRAFT_HANGAR, aircraft->hangar);
 
 	subnode = cgi->XML_AddNode(node, SAVE_AIRCRAFT_AIRCRAFTTEAM);
-	LIST_Foreach(aircraft->acTeam, employee_t, employee) {
+	LIST_Foreach(aircraft->acTeam, Employee, employee) {
 		xmlNode_t *ssnode = cgi->XML_AddNode(subnode, SAVE_AIRCRAFT_MEMBER);
 		cgi->XML_AddInt(ssnode, SAVE_AIRCRAFT_TEAM_UCN, employee->chr.ucn);
 	}
@@ -2926,7 +2926,7 @@ int AIR_CalculateHangarStorage (const aircraft_t *aircraftTemplate, const base_t
  * Use @c NULL to remove the soldier from any aircraft.
  * @sa AIR_AddEmployee
  */
-bool AIR_RemoveEmployee (employee_t *employee, aircraft_t *aircraft)
+bool AIR_RemoveEmployee (Employee *employee, aircraft_t *aircraft)
 {
 	if (!employee)
 		return false;
@@ -2965,7 +2965,7 @@ bool AIR_RemoveEmployee (employee_t *employee, aircraft_t *aircraft)
  * check if the soldier is in @b any aircraft.
  * @return true if the soldier was found in the aircraft otherwise false.
  */
-const aircraft_t *AIR_IsEmployeeInAircraft (const employee_t *employee, const aircraft_t* aircraft)
+const aircraft_t *AIR_IsEmployeeInAircraft (const Employee *employee, const aircraft_t* aircraft)
 {
 	if (!employee)
 		return NULL;
@@ -3001,7 +3001,7 @@ const aircraft_t *AIR_IsEmployeeInAircraft (const employee_t *employee, const ai
  */
 void AIR_RemoveEmployees (aircraft_t &aircraft)
 {
-	LIST_Foreach(aircraft.acTeam, employee_t, employee) {
+	LIST_Foreach(aircraft.acTeam, Employee, employee) {
 		/* use global aircraft index here */
 		AIR_RemoveEmployee(employee, &aircraft);
 	}
@@ -3026,7 +3026,7 @@ void AIR_MoveEmployeeInventoryIntoStorage (const aircraft_t &aircraft, equipDef_
 		return;
 	}
 
-	LIST_Foreach(aircraft.acTeam, employee_t, employee) {
+	LIST_Foreach(aircraft.acTeam, Employee, employee) {
 		const Container *cont = NULL;
 		while ((cont = employee->chr.inv.getNextCont(cont, true))) {
 			Item *ic = cont->getNextItem(NULL);
@@ -3055,7 +3055,7 @@ void AIR_MoveEmployeeInventoryIntoStorage (const aircraft_t &aircraft, equipDef_
  * @sa AIR_RemoveEmployee
  * @sa AIR_AddToAircraftTeam
  */
-bool AIR_AddEmployee (employee_t *employee, aircraft_t *aircraft)
+bool AIR_AddEmployee (Employee *employee, aircraft_t *aircraft)
 {
 	if (!employee || !aircraft)
 		return false;

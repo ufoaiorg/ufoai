@@ -210,7 +210,7 @@ transfer_t* TR_TransferStart (base_t *srcBase, transferData_t &transData)
 	/* Note that the employee remains hired in source base during the transfer, that is
 	 * it takes Living Quarters capacity, etc, but it cannot be used anywhere. */
 	for (i = 0; i < MAX_EMPL; i++) {		/* Employees. */
-		LIST_Foreach(transData.trEmployeesTmp[i], employee_t, employee) {
+		LIST_Foreach(transData.trEmployeesTmp[i], Employee, employee) {
 			assert(E_IsInBase(employee, srcBase));
 
 			transfer.hasEmployees = true;
@@ -516,7 +516,7 @@ bool TR_LoadXML (xmlNode_t *p)
 			transfer.hasEmployees = true;
 			for (; ss; ss = cgi->XML_GetNextNode(ss, s, SAVE_TRANSFER_EMPLOYEE)) {
 				const int ucn = cgi->XML_GetInt(ss, SAVE_TRANSFER_UCN, -1);
-				employee_t *empl = E_GetEmployeeFromChrUCN(ucn);
+				Employee *empl = E_GetEmployeeFromChrUCN(ucn);
 
 				if (!empl) {
 					Com_Printf("Error: No employee found with UCN: %i\n", ucn);

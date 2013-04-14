@@ -94,7 +94,7 @@ void CP_UpdateCharacterSkills (character_t *chr)
 void CP_UpdateCharacterData (linkedList_t *updateCharacters)
 {
 	LIST_Foreach(updateCharacters, updateCharacter_t, c) {
-		employee_t *employee = E_GetEmployeeFromChrUCN(c->ucn);
+		Employee *employee = E_GetEmployeeFromChrUCN(c->ucn);
 		character_t* chr;
 		bool fullHP;
 

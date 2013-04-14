@@ -90,7 +90,7 @@ int main (int argc, char **argv)
 	TYPESIZE(cvar_t);
 	TYPESIZE(damageType_t);
 	TYPESIZE(dMapTile_t);
-	TYPESIZE(employee_t);
+	TYPESIZE(Employee);
 	TYPESIZE(equipDef_t);
 	TYPESIZE(eventMail_t);
 	TYPESIZE(gametype_t);

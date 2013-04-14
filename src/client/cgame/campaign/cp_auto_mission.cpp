@@ -143,7 +143,7 @@ static void AM_FillTeamFromAircraft (autoMissionBattle_t *battle, const autoMiss
 
 	teamSize = 0;
 	unitsAlive = 0;
-	LIST_Foreach(aircraft->acTeam, employee_t, employee) {
+	LIST_Foreach(aircraft->acTeam, Employee, employee) {
 		autoUnit_t *unit = AM_GetUnit(battle, teamNum, teamSize);
 
 		unit->chr = &employee->chr;
@@ -847,7 +847,7 @@ static void AM_UpdateSurivorsAfterBattle (const autoMissionBattle_t *battle, str
 
 	battleExperience = std::max(0, battle->teamAccomplishment[AUTOMISSION_TEAM_TYPE_PLAYER]);
 
-	LIST_Foreach(aircraft->acTeam, employee_t, soldier) {
+	LIST_Foreach(aircraft->acTeam, Employee, soldier) {
 		character_t *chr = &soldier->chr;
 		chrScoreGlobal_t *score = &chr->score;
 		int expCount;

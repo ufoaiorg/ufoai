@@ -31,7 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 
 /** Currently selected employee. */
-static employee_t *selectedEmployee = NULL;
+static Employee *selectedEmployee = NULL;
 /* Holds the current active employee category */
 static int employeeCategory = 0;
 
@@ -63,7 +63,7 @@ static void E_UpdateGUICount_f (void)
 	cgi->Cvar_Set("mn_hirepeople", va("%d/%d", E_CountAllHired(base), max));
 }
 
-static void E_EmployeeSelect (employee_t *employee)
+static void E_EmployeeSelect (Employee *employee)
 {
 	const base_t *base = B_GetCurrentSelectedBase();
 	if (!base)
@@ -143,7 +143,7 @@ static void E_EmployeeListScroll_f (void)
  */
 static void E_EmployeeList_f (void)
 {
-	employee_t* employee;
+	Employee* employee;
 	int hiredEmployeeIdx;
 	linkedList_t *employeeListName;
 	base_t *base = B_GetCurrentSelectedBase();
@@ -224,7 +224,7 @@ static void E_EmployeeList_f (void)
  */
 static void E_ChangeName_f (void)
 {
-	employee_t *employee = E_GetEmployeeFromChrUCN(cgi->Cvar_GetInteger("mn_ucn"));
+	Employee *employee = E_GetEmployeeFromChrUCN(cgi->Cvar_GetInteger("mn_ucn"));
 	if (!employee)
 		return;
 
@@ -252,9 +252,9 @@ int E_GenerateHiredEmployeesList (const base_t *base)
  * @brief Find an hired or free employee by the menu index
  * @param[in] num The index from the hire menu screen (index inemployeeList).
  */
-employee_t* E_GetEmployeeByMenuIndex (int num)
+Employee* E_GetEmployeeByMenuIndex (int num)
 {
-	return (employee_t*)cgi->LIST_GetByIdx(employeeList, num);
+	return (Employee*)cgi->LIST_GetByIdx(employeeList, num);
 }
 
 /**
@@ -265,7 +265,7 @@ static void E_EmployeeDelete_f (void)
 {
 	/* num - menu index (line in text) */
 	int num;
-	employee_t* employee;
+	Employee* employee;
 
 	/* Check syntax. */
 	if (cgi->Cmd_Argc() < 2) {
@@ -301,7 +301,7 @@ static void E_EmployeeHire_f (void)
 	/* num - menu index (line in text), button - number of button */
 	int num, button;
 	const char *arg;
-	employee_t* employee;
+	Employee* employee;
 	base_t *base = B_GetCurrentSelectedBase();
 
 	if (!base)

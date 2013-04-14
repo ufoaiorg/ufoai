@@ -153,7 +153,7 @@ void CAP_RemoveItemsExceedingCapacity (base_t *base)
 		const int randNumber = rand() % num;
 		if (objIdx[randNumber] >= MAX_OBJDEFS) {
 			/* A UGV is destroyed: get first one */
-			employee_t* employee = E_GetHiredRobot(base, 0);
+			Employee* employee = E_GetHiredRobot(base, 0);
 			/* There should be at least a UGV */
 			assert(employee);
 			E_DeleteEmployee(employee);

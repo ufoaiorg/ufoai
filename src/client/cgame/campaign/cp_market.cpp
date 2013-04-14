@@ -348,7 +348,7 @@ bool BS_BuyUGV (const ugv_t *ugv, base_t *base)
  * @return @c true if the ugv could get sold, @c false otherwise
  * @todo Implement this correctly once we have UGV
  */
-bool BS_SellUGV (employee_t *robot)
+bool BS_SellUGV (Employee *robot)
 {
 	const objDef_t *ugvWeapon;
 	const ugv_t *ugv;

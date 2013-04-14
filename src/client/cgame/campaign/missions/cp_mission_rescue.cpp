@@ -72,7 +72,7 @@ void CP_EndRescueMission (mission_t *mission, aircraft_t *aircraft, bool won)
 		if (crashedAircraft->pilot)
 			AIR_RemoveEmployee(crashedAircraft->pilot, crashedAircraft);
 		/* Save the soldiers */
-		LIST_Foreach(crashedAircraft->acTeam, employee_t, employee) {
+		LIST_Foreach(crashedAircraft->acTeam, Employee, employee) {
 			AIR_RemoveEmployee(employee, crashedAircraft);
 		}
 

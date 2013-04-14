@@ -38,7 +38,7 @@ typedef enum {
 } employeeType_t;
 
 /** The definition of an employee */
-class employee_t {
+class Employee {
 public:
 	/**
 	 * @brief Returns true if the employee is _only_ listed in the global list.
@@ -57,11 +57,11 @@ public:
 	const struct ugv_s *ugv;		/**< if this is an employee of type EMPL_ROBOT then this is a pointer to the matching ugv_t struct. For normal employees this is NULL. */
 };
 
-#define E_Foreach(employeeType, var) LIST_Foreach(ccs.employees[employeeType], employee_t, var)
+#define E_Foreach(employeeType, var) LIST_Foreach(ccs.employees[employeeType], Employee, var)
 #define E_IsHired(employee)	((employee)->baseHired != NULL)
 
-employee_t* E_CreateEmployee(employeeType_t type, const struct nation_s *nation, const struct ugv_s *ugvType);
-bool E_DeleteEmployee(employee_t *employee);
+Employee* E_CreateEmployee(employeeType_t type, const struct nation_s *nation, const struct ugv_s *ugvType);
+bool E_DeleteEmployee(Employee *employee);
 
 /* count */
 int E_CountByType(employeeType_t type);
@@ -73,44 +73,44 @@ int E_CountUnhiredRobotsByType(const struct ugv_s *ugvType);
 int E_CountUnassigned(const base_t* const base, employeeType_t type);
 
 
-bool E_HireEmployee(base_t* base, employee_t* employee);
+bool E_HireEmployee(base_t* base, Employee* employee);
 bool E_HireEmployeeByType(base_t* base, employeeType_t type);
 bool E_HireRobot(base_t* base, const struct ugv_s *ugvType);
-bool E_UnhireEmployee(employee_t* employee);
+bool E_UnhireEmployee(Employee* employee);
 
 int E_RefreshUnhiredEmployeeGlobalList(const employeeType_t type, const bool excludeUnhappyNations);
 
-void E_Unassign(employee_t *employee);
+void E_Unassign(Employee *employee);
 int E_GenerateHiredEmployeesList(const base_t *base);
-bool E_IsAwayFromBase(const employee_t *employee);
+bool E_IsAwayFromBase(const Employee *employee);
 
 employeeType_t E_GetEmployeeType(const char *type);
 extern const char *E_GetEmployeeString(employeeType_t type, int n);
 
-employee_t* E_GetUnhired(employeeType_t type);
-employee_t* E_GetUnhiredRobot(const struct ugv_s *ugvType);
+Employee* E_GetUnhired(employeeType_t type);
+Employee* E_GetUnhiredRobot(const struct ugv_s *ugvType);
 
 int E_GetHiredEmployees(const base_t* const base, employeeType_t type, linkedList_t **hiredEmployees);
-employee_t* E_GetHiredRobot(const base_t* const base, const struct ugv_s *ugvType);
+Employee* E_GetHiredRobot(const base_t* const base, const struct ugv_s *ugvType);
 
-employee_t* E_GetUnassignedEmployee(const base_t* const base, employeeType_t type);
-employee_t* E_GetAssignedEmployee(const base_t* const base, employeeType_t type);
+Employee* E_GetUnassignedEmployee(const base_t* const base, employeeType_t type);
+Employee* E_GetAssignedEmployee(const base_t* const base, employeeType_t type);
 
-employee_t* E_GetEmployeeFromChrUCN(int uniqueCharacterNumber);
-employee_t* E_GetEmployeeByTypeFromChrUCN(employeeType_t type, int uniqueCharacterNumber);
+Employee* E_GetEmployeeFromChrUCN(int uniqueCharacterNumber);
+Employee* E_GetEmployeeByTypeFromChrUCN(employeeType_t type, int uniqueCharacterNumber);
 
-employee_t* E_GetEmployeeByMenuIndex(int num);
+Employee* E_GetEmployeeByMenuIndex(int num);
 void E_UnhireAllEmployees(base_t* base, employeeType_t type);
 void E_DeleteAllEmployees(base_t* base);
-bool E_IsInBase(const employee_t* empl, const base_t* const base);
+bool E_IsInBase(const Employee* empl, const base_t* const base);
 
 void E_DeleteEmployeesExceedingCapacity(base_t *base);
 
 void E_HireForBuilding(base_t* base, building_t *building, int num);
 void E_InitialEmployees(const struct campaign_s *campaign);
 
-bool E_MoveIntoNewBase(employee_t *employee, base_t *newBase);
-void E_RemoveInventoryFromStorage(employee_t *employee);
+bool E_MoveIntoNewBase(Employee *employee, base_t *newBase);
+void E_RemoveInventoryFromStorage(Employee *employee);
 
 void E_InitStartup(void);
 void E_Shutdown(void);

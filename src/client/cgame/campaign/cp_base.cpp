@@ -1877,7 +1877,7 @@ static void B_InitialEquipment (aircraft_t *aircraft, const equipDef_t *ed)
 	assert(homebase);
 	assert(ed);
 
-	LIST_Foreach(aircraft->acTeam, employee_t, employee) {
+	LIST_Foreach(aircraft->acTeam, Employee, employee) {
 		character_t *chr = &employee->chr;
 
 		/* pack equipment */

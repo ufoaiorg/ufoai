@@ -441,7 +441,7 @@ static void RS_MaxOutResearch (base_t *base, technology_t* tech)
 
 	/* Add as many scientists as possible to this tech. */
 	while (CAP_GetFreeCapacity(base, CAP_LABSPACE) > 0) {
-		const employee_t *employee = E_GetUnassignedEmployee(base, EMPL_SCIENTIST);
+		const Employee *employee = E_GetUnassignedEmployee(base, EMPL_SCIENTIST);
 		if (!employee)
 			break;
 		RS_AssignScientist(tech, base);

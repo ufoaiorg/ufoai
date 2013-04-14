@@ -106,7 +106,7 @@ static transferType_t TR_GetTransferType (const char *id)
  * @param[in] destbase Pointer to destination base.
  * @return true if transfer of this type of employee is possible.
  */
-static bool TR_CheckEmployee (const employee_t *employee, const base_t *destbase)
+static bool TR_CheckEmployee (const Employee *employee, const base_t *destbase)
 {
 	assert(employee && destbase);
 
@@ -157,7 +157,7 @@ static void TR_CargoList (void)
 		switch (emplType) {
 		case EMPL_SOLDIER:
 		case EMPL_PILOT:
-			LIST_Foreach(td.trEmployeesTmp[emplType], employee_t, employee) {
+			LIST_Foreach(td.trEmployeesTmp[emplType], Employee, employee) {
 				if (emplType == EMPL_SOLDIER) {
 					const rank_t *rank = CL_GetRankByIdx(employee->chr.score.rank);
 					cgi->UI_ExecuteConfunc("ui_cargolist_add \"ucn:%d\" \"%s %s %s\" %d", employee->chr.ucn,
@@ -449,7 +449,7 @@ static void TR_Add_f (void)
 			cgi->LIST_Remove(&td.aircraft, (void*)aircraft);
 		}
 	} else if (Q_strstart(itemId, "ucn:")) {
-		employee_t *employee = E_GetEmployeeFromChrUCN(atoi(itemId + 4));
+		Employee *employee = E_GetEmployeeFromChrUCN(atoi(itemId + 4));
 		if (!employee)
 			return;
 		if (amount > 0) {

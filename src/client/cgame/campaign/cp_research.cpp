@@ -658,7 +658,7 @@ void RS_InitTree (const campaign_t *campaign, bool load)
  * @sa RS_AssignScientist_f
  * @sa RS_RemoveScientist
  */
-void RS_AssignScientist (technology_t* tech, base_t *base, employee_t *employee)
+void RS_AssignScientist (technology_t* tech, base_t *base, Employee *employee)
 {
 	assert(tech);
 	Com_DPrintf(DEBUG_CLIENT, "RS_AssignScientist: %i | %s \n", tech->idx, tech->name);
@@ -699,7 +699,7 @@ void RS_AssignScientist (technology_t* tech, base_t *base, employee_t *employee)
  * @sa RS_RemoveScientist_f
  * @sa RS_AssignScientist
  */
-void RS_RemoveScientist (technology_t* tech, employee_t *employee)
+void RS_RemoveScientist (technology_t* tech, Employee *employee)
 {
 	assert(tech);
 
@@ -737,10 +737,10 @@ void RS_RemoveScientist (technology_t* tech, employee_t *employee)
  * @note used when a scientist is fired.
  * @note This function is called before the employee is actually fired.
  */
-void RS_RemoveFiredScientist (base_t *base, employee_t *employee)
+void RS_RemoveFiredScientist (base_t *base, Employee *employee)
 {
 	technology_t *tech;
-	employee_t *freeScientist = E_GetUnassignedEmployee(base, EMPL_SCIENTIST);
+	Employee *freeScientist = E_GetUnassignedEmployee(base, EMPL_SCIENTIST);
 
 	assert(base);
 	assert(employee);

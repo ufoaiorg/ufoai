@@ -46,7 +46,7 @@ int E_CountByType (employeeType_t type)
  * @param[in] type Employee type to look for
  * @sa employeeType_t
  */
-employee_t* E_GetUnhired (employeeType_t type)
+Employee* E_GetUnhired (employeeType_t type)
 {
 	E_Foreach(type, employee) {
 		if (!E_IsHired(employee))
@@ -61,7 +61,7 @@ employee_t* E_GetUnhired (employeeType_t type)
  * @param[in] employee Pointer to the employee.
  * @return bool true if the employee is away in mission, false if he is not or he is unhired.
  */
-bool E_IsAwayFromBase (const employee_t *employee)
+bool E_IsAwayFromBase (const Employee *employee)
 {
 	const base_t *base;
 
@@ -140,7 +140,7 @@ void E_HireForBuilding (base_t *base, building_t *building, int num)
  * @brief Checks whether the given employee is in the given base
  * @sa E_EmployeeIsCurrentlyInBase
  */
-bool E_IsInBase (const employee_t* empl, const base_t* const base)
+bool E_IsInBase (const Employee* empl, const base_t* const base)
 {
 	assert(empl != NULL);
 	assert(base != NULL);
@@ -160,7 +160,7 @@ bool E_IsInBase (const employee_t* empl, const base_t* const base)
  * @param newBase The base where the employee should be located at
  * @return @c false if @c employee was a @c NULL pointer
  */
-bool E_MoveIntoNewBase (employee_t *employee, base_t *newBase)
+bool E_MoveIntoNewBase (Employee *employee, base_t *newBase)
 {
 	if (employee) {
 		base_t *oldBase = employee->baseHired;
@@ -255,10 +255,10 @@ employeeType_t E_GetEmployeeType (const char *type)
 /**
  * @brief Return a "not hired" ugv-employee pointer of a given ugv-type.
  * @param[in] ugvType What type of robot we want.
- * @return employee_t pointer on success or NULL on error.
+ * @return Employee pointer on success or NULL on error.
  * @sa E_GetHiredRobot
  */
-employee_t* E_GetUnhiredRobot (const ugv_t *ugvType)
+Employee* E_GetUnhiredRobot (const ugv_t *ugvType)
 {
 	E_Foreach(EMPL_ROBOT, employee) {
 		if (!E_IsHired(employee)) {
@@ -303,18 +303,18 @@ int E_GetHiredEmployees (const base_t* const base, employeeType_t type, linkedLi
  * @brief Return a "hired" ugv-employee pointer of a given ugv-type in a given base.
  * @param[in] base Which base the ugv should be searched in.c
  * @param[in] ugvType What type of robot we want.
- * @return employee_t pointer on success or NULL on error.
+ * @return Employee pointer on success or NULL on error.
  * @sa E_GetUnhiredRobot
  */
-employee_t* E_GetHiredRobot (const base_t* const base, const ugv_t *ugvType)
+Employee* E_GetHiredRobot (const base_t* const base, const ugv_t *ugvType)
 {
 	linkedList_t *hiredEmployees = NULL;
-	employee_t *employee;
+	Employee *employee;
 
 	E_GetHiredEmployees(base, EMPL_ROBOT, &hiredEmployees);
 
 	employee = NULL;
-	LIST_Foreach(hiredEmployees, employee_t, e) {
+	LIST_Foreach(hiredEmployees, Employee, e) {
 		if ((e->ugv == ugvType || !ugvType)	/* If no type was given we return the first ugv we find. */
 		 && E_IsInBase(e, base)) {		/* It has to be in the defined base. */
 			assert(E_IsHired(e));
@@ -335,11 +335,11 @@ employee_t* E_GetHiredRobot (const base_t* const base, const ugv_t *ugvType)
  * @brief Gets an unassigned employee of a given type from the given base.
  * @param[in] base Which base the employee should be hired in.
  * @param[in] type The type of employee to search.
- * @return employee_t
+ * @return Employee
  * @sa E_EmployeeIsUnassigned
  * @note assigned is not hired - they are already hired in a base, in a quarter _and_ working in another building.
  */
-employee_t* E_GetAssignedEmployee (const base_t* const base, const employeeType_t type)
+Employee* E_GetAssignedEmployee (const base_t* const base, const employeeType_t type)
 {
 	E_Foreach(type, employee) {
 		if (!E_IsInBase(employee, base))
@@ -354,11 +354,11 @@ employee_t* E_GetAssignedEmployee (const base_t* const base, const employeeType_
  * @brief Gets an assigned employee of a given type from the given base.
  * @param[in] base Which base the employee should be hired in.
  * @param[in] type The type of employee to search.
- * @return employee_t
+ * @return Employee
  * @sa E_EmployeeIsUnassigned
  * @note unassigned is not unhired - they are already hired in a base but are at quarters
  */
-employee_t* E_GetUnassignedEmployee (const base_t* const base, const employeeType_t type)
+Employee* E_GetUnassignedEmployee (const base_t* const base, const employeeType_t type)
 {
 	E_Foreach(type, employee) {
 		if (!E_IsInBase(employee, base))
@@ -377,7 +377,7 @@ employee_t* E_GetUnassignedEmployee (const base_t* const base, const employeeTyp
  * @sa E_UnhireEmployee
  * @todo handle EMPL_ROBOT capacities here?
  */
-bool E_HireEmployee (base_t* base, employee_t* employee)
+bool E_HireEmployee (base_t* base, Employee* employee)
 {
 	if (CAP_GetFreeCapacity(base, CAP_EMPLOYEES) <= 0) {
 		CP_Popup(_("Not enough quarters"), _("You don't have enough quarters for your employees.\nBuild more quarters."));
@@ -419,7 +419,7 @@ bool E_HireEmployee (base_t* base, employee_t* employee)
  */
 bool E_HireEmployeeByType (base_t* base, employeeType_t type)
 {
-	employee_t* employee = E_GetUnhired(type);
+	Employee* employee = E_GetUnhired(type);
 	return employee ? E_HireEmployee(base, employee) : false;
 }
 
@@ -431,7 +431,7 @@ bool E_HireEmployeeByType (base_t* base, employeeType_t type)
  */
 bool E_HireRobot (base_t* base, const ugv_t *ugvType)
 {
-	employee_t* employee = E_GetUnhiredRobot(ugvType);
+	Employee* employee = E_GetUnhiredRobot(ugvType);
 	return employee ? E_HireEmployee(base, employee) : false;
 }
 
@@ -439,7 +439,7 @@ bool E_HireRobot (base_t* base, const ugv_t *ugvType)
  * @brief Removes the inventory of the employee and also removes him from buildings
  * @param[in,out] employee Employe to unassign from aircraft/buildings
  */
-void E_Unassign (employee_t *employee)
+void E_Unassign (Employee *employee)
 {
 	if (!employee)
 		return;
@@ -485,7 +485,7 @@ void E_Unassign (employee_t *employee)
  * @sa CL_RemoveSoldierFromAircraft
  * @todo handle EMPL_ROBOT capacities here?
  */
-bool E_UnhireEmployee (employee_t* employee)
+bool E_UnhireEmployee (Employee* employee)
 {
 	if (employee && E_IsHired(employee) && !employee->transfer) {
 		base_t *base = employee->baseHired;
@@ -542,9 +542,9 @@ void E_UnhireAllEmployees (base_t* base, employeeType_t type)
  * @return Pointer to the newly created employee in the global list. NULL if something goes wrong.
  * @sa E_DeleteEmployee
  */
-employee_t* E_CreateEmployee (employeeType_t type, const nation_t *nation, const ugv_t *ugvType)
+Employee* E_CreateEmployee (employeeType_t type, const nation_t *nation, const ugv_t *ugvType)
 {
-	employee_t employee;
+	Employee employee;
 	const char *teamID;
 	char teamDefName[MAX_VAR];
 	const char *rank;
@@ -612,7 +612,7 @@ employee_t* E_CreateEmployee (employeeType_t type, const nation_t *nation, const
  * the aircraft can point to wrong employees now. This has to be taken into
  * account
  */
-bool E_DeleteEmployee (employee_t *employee)
+bool E_DeleteEmployee (Employee *employee)
 {
 	employeeType_t type;
 
@@ -942,7 +942,7 @@ static void CL_DebugNewEmployees_f (void)
  * @param[in] type employee type
  * @param[in] uniqueCharacterNumber unique character number (UCN)
  */
-employee_t* E_GetEmployeeByTypeFromChrUCN (employeeType_t type, int uniqueCharacterNumber)
+Employee* E_GetEmployeeByTypeFromChrUCN (employeeType_t type, int uniqueCharacterNumber)
 {
 	E_Foreach(type, employee) {
 		if (employee->chr.ucn == uniqueCharacterNumber)
@@ -956,13 +956,13 @@ employee_t* E_GetEmployeeByTypeFromChrUCN (employeeType_t type, int uniqueCharac
  * @brief Searches all employee for the ucn (character id)
  * @param[in] uniqueCharacterNumber unique character number (UCN)
  */
-employee_t* E_GetEmployeeFromChrUCN (int uniqueCharacterNumber)
+Employee* E_GetEmployeeFromChrUCN (int uniqueCharacterNumber)
 {
 	int i;
 
 	for (i = EMPL_SOLDIER; i < MAX_EMPL; i++) {
 		const employeeType_t emplType = (employeeType_t)i;
-		employee_t *employee = E_GetEmployeeByTypeFromChrUCN(emplType, uniqueCharacterNumber);
+		Employee *employee = E_GetEmployeeByTypeFromChrUCN(emplType, uniqueCharacterNumber);
 		if (employee)
 			return employee;
 	}
@@ -1041,7 +1041,7 @@ bool E_LoadXML (xmlNode_t *p)
 				ssnode = cgi->XML_GetNextNode(ssnode, snode, SAVE_EMPLOYEE_EMPLOYEE)) {
 			int baseIDX;
 			xmlNode_t *chrNode;
-			employee_t e;
+			Employee e;
 
 			OBJZERO(e);
 			/** @note e->transfer is restored in cl_transfer.c:TR_Load */
@@ -1098,7 +1098,7 @@ bool E_HireAllowed (const base_t* base)
  * @brief Removes the items of an employee (soldier) from the base storage (s)he is hired at
  * @param[in] employee Pointer to the soldier whose items should be removed
  */
-void E_RemoveInventoryFromStorage (employee_t *employee)
+void E_RemoveInventoryFromStorage (Employee *employee)
 {
 	const character_t *chr = &employee->chr;
 

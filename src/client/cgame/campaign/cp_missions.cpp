@@ -1246,7 +1246,7 @@ void CP_SpawnRescueMission (aircraft_t *aircraft, aircraft_t *ufo)
 {
 	mission_t *mission;
 	mission_t *oldMission;
-	employee_t *pilot;
+	Employee *pilot;
 	int survivors = 0;
 
 	/* Handle events about crash */
@@ -1259,7 +1259,7 @@ void CP_SpawnRescueMission (aircraft_t *aircraft, aircraft_t *ufo)
 		E_DeleteEmployee(pilot);
 	}
 
-	LIST_Foreach(aircraft->acTeam, employee_t, employee) {
+	LIST_Foreach(aircraft->acTeam, Employee, employee) {
 #if 0
 		const character_t *chr = &employee->chr;
 		const chrScoreGlobal_t *score = &chr->score;

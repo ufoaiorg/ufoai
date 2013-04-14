@@ -331,7 +331,7 @@ bool GAME_CP_Spawn (linkedList_t **chrList)
 		return false;
 
 	/* convert aircraft team to character list */
-	LIST_Foreach(aircraft->acTeam, employee_t, employee) {
+	LIST_Foreach(aircraft->acTeam, Employee, employee) {
 		cgi->LIST_AddPointer(chrList, (void*)&employee->chr);
 	}
 
@@ -374,7 +374,7 @@ bool GAME_CP_TeamIsKnown (const teamDef_t *teamDef)
  */
 character_t* GAME_CP_GetSelectedChr (void)
 {
-	employee_t *employee = E_GetEmployeeFromChrUCN(cgi->Cvar_GetInteger("mn_ucn"));
+	Employee *employee = E_GetEmployeeFromChrUCN(cgi->Cvar_GetInteger("mn_ucn"));
 	if (employee)
 		return &employee->chr;
 	return NULL;

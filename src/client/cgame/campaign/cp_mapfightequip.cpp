@@ -162,7 +162,7 @@ bool AIM_SelectableCraftItem (const aircraftSlot_t *slot, const technology_t *te
  * @param[in] pilot Which employee to search for.
  * @return true or false depending on if the employee was found on the base aircraft.
  */
-bool AIM_PilotAssignedAircraft (const base_t* base, const employee_t* pilot)
+bool AIM_PilotAssignedAircraft (const base_t* base, const Employee* pilot)
 {
 	bool found = false;
 

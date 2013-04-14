@@ -30,7 +30,7 @@ extern memPool_t *cp_campaignPool;
 
 struct aircraft_s;
 struct installation_s;
-class employee_t;
+class Employee;
 struct ugv_s;
 struct campaign_s;
 

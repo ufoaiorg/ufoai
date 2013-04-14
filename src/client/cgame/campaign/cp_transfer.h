@@ -78,7 +78,7 @@ typedef struct transferCargo_s {
 	union transferItem_t {
 		const objDef_t *item;
 		const aircraft_t *aircraft;
-		const employee_t *employee;
+		const Employee *employee;
 		const teamDef_t *alienTeam;
 		const void *pointer;		/**< if you just wanna check whether a valid pointer was set */
 	} data;
@@ -116,7 +116,7 @@ typedef struct transferData_s {
 
 #define TR_SetData(dataPtr, typeVal, ptr)  do { (dataPtr)->data.pointer = (ptr); (dataPtr)->type = (typeVal); } while (0);
 #define TR_Foreach(var) LIST_Foreach(ccs.transfers, transfer_t, var)
-#define TR_ForeachEmployee(var, transfer, employeeType) LIST_Foreach(transfer->employees[employeeType], employee_t, var)
+#define TR_ForeachEmployee(var, transfer, employeeType) LIST_Foreach(transfer->employees[employeeType], Employee, var)
 #define TR_ForeachAircraft(var, transfer) LIST_Foreach(transfer->aircraft, aircraft_t, var)
 
 bool TR_AddData(transferData_t *transferData, transferCargoType_t type, const void *data);

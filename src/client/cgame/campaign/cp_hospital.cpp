@@ -103,7 +103,7 @@ void HOS_HospitalRun (void)
  * @sa HOS_HealCharacter
  * @sa HOS_HealAll
  */
-bool HOS_HealEmployee (employee_t* employee)
+bool HOS_HealEmployee (Employee* employee)
 {
 	assert(employee);
 	return HOS_HealCharacter(&employee->chr, true);
