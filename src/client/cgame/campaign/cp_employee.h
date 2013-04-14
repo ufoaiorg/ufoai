@@ -38,7 +38,8 @@ typedef enum {
 } employeeType_t;
 
 /** The definition of an employee */
-typedef struct employee_s {
+class employee_t {
+public:
 	base_t *baseHired;				/**< Base where the soldier is hired it atm. */
 	bool assigned;				/**< Assigned to a building */
 	bool transfer;				/**< Is this employee currently transferred? */
@@ -46,7 +47,7 @@ typedef struct employee_s {
 	employeeType_t type;			/**< employee type */
 	const struct nation_s *nation;	/**< What nation this employee came from. This is NULL if the nation is unknown for some (code-related) reason. */
 	const struct ugv_s *ugv;		/**< if this is an employee of type EMPL_ROBOT then this is a pointer to the matching ugv_t struct. For normal employees this is NULL. */
-} employee_t;
+};
 
 #define E_Foreach(employeeType, var) LIST_Foreach(ccs.employees[employeeType], employee_t, var)
 #define E_IsHired(employee)	((employee)->baseHired != NULL)
