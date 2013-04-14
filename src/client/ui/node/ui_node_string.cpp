@@ -101,7 +101,7 @@ void uiStringNode::drawTooltip (const uiNode_t *node, int x, int y) const
 		return;
 
 	const int maxWidth = node->box.size[0] - node->padding - node->padding;
-	const longlines_t longLines = (longlines_t)EXTRADATA(node).longlines;
+	const longlines_t longLines = (longlines_t)EXTRADATACONST(node).longlines;
 	R_FontTextSize(font, text, maxWidth, longLines, NULL, NULL, NULL, &isTruncated);
 	if (!isTruncated)
 		return;
