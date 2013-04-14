@@ -92,22 +92,25 @@ void uiStringNode::drawTooltip (const uiNode_t *node, int x, int y) const
 {
 	if (node->tooltip) {
 		UI_Tooltip(node, x, y);
-	} else {
-		const char *font = UI_GetFontFromNode(node);
-		const char* text = UI_GetReferenceString(node, node->text);
-		bool isTruncated;
-		if (!text)
-			return;
-
-		R_FontTextSize(font, text, node->box.size[0] - node->padding - node->padding, (longlines_t)EXTRADATA(node).longlines, NULL, NULL, NULL, &isTruncated);
-		if (isTruncated) {
-			const int tooltipWidth = 250;
-			static char tooltiptext[MAX_VAR * 4];
-			tooltiptext[0] = '\0';
-			Q_strcat(tooltiptext, text, sizeof(tooltiptext));
-			UI_DrawTooltip(tooltiptext, x, y, tooltipWidth);
-		}
+		return;
 	}
+	const char *font = UI_GetFontFromNode(node);
+	const char *text = UI_GetReferenceString(node, node->text);
+	bool isTruncated;
+	if (!text)
+		return;
+
+	const int maxWidth = node->box.size[0] - node->padding - node->padding;
+	const longlines_t longLines = (longlines_t)EXTRADATA(node).longlines;
+	R_FontTextSize(font, text, maxWidth, longLines, NULL, NULL, NULL, &isTruncated);
+	if (!isTruncated)
+		return;
+
+	const int tooltipWidth = 250;
+	static char tooltiptext[MAX_VAR * 4];
+	tooltiptext[0] = '\0';
+	Q_strcat(tooltiptext, text, sizeof(tooltiptext));
+	UI_DrawTooltip(tooltiptext, x, y, tooltipWidth);
 }
 
 void uiStringNode::onLoading (uiNode_t *node)
