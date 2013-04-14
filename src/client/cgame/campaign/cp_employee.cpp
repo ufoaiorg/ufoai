@@ -337,7 +337,7 @@ employee_t* E_GetHiredRobot (const base_t* const base, const ugv_t *ugvType)
  * @return bool
  * @sa E_EmployeeIsFree
  */
-static inline bool E_EmployeeIsUnassigned (const employee_t *employee)
+static bool E_EmployeeIsUnassigned (const employee_t *employee)
 {
 	if (!employee)
 		cgi->Com_Error(ERR_DROP, "E_EmployeeIsUnassigned: Employee is NULL.\n");
