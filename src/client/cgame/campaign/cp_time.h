@@ -42,7 +42,7 @@ typedef struct dateLong_s {
 } dateLong_t;
 
 void CP_DateConvertLong(const date_t *date, dateLong_t *dateLong);
-const char* CP_SecondConvert(int second);
+const char *CP_SecondConvert(int second);
 
 void CP_UpdateTime(void);
 void CP_GameTimeStop(void);

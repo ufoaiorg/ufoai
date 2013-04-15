@@ -198,7 +198,7 @@ int PR_RequirementsMet (int amount, const requirements_t *reqs, base_t *base)
 /**
  * @return The translated name of the item in production
  */
-const char* PR_GetName (const productionData_t *data)
+const char *PR_GetName (const productionData_t *data)
 {
 	switch (data->type) {
 	case PRODUCTION_TYPE_ITEM:

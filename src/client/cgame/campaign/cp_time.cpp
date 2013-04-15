@@ -53,7 +53,7 @@ CASSERT(lengthof(lapse) == NUM_TIMELAPSE);
  * @param[in] second Number of second.
  * @todo Abstract the code into an extra function (DateConvertSeconds?) see also CP_DateConvertLong
  */
-const char* CP_SecondConvert (int second)
+const char *CP_SecondConvert (int second)
 {
 	static char buffer[6];
 	const int hour = second / SECONDS_PER_HOUR;

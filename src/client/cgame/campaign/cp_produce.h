@@ -114,7 +114,7 @@ struct base_s *PR_ProductionBase(const production_t *production);
 int PR_IncreaseProduction(production_t *prod, int amount);
 int PR_DecreaseProduction(production_t *prod, int amount);
 
-const char* PR_GetName(const productionData_t *data);
+const char *PR_GetName(const productionData_t *data);
 technology_t* PR_GetTech(const productionData_t *data);
 
 void PR_UpdateProductionCap(struct base_s *base, int workerChange = 0);

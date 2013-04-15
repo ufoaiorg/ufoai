@@ -356,7 +356,7 @@ static void GAME_UI_Popup (const char *title, const char *format, ...)
 	UI_Popup(title, popupText);
 }
 
-static char* GAME_StrDup (const char *string)
+static char *GAME_StrDup (const char *string)
 {
 	return Mem_PoolStrDup(string, cl_genericPool, 0);
 }
@@ -1323,7 +1323,7 @@ static void GAME_SendCurrentTeamSpawningInfo (dbuffer *buf, linkedList_t *team)
 	}
 }
 
-const char* GAME_GetTeamDef (void)
+const char *GAME_GetTeamDef (void)
 {
 	const char *teamDefID;
 	const cgame_export_t *list = GAME_GetCurrentType();
@@ -1595,7 +1595,7 @@ void GAME_HandleBaseClick (int baseIdx, int key, int col, int row)
  * @param[out] uiModel The menu model pointer.
  * @return The model path for the item. Never @c NULL.
  */
-const char* GAME_GetModelForItem (const objDef_t *od, uiModel_t **uiModel)
+const char *GAME_GetModelForItem (const objDef_t *od, uiModel_t **uiModel)
 {
 	const cgame_export_t *list = GAME_GetCurrentType();
 	if (list && list->GetModelForItem != NULL) {

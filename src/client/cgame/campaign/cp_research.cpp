@@ -1362,8 +1362,8 @@ void RS_ParseTechnologies (const char *name, const char **text)
 								cgi->Com_Error(ERR_DROP, "RS_ParseTechnologies: required item tuple must contains 2 elements (id pos)");
 							}
 
-							const char* idToken = (char*)list->data;
-							const char* amountToken = (char*)list->next->data;
+							const char *idToken = (char*)list->data;
+							const char *amountToken = (char*)list->next->data;
 
 							/* Set requirement-type. */
 							requiredTemp->links[requiredTemp->numLinks].type = RS_LINK_ITEM;
@@ -1411,8 +1411,8 @@ void RS_ParseTechnologies (const char *name, const char **text)
 								cgi->Com_Error(ERR_DROP, "RS_ParseTechnologies: required alien tuple must contains 2 elements (id pos)");
 							}
 
-							const char* idToken = (char*)list->data;
-							const char* amountToken = (char*)list->next->data;
+							const char *idToken = (char*)list->data;
+							const char *amountToken = (char*)list->next->data;
 
 							/* Set requirement-name (id). */
 							requiredTemp->links[requiredTemp->numLinks].id = Mem_PoolStrDup(idToken, cp_campaignPool, 0);
@@ -1435,8 +1435,8 @@ void RS_ParseTechnologies (const char *name, const char **text)
 								cgi->Com_Error(ERR_DROP, "RS_ParseTechnologies: required item tuple must contains 2 elements (id pos)");
 							}
 
-							const char* idToken = (char*)list->data;
-							const char* amountToken = (char*)list->next->data;
+							const char *idToken = (char*)list->data;
+							const char *amountToken = (char*)list->next->data;
 
 							/* Set requirement-type. */
 							requiredTemp->links[requiredTemp->numLinks].type = RS_LINK_UFO;

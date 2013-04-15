@@ -132,7 +132,7 @@ const nationInfo_t* NAT_GetCurrentMonthInfo (const nation_t* const nation)
  * @return Translated happiness string
  * @note happiness is between 0 and 1.0
  */
-const char* NAT_GetHappinessString (const nation_t* nation)
+const char *NAT_GetHappinessString (const nation_t* nation)
 {
 	const nationInfo_t *stats = NAT_GetCurrentMonthInfo(nation);
 	if (stats->happiness < 0.015)

@@ -31,7 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @param[in] rankID Script id of the rank
  * @return -1 if no rank with rankID found
  */
-int CL_GetRankIdx (const char* rankID)
+int CL_GetRankIdx (const char *rankID)
 {
 	int i;
 

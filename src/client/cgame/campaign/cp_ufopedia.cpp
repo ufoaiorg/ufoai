@@ -135,7 +135,7 @@ static void UP_ChangeDisplay (int newDisplay)
  * @sa aircraftParams_t
  * @sa AIR_AircraftMenuStatsValues
  */
-static const char* UP_AircraftStatToName (int stat)
+static const char *UP_AircraftStatToName (int stat)
 {
 	switch (stat) {
 	case AIR_STATS_SPEED:
@@ -163,7 +163,7 @@ static const char* UP_AircraftStatToName (int stat)
  * @brief Translate a aircraft size integer to a translated string
  * @sa aircraftSize_t
  */
-static const char* UP_AircraftSizeToName (int aircraftSize)
+static const char *UP_AircraftSizeToName (int aircraftSize)
 {
 	switch (aircraftSize) {
 	case AIRCRAFT_SMALL:
@@ -803,7 +803,7 @@ static uiNode_t* UP_GenerateArticlesSummary (pediaChapter_t *parentChapter)
 
 	while (tech) {
 		if (UP_TechGetsDisplayed(tech)) {
-			const char* id = va("@%i", tech->idx);
+			const char *id = va("@%i", tech->idx);
 			cgi->UI_AddOption(&first, id, va("_%s", tech->name), id);
 		}
 		tech = tech->upNext;

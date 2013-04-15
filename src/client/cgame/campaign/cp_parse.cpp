@@ -748,7 +748,7 @@ static bool CP_ItemsSanityCheck (void)
 /** @brief struct that holds the sanity check data */
 typedef struct {
 	bool (*check)(void);	/**< function pointer to check function */
-	const char* name;			/**< name of the subsystem to check */
+	const char *name;			/**< name of the subsystem to check */
 } sanity_functions_t;
 
 /** @brief Data for sanity check of parsed script data */
