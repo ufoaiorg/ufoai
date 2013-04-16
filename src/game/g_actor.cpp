@@ -524,7 +524,7 @@ int G_ActorGetContentFlags (const vec3_t origin)
 
 /**
  * @brief Moves an item inside an inventory. Floors are handled special.
- * @param[in] ent The pointer to the selected/used edict/soldier.
+ * @param[in] actor The pointer to the selected/used edict/soldier.
  * @param[in] from The container (-id) the item should be moved from.
  * @param[in] fItem The item you want to move.
  * @param[in] toContType The container (-def) the item should be moved to.
@@ -534,7 +534,7 @@ int G_ActorGetContentFlags (const vec3_t origin)
  * @sa event PA_INVMOVE
  * @sa AI_ActorThink
  */
-bool G_ActorInvMove (Edict *ent, const invDef_t *from, invList_t *fItem, const invDef_t *toContType, int tx, int ty, bool checkaction)
+bool G_ActorInvMove (Edict *actor, const invDef_t *from, invList_t *fItem, const invDef_t *toContType, int tx, int ty, bool checkaction)
 {
 	Edict *floor;
 	bool newFloor;
@@ -544,7 +544,7 @@ bool G_ActorInvMove (Edict *ent, const invDef_t *from, invList_t *fItem, const i
 	Item fromItemBackup, toItemBackup;
 	int fx, fy;
 	int originalTU, reservedTU = 0;
-	Player &player = ent->getPlayer();
+	Player &player = actor->getPlayer();
 
 	assert(fItem);
 	assert(fItem->def());
@@ -554,7 +554,7 @@ bool G_ActorInvMove (Edict *ent, const invDef_t *from, invList_t *fItem, const i
 
 	/* Store the location of 'to' BEFORE actually moving items with moveInInventory
 	 * so in case we swap ammo the client can be updated correctly */
-	tc = ent->chr.inv.getItemAtPos(toContType, tx, ty);
+	tc = actor->chr.inv.getItemAtPos(toContType, tx, ty);
 	if (tc)
 		toItemBackup = *tc;
 	else
@@ -567,19 +567,19 @@ bool G_ActorInvMove (Edict *ent, const invDef_t *from, invList_t *fItem, const i
 
 	/* Check if action is possible */
 	/* TUs are 1 here - but this is only a dummy - the real TU check is done in the inventory functions below */
-	if (checkaction && !G_ActionCheckForCurrentTeam(&player, ent, 1))
+	if (checkaction && !G_ActionCheckForCurrentTeam(&player, actor, 1))
 		return false;
 
-	if (!ent->chr.inv.canHoldItemWeight(from->id, toContType->id, *fItem, ent->chr.score.skills[ABILITY_POWER])) {
+	if (!actor->chr.inv.canHoldItemWeight(from->id, toContType->id, *fItem, actor->chr.score.skills[ABILITY_POWER])) {
 		G_ClientPrintf(player, PRINT_HUD, _("This soldier can not carry anything else."));
 		return false;
 	}
 
 	/* "get floor ready" - searching for existing floor-edict */
-	floor = G_GetFloorItems(ent);
+	floor = G_GetFloorItems(actor);
 	if (toContType->isFloorDef() && !floor) {
 		/* We are moving to the floor, but no existing edict for this floor-tile found -> create new one */
-		floor = G_SpawnFloor(ent->pos);
+		floor = G_SpawnFloor(actor->pos);
 		newFloor = true;
 	} else if (from->isFloorDef() && !floor) {
 		/* We are moving from the floor, but no existing edict for this floor-tile found -> this should never be the case. */
@@ -593,24 +593,24 @@ bool G_ActorInvMove (Edict *ent, const invDef_t *from, invList_t *fItem, const i
 	/* search for space */
 	Item *item2;
 	if (tx == NONE) {
-		item2 = ent->chr.inv.getItemAtPos(from, fItem->getX(), fItem->getY());
+		item2 = actor->chr.inv.getItemAtPos(from, fItem->getX(), fItem->getY());
 		if (item2)
-			ent->chr.inv.findSpace(toContType, item2, &tx, &ty, fItem);
+			actor->chr.inv.findSpace(toContType, item2, &tx, &ty, fItem);
 		if (tx == NONE)
 			return false;
 	}
 
 	/** @todo what if we don't have enough TUs after subtracting the reserved ones? */
-	/* Because moveInInventory don't know anything about character_t and it updates ent->TU,
-	 * we need to save original ent->TU for the sake of checking TU reservations. */
-	originalTU = ent->TU;
-	reservedTU = G_ActorGetReservedTUs(ent);
-	/* Temporary decrease ent->TU to make moveInInventory do what expected. */
-	G_ActorUseTU(ent, reservedTU);
-	/* Try to actually move the item and check the return value after restoring valid ent->TU. */
-	ia = game.i.moveInInventory(&ent->chr.inv, from, fItem, toContType, tx, ty, checkaction ? &ent->TU : nullptr, &item2);
-	/* Now restore the original ent->TU and decrease it for TU used for inventory move. */
-	G_ActorSetTU(ent, originalTU - (originalTU - reservedTU - ent->TU));
+	/* Because moveInInventory don't know anything about character_t and it updates actor->TU,
+	 * we need to save original actor->TU for the sake of checking TU reservations. */
+	originalTU = actor->TU;
+	reservedTU = G_ActorGetReservedTUs(actor);
+	/* Temporary decrease actor->TU to make moveInInventory do what expected. */
+	G_ActorUseTU(actor, reservedTU);
+	/* Try to actually move the item and check the return value after restoring valid actor->TU. */
+	ia = game.i.moveInInventory(&actor->chr.inv, from, fItem, toContType, tx, ty, checkaction ? &actor->TU : nullptr, &item2);
+	/* Now restore the original actor->TU and decrease it for TU used for inventory move. */
+	G_ActorSetTU(actor, originalTU - (originalTU - reservedTU - actor->TU));
 
 	switch (ia) {
 	case IA_NONE:
@@ -633,9 +633,9 @@ bool G_ActorInvMove (Edict *ent, const invDef_t *from, invList_t *fItem, const i
 		/* We removed an item from the floor - check how the client
 		 * needs to be updated. */
 		assert(!newFloor);
-		if (ent->getFloor()) {
+		if (actor->getFloor()) {
 			/* There is still something on the floor. */
-			floor->setFloor(ent);
+			floor->setFloor(actor);
 			/* Delay this if swapping ammo, otherwise the le will be removed in the client before we can add back
 			 * the current ammo because removeNextFrame is set in LE_PlaceItem() if the floor le has no items */
 			if (ia != IA_RELOAD_SWAP)
@@ -650,11 +650,11 @@ bool G_ActorInvMove (Edict *ent, const invDef_t *from, invList_t *fItem, const i
 				G_EventInventoryDelete(*floor, G_VisToPM(floor->visflags), from->id, fx, fy);
 		}
 	} else {
-		G_EventInventoryDelete(*ent, G_TeamToPM(ent->team), from->id, fx, fy);
+		G_EventInventoryDelete(*actor, G_TeamToPM(actor->team), from->id, fx, fy);
 	}
 
 	/* send tu's */
-	G_SendStats(*ent);
+	G_SendStats(*actor);
 
 	assert(item2);
 	Item item = *item2;
@@ -664,9 +664,9 @@ bool G_ActorInvMove (Edict *ent, const invDef_t *from, invList_t *fItem, const i
 		if (toContType->isFloorDef())
 			mask = G_VisToPM(floor->visflags);
 		else
-			mask = G_TeamToPM(ent->team);
+			mask = G_TeamToPM(actor->team);
 
-		G_EventInventoryReload(toContType->isFloorDef() ? *floor : *ent, mask, &item, toContType, item2);
+		G_EventInventoryReload(toContType->isFloorDef() ? *floor : *actor, mask, &item, toContType, item2);
 
 		if (ia == IA_RELOAD) {
 			return true;
@@ -681,7 +681,7 @@ bool G_ActorInvMove (Edict *ent, const invDef_t *from, invList_t *fItem, const i
 				/* moveInInventory placed the swapped ammo in an available space, check where it was placed
 				 * so we can place it at the same place in the client, otherwise since fItem hasn't been removed
 				 * this could end in a different place in the client - will cause an error if trying to use it again */
-				item2 = ent->chr.inv.findInContainer(toContType->id, &item);
+				item2 = actor->chr.inv.findInContainer(toContType->id, &item);
 				assert(item2);
 				fromItemBackup = item;
 				fromItemBackup.setX(item2->getX());
@@ -698,7 +698,7 @@ bool G_ActorInvMove (Edict *ent, const invDef_t *from, invList_t *fItem, const i
 		 * the item to an already existing floor edict - the floor container that
 		 * is already linked might be from a different entity (this might happen
 		 * in case of a throw by another actor) */
-		floor->setFloor(ent);
+		floor->setFloor(actor);
 
 		/* A new container was created for the floor. */
 		if (newFloor) {
@@ -716,21 +716,21 @@ bool G_ActorInvMove (Edict *ent, const invDef_t *from, invList_t *fItem, const i
 				G_EventInventoryDelete(*floor, G_VisToPM(floor->visflags), from->id, fx, fy);
 		}
 	} else {
-		G_EventInventoryAdd(*ent, G_TeamToPM(ent->team), 1);
+		G_EventInventoryAdd(*actor, G_TeamToPM(actor->team), 1);
 		G_WriteItem(item, toContType->id, tx, ty);
 		G_EventEnd();
 	}
 
-	G_ReactionFireSettingsUpdate(ent, ent->chr.RFmode.getFmIdx(), ent->chr.RFmode.getHand(), ent->chr.RFmode.getWeapon());
+	G_ReactionFireSettingsUpdate(actor, actor->chr.RFmode.getFmIdx(), actor->chr.RFmode.getHand(), actor->chr.RFmode.getWeapon());
 
 	/* Other players receive weapon info only. */
-	mask = G_VisToPM(ent->visflags) & ~G_TeamToPM(ent->team);
+	mask = G_VisToPM(actor->visflags) & ~G_TeamToPM(actor->team);
 	if (mask) {
 		if (from->isRightDef() || from->isLeftDef()) {
-			G_EventInventoryDelete(*ent, mask, from->id, fx, fy);
+			G_EventInventoryDelete(*actor, mask, from->id, fx, fy);
 		}
 		if (toContType->isRightDef() || toContType->isLeftDef()) {
-			G_EventInventoryAdd(*ent, mask, 1);
+			G_EventInventoryAdd(*actor, mask, 1);
 			G_WriteItem(item, toContType->id, tx, ty);
 			G_EventEnd();
 		}
