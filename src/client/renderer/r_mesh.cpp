@@ -76,7 +76,7 @@ static void R_DrawMeshModelShell (const mAliasMesh_t *mesh, const vec4_t color)
 
 	R_EnableShell(false);
 
-	R_Color(NULL);
+	R_Color(nullptr);
 }
 
 /**
@@ -95,7 +95,7 @@ static void R_DrawAliasFrameLerp (mAliasModel_t* mod, mAliasMesh_t *mesh, float 
 
 	R_DrawMeshModelShell(mesh, shellColor);
 
-	R_EnableAnimation(NULL, 0.0, false);
+	R_EnableAnimation(nullptr, 0.0, false);
 
 	R_CheckError();
 }
@@ -169,8 +169,8 @@ void R_GetTags (const model_t* mod, const char* tagName, int currentFrame, int o
 {
 	const int index = R_GetTagIndexByName(mod, tagName);
 	if (index == -1) {
-		*current = NULL;
-		*old = NULL;
+		*current = nullptr;
+		*old = nullptr;
 		Com_Printf("Could not get tags for tag %s of model %s\n", tagName, mod->name);
 		return;
 	}
@@ -243,8 +243,8 @@ void R_InterpolateTransform (float backLerp, int numframes, const mAliasTagOrien
 
 /**
  * @brief Searches the tag data for the given name
- * @param[in] mod The model to search the tag data. Can be @c NULL
- * @param[in] tagName The name of the tag to get the matrix for. Might not be @c NULL
+ * @param[in] mod The model to search the tag data. Can be @c nullptr
+ * @param[in] tagName The name of the tag to get the matrix for. Might not be @c nullptr
  * @return @c -1 if no tag with the given name was found
  */
 int R_GetTagIndexByName (const model_t* mod, const char* tagName)
@@ -326,7 +326,7 @@ void R_DrawModelDirect (modelInfo_t *mi, modelInfo_t *pmi, const char *tagname)
 	}
 
 	skin = R_AliasModelState(mi->model, &mi->mesh, &mi->frame, &mi->oldframe, &mi->skin);
-	if (skin == NULL) {
+	if (skin == nullptr) {
 		Com_Printf("Model '%s' is broken\n", mi->name);
 		return;
 	}
@@ -346,10 +346,10 @@ void R_DrawModelDirect (modelInfo_t *mi, modelInfo_t *pmi, const char *tagname)
 
 		/* tag transformation */
 		if (tagname) {
-			const mAliasTagOrientation_t *current = NULL;
-			const mAliasTagOrientation_t *old = NULL;
+			const mAliasTagOrientation_t *current = nullptr;
+			const mAliasTagOrientation_t *old = nullptr;
 			R_GetTags(pmi->model, tagname, pmi->frame, pmi->oldframe, &current, &old);
-			if (current != NULL && old != NULL) {
+			if (current != nullptr && old != nullptr) {
 				float interpolated[16];
 
 				/* do interpolation */
@@ -387,7 +387,7 @@ void R_DrawModelDirect (modelInfo_t *mi, modelInfo_t *pmi, const char *tagname)
 
 	glPopMatrix();
 
-	R_Color(NULL);
+	R_Color(nullptr);
 }
 
 /**
@@ -405,7 +405,7 @@ void R_DrawModelParticle (modelInfo_t *mi)
 		return;
 
 	skin = R_AliasModelState(mi->model, &mi->mesh, &mi->frame, &mi->oldframe, &mi->skin);
-	if (skin == NULL) {
+	if (skin == nullptr) {
 		Com_Printf("Model '%s' is broken\n", mi->name);
 		return;
 	}
@@ -436,7 +436,7 @@ void R_DrawModelParticle (modelInfo_t *mi)
 
 	glPopMatrix();
 
-	R_Color(NULL);
+	R_Color(nullptr);
 }
 
 /**
@@ -612,7 +612,7 @@ static bool R_UpdateShadowOrigin (entity_t *e)
 {
 	vec3_t start, end;
 
-	if (e->lighting == NULL)
+	if (e->lighting == nullptr)
 		return false;
 
 	if (e->lighting->lastShadowedFrame == r_locals.frame)
@@ -701,17 +701,17 @@ static void R_DrawMeshShadow (entity_t *e, const mAliasMesh_t *mesh)
 	R_EnableStencilTest(true);
 
 	if (lighting)
-		R_EnableLighting(NULL, false);
+		R_EnableLighting(nullptr, false);
 	glDrawArrays(GL_TRIANGLES, 0, mesh->num_tris * 3);
 	refdef.batchCount++;
 	if (lighting)
 		R_EnableLighting(program, true);
 
 	R_EnableStencilTest(false);
-	R_RotateForMeshShadow(NULL);
+	R_RotateForMeshShadow(nullptr);
 	R_EnableBlend(oldBlend);
 	R_EnableTexture(&texunit_diffuse, true);
-	R_Color(NULL);
+	R_Color(nullptr);
 }
 
 /**
@@ -782,17 +782,17 @@ void R_DrawAliasModel (entity_t *e)
 	mesh = R_DrawAliasModelBuffer(e);
 
 	if (r_state.specularmap_enabled)
-		R_EnableSpecularMap(NULL, false);
+		R_EnableSpecularMap(nullptr, false);
 
 	if (r_state.roughnessmap_enabled)
-		R_EnableRoughnessMap(NULL, false);
+		R_EnableRoughnessMap(nullptr, false);
 
-	R_EnableModelLights(NULL, 0, false, false);
+	R_EnableModelLights(nullptr, 0, false, false);
 
-	R_EnableGlowMap(NULL);
+	R_EnableGlowMap(nullptr);
 
 	if (r_state.active_normalmap)
-		R_EnableBumpmap(NULL);
+		R_EnableBumpmap(nullptr);
 
 	R_DrawMeshShadow(e, mesh);
 
@@ -805,5 +805,5 @@ void R_DrawAliasModel (entity_t *e)
 	if (r_showbox->integer)
 		R_DrawBoundingBox(mod->frames[e->as.frame].mins, mod->frames[e->as.frame].maxs);
 
-	R_Color(NULL);
+	R_Color(nullptr);
 }

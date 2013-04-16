@@ -36,7 +36,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /**
  * @brief Unloads transfer cargo when finishing the transfer or destroys it when no buildings/base.
- * @param[in,out] destination The destination base - might be NULL in case the base
+ * @param[in,out] destination The destination base - might be nullptr in case the base
  * is already destroyed
  * @param[in] transfer Pointer to transfer in ccs.transfers.
  * @param[in] success True if the transfer reaches dest base, false if the base got destroyed.
@@ -106,7 +106,7 @@ static void TR_EmptyTransferCargo (base_t *destination, transfer_t *transfer, bo
 	}
 
 	/* Aliens */
-	if (transfer->alienCargo != NULL) {
+	if (transfer->alienCargo != nullptr) {
 		if (success) {
 			if (!destination->alienContainment) {
 				Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("%s does not have Alien Containment, Aliens are removed!"), destination->name);
@@ -120,7 +120,7 @@ static void TR_EmptyTransferCargo (base_t *destination, transfer_t *transfer, bo
 			}
 		}
 		delete transfer->alienCargo;
-		transfer->alienCargo = NULL;
+		transfer->alienCargo = nullptr;
 	}
 
 	if (transfer->hasAircraft && success && transfer->srcBase) {	/* Aircraft. Cannot come from mission */
@@ -146,7 +146,7 @@ static void TR_TransferEnd (transfer_t *transfer)
 	assert(destination);
 
 	if (!destination->founded) {
-		TR_EmptyTransferCargo(NULL, transfer, false);
+		TR_EmptyTransferCargo(nullptr, transfer, false);
 		MSO_CheckAddNewMessage(NT_TRANSFER_LOST, _("Transport mission"), _("The destination base no longer exists! Transfer cargo was lost, personnel has been discharged."), MSG_TRANSFERFINISHED);
 		/** @todo what if source base is lost? we won't be able to unhire transfered employees. */
 	} else {
@@ -181,7 +181,7 @@ transfer_t* TR_TransferStart (base_t *srcBase, transferData_t &transData)
 
 	if (!transData.transferBase || !srcBase) {
 		Com_Printf("TR_TransferStart: No base selected!\n");
-		return NULL;
+		return nullptr;
 	}
 
 	/* Initialize transfer. */
@@ -222,7 +222,7 @@ transfer_t* TR_TransferStart (base_t *srcBase, transferData_t &transData)
 	}
 
 	/* Aliens. */
-	if (transData.alienCargo != NULL) {
+	if (transData.alienCargo != nullptr) {
 		transfer.alienCargo = new AlienCargo(*transData.alienCargo);
 		count += transData.alienCargo->getAlive();
 		count += transData.alienCargo->getDead();
@@ -239,7 +239,7 @@ transfer_t* TR_TransferStart (base_t *srcBase, transferData_t &transData)
 
 	/* don't start empty transfer */
 	if (count == 0)
-		return NULL;
+		return nullptr;
 
 	/* Recheck if production/research can be done on srcbase (if there are workers/scientists) */
 	PR_ProductionAllowed(srcBase);
@@ -351,7 +351,7 @@ static void TR_ListTransfers_f (void)
 			}
 		}
 		/* AlienCargo */
-		if (transfer->alienCargo != NULL) {
+		if (transfer->alienCargo != nullptr) {
 			Com_Printf("...AlienCargo:\n");
 			linkedList_t *cargo = transfer->alienCargo->list();
 			LIST_Foreach(cargo, alienCargo_t, item) {
@@ -392,7 +392,7 @@ bool TR_SaveXML (xmlNode_t *p)
 			return false;
 		}
 		cgi->XML_AddInt(s, SAVE_TRANSFER_DESTBASE, transfer->destBase->idx);
-		/* scrBase can be NULL if this is alien (mission->base) transport
+		/* scrBase can be nullptr if this is alien (mission->base) transport
 		 * @sa TR_TransferAlienAfterMissionStart */
 		if (transfer->srcBase)
 			cgi->XML_AddInt(s, SAVE_TRANSFER_SRCBASE, transfer->srcBase->idx);
@@ -410,7 +410,7 @@ bool TR_SaveXML (xmlNode_t *p)
 			}
 		}
 		/* save aliens */
-		if (transfer->alienCargo != NULL) {
+		if (transfer->alienCargo != nullptr) {
 			xmlNode_t *alienNode = cgi->XML_AddNode(s, SAVE_TRANSFER_ALIENCARGO);
 			if (!alienNode)
 				return false;
@@ -490,7 +490,7 @@ bool TR_LoadXML (xmlNode_t *p)
 		ss = cgi->XML_GetNode(s, SAVE_TRANSFER_ALIENCARGO);
 		if (ss) {
 			transfer.alienCargo = new AlienCargo();
-			if (transfer.alienCargo == NULL)
+			if (transfer.alienCargo == nullptr)
 				cgi->Com_Error(ERR_DROP, "TR_LoadXML: Cannot create AlienCargo object\n");
 			transfer.alienCargo->load(ss);
 		} else {
@@ -498,7 +498,7 @@ bool TR_LoadXML (xmlNode_t *p)
 			ss = cgi->XML_GetNode(s, SAVE_TRANSFER_ALIEN);
 			if (ss) {
 				transfer.alienCargo = new AlienCargo();
-				if (transfer.alienCargo == NULL)
+				if (transfer.alienCargo == nullptr)
 					cgi->Com_Error(ERR_DROP, "TR_LoadXML: Cannot create AlienCargo object\n");
 				for (; ss; ss = cgi->XML_GetNextNode(ss, s, SAVE_TRANSFER_ALIEN)) {
 					const int alive = cgi->XML_GetInt(ss, SAVE_TRANSFER_ALIVEAMOUNT, 0);
@@ -564,9 +564,9 @@ void TR_Shutdown (void)
 	TR_Foreach(transfer) {
 		int i;
 
-		if (transfer->alienCargo != NULL) {
+		if (transfer->alienCargo != nullptr) {
 			delete transfer->alienCargo;
-			transfer->alienCargo = NULL;
+			transfer->alienCargo = nullptr;
 		}
 		cgi->LIST_Delete(&transfer->aircraft);
 		for (i = EMPL_SOLDIER; i < MAX_EMPL; i++) {

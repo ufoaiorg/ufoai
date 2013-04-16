@@ -47,7 +47,7 @@ static byte G_GetImpactDirection(const Edict *const target, const vec3_t impact)
  * @brief Deals damage and causes wounds.
  * @param[in,out] target Pointer to the actor we want to damage.
  * @param[in] damage The value of the damage.
- * @param[in] impact Impact location @c NULL for splash damage.
+ * @param[in] impact Impact location @c nullptr for splash damage.
  */
 void G_DamageActor (Edict *target, const int damage, const vec3_t impact)
 {
@@ -136,7 +136,7 @@ void G_TreatActor (Edict *target, const fireDef_t *const fd, const int heal, con
  */
 void G_BleedWounds (const int team)
 {
-	Edict *ent = NULL;
+	Edict *ent = nullptr;
 
 	while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, team))) {
 		int bodyPart, damage = 0;
@@ -150,7 +150,7 @@ void G_BleedWounds (const int team)
 		if (damage > 0) {
 			G_PrintStats("%s is bleeding (damage: %i)", ent->chr.name, damage);
 			G_TakeDamage(ent, damage);
-			G_CheckDeathOrKnockout(ent, NULL, NULL, damage);
+			G_CheckDeathOrKnockout(ent, nullptr, nullptr, damage);
 		}
 	}
 	/* Maybe the last team member bled to death */
@@ -221,7 +221,7 @@ float G_ActorGetInjuryPenalty (const Edict *const ent, const modifier_types_t ty
 
 bool G_IsActorWounded (const Edict *ent)
 {
-	if (ent == NULL || !G_IsLivingActor(ent) || ent->chr.teamDef == NULL)
+	if (ent == nullptr || !G_IsLivingActor(ent) || ent->chr.teamDef == nullptr)
 		return false;
 
 	for (int i = 0; i < ent->chr.teamDef->bodyTemplate->numBodyParts(); ++i)

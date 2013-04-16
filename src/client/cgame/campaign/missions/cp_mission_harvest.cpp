@@ -137,12 +137,12 @@ void CP_HarvestMissionGo (mission_t *mission)
 	mission->stage = STAGE_MISSION_GOTO;
 
 	/* Choose a map */
-	if (CP_ChooseMap(mission, NULL)) {
+	if (CP_ChooseMap(mission, nullptr)) {
 		int counter;
-		linkedList_t *nationList = NULL;
+		linkedList_t *nationList = nullptr;
 		const bool nationTest = CP_ChooseNation(mission, &nationList);
 		for (counter = 0; counter < MAX_POS_LOOP; counter++) {
-			if (!CP_GetRandomPosOnGeoscapeWithParameters(mission->pos, mission->mapDef->terrains, mission->mapDef->cultures, mission->mapDef->populations, nationTest ? nationList : NULL))
+			if (!CP_GetRandomPosOnGeoscapeWithParameters(mission->pos, mission->mapDef->terrains, mission->mapDef->cultures, mission->mapDef->populations, nationTest ? nationList : nullptr))
 				continue;
 			if (GEO_PositionCloseToBase(mission->pos))
 				continue;

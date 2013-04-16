@@ -40,8 +40,8 @@ static void CL_NetReceiveItem (dbuffer *buf, Item *item, containerIndex_t *conta
 	int itemIdx, ammoIdx;
 	int ammoleft = NONE_AMMO;
 	int amount = 0;
-	item->setDef(NULL);
-	item->setAmmoDef(NULL);
+	item->setDef(nullptr);
+	item->setAmmoDef(nullptr);
 	NET_ReadFormat(buf, eventData->formatString, &itemIdx, &ammoleft, &ammoIdx, container, x, y, &item->rotated, &amount);
 	item->setAmmoLeft(ammoleft);
 	item->setAmount(amount);
@@ -97,7 +97,7 @@ void CL_InvAdd (const eventRegister_t *self, dbuffer *msg)
 			Com_Error(ERR_DROP, "InvAdd for %i to temp container %i", le->type, container);
 		}
 
-		if (cls.i.addToInventory(&le->inv, &item, INVDEF(container), x, y, item.getAmount()) == NULL)
+		if (cls.i.addToInventory(&le->inv, &item, INVDEF(container), x, y, item.getAmount()) == nullptr)
 			Com_Error(ERR_DROP, "InvAdd failed - could not add %i item(s) of %s to container %i",
 					item.getAmount(), item.def()->id, container);
 

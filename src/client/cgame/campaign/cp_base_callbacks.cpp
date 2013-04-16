@@ -115,7 +115,7 @@ static void B_SelectBase_f (void)
 			B_SelectBase(base);
 	} else if (baseID == CREATE_NEW_BASE_ID) {
 		/* create a new base */
-		B_SelectBase(NULL);
+		B_SelectBase(nullptr);
 	}
 }
 
@@ -134,7 +134,7 @@ static void B_NextBase_f (void)
 	base = B_GetNext(base);
 	/* if it was the last base, select the first */
 	if (!base)
-		base = B_GetNext(NULL);
+		base = B_GetNext(nullptr);
 	if (base)
 		B_SelectBase(base);
 }
@@ -154,16 +154,16 @@ static void B_PrevBase_f (void)
 	if (!currentBase)
 		return;
 
-	prevBase = NULL;
-	base = NULL;
-	while ((base = B_GetNext(base)) != NULL) {
+	prevBase = nullptr;
+	base = nullptr;
+	while ((base = B_GetNext(base)) != nullptr) {
 		if (base == currentBase)
 			break;
 		prevBase = base;
 	}
 	/* if it was the first base, select the last */
 	if (!prevBase) {
-		while ((base = B_GetNext(base)) != NULL) {
+		while ((base = B_GetNext(base)) != nullptr) {
 			prevBase = base;
 		}
 	}
@@ -403,7 +403,7 @@ static void B_BaseInit_f (void)
 	/* Get the research item closest to completion in the base if it exists */
 	cgi->UI_ExecuteConfunc("clear_research");
 	if (RS_ResearchAllowed(base)) {
-		const technology_t *closestTech = NULL;
+		const technology_t *closestTech = nullptr;
 		double finished = -1;
 		for (i = 0; i < ccs.numTechnologies; i++) {
 			const technology_t *tech = RS_GetTechByIDX(i);
@@ -419,7 +419,7 @@ static void B_BaseInit_f (void)
 				}
 			}
 		}
-		if (closestTech != NULL)
+		if (closestTech != nullptr)
 			cgi->UI_ExecuteConfunc("show_research \"%s\" %i %3.0f", closestTech->name, closestTech->scientists, finished);
 	}
 
@@ -479,7 +479,7 @@ static void B_BuildingSpace_f (void)
 static void B_BuildingInit (base_t* base)
 {
 	int i;
-	linkedList_t *buildingList = NULL;
+	linkedList_t *buildingList = nullptr;
 
 	/* maybe someone call this command before the bases are parsed?? */
 	if (!base)
@@ -611,7 +611,7 @@ static void B_MarkBuildingDestroy (building_t* building)
 				cgi->UI_PopupButton(_("Destroy Hangar"), _("If you destroy this hangar, you will also destroy the aircraft inside.\nAre you sure you want to destroy this building?"),
 					"ui_pop;ui_push aircraft;aircraft_select;", _("Go to hangar"), _("Go to hangar without destroying building"),
 					va("building_destroy %i %i confirmed; ui_pop;", base->idx, building->idx), _("Destroy"), _("Destroy the building"),
-					hasMoreBases ? "ui_pop;ui_push transfer;" : NULL, hasMoreBases ? _("Transfer") : NULL,
+					hasMoreBases ? "ui_pop;ui_push transfer;" : nullptr, hasMoreBases ? _("Transfer") : nullptr,
 					_("Go to transfer menu without destroying the building"));
 				return;
 			}
@@ -621,7 +621,7 @@ static void B_MarkBuildingDestroy (building_t* building)
 				cgi->UI_PopupButton(_("Destroy Quarter"), _("If you destroy this Quarters, every employee inside will be killed.\nAre you sure you want to destroy this building?"),
 					"ui_pop;ui_push employees;employee_list 0;", _("Dismiss"), _("Go to hiring menu without destroying building"),
 					va("building_destroy %i %i confirmed; ui_pop;", base->idx, building->idx), _("Destroy"), _("Destroy the building"),
-					hasMoreBases ? "ui_pop;ui_push transfer;" : NULL, hasMoreBases ? _("Transfer") : NULL,
+					hasMoreBases ? "ui_pop;ui_push transfer;" : nullptr, hasMoreBases ? _("Transfer") : nullptr,
 					_("Go to transfer menu without destroying the building"));
 				return;
 			}
@@ -631,7 +631,7 @@ static void B_MarkBuildingDestroy (building_t* building)
 				cgi->UI_PopupButton(_("Destroy Storage"), _("If you destroy this Storage, every items inside will be destroyed.\nAre you sure you want to destroy this building?"),
 					"ui_pop;ui_push market;buy_type *mn_itemtype", _("Go to storage"), _("Go to buy/sell menu without destroying building"),
 					va("building_destroy %i %i confirmed; ui_pop;", base->idx, building->idx), _("Destroy"), _("Destroy the building"),
-					hasMoreBases ? "ui_pop;ui_push transfer;" : NULL, hasMoreBases ? _("Transfer") : NULL,
+					hasMoreBases ? "ui_pop;ui_push transfer;" : nullptr, hasMoreBases ? _("Transfer") : nullptr,
 					_("Go to transfer menu without destroying the building"));
 				return;
 			}
@@ -642,9 +642,9 @@ static void B_MarkBuildingDestroy (building_t* building)
 	}
 
 	cgi->UI_PopupButton(_("Destroy building"), _("Are you sure you want to destroy this building?"),
-		NULL, NULL, NULL,
+		nullptr, nullptr, nullptr,
 		va("building_destroy %i %i confirmed; ui_pop;", base->idx, building->idx), _("Destroy"), _("Destroy the building"),
-		NULL, NULL, NULL);
+		nullptr, nullptr, nullptr);
 }
 
 /**
@@ -758,7 +758,7 @@ static void B_CheckBuildingStatusForMenu_f (void)
 		B_CheckBuildingTypeStatus(base, building->buildingType, B_STATUS_UNDER_CONSTRUCTION, &numUnderConstruction);
 		if (numUnderConstruction == num) {
 			int minDay = 99999;
-			building_t *b = NULL;
+			building_t *b = nullptr;
 
 			while ((b = B_GetNextBuildingByType(base, b, building->buildingType))) {
 				if (b->buildingStatus == B_STATUS_UNDER_CONSTRUCTION) {
@@ -783,7 +783,7 @@ static void B_CheckBuildingStatusForMenu_f (void)
 				/* maybe the dependence of the building is under construction
 				 * note that we can't use B_STATUS_UNDER_CONSTRUCTION here, because this value
 				 * is not use for every building (for exemple Command Centre) */
-				building_t *b = NULL;
+				building_t *b = nullptr;
 
 				while ((b = B_GetNextBuildingByType(base, b, dependenceBuilding->buildingType))) {
 					if (!B_IsBuildingBuiltUp(b)) {
@@ -945,7 +945,7 @@ static void BaseSummary_SelectBase_f (void)
 	if (cgi->Cmd_Argc() >= 2) {
 		const int i = atoi(cgi->Cmd_Argv(1));
 		base = B_GetFoundedBaseByIDX(i);
-		if (base == NULL) {
+		if (base == nullptr) {
 			Com_Printf("Invalid base index given (%i).\n", i);
 			return;
 		}
@@ -953,7 +953,7 @@ static void BaseSummary_SelectBase_f (void)
 		base = B_GetCurrentSelectedBase();
 	}
 
-	if (base != NULL) {
+	if (base != nullptr) {
 		BaseSummary_Init(base);
 		cgi->UI_ExecuteConfunc("basesummary_change_color %i", base->idx);
 	}
@@ -995,20 +995,20 @@ void B_InitCallbacks (void)
 	cgi->Cmd_AddCommand("mn_base_prev", B_PrevBase_f, "Go to the previous base");
 	cgi->Cmd_AddCommand("mn_base_next", B_NextBase_f, "Go to the next base");
 	cgi->Cmd_AddCommand("mn_base_select", B_SelectBase_f, "Select a founded base by index");
-	cgi->Cmd_AddCommand("mn_base_build", B_BuildBase_f, NULL);
-	cgi->Cmd_AddCommand("mn_set_base_title", B_SetBaseTitle_f, NULL);
+	cgi->Cmd_AddCommand("mn_base_build", B_BuildBase_f, nullptr);
+	cgi->Cmd_AddCommand("mn_set_base_title", B_SetBaseTitle_f, nullptr);
 	cgi->Cmd_AddCommand("base_changename", B_ChangeBaseName_f, "Called after editing the cvar base name");
-	cgi->Cmd_AddCommand("base_init", B_BaseInit_f, NULL);
+	cgi->Cmd_AddCommand("base_init", B_BaseInit_f, nullptr);
 	cgi->Cmd_AddCommand("base_assemble", B_AssembleMap_f, "Called to assemble the current selected base");
 	cgi->Cmd_AddCommand("base_building_space", B_BuildingSpace_f, "Called to display building capacity in current selected base");
-	cgi->Cmd_AddCommand("building_init", B_BuildingInit_f, NULL);
-	cgi->Cmd_AddCommand("building_status", B_BuildingStatus_f, NULL);
+	cgi->Cmd_AddCommand("building_init", B_BuildingInit_f, nullptr);
+	cgi->Cmd_AddCommand("building_status", B_BuildingStatus_f, nullptr);
 	cgi->Cmd_AddCommand("building_destroy", B_BuildingDestroy_f, "Function to destroy a building (select via right click in baseview first)");
 	cgi->Cmd_AddCommand("building_amdestroy", B_Destroy_AntimaterStorage_f, "Function called if antimatter storage destroyed");
 	cgi->Cmd_AddCommand("building_ufopedia", B_BuildingInfoClick_f, "Opens the UFOpedia for the current selected building");
 	cgi->Cmd_AddCommand("check_building_status", B_CheckBuildingStatusForMenu_f, "Create a popup to inform player why he can't use a button");
 	cgi->Cmd_AddCommand("buildings_click", B_BuildingClick_f, "Opens the building information window in construction mode");
-	cgi->Cmd_AddCommand("reset_building_current", B_ResetBuildingCurrent_f, NULL);
+	cgi->Cmd_AddCommand("reset_building_current", B_ResetBuildingCurrent_f, nullptr);
 	cgi->Cmd_AddCommand("basesummary_selectbase", BaseSummary_SelectBase_f, "Opens Base Statistics menu in base");
 }
 

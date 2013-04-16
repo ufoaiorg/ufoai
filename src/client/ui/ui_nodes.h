@@ -79,7 +79,7 @@ struct uiNode_t {
 	/* common identification */
 	char name[MAX_VAR];			/**< name from the script files */
 	uiBehaviour_t *behaviour;
-	uiNode_t const* super;      /**< Node inherited, else NULL */
+	uiNode_t const* super;      /**< Node inherited, else nullptr */
 	bool dynamic;				/** If true, it use dynamic memory */
 	bool indexed;				/** If true, the node name indexed into his window */
 
@@ -87,7 +87,7 @@ struct uiNode_t {
 	uiNode_t* firstChild; 		/**< first element of linked list of child */
 	uiNode_t* lastChild;  		/**< last element of linked list of child */
 	uiNode_t* next;      		/**< Next element into linked list */
-	uiNode_t* parent;     		/**< Parent window, else NULL */
+	uiNode_t* parent;     		/**< Parent window, else nullptr */
 	uiNode_t* root;       		/**< Shortcut to the root node */
 
 	/* common pos */

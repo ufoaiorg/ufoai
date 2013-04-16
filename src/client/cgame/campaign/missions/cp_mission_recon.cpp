@@ -132,10 +132,10 @@ void CP_ReconMissionGroundGo (mission_t *mission)
 	}
 
 	/* Choose a map */
-	if (CP_ChooseMap(mission, NULL)) {
+	if (CP_ChooseMap(mission, nullptr)) {
 		int counter;
 		for (counter = 0; counter < MAX_POS_LOOP; counter++) {
-			if (!CP_GetRandomPosOnGeoscapeWithParameters(mission->pos, mission->mapDef->terrains, mission->mapDef->cultures, mission->mapDef->populations, NULL))
+			if (!CP_GetRandomPosOnGeoscapeWithParameters(mission->pos, mission->mapDef->terrains, mission->mapDef->cultures, mission->mapDef->populations, nullptr))
 				continue;
 			if (GEO_PositionCloseToBase(mission->pos))
 				continue;

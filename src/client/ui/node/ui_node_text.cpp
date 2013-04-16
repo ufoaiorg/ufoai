@@ -48,7 +48,7 @@ static int mouseScrollY;
 void uiTextNode::validateCache (uiNode_t *node)
 {
 	int v;
-	if (EXTRADATA(node).dataID == TEXT_NULL || node->text != NULL)
+	if (EXTRADATA(node).dataID == TEXT_nullptr || node->text != nullptr)
 		return;
 
 	v = UI_GetDataVersion(EXTRADATA(node).dataID);
@@ -60,7 +60,7 @@ void uiTextNode::validateCache (uiNode_t *node)
 const char *UI_TextNodeGetSelectedText (uiNode_t *node, int num)
 {
 	const char *text = UI_GetTextFromList(EXTRADATA(node).dataID, num);
-	if (text == NULL)
+	if (text == nullptr)
 		return "";
 	return text;
 }
@@ -148,8 +148,8 @@ void uiTextNode::onMouseMove (uiNode_t *node, int x, int y)
 /**
  * @brief Handles line breaks and drawing for shared data id
  * @param[in] node The context node
- * @param[in] text The test to draw else NULL
- * @param[in] list The test to draw else NULL
+ * @param[in] text The test to draw else nullptr
+ * @param[in] list The test to draw else nullptr
  * @param[in] noDraw If true, calling of this function only update the cache (real number of lines)
  * @note text or list but be used, not both
  */
@@ -157,7 +157,7 @@ void uiTextNode::drawText (uiNode_t* node, const char *text, const linkedList_t 
 {
 	static char textCopy[UI_TEXTNODE_BUFFERSIZE];
 	char newFont[MAX_VAR];
-	const char* oldFont = NULL;
+	const char* oldFont = nullptr;
 	vec4_t colorHover;
 	vec4_t colorSelectedHover;
 	char *cur, *tab, *end;
@@ -224,7 +224,7 @@ void uiTextNode::drawText (uiNode_t* node, const char *text, const linkedList_t 
 		x1 = x;
 		if (oldFont) {
 			font = oldFont;
-			oldFont = NULL;
+			oldFont = nullptr;
 		}
 
 		/* text styles and inline images */
@@ -265,7 +265,7 @@ void uiTextNode::drawText (uiNode_t* node, const char *text, const linkedList_t 
 		}
 
 		/* tabulation, we assume all the tabs fit on a single line */
-		haveTab = strchr(cur, '\t') != NULL;
+		haveTab = strchr(cur, '\t') != nullptr;
 		if (haveTab) {
 			while (cur && *cur) {
 				int tabwidth;
@@ -319,7 +319,7 @@ void uiTextNode::drawText (uiNode_t* node, const char *text, const linkedList_t 
 			} else {
 				if (noDraw) {
 					int lines = 0;
-					R_FontTextSize(font, cur, width, (longlines_t)EXTRADATA(node).longlines, NULL, NULL, &lines, NULL);
+					R_FontTextSize(font, cur, width, (longlines_t)EXTRADATA(node).longlines, nullptr, nullptr, &lines, nullptr);
 					fullSizeY += lines;
 				} else
 					UI_DrawString(font, (align_t)node->contentAlign, x1, y, x, width, EXTRADATA(node).lineHeight, cur, viewSizeY, EXTRADATA(node).super.scrollY.viewPos, &fullSizeY, true, (longlines_t)EXTRADATA(node).longlines);
@@ -343,14 +343,14 @@ void uiTextNode::drawText (uiNode_t* node, const char *text, const linkedList_t 
 	/* update scroll status */
 	setScrollY(node, -1, viewSizeY, fullSizeY);
 
-	R_Color(NULL);
+	R_Color(nullptr);
 }
 
 void uiTextNode::updateCache (uiNode_t *node)
 {
 	const uiSharedData_t *shared;
 
-	if (EXTRADATA(node).dataID == TEXT_NULL && node->text != NULL)
+	if (EXTRADATA(node).dataID == TEXT_nullptr && node->text != nullptr)
 		return;
 
 	shared = &ui_global.sharedData[EXTRADATA(node).dataID];
@@ -359,11 +359,11 @@ void uiTextNode::updateCache (uiNode_t *node)
 	case UI_SHARED_TEXT:
 		{
 			const char* t = CL_Translate(shared->data.text);
-			drawText(node, t, NULL, true);
+			drawText(node, t, nullptr, true);
 		}
 		break;
 	case UI_SHARED_LINKEDLISTTEXT:
-		drawText(node, NULL, shared->data.linkedListText, true);
+		drawText(node, nullptr, shared->data.linkedListText, true);
 		break;
 	default:
 		break;
@@ -379,9 +379,9 @@ void uiTextNode::draw (uiNode_t *node)
 {
 	const uiSharedData_t *shared;
 
-	if (EXTRADATA(node).dataID == TEXT_NULL && node->text != NULL) {
+	if (EXTRADATA(node).dataID == TEXT_nullptr && node->text != nullptr) {
 		const char* t = CL_Translate(UI_GetReferenceString(node, node->text));
-		drawText(node, t, NULL, false);
+		drawText(node, t, nullptr, false);
 		return;
 	}
 
@@ -391,11 +391,11 @@ void uiTextNode::draw (uiNode_t *node)
 	case UI_SHARED_TEXT:
 	{
 		const char* t = CL_Translate(shared->data.text);
-		drawText(node, t, NULL, false);
+		drawText(node, t, nullptr, false);
 		break;
 	}
 	case UI_SHARED_LINKEDLISTTEXT:
-		drawText(node, NULL, shared->data.linkedListText, false);
+		drawText(node, nullptr, shared->data.linkedListText, false);
 		break;
 	default:
 		break;
@@ -509,7 +509,7 @@ void uiTextNode::onLoaded (uiNode_t *node)
 	}
 #endif
 
-	if (node->text == NULL && EXTRADATA(node).dataID == TEXT_NULL)
+	if (node->text == nullptr && EXTRADATA(node).dataID == TEXT_nullptr)
 		Com_Printf("UI_TextNodeLoaded: 'textid' property of node '%s' is not set\n", UI_GetPath(node));
 }
 

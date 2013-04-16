@@ -36,7 +36,7 @@ typedef struct _libtrace_data
 } libtrace_data;
 
 static libtrace_data m_libtrace_data = { .unwind_inlines = TRUE, .with_functions = TRUE, .do_demangle = TRUE,
-		.base_names = TRUE, .syms = NULL, .abfd = NULL, .section = NULL, };
+		.base_names = TRUE, .syms = nullptr, .abfd = nullptr, .section = nullptr, };
 
 /** These variables are used to pass information between
  translate_addresses and find_address_in_section.  */
@@ -211,7 +211,7 @@ static int translate_addresses (bfd *abfd, asection *section, void *xaddr, char 
 	sym_info si = { 0 };
 
 	sprintf(addr, "%p", xaddr);
-	si.pc = bfd_scan_vma(addr, NULL, 16);
+	si.pc = bfd_scan_vma(addr, nullptr, 16);
 
 	si.found = FALSE;
 	if (section)
@@ -220,36 +220,36 @@ static int translate_addresses (bfd *abfd, asection *section, void *xaddr, char 
 		bfd_map_over_sections(abfd, find_address_in_section, &si);
 
 	if (!si.found) {
-		if (buf_func != NULL)
+		if (buf_func != nullptr)
 			snprintf(buf_func, buf_func_len, "%s ??:0", m_libtrace_data.with_functions ? "??" : "");
 	} else {
 		do {
 			if (m_libtrace_data.with_functions) {
 				const char *name;
-				char *alloc = NULL;
+				char *alloc = nullptr;
 
 				name = si.functionname;
-				if (name == NULL || *name == '\0')
+				if (name == nullptr || *name == '\0')
 					name = "??";
 				else if (m_libtrace_data.do_demangle) {
 					alloc = bfd_demangle(abfd, name, DMGL_ANSI | DMGL_PARAMS);
-					if (alloc != NULL)
+					if (alloc != nullptr)
 						name = alloc;
 				}
 
-				if (buf_func != NULL)
+				if (buf_func != nullptr)
 					snprintf(buf_func, buf_func_len, "%s", name);
 
 				free(alloc);
 			}
 
-			if (m_libtrace_data.base_names && si.filename != NULL) {
+			if (m_libtrace_data.base_names && si.filename != nullptr) {
 				char *h = strrchr(si.filename, '/');
-				if (h != NULL)
+				if (h != nullptr)
 					si.filename = h + 1;
 			}
 
-			if (buf_file != NULL)
+			if (buf_file != nullptr)
 				snprintf(buf_file, buf_file_len, "%s:%u", si.filename ? si.filename : "??", si.line);
 			if (!m_libtrace_data.unwind_inlines)
 				si.found = FALSE;
@@ -264,7 +264,7 @@ static int translate_addresses (bfd *abfd, asection *section, void *xaddr, char 
 
 int libtrace_init (const char *file_name, const char *section_name, const char *target)
 {
-	char **matching = NULL;
+	char **matching = nullptr;
 
 	bfd_init();
 	set_default_bfd_target();
@@ -273,7 +273,7 @@ int libtrace_init (const char *file_name, const char *section_name, const char *
 		return -1;
 
 	m_libtrace_data.abfd = bfd_openr(file_name, target);
-	if (m_libtrace_data.abfd == NULL) {
+	if (m_libtrace_data.abfd == nullptr) {
 		bfd_nonfatal(file_name);
 		return -1;
 	}
@@ -292,12 +292,12 @@ int libtrace_init (const char *file_name, const char *section_name, const char *
 		return -1;
 	}
 
-	if (section_name != NULL) {
+	if (section_name != nullptr) {
 		m_libtrace_data.section = bfd_get_section_by_name(m_libtrace_data.abfd, section_name);
-		if (m_libtrace_data.section == NULL)
+		if (m_libtrace_data.section == nullptr)
 			non_fatal("%s: cannot find section %s", file_name, section_name);
 	} else
-		m_libtrace_data.section = NULL;
+		m_libtrace_data.section = nullptr;
 
 	if (0 != slurp_symtab(m_libtrace_data.abfd))
 		return -1;
@@ -308,7 +308,7 @@ int libtrace_init (const char *file_name, const char *section_name, const char *
 int libtrace_close (void)
 {
 	free(m_libtrace_data.syms);
-	m_libtrace_data.syms = NULL;
+	m_libtrace_data.syms = nullptr;
 
 	bfd_close(m_libtrace_data.abfd);
 
@@ -345,9 +345,9 @@ static void usage (FILE *stream, int status)
 
 int main (int argc, char **argv)
 {
-	const char *file_name = NULL;
-	const char *section_name = NULL;
-	char *target = NULL;
+	const char *file_name = nullptr;
+	const char *section_name = nullptr;
+	char *target = nullptr;
 
 #if defined (HAVE_SETLOCALE) && defined (HAVE_LC_MESSAGES)
 	setlocale (LC_MESSAGES, "");
@@ -368,7 +368,7 @@ int main (int argc, char **argv)
 #define FUNC_MAX (PATH_MAX)
 	if (0 == libtrace_init(file_name, section_name, target)) {
 		int i;
-		void *sym = NULL;
+		void *sym = nullptr;
 		char func[FUNC_MAX + 1] = { 0 };
 		char file[PATH_MAX + 1] = { 0 };
 

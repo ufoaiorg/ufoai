@@ -54,7 +54,7 @@ static inline void R_AnimAdd (animState_t *as, const model_t *mod, const mAliasA
  * @sa R_AnimGetName
  * @param[in] mod The model to search the given animation id in
  * @param[in] name The animation name (from the *.anm file) to search
- * @return @c NULL if not found, otherwise the animation data
+ * @return @c nullptr if not found, otherwise the animation data
  */
 static const mAliasAnim_t *R_AnimGet (const model_t *mod, const char *name)
 {
@@ -62,13 +62,13 @@ static const mAliasAnim_t *R_AnimGet (const model_t *mod, const char *name)
 	int i;
 
 	if (!mod || !mod->alias.num_anims)
-		return NULL;
+		return nullptr;
 
 	for (i = 0, anim = mod->alias.animdata; i < mod->alias.num_anims; i++, anim++)
 		if (Q_streq(name, anim->name))
 			return anim;
 
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -237,7 +237,7 @@ void R_AnimRun (animState_t *as, const model_t *mod, int msec)
  * @sa R_AnimChange
  * @param[in] as The animation state to check
  * @param[in] mod The model to check
- * @return @c NULL if no animation is set or running or the name of the current running animation otherwise.
+ * @return @c nullptr if no animation is set or running or the name of the current running animation otherwise.
  */
 const char *R_AnimGetName (const animState_t *as, const model_t *mod)
 {
@@ -246,10 +246,10 @@ const char *R_AnimGetName (const animState_t *as, const model_t *mod)
 	assert(as->lcur < MAX_ANIMLIST);
 
 	if (!mod || !mod->alias.num_anims)
-		return NULL;
+		return nullptr;
 
 	if (as->lcur == as->ladd)
-		return NULL;
+		return nullptr;
 
 	anim = R_AnimGetAliasAnim(mod, as);
 	return anim->name;

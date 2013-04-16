@@ -101,7 +101,7 @@ static inline const char *CP_ToDifficultyName (const int difficulty)
 static void GAME_CP_GetCampaigns_f (void)
 {
 	int i;
-	uiNode_t *campaignOption = NULL;
+	uiNode_t *campaignOption = nullptr;
 
 	for (i = 0; i < ccs.numCampaigns; i++) {
 		const campaign_t *c = &ccs.campaigns[i];
@@ -126,7 +126,7 @@ static void GAME_CP_CampaignDescription_f (void)
 		if (ccs.numCampaigns > 0)
 			campaign = &ccs.campaigns[0];
 		else
-			campaign = NULL;
+			campaign = nullptr;
 	} else {
 		campaign = CP_GetCampaign(cgi->Cmd_Argv(1));
 	}
@@ -341,7 +341,7 @@ bool GAME_CP_Spawn (linkedList_t **chrList)
 	CP_CleanTempInventory(base);
 
 	/* activate hud */
-	cgi->HUD_InitUI(NULL, false);
+	cgi->HUD_InitUI(nullptr, false);
 
 	return true;
 }
@@ -370,14 +370,14 @@ bool GAME_CP_TeamIsKnown (const teamDef_t *teamDef)
 
 /**
  * @brief Returns the currently selected character.
- * @return The selected character or @c NULL.
+ * @return The selected character or @c nullptr.
  */
 character_t* GAME_CP_GetSelectedChr (void)
 {
 	Employee *employee = E_GetEmployeeFromChrUCN(cgi->Cvar_GetInteger("mn_ucn"));
 	if (employee)
 		return &employee->chr;
-	return NULL;
+	return nullptr;
 }
 
 void GAME_CP_Drop (void)
@@ -404,7 +404,7 @@ void GAME_CP_Frame (float secondsSinceLastFrame)
 void GAME_CP_DrawBaseLayout (int baseIdx, int x1, int y1, int totalMarge, int w, int h, int padding, const vec4_t bgcolor, const vec4_t color)
 {
 	const base_t *base = B_GetBaseByIDX(baseIdx);
-	if (base == NULL)
+	if (base == nullptr)
 		base = B_GetCurrentSelectedBase();
 	int y = y1 + padding;
 	for (int row = 0; row < BASE_SIZE; row++) {
@@ -412,7 +412,7 @@ void GAME_CP_DrawBaseLayout (int baseIdx, int x1, int y1, int totalMarge, int w,
 		for (int col = 0; col < BASE_SIZE; col++) {
 			if (B_IsTileBlocked(base, col, row)) {
 				cgi->UI_DrawFill(x, y, w, h, bgcolor);
-			} else if (B_GetBuildingAt(base, col, row) != NULL) {
+			} else if (B_GetBuildingAt(base, col, row) != nullptr) {
 				/* maybe destroyed in the meantime */
 				if (base->founded)
 					cgi->UI_DrawFill(x, y, w, h, color);
@@ -426,7 +426,7 @@ void GAME_CP_DrawBaseLayout (int baseIdx, int x1, int y1, int totalMarge, int w,
 void GAME_CP_DrawBaseTooltip (int baseIdx, int x, int y, int col, int row)
 {
 	const base_t *base = B_GetBaseByIDX(baseIdx);
-	if (base == NULL)
+	if (base == nullptr)
 		base = B_GetCurrentSelectedBase();
 	building_t *building = base->map[row][col].building;
 	if (!building)
@@ -442,7 +442,7 @@ void GAME_CP_DrawBaseTooltip (int baseIdx, int x, int y, int col, int row)
 void GAME_CP_DrawBase (int baseIdx, int x, int y, int w, int h, int col, int row, bool hover, int overlap)
 {
 	const base_t *base = B_GetBaseByIDX(baseIdx);
-	if (base == NULL)
+	if (base == nullptr)
 		base = B_GetCurrentSelectedBase();
 	if (!base) {
 		cgi->UI_PopWindow(false);
@@ -455,16 +455,16 @@ void GAME_CP_DrawBase (int baseIdx, int x, int y, int w, int h, int col, int row
 
 	int baseRow, baseCol;
 	for (baseRow = 0; baseRow < BASE_SIZE; baseRow++) {
-		const char *image = NULL;
+		const char *image = nullptr;
 		for (baseCol = 0; baseCol < BASE_SIZE; baseCol++) {
 			const vec2_t pos = Vector2FromInt(x + baseCol * w, y + baseRow * (h - overlap));
 			const building_t *building;
 			/* base tile */
 			if (B_IsTileBlocked(base, baseCol, baseRow)) {
-				building = NULL;
+				building = nullptr;
 				image = "base/invalid";
-			} else if (B_GetBuildingAt(base, baseCol, baseRow) == NULL) {
-				building = NULL;
+			} else if (B_GetBuildingAt(base, baseCol, baseRow) == nullptr) {
+				building = nullptr;
 				image = "base/grid";
 			} else {
 				building = B_GetBuildingAt(base, baseCol, baseRow);
@@ -482,7 +482,7 @@ void GAME_CP_DrawBase (int baseIdx, int x, int y, int w, int h, int col, int row
 			}
 
 			/* draw tile */
-			if (image != NULL)
+			if (image != nullptr)
 				cgi->UI_DrawNormImageByName(false, pos[0], pos[1], w * (building ? building->size[0] : 1), h * (building ? building->size[1] : 1), 0, 0, 0, 0, image);
 			if (building) {
 				switch (building->buildingStatus) {
@@ -525,9 +525,9 @@ void GAME_CP_DrawBase (int baseIdx, int x, int y, int w, int h, int col, int row
 void GAME_CP_HandleBaseClick (int baseIdx, int key, int col, int row)
 {
 	base_t *base = B_GetBaseByIDX(baseIdx);
-	if (base == NULL)
+	if (base == nullptr)
 		base = B_GetCurrentSelectedBase();
-	if (base == NULL)
+	if (base == nullptr)
 		return;
 	const building_t *entry = base->map[row][col].building;
 	if (key == K_MOUSE3) {
@@ -551,7 +551,7 @@ void GAME_CP_HandleBaseClick (int baseIdx, int key, int col, int row)
 				return;
 			for (int y = row; y < row + building->size[1]; y++)
 				for (int x = col; x < col + building->size[0]; x++)
-					if (B_GetBuildingAt(base, x, y) != NULL || B_IsTileBlocked(base, x, y))
+					if (B_GetBuildingAt(base, x, y) != nullptr || B_IsTileBlocked(base, x, y))
 						return;
 			B_SetBuildingByClick(base, building, row, col);
 			cgi->S_StartLocalSample("geoscape/build-place", 1.0f);
@@ -559,7 +559,7 @@ void GAME_CP_HandleBaseClick (int baseIdx, int key, int col, int row)
 		}
 
 		const building_t *entry = B_GetBuildingAt(base, col, row);
-		if (entry != NULL) {
+		if (entry != nullptr) {
 			if (B_IsTileBlocked(base, col, row))
 				cgi->Com_Error(ERR_DROP, "tile with building is not blocked");
 
@@ -612,7 +612,7 @@ dbuffer *GAME_CP_InitializeBattlescape (const linkedList_t *team)
 		NET_WriteShort(msg, chr->state);
 		NET_WriteShort(msg, chr->RFmode.getHand());
 		NET_WriteShort(msg, chr->RFmode.getFmIdx());
-		NET_WriteShort(msg, chr->RFmode.getWeapon() != NULL ? chr->RFmode.getWeapon()->idx : NONE);
+		NET_WriteShort(msg, chr->RFmode.getWeapon() != nullptr ? chr->RFmode.getWeapon()->idx : NONE);
 	}
 
 	return msg;
@@ -656,14 +656,14 @@ const char *GAME_CP_GetItemModel (const char *string)
 		const technology_t *tech = RS_GetTechByProvided(string);
 		if (tech)
 			return tech->mdl;
-		return NULL;
+		return nullptr;
 	}
 }
 
 void GAME_CP_InitStartup (void)
 {
 	cgi->Cmd_AddCommand("cp_results", GAME_CP_Results_f, "Parses and shows the game results");
-	cgi->Cmd_AddCommand("cp_getdescription", GAME_CP_CampaignDescription_f, NULL);
+	cgi->Cmd_AddCommand("cp_getdescription", GAME_CP_CampaignDescription_f, nullptr);
 	cgi->Cmd_AddCommand("cp_getcampaigns", GAME_CP_GetCampaigns_f, "Fill the campaign list with available campaigns");
 	cgi->Cmd_AddCommand("cp_start", GAME_CP_Start_f, "Start the new campaign");
 

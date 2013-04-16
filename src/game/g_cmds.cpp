@@ -42,7 +42,7 @@ static void G_Players_f (const Player &player)
 	/* print information */
 	largeBuf[0] = 0;
 
-	Player *p = NULL;
+	Player *p = nullptr;
 	while ((p = G_PlayerGetNextActiveHuman(p))) {
 		Com_sprintf(smallBuf, sizeof(smallBuf), "(%i) Team %i %s status: %s\n", p->getNum(),
 				p->getTeam(), p->pers.netname, (p->roundDone ? "waiting" : "playing"));
@@ -117,7 +117,7 @@ static void G_Say_f (Player &player, bool arg0, bool team)
 	if (sv_dedicated->integer)
 		gi.DPrintf("%s", text);
 
-	Player *p = NULL;
+	Player *p = nullptr;
 	while ((p = G_PlayerGetNextActiveHuman(p))) {
 		if (team && p->getTeam() != player.getTeam())
 			continue;
@@ -135,7 +135,7 @@ static void G_KillTeam_f (void)
 {
 	/* default is to kill all teams */
 	int teamToKill = -1;
-	Edict *ent = NULL;
+	Edict *ent = nullptr;
 	int amount = -1;
 
 	/* with a parameter we will be able to kill a specific team */
@@ -153,7 +153,7 @@ static void G_KillTeam_f (void)
 				break;
 			/* die */
 			ent->HP = 0;
-			G_ActorDieOrStun(ent, NULL);
+			G_ActorDieOrStun(ent, nullptr);
 
 			if (teamToKill == TEAM_ALIEN)
 				level.num_kills[TEAM_PHALANX][TEAM_ALIEN]++;
@@ -174,7 +174,7 @@ static void G_StunTeam_f (void)
 {
 	/* default is to kill all teams */
 	int teamToKill = -1;
-	Edict *ent = NULL;
+	Edict *ent = nullptr;
 
 	/* with a parameter we will be able to kill a specific team */
 	if (gi.Cmd_Argc() == 2)
@@ -183,7 +183,7 @@ static void G_StunTeam_f (void)
 	if (teamToKill >= 0) {
 		while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, teamToKill))) {
 			/* stun */
-			G_ActorDieOrStun(ent, NULL);
+			G_ActorDieOrStun(ent, nullptr);
 
 			if (teamToKill == TEAM_ALIEN)
 				level.num_stuns[TEAM_PHALANX][TEAM_ALIEN]++;
@@ -203,7 +203,7 @@ static void G_StunTeam_f (void)
 static void G_ListMissionScore_f (void)
 {
 	int team = -1;
-	Edict *ent = NULL;
+	Edict *ent = nullptr;
 	int i, j;
 
 	/* With a parameter we will be able to get the info for a specific team */
@@ -295,16 +295,16 @@ static void G_ListMissionScore_f (void)
  */
 void G_InvList_f (const Player &player)
 {
-	Edict *ent = NULL;
+	Edict *ent = nullptr;
 
 	gi.DPrintf("Print inventory for '%s'\n", player.pers.netname);
 	while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, player.getTeam()))) {
 		gi.DPrintf("actor: '%s'\n", ent->chr.name);
 
-		const Container *cont = NULL;
+		const Container *cont = nullptr;
 		while ((cont = ent->chr.inv.getNextCont(cont, true))) {
 			Com_Printf("Container: %i\n", cont->id);
-			Item *item = NULL;
+			Item *item = nullptr;
 			while ((item = cont->getNextItem(item))) {
 				Com_Printf(".. item.def(): %i, item.ammo: %i, item.ammoLeft: %i, x: %i, y: %i\n",
 						(item->def() ? item->def()->idx : NONE), (item->ammoDef() ? item->ammoDef()->idx : NONE),
@@ -338,7 +338,7 @@ static void G_TouchEdict_f (void)
 		return;
 	}
 
-	ent = G_EdictsGetNextLivingActor(NULL);
+	ent = G_EdictsGetNextLivingActor(nullptr);
 	if (!ent)
 		return;	/* didn't find any */
 
@@ -369,7 +369,7 @@ static void G_UseEdict_f (void)
 	}
 
 	gi.DPrintf("Call use function for %s\n", e->classname);
-	e->use(e, NULL);
+	e->use(e, nullptr);
 }
 
 static void G_DestroyEdict_f (void)
@@ -405,7 +405,7 @@ static void G_StateChange_f (void)
 
 	const int entnum = atoi(gi.Cmd_Argv(1));
 	Edict *e = G_EdictsGetByNum(entnum);
-	if (e == NULL)
+	if (e == nullptr)
 		return;
 
 	const char *state = gi.Cmd_Argv(2);

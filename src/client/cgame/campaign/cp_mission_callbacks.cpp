@@ -46,12 +46,12 @@ static void AM_Go_f (void)
 		return;
 	}
 
-	if (GEO_GetMissionAircraft() == NULL) {
+	if (GEO_GetMissionAircraft() == nullptr) {
 		Com_Printf("GAME_CP_MissionAutoGo_f: No aircraft at target pos\n");
 		return;
 	}
 
-	if (GEO_GetInterceptorAircraft() == NULL) {
+	if (GEO_GetInterceptorAircraft() == nullptr) {
 		Com_Printf("GAME_CP_MissionAutoGo_f: No intercept aircraft given\n");
 		return;
 	}
@@ -89,7 +89,7 @@ static void AM_Check_f (void)
 {
 	const mission_t *mission = GEO_GetSelectedMission();
 
-	if (!mission || GEO_GetInterceptorAircraft() == NULL) {
+	if (!mission || GEO_GetInterceptorAircraft() == nullptr) {
 		Com_DPrintf(DEBUG_CLIENT, "GAME_CP_MissionAutoCheck_f: No update after automission\n");
 		return;
 	}
@@ -109,7 +109,7 @@ static void AM_Check_f (void)
  */
 void MIS_InitResultScreen (const missionResults_t *results)
 {
-	linkedList_t *list = NULL;
+	linkedList_t *list = nullptr;
 
 	/* init result text */
 	cgi->UI_ResetData(TEXT_LIST2);

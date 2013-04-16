@@ -77,7 +77,7 @@ static void BS_SetAutosell_f (void)
 		return;
 	}
 	/* aircraft check */
-	if (AIR_GetAircraftSilent(cgi->Cmd_Argv(1)) != NULL) {
+	if (AIR_GetAircraftSilent(cgi->Cmd_Argv(1)) != nullptr) {
 		Com_Printf("Aircraft can't be autosold!\n");
 		return;
 	}

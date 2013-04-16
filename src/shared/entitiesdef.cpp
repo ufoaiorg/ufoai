@@ -104,7 +104,7 @@ static int ED_AllocEntityDef (entityKeyDef_t *newKeyDefs, int numKeyDefs, int en
 	/* and copy from temp buffer */
 	memcpy(eDef->keyDefs, newKeyDefs, numKeyDefs * sizeof(entityKeyDef_t));
 
-	/* set NULLs at the end, to enable looping through using a pointer */
+	/* set nullptrs at the end, to enable looping through using a pointer */
 	OBJZERO(eDef->keyDefs[numKeyDefs]);
 
 	/* classname is commonly used, put it in its own field, copied from keyDefs[0] */
@@ -116,7 +116,7 @@ static int ED_AllocEntityDef (entityKeyDef_t *newKeyDefs, int numKeyDefs, int en
 
 /**
  * @brief search for an existing keyDef to add a new parsed pair info to.
- * @return a pointer to the entity def or NULL if it is not found
+ * @return a pointer to the entity def or nullptr if it is not found
  */
 static entityKeyDef_t *ED_FindKeyDefInArray (entityKeyDef_t keyDefs[], int numDefs, const char *name, int parseMode)
 {
@@ -128,7 +128,7 @@ static entityKeyDef_t *ED_FindKeyDefInArray (entityKeyDef_t keyDefs[], int numDe
 			return &keyDefs[i];
 		}
 	}
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -153,7 +153,7 @@ static int ED_Type2Constant (const char *strType)
 /**
  * @brief converts an internal constant integer to a string
  * representation of a type (eg V_FLOAT)
- * @return the string, or NULL if the integer is not recognised.
+ * @return the string, or nullptr if the integer is not recognised.
  */
 static const char *ED_Constant2Type (int constInt)
 {
@@ -168,7 +168,7 @@ static const char *ED_Constant2Type (int constInt)
 		return "V_STRING";
 	default:
 		snprintf(lastErr, sizeof(lastErr), "ED_Constant2Type: constant not recognised");
-		return NULL;
+		return nullptr;
 	}
 }
 
@@ -463,7 +463,7 @@ static int ED_Block2Constant (const char *blockName)
 /**
  * @brief converts an internal constant integer to a string
  * representation of a type (eg V_FLOAT)
- * @return the string, or NULL if the integer is not recognised.
+ * @return the string, or nullptr if the integer is not recognised.
  */
 static const char *ED_Constant2Block (int constInt)
 {
@@ -482,7 +482,7 @@ static const char *ED_Constant2Block (int constInt)
 		return "range";
 	default:
 		snprintf(lastErr, sizeof(lastErr), "ED_Constant2Block: constant not recognised");
-		return NULL;
+		return nullptr;
 	}
 }
 
@@ -771,7 +771,7 @@ const char *ED_GetLastError (void)
  * @param classname The name, eg. "func_door"
  * @param keyname The key we are looking for
  * @param abstract send abstract to find an abstract key with this name
- * @return NULL if the entity def or key def is not found. call ED_GetLastError to get a relevant message.
+ * @return nullptr if the entity def or key def is not found. call ED_GetLastError to get a relevant message.
  */
 const entityKeyDef_t *ED_GetKeyDef (const char *classname, const char *keyname, const int abstract)
 {
@@ -785,14 +785,14 @@ const entityKeyDef_t *ED_GetKeyDef (const char *classname, const char *keyname, 
  * @param keyname The key we are looking for
  * @param abstract send a nonzero value if the abstract (radiant - not in any block) version of the
  * key is required
- * @return NULL if the entity def or key def is not found. call ED_GetLastError to get a relevant message.
+ * @return nullptr if the entity def or key def is not found. call ED_GetLastError to get a relevant message.
  */
 const entityKeyDef_t *ED_GetKeyDefEntity (const entityDef_t *ed, const char *keyname, const int abstract)
 {
 	const entityKeyDef_t *kd;
 
 	if (!ed)
-		return NULL;
+		return nullptr;
 
 	for (kd = ed->keyDefs; kd->name; kd++)
 		if (Q_streq(keyname, kd->name)) {
@@ -806,12 +806,12 @@ const entityKeyDef_t *ED_GetKeyDefEntity (const entityDef_t *ed, const char *key
 		}
 
 	snprintf(lastErr, sizeof(lastErr), "ED_GetKeyDefEntity: no key definition for %s found in entity %s entities.ufo", keyname, ed->classname);
-	return NULL;
+	return nullptr;
 }
 
 /**
  * @brief searches for the parsed entity def by classname
- * @return NULL if the entity def is not found. call ED_GetLastError to get a relevant message.
+ * @return nullptr if the entity def is not found. call ED_GetLastError to get a relevant message.
  */
 const entityDef_t *ED_GetEntityDef (const char *classname)
 {
@@ -822,7 +822,7 @@ const entityDef_t *ED_GetEntityDef (const char *classname)
 			return ed;
 
 	snprintf(lastErr, sizeof(lastErr), "ED_GetEntityDef: no entity definition for %s found in entities.ufo", classname);
-	return NULL;
+	return nullptr;
 }
 
 void ED_Free (void)

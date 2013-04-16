@@ -77,7 +77,7 @@ bool US_TransferUFO(storedUFO_t *ufo, installation_t *ufoyard);
 /**
  * @brief returns if any UFOs are stored in UFO Yards
  */
-#define US_UFOStored() (US_GetNext(NULL) != NULL)
+#define US_UFOStored() (US_GetNext(nullptr) != nullptr)
 
 void UR_InitStartup(void);
 void UR_Shutdown(void);

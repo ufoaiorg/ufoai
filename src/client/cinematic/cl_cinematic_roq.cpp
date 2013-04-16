@@ -552,7 +552,7 @@ void CIN_ROQ_CloseCinematic (cinematic_t *cin)
 	M_StopMusicStream(&ROQCIN.musicStream);
 
 	Mem_Free(cin->codecData);
-	cin->codecData = NULL;
+	cin->codecData = nullptr;
 }
 
 int CIN_ROQ_OpenCinematic (cinematic_t *cin, const char *fileName)
@@ -566,7 +566,7 @@ int CIN_ROQ_OpenCinematic (cinematic_t *cin, const char *fileName)
 		CIN_ROQ_CloseCinematic(cin);
 	}
 
-	assert(cin->codecData == NULL);
+	assert(cin->codecData == nullptr);
 	cin->codecData = Mem_PoolAllocType(roqCinematic_t, vid_genericPool);
 	OBJZERO(ROQCIN);
 
@@ -604,9 +604,9 @@ int CIN_ROQ_OpenCinematic (cinematic_t *cin, const char *fileName)
 	ROQCIN.startTime = CL_Milliseconds();
 	ROQCIN.frameRate = (chunk.flags != 0) ? chunk.flags : 30;
 	Mem_Free(ROQCIN.frameBuffer[0]);
-	ROQCIN.frameBuffer[0] = NULL;
+	ROQCIN.frameBuffer[0] = nullptr;
 	Mem_Free(ROQCIN.frameBuffer[1]);
-	ROQCIN.frameBuffer[1] = NULL;
+	ROQCIN.frameBuffer[1] = nullptr;
 
 	ROQCIN.currentFrame = 0;
 

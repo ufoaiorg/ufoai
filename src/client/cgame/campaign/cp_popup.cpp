@@ -83,8 +83,8 @@ static popup_intercept_t popupIntercept;	/**< Data about popup_intercept */
 
 /** Reservation-popup info */
 static int popupNum;							/**< Number of entries in the popup list */
-static linkedList_t *popupListData = NULL;		/**< Further datas needed when popup is clicked */
-static uiNode_t* popupListNode = NULL;		/**< Node used for popup */
+static linkedList_t *popupListData = nullptr;		/**< Further datas needed when popup is clicked */
+static uiNode_t* popupListNode = nullptr;		/**< Node used for popup */
 
 static int INVALID_BASE = -1;
 
@@ -103,7 +103,7 @@ bool CL_DisplayHomebasePopup (aircraft_t *aircraft, bool alwaysDisplay)
 	int homebase;
 	int numAvailableBases = 0;
 	baseCapacities_t capacity;
-	linkedList_t *popupListText = NULL;
+	linkedList_t *popupListText = nullptr;
 	base_t *base;
 
 	assert(aircraft);
@@ -115,8 +115,8 @@ bool CL_DisplayHomebasePopup (aircraft_t *aircraft, bool alwaysDisplay)
 	popupNum = 0;
 	homebase = -1;
 
-	base = NULL;
-	while ((base = B_GetNext(base)) != NULL) {
+	base = nullptr;
+	while ((base = B_GetNext(base)) != nullptr) {
 		char text[MAX_VAR];
 		char const* msg;
 
@@ -193,7 +193,7 @@ static void CL_PopupChangeHomebase_f (void)
 	}
 
 	base = B_GetFoundedBaseByIDX(baseIdx);
-	if (base == NULL)
+	if (base == nullptr)
 		return;
 
 	AIR_MoveAircraftIntoNewHomebase(aircraft, base);
@@ -269,7 +269,7 @@ static void CL_PopupAircraftClick_f (void)
 
 	/* Get aircraft associated with the popup_aircraft */
 	aircraft = popupAircraft.aircraft;
-	if (aircraft == NULL)
+	if (aircraft == nullptr)
 		return;
 
 	/* Execute action corresponding to item selected */
@@ -315,14 +315,14 @@ static int AIR_SortByDistance (linkedList_t *aircraftEntry1, linkedList_t *aircr
  */
 void CL_DisplayPopupInterceptMission (mission_t* mission)
 {
-	linkedList_t *aircraftList = NULL;
+	linkedList_t *aircraftList = nullptr;
 	linkedList_t *aircraftListSorted;
 
 	if (!mission)
 		return;
 
 	popupIntercept.mission = mission;
-	popupIntercept.ufo = NULL;
+	popupIntercept.ufo = nullptr;
 
 	/* Create the list of aircraft, and write the text to display in popup */
 	popupIntercept.numAircraft = 0;
@@ -368,15 +368,15 @@ void CL_DisplayPopupInterceptMission (mission_t* mission)
  */
 void CL_DisplayPopupInterceptUFO (aircraft_t* ufo)
 {
-	linkedList_t *aircraftList = NULL;
+	linkedList_t *aircraftList = nullptr;
 	linkedList_t *aircraftListSorted;
-	linkedList_t *baseList = NULL;
+	linkedList_t *baseList = nullptr;
 	base_t *base;
 
 	if (!ufo)
 		return;
 
-	popupIntercept.mission = NULL;
+	popupIntercept.mission = nullptr;
 	popupIntercept.ufo = ufo;
 
 	/* Create the list of aircraft, and write the text to display in popup */
@@ -411,8 +411,8 @@ void CL_DisplayPopupInterceptUFO (aircraft_t* ufo)
 	}
 	cgi->LIST_Delete(&aircraftListSorted);
 
-	base = NULL;
-	while ((base = B_GetNext(base)) != NULL) {
+	base = nullptr;
+	while ((base = B_GetNext(base)) != nullptr) {
 		/* Check if the base should be displayed in base list
 		 * don't check range because maybe UFO will get closer */
 		if (AII_BaseCanShoot(base))
@@ -452,16 +452,16 @@ static aircraft_t* CL_PopupInterceptGetAircraft (void)
 	int num;
 
 	if (cgi->Cmd_Argc() < 2)
-		return NULL;
+		return nullptr;
 
 	/* Get the selected aircraft */
 	num = atoi(cgi->Cmd_Argv(1));
 	if (num < 0 || num >= popupIntercept.numAircraft)
-		return NULL;
+		return nullptr;
 
 	cgi->UI_PopWindow(false);
 	if (!popupIntercept.aircraft[num])
-		return NULL;
+		return nullptr;
 	return popupIntercept.aircraft[num];
 }
 
@@ -476,7 +476,7 @@ static void CL_PopupInterceptClick_f (void)
 
 	/* Get the selected aircraft */
 	aircraft = CL_PopupInterceptGetAircraft();
-	if (aircraft == NULL)
+	if (aircraft == nullptr)
 		return;
 
 	/* Aircraft can start if only Command Centre in base is operational. */
@@ -504,7 +504,7 @@ static void CL_PopupInterceptRClick_f (void)
 
 	/* Get the selected aircraft */
 	aircraft = CL_PopupInterceptGetAircraft();
-	if (aircraft == NULL)
+	if (aircraft == nullptr)
 		return;
 
 	/* Display aircraft menu */
@@ -531,13 +531,13 @@ static void CL_PopupInterceptBaseClick_f (void)
 	}
 
 	/* If popup is opened, that means that ufo is selected on geoscape */
-	if (GEO_GetSelectedUFO() == NULL)
+	if (GEO_GetSelectedUFO() == nullptr)
 		return;
 
 	num = atoi(cgi->Cmd_Argv(1));
 
-	base = NULL;
-	while ((base = B_GetNext(base)) != NULL) {
+	base = nullptr;
+	while ((base = B_GetNext(base)) != nullptr) {
 		/* Check if the base should be displayed in base list */
 		if (AII_BaseCanShoot(base)) {
 			num--;
@@ -547,7 +547,7 @@ static void CL_PopupInterceptBaseClick_f (void)
 		}
 	}
 
-	installation = NULL;
+	installation = nullptr;
 	if (num >= 0) { /* don't try to find an installation if we already found the right base */
 		INS_Foreach(inst) {
 			/* Check if the installation should be displayed in base list */
@@ -592,15 +592,15 @@ static void CL_PopupInterceptBaseClick_f (void)
 void CL_PopupInit (void)
 {
 	/* popup_aircraft commands */
-	cgi->Cmd_AddCommand("popup_aircraft_action_click", CL_PopupAircraftClick_f, NULL);
+	cgi->Cmd_AddCommand("popup_aircraft_action_click", CL_PopupAircraftClick_f, nullptr);
 
 	/* popup_intercept commands */
-	cgi->Cmd_AddCommand("ships_click", CL_PopupInterceptClick_f, NULL);
-	cgi->Cmd_AddCommand("ships_rclick", CL_PopupInterceptRClick_f, NULL);
-	cgi->Cmd_AddCommand("bases_click", CL_PopupInterceptBaseClick_f, NULL);
+	cgi->Cmd_AddCommand("ships_click", CL_PopupInterceptClick_f, nullptr);
+	cgi->Cmd_AddCommand("ships_rclick", CL_PopupInterceptRClick_f, nullptr);
+	cgi->Cmd_AddCommand("bases_click", CL_PopupInterceptBaseClick_f, nullptr);
 
 	/* popup_homebase commands */
-	cgi->Cmd_AddCommand("change_homebase", CL_PopupChangeHomebase_f, NULL);
+	cgi->Cmd_AddCommand("change_homebase", CL_PopupChangeHomebase_f, nullptr);
 
 	OBJZERO(popupIntercept);
 	OBJZERO(popupAircraft);

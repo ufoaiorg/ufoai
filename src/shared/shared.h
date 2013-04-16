@@ -51,6 +51,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "sharedptr.h"
 #include "autoptr.h"
+#include "cxx.h"
 
 /* to support the gnuc __attribute__ command */
 #if defined __ICC || !defined __GNUC__
@@ -133,7 +134,7 @@ _CRTIMP int __cdecl	_strnicmp (const char*, const char*, size_t);
 
 #define Q_strcaseeq(a, b) (Q_strcasecmp(a, b) == 0)
 #define Q_streq(a, b) (strcmp(a, b) == 0)
-#define Q_strnull(string) ((string) == NULL || (string)[0] == '\0')
+#define Q_strnull(string) ((string) == nullptr || (string)[0] == '\0')
 #define Q_strvalid(string) !Q_strnull(string)
 
 #ifndef DEBUG

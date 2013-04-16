@@ -170,7 +170,7 @@ static const value_t seqCamera_vals[] = {
 	{"ddist", V_FLOAT, offsetof(seqCamera_t, ddist), MEMBER_SIZEOF(seqCamera_t, ddist)},
 	{"zoom", V_FLOAT, offsetof(seqCamera_t, zoom), MEMBER_SIZEOF(seqCamera_t, zoom)},
 	{"dzoom", V_FLOAT, offsetof(seqCamera_t, dzoom), MEMBER_SIZEOF(seqCamera_t, dzoom)},
-	{NULL, V_NULL, 0, 0}
+	{nullptr, V_nullptr, 0, 0}
 };
 
 /** @brief valid entity names for a sequence */
@@ -185,7 +185,7 @@ static const value_t seqEnt_vals[] = {
 	{"color", V_VECTOR, offsetof(seqEnt_t, color), MEMBER_SIZEOF(seqEnt_t, color)},
 	{"parent", V_STRING, offsetof(seqEnt_t, parent), 0},
 	{"tag", V_STRING, offsetof(seqEnt_t, tag), 0},
-	{NULL, V_NULL, 0, 0}
+	{nullptr, V_nullptr, 0, 0}
 };
 
 /** @brief valid id names for 2d entity */
@@ -204,7 +204,7 @@ static const value_t seq2D_vals[] = {
 	{"align", V_ALIGN, offsetof(seq2D_t, align), MEMBER_SIZEOF(seq2D_t, align)},
 	{"inbackground", V_BOOL, offsetof(seq2D_t, inBackground), MEMBER_SIZEOF(seq2D_t, inBackground)},
 	{"relative", V_BOOL, offsetof(seq2D_t, relativePos), MEMBER_SIZEOF(seq2D_t, relativePos)},
-	{NULL, V_NULL, 0, 0}
+	{nullptr, V_nullptr, 0, 0}
 };
 
 /**
@@ -250,7 +250,7 @@ static seqEnt_t *SEQ_FindEnt (sequenceContext_t *context, const char *name)
 			break;
 	if (i < context->numEnts)
 		return se;
-	return NULL;
+	return nullptr;
 }
 
 
@@ -268,7 +268,7 @@ static seq2D_t *SEQ_Find2D (sequenceContext_t *context, const char *name)
 			break;
 	if (i < context->numObj2Ds)
 		return s2d;
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -412,7 +412,7 @@ static void SEQ_Render2D (sequenceContext_t *context, bool backgroundObjects)
 			height += UI_DrawString(s2d->font, s2d->align, s2d->pos[0], s2d->pos[1], s2d->pos[0], maxWidth, -1 /** @todo use this for some nice line spacing */, _(s2d->text));
 		}
 	}
-	R_Color(NULL);
+	R_Color(nullptr);
 }
 
 /**
@@ -528,13 +528,13 @@ bool SEQ_Render (sequenceContext_t *context)
 	pos[0] = context->pos[0] + (context->size[0] - VID_NORM_WIDTH) / 2;
 	pos[1] = context->pos[1] + (context->size[1] - VID_NORM_HEIGHT) / 2;
 	pos[2] = 0;
-	UI_Transform(pos, NULL, NULL);
+	UI_Transform(pos, nullptr, nullptr);
 
 	SEQ_Render2D(context, true);
 	SEQ_Render3D(context);
 	SEQ_Render2D(context, false);
 
-	UI_Transform(NULL, NULL, NULL);
+	UI_Transform(nullptr, nullptr, nullptr);
 	return true;
 }
 
@@ -687,10 +687,10 @@ static int SEQ_ExecuteModel (sequenceContext_t *context, const char *name, const
 				data += strlen(data) + 1;
 				Com_DPrintf(DEBUG_CLIENT, "Registering model: %s\n", data);
 				se->model = R_FindModel(data);
-				if (se->model == NULL)
+				if (se->model == nullptr)
 					se->inuse = false;
 			} else if (Q_streq(data, "anim")) {
-				if (se->model == NULL)
+				if (se->model == nullptr)
 					Com_Error(ERR_FATAL, "could not change the animation - no model loaded yet");
 				data += strlen(data) + 1;
 				Com_DPrintf(DEBUG_CLIENT, "Change anim to: %s\n", data);
@@ -804,7 +804,7 @@ static int SEQ_ExecuteDelete (sequenceContext_t *context, const char *name, cons
 		s2d->inuse = false;
 
 		Mem_Free(s2d->text);
-		s2d->text = NULL;
+		s2d->text = nullptr;
 	}
 
 	if (!se && !s2d)
@@ -848,7 +848,7 @@ static char const* const seqCmdName[] = {
  * @brief Function to exeute all available commands
  */
 static sequenceHandler_t seqCmdFunc[] = {
-	NULL,
+	nullptr,
 	SEQ_ExecuteWait,
 	SEQ_ExecuteClick,
 	SEQ_ExecutePrecache,
@@ -941,7 +941,7 @@ void CL_ParseSequence (const char *name, const char **text)
 				Com_Error(ERR_FATAL, "Too many sequence commands for %s", name);
 
 			/* init seqCmd */
-			if (seqCmds == NULL)
+			if (seqCmds == nullptr)
 				seqCmds = Mem_PoolAllocTypeN(seqCmd_t, MAX_SEQCMDS, cl_genericPool);
 			sc = &seqCmds[numSeqCmds++];
 			OBJZERO(*sc);
@@ -985,7 +985,7 @@ void CL_ParseSequence (const char *name, const char **text)
 					Com_Error(ERR_DROP, "CL_ParseSequence: error while reading list (sequence \"%s\")", name);
 				}
 				data = &sc->data[0];
-				for (linkedList_t *element = list; element != NULL; element = element->next) {
+				for (linkedList_t *element = list; element != nullptr; element = element->next) {
 					if (maxLength <= 0) {
 						Com_Printf("Too much data for sequence %s", sc->name);
 						break;
@@ -1010,6 +1010,6 @@ void SEQ_Shutdown (void)
 {
 	OBJZERO(sequences);
 	numSequences = 0;
-	seqCmds = NULL;
+	seqCmds = nullptr;
 	numSeqCmds = 0;
 }

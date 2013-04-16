@@ -97,5 +97,5 @@ stringHunk_t *STRHUNK_Create (size_t size)
 void STRHUNK_Delete (stringHunk_t **hunk)
 {
 	Mem_Free(*hunk);
-	*hunk = NULL;
+	*hunk = nullptr;
 }

@@ -50,14 +50,14 @@ static uiNode_t *UI_ParseNode(uiNode_t *parent, const char **text, const char **
 /** @brief valid properties for a UI model definition */
 static const value_t uiModelProperties[] = {
 	{"model", V_HUNK_STRING, offsetof(uiModel_t, model), 0},
-	{"need", V_NULL, 0, 0},
+	{"need", V_nullptr, 0, 0},
 	{"anim", V_HUNK_STRING, offsetof(uiModel_t, anim), 0},
 	{"skin", V_INT, offsetof(uiModel_t, skin), sizeof(int)},
 	{"color", V_COLOR, offsetof(uiModel_t, color), sizeof(vec4_t)},
 	{"tag", V_HUNK_STRING, offsetof(uiModel_t, tag), 0},
 	{"parent", V_HUNK_STRING, offsetof(uiModel_t, parent), 0},
 
-	{NULL, V_NULL, 0, 0},
+	{nullptr, V_nullptr, 0, 0},
 };
 
 /** @brief reserved token preventing calling a node with it
@@ -75,7 +75,7 @@ static char const* const reservedTokens[] = {
 	"float",
 	"string",
 	"var",
-	NULL
+	nullptr
 };
 
 static bool UI_TokenIsReserved (const char *name)
@@ -148,17 +148,17 @@ static bool UI_TokenIsName (const char *name, bool isQuoted)
  * @brief Find a value_t by name into a array of value_t
  * @param[in] propertyList Array of value_t, with null termination
  * @param[in] name Property name we search
- * @return A value_t with the requested name, else NULL
+ * @return A value_t with the requested name, else nullptr
  */
 const value_t* UI_FindPropertyByName (const value_t* propertyList, const char* name)
 {
 	const value_t* current = propertyList;
-	while (current->string != NULL) {
+	while (current->string != nullptr) {
 		if (!Q_strcasecmp(name, current->string))
 			return current;
 		current++;
 	}
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -172,7 +172,7 @@ float* UI_AllocStaticFloat (int count)
 	float *result;
 	assert(count > 0);
 	result = (float*) UI_AllocHunkMemory(sizeof(float) * count, sizeof(float), false);
-	if (result == NULL)
+	if (result == nullptr)
 		Com_Error(ERR_FATAL, "UI_AllocFloat: UI memory hunk exceeded - increase the size");
 	return result;
 }
@@ -188,7 +188,7 @@ vec4_t* UI_AllocStaticColor (int count)
 	vec4_t *result;
 	assert(count > 0);
 	result = (vec4_t*) UI_AllocHunkMemory(sizeof(vec_t) * 4 * count, sizeof(vec_t), false);
-	if (result == NULL)
+	if (result == nullptr)
 		Com_Error(ERR_FATAL, "UI_AllocColor: UI memory hunk exceeded - increase the size");
 	return result;
 }
@@ -207,7 +207,7 @@ char* UI_AllocStaticString (const char* string, int size)
 		size = strlen(string) + 1;
 	}
 	result = (char*) UI_AllocHunkMemory(size, sizeof(char), false);
-	if (result == NULL)
+	if (result == nullptr)
 		Com_Error(ERR_FATAL, "UI_AllocString: UI memory hunk exceeded - increase the size");
 	Q_strncpyz(result, string, size);
 	return result;
@@ -229,14 +229,14 @@ uiAction_t *UI_AllocStaticAction (void)
  *
  * @param action Action to initialize
  * @param node Current node we are parsing, only used for error message
- * @param property Type of the value to parse, if NULL the string is not stored as string
+ * @param property Type of the value to parse, if nullptr the string is not stored as string
  * @param string String value to parse
  * @return True if the action is initialized
  * @todo remove node param and catch error where we call that function
  */
 bool UI_InitRawActionValue (uiAction_t* action, uiNode_t *node, const value_t *property, const char *string)
 {
-	if (property == NULL) {
+	if (property == nullptr) {
 		action->type = EA_VALUE_STRING;
 		action->d.terminal.d1.data = UI_AllocStaticString(string, 0);
 		action->d.terminal.d2.integer = 0;
@@ -245,7 +245,7 @@ bool UI_InitRawActionValue (uiAction_t* action, uiNode_t *node, const value_t *p
 
 	if (property->type == V_UI_SPRITEREF) {
 		uiSprite_t* sprite = UI_GetSpriteByName(string);
-		if (sprite == NULL) {
+		if (sprite == nullptr) {
 			Com_Printf("UI_ParseSetAction: sprite '%s' not found (%s)\n", string, UI_GetPath(node));
 			return false;
 		}
@@ -291,7 +291,7 @@ static bool UI_ParseSetAction (uiNode_t *node, uiAction_t *action, const char **
 	}
 
 	/* must use "equal" char between name and value */
-	*token = Com_EParse(text, errhead, NULL);
+	*token = Com_EParse(text, errhead, nullptr);
 	if (!*text)
 		return false;
 	if (!Q_streq(*token, "=")) {
@@ -307,20 +307,20 @@ static bool UI_ParseSetAction (uiNode_t *node, uiAction_t *action, const char **
 
 	property = (const value_t *) action->d.nonTerminal.left->d.terminal.d2.data;
 
-	*token = Com_EParse(text, errhead, NULL);
+	*token = Com_EParse(text, errhead, nullptr);
 	if (!*text)
 		return false;
 
 	if (Q_streq(*token, "{")) {
 		uiAction_t* actionList;
 
-		if (property != NULL && property->type != V_UI_ACTION) {
+		if (property != nullptr && property->type != V_UI_ACTION) {
 			Com_Printf("UI_ParseSetAction: Property %s@%s do not expect code block.\n", UI_GetPath(node), property->string);
 			return false;
 		}
 
 		actionList = UI_ParseActionList(node, text, token);
-		if (actionList == NULL)
+		if (actionList == nullptr)
 			return false;
 
 		localAction = UI_AllocStaticAction();
@@ -360,10 +360,10 @@ static bool UI_ParseSetAction (uiNode_t *node, uiAction_t *action, const char **
 static bool UI_ParseCallAction (uiNode_t *node, uiAction_t *action, const char **text, const char **token, const char *errhead)
 {
 	uiAction_t *expression;
-	uiAction_t *lastParam = NULL;
+	uiAction_t *lastParam = nullptr;
 	int paramID = 0;
 	expression = UI_ParseExpression(text);
-	if (expression == NULL)
+	if (expression == nullptr)
 		return false;
 
 	if (expression->type != EA_VALUE_PATHNODE_WITHINJECTION && expression->type != EA_VALUE_PATHNODE && expression->type != EA_VALUE_PATHPROPERTY && expression->type != EA_VALUE_PATHPROPERTY_WITHINJECTION) {
@@ -374,7 +374,7 @@ static bool UI_ParseCallAction (uiNode_t *node, uiAction_t *action, const char *
 	action->d.nonTerminal.left = expression;
 
 	/* check parameters */
-	*token = Com_EParse(text, errhead, NULL);
+	*token = Com_EParse(text, errhead, nullptr);
 	if ((*token)[0] == '\0')
 		return false;
 
@@ -391,18 +391,18 @@ static bool UI_ParseCallAction (uiNode_t *node, uiAction_t *action, const char *
 
 		/* parameter */
 		param = UI_ParseExpression(text);
-		if (param == NULL) {
+		if (param == nullptr) {
 			Com_Printf("UI_ParseCallAction: problem with the %i parameter\n", paramID);
 			return false;
 		}
-		if (lastParam == NULL)
+		if (lastParam == nullptr)
 			action->d.nonTerminal.right = param;
 		else
 			lastParam->next = param;
 		lastParam = param;
 
 		/* separator */
-		*token = Com_EParse(text, errhead, NULL);
+		*token = Com_EParse(text, errhead, nullptr);
 		if (!*token)
 			return false;
 		if (!Q_streq(*token, ",")) {
@@ -430,36 +430,36 @@ static uiAction_t *UI_ParseActionList (uiNode_t *node, const char **text, const 
 	uiAction_t *lastAction;
 	uiAction_t *action;
 
-	lastAction = NULL;
-	firstAction = NULL;
+	lastAction = nullptr;
+	firstAction = nullptr;
 
 	/* prevent bad position */
 	if ((*token)[0] != '{') {
 		Com_Printf("UI_ParseActionList: token \"{\" expected, but \"%s\" found (in event) (node: %s)\n", *token, UI_GetPath(node));
-		return NULL;
+		return nullptr;
 	}
 
 	while (true) {
 		bool result;
-		int type = EA_NULL;
+		int type = EA_nullptr;
 
 		/* get new token */
-		*token = Com_EParse(text, errhead, NULL);
+		*token = Com_EParse(text, errhead, nullptr);
 		if (!*token)
-			return NULL;
+			return nullptr;
 
 		if ((*token)[0] == '}')
 			break;
 
 		type = UI_GetActionTokenType(*token, EA_ACTION);
 		/* setter form */
-		if (type == EA_NULL && (*token)[0] == '*')
+		if (type == EA_nullptr && (*token)[0] == '*')
 			type = EA_ASSIGN;
 
 		/* unknown, we break the parsing */
-		if (type == EA_NULL) {
+		if (type == EA_nullptr) {
 			Com_Printf("UI_ParseActionList: unknown token \"%s\" ignored (in event) (node: %s)\n", *token, UI_GetPath(node));
-			return NULL;
+			return nullptr;
 		}
 
 		/* add the action */
@@ -475,9 +475,9 @@ static uiAction_t *UI_ParseActionList (uiNode_t *node, const char **text, const 
 		switch (action->type) {
 		case EA_CMD:
 			/* get parameter values */
-			*token = Com_EParse(text, errhead, NULL);
+			*token = Com_EParse(text, errhead, nullptr);
 			if (!*text)
-				return NULL;
+				return nullptr;
 
 			/* get the value */
 			action->d.terminal.d1.constString = UI_AllocStaticString(*token, 0);
@@ -486,25 +486,25 @@ static uiAction_t *UI_ParseActionList (uiNode_t *node, const char **text, const 
 		case EA_ASSIGN:
 			result = UI_ParseSetAction(node, action, text, token, errhead);
 			if (!result)
-				return NULL;
+				return nullptr;
 			break;
 
 		case EA_CALL:
 			result = UI_ParseCallAction(node, action, text, token, errhead);
 			if (!result)
-				return NULL;
+				return nullptr;
 			break;
 
 		case EA_DELETE:
 			{
 				uiAction_t *expression;
 				expression = UI_ParseExpression(text);
-				if (expression == NULL)
-					return NULL;
+				if (expression == nullptr)
+					return nullptr;
 
 				if (expression->type != EA_VALUE_CVARNAME) {
 					Com_Printf("UI_ParseActionList: \"delete\" keyword only support cvarname (node: %s)\n", UI_GetPath(node));
-					return NULL;
+					return nullptr;
 				}
 
 				action->d.nonTerminal.left = expression;
@@ -515,7 +515,7 @@ static uiAction_t *UI_ParseActionList (uiNode_t *node, const char **text, const 
 			/* check previous action */
 			if (!lastAction || (lastAction->type != EA_IF && lastAction->type != EA_ELIF)) {
 				Com_Printf("UI_ParseActionList: 'elif' must be set after an 'if' or an 'elif' (node: %s)\n", UI_GetPath(node));
-				return NULL;
+				return nullptr;
 			}
 			/* then it execute EA_IF, no break */
 		case EA_WHILE:
@@ -525,23 +525,23 @@ static uiAction_t *UI_ParseActionList (uiNode_t *node, const char **text, const 
 
 				/* get the condition */
 				expression = UI_ParseExpression(text);
-				if (expression == NULL)
-					return NULL;
+				if (expression == nullptr)
+					return nullptr;
 				action->d.nonTerminal.left = expression;
 
 				/* get the action block */
-				*token = Com_EParse(text, errhead, NULL);
+				*token = Com_EParse(text, errhead, nullptr);
 				if (!*text)
-					return NULL;
+					return nullptr;
 				action->d.nonTerminal.right = UI_ParseActionList(node, text, token);
-				if (action->d.nonTerminal.right == NULL) {
+				if (action->d.nonTerminal.right == nullptr) {
 					if (action->type == EA_IF)
 						Com_Printf("UI_ParseActionList: block expected after \"if\" (node: %s)\n", UI_GetPath(node));
 					else if (action->type == EA_ELIF)
 						Com_Printf("UI_ParseActionList: block expected after \"elif\" (node: %s)\n", UI_GetPath(node));
 					else
 						Com_Printf("UI_ParseActionList: block expected after \"while\" (node: %s)\n", UI_GetPath(node));
-					return NULL;
+					return nullptr;
 				}
 				break;
 			}
@@ -550,18 +550,18 @@ static uiAction_t *UI_ParseActionList (uiNode_t *node, const char **text, const 
 			/* check previous action */
 			if (!lastAction || (lastAction->type != EA_IF && lastAction->type != EA_ELIF)) {
 				Com_Printf("UI_ParseActionList: 'else' must be set after an 'if' or an 'elif' (node: %s)\n", UI_GetPath(node));
-				return NULL;
+				return nullptr;
 			}
 
 			/* get the action block */
-			*token = Com_EParse(text, errhead, NULL);
+			*token = Com_EParse(text, errhead, nullptr);
 			if (!*text)
-				return NULL;
-			action->d.nonTerminal.left = NULL;
+				return nullptr;
+			action->d.nonTerminal.left = nullptr;
 			action->d.nonTerminal.right = UI_ParseActionList(node, text, token);
-			if (action->d.nonTerminal.right == NULL) {
+			if (action->d.nonTerminal.right == nullptr) {
 				Com_Printf("UI_ParseActionList: block expected after \"else\" (node: %s)\n", UI_GetPath(node));
-				return NULL;
+				return nullptr;
 			}
 			break;
 
@@ -575,8 +575,8 @@ static uiAction_t *UI_ParseActionList (uiNode_t *node, const char **text, const 
 
 	assert((*token)[0] == '}');
 
-	/* return non NULL value */
-	if (firstAction == NULL) {
+	/* return non nullptr value */
+	if (firstAction == nullptr) {
 		firstAction = UI_AllocStaticAction();
 	}
 
@@ -616,7 +616,7 @@ static bool UI_ParseExcludeRect (uiNode_t *node, const char **text, const char *
 	} while ((*token)[0] != '}');
 
 	newRect = (uiExcludeRect_t*) UI_AllocHunkMemory(sizeof(*newRect), STRUCT_MEMORY_ALIGN, false);
-	if (newRect == NULL) {
+	if (newRect == nullptr) {
 		Com_Printf("UI_ParseExcludeRect: ui hunk memory exceeded.");
 		return false;
 	}
@@ -645,7 +645,7 @@ static bool UI_ParseEventProperty (uiNode_t *node, const value_t *event, const c
 	}
 
 	*action = UI_ParseActionList(node, text, token);
-	if (*action == NULL)
+	if (*action == nullptr)
 		return false;
 
 	/* block terminal already read */
@@ -666,7 +666,7 @@ static bool UI_ParseProperty (void *object, const value_t *property, const char*
 	int result;
 	const int specialType = property->type & V_UI_MASK;
 
-	if (property->type == V_NULL) {
+	if (property->type == V_nullptr) {
 		return false;
 	}
 
@@ -857,7 +857,7 @@ static bool UI_ParseFunction (uiNode_t *node, const char **text, const char **to
 
 	action = &node->onClick;
 	*action = UI_ParseActionList(node, text, token);
-	if (*action == NULL)
+	if (*action == nullptr)
 		return false;
 
 	return (*token)[0] == '}';
@@ -982,7 +982,7 @@ static bool UI_ParseNodeBody (uiNode_t *node, const char **text, const char **to
 					return false;
 
 				*token = Com_EParse(text, errhead, node->name);
-				if (*text == NULL)
+				if (*text == nullptr)
 					return false;
 			}
 		} else if (UI_GetPropertyFromBehaviour(node->behaviour, *token)) {
@@ -996,7 +996,7 @@ static bool UI_ParseNodeBody (uiNode_t *node, const char **text, const char **to
 					return false;
 
 				*token = Com_EParse(text, errhead, node->name);
-				if (*text == NULL)
+				if (*text == nullptr)
 					return false;
 			}
 		}
@@ -1021,31 +1021,31 @@ static bool UI_ParseNodeBody (uiNode_t *node, const char **text, const char **to
  */
 static uiNode_t *UI_ParseNode (uiNode_t *parent, const char **text, const char **token, const char *errhead)
 {
-	uiNode_t *node = NULL;
+	uiNode_t *node = nullptr;
 	uiBehaviour_t *behaviour;
-	uiNode_t *component = NULL;
+	uiNode_t *component = nullptr;
 
 	/* get the behaviour */
 	behaviour = UI_GetNodeBehaviour(*token);
 	if (!behaviour) {
 		component = UI_GetComponent(*token);
 	}
-	if (behaviour == NULL && component == NULL) {
+	if (behaviour == nullptr && component == nullptr) {
 		Com_Printf("UI_ParseNode: node behaviour/component '%s' doesn't exists (%s)\n", *token, UI_GetPath(parent));
-		return NULL;
+		return nullptr;
 	}
 
 	/* get the name */
 	*token = Com_EParse(text, errhead, "");
 	if (!*text)
-		return NULL;
+		return nullptr;
 	if (!UI_TokenIsName(*token, Com_GetType(text) == TT_QUOTED_WORD)) {
 		Com_Printf("UI_ParseNode: \"%s\" is not a well formed node name ([a-zA-Z_][a-zA-Z0-9_]*)\n", *token);
-		return NULL;
+		return nullptr;
 	}
 	if (UI_TokenIsReserved(*token)) {
 		Com_Printf("UI_ParseNode: \"%s\" is a reserved token, we can't call a node with it\n", *token);
-		return NULL;
+		return nullptr;
 	}
 
 	/* test if node already exists */
@@ -1057,13 +1057,13 @@ static uiNode_t *UI_ParseNode (uiNode_t *parent, const char **text, const char *
 	if (node) {
 		if (node->behaviour != behaviour) {
 			Com_Printf("UI_ParseNode: we can't change node type (node \"%s\")\n", UI_GetPath(node));
-			return NULL;
+			return nullptr;
 		}
 		Com_DPrintf(DEBUG_CLIENT, "... over-riding node %s\n", UI_GetPath(node));
 
 	/* else initialize a component */
 	} else if (component) {
-		node = UI_CloneNode(component, NULL, true, *token, false);
+		node = UI_CloneNode(component, nullptr, true, *token, false);
 		if (parent) {
 			if (parent->root)
 				UI_UpdateRoot(node, parent->root);
@@ -1084,7 +1084,7 @@ static uiNode_t *UI_ParseNode (uiNode_t *parent, const char **text, const char *
 	/* get body */
 	const bool result = UI_ParseNodeBody(node, text, token, errhead);
 	if (!result)
-		return NULL;
+		return nullptr;
 
 	/* validate properties */
 	UI_Node_Loaded(node);
@@ -1101,7 +1101,7 @@ bool UI_ParseUIModel (const char *name, const char **text)
 	uiModel_t *model;
 	const char *token;
 	int i;
-	const value_t *v = NULL;
+	const value_t *v = nullptr;
 	const char *errhead = "UI_ParseUIModel: unexpected end of file (names ";
 
 	/* search for a UI models with same name */
@@ -1149,12 +1149,12 @@ bool UI_ParseUIModel (const char *name, const char **text)
 			return false;
 		}
 
-		if (v->type == V_NULL) {
+		if (v->type == V_nullptr) {
 			if (Q_streq(v->string, "need")) {
 				token = Com_EParse(text, errhead, name);
 				if (!*text)
 					return false;
-				if (model->next != NULL)
+				if (model->next != nullptr)
 					Sys_Error("UI_ParseUIModel: second 'need' token found in model %s", name);
 				model->next = UI_GetUIModel(token);
 				 if (!model->next)
@@ -1195,7 +1195,7 @@ bool UI_ParseSprite (const char *name, const char **text)
 		const value_t *property;
 
 		token = Com_Parse(text);
-		if (*text == NULL)
+		if (*text == nullptr)
 			return false;
 
 		if (token[0] == '}')
@@ -1247,7 +1247,7 @@ bool UI_ParseComponent (const char *type, const char *name, const char **text)
 	}
 
 	token = Com_EParse(text, errhead, "");
-	if (text == NULL)
+	if (text == nullptr)
 		return false;
 
 	/* get keyword */
@@ -1256,11 +1256,11 @@ bool UI_ParseComponent (const char *type, const char *name, const char **text)
 		return false;
 	}
 	token = Com_EParse(text, errhead, "");
-	if (text == NULL)
+	if (text == nullptr)
 		return false;
 
 	/* initialize component */
-	uiNode_t *component = NULL;
+	uiNode_t *component = nullptr;
 	const uiBehaviour_t *behaviour = UI_GetNodeBehaviour(token);
 	if (behaviour) {
 		/* initialize a new node from behaviour */
@@ -1269,7 +1269,7 @@ bool UI_ParseComponent (const char *type, const char *name, const char **text)
 		const uiNode_t *inheritedComponent = UI_GetComponent(token);
 		if (inheritedComponent) {
 			/* initialize from a component */
-			component = UI_CloneNode(inheritedComponent, NULL, true, name, false);
+			component = UI_CloneNode(inheritedComponent, nullptr, true, name, false);
 		} else {
 			Com_Printf("UI_ParseComponent: node behaviour/component '%s' doesn't exists (component %s)\n", token, name);
 			return false;
@@ -1343,9 +1343,9 @@ bool UI_ParseWindow (const char *type, const char *name, const char **text)
 		uiNode_t *superWindow;
 		token = Com_Parse(text);
 		superWindow = UI_GetWindow(token);
-		if (superWindow == NULL)
+		if (superWindow == nullptr)
 			Sys_Error("Could not get the super window \"%s\"", token);
-		window = UI_CloneNode(superWindow, NULL, true, name, false);
+		window = UI_CloneNode(superWindow, nullptr, true, name, false);
 		token = Com_Parse(text);
 	} else {
 		window = UI_AllocNode(name, type, false);
@@ -1371,7 +1371,7 @@ bool UI_ParseWindow (const char *type, const char *name, const char **text)
 const char *UI_GetReferenceString (const uiNode_t* const node, const char *ref)
 {
 	if (!ref)
-		return NULL;
+		return nullptr;
 
 	/* its a cvar */
 	if (ref[0] != '*')
@@ -1385,7 +1385,7 @@ const char *UI_GetReferenceString (const uiNode_t* const node, const char *ref)
 	/* skip the star */
 	token = ref + 1;
 	if (token[0] == '\0')
-		return NULL;
+		return nullptr;
 
 	if (char const* const binding = Q_strstart(token, "binding:")) {
 		return Key_GetBinding(binding, cls.state != ca_active ? KEYSPACE_UI : KEYSPACE_GAME);

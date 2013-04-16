@@ -76,7 +76,7 @@ void uiZoneNode::onCapturedMouseLost (uiNode_t *node)
 {
 	if (capturedTimer) {
 		UI_TimerRelease(capturedTimer);
-		capturedTimer = NULL;
+		capturedTimer = nullptr;
 	}
 }
 

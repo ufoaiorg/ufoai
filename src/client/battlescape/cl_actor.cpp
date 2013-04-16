@@ -189,7 +189,7 @@ le_t *CL_ActorGetFromCharacter (const character_t *chr)
 		if (cl.teamList[i] && cl.teamList[i]->ucn == chr->ucn)
 			return cl.teamList[i];
 	}
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -206,7 +206,7 @@ character_t *CL_ActorGetChr (const le_t *le)
 			return chr;
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -422,7 +422,7 @@ void CL_ActorRemoveFromTeamList (le_t *le)
 			if (!LE_IsStunned(le)) {
 				CL_ActorCleanup(le);
 				/* remove from list */
-				cl.teamList[i] = NULL;
+				cl.teamList[i] = nullptr;
 			} else {
 				/** @todo why the heck is that needed? the inventory was already dropped to floor. */
 				le->left = le->right = le->extension = le->headgear = NONE;
@@ -445,13 +445,13 @@ void CL_ActorRemoveFromTeamList (le_t *le)
 		}
 
 		if (i == cl.numTeamList)
-			CL_ActorSelect(NULL);
+			CL_ActorSelect(nullptr);
 	}
 }
 
 /**
  * @brief Selects an actor.
- * @param le Pointer to local entity struct. If this is @c NULL the ui_inventory that is linked from the actors
+ * @param le Pointer to local entity struct. If this is @c nullptr the ui_inventory that is linked from the actors
  * @sa CL_UGVCvars
  * @sa CL_ActorCvars
  */
@@ -464,8 +464,8 @@ bool CL_ActorSelect (le_t *le)
 	if (!le) {
 		if (selActor)
 			selActor->flags &= ~LE_SELECTED;
-		selActor = NULL;
-		ui_inventory = NULL;
+		selActor = nullptr;
+		ui_inventory = nullptr;
 		return false;
 	}
 
@@ -490,7 +490,7 @@ bool CL_ActorSelect (le_t *le)
 	else
 		refdef.rendererFlags &= ~RDF_IRGOGGLES;
 
-	if (le->clientAction != NULL)
+	if (le->clientAction != nullptr)
 		UI_ExecuteConfunc("enable_clientaction");
 	else
 		UI_ExecuteConfunc("disable_clientaction");
@@ -639,7 +639,7 @@ static int forbiddenListLength;
  */
 static void CL_BuildForbiddenList (void)
 {
-	le_t *le = NULL;
+	le_t *le = nullptr;
 
 	forbiddenListLength = 0;
 
@@ -669,7 +669,7 @@ static void CL_BuildForbiddenList (void)
  */
 static void CL_DisplayBlockedPaths_f (void)
 {
-	le_t *le = NULL;
+	le_t *le = nullptr;
 	int j;
 	ptl_t *ptl;
 	vec3_t s;
@@ -691,7 +691,7 @@ static void CL_DisplayBlockedPaths_f (void)
 			continue;
 		}
 
-		ptl = CL_ParticleSpawn("blocked_field", 0, s, NULL, NULL);
+		ptl = CL_ParticleSpawn("blocked_field", 0, s, nullptr, nullptr);
 		ptl->rounds = 2;
 		ptl->roundsCnt = 2;
 		ptl->life = 10000;
@@ -699,7 +699,7 @@ static void CL_DisplayBlockedPaths_f (void)
 		if (le->fieldSize == ACTOR_SIZE_2x2) {
 			/* If this actor blocks 4 fields draw them as well. */
 			for (j = 0; j < 3; j++) {
-				ptl_t *ptl2 = CL_ParticleSpawn("blocked_field", 0, s, NULL, NULL);
+				ptl_t *ptl2 = CL_ParticleSpawn("blocked_field", 0, s, nullptr, nullptr);
 				ptl2->rounds = ptl->rounds;
 				ptl2->roundsCnt = ptl->roundsCnt;
 				ptl2->life = ptl->life;
@@ -1041,7 +1041,7 @@ void CL_ActorInvMove (const le_t *le, containerIndex_t fromContainer, int fromX,
 
 	const Item *item = le->inv.getItemAtPos(fromPtr, fromX, fromY);
 
-	if (item != NULL) {
+	if (item != nullptr) {
 		const character_t *chr = CL_ActorGetChr(le);
 		if (!le->inv.canHoldItemWeight(fromContainer, toContainer, *item, GAME_GetChrMaxLoad(chr))) {
 			UI_Popup(_("Warning"), _("This soldier can not carry anything else."));
@@ -1077,7 +1077,7 @@ static void CL_ActorUse_f (void)
 		return;
 
 	/* no client action */
-	if (actor->clientAction == NULL) {
+	if (actor->clientAction == nullptr) {
 		Com_DPrintf(DEBUG_CLIENT, "CL_ActorUse_f: No client_action set for actor with entnum %i.\n", actor->entnum);
 		return;
 	}
@@ -1460,18 +1460,18 @@ bool CL_ActorMouseTrace (void)
 	VectorCopy(testPos, mousePos);
 
 	interactLe = CL_BattlescapeSearchAtGridPos(mousePos, false, selActor);
-	if (interactLe != NULL && LE_IsActor(interactLe)) {
+	if (interactLe != nullptr && LE_IsActor(interactLe)) {
 		mouseActor = interactLe;
-		interactEntity = NULL;
-	} else if (selActor != NULL && selActor->clientAction == interactLe) {
+		interactEntity = nullptr;
+	} else if (selActor != nullptr && selActor->clientAction == interactLe) {
 		interactEntity = interactLe;
-		mouseActor = NULL;
+		mouseActor = nullptr;
 	} else {
-		interactEntity = NULL;
-		mouseActor = NULL;
+		interactEntity = nullptr;
+		mouseActor = nullptr;
 	}
 
-	if (interactEntity != NULL) {
+	if (interactEntity != nullptr) {
 		SCR_ChangeCursor(2);
 	} else {
 		SCR_ChangeCursor(1);
@@ -1491,7 +1491,7 @@ bool CL_ActorMouseTrace (void)
  */
 void CL_InitBattlescapeMouseDragging (void)
 {
-	CL_GetWorldCoordsUnderMouse(mouseDraggingPos, NULL, NULL);
+	CL_GetWorldCoordsUnderMouse(mouseDraggingPos, nullptr, nullptr);
 }
 
 /**
@@ -1503,7 +1503,7 @@ void CL_BattlescapeMouseDragging (void)
 	/* Difference between last and currently selected cell, we'll move camera by that difference */
 	vec3_t currentMousePos, mousePosDiff;
 
-	CL_GetWorldCoordsUnderMouse(currentMousePos, NULL, NULL);
+	CL_GetWorldCoordsUnderMouse(currentMousePos, nullptr, nullptr);
 	if (fabs(currentMousePos[0] - mouseDraggingPos[0]) + fabs(currentMousePos[1] - mouseDraggingPos[1]) < 0.5f)
 		return;
 	VectorSubtract(mouseDraggingPos, currentMousePos, mousePosDiff);
@@ -1644,7 +1644,7 @@ bool CL_AddActor (le_t *le, entity_t *ent)
 
 	if (ent->flags & RF_BLOOD) {
 		const char *deathTextureName;
-		assert(le->teamDef != NULL);
+		assert(le->teamDef != nullptr);
 		deathTextureName = le->teamDef->deathTextureName;
 		ent->texture = R_FindImage(deathTextureName, it_effect);
 	}
@@ -1666,7 +1666,7 @@ TARGETING GRAPHICS
 static void CL_TargetingRadius (const vec3_t center, const float radius)
 {
 	ptl_t *particle = CL_ParticleSpawn("circle", 0, center);
-	if (particle != NULL)
+	if (particle != nullptr)
 		particle->size[0] = radius;
 }
 
@@ -1685,14 +1685,14 @@ static void CL_TargetingStraight (const pos3_t fromPos, actorSizeEnum_t fromActo
 	vec3_t start, end;
 	vec3_t dir, mid, temp;
 	bool crossNo;
-	le_t *target = NULL;
+	le_t *target = nullptr;
 	actorSizeEnum_t toActorSize;
 
 	if (!selActor || !selActor->fd)
 		return;
 
 	/* search for an actor at target */
-	target = CL_BattlescapeSearchAtGridPos(toPos, true, NULL);
+	target = CL_BattlescapeSearchAtGridPos(toPos, true, nullptr);
 
 	/* Determine the target's size. */
 	toActorSize = target
@@ -1721,7 +1721,7 @@ static void CL_TargetingStraight (const pos3_t fromPos, actorSizeEnum_t fromActo
 	/* switch up to top level, this is needed to make sure our trace doesn't go through ceilings ... */
 	/** @todo is this really needed for straight targetting? - for grenades, yes, but not for straight no?
 	 * cl_worldlevel->integer should be enough here */
-	trace_t tr = CL_Trace(start, temp, AABB(), selActor, NULL, MASK_SHOT, cl.mapMaxLevel - 1);
+	trace_t tr = CL_Trace(start, temp, AABB(), selActor, nullptr, MASK_SHOT, cl.mapMaxLevel - 1);
 	if (tr.le && (tr.le->team == cls.team || LE_IsCivilian(tr.le)) && LE_IsCrouched(tr.le))
 		VectorMA(start, UNIT_SIZE * 1.4, dir, temp);
 	else
@@ -1768,14 +1768,14 @@ static void CL_TargetingGrenade (const pos3_t fromPos, actorSizeEnum_t fromActor
 	vec3_t v0, ds, next;
 	bool obstructed = false;
 	int i;
-	le_t *target = NULL;
+	le_t *target = nullptr;
 	actorSizeEnum_t toActorSize;
 
 	if (!selActor || !selActor->fd || Vector2Compare(fromPos, toPos))
 		return;
 
 	/* search for an actor at target */
-	target = CL_BattlescapeSearchAtGridPos(toPos, true, NULL);
+	target = CL_BattlescapeSearchAtGridPos(toPos, true, nullptr);
 
 	/* Determine the target's size. */
 	toActorSize = target
@@ -2123,7 +2123,7 @@ void CL_AddPathing (void)
 {
 	pos3_t pos;
 
-	if (selActor == NULL) {
+	if (selActor == nullptr) {
 		return;
 	}
 
@@ -2146,7 +2146,7 @@ void CL_AddActorPathing (void)
 	pos3_t pos;
 	int i = 0;
 
-	if (selActor == NULL) {
+	if (selActor == nullptr) {
 		return;
 	}
 
@@ -2283,7 +2283,7 @@ static void CL_DebugPath_f (void)
 	int dir = 3;
 	RT_DebugSpecial(cl.mapTiles, cl.mapData->routing, actorSize, x, y, dir, cl.leInlineModelList);
 
-	bool found = Grid_FindPath(cl.mapData->routing, actorSize, &cl.pathMap, selActor->pos, mousePos, 0, 600, NULL, NULL);
+	bool found = Grid_FindPath(cl.mapData->routing, actorSize, &cl.pathMap, selActor->pos, mousePos, 0, 600, nullptr, nullptr);
 	if (found)
 		Com_Printf("found the path !\n");
 	{
@@ -2399,7 +2399,7 @@ static bool CL_ActorVis (const le_t *le, const le_t *check)
 
 	/* do 3 tests */
 	for (i = 0; i < 3; i++) {
-		const trace_t tr = CL_Trace(from, test, AABB(), le, NULL, MASK_SOLID, cl_worldlevel->integer);
+		const trace_t tr = CL_Trace(from, test, AABB(), le, nullptr, MASK_SOLID, cl_worldlevel->integer);
 		/* trace didn't reach the target - something was hit before */
 		if (tr.fraction < 1.0) {
 			/* look further down or stop */
@@ -2548,7 +2548,7 @@ static void CL_ActorConfirmAction_f (void)
 	static int time = 0;
 
 	if (time - cl.time < 1000) {
-		le_t *le = NULL;
+		le_t *le = nullptr;
 		while ((le = LE_GetNextInUse(le))) {
 			if (LE_IsLivingActor(le) && !LE_IsStunned(le) && le->team == cls.team)
 				CL_ActorConfirmAction(le);
@@ -2585,6 +2585,6 @@ void ACTOR_InitStartup (void)
 	Cmd_AddCommand("debug_drawblocked", CL_DisplayBlockedPaths_f, "Draw a marker for all blocked map-positions.");
 	Cmd_AddCommand("debug_movemark", CL_DumpMoveMark_f, "Trigger Step::isPossible in every direction at the current truePos.");
 	Cmd_AddCommand("debug_tus", CL_DumpTUs_f, "Show a table of the TUs that would be used by the current actor to move relative to his current location.");
-	Cmd_AddCommand("debug_actorinvlist", NULL, "Show the inventory list of all actors.");
+	Cmd_AddCommand("debug_actorinvlist", nullptr, "Show the inventory list of all actors.");
 #endif /* DEBUG */
 }

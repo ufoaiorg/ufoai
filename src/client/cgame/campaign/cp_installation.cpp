@@ -88,7 +88,7 @@ bool INS_HasType (installationType_t type, installationStatus_t status)
 /**
  * @brief Get installation by it's index.
  * @param[in] idx Instalation's index
- * @return Pointer to the installation corresponding to idx or @c NULL if not found.
+ * @return Pointer to the installation corresponding to idx or @c nullptr if not found.
  */
 installation_t* INS_GetByIDX (int idx)
 {
@@ -97,13 +97,13 @@ installation_t* INS_GetByIDX (int idx)
 			return installation;
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 /**
  * @brief Returns the installation Template for a given installation ID.
  * @param[in] id ID of the installation template to find.
- * @return corresponding installation Template, @c NULL if not found.
+ * @return corresponding installation Template, @c nullptr if not found.
  */
 const installationTemplate_t* INS_GetInstallationTemplateByID (const char *id)
 {
@@ -115,13 +115,13 @@ const installationTemplate_t* INS_GetInstallationTemplateByID (const char *id)
 			return t;
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 /**
  * @brief Returns the installation Template for a given installation type.
  * @param[in] type Type of the installation template to find.
- * @return corresponding installation Template, @c NULL if not found.
+ * @return corresponding installation Template, @c nullptr if not found.
  */
 const installationTemplate_t* INS_GetInstallationTemplateByType (installationType_t type)
 {
@@ -133,7 +133,7 @@ const installationTemplate_t* INS_GetInstallationTemplateByType (installationTyp
 			return t;
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -203,7 +203,7 @@ installation_t *INS_GetCurrentSelectedInstallation (void)
 			return installation;
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -217,7 +217,7 @@ void INS_SetCurrentSelectedInstallation (const installation_t *installation)
 		ins->selected = (ins == installation);
 
 	if (installation) {
-		B_SetCurrentSelectedBase(NULL);
+		B_SetCurrentSelectedBase(nullptr);
 		cgi->Cvar_Set("mn_installation_title", installation->name);
 		cgi->Cvar_Set("mn_installation_type", installation->installationTemplate->id);
 	} else {
@@ -320,7 +320,7 @@ installation_t *INS_GetFirstUFOYard (bool free)
 		return installation;
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -378,7 +378,7 @@ static const value_t installation_vals[] = {
 	{"model", V_HUNK_STRING, offsetof(installationTemplate_t, model), 0},
 	{"image", V_HUNK_STRING, offsetof(installationTemplate_t, image), 0},
 
-	{NULL, V_NULL, 0, 0}
+	{nullptr, V_nullptr, 0, 0}
 };
 
 /**

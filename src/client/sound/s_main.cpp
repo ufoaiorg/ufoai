@@ -102,7 +102,7 @@ void S_Frame (void)
 		}
 
 		/* ambient sounds */
-		le = NULL;
+		le = nullptr;
 		while ((le = LE_GetNextInUse(le))) {
 			if (le->type == ET_SOUND) {
 				s_sample_t *sample = S_GetSample(le->sampleIdx);
@@ -230,7 +230,7 @@ void S_Init (void)
 		return;
 	}
 
-	if (SDL_AudioDriverName(drivername, sizeof(drivername)) == NULL)
+	if (SDL_AudioDriverName(drivername, sizeof(drivername)) == nullptr)
 		Q_strncpyz(drivername, "(UNKNOWN)", sizeof(drivername));
 	Com_Printf("... driver: '%s'\n", drivername);
 

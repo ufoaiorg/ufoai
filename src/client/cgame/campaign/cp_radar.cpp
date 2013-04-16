@@ -53,8 +53,8 @@ void RADAR_UpdateStaticRadarCoverage (void)
 	CP_InitializeRadarOverlay(true);
 
 	/* Add base radar coverage */
-	base = NULL;
-	while ((base = B_GetNext(base)) != NULL) {
+	base = nullptr;
+	while ((base = B_GetNext(base)) != nullptr) {
 		if (base->radar.range) {
 			CP_AddRadarCoverage(base->pos, base->radar.range, base->radar.trackingRange, true);
 		}
@@ -116,8 +116,8 @@ void RADAR_DeactivateRadarOverlay (void)
 			return;
 	}
 
-	base = NULL;
-	while ((base = B_GetNext(base)) != NULL) {
+	base = nullptr;
+	while ((base = B_GetNext(base)) != nullptr) {
 		if (base->radar.numUFOs)
 			return;
 	}
@@ -217,8 +217,8 @@ void RADAR_NotifyUFORemoved (const aircraft_t* ufo, bool destroyed)
 {
 	base_t *base;
 
-	base = NULL;
-	while ((base = B_GetNext(base)) != NULL) {
+	base = nullptr;
+	while ((base = B_GetNext(base)) != nullptr) {
 		RADAR_NotifyUFORemovedFromOneRadar(&base->radar, ufo, destroyed);
 
 		AIR_ForeachFromBase(aircraft, base)
@@ -335,7 +335,7 @@ void RADAR_UpdateInstallationRadarCoverage (installation_t *installation, const 
  */
 void RADAR_AddDetectedUFOToEveryRadar (const aircraft_t *ufo)
 {
-	base_t *base = NULL;
+	base_t *base = nullptr;
 
 	AIR_Foreach(aircraft) {
 		if (!AIR_IsAircraftOnGeoscape(aircraft))
@@ -349,7 +349,7 @@ void RADAR_AddDetectedUFOToEveryRadar (const aircraft_t *ufo)
 		}
 	}
 
-	while ((base = B_GetNext(base)) != NULL) {
+	while ((base = B_GetNext(base)) != nullptr) {
 		if (!RADAR_IsUFOSensored(&base->radar, ufo)) {
 			/* Distance from radar to UFO */
 			const float dist = GetDistanceOnGlobe(ufo->pos, base->pos);
@@ -379,9 +379,9 @@ void RADAR_AddDetectedUFOToEveryRadar (const aircraft_t *ufo)
  */
 bool RADAR_CheckRadarSensored (const vec2_t pos)
 {
-	base_t *base = NULL;
+	base_t *base = nullptr;
 
-	while ((base = B_GetNext(base)) != NULL) {
+	while ((base = B_GetNext(base)) != nullptr) {
 		const float dist = GetDistanceOnGlobe(pos, base->pos);		/* Distance from base to position */
 		if (dist <= base->radar.range)
 			return true;
@@ -457,8 +457,8 @@ void RADAR_SetRadarAfterLoading (void)
 {
 	aircraft_t *ufo;
 
-	ufo = NULL;
-	while ((ufo = UFO_GetNext(ufo)) != NULL) {
+	ufo = nullptr;
+	while ((ufo = UFO_GetNext(ufo)) != nullptr) {
 		if (!ufo->detected)
 			continue;
 

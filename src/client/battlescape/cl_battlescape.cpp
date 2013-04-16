@@ -37,12 +37,12 @@ clientBattleScape_t cl;
 le_t* CL_BattlescapeSearchAtGridPos (const pos3_t pos, bool includingStunned, const le_t *actor)
 {
 	le_t *le;
-	le_t *nonActor = NULL;
+	le_t *nonActor = nullptr;
 
 	/* search for an actor on this field */
-	le = NULL;
+	le = nullptr;
 	while ((le = LE_GetNextInUse(le))) {
-		if (actor != NULL && le == actor->clientAction) {
+		if (actor != nullptr && le == actor->clientAction) {
 			/* if the actor has a client action assigned and we click onto the actor,
 			 * we will trigger this client action */
 			if (VectorCompare(actor->pos, pos))
@@ -326,7 +326,7 @@ int CL_CountVisibleEnemies (void)
 	int count;
 
 	count = 0;
-	le = NULL;
+	le = nullptr;
 	while ((le = LE_GetNextInUse(le))) {
 		if (LE_IsLivingAndVisibleActor(le) && le->team != cls.team && le->team != TEAM_CIVILIAN)
 			count++;

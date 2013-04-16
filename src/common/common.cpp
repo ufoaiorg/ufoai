@@ -325,8 +325,8 @@ void Com_EndRedirect (void)
 {
 	NET_OOB_Printf(rd_stream, "print\n%s", rd_buffer);
 
-	rd_stream = NULL;
-	rd_buffer = NULL;
+	rd_stream = nullptr;
+	rd_buffer = nullptr;
 	rd_buffersize = 0;
 }
 
@@ -450,7 +450,7 @@ void Com_Error (int code, const char *fmt, ...)
 		NET_Wait(0);
 
 		FS_CloseFile(&logfile);
-		if (pipefile.f != NULL) {
+		if (pipefile.f != nullptr) {
 			FS_CloseFile(&pipefile);
 			FS_RemoveFile(va("%s/%s", FS_Gamedir(), pipefile.name));
 		}
@@ -485,7 +485,7 @@ void Com_Quit (void)
 	/* send an receive net messages a last time */
 	NET_Wait(0);
 	FS_CloseFile(&logfile);
-	if (pipefile.f != NULL) {
+	if (pipefile.f != nullptr) {
 		FS_CloseFile(&pipefile);
 		FS_RemoveFile(va("%s/%s", FS_Gamedir(), pipefile.name));
 	}
@@ -581,12 +581,12 @@ const char *Com_MacroExpandString (const char *text)
 	inquote = false;
 	scan = text;
 	if (!text || !*text)
-		return NULL;
+		return nullptr;
 
 	len = strlen(scan);
 	if (len >= MAX_STRING_CHARS) {
 		Com_Printf("Line exceeded %i chars, discarded.\n", MAX_STRING_CHARS);
-		return NULL;
+		return nullptr;
 	}
 
 	count = 0;
@@ -619,13 +619,13 @@ const char *Com_MacroExpandString (const char *text)
 		cvarvalue = Cvar_GetString(token);
 		if (!cvarvalue) {
 			Com_Printf("Could not get cvar value for cvar: %s\n", token);
-			return NULL;
+			return nullptr;
 		}
 
 		j = strlen(cvarvalue);
 		if (strlen(pos) + j >= MAX_STRING_CHARS) {
 			Com_Printf("Expanded line exceeded %i chars, discarded.\n", MAX_STRING_CHARS);
-			return NULL;
+			return nullptr;
 		}
 
 		/* copy the cvar value into the target buffer */
@@ -635,19 +635,19 @@ const char *Com_MacroExpandString (const char *text)
 
 		if (++count == 100) {
 			Com_Printf("Macro expansion loop, discarded.\n");
-			return NULL;
+			return nullptr;
 		}
 	}
 
 	if (inquote) {
 		Com_Printf("Line has unmatched quote, discarded.\n");
-		return NULL;
+		return nullptr;
 	}
 
 	if (count)
 		return expanded;
 	else
-		return NULL;
+		return nullptr;
 }
 
 void Com_UploadCrashDump (const char *crashDumpFile)
@@ -665,7 +665,7 @@ void Com_UploadCrashDump (const char *crashDumpFile)
 	paramVersion.next = &paramOS;
 	paramOS.name = "os";
 	paramOS.value = BUILDSTRING_OS;
-	paramOS.next = NULL;
+	paramOS.next = nullptr;
 
 	HTTP_PutFile("crashdump", crashDumpFile, crashDumpURL, &paramUser);
 	HTTP_PutFile("crashdump", va("%s/%s", FS_Gamedir(), consoleLogName), crashDumpURL, &paramUser);
@@ -684,7 +684,7 @@ void Com_UploadCrashDump (const char *crashDumpFile)
  */
 bool Com_ConsoleCompleteCommand (const char *s, char *target, size_t bufSize, uint32_t *pos, uint32_t offset)
 {
-	const char *cmd = NULL, *cvar = NULL, *use = NULL;
+	const char *cmd = nullptr, *cvar = nullptr, *use = nullptr;
 	char cmdLine[MAXCMDLINE] = "";
 	char cmdBase[MAXCMDLINE] = "";
 	bool append = true;
@@ -895,7 +895,7 @@ static const debugLevel_t debugLevels[] = {
 	{"DEBUG_RENDERER", DEBUG_RENDERER},
 	{"DEBUG_SOUND", DEBUG_SOUND},
 
-	{NULL, 0}
+	{nullptr, 0}
 };
 
 static void Com_DeveloperSet_f (void)
@@ -1052,13 +1052,13 @@ vPrintfPtr_t Qcommon_GetPrintFunction (void)
  */
 void Qcommon_Init (int argc, char **argv)
 {
-	logfile_active = NULL;
-	developer = NULL;
+	logfile_active = nullptr;
+	developer = nullptr;
 
 	Sys_InitSignals();
 
 	/* random seed */
-	Com_SetRandomSeed(time(NULL));
+	Com_SetRandomSeed(time(nullptr));
 
 	com_aliasSysPool = Mem_CreatePool("Common: Alias system for commands and enums");
 	com_cmdSysPool = Mem_CreatePool("Common: Command system");
@@ -1194,18 +1194,18 @@ void Qcommon_Init (int argc, char **argv)
 
 #ifndef DEDICATED_ONLY
 		if (!sv_dedicated->integer) {
-			Schedule_Timer(cl_maxfps, &CL_Frame, NULL, NULL);
-			Schedule_Timer(Cvar_Get("cl_slowfreq", "10", 0, NULL), &CL_SlowFrame, NULL, NULL);
+			Schedule_Timer(cl_maxfps, &CL_Frame, nullptr, nullptr);
+			Schedule_Timer(Cvar_Get("cl_slowfreq", "10", 0, nullptr), &CL_SlowFrame, nullptr, nullptr);
 
 			/* now hide the console */
 			Sys_ShowConsole(false);
 		}
 #endif
 
-		Schedule_Timer(Cvar_Get("sv_freq", "10", CVAR_NOSET, NULL), &SV_Frame, NULL, NULL);
+		Schedule_Timer(Cvar_Get("sv_freq", "10", CVAR_NOSET, nullptr), &SV_Frame, nullptr, nullptr);
 
 		/** @todo This line wants to be removed */
-		Schedule_Timer(Cvar_Get("cbuf_freq", "10", 0, NULL), &Cbuf_Execute_timer, NULL, NULL);
+		Schedule_Timer(Cvar_Get("cbuf_freq", "10", 0, nullptr), &Cbuf_Execute_timer, nullptr, nullptr);
 
 		Com_Printf("====== UFO Initialized ======\n");
 		Com_Printf("=============================\n");
@@ -1222,7 +1222,7 @@ void Com_ReadFromPipe (void)
 	char buffer[MAX_STRING_CHARS] = { "" };
 	int read;
 
-	if (pipefile.f == NULL)
+	if (pipefile.f == nullptr)
 		return;
 
 	read = FS_Read2(buffer, sizeof(buffer), &pipefile, false);
@@ -1288,7 +1288,7 @@ static void tick_timer (int now, void *data)
 	/* We correct for the lateness of this frame. We do not correct for
 	 * the time consumed by this frame - that's billed to the lateness
 	 * of future frames (so that the automagic slowdown can work) */
-	Schedule_Event(now + lateness + timer->interval, &tick_timer, NULL, NULL, timer);
+	Schedule_Event(now + lateness + timer->interval, &tick_timer, nullptr, nullptr, timer);
 }
 
 static void Schedule_Timer (cvar_t *freq, event_func *func, event_check_func *check, void *data)
@@ -1307,7 +1307,7 @@ static void Schedule_Timer (cvar_t *freq, event_func *func, event_check_func *ch
 	for (i = 0; i < TIMER_LATENESS_HISTORY; i++)
 		timer->recent_lateness[i] = 0;
 
-	Schedule_Event(Sys_Milliseconds() + timer->interval, &tick_timer, check, NULL, timer);
+	Schedule_Event(Sys_Milliseconds() + timer->interval, &tick_timer, check, nullptr, timer);
 }
 
 /**
@@ -1339,7 +1339,7 @@ ScheduleEventPtr Dequeue_Event(int now);
 /**
  * @brief Finds and returns the first event in the event_queue that is due.
  *  If the event has a check function, we check to see if the event can be run now, and skip it if not (even if it is due).
- * @return Returns a pointer to the event, NULL if none found.
+ * @return Returns a pointer to the event, nullptr if none found.
  */
 ScheduleEventPtr Dequeue_Event (int now)
 {
@@ -1348,7 +1348,7 @@ ScheduleEventPtr Dequeue_Event (int now)
 		if (event->when > now)
 			break;
 
-		if (event->check == NULL || event->check(now, event->data)) {
+		if (event->check == nullptr || event->check(now, event->data)) {
 			eventQueue.erase(i);
 			return event;
 		}
@@ -1376,7 +1376,7 @@ int CL_FilterEventQueue (event_filter *filter)
 			continue;
 		}
 
-		if (event->clean != NULL)
+		if (event->clean != nullptr)
 			event->clean(event->data);
 
 		EventPriorityQueue::iterator removeIter = i++;
@@ -1423,11 +1423,11 @@ void Qcommon_Frame (void)
 		CL_Shutdown();
 		Qcommon_Shutdown();
 		CL_FilterEventQueue(&Event_FilterAll);
-		if (restart.gamedir != NULL) {
+		if (restart.gamedir != nullptr) {
 			const char *restartArgv[] = {"", "+set", "fs_gamedir", restart.gamedir};
 			Qcommon_Init(4, const_cast<char **>(restartArgv));
 		} else {
-			Qcommon_Init(0, NULL);
+			Qcommon_Init(0, nullptr);
 		}
 	} catch (comDrop_t const&) {
 		return;

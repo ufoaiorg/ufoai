@@ -53,18 +53,18 @@ const value_t ui_spriteProperties[] = {
 	{"disabledcolor", V_COLOR, offsetof(uiSprite_t, color[SPRITE_STATUS_DISABLED]), MEMBER_SIZEOF(uiSprite_t, color[SPRITE_STATUS_DISABLED])},
 	{"clickedcolor", V_COLOR, offsetof(uiSprite_t, color[SPRITE_STATUS_CLICKED]), MEMBER_SIZEOF(uiSprite_t, color[SPRITE_STATUS_CLICKED])},
 
-	{NULL, V_NULL, 0, 0}
+	{nullptr, V_nullptr, 0, 0}
 };
 
 /**
  * @brief Search a file name inside pics/ according to the sprite name
  * If it exists, generate a "single" sprite using the size of the image
  * @param name Name of the sprite
- * @return A sprite, else NULL
+ * @return A sprite, else nullptr
  */
 static uiSprite_t* UI_AutoGenerateSprite (const char* name)
 {
-	uiSprite_t* sprite = NULL;
+	uiSprite_t* sprite = nullptr;
 	const char* suffix[SPRITE_STATUS_MAX] = {"", "_hovered", "_disabled", "_clicked"};
 	char basePicNameBuf[MAX_QPATH];
 	const image_t *pic;
@@ -73,8 +73,8 @@ static uiSprite_t* UI_AutoGenerateSprite (const char* name)
 	Q_strncpyz(basePicNameBuf, name, sizeof(basePicNameBuf));
 
 	pic = UI_LoadImage(basePicNameBuf);
-	if (pic == NULL)
-		return NULL;
+	if (pic == nullptr)
+		return nullptr;
 
 	sprite = UI_AllocStaticSprite(basePicNameBuf);
 	sprite->image[SPRITE_STATUS_NORMAL] = UI_AllocStaticString(basePicNameBuf, 0);
@@ -84,7 +84,7 @@ static uiSprite_t* UI_AutoGenerateSprite (const char* name)
 		char picNameBuf[MAX_QPATH];
 		Com_sprintf(picNameBuf, sizeof(picNameBuf), "%s%s", basePicNameBuf, suffix[i]);
 		pic = UI_LoadImage(picNameBuf);
-		if (pic != NULL)
+		if (pic != nullptr)
 			sprite->image[i] = UI_AllocStaticString(picNameBuf, 0);
 	}
 	return sprite;
@@ -110,7 +110,7 @@ static bool UI_SpriteExists (const char* name)
 /**
  * @brief Return an sprite by is name
  * @param[in] name Name of the sprite
- * @return The requested sprite, else NULL
+ * @return The requested sprite, else nullptr
  * @note not very fast; if we use it often we should improve the search
  */
 uiSprite_t* UI_GetSpriteByName (const char* name)
@@ -253,5 +253,5 @@ void UI_DrawSpriteInBox (bool flip, const uiSprite_t* sprite, uiSpriteStatus_t s
 	}
 
 	if (sprite->blend)
-		R_Color(NULL);
+		R_Color(nullptr);
 }

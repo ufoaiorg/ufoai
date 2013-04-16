@@ -225,7 +225,7 @@ technology_t* PR_GetTech (const productionData_t *data)
 	case PRODUCTION_TYPE_DISASSEMBLY:
 		return data->data.ufo->ufoTemplate->tech;
 	default:
-		return NULL;
+		return nullptr;
 	}
 }
 
@@ -242,9 +242,9 @@ production_t *PR_QueueNew (base_t *base, const productionData_t *data, signed in
 	production_queue_t *queue = PR_GetProductionForBase(base);
 
 	if (queue->numItems >= MAX_PRODUCTIONS)
-		return NULL;
+		return nullptr;
 	if (E_CountHired(base, EMPL_WORKER) <= 0)
-		return NULL;
+		return nullptr;
 
 	/* Initialize */
 	prod = &queue->items[queue->numItems];
@@ -256,7 +256,7 @@ production_t *PR_QueueNew (base_t *base, const productionData_t *data, signed in
 
 	tech = PR_GetTech(&prod->data);
 	if (!tech)
-		return NULL;
+		return nullptr;
 
 	prod->totalFrames = PR_CalculateTotalFrames(base, data);
 
@@ -265,12 +265,12 @@ production_t *PR_QueueNew (base_t *base, const productionData_t *data, signed in
 		amount = 1;
 	} else if (tech->produceTime < 0) {
 		/* Don't try to add an item to the queue which is not producible. */
-		return NULL;
+		return nullptr;
 	}
 
 	amount = PR_RequirementsMet(amount, &tech->requireForProduction, base);
 	if (amount == 0)
-		return NULL;
+		return nullptr;
 
 	PR_UpdateRequiredItemsInBasestorage(base, -amount, &tech->requireForProduction);
 
@@ -280,16 +280,16 @@ production_t *PR_QueueNew (base_t *base, const productionData_t *data, signed in
 		if (!B_GetBuildingStatus(base, B_COMMAND)) {
 			/** @todo move popup into menucode */
 			CP_Popup(_("Hangars not ready"), _("You cannot queue aircraft.\nNo command centre in this base.\n"));
-			return NULL;
+			return nullptr;
 		} else if (!B_GetBuildingStatus(base, B_HANGAR) && !B_GetBuildingStatus(base, B_SMALL_HANGAR)) {
 			/** @todo move popup into menucode */
 			CP_Popup(_("Hangars not ready"), _("You cannot queue aircraft.\nNo hangars in this base.\n"));
-			return NULL;
+			return nullptr;
 		}
 		/** @todo we should also count aircraft that are already in the queue list */
 		if (AIR_CalculateHangarStorage(data->data.aircraft, base, 0) <= 0) {
 			CP_Popup(_("Hangars not ready"), _("You cannot queue aircraft.\nNo free space in hangars.\n"));
-			return NULL;
+			return nullptr;
 		}
 	}
 
@@ -316,11 +316,11 @@ void PR_QueueDelete (base_t *base, production_queue_t *queue, int index)
 	assert(base);
 
 	tech = PR_GetTech(&prod->data);
-	if (tech == NULL)
+	if (tech == nullptr)
 		cgi->Com_Error(ERR_DROP, "No tech pointer for production");
 
 	if (PR_IsDisassembly(prod))
-		prod->data.data.ufo->disassembly = NULL;
+		prod->data.data.ufo->disassembly = nullptr;
 
 	PR_UpdateRequiredItemsInBasestorage(base, prod->amount, &tech->requireForProduction);
 
@@ -653,7 +653,7 @@ int PR_DecreaseProduction (production_t *prod, int amount)
 	}
 
 	tech = PR_GetTech(&prod->data);
-	if (tech == NULL)
+	if (tech == nullptr)
 		cgi->Com_Error(ERR_DROP, "No tech pointer for production");
 
 	prod->amount += -amount;
@@ -676,8 +676,8 @@ void PR_ProductionRun (void)
 	/* Loop through all founded bases. Then check productions
 	 * in global data array. Then increase prod->percentDone and check
 	 * whether an item is produced. Then add to base storage. */
-	base = NULL;
-	while ((base = B_GetNext(base)) != NULL) {
+	base = nullptr;
+	while ((base = B_GetNext(base)) != nullptr) {
 		production_t *prod;
 		production_queue_t *q = PR_GetProductionForBase(base);
 
@@ -715,9 +715,9 @@ bool PR_ProductionAllowed (const base_t* base)
 
 void PR_ProductionInit (void)
 {
-	mn_production_limit = cgi->Cvar_Get("mn_production_limit", "0", 0, NULL);
-	mn_production_workers = cgi->Cvar_Get("mn_production_workers", "0", 0, NULL);
-	mn_production_amount = cgi->Cvar_Get("mn_production_amount", "0", 0, NULL);
+	mn_production_limit = cgi->Cvar_Get("mn_production_limit", "0", 0, nullptr);
+	mn_production_workers = cgi->Cvar_Get("mn_production_workers", "0", 0, nullptr);
+	mn_production_amount = cgi->Cvar_Get("mn_production_amount", "0", 0, nullptr);
 }
 
 /**
@@ -772,14 +772,14 @@ bool PR_ItemIsProduceable (const objDef_t *item)
  */
 base_t *PR_ProductionBase (const production_t *production)
 {
-	base_t *base = NULL;
-	while ((base = B_GetNext(base)) != NULL) {
+	base_t *base = nullptr;
+	while ((base = B_GetNext(base)) != nullptr) {
 		const ptrdiff_t diff = ((ptrdiff_t)((production) - PR_GetProductionForBase(base)->items));
 
 		if (diff >= 0 && diff < MAX_PRODUCTIONS)
 			return base;
 	}
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -793,8 +793,8 @@ bool PR_SaveXML (xmlNode_t *p)
 	base_t *base;
 	xmlNode_t *node = cgi->XML_AddNode(p, SAVE_PRODUCE_PRODUCTION);
 
-	base = NULL;
-	while ((base = B_GetNext(base)) != NULL) {
+	base = nullptr;
+	while ((base = B_GetNext(base)) != nullptr) {
 		const production_queue_t *pq = PR_GetProductionForBase(base);
 		int j;
 
@@ -837,7 +837,7 @@ bool PR_LoadXML (xmlNode_t *p)
 		base_t *base = B_GetBaseByIDX(baseIDX);
 		production_queue_t *pq;
 
-		if (base == NULL) {
+		if (base == nullptr) {
 			Com_Printf("Invalid production queue index %i\n", baseIDX);
 			continue;
 		}
@@ -900,8 +900,8 @@ bool PR_LoadXML (xmlNode_t *p)
  */
 static bool PR_PostLoadInitProgress (void)
 {
-	base_t *base = NULL;
-	while ((base = B_GetNext(base)) != NULL) {
+	base_t *base = nullptr;
+	while ((base = B_GetNext(base)) != nullptr) {
 		production_queue_t *pq = PR_GetProductionForBase(base);
 		int j;
 

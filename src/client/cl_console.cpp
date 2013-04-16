@@ -261,7 +261,7 @@ void Con_SaveConsoleHistory (void)
 {
 	int i;
 	qFILE f;
-	const char *lastLine = NULL;
+	const char *lastLine = nullptr;
 
 	/* maybe con_history is not initialized here (early Sys_Error) */
 	if (!con_history || !con_history->integer)

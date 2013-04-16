@@ -372,7 +372,7 @@ static void UI_ColumnLayout (uiNode_t *node)
 	/* check the first row */
 	child = node->firstChild;
 	for (i = 0; i < EXTRADATA(node).layoutColumns; i++) {
-		if (child == NULL)
+		if (child == nullptr)
 			break;
 		columnSize[i] = child->box.size[0];
 		if (child->box.size[1] > rowHeight) {
@@ -525,7 +525,7 @@ void uiPanelNode::getClientPosition (const uiNode_t *node, vec2_t position)
 void uiPanelNode::onPropertyChanged (uiNode_t *node, const value_t *property)
 {
 	/** @todo move it to registration code when it is possible */
-	if (propertyPadding == NULL) {
+	if (propertyPadding == nullptr) {
 		propertyPadding = UI_GetPropertyFromBehaviour(node->behaviour, "padding");
 	}
 

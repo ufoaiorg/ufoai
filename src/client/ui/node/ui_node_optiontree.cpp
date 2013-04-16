@@ -127,7 +127,7 @@ void uiOptionTreeNode::draw (uiNode_t *node)
 		systemCollapse = UI_GetSpriteByName("icons/system_collapse");
 
 	ref = UI_AbstractOptionGetCurrentValue(node);
-	if (ref == NULL)
+	if (ref == nullptr)
 		return;
 
 	UI_GetNodeAbsPos(node, pos);
@@ -179,7 +179,7 @@ void uiOptionTreeNode::draw (uiNode_t *node)
 		/* print the option label */
 		decX = pos[0] + node->padding + iterator.depthPos * DEPTH_WIDTH;
 
-		R_Color(NULL);
+		R_Color(nullptr);
 		if (option->firstChild) {
 			uiSprite_t *icon = OPTIONEXTRADATA(option).collapsed ? systemExpand : systemCollapse;
 			UI_DrawSpriteInBox(OPTIONEXTRADATA(option).flipIcon, icon, SPRITE_STATUS_NORMAL, decX, currentY, icon->size[0], fontHeight);
@@ -201,13 +201,13 @@ void uiOptionTreeNode::draw (uiNode_t *node)
 		R_Color(textColor);
 		UI_DrawString(font, ALIGN_UL, decX, currentY + currentDecY,
 			pos[0], node->box.size[0] - node->padding - node->padding,
-			0, label, 0, 0, NULL, false, LONGLINES_PRETTYCHOP);
+			0, label, 0, 0, nullptr, false, LONGLINES_PRETTYCHOP);
 
 		/* next entries' position */
 		currentY += fontHeight;
 		count++;
 	}
-	R_Color(NULL);
+	R_Color(nullptr);
 }
 
 static uiNode_t* UI_OptionTreeNodeGetOptionAtPosition (uiNode_t *node, int x, int y, int *depth)
@@ -240,7 +240,7 @@ void uiOptionTreeNode::onLeftClick (uiNode_t *node, int x, int y)
 	uiNode_t* option;
 	int depth;
 
-	if (UI_AbstractOptionGetCurrentValue(node) == NULL)
+	if (UI_AbstractOptionGetCurrentValue(node) == nullptr)
 		return;
 
 	/* select the right option */

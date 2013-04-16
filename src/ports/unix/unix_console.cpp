@@ -143,7 +143,7 @@ static consoleHistory_t *Sys_TTYConsoleHistoryPrevious (void)
 
 	histPrev = histCurrent + 1;
 	if (histPrev >= histCount)
-		return NULL;
+		return nullptr;
 
 	histCurrent++;
 	return &(ttyEditLines[histCurrent]);
@@ -159,7 +159,7 @@ static consoleHistory_t *Sys_TTYConsoleHistoryNext (void)
 		histCurrent--;
 
 	if (histCurrent == -1)
-		return NULL;
+		return nullptr;
 
 	return &(ttyEditLines[histCurrent]);
 }
@@ -287,7 +287,7 @@ const char *Sys_ConsoleInput (void)
 					ttyConsoleHistory.buffer[ttyConsoleHistory.cursor] = '\0';
 					Sys_TTYDeleteCharacter();
 				}
-				return NULL;
+				return nullptr;
 			}
 			/* check if this is a control char */
 			if (key && key < ' ') {
@@ -308,7 +308,7 @@ const char *Sys_ConsoleInput (void)
 					Sys_ShowConsole(false);
 					Com_ConsoleCompleteCommand(s, target, size, &ttyConsoleHistory.cursor, 0);
 					Sys_ShowConsole(true);
-					return NULL;
+					return nullptr;
 				}
 				avail = read(STDIN_FILENO, &key, 1);
 				if (avail != -1) {
@@ -326,7 +326,7 @@ const char *Sys_ConsoleInput (void)
 									Sys_ShowConsole(true);
 								}
 								CON_FlushIn();
-								return NULL;
+								return nullptr;
 								break;
 							case 'B':
 								history = Sys_TTYConsoleHistoryNext();
@@ -338,21 +338,21 @@ const char *Sys_ConsoleInput (void)
 								}
 								Sys_ShowConsole(true);
 								CON_FlushIn();
-								return NULL;
+								return nullptr;
 								break;
 							case 'C':
-								return NULL;
+								return nullptr;
 							case 'D':
-								return NULL;
+								return nullptr;
 							}
 						}
 					}
 				}
 				CON_FlushIn();
-				return NULL;
+				return nullptr;
 			}
 			if (ttyConsoleHistory.cursor >= sizeof(text) - 1)
-				return NULL;
+				return nullptr;
 			/* push regular character */
 			ttyConsoleHistory.buffer[ttyConsoleHistory.cursor] = key;
 			ttyConsoleHistory.cursor++;
@@ -360,7 +360,7 @@ const char *Sys_ConsoleInput (void)
 			write(STDOUT_FILENO, &key, 1);
 		}
 
-		return NULL;
+		return nullptr;
 	} else if (stdinActive) {
 		int len;
 		fd_set fdset;
@@ -370,23 +370,23 @@ const char *Sys_ConsoleInput (void)
 		FD_SET(STDIN_FILENO, &fdset); /* stdin */
 		timeout.tv_sec = 0;
 		timeout.tv_usec = 0;
-		if (select(STDIN_FILENO + 1, &fdset, NULL, NULL, &timeout) == -1
+		if (select(STDIN_FILENO + 1, &fdset, nullptr, nullptr, &timeout) == -1
 				|| !FD_ISSET(STDIN_FILENO, &fdset))
-			return NULL;
+			return nullptr;
 
 		len = read(STDIN_FILENO, text, sizeof(text));
 		if (len == 0) { /* eof! */
 			stdinActive = false;
-			return NULL;
+			return nullptr;
 		}
 
 		if (len < 1)
-			return NULL;
+			return nullptr;
 		text[len - 1] = 0; /* rip off the /n and terminate */
 
 		return text;
 	}
-	return NULL;
+	return nullptr;
 }
 
 void Sys_ConsoleOutput (const char *string)

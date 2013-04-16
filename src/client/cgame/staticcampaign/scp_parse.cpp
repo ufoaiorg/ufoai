@@ -32,7 +32,7 @@
 static const value_t mission_vals[] = {
 	{"pos", V_POS, offsetof(staticMission_t, pos), 0},
 
-	{NULL, V_NULL, 0, 0}
+	{nullptr, V_nullptr, 0, 0}
 };
 
 static void SCP_ParseMission (const char *name, const char **text)
@@ -108,7 +108,7 @@ static void SCP_ParseMission (const char *name, const char **text)
 				if (text[0] == '\0')
 					return;
 				city = CITY_GetById(token);
-				if (city == NULL)
+				if (city == nullptr)
 					Com_Printf("SCP_ParseMission: unknown city \"%s\" ignored (mission %s)\n", token, ms->id);
 				else
 					Vector2Copy(city->pos, ms->pos);
@@ -120,13 +120,13 @@ static void SCP_ParseMission (const char *name, const char **text)
 	} while (*text);
 
 	mapDef_t *mapDef = cgi->Com_GetMapDefinitionByID(ms->id);
-	if (mapDef == NULL) {
+	if (mapDef == nullptr) {
 		Com_Printf("SCP_ParseMission: invalid mapdef for '%s'\n", ms->id);
 		return;
 	}
 
 	if (Vector2Empty(ms->pos)) {
-		if (!CP_GetRandomPosOnGeoscapeWithParameters(ms->pos, mapDef->terrains, mapDef->cultures, mapDef->populations, NULL)) {
+		if (!CP_GetRandomPosOnGeoscapeWithParameters(ms->pos, mapDef->terrains, mapDef->cultures, mapDef->populations, nullptr)) {
 			Com_Printf("SCP_ParseMission: could not find a valid position for '%s'\n", ms->id);
 			return;
 		}
@@ -147,7 +147,7 @@ static const value_t stageset_vals[] = {
 	{"endstage", V_STRING, offsetof(stageSet_t, endstage), 0},
 	{"commands", V_STRING, offsetof(stageSet_t, cmds), 0},
 
-	{NULL, V_NULL, 0, 0}
+	{nullptr, V_nullptr, 0, 0}
 };
 
 static void SCP_ParseStageSet (const char *name, const char **text)
@@ -218,13 +218,13 @@ static void SCP_ParseStageSet (const char *name, const char **text)
 
 				if (j == scd->numMissions) {
 					const mapDef_t *mapDef = cgi->Com_GetMapDefinitionByID(token);
-					if (mapDef != NULL) {
+					if (mapDef != nullptr) {
 						if (j < MAX_STATIC_MISSIONS - 1) {
 							/* we don't need and mission definition in the scripts if we just would like to link a mapdef */
 							staticMission_t *mis = &scd->missions[j];
 							OBJZERO(*mis);
 							Q_strncpyz(mis->id, token, sizeof(mis->id));
-							if (!CP_GetRandomPosOnGeoscapeWithParameters(mis->pos, mapDef->terrains, mapDef->cultures, mapDef->populations, NULL)) {
+							if (!CP_GetRandomPosOnGeoscapeWithParameters(mis->pos, mapDef->terrains, mapDef->cultures, mapDef->populations, nullptr)) {
 								Com_Printf("SCP_ParseMission: could not find a valid position for '%s'\n", mis->id);
 								continue;
 							}
@@ -333,10 +333,10 @@ void SCP_Parse (void)
 	const char *type, *name, *text;
 
 	cgi->FS_BuildFileList("ufos/*.ufo");
-	cgi->FS_NextScriptHeader(NULL, NULL, NULL);
-	text = NULL;
+	cgi->FS_NextScriptHeader(nullptr, nullptr, nullptr);
+	text = nullptr;
 
-	while ((type = cgi->FS_NextScriptHeader("ufos/*.ufo", &name, &text)) != NULL) {
+	while ((type = cgi->FS_NextScriptHeader("ufos/*.ufo", &name, &text)) != nullptr) {
 		if (Q_streq(type, "staticcampaign")) {
 			const char **textPtr = &text;
 			SCP_ParseStaticCampaignData(name, textPtr);

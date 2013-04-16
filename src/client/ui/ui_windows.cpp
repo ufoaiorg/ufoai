@@ -149,7 +149,7 @@ static inline void UI_InsertWindowIntoStack (uiNode_t *window, int position)
 	int i;
 	assert(position <= ui_global.windowStackPos);
 	assert(position > 0);
-	assert(window != NULL);
+	assert(window != nullptr);
 
 	/* create space for the new window */
 	for (i = ui_global.windowStackPos; i > position; i--) {
@@ -163,9 +163,9 @@ static inline void UI_InsertWindowIntoStack (uiNode_t *window, int position)
 /**
  * @brief Push a window onto the window stack
  * @param[in] name Name of the window to push onto window stack
- * @param[in] parentName Window name to link as parent-child (else NULL)
+ * @param[in] parentName Window name to link as parent-child (else nullptr)
  * @param[in] params List of string parameters to send to the onWindowOpened method.
- * It can be NULL when there is no parameters, else this object must be freed by the caller.
+ * It can be nullptr when there is no parameters, else this object must be freed by the caller.
  * @return A pointer to @c uiNode_t
  */
 uiNode_t* UI_PushWindow (const char *name, const char *parentName, linkedList_t *params)
@@ -175,9 +175,9 @@ uiNode_t* UI_PushWindow (const char *name, const char *parentName, linkedList_t 
 	UI_ReleaseInput();
 
 	window = UI_GetWindow(name);
-	if (window == NULL) {
+	if (window == nullptr) {
 		Com_Printf("Window \"%s\" not found.\n", name);
-		return NULL;
+		return nullptr;
 	}
 
 	UI_DeleteWindowFromStack(window);
@@ -187,7 +187,7 @@ uiNode_t* UI_PushWindow (const char *name, const char *parentName, linkedList_t 
 			const int parentPos = UI_GetWindowPositionFromStackByName(parentName);
 			if (parentPos == -1) {
 				Com_Printf("Didn't find parent window \"%s\" for window push of \"%s\"\n", parentName, name);
-				return NULL;
+				return nullptr;
 			}
 			UI_InsertWindowIntoStack(window, parentPos + 1);
 			WINDOWEXTRADATA(window).parent = ui_global.windowStack[parentPos];
@@ -242,7 +242,7 @@ static void UI_PushChildWindow_f (void)
  */
 static void UI_PushWindow_f (void)
 {
-	linkedList_t *params = NULL;
+	linkedList_t *params = nullptr;
 	int i;
 
 	if (Cmd_Argc() == 0) {
@@ -253,7 +253,7 @@ static void UI_PushWindow_f (void)
 	for (i = 2; i < Cmd_Argc(); i++) {
 		LIST_AddString(&params, Cmd_Argv(i));
 	}
-	UI_PushWindow(Cmd_Argv(1), NULL, params);
+	UI_PushWindow(Cmd_Argv(1), nullptr, params);
 	LIST_Delete(&params);
 }
 
@@ -281,7 +281,7 @@ static void UI_PushDropDownWindow_f (void)
 
 	/* get the source anchor */
 	node = UI_GetNodeByPath(Cmd_Argv(1));
-	if (node == NULL) {
+	if (node == nullptr) {
 		Com_Printf("UI_PushDropDownWindow_f: Node '%s' doesn't exist\n", Cmd_Argv(1));
 		return;
 	}
@@ -300,7 +300,7 @@ static void UI_PushDropDownWindow_f (void)
 	} else {
 		/* get the source anchor */
 		node = UI_GetNodeByPath(Cmd_Argv(3));
-		if (node == NULL) {
+		if (node == nullptr) {
 			Com_Printf("UI_PushDropDownWindow_f: Node '%s' doesn't exist\n", Cmd_Argv(3));
 			return;
 		}
@@ -315,7 +315,7 @@ static void UI_PushDropDownWindow_f (void)
 
 	/* update the window and push it */
 	node = UI_GetNodeByPath(Cmd_Argv(1));
-	if (node == NULL) {
+	if (node == nullptr) {
 		Com_Printf("UI_PushDropDownWindow_f: Node '%s' doesn't exist\n", Cmd_Argv(1));
 		return;
 	}
@@ -335,7 +335,7 @@ static void UI_RemoveWindowAtPositionFromStack (int position)
 	for (i = position; i < ui_global.windowStackPos; i++) {
 		ui_global.windowStack[i] = ui_global.windowStack[i + 1];
 	}
-	ui_global.windowStack[ui_global.windowStackPos--] = NULL;
+	ui_global.windowStack[ui_global.windowStackPos--] = nullptr;
 }
 
 static void UI_CloseAllWindow (void)
@@ -347,20 +347,20 @@ static void UI_CloseAllWindow (void)
 		UI_Node_WindowClosed(window);
 
 		/* safe: unlink window */
-		WINDOWEXTRADATA(window).parent = NULL;
+		WINDOWEXTRADATA(window).parent = nullptr;
 		ui_global.windowStackPos--;
-		ui_global.windowStack[ui_global.windowStackPos] = NULL;
+		ui_global.windowStack[ui_global.windowStackPos] = nullptr;
 	}
 }
 
 /**
  * @brief Init the stack to start with a window, and have an alternative window with ESC
- * @param[in] activeWindow The first active window of the stack, else NULL
- * @param[in] mainWindow The alternative window, else NULL if nothing
+ * @param[in] activeWindow The first active window of the stack, else nullptr
+ * @param[in] mainWindow The alternative window, else nullptr if nothing
  * @param[in] popAll If true, clean up the stack first
  * @param[in] pushActive If true, push the active window into the stack
  * @todo remove Cvar_Set we have direct access to the cvar
- * @todo check why activeWindow can be NULL. It should never be NULL: a stack must not be empty
+ * @todo check why activeWindow can be nullptr. It should never be nullptr: a stack must not be empty
  * @todo We should only call it a very few time. When we switch from/to this different par of the game: main-option-interface / geoscape-and-base / battlescape
  * @todo Update the code: popAll should be every time true
  * @todo Update the code: pushActive should be every time true
@@ -418,13 +418,13 @@ static void UI_CloseWindowByRef (uiNode_t *window)
 		}
 
 		UI_Node_WindowClosed(window);
-		WINDOWEXTRADATA(m).parent = NULL;
+		WINDOWEXTRADATA(m).parent = nullptr;
 		UI_RemoveWindowAtPositionFromStack(i + 1);
 	}
 
 	/* close the window */
 	UI_Node_WindowClosed(window);
-	WINDOWEXTRADATA(window).parent = NULL;
+	WINDOWEXTRADATA(window).parent = nullptr;
 	UI_RemoveWindowAtPositionFromStack(i);
 
 	UI_InvalidateMouse();
@@ -433,7 +433,7 @@ static void UI_CloseWindowByRef (uiNode_t *window)
 void UI_CloseWindow (const char* name)
 {
 	uiNode_t *window = UI_GetWindow(name);
-	if (window == NULL) {
+	if (window == nullptr) {
 		Com_Printf("Window '%s' not found\n", name);
 		return;
 	}
@@ -527,13 +527,13 @@ static void UI_PopWindow_f (void)
 }
 
 /**
- * @brief Returns the current active window from the window stack or NULL if there is none
+ * @brief Returns the current active window from the window stack or nullptr if there is none
  * @return uiNode_t pointer from window stack
  * @sa UI_GetWindow
  */
 uiNode_t* UI_GetActiveWindow (void)
 {
-	return (ui_global.windowStackPos > 0 ? ui_global.windowStack[ui_global.windowStackPos - 1] : NULL);
+	return (ui_global.windowStackPos > 0 ? ui_global.windowStack[ui_global.windowStackPos - 1] : nullptr);
 }
 
 /**
@@ -544,7 +544,7 @@ uiNode_t* UI_GetActiveWindow (void)
 const char* UI_GetActiveWindowName (void)
 {
 	const uiNode_t* window = UI_GetActiveWindow();
-	if (window == NULL)
+	if (window == nullptr)
 		return "";
 	return window->name;
 }
@@ -557,7 +557,7 @@ bool UI_IsMouseOnWindow (void)
 {
 	const uiNode_t *hovered;
 
-	if (UI_GetMouseCapture() != NULL)
+	if (UI_GetMouseCapture() != nullptr)
 		return true;
 
 	if (ui_global.windowStackPos != 0) {
@@ -580,7 +580,7 @@ bool UI_IsMouseOnWindow (void)
 /**
  * @brief Searches all windows for the specified one
  * @param[in] name Name of the window we search
- * @return The window found, else NULL
+ * @return The window found, else nullptr
  * @note Use dichotomic search
  * @sa UI_GetActiveWindow
  */
@@ -604,7 +604,7 @@ uiNode_t *UI_GetWindow (const char *name)
 			min = mid + 1;
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -674,7 +674,7 @@ void UI_FinishWindowsInit (void)
 
 static void UI_InitStack_f (void) {
 	const char *mainWindow;
-	const char *optionWindow = NULL;
+	const char *optionWindow = nullptr;
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <mainwindow> [<optionwindow>]\n", Cmd_Argv(0));

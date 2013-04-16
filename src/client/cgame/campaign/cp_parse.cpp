@@ -68,7 +68,7 @@ static const value_t alien_group_vals[] = {
 	{"maxinterest", V_INT, offsetof(alienTeamGroup_t, maxInterest), 0},
 	{"minaliencount", V_INT, offsetof(alienTeamGroup_t, minAlienCount), 0},
 	{"maxaliencount", V_INT, offsetof(alienTeamGroup_t, maxAlienCount), 0},
-	{NULL, V_NULL, 0, 0}
+	{nullptr, V_nullptr, 0, 0}
 };
 
 /**
@@ -123,7 +123,7 @@ static void CP_ParseAlienTeam (const char *name, const char **text)
 			if (!Com_ParseList(text, &list)) {
 				cgi->Com_Error(ERR_DROP, "CL_ParseAlienTeam: \"%s\" Error while parsing category list", name);
 			}
-			for (linkedList_t *element = list; element != NULL; element = element->next) {
+			for (linkedList_t *element = list; element != nullptr; element = element->next) {
 				alienCategory->missionCategories[alienCategory->numMissionCategories] = CP_GetAlienMissionTypeByID((char*)element->data);
 				if (alienCategory->missionCategories[alienCategory->numMissionCategories] == INTERESTCATEGORY_NONE)
 					Com_Printf("CP_ParseAlienTeam: alien team category \"%s\" is used with no mission category. It won't be used in game.\n", name);
@@ -161,13 +161,13 @@ static void CP_ParseAlienTeam (const char *name, const char **text)
 						if (!Com_ParseList(text, &list)) {
 							cgi->Com_Error(ERR_DROP, "CL_ParseAlienTeam: \"%s\" Error while parsing team list", name);
 						}
-						for (linkedList_t *element = list; element != NULL; element = element->next) {
+						for (linkedList_t *element = list; element != nullptr; element = element->next) {
 							if (group->numAlienTeams >= MAX_TEAMS_PER_MISSION)
 								cgi->Com_Error(ERR_DROP, "CL_ParseAlienTeam: MAX_TEAMS_PER_MISSION hit");
 							const teamDef_t *teamDef = cgi->Com_GetTeamDefinitionByID(strtok((char*)element->data, "/"));
 							if (teamDef) {
 								group->alienTeams[group->numAlienTeams] = teamDef;
-								const chrTemplate_t *chrTemplate = CHRSH_GetTemplateByID(teamDef, strtok(NULL, ""));
+								const chrTemplate_t *chrTemplate = CHRSH_GetTemplateByID(teamDef, strtok(nullptr, ""));
 								group->alienChrTemplates[group->numAlienTeams] = chrTemplate;
 								++group->numAlienTeams;
 							}
@@ -318,7 +318,7 @@ static const value_t salary_vals[] = {
 	{"admin_pilot", V_INT, offsetof(salary_t, admin[EMPL_PILOT]), MEMBER_SIZEOF(salary_t, admin[EMPL_PILOT])},
 	{"admin_robot", V_INT, offsetof(salary_t, admin[EMPL_ROBOT]), MEMBER_SIZEOF(salary_t, admin[EMPL_ROBOT])},
 	{"debt_interest", V_FLOAT, offsetof(salary_t, debtInterest), MEMBER_SIZEOF(salary_t, debtInterest)},
-	{NULL, V_NULL, 0, 0}
+	{nullptr, V_nullptr, 0, 0}
 };
 
 /**
@@ -369,7 +369,7 @@ static const value_t campaign_vals[] = {
 	{"initialinterest", V_INT, offsetof(campaign_t, initialInterest), MEMBER_SIZEOF(campaign_t, initialInterest)},
 	{"employeerate", V_FLOAT, offsetof(campaign_t, employeeRate), MEMBER_SIZEOF(campaign_t, employeeRate)},
 	{"alienbaseinterest", V_INT, offsetof(campaign_t, alienBaseInterest), MEMBER_SIZEOF(campaign_t, alienBaseInterest)},
-	{NULL, V_NULL, 0, 0}
+	{nullptr, V_nullptr, 0, 0}
 };
 
 /**
@@ -447,7 +447,7 @@ static void CP_ParseCampaign (const char *name, const char **text)
 			break;
 
 		/* check for some standard values */
-		if (Com_ParseBlockToken(name, text, cp, campaign_vals, NULL, token)) {
+		if (Com_ParseBlockToken(name, text, cp, campaign_vals, nullptr, token)) {
 			continue;
 		} else if (Q_streq(token, "salary")) {
 			CP_ParseSalary(token, text, s);
@@ -493,7 +493,7 @@ static const value_t components_type_vals[] = {
 	{"id", V_STRING, offsetof(component_type_data_t, id), 0},
 	{"amount", V_STRING, offsetof(component_type_data_t, amount), 0},
 	{"numbercrash", V_STRING, offsetof(component_type_data_t, numbercrash), 0},
-	{NULL, V_NULL, 0, 0}
+	{nullptr, V_nullptr, 0, 0}
 };
 
 /**
@@ -552,7 +552,7 @@ static void CP_ParseComponents (const char *name, const char **text)
 				/* Parse block */
 				component_type_data_t itemTokens;
 				OBJZERO(itemTokens);
-				if (Com_ParseBlock ("item", text, &itemTokens, components_type_vals, NULL)) {
+				if (Com_ParseBlock ("item", text, &itemTokens, components_type_vals, nullptr)) {
 					if (itemTokens.id[0] == '\0')
 						cgi->Com_Error(ERR_DROP, "CP_ParseComponents: \"item\" token id is missing.\n");
 					if (itemTokens.amount[0] == '\0')
@@ -759,7 +759,7 @@ static const sanity_functions_t sanity_functions[] = {
 	{CP_ItemsSanityCheck, "items"},
 	{NAT_ScriptSanityCheck, "nations"},
 
-	{NULL, NULL}
+	{nullptr, nullptr}
 };
 
 /**
@@ -793,21 +793,21 @@ void CP_ParseCampaignData (void)
 
 	/* pre-stage parsing */
 	cgi->FS_BuildFileList("ufos/*.ufo");
-	cgi->FS_NextScriptHeader(NULL, NULL, NULL);
-	text = NULL;
+	cgi->FS_NextScriptHeader(nullptr, nullptr, nullptr);
+	text = nullptr;
 
-	while ((type = cgi->FS_NextScriptHeader("ufos/*.ufo", &name, &text)) != NULL)
+	while ((type = cgi->FS_NextScriptHeader("ufos/*.ufo", &name, &text)) != nullptr)
 		CP_ParseScriptFirst(type, name, &text);
 
 	/* fill in IDXs for required research techs */
 	RS_RequiredLinksAssign();
 
 	/* stage two parsing */
-	cgi->FS_NextScriptHeader(NULL, NULL, NULL);
-	text = NULL;
+	cgi->FS_NextScriptHeader(nullptr, nullptr, nullptr);
+	text = nullptr;
 
 	Com_DPrintf(DEBUG_CLIENT, "Second stage parsing started...\n");
-	while ((type = cgi->FS_NextScriptHeader("ufos/*.ufo", &name, &text)) != NULL)
+	while ((type = cgi->FS_NextScriptHeader("ufos/*.ufo", &name, &text)) != nullptr)
 		CP_ParseScriptSecond(type, name, &text);
 	INS_LinkTechnologies();
 
@@ -817,7 +817,7 @@ void CP_ParseCampaignData (void)
 			continue;
 
 		ccs.teamDefTechs[teamDef->idx] = RS_GetTechByID(teamDef->tech);
-		if (ccs.teamDefTechs[teamDef->idx] == NULL)
+		if (ccs.teamDefTechs[teamDef->idx] == nullptr)
 			cgi->Com_Error(ERR_DROP, "Could not find a tech for teamdef %s", teamDef->id);
 	}
 
@@ -841,11 +841,11 @@ void CP_ReadCampaignData (const campaign_t *campaign)
 	const char *type, *name, *text;
 
 	/* stage two parsing */
-	cgi->FS_NextScriptHeader(NULL, NULL, NULL);
-	text = NULL;
+	cgi->FS_NextScriptHeader(nullptr, nullptr, nullptr);
+	text = nullptr;
 
 	Com_DPrintf(DEBUG_CLIENT, "Second stage parsing started...\n");
-	while ((type = cgi->FS_NextScriptHeader("ufos/*.ufo", &name, &text)) != NULL)
+	while ((type = cgi->FS_NextScriptHeader("ufos/*.ufo", &name, &text)) != nullptr)
 		CP_ParseScriptCampaignRelated(campaign, type, name, &text);
 
 	/* initialise date */

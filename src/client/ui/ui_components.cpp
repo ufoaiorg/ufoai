@@ -28,7 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /**
  * @brief Searches all components for the specified one
  * @param[in] name Name of the component we search
- * @return The component found, else NULL
+ * @return The component found, else nullptr
  * @note Use dichotomic search
  */
 uiNode_t *UI_GetComponent (const char *name)
@@ -51,7 +51,7 @@ uiNode_t *UI_GetComponent (const char *name)
 			min = mid + 1;
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 /**

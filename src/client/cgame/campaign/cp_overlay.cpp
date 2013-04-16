@@ -271,7 +271,7 @@ void CP_ChangeXVILevel (const vec2_t pos, float factor)
  */
 void CP_InitializeXVIOverlay (void)
 {
-	/* data Pointer to the data containing values to store in XVI map. Can be NULL for new games.
+	/* data Pointer to the data containing values to store in XVI map. Can be nullptr for new games.
 	 * This is only the alpha channel of the xvi map */
 	memset(cgi->r_xviAlpha, 0, XVI_WIDTH * XVI_HEIGHT);
 	CP_UploadXVI();

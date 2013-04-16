@@ -93,7 +93,7 @@ void M_ParseMusic (const char *name, const char **text)
 		Com_Error(ERR_DROP, "M_ParseMusic: error while reading music \"%s\"", name);
 	}
 
-	for (linkedList_t *element = list; element != NULL; element = element->next) {
+	for (linkedList_t *element = list; element != nullptr; element = element->next) {
 		if (musicArrayLength[i] >= MUSIC_MAX_ENTRIES) {
 			Com_Printf("M_ParseMusic: Too many music entries for category: '%s'!\n", name);
 			break;
@@ -114,7 +114,7 @@ void M_Stop (void)
 	if (music.playingStream)
 		return;
 
-	if (music.data != NULL) {
+	if (music.data != nullptr) {
 		Mix_HaltMusic();
 		Mix_FreeMusic(music.data);
 	}
@@ -122,8 +122,8 @@ void M_Stop (void)
 	if (music.buffer)
 		FS_FreeFile(music.buffer);
 
-	music.data = NULL;
-	music.buffer = NULL;
+	music.data = nullptr;
+	music.buffer = nullptr;
 }
 
 /**
@@ -221,7 +221,7 @@ static void M_RandomTrack_f (void)
 		Com_DPrintf(DEBUG_SOUND, "M_RandomTrack_f: random track id: %i/%i\n", randomID, musicTrackCount);
 
 		const char *filename;
-		while ((filename = FS_NextFileFromFileList("music/*.ogg")) != NULL) {
+		while ((filename = FS_NextFileFromFileList("music/*.ogg")) != nullptr) {
 			if (!randomID) {
 				const char *musicTrack = Com_SkipPath(filename);
 				Com_Printf("..playing next music track: '%s'\n", musicTrack);
@@ -229,7 +229,7 @@ static void M_RandomTrack_f (void)
 			}
 			randomID--;
 		}
-		FS_NextFileFromFileList(NULL);
+		FS_NextFileFromFileList(nullptr);
 	} else {
 		Com_DPrintf(DEBUG_SOUND, "M_RandomTrack_f: No music found!\n");
 	}
@@ -300,7 +300,7 @@ static void M_MusicStreamUpdate (void)
 {
 	if (music.interruptStream) {
 		music.interruptStream = false;
-		M_StopMusicStream(NULL);
+		M_StopMusicStream(nullptr);
 	}
 }
 
@@ -448,9 +448,9 @@ void M_AddToSampleBuffer (musicStream_t *userdata, int rate, int samples, const 
 
 void M_StopMusicStream (musicStream_t *userdata)
 {
-	if (userdata != NULL)
+	if (userdata != nullptr)
 		userdata->playing = false;
 	music.playingStream = false;
 	music.interruptStream = false;
-	Mix_HookMusic(NULL, NULL);
+	Mix_HookMusic(nullptr, nullptr);
 }

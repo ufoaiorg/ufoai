@@ -38,7 +38,7 @@ serverInstanceGame_t *sv;			/* local server */
 /**
  * @brief Get the map title for a given map
  * @note the title string must be translated client side
- * @return Never NULL - mapname or maptitle (if defined in assembly)
+ * @return Never nullptr - mapname or maptitle (if defined in assembly)
  */
 static const char *SV_GetMapTitle (const MapInfo *map, const char* const mapname)
 {
@@ -90,10 +90,10 @@ static void SV_InitGame (void)
 
 	/* init network stuff */
 	if (sv_maxclients->integer > 1) {
-		svs.initialized = SV_Start(NULL, port->string, &SV_ReadPacket);
-		svs.netDatagramSocket = NET_DatagramSocketNew(NULL, port->string, &SV_DiscoveryCallback);
+		svs.initialized = SV_Start(nullptr, port->string, &SV_ReadPacket);
+		svs.netDatagramSocket = NET_DatagramSocketNew(nullptr, port->string, &SV_DiscoveryCallback);
 	} else
-		svs.initialized = SV_Start(NULL, NULL, &SV_ReadPacket);
+		svs.initialized = SV_Start(nullptr, nullptr, &SV_ReadPacket);
 
 	SV_Heartbeat_f();
 
@@ -118,7 +118,7 @@ void SV_Map (bool day, const char *levelstring, const char *assembly)
 	char *map = SV_GetConfigString(CS_TILES);
 	char *pos = SV_GetConfigString(CS_POSITIONS);
 	char *entityString = SV_GetConfigString(CS_ENTITYSTRING);
-	MapInfo *randomMap = NULL;
+	MapInfo *randomMap = nullptr;
 	client_t *cl;
 
 	/* any partially connected client will be restarted */
@@ -155,8 +155,8 @@ void SV_Map (bool day, const char *levelstring, const char *assembly)
 		sv->assembly[0] = '\0';
 
 	/* leave slots at start for clients only */
-	cl = NULL;
-	while ((cl = SV_GetNextClient(cl)) != NULL) {
+	cl = nullptr;
+	while ((cl = SV_GetNextClient(cl)) != nullptr) {
 		/* needs to reconnect */
 		if (cl->state >= cs_spawning)
 			SV_SetClientState(cl, cs_connected);
@@ -195,7 +195,7 @@ void SV_Map (bool day, const char *levelstring, const char *assembly)
 
 	/* clear random-map assembly data */
 	Mem_Free(randomMap);
-	randomMap = NULL;
+	randomMap = nullptr;
 
 	/* clear physics interaction links */
 	SV_ClearWorld();

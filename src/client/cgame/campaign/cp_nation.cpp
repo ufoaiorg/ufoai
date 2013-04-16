@@ -44,15 +44,15 @@ nation_t *NAT_GetNationByIDX (const int index)
 /**
  * @brief Return a nation-pointer by the nations id (nation_t->id) text.
  * @param[in] nationID nation id as defined in (nation_t->id)
- * @return nation_t pointer or NULL if nothing found (=error).
+ * @return nation_t pointer or nullptr if nothing found (=error).
  */
 nation_t *NAT_GetNationByID (const char *nationID)
 {
 	int i;
 
 	if (!nationID) {
-		Com_Printf("NAT_GetNationByID: NULL nationID\n");
-		return NULL;
+		Com_Printf("NAT_GetNationByID: nullptr nationID\n");
+		return nullptr;
 	}
 	for (i = 0; i < ccs.numNations; i++) {
 		nation_t *nation = NAT_GetNationByIDX(i);
@@ -63,7 +63,7 @@ nation_t *NAT_GetNationByID (const char *nationID)
 	Com_Printf("NAT_GetNationByID: Could not find nation '%s'\n", nationID);
 
 	/* No matching nation found - ERROR */
-	return NULL;
+	return nullptr;
 }
 
 
@@ -288,7 +288,7 @@ static const value_t nation_vals[] = {
 	{"workers", V_INT, offsetof(nation_t, maxWorkers), MEMBER_SIZEOF(nation_t, maxWorkers)},
 	{"pilots", V_INT, offsetof(nation_t, maxPilots), MEMBER_SIZEOF(nation_t, maxPilots)},
 
-	{NULL, V_NULL, 0, 0}
+	{nullptr, V_nullptr, 0, 0}
 };
 
 /**
@@ -344,7 +344,7 @@ city_t *CITY_GetById (const char *cityId)
 		if (Q_streq(cityId, city->id))
 			return city;
 	}
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -357,14 +357,14 @@ city_t *CITY_GetByPos (vec2_t pos)
 		if (Vector2Equal(pos, city->pos))
 			return city;
 	}
-	return NULL;
+	return nullptr;
 }
 
 static const value_t city_vals[] = {
 	{"name", V_TRANSLATION_STRING, offsetof(city_t, name), 0},
 	{"pos", V_POS, offsetof(city_t, pos), MEMBER_SIZEOF(city_t, pos)},
 
-	{NULL, V_NULL, 0, 0}
+	{nullptr, V_nullptr, 0, 0}
 };
 
 /**
@@ -414,18 +414,18 @@ bool NAT_ScriptSanityCheck (void)
 			Com_Printf("...... city '%s' has no name\n", city->id);
 		}
 
-		if (MapIsWater(GEO_GetColor(city->pos, MAPTYPE_TERRAIN, NULL))) {
+		if (MapIsWater(GEO_GetColor(city->pos, MAPTYPE_TERRAIN, nullptr))) {
 			error++;
 			Com_Printf("...... city '%s' has a position in the water\n", city->id);
 		}
 
-		numTypes = CP_TerrorMissionAvailableUFOs(NULL, ufoTypes);
+		numTypes = CP_TerrorMissionAvailableUFOs(nullptr, ufoTypes);
 
 		MapDef_ForeachSingleplayerCampaign(md) {
 			if (md->storyRelated)
 				continue;
 
-			if (GEO_PositionFitsTCPNTypes(city->pos, md->terrains, md->cultures, md->populations, NULL)) {
+			if (GEO_PositionFitsTCPNTypes(city->pos, md->terrains, md->cultures, md->populations, nullptr)) {
 				int i;
 				/* this map fits city parameter, check if we have some terror mission UFOs available for this map */
 				parametersFit = true;
@@ -792,14 +792,14 @@ void NAT_HandleBudget (const campaign_t *campaign)
 
 		for (j = 0; 0.25 + j < (float) nation->maxScientists * stats->happiness * ccs.curCampaign->employeeRate; j++) {
 			/* Create a scientist, but don't auto-hire her. */
-			E_CreateEmployee(EMPL_SCIENTIST, nation, NULL);
+			E_CreateEmployee(EMPL_SCIENTIST, nation, nullptr);
 			newScientists++;
 		}
 
 		if (stats->happiness > 0) {
 			for (j = 0; 0.25 + j < (float) nation->maxSoldiers * stats->happiness * ccs.curCampaign->employeeRate; j++) {
 				/* Create a soldier. */
-				E_CreateEmployee(EMPL_SOLDIER, nation, NULL);
+				E_CreateEmployee(EMPL_SOLDIER, nation, nullptr);
 				newSoldiers++;
 			}
 		}
@@ -807,14 +807,14 @@ void NAT_HandleBudget (const campaign_t *campaign)
 		if (stats->happiness > 0) {
 			for (j = 0; 0.25 + j < (float) nation->maxPilots * stats->happiness * ccs.curCampaign->employeeRate; j++) {
 				/* Create a pilot. */
-				E_CreateEmployee(EMPL_PILOT, nation, NULL);
+				E_CreateEmployee(EMPL_PILOT, nation, nullptr);
 				newPilots++;
 			}
 		}
 
 		for (j = 0; 0.25 + j * 2 < (float) nation->maxWorkers * stats->happiness * ccs.curCampaign->employeeRate; j++) {
 			/* Create a worker. */
-			E_CreateEmployee(EMPL_WORKER, nation, NULL);
+			E_CreateEmployee(EMPL_WORKER, nation, nullptr);
 			newWorkers++;
 		}
 
@@ -859,8 +859,8 @@ void NAT_HandleBudget (const campaign_t *campaign)
 		MS_AddNewMessage(_("Notice"), message);
 	}
 
-	base = NULL;
-	while ((base = B_GetNext(base)) != NULL) {
+	base = nullptr;
+	while ((base = B_GetNext(base)) != nullptr) {
 		cost = CP_GetSalaryUpKeepBase(salary, base);
 		totalExpenditure += cost;
 
@@ -913,7 +913,7 @@ void NAT_BackupMonthlyData (void)
  */
 void NAT_InitStartup (void)
 {
-	cgi->Cmd_AddCommand("nation_stats_click", CP_NationStatsClick_f, NULL);
+	cgi->Cmd_AddCommand("nation_stats_click", CP_NationStatsClick_f, nullptr);
 	cgi->Cmd_AddCommand("nation_update", CL_NationStatsUpdate_f, "Shows the current nation list + statistics.");
 	cgi->Cmd_AddCommand("nation_select", CL_NationSelect_f, "Select nation and display all relevant information for it.");
 #ifdef DEBUG

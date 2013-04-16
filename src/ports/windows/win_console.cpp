@@ -72,8 +72,8 @@ static void Sys_ConsoleLoop (bool error)
 {
 	MSG msg;
 
-	while (PeekMessage(&msg, NULL, 0, 0, PM_NOREMOVE)) {
-		if (!GetMessage(&msg, NULL, 0, 0)) {
+	while (PeekMessage(&msg, nullptr, 0, 0, PM_NOREMOVE)) {
+		if (!GetMessage(&msg, nullptr, 0, 0)) {
 			if (error)
 				ExitProcess(1);
 			else
@@ -87,7 +87,7 @@ static void Sys_ConsoleLoop (bool error)
 
 /**
  * @brief Handles input for the console window
- * @returns @c NULL if there is no input in the input box
+ * @returns @c nullptr if there is no input in the input box
  */
 const char *Sys_ConsoleInput (void)
 {
@@ -101,7 +101,7 @@ const char *Sys_ConsoleInput (void)
 
 	/* empty command buffer? */
 	if (sys_console.cmdBuffer[0] == '\0')
-		return NULL;
+		return nullptr;
 
 	Q_strncpyz(buffer, sys_console.cmdBuffer, sizeof(buffer));
 
@@ -185,7 +185,7 @@ void Sys_Error (const char *error, ...)
 
 	/* Display the message and set a timer so we can flash the text */
 	SetWindowText(sys_console.hWndMsg, text);
-	SetTimer(sys_console.hWnd, 1, 1000, NULL);
+	SetTimer(sys_console.hWnd, 1, 1000, nullptr);
 
 	sys_console.timerActive = true;
 
@@ -254,7 +254,7 @@ static LONG WINAPI Sys_ConsoleProc (HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM 
 			} else if ((HWND)lParam == sys_console.hWndQuit)
 				Sys_Quit();
 		} else if (HIWORD(wParam) == EN_VSCROLL)
-			InvalidateRect(sys_console.hWndOutput, NULL, TRUE);
+			InvalidateRect(sys_console.hWndOutput, nullptr, TRUE);
 		break;
 
 	case WM_CTLCOLOREDIT:
@@ -287,11 +287,11 @@ static LONG WINAPI Sys_ConsoleProc (HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM 
 
 	case WM_TIMER:
 		sys_console.flashColor = !sys_console.flashColor;
-		InvalidateRect(sys_console.hWndMsg, NULL, TRUE);
+		InvalidateRect(sys_console.hWndMsg, nullptr, TRUE);
 		break;
 
 	case WM_CREATE:
-		SetTimer(sys_console.hWnd, 1, 500, NULL);
+		SetTimer(sys_console.hWnd, 1, 500, nullptr);
 		break;
 	}
 
@@ -409,30 +409,30 @@ void Sys_ConsoleInit (void)
 	wc.hInstance = global_hInstance;
 	wc.hIcon = LoadIcon(global_hInstance, MAKEINTRESOURCE(101));
 	wc.hIconSm = 0;
-	wc.hCursor = LoadCursor(NULL, IDC_ARROW);
+	wc.hCursor = LoadCursor(nullptr, IDC_ARROW);
 	wc.hbrBackground = (HBRUSH)COLOR_WINDOW;
 	wc.lpszMenuName = 0;
 	wc.lpszClassName = CONSOLE_WINDOW_CLASS_NAME;
 	wc.cbSize = sizeof(WNDCLASSEX);
 
 	if (!RegisterClassEx(&wc)) {
-		MessageBox(NULL, "Could not register console window class", "ERROR", MB_OK | MB_ICONERROR | MB_TASKMODAL);
+		MessageBox(nullptr, "Could not register console window class", "ERROR", MB_OK | MB_ICONERROR | MB_TASKMODAL);
 		exit(0);
 	}
 
-	sys_console.hWnd = CreateWindowEx(0, CONSOLE_WINDOW_CLASS_NAME, CONSOLE_WINDOW_NAME, CONSOLE_WINDOW_STYLE, x, y, w, h, NULL, NULL, global_hInstance, NULL);
+	sys_console.hWnd = CreateWindowEx(0, CONSOLE_WINDOW_CLASS_NAME, CONSOLE_WINDOW_NAME, CONSOLE_WINDOW_STYLE, x, y, w, h, nullptr, nullptr, global_hInstance, nullptr);
 	if (!sys_console.hWnd) {
 		UnregisterClass(CONSOLE_WINDOW_CLASS_NAME, global_hInstance);
-		MessageBox(NULL, "Could not create console window", "ERROR", MB_OK | MB_ICONERROR | MB_TASKMODAL);
+		MessageBox(nullptr, "Could not create console window", "ERROR", MB_OK | MB_ICONERROR | MB_TASKMODAL);
 		exit(0);
 	}
 
-	sys_console.hWndMsg = CreateWindowEx(0, "STATIC", "", WS_CHILD | SS_SUNKEN, 5, 5, 530, 30, sys_console.hWnd, NULL, global_hInstance, NULL);
-	sys_console.hWndOutput = CreateWindowEx(0, "EDIT", "", WS_CHILD | WS_VISIBLE | WS_BORDER | WS_VSCROLL | ES_MULTILINE, 5, 40, 530, 350, sys_console.hWnd, NULL, global_hInstance, NULL);
-	sys_console.hWndInput = CreateWindowEx(0, "EDIT", "", WS_CHILD | WS_VISIBLE | WS_BORDER | ES_AUTOHSCROLL, 5, 395, 530, 20, sys_console.hWnd, NULL, global_hInstance, NULL);
-	sys_console.hWndCopy = CreateWindowEx(0, "BUTTON", "copy", WS_CHILD | WS_VISIBLE | BS_DEFPUSHBUTTON, 5, 425, 70, 25, sys_console.hWnd, NULL, global_hInstance, NULL);
-	sys_console.hWndClear = CreateWindowEx(0, "BUTTON", "clear", WS_CHILD | WS_VISIBLE | BS_DEFPUSHBUTTON, 80, 425, 70, 25, sys_console.hWnd, NULL, global_hInstance, NULL);
-	sys_console.hWndQuit = CreateWindowEx(0, "BUTTON", "quit", WS_CHILD | WS_VISIBLE | BS_DEFPUSHBUTTON, 465, 425, 70, 25, sys_console.hWnd, NULL, global_hInstance, NULL);
+	sys_console.hWndMsg = CreateWindowEx(0, "STATIC", "", WS_CHILD | SS_SUNKEN, 5, 5, 530, 30, sys_console.hWnd, nullptr, global_hInstance, nullptr);
+	sys_console.hWndOutput = CreateWindowEx(0, "EDIT", "", WS_CHILD | WS_VISIBLE | WS_BORDER | WS_VSCROLL | ES_MULTILINE, 5, 40, 530, 350, sys_console.hWnd, nullptr, global_hInstance, nullptr);
+	sys_console.hWndInput = CreateWindowEx(0, "EDIT", "", WS_CHILD | WS_VISIBLE | WS_BORDER | ES_AUTOHSCROLL, 5, 395, 530, 20, sys_console.hWnd, nullptr, global_hInstance, nullptr);
+	sys_console.hWndCopy = CreateWindowEx(0, "BUTTON", "copy", WS_CHILD | WS_VISIBLE | BS_DEFPUSHBUTTON, 5, 425, 70, 25, sys_console.hWnd, nullptr, global_hInstance, nullptr);
+	sys_console.hWndClear = CreateWindowEx(0, "BUTTON", "clear", WS_CHILD | WS_VISIBLE | BS_DEFPUSHBUTTON, 80, 425, 70, 25, sys_console.hWnd, nullptr, global_hInstance, nullptr);
+	sys_console.hWndQuit = CreateWindowEx(0, "BUTTON", "quit", WS_CHILD | WS_VISIBLE | BS_DEFPUSHBUTTON, 465, 425, 70, 25, sys_console.hWnd, nullptr, global_hInstance, nullptr);
 
 	/* Create and set fonts */
 	sys_console.hFont = CreateFont(14, 0, 0, 0, FW_LIGHT, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, FIXED_PITCH | FF_MODERN, "Courier New");

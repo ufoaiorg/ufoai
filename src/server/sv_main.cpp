@@ -42,7 +42,7 @@ static cvar_t *sv_hostname;
 static cvar_t *sv_reconnect_limit;
 static cvar_t *sv_timeout;			/* seconds without any message */
 
-cvar_t *sv_maxclients = NULL;
+cvar_t *sv_maxclients = nullptr;
 cvar_t *sv_dumpmapassembly;
 cvar_t *sv_threads;
 cvar_t *sv_rma;
@@ -103,7 +103,7 @@ char *SV_SetConfigString (int index, ...)
 
 /**
  * @brief Iterates through clients
- * @param[in] lastClient Pointer of the client to iterate from. call with NULL to get the first one.
+ * @param[in] lastClient Pointer of the client to iterate from. call with nullptr to get the first one.
  */
 client_t *SV_GetNextClient (client_t *lastClient)
 {
@@ -111,7 +111,7 @@ client_t *SV_GetNextClient (client_t *lastClient)
 	client_t *client;
 
 	if (!sv_maxclients->integer)
-		return NULL;
+		return nullptr;
 
 	if (!lastClient)
 		return svs.clients;
@@ -122,7 +122,7 @@ client_t *SV_GetNextClient (client_t *lastClient)
 
 	client++;
 	if (client >= endOfClients)
-		return NULL;
+		return nullptr;
 	else
 		return client;
 }
@@ -154,7 +154,7 @@ void SV_DropClient (client_t *drop, const char *message)
 	}
 
 	NET_StreamFinished(drop->stream);
-	drop->stream = NULL;
+	drop->stream = nullptr;
 
 	drop->player->setInUse(false);
 	SV_SetClientState(drop, cs_free);
@@ -162,8 +162,8 @@ void SV_DropClient (client_t *drop, const char *message)
 
 	if (svs.abandon) {
 		int count = 0;
-		client_t *cl = NULL;
-		while ((cl = SV_GetNextClient(cl)) != NULL)
+		client_t *cl = nullptr;
+		while ((cl = SV_GetNextClient(cl)) != nullptr)
 			if (cl->state >= cs_connected)
 				count++;
 		if (count == 0)
@@ -195,8 +195,8 @@ static void SVC_TeamInfo (struct net_stream *s)
 	Info_SetValueForKey(infoGlobal, sizeof(infoGlobal), "sv_maxplayersperteam", Cvar_GetString("sv_maxplayersperteam"));
 	NET_WriteString(&msg, infoGlobal);
 
-	cl = NULL;
-	while ((cl = SV_GetNextClient(cl)) != NULL) {
+	cl = nullptr;
+	while ((cl = SV_GetNextClient(cl)) != nullptr) {
 		if (cl->state >= cs_connected) {
 			char infoPlayer[MAX_INFO_STRING] = "";
 			/* show players that already have a team with their teamnum */
@@ -230,8 +230,8 @@ static void SVC_Status (struct net_stream *s)
 	NET_WriteRawString(&msg, Cvar_Serverinfo());
 	NET_WriteRawString(&msg, "\n");
 
-	cl = NULL;
-	while ((cl = SV_GetNextClient(cl)) != NULL) {
+	cl = nullptr;
+	while ((cl = SV_GetNextClient(cl)) != nullptr) {
 		if (cl->state > cs_free) {
 			Com_sprintf(player, sizeof(player), "%i \"%s\"\n", svs.ge->ClientGetTeamNum(*cl->player), cl->name);
 			NET_WriteRawString(&msg, player);
@@ -269,8 +269,8 @@ static void SVC_Info (struct net_stream *s)
 		char infostring[MAX_INFO_STRING];
 		int count = 0;
 
-		cl = NULL;
-		while ((cl = SV_GetNextClient(cl)) != NULL)
+		cl = nullptr;
+		while ((cl = SV_GetNextClient(cl)) != nullptr)
 			if (cl->state >= cs_spawning)
 				count++;
 
@@ -343,11 +343,11 @@ static void SVC_DirectConnect (struct net_stream *stream)
 	Info_SetValueForKey(userinfo, sizeof(userinfo), "ip", peername);
 
 	/* find a client slot */
-	cl = NULL;
-	while ((cl = SV_GetNextClient(cl)) != NULL)
+	cl = nullptr;
+	while ((cl = SV_GetNextClient(cl)) != nullptr)
 		if (cl->state == cs_free)
 			break;
-	if (cl == NULL) {
+	if (cl == nullptr) {
 		NET_OOB_Printf(stream, "print\nServer is full.\n");
 		Com_Printf("Rejected a connection - server is full.\n");
 		return;
@@ -509,7 +509,7 @@ void SV_ReadPacket (struct net_stream *s)
 			SV_ExecuteClientMessage(cl, cmd, msg);
 		else {
 			NET_StreamFree(s);
-			s = NULL;
+			s = nullptr;
 		}
 
 		delete msg;
@@ -531,9 +531,9 @@ static int Master_HeartbeatThread (void * data)
 
 	/* send to master */
 	Com_Printf("sending heartbeat\n");
-	HTTP_GetURL(url, NULL);
+	HTTP_GetURL(url, nullptr);
 
-	masterServerHeartBeatThread = NULL;
+	masterServerHeartBeatThread = nullptr;
 	return 0;
 }
 
@@ -557,10 +557,10 @@ static void Master_Heartbeat (void)
 
 	svs.lastHeartbeat = svs.realtime;
 
-	if (masterServerHeartBeatThread != NULL)
-		SDL_WaitThread(masterServerHeartBeatThread, NULL);
+	if (masterServerHeartBeatThread != nullptr)
+		SDL_WaitThread(masterServerHeartBeatThread, nullptr);
 
-	masterServerHeartBeatThread = SDL_CreateThread(Master_HeartbeatThread, NULL);
+	masterServerHeartBeatThread = SDL_CreateThread(Master_HeartbeatThread, nullptr);
 }
 
 /**
@@ -576,8 +576,8 @@ static void SV_CheckSpawnSoldiers (void)
 	if (sv->spawned)
 		return;
 
-	cl = NULL;
-	while ((cl = SV_GetNextClient(cl)) != NULL) {
+	cl = nullptr;
+	while ((cl = SV_GetNextClient(cl)) != nullptr) {
 		/* all players must be connected and all of them must have set
 		 * the ready flag */
 		if (cl->state != cs_began || !cl->player->isReady())
@@ -586,8 +586,8 @@ static void SV_CheckSpawnSoldiers (void)
 
 	sv->spawned = true;
 
-	cl = NULL;
-	while ((cl = SV_GetNextClient(cl)) != NULL)
+	cl = nullptr;
+	while ((cl = SV_GetNextClient(cl)) != nullptr)
 		if (cl->state != cs_free)
 			SV_ClientCommand(cl, "spawnsoldiers\n");
 }
@@ -600,8 +600,8 @@ static void SV_CheckStartMatch (void)
 		return;
 
 	if (sv_maxclients->integer > 1) {
-		cl = NULL;
-		while ((cl = SV_GetNextClient(cl)) != NULL) {
+		cl = nullptr;
+		while ((cl = SV_GetNextClient(cl)) != nullptr) {
 			/* all players must have their actors spawned */
 			if (cl->state != cs_spawned)
 				return;
@@ -613,8 +613,8 @@ static void SV_CheckStartMatch (void)
 
 	sv->started = true;
 
-	cl = NULL;
-	while ((cl = SV_GetNextClient(cl)) != NULL)
+	cl = nullptr;
+	while ((cl = SV_GetNextClient(cl)) != nullptr)
 		if (cl->state != cs_free)
 			SV_ClientCommand(cl, "startmatch\n");
 }
@@ -632,8 +632,8 @@ static void SV_PingPlayers (void)
 		return;					/* not time to send yet */
 
 	svs.lastPing = svs.realtime;
-	cl = NULL;
-	while ((cl = SV_GetNextClient(cl)) != NULL)
+	cl = nullptr;
+	while ((cl = SV_GetNextClient(cl)) != nullptr)
 		if (cl->state != cs_free) {
 			dbuffer msg(1);
 			NET_WriteByte(&msg, svc_ping);
@@ -643,14 +643,14 @@ static void SV_PingPlayers (void)
 
 static void SV_CheckTimeouts (void)
 {
-	client_t *cl = NULL;
+	client_t *cl = nullptr;
 	const int droppoint = svs.realtime - 1000 * sv_timeout->integer;
 
 	if (sv_maxclients->integer == 1)
 		return;
 
-	cl = NULL;
-	while ((cl = SV_GetNextClient(cl)) != NULL) {
+	cl = nullptr;
+	while ((cl = SV_GetNextClient(cl)) != nullptr) {
 		if (cl->state == cs_free)
 			continue;
 
@@ -735,7 +735,7 @@ static void Master_Shutdown (void)
 		return;					/* a private dedicated game */
 
 	/* send to master */
-	HTTP_GetURL(va("%s/ufo/masterserver.php?shutdown&port=%s", masterserver_url->string, port->string), NULL);
+	HTTP_GetURL(va("%s/ufo/masterserver.php?shutdown&port=%s", masterserver_url->string, port->string), nullptr);
 }
 
 /**
@@ -835,12 +835,12 @@ static void SV_FinalMessage (const char *message, bool reconnect)
 		NET_WriteByte(&msg, svc_disconnect);
 	NET_WriteString(&msg, message);
 
-	cl = NULL;
-	while ((cl = SV_GetNextClient(cl)) != NULL)
+	cl = nullptr;
+	while ((cl = SV_GetNextClient(cl)) != nullptr)
 		if (cl->state >= cs_connected) {
 			NET_WriteConstMsg(cl->stream, msg);
 			NET_StreamFinished(cl->stream);
-			cl->stream = NULL;
+			cl->stream = nullptr;
 		}
 
 	/* make sure, that this is send */
@@ -928,8 +928,8 @@ int SV_CountPlayers (void)
 	if (!svs.initialized)
 		return 0;
 
-	cl = NULL;
-	while ((cl = SV_GetNextClient(cl)) != NULL) {
+	cl = nullptr;
+	while ((cl = SV_GetNextClient(cl)) != nullptr) {
 		if (cl->state != cs_spawned)
 			continue;
 

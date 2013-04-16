@@ -614,7 +614,7 @@ static void testGetBlock (void)
 		const size_t expected = strlen(test) - 2;
 		const char *start = NULL;
 		const int length = Com_GetBlock(&buf, &start);
-		UFO_CU_ASSERT_EQUAL_INT_MSG(length, expected, NULL);
+		CU_ASSERT_EQUAL(length, expected);
 		UFO_CU_ASSERT_EQUAL_INT_MSG(strncmp(start, test + 1, length), 0,
 				va("%s and %s should match on the first %i characters", start, test + 1, length));
 	}

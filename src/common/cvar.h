@@ -35,7 +35,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef COMMON_CVAR
 #define COMMON_CVAR
 
-#include "../shared/sharedptr.h"
+#include "../shared/shared.h"
 
 #define CVAR_ARCHIVE    1       /**< set to cause it to be saved to vars.rc */
 #define CVAR_USERINFO   2       /**< added to userinfo  when changed */
@@ -53,8 +53,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /**
  * @brief Callback for the change listener
  * @param cvarName The name of the cvar that was changed.
- * @param oldValue The old value of the cvar - this is never @c NULL, but can be empty.
- * @param newValue The new value of the cvar - this is never @c NULL, but can be empty.
+ * @param oldValue The old value of the cvar - this is never @c nullptr, but can be empty.
+ * @param newValue The new value of the cvar - this is never @c nullptr, but can be empty.
  */
 typedef void (*cvarChangeListenerFunc_t) (const char *cvarName, const char *oldValue, const char *newValue, void *data);
 
@@ -114,7 +114,7 @@ cvar_t *Cvar_GetFirst(void);
  * if it exists, the value will not be changed, but flags will be ORed in
  * that allows variables to be unarchived without needing bitflags
  */
-cvar_t *Cvar_Get(const char *varName, const char *value = "", int flags = 0, const char *desc = NULL);
+cvar_t *Cvar_Get(const char *varName, const char *value = "", int flags = 0, const char *desc = nullptr);
 
 /**
  * @brief will create the variable if it doesn't exist
@@ -155,7 +155,7 @@ const char *Cvar_VariableStringOld(const char *varName);
 
 /**
  * @brief attempts to match a partial variable name for command line completion
- * returns NULL if nothing fits
+ * returns nullptr if nothing fits
  */
 int Cvar_CompleteVariable(const char *partial, const char **match);
 

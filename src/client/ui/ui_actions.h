@@ -32,7 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @sa uiAction_t
  */
 typedef enum uiActionType_s {
-	EA_NULL = 0,
+	EA_nullptr = 0,
 
 	EA_BINARYOPERATOR,
 	EA_UNARYOPERATOR,

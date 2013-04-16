@@ -83,13 +83,13 @@ uiNode_t *UI_PopupList (const char *title, const char *headline, linkedList_t *e
 		assert(listNode->onClick->d.terminal.d1.data);
 		Mem_Free(listNode->onClick->d.terminal.d1.data);
 		Mem_Free(listNode->onClick);
-		listNode->onClick = NULL;
+		listNode->onClick = nullptr;
 	}
 
 	if (clickAction) {
 		UI_PoolAllocAction(&listNode->onClick, EA_CMD, clickAction);
 	} else {
-		listNode->onClick = NULL;
+		listNode->onClick = nullptr;
 	}
 
 	if (!UI_IsWindowOnStack(window->name))
@@ -102,7 +102,7 @@ uiNode_t *UI_PopupList (const char *title, const char *headline, linkedList_t *e
  * @param[in] window window where buttons are modified.
  * @param[in] button Name of the node of the button.
  * @param[in] clickAction Action to perform when button is clicked.
- * @note clickAction may be NULL if button is not needed.
+ * @note clickAction may be nullptr if button is not needed.
  */
 static void UI_SetOneButton (uiNode_t* window, const char *button, const char *clickAction)
 {
@@ -117,14 +117,14 @@ static void UI_SetOneButton (uiNode_t* window, const char *button, const char *c
 		assert(buttonNode->onClick->d.terminal.d1.data);
 		Mem_Free(buttonNode->onClick->d.terminal.d1.data);
 		Mem_Free(buttonNode->onClick);
-		buttonNode->onClick = NULL;
+		buttonNode->onClick = nullptr;
 	}
 
 	if (clickAction) {
 		UI_PoolAllocAction(&buttonNode->onClick, EA_CMD, clickAction);
 		buttonNode->invis = false;
 	} else {
-		buttonNode->onClick = NULL;
+		buttonNode->onClick = nullptr;
 		buttonNode->invis = true;
 	}
 }
@@ -132,7 +132,7 @@ static void UI_SetOneButton (uiNode_t* window, const char *button, const char *c
 /**
  * @brief Generates a popup that contains up to 3 buttons.
  * @param[in] title Title of the popup.
- * @param[in] text Text to display in the popup (use popupText if text is NULL).
+ * @param[in] text Text to display in the popup (use popupText if text is nullptr).
  * @param[in] clickAction1 Action to perform when one clicked on the first button.
  * @param[in] clickText1 String that will be written in first button.
  * @param[in] tooltip1 Tooltip of first button.
@@ -142,7 +142,7 @@ static void UI_SetOneButton (uiNode_t* window, const char *button, const char *c
  * @param[in] clickAction3 Action to perform when one clicked on the third button.
  * @param[in] clickText3 String that will be written in third button.
  * @param[in] tooltip3 Tooltip of third button.
- * @note clickAction AND clickText must be NULL if button should be invisible.
+ * @note clickAction AND clickText must be nullptr if button should be invisible.
  */
 void UI_PopupButton (const char *title, const char *text,
 	const char *clickAction1, const char *clickText1, const char *tooltip1,
@@ -165,7 +165,7 @@ void UI_PopupButton (const char *title, const char *text,
 	Cvar_Set("ui_sys_popup_button_tooltip1", tooltip1);
 	if (!clickAction1 && !clickText1) {
 		UI_SetOneButton(window, va("%s1", POPUPBUTTON_NODE_NAME),
-			NULL);
+			nullptr);
 	} else {
 		UI_SetOneButton(window, va("%s1", POPUPBUTTON_NODE_NAME),
 			clickAction1 ? clickAction1 : popupAction1);
@@ -174,7 +174,7 @@ void UI_PopupButton (const char *title, const char *text,
 	Cvar_Set("ui_sys_popup_button_text2", clickText2);
 	Cvar_Set("ui_sys_popup_button_tooltip2", tooltip2);
 	if (!clickAction2 && !clickText2) {
-		UI_SetOneButton(window, va("%s2", POPUPBUTTON_NODE_NAME), NULL);
+		UI_SetOneButton(window, va("%s2", POPUPBUTTON_NODE_NAME), nullptr);
 	} else {
 		UI_SetOneButton(window, va("%s2", POPUPBUTTON_NODE_NAME),
 			clickAction2 ? clickAction2 : popupAction2);
@@ -183,7 +183,7 @@ void UI_PopupButton (const char *title, const char *text,
 	Cvar_Set("ui_sys_popup_button_text3", clickText3);
 	Cvar_Set("ui_sys_popup_button_tooltip3", tooltip3);
 	if (!clickAction3 && !clickText3) {
-		UI_SetOneButton(window, va("%s3", POPUPBUTTON_NODE_NAME), NULL);
+		UI_SetOneButton(window, va("%s3", POPUPBUTTON_NODE_NAME), nullptr);
 	} else {
 		UI_SetOneButton(window, va("%s3", POPUPBUTTON_NODE_NAME),
 			clickAction3 ? clickAction3 : popupAction3);

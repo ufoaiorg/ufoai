@@ -56,7 +56,7 @@ static inline void CLMN_AddUIBindings (linkedList_t **list)
 	for (i = 0; i < UI_GetKeyBindingCount(); i++) {
 		const uiKeyBinding_t* binding = UI_GetKeyBindingByIndex(i);
 
-		if (binding == NULL)
+		if (binding == nullptr)
 			continue;
 		if (binding->inherited)
 			continue;
@@ -72,7 +72,7 @@ static inline void CLMN_AddUIBindings (linkedList_t **list)
  */
 static void CLMN_InitKeyList_f (void)
 {
-	linkedList_t *list = NULL;
+	linkedList_t *list = nullptr;
 
 	LIST_AddString(&list, _("^BGlobal bindings"));
 	LIST_AddString(&list, "");
@@ -94,7 +94,7 @@ static void CLMN_InitKeyList_f (void)
 
 static void CLMN_Mods_f (void)
 {
-	linkedList_t *mods = NULL;
+	linkedList_t *mods = nullptr;
 	FS_GetModList(&mods);
 	while (mods) {
 		Cbuf_AddText(va("mn_mods_result %s\n", (char*)mods->data));

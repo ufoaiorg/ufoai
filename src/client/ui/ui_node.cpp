@@ -39,31 +39,31 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 bool UI_Node_IsVirtual(uiNode_t const* node)
 {
 	uiLocatedNode* b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager.get());
-	return b == NULL;
+	return b == nullptr;
 }
 
 bool UI_Node_IsDrawable(uiNode_t const* node)
 {
 	uiLocatedNode* b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager.get());
-	return b != NULL;
+	return b != nullptr;
 }
 
 bool UI_Node_IsOptionContainer(uiNode_t const* node)
 {
 	uiAbstractOptionNode* b = dynamic_cast<uiAbstractOptionNode*>(node->behaviour->manager.get());
-	return b != NULL;
+	return b != nullptr;
 }
 
 bool UI_Node_IsWindow(uiNode_t const* node)
 {
 	uiWindowNode* b = dynamic_cast<uiWindowNode*>(node->behaviour->manager.get());
-	return b != NULL;
+	return b != nullptr;
 }
 
 bool UI_Node_IsBattleScape(uiNode_t const* node)
 {
 	uiBattleScapeNode *b = dynamic_cast<uiBattleScapeNode*>(node->behaviour->manager.get());
-	return b != NULL;
+	return b != nullptr;
 }
 
 bool UI_Node_IsAbstract(uiNode_t const* node)
@@ -90,7 +90,7 @@ bool UI_Node_IsFunction(uiNode_t const* node)
 bool UI_Node_IsScrollableContainer(uiNode_t const* node)
 {
 	uiAbstractScrollableNode *b = dynamic_cast<uiAbstractScrollableNode*>(node->behaviour->manager.get());
-	return b != NULL;
+	return b != nullptr;
 }
 
 const char* UI_Node_GetWidgetName(uiNode_t const* node)
@@ -520,11 +520,11 @@ void UI_NodeRelativeToAbsolutePoint (const uiNode_t* node, vec2_t pos)
  */
 void UI_NodeAbsoluteToRelativePos (const uiNode_t* node, int *x, int *y)
 {
-	assert(node != NULL);
+	assert(node != nullptr);
 	/* if we request the position of an undrawable node, there is a problem */
 	assert(node->behaviour->isVirtual == false);
-	assert(x != NULL);
-	assert(y != NULL);
+	assert(x != nullptr);
+	assert(y != nullptr);
 
 	/* if we request the position of an undrawable node, there is a problem */
 	if (node->behaviour->isVirtual)
@@ -587,10 +587,10 @@ void UI_NodeSetSize (uiNode_t* node, vec2_t size)
  */
 uiNode_t *UI_GetNode (const uiNode_t* const node, const char *name)
 {
-	uiNode_t *current = NULL;
+	uiNode_t *current = nullptr;
 
 	if (!node)
-		return NULL;
+		return nullptr;
 
 	for (current = node->firstChild; current; current = current->next)
 		if (Q_streq(name, current->name))
@@ -600,14 +600,14 @@ uiNode_t *UI_GetNode (const uiNode_t* const node, const char *name)
 }
 
 /**
- * @brief Insert a node next another one into a node. If prevNode is NULL add the node on the head of the window
+ * @brief Insert a node next another one into a node. If prevNode is nullptr add the node on the head of the window
  * @param[in] node Node where inserting a node
- * @param[in] prevNode previous node, will became before the newNode; else NULL if newNode will become the first child of the node
+ * @param[in] prevNode previous node, will became before the newNode; else nullptr if newNode will become the first child of the node
  * @param[in] newNode node we insert
  */
 void UI_InsertNode (uiNode_t* const node, uiNode_t *prevNode, uiNode_t *newNode)
 {
-	if (newNode->root == NULL)
+	if (newNode->root == nullptr)
 		newNode->root = node->root;
 
 	assert(node);
@@ -633,7 +633,7 @@ void UI_InsertNode (uiNode_t* const node, uiNode_t *prevNode, uiNode_t *newNode)
 
 /**
  * @brief Remove a node from a parent node
- * @return The removed node, else NULL
+ * @return The removed node, else nullptr
  * @param[in] node Node where is the child
  * @param[in] child Node we want to remove
  */
@@ -665,7 +665,7 @@ uiNode_t* UI_RemoveNode (uiNode_t* const node, uiNode_t *child)
 	if (child->root && child->indexed)
 		UI_WindowNodeRemoveIndexedNode(child->root, child);
 
-	child->next = NULL;
+	child->next = nullptr;
 	return child;
 }
 
@@ -801,7 +801,7 @@ bool UI_NodeSetProperty (uiNode_t* node, const value_t *property, const char* va
  * @brief Return a string from a node property
  * @param[in] node Requested node
  * @param[in] property Requested property
- * @return Return a string value of a property, else NULL, if the type is not supported
+ * @return Return a string value of a property, else nullptr, if the type is not supported
  */
 const char* UI_GetStringFromNodeProperty (const uiNode_t* node, const value_t* property)
 {
@@ -834,7 +834,7 @@ const char* UI_GetStringFromNodeProperty (const uiNode_t* node, const value_t* p
 	}
 
 	Com_Printf("UI_GetStringFromNodeProperty: Unsupported string getter for property type 0x%X (%s@%s)\n", property->type, UI_GetPath(node), property->string);
-	return NULL;
+	return nullptr;
 }
 
 /**

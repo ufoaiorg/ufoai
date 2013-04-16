@@ -76,7 +76,7 @@ static void R_DrawBox (const entity_t *e)
 		} else {
 			R_DrawTexturedBox(e->oldorigin, e->origin);
 		}
-		R_Color(NULL);
+		R_Color(nullptr);
 		return;
 	}
 
@@ -119,7 +119,7 @@ static void R_DrawBox (const entity_t *e)
 	}
 	glEnable(GL_TEXTURE_2D);
 
-	R_Color(NULL);
+	R_Color(nullptr);
 }
 
 
@@ -164,7 +164,7 @@ static void R_DrawFloor (const entity_t *e)
 
 	refdef.batchCount += 2;
 
-	R_Color(NULL);
+	R_Color(nullptr);
 }
 
 /**
@@ -195,7 +195,7 @@ static void R_DrawArrow (const entity_t *e)
 	glDisable(GL_LINE_SMOOTH);
 	glEnable(GL_TEXTURE_2D);
 
-	R_Color(NULL);
+	R_Color(nullptr);
 }
 
 static image_t *selectedActorIndicator;
@@ -214,7 +214,7 @@ void R_DrawEntityEffects (void)
 
 	R_EnableBlend(true);
 
-	if (actorIndicator == NULL) {
+	if (actorIndicator == nullptr) {
 		selectedActorIndicator = R_FindImage("pics/sfx/actor_selected", it_effect);
 		actorIndicator = R_FindImage("pics/sfx/actor", it_effect);
 	}
@@ -302,7 +302,7 @@ void R_DrawEntityEffects (void)
 			R_BindDefaultArray(GL_TEXTURE_COORD_ARRAY);
 			R_BindDefaultArray(GL_VERTEX_ARRAY);
 
-			R_Color(NULL);
+			R_Color(nullptr);
 			R_EnableDrawAsGlow(false);
 		}
 		glPopMatrix();
@@ -347,8 +347,8 @@ void R_DrawOpaqueMeshEntities (entity_t *ents)
 	}
 	R_DrawMeshEntities(ents);
 	if (!(refdef.rendererFlags & RDF_NOWORLDMODEL)) {
-		R_EnableLighting(NULL, false);
-		R_EnableGlowMap(NULL);
+		R_EnableLighting(nullptr, false);
+		R_EnableGlowMap(nullptr);
 	}
 }
 
@@ -359,10 +359,10 @@ static entity_t *R_MergeSortMerge (entity_t *a, entity_t *b)
 {
 	entity_t *c;
 
-	if (a == NULL)
+	if (a == nullptr)
 		return b;
 
-	if (b == NULL)
+	if (b == nullptr)
 		return a;
 
 	if (a->distanceFromViewOrigin > b->distanceFromViewOrigin) {
@@ -389,18 +389,18 @@ static entity_t *R_MergeSortEntList (entity_t *c)
 	entity_t *a, *b;
 
 	/* list containing one or no entities is already sorted by definition */
-	if (c == NULL || c->next == NULL)
+	if (c == nullptr || c->next == nullptr)
 		return c;
 
 	/* two element or longer lists are bisected */
 	a = c;
 	b = c->next;
-	while (b != NULL && b->next != NULL) {
+	while (b != nullptr && b->next != nullptr) {
 		c = c->next;
 		b = b->next->next;
 	}
 	b = c->next;
-	c->next = NULL;
+	c->next = nullptr;
 
 	/* these halves are sorted recursively, and merged into one sorted list */
 	return R_MergeSortMerge(R_MergeSortEntList(a), R_MergeSortEntList(b));
@@ -423,8 +423,8 @@ void R_DrawBlendMeshEntities (entity_t *ents)
 
 	R_EnableBlend(false);
 	if (!(refdef.rendererFlags & RDF_NOWORLDMODEL)) {
-		R_EnableLighting(NULL, false);
-		R_EnableGlowMap(NULL);
+		R_EnableLighting(nullptr, false);
+		R_EnableGlowMap(nullptr);
 	}
 }
 
@@ -552,18 +552,18 @@ static float *R_CalcTransform (entity_t *e)
 
 	/* process this matrix */
 	t->processing = true;
-	mp = NULL;
+	mp = nullptr;
 
 	/* do parent object transformations first */
 	if (e->tagent) {
 		/* tag transformation */
 		const model_t *model = e->tagent->model;
-		const mAliasTagOrientation_t *current = NULL;
-		const mAliasTagOrientation_t *old = NULL;
+		const mAliasTagOrientation_t *current = nullptr;
+		const mAliasTagOrientation_t *old = nullptr;
 		const animState_t *as = &e->tagent->as;
 
 		R_GetTags(model, e->tagname, as->frame, as->oldframe, &current, &old);
-		if (current != NULL && old != NULL) {
+		if (current != nullptr && old != nullptr) {
 			float interpolated[16];
 
 			/* parent transformation */
@@ -632,7 +632,7 @@ void R_GetEntityLists (void)
 		return;
 
 	r_opaque_mesh_entities = r_special_entities =
-		r_blend_mesh_entities = r_null_entities = NULL;
+		r_blend_mesh_entities = r_null_entities = nullptr;
 
 	for (i = 0; i < refdef.numEntities; i++) {
 		entity_t *e = &r_entities[i];
@@ -658,7 +658,7 @@ void R_GetEntityLists (void)
 			case mod_alias_md3:
 			case mod_obj:
 				skin = R_AliasModelState(e->model, &e->as.mesh, &e->as.frame, &e->as.oldframe, &e->skinnum);
-				if (skin == NULL || skin->texnum == 0)
+				if (skin == nullptr || skin->texnum == 0)
 					Com_Error(ERR_DROP, "Model '%s' has no skin assigned", e->model->name);
 				if (skin->has_alpha || (e->flags & RF_TRANSLUCENT))
 					chain = &r_blend_mesh_entities;
@@ -694,7 +694,7 @@ entity_t *R_GetFreeEntity (void)
 entity_t *R_GetEntity (int id)
 {
 	if (id < 0 || id >= refdef.numEntities)
-		return NULL;
+		return nullptr;
 	return &r_entities[id];
 }
 

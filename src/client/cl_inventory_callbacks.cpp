@@ -350,7 +350,7 @@ static void INV_UpdateActorLoad_f (void)
 	}
 
 	const character_t *chr = GAME_GetSelectedChr();
-	if (chr != NULL) {
+	if (chr != nullptr) {
 		const float invWeight = chr->inv.getWeight();
 		const int maxWeight = GAME_GetChrMaxLoad(chr);
 		const float penalty = GET_ENCUMBRANCE_PENALTY(invWeight, chr->score.skills[ABILITY_POWER]);
@@ -359,12 +359,12 @@ static void INV_UpdateActorLoad_f (void)
 		const int tuPenalty = tus - normalTU;
 		int count = 0;
 
-		const Container *cont = NULL;
+		const Container *cont = nullptr;
 		while ((cont = chr->inv.getNextCont(cont))) {
 			for (invList_t *invList = cont->_invList, *next; invList; invList = next) {
 				next = invList->getNext();
 				const fireDef_t *fireDef = invList->getFiredefs();
-				if (fireDef == NULL)
+				if (fireDef == nullptr)
 					continue;
 				for (int i = 0; i < MAX_FIREDEFS_PER_WEAPON; i++)
 					if (fireDef[i].time > 0 && fireDef[i].time > tus) {

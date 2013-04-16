@@ -83,12 +83,12 @@ typedef struct gltexunit_s {
 #define DOWNSAMPLE_PASSES	5
 #define DOWNSAMPLE_SCALE	2
 
-#define fbo_screen			NULL
+#define fbo_screen			nullptr
 #define fbo_render			r_state.renderBuffer
 #define fbo_bloom0			r_state.bloomBuffer0
 #define fbo_bloom1			r_state.bloomBuffer1
 
-#define default_program		NULL
+#define default_program		nullptr
 
 struct mAliasMesh_s;
 

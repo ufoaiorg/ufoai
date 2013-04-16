@@ -303,9 +303,9 @@ void R_EndBuildingLightmaps (void)
 	Mem_Free(r_lightmaps.allocated);
 	Mem_Free(r_lightmaps.sample_buffer);
 	Mem_Free(r_lightmaps.direction_buffer);
-	r_lightmaps.allocated = NULL;
-	r_lightmaps.sample_buffer = NULL;
-	r_lightmaps.direction_buffer = NULL;
+	r_lightmaps.allocated = nullptr;
+	r_lightmaps.sample_buffer = nullptr;
+	r_lightmaps.direction_buffer = nullptr;
 }
 
 
@@ -332,7 +332,7 @@ void R_Trace (const vec3_t start, const vec3_t end, float size, int contentmask)
 	AABB box(mins, maxs);
 
 	refdef.trace = CM_CompleteBoxTrace(refdef.mapTiles, start, end, box, TRACING_ALL_VISIBLE_LEVELS, contentmask, 0);
-	refdef.traceEntity = NULL;
+	refdef.traceEntity = nullptr;
 
 	frac = refdef.trace.fraction;
 

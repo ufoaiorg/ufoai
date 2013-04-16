@@ -172,7 +172,7 @@ static font_t *R_FontAnalyze (const char *name, const char *path, int renderStyl
 	int ttfSize;
 
 	if (numFonts >= MAX_FONTS)
-		return NULL;
+		return nullptr;
 
 	/* allocate new font */
 	f = &fonts[numFonts];
@@ -221,8 +221,8 @@ font_t *R_GetFont (const char *name)
 #ifndef COMPILE_UNITTESTS
 	Com_Error(ERR_FATAL, "Could not find font: %s", name);
 #else
-	Com_Printf("R_GetFont: Could not find font: %s. Return NULL\n", name);
-	return NULL;
+	Com_Printf("R_GetFont: Could not find font: %s. Return nullptr\n", name);
+	return nullptr;
 #endif
 }
 
@@ -283,7 +283,7 @@ static int R_FontChunkLength (const font_t *f, char *text, int len)
 
 	old = text[len];
 	text[len] = '\0';
-	TTF_SizeUTF8(f->font, text, &width, NULL);
+	TTF_SizeUTF8(f->font, text, &width, nullptr);
 	text[len] = old;
 
 	return width;
@@ -370,7 +370,7 @@ static int R_FontFindTruncFit (const font_t *f, const char *text, int maxlen, in
 			Q_strncpyz(&buf[len], truncmarker, sizeof(buf) - len);
 		else
 			buf[len] = '\0';
-		TTF_SizeUTF8(f->font, buf, &width, NULL);
+		TTF_SizeUTF8(f->font, buf, &width, nullptr);
 		if (width > maxWidth)
 			return breaklen;
 		breaklen = len;
@@ -525,7 +525,7 @@ static wrapCache_t *R_FontWrapText (const font_t *f, const char *text, int maxWi
 /**
  * @brief Supply information about the size of the text when it is
  * linewrapped and rendered, without actually rendering it. Any of the
- * output parameters may be NULL.
+ * output parameters may be nullptr.
  * @param[in] fontId the font id (defined in ufos/fonts.ufo)
  * @param[in] text The text to check
  * @param maxWidth Max width available

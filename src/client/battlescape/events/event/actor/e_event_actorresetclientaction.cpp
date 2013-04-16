@@ -44,7 +44,7 @@ void CL_ActorResetClientAction (const eventRegister_t *self, dbuffer *msg)
 		LE_NotFoundError(number);
 
 	/* reset client action entity */
-	le->clientAction = NULL;
+	le->clientAction = nullptr;
 	UI_ExecuteConfunc("disable_clientaction");
 	Com_DPrintf(DEBUG_CLIENT, "CL_ActorResetClientAction: Reset client action for actor with entnum %i\n", number);
 }

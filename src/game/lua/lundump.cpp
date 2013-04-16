@@ -79,7 +79,7 @@ static TString* LoadString(LoadState* S)
  size_t size;
  LoadVar(S,size);
  if (size==0)
-  return NULL;
+  return nullptr;
  else
  {
   char *s=luaZ_openspace(S->L,S->b,size);
@@ -131,7 +131,7 @@ static void LoadConstants(LoadState* S, Proto* f)
  n=LoadInt(S);
  f->p=luaM_newvector(S->L,n,Proto*);
  f->sizep=n;
- for (i=0; i<n; i++) f->p[i]=NULL;
+ for (i=0; i<n; i++) f->p[i]=nullptr;
  for (i=0; i<n; i++) f->p[i]=LoadFunction(S,f->source);
 }
 
@@ -145,7 +145,7 @@ static void LoadDebug(LoadState* S, Proto* f)
  n=LoadInt(S);
  f->locvars=luaM_newvector(S->L,n,LocVar);
  f->sizelocvars=n;
- for (i=0; i<n; i++) f->locvars[i].varname=NULL;
+ for (i=0; i<n; i++) f->locvars[i].varname=nullptr;
  for (i=0; i<n; i++)
  {
   f->locvars[i].varname=LoadString(S);
@@ -155,7 +155,7 @@ static void LoadDebug(LoadState* S, Proto* f)
  n=LoadInt(S);
  f->upvalues=luaM_newvector(S->L,n,TString*);
  f->sizeupvalues=n;
- for (i=0; i<n; i++) f->upvalues[i]=NULL;
+ for (i=0; i<n; i++) f->upvalues[i]=nullptr;
  for (i=0; i<n; i++) f->upvalues[i]=LoadString(S);
 }
 
@@ -165,7 +165,7 @@ static Proto* LoadFunction(LoadState* S, TString* p)
  if (++S->L->nCcalls > LUAI_MAXCCALLS) error(S,"code too deep");
  f=luaF_newproto(S->L);
  setptvalue2s(S->L,S->L->top,f); incr_top(S->L);
- f->source=LoadString(S); if (f->source==NULL) f->source=p;
+ f->source=LoadString(S); if (f->source==nullptr) f->source=p;
  f->linedefined=LoadInt(S);
  f->lastlinedefined=LoadInt(S);
  f->nups=LoadByte(S);

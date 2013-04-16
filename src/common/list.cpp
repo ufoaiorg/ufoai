@@ -66,37 +66,37 @@ linkedList_t *LIST_Add (linkedList_t **listDest, void const* data, size_t length
 
 /**
  * @brief Searches for the first occurrence of a given string
- * @return the linkedList_t pointer if the string is found, otherwise @c NULL
- * @note if string is @c NULL, the function returns @c NULL
+ * @return the linkedList_t pointer if the string is found, otherwise @c nullptr
+ * @note if string is @c nullptr, the function returns @c nullptr
  * @sa LIST_AddString
  */
 const linkedList_t *LIST_ContainsString (const linkedList_t *list, const char *string)
 {
-	while ((string != NULL) && (list != NULL)) {
+	while ((string != nullptr) && (list != nullptr)) {
 		if (Q_streq(static_cast<char const*>(list->data), string))
 			return list;
 		list = list->next;
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 /**
  * @brief Searches for the first occurrence of a given pointer
- * @return the linkedList_t pointer if the string is found, otherwise @c NULL
- * @note if data is @c NULL, the function returns @c NULL
+ * @return the linkedList_t pointer if the string is found, otherwise @c nullptr
+ * @note if data is @c nullptr, the function returns @c nullptr
  * @note O(n)
  * @note Only use this for small linked lists
  */
 linkedList_t *LIST_GetPointer (linkedList_t *list, const void *data)
 {
-	while ((data != NULL) && (list != NULL)) {
+	while ((data != nullptr) && (list != nullptr)) {
 		if (list->data == data)
 			return list;
 		list = list->next;
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 static linkedList_t *LIST_AllocateString(char const* data, linkedList_t* const next = 0)
@@ -119,7 +119,7 @@ void LIST_AddStringSorted (linkedList_t **listDest, const char *data)
 
 /**
  * @brief Adds a string as first entry to a linked list
- * @param listDest The linked list to add the string, too. If this is @c NULL, a new list is created
+ * @param listDest The linked list to add the string, too. If this is @c nullptr, a new list is created
  * @param data The string to add to the list
  * @sa LIST_AddString
  * @todo Optimize this to not allocate memory for every entry - but use a hunk
@@ -204,7 +204,7 @@ void LIST_Delete (linkedList_t **list)
 		Mem_Free(l);
 		l = next;
 	}
-	*list = NULL;
+	*list = nullptr;
 }
 
 /**
@@ -214,7 +214,7 @@ void LIST_Delete (linkedList_t **list)
 bool LIST_Remove (linkedList_t **list, const void *data)
 {
 	linkedList_t *l = LIST_GetPointer(*list, data);
-	if (l != NULL)
+	if (l != nullptr)
 		return LIST_RemoveEntry(list, l);
 	return false;
 }
@@ -231,18 +231,18 @@ static linkedList_t *_LIST_Sort (linkedList_t *list, linkedListSort_t sorter, co
 	int insize, nmerges, psize, qsize, i;
 
 	/*
-	 * Silly special case: if `list' was passed in as NULL, return
-	 * NULL immediately.
+	 * Silly special case: if `list' was passed in as nullptr, return
+	 * nullptr immediately.
 	 */
 	if (!list)
-		return NULL;
+		return nullptr;
 
 	insize = 1;
 
 	while (1) {
 		p = list;
-		list = NULL;
-		tail = NULL;
+		list = nullptr;
+		tail = nullptr;
 
 		nmerges = 0; /* count number of merges we do in this pass */
 
@@ -299,7 +299,7 @@ static linkedList_t *_LIST_Sort (linkedList_t *list, linkedListSort_t sorter, co
 			/* now p has stepped `insize' places along, and q has too */
 			p = q;
 		}
-		tail->next = NULL;
+		tail->next = nullptr;
 
 		/* If we have done only one merge, we're finished. */
 		if (nmerges <= 1) /* allow for nmerges==0, the empty list case */
@@ -323,7 +323,7 @@ void LIST_Sort (linkedList_t **list, linkedListSort_t sorter, const void *userDa
  */
 linkedList_t *LIST_CopyStructure (linkedList_t *src)
 {
-	linkedList_t *dest = NULL;
+	linkedList_t *dest = nullptr;
 	LIST_Foreach(src, void, data) {
 		LIST_AddPointer(&dest, data);
 	}
@@ -337,7 +337,7 @@ linkedList_t *LIST_CopyStructure (linkedList_t *src)
  */
 bool LIST_IsEmpty (const linkedList_t *list)
 {
-	return list == NULL;
+	return list == nullptr;
 }
 
 /**
@@ -367,10 +367,10 @@ void *LIST_GetByIdx (linkedList_t *list, int index)
 	int i;
 
 	if (LIST_IsEmpty(list))
-		return NULL;
+		return nullptr;
 
 	if (index < 0)
-		return NULL;
+		return nullptr;
 
 	i = 0;
 	while (list) {
@@ -380,5 +380,5 @@ void *LIST_GetByIdx (linkedList_t *list, int index)
 		list = list->next;
 	}
 
-	return NULL;
+	return nullptr;
 }

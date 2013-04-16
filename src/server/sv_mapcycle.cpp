@@ -19,7 +19,7 @@ static int mapcycleCount;		/**< number of maps in the cycle */
  */
 void SV_NextMapcycle (void)
 {
-	const char *map = NULL, *gameType = NULL;
+	const char *map = nullptr, *gameType = nullptr;
 	bool day = true;
 	char expanded[MAX_QPATH];
 	char cmd[MAX_QPATH];
@@ -82,8 +82,8 @@ void SV_NextMapcycle (void)
 					if (map[0] != '+' && FS_CheckFile("%s", expanded) < 0) {
 						Com_Printf("SV_NextMapcycle: Can't find '%s' - mapcycle error\n"
 							"Use the 'maplist' command to get a list of valid maps\n", expanded);
-						map = NULL;
-						gameType = NULL;
+						map = nullptr;
+						gameType = nullptr;
 					} else
 						break;
 				}
@@ -110,7 +110,7 @@ void SV_NextMapcycle (void)
 		} else if (sv->name[0]) {
 			Com_Printf("No mapcycle - restart the current map (%s)\n", sv->name);
 			map = sv->name;
-			gameType = NULL;
+			gameType = nullptr;
 		} else {
 			Com_Printf("No mapcycle and no running map\n");
 			return;
@@ -153,7 +153,7 @@ void SV_MapcycleClear (void)
 	}
 
 	/* reset the mapcycle data */
-	mapcycleList = NULL;
+	mapcycleList = nullptr;
 	mapcycleCount = 0;
 }
 
@@ -187,11 +187,11 @@ static void SV_MapcycleAdd (const char *mapName, bool day, const char *gameType)
 static void SV_ParseMapcycle (void)
 {
 	int length = 0;
-	byte *buffer = NULL;
+	byte *buffer = nullptr;
 	const char *buf;
 
 	mapcycleCount = 0;
-	mapcycleList = NULL;
+	mapcycleList = nullptr;
 
 	length = FS_LoadFile("mapcycle.txt", &buffer);
 	if (length == -1 || !buffer)
@@ -250,7 +250,7 @@ static void SV_MapcycleAdd_f (void)
 		const char *map = Cmd_Argv(1);
 		const char *day = Cmd_Argv(2);
 		const char *gametype = Cmd_Argv(3);
-		if (!SV_CheckMap(map, NULL)) {
+		if (!SV_CheckMap(map, nullptr)) {
 			Com_Printf("map '%s' isn't a valid map\n", map);
 			return;
 		}

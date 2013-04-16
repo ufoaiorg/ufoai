@@ -138,7 +138,7 @@ uiMessageListNodeMessage_t *MS_AddNewMessage (const char *title, const char *tex
 		CP_PopupList(mess->title, mess->text);
 
 	if (playSound) {
-		const char *sound = NULL;
+		const char *sound = nullptr;
 		switch (type) {
 		case MSG_DEBUG:
 			break;
@@ -268,7 +268,7 @@ bool MS_LoadXML (xmlNode_t *p)
 		char title[MAX_VAR];
 		char text[MAX_MESSAGE_TEXT];
 		char id[MAX_VAR];
-		technology_t *tech = NULL;
+		technology_t *tech = nullptr;
 		uiMessageListNodeMessage_t *mess;
 
 		if (!cgi->Com_GetConstIntFromNamespace(SAVE_MESSAGETYPE_NAMESPACE, type, (int*) &mtype)) {
@@ -285,7 +285,7 @@ bool MS_LoadXML (xmlNode_t *p)
 			if (mail)
 				mail->read = cgi->XML_GetBool(sn, SAVE_MESSAGES_EVENTMAILREAD, false);
 		} else
-			mail = NULL;
+			mail = nullptr;
 
 		/* event and not mail means, dynamic mail - we don't save or load them */
 		if (mtype == MSG_EVENT && !mail)

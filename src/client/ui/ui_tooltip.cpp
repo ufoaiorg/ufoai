@@ -45,7 +45,7 @@ int UI_DrawTooltip (const char *string, int x, int y, int maxWidth)
 	if (Q_strnull(string) || !font)
 		return 0;
 
-	R_FontTextSize(font, string, maxWidth, LONGLINES_WRAP, &width, &height, NULL, NULL);
+	R_FontTextSize(font, string, maxWidth, LONGLINES_WRAP, &width, &height, nullptr, nullptr);
 
 	if (!width)
 		return 0;
@@ -62,7 +62,7 @@ int UI_DrawTooltip (const char *string, int x, int y, int maxWidth)
 	UI_DrawFill(x - 1, y - 1, width + 4, height + 4, tooltipBG);
 	R_Color(tooltipColor);
 	UI_DrawString(font, ALIGN_UL, x + 1, y + 1, x + 1, maxWidth, 0, string);
-	R_Color(NULL);
+	R_Color(nullptr);
 
 	return width;
 }
@@ -73,8 +73,8 @@ int UI_DrawTooltip (const char *string, int x, int y, int maxWidth)
 void UI_Tooltip (const uiNode_t *node, int x, int y)
 {
 	const char *string;
-	const char *key = NULL;
-	const char *tooltip = NULL;
+	const char *key = nullptr;
+	const char *tooltip = nullptr;
 	static const int maxWidth = 200;
 
 	/* check values */
@@ -85,9 +85,9 @@ void UI_Tooltip (const uiNode_t *node, int x, int y)
 
 	/* normalize */
 	if (tooltip && tooltip[0] == '\0')
-		tooltip = NULL;
+		tooltip = nullptr;
 	if (key && key[0] == '\0')
-		key = NULL;
+		key = nullptr;
 
 	/* create tooltip */
 	if (key && tooltip) {

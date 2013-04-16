@@ -137,7 +137,7 @@ static bool INVSH_CheckShapeCollision (const uint32_t *shape, const uint32_t ite
  * @param[in] itemShape The shape info of an item to fit into the container.
  * @param[in] x The x value in the container (1 << x in the shape bitmask)
  * @param[in] y The y value in the container (SHAPE_BIG_MAX_HEIGHT is the max)
- * @param[in] ignoredItem You can ignore one item in the container (most often the currently dragged one). Use NULL if you want to check against all items in the container.
+ * @param[in] ignoredItem You can ignore one item in the container (most often the currently dragged one). Use nullptr if you want to check against all items in the container.
  * @sa canHoldItem
  * @return false if the item does not fit, true if it fits.
  */
@@ -162,7 +162,7 @@ static bool INVSH_CheckToInventory_shape (const inventory_t *const inv, const in
 
 		/* Add other items to mask. (i.e. merge their shapes at their location into the generated mask) */
 		const Container *cont = inv->getContainer(container->id);
-		Item *item = NULL;
+		Item *item = nullptr;
 		while ((item = cont->getNextItem(item))) {
 			if (ignoredItem == item)
 				continue;
@@ -258,14 +258,14 @@ const objDef_t *INVSH_GetItemByIDSilent (const char *id)
 	int i;
 
 	if (!id)
-		return NULL;
+		return nullptr;
 	for (i = 0; i < CSI->numODs; i++) {	/* i = item index */
 		const objDef_t *item = &CSI->ods[i];
 		if (Q_streq(id, item->id)) {
 			return item;
 		}
 	}
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -274,7 +274,7 @@ const objDef_t *INVSH_GetItemByIDSilent (const char *id)
 const objDef_t *INVSH_GetItemByIDX (int index)
 {
 	if (index == NONE)
-		return NULL;
+		return nullptr;
 
 	if (index < 0 || index >= CSI->numODs)
 		Sys_Error("Invalid object index given: %i", index);
@@ -283,7 +283,7 @@ const objDef_t *INVSH_GetItemByIDX (int index)
 }
 
 /**
- * @brief Returns the item that belongs to the given id or @c NULL if it wasn't found.
+ * @brief Returns the item that belongs to the given id or @c nullptr if it wasn't found.
  * @param[in] id the item id in our object definition array (csi.ods)
  * @sa INVSH_GetItemByIDSilent
  */
@@ -299,7 +299,7 @@ const objDef_t *INVSH_GetItemByID (const char *id)
 /**
  * Searched an inventory container by a given container id
  * @param[in] id ID or name of the inventory container to search for
- * @return @c NULL if not found
+ * @return @c nullptr if not found
  */
 const invDef_t *INVSH_GetInventoryDefinitionByID (const char *id)
 {
@@ -310,12 +310,12 @@ const invDef_t *INVSH_GetInventoryDefinitionByID (const char *id)
 		if (Q_streq(id, container->name))
 			return container;
 
-	return NULL;
+	return nullptr;
 }
 
 /**
  * @brief Checks if an item can be used to reload a weapon.
- * @param[in] weapon The weapon (in the inventory) to check the item with. Might not be @c NULL.
+ * @param[in] weapon The weapon (in the inventory) to check the item with. Might not be @c nullptr.
  * @return @c true if the item can be used in the given weapon, otherwise @c false.
  */
 bool objDef_t::isLoadableInWeapon (const objDef_t *weapon) const
@@ -347,7 +347,7 @@ FIREMODE MANAGEMENT FUNCTIONS
  * @param[in] obj The object to get the firedef for
  * @param[in] weapFdsIdx the weapon index in the fire definition array
  * @param[in] fdIdx the fire definition index for the weapon (given by @c weapFdsIdx)
- * @return Will never return NULL
+ * @return Will never return nullptr
  * @sa getFiredefs
  */
 const fireDef_t *FIRESH_GetFiredef (const objDef_t *obj, const weaponFireDefIndex_t weapFdsIdx, const fireDefIndex_t fdIdx)
@@ -471,10 +471,10 @@ Item::Item ()
 {
 	setAmmoLeft(NONE_AMMO);
 	setAmount(0);
-	setAmmoDef(NULL);
-	_itemDef = NULL;
+	setAmmoDef(nullptr);
+	_itemDef = nullptr;
 	_x = _y = rotated = 0;
-	_next = NULL;
+	_next = nullptr;
 }
 
 /** @brief Item constructor with the 3 most often changed attributes */
@@ -485,7 +485,7 @@ Item::Item (const objDef_t *itemDef, const objDef_t *ammo, int ammoLeft)
 	setAmmoDef(ammo);
 	_itemDef = itemDef;
 	_x = _y = rotated = 0;
-	_next = NULL;
+	_next = nullptr;
 }
 
 /**
@@ -511,7 +511,7 @@ bool Item::isSameAs (const Item *const other) const
 	if (this == other)
 		return true;
 
-	if (this == NULL || other == NULL)
+	if (this == nullptr || other == nullptr)
 		return false;
 
 	if (this->def() == other->def() && this->ammoDef() == other->ammoDef() && this->getAmmoLeft() == other->getAmmoLeft())
@@ -546,7 +546,7 @@ void Item::getFirstShapePosition (int* const x, int* const y) const
 
 /**
  * @brief Returns the firedefinitions for a given weapon/ammo
- * @return The array (one-dimensional) of the firedefs of the ammo for a given weapon, or @c NULL if the ammo
+ * @return The array (one-dimensional) of the firedefs of the ammo for a given weapon, or @c nullptr if the ammo
  * doesn't support the given weapon
  * @sa FIRESH_GetFiredef
  */
@@ -562,27 +562,27 @@ const fireDef_t *Item::getFiredefs () const
 		ammodef = def();
 
 	if (!ammodef)
-		return NULL;
+		return nullptr;
 
 	for (i = 0; i < ammodef->numWeapons; i++) {
 		if (weapon == ammodef->weapons[i])
 			return &ammodef->fd[i][0];
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 /**
  * @brief Get the firedef that uses the most TU for this item.
- * @return The firedef that uses the most TU for this item or @c NULL.
+ * @return The firedef that uses the most TU for this item or @c nullptr.
  */
 const fireDef_t *Item::getSlowestFireDef () const
 {
 	const fireDef_t *fdArray = getFiredefs();
 	int slowest = 0;
 
-	if (fdArray == NULL)
-		return NULL;
+	if (fdArray == nullptr)
+		return nullptr;
 
 	for (int i = 0; i < MAX_FIREDEFS_PER_WEAPON; i++)
 		if (fdArray[i].time > fdArray[slowest].time)
@@ -594,13 +594,13 @@ const fireDef_t *Item::getSlowestFireDef () const
 /**
  * @brief Checks whether this item is a reaction fire enabled weapon.
  * @note The item is supposed to be in the right or left hand
- * @return @c NULL if no reaction fire enabled weapon, the
+ * @return @c nullptr if no reaction fire enabled weapon, the
  * reaction fire enabled object otherwise.
  */
 const objDef_t *Item::getReactionFireWeaponType () const
 {
 	if (!this)
-		return NULL;
+		return nullptr;
 
 	if (def()) {
 		const fireDef_t *fd = getFiredefs();
@@ -608,7 +608,7 @@ const objDef_t *Item::getReactionFireWeaponType () const
 			return def();
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 const invDef_t *Container::def () const
@@ -633,7 +633,7 @@ Item *Container::getNextItem (const Item *prev) const
 int Container::countItems () const
 {
 	int nr = 0;
-	Item *item = NULL;
+	Item *item = nullptr;
 	while ((item = getNextItem(item))) {
 		/** For temp containers, we neglect Item::amount. */
 		nr++;
@@ -645,7 +645,7 @@ inventory_s::inventory_s ()
 {
 // This (prototype-)constructor does not work as intended. Seems like the first inventory is created before CSI is set.
 // There is the static game_inventory, static character_t, static le_t ...
-//	containers[CID_LEFT]._invList = NULL;
+//	containers[CID_LEFT]._invList = nullptr;
 //	containers[CID_LEFT]._def = &CSI->ids[CID_LEFT];
 
 // Plan B: add an 'id' member to class Container and init it here
@@ -659,7 +659,7 @@ const Container *inventory_t::_getNextCont (const Container *prev) const
 	if (!prev)
 		return &containers[0];	/* the first one */
 	else if (prev >= &containers[CID_MAX - 1])
-		return NULL;			/* prev was the last one */
+		return nullptr;			/* prev was the last one */
 	else
 		prev++;
 
@@ -685,7 +685,7 @@ const Container *inventory_t::getNextCont (const Container *prev, bool inclTemp)
 int inventory_t::countItems () const
 {
 	int nr = 0;
-	const Container *cont = NULL;
+	const Container *cont = nullptr;
 	while ((cont = getNextCont(cont))) {	/* skips the temp containers */
 		nr += cont->countItems();
 	}
@@ -696,7 +696,7 @@ int inventory_t::countItems () const
  * @param[in] od The type of item to check in the inventory.
  * @param[in] x The x value in the container (1 << x in the shape bitmask)
  * @param[in] y The y value in the container (SHAPE_BIG_MAX_HEIGHT is the max)
- * @param[in] ignoredItem You can ignore one item in the container (most often the currently dragged one). Use NULL if you want to check against all items in the container.
+ * @param[in] ignoredItem You can ignore one item in the container (most often the currently dragged one). Use nullptr if you want to check against all items in the container.
  * @return INV_DOES_NOT_FIT if the item does not fit
  * @return INV_FITS if it fits and
  * @return INV_FITS_ONLY_ROTATED if it fits only when rotated 90 degree (to the left).
@@ -794,13 +794,13 @@ invList_t *inventory_t::getItemAtPos (const invDef_t *container, const int x, co
 
 	/* More than one item - search for the item that is located at location x/y in this container. */
 	const Container *cont = getContainer(container->id);
-	Item *item = NULL;
+	Item *item = nullptr;
 	while ((item = cont->getNextItem(item)))
 		if (INVSH_ShapeCheckPosition(item, x, y))
 			return item;
 
 	/* Found nothing. */
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -809,7 +809,7 @@ invList_t *inventory_t::getItemAtPos (const invDef_t *container, const int x, co
  * @param[in] container The container to search in
  * @param[out] px The x position in the container
  * @param[out] py The y position in the container
- * @param[in] ignoredItem You can ignore one item in the container (most often the currently dragged one). Use NULL if you want to check against all items in the container.
+ * @param[in] ignoredItem You can ignore one item in the container (most often the currently dragged one). Use nullptr if you want to check against all items in the container.
  * @sa canHoldItem
  * @note x and y are NONE if no free space is available
  */
@@ -877,9 +877,9 @@ bool inventory_t::canHoldItemWeight (containerIndex_t from, containerIndex_t to,
 float inventory_t::getWeight () const
 {
 	float weight = 0;
-	const Container *cont = NULL;
+	const Container *cont = nullptr;
 	while ((cont = getNextCont(cont))) {
-		Item *item = NULL;
+		Item *item = nullptr;
 		while ((item = cont->getNextItem(item))) {
 			weight += item->getWeight();
 		}
@@ -931,18 +931,18 @@ Item *inventory_t::getArmour () const
  * @brief Searches a specific item in the inventory&container.
  * @param[in] contId Container in the inventory.
  * @param[in] searchItem The item to search for.
- * @return Pointer to the first item of this type found, otherwise @c NULL.
+ * @return Pointer to the first item of this type found, otherwise @c nullptr.
  */
 Item *inventory_t::findInContainer (const containerIndex_t contId, const Item *const searchItem) const
 {
 	const Container *cont = getContainer(contId);
-	Item *item = NULL;
+	Item *item = nullptr;
 	while ((item = cont->getNextItem(item)))
 		if (item->isSameAs(searchItem)) {
 			return item;
 		}
 
-	return NULL;
+	return nullptr;
 }
 
 /**

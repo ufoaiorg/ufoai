@@ -130,10 +130,10 @@ size_t luaC_separateudata (lua_State *L, int all) {
   size_t deadmem = 0;
   GCObject **p = &g->mainthread->next;
   GCObject *curr;
-  while ((curr = *p) != NULL) {
+  while ((curr = *p) != nullptr) {
     if (!(iswhite(curr) || all) || isfinalized(gco2u(curr)))
       p = &curr->gch.next;  /* don't bother with them */
-    else if (fasttm(L, gco2u(curr)->metatable, TM_GC) == NULL) {
+    else if (fasttm(L, gco2u(curr)->metatable, TM_GC) == nullptr) {
       markfinalized(gco2u(curr));  /* don't need finalization */
       p = &curr->gch.next;
     }
@@ -142,7 +142,7 @@ size_t luaC_separateudata (lua_State *L, int all) {
       markfinalized(gco2u(curr));
       *p = curr->gch.next;
       /* link `curr' at the end of `tmudata' list */
-      if (g->tmudata == NULL)  /* list is empty? */
+      if (g->tmudata == nullptr)  /* list is empty? */
         g->tmudata = curr->gch.next = curr;  /* creates a circular list */
       else {
         curr->gch.next = g->tmudata->gch.next;
@@ -164,8 +164,8 @@ static int traversetable (global_State *g, Table *h) {
     markobject(g, h->metatable);
   mode = gfasttm(g, h->metatable, TM_MODE);
   if (mode && ttisstring(mode)) {  /* is there a weak mode? */
-    weakkey = (strchr(svalue(mode), 'k') != NULL);
-    weakvalue = (strchr(svalue(mode), 'v') != NULL);
+    weakkey = (strchr(svalue(mode), 'k') != nullptr);
+    weakvalue = (strchr(svalue(mode), 'v') != nullptr);
     if (weakkey || weakvalue) {  /* is really weak? */
       h->marked &= ~(KEYWEAK | VALUEWEAK);  /* clear bits */
       h->marked |= cast_byte((weakkey << KEYWEAKBIT) |
@@ -408,7 +408,7 @@ static GCObject **sweeplist (lua_State *L, GCObject **p, lu_mem count) {
   GCObject *curr;
   global_State *g = G(L);
   int deadmask = otherwhite(g);
-  while ((curr = *p) != NULL && count-- > 0) {
+  while ((curr = *p) != nullptr && count-- > 0) {
     if (curr->gch.tt == LUA_TTHREAD)  /* sweep open upvalues of each thread */
       sweepwholelist(L, &gco2th(curr)->openupval);
     if ((curr->gch.marked ^ WHITEBITS) & deadmask) {  /* not dead? */
@@ -449,14 +449,14 @@ static void GCTM (lua_State *L) {
   const TValue *tm;
   /* remove udata from `tmudata' */
   if (o == g->tmudata)  /* last element? */
-    g->tmudata = NULL;
+    g->tmudata = nullptr;
   else
     g->tmudata->gch.next = udata->uv.next;
   udata->uv.next = g->mainthread->next;  /* return it to `root' list */
   g->mainthread->next = o;
   makewhite(g, o);
   tm = fasttm(L, udata->uv.metatable, TM_GC);
-  if (tm != NULL) {
+  if (tm != nullptr) {
     lu_byte oldah = L->allowhook;
     lu_mem oldt = g->GCthreshold;
     L->allowhook = 0;  /* stop debug hooks during GC tag method */
@@ -500,9 +500,9 @@ static void markmt (global_State *g) {
 /* mark root set */
 static void markroot (lua_State *L) {
   global_State *g = G(L);
-  g->gray = NULL;
-  g->grayagain = NULL;
-  g->weak = NULL;
+  g->gray = nullptr;
+  g->grayagain = nullptr;
+  g->weak = nullptr;
   markobject(g, g->mainthread);
   /* make global table be traversed before main stack */
   markvalue(g, gt(g->mainthread));
@@ -531,14 +531,14 @@ static void atomic (lua_State *L) {
   propagateall(g);
   /* remark weak tables */
   g->gray = g->weak;
-  g->weak = NULL;
+  g->weak = nullptr;
   lua_assert(!iswhite(obj2gco(g->mainthread)));
   markobject(g, L);  /* mark running thread */
   markmt(g);  /* mark basic metatables (again) */
   propagateall(g);
   /* remark gray again */
   g->gray = g->grayagain;
-  g->grayagain = NULL;
+  g->grayagain = nullptr;
   propagateall(g);
   udsize = luaC_separateudata(L, 0);  /* separate userdata to be finalized */
   marktmu(g);  /* mark `preserved' userdata */
@@ -581,7 +581,7 @@ static l_mem singlestep (lua_State *L) {
     case GCSsweep: {
       lu_mem old = g->totalbytes;
       g->sweepgc = sweeplist(L, g->sweepgc, GCSWEEPMAX);
-      if (*g->sweepgc == NULL) {  /* nothing more to sweep? */
+      if (*g->sweepgc == nullptr) {  /* nothing more to sweep? */
         checkSizes(L);
         g->gcstate = GCSfinalize;  /* end sweep phase */
       }
@@ -640,9 +640,9 @@ void luaC_fullgc (lua_State *L) {
     g->sweepstrgc = 0;
     g->sweepgc = &g->rootgc;
     /* reset other collector lists */
-    g->gray = NULL;
-    g->grayagain = NULL;
-    g->weak = NULL;
+    g->gray = nullptr;
+    g->grayagain = nullptr;
+    g->weak = nullptr;
     g->gcstate = GCSsweepstring;
   }
   lua_assert(g->gcstate != GCSpause && g->gcstate != GCSpropagate);

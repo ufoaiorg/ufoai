@@ -86,7 +86,7 @@ typedef struct cgameType_s {
 	char window[MAX_VAR];	/**< the ui window id where this game type should become active for */
 	char name[MAX_VAR];		/**< translatable ui name */
 	linkedList_t *equipmentList; /**< the list of valid equipment definitions for this gametype - if this
-								 * is @c NULL, every equipment may be used */
+								 * is @c nullptr, every equipment may be used */
 } cgameType_t;
 
 typedef enum {

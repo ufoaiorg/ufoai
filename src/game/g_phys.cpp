@@ -49,7 +49,7 @@ void G_PhysicsStep (Edict *ent)
 		const playermask_t playerMask = ~G_VisToPM(visflags);
 		/* Send the sound effect to everyone how's not seeing the actor */
 		if (!G_IsCrouched(ent)) {
-			const char *snd = NULL;
+			const char *snd = nullptr;
 			if (stepContentFlags & CONTENTS_WATER) {
 				if (contentFlags & CONTENTS_WATER) {
 					/* looks like we already are in the water */
@@ -67,7 +67,7 @@ void G_PhysicsStep (Edict *ent)
 			} else {
 				/* we should really hit the ground with this */
 				const vec3_t to = {ent->origin[0], ent->origin[1], ent->origin[2] - UNIT_HEIGHT};
-				const trace_t trace = G_Trace(ent->origin, to, NULL, MASK_SOLID);
+				const trace_t trace = G_Trace(ent->origin, to, nullptr, MASK_SOLID);
 				if (trace.surface) {
 					snd = gi.GetFootstepSound(trace.surface->name);
 				}
@@ -85,7 +85,7 @@ void G_PhysicsStep (Edict *ent)
 	} else {
 		ent->moveinfo.currentStep = 0;
 		ent->moveinfo.steps = 0;
-		ent->think = NULL;
+		ent->think = nullptr;
 	}
 }
 
@@ -101,7 +101,7 @@ static bool G_PhysicsThink (Edict *ent)
 
 	ent->nextthink = level.time + SERVER_FRAME_SECONDS;
 	if (!ent->think)
-		gi.Error("G_PhysicsThink ent->think is NULL");
+		gi.Error("G_PhysicsThink ent->think is nullptr");
 	ent->think(ent);
 
 	return false;
@@ -125,7 +125,7 @@ void G_PhysicsRun (void)
 
 	/* treat each object in turn */
 	/* even the world gets a chance to think */
-	Edict *ent = NULL;
+	Edict *ent = nullptr;
 	while ((ent = G_EdictsGetNextInUse(ent))) {
 		if (ent->think)
 			G_PhysicsThink(ent);

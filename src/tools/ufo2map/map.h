@@ -110,13 +110,13 @@ typedef struct plane_s {
 
 typedef struct portal_s {
 	plane_t		plane;
-	struct node_s		*onnode;		/**< NULL = outside box */
+	struct node_s		*onnode;		/**< nullptr = outside box */
 	struct node_s		*nodes[2];		/**< [0] = front side of plane */
 	struct portal_s	*next[2];
 	winding_t	*winding;
 
 	bool	sidefound;		/**< false if ->side hasn't been checked */
-	struct side_s		*side;			/**< NULL = non-visible */
+	struct side_s		*side;			/**< nullptr = non-visible */
 	face_t		*face[2];		/**< output face in bsp file */
 } portal_t;
 

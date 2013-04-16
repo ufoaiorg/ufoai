@@ -60,7 +60,7 @@ static bspbrush_t *SubtractBrush (bspbrush_t *a, const bspbrush_t *b)
 	bspbrush_t *in;
 
 	in = a;
-	out = NULL;
+	out = nullptr;
 	for (i = 0; i < b->numsides && in; i++) {
 		SplitBrush(in, b->sides[i].planenum, &front, &back);
 		if (in != a)
@@ -124,7 +124,7 @@ static bspbrush_t *ClipBrushToBox (bspbrush_t *brush, const vec3_t clipmins, con
 				FreeBrush(front);
 			brush = back;
 			if (!brush)
-				return NULL;
+				return nullptr;
 		}
 		if (brush->mins[j] < clipmins[j]) {
 			SplitBrush(brush, minplanenums[j], &front, &back);
@@ -133,7 +133,7 @@ static bspbrush_t *ClipBrushToBox (bspbrush_t *brush, const vec3_t clipmins, con
 				FreeBrush(back);
 			brush = front;
 			if (!brush)
-				return NULL;
+				return nullptr;
 		}
 	}
 
@@ -205,7 +205,7 @@ static bspbrush_t *AddBrushListToTail (bspbrush_t *list, bspbrush_t *tail)
 	/* add to end of list */
 	for (walk = list; walk; walk = next) {
 		next = walk->next;
-		walk->next = NULL;
+		walk->next = nullptr;
 		tail->next = walk;
 		tail = walk;
 	}
@@ -224,7 +224,7 @@ static bspbrush_t *CullList (bspbrush_t *list, bspbrush_t *skip)
 	bspbrush_t *newlist;
 	bspbrush_t *next;
 
-	newlist = NULL;
+	newlist = nullptr;
 
 	for (; list; list = next) {
 		next = list->next;
@@ -317,7 +317,7 @@ bspbrush_t *MakeBspBrushList (int startbrush, int endbrush, int level, const AAB
 		minplanenums[i] = FindOrCreateFloatPlane(normal, dist);
 	}
 
-	brushlist = NULL;
+	brushlist = nullptr;
 
 	for (i = startbrush; i < endbrush; i++) {
 		mapbrush_t *mb = &mapbrushes[i];
@@ -398,12 +398,12 @@ bspbrush_t *ChopBrushes (bspbrush_t *head)
 
 	Verb_Printf(VERB_EXTRA, "---- ChopBrushes ----\n");
 
-	keep = NULL;
+	keep = nullptr;
 
 newlist:
 	/* find tail */
 	if (!head)
-		return NULL;
+		return nullptr;
 
 	for (tail = head; tail->next; tail = tail->next);
 
@@ -413,7 +413,7 @@ newlist:
 			if (BrushesDisjoint(b1, b2))
 				continue;
 
-			sub = sub2 = NULL;
+			sub = sub2 = nullptr;
 			c1 = c2 = 999999;
 
 			if (BrushGE(b2, b1)) {

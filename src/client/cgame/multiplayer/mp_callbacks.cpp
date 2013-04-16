@@ -76,7 +76,7 @@ static void CL_Connect_f (void)
 
 	cgi->CL_SetClientState(ca_connecting);
 
-	cgi->UI_InitStack(NULL, "multiplayerInGame", false, false);
+	cgi->UI_InitStack(nullptr, "multiplayerInGame", false, false);
 }
 
 static void CL_RconCallback (struct net_stream *s)
@@ -128,7 +128,7 @@ static void CL_Rcon_f (void)
 		else
 			port = DOUBLEQUOTE(PORT_SERVER);
 
-		struct net_stream *s = cgi->NET_Connect(rcon_address->string, port, NULL);
+		struct net_stream *s = cgi->NET_Connect(rcon_address->string, port, nullptr);
 		if (s) {
 			cgi->NET_OOB_Printf(s, "%s", message);
 			cgi->NET_StreamSetCallback(s, &CL_RconCallback);
@@ -253,7 +253,7 @@ void MP_CallbacksInit (const cgame_import_t *import)
 	cgi = import;
 	rcon_client_password = cgi->Cvar_Get("rcon_password", "", 0, "Remote console password");
 	rcon_address = cgi->Cvar_Get("rcon_address", "", 0, "Address of the host you would like to control via rcon");
-	info_password = cgi->Cvar_Get("password", "", CVAR_USERINFO, NULL);
+	info_password = cgi->Cvar_Get("password", "", CVAR_USERINFO, nullptr);
 	cgi->Cmd_AddCommand("mp_selectteam_init", CL_SelectTeam_Init_f, "Function that gets all connected players and let you choose a free team");
 	cgi->Cmd_AddCommand("teamnum_dec", CL_TeamNum_f, "Decrease the preferred teamnum");
 	cgi->Cmd_AddCommand("teamnum_inc", CL_TeamNum_f, "Increase the preferred teamnum");

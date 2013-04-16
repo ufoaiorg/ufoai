@@ -71,7 +71,7 @@ struct uiMessageListNodeMessage_s* UI_MessageGetStack (void)
 
 void UI_MessageResetStack (void)
 {
-	messageStack = NULL;
+	messageStack = nullptr;
 }
 
 void UI_MessageAddStack (struct uiMessageListNodeMessage_s* message)
@@ -89,8 +89,8 @@ static int UI_MessageGetLines (const uiNode_t *node, uiMessageListNodeMessage_t 
 	const int column2 = width - DATETIME_COLUUI_SIZE - node->padding;
 	int lines1;
 	int lines2;
-	R_FontTextSize(fontID, message->timestamp, column1, LONGLINES_WRAP, NULL, NULL, &lines1, NULL);
-	R_FontTextSize(fontID, message->text, column2, LONGLINES_WRAP, NULL, NULL, &lines2, NULL);
+	R_FontTextSize(fontID, message->timestamp, column1, LONGLINES_WRAP, nullptr, nullptr, &lines1, nullptr);
+	R_FontTextSize(fontID, message->text, column2, LONGLINES_WRAP, nullptr, nullptr, &lines2, nullptr);
 	return std::max(lines1, lines2);
 }
 
@@ -121,10 +121,10 @@ static void UI_MessageDraw (const uiNode_t *node, uiMessageListNodeMessage_t *me
 		lines1 = 0;
 
 	/* display the date */
-	if (lastDate == NULL || !Q_streq(lastDate, message->timestamp)) {
+	if (lastDate == nullptr || !Q_streq(lastDate, message->timestamp)) {
 		R_Color(node->color);
 		UI_DrawString(fontID, ALIGN_UL, x, y, x, column1, LINEHEIGHT, message->timestamp, EXTRADATACONST(node).scrollY.viewSize, 0, &lines1, true, LONGLINES_WRAP);
-		R_Color(NULL);
+		R_Color(nullptr);
 	}
 
 	x += DATETIME_COLUUI_SIZE + node->padding;
@@ -132,14 +132,14 @@ static void UI_MessageDraw (const uiNode_t *node, uiMessageListNodeMessage_t *me
 	/* identify the begin of a message with a mark */
 	if (lines2 >= 0) {
 		const uiSprite_t *icon = UI_MessageGetIcon(message);
-		R_Color(NULL);
+		R_Color(nullptr);
 		UI_DrawSpriteInBox(false, icon, SPRITE_STATUS_NORMAL, x - 25, y + LINEHEIGHT * lines2 - 1, 19, 19);
 	}
 
 	/* draw the message */
 	R_Color(node->color);
 	UI_DrawString(fontID, ALIGN_UL, x, y, x, column2, LINEHEIGHT, message->text, EXTRADATACONST(node).scrollY.viewSize, 0, &lines2, true, LONGLINES_WRAP);
-	R_Color(NULL);
+	R_Color(nullptr);
 	*screenLines = std::max(lines1, lines2);
 	lastDate = message->timestamp;
 }
@@ -219,7 +219,7 @@ void uiMessageListNode::draw (uiNode_t *node)
 
 	/* draw */
 	/** @note posY can be negative (if we must display last line of the first message) */
-	lastDate = NULL;
+	lastDate = nullptr;
 	screenLines = posY;
 	while (message) {
 		UI_MessageDraw(node, message, font, x, y, width, &screenLines);

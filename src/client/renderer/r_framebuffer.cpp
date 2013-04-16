@@ -183,12 +183,12 @@ r_framebuffer_t *R_CreateFramebuffer (int width, int height, int ntextures, bool
 
 	if (!r_state.frameBufferObjectsInitialized) {
 		Com_Printf("Warning: framebuffer creation failed; framebuffers not initialized!\n");
-		return NULL;
+		return nullptr;
 	}
 
 	if (frameBufferObjectCount >= lengthof(frameBufferObjects)) {
 		Com_Printf("Warning: framebuffer creation failed; already created too many framebuffers!\n");
-		return NULL;
+		return nullptr;
 	}
 
 	buf = &frameBufferObjects[frameBufferObjectCount++];
@@ -324,7 +324,7 @@ void R_ResolveMSAA (const r_framebuffer_t *buf)
 
 /**
  * @brief bind specified framebuffer object so we render to it
- * @param[in] buf the framebuffer to use, if @c NULL the screen buffer will be used.
+ * @param[in] buf the framebuffer to use, if @c nullptr the screen buffer will be used.
  */
 void R_UseFramebuffer (const r_framebuffer_t *buf)
 {
@@ -360,7 +360,7 @@ void R_UseFramebuffer (const r_framebuffer_t *buf)
 
 /**
  * @brief Sets the framebuffer dimensions of the viewport
- * @param[out] buf The framebuffer to initialize the viewport for. If @c NULL the screen buffer will be taken.
+ * @param[out] buf The framebuffer to initialize the viewport for. If @c nullptr the screen buffer will be taken.
  * @sa R_UseViewport
  */
 void R_SetupViewport (r_framebuffer_t *buf, int x, int y, int width, int height)
@@ -376,7 +376,7 @@ void R_SetupViewport (r_framebuffer_t *buf, int x, int y, int width, int height)
 
 /**
  * @brief Set the viewport to the dimensions of the given framebuffer
- * @param[out] buf The framebuffer to set the viewport for. If @c NULL the screen buffer will be taken.
+ * @param[out] buf The framebuffer to set the viewport for. If @c nullptr the screen buffer will be taken.
  * @sa R_SetupViewport
  */
 void R_UseViewport (const r_framebuffer_t *buf)

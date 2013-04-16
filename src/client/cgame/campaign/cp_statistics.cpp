@@ -113,8 +113,8 @@ void CP_StatsUpdate_f (void)
 	Q_strcat(pos, va(_("Aircraft:\t%i c\n"), costs), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
 	sum += costs;
 
-	base = NULL;
-	while ((base = B_GetNext(base)) != NULL) {
+	base = nullptr;
+	while ((base = B_GetNext(base)) != nullptr) {
 		costs = CP_GetSalaryUpKeepBase(salary, base);
 		Q_strcat(pos, va(_("Base (%s):\t%i c\n"), base->name, costs), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
 		sum += costs;

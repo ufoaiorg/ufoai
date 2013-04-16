@@ -44,7 +44,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define FFL_SPAWNTEMP		1
 #define FFL_NOSPAWN			2
 
-#define G_ValidMessage(ent)		((ent)->message && ((ent)->message[0] == '_' || strstr((ent)->message, "*msgid:") != NULL))
+#define G_ValidMessage(ent)		((ent)->message && ((ent)->message[0] == '_' || strstr((ent)->message, "*msgid:") != nullptr))
 
 /**
  * @brief this is only used to hold entity field values that can be set from
@@ -112,7 +112,7 @@ static const spawn_t spawns[] = {
 	{"misc_smokestun", SP_misc_smokestun},
 	{"misc_camera", SP_misc_camera},
 
-	{NULL, NULL}
+	{nullptr, nullptr}
 };
 
 /**
@@ -353,7 +353,7 @@ void G_SpawnEntities (const char *mapname, bool day, const char *entities)
 	level.activeTeam = TEAM_NO_ACTIVE;
 	level.actualRound = 1;
 	level.hurtAliens = sv_hurtaliens->integer;
-	ai_waypointList = NULL;
+	ai_waypointList = nullptr;
 
 	/* parse ents */
 	entnum = 0;
@@ -385,12 +385,12 @@ void G_SpawnEntities (const char *mapname, bool day, const char *entities)
 
 	/* spawn ai players, if needed */
 	if (level.num_spawnpoints[TEAM_CIVILIAN]) {
-		if (AI_CreatePlayer(TEAM_CIVILIAN) == NULL)
+		if (AI_CreatePlayer(TEAM_CIVILIAN) == nullptr)
 			gi.DPrintf("Could not create civilian\n");
 	}
 
 	if ((sv_maxclients->integer == 1 || ai_numactors->integer) && level.num_spawnpoints[TEAM_ALIEN]) {
-		if (AI_CreatePlayer(TEAM_ALIEN) == NULL)
+		if (AI_CreatePlayer(TEAM_ALIEN) == nullptr)
 			gi.DPrintf("Could not create alien\n");
 	}
 
@@ -436,7 +436,7 @@ static void Think_SmokeAndFire (Edict *self)
 		G_FreeEdict(self->particleLink);
 		G_FreeEdict(self);
 		if (checkVis)
-			G_CheckVis(NULL);
+			G_CheckVis(nullptr);
 	}
 }
 
@@ -448,7 +448,7 @@ static void G_SpawnSmoke (const vec3_t vec, const char *particle, int rounds)
 	VecToPos(vec, pos);
 
 	ent = G_GetEdictFromPos(pos, ET_SMOKE);
-	if (ent == NULL) {
+	if (ent == nullptr) {
 		pos_t z = gi.GridFall(ACTOR_SIZE_NORMAL, pos);
 		if (z != pos[2])
 			return;
@@ -488,7 +488,7 @@ void G_SpawnSmokeField (const vec3_t vec, const char *particle, int rounds, vec_
 			/* cut off the edges of the square to resemble a circle */
 			if (VectorDist(end, vec) > radius)
 				continue;
-			const trace_t tr = G_Trace(vec, end, NULL, MASK_SMOKE_AND_FIRE);
+			const trace_t tr = G_Trace(vec, end, nullptr, MASK_SMOKE_AND_FIRE);
 			/* trace didn't reach the target - something was hit before */
 			if (tr.fraction < 1.0 || (tr.contentFlags & CONTENTS_WATER)) {
 				continue;
@@ -506,7 +506,7 @@ static void G_SpawnFire (const vec3_t vec, const char *particle, int rounds, int
 	VecToPos(vec, pos);
 
 	ent = G_GetEdictFromPos(pos, ET_FIRE);
-	if (ent == NULL) {
+	if (ent == nullptr) {
 		pos_t z = gi.GridFall(ACTOR_SIZE_NORMAL, pos);
 		if (z != pos[2])
 			return;
@@ -536,7 +536,7 @@ void G_SpawnFireField (const vec3_t vec, const char *particle, int rounds, int d
 
 			if (VectorDist(end, vec) > radius)
 				continue;
-			const trace_t tr = G_Trace(vec, end, NULL, MASK_SMOKE_AND_FIRE);
+			const trace_t tr = G_Trace(vec, end, nullptr, MASK_SMOKE_AND_FIRE);
 			/* trace didn't reach the target - something was hit before */
 			if (tr.fraction < 1.0 || (tr.contentFlags & CONTENTS_WATER)) {
 				continue;
@@ -555,7 +555,7 @@ static void G_SpawnStunSmoke (const vec3_t vec, const char *particle, int rounds
 	VecToPos(vec, pos);
 
 	ent = G_GetEdictFromPos(pos, ET_SMOKESTUN);
-	if (ent == NULL) {
+	if (ent == nullptr) {
 		pos_t z = gi.GridFall(ACTOR_SIZE_NORMAL, pos);
 		if (z != pos[2])
 			return;
@@ -585,7 +585,7 @@ void G_SpawnStunSmokeField (const vec3_t vec, const char *particle, int rounds, 
 
 			if (VectorDist(end, vec) > radius)
 				continue;
-			const trace_t tr = G_Trace(vec, end, NULL, MASK_SMOKE_AND_FIRE);
+			const trace_t tr = G_Trace(vec, end, nullptr, MASK_SMOKE_AND_FIRE);
 			/* trace didn't reach the target - something was hit before */
 			if (tr.fraction < 1.0 || (tr.contentFlags & CONTENTS_WATER)) {
 				continue;
@@ -1056,7 +1056,7 @@ static void G_SpawnField (Edict *ent, const char *classname, entity_type_t type,
 static void SP_misc_smoke (Edict *ent)
 {
 	G_SpawnField(ent, "smoke", ET_SMOKE, SOLID_NOT);
-	G_CheckVis(NULL);
+	G_CheckVis(nullptr);
 }
 
 static void SP_misc_fire (Edict *ent)

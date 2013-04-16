@@ -45,7 +45,7 @@ enum {
 	HTTPDL_ABORT_HARD
 };
 
-static CURLM	*multi = NULL;
+static CURLM	*multi = nullptr;
 static int		handleCount = 0;
 static int		pendingCount = 0;
 static int		abortDownloads = HTTPDL_ABORT_NONE;
@@ -147,9 +147,9 @@ static void CL_StartHTTPDownload (dlqueue_t *entry, dlhandle_t *dl)
 	const char *extension = Com_GetExtension(entry->ufoPath);
 
 	/* yet another hack to accomodate filelists, how i wish i could push :(
-	 * NULL file handle indicates filelist. */
-	if (extension != NULL && Q_streq(extension, "filelist")) {
-		dl->file = NULL;
+	 * nullptr file handle indicates filelist. */
+	if (extension != nullptr && Q_streq(extension, "filelist")) {
+		dl->file = nullptr;
 		CL_EscapeHTTPPath(entry->ufoPath, escapedFilePath);
 	} else {
 		char tempFile[MAX_OSPATH];
@@ -173,7 +173,7 @@ static void CL_StartHTTPDownload (dlqueue_t *entry, dlhandle_t *dl)
 		}
 	}
 
-	dl->tempBuffer = NULL;
+	dl->tempBuffer = nullptr;
 	dl->speed = 0;
 	dl->fileSize = 0;
 	dl->position = 0;
@@ -191,7 +191,7 @@ static void CL_StartHTTPDownload (dlqueue_t *entry, dlhandle_t *dl)
 	curl_easy_setopt(dl->curl, CURLOPT_NOPROGRESS, 0);
 	if (dl->file) {
 		curl_easy_setopt(dl->curl, CURLOPT_WRITEDATA, dl->file);
-		curl_easy_setopt(dl->curl, CURLOPT_WRITEFUNCTION, NULL);
+		curl_easy_setopt(dl->curl, CURLOPT_WRITEFUNCTION, nullptr);
 	} else {
 		curl_easy_setopt(dl->curl, CURLOPT_WRITEDATA, dl);
 		curl_easy_setopt(dl->curl, CURLOPT_WRITEFUNCTION, HTTP_Recv);
@@ -282,7 +282,7 @@ static dlhandle_t *CL_GetFreeDLHandle (void)
 			return dl;
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -303,7 +303,7 @@ bool CL_QueueHTTPDownload (const char *ufoPath)
 	}
 
 	dlqueue_t* const q = Mem_AllocType(dlqueue_t);
-	q->next = NULL;
+	q->next = nullptr;
 	q->state = DLQ_STATE_NOT_STARTED;
 	Q_strncpyz(q->ufoPath, ufoPath, sizeof(q->ufoPath));
 	*anchor = q;
@@ -311,7 +311,7 @@ bool CL_QueueHTTPDownload (const char *ufoPath)
 	/* special case for map file lists */
 	if (cl_http_filelists->integer) {
 		const char *extension = Com_GetExtension(ufoPath);
-		if (extension != NULL && !Q_strcasecmp(extension, "bsp")) {
+		if (extension != nullptr && !Q_strcasecmp(extension, "bsp")) {
 			char listPath[MAX_OSPATH];
 			const size_t len = strlen(ufoPath);
 			Com_sprintf(listPath, sizeof(listPath), BASEDIRNAME"/%.*s.filelist", (int)(len - 4), ufoPath);
@@ -377,7 +377,7 @@ bool CL_CheckOrDownloadFile (const char *filename)
 		return true;
 	}
 
-	if (FS_LoadFile(filename, NULL) != -1) {
+	if (FS_LoadFile(filename, nullptr) != -1) {
 		/* it exists, no need to download */
 		return true;
 	}
@@ -409,7 +409,7 @@ static void CL_CheckAndQueueDownload (char *path)
 		return;
 
 	ext = Com_GetExtension(path);
-	if (ext == NULL)
+	if (ext == nullptr)
 		return;
 
 	if (Q_streq(ext, "pk3")) {
@@ -517,7 +517,7 @@ static void CL_ParseFileList (dlhandle_t *dl)
 	}
 
 	Mem_Free(dl->tempBuffer);
-	dl->tempBuffer = NULL;
+	dl->tempBuffer = nullptr;
 }
 
 /**
@@ -530,7 +530,7 @@ static void CL_ReVerifyHTTPQueue (void)
 
 	for (dlqueue_t* q = cls.downloadQueue; q; q = q->next) {
 		if (q->state == DLQ_STATE_NOT_STARTED) {
-			if (FS_LoadFile(q->ufoPath, NULL) != -1)
+			if (FS_LoadFile(q->ufoPath, nullptr) != -1)
 				q->state = DLQ_STATE_DONE;
 			else
 				pendingCount++;
@@ -551,25 +551,25 @@ void CL_HTTP_Cleanup (void)
 		if (dl->file) {
 			fclose(dl->file);
 			remove(dl->filePath);
-			dl->file = NULL;
+			dl->file = nullptr;
 		}
 
 		Mem_Free(dl->tempBuffer);
-		dl->tempBuffer = NULL;
+		dl->tempBuffer = nullptr;
 
 		if (dl->curl) {
 			if (multi)
 				curl_multi_remove_handle(multi, dl->curl);
 			curl_easy_cleanup(dl->curl);
-			dl->curl = NULL;
+			dl->curl = nullptr;
 		}
 
-		dl->queueEntry = NULL;
+		dl->queueEntry = nullptr;
 	}
 
 	if (multi) {
 		curl_multi_cleanup(multi);
-		multi = NULL;
+		multi = nullptr;
 	}
 }
 
@@ -589,7 +589,7 @@ static void CL_FinishHTTPDownload (void)
 
 	do {
 		CURLMsg *msg = curl_multi_info_read(multi, &messagesInQueue);
-		dlhandle_t *dl = NULL;
+		dlhandle_t *dl = nullptr;
 
 		if (!msg) {
 			Com_Printf("CL_FinishHTTPDownload: Odd, no message for us...\n");
@@ -625,7 +625,7 @@ static void CL_FinishHTTPDownload (void)
 
 		if (isFile) {
 			fclose(dl->file);
-			dl->file = NULL;
+			dl->file = nullptr;
 		}
 
 		/* might be aborted */
@@ -645,7 +645,7 @@ static void CL_FinishHTTPDownload (void)
 			curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, &responseCode);
 			if (responseCode == 404) {
 				const char *extension = Com_GetExtension(dl->queueEntry->ufoPath);
-				if (extension != NULL && Q_streq(extension, "pk3"))
+				if (extension != nullptr && Q_streq(extension, "pk3"))
 					downloadingPK3 = false;
 
 				if (isFile)
@@ -702,7 +702,7 @@ static void CL_FinishHTTPDownload (void)
 			/* a pk3 file is very special... */
 			i = strlen(tempName);
 			if (Q_streq(tempName + i - 4, ".pk3")) {
-				FS_RestartFilesystem(NULL);
+				FS_RestartFilesystem(nullptr);
 				CL_ReVerifyHTTPQueue();
 				downloadingPK3 = false;
 			}

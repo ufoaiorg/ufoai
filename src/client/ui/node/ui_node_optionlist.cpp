@@ -86,7 +86,7 @@ void uiOptionListNode::draw (uiNode_t *node)
 	int count = 0;
 
 	ref = UI_AbstractOptionGetCurrentValue(node);
-	if (ref == NULL)
+	if (ref == nullptr)
 		return;
 
 	UI_GetNodeAbsPos(node, pos);
@@ -137,7 +137,7 @@ void uiOptionListNode::draw (uiNode_t *node)
 			uiSpriteStatus_t iconStatus = SPRITE_STATUS_NORMAL;
 			if (option->disabled)
 				iconStatus = SPRITE_STATUS_DISABLED;
-			R_Color(NULL);
+			R_Color(nullptr);
 			UI_DrawSpriteInBox(OPTIONEXTRADATA(option).flipIcon, OPTIONEXTRADATA(option).icon, iconStatus, decX, currentY, OPTIONEXTRADATA(option).icon->size[0], lineHeight);
 			decX += OPTIONEXTRADATA(option).icon->size[0] + lineHeight / 4;
 		}
@@ -148,13 +148,13 @@ void uiOptionListNode::draw (uiNode_t *node)
 		R_Color(textColor);
 		UI_DrawString(font, ALIGN_UL, decX, currentY,
 			pos[0], node->box.size[0] - node->padding - node->padding,
-			0, label, 0, 0, NULL, false, LONGLINES_PRETTYCHOP);
+			0, label, 0, 0, nullptr, false, LONGLINES_PRETTYCHOP);
 
 		/* next entries' position */
 		currentY += lineHeight;
 		count++;
 	}
-	R_Color(NULL);
+	R_Color(nullptr);
 
 	/* count number of options (current architecture doesn't allow to know if the data change) */
 	for (; option; option = option->next) {
@@ -199,7 +199,7 @@ static uiNode_t* UI_OptionListNodeGetOptionAtPosition (uiNode_t *node, int x, in
 			break;
 		currentY += lineHeight;
 	}
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -209,7 +209,7 @@ void uiOptionListNode::onLeftClick (uiNode_t *node, int x, int y)
 {
 	uiNode_t* option;
 
-	if (UI_AbstractOptionGetCurrentValue(node) == NULL)
+	if (UI_AbstractOptionGetCurrentValue(node) == nullptr)
 		return;
 
 	/* select the right option */

@@ -77,7 +77,7 @@ ELEMENTS COMMUNICATED ACROSS THE NET
  * @sa cl_parse.c for event bindings
  */
 typedef enum {
-	EV_NULL,
+	EV_nullptr,
 	EV_RESET,
 	EV_START,
 	EV_ENDROUND,	/**< ends the current team's turn CL_DoEndRound */
@@ -137,7 +137,7 @@ typedef enum {
 } event_t;
 
 typedef enum {
-	ET_NULL,
+	ET_nullptr,
 	ET_ACTORSPAWN,
 	ET_ACTOR,
 	ET_ITEM,
@@ -181,7 +181,7 @@ typedef enum {
 #define DOOR_ROTATION_ANGLE 90
 
 typedef enum {
-	PA_NULL,
+	PA_nullptr,
 	PA_TURN,
 	PA_MOVE,
 	PA_STATE,
@@ -245,7 +245,7 @@ typedef int32_t shoot_types_t;
 #define SF_BOUNCED	8	/**< at least hit the ground once and can now start to bounce */
 
 /* is used in events where two edicts can be send, one actor and one receiver - but one of them can
- * be NULL, e.g. in a case where the actor is a trigger */
+ * be nullptr, e.g. in a case where the actor is a trigger */
 #define SKIP_LOCAL_ENTITY (-1)
 
 #define MAX_DEATH	3	/**< @sa STATE_DEAD */
@@ -342,7 +342,7 @@ typedef struct mapDef_s {
 	char *victoryCondition;	/**< the mission briefing victory condition */
 	char *missionBriefing;	/**< the mission briefing description */
 	char *size;				/**< small, medium, big */
-	char *civTeam;			/**< the civilian team to use for this map - this can also be NULL */
+	char *civTeam;			/**< the civilian team to use for this map - this can also be nullptr */
 
 	/* multiplayer */
 	bool multiplayer;		/**< is this map multiplayer ready at all */
@@ -374,7 +374,7 @@ typedef struct mapDef_s {
 } mapDef_t;
 
 #define MapDef_ForeachCondition(var, condition) \
-	for (int var##__loopvar = 0; (var) = NULL, var##__loopvar < csi.numMDs; var##__loopvar++) \
+	for (int var##__loopvar = 0; (var) = nullptr, var##__loopvar < csi.numMDs; var##__loopvar++) \
 		if ((var) = &csi.mds[var##__loopvar], !(condition)) {} else
 
 #define MapDef_Foreach(var) MapDef_ForeachCondition(var, 1)

@@ -34,7 +34,7 @@ static const float MAX_DETECTING_RANGE = 25.0f; /**< range to detect and fire at
 
 /**
  * @brief Iterates through the UFOs
- * @param[in] lastUFO Pointer of the aircraft to iterate from. call with NULL to get the first one.
+ * @param[in] lastUFO Pointer of the aircraft to iterate from. call with nullptr to get the first one.
  */
 aircraft_t* UFO_GetNext (aircraft_t *lastUFO)
 {
@@ -42,7 +42,7 @@ aircraft_t* UFO_GetNext (aircraft_t *lastUFO)
 	aircraft_t* ufo;
 
 	if (!ccs.numUFOs)
-		return NULL;
+		return nullptr;
 
 	if (!lastUFO)
 		return ccs.ufos;
@@ -53,7 +53,7 @@ aircraft_t* UFO_GetNext (aircraft_t *lastUFO)
 
 	ufo++;
 	if (ufo >= endOfUFOs)
-		return NULL;
+		return nullptr;
 	else
 		return ufo;
 }
@@ -64,7 +64,7 @@ aircraft_t* UFO_GetNext (aircraft_t *lastUFO)
 aircraft_t *UFO_GetNextOnGeoscape (aircraft_t *lastUFO)
 {
 	aircraft_t* ufo = lastUFO;
-	while ((ufo = UFO_GetNext(ufo)) != NULL) {
+	while ((ufo = UFO_GetNext(ufo)) != nullptr) {
 		if (UFO_IsUFOSeenOnGeoscape(ufo)
 #ifdef DEBUG
 		|| cgi->Cvar_GetInteger("debug_showufos")
@@ -73,7 +73,7 @@ aircraft_t *UFO_GetNextOnGeoscape (aircraft_t *lastUFO)
 			return ufo;
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -90,7 +90,7 @@ aircraft_t* UFO_GetByIDX (const int idx)
  * @brief Get the technology for a given UFO type
  * @param type UFO type to get the technology for
  * @return The technology for the given UFO. If no technology was found for the UFO
- * id this might return @c NULL.
+ * id this might return @c nullptr.
  */
 const technology_t* UFO_GetTechnologyFromType (const ufoType_t type)
 {
@@ -348,16 +348,16 @@ void UFO_UpdateAlienInterestForAllBasesAndInstallations (void)
 {
 	aircraft_t *ufo;
 
-	ufo = NULL;
-	while ((ufo = UFO_GetNext(ufo)) != NULL) {
+	ufo = nullptr;
+	while ((ufo = UFO_GetNext(ufo)) != nullptr) {
 		base_t *base;
 
 		/* landed UFO can't detect any phalanx base or installation */
 		if (ufo->landed)
 			continue;
 
-		base = NULL;
-		while ((base = B_GetNext(base)) != NULL)
+		base = nullptr;
+		while ((base = B_GetNext(base)) != nullptr)
 			UFO_UpdateAlienInterestForOneBase(ufo, base);
 
 		INS_Foreach(installation)
@@ -386,7 +386,7 @@ static void UFO_SearchAircraftTarget (const campaign_t* campaign, aircraft_t *uf
 		if (AIR_IsAircraftOnGeoscape(ufo->aircraftTarget))
 			AIRFIGHT_ExecuteActions(campaign, ufo, ufo->aircraftTarget);
 		else
-			ufo->aircraftTarget = NULL;
+			ufo->aircraftTarget = nullptr;
 		return;
 	}
 
@@ -415,9 +415,9 @@ static void UFO_SearchAircraftTarget (const campaign_t* campaign, aircraft_t *uf
 	/* if this ufo is a leader, it does not try to search another one */
 	if (ufo->leader)
 		return;
-	aircraft_t *otherUFO = NULL;
+	aircraft_t *otherUFO = nullptr;
 	const float polarCoordinatesOffset = 1.0f;
-	while ((otherUFO = UFO_GetNextOnGeoscape(otherUFO)) != NULL) {
+	while ((otherUFO = UFO_GetNextOnGeoscape(otherUFO)) != nullptr) {
 		if (otherUFO == ufo)
 			continue;
 		if (otherUFO->leader) {
@@ -493,7 +493,7 @@ void UFO_CheckShootBack (const campaign_t* campaign, aircraft_t *ufo, aircraft_t
 		if (AIR_IsAircraftOnGeoscape(ufo->aircraftTarget))
 			AIRFIGHT_ExecuteActions(campaign, ufo, ufo->aircraftTarget);
 		else {
-			ufo->aircraftTarget = NULL;
+			ufo->aircraftTarget = nullptr;
 			CP_UFOProceedMission(campaign, ufo);
 		}
 	} else {
@@ -566,7 +566,7 @@ static void UFO_DestroyUFOs_f (void)
 	campaign_t* campaign = ccs.curCampaign;
 
 	for (ufo = ccs.ufos; ufo < ccs.ufos + ccs.numUFOs; ufo++) {
-		AIRFIGHT_ActionsAfterAirfight(campaign, NULL, ufo, true);
+		AIRFIGHT_ActionsAfterAirfight(campaign, nullptr, ufo, true);
 	}
 }
 
@@ -605,7 +605,7 @@ static void UFO_ListOnGeoscape_f (void)
 /**
  * @brief Get the template data for the given ufo type
  * @param ufoType The ufo type to search the template for.
- * @return @c NULL in case the ufoType wasn't found, or the pointer to the ufo template.
+ * @return @c nullptr in case the ufoType wasn't found, or the pointer to the ufo template.
  */
 const aircraft_t* UFO_GetTemplate (ufoType_t ufoType)
 {
@@ -619,7 +619,7 @@ const aircraft_t* UFO_GetTemplate (ufoType_t ufoType)
 
 	/* not found */
 	if (newUFONum == ccs.numAircraftTemplates)
-		return NULL;
+		return nullptr;
 
 	return &ccs.aircraftTemplates[newUFONum];
 }
@@ -628,7 +628,7 @@ const aircraft_t* UFO_GetTemplate (ufoType_t ufoType)
  * @brief Get the template data for the given ufo type
  * @param ufoType The ufo type to search the template for.
  * @note This function will only return those templates that may appear on the geoscape!
- * @return @c NULL in case the ufoType wasn't found, or the pointer to the ufo template.
+ * @return @c nullptr in case the ufoType wasn't found, or the pointer to the ufo template.
  */
 static const aircraft_t* UFO_GetTemplateForGeoscape (ufoType_t ufoType)
 {
@@ -642,7 +642,7 @@ static const aircraft_t* UFO_GetTemplateForGeoscape (ufoType_t ufoType)
 
 	/* not found */
 	if (newUFONum == ccs.numAircraftTemplates)
-		return NULL;
+		return nullptr;
 
 	return &ccs.aircraftTemplates[newUFONum];
 }
@@ -650,19 +650,19 @@ static const aircraft_t* UFO_GetTemplateForGeoscape (ufoType_t ufoType)
 /**
  * @brief Creates a new ufo on the geoscape from the given aircraft template
  * @param ufoTemplate The aircraft template to create the ufo from.
- * @return @c NULL if the max allowed amount of ufos are already on the geoscape, otherwise
+ * @return @c nullptr if the max allowed amount of ufos are already on the geoscape, otherwise
  * the newly created ufo pointer
  */
 aircraft_t* UFO_CreateFromTemplate (const aircraft_t *ufoTemplate)
 {
 	aircraft_t *ufo;
 
-	if (ufoTemplate == NULL)
-		return NULL;
+	if (ufoTemplate == nullptr)
+		return nullptr;
 
 	/* check max amount */
 	if (ccs.numUFOs >= MAX_UFOONGEOSCAPE)
-		return NULL;
+		return nullptr;
 
 	/* must be an ufo */
 	assert(ufoTemplate->type == AIRCRAFT_UFO);
@@ -680,7 +680,7 @@ aircraft_t* UFO_CreateFromTemplate (const aircraft_t *ufoTemplate)
 /**
  * @brief Add a UFO to geoscape
  * @param[in] ufoType The type of ufo (fighter, scout, ...).
- * @param[in] destination Position where the ufo should go. NULL is randomly chosen
+ * @param[in] destination Position where the ufo should go. nullptr is randomly chosen
  * @param[in] mission Pointer to the mission the UFO is involved in
  * @sa UFO_RemoveFromGeoscape
  * @sa UFO_RemoveFromGeoscape_f
@@ -691,13 +691,13 @@ aircraft_t *UFO_AddToGeoscape (ufoType_t ufoType, const vec2_t destination, miss
 	const aircraft_t *ufoTemplate;
 
 	ufoTemplate = UFO_GetTemplateForGeoscape(ufoType);
-	if (ufoTemplate == NULL)
-		return NULL;
+	if (ufoTemplate == nullptr)
+		return nullptr;
 
 	/* Create ufo */
 	ufo = UFO_CreateFromTemplate(ufoTemplate);
-	if (ufo == NULL)
-		return NULL;
+	if (ufo == nullptr)
+		return nullptr;
 
 	/* Update Stats of UFO */
 	AII_UpdateAircraftStats(ufo);
@@ -787,8 +787,8 @@ bool UFO_CampaignCheckEvents (void)
 	newDetection = false;
 
 	/* For each ufo in geoscape */
-	ufo = NULL;
-	while ((ufo = UFO_GetNext(ufo)) != NULL) {
+	ufo = nullptr;
+	while ((ufo = UFO_GetNext(ufo)) != nullptr) {
 		char detectedBy[MAX_VAR] = "";
 		float minDistance = -1;
 		/* detected tells us whether or not a UFO is detected NOW, whereas ufo->detected tells
@@ -820,8 +820,8 @@ bool UFO_CampaignCheckEvents (void)
 		}
 
 		/* Check if UFO is detected by a base */
-		base = NULL;
-		while ((base = B_GetNext(base)) != NULL) {
+		base = nullptr;
+		while ((base = B_GetNext(base)) != nullptr) {
 			if (!B_GetBuildingStatus(base, B_POWER))
 				continue;
 
@@ -894,7 +894,7 @@ void UFO_NotifyPhalanxAircraftRemoved (const aircraft_t *const aircraft)
 		aircraft_t *ufo = UFO_GetByIDX(ufoIdx);
 
 		if (ufo->aircraftTarget == aircraft)
-			ufo->aircraftTarget = NULL;
+			ufo->aircraftTarget = nullptr;
 	}
 }
 

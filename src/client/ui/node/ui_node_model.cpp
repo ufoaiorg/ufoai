@@ -65,7 +65,7 @@ uiModel_t *UI_GetUIModel (const char *modelName)
 		if (Q_streq(m->id, modelName))
 			return m;
 	}
-	return NULL;
+	return nullptr;
 }
 
 static void UI_ListUIModels_f (void)
@@ -76,7 +76,7 @@ static void UI_ListUIModels_f (void)
 	Com_Printf("UI models: %i\n", ui_global.numModels);
 	for (i = 0; i < ui_global.numModels; i++) {
 		const uiModel_t *m = &ui_global.models[i];
-		const char *need = m->next != NULL ? m->next->id : "none";
+		const char *need = m->next != nullptr ? m->next->id : "none";
 		Com_Printf("id: %s\n...model: %s\n...need: %s\n\n", m->id, m->model, need);
 	}
 }
@@ -227,7 +227,7 @@ static void UI_DrawModelNodeWithUIModel (uiNode_t *node, const char *source, mod
 				animState_t *as = &model->animState;
 				const char *anim = R_AnimGetName(as, mi->model);
 				/* initial animation or animation change */
-				if (anim == NULL || !Q_streq(anim, ref))
+				if (anim == nullptr || !Q_streq(anim, ref))
 					R_AnimChange(as, mi->model, ref);
 				else
 					R_AnimRun(as, mi->model, cls.frametime * 1000);
@@ -236,7 +236,7 @@ static void UI_DrawModelNodeWithUIModel (uiNode_t *node, const char *source, mod
 				mi->oldframe = as->oldframe;
 				mi->backlerp = as->backlerp;
 			}
-			R_DrawModelDirect(mi, NULL, NULL);
+			R_DrawModelDirect(mi, nullptr, nullptr);
 		}
 
 		/* next */
@@ -334,7 +334,7 @@ void UI_DrawModelNode (uiNode_t *node, const char *source)
 			Q_strncpyz(EXTRADATA(node).oldRefValue, source, MAX_OLDREFVALUE);
 			/* model has changed but mem is already reserved in pool */
 			Mem_Free(EXTRADATA(node).animationState);
-			EXTRADATA(node).animationState = NULL;
+			EXTRADATA(node).animationState = nullptr;
 		}
 		animState_t* as = EXTRADATA(node).animationState;
 		if (!as) {
@@ -358,7 +358,7 @@ void UI_DrawModelNode (uiNode_t *node, const char *source)
 	}
 
 	/* draw the main model on the node */
-	R_DrawModelDirect(&mi, NULL, NULL);
+	R_DrawModelDirect(&mi, nullptr, nullptr);
 
 	/* draw all children */
 	if (node->firstChild) {
@@ -482,22 +482,22 @@ void uiModelNode::newNode (uiNode_t *node)
 void uiModelNode::deleteNode (uiNode_t *node)
 {
 	Mem_Free(EXTRADATA(node).oldRefValue);
-	EXTRADATA(node).oldRefValue = NULL;
+	EXTRADATA(node).oldRefValue = nullptr;
 }
 
 void uiModelNode::onLoaded (uiNode_t *node)
 {
 	/* a tag without but not a submodel */
-	if (EXTRADATA(node).tag != NULL && node->behaviour != node->parent->behaviour) {
+	if (EXTRADATA(node).tag != nullptr && node->behaviour != node->parent->behaviour) {
 		Com_Printf("UI_ModelNodeLoaded: '%s' use a tag but is not a submodel. Tag removed.\n", UI_GetPath(node));
-		EXTRADATA(node).tag = NULL;
+		EXTRADATA(node).tag = nullptr;
 	}
 
-	if (EXTRADATA(node).oldRefValue == NULL)
+	if (EXTRADATA(node).oldRefValue == nullptr)
 		EXTRADATA(node).oldRefValue = UI_AllocStaticString("", MAX_OLDREFVALUE);
 
 	/* no tag but no size */
-	if (EXTRADATA(node).tag == NULL && (node->box.size[0] == 0 || node->box.size[1] == 0)) {
+	if (EXTRADATA(node).tag == nullptr && (node->box.size[0] == 0 || node->box.size[1] == 0)) {
 		Com_Printf("UI_ModelNodeLoaded: Please set a pos and size to the node '%s'. Note: 'origin' is a relative value to the center of the node\n", UI_GetPath(node));
 	}
 }

@@ -32,11 +32,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_event_callbacks.h"
 #include "save/save_triggerevents.h"
 
-static linkedList_t *eventMails = NULL;
+static linkedList_t *eventMails = nullptr;
 
 /**
  * @brief Searches all event mails for a given id
- * @note Might also return NULL - always check the return value
+ * @note Might also return nullptr - always check the return value
  * @note If you want to create mails that base on a script definition but have different
  * body messages, set createCopy to true
  * @param[in] id The id from the script files
@@ -56,7 +56,7 @@ eventMail_t* CL_GetEventMail (const char *id)
 			return listMail;
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -82,7 +82,7 @@ static const value_t eventMail_vals[] = {
 	{"model", V_HUNK_STRING, offsetof(eventMail_t, model), 0},
 	{"skipmessage", V_BOOL, offsetof(eventMail_t, skipMessage), MEMBER_SIZEOF(eventMail_t, skipMessage)},
 
-	{NULL, V_NULL, 0, 0}
+	{nullptr, V_nullptr, 0, 0}
 };
 
 /**
@@ -152,7 +152,7 @@ const campaignEvents_t *CP_GetEventsByID (const char *name)
 		}
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 static int CP_CheckTriggerEvent (const char *expression, const void *userdata)
@@ -213,7 +213,7 @@ static int CP_CheckTriggerEvent (const char *expression, const void *userdata)
 		Q_strncpyz(value, type + 1, sizeof(value));
 		value[strlen(value) - 1] = '\0';
 		technology_t *tech = RS_GetTechByID(value);
-		if (tech == NULL)
+		if (tech == nullptr)
 			return -1;
 		if (RS_IsResearched_ptr(tech))
 			return 1;
@@ -315,7 +315,7 @@ void CP_TriggerEvent (campaignTriggerEventType_t type, const void *userdata)
 
 	for (i = 0; i < ccs.numCampaignTriggerEvents; i++) {
 		campaignTriggerEvent_t *event = &ccs.campaignTriggerEvents[i];
-		if (event->type != type || (!event->active && event->reactivate == NULL))
+		if (event->type != type || (!event->active && event->reactivate == nullptr))
 			continue;
 
 		if (event->active) {
@@ -345,7 +345,7 @@ static const value_t event_vals[] = {
 	{"command", V_HUNK_STRING, offsetof(campaignTriggerEvent_t, command), 0},
 	{"once", V_BOOL, offsetof(campaignTriggerEvent_t, once), MEMBER_SIZEOF(campaignTriggerEvent_t, once)},
 
-	{NULL, V_NULL, 0, 0}
+	{nullptr, V_nullptr, 0, 0}
 };
 
 #define EVENTCONSTANTS_NAMESPACE "eventTrigger::"
@@ -356,7 +356,7 @@ static const constListEntry_t eventConstants[] = {
 	{EVENTCONSTANTS_NAMESPACE "captured_aliens", CAPTURED_ALIENS},
 	{EVENTCONSTANTS_NAMESPACE "alienbase_discovered", ALIENBASE_DISCOVERED},
 
-	{NULL, -1}
+	{nullptr, -1}
 };
 
 void CP_ParseEventTrigger (const char *name, const char **text)

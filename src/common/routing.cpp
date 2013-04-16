@@ -230,7 +230,7 @@ void RT_DumpWholeMap (mapTiles_t *mapTiles, const Routing &routing)
 			PosToVec(end, box.maxs);
 			VectorAdd(box.maxs, normal, box.maxs);
 			/* Test for stuff in a small box, if there is something then exit while */
-			trace = RT_COMPLETEBOXTRACE_SIZE(mapTiles, &box, NULL);
+			trace = RT_COMPLETEBOXTRACE_SIZE(mapTiles, &box, nullptr);
 			if (trace.fraction < 1.0)
 				break;
 			/* There is nothing, lower the boundary. */
@@ -248,7 +248,7 @@ void RT_DumpWholeMap (mapTiles_t *mapTiles, const Routing &routing)
 			PosToVec(test, box.maxs);
 			VectorAdd(box.maxs, normal, box.maxs);
 			/* Test for stuff in a small box, if there is something then exit while */
-			trace = RT_COMPLETEBOXTRACE_SIZE(mapTiles, &box, NULL);
+			trace = RT_COMPLETEBOXTRACE_SIZE(mapTiles, &box, nullptr);
 			if (trace.fraction < 1.0)
 				break;
 			/* There is nothing, raise the boundary. */
@@ -306,7 +306,7 @@ void RT_GetMapSize (mapTiles_t *mapTiles, vec3_t map_min, vec3_t map_max)
 			PosToVec(end, box.maxs);
 			VectorAdd(box.maxs, normal, box.maxs);
 			/* Test for stuff in a small box, if there is something then exit while */
-			const trace_t trace = RT_COMPLETEBOXTRACE_SIZE(mapTiles, &box, NULL);
+			const trace_t trace = RT_COMPLETEBOXTRACE_SIZE(mapTiles, &box, nullptr);
 			if (trace.fraction < 1.0)
 				break;
 			/* There is nothing, lower the boundary. */
@@ -324,7 +324,7 @@ void RT_GetMapSize (mapTiles_t *mapTiles, vec3_t map_min, vec3_t map_max)
 			PosToVec(test, box.maxs);
 			VectorAdd(box.maxs, normal, box.maxs);
 			/* Test for stuff in a small box, if there is something then exit while */
-			const trace_t trace = RT_COMPLETEBOXTRACE_SIZE(mapTiles, &box, NULL);
+			const trace_t trace = RT_COMPLETEBOXTRACE_SIZE(mapTiles, &box, nullptr);
 			if (trace.fraction < 1.0)
 				break;
 			/* There is nothing, raise the boundary. */
@@ -1253,7 +1253,7 @@ static void RT_TracePassage (RoutingData *rtd, const int x, const int y, const i
 	int aboveCeil, lowCeil;
 	/** we don't need the cell below the adjacent cell because we should have already checked it */
 	place_t from, to, above;
-	const place_t *placeToCheck = NULL;
+	const place_t *placeToCheck = nullptr;
 
 	RT_PlaceInit(rtd->routing, rtd->actorSize, &from, x, y, z);
 	RT_PlaceInit(rtd->routing, rtd->actorSize, &to, ax, ay, z);

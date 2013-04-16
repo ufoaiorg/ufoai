@@ -41,7 +41,7 @@ void uiFuncNode::onLoaded (uiNode_t *node)
 	if (prop && prop->type == V_UI_ACTION) {
 		/** @todo move this code into the parser (cause property should not create a func node) */
 		uiAction_t*& value = Com_GetValue<uiAction_t*>(node->parent, prop);
-		if (value != NULL && node->super == NULL) {
+		if (value != nullptr && node->super == nullptr) {
 			Com_Printf("UI_FuncNodeLoaded: '%s' already defined. Previous function ignored (\"%s\")\n", prop->string, UI_GetPath(node));
 		}
 		value = node->onClick;
@@ -84,7 +84,7 @@ static bool UI_ConFuncIsVirtual (const uiNode_t *const node)
 	const uiNode_t *dummy = static_cast<const uiNode_t*>(Cmd_GetUserdata(node->name));
 	assert(node);
 	assert(UI_NodeInstanceOf(node, "confunc"));
-	return (dummy != NULL && dummy->parent == NULL);
+	return (dummy != nullptr && dummy->parent == nullptr);
 }
 
 /**
@@ -93,7 +93,7 @@ static bool UI_ConFuncIsVirtual (const uiNode_t *const node)
 void uiConFuncNode::onLoaded (uiNode_t *node)
 {
 	/* register confunc non inherited */
-	if (node->super == NULL) {
+	if (node->super == nullptr) {
 		/* don't add a callback twice */
 		if (!Cmd_Exists(node->name)) {
 			Cmd_AddCommand(node->name, UI_ConfuncCommand_f, "Confunc callback");
@@ -154,7 +154,7 @@ void UI_RegisterConFuncNode (uiBehaviour_t *behaviour)
 static void UI_CvarListenerNodeCallback (const char *cvarName, const char *oldValue, const char *newValue, void *data)
 {
 	linkedList_t *list = static_cast<linkedList_t*>(data);
-	linkedList_t *params = NULL;
+	linkedList_t *params = nullptr;
 	LIST_AddString(&params, oldValue);
 	LIST_AddString(&params, newValue);
 	while (list) {
@@ -171,12 +171,12 @@ static void UI_CvarListenerNodeBind (uiNode_t *node)
 {
 	cvarChangeListener_t *l;
 	l = Cvar_RegisterChangeListener(node->name, UI_CvarListenerNodeCallback);
-	if (l == NULL) {
+	if (l == nullptr) {
 		Com_Printf("Node %s is not binded: cvar %s not found\n", UI_GetPath(node), node->name);
 		return;
 	}
 
-	if (LIST_GetPointer(static_cast<linkedList_t*>(l->data), node) == NULL) {
+	if (LIST_GetPointer(static_cast<linkedList_t*>(l->data), node) == nullptr) {
 		LIST_AddPointer(reinterpret_cast<linkedList_t**>(&l->data), node);
 	}
 }
@@ -189,7 +189,7 @@ void uiCvarNode::onWindowClosed (uiNode_t *node)
 	cvar_t *var;
 
 	var = Cvar_FindVar(node->name);
-	if (var == NULL)
+	if (var == nullptr)
 		return;
 
 	cvarChangeListener_t *l = var->changeListener;

@@ -68,7 +68,7 @@ static void AIM_SelectAircraft_f (void)
 	} else {
 		const int i = atoi(cgi->Cmd_Argv(1));
 		aircraft_t *aircraft = AIR_GetAircraftFromBaseByIDXSafe(base, i);
-		if (aircraft != NULL)
+		if (aircraft != nullptr)
 			AIR_AircraftSelect(aircraft);
 	}
 }
@@ -119,7 +119,7 @@ static void AIM_AircraftStart_f (void)
 /**
  * @brief Returns the amount of assigned items for a given slot of a given aircraft
  * @param[in] type This is the slot type to get the amount of assigned items for
- * @param[in] aircraft The aircraft to count the items for (may not be NULL)
+ * @param[in] aircraft The aircraft to count the items for (may not be nullptr)
  * @return The amount of assigned items for the given slot
  */
 static int AIR_GetSlotItems (aircraftItemType_t type, const aircraft_t *aircraft)
@@ -166,10 +166,10 @@ void AIR_AircraftSelect (aircraft_t* aircraft)
 	base_t *base;
 	int id;
 
-	if (aircraft != NULL)
+	if (aircraft != nullptr)
 		base = aircraft->homebase;
 	else
-		base = NULL;
+		base = nullptr;
 
 	if (!AIR_BaseHasAircraft(base)) {
 		cgi->UI_ResetData(TEXT_AIRCRAFT_INFO);
@@ -221,7 +221,7 @@ void AIR_AircraftSelect (aircraft_t* aircraft)
  */
 static void AIR_AircraftUpdateList_f (void)
 {
-	linkedList_t *list = NULL;
+	linkedList_t *list = nullptr;
 	base_t *base = B_GetCurrentSelectedBase();
 
 	AIR_ForeachFromBase(aircraft, base) {
@@ -277,13 +277,13 @@ static void AIR_ChangeAircraftName_f (void)
 void AIR_InitCallbacks (void)
 {
 	/* menu aircraft */
-	cgi->Cmd_AddCommand("aircraft_start", AIM_AircraftStart_f, NULL);
+	cgi->Cmd_AddCommand("aircraft_start", AIM_AircraftStart_f, nullptr);
 	/* menu aircraft_equip, aircraft */
-	cgi->Cmd_AddCommand("mn_select_aircraft", AIM_SelectAircraft_f, NULL);
+	cgi->Cmd_AddCommand("mn_select_aircraft", AIM_SelectAircraft_f, nullptr);
 	/* menu aircraft, popup_transferbaselist */
 	cgi->Cmd_AddCommand("aircraft_return", AIM_AircraftReturnToBase_f, "Sends the current aircraft back to homebase.");
 	/* menu aircraft, aircraft_equip, aircraft_soldier */
-	cgi->Cmd_AddCommand("aircraft_update_list", AIR_AircraftUpdateList_f, NULL);
+	cgi->Cmd_AddCommand("aircraft_update_list", AIR_AircraftUpdateList_f, nullptr);
 	cgi->Cmd_AddCommand("aircraft_namechange", AIR_ChangeAircraftName_f, "Callback to change the name of the aircraft.");
 }
 

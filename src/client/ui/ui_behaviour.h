@@ -124,7 +124,7 @@ const struct value_s *UI_RegisterNodeMethod(uiBehaviour_t *behaviour, const char
 
 /**
  * @brief Return a property from a node behaviour
- * @return A property, else NULL if not found.
+ * @return A property, else nullptr if not found.
  */
 const struct value_s *UI_GetPropertyFromBehaviour(const uiBehaviour_t *behaviour, const char* name) __attribute__ ((warn_unused_result));
 

@@ -244,7 +244,7 @@ static void UI_GetRadarWidth (const uiNode_t *node, vec2_t gridSize)
 }
 
 static char const* const imageExtensions[] = {
-	"tga", "jpg", "png", NULL
+	"tga", "jpg", "png", nullptr
 };
 
 static bool UI_CheckRadarImage (const char *imageName, const int level)
@@ -414,7 +414,7 @@ static void UI_RadarNodeDrawArrays (const vec4_t color, vec2_t coords[4], vec2_t
 {
 	R_Color(color);
 	R_DrawImageArray((const vec2_t *)coords, (const vec2_t *)vertices, image);
-	R_Color(NULL);
+	R_Color(nullptr);
 }
 
 static void UI_RadarNodeDrawActor (const le_t *le, const vec3_t pos)
@@ -430,7 +430,7 @@ static void UI_RadarNodeDrawActor (const le_t *le, const vec3_t pos)
 	const float pov = directionAngles[le->angle] * torad + M_PI;
 
 	image = UI_LoadImage("ui/radar");
-	if (image == NULL)
+	if (image == nullptr)
 		return;
 
 	/* draw FOV */
@@ -591,7 +591,7 @@ void uiRadarNode::draw (uiNode_t *node)
 	UI_DrawFill(pos[0], pos[1], UNIT_SIZE * mapCoefX, UNIT_SIZE * mapCoefY, red);
 #endif
 
-	le = NULL;
+	le = nullptr;
 	while ((le = LE_GetNextInUse(le))) {
 		vec3_t itempos;
 		if (LE_IsInvisible(le))

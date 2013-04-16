@@ -40,7 +40,7 @@ static void R_SetSDLIcon (void)
 	unsigned int i, mask;
 
 	icon = SDL_CreateRGBSurface(SDL_SWSURFACE, ufoicon_width, ufoicon_height, 8, 0, 0, 0, 0);
-	if (icon == NULL)
+	if (icon == nullptr)
 		return;
 	SDL_SetColorKey(icon, SDL_SRCCOLORKEY, 0);
 
@@ -58,7 +58,7 @@ static void R_SetSDLIcon (void)
 		}
 	}
 
-	SDL_WM_SetIcon(icon, NULL);
+	SDL_WM_SetIcon(icon, nullptr);
 	SDL_FreeSurface(icon);
 }
 #endif
@@ -107,7 +107,7 @@ bool Rimp_Init (void)
 			Q_strcat(buf, "I: Available resolutions:", sizeof(buf));
 			if (modes == (SDL_Rect **)-1) {
 				Com_Printf("%s any resolution is supported\n", buf);
-				r_sdl_config.modes = NULL;
+				r_sdl_config.modes = nullptr;
 			} else {
 				int i;
 				for (r_sdl_config.numModes = 0; modes[r_sdl_config.numModes]; r_sdl_config.numModes++) {}
@@ -122,7 +122,7 @@ bool Rimp_Init (void)
 				Com_Printf("%s (%i)\n", buf, r_sdl_config.numModes);
 			}
 		} else {
-			r_sdl_config.modes = NULL;
+			r_sdl_config.modes = nullptr;
 			Com_Printf("I: Could not get list of available resolutions\n");
 		}
 	} else {
@@ -172,7 +172,7 @@ bool R_InitGraphics (const viddefContext_t *context)
 {
 	uint32_t flags;
 	int i;
-	SDL_Surface* screen = NULL;
+	SDL_Surface* screen = nullptr;
 
 	SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
 	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);

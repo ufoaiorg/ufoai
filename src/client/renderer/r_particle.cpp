@@ -54,14 +54,14 @@ static void R_GetSpriteVectors (const ptl_t *p, vec3_t right, vec3_t up)
 		break;
 
 	case STYLE_ROTATED:
-		AngleVectors(p->angles, NULL, right, up);
+		AngleVectors(p->angles, nullptr, right, up);
 		VectorScale(right, p->size[0], right);
 		VectorScale(up, p->size[1], up);
 		break;
 
 	case STYLE_BEAM:
 	case STYLE_AXIS:
-		AngleVectors(p->angles, right, NULL, NULL);
+		AngleVectors(p->angles, right, nullptr, nullptr);
 		CrossProduct(right, r_locals.forward, up);
 		VectorNormalizeFast(up);
 		VectorScale(right, p->size[0], right);
@@ -215,7 +215,7 @@ static void R_DrawPtlLine (const ptl_t *p)
 
 	refdef.batchCount++;
 
-	R_Color(NULL);
+	R_Color(nullptr);
 
 	glDisable(GL_LINE_SMOOTH);
 
@@ -277,7 +277,7 @@ void R_DrawParticles (void)
 			if (p->levelFlags && !((1 << refdef.worldlevel) & p->levelFlags))
 				continue;
 
-			if (p->program != NULL)
+			if (p->program != nullptr)
 				R_UseProgram(p->program);
 
 			/* set blend mode and draw gfx */
@@ -298,10 +298,10 @@ void R_DrawParticles (void)
 				R_DrawParticleModel(p);
 			R_TexEnv(GL_MODULATE);
 
-			R_UseProgram(NULL);
+			R_UseProgram(nullptr);
 		}
 
 	R_BlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-	R_Color(NULL);
+	R_Color(nullptr);
 }

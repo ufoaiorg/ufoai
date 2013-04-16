@@ -61,7 +61,7 @@ static const int TILE_SIZE = 40;
  * @param[in] node A tab node
  * @param[in] x The x position of the screen to test
  * @param[in] y The x position of the screen to test
- * @return A uiNode_t, or NULL if nothing.
+ * @return A uiNode_t, or nullptr if nothing.
  * @todo improve test when we are on a junction
  * @todo improve test when we are on a chopped tab
  */
@@ -69,7 +69,7 @@ static uiNode_t* UI_TabNodeTabAtPosition (const uiNode_t *node, int x, int y)
 {
 	const char *font;
 	uiNode_t* option;
-	uiNode_t* prev = NULL;
+	uiNode_t* prev = nullptr;
 	int allowedWidth;
 
 	UI_NodeAbsoluteToRelativePos(node, &x, &y);
@@ -79,7 +79,7 @@ static uiNode_t* UI_TabNodeTabAtPosition (const uiNode_t *node, int x, int y)
 
 	/* Bounded box test (shound not need, but there are problem) */
 	if (x < 0 || y < 0 || x >= node->box.size[0] || y >= node->box.size[1])
-		return NULL;
+		return nullptr;
 
 	font = UI_GetFontFromNode(node);
 
@@ -97,7 +97,7 @@ static uiNode_t* UI_TabNodeTabAtPosition (const uiNode_t *node, int x, int y)
 
 		const char *label = CL_Translate(OPTIONEXTRADATA(option).label);
 
-		R_FontTextSize(font, label, 0, LONGLINES_PRETTYCHOP, &tabWidth, NULL, NULL, NULL);
+		R_FontTextSize(font, label, 0, LONGLINES_PRETTYCHOP, &tabWidth, nullptr, nullptr, nullptr);
 		if (OPTIONEXTRADATA(option).icon && OPTIONEXTRADATA(option).icon->size[0] < allowedWidth) {
 			tabWidth += OPTIONEXTRADATA(option).icon->size[0];
 		}
@@ -117,7 +117,7 @@ static uiNode_t* UI_TabNodeTabAtPosition (const uiNode_t *node, int x, int y)
 	}
 	if (x < TILE_WIDTH / 2)
 		return prev;
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -127,11 +127,11 @@ void uiTabNode::onLeftClick (uiNode_t *node, int x, int y)
 {
 	uiNode_t* option;
 
-	if (UI_AbstractOptionGetCurrentValue(node) == NULL)
+	if (UI_AbstractOptionGetCurrentValue(node) == nullptr)
 		return;
 
 	option = UI_TabNodeTabAtPosition(node, x, y);
-	if (option == NULL)
+	if (option == nullptr)
 		return;
 
 	if (option->disabled)
@@ -177,7 +177,7 @@ void uiTabNode::draw (uiNode_t *node)
 {
 	ui_tabStatus_t lastStatus = UI_TAB_NOTHING;
 	uiNode_t* option;
-	uiNode_t* overMouseOption = NULL;
+	uiNode_t* overMouseOption = nullptr;
 	const char *ref;
 	const char *font;
 	int currentX;
@@ -189,7 +189,7 @@ void uiTabNode::draw (uiNode_t *node)
 		image = "ui/tab";
 
 	ref = UI_AbstractOptionGetCurrentValue(node);
-	if (ref == NULL)
+	if (ref == nullptr)
 		return;
 
 	font = UI_GetFontFromNode(node);
@@ -235,7 +235,7 @@ void uiTabNode::draw (uiNode_t *node)
 
 		const char *label = CL_Translate(OPTIONEXTRADATA(option).label);
 
-		R_FontTextSize(font, label, 0, LONGLINES_PRETTYCHOP, &fontWidth, &fontHeight, NULL, NULL);
+		R_FontTextSize(font, label, 0, LONGLINES_PRETTYCHOP, &fontWidth, &fontHeight, nullptr, nullptr);
 		tabWidth = fontWidth;
 		if (OPTIONEXTRADATA(option).icon && OPTIONEXTRADATA(option).icon->size[0] < allowedWidth) {
 			tabWidth += OPTIONEXTRADATA(option).icon->size[0];
@@ -265,7 +265,7 @@ void uiTabNode::draw (uiNode_t *node)
 		/** @todo fontWidth can be =0, maybe a bug from the font cache */
 		OPTIONEXTRADATA(option).truncated = tabWidth < fontWidth || tabWidth == 0;
 		UI_DrawString(font, ALIGN_UL, textPos, pos[1] + ((node->box.size[1] - fontHeight) / 2),
-			textPos, tabWidth + 1, 0, label, 0, 0, NULL, false, LONGLINES_PRETTYCHOP);
+			textPos, tabWidth + 1, 0, label, 0, 0, nullptr, false, LONGLINES_PRETTYCHOP);
 		currentX += tabWidth;
 		allowedWidth -= tabWidth;
 
@@ -293,7 +293,7 @@ void uiTabNode::drawTooltip (const uiNode_t *node, int x, int y) const
 	const int tooltipWidth = 250;
 
 	option = UI_TabNodeTabAtPosition(node, x, y);
-	if (option == NULL)
+	if (option == nullptr)
 		return;
 
 	if (!OPTIONEXTRADATA(option).truncated)
@@ -318,12 +318,12 @@ void uiTabNode::onWindowOpened (uiNode_t *node, linkedList_t *params)
 	if (!cvarName) {
 		/* normalize */
 		Com_Printf("UI_TabNodeInit: node '%s' doesn't have a valid cvar assigned (\"%s\" read)\n", UI_GetPath(node), EXTRADATA(node).cvar);
-		EXTRADATA(node).cvar = NULL;
+		EXTRADATA(node).cvar = nullptr;
 		return;
 	}
 
 	/* cvar do not exists? */
-	if (Cvar_FindVar(cvarName) == NULL) {
+	if (Cvar_FindVar(cvarName) == nullptr) {
 		/* search default value, if possible */
 		uiNode_t* option = node->firstChild;
 		assert(option->behaviour == ui_optionBehaviour);

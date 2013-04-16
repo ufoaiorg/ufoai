@@ -102,7 +102,7 @@ static void AM_ClearBattle (autoMissionBattle_t *battle)
 {
 	int team;
 
-	assert(battle != NULL);
+	assert(battle != nullptr);
 
 	OBJZERO(*battle);
 
@@ -120,7 +120,7 @@ static void AM_ClearBattle (autoMissionBattle_t *battle)
 	}
 
 	battle->winningTeam = -1;
-	battle->results = NULL;
+	battle->results = nullptr;
 }
 
 /**
@@ -138,8 +138,8 @@ static void AM_FillTeamFromAircraft (autoMissionBattle_t *battle, const autoMiss
 	int unitsAlive;
 
 	assert(teamNum < AUTOMISSION_TEAM_TYPE_MAX);
-	assert(battle != NULL);
-	assert(aircraft != NULL);
+	assert(battle != nullptr);
+	assert(aircraft != nullptr);
 
 	teamSize = 0;
 	unitsAlive = 0;
@@ -283,7 +283,7 @@ static void AM_FillTeamFromBattleParams (autoMissionBattle_t *battle, const batt
 		for (unitIDX = 0; unitIDX < missionParams->civilians; unitIDX++) {
 			autoUnit_t *unit = AM_GetUnit(battle, AUTOMISSION_TEAM_TYPE_CIVILIAN, unitIDX);
 
-			AM_CreateUnitChr(unit, teamDef, NULL);
+			AM_CreateUnitChr(unit, teamDef, nullptr);
 			unit->team = AUTOMISSION_TEAM_TYPE_CIVILIAN;
 			unit->idx = unitIDX;
 		}
@@ -496,11 +496,11 @@ static autoUnit_t *AM_GetRandomActiveUnitOfTeam (autoMissionBattle_t *battle, in
 
 	assert(battle);
 	if (team < 0 || team >= AUTOMISSION_TEAM_TYPE_MAX)
-		return NULL;
+		return nullptr;
 	if (battle->actUnits[team] <= 0)
-		return NULL;
+		return nullptr;
 	if (battle->nUnits[team] <= 0)
-		return NULL;
+		return nullptr;
 
 	/* select a unit randomly */
 	idx = rand() % battle->nUnits[team];
@@ -519,7 +519,7 @@ static autoUnit_t *AM_GetRandomActiveUnitOfTeam (autoMissionBattle_t *battle, in
 				return unit;
 		}
 		/* none found */
-		return NULL;
+		return nullptr;
 	}
 }
 
@@ -540,7 +540,7 @@ static autoUnit_t *AM_GetRandomActiveUnit (autoMissionBattle_t *battle, int curr
 
 	eTeam = AM_GetRandomTeam(battle, currTeam, enemy);
 	if (eTeam >= AUTOMISSION_TEAM_TYPE_MAX)
-		return NULL;
+		return nullptr;
 
 	unit = AM_GetRandomActiveUnitOfTeam(battle, eTeam);
 	if (unit)
@@ -555,7 +555,7 @@ static autoUnit_t *AM_GetRandomActiveUnit (autoMissionBattle_t *battle, int curr
 		}
 	}
 	/* none found */
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -674,14 +674,14 @@ static bool AM_UnitAttackEnemy (autoMissionBattle_t *battle, autoUnit_t *currUni
 
 	eUnit = AM_GetRandomActiveUnit(battle, currUnit->team, true);
 	/* no more enemies */
-	if (eUnit == NULL)
+	if (eUnit == nullptr)
 		return false;
 
 	/* shot an enemy */
 	if (!AM_CheckFire(battle, currUnit, eUnit, effective)) {
 		/* if failed, attack a friendly */
 		eUnit = AM_GetRandomActiveUnit(battle, currUnit->team, false);
-		if (eUnit != NULL)
+		if (eUnit != nullptr)
 			AM_CheckFire(battle, currUnit, eUnit, effective);
 	}
 
@@ -779,11 +779,11 @@ static void AM_DisplayResults (const autoMissionBattle_t *battle)
  */
 static void AM_MoveCharacterInventoryIntoItemCargo (aircraft_t *aircraft, character_t *chr)
 {
-	assert(aircraft != NULL);
-	assert(chr != NULL);
+	assert(aircraft != nullptr);
+	assert(chr != nullptr);
 
 	/* add items to itemcargo */
-	const Container *cont = NULL;
+	const Container *cont = nullptr;
 	while ((cont = chr->inv.getNextCont(cont))) {
 		const invList_t *ic = cont->_invList;
 

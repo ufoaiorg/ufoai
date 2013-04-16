@@ -115,7 +115,7 @@ const char *Sys_SetLocale (const char *localeID)
 		if (!locale) {
 			Com_DPrintf(DEBUG_CLIENT, "...could not set to system language\n");
 		}
-		return NULL;
+		return nullptr;
 	}
 
 	Com_Printf("...using language: %s\n", locale);
@@ -124,9 +124,9 @@ const char *Sys_SetLocale (const char *localeID)
 
 const char *Sys_GetLocale (void)
 {
-	/* Calling with NULL param should return current system settings. */
-	const char *currentLocale = setlocale(LC_MESSAGES, NULL);
-	if (currentLocale != NULL && currentLocale[0] != '\0')
+	/* Calling with nullptr param should return current system settings. */
+	const char *currentLocale = setlocale(LC_MESSAGES, nullptr);
+	if (currentLocale != nullptr && currentLocale[0] != '\0')
 		return currentLocale;
 	else
 		return "C";

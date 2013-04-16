@@ -109,7 +109,7 @@ static bool CL_CheckBattlescapeEvent (int now, void *data)
 	const evTimes_t *event = (evTimes_t *)data;
 	const eventRegister_t *eventData = CL_GetEvent(event->eType);
 
-	if (eventData->eventCheck == NULL)
+	if (eventData->eventCheck == nullptr)
 		return true;
 
 	return eventData->eventCheck(eventData, event->msg);
@@ -212,8 +212,8 @@ event_t CL_ParseEvent (dbuffer *msg)
 {
 	static eventTiming_t eventTiming;
 	int eType = NET_ReadByte(msg);
-	if (eType == EV_NULL)
-		return EV_NULL;
+	if (eType == EV_nullptr)
+		return EV_nullptr;
 
 	bool now;
 	/* check instantly flag */

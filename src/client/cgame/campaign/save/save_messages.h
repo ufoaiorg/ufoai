@@ -55,7 +55,7 @@ static const constListEntry_t saveMessageConstants[] = {
 	{SAVE_MESSAGETYPE_NAMESPACE"::death", MSG_DEATH},
 	{SAVE_MESSAGETYPE_NAMESPACE"::crashsite", MSG_CRASHSITE},
 	{SAVE_MESSAGETYPE_NAMESPACE"::event", MSG_EVENT},
-	{NULL, -1}
+	{nullptr, -1}
 };
 
 #endif

@@ -60,7 +60,7 @@ static const char HIDECHAR = '*';	/**< use as a mask for password */
 
 /* global data */
 static char cvarValueBackup[MAX_CVAR_EDITING_LENGTH];
-static cvar_t *editedCvar = NULL;
+static cvar_t *editedCvar = nullptr;
 static bool isAborted = false;
 
 /**
@@ -69,7 +69,7 @@ static bool isAborted = false;
 static void UI_TextEntryNodeValidateEdition (uiNode_t *node)
 {
 	/* invalidate cache */
-	editedCvar = NULL;
+	editedCvar = nullptr;
 	cvarValueBackup[0] = '\0';
 
 	/* fire change event */
@@ -89,7 +89,7 @@ static void UI_TextEntryNodeAbortEdition (uiNode_t *node)
 	Cvar_ForceSet(editedCvar->name, cvarValueBackup);
 
 	/* invalidate cache */
-	editedCvar = NULL;
+	editedCvar = nullptr;
 	cvarValueBackup[0] = '\0';
 
 	/* fire abort event */
@@ -137,7 +137,7 @@ void uiTextEntryNode::onLeftClick (uiNode_t *node, int x, int y)
  */
 void uiTextEntryNode::onFocusGained (uiNode_t *node)
 {
-	assert(editedCvar == NULL);
+	assert(editedCvar == nullptr);
 	/* skip '*cvar ' */
 	editedCvar = Cvar_Get(&((char*)node->text)[6]);
 	assert(editedCvar);
@@ -159,7 +159,7 @@ void uiTextEntryNode::onFocusGained (uiNode_t *node)
 void uiTextEntryNode::onFocusLost (uiNode_t *node)
 {
 	/* already aborted/changed with the keyboard */
-	if (editedCvar == NULL)
+	if (editedCvar == nullptr)
 		return;
 
 	/* release the keyboard */
@@ -293,7 +293,7 @@ void uiTextEntryNode::draw (uiNode_t *node)
 				pos[0] + node->padding, pos[1] + node->padding,
 				node->box.size[0] - node->padding - node->padding, node->box.size[1] - node->padding - node->padding,
 				buf);
-			R_Color(NULL);
+			R_Color(nullptr);
 		}
 	}
 

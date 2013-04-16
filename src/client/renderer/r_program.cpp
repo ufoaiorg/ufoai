@@ -71,7 +71,7 @@ static r_progvar_t *R_ProgramVariable (int type, const char *name)
 
 	if (!r_state.active_program) {
 		Com_DPrintf(DEBUG_RENDERER, "R_ProgramVariable: \"%s\" - No program bound.\n", name);
-		return NULL;
+		return nullptr;
 	}
 
 	/* find the variable */
@@ -87,7 +87,7 @@ static r_progvar_t *R_ProgramVariable (int type, const char *name)
 
 	if (i == MAX_PROGRAM_VARS) {
 		Com_Printf("R_ProgramVariable: MAX_PROGRAM_VARS reached.\n");
-		return NULL;
+		return nullptr;
 	}
 
 	/* or query for it */
@@ -99,7 +99,7 @@ static r_progvar_t *R_ProgramVariable (int type, const char *name)
 	if (v->location == -1) {
 		Com_Printf("R_ProgramVariable: Could not find parameter %s in program %s.\n", name, r_state.active_program->name);
 		v->location = 0;
-		return NULL;
+		return nullptr;
 	}
 
 	v->type = type;
@@ -329,7 +329,7 @@ static size_t R_InitializeShader (const GLenum type, const char *name, char *out
 		hwHack = "#ifndef MESA\n#define MESA\n#endif\n";
 		break;
 	case GLHW_GENERIC:
-		hwHack = NULL;
+		hwHack = nullptr;
 		break;
 	default:
 		Com_Error(ERR_FATAL, "R_PreprocessShader: Unknown hardwaretype");
@@ -385,7 +385,7 @@ static size_t R_InitializeShader (const GLenum type, const char *name, char *out
  * preprocessor handles "#ifdef" and "#ifndef", not "#if".
  * @param[in] name The file name of the shader (e.g. "world_fs.glsl").
  * @param[in] inPtr The non-preprocessed shader string.
- * @param[in,out] out The preprocessed shader string, NULL if we don't want to write to it.
+ * @param[in,out] out The preprocessed shader string, nullptr if we don't want to write to it.
  * @param[in,out] remainingOutChars The number of characters left in the out buffer.
  * @param[in] nested If true, parsing a part of "#if" clause, so "#else" and "#endif" tokens are allowed
  * @param[in] inElse If true, parsing an "#else" clause and shouldn't expect another "#else"
@@ -580,7 +580,7 @@ static size_t R_PreprocessShaderR (const char *name, const char **inPtr, char *o
  * preprocessor handles "#ifdef" and "#ifndef", not "#if".
  * @param[in] name The file name of the shader (e.g. "world_fs.glsl").
  * @param[in] in The non-preprocessed shader string.
- * @param[in,out] out The preprocessed shader string, NULL if we don't want to write to it.
+ * @param[in,out] out The preprocessed shader string, nullptr if we don't want to write to it.
  * @param[in,out] remainingOutChars The number of characters left in the out buffer.
  * @return The number of characters added to the buffer pointed to by out.
  */
@@ -618,7 +618,7 @@ static r_shader_t *R_LoadShader (const GLenum type, const char *name)
 
 	if (FS_LoadFile(path, &buf) == -1) {
 		Com_DPrintf(DEBUG_RENDERER, "R_LoadShader: Failed to load ./base/shaders/%s.\n", name);
-		return NULL;
+		return nullptr;
 	}
 
 	Com_DPrintf(DEBUG_RENDERER, "R_LoadShader: Loading ./base/shaders/%s.\n", name);
@@ -645,7 +645,7 @@ static r_shader_t *R_LoadShader (const GLenum type, const char *name)
 	if (i == MAX_SHADERS) {
 		Com_Printf("R_LoadShader: MAX_SHADERS reached.\n");
 		Mem_Free(source);
-		return NULL;
+		return nullptr;
 	}
 
 	Q_strncpyz(sh->name, name, sizeof(sh->name));
@@ -655,7 +655,7 @@ static r_shader_t *R_LoadShader (const GLenum type, const char *name)
 	sh->id = qglCreateShader(sh->type);
 	if (!sh->id) {
 		Mem_Free(source);
-		return NULL;
+		return nullptr;
 	}
 
 	/* upload the shader source */
@@ -668,20 +668,20 @@ static r_shader_t *R_LoadShader (const GLenum type, const char *name)
 
 	qglGetShaderiv(sh->id, GL_COMPILE_STATUS, &e);
 #ifdef DEBUG
-	qglGetShaderInfoLog(sh->id, sizeof(log) - 1, NULL, log);
+	qglGetShaderInfoLog(sh->id, sizeof(log) - 1, nullptr, log);
 	Com_Printf("R_LoadShader: %s: %s", sh->name, log);
 #endif
 	if (!e) {
 #ifndef DEBUG
 		char log[MAX_STRING_CHARS];
-		qglGetShaderInfoLog(sh->id, sizeof(log) - 1, NULL, log);
+		qglGetShaderInfoLog(sh->id, sizeof(log) - 1, nullptr, log);
 		Com_Printf("R_LoadShader: %s: %s", sh->name, log);
 #endif
 
 		qglDeleteShader(sh->id);
 		OBJZERO(*sh);
 
-		return NULL;
+		return nullptr;
 	}
 
 	return sh;
@@ -695,7 +695,7 @@ r_program_t *R_LoadProgram (const char *name, programInitFunc_t init, programUse
 
 	/* shaders are deactivated */
 	if (!r_programs->integer)
-		return NULL;
+		return nullptr;
 
 	/* search existing one */
 	for (i = 0; i < MAX_PROGRAMS; i++) {
@@ -715,7 +715,7 @@ r_program_t *R_LoadProgram (const char *name, programInitFunc_t init, programUse
 
 	if (i == MAX_PROGRAMS) {
 		Com_Printf("R_LoadProgram: MAX_PROGRAMS reached.\n");
-		return NULL;
+		return nullptr;
 	}
 
 	Q_strncpyz(prog->name, name, sizeof(prog->name));
@@ -735,11 +735,11 @@ r_program_t *R_LoadProgram (const char *name, programInitFunc_t init, programUse
 	qglGetProgramiv(prog->id, GL_LINK_STATUS, &e);
 	if (!e || !prog->v || !prog->f) {
 		char log[MAX_STRING_CHARS];
-		qglGetProgramInfoLog(prog->id, sizeof(log) - 1, NULL, log);
+		qglGetProgramInfoLog(prog->id, sizeof(log) - 1, nullptr, log);
 		Com_Printf("R_LoadProgram: %s: %s\n", prog->name, log);
 
 		R_ShutdownProgram(prog);
-		return NULL;
+		return nullptr;
 	}
 
 	prog->init = init;
@@ -749,7 +749,7 @@ r_program_t *R_LoadProgram (const char *name, programInitFunc_t init, programUse
 
 		prog->init(prog);
 
-		R_UseProgram(NULL);
+		R_UseProgram(nullptr);
 	}
 
 	prog->use = use;
@@ -1045,11 +1045,11 @@ void R_InitPrograms (void)
 	r_state.world_program = R_LoadProgram(shaderQualityLevelNames[r_programs->integer - 1][0], R_InitWorldProgram, R_UseWorldProgram);
 	r_state.model_program = R_LoadProgram(shaderQualityLevelNames[r_programs->integer - 1][1], R_InitModelProgram, R_UseModelProgram);
 	r_state.warp_program = R_LoadProgram("warp", R_InitWarpProgram, R_UseWarpProgram);
-	r_state.geoscape_program = R_LoadProgram("geoscape", R_InitGeoscapeProgram, NULL);
-	r_state.combine2_program = R_LoadProgram("combine2", R_InitCombine2Program, NULL);
+	r_state.geoscape_program = R_LoadProgram("geoscape", R_InitGeoscapeProgram, nullptr);
+	r_state.combine2_program = R_LoadProgram("combine2", R_InitCombine2Program, nullptr);
 	r_state.convolve_program = R_LoadProgram("convolve" DOUBLEQUOTE(FILTER_SIZE), R_InitConvolveProgram, R_UseConvolveProgram);
-	r_state.atmosphere_program = R_LoadProgram("atmosphere", R_InitAtmosphereProgram, NULL);
-	r_state.simple_glow_program = R_LoadProgram("simple_glow", R_InitSimpleGlowProgram, NULL);
+	r_state.atmosphere_program = R_LoadProgram("atmosphere", R_InitAtmosphereProgram, nullptr);
+	r_state.simple_glow_program = R_LoadProgram("simple_glow", R_InitSimpleGlowProgram, nullptr);
 
 	if (!(r_state.world_program && r_state.model_program && r_state.warp_program && r_state.geoscape_program && r_state.combine2_program
 		&& r_state.convolve_program && r_state.atmosphere_program && r_state.simple_glow_program)) {
@@ -1065,7 +1065,7 @@ void R_InitPrograms (void)
 void R_RestartPrograms_f (void)
 {
 	if (r_programs->integer) {
-		Com_Printf("glsl restart to a version of v%s\n", Cvar_Get("r_glsl_version", NULL, 0, NULL)->string);
+		Com_Printf("glsl restart to a version of v%s\n", Cvar_Get("r_glsl_version", nullptr, 0, nullptr)->string);
 	} else {
 		Com_Printf("glsl shutdown\n");
 	}

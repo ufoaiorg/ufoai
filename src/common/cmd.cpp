@@ -113,7 +113,7 @@ void Cbuf_Init (void)
  */
 void Cbuf_Shutdown (void)
 {
-	SZ_Init(&cmd_text, NULL, 0);
+	SZ_Init(&cmd_text, nullptr, 0);
 }
 
 /**
@@ -126,7 +126,7 @@ void Cbuf_AddText (const char *text)
 
 	if (cmdClosed) {
 		text = strstr(text, "cmdopen");
-		if (text == NULL) {
+		if (text == nullptr) {
 			Com_DPrintf(DEBUG_COMMANDS, "Cbuf_AddText: currently closed\n");
 			return;
 		}
@@ -163,7 +163,7 @@ void Cbuf_InsertText (const char *text)
 		memcpy(temp, cmd_text.data, templen);
 		SZ_Clear(&cmd_text);
 	} else
-		temp = NULL;			/* shut up compiler */
+		temp = nullptr;			/* shut up compiler */
 
 	/* add the entire text of the file */
 	Cbuf_AddText(text);
@@ -559,12 +559,12 @@ void Cmd_BufClear (void)
 	/* clear the args from the last string */
 	for (i = 0; i < cmd_argc; i++) {
 		Mem_Free(cmd_argv[i]);
-		cmd_argv[i] = NULL;
+		cmd_argv[i] = nullptr;
 	}
 
 	cmd_argc = 0;
 	cmd_args[0] = 0;
-	cmd_userdata = NULL;
+	cmd_userdata = nullptr;
 }
 
 /**
@@ -628,13 +628,13 @@ void Cmd_TokenizeString (const char *text, bool macroExpand)
 /**
  * @brief Returns the command description for a given command
  * @param[in] cmd_name Command id in global command array
- * @note never returns a NULL pointer
+ * @note never returns a nullptr pointer
  * @todo - search alias, too
  */
 const char *Cmd_GetCommandDesc (const char *cmd_name)
 {
 	cmd_function_t *cmd;
-	char *sep = NULL;
+	char *sep = nullptr;
 	unsigned int hash;
 	char searchName[MAX_VAR];
 
@@ -708,7 +708,7 @@ void Cmd_AddParamCompleteFunction (const char *cmd_name, int (*function)(const c
 /**
  * @brief Fetches the userdata for a console command.
  * @param[in] cmd_name The name the command we want to add edit
- * @return @c NULL if no userdata was set or the command wasn't found, the userdata
+ * @return @c nullptr if no userdata was set or the command wasn't found, the userdata
  * pointer if it was found and set
  * @sa Cmd_AddCommand
  * @sa Cmd_CompleteCommandParameters
@@ -721,7 +721,7 @@ void *Cmd_GetUserdata (const char *cmd_name)
 
 	if (!cmd_name || !cmd_name[0]) {
 		Com_Printf("Cmd_GetUserdata: Invalide parameter\n");
-		return NULL;
+		return nullptr;
 	}
 
 	hash = Com_HashKey(cmd_name, CMD_HASH_SIZE);
@@ -732,7 +732,7 @@ void *Cmd_GetUserdata (const char *cmd_name)
 	}
 
 	Com_Printf("Cmd_GetUserdata: '%s' not found\n", cmd_name);
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -793,7 +793,7 @@ void Cmd_AddCommand (const char *cmd_name, xcommand_t function, const char *desc
 	cmd->name = cmd_name;
 	cmd->description = desc;
 	cmd->function = function;
-	cmd->completeParam = NULL;
+	cmd->completeParam = nullptr;
 	HASH_Add(cmd_functions_hash, cmd, hash);
 	cmd->next = cmd_functions;
 	cmd_functions = cmd;
@@ -984,7 +984,7 @@ static void Cmd_List_f (void)
 	const cmd_function_t *cmd;
 	const cmd_alias_t *alias;
 	int i = 0, j = 0, c, l = 0;
-	const char *token = NULL;
+	const char *token = nullptr;
 
 	c = Cmd_Argc();
 
@@ -1031,7 +1031,7 @@ static int Cmd_CompleteExecCommand (const char *partial, const char **match)
 			++n;
 		}
 	}
-	FS_NextFileFromFileList(NULL);
+	FS_NextFileFromFileList(nullptr);
 
 	return n;
 }
@@ -1106,10 +1106,10 @@ void Cmd_Init (void)
 void Cmd_Shutdown (void)
 {
 	OBJZERO(cmd_functions_hash);
-	cmd_functions = NULL;
+	cmd_functions = nullptr;
 
 	OBJZERO(cmd_alias_hash);
-	cmd_alias = NULL;
+	cmd_alias = nullptr;
 	alias_count = 0;
 
 	OBJZERO(cmd_argv);

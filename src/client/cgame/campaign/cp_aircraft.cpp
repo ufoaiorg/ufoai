@@ -52,17 +52,17 @@ aircraft_t* AIR_GetFirstFromBase (const base_t *b)
 			return aircraft;
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 /**
  * @brief Checks whether there is any aircraft assigned to the given base
  * @param[in] base The base to check
- * @return @c true if there is at least one aircraft, @c false otherwise (or when the @c base pointer is @c NULL)
+ * @return @c true if there is at least one aircraft, @c false otherwise (or when the @c base pointer is @c nullptr)
  */
 bool AIR_BaseHasAircraft (const base_t *base)
 {
-	return base != NULL && AIR_GetFirstFromBase(base) != NULL;
+	return base != nullptr && AIR_GetFirstFromBase(base) != nullptr;
 }
 
 /**
@@ -144,7 +144,7 @@ void AIR_UpdateHangarCapForAll (base_t *base)
  */
 void AIR_ListAircraft_f (void)
 {
-	base_t *base = NULL;
+	base_t *base = nullptr;
 
 	if (cgi->Cmd_Argc() == 2) {
 		int baseIdx = atoi(cgi->Cmd_Argv(1));
@@ -324,7 +324,7 @@ static void AII_CarriedItems (const inventory_t *soldierInventory)
 	Item *item;
 	equipDef_t *ed = &ccs.eMission;
 
-	const Container *cont = NULL;
+	const Container *cont = nullptr;
 	while ((cont = soldierInventory->getNextCont(cont))) {
 		/* Items on the ground are collected as ET_ITEM */
 		for (item = cont->_invList; item; item = item->getNext()) {
@@ -444,7 +444,7 @@ const char *AIR_AircraftStatusToName (const aircraft_t *aircraft)
 	case AIR_CRASHED:
 		cgi->Com_Error(ERR_DROP, "AIR_CRASHED should not be visible anywhere");
 	}
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -638,15 +638,15 @@ void AIR_AircraftReturnToBase (aircraft_t *aircraft)
 		aircraft->status = AIR_RETURNING;
 		aircraft->time = 0;
 		aircraft->point = 0;
-		aircraft->mission = NULL;
-		aircraft->aircraftTarget = NULL;
+		aircraft->mission = nullptr;
+		aircraft->aircraftTarget = nullptr;
 	}
 }
 
 /**
  * @param base The base to get the aircraft from
  * @param index The index of the aircraft in the given base
- * @return @c NULL if there is no such aircraft in the given base, or the aircraft pointer that belongs to the given index.
+ * @return @c nullptr if there is no such aircraft in the given base, or the aircraft pointer that belongs to the given index.
  * @todo Remove this! Aircraft no longer have local index per base
  */
 aircraft_t *AIR_GetAircraftFromBaseByIDXSafe (const base_t* base, int index)
@@ -660,13 +660,13 @@ aircraft_t *AIR_GetAircraftFromBaseByIDXSafe (const base_t* base, int index)
 		i++;
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 /**
  * @brief Searches the global array of aircraft types for a given aircraft.
  * @param[in] name Aircraft id.
- * @return aircraft_t pointer or NULL if not found.
+ * @return aircraft_t pointer or nullptr if not found.
  * @note This function gives no warning on null name or if no aircraft found
  */
 const aircraft_t *AIR_GetAircraftSilent (const char *name)
@@ -674,13 +674,13 @@ const aircraft_t *AIR_GetAircraftSilent (const char *name)
 	int i;
 
 	if (!name)
-		return NULL;
+		return nullptr;
 	for (i = 0; i < ccs.numAircraftTemplates; i++) {
 		const aircraft_t *aircraftTemplate = &ccs.aircraftTemplates[i];
 		if (Q_streq(aircraftTemplate->id, name))
 			return aircraftTemplate;
 	}
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -691,9 +691,9 @@ const aircraft_t *AIR_GetAircraftSilent (const char *name)
 const aircraft_t *AIR_GetAircraft (const char *name)
 {
 	const aircraft_t *aircraft = AIR_GetAircraftSilent(name);
-	if (name == NULL || name[0] == '\0')
-		cgi->Com_Error(ERR_DROP, "AIR_GetAircraft called with NULL name!");
-	else if (aircraft == NULL)
+	if (name == nullptr || name[0] == '\0')
+		cgi->Com_Error(ERR_DROP, "AIR_GetAircraft called with nullptr name!");
+	else if (aircraft == nullptr)
 		cgi->Com_Error(ERR_DROP, "Aircraft '%s' not found", name);
 
 	return aircraft;
@@ -817,9 +817,9 @@ static int AIR_GetStorageRoom (const aircraft_t *aircraft)
 	int size = 0;
 
 	LIST_Foreach(aircraft->acTeam, Employee, employee) {
-		const Container *cont = NULL;
+		const Container *cont = nullptr;
 		while ((cont = employee->chr.inv.getNextCont(cont, true))) {
-			Item *item = NULL;
+			Item *item = nullptr;
 			while ((item = cont->getNextItem(item))) {
 				const objDef_t *obj = item->def();
 				size += obj->size;
@@ -853,7 +853,7 @@ const char *AIR_CheckMoveIntoNewHomebase (const aircraft_t *aircraft, const base
 	if (!AIR_AircraftHasEnoughFuelOneWay(aircraft, base->pos))
 		return _("That base is beyond this aircraft's range.");
 
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -864,9 +864,9 @@ const char *AIR_CheckMoveIntoNewHomebase (const aircraft_t *aircraft, const base
  */
 static void AIR_TransferItemsCarriedByCharacterToBase (character_t *chr, base_t *sourceBase, base_t* destBase)
 {
-	const Container *cont = NULL;
+	const Container *cont = nullptr;
 	while ((cont = chr->inv.getNextCont(cont, true))) {
-		Item *item = NULL;
+		Item *item = nullptr;
 		while ((item = cont->getNextItem(item))) {
 			const objDef_t *obj = item->def();
 			B_UpdateStorageAndCapacity(sourceBase, obj, -1, false);
@@ -968,21 +968,21 @@ void AIR_DeleteAircraft (aircraft_t *aircraft)
 	/* Remove pilot and all soldiers from the aircraft (the employees are still hired after this). */
 	AIR_RemoveEmployees(*aircraft);
 
-	/* base is NULL here because we don't want to readd this to the inventory
+	/* base is nullptr here because we don't want to readd this to the inventory
 	 * If you want this in the inventory you really have to call these functions
 	 * before you are destroying a craft */
 	for (i = 0; i < MAX_AIRCRAFTSLOT; i++) {
-		AII_RemoveItemFromSlot(NULL, aircraft->weapons, false);
-		AII_RemoveItemFromSlot(NULL, aircraft->electronics, false);
+		AII_RemoveItemFromSlot(nullptr, aircraft->weapons, false);
+		AII_RemoveItemFromSlot(nullptr, aircraft->electronics, false);
 	}
-	AII_RemoveItemFromSlot(NULL, &aircraft->shield, false);
+	AII_RemoveItemFromSlot(nullptr, &aircraft->shield, false);
 
 	if (base->aircraftCurrent == aircraft)
-		base->aircraftCurrent = NULL;
+		base->aircraftCurrent = nullptr;
 
-	if (aircraft->alienCargo != NULL) {
+	if (aircraft->alienCargo != nullptr) {
 		delete aircraft->alienCargo;
-		aircraft->alienCargo = NULL;
+		aircraft->alienCargo = nullptr;
 	}
 
 	AIR_Delete(base, aircraft);
@@ -992,7 +992,7 @@ void AIR_DeleteAircraft (aircraft_t *aircraft)
 		cgi->Cvar_Set("mn_aircraftinbase", "0");
 		cgi->Cvar_Set("mn_aircraftname", "");
 		cgi->Cvar_Set("mn_aircraft_model", "");
-	} else if (base->aircraftCurrent == NULL) {
+	} else if (base->aircraftCurrent == nullptr) {
 		base->aircraftCurrent = AIR_GetFirstFromBase(base);
 	}
 
@@ -1030,12 +1030,12 @@ void AIR_DestroyAircraft (aircraft_t *aircraft, bool killPilot)
 	if (pilot) {
 		if (killPilot) {
 			if (E_DeleteEmployee(pilot))
-				AIR_SetPilot(aircraft, NULL);
+				AIR_SetPilot(aircraft, nullptr);
 			else
 				cgi->Com_Error(ERR_DROP, "AIR_DestroyAircraft: Could not remove pilot from game: %s (ucn: %i)\n",
 						pilot->chr.name, pilot->chr.ucn);
 		} else {
-			AIR_SetPilot(aircraft, NULL);
+			AIR_SetPilot(aircraft, nullptr);
 		}
 	} else {
 		if (aircraft->status != AIR_CRASHED)
@@ -1255,7 +1255,7 @@ void AIR_CampaignRun (const campaign_t* campaign, int dt, bool updateRadarOverla
 /**
  * @brief Returns aircraft for a given global index.
  * @param[in] aircraftIdx Global aircraft index.
- * @return An aircraft pointer (to a struct in a base) that has the given index or NULL if no aircraft found.
+ * @return An aircraft pointer (to a struct in a base) that has the given index or nullptr if no aircraft found.
  */
 aircraft_t* AIR_AircraftGetFromIDX (int aircraftIdx)
 {
@@ -1266,7 +1266,7 @@ aircraft_t* AIR_AircraftGetFromIDX (int aircraftIdx)
 		}
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -1327,10 +1327,10 @@ static void AII_InitialiseAircraftSlots (aircraft_t *aircraftTemplate)
 
 	/* initialise weapon slots */
 	for (i = 0; i < MAX_AIRCRAFTSLOT; i++) {
-		AII_InitialiseSlot(aircraftTemplate->weapons + i, aircraftTemplate, NULL, NULL, AC_ITEM_WEAPON);
-		AII_InitialiseSlot(aircraftTemplate->electronics + i, aircraftTemplate, NULL, NULL, AC_ITEM_ELECTRONICS);
+		AII_InitialiseSlot(aircraftTemplate->weapons + i, aircraftTemplate, nullptr, nullptr, AC_ITEM_WEAPON);
+		AII_InitialiseSlot(aircraftTemplate->electronics + i, aircraftTemplate, nullptr, nullptr, AC_ITEM_ELECTRONICS);
 	}
-	AII_InitialiseSlot(&aircraftTemplate->shield, aircraftTemplate, NULL, NULL, AC_ITEM_SHIELD);
+	AII_InitialiseSlot(&aircraftTemplate->shield, aircraftTemplate, nullptr, nullptr, AC_ITEM_SHIELD);
 }
 
 /**
@@ -1360,7 +1360,7 @@ static const value_t aircraft_param_vals[] = {
 	{"accuracy", V_INT, offsetof(aircraft_t, stats[AIR_STATS_ACCURACY]), MEMBER_SIZEOF(aircraft_t, stats[0])},
 	{"antimatter", V_INT, offsetof(aircraft_t, stats[AIR_STATS_ANTIMATTER]), MEMBER_SIZEOF(aircraft_t, stats[0])},
 
-	{NULL, V_NULL, 0, 0}
+	{nullptr, V_nullptr, 0, 0}
 };
 
 /** @brief Valid aircraft definition values from script files. */
@@ -1382,7 +1382,7 @@ static const value_t aircraft_vals[] = {
 	{"productioncost", V_INT, offsetof(aircraft_t, productionCost), MEMBER_SIZEOF(aircraft_t, productionCost)},
 	{"building", V_HUNK_STRING, offsetof(aircraft_t, building), 0},
 
-	{NULL, V_NULL, 0, 0}
+	{nullptr, V_nullptr, 0, 0}
 };
 
 /** @brief Valid radar definition values for an airtcraft from script files. */
@@ -1391,7 +1391,7 @@ static const value_t aircraft_radar_vals[] = {
 	{"trackingrange", V_INT, offsetof(aircraft_t, radar.trackingRange), MEMBER_SIZEOF(aircraft_t, radar.trackingRange)},
 	{"detectionprobability", V_FLOAT, offsetof(aircraft_t, radar.ufoDetectionProbability), MEMBER_SIZEOF(aircraft_t, radar.ufoDetectionProbability)},
 
-	{NULL, V_NULL, 0, 0}
+	{nullptr, V_nullptr, 0, 0}
 };
 
 /**
@@ -1415,7 +1415,7 @@ void AIR_ParseAircraft (const char *name, const char **text, bool assignAircraft
 	}
 
 	if (!assignAircraftItems) {
-		aircraftTemplate = NULL;
+		aircraftTemplate = nullptr;
 		for (i = 0; i < ccs.numAircraftTemplates; i++) {
 			aircraft_t *aircraft = &ccs.aircraftTemplates[i];
 			if (Q_streq(aircraft->id, name)) {
@@ -1449,7 +1449,7 @@ void AIR_ParseAircraft (const char *name, const char **text, bool assignAircraft
 
 		ccs.numAircraftTemplates++;
 	} else {
-		aircraftTemplate = NULL;
+		aircraftTemplate = nullptr;
 		for (i = 0; i < ccs.numAircraftTemplates; i++) {
 			aircraft_t *aircraft = &ccs.aircraftTemplates[i];
 			if (Q_streq(aircraft->id, name)) {
@@ -1770,21 +1770,21 @@ void AIR_AircraftsNotifyUFORemoved (const aircraft_t *const ufo, bool destroyed)
 	}
 
 	/** @todo this should be in a BDEF_NotifyUFORemoved callback */
-	base = NULL;
-	while ((base = B_GetNext(base)) != NULL) {
+	base = nullptr;
+	while ((base = B_GetNext(base)) != nullptr) {
 		int i;
 		/* Base currently targeting the specified ufo loose their target */
 		for (i = 0; i < base->numBatteries; i++) {
 			baseWeapon_t *baseWeapon = &base->batteries[i];
 			if (baseWeapon->target == ufo)
-				baseWeapon->target = NULL;
+				baseWeapon->target = nullptr;
 			else if (destroyed && (baseWeapon->target > ufo))
 				baseWeapon->target--;
 		}
 		for (i = 0; i < base->numLasers; i++) {
 			baseWeapon_t *baseWeapon = &base->lasers[i];
 			if (baseWeapon->target == ufo)
-				baseWeapon->target = NULL;
+				baseWeapon->target = nullptr;
 			else if (destroyed && (baseWeapon->target > ufo))
 				baseWeapon->target--;
 		}
@@ -2116,7 +2116,7 @@ bool AIR_IsInAircraftTeam (const aircraft_t *aircraft, const Employee *employee)
 {
 	assert(aircraft);
 	assert(employee);
-	return cgi->LIST_GetPointer(aircraft->acTeam, employee) != NULL;
+	return cgi->LIST_GetPointer(aircraft->acTeam, employee) != nullptr;
 }
 
 /**
@@ -2136,11 +2136,11 @@ int AIR_GetTeamSize (const aircraft_t *aircraft)
  * @param[in] pilot Pointer to the pilot to add
  * @return @c true if the assignment was successful (there wasn't a pilot
  * assigned), @c false if there was already a pilot assigned and we tried
- * to assign a new one (@c pilot isn't @c NULL).
+ * to assign a new one (@c pilot isn't @c nullptr).
  */
 bool AIR_SetPilot (aircraft_t *aircraft, Employee *pilot)
 {
-	if (aircraft->pilot == NULL || pilot == NULL) {
+	if (aircraft->pilot == nullptr || pilot == nullptr) {
 		aircraft->pilot = pilot;
 		return true;
 	}
@@ -2151,14 +2151,14 @@ bool AIR_SetPilot (aircraft_t *aircraft, Employee *pilot)
 /**
  * @brief Get pilot of an aircraft
  * @param[in] aircraft Pointer to the aircraft
- * @return @c NULL if there is no pilot assigned to this craft, the employee pointer otherwise
+ * @return @c nullptr if there is no pilot assigned to this craft, the employee pointer otherwise
  */
 Employee* AIR_GetPilot (const aircraft_t *aircraft)
 {
 	const Employee *e = aircraft->pilot;
 
 	if (!e)
-		return NULL;
+		return nullptr;
 
 	return E_GetEmployeeByTypeFromChrUCN(e->getType(), e->chr.ucn);
 }
@@ -2170,16 +2170,16 @@ Employee* AIR_GetPilot (const aircraft_t *aircraft)
  */
 bool AIR_PilotSurvivedCrash (const aircraft_t* aircraft)
 {
-	if (aircraft == NULL)
+	if (aircraft == nullptr)
 		return false;
 
-	if (aircraft->pilot == NULL)
+	if (aircraft->pilot == nullptr)
 		return false;
 
 	const int pilotSkill = aircraft->pilot->chr.score.skills[SKILL_PILOTING];
 	float baseProbability = (float) pilotSkill;
 
-	const byte *color = GEO_GetColor(aircraft->pos, MAPTYPE_TERRAIN, NULL);
+	const byte *color = GEO_GetColor(aircraft->pos, MAPTYPE_TERRAIN, nullptr);
 	/* Crash over water: chances for survival are very bad */
 	if (MapIsWater(color)) {
 		baseProbability /= 10.0f;
@@ -2234,7 +2234,7 @@ void AIR_RemovePilotFromAssignedAircraft (const base_t* base, const Employee* pi
 {
 	AIR_ForeachFromBase(aircraft, base) {
 		if (AIR_GetPilot(aircraft) == pilot) {
-			AIR_SetPilot(aircraft, NULL);
+			AIR_SetPilot(aircraft, nullptr);
 			break;
 		}
 	}
@@ -2430,7 +2430,7 @@ static bool AIR_SaveAircraftXML (xmlNode_t *p, const aircraft_t* const aircraft,
 	}
 
 	/* aliencargo */
-	if (aircraft->alienCargo != NULL) {
+	if (aircraft->alienCargo != nullptr) {
 		subnode = cgi->XML_AddNode(node, SAVE_AIRCRAFT_ALIENCARGO);
 		if (!subnode)
 			return false;
@@ -2461,7 +2461,7 @@ bool AIR_SaveXML (xmlNode_t *parent)
 	snode = cgi->XML_AddNode(parent, SAVE_AIRCRAFT_UFOS);
 	for (i = 0; i < MAX_UFOONGEOSCAPE; i++) {
 		const aircraft_t *ufo = UFO_GetByIDX(i);
-		if (!ufo || (ufo->id == NULL))
+		if (!ufo || (ufo->id == nullptr))
 			continue;
 		AIR_SaveAircraftXML(snode, ufo, true);
 	}
@@ -2544,7 +2544,7 @@ static bool AIR_LoadAircraftXML (xmlNode_t *p, aircraft_t *craft)
 	*craft = *crafttype;
 
 	tmpInt = cgi->XML_GetInt(p, SAVE_AIRCRAFT_HOMEBASE, MAX_BASES);
-	craft->homebase = (tmpInt != MAX_BASES) ? B_GetBaseByIDX(tmpInt) : NULL;
+	craft->homebase = (tmpInt != MAX_BASES) ? B_GetBaseByIDX(tmpInt) : nullptr;
 
 	craft->idx = cgi->XML_GetInt(p, SAVE_AIRCRAFT_IDX, -1);
 	if (craft->idx < 0) {
@@ -2613,7 +2613,7 @@ static bool AIR_LoadAircraftXML (xmlNode_t *p, aircraft_t *craft)
 
 	tmpInt = cgi->XML_GetInt(p, SAVE_AIRCRAFT_AIRCRAFTTARGET, -1);
 	if (tmpInt == -1)
-		craft->aircraftTarget = NULL;
+		craft->aircraftTarget = nullptr;
 	else if (!craft->homebase)
 		craft->aircraftTarget = AIR_AircraftGetFromIDX(tmpInt);
 	else
@@ -2650,7 +2650,7 @@ static bool AIR_LoadAircraftXML (xmlNode_t *p, aircraft_t *craft)
 	if (tmpInt != -1)
 		AIR_SetPilot(craft, E_GetEmployeeFromChrUCN(tmpInt));
 	else
-		AIR_SetPilot(craft, NULL);
+		AIR_SetPilot(craft, nullptr);
 
 	RADAR_Initialise(&craft->radar, crafttype->radar.range, crafttype->radar.trackingRange, 1.0f, false);
 	RADAR_InitialiseUFOs(&craft->radar);
@@ -2678,7 +2678,7 @@ static bool AIR_LoadAircraftXML (xmlNode_t *p, aircraft_t *craft)
 	snode = cgi->XML_GetNode(p, SAVE_AIRCRAFT_ALIENCARGO);
 	if (snode) {
 		craft->alienCargo = new AlienCargo();
-		if (craft->alienCargo == NULL)
+		if (craft->alienCargo == nullptr)
 			cgi->Com_Error(ERR_DROP, "AIR_LoadAircraftXML: Cannot create AlienCargo object\n");
 		craft->alienCargo->load(snode);
 	}
@@ -2698,17 +2698,17 @@ static void AIR_CorrectAircraftSlotPointers (aircraft_t *aircraft)
 
 	for (i = 0; i < aircraft->maxWeapons; i++) {
 		aircraft->weapons[i].aircraft = aircraft;
-		aircraft->weapons[i].base = NULL;
-		aircraft->weapons[i].installation = NULL;
+		aircraft->weapons[i].base = nullptr;
+		aircraft->weapons[i].installation = nullptr;
 	}
 	for (i = 0; i < aircraft->maxElectronics; i++) {
 		aircraft->electronics[i].aircraft = aircraft;
-		aircraft->electronics[i].base = NULL;
-		aircraft->electronics[i].installation = NULL;
+		aircraft->electronics[i].base = nullptr;
+		aircraft->electronics[i].installation = nullptr;
 	}
 	aircraft->shield.aircraft = aircraft;
-	aircraft->shield.base = NULL;
-	aircraft->shield.installation = NULL;
+	aircraft->shield.base = nullptr;
+	aircraft->shield.installation = nullptr;
 }
 
 bool AIR_LoadXML (xmlNode_t *parent)
@@ -2776,7 +2776,7 @@ static bool AIR_PostLoadInitMissions (void)
 				AIR_AircraftReturnToBase(aircraft);
 		}
 		Mem_Free(aircraft->missionID);
-		aircraft->missionID = NULL;
+		aircraft->missionID = nullptr;
 	}
 
 	/* UFOs */
@@ -2784,8 +2784,8 @@ static bool AIR_PostLoadInitMissions (void)
 	 * @todo UFO_RemoveFromGeoscape call doesn't notify other systems (aircraft, base defences, sam sites, radar)
 	 * about the removal of the UFO. Destroying UFOs should get a dedicated function with all necessary notify-callbacks called
 	 */
-	prevUfo = NULL;
-	while ((ufo = UFO_GetNext(prevUfo)) != NULL) {
+	prevUfo = nullptr;
+	while ((ufo = UFO_GetNext(prevUfo)) != nullptr) {
 		if (Q_strnull(ufo->missionID)) {
 			Com_Printf("Warning: %s (idx: %i) has no mission assigned, removing it\n", ufo->name, ufo->idx);
 			UFO_RemoveFromGeoscape(ufo);
@@ -2799,7 +2799,7 @@ static bool AIR_PostLoadInitMissions (void)
 		}
 		ufo->mission->ufo = ufo;
 		Mem_Free(ufo->missionID);
-		ufo->missionID = NULL;
+		ufo->missionID = nullptr;
 		prevUfo = ufo;
 	}
 
@@ -2838,7 +2838,7 @@ bool AIR_CanIntercept (const aircraft_t *aircraft)
 		return false;
 
 	/* we need a pilot to intercept */
-	if (AIR_GetPilot(aircraft) == NULL)
+	if (AIR_GetPilot(aircraft) == nullptr)
 		return false;
 
 	return true;
@@ -2923,7 +2923,7 @@ int AIR_CalculateHangarStorage (const aircraft_t *aircraftTemplate, const base_t
  * @brief Removes a soldier from an aircraft.
  * @param[in,out] employee The soldier to be removed from the aircraft.
  * @param[in,out] aircraft The aircraft to remove the soldier from.
- * Use @c NULL to remove the soldier from any aircraft.
+ * Use @c nullptr to remove the soldier from any aircraft.
  * @sa AIR_AddEmployee
  */
 bool AIR_RemoveEmployee (Employee *employee, aircraft_t *aircraft)
@@ -2952,7 +2952,7 @@ bool AIR_RemoveEmployee (Employee *employee, aircraft_t *aircraft)
 		if (employee->getType() != EMPL_PILOT)
 			Com_Printf("Warning: pilot of aircraf %i is not a qualified pilot (ucn: %i)\n", aircraft->idx, employee->chr.ucn);
 #endif
-		return AIR_SetPilot(aircraft, NULL);
+		return AIR_SetPilot(aircraft, nullptr);
 	}
 
 	return cgi->LIST_Remove(&aircraft->acTeam, employee);
@@ -2961,17 +2961,17 @@ bool AIR_RemoveEmployee (Employee *employee, aircraft_t *aircraft)
 /**
  * @brief Tells you if an employee is assigned to an aircraft.
  * @param[in] employee The employee to search for.
- * @param[in] aircraft The aircraft to search the employee in. Use @c NULL to
+ * @param[in] aircraft The aircraft to search the employee in. Use @c nullptr to
  * check if the soldier is in @b any aircraft.
  * @return true if the soldier was found in the aircraft otherwise false.
  */
 const aircraft_t *AIR_IsEmployeeInAircraft (const Employee *employee, const aircraft_t* aircraft)
 {
 	if (!employee)
-		return NULL;
+		return nullptr;
 
 	if (employee->transfer)
-		return NULL;
+		return nullptr;
 
 	/* If no aircraft is given we search if he is in _any_ aircraft and return true if that's the case. */
 	if (!aircraft) {
@@ -2979,19 +2979,19 @@ const aircraft_t *AIR_IsEmployeeInAircraft (const Employee *employee, const airc
 			if (AIR_IsEmployeeInAircraft(employee, anyAircraft))
 				return anyAircraft;
 		}
-		return NULL;
+		return nullptr;
 	}
 
 	if (employee->isPilot()) {
 		if (AIR_GetPilot(aircraft) == employee)
 			return aircraft;
-		return NULL;
+		return nullptr;
 	}
 
 	if (AIR_IsInAircraftTeam(aircraft, employee))
 		return aircraft;
 
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -3007,7 +3007,7 @@ void AIR_RemoveEmployees (aircraft_t &aircraft)
 	}
 
 	/* Remove pilot */
-	AIR_SetPilot(&aircraft, NULL);
+	AIR_SetPilot(&aircraft, nullptr);
 
 	if (AIR_GetTeamSize(&aircraft) > 0)
 		cgi->Com_Error(ERR_DROP, "AIR_RemoveEmployees: Error, there went something wrong with soldier-removing from aircraft.");
@@ -3027,9 +3027,9 @@ void AIR_MoveEmployeeInventoryIntoStorage (const aircraft_t &aircraft, equipDef_
 	}
 
 	LIST_Foreach(aircraft.acTeam, Employee, employee) {
-		const Container *cont = NULL;
+		const Container *cont = nullptr;
 		while ((cont = employee->chr.inv.getNextCont(cont, true))) {
-			Item *ic = cont->getNextItem(NULL);
+			Item *ic = cont->getNextItem(nullptr);
 			while (ic) {
 				const item_t item = *ic;
 				const objDef_t *type = item.def();
@@ -3062,7 +3062,7 @@ bool AIR_AddEmployee (Employee *employee, aircraft_t *aircraft)
 
 	if (AIR_GetTeamSize(aircraft) < aircraft->maxTeamSize) {
 		/* Check whether the soldier is already on another aircraft */
-		if (AIR_IsEmployeeInAircraft(employee, NULL))
+		if (AIR_IsEmployeeInAircraft(employee, nullptr))
 			return false;
 
 		/* Assign the soldier to the aircraft. */
@@ -3119,9 +3119,9 @@ void AIR_Shutdown (void)
 {
 	AIR_Foreach(craft) {
 		AIR_ResetAircraftTeam(craft);
-		if (craft->alienCargo != NULL) {
+		if (craft->alienCargo != nullptr) {
 			delete craft->alienCargo;
-			craft->alienCargo = NULL;
+			craft->alienCargo = nullptr;
 		}
 	}
 	cgi->LIST_Delete(&ccs.aircraft);

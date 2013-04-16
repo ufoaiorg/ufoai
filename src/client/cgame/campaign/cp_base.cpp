@@ -55,14 +55,14 @@ static void B_InitialEquipment(aircraft_t *aircraft, const equipDef_t *ed);
  */
 static linkedList_t *B_GetNeighbours (const building_t *building)
 {
-	linkedList_t *neighbours = NULL;
+	linkedList_t *neighbours = nullptr;
 	base_t *base;
 	int x;
 	int y;
 	int i;
 
 	if (!building || !B_IsBuildingBuiltUp(building))
-		return NULL;
+		return nullptr;
 
 	x = building->pos[0];
 	y = building->pos[1];
@@ -71,18 +71,18 @@ static linkedList_t *B_GetNeighbours (const building_t *building)
 	assert(base);
 	for (i = x; i < x + building->size[0]; i++) {
 		/* North */
-		if (y > 0 && B_GetBuildingAt(base, i, y - 1) != NULL)
+		if (y > 0 && B_GetBuildingAt(base, i, y - 1) != nullptr)
 			cgi->LIST_AddPointer(&neighbours, (void*)B_GetBuildingAt(base, i, y - 1));
 		/* South */
-		if (y < BASE_SIZE - building->size[1] && B_GetBuildingAt(base, i, y + building->size[1]) != NULL)
+		if (y < BASE_SIZE - building->size[1] && B_GetBuildingAt(base, i, y + building->size[1]) != nullptr)
 			cgi->LIST_AddPointer(&neighbours, (void*)B_GetBuildingAt(base, i, y + building->size[1]));
 	}
 	for (i = y; i < y + building->size[1]; i++) {
 		/* West */
-		if (x > 0 && B_GetBuildingAt(base, x - 1, i) != NULL)
+		if (x > 0 && B_GetBuildingAt(base, x - 1, i) != nullptr)
 			cgi->LIST_AddPointer(&neighbours, (void*)B_GetBuildingAt(base, x - 1, i));
 		/* East */
-		if (x < BASE_SIZE - building->size[0] && B_GetBuildingAt(base, x + building->size[0], i) != NULL)
+		if (x < BASE_SIZE - building->size[0] && B_GetBuildingAt(base, x + building->size[0], i) != nullptr)
 			cgi->LIST_AddPointer(&neighbours, (void*)B_GetBuildingAt(base, x + building->size[0], i));
 	}
 	return neighbours;
@@ -96,13 +96,13 @@ static linkedList_t *B_GetNeighbours (const building_t *building)
 static bool B_IsCoherent (const base_t *base)
 {
 	int found[MAX_BUILDINGS];
-	linkedList_t *queue = NULL;
+	linkedList_t *queue = nullptr;
 	linkedList_t *neighbours;
-	building_t *bldg = NULL;
+	building_t *bldg = nullptr;
 	int i;
 
 	OBJZERO(found);
-	while ((bldg = B_GetNextBuilding(base, bldg)) != NULL) {
+	while ((bldg = B_GetNextBuilding(base, bldg)) != nullptr) {
 		cgi->LIST_AddPointer(&queue, (void*)bldg);
 		break;
 	}
@@ -143,13 +143,13 @@ static bool B_IsCoherent (const base_t *base)
 static bool B_AddBlockedTile (base_t *base, int row, int column)
 {
 	int found[BASE_SIZE][BASE_SIZE];
-	linkedList_t *queue = NULL;
+	linkedList_t *queue = nullptr;
 	int x;
 	int y;
 
 	assert(base);
 
-	if (B_GetBuildingAt(base, column, row) != NULL)
+	if (B_GetBuildingAt(base, column, row) != nullptr)
 		return false;
 
 	OBJZERO(found);
@@ -220,7 +220,7 @@ static void B_AddBlockedTiles (base_t *base, int count)
 		if (B_IsTileBlocked(base, x, y))
 			continue;
 
-		if (B_GetBuildingAt(base, x, y) != NULL)
+		if (B_GetBuildingAt(base, x, y) != nullptr)
 			continue;
 
 		B_AddBlockedTile(base, y, x);
@@ -241,16 +241,16 @@ bool B_IsBuildingDestroyable (const building_t *building)
 
 	if (base->baseStatus != BASE_DESTROYED) {
 		int found[MAX_BUILDINGS];
-		linkedList_t *queue = NULL;
+		linkedList_t *queue = nullptr;
 		linkedList_t *neighbours;
-		building_t *bldg = NULL;
+		building_t *bldg = nullptr;
 		int i;
 
 		OBJZERO(found);
 		/* prevents adding building to be removed to the queue */
 		found[building->idx] = 1;
 
-		while ((bldg = B_GetNextBuilding(base, bldg)) != NULL) {
+		while ((bldg = B_GetNextBuilding(base, bldg)) != nullptr) {
 			if (bldg != building) {
 				cgi->LIST_AddPointer(&queue, (void*)bldg);
 				break;
@@ -293,7 +293,7 @@ int B_GetCount (void)
 
 /**
  * @brief Iterates through founded bases
- * @param[in] lastBase Pointer of the base to iterate from. call with NULL to get the first one.
+ * @param[in] lastBase Pointer of the base to iterate from. call with nullptr to get the first one.
  */
 base_t *B_GetNext (base_t *lastBase)
 {
@@ -301,7 +301,7 @@ base_t *B_GetNext (base_t *lastBase)
 	base_t* base;
 
 	if (!B_GetCount())
-		return NULL;
+		return nullptr;
 
 	if (!lastBase)
 		return ccs.bases;
@@ -312,7 +312,7 @@ base_t *B_GetNext (base_t *lastBase)
 
 	base++;
 	if (base >= endOfBases)
-		return NULL;
+		return nullptr;
 	else
 		return base;
 }
@@ -326,7 +326,7 @@ base_t *B_GetNext (base_t *lastBase)
 base_t* B_GetBaseByIDX (int baseIdx)
 {
 	if (baseIdx >= MAX_BASES || baseIdx < 0)
-		return NULL;
+		return nullptr;
 
 	return &ccs.bases[baseIdx];
 }
@@ -334,12 +334,12 @@ base_t* B_GetBaseByIDX (int baseIdx)
 /**
  * @brief Array bound check for the base index.
  * @param[in] baseIdx Index to check
- * @return Pointer to the base corresponding to baseIdx if base is founded, NULL else.
+ * @return Pointer to the base corresponding to baseIdx if base is founded, nullptr else.
  */
 base_t* B_GetFoundedBaseByIDX (int baseIdx)
 {
 	if (baseIdx >= B_GetCount())
-		return NULL;
+		return nullptr;
 
 	return B_GetBaseByIDX(baseIdx);
 }
@@ -347,7 +347,7 @@ base_t* B_GetFoundedBaseByIDX (int baseIdx)
 /**
  * @brief Iterates through buildings in a base
  * @param[in] base Pointer to the base which buildings asked
- * @param[in] lastBuilding Pointer to the building iterate from. Call with NULL to get the first one.
+ * @param[in] lastBuilding Pointer to the building iterate from. Call with nullptr to get the first one.
  */
 building_t* B_GetNextBuilding (const base_t *base, building_t *lastBuilding)
 {
@@ -355,7 +355,7 @@ building_t* B_GetNextBuilding (const base_t *base, building_t *lastBuilding)
 	building_t *building;
 
 	if (!ccs.numBuildings[base->idx])
-		return NULL;
+		return nullptr;
 
 	if (!lastBuilding)
 		return ccs.buildings[base->idx];
@@ -366,7 +366,7 @@ building_t* B_GetNextBuilding (const base_t *base, building_t *lastBuilding)
 
 	building++;
 	if (building >= endOfBuildings)
-		return NULL;
+		return nullptr;
 	else
 		return building;
 }
@@ -374,7 +374,7 @@ building_t* B_GetNextBuilding (const base_t *base, building_t *lastBuilding)
 /**
  * @brief Iterates throught buildings of a type in a base
  * @param[in] base Pointer to the base which buildings asked
- * @param[in] lastBuilding Pointer to the building iterate from. Call with NULL to get the first one.
+ * @param[in] lastBuilding Pointer to the building iterate from. Call with nullptr to get the first one.
  * @param[in] buildingType Type of the buildings to search
  * @sa buildingType_t
  */
@@ -395,7 +395,7 @@ building_t* B_GetNextBuildingByType (const base_t *base, building_t *lastBuildin
  * @param[in] type Building type to search
  * @param[in] status The status the building should have
  * @param[out] cnt This is a pointer to an int value which will hold the building
- * count of that type with the status you are searching - might also be NULL
+ * count of that type with the status you are searching - might also be nullptr
  * if you are not interested in this value
  * @note If you are searching for a quarter (e.g.) you should perform a
  * <code>if (hasBuilding[B_QUARTERS])</code> check - this should speed things up a lot
@@ -404,7 +404,7 @@ building_t* B_GetNextBuildingByType (const base_t *base, building_t *lastBuildin
 bool B_CheckBuildingTypeStatus (const base_t* const base, buildingType_t type, buildingStatus_t status, int *cnt)
 {
 	int cntlocal = 0;
-	building_t *building = NULL;
+	building_t *building = nullptr;
 
 	while ((building = B_GetNextBuildingByType(base, building, type))) {
 		if (building->buildingStatus == status) {
@@ -532,7 +532,7 @@ void B_SetBuildingStatus (base_t* const base, const buildingType_t buildingType,
 void B_ResetBuildingCurrent (base_t* base)
 {
 	if (base)
-		base->buildingCurrent = NULL;
+		base->buildingCurrent = nullptr;
 	ccs.baseAction = BA_NONE;
 }
 
@@ -548,7 +548,7 @@ float B_GetMaxBuildingLevel (const base_t* base, const buildingType_t type)
 	float max = 0.0f;
 
 	if (B_GetBuildingStatus(base, type)) {
-		building_t *building = NULL;
+		building_t *building = nullptr;
 		while ((building = B_GetNextBuildingByType(base, building, type)))
 			if (building->buildingStatus == B_STATUS_WORKING)
 				max = std::max(building->level, max);
@@ -656,7 +656,7 @@ static bool B_UpdateStatusBuilding (base_t* base, buildingType_t buildingType, b
 {
 	bool test = false;
 	bool returnValue = false;
-	building_t *building = NULL;
+	building_t *building = nullptr;
 
 	/* Construction / destruction may have changed the status of other building
 	 * We check that, but only for buildings which needed building */
@@ -685,7 +685,7 @@ static bool B_UpdateStatusBuilding (base_t* base, buildingType_t buildingType, b
 	 * So we check again, until nothing changes. (no condition here for check, it's too complex) */
 	while (test) {
 		test = false;
-		building = NULL;
+		building = nullptr;
 		while ((building = B_GetNextBuilding(base, building))) {
 			if (onBuilt && !B_GetBuildingStatus(base, building->buildingType)) {
 				/* we can only activate a non operationnal building */
@@ -714,7 +714,7 @@ static bool B_UpdateStatusBuilding (base_t* base, buildingType_t buildingType, b
 static void B_UpdateAntimatterCap (base_t *base)
 {
 	const objDef_t *od = INVSH_GetItemByID(ANTIMATTER_TECH_ID);
-	if (od != NULL)
+	if (od != nullptr)
 		CAP_SetCurrent(base, CAP_ANTIMATTER, B_ItemInBase(od, base));
 }
 
@@ -740,7 +740,7 @@ void B_ResetAllStatusAndCapacities (base_t *base, bool firstEnable)
 	}
 	/* activate all buildings that needs to be activated */
 	while (test) {
-		building_t *building = NULL;
+		building_t *building = nullptr;
 		test = false;
 		while ((building = B_GetNextBuilding(base, building))) {
 			if (!B_GetBuildingStatus(base, building->buildingType)
@@ -819,7 +819,7 @@ bool B_BuildingDestroy (building_t* building)
 	if (base->buildingCurrent > building)
 		base->buildingCurrent--;
 	else if (base->buildingCurrent == building)
-		base->buildingCurrent = NULL;
+		base->buildingCurrent = nullptr;
 
 	int const baseIDX = base->idx;
 	building_t* const buildings = ccs.buildings[baseIDX];
@@ -828,7 +828,7 @@ bool B_BuildingDestroy (building_t* building)
 
 	for (y = building->pos[1]; y < building->pos[1] + building->size[1]; y++)
 		for (x = building->pos[0]; x < building->pos[0] + building->size[0]; x++)
-			base->map[y][x].building = NULL;
+			base->map[y][x].building = nullptr;
 
 	REMOVE_ELEM(buildings, idx, ccs.numBuildings[baseIDX]);
 
@@ -844,7 +844,7 @@ bool B_BuildingDestroy (building_t* building)
 					base->map[y][x].building = bldg;
 		}
 	}
-	building = NULL;
+	building = nullptr;
 
 	/* Don't use the building pointer after this point - it's zeroed. */
 
@@ -891,9 +891,9 @@ static void B_MoveAircraftOnGeoscapeToOtherBases (const base_t *base)
 	AIR_ForeachFromBase(aircraft, base) {
 		if (!AIR_IsAircraftOnGeoscape(aircraft))
 			continue;
-		base_t *newbase = NULL;
+		base_t *newbase = nullptr;
 		bool moved = false;
-		while ((newbase = B_GetNext(newbase)) != NULL) {
+		while ((newbase = B_GetNext(newbase)) != nullptr) {
 			/* found a new homebase? */
 			if (base != newbase && AIR_MoveAircraftIntoNewHomebase(aircraft, newbase)) {
 				moved = true;
@@ -906,8 +906,8 @@ static void B_MoveAircraftOnGeoscapeToOtherBases (const base_t *base)
 
 		/* No base can hold this aircraft */
 		UFO_NotifyPhalanxAircraftRemoved(aircraft);
-		if (!MapIsWater(GEO_GetColor(aircraft->pos, MAPTYPE_TERRAIN, NULL))) {
-			CP_SpawnRescueMission(aircraft, NULL);
+		if (!MapIsWater(GEO_GetColor(aircraft->pos, MAPTYPE_TERRAIN, nullptr))) {
+			CP_SpawnRescueMission(aircraft, nullptr);
 		} else {
 			/* Destroy the aircraft and everything onboard - the aircraft pointer
 			 * is no longer valid after this point */
@@ -1080,10 +1080,10 @@ static void B_AddBuildingToBasePos (base_t *base, const building_t *buildingTemp
 /**
  * @brief builds a base from template
  * @param[out] base The base to build
- * @param[in] templateName Templated used for building. If @c NULL no template
+ * @param[in] templateName Templated used for building. If @c nullptr no template
  * will be used.
  * @param[in] hire If hiring employee needed
- * @note It builds an empty base on NULL (or empty) templatename
+ * @note It builds an empty base on nullptr (or empty) templatename
  */
 static void B_BuildFromTemplate (base_t *base, const char *templateName, bool hire)
 {
@@ -1196,10 +1196,10 @@ void B_SetUpFirstBase (const campaign_t *campaign, base_t* base)
 int B_GetInstallationLimit (void)
 {
 	int limit = 0;
-	base_t *base = NULL;
+	base_t *base = nullptr;
 
 	/* count working Command Centers */
-	while ((base = B_GetNext(base)) != NULL) {
+	while ((base = B_GetNext(base)) != nullptr) {
 		if (B_GetBuildingStatus(base, B_COMMAND))
 			limit++;
 	}
@@ -1258,7 +1258,7 @@ base_t *B_Build (const campaign_t *campaign, const vec2_t pos, const char *name)
 			cgi->Com_Error(ERR_DROP, "No base template for setting up the first base given");
 		B_BuildFromTemplate(base, campaign->firstBaseTemplate, true);
 	} else {
-		B_BuildFromTemplate(base, NULL, true);
+		B_BuildFromTemplate(base, nullptr, true);
 	}
 	base->baseStatus = BASE_WORKING;
 
@@ -1284,21 +1284,21 @@ base_t *B_Build (const campaign_t *campaign, const vec2_t pos, const char *name)
 /**
  * @brief Returns the baseTemplate in the global baseTemplate list that has the unique name baseTemplateID.
  * @param[in] baseTemplateID The unique id of the building (baseTemplate_t->name).
- * @return baseTemplate_t If a Template was found it is returned, otherwise->NULL.
+ * @return baseTemplate_t If a Template was found it is returned, otherwise->nullptr.
  */
 const baseTemplate_t *B_GetBaseTemplate (const char *baseTemplateID)
 {
 	int i = 0;
 
 	if (!baseTemplateID)
-		return NULL;
+		return nullptr;
 
 	for (i = 0; i < ccs.numBaseTemplates; i++)
 		if (Q_streq(ccs.baseTemplates[i].id, baseTemplateID))
 			return &ccs.baseTemplates[i];
 
 	Com_Printf("Base Template %s not found\n", baseTemplateID);
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -1309,7 +1309,7 @@ bool B_MapIsCellFree (const base_t *base, int col, int row)
 {
 	return col >= 0 && col < BASE_SIZE
 	 && row >= 0 && row < BASE_SIZE
-	 && B_GetBuildingAt(base, col, row) == NULL
+	 && B_GetBuildingAt(base, col, row) == nullptr
 	 && !B_IsTileBlocked(base, col, row);
 }
 
@@ -1331,7 +1331,7 @@ building_t* B_SetBuildingByClick (base_t *base, const building_t *buildingTempla
 #endif
 	if (!CP_CheckCredits(buildingTemplate->fixCosts)) {
 		CP_Popup(_("Notice"), _("Not enough credits to build this\n"));
-		return NULL;
+		return nullptr;
 	}
 
 	/* template should really be a template */
@@ -1348,17 +1348,17 @@ building_t* B_SetBuildingByClick (base_t *base, const building_t *buildingTempla
 		/* Link to the base. */
 		buildingNew->base = base;
 
-		if (!B_IsTileBlocked(base, col, row) && B_GetBuildingAt(base, col, row) == NULL) {
+		if (!B_IsTileBlocked(base, col, row) && B_GetBuildingAt(base, col, row) == nullptr) {
 			int y, x;
 
 			if (col + buildingNew->size[0] > BASE_SIZE)
-				return NULL;
+				return nullptr;
 			if (row + buildingNew->size[1] > BASE_SIZE)
-				return NULL;
+				return nullptr;
 			for (y = row; y < row + buildingNew->size[1]; y++)
 				for (x = col; x < col + buildingNew->size[0]; x++)
-					if (B_GetBuildingAt(base, x, y) != NULL || B_IsTileBlocked(base, x, y))
-						return NULL;
+					if (B_GetBuildingAt(base, x, y) != nullptr || B_IsTileBlocked(base, x, y))
+						return nullptr;
 			/* No building in this place */
 
 			/* set building position */
@@ -1381,7 +1381,7 @@ building_t* B_SetBuildingByClick (base_t *base, const building_t *buildingTempla
 
 				if (!coherent) {
 					CP_Popup(_("Notice"), _("You must build next to existing buildings."));
-					return NULL;
+					return nullptr;
 				}
 			}
 
@@ -1410,7 +1410,7 @@ building_t* B_SetBuildingByClick (base_t *base, const building_t *buildingTempla
 			return buildingNew;
 		}
 	}
-	return NULL;
+	return nullptr;
 }
 
 #define MAX_BUILDING_INFO_TEXT_LENGTH 512
@@ -1466,7 +1466,7 @@ void B_DrawBuilding (const building_t* building)
 int B_GetNumberOfBuildingsInBaseByTemplate (const base_t *base, const building_t *tpl)
 {
 	int numberOfBuildings = 0;
-	building_t *building = NULL;
+	building_t *building = nullptr;
 
 	if (!base) {
 		Com_Printf("B_GetNumberOfBuildingsInBaseByTemplate: No base given!\n");
@@ -1500,7 +1500,7 @@ int B_GetNumberOfBuildingsInBaseByTemplate (const base_t *base, const building_t
 int B_GetNumberOfBuildingsInBaseByBuildingType (const base_t *base, const buildingType_t buildingType)
 {
 	int numberOfBuildings = 0;
-	building_t *building = NULL;
+	building_t *building = nullptr;
 
 	if (!base) {
 		Com_Printf("B_GetNumberOfBuildingsInBaseByBuildingType: No base given!\n");
@@ -1524,22 +1524,22 @@ int B_GetNumberOfBuildingsInBaseByBuildingType (const base_t *base, const buildi
  * @param[in] base The base to search the building in
  * @param[in] buildingType What building-type to get.
  * @param[in] onlyWorking If we're looking only for working buildings
- * @return The building or NULL if base has no building of that type
+ * @return The building or nullptr if base has no building of that type
  */
 const building_t *B_GetBuildingInBaseByType (const base_t* base, buildingType_t buildingType, bool onlyWorking)
 {
-	building_t *building = NULL;
+	building_t *building = nullptr;
 
 	/* we maybe only want to get the working building (e.g. it might the
 	 * case that we don't have a powerplant and thus the searched building
 	 * is not functional) */
 	if (onlyWorking && !B_GetBuildingStatus(base, buildingType))
-		return NULL;
+		return nullptr;
 
 	while ((building = B_GetNextBuildingByType(base, building, buildingType)))
 		return building;
 
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -1651,7 +1651,7 @@ void B_ParseBaseTemplate (const char *name, const char **text)
 
 /**
  * @brief Get the first unfounded base
- * @return first unfounded base or NULL if every available base slot is already filled
+ * @return first unfounded base or nullptr if every available base slot is already filled
  */
 base_t *B_GetFirstUnfoundedBase (void)
 {
@@ -1663,7 +1663,7 @@ base_t *B_GetFirstUnfoundedBase (void)
 			return base;
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -1673,18 +1673,18 @@ base_t *B_GetFirstUnfoundedBase (void)
  */
 void B_SetCurrentSelectedBase (const base_t *base)
 {
-	base_t *b = NULL;
-	while ((b = B_GetNext(b)) != NULL) {
+	base_t *b = nullptr;
+	while ((b = B_GetNext(b)) != nullptr) {
 		if (b == base) {
 			b->selected = true;
-			if (b->aircraftCurrent == NULL)
+			if (b->aircraftCurrent == nullptr)
 				b->aircraftCurrent = AIR_GetFirstFromBase(b);
 		} else
 			b->selected = false;
 	}
 
 	if (base) {
-		INS_SetCurrentSelectedInstallation(NULL);
+		INS_SetCurrentSelectedInstallation(nullptr);
 		cgi->Cvar_Set("mn_base_title", base->name);
 		cgi->Cvar_SetValue("mn_base_status_id", base->baseStatus);
 	} else {
@@ -1698,17 +1698,17 @@ void B_SetCurrentSelectedBase (const base_t *base)
  */
 base_t *B_GetCurrentSelectedBase (void)
 {
-	base_t *base = NULL;
-	while ((base = B_GetNext(base)) != NULL)
+	base_t *base = nullptr;
+	while ((base = B_GetNext(base)) != nullptr)
 		if (base->selected)
 			return base;
 
-	return NULL;
+	return nullptr;
 }
 
 /**
  * @brief Select and opens a base
- * @param[in] base If this is @c NULL we want to build a new base
+ * @param[in] base If this is @c nullptr we want to build a new base
  */
 void B_SelectBase (const base_t *base)
 {
@@ -1808,8 +1808,8 @@ static void CL_SwapSkills (linkedList_t *team)
 			abilityskills_t skill = (abilityskills_t)x;
 			for (linkedList_t *cp1List = team; cp1List && cp1List->next; cp1List = cp1List->next) {
 				character_t *cp1 = (character_t*)cp1List->data;
-				const fireDef_t *fdRightArray = NULL;
-				const fireDef_t *fdHolsterArray = NULL;
+				const fireDef_t *fdRightArray = nullptr;
+				const fireDef_t *fdHolsterArray = nullptr;
 				const Item *rightHandCharOne = cp1->inv.getRightHandContainer();
 				const Item *holsterCharOne = cp1->inv.getHolsterContainer();
 
@@ -1819,7 +1819,7 @@ static void CL_SwapSkills (linkedList_t *team)
 					fdHolsterArray = holsterCharOne->getFiredefs();
 				/* disregard left hand, or dual-wielding guys are too good */
 
-				if (fdHolsterArray != NULL && fdRightArray != NULL) {
+				if (fdHolsterArray != nullptr && fdRightArray != nullptr) {
 					const int no1 = 2 * (rightHandCharOne && skill == rightHandCharOne->ammoDef()->fd[fdRightArray->weapFdsIdx][fmode1].weaponSkill)
 						+ 2 * (rightHandCharOne && skill == rightHandCharOne->ammoDef()->fd[fdRightArray->weapFdsIdx][fmode2].weaponSkill)
 						+ (holsterCharOne && holsterCharOne->isReloadable()
@@ -1829,8 +1829,8 @@ static void CL_SwapSkills (linkedList_t *team)
 
 					for (linkedList_t *cp2List = cp1List->next; cp2List; cp2List = cp2List->next) {
 						character_t *cp2 = (character_t*)cp2List->data;
-						fdRightArray = NULL;
-						fdHolsterArray = NULL;
+						fdRightArray = nullptr;
+						fdHolsterArray = nullptr;
 						const Item *rightHandCharTwo = cp2->inv.getRightHandContainer();
 						const Item *holsterCharTwo = cp2->inv.getHolsterContainer();
 
@@ -1839,7 +1839,7 @@ static void CL_SwapSkills (linkedList_t *team)
 						if (holsterCharTwo && holsterCharTwo->ammoDef() && holsterCharTwo->def())
 							fdHolsterArray = holsterCharTwo->getFiredefs();
 
-						if (fdHolsterArray != NULL && fdRightArray != NULL) {
+						if (fdHolsterArray != nullptr && fdRightArray != nullptr) {
 							const int no2 = 2 * (rightHandCharTwo && skill == rightHandCharTwo->ammoDef()->fd[fdRightArray->weapFdsIdx][fmode1].weaponSkill)
 								+ 2 * (rightHandCharTwo && skill == rightHandCharTwo->ammoDef()->fd[fdRightArray->weapFdsIdx][fmode2].weaponSkill)
 								+ (holsterCharTwo && holsterCharTwo->isReloadable()
@@ -1870,7 +1870,7 @@ static void CL_SwapSkills (linkedList_t *team)
 static void B_InitialEquipment (aircraft_t *aircraft, const equipDef_t *ed)
 {
 	base_t *homebase;
-	linkedList_t *chrListTemp = NULL;
+	linkedList_t *chrListTemp = nullptr;
 
 	assert(aircraft);
 	homebase = aircraft->homebase;
@@ -1915,8 +1915,8 @@ static void B_BuildingList_f (void)
 {
 	base_t *base;
 
-	base = NULL;
-	while ((base = B_GetNext(base)) != NULL) {
+	base = nullptr;
+	while ((base = B_GetNext(base)) != nullptr) {
 		int j;
 
 		Com_Printf("\nBase id %i: %s\n", base->idx, base->name);
@@ -1952,8 +1952,8 @@ static void B_BaseList_f (void)
 	int row, col, j;
 	base_t *base;
 
-	base = NULL;
-	while ((base = B_GetNext(base)) != NULL) {
+	base = nullptr;
+	while ((base = B_GetNext(base)) != nullptr) {
 		if (!base->founded) {
 			Com_Printf("Base idx %i not founded\n\n", base->idx);
 			continue;
@@ -2137,8 +2137,8 @@ static void B_ResetAllStatusAndCapacities_f (void)
 {
 	base_t *base;
 
-	base = NULL;
-	while ((base = B_GetNext(base)) != NULL) {
+	base = nullptr;
+	while ((base = B_GetNext(base)) != nullptr) {
 		/* set buildingStatus[] and capacities.max values */
 		B_ResetAllStatusAndCapacities(base, false);
 	}
@@ -2218,9 +2218,9 @@ static bool B_CheckBuildingConstruction (building_t *building)
  */
 void B_UpdateBaseData (void)
 {
-	base_t *base = NULL;
-	while ((base = B_GetNext(base)) != NULL) {
-		building_t *building = NULL;
+	base_t *base = nullptr;
+	while ((base = B_GetNext(base)) != nullptr) {
+		building_t *building = nullptr;
 		while ((building = B_GetNextBuilding(base, building))) {
 			if (!B_CheckBuildingConstruction(building))
 				continue;
@@ -2267,7 +2267,7 @@ static void B_SellOrAddItems (aircraft_t *aircraft)
 		} else {
 			/* If the related technology is researched, check the autosell option. */
 			if (ccs.eMarket.autosell[item->idx]) { /* Sell items if autosell is enabled. */
-				BS_SellItem(item, NULL, amount);
+				BS_SellItem(item, nullptr, amount);
 				gained += BS_GetItemSellingPrice(item) * amount;
 				numitems += amount;
 			} else {
@@ -2277,7 +2277,7 @@ static void B_SellOrAddItems (aircraft_t *aircraft)
 				for (j = 0; j < amount; j++) {
 					if (!B_UpdateStorageAndCapacity(base, item, 1, false)) {
 						/* Not enough space, sell item. */
-						BS_SellItem(item, NULL, 1);
+						BS_SellItem(item, nullptr, 1);
 						forcedgained += BS_GetItemSellingPrice(item);
 						forcedsold++;
 					}
@@ -2421,7 +2421,7 @@ void B_UpdateBaseCapacities (baseCapacities_t cap, base_t *base)
 			}
 		}
 		/* Finally update capacity. */
-		building = NULL;
+		building = nullptr;
 		while ((building = B_GetNextBuildingByType(base, building, buildingType)))
 			if (building->buildingStatus >= B_STATUS_CONSTRUCTION_FINISHED)
 				CAP_AddMax(base, cap, capacity);
@@ -2431,11 +2431,11 @@ void B_UpdateBaseCapacities (baseCapacities_t cap, base_t *base)
 				ccs.buildingTemplates[buildingTemplateIDX].id, CAP_GetMax(base, cap));
 
 		if (cap == CAP_ALIENS) {
-			if (base->alienContainment != NULL && CAP_GetMax(base, CAP_ALIENS) == 0) {
+			if (base->alienContainment != nullptr && CAP_GetMax(base, CAP_ALIENS) == 0) {
 				delete base->alienContainment;
-				base->alienContainment = NULL;
-			} else if (base->alienContainment == NULL && CAP_GetMax(base, CAP_ALIENS) > 0) {
-				base->alienContainment = new AlienContainment(CAP_Get(base, CAP_ALIENS), NULL);
+				base->alienContainment = nullptr;
+			} else if (base->alienContainment == nullptr && CAP_GetMax(base, CAP_ALIENS) > 0) {
+				base->alienContainment = new AlienContainment(CAP_Get(base, CAP_ALIENS), nullptr);
 			}
 		}
 		break;
@@ -2502,8 +2502,8 @@ bool B_SaveXML (xmlNode_t *parent)
 	base_t *b;
 
 	bases = cgi->XML_AddNode(parent, SAVE_BASES_BASES);
-	b = NULL;
-	while ((b = B_GetNext(b)) != NULL) {
+	b = nullptr;
+	while ((b = B_GetNext(b)) != nullptr) {
 		int row;
 		xmlNode_t *act_base;
 		xmlNode_t *node;
@@ -2539,7 +2539,7 @@ bool B_SaveXML (xmlNode_t *parent)
 		}
 		/* buildings */
 		node = cgi->XML_AddNode(act_base, SAVE_BASES_BUILDINGS);
-		building = NULL;
+		building = nullptr;
 		while ((building = B_GetNextBuilding(b, building))) {
 			xmlNode_t *snode;
 
@@ -2593,7 +2593,7 @@ int B_LoadBaseSlotsXML (baseWeapon_t* weapons, int max, xmlNode_t *p)
 		const int target = cgi->XML_GetInt(s, SAVE_BASES_TARGET, -1);
 		AII_LoadOneSlotXML(s, &weapons[i].slot, true);
 		weapons[i].autofire = cgi->XML_GetBool(s, SAVE_BASES_AUTOFIRE, true);
-		weapons[i].target = (target >= 0) ? UFO_GetByIDX(target) : NULL;
+		weapons[i].target = (target >= 0) ? UFO_GetByIDX(target) : nullptr;
 	}
 	return i;
 }
@@ -2604,8 +2604,8 @@ int B_LoadBaseSlotsXML (baseWeapon_t* weapons, int max, xmlNode_t *p)
  */
 static bool B_PostLoadInitCapacity (void)
 {
-	base_t *base = NULL;
-	while ((base = B_GetNext(base)) != NULL)
+	base_t *base = nullptr;
+	while ((base = B_GetNext(base)) != nullptr)
 		B_ResetAllStatusAndCapacities(base, true);
 
 	return true;
@@ -2685,7 +2685,7 @@ bool B_LoadXML (xmlNode_t *parent)
 		Q_strncpyz(b->name, cgi->XML_GetString(base, SAVE_BASES_NAME), sizeof(b->name));
 		cgi->XML_GetPos3(base, SAVE_BASES_POS, b->pos);
 		b->alienInterest = cgi->XML_GetFloat(base, SAVE_BASES_ALIENINTEREST, 0.0);
-		b->aircraftCurrent = NULL;
+		b->aircraftCurrent = nullptr;
 
 		/* building space*/
 		node = cgi->XML_GetNode(base, SAVE_BASES_BUILDINGSPACE);
@@ -2702,9 +2702,9 @@ bool B_LoadXML (xmlNode_t *parent)
 				/* The buildings are actually parsed _below_. (See PRE_MAXBUI loop) */
 				tile->building = B_GetBuildingByIDX(i, buildingIdx);
 			else
-				tile->building = NULL;
+				tile->building = nullptr;
 			tile->blocked = cgi->XML_GetBool(snode, SAVE_BASES_BLOCKED, false);
-			if (tile->blocked && tile->building != NULL) {
+			if (tile->blocked && tile->building != nullptr) {
 				Com_Printf("inconstent base layout found\n");
 				cgi->Com_UnregisterConstList(saveBaseConstants);
 				return false;
@@ -2778,7 +2778,7 @@ bool B_LoadXML (xmlNode_t *parent)
 
 		node = cgi->XML_GetNode(base, SAVE_BASES_ALIENCONTAINMENT);
 		if (node) {
-			b->alienContainment = new AlienContainment(CAP_Get(b, CAP_ALIENS), NULL);
+			b->alienContainment = new AlienContainment(CAP_Get(b, CAP_ALIENS), nullptr);
 			b->alienContainment->load(node);
 		}
 
@@ -2917,7 +2917,7 @@ int B_AntimatterInBase (const base_t *base)
 	const objDef_t *od;
 
 	od = INVSH_GetItemByID(ANTIMATTER_TECH_ID);
-	if (od == NULL)
+	if (od == nullptr)
 		cgi->Com_Error(ERR_DROP, "Could not find " ANTIMATTER_TECH_ID " object definition");
 
 	assert(base);
@@ -2951,7 +2951,7 @@ void B_ManageAntimatter (base_t *base, int amount, bool add)
 	}
 
 	od = INVSH_GetItemByIDSilent(ANTIMATTER_TECH_ID);
-	if (od == NULL)
+	if (od == nullptr)
 		cgi->Com_Error(ERR_DROP, "Could not find " ANTIMATTER_TECH_ID " object definition");
 
 	cap = CAP_Get(base, CAP_ANTIMATTER);

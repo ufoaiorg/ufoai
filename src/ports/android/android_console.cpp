@@ -46,7 +46,7 @@ void Sys_ConsoleInit (void)
 
 const char *Sys_ConsoleInput (void)
 {
-	return NULL;
+	return nullptr;
 }
 
 void Sys_ConsoleOutput (const char *string)

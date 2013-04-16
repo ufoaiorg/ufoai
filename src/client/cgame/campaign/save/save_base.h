@@ -77,7 +77,7 @@ static const constListEntry_t saveBaseConstants[] = {
 	{SAVE_BUILDINGSTATUS_NAMESPACE"::working", B_STATUS_WORKING},
 	{SAVE_BUILDINGSTATUS_NAMESPACE"::down", B_STATUS_DOWN},
 
-	{NULL, -1}
+	{nullptr, -1}
 };
 
 #endif

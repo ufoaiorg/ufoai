@@ -43,7 +43,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static const constListEntry_t saveInstallationConstants[] = {
 	{SAVE_INSTALLATIONSTATUS_NAMESPACE"::construction", INSTALLATION_UNDER_CONSTRUCTION},
 	{SAVE_INSTALLATIONSTATUS_NAMESPACE"::working", INSTALLATION_WORKING},
-	{NULL, -1}
+	{nullptr, -1}
 };
 
 #endif

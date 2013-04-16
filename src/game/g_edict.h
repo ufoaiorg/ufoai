@@ -145,7 +145,7 @@ public:
 	void (*think)(Edict *self);
 	/** general use function that is called when the triggered client action is executed
 	 * or when the server has to 'use' the entity
-	 * @param activator Might be @c NULL if there is no activator */
+	 * @param activator Might be @c nullptr if there is no activator */
 	bool (*use)(Edict *self, Edict *activator);
 	bool (*destroy)(Edict *self);
 
@@ -197,7 +197,7 @@ public:
 			return chr.inv.getRightHandContainer();
 		else if (hand == ACTOR_HAND_LEFT)
 			return chr.inv.getLeftHandContainer();
-		else return NULL;
+		else return nullptr;
 	}
 	inline invList_t *getFloor () const
 	{
@@ -209,7 +209,7 @@ public:
 	}
 	inline void resetFloor ()
 	{
-		chr.inv.setFloorContainer(NULL);
+		chr.inv.setFloorContainer(nullptr);
 	}
 	inline Player &getPlayer () const
 	{

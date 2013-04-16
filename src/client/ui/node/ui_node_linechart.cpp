@@ -52,7 +52,7 @@ void uiLineChartNode::draw (uiNode_t *node)
 	UI_GetNodeAbsPos(node, pos);
 	pos[2] = 0;
 
-	UI_Transform(pos, NULL, NULL);
+	UI_Transform(pos, nullptr, nullptr);
 
 	/* Draw axes */
 	if (EXTRADATA(node).displayAxes) {
@@ -76,9 +76,9 @@ void uiLineChartNode::draw (uiNode_t *node)
 			R_DrawLineStrip(lineStrip->numPoints, lineStrip->pointList);
 		}
 	}
-	R_Color(NULL);
+	R_Color(nullptr);
 
-	UI_Transform(NULL, NULL, NULL);
+	UI_Transform(nullptr, nullptr, nullptr);
 }
 
 void UI_RegisterLineChartNode (uiBehaviour_t *behaviour)

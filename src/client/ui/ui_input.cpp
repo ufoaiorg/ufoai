@@ -70,7 +70,7 @@ static int oldMousePosX, oldMousePosY;
  * @sa UI_SetMouseCapture
  * @sa UI_GetMouseCapture
  * @sa UI_MouseRelease
- * @todo think about replacing it by a boolean. When capturedNode != NULL => hoveredNode == capturedNode
+ * @todo think about replacing it by a boolean. When capturedNode != nullptr => hoveredNode == capturedNode
  * it create unneed case
  */
 static uiNode_t* capturedNode;
@@ -81,17 +81,17 @@ static uiNode_t* capturedNode;
 static uiNode_t *pressedNode;
 
 /**
- * @brief X position of the mouse when pressedNode != NULL
+ * @brief X position of the mouse when pressedNode != nullptr
  */
 static int pressedNodeLocationX;
 
 /**
- * @brief Y position of the mouse when pressedNode != NULL
+ * @brief Y position of the mouse when pressedNode != nullptr
  */
 static int pressedNodeLocationY;
 
 /**
- * @brief Button pressed when pressedNode != NULL
+ * @brief Button pressed when pressedNode != nullptr
  */
 static int pressedNodeButton;
 
@@ -132,7 +132,7 @@ static bool UI_FocusExecuteActionNode (void)
 			UI_ExecuteEventActions(focusNode, focusNode->onClick);
 		}
 		UI_ExecuteEventActions(focusNode, focusNode->onMouseLeave);
-		focusNode = NULL;
+		focusNode = nullptr;
 		return true;
 	}
 #endif
@@ -154,7 +154,7 @@ static uiNode_t *UI_GetNextActionNode (uiNode_t* node)
 			return node;
 		node = node->next;
 	}
-	return NULL;
+	return nullptr;
 }
 #endif
 
@@ -212,7 +212,7 @@ void UI_RequestFocus (uiNode_t* node)
 
 	/* invalidate the data before calling the event */
 	tmp = focusNode;
-	focusNode = NULL;
+	focusNode = nullptr;
 
 	/* lost the focus */
 	if (tmp) {
@@ -250,7 +250,7 @@ void UI_RemoveFocus (void)
 
 	/* invalidate the data before calling the event */
 	tmp = focusNode;
-	focusNode = NULL;
+	focusNode = nullptr;
 
 	/* callback the lost of the focus */
 	UI_Node_FocusLost(tmp);
@@ -306,17 +306,17 @@ static void UI_SetKeyBindingEx (const char* path, int key, const char* descripti
 {
 	uiNode_t *node;
 	uiKeyBinding_t *binding;
-	const value_t *property = NULL;
+	const value_t *property = nullptr;
 	int windowId;
 	char newPath[256];
 
-	UI_ReadNodePath(path, NULL, &node, &property);
-	if (node == NULL) {
+	UI_ReadNodePath(path, nullptr, &node, &property);
+	if (node == nullptr) {
 		Com_Printf("UI_SetKeyBinding: node \"%s\" not found.\n", path);
 		return;
 	}
 
-	if (property != NULL && property->type != V_UI_NODEMETHOD)
+	if (property != nullptr && property->type != V_UI_NODEMETHOD)
 		Com_Error(ERR_FATAL, "UI_SetKeyBinding: Only node and method are supported. Property @%s not found in path \"%s\".", property->string, path);
 
 	/* init and link the keybinding */
@@ -388,7 +388,7 @@ static bool UI_KeyPressedInWindow (unsigned int key, const uiNode_t *window)
 
 	/* execute event */
 	node = binding->node;
-	if (binding->property == NULL)
+	if (binding->property == nullptr)
 		UI_Node_Activate(node);
 	else if (binding->property->type == V_UI_NODEMETHOD) {
 		uiCallContext_t newContext;
@@ -460,7 +460,7 @@ bool UI_KeyPressed (unsigned int key, unsigned short unicode)
 			return true;
 		break;
 	case K_ESCAPE:
-		if (UI_GetMouseCapture() != NULL) {
+		if (UI_GetMouseCapture() != nullptr) {
 			UI_MouseRelease();
 			return true;
 		}
@@ -499,7 +499,7 @@ void UI_ReleaseInput (void)
 
 /**
  * @brief Return the captured node
- * @return Return a node, else NULL
+ * @return Return a node, else nullptr
  */
 uiNode_t* UI_GetMouseCapture (void)
 {
@@ -511,8 +511,8 @@ uiNode_t* UI_GetMouseCapture (void)
  */
 void UI_SetMouseCapture (uiNode_t* node)
 {
-	assert(capturedNode == NULL);
-	assert(node != NULL);
+	assert(capturedNode == nullptr);
+	assert(node != nullptr);
 	capturedNode = node;
 }
 
@@ -523,27 +523,27 @@ void UI_MouseRelease (void)
 {
 	uiNode_t *tmp = capturedNode;
 
-	if (capturedNode == NULL)
+	if (capturedNode == nullptr)
 		return;
 
-	capturedNode = NULL;
+	capturedNode = nullptr;
 	UI_Node_CapturedMouseLost(tmp);
 	UI_InvalidateMouse();
 }
 
 void UI_ResetInput (void)
 {
-	hoveredNode = NULL;
-	oldHoveredNode = NULL;
-	focusNode = NULL;
-	capturedNode = NULL;
-	pressedNode = NULL;
-	longPressTimer = NULL;
+	hoveredNode = nullptr;
+	oldHoveredNode = nullptr;
+	focusNode = nullptr;
+	capturedNode = nullptr;
+	pressedNode = nullptr;
+	longPressTimer = nullptr;
 }
 
 /**
  * @brief Get the current hovered node
- * @return A node, else NULL if the mouse hover nothing
+ * @return A node, else nullptr if the mouse hover nothing
  */
 uiNode_t *UI_GetHoveredNode (void)
 {
@@ -623,7 +623,7 @@ void UI_MouseMove (int x, int y)
 					break;
 				node = node->parent;
 			}
-			if (node != NULL)
+			if (node != nullptr)
 				break;
 			commonNode = commonNode->parent;
 		}
@@ -690,7 +690,7 @@ static void UI_LeftClick (int x, int y)
 		}
 	}
 
-	const bool disabled = (pressedNode == NULL) || (pressedNode->disabled) || (pressedNode->parent && pressedNode->parent->disabled);
+	const bool disabled = (pressedNode == nullptr) || (pressedNode->disabled) || (pressedNode->parent && pressedNode->parent->disabled);
 	if (!disabled) {
 		UI_Node_LeftClick(pressedNode, x, y);
 	}
@@ -714,7 +714,7 @@ static void UI_RightClick (int x, int y)
 		return;
 	}
 
-	const bool disabled = (pressedNode == NULL) || (pressedNode->disabled) || (pressedNode->parent && pressedNode->parent->disabled);
+	const bool disabled = (pressedNode == nullptr) || (pressedNode->disabled) || (pressedNode->parent && pressedNode->parent->disabled);
 	if (!disabled) {
 		UI_Node_RightClick(pressedNode, x, y);
 	}
@@ -736,7 +736,7 @@ static void UI_MiddleClick (int x, int y)
 		return;
 	}
 
-	const bool disabled = (pressedNode == NULL) || (pressedNode->disabled) || (pressedNode->parent && pressedNode->parent->disabled);
+	const bool disabled = (pressedNode == nullptr) || (pressedNode->disabled) || (pressedNode->parent && pressedNode->parent->disabled);
 	if (!disabled) {
 		UI_Node_MiddleClick(pressedNode, x, y);
 	}
@@ -777,7 +777,7 @@ static void UI_LongPressCallback (uiNode_t *, uiTimer_t *timer)
 	UI_TimerStop(timer);
 
 	/* make sure the event still make sense */
-	if (pressedNode == NULL)
+	if (pressedNode == nullptr)
 		return;
 
 	uiNode_t *node = pressedNode;
@@ -805,24 +805,24 @@ void UI_MouseDown (int x, int y, int button)
 	/* captured or hover node */
 	node = capturedNode ? capturedNode : hoveredNode;
 
-	if (node != NULL) {
+	if (node != nullptr) {
 		UI_MoveWindowOnTop(node->root);
 		UI_Node_MouseDown(node, x, y, button);
 	}
 
 	/* select clickableNode on button up, and detect multipress button */
-	if (pressedNode == NULL) {
+	if (pressedNode == nullptr) {
 		pressedNode = node;
 		pressedNodeLocationX = x;
 		pressedNodeLocationY = y;
 		pressedNodeButton = button;
 		/** @todo find a way to create the timer when UI loading and remove "if (longPressTimer)" */
-		if (longPressTimer == NULL) {
-			longPressTimer = UI_AllocTimer(NULL, LONGPRESS_DELAY, UI_LongPressCallback);
+		if (longPressTimer == nullptr) {
+			longPressTimer = UI_AllocTimer(nullptr, LONGPRESS_DELAY, UI_LongPressCallback);
 		}
 		UI_TimerStart(longPressTimer);
 	} else {
-		pressedNode = NULL;
+		pressedNode = nullptr;
 	}
 }
 
@@ -855,15 +855,15 @@ void UI_MouseUp (int x, int y, int button)
 	}
 
 	/* captured or hovered node */
-	uiNode_t *node = NULL;
+	uiNode_t *node = nullptr;
 	if (capturedNode) {
 		node = capturedNode;
 	} else if (pressedNode == hoveredNode) {
 		node = hoveredNode;
 	}
 
-	pressedNode = NULL;
-	if (node == NULL)
+	pressedNode = nullptr;
+	if (node == nullptr)
 		return;
 
 	UI_Node_MouseUp(node, x, y, button);

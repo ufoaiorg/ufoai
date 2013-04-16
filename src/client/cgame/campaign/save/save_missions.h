@@ -66,7 +66,7 @@ static const constListEntry_t saveMissionConstants[] = {
 	{SAVE_MISSIONSTAGE_NAMESPACE"::harvest", STAGE_HARVEST},
 	{SAVE_MISSIONSTAGE_NAMESPACE"::returnToOrbit", STAGE_RETURN_TO_ORBIT},
 	{SAVE_MISSIONSTAGE_NAMESPACE"::missionOver", STAGE_OVER},
-	{NULL, -1}
+	{nullptr, -1}
 };
 
 #endif

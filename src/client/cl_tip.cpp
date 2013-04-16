@@ -104,6 +104,6 @@ void TOTD_InitStartup (void)
 
 void TOTD_Shutdown (void)
 {
-	tipList = NULL;
+	tipList = nullptr;
 	tipCount = 0;
 }

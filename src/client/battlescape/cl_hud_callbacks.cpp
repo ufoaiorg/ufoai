@@ -30,7 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /**
  * @brief returns the weapon the actor's left hand is touching. In case the actor
  * holds a two handed weapon in his right hand, this weapon is returned here.
- * This function only returns @c NULL if no two handed weapon is in the right hand
+ * This function only returns @c nullptr if no two handed weapon is in the right hand
  * and the left hand is empty.
  */
 Item *HUD_GetLeftHandWeapon (const le_t *actor, containerIndex_t *container)
@@ -39,9 +39,9 @@ Item *HUD_GetLeftHandWeapon (const le_t *actor, containerIndex_t *container)
 
 	if (!item) {
 		item = actor->getRightHandItem();
-		if (item == NULL || !item->isHeldTwoHanded())
-			item = NULL;
-		else if (container != NULL)
+		if (item == nullptr || !item->isHeldTwoHanded())
+			item = nullptr;
+		else if (container != nullptr)
 			*container = CID_RIGHT;
 	}
 
@@ -57,11 +57,11 @@ Item *HUD_GetLeftHandWeapon (const le_t *actor, containerIndex_t *container)
 const fireDef_t *HUD_GetFireDefinitionForHand (const le_t *actor, const actorHands_t hand)
 {
 	if (!actor)
-		return NULL;
+		return nullptr;
 
 	const Item *weapon = actor->getHandItem(hand);
 	if (!weapon || !weapon->def())
-		return NULL;
+		return nullptr;
 
 	return weapon->getFiredefs();
 }
@@ -112,7 +112,7 @@ static void HUD_FireWeapon_f (void)
 		return;
 	}
 
-	if (actor == NULL)
+	if (actor == nullptr)
 		return;
 
 	const actorHands_t hand = ACTOR_GET_HAND_INDEX(Cmd_Argv(1)[0]);
@@ -121,7 +121,7 @@ static void HUD_FireWeapon_f (void)
 		return;
 
 	const fireDef_t *fd = HUD_GetFireDefinitionForHand(actor, hand);
-	if (fd == NULL)
+	if (fd == nullptr)
 		return;
 
 	const objDef_t *ammo = fd->obj;
@@ -149,7 +149,7 @@ static void HUD_SetMoveMode_f (void)
 {
 	le_t *actor = selActor;
 
-	if (actor == NULL)
+	if (actor == nullptr)
 		return;
 
 	CL_ActorSetMode(actor, M_MOVE);
@@ -277,7 +277,7 @@ static void HUD_ReloadLeft_f (void)
 {
 	le_t *actor = selActor;
 
-	if (actor == NULL)
+	if (actor == nullptr)
 		return;
 
 	containerIndex_t container = CID_LEFT;

@@ -33,7 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /**
  * Allow to check if a node is an option without string check
  */
-const uiBehaviour_t *ui_optionBehaviour = NULL;
+const uiBehaviour_t *ui_optionBehaviour = nullptr;
 
 #define EXTRADATA_TYPE optionExtraData_t
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)

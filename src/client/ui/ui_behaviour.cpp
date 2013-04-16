@@ -47,7 +47,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 const struct value_s *UI_RegisterNodePropertyPosSize_ (uiBehaviour_t *behaviour, const char* name, int type, size_t pos, size_t size)
 {
 	value_t *property = (value_t*) UI_AllocHunkMemory(sizeof(value_t), STRUCT_MEMORY_ALIGN, false);
-	if (property == NULL)
+	if (property == nullptr)
 		Com_Error(ERR_FATAL, "UI_RegisterNodePropertyPosSize_: UI memory hunk exceeded - increase the size");
 
 	if (type == V_STRING || type == V_LONGSTRING || type == V_CVAR_OR_LONGSTRING || V_CVAR_OR_STRING) {
@@ -59,7 +59,7 @@ const struct value_s *UI_RegisterNodePropertyPosSize_ (uiBehaviour_t *behaviour,
 	property->ofs = pos;
 	property->size = size;
 
-	if (behaviour->localProperties == NULL) {
+	if (behaviour->localProperties == nullptr) {
 		/* temporary memory allocation */
 		behaviour->localProperties = Mem_PoolAllocTypeN(value_t const*, LOCAL_PROPERTY_SIZE, ui_sysPool);
 	}
@@ -67,7 +67,7 @@ const struct value_s *UI_RegisterNodePropertyPosSize_ (uiBehaviour_t *behaviour,
 		Com_Error(ERR_FATAL, "UI_RegisterNodePropertyPosSize_: Property memory of behaviour %s is full.", behaviour->name);
 	}
 	behaviour->localProperties[behaviour->propertyCount++] = property;
-	behaviour->localProperties[behaviour->propertyCount] = NULL;
+	behaviour->localProperties[behaviour->propertyCount] = nullptr;
 
 	return property;
 }
@@ -89,7 +89,7 @@ const struct value_s *UI_RegisterNodeMethod (uiBehaviour_t *behaviour, const cha
  * It use a dichotomic search.
  * @param[in] behaviour Context behaviour
  * @param[in] name Property name we search
- * @return A value_t with the requested name, else NULL
+ * @return A value_t with the requested name, else nullptr
  */
 const value_t *UI_GetPropertyFromBehaviour (const uiBehaviour_t *behaviour, const char* name)
 {
@@ -112,7 +112,7 @@ const value_t *UI_GetPropertyFromBehaviour (const uiBehaviour_t *behaviour, cons
 				min = mid + 1;
 		}
 	}
-	return NULL;
+	return nullptr;
 }
 
 /** @brief position of virtual function into node behaviour */
@@ -131,7 +131,7 @@ void UI_InitializeNodeBehaviour (uiBehaviour_t* behaviour)
 		return;
 
 	/* everything inherits 'abstractnode' */
-	if (behaviour->extends == NULL && !Q_streq(behaviour->name, "abstractnode")) {
+	if (behaviour->extends == nullptr && !Q_streq(behaviour->name, "abstractnode")) {
 		behaviour->extends = "abstractnode";
 	}
 
@@ -169,27 +169,27 @@ void UI_InitializeNodeBehaviour (uiBehaviour_t* behaviour)
 		const value_t* previous;
 		const value_t **oldmemory = behaviour->localProperties;
 		behaviour->localProperties = (const value_t**) UI_AllocHunkMemory(sizeof(value_t*) * (behaviour->propertyCount+1), STRUCT_MEMORY_ALIGN, false);
-		if (behaviour->localProperties == NULL) {
+		if (behaviour->localProperties == nullptr) {
 			Com_Error(ERR_FATAL, "UI_InitializeNodeBehaviour: UI memory hunk exceeded - increase the size");
 		}
 
-		previous = NULL;
+		previous = nullptr;
 		for (i = 0; i < behaviour->propertyCount; i++) {
-			const value_t* better = NULL;
+			const value_t* better = nullptr;
 			const value_t **current;
 			/* search the next element after previous */
-			for (current = oldmemory; *current != NULL; current++) {
-				if (previous != NULL && Q_strcasecmp(previous->string, (*current)->string) >= 0) {
+			for (current = oldmemory; *current != nullptr; current++) {
+				if (previous != nullptr && Q_strcasecmp(previous->string, (*current)->string) >= 0) {
 					continue;
 				}
-				if (better == NULL || Q_strcasecmp(better->string, (*current)->string) >= 0) {
+				if (better == nullptr || Q_strcasecmp(better->string, (*current)->string) >= 0) {
 					better = *current;
 				}
 			}
 			previous = better;
 			behaviour->localProperties[i] = better;
 		}
-		behaviour->localProperties[behaviour->propertyCount] = NULL;
+		behaviour->localProperties[behaviour->propertyCount] = nullptr;
 		Mem_Free(oldmemory);
 	}
 
@@ -201,10 +201,10 @@ void UI_InitializeNodeBehaviour (uiBehaviour_t* behaviour)
 #if 0	/**< @todo not possible at the moment, not sure its the right way */
 			const uiBehaviour_t *b = UI_GetNodeBehaviour(current->string);
 #endif
-			if (p != NULL)
+			if (p != nullptr)
 				Com_Error(ERR_FATAL, "UI_InitializeNodeBehaviour: property '%s' from node behaviour '%s' overwrite another property", (*property)->string, behaviour->name);
 #if 0	/**< @todo not possible at the moment, not sure its the right way */
-			if (b != NULL)
+			if (b != nullptr)
 				Com_Error(ERR_FATAL, "UI_InitializeNodeBehaviour: property '%s' from node behaviour '%s' use the name of an existing node behaviour", (*property)->string, behaviour->name);
 #endif
 			property++;

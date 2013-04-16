@@ -74,7 +74,7 @@ void CL_ActorDie (const eventRegister_t *self, dbuffer *msg)
 	Cvar_SetValue("mn_numaliensspotted", cl.numEnemiesSpotted);
 
 	/* play animation */
-	LE_SetThink(le, NULL);
+	LE_SetThink(le, nullptr);
 	R_AnimChange(&le->as, le->model1, va("death%i", LE_GetAnimationIndexForDeath(le)));
 	R_AnimAppend(&le->as, le->model1, va("dead%i", LE_GetAnimationIndexForDeath(le)));
 

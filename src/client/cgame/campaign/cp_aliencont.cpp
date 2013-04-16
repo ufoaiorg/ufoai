@@ -45,9 +45,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 bool AL_AddAlienTypeToAircraftCargo (aircraft_t *aircraft, const teamDef_t *teamDef, int amount, bool dead)
 {
-	if (aircraft->alienCargo == NULL)
+	if (aircraft->alienCargo == nullptr)
 		aircraft->alienCargo = new AlienCargo();
-	if (aircraft->alienCargo == NULL)
+	if (aircraft->alienCargo == nullptr)
 		return false;
 
 	if (dead)
@@ -76,7 +76,7 @@ void AL_AddAliens (aircraft_t *aircraft)
 	if (!aircraft->homebase) {
 		Com_Printf("AL_AddAliens: Aircraft %s (idx: %d) has no base, alienCargo destroyed\n", aircraft->name, aircraft->idx);
 		delete aircraft->alienCargo;
-		aircraft->alienCargo = NULL;
+		aircraft->alienCargo = nullptr;
 		return;
 	}
 
@@ -84,7 +84,7 @@ void AL_AddAliens (aircraft_t *aircraft)
 	if (!cont) {
 		MS_AddNewMessage(_("Notice"), _("You cannot process aliens yet. Alien Containment not ready in this base."));
 		delete aircraft->alienCargo;
-		aircraft->alienCargo = NULL;
+		aircraft->alienCargo = nullptr;
 		return;
 	}
 
@@ -99,7 +99,7 @@ void AL_AddAliens (aircraft_t *aircraft)
 
 			ccs.campaignStats.killedAliens += item->dead + item->alive;
 			if (item->alive > 0) {
-				CP_TriggerEvent(CAPTURED_ALIENS_DIED, NULL);
+				CP_TriggerEvent(CAPTURED_ALIENS_DIED, nullptr);
 				/* only once */
 				if (!messageSent) {
 					MS_AddNewMessage(_("Notice"), _("You can't hold live aliens yet. Aliens died."), MSG_DEATH);
@@ -113,7 +113,7 @@ void AL_AddAliens (aircraft_t *aircraft)
 			ccs.campaignStats.killedAliens += item->dead;
 			ccs.campaignStats.capturedAliens += item->alive;
 			if (item->alive > 0) {
-				CP_TriggerEvent(CAPTURED_ALIENS, NULL);
+				CP_TriggerEvent(CAPTURED_ALIENS, nullptr);
 				if (!messageSent) {
 					MS_AddNewMessage(_("Notice"), _("You've captured new aliens."));
 					messageSent = true;
@@ -158,9 +158,9 @@ void AL_RemoveAliensExceedingCapacity (base_t *base)
 int AL_CountAll (void)
 {
 	int amount = 0;
-	base_t *base = NULL;
+	base_t *base = nullptr;
 
-	while ((base = B_GetNext(base)) != NULL) {
+	while ((base = B_GetNext(base)) != nullptr) {
 		if (base->alienContainment)
 			amount += base->alienContainment->getAlive();
 	}
@@ -246,7 +246,7 @@ bool AC_LoadXML (xmlNode_t *parent)
 				continue;
 
 			if (!base->alienContainment)
-				base->alienContainment = new AlienContainment(CAP_Get(base, CAP_ALIENS), NULL);
+				base->alienContainment = new AlienContainment(CAP_Get(base, CAP_ALIENS), nullptr);
 
 			base->alienContainment->add(teamId, alive, dead);
 		}

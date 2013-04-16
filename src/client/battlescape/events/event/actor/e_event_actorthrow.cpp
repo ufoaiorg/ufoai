@@ -65,10 +65,10 @@ void CL_ActorDoThrow (const eventRegister_t *self, dbuffer *msg)
 
 	/* add effect le (local entity) */
 	/** @todo add victim support for blood and hurt sounds */
-	LE_AddGrenade(fd, flags, muzzle, v0, dtime, NULL);
+	LE_AddGrenade(fd, flags, muzzle, v0, dtime, nullptr);
 
 	/* start the sound */
-	if (fd->fireSound != NULL && !(flags & SF_BOUNCED)) {
+	if (fd->fireSound != nullptr && !(flags & SF_BOUNCED)) {
 		S_LoadAndPlaySample(fd->fireSound, muzzle, SOUND_ATTN_IDLE, SND_VOLUME_DEFAULT);
 	}
 }

@@ -44,7 +44,7 @@ static searchpath_t *fs_searchpaths;
 
 void FS_CreateOpenPipeFile (const char *filename, qFILE *f)
 {
-	if (fs_searchpaths == NULL) {
+	if (fs_searchpaths == nullptr) {
 		Sys_Error("Filesystem call made without initialization");
 	}
 
@@ -53,7 +53,7 @@ void FS_CreateOpenPipeFile (const char *filename, qFILE *f)
 	Q_strncpyz(f->name, filename, sizeof(f->name));
 	Sys_Mkfifo(va("%s/%s", FS_Gamedir(), filename), f);
 
-	if (f->f != NULL) {
+	if (f->f != nullptr) {
 		Com_Printf("created pipe %s\n", filename);
 		fs_openedFiles++;
 	}
@@ -72,7 +72,7 @@ const char *FS_Gamedir (void)
 			return search->filename;
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -101,7 +101,7 @@ int FS_FileLength (qFILE * f)
 		return end;
 	} else if (f->z) {
 		unz_file_info info;
-		if (unzGetCurrentFileInfo(f->z, &info, NULL, 0, NULL, 0, NULL, 0) != UNZ_OK)
+		if (unzGetCurrentFileInfo(f->z, &info, nullptr, 0, nullptr, 0, nullptr, 0) != UNZ_OK)
 			Sys_Error("Couldn't get size of %s", f->name);
 		return info.uncompressed_size;
 	}
@@ -147,8 +147,8 @@ void FS_CloseFile (qFILE * f)
 	}
 	assert(fs_openedFiles >= 0);
 
-	f->f = NULL;
-	f->z = NULL;
+	f->f = nullptr;
+	f->z = nullptr;
 }
 
 /**
@@ -166,7 +166,7 @@ int FS_OpenFile (const char *filename, qFILE *file, filemode_t mode)
 	int i;
 	filelink_t *link;
 
-	file->z = file->f = NULL;
+	file->z = file->f = nullptr;
 
 	/* open for write or append in gamedir and return */
 	if (mode == FILE_WRITE || mode == FILE_APPEND) {
@@ -210,7 +210,7 @@ int FS_OpenFile (const char *filename, qFILE *file, filemode_t mode)
 					if (unzLocateFile(pak->handle.z, filename, 2) == UNZ_OK) {	/* found it! */
 						if (unzOpenCurrentFile(pak->handle.z) == UNZ_OK) {
 							unz_file_info info;
-							if (unzGetCurrentFileInfo(pak->handle.z, &info, NULL, 0, NULL, 0, NULL, 0) != UNZ_OK)
+							if (unzGetCurrentFileInfo(pak->handle.z, &info, nullptr, 0, nullptr, 0, nullptr, 0) != UNZ_OK)
 								Sys_Error("Couldn't get size of %s in %s", filename, pak->filename);
 							unzGetCurrentFileInfoPosition(pak->handle.z, &file->filepos);
 							file->z = pak->handle.z;
@@ -234,8 +234,8 @@ int FS_OpenFile (const char *filename, qFILE *file, filemode_t mode)
 		}
 	}
 
-	file->f = NULL;
-	file->z = NULL;
+	file->f = nullptr;
+	file->z = nullptr;
 	return -1;
 }
 
@@ -403,7 +403,7 @@ int FS_LoadFile (const char *path, byte **buffer)
 	len = FS_OpenFile(path, &h, FILE_READ);
 	if (!h.f && !h.z) {
 		if (buffer)
-			*buffer = NULL;
+			*buffer = nullptr;
 		return -1;
 	}
 
@@ -450,12 +450,12 @@ static pack_t *FS_LoadPackFile (const char *packfile)
 
 		if (err != UNZ_OK) {
 			Com_Printf("Could not load '%s'\n", packfile);
-			return NULL;
+			return nullptr;
 		}
 
 		unzGoToFirstFile(uf);
 		for (i = 0; i < gi.number_entry; i++) {
-			err = unzGetCurrentFileInfo(uf, &file_info, filenameInZip, sizeof(filenameInZip), NULL, 0, NULL, 0);
+			err = unzGetCurrentFileInfo(uf, &file_info, filenameInZip, sizeof(filenameInZip), nullptr, 0, nullptr, 0);
 			if (err != UNZ_OK) {
 				break;
 			}
@@ -465,7 +465,7 @@ static pack_t *FS_LoadPackFile (const char *packfile)
 		pack_t* const pack = Mem_PoolAllocType(pack_t, com_fileSysPool);
 		Q_strncpyz(pack->filename, packfile, sizeof(pack->filename));
 		pack->handle.z = uf;
-		pack->handle.f = NULL;
+		pack->handle.f = nullptr;
 		pack->numfiles = gi.number_entry;
 		unzGoToFirstFile(uf);
 
@@ -473,7 +473,7 @@ static pack_t *FS_LoadPackFile (const char *packfile)
 		packfile_t* const newfiles = Mem_PoolAllocTypeN(packfile_t, i, com_fileSysPool);
 
 		for (i = 0; i < gi.number_entry; i++) {
-			err = unzGetCurrentFileInfo(uf, &file_info, filenameInZip, sizeof(filenameInZip), NULL, 0, NULL, 0);
+			err = unzGetCurrentFileInfo(uf, &file_info, filenameInZip, sizeof(filenameInZip), nullptr, 0, nullptr, 0);
 			if (err != UNZ_OK)
 				break;
 			Q_strlwr(filenameInZip);
@@ -493,14 +493,14 @@ static pack_t *FS_LoadPackFile (const char *packfile)
 	} else {
 		/* Unrecognized file type! */
 		Com_Printf("Pack file type %s unrecognized\n", extension);
-		return NULL;
+		return nullptr;
 	}
 }
 
 #define MAX_PACKFILES 1024
 
 static char const* const pakFileExt[] = {
-	"pk3", "zip", NULL
+	"pk3", "zip", nullptr
 };
 
 /**
@@ -511,7 +511,7 @@ static char const* const pakFileExt[] = {
  */
 void FS_AddGameDirectory (const char *dir, bool write)
 {
-	char **dirnames = NULL;
+	char **dirnames = nullptr;
 	int ndirs = 0, i;
 	char pakfile_list[MAX_PACKFILES][MAX_OSPATH];
 	int pakfile_count = 0;
@@ -531,7 +531,7 @@ void FS_AddGameDirectory (const char *dir, bool write)
 	for (char const* const* extList = pakFileExt; *extList; ++extList) {
 		Com_sprintf(pattern, sizeof(pattern), "%s/*.%s", dir, *extList);
 		dirnames = FS_ListFiles(pattern, &ndirs, 0, SFF_SUBDIR | SFF_HIDDEN | SFF_SYSTEM);
-		if (dirnames != NULL) {
+		if (dirnames != nullptr) {
 			for (i = 0; i < ndirs - 1; i++) {
 				if (strrchr(dirnames[i], '/')) {
 					Q_strncpyz(pakfile_list[pakfile_count], dirnames[i], sizeof(pakfile_list[pakfile_count]));
@@ -594,7 +594,7 @@ char **FS_ListFiles (const char *findname, int *numfiles, unsigned musthave, uns
 	Sys_FindClose();
 
 	if (!nfiles)
-		return NULL;
+		return nullptr;
 
 	nfiles++; /* add space for a guard */
 	*numfiles = nfiles;
@@ -638,7 +638,7 @@ const char *FS_NextPath (const char *prevpath)
 	if (!prevpath)
 		return FS_Gamedir();
 
-	prev = NULL;
+	prev = nullptr;
 	for (s = fs_searchpaths; s; s = s->next) {
 		if (s->pack)
 			continue;
@@ -647,7 +647,7 @@ const char *FS_NextPath (const char *prevpath)
 		prev = s->filename;
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 static bool FS_GetHomeDirectory(char *gdir, size_t length)
@@ -700,7 +700,7 @@ int FS_GetModList (linkedList_t **mods)
 		Q_strcat(gdir, append, sizeof(gdir));
 		homedir = gdir;
 	} else {
-		homedir = NULL;
+		homedir = nullptr;
 	}
 
 	char const * searchpaths[] = {
@@ -709,7 +709,7 @@ int FS_GetModList (linkedList_t **mods)
 #endif
 			"./" MODS_DIR,
 			homedir,
-			NULL
+			nullptr
 	};
 
 	LIST_AddString(mods, BASEDIRNAME);
@@ -719,7 +719,7 @@ int FS_GetModList (linkedList_t **mods)
 		const char *pattern = *path;
 		int ndirs = 0;
 		char **dirnames = FS_ListFiles(va("%s/*", pattern), &ndirs, SFF_SUBDIR, SFF_HIDDEN | SFF_SYSTEM);
-		if (dirnames != NULL) {
+		if (dirnames != nullptr) {
 			int i;
 			for (i = 0; i < ndirs - 1; i++) {
 				LIST_AddString(mods, dirnames[i] + (strlen(pattern) + 1));
@@ -738,7 +738,7 @@ int FS_GetModList (linkedList_t **mods)
 static void FS_Mod_f (void)
 {
 	if (Cmd_Argc() == 1) {
-		linkedList_t *list = NULL;
+		linkedList_t *list = nullptr;
 		FS_GetModList(&list);
 		LIST_Foreach(list, const char, mod) {
 			Com_Printf("mod: %s\n", mod);
@@ -757,7 +757,7 @@ void FS_ExecAutoexec (void)
 	searchpath_t *s;
 
 	/* search through all the paths for an autoexec.cfg file */
-	for (s = fs_searchpaths; s != NULL; s = s->next) {
+	for (s = fs_searchpaths; s != nullptr; s = s->next) {
 		snprintf(name, sizeof(name), "%s/autoexec.cfg", s->filename);
 
 		if (Sys_FindFirst(name, 0, SFF_SUBDIR | SFF_HIDDEN | SFF_SYSTEM)) {
@@ -818,12 +818,12 @@ static void FS_Link_f (void)
 static void FS_Dir_f (void)
 {
 	char const *wildcard = Cmd_Argc() != 1 ? Cmd_Argv(1) : "*.*";
-	const char *path = NULL;
+	const char *path = nullptr;
 	char findname[1024];
 	char **dirnames;
 	int ndirs;
 
-	while ((path = FS_NextPath(path)) != NULL) {
+	while ((path = FS_NextPath(path)) != nullptr) {
 		Com_sprintf(findname, sizeof(findname), "%s/%s", path, wildcard);
 		FS_NormPath(findname);
 
@@ -831,7 +831,7 @@ static void FS_Dir_f (void)
 		Com_Printf("----\n");
 
 		dirnames = FS_ListFiles(findname, &ndirs, 0, SFF_SUBDIR | SFF_HIDDEN | SFF_SYSTEM);
-		if (dirnames != NULL) {
+		if (dirnames != nullptr) {
 			int i;
 
 			for (i = 0; i < ndirs - 1; i++) {
@@ -853,9 +853,9 @@ static void FS_List_f (void)
 
 	Com_Printf("Show files for '%s'\n", wildcard);
 	FS_BuildFileList(wildcard);
-	while ((filename = FS_NextFileFromFileList(wildcard)) != NULL)
+	while ((filename = FS_NextFileFromFileList(wildcard)) != nullptr)
 		Com_Printf("%s\n", filename);
-	FS_NextFileFromFileList(NULL);
+	FS_NextFileFromFileList(nullptr);
 }
 
 /**
@@ -870,7 +870,7 @@ static void FS_Info_f (void)
 	Com_Printf("...write dir: '%s'\n", FS_Gamedir());
 
 	for (search = fs_searchpaths; search; search = search->next) {
-		if (search->pack == NULL)
+		if (search->pack == nullptr)
 			Com_Printf("...path: '%s'\n", search->filename);
 		else
 			Com_Printf("...pakfile: '%s' (%i files)\n", search->pack->filename, search->pack->numfiles);
@@ -885,7 +885,7 @@ static void FS_RestartFilesystem_f (void)
 	if (Cmd_Argc() == 2)
 		FS_RestartFilesystem(Cmd_Argv(1));
 	else
-		FS_RestartFilesystem(NULL);
+		FS_RestartFilesystem(nullptr);
 }
 
 /**
@@ -901,7 +901,7 @@ static const cmdList_t fs_commands[] = {
 	{"fs_info", FS_Info_f, "Show information about the virtual filesystem"},
 	{"fs_mod", FS_Mod_f, "Show or activate mods"},
 
-	{NULL, NULL, NULL}
+	{nullptr, nullptr, nullptr}
 };
 
 static void FS_RemoveCommands (void)
@@ -969,7 +969,7 @@ typedef struct listBlock_s {
 	struct listBlock_s *next;
 } listBlock_t;
 
-static listBlock_t *fs_blocklist = NULL;
+static listBlock_t *fs_blocklist = nullptr;
 
 /**
  * @brief Add one name to the filelist
@@ -1071,7 +1071,7 @@ int FS_BuildFileList (const char *fileList)
 				}
 			}
 		} else if (strstr(files, "**")) {
-			linkedList_t *list = NULL;
+			linkedList_t *list = nullptr;
 			const char *wildcard = strstr(files, "**");
 			const size_t l = strlen(files) - strlen(wildcard);
 
@@ -1096,7 +1096,7 @@ int FS_BuildFileList (const char *fileList)
 			FS_NormPath(findname);
 
 			filenames = FS_ListFiles(findname, &nfiles, 0, SFF_HIDDEN | SFF_SYSTEM);
-			if (filenames != NULL) {
+			if (filenames != nullptr) {
 				for (i = 0; i < nfiles - 1; i++) {
 					_AddToListBlock(&block->files, filenames[i], true);
 					Mem_Free(filenames[i]);
@@ -1111,15 +1111,15 @@ int FS_BuildFileList (const char *fileList)
 
 const char *FS_NextFileFromFileList (const char *files)
 {
-	static linkedList_t *listEntry = NULL;
-	static listBlock_t *_block = NULL;
+	static linkedList_t *listEntry = nullptr;
+	static listBlock_t *_block = nullptr;
 	listBlock_t *block;
-	const char *file = NULL;
+	const char *file = nullptr;
 
 	/* restart the list? */
-	if (files == NULL) {
-		_block = NULL;
-		return NULL;
+	if (files == nullptr) {
+		_block = nullptr;
+		return nullptr;
 	}
 
 	for (block = fs_blocklist; block; block = block->next) {
@@ -1136,7 +1136,7 @@ const char *FS_NextFileFromFileList (const char *files)
 		if (!block) {
 			/* still no filelist */
 			Com_Printf("FS_NextFileFromFileList: Could not create filelist for %s\n", files);
-			return NULL;
+			return nullptr;
 		}
 	}
 
@@ -1158,28 +1158,28 @@ const char *FS_NextFileFromFileList (const char *files)
 
 /**
  * @brief Returns the buffer of a file
- * @param[in] files If NULL, reset the filelist
- * If not NULL it may be something like *.cfg to get a list
+ * @param[in] files If nullptr, reset the filelist
+ * If not nullptr it may be something like *.cfg to get a list
  * of all config files in base/. Calling @c FS_GetFileData("*.cfg");
- * until it returns @c NULL is sufficient to get one buffer after another.
+ * until it returns @c nullptr is sufficient to get one buffer after another.
  * @note You don't have to free the file buffer on the calling side.
  * This is done in this function, too
  */
 const char *FS_GetFileData (const char *files)
 {
 	listBlock_t *block;
-	static linkedList_t *fileList = NULL;
-	static byte *buffer = NULL;
+	static linkedList_t *fileList = nullptr;
+	static byte *buffer = nullptr;
 
 	/* free the old file */
 	if (buffer) {
 		FS_FreeFile(buffer);
-		buffer = NULL;
+		buffer = nullptr;
 	}
 
 	if (!files) {
-		fileList = NULL;
-		return NULL;
+		fileList = nullptr;
+		return nullptr;
 	}
 
 	for (block = fs_blocklist; block; block = block->next) {
@@ -1189,7 +1189,7 @@ const char *FS_GetFileData (const char *files)
 
 	if (!block) {
 		/* didn't find any valid file list */
-		fileList = NULL;
+		fileList = nullptr;
 		FS_BuildFileList(files);
 		for (block = fs_blocklist; block; block = block->next) {
 			if (Q_streq(files, block->path))
@@ -1198,7 +1198,7 @@ const char *FS_GetFileData (const char *files)
 		if (!block) {
 			/* still no filelist */
 			Com_Printf("FS_GetFileData: Could not create filelist for %s\n", files);
-			return NULL;
+			return nullptr;
 		}
 	}
 
@@ -1221,7 +1221,7 @@ const char *FS_GetFileData (const char *files)
 	}
 
 	/* finished */
-	return NULL;
+	return nullptr;
 }
 
 char *FS_NextScriptHeader (const char *files, const char **name, const char **text)
@@ -1242,10 +1242,10 @@ char *FS_NextScriptHeader (const char *files, const char **name, const char **te
 		/* free the old file */
 		if (lBuffer) {
 			FS_FreeFile(lBuffer);
-			lBuffer = NULL;
+			lBuffer = nullptr;
 		}
 
-		return NULL;
+		return nullptr;
 	}
 
 	if (!Q_streq(files, lastList)) {
@@ -1259,7 +1259,7 @@ char *FS_NextScriptHeader (const char *files, const char **name, const char **te
 
 		if (!block)
 			/* didn't find any valid file list */
-			return NULL;
+			return nullptr;
 
 		lBlock = block;
 		lFile = block->files;
@@ -1304,7 +1304,7 @@ char *FS_NextScriptHeader (const char *files, const char **name, const char **te
 			/* free the old file */
 			if (lBuffer) {
 				FS_FreeFile(lBuffer);
-				lBuffer = NULL;
+				lBuffer = nullptr;
 			}
 
 			/* load a new file */
@@ -1325,11 +1325,11 @@ char *FS_NextScriptHeader (const char *files, const char **name, const char **te
 	/* free the old file */
 	if (lBuffer) {
 		FS_FreeFile(lBuffer);
-		lBuffer = NULL;
+		lBuffer = nullptr;
 	}
 
 	/* finished */
-	return NULL;
+	return nullptr;
 }
 
 /* global vars for maplisting */
@@ -1404,7 +1404,7 @@ void FS_GetMaps (bool reset)
 	char findname[MAX_OSPATH];
 	char filename[MAX_QPATH];
 	int status, i;
-	const char *baseMapName = NULL;
+	const char *baseMapName = nullptr;
 	char **dirnames;
 	int ndirs;
 	searchpath_t *search;
@@ -1444,7 +1444,7 @@ void FS_GetMaps (bool reset)
 						break;
 					}
 					fs_maps[fs_numInstalledMaps + 1] = Mem_PoolAllocTypeN(char, MAX_QPATH, com_fileSysPool);
-					if (fs_maps[fs_numInstalledMaps + 1] == NULL) {
+					if (fs_maps[fs_numInstalledMaps + 1] == nullptr) {
 						Com_Printf("Could not allocate memory in FS_GetMaps\n");
 						continue;
 					}
@@ -1464,7 +1464,7 @@ void FS_GetMaps (bool reset)
 			FS_NormPath(findname);
 
 			dirnames = FS_ListFiles(findname, &ndirs, 0, SFF_HIDDEN | SFF_SYSTEM);
-			if (dirnames != NULL) {
+			if (dirnames != nullptr) {
 				for (i = 0; i < ndirs - 1; i++) {
 					baseMapName = Com_SkipPath(dirnames[i]);
 					Com_StripExtension(baseMapName, filename, sizeof(filename));
@@ -1475,7 +1475,7 @@ void FS_GetMaps (bool reset)
 							break;
 						}
 						fs_maps[fs_numInstalledMaps + 1] = Mem_PoolAllocTypeN(char, MAX_QPATH, com_fileSysPool);
-						if (fs_maps[fs_numInstalledMaps + 1] == NULL) {
+						if (fs_maps[fs_numInstalledMaps + 1] == nullptr) {
 							Com_Printf("Could not allocate memory in FS_GetMaps\n");
 							Mem_Free(dirnames[i]);
 							continue;
@@ -1493,7 +1493,7 @@ void FS_GetMaps (bool reset)
 			FS_NormPath(findname);
 
 			dirnames = FS_ListFiles(findname, &ndirs, 0, SFF_HIDDEN | SFF_SYSTEM);
-			if (dirnames != NULL) {
+			if (dirnames != nullptr) {
 				for (i = 0; i < ndirs - 1; i++) {
 					baseMapName = Com_SkipPath(dirnames[i]);
 					Com_StripExtension(baseMapName, filename, sizeof(filename));
@@ -1502,7 +1502,7 @@ void FS_GetMaps (bool reset)
 						break;
 					}
 					fs_maps[fs_numInstalledMaps + 1] = Mem_PoolAllocTypeN(char, MAX_QPATH, com_fileSysPool);
-					if (fs_maps[fs_numInstalledMaps + 1] == NULL) {
+					if (fs_maps[fs_numInstalledMaps + 1] == nullptr) {
 						Com_Printf("Could not allocate memory in FS_GetMaps\n");
 						Mem_Free(dirnames[i]);
 						continue;
@@ -1656,11 +1656,11 @@ void FS_Shutdown (void)
 	}
 
 	/* any FS_ calls will now be an error until reinitialized */
-	fs_searchpaths = NULL;
-	fs_links = NULL;
+	fs_searchpaths = nullptr;
+	fs_links = nullptr;
 	fs_mapsInstalledInit = false;
 	fs_numInstalledMaps = -1;
-	fs_blocklist = NULL;
+	fs_blocklist = nullptr;
 
 #ifdef COMPILE_UFO
 	FS_RemoveCommands();
@@ -1677,7 +1677,7 @@ void FS_Shutdown (void)
  */
 void FS_RestartFilesystem (const char *gamedir)
 {
-	if (gamedir != NULL)
+	if (gamedir != nullptr)
 		Com_Printf("restarting with gamedir set to %s\n", gamedir);
 	throw comRestart_t(gamedir);
 }

@@ -86,7 +86,7 @@ static void CP_TEAM_SetEquipContainer (character_t *chr)
 	inventory_t *uiInv = *cgi->ui_inventory;
 	if (uiInv && uiInv != &chr->inv) {
 		chr->inv.setContainer(CID_EQUIP, uiInv->getContainer2(CID_EQUIP));
-		/* set 'old' CID_EQUIP to NULL */
+		/* set 'old' CID_EQUIP to nullptr */
 		uiInv->resetContainer(CID_EQUIP);
 	}
 	*cgi->ui_inventory = &chr->inv;
@@ -195,7 +195,7 @@ static void CP_TeamListDebug_f (void)
 	}
 
 	Com_Printf("%i members in the current team", AIR_GetTeamSize(aircraft));
-	for (l = aircraft->acTeam; l != NULL; l = l->next) {
+	for (l = aircraft->acTeam; l != nullptr; l = l->next) {
 		const Employee *employee = (const Employee *)l->data;
 		Com_Printf("ucn %i - name: %s\n", employee->chr.ucn, employee->chr.name);
 	}
@@ -236,7 +236,7 @@ static void CP_TEAM_FillEmployeeList_f (void)
 		return;
 
 	cgi->UI_ExecuteConfunc("aircraft_soldierlist_clear");
-	const int teamSize = employeeType == EMPL_PILOT ? (AIR_GetPilot(aircraft) != NULL ? 1 : 0) : AIR_GetTeamSize(aircraft);
+	const int teamSize = employeeType == EMPL_PILOT ? (AIR_GetPilot(aircraft) != nullptr ? 1 : 0) : AIR_GetTeamSize(aircraft);
 	const int maxTeamSize = employeeType == EMPL_PILOT ? 1 : aircraft->maxTeamSize;
 	E_Foreach(employeeType, employee) {
 		const aircraft_t *assignedCraft;
@@ -247,8 +247,8 @@ static void CP_TEAM_FillEmployeeList_f (void)
 		if (employee->transfer)
 			continue;
 
-		assignedCraft = AIR_IsEmployeeInAircraft(employee, NULL);
-		if (assignedCraft == NULL) {
+		assignedCraft = AIR_IsEmployeeInAircraft(employee, nullptr);
+		if (assignedCraft == nullptr) {
 			/* employee unassigned */
 			if (teamSize >= maxTeamSize)
 				/* aircraft is full */
@@ -293,7 +293,7 @@ static void CP_TEAM_FillEquipSoldierList_f (void)
 			base = aircraft->homebase;
 			assert(base);
 		} else {
-			aircraft = NULL;
+			aircraft = nullptr;
 		}
 	}
 
@@ -353,7 +353,7 @@ static void CP_TEAM_FillBDEFEmployeeList_f (void)
 			continue;
 
 		const char *tooltip;
-		const bool isInTeam = AIR_IsEmployeeInAircraft(employee, aircraft) != NULL;
+		const bool isInTeam = AIR_IsEmployeeInAircraft(employee, aircraft) != nullptr;
 		if (employee->isAwayFromBase())
 			tooltip = _("Employee is away from base");
 		else if (!isInTeam && teamSize >= maxTeamSize)
@@ -379,7 +379,7 @@ static void CP_TEAM_ChangeSkin_f (void)
 	int bodySkinIdx = atoi(cgi->Cmd_Argv(2));
 
 	Employee *soldier = E_GetEmployeeFromChrUCN(ucn);
-	if (soldier == NULL || !soldier->isSoldier()) {
+	if (soldier == nullptr || !soldier->isSoldier()) {
 		Com_Printf("Invalid soldier UCN: %i\n", ucn);
 		return;
 	}

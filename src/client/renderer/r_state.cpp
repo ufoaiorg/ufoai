@@ -32,7 +32,7 @@ const vec2_t default_texcoords[4] = {
 };
 
 /* Hack to keep track of active rendering program (have to reinit binings&parameters once it changed)*/
-static r_program_t* lastProgram = NULL;
+static r_program_t* lastProgram = nullptr;
 
 /**
  * @brief Returns false if the texunit is not supported
@@ -224,7 +224,7 @@ void R_BindBuffer (GLenum target, GLenum type, GLuint id)
 	}
 
 	if (type && id)  /* assign the array pointer as well */
-		R_BindArray(target, type, NULL);
+		R_BindArray(target, type, nullptr);
 }
 
 void R_BlendFunc (GLenum src, GLenum dest)
@@ -347,7 +347,7 @@ bool R_EnableLighting (r_program_t *program, bool enable)
 	} else {
 		glDisableClientState(GL_NORMAL_ARRAY);
 
-		R_UseProgram(NULL);
+		R_UseProgram(nullptr);
 	}
 
 	return r_state.lighting_enabled;
@@ -494,7 +494,7 @@ void R_EnableWarp (r_program_t *program, bool enable)
 		R_UseProgram(program);
 	} else {
 		glDisable(GL_TEXTURE_2D);
-		R_UseProgram(NULL);
+		R_UseProgram(nullptr);
 	}
 
 	R_SelectTexture(&texunit_diffuse);
@@ -522,7 +522,7 @@ void R_EnableBlur (r_program_t *program, bool enable, r_framebuffer_t *source, r
 		R_UseProgram(program);
 	} else {
 		R_UseFramebuffer(fbo_screen);
-		R_UseProgram(NULL);
+		R_UseProgram(nullptr);
 	}
 
 	R_SelectTexture(&texunit_diffuse);
@@ -661,7 +661,7 @@ void R_EnableGlowMap (const image_t *image)
 			R_UseProgram(r_state.simple_glow_program);
 	} else {
 		if (r_state.active_program == r_state.simple_glow_program)
-			R_UseProgram(NULL);
+			R_UseProgram(nullptr);
 	}
 
 	lastProgram = r_state.active_program;
@@ -692,7 +692,7 @@ void R_EnableSpecularMap (const image_t *image, bool enable)
 	if (r_programs->integer < 2)
 		return;
 
-	if (enable && image != NULL) {
+	if (enable && image != nullptr) {
 		R_BindTextureForTexUnit(image->texnum, &texunit_specularmap);
 		R_ProgramParameter1i("SPECULARMAP", 1);
 		r_state.specularmap_enabled = enable;
@@ -707,7 +707,7 @@ void R_EnableRoughnessMap (const image_t *image, bool enable)
 	if (!r_state.dynamic_lighting_enabled)
 		return;
 
-	if (enable && image != NULL) {
+	if (enable && image != nullptr) {
 		R_BindTextureForTexUnit(image->texnum, &texunit_roughnessmap);
 		R_ProgramParameter1i("ROUGHMAP", 1);
 		r_state.roughnessmap_enabled = enable;
@@ -823,7 +823,7 @@ void R_Setup2D (void)
 	/* bind default vertex array */
 	R_BindDefaultArray(GL_VERTEX_ARRAY);
 
-	R_Color(NULL);
+	R_Color(nullptr);
 
 	glEnable(GL_BLEND);
 
@@ -857,10 +857,10 @@ void R_SetDefaultState (void)
 	r_state.roughnessmap_enabled = false;
 	r_state.animation_enabled = false;
 	r_state.renderbuffer_enabled = false;
-	r_state.active_material = NULL;
+	r_state.active_material = nullptr;
 	r_state.blend_src = 0;
 	r_state.blend_dest = 0;
-	r_state.active_texunit = NULL;
+	r_state.active_texunit = nullptr;
 
 	glClearColor(0, 0, 0, 0);
 
@@ -945,7 +945,7 @@ void R_TexEnv (GLenum mode)
 }
 
 /**
- * @brief Sets special texture environment mode to override texture color; don't forget to call R_TexOverride(NULL) to reset after drawing; intended for UI only, will conflict with lightmaps
+ * @brief Sets special texture environment mode to override texture color; don't forget to call R_TexOverride(nullptr) to reset after drawing; intended for UI only, will conflict with lightmaps
  */
 void R_TexOverride (vec4_t rgba)
 {
@@ -988,7 +988,7 @@ const vec4_t color_white = {1, 1, 1, 1};
 /**
  * @brief Change the color to given value
  * @param[in] rgba A pointer to a vec4_t with rgba color value
- * @note To reset the color let rgba be NULL
+ * @note To reset the color let rgba be nullptr
  */
 void R_Color (const vec4_t rgba)
 {

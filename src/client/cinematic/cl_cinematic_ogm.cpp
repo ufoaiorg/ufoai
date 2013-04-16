@@ -98,7 +98,7 @@ static int CIN_XVID_Init (cinematic_t *cin)
 	xvid_gbl_init.cpu_flags = 0;
 	xvid_gbl_init.debug = 0;
 
-	xvid_global(NULL, 0, &xvid_gbl_init, NULL);
+	xvid_global(nullptr, 0, &xvid_gbl_init, nullptr);
 
 	/* Version */
 	xvid_dec_create.version = XVID_VERSION;
@@ -107,7 +107,7 @@ static int CIN_XVID_Init (cinematic_t *cin)
 	xvid_dec_create.width = 0;
 	xvid_dec_create.height = 0;
 
-	ret = xvid_decore(NULL, XVID_DEC_CREATE, &xvid_dec_create, NULL);
+	ret = xvid_decore(nullptr, XVID_DEC_CREATE, &xvid_dec_create, nullptr);
 
 	OGMCIN.xvidDecodeHandle = xvid_dec_create.handle;
 
@@ -138,7 +138,7 @@ static int CIN_XVID_Decode (cinematic_t *cin, unsigned char *input, int inputSiz
 	/* Output frame structure */
 	xvid_dec_frame.output.plane[0]  = OGMCIN.outputBuffer;
 	xvid_dec_frame.output.stride[0] = OGMCIN.outputWidth * sizeof(*OGMCIN.outputBuffer);
-	if (OGMCIN.outputBuffer == NULL)
+	if (OGMCIN.outputBuffer == nullptr)
 		xvid_dec_frame.output.csp = XVID_CSP_NULL;
 	else
 		xvid_dec_frame.output.csp = XVID_CSP_RGBA;
@@ -153,7 +153,7 @@ static int CIN_XVID_Shutdown (cinematic_t *cin)
 	int ret = 0;
 
 	if (OGMCIN.xvidDecodeHandle)
-		ret = xvid_decore(OGMCIN.xvidDecodeHandle, XVID_DEC_DESTROY, NULL, NULL);
+		ret = xvid_decore(OGMCIN.xvidDecodeHandle, XVID_DEC_DESTROY, nullptr, nullptr);
 
 	return ret;
 }
@@ -186,7 +186,7 @@ static int CIN_OGM_LoadPagesToStream (cinematic_t *cin)
 	int r = -1;
 	int audioPages = 0;
 	int videoPages = 0;
-	ogg_stream_state* osptr = NULL;
+	ogg_stream_state* osptr = nullptr;
 	ogg_page og;
 
 	while (!audioPages || !videoPages) {
@@ -202,7 +202,7 @@ static int CIN_OGM_LoadPagesToStream (cinematic_t *cin)
 			++videoPages;
 		}
 
-		if (osptr != NULL) {
+		if (osptr != nullptr) {
 			ogg_stream_pagein(osptr, &og);
 		}
 	}
@@ -299,7 +299,7 @@ static int CIN_XVID_LoadVideoFrame (cinematic_t *cin)
 
 				/* Allocate the new buffer */
 				OGMCIN.outputBuffer = Mem_PoolAllocTypeN(unsigned, OGMCIN.outputBufferSize, cl_genericPool);
-				if (OGMCIN.outputBuffer == NULL) {
+				if (OGMCIN.outputBuffer == nullptr) {
 					OGMCIN.outputBufferSize = 0;
 					r = -2;
 					break;
@@ -417,7 +417,7 @@ static int CIN_THEORA_LoadVideoFrame (cinematic_t *cin)
 
 				/* Allocate the new buffer */
 				OGMCIN.outputBuffer = Mem_PoolAllocTypeN(unsigned, OGMCIN.outputBufferSize, cl_genericPool);
-				if (OGMCIN.outputBuffer == NULL) {
+				if (OGMCIN.outputBuffer == nullptr) {
 					OGMCIN.outputBufferSize = 0;
 					r = -2;
 					break;
@@ -566,7 +566,7 @@ int CIN_OGM_OpenCinematic (cinematic_t *cin, const char* filename)
 	}
 
 	/* alloc memory for decoding of this video */
-	assert(cin->codecData == NULL);
+	assert(cin->codecData == nullptr);
 	cin->codecData = Mem_PoolAllocType(ogmCinematic_t, vid_genericPool);
 
 	if (FS_OpenFile(filename, &OGMCIN.ogmFile, FILE_READ) == -1) {
@@ -766,7 +766,7 @@ void CIN_OGM_CloseCinematic (cinematic_t *cin)
 	M_StopMusicStream(&OGMCIN.musicStream);
 
 	Mem_Free(OGMCIN.outputBuffer);
-	OGMCIN.outputBuffer = NULL;
+	OGMCIN.outputBuffer = nullptr;
 
 	vorbis_dsp_clear(&OGMCIN.vd);
 	vorbis_comment_clear(&OGMCIN.vc);
@@ -781,7 +781,7 @@ void CIN_OGM_CloseCinematic (cinematic_t *cin)
 
 	/* free data allocated for decodage */
 	Mem_Free(cin->codecData);
-	cin->codecData = NULL;
+	cin->codecData = nullptr;
 }
 
 void CIN_OGM_Init (void)

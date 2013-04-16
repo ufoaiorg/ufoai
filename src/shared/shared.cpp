@@ -258,7 +258,7 @@ void Com_ReplaceFilename (const char *inputPath, const char *expectedFileName, c
  */
 void Com_StripExtension (const char *in, char *out, const size_t size)
 {
-	char *out_ext = NULL;
+	char *out_ext = nullptr;
 	int i = 1;
 
 	while (*in && i < size) {
@@ -277,7 +277,7 @@ void Com_StripExtension (const char *in, char *out, const size_t size)
 
 /**
  * @param path The path resp. filename to extract the extension from
- * @return @c NULL if the given path name does not contain an extension
+ * @return @c nullptr if the given path name does not contain an extension
  */
 const char *Com_GetExtension (const char *path)
 {
@@ -288,7 +288,7 @@ const char *Com_GetExtension (const char *path)
 		src--;
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -458,9 +458,9 @@ void Q_strncpyz (char *dest, const char *src, size_t destsize)
 {
 #ifdef DEBUG
 	if (!dest)
-		Sys_Error("Q_strncpyz: NULL dest (%s, %i)", file, line);
+		Sys_Error("Q_strncpyz: nullptr dest (%s, %i)", file, line);
 	if (!src)
-		Sys_Error("Q_strncpyz: NULL src (%s, %i)", file, line);
+		Sys_Error("Q_strncpyz: nullptr src (%s, %i)", file, line);
 	if (destsize < 1)
 		Sys_Error("Q_strncpyz: destsize < 1 (%s, %i)", file, line);
 #endif
@@ -562,7 +562,7 @@ const char *Q_stristr (const char *str, const char *substr)
 		str++;
 	}
 	if (!(*str))
-		str = NULL;
+		str = nullptr;
 	return str;
 }
 
@@ -600,7 +600,7 @@ bool Com_IsValidName (const char *input)
 	if (Q_streq(input, "_"))
 		return false;
 	/* there may be no quotes in the names - as they are given very often as parameter in the scripts */
-	if (strchr(input, '"') != NULL)
+	if (strchr(input, '"') != nullptr)
 		return false;
 	return true;
 }

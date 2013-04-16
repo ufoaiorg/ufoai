@@ -82,9 +82,9 @@ bool G_MissionTouch (Edict *self, Edict *activator)
 
 		/* search the item in the activator's inventory */
 		/* ignore items linked from any temp container the actor must have this in his hands */
-		const Container *cont = NULL;
+		const Container *cont = nullptr;
 		while ((cont = activator->chr.inv.getNextCont(cont))) {
-			Item *item = NULL;
+			Item *item = nullptr;
 			while ((item = cont->getNextItem(item))) {
 				const objDef_t *od = item->def();
 				/* check whether we found the searched item in the actor's inventory */
@@ -128,8 +128,8 @@ bool G_MissionUse (Edict *self, Edict *activator)
 		target->HP = 0;
 		target->destroy(target);
 		/* freed when the level changes */
-		self->target = NULL;
-		self->use = NULL;
+		self->target = nullptr;
+		self->use = nullptr;
 	} else if (target->use)
 		target->use(target, activator);
 
@@ -155,7 +155,7 @@ void G_MissionThink (Edict *self)
 		G_SpawnParticle(self->origin, self->spawnflags, self->particle);
 
 		/* This is automatically freed on map shutdown */
-		self->particle = NULL;
+		self->particle = nullptr;
 	}
 
 	if (!chain)
@@ -202,7 +202,7 @@ void G_MissionThink (Edict *self)
 	}
 
 	if (self->use)
-		self->use(self, NULL);
+		self->use(self, nullptr);
 
 	/* store team before the edict is released */
 	team = self->team;
@@ -211,22 +211,22 @@ void G_MissionThink (Edict *self)
 	if (!chain)
 		chain = self;
 	while (chain) {
-		if (chain->item != NULL) {
+		if (chain->item != nullptr) {
 			Edict *item = G_GetEdictFromPos(chain->pos, ET_ITEM);
-			if (item != NULL) {
+			if (item != nullptr) {
 				if (!G_InventoryRemoveItemByID(chain->item, item, CID_FLOOR)) {
 					Com_Printf("Could not remove item '%s' from floor edict %i\n",
 							chain->item, item->number);
 				} else {
-					G_AppearPerishEvent(G_VisToPM(item->visflags), false, *item, NULL);
+					G_AppearPerishEvent(G_VisToPM(item->visflags), false, *item, nullptr);
 				}
 			}
 		}
-		if (chain->particle != NULL) {
+		if (chain->particle != nullptr) {
 			/** @todo not yet working - particle stays active */
 			Edict *particle = G_GetEdictFromPos(chain->pos, ET_PARTICLE);
-			if (particle != NULL) {
-				G_AppearPerishEvent(PM_ALL, false, *particle, NULL);
+			if (particle != nullptr) {
+				G_AppearPerishEvent(PM_ALL, false, *particle, nullptr);
 				G_FreeEdict(particle);
 			}
 		}
@@ -239,10 +239,10 @@ void G_MissionThink (Edict *self)
 		G_FreeEdict(chain);
 		chain = ent;
 	}
-	self = NULL;
+	self = nullptr;
 
 	/* still active mission edicts left */
-	ent = NULL;
+	ent = nullptr;
 	while ((ent = G_EdictsGetNextInUse(ent)))
 		if (ent->type == ET_MISSION && ent->team == team)
 			return;

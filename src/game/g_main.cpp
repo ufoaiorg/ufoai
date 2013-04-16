@@ -156,8 +156,8 @@ static void G_Init (void)
 
 	/* latched vars */
 	sv_cheats = gi.Cvar_Get("sv_cheats", "0", CVAR_SERVERINFO | CVAR_LATCH, "Activate cheats");
-	gi.Cvar_Get("gamename", GAMEVERSION, CVAR_SERVERINFO | CVAR_LATCH, NULL);
-	gi.Cvar_Get("gamedate", __DATE__, CVAR_SERVERINFO | CVAR_LATCH, NULL);
+	gi.Cvar_Get("gamename", GAMEVERSION, CVAR_SERVERINFO | CVAR_LATCH, nullptr);
+	gi.Cvar_Get("gamedate", __DATE__, CVAR_SERVERINFO | CVAR_LATCH, nullptr);
 	developer = gi.Cvar_Get("developer", "0", 0, "Print out a lot of developer debug messages - useful to track down bugs");
 	logstats = gi.Cvar_Get("logstats", "1", CVAR_ARCHIVE, "Server logfile output for kills");
 
@@ -171,15 +171,15 @@ static void G_Init (void)
 	sv_enablemorale = gi.Cvar_Get("sv_enablemorale", "1", CVAR_ARCHIVE | CVAR_SERVERINFO | CVAR_LATCH, "Enable morale behaviour for actors");
 	sv_roundtimelimit = gi.Cvar_Get("sv_roundtimelimit", "90", CVAR_ARCHIVE | CVAR_SERVERINFO, "Timelimit in seconds for multiplayer rounds");
 	sv_roundtimelimit->modified = false;
-	sv_maxentities = gi.Cvar_Get("sv_maxentities", "1024", CVAR_LATCH, NULL);
+	sv_maxentities = gi.Cvar_Get("sv_maxentities", "1024", CVAR_LATCH, nullptr);
 
 	sv_maxteams = gi.Cvar_Get("sv_maxteams", "2", CVAR_SERVERINFO, "How many teams for current running map");
 	sv_maxteams->modified = false;
 
 	/* change anytime vars */
-	password = gi.Cvar_Get("password", "", CVAR_USERINFO, NULL);
-	sv_needpass = gi.Cvar_Get("sv_needpass", "0", CVAR_SERVERINFO, NULL);
-	sv_filterban = gi.Cvar_Get("sv_filterban", "1", 0, NULL);
+	password = gi.Cvar_Get("password", "", CVAR_USERINFO, nullptr);
+	sv_needpass = gi.Cvar_Get("sv_needpass", "0", CVAR_SERVERINFO, nullptr);
+	sv_filterban = gi.Cvar_Get("sv_filterban", "1", 0, nullptr);
 	sv_ai = gi.Cvar_Get("sv_ai", "1", 0, "Activate or deativate the ai");
 	sv_teamplay = gi.Cvar_Get("sv_teamplay", "0", CVAR_ARCHIVE | CVAR_LATCH | CVAR_SERVERINFO, "Is teamplay activated? see sv_maxclients, sv_maxplayersperteam, sv_maxsoldiersperteam and sv_maxsoldiersperplayer");
 	/* how many connected clients */
@@ -199,13 +199,13 @@ static void G_Init (void)
 	/* aliens in multiplayer */
 	ai_numactors = gi.Cvar_Get("ai_numactors", "8", CVAR_ARCHIVE, "How many (ai controlled) actors in this battle (multiplayer)");
 
-	mob_death = gi.Cvar_Get("mob_death", "10", CVAR_LATCH|CVAR_NOSET, NULL);
-	mob_wound = gi.Cvar_Get("mob_wound", "0.1", CVAR_LATCH|CVAR_NOSET, NULL);
-	mof_watching = gi.Cvar_Get("mof_watching", "1.7", CVAR_LATCH|CVAR_NOSET, NULL);
-	mof_teamkill = gi.Cvar_Get("mof_teamkill", "2.0", CVAR_LATCH|CVAR_NOSET, NULL);
-	mof_civilian = gi.Cvar_Get("mof_civilian", "0.3", CVAR_LATCH|CVAR_NOSET, NULL);
-	mof_enemy = gi.Cvar_Get("mof_ememy", "0.5", CVAR_LATCH|CVAR_NOSET, NULL);
-	mor_pain = gi.Cvar_Get("mof_pain", "3.6", CVAR_LATCH|CVAR_NOSET, NULL);
+	mob_death = gi.Cvar_Get("mob_death", "10", CVAR_LATCH|CVAR_NOSET, nullptr);
+	mob_wound = gi.Cvar_Get("mob_wound", "0.1", CVAR_LATCH|CVAR_NOSET, nullptr);
+	mof_watching = gi.Cvar_Get("mof_watching", "1.7", CVAR_LATCH|CVAR_NOSET, nullptr);
+	mof_teamkill = gi.Cvar_Get("mof_teamkill", "2.0", CVAR_LATCH|CVAR_NOSET, nullptr);
+	mof_civilian = gi.Cvar_Get("mof_civilian", "0.3", CVAR_LATCH|CVAR_NOSET, nullptr);
+	mof_enemy = gi.Cvar_Get("mof_ememy", "0.5", CVAR_LATCH|CVAR_NOSET, nullptr);
+	mor_pain = gi.Cvar_Get("mof_pain", "3.6", CVAR_LATCH|CVAR_NOSET, nullptr);
 	/* everyone gets this times morale damage */
 	mor_default = gi.Cvar_Get("mor_default", "0.3", CVAR_LATCH|CVAR_NOSET, "Everyone gets this times morale damage");
 	/* at this distance the following two get halved (exponential scale) */
@@ -217,15 +217,15 @@ static void G_Init (void)
 	/* how much the morale depends on the size of the damaged team */
 	mon_teamfactor = gi.Cvar_Get("mon_teamfactor", "0.6", CVAR_LATCH|CVAR_NOSET, "How much the morale depends on the size of the damaged team");
 
-	mor_regeneration = gi.Cvar_Get("mor_regeneration", "15", CVAR_LATCH|CVAR_NOSET, NULL);
-	mor_shaken = gi.Cvar_Get("mor_shaken", "50", CVAR_LATCH|CVAR_NOSET, NULL);
-	mor_panic = gi.Cvar_Get("mor_panic", "30", CVAR_LATCH|CVAR_NOSET, NULL);
-	mor_brave = gi.Cvar_Get("mor_brave", "85", CVAR_LATCH|CVAR_NOSET, NULL);
+	mor_regeneration = gi.Cvar_Get("mor_regeneration", "15", CVAR_LATCH|CVAR_NOSET, nullptr);
+	mor_shaken = gi.Cvar_Get("mor_shaken", "50", CVAR_LATCH|CVAR_NOSET, nullptr);
+	mor_panic = gi.Cvar_Get("mor_panic", "30", CVAR_LATCH|CVAR_NOSET, nullptr);
+	mor_brave = gi.Cvar_Get("mor_brave", "85", CVAR_LATCH|CVAR_NOSET, nullptr);
 
-	m_sanity = gi.Cvar_Get("m_sanity", "1.0", CVAR_LATCH|CVAR_NOSET, NULL);
-	m_rage = gi.Cvar_Get("m_rage", "0.6", CVAR_LATCH|CVAR_NOSET, NULL);
-	m_rage_stop = gi.Cvar_Get("m_rage_stop", "2.0", CVAR_LATCH|CVAR_NOSET, NULL);
-	m_panic_stop = gi.Cvar_Get("m_panic_stop", "1.0", CVAR_LATCH|CVAR_NOSET, NULL);
+	m_sanity = gi.Cvar_Get("m_sanity", "1.0", CVAR_LATCH|CVAR_NOSET, nullptr);
+	m_rage = gi.Cvar_Get("m_rage", "0.6", CVAR_LATCH|CVAR_NOSET, nullptr);
+	m_rage_stop = gi.Cvar_Get("m_rage_stop", "2.0", CVAR_LATCH|CVAR_NOSET, nullptr);
+	m_panic_stop = gi.Cvar_Get("m_panic_stop", "1.0", CVAR_LATCH|CVAR_NOSET, nullptr);
 
 	g_endlessaliens = gi.Cvar_Get("g_endlessaliens", "0", CVAR_LATCH|CVAR_SERVERINFO, "Spawn endless aliens");
 	g_ailua = gi.Cvar_Get("g_ailua", "0", 0, "Activate or deactivate the LUA AI");
@@ -239,8 +239,8 @@ static void G_Init (void)
 	g_nospawn = gi.Cvar_Get("g_nospawn", "0", CVAR_DEVELOPER|CVAR_CHEAT, "Do not spawn a soldier");
 
 	/* flood control */
-	flood_msgs = gi.Cvar_Get("flood_msgs", "4", 0, NULL);
-	flood_persecond = gi.Cvar_Get("flood_persecond", "4", 0, NULL);
+	flood_msgs = gi.Cvar_Get("flood_msgs", "4", 0, nullptr);
+	flood_persecond = gi.Cvar_Get("flood_persecond", "4", 0, nullptr);
 	flood_waitdelay = gi.Cvar_Get("flood_waitdelay", "10", 0, "Delay until someone is unlocked from talking again");
 
 	g_difficulty = gi.Cvar_Get("g_difficulty", "0", CVAR_NOSET, "Singleplayer difficulty level");
@@ -267,7 +267,7 @@ static void G_Init (void)
 	if (logstats->integer)
 		logstatsfile = fopen(va("%s/stats.log", gi.FS_Gamedir()), "a");
 	else
-		logstatsfile = NULL;
+		logstatsfile = nullptr;
 
 	AI_Init();
 	AIL_Init();
@@ -285,7 +285,7 @@ static void G_Shutdown (void)
 
 	if (logstatsfile)
 		fclose(logstatsfile);
-	logstatsfile = NULL;
+	logstatsfile = nullptr;
 
 	G_FreeTags(TAG_LEVEL);
 	G_FreeTags(TAG_GAME);

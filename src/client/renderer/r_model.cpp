@@ -44,7 +44,7 @@ static int r_numActorSkinName;
  * @sa modtype_t
  */
 static char const* const mod_extensions[] = {
-	"md2", "md3", "obj", NULL
+	"md2", "md3", "obj", nullptr
 };
 
 /**
@@ -119,7 +119,7 @@ static bool R_LoadModel (model_t *mod, const char *filename)
 	char animname[MAX_QPATH];
 
 	if (filename[0] == '\0')
-		Com_Error(ERR_FATAL, "R_ModForName: NULL name");
+		Com_Error(ERR_FATAL, "R_ModForName: nullptr name");
 
 	/* load the file */
 	modfilelen = FS_LoadFile(filename, &buf);
@@ -148,7 +148,7 @@ static bool R_LoadModel (model_t *mod, const char *filename)
 	default:
 	{
 		const char *ext = Com_GetExtension(filename);
-		if (ext != NULL && !Q_strcasecmp(ext, "obj"))
+		if (ext != nullptr && !Q_strcasecmp(ext, "obj"))
 			R_LoadObjModel(mod, buf, modfilelen);
 		else
 			Com_Error(ERR_FATAL, "R_ModForName: unknown fileid for %s", mod->name);
@@ -171,9 +171,9 @@ static bool R_LoadModel (model_t *mod, const char *filename)
 
 bool R_ModelExists (const char *name)
 {
-	if (Com_GetExtension(name) == NULL) {
+	if (Com_GetExtension(name) == nullptr) {
 		int i;
-		for (i = 0; mod_extensions[i] != NULL; i++) {
+		for (i = 0; mod_extensions[i] != nullptr; i++) {
 			if (FS_CheckFile("models/%s.%s", name, mod_extensions[i]) != -1) {
 				return true;
 			}
@@ -194,7 +194,7 @@ bool R_ModelExists (const char *name)
  * @note if first char of name is a '*' - this is an inline model
  * @note if there is not extension in the given filename the function will
  * try to load one of the supported model formats
- * @return NULL if no model could be found with the given name, model_t otherwise
+ * @return nullptr if no model could be found with the given name, model_t otherwise
  */
 model_t *R_FindModel (const char *name)
 {
@@ -204,22 +204,22 @@ model_t *R_FindModel (const char *name)
 	int i;
 
 	if (!name || !name[0])
-		return NULL;
+		return nullptr;
 
 	/* search for existing models */
 	mod = R_GetModel(name);
-	if (mod != NULL)
+	if (mod != nullptr)
 		return mod;
 
 	/* no inline bsp models here */
 	if (name[0] == '*')
-		return NULL;
+		return nullptr;
 
 	/* load model */
-	if (Com_GetExtension(name) == NULL) {
+	if (Com_GetExtension(name) == nullptr) {
 		char filename[MAX_QPATH];
 
-		for (i = 0; mod_extensions[i] != NULL; i++) {
+		for (i = 0; mod_extensions[i] != nullptr; i++) {
 			Com_sprintf(filename, sizeof(filename), "models/%s.%s", name, mod_extensions[i]);
 			loaded = R_LoadModel(&model, filename);
 			if (loaded) {
@@ -235,7 +235,7 @@ model_t *R_FindModel (const char *name)
 
 	if (!loaded) {
 		Com_Printf("R_FindModel: Could not find: '%s'\n", name);
-		return NULL;
+		return nullptr;
 	}
 
 	/* register the new model only after the loading is finished */
@@ -258,7 +258,7 @@ model_t *R_FindModel (const char *name)
 
 /**
  * @brief Get a model for the given name already loaded.
- * @return A model for the given name, else NULL.
+ * @return A model for the given name, else nullptr.
  * @sa R_FindModel
  * @param[in] name Short name of the model relative to base dir without (models/model)
  */
@@ -268,7 +268,7 @@ model_t *R_GetModel (const char *name)
 	int i;
 
 	if (name[0] == '\0')
-		Com_Error(ERR_FATAL, "R_ModForName: NULL name");
+		Com_Error(ERR_FATAL, "R_ModForName: nullptr name");
 
 	/* inline models are grabbed only from worldmodel */
 	if (name[0] == '*') {
@@ -282,7 +282,7 @@ model_t *R_GetModel (const char *name)
 	for (i = 0, mod = r_models; i < r_numModels; i++, mod++)
 		if (Q_streq(mod->name, name))
 			return mod;
-	return NULL;
+	return nullptr;
 }
 
 #define MEM_TAG_STATIC_MODELS 1
@@ -369,7 +369,7 @@ void R_LoadActorSkinsFromModel (mAliasMesh_t *outMesh, image_t *defaultSkin)
 			modelSkin->skin = defaultSkin;
 		} else {
 			const char *skin = R_GetActorSkin(i);
-			modelSkin->skin = R_AliasModelGetSkin(NULL, va("%s_%s", defaultSkin->name, skin));
+			modelSkin->skin = R_AliasModelGetSkin(nullptr, va("%s_%s", defaultSkin->name, skin));
 			/** @todo should we add warning here? */
 			if (modelSkin->skin == r_noTexture)
 				modelSkin->skin = defaultSkin;

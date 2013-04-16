@@ -30,7 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define CLIENT_INPUT_H
 
 typedef enum {
-	MS_NULL,
+	MS_nullptr,
 	MS_UI,			/**< we are over some menu node */
 	MS_WORLD,		/**< we are in tactical mode */
 

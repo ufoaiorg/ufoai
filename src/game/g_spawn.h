@@ -31,7 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "g_local.h"
 
 void G_SpawnEntities(const char *mapname, bool day, const char *entities);
-Edict *G_Spawn(const char *classname = NULL);
+Edict *G_Spawn(const char *classname = nullptr);
 void G_SpawnSmokeField(const vec3_t vec, const char *particle, int rounds, vec_t radius);
 void G_SpawnFireField(const vec3_t vec, const char *particle, int rounds, int damage, vec_t radius);
 void G_SpawnStunSmokeField(const vec3_t vec, const char *particle, int rounds, int damage, vec_t radius);

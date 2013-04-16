@@ -123,10 +123,10 @@ void RemovePortalFromNode (portal_t *portal, node_t *l)
 
 	if (portal->nodes[0] == l) {
 		*pp = portal->next[0];
-		portal->nodes[0] = NULL;
+		portal->nodes[0] = nullptr;
 	} else if (portal->nodes[1] == l) {
 		*pp = portal->next[1];
-		portal->nodes[1] = NULL;
+		portal->nodes[1] = nullptr;
 	}
 }
 
@@ -151,8 +151,8 @@ static void MakeHeadnodePortals (tree_t *tree)
 	}
 
 	tree->outside_node.planenum = PLANENUM_LEAF;
-	tree->outside_node.brushlist = NULL;
-	tree->outside_node.portals = NULL;
+	tree->outside_node.brushlist = nullptr;
+	tree->outside_node.portals = nullptr;
 	tree->outside_node.contentFlags = 0;
 
 	for (i = 0; i < 3; i++)
@@ -300,13 +300,13 @@ static void SplitNodePortals (node_t *node)
 
 		if (frontwinding && WindingIsTiny(frontwinding)) {
 			FreeWinding(frontwinding);
-			frontwinding = NULL;
+			frontwinding = nullptr;
 			c_tinyportals++;
 		}
 
 		if (backwinding && WindingIsTiny(backwinding)) {
 			FreeWinding(backwinding);
-			backwinding = NULL;
+			backwinding = nullptr;
 			c_tinyportals++;
 		}
 
@@ -347,7 +347,7 @@ static void SplitNodePortals (node_t *node)
 		}
 	}
 
-	node->portals = NULL;
+	node->portals = nullptr;
 }
 
 
@@ -417,7 +417,7 @@ static void FindPortalSide (portal_t *p)
 		return;
 
 	planenum = p->onnode->planenum;
-	bestside = NULL;
+	bestside = nullptr;
 	bestdot = 0;
 
 	for (j = 0; j < 2; j++) {

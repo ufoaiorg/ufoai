@@ -79,6 +79,6 @@ void SV_LogInit (void)
 void SV_LogShutdown (void)
 {
 	SDL_DestroyMutex(svLogMutex);
-	svLogMutex = NULL;
+	svLogMutex = nullptr;
 	STRHUNK_Delete(&svLogHunk);
 }

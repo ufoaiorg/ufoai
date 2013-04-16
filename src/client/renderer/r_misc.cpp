@@ -73,7 +73,7 @@ void R_InitMiscTexture (void)
 	r_dummyTexture = R_LoadImageData("***r_dummytexture***", dummytexture, 1, 1, it_effect);
 
 	/* empty pic in the texture chain for cinematic frames */
-	R_LoadImageData("***cinematic***", NULL, VID_NORM_WIDTH, VID_NORM_HEIGHT, it_pic);
+	R_LoadImageData("***cinematic***", nullptr, VID_NORM_WIDTH, VID_NORM_HEIGHT, it_pic);
 }
 
 /*
@@ -95,8 +95,8 @@ enum {
  * @param[in] y
  * @param[in] width
  * @param[in] height
- * @param[in] filename Force to use a filename. Else NULL to autogen a filename
- * @param[in] ext Force to use an image format (tga/png/jpg). Else NULL to use value of r_screenshot_format
+ * @param[in] filename Force to use a filename. Else nullptr to autogen a filename
+ * @param[in] ext Force to use an image format (tga/png/jpg). Else nullptr to use value of r_screenshot_format
  */
 void R_ScreenShot (int x, int y, int width, int height, const char *filename, const char *ext)
 {
@@ -109,7 +109,7 @@ void R_ScreenShot (int x, int y, int width, int height, const char *filename, co
 	glPixelStorei(GL_PACK_ALIGNMENT, 1);
 
 	/* Find out what format to save in */
-	if (ext == NULL)
+	if (ext == nullptr)
 		ext = r_screenshot_format->string;
 
 	if (!Q_strcasecmp(ext, "png"))
@@ -203,15 +203,15 @@ void R_ScreenShot (int x, int y, int width, int height, const char *filename, co
 
 void R_ScreenShot_f (void)
 {
-	const char *ext = NULL;
+	const char *ext = nullptr;
 	if (Cmd_Argc() > 1)
 		ext = Cmd_Argv(1);
-	R_ScreenShot(0, 0, viddef.context.width, viddef.context.height, NULL, ext);
+	R_ScreenShot(0, 0, viddef.context.width, viddef.context.height, nullptr, ext);
 }
 
 /**
  * @brief Perform translate, rotate and scale operations on the current matrix
- * @note Every parameter may be @c NULL and is ignored then
+ * @note Every parameter may be @c nullptr and is ignored then
  * @param[in] transform Translation vector
  * @param[in] rotate Rotation vector
  * @param[in] scale Scale vector (keep in mind to not set this to @c vec3_origin or zero)
@@ -220,17 +220,17 @@ void R_ScreenShot_f (void)
  */
 void R_Transform (const vec3_t transform, const vec3_t rotate, const vec3_t scale)
 {
-	if (transform != NULL) {
+	if (transform != nullptr) {
 		glTranslatef(transform[0], transform[1], transform[2]);
 	}
 
-	if (rotate != NULL) {
+	if (rotate != nullptr) {
 		glRotatef(rotate[0], 0, 0, 1);
 		glRotatef(rotate[1], 0, 1, 0);
 		glRotatef(rotate[2], 1, 0, 0);
 	}
 
-	if (scale != NULL) {
+	if (scale != nullptr) {
 		glScalef(scale[0], scale[1], scale[2]);
 	}
 }
@@ -364,7 +364,7 @@ void R_ReinitOpenglContext (void)
 	R_ReloadImages();
 	/* Re-upload other GL stuff */
 	R_InitFBObjects();
-	R_UpdateDefaultMaterial("", "", "", NULL);
+	R_UpdateDefaultMaterial("", "", "", nullptr);
 
 	/* Re-upload the battlescape terrain geometry */
 	if (!qglBindBuffer)

@@ -111,7 +111,7 @@ static stageState_t *SCP_CampaignActivateStage (const char *name)
 	}
 
 	Com_Printf("SCP_CampaignActivateStage: stage '%s' not found.\n", name);
-	return NULL;
+	return nullptr;
 }
 
 static void SCP_CampaignEndStage (const char *name)
@@ -179,7 +179,7 @@ static void SCP_CampaignAddMission (setState_t *set)
 
 	/* set relevant info */
 	mis->def = SCP_GetMission(set);
-	if (mis->def == NULL) {
+	if (mis->def == nullptr) {
 		return;
 	}
 	mis->cause = set;
@@ -265,7 +265,7 @@ void SCP_CampaignActivateFirstStage (void)
 
 void SCP_CampaignProgress (const missionResults_t *results)
 {
-	actMis_t *mission = NULL;
+	actMis_t *mission = nullptr;
 	int i;
 
 	for (i = 0; i < scd->numActiveMissions; i++) {
@@ -275,7 +275,7 @@ void SCP_CampaignProgress (const missionResults_t *results)
 		}
 	}
 
-	if (i == scd->numActiveMissions || mission == NULL) {
+	if (i == scd->numActiveMissions || mission == nullptr) {
 		Com_Printf("SCP_CampaignProgress: Could not find an active mission\n");
 		return;
 	}
@@ -393,8 +393,8 @@ bool SCP_Load (xmlNode_t *parent)
 		int j;
 		const char *name = cgi->XML_GetString(snode, SAVE_STATICCAMPAIGN_STAGESETNAME);
 		actMis_t *mis = &scd->activeMissions[scd->numActiveMissions++];
-		mis->def = NULL;
-		mis->cause = NULL;
+		mis->def = nullptr;
+		mis->cause = nullptr;
 
 		for (j = 0; j < scd->numStageSets; j++)
 			if (Q_streq(name, scd->stageSets[j].name)) {

@@ -70,11 +70,11 @@ void R_ShutdownThreads (void)
 		const int old = r_threads->integer;
 		r_threads->integer = 0;
 		r_threadstate.state = THREAD_BSP;
-		SDL_WaitThread(r_threadstate.thread, NULL);
+		SDL_WaitThread(r_threadstate.thread, nullptr);
 		r_threads->integer = old;
 	}
 
-	r_threadstate.thread = NULL;
+	r_threadstate.thread = nullptr;
 }
 
 /**
@@ -82,5 +82,5 @@ void R_ShutdownThreads (void)
  */
 void R_InitThreads (void)
 {
-	r_threadstate.thread = SDL_CreateThread(R_RunThread, NULL);
+	r_threadstate.thread = SDL_CreateThread(R_RunThread, nullptr);
 }

@@ -84,7 +84,7 @@ static void RS_UpdateInfo (const base_t* base)
 		return;
 
 	technology_t *tech = researchList2[researchListPos].tech;
-	if (tech == NULL)
+	if (tech == nullptr)
 		return;
 
 	char tmpbuf[128];
@@ -372,7 +372,7 @@ static void CL_ResearchSelect_f (void)
 	/* switch to another team */
 	if (type == RSGUI_BASETITLE) {
 		const base_t *b = researchList2[num].base;
-		if (b != NULL && b != base) {
+		if (b != nullptr && b != base) {
 			cgi->UI_ExecuteConfunc("research_changebase %i %i", b->idx, researchListPos);
 			return;
 		}
@@ -419,7 +419,7 @@ static void RS_ChangeScientist_f (void)
 	if (diff > 0) {
 		RS_AssignScientist(researchList2[num].tech, base);
 	} else {
-		RS_RemoveScientist(researchList2[num].tech, NULL);
+		RS_RemoveScientist(researchList2[num].tech, nullptr);
 	}
 
 	/* Update display-list and display-info. */
@@ -497,7 +497,7 @@ static void RS_RemoveScientist_f (void)
 	if (num < 0 || num >= researchListLength)
 		return;
 
-	RS_RemoveScientist(researchList2[num].tech, NULL);
+	RS_RemoveScientist(researchList2[num].tech, nullptr);
 
 	/* Update display-list and display-info. */
 	RS_InitGUI(base, true);
@@ -685,7 +685,7 @@ static void RS_InitGUIData (base_t* base)
 			continue;
 
 		/* In this base or nowhere */
-		if (tech->base != NULL && tech->base != base)
+		if (tech->base != nullptr && tech->base != base)
 			continue;
 
 		if (!RS_RequirementsMet(tech, base))
@@ -742,7 +742,7 @@ static void RS_InitGUIData (base_t* base)
 			continue;
 
 		/* skip bases without labs */
-		if (B_GetBuildingInBaseByType(b, B_LAB, true) == NULL)
+		if (B_GetBuildingInBaseByType(b, B_LAB, true) == nullptr)
 			continue;
 
 		researchList2[row].type = RSGUI_NOTHING;
@@ -840,7 +840,7 @@ void RS_InitCallbacks (void)
 {
 	cgi->Cmd_AddCommand("research_init", UI_ResearchInit_f, "Research menu init function binding");
 	cgi->Cmd_AddCommand("research_select", CL_ResearchSelect_f, "Update current selection with the one that has been clicked");
-	cgi->Cmd_AddCommand("research_update", RS_UpdateData_f, NULL);
+	cgi->Cmd_AddCommand("research_update", RS_UpdateData_f, nullptr);
 	cgi->Cmd_AddCommand("research_type", CL_ResearchType_f, "Switch between different research types");
 	cgi->Cmd_AddCommand("mn_rs_add", RS_AssignScientist_f, "Assign one scientist to this entry");
 	cgi->Cmd_AddCommand("mn_rs_change", RS_ChangeScientist_f, "Assign or remove scientist from this entry");

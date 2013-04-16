@@ -39,7 +39,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /**
  * @brief Checks whether the activator of this trigger_touch was already recognized
  * @param self The trigger self pointer
- * @param activator The activating edict (might be NULL)
+ * @param activator The activating edict (might be nullptr)
  * @return @c true if the activator is already in the list of recognized edicts or no activator
  * was given, @c false if the activator is not yet part of the list
  */
@@ -47,7 +47,7 @@ bool G_TriggerIsInList (Edict *self, Edict *activator)
 {
 	Edict *e = self->touchedNext;
 
-	if (activator == NULL)
+	if (activator == nullptr)
 		return true;
 
 	while (e) {
@@ -62,13 +62,13 @@ bool G_TriggerIsInList (Edict *self, Edict *activator)
 /**
  * @brief Adds the activator to the list of recognized edicts for this trigger_touch edict
  * @param self The trigger self pointer
- * @param activator The activating edict (might be NULL)
+ * @param activator The activating edict (might be nullptr)
  */
 void G_TriggerAddToList (Edict *self, Edict *activator)
 {
 	Edict *e = self->touchedNext;
 
-	if (activator == NULL)
+	if (activator == nullptr)
 		return;
 
 	if (G_TriggerIsInList(self, activator))
@@ -81,7 +81,7 @@ void G_TriggerAddToList (Edict *self, Edict *activator)
 /**
  * @brief Removes an activator from the list or recognized edicts
  * @param self The trigger self pointer
- * @param activator The activating edict (might be NULL)
+ * @param activator The activating edict (might be nullptr)
  * @return @c true if removal was successful or not needed, @c false if the activator wasn't found in the list
  */
 bool G_TriggerRemoveFromList (Edict *self, Edict *activator)
@@ -89,13 +89,13 @@ bool G_TriggerRemoveFromList (Edict *self, Edict *activator)
 	Edict *prev = self;
 	Edict *e = self->touchedNext;
 
-	if (activator == NULL)
+	if (activator == nullptr)
 		return true;
 
 	while (e) {
 		if (e == activator) {
 			prev->touchedNext = e->touchedNext;
-			activator->touchedNext = NULL;
+			activator->touchedNext = nullptr;
 			return true;
 		}
 		prev = e;
@@ -119,7 +119,7 @@ Edict *G_TriggerSpawn (Edict *owner)
 	VectorCopy(aabb.maxs, trigger->maxs);
 
 	trigger->solid = SOLID_TRIGGER;
-	trigger->reset = NULL;
+	trigger->reset = nullptr;
 
 	/* link into the world */
 	gi.LinkEdict(trigger);
@@ -133,7 +133,7 @@ Edict *G_TriggerSpawn (Edict *owner)
  */
 static bool Touch_NextMapTrigger (Edict *self, Edict *activator)
 {
-	if (activator != NULL && activator->team == self->team) {
+	if (activator != nullptr && activator->team == self->team) {
 		char command[MAX_VAR];
 		self->inuse = false;
 		G_ClientPrintf(activator->getPlayer(), PRINT_HUD, _("Switching map!"));
@@ -168,7 +168,7 @@ void Think_NextMapTrigger (Edict *self)
 	gi.BroadcastPrintf(PRINT_HUD, _("You are now ready to switch the map."));
 
 	self->touch = Touch_NextMapTrigger;
-	self->think = NULL;
+	self->think = nullptr;
 }
 
 void SP_trigger_nextmap (Edict *ent)
@@ -202,8 +202,8 @@ void SP_trigger_nextmap (Edict *ent)
 	ent->solid = SOLID_TRIGGER;
 	gi.SetModel(ent, ent->model);
 
-	ent->reset = NULL;
-	ent->child = NULL;
+	ent->reset = nullptr;
+	ent->child = nullptr;
 
 	gi.LinkEdict(ent);
 }
@@ -253,8 +253,8 @@ void SP_trigger_hurt (Edict *ent)
 	gi.SetModel(ent, ent->model);
 
 	ent->touch = Touch_HurtTrigger;
-	ent->reset = NULL;
-	ent->child = NULL;
+	ent->reset = nullptr;
+	ent->child = nullptr;
 
 	gi.LinkEdict(ent);
 }
@@ -279,7 +279,7 @@ static bool Touch_TouchTrigger (Edict *self, Edict *activator)
 
 	if (self->owner->flags & FL_CLIENTACTION) {
 		G_ActorSetClientAction(activator, self->owner);
-	} else if (!(self->spawnflags & TRIGGER_TOUCH_ONCE) || self->touchedNext == NULL) {
+	} else if (!(self->spawnflags & TRIGGER_TOUCH_ONCE) || self->touchedNext == nullptr) {
 		if (!self->owner->use) {
 			gi.DPrintf("Owner of %s doesn't have a use function\n", self->classname);
 			G_FreeEdict(self);
@@ -294,9 +294,9 @@ static bool Touch_TouchTrigger (Edict *self, Edict *activator)
 static void Reset_TouchTrigger (Edict *self, Edict *activator)
 {
 	/* fire the use function on leaving the trigger area */
-	if (activator != NULL && (self->owner->flags & FL_CLIENTACTION))
-		G_ActorSetClientAction(activator, NULL);
-	else if ((self->spawnflags & TRIGGER_TOUCH_ONCE) && self->touchedNext == NULL)
+	if (activator != nullptr && (self->owner->flags & FL_CLIENTACTION))
+		G_ActorSetClientAction(activator, nullptr);
+	else if ((self->spawnflags & TRIGGER_TOUCH_ONCE) && self->touchedNext == nullptr)
 		G_UseEdict(self->owner, activator);
 }
 
@@ -321,7 +321,7 @@ void SP_trigger_touch (Edict *ent)
 
 	ent->touch = Touch_TouchTrigger;
 	ent->reset = Reset_TouchTrigger;
-	ent->child = NULL;
+	ent->child = nullptr;
 
 	gi.LinkEdict(ent);
 }
@@ -372,7 +372,7 @@ void SP_trigger_rescue (Edict *ent)
 		ent->spawnflags |= 0xFF;
 	ent->touch = Touch_RescueTrigger;
 	ent->reset = Reset_RescueTrigger;
-	ent->child = NULL;
+	ent->child = nullptr;
 
 	gi.LinkEdict(ent);
 }

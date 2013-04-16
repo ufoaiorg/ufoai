@@ -50,7 +50,7 @@ typedef enum {
  */
 static bool G_TeamPointVis (int team, const vec3_t point)
 {
-	Edict *from = NULL;
+	Edict *from = nullptr;
 	vec3_t eye;
 
 	/* test if point is visible from team */
@@ -65,7 +65,7 @@ static bool G_TeamPointVis (int team, const vec3_t point)
 				bool blocked = false;
 				/* check visibility in the smoke */
 				if (distance >= UNIT_SIZE) {
-					Edict *e = NULL;
+					Edict *e = nullptr;
 					while ((e = G_EdictsGetNextInUse(e))) {
 						if (G_IsSmoke(e) && RayIntersectAABB(eye, point, e->absmin, e->absmax)) {
 								blocked = true;
@@ -94,7 +94,7 @@ static bool G_TeamPointVis (int team, const vec3_t point)
  */
 static void G_Morale (int type, const Edict *victim, const Edict *attacker, int param)
 {
-	Edict *ent = NULL;
+	Edict *ent = nullptr;
 	int newMorale;
 	float mod;
 
@@ -112,7 +112,7 @@ static void G_Morale (int type, const Edict *victim, const Edict *attacker, int 
 				/* seeing how someone gets shot increases the morale change */
 				if (ent == victim || (G_FrustumVis(ent, victim->origin) && G_ActorVis(ent->origin, ent, victim, false)))
 					mod *= mof_watching->value;
-				if (attacker != NULL && ent->team == attacker->team) {
+				if (attacker != nullptr && ent->team == attacker->team) {
 					/* teamkills are considered to be bad form, but won't cause an increased morale boost for the enemy */
 					/* morale boost isn't equal to morale loss (it's lower, but morale gets regenerated) */
 					if (victim->team == attacker->team)
@@ -126,7 +126,7 @@ static void G_Morale (int type, const Edict *victim, const Edict *attacker, int 
 				/* if an ally (or in singleplayermode, as human, a civilian) got shot, lower the morale, don't heighten it. */
 				if (victim->team == ent->team || (G_IsCivilian(victim) && ent->team != TEAM_ALIEN && sv_maxclients->integer == 1))
 					mod *= -1;
-				if (attacker != NULL) {
+				if (attacker != nullptr) {
 					/* if you stand near to the attacker or the victim, the morale change is higher. */
 					mod *= mor_default->value + pow(0.5, VectorDist(ent->origin, victim->origin) / mor_distance->value)
 						* mor_victim->value + pow(0.5, VectorDist(ent->origin, attacker->origin) / mor_distance->value)
@@ -166,7 +166,7 @@ static void G_Morale (int type, const Edict *victim, const Edict *attacker, int 
 
 /**
  * @brief Function to calculate possible damages for mock pseudoaction.
- * @param[in,out] mock Pseudo action - only for calculating mock values - NULL for real action.
+ * @param[in,out] mock Pseudo action - only for calculating mock values - nullptr for real action.
  * @param[in] shooter Pointer to attacker for this mock pseudoaction.
  * @param[in] struck Pointer to victim of this mock pseudoaction.
  * @param[in] damage Updates mock value of damage.
@@ -332,8 +332,8 @@ int G_ApplyProtection (const Edict *target, const byte dmgWeight, int damage)
  * @param[in] fd The fire definition that defines what type of damage is dealt.
  * @param[in] damage The value of the damage.
  * @param[in] attacker The attacker.
- * @param[in] mock pseudo shooting - only for calculating mock values - NULL for real shots
- * @param[in] impact impact location - @c NULL for splash damage
+ * @param[in] mock pseudo shooting - only for calculating mock values - nullptr for real shots
+ * @param[in] impact impact location - @c nullptr for splash damage
  * @sa G_SplashDamage
  * @sa G_TakeDamage
  * @sa G_PrintActorStats
@@ -400,7 +400,7 @@ static void G_Damage (Edict *target, const fireDef_t *fd, int damage, Edict *att
 	assert(attacker->team >= 0 && attacker->team < MAX_TEAMS);
 	assert(target->team >= 0 && target->team < MAX_TEAMS);
 
-	if (g_nodamage != NULL && !g_nodamage->integer) {
+	if (g_nodamage != nullptr && !g_nodamage->integer) {
 		/* hit */
 		if (mock) {
 			G_UpdateShotMock(mock, attacker, target, damage);
@@ -503,12 +503,12 @@ static inline bool G_FireAffectedSurface (const cBspSurface_t *surface, const fi
  * @param[in] ent The shooting actor
  * @param[in] fd The fire definition that defines what type of damage is dealt and how big the splash radius is.
  * @param[in] impact The impact vector where the grenade is exploding
- * @param[in,out] mock pseudo shooting - only for calculating mock values - NULL for real shots
+ * @param[in,out] mock pseudo shooting - only for calculating mock values - nullptr for real shots
  * @param[in] tr The trace where the grenade hits something (or not)
  */
 static void G_SplashDamage (Edict *ent, const fireDef_t *fd, vec3_t impact, shot_mock_t *mock, const trace_t *tr)
 {
-	Edict *check = NULL;
+	Edict *check = nullptr;
 	vec3_t center;
 	float dist;
 	int damage;
@@ -562,7 +562,7 @@ static void G_SplashDamage (Edict *ent, const fireDef_t *fd, vec3_t impact, shot
 
 		if (mock)
 			mock->allow_self = true;
-		G_Damage(check, fd, damage, ent, mock, NULL);
+		G_Damage(check, fd, damage, ent, mock, nullptr);
 		if (mock)
 			mock->allow_self = false;
 	}
@@ -585,7 +585,7 @@ static void G_SpawnItemOnFloor (const pos3_t pos, const Item *item)
 	Edict *floor;
 
 	floor = G_GetFloorItemFromPos(pos);
-	if (floor == NULL) {
+	if (floor == nullptr) {
 		floor = G_SpawnFloor(pos);
 
 		if (!game.i.tryAddToInventory(&floor->chr.inv, item, INVDEF(CID_FLOOR))) {
@@ -596,7 +596,7 @@ static void G_SpawnItemOnFloor (const pos3_t pos, const Item *item)
 			/* send the inventory */
 			G_CheckVis(floor);
 
-			if (actor != NULL)
+			if (actor != nullptr)
 				G_GetFloorItems(actor);
 		}
 	} else {
@@ -622,7 +622,7 @@ static void G_SpawnItemOnFloor (const pos3_t pos, const Item *item)
  * @param[in] at The grid position the actor is shooting to (or trying to shoot to)
  * @param[in] mask The team visibility mask (who's seeing the event)
  * @param[in] weapon The weapon to shoot with
- * @param[in] mock pseudo shooting - only for calculating mock values - NULL for real shots
+ * @param[in] mock pseudo shooting - only for calculating mock values - nullptr for real shots
  * @param[in] z_align This value may change the target z height
  * @param[out] impact The location of the target (-center?)
  */
@@ -671,7 +671,7 @@ static void G_ShootGrenade (const Player &player, Edict *ent, const fireDef_t *f
 	/** @todo Remove the 2.0f and use gaussian random number instead of crand() */
 	angles[PITCH] += crand() * 2.0f * (fd->spread[0] * (WEAPON_BALANCE + SKILL_BALANCE * acc));
 	angles[YAW] += crand() * 2.0f * (fd->spread[1] * (WEAPON_BALANCE + SKILL_BALANCE * acc));
-	AngleVectors(angles, startV, NULL, NULL);
+	AngleVectors(angles, startV, nullptr, nullptr);
 	VectorScale(startV, speed, startV);
 
 	/* move */
@@ -792,7 +792,7 @@ static void DumpTrace (vec3_t start, const trace_t &tr)
 static void DumpAllEntities (void)
 {
 	int i = 0;
-	Edict *check = NULL;
+	Edict *check = nullptr;
 
 	while ((check = G_EdictsGetNext(check))) {
 		Com_DPrintf(DEBUG_GAME, "%i %s %s %s (%i, %i, %i) (%i, %i, %i) [%i, %i, %i] [%i, %i, %i]\n", i,
@@ -816,7 +816,7 @@ static void DumpAllEntities (void)
  * @param[in] at Grid coordinate of the target.
  * @param[in] mask Visibility bit-mask (who's seeing the event)
  * @param[in] weapon The weapon the actor is shooting with
- * @param[in] mock pseudo shooting - only for calculating mock values - NULL for real shots
+ * @param[in] mock pseudo shooting - only for calculating mock values - nullptr for real shots
  * @param[in] z_align This value may change the target z height
  * @param[in] i The ith shot
  * @param[in] shootType The firemode (ST_NUM_SHOOT_TYPES)
@@ -886,7 +886,7 @@ static void G_ShootSingle (Edict *ent, const fireDef_t *fd, const vec3_t from, c
 		angles[YAW] += gauss2 * (fd->spread[1] * commonfactor);
 	}
 	/* Convert changed angles into new direction. */
-	AngleVectors(angles, dir, NULL, NULL);
+	AngleVectors(angles, dir, nullptr, nullptr);
 
 	/* shoot and bounce */
 	throughWall = fd->throughWall;
@@ -1048,9 +1048,9 @@ void G_GetShotOrigin (const Edict *shooter, const fireDef_t *fd, const vec3_t di
  * @param[in] ent Pointer to attacker.
  * @param[in] shootType Type of shot.
  * @param[in] firemode An index of used firemode.
- * @param[in,out] weapon Weapon being used. It is NULL when calling this function.
+ * @param[in,out] weapon Weapon being used. It is nullptr when calling this function.
  * @param[in,out] container Container with weapon being used. It is 0 when calling this function.
- * @param[in,out] fd Firemode being used. It is NULL when calling this function.
+ * @param[in,out] fd Firemode being used. It is nullptr when calling this function.
  * @return true if function is able to check and set everything correctly.
  * @sa G_ClientShoot
  */
@@ -1081,7 +1081,7 @@ static bool G_PrepareShot (Edict *ent, shoot_types_t shootType, fireDefIndex_t f
 
 	/* Get firedef from the weapon entry instead */
 	fdArray = item->getFiredefs();
-	if (fdArray == NULL)
+	if (fdArray == nullptr)
 		return false;
 
 	*weapon = item;
@@ -1099,7 +1099,7 @@ static bool G_PrepareShot (Edict *ent, shoot_types_t shootType, fireDefIndex_t f
  * @param[in] at Position to fire on.
  * @param[in] shootType What type of shot this is (left, right reaction-left etc...).
  * @param[in] firemode The firemode index of the ammo for the used weapon.
- * @param[in] mock pseudo shooting - only for calculating mock values - NULL for real shots
+ * @param[in] mock pseudo shooting - only for calculating mock values - nullptr for real shots
  * @param[in] allowReaction Set to true to check whether this has forced any reaction fire, otherwise false.
  * @return true if everything went ok (i.e. the shot(s) where fired ok), otherwise false.
  * @param[in] z_align This value may change the target z height - often @c GROUND_DELTA is used to calculate
@@ -1122,10 +1122,10 @@ bool G_ClientShoot (const Player &player, Edict *ent, const pos3_t at, shoot_typ
 
 	/* just in 'test-whether-it's-possible'-mode or the player is an
 	 * ai - no readable feedback needed */
-	quiet = (mock != NULL) || G_IsAIPlayer(&player);
+	quiet = (mock != nullptr) || G_IsAIPlayer(&player);
 
-	weapon = NULL;
-	fd = NULL;
+	weapon = nullptr;
+	fd = nullptr;
 	container = 0;
 	if (!G_PrepareShot(ent, shootType, firemode, &weapon, &container, &fd)) {
 		if (!weapon && !quiet)
@@ -1151,7 +1151,7 @@ bool G_ClientShoot (const Player &player, Edict *ent, const pos3_t at, shoot_typ
 	/* Don't allow to shoot yourself */
 	if (!fd->irgoggles && G_EdictPosIsSameAs(ent, at))
 		return false;
-	const Edict *targetEnt = NULL;
+	const Edict *targetEnt = nullptr;
 	if (FIRESH_IsMedikit(fd)) {
 		targetEnt = G_EdictsGetLivingActorFromPos(at);
 		if (!targetEnt)
@@ -1269,7 +1269,7 @@ bool G_ClientShoot (const Player &player, Edict *ent, const pos3_t at, shoot_typ
 				return false;
 		}
 		/* Check we aren't trying to heal a dead actor */
-		if (targetEnt != NULL && (G_IsDead(targetEnt) && !G_IsStunned(targetEnt)))
+		if (targetEnt != nullptr && (G_IsDead(targetEnt) && !G_IsStunned(targetEnt)))
 			return false;
 
 		/* start shoot */
@@ -1336,7 +1336,7 @@ bool G_ClientShoot (const Player &player, Edict *ent, const pos3_t at, shoot_typ
 		 * its use here implies that may not always be the case (it does make sense that they would affected
 		 * by fire fields and similar triggers after all) */
 		/* @todo decide if stunned should be able to touch some triggers and adjust accordingly */
-		Edict *closeActor = NULL;
+		Edict *closeActor = nullptr;
 		while ((closeActor = G_FindRadius(closeActor, impact, fd->splrad, ET_ACTOR))) {
 			G_TouchTriggers(closeActor);
 		}

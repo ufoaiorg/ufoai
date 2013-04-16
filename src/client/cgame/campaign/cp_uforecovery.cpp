@@ -84,7 +84,7 @@ storedUFO_t* US_GetStoredUFOByIDX (const int idx)
 		if (ufo->idx == idx)
 			return ufo;
 	}
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -93,7 +93,7 @@ storedUFO_t* US_GetStoredUFOByIDX (const int idx)
  * @param[in,out] installation Pointer to the installation it should be added to
  * @param[in] date Date when UFO is arrives to the storage (recovery || transfer)
  * @param[in] condition Condition of the UFO to store (How much the UFO is damaged)
- * @return storedUFO_t pointer to the newly stored UFO (or NULL if failed)
+ * @return storedUFO_t pointer to the newly stored UFO (or nullptr if failed)
  */
 storedUFO_t *US_StoreUFO (const aircraft_t *ufoTemplate, installation_t *installation, date_t date, float condition)
 {
@@ -101,17 +101,17 @@ storedUFO_t *US_StoreUFO (const aircraft_t *ufoTemplate, installation_t *install
 
 	if (!ufoTemplate) {
 		Com_DPrintf(DEBUG_CLIENT, "US_StoreUFO: Invalid aircraft (UFO) Template.\n");
-		return NULL;
+		return nullptr;
 	}
 
 	if (!installation) {
 		Com_DPrintf(DEBUG_CLIENT, "US_StoreUFO: Invalid Installation\n");
-		return NULL;
+		return nullptr;
 	}
 
 	if (installation->ufoCapacity.cur >= installation->ufoCapacity.max) {
 		Com_DPrintf(DEBUG_CLIENT, "US_StoreUFO: Installation is full with UFOs.\n");
-		return NULL;
+		return nullptr;
 	}
 
 	/* we can store it there */
@@ -126,7 +126,7 @@ storedUFO_t *US_StoreUFO (const aircraft_t *ufoTemplate, installation_t *install
 	assert(ufoTemplate->tech);
 
 	ufo.ufoTemplate = ufoTemplate;
-	ufo.disassembly = NULL;
+	ufo.disassembly = nullptr;
 
 	ufo.arrive = date;
 	if (Date_LaterThan(&ccs.date, &ufo.arrive)) {
@@ -174,7 +174,7 @@ void US_RemoveStoredUFO (storedUFO_t *ufo)
  * @param[in] ufoTemplate aircraftTemplate of the ufo
  * @param[in] installation Pointer to the installation to count at
  * @returns the number of ufos stored of the given ufotype at given installation or overall
- * @note installation == NULL means count on every ufoyards
+ * @note installation == nullptr means count on every ufoyards
  */
 int US_UFOsInStorage (const aircraft_t *ufoTemplate, const installation_t *installation)
 {
@@ -235,7 +235,7 @@ bool US_TransferUFO (storedUFO_t *ufo, installation_t *ufoyard)
 	if (ufo->status != SUFO_STORED)
 		return false;
 	/* UFO being disassembled cannot be transfered*/
-	if (ufo->disassembly != NULL)
+	if (ufo->disassembly != nullptr)
 		return false;
 	/* UFO is in the same yard - no need of transfer */
 	if (ufo->installation == ufoyard)
@@ -260,14 +260,14 @@ bool US_TransferUFO (storedUFO_t *ufo, installation_t *ufoyard)
 
 /**
  * @brief get the closest stored ufo (of a type) from a base
- * @param[in] ufoTemplate Pointer to the aircraft (ufo) template to look for (@c NULL for any type)
- * @param[in] base Pointer to the base. If it's @c NULL the function simply return the first stored UFO of type
+ * @param[in] ufoTemplate Pointer to the aircraft (ufo) template to look for (@c nullptr for any type)
+ * @param[in] base Pointer to the base. If it's @c nullptr the function simply return the first stored UFO of type
  * @return Pointer to the first stored UFO matches the conditions
  */
 storedUFO_t *US_GetClosestStoredUFO (const aircraft_t *ufoTemplate, const base_t *base)
 {
 	float minDistance = -1;
-	storedUFO_t *closestUFO = NULL;
+	storedUFO_t *closestUFO = nullptr;
 
 	US_Foreach(ufo) {
 		float distance = 0;
@@ -381,7 +381,7 @@ bool US_LoadXML (xmlNode_t *p)
 		cgi->XML_GetDate(snode, SAVE_UFORECOVERY_DATE, &ufo.arrive.day, &ufo.arrive.sec);
 		ufo.condition = cgi->XML_GetFloat(snode, SAVE_UFORECOVERY_CONDITION, 1.0f);
 		/* disassembly is set by production savesystem later but only for UFOs that are being disassembled */
-		ufo.disassembly = NULL;
+		ufo.disassembly = nullptr;
 		LIST_Add(&ccs.storedUFOs, ufo);
 	}
 	cgi->Com_UnregisterConstList(saveStoredUFOConstants);
@@ -421,7 +421,7 @@ static void US_StoreUFO_f (void)
 	char ufoId[MAX_VAR];
 	int installationIDX;
 	installation_t *installation;
-	aircraft_t *ufoType = NULL;
+	aircraft_t *ufoType = nullptr;
 	int i;
 
 	if (cgi->Cmd_Argc() <= 2) {
@@ -450,7 +450,7 @@ static void US_StoreUFO_f (void)
 			break;
 		}
 	}
-	if (ufoType == NULL) {
+	if (ufoType == nullptr) {
 		Com_Printf("US_StoreUFO_f: In valid UFO Id.\n");
 		return;
 	}

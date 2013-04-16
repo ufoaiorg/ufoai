@@ -39,7 +39,7 @@ void R_ModLoadAnims (mAliasModel_t *mod, const char *animname)
 	mAliasAnim_t *anim;
 	int n;
 	/* load the tags */
-	byte *animbuf = NULL;
+	byte *animbuf = nullptr;
 	const char *buffer;
 
 	FS_LoadFile(animname, &animbuf);
@@ -236,7 +236,7 @@ bool R_ModLoadMDX (model_t *mod)
 	for (i = 0; i < mod->alias.num_meshes; i++) {
 		mAliasMesh_t *mesh = &mod->alias.meshes[i];
 		char mdxFileName[MAX_QPATH];
-		byte *buffer = NULL, *buf;
+		byte *buffer = nullptr, *buf;
 		const int32_t *intbuf;
 		uint32_t version;
 		int sharedTris[MAX_ALIAS_VERTS];
@@ -544,7 +544,7 @@ image_t* R_AliasModelState (const model_t *mod, int *mesh, int *frame, int *oldF
 		*mesh = 0;
 
 	if (!mod->alias.meshes)
-		return NULL;
+		return nullptr;
 
 	/* use default skin - this is never null - but maybe the placeholder texture */
 	if (*skin < 0 || *skin >= mod->alias.meshes[*mesh].num_skins)
@@ -669,13 +669,13 @@ void R_ModLoadArrayData (mAliasModel_t *mod, mAliasMesh_t *mesh, bool loadNormal
 	const int t = mesh->num_tris * 3 * 4;
 	const int st = mesh->num_tris * 3 * 2;
 
-	assert(mesh->verts == NULL);
-	assert(mesh->texcoords == NULL);
-	assert(mesh->normals == NULL);
-	assert(mesh->tangents == NULL);
-	assert(mesh->next_verts == NULL);
-	assert(mesh->next_normals == NULL);
-	assert(mesh->next_tangents == NULL);
+	assert(mesh->verts == nullptr);
+	assert(mesh->texcoords == nullptr);
+	assert(mesh->normals == nullptr);
+	assert(mesh->tangents == nullptr);
+	assert(mesh->next_verts == nullptr);
+	assert(mesh->next_normals == nullptr);
+	assert(mesh->next_tangents == nullptr);
 
 	mesh->verts     = Mem_PoolAllocTypeN(float, v,  vid_modelPool);
 	mesh->normals   = Mem_PoolAllocTypeN(float, v,  vid_modelPool);

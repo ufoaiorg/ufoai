@@ -116,8 +116,8 @@ typedef struct aircraftSlot_s {
 	struct aircraft_s *aircraft;	/**< A link to the aircraft (if defined by aircraftItemType_t). */
 	aircraftItemType_t type;	/**< The type of item that can fit in this slot. */
 
-	const objDef_t *item;		/**< Item that is currently in the slot. NULL if empty. */
-	const objDef_t *ammo;		/**< Ammo that is currently in the slot. NULL if empty. */
+	const objDef_t *item;		/**< Item that is currently in the slot. nullptr if empty. */
+	const objDef_t *ammo;		/**< Ammo that is currently in the slot. nullptr if empty. */
 	itemWeight_t size;			/**< The maximum size (weight) of item that can fit in this slot. */
 	int ammoLeft;				/**< The number of ammo left in this slot */
 	int delayNextShot;			/**< The delay before the next projectile can be shot */

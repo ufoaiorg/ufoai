@@ -99,13 +99,13 @@ static void CL_BattlescapeRadarGenerate_f (void)
 	const char *mapName = Cvar_GetString("sv_mapname");
 
 	const int level = Cvar_GetInteger("cl_worldlevel");
-	const char *filename = NULL;
+	const char *filename = nullptr;
 	int x, y, width, height;
 
 	CL_BattlescapeRadarMapInFrameBuffer(&x, &y, &width, &height);
 	if (mapName)
 		filename = va("%s_%i", mapName, level + 1);
-	R_ScreenShot(x - border, y - border, width + border * 2, height + border * 2, filename, NULL);
+	R_ScreenShot(x - border, y - border, width + border * 2, height + border * 2, filename, nullptr);
 }
 
 static void CL_BattlescapeRadarGenerateAll (uiNode_t *node, uiTimer_t *timer)
@@ -131,7 +131,7 @@ static void CL_BattlescapeRadarGenerateAll (uiNode_t *node, uiTimer_t *timer)
 static void CL_BattlescapeRadarGenerateAll_f (void)
 {
 	const int delay = 1000;
-	timer = UI_AllocTimer(NULL, delay, CL_BattlescapeRadarGenerateAll);
+	timer = UI_AllocTimer(nullptr, delay, CL_BattlescapeRadarGenerateAll);
 	UI_TimerStart(timer);
 }
 

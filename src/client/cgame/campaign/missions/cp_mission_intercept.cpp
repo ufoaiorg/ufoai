@@ -134,12 +134,12 @@ void CP_InterceptAircraftMissionSet (mission_t *mission)
 /**
  * @brief Choose Base that will be attacked, and add it to mission description.
  * @note Base attack mission -- Stage 1
- * @return Pointer to the base, NULL if no base set
+ * @return Pointer to the base, nullptr if no base set
  */
 static installation_t* CP_InterceptChooseInstallation (const mission_t *mission)
 {
 	float randomNumber, sum = 0.0f;
-	installation_t *installation = NULL;
+	installation_t *installation = nullptr;
 
 	assert(mission);
 

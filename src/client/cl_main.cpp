@@ -187,12 +187,12 @@ static void CL_Reconnect (void)
 
 static void CL_FreeClientStream (void)
 {
-	cls.netStream = NULL;
+	cls.netStream = nullptr;
 	Com_Printf("Client stream was closed\n");
 }
 
 /**
- * @note Only call @c CL_Connect if there is no connection yet (@c cls.netStream is @c NULL)
+ * @note Only call @c CL_Connect if there is no connection yet (@c cls.netStream is @c nullptr)
  * @sa CL_Disconnect
  * @sa CL_SendChangedUserinfos
  */
@@ -270,7 +270,7 @@ void CL_Disconnect (void)
 	}
 
 	NET_StreamFinished(cls.netStream);
-	cls.netStream = NULL;
+	cls.netStream = nullptr;
 
 	CL_ClearState();
 
@@ -663,7 +663,7 @@ static void CL_SetRatioFilter_f (void)
 static void CL_VideoInitMenu (void)
 {
 	uiNode_t* option = UI_GetOption(OPTION_VIDEO_RESOLUTIONS);
-	if (option != NULL) {
+	if (option != nullptr) {
 		return;
 	}
 	int i;
@@ -678,7 +678,7 @@ static void CL_VideoInitMenu (void)
 static void CL_TeamDefInitMenu (void)
 {
 	uiNode_t* option = UI_GetOption(OPTION_TEAMDEFS);
-	if (option != NULL)
+	if (option != nullptr)
 		return;
 
 	for (int i = 0; i < csi.numTeamDefs; i++) {
@@ -695,7 +695,7 @@ static const value_t actorskin_vals[] = {
 	{"singleplayer", V_BOOL, offsetof(actorSkin_t, singleplayer), MEMBER_SIZEOF(actorSkin_t, singleplayer)},
 	{"multiplayer", V_BOOL, offsetof(actorSkin_t, multiplayer), MEMBER_SIZEOF(actorSkin_t, multiplayer)},
 
-	{NULL, V_NULL, 0, 0}
+	{nullptr, V_nullptr, 0, 0}
 };
 
 
@@ -710,7 +710,7 @@ static void CL_ParseActorSkin (const char *name, const char **text)
 
 	actorSkin_t *skin = CL_AllocateActorSkin(name);
 
-	Com_ParseBlock(name, text, skin, actorskin_vals, NULL);
+	Com_ParseBlock(name, text, skin, actorskin_vals, nullptr);
 }
 
 /**
@@ -813,10 +813,10 @@ bool CL_ParseClientData (const char *type, const char *name, const char **text)
 
 /** @brief Cvars for initial check (popup at first start) */
 static cvarList_t checkcvar[] = {
-	{"cl_name", NULL},
-	{"s_language", NULL},
+	{"cl_name", nullptr},
+	{"s_language", nullptr},
 
-	{NULL, NULL}
+	{nullptr, nullptr}
 };
 /**
  * @brief Check cvars for some initial values that should/must be set
@@ -825,7 +825,7 @@ static void CL_CheckCvars_f (void)
 {
 	cvarList_t *c;
 
-	for (c = checkcvar; c->name != NULL; c++) {
+	for (c = checkcvar; c->name != nullptr; c++) {
 		cvar_t *var = Cvar_Get(c->name);
 		if (var->string[0] == '\0') {
 			Com_Printf("%s has no value\n", var->name);
@@ -913,22 +913,22 @@ static void CL_InitLocal (void)
 	 * the only thing this does is allow command completion
 	 * to work -- all unknown commands are automatically
 	 * forwarded to the server */
-	Cmd_AddCommand("say", NULL, "Chat command");
-	Cmd_AddCommand("say_team", NULL, "Team chat command");
-	Cmd_AddCommand("players", NULL, "List of team and player name");
+	Cmd_AddCommand("say", nullptr, "Chat command");
+	Cmd_AddCommand("say_team", nullptr, "Team chat command");
+	Cmd_AddCommand("players", nullptr, "List of team and player name");
 #ifdef DEBUG
 	Cmd_AddCommand("debug_cgrid", Grid_DumpWholeClientMap_f, "Shows the whole client side pathfinding grid of the current loaded map");
 	Cmd_AddCommand("debug_croute", Grid_DumpClientRoutes_f, "Shows the whole client side pathfinding grid of the current loaded map");
 	Cmd_AddCommand("debug_listle", LE_List_f, "Shows a list of current know local entities with type and status");
 	Cmd_AddCommand("debug_listlm", LM_List_f, "Shows a list of current know local models");
 	/* forward commands again */
-	Cmd_AddCommand("debug_edictdestroy", NULL, "Call the 'destroy' function of a given edict");
-	Cmd_AddCommand("debug_edictuse", NULL, "Call the 'use' function of a given edict");
-	Cmd_AddCommand("debug_edicttouch", NULL, "Call the 'touch' function of a given edict");
-	Cmd_AddCommand("debug_killteam", NULL, "Kills a given team");
-	Cmd_AddCommand("debug_stunteam", NULL, "Stuns a given team");
-	Cmd_AddCommand("debug_listscore", NULL, "Shows mission-score entries of all team members");
-	Cmd_AddCommand("debug_statechange", NULL, "Change the state of an edict");
+	Cmd_AddCommand("debug_edictdestroy", nullptr, "Call the 'destroy' function of a given edict");
+	Cmd_AddCommand("debug_edictuse", nullptr, "Call the 'use' function of a given edict");
+	Cmd_AddCommand("debug_edicttouch", nullptr, "Call the 'touch' function of a given edict");
+	Cmd_AddCommand("debug_killteam", nullptr, "Kills a given team");
+	Cmd_AddCommand("debug_stunteam", nullptr, "Stuns a given team");
+	Cmd_AddCommand("debug_listscore", nullptr, "Shows mission-score entries of all team members");
+	Cmd_AddCommand("debug_statechange", nullptr, "Change the state of an edict");
 #endif
 
 	IN_Init();
@@ -1138,12 +1138,12 @@ static void CL_InitMemPools (void)
 
 static void CL_RContextCvarChange (const char *cvarName, const char *oldValue, const char *newValue, void *data)
 {
-	UI_DisplayNotice(_("This change requires a restart!"), 2000, NULL);
+	UI_DisplayNotice(_("This change requires a restart!"), 2000, nullptr);
 }
 
 static void CL_RImagesCvarChange (const char *cvarName, const char *oldValue, const char *newValue, void *data)
 {
-	UI_DisplayNotice(_("This change might require a restart."), 2000, NULL);
+	UI_DisplayNotice(_("This change might require a restart."), 2000, nullptr);
 }
 
 /**
@@ -1242,7 +1242,7 @@ void CL_Shutdown (void)
 			Cvar_UnRegisterChangeListener(var->name, CL_RImagesCvarChange);
 	}
 
-	GAME_SetMode(NULL);
+	GAME_SetMode(nullptr);
 	GAME_UnloadGame();
 	CL_HTTP_Cleanup();
 	Irc_Shutdown();

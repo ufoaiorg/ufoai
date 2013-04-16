@@ -133,7 +133,7 @@ public:
 
 	inline bool isSaneFiremode () const
 	{
-		return _hand > ACTOR_HAND_NOT_SET && _fmIdx >= 0 && _fmIdx < MAX_FIREDEFS_PER_WEAPON && _weapon != NULL;
+		return _hand > ACTOR_HAND_NOT_SET && _fmIdx >= 0 && _fmIdx < MAX_FIREDEFS_PER_WEAPON && _weapon != nullptr;
 	}
 
 	inline int getFmIdx () const
@@ -353,7 +353,7 @@ typedef struct character_s {
 	int state;					/**< a character can request some initial states when the team is spawned (like reaction fire) */
 
 	chrScoreGlobal_t score;		/**< Array of scores/stats the soldier/unit collected over time. */
-	chrScoreMission_t *scoreMission;	/**< Array of scores/stats the soldier/unit collected in a mission - only used in battlescape (server side). Otherwise it's NULL. */
+	chrScoreMission_t *scoreMission;	/**< Array of scores/stats the soldier/unit collected in a mission - only used in battlescape (server side). Otherwise it's nullptr. */
 
 	actorSizeEnum_t fieldSize;
 

@@ -79,7 +79,7 @@ void uiStringNode::draw (uiNode_t *node)
 		UI_DrawString(font, (align_t)node->contentAlign, nodepos[0], nodepos[1], nodepos[0], node->box.size[0], 0, ref);
 	else
 		UI_DrawStringInBox(font, (align_t)node->contentAlign, nodepos[0] + node->padding, nodepos[1] + node->padding, node->box.size[0] - node->padding - node->padding, node->box.size[1] - node->padding - node->padding, ref, (longlines_t) EXTRADATA(node).longlines);
-	R_Color(NULL);
+	R_Color(nullptr);
 }
 
 /**
@@ -102,7 +102,7 @@ void uiStringNode::drawTooltip (const uiNode_t *node, int x, int y) const
 
 	const int maxWidth = node->box.size[0] - node->padding - node->padding;
 	const longlines_t longLines = (longlines_t)EXTRADATACONST(node).longlines;
-	R_FontTextSize(font, text, maxWidth, longLines, NULL, NULL, NULL, &isTruncated);
+	R_FontTextSize(font, text, maxWidth, longLines, nullptr, nullptr, nullptr, &isTruncated);
 	if (!isTruncated)
 		return;
 

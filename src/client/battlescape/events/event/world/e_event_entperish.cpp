@@ -43,7 +43,7 @@ void CL_EntPerish (const eventRegister_t *self, dbuffer *msg)
 	if (!le)
 		LE_NotFoundWithTypeError(entnum, type);
 
-	le_t *actor = NULL;
+	le_t *actor = nullptr;
 	switch (le->type) {
 	case ET_ITEM:
 		cls.i.emptyContainer(&le->inv, CID_FLOOR);
@@ -69,9 +69,9 @@ void CL_EntPerish (const eventRegister_t *self, dbuffer *msg)
 	case ET_PARTICLE:
 		if (le->ptl) {
 			CL_ParticleFree(le->ptl);
-			le->ptl = NULL;
+			le->ptl = nullptr;
 		} else {
-			Com_Printf("CL_EntPerish: Particle is NULL for entnum %i!\n", entnum);
+			Com_Printf("CL_EntPerish: Particle is nullptr for entnum %i!\n", entnum);
 		}
 		break;
 	case ET_BREAKABLE:

@@ -32,6 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #pragma once
 
 #include "filesys.h"
+#include "../shared/cxx.h"
 
 /**
  * @brief allocates an initial text buffer that will grow as needed
@@ -99,10 +100,10 @@ void Cmd_Shutdown(void);
  * @brief called by the init functions of other parts of the program to
  * register commands and functions to call for them.
  * The cmd_name is referenced later, so it should not be in temp memory
- * if function is NULL, the command will be forwarded to the server
+ * if function is nullptr, the command will be forwarded to the server
  * as a clc_stringcmd instead of executed locally
  */
-void Cmd_AddCommand(const char *cmd_name, xcommand_t function, const char *desc = NULL);
+void Cmd_AddCommand(const char *cmd_name, xcommand_t function, const char *desc = nullptr);
 
 void Cmd_RemoveCommand(const char *cmd_name);
 
@@ -128,14 +129,14 @@ bool Cmd_Exists(const char *cmd_name);
 
 /**
  * @brief attempts to match a partial command for automatic command line completion
- * returns NULL if nothing fits
+ * returns nullptr if nothing fits
  */
 int Cmd_CompleteCommandParameters(const char *command, const char *partial, const char **match);
 int Cmd_CompleteCommand(const char *partial, const char **match);
 
 /**
  * @brief The functions that execute commands get their parameters with these
- * functions. Cmd_Argv() will return an empty string, not a NULL
+ * functions. Cmd_Argv() will return an empty string, not a nullptr
  * if arg > argc, so string operations are always safe.
  */
 int Cmd_Argc(void);

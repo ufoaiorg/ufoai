@@ -194,7 +194,7 @@ char *Sys_FindFirst (const char *path, unsigned musthave, unsigned canthave)
 	}
 
 	/* none found */
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -206,7 +206,7 @@ char *Sys_FindNext (unsigned musthave, unsigned canthave)
 	struct _finddata_t findinfo;
 
 	if (findhandle == -1)
-		return NULL;
+		return nullptr;
 
 	/* until we found the next entry */
 	while (_findnext(findhandle, &findinfo) != -1) {
@@ -218,7 +218,7 @@ char *Sys_FindNext (unsigned musthave, unsigned canthave)
 	}
 
 	/* none found */
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -368,8 +368,8 @@ char *Sys_Cwd (void)
 {
 	static char cwd[MAX_OSPATH];
 
-	if (_getcwd(cwd, sizeof(cwd) - 1) == NULL)
-		return NULL;
+	if (_getcwd(cwd, sizeof(cwd) - 1) == nullptr)
+		return nullptr;
 	cwd[MAX_OSPATH-1] = 0;
 
 	return cwd;
@@ -404,32 +404,32 @@ char *Sys_GetHomeDirectory (void)
 
 	shfolder = LoadLibrary("shfolder.dll");
 
-	if (shfolder == NULL) {
+	if (shfolder == nullptr) {
 		Com_Printf("Unable to load SHFolder.dll\n");
-		return NULL;
+		return nullptr;
 	}
 
 	typedef HRESULT WINAPI SHGetFolderPath_t(HWND, int, HANDLE, DWORD, LPSTR);
 	SHGetFolderPath_t* const qSHGetFolderPath = (SHGetFolderPath_t*)GetProcAddress(shfolder, "SHGetFolderPathA");
-	if (qSHGetFolderPath == NULL) {
+	if (qSHGetFolderPath == nullptr) {
 		Com_Printf("Unable to find SHGetFolderPath in SHFolder.dll\n");
 		FreeLibrary(shfolder);
-		return NULL;
+		return nullptr;
 	}
 
-	if (!SUCCEEDED(qSHGetFolderPath(NULL, CSIDL_APPDATA, NULL, 0, path))) {
+	if (!SUCCEEDED(qSHGetFolderPath(nullptr, CSIDL_APPDATA, nullptr, 0, path))) {
 		Com_Printf("Unable to detect CSIDL_APPDATA\n");
 		FreeLibrary(shfolder);
-		return NULL;
+		return nullptr;
 	}
 
 	Q_strcat(path, "\\UFOAI", sizeof(path));
 	FreeLibrary(shfolder);
 
-	if (!CreateDirectory(path, NULL)) {
+	if (!CreateDirectory(path, nullptr)) {
 		if (GetLastError() != ERROR_ALREADY_EXISTS) {
 			Com_Printf("Unable to create directory \"%s\"\n", path);
-			return NULL;
+			return nullptr;
 		}
 	}
 	return path;

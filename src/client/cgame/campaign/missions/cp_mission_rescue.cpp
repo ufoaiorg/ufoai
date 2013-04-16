@@ -92,7 +92,7 @@ void CP_EndRescueMission (mission_t *mission, aircraft_t *aircraft, bool won)
  */
 static void CP_LeaveRescueMission (mission_t *mission)
 {
-	CP_EndRescueMission(mission, NULL, false);
+	CP_EndRescueMission(mission, nullptr, false);
 	mission->stage = STAGE_RETURN_TO_ORBIT;
 
 	if (mission->ufo) {

@@ -67,7 +67,7 @@ static void CP_AddItemAsCollected_f (void)
 	id = cgi->Cmd_Argv(1);
 	baseID = atoi(cgi->Cmd_Argv(2));
 	base = B_GetBaseByIDX(baseID);
-	if (base == NULL)
+	if (base == nullptr)
 		return;
 
 	/* i = item index */
@@ -135,7 +135,7 @@ static const cmdList_t cp_commands[] = {
 	{"cp_changehappiness", CP_ChangeNationHappiness_f, "Function to raise or lower nation happiness."},
 	{"cp_endgame", CP_EndGame_f, "This command will end the current campaign"},
 
-	{NULL, NULL, NULL}
+	{nullptr, nullptr, nullptr}
 };
 
 /**

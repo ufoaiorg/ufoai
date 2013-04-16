@@ -202,7 +202,7 @@ static const keyName_t keyNames[] = {
 	M(EURO),
 	M(UNDO),
 
-	{NULL, 0}
+	{nullptr, 0}
 };
 #undef M
 
@@ -512,7 +512,7 @@ const char *Key_KeynumToString (int keynum)
 const char* Key_GetBinding (const char *binding, keyBindSpace_t space)
 {
 	int i;
-	char **keySpace = NULL;
+	char **keySpace = nullptr;
 
 	switch (space) {
 	case KEYSPACE_UI:
@@ -548,7 +548,7 @@ const char* Key_GetBinding (const char *binding, keyBindSpace_t space)
  */
 void Key_SetBinding (int keynum, const char *binding, keyBindSpace_t space)
 {
-	char **keySpace = NULL;
+	char **keySpace = nullptr;
 
 	if (keynum == -1 || keynum >= K_KEY_SIZE)
 		return;
@@ -574,7 +574,7 @@ void Key_SetBinding (int keynum, const char *binding, keyBindSpace_t space)
 
 	/* free old bindings */
 	Mem_Free(*keySpace);
-	*keySpace = NULL;
+	*keySpace = nullptr;
 
 	/* allocate memory for new binding, but don't set empty commands*/
 	if (binding)
@@ -713,11 +713,11 @@ void Key_WriteBindings (const char* filename)
 		const char *path;
 		uiKeyBinding_t*binding = UI_GetKeyBindingByIndex(i);
 
-		if (binding->node == NULL)
+		if (binding->node == nullptr)
 			continue;
 		if (binding->inherited)
 			continue;
-		if (binding->property == NULL)
+		if (binding->property == nullptr)
 			path = va("%s", UI_GetPath(binding->node));
 		else
 			path = va("%s@%s", UI_GetPath(binding->node), binding->property->string);
@@ -906,7 +906,7 @@ void Key_Event (unsigned int key, unsigned short unicode, bool down, unsigned ti
 		/* Some keyboards need modifiers to access key values that are
 		 * present as bare keys on other keyboards. Smooth over the difference
 		 * here by using the translated value if there is a binding for it. */
-		const char *kb = NULL;
+		const char *kb = nullptr;
 		if (IN_GetMouseSpace() == MS_UI && unicode >= 32 && unicode < 127)
 			kb = menuKeyBindings[unicode];
 		if (!kb && IN_GetMouseSpace() == MS_UI)

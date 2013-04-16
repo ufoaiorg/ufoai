@@ -104,7 +104,7 @@ static const value_t localEntityValues[] = {
 	{"angles_night", V_POS, offsetof(localEntityParse_t, nightSunAngles), MEMBER_SIZEOF(localEntityParse_t, nightSunAngles)},
 	{"color_night", V_VECTOR, offsetof(localEntityParse_t, nightSunColor), MEMBER_SIZEOF(localEntityParse_t, nightSunColor)},
 
-	{NULL, V_NULL, 0, 0}
+	{nullptr, V_nullptr, 0, 0}
 };
 
 static void SP_worldspawn(const localEntityParse_t *entData);
@@ -125,7 +125,7 @@ static const spawn_t spawns[] = {
 	{"misc_sound", SP_misc_sound},
 	{"light", SP_light},
 
-	{NULL, NULL}
+	{nullptr, nullptr}
 };
 
 /**
@@ -305,7 +305,7 @@ static void SP_worldspawn (const localEntityParse_t *entData)
 	while (VectorSum(refdef.modelAmbientColor) < MIN_AMBIENT_SUM)
 		VectorScale(refdef.modelAmbientColor, 1.25, refdef.modelAmbientColor);
 
-	AngleVectors(sunAngles, refdef.sunVector, NULL, NULL);
+	AngleVectors(sunAngles, refdef.sunVector, nullptr, nullptr);
 	refdef.sunVector[3] = 0.0; /* to use as directional light source in OpenGL */
 
 	/** @todo Parse fog from worldspawn config */
@@ -330,7 +330,7 @@ static void SP_misc_model (const localEntityParse_t *entData)
 	/* add it */
 	lm = LM_AddModel(entData->model, entData->origin, entData->angles, entData->entnum, (entData->spawnflags & 0xFF), renderFlags, entData->scale);
 	if (lm) {
-		if (LM_GetByID(entData->targetname) != NULL)
+		if (LM_GetByID(entData->targetname) != nullptr)
 			Com_Error(ERR_DROP, "Ambiguous targetname '%s'", entData->targetname);
 		Q_strncpyz(lm->id, entData->targetname, sizeof(lm->id));
 		Q_strncpyz(lm->target, entData->target, sizeof(lm->target));

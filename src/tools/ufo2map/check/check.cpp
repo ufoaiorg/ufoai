@@ -460,7 +460,7 @@ static void Check_FindCompositeSides (void)
 
 			while (numTodo > 0) {
 				mapbrush_t *bChecking = bTodo[--numTodo];
-				if (bChecking == NULL)
+				if (bChecking == nullptr)
 					continue;
 				bDone[numDone++] = bChecking; /* remember so it is not added to the todo list again */
 
@@ -1272,7 +1272,7 @@ static vec_t Check_MapBrushVolume (const mapbrush_t *brush)
 		return 0;
 
 	/* grab the first valid point as the corner */
-	w = NULL;
+	w = nullptr;
 	for (i = 0; i < brush->numsides; i++) {
 		w = brush->original_sides[i].winding;
 		if (w)
@@ -1467,7 +1467,7 @@ void SetImpliedFlags (side_t *side, brush_texture_t *tex, const mapbrush_t *brus
 
 	/* see discussion at Check_SetNodraw */
 	if (!config.fixMap && !config.performMapCheck) {
-		const char *flagsDescription = NULL;
+		const char *flagsDescription = nullptr;
 		if (Q_streq(texname, "tex_common/actorclip")) {
 			side->contentFlags |= CONTENTS_ACTORCLIP;
 			flagsDescription = "CONTENTS_ACTORCLIP";
@@ -1592,8 +1592,8 @@ void CheckTexturesBasedOnFlags (void)
 				Check_Printf(VERB_CHECK, false, brush->entitynum, brush->brushnum, "error texture assigned - check this brush\n");
 			}
 
-			if (Q_streq(tex->name, "NULL")) {
-				Check_Printf(VERB_CHECK, true, brush->entitynum, brush->brushnum, "replaced NULL with nodraw texture\n");
+			if (Q_streq(tex->name, "nullptr")) {
+				Check_Printf(VERB_CHECK, true, brush->entitynum, brush->brushnum, "replaced nullptr with nodraw texture\n");
 				Q_strncpyz(tex->name, "tex_common/nodraw", sizeof(tex->name));
 				tex->surfaceFlags |= SURF_NODRAW;
 			}

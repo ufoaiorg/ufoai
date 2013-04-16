@@ -90,7 +90,7 @@ static bool Cvar_InfoValidate (const char *s)
 /**
  * @brief Searches for a cvar given by parameter
  * @param varName The cvar name as string
- * @return Pointer to cvar_t struct or @c NULL if no cvar with the specified name was found
+ * @return Pointer to cvar_t struct or @c nullptr if no cvar with the specified name was found
  * @sa Cvar_GetString
  * @sa Cvar_SetValue
  */
@@ -104,7 +104,7 @@ cvar_t *Cvar_FindVar (const char *varName)
 			return var;
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -244,7 +244,7 @@ void Cvar_Reset (cvar_t *cvar)
 {
 	char *str;
 
-	if (cvar->oldString == NULL)
+	if (cvar->oldString == nullptr)
 		return;
 
 	str = Mem_StrDup(cvar->oldString);
@@ -314,7 +314,7 @@ bool Cvar_Delete (const char *varName)
 			Mem_Free(var->oldString);
 			Mem_Free(var->defaultString);
 			/* latched cvars should not be removable */
-			assert(var->latchedString == NULL);
+			assert(var->latchedString == nullptr);
 			changeListener = var->changeListener;
 			while (changeListener) {
 				cvarChangeListener_t *changeListener2 = changeListener->next;
@@ -353,7 +353,7 @@ cvar_t *Cvar_Get (const char *var_name, const char *var_value, int flags, const 
 	if (flags & (CVAR_USERINFO | CVAR_SERVERINFO)) {
 		if (!Cvar_InfoValidate(var_name)) {
 			Com_Printf("invalid info cvar name\n");
-			return NULL;
+			return nullptr;
 		}
 	}
 
@@ -369,19 +369,19 @@ cvar_t *Cvar_Get (const char *var_name, const char *var_value, int flags, const 
 	}
 
 	if (!var_value)
-		return NULL;
+		return nullptr;
 
 	if (flags & (CVAR_USERINFO | CVAR_SERVERINFO)) {
 		if (!Cvar_InfoValidate(var_value)) {
 			Com_Printf("invalid info cvar value '%s' of cvar '%s'\n", var_value, var_name);
-			return NULL;
+			return nullptr;
 		}
 	}
 
 	cvar_t* const var = Mem_PoolAllocType(cvar_t, com_cvarSysPool);
 	var->name = Mem_PoolStrDup(var_name, com_cvarSysPool, 0);
 	var->string = Mem_PoolStrDup(var_value, com_cvarSysPool, 0);
-	var->oldString = NULL;
+	var->oldString = nullptr;
 	var->modified = true;
 	var->value = atof(var->string);
 	var->integer = atoi(var->string);
@@ -455,7 +455,7 @@ cvarChangeListener_t *Cvar_RegisterChangeListener (const char *varName, cvarChan
 	cvar_t *var = Cvar_FindVar(varName);
 	if (!var) {
 		Com_Printf("Could not register change listener, cvar '%s' wasn't found\n", varName);
-		return NULL;
+		return nullptr;
 	}
 
 	if (!var->changeListener) {
@@ -476,14 +476,14 @@ cvarChangeListener_t *Cvar_RegisterChangeListener (const char *varName, cvarChan
 			if (!l->next) {
 				cvarChangeListener_t *listener = Cvar_GetChangeListener(listenerFunc);
 				l->next = listener;
-				l->next->next = NULL;
+				l->next->next = nullptr;
 				return listener;
 			}
 			l = l->next;
 		}
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -521,7 +521,7 @@ static cvar_t *Cvar_Set2 (const char *varName, const char *value, bool force)
 	cvar_t *var;
 
 	if (!value)
-		return NULL;
+		return nullptr;
 
 	var = Cvar_FindVar(varName);
 	/* create it */
@@ -552,7 +552,7 @@ static cvar_t *Cvar_Set2 (const char *varName, const char *value, bool force)
 				if (Q_streq(value, var->latchedString))
 					return var;
 				Mem_Free(var->latchedString);
-				var->latchedString = NULL;
+				var->latchedString = nullptr;
 			} else {
 				if (Q_streq(value, var->string))
 					return var;
@@ -577,7 +577,7 @@ static cvar_t *Cvar_Set2 (const char *varName, const char *value, bool force)
 		}
 	} else {
 		Mem_Free(var->latchedString);
-		var->latchedString = NULL;
+		var->latchedString = nullptr;
 	}
 
 	if (Q_streq(value, var->string))
@@ -645,7 +645,7 @@ cvar_t *Cvar_FullSet (const char *varName, const char *value, int flags)
 	cvar_t *var;
 
 	if (!value)
-		return NULL;
+		return nullptr;
 
 	var = Cvar_FindVar(varName);
 	/* create it */
@@ -698,7 +698,7 @@ void Cvar_UpdateLatchedVars (void)
 			continue;
 		var->oldString = var->string;
 		var->string = var->latchedString;
-		var->latchedString = NULL;
+		var->latchedString = nullptr;
 		var->value = atof(var->string);
 		var->integer = atoi(var->string);
 	}
@@ -768,7 +768,7 @@ static void Cvar_Define_f (void)
 
 	name = Cmd_Argv(1);
 
-	if (Cvar_FindVar(name) == NULL)
+	if (Cvar_FindVar(name) == nullptr)
 		Cvar_Set(name, Cmd_Argc() == 3 ? Cmd_Argv(2) : "");
 }
 
@@ -915,7 +915,7 @@ static void Cvar_List_f (void)
 {
 	cvar_t *var;
 	int i, c, l = 0;
-	const char *token = NULL;
+	const char *token = nullptr;
 
 	c = Cmd_Argc();
 
@@ -1081,7 +1081,7 @@ void Cvar_FixCheatVars (void)
 
 		/* also remove the oldString value here */
 		Mem_Free(var->oldString);
-		var->oldString = NULL;
+		var->oldString = nullptr;
 		Mem_Free(var->string);
 		var->string = Mem_PoolStrDup(var->defaultString, com_cvarSysPool, 0);
 		var->value = atof(var->string);
@@ -1124,6 +1124,6 @@ void Cvar_Init (void)
 
 void Cvar_Shutdown (void)
 {
-	cvarVars = NULL;
+	cvarVars = nullptr;
 	OBJZERO(cvarVarsHash);
 }

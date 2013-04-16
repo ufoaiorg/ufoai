@@ -192,5 +192,5 @@ void R_DrawFlareSurfaces (const mBspSurfaces_t *surfs, GLushort *indexPtr)
 
 	R_EnableColorArray(false);
 
-	R_Color(NULL);
+	R_Color(nullptr);
 }

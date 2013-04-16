@@ -43,7 +43,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 void CAP_RemoveAircraftExceedingCapacity (base_t* base, baseCapacities_t capacity)
 {
-	linkedList_t *awayAircraft = NULL;
+	linkedList_t *awayAircraft = nullptr;
 	int numAwayAircraft;
 	int randomNum;
 
@@ -90,8 +90,8 @@ void CAP_RemoveAircraftExceedingCapacity (base_t* base, baseCapacities_t capacit
 		aircraft_t *aircraft = (aircraft_t*)cgi->LIST_GetByIdx(awayAircraft, randomNum);
 		/* No base can hold this aircraft */
 		UFO_NotifyPhalanxAircraftRemoved(aircraft);
-		if (!MapIsWater(GEO_GetColor(aircraft->pos, MAPTYPE_TERRAIN, NULL)))
-			CP_SpawnRescueMission(aircraft, NULL);
+		if (!MapIsWater(GEO_GetColor(aircraft->pos, MAPTYPE_TERRAIN, nullptr)))
+			CP_SpawnRescueMission(aircraft, nullptr);
 		else {
 			/* Destroy the aircraft and everything onboard - the aircraft pointer
 			 * is no longer valid after this point */
@@ -260,9 +260,9 @@ int CAP_GetFreeCapacity (const base_t *base, baseCapacities_t capacityType)
  */
 void CAP_CheckOverflow (void)
 {
-	base_t *base = NULL;
+	base_t *base = nullptr;
 
-	while ((base = B_GetNext(base)) != NULL) {
+	while ((base = B_GetNext(base)) != nullptr) {
 		int i;
 
 		for (i = CAP_ALIENS; i < MAX_CAP; i++) {

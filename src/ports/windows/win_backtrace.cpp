@@ -20,14 +20,14 @@
 static void _backtrace (struct output_buffer *ob, struct bfd_set *set, int depth, LPCONTEXT context)
 {
 	char procname[MAX_PATH];
-	struct bfd_ctx *bc = NULL;
+	struct bfd_ctx *bc = nullptr;
 	HANDLE process = GetCurrentProcess();
 	HANDLE thread = GetCurrentThread();
 	STACKFRAME frame;
 	char symbol_buffer[sizeof(IMAGEHLP_SYMBOL) + 255];
 	char module_name_raw[MAX_PATH];
 
-	GetModuleFileNameA(NULL, procname, sizeof(procname));
+	GetModuleFileNameA(nullptr, procname, sizeof(procname));
 
 	OBJZERO(frame);
 
@@ -40,8 +40,8 @@ static void _backtrace (struct output_buffer *ob, struct bfd_set *set, int depth
 
 	while (StackWalk(IMAGE_FILE_MACHINE_I386, process, thread, &frame, context,
 			0, SymFunctionTableAccess, SymGetModuleBase, 0)) {
-		const char * file = NULL;
-		const char * func = NULL;
+		const char * file = nullptr;
+		const char * func = nullptr;
 		unsigned line = 0;
 		DWORD module_base = SymGetModuleBase(process, frame.AddrPC.Offset);
 		const char * module_name = "[unknown module]";
@@ -63,7 +63,7 @@ static void _backtrace (struct output_buffer *ob, struct bfd_set *set, int depth
 			find(bc, frame.AddrPC.Offset, &file, &func, &line);
 		}
 
-		if (file == NULL) {
+		if (file == nullptr) {
 			DWORD dummy = 0;
 			if (SymGetSymFromAddr(process, frame.AddrPC.Offset, &dummy, symbol)) {
 				file = symbol->Name;
@@ -71,7 +71,7 @@ static void _backtrace (struct output_buffer *ob, struct bfd_set *set, int depth
 				file = "[unknown file]";
 			}
 		}
-		if (func == NULL) {
+		if (func == nullptr) {
 			output_print(ob, "0x%x : %s : %s \n", frame.AddrPC.Offset,
 					module_name, file);
 		} else {
@@ -81,9 +81,9 @@ static void _backtrace (struct output_buffer *ob, struct bfd_set *set, int depth
 	}
 }
 
-static LPTOP_LEVEL_EXCEPTION_FILTER g_prev = NULL;
+static LPTOP_LEVEL_EXCEPTION_FILTER g_prev = nullptr;
 #define BUFFER_MAX (16*1024)
-static char * g_output = NULL;
+static char * g_output = nullptr;
 
 static LONG WINAPI exception_filter (LPEXCEPTION_POINTERS info)
 {
@@ -117,7 +117,7 @@ static LONG WINAPI exception_filter (LPEXCEPTION_POINTERS info)
 	}
 
 	crash = fopen(dumpFile, "w");
-	if (crash != NULL) {
+	if (crash != nullptr) {
 		fprintf(crash, "======start======\n");
 		fprintf(crash, "Date: %.4d-%.2d-%.2d\n",
 				timeInfo.wYear, timeInfo.wMonth, timeInfo.wDay);
@@ -130,7 +130,7 @@ static LONG WINAPI exception_filter (LPEXCEPTION_POINTERS info)
 	}
 	fputs(g_output, stderr);
 
-	ret = MessageBox(NULL, "Would you like to upload this crash dump and your ufoconsole.log? This will help the developers to fix the problem.", GAME_TITLE_LONG" Fatal Error", MB_ICONQUESTION | MB_YESNO | MB_DEFBUTTON2);
+	ret = MessageBox(nullptr, "Would you like to upload this crash dump and your ufoconsole.log? This will help the developers to fix the problem.", GAME_TITLE_LONG" Fatal Error", MB_ICONQUESTION | MB_YESNO | MB_DEFBUTTON2);
 	if (ret == IDYES)
 		Com_UploadCrashDump(dumpFile);
 
@@ -139,7 +139,7 @@ static LONG WINAPI exception_filter (LPEXCEPTION_POINTERS info)
 
 static void backtrace_register (void)
 {
-	if (g_output == NULL) {
+	if (g_output == nullptr) {
 		g_output = (char*)malloc(BUFFER_MAX);
 		g_prev = SetUnhandledExceptionFilter(exception_filter);
 	}
@@ -150,8 +150,8 @@ static void backtrace_unregister (void)
 	if (g_output) {
 		free(g_output);
 		SetUnhandledExceptionFilter(g_prev);
-		g_prev = NULL;
-		g_output = NULL;
+		g_prev = nullptr;
+		g_output = nullptr;
 	}
 }
 #endif

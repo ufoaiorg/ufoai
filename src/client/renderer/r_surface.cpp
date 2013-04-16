@@ -46,9 +46,9 @@ void R_SetSurfaceBumpMappingParameters (const mBspSurface_t *surf, const image_t
 		R_EnableSpecularMap(specularMap, true);
 		R_UseMaterial(&image->material);
 	} else {
-		R_EnableBumpmap(NULL);
-		R_EnableSpecularMap(NULL, false);
-		R_UseMaterial(NULL);
+		R_EnableBumpmap(nullptr);
+		R_EnableSpecularMap(nullptr, false);
+		R_UseMaterial(nullptr);
 	}
 }
 
@@ -102,7 +102,7 @@ void R_DrawSurfaces (const mBspSurfaces_t *surfs, GLushort *indexPtr)
 	const int frame = r_locals.frame;
 
 	int lastLightMap = 0, lastDeluxeMap = 0;
-	image_t *lastTexture = NULL;
+	image_t *lastTexture = nullptr;
 	uint32_t lastFlags = ~0;
 
 	int batchStart = 0, batchSize = 0; /* in triangles */
@@ -161,9 +161,9 @@ void R_DrawSurfaces (const mBspSurfaces_t *surfs, GLushort *indexPtr)
 
 	/* reset state */
 	if (r_state.active_normalmap)
-		R_EnableBumpmap(NULL);
+		R_EnableBumpmap(nullptr);
 
-	R_EnableGlowMap(NULL);
+	R_EnableGlowMap(nullptr);
 
-	R_Color(NULL);
+	R_Color(nullptr);
 }

@@ -46,8 +46,8 @@ enum {
 
 /** @brief Transfer informations (they are being stored in ccs.transfers). */
 typedef struct transfer_s {
-	base_t *destBase;				/**< Pointer to destination base. May not be NULL if active is true. */
-	base_t *srcBase;				/**< Pointer to source base. May be NULL if transfer comes from a mission (alien body recovery). */
+	base_t *destBase;				/**< Pointer to destination base. May not be nullptr if active is true. */
+	base_t *srcBase;				/**< Pointer to source base. May be nullptr if transfer comes from a mission (alien body recovery). */
 	date_t event;					/**< When the transfer finish process should start. */
 
 	int itemAmount[MAX_OBJDEFS];			/**< Amount of given item. */

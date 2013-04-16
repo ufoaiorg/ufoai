@@ -83,7 +83,7 @@ float G_ActorVis (const vec3_t from, const Edict *ent, const Edict *check, bool 
 	/* units that are very close are visible in the smoke */
 	if (distance > UNIT_SIZE * 1.5f) {
 		vec3_t eyeEnt;
-		Edict *e = NULL;
+		Edict *e = nullptr;
 
 		G_ActorGetEyeVector(ent, eyeEnt);
 
@@ -246,7 +246,7 @@ bool G_Vis (const int team, const Edict *from, const Edict *check, const vischec
  */
 int G_TestVis (const int team, Edict *check, const vischeckflags_t flags)
 {
-	Edict *from = NULL;
+	Edict *from = nullptr;
 	/* store old flag */
 	const int old = G_IsVisibleForTeam(check, team) ? VS_CHANGE : 0;
 
@@ -318,12 +318,12 @@ static int G_DoTestVis (const int team, Edict *check, const vischeckflags_t visF
  */
 void G_CheckVisPlayer (Player &player, const vischeckflags_t visFlags)
 {
-	Edict *ent = NULL;
+	Edict *ent = nullptr;
 
 	/* check visibility */
 	while ((ent = G_EdictsGetNextInUse(ent))) {
 		/* check if he's visible */
-		G_DoTestVis(player.getTeam(), ent, visFlags, G_PlayerToPM(player), NULL);
+		G_DoTestVis(player.getTeam(), ent, visFlags, G_PlayerToPM(player), nullptr);
 	}
 }
 
@@ -333,7 +333,7 @@ void G_CheckVisPlayer (Player &player, const vischeckflags_t visFlags)
  * @sa G_TestVis
  * @param[in] team Team to check the vis for
  * @param[in] check The edict that you want to check (and which maybe will appear
- * or perish for the given team). If this is NULL every edict will be checked.
+ * or perish for the given team). If this is nullptr every edict will be checked.
  * @param visFlags Modifiers for the checks
  * @param[in] ent The edict that is (maybe) seeing other edicts
  * @return If an actor get visible who's no civilian VIS_STOP is added to the
@@ -367,7 +367,7 @@ static int G_CheckVisTeam (const int team, Edict *check, const vischeckflags_t v
  */
 int G_CheckVisTeamAll (const int team, const vischeckflags_t visFlags, const Edict *ent)
 {
-	Edict *chk = NULL;
+	Edict *chk = nullptr;
 	int status = 0;
 
 	while ((chk = G_EdictsGetNextInUse(chk))) {
@@ -381,10 +381,10 @@ int G_CheckVisTeamAll (const int team, const vischeckflags_t visFlags, const Edi
  */
 void G_VisMakeEverythingVisible (void)
 {
-	Edict *ent = NULL;
+	Edict *ent = nullptr;
 	while ((ent = G_EdictsGetNextInUse(ent))) {
 		const int playerMask = G_VisToPM(ent->visflags);
-		G_AppearPerishEvent(~playerMask, true, *ent, NULL);
+		G_AppearPerishEvent(~playerMask, true, *ent, nullptr);
 		if (G_IsActor(ent))
 			G_SendInventory(~G_TeamToPM(ent->team), *ent);
 	}
@@ -394,7 +394,7 @@ void G_VisMakeEverythingVisible (void)
  * @brief Check if the edict appears/perishes for the other teams. If they appear
  * for other teams, the needed information for those clients are also send in
  * @c G_CheckVisTeam resp. @c G_AppearPerishEvent
- * @param[in] check The edict that is maybe seen by others. If NULL, all edicts are checked
+ * @param[in] check The edict that is maybe seen by others. If nullptr, all edicts are checked
  * @param visFlags Modifiers for the checks
  * @sa G_CheckVisTeam
  */
@@ -405,9 +405,9 @@ void G_CheckVis (Edict *check, const vischeckflags_t visFlags)
 	for (team = 0; team < MAX_TEAMS; team++)
 		if (level.num_alive[team]) {
 			if (!check)	/* no special entity given, so check them all */
-				G_CheckVisTeamAll(team, visFlags, NULL);
+				G_CheckVisTeamAll(team, visFlags, nullptr);
 			else
-				G_CheckVisTeam(team, check, visFlags, NULL);
+				G_CheckVisTeam(team, check, visFlags, nullptr);
 		}
 }
 
@@ -417,7 +417,7 @@ void G_CheckVis (Edict *check, const vischeckflags_t visFlags)
  */
 void G_VisFlagsClear (int team)
 {
-	Edict *ent = NULL;
+	Edict *ent = nullptr;
 	const teammask_t teamMask = ~G_TeamToVisMask(team);
 	while ((ent = G_EdictsGetNextInUse(ent))) {
 		ent->visflags &= teamMask;

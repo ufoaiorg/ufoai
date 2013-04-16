@@ -58,7 +58,7 @@ void CL_ActorStateChange (const eventRegister_t *self, dbuffer *msg)
 	if ((state & STATE_DEAD) && LE_IsLivingActor(le)) {
 		le->state = state;
 		le->resetFloor();
-		LE_SetThink(le, NULL);
+		LE_SetThink(le, nullptr);
 		le->aabb.setMaxs(player_dead_maxs);
 		CL_ActorRemoveFromTeamList(le);
 		return;

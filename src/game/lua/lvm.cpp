@@ -40,7 +40,7 @@ const TValue *luaV_tonumber (const TValue *obj, TValue *n) {
     return n;
   }
   else
-    return NULL;
+    return nullptr;
 }
 
 
@@ -113,7 +113,7 @@ void luaV_gettable (lua_State *L, const TValue *t, TValue *key, StkId val) {
       Table *h = hvalue(t);
       const TValue *res = luaH_get(h, key); /* do a primitive get */
       if (!ttisnil(res) ||  /* result is no nil? */
-          (tm = fasttm(L, h->metatable, TM_INDEX)) == NULL) { /* or no TM? */
+          (tm = fasttm(L, h->metatable, TM_INDEX)) == nullptr) { /* or no TM? */
         setobj2s(L, val, res);
         return;
       }
@@ -140,7 +140,7 @@ void luaV_settable (lua_State *L, const TValue *t, TValue *key, StkId val) {
       Table *h = hvalue(t);
       TValue *oldval = luaH_set(L, h, key); /* do a primitive set */
       if (!ttisnil(oldval) ||  /* result is no nil? */
-          (tm = fasttm(L, h->metatable, TM_NEWINDEX)) == NULL) { /* or no TM? */
+          (tm = fasttm(L, h->metatable, TM_NEWINDEX)) == nullptr) { /* or no TM? */
         setobj2t(L, oldval, val);
         luaC_barriert(L, h, val);
         return;
@@ -177,13 +177,13 @@ static const TValue *get_compTM (lua_State *L, Table *mt1, Table *mt2,
                                   TMS event) {
   const TValue *tm1 = fasttm(L, mt1, event);
   const TValue *tm2;
-  if (tm1 == NULL) return NULL;  /* no metamethod */
+  if (tm1 == nullptr) return nullptr;  /* no metamethod */
   if (mt1 == mt2) return tm1;  /* same metatables => same metamethods */
   tm2 = fasttm(L, mt2, event);
-  if (tm2 == NULL) return NULL;  /* no metamethod */
+  if (tm2 == nullptr) return nullptr;  /* no metamethod */
   if (luaO_rawequalObj(tm1, tm2))  /* same metamethods? */
     return tm1;
-  return NULL;
+  return nullptr;
 }
 
 
@@ -273,7 +273,7 @@ int luaV_equalval (lua_State *L, const TValue *t1, const TValue *t2) {
     }
     default: return gcvalue(t1) == gcvalue(t2);
   }
-  if (tm == NULL) return 0;  /* no TM? */
+  if (tm == nullptr) return 0;  /* no TM? */
   callTMres(L, L->top, tm, t1, t2);  /* call TM */
   return !l_isfalse(L->top);
 }
@@ -318,8 +318,8 @@ static void Arith (lua_State *L, StkId ra, const TValue *rb,
                    const TValue *rc, TMS op) {
   TValue tempb, tempc;
   const TValue *b, *c;
-  if ((b = luaV_tonumber(rb, &tempb)) != NULL &&
-      (c = luaV_tonumber(rc, &tempc)) != NULL) {
+  if ((b = luaV_tonumber(rb, &tempb)) != nullptr &&
+      (c = luaV_tonumber(rc, &tempc)) != nullptr) {
     lua_Number nb = nvalue(b), nc = nvalue(c);
     switch (op) {
       case TM_ADD: setnvalue(ra, luai_numadd(nb, nc)); break;

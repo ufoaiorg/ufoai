@@ -31,7 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 mBspSurfaces_t r_material_surfaces;
 
 /** @todo load this from file, will make tweaking the game much easier */
-material_t defaultMaterial = {0, 0.0f, DEFAULT_BUMP, DEFAULT_PARALLAX, DEFAULT_HARDNESS, DEFAULT_SPECULAR, DEFAULT_GLOWSCALE, NULL, 0};
+material_t defaultMaterial = {0, 0.0f, DEFAULT_BUMP, DEFAULT_PARALLAX, DEFAULT_HARDNESS, DEFAULT_SPECULAR, DEFAULT_GLOWSCALE, nullptr, 0};
 
 #define UPDATE_THRESHOLD 0.02
 /**
@@ -122,7 +122,7 @@ static void R_StageGlow (const materialStage_t *stage)
 		if (r_state.glowmap_enabled)
 			R_ProgramParameter1f("GLOWSCALE", stage->glowscale);
 	} else {
-		R_EnableGlowMap(NULL);
+		R_EnableGlowMap(nullptr);
 	}
 }
 
@@ -144,14 +144,14 @@ static void R_StageLighting (const mBspSurface_t *surf, const materialStage_t *s
 				R_EnableLighting(r_state.world_program, true);
 				R_SetSurfaceBumpMappingParameters(surf, stage->image->normalmap, stage->image->specularmap);
 			} else {
-				R_SetSurfaceBumpMappingParameters(surf, NULL, NULL);
-				R_EnableLighting(NULL, false);
+				R_SetSurfaceBumpMappingParameters(surf, nullptr, nullptr);
+				R_EnableLighting(nullptr, false);
 			}
 		}
 	} else {
 		if (!r_state.lighting_enabled)
 			return;
-		R_EnableLighting(NULL, false);
+		R_EnableLighting(nullptr, false);
 
 		R_EnableTexture(&texunit_lightmap, false);
 	}
@@ -411,7 +411,7 @@ void R_DrawMaterialSurfaces (const mBspSurfaces_t *surfs, GLushort *indexPtr)
 	assert(r_state.blend_enabled);
 
 	/** @todo - integrate BSP lighting with model lighting */
-	R_EnableModelLights(NULL, 0, false, false);
+	R_EnableModelLights(nullptr, 0, false, false);
 
 	R_EnableColorArray(true);
 
@@ -419,7 +419,7 @@ void R_DrawMaterialSurfaces (const mBspSurfaces_t *surfs, GLushort *indexPtr)
 
 	R_EnableColorArray(false);
 
-	R_EnableLighting(NULL, false);
+	R_EnableLighting(nullptr, false);
 
 	R_EnableTexture(&texunit_lightmap, false);
 
@@ -451,7 +451,7 @@ void R_DrawMaterialSurfaces (const mBspSurfaces_t *surfs, GLushort *indexPtr)
 		}
 	}
 
-	R_Color(NULL);
+	R_Color(nullptr);
 
 	/* polygon offset parameters */
 	glPolygonOffset(0.0, 0.0);
@@ -470,13 +470,13 @@ void R_DrawMaterialSurfaces (const mBspSurfaces_t *surfs, GLushort *indexPtr)
 
 	R_EnableTexture(&texunit_lightmap, false);
 
-	R_EnableBumpmap(NULL);
+	R_EnableBumpmap(nullptr);
 
-	R_EnableLighting(NULL, false);
+	R_EnableLighting(nullptr, false);
 
-	R_EnableGlowMap(NULL);
+	R_EnableGlowMap(nullptr);
 
-	R_Color(NULL);
+	R_Color(nullptr);
 }
 
 /**
@@ -755,7 +755,7 @@ static int R_ParseStage (materialStage_t *s, const char **buffer)
 			s->terrain.ceil = atof(c);
 			if (s->terrain.ceil < s->terrain.floor) {
 				Com_Printf("R_ParseStage: Inverted terrain ceiling and floor "
-					"values for %s\n", (s->image ? s->image->name : "NULL"));
+					"values for %s\n", (s->image ? s->image->name : "nullptr"));
 				return -1;
 			}
 
@@ -763,7 +763,7 @@ static int R_ParseStage (materialStage_t *s, const char **buffer)
 
 			if (s->terrain.height == 0.0) {
 				Com_Printf("R_ParseStage: Zero height terrain specified for %s\n",
-					(s->image ? s->image->name : "NULL"));
+					(s->image ? s->image->name : "nullptr"));
 				return -1;
 			}
 
@@ -789,7 +789,7 @@ static int R_ParseStage (materialStage_t *s, const char **buffer)
 
 			if (s->tape.height == 0.0) {
 				Com_Printf("R_ParseStage: Zero height tape specified for %s\n",
-					(s->image ? s->image->name : "NULL"));
+					(s->image ? s->image->name : "nullptr"));
 				return -1;
 			}
 
@@ -802,7 +802,7 @@ static int R_ParseStage (materialStage_t *s, const char **buffer)
 			s->dirt.intensity = atof(c);
 			if (s->dirt.intensity <= 0.0 || s->dirt.intensity > 1.0) {
 				Com_Printf("R_ParseStage: Invalid dirtmap intensity for %s\n",
-					(s->image ? s->image->name : "NULL"));
+					(s->image ? s->image->name : "nullptr"));
 				return -1;
 			}
 			s->flags |= STAGE_DIRTMAP;
@@ -832,7 +832,7 @@ static int R_ParseStage (materialStage_t *s, const char **buffer)
 
 			if (s->anim.num_frames < 1 || s->anim.num_frames > MAX_ANIM_FRAMES) {
 				Com_Printf("R_ParseStage: Invalid number of anim frames for %s (max is %i)\n",
-						(s->image ? s->image->name : "NULL"), MAX_ANIM_FRAMES);
+						(s->image ? s->image->name : "nullptr"), MAX_ANIM_FRAMES);
 				return -1;
 			}
 
@@ -841,7 +841,7 @@ static int R_ParseStage (materialStage_t *s, const char **buffer)
 
 			if (s->anim.fps <= 0) {
 				Com_Printf("R_ParseStage: Invalid anim fps for %s\n",
-						(s->image ? s->image->name : "NULL"));
+						(s->image ? s->image->name : "nullptr"));
 				return -1;
 			}
 
@@ -897,7 +897,7 @@ static int R_ParseStage (materialStage_t *s, const char **buffer)
 					"  terrain.ceil: %5f\n"
 					"  anim.num_frames: %d\n"
 					"  anim.fps: %3f\n",
-					s->flags, (s->image ? s->image->name : "NULL"),
+					s->flags, (s->image ? s->image->name : "nullptr"),
 					s->blend.src, s->blend.dest,
 					s->color[0], s->color[1], s->color[2],
 					s->pulse.hz, s->pulse.dutycycle, s->stretch.amp, s->stretch.hz,
@@ -959,8 +959,8 @@ void R_LoadMaterials (const char *map)
 	buffer = (const char *)fileBuffer;
 
 	inmaterial = false;
-	image = NULL;
-	m = NULL;
+	image = nullptr;
+	m = nullptr;
 
 	while (true) {
 		const char *c = Com_Parse(&buffer);
@@ -976,7 +976,7 @@ void R_LoadMaterials (const char *map)
 		if (Q_streq(c, "material")) {
 			c = Com_Parse(&buffer);
 			image = R_GetImage(va("textures/%s", c));
-			if (image == NULL)
+			if (image == nullptr)
 				Com_DPrintf(DEBUG_RENDERER, "R_LoadMaterials: skip texture: %s - not used in the map\n", c);
 
 			continue;
@@ -993,7 +993,7 @@ void R_LoadMaterials (const char *map)
 
 			if (image->normalmap == r_noTexture){
 				Com_Printf("R_LoadMaterials: Failed to resolve normalmap: %s\n", c);
-				image->normalmap = NULL;
+				image->normalmap = nullptr;
 			}
 		}
 
@@ -1003,7 +1003,7 @@ void R_LoadMaterials (const char *map)
 
 			if (image->glowmap == r_noTexture){
 				Com_Printf("R_LoadMaterials: Failed to resolve glowmap: %s\n", c);
-				image->glowmap = NULL;
+				image->glowmap = nullptr;
 			}
 		}
 
@@ -1082,7 +1082,7 @@ void R_LoadMaterials (const char *map)
 		if (*c == '}' && inmaterial) {
 			Com_DPrintf(DEBUG_RENDERER, "Parsed material %s with %d stages\n", image->name, m->num_stages);
 			inmaterial = false;
-			image = NULL;
+			image = nullptr;
 			/* multiply stage glowscale values by material glowscale */
 			ss = m->stages;
 			while (ss) {

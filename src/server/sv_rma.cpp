@@ -283,7 +283,7 @@ static const TileSet *SV_GetMapTileSet (const MapInfo *map, const char *tileSetN
 			return tileSet;
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 static inline const Tile *SV_GetMapTile (const MapInfo *map, const char *tileName)
@@ -296,7 +296,7 @@ static inline const Tile *SV_GetMapTile (const MapInfo *map, const char *tileNam
 			return tile;
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -347,7 +347,7 @@ static bool SV_ParseMapTileSet (const char *filename, const char **text, MapInfo
 					Q_strncpyz(tileTarget, token, size);
 				}
 
-				if (SV_GetMapTile(map, tileTarget) != NULL)
+				if (SV_GetMapTile(map, tileTarget) != nullptr)
 					target->numTiles++;
 				else
 					Com_Error(ERR_DROP, "Did not find tile '%s' from tileset '%s'", tileTarget, target->id);
@@ -447,7 +447,7 @@ static bool SV_ParseMapTile (const char *filename, const char **text, MapInfo *m
  * @param filename The ump filename
  * @param text The text buffer
  * @param errhead Error header
- * @return @c NULL if file has invalid format, @c the tilename of the cvar otherwise.
+ * @return @c nullptr if file has invalid format, @c the tilename of the cvar otherwise.
  */
 static const char *SV_GetCvarToken (const MapInfo *map, const Assembly *a, const char *token, const char *filename, const char **text, const char *errhead)
 {
@@ -459,9 +459,9 @@ static const char *SV_GetCvarToken (const MapInfo *map, const Assembly *a, const
 
 	token = Com_EParse(text, errhead, filename);
 	if (!text || token[0] == '}')
-		return NULL;
+		return nullptr;
 
-	if (cvar == NULL)
+	if (cvar == nullptr)
 		return token;
 
 	Com_DPrintf(DEBUG_SERVER, "SV_ParseAssembly: cvar replacement value: %s\n", cvar->string);
@@ -506,7 +506,7 @@ static const char *SV_GetTileFromTileSet (const MapInfo *map, const char *filena
 		Com_Error(ERR_DROP, "SV_GetTileFromTileSet: illegal tileset syntax in assembly '%s' in %s", a->id, filename);
 
 	tileSet = SV_GetMapTileSet(map, token);
-	if (tileSet == NULL)
+	if (tileSet == nullptr)
 		Com_Error(ERR_DROP, "SV_GetTileFromTileSet: Could not find tileset %s in %s (assembly %s)", token, filename, a->id);
 
 	random = rand() % tileSet->numTiles;
@@ -561,7 +561,7 @@ static void SV_GetTilesFromTileSet (const MapInfo *map, const char *filename, co
 	if (!text)
 		Com_Error(ERR_DROP, "SV_GetTilesFromTilesSet: illegal tileset syntax in assembly '%s' in %s", a->id, filename);
 	tileSet = SV_GetMapTileSet(map, token);
-	if (tileSet == NULL)
+	if (tileSet == nullptr)
 		Com_Error(ERR_DROP, "SV_GetTilesFromTilesSet: Could not find tileset %s in %s (assembly %s)", token, filename, a->id);
 
 	/* get min and max tileset number */
@@ -579,7 +579,7 @@ static void SV_GetTilesFromTileSet (const MapInfo *map, const char *filename, co
 	for (int i = max, j = min; i > 0; --i) {
 		const int random = rand() % tileSet->numTiles;
 		const Tile *tile = SV_GetMapTile(map, tileSet->tiles[random]);
-		if (tile != NULL) {
+		if (tile != nullptr) {
 			const ptrdiff_t tileIdx = tile - map->mTile;
 			++a->max[tileIdx];
 			if (j > 0) {
@@ -653,7 +653,7 @@ static bool SV_ParseAssembly (MapInfo *map, const char *filename, const char **t
 			 * we are playing a multiplayer match */
 			if (sv_maxclients->integer >= 2) {
 				const Tile *t = SV_GetMapTile(map, token);
-				if (t != NULL) {
+				if (t != nullptr) {
 					const ptrdiff_t i = t - map->mTile;
 					a->min[i] = 1;
 					a->max[i] = 1;
@@ -698,14 +698,14 @@ static bool SV_ParseAssembly (MapInfo *map, const char *filename, const char **t
 
 			if (token[0] == '*') {
 				token = SV_GetCvarToken(map, a, token + 1, filename, text, errhead);
-				if (token == NULL)
+				if (token == nullptr)
 					break;
 			} else if (Q_streq(token, "tileset")) {
 				token = SV_GetTileFromTileSet(map, filename, text, a);
 			}
 
 			t = SV_GetMapTile(map, token);
-			if (t != NULL) {
+			if (t != nullptr) {
 				const ptrdiff_t i = t - map->mTile;
 				if (a->numFixed >= MAX_FIXEDTILES)
 					Com_Error(ERR_DROP, "SV_ParseAssembly: Too many fixed tiles in assembly '%s' (%s)", a->id, filename);
@@ -733,12 +733,12 @@ static bool SV_ParseAssembly (MapInfo *map, const char *filename, const char **t
 		/* <format>*cvarname <defaultvalue> "min max"</format> */
 		} else if (token[0] == '*') {
 			token = SV_GetCvarToken(map, a, token + 1, filename, text, errhead);
-			if (token == NULL)
+			if (token == nullptr)
 				break;
 		}
 
 		tile = SV_GetMapTile(map, token);
-		if (tile != NULL) {
+		if (tile != nullptr) {
 			const ptrdiff_t i = tile - map->mTile;
 			/* get min and max tile number */
 			token = Com_EParse(text, errhead, filename);
@@ -817,8 +817,8 @@ static void SV_ClearMap (MapInfo *map)
 static bool SV_FitTile (const MapInfo *map, const Tile * tile, const int x, const int y)
 {
 	int tx, ty;
-	const unsigned long *spec = NULL;
-	const unsigned long *m = NULL;
+	const unsigned long *spec = nullptr;
+	const unsigned long *m = nullptr;
 	const Assembly *mAsm = map->getCurrentAssembly();
 
 	/* check for valid grid positions */
@@ -1245,7 +1245,7 @@ static bool SV_AddMissingTiles_r (MapInfo *map, int rec, int posListCnt, short m
 								return true;		/* recursive placement succeeded */
 
 							/* tile was a dead end, remove it */
-							SV_RemoveTile(map, NULL, NULL);
+							SV_RemoveTile(map, nullptr, nullptr);
 
 							if (h >= g) {
 #if 0
@@ -1276,7 +1276,7 @@ static bool SV_AddMissingTiles_r (MapInfo *map, int rec, int posListCnt, short m
 		if (SV_AddMissingTiles_r(map, rec + 1, j, posTileList[rec], mToPlace[ti].tile, x, y))
 			return true;
 		else
-			SV_RemoveTile(map, NULL, NULL);
+			SV_RemoveTile(map, nullptr, nullptr);
 	}
 	return false;
 }
@@ -1567,7 +1567,7 @@ static bool SV_AddMissingTiles (MapInfo *map)
 		}
 	}
 
-	return SV_AddMissingTiles_r(map, 0, n, posTileList[0], NULL, 0, 0);
+	return SV_AddMissingTiles_r(map, 0, n, posTileList[0], nullptr, 0, 0);
 }
 
 /**
@@ -1730,7 +1730,7 @@ static int SV_AssemblyThread (void *data)
 {
 	MapInfo *map = (MapInfo*) data;
 
-	Com_SetRandomSeed(time(NULL));
+	Com_SetRandomSeed(time(nullptr));
 
 	if (!SV_AddMapTiles(map)) {
 		map->retryCnt++;
@@ -1783,14 +1783,14 @@ static int SV_ParallelSearch (MapInfo *map)
 	static int timeout = 5000;  /* wait for 5 sec initially, double it every time it times out */
 	const int threadno = std::min(sv_threads->integer, ASSEMBLE_THREADS);
 
-	assert(mapLock == NULL);
+	assert(mapLock == nullptr);
 	mapLock = SDL_CreateMutex();
 
-	assert(mapCond == NULL);
+	assert(mapCond == nullptr);
 	mapCond = SDL_CreateCond();
 
 	threadID = 0;
-	assert(mapSem == NULL);
+	assert(mapSem == nullptr);
 	mapSem = SDL_CreateSemaphore(1);
 
 	SDL_LockMutex(mapLock);
@@ -1811,7 +1811,7 @@ static int SV_ParallelSearch (MapInfo *map)
 			}
 			/* collect the dead */
 			for (i = 0; i < threadno; i++) {
-				SDL_WaitThread(threads[i], NULL);
+				SDL_WaitThread(threads[i], nullptr);
 			}
 			/* reset semaphore */
 			SDL_SemPost(mapSem);
@@ -1831,7 +1831,7 @@ static int SV_ParallelSearch (MapInfo *map)
 			memcpy(map, maps[i], sizeof(*map));
 		}
 
-		SDL_WaitThread(threads[i], NULL);
+		SDL_WaitThread(threads[i], nullptr);
 		Mem_Free(maps[i]);
 	}
 
@@ -1839,9 +1839,9 @@ static int SV_ParallelSearch (MapInfo *map)
 	SDL_DestroySemaphore(mapSem);
 	SDL_DestroyCond(mapCond);
 	SDL_DestroyMutex(mapLock);
-	mapLock = NULL;
-	mapSem = NULL;
-	mapCond = NULL;
+	mapLock = nullptr;
+	mapSem = nullptr;
+	mapCond = nullptr;
 	threadID = 0;
 	timeout = 5000;
 
@@ -1901,7 +1901,7 @@ void SV_ParseUMP (const char *name, char *entityString, MapInfo *map, bool inher
 			else if (SV_ParseMapTileSet(filename, &text, map, inherit))
 				map->numTileSets++;
 		} else if (Q_streq(token, "worldspawn")) {
-			const char *start = NULL;
+			const char *start = nullptr;
 			const int length = Com_GetBlock(&text, &start);
 			if (length == -1) {
 				Com_Printf("SV_ParseUMP: Not a valid worldspawn block in '%s'\n", filename);
@@ -1988,7 +1988,7 @@ static MapInfo* SV_DoMapAssemble (MapInfo *map, const char *assembly, char *asmT
 				return SV_DoMapAssemble(map, assembly, asmTiles, asmPos, seed);
 			}
 			Mem_Free(map);
-			return NULL;
+			return nullptr;
 		}
 	} else {
 		unsigned int seedUsed;
@@ -2023,7 +2023,7 @@ static MapInfo* SV_DoMapAssemble (MapInfo *map, const char *assembly, char *asmT
 				Com_SetRandomSeed(mAsm->seeds[seed % mAsm->numSeeds]);
 				return SV_DoMapAssemble(map, assembly, asmTiles, asmPos, seed);
 			}
-			return NULL;
+			return nullptr;
 		}
 	}
 

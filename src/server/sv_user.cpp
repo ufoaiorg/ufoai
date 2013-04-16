@@ -204,7 +204,7 @@ static const ucmd_t ucmds[] = {
 	/* issued by hand at client consoles */
 	{"info", SV_ShowServerinfo_f},
 
-	{NULL, NULL}
+	{nullptr, nullptr}
 };
 
 /**
@@ -274,7 +274,7 @@ void SV_ExecuteClientMessage (client_t *cl, int cmd, dbuffer *msg)
 		ScopedMutex scopedMutex(svs.serverMutex);
 		sv->messageBuffer = msg;
 		svs.ge->ClientAction(*cl->player);
-		sv->messageBuffer = NULL;
+		sv->messageBuffer = nullptr;
 		break;
 	}
 
@@ -283,7 +283,7 @@ void SV_ExecuteClientMessage (client_t *cl, int cmd, dbuffer *msg)
 		ScopedMutex scopedMutex(svs.serverMutex);
 		sv->messageBuffer = msg;
 		svs.ge->ClientEndRound(*cl->player);
-		sv->messageBuffer = NULL;
+		sv->messageBuffer = nullptr;
 		break;
 	}
 
@@ -293,7 +293,7 @@ void SV_ExecuteClientMessage (client_t *cl, int cmd, dbuffer *msg)
 		ScopedMutex scopedMutex(svs.serverMutex);
 		sv->messageBuffer = msg;
 		svs.ge->ClientTeamInfo(*cl->player);
-		sv->messageBuffer = NULL;
+		sv->messageBuffer = nullptr;
 		SV_SetClientState(cl, cs_spawned);
 		break;
 	}
@@ -304,7 +304,7 @@ void SV_ExecuteClientMessage (client_t *cl, int cmd, dbuffer *msg)
 		ScopedMutex scopedMutex(svs.serverMutex);
 		sv->messageBuffer = msg;
 		svs.ge->ClientInitActorStates(*cl->player);
-		sv->messageBuffer = NULL;
+		sv->messageBuffer = nullptr;
 		break;
 	}
 	}

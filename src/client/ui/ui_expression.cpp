@@ -37,12 +37,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @param expression Expression tree to analyse
  * @param context Call context
  * @param[out] property A node property
- * @return A node (else NULL, if no node found) and a property (else NULL if no/wrong property defined)
+ * @return A node (else nullptr, if no node found) and a property (else nullptr if no/wrong property defined)
  */
 uiNode_t* UI_GetNodeFromExpression (uiAction_t *expression, const uiCallContext_t *context, const value_t **property)
 {
-	if (property != NULL)
-		*property = NULL;
+	if (property != nullptr)
+		*property = nullptr;
 
 	switch (expression->type & EA_HIGHT_MASK) {
 	case EA_VALUE:
@@ -70,10 +70,10 @@ uiNode_t* UI_GetNodeFromExpression (uiAction_t *expression, const uiCallContext_
 
 			UI_ReadNodePath(path, context->source, &node, &propertyTmp);
 			if (!node) {
-				Com_Printf("UI_GetNodeFromExpression: Node '%s' wasn't found; NULL returned\n", path);
-				return NULL;
+				Com_Printf("UI_GetNodeFromExpression: Node '%s' wasn't found; nullptr returned\n", path);
+				return nullptr;
 			}
-			if (propertyTmp != NULL)
+			if (propertyTmp != nullptr)
 				Com_Printf("UI_GetNodeFromExpression: No property expected, but path '%s' contain a property. Property ignored.\n", path);
 
 			return node;
@@ -90,11 +90,11 @@ uiNode_t* UI_GetNodeFromExpression (uiAction_t *expression, const uiCallContext_
 
 				UI_ReadNodePath(path, context->source, &node, &propertyTmp);
 				if (!node) {
-					Com_Printf("UI_GetNodeFromExpression: Node '%s' wasn't found; NULL returned\n", path);
-					return NULL;
+					Com_Printf("UI_GetNodeFromExpression: Node '%s' wasn't found; nullptr returned\n", path);
+					return nullptr;
 				}
-				if (property == NULL) {
-					if (propertyTmp != NULL)
+				if (property == nullptr) {
+					if (propertyTmp != nullptr)
 						Com_Printf("UI_GetNodeFromExpression: No property expected, but path '%s' contain a property. Property ignored.\n", path);
 				} else {
 					 *property = propertyTmp;
@@ -120,18 +120,18 @@ uiNode_t* UI_GetNodeFromExpression (uiAction_t *expression, const uiCallContext_
 		switch (expression->type) {
 		case EA_OPERATOR_PATHPROPERTYFROM:
 			{
-				uiNode_t *relativeTo = UI_GetNodeFromExpression(expression->d.nonTerminal.left, context, NULL);
+				uiNode_t *relativeTo = UI_GetNodeFromExpression(expression->d.nonTerminal.left, context, nullptr);
 				uiNode_t *node;
 				const value_t *propertyTmp;
 				const char* path = expression->d.terminal.d2.constString;
 				UI_ReadNodePath(path, relativeTo, &node, &propertyTmp);
 				if (!node) {
-					Com_Printf("UI_GetNodeFromExpression: Path '%s' from node '%s' found no node; NULL returned\n", path, UI_GetPath(relativeTo));
-					return NULL;
+					Com_Printf("UI_GetNodeFromExpression: Path '%s' from node '%s' found no node; nullptr returned\n", path, UI_GetPath(relativeTo));
+					return nullptr;
 				}
-				if (property == NULL) {
-					if (propertyTmp != NULL)
-						Com_Printf("UI_GetNodeFromExpression:  No property expected, but path '%s' from node '%s' found no node; NULL returned\n", path, UI_GetPath(relativeTo));
+				if (property == nullptr) {
+					if (propertyTmp != nullptr)
+						Com_Printf("UI_GetNodeFromExpression:  No property expected, but path '%s' from node '%s' found no node; nullptr returned\n", path, UI_GetPath(relativeTo));
 				} else {
 					*property = propertyTmp;
 				}
@@ -145,7 +145,7 @@ uiNode_t* UI_GetNodeFromExpression (uiAction_t *expression, const uiCallContext_
 		break;
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 
@@ -162,7 +162,7 @@ float UI_GetFloatFromExpression (uiAction_t *expression, const uiCallContext_t *
 				uiValue_t *variable =  UI_GetVariable(context, expression->d.terminal.d1.integer);
 				switch (variable->type) {
 				case EA_VALUE_STRING:
-					if (variable->value.string == NULL) {
+					if (variable->value.string == nullptr) {
 						Com_Printf("UI_GetFloatFromExpression: String variable not initialized. '0' returned");
 						return 0;
 					}
@@ -172,7 +172,7 @@ float UI_GetFloatFromExpression (uiAction_t *expression, const uiCallContext_t *
 				case EA_VALUE_CVAR:
 					{
 						cvar_t *cvar = variable->value.cvar;
-						if (cvar == NULL) {
+						if (cvar == nullptr) {
 							Com_Printf("UI_GetFloatFromExpression: Cvar variable not initialized. '0' returned");
 							return 0;
 						}
@@ -196,7 +196,7 @@ float UI_GetFloatFromExpression (uiAction_t *expression, const uiCallContext_t *
 		case EA_VALUE_CVARNAME:
 		case EA_VALUE_CVARNAME_WITHINJECTION:
 			{
-				cvar_t *cvar = NULL;
+				cvar_t *cvar = nullptr;
 				const char *cvarName = expression->d.terminal.d1.constString;
 				if (expression->type == EA_VALUE_CVARNAME_WITHINJECTION)
 					cvarName = UI_GenInjectedString(cvarName, false, context);
@@ -297,7 +297,7 @@ const char* UI_GetStringFromExpression (uiAction_t *expression, const uiCallCont
 				uiValue_t *variable =  UI_GetVariable(context, expression->d.terminal.d1.integer);
 				switch (variable->type) {
 				case EA_VALUE_STRING:
-					if (variable->value.string == NULL) {
+					if (variable->value.string == nullptr) {
 						Com_Printf("UI_GetStringFromExpression: String variable not initialized. Empty string returned");
 						return "";
 					}
@@ -315,7 +315,7 @@ const char* UI_GetStringFromExpression (uiAction_t *expression, const uiCallCont
 				case EA_VALUE_CVAR:
 					{
 						cvar_t *cvar = variable->value.cvar;
-						if (cvar == NULL) {
+						if (cvar == nullptr) {
 							Com_Printf("UI_GetStringFromExpression: Cvar variable not initialized. Empty string returned");
 							return "";
 						}
@@ -347,7 +347,7 @@ const char* UI_GetStringFromExpression (uiAction_t *expression, const uiCallCont
 		case EA_VALUE_CVARNAME:
 		case EA_VALUE_CVARNAME_WITHINJECTION:
 		{
-			cvar_t *cvar = NULL;
+			cvar_t *cvar = nullptr;
 			const char *cvarName = expression->d.terminal.d1.constString;
 			if (expression->type == EA_VALUE_CVARNAME_WITHINJECTION)
 				cvarName = UI_GenInjectedString(cvarName, false, context);
@@ -370,7 +370,7 @@ const char* UI_GetStringFromExpression (uiAction_t *expression, const uiCallCont
 					return "";
 				}
 				string = UI_GetStringFromNodeProperty(node, property);
-				if (string == NULL) {
+				if (string == nullptr) {
 					Com_Printf("UI_GetStringFromExpression: String getter for '%s@%s' property do not exists; '' returned\n", UI_Node_GetWidgetName(node), property->string);
 					return "";
 				}
@@ -427,7 +427,7 @@ const char* UI_GetStringFromExpression (uiAction_t *expression, const uiCallCont
  */
 bool UI_GetBooleanFromExpression (uiAction_t *expression, const uiCallContext_t *context)
 {
-	if (expression == NULL)
+	if (expression == nullptr)
 		return false;
 
 	switch (expression->type & EA_HIGHT_MASK) {
@@ -488,14 +488,14 @@ bool UI_GetBooleanFromExpression (uiAction_t *expression, const uiCallContext_t 
 				case EA_VALUE_CVARNAME_WITHINJECTION:
 					name = UI_GenInjectedString(name, false, context);
 				case EA_VALUE_CVARNAME:
-					return Cvar_FindVar(name) != NULL;
+					return Cvar_FindVar(name) != nullptr;
 				case EA_VALUE_PATHNODE_WITHINJECTION:
 					name = UI_GenInjectedString(name, false, context);
 				case EA_VALUE_PATHNODE: {
-					uiNode_t* node = NULL;
+					uiNode_t* node = nullptr;
 					const value_t *property;
 					UI_ReadNodePath(name, context->source, &node, &property);
-					return node != NULL;
+					return node != nullptr;
 				}
 				default:
 					return false;
@@ -530,7 +530,7 @@ bool UI_GetBooleanFromExpression (uiAction_t *expression, const uiCallContext_t 
 /**
  * @brief Allocate and initialize an expression according to a string
  * @param[in] description String describing a condition
- * @return The condition if everything is ok, NULL otherwise
+ * @return The condition if everything is ok, nullptr otherwise
  */
 uiAction_t *UI_AllocStaticStringCondition (const char *description)
 {
@@ -542,7 +542,7 @@ uiAction_t *UI_AllocStaticStringCondition (const char *description)
 	expression = UI_ParseExpression(&text);
 	if (!expression) {
 		Com_Printf("UI_AllocStaticStringCondition: Parse error on expression \"%s\"\n", base);
-		return NULL;
+		return nullptr;
 	}
 
 	return expression;
@@ -550,7 +550,7 @@ uiAction_t *UI_AllocStaticStringCondition (const char *description)
 
 /**
  * @brief Read a value from the stream and init an action with it
- * @return An initialized action else NULL
+ * @return An initialized action else nullptr
  */
 static uiAction_t *UI_ParseValueExpression (const char **text)
 {
@@ -558,9 +558,9 @@ static uiAction_t *UI_ParseValueExpression (const char **text)
 	uiAction_t *expression = UI_AllocStaticAction();
 
 	token = Com_Parse(text);
-	if (*text == NULL) {
+	if (*text == nullptr) {
 		Com_Printf("UI_ParseTerminalExpression: Token expected\n");
-		return NULL;
+		return nullptr;
 	}
 
 	/* it is a const string (or an injection tag for compatibility) */
@@ -625,7 +625,7 @@ static uiAction_t *UI_ParseValueExpression (const char **text)
 
 		/* get property name */
 		propertyName = strchr(path, '@');
-		if (propertyName == NULL) {
+		if (propertyName == nullptr) {
 			if (expression->type == EA_VALUE_PATHPROPERTY_WITHINJECTION)
 				expression->type = EA_VALUE_PATHNODE_WITHINJECTION;
 			else
@@ -667,8 +667,8 @@ uiAction_t *UI_ParseExpression (const char **text)
 	const char* token;
 
 	token = Com_Parse(text);
-	if (*text == NULL)
-		return NULL;
+	if (*text == nullptr)
+		return nullptr;
 
 	if (Q_streq(token, "(")) {
 		uiAction_t *expression;
@@ -677,8 +677,8 @@ uiAction_t *UI_ParseExpression (const char **text)
 		e = UI_ParseExpression(text);
 
 		token = Com_Parse(text);
-		if (*text == NULL)
-			return NULL;
+		if (*text == nullptr)
+			return nullptr;
 
 		/* unary operator or unneed "( ... )" */
 		if (Q_streq(token, ")"))
@@ -688,26 +688,26 @@ uiAction_t *UI_ParseExpression (const char **text)
 		expression = UI_AllocStaticAction();
 		expression->d.nonTerminal.left = e;
 		expression->type = UI_GetActionTokenType(token, EA_BINARYOPERATOR);
-		if (expression->type == EA_NULL) {
+		if (expression->type == EA_nullptr) {
 			Com_Printf("UI_ParseExpression: Invalid 'expression' statement. Unknown '%s' operator\n", token);
-			return NULL;
+			return nullptr;
 		}
 
 		e = UI_ParseExpression(text);
 		expression->d.nonTerminal.right = e;
 
 		token = Com_Parse(text);
-		if (*text == NULL)
-			return NULL;
+		if (*text == nullptr)
+			return nullptr;
 		if (!Q_streq(token, ")")) {
 			Com_Printf("UI_ParseExpression: Token ')' expected\n");
-			return NULL;
+			return nullptr;
 		}
 
 		return expression;
 	} else {
 		const int type = UI_GetActionTokenType(token, EA_UNARYOPERATOR);
-		if (type == EA_NULL) {
+		if (type == EA_nullptr) {
 			Com_UnParseLastToken();
 			return UI_ParseValueExpression(text);
 		} else {
@@ -727,7 +727,7 @@ uiAction_t *UI_ParseExpression (const char **text)
 					break;
 				default:
 					Com_Printf("UI_ParseExpression: Cvar or Node path expected, but type %d found\n", e->type);
-					return NULL;
+					return nullptr;
 				}
 			}
 			return expression;

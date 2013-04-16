@@ -40,7 +40,7 @@ static mission_t *CP_GetCarrierMission (void)
 			return mission;
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -63,7 +63,7 @@ static void CP_UFOCarrierMissionUpdate (mission_t *mission)
 		cgi->UI_PopupButton(_("UFO-Carrier"), _("The Carrier UFO is in range. Should we launch the payload?"),
 			"ui_pop;", _("Wait"), _("Don't attack the UFO-Carrier yet"),
 			"cp_attack_ufocarrier;ui_pop;", _("Launch"), _("Attack the UFO-Carrier now"),
-			NULL, NULL, NULL);
+			nullptr, nullptr, nullptr);
 	}
 }
 
@@ -89,7 +89,7 @@ void CP_UFOCarrierNextStage (mission_t *mission)
 void CP_SpawnUFOCarrier_f (void)
 {
 	/* only one carrier missions is allowed */
-	if (CP_GetCarrierMission() != NULL)
+	if (CP_GetCarrierMission() != nullptr)
 		return;
 
 	const installationTemplate_t *installationTemplate = INS_GetInstallationTemplateByType(INSTALLATION_ORBIT);
@@ -98,7 +98,7 @@ void CP_SpawnUFOCarrier_f (void)
 
 	if (cgi->Cmd_Argc() == 3) {
 		const vec2_t pos = Vector2FromInt(atof(cgi->Cmd_Argv(1)), atof(cgi->Cmd_Argv(2)));
-		if (!MapIsWater(GEO_GetColor(pos, MAPTYPE_TERRAIN, NULL))) {
+		if (!MapIsWater(GEO_GetColor(pos, MAPTYPE_TERRAIN, nullptr))) {
 			INS_Build(installationTemplate, pos, _(installationTemplate->name));
 			GEO_CenterPosition(pos);
 			CL_EventAddMail("ufocarrier");
@@ -115,7 +115,7 @@ void CP_SpawnUFOCarrier_f (void)
 void CP_AttackUFOCarrier_f (void)
 {
 	mission_t *mission = CP_GetCarrierMission();
-	if (mission == NULL)
+	if (mission == nullptr)
 		return;
 
 	if (!INS_HasType(INSTALLATION_ORBIT))
@@ -132,7 +132,7 @@ void CP_AttackUFOCarrier_f (void)
 
 	const aircraft_t* ufoTemplate = UFO_GetTemplate(UFO_CARRIER);
 	aircraft_t *ufo = UFO_CreateFromTemplate(ufoTemplate);
-	if (ufo == NULL) {
+	if (ufo == nullptr) {
 		cgi->Com_Error(ERR_DROP, "Could not add UFO-Carrier to geoscape");
 		return;
 	}
@@ -140,7 +140,7 @@ void CP_AttackUFOCarrier_f (void)
 	mission->ufo = ufo;
 	CP_GetRandomPosOnGeoscape(ufo->pos, true);
 	CP_SpawnCrashSiteMission(ufo);
-	if (mission->mapDef != NULL) {
+	if (mission->mapDef != nullptr) {
 		Com_Printf("spawned mapdef: %s\n", mission->mapDef->id);
 	}
 #endif

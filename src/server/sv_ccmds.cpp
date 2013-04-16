@@ -51,7 +51,7 @@ void SV_SetMaster_f (void)
 	Cvar_Set("public", "1");
 
 	Com_Printf("Master server at [%s] - sending a ping\n", masterserver_url->string);
-	HTTP_GetURL(va("%s/ufo/masterserver.php?ping&port=%s", masterserver_url->string, port->string), NULL);
+	HTTP_GetURL(va("%s/ufo/masterserver.php?ping&port=%s", masterserver_url->string, port->string), nullptr);
 
 	if (!sv_dedicated->integer)
 		return;
@@ -70,19 +70,19 @@ static client_t *SV_GetPlayerClientStructure (const char *s)
 	/* numeric values are just slot numbers */
 	if (s[0] >= '0' && s[0] <= '9') {
 		int idnum = atoi(Cmd_Argv(1));
-		client_t *cl = NULL;
+		client_t *cl = nullptr;
 		/* check for a name match */
-		while ((cl = SV_GetNextClient(cl)) != NULL && idnum > 0)
+		while ((cl = SV_GetNextClient(cl)) != nullptr && idnum > 0)
 			idnum--;
 		if (cl->state == cs_free) {
 			Com_Printf("Client %i is not active\n", idnum);
-			return NULL;
+			return nullptr;
 		}
 		return cl;
 	} else {
-		client_t *cl = NULL;
+		client_t *cl = nullptr;
 		/* check for a name match */
-		while ((cl = SV_GetNextClient(cl)) != NULL) {
+		while ((cl = SV_GetNextClient(cl)) != nullptr) {
 			if (cl->state == cs_free)
 				continue;
 			if (Q_streq(cl->name, s)) {
@@ -92,7 +92,7 @@ static client_t *SV_GetPlayerClientStructure (const char *s)
 	}
 
 	Com_Printf("Userid %s is not on the server\n", s);
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -195,7 +195,7 @@ static void SV_Kick_f (void)
 	}
 
 	cl = SV_GetPlayerClientStructure(Cmd_Argv(1));
-	if (cl == NULL)
+	if (cl == nullptr)
 		return;
 
 	SV_BroadcastPrintf(PRINT_CONSOLE, "%s was kicked\n", cl->name);
@@ -210,9 +210,9 @@ static void SV_Kick_f (void)
  */
 static void SV_StartGame_f (void)
 {
-	client_t *cl = NULL;
+	client_t *cl = nullptr;
 	int cnt = 0;
-	while ((cl = SV_GetNextClient(cl)) != NULL) {
+	while ((cl = SV_GetNextClient(cl)) != nullptr) {
 		if (cl->state != cs_free) {
 			cl->player->setReady(true);
 			cnt++;
@@ -242,9 +242,9 @@ static void SV_Status_f (void)
 	Com_Printf("num status  name            timeout        ready  address              \n");
 	Com_Printf("--- ------- --------------- -------------- ----- ---------------------\n");
 
-	cl = NULL;
+	cl = nullptr;
 	i = 0;
-	while ((cl = SV_GetNextClient(cl)) != NULL) {
+	while ((cl = SV_GetNextClient(cl)) != nullptr) {
 		char        state_buf[16];
 		char const* state;
 
@@ -335,7 +335,7 @@ static void SV_UserInfo_f (void)
 	}
 
 	cl = SV_GetPlayerClientStructure(Cmd_Argv(1));
-	if (cl == NULL)
+	if (cl == nullptr)
 		return;
 
 	Com_Printf("userinfo\n");
@@ -383,7 +383,7 @@ static void SV_ServerCommand_f (void)
  */
 static int SV_CompleteMapCommand (const char *partial, const char **match)
 {
-	const char *dayNightStr = NULL;
+	const char *dayNightStr = nullptr;
 	static char dayNightMatch[7];
 
 	if (partial[0])

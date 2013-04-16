@@ -51,7 +51,7 @@ static com_constNameInt_t *com_constNameInt_hash[CONSTNAMEINT_HASH_SIZE];
 /**
  * @brief Will extract the variable from a string<=>int mapping string which contain a namespace
  * @param name The name of the script entry to map to an integer
- * @return The namespace in case one was found, @c NULL otherwise
+ * @return The namespace in case one was found, @c nullptr otherwise
  */
 static const char *Com_ConstIntGetVariable (const char *name)
 {
@@ -116,7 +116,7 @@ bool Com_GetConstIntFromNamespace (const char *space, const char *variable, int 
 
 /**
  * @brief Searches the mapping variable for a given integer value and a namespace
- * @param[in] space The namespace to search in - might not be @c NULL or empty.
+ * @param[in] space The namespace to search in - might not be @c nullptr or empty.
  * @param[in] value The mapped integer
  * @note only variables with a namespace given are found here
  * @sa Com_RegisterConstInt
@@ -136,7 +136,7 @@ const char *Com_GetConstVariable (const char *space, int value)
 		a = a->next;
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -150,7 +150,7 @@ const char *Com_GetConstVariable (const char *space, int value)
  */
 bool Com_UnregisterConstVariable (const char *name)
 {
-	com_constNameInt_t *prev = NULL;
+	com_constNameInt_t *prev = nullptr;
 
 	com_constNameInt_t *a = com_constNameInt;
 	while (a) {
@@ -165,7 +165,7 @@ bool Com_UnregisterConstVariable (const char *name)
 		else
 			com_constNameInt = a->next;
 
-		prev = NULL;
+		prev = nullptr;
 
 		const char *variable = Com_ConstIntGetVariable(name);
 		const unsigned int hash = Com_HashKey(variable, CONSTNAMEINT_HASH_SIZE);
@@ -238,7 +238,7 @@ void Com_RegisterConstInt (const char *name, int value)
 /**
  * @brief Unregisters a list of string aliases
  * @param[in] constList Array of string => int mappings. Must be terminated
- * with a NULL string ({NULL, -1}) line
+ * with a nullptr string ({nullptr, -1}) line
  * @sa constListEntry_t
  */
 bool Com_UnregisterConstList (const constListEntry_t constList[])
@@ -246,7 +246,7 @@ bool Com_UnregisterConstList (const constListEntry_t constList[])
 	int i;
 	bool state = true;
 
-	for (i = 0; constList[i].name != NULL; i++)
+	for (i = 0; constList[i].name != nullptr; i++)
 		state &= Com_UnregisterConstVariable(constList[i].name);
 
 	return state;
@@ -255,14 +255,14 @@ bool Com_UnregisterConstList (const constListEntry_t constList[])
 /**
  * @brief Registers a list of string aliases
  * @param[in] constList Array of string => int mappings. Must be terminated
- * with a NULL string ({NULL, -1}) line
+ * with a nullptr string ({nullptr, -1}) line
  * @sa constListEntry_t
  */
 void Com_RegisterConstList (const constListEntry_t constList[])
 {
 	int i;
 
-	for (i = 0; constList[i].name != NULL; i++)
+	for (i = 0; constList[i].name != nullptr; i++)
 		Com_RegisterConstInt(constList[i].name, constList[i].value);
 }
 
@@ -296,7 +296,7 @@ const char *Com_EParse (const char **text, const char *errhead, const char *erri
 		else
 			Com_Printf("%s\n", errhead);
 
-		return NULL;
+		return nullptr;
 	}
 
 	return token;
@@ -373,7 +373,7 @@ CASSERT(lengthof(fade_names) == FADE_LAST);
 
 /** @brief target sizes for buffer */
 static const size_t vt_sizes[] = {
-	0,	/* V_NULL */
+	0,	/* V_nullptr */
 	sizeof(bool),	/* V_BOOL */
 	sizeof(char),	/* V_CHAR */
 	sizeof(int),	/* V_INT */
@@ -405,7 +405,7 @@ CASSERT(lengthof(vt_sizes) == V_NUM_TYPES);
 
 /** @brief natural align for each targets */
 static const size_t vt_aligns[] = {
-	0,	/* V_NULL */
+	0,	/* V_nullptr */
 	sizeof(bool),	/* V_BOOL */
 	sizeof(char),	/* V_CHAR */
 	sizeof(int),	/* V_INT */
@@ -453,9 +453,9 @@ const char *Com_GetLastParseError (void)
 void *Com_AlignPtr (const void *memory, valueTypes_t type)
 {
 	const size_t align = vt_aligns[type];
-	assert(memory != NULL);
-	if (align == V_NULL)
-		Sys_Error("Com_AlignPtr: can't align V_NULL");
+	assert(memory != nullptr);
+	if (align == V_nullptr)
+		Sys_Error("Com_AlignPtr: can't align V_nullptr");
 	if (type >= V_NUM_TYPES)
 		Sys_Error("Com_AlignPtr: type hit V_NUM_TYPES");
 	return ALIGN_PTR(memory, align);
@@ -505,7 +505,7 @@ resultStatus_t Com_ParseValue (void *base, const char *token, valueTypes_t type,
 		snprintf(parseErrorMessage, sizeof(parseErrorMessage), "V_HUNK_STRING is not parsed here");
 		return RESULT_ERROR;
 
-	case V_NULL:
+	case V_nullptr:
 		*writtenBytes = 0;
 		break;
 
@@ -912,7 +912,7 @@ int Com_SetValue (void *base, const void *set, valueTypes_t type, int ofs, size_
 #endif
 
 	switch (type) {
-	case V_NULL:
+	case V_nullptr:
 		return 0;
 
 	case V_BOOL:
@@ -1110,11 +1110,11 @@ const char *Com_ValueToStr (const void *base, const valueTypes_t type, const int
 #endif
 
 	switch (type) {
-	case V_NULL:
+	case V_nullptr:
 		return 0;
 
 	case V_HUNK_STRING:
-		if (b == NULL)
+		if (b == nullptr)
 			return "(null)";
 		else
 			return (const char*)b;
@@ -1242,7 +1242,7 @@ const char *Com_ValueToStr (const void *base, const valueTypes_t type, const int
 	case V_TRANSLATION_STRING:
 	case V_STRING:
 	case V_LONGSTRING:
-		if (b == NULL)
+		if (b == nullptr)
 			return "(null)";
 		else
 			return (const char *) b;
@@ -1310,7 +1310,7 @@ bool Com_ParseBlockToken (const char *name, const char **text, void *base, const
 
 			switch (v->type) {
 			case V_TRANSLATION_STRING:
-				if (mempool == NULL) {
+				if (mempool == nullptr) {
 					if (Com_EParseValue(base, token, v->type, v->ofs, v->size) == -1)
 						Com_Printf("Com_ParseBlockToken: Wrong size for value %s\n", v->string);
 					break;
@@ -1339,7 +1339,7 @@ bool Com_ParseBlockToken (const char *name, const char **text, void *base, const
 			break;
 		}
 
-	return v->string != NULL;
+	return v->string != nullptr;
 }
 
 /**
@@ -1351,7 +1351,7 @@ bool Com_ParseBlockToken (const char *name, const char **text, void *base, const
  */
 bool Com_ParseList (const char **text, linkedList_t **list)
 {
-	*list = NULL;
+	*list = nullptr;
 
 	if (Com_NextToken(text) != TT_BEGIN_LIST) {
 		Com_Printf("Com_ParseList: expected '(' but \"%s\" found\n", Com_GetToken(text));
@@ -1489,7 +1489,7 @@ static const value_t od_vals[] = {
 	{"is_dummy", V_BOOL, offsetof(objDef_t, isDummy), MEMBER_SIZEOF(objDef_t, isDummy)},
 	{"virtual", V_BOOL, offsetof(objDef_t, isVirtual), MEMBER_SIZEOF(objDef_t, isVirtual)},
 
-	{NULL, V_NULL, 0, 0}
+	{nullptr, V_nullptr, 0, 0}
 };
 
 /* =========================================================== */
@@ -1527,7 +1527,7 @@ static const value_t fdps[] = {
 	{"dmgweight", V_DAMAGE, offsetof(fireDef_t, dmgweight), MEMBER_SIZEOF(fireDef_t, dmgweight)},
 	{"irgoggles", V_BOOL, offsetof(fireDef_t, irgoggles), MEMBER_SIZEOF(fireDef_t, irgoggles)},
 	{"rounds", V_INT, offsetof(fireDef_t, rounds), MEMBER_SIZEOF(fireDef_t, rounds)},
-	{NULL, V_NULL, 0, 0}
+	{nullptr, V_nullptr, 0, 0}
 };
 
 
@@ -1595,7 +1595,7 @@ static bool Com_ParseFire (const char *name, const char **text, fireDef_t *fd)
 		fd->delayBetweenShots = 0.0f;
 	}
 
-	if (fd->name == NULL) {
+	if (fd->name == nullptr) {
 		Com_Printf("firedef without name\n");
 		return false;
 	}
@@ -1672,7 +1672,7 @@ CASSERT(lengthof(air_slot_type_strings) == MAX_ACITEMS);
  * @brief Temporary list of weapon ids as parsed from the ufo file "weapon_mod \<id\>"
  * in Com_ParseItem and used in Com_AddObjectLinks.
  */
-static linkedList_t *parseItemWeapons = NULL;
+static linkedList_t *parseItemWeapons = nullptr;
 
 struct parseItemWeapon_t {
 	objDef_t *od;
@@ -1752,7 +1752,7 @@ static void Com_ParseItem (const char *name, const char **text)
 	int i;
 
 	/* search for items with same name */
-	if (INVSH_GetItemByIDSilent(name) != NULL) {
+	if (INVSH_GetItemByIDSilent(name) != nullptr) {
 		Com_Printf("Com_ParseItem: weapon def \"%s\" with same name found, second ignored\n", name);
 		return;
 	}
@@ -1884,7 +1884,7 @@ static const value_t idps[] = {
 	/* time units for moving something out */
 	{"out", V_INT, offsetof(invDef_t, out), MEMBER_SIZEOF(invDef_t, out)},
 
-	{NULL, V_NULL, 0, 0}
+	{nullptr, V_nullptr, 0, 0}
 };
 
 static void Com_ParseInventory (const char *name, const char **text)
@@ -1927,7 +1927,7 @@ static void Com_ParseInventory (const char *name, const char **text)
 	invDef_t *id = &csi.ids[cid];
 	OBJZERO(*id);
 
-	if (!Com_ParseBlock(name, text, id, idps, NULL))
+	if (!Com_ParseBlock(name, text, id, idps, nullptr))
 		return;
 
 	Q_strncpyz(id->name, name, sizeof(id->name));
@@ -1958,7 +1958,7 @@ static const value_t equipment_definition_vals[] = {
 	{"maxinterest", V_INT, offsetof(equipDef_t, maxInterest), MEMBER_SIZEOF(equipDef_t, maxInterest)},
 	{"name", V_TRANSLATION_STRING, offsetof(equipDef_t, name), 0},
 
-	{NULL, V_NULL, 0, 0}
+	{nullptr, V_nullptr, 0, 0}
 };
 
 static void Com_ParseEquipment (const char *name, const char **text)
@@ -2082,7 +2082,7 @@ static const char *Com_GiveName (int gender, const teamDef_t *td)
 #ifdef DEBUG
 		Com_DPrintf(DEBUG_ENGINE, "No valid name definitions for gender %i in category '%s'\n", gender, td->id);
 #endif
-		return NULL;
+		return nullptr;
 	}
 	name = rand() % td->numNames[gender];
 
@@ -2109,7 +2109,7 @@ static teamDef_t::model_t const* Com_GiveModel (int gender, const teamDef_t *td)
 	/* found category */
 	if (!td->numModels[gender]) {
 		Com_Printf("Com_GiveModel: no models defined for gender %i and category '%s'\n", gender, td->id);
-		return NULL;
+		return nullptr;
 	}
 
 	/* search one of the model definitions */
@@ -2138,15 +2138,15 @@ const char *Com_GetActorSound (teamDef_t *td, int gender, actorSound_t soundType
 	linkedList_t *list;
 
 	if (!td)
-		return NULL;
+		return nullptr;
 
 	if (gender < 0 || gender >= NAME_LAST) {
 		Com_DPrintf(DEBUG_SOUND|DEBUG_CLIENT, "Com_GetActorSound: invalid gender: %i\n", gender);
-		return NULL;
+		return nullptr;
 	}
 	if (td->numSounds[soundType][gender] <= 0) {
 		Com_DPrintf(DEBUG_SOUND|DEBUG_CLIENT, "Com_GetActorSound: no sound defined for soundtype: %i, teamID: '%s', gender: %i\n", soundType, td->id, gender);
-		return NULL;
+		return nullptr;
 	}
 
 	random = rand() % td->numSounds[soundType][gender];
@@ -2162,7 +2162,7 @@ const char *Com_GetActorSound (teamDef_t *td, int gender, actorSound_t soundType
 }
 
 /**
- * @brief Returns the teamDef pointer for the searched team id - or NULL if not
+ * @brief Returns the teamDef pointer for the searched team id - or nullptr if not
  * found in the teamDef array
  * @param[in] team The team id (given in ufo-script files)
  */
@@ -2178,7 +2178,7 @@ const teamDef_t *Com_GetTeamDefinitionByID (const char *team)
 	}
 
 	Com_Printf("Com_GetTeamDefinitionByID: could not find team definition for '%s' in team definitions\n", team);
-	return NULL;
+	return nullptr;
 }
 
 bool Com_GetCharacterModel (character_t *chr)
@@ -2238,7 +2238,7 @@ void Com_GetCharacterValues (const char *teamDefition, character_t *chr)
 	assert(chr);
 
 	chr->teamDef = Com_GetTeamDefinitionByID(teamDefition);
-	if (chr->teamDef == NULL)
+	if (chr->teamDef == nullptr)
 		Com_Error(ERR_DROP, "Com_GetCharacterValues: could not find team '%s' in team definitions", teamDefition);
 
 	if (chr->teamDef->size != ACTOR_SIZE_INVALID)
@@ -2314,7 +2314,7 @@ static void Com_ParseActorNames (const char *name, const char **text)
 			Com_Error(ERR_DROP, "Com_ParseActorNames: error while reading names (%s)", name);
 		}
 
-		for (linkedList_t *element = list; element != NULL; element = element->next) {
+		for (linkedList_t *element = list; element != nullptr; element = element->next) {
 			/* some names can be translatable */
 			const char *n = (char*)element->data;
 			if (*n == '_')
@@ -2483,7 +2483,7 @@ static const BodyData* Com_GetBodyTemplateByID (const char *id)
 		if (Q_streq(id, bd->id()))
 			return bd;
 	Com_Printf("Com_GetBodyTemplateByID: could not find template: '%s'\n", id);
-	return NULL;
+	return nullptr;
 }
 
 static const teamNames_t *Com_GetNameListByID (const char *id)
@@ -2492,7 +2492,7 @@ static const teamNames_t *Com_GetNameListByID (const char *id)
 		if (Q_streq(id, names->id))
 			return names;
 	Com_Printf("Com_GetNameListByID: could not find name list: '%s'\n", id);
-	return NULL;
+	return nullptr;
 }
 
 /** @brief possible teamdesc values (ufo-scriptfiles) */
@@ -2508,7 +2508,7 @@ static const value_t teamDefValues[] = {
 	{"team", V_TEAM, offsetof(teamDef_t, team), MEMBER_SIZEOF(teamDef_t, team)},
 	{"robot", V_BOOL, offsetof(teamDef_t, robot), MEMBER_SIZEOF(teamDef_t, robot)},
 
-	{NULL, V_NULL, 0, 0}
+	{nullptr, V_nullptr, 0, 0}
 };
 
 static void Com_ParseTeam (const char *name, const char **text)
@@ -2542,7 +2542,7 @@ static void Com_ParseTeam (const char *name, const char **text)
 
 	Q_strncpyz(td->id, name, sizeof(td->id));
 	td->armour = td->weapons = true; /* default values */
-	td->onlyWeapon = NULL;
+	td->onlyWeapon = nullptr;
 
 	/* get name list body body */
 	token = Com_Parse(text);
@@ -2562,7 +2562,7 @@ static void Com_ParseTeam (const char *name, const char **text)
 		if (*token == '}')
 			break;
 
-		if (!Com_ParseBlockToken(name, text, td, teamDefValues, NULL, token)) {
+		if (!Com_ParseBlockToken(name, text, td, teamDefValues, nullptr, token)) {
 			if (Q_streq(token, "onlyWeapon")) {
 				const objDef_t *od;
 				token = Com_EParse(text, errhead, name);
@@ -2580,7 +2580,7 @@ static void Com_ParseTeam (const char *name, const char **text)
 					Com_Error(ERR_DROP, "Com_ParseTeam: error while reading templates (team \"%s\")", name);
 				}
 
-				for (linkedList_t *element = list; element != NULL; element = element->next) {
+				for (linkedList_t *element = list; element != nullptr; element = element->next) {
 					for (i = 0; i < td->numTemplates; i++) {
 						if (Q_streq(token, td->characterTemplates[i]->id)) {
 							Com_Printf("Com_ParseTeam: template %s used more than once in team def %s second ignored", (char*)element->data, name);
@@ -2601,14 +2601,14 @@ static void Com_ParseTeam (const char *name, const char **text)
 				const BodyData *bd;
 				token = Com_EParse(text, errhead, name);
 				bd = Com_GetBodyTemplateByID(token);
-				if (bd == NULL)
+				if (bd == nullptr)
 					Sys_Error("Com_ParseTeam: Could not find body type %s in team def %s\n", token, name);
 				td->bodyTemplate = bd;
 			} else if (Q_streq(token, "names")) {
 				const teamNames_t *nameList;
 				token = Com_EParse(text, errhead, name);
 				nameList = Com_GetNameListByID(token);
-				if (nameList == NULL)
+				if (nameList == nullptr)
 					Sys_Error("Com_ParseTeam: Could not find name list %s in team def %s\n", token, name);
 				td->names = nameList->names;
 				td->numNames = nameList->numNames;
@@ -2628,12 +2628,12 @@ static void Com_ParseTeam (const char *name, const char **text)
 		Q_strncpyz(td->deathTextureName, va("pics/sfx/blood_%i", i), sizeof(td->deathTextureName));
 		Com_DPrintf(DEBUG_CLIENT, "Using random blood for teamdef: '%s' (%i)\n", td->id, i);
 	}
-	if (td->bodyTemplate == NULL)
+	if (td->bodyTemplate == nullptr)
 		Sys_Error("Teamdef without body data: %s\n", td->id);
 }
 
 /**
- * @brief Returns the chrTemplate pointer for the given id - or NULL if not found in the chrTemplates
+ * @brief Returns the chrTemplate pointer for the given id - or nullptr if not found in the chrTemplates
  * array
  * @param[in] chrTemplate The character template id (given in ufo-script files)
  */
@@ -2642,7 +2642,7 @@ const chrTemplate_t *Com_GetCharacterTemplateByID (const char *chrTemplate)
 	int i;
 
 	if (Q_strnull(chrTemplate))
-		return NULL;
+		return nullptr;
 
 	/* get character template */
 	for (i = 0; i < csi.numChrTemplates; i++)
@@ -2650,7 +2650,7 @@ const chrTemplate_t *Com_GetCharacterTemplateByID (const char *chrTemplate)
 			return &csi.chrTemplates[i];
 
 	Com_Printf("Com_GetCharacterTemplateByID: could not find character template: '%s'\n", chrTemplate);
-	return NULL;
+	return nullptr;
 }
 
 static const value_t ugvValues[] = {
@@ -2660,7 +2660,7 @@ static const value_t ugvValues[] = {
 	{"actors", V_STRING, offsetof(ugv_t, actors), 0},
 	{"price", V_INT, offsetof(ugv_t, price), 0},
 
-	{NULL, V_NULL, 0, 0}
+	{nullptr, V_nullptr, 0, 0}
 };
 
 /**
@@ -2688,7 +2688,7 @@ static void Com_ParseUGVs (const char *name, const char **text)
 	ugv = &csi.ugvs[csi.numUGV];
 	OBJZERO(*ugv);
 
-	if (Com_ParseBlock(name, text, ugv, ugvValues, NULL)) {
+	if (Com_ParseBlock(name, text, ugv, ugvValues, nullptr)) {
 		ugv->id = Mem_PoolStrDup(name, com_genericPool, 0);
 		ugv->idx = csi.numUGV;
 		csi.numUGV++;
@@ -2761,7 +2761,7 @@ static const value_t bodyPartValues[] = {
 		{"bleed", V_INT, offsetof(BodyPartData, bleedingFactor), MEMBER_SIZEOF(BodyPartData, bleedingFactor)},
 		{"threshold", V_INT, offsetof(BodyPartData, woundThreshold), MEMBER_SIZEOF(BodyPartData, woundThreshold)},
 
-		{NULL, V_NULL, 0, 0}
+		{nullptr, V_nullptr, 0, 0}
 };
 
 static const char *const penaltyNames[MODIFIER_MAX] = {
@@ -2801,7 +2801,7 @@ static void Com_ParseBodyPart (const char *name, const char **text, BodyData *bd
 		if (!*text || *token == '}')
 			break;
 
-		if (!Com_ParseBlockToken(name, text, &bp, bodyPartValues, NULL, token)) {
+		if (!Com_ParseBlockToken(name, text, &bp, bodyPartValues, nullptr, token)) {
 			if (Q_streq(token, "penalty")) {
 				linkedList_t *list;
 				if (!Com_ParseList(text, &list)) {
@@ -2896,7 +2896,7 @@ static const value_t terrainTypeValues[] = {
 	{"footstepvolume", V_FLOAT, offsetof(terrainType_t, footstepVolume), 0},
 	{"bouncefraction", V_FLOAT, offsetof(terrainType_t, bounceFraction), 0},
 
-	{NULL, V_NULL, 0, 0}
+	{nullptr, V_nullptr, 0, 0}
 };
 
 /**
@@ -2916,7 +2916,7 @@ const terrainType_t *Com_GetTerrainType (const char *textureName)
 			return t;
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -2928,7 +2928,7 @@ static void Com_ParseTerrain (const char *name, const char **text)
 {
 
 	/* check for additions to existing name categories */
-	if (Com_GetTerrainType(name) != NULL) {
+	if (Com_GetTerrainType(name) != nullptr) {
 		Com_Printf("Terrain definition with same name already parsed: '%s'\n", name);
 		return;
 	}
@@ -2940,7 +2940,7 @@ static void Com_ParseTerrain (const char *name, const char **text)
 	if (Com_ParseBlock(name, text, t, terrainTypeValues, com_genericPool)) {
 		const unsigned hash = Com_HashKey(name, TERRAIN_HASH_SIZE);
 		t->texture = Mem_PoolStrDup(name, com_genericPool, 0);
-		/* link in terrainTypesHash[hash] should be NULL on the first run */
+		/* link in terrainTypesHash[hash] should be nullptr on the first run */
 		t->hash_next = terrainTypesHash[hash];
 		terrainTypesHash[hash] = t;
 	} else {
@@ -2957,7 +2957,7 @@ GAMETYPE INTERPRETER
 /** @brief possible gametype values for the gameserver (ufo-scriptfiles) */
 static const value_t gameTypeValues[] = {
 	{"name", V_TRANSLATION_STRING, offsetof(gametype_t, name), 0}, /**< translated game-type name for menu displaying */
-	{NULL, V_NULL, 0, 0}
+	{nullptr, V_nullptr, 0, 0}
 };
 
 static void Com_ParseGameTypes (const char *name, const char **text)
@@ -2996,7 +2996,7 @@ static void Com_ParseGameTypes (const char *name, const char **text)
 			if (*token == '}')
 				break;
 
-			if (!Com_ParseBlockToken(name, text, gt, gameTypeValues, NULL, token)) {
+			if (!Com_ParseBlockToken(name, text, gt, gameTypeValues, nullptr, token)) {
 				if (!Q_streq(token, "cvarlist"))
 					Sys_Error("Com_ParseGameTypes: gametype \"%s\" without cvarlist", name);
 
@@ -3204,7 +3204,7 @@ const char *Com_UFOCrashedTypeToShortName (ufoType_t type)
 /**
  * @brief Searches an UGV definition by a given script id and returns the pointer to the global data
  * @param[in] ugvID The script id of the UGV definition you are looking for
- * @return ugv_t pointer or NULL if not found.
+ * @return ugv_t pointer or nullptr if not found.
  * @note This function gives no warning on null name or if no ugv found
  */
 const ugv_t *Com_GetUGVByIDSilent (const char *ugvID)
@@ -3212,27 +3212,27 @@ const ugv_t *Com_GetUGVByIDSilent (const char *ugvID)
 	int i;
 
 	if (!ugvID)
-		return NULL;
+		return nullptr;
 	for (i = 0; i < csi.numUGV; i++) {
 		const ugv_t *ugv = &csi.ugvs[i];
 		if (Q_streq(ugv->id, ugvID)) {
 			return ugv;
 		}
 	}
-	return NULL;
+	return nullptr;
 }
 
 /**
  * @brief Searches an UGV definition by a given script id and returns the pointer to the global data
  * @param[in] ugvID The script id of the UGV definition you are looking for
- * @return ugv_t pointer or NULL if not found.
+ * @return ugv_t pointer or nullptr if not found.
  */
 const ugv_t *Com_GetUGVByID (const char *ugvID)
 {
 	const ugv_t *ugv = Com_GetUGVByIDSilent(ugvID);
 
 	if (!ugvID)
-		Com_Printf("Com_GetUGVByID Called with NULL ugvID!\n");
+		Com_Printf("Com_GetUGVByID Called with nullptr ugvID!\n");
 	else if (!ugv)
 		Com_Printf("Com_GetUGVByID: No ugv_t entry found for id '%s' in %i entries.\n", ugvID, csi.numUGV);
 	return ugv;
@@ -3317,7 +3317,7 @@ static const value_t mapdef_vals[] = {
 	{"cultures", V_LIST, offsetof(mapDef_t, cultures), 0},
 	{"gametypes", V_LIST, offsetof(mapDef_t, gameTypes), 0},
 
-	{NULL, V_NULL, 0, 0}
+	{nullptr, V_nullptr, 0, 0}
 };
 
 static void Com_ParseMapDefinition (const char *name, const char **text)
@@ -3391,7 +3391,7 @@ mapDef_t *Com_GetMapDefinitionByID (const char *mapDefID)
 	}
 
 	Com_DPrintf(DEBUG_CLIENT, "Com_GetMapDefinition: Could not find mapdef with id: '%s'\n", mapDefID);
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -3413,11 +3413,11 @@ void Com_ParseScripts (bool onlyServer)
 
 	/* pre-stage parsing */
 	Com_Printf("%i script files\n", FS_BuildFileList("ufos/*.ufo"));
-	text = NULL;
+	text = nullptr;
 
-	FS_NextScriptHeader(NULL, NULL, NULL);
+	FS_NextScriptHeader(nullptr, nullptr, nullptr);
 
-	while ((type = FS_NextScriptHeader("ufos/*.ufo", &name, &text)) != NULL)
+	while ((type = FS_NextScriptHeader("ufos/*.ufo", &name, &text)) != nullptr)
 		if (Q_streq(type, "damagetypes"))
 			Com_ParseDamageTypes(name, &text);
 		else if (Q_streq(type, "gametype"))
@@ -3426,10 +3426,10 @@ void Com_ParseScripts (bool onlyServer)
 			Com_ParseVersion(name);
 
 	/* stage one parsing */
-	FS_NextScriptHeader(NULL, NULL, NULL);
-	text = NULL;
+	FS_NextScriptHeader(nullptr, nullptr, nullptr);
+	text = nullptr;
 
-	while ((type = FS_NextScriptHeader("ufos/*.ufo", &name, &text)) != NULL) {
+	while ((type = FS_NextScriptHeader("ufos/*.ufo", &name, &text)) != nullptr) {
 		/* server/client scripts */
 		if (Q_streq(type, "item") || Q_streq(type, "craftitem"))
 			Com_ParseItem(name, &text);
@@ -3455,10 +3455,10 @@ void Com_ParseScripts (bool onlyServer)
 		Sys_Error("Could not find version string for script files");
 
 	/* Stage two parsing (weapon/inventory dependant stuff). */
-	FS_NextScriptHeader(NULL, NULL, NULL);
-	text = NULL;
+	FS_NextScriptHeader(nullptr, nullptr, nullptr);
+	text = nullptr;
 
-	while ((type = FS_NextScriptHeader("ufos/*.ufo", &name, &text)) != NULL) {
+	while ((type = FS_NextScriptHeader("ufos/*.ufo", &name, &text)) != nullptr) {
 		/* server/client scripts */
 		if (Q_streq(type, "equipment"))
 			Com_ParseEquipment(name, &text);
@@ -3471,9 +3471,9 @@ void Com_ParseScripts (bool onlyServer)
 	/* parse ui node script */
 	if (!onlyServer) {
 		Com_Printf("%i ui script files\n", FS_BuildFileList("ufos/ui/*.ufo"));
-		FS_NextScriptHeader(NULL, NULL, NULL);
-		text = NULL;
-		while ((type = FS_NextScriptHeader("ufos/ui/*.ufo", &name, &text)) != NULL)
+		FS_NextScriptHeader(nullptr, nullptr, nullptr);
+		text = nullptr;
+		while ((type = FS_NextScriptHeader("ufos/ui/*.ufo", &name, &text)) != nullptr)
 			CL_ParseClientData(type, name, &text);
 	}
 
@@ -3493,9 +3493,9 @@ int Com_GetScriptChecksum (void)
 	if (checksum != 0)
 		return checksum;
 
-	while ((buf = FS_GetFileData("ufos/*.ufo")) != NULL)
+	while ((buf = FS_GetFileData("ufos/*.ufo")) != nullptr)
 		checksum += LittleLong(Com_BlockChecksum(buf, strlen(buf)));
-	FS_GetFileData(NULL);
+	FS_GetFileData(nullptr);
 
 	return checksum;
 }
@@ -3504,6 +3504,6 @@ void Com_Shutdown (void)
 {
 	OBJZERO(terrainTypesHash);
 	OBJZERO(com_constNameInt_hash);
-	com_constNameInt = NULL;
+	com_constNameInt = nullptr;
 	versionParsed = false;
 }

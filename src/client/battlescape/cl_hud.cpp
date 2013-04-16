@@ -271,7 +271,7 @@ static void HUD_PopupFiremodeReservation (const le_t *le, bool popupReload)
 	int i;
 	static char text[MAX_VAR];
 	int selectedEntry;
-	linkedList_t *popupListText = NULL;
+	linkedList_t *popupListText = nullptr;
 	reserveShot_t reserveShotData;
 
 	/* reset the list */
@@ -346,7 +346,7 @@ static void HUD_PopupFiremodeReservation_f (void)
 	/* A second parameter (the value itself will be ignored) was given.
 	 * This is used to reset the shot-reservation.*/
 	if (Cmd_Argc() == 2) {
-		HUD_SetShootReservation(selActor, 0, ACTOR_HAND_NOT_SET, -1, NULL);
+		HUD_SetShootReservation(selActor, 0, ACTOR_HAND_NOT_SET, -1, nullptr);
 	} else {
 		HUD_PopupFiremodeReservation(selActor, false);
 	}
@@ -376,7 +376,7 @@ static void HUD_ShotReserve_f (void)
 		return;
 
 	if (reserveShotData->weaponIndex == NONE) {
-		HUD_SetShootReservation(selActor, 0, ACTOR_HAND_NOT_SET, -1, NULL);
+		HUD_SetShootReservation(selActor, 0, ACTOR_HAND_NOT_SET, -1, nullptr);
 		return;
 	}
 
@@ -464,7 +464,7 @@ static void HUD_DisplayActions (const char *callback, const le_t* actor, actionT
 	case FIRE_RIGHT: {
 		const actorHands_t hand = ACTOR_HAND_RIGHT;
 		const fireDef_t *fd = HUD_GetFireDefinitionForHand(actor, hand);
-		if (fd == NULL) {
+		if (fd == nullptr) {
 			UI_PopWindow(false);
 			return;
 		}
@@ -504,7 +504,7 @@ static void HUD_DisplayActions (const char *callback, const le_t* actor, actionT
 	case FIRE_LEFT: {
 		const actorHands_t hand = ACTOR_HAND_LEFT;
 		const fireDef_t *fd = HUD_GetFireDefinitionForHand(actor, hand);
-		if (fd == NULL) {
+		if (fd == nullptr) {
 			UI_PopWindow(false);
 			return;
 		}
@@ -554,13 +554,13 @@ static void HUD_DisplayActions_f (void)
 		return;
 
 	actionType_t type;
-	if (strchr(Cmd_Argv(2), 'r') != NULL) {
+	if (strchr(Cmd_Argv(2), 'r') != nullptr) {
 		type = FIRE_RIGHT;
-	} else if (strchr(Cmd_Argv(2), 'l') != NULL) {
+	} else if (strchr(Cmd_Argv(2), 'l') != nullptr) {
 		type = FIRE_LEFT;
-	} else if (strchr(Cmd_Argv(2), 'R') != NULL) {
+	} else if (strchr(Cmd_Argv(2), 'R') != nullptr) {
 		type = RELOAD_RIGHT;
-	} else if (strchr(Cmd_Argv(2), 'L') != NULL) {
+	} else if (strchr(Cmd_Argv(2), 'L') != nullptr) {
 		type = RELOAD_LEFT;
 	} else {
 		return;
@@ -608,7 +608,7 @@ static void HUD_UpdateReactionFiremodes (const le_t *actor, const actorHands_t h
 	assert(actor);
 
 	fd = HUD_GetFireDefinitionForHand(actor, hand);
-	if (fd == NULL)
+	if (fd == nullptr)
 		return;
 
 	ammo = fd->obj;
@@ -679,7 +679,7 @@ static int HUD_GetMinimumTUsForUsage (const Item *item)
 	assert(item->def());
 
 	const fireDef_t *fdArray = item->getFiredefs();
-	if (fdArray == NULL)
+	if (fdArray == nullptr)
 		return time;
 
 	/* Search for the smallest TU needed to shoot. */
@@ -815,7 +815,7 @@ static int HUD_ReactionFireGetTUs (const le_t *actor)
 
 	if (weapon && weapon->ammoDef() && weapon->isWeapon()) {
 		const fireDef_t *fdArray = weapon->getFiredefs();
-		if (fdArray == NULL)
+		if (fdArray == nullptr)
 			return -1;
 
 		const fireDefIndex_t fmIdx = fmSetting.getFmIdx();
@@ -846,7 +846,7 @@ static void HUD_UpdateButtons (const le_t *le)
 	if (!weaponR || !weaponR->isHeldTwoHanded())
 		weaponL = le->getLeftHandItem();
 	else
-		weaponL = NULL;
+		weaponL = nullptr;
 
 	const int time = CL_ActorUsableTUs(le);
 	/* Crouch/stand button. */
@@ -1034,11 +1034,11 @@ void HUD_UpdateCursor (void)
 
 		/* if exists gets width of player name */
 		if (UI_GetText(TEXT_MOUSECURSOR_PLAYERNAMES))
-			R_FontTextSize("f_verysmall", UI_GetText(TEXT_MOUSECURSOR_PLAYERNAMES), viddef.virtualWidth - bgX, LONGLINES_WRAP, &width, NULL, NULL, NULL);
+			R_FontTextSize("f_verysmall", UI_GetText(TEXT_MOUSECURSOR_PLAYERNAMES), viddef.virtualWidth - bgX, LONGLINES_WRAP, &width, nullptr, nullptr, nullptr);
 
 		/* gets width of background */
 		if (width == 0 && UI_GetText(TEXT_MOUSECURSOR_RIGHT)) {
-			R_FontTextSize("f_verysmall", UI_GetText(TEXT_MOUSECURSOR_RIGHT), viddef.virtualWidth - bgX, LONGLINES_WRAP, &width, NULL, NULL, NULL);
+			R_FontTextSize("f_verysmall", UI_GetText(TEXT_MOUSECURSOR_RIGHT), viddef.virtualWidth - bgX, LONGLINES_WRAP, &width, nullptr, nullptr, nullptr);
 		}
 
 		/* Display 'crouch' icon if actor is crouched. */
@@ -1056,7 +1056,7 @@ void HUD_UpdateCursor (void)
 		if (le->state & STATE_REACTION)
 			image = R_FindImage("pics/cursors/reactionfire", it_pic);
 		else
-			image = NULL;
+			image = nullptr;
 
 		if (image)
 			R_DrawImage(mousePosX - image->width / 2 + iconOffsetX, mousePosY - image->height / 2 + iconOffsetY, image);
@@ -1127,7 +1127,7 @@ static int HUD_UpdateActorFireMode (le_t *actor)
 	if (IS_MODE_FIRE_HEADGEAR(actor->actorMode)) {
 		selWeapon = actor->inv.getHeadgearContainer();
 	} else if (IS_MODE_FIRE_LEFT(actor->actorMode)) {
-		selWeapon = HUD_GetLeftHandWeapon(actor, NULL);
+		selWeapon = HUD_GetLeftHandWeapon(actor, nullptr);
 	} else {
 		selWeapon = actor->getRightHandItem();
 	}
@@ -1144,17 +1144,17 @@ static int HUD_UpdateActorFireMode (le_t *actor)
 	const objDef_t *def = selWeapon->def();
 	if (!def) {
 		/* No valid weapon in the hand. */
-		CL_ActorSetFireDef(actor, NULL);
+		CL_ActorSetFireDef(actor, nullptr);
 	} else {
 		/* Check whether this item uses/has ammo. */
 		if (!selWeapon->ammoDef()) {
-			CL_ActorSetFireDef(actor, NULL);
+			CL_ActorSetFireDef(actor, nullptr);
 			/* This item does not use ammo, check for existing firedefs in this item. */
 			/* This is supposed to be a weapon or other usable item. */
 			if (def->numWeapons > 0) {
 				if (selWeapon->isWeapon() || def->weapons[0] == def) {
 					const fireDef_t *fdArray = selWeapon->getFiredefs();
-					if (fdArray != NULL) {
+					if (fdArray != nullptr) {
 						/* Get firedef from the weapon (or other usable item) entry instead. */
 						const fireDef_t *old = FIRESH_GetFiredef(def, fdArray->weapFdsIdx, actor->currentSelectedFiremode);
 						CL_ActorSetFireDef(actor, old);
@@ -1163,7 +1163,7 @@ static int HUD_UpdateActorFireMode (le_t *actor)
 			}
 		} else {
 			const fireDef_t *fdArray = selWeapon->getFiredefs();
-			if (fdArray != NULL) {
+			if (fdArray != nullptr) {
 				const fireDef_t *old = FIRESH_GetFiredef(selWeapon->ammoDef(), fdArray->weapFdsIdx, actor->currentSelectedFiremode);
 				/* reset the align if we switched the firemode */
 				CL_ActorSetFireDef(actor, old);
@@ -1284,7 +1284,7 @@ static void HUD_UpdateActorCvar (const le_t *actor)
 	else
 		Cvar_Set("mn_ammoright", "");
 
-	const Item *itemLeft = HUD_GetLeftHandWeapon(actor, NULL);
+	const Item *itemLeft = HUD_GetLeftHandWeapon(actor, nullptr);
 	if (itemLeft)
 		Cvar_SetValue("mn_ammoleft", itemLeft->getAmmoLeft());
 	else
@@ -1365,12 +1365,12 @@ static void HUD_UpdateActorLoad_f (void)
 	const int tuPenalty = tus - normalTU;
 	int count = 0;
 
-	const Container *cont = NULL;
+	const Container *cont = nullptr;
 	while ((cont = chr->inv.getNextCont(cont))) {
 		for (invList_t *invList = cont->_invList, *next; invList; invList = next) {
 			next = invList->getNext();
 			const fireDef_t *fireDef = invList->getFiredefs();
-			if (fireDef == NULL)
+			if (fireDef == nullptr)
 				continue;
 			for (int i = 0; i < MAX_FIREDEFS_PER_WEAPON; i++)
 				if (fireDef[i].time > 0 && fireDef[i].time > tus) {
@@ -1423,7 +1423,7 @@ static void HUD_UpdateActor (le_t *actor)
 			item = HUD_GetLeftHandWeapon(actor, &container);
 		} else {
 			container = NONE;
-			item = NULL;
+			item = nullptr;
 		}
 
 		if (item && item->def() && item->ammoDef() && item->isReloadable()) {
@@ -1586,11 +1586,11 @@ static bool CL_CvarWorldLevel (cvar_t *cvar)
 static bool HUD_CheckCLHud (cvar_t *cvar)
 {
 	const uiNode_t *window = UI_GetWindow(cvar->string);
-	if (window == NULL) {
+	if (window == nullptr) {
 		return false;
 	}
 
-	if (window->super == NULL) {
+	if (window->super == nullptr) {
 		return false;
 	}
 
@@ -1602,7 +1602,7 @@ static bool HUD_CheckCLHud (cvar_t *cvar)
 
 /**
  * @brief Display the user interface
- * @param optionWindowName Name of the window used to display options, else NULL if nothing
+ * @param optionWindowName Name of the window used to display options, else nullptr if nothing
  * @param popAll If true
  * @todo Remove popAll when it is possible. It should always be true
  */

@@ -90,11 +90,11 @@ static int ThreadWork (void *p)
 }
 
 
-static SDL_mutex *lock = NULL;
+static SDL_mutex *lock = nullptr;
 
 static void ThreadInit (void)
 {
-	if (lock != NULL)
+	if (lock != nullptr)
 		Sys_Error("Mutex already created!");
 
 	lock = SDL_CreateMutex();
@@ -103,7 +103,7 @@ static void ThreadInit (void)
 static void ThreadRelease (void)
 {
 	SDL_DestroyMutex(lock);
-	lock = NULL;
+	lock = nullptr;
 }
 
 /**
@@ -113,7 +113,7 @@ void ThreadLock (void)
 {
 	if (threadstate.numthreads == 1) {
 		/* do nothing */
-	} else if (lock != NULL && SDL_LockMutex(lock) != -1) {
+	} else if (lock != nullptr && SDL_LockMutex(lock) != -1) {
 		/* already locked */
 	} else {
 		Sys_Error("Couldn't lock mutex (%p)!", (void*)lock);
@@ -127,7 +127,7 @@ void ThreadUnlock (void)
 {
 	if (threadstate.numthreads == 1) {
 		/* do nothing */
-	} else if (lock != NULL && SDL_UnlockMutex(lock) != -1) {
+	} else if (lock != nullptr && SDL_UnlockMutex(lock) != -1) {
 		/* already locked */
 	} else {
 		Sys_Error("Couldn't unlock mutex (%p)!", (void*)lock);
@@ -140,17 +140,17 @@ static void RunThreads (void)
 	int i;
 
 	if (threadstate.numthreads == 1) {
-		ThreadWork(NULL);
+		ThreadWork(nullptr);
 		return;
 	}
 
 	ThreadInit();
 
 	for (i = 0; i < threadstate.numthreads; i++)
-		threads[i] = SDL_CreateThread(ThreadWork, NULL);
+		threads[i] = SDL_CreateThread(ThreadWork, nullptr);
 
 	for (i = 0; i < threadstate.numthreads; i++)
-		SDL_WaitThread(threads[i], NULL);
+		SDL_WaitThread(threads[i], nullptr);
 
 	ThreadRelease();
 }
@@ -177,7 +177,7 @@ void RunThreadsOn (void (*func)(unsigned int), int unsigned workcount, bool prog
 
 	WorkFunction = func;
 
-	start = time(NULL);
+	start = time(nullptr);
 
 	if (threadstate.progress) {
 		fprintf(stdout, "%10s: ", id);
@@ -186,7 +186,7 @@ void RunThreadsOn (void (*func)(unsigned int), int unsigned workcount, bool prog
 
 	RunThreads();
 
-	end = time(NULL);
+	end = time(nullptr);
 
 	if (threadstate.progress) {
 		Verb_Printf(VERB_NORMAL, " (time: %6is, #: %i)\n", end - start, workcount);

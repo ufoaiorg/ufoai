@@ -170,7 +170,7 @@ static void Door_SlidingUse (Edict *door)
 	GET_SLIDING_DOOR_SHIFT_VECTOR(door->dir, open ? 1 : -1, moveAngles);
 
 	/* get the direction vector from the movement angles that were set on the entity */
-	AngleVectors(moveAngles, moveDir, NULL, NULL);
+	AngleVectors(moveAngles, moveDir, nullptr, nullptr);
 	moveDir[0] = fabsf(moveDir[0]);
 	moveDir[1] = fabsf(moveDir[1]);
 	moveDir[2] = fabsf(moveDir[2]);
@@ -296,7 +296,7 @@ static bool Touch_DoorTrigger (Edict *self, Edict *activator)
 static void Reset_DoorTrigger (Edict *self, Edict *activator)
 {
 	if (activator->clientAction == self->owner)
-		G_ActorSetClientAction(activator, NULL);
+		G_ActorSetClientAction(activator, nullptr);
 }
 
 #define REVERSE		0x00000200
@@ -344,7 +344,7 @@ void SP_func_door (Edict *ent)
 
 	/* the door should start opened */
 	if (ent->spawnflags & FL_TRIGGERED)
-		G_UseEdict(ent, NULL);
+		G_UseEdict(ent, nullptr);
 
 	ent->destroy = Destroy_Breakable;
 }

@@ -43,7 +43,7 @@ int r_numImages;
 /* Wicked for()-loop to go through all images in the r_images linked list. Parameters are: (int i, image_t *image, imageArray_t *imageArray) */
 #define FOR_EACH_IMAGE(i, image, imageArray) \
 	for (i = 0, imageArray = &r_images, image = &imageArray->images[0]; i < r_numImages; i++, image++, \
-			i % IMAGE_ARRAY_SIZE ? 0 : (image = (imageArray = imageArray->next) ? &imageArray->images[0] : NULL))
+			i % IMAGE_ARRAY_SIZE ? 0 : (image = (imageArray = imageArray->next) ? &imageArray->images[0] : nullptr))
 
 
 /* generic environment map */
@@ -155,7 +155,7 @@ void R_LoadImage (const char *name, byte **pic, int *width, int *height)
 	SDL_Surface *surf;
 
 	if (Q_strnull(name))
-		Com_Error(ERR_FATAL, "R_LoadImage: NULL name");
+		Com_Error(ERR_FATAL, "R_LoadImage: nullptr name");
 
 	Com_StripExtension(name, filenameTemp, sizeof(filenameTemp));
 
@@ -419,7 +419,7 @@ image_t *R_GetImage (const char *name)
 		if (Q_streq(name, image->name))
 			return image;
 
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -507,8 +507,8 @@ image_t *R_LoadImageData (const char *name, const byte *pic, int width, int heig
 image_t* R_RenderToTexture (const char *name, int x, int y, int w, int h)
 {
 	image_t *img = R_GetImage(name);
-	const bool dimensionDiffer = img != NULL && img->width != w && img->height != h;
-	if (img == NULL || dimensionDiffer) {
+	const bool dimensionDiffer = img != nullptr && img->width != w && img->height != h;
+	if (img == nullptr || dimensionDiffer) {
 		if (dimensionDiffer) {
 			R_DeleteImage(img);
 		}
@@ -567,7 +567,7 @@ image_t *R_FindImage (const char *pname, imagetype_t type)
 	SDL_Surface *surf;
 
 	if (!pname || !pname[0])
-		Com_Error(ERR_FATAL, "R_FindImage: NULL name");
+		Com_Error(ERR_FATAL, "R_FindImage: nullptr name");
 
 	/* drop extension */
 	Com_StripExtension(pname, lname, sizeof(lname));
@@ -592,27 +592,27 @@ image_t *R_FindImage (const char *pname, imagetype_t type)
 		if (image->type == it_world) {
 			image->normalmap = R_FindImage(va("%s_nm", image->name), it_normalmap);
 			if (image->normalmap == r_noTexture)
-				image->normalmap = NULL;
+				image->normalmap = nullptr;
 		}
 		if (image->type != it_glowmap) {
 			image->glowmap = R_FindImage(va("%s_gm", image->name), it_glowmap);
 			if (image->glowmap == r_noTexture)
-				image->glowmap = NULL;
+				image->glowmap = nullptr;
 		}
 		if (image->type != it_normalmap) {
 			image->normalmap = R_FindImage(va("%s_nm", image->name), it_normalmap);
 			if (image->normalmap == r_noTexture)
-				image->normalmap = NULL;
+				image->normalmap = nullptr;
 		}
 		if (image->type != it_specularmap) {
 			image->specularmap = R_FindImage(va("%s_sm", image->name), it_specularmap);
 			if (image->specularmap == r_noTexture)
-				image->specularmap = NULL;
+				image->specularmap = nullptr;
 		}
 		if (image->type != it_roughnessmap) {
 			image->roughnessmap = R_FindImage(va("%s_rm", image->name), it_roughnessmap);
 			if (image->roughnessmap == r_noTexture)
-				image->roughnessmap = NULL;
+				image->roughnessmap = nullptr;
 		}
 	}
 
@@ -627,14 +627,14 @@ image_t *R_FindImage (const char *pname, imagetype_t type)
  * @brief Searches for an image in the image array
  * @param[in] name The name of the image relative to pics/
  * @note name may not be null and has to be longer than 4 chars
- * @return NULL on error or image_t pointer on success
+ * @return nullptr on error or image_t pointer on success
  * @sa R_FindImage
  */
 const image_t *R_FindPics (const char *name)
 {
 	const image_t *image = R_FindImage(va("pics/%s", name), it_pic);
 	if (image == r_noTexture)
-		return NULL;
+		return nullptr;
 	return image;
 }
 
@@ -681,7 +681,7 @@ image_t *R_GetImageAtIndex (int i)
 	imageArray_t *images;
 
 	if (i >= r_numImages || i < 0)
-		return NULL;
+		return nullptr;
 
 	for (images = &r_images; i >= IMAGE_ARRAY_SIZE; i -= IMAGE_ARRAY_SIZE)
 		images = images->next;
@@ -783,7 +783,7 @@ static void R_ReloadImageData (image_t *image)
 		Com_Printf("R_ReloadImageData: unable to load image %s\n", image->name);
 		surf = SDL_CreateRGBSurface(0, image->width, image->height, 32,
 					0xff000000, 0x00ff0000, 0x0000ff00, 0x000000ff);
-		SDL_FillRect(surf, NULL, 0x99ff33ff); /* A random color */
+		SDL_FillRect(surf, nullptr, 0x99ff33ff); /* A random color */
 	}
 	glGenTextures(1, &image->texnum);
 	R_BindTexture(image->texnum);
@@ -835,14 +835,14 @@ void R_TextureMode (const char *string)
 	const size_t size = lengthof(gl_texture_modes);
 	const glTextureMode_t *mode;
 
-	mode = NULL;
+	mode = nullptr;
 	for (i = 0; i < size; i++) {
 		mode = &gl_texture_modes[i];
 		if (!Q_strcasecmp(mode->name, string))
 			break;
 	}
 
-	if (mode == NULL) {
+	if (mode == nullptr) {
 		Com_Printf("bad filter name\n");
 		return;
 	}

@@ -45,7 +45,7 @@ typedef struct {
 	/** Called when the sequence end */
 	struct uiAction_s *onEnd;
 
-	/** Link to the current sequence context, else NULL */
+	/** Link to the current sequence context, else nullptr */
 	pSequenceContext_t context;
 } sequenceExtraData_t;
 

@@ -85,7 +85,7 @@ static const constListEntry_t saveCharacterConstants[] = {
 	{SAVE_CHARACTER_KILLTYPE_NAMESPACE"::civilian", KILLED_CIVILIANS},
 	{SAVE_CHARACTER_KILLTYPE_NAMESPACE"::team", KILLED_TEAM},
 
-	{NULL, -1}
+	{nullptr, -1}
 };
 
 #endif

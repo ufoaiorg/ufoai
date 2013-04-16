@@ -430,7 +430,7 @@ static void R_ModLoadAliasMD2Mesh (model_t *mod, const dMD2Model_t *md2, int buf
 	mod->alias.num_meshes++;
 	size = sizeof(mAliasMesh_t) * mod->alias.num_meshes;
 
-	if (mod->alias.meshes == NULL)
+	if (mod->alias.meshes == nullptr)
 		mod->alias.meshes = (mAliasMesh_t *)Mem_PoolAlloc(size, vid_modelPool, 0);
 	else {
 		mod->alias.meshes = (mAliasMesh_t *)Mem_ReAlloc(mod->alias.meshes, size);
@@ -494,7 +494,7 @@ static void R_ModLoadLevelOfDetailData (model_t* mod, bool loadNormals)
 void R_ModLoadAliasMD2Model (model_t *mod, byte *buffer, int bufSize, bool loadNormals)
 {
 	dMD2Model_t *md2;
-	byte *tagbuf = NULL;
+	byte *tagbuf = nullptr;
 	char tagname[MAX_QPATH];
 
 	/* get the disk data */

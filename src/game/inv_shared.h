@@ -428,7 +428,7 @@ public:
 		_next = nx;
 	}
 	Item ();
-	Item (const objDef_t *_itemDef, const objDef_t *ammo=NULL, int ammoLeft=0);
+	Item (const objDef_t *_itemDef, const objDef_t *ammo=nullptr, int ammoLeft=0);
 
 	inline int getX () const
 	{
@@ -524,7 +524,7 @@ typedef struct inventory_s {
 	}
 	inline void resetContainer (const containerIndex_t idx)
 	{
-		containers[idx]._invList = NULL;
+		containers[idx]._invList = nullptr;
 	}
 	/**
 	 * @brief Searches if there is a specific item already in the inventory&container.

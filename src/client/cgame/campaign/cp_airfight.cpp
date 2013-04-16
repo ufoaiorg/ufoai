@@ -46,8 +46,8 @@ static void AIRFIGHT_RemoveProjectile (aircraftProjectile_t *projectile)
 
 /**
  * @brief Add a projectile in ccs.projectiles
- * @param[in] attackingBase the attacking base in ccs.bases[]. NULL is the attacker is an aircraft or a samsite.
- * @param[in] attackingInstallation the attacking samsite in ccs.installations[]. NULL is the attacker is an aircraft or a base.
+ * @param[in] attackingBase the attacking base in ccs.bases[]. nullptr is the attacker is an aircraft or a samsite.
+ * @param[in] attackingInstallation the attacking samsite in ccs.installations[]. nullptr is the attacker is an aircraft or a base.
  * @param[in] attacker Pointer to the attacking aircraft
  * @param[in] target Pointer to the target aircraft
  * @param[in] weaponSlot Pointer to the weapon slot that fires the projectile.
@@ -75,11 +75,11 @@ static bool AIRFIGHT_AddProjectile (const base_t* attackingBase, const installat
 
 	projectile->aircraftItem = weaponSlot->ammo;
 	if (attackingBase) {
-		projectile->attackingAircraft = NULL;
+		projectile->attackingAircraft = nullptr;
 		VectorSet(projectile->pos[0], attackingBase->pos[0], attackingBase->pos[1], 0);
 		VectorSet(projectile->attackerPos, attackingBase->pos[0], attackingBase->pos[1], 0);
 	} else if (attackingInstallation) {
-		projectile->attackingAircraft = NULL;
+		projectile->attackingAircraft = nullptr;
 		VectorSet(projectile->pos[0], attackingInstallation->pos[0], attackingInstallation->pos[1], 0);
 		VectorSet(projectile->attackerPos, attackingInstallation->pos[0], attackingInstallation->pos[1], 0);
 	} else {
@@ -117,10 +117,10 @@ static bool AIRFIGHT_AddProjectile (const base_t* attackingBase, const installat
 	} else if (projectile->rocket) {
 		sound = "geoscape/combat-rocket";
 	} else {
-		sound = NULL;
+		sound = nullptr;
 	}
 
-	if (sound != NULL)
+	if (sound != nullptr)
 		cgi->S_StartLocalSample(sound, 1.0f);
 
 	return true;
@@ -164,7 +164,7 @@ static void AIRFIGHT_MissTarget (aircraftProjectile_t *projectile)
 
 	if (projectile->aimedAircraft) {
 		VectorCopy(projectile->aimedAircraft->pos, newTarget);
-		projectile->aimedAircraft = NULL;
+		projectile->aimedAircraft = nullptr;
 	} else {
 		VectorCopy(projectile->idleTarget, newTarget);
 	}
@@ -258,8 +258,8 @@ int AIRFIGHT_ChooseWeapon (const aircraftSlot_t *slot, int maxSlot, const vec2_t
 
 /**
  * @brief Calculate the probability to hit the enemy.
- * @param[in] shooter Pointer to the attacking aircraft (may be NULL if a base fires the projectile).
- * @param[in] target Pointer to the aimed aircraft (may be NULL if a target is a base).
+ * @param[in] shooter Pointer to the attacking aircraft (may be nullptr if a base fires the projectile).
+ * @param[in] target Pointer to the aimed aircraft (may be nullptr if a target is a base).
  * @param[in] slot Slot containing the weapon firing.
  * @return Probability to hit the target (0 when you don't have a chance, 1 (or more) when you're sure to hit).
  * @note that modifiers due to electronics, weapons, and shield are already taken into account in AII_UpdateAircraftStats
@@ -359,7 +359,7 @@ void AIRFIGHT_ExecuteActions (const campaign_t* campaign, aircraft_t* shooter, a
 		const objDef_t *ammo = weaponSlot->ammo;
 
 		/* shoot */
-		if (AIRFIGHT_AddProjectile(NULL, NULL, shooter, target, weaponSlot)) {
+		if (AIRFIGHT_AddProjectile(nullptr, nullptr, shooter, target, weaponSlot)) {
 			/* will we miss the target ? */
 			const float probability = frand();
 			Com_DPrintf(DEBUG_CLIENT, "AIRFIGHT_ExecuteActions: %s - Random probability to hit: %f\n", shooter->name, probability);
@@ -395,7 +395,7 @@ void AIRFIGHT_ExecuteActions (const campaign_t* campaign, aircraft_t* shooter, a
 	} else {
 		/* no ammo left, or no weapon, proceed with mission */
 		if (shooter->type == AIRCRAFT_UFO) {
-			shooter->aircraftTarget = NULL;		/* reset target */
+			shooter->aircraftTarget = nullptr;		/* reset target */
 			CP_UFOProceedMission(campaign, shooter);
 		} else {
 			MS_AddNewMessage(_("Notice"), _("Our aircraft has no more ammo left - returning to home base now."));
@@ -431,7 +431,7 @@ void AIRFIGHT_RemoveProjectileAimingAircraft (const aircraft_t *aircraft)
 }
 
 /**
- * @brief Set all projectile attackingAircraft pointers to NULL
+ * @brief Set all projectile attackingAircraft pointers to nullptr
  * @param[in] aircraft Pointer to the destroyed aircraft.
  * @note This function is called when @c aircraft is destroyed.
  */
@@ -444,7 +444,7 @@ static void AIRFIGHT_UpdateProjectileForDestroyedAircraft (const aircraft_t *air
 		const aircraft_t *attacker = projectile->attackingAircraft;
 
 		if (attacker == aircraft)
-			projectile->attackingAircraft = NULL;
+			projectile->attackingAircraft = nullptr;
 	}
 }
 
@@ -455,7 +455,7 @@ static void AIRFIGHT_UpdateProjectileForDestroyedAircraft (const aircraft_t *air
  * @param[in] aircraft Pointer to the aircraft which was destroyed (alien or phalanx).
  * @param[in] phalanxWon true if PHALANX won, false if UFO won.
  * @note Some of these mission values are redone (and not reloaded) in CP_Load
- * @note shooter may be NULL
+ * @note shooter may be nullptr
  * @sa UFO_DestroyAllUFOsOnGeoscape_f
  * @sa CP_Load
  * @sa CP_SpawnCrashSiteMission
@@ -477,7 +477,7 @@ void AIRFIGHT_ActionsAfterAirfight (const campaign_t* campaign, aircraft_t *shoo
 		 * (in case we need to know what item to collect e.g.) */
 
 		/* get the color value of the map at the crash position */
-		color = GEO_GetColor(aircraft->pos, MAPTYPE_TERRAIN, NULL);
+		color = GEO_GetColor(aircraft->pos, MAPTYPE_TERRAIN, nullptr);
 		/* if this color value is not the value for water ...
 		 * and we hit the probability to spawn a crashsite mission */
 		if (!MapIsWater(color)) {
@@ -513,7 +513,7 @@ void AIRFIGHT_ActionsAfterAirfight (const campaign_t* campaign, aircraft_t *shoo
 		/* notify UFOs that a phalanx aircraft has been destroyed */
 		UFO_NotifyPhalanxAircraftRemoved(aircraft);
 
-		if (!MapIsWater(GEO_GetColor(aircraft->pos, MAPTYPE_TERRAIN, NULL))) {
+		if (!MapIsWater(GEO_GetColor(aircraft->pos, MAPTYPE_TERRAIN, nullptr))) {
 			CP_SpawnRescueMission(aircraft, shooter);
 		} else {
 			/* Destroy the aircraft and everything onboard - the aircraft pointer
@@ -663,7 +663,7 @@ static void AIRFIGHT_GetNextPointInPathFromVector (const float *movement, const 
  */
 static void AIRFIGHT_GetNextPointInPath (const float *movement, const vec2_t originalPoint, const vec2_t targetPoint, float *angle, vec2_t finalPoint, vec3_t orthogonalVector)
 {
-	*angle = GEO_AngleOfPath(originalPoint, targetPoint, NULL, orthogonalVector);
+	*angle = GEO_AngleOfPath(originalPoint, targetPoint, nullptr, orthogonalVector);
 	AIRFIGHT_GetNextPointInPathFromVector(movement, originalPoint, orthogonalVector, finalPoint);
 }
 
@@ -740,7 +740,7 @@ static void AIRFIGHT_BaseShoot (const base_t *base, baseWeapon_t *weapons, int m
 
 		/* check that the ufo is still visible */
 		if (!UFO_IsUFOSeenOnGeoscape(target)) {
-			weapons[i].target = NULL;
+			weapons[i].target = nullptr;
 			continue;
 		}
 
@@ -749,7 +749,7 @@ static void AIRFIGHT_BaseShoot (const base_t *base, baseWeapon_t *weapons, int m
 		const int test = AIRFIGHT_CheckWeapon(slot, distance);
 		/* weapon unable to shoot, reset target */
 		if (test == AIRFIGHT_WEAPON_CAN_NEVER_SHOOT) {
-			weapons[i].target = NULL;
+			weapons[i].target = nullptr;
 			continue;
 		}
 		/* we can't shoot with this weapon atm, wait to see if UFO comes closer */
@@ -760,10 +760,10 @@ static void AIRFIGHT_BaseShoot (const base_t *base, baseWeapon_t *weapons, int m
 			continue;
 
 		/* shoot */
-		if (AIRFIGHT_AddProjectile(base, NULL, NULL, target, slot)) {
+		if (AIRFIGHT_AddProjectile(base, nullptr, nullptr, target, slot)) {
 			slot->delayNextShot = slot->ammo->craftitem.weaponDelay;
 			/* will we miss the target ? */
-			if (frand() > AIRFIGHT_ProbabilityToHit(NULL, target, slot))
+			if (frand() > AIRFIGHT_ProbabilityToHit(nullptr, target, slot))
 				AIRFIGHT_MissTarget(&ccs.projectiles[ccs.numProjectiles - 1]);
 		}
 	}
@@ -796,7 +796,7 @@ static void AIRFIGHT_InstallationShoot (const installation_t *installation, base
 
 		/* check that the ufo is still visible */
 		if (!UFO_IsUFOSeenOnGeoscape(target)) {
-			weapons[i].target = NULL;
+			weapons[i].target = nullptr;
 			continue;
 		}
 
@@ -805,7 +805,7 @@ static void AIRFIGHT_InstallationShoot (const installation_t *installation, base
 		const int test = AIRFIGHT_CheckWeapon(slot, distance);
 		/* weapon unable to shoot, reset target */
 		if (test == AIRFIGHT_WEAPON_CAN_NEVER_SHOOT) {
-			weapons[i].target = NULL;
+			weapons[i].target = nullptr;
 			continue;
 		}
 		/* we can't shoot with this weapon atm, wait to see if UFO comes closer */
@@ -816,10 +816,10 @@ static void AIRFIGHT_InstallationShoot (const installation_t *installation, base
 			continue;
 
 		/* shoot */
-		if (AIRFIGHT_AddProjectile(NULL, installation, NULL, target, slot)) {
+		if (AIRFIGHT_AddProjectile(nullptr, installation, nullptr, target, slot)) {
 			slot->delayNextShot = slot->ammo->craftitem.weaponDelay;
 			/* will we miss the target ? */
-			if (frand() > AIRFIGHT_ProbabilityToHit(NULL, target, slot))
+			if (frand() > AIRFIGHT_ProbabilityToHit(nullptr, target, slot))
 				AIRFIGHT_MissTarget(&ccs.projectiles[ccs.numProjectiles - 1]);
 		}
 	}
@@ -833,8 +833,8 @@ void AIRFIGHT_CampaignRunBaseDefence (int dt)
 {
 	base_t *base;
 
-	base = NULL;
-	while ((base = B_GetNext(base)) != NULL) {
+	base = nullptr;
+	while ((base = B_GetNext(base)) != nullptr) {
 		int idx;
 
 		if (B_IsUnderAttack(base))
@@ -978,7 +978,7 @@ bool AIRFIGHT_LoadXML (xmlNode_t *parent)
 			else
 				projectile->attackingAircraft = AIR_AircraftGetFromIDX(cgi->XML_GetInt(attackingAircraft, SAVE_AIRFIGHT_AIRCRAFTIDX, AIRCRAFT_INVALID));
 		} else {
-			projectile->attackingAircraft = NULL;
+			projectile->attackingAircraft = nullptr;
 		}
 		cgi->XML_GetPos3(node, SAVE_AIRFIGHT_ATTACKERPOS, projectile->attackerPos);
 
@@ -989,7 +989,7 @@ bool AIRFIGHT_LoadXML (xmlNode_t *parent)
 			else
 				projectile->aimedAircraft = AIR_AircraftGetFromIDX(cgi->XML_GetInt(aimedAircraft, SAVE_AIRFIGHT_AIRCRAFTIDX, AIRCRAFT_INVALID));
 		} else {
-			projectile->aimedAircraft = NULL;
+			projectile->aimedAircraft = nullptr;
 		}
 	}
 	ccs.numProjectiles = i;

@@ -50,7 +50,7 @@ void uiCheckBoxNode::draw (uiNode_t* node)
 {
 	const float value = getValue(node);
 	vec2_t pos;
-	uiSprite_t *icon = NULL;
+	uiSprite_t *icon = nullptr;
 	uiSpriteStatus_t status = SPRITE_STATUS_NORMAL;
 
 	/* outer status */

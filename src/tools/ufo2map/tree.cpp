@@ -54,7 +54,7 @@ static void FreeTreePortals_r (node_t *node)
 		RemovePortalFromNode(p, p->nodes[!s]);
 		FreePortal(p);
 	}
-	node->portals = NULL;
+	node->portals = nullptr;
 }
 
 static void FreeTree_r (node_t *node)
@@ -119,7 +119,7 @@ static void CheckPlaneAgainstParents (uint16_t pnum, const node_t *node)
 
 static void LeafNode (node_t *node, bspbrush_t *brushes)
 {
-	node->side = NULL;
+	node->side = nullptr;
 	node->planenum = PLANENUM_LEAF;
 
 	Verb_Printf(VERB_DUMP, "LeafNode: scanning brushes.\n");

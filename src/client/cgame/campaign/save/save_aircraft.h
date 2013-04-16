@@ -110,7 +110,7 @@ static const constListEntry_t saveAircraftConstants[] = {
 	{SAVE_AIRCRAFTSTAT_NAMESPACE"::weaponrange", AIR_STATS_WRANGE},
 	{SAVE_AIRCRAFTSTAT_NAMESPACE"::antimatter", AIR_STATS_ANTIMATTER},
 
-	{NULL, -1}
+	{nullptr, -1}
 };
 
 #endif

@@ -194,7 +194,7 @@ void R_DrawBspNormals (int tile)
 
 	R_EnableTexture(&texunit_diffuse, true);
 
-	R_Color(NULL);
+	R_Color(nullptr);
 }
 
 /**
@@ -396,9 +396,9 @@ static void R_RenderBspRRefs (drawSurfaceFunc drawFunc, surfaceArrayType_t surfT
 
 		R_SetArrayState(tile);
 
-		/* Vertex buffers are NULL-based, arrays are not */
+		/* Vertex buffers are nullptr-based, arrays are not */
 		if (qglBindBuffer && r_vertexbuffers->integer)
-			indexPtr = NULL;
+			indexPtr = nullptr;
 		else
 			indexPtr = tile->indexes;
 
@@ -441,8 +441,8 @@ void R_RenderOpaqueBspRRefs (void)
 
 	R_RenderBspRRefs(R_DrawSurfaces, S_OPAQUE);
 
-	R_EnableLighting(NULL, false);
-	R_EnableGlowMap(NULL);
+	R_EnableLighting(nullptr, false);
+	R_EnableGlowMap(nullptr);
 	R_EnableTexture(&texunit_lightmap, false);
 }
 
@@ -455,8 +455,8 @@ void R_RenderOpaqueWarpBspRRefs (void)
 
 	R_RenderBspRRefs(R_DrawSurfaces, S_OPAQUE_WARP);
 
-	R_EnableWarp(NULL, false);
-	R_EnableGlowMap(NULL);
+	R_EnableWarp(nullptr, false);
+	R_EnableGlowMap(nullptr);
 }
 
 void R_RenderAlphaTestBspRRefs (void)
@@ -467,8 +467,8 @@ void R_RenderAlphaTestBspRRefs (void)
 
 	R_RenderBspRRefs(R_DrawSurfaces, S_ALPHA_TEST);
 
-	R_EnableLighting(NULL, false);
-	R_EnableGlowMap(NULL);
+	R_EnableLighting(nullptr, false);
+	R_EnableGlowMap(nullptr);
 	R_EnableAlphaTest(false);
 }
 
@@ -505,6 +505,6 @@ void R_RenderBlendWarpBspRRefs (void)
 
 	R_RenderBspRRefs(R_DrawSurfaces, S_BLEND_WARP);
 
-	R_EnableWarp(NULL, false);
-	R_EnableGlowMap(NULL);
+	R_EnableWarp(nullptr, false);
+	R_EnableGlowMap(nullptr);
 }

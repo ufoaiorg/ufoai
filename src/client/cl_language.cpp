@@ -129,7 +129,7 @@ const char* CL_Translate (const char* t)
 			t = _(++t);
 	} else {
 		const char* msgid = Q_strstart(t, "*msgid:");
-		if (msgid != NULL)
+		if (msgid != nullptr)
 			t = CL_GetMessageID(msgid);
 	}
 
@@ -143,7 +143,7 @@ void CL_ParseMessageIDs (void)
 	numMsgIDs = 0;
 	OBJZERO(msgIDHash);
 
-	if (cl_msgidPool != NULL) {
+	if (cl_msgidPool != nullptr) {
 		Mem_FreePool(cl_msgidPool);
 	} else {
 		cl_msgidPool = Mem_CreatePool("msgids");
@@ -153,11 +153,11 @@ void CL_ParseMessageIDs (void)
 	Com_Printf("\n----------- parse msgids -----------\n");
 
 	Com_Printf("%i msgid files\n", FS_BuildFileList("ufos/msgid/*.ufo"));
-	text = NULL;
+	text = nullptr;
 
-	FS_NextScriptHeader(NULL, NULL, NULL);
+	FS_NextScriptHeader(nullptr, nullptr, nullptr);
 
-	while ((type = FS_NextScriptHeader("ufos/msgid/*.ufo", &name, &text)) != NULL) {
+	while ((type = FS_NextScriptHeader("ufos/msgid/*.ufo", &name, &text)) != nullptr) {
 		if (Q_streq(type, "msgid"))
 			CL_ParseMessageID(name, &text);
 	}
@@ -206,7 +206,7 @@ static const char *CL_GetLocaleID (const char *fullLocale)
 	}
 	Com_DPrintf(DEBUG_CLIENT, "CL_GetLocaleID: Could not find your system locale '%s'. "
 		"Add it to the languages script file and send a patch please.\n", fullLocale);
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -232,7 +232,7 @@ void CL_ParseLanguages (const char *name, const char **text)
 	language->localeID = Mem_PoolStrDup(name, cl_genericPool, 0);
 	language->localeString = "";
 	language->nativeString = "";
-	language->localeMapping = NULL;
+	language->localeMapping = nullptr;
 
 	do {
 		/* get the name type */
@@ -245,7 +245,7 @@ void CL_ParseLanguages (const char *name, const char **text)
 			if (!Com_ParseList(text, &list)) {
 				Com_Error(ERR_DROP, "CL_ParseLanguages: error while reading language codes \"%s\"", name);
 			}
-			for (linkedList_t *element = list; element != NULL; element = element->next) {
+			for (linkedList_t *element = list; element != nullptr; element = element->next) {
 				localeMapping_t* const mapping = Mem_PoolAllocType(localeMapping_t, cl_genericPool);
 				mapping->localeMapping = Mem_PoolStrDup((char*)element->data, cl_genericPool, 0);
 				/* link it in */
@@ -331,7 +331,7 @@ static bool CL_LanguageTest (const char *localeID)
 	}
 	/* Cycle through all mappings, but stop at first locale possible to set. */
 	do {
-		/* setlocale() will return NULL if no setting possible. */
+		/* setlocale() will return nullptr if no setting possible. */
 		if (setlocale(LC_MESSAGES, mapping->localeMapping)) {
 			Com_DPrintf(DEBUG_CLIENT, "CL_LanguageTest: language '%s' with locale '%s' found.\n", localeID, mapping->localeMapping);
 			return true;
@@ -348,10 +348,10 @@ static bool CL_LanguageTest (const char *localeID)
 void CL_LanguageShutdown (void)
 {
 	languageCount = 0;
-	languageList = NULL;
+	languageList = nullptr;
 	Mem_DeletePool(cl_msgidPool);
-	cl_msgidPool = NULL;
-	msgIDText = NULL;
+	cl_msgidPool = nullptr;
+	msgIDText = nullptr;
 	numMsgIDs = 0;
 	OBJZERO(msgIDHash);
 }
@@ -365,7 +365,7 @@ void CL_LanguageInit (void)
 {
 	int i;
 	language_t* language;
-	uiNode_t *languageOption = NULL;
+	uiNode_t *languageOption = nullptr;
 	char systemLanguage[MAX_VAR];
 
 	fs_i18ndir = Cvar_Get("fs_i18ndir", "", 0, "System path to language files");

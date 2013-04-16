@@ -160,8 +160,8 @@ void G_MoraleBehaviour (int team)
 	if (!enabled)
 		return;
 
-	Edict *ent = NULL;
-	while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, team)) != NULL) {
+	Edict *ent = nullptr;
+	while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, team)) != nullptr) {
 		/* this only applies to ET_ACTOR but not to ET_ACTOR2x2 */
 		if (ent->type != ET_ACTOR || CHRSH_IsTeamDefRobot(ent->chr.teamDef))
 			continue;

@@ -47,14 +47,14 @@ static void UI_NodeGetProperty_f (void)
 		return;
 	}
 
-	UI_ReadNodePath(Cmd_Argv(1), NULL, &node, &property);
+	UI_ReadNodePath(Cmd_Argv(1), nullptr, &node, &property);
 
-	if (node == NULL) {
+	if (node == nullptr) {
 		Com_Printf("UI_NodeGetProperty_f: Node from path '%s' doesn't exist\n", Cmd_Argv(1));
 		return;
 	}
 
-	if (property == NULL) {
+	if (property == nullptr) {
 		Com_Printf("UI_NodeGetProperty_f: Property from path '%s' doesn't exist\n", Cmd_Argv(1));
 		return;
 	}
@@ -170,7 +170,7 @@ void uiNode::onWindowOpened (uiNode_t *node, linkedList_t *params)
 {
 	uiNode_t* child;
 	for (child = node->firstChild; child; child = child->next) {
-		UI_Node_WindowOpened(child, NULL);
+		UI_Node_WindowOpened(child, nullptr);
 	}
 }
 
@@ -187,13 +187,13 @@ void uiNode::onWindowClosed (uiNode_t *node)
  */
 void uiLocatedNode::onSizeChanged (uiNode_t *node)
 {
-	if (node->firstChild != NULL)
+	if (node->firstChild != nullptr)
 		UI_Invalidate(node);
 }
 
 static void UI_AbstractNodeVisibilityChange (uiNode_t *node)
 {
-	if (node->parent != NULL)
+	if (node->parent != nullptr)
 		UI_Invalidate(node->parent);
 }
 
@@ -242,7 +242,7 @@ static void UI_AbstractNodeCallCreateChild (uiNode_t *node, const uiCallContext_
 		child = UI_AllocNode(name, type, true);
 	}
 
-	if (child == NULL) {
+	if (child == nullptr) {
 		Com_Printf("UI_AbstractNodeCallCreateChild: Impossible to create the node\n");
 		return;
 	}
@@ -283,7 +283,7 @@ void uiLocatedNode::drawTooltip(const uiNode_t* node, int x, int y) const
 
 void uiLocatedNode::onLeftClick(uiNode_t* node, int x, int y)
 {
-	if (node->onClick != NULL) {
+	if (node->onClick != nullptr) {
 		UI_ExecuteEventActions(node, node->onClick);
 		UI_PlaySound("click1");
 	}
@@ -291,7 +291,7 @@ void uiLocatedNode::onLeftClick(uiNode_t* node, int x, int y)
 
 void uiLocatedNode::onRightClick(uiNode_t* node, int x, int y)
 {
-	if (node->onRightClick != NULL) {
+	if (node->onRightClick != nullptr) {
 		UI_ExecuteEventActions(node, node->onRightClick);
 		UI_PlaySound("click1");
 	}
@@ -299,7 +299,7 @@ void uiLocatedNode::onRightClick(uiNode_t* node, int x, int y)
 
 void uiLocatedNode::onMiddleClick(uiNode_t* node, int x, int y)
 {
-	if (node->onMiddleClick != NULL) {
+	if (node->onMiddleClick != nullptr) {
 		UI_ExecuteEventActions(node, node->onMiddleClick);
 		UI_PlaySound("click1");
 	}

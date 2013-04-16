@@ -135,8 +135,8 @@ void UI_DNDDragItem (uiNode_t *node, const Item *item)
 static inline void UI_DNDCleanup (void)
 {
 	objectType = DND_NOTHING;
-	targetNode = NULL;
-	sourceNode = NULL;
+	targetNode = nullptr;
+	sourceNode = nullptr;
 }
 
 /**
@@ -148,7 +148,7 @@ void UI_DNDAbort (void)
 {
 	assert(UI_DNDIsDragging());
 	assert(objectType != DND_NOTHING);
-	assert(sourceNode != NULL);
+	assert(sourceNode != nullptr);
 
 	if (nodeAcceptDND && targetNode) {
 		UI_Node_DndLeave(targetNode);
@@ -169,7 +169,7 @@ void UI_DNDDrop (void)
 	bool result = false;
 	assert(UI_DNDIsDragging());
 	assert(objectType != DND_NOTHING);
-	assert(sourceNode != NULL);
+	assert(sourceNode != nullptr);
 
 	if (!positionAcceptDND) {
 		UI_DNDAbort();
@@ -210,7 +210,7 @@ static void UI_DNDMouseMove (int mousePosX, int mousePosY)
 		}
 	}
 
-	if (targetNode == NULL) {
+	if (targetNode == nullptr) {
 		nodeAcceptDND = false;
 		positionAcceptDND = false;
 		return;
@@ -250,7 +250,7 @@ void UI_DrawDragAndDrop (int mousePosX, int mousePosY)
 
 	switch (objectType) {
 	case DND_ITEM:
-		UI_DrawItem(NULL, orgine, &draggingItem, -1, -1, scale, color);
+		UI_DrawItem(nullptr, orgine, &draggingItem, -1, -1, scale, color);
 		break;
 
 	default:

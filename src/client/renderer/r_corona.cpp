@@ -98,5 +98,5 @@ void R_DrawCoronas (void)
 
 	R_EnableTexture(&texunit_diffuse, true);
 
-	R_Color(NULL);
+	R_Color(nullptr);
 }

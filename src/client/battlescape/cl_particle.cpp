@@ -202,7 +202,7 @@ static const value_t pps[] = {
 	{"lightintensity", V_FLOAT, offsetof(ptl_t, lightIntensity), MEMBER_SIZEOF(ptl_t, lightIntensity)},
 	{"lightsustain", V_FLOAT, offsetof(ptl_t, lightSustain), MEMBER_SIZEOF(ptl_t, lightSustain)},
 
-	{NULL, V_NULL, 0, 0}
+	{nullptr, V_nullptr, 0, 0}
 };
 
 /* =========================================================== */
@@ -367,7 +367,7 @@ static ptlArt_t *CL_ParticleGetArt (const char *name, int frame, artType_t type)
 
 	/* check for an error */
 	if (!a->art.image)
-		return NULL;
+		return nullptr;
 
 	r_numParticlesArt++;
 
@@ -689,7 +689,7 @@ ptlDef_t *CL_ParticleGet (const char *name)
 	int i;
 
 	if (!name || strlen(name) <= 0)
-		return NULL;
+		return nullptr;
 
 	/* find the particle definition */
 	for (i = 0; i < numPtlDefs; i++) {
@@ -699,7 +699,7 @@ ptlDef_t *CL_ParticleGet (const char *name)
 		}
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -720,13 +720,13 @@ ptl_t *CL_ParticleSpawn (const char *name, int levelFlags, const vec3_t s, const
 	int i;
 
 	if (!name || strlen(name) <= 0)
-		return NULL;
+		return nullptr;
 
 	/* find the particle definition */
 	pd = CL_ParticleGet(name);
-	if (pd == NULL) {
+	if (pd == nullptr) {
 		Com_Printf("Particle definition \"%s\" not found\n", name);
-		return NULL;
+		return nullptr;
 	}
 
 	/* add the particle */
@@ -739,7 +739,7 @@ ptl_t *CL_ParticleSpawn (const char *name, int levelFlags, const vec3_t s, const
 			r_numParticles++;
 		else {
 			Com_DPrintf(DEBUG_CLIENT, "Too many particles (don't add %s) - exceeded %i\n", name, MAX_PTLS);
-			return NULL;
+			return nullptr;
 		}
 	}
 
@@ -753,8 +753,8 @@ ptl_t *CL_ParticleSpawn (const char *name, int levelFlags, const vec3_t s, const
 	p->ctrl = pd;
 	Vector4Set(p->color, 1.0f, 1.0f, 1.0f, 1.0f);
 
-	p->pic = NULL;
-	p->model = NULL;
+	p->pic = nullptr;
+	p->model = nullptr;
 
 	/* copy location */
 	if (s) {
@@ -889,7 +889,7 @@ static inline trace_t PTL_Trace (ptl_t *ptl, const vec3_t mins, const vec3_t max
 	VectorCopy(mins, ptlCache.mins);
 	VectorCopy(maxs, ptlCache.maxs);
 
-	ptlCache.trace = CL_Trace(ptl->origin, ptl->s, AABB(mins, maxs), NULL, NULL, MASK_SOLID, cl.mapMaxLevel - 1);
+	ptlCache.trace = CL_Trace(ptl->origin, ptl->s, AABB(mins, maxs), nullptr, nullptr, MASK_SOLID, cl.mapMaxLevel - 1);
 	return ptlCache.trace;
 }
 

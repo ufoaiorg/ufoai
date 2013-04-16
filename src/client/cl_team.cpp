@@ -71,12 +71,12 @@ unsigned int CL_GetActorSkinCount (void)
 
 /**
  * @brief Get a actorskin from idx
- * @return A actorskin, else NULL
+ * @return A actorskin, else nullptr
  */
 static const actorSkin_t* CL_GetActorSkinByIDS (unsigned int idx)
 {
 	if (idx >= cls.numActorSkins)
-		return NULL;
+		return nullptr;
 	return &cls.actorSkins[idx];
 }
 
@@ -202,7 +202,7 @@ void CL_GenerateCharacter (character_t *chr, const char *teamDefName)
 	/* get ucn */
 	chr->ucn = cls.nextUniqueCharacterNumber++;
 
-	chr->reservedTus.shotSettings.set(ACTOR_HAND_NOT_SET, -1, NULL);
+	chr->reservedTus.shotSettings.set(ACTOR_HAND_NOT_SET, -1, nullptr);
 
 	Com_GetCharacterValues(teamDefName, chr);
 	/* Create attributes. */
@@ -215,8 +215,8 @@ void CL_GenerateCharacter (character_t *chr, const char *teamDefName)
 static void CL_InitSkin_f (void)
 {
 	/* create option for singleplayer skins */
-	if (UI_GetOption(OPTION_SINGLEPLAYER_SKINS) == NULL) {
-		uiNode_t *skins = NULL;
+	if (UI_GetOption(OPTION_SINGLEPLAYER_SKINS) == nullptr) {
+		uiNode_t *skins = nullptr;
 		int idx = 0;
 		const actorSkin_t *skin;
 		while ((skin = CL_GetActorSkinByIDS(idx++))) {
@@ -228,8 +228,8 @@ static void CL_InitSkin_f (void)
 	}
 
 	/* create option for multiplayer skins */
-	if (UI_GetOption(OPTION_MULTIPLAYER_SKINS) == NULL) {
-		uiNode_t *skins = NULL;
+	if (UI_GetOption(OPTION_MULTIPLAYER_SKINS) == nullptr) {
+		uiNode_t *skins = nullptr;
 		int idx = 0;
 		const actorSkin_t *skin;
 		while ((skin = CL_GetActorSkinByIDS(idx++))) {
@@ -249,7 +249,7 @@ static int CL_FixActorSkinIDX (int idx)
 	const actorSkin_t *skin = CL_GetActorSkinByIDS(idx);
 
 	/** @todo we should check somewhere there is at least 1 skin */
-	if (skin == NULL) {
+	if (skin == nullptr) {
 		idx = 0;
 	} else {
 		if (GAME_IsSingleplayer() && !skin->singleplayer)

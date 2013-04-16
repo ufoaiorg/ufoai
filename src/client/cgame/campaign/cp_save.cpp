@@ -236,7 +236,7 @@ bool SAV_GameLoad (const char *file, const char **error)
 	Com_Printf("File '%s' successfully loaded from %s xml savegame.\n",
 			filename, header.compressed ? "compressed" : "");
 
-	cgi->UI_InitStack("geoscape", NULL, true, true);
+	cgi->UI_InitStack("geoscape", nullptr, true, true);
 	return true;
 }
 
@@ -360,7 +360,7 @@ static bool SAV_GameSave (const char *filename, const char *comment, char **erro
 static void SAV_GameSave_f (void)
 {
 	char comment[MAX_VAR] = "";
-	char *error = NULL;
+	char *error = nullptr;
 	bool result;
 
 	/* get argument */
@@ -449,7 +449,7 @@ static void SAV_GameReadGameComments_f (void)
  */
 static void SAV_GameLoad_f (void)
 {
-	const char *error = NULL;
+	const char *error = nullptr;
 
 	/* get argument */
 	if (cgi->Cmd_Argc() < 2) {
@@ -480,7 +480,7 @@ static void SAV_GameLoad_f (void)
  */
 static void SAV_GameContinue_f (void)
 {
-	const char *error = NULL;
+	const char *error = nullptr;
 
 	if (cgi->CL_OnBattlescape()) {
 		cgi->UI_PopWindow(false);
@@ -586,7 +586,7 @@ static void SAV_GameQuickSave_f (void)
 	if (cgi->CL_OnBattlescape())
 		return;
 
-	char *error = NULL;
+	char *error = nullptr;
 	bool result = SAV_GameSave("slotquick", _("QuickSave"), &error);
 	if (!result)
 		Com_Printf("Error saving the xml game: %s\n", error ? error : "");
@@ -600,7 +600,7 @@ static void SAV_GameQuickSave_f (void)
  */
 static void SAV_GameQuickLoad_f (void)
 {
-	const char *error = NULL;
+	const char *error = nullptr;
 
 	if (cgi->CL_OnBattlescape()) {
 		Com_Printf("Could not load the campaign while you are on the battlefield\n");
@@ -629,7 +629,7 @@ void SAV_Init (void)
 	static saveSubsystems_t hos_subsystemXML = {"hospital", HOS_SaveXML, HOS_LoadXML};
 	static saveSubsystems_t bs_subsystemXML = {"market", BS_SaveXML, BS_LoadXML};
 	static saveSubsystems_t e_subsystemXML = {"employee", E_SaveXML, E_LoadXML};
-	static saveSubsystems_t ac_subsystemXML = {"aliencont", NULL, AC_LoadXML};
+	static saveSubsystems_t ac_subsystemXML = {"aliencont", nullptr, AC_LoadXML};
 	static saveSubsystems_t pr_subsystemXML = {"production", PR_SaveXML, PR_LoadXML};
 	static saveSubsystems_t air_subsystemXML = {"aircraft", AIR_SaveXML, AIR_LoadXML};
 	static saveSubsystems_t ab_subsystemXML = {"alien base", AB_SaveXML, AB_LoadXML};

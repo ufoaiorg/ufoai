@@ -259,7 +259,7 @@ typedef struct mission_s {
 	date_t finalDate;				/**< Date when the event should finish (e.g. for aerial recon)
 									 * if finaleDate.day == 0, then delay is not a limitating factor for next stage */
 	vec2_t pos;						/**< Position of the mission */
-	aircraft_t *ufo;				/**< UFO on geoscape fulfilling the mission (may be NULL) */
+	aircraft_t *ufo;				/**< UFO on geoscape fulfilling the mission (may be nullptr) */
 	bool onGeoscape;			/**< Should the mission be displayed on geoscape */
 	bool crashed;				/**< is UFO crashed ? (only used if mission is spawned from a UFO */
 

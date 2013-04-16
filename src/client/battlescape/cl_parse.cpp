@@ -137,7 +137,7 @@ static void CL_ParseConfigString (dbuffer *msg)
 			if (s[0] == '*')
 				cl.model_clip[index] = CM_InlineModel(cl.mapTiles, s);
 			else
-				cl.model_clip[index] = NULL;
+				cl.model_clip[index] = nullptr;
 		}
 	} else if (i >= CS_PLAYERNAMES && i < CS_PLAYERNAMES + MAX_CLIENTS) {
 		const unsigned int index = i - CS_PLAYERNAMES;

@@ -37,7 +37,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 extern memPool_t *cl_soundSysPool;
 
 /** @brief Supported sound file extensions */
-#define SAMPLE_TYPES { "ogg", "wav", NULL }
+#define SAMPLE_TYPES { "ogg", "wav", nullptr }
 
 typedef struct s_sample_s {
 	char *name;

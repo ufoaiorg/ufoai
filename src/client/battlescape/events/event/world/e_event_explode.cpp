@@ -47,7 +47,7 @@ void CL_Explode (const eventRegister_t *self, dbuffer *msg)
 
 	le->inuse = false;
 	if (le->modelnum1 > 0)
-		cl.model_clip[le->modelnum1] = NULL;
+		cl.model_clip[le->modelnum1] = nullptr;
 
 	/* Recalc the client routing table because this le (and the inline model) is now gone */
 	CL_RecalcRouting(le);

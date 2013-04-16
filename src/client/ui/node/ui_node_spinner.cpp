@@ -59,7 +59,7 @@ enum spinnerMode_t {
 };
 
 static bool capturedDownButton;
-static uiTimer_t *capturedTimer = NULL;
+static uiTimer_t *capturedTimer = nullptr;
 
 /**
  * @brief change the value of the spinner of one step
@@ -146,7 +146,7 @@ void uiSpinnerNode::onCapturedMouseLost (uiNode_t *node)
 {
 	if (capturedTimer) {
 		UI_TimerRelease(capturedTimer);
-		capturedTimer = NULL;
+		capturedTimer = nullptr;
 	}
 }
 

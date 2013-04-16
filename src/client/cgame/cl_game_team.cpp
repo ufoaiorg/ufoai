@@ -435,7 +435,7 @@ void GAME_UpdateInventory (inventory_t *inv, const equipDef_t *ed)
 	if (!LIST_IsEmpty(chrDisplayList))
 		ui_inventory = &((character_t*)chrDisplayList->data)->inv;
 	else
-		ui_inventory = NULL;
+		ui_inventory = nullptr;
 
 	/* manage inventory */
 	UI_ContainerNodeUpdateEquipment(inv, ed);
@@ -471,7 +471,7 @@ void GAME_ActorSelect_f (void)
 	}
 
 	const int ucn = atoi(Cmd_Argv(1));
-	character_t *chr = NULL;
+	character_t *chr = nullptr;
 	LIST_Foreach(chrDisplayList, character_t, chrTmp) {
 		if (ucn == chrTmp->ucn) {
 			chr = chrTmp;
@@ -484,7 +484,7 @@ void GAME_ActorSelect_f (void)
 	/* update menu inventory */
 	if (ui_inventory && ui_inventory != &chr->inv) {
 		chr->inv.setContainer(CID_EQUIP, ui_inventory->getEquipContainer());
-		/* set 'old' CID_EQUIP to NULL */
+		/* set 'old' CID_EQUIP to nullptr */
 		ui_inventory->resetContainer(CID_EQUIP);
 	}
 	ui_inventory = &chr->inv;
@@ -503,7 +503,7 @@ void GAME_ActorSelect_f (void)
  */
 static void GAME_SaveItem (xmlNode_t *p, const Item *item, containerIndex_t container, int x, int y)
 {
-	assert(item->def() != NULL);
+	assert(item->def() != nullptr);
 
 	XML_AddString(p, SAVE_INVENTORY_CONTAINER, INVDEF(container)->name);
 	XML_AddInt(p, SAVE_INVENTORY_X, x);
@@ -612,7 +612,7 @@ static void GAME_LoadInventory (xmlNode_t *p, inventory_t *inv, int maxLoad)
 			Com_Printf("GAME_LoadInventory: Item %s exceeds weight capacity\n", item.def()->id);
 
 		if (!cls.i.addToInventory(inv, &item, INVDEF(container), x, y, 1))
-			Com_Printf("Could not add item '%s' to inventory\n", item.def() ? item.def()->id : "NULL");
+			Com_Printf("Could not add item '%s' to inventory\n", item.def() ? item.def()->id : "nullptr");
 	}
 }
 

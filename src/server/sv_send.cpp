@@ -105,8 +105,8 @@ void SV_BroadcastPrintf (int level, const char *fmt, ...)
 		Com_Printf("%s", copy);
 	}
 
-	client_t *cl = NULL;
-	while ((cl = SV_GetNextClient(cl)) != NULL) {
+	client_t *cl = nullptr;
+	while ((cl = SV_GetNextClient(cl)) != nullptr) {
 		if (level > cl->messagelevel)
 			continue;
 		if (cl->state < cs_connected)
@@ -123,9 +123,9 @@ void SV_BroadcastPrintf (int level, const char *fmt, ...)
 void SV_Multicast (int mask, const dbuffer &msg)
 {
 	/* send the data to all relevant clients */
-	client_t *cl = NULL;
+	client_t *cl = nullptr;
 	int j = -1;
-	while ((cl = SV_GetNextClient(cl)) != NULL) {
+	while ((cl = SV_GetNextClient(cl)) != nullptr) {
 		j++;
 		if (cl->state < cs_connected)
 			continue;

@@ -39,7 +39,7 @@ static int numTutorials;
 static void TUT_GetTutorials_f (void)
 {
 	int i;
-	linkedList_t *tutorialList = NULL;
+	linkedList_t *tutorialList = nullptr;
 
 	for (i = 0; i < numTutorials; i++) {
 		const tutorial_t *t = &tutorials[i];
@@ -92,7 +92,7 @@ void TUT_InitStartup (void)
 static const value_t tutValues[] = {
 	{"name", V_TRANSLATION_STRING, offsetof(tutorial_t, name), 0},
 	{"sequence", V_STRING, offsetof(tutorial_t, sequence), 0},
-	{NULL, V_NULL, 0, 0}
+	{nullptr, V_nullptr, 0, 0}
 };
 
 /**
@@ -110,5 +110,5 @@ void TUT_ParseTutorials (const char *name, const char **text)
 	t = &tutorials[numTutorials++];
 	OBJZERO(*t);
 
-	Com_ParseBlock(name, text, t, tutValues, NULL);
+	Com_ParseBlock(name, text, t, tutValues, nullptr);
 }

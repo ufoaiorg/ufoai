@@ -317,9 +317,9 @@ bool BS_BuyUGV (const ugv_t *ugv, base_t *base)
 	const objDef_t *ugvWeapon;
 
 	if (!ugv)
-		cgi->Com_Error(ERR_DROP, "BS_BuyUGV: Called on NULL UGV!");
+		cgi->Com_Error(ERR_DROP, "BS_BuyUGV: Called on nullptr UGV!");
 	if (!base)
-		cgi->Com_Error(ERR_DROP, "BS_BuyUGV: Called on NULL base!");
+		cgi->Com_Error(ERR_DROP, "BS_BuyUGV: Called on nullptr base!");
 	ugvWeapon = INVSH_GetItemByID(ugv->weapon);
 	if (!ugvWeapon)
 		cgi->Com_Error(ERR_DROP, "BS_BuyItem_f: Could not get weapon '%s' for ugv/tank '%s'.", ugv->weapon, ugv->id);
@@ -355,7 +355,7 @@ bool BS_SellUGV (Employee *robot)
 	base_t *base;
 
 	if (!robot)
-		cgi->Com_Error(ERR_DROP, "Selling NULL UGV!");
+		cgi->Com_Error(ERR_DROP, "Selling nullptr UGV!");
 	if (!robot->getUGV())
 		cgi->Com_Error(ERR_DROP, "Selling invalid UGV with UCN: %i", robot->chr.ucn);
 	ugv = robot->getUGV();
@@ -389,9 +389,9 @@ bool BS_SellUGV (Employee *robot)
 bool BS_BuyItem (const objDef_t *od, base_t *base, int count)
 {
 	if (!od)
-		cgi->Com_Error(ERR_DROP, "BS_BuyItem: Called on NULL objDef!");
+		cgi->Com_Error(ERR_DROP, "BS_BuyItem: Called on nullptr objDef!");
 	if (!base)
-		cgi->Com_Error(ERR_DROP, "BS_BuyItem: Called on NULL base!");
+		cgi->Com_Error(ERR_DROP, "BS_BuyItem: Called on nullptr base!");
 
 	if (count <= 0)
 		return false;
@@ -421,7 +421,7 @@ bool BS_BuyItem (const objDef_t *od, base_t *base, int count)
 bool BS_SellItem (const objDef_t *od, base_t *base, int count)
 {
 	if (!od)
-		cgi->Com_Error(ERR_DROP, "BS_SellItem: Called on NULL objDef!");
+		cgi->Com_Error(ERR_DROP, "BS_SellItem: Called on nullptr objDef!");
 
 	if (count <= 0)
 		return false;

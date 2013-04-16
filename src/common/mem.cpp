@@ -94,7 +94,7 @@ static memPool_t *Mem_FindPool (const char *name)
 		return pool;
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -107,7 +107,7 @@ memPool_t *_Mem_CreatePool (const char *name, const char *fileName, const int fi
 
 	/* Check name */
 	if (!name || !name[0])
-		Sys_Error("Mem_CreatePool: NULL name %s:#%i", fileName, fileLine);
+		Sys_Error("Mem_CreatePool: nullptr name %s:#%i", fileName, fileLine);
 	if (strlen(name) + 1 >= MEM_MAX_POOLNAME)
 		Com_Printf("Mem_CreatePoole: name '%s' too long, truncating!\n", name);
 
@@ -129,7 +129,7 @@ memPool_t *_Mem_CreatePool (const char *name, const char *fileName, const int fi
 
 	/* Store values */
 	for (i = 0; i < MEM_HASH; i++)
-		pool->blocks[i] = NULL;
+		pool->blocks[i] = nullptr;
 	pool->blockCount = 0;
 	pool->byteCount = 0;
 	pool->createFile = fileName;
@@ -395,7 +395,7 @@ MISC FUNCTIONS
 char *_Mem_PoolStrDupTo (const char *in, char **out, memPool_t *pool, const int tagNum, const char *fileName, const int fileLine)
 {
 	if (!out)
-		return NULL;
+		return nullptr;
 	*out = _Mem_PoolStrDup(in, pool, tagNum, fileName, fileLine);
 	return *out;
 }
@@ -404,7 +404,7 @@ void *_Mem_PoolDup (const void *in, size_t size, memPool_t *pool, const int tagN
 {
 	void *copy;
 
-	assert(in != NULL);
+	assert(in != nullptr);
 	assert(size > 0);
 
 	copy = _Mem_Alloc(size, false, pool, tagNum, fileName, fileLine);
@@ -549,7 +549,7 @@ static void Mem_Stats_f (void)
 		memPool_t *best;
 		memBlock_t *mem;
 
-		best = NULL;
+		best = nullptr;
 		for (i = 0, pool = &m_poolList[0]; i < m_numPools; pool++, i++) {
 			if (!pool->inUse)
 				continue;
@@ -648,5 +648,5 @@ void Mem_Shutdown (void)
 	}
 
 	SDL_DestroyMutex(z_lock);
-	z_lock = NULL;
+	z_lock = nullptr;
 }

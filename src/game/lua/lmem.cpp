@@ -25,16 +25,16 @@
 ** void * frealloc (void *ud, void *ptr, size_t osize, size_t nsize);
 ** (`osize' is the old size, `nsize' is the new size)
 **
-** Lua ensures that (ptr == NULL) iff (osize == 0).
+** Lua ensures that (ptr == nullptr) iff (osize == 0).
 **
-** * frealloc(ud, NULL, 0, x) creates a new block of size `x'
+** * frealloc(ud, nullptr, 0, x) creates a new block of size `x'
 **
 ** * frealloc(ud, p, x, 0) frees the block `p'
-** (in this specific case, frealloc must return NULL).
-** particularly, frealloc(ud, NULL, 0, 0) does nothing
-** (which is equivalent to free(NULL) in ANSI C)
+** (in this specific case, frealloc must return nullptr).
+** particularly, frealloc(ud, nullptr, 0, 0) does nothing
+** (which is equivalent to free(nullptr) in ANSI C)
 **
-** frealloc returns NULL if it cannot create or reallocate the area
+** frealloc returns nullptr if it cannot create or reallocate the area
 ** (any reallocation to an equal or smaller size cannot fail!)
 */
 
@@ -65,7 +65,7 @@ void *luaM_growaux_ (lua_State *L, void *block, int *size, size_t size_elems,
 
 void *luaM_toobig (lua_State *L) {
   luaG_runerror(L, "memory allocation error: block too big");
-  return NULL;  /* to avoid warnings */
+  return nullptr;  /* to avoid warnings */
 }
 
 
@@ -75,11 +75,11 @@ void *luaM_toobig (lua_State *L) {
 */
 void *luaM_realloc_ (lua_State *L, void *block, size_t osize, size_t nsize) {
   global_State *g = G(L);
-  lua_assert((osize == 0) == (block == NULL));
+  lua_assert((osize == 0) == (block == nullptr));
   block = (*g->frealloc)(g->ud, block, osize, nsize);
-  if (block == NULL && nsize > 0)
+  if (block == nullptr && nsize > 0)
     luaD_throw(L, LUA_ERRMEM);
-  lua_assert((nsize == 0) == (block == NULL));
+  lua_assert((nsize == 0) == (block == nullptr));
   g->totalbytes = (g->totalbytes - osize) + nsize;
   return block;
 }

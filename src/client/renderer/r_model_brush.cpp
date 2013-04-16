@@ -337,7 +337,7 @@ static void R_ModLoadSurfaces (bool day, const lump_t *l)
 			i = LittleLong(in->lightofs[LIGHTMAP_NIGHT]);
 
 		if (i == -1)
-			out->samples = NULL;
+			out->samples = nullptr;
 		else
 			out->samples = r_worldmodel->bsp.lightdata + i;
 
@@ -356,7 +356,7 @@ static void R_ModLoadNodes (const lump_t *l)
 {
 	int i, j, count;
 	const dBspNode_t *in;
-	mBspNode_t *parent = NULL;
+	mBspNode_t *parent = nullptr;
 
 	in = (const dBspNode_t *) (mod_base + l->fileofs);
 	if (l->filelen % sizeof(*in))
@@ -374,10 +374,10 @@ static void R_ModLoadNodes (const lump_t *l)
 		/* skip special pathfinding nodes - they have a negative index */
 		if (p == PLANENUM_LEAF) {
 			/* in case of "special" pathfinding nodes (they don't have a plane)
-			 * we have to set this to NULL */
-			out->plane = NULL;
+			 * we have to set this to nullptr */
+			out->plane = nullptr;
 			out->contents = CONTENTS_PATHFINDING_NODE;
-			parent = NULL;
+			parent = nullptr;
 		} else {
 			out->plane = r_worldmodel->bsp.planes + p;
 			/* differentiate from leafs */
@@ -1202,7 +1202,7 @@ void R_ModReloadSurfacesArrays (void)
 		for (j = 0; j < size; j++)
 			if (mod->bsp.sorted_surfaces[j]) {
 				Mem_Free(mod->bsp.sorted_surfaces[j]);
-				mod->bsp.sorted_surfaces[j] = NULL;
+				mod->bsp.sorted_surfaces[j] = nullptr;
 			}
 	}
 	R_LoadSurfacesArrays();

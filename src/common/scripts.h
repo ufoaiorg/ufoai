@@ -47,7 +47,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @sa vt_sizes
  */
 typedef enum {
-	V_NULL,
+	V_nullptr,
 	V_BOOL,
 	V_CHAR,
 	V_INT,
@@ -230,7 +230,7 @@ const terrainType_t *Com_GetTerrainType(const char *textureName);
 
 /**
  * @brief list of script aliases to register
- * @note must be terminated with a NULL ({NULL, -1}) entry!
+ * @note must be terminated with a nullptr ({nullptr, -1}) entry!
  * @sa saveEmployeeConstants[]
  */
 typedef struct constListEntry_s {

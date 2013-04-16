@@ -56,7 +56,7 @@ static void SL_Parameter (int argc, char **argv)
 
 	for (i = 1; i < argc; i++) {
 		if (Q_streq(argv[i], "-t") && (i + 1 < argc)) {
-			config.thickness = strtod(argv[++i], NULL);
+			config.thickness = strtod(argv[++i], nullptr);
 		} else if (Q_streq(argv[i], "-s") && (i + 1 < argc)) {
 			config.scale = atoi(argv[++i]);
 		} else if (Q_streq(argv[i], "-c")) {

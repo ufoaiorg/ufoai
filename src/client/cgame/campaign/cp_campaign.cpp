@@ -123,8 +123,8 @@ void CP_UpdateCharacterData (linkedList_t *updateCharacters)
 
 /**
  * @brief Parses the character data which was send by G_MatchSendResults using G_SendCharacterData
- * @param[in] msg The network buffer message. If this is NULL the character is updated, if this
- * is not NULL the data is stored in a temp buffer because the player can choose to retry
+ * @param[in] msg The network buffer message. If this is nullptr the character is updated, if this
+ * is not nullptr the data is stored in a temp buffer because the player can choose to retry
  * the mission and we have to catch this situation to not update the character data in this case.
  * @param updateCharacters A LinkedList where to store the character data. One listitem per character.
  * @sa G_SendCharacterData
@@ -166,13 +166,13 @@ void CP_ParseCharacterData (dbuffer *msg, linkedList_t **updateCharacters)
  */
 bool CP_IsRunning (void)
 {
-	return ccs.curCampaign != NULL;
+	return ccs.curCampaign != nullptr;
 }
 
 /**
  * @brief Check if a map may be selected for mission.
  * @param[in] mission Pointer to the mission where mapDef should be added
- * @param[in] pos position of the mission (NULL if the position will be chosen afterwards)
+ * @param[in] pos position of the mission (nullptr if the position will be chosen afterwards)
  * @param[in] md The map description data (what it is suitable for)
  * @return false if map is not selectable
  */
@@ -200,7 +200,7 @@ static bool CP_MapIsSelectable (const mission_t *mission, const mapDef_t *md, co
 			return false;
 	}
 
-	if (pos && !GEO_PositionFitsTCPNTypes(pos, md->terrains, md->cultures, md->populations, NULL))
+	if (pos && !GEO_PositionFitsTCPNTypes(pos, md->terrains, md->cultures, md->populations, nullptr))
 		return false;
 
 	return true;
@@ -209,7 +209,7 @@ static bool CP_MapIsSelectable (const mission_t *mission, const mapDef_t *md, co
 /**
  * @brief Choose a map for given mission.
  * @param[in,out] mission Pointer to the mission where a new map should be added
- * @param[in] pos position of the mission (NULL if the position will be chosen afterwards)
+ * @param[in] pos position of the mission (nullptr if the position will be chosen afterwards)
  * @return false if could not set mission
  */
 bool CP_ChooseMap (mission_t *mission, const vec2_t pos)
@@ -222,7 +222,7 @@ bool CP_ChooseMap (mission_t *mission, const vec2_t pos)
 
 	int countMinimal = 0;	/**< Number of maps fulfilling mission conditions and appeared less often during game. */
 	int minMapDefAppearance = -1;
-	mapDef_t *md = NULL;
+	mapDef_t *md = nullptr;
 	MapDef_ForeachSingleplayerCampaign(md) {
 		/* Check if mission fulfill conditions */
 		if (!CP_MapIsSelectable(mission, md, pos))
@@ -264,7 +264,7 @@ bool CP_ChooseMap (mission_t *mission, const vec2_t pos)
 		Com_Printf("CP_ChooseMap: Could not find map with required conditions:\n");
 		Com_Printf("  ufo: %s -- pos: ", mission->ufo ? cgi->Com_UFOTypeToShortName(mission->ufo->ufotype) : "none");
 		if (pos)
-			Com_Printf("%s", MapIsWater(GEO_GetColor(pos, MAPTYPE_TERRAIN, NULL)) ? " (in water) " : "");
+			Com_Printf("%s", MapIsWater(GEO_GetColor(pos, MAPTYPE_TERRAIN, nullptr)) ? " (in water) " : "");
 		if (pos)
 			Com_Printf("(%.02f, %.02f)\n", pos[0], pos[1]);
 		else
@@ -274,7 +274,7 @@ bool CP_ChooseMap (mission_t *mission, const vec2_t pos)
 
 	/* select a map randomly from the selected */
 	int randomNum = rand() % countMinimal;
-	md = NULL;
+	md = nullptr;
 	MapDef_ForeachSingleplayerCampaign(md) {
 		/* Check if mission fulfill conditions */
 		if (!CP_MapIsSelectable(mission, md, pos))
@@ -312,9 +312,9 @@ void CP_EndCampaign (bool won)
 	cgi->Cmd_ExecuteString("game_exit");
 
 	if (won)
-		cgi->UI_InitStack("endgame", NULL, true, true);
+		cgi->UI_InitStack("endgame", nullptr, true, true);
 	else
-		cgi->UI_InitStack("lostgame", NULL, true, true);
+		cgi->UI_InitStack("lostgame", nullptr, true, true);
 
 	cgi->Com_Drop();
 }
@@ -836,7 +836,7 @@ void CP_StartSelectedMission (void)
 
 	base = aircraft->homebase;
 
-	if (GEO_GetSelectedMission() == NULL)
+	if (GEO_GetSelectedMission() == nullptr)
 		GEO_SetSelectedMission(aircraft->mission);
 
 	mis = GEO_GetSelectedMission();
@@ -1051,12 +1051,12 @@ static void CP_DebugFullCredits_f (void)
 static const cmdList_t game_commands[] = {
 	{"update_base_radar_coverage", RADAR_UpdateBaseRadarCoverage_f, "Update base radar coverage"},
 	{"addeventmail", CL_EventAddMail_f, "Add a new mail (event trigger) - e.g. after a mission"},
-	{"stats_update", CP_StatsUpdate_f, NULL},
-	{"game_go", CP_StartSelectedMission, NULL},
-	{"game_timestop", CP_GameTimeStop, NULL},
-	{"game_timeslow", CP_GameTimeSlow, NULL},
-	{"game_timefast", CP_GameTimeFast, NULL},
-	{"game_settimeid", CP_SetGameTime_f, NULL},
+	{"stats_update", CP_StatsUpdate_f, nullptr},
+	{"game_go", CP_StartSelectedMission, nullptr},
+	{"game_timestop", CP_GameTimeStop, nullptr},
+	{"game_timeslow", CP_GameTimeSlow, nullptr},
+	{"game_timefast", CP_GameTimeFast, nullptr},
+	{"game_settimeid", CP_SetGameTime_f, nullptr},
 	{"map_center", GEO_CenterOnPoint_f, "Centers the geoscape view on items on the geoscape - and cycle through them"},
 	{"cp_start_xvi_spreading", CP_StartXVISpreading_f, "Start XVI spreading"},
 	{"cp_spawn_ufocarrier", CP_SpawnUFOCarrier_f, "Spawns a UFO-Carrier on the geoscape"},
@@ -1067,7 +1067,7 @@ static const cmdList_t game_commands[] = {
 	{"debug_antimatteradd", CP_DebugAddAntimatter_f, "Debug function to add some antimatter to base container"},
 	{"debug_listitem", CP_DebugShowItems_f, "Debug function to show all items in base storage"},
 #endif
-	{NULL, NULL, NULL}
+	{nullptr, nullptr, nullptr}
 };
 
 /**
@@ -1164,7 +1164,7 @@ void CP_CampaignInit (campaign_t *campaign, bool load)
 
 	CL_EventAddMail("prolog");
 
-	RS_MarkResearchable(NULL, true);
+	RS_MarkResearchable(nullptr, true);
 	BS_InitMarket(campaign);
 
 	/* create initial employees */
@@ -1183,7 +1183,7 @@ void CP_CampaignInit (campaign_t *campaign, bool load)
 	CP_InitializeXVIOverlay();
 
 	/* create a base as first step */
-	B_SelectBase(NULL);
+	B_SelectBase(nullptr);
 
 	/* Spawn first missions of the game */
 	CP_InitializeSpawningDelay();
@@ -1229,7 +1229,7 @@ void CP_Shutdown (void)
 /**
  * @brief Returns the campaign pointer from global campaign array
  * @param name Name of the campaign
- * @return campaign_t pointer to campaign with name or NULL if not found
+ * @return campaign_t pointer to campaign with name or nullptr if not found
  */
 campaign_t* CP_GetCampaign (const char *name)
 {
@@ -1242,7 +1242,7 @@ campaign_t* CP_GetCampaign (const char *name)
 
 	if (i == ccs.numCampaigns) {
 		Com_Printf("CL_GetCampaign: Campaign \"%s\" doesn't exist.\n", name);
-		return NULL;
+		return nullptr;
 	}
 	return campaign;
 }
@@ -1320,7 +1320,7 @@ void CP_GetRandomPosOnGeoscape (vec2_t pos, bool noWater)
 	do {
 		pos[0] = (frand() - 0.5f) * 360.0f;
 		pos[1] = asin((frand() - 0.5f) * 2.0f) * todeg;
-	} while (noWater && MapIsWater(GEO_GetColor(pos, MAPTYPE_TERRAIN, NULL)));
+	} while (noWater && MapIsWater(GEO_GetColor(pos, MAPTYPE_TERRAIN, nullptr)));
 
 	Com_DPrintf(DEBUG_CLIENT, "CP_GetRandomPosOnGeoscape: Get random position on geoscape %.2f:%.2f\n", pos[0], pos[1]);
 }
@@ -1328,15 +1328,15 @@ void CP_GetRandomPosOnGeoscape (vec2_t pos, bool noWater)
 /**
  * @brief Determines a random position on geoscape that fulfills certain criteria given via parameters
  * @param[out] pos The position that will be overwritten with the random point fulfilling the criteria. pos[0] is within -180, +180. pos[1] within -90, +90.
- * @param[in] terrainTypes A linkedList_t containing a list of strings determining the acceptable terrain types (e.g. "grass") May be NULL.
- * @param[in] cultureTypes A linkedList_t containing a list of strings determining the acceptable culture types (e.g. "western") May be NULL.
- * @param[in] populationTypes A linkedList_t containing a list of strings determining the acceptable population types (e.g. "suburban") May be NULL.
- * @param[in] nations A linkedList_t containing a list of strings determining the acceptable nations (e.g. "asia"). May be NULL
+ * @param[in] terrainTypes A linkedList_t containing a list of strings determining the acceptable terrain types (e.g. "grass") May be nullptr.
+ * @param[in] cultureTypes A linkedList_t containing a list of strings determining the acceptable culture types (e.g. "western") May be nullptr.
+ * @param[in] populationTypes A linkedList_t containing a list of strings determining the acceptable population types (e.g. "suburban") May be nullptr.
+ * @param[in] nations A linkedList_t containing a list of strings determining the acceptable nations (e.g. "asia"). May be nullptr
  * @return true if a location was found, otherwise false
  * @note There may be no position fitting the parameters. The higher RASTER, the lower the probability to find a position.
  * @sa LIST_AddString
  * @sa LIST_Delete
- * @note When all parameters are NULL, the algorithm assumes that it does not need to include "water" terrains when determining a random position
+ * @note When all parameters are nullptr, the algorithm assumes that it does not need to include "water" terrains when determining a random position
  * @note You should rather use CP_GetRandomPosOnGeoscape if there are no parameters (except water) to choose a random position
  */
 bool CP_GetRandomPosOnGeoscapeWithParameters (vec2_t pos, const linkedList_t *terrainTypes, const linkedList_t *cultureTypes, const linkedList_t *populationTypes, const linkedList_t *nations)
@@ -1447,7 +1447,7 @@ int CP_GetSalaryRankBonusEmployee (const salary_t *salary, employeeType_t type)
 int CP_GetSalaryUpKeepBase (const salary_t *salary, const base_t *base)
 {
 	int cost = salary->baseUpkeep;	/* base cost */
-	building_t *building = NULL;
+	building_t *building = nullptr;
 	while ((building = B_GetNextBuilding(base, building))) {
 		if (building->buildingStatus == B_STATUS_WORKING
 		 || building->buildingStatus == B_STATUS_CONSTRUCTION_FINISHED)

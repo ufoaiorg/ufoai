@@ -51,7 +51,7 @@ void CL_StartGame (const eventRegister_t *self, dbuffer *msg)
 	Com_Printf("Starting the game...\n");
 
 	/* make sure selActor is null (after reconnect or server change this is needed) */
-	CL_ActorSelect(NULL);
+	CL_ActorSelect(nullptr);
 
 	/* center on first actor */
 	cl_worldlevel->modified = true;

@@ -46,7 +46,7 @@ static const constListEntry_t saveResearchConstants[] = {
 	{SAVE_RESEARCHSTATUS_NAMESPACE"::running", RS_RUNNING},
 	{SAVE_RESEARCHSTATUS_NAMESPACE"::paused", RS_PAUSED},
 	{SAVE_RESEARCHSTATUS_NAMESPACE"::finished", RS_FINISH},
-	{NULL, -1}
+	{nullptr, -1}
 };
 
 #endif

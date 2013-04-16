@@ -43,12 +43,12 @@ messageSettings_t backupMessageSettings[NT_NUM_NOTIFYTYPE]; /**< array holding b
  */
 static void MSO_InitList (void)
 {
-	uiNode_t *messageSetting = NULL;
-	uiNode_t *lastCategory = NULL;
+	uiNode_t *messageSetting = nullptr;
+	uiNode_t *lastCategory = nullptr;
 	int idx;
 
 	/* option already allocated, nothing to do */
-	if (cgi->UI_GetOption(TEXT_MESSAGEOPTIONS) != NULL)
+	if (cgi->UI_GetOption(TEXT_MESSAGEOPTIONS) != nullptr)
 		return;
 
 	cgi->UI_ResetData(TEXT_MESSAGEOPTIONS);

@@ -89,10 +89,10 @@ void BATTLE_SetVars (const battleParam_t *battleParameters)
  */
 void BATTLE_Start (mission_t* mission, const battleParam_t *battleParameters)
 {
-	const char *param = NULL;
+	const char *param = nullptr;
 
 	/* prepare */
-	cgi->UI_InitStack(NULL, "singleplayermission", true, false);
+	cgi->UI_InitStack(nullptr, "singleplayermission", true, false);
 
 	assert(mission->mapDef->map);
 
@@ -301,7 +301,7 @@ static void CP_CreateCivilianTeam (const mission_t *mission, battleParam_t *para
 
 	nation = GEO_GetNation(mission->pos);
 	param->nation = nation;
-	if (mission->mapDef->civTeam != NULL) {
+	if (mission->mapDef->civTeam != nullptr) {
 		Q_strncpyz(param->civTeam, mission->mapDef->civTeam, sizeof(param->civTeam));
 	} else if (nation) {
 		/** @todo There should always be a nation, no? Otherwise the mission was placed wrong. */
@@ -333,7 +333,7 @@ void CP_CreateBattleParameters (mission_t *mission, battleParam_t *param, const 
 
 	/* Reset parameters */
 	Mem_Free(param->param);
-	param->param = NULL;
+	param->param = nullptr;
 	param->retriable = true;
 
 	cgi->Cvar_Set("rm_ufo", "");
@@ -341,7 +341,7 @@ void CP_CreateBattleParameters (mission_t *mission, battleParam_t *param, const 
 	cgi->Cvar_Set("rm_crashed", "");
 
 	param->mission = mission;
-	color = GEO_GetColor(mission->pos, MAPTYPE_TERRAIN, NULL);
+	color = GEO_GetColor(mission->pos, MAPTYPE_TERRAIN, nullptr);
 	zoneType = GEO_GetTerrainType(color);
 	param->zoneType = zoneType; /* store to terrain type for texture replacement */
 	/* Is there a UFO to recover ? */
@@ -391,32 +391,32 @@ void CP_CreateBattleParameters (mission_t *mission, battleParam_t *param, const 
 /**
  * @brief Get a mission in ccs.missions by Id without error messages.
  * @param[in] missionId Unique string id for the mission
- * @return pointer to the mission or NULL if Id was NULL or mission not found
+ * @return pointer to the mission or nullptr if Id was nullptr or mission not found
  */
 mission_t* CP_GetMissionByIDSilent (const char *missionId)
 {
 	if (!missionId)
-		return NULL;
+		return nullptr;
 
 	MIS_Foreach(mission) {
 		if (Q_streq(mission->id, missionId))
 			return mission;
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 /**
  * @brief Get a mission in ccs.missions by Id.
  * @param[in] missionId Unique string id for the mission
- * @return pointer to the mission or NULL if Id was NULL or mission not found
+ * @return pointer to the mission or nullptr if Id was nullptr or mission not found
  */
 mission_t* CP_GetMissionByID (const char *missionId)
 {
 	mission_t *mission = CP_GetMissionByIDSilent(missionId);
 
 	if (!missionId)
-		Com_Printf("CP_GetMissionByID: missionId was NULL!\n");
+		Com_Printf("CP_GetMissionByID: missionId was nullptr!\n");
 	else if (!mission)
 		Com_Printf("CP_GetMissionByID: Could not find mission %s\n", missionId);
 
@@ -433,7 +433,7 @@ mission_t* MIS_GetByIdx (int id)
 			return mission;
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -824,7 +824,7 @@ void CP_UFORemoveFromGeoscape (mission_t *mission, bool destroyed)
 		}
 
 		UFO_RemoveFromGeoscape(mission->ufo);
-		mission->ufo = NULL;
+		mission->ufo = nullptr;
 	} else if (mission->ufo->detected && !RADAR_CheckRadarSensored(mission->ufo->pos)) {
 		/* maybe we use a high speed time: UFO was detected, but flied out of radar
 		 * range since last calculation, and mission is spawned outside radar range */
@@ -851,7 +851,7 @@ void CP_MissionRemove (mission_t *mission)
 
 	/* Remove from battle parameters */
 	if (mission == ccs.battleParameters.mission)
-		ccs.battleParameters.mission = NULL;
+		ccs.battleParameters.mission = nullptr;
 
 	/* Notifications */
 	CP_MissionRemoveFromGeoscape(mission);
@@ -1215,7 +1215,7 @@ void CP_SpawnCrashSiteMission (aircraft_t *ufo)
 	mission->crashed = true;
 
 	/* Reset mapDef. CP_ChooseMap don't overwrite if set */
-	mission->mapDef = NULL;
+	mission->mapDef = nullptr;
 	if (!CP_ChooseMap(mission, ufo->pos)) {
 		Com_Printf("CP_SpawnCrashSiteMission: No map found, remove mission.\n");
 		CP_MissionRemove(mission);
@@ -1238,7 +1238,7 @@ void CP_SpawnCrashSiteMission (aircraft_t *ufo)
  * @brief Spawn a new rescue mission for a crashed (phalanx) aircraft
  * @param[in] aircraft The crashed aircraft to spawn the rescue mission for.
  * @param[in] ufo The UFO that shot down the phalanx aircraft, can also
- * be @c NULL if the UFO was destroyed.
+ * be @c nullptr if the UFO was destroyed.
  * @note Don't use ufo's old mission pointer after this call! It might have been removed.
  * @todo Don't spawn rescue mission every time! It should depend on pilot's manoeuvring (piloting) skill
  */
@@ -1282,7 +1282,7 @@ void CP_SpawnRescueMission (aircraft_t *aircraft, aircraft_t *ufo)
 	AIR_UpdateHangarCapForAll(aircraft->homebase);
 
 	if (GEO_IsAircraftSelected(aircraft))
-		GEO_SetSelectedAircraft(NULL);
+		GEO_SetSelectedAircraft(nullptr);
 
 	/* Check if ufo was destroyed too */
 	if (!ufo) {
@@ -1302,7 +1302,7 @@ void CP_SpawnRescueMission (aircraft_t *aircraft, aircraft_t *ufo)
 		cgi->Com_Error(ERR_DROP, "CP_SpawnRescueMission: mission could not be created");
 
 	/* Reset mapDef. CP_ChooseMap don't overwrite if set */
-	mission->mapDef = NULL;
+	mission->mapDef = nullptr;
 	if (!CP_ChooseMap(mission, aircraft->pos)) {
 		Com_Printf("CP_SpawnRescueMission: Cannot set mapDef for mission %s, removing.\n", mission->id);
 		CP_MissionRemove(mission);
@@ -1313,7 +1313,7 @@ void CP_SpawnRescueMission (aircraft_t *aircraft, aircraft_t *ufo)
 
 	/* UFO drops it's previous mission and goes for the crashed aircraft */
 	oldMission = ufo->mission;
-	oldMission->ufo = NULL;
+	oldMission->ufo = nullptr;
 	ufo->mission = mission;
 	CP_MissionRemove(oldMission);
 
@@ -1385,7 +1385,7 @@ bool CP_MissionBegin (mission_t *mission)
 	mission->stage = STAGE_COME_FROM_ORBIT;
 
 	if (MIS_IsSpawnedFromGround(mission)) {
-		mission->ufo = NULL;
+		mission->ufo = nullptr;
 		/* Mission starts from ground: no UFO. Go to next stage on next frame (skip UFO arrives on earth) */
 		mission->finalDate = ccs.date;
 	} else {
@@ -1394,7 +1394,7 @@ bool CP_MissionBegin (mission_t *mission)
 			CP_MissionRemove(mission);
 			return false;
 		}
-		mission->ufo = UFO_AddToGeoscape(ufoType, NULL, mission);
+		mission->ufo = UFO_AddToGeoscape(ufoType, nullptr, mission);
 		if (!mission->ufo) {
 			Com_Printf("CP_MissionBegin: Could not add UFO '%s', remove mission %s\n",
 				cgi->Com_UFOTypeToShortName(ufoType), mission->id);
@@ -1516,7 +1516,7 @@ mission_t *CP_CreateNewMission (interestCategory_t category, bool beginNow)
 
 	/* Some event are non-occurrence */
 	if (category <= INTERESTCATEGORY_NONE || category >= INTERESTCATEGORY_MAX)
-		return NULL;
+		return nullptr;
 
 	OBJZERO(mission);
 
@@ -1525,7 +1525,7 @@ mission_t *CP_CreateNewMission (interestCategory_t category, bool beginNow)
 	mission.initialOverallInterest = ccs.overallInterest;
 	mission.initialIndividualInterest = ccs.interest[category];
 	mission.stage = STAGE_NOT_ACTIVE;
-	mission.ufo = NULL;
+	mission.ufo = nullptr;
 	if (beginNow) {
 		mission.startDate.day = ccs.date.day;
 		mission.startDate.sec = ccs.date.sec;
@@ -1690,7 +1690,7 @@ static void MIS_SpawnNewMissions_f (void)
 			Com_Printf("No aircraft in base\n");
 			return;
 		}
-		CP_SpawnRescueMission(aircraft, NULL);
+		CP_SpawnRescueMission(aircraft, nullptr);
 		return;
 	}
 
@@ -1748,7 +1748,7 @@ static void MIS_MissionSetMap_f (void)
 	}
 	mission = CP_GetMissionByID(cgi->Cmd_Argv(1));
 	mapDef = cgi->Com_GetMapDefinitionByID(cgi->Cmd_Argv(2));
-	if (mapDef == NULL) {
+	if (mapDef == nullptr) {
 		Com_Printf("Could not find mapdef for %s\n", cgi->Cmd_Argv(2));
 		return;
 	}
@@ -1928,7 +1928,7 @@ bool MIS_LoadXML (xmlNode_t *parent)
 				continue;
 			}
 		} else {
-			mission.mapDef = NULL;
+			mission.mapDef = nullptr;
 		}
 
 		if (!cgi->Com_GetConstIntFromNamespace(SAVE_INTERESTCAT_NAMESPACE, categoryId, (int*) &mission.category)) {
@@ -1983,7 +1983,7 @@ bool MIS_LoadXML (xmlNode_t *parent)
 			{
 				const int aircraftIdx = cgi->XML_GetInt(node, SAVE_MISSIONS_CRASHED_AIRCRAFT, -1);
 				mission.data.aircraft = AIR_AircraftGetFromIDX(aircraftIdx);
-				if (mission.data.aircraft == NULL) {
+				if (mission.data.aircraft == nullptr) {
 					Com_Printf("Error while loading rescue mission (missionidx %i, aircraftidx: %i, category: %i, stage: %i)\n",
 							mission.idx, aircraftIdx, mission.category, mission.stage);
 					continue;

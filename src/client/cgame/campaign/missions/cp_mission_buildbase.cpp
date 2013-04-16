@@ -102,7 +102,7 @@ void CP_BuildBaseMissionBaseDestroyed (mission_t *mission)
 	INT_ChangeIndividualInterest(+0.3f, INTERESTCATEGORY_INTERCEPT);
 
 	AB_DestroyBase(base);
-	mission->data.alienBase = NULL;
+	mission->data.alienBase = nullptr;
 	CP_MissionRemove(mission);
 }
 

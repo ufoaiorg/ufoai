@@ -67,7 +67,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static const char *AIL_toTeamString (const int team)
 {
 	const char *teamStr = gi.GetConstVariable("luaaiteam", team);
-	if (teamStr == NULL)
+	if (teamStr == nullptr)
 		AIL_invalidparameter(1);
 	return teamStr;
 }
@@ -124,7 +124,7 @@ static const luaL_reg actorL_methods[] = {
 	{"shoot", actorL_shoot},
 	{"face", actorL_face},
 	{"team", actorL_team},
-	{NULL, NULL}
+	{nullptr, nullptr}
 };
 
 
@@ -147,7 +147,7 @@ static const luaL_reg pos3L_methods[] = {
 	{"__tostring", pos3L_tostring},
 	{"goto", pos3L_goto},
 	{"face", pos3L_face},
-	{NULL, NULL}
+	{nullptr, nullptr}
 };
 
 
@@ -188,7 +188,7 @@ static const luaL_reg AIL_methods[] = {
 	{"positionhide", AIL_positionhide},
 	{"positionherd", AIL_positionherd},
 	{"distance", AIL_distance},
-	{NULL, NULL}
+	{nullptr, nullptr}
 };
 
 
@@ -211,7 +211,7 @@ static int actorL_register (lua_State *L)
 	lua_setfield(L, -2, "__index");
 
 	/* Register the values */
-	luaL_register(L, NULL, actorL_methods);
+	luaL_register(L, nullptr, actorL_methods);
 
 	/* Clean up stack. */
 	lua_pop(L, 1);
@@ -250,7 +250,7 @@ static aiActor_t *lua_toactor (lua_State *L, int index)
 		return (aiActor_t*) lua_touserdata(L, index);
 	}
 	luaL_typerror(L, index, ACTOR_METATABLE);
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -322,20 +322,20 @@ static int actorL_shoot (lua_State *L)
 
 	shootType = ST_RIGHT;
 	const Item *item = AI_GetItemForShootType(shootType, AIL_ent);
-	if (item == NULL) {
+	if (item == nullptr) {
 		shootType = ST_LEFT;
 		item = AI_GetItemForShootType(shootType, AIL_ent);
 	}
 
 	/* Failure - no weapon. */
-	if (item == NULL) {
+	if (item == nullptr) {
 		lua_pushboolean(L, 0);
 		return 1;
 	}
 
 	/** @todo Choose fire mode based on TU available - currently the first one is used. */
 	fdArray = item->getFiredefs();
-	if (fdArray == NULL) {
+	if (fdArray == nullptr) {
 		/* Failure - no weapon. */
 		lua_pushboolean(L, 0);
 		return 1;
@@ -347,7 +347,7 @@ static int actorL_shoot (lua_State *L)
 		shots--;
 		/** @todo actually handle fire modes */
 		G_ClientShoot(*AIL_player, AIL_ent, target->ent->pos,
-				shootType, 0, NULL, true, 0);
+				shootType, 0, nullptr, true, 0);
 	}
 
 	/* Success. */
@@ -385,7 +385,7 @@ static int actorL_team (lua_State *L)
 	assert(lua_isactor(L, 1));
 
 	target = lua_toactor(L, 1);
-	assert(target != NULL);
+	assert(target != nullptr);
 	team = AIL_toTeamString(target->ent->team);
 	lua_pushstring(L, team);
 	return 1;
@@ -411,7 +411,7 @@ static int pos3L_register (lua_State *L)
 	lua_setfield(L, -2, "__index");
 
 	/* Register the values */
-	luaL_register(L, NULL, pos3L_methods);
+	luaL_register(L, nullptr, pos3L_methods);
 
 	/* Clean up the stack. */
 	lua_pop(L, 1);
@@ -450,7 +450,7 @@ static pos3_t *lua_topos3 (lua_State *L, int index)
 		return (pos3_t*) lua_touserdata(L, index);
 	}
 	luaL_typerror(L, index, POS3_METATABLE);
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -574,7 +574,7 @@ static int AIL_see (lua_State *L)
 {
 	int vision, team;
 	int i, j, k, n, cur;
-	Edict *check = NULL;
+	Edict *check = nullptr;
 	aiActor_t target;
 	Edict *sorted[MAX_EDICTS], *unsorted[MAX_EDICTS];
 	float distLookup[MAX_EDICTS];
@@ -979,8 +979,8 @@ void AIL_ActorThink (Player &player, Edict *ent)
 	}
 
 	/* Cleanup */
-	AIL_ent = NULL;
-	AIL_player = NULL;
+	AIL_ent = nullptr;
+	AIL_player = nullptr;
 }
 
 
@@ -1005,7 +1005,7 @@ int AIL_InitActor (Edict *ent, const char *type, const char *subtype)
 
 	/* Create the new Lua state */
 	AI->L = luaL_newstate();
-	if (AI->L == NULL) {
+	if (AI->L == nullptr) {
 		gi.DPrintf("Unable to create Lua state.\n");
 		return -1;
 	}
@@ -1043,9 +1043,9 @@ static void AIL_CleanupActor (Edict *ent)
 	AI_t *AI = &ent->AI;
 
 	/* Cleanup. */
-	if (AI->L != NULL) {
+	if (AI->L != nullptr) {
 		lua_close(AI->L);
-		AI->L = NULL;
+		AI->L = nullptr;
 	}
 }
 
@@ -1070,7 +1070,7 @@ void AIL_Shutdown (void)
  */
 void AIL_Cleanup (void)
 {
-	Edict *ent = NULL;
+	Edict *ent = nullptr;
 
 	while ((ent = G_EdictsGetNextActor(ent)))
 		AIL_CleanupActor(ent);

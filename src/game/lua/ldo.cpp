@@ -87,7 +87,7 @@ static void resetstack (lua_State *L, int status) {
   L->allowhook = 1;
   restore_stack_limit(L);
   L->errfunc = 0;
-  L->errorJmp = NULL;
+  L->errorJmp = nullptr;
 }
 
 
@@ -127,7 +127,7 @@ static void correctstack (lua_State *L, TValue *oldstack) {
   CallInfo *ci;
   GCObject *up;
   L->top = (L->top - oldstack) + L->stack;
-  for (up = L->openupval; up != NULL; up = up->gch.next)
+  for (up = L->openupval; up != nullptr; up = up->gch.next)
     gco2uv(up)->v = (gco2uv(up)->v - oldstack) + L->stack;
   for (ci = L->base_ci; ci <= L->ci; ci++) {
     ci->top = (ci->top - oldstack) + L->stack;
@@ -208,7 +208,7 @@ void luaD_callhook (lua_State *L, int event, int line) {
 static StkId adjust_varargs (lua_State *L, Proto *p, int actual) {
   int i;
   int nfixargs = p->numparams;
-  Table *htab = NULL;
+  Table *htab = nullptr;
   StkId base, fixed;
   for (; actual < nfixargs; ++actual)
     setnilvalue(L->top++);

@@ -119,13 +119,13 @@ void UI_ExecuteConfunc (const char *fmt, ...)
  * @param size Quantity of memory expected
  * @param align Alignement of the expected memory
  * @param reset If true initilize the memory with 0
- * @return available memory, else NULL
+ * @return available memory, else nullptr
  */
 void *UI_AllocHunkMemory (size_t size, int align, bool reset)
 {
 	byte *memory = (byte*) ALIGN_PTR(ui_global.curadata, align);
 	if (memory + size > ui_global.adata + ui_global.adataize)
-		return NULL;
+		return nullptr;
 	if (reset)
 		memset(memory, 0, size);
 	ui_global.curadata = memory + size;
@@ -155,7 +155,7 @@ void UI_Shutdown (void)
 	const uiBehaviour_t *confunc;
 
 	/* MN is not yet initialized */
-	if (ui_global.adata == NULL)
+	if (ui_global.adata == nullptr)
 		return;
 
 	confunc = UI_GetNodeBehaviour("confunc");
@@ -173,11 +173,11 @@ void UI_Shutdown (void)
 			}
 
 			/* recursive next */
-			if (node->firstChild != NULL)
+			if (node->firstChild != nullptr)
 				node = node->firstChild;
 			else {
 				while (node) {
-					if (node->next != NULL) {
+					if (node->next != nullptr) {
 						node = node->next;
 						break;
 					}
@@ -198,9 +198,9 @@ void UI_Shutdown (void)
 	Mem_FreePool(ui_sysPool);
 	Mem_FreePool(ui_dynStringPool);
 	Mem_FreePool(ui_dynPool);
-	ui_sysPool = NULL;
-	ui_dynStringPool = NULL;
-	ui_dynPool = NULL;
+	ui_sysPool = nullptr;
+	ui_dynStringPool = nullptr;
+	ui_dynPool = nullptr;
 }
 
 /**

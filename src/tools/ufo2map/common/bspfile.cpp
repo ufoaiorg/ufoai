@@ -452,7 +452,7 @@ static entity_t *ParseEntity (void)
 	entity_t *mapent;
 
 	if (!GetToken(true))
-		return NULL;
+		return nullptr;
 
 	if (parsedToken[0] != '{')
 		Sys_Error("ParseEntity: { not found");
@@ -488,7 +488,7 @@ void ParseEntities (void)
 	num_entities = 0;
 	ParseFromMemory(curTile->entdata, curTile->entdatasize);
 
-	while (ParseEntity() != NULL) {
+	while (ParseEntity() != nullptr) {
 	}
 }
 

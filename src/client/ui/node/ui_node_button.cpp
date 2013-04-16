@@ -94,9 +94,9 @@ void uiButtonNode::draw (uiNode_t *node)
 	uiBox_t content;
 	content.clear();
 
-	const bool hasIcon = EXTRADATA(node).icon != NULL;
+	const bool hasIcon = EXTRADATA(node).icon != nullptr;
 	const char* text = UI_GetReferenceString(node, node->text);
-	const bool hasText = text != NULL && *text != '\0';
+	const bool hasText = text != nullptr && *text != '\0';
 	if (hasText) {
 		text = _(text);
 	}
@@ -115,7 +115,7 @@ void uiButtonNode::draw (uiNode_t *node)
 		textPos[0] = content.size[0];
 		const int availableTextWidth = inside.size[0] - content.size[0];
 		int height;
-		R_FontTextSize(font, text, availableTextWidth, LONGLINES_PRETTYCHOP, &textWidth, &height, NULL, NULL);
+		R_FontTextSize(font, text, availableTextWidth, LONGLINES_PRETTYCHOP, &textWidth, &height, nullptr, nullptr);
 		content.size[0] += textWidth;
 		if (height > content.size[1]) {
 			content.size[1] = height;
@@ -144,7 +144,7 @@ void uiButtonNode::draw (uiNode_t *node)
 		UI_DrawStringInBox(font, (align_t) node->contentAlign,
 			textPos[0], content.pos[1], textWidth, content.size[1],
 			text);
-		R_Color(NULL);
+		R_Color(nullptr);
 	}
 
 	if (node->flash)

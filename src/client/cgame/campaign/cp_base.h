@@ -63,7 +63,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define B_IsUnderAttack(base) ((base)->baseStatus == BASE_UNDER_ATTACK)
 
-#define B_AtLeastOneExists() (B_GetNext(NULL) != NULL)
+#define B_AtLeastOneExists() (B_GetNext(nullptr) != nullptr)
 
 /**
  * @brief Possible base states
@@ -85,7 +85,7 @@ typedef enum {
 } baseAction_t;
 
 typedef struct baseBuildingTile_s {
-	building_t *building;	/**< NULL if free spot */
+	building_t *building;	/**< nullptr if free spot */
 	bool	blocked;	/**< true if the tile is usable for buildings otherwise it's false (blocked somehow). */
 	/* These are only used for baseTemplates: */
 	int posX;	/**< The x screen coordinate for the building on the basemap. */

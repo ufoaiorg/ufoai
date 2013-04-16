@@ -141,7 +141,7 @@ static unsigned int SV_ModelIndex (const char *name)
 static void SV_SetModel (edict_t *ent, const char *name)
 {
 	if (!name)
-		SV_error("SV_SetModel: NULL");
+		SV_error("SV_SetModel: nullptr");
 
 	ent->modelindex = SV_ModelIndex(name);
 
@@ -296,7 +296,7 @@ static void SV_ReadFormat (const char *format, ...)
 	va_list ap;
 
 	assert(format);
-	if (!*format) /* PA_NULL */
+	if (!*format) /* PA_nullptr */
 		return;
 
 	va_start(ap, format);
@@ -316,7 +316,7 @@ static void SV_AbortEvents (void)
 
 	p->pending = false;
 	delete p->buf;
-	p->buf = NULL;
+	p->buf = nullptr;
 }
 
 /**
@@ -329,11 +329,11 @@ static void SV_EndEvents (void)
 	if (!p->pending)
 		return;
 
-	NET_WriteByte(p->buf, EV_NULL);
+	NET_WriteByte(p->buf, EV_nullptr);
 	SV_Multicast(p->playerMask, *p->buf);
 	p->pending = false;
 	delete p->buf;
-	p->buf = NULL;
+	p->buf = nullptr;
 }
 
 typedef struct {
@@ -342,7 +342,7 @@ typedef struct {
 
 #define M(x) { #x }
 static const eventNames_t eventNames[] = {
-	M(EV_NULL),
+	M(EV_nullptr),
 	M(EV_RESET),
 	M(EV_START),
 	M(EV_ENDROUND),
@@ -449,10 +449,10 @@ static edict_t *SV_GetEventEdict (void)
 {
 	const pending_event_t *p = &sv->pendingEvent;
 	if (!p->pending)
-		return NULL;
+		return nullptr;
 
 	if (p->entnum == -1)
-		return NULL;
+		return nullptr;
 
 	const sv_edict_t &e = sv->edicts[p->entnum];
 	return e.ent;
@@ -585,12 +585,12 @@ static game_export_t *SV_GetGameAPI (game_import_t *parms)
 #endif
 
 	/* now run through the search paths */
-	path = NULL;
+	path = nullptr;
 	while (!svs.gameLibrary) {
 		path = FS_NextPath(path);
 		if (!path)
 			/* couldn't find one anywhere */
-			return NULL;
+			return nullptr;
 		else if (SV_LoadGame(path))
 			break;
 	}
@@ -598,7 +598,7 @@ static game_export_t *SV_GetGameAPI (game_import_t *parms)
 	GetGameAPI = (game_api_t)(uintptr_t)SDL_LoadFunction(svs.gameLibrary, "GetGameAPI");
 	if (!GetGameAPI) {
 		SV_UnloadGame();
-		return NULL;
+		return nullptr;
 	}
 #endif
 
@@ -623,10 +623,10 @@ void SV_ShutdownGameProgs (void)
 
 	if (svs.gameThread) {
 		SDL_CondSignal(svs.gameFrameCond);
-		SDL_WaitThread(svs.gameThread, NULL);
+		SDL_WaitThread(svs.gameThread, nullptr);
 		SDL_DestroyCond(svs.gameFrameCond);
-		svs.gameFrameCond = NULL;
-		svs.gameThread = NULL;
+		svs.gameFrameCond = nullptr;
+		svs.gameThread = nullptr;
 	}
 
 	svs.ge->Shutdown();
@@ -638,11 +638,11 @@ void SV_ShutdownGameProgs (void)
 	}
 
 	Mem_DeletePool(sv->gameSysPool);
-	sv->gameSysPool = NULL;
+	sv->gameSysPool = nullptr;
 
 	SV_UnloadGame();
 
-	svs.ge = NULL;
+	svs.ge = nullptr;
 }
 
 /**
@@ -799,6 +799,6 @@ void SV_InitGameProgs (void)
 
 	if (sv_threads->integer) {
 		svs.gameFrameCond = SDL_CreateCond();
-		svs.gameThread = SDL_CreateThread(SV_RunGameFrameThread, NULL);
+		svs.gameThread = SDL_CreateThread(SV_RunGameFrameThread, nullptr);
 	}
 }

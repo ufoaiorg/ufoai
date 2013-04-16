@@ -73,11 +73,11 @@ static void lookup_section (bfd *abfd, asection *sec, void *opaque_data)
 void find (struct bfd_ctx * b, size_t offset, const char **file, const char **func, unsigned *line)
 {
 	struct find_info data;
-	data.func = NULL;
+	data.func = nullptr;
 	data.symbol = b->symbol;
 	data.counter = offset;
-	data.file = NULL;
-	data.func = NULL;
+	data.file = nullptr;
+	data.func = nullptr;
 	data.line = 0;
 
 	bfd_map_over_sections(b->handle, &lookup_section, &data);
@@ -108,10 +108,10 @@ static int init_bfd_ctx (struct bfd_ctx *bc, const char * procname, struct outpu
 	bfd *b;
 	void *symbol_table;
 	unsigned dummy = 0;
-	char **matching = NULL;
+	char **matching = nullptr;
 
-	bc->handle = NULL;
-	bc->symbol = NULL;
+	bc->handle = nullptr;
+	bc->symbol = nullptr;
 
 	b = bfd_openr(procname, 0);
 	if (!b) {
@@ -178,7 +178,7 @@ struct bfd_ctx *get_bc (struct output_buffer *ob, struct bfd_set *set, const cha
 		set = set->next;
 	}
 	if (init_bfd_ctx(&bc, procname, ob)) {
-		return NULL;
+		return nullptr;
 	}
 	set->next = (bfd_set*)calloc(1, sizeof(*set));
 	set->bc = (bfd_ctx*)malloc(sizeof(struct bfd_ctx));

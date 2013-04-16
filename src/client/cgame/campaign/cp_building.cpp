@@ -126,7 +126,7 @@ static const value_t valid_building_vars[] = {
 	{"onenable", V_HUNK_STRING, offsetof(building_t, onEnable), 0}, /**< Event handler. */
 	{"ondisable", V_HUNK_STRING, offsetof(building_t, onDisable), 0}, /**< Event handler. */
 	{"mandatory", V_BOOL, offsetof(building_t, mandatory), MEMBER_SIZEOF(building_t, mandatory)}, /**< Automatically construct this building when a base is set up. Must also set the pos-flag. */
-	{NULL, V_NULL, 0, 0}
+	{nullptr, V_nullptr, 0, 0}
 };
 
 /**
@@ -176,9 +176,9 @@ void B_ParseBuildings (const char *name, const char **text, bool link)
 		/* set standard values */
 		building->tpl = building;	/* Self-link just in case ... this way we can check if it is a template or not. */
 		building->idx = -1;			/* No entry in buildings list (yet). */
-		building->base = NULL;
+		building->base = nullptr;
 		building->buildingType = MAX_BUILDING_TYPE;
-		building->dependsBuilding = NULL;
+		building->dependsBuilding = nullptr;
 		building->maxCount = -1;	/* Default: no limit */
 		building->size[0] = 1;
 		building->size[1] = 1;
@@ -279,7 +279,7 @@ bool B_BuildingScriptSanityCheck (void)
 /**
  * @brief Returns the building in the global building-types list that has the unique name buildingID.
  * @param[in] buildingName The unique id of the building (building_t->id).
- * @return Building template pointer if found, NULL otherwise
+ * @return Building template pointer if found, nullptr otherwise
  * @todo make the returned pointer const
  */
 building_t *B_GetBuildingTemplateSilent (const char *buildingName)
@@ -287,26 +287,26 @@ building_t *B_GetBuildingTemplateSilent (const char *buildingName)
 	int i = 0;
 
 	if (!buildingName)
-		return NULL;
+		return nullptr;
 	for (i = 0; i < ccs.numBuildingTemplates; i++) {
 		building_t *buildingTemplate = &ccs.buildingTemplates[i];
 		if (Q_streq(buildingTemplate->id, buildingName))
 			return buildingTemplate;
 	}
-	return NULL;
+	return nullptr;
 }
 
 /**
  * @brief Returns the building in the global building-types list that has the unique name buildingID.
  * @param[in] buildingName The unique id of the building (building_t->id).
- * @return Building template pointer if found, NULL otherwise
+ * @return Building template pointer if found, nullptr otherwise
  * @todo make the returned pointer const
  */
 building_t *B_GetBuildingTemplate (const char *buildingName)
 {
 	if (!buildingName || buildingName[0] == '\0') {
 		Com_Printf("No, or empty building ID\n");
-		return NULL;
+		return nullptr;
 	}
 
 	building_t *buildingTemplate = B_GetBuildingTemplateSilent(buildingName);
@@ -342,7 +342,7 @@ bool B_CheckBuildingDependencesStatus (const building_t* building)
  */
 bool B_FireEvent (const building_t *buildingTemplate, const base_t *base, buildingEvent_t eventType)
 {
-	const char *command = NULL;
+	const char *command = nullptr;
 
 	assert(buildingTemplate);
 	assert(base);

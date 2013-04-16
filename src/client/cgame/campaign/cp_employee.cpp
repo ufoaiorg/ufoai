@@ -53,7 +53,7 @@ Employee* E_GetUnhired (employeeType_t type)
 			return employee;
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -135,7 +135,7 @@ void E_HireForBuilding (base_t *base, building_t *building, int num)
  * @note Doesn't make any capacity checks and the employee must be hired already.
  * @param employee The employee to change the base for
  * @param newBase The base where the employee should be located at
- * @return @c false if @c employee was a @c NULL pointer
+ * @return @c false if @c employee was a @c nullptr pointer
  */
 bool E_MoveIntoNewBase (Employee *employee, base_t *newBase)
 {
@@ -232,7 +232,7 @@ employeeType_t E_GetEmployeeType (const char *type)
 /**
  * @brief Return a "not hired" ugv-employee pointer of a given ugv-type.
  * @param[in] ugvType What type of robot we want.
- * @return Employee pointer on success or NULL on error.
+ * @return Employee pointer on success or nullptr on error.
  * @sa E_GetHiredRobot
  */
 Employee* E_GetUnhiredRobot (const ugv_t *ugvType)
@@ -245,12 +245,12 @@ Employee* E_GetUnhiredRobot (const ugv_t *ugvType)
 		}
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 /**
  * @brief Return a list of hired employees in the given base of a given type
- * @param[in] base Which base the employee should be searched in. If NULL is given employees in all bases will be listed.
+ * @param[in] base Which base the employee should be searched in. If nullptr is given employees in all bases will be listed.
  * @param[in] type Which employee type to search for.
  * @param[out] hiredEmployees Linked list of hired employees in the base.
  * @return Number of hired employees in the base that are currently not on a transfer. Or @c -1 in case of an error.
@@ -259,7 +259,7 @@ int E_GetHiredEmployees (const base_t* const base, employeeType_t type, linkedLi
 {
 	if (type >= MAX_EMPL) {
 		Com_Printf("E_GetHiredEmployees: Unknown EmployeeType: %i\n", type);
-		*hiredEmployees = NULL;
+		*hiredEmployees = nullptr;
 		return -1;
 	}
 
@@ -280,17 +280,17 @@ int E_GetHiredEmployees (const base_t* const base, employeeType_t type, linkedLi
  * @brief Return a "hired" ugv-employee pointer of a given ugv-type in a given base.
  * @param[in] base Which base the ugv should be searched in.c
  * @param[in] ugvType What type of robot we want.
- * @return Employee pointer on success or NULL on error.
+ * @return Employee pointer on success or nullptr on error.
  * @sa E_GetUnhiredRobot
  */
 Employee* E_GetHiredRobot (const base_t* const base, const ugv_t *ugvType)
 {
-	linkedList_t *hiredEmployees = NULL;
+	linkedList_t *hiredEmployees = nullptr;
 	Employee *employee;
 
 	E_GetHiredEmployees(base, EMPL_ROBOT, &hiredEmployees);
 
-	employee = NULL;
+	employee = nullptr;
 	LIST_Foreach(hiredEmployees, Employee, e) {
 		if ((e->getUGV() == ugvType || !ugvType)	/* If no type was given we return the first ugv we find. */
 		 && e->isHiredInBase(base)) {		/* It has to be in the defined base. */
@@ -324,7 +324,7 @@ Employee* E_GetAssignedEmployee (const base_t* const base, const employeeType_t 
 		if (employee->isAssigned())
 			return employee;
 	}
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -343,7 +343,7 @@ Employee* E_GetUnassignedEmployee (const base_t* const base, const employeeType_
 		if (!employee->isAssigned())
 			return employee;
 	}
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -433,8 +433,8 @@ base_t *Employee::unassign ()
 	case EMPL_ROBOT:
 	case EMPL_SOLDIER:
 		/* Remove soldier from aircraft/team if he was assigned to one. */
-		if (AIR_IsEmployeeInAircraft(this, NULL))
-			AIR_RemoveEmployee(this, NULL);
+		if (AIR_IsEmployeeInAircraft(this, nullptr))
+			AIR_RemoveEmployee(this, nullptr);
 		break;
 	case EMPL_PILOT:
 		AIR_RemovePilotFromAssignedAircraft(base, this);
@@ -451,7 +451,7 @@ base_t *Employee::unassign ()
 	cgi->INV_DestroyInventory(&chr.inv);
 
 	/* Set all employee-tags to 'unhired'. */
-	baseHired = NULL;
+	baseHired = nullptr;
 
 	return base;
 }
@@ -516,7 +516,7 @@ void E_UnhireAllEmployees (base_t* base, employeeType_t type)
  * @param[in] type What type of employee to create.
  * @param[in] nation What nation the employee (mainly used for soldiers in singleplayer) comes from.
  * @param[in] ugvType What type of ugv this employee is.
- * @return Pointer to the newly created employee in the global list. NULL if something goes wrong.
+ * @return Pointer to the newly created employee in the global list. nullptr if something goes wrong.
  * @sa E_DeleteEmployee
  */
 Employee* E_CreateEmployee (employeeType_t type, const nation_t *nation, const ugv_t *ugvType)
@@ -526,7 +526,7 @@ Employee* E_CreateEmployee (employeeType_t type, const nation_t *nation, const u
 	const char *rank;
 
 	if (type >= MAX_EMPL)
-		return NULL;
+		return nullptr;
 
 	Employee employee(type, nation, ugvType);
 
@@ -617,7 +617,7 @@ void E_DeleteAllEmployees (base_t* base)
 	for (i = EMPL_SOLDIER; i < MAX_EMPL; i++) {
 		const employeeType_t type = (employeeType_t)i;
 		E_Foreach(type, employee) {
-			if (base == NULL || employee->isHiredInBase(base))
+			if (base == nullptr || employee->isHiredInBase(base))
 				E_DeleteEmployee(employee);
 		}
 	}
@@ -673,7 +673,7 @@ int E_RefreshUnhiredEmployeeGlobalList (const employeeType_t type, const bool ex
 	int numHappyNations = 0;
 	int idx, nationIdx, cnt;
 
-	happyNations[0] = NULL;
+	happyNations[0] = nullptr;
 	/* get a list of nations,  if excludeHappyNations is true then also exclude
 	 * unhappy nations (unhappy nation: happiness <= 0) from the list */
 	for (idx = 0; idx < ccs.numNations; idx++) {
@@ -702,7 +702,7 @@ int E_RefreshUnhiredEmployeeGlobalList (const employeeType_t type, const bool ex
 	nationIdx = 0;
 	cnt = 0;
 	while (idx-- > 0) {
-		if (E_CreateEmployee(type, happyNations[nationIdx], NULL) != NULL)
+		if (E_CreateEmployee(type, happyNations[nationIdx], nullptr) != nullptr)
 			cnt++;
 		nationIdx = (nationIdx + 1) % numHappyNations;
 	}
@@ -712,7 +712,7 @@ int E_RefreshUnhiredEmployeeGlobalList (const employeeType_t type, const bool ex
 
 /**
  * @brief Counts hired employees of a given type in a given base
- * @param[in] base The base where we count (@c NULL to count all).
+ * @param[in] base The base where we count (@c nullptr to count all).
  * @param[in] type The type of employee to search.
  * @return count of hired employees of a given type in a given base
  */
@@ -731,7 +731,7 @@ int E_CountHired (const base_t* const base, employeeType_t type)
 
 /**
  * @brief Counts 'hired' (i.e. bought or produced UGVs and other robots of a given ugv-type in a given base.
- * @param[in] base The base where we count (@c NULL to count all).
+ * @param[in] base The base where we count (@c nullptr to count all).
  * @param[in] ugvType What type of robot/ugv we are looking for.
  * @return Count of Robots/UGVs.
  */
@@ -840,13 +840,13 @@ void E_InitialEmployees (const campaign_t *campaign)
 
 	/* setup initial employee count */
 	for (i = 0; i < campaign->soldiers; i++)
-		E_CreateEmployee(EMPL_SOLDIER, E_RandomNation(), NULL);
+		E_CreateEmployee(EMPL_SOLDIER, E_RandomNation(), nullptr);
 	for (i = 0; i < campaign->scientists; i++)
-		E_CreateEmployee(EMPL_SCIENTIST, E_RandomNation(), NULL);
+		E_CreateEmployee(EMPL_SCIENTIST, E_RandomNation(), nullptr);
 	for (i = 0; i < campaign->workers; i++)
-		E_CreateEmployee(EMPL_WORKER, E_RandomNation(), NULL);
+		E_CreateEmployee(EMPL_WORKER, E_RandomNation(), nullptr);
 	for (i = 0; i < campaign->pilots; i++)
-		E_CreateEmployee(EMPL_PILOT, E_RandomNation(), NULL);
+		E_CreateEmployee(EMPL_PILOT, E_RandomNation(), nullptr);
 	for (i = 0; i < campaign->ugvs; i++) {
 		/** @todo don't use hardcoded UGV ids */
 		if (frand() > 0.5)
@@ -886,19 +886,19 @@ static void CL_DebugNewEmployees_f (void)
 
 	for (j = 0; j < 5; j++)
 		/* Create a scientist */
-		E_CreateEmployee(EMPL_SCIENTIST, nation, NULL);
+		E_CreateEmployee(EMPL_SCIENTIST, nation, nullptr);
 
 	for (j = 0; j < 5; j++)
 		/* Create a pilot. */
-		E_CreateEmployee(EMPL_PILOT, nation, NULL);
+		E_CreateEmployee(EMPL_PILOT, nation, nullptr);
 
 	for (j = 0; j < 5; j++)
 		/* Create a soldier. */
-		E_CreateEmployee(EMPL_SOLDIER, nation, NULL);
+		E_CreateEmployee(EMPL_SOLDIER, nation, nullptr);
 
 	for (j = 0; j < 5; j++)
 		/* Create a worker. */
-		E_CreateEmployee(EMPL_WORKER, nation, NULL);
+		E_CreateEmployee(EMPL_WORKER, nation, nullptr);
 }
 #endif
 
@@ -914,7 +914,7 @@ Employee* E_GetEmployeeByTypeFromChrUCN (employeeType_t type, int uniqueCharacte
 			return employee;
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -932,7 +932,7 @@ Employee* E_GetEmployeeFromChrUCN (int uniqueCharacterNumber)
 			return employee;
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 
@@ -1067,7 +1067,7 @@ void E_RemoveInventoryFromStorage (Employee *employee)
 
 	assert(employee->baseHired);
 
-	const Container *cont = NULL;
+	const Container *cont = nullptr;
 	while ((cont = chr->inv.getNextCont(cont))) {
 		const invList_t *invList = cont->_invList;
 

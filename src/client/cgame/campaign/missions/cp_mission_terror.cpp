@@ -99,13 +99,13 @@ static city_t* CP_ChooseCity (void)
 		return (city_t*) cgi->LIST_GetByIdx(ccs.cities, randnumber);
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 static const mission_t* CP_TerrorInCity (const city_t *city)
 {
 	if (!city)
-		return NULL;
+		return nullptr;
 
 	MIS_Foreach(mission) {
 		if (mission->category == INTERESTCATEGORY_TERROR_ATTACK
@@ -113,7 +113,7 @@ static const mission_t* CP_TerrorInCity (const city_t *city)
 		 && Vector2Equal(mission->pos, city->pos))
 			return mission;
 	}
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -165,7 +165,7 @@ static void CP_TerrorMissionGo (mission_t *mission)
 
 /**
  * @brief Fill an array with available UFOs for Terror attack mission type.
- * @param[in] mission Pointer to the mission we are currently creating (may be NULL if we want to know what UFO
+ * @param[in] mission Pointer to the mission we are currently creating (may be nullptr if we want to know what UFO
  * types will be needed during the whole game).
  * @param[out] ufoTypes Array of ufoType_t that may be used for this mission.
  * @note Terror attack mission -- Stage 0

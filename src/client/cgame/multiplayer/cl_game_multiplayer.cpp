@@ -37,7 +37,7 @@ CGAME_HARD_LINKED_FUNCTIONS
 static void GAME_MP_StartBattlescape (bool isTeamPlay)
 {
 	cgi->UI_ExecuteConfunc("multiplayer_setTeamplay %i", isTeamPlay);
-	cgi->UI_InitStack("multiplayer_wait", NULL, true, true);
+	cgi->UI_InitStack("multiplayer_wait", nullptr, true, true);
 }
 
 static void GAME_MP_NotifyEvent (event_t eventType)
@@ -116,7 +116,7 @@ static void GAME_MP_UpdateGametype_f (void)
 static void GAME_MP_ChangeGametype_f (void)
 {
 	const mapDef_t *md;
-	const char *newGameTypeID = NULL;
+	const char *newGameTypeID = nullptr;
 	bool next = true;
 	const int numGTs = cgi->csi->numGTs;
 	const char *gameType = cgi->Cvar_GetString("sv_gametype");
@@ -138,7 +138,7 @@ static void GAME_MP_ChangeGametype_f (void)
 
 	if (md->gameTypes) {
 		linkedList_t *list = md->gameTypes;
-		linkedList_t *old = NULL;
+		linkedList_t *old = nullptr;
 		while (list) {
 			if (Q_streq((const char*)list->data, gameType)) {
 				if (next) {
@@ -205,7 +205,7 @@ static void GAME_MP_ChangeGametype_f (void)
  */
 static void GAME_MP_Results (dbuffer *msg, int winner, int *numSpawned, int *numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS], bool nextmap)
 {
-	linkedList_t *list = NULL;
+	linkedList_t *list = nullptr;
 	int enemiesKilled, enemiesStunned;
 	int i;
 	const int team = cgi->GAME_GetCurrentTeam();
@@ -256,7 +256,7 @@ static const mapDef_t *GAME_MP_MapInfo (int step)
 }
 
 
-static linkedList_t *mp_chatMessageStack = NULL;
+static linkedList_t *mp_chatMessageStack = nullptr;
 
 /**
  * @brief Displays a chat on the hud and add it to the chat buffer
@@ -292,7 +292,7 @@ static void GAME_MP_InitStartup (void)
 
 	cgi->Cvar_ForceSet("sv_maxclients", "2");
 
-	cgi->Cmd_AddCommand("mp_startserver", GAME_MP_StartServer_f, NULL);
+	cgi->Cmd_AddCommand("mp_startserver", GAME_MP_StartServer_f, nullptr);
 	cgi->Cmd_AddCommand("mp_updategametype", GAME_MP_UpdateGametype_f, "Update the menu values with current gametype values");
 	cgi->Cmd_AddCommand("mp_nextgametype", GAME_MP_ChangeGametype_f, "Switch to the next multiplayer game type");
 	cgi->Cmd_AddCommand("mp_prevgametype", GAME_MP_ChangeGametype_f, "Switch to the previous multiplayer game type");

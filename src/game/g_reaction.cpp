@@ -174,7 +174,7 @@ ReactionFireTargetList* ReactionFireTargets::find (const Edict *shooter)
 			return rfts;
 		}
 	}
-	return NULL;
+	return nullptr;
 }
 
 
@@ -358,7 +358,7 @@ static int G_ReactionFireGetTUsForItem (const Edict *shooter, const Edict *targe
 
 	if (weapon && weapon->ammoDef() && weapon->isWeapon() && !weapon->mustReload()) {
 		const fireDef_t *fdArray = weapon->getFiredefs();
-		if (fdArray == NULL)
+		if (fdArray == nullptr)
 			return -1;
 
 		if (fmSetting->getFmIdx() >= 0 && fmSetting->getFmIdx() < MAX_FIREDEFS_PER_WEAPON) { /* If firemode is sane. */
@@ -391,7 +391,7 @@ static bool G_ActorHasWorkingFireModeSet (const Edict *actor)
 	if (!weapon)
 		return false;
 	const fireDef_t *fd = weapon->getFiredefs();
-	if (fd == NULL)
+	if (fd == nullptr)
 		return false;
 
 	if (fd->obj->weapons[fd->weapFdsIdx] == fmSettings->getWeapon()
@@ -600,7 +600,7 @@ static bool G_ReactionFireIsPossible (Edict *ent, const Edict *target)
  */
 static void G_ReactionFireTargetsUpdateAll (const Edict *target)
 {
-	Edict *shooter = NULL;
+	Edict *shooter = nullptr;
 
 	/* check all possible shooters */
 	while ((shooter = G_EdictsGetNextLivingActor(shooter))) {
@@ -654,7 +654,7 @@ static bool G_ReactionFireShoot (Edict *shooter, const pos3_t at, shoot_types_t 
 
 	const int ff = mock.friendCount + (G_IsAlien(shooter) ? 0 : mock.civilian);
 	if (ff <= maxff && mock.enemyCount >= minhit)
-		return G_ClientShoot(player, shooter, at, type, firemode, NULL, false, 0);
+		return G_ClientShoot(player, shooter, at, type, firemode, nullptr, false, 0);
 
 	return false;
 }
@@ -697,7 +697,7 @@ static bool G_ReactionFireTryToShoot (Edict *shooter, const Edict *target)
  */
 static bool G_ReactionFireCheckExecution (const Edict *target)
 {
-	Edict *shooter = NULL;
+	Edict *shooter = nullptr;
 	bool fired = false;
 
 	/* check all possible shooters */
@@ -727,7 +727,7 @@ static void G_ReactionFirePrintSituation (Edict *target)
 
 	Com_Printf("Alien %i at %i/%i/%i TU:%i\n", target->number, target->pos[0], target->pos[1], target->pos[2], target->TU);
 
-	Edict *shooter = NULL;
+	Edict *shooter = nullptr;
 	/* check all possible shooters */
 	while ((shooter = G_EdictsGetNextLivingActor(shooter))) {
 		if (G_IsAlien(shooter) || G_IsCivilian(shooter))
@@ -783,7 +783,7 @@ void G_ReactionFirePreShot (const Edict *target, const int fdTime)
 	/* if any reaction fire occurs, we have to loop through all entities again to allow
 	 * multiple (fast) RF snap shots before a (slow) aimed shot from the target occurs. */
 	while (repeat) {
-		Edict *shooter = NULL;
+		Edict *shooter = nullptr;
 		repeat = false;
 		/* check all ents to see who wins and who loses a draw */
 		while ((shooter = G_EdictsGetNextLivingActor(shooter))) {
@@ -829,7 +829,7 @@ void G_ReactionFireOnEndTurn (void)
  */
 void G_ReactionFireReset (int team)
 {
-	Edict *ent = NULL;
+	Edict *ent = nullptr;
 
 	while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, team))) {
 		G_RemoveShaken(ent);

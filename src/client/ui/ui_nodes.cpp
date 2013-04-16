@@ -202,20 +202,20 @@ const char* UI_GetPath (const uiNode_t* node)
  * from the 'window' behaviour.
  * @param[in] path Path to read. Contain a node location with dot seprator and a facultative property
  * @param[in] relativeNode relative node where the path start. It allow to use facultative command to start the path (this, parent, root).
- * @param[out] resultNode Node found. Else NULL.
- * @param[out] resultProperty Property found. Else NULL.
+ * @param[out] resultNode Node found. Else nullptr.
+ * @param[out] resultProperty Property found. Else nullptr.
  * TODO Speed up, evilly used function, use strncmp instead of using buffer copy (name[MAX_VAR])
  */
 void UI_ReadNodePath (const char* path, const uiNode_t *relativeNode, uiNode_t **resultNode, const value_t **resultProperty)
 {
 	char name[MAX_VAR];
-	uiNode_t* node = NULL;
+	uiNode_t* node = nullptr;
 	const char* nextName;
 	char nextCommand = '^';
 
-	*resultNode = NULL;
+	*resultNode = nullptr;
 	if (resultProperty)
-		*resultProperty = NULL;
+		*resultProperty = nullptr;
 
 	nextName = path;
 	while (nextName && nextName[0] != '\0') {
@@ -235,16 +235,16 @@ void UI_ReadNodePath (const char* path, const uiNode_t *relativeNode, uiNode_t *
 		switch (command) {
 		case '^':	/* first string */
 			if (Q_streq(name, "this")) {
-				if (relativeNode == NULL)
+				if (relativeNode == nullptr)
 					return;
 				/** @todo find a way to fix the bad cast. only here to remove "discards qualifiers" warning */
 				node = *(uiNode_t**) ((void*)&relativeNode);
 			} else if (Q_streq(name, "parent")) {
-				if (relativeNode == NULL)
+				if (relativeNode == nullptr)
 					return;
 				node = relativeNode->parent;
 			} else if (Q_streq(name, "root")) {
-				if (relativeNode == NULL)
+				if (relativeNode == nullptr)
 					return;
 				node = relativeNode->root;
 			} else
@@ -281,7 +281,7 @@ void UI_ReadNodePath (const char* path, const uiNode_t *relativeNode, uiNode_t *
 /**
  * @brief Return a node by a path name (names with dot separation)
  * It is a simplification facade over UI_ReadNodePath
- * @return The requested node, else NULL if not found
+ * @return The requested node, else nullptr if not found
  * @code
  * // get keylist node from options_keys node from options window
  * node = UI_GetNodeByPath("options.options_keys.keylist");
@@ -290,9 +290,9 @@ void UI_ReadNodePath (const char* path, const uiNode_t *relativeNode, uiNode_t *
  */
 uiNode_t* UI_GetNodeByPath (const char* path)
 {
-	uiNode_t* node = NULL;
+	uiNode_t* node = nullptr;
 	const value_t *property;
-	UI_ReadNodePath(path, NULL, &node, &property);
+	UI_ReadNodePath(path, nullptr, &node, &property);
 	/** @todo FIXME warning if it return a property */
 	return node;
 }
@@ -301,7 +301,7 @@ uiNode_t* UI_GetNodeByPath (const char* path)
  * @brief Allocate a node into the UI memory (do not call behaviour->new)
  * @note It's not a dynamic memory allocation. Please only use it at the loading time
  * @todo Assert out when we are not in parsing/loading stage
- * @param[in] name Name of the new node, else NULL if we don't want to edit it.
+ * @param[in] name Name of the new node, else nullptr if we don't want to edit it.
  * @param[in] type Name of the node behavior
  * @param[in] isDynamic Allocate a node in static or dynamic memory
  */
@@ -312,14 +312,14 @@ static uiNode_t* UI_AllocNodeWithoutNew (const char* name, const char* type, boo
 	int nodeSize;
 
 	behaviour = UI_GetNodeBehaviour(type);
-	if (behaviour == NULL)
+	if (behaviour == nullptr)
 		Com_Error(ERR_FATAL, "UI_AllocNodeWithoutNew: Node behaviour '%s' doesn't exist", type);
 
 	nodeSize = sizeof(*node) + behaviour->extraDataSize;
 
 	if (!isDynamic) {
 		void *memory = UI_AllocHunkMemory(nodeSize, STRUCT_MEMORY_ALIGN, true);
-		if (memory == NULL)
+		if (memory == nullptr)
 			Com_Error(ERR_FATAL, "UI_AllocNodeWithoutNew: No more memory to allocate a new node - increase the cvar ui_hunksize");
 		node = static_cast<uiNode_t*>(memory);
 		ui_global.numNodes++;
@@ -335,7 +335,7 @@ static uiNode_t* UI_AllocNodeWithoutNew (const char* name, const char* type, boo
 	if (UI_Node_IsAbstract(node))
 		Com_Error(ERR_FATAL, "UI_AllocNodeWithoutNew: Node behavior '%s' is abstract. We can't instantiate it.", type);
 
-	if (name != NULL) {
+	if (name != nullptr) {
 		Q_strncpyz(node->name, name, sizeof(node->name));
 		if (strlen(node->name) != strlen(name))
 			Com_Printf("UI_AllocNodeWithoutNew: Node name \"%s\" truncated. New name is \"%s\"\n", name, node->name);
@@ -351,7 +351,7 @@ static uiNode_t* UI_AllocNodeWithoutNew (const char* name, const char* type, boo
  * @brief Allocate a node into the UI memory
  * @note It's not a dynamic memory allocation. Please only use it at the loading time
  * @todo Assert out when we are not in parsing/loading stage
- * @param[in] name Name of the new node, else NULL if we don't want to edit it.
+ * @param[in] name Name of the new node, else nullptr if we don't want to edit it.
  * @param[in] type Name of the node behavior
  * @param[in] isDynamic Allocate a node in static or dynamic memory
  */
@@ -371,14 +371,14 @@ uiNode_t* UI_AllocNode (const char* name, const char* type, bool isDynamic)
  * @param[in] node Node where we must search
  * @param[in] rx Relative x position to the parent of the node
  * @param[in] ry Relative y position to the parent of the node
- * @return The first visible node at position, else NULL
+ * @return The first visible node at position, else nullptr
  */
 static uiNode_t *UI_GetNodeInTreeAtPosition (uiNode_t *node, int rx, int ry)
 {
 	uiNode_t *find;
 
 	if (node->invis || UI_Node_IsVirtual(node) || !UI_CheckVisibility(node))
-		return NULL;
+		return nullptr;
 
 	/* relative to the node */
 	rx -= node->box.pos[0];
@@ -386,10 +386,10 @@ static uiNode_t *UI_GetNodeInTreeAtPosition (uiNode_t *node, int rx, int ry)
 
 	/* check bounding box */
 	if (rx < 0 || ry < 0 || rx >= node->box.size[0] || ry >= node->box.size[1])
-		return NULL;
+		return nullptr;
 
 	/** @todo we should improve the loop (last-to-first) */
-	find = NULL;
+	find = nullptr;
 	if (node->firstChild) {
 		uiNode_t *child;
 		vec2_t clientPosition = {0, 0};
@@ -418,15 +418,15 @@ static uiNode_t *UI_GetNodeInTreeAtPosition (uiNode_t *node, int rx, int ry)
 		uiExcludeRect_t *excludeRect;
 		/* is the node tangible */
 		if (node->ghost)
-			return NULL;
+			return nullptr;
 
 		/* check excluded box */
-		for (excludeRect = node->firstExcludeRect; excludeRect != NULL; excludeRect = excludeRect->next) {
+		for (excludeRect = node->firstExcludeRect; excludeRect != nullptr; excludeRect = excludeRect->next) {
 			if (rx >= excludeRect->pos[0]
 			 && rx < excludeRect->pos[0] + excludeRect->size[0]
 			 && ry >= excludeRect->pos[1]
 			 && ry < excludeRect->pos[1] + excludeRect->size[1])
-				return NULL;
+				return nullptr;
 		}
 	}
 
@@ -462,14 +462,14 @@ uiNode_t *UI_GetNodeAtPosition (int x, int y)
 			break;
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 /**
  * @brief Return a node behaviour by name
  * @note Use a dichotomic search. nodeBehaviourList must be sorted by name.
  * @param[in] name Behaviour name requested
- * @return The bahaviour found, else NULL
+ * @return The bahaviour found, else nullptr
  */
 uiBehaviour_t* UI_GetNodeBehaviour (const char* name)
 {
@@ -491,7 +491,7 @@ uiBehaviour_t* UI_GetNodeBehaviour (const char* name)
 			min = mid + 1;
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 uiBehaviour_t* UI_GetNodeBehaviourByIndex (int index)
@@ -540,7 +540,7 @@ void UI_DeleteNode (uiNode_t* node)
 	UI_BeforeDeletingNode(node);
 
 	UI_DeleteAllChild(node);
-	if (node->firstChild != NULL) {
+	if (node->firstChild != nullptr) {
 		Com_Printf("UI_DeleteNode: Node '%s' contain static nodes. We can't delete it.\n", UI_GetPath(node));
 		return;
 	}
@@ -551,7 +551,7 @@ void UI_DeleteNode (uiNode_t* node)
 	/* delete all allocated properties */
 	for (behaviour = node->behaviour; behaviour; behaviour = behaviour->super) {
 		const value_t **property = behaviour->localProperties;
-		if (property == NULL)
+		if (property == nullptr)
 			continue;
 		while (*property) {
 			if (((*property)->type & V_UI_MASK) == V_UI_CVAR) {
@@ -575,41 +575,41 @@ void UI_DeleteNode (uiNode_t* node)
  * @param[in] node Node to clone
  * @param[in] recursive True if we also must clone subnodes
  * @param[in] newWindow Window where the nodes must be add (this function only link node into window, not window into the new node)
- * @param[in] newName New node name, else NULL to use the source name
+ * @param[in] newName New node name, else nullptr to use the source name
  * @param[in] isDynamic Allocate a node in static or dynamic memory
  * @todo exclude rect is not safe cloned.
  * @todo actions are not cloned. It is be a problem if we use add/remove listener into a cloned node.
  */
 uiNode_t* UI_CloneNode (const uiNode_t* node, uiNode_t *newWindow, bool recursive, const char *newName, bool isDynamic)
 {
-	uiNode_t* newNode = UI_AllocNodeWithoutNew(NULL, UI_Node_GetWidgetName(node), isDynamic);
+	uiNode_t* newNode = UI_AllocNodeWithoutNew(nullptr, UI_Node_GetWidgetName(node), isDynamic);
 
 	/* clone all data */
 	memcpy(newNode, node, UI_Node_GetMemorySize(node));
 	newNode->dynamic = isDynamic;
 
 	/* custom name */
-	if (newName != NULL) {
+	if (newName != nullptr) {
 		Q_strncpyz(newNode->name, newName, sizeof(newNode->name));
 		if (strlen(newNode->name) != strlen(newName))
 			Com_Printf("UI_CloneNode: Node name \"%s\" truncated. New name is \"%s\"\n", newName, newNode->name);
 	}
 
 	/* clean up node navigation */
-	if (node->root == node && newWindow == NULL)
+	if (node->root == node && newWindow == nullptr)
 		newWindow = newNode;
 	newNode->root = newWindow;
-	newNode->parent = NULL;
-	newNode->firstChild = NULL;
-	newNode->lastChild = NULL;
-	newNode->next = NULL;
+	newNode->parent = nullptr;
+	newNode->firstChild = nullptr;
+	newNode->lastChild = nullptr;
+	newNode->next = nullptr;
 	newNode->super = node;
 
 	/* clone child */
 	if (recursive) {
 		uiNode_t* childNode;
 		for (childNode = node->firstChild; childNode; childNode = childNode->next) {
-			uiNode_t* newChildNode = UI_CloneNode(childNode, newWindow, recursive, NULL, isDynamic);
+			uiNode_t* newChildNode = UI_CloneNode(childNode, newWindow, recursive, nullptr, isDynamic);
 			UI_AppendNode(newNode, newChildNode);
 		}
 	}

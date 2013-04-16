@@ -54,7 +54,7 @@ static void INS_SetInstallationTitle (installationType_t type)
  * @brief Select an installation when clicking on it on geoscape
  * @param[in] installation The installation to select
  * @note This is (and should be) the only place where installationCurrent is set
- * to a value that is not @c NULL
+ * to a value that is not @c nullptr
  */
 void INS_SelectInstallation (installation_t *installation)
 {
@@ -149,7 +149,7 @@ static void INS_SelectInstallation_f (void)
 	installationID = atoi(cgi->Cmd_Argv(1));
 
 	installation = INS_GetByIDX(installationID);
-	if (installation != NULL)
+	if (installation != nullptr)
 		INS_SelectInstallation(installation);
 }
 
@@ -195,7 +195,7 @@ static void INS_DestroyInstallation_f (void)
 		cgi->UI_PopupButton(_("Destroy Installation"), _("Do you really want to destroy this installation?"),
 			command, _("Destroy"), _("Destroy installation"),
 			"ui_pop;", _("Cancel"), _("Forget it"),
-			NULL, NULL, NULL);
+			nullptr, nullptr, nullptr);
 		return;
 	}
 	INS_DestroyInstallation(installation);
@@ -260,7 +260,7 @@ static void INS_FillTypes_f (void)
 			const installationTemplate_t *tpl = &ccs.installationTemplates[i];
 			if (tpl->once && INS_HasType(tpl->type, INSTALLATION_NOT_USED))
 				continue;
-			if (tpl->tech == NULL || RS_IsResearched_ptr(tpl->tech)) {
+			if (tpl->tech == nullptr || RS_IsResearched_ptr(tpl->tech)) {
 				cgi->UI_ExecuteConfunc("installationtype_add \"%s\" \"%s\" \"%s\" \"%d c\"", tpl->id, _(tpl->name),
 					(tpl->buildTime > 0) ? va("%d %s", tpl->buildTime, ngettext("day", "days", tpl->buildTime)) : "-", tpl->cost);
 			}
@@ -298,7 +298,7 @@ static void INS_SelectType_f (void)
 		return;
 	}
 
-	if (tpl->tech != NULL && !RS_IsResearched_ptr(tpl->tech)) {
+	if (tpl->tech != nullptr && !RS_IsResearched_ptr(tpl->tech)) {
 		Com_Printf("This type of installation is not yet researched\n");
 		return;
 	}
@@ -321,7 +321,7 @@ static void INS_SelectType_f (void)
 void INS_InitCallbacks (void)
 {
 	cgi->Cmd_AddCommand("mn_installation_select", INS_SelectInstallation_f, "Parameter is the installation index. -1 will build a new one.");
-	cgi->Cmd_AddCommand("mn_installation_build", INS_BuildInstallation_f, NULL);
+	cgi->Cmd_AddCommand("mn_installation_build", INS_BuildInstallation_f, nullptr);
 	cgi->Cmd_AddCommand("mn_installation_changename", INS_ChangeInstallationName_f, "Called after editing the cvar installation name");
 	cgi->Cmd_AddCommand("mn_installation_destroy", INS_DestroyInstallation_f, "Destroys an installation");
 	cgi->Cmd_AddCommand("mn_installation_update_max_count", INS_UpdateInstallationLimit_f, "Updates the installation count limit");

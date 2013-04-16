@@ -187,7 +187,7 @@ void uiImageNode::draw (uiNode_t *node)
 	 */
 #if 0
 	if (node->mousefx && node->state) {
-		R_Color(NULL);
+		R_Color(nullptr);
 	}
 #endif
 }

@@ -32,7 +32,7 @@ struct uiNode_t;
 
 typedef struct uiKeyBinding_s {
 	uiNode_t* node;				/**< Node target. */
-	const struct value_s *property;		/**< Property target, else NULL. */
+	const struct value_s *property;		/**< Property target, else nullptr. */
 	int key;							/**< Keynum to catch. */
 	const char* description;			/**< Description of this binding */
 	bool inherited;					/**< True if this binding is inherited from another binding. */

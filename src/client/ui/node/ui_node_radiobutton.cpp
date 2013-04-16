@@ -55,7 +55,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 static bool UI_RadioButtonNodeIsSelected (uiNode_t *node)
 {
-	if (EXTRADATA(node).string == NULL) {
+	if (EXTRADATA(node).string == nullptr) {
 		const float current = UI_GetReferenceFloat(node, EXTRADATA(node).cvar);
 		return current > EXTRADATA(node).value - EPSILON && current < EXTRADATA(node).value + EPSILON;
 	} else {
@@ -131,7 +131,7 @@ void uiRadioButtonNode::onActivate (uiNode_t *node)
 	if (UI_RadioButtonNodeIsSelected(node))
 		return;
 
-	if (EXTRADATA(node).string == NULL) {
+	if (EXTRADATA(node).string == nullptr) {
 		Cvar_SetValue(cvarName, EXTRADATA(node).value);
 	} else {
 		Cvar_Set(cvarName, EXTRADATA(node).string);

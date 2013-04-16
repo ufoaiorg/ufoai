@@ -40,7 +40,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static itemFilterTypes_t produceCategory = FILTER_S_PRIMARY;
 
 /** Holds the current active selected queue entry. */
-static production_t *selectedProduction = NULL;
+static production_t *selectedProduction = nullptr;
 
 /** A list if all producable items. */
 static linkedList_t *productionItemList;
@@ -62,13 +62,13 @@ static void PR_ClearSelectedItems (void)
 }
 
 /**
- * @brief Resets all "selected" pointers to NULL.
+ * @brief Resets all "selected" pointers to nullptr.
  * @sa PR_ClearSelectedItems
  */
 static void PR_ClearSelected (void)
 {
 	PR_ClearSelectedItems();
-	selectedProduction = NULL;
+	selectedProduction = nullptr;
 }
 
 /**
@@ -78,9 +78,9 @@ static void PR_ClearSelected (void)
 static void PR_UpdateProductionList (const base_t* base)
 {
 	int i;
-	linkedList_t *productionList = NULL;
-	linkedList_t *productionQueued = NULL;
-	linkedList_t *productionAmount = NULL;
+	linkedList_t *productionList = nullptr;
+	linkedList_t *productionQueued = nullptr;
+	linkedList_t *productionAmount = nullptr;
 	const production_queue_t *queue;
 
 	assert(base);
@@ -190,11 +190,11 @@ static void PR_RequirementsInfo (const base_t *base, const requirements_t *reqs)
 	const vec4_t green = {0.0f, 1.0f, 0.0f, 0.8f};
 	const vec4_t yellow = {1.0f, 0.874f, 0.294f, 1.0f};
 	int i;
-	uiNode_t *req_root = NULL;
-	uiNode_t *req_items = NULL;
+	uiNode_t *req_root = nullptr;
+	uiNode_t *req_items = nullptr;
 #if 0
-	uiNode_t *req_techs = NULL;
-	uiNode_t *req_technots = NULL;
+	uiNode_t *req_techs = nullptr;
+	uiNode_t *req_technots = nullptr;
 #endif
 
 	cgi->UI_ResetData(OPTION_PRODUCTION_REQUIREMENTS);
@@ -608,7 +608,7 @@ static void PR_ProductionIncrease_f (void)
 {
 	production_t *prod;
 	base_t *base = B_GetCurrentSelectedBase();
-	technology_t *tech = NULL;
+	technology_t *tech = nullptr;
 	int amount = 1;
 	int producibleAmount;
 
@@ -661,7 +661,7 @@ static void PR_ProductionIncrease_f (void)
 		PR_IncreaseProduction(prod, producibleAmount);
 		cgi->Cvar_SetValue("mn_production_amount", prod->amount);
 	} else {
-		const char *name = NULL;
+		const char *name = nullptr;
 
 		tech = PR_GetTech(&selectedData);
 		name = PR_GetName(&selectedData);
@@ -721,7 +721,7 @@ static void PR_ProductionStop_f (void)
 	PR_QueueDelete(base, queue, prodIDX);
 
 	if (queue->numItems == 0) {
-		selectedProduction = NULL;
+		selectedProduction = nullptr;
 		cgi->UI_ExecuteConfunc("prod_selectline -1");
 	} else if (prodIDX >= queue->numItems) {
 		selectedProduction = &queue->items[queue->numItems - 1];
@@ -835,16 +835,16 @@ static void PR_ProductionDown_f (void)
 
 void PR_InitCallbacks (void)
 {
-	cgi->Cmd_AddCommand("prod_init", PR_ProductionList_f, NULL);
-	cgi->Cmd_AddCommand("prod_type", PR_ProductionType_f, NULL);
+	cgi->Cmd_AddCommand("prod_init", PR_ProductionList_f, nullptr);
+	cgi->Cmd_AddCommand("prod_type", PR_ProductionType_f, nullptr);
 	cgi->Cmd_AddCommand("prod_up", PR_ProductionUp_f, "Move production item up in the queue");
 	cgi->Cmd_AddCommand("prod_down", PR_ProductionDown_f, "Move production item down in the queue");
 	cgi->Cmd_AddCommand("prod_change", PR_ProductionChange_f, "Change production amount");
 	cgi->Cmd_AddCommand("prod_inc", PR_ProductionIncrease_f, "Increase production amount");
 	cgi->Cmd_AddCommand("prod_dec", PR_ProductionDecrease_f, "Decrease production amount");
 	cgi->Cmd_AddCommand("prod_stop", PR_ProductionStop_f, "Stop production");
-	cgi->Cmd_AddCommand("prodlist_rclick", PR_ProductionListRightClick_f, NULL);
-	cgi->Cmd_AddCommand("prodlist_click", PR_ProductionListClick_f, NULL);
+	cgi->Cmd_AddCommand("prodlist_rclick", PR_ProductionListRightClick_f, nullptr);
+	cgi->Cmd_AddCommand("prodlist_click", PR_ProductionListClick_f, nullptr);
 }
 
 void PR_ShutdownCallbacks (void)

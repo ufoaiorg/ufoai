@@ -99,7 +99,7 @@ size_t HTTP_Header (void *ptr, size_t size, size_t nmemb, void *stream)
 		dl = (dlhandle_t *)stream;
 
 		if (dl->file)
-			dl->fileSize = strtoul(headerBuff + 16, NULL, 10);
+			dl->fileSize = strtoul(headerBuff + 16, nullptr, 10);
 	}
 
 	return bytes;
@@ -175,7 +175,7 @@ static char *HTTP_GetURLInternal (const char *url)
 
 	HTTP_ResolvURL(url, buf, sizeof(buf));
 	if (buf[0] == '\0')
-		return NULL;
+		return nullptr;
 	Q_strncpyz(dl.URL, url, sizeof(dl.URL));
 
 	dl.curl = curl_easy_init();
@@ -207,8 +207,8 @@ static char *HTTP_GetURLInternal (const char *url)
 void HTTP_PutFile (const char *formName, const char *fileName, const char *url, const upparam_t *params)
 {
 	CURL *curl;
-	struct curl_httppost* post = NULL;
-	struct curl_httppost* last = NULL;
+	struct curl_httppost* post = nullptr;
+	struct curl_httppost* last = nullptr;
 	char buf[576];
 
 	HTTP_ResolvURL(url, buf, sizeof(buf));
@@ -241,7 +241,7 @@ void HTTP_PutFile (const char *formName, const char *fileName, const char *url, 
 void HTTP_GetURL (const char *url, http_callback_t callback)
 {
 	char *response = HTTP_GetURLInternal(url);
-	if (callback != NULL)
+	if (callback != nullptr)
 		callback(response);
 	Mem_Free(response);
 }

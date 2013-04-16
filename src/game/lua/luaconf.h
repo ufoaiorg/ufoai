@@ -275,7 +275,7 @@
 #include <stdio.h>
 #include <readline/readline.h>
 #include <readline/history.h>
-#define lua_readline(L,b,p)	((void)L, ((b)=readline(p)) != NULL)
+#define lua_readline(L,b,p)	((void)L, ((b)=readline(p)) != nullptr)
 #define lua_saveline(L,idx) \
 	if (lua_strlen(L,idx) > 0)  /* non-empty line? */ \
 	  add_history(lua_tostring(L, idx));  /* add it to history */
@@ -283,7 +283,7 @@
 #else
 #define lua_readline(L,b,p)	\
 	((void)L, fputs(p, stdout), fflush(stdout),  /* show prompt */ \
-	fgets(b, LUA_MAXINPUT, stdin) != NULL)  /* get line */
+	fgets(b, LUA_MAXINPUT, stdin) != nullptr)  /* get line */
 #define lua_saveline(L,idx)	{ (void)L; (void)idx; }
 #define lua_freeline(L,b)	{ (void)L; (void)b; }
 #endif
@@ -655,7 +655,7 @@ union luai_Cast { double l_d; long l_l; };
 
 #else
 #define LUA_TMPNAMBUFSIZE	L_tmpnam
-#define lua_tmpnam(b,e)		{ e = (tmpnam(b) == NULL); }
+#define lua_tmpnam(b,e)		{ e = (tmpnam(b) == nullptr); }
 #endif
 
 #endif
@@ -668,7 +668,7 @@ union luai_Cast { double l_d; long l_l; };
 */
 #if defined(LUA_USE_POPEN)
 
-#define lua_popen(L,c,m)	((void)L, fflush(NULL), popen(c,m))
+#define lua_popen(L,c,m)	((void)L, fflush(nullptr), popen(c,m))
 #define lua_pclose(L,file)	((void)L, (pclose(file) != -1))
 
 #elif defined(LUA_WIN)

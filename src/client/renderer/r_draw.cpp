@@ -259,7 +259,7 @@ void R_DrawFills (void)
 
 	r_fill_arrays.vert_index = r_fill_arrays.color_index = 0;
 
-	R_Color(NULL);
+	R_Color(nullptr);
 }
 
 /**
@@ -335,7 +335,7 @@ void R_DrawTexture (int texnum, int x, int y, int w, int h)
 	const vec2_t vertexes[] = {Vector2FromInt(x, y), Vector2FromInt(x + w, y), Vector2FromInt(x + w, y + h), Vector2FromInt(x, y + h)};
 
 	R_BindTexture(texnum);
-	R_DrawImageArray(default_texcoords, vertexes, NULL);
+	R_DrawImageArray(default_texcoords, vertexes, nullptr);
 }
 
 /**
@@ -366,7 +366,7 @@ const image_t *R_DrawImageArray (const vec2_t texcoords[4], const vec2_t verts[4
 	glVertexPointer(2, GL_FLOAT, 0, verts);
 	R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, texcoords);
 
-	if (image != NULL)
+	if (image != nullptr)
 		R_BindTexture(image->texnum);
 
 	glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
@@ -423,7 +423,7 @@ void R_DrawRect (int x, int y, int w, int h, const vec4_t color, float lineWidth
 	glDisable(GL_LINE_STIPPLE);
 #endif
 
-	R_Color(NULL);
+	R_Color(nullptr);
 }
 
 void R_DrawCircle (float radius, const vec4_t color, float thickness, const vec3_t shift)
@@ -448,7 +448,7 @@ void R_DrawCircle (float radius, const vec4_t color, float thickness, const vec3
 
 	refdef.batchCount++;
 
-	R_Color(NULL);
+	R_Color(nullptr);
 
 	glLineWidth(1.0f);
 	glDisable(GL_LINE_SMOOTH);
@@ -662,7 +662,7 @@ void R_DrawBoundingBoxes (void)
 
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-	R_Color(NULL);
+	R_Color(nullptr);
 
 	for (i = 0; i < bboxes; i++) {
 		const float *bbox = &r_bbox_array.bboxes[i * step];

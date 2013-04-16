@@ -79,7 +79,7 @@ void G_CheckForceEndRound (void)
 	/* store this in a local variable, as the global variable is changed in G_ClientEndRound */
 	const int activeTeam = level.activeTeam;
 	/* set all team members to ready (only human players) */
-	Player *p = NULL;
+	Player *p = nullptr;
 	while ((p = G_PlayerGetNextActiveHuman(p))) {
 		if (p->getTeam() == activeTeam) {
 			G_ClientEndRound(*p);
@@ -96,7 +96,7 @@ void G_CheckForceEndRound (void)
 static int G_PlayerSoldiersCount (const Player &player)
 {
 	int cnt = 0;
-	Edict *ent = NULL;
+	Edict *ent = nullptr;
 
 	while ((ent = G_EdictsGetNextLivingActor(ent))) {
 		if (ent->pnum == player.getNum())
@@ -116,7 +116,7 @@ static int G_PlayerSoldiersCount (const Player &player)
  */
 static void G_UpdateStunState (int team)
 {
-	Edict *ent = NULL;
+	Edict *ent = nullptr;
 	const int regen = 1;
 
 	while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, team))) {
@@ -137,7 +137,7 @@ static void G_UpdateStunState (int team)
  */
 static void G_UpdateCarriedWeight (int team)
 {
-	Edict *ent = NULL;
+	Edict *ent = nullptr;
 
 	while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, team))) {
 		if (ent->chr.scoreMission) {
@@ -198,11 +198,11 @@ void G_ClientEndRound (Player &player)
 			G_EventEndRoundAnnounce(player);
 			G_EventEnd();
 		}
-		p = NULL;
+		p = nullptr;
 		while ((p = G_PlayerGetNextActiveHuman(p)))
 			if (p->getTeam() == level.activeTeam && !p->roundDone && G_PlayerSoldiersCount(*p) > 0)
 				return;
-		p = NULL;
+		p = nullptr;
 		while ((p = G_PlayerGetNextActiveAI(p)))
 			if (p->getTeam() == level.activeTeam && !p->roundDone && G_PlayerSoldiersCount(*p) > 0)
 				return;
@@ -214,7 +214,7 @@ void G_ClientEndRound (Player &player)
 	G_ReactionFireOnEndTurn();
 
 	/* let all the invisible players perish now */
-	G_CheckVisTeamAll(level.activeTeam, VIS_APPEAR, NULL);
+	G_CheckVisTeamAll(level.activeTeam, VIS_APPEAR, nullptr);
 
 	G_GetNextActiveTeam();
 
@@ -252,19 +252,19 @@ void G_ClientEndRound (Player &player)
 	/* start ai - there is only one player for ai teams, and the last pointer must only
 	 * be updated for ai players */
 	p = G_GetPlayerForTeam(level.activeTeam);
-	if (p == NULL)
+	if (p == nullptr)
 		gi.Error("Could not find player for team %i", level.activeTeam);
 
 	/* finish off events */
 	G_EventEnd();
 
 	/* reset ready flag for every player on the current team (even ai players) */
-	p = NULL;
+	p = nullptr;
 	while ((p = G_PlayerGetNextActiveHuman(p))) {
 		if (p->getTeam() == level.activeTeam) {
 			p->roundDone = false;
 			if (g_lastseen->integer > 0) {
-				Edict *ent = NULL;
+				Edict *ent = nullptr;
 				while ((ent = G_EdictsGetNextActor(ent))) {
 					if (G_IsAI(ent) && G_IsVisibleForTeam(ent, level.activeTeam)) {
 						p->lastSeen = level.actualRound;
@@ -281,7 +281,7 @@ void G_ClientEndRound (Player &player)
 		}
 	}
 
-	p = NULL;
+	p = nullptr;
 	while ((p = G_PlayerGetNextActiveAI(p))) {
 		if (p->getTeam() == level.activeTeam) {
 			p->roundDone = false;

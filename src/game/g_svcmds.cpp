@@ -79,8 +79,8 @@ static bool StringToFilter (const char *s, ipfilter_t *f)
 
 	for (i = 0; i < 4; i++) {
 		if (*s < '0' || *s > '9') {
-			/** @todo find out if this printf is needed. Passing NULL as a player would have crashed anyway. */
-			//G_ClientPrintf(NULL, PRINT_CONSOLE, "Bad filter address: %s\n", s);
+			/** @todo find out if this printf is needed. Passing nullptr as a player would have crashed anyway. */
+			//G_ClientPrintf(nullptr, PRINT_CONSOLE, "Bad filter address: %s\n", s);
 			return false;
 		}
 
@@ -278,11 +278,11 @@ static void SVCmd_Win_f (void)
 #ifdef DEBUG
 static void SVCmd_ShowAll_f (void)
 {
-	Edict *ent = NULL;
+	Edict *ent = nullptr;
 
 	/* Make everything visible to anyone who can't already see it */
 	while ((ent = G_EdictsGetNextInUse(ent))) {
-		G_AppearPerishEvent(~G_VisToPM(ent->visflags), 1, *ent, NULL);
+		G_AppearPerishEvent(~G_VisToPM(ent->visflags), 1, *ent, nullptr);
 		G_VisFlagsAdd(*ent, ~ent->visflags);
 	}
 	gi.DPrintf("All items and creatures revealed to all sides\n");
@@ -291,7 +291,7 @@ static void SVCmd_ShowAll_f (void)
 static void SVCmd_AddItem_f (void)
 {
 	const int team = TEAM_DEFAULT;
-	Edict *ent = G_EdictsGetNextLivingActorOfTeam(NULL, team);
+	Edict *ent = G_EdictsGetNextLivingActorOfTeam(nullptr, team);
 
 	if (gi.Cmd_Argc() < 3) {
 		gi.DPrintf("Usage: %s <item-id>\n", gi.Cmd_Argv(1));
@@ -324,7 +324,7 @@ static void SVCmd_ActorInvList_f (void)
 
 static void SVCmd_ListEdicts_f (void)
 {
-	Edict *ent = NULL;
+	Edict *ent = nullptr;
 	int i = 0;
 	Com_Printf("number | entnum | mapnum | type | inuse | pnum | team | size |  HP | state | classname      | model/ptl             | pos\n");
 	while ((ent = G_EdictsGetNext(ent))) {

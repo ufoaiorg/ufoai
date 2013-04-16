@@ -52,7 +52,7 @@ static void GAME_SK_InitMissionBriefing (const char **title, linkedList_t **vict
 static void GAME_SK_NotifyEvent (event_t eventType)
 {
 	if (eventType == EV_RESET)
-		cgi->HUD_InitUI(NULL, true);
+		cgi->HUD_InitUI(nullptr, true);
 }
 
 static inline const char* GAME_SK_GetRandomMapAssemblyNameForCraft (const char *name)
@@ -69,7 +69,7 @@ static void GAME_SK_SetMissionParameters (const mapDef_t *md)
 	int i;
 
 	cgi->Cvar_SetValue("ai_numcivilians", 8);
-	if (md->civTeam != NULL)
+	if (md->civTeam != nullptr)
 		cgi->Cvar_Set("ai_civilian", md->civTeam);
 	else
 		cgi->Cvar_Set("ai_civilian", "europe");
@@ -132,7 +132,7 @@ static void GAME_SK_Start_f (void)
 	Com_sprintf(map, sizeof(map), "map %s %s %s;", cgi->Cvar_GetInteger("mn_serverday") ? "day" : "night", md->map, md->param ? md->param : "");
 
 	/* prepare */
-	cgi->UI_InitStack(NULL, "singleplayermission", true, false);
+	cgi->UI_InitStack(nullptr, "singleplayermission", true, false);
 
 	cgi->Cbuf_AddText(map);
 }
@@ -237,12 +237,12 @@ static void GAME_SK_Results (dbuffer *msg, int winner, int *numSpawned, int *num
 
 /**
  * @brief Hide the dropship selection or show it with the dropship given in the parameter
- * @param dropships if @c NULL, the dropship selection panel will be hidden, otherwise it
+ * @param dropships if @c nullptr, the dropship selection panel will be hidden, otherwise it
  * will be shown with the given list entries as content.
  */
 static inline void GAME_SK_HideDropships (const linkedList_t *dropships)
 {
-	const bool hide = (dropships == NULL);
+	const bool hide = (dropships == nullptr);
 	if (hide) {
 		cgi->UI_ExecuteConfunc("skirmish_hide_dropships true");
 		cgi->Cvar_Set("rm_drop", "");
@@ -258,12 +258,12 @@ static inline void GAME_SK_HideDropships (const linkedList_t *dropships)
 
 /**
  * @brief Hide the ufo selection or show it with the ufos given in the parameter
- * @param ufos if @c NULL, the ufo selection panel will be hidden, otherwise it
+ * @param ufos if @c nullptr, the ufo selection panel will be hidden, otherwise it
  * will be shown with the given list entries as content.
  */
 static inline void GAME_SK_HideUFOs (const linkedList_t *ufos)
 {
-	const bool hide = (ufos == NULL);
+	const bool hide = (ufos == nullptr);
 	if (hide) {
 		cgi->UI_ExecuteConfunc("skirmish_hide_ufos true");
 		cgi->Cvar_Set("rm_ufo", "");
@@ -293,14 +293,14 @@ static const mapDef_t *GAME_SK_MapInfo (int step)
 	md = cgi->GAME_GetCurrentSelectedMap();
 
 	if (md->map[0] == '.')
-		return NULL;
+		return nullptr;
 
 	if (md->map[0] == '+') {
 		GAME_SK_HideUFOs(md->ufos);
 		GAME_SK_HideDropships(md->aircraft);
 	} else {
-		GAME_SK_HideUFOs(NULL);
-		GAME_SK_HideDropships(NULL);
+		GAME_SK_HideUFOs(nullptr);
+		GAME_SK_HideDropships(nullptr);
 	}
 
 	return md;
@@ -309,8 +309,8 @@ static const mapDef_t *GAME_SK_MapInfo (int step)
 static void GAME_InitMenuOptions (void)
 {
 	int i;
-	uiNode_t* ufoOptions = NULL;
-	uiNode_t* aircraftOptions = NULL;
+	uiNode_t* ufoOptions = nullptr;
+	uiNode_t* aircraftOptions = nullptr;
 
 	for (i = 0; i < UFO_MAX; i++) {
 		const char *shortName = cgi->Com_UFOTypeToShortName((ufoType_t)i);

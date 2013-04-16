@@ -121,7 +121,7 @@ void TR_BuildTracingNode_r (TR_TILE_TYPE *tile, tnode_t ** tnode, int32_t nodenu
 
 	/**
 	 *  We are checking for a leaf in the tracing node.  For ufo2map, planenum == PLANENUMLEAF.
-	 *  For the game, plane will be NULL.
+	 *  For the game, plane will be nullptr.
 	 */
 #ifdef COMPILE_UFO
 	if (!tile->nodes[nodenum].plane) {
@@ -624,13 +624,13 @@ static void TR_ClipBoxToBrush (boxtrace_t *traceData, cBspBrush_t *brush, TR_LEA
 	float d1, d2;
 	bool getout, startout;
 #ifdef COMPILE_UFO
-	TR_BRUSHSIDE_TYPE *leadside = NULL;
+	TR_BRUSHSIDE_TYPE *leadside = nullptr;
 #endif
 	TR_TILE_TYPE *myTile = traceData->tile;
 
 	enterfrac = -1.0;
 	leavefrac = 1.0;
-	clipplane = NULL;
+	clipplane = nullptr;
 
 	if (!brush || !brush->numsides)
 		return;
@@ -1001,7 +1001,7 @@ trace_t TR_BoxTrace (TR_TILE_TYPE *tile, const vec3_t start, const vec3_t end, c
 	/* fill in a default trace */
 	OBJZERO(traceData.trace);
 	traceData.trace.fraction = std::min(fraction, 1.0f); /* Use 1 or fraction, whichever is lower. */
-	traceData.trace.surface = NULL;
+	traceData.trace.surface = nullptr;
 
 	if (!tile->numnodes)		/* map not loaded */
 		return traceData.trace;

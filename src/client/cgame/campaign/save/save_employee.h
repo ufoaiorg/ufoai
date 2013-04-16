@@ -42,7 +42,7 @@ static const constListEntry_t saveEmployeeConstants[] = {
 	{SAVE_EMPLOYEETYPE_NAMESPACE"::worker", EMPL_WORKER},
 	{SAVE_EMPLOYEETYPE_NAMESPACE"::pilot", EMPL_PILOT},
 	{SAVE_EMPLOYEETYPE_NAMESPACE"::robot", EMPL_ROBOT},
-	{NULL, -1}
+	{nullptr, -1}
 };
 
 #endif

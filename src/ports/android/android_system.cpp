@@ -102,7 +102,7 @@ void Sys_Backtrace (void)
 {
 	const char *dumpFile = "crashdump.txt";
 	FILE *file = fopen(dumpFile, "w");
-	FILE *crash = file != NULL ? file : stderr;
+	FILE *crash = file != nullptr ? file : stderr;
 
 	fprintf(crash, "======start======\n");
 
@@ -113,7 +113,7 @@ void Sys_Backtrace (void)
 
 	fprintf(crash, "======end========\n");
 
-	if (file != NULL)
+	if (file != nullptr)
 		fclose(file);
 
 #ifdef COMPILE_UFO

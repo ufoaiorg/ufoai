@@ -50,7 +50,7 @@ typedef enum {
 } zoneNode_t;
 
 
-static uiNode_t* anchoredNode = NULL;
+static uiNode_t* anchoredNode = nullptr;
 static const vec4_t red = {1.0, 0.0, 0.0, 1.0};
 static const vec4_t grey = {0.8, 0.8, 0.8, 1.0};
 static const int anchorSize = 10;
@@ -104,7 +104,7 @@ void uiEditorNode::draw (uiNode_t *node)
 
 void uiEditorNode::drawOverWindow (uiNode_t *node)
 {
-	uiNode_t* hovered = NULL;
+	uiNode_t* hovered = nullptr;
 
 	if (UI_GetMouseCapture() != node) {
 		if (anchoredNode)
@@ -120,7 +120,7 @@ void uiEditorNode::drawOverWindow (uiNode_t *node)
 		hovered = UI_GetNodeAtPosition(mousePosX, mousePosY);
 		/* do not edit node from editor window */
 		if (hovered && hovered->root == node->root)
-			hovered = NULL;
+			hovered = nullptr;
 	}
 
 	if (hovered && hovered != anchoredNode)
@@ -138,7 +138,7 @@ void uiEditorNode::onCapturedMouseMove (uiNode_t *node, int x, int y)
 	startX = x;
 	startY = y;
 
-	if (anchoredNode == NULL)
+	if (anchoredNode == nullptr)
 		return;
 
 	switch (dragStatus) {
@@ -201,7 +201,7 @@ void uiEditorNode::onMouseUp (uiNode_t *node, int x, int y, int button)
 
 static void UI_EditorNodeSelectNode (uiNode_t *node, uiNode_t *selected)
 {
-	if (selected == NULL)
+	if (selected == nullptr)
 		return;
 	/* do not select a node from the editor window */
 	if (selected->root == node->root)
@@ -229,12 +229,12 @@ void uiEditorNode::onMouseDown (uiNode_t *node, int x, int y, int button)
 	}
 
 	if (hovered == anchoredNode)
-		hovered = NULL;
+		hovered = nullptr;
 
 	if (anchoredNode) {
 		dragStatus = UI_EditorNodeGetElementAtPosition(anchoredNode, x, y);
 		if (dragStatus == ZONE_BODY) {
-			if (hovered == NULL) {
+			if (hovered == nullptr) {
 				startX = x;
 				startY = y;
 				return;
@@ -264,7 +264,7 @@ static void UI_EditorNodeSelectNext (uiNode_t *node, const uiCallContext_t *cont
 {
 	if (dragStatus != ZONE_NONE)
 		return;
-	if (anchoredNode == NULL)
+	if (anchoredNode == nullptr)
 		return;
 	UI_EditorNodeSelectNode(node, anchoredNode->next);
 }
@@ -273,7 +273,7 @@ static void UI_EditorNodeSelectParent (uiNode_t *node, const uiCallContext_t *co
 {
 	if (dragStatus != ZONE_NONE)
 		return;
-	if (anchoredNode == NULL)
+	if (anchoredNode == nullptr)
 		return;
 	UI_EditorNodeSelectNode(node, anchoredNode->parent);
 }
@@ -282,7 +282,7 @@ static void UI_EditorNodeSelectFirstChild (uiNode_t *node, const uiCallContext_t
 {
 	if (dragStatus != ZONE_NONE)
 		return;
-	if (anchoredNode == NULL)
+	if (anchoredNode == nullptr)
 		return;
 	UI_EditorNodeSelectNode(node, anchoredNode->firstChild);
 }

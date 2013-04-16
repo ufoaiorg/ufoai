@@ -48,11 +48,11 @@ static worldSector_t *SV_CreateWorldSector (int depth, const vec3_t mins, const 
 	anode = &sv->worldSectors[sv->numWorldSectors];
 	sv->numWorldSectors++;
 
-	anode->entities = NULL;
+	anode->entities = nullptr;
 
 	if (depth == AREA_DEPTH) {
 		anode->axis = LEAFNODE; /* end of tree */
-		anode->children[0] = anode->children[1] = NULL;
+		anode->children[0] = anode->children[1] = nullptr;
 		return anode;
 	}
 
@@ -110,7 +110,7 @@ void SV_UnlinkEdict (edict_t *ent)
 	if (!ws)
 		return;					/* not linked in anywhere */
 
-	sv_ent->worldSector = NULL;
+	sv_ent->worldSector = nullptr;
 
 	if (ws->entities == sv_ent) {
 		ws->entities = sv_ent->nextEntityInWorldSector;
@@ -454,7 +454,7 @@ static void SV_TraceBounds (const vec3_t start, const vec3_t mins, const vec3_t 
  * @sa CL_Trace
  * @param[in] start The starting position in the world for this trace
  * @param[in] end The position in the world where this trace should stop
- * @param[in] passedict is explicitly excluded from clipping checks (normally NULL)
+ * @param[in] passedict is explicitly excluded from clipping checks (normally nullptr)
  * if the entire move stays in a solid volume, trace.allsolid will be set,
  * trace.startsolid will be set, and trace.fraction will be 0
  * if the starting point is in a solid, it will be allowed to move out to an open area
@@ -502,12 +502,12 @@ trace_t SV_Trace (const vec3_t start, const AABB &box, const vec3_t end, const e
  * @brief Query the footstep sound for the given surface texture
  * @sa Com_GetTerrainType
  * @sa GenerateFootstepList
- * @return either @c NULL or the footstep sound filename if there is one assigned in the scripts
+ * @return either @c nullptr or the footstep sound filename if there is one assigned in the scripts
  */
 const char *SV_GetFootstepSound (const char *texture)
 {
 	const terrainType_t *t = Com_GetTerrainType(texture);
-	return t ? t->footstepSound : NULL;
+	return t ? t->footstepSound : nullptr;
 }
 
 /**
@@ -589,7 +589,7 @@ static void SV_ModLoadObjModel (sv_model_t *mod, const byte *buffer, int bufferL
  * @sa modtype_t
  */
 static char const* const mod_extensions[] = {
-	"md2", "md3", "obj", NULL
+	"md2", "md3", "obj", nullptr
 };
 
 /**
@@ -601,12 +601,12 @@ static char const* const mod_extensions[] = {
 bool SV_LoadModelAABB (const char *model, int frame, AABB& aabb)
 {
 	sv_model_t *mod;
-	byte *buf = NULL;
+	byte *buf = nullptr;
 	unsigned int i;
 	int modfilelen = 0;
 
 	if (model[0] == '\0')
-		Com_Error(ERR_DROP, "SV_LoadModelAABB: NULL model");
+		Com_Error(ERR_DROP, "SV_LoadModelAABB: nullptr model");
 
 	/* search the currently loaded models */
 	for (i = 0, mod = sv->svModels; i < sv->numSVModels; i++, mod++)
@@ -631,10 +631,10 @@ bool SV_LoadModelAABB (const char *model, int frame, AABB& aabb)
 	VectorCopy(vec3_origin, aabb.maxs);
 
 	/* load the file */
-	if (Com_GetExtension(model) == NULL) {
+	if (Com_GetExtension(model) == nullptr) {
 		char filename[MAX_QPATH];
 
-		for (i = 0; mod_extensions[i] != NULL; i++) {
+		for (i = 0; mod_extensions[i] != nullptr; i++) {
 			Com_sprintf(filename, sizeof(filename), "%s.%s", model, mod_extensions[i]);
 			modfilelen = FS_LoadFile(filename, &buf);
 			if (buf) {

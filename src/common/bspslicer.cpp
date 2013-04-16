@@ -319,7 +319,7 @@ void SL_BSPSlice (const TR_TILE_TYPE *model, float thickness, int scale, bool si
 	vec3_t mins = {-MAX_WORLD_WIDTH, -MAX_WORLD_WIDTH, 0};
 	vec3_t maxs = {MAX_WORLD_WIDTH, MAX_WORLD_WIDTH, (PATHFINDING_HEIGHT - 1) * UNIT_HEIGHT};
 
-	if (model == NULL)
+	if (model == nullptr)
 		return;
 
 	for (i = 0; i < model->nummodels; i++) {

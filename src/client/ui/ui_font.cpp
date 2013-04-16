@@ -40,7 +40,7 @@ static const value_t fontValues[] = {
 	{"size", V_INT, offsetof(uiFont_t, size), MEMBER_SIZEOF(uiFont_t, size)},
 	{"style", V_HUNK_STRING, offsetof(uiFont_t, style), 0},
 
-	{NULL, V_NULL, 0, 0}
+	{nullptr, V_nullptr, 0, 0}
 };
 
 /**
@@ -70,7 +70,7 @@ bool UI_ParseFont (const char *name, const char **text)
 	uiFont_t *font;
 	const char *errhead = "UI_ParseFont: unexpected end of file (font";
 	const char *token;
-	const value_t *v = NULL;
+	const value_t *v = nullptr;
 
 	/* search for font with same name */
 	if (UI_GetFontByID(name)) {
@@ -162,13 +162,13 @@ const uiFont_t *UI_GetFontByID (const char *name)
 		if (Q_streq(fonts[i].name, name))
 			return &fonts[i];
 
-	return NULL;
+	return nullptr;
 }
 
 int UI_FontGetHeight (const char *fontID)
 {
 	font_t *font = R_GetFont(fontID);
-	if (font != NULL)
+	if (font != nullptr)
 		return font->height;
 	return -1;
 }

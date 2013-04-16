@@ -106,7 +106,7 @@ static void UI_CheckActionTokenTypeSanity (void)
  * @param[in] token Requested token
  * @param[in] group Requested group, EA_ACTION, EA_BINARYOPERATOR, or EA_UNARYOPERATOR
  * @sa actionTokens
- * @return a action type from the requested group, else EA_NULL
+ * @return a action type from the requested group, else EA_nullptr
  */
 int UI_GetActionTokenType (const char* token, int group)
 {
@@ -123,7 +123,7 @@ int UI_GetActionTokenType (const char* token, int group)
 			if (actionTokens[mid].group == group)
 				return actionTokens[mid].type;
 			else
-				return EA_NULL;
+				return EA_nullptr;
 		}
 
 		if (diff > 0)
@@ -131,12 +131,12 @@ int UI_GetActionTokenType (const char* token, int group)
 		else
 			min = mid + 1;
 	}
-	return EA_NULL;
+	return EA_nullptr;
 }
 
 /**
  * @brief read a property name from an input buffer to an output
- * @return last position in the input buffer if we find the property, NULL otherwise
+ * @return last position in the input buffer if we find the property, nullptr otherwise
  */
 static inline const char* UI_GenCommandReadProperty (const char* input, char* output, int outputSize)
 {
@@ -150,7 +150,7 @@ static inline const char* UI_GenCommandReadProperty (const char* input, char* ou
 	}
 
 	if (input[0] != '>')
-		return NULL;
+		return nullptr;
 
 	output[0] = '\0';
 	return ++input;
@@ -242,7 +242,7 @@ const char* UI_GenInjectedString (const char* input, bool addNewLine, const uiCa
 						string = "";
 					} else {
 						string = UI_GetStringFromNodeProperty(node, property);
-						if (string == NULL) {
+						if (string == nullptr) {
 							Com_Printf("UI_GenInjectedString: String getter for '%s' property do not exists; '' injected\n", path);
 							string = "";
 						}
@@ -256,7 +256,7 @@ const char* UI_GenInjectedString (const char* input, bool addNewLine, const uiCa
 				/* source path injection */
 				} else if (char const* const command = Q_strstart(propertyName, "path:")) {
 					if (context->source) {
-						const uiNode_t *node = NULL;
+						const uiNode_t *node = nullptr;
 						if (Q_streq(command, "root"))
 							node = context->source->root;
 						else if (Q_streq(command, "this"))
@@ -286,7 +286,7 @@ const char* UI_GenInjectedString (const char* input, bool addNewLine, const uiCa
 							int l;
 							/* inject the property value */
 							value = UI_GetStringFromNodeProperty(context->source, property);
-							if (value == NULL)
+							if (value == nullptr)
 								value = "";
 							l = snprintf(cout, length, "%s", value);
 							cout += l;
@@ -374,13 +374,13 @@ static inline void UI_ExecuteSetAction (const uiAction_t* action, const uiCallCo
 	uiAction_t *right;
 
 	left = action->d.nonTerminal.left;
-	if (left == NULL) {
+	if (left == nullptr) {
 		Com_Printf("UI_ExecuteSetAction: Action without left operand skipped.\n");
 		return;
 	}
 
 	right = action->d.nonTerminal.right;
-	if (right == NULL) {
+	if (right == nullptr) {
 		Com_Printf("UI_ExecuteSetAction: Action without right operand skipped.\n");
 		return;
 	}
@@ -421,11 +421,11 @@ static inline void UI_ExecuteSetAction (const uiAction_t* action, const uiCallCo
 
 static inline void UI_ExecuteCallAction (const uiAction_t* action, const uiCallContext_t *context)
 {
-	uiNode_t* callNode = NULL;
+	uiNode_t* callNode = nullptr;
 	uiAction_t* param;
 	uiAction_t* left = action->d.nonTerminal.left;
 	uiCallContext_t newContext;
-	const value_t* callProperty = NULL;
+	const value_t* callProperty = nullptr;
 	const char* path = left->d.terminal.d1.constString;
 
 	if (left->type == EA_VALUE_PATHPROPERTY || left->type == EA_VALUE_PATHNODE)
@@ -434,18 +434,18 @@ static inline void UI_ExecuteCallAction (const uiAction_t* action, const uiCallC
 		path = UI_GenInjectedString(left->d.terminal.d1.constString, false, context);
 	UI_ReadNodePath(path, context->source, &callNode, &callProperty);
 
-	if (callNode == NULL) {
+	if (callNode == nullptr) {
 		Com_Printf("UI_ExecuteCallAction: Node from path \"%s\" not found (relative to \"%s\").\n", path, UI_GetPath(context->source));
 		return;
 	}
 
-	if (callProperty != NULL && callProperty->type != V_UI_ACTION && callProperty->type != V_UI_NODEMETHOD) {
+	if (callProperty != nullptr && callProperty->type != V_UI_ACTION && callProperty->type != V_UI_NODEMETHOD) {
 		Com_Printf("UI_ExecuteCallAction: Call operand %d unsupported. (%s)\n", callProperty->type, UI_GetPath(callNode));
 		return;
 	}
 
 	newContext.source = callNode;
-	newContext.params = NULL;
+	newContext.params = nullptr;
 	newContext.paramNumber = 0;
 	newContext.varNumber = 0;
 	newContext.varPosition = context->varPosition + context->varNumber;
@@ -475,7 +475,7 @@ static inline void UI_ExecuteCallAction (const uiAction_t* action, const uiCallC
 		}
 	}
 
-	if (callProperty == NULL || callProperty->type == V_UI_ACTION) {
+	if (callProperty == nullptr || callProperty->type == V_UI_ACTION) {
 		uiAction_t const* const actionsRef = callProperty ? Com_GetValue<uiAction_t*>(callNode, callProperty) : callNode->onClick;
 		UI_ExecuteActions(actionsRef, &newContext);
 	} else if (callProperty->type == V_UI_NODEMETHOD) {
@@ -530,7 +530,7 @@ static void UI_ReleaseVariable (uiValue_t *variable)
 static void UI_ExecuteAction (const uiAction_t* action, uiCallContext_t *context)
 {
 	switch (action->type) {
-	case EA_NULL:
+	case EA_nullptr:
 		/* do nothing */
 		break;
 
@@ -774,12 +774,12 @@ void UI_AddListener (uiNode_t *node, const value_t *property, const uiNode_t *fu
 	uiAction_t* const action = Mem_PoolAllocType(uiAction_t, ui_sysPool);
 	uiAction_t* const value  = Mem_PoolAllocType(uiAction_t, ui_sysPool);
 	value->d.terminal.d1.constString = Mem_PoolStrDup(UI_GetPath(functionNode), ui_sysPool, 0);
-	value->next = NULL;
+	value->next = nullptr;
 	action->type = EA_LISTENER;
 	action->d.nonTerminal.left = value;
 	/** @todo It is a hack, we should remove that */
 	action->d.terminal.d2.constData = &functionNode->onClick;
-	action->next = NULL;
+	action->next = nullptr;
 
 	/* insert the action */
 	uiAction_t **anchor = &Com_GetValue<uiAction_t*>(node, property);
@@ -802,18 +802,18 @@ static void UI_AddListener_f (void)
 		return;
 	}
 
-	UI_ReadNodePath(Cmd_Argv(1), NULL, &node, &property);
-	if (node == NULL) {
+	UI_ReadNodePath(Cmd_Argv(1), nullptr, &node, &property);
+	if (node == nullptr) {
 		Com_Printf("UI_AddListener_f: '%s' node not found.\n", Cmd_Argv(1));
 		return;
 	}
-	if (property == NULL || property->type != V_UI_ACTION) {
+	if (property == nullptr || property->type != V_UI_ACTION) {
 		Com_Printf("UI_AddListener_f: '%s' property not found, or is not an event.\n", Cmd_Argv(1));
 		return;
 	}
 
 	function = UI_GetNodeByPath(Cmd_Argv(2));
-	if (function == NULL) {
+	if (function == nullptr) {
 		Com_Printf("UI_AddListener_f: '%s' node not found.\n", Cmd_Argv(2));
 		return;
 	}
@@ -837,7 +837,7 @@ void UI_RemoveListener (uiNode_t *node, const value_t *property, uiNode_t *funct
 	/* remove the action */
 	uiAction_t*& action = Com_GetValue<uiAction_t*>(node, property);
 	if (uiAction_t* lastAction = action) {
-		uiAction_t *tmp = NULL;
+		uiAction_t *tmp = nullptr;
 		if (lastAction->type == EA_LISTENER && lastAction->d.terminal.d2.constData == data) {
 			tmp = lastAction;
 			action = lastAction->next;
@@ -877,18 +877,18 @@ static void UI_RemoveListener_f (void)
 		return;
 	}
 
-	UI_ReadNodePath(Cmd_Argv(1), NULL, &node, &property);
-	if (node == NULL) {
+	UI_ReadNodePath(Cmd_Argv(1), nullptr, &node, &property);
+	if (node == nullptr) {
 		Com_Printf("UI_RemoveListener_f: '%s' node not found.\n", Cmd_Argv(1));
 		return;
 	}
-	if (property == NULL || property->type != V_UI_ACTION) {
+	if (property == nullptr || property->type != V_UI_ACTION) {
 		Com_Printf("UI_RemoveListener_f: '%s' property not found, or is not an event.\n", Cmd_Argv(1));
 		return;
 	}
 
 	function = UI_GetNodeByPath(Cmd_Argv(2));
-	if (function == NULL) {
+	if (function == nullptr) {
 		Com_Printf("UI_RemoveListener_f: '%s' node not found.\n", Cmd_Argv(2));
 		return;
 	}
@@ -918,7 +918,7 @@ static void UI_AddCvarListener_f (void)
 	cvarName = Cmd_Argv(1);
 	confuncName = Cmd_Argv(2);
 	l = Cvar_RegisterChangeListener(cvarName, UI_CvarChangeListener);
-	if (LIST_ContainsString(static_cast<linkedList_t*>(l->data), confuncName) == NULL)
+	if (LIST_ContainsString(static_cast<linkedList_t*>(l->data), confuncName) == nullptr)
 		LIST_AddString(reinterpret_cast<linkedList_t**>(&l->data), confuncName);
 }
 
@@ -937,14 +937,14 @@ static void UI_RemoveCvarListener_f (void)
 	confuncName = Cmd_Argv(2);
 
 	var = Cvar_FindVar(cvarName);
-	if (var == NULL)
+	if (var == nullptr)
 		return;
 
 	cvarChangeListener_t *l = var->changeListener;
 	while (l) {
 		if (l->exec == UI_CvarChangeListener) {
 			linkedList_t *entry = const_cast<linkedList_t*>(LIST_ContainsString(static_cast<linkedList_t*>(l->data), confuncName));
-			if (entry != NULL)
+			if (entry != nullptr)
 				LIST_RemoveEntry(reinterpret_cast<linkedList_t**>(&l->data), entry);
 			if (LIST_IsEmpty(static_cast<linkedList_t*>(l->data))) {
 				Cvar_UnRegisterChangeListener(cvarName, UI_CvarChangeListener);

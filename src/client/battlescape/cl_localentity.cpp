@@ -45,14 +45,14 @@ Local Model (LM) handling
 
 static inline void LE_GenerateInlineModelList (void)
 {
-	le_t *le = NULL;
+	le_t *le = nullptr;
 	int i = 0;
 
 	while ((le = LE_GetNextInUse(le))) {
 		if (le->model1 && le->inlineModelName[0] == '*')
 			cl.leInlineModelList[i++] = le->inlineModelName;
 	}
-	cl.leInlineModelList[i] = NULL;
+	cl.leInlineModelList[i] = nullptr;
 }
 
 static void CL_GridRecalcRouting (const le_t *le)
@@ -128,7 +128,7 @@ static void LM_AddToSceneOrder (bool parents)
 
 		/* if we want to render the children and this is a parent (no further parent
 		 * assigned), then skip it. */
-		if (!parents && lm->parent == NULL)
+		if (!parents && lm->parent == nullptr)
 			continue;
 
 		/* set entity values */
@@ -142,7 +142,7 @@ static void LM_AddToSceneOrder (bool parents)
 		if (lm->parent) {
 			/** @todo what if the tagent is not rendered due to different level flags? */
 			ent.tagent = R_GetEntity(lm->parent->renderEntityNum);
-			if (ent.tagent == NULL)
+			if (ent.tagent == nullptr)
 				Com_Error(ERR_DROP, "Invalid parent entity num for local model (%s/%s): %i",
 						lm->model->name, lm->id, lm->parent->renderEntityNum);
 			ent.tagname = lm->tagname;
@@ -191,7 +191,7 @@ static inline localModel_t *LM_Find (int entnum)
 		if (cl.LMs[i].entnum == entnum)
 			return &cl.LMs[i];
 
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -279,14 +279,14 @@ localModel_t *LM_GetByID (const char *id)
 	int i;
 
 	if (Q_strnull(id))
-		return NULL;
+		return nullptr;
 
 	for (i = 0; i < cl.numLMs; i++) {
 		localModel_t *lm = &cl.LMs[i];
 		if (Q_streq(lm->id, id))
 			return lm;
 	}
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -352,7 +352,7 @@ void LE_ExecuteThink (le_t *le)
  */
 void LE_Think (void)
 {
-	le_t *le = NULL;
+	le_t *le = nullptr;
 
 	if (cls.state != ca_active)
 		return;
@@ -460,7 +460,7 @@ void LET_StartIdle (le_t *le)
 	le->pathPos = le->pathLength = 0;
 
 	/* keep this animation until something happens */
-	LE_SetThink(le, NULL);
+	LE_SetThink(le, nullptr);
 }
 
 /**
@@ -558,7 +558,7 @@ static void LE_PlayFootStepSound (le_t *le)
 		/* we should really hit the ground with this */
 		to[2] -= UNIT_HEIGHT;
 
-		const trace_t trace = CL_Trace(from, to, AABB(), NULL, NULL, MASK_SOLID, cl_worldlevel->integer);
+		const trace_t trace = CL_Trace(from, to, AABB(), nullptr, nullptr, MASK_SOLID, cl_worldlevel->integer);
 		if (trace.surface)
 			LE_PlaySoundFileAndParticleForSurface(le, trace.surface->name);
 	} else
@@ -760,13 +760,13 @@ void LE_AddProjectile (const fireDef_t *fd, int flags, const vec3_t muzzle, cons
 		le->ptl->size[0] = dist;
 		VectorMA(muzzle, 0.5, delta, le->ptl->s);
 		if ((flags & (SF_IMPACT | SF_BODY)) || (fd->splrad && !fd->bounce)) {
-			ptl_t *ptl = NULL;
+			ptl_t *ptl = nullptr;
 			const float *dir = bytedirs[le->angle];
 			if (flags & SF_BODY) {
-				if (fd->hitBodySound != NULL) {
+				if (fd->hitBodySound != nullptr) {
 					S_LoadAndPlaySample(fd->hitBodySound, le->origin, le->fd->impactAttenuation, SND_VOLUME_WEAPONS);
 				}
-				if (fd->hitBody != NULL)
+				if (fd->hitBody != nullptr)
 					ptl = CL_ParticleSpawn(fd->hitBody, 0, impact, dir);
 
 				/* Spawn blood particles (if defined) if actor(-body) was hit. Even if actor is dead. */
@@ -778,10 +778,10 @@ void LE_AddProjectile (const fireDef_t *fd, int flags, const vec3_t muzzle, cons
 					CL_ActorPlaySound(leVictim, SND_HURT);
 				}
 			} else {
-				if (fd->impactSound != NULL) {
+				if (fd->impactSound != nullptr) {
 					S_LoadAndPlaySample(fd->impactSound, le->origin, le->fd->impactAttenuation, SND_VOLUME_WEAPONS);
 				}
-				if (fd->impact != NULL)
+				if (fd->impact != nullptr)
 					ptl = CL_ParticleSpawn(fd->impact, 0, impact, dir);
 			}
 			if (ptl)
@@ -802,7 +802,7 @@ void LE_AddProjectile (const fireDef_t *fd, int flags, const vec3_t muzzle, cons
 		le->ref1 = fd->impact;
 		le->ref2 = fd->impactSound;
 	} else {
-		le->ref1 = NULL;
+		le->ref1 = nullptr;
 		if (flags & SF_BOUNCING)
 			le->ref2 = fd->bounceSound;
 	}
@@ -843,7 +843,7 @@ static const objDef_t *LE_BiggestItem (const invList_t *ic)
  */
 void LE_PlaceItem (le_t *le)
 {
-	le_t *actor = NULL;
+	le_t *actor = nullptr;
 
 	assert(LE_IsItem(le));
 
@@ -917,7 +917,7 @@ void LE_AddGrenade (const fireDef_t *fd, int flags, const vec3_t muzzle, const v
 		le->ref1 = fd->impact;
 		le->ref2 = fd->impactSound;
 	} else {
-		le->ref1 = NULL;
+		le->ref1 = nullptr;
 		if (flags & SF_BOUNCING)
 			le->ref2 = fd->bounceSound;
 	}
@@ -958,10 +958,10 @@ bool LE_BrushModelAction (le_t *le, entity_t *ent)
 
 		ent->flags = 0; /* Do not draw anything at all, if drawFlags set to 0 */
 		enum { DRAW_TEXTURE = 0x1, DRAW_CIRCLES = 0x2 };
-		ent->model = NULL;
+		ent->model = nullptr;
 		ent->alpha = 0.3f;
 		VectorSet(ent->color, 0.5f, 1.0f, 0.0f);
-		if ((drawFlags & DRAW_TEXTURE) && ent->texture == NULL) {
+		if ((drawFlags & DRAW_TEXTURE) && ent->texture == nullptr) {
 			ent->flags = RF_BOX;
 			ent->texture = R_FindPics("sfx/misc/rescue");
 			VectorSet(ent->color, 1, 1, 1);
@@ -1027,7 +1027,7 @@ void LMT_Init (localModel_t* localModel)
 	}
 
 	/* no longer needed */
-	localModel->think = NULL;
+	localModel->think = nullptr;
 }
 
 /**
@@ -1049,7 +1049,7 @@ void LET_RotateDoor (le_t *le, int speed)
 	CL_RecalcRouting(le);
 
 	/* reset the think function as the movement finished */
-	LE_SetThink(le, NULL);
+	LE_SetThink(le, nullptr);
 }
 
 /**
@@ -1078,7 +1078,7 @@ void LET_SlideDoor (le_t *le, int speed)
 	VectorAdd(le->origin, moveAngles, le->origin);
 
 	/* get the direction vector from the movement angles that were set on the entity */
-	AngleVectors(moveAngles, moveDir, NULL, NULL);
+	AngleVectors(moveAngles, moveDir, nullptr, nullptr);
 	moveDir[0] = fabsf(moveDir[0]);
 	moveDir[1] = fabsf(moveDir[1]);
 	moveDir[2] = fabsf(moveDir[2]);
@@ -1117,7 +1117,7 @@ void LET_SlideDoor (le_t *le, int speed)
 		CL_RecalcRouting(le);
 
 		/* reset the think function as the movement finished */
-		LE_SetThink(le, NULL);
+		LE_SetThink(le, nullptr);
 	} else
 		le->thinkDelay = 1000;
 }
@@ -1171,7 +1171,7 @@ void LE_AddAmbientSound (const char *sound, const vec3_t origin, int levelflags,
  */
 le_t *LE_Add (int entnum)
 {
-	le_t *le = NULL;
+	le_t *le = nullptr;
 
 	while ((le = LE_GetNext(le))) {
 		if (!le->inuse)
@@ -1235,10 +1235,10 @@ void LE_CenterView (const le_t *le)
  */
 le_t *LE_Get (int entnum)
 {
-	le_t *le = NULL;
+	le_t *le = nullptr;
 
 	if (entnum == SKIP_LOCAL_ENTITY)
-		return NULL;
+		return nullptr;
 
 	while ((le = LE_GetNextInUse(le))) {
 		if (le->entnum == entnum)
@@ -1247,7 +1247,7 @@ le_t *LE_Get (int entnum)
 	}
 
 	/* didn't find it */
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -1258,7 +1258,7 @@ le_t *LE_Get (int entnum)
 bool LE_IsLocked (int entnum)
 {
 	le_t *le = LE_Get(entnum);
-	return (le != NULL && (le->flags & LE_LOCKED));
+	return (le != nullptr && (le->flags & LE_LOCKED));
 }
 
 /**
@@ -1301,7 +1301,7 @@ void LE_Unlock (le_t *le)
  */
 le_t *LE_GetFromPos (const pos3_t pos)
 {
-	le_t *le = NULL;
+	le_t *le = nullptr;
 
 	while ((le = LE_GetNextInUse(le))) {
 		if (VectorCompare(le->pos, pos))
@@ -1309,12 +1309,12 @@ le_t *LE_GetFromPos (const pos3_t pos)
 	}
 
 	/* didn't find it */
-	return NULL;
+	return nullptr;
 }
 
 /**
  * @brief Iterate through the list of entities
- * @param lastLE The entity found in the previous iteration; if NULL, we start at the beginning
+ * @param lastLE The entity found in the previous iteration; if nullptr, we start at the beginning
  */
 le_t* LE_GetNext (le_t* lastLE)
 {
@@ -1322,7 +1322,7 @@ le_t* LE_GetNext (le_t* lastLE)
 	le_t* le;
 
 	if (!cl.numLEs)
-		return NULL;
+		return nullptr;
 
 	if (!lastLE)
 		return cl.LEs;
@@ -1334,7 +1334,7 @@ le_t* LE_GetNext (le_t* lastLE)
 
 	le++;
 	if (le >= endOfLEs)
-		return NULL;
+		return nullptr;
 	else
 		return le;
 }
@@ -1343,7 +1343,7 @@ le_t* LE_GetNext (le_t* lastLE)
  * @brief Iterate through the entities that are in use
  * @note we can hopefully get rid of this function once we know when it makes sense
  * to iterate through entities that are NOT in use
- * @param lastLE The entity found in the previous iteration; if NULL, we start at the beginning
+ * @param lastLE The entity found in the previous iteration; if nullptr, we start at the beginning
  */
 le_t* LE_GetNextInUse (le_t* lastLE)
 {
@@ -1358,10 +1358,10 @@ le_t* LE_GetNextInUse (le_t* lastLE)
 
 /**
  * @brief Returns entities that have origins within a spherical area.
- * @param[in] from The entity to start the search from. @c NULL will start from the beginning.
+ * @param[in] from The entity to start the search from. @c nullptr will start from the beginning.
  * @param[in] org The origin that is the center of the circle.
  * @param[in] rad radius to search an edict in.
- * @param[in] type Type of local entity. @c ET_NULL to ignore the type.
+ * @param[in] type Type of local entity. @c ET_nullptr to ignore the type.
  */
 le_t *LE_FindRadius (le_t *from, const vec3_t org, float rad, entity_type_t type)
 {
@@ -1374,12 +1374,12 @@ le_t *LE_FindRadius (le_t *from, const vec3_t org, float rad, entity_type_t type
 			eorg[j] = org[j] - (le->origin[j] + (le->aabb.mins[j] + le->aabb.maxs[j]) * 0.5);
 		if (VectorLength(eorg) > rad)
 			continue;
-		if (type != ET_NULL && le->type != type)
+		if (type != ET_nullptr && le->type != type)
 			continue;
 		return le;
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -1389,7 +1389,7 @@ le_t *LE_FindRadius (le_t *from, const vec3_t org, float rad, entity_type_t type
  */
 le_t *LE_Find (entity_type_t type, const pos3_t pos)
 {
-	le_t *le = NULL;
+	le_t *le = nullptr;
 
 	while ((le = LE_GetNextInUse(le))) {
 		if (le->type == type && VectorCompare(le->pos, pos))
@@ -1398,7 +1398,7 @@ le_t *LE_Find (entity_type_t type, const pos3_t pos)
 	}
 
 	/* didn't find it */
-	return NULL;
+	return nullptr;
 }
 
 /** @sa BoxOffset in cl_actor.c */
@@ -1501,7 +1501,7 @@ void LE_AddToScene (void)
 				break;
 			}
 
-			if (LE_IsSelected(le) && le->clientAction != NULL) {
+			if (LE_IsSelected(le) && le->clientAction != nullptr) {
 				const le_t *action = le->clientAction;
 				LE_AddEdictHighlight(action);
 			}
@@ -1643,7 +1643,7 @@ static int32_t CL_HullForEntity (const le_t *le, int *tile, vec3_t rmaShift, vec
 		const cBspModel_t *model = LE_GetClipModel(le);
 		/* special value for bmodel */
 		if (!model)
-			Com_Error(ERR_DROP, "CL_HullForEntity: Error - le with NULL bmodel (%i)\n", le->type);
+			Com_Error(ERR_DROP, "CL_HullForEntity: Error - le with nullptr bmodel (%i)\n", le->type);
 		*tile = model->tile;
 		VectorCopy(le->angles, angles);
 		VectorCopy(model->shift, rmaShift);
@@ -1664,7 +1664,7 @@ static int32_t CL_HullForEntity (const le_t *le, int *tile, vec3_t rmaShift, vec
  */
 static void CL_ClipMoveToLEs (moveclip_t *clip)
 {
-	le_t *le = NULL;
+	le_t *le = nullptr;
 
 	if (clip->trace.allsolid)
 		return;
@@ -1744,8 +1744,8 @@ static inline void CL_TraceBounds (const vec3_t start, const vec3_t mins, const 
  * @param[in] start Start vector to start the trace from
  * @param[in] end End vector to stop the trace at
  * @param[in] box Bounding box used for tracing
- * @param[in] passle Ignore this local entity in the trace (might be NULL)
- * @param[in] passle2 Ignore this local entity in the trace (might be NULL)
+ * @param[in] passle Ignore this local entity in the trace (might be nullptr)
+ * @param[in] passle2 Ignore this local entity in the trace (might be nullptr)
  * @param[in] contentmask Searched content the trace should watch for
  * @param[in] worldLevel The worldlevel (0-7) to calculate the levelmask for the trace from
  */
@@ -1758,7 +1758,7 @@ trace_t CL_Trace (const vec3_t start, const vec3_t end, const AABB &box, const l
 
 	/* clip to world */
 	clip.trace = CM_CompleteBoxTrace(cl.mapTiles, start, end, box, (1 << (worldLevel + 1)) - 1, contentmask, 0);
-	clip.trace.le = NULL;
+	clip.trace.le = nullptr;
 	if (clip.trace.fraction == 0)
 		return clip.trace;		/* blocked by the world */
 

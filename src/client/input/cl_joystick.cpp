@@ -30,7 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui/ui_nodes.h"
 #include "../ui/node/ui_node_abstractoption.h"
 
-static SDL_Joystick *stick = NULL;
+static SDL_Joystick *stick = nullptr;
 static cvar_t *in_joystick;
 static cvar_t *in_joystickNo;
 static cvar_t *in_joystickThreshold;
@@ -271,7 +271,7 @@ void IN_JoystickMove (void)
  */
 void IN_JoystickInitMenu (void)
 {
-	uiNode_t* joystickOptions = NULL;
+	uiNode_t* joystickOptions = nullptr;
 	const int total = SDL_NumJoysticks();
 
 	if (total == 0) {
@@ -297,12 +297,12 @@ void IN_StartupJoystick (void)
 	in_joystickThreshold = Cvar_Get("in_joystickThreshold", "0.05", CVAR_ARCHIVE, "The threshold for the joystick axes");
 	in_joystickSpeed = Cvar_Get("in_joystickSpeed", "20", CVAR_ARCHIVE, "The joystick speed for the cursor");
 
-	if (stick != NULL) {
+	if (stick != nullptr) {
 		Com_Printf("... closing already initialized joystick\n");
 		SDL_JoystickClose(stick);
 	}
 
-	stick = NULL;
+	stick = nullptr;
 	OBJZERO(stick_state);
 
 	if (!SDL_WasInit(SDL_INIT_JOYSTICK)) {
@@ -325,7 +325,7 @@ void IN_StartupJoystick (void)
 
 	stick = SDL_JoystickOpen(in_joystickNo->integer);
 
-	if (stick == NULL) {
+	if (stick == nullptr) {
 		Com_Printf("no joystick found.\n");
 		return;
 	}

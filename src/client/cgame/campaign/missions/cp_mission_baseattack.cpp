@@ -72,7 +72,7 @@ void CP_BaseAttackMissionIsFailure (mission_t *mission)
 	}
 	ccs.mapAction = MA_NONE;
 
-	GEO_SetMissionAircraft(NULL);
+	GEO_SetMissionAircraft(nullptr);
 
 	INT_ChangeIndividualInterest(0.05f, INTERESTCATEGORY_BUILDING);
 	INT_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_BASE_ATTACK);
@@ -129,12 +129,12 @@ void CP_BaseAttackMissionDestroyBase (mission_t *mission)
 	CP_GameTimeStop();
 
 	/* we really don't want to use the fake aircraft anywhere */
-	GEO_SetMissionAircraft(NULL);
+	GEO_SetMissionAircraft(nullptr);
 
 	/* HACK This hack is only needed until base will be really destroyed
 	 * we must recalculate items in storage because of the items we collected on battlefield */
 	CAP_UpdateStorageCap(base);
-	base->aircraftCurrent = NULL;
+	base->aircraftCurrent = nullptr;
 	base->baseStatus = BASE_WORKING;
 }
 
@@ -243,20 +243,20 @@ void CP_CheckBaseAttacks (void)
 
 /**
  * @brief Choose Base that will be attacked
- * @return Pointer to the base, NULL if no base set
+ * @return Pointer to the base, nullptr if no base set
  * @note Base attack mission -- Stage 1
  */
 static base_t *CP_BaseAttackChooseBase (void)
 {
 	float randomNumber;
 	float sum = 0.0f;
-	base_t *base = NULL;
+	base_t *base = nullptr;
 
 	/* Choose randomly a base depending on alienInterest values for those bases */
-	while ((base = B_GetNext(base)) != NULL)
+	while ((base = B_GetNext(base)) != nullptr)
 		sum += base->alienInterest;
 	randomNumber = frand() * sum;
-	while ((base = B_GetNext(base)) != NULL) {
+	while ((base = B_GetNext(base)) != nullptr) {
 		randomNumber -= base->alienInterest;
 		if (randomNumber < 0)
 			break;
@@ -267,10 +267,10 @@ static base_t *CP_BaseAttackChooseBase (void)
 
 	/* base is already under attack */
 	if (B_IsUnderAttack(base))
-		return NULL;
+		return nullptr;
 	/* base not (yet) working */
 	if (!B_GetBuildingStatus(base, B_COMMAND))
-		return NULL;
+		return nullptr;
 
 	return base;
 }

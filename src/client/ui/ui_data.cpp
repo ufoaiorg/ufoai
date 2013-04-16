@@ -36,7 +36,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @brief
  */
 static const char *const ui_sharedDataIDNames[] = {
-	"", /**< NULL value */
+	"", /**< nullptr value */
 	STRINGIFY(TEXT_STANDARD),
 	STRINGIFY(TEXT_LIST),
 	STRINGIFY(TEXT_LIST2),
@@ -170,14 +170,14 @@ void UI_RegisterLinkedListText (int dataId, linkedList_t *text)
 const char *UI_GetText (int textId)
 {
 	if (ui_global.sharedData[textId].type != UI_SHARED_TEXT)
-		return NULL;
+		return nullptr;
 	return CL_Translate(ui_global.sharedData[textId].data.text);
 }
 
 const char *UI_GetTextFromList (int textId, int line)
 {
 	if (ui_global.sharedData[textId].type != UI_SHARED_LINKEDLISTTEXT)
-		return NULL;
+		return nullptr;
 	linkedList_t *list = ui_global.sharedData[textId].data.linkedListText;
 	return static_cast<const char*>(LIST_GetByIdx(list, line));
 }
@@ -199,13 +199,13 @@ uiNode_t* UI_AddOption (uiNode_t **tree, const char* name, const char* label, co
 {
 	uiNode_t *last;
 	uiNode_t *option;
-	assert(tree != NULL);
+	assert(tree != nullptr);
 
 	option = UI_AllocOptionNode(name, label, value);
 
 	/* append the option */
 	last = *tree;
-	if (last != NULL) {
+	if (last != nullptr) {
 		while (last->next)
 			last = last->next;
 	}
@@ -233,7 +233,7 @@ static void UI_DeleteOption (uiNode_t* tree)
 }
 
 /**
- * @brief Reset a shared data. Type became NONE and value became NULL
+ * @brief Reset a shared data. Type became NONE and value became nullptr
  */
 void UI_ResetData (int dataId)
 {
@@ -254,7 +254,7 @@ void UI_ResetData (int dataId)
 	}
 
 	ui_global.sharedData[dataId].type = UI_SHARED_NONE;
-	ui_global.sharedData[dataId].data.text = NULL;
+	ui_global.sharedData[dataId].data.text = nullptr;
 	ui_global.sharedData[dataId].versionId++;
 }
 
@@ -266,7 +266,7 @@ void UI_ResetData (int dataId)
 static uiNode_t *UI_OptionNodeRemoveHigherOption (uiNode_t **option)
 {
 	uiNode_t *prev = *option;
-	uiNode_t *prevfind = NULL;
+	uiNode_t *prevfind = nullptr;
 	uiNode_t *search = (*option)->next;
 	const char *label = CL_Translate(OPTIONEXTRADATA(*option).label);
 
@@ -282,7 +282,7 @@ static uiNode_t *UI_OptionNodeRemoveHigherOption (uiNode_t **option)
 	}
 
 	/* remove the first element */
-	if (prevfind == NULL) {
+	if (prevfind == nullptr) {
 		uiNode_t *tmp = *option;
 		*option = (*option)->next;
 		return tmp;
@@ -302,9 +302,9 @@ void UI_SortOptions (uiNode_t **first)
 
 	/* unlink the unsorted list */
 	option = *first;
-	if (option == NULL)
+	if (option == nullptr)
 		return;
-	*first = NULL;
+	*first = nullptr;
 
 	/* construct a sorted list */
 	while (option) {
@@ -322,7 +322,7 @@ void UI_SortOptions (uiNode_t **first)
  */
 void UI_UpdateInvisOptions (uiNode_t *option, const linkedList_t *stringList)
 {
-	if (option == NULL || stringList == NULL)
+	if (option == nullptr || stringList == nullptr)
 		return;
 
 	while (option) {
@@ -360,7 +360,7 @@ uiNode_t *UI_GetOption (int dataId)
 	if (ui_global.sharedData[dataId].type == UI_SHARED_OPTION) {
 		return ui_global.sharedData[dataId].data.option;
 	}
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -404,8 +404,8 @@ static uiNode_t* UI_FindOptionAtIndex (int index, uiNode_t* option, uiOptionIter
 		option = option->next;
 	}
 
-	iterator->option = NULL;
-	return NULL;
+	iterator->option = nullptr;
+	return nullptr;
 }
 
 /**
@@ -427,7 +427,7 @@ static uiNode_t* UI_FindOptionAtIndex (int index, uiNode_t* option, uiOptionIter
  */
 uiNode_t* UI_InitOptionIteratorAtIndex (int index, uiNode_t* option, uiOptionIterator_t* iterator)
 {
-	assert(option == NULL || option->behaviour == ui_optionBehaviour);
+	assert(option == nullptr || option->behaviour == ui_optionBehaviour);
 	OBJZERO(*iterator);
 	iterator->skipCollapsed = true;
 	iterator->skipInvisible = true;
@@ -448,7 +448,7 @@ uiNode_t* UI_OptionIteratorNextOption (uiOptionIterator_t* iterator)
 	iterator->depthPos++;
 
 	if (OPTIONEXTRADATA(option).collapsed && iterator->skipCollapsed)
-		option = NULL;
+		option = nullptr;
 	else
 		option = option->firstChild;
 
@@ -466,15 +466,15 @@ uiNode_t* UI_OptionIteratorNextOption (uiOptionIterator_t* iterator)
 		option = iterator->depthCache[iterator->depthPos]->next;
 	}
 
-	iterator->option = NULL;
-	return NULL;
+	iterator->option = nullptr;
+	return nullptr;
 }
 
 /**
  * @brief Find an option (and all his parents) by is value.
  * @param[in,out] iterator If it found an option, the iterator contain all option parent
  * @param[in] value The value we search
- * @return The right option, else NULL
+ * @return The right option, else nullptr
  */
 uiNode_t* UI_FindOptionByValue (uiOptionIterator_t* iterator, const char* value)
 {
@@ -484,7 +484,7 @@ uiNode_t* UI_FindOptionByValue (uiOptionIterator_t* iterator, const char* value)
 			return iterator->option;
 		UI_OptionIteratorNextOption(iterator);
 	}
-	return NULL;
+	return nullptr;
 }
 
 /**

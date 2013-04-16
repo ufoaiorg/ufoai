@@ -39,7 +39,7 @@ static const constListEntry_t saveStoredUFOConstants[] = {
 	{SAVE_STOREDUFOSTATUS_NAMESPACE"::recovered", SUFO_RECOVERED},
 	{SAVE_STOREDUFOSTATUS_NAMESPACE"::stored", SUFO_STORED},
 	{SAVE_STOREDUFOSTATUS_NAMESPACE"::transfered", SUFO_TRANSFERED},
-	{NULL, -1}
+	{nullptr, -1}
 };
 
 #endif

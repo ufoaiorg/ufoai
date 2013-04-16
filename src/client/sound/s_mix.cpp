@@ -87,7 +87,7 @@ void S_SpatializeChannel (const s_channel_t *ch)
 
 /**
  * @brief Validates the parms and queues the sound up
- * @param[in] origin if this is @c NULL, the sound will be dynamically sourced from the entity
+ * @param[in] origin if this is @c nullptr, the sound will be dynamically sourced from the entity
  * @param[in] sample The soundfile to play
  * @param[in] atten Attenuation of sound to be played (for example, @c fireAttenuation
  * or @c impactAttenuation from @c fireDef_s).
@@ -120,7 +120,7 @@ void S_PlaySample (const vec3_t origin, s_sample_t* sample, float atten, float r
 	ch->atten = atten;
 	ch->sample = sample;
 
-	if (origin != NULL) {
+	if (origin != nullptr) {
 		VectorCopy(origin, ch->org);
 		S_SpatializeChannel(ch);
 	}
@@ -143,7 +143,7 @@ void S_LoopSample (const vec3_t org, s_sample_t *sample, float relVolume, float 
 	if (!sample || !sample->chunk)
 		return;
 
-	ch = NULL;
+	ch = nullptr;
 
 	for (i = 0; i < MAX_CHANNELS; i++){  /* find existing loop sound */
 		if (s_env.channels[i].sample == sample) {
@@ -201,5 +201,5 @@ void S_StartLocalSample (const char *name, float relVolume)
 		Com_Printf("S_StartLocalSample: Failed to load %s\n", name);
 		return;
 	}
-	S_PlaySample(NULL, sample, SOUND_ATTN_NORM, relVolume);
+	S_PlaySample(nullptr, sample, SOUND_ATTN_NORM, relVolume);
 }

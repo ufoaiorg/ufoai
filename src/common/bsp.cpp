@@ -159,7 +159,7 @@ static void CMod_LoadNodes (MapTile &tile, const byte *base, const lump_t *l, co
 
 	for (i = 0; i < count; i++, out++, in++) {
 		if (LittleLong(in->planenum) == PLANENUM_LEAF)
-			out->plane = NULL;
+			out->plane = nullptr;
 		else
 			out->plane = tile.planes + LittleLong(in->planenum);
 
@@ -489,7 +489,7 @@ static void CMod_LoadRouting (MapTile &tile, mapData_t *mapData, const byte *bas
 	double start, end;
 	const int targetLength = sizeof(tile.wpMins) + sizeof(tile.wpMaxs) + sizeof(Routing);
 
-	start = time(NULL);
+	start = time(nullptr);
 
 	if (!l)
 		Com_Error(ERR_DROP, "CMod_LoadRouting: No lump given");
@@ -576,7 +576,7 @@ static void CMod_LoadRouting (MapTile &tile, mapData_t *mapData, const byte *bas
 
 	Com_DPrintf(DEBUG_ROUTING, "Done copying data.\n");
 
-	end = time(NULL);
+	end = time(nullptr);
 	Com_DPrintf(DEBUG_ROUTING, "Loaded routing for tile %s in %5.1fs\n", name, end - start);
 
 	Mem_Free(tempMap);
@@ -612,7 +612,7 @@ static void CMod_LoadEntityString (MapTile &tile, const char *entityString, mapD
 	/* merge entitystring information */
 	es = (const char *) (base + l->fileofs);
 	while (1) {
-		cBspModel_t *model = NULL;
+		cBspModel_t *model = nullptr;
 		/* parse the opening brace */
 		token = Com_Parse(&es);
 		if (!es)
@@ -652,7 +652,7 @@ static void CMod_LoadEntityString (MapTile &tile, const char *entityString, mapD
 				if (model) {
 					VectorSubtract(model->mins, shift, model->mins);
 					VectorSubtract(model->maxs, shift, model->maxs);
-					model = NULL; /* reset it, or the next origin will shift it again */
+					model = nullptr; /* reset it, or the next origin will shift it again */
 				}
 			} else if (Q_streq(keyname, "model") && token[0] == '*') {
 				/* adapt inline model number */
@@ -859,7 +859,7 @@ static void CMod_RerouteMap (mapTiles_t *mapTiles, mapData_t *mapData)
 	int x, y, z, dir;
 	double start, end;	/* stopwatch */
 
-	start = time(NULL);
+	start = time(nullptr);
 
 	GridBox rBox(mapData->mapMin, mapData->mapMax);	/* the box we will actually reroute */
 	rBox.clipToMaxBoundaries();
@@ -870,7 +870,7 @@ static void CMod_RerouteMap (mapTiles_t *mapTiles, mapData_t *mapData)
 			for (x = rBox.mins[0]; x <= rBox.maxs[0]; x++) {
 				if (mapData->reroute[size][y][x] == ROUTING_NOT_REACHABLE) {
 					for (z = rBox.maxs[2]; z >= rBox.mins[2]; z--) {
-						const int newZ = RT_CheckCell(mapTiles, mapData->routing, size + 1, x, y, z, NULL);
+						const int newZ = RT_CheckCell(mapTiles, mapData->routing, size + 1, x, y, z, nullptr);
 						assert(newZ <= z);
 						z = newZ;
 					}
@@ -899,14 +899,14 @@ static void CMod_RerouteMap (mapTiles_t *mapTiles, mapData_t *mapData)
 						tile2 = mapData->reroute[size][dy][dx];
 						/* Both cells are present and if either cell is ROUTING_NOT_REACHABLE or if the cells are different. */
 						if (tile2 && (tile2 == ROUTING_NOT_REACHABLE || tile2 != tile)) {
-							RT_UpdateConnectionColumn(mapTiles, mapData->routing, size + 1, x, y, dir, NULL);
+							RT_UpdateConnectionColumn(mapTiles, mapData->routing, size + 1, x, y, dir, nullptr);
 						}
 					}
 				}
 			}
 		}
 	}
-	end = time(NULL);
+	end = time(nullptr);
 	Com_Printf("Rerouted for RMA in %5.1fs\n", end - start);
 }
 
@@ -920,7 +920,7 @@ static void CMod_RerouteMap (mapTiles_t *mapTiles, mapData_t *mapData)
  * have to provide the positions where those tiles should be placed at.
  * @param[out] mapData The loaded data is stored here.
  * @param[in] mapTiles List of tiles the current (RMA-)map is composed of
- * @param[in] entityString An entity string that is used for all map tiles. Might be @c NULL.
+ * @param[in] entityString An entity string that is used for all map tiles. Might be @c nullptr.
  * @sa CM_AddMapTile
  * @sa R_ModBeginLoading
  */
@@ -1069,7 +1069,7 @@ float CM_GetVisibility (const mapTiles_t *mapTiles, const pos3_t position)
 	for (i = 0; i < mapTiles->numTiles; i++) {
 		const MapTile &tile = mapTiles->mapTiles[i];
 		if (VectorInside(position, tile.wpMins, tile.wpMaxs)) {
-			if (tile.lightdata == NULL)
+			if (tile.lightdata == nullptr)
 				return 1.0f;
 			/** @todo implement me */
 			return 1.0f;

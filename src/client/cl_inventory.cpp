@@ -34,7 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /**
  * @brief Gets equipment definition by id.
  * @param[in] name An id taken from scripts.
- * @return Found @c equipDef_t or @c NULL if no equipment definition found.
+ * @return Found @c equipDef_t or @c nullptr if no equipment definition found.
  */
 const equipDef_t *INV_GetEquipmentDefinitionByID (const char *name)
 {
@@ -78,7 +78,7 @@ bool INV_MoveItem (inventory_t* inv, const invDef_t *toContainer, int toX, int t
 	}
 
 	/* move the item */
-	moved = cls.i.moveInInventory(inv, fromContainer, fItem, toContainer, toX, toY, NULL, uponItem);
+	moved = cls.i.moveInInventory(inv, fromContainer, fItem, toContainer, toX, toY, nullptr, uponItem);
 
 	switch (moved) {
 	case IA_MOVE:
@@ -117,7 +117,7 @@ bool INV_LoadWeapon (const invList_t *weaponList, inventory_t *inv, const invDef
 	} else if (weapon->isReloadable()) {
 		const itemFilterTypes_t equipType = INV_GetFilterFromItem(weapon);
 		int i = 0;
-		invList_t *ic = NULL;
+		invList_t *ic = nullptr;
 		/* search an ammo */
 		while (i < weapon->numAmmos && !ic) {
 			const objDef_t *ammo = weapon->ammos[i];
@@ -125,7 +125,7 @@ bool INV_LoadWeapon (const invList_t *weaponList, inventory_t *inv, const invDef
 			i++;
 		}
 		if (ic) {
-			return INV_MoveItem(inv, destContainer, x, y, srcContainer, ic, NULL);
+			return INV_MoveItem(inv, destContainer, x, y, srcContainer, ic, nullptr);
 		}
 	}
 
@@ -146,10 +146,10 @@ bool INV_UnloadWeapon (Item *weapon, inventory_t *inv, const invDef_t *container
 		bool moved = false;
 		if (weapon->def() != weapon->ammoDef() && weapon->getAmmoLeft() > 0) {
 			const Item item(weapon->ammoDef());
-			moved = cls.i.addToInventory(inv, &item, container, NONE, NONE, 1) != NULL;
+			moved = cls.i.addToInventory(inv, &item, container, NONE, NONE, 1) != nullptr;
 		}
 		if (moved || weapon->def() == weapon->ammoDef()) {
-			weapon->setAmmoDef(NULL);
+			weapon->setAmmoDef(nullptr);
 			weapon->setAmmoLeft(0);
 			return moved;
 		}
@@ -366,11 +366,11 @@ invList_t *INV_SearchInInventoryWithFilter (const inventory_t* const inv, const 
 {
 	invList_t *ic;
 
-	if (inv == NULL)
-		return NULL;
+	if (inv == nullptr)
+		return nullptr;
 
-	if (item == NULL)
-		return NULL;
+	if (item == nullptr)
+		return nullptr;
 
 	for (ic = inv->getContainer3(container->id); ic; ic = ic->getNext()) {
 		/* Search only in the items that could get displayed. */
@@ -382,7 +382,7 @@ invList_t *INV_SearchInInventoryWithFilter (const inventory_t* const inv, const 
 	}
 
 	/* No item with these coordinates (or matching item) found. */
-	return NULL;
+	return nullptr;
 }
 
 /** Names of the filter types as used in console function. e.g. in .ufo files.

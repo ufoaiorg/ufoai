@@ -49,9 +49,9 @@ static void UI_TextNodeGenerateLineSplit (uiNode_t *node)
 
 	LIST_Delete(&EXTRADATA(node).lineSplit);
 
-	if (node->text != NULL)
+	if (node->text != nullptr)
 		data = UI_GetReferenceString(node, node->text);
-	else if (EXTRADATA(node).super.dataID != TEXT_NULL) {
+	else if (EXTRADATA(node).super.dataID != TEXT_nullptr) {
 		const uiSharedData_t *shared;
 		shared = &ui_global.sharedData[EXTRADATA(node).super.dataID];
 		switch (shared->type) {
@@ -71,7 +71,7 @@ static void UI_TextNodeGenerateLineSplit (uiNode_t *node)
 	while (data[0] != '\0') {
 		const char *next = strchr(data, '\n');
 		int lineSize;
-		if (next == NULL)
+		if (next == nullptr)
 			lineSize = strlen(data);
 		else
 			lineSize = next - data;
@@ -85,7 +85,7 @@ static void UI_TextNodeGenerateLineSplit (uiNode_t *node)
 		Q_strncpyz(buffer, data, lineSize + 1);
 		LIST_AddString(&EXTRADATA(node).lineSplit, buffer);
 
-		if (next == NULL)
+		if (next == nullptr)
 			break;
 		data = next + 1;
 	}
@@ -137,13 +137,13 @@ void uiText2Node::onMouseMove (uiNode_t *node, int x, int y)
  * A line break is between 2 element of the list. Text line is wrapped/truncated... according to
  * a node property
  * @param[in] node The context node
- * @param[in] list The test to draw else NULL
+ * @param[in] list The test to draw else nullptr
  * @param[in] noDraw If true, calling of this function only update the cache (real number of lines)
  */
 void uiText2Node::drawText (uiNode_t* node, const linkedList_t *list, bool noDraw)
 {
 	char newFont[MAX_VAR];
-	const char* oldFont = NULL;
+	const char* oldFont = nullptr;
 	int fullSizeY;
 	int x1; /* variable x position */
 	const char *font = UI_GetFontFromNode(node);
@@ -191,7 +191,7 @@ void uiText2Node::drawText (uiNode_t* node, const linkedList_t *list, bool noDra
 		x1 = x;
 		if (oldFont) {
 			font = oldFont;
-			oldFont = NULL;
+			oldFont = nullptr;
 		}
 
 		/* text styles and inline images */
@@ -212,7 +212,7 @@ void uiText2Node::drawText (uiNode_t* node, const linkedList_t *list, bool noDra
 		} else {
 			if (noDraw) {
 				int lines = 0;
-				R_FontTextSize(font, cur, width, (longlines_t)EXTRADATA(node).super.longlines, NULL, NULL, &lines, NULL);
+				R_FontTextSize(font, cur, width, (longlines_t)EXTRADATA(node).super.longlines, nullptr, nullptr, &lines, nullptr);
 				fullSizeY += lines;
 			} else
 				UI_DrawString(font, (align_t)node->contentAlign, x1, y, x, width, EXTRADATA(node).super.lineHeight, cur, viewSizeY, EXTRADATA(node).super.super.scrollY.viewPos, &fullSizeY, true, (longlines_t)EXTRADATA(node).super.longlines);
@@ -224,7 +224,7 @@ void uiText2Node::drawText (uiNode_t* node, const linkedList_t *list, bool noDra
 	/* update scroll status */
 	setScrollY(node, -1, viewSizeY, fullSizeY);
 
-	R_Color(NULL);
+	R_Color(nullptr);
 }
 
 void uiText2Node::updateCache (uiNode_t *node)
@@ -233,7 +233,7 @@ void uiText2Node::updateCache (uiNode_t *node)
 
 	UI_TextNodeGenerateLineSplit(node);
 
-	if (EXTRADATA(node).super.dataID == TEXT_NULL && node->text != NULL) {
+	if (EXTRADATA(node).super.dataID == TEXT_nullptr && node->text != nullptr) {
 		drawText(node, EXTRADATA(node).lineSplit, true);
 		return;
 	}
@@ -258,7 +258,7 @@ void uiText2Node::draw (uiNode_t *node)
 
 	validateCache(node);
 
-	if (EXTRADATA(node).super.dataID == TEXT_NULL && node->text != NULL) {
+	if (EXTRADATA(node).super.dataID == TEXT_nullptr && node->text != nullptr) {
 		drawText(node, EXTRADATA(node).lineSplit, false);
 		return;
 	}
@@ -358,7 +358,7 @@ void uiText2Node::onLoaded (uiNode_t *node)
 	}
 #endif
 
-	if (node->text == NULL && EXTRADATA(node).super.dataID == TEXT_NULL)
+	if (node->text == nullptr && EXTRADATA(node).super.dataID == TEXT_nullptr)
 		Com_Printf("UI_TextNodeLoaded: 'textid' property of node '%s' is not set\n", UI_GetPath(node));
 }
 

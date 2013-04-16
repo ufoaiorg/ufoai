@@ -77,8 +77,8 @@ int CL_ActorDoShootTime (const eventRegister_t *self, dbuffer *msg, eventTiming_
 
 /**
  * @brief Calculates the muzzle for the current weapon the actor is shooting with
- * @param[in] actor The actor that is shooting. Might not be @c NULL
- * @param[out] muzzle The muzzle vector to spawn the particle at. Might not be @c NULL. This is not
+ * @param[in] actor The actor that is shooting. Might not be @c nullptr
+ * @param[out] muzzle The muzzle vector to spawn the particle at. Might not be @c nullptr. This is not
  * modified if there is no tag for the muzzle found for the weapon or item the actor has
  * in the hand (also see the given shoot type)
  * @param[in] shootType The shoot type to determine which tag of the actor should be used
@@ -88,7 +88,7 @@ int CL_ActorDoShootTime (const eventRegister_t *self, dbuffer *msg, eventTiming_
 static void CL_ActorGetMuzzle (const le_t* actor, vec3_t muzzle, shoot_types_t shootType)
 {
 
-	if (actor == NULL)
+	if (actor == nullptr)
 		return;
 
 	const Item *weapon;
@@ -158,7 +158,7 @@ void CL_ActorDoShoot (const eventRegister_t *self, dbuffer *msg)
 		if (!leVictim)
 			LE_NotFoundError(victimEntnum);
 	} else {
-		leVictim = NULL;
+		leVictim = nullptr;
 	}
 
 	/* get shooter le */
@@ -174,7 +174,7 @@ void CL_ActorDoShoot (const eventRegister_t *self, dbuffer *msg)
 	LE_AddProjectile(fd, flags, muzzle, impact, normal, leVictim);
 
 	/* start the sound */
-	if ((first || !fd->soundOnce) && fd->fireSound != NULL && !(flags & SF_BOUNCED))
+	if ((first || !fd->soundOnce) && fd->fireSound != nullptr && !(flags & SF_BOUNCED))
 		S_LoadAndPlaySample(fd->fireSound, muzzle, fd->fireAttenuation, SND_VOLUME_WEAPONS);
 
 	/* do actor related stuff */

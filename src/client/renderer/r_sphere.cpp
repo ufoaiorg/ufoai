@@ -60,7 +60,7 @@ void R_SphereGenerate (sphere_t *sphere, const int tris, const float radius)
 	int vertspos = 0;
 	int texespos = 0;
 
-	sphere->glslProgram = NULL;
+	sphere->glslProgram = nullptr;
 
 	sphere->verts   = Mem_PoolAllocTypeN(float, (tris + 1) * (tris + 2) * 6, vid_genericPool);
 	sphere->texes   = Mem_PoolAllocTypeN(float, (tris + 1) * (tris + 2) * 4, vid_genericPool);
@@ -234,7 +234,7 @@ static void R_SphereShadeGLSL (const sphere_t *sphere)
 	R_SphereDeactivateTextureUnit(&texunit_2);
 
 	/* deactivate the shader program */
-	R_EnableLighting(NULL, false);
+	R_EnableLighting(nullptr, false);
 	R_SelectTexture(&texunit_diffuse);
 }
 
@@ -244,7 +244,7 @@ static void R_SphereShadeGLSL (const sphere_t *sphere)
  * @param[in] pos The position (translation) of the matrix
  * @param[in] rotate The rotation of the matrix
  * @param[in] scale The scale of the matrix
- * @param[in] lightPos Set this to NULL if you don't want to change the light position
+ * @param[in] lightPos Set this to nullptr if you don't want to change the light position
  */
 void R_SphereRender (const sphere_t *sphere, const vec3_t pos, const vec3_t rotate, const float scale, const vec4_t lightPos)
 {

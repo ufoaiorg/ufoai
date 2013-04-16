@@ -153,7 +153,7 @@ void R_SetArrayState (const mBspModel_t *bsp)
 	int arrays, mask;
 
 	if (r_vertexbuffers->modified) {  /* force a full re-bind */
-		r_array_state.bspmodel = NULL;
+		r_array_state.bspmodel = nullptr;
 		r_array_state.arrays = 0xFFFF;
 		r_vertexbuffers->modified = false;
 	}
@@ -182,7 +182,7 @@ void R_SetArrayState (const mBspModel_t *bsp)
 
 void R_ResetArrayState (void)
 {
-	r_array_state.bspmodel = NULL;
+	r_array_state.bspmodel = nullptr;
 	r_array_state.arrays = 0;
 
 	/* vbo */

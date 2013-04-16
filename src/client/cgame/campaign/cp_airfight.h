@@ -51,12 +51,12 @@ typedef struct aircraftProjectile_s {
 	bool hasMoved;       /**< Has the projectile been moved by the CampaignRunProjectiles function */
 	int numInterpolationPoints;	/**< Number of points drawn so far during interpolation. */
 	vec3_t idleTarget;		/**< target of the projectile
-							 ** used only if the projectile will miss its target (that is if aimedAircraft is NULL) */
-	aircraft_t *attackingAircraft;	/**< Aircraft which shot the projectile. NULL if aircraft is destroyed or base is shooting */
+							 ** used only if the projectile will miss its target (that is if aimedAircraft is nullptr) */
+	aircraft_t *attackingAircraft;	/**< Aircraft which shot the projectile. nullptr if aircraft is destroyed or base is shooting */
 	vec3_t attackerPos;		/**< position of the attacker.
-							 ** used only if base or samsite is shooting (attackingAircraft == NULL) */
+							 ** used only if base or samsite is shooting (attackingAircraft == nullptr) */
 	aircraft_t *aimedAircraft;	/**< target of the projectile/
-								 ** used only if the projectile will touch its target (otherwise it's NULL) */
+								 ** used only if the projectile will touch its target (otherwise it's nullptr) */
 	int time;				/**< time since the projectile has been launched */
 	float angle;			/**< angle of the missile on the geoscape */
 	bool bullets;		/**< projectile has active bullets on geoscape */

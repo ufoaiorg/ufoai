@@ -24,6 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "xml.h"
+#include "../shared/cxx.h"
 
 /**
  * @brief add a String attribute to the XML Node
@@ -398,13 +399,13 @@ double XML_GetDouble (xmlNode_t *parent, const char *name, const double defaultv
  * @param[in] name Name of the pos node
  * @param[out] pos vec2_t structure to fill
  * @return pointer to the node the data was retrieved from
- * @return NULL if no node with name found
+ * @return nullptr if no node with name found
  */
 xmlNode_t *XML_GetPos2 (xmlNode_t *parent, const char *name, vec2_t pos)
 {
 	xmlNode_t *p = XML_GetNode(parent, name);
 	if (!p)
-		return NULL;
+		return nullptr;
 	pos[0] = XML_GetFloat(p, "x", 0);
 	pos[1] = XML_GetFloat(p, "y", 0);
 	return p;
@@ -417,13 +418,13 @@ xmlNode_t *XML_GetPos2 (xmlNode_t *parent, const char *name, vec2_t pos)
  * @param[in] name Name of the pos node
  * @param[out] pos vec2_t structure to fill
  * @return pointer to the node the data was retrieved from
- * @return NULL if no Node with name found
+ * @return nullptr if no Node with name found
  */
 xmlNode_t *XML_GetNextPos2 (xmlNode_t *actual, xmlNode_t *parent, const char *name, vec2_t pos)
 {
 	xmlNode_t *p = XML_GetNextNode(actual, parent, name);
 	if (!p)
-		return NULL;
+		return nullptr;
 	pos[0] = XML_GetFloat(p, "x", 0);
 	pos[1] = XML_GetFloat(p, "y", 0);
 	return p;
@@ -435,13 +436,13 @@ xmlNode_t *XML_GetNextPos2 (xmlNode_t *actual, xmlNode_t *parent, const char *na
  * @param[in] name Name of the pos node
  * @param[out] pos vec3_t structure to fill
  * @return pointer to the node the data was retrieved from
- * @return NULL if no node with name found
+ * @return nullptr if no node with name found
  */
 xmlNode_t *XML_GetPos3 (xmlNode_t *parent, const char *name, vec3_t pos)
 {
 	xmlNode_t *p = XML_GetNode(parent, name);
 	if (!p)
-		return NULL;
+		return nullptr;
 	pos[0] = XML_GetFloat(p, "x", 0);
 	pos[1] = XML_GetFloat(p, "y", 0);
 	pos[2] = XML_GetFloat(p, "z", 0);
@@ -455,13 +456,13 @@ xmlNode_t *XML_GetPos3 (xmlNode_t *parent, const char *name, vec3_t pos)
  * @param[in] name Name of the pos node
  * @param[out] pos vec3_t structure to fill
  * @return pointer to the node the data was retrieved from
- * @return NULL if no Node with name found
+ * @return nullptr if no Node with name found
  */
 xmlNode_t *XML_GetNextPos3 (xmlNode_t *actual, xmlNode_t *parent, const char *name, vec3_t pos)
 {
 	xmlNode_t *p = XML_GetNextNode(actual, parent, name);
 	if (!p)
-		return NULL;
+		return nullptr;
 	pos[0] = XML_GetFloat(p, "x", 0);
 	pos[1] = XML_GetFloat(p, "y", 0);
 	pos[2] = XML_GetFloat(p, "z", 0);
@@ -475,13 +476,13 @@ xmlNode_t *XML_GetNextPos3 (xmlNode_t *actual, xmlNode_t *parent, const char *na
  * @param[out] day Day part of the date to fill
  * @param[out] sec Second part of the date to fill
  * @return pointer to the node the data was retrieved from
- * @return NULL if no node with name found
+ * @return nullptr if no node with name found
  */
 xmlNode_t *XML_GetDate (xmlNode_t *parent, const char *name, int *day, int *sec)
 {
 	xmlNode_t *p = XML_GetNode(parent, name);
 	if (!p)
-		return NULL;
+		return nullptr;
 	*day = XML_GetInt(p, "day", 0);
 	*sec = XML_GetInt(p, "sec", 0);
 	return p;
@@ -491,11 +492,11 @@ xmlNode_t *XML_GetDate (xmlNode_t *parent, const char *name, int *day, int *sec)
  * @brief Get first Node of the XML tree by name
  * @param[in] parent Parent XML Node structure
  * @param[in] name Name of the node to retrieve
- * @return pointer to the found XML Node structure or NULL
+ * @return pointer to the found XML Node structure or nullptr
  */
 xmlNode_t *XML_GetNode (xmlNode_t *parent, const char *name)
 {
-	return mxmlFindElement(parent, parent, name, NULL, NULL, MXML_DESCEND_FIRST);
+	return mxmlFindElement(parent, parent, name, nullptr, nullptr, MXML_DESCEND_FIRST);
 }
 
 /**
@@ -503,11 +504,11 @@ xmlNode_t *XML_GetNode (xmlNode_t *parent, const char *name)
  * @param[in] current Pointer to the previous Node was found
  * @param[in] parent Parent XML Node structure
  * @param[in] name Name of the node to retrieve
- * @return pointer to the found XML Node structure or NULL
+ * @return pointer to the found XML Node structure or nullptr
  */
 xmlNode_t *XML_GetNextNode (xmlNode_t *current, xmlNode_t *parent, const char *name)
 {
-	return mxmlFindElement(current, parent, name, NULL, NULL, MXML_NO_DESCEND);
+	return mxmlFindElement(current, parent, name, nullptr, nullptr, MXML_NO_DESCEND);
 }
 
 /**
@@ -518,7 +519,7 @@ static mxml_type_t mxml_ufo_type_cb (xmlNode_t *node)
 	/* You can lookup attributes and/or use the
 	 * element name, hierarchy, etc... */
 	const char *type = mxmlElementGetAttr(node, "type");
-	if (type == NULL)
+	if (type == nullptr)
 		type = node->value.element.name;
 
 	if (!strcmp(type, "int"))
@@ -535,5 +536,5 @@ static mxml_type_t mxml_ufo_type_cb (xmlNode_t *node)
 
 xmlNode_t *XML_Parse (const char *buffer)
 {
-	return mxmlLoadString(NULL, buffer, mxml_ufo_type_cb);
+	return mxmlLoadString(nullptr, buffer, mxml_ufo_type_cb);
 }

@@ -38,7 +38,7 @@ static int luaB_print (lua_State *L) {
     lua_pushvalue(L, i);   /* value to print */
     lua_call(L, 1, 1);
     s = lua_tostring(L, -1);  /* get result */
-    if (s == NULL)
+    if (s == nullptr)
       return luaL_error(L, LUA_QL("tostring") " must return a string to "
                            LUA_QL("print"));
     if (i>1) fputs("\t", stdout);
@@ -192,7 +192,7 @@ static int luaB_gcinfo (lua_State *L) {
 
 static int luaB_collectgarbage (lua_State *L) {
   static const char *const opts[] = {"stop", "restart", "collect",
-    "count", "step", "setpause", "setstepmul", NULL};
+    "count", "step", "setpause", "setstepmul", nullptr};
   static const int optsnum[] = {LUA_GCSTOP, LUA_GCRESTART, LUA_GCCOLLECT,
     LUA_GCCOUNT, LUA_GCSTEP, LUA_GCSETPAUSE, LUA_GCSETSTEPMUL};
   int o = luaL_checkoption(L, 1, "collect", opts);
@@ -283,7 +283,7 @@ static int luaB_loadstring (lua_State *L) {
 
 
 static int luaB_loadfile (lua_State *L) {
-  const char *fname = luaL_optstring(L, 1, NULL);
+  const char *fname = luaL_optstring(L, 1, nullptr);
   return load_aux(L, luaL_loadfile(L, fname));
 }
 
@@ -301,14 +301,14 @@ static const char *generic_reader (lua_State *L, void *ud, size_t *size) {
   lua_call(L, 0, 1);  /* call it */
   if (lua_isnil(L, -1)) {
     *size = 0;
-    return NULL;
+    return nullptr;
   }
   else if (lua_isstring(L, -1)) {
     lua_replace(L, 3);  /* save string in a reserved stack slot */
     return lua_tolstring(L, 3, size);
   }
   else luaL_error(L, "reader function must return a string");
-  return NULL;  /* to avoid warnings */
+  return nullptr;  /* to avoid warnings */
 }
 
 
@@ -317,13 +317,13 @@ static int luaB_load (lua_State *L) {
   const char *cname = luaL_optstring(L, 2, "=(load)");
   luaL_checktype(L, 1, LUA_TFUNCTION);
   lua_settop(L, 3);  /* function, eventual name, plus one reserved slot */
-  status = lua_load(L, generic_reader, NULL, cname);
+  status = lua_load(L, generic_reader, nullptr, cname);
   return load_aux(L, status);
 }
 
 
 static int luaB_dofile (lua_State *L) {
-  const char *fname = luaL_optstring(L, 1, NULL);
+  const char *fname = luaL_optstring(L, 1, nullptr);
   int n = lua_gettop(L);
   if (luaL_loadfile(L, fname) != 0) lua_error(L);
   lua_call(L, 0, LUA_MULTRET);
@@ -469,7 +469,7 @@ static const luaL_Reg base_funcs[] = {
   {"type", luaB_type},
   {"unpack", luaB_unpack},
   {"xpcall", luaB_xpcall},
-  {NULL, NULL}
+  {nullptr, nullptr}
 };
 
 
@@ -609,7 +609,7 @@ static const luaL_Reg co_funcs[] = {
   {"status", luaB_costatus},
   {"wrap", luaB_cowrap},
   {"yield", luaB_yield},
-  {NULL, NULL}
+  {nullptr, nullptr}
 };
 
 /* }====================================================== */

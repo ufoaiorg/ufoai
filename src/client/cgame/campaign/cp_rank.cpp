@@ -46,13 +46,13 @@ int CL_GetRankIdx (const char *rankID)
 /**
  * @brief Returns a rank at an index
  * @param[in] index Index of rank in ccs.ranks
- * @return NULL on invalid index
+ * @return nullptr on invalid index
  * @return pointer to the rank definition otherwise
  */
 rank_t *CL_GetRankByIdx (const int index)
 {
 	if (index < 0 || index >= ccs.numRanks)
-		return NULL;
+		return nullptr;
 
 	return &ccs.ranks[index];
 }
@@ -66,7 +66,7 @@ static const value_t rankValues[] = {
 	{"killed_others", V_INT, offsetof(rank_t, killedOthers), MEMBER_SIZEOF(rank_t, killedOthers)},
 	{"factor", V_FLOAT, offsetof(rank_t, factor), MEMBER_SIZEOF(rank_t, factor)},
 	{"level", V_INT, offsetof(rank_t, level), MEMBER_SIZEOF(rank_t, level)},
-	{NULL, V_NULL, 0, 0}
+	{nullptr, V_nullptr, 0, 0}
 };
 
 /**
@@ -127,13 +127,13 @@ void CL_ParseRanks (const char *name, const char **text)
 			Com_Printf("CL_ParseRanks: unknown token \"%s\" ignored (medal/rank %s)\n", token, name);
 	} while (*text);
 
-	if (rank->image == NULL || !strlen(rank->image))
+	if (rank->image == nullptr || !strlen(rank->image))
 		cgi->Com_Error(ERR_DROP, "CL_ParseRanks: image is missing for rank %s", rank->id);
 
-	if (rank->name == NULL || !strlen(rank->name))
+	if (rank->name == nullptr || !strlen(rank->name))
 		cgi->Com_Error(ERR_DROP, "CL_ParseRanks: name is missing for rank %s", rank->id);
 
-	if (rank->shortname == NULL || !strlen(rank->shortname))
+	if (rank->shortname == nullptr || !strlen(rank->shortname))
 		rank->shortname = rank->name;
 
 	if (rank->level == -1)

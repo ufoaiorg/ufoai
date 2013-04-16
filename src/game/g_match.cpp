@@ -183,9 +183,9 @@ static void G_UpdateCharacterExperience (Edict *ent)
 void G_MatchEndTrigger (int team, int timeGap)
 {
 	bool foundNextMap = false;
-	Edict *ent = NULL;
+	Edict *ent = nullptr;
 
-	while ((ent = G_EdictsGetTriggerNextMaps(ent)) != NULL) {
+	while ((ent = G_EdictsGetTriggerNextMaps(ent)) != nullptr) {
 		if (ent->team == team) {
 			ent->think = Think_NextMapTrigger;
 			ent->nextthink = 1;
@@ -246,8 +246,8 @@ static void G_MatchSendResults (int team, bool nextmap)
 	Edict *ent, *attacker;
 	int i, j = 0;
 
-	attacker = NULL;
-	ent = NULL;
+	attacker = nullptr;
+	ent = nullptr;
 	/* Calculate new scores/skills for the soldiers. */
 	while ((ent = G_EdictsGetNextLivingActor(ent))) {
 		if (!G_IsAI(ent))
@@ -258,7 +258,7 @@ static void G_MatchSendResults (int team, bool nextmap)
 
 	/* if aliens won, make sure every soldier that is not in the rescue zone dies */
 	if (team == TEAM_ALIEN) {
-		ent = NULL;
+		ent = nullptr;
 		while ((ent = G_EdictsGetNextLivingActor(ent)))
 			if (ent->team != team && !G_ActorIsInRescueZone(ent)) {
 				ent->HP = 0;
@@ -289,7 +289,7 @@ static void G_MatchSendResults (int team, bool nextmap)
 
 	/* how many actors */
 	j = 0;
-	ent = NULL;
+	ent = nullptr;
 	while ((ent = G_EdictsGetNextActor(ent)))
 		if (!G_IsAI(ent))
 			j++;
@@ -298,7 +298,7 @@ static void G_MatchSendResults (int team, bool nextmap)
 	gi.WriteByte(j);
 
 	if (j) {
-		ent = NULL;
+		ent = nullptr;
 		while ((ent = G_EdictsGetNextActor(ent))) {
 			if (!G_IsAI(ent)) {
 				G_SendCharacterData(ent);
@@ -323,7 +323,7 @@ bool G_MatchDoEnd (void)
 		/* now we cleanup the AI */
 		AIL_Cleanup();
 
-		if (level.mapEndCommand != NULL) {
+		if (level.mapEndCommand != nullptr) {
 			gi.AddCommandString(level.mapEndCommand);
 		}
 
@@ -355,10 +355,10 @@ void G_MatchEndCheck (void)
 
 	/** @todo count from 0 to get the civilians for objectives */
 	for (i = 1, activeTeams = 0, last = 0; i < MAX_TEAMS; i++) {
-		Edict *ent = NULL;
+		Edict *ent = nullptr;
 		/* search for living but not stunned actors - there must at least be one actor
 		 * that is still able to attack or defend himself */
-		while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, i)) != NULL) {
+		while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, i)) != nullptr) {
 			if (!G_IsStunned(ent)) {
 				last = i;
 				activeTeams++;

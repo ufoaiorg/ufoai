@@ -126,8 +126,8 @@ static void UR_DialogInit_f (void)
 static void UR_DialogInitStore_f (void)
 {
 	int count = 0;
-	linkedList_t *recoveryYardName = NULL;
-	linkedList_t *recoveryYardCapacity = NULL;
+	linkedList_t *recoveryYardName = nullptr;
+	linkedList_t *recoveryYardCapacity = nullptr;
 	static char cap[MAX_VAR];
 
 	/* Do nothing if recovery process is finished. */
@@ -164,7 +164,7 @@ static void UR_DialogInitStore_f (void)
  */
 static void UR_DialogStartStore_f (void)
 {
-	installation_t *installation = NULL;
+	installation_t *installation = nullptr;
 	int idx;
 	int count = 0;
 	date_t date;
@@ -206,7 +206,7 @@ static void UR_DialogStartStore_f (void)
 static void UR_DialogFillNations (void)
 {
 	int i;
-	linkedList_t *nationList = NULL;
+	linkedList_t *nationList = nullptr;
 
 	for (i = 0; i < ccs.numNations; i++) {
 		const nation_t *nation = ufoRecovery.ufoNations[i].nation;
@@ -322,7 +322,7 @@ static COMP_FUNCTION UR_GetSortFunctionByColumn (ufoRecoveryNationOrder_t column
 		return UR_CompareByHappiness;
 	default:
 		Com_Printf("UR_DialogSortByColumn_f: Invalid sort option!\n");
-		return NULL;
+		return nullptr;
 	}
 }
 
@@ -511,7 +511,7 @@ const char *US_StoredUFOStatus (const storedUFO_t *ufo)
 {
 	assert(ufo);
 
-	if (ufo->disassembly != NULL)
+	if (ufo->disassembly != nullptr)
 		return "disassembling";
 
 	switch (ufo->status) {
@@ -533,7 +533,7 @@ static void US_SelectStoredUfo_f (void)
 {
 	const storedUFO_t *ufo;
 
-	if (cgi->Cmd_Argc() < 2 || (ufo = US_GetStoredUFOByIDX(atoi(cgi->Cmd_Argv(1)))) == NULL) {
+	if (cgi->Cmd_Argc() < 2 || (ufo = US_GetStoredUFOByIDX(atoi(cgi->Cmd_Argv(1)))) == nullptr) {
 		cgi->UI_ExecuteConfunc("show_storedufo -");
 		return;
 	}
@@ -577,7 +577,7 @@ static void US_DestroySoredUFO_f (void)
 		cgi->UI_PopupButton(_("Destroy stored UFO"), _("Do you really want to destroy this stored UFO?"),
 			command, _("Destroy"), _("Destroy stored UFO"),
 			"ui_pop;", _("Cancel"), _("Forget it"),
-			NULL, NULL, NULL);
+			nullptr, nullptr, nullptr);
 		return;
 	}
 	US_RemoveStoredUFO(ufo);
@@ -641,14 +641,14 @@ static void US_FillUFOTransferUFOs_f (void)
 static void US_TransferUFO_f (void)
 {
 	storedUFO_t *ufo;
-	installation_t *ins = NULL;
+	installation_t *ins = nullptr;
 
 	if (cgi->Cmd_Argc() < 3) {
 		Com_Printf("Usage: %s <stored-ufo-idx>  <ufoyard-idx>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 	ufo = US_GetStoredUFOByIDX(atoi(cgi->Cmd_Argv(1)));
-	if (ufo == NULL) {
+	if (ufo == nullptr) {
 		Com_Printf("Stored ufo with idx %i not found.\n", atoi(cgi->Cmd_Argv(1)));
 		return;
 	}

@@ -87,7 +87,7 @@ bool uiKeyBindingNode::onKeyPressed (uiNode_t *node, unsigned int key, unsigned 
 		 * show the reason why nothing was changed */
 		if (!Q_streq(binding, command)) {
 			const char *keyStr = Key_KeynumToString(key);
-			UI_DisplayNotice(va(_("Key %s already bound"), keyStr), 2000, NULL);
+			UI_DisplayNotice(va(_("Key %s already bound"), keyStr), 2000, nullptr);
 		}
 		return false;
 	}
@@ -156,7 +156,7 @@ void uiKeyBindingNode::draw (uiNode_t *node)
 		bindingSize[0] - node->padding - node->padding, bindingSize[1] - node->padding - node->padding,
 		binding);
 
-	R_Color(NULL);
+	R_Color(nullptr);
 }
 
 /**

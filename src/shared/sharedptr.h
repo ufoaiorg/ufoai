@@ -217,7 +217,7 @@ public:
 	}
 
 	/**
-	 * Resets the SharedPtr object to a NULL pointer.
+	 * Resets the SharedPtr object to a nullptr pointer.
 	 */
 	void reset ()
 	{

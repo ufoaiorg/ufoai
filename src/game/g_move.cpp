@@ -59,7 +59,7 @@ static int forbiddenListLength;
  */
 static void G_BuildForbiddenList (int team, const Edict *movingActor)
 {
-	Edict *ent = NULL;
+	Edict *ent = nullptr;
 	teammask_t teamMask;
 
 	forbiddenListLength = 0;
@@ -135,8 +135,8 @@ void G_ActorFall (Edict *ent)
 	if (oldZ == ent->pos[2])
 		return;
 
-	entAtPos = G_GetEdictFromPos(ent->pos, ET_NULL);
-	if (entAtPos != NULL && (G_IsBreakable(entAtPos) || G_IsBlockingMovementActor(entAtPos))) {
+	entAtPos = G_GetEdictFromPos(ent->pos, ET_nullptr);
+	if (entAtPos != nullptr && (G_IsBreakable(entAtPos) || G_IsBlockingMovementActor(entAtPos))) {
 		const int diff = oldZ - ent->pos[2];
 		G_TakeDamage(entAtPos, (int)(FALLING_DAMAGE_FACTOR * (float)diff));
 	}
@@ -337,7 +337,7 @@ void G_ClientMove (const Player &player, int visTeam, Edict *ent, const pos3_t t
 
 	/* everything ok, found valid route? */
 	if (VectorCompare(pos, ent->pos)) {
-		byte* stepAmount = NULL;
+		byte* stepAmount = nullptr;
 		int usedTUs = 0;
 		/* no floor inventory at this point */
 		ent->resetFloor();
@@ -461,7 +461,7 @@ void G_ClientMove (const Player &player, int visTeam, Edict *ent, const pos3_t t
 				/** @todo Handle dazed via trigger_hurt */
 				/* maybe this was due to rf - then the G_ActorDie was already called */
 				if (!G_IsDead(ent)) {
-					G_CheckDeathOrKnockout(ent, NULL, NULL, (oldHP - ent->HP) + (ent->STUN - oldSTUN));
+					G_CheckDeathOrKnockout(ent, nullptr, nullptr, (oldHP - ent->HP) + (ent->STUN - oldSTUN));
 				}
 				G_MatchEndCheck();
 				return;

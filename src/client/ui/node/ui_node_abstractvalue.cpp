@@ -38,7 +38,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 static inline void UI_InitCvarOrFloat (float** adress, float defaultValue)
 {
-	if (*adress == NULL) {
+	if (*adress == nullptr) {
 		*adress = UI_AllocStaticFloat(1);
 		**adress = defaultValue;
 	}
@@ -71,10 +71,10 @@ void uiAbstractValueNode::deleteNode (uiNode_t *node)
 	Mem_Free(EXTRADATA(node).delta);
 	Mem_Free(EXTRADATA(node).max);
 	Mem_Free(EXTRADATA(node).min);
-	EXTRADATA(node).value = NULL;
-	EXTRADATA(node).delta = NULL;
-	EXTRADATA(node).max = NULL;
-	EXTRADATA(node).min = NULL;
+	EXTRADATA(node).value = nullptr;
+	EXTRADATA(node).delta = nullptr;
+	EXTRADATA(node).max = nullptr;
+	EXTRADATA(node).min = nullptr;
 }
 
 static void UI_CloneCvarOrFloat (const uiNode_t *source, uiNode_t *clone, const float*const* sourceData, float** cloneData)
@@ -104,10 +104,10 @@ float uiAbstractValueNode::getFactorFloat (const uiNode_t *node)
 
 void uiAbstractValueNode::setRange(uiNode_t* node, float min, float max)
 {
-	if (EXTRADATA(node).min == NULL) {
+	if (EXTRADATA(node).min == nullptr) {
 		UI_InitCvarOrFloat((float**)&EXTRADATA(node).min, min);
 	}
-	if (EXTRADATA(node).max == NULL) {
+	if (EXTRADATA(node).max == nullptr) {
 		UI_InitCvarOrFloat((float**)&EXTRADATA(node).max, max);
 	}
 }

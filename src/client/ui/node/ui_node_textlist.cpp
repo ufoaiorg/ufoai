@@ -149,7 +149,7 @@ void uiTextListNode::drawText (uiNode_t* node, const linkedList_t *list)
 	/* update scroll status */
 	setScrollY(node, -1, viewSizeY, count);
 
-	R_Color(NULL);
+	R_Color(nullptr);
 }
 
 /**

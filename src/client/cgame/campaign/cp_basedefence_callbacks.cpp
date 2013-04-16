@@ -66,7 +66,7 @@ static const char *BDEF_GetIDFromItemType (aircraftItemType_t type)
  */
 static void BDEF_UpdateAircraftItemList (const aircraftSlot_t *slot)
 {
-	linkedList_t *itemList = NULL;
+	linkedList_t *itemList = nullptr;
 	technology_t **list;
 
 	assert(slot);
@@ -115,11 +115,11 @@ static void BDEF_SelectItem_f (void)
 	if (slotIDX >= 0) {
 		const objDef_t *item;
 		slot = (installation) ? BDEF_GetInstallationSlotByIDX(installation, bdefType, slotIDX) : BDEF_GetBaseSlotByIDX(base, bdefType, slotIDX);
-		item = (slot) ? ( (slot->nextItem) ? slot->nextItem : slot->item ) : NULL;
+		item = (slot) ? ( (slot->nextItem) ? slot->nextItem : slot->item ) : nullptr;
 		UP_AircraftItemDescription(item);
 	} else if (itemIDX >= 0) {
 		technology_t **list;
-		technology_t *itemTech = NULL;
+		technology_t *itemTech = nullptr;
 		int i = 0;
 
 		slot = (installation) ? BDEF_GetInstallationSlotByIDX(installation, bdefType, 0) : BDEF_GetBaseSlotByIDX(base, bdefType, 0);
@@ -132,7 +132,7 @@ static void BDEF_SelectItem_f (void)
 			}
 			list++;
 		}
-		UP_AircraftItemDescription((itemTech) ? INVSH_GetItemByIDSilent(itemTech->provides) : NULL);
+		UP_AircraftItemDescription((itemTech) ? INVSH_GetItemByIDSilent(itemTech->provides) : nullptr);
 	} else {
 		Com_Printf("BDEF_AddItem_f: Invalid item-space.\n");
 	}
@@ -157,7 +157,7 @@ static void BDEF_AddSlotToSlotList (const aircraftSlot_t *slot, linkedList_t **s
 		else
 			status = _("Removing");
 
-		if (slot->nextItem != NULL)
+		if (slot->nextItem != nullptr)
 			tech = RS_GetTechForItem(slot->nextItem);
 		else
 			tech = RS_GetTechForItem(slot->item);
@@ -189,7 +189,7 @@ static void BDEF_BaseDefenceMenuUpdate_f (void)
 	base_t *base = B_GetCurrentSelectedBase();
 	installation_t *installation = INS_GetCurrentSelectedInstallation();
 	aircraftItemType_t bdefType;
-	linkedList_t *slotList = NULL;
+	linkedList_t *slotList = nullptr;
 	const bool missileResearched = RS_IsResearched_ptr(RS_GetTechByID("rs_building_missile"));
 	const bool laserResearched = RS_IsResearched_ptr(RS_GetTechByID("rs_building_laser"));
 
@@ -203,7 +203,7 @@ static void BDEF_BaseDefenceMenuUpdate_f (void)
 	cgi->UI_ResetData(TEXT_LIST);
 	cgi->UI_ResetData(TEXT_ITEMDESCRIPTION);
 
-	/* base or installation should not be NULL because we are in the menu of this base or installation */
+	/* base or installation should not be nullptr because we are in the menu of this base or installation */
 	if (!base && !installation)
 		return;
 
@@ -311,7 +311,7 @@ static void BDEF_AddItem_f (void)
 	installation_t* installation = INS_GetCurrentSelectedInstallation();
 	base_t *base = B_GetCurrentSelectedBase();
 	technology_t **list;
-	technology_t *itemTech = NULL;
+	technology_t *itemTech = nullptr;
 	aircraftItemType_t bdefType;
 	int slotIDX;
 
@@ -547,7 +547,7 @@ static void BDEF_RemoveBattery_f (void)
 			return;
 		}
 
-		building = NULL;
+		building = nullptr;
 		workingNum = 0;
 		while ((building = B_GetNextBuildingByType(base, building, type)))
 			if (building->buildingStatus == B_STATUS_WORKING)
@@ -596,7 +596,7 @@ static void BDEF_AddBattery_f (void)
 	}
 
 	base = B_GetBaseByIDX(atoi(cgi->Cmd_Argv(2)));
-	if (base == NULL) {
+	if (base == nullptr) {
 		Com_Printf("BDEF_AddBattery_f: Invalid base index given\n");
 		return;
 	}
@@ -615,7 +615,7 @@ static void BDEF_SetAutoFire (baseWeapon_t *weapon, bool state)
 	assert(weapon);
 	weapon->autofire = state;
 	if (!weapon->autofire) {
-		weapon->target = NULL;
+		weapon->target = nullptr;
 		cgi->Cvar_Set("mn_target", _("None"));
 	}
 }
@@ -635,7 +635,7 @@ static void BDEF_UpdateActiveBattery_f (void)
 	}
 
 	base = B_GetBaseByIDX(atoi(cgi->Cmd_Argv(2)));
-	if (base == NULL) {
+	if (base == nullptr) {
 		Com_Printf("BDEF_UpdateActiveBattery_f: Invalid base index given\n");
 		return;
 	}
@@ -686,7 +686,7 @@ void BDEF_InitCallbacks (void)
 	cgi->Cmd_AddCommand("add_battery", BDEF_AddBattery_f, "Add a new battery to base");
 	cgi->Cmd_AddCommand("remove_battery", BDEF_RemoveBattery_f, "Remove a battery from base");
 	cgi->Cmd_AddCommand("basedef_updatemenu", BDEF_BaseDefenceMenuUpdate_f, "Inits base defence menu");
-	cgi->Cmd_AddCommand("basedef_selectitem", BDEF_SelectItem_f, NULL);
+	cgi->Cmd_AddCommand("basedef_selectitem", BDEF_SelectItem_f, nullptr);
 	cgi->Cmd_AddCommand("basedef_additem", BDEF_AddItem_f, "Add item to slot");
 	cgi->Cmd_AddCommand("basedef_removeitem", BDEF_RemoveItem_f, "Remove item from slot");
 	cgi->Cmd_AddCommand("basedef_autofire", BDEF_ChangeAutoFire, "Change autofire option for selected defence system");

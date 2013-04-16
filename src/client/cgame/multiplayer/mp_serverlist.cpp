@@ -156,7 +156,7 @@ static void CL_PingServerCallback (struct net_stream *s)
  */
 static void CL_PingServer (serverList_t *server)
 {
-	struct net_stream *s = cgi->NET_Connect(server->node, server->service, NULL);
+	struct net_stream *s = cgi->NET_Connect(server->node, server->service, nullptr);
 
 	if (s) {
 		cgi->Com_DPrintf(DEBUG_CLIENT, "pinging [%s]:%s...\n", server->node, server->service);
@@ -218,8 +218,8 @@ void CL_ParseTeamInfoMessage (dbuffer *msg)
 {
 	char str[4096];
 	int cnt = 0;
-	linkedList_t *userList = NULL;
-	linkedList_t *userTeam = NULL;
+	linkedList_t *userList = nullptr;
+	linkedList_t *userTeam = nullptr;
 
 	if (cgi->NET_ReadString(msg, str, sizeof(str)) == 0) {
 		cgi->UI_ResetData(TEXT_MULTIPLAYER_USERLIST);
@@ -492,7 +492,7 @@ static void CL_ServerInfo_f (void)
 		}
 		break;
 	}
-	s = cgi->NET_Connect(host, port, NULL);
+	s = cgi->NET_Connect(host, port, nullptr);
 	if (s) {
 		cgi->NET_OOB_Printf(s, "status %i", PROTOCOL_VERSION);
 		cgi->NET_StreamSetCallback(s, &CL_ServerInfoCallback);
@@ -540,7 +540,7 @@ static int lastServerQuery = 0;
  */
 void CL_PingServers_f (void)
 {
-	selectedServer = NULL;
+	selectedServer = nullptr;
 
 	/* refresh the list */
 	if (cgi->Cmd_Argc() == 2) {
@@ -561,7 +561,7 @@ void CL_PingServers_f (void)
 	}
 
 	if (!netDatagramSocket)
-		netDatagramSocket = cgi->NET_DatagramSocketNew(NULL, DOUBLEQUOTE(PORT_CLIENT), &CL_ServerListDiscoveryCallback);
+		netDatagramSocket = cgi->NET_DatagramSocketNew(nullptr, DOUBLEQUOTE(PORT_CLIENT), &CL_ServerListDiscoveryCallback);
 
 	/* broadcast search for all the servers int the local network */
 	if (netDatagramSocket) {
@@ -597,10 +597,10 @@ void MP_ServerListInit (const cgame_import_t *import)
 	cl_serverlist = cgi->Cvar_Get("cl_serverlist", "0", CVAR_ARCHIVE, "0=show all, 1=hide full - servers on the serverlist");
 
 	cgi->Cmd_AddCommand("bookmark_add", CL_BookmarkAdd_f, "Add a new bookmark - see adrX cvars");
-	cgi->Cmd_AddCommand("server_info", CL_ServerInfo_f, NULL);
-	cgi->Cmd_AddCommand("serverlist", CL_PrintServerList_f, NULL);
+	cgi->Cmd_AddCommand("server_info", CL_ServerInfo_f, nullptr);
+	cgi->Cmd_AddCommand("serverlist", CL_PrintServerList_f, nullptr);
 	/* text id is servers in menu_multiplayer.ufo */
-	cgi->Cmd_AddCommand("servers_click", CL_ServerListClick_f, NULL);
+	cgi->Cmd_AddCommand("servers_click", CL_ServerListClick_f, nullptr);
 }
 
 void MP_ServerListShutdown (void)
@@ -611,5 +611,5 @@ void MP_ServerListShutdown (void)
 	cgi->Cmd_RemoveCommand("servers_click");
 
 	cgi->NET_DatagramSocketClose(netDatagramSocket);
-	netDatagramSocket = NULL;
+	netDatagramSocket = nullptr;
 }

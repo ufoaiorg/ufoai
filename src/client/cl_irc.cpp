@@ -353,7 +353,7 @@ static bool Irc_Proto_Connect (const char *host, const char *port)
 {
 	const bool status = Irc_Net_Connect(host, port);
 	if (!status) {
-		irc_bucket.first_msg = NULL;
+		irc_bucket.first_msg = nullptr;
 		irc_bucket.message_size = 0;
 		irc_bucket.character_size = 0;
 		irc_bucket.last_refill = CL_Milliseconds();
@@ -377,7 +377,7 @@ static bool Irc_Proto_Disconnect (void)
 			Mem_Free(prev->msg);
 			Mem_Free(prev);
 		}
-		irc_bucket.first_msg = NULL;
+		irc_bucket.first_msg = nullptr;
 		irc_bucket.message_size = 0;
 		irc_bucket.character_size = 0;
 	}
@@ -669,7 +669,7 @@ static void Irc_Client_CmdRplWhowasuser (const char *params, const char *trailin
 
 	/* parse params "<nick> <user> <host> * :<real name>" */
 	Q_strncpyz(buf, params, sizeof(buf));
-	for (p = strtok(buf, " "); p; p = strtok(NULL, " "), ++i) {
+	for (p = strtok(buf, " "); p; p = strtok(nullptr, " "), ++i) {
 		switch (i) {
 		case 1:
 			nick = p;
@@ -708,7 +708,7 @@ static void Irc_Client_CmdRplWhoisuser (const char *params, const char *trailing
 
 	/* parse params "<nick> <user> <host> * :<real name>" */
 	strcpy(buf, params);
-	for (p = strtok(buf, " "); p; p = strtok(NULL, " "), ++i) {
+	for (p = strtok(buf, " "); p; p = strtok(nullptr, " "), ++i) {
 		switch (i) {
 		case 1:
 			nick = p;
@@ -733,7 +733,7 @@ static void Irc_Client_CmdRplWhoisserver (const char *params, const char *traili
 
 	/* parse params "<nick> <server> :<server info>" */
 	strcpy(buf, params);
-	for (p = strtok(buf, " "); p; p = strtok(NULL, " "), ++i) {
+	for (p = strtok(buf, " "); p; p = strtok(nullptr, " "), ++i) {
 		switch (i) {
 		case 1:
 			nick = p;
@@ -755,7 +755,7 @@ static void Irc_Client_CmdRplWhoisaccount (const char *params, const char *trail
 
 	/* parse params "<nick> <account> :is logged in as" */
 	strcpy(buf, params);
-	for (p = strtok(buf, " "); p; p = strtok(NULL, " "), ++i) {
+	for (p = strtok(buf, " "); p; p = strtok(nullptr, " "), ++i) {
 		switch (i) {
 		case 1:
 			nick = p;
@@ -777,7 +777,7 @@ static void Irc_Client_CmdRplWhoisidle (const char *params, const char *trailing
 
 	/* parse params "<nick> <integer> :seconds idle" */
 	strcpy(buf, params);
-	for (p = strtok(buf, " "); p; p = strtok(NULL, " "), ++i) {
+	for (p = strtok(buf, " "); p; p = strtok(nullptr, " "), ++i) {
 		switch (i) {
 		case 1:
 			nick = p;
@@ -799,7 +799,7 @@ static void Irc_Client_CmdRplWhoreply (const char *params, const char *trailing)
 
 	/* parse params "<channel> <user> <host> <server> <nick> <H|G>[*][@|+] :<hopcount> <real name>" */
 	strcpy(buf, params);
-	for (p = strtok(buf, " "); p; p = strtok(NULL, " "), ++i) {
+	for (p = strtok(buf, " "); p; p = strtok(nullptr, " "), ++i) {
 		switch (i) {
 		case 0:
 			channel = p;
@@ -877,7 +877,7 @@ static void Irc_Client_CmdKick (const char *prefix, const char *params, const ch
 	Irc_ParseName(prefix, nick, sizeof(nick), &p);
 	strcpy(buf, params);
 	channel = strtok(buf, " ");
-	victim = strtok(NULL, " ");
+	victim = strtok(nullptr, " ");
 	if (Q_streq(victim, irc_nick->string)) {
 		/* we have been kicked */
 		Irc_AppendToBuffer("^BYou were kicked from %s by %s (%s)", channel, nick, trailing);
@@ -938,7 +938,7 @@ static void Irc_Client_CmdPrivmsg (const char *prefix, const char *params, const
 			response[2] = 'O'; /* PING => PONG */
 			Irc_Proto_Notice(nick, response);
 		} else if (Q_streq(trailing + 1, "TIME" IRC_CTCP_MARKER_STR)) {
-			const time_t t = time(NULL);
+			const time_t t = time(nullptr);
 			char response[IRC_SEND_BUF_SIZE];
 			const size_t response_len = sprintf(response, IRC_CTCP_MARKER_STR "TIME :%s" IRC_CTCP_MARKER_STR, ctime(&t));
 			response[response_len - 1] = '\0';	/* remove trailing \n */
@@ -954,7 +954,7 @@ static void Irc_Client_CmdPrivmsg (const char *prefix, const char *params, const
 			Q_strncpyz(serverIPAndPort, trailing + strlen(IRC_INVITE_FOR_A_GAME), sizeof(serverIPAndPort));
 			/* values are splitted by ; */
 			port = strstr(serverIPAndPort, ";");
-			if (port == NULL) {
+			if (port == nullptr) {
 				Com_DPrintf(DEBUG_CLIENT, "Invalid irc invite message received\n");
 				return;
 			}
@@ -964,7 +964,7 @@ static void Irc_Client_CmdPrivmsg (const char *prefix, const char *params, const
 
 			/* the version is optional */
 			version = strstr(port, ";");
-			if (version != NULL) {
+			if (version != nullptr) {
 				/* split port and version */
 				*version++ = '\0';
 				if (!Q_streq(version, UFO_VERSION)) {
@@ -1040,7 +1040,7 @@ static void Irc_Client_CmdRplEndofnames (const char *params, const char *trailin
 static bool Irc_Proto_ProcessServerMsg (const irc_server_msg_t *msg)
 {
 	irc_command_t cmd;
-	const char *p = NULL;
+	const char *p = nullptr;
 	cmd.type = msg->type;
 
 	/** @todo Skip non printable chars here */
@@ -1205,7 +1205,7 @@ static bool Irc_Proto_ProcessServerMsg (const irc_server_msg_t *msg)
 		else if (!strncmp(cmd.id.string, "KICK", 4))
 			Irc_Client_CmdKick(msg->prefix, msg->params, msg->trailing);
 		else if (!strncmp(cmd.id.string, "PING", 4))
-			Irc_Proto_Pong(irc_nick->string, msg->params, msg->trailing[0] ? msg->trailing : NULL);
+			Irc_Proto_Pong(irc_nick->string, msg->params, msg->trailing[0] ? msg->trailing : nullptr);
 		else if (!strncmp(cmd.id.string, "ERROR", 5)) {
 			Irc_Logic_Disconnect(msg->trailing);
 			Q_strncpyz(popupText, msg->trailing, sizeof(popupText));
@@ -1331,7 +1331,7 @@ static bool Irc_Proto_Enqueue (const char *msg, size_t msg_len)
 		m->msg = Mem_AllocTypeN(char, msg_len);
 		memcpy(m->msg, msg, msg_len);
 		m->msg_len = msg_len;
-		m->next = NULL;
+		m->next = nullptr;
 		/* append message node */
 		irc_bucket_message_t **anchor = &irc_bucket.first_msg;
 		while (*anchor) anchor = &(*anchor)->next;
@@ -1467,7 +1467,7 @@ static void Irc_Logic_Disconnect (const char *reason)
 	Irc_Proto_Quit(reason);
 	Irc_Proto_Disconnect();
 	irc_connected = false;
-	chan = NULL;
+	chan = nullptr;
 	Cvar_ForceSet("irc_defaultChannel", "");
 	Cvar_ForceSet("irc_topic", "Connecting (please wait)...");
 	UI_ResetData(TEXT_IRCUSERS);
@@ -1486,7 +1486,7 @@ void Irc_Logic_Frame (void)
 			Irc_Logic_Disconnect("Switched to another channel");
 			Irc_Logic_Connect(irc_server->string, irc_port->string);
 			if (irc_connected)
-				Irc_Client_Join(irc_channel->string, NULL);
+				Irc_Client_Join(irc_channel->string, nullptr);
 		}
 		/* could have changed in the meantime */
 		if (irc_connected) {
@@ -1535,7 +1535,7 @@ static void Irc_Logic_RemoveChannelName (irc_channel_t *channel, const char *nic
 	int i;
 	/* first one */
 	irc_user_t* user = channel->user;
-	irc_user_t* predecessor = NULL;
+	irc_user_t* predecessor = nullptr;
 	for (i = 0; user && i < channel->users; i++, user = user->next) {
 		if (!strncmp(&(user->key[1]), nick, sizeof(user->key))) {
 			/* delete the first user from the list */
@@ -1561,7 +1561,7 @@ Network functions
 
 static void Irc_Net_StreamClose (void)
 {
-	irc_stream = NULL;
+	irc_stream = nullptr;
 }
 
 /**
@@ -1616,7 +1616,7 @@ static void Irc_Connect_f (void)
 			Com_Printf("Connecting to %s:%s\n", irc_server->string, irc_port->string);
 			Irc_Logic_Connect(irc_server->string, irc_port->string);
 			if (irc_connected && argc >= 4)
-				Irc_Client_Join(Cmd_Argv(3), NULL);
+				Irc_Client_Join(Cmd_Argv(3), nullptr);
 		} else {
 			Com_Printf("Already connected.\n");
 		}
@@ -1658,7 +1658,7 @@ static void Irc_Client_Join_f (void)
 	if (argc >= 2 && argc <= 3) {
 		const char * const channel = Cmd_Argv(1);
 		/* password is optional */
-		const char * const channel_pass = (argc == 3) ? Cmd_Argv(2) : NULL;
+		const char * const channel_pass = (argc == 3) ? Cmd_Argv(2) : nullptr;
 		Irc_Client_Join(channel, channel_pass);
 	} else {
 		Com_Printf("Usage: %s <channel> [<password>]\n", Cmd_Argv(0));
@@ -1737,7 +1737,7 @@ static void Irc_Client_Mode_f (void)
 		const char * const modes = Cmd_Argv(2);
 		const char * const params = argc >= 4
 			? Cmd_Args() + strlen(target) + strlen(modes) + 2
-			: NULL;
+			: nullptr;
 		Irc_Proto_Mode(target, modes, params);
 	} else
 		Com_Printf("Usage: %s <target> <modes> {<param>}\n", Cmd_Argv(0));
@@ -1785,7 +1785,7 @@ static void Irc_Client_Names_f (void)
 		Com_Printf("Not joined\n");
 		return;
 	}
-	linkedList_t *irc_names_buffer = NULL;
+	linkedList_t *irc_names_buffer = nullptr;
 	int i;
 	irc_user_t* user = chan->user;
 	for (i = 0; i < chan->users; i++) {
@@ -1819,7 +1819,7 @@ static void Irc_Client_Kick_f (void)
 	if (argc >= 4)
 		reason = Cmd_Args() + strlen(nick) + strlen(channel) + 2;
 	else
-		reason = NULL;
+		reason = nullptr;
 	Irc_Proto_Kick(channel, nick, reason);
 }
 

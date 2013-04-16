@@ -33,7 +33,7 @@ static aircraftItemType_t airequipID = MAX_ACITEMS;				/**< value of aircraftIte
 
 static int airequipSelectedZone = ZONE_NONE;		/**< Selected zone in equip menu */
 static int airequipSelectedSlot = ZONE_NONE;			/**< Selected slot in equip menu */
-static technology_t *aimSelectedTechnology = NULL;		/**< Selected technology in equip menu */
+static technology_t *aimSelectedTechnology = nullptr;		/**< Selected technology in equip menu */
 
 /**
  * @brief Check airequipID value and set the correct values for aircraft items
@@ -103,7 +103,7 @@ aircraftSlot_t *AII_SelectAircraftSlot (aircraft_t *aircraft, aircraftItemType_t
 		break;
 	default:
 		Com_Printf("AII_SelectAircraftSlot: Unknown airequipID: %i\n", type);
-		return NULL;
+		return nullptr;
 	}
 
 	return slot;
@@ -191,12 +191,12 @@ static bool AIM_CrafttypeFilter (const base_t *base, aircraftItemType_t filterTy
  */
 static void AIM_UpdateAircraftItemList (const aircraftSlot_t *slot)
 {
-	linkedList_t *amountList = NULL;
+	linkedList_t *amountList = nullptr;
 	technology_t **techList;
 	technology_t **currentTech;
 	const base_t *base = slot->aircraft->homebase;
 	int count = 0;
-	uiNode_t *AIM_items = NULL;
+	uiNode_t *AIM_items = nullptr;
 
 	/* Add all items corresponding to airequipID to list */
 	techList = AII_GetCraftitemTechsByType(airequipID);
@@ -362,7 +362,7 @@ static void AIM_AircraftEquipMenuUpdate (void)
 			AII_WeightToName(slot->size)), sizeof(smallbuffer1));
 	} else {
 		technology_t *itemTech = RS_GetTechForItem(slot->item);
-		technology_t *nextItemTech = slot->nextItem ? RS_GetTechForItem(slot->nextItem) : NULL;
+		technology_t *nextItemTech = slot->nextItem ? RS_GetTechForItem(slot->nextItem) : nullptr;
 		/* Print next item if we are removing item currently installed and a new item has been added. */
 		Com_sprintf(smallbuffer1, sizeof(smallbuffer1), "%s\n", slot->nextItem ? _(nextItemTech->name) : _(itemTech->name));
 		if (!slot->installationTime) {
@@ -441,10 +441,10 @@ static int AIM_CheckTechnologyIntoSlot (const aircraftSlot_t *slot, const techno
 	if (item->craftitem.type >= AC_ITEM_AMMO) {
 		const objDef_t *weapon = slot->item;
 		int k;
-		if (slot->nextItem != NULL)
+		if (slot->nextItem != nullptr)
 			weapon = slot->nextItem;
 
-		if (weapon == NULL)
+		if (weapon == nullptr)
 			return AIM_LOADING_NOWEAPON;
 
 		/* Is the ammo is usable with the slot */
@@ -509,7 +509,7 @@ static void AIM_UpdateItemDescription (bool fromList, bool fromSlot)
 	/* update mini ufopedia */
 	/** @todo we should clone the text, and not using the ufopedia text */
 	if (fromList)
-		UP_AircraftItemDescription(INVSH_GetItemByIDSilent(aimSelectedTechnology ? aimSelectedTechnology->provides : NULL));
+		UP_AircraftItemDescription(INVSH_GetItemByIDSilent(aimSelectedTechnology ? aimSelectedTechnology->provides : nullptr));
 	else if (fromSlot) {
 		if (airequipID == AC_ITEM_AMMO)
 			UP_AircraftItemDescription(slot->ammo);
@@ -736,7 +736,7 @@ static void AIM_AircraftEquipAddItem_f (void)
 {
 	int zone;
 	aircraftSlot_t *slot;
-	aircraft_t *aircraft = NULL;
+	aircraft_t *aircraft = nullptr;
 	base_t *base = B_GetCurrentSelectedBase();
 
 	zone = (airequipID == AC_ITEM_AMMO) ? 2 : 1;
@@ -750,7 +750,7 @@ static void AIM_AircraftEquipAddItem_f (void)
 	assert(aircraft);
 	base = aircraft->homebase;	/* we need to know where items will be removed */
 	slot = AII_SelectAircraftSlot(aircraft, airequipID);
-	if (slot == NULL)
+	if (slot == nullptr)
 		return;
 
 	/* the clicked button doesn't correspond to the selected zone */
@@ -822,7 +822,7 @@ static void AIM_AircraftEquipRemoveItem_f (void)
 {
 	int zone;
 	aircraftSlot_t *slot;
-	aircraft_t *aircraft = NULL;
+	aircraft_t *aircraft = nullptr;
 	base_t *base = B_GetCurrentSelectedBase();
 
 	zone = (airequipID == AC_ITEM_AMMO) ? 2 : 1;
@@ -935,11 +935,11 @@ void AIM_InitCallbacks (void)
 {
 	cgi->Cmd_AddCommand("airequip_updatemenu", AIM_AircraftEquipMenuUpdate_f, "Init function for the aircraft equip menu");
 	cgi->Cmd_AddCommand("airequip_selectcategory", AIM_AircraftItemtypeByName_f, "Select an item category and update the GUI");
-	cgi->Cmd_AddCommand("airequip_list_click", AIM_AircraftEquipMenuClick_f, NULL);
-	cgi->Cmd_AddCommand("airequip_slot_select", AIM_AircraftEquipSlotSelect_f, NULL);
+	cgi->Cmd_AddCommand("airequip_list_click", AIM_AircraftEquipMenuClick_f, nullptr);
+	cgi->Cmd_AddCommand("airequip_slot_select", AIM_AircraftEquipSlotSelect_f, nullptr);
 	cgi->Cmd_AddCommand("airequip_add_item", AIM_AircraftEquipAddItem_f, "Add item to slot");
 	cgi->Cmd_AddCommand("airequip_remove_item", AIM_AircraftEquipRemoveItem_f, "Remove item from slot");
-	cgi->Cmd_AddCommand("airequip_zone_select", AIM_AircraftEquipZoneSelect_f, NULL);
+	cgi->Cmd_AddCommand("airequip_zone_select", AIM_AircraftEquipZoneSelect_f, nullptr);
 }
 
 void AIM_ShutdownCallbacks (void)

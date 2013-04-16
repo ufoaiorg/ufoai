@@ -42,12 +42,12 @@ class Employee {
 private:
 	const employeeType_t _type;			/**< employee type */
 	bool _assigned;				/**< Assigned to a building - currently only used for scientists */
-	const struct nation_s *_nation;	/**< What nation this employee came from. This is NULL if the nation is unknown for some (code-related) reason. */
-	const struct ugv_s *_ugv;		/**< if this is an employee of type EMPL_ROBOT then this is a pointer to the matching ugv_t struct. For normal employees this is NULL. */
+	const struct nation_s *_nation;	/**< What nation this employee came from. This is nullptr if the nation is unknown for some (code-related) reason. */
+	const struct ugv_s *_ugv;		/**< if this is an employee of type EMPL_ROBOT then this is a pointer to the matching ugv_t struct. For normal employees this is nullptr. */
 
 public:
 	Employee (employeeType_t type, const struct nation_s *nation, const struct ugv_s *ugv) :
-			_type(type), _assigned(false), _nation(nation), _ugv(ugv), baseHired(NULL), transfer(false) {
+			_type(type), _assigned(false), _nation(nation), _ugv(ugv), baseHired(nullptr), transfer(false) {
 		OBJZERO(chr);
 	}
 
@@ -86,7 +86,7 @@ public:
 	}
 
 	inline bool isHired () const {
-		return baseHired != NULL;
+		return baseHired != nullptr;
 	}
 
 	/**
@@ -94,7 +94,7 @@ public:
 	 * @param[in] base The base the employee must be hired in for this function to return @c true.
 	 */
 	inline bool isHiredInBase (const base_t* const base) const {
-		assert(base != NULL);
+		assert(base != nullptr);
 		return baseHired == base;
 	}
 

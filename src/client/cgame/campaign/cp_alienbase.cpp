@@ -126,7 +126,7 @@ alienBase_t* AB_GetByIDX (int baseIDX)
 		if (base->idx == baseIDX)
 			return base;
 	}
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -157,7 +157,7 @@ void CP_SpawnAlienBaseMission (alienBase_t *alienBase)
 	/* mission appears on geoscape, player can go there */
 	CP_MissionAddToGeoscape(mission, false);
 
-	CP_TriggerEvent(ALIENBASE_DISCOVERED, NULL);
+	CP_TriggerEvent(ALIENBASE_DISCOVERED, nullptr);
 }
 
 /**
@@ -211,8 +211,8 @@ static void AB_UpdateStealthForOneBase (const aircraft_t *aircraft, alienBase_t 
  */
 void AB_UpdateStealthForAllBase (void)
 {
-	base_t *base = NULL;
-	while ((base = B_GetNext(base)) != NULL) {
+	base_t *base = nullptr;
+	while ((base = B_GetNext(base)) != nullptr) {
 		AIR_ForeachFromBase(aircraft, base) {
 			/* Only aircraft on geoscape can detect alien bases */
 			if (!AIR_IsAircraftOnGeoscape(aircraft))
@@ -276,7 +276,7 @@ alienBase_t* AB_ChooseBaseToSupply (void)
 
 	if (baseCount <= 0) {
 		Com_Printf("AB_ChooseBaseToSupply: no bases exists (basecount: %d)\n", baseCount);
-		return NULL;
+		return nullptr;
 	}
 
 	const int selected = rand() % baseCount;
@@ -287,7 +287,7 @@ alienBase_t* AB_ChooseBaseToSupply (void)
 			return alienBase;
 		i++;
 	}
-	return NULL;
+	return nullptr;
 }
 
 /**

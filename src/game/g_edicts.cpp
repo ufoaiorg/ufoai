@@ -83,7 +83,7 @@ Edict *G_EdictsGetByNum (const int num)
 {
 	if (!G_EdictsIsValidNum(num)) {
 		gi.DPrintf("Invalid edict num %i\n", num);
-		return NULL;
+		return nullptr;
 	}
 
 	return g_edicts + num;
@@ -101,7 +101,7 @@ Edict *G_EdictsGetFirst (void)
 
 /**
  * @brief Iterate through the list of entities
- * @param lastEnt The entity found in the previous iteration; if NULL, we start at the beginning
+ * @param lastEnt The entity found in the previous iteration; if nullptr, we start at the beginning
  */
 Edict *G_EdictsGetNext (Edict *lastEnt)
 {
@@ -109,7 +109,7 @@ Edict *G_EdictsGetNext (Edict *lastEnt)
 	Edict *ent;
 
 	if (!globals.num_edicts)
-		return NULL;
+		return nullptr;
 
 	if (!lastEnt)
 		return g_edicts;
@@ -120,7 +120,7 @@ Edict *G_EdictsGetNext (Edict *lastEnt)
 
 	ent++;
 	if (ent >= endOfEnts)
-		return NULL;
+		return nullptr;
 
 	return ent;
 }
@@ -128,8 +128,8 @@ Edict *G_EdictsGetNext (Edict *lastEnt)
 Edict *G_EdictDuplicate (const Edict *edict)
 {
 	Edict *duplicate = G_EdictsGetNewEdict();
-	if (duplicate == NULL)
-		return NULL;
+	if (duplicate == nullptr)
+		return nullptr;
 	memcpy(duplicate, edict, sizeof(*edict));
 	duplicate->number = G_EdictsGetNumber(duplicate);
 	return duplicate;
@@ -140,7 +140,7 @@ Edict *G_EdictDuplicate (const Edict *edict)
  */
 Edict *G_EdictsGetNewEdict (void)
 {
-	Edict *ent = NULL;
+	Edict *ent = nullptr;
 
 	/* try to recycle an edict */
 	while ((ent = G_EdictsGetNext(ent))) {
@@ -152,7 +152,7 @@ Edict *G_EdictsGetNewEdict (void)
 	ent = &g_edicts[globals.num_edicts];
 	globals.num_edicts++;
 	if (globals.num_edicts > game.sv_maxentities)
-		return NULL;
+		return nullptr;
 
 	return ent;
 }
@@ -161,7 +161,7 @@ Edict *G_EdictsGetNewEdict (void)
  * @brief Iterate through the entities that are in use
  * @note we can hopefully get rid of this function once we know when it makes sense
  * to iterate through entities that are NOT in use
- * @param lastEnt The entity found in the previous iteration; if NULL, we start at the beginning
+ * @param lastEnt The entity found in the previous iteration; if nullptr, we start at the beginning
  */
 Edict *G_EdictsGetNextInUse (Edict *lastEnt)
 {
@@ -176,7 +176,7 @@ Edict *G_EdictsGetNextInUse (Edict *lastEnt)
 
 /**
  * @brief Iterator through all the trigger_nextmap edicts
- * @param lastEnt The entity found in the previous iteration; if NULL, we start at the beginning
+ * @param lastEnt The entity found in the previous iteration; if nullptr, we start at the beginning
  */
 Edict *G_EdictsGetTriggerNextMaps (Edict *lastEnt)
 {
@@ -191,7 +191,7 @@ Edict *G_EdictsGetTriggerNextMaps (Edict *lastEnt)
 
 /**
  * @brief Iterate through the living actor entities
- * @param lastEnt The entity found in the previous iteration; if NULL, we start at the beginning
+ * @param lastEnt The entity found in the previous iteration; if nullptr, we start at the beginning
  */
 Edict *G_EdictsGetNextLivingActor (Edict *lastEnt)
 {
@@ -206,7 +206,7 @@ Edict *G_EdictsGetNextLivingActor (Edict *lastEnt)
 
 /**
  * @brief Iterate through the living actor entities of the given team
- * @param lastEnt The entity found in the previous iteration; if NULL, we start at the beginning
+ * @param lastEnt The entity found in the previous iteration; if nullptr, we start at the beginning
  * @param team The team we are looking for
  */
 Edict *G_EdictsGetNextLivingActorOfTeam (Edict *lastEnt, const int team)
@@ -222,7 +222,7 @@ Edict *G_EdictsGetNextLivingActorOfTeam (Edict *lastEnt, const int team)
 
 /**
  * @brief Iterate through the actor entities (even the dead! - but skips the invisible)
- * @param lastEnt The entity found in the previous iteration; if NULL, we start at the beginning
+ * @param lastEnt The entity found in the previous iteration; if nullptr, we start at the beginning
  */
 Edict *G_EdictsGetNextActor (Edict *lastEnt)
 {
@@ -241,27 +241,27 @@ Edict *G_EdictsGetNextActor (Edict *lastEnt)
  * @brief Searches an actor by a unique character number
  * @param[in] ucn The unique character number
  * @param[in] team The team to get the actor with the ucn from
- * @return The actor edict if found, otherwise @c NULL
+ * @return The actor edict if found, otherwise @c nullptr
  */
 Edict *G_EdictsGetActorByUCN (const int ucn, const int team)
 {
-	Edict *ent = NULL;
+	Edict *ent = nullptr;
 
 	while ((ent = G_EdictsGetNextActor(ent)))
 		if (team == ent->team && ent->chr.ucn == ucn)
 			return ent;
 
-	return NULL;
+	return nullptr;
 }
 
 /**
  * @brief Searches an actor at the given grid location.
  * @param pos The grid location to look for an edict.
- * @return @c NULL if nothing was found, otherwise the actor located at the given grid position.
+ * @return @c nullptr if nothing was found, otherwise the actor located at the given grid position.
  */
 Edict *G_EdictsGetLivingActorFromPos (const pos3_t pos)
 {
-	Edict *ent = NULL;
+	Edict *ent = nullptr;
 
 	while ((ent = G_EdictsGetNextLivingActor(ent))) {
 		if (!VectorCompare(pos, ent->pos))
@@ -270,18 +270,18 @@ Edict *G_EdictsGetLivingActorFromPos (const pos3_t pos)
 		return ent;
 	}
 	/* nothing found at this pos */
-	return NULL;
+	return nullptr;
 }
 
 /**
  * @brief Searches the edict that has the given target as @c targetname set
  * @param target The target name of the edict that you are searching
- * @return @c NULL if no edict with the given target name was found, otherwise
+ * @return @c nullptr if no edict with the given target name was found, otherwise
  * the edict that has the targetname set you were looking for.
  */
 Edict *G_EdictsFindTargetEntity (const char *target)
 {
-	Edict *ent = NULL;
+	Edict *ent = nullptr;
 
 	while ((ent = G_EdictsGetNextInUse(ent))) {
 		const char *n = ent->targetname;
@@ -289,7 +289,7 @@ Edict *G_EdictsFindTargetEntity (const char *target)
 			return ent;
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 /**

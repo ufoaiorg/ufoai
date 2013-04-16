@@ -191,7 +191,7 @@ static void GEO_MultiSelectExecuteAction_f (void)
 	}
 	case MULTISELECT_TYPE_AIRCRAFT: /* Selection of an aircraft */
 		aircraft = AIR_AircraftGetFromIDX(id);
-		if (aircraft == NULL) {
+		if (aircraft == nullptr) {
 			Com_DPrintf(DEBUG_CLIENT, "GEO_MultiSelectExecuteAction: selection of an unknown aircraft idx %i\n", id);
 			return;
 		}
@@ -265,7 +265,7 @@ bool GEO_Click (const uiNode_t* node, int x, int y, const vec2_t pos)
 	case MA_NEWBASE:
 		/* new base construction */
 		/** @todo make this a function in cp_base.c - B_BuildBaseAtPos */
-		if (!MapIsWater(GEO_GetColor(pos, MAPTYPE_TERRAIN, NULL))) {
+		if (!MapIsWater(GEO_GetColor(pos, MAPTYPE_TERRAIN, nullptr))) {
 			if (B_GetCount() < MAX_BASES) {
 				Vector2Copy(pos, ccs.newBasePos);
 				CP_GameTimeStop();
@@ -277,7 +277,7 @@ bool GEO_Click (const uiNode_t* node, int x, int y, const vec2_t pos)
 		}
 		break;
 	case MA_NEWINSTALLATION:
-		if (!MapIsWater(GEO_GetColor(pos, MAPTYPE_TERRAIN, NULL))) {
+		if (!MapIsWater(GEO_GetColor(pos, MAPTYPE_TERRAIN, nullptr))) {
 			Vector2Copy(pos, ccs.newBasePos);
 			CP_GameTimeStop();
 			cgi->UI_PushWindow("popup_newinstallation");
@@ -311,8 +311,8 @@ bool GEO_Click (const uiNode_t* node, int x, int y, const vec2_t pos)
 	}
 
 	/* Get selected bases */
-	base = NULL;
-	while ((base = B_GetNext(base)) != NULL && multiSelect.nbSelect < MULTISELECT_MAXSELECT) {
+	base = nullptr;
+	while ((base = B_GetNext(base)) != nullptr && multiSelect.nbSelect < MULTISELECT_MAXSELECT) {
 		if (GEO_IsPositionSelected(node, base->pos, x, y))
 			GEO_MultiSelectListAddItem(MULTISELECT_TYPE_BASE, base->idx, _("Base"), base->name);
 	}
@@ -326,8 +326,8 @@ bool GEO_Click (const uiNode_t* node, int x, int y, const vec2_t pos)
 	}
 
 	/* Get selected ufos */
-	ufo = NULL;
-	while ((ufo = UFO_GetNextOnGeoscape(ufo)) != NULL)
+	ufo = nullptr;
+	while ((ufo = UFO_GetNextOnGeoscape(ufo)) != nullptr)
 		if (AIR_IsAircraftOnGeoscape(ufo) && GEO_IsPositionSelected(node, ufo->pos, x, y))
 			GEO_MultiSelectListAddItem(MULTISELECT_TYPE_UFO, UFO_GetGeoscapeIDX(ufo), _("UFO Sighting"), UFO_GetName(ufo));
 
@@ -353,7 +353,7 @@ bool GEO_Click (const uiNode_t* node, int x, int y, const vec2_t pos)
 			/* Move the selected aircraft to the position clicked */
 			GEO_CalcLine(aircraft->pos, pos, &aircraft->route);
 			aircraft->status = AIR_TRANSIT;
-			aircraft->aircraftTarget = NULL;
+			aircraft->aircraftTarget = nullptr;
 			aircraft->time = 0;
 			aircraft->point = 0;
 			return true;
@@ -375,7 +375,7 @@ GEOSCAPE DRAWING AND COORDINATES
  * @param[in] pos vector that holds longitude and latitude
  * @param[out] x normalized (rotated and scaled) x value of mouseclick
  * @param[out] y normalized (rotated and scaled) y value of mouseclick
- * @param[out] z z value of the given latitude and longitude - might also be NULL if not needed
+ * @param[out] z z value of the given latitude and longitude - might also be nullptr if not needed
  * @return true if the point is visible, false else (if it's outside the node or on the wrong side of the earth).
  */
 static bool GEO_3DMapToScreen (const uiNode_t* node, const vec2_t pos, int *x, int *y, int *z)
@@ -459,7 +459,7 @@ static bool GEO_MapToScreen (const uiNode_t* node, const vec2_t pos, int *x, int
  * @param[in] pos Position on the map described by longitude and latitude
  * @param[out] x Pointer to the X coordinate on the screen
  * @param[out] y Pointer to the Y coordinate on the screen
- * @param[out] z Pointer to the Z coordinate on the screen (may be NULL if not needed)
+ * @param[out] z Pointer to the Z coordinate on the screen (may be nullptr if not needed)
  * @returns true if pos corresponds to a point which is visible on the screen. Otherwise returns false.
  */
 static bool GEO_AllMapToScreen (const uiNode_t* node, const vec2_t pos, int *x, int *y, int *z)
@@ -484,7 +484,7 @@ static bool GEO_IsPositionSelected (const uiNode_t* node, const vec2_t pos, int 
 {
 	int msx, msy;
 
-	if (GEO_AllMapToScreen(node, pos, &msx, &msy, NULL))
+	if (GEO_AllMapToScreen(node, pos, &msx, &msy, nullptr))
 		if (x >= msx - UI_MAP_DIST_SELECTION && x <= msx + UI_MAP_DIST_SELECTION
 		 && y >= msy - UI_MAP_DIST_SELECTION && y <= msy + UI_MAP_DIST_SELECTION)
 			return true;
@@ -509,7 +509,7 @@ static void GEO_Draw3DMarkerIfVisible (const uiNode_t* node, const vec2_t pos, f
 		int x, y;
 		vec3_t screenPos;
 
-		GEO_AllMapToScreen(node, pos, &x, &y, NULL);
+		GEO_AllMapToScreen(node, pos, &x, &y, nullptr);
 		VectorSet(screenPos, x, y, 0);
 		/* models are used on 2D geoscape for aircraft */
 		cgi->R_Draw2DMapMarkers(screenPos, theta, model, skin);
@@ -580,7 +580,7 @@ void GEO_CalcLine (const vec2_t start, const vec2_t end, mapline_t* line)
 	/* make sure we do not exceed route array size */
 	assert(line->numPoints <= LINE_MAXPTS);
 	dPhi = (phiEnd - phiStart) / n;
-	p = NULL;
+	p = nullptr;
 	for (phi = phiStart, i = 0; i <= n; phi += dPhi, i++) {
 		const float *last = p;
 		p = line->point[i];
@@ -648,7 +648,7 @@ static void GEO_MapDrawLine (const uiNode_t* node, const mapline_t* line)
 	}
 
 	cgi->R_DrawLineStrip(i - start, (int*)(&pts));
-	cgi->R_Color(NULL);
+	cgi->R_Color(nullptr);
 }
 
 /**
@@ -669,7 +669,7 @@ static void GEO_3DMapDrawLine (const uiNode_t* node, const mapline_t* line)
 	/* draw only when the point of the path is visible */
 	cgi->R_Color(color);
 	for (i = 0, numPoints = 0; i < line->numPoints; i++) {
-		if (GEO_3DMapToScreen(node, line->point[i], &pts[i].x, &pts[i].y, NULL))
+		if (GEO_3DMapToScreen(node, line->point[i], &pts[i].x, &pts[i].y, nullptr))
 			numPoints++;
 		else if (!numPoints)
 			/* the point which is not drawn is at the beginning of the path */
@@ -677,7 +677,7 @@ static void GEO_3DMapDrawLine (const uiNode_t* node, const mapline_t* line)
 	}
 
 	cgi->R_DrawLineStrip(numPoints, (int*)(&pts[start]));
-	cgi->R_Color(NULL);
+	cgi->R_Color(nullptr);
 }
 
 #define CIRCLE_DRAW_POINTS	60
@@ -714,7 +714,7 @@ static void GEO_MapDrawEquidistantPoints (const uiNode_t* node, const vec2_t cen
 		const float degrees = i * 360.0f / (float)CIRCLE_DRAW_POINTS;
 		RotatePointAroundVector(currentPoint, centerPos, initialVector, degrees);
 		VecToPolar(currentPoint, posCircle);
-		if (GEO_AllMapToScreen(node, posCircle, &xCircle, &yCircle, NULL)) {
+		if (GEO_AllMapToScreen(node, posCircle, &xCircle, &yCircle, nullptr)) {
 			draw = true;
 			if (UI_MAPEXTRADATACONST(node).flatgeoscape && numPoints != 0 && abs(pts[numPoints - 1].x - xCircle) > 512)
 				oldDraw = false;
@@ -738,15 +738,15 @@ static void GEO_MapDrawEquidistantPoints (const uiNode_t* node, const vec2_t cen
 
 	/* Draw the last path */
 	cgi->R_DrawLineStrip(numPoints, (int*)(&pts));
-	cgi->R_Color(NULL);
+	cgi->R_Color(nullptr);
 }
 
 /**
  * @brief Return the angle of a model given its position and destination, on 3D geoscape.
  * @param[in] start Latitude and longitude of the position of the model.
  * @param[in] end Latitude and longitude of aimed point.
- * @param[in] direction vec3_t giving current direction of the model (NULL if the model is idle).
- * @param[out] ortVector If not NULL, this will be filled with the normalized vector around which rotation allows to go toward @c direction.
+ * @param[in] direction vec3_t giving current direction of the model (nullptr if the model is idle).
+ * @param[out] ortVector If not nullptr, this will be filled with the normalized vector around which rotation allows to go toward @c direction.
  * @return Angle (degrees) of rotation around the radius axis of earth for @c start going toward @c end. Zero value is the direction of North pole.
  */
 static float GEO_AngleOfPath3D (const vec3_t start, const vec2_t end, vec3_t direction, vec3_t ortVector)
@@ -807,8 +807,8 @@ static float GEO_AngleOfPath3D (const vec3_t start, const vec2_t end, vec3_t dir
  * @brief Return the angle of a model given its position and destination, on 2D geoscape.
  * @param[in] start Latitude and longitude of the position of the model.
  * @param[in] end Latitude and longitude of aimed point.
- * @param[in] direction vec3_t giving current direction of the model (NULL if the model is idle).
- * @param[out] ortVector If not NULL, this will be filled with the normalized vector around which rotation allows to go toward @c direction.
+ * @param[in] direction vec3_t giving current direction of the model (nullptr if the model is idle).
+ * @param[out] ortVector If not nullptr, this will be filled with the normalized vector around which rotation allows to go toward @c direction.
  * @return Angle (degrees) of rotation around the radius axis of earth for @c start going toward @c end. Zero value is the direction of North pole.
  */
 static float GEO_AngleOfPath2D (const vec3_t start, const vec2_t end, vec3_t direction, vec3_t ortVector)
@@ -865,8 +865,8 @@ static float GEO_AngleOfPath2D (const vec3_t start, const vec2_t end, vec3_t dir
  * @brief Select which function should be used for calculating the direction of model on 2D or 3D geoscape.
  * @param[in] start Latitude and longitude of the position of the model.
  * @param[in] end Latitude and longitude of aimed point.
- * @param[in] direction vec3_t giving current direction of the model (NULL if the model is idle).
- * @param[out] ortVector If not NULL, this will be filled with the normalized vector around which rotation allows to go toward @c direction.
+ * @param[in] direction vec3_t giving current direction of the model (nullptr if the model is idle).
+ * @param[out] ortVector If not nullptr, this will be filled with the normalized vector around which rotation allows to go toward @c direction.
  * @return Angle (degrees) of rotation around the radius axis of earth for @c start going toward @c end. Zero value is the direction of North pole.
  */
 float GEO_AngleOfPath (const vec3_t start, const vec2_t end, vec3_t direction, vec3_t ortVector)
@@ -903,7 +903,7 @@ static void GEO_ConvertObjectPositionToGeoscapePosition (bool flatgeoscape, floa
 static void GEO_GetMissionAngle (bool flatgeoscape, float *vector, int id)
 {
 	mission_t *mission = MIS_GetByIdx(id);
-	if (mission == NULL)
+	if (mission == nullptr)
 		return;
 	GEO_ConvertObjectPositionToGeoscapePosition(flatgeoscape, vector, mission->pos);
 	GEO_SelectMission(mission);
@@ -917,8 +917,8 @@ static void GEO_GetUFOAngle (bool flatgeoscape, float *vector, int idx)
 	aircraft_t *ufo;
 
 	/* Cycle through UFOs (only those visible on geoscape) */
-	ufo = NULL;
-	while ((ufo = UFO_GetNextOnGeoscape(ufo)) != NULL) {
+	ufo = nullptr;
+	while ((ufo = UFO_GetNextOnGeoscape(ufo)) != nullptr) {
 		if (ufo->idx != idx)
 			continue;
 		GEO_ConvertObjectPositionToGeoscapePosition(flatgeoscape, vector, ufo->pos);
@@ -1030,15 +1030,15 @@ static void GEO_GetGeoscapeAngle (vec2_t pos)
 
 	/* If the value of maxEventIdx is too big or to low, restart from beginning */
 	maxEventIdx = numMissions + numBases + INS_GetCount() - 1;
-	base = NULL;
-	while ((base = B_GetNext(base)) != NULL) {
+	base = nullptr;
+	while ((base = B_GetNext(base)) != nullptr) {
 		AIR_ForeachFromBase(aircraft, base) {
 			if (AIR_IsAircraftOnGeoscape(aircraft))
 				maxEventIdx++;
 		}
 	}
-	ufo = NULL;
-	while ((ufo = UFO_GetNextOnGeoscape(ufo)) != NULL)
+	ufo = nullptr;
+	while ((ufo = UFO_GetNextOnGeoscape(ufo)) != nullptr)
 		maxEventIdx++;
 
 	/* if there's nothing to center the view on, just go to 0,0 pos */
@@ -1070,8 +1070,8 @@ static void GEO_GetGeoscapeAngle (vec2_t pos)
 
 	/* Cycle through bases */
 	if (centerOnEventIdx < numBases + counter) {
-		base = NULL;
-		while ((base = B_GetNext(base)) != NULL) {
+		base = nullptr;
+		while ((base = B_GetNext(base)) != nullptr) {
 			if (counter == centerOnEventIdx) {
 				Vector2Copy(base->pos, pos);
 				return;
@@ -1106,8 +1106,8 @@ static void GEO_GetGeoscapeAngle (vec2_t pos)
 	}
 
 	/* Cycle through UFOs (only those visible on geoscape) */
-	ufo = NULL;
-	while ((ufo = UFO_GetNextOnGeoscape(ufo)) != NULL) {
+	ufo = nullptr;
+	while ((ufo = UFO_GetNextOnGeoscape(ufo)) != nullptr) {
 		if (centerOnEventIdx == counter) {
 			Vector2Copy(ufo->pos, pos);
 			GEO_SelectUFO(ufo);
@@ -1150,7 +1150,7 @@ static void GEO_DrawBullets (const uiNode_t* node, const vec3_t pos)
 {
 	int x, y;
 
-	if (GEO_AllMapToScreen(node, pos, &x, &y, NULL))
+	if (GEO_AllMapToScreen(node, pos, &x, &y, nullptr))
 		cgi->R_DrawFill(x, y, BULLET_SIZE, BULLET_SIZE, yellow);
 }
 
@@ -1166,14 +1166,14 @@ static void GEO_DrawBeam (const uiNode_t* node, const vec3_t start, const vec3_t
 {
 	int points[4];
 
-	if (!GEO_AllMapToScreen(node, start, &(points[0]), &(points[1]), NULL))
+	if (!GEO_AllMapToScreen(node, start, &(points[0]), &(points[1]), nullptr))
 		return;
-	if (!GEO_AllMapToScreen(node, end, &(points[2]), &(points[3]), NULL))
+	if (!GEO_AllMapToScreen(node, end, &(points[2]), &(points[3]), nullptr))
 		return;
 
 	cgi->R_Color(color);
 	cgi->R_DrawLine(points, 2.0);
-	cgi->R_Color(NULL);
+	cgi->R_Color(nullptr);
 }
 
 static inline void GEO_RenderImage (int x, int y, const char *image)
@@ -1196,7 +1196,7 @@ static void GEO_DrawMapOneMission (const uiNode_t* node, const mission_t *missio
 	if (isCurrentSelectedMission)
 		cgi->Cvar_Set("mn_mapdaytime", GEO_IsNight(mission->pos) ? _("Night") : _("Day"));
 
-	if (!GEO_AllMapToScreen(node, mission->pos, &x, &y, NULL))
+	if (!GEO_AllMapToScreen(node, mission->pos, &x, &y, nullptr))
 		return;
 
 	if (isCurrentSelectedMission) {
@@ -1259,7 +1259,7 @@ static void GEO_DrawRadarInMap (const uiNode_t *node, const radar_t *radar, cons
 	cgi->R_Color(color);
 
 	/* Draw lines from radar to ufos sensored */
-	display = GEO_AllMapToScreen(node, pos, &x, &y, NULL);
+	display = GEO_AllMapToScreen(node, pos, &x, &y, nullptr);
 	if (display) {
 		int i;
 		screenPoint_t pts[2];
@@ -1269,7 +1269,7 @@ static void GEO_DrawRadarInMap (const uiNode_t *node, const radar_t *radar, cons
 
 		for (i = 0; i < radar->numUFOs; i++) {
 			const aircraft_t *ufo = radar->ufos[i];
-			if (UFO_IsUFOSeenOnGeoscape(ufo) && GEO_AllMapToScreen(node, ufo->pos, &x, &y, NULL)) {
+			if (UFO_IsUFOSeenOnGeoscape(ufo) && GEO_AllMapToScreen(node, ufo->pos, &x, &y, nullptr)) {
 				pts[1].x = x;
 				pts[1].y = y;
 				cgi->R_DrawLineStrip(2, (int*)pts);
@@ -1277,7 +1277,7 @@ static void GEO_DrawRadarInMap (const uiNode_t *node, const radar_t *radar, cons
 		}
 	}
 
-	cgi->R_Color(NULL);
+	cgi->R_Color(nullptr);
 }
 
 /**
@@ -1286,7 +1286,7 @@ static void GEO_DrawRadarInMap (const uiNode_t *node, const radar_t *radar, cons
  * @param[in] installation Pointer to the installation to draw.
  * @param[in] oneUFOVisible Is there at least one UFO visible on the geoscape?
  * @param[in] font Default font.
- * @pre installation is not NULL.
+ * @pre installation is not nullptr.
  */
 static void GEO_DrawMapOneInstallation (const uiNode_t* node, const installation_t *installation,
 	bool oneUFOVisible, const char *font)
@@ -1318,7 +1318,7 @@ static void GEO_DrawMapOneInstallation (const uiNode_t* node, const installation
 	}
 
 	/* Draw installation names */
-	if (GEO_AllMapToScreen(node, installation->pos, &x, &y, NULL))
+	if (GEO_AllMapToScreen(node, installation->pos, &x, &y, nullptr))
 		cgi->UI_DrawString(font, ALIGN_UL, x, y + 10, installation->name);
 }
 
@@ -1372,7 +1372,7 @@ static void GEO_DrawMapOneBase (const uiNode_t* node, const base_t *base,
 	}
 
 	/* Draw base names */
-	if (GEO_AllMapToScreen(node, base->pos, &x, &y, NULL))
+	if (GEO_AllMapToScreen(node, base->pos, &x, &y, nullptr))
 		cgi->UI_DrawString(font, ALIGN_UL, x, y + 10, base->name);
 }
 
@@ -1405,9 +1405,9 @@ static void GEO_DrawAircraftHealthBar (const uiNode_t* node, const aircraft_t *a
 	}
 
 	if (!UI_MAPEXTRADATACONST(node).flatgeoscape)
-		visible = GEO_3DMapToScreen(node, aircraft->pos, &centerX, &centerY, NULL);
+		visible = GEO_3DMapToScreen(node, aircraft->pos, &centerX, &centerY, nullptr);
 	else
-		visible = GEO_AllMapToScreen(node, aircraft->pos, &centerX, &centerY, NULL);
+		visible = GEO_AllMapToScreen(node, aircraft->pos, &centerX, &centerY, nullptr);
 
 	if (visible) {
 		const vec4_t bordercolor = {1, 1, 1, 1};
@@ -1449,7 +1449,7 @@ static void GEO_DrawMapOnePhalanxAircraft (const uiNode_t* node, aircraft_t *air
 			else
 				GEO_MapDrawLine(node, &path);
 		}
-		angle = GEO_AngleOfPath(aircraft->pos, aircraft->route.point[aircraft->route.numPoints - 1], aircraft->direction, NULL);
+		angle = GEO_AngleOfPath(aircraft->pos, aircraft->route.point[aircraft->route.numPoints - 1], aircraft->direction, nullptr);
 	} else {
 		/* aircraft is idle */
 		angle = 0.0f;
@@ -1463,12 +1463,12 @@ static void GEO_DrawMapOnePhalanxAircraft (const uiNode_t* node, aircraft_t *air
 		if (!UI_MAPEXTRADATACONST(node).flatgeoscape)
 			GEO_MapDrawEquidistantPoints(node, aircraft->pos, SELECT_CIRCLE_RADIUS, yellow);
 		else {
-			GEO_AllMapToScreen(node, aircraft->pos, &x, &y, NULL);
+			GEO_AllMapToScreen(node, aircraft->pos, &x, &y, nullptr);
 			GEO_RenderImage(x, y, "pics/geoscape/circleactive");
 		}
 
 		/* Draw a circle around the ufo pursued by selected aircraft */
-		if (aircraft->status == AIR_UFO && GEO_AllMapToScreen(node, aircraft->aircraftTarget->pos, &x, &y, NULL)) {
+		if (aircraft->status == AIR_UFO && GEO_AllMapToScreen(node, aircraft->aircraftTarget->pos, &x, &y, nullptr)) {
 			if (!UI_MAPEXTRADATACONST(node).flatgeoscape)
 				GEO_MapDrawEquidistantPoints(node, aircraft->aircraftTarget->pos, SELECT_CIRCLE_RADIUS, yellow);
 			else
@@ -1570,8 +1570,8 @@ void GEO_UpdateGeoscapeDock (void)
 	}
 
 	/* draws ufos */
-	ufo = NULL;
-	while ((ufo = UFO_GetNextOnGeoscape(ufo)) != NULL) {
+	ufo = nullptr;
+	while ((ufo = UFO_GetNextOnGeoscape(ufo)) != nullptr) {
 		const unsigned int ufoIDX = UFO_GetGeoscapeIDX(ufo);
 		cgi->UI_ExecuteConfunc("add_geoscape_object ufo %i %s \"%s\"",
 				ufoIDX, ufo->model, GEO_GetUFOText(buf, sizeof(buf), ufo));
@@ -1605,7 +1605,7 @@ void GEO_DrawMarkers (const uiNode_t* node)
 	font = cgi->UI_GetFontFromNode(node);
 
 	/* check if at least 1 UFO is visible */
-	const bool oneUFOVisible = UFO_GetNextOnGeoscape(NULL) != NULL;
+	const bool oneUFOVisible = UFO_GetNextOnGeoscape(nullptr) != nullptr;
 
 	/* draw mission pics */
 	MIS_Foreach(mission) {
@@ -1620,8 +1620,8 @@ void GEO_DrawMarkers (const uiNode_t* node)
 	}
 
 	/* draw bases */
-	base = NULL;
-	while ((base = B_GetNext(base)) != NULL)
+	base = nullptr;
+	while ((base = B_GetNext(base)) != nullptr)
 		GEO_DrawMapOneBase(node, base, oneUFOVisible, font);
 
 	/* draw all aircraft */
@@ -1631,8 +1631,8 @@ void GEO_DrawMarkers (const uiNode_t* node)
 	}
 
 	/* draws ufos */
-	ufo = NULL;
-	while ((ufo = UFO_GetNextOnGeoscape(ufo)) != NULL) {
+	ufo = nullptr;
+	while ((ufo = UFO_GetNextOnGeoscape(ufo)) != nullptr) {
 #ifdef DEBUG
 		/* in debug mode you execute set showufos 1 to see the ufos on geoscape */
 		if (cgi->Cvar_GetInteger("debug_showufos")) {
@@ -1644,7 +1644,7 @@ void GEO_DrawMarkers (const uiNode_t* node)
 		} else
 #endif
 		{
-			const float angle = GEO_AngleOfPath(ufo->pos, ufo->route.point[ufo->route.numPoints - 1], ufo->direction, NULL);
+			const float angle = GEO_AngleOfPath(ufo->pos, ufo->route.point[ufo->route.numPoints - 1], ufo->direction, nullptr);
 
 			if (!UI_MAPEXTRADATACONST(node).flatgeoscape)
 				GEO_MapDrawEquidistantPoints(node, ufo->pos, SELECT_CIRCLE_RADIUS, white);
@@ -1653,7 +1653,7 @@ void GEO_DrawMarkers (const uiNode_t* node)
 					GEO_MapDrawEquidistantPoints(node, ufo->pos, SELECT_CIRCLE_RADIUS, yellow);
 				else {
 					int x, y;
-					GEO_AllMapToScreen(node, ufo->pos, &x, &y, NULL);
+					GEO_AllMapToScreen(node, ufo->pos, &x, &y, nullptr);
 					GEO_RenderImage(x, y, "pics/geoscape/circleactive");
 				}
 			}
@@ -1723,7 +1723,7 @@ void GEO_DrawMarkers (const uiNode_t* node)
 	for (i = 0; i < ccs.numNations; i++) {
 		const nation_t *nation = NAT_GetNationByIDX(i);
 		int x, y;
-		if (GEO_AllMapToScreen(node, nation->pos, &x, &y, NULL))
+		if (GEO_AllMapToScreen(node, nation->pos, &x, &y, nullptr))
 			cgi->UI_DrawString("f_verysmall", ALIGN_UC, x , y, _(nation->name));
 		if (showXVI) {
 			const nationInfo_t *stats = NAT_GetCurrentMonthInfo(nation);
@@ -1736,7 +1736,7 @@ void GEO_DrawMarkers (const uiNode_t* node)
 	else
 		cgi->UI_ResetData(TEXT_XVI);
 
-	cgi->R_Color(NULL);
+	cgi->R_Color(nullptr);
 }
 
 /**
@@ -1791,15 +1791,15 @@ void GEO_Draw (geoscapeData_t* data)
 	/* Nothing is displayed yet */
 	if (mission) {
 		cgi->UI_RegisterText(TEXT_STANDARD, GEO_GetMissionText(textStandard, sizeof(textStandard), mission));
-	} else if (GEO_GetSelectedAircraft() != NULL) {
+	} else if (GEO_GetSelectedAircraft() != nullptr) {
 		const aircraft_t *aircraft = GEO_GetSelectedAircraft();
 		if (AIR_IsAircraftInBase(aircraft)) {
-			cgi->UI_RegisterText(TEXT_STANDARD, NULL);
+			cgi->UI_RegisterText(TEXT_STANDARD, nullptr);
 			GEO_ResetAction();
 			return;
 		}
 		cgi->UI_RegisterText(TEXT_STANDARD, GEO_GetAircraftText(textStandard, sizeof(textStandard), aircraft));
-	} else if (GEO_GetSelectedUFO() != NULL) {
+	} else if (GEO_GetSelectedUFO() != nullptr) {
 		cgi->UI_RegisterText(TEXT_STANDARD, GEO_GetUFOText(textStandard, sizeof(textStandard), GEO_GetSelectedUFO()));
 	} else {
 #ifdef DEBUG
@@ -1822,10 +1822,10 @@ void GEO_ResetAction (void)
 	if (B_AtLeastOneExists())
 		ccs.mapAction = MA_NONE;
 
-	GEO_SetInterceptorAircraft(NULL);
-	GEO_SetSelectedMission(NULL);
-	GEO_SetSelectedAircraft(NULL);
-	GEO_SetSelectedUFO(NULL);
+	GEO_SetInterceptorAircraft(nullptr);
+	GEO_SetSelectedMission(nullptr);
+	GEO_SetSelectedAircraft(nullptr);
+	GEO_SetSelectedUFO(nullptr);
 
 	if (!radarOverlayWasSet)
 		GEO_DeactivateOverlay("radar");
@@ -1885,7 +1885,7 @@ void GEO_NotifyUFORemoved (const aircraft_t* ufo, bool destroyed)
 {
 	GEO_UpdateGeoscapeDock();
 
-	if (GEO_GetSelectedUFO() == NULL)
+	if (GEO_GetSelectedUFO() == nullptr)
 		return;
 
 	/* Unselect the current selected ufo if it's the same */
@@ -1912,13 +1912,13 @@ void GEO_NotifyAircraftRemoved (const aircraft_t* aircraft)
  * @sa GEO_GetColor
  * @param[in] pos Map Coordinates to get the nation from
  * @return returns the nation pointer with the given color on nationPic at given pos
- * @return NULL if no nation with the given color value was found
+ * @return nullptr if no nation with the given color value was found
  * @note The coordinates already have to be transformed to map coordinates via GEO_ScreenToMap
  */
 nation_t* GEO_GetNation (const vec2_t pos)
 {
 	int i;
-	const byte* color = GEO_GetColor(pos, MAPTYPE_NATIONS, NULL);
+	const byte* color = GEO_GetColor(pos, MAPTYPE_NATIONS, nullptr);
 	const vec3_t fcolor = {color[0] / 255.0f, color[1] / 255.0f, color[2] / 255.0f};
 #ifdef PARANOID
 	Com_DPrintf(DEBUG_CLIENT, "GEO_GetNation: color value for %.0f:%.0f is r:%i, g:%i, b: %i\n", pos[0], pos[1], color[0], color[1], color[2]);
@@ -1931,7 +1931,7 @@ nation_t* GEO_GetNation (const vec2_t pos)
 			return nation;
 	}
 	Com_DPrintf(DEBUG_CLIENT, "GEO_GetNation: No nation found at %.0f:%.0f - color: %i:%i:%i\n", pos[0], pos[1], color[0], color[1], color[2]);
-	return NULL;
+	return nullptr;
 }
 
 
@@ -2027,7 +2027,7 @@ static inline const char *GEO_GetTerrainTypeByPos (const vec2_t pos, bool *coast
  */
 static inline const char *GEO_GetCultureTypeByPos (const vec2_t pos)
 {
-	const byte* color = GEO_GetColor(pos, MAPTYPE_CULTURE, NULL);
+	const byte* color = GEO_GetColor(pos, MAPTYPE_CULTURE, nullptr);
 	return GEO_GetCultureType(color);
 }
 
@@ -2039,7 +2039,7 @@ static inline const char *GEO_GetCultureTypeByPos (const vec2_t pos)
  */
 static inline const char *GEO_GetPopulationTypeByPos (const vec2_t pos)
 {
-	const byte* color = GEO_GetColor(pos, MAPTYPE_POPULATION, NULL);
+	const byte* color = GEO_GetColor(pos, MAPTYPE_POPULATION, nullptr);
 	return GEO_GetPopulationType(color);
 }
 
@@ -2051,7 +2051,7 @@ static inline const char *GEO_GetPopulationTypeByPos (const vec2_t pos)
  */
 int GEO_GetCivilianNumberByPosition (const vec2_t pos)
 {
-	const byte* color = GEO_GetColor(pos, MAPTYPE_POPULATION, NULL);
+	const byte* color = GEO_GetColor(pos, MAPTYPE_POPULATION, nullptr);
 
 	if (MapIsWater(color))
 		cgi->Com_Error(ERR_DROP, "GEO_GetPopulationType: Trying to get number of civilian in a position on water");
@@ -2131,7 +2131,7 @@ bool GEO_IsNight (const vec2_t pos)
  * one for the climatezone (bases made use of this - there are grass, ice and desert
  * base tiles available) and one for the nations
  * @param[out] coast The function will set this to true if the given position is a coast line.
- * This can be @c NULL if you are not interested in this fact.
+ * This can be @c nullptr if you are not interested in this fact.
  * @return Returns the color value at given position.
  * @note terrainPic, culturePic and populationPic are pointers to an rgba image in memory
  */
@@ -2190,7 +2190,7 @@ const byte *GEO_GetColor (const vec2_t pos, mapType_t type, bool *coast)
 	/* this calculation returns the pixel in col x and in row y */
 	assert(4 * (x + y * width) < width * height * 4);
 	color = mask + 4 * (x + y * width);
-	if (coast != NULL) {
+	if (coast != nullptr) {
 		if (MapIsWater(color)) {
 			*coast = false;
 		} else {
@@ -2228,25 +2228,25 @@ static const float MIN_DIST_BASE = 4.0f;
 
 /**
  * @brief Check if given pos is close to an existing base.
- * @return Pointer to the base if one base is closer than MIN_DIST_BASE from pos, NULL else
+ * @return Pointer to the base if one base is closer than MIN_DIST_BASE from pos, nullptr else
  */
 base_t* GEO_PositionCloseToBase (const vec2_t pos)
 {
-	base_t *base = NULL;
-	while ((base = B_GetNext(base)) != NULL)
+	base_t *base = nullptr;
+	while ((base = B_GetNext(base)) != nullptr)
 		if (GetDistanceOnGlobe(pos, base->pos) < MIN_DIST_BASE)
 			return base;
 
-	return NULL;
+	return nullptr;
 }
 
 /**
  * @brief Checks for a given location, if it fulfills all criteria given via parameters (terrain, culture, population, nation type)
  * @param[in] pos Location to be tested
- * @param[in] terrainTypes A linkedList_t containing a list of strings determining the terrain types to be tested for (e.g. "grass") may be NULL
- * @param[in] cultureTypes A linkedList_t containing a list of strings determining the culture types to be tested for (e.g. "western") may be NULL
- * @param[in] populationTypes A linkedList_t containing a list of strings determining the population types to be tested for (e.g. "suburban") may be NULL
- * @param[in] nations A linkedList_t containing a list of strings determining the nations to be tested for (e.g. "asia") may be NULL
+ * @param[in] terrainTypes A linkedList_t containing a list of strings determining the terrain types to be tested for (e.g. "grass") may be nullptr
+ * @param[in] cultureTypes A linkedList_t containing a list of strings determining the culture types to be tested for (e.g. "western") may be nullptr
+ * @param[in] populationTypes A linkedList_t containing a list of strings determining the population types to be tested for (e.g. "suburban") may be nullptr
+ * @param[in] nations A linkedList_t containing a list of strings determining the nations to be tested for (e.g. "asia") may be nullptr
  * @return true if a location was found, otherwise false. If the map is over water, return false
  * @note The name TCPNTypes comes from terrain, culture, population, nation types
  */
@@ -2257,7 +2257,7 @@ bool GEO_PositionFitsTCPNTypes (const vec2_t pos, const linkedList_t *terrainTyp
 	const char *cultureType = GEO_GetCultureTypeByPos(pos);
 	const char *populationType = GEO_GetPopulationTypeByPos(pos);
 
-	if (MapIsWater(GEO_GetColor(pos, MAPTYPE_TERRAIN, NULL)))
+	if (MapIsWater(GEO_GetColor(pos, MAPTYPE_TERRAIN, nullptr)))
 		return false;
 
 	if (!terrainTypes || cgi->LIST_ContainsString(terrainTypes, terrainType) || (coast && cgi->LIST_ContainsString(terrainTypes, "coast"))) {
@@ -2279,16 +2279,16 @@ bool GEO_PositionFitsTCPNTypes (const vec2_t pos, const linkedList_t *terrainTyp
 void GEO_Shutdown (void)
 {
 	Mem_Free(terrainPic);
-	terrainPic = NULL;
+	terrainPic = nullptr;
 
 	Mem_Free(culturePic);
-	culturePic = NULL;
+	culturePic = nullptr;
 
 	Mem_Free(populationPic);
-	populationPic = NULL;
+	populationPic = nullptr;
 
 	Mem_Free(nationsPic);
-	nationsPic = NULL;
+	nationsPic = nullptr;
 }
 
 void GEO_Init (const char *map)
@@ -2418,11 +2418,11 @@ static void GEO_DeactivateOverlay_f (void)
  */
 void GEO_InitStartup (void)
 {
-	cgi->Cmd_AddCommand("multi_select_click", GEO_MultiSelectExecuteAction_f, NULL);
+	cgi->Cmd_AddCommand("multi_select_click", GEO_MultiSelectExecuteAction_f, nullptr);
 	cgi->Cmd_AddCommand("map_overlay", GEO_SetOverlay_f, "Set the geoscape overlay");
 	cgi->Cmd_AddCommand("map_deactivateoverlay", GEO_DeactivateOverlay_f, "Deactivate overlay");
 	cgi->Cmd_AddCommand("map_selectobject", GEO_SelectObject_f, "Select an object and center on it");
-	cgi->Cmd_AddCommand("mn_mapaction_reset", GEO_ResetAction, NULL);
+	cgi->Cmd_AddCommand("mn_mapaction_reset", GEO_ResetAction, nullptr);
 
 #ifdef DEBUG
 	debug_showInterest = cgi->Cvar_Get("debug_showinterest", "0", CVAR_DEVELOPER, "Shows the global interest value on geoscape");

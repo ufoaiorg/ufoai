@@ -29,7 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_hospital_callbacks.h"
 
 /** @brief This is the current selected employee for the hospital_employee menu. */
-static Employee* currentEmployeeInHospital = NULL;
+static Employee* currentEmployeeInHospital = nullptr;
 
 /** @brief First line in Hospital menu. */
 static int hospitalFirstEntry;
@@ -201,7 +201,7 @@ static void HOS_ListClick_f (void)
 	base_t *base = B_GetCurrentSelectedBase();
 
 	if (!base) {
-		currentEmployeeInHospital = NULL;
+		currentEmployeeInHospital = nullptr;
 		return;
 	}
 

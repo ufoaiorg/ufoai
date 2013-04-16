@@ -88,7 +88,7 @@ void CL_ActorRevitalised (const eventRegister_t *self, dbuffer *msg)
 
 	if (le->ptl) {
 		CL_ParticleFree(le->ptl);
-		le->ptl = NULL;
+		le->ptl = nullptr;
 	}
 
 	/* add team members to the actor list */

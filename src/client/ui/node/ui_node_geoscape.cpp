@@ -47,7 +47,7 @@ enum mapDragMode_t {
 	/**
 	 * No interaction
 	 */
-	MODE_NULL,
+	MODE_nullptr,
 	/**
 	 * Mouse captured to move the 2D geoscape
 	 */
@@ -78,7 +78,7 @@ static int oldMousePosY = 0;
  * Status of the node.
  * It is related to a captured node (only one at a time), that why it is global.
  */
-static mapDragMode_t mode = MODE_NULL;
+static mapDragMode_t mode = MODE_nullptr;
 static const float ROTATE_SPEED	= 0.5f;
 static const float GLOBE_ROTATE = -90.0f;
 static const float SMOOTHING_STEP_2D = 0.02f;
@@ -448,7 +448,7 @@ void uiGeoscapeNode::screenTo3DMap (const uiNode_t* node, int x, int y, vec2_t p
 
 void uiGeoscapeNode::onLeftClick (uiNode_t* node, int x, int y)
 {
-	if (mode != MODE_NULL)
+	if (mode != MODE_nullptr)
 		return;
 
 	vec2_t pos;
@@ -481,9 +481,9 @@ bool uiGeoscapeNode::onStartDragging (uiNode_t* node, int startX, int startY, in
 
 void uiGeoscapeNode::onMouseUp (uiNode_t *node, int x, int y, int button)
 {
-	if (mode != MODE_NULL) {
+	if (mode != MODE_nullptr) {
 		UI_MouseRelease();
-		mode = MODE_NULL;
+		mode = MODE_nullptr;
 	}
 }
 
@@ -493,7 +493,7 @@ void uiGeoscapeNode::onMouseUp (uiNode_t *node, int x, int y, int button)
  */
 void uiGeoscapeNode::onCapturedMouseLost (uiNode_t *node)
 {
-	mode = MODE_NULL;
+	mode = MODE_nullptr;
 }
 
 /**
@@ -547,9 +547,9 @@ void uiGeoscapeNode::onLoading (uiNode_t *node)
 	/** this is the data that is used with r_dayandnightTexture */
 	EXTRADATA(node).r_dayandnightAlpha = Mem_AllocTypeN(byte, DAN_WIDTH * DAN_HEIGHT);
 
-	r_dayandnightTexture = R_LoadImageData("***r_dayandnighttexture***", NULL, DAN_WIDTH, DAN_HEIGHT, it_effect);
-	r_radarTexture = R_LoadImageData("***r_radarTexture***", NULL, RADAR_WIDTH, RADAR_HEIGHT, it_effect);
-	r_xviTexture = R_LoadImageData("***r_xvitexture***", NULL, XVI_WIDTH, XVI_HEIGHT, it_effect);
+	r_dayandnightTexture = R_LoadImageData("***r_dayandnighttexture***", nullptr, DAN_WIDTH, DAN_HEIGHT, it_effect);
+	r_radarTexture = R_LoadImageData("***r_radarTexture***", nullptr, RADAR_WIDTH, RADAR_HEIGHT, it_effect);
+	r_xviTexture = R_LoadImageData("***r_xvitexture***", nullptr, XVI_WIDTH, XVI_HEIGHT, it_effect);
 }
 
 static void UI_GeoscapeNodeZoomIn (uiNode_t *node, const uiCallContext_t *context)

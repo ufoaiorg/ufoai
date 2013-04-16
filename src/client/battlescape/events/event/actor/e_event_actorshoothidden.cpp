@@ -74,6 +74,6 @@ void CL_ActorShootHidden (const eventRegister_t *self, dbuffer *msg)
 	const fireDef_t *fd = FIRESH_GetFiredef(obj, weapFdsIdx, fdIdx);
 
 	/* start the sound */
-	if ((first || !fd->soundOnce) && fd->fireSound != NULL)
+	if ((first || !fd->soundOnce) && fd->fireSound != nullptr)
 		S_StartLocalSample(fd->fireSound, SND_VOLUME_WEAPONS);
 }

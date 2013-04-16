@@ -54,14 +54,14 @@ void G_FreeEdict (Edict *ent)
  * @brief Searches an edict of the given type at the given grid location.
  * @param pos The grid location to look for an edict.
  * @param type The type of the edict to look for or @c -1 to look for any type in the search.
- * @return @c NULL if nothing was found, otherwise the entity located at the given grid position.
+ * @return @c nullptr if nothing was found, otherwise the entity located at the given grid position.
  */
 Edict *G_GetEdictFromPos (const pos3_t pos, const entity_type_t type)
 {
-	Edict *ent = NULL;
+	Edict *ent = nullptr;
 
 	while ((ent = G_EdictsGetNextInUse(ent))) {
-		if (type > ET_NULL && ent->type != type)
+		if (type > ET_nullptr && ent->type != type)
 			continue;
 		if (!VectorCompare(pos, ent->pos))
 			continue;
@@ -69,18 +69,18 @@ Edict *G_GetEdictFromPos (const pos3_t pos, const entity_type_t type)
 		return ent;
 	}
 	/* nothing found at this pos */
-	return NULL;
+	return nullptr;
 }
 
 /**
  * @brief Searches an edict that is not of the given types at the given grid location.
  * @param pos The grid location to look for an edict.
  * @param n The amount of given entity_type_t values that are given via variadic arguments to this function.
- * @return @c NULL if nothing was found, otherwise the entity located at the given grid position.
+ * @return @c nullptr if nothing was found, otherwise the entity located at the given grid position.
  */
 Edict *G_GetEdictFromPosExcluding (const pos3_t pos, const int n, ...)
 {
-	Edict *ent = NULL;
+	Edict *ent = nullptr;
 	entity_type_t types[ET_MAX];
 	va_list ap;
 	int i;
@@ -104,7 +104,7 @@ Edict *G_GetEdictFromPosExcluding (const pos3_t pos, const int n, ...)
 			return ent;
 	}
 	/* nothing found at this pos */
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -143,7 +143,7 @@ bool G_UseEdict (Edict *ent, Edict *activator)
 /**
  * @brief Searches for the obj that has the given firedef.
  * @param[in] fd Pointer to fire definition, for which item is wanted.
- * @return @c od to which fire definition belongs or @c NULL when no object found.
+ * @return @c od to which fire definition belongs or @c nullptr when no object found.
  */
 static const objDef_t *G_GetObjectForFiredef (const fireDef_t *fd)
 {
@@ -163,7 +163,7 @@ static const objDef_t *G_GetObjectForFiredef (const fireDef_t *fd)
 		}
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -184,7 +184,7 @@ const char *G_GetWeaponNameForFiredef (const fireDef_t *fd)
 /**
  * @brief Gets player for given team.
  * @param[in] team The team the player data should be searched for
- * @return The inuse player for the given team or @c NULL when no player found.
+ * @return The inuse player for the given team or @c nullptr when no player found.
  * @todo What if there are multiple players for a team (multiplayer coop match)
  */
 Player* G_GetPlayerForTeam (int team)
@@ -192,19 +192,19 @@ Player* G_GetPlayerForTeam (int team)
 	Player *p;
 
 	/* search corresponding player (even ai players) */
-	p = NULL;
+	p = nullptr;
 	while ((p = G_PlayerGetNextActiveHuman(p)))
 		if (p->getTeam() == team)
 			/* found player */
 			return p;
 
-	p = NULL;
+	p = nullptr;
 	while ((p = G_PlayerGetNextActiveAI(p)))
 		if (p->getTeam() == team)
 			/* found player */
 			return p;
 
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -293,7 +293,7 @@ const char *G_GetPlayerName (int pnum)
 playermask_t G_GetClosePlayerMask (const vec3_t origin, float radius)
 {
 	playermask_t pm = 0;
-	Edict *closeActor = NULL;
+	Edict *closeActor = nullptr;
 	while ((closeActor = G_FindRadius(closeActor, origin, radius))) {
 		if (!G_IsLivingActor(closeActor))
 			continue;
@@ -343,7 +343,7 @@ void G_PrintActorStats (const Edict *victim, const Edict *attacker, const fireDe
 {
 	char buffer[512];
 
-	if (attacker != NULL && fd != NULL) {
+	if (attacker != nullptr && fd != nullptr) {
 		if (victim->pnum != attacker->pnum) {
 			const char *victimName = G_GetPlayerName(victim->pnum);
 			const char *attackerName = G_GetPlayerName(attacker->pnum);
@@ -400,13 +400,13 @@ void G_PrintActorStats (const Edict *victim, const Edict *attacker, const fireDe
 
 /**
  * @brief Returns entities that have origins within a spherical area.
- * @param[in] from The entity to start the search from. @c NULL will start from the beginning.
+ * @param[in] from The entity to start the search from. @c nullptr will start from the beginning.
  * @param[in] org The origin that is the center of the circle.
  * @param[in] rad radius to search an edict in.
- * @param[in] type Type of entity. @c ET_NULL to ignore the type.
+ * @param[in] type Type of entity. @c ET_nullptr to ignore the type.
  * @code
- * Edict *ent = NULL;
- * while ((ent = G_FindRadius(ent, origin, rad, type)) != NULL) {
+ * Edict *ent = nullptr;
+ * while ((ent = G_FindRadius(ent, origin, rad, type)) != nullptr) {
  *   [...]
  * }
  * @endcode
@@ -422,12 +422,12 @@ Edict *G_FindRadius (Edict *from, const vec3_t org, float rad, entity_type_t typ
 			eorg[j] = org[j] - (ent->origin[j] + (ent->mins[j] + ent->maxs[j]) * 0.5);
 		if (VectorLength(eorg) > rad)
 			continue;
-		if (type != ET_NULL && ent->type != type)
+		if (type != ET_nullptr && ent->type != type)
 			continue;
 		return ent;
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 #define IS_BMODEL(ent) ((ent)->model && (ent)->model[0] == '*' && (ent)->solid == SOLID_BSP)
@@ -441,13 +441,13 @@ Edict *G_FindRadius (Edict *from, const vec3_t org, float rad, entity_type_t typ
 void G_GenerateEntList (const char *entList[MAX_EDICTS])
 {
 	int i = 0;
-	Edict *ent = NULL;
+	Edict *ent = nullptr;
 
 	/* generate entity list */
 	while ((ent = G_EdictsGetNextInUse(ent)))
 		if (IS_BMODEL(ent))
 			entList[i++] = ent->model;
-	entList[i] = NULL;
+	entList[i] = nullptr;
 }
 
 /**
@@ -468,7 +468,7 @@ void G_RecalcRouting (const char *model, const GridBox& box)
  */
 void G_CompleteRecalcRouting (void)
 {
-	Edict *ent = NULL;
+	Edict *ent = nullptr;
 
 	while ((ent = G_EdictsGetNextInUse(ent)))
 		if (IS_BMODEL(ent))
@@ -483,7 +483,7 @@ void G_CompleteRecalcRouting (void)
  */
 static void G_ResetTriggers (Edict *ent, Edict **touched, int num)
 {
-	Edict *trigger = NULL;
+	Edict *trigger = nullptr;
 
 	/* check all edicts to find all triggers */
 	while ((trigger = G_EdictsGetNextInUse(trigger))) {
@@ -499,7 +499,7 @@ static void G_ResetTriggers (Edict *ent, Edict **touched, int num)
 				if (i == num) {	/* No ! */
 					G_TriggerRemoveFromList(trigger, ent);
 					/* the ent left the trigger area */
-					if (trigger->reset != NULL)
+					if (trigger->reset != nullptr)
 						trigger->reset(trigger, ent);
 				}
 			}

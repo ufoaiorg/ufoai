@@ -365,7 +365,7 @@ void R_RenderFrame (void)
 			R_DrawBspNormals(tile);
 		}
 
-		R_Color(NULL);
+		R_Color(nullptr);
 		R_DrawSpecialEntities(r_special_entities);
 		R_DrawNullEntities(r_null_entities);
 		R_DrawEntityEffects();
@@ -391,7 +391,7 @@ void R_RenderFrame (void)
 
 		R_EnableBlend(false);
 
-		R_Color(NULL);
+		R_Color(nullptr);
 		R_DrawSpecialEntities(r_special_entities);
 		R_DrawNullEntities(r_null_entities);
 		R_DrawEntityEffects();
@@ -430,7 +430,7 @@ void R_EndFrame (void)
 	R_DrawChars();  /* draw all chars accumulated above */
 
 	/* restore draw color */
-	R_Color(NULL);
+	R_Color(nullptr);
 
 	R_EnableBlend(false);
 
@@ -455,7 +455,7 @@ static const cmdList_t r_commands[] = {
 	{"r_strings", R_Strings_f, "Print openGL vendor and other strings"},
 	{"r_restartprograms", R_RestartPrograms_f, "Reloads the shaders"},
 
-	{NULL, NULL, NULL}
+	{nullptr, nullptr, nullptr}
 };
 
 static bool R_CvarCheckMaxLightmap (cvar_t *cvar)
@@ -708,7 +708,7 @@ static inline uintptr_t R_GetProcAddress (const char *functionName)
 static uintptr_t R_GetProcAddressExt (const char *functionName)
 {
 	const char *s = strstr(functionName, "###");
-	if (s == NULL) {
+	if (s == nullptr) {
 		return R_GetProcAddress(functionName);
 	} else {
 		const char *replace[] = {"EXT", "OES", "ARB"};
@@ -744,8 +744,8 @@ static inline bool R_CheckExtension (const char *extension)
 	}
 #endif
 	const char *s = strstr(extension, "###");
-	if (s == NULL) {
-		found = strstr(r_config.extensionsString, extension) != NULL;
+	if (s == nullptr) {
+		found = strstr(r_config.extensionsString, extension) != nullptr;
 	} else {
 		const char *replace[] = {"ARB", "EXT", "OES"};
 		char targetBuf[128];
@@ -754,7 +754,7 @@ static inline bool R_CheckExtension (const char *extension)
 		size_t i;
 		for (i = 0; i < replaceNo; i++) {
 			if (Q_strreplace(extension, "###", replace[i], targetBuf, length)) {
-				if (strstr(r_config.extensionsString, targetBuf) != NULL) {
+				if (strstr(r_config.extensionsString, targetBuf) != nullptr) {
 					found = true;
 					break;
 				}
@@ -794,7 +794,7 @@ static void R_InitExtensions (void)
 	/* Get OpenGL version.*/
 	if(sscanf(r_config.versionString, "%d.%d", &r_config.glVersionMajor, &r_config.glVersionMinor) != 2) {
 		const char * versionNumbers = r_config.versionString; /* GLES reports version as "OpenGL ES 1.1", so we must skip non-numeric symbols first */
-		while(*versionNumbers && strchr("0123456789", *versionNumbers) == NULL) {
+		while(*versionNumbers && strchr("0123456789", *versionNumbers) == nullptr) {
 			versionNumbers ++;
 		}
 		if( *versionNumbers )
@@ -803,66 +803,66 @@ static void R_InitExtensions (void)
 	Com_Printf("OpenGL version detected: %d.%d", r_config.glVersionMajor, r_config.glVersionMinor);
 
 	/* multitexture */
-	qglActiveTexture = NULL;
-	qglClientActiveTexture = NULL;
+	qglActiveTexture = nullptr;
+	qglClientActiveTexture = nullptr;
 
 	/* vertex buffer */
-	qglGenBuffers = NULL;
-	qglDeleteBuffers = NULL;
-	qglBindBuffer = NULL;
-	qglBufferData = NULL;
+	qglGenBuffers = nullptr;
+	qglDeleteBuffers = nullptr;
+	qglBindBuffer = nullptr;
+	qglBufferData = nullptr;
 
 	/* glsl */
-	qglCreateShader = NULL;
-	qglDeleteShader = NULL;
-	qglShaderSource = NULL;
-	qglCompileShader = NULL;
-	qglGetShaderiv = NULL;
-	qglGetShaderInfoLog = NULL;
-	qglCreateProgram = NULL;
-	qglDeleteProgram = NULL;
-	qglAttachShader = NULL;
-	qglDetachShader = NULL;
-	qglLinkProgram = NULL;
-	qglUseProgram = NULL;
-	qglGetActiveUniform = NULL;
-	qglGetProgramiv = NULL;
-	qglGetProgramInfoLog = NULL;
-	qglGetUniformLocation = NULL;
-	qglUniform1i = NULL;
-	qglUniform1f = NULL;
-	qglUniform1fv = NULL;
-	qglUniform2fv = NULL;
-	qglUniform3fv = NULL;
-	qglUniform4fv = NULL;
-	qglGetAttribLocation = NULL;
-	qglUniformMatrix4fv = NULL;
+	qglCreateShader = nullptr;
+	qglDeleteShader = nullptr;
+	qglShaderSource = nullptr;
+	qglCompileShader = nullptr;
+	qglGetShaderiv = nullptr;
+	qglGetShaderInfoLog = nullptr;
+	qglCreateProgram = nullptr;
+	qglDeleteProgram = nullptr;
+	qglAttachShader = nullptr;
+	qglDetachShader = nullptr;
+	qglLinkProgram = nullptr;
+	qglUseProgram = nullptr;
+	qglGetActiveUniform = nullptr;
+	qglGetProgramiv = nullptr;
+	qglGetProgramInfoLog = nullptr;
+	qglGetUniformLocation = nullptr;
+	qglUniform1i = nullptr;
+	qglUniform1f = nullptr;
+	qglUniform1fv = nullptr;
+	qglUniform2fv = nullptr;
+	qglUniform3fv = nullptr;
+	qglUniform4fv = nullptr;
+	qglGetAttribLocation = nullptr;
+	qglUniformMatrix4fv = nullptr;
 
 	/* vertex attribute arrays */
-	qglEnableVertexAttribArray = NULL;
-	qglDisableVertexAttribArray = NULL;
-	qglVertexAttribPointer = NULL;
+	qglEnableVertexAttribArray = nullptr;
+	qglDisableVertexAttribArray = nullptr;
+	qglVertexAttribPointer = nullptr;
 
 	/* framebuffer objects */
-	qglIsRenderbufferEXT = NULL;
-	qglBindRenderbufferEXT = NULL;
-	qglDeleteRenderbuffersEXT = NULL;
-	qglGenRenderbuffersEXT = NULL;
-	qglRenderbufferStorageEXT = NULL;
-	qglRenderbufferStorageMultisampleEXT = NULL;
-	qglGetRenderbufferParameterivEXT = NULL;
-	qglIsFramebufferEXT = NULL;
-	qglBindFramebufferEXT = NULL;
-	qglDeleteFramebuffersEXT = NULL;
-	qglGenFramebuffersEXT = NULL;
-	qglCheckFramebufferStatusEXT = NULL;
-	qglFramebufferTexture1DEXT = NULL;
-	qglFramebufferTexture2DEXT = NULL;
-	qglFramebufferTexture3DEXT = NULL;
-	qglFramebufferRenderbufferEXT = NULL;
-	qglGetFramebufferAttachmentParameterivEXT = NULL;
-	qglGenerateMipmapEXT = NULL;
-	qglDrawBuffers = NULL;
+	qglIsRenderbufferEXT = nullptr;
+	qglBindRenderbufferEXT = nullptr;
+	qglDeleteRenderbuffersEXT = nullptr;
+	qglGenRenderbuffersEXT = nullptr;
+	qglRenderbufferStorageEXT = nullptr;
+	qglRenderbufferStorageMultisampleEXT = nullptr;
+	qglGetRenderbufferParameterivEXT = nullptr;
+	qglIsFramebufferEXT = nullptr;
+	qglBindFramebufferEXT = nullptr;
+	qglDeleteFramebuffersEXT = nullptr;
+	qglGenFramebuffersEXT = nullptr;
+	qglCheckFramebufferStatusEXT = nullptr;
+	qglFramebufferTexture1DEXT = nullptr;
+	qglFramebufferTexture2DEXT = nullptr;
+	qglFramebufferTexture3DEXT = nullptr;
+	qglFramebufferRenderbufferEXT = nullptr;
+	qglGetFramebufferAttachmentParameterivEXT = nullptr;
+	qglGenerateMipmapEXT = nullptr;
+	qglDrawBuffers = nullptr;
 
 	/* multitexture */
 	if (R_CheckExtension("GL_ARB_multitexture")) {
@@ -1253,7 +1253,7 @@ bool R_Init (void)
 	R_SphereInit();
 	R_FontInit();
 	R_InitFBObjects();
-	R_UpdateDefaultMaterial("","","", NULL);
+	R_UpdateDefaultMaterial("","","", nullptr);
 
 	R_CheckError();
 

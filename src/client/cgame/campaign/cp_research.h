@@ -162,7 +162,7 @@ typedef struct technology_s {
 					 * counting only if a day has passed and they still are met. */
 
 	researchStatus_t statusResearch;	/**< Current status of the research. */
-	char *finishedResearchEvent;		/**< NULL or string with scriptable commands that are executed after the tech was successfully researched */
+	char *finishedResearchEvent;		/**< nullptr or string with scriptable commands that are executed after the tech was successfully researched */
 	bool announce;			/**< if this is true the ufopedia will be opened on finishing the research */
 
 	struct base_s	*base;	/**< The base this tech is researched in. */
@@ -221,7 +221,7 @@ void RS_ResearchFinish(technology_t* tech);
 void RS_StopResearch(technology_t* tech);
 void RS_MarkOneResearchable(technology_t *tech);
 
-void RS_AssignScientist(technology_t* tech, struct base_s *base, Employee *employee = NULL);
+void RS_AssignScientist(technology_t* tech, struct base_s *base, Employee *employee = nullptr);
 void RS_RemoveScientist(technology_t* tech, Employee *employee);
 void RS_RemoveFiredScientist(struct base_s *base, Employee *employee);
 void RS_RemoveScientistsExceedingCapacity(struct base_s *base);

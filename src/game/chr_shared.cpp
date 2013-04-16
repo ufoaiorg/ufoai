@@ -61,7 +61,7 @@ const chrTemplate_t *CHRSH_GetTemplateByID (const teamDef_t *teamDef, const char
 			if (Q_streq(teamDef->characterTemplates[i]->id, templateId))
 				return teamDef->characterTemplates[i];
 
-	return NULL;
+	return nullptr;
 }
 
 /**

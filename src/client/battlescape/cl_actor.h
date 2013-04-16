@@ -46,7 +46,7 @@ extern le_t *selActor;
 extern pos3_t truePos;
 extern pos3_t mousePos;
 
-#define ACTOR_GET_FIELDSIZE(actor) ((actor != NULL) ? (actor)->fieldSize : ACTOR_SIZE_NORMAL)
+#define ACTOR_GET_FIELDSIZE(actor) ((actor != nullptr) ? (actor)->fieldSize : ACTOR_SIZE_NORMAL)
 
 void MSG_Write_PA(player_action_t player_action, int num, ...);
 

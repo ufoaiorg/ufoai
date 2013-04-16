@@ -76,7 +76,7 @@ static void FixWorkingDirectory (void)
 	char *p;
 	char curDir[MAX_PATH];
 
-	GetModuleFileName(NULL, curDir, sizeof(curDir)-1);
+	GetModuleFileName(nullptr, curDir, sizeof(curDir)-1);
 
 	p = strrchr(curDir, '\\');
 	p[0] = 0;

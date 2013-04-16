@@ -94,7 +94,7 @@ void RS_StopResearch (technology_t* tech)
 {
 	assert(tech);
 	while (tech->scientists > 0)
-		RS_RemoveScientist(tech, NULL);
+		RS_RemoveScientist(tech, nullptr);
 }
 
 /**
@@ -198,7 +198,7 @@ bool RS_RequirementsMet (const technology_t *tech, const base_t *base)
 					metAND = false;
 				break;
 			case RS_LINK_UFO:
-				if (US_UFOsInStorage(req->link.aircraft, NULL) < req->amount)
+				if (US_UFOsInStorage(req->link.aircraft, nullptr) < req->amount)
 					metAND = false;
 				break;
 			case RS_LINK_ANTIMATTER:
@@ -244,7 +244,7 @@ bool RS_RequirementsMet (const technology_t *tech, const base_t *base)
 					metOR = true;
 				break;
 			case RS_LINK_UFO:
-				if (US_UFOsInStorage(req->link.aircraft, NULL) >= req->amount)
+				if (US_UFOsInStorage(req->link.aircraft, nullptr) >= req->amount)
 					metOR = true;
 				break;
 			case RS_LINK_ANTIMATTER:
@@ -462,11 +462,11 @@ void RS_RequiredLinksAssign (void)
  */
 technology_t* RS_GetTechForItem (const objDef_t *item)
 {
-	if (item == NULL)
+	if (item == nullptr)
 		cgi->Com_Error(ERR_DROP, "RS_GetTechForItem: No item given");
 	if (item->idx < 0 || item->idx > lengthof(ccs.objDefTechs))
 		cgi->Com_Error(ERR_DROP, "RS_GetTechForItem: Buffer overflow");
-	if (ccs.objDefTechs[item->idx] == NULL)
+	if (ccs.objDefTechs[item->idx] == nullptr)
 		cgi->Com_Error(ERR_DROP, "RS_GetTechForItem: No technology for item %s", item->id);
 	return ccs.objDefTechs[item->idx];
 }
@@ -477,11 +477,11 @@ technology_t* RS_GetTechForItem (const objDef_t *item)
  */
 technology_t* RS_GetTechForTeam (const teamDef_t *team)
 {
-	if (team == NULL)
+	if (team == nullptr)
 		cgi->Com_Error(ERR_DROP, "RS_GetTechForTeam: No team given");
 	if (team->idx < 0 || team->idx > lengthof(ccs.teamDefTechs))
 		cgi->Com_Error(ERR_DROP, "RS_GetTechForTeam: Buffer overflow");
-	if (ccs.teamDefTechs[team->idx] == NULL)
+	if (ccs.teamDefTechs[team->idx] == nullptr)
 		cgi->Com_Error(ERR_DROP, "RS_GetTechForTeam: No technology for team %s", team->id);
 	return ccs.teamDefTechs[team->idx];
 }
@@ -653,8 +653,8 @@ void RS_InitTree (const campaign_t *campaign, bool load)
  * @note The lab will be automatically selected (the first one that has still free space).
  * @param[in] tech What technology you want to assign the scientist to.
  * @param[in] base Pointer to base where the research is ongoing.
- * @param[in] employee Pointer to the scientist to assign. It can be NULL! That means "any".
- * @note if employee is NULL, te system selects an unassigned scientist on the selected (or tech-) base
+ * @param[in] employee Pointer to the scientist to assign. It can be nullptr! That means "any".
+ * @note if employee is nullptr, te system selects an unassigned scientist on the selected (or tech-) base
  * @sa RS_AssignScientist_f
  * @sa RS_RemoveScientist
  */
@@ -695,7 +695,7 @@ void RS_AssignScientist (technology_t* tech, base_t *base, Employee *employee)
 /**
  * @brief Remove a scientist from a technology.
  * @param[in] tech The technology you want to remove the scientist from.
- * @param[in] employee Employee you want to remove (NULL if you don't care which one should be removed).
+ * @param[in] employee Employee you want to remove (nullptr if you don't care which one should be removed).
  * @sa RS_RemoveScientist_f
  * @sa RS_AssignScientist
  */
@@ -705,7 +705,7 @@ void RS_RemoveScientist (technology_t* tech, Employee *employee)
 
 	/* no need to remove anything, but we can do some check */
 	if (tech->scientists == 0) {
-		assert(tech->base == NULL);
+		assert(tech->base == nullptr);
 		assert(tech->statusResearch == RS_PAUSED);
 		return;
 	}
@@ -725,7 +725,7 @@ void RS_RemoveScientist (technology_t* tech, Employee *employee)
 
 	if (tech->scientists == 0) {
 		/* Remove the tech from the base if no scientists are left to research it. */
-		tech->base = NULL;
+		tech->base = nullptr;
 		tech->statusResearch = RS_PAUSED;
 	}
 }
@@ -748,7 +748,7 @@ void RS_RemoveFiredScientist (base_t *base, Employee *employee)
 	/* Get a tech where there is at least one scientist working on (unless no scientist working in this base) */
 	tech = RS_GetTechWithMostScientists(base);
 
-	/* tech should never be NULL, as there is at least 1 scientist working in base */
+	/* tech should never be nullptr, as there is at least 1 scientist working in base */
 	assert(tech);
 	RS_RemoveScientist(tech, employee);
 
@@ -780,8 +780,8 @@ bool RS_MarkStoryLineEventResearched (const char *techID)
 {
 	technology_t* tech = RS_GetTechByID(techID);
 	if (!RS_IsResearched_ptr(tech)) {
-		const base_t *base = B_GetNext(NULL);
-		if (base != NULL) {
+		const base_t *base = B_GetNext(nullptr);
+		if (base != nullptr) {
 			RS_MarkResearched(tech, base);
 			return true;
 		}
@@ -1117,7 +1117,7 @@ static const value_t valid_tech_vars[] = {
 	{"image", V_HUNK_STRING, offsetof(technology_t, image), 0},
 	{"model", V_HUNK_STRING, offsetof(technology_t, mdl), 0},
 
-	{NULL, V_NULL, 0, 0}
+	{nullptr, V_nullptr, 0, 0}
 };
 
 /**
@@ -1131,7 +1131,7 @@ static const value_t valid_techmail_vars[] = {
 	{"icon", V_HUNK_STRING, offsetof(techMail_t, icon), 0},
 	{"model", V_HUNK_STRING, offsetof(techMail_t, model), 0},
 
-	{NULL, V_NULL, 0, 0}
+	{nullptr, V_nullptr, 0, 0}
 };
 
 /**
@@ -1269,7 +1269,7 @@ void RS_ParseTechnologies (const char *name, const char **text)
 					linkedList_t *list;
 
 					if (Q_streq(token, "default")) {
-						list = NULL;
+						list = nullptr;
 						cgi->LIST_AddString(&list, token);
 						token = cgi->Com_EParse(text, errhead, name);
 						cgi->LIST_AddString(&list, token);
@@ -1477,15 +1477,15 @@ void RS_ParseTechnologies (const char *name, const char **text)
 							if (!ccs.upChapters[i].first) {
 								ccs.upChapters[i].first = tech;
 								ccs.upChapters[i].last = tech;
-								tech->upPrev = NULL;
-								tech->upNext = NULL;
+								tech->upPrev = nullptr;
+								tech->upNext = nullptr;
 							} else {
 								/* get "last entry" in chapter */
 								technology_t *techOld = ccs.upChapters[i].last;
 								ccs.upChapters[i].last = tech;
 								techOld->upNext = tech;
 								ccs.upChapters[i].last->upPrev = techOld;
-								ccs.upChapters[i].last->upNext = NULL;
+								ccs.upChapters[i].last->upNext = nullptr;
 							}
 							break;
 						}
@@ -1525,7 +1525,7 @@ void RS_ParseTechnologies (const char *name, const char **text)
 						return;
 				} while (*text && *token != '}');
 				/* default model is navarre */
-				if (mail->model == NULL)
+				if (mail->model == nullptr)
 					mail->model = "characters/navarre";
 			} else {
 				if (!Com_ParseBlockToken(name, text, tech, valid_tech_vars, cp_campaignPool, token))
@@ -1601,12 +1601,12 @@ bool RS_IsResearched_ptr (const technology_t *tech)
  * @brief Returns the technology pointer for a tech index.
  * You can use this instead of "&ccs.technologies[techIdx]" to avoid having to check valid indices.
  * @param[in] techIdx Index in the global ccs.technologies[] array.
- * @return technology_t pointer or NULL if an error occurred.
+ * @return technology_t pointer or nullptr if an error occurred.
  */
 technology_t* RS_GetTechByIDX (int techIdx)
 {
 	if (!RS_IsValidTechIndex(techIdx))
-		return NULL;
+		return nullptr;
 	return &ccs.technologies[techIdx];
 }
 
@@ -1614,7 +1614,7 @@ technology_t* RS_GetTechByIDX (int techIdx)
 /**
  * @brief return a pointer to the technology identified by given id string
  * @param[in] id Unique identifier of the tech as defined in the research.ufo file (e.g. "tech xxxx").
- * @return technology_t pointer or NULL if an error occured.
+ * @return technology_t pointer or nullptr if an error occured.
  */
 technology_t *RS_GetTechByID (const char *id)
 {
@@ -1622,7 +1622,7 @@ technology_t *RS_GetTechByID (const char *id)
 	technology_t *tech;
 
 	if (Q_strnull(id))
-		return NULL;
+		return nullptr;
 
 	hash = Com_HashKey(id, TECH_HASH_SIZE);
 	for (tech = techHash[hash]; tech; tech = tech->hashNext)
@@ -1630,13 +1630,13 @@ technology_t *RS_GetTechByID (const char *id)
 			return tech;
 
 	Com_Printf("RS_GetTechByID: Could not find a technology with id \"%s\"\n", id);
-	return NULL;
+	return nullptr;
 }
 
 /**
  * @brief returns a pointer to the item tech (as listed in "provides")
  * @param[in] idProvided Unique identifier of the object the tech is providing
- * @return The tech for the given object id or NULL if not found
+ * @return The tech for the given object id or nullptr if not found
  */
 technology_t *RS_GetTechByProvided (const char *idProvided)
 {
@@ -1644,10 +1644,10 @@ technology_t *RS_GetTechByProvided (const char *idProvided)
 	technology_t *tech;
 
 	if (!idProvided)
-		return NULL;
+		return nullptr;
 	/* catch empty strings */
 	if (idProvided[0] == '\0')
-		return NULL;
+		return nullptr;
 
 	hash = Com_HashKey(idProvided, TECH_HASH_SIZE);
 	for (tech = techHashProvided[hash]; tech; tech = tech->hashProvidedNext)
@@ -1656,8 +1656,8 @@ technology_t *RS_GetTechByProvided (const char *idProvided)
 
 	Com_DPrintf(DEBUG_CLIENT, "RS_GetTechByProvided: %s\n", idProvided);
 	/* if a building, probably needs another building */
-	/* if not a building, catch NULL where function is called! */
-	return NULL;
+	/* if not a building, catch nullptr where function is called! */
+	return nullptr;
 }
 
 /**
@@ -1670,9 +1670,9 @@ technology_t *RS_GetTechWithMostScientists (const struct base_s *base)
 	int i, max;
 
 	if (!base)
-		return NULL;
+		return nullptr;
 
-	tech = NULL;
+	tech = nullptr;
 	max = 0;
 	for (i = 0; i < ccs.numTechnologies; i++) {
 		technology_t *tech_temp = RS_GetTechByIDX(i);
@@ -1684,7 +1684,7 @@ technology_t *RS_GetTechWithMostScientists (const struct base_s *base)
 		}
 	}
 
-	/* this tech has at least one assigned scientist or is a NULL pointer */
+	/* this tech has at least one assigned scientist or is a nullptr pointer */
 	return tech;
 }
 
@@ -1739,7 +1739,7 @@ void RS_RemoveScientistsExceedingCapacity (base_t *base)
 
 	while (CAP_GetFreeCapacity(base, CAP_LABSPACE) < 0) {
 		technology_t *tech = RS_GetTechWithMostScientists(base);
-		RS_RemoveScientist(tech, NULL);
+		RS_RemoveScientist(tech, nullptr);
 	}
 }
 

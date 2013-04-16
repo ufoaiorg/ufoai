@@ -126,8 +126,8 @@ const cgame_export_t *GetCGameAPI (const cgame_import_t *import)
 	const size_t len = lengthof(gameTypeList);
 	int i;
 
-	if (cgameMenu == NULL)
-		return NULL;
+	if (cgameMenu == nullptr)
+		return nullptr;
 
 	for (i = 0; i < len; i++) {
 		const cgame_api_t list = gameTypeList[i];
@@ -137,7 +137,7 @@ const cgame_export_t *GetCGameAPI (const cgame_import_t *import)
 		}
 	}
 
-	return NULL;
+	return nullptr;
 }
 #endif
 
@@ -190,7 +190,7 @@ void GAME_AppendTeamMember (int memberIndex, const char *teamDefID, const equipD
 {
 	character_t *chr;
 
-	if (ed == NULL)
+	if (ed == nullptr)
 		Com_Error(ERR_DROP, "No equipment definition given");
 
 	chr = GAME_GetCharacter(memberIndex);
@@ -209,7 +209,7 @@ void GAME_GenerateTeam (const char *teamDefID, const equipDef_t *ed, int teamMem
 	if (teamMembers > GAME_GetCharacterArraySize())
 		Com_Error(ERR_DROP, "More than the allowed amount of team members");
 
-	if (ed == NULL)
+	if (ed == nullptr)
 		Com_Error(ERR_DROP, "No equipment definition given");
 
 	GAME_ResetCharacters();
@@ -221,8 +221,8 @@ void GAME_GenerateTeam (const char *teamDefID, const equipDef_t *ed, int teamMem
 void GAME_ReloadMode (void)
 {
 	const cgame_export_t *list = GAME_GetCurrentType();
-	if (list != NULL) {
-		GAME_SetMode(NULL);
+	if (list != nullptr) {
+		GAME_SetMode(nullptr);
 		GAME_SetMode(list);
 	}
 }
@@ -230,7 +230,7 @@ void GAME_ReloadMode (void)
 bool GAME_IsMultiplayer (void)
 {
 	const cgame_export_t *list = GAME_GetCurrentType();
-	if (list != NULL) {
+	if (list != nullptr) {
 		const bool isMultiplayer = list->isMultiplayer == 1;
 		return isMultiplayer;
 	}
@@ -257,7 +257,7 @@ void GAME_EndRoundAnnounce (int playerNum, int team)
 {
 	/** @todo do we need the team number here? isn't the playernum enough to get the team? */
 	const cgame_export_t *list = GAME_GetCurrentType();
-	if (list != NULL && list->EndRoundAnnounce)
+	if (list != nullptr && list->EndRoundAnnounce)
 		list->EndRoundAnnounce(playerNum, team);
 }
 
@@ -269,7 +269,7 @@ void GAME_EndRoundAnnounce (int playerNum, int team)
 void GAME_DisplayItemInfo (uiNode_t *node, const char *string)
 {
 	const cgame_export_t *list = GAME_GetCurrentType();
-	if (list != NULL && list->GetModelForItem) {
+	if (list != nullptr && list->GetModelForItem) {
 		const char *model = list->GetModelForItem(string);
 		UI_DrawModelNode(node, model);
 	}
@@ -292,7 +292,7 @@ static void CL_QueryMasterServer (const char *action, http_callback_t callback)
 bool GAME_HandleServerCommand (const char *command, dbuffer *msg)
 {
 	const cgame_export_t *list = GAME_GetCurrentType();
-	if (!list || list->HandleServerCommand == NULL)
+	if (!list || list->HandleServerCommand == nullptr)
 		return false;
 
 	return list->HandleServerCommand(command, msg);
@@ -304,7 +304,7 @@ void GAME_AddChatMessage (const char *format, ...)
 	char string[4096];
 
 	const cgame_export_t *list = GAME_GetCurrentType();
-	if (!list || list->AddChatMessage == NULL)
+	if (!list || list->AddChatMessage == nullptr)
 		return;
 
 	S_StartLocalSample("misc/talk", SND_VOLUME_DEFAULT);
@@ -403,7 +403,7 @@ static int GAME_GetNextUniqueCharacterNumber (void)
 
 static void GAME_CollectItems (void *data, int won, void (*collectItem)(void*, const objDef_t*, int), void (*collectAmmo) (void *, const invList_t *), void (*ownitems) (const inventory_t *))
 {
-	le_t *le = NULL;
+	le_t *le = nullptr;
 	while ((le = LE_GetNextInUse(le))) {
 		/* Winner collects everything on the floor, and everything carried
 		 * by surviving actors. Loser only gets what their living team
@@ -438,7 +438,7 @@ static void GAME_CollectItems (void *data, int won, void (*collectItem)(void*, c
  */
 static void GAME_CollectAliens (void *data, void (*collect)(void*, const teamDef_t*, int, bool))
 {
-	le_t *le = NULL;
+	le_t *le = nullptr;
 
 	while ((le = LE_GetNextInUse(le))) {
 		if (LE_IsActor(le) && LE_IsAlien(le)) {
@@ -492,9 +492,9 @@ static const char *Com_EParse_ (const char **text, const char *errhead, const ch
 static const cgame_import_t* GAME_GetImportData (const cgameType_t *t)
 {
 	static cgame_import_t gameImport;
-	static cgame_import_t *cgi = NULL;
+	static cgame_import_t *cgi = nullptr;
 
-	if (cgi == NULL) {
+	if (cgi == nullptr) {
 		cgi = &gameImport;
 
 		cgi->ui_inventory = &ui_inventory;
@@ -767,10 +767,10 @@ void GAME_UnloadGame (void)
 {
 #ifndef HARD_LINKED_CGAME
 	if (cls.cgameLibrary) {
-		GAME_SetMode(NULL);
+		GAME_SetMode(nullptr);
 		Com_Printf("Unload the cgame library\n");
 		SDL_UnloadObject(cls.cgameLibrary);
-		cls.cgameLibrary = NULL;
+		cls.cgameLibrary = nullptr;
 	}
 #endif
 }
@@ -1032,7 +1032,7 @@ static const value_t cgame_vals[] = {
 	{"name", V_STRING, offsetof(cgameType_t, name), 0},
 	{"equipments", V_LIST, offsetof(cgameType_t, equipmentList), 0},
 
-	{NULL, V_NULL, 0, 0}
+	{nullptr, V_nullptr, 0, 0}
 };
 
 void GAME_ParseModes (const char *name, const char **text)
@@ -1059,7 +1059,7 @@ void GAME_ParseModes (const char *name, const char **text)
 
 	Q_strncpyz(cgame->id, name, sizeof(cgame->id));
 
-	Com_ParseBlock(name, text, cgame, cgame_vals, NULL);
+	Com_ParseBlock(name, text, cgame, cgame_vals, nullptr);
 }
 
 #ifndef HARD_LINKED_CGAME
@@ -1102,12 +1102,12 @@ static const cgame_export_t *GAME_GetCGameAPI (const cgameType_t *t)
 #endif
 
 	/* now run through the search paths */
-	path = NULL;
+	path = nullptr;
 	while (!cls.cgameLibrary) {
 		path = FS_NextPath(path);
 		if (!path)
 			/* couldn't find one anywhere */
-			return NULL;
+			return nullptr;
 		else if (GAME_LoadGame(path, name))
 			break;
 	}
@@ -1115,14 +1115,14 @@ static const cgame_export_t *GAME_GetCGameAPI (const cgameType_t *t)
 	GetCGameAPI = (cgame_api_t)(uintptr_t)SDL_LoadFunction(cls.cgameLibrary, "GetCGameAPI");
 	if (!GetCGameAPI) {
 		GAME_UnloadGame();
-		return NULL;
+		return nullptr;
 	}
 #endif
 
 	/* sanity checks */
 	if (!LIST_IsEmpty(t->equipmentList)) {
 		LIST_Foreach(t->equipmentList, char const, equipID) {
-			if (INV_GetEquipmentDefinitionByID(equipID) == NULL)
+			if (INV_GetEquipmentDefinitionByID(equipID) == nullptr)
 				Sys_Error("Could not find the equipDef '%s' in the cgame mode: '%s'", equipID, name);
 		}
 	}
@@ -1178,7 +1178,7 @@ bool GAME_ItemIsUseable (const objDef_t *od)
 		const teamDef_t *teamDef = Com_GetTeamDefinitionByID(teamDefID);
 
 		/* Don't allow armour for other teams */
-		if (teamDef != NULL && !CHRSH_IsArmourUseableForTeam(od, teamDef))
+		if (teamDef != nullptr && !CHRSH_IsArmourUseableForTeam(od, teamDef))
 			return false;
 	}
 
@@ -1259,7 +1259,7 @@ static void GAME_NetSendCharacter (dbuffer *buf, const character_t *chr)
 	if (chr->fieldSize != ACTOR_SIZE_2x2 && chr->fieldSize != ACTOR_SIZE_NORMAL)
 		Com_Error(ERR_DROP, "Invalid character size given for character '%s': %i",
 				chr->name, chr->fieldSize);
-	if (chr->teamDef == NULL)
+	if (chr->teamDef == nullptr)
 		Com_Error(ERR_DROP, "Character with no teamdef set (%s)", chr->name);
 
 	NET_WriteByte(buf, chr->fieldSize);
@@ -1343,7 +1343,7 @@ static bool GAME_Spawn (linkedList_t **chrList)
 
 	/* If there is no active gametype we create a team with default values.
 	 * This is e.g. the case when someone starts a map with the map command */
-	if (GAME_GetCurrentType() == NULL || LIST_IsEmpty(chrDisplayList)) {
+	if (GAME_GetCurrentType() == nullptr || LIST_IsEmpty(chrDisplayList)) {
 		const char *teamDefID = GAME_GetTeamDef();
 		const equipDef_t *ed = INV_GetEquipmentDefinitionByID("multiplayer_initial");
 
@@ -1376,11 +1376,11 @@ void GAME_StartBattlescape (bool isTeamPlay)
 	Cvar_Set("cl_onbattlescape", "1");
 
 	Cvar_Set("cl_maxworldlevel", va("%i", cl.mapMaxLevel - 1));
-	if (list != NULL && list->StartBattlescape) {
+	if (list != nullptr && list->StartBattlescape) {
 		list->StartBattlescape(isTeamPlay);
 	} else {
-		UI_InitStack(NULL, "singleplayermission", true, false);
-		HUD_InitUI(NULL, true);
+		UI_InitStack(nullptr, "singleplayermission", true, false);
+		HUD_InitUI(nullptr, true);
 		GAME_InitMissionBriefing(_(CL_GetConfigString(CS_MAPTITLE)));
 	}
 }
@@ -1389,8 +1389,8 @@ void GAME_InitMissionBriefing (const char *title)
 {
 	const cgame_export_t *list = GAME_GetCurrentType();
 
-	linkedList_t *victoryConditionsMsgIDs = NULL;
-	linkedList_t *missionBriefingMsgIDs = NULL;
+	linkedList_t *victoryConditionsMsgIDs = nullptr;
+	linkedList_t *missionBriefingMsgIDs = nullptr;
 
 	/* allow the server to add e.g. the misc_mission victory condition */
 	const char *serverVictoryMsgID = CL_GetConfigString(CS_VICTORY_CONDITIONS);
@@ -1399,7 +1399,7 @@ void GAME_InitMissionBriefing (const char *title)
 
 	UI_PushWindow("mission_briefing");
 
-	if (list != NULL && list->InitMissionBriefing)
+	if (list != nullptr && list->InitMissionBriefing)
 		list->InitMissionBriefing(&title, &victoryConditionsMsgIDs, &missionBriefingMsgIDs);
 
 	/* if the cgame has nothing to contribute here, we will add a default victory condition */
@@ -1432,7 +1432,7 @@ static void GAME_InitializeBattlescape (linkedList_t *team)
 
 	if (list && list->InitializeBattlescape) {
 		dbuffer *msg = list->InitializeBattlescape(team);
-		if (msg != NULL) {
+		if (msg != nullptr) {
 			NET_WriteMsg(cls.netStream, *msg);
 			delete msg;
 		}
@@ -1479,7 +1479,7 @@ equipDef_t *GAME_GetEquipmentDefinition (void)
 {
 	const cgame_export_t *list = GAME_GetCurrentType();
 
-	if (list && list->GetEquipmentDefinition != NULL)
+	if (list && list->GetEquipmentDefinition != nullptr)
 		return list->GetEquipmentDefinition();
 	return &equipDefStandard;
 }
@@ -1498,7 +1498,7 @@ bool GAME_TeamIsKnown (const teamDef_t *teamDef)
 	if (!teamDef)
 		return false;
 
-	if (list && list->IsTeamKnown != NULL)
+	if (list && list->IsTeamKnown != nullptr)
 		return list->IsTeamKnown(teamDef);
 	return true;
 }
@@ -1506,7 +1506,7 @@ bool GAME_TeamIsKnown (const teamDef_t *teamDef)
 void GAME_CharacterCvars (const character_t *chr)
 {
 	const cgame_export_t *list = GAME_GetCurrentType();
-	if (list && list->UpdateCharacterValues != NULL)
+	if (list && list->UpdateCharacterValues != nullptr)
 		list->UpdateCharacterValues(chr);
 }
 
@@ -1527,11 +1527,11 @@ void GAME_Drop (void)
 		list->Drop();
 	} else {
 		SV_Shutdown("Drop", false);
-		GAME_SetMode(NULL);
+		GAME_SetMode(nullptr);
 
 		GAME_UnloadGame();
 
-		UI_InitStack("main", NULL, false, true);
+		UI_InitStack("main", nullptr, false, true);
 	}
 }
 
@@ -1540,7 +1540,7 @@ void GAME_Drop (void)
  */
 static void GAME_Exit_f (void)
 {
-	GAME_SetMode(NULL);
+	GAME_SetMode(nullptr);
 
 	GAME_UnloadGame();
 }
@@ -1557,35 +1557,35 @@ void GAME_Frame (void)
 		return;
 
 	list = GAME_GetCurrentType();
-	if (list && list->RunFrame != NULL)
+	if (list && list->RunFrame != nullptr)
 		list->RunFrame(cls.frametime);
 }
 
 void GAME_DrawBase (int baseIdx, int x, int y, int w, int h, int col, int row, bool hover, int overlap)
 {
 	const cgame_export_t *list = GAME_GetCurrentType();
-	if (list && list->DrawBase != NULL)
+	if (list && list->DrawBase != nullptr)
 		list->DrawBase(baseIdx, x, y, w, h, col, row, hover, overlap);
 }
 
 void GAME_DrawBaseTooltip (int baseIdx, int x, int y, int col, int row)
 {
 	const cgame_export_t *list = GAME_GetCurrentType();
-	if (list && list->DrawBaseTooltip != NULL)
+	if (list && list->DrawBaseTooltip != nullptr)
 		list->DrawBaseTooltip(baseIdx, x, y, col, row);
 }
 
 void GAME_DrawBaseLayout (int baseIdx, int x, int y, int totalMarge, int w, int h, int padding, const vec4_t bgcolor, const vec4_t color)
 {
 	const cgame_export_t *list = GAME_GetCurrentType();
-	if (list && list->DrawBaseLayout != NULL)
+	if (list && list->DrawBaseLayout != nullptr)
 		list->DrawBaseLayout(baseIdx, x, y, totalMarge, w, h, padding, bgcolor, color);
 }
 
 void GAME_HandleBaseClick (int baseIdx, int key, int col, int row)
 {
 	const cgame_export_t *list = GAME_GetCurrentType();
-	if (list && list->HandleBaseClick != NULL)
+	if (list && list->HandleBaseClick != nullptr)
 		list->HandleBaseClick(baseIdx, key, col, row);
 }
 
@@ -1593,37 +1593,37 @@ void GAME_HandleBaseClick (int baseIdx, int key, int col, int row)
  * @brief Get a model for an item.
  * @param[in] od The object definition to get the model from.
  * @param[out] uiModel The menu model pointer.
- * @return The model path for the item. Never @c NULL.
+ * @return The model path for the item. Never @c nullptr.
  */
 const char *GAME_GetModelForItem (const objDef_t *od, uiModel_t **uiModel)
 {
 	const cgame_export_t *list = GAME_GetCurrentType();
-	if (list && list->GetModelForItem != NULL) {
+	if (list && list->GetModelForItem != nullptr) {
 		const char *model = list->GetModelForItem(od->id);
-		if (model != NULL) {
-			if (uiModel != NULL)
+		if (model != nullptr) {
+			if (uiModel != nullptr)
 				*uiModel = UI_GetUIModel(model);
 			return model;
 		}
 	}
 
-	if (uiModel != NULL)
-		*uiModel = NULL;
+	if (uiModel != nullptr)
+		*uiModel = nullptr;
 	return od->model;
 }
 
 /**
  * @brief Returns the currently selected character.
- * @return The selected character or @c NULL.
+ * @return The selected character or @c nullptr.
  */
 character_t* GAME_GetSelectedChr (void)
 {
 	const cgame_export_t *list = GAME_GetCurrentType();
-	if (list && list->GetSelectedChr != NULL)
+	if (list && list->GetSelectedChr != nullptr)
 		return list->GetSelectedChr();
 
 	const int ucn = Cvar_GetInteger("mn_ucn");
-	character_t *chr = NULL;
+	character_t *chr = nullptr;
 	LIST_Foreach(chrDisplayList, character_t, chrTmp) {
 		if (ucn == chrTmp->ucn) {
 			chr = chrTmp;
@@ -1643,7 +1643,7 @@ int GAME_GetChrMaxLoad (const character_t *chr)
 	if (chr) {
 		const cgame_export_t *list = GAME_GetCurrentType();
 		const int strength = chr->score.skills[ABILITY_POWER];
-		if (list && list->GetChrMaxLoad != NULL)
+		if (list && list->GetChrMaxLoad != nullptr)
 			return std::min(strength, list->GetChrMaxLoad(chr));
 		return strength;
 	}
@@ -1660,7 +1660,7 @@ const equipDef_t *GAME_ChangeEquip (const linkedList_t *equipmentList, changeEqu
 	if (LIST_IsEmpty(equipmentList)) {
 		int index;
 		ed = INV_GetEquipmentDefinitionByID(equipID);
-		if (ed == NULL)
+		if (ed == nullptr)
 			Com_Error(ERR_DROP, "Could not find the equipment definition for '%s'", equipID);
 		index = ed - csi.eds;
 
@@ -1681,16 +1681,16 @@ const equipDef_t *GAME_ChangeEquip (const linkedList_t *equipmentList, changeEqu
 		ed = &csi.eds[index];
 	} else {
 		const linkedList_t *entry = LIST_ContainsString(equipmentList, equipID);
-		if (entry == NULL) {
+		if (entry == nullptr) {
 			equipID = (const char *)equipmentList->data;
 		} else if (changeType == FORWARD) {
-			equipID = (const char *)(entry->next != NULL ? entry->next->data : equipmentList->data);
+			equipID = (const char *)(entry->next != nullptr ? entry->next->data : equipmentList->data);
 		} else if (changeType == BACKWARD) {
-			const char *newEntry = NULL;
-			const char *prevEntry = NULL;
+			const char *newEntry = nullptr;
+			const char *prevEntry = nullptr;
 			LIST_Foreach(equipmentList, char const, tmp) {
 				if (Q_streq(tmp, equipID)) {
-					if (prevEntry != NULL) {
+					if (prevEntry != nullptr) {
 						newEntry = prevEntry;
 						break;
 					}
@@ -1701,7 +1701,7 @@ const equipDef_t *GAME_ChangeEquip (const linkedList_t *equipmentList, changeEqu
 			equipID = newEntry;
 		}
 		ed = INV_GetEquipmentDefinitionByID(equipID);
-		if (ed == NULL)
+		if (ed == nullptr)
 			Com_Error(ERR_DROP, "Could not find the equipment definition for '%s'", equipID);
 	}
 
@@ -1719,7 +1719,7 @@ void GAME_InitUIData (void)
 	for (i = 0; i < numCGameTypes; i++) {
 		const cgameType_t *t = &cgameTypes[i];
 		const cgame_export_t *e = GAME_GetCGameAPI_(t);
-		if (e == NULL)
+		if (e == nullptr)
 			continue;
 
 		if (e->isMultiplayer)

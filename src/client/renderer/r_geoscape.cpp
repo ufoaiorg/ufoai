@@ -196,7 +196,7 @@ void R_Draw2DMapMarkers (const vec2_t screenPos, float direction, const char *mo
 	size[0] = size[1] = MARKER_SIZE * zoom;
 	R_ModelAutoScale(size, &mi, scale, center);
 	/* reset the center, as we want to place the models onto the surface of the earth */
-	mi.center = NULL;
+	mi.center = nullptr;
 
 	/* go to a new matrix */
 	glPushMatrix();
@@ -211,7 +211,7 @@ void R_Draw2DMapMarkers (const vec2_t screenPos, float direction, const char *mo
 	/* rotate model to proper direction. */
 	glRotatef(-90.f + direction, 0, 0, 1);
 
-	R_DrawModelDirect(&mi, NULL, NULL);
+	R_DrawModelDirect(&mi, nullptr, nullptr);
 
 	/* restore previous matrix */
 	glPopMatrix();
@@ -259,7 +259,7 @@ void R_Draw3DMapMarkers (const vec2_t nodePos, const vec2_t nodeSize, const vec3
 	size[0] = size[1] = MARKER_SIZE * zoom;
 	R_ModelAutoScale(size, &mi, scale, center);
 	/* reset the center, as we want to place the models onto the surface of the earth */
-	mi.center = NULL;
+	mi.center = nullptr;
 
 	/* go to a new matrix */
 	glPushMatrix();
@@ -280,7 +280,7 @@ void R_Draw3DMapMarkers (const vec2_t nodePos, const vec2_t nodeSize, const vec3
 	glTranslatef(0, 0, earthRadius);
 	glRotatef(90.0f + direction, 0, 0, 1);
 
-	R_DrawModelDirect(&mi, NULL, NULL);
+	R_DrawModelDirect(&mi, nullptr, nullptr);
 
 	/* restore previous matrix */
 	glPopMatrix();
@@ -530,7 +530,7 @@ void R_Draw3DGlobe (const vec2_t pos, const vec2_t size, int day, int second, co
 		/* load normal map (with embedded gloss map as alpha channel) */
 		r_globeEarth.normalMap = R_FindImage(va("pics/geoscape/%s/%s_bump", r_config.lodDir, map), it_wrappic);
 		if (r_globeEarth.normalMap == r_noTexture)
-			r_globeEarth.normalMap = NULL;
+			r_globeEarth.normalMap = nullptr;
 
 		/* weight the blending based on how much of the month has elapsed */
 		r_globeEarth.blendScale = seasonProgress;
@@ -658,7 +658,7 @@ void R_Draw3DGlobe (const vec2_t pos, const vec2_t size, int day, int second, co
 			R_DrawBuffers(1);
 		}
 
-		r_globeEarth.overlay = NULL;
+		r_globeEarth.overlay = nullptr;
 	}
 	/* draw XVI overlay */
 	if (overlayXVI) {
@@ -666,15 +666,15 @@ void R_Draw3DGlobe (const vec2_t pos, const vec2_t size, int day, int second, co
 		r_globeEarth.overlayAlphaMask = r_xviTexture;
 		assert(r_globeEarth.overlayAlphaMask);
 		R_SphereRender(&r_globeEarth, earthPos, rotate, fullscale, sunPos);
-		r_globeEarth.overlayAlphaMask = NULL;
-		r_globeEarth.overlay = NULL;
+		r_globeEarth.overlayAlphaMask = nullptr;
+		r_globeEarth.overlay = nullptr;
 	}
 	/* draw radar overlay */
 	if (overlayRadar) {
 		r_globeEarth.overlay = r_radarTexture;
 		assert(r_globeEarth.overlay);
 		R_SphereRender(&r_globeEarth, earthPos, rotate, fullscale, sunPos);
-		r_globeEarth.overlay = NULL;
+		r_globeEarth.overlay = nullptr;
 	}
 
 	/* disable 3d geoscape lighting */
@@ -719,7 +719,7 @@ static void R_Blur (r_framebuffer_t *source, r_framebuffer_t *dest, int tex, int
 	R_UseViewport(source);
 	R_DrawQuad();
 
-	R_EnableBlur(r_state.convolve_program, false, NULL, NULL, 0);
+	R_EnableBlur(r_state.convolve_program, false, nullptr, nullptr, 0);
 }
 
 /**

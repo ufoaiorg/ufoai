@@ -68,7 +68,7 @@ static const materialDescription_t materialDescriptions[] = {
 	{"anim", STAGE_ANIM},
 	{"dirtmap", STAGE_DIRTMAP},
 
-	{NULL, 0}
+	{nullptr, 0}
 };
 
 static materialStage_t *UI_MaterialEditorGetStage (material_t *material, int stageIndex)
@@ -185,7 +185,7 @@ void uiMaterialEditorNode::draw (uiNode_t *node)
 }
 
 /**
- * @brief Return index of the image (r_images[i]) else NULL
+ * @brief Return index of the image (r_images[i]) else nullptr
  */
 static int UI_MaterialEditorNodeGetImageAtPosition (uiNode_t *node, int x, int y)
 {
@@ -265,15 +265,15 @@ static void UI_MaterialEditorStagesToName (const materialStage_t *stage, char *b
  */
 static void UI_MaterialEditorUpdate (image_t *image, materialStage_t *materialStage)
 {
-	linkedList_t *materialStagesList = NULL;
+	linkedList_t *materialStagesList = nullptr;
 
-	if (image->normalmap == NULL)
+	if (image->normalmap == nullptr)
 		UI_ExecuteConfunc("hideshaders true 0 0 0 0");
 	else
 		UI_ExecuteConfunc("hideshaders false %f %f %f %f", image->material.bump,
 				image->material.hardness, image->material.parallax, image->material.specular);
 
-	if (image->normalmap == NULL)
+	if (image->normalmap == nullptr)
 		Cvar_Set("me_imagename", image->name);
 	else
 		Cvar_Set("me_imagename", va("%s (nm)", image->name));
@@ -338,7 +338,7 @@ void uiMaterialEditorNode::onMouseDown (uiNode_t *node, int x, int y, int button
 	/* have we selected a new image? */
 	if (node->num != id) {
 		image_t *image = R_GetImageAtIndex(id);
-		UI_MaterialEditorUpdate(image, NULL);
+		UI_MaterialEditorUpdate(image, nullptr);
 
 		node->num = id;
 
@@ -386,7 +386,7 @@ static const value_t materialValues[] = {
 	{"specular", V_FLOAT, offsetof(material_t, specular), 0},
 	{"hardness", V_FLOAT, offsetof(material_t, hardness), 0},
 
-	{NULL, V_NULL, 0, 0},
+	{nullptr, V_nullptr, 0, 0},
 };
 
 
@@ -418,7 +418,7 @@ static const value_t materialStageValues[] = {
 	{"blend.src", V_INT, offsetof(materialStage_t, blend.src), 0},
 	{"blend.dest", V_INT, offsetof(materialStage_t, blend.dest), 0},
 
-	{NULL, V_NULL, 0, 0},
+	{nullptr, V_nullptr, 0, 0},
 };
 
 static void UI_MaterialEditorChangeValue_f (void)
@@ -546,7 +546,7 @@ static void UI_MaterialEditorRemoveStage_f (void)
 
 	image->material.num_stages--;
 
-	UI_MaterialEditorUpdate(image, NULL);
+	UI_MaterialEditorUpdate(image, nullptr);
 }
 
 static void UI_MaterialEditorNewStage_f (void)

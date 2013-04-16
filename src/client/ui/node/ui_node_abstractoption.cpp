@@ -56,12 +56,12 @@ const char *UI_AbstractOptionGetCurrentValue (uiNode_t *node)
 	/* no cvar given? */
 	if (!EXTRADATA(node).cvar || !*EXTRADATA(node).cvar) {
 		Com_Printf("UI_AbstractOptionGetCurrentValue: node '%s' doesn't have a valid cvar assigned\n", UI_GetPath(node));
-		return NULL;
+		return nullptr;
 	}
 
 	/* not a cvar? */
 	if (!Q_strstart(EXTRADATA(node).cvar, "*cvar:"))
-		return NULL;
+		return nullptr;
 
 	return UI_GetReferenceString(node, EXTRADATA(node).cvar);
 }

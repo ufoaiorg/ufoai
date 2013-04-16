@@ -40,7 +40,7 @@
 #endif
 
 /** image formats, tried in this order */
-static char const* const IMAGE_TYPES[] = { "png", "jpg", NULL };
+static char const* const IMAGE_TYPES[] = { "png", "jpg", nullptr };
 
 #define TGA_UNMAP_COMP			10
 
@@ -61,14 +61,14 @@ void R_WritePNG (qFILE *f, byte *buffer, int width, int height)
 	png_infop	info_ptr;
 	png_bytep	*row_pointers;
 
-	png_ptr = png_create_write_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
+	png_ptr = png_create_write_struct(PNG_LIBPNG_VER_STRING, nullptr, nullptr, nullptr);
 	if (!png_ptr) {
 		return;
 	}
 
 	info_ptr = png_create_info_struct(png_ptr);
 	if (!info_ptr) {
-		png_destroy_write_struct(&png_ptr, (png_infopp)NULL);
+		png_destroy_write_struct(&png_ptr, (png_infopp)nullptr);
 		return;
 	}
 

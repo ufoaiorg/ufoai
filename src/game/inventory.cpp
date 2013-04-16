@@ -35,7 +35,7 @@ void InventoryInterface::removeInvList (invList_t *invList)
 		free(ic);
 	} else {
 		invList_t *ic = this->_invList;
-		invList_t *prev = NULL;
+		invList_t *prev = nullptr;
 		while (ic) {
 			if (ic == invList) {
 				if (prev)
@@ -52,7 +52,7 @@ void InventoryInterface::removeInvList (invList_t *invList)
 invList_t *InventoryInterface::addInvList (inventory_t *const inv, const invDef_t *container)
 {
 	invList_t *newEntry = (invList_t*)alloc(sizeof(invList_t));
-	newEntry->setNext(NULL);	/* not really needed - but for better readability */
+	newEntry->setNext(nullptr);	/* not really needed - but for better readability */
 
 	Com_DPrintf(DEBUG_SHARED, "AddInvList: add one slot (%s)\n", invName);
 
@@ -82,21 +82,21 @@ invList_t *InventoryInterface::addInvList (inventory_t *const inv, const invDef_
  * @param[in] y The x location in the container.
  * @param[in] amount How many items of this type should be added. (this will overwrite the amount as defined in "item.amount")
  * @sa removeFromInventory
- * @return the @c invList_t pointer the item was added to, or @c NULL in case of an error (item wasn't added)
+ * @return the @c invList_t pointer the item was added to, or @c nullptr in case of an error (item wasn't added)
  */
 invList_t *InventoryInterface::addToInventory (inventory_t *const inv, const Item* const item, const invDef_t *container, int x, int y, int amount)
 {
 	if (!item->def())
-		return NULL;
+		return nullptr;
 
 	if (amount <= 0)
-		return NULL;
+		return nullptr;
 
 	assert(inv);
 	assert(container);
 
 	if (container->single && inv->getContainer2(container->id))
-		return NULL;
+		return nullptr;
 
 	invList_t *ic;
 	/* CID_EQUIP and CID_FLOOR */
@@ -112,12 +112,12 @@ invList_t *InventoryInterface::addToInventory (inventory_t *const inv, const Ite
 
 	if (x < 0 || y < 0 || x >= SHAPE_BIG_MAX_WIDTH || y >= SHAPE_BIG_MAX_HEIGHT) {
 		/* No (sane) position in container given as parameter - find free space on our own. */
-		inv->findSpace(container, item, &x, &y, NULL);
+		inv->findSpace(container, item, &x, &y, nullptr);
 		if (x == NONE)
-			return NULL;
+			return nullptr;
 	}
 
-	const int checkedTo = inv->canHoldItem(container, item->def(), x, y, NULL);
+	const int checkedTo = inv->canHoldItem(container, item->def(), x, y, nullptr);
 	assert(checkedTo);
 
 	/* not found - add a new one */
@@ -125,7 +125,7 @@ invList_t *InventoryInterface::addToInventory (inventory_t *const inv, const Ite
 
 	/* Set the data in the new entry to the data we got via function-parameters.*/
 	*ic = *item;
-	ic->setNext(NULL);
+	ic->setNext(nullptr);
 	ic->setAmount(amount);
 
 	/* don't reset an already applied rotation */
@@ -220,7 +220,7 @@ bool InventoryInterface::removeFromInventory (inventory_t* const inv, const invD
  * @param[in] tx X coordinate in destination container.
  * @param[in] ty Y coordinate in destination container.
  * @param[in,out] TU pointer to entity available TU at this moment
- * or @c NULL if TU doesn't matter (outside battlescape)
+ * or @c nullptr if TU doesn't matter (outside battlescape)
  * @param[out] uponItem The item fItem is evetually dropped upon
  * @return IA_NOTIME when not enough TU.
  * @return IA_NONE if no action possible.
@@ -242,7 +242,7 @@ inventory_action_t InventoryInterface::moveInInventory (inventory_t* const inv, 
 	assert(from);
 
 	if (uponItem)
-		*uponItem = NULL;
+		*uponItem = nullptr;
 
 	if (from == to && fItem->getX() == tx && fItem->getY() == ty)
 		return IA_NONE;
@@ -267,7 +267,7 @@ inventory_action_t InventoryInterface::moveInInventory (inventory_t* const inv, 
 			return IA_NONE;
 
 		const Container *cont = inv->getContainer(from->id);
-		Item *item = NULL;
+		Item *item = nullptr;
 		while ((item = cont->getNextItem(item))) {
 			if (item == fItem) {
 				if (item->getAmount() > 1) {
@@ -369,7 +369,7 @@ inventory_action_t InventoryInterface::moveInInventory (inventory_t* const inv, 
 						return IA_NONE;
 
 					/* Add the currently used ammo in place of the new ammo in the "from" container. */
-					if (addToInventory(inv, &item, from, cacheFromX, cacheFromY, 1) == NULL)
+					if (addToInventory(inv, &item, from, cacheFromX, cacheFromY, 1) == nullptr)
 						Sys_Error("Could not reload the weapon - add to inventory failed (%s)", invName);
 
 					ic->setAmmoDef(this->cacheItem.def());
@@ -469,13 +469,13 @@ bool InventoryInterface::tryAddToInventory (inventory_t* const inv, const Item *
 {
 	int x, y;
 
-	inv->findSpace(container, item, &x, &y, NULL);
+	inv->findSpace(container, item, &x, &y, nullptr);
 
 	if (x == NONE) {
 		assert(y == NONE);
 		return false;
 	} else {
-		const int checkedTo = inv->canHoldItem(container, item->def(), x, y, NULL);
+		const int checkedTo = inv->canHoldItem(container, item->def(), x, y, nullptr);
 		if (!checkedTo)
 			return false;
 
@@ -483,7 +483,7 @@ bool InventoryInterface::tryAddToInventory (inventory_t* const inv, const Item *
 		Item itemRotation = *item;
 		itemRotation.rotated = rotated;
 
-		return addToInventory(inv, &itemRotation, container, x, y, 1) != NULL;
+		return addToInventory(inv, &itemRotation, container, x, y, 1) != nullptr;
 	}
 }
 
@@ -494,7 +494,7 @@ bool InventoryInterface::tryAddToInventory (inventory_t* const inv, const Item *
  * @sa destroyInventory
  * @note This should only be called for temp containers if the container is really a temp container
  * e.g. the container of a dropped weapon in tactical mission (ET_ITEM)
- * in every other case just set the pointer to NULL for a temp container like CID_EQUIP or CID_FLOOR
+ * in every other case just set the pointer to nullptr for a temp container like CID_EQUIP or CID_FLOOR
  */
 void InventoryInterface::emptyContainer (inventory_t* const inv, const containerIndex_t containerId)
 {
@@ -514,7 +514,7 @@ void InventoryInterface::emptyContainer (inventory_t* const inv, const container
 /**
  * @brief Destroys inventory.
  * @param[in] inv Pointer to the inventory which should be erased.
- * @note Loops through all containers in inventory. @c NULL for temp containers are skipped,
+ * @note Loops through all containers in inventory. @c nullptr for temp containers are skipped,
  * for real containers @c emptyContainer is called.
  * @sa emptyContainer
  */
@@ -523,7 +523,7 @@ void InventoryInterface::destroyInventory (inventory_t* const inv)
 	if (!inv)
 		return;
 
-	const Container *cont = NULL;
+	const Container *cont = nullptr;
 	while ((cont = inv->getNextCont(cont))) {
 		emptyContainer(inv, cont->id);
 	}
@@ -542,7 +542,7 @@ float InventoryInterface::GetInventoryState (const inventory_t *inventory, int &
 	float weight = 0;
 
 	slowestFd = 0;
-	const Container *cont = NULL;
+	const Container *cont = nullptr;
 	while ((cont = inventory->getNextCont(cont))) {
 		for (invList_t *ic = cont->_invList, *next; ic; ic = next) {
 			next = ic->getNext();
@@ -570,7 +570,7 @@ int InventoryInterface::PackAmmoAndWeapon (character_t* const chr, const objDef_
 {
 	inventory_t* const inv = &chr->inv;
 	const int speed = chr->score.skills[ABILITY_SPEED];
-	const objDef_t *ammo = NULL;
+	const objDef_t *ammo = nullptr;
 	bool allowLeft;
 	bool packed;
 	int ammoMult = 1;
@@ -761,7 +761,7 @@ void InventoryInterface::EquipActor (character_t* const chr, const equipDef_t *e
 		int sum;
 		int missedPrimary = 0; /**< If actor has a primary weapon, this is zero. Otherwise, this is the probability * 100
 								* that the actor had to get a primary weapon (used to compensate the lack of primary weapon) */
-		const objDef_t *primaryWeapon = NULL;
+		const objDef_t *primaryWeapon = nullptr;
 		int hasWeapon = 0;
 		/* Primary weapons */
 		const int maxWeaponIdx = std::min(this->csi->numODs - 1, numEquip - 1);
@@ -807,7 +807,7 @@ void InventoryInterface::EquipActor (character_t* const chr, const equipDef_t *e
 		/* Sidearms (secondary weapons with reload). */
 		do {
 			int randNumber = rand() % 100;
-			const objDef_t *secondaryWeapon = NULL;
+			const objDef_t *secondaryWeapon = nullptr;
 			for (i = 0; i < this->csi->numODs; i++) {
 				const objDef_t *obj = INVSH_GetItemByIDX(i);
 				if (ed->numItems[i] && obj->weapon && obj->isReloadable() && !obj->deplete && obj->isSecondary) {
@@ -853,7 +853,7 @@ void InventoryInterface::EquipActor (character_t* const chr, const equipDef_t *e
 		if (sum) {
 			do {
 				int randNumber = rand() % sum;
-				const objDef_t *secondaryWeapon = NULL;
+				const objDef_t *secondaryWeapon = nullptr;
 				for (i = 0; i < this->csi->numODs; i++) {
 					const objDef_t *obj = INVSH_GetItemByIDX(i);
 					if (ed->numItems[i] && ((obj->weapon && obj->isSecondary
@@ -878,7 +878,7 @@ void InventoryInterface::EquipActor (character_t* const chr, const equipDef_t *e
 		/* If no weapon at all, bad guys will always find a blade to wield. */
 		if (!hasWeapon) {
 			int maxPrice = 0;
-			const objDef_t *blade = NULL;
+			const objDef_t *blade = nullptr;
 			Com_DPrintf(DEBUG_SHARED, "INVSH_EquipActor: no weapon picked in equipment '%s', defaulting to the most expensive secondary weapon without reload. (%s)\n",
 					ed->id, invName);
 			for (i = 0; i < this->csi->numODs; i++) {
@@ -940,7 +940,7 @@ void InventoryInterface::EquipActor (character_t* const chr, const equipDef_t *e
 					randNumber -= ed->numItems[i];
 					if (randNumber < 0) {
 						const bool oneShot = miscItem->oneshot;
-						const Item item(miscItem, oneShot ? miscItem : NULL, oneShot ? miscItem->ammo : NONE_AMMO);
+						const Item item(miscItem, oneShot ? miscItem : nullptr, oneShot ? miscItem->ammo : NONE_AMMO);
 						containerIndex_t container;
 						int tuNeed;
 						const fireDef_t *itemFd = item.getSlowestFireDef();
@@ -997,12 +997,12 @@ void InventoryInterface::initInventory (const char *name, const csi_t *csi, cons
 	this->invName = name;
 	this->cacheItem = item;
 	this->csi = csi;
-	this->_invList = NULL;
+	this->_invList = nullptr;
 }
 
 void InventoryInterface::destroyInventoryInterface (void)
 {
-	if (this->import == NULL)
+	if (this->import == nullptr)
 		return;
 	this->import->FreeAll();
 	OBJZERO(*this);

@@ -92,13 +92,13 @@ void CL_ViewLoadMedia (void)
 		if (name[0] == '*')
 			cl.model_clip[i] = CM_InlineModel(cl.mapTiles, name);
 		else
-			cl.model_clip[i] = NULL;
+			cl.model_clip[i] = nullptr;
 
 		loadingPercent += 100.0f / (float)max;
 	}
 
 	/* update le model references */
-	le = NULL;
+	le = nullptr;
 	while ((le = LE_GetNextInUse(le))) {
 		if (le->modelnum1 > 0)
 			le->model1 = LE_GetDrawModel(le->modelnum1);

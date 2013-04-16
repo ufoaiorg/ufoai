@@ -940,7 +940,7 @@ entity_t *FindTargetEntity (const char *target)
 			return &entities[i];
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -1113,7 +1113,7 @@ void WriteMapFile (const char *filename)
 		if (i == 0) {
 			int numToAdd;
 			mapbrush_t **brushesToAdd = Check_ExtraBrushesForWorldspawn(&numToAdd);
-			if (brushesToAdd != NULL) {
+			if (brushesToAdd != nullptr) {
 				int k;
 				for (k = 0; k < numToAdd; k++) {
 					if (brushesToAdd[k]->skipWriteBack)
@@ -1166,7 +1166,7 @@ static void ParseUMP (const char *name, char *entityString, bool inherit)
 			else
 				ParseUMP(token, entityString, true);
 		} else if (Q_streq(token, "worldspawn")) {
-			const char *start = NULL;
+			const char *start = nullptr;
 			const int length = Com_GetBlock(&text, &start);
 			if (length == -1) {
 				Com_Printf("ParseUMP: Not a valid worldspawn block in '%s'\n", filename);
@@ -1200,15 +1200,15 @@ static const char *GetUMPName (const char *mapFilename)
 	static char name[MAX_QPATH];
 	const char *filename = Com_SkipPath(mapFilename);
 	/* if we are in no subdir, we don't have any ump */
-	if (filename == NULL)
-		return NULL;
+	if (filename == nullptr)
+		return nullptr;
 
 	const char *mapsDir = "maps/";
 	const int lMaps = strlen(mapsDir);
 	const int l = strlen(filename);
 	const int targetLength = strlen(mapFilename) - lMaps - l;
 	if (targetLength <= 0)
-		return NULL;
+		return nullptr;
 	Q_strncpyz(name, mapFilename + lMaps, targetLength);
 	Com_Printf("...ump: '%s%s.ump'\n", mapsDir, name);
 	return name;
@@ -1244,7 +1244,7 @@ void LoadMapFile (const char *filename)
 
 	char entityString[MAX_TOKEN_CHARS];
 	const char *ump = GetUMPName(filename);
-	if (ump != NULL)
+	if (ump != nullptr)
 		ParseUMP(ump, entityString, false);
 
 	while (ParseMapEntity(filename, entityString));

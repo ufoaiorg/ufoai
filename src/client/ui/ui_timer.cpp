@@ -66,10 +66,10 @@ static inline void UI_RemoveTimerFromActiveList (uiTimer_t *timer)
 static void UI_InsertTimerInActiveList (uiTimer_t* first, uiTimer_t* newTimer)
 {
 	uiTimer_t* current = first;
-	uiTimer_t* prev = NULL;
+	uiTimer_t* prev = nullptr;
 
 	/* find insert position */
-	if (current != NULL) {
+	if (current != nullptr) {
 		prev = current->prev;
 	}
 	while (current) {
@@ -82,10 +82,10 @@ static void UI_InsertTimerInActiveList (uiTimer_t* first, uiTimer_t* newTimer)
 	/* insert between previous and current */
 	newTimer->prev = prev;
 	newTimer->next = current;
-	if (current != NULL) {
+	if (current != nullptr) {
 		current->prev = newTimer;
 	}
-	if (prev != NULL) {
+	if (prev != nullptr) {
 		prev->next = newTimer;
 	} else {
 		ui_firstTimer = newTimer;
@@ -122,25 +122,25 @@ void UI_HandleTimers (void)
  */
 uiTimer_t* UI_AllocTimer (uiNode_t *node, int firstDelay, timerCallback_t callback)
 {
-	uiTimer_t *timer = NULL;
+	uiTimer_t *timer = nullptr;
 	int i;
 
 	/* search empty slot */
 	for (i = 0; i < UI_TIMER_SLOT_NUMBER; i++) {
-		if (ui_timerSlots[i].callback != NULL)
+		if (ui_timerSlots[i].callback != nullptr)
 			continue;
 		timer = ui_timerSlots + i;
 		break;
 	}
-	if (timer == NULL)
+	if (timer == nullptr)
 		Com_Error(ERR_FATAL, "UI_AllocTimer: No more timer slot");
 
 	timer->owner = node;
 	timer->delay = firstDelay;
 	timer->callback = callback;
 	timer->calledTime = 0;
-	timer->prev = NULL;
-	timer->next = NULL;
+	timer->prev = nullptr;
+	timer->next = nullptr;
 	timer->isRunning = false;
 	return timer;
 }
@@ -152,7 +152,7 @@ void UI_TimerStart (uiTimer_t *timer)
 {
 	if (timer->isRunning)
 		return;
-	assert(ui_firstTimer != timer && timer->prev == NULL && timer->next == NULL);
+	assert(ui_firstTimer != timer && timer->prev == nullptr && timer->next == nullptr);
 	timer->nextTime = CL_Milliseconds() + timer->delay;
 	timer->isRunning = true;
 	UI_InsertTimerInActiveList(ui_firstTimer, timer);
@@ -166,8 +166,8 @@ void UI_TimerStop (uiTimer_t *timer)
 	if (!timer->isRunning)
 		return;
 	UI_RemoveTimerFromActiveList(timer);
-	timer->prev = NULL;
-	timer->next = NULL;
+	timer->prev = nullptr;
+	timer->next = nullptr;
 	timer->isRunning = false;
 }
 
@@ -177,16 +177,16 @@ void UI_TimerStop (uiTimer_t *timer)
 void UI_TimerRelease (uiTimer_t *timer)
 {
 	UI_RemoveTimerFromActiveList(timer);
-	timer->prev = NULL;
-	timer->next = NULL;
-	timer->owner = NULL;
-	timer->callback = NULL;
+	timer->prev = nullptr;
+	timer->next = nullptr;
+	timer->owner = nullptr;
+	timer->callback = nullptr;
 }
 
 void UI_ResetTimers (void)
 {
 	OBJZERO(ui_timerSlots);
-	ui_firstTimer = NULL;
+	ui_firstTimer = nullptr;
 }
 
 #ifdef COMPILE_UNITTESTS

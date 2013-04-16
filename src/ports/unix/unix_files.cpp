@@ -95,7 +95,7 @@ char *Sys_FindFirst (const char *path, unsigned musthave, unsigned canhave)
 
 	Q_strncpyz(findbase, path, sizeof(findbase));
 
-	if ((p = strrchr(findbase, '/')) != NULL) {
+	if ((p = strrchr(findbase, '/')) != nullptr) {
 		*p = 0;
 		Q_strncpyz(findpattern, p + 1, sizeof(findpattern));
 	} else
@@ -104,10 +104,10 @@ char *Sys_FindFirst (const char *path, unsigned musthave, unsigned canhave)
 	if (Q_streq(findpattern, "*.*"))
 		Q_strncpyz(findpattern, "*", sizeof(findpattern));
 
-	if ((fdir = opendir(findbase)) == NULL)
-		return NULL;
+	if ((fdir = opendir(findbase)) == nullptr)
+		return nullptr;
 
-	while ((d = readdir(fdir)) != NULL) {
+	while ((d = readdir(fdir)) != nullptr) {
 		if (!*findpattern || Com_Filter(findpattern, d->d_name)) {
 			if (CompareAttributes(findbase, d->d_name, musthave, canhave)) {
 				Com_sprintf(findpath, sizeof(findpath), "%s/%s", findbase, d->d_name);
@@ -115,7 +115,7 @@ char *Sys_FindFirst (const char *path, unsigned musthave, unsigned canhave)
 			}
 		}
 	}
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -128,9 +128,9 @@ char *Sys_FindNext (unsigned musthave, unsigned canhave)
 {
 	struct dirent *d;
 
-	if (fdir == NULL)
-		return NULL;
-	while ((d = readdir(fdir)) != NULL) {
+	if (fdir == nullptr)
+		return nullptr;
+	while ((d = readdir(fdir)) != nullptr) {
 		if (!*findpattern || Com_Filter(findpattern, d->d_name)) {
 			if (CompareAttributes(findbase, d->d_name, musthave, canhave)) {
 				Com_sprintf(findpath, sizeof(findpath), "%s/%s", findbase, d->d_name);
@@ -138,14 +138,14 @@ char *Sys_FindNext (unsigned musthave, unsigned canhave)
 			}
 		}
 	}
-	return NULL;
+	return nullptr;
 }
 
 void Sys_FindClose (void)
 {
-	if (fdir != NULL)
+	if (fdir != nullptr)
 		closedir(fdir);
-	fdir = NULL;
+	fdir = nullptr;
 }
 
 #define MAX_FOUND_FILES 0x1000
@@ -164,10 +164,10 @@ void Sys_ListFilteredFiles (const char *basedir, const char *subdirs, const char
 		Com_sprintf(search, sizeof(search), "%s", basedir);
 	}
 
-	if ((directory = opendir(search)) == NULL)
+	if ((directory = opendir(search)) == nullptr)
 		return;
 
-	while ((d = readdir(directory)) != NULL) {
+	while ((d = readdir(directory)) != nullptr) {
 		Com_sprintf(filename, sizeof(filename), "%s/%s", search, d->d_name);
 		if (stat(filename, &st) == -1)
 			continue;
@@ -192,14 +192,14 @@ void Sys_ListFilteredFiles (const char *basedir, const char *subdirs, const char
 }
 
 /**
- * @return NULL if getcwd failed
+ * @return nullptr if getcwd failed
  */
 char *Sys_Cwd (void)
 {
 	static char cwd[MAX_OSPATH];
 
-	if (getcwd(cwd, sizeof(cwd) - 1) == NULL)
-		return NULL;
+	if (getcwd(cwd, sizeof(cwd) - 1) == nullptr)
+		return nullptr;
 	cwd[MAX_OSPATH - 1] = 0;
 
 	return cwd;
@@ -238,6 +238,6 @@ void Sys_Mkfifo (const char *ospath, qFILE *f)
 		f->f = fifo;
 	} else {
 		Com_Printf("WARNING: Could not create fifo pipe at %s.\n", ospath);
-		f->f = NULL;
+		f->f = nullptr;
 	}
 }

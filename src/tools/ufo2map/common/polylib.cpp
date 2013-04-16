@@ -170,7 +170,7 @@ winding_t *BaseWindingForPlane (const vec3_t normal, const vec_t dist)
 	/* project a really big axis aligned box onto the plane */
 	w = AllocWinding(4);
 	if (!w)
-		return NULL;
+		return nullptr;
 
 	VectorSubtract(org, vright, w->p[0]);
 	VectorAdd(w->p[0], vup, w->p[0]);
@@ -243,12 +243,12 @@ void ClipWindingEpsilon (const winding_t *in, const vec3_t normal, const vec_t d
 
 	if (!counts[0]) {
 		*back = CopyWinding(in);
-		*front = NULL;
+		*front = nullptr;
 		return;
 	}
 	if (!counts[1]) {
 		*front = CopyWinding(in);
-		*back = NULL;
+		*back = nullptr;
 		return;
 	}
 
@@ -343,7 +343,7 @@ void ChopWindingInPlace (winding_t **inout, const vec3_t normal, const vec_t dis
 
 	if (!counts[0]) {
 		FreeWinding(in);
-		*inout = NULL;
+		*inout = nullptr;
 		return;
 	}
 	if (!counts[1])
@@ -468,7 +468,7 @@ static void SnapWeldVector (const vec3_t a, const vec3_t b, vec3_t out)
 	vec_t outi;
 
 	/* dummy check */
-	if (a == NULL || b == NULL || out == NULL)
+	if (a == nullptr || b == nullptr || out == nullptr)
 		return;
 
 	/* do each element */

@@ -80,7 +80,7 @@ typedef struct production_s
 #define PR_IsProduction(prod)		(!PR_IsDisassembly(prod))
 
 #define PR_SetData(dataPtr, typeVal, ptr)  do { assert(ptr); (dataPtr)->data.pointer = (ptr); (dataPtr)->type = (typeVal); } while (0);
-#define PR_IsDataValid(dataPtr)	((dataPtr)->data.pointer != NULL)
+#define PR_IsDataValid(dataPtr)	((dataPtr)->data.pointer != nullptr)
 
 #define PR_GetProgress(prod)	((double)(prod)->frame / (prod)->totalFrames)
 #define PR_IsReady(prod)		((prod)->frame > (prod)->totalFrames)

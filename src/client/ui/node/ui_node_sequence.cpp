@@ -46,7 +46,7 @@ static const uiBehaviour_t *localBehaviour;
 
 void uiSequenceNode::draw (uiNode_t *node)
 {
-	if (EXTRADATA(node).context != NULL && EXTRADATA(node).playing) {
+	if (EXTRADATA(node).context != nullptr && EXTRADATA(node).playing) {
 		bool finished = false;
 		vec2_t pos;
 		vec2_t screenPos;
@@ -72,9 +72,9 @@ void uiSequenceNode::draw (uiNode_t *node)
 
 void uiSequenceNode::onWindowOpened (uiNode_t *node, linkedList_t *params)
 {
-	if (EXTRADATA(node).context == NULL)
+	if (EXTRADATA(node).context == nullptr)
 		EXTRADATA(node).context = SEQ_AllocContext();
-	if (EXTRADATA(node).source != NULL) {
+	if (EXTRADATA(node).source != nullptr) {
 		SEQ_InitContext(EXTRADATA(node).context, EXTRADATA(node).source);
 		EXTRADATA(node).playing = true;
 	}
@@ -82,16 +82,16 @@ void uiSequenceNode::onWindowOpened (uiNode_t *node, linkedList_t *params)
 
 void uiSequenceNode::onWindowClosed (uiNode_t *node)
 {
-	if (EXTRADATA(node).context != NULL) {
+	if (EXTRADATA(node).context != nullptr) {
 		SEQ_FreeContext(EXTRADATA(node).context);
-		EXTRADATA(node).context = NULL;
+		EXTRADATA(node).context = nullptr;
 	}
 	EXTRADATA(node).playing = false;
 }
 
 void uiSequenceNode::onLeftClick (uiNode_t *node, int x, int y)
 {
-	if (EXTRADATA(node).context != NULL) {
+	if (EXTRADATA(node).context != nullptr) {
 		SEQ_SendClickEvent(EXTRADATA(node).context);
 	}
 }
@@ -99,9 +99,9 @@ void uiSequenceNode::onLeftClick (uiNode_t *node, int x, int y)
 void uiSequenceNode::onPropertyChanged (uiNode_t *node, const value_t *property)
 {
 	if (property == propertySource) {
-		if (EXTRADATA(node).source != NULL) {
-			onWindowOpened(node, NULL);
-		} else if (EXTRADATA(node).context != NULL) {
+		if (EXTRADATA(node).source != nullptr) {
+			onWindowOpened(node, nullptr);
+		} else if (EXTRADATA(node).context != nullptr) {
 			onWindowClosed(node);
 		}
 		return;

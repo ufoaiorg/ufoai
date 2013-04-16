@@ -182,7 +182,7 @@ static int auxupvalue (lua_State *L, int get) {
   luaL_checktype(L, 1, LUA_TFUNCTION);
   if (lua_iscfunction(L, 1)) return 0;  /* cannot touch C upvalues from Lua */
   name = get ? lua_getupvalue(L, 1, n) : lua_setupvalue(L, 1, n);
-  if (name == NULL) return 0;
+  if (name == nullptr) return 0;
   lua_pushstring(L, name);
   lua_insert(L, -(get+1));
   return get + 1;
@@ -261,7 +261,7 @@ static int db_sethook (lua_State *L) {
   lua_State *L1 = getthread(L, &arg);
   if (lua_isnoneornil(L, arg+1)) {
     lua_settop(L, arg+1);
-    func = NULL; mask = 0; count = 0;  /* turn off hooks */
+    func = nullptr; mask = 0; count = 0;  /* turn off hooks */
   }
   else {
     const char *smask = luaL_checkstring(L, arg+2);
@@ -285,7 +285,7 @@ static int db_gethook (lua_State *L) {
   char buff[5];
   int mask = lua_gethookmask(L1);
   lua_Hook hook = lua_gethook(L1);
-  if (hook != NULL && hook != hookf)  /* external hook? */
+  if (hook != nullptr && hook != hookf)  /* external hook? */
     lua_pushliteral(L, "external hook");
   else {
     gethooktable(L);
@@ -387,7 +387,7 @@ static const luaL_Reg dblib[] = {
   {"setmetatable", db_setmetatable},
   {"setupvalue", db_setupvalue},
   {"traceback", db_errorfb},
-  {NULL, NULL}
+  {nullptr, nullptr}
 };
 
 

@@ -66,7 +66,7 @@ void G_ActorUseDoor (Edict *actor, Edict *door)
 	if (G_IsAI(actor))
 		return;
 
-	Edict *closeActor = NULL;
+	Edict *closeActor = nullptr;
 	while ((closeActor = G_FindRadius(closeActor, door->origin, UNIT_SIZE * 3))) {
 		/* check whether the door is still reachable (this might have
 		 * changed due to the rotation) or whether an actor can reach it now */
@@ -112,9 +112,9 @@ void G_ActorSetClientAction (Edict *actor, Edict *ent)
 	if (actor->clientAction == ent)
 		return;
 
-	assert(ent == NULL || (ent->flags & FL_CLIENTACTION));
+	assert(ent == nullptr || (ent->flags & FL_CLIENTACTION));
 	actor->clientAction = ent;
-	if (ent == NULL) {
+	if (ent == nullptr) {
 		G_EventResetClientAction(*actor);
 	} else {
 		G_EventSetClientAction(*actor);
@@ -134,7 +134,7 @@ int G_ActorGetReservedTUs (const Edict *ent)
 
 /**
  * @brief Calculates the amount of usable TUs. This is without the reserved TUs.
- * @param[in] ent The actor to calculate the amount of usable TUs for. If @c ent is @c NULL, we
+ * @param[in] ent The actor to calculate the amount of usable TUs for. If @c ent is @c nullptr, we
  * return zero here
  * @return The amount of usable TUs for the given actor edict
  */
@@ -167,7 +167,7 @@ int G_ActorGetTUForReactionFire (const Edict *ent)
 
 /**
  * @brief Reserves TUs for different actor actions
- * @param[in,out] ent The actor to reserve TUs for. Might not be @c NULL.
+ * @param[in,out] ent The actor to reserve TUs for. Might not be @c nullptr.
  * @param[in] resReaction TUs for reaction fire
  * @param[in] resShot TUs for shooting
  * @param[in] resCrouch TUs for going into crouch mode
@@ -301,7 +301,7 @@ void G_ActorGiveTimeUnits (Edict *ent)
 void G_ActorSetTU (Edict *ent, int tus)
 {
 	if (tus > 0 && tus < ent->TU) {
-		if (g_notu != NULL && g_notu->integer) {
+		if (g_notu != nullptr && g_notu->integer) {
 			ent->TU = G_ActorCalculateMaxTU(ent);
 			return;
 		}
@@ -333,7 +333,7 @@ static bool G_ActorStun (Edict *ent, const Edict *attacker)
 void G_ActorModifyCounters (const Edict *attacker, const Edict *victim, int deltaAlive, int deltaKills, int deltaStuns)
 {
 	const int spawned = level.num_spawned[victim->team];
-	const int attackerTeam = (attacker != NULL ? attacker->team : MAX_TEAMS);
+	const int attackerTeam = (attacker != nullptr ? attacker->team : MAX_TEAMS);
 	byte *alive = level.num_alive;
 
 	alive[victim->team] += deltaAlive;
@@ -424,7 +424,7 @@ void G_ActorCheckRevitalise (Edict *ent)
 {
 	if (G_IsStunned(ent) && ent->STUN < ent->HP) {
 		/* check that we could move after we stood up */
-		Edict *otherActor = NULL;
+		Edict *otherActor = nullptr;
 		while ((otherActor = G_EdictsGetNextInUse(otherActor))) {
 			if (!VectorCompare(ent->pos, otherActor->pos))
 				continue;
@@ -487,7 +487,7 @@ bool G_ActorDieOrStun (Edict *ent, Edict *attacker)
 		ent->solid = SOLID_NOT;
 
 	/* send death */
-	G_EventActorDie(*ent, attacker != NULL);
+	G_EventActorDie(*ent, attacker != nullptr);
 
 	/* handle inventory - drop everything but the armour to the floor */
 	G_InventoryToFloor(ent);
@@ -608,7 +608,7 @@ bool G_ActorInvMove (Edict *ent, const invDef_t *from, invList_t *fItem, const i
 	/* Temporary decrease ent->TU to make moveInInventory do what expected. */
 	G_ActorUseTU(ent, reservedTU);
 	/* Try to actually move the item and check the return value after restoring valid ent->TU. */
-	ia = game.i.moveInInventory(&ent->chr.inv, from, fItem, toContType, tx, ty, checkaction ? &ent->TU : NULL, &item2);
+	ia = game.i.moveInInventory(&ent->chr.inv, from, fItem, toContType, tx, ty, checkaction ? &ent->TU : nullptr, &item2);
 	/* Now restore the original ent->TU and decrease it for TU used for inventory move. */
 	G_ActorSetTU(ent, originalTU - (originalTU - reservedTU - ent->TU));
 
@@ -672,7 +672,7 @@ bool G_ActorInvMove (Edict *ent, const invDef_t *from, invList_t *fItem, const i
 			return true;
 		} else { /* ia == IA_RELOAD_SWAP */
 			item.setAmmoLeft(NONE_AMMO);
-			item.setAmmoDef(NULL);
+			item.setAmmoDef(nullptr);
 			item.setDef(toItemBackup.ammoDef());
 			item.rotated = fromItemBackup.rotated;
 			item.setAmount(toItemBackup.getAmount());
@@ -766,17 +766,17 @@ void G_ActorReload (Edict *ent, const invDef_t *invDef)
 
 	/* search for clips and select the one that is available easily */
 	/* also try the temp containers */
-	const invDef_t *bestContainer = NULL;
-	Item *ammoItem = NULL;
+	const invDef_t *bestContainer = nullptr;
+	Item *ammoItem = nullptr;
 	int tu = 100;
-	const Container *cont = NULL;
+	const Container *cont = nullptr;
 	while ((cont = ent->chr.inv.getNextCont(cont, true))) {
 		if (cont->def()->out < tu) {
 			/* Once we've found at least one clip, there's no point
 			 * searching other containers if it would take longer
 			 * to retrieve the ammo from them than the one
 			 * we've already found. */
-			Item *item = NULL;
+			Item *item = nullptr;
 			while ((item = cont->getNextItem(item))) {
 				if (item->def()->isLoadableInWeapon(weapon)) {
 					ammoItem = item;

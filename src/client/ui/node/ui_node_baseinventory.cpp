@@ -141,9 +141,9 @@ static void UI_ContainerItemIteratorNext (containerItemIterator_t *iterator)
 
 			/* exists in inventory filter */
 			iterator->itemFound = UI_ContainerNodeGetExistingItem(iterator->node, obj, iterator->filterEquipType);
-			if ((filter & CII_AVAILABLEONLY) && iterator->itemFound == NULL)
+			if ((filter & CII_AVAILABLEONLY) && iterator->itemFound == nullptr)
 				continue;
-			if ((filter & CII_NOTAVAILABLEONLY) && iterator->itemFound != NULL)
+			if ((filter & CII_NOTAVAILABLEONLY) && iterator->itemFound != nullptr)
 				continue;
 
 			/* we found something */
@@ -156,7 +156,7 @@ static void UI_ContainerItemIteratorNext (containerItemIterator_t *iterator)
 	}
 
 	/* clean up */
-	iterator->itemFound = NULL;
+	iterator->itemFound = nullptr;
 }
 
 /**
@@ -243,7 +243,7 @@ static int UI_BaseInventoryNodeDrawItems (uiNode_t *node, const objDef_t *highli
 	for (; iterator.itemID < csi.numODs; UI_ContainerItemIteratorNext(&iterator)) {
 		const int id = iterator.itemID;
 		const objDef_t *obj = INVSH_GetItemByIDX(id);
-		Item tempItem(obj, NULL, 1);
+		Item tempItem(obj, nullptr, 1);
 		vec3_t pos;
 		vec3_t ammopos;
 		const float *color;
@@ -257,7 +257,7 @@ static int UI_BaseInventoryNodeDrawItems (uiNode_t *node, const objDef_t *highli
 		if (outOfNode || currentHeight < EXTRADATA(node).scrollY.viewPos) {
 			int height;
 			R_FontTextSize("f_verysmall", _(obj->name),
-				cellWidth - 5, LONGLINES_WRAP, NULL, &height, NULL, NULL);
+				cellWidth - 5, LONGLINES_WRAP, nullptr, &height, nullptr, nullptr);
 			height += obj->sy * C_UNIT + 10;
 			if (height > rowHeight)
 				rowHeight = height;
@@ -284,7 +284,7 @@ static int UI_BaseInventoryNodeDrawItems (uiNode_t *node, const objDef_t *highli
 				isHighlight = highlightType->isLoadableInWeapon(obj);
 		}
 
-		if (icItem != NULL) {
+		if (icItem != nullptr) {
 			if (isHighlight)
 				color = colorLoadable;
 			else
@@ -401,7 +401,7 @@ static void UI_BaseInventoryNodeDraw2 (uiNode_t *node, const objDef_t *highlight
 	R_FontDrawString("f_verysmall", ALIGN_UL,
 		node->box.pos[0], node->box.pos[1], node->box.pos[0], node->box.pos[1],
 		0,	0,	/* maxWidth/maxHeight */
-		0, va("%i %i/%i", EXTRADATA(node).scrollCur, visibleRows, totalRows), 0, 0, NULL, false, 0);
+		0, va("%i %i/%i", EXTRADATA(node).scrollCur, visibleRows, totalRows), 0, 0, nullptr, false, 0);
 #endif
 
 	/* Update display of scroll buttons if something changed. */
@@ -428,7 +428,7 @@ static void UI_BaseInventoryNodeDraw2 (uiNode_t *node, const objDef_t *highlight
  */
 void uiBaseInventoryNode::draw (uiNode_t *node)
 {
-	const objDef_t *highlightType = NULL;
+	const objDef_t *highlightType = nullptr;
 
 	if (!EXTRADATA(node).super.container)
 		return;
@@ -482,7 +482,7 @@ static invList_t *UI_BaseInventoryNodeGetItem (const uiNode_t* const node, int m
 		if (outOfNode || currentHeight < EXTRADATACONST(node).scrollY.viewPos) {
 			int outHeight;
 			R_FontTextSize("f_verysmall", _(obj->name),
-				cellWidth - 5, LONGLINES_WRAP, NULL, &outHeight, NULL, NULL);
+				cellWidth - 5, LONGLINES_WRAP, nullptr, &outHeight, nullptr, nullptr);
 			outHeight += obj->sy * C_UNIT + 10;
 			if (outHeight > rowHeight)
 				rowHeight = outHeight;
@@ -511,7 +511,7 @@ static invList_t *UI_BaseInventoryNodeGetItem (const uiNode_t* const node, int m
 				*contY = icItem->getY();
 				return icItem;
 			}
-			return NULL;
+			return nullptr;
 		}
 		pos[1] += obj->sy * C_UNIT;
 		cellHeight += obj->sy * C_UNIT;
@@ -522,7 +522,7 @@ static invList_t *UI_BaseInventoryNodeGetItem (const uiNode_t* const node, int m
 
 		/* draw the item name. */
 		R_FontTextSize("f_verysmall", _(obj->name),
-			cellWidth - 5, LONGLINES_WRAP, NULL, &height, NULL, NULL);
+			cellWidth - 5, LONGLINES_WRAP, nullptr, &height, nullptr, nullptr);
 		cellHeight += height;
 
 		/* draw ammos of weapon */
@@ -563,7 +563,7 @@ static invList_t *UI_BaseInventoryNodeGetItem (const uiNode_t* const node, int m
 			currentHeight += rowHeight;
 			rowHeight = 0;
 			if (currentHeight - EXTRADATACONST(node).scrollY.viewPos >= node->box.size[1])
-				return NULL;
+				return nullptr;
 		}
 
 		/* count items */
@@ -572,7 +572,7 @@ static invList_t *UI_BaseInventoryNodeGetItem (const uiNode_t* const node, int m
 
 	*contX = NONE;
 	*contY = NONE;
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -588,7 +588,7 @@ void uiBaseInventoryNode::drawTooltip (const uiNode_t *node, int x, int y) const
 	UI_GetNodeAbsPos(node, nodepos);
 
 	/* Find out where the mouse is. */
-	const Item *itemHover = UI_BaseInventoryNodeGetItem(node, x, y, NULL, NULL);
+	const Item *itemHover = UI_BaseInventoryNodeGetItem(node, x, y, nullptr, nullptr);
 
 	if (itemHover) {
 		static char tooltiptext[MAX_VAR * 2];
@@ -712,7 +712,7 @@ bool uiBaseInventoryNode::onScroll (uiNode_t *node, int deltaX, int deltaY)
 
 void uiBaseInventoryNode::onLoading (uiNode_t *node)
 {
-	EXTRADATA(node).super.container = NULL;
+	EXTRADATA(node).super.container = nullptr;
 	EXTRADATA(node).columns = 1;
 	node->color[3] = 1.0;
 }
@@ -723,7 +723,7 @@ void uiBaseInventoryNode::onLoading (uiNode_t *node)
 bool uiBaseInventoryNode::onDndEnter (uiNode_t *target)
 {
 	/* The node is invalid */
-	if (EXTRADATA(target).super.container == NULL)
+	if (EXTRADATA(target).super.container == nullptr)
 		return false;
 	/* accept items only, if we have a container */
 	return UI_DNDGetType() == DND_ITEM && UI_DNDGetSourceNode() != target;

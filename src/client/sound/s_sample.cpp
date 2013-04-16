@@ -42,7 +42,7 @@ s_sample_t *stdSoundPool[MAX_SOUNDIDS];
 /**
  * @brief Searches the hash for a given sound file
  * @param name The soundfile (relative to the sound dir and without extension)
- * @return @c NULL if not yet loaded
+ * @return @c nullptr if not yet loaded
  */
 static s_sample_t *S_FindByName (const char *name)
 {
@@ -53,7 +53,7 @@ static s_sample_t *S_FindByName (const char *name)
 		if (Q_streq(name, sample->name))
 			return sample;
 
-	return NULL;
+	return nullptr;
 }
 
 static Mix_Chunk* S_LoadSampleChunk (const char *sound)
@@ -66,12 +66,12 @@ static Mix_Chunk* S_LoadSampleChunk (const char *sound)
 	Mix_Chunk *chunk;
 
 	if (!sound || sound[0] == '*')
-		return NULL;
+		return nullptr;
 
 	len = strlen(sound);
 	if (len + 4 >= MAX_QPATH) {
 		Com_Printf("S_LoadSound: MAX_QPATH exceeded for: '%s'\n", sound);
-		return NULL;
+		return nullptr;
 	}
 
 	while (*extension) {
@@ -95,7 +95,7 @@ static Mix_Chunk* S_LoadSampleChunk (const char *sound)
 	}
 
 	Com_Printf("S_LoadSound: Could not find sound file: '%s'\n", sound);
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -138,7 +138,7 @@ s_sample_t *S_GetSample (const int soundIdx)
 {
 	if (soundIdx > 0 && soundIdx <= sampleIndexLast)
 		return sampleIndex[soundIdx];
-	return NULL;
+	return nullptr;
 }
 
 void S_FreeSamples (void)
@@ -180,13 +180,13 @@ void S_PrecacheSamples (void)
 		for (j = 0; j < od->numWeapons; j++) {	/* j = weapon-entry per obj */
 			for (k = 0; k < od->numFiredefs[j]; k++) { /* k = firedef per weapon */
 				const fireDef_t *fd = &od->fd[j][k];
-				if (fd->fireSound != NULL)
+				if (fd->fireSound != nullptr)
 					S_LoadSample(fd->fireSound);
-				if (fd->impactSound != NULL)
+				if (fd->impactSound != nullptr)
 					S_LoadSample(fd->impactSound);
-				if (fd->hitBodySound != NULL)
+				if (fd->hitBodySound != nullptr)
 					S_LoadSample(fd->hitBodySound);
-				if (fd->bounceSound != NULL)
+				if (fd->bounceSound != nullptr)
 					S_LoadSample(fd->bounceSound);
 			}
 		}

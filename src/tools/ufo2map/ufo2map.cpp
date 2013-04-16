@@ -55,16 +55,16 @@ memPool_t *com_fileSysPool;
 char baseFilename[MAX_OSPATH]; /**< This is used for extra file output functions */
 
 typedef struct usagePair_s {
-	const char *flags;	/**< The command line flag (and maybe an alias), or a full line (in which case the desc should be NULL */
-	const char *desc;/**< a description of the functionality provided by the flag, or NULL if the flags is actually a full line  */
+	const char *flags;	/**< The command line flag (and maybe an alias), or a full line (in which case the desc should be nullptr */
+	const char *desc;/**< a description of the functionality provided by the flag, or nullptr if the flags is actually a full line  */
 } usagePair_t;
 
 static const usagePair_t usageArray[] = {
-	{"Usage: ufo2map <param1 <subparam1> <subparam2> <...>> <param2> <...> [map]", NULL},
+	{"Usage: ufo2map <param1 <subparam1> <subparam2> <...>> <param2> <...> [map]", nullptr},
 #ifdef _WIN32
-	{"Even on Windows, use / slashes in the path", NULL},
+	{"Even on Windows, use / slashes in the path", nullptr},
 #endif
-	{"\nGeneral options:",NULL},
+	{"\nGeneral options:",nullptr},
 	{" -h --help", "print (this) help and exit"},
 #ifdef _WIN32
 	{" -nice <prio>","priority level [0 = HIGH, 1 = NORMAL, 2 = IDLE]"},
@@ -76,23 +76,23 @@ static const usagePair_t usageArray[] = {
 	{" -debugfile (TODO)","generate a trace debug file. The client can load the file to highlight map obstructions"},
 	{" -stats --statistics","print statistics and quit. may be used with -check or -fix"},
 	{" -v --verbosity <int>","set verbosity. higher <int> gives more output"},
-	{NULL, "if it is required, this should be the first option"},
-	{NULL, "0 - no stdout, 1 - only check/fix messages, 2  - (compile) only mapname"},
-	{NULL, "2 - (check/fix) mapname if findings, 4 - normal output,"},
-	{NULL, "5 - extra output, 6 - dump (a lot extra from BSPing)"},
+	{nullptr, "if it is required, this should be the first option"},
+	{nullptr, "0 - no stdout, 1 - only check/fix messages, 2  - (compile) only mapname"},
+	{nullptr, "2 - (check/fix) mapname if findings, 4 - normal output,"},
+	{nullptr, "5 - extra output, 6 - dump (a lot extra from BSPing)"},
 	/* Do not change the -V output, you will break compile_maps.bat */
 	{" -V --version","return Version and Revision level"},
 	{" -material","generate a material (.mat) file, do not proceed to compilation"},
-	{"\nLighting options:", NULL},
+	{"\nLighting options:", nullptr},
 	{" -extra","extra light samples"},
 	{" -nolighting TYPE","don't perform the lighting calculations, where TYPE is one of day, night, all"},
-	{NULL, "default is all"},
+	{nullptr, "default is all"},
 	{" -quant","lightquant - lightmap resolution downscale (e.g. 4 = 1 << 4) (values between 1 and 6)"},
 	{" -scale","global light scale factor"},
 	{" -saturation","saturation factor (e.g. 1.5 - default is 1.0)"},
 	{" -contrast","contrast factor (e.g. 1.05, default is 1.0)"},
 	{" -t --threads","thread amount"},
-	{"\nBinary space partitioning (BSPing) options:", NULL},
+	{"\nBinary space partitioning (BSPing) options:", nullptr},
 	{" -block <xl> <yl>",""},
 	{" -blocks <xl> <yl> <xh> <yh>",""},
 	{" -subdivide","subdivide brushes for better light effects (but higher polycount)"},
@@ -101,9 +101,9 @@ static const usagePair_t usageArray[] = {
 	{" -fulldetail","don't treat details (and trans surfaces) as details"},
 	{" -info","print bsp file info"},
 	{" -micro <float>","warn if a brush has a volume lower than the specified float."},
-	{NULL, "brushes are tested after CSG."},
+	{nullptr, "brushes are tested after CSG."},
 	{" -nobackclip","draw downward pointing faces. (so actors cannot see up through floors"},
-	{NULL,"in first person view). default is to set SURF_NODRAW to downard faces."},
+	{nullptr,"in first person view). default is to set SURF_NODRAW to downard faces."},
 	{" -nocsg",""},
 	{" -gamedir", "Add another game dir to the search directories"},
 	{" -nodetail","skip detail brushes"},
@@ -116,29 +116,29 @@ static const usagePair_t usageArray[] = {
 	{" -onlyents","modify existing bsp file with entities from map file"},
 	{" -exportlightmaps","write lightmaps into tga images"},
 	{" -verboseentities","also be verbose about submodels (entities)"},
-	{"\nMapping options:", NULL},
-	{"\n These options operate on map file only. No bsp file is created.", NULL},
-	{" Output prefixed by an asterisk (*) indicates operations that would change the map file.", NULL},
+	{"\nMapping options:", nullptr},
+	{"\n These options operate on map file only. No bsp file is created.", nullptr},
+	{" Output prefixed by an asterisk (*) indicates operations that would change the map file.", nullptr},
 	{" -check","check source map, only print information."},
 	{" -fix","same subparameters as -check, changes the source map file."},
-	{" \n subparameters for -check and -fix", NULL},
+	{" \n subparameters for -check and -fix", nullptr},
 	{"    all","performs all checks and fixes. This is the default."},
 	{"    bru brushes","includes 'lvl tex mfc mbr'. Performs all checks and fixes associated with brushes."},
 	{"    ent entities","performs all checks and fixes associated with entities."},
 	{"    con contained","checks for brushes contained entirely within other brushes. includes coincident duplicates."},
 	{"    isc intersection","report intersection between optimisable brushes from worldspawn and func_group entities"},
-	{NULL, "this is not included in all or bru as it is not always a bad thing"},
+	{nullptr, "this is not included in all or bru as it is not always a bad thing"},
 	{"    mbr microbrush <float> ","test for brushes smaller than <float> unit^3. this is done without the csg"},
-	{NULL, "step, unlike the bsp -micro option. default 1 unit^3."},
+	{nullptr, "step, unlike the bsp -micro option. default 1 unit^3."},
 	{"    lvl levelflags","if no levelflags for a brush or entity are set, all of them are set"},
 	{"    flv filllevelflags","ensure set levelflag bits are uninterrupted"},
 	{"    ndr nodraws","assigns SURF_NODRAW to hidden faces"},
 	{"    tex textures","warns when no texture or error texture is assigned."},
-	{NULL, "ensures special textures and content/surface flags are consistent."},
+	{nullptr, "ensures special textures and content/surface flags are consistent."},
 	{"    mfc mixedfacecontents","ensures the contentflags are the same on each face of each brush."},
 	{"    zft zfighting","intersecting brushes with a common face: prevent textures shimmering together"},
 
-	{NULL, NULL}
+	{nullptr, nullptr}
 };
 
 /**
@@ -502,7 +502,7 @@ static void U2M_SetDefaultConfigValues (void)
 	Vector2Set(config.sun_angles[LIGHTMAP_NIGHT], -80, 220);
 	VectorSet(config.sun_color[LIGHTMAP_NIGHT], 0.25, 0.25, 0.35);
 	ColorNormalize(config.sun_color[LIGHTMAP_NIGHT], config.sun_color[LIGHTMAP_NIGHT]);
-	AngleVectors(config.sun_angles[LIGHTMAP_NIGHT], config.sun_normal[LIGHTMAP_NIGHT], NULL, NULL);
+	AngleVectors(config.sun_angles[LIGHTMAP_NIGHT], config.sun_normal[LIGHTMAP_NIGHT], nullptr, nullptr);
 
 	/* lightmap day values */
 	VectorSet(config.sun_ambient_color[LIGHTMAP_DAY], 0.26, 0.26, 0.26);
@@ -510,7 +510,7 @@ static void U2M_SetDefaultConfigValues (void)
 	Vector2Set(config.sun_angles[LIGHTMAP_DAY], -75, 100);
 	VectorSet(config.sun_color[LIGHTMAP_DAY], 0.90, 0.75, 0.65);
 	ColorNormalize(config.sun_color[LIGHTMAP_DAY], config.sun_color[LIGHTMAP_DAY]);
-	AngleVectors(config.sun_angles[LIGHTMAP_DAY], config.sun_normal[LIGHTMAP_DAY], NULL, NULL);
+	AngleVectors(config.sun_angles[LIGHTMAP_DAY], config.sun_normal[LIGHTMAP_DAY], nullptr, nullptr);
 
 	config.saturation = 1.0f;
 	config.contrast = 1.0f;
@@ -531,7 +531,7 @@ static void U2M_SetDefaultConfigValues (void)
  */
 void PrintMapName (void)
 {
-	const char *mode = NULL;
+	const char *mode = nullptr;
 
 	if (config.performMapCheck) {
 		mode = "[check]";
@@ -571,7 +571,7 @@ int main (int argc, char **argv)
 	Swap_Init();
 	Mem_Init();
 
-	start = time(NULL);
+	start = time(nullptr);
 
 	Verb_Printf(VERB_NORMAL, "path: '%s'\n", argv[argc - 1]);
 
@@ -681,7 +681,7 @@ int main (int argc, char **argv)
 		ProcessModels(bspFilename);
 	}
 
-	end = time(NULL);
+	end = time(nullptr);
 	Verb_Printf(VERB_LESS, "%5.0f seconds elapsed\n", end - start);
 	begin = start;
 
@@ -692,18 +692,18 @@ int main (int argc, char **argv)
 
 		if (config.nolighting != LIGHTING_DAY_ONLY) {
 			/* compile night version */
-			start = time(NULL);
+			start = time(nullptr);
 			LightWorld();
-			end = time(NULL);
+			end = time(nullptr);
 			Verb_Printf(VERB_LESS, "%5.0f seconds elapsed\n", end - start);
 		}
 
 		if (config.nolighting != LIGHTING_NIGHT_ONLY) {
 			/* compile day version */
 			config.compile_for_day = 1;
-			start = time(NULL);
+			start = time(nullptr);
 			LightWorld();
-			end = time(NULL);
+			end = time(nullptr);
 			Verb_Printf(VERB_LESS, "%5.0f seconds elapsed\n", end - start);
 		}
 
@@ -713,7 +713,7 @@ int main (int argc, char **argv)
 		/* build per-vertex normals for phong shading */
 		BuildVertexNormals();
 		size = WriteBSPFile(bspFilename);
-		end = time(NULL);
+		end = time(nullptr);
 	}
 
 	Verb_Printf(VERB_LESS, "sum: %5.0f seconds elapsed - %.1g MB (%li bytes)\n\n", end - begin, (float)size / (1024.0f * 1024.0f), size);

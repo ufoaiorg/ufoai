@@ -125,9 +125,9 @@ static face_t *NewFaceFromFace (const face_t *f)
 
 	newf = AllocFace();
 	*newf = *f;
-	newf->merged = NULL;
-	newf->split[0] = newf->split[1] = NULL;
-	newf->w = NULL;
+	newf->merged = nullptr;
+	newf->split[0] = newf->split[1] = nullptr;
+	newf->w = nullptr;
 	return newf;
 }
 
@@ -448,7 +448,7 @@ FACE MERGING
 /**
  * @brief If two polygons share a common edge and the edges that meet at the
  * common points are both inside the other polygons, merge them
- * @return NULL if the faces couldn't be merged, or the new winding.
+ * @return nullptr if the faces couldn't be merged, or the new winding.
  * @note The originals will NOT be freed.
  */
 static winding_t *TryMergeWinding (winding_t *f1, winding_t *f2, const vec3_t planenormal)
@@ -460,7 +460,7 @@ static winding_t *TryMergeWinding (winding_t *f1, winding_t *f2, const vec3_t pl
 	vec_t dot;
 	bool keep1, keep2;
 
-	p1 = p2 = NULL;
+	p1 = p2 = nullptr;
 	j = 0;
 
 	/* find a common edge */
@@ -485,7 +485,7 @@ static winding_t *TryMergeWinding (winding_t *f1, winding_t *f2, const vec3_t pl
 
 	/* no matching edges */
 	if (i == f1->numpoints)
-		return NULL;
+		return nullptr;
 
 	/* check slope of connected lines */
 	/* if the slopes are colinear, the point can be removed */
@@ -499,7 +499,7 @@ static winding_t *TryMergeWinding (winding_t *f1, winding_t *f2, const vec3_t pl
 	dot = DotProduct(delta, normal);
 	/* not a convex polygon */
 	if (dot > CONTINUOUS_EPSILON)
-		return NULL;
+		return nullptr;
 	keep1 = (bool)(dot < -CONTINUOUS_EPSILON);
 
 	back = f1->p[(i + 2) % f1->numpoints];
@@ -512,7 +512,7 @@ static winding_t *TryMergeWinding (winding_t *f1, winding_t *f2, const vec3_t pl
 	dot = DotProduct(delta, normal);
 	/* not a convex polygon */
 	if (dot > CONTINUOUS_EPSILON)
-		return NULL;
+		return nullptr;
 	keep2 = (bool)(dot < -CONTINUOUS_EPSILON);
 
 	/* build the new polygon */
@@ -542,7 +542,7 @@ static winding_t *TryMergeWinding (winding_t *f1, winding_t *f2, const vec3_t pl
  * @brief If two polygons share a common edge and the edges that meet at the
  * common points are both inside the other polygons, merge them
  *
- * @return NULL if the faces couldn't be merged, or the new face.
+ * @return nullptr if the faces couldn't be merged, or the new face.
  * @note The originals will NOT be freed.
  */
 static face_t *TryMerge (face_t *f1, face_t *f2, const vec3_t planenormal)
@@ -551,17 +551,17 @@ static face_t *TryMerge (face_t *f1, face_t *f2, const vec3_t planenormal)
 	winding_t *nw;
 
 	if (!f1->w || !f2->w)
-		return NULL;
+		return nullptr;
 	if (f1->texinfo != f2->texinfo)
-		return NULL;
+		return nullptr;
 	if (f1->planenum != f2->planenum)	/* on front and back sides */
-		return NULL;
+		return nullptr;
 	if (f1->contentFlags != f2->contentFlags)
-		return NULL;
+		return nullptr;
 
 	nw = TryMergeWinding(f1->w, f2->w, planenormal);
 	if (!nw)
-		return NULL;
+		return nullptr;
 
 	c_merge++;
 	newf = NewFaceFromFace(f1);
@@ -597,7 +597,7 @@ static void MergeNodeFaces (node_t *node)
 			 * so it will be checked against all the faces again */
 			for (end = node->faces; end->next; end = end->next);
 
-			merged->next = NULL;
+			merged->next = nullptr;
 			end->next = merged;
 			break;
 		}
@@ -691,11 +691,11 @@ static face_t *FaceFromPortal (portal_t *p, bool pside)
 
 	/* portal does not bridge different visible contents */
 	if (!side)
-		return NULL;
+		return nullptr;
 
 	/* nodraw/caulk faces */
 	if (side->surfaceFlags & SURF_NODRAW)
-		return NULL;
+		return nullptr;
 
 	f = AllocFace();
 
@@ -705,7 +705,7 @@ static face_t *FaceFromPortal (portal_t *p, bool pside)
 
 	if ((p->nodes[pside]->contentFlags & CONTENTS_WINDOW)
 	 && VisibleContents(p->nodes[!pside]->contentFlags ^ p->nodes[pside]->contentFlags) == CONTENTS_WINDOW)
-		return NULL;	/* don't show insides of windows */
+		return nullptr;	/* don't show insides of windows */
 
 	/* do back-clipping */
 	if (!config.nobackclip && mapplanes[f->planenum].normal[2] < -0.9) {
@@ -717,7 +717,7 @@ static face_t *FaceFromPortal (portal_t *p, bool pside)
 				/* e.g. water surfaces are removed if we set the surfaceFlags
 				 * to SURF_NODRAW for this side */
 				/*side->surfaceFlags |= SURF_NODRAW;*/
-				return NULL;
+				return nullptr;
 			}
 		}
 	}

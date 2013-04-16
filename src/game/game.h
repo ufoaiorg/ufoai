@@ -193,7 +193,7 @@ typedef struct game_import_s {
 
 	/** @brief collision detection
 	 * @note traces a box from start to end, ignoring entities passent, stopping if it hits an object of type specified
-	 * via contentmask (MASK_*). Mins and maxs set the box which will do the tracing - if NULL then a line is used instead
+	 * via contentmask (MASK_*). Mins and maxs set the box which will do the tracing - if nullptr then a line is used instead
 	 * @return the trace data
 	 */
 	trace_t (IMPORT *Trace) (const vec3_t start, const AABB &box, const vec3_t end, const edict_t *passent, int contentmask);

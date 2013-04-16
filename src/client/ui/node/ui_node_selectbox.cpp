@@ -104,7 +104,7 @@ void uiSelectBoxNode::draw (uiNode_t *node)
 	static vec4_t invisColor = {1.0, 1.0, 1.0, 0.7};
 
 	ref = UI_AbstractOptionGetCurrentValue(node);
-	if (ref == NULL)
+	if (ref == nullptr)
 		return;
 
 	UI_GetNodeAbsPos(node, nodepos);
@@ -140,9 +140,9 @@ void uiSelectBoxNode::draw (uiNode_t *node)
 
 		UI_DrawString(font, ALIGN_UL, selBoxX, selBoxY,
 			selBoxX, node->box.size[0] - 4,
-			0, label, 0, 0, NULL, false, LONGLINES_PRETTYCHOP);
+			0, label, 0, 0, nullptr, false, LONGLINES_PRETTYCHOP);
 
-		R_Color(NULL);
+		R_Color(nullptr);
 		break;
 	}
 
@@ -163,7 +163,7 @@ void uiSelectBoxNode::drawOverWindow (uiNode_t *node)
 	const image_t *image;
 
 	ref = UI_AbstractOptionGetCurrentValue(node);
-	if (ref == NULL)
+	if (ref == nullptr)
 		return;
 
 	UI_GetNodeAbsPos(node, nodepos);
@@ -205,7 +205,7 @@ void uiSelectBoxNode::drawOverWindow (uiNode_t *node)
 		const char *label = CL_Translate(OPTIONEXTRADATA(option).label);
 		UI_DrawString(font, ALIGN_UL, selBoxX, selBoxY,
 			selBoxX, node->box.size[0] - 4,
-			0, label, 0, 0, NULL, false, LONGLINES_PRETTYCHOP);
+			0, label, 0, 0, nullptr, false, LONGLINES_PRETTYCHOP);
 		/* next entries' position */
 		selBoxY += node->box.size[1];
 		check++;
@@ -243,7 +243,7 @@ void uiSelectBoxNode::onLeftClick (uiNode_t *node, int x, int y)
 	vec2_t pos;
 
 	/* dropdown the node */
-	if (UI_GetMouseCapture() == NULL) {
+	if (UI_GetMouseCapture() == nullptr) {
 		UI_SetMouseCapture(node);
 		return;
 	}
@@ -267,7 +267,7 @@ void uiSelectBoxNode::onLeftClick (uiNode_t *node, int x, int y)
 	if (clickedAtOption < 0 || clickedAtOption >= EXTRADATA(node).count)
 		return;
 
-	if (UI_AbstractOptionGetCurrentValue(node) == NULL)
+	if (UI_AbstractOptionGetCurrentValue(node) == nullptr)
 		return;
 
 	/* select the right option */

@@ -144,7 +144,7 @@ image_t *R_FindImage (const char *pname, imagetype_t type)
 	SDL_Surface *surf;
 
 	if (!pname || !pname[0])
-		Com_Error(ERR_FATAL, "R_FindImage: NULL name");
+		Com_Error(ERR_FATAL, "R_FindImage: invalid name");
 
 	/* drop extension */
 	Com_StripExtension(pname, lname, sizeof(lname));
@@ -153,7 +153,7 @@ image_t *R_FindImage (const char *pname, imagetype_t type)
 		image = R_LoadImageData(lname, (byte *)surf->pixels, surf->w, surf->h, type);
 		SDL_FreeSurface(surf);
 	} else {
-		image = NULL;
+		image = nullptr;
 	}
 
 	/* no fitting texture found */
@@ -195,7 +195,7 @@ static model_t *LoadModel (const char *name)
 	modfilelen = FS_LoadFile(name, &buf);
 	if (!buf) {
 		Com_Printf("Could not load '%s'\n", name);
-		return NULL;
+		return nullptr;
 	}
 
 	model_t* const mod = Mem_PoolAllocType(model_t, vid_modelPool);
@@ -302,12 +302,12 @@ static void PrecalcNormalsAndTangentsBatch (const char *pattern)
 
 	cntAll = cntCalculated = 0;
 
-	while ((filename = FS_NextFileFromFileList(pattern)) != NULL) {
+	while ((filename = FS_NextFileFromFileList(pattern)) != nullptr) {
 		cntAll++;
 		cntCalculated += PrecalcNormalsAndTangents(filename);
 	}
 
-	FS_NextFileFromFileList(NULL);
+	FS_NextFileFromFileList(nullptr);
 
 	Com_Printf("%i/%i\n", cntCalculated, cntAll);
 }
@@ -347,7 +347,7 @@ static void UM_Parameter (int argc, char **argv)
 		} else if (Q_streq(argv[i], "-f") && (i + 1 < argc)) {
 			Q_strncpyz(config.inputName, argv[++i], sizeof(config.inputName));
 		} else if (Q_streq(argv[i], "-s") && (i + 1 < argc)) {
-			config.smoothness = strtod(argv[++i], NULL);
+			config.smoothness = strtod(argv[++i], nullptr);
 			if (config.smoothness < -1.0 || config.smoothness > 1.0) {
 				Usage();
 				Exit(1);
@@ -407,7 +407,7 @@ typedef void (*modelWorker_t) (const byte *buf, const char *fileName, int bufSiz
  */
 static void ModelWorker (modelWorker_t worker, const char *fileName, void *userData)
 {
-	byte *buf = NULL;
+	byte *buf = nullptr;
 	int modfilelen;
 
 	/* load the file */
@@ -438,7 +438,7 @@ static void MD2SkinFix (const byte *buf, const char *fileName, int bufSize, void
 	uint32_t numSkins;
 	int i;
 	const dMD2Model_t *md2 = (const dMD2Model_t *)buf;
-	byte *model = NULL;
+	byte *model = nullptr;
 
 	MD2HeaderCheck(md2, fileName, bufSize);
 
@@ -457,7 +457,7 @@ static void MD2SkinFix (const byte *buf, const char *fileName, int bufSize, void
 			name++;
 
 		extension = Com_GetExtension(name);
-		if (extension != NULL)
+		if (extension != nullptr)
 			errors++;
 
 		if (errors > 0) {
@@ -466,7 +466,7 @@ static void MD2SkinFix (const byte *buf, const char *fileName, int bufSize, void
 			char path[MD2_MAX_SKINNAME];
 			char pathBuf[MD2_MAX_SKINNAME];
 			const char *fixedPath;
-			if (model == NULL) {
+			if (model == nullptr) {
 				model = Mem_Dup(byte, buf, bufSize);
 				Com_Printf("model: %s\n", fileName);
 			}
@@ -475,7 +475,7 @@ static void MD2SkinFix (const byte *buf, const char *fileName, int bufSize, void
 
 			OBJZERO(path);
 
-			if (extension != NULL) {
+			if (extension != nullptr) {
 				Com_StripExtension(name, pathBuf, sizeof(pathBuf));
 				fixedPath = pathBuf;
 			} else {
@@ -491,7 +491,7 @@ static void MD2SkinFix (const byte *buf, const char *fileName, int bufSize, void
 			}
 		}
 	}
-	if (model != NULL) {
+	if (model != nullptr) {
 		FS_WriteFile(model, bufSize, fileName);
 		Mem_Free(model);
 	}
@@ -522,7 +522,7 @@ static void MD2Check (const byte *buf, const char *fileName, int bufSize, void *
 			name++;
 
 		extension = Com_GetExtension(name);
-		if (extension != NULL)
+		if (extension != nullptr)
 			errors++;
 
 		if (errors > 0) {
@@ -533,7 +533,7 @@ static void MD2Check (const byte *buf, const char *fileName, int bufSize, void *
 			Com_Printf("  \\ - skin %i: %s - %i errors/warnings\n", i + 1, name, errors);
 			if (name[0] != '.')
 				Com_Printf("    \\ - skin contains full path\n");
-			if (extension != NULL)
+			if (extension != nullptr)
 				Com_Printf("    \\ - skin contains extension '%s'\n", extension);
 			if (R_AliasModelGetSkin(fileName, md2Path + i * MD2_MAX_SKINNAME) == r_noTexture)
 				Com_Printf("  \\ - could not load the skin\n");
@@ -548,20 +548,20 @@ static void MD2Visitor (modelWorker_t worker, void *userData)
 
 	FS_BuildFileList(pattern);
 
-	while ((fileName = FS_NextFileFromFileList(pattern)) != NULL)
+	while ((fileName = FS_NextFileFromFileList(pattern)) != nullptr)
 		ModelWorker(worker, fileName, userData);
 
-	FS_NextFileFromFileList(NULL);
+	FS_NextFileFromFileList(nullptr);
 }
 
 static void ModelCheck (void)
 {
-	MD2Visitor(MD2Check, NULL);
+	MD2Visitor(MD2Check, nullptr);
 }
 
 static void SkinFix (void)
 {
-	MD2Visitor(MD2SkinFix, NULL);
+	MD2Visitor(MD2SkinFix, nullptr);
 }
 
 static void GLCmdsRemove (void)
@@ -636,15 +636,15 @@ int main (int argc, char **argv)
 		break;
 
 	case ACTION_SKINEDIT:
-		ModelWorker(MD2SkinEdit, config.fileName, NULL);
+		ModelWorker(MD2SkinEdit, config.fileName, nullptr);
 		break;
 
 	case ACTION_SKINNUM:
-		ModelWorker(MD2SkinNum, config.fileName, NULL);
+		ModelWorker(MD2SkinNum, config.fileName, nullptr);
 		break;
 
 	case ACTION_INFO:
-		ModelWorker(MD2Info, config.fileName, NULL);
+		ModelWorker(MD2Info, config.fileName, nullptr);
 		break;
 
 	case ACTION_CHECK:

@@ -203,7 +203,7 @@ static void UI_ActiveVScrollbarNode_f ()
 	}
 
 	node = UI_GetNodeByPath(Cmd_Argv(1));
-	if (node == NULL) {
+	if (node == nullptr) {
 		Com_Printf("UI_ActiveVScrollbarNode_f: node '%s' not found\n", Cmd_Argv(1));
 		return;
 	}
@@ -251,7 +251,7 @@ void uiVScrollbarNode::onCapturedMouseLost (uiNode_t *node)
 {
 	if (capturedTimer) {
 		UI_TimerRelease(capturedTimer);
-		capturedTimer = NULL;
+		capturedTimer = nullptr;
 	}
 }
 

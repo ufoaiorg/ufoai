@@ -52,9 +52,9 @@ static transferData_t td;
 static void TR_ClearTempCargo (void)
 {
 	OBJZERO(td.trItemsTmp);
-	if (td.alienCargo != NULL) {
+	if (td.alienCargo != nullptr) {
 		delete td.alienCargo;
-		td.alienCargo = NULL;
+		td.alienCargo = nullptr;
 	}
 	for (int i = EMPL_SOLDIER; i < MAX_EMPL; i++) {
 		const employeeType_t emplType = (employeeType_t)i;
@@ -76,7 +76,7 @@ static void TR_TransferStart_f (void)
 		return;
 	}
 
-	if (TR_TransferStart(base, td) == NULL)
+	if (TR_TransferStart(base, td) == nullptr)
 		return;
 	TR_ClearTempCargo();
 
@@ -113,7 +113,7 @@ static bool TR_CheckEmployee (const Employee *employee, const base_t *destbase)
 	switch (employee->getType()) {
 	case EMPL_SOLDIER:
 		/* Is this a soldier assigned to aircraft? */
-		if (AIR_IsEmployeeInAircraft(employee, NULL)) {
+		if (AIR_IsEmployeeInAircraft(employee, nullptr)) {
 			const rank_t *rank = CL_GetRankByIdx(employee->chr.score.rank);
 			CP_Popup(_("Soldier in aircraft"), _("%s %s is assigned to aircraft and cannot be\ntransfered to another base.\n"),
 					_(rank->shortname), employee->chr.name);
@@ -122,7 +122,7 @@ static bool TR_CheckEmployee (const Employee *employee, const base_t *destbase)
 		break;
 	case EMPL_PILOT:
 		/* Is this a pilot assigned to aircraft? */
-		if (AIR_IsEmployeeInAircraft(employee, NULL)) {
+		if (AIR_IsEmployeeInAircraft(employee, nullptr)) {
 			CP_Popup(_("Pilot in aircraft"), _("%s is assigned to aircraft and cannot be\ntransfered to another base.\n"),
 					employee->chr.name);
 			return false;
@@ -186,7 +186,7 @@ static void TR_CargoList (void)
 	}
 
 	/* Show aliens. */
-	if (td.alienCargo != NULL) {
+	if (td.alienCargo != nullptr) {
 		linkedList_t *cargo = td.alienCargo->list();
 		LIST_Foreach(cargo, alienCargo_t, item) {
 			if (item->dead > 0)
@@ -376,7 +376,7 @@ static void TR_FillAircraft (const base_t *srcBase, const base_t *destBase)
  */
 static void TR_Fill (const base_t *srcBase, const base_t *destBase, transferType_t transferType)
 {
-	if (srcBase == NULL || destBase == NULL)
+	if (srcBase == nullptr || destBase == nullptr)
 		return;
 
 	td.currentTransferType = transferType;
@@ -507,9 +507,9 @@ static void TR_Add_f (void)
 			}
 		}
 	} else if (Q_strstart(itemId, "alive:")) {
-		if (td.alienCargo == NULL)
+		if (td.alienCargo == nullptr)
 			td.alienCargo = new AlienCargo();
-		if (td.alienCargo == NULL)
+		if (td.alienCargo == nullptr)
 			cgi->Com_Error(ERR_DROP, "TR_Add_f: Cannot create AlienCargo object\n");
 
 		const teamDef_t *teamDef = cgi->Com_GetTeamDefinitionByID(itemId + 6);
@@ -528,9 +528,9 @@ static void TR_Add_f (void)
 			}
 		}
 	} else if (Q_strstart(itemId, "dead:")) {
-		if (td.alienCargo == NULL)
+		if (td.alienCargo == nullptr)
 			td.alienCargo = new AlienCargo();
-		if (td.alienCargo == NULL)
+		if (td.alienCargo == nullptr)
 			cgi->Com_Error(ERR_DROP, "TR_Add_f: Cannot create AlienCargo object\n");
 
 		const teamDef_t *teamDef = cgi->Com_GetTeamDefinitionByID(itemId + 5);
@@ -663,10 +663,10 @@ static void TR_TransferBaseSelect (base_t *srcbase, base_t *destbase)
 static void TR_InitBaseList (void)
 {
 	const base_t *currentBase = B_GetCurrentSelectedBase();
-	uiNode_t *baseList = NULL;
-	base_t *base = NULL;
+	uiNode_t *baseList = nullptr;
+	base_t *base = nullptr;
 
-	while ((base = B_GetNext(base)) != NULL) {
+	while ((base = B_GetNext(base)) != nullptr) {
 		if (base == currentBase)
 			continue;
 
@@ -713,7 +713,7 @@ static void TR_Init_f (void)
 	td.transferBase = B_GetNext(base);
 	/* If this was the last base select the first */
 	if (!td.transferBase)
-		td.transferBase = B_GetNext(NULL);
+		td.transferBase = B_GetNext(nullptr);
 	if (!td.transferBase)
 		cgi->Com_Error(ERR_DROP, "No bases! Transfer needs at least two...");
 	TR_TransferBaseSelect(base, td.transferBase);
@@ -786,7 +786,7 @@ static void TR_List_f (void)
 			}
 		}
 		/* Aliens */
-		if (transfer->alienCargo != NULL) {
+		if (transfer->alienCargo != nullptr) {
 			cgi->UI_ExecuteConfunc("tr_listaddcargo %d \"%s\" \"%s\" \"%s\"", i, "tr_cargo", "aliens", _("Aliens"));
 			linkedList_t *cargo = transfer->alienCargo->list();
 			LIST_Foreach(cargo, alienCargo_t, item) {

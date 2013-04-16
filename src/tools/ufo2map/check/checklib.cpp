@@ -50,7 +50,7 @@ void Check_Printf (verbosityLevel_t msgVerbLevel, bool change,
 	static verbosityLevel_t lastMsgVerbLevel = VERB_NORMAL;
 	static bool firstSuccessfulPrint = true;
 	static bool startOfLine = true;
-	const bool containsNewline = strchr(format, '\n') != NULL;
+	const bool containsNewline = strchr(format, '\n') != nullptr;
 
 	/* some checking/fix functions are called when ufo2map is compiling
 	 * then the check/fix functions should be quiet */
@@ -160,7 +160,7 @@ void Check_Free (void)
 			assert(iBrush->nearBrushes);
 			Mem_Free(iBrush->nearBrushes);
 			iBrush->numNear = 0;
-			iBrush->nearBrushes = NULL;
+			iBrush->nearBrushes = nullptr;
 		}
 	}
 
@@ -170,7 +170,7 @@ void Check_Free (void)
 			assert(cs->memberSides);
 			Mem_Free(cs->memberSides);
 			cs->numMembers = 0;
-			cs->memberSides = NULL;
+			cs->memberSides = nullptr;
 		}
 	}
 }

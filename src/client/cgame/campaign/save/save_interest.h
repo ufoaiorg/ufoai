@@ -49,7 +49,7 @@ static const constListEntry_t saveInterestConstants[] = {
 	{SAVE_INTERESTCAT_NAMESPACE"::harvest", INTERESTCATEGORY_HARVEST},
 	{SAVE_INTERESTCAT_NAMESPACE"::alienBase", INTERESTCATEGORY_ALIENBASE},
 	{SAVE_INTERESTCAT_NAMESPACE"::ufoCarrier", INTERESTCATEGORY_UFOCARRIER},
-	{NULL, -1}
+	{nullptr, -1}
 };
 
 #endif

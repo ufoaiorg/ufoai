@@ -207,7 +207,7 @@ static void MSO_SetAll_f (void)
  */
 uiMessageListNodeMessage_t *MSO_CheckAddNewMessage (const notify_t messagecategory, const char *title, const char *text, messageType_t type, technology_t *pedia, bool popup)
 {
-	uiMessageListNodeMessage_t *result = NULL;
+	uiMessageListNodeMessage_t *result = nullptr;
 	const messageSettings_t *settings = &messageSettings[messagecategory];
 
 	if (settings->doNotify)
@@ -292,7 +292,7 @@ static int MSO_ParseOption (const char *blockName, const char **text)
 	}
 
 	int messageType = -1;
-	linkedList_t *status = NULL;
+	linkedList_t *status = nullptr;
 
 	do {
 		/* get the msg type*/
@@ -308,7 +308,7 @@ static int MSO_ParseOption (const char *blockName, const char **text)
 			token = cgi->Com_EParse(text, errhead, blockName);
 			messageType = MSO_ParseNotifyType(token);
 		} else if (Q_streq(token, "status")) {
-			if (status != NULL) {
+			if (status != nullptr) {
 				Com_Printf("MSO_ParseOption: status already defined. Previous definition ignored.\n");
 				cgi->LIST_Delete(&status);
 			} else if (!Com_ParseList(text, &status)) {
@@ -326,7 +326,7 @@ static int MSO_ParseOption (const char *blockName, const char **text)
 		return -1;
 	}
 
-	for (linkedList_t *element = status; element != NULL; element = element->next) {
+	for (linkedList_t *element = status; element != nullptr; element = element->next) {
 		const char *value = (const char*)element->data;
 		const int optionType = MSO_ParseOptionType(value);
 		if (optionType == 0) {
@@ -379,8 +379,8 @@ static bool MSO_ParseCategory (const char *blockName, const char **text)
 	OBJZERO(*categoryEntry);
 	categoryEntry->category = &ccs.messageCategories[ccs.numMsgCategories];
 	category->last = category->first = &ccs.msgCategoryEntries[ccs.numMsgCategoryEntries];
-	categoryEntry->previous = NULL;
-	categoryEntry->next = NULL;
+	categoryEntry->previous = nullptr;
+	categoryEntry->next = nullptr;
 	categoryEntry->isCategory = true;
 	ccs.numMsgCategoryEntries++;
 
@@ -408,7 +408,7 @@ static bool MSO_ParseCategory (const char *blockName, const char **text)
 
 			entry->category = &ccs.messageCategories[ccs.numMsgCategories];
 			entry->previous = previous;
-			entry->next = NULL;
+			entry->next = nullptr;
 			entry->notifyType = nt_strings[optionId];
 			entry->settings = &messageSettings[optionId];
 			ccs.numMsgCategoryEntries++;
@@ -429,7 +429,7 @@ static bool MSO_ParseCategory (const char *blockName, const char **text)
 		}
 	} while (*text);
 
-	if (category->name == NULL) {
+	if (category->name == nullptr) {
 		Com_Printf("MSO_ParseMessageSettings: category do not have name\n");
 		return false;
 	}

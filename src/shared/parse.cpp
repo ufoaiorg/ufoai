@@ -124,7 +124,7 @@ const char *Com_Parse (const char *data_p[], char *target, size_t size)
 	target[0] = 0;
 
 	if (!data) {
-		*data_p = NULL;
+		*data_p = nullptr;
 		type = TT_EOF;
 		return "";
 	}
@@ -133,7 +133,7 @@ const char *Com_Parse (const char *data_p[], char *target, size_t size)
 skipwhite:
 	while ((c = *data) <= ' ') {
 		if (c == 0) {
-			*data_p = NULL;
+			*data_p = nullptr;
 			type = TT_EOF;
 			return "";
 		}

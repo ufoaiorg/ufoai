@@ -53,7 +53,7 @@ static int scoreMissionNum = 0;
 
 /**
  * @brief Iterate through the list of players
- * @param lastPlayer The player found in the previous iteration; if NULL, we start at the beginning
+ * @param lastPlayer The player found in the previous iteration; if nullptr, we start at the beginning
  */
 Player *G_PlayerGetNextHuman (Player *lastPlayer)
 {
@@ -61,7 +61,7 @@ Player *G_PlayerGetNextHuman (Player *lastPlayer)
 	Player *player;
 
 	if (!game.sv_maxplayersperteam)
-		return NULL;
+		return nullptr;
 
 	if (!lastPlayer)
 		return game.players;
@@ -72,14 +72,14 @@ Player *G_PlayerGetNextHuman (Player *lastPlayer)
 
 	player++;
 	if (player >= endOfPlayers)
-		return NULL;
+		return nullptr;
 	else
 		return player;
 }
 
 /**
  * @brief Iterate through the list of players
- * @param lastPlayer The player found in the previous iteration; if NULL, we start at the beginning
+ * @param lastPlayer The player found in the previous iteration; if nullptr, we start at the beginning
  */
 Player *G_PlayerGetNextAI (Player *lastPlayer)
 {
@@ -87,7 +87,7 @@ Player *G_PlayerGetNextAI (Player *lastPlayer)
 	Player *player;
 
 	if (!game.sv_maxplayersperteam)
-		return NULL;
+		return nullptr;
 
 	if (!lastPlayer)
 		return &game.players[game.sv_maxplayersperteam];
@@ -98,14 +98,14 @@ Player *G_PlayerGetNextAI (Player *lastPlayer)
 
 	player++;
 	if (player >= endOfPlayers)
-		return NULL;
+		return nullptr;
 	else
 		return player;
 }
 
 /**
  * @brief Iterate through the list of players
- * @param lastPlayer The player found in the previous iteration; if NULL, we start at the beginning
+ * @param lastPlayer The player found in the previous iteration; if nullptr, we start at the beginning
  */
 Player *G_PlayerGetNextActiveHuman (Player *lastPlayer)
 {
@@ -116,12 +116,12 @@ Player *G_PlayerGetNextActiveHuman (Player *lastPlayer)
 			return player;
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 /**
  * @brief Iterate through the list of players
- * @param lastPlayer The player found in the previous iteration; if NULL, we start at the beginning
+ * @param lastPlayer The player found in the previous iteration; if nullptr, we start at the beginning
  */
 Player *G_PlayerGetNextActiveAI (Player *lastPlayer)
 {
@@ -132,7 +132,7 @@ Player *G_PlayerGetNextActiveAI (Player *lastPlayer)
 			return player;
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -144,7 +144,7 @@ Player *G_PlayerGetNextActiveAI (Player *lastPlayer)
 playermask_t G_TeamToPM (int team)
 {
 	playermask_t playerMask = 0;
-	Player *p = NULL;
+	Player *p = nullptr;
 
 	/* don't handle the ai players, here */
 	while ((p = G_PlayerGetNextHuman(p))) {
@@ -165,7 +165,7 @@ playermask_t G_TeamToPM (int team)
 teammask_t G_PMToVis (playermask_t playerMask)
 {
 	teammask_t teamMask = 0;
-	Player *p = NULL;
+	Player *p = nullptr;
 
 	/* don't handle the ai players, here */
 	while ((p = G_PlayerGetNextActiveHuman(p))) {
@@ -186,7 +186,7 @@ teammask_t G_PMToVis (playermask_t playerMask)
 playermask_t G_VisToPM (teammask_t teamMask)
 {
 	playermask_t playerMask = 0;
-	Player *p = NULL;
+	Player *p = nullptr;
 
 	/* don't handle the ai players, here */
 	while ((p = G_PlayerGetNextActiveHuman(p))) {
@@ -224,7 +224,7 @@ void G_ClientPrintf (const Player &player, int printLevel, const char *fmt, ...)
  */
 void G_GiveTimeUnits (int team)
 {
-	Edict *ent = NULL;
+	Edict *ent = nullptr;
 
 	while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, team))) {
 		G_ActorGiveTimeUnits(ent);
@@ -240,7 +240,7 @@ void G_GiveTimeUnits (int team)
  * @param[in] appear Is this event about an appearing actor (or a perishing one)
  * @param[in] check The edict we are talking about (that appears or perishes)
  * @param[in] ent The edict that was responsible for letting the check edict appear
- * or perish. Might be @c NULL.
+ * or perish. Might be @c nullptr.
  * @sa CL_ActorAppear
  */
 void G_AppearPerishEvent (playermask_t playerMask, bool appear, Edict &check, const Edict *ent)
@@ -306,7 +306,7 @@ void G_SendInvisible (const Player &player)
 
 	assert(team != TEAM_NO_ACTIVE);
 	if (level.num_alive[team]) {
-		Edict *ent = NULL;
+		Edict *ent = nullptr;
 		/* check visibility */
 		while ((ent = G_EdictsGetNextActor(ent))) {
 			if (ent->team != team) {
@@ -554,9 +554,9 @@ bool G_ClientCanReload (Edict *ent, containerIndex_t containerID)
 	assert(weapon);
 
 	/* also try the temp containers */
-	const Container *cont = NULL;
+	const Container *cont = nullptr;
 	while ((cont = ent->chr.inv.getNextCont(cont, true))) {
-		Item *item = NULL;
+		Item *item = nullptr;
 		while ((item = cont->getNextItem(item))) {
 			if (item->def()->isLoadableInWeapon(weapon))
 				return true;
@@ -578,13 +578,13 @@ void G_ClientGetWeaponFromInventory (Edict *ent)
 		return;
 
 	/* search for weapons and select the one that is available easily */
-	const invDef_t *bestContainer = NULL;
-	invList_t *theWeapon = NULL;
+	const invDef_t *bestContainer = nullptr;
+	invList_t *theWeapon = nullptr;
 	int tu = 100;
-	const Container *cont = NULL;
+	const Container *cont = nullptr;
 	while ((cont = ent->chr.inv.getNextCont(cont, true))) {
 		if (cont->def()->out < tu) {
-			Item *item = NULL;
+			Item *item = nullptr;
 			while ((item = cont->getNextItem(item))) {
 				/* We are looking for the *fastest* way to get a weapon,
 				 * no matter what kind of weapon it is. */
@@ -658,13 +658,13 @@ int G_ClientAction (Player &player)
 	num = gi.ReadShort();
 
 	ent = G_EdictsGetByNum(num);
-	if (ent == NULL)
+	if (ent == nullptr)
 		return action;
 
 	format = pa_format[action];
 
 	switch (action) {
-	case PA_NULL:
+	case PA_nullptr:
 		/* do nothing on a null action */
 		break;
 
@@ -685,7 +685,7 @@ int G_ClientAction (Player &player)
 
 	case PA_SHOOT:
 		gi.ReadFormat(format, &pos, &i, &firemode, &from);
-		G_ClientShoot(player, ent, pos, i, firemode, NULL, true, from);
+		G_ClientShoot(player, ent, pos, i, firemode, nullptr, true, from);
 		break;
 
 	case PA_INVMOVE:
@@ -753,7 +753,7 @@ static void G_GetTeam (Player &player)
 
 	/* number of currently connected players (no ai players) */
 	int playersInGame = 0;
-	Player *p = NULL;
+	Player *p = nullptr;
 	while ((p = G_PlayerGetNextActiveHuman(p)))
 		playersInGame++;
 
@@ -815,7 +815,7 @@ static void G_GetTeam (Player &player)
 			if (level.num_spawnpoints[i]) {
 				bool teamAvailable = true;
 
-				p = NULL;
+				p = nullptr;
 				/* check if team is in use (only human controlled players) */
 				while ((p = G_PlayerGetNextActiveAI(p))) {
 					if (p->getTeam() == i) {
@@ -833,7 +833,7 @@ static void G_GetTeam (Player &player)
 		/* set the team */
 		if (i < MAX_TEAMS) {
 			/* remove ai player */
-			p = NULL;
+			p = nullptr;
 			while ((p = G_PlayerGetNextActiveHuman(p))) {
 				if (p->getTeam() == i) {
 					gi.BroadcastPrintf(PRINT_CONSOLE, "Removing ai player...");
@@ -865,8 +865,8 @@ bool G_SetTeamForPlayer (Player &player, const int team)
 			return false;
 	} else {
 		if (!sv_teamplay->integer) {
-			Player *p = NULL;
-			while ((p = G_PlayerGetNextHuman(p)) != NULL) {
+			Player *p = nullptr;
+			while ((p = G_PlayerGetNextHuman(p)) != nullptr) {
 				if (p->getTeam() == team)
 					return false;
 			}
@@ -938,7 +938,7 @@ static void G_GetStartingTeam (const Player &player)
 	}
 
 	/* count number of currently connected unique teams and players (human controlled players only) */
-	p = NULL;
+	p = nullptr;
 	teamCount = 0;
 	playerCount = 0;
 	while ((p = G_PlayerGetNextActiveHuman(p))) {
@@ -957,7 +957,7 @@ static void G_GetStartingTeam (const Player &player)
 		G_PrintStats("Starting new game: %s with %i teams", level.mapname, teamCount);
 		level.activeTeam = knownTeams[teamIndex];
 		level.teamOfs = MAX_TEAMS - level.activeTeam;
-		p = NULL;
+		p = nullptr;
 		while ((p = G_PlayerGetNextActiveHuman(p)))
 			if (p->getTeam() != level.activeTeam)
 				p->roundDone = true;
@@ -969,11 +969,11 @@ static void G_GetStartingTeam (const Player &player)
  * @note Already used spawn-point are not found because ent->type is changed in G_ClientTeamInfo.
  * @param[in] player The player to spawn the actors for.
  * @param[in] spawnType The type of spawn-point so search for (ET_ACTORSPAWN or ET_ACTOR2x2SPAWN)
- * @return A pointer to a found spawn point or NULL if nothing was found or on error.
+ * @return A pointer to a found spawn point or nullptr if nothing was found or on error.
  */
 static Edict *G_ClientGetFreeSpawnPoint (const Player &player, int spawnType)
 {
-	Edict *ent = NULL;
+	Edict *ent = nullptr;
 
 	/* Abort for non-spawnpoints */
 	assert(spawnType == ET_ACTORSPAWN || spawnType == ET_ACTOR2x2SPAWN);
@@ -999,7 +999,7 @@ static Edict *G_ClientGetFreeSpawnPoint (const Player &player, int spawnType)
 			return list[rand() % count];
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -1025,8 +1025,8 @@ static inline bool G_ActorSpawnIsAllowed (const int num, const int team)
  */
 static void G_ThinkActorDieAfterSpawn (Edict *ent)
 {
-	G_ActorDieOrStun(ent, NULL);
-	ent->think = NULL;
+	G_ActorDieOrStun(ent, nullptr);
+	ent->think = nullptr;
 }
 
 /**
@@ -1036,14 +1036,14 @@ static void G_ThinkActorDieAfterSpawn (Edict *ent)
 static void G_ThinkActorGoCrouch (Edict *ent)
 {
 	G_ClientStateChange(ent->getPlayer(), ent, STATE_CROUCHED, true);
-	ent->think = NULL;
+	ent->think = nullptr;
 }
 
 /**
  * @brief Searches a free spawning point for a given actor size and turns it into an actor
  * @param[in] player The player to get the free spawn points for
  * @param[in] actorSize The actor size to get a spawning point for
- * @return An actor edict or @c NULL if no free spawning point was found
+ * @return An actor edict or @c nullptr if no free spawning point was found
  */
 Edict *G_ClientGetFreeSpawnPointForActorSize (const Player &player, const actorSizeEnum_t actorSize)
 {
@@ -1054,7 +1054,7 @@ Edict *G_ClientGetFreeSpawnPointForActorSize (const Player &player, const actorS
 		ent = G_ClientGetFreeSpawnPoint(player, ET_ACTORSPAWN);
 		if (ent) {
 			Edict *copy = G_EdictDuplicate(ent);
-			if (copy != NULL)
+			if (copy != nullptr)
 				copy->type = ET_ACTOR;
 			ent = copy;
 		}
@@ -1063,7 +1063,7 @@ Edict *G_ClientGetFreeSpawnPointForActorSize (const Player &player, const actorS
 		ent = G_ClientGetFreeSpawnPoint(player, ET_ACTOR2x2SPAWN);
 		if (ent) {
 			Edict *copy = G_EdictDuplicate(ent);
-			if (copy != NULL) {
+			if (copy != nullptr) {
 				copy->type = ET_ACTOR2x2;
 				copy->morale = 100;
 			}
@@ -1075,7 +1075,7 @@ Edict *G_ClientGetFreeSpawnPointForActorSize (const Player &player, const actorS
 	}
 
 	if (!ent)
-		return NULL;
+		return nullptr;
 
 	level.num_spawned[ent->team]++;
 	ent->pnum = player.getNum();
@@ -1097,7 +1097,7 @@ Edict *G_ClientGetFreeSpawnPointForActorSize (const Player &player, const actorS
 		ent->nextthink = 1;
 	}
 
-	G_ActorModifyCounters(NULL, ent, 1, 0, 0);
+	G_ActorModifyCounters(nullptr, ent, 1, 0, 0);
 
 	G_ReactionFireTargetsCreate(ent);
 
@@ -1123,7 +1123,7 @@ static void G_ClientReadInventory (Edict *ent)
 		/* ignore the overload for now */
 		if (!ent->chr.inv.canHoldItemWeight(CID_EQUIP, container->id, item, ent->chr.score.skills[ABILITY_POWER]))
 			Com_Printf("G_ClientReadInventory: Item %s exceeds ent %i weight capacity\n", item.def()->id, ent->number);
-		if (!level.noEquipment && game.i.addToInventory(&ent->chr.inv, &item, container, x, y, 1) == NULL)
+		if (!level.noEquipment && game.i.addToInventory(&ent->chr.inv, &item, container, x, y, 1) == nullptr)
 			gi.Error("G_ClientReadInventory failed, could not add item '%s' to container %i (x:%i,y:%i)",
 					item.def()->id, container->id, x, y);
 	}
@@ -1316,7 +1316,7 @@ static void G_ClientSendEdictsAndBrushModels (const Player &player)
 			continue;
 
 		/* skip the world(s) in case of map assembly */
-		if (ent->type > ET_NULL) {
+		if (ent->type > ET_nullptr) {
 			G_EventAddBrushModel(mask, *ent);
 			G_VisFlagsAdd(*ent, ~ent->visflags);
 		}
@@ -1487,7 +1487,7 @@ bool G_ClientConnect (Player *player, char *userinfo, size_t userinfoSize)
 void G_ClientDisconnect (Player &player)
 {
 #if 0
-	Edict *ent = NULL;
+	Edict *ent = nullptr;
 #endif
 
 	/* only if the player already sent his began */
@@ -1506,7 +1506,7 @@ void G_ClientDisconnect (Player &player)
 	/* now let's remove all the edicts that belongs to this player */
 	while ((ent = G_EdictsGetNextLivingActor(ent))) {
 		if (ent->pnum == player->num)
-			G_ActorDie(ent, STATE_DEAD, NULL);
+			G_ActorDie(ent, STATE_DEAD, nullptr);
 	}
 	G_MatchEndCheck();
 #endif

@@ -57,8 +57,8 @@ void UI_PopClipRect (void)
 /**
  * @brief Pushes a new matrix, normalize to current resolution and move, rotate and
  * scale the matrix to the given values.
- * @note Will pop the matrix if @c transform is @c NULL
- * @param transform Translation (if @c NULL the matrix is removed from stack)
+ * @note Will pop the matrix if @c transform is @c nullptr
+ * @param transform Translation (if @c nullptr the matrix is removed from stack)
  * @param rotate Rotation
  * @param scale Scale
  * @sa R_Transform
@@ -69,7 +69,7 @@ void UI_Transform (const vec3_t transform, const vec3_t rotate, const vec3_t sca
 {
 	vec3_t pos;
 
-	if (transform != NULL) {
+	if (transform != nullptr) {
 		R_PushMatrix();
 		VectorCopy(transform, pos);
 		pos[0] *= viddef.rx;
@@ -85,14 +85,14 @@ void UI_Transform (const vec3_t transform, const vec3_t rotate, const vec3_t sca
  * @brief Searches for an image in the image array
  * @param[in] name The name of the image relative to pics/
  * @note name may not be null and has to be longer than 4 chars
- * @return NULL on error or image_t pointer on success
+ * @return nullptr on error or image_t pointer on success
  * @sa R_FindImage
  */
 const struct image_s *UI_LoadImage (const char *name)
 {
 	const struct image_s *image = R_FindImage(va("pics/%s", name), it_pic);
 	if (image == r_noTexture)
-		return NULL;
+		return nullptr;
 	return image;
 }
 
@@ -100,14 +100,14 @@ const struct image_s *UI_LoadImage (const char *name)
  * @brief Searches for a wrapped image in the image array
  * @param[in] name The name of the image relative to pics/
  * @note name may not be null and has to be longer than 4 chars
- * @return NULL on error or image_t pointer on success
+ * @return nullptr on error or image_t pointer on success
  * @sa R_FindImage
  */
 const struct image_s *UI_LoadWrappedImage (const char *name)
 {
 	const struct image_s *image = R_FindImage(va("pics/%s", name), it_wrappic);
 	if (image == r_noTexture)
-		return NULL;
+		return nullptr;
 	return image;
 }
 
@@ -209,7 +209,7 @@ const image_t *UI_DrawNormImageByName (bool flip, float x, float y, float w, flo
 	image = UI_LoadImage(name);
 	if (!image) {
 		Com_Printf("Can't find pic: %s\n", name);
-		return NULL;
+		return nullptr;
 	}
 
 	UI_DrawNormImage(flip, x, y, w, h, sh, th, sl, tl, image);
@@ -368,7 +368,7 @@ int UI_DrawStringInBox (const char *fontID, align_t align, int x, int y, int wid
 	const int xx = x + ((width * horizontalAlign) >> 1);
 	const int yy = y + ((height * verticalAlign) >> 1);
 
-	return UI_DrawString(fontID, align, xx, yy, xx, width, 0, text, 0, 0, NULL, false, method);
+	return UI_DrawString(fontID, align, xx, yy, xx, width, 0, text, 0, 0, nullptr, false, method);
 }
 
 int UI_DrawString (const char *fontID, align_t align, int x, int y, int absX, int maxWidth,
@@ -419,5 +419,5 @@ void UI_EnableFlashing (const vec4_t flashingColor, float speed)
  */
 void UI_DisableFlashing (void)
 {
-	R_TexOverride(NULL);
+	R_TexOverride(nullptr);
 }

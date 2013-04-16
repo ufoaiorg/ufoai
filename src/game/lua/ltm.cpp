@@ -52,7 +52,7 @@ const TValue *luaT_gettm (Table *events, TMS event, TString *ename) {
   lua_assert(event <= TM_EQ);
   if (ttisnil(tm)) {  /* no tag method? */
     events->flags |= cast_byte(1u<<event);  /* cache this fact */
-    return NULL;
+    return nullptr;
   }
   else return tm;
 }

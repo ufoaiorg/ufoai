@@ -55,7 +55,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @todo need refactoring to remove, reduce use... of that var
  * Global access to many node content like that is very bad.
  */
-inventory_t *ui_inventory = NULL;
+inventory_t *ui_inventory = nullptr;
 
 #define EXTRADATA_TYPE containerExtraData_t
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
@@ -195,9 +195,9 @@ void UI_DrawItem (uiNode_t *node, const vec3_t org, const Item *item, int x, int
 		/* Draw the image. */
 		R_Color(color);
 		UI_DrawNormImageByName(false, origin[0], origin[1], imgWidth, imgHeight, 0, 0, 0, 0, od->image);
-		R_Color(NULL);
+		R_Color(nullptr);
 	} else {
-		uiModel_t *model = NULL;
+		uiModel_t *model = nullptr;
 		const char *modelName = GAME_GetModelForItem(od, &model);
 
 		/* no model definition in the tech struct, not in the fallback object definition */
@@ -231,7 +231,7 @@ void UI_DrawItem (uiNode_t *node, const vec3_t org, const Item *item, int x, int
 			mi.name = modelName;
 
 			/* draw the model */
-			R_DrawModelDirect(&mi, NULL, NULL);
+			R_DrawModelDirect(&mi, nullptr, nullptr);
 		}
 	}
 }
@@ -393,7 +393,7 @@ void uiContainerNode::onLoaded (uiNode_t* const node)
 		name = "equip";
 
 	container = INVSH_GetInventoryDefinitionByID(name);
-	if (container == NULL)
+	if (container == nullptr)
 		return;
 
 	EXTRADATA(node).container = container;
@@ -508,7 +508,7 @@ static void UI_ContainerNodeDrawGrid (uiNode_t *node, const objDef_t *highlightT
 	pos[2] = 0;
 
 	const Container *cont = ui_inventory->getContainer(EXTRADATA(node).container->id);
-	Item *item = NULL;
+	Item *item = nullptr;
 	while ((item = cont->getNextItem(item))) {
 		assert(item->def());
 		if (highlightType && highlightType->isLoadableInWeapon(item->def()))
@@ -572,7 +572,7 @@ static void UI_ContainerNodeDrawDropPreview (uiNode_t *target)
 		}
 	}
 
-	UI_DrawItem(NULL, origine, &previewItem, -1, -1, scale, colorPreview);
+	UI_DrawItem(nullptr, origine, &previewItem, -1, -1, scale, colorPreview);
 }
 
 /**
@@ -580,7 +580,7 @@ static void UI_ContainerNodeDrawDropPreview (uiNode_t *target)
  */
 void uiContainerNode::draw (uiNode_t *node)
 {
-	const objDef_t *highlightType = NULL;
+	const objDef_t *highlightType = nullptr;
 
 	if (!EXTRADATA(node).container)
 		return;
@@ -622,12 +622,12 @@ void uiContainerNode::draw (uiNode_t *node)
  * @param[out] contY Y location in the container (row).
  * @sa UI_ContainerNodeSearchInScrollableContainer
  */
-static invList_t *UI_ContainerNodeGetItemAtPosition (const uiNode_t* const node, int mouseX, int mouseY, int* contX = NULL, int* contY = NULL)
+static invList_t *UI_ContainerNodeGetItemAtPosition (const uiNode_t* const node, int mouseX, int mouseY, int* contX = nullptr, int* contY = nullptr)
 {
-	invList_t *result = NULL;
+	invList_t *result = nullptr;
 
 	if (!ui_inventory)
-		return NULL;
+		return nullptr;
 
 	/* Get coordinates inside a scrollable container (if it is one). */
 	if (UI_IsScrollContainerNode(node)) {
@@ -683,7 +683,7 @@ static bool UI_ContainerNodeAddItem (const invDef_t *container, invList_t *ic, c
 {
 	int px, py;
 	const invDef_t *target = INVDEF(containerID);
-	ui_inventory->findSpace(target, ic, &px, &py, NULL);
+	ui_inventory->findSpace(target, ic, &px, &py, nullptr);
 	return INV_MoveItem(ui_inventory, target, px, py, container, ic, icp);
 }
 
@@ -708,7 +708,7 @@ void UI_ContainerNodeAutoPlaceItem (uiNode_t* node, invList_t *ic)
 		}
 		if (!ammoChanged && !ic->ammoDef()) {
 			/* Move back to CID_EQUIP (ground, floor) container. */
-			INV_MoveItem(ui_inventory, INVDEF(target), NONE, NONE, container, ic, NULL);
+			INV_MoveItem(ui_inventory, INVDEF(target), NONE, NONE, container, ic, nullptr);
 		}
 	} else {
 		bool packed = false;
@@ -716,7 +716,7 @@ void UI_ContainerNodeAutoPlaceItem (uiNode_t* node, invList_t *ic)
 		/* armour can only have one target */
 		if (ic->isArmour()) {
 			target = CID_ARMOUR;
-			packed = INV_MoveItem(ui_inventory, INVDEF(target), 0, 0, container, ic, NULL);
+			packed = INV_MoveItem(ui_inventory, INVDEF(target), 0, 0, container, ic, nullptr);
 		/* ammo or item */
 		} else if (ic->def()->isAmmo()) {
 			/* Finally try left and right hand. There is no other place to put it now. */
@@ -725,20 +725,20 @@ void UI_ContainerNodeAutoPlaceItem (uiNode_t* node, invList_t *ic)
 			unsigned int i;
 			for (i = 0; i < size; i++) {
 				target = idxArray[i];
-				packed = UI_ContainerNodeAddItem(container, ic, target, NULL);
+				packed = UI_ContainerNodeAddItem(container, ic, target, nullptr);
 				if (packed)
 					break;
 			}
 		} else {
 			if (ic->def()->headgear) {
 				target = CID_HEADGEAR;
-				packed = UI_ContainerNodeAddItem(container, ic, target, NULL);
+				packed = UI_ContainerNodeAddItem(container, ic, target, nullptr);
 			} else {
 				/* left and right are single containers, but this might change - it's cleaner to check
 				 * for available space here, too */
 				const containerIndex_t idxArray[] = { CID_RIGHT, CID_BELT, CID_HOLSTER, CID_BACKPACK, CID_LEFT };
 				const size_t size = lengthof(idxArray);
-				invList_t *tItem = NULL;
+				invList_t *tItem = nullptr;
 				unsigned int i;
 				for (i = 0; i < size; i++) {
 					target = idxArray[i];
@@ -760,14 +760,14 @@ void UI_ContainerNodeAutoPlaceItem (uiNode_t* node, invList_t *ic)
 	uiNode_t *targetNode = UI_GetContainerNodeByContainerIDX(node->parent, target);
 	if (node->onChange)
 		UI_ExecuteEventActions(node, node->onChange);
-	if (targetNode != NULL && node != targetNode && targetNode->onChange)
+	if (targetNode != nullptr && node != targetNode && targetNode->onChange)
 		UI_ExecuteEventActions(targetNode, targetNode->onChange);
 	/* Also call onChange for equip_ammo if ammo moved
 	 * Maybe there's a better way to do this? */
 	if (ic->def()->isAmmo() || ammoChanged) {
 		/** @todo hard coded node name, remove it when it is possible */
 		uiNode_t *ammoNode = UI_GetNode(node->root, "equip_ammo");
-		if (ammoNode != NULL && node != ammoNode && ammoNode->onChange)
+		if (ammoNode != nullptr && node != ammoNode && ammoNode->onChange)
 			UI_ExecuteEventActions(ammoNode, ammoNode->onChange);
 	}
 }
@@ -860,7 +860,7 @@ void uiContainerNode::onMouseUp (uiNode_t *node, int x, int y, int button)
 
 void uiContainerNode::onLoading (uiNode_t *node)
 {
-	EXTRADATA(node).container = NULL;
+	EXTRADATA(node).container = nullptr;
 	node->color[3] = 1.0;
 }
 

@@ -61,7 +61,7 @@ const char *Sys_GetCurrentUser (void)
 	static char s_userName[MAX_VAR];
 	struct passwd *p;
 
-	if ((p = getpwuid(getuid())) == NULL)
+	if ((p = getpwuid(getuid())) == nullptr)
 		s_userName[0] = '\0';
 	else {
 		strncpy(s_userName, p->pw_name, sizeof(s_userName));
@@ -184,17 +184,17 @@ static void _backtrace (FILE *crash, void * const *buffer, int size)
 	int x;
 	struct bfd_set *set = (bfd_set*)calloc(1, sizeof(*set));
 	struct output_buffer ob;
-	struct bfd_ctx *bc = NULL;
+	struct bfd_ctx *bc = nullptr;
 
 	output_init(&ob, g_output, sizeof(g_output));
 
 	bfd_init();
 
 	for (x = 0; x < size; x++) {
-		struct file_match match = {(const char*)buffer[x], NULL, NULL, NULL};
+		struct file_match match = {(const char*)buffer[x], nullptr, nullptr, nullptr};
 		unsigned long addr;
-		const char * file = NULL;
-		const char * func = NULL;
+		const char * file = nullptr;
+		const char * func = nullptr;
 		unsigned line = 0;
 		const char *procname;
 
@@ -212,12 +212,12 @@ static void _backtrace (FILE *crash, void * const *buffer, int size)
 			procname = bc->handle->filename;
 		}
 
-		if (func == NULL) {
+		if (func == nullptr) {
 			output_print(&ob, "0x%x : %s : %s \n",
-					addr, procname == NULL ? "unknown" : procname, file == NULL ? "unknown" : file);
+					addr, procname == nullptr ? "unknown" : procname, file == nullptr ? "unknown" : file);
 		} else {
 			output_print(&ob, "0x%x : %s : %s (%d) : in function (%s) \n",
-					addr, procname == NULL ? "unknown" : procname, file == NULL ? "unknown" : file, line, func);
+					addr, procname == nullptr ? "unknown" : procname, file == nullptr ? "unknown" : file, line, func);
 		}
 	}
 
@@ -237,7 +237,7 @@ void Sys_Backtrace (void)
 {
 	const char *dumpFile = "crashdump.txt";
 	FILE *file = fopen(dumpFile, "w");
-	FILE *crash = file != NULL ? file : stderr;
+	FILE *crash = file != nullptr ? file : stderr;
 
 	fprintf(crash, "======start======\n");
 
@@ -267,7 +267,7 @@ void Sys_Backtrace (void)
 
 	fprintf(crash, "======end========\n");
 
-	if (file != NULL)
+	if (file != nullptr)
 		fclose(file);
 
 #ifdef COMPILE_UFO

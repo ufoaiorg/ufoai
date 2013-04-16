@@ -129,7 +129,7 @@ static vec_t BrushVolume (const bspbrush_t *brush)
 		return 0;
 
 	/* grab the first valid point as the corner */
-	w = NULL;
+	w = nullptr;
 	for (i = 0; i < brush->numsides; i++) {
 		w = brush->sides[i].winding;
 		if (w)
@@ -429,7 +429,7 @@ static bool CheckPlaneAgainstVolume (uint16_t pnum, const bspbrush_t *volume)
 /**
  * @brief Using a heuristic, choses one of the sides out of the brushlist
  * to partition the brushes with.
- * @return NULL if there are no valid planes to split with..
+ * @return nullptr if there are no valid planes to split with..
  */
 side_t *SelectSplitSide (bspbrush_t *brushes, bspbrush_t *volume)
 {
@@ -442,9 +442,9 @@ side_t *SelectSplitSide (bspbrush_t *brushes, bspbrush_t *volume)
 	bool hintsplit;
 
 	if (!volume)
-		return NULL; /* can't split empty brush */
+		return nullptr; /* can't split empty brush */
 
-	bestside = NULL;
+	bestside = nullptr;
 	bestvalue = -99999;
 
 	/**
@@ -568,7 +568,7 @@ void SplitBrush (const bspbrush_t *brush, uint16_t planenum, bspbrush_t **front,
 	plane_t *plane, *plane2;
 	float d_front, d_back;
 
-	*front = *back = NULL;
+	*front = *back = nullptr;
 	plane = &mapplanes[planenum];
 
 	/* check all points */
@@ -664,7 +664,7 @@ void SplitBrush (const bspbrush_t *brush, uint16_t planenum, bspbrush_t **front,
 
 		if (b[i]->numsides < 3 || j < 3) {
 			FreeBrush(b[i]);
-			b[i] = NULL;
+			b[i] = nullptr;
 		}
 	}
 
@@ -705,7 +705,7 @@ void SplitBrush (const bspbrush_t *brush, uint16_t planenum, bspbrush_t **front,
 		const vec_t v1 = BrushVolume(b[i]);
 		if (v1 < 1.0) {
 			FreeBrush(b[i]);
-			b[i] = NULL;
+			b[i] = nullptr;
 			/** @todo Print brush and entnum either of the brush that was splitted
 			 * or the plane that was used as splitplane */
 			Verb_Printf(VERB_EXTRA, "tiny volume after clip\n");
@@ -720,7 +720,7 @@ void SplitBrushList (bspbrush_t *brushes, uint16_t planenum, bspbrush_t **front,
 {
 	bspbrush_t *brush;
 
-	*front = *back = NULL;
+	*front = *back = nullptr;
 
 	for (brush = brushes; brush; brush = brush->next) {
 		const int sides = brush->side;

@@ -42,7 +42,7 @@ void CP_ExecuteMissionTrigger (const mission_t *mission, bool won)
 {
 	Com_DPrintf(DEBUG_CLIENT, "Execute mission triggers\n");
 
-	if (mission == NULL)
+	if (mission == nullptr)
 		return;
 
 	/* we add them only here - and remove them afterwards to prevent cheating */

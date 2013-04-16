@@ -781,7 +781,7 @@ void VectorNormalizeFast (vec3_t v)
  * @note @c dst is a perpendicular vector to @c src such that it is the closest
  * to one of the three axis: {1,0,0}, {0,1,0} and {0,0,1} (chosen in that order
  * in case of equality)
- * @pre non-NULL pointers and @c src is normalized
+ * @pre non-nullptr pointers and @c src is normalized
  * @sa ProjectPointOnPlane
  */
 void PerpendicularVector (vec3_t dst, const vec3_t src)

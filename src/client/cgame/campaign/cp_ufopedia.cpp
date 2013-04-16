@@ -110,8 +110,8 @@ static void UP_ChangeDisplay (int newDisplay)
 
 	switch (upDisplay) {
 	case UFOPEDIA_CHAPTERS:
-		currentChapter = NULL;
-		upCurrentTech = NULL;
+		currentChapter = nullptr;
+		upCurrentTech = nullptr;
 		cgi->Cvar_Set("mn_upmodel_top", "");
 		cgi->Cvar_Set("mn_upmodel_bottom", "");
 		cgi->Cvar_Set("mn_upimage_top", "base/empty");
@@ -187,7 +187,7 @@ static void UP_DisplayTechTree (const technology_t* t)
 	const requirements_t *required;
 
 	required = &t->requireAND;
-	upTechtree = NULL;
+	upTechtree = nullptr;
 
 	if (required->numLinks <= 0)
 		cgi->LIST_AddString(&upTechtree, _("No requirements"));
@@ -251,7 +251,7 @@ void UP_AircraftItemDescription (const objDef_t *item)
 	const technology_t *tech;
 
 	/* Set menu text node content to null. */
-	cgi->INV_ItemDescription(NULL);
+	cgi->INV_ItemDescription(nullptr);
 	*itemText = '\0';
 
 	/* no valid item id given */
@@ -275,7 +275,7 @@ void UP_AircraftItemDescription (const objDef_t *item)
 	/* set description text */
 	if (RS_IsResearched_ptr(tech)) {
 		int i;
-		const objDef_t *ammo = NULL;
+		const objDef_t *ammo = nullptr;
 
 		switch (item->craftitem.type) {
 		case AC_ITEM_WEAPON:
@@ -343,7 +343,7 @@ void UP_AircraftItemDescription (const objDef_t *item)
  */
 void UP_AircraftDescription (const technology_t* tech)
 {
-	cgi->INV_ItemDescription(NULL);
+	cgi->INV_ItemDescription(nullptr);
 
 	/* ensure that the buffer is emptied in every case */
 	upBuffer[0] = '\0';
@@ -408,7 +408,7 @@ void UP_UGVDescription (const ugv_t *ugvType)
 	tech = RS_GetTechByProvided(ugvType->id);
 	assert(tech);
 
-	cgi->INV_ItemDescription(NULL);
+	cgi->INV_ItemDescription(nullptr);
 
 	/* Set name of ugv/robot */
 	cgi->Cvar_Set("mn_itemname", _(tech->name));
@@ -533,7 +533,7 @@ static void UP_SetMailHeader (technology_t* tech, techMailType_t type, eventMail
 				cgi->Com_Error(ERR_DROP, "UP_SetMailHeader: unhandled techMailType_t %i for date.", type);
 			}
 		}
-		if (from != NULL) {
+		if (from != nullptr) {
 			if (!mail->read) {
 				mail->read = true;
 				/* reread the unread mails in UP_GetUnreadMails */
@@ -620,7 +620,7 @@ static void UP_Article (technology_t* tech, eventMail_t *mail)
 		/* event mail */
 		cgi->Cvar_SetValue("mn_uppreavailable", 0);
 		cgi->Cvar_SetValue("mn_updisplay", UFOPEDIA_CHAPTERS);
-		UP_SetMailHeader(NULL, TECHMAIL_PRE, mail);
+		UP_SetMailHeader(nullptr, TECHMAIL_PRE, mail);
 		cgi->UI_RegisterText(TEXT_UFOPEDIA, _(mail->body));
 		/* This allows us to use the index button in the UFOpaedia,
 		 * eventMails don't have any chapter to go back to. */
@@ -640,16 +640,16 @@ static void UP_Article (technology_t* tech, eventMail_t *mail)
 				/* Display pre-research text and the buttons if a pre-research text is available. */
 				if (mn_uppretext->integer) {
 					cgi->UI_RegisterText(TEXT_UFOPEDIA, _(RS_GetDescription(&tech->preDescription)));
-					UP_SetMailHeader(tech, TECHMAIL_PRE, NULL);
+					UP_SetMailHeader(tech, TECHMAIL_PRE, nullptr);
 				} else {
-					UP_SetMailHeader(tech, TECHMAIL_RESEARCHED, NULL);
+					UP_SetMailHeader(tech, TECHMAIL_RESEARCHED, nullptr);
 				}
 				cgi->Cvar_SetValue("mn_uppreavailable", 1);
 			} else {
 				/* Do not display the pre-research-text button if none is available (no need to even bother clicking there). */
 				cgi->Cvar_SetValue("mn_uppreavailable", 0);
 				cgi->Cvar_SetValue("mn_updisplay", UFOPEDIA_CHAPTERS);
-				UP_SetMailHeader(tech, TECHMAIL_RESEARCHED, NULL);
+				UP_SetMailHeader(tech, TECHMAIL_RESEARCHED, nullptr);
 			}
 
 			switch (tech->type) {
@@ -690,7 +690,7 @@ static void UP_Article (technology_t* tech, eventMail_t *mail)
 			/* Not researched but some items collected -> display pre-research text if available. */
 			if (tech->preDescription.numDescriptions > 0) {
 				cgi->UI_RegisterText(TEXT_UFOPEDIA, _(RS_GetDescription(&tech->preDescription)));
-				UP_SetMailHeader(tech, TECHMAIL_PRE, NULL);
+				UP_SetMailHeader(tech, TECHMAIL_PRE, nullptr);
 			} else {
 				cgi->UI_RegisterText(TEXT_UFOPEDIA, _("No pre-research description available."));
 			}
@@ -714,7 +714,7 @@ void UP_OpenEventMail (const char *eventMailID)
 		return;
 
 	cgi->UI_PushWindow("mail");
-	UP_Article(NULL, mail);
+	UP_Article(nullptr, mail);
 }
 
 /**
@@ -788,18 +788,18 @@ static void UP_FindEntry_f (void)
 	if (tech->redirect)
 		tech = tech->redirect;
 
-	UP_Article(tech, NULL);
+	UP_Article(tech, nullptr);
 }
 
 /**
  * @brief Generate a list of options for all allowed articles of a chapter
  * @param[in] parentChapter requested chapter
- * @return The first option of the list, else NULL if no articles
+ * @return The first option of the list, else nullptr if no articles
  */
 static uiNode_t* UP_GenerateArticlesSummary (pediaChapter_t *parentChapter)
 {
 	technology_t *tech = parentChapter->first;
-	uiNode_t* first = NULL;
+	uiNode_t* first = nullptr;
 
 	while (tech) {
 		if (UP_TechGetsDisplayed(tech)) {
@@ -821,7 +821,7 @@ static uiNode_t* UP_GenerateArticlesSummary (pediaChapter_t *parentChapter)
 static void UP_GenerateSummary (void)
 {
 	int i;
-	uiNode_t *chapters = NULL;
+	uiNode_t *chapters = nullptr;
 	int num = 0;
 
 	numChaptersDisplayList = 0;
@@ -829,7 +829,7 @@ static void UP_GenerateSummary (void)
 	for (i = 0; i < ccs.numChapters; i++) {
 		/* hide chapters without name */
 		pediaChapter_t *chapter = &ccs.upChapters[i];
-		if (chapter->name == NULL)
+		if (chapter->name == nullptr)
 			continue;
 
 		/* Check if there are any researched or collected items in this chapter ... */
@@ -891,7 +891,7 @@ static void UP_Click_f (void)
 		assert(techId < ccs.numTechnologies);
 		tech = &ccs.technologies[techId];
 		if (tech)
-			UP_Article(tech, NULL);
+			UP_Article(tech, nullptr);
 		return;
 	} else {
 		/* Reset itemdescription */
@@ -947,7 +947,7 @@ static void UP_TechTreeClick_f (void)
 static void UP_Update_f (void)
 {
 	if (upCurrentTech)
-		UP_Article(upCurrentTech, NULL);
+		UP_Article(upCurrentTech, nullptr);
 }
 
 /**
@@ -1257,13 +1257,13 @@ void UP_InitStartup (void)
 	cgi->Cmd_AddCommand("mn_upcontent", UP_Content_f, "Shows the UFOpaedia chapters");
 	cgi->Cmd_AddCommand("mn_upupdate", UP_Update_f, "Redraw the current UFOpaedia article");
 	cgi->Cmd_AddCommand("ufopedia", UP_FindEntry_f, "Open the UFOpaedia with the given article");
-	cgi->Cmd_AddCommand("ufopedia_click", UP_Click_f, NULL);
-	cgi->Cmd_AddCommand("mailclient_click", UP_MailClientClick_f, NULL);
+	cgi->Cmd_AddCommand("ufopedia_click", UP_Click_f, nullptr);
+	cgi->Cmd_AddCommand("mailclient_click", UP_MailClientClick_f, nullptr);
 	cgi->Cmd_AddCommand("mn_mail_readall", UP_SetAllMailsRead_f, "Mark all mails read");
 	cgi->Cmd_AddCommand("ufopedia_openmail", UP_OpenMail_f, "Start the mailclient");
-	cgi->Cmd_AddCommand("ufopedia_scrollmail", UP_SetMailButtons_f, NULL);
-	cgi->Cmd_AddCommand("techtree_click", UP_TechTreeClick_f, NULL);
-	cgi->Cmd_AddCommand("mn_upgotoresearchedlink", UP_ResearchedLinkClick_f, NULL);
+	cgi->Cmd_AddCommand("ufopedia_scrollmail", UP_SetMailButtons_f, nullptr);
+	cgi->Cmd_AddCommand("techtree_click", UP_TechTreeClick_f, nullptr);
+	cgi->Cmd_AddCommand("mn_upgotoresearchedlink", UP_ResearchedLinkClick_f, nullptr);
 
 	mn_uppretext = cgi->Cvar_Get("mn_uppretext", "0", 0, "Show the pre-research text in the UFOpaedia");
 	mn_uppreavailable = cgi->Cvar_Get("mn_uppreavailable", "0", 0, "True if there is a pre-research text available");

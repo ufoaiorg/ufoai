@@ -31,7 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 
 /** Currently selected employee. */
-static Employee *selectedEmployee = NULL;
+static Employee *selectedEmployee = nullptr;
 /* Holds the current active employee category */
 static int employeeCategory = 0;
 
@@ -171,7 +171,7 @@ static void E_EmployeeList_f (void)
 	cgi->LIST_Delete(&employeeList);
 	/* make sure, that we are using the linked list */
 	cgi->UI_ResetData(TEXT_LIST);
-	employeeListName = NULL;
+	employeeListName = nullptr;
 
 	E_Foreach(employeeCategory, e) {
 		/* don't show employees of other bases */
@@ -205,7 +205,7 @@ static void E_EmployeeList_f (void)
 	}
 	/* Select the current employee if name was changed or first one. Use the direct string
 	 * execution here - otherwise the employeeCategory might be out of sync */
-	if (hiredEmployeeIdx < 0 || selectedEmployee == NULL)
+	if (hiredEmployeeIdx < 0 || selectedEmployee == nullptr)
 		employee = E_GetEmployeeByMenuIndex(0);
 	else
 		employee = selectedEmployee;
@@ -379,8 +379,8 @@ void E_InitCallbacks (void)
 	cgi->Cmd_AddCommand("employee_update_count", E_UpdateGUICount_f, "Callback to update the employee count of the current GUI");
 	cgi->Cmd_AddCommand("employee_init", E_EmployeeList_f, "Init function for employee hire menu");
 	cgi->Cmd_AddCommand("employee_delete", E_EmployeeDelete_f, "Removed an employee from the global employee list");
-	cgi->Cmd_AddCommand("employee_hire", E_EmployeeHire_f, NULL);
-	cgi->Cmd_AddCommand("employee_select", E_EmployeeSelect_f, NULL);
+	cgi->Cmd_AddCommand("employee_hire", E_EmployeeHire_f, nullptr);
+	cgi->Cmd_AddCommand("employee_select", E_EmployeeSelect_f, nullptr);
 	cgi->Cmd_AddCommand("employee_changename", E_ChangeName_f, "Change the name of an employee");
 	cgi->Cmd_AddCommand("employee_scroll", E_EmployeeListScroll_f, "Scroll callback for employee list");
 }

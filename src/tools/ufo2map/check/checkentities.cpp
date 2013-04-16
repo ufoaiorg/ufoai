@@ -263,7 +263,7 @@ mapbrush_t **Check_ExtraBrushesForWorldspawn (int *numBrushes)
 	*numBrushes = numToMoveToWorldspawn;
 
 	if (!numToMoveToWorldspawn)
-		return NULL;
+		return nullptr;
 
 	brushesToMove = Mem_AllocTypeN(mapbrush_t *, numToMoveToWorldspawn);
 	if (!brushesToMove)

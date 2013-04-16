@@ -50,7 +50,7 @@ static const vec4_t anamorphicBorder = {0, 0, 0, 1};
 
 /**
  * @brief Get a node from child index
- * @return A child node by his name, else NULL
+ * @return A child node by his name, else nullptr
  */
 uiNode_t* UI_WindowNodeGetIndexedChild (uiNode_t* const node, const char* childName)
 {
@@ -63,7 +63,7 @@ uiNode_t* UI_WindowNodeGetIndexedChild (uiNode_t* const node, const char* childN
 			return a->node;
 		}
 	}
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -195,7 +195,7 @@ void uiWindowNode::onWindowOpened (uiNode_t *node, linkedList_t *params)
 
 	/* init child */
 	for (child = node->firstChild; child; child = child->next) {
-		UI_Node_WindowOpened(child, NULL);
+		UI_Node_WindowOpened(child, nullptr);
 	}
 
 	/* script callback */
@@ -279,19 +279,19 @@ void uiWindowNode::onLoaded (uiNode_t *node)
 void uiWindowNode::clone (const uiNode_t *source, uiNode_t *clone)
 {
 	/* clean up index */
-	EXTRADATA(clone).index = NULL;
+	EXTRADATA(clone).index = nullptr;
 	OBJZERO(EXTRADATA(clone).index_hash);
 }
 
 /**
  * @brief Get the noticePosition from a window node.
  * @param node A window node
- * @return A position, else NULL if no notice position
+ * @return A position, else nullptr if no notice position
  */
 vec_t *UI_WindowNodeGetNoticePosition(uiNode_t* node)
 {
 	if (Vector2Empty(EXTRADATA(node).noticePos))
-		return NULL;
+		return nullptr;
 	return EXTRADATA(node).noticePos;
 }
 

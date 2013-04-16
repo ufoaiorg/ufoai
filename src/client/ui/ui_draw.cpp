@@ -86,10 +86,10 @@ static void UI_HighlightNode (const uiNode_t *node, const vec4_t color)
 	UI_GetNodeAbsPos(node, pos);
 
 	text = va("%s (%s)", node->name, UI_Node_GetWidgetName(node));
-	R_FontTextSize("f_small_bold", text, DEBUG_PANEL_WIDTH, LONGLINES_PRETTYCHOP, &width, NULL, NULL, NULL);
+	R_FontTextSize("f_small_bold", text, DEBUG_PANEL_WIDTH, LONGLINES_PRETTYCHOP, &width, nullptr, nullptr, nullptr);
 
 	R_Color(color);
-	UI_DrawString("f_small_bold", ALIGN_UL, debugPositionX + 20, debugTextPositionY, debugPositionX + 20, DEBUG_PANEL_WIDTH, 0, text, 0, 0, NULL, false, LONGLINES_PRETTYCHOP);
+	UI_DrawString("f_small_bold", ALIGN_UL, debugPositionX + 20, debugTextPositionY, debugPositionX + 20, DEBUG_PANEL_WIDTH, 0, text, 0, 0, nullptr, false, LONGLINES_PRETTYCHOP);
 	debugTextPositionY += 15;
 
 	if (debugPositionX != 0) {
@@ -102,7 +102,7 @@ static void UI_HighlightNode (const uiNode_t *node, const vec4_t color)
 	lineDefinition[1] = debugTextPositionY - 5;
 	lineDefinition[3] = pos[1];
 	R_DrawLine(lineDefinition, 1);
-	R_Color(NULL);
+	R_Color(nullptr);
 
 	/* exclude rect */
 	if (node->firstExcludeRect) {
@@ -111,7 +111,7 @@ static void UI_HighlightNode (const uiNode_t *node, const vec4_t color)
 		Vector4Copy(color, trans);
 		trans[3] = trans[3] / 2;
 
-		for (current = node->firstExcludeRect; current != NULL; current = current->next) {
+		for (current = node->firstExcludeRect; current != nullptr; current = current->next) {
 			const int x = pos[0] + current->pos[0];
 			const int y = pos[1] + current->pos[1];
 			UI_DrawFill(x, y, current->size[0], current->size[1], trans);
@@ -143,18 +143,18 @@ static void UI_DrawDebugNodeNames (void)
 		debugPositionX = 0;
 
 	/* mouse position */
-	UI_DrawString("f_small_bold", ALIGN_UL, debugPositionX, debugTextPositionY, debugPositionX, 200, 0, va("Mouse X: %i Y: %i", mousePosX, mousePosY), 0, 0, NULL, false, LONGLINES_PRETTYCHOP);
+	UI_DrawString("f_small_bold", ALIGN_UL, debugPositionX, debugTextPositionY, debugPositionX, 200, 0, va("Mouse X: %i Y: %i", mousePosX, mousePosY), 0, 0, nullptr, false, LONGLINES_PRETTYCHOP);
 	debugTextPositionY += 15;
 	/* global */
-	UI_DrawString("f_small_bold", ALIGN_UL, debugPositionX, debugTextPositionY, debugPositionX, 200, 0, "main active window:", 0, 0, NULL, false, LONGLINES_PRETTYCHOP);
+	UI_DrawString("f_small_bold", ALIGN_UL, debugPositionX, debugTextPositionY, debugPositionX, 200, 0, "main active window:", 0, 0, nullptr, false, LONGLINES_PRETTYCHOP);
 	debugTextPositionY += 15;
-	UI_DrawString("f_small_bold", ALIGN_UL, debugPositionX+20, debugTextPositionY, debugPositionX + 20, 200, 0, Cvar_GetString("ui_sys_active"), 0, 0, NULL, false, LONGLINES_PRETTYCHOP);
+	UI_DrawString("f_small_bold", ALIGN_UL, debugPositionX+20, debugTextPositionY, debugPositionX + 20, 200, 0, Cvar_GetString("ui_sys_active"), 0, 0, nullptr, false, LONGLINES_PRETTYCHOP);
 	debugTextPositionY += 15;
-	UI_DrawString("f_small_bold", ALIGN_UL, debugPositionX, debugTextPositionY, debugPositionX, 200, 0, "main option window:", 0, 0, NULL, false, LONGLINES_PRETTYCHOP);
+	UI_DrawString("f_small_bold", ALIGN_UL, debugPositionX, debugTextPositionY, debugPositionX, 200, 0, "main option window:", 0, 0, nullptr, false, LONGLINES_PRETTYCHOP);
 	debugTextPositionY += 15;
-	UI_DrawString("f_small_bold", ALIGN_UL, debugPositionX+20, debugTextPositionY, debugPositionX + 20, 200, 0, Cvar_GetString("ui_sys_main"), 0, 0, NULL, false, LONGLINES_PRETTYCHOP);
+	UI_DrawString("f_small_bold", ALIGN_UL, debugPositionX+20, debugTextPositionY, debugPositionX + 20, 200, 0, Cvar_GetString("ui_sys_main"), 0, 0, nullptr, false, LONGLINES_PRETTYCHOP);
 	debugTextPositionY += 15;
-	UI_DrawString("f_small_bold", ALIGN_UL, debugPositionX, debugTextPositionY, debugPositionX, 200, 0, "-----------------------", 0, 0, NULL, false, LONGLINES_PRETTYCHOP);
+	UI_DrawString("f_small_bold", ALIGN_UL, debugPositionX, debugTextPositionY, debugPositionX, 200, 0, "-----------------------", 0, 0, nullptr, false, LONGLINES_PRETTYCHOP);
 	debugTextPositionY += 15;
 
 	/* background */
@@ -162,21 +162,21 @@ static void UI_DrawDebugNodeNames (void)
 
 	/* window stack */
 	R_Color(white);
-	UI_DrawString("f_small_bold", ALIGN_UL, debugPositionX, debugTextPositionY, debugPositionX, 200, 0, "window stack:", 0, 0, NULL, false, LONGLINES_PRETTYCHOP);
+	UI_DrawString("f_small_bold", ALIGN_UL, debugPositionX, debugTextPositionY, debugPositionX, 200, 0, "window stack:", 0, 0, nullptr, false, LONGLINES_PRETTYCHOP);
 	debugTextPositionY += 15;
 	for (stackPosition = 0; stackPosition < ui_global.windowStackPos; stackPosition++) {
 		uiNode_t *window = ui_global.windowStack[stackPosition];
-		UI_DrawString("f_small_bold", ALIGN_UL, debugPositionX+20, debugTextPositionY, debugPositionX + 20, 200, 0, window->name, 0, 0, NULL, false, LONGLINES_PRETTYCHOP);
+		UI_DrawString("f_small_bold", ALIGN_UL, debugPositionX+20, debugTextPositionY, debugPositionX + 20, 200, 0, window->name, 0, 0, nullptr, false, LONGLINES_PRETTYCHOP);
 		debugTextPositionY += 15;
 	}
 
 	/* hovered node */
 	hoveredNode = UI_GetHoveredNode();
 	if (hoveredNode) {
-		UI_DrawString("f_small_bold", ALIGN_UL, debugPositionX, debugTextPositionY, debugPositionX, 200, 0, "-----------------------", 0, 0, NULL, false, LONGLINES_PRETTYCHOP);
+		UI_DrawString("f_small_bold", ALIGN_UL, debugPositionX, debugTextPositionY, debugPositionX, 200, 0, "-----------------------", 0, 0, nullptr, false, LONGLINES_PRETTYCHOP);
 		debugTextPositionY += 15;
 
-		UI_DrawString("f_small_bold", ALIGN_UL, debugPositionX, debugTextPositionY, debugPositionX, 200, 0, "hovered node:", 0, 0, NULL, false, LONGLINES_PRETTYCHOP);
+		UI_DrawString("f_small_bold", ALIGN_UL, debugPositionX, debugTextPositionY, debugPositionX, 200, 0, "hovered node:", 0, 0, nullptr, false, LONGLINES_PRETTYCHOP);
 		debugTextPositionY += 15;
 		UI_HighlightNode(hoveredNode, red);
 		R_Color(white);
@@ -186,16 +186,16 @@ static void UI_DrawDebugNodeNames (void)
 	if (UI_DNDIsDragging()) {
 		uiNode_t *targetNode = UI_DNDGetTargetNode();
 		if (targetNode) {
-			UI_DrawString("f_small_bold", ALIGN_UL, debugPositionX, debugTextPositionY, debugPositionX, 200, 0, "-----------------------", 0, 0, NULL, false, LONGLINES_PRETTYCHOP);
+			UI_DrawString("f_small_bold", ALIGN_UL, debugPositionX, debugTextPositionY, debugPositionX, 200, 0, "-----------------------", 0, 0, nullptr, false, LONGLINES_PRETTYCHOP);
 			debugTextPositionY += 15;
 
 			R_Color(green);
-			UI_DrawString("f_small_bold", ALIGN_UL, debugPositionX, debugTextPositionY, debugPositionX, 200, 0, "drag and drop target node:", 0, 0, NULL, false, LONGLINES_PRETTYCHOP);
+			UI_DrawString("f_small_bold", ALIGN_UL, debugPositionX, debugTextPositionY, debugPositionX, 200, 0, "drag and drop target node:", 0, 0, nullptr, false, LONGLINES_PRETTYCHOP);
 			debugTextPositionY += 15;
 			UI_HighlightNode(targetNode, green);
 		}
 	}
-	R_Color(NULL);
+	R_Color(nullptr);
 }
 #endif
 
@@ -263,7 +263,7 @@ static void UI_DrawNode (uiNode_t *node)
 			trans[0] = clientPosition[0] * viddef.rx;
 			trans[1] = clientPosition[1] * viddef.ry;
 			trans[2] = 0;
-			R_Transform(trans, NULL, NULL);
+			R_Transform(trans, nullptr, nullptr);
 		}
 
 		/** @todo we can skip nodes outside visible rect */
@@ -278,7 +278,7 @@ static void UI_DrawNode (uiNode_t *node)
 			trans[0] = -clientPosition[0] * viddef.rx;
 			trans[1] = -clientPosition[1] * viddef.ry;
 			trans[2] = 0;
-			R_Transform(trans, NULL, NULL);
+			R_Transform(trans, nullptr, nullptr);
 		}
 
 		UI_PopClipRect();
@@ -314,7 +314,7 @@ static void UI_DrawNotice (void)
 	x += noticeWindow->box.pos[0];
 	y += noticeWindow->box.pos[1];
 
-	R_FontTextSize(font, noticeText, maxWidth, LONGLINES_WRAP, &width, &height, NULL, NULL);
+	R_FontTextSize(font, noticeText, maxWidth, LONGLINES_WRAP, &width, &height, nullptr, nullptr);
 
 	if (!width)
 		return;
@@ -327,7 +327,7 @@ static void UI_DrawNotice (void)
 	UI_DrawFill((x - 2 + dx) - ((width + 2) / 2), (y - 2) - ((height + 2) / 2), width + 4, height + 4, noticeBG);
 	R_Color(noticeColor);
 	UI_DrawString(font, ALIGN_CC, x + 1 + dx, y + 1, x + 1, maxWidth, 0, noticeText, lines);
-	R_Color(NULL);
+	R_Color(nullptr);
 }
 
 /**
@@ -361,7 +361,7 @@ void UI_Draw (void)
 		uiNode_t *window;
 		window = ui_global.windowStack[pos];
 
-		drawOverNode = NULL;
+		drawOverNode = nullptr;
 
 		UI_DrawNode(window);
 
@@ -372,12 +372,12 @@ void UI_Draw (void)
 	}
 
 	/* draw a special notice */
-	if (noticeWindow != NULL && CL_Milliseconds() < noticeTime)
+	if (noticeWindow != nullptr && CL_Milliseconds() < noticeTime)
 		UI_DrawNotice();
 
 	/* unactive notice */
-	if (noticeWindow != NULL && CL_Milliseconds() >= noticeTime)
-		noticeWindow = NULL;
+	if (noticeWindow != nullptr && CL_Milliseconds() >= noticeTime)
+		noticeWindow = nullptr;
 
 	/* draw tooltip */
 	if (hoveredNode && tooltipVisible && !UI_DNDIsDragging()) {
@@ -402,20 +402,20 @@ void UI_DrawCursor (void)
  * @sa HUD_DisplayMessage
  * @param[in] time is a ms values
  * @param[in] text text is already translated here
- * @param[in] windowName Window name where we must display the notice; else NULL to use the current active window
+ * @param[in] windowName Window name where we must display the notice; else nullptr to use the current active window
  */
 void UI_DisplayNotice (const char *text, int time, const char* windowName)
 {
 	noticeTime = CL_Milliseconds() + time;
 	Q_strncpyz(noticeText, text, sizeof(noticeText));
 
-	if (windowName == NULL) {
+	if (windowName == nullptr) {
 		noticeWindow = UI_GetActiveWindow();
-		if (noticeWindow == NULL)
+		if (noticeWindow == nullptr)
 			Com_Printf("UI_DisplayNotice: No active window\n");
 	} else {
 		noticeWindow = UI_GetWindow(windowName);
-		if (noticeWindow == NULL)
+		if (noticeWindow == nullptr)
 			Com_Printf("UI_DisplayNotice: '%s' not found\n", windowName);
 	}
 }
@@ -423,5 +423,5 @@ void UI_DisplayNotice (const char *text, int time, const char* windowName)
 void UI_InitDraw (void)
 {
 	ui_show_tooltips = Cvar_Get("ui_show_tooltips", "1", CVAR_ARCHIVE, "Show tooltips in the UI");
-	tooltipTimer = UI_AllocTimer(NULL, TOOLTIP_DELAY, UI_CheckTooltipDelay);
+	tooltipTimer = UI_AllocTimer(nullptr, TOOLTIP_DELAY, UI_CheckTooltipDelay);
 }

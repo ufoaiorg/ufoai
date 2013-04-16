@@ -410,7 +410,7 @@ void NET_ReadDir (dbuffer *buf, vec3_t dir)
  * @brief Reads from a buffer according to format; version without syntactic sugar for variable arguments, to call it from other functions with variable arguments
  * @sa SV_ReadFormat
  * @param[in] buf The buffer we read the data from
- * @param[in] format The format string may not be NULL
+ * @param[in] format The format string may not be nullptr
  */
 void NET_vReadFormat (dbuffer *buf, const char *format, va_list ap)
 {
@@ -515,7 +515,7 @@ void NET_SkipFormat (dbuffer *buf, const char *format)
 			format++;
 			break;
 		case '&':
-			NET_ReadString(buf, NULL, 0);
+			NET_ReadString(buf, nullptr, 0);
 			break;
 		case '*': {
 			const int n = NET_ReadShort(buf);
