@@ -785,19 +785,14 @@ static void AM_MoveCharacterInventoryIntoItemCargo (aircraft_t *aircraft, charac
 	/* add items to itemcargo */
 	const Container *cont = nullptr;
 	while ((cont = chr->inv.getNextCont(cont))) {
-		const invList_t *ic = cont->_invList;
-
-		while (ic) {
-			const item_t *item = ic;
-			const invList_t *next = ic->getNext();
-
+		Item *item = nullptr;
+		while ((item = cont->getNextItem(item))) {
 			if (item->def()) {
 				AII_CollectItem(aircraft, item->def(), 1);
 
 				if (item->getAmmoLeft() && item->ammoDef())
 					AII_CollectItem(aircraft, item->ammoDef(), 1);
 			}
-			ic = next;
 		}
 	}
 }
