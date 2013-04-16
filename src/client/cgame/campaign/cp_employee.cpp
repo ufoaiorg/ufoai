@@ -991,7 +991,7 @@ bool E_LoadXML (xmlNode_t *p)
 
 	cgi->Com_RegisterConstList(saveEmployeeConstants);
 	for (snode = cgi->XML_GetNode(p, SAVE_EMPLOYEE_EMPLOYEES); snode;
-			snode = cgi->XML_GetNextNode(snode, p , SAVE_EMPLOYEE_EMPLOYEES)) {
+			snode = cgi->XML_GetNextNode(snode, p, SAVE_EMPLOYEE_EMPLOYEES)) {
 		xmlNode_t *ssnode;
 		employeeType_t emplType;
 		const char *type = cgi->XML_GetString(snode, SAVE_EMPLOYEE_TYPE);
