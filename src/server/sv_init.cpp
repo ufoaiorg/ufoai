@@ -132,7 +132,7 @@ void SV_Map (bool day, const char *levelstring, const char *assembly)
 		return;
 	}
 
-	assert(levelstring[0] != '\0');
+	assert(Q_strvalid(levelstring));
 
 	Com_DPrintf(DEBUG_SERVER, "SpawnServer: %s\n", levelstring);
 
