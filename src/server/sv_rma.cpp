@@ -2086,7 +2086,7 @@ MapInfo* SV_AssembleMap (const char *mapName, const char *assembly, char *asmTil
 	map->asmIdx = rand() % map->numAssemblies;
 
 	/* overwrite with specified, if any */
-	if (assembly && assembly[0]) {
+	if (Q_strvalid(assembly)) {
 		int i;
 		for (i = 0; i < map->numAssemblies; i++)
 			if (Q_streq(assembly, map->assemblies[i].id)) {
