@@ -691,8 +691,8 @@ const aircraft_t *AIR_GetAircraftSilent (const char *name)
 const aircraft_t *AIR_GetAircraft (const char *name)
 {
 	const aircraft_t *aircraft = AIR_GetAircraftSilent(name);
-	if (name == nullptr || name[0] == '\0')
-		cgi->Com_Error(ERR_DROP, "AIR_GetAircraft called with nullptr name!");
+	if (Q_strnull(name))
+		cgi->Com_Error(ERR_DROP, "AIR_GetAircraft called with invaliad name!");
 	else if (aircraft == nullptr)
 		cgi->Com_Error(ERR_DROP, "Aircraft '%s' not found", name);
 
