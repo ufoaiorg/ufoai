@@ -30,15 +30,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../cl_renderer.h"	/**< include animState_t */
 
 class uiModelNode : public uiLocatedNode {
-	void draw(uiNode_t* node) OVERRIDE;
-	void onMouseDown(uiNode_t* node, int x, int y, int button) OVERRIDE;
-	void onMouseUp(uiNode_t* node, int x, int y, int button) OVERRIDE;
-	void onLoading(uiNode_t* node) OVERRIDE;
-	void onLoaded(uiNode_t* node) OVERRIDE;
-	void clone(uiNode_t const* source, uiNode_t* clone) OVERRIDE;
-	void newNode(uiNode_t* node) OVERRIDE;
-	void deleteNode(uiNode_t* node) OVERRIDE;
-	void onCapturedMouseMove(uiNode_t* node, int x, int y) OVERRIDE;
+	void draw(uiNode_t* node) override;
+	void onMouseDown(uiNode_t* node, int x, int y, int button) override;
+	void onMouseUp(uiNode_t* node, int x, int y, int button) override;
+	void onLoading(uiNode_t* node) override;
+	void onLoaded(uiNode_t* node) override;
+	void clone(uiNode_t const* source, uiNode_t* clone) override;
+	void newNode(uiNode_t* node) override;
+	void deleteNode(uiNode_t* node) override;
+	void onCapturedMouseMove(uiNode_t* node, int x, int y) override;
 };
 
 #define UI_MAX_MODELS		128

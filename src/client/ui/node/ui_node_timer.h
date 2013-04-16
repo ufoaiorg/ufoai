@@ -35,8 +35,8 @@ struct uiAction_s;
 class uiTimerNode : public uiLocatedNode {
 public:
 	void draw(uiNode_t* node);
-	void onWindowOpened(uiNode_t* node, linkedList_t *params) OVERRIDE;
-	void onWindowClosed(uiNode_t* node) OVERRIDE;
+	void onWindowOpened(uiNode_t* node, linkedList_t *params) override;
+	void onWindowClosed(uiNode_t* node) override;
 };
 
 /**

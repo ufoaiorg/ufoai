@@ -26,12 +26,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define CLIENT_UI_UI_NODE_BATTLESCAPE_H
 
 class uiBattleScapeNode : public uiLocatedNode {
-	void draw(uiNode_t* node) OVERRIDE;
-	void onSizeChanged(uiNode_t* node) OVERRIDE;
-	void onWindowOpened(uiNode_t* node, linkedList_t *params) OVERRIDE;
-	void onWindowClosed(uiNode_t* node) OVERRIDE;
-	void onLoading(uiNode_t* node) OVERRIDE;
-	bool onScroll(uiNode_t* node, int deltaX, int deltaY) OVERRIDE;
+	void draw(uiNode_t* node) override;
+	void onSizeChanged(uiNode_t* node) override;
+	void onWindowOpened(uiNode_t* node, linkedList_t *params) override;
+	void onWindowClosed(uiNode_t* node) override;
+	void onLoading(uiNode_t* node) override;
+	bool onScroll(uiNode_t* node, int deltaX, int deltaY) override;
 };
 
 struct uiBehaviour_t;

@@ -28,13 +28,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_node_abstractscrollable.h"
 
 class uiMessageListNode : public uiAbstractScrollableNode {
-	void draw(uiNode_t* node) OVERRIDE;
-	void onLoading(uiNode_t* node) OVERRIDE;
-	bool onScroll(uiNode_t* node, int deltaX, int deltaY) OVERRIDE;
-	void onMouseDown(uiNode_t* node, int x, int y, int button) OVERRIDE;
-	void onMouseUp(uiNode_t* node, int x, int y, int button) OVERRIDE;
-	void onCapturedMouseMove(uiNode_t* node, int x, int y) OVERRIDE;
-	int getCellHeight (uiNode_t *node) OVERRIDE;
+	void draw(uiNode_t* node) override;
+	void onLoading(uiNode_t* node) override;
+	bool onScroll(uiNode_t* node, int deltaX, int deltaY) override;
+	void onMouseDown(uiNode_t* node, int x, int y, int button) override;
+	void onMouseUp(uiNode_t* node, int x, int y, int button) override;
+	void onCapturedMouseMove(uiNode_t* node, int x, int y) override;
+	int getCellHeight (uiNode_t *node) override;
 };
 
 struct uiMessageListNodeMessage_s;

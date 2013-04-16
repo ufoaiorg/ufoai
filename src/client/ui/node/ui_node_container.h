@@ -35,17 +35,17 @@ struct uiNode_t;
 
 class uiContainerNode : public uiLocatedNode {
 public:
-	void draw(uiNode_t* node) OVERRIDE;
-	void drawTooltip(const uiNode_t* node, int x, int y) const OVERRIDE;
-	void onMouseDown(uiNode_t* node, int x, int y, int button) OVERRIDE;
-	void onMouseUp(uiNode_t* node, int x, int y, int button) OVERRIDE;
-	void onCapturedMouseMove(uiNode_t* node, int x, int y) OVERRIDE;
-	void onLoading(uiNode_t* node) OVERRIDE;
-	void onLoaded(uiNode_t* node) OVERRIDE;
-	bool onDndEnter(uiNode_t* node) OVERRIDE;
-	bool onDndMove(uiNode_t* node, int x, int y) OVERRIDE;
-	void onDndLeave(uiNode_t* node) OVERRIDE;
-	bool onDndFinished(uiNode_t* node, bool isDroped) OVERRIDE;
+	void draw(uiNode_t* node) override;
+	void drawTooltip(const uiNode_t* node, int x, int y) const override;
+	void onMouseDown(uiNode_t* node, int x, int y, int button) override;
+	void onMouseUp(uiNode_t* node, int x, int y, int button) override;
+	void onCapturedMouseMove(uiNode_t* node, int x, int y) override;
+	void onLoading(uiNode_t* node) override;
+	void onLoaded(uiNode_t* node) override;
+	bool onDndEnter(uiNode_t* node) override;
+	bool onDndMove(uiNode_t* node, int x, int y) override;
+	void onDndLeave(uiNode_t* node) override;
+	bool onDndFinished(uiNode_t* node, bool isDroped) override;
 };
 
 extern inventory_t *ui_inventory;

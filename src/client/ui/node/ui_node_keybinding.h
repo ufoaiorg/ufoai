@@ -31,10 +31,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../input/cl_keys.h"
 
 class uiKeyBindingNode : public uiLocatedNode {
-	void onLeftClick(uiNode_t* node, int x, int y) OVERRIDE;
-	bool onKeyPressed(uiNode_t* node, unsigned int key, unsigned short unicode) OVERRIDE;
-	void draw(uiNode_t* node) OVERRIDE;
-	void onLoading(uiNode_t* node) OVERRIDE;
+	void onLeftClick(uiNode_t* node, int x, int y) override;
+	bool onKeyPressed(uiNode_t* node, unsigned int key, unsigned short unicode) override;
+	void draw(uiNode_t* node) override;
+	void onLoading(uiNode_t* node) override;
 };
 
 /**

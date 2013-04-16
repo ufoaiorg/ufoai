@@ -1,5 +1,4 @@
-#ifndef CXX_H
-#define CXX_H
+#pragma once
 
 #define GCC_ATLEAST(major, minor) (defined __GNUC__ && (__GNUC__ > (major) || (__GNUC__ == (major) && __GNUC_MINOR__ >= (minor))))
 
@@ -30,10 +29,11 @@
 #	define DELETED
 #endif
 
-#if CXX11(4, 7, 1400, cxx_override_control)
-#	define OVERRIDE override
-#else
-#	define OVERRIDE
+#if not CXX11(4, 7, 1400, cxx_override_control)
+#	define override
 #endif
 
+#if __cplusplus < 201103L
+/* not typesafe as the real nullptr from c++11 */
+#define nullptr 0
 #endif

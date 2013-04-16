@@ -27,14 +27,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define CLIENT_UI_UI_NODE_VSCROLLBAR_H
 
 class uiVScrollbarNode : public uiAbstractScrollbarNode {
-	void draw(uiNode_t* node) OVERRIDE;
-	void onLoading(uiNode_t* node) OVERRIDE;
-	void onLoaded(uiNode_t* node) OVERRIDE;
-	void onMouseDown(uiNode_t* node, int x, int y, int button) OVERRIDE;
-	void onMouseUp(uiNode_t* node, int x, int y, int button) OVERRIDE;
-	bool onScroll(uiNode_t* node, int deltaX, int deltaY) OVERRIDE;
-	void onCapturedMouseMove(uiNode_t* node, int x, int y) OVERRIDE;
-	void onCapturedMouseLost(uiNode_t* node) OVERRIDE;
+	void draw(uiNode_t* node) override;
+	void onLoading(uiNode_t* node) override;
+	void onLoaded(uiNode_t* node) override;
+	void onMouseDown(uiNode_t* node, int x, int y, int button) override;
+	void onMouseUp(uiNode_t* node, int x, int y, int button) override;
+	bool onScroll(uiNode_t* node, int deltaX, int deltaY) override;
+	void onCapturedMouseMove(uiNode_t* node, int x, int y) override;
+	void onCapturedMouseLost(uiNode_t* node) override;
 };
 
 void UI_RegisterVScrollbarNode(uiBehaviour_t *behaviour);

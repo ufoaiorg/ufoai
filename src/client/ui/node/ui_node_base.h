@@ -27,25 +27,25 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 class uiAbstractBaseNode : public uiLocatedNode {
 public:
-	void onLoaded(uiNode_t* node) OVERRIDE;
-	void onLoading(uiNode_t* node) OVERRIDE;
+	void onLoaded(uiNode_t* node) override;
+	void onLoading(uiNode_t* node) override;
 };
 
 class uiBaseMapNode : public uiAbstractBaseNode {
 public:
-	void draw(uiNode_t* node) OVERRIDE;
-	void onLeftClick(uiNode_t* node, int x, int y) OVERRIDE;
-	void onRightClick(uiNode_t* node, int x, int y) OVERRIDE;
-	void onMiddleClick(uiNode_t* node, int x, int y) OVERRIDE;
-	void drawTooltip(const uiNode_t* node, int x, int y) const OVERRIDE;
+	void draw(uiNode_t* node) override;
+	void onLeftClick(uiNode_t* node, int x, int y) override;
+	void onRightClick(uiNode_t* node, int x, int y) override;
+	void onMiddleClick(uiNode_t* node, int x, int y) override;
+	void drawTooltip(const uiNode_t* node, int x, int y) const override;
 protected:
 	void getCellAtPos(const uiNode_t *node, int x, int y, int *col, int *row) const;
 };
 
 class uiBaseLayoutNode : public uiAbstractBaseNode {
 public:
-	void draw(uiNode_t* node) OVERRIDE;
-	void onLoading(uiNode_t* node) OVERRIDE;
+	void draw(uiNode_t* node) override;
+	void onLoading(uiNode_t* node) override;
 };
 
 

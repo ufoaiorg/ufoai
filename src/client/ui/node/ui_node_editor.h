@@ -26,12 +26,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define CLIENT_UI_UI_NODE_EDITOR_H
 
 class uiEditorNode : public uiLocatedNode {
-	void draw(uiNode_t* node) OVERRIDE;
-	void drawOverWindow(uiNode_t* node) OVERRIDE;
-	void onMouseDown(uiNode_t* node, int x, int y, int button) OVERRIDE;
-	void onMouseUp(uiNode_t* node, int x, int y, int button) OVERRIDE;
-	void onCapturedMouseMove(uiNode_t* node, int x, int y) OVERRIDE;
-	void onCapturedMouseLost(uiNode_t* node) OVERRIDE;
+	void draw(uiNode_t* node) override;
+	void drawOverWindow(uiNode_t* node) override;
+	void onMouseDown(uiNode_t* node, int x, int y, int button) override;
+	void onMouseUp(uiNode_t* node, int x, int y, int button) override;
+	void onCapturedMouseMove(uiNode_t* node, int x, int y) override;
+	void onCapturedMouseLost(uiNode_t* node) override;
 };
 
 void UI_RegisterEditorNode(uiBehaviour_t* behaviour);

@@ -28,7 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_node_abstractvalue.h"
 
 class uiTBarNode : public uiAbstractValueNode {
-	void draw(uiNode_t* node) OVERRIDE;
+	void draw(uiNode_t* node) override;
 };
 
 void UI_RegisterTBarNode(uiBehaviour_t *behaviour);

@@ -37,14 +37,14 @@ protected:
 	void screenToMap (const uiNode_t* node, int x, int y, vec2_t pos);
 	void calcAndUploadDayAndNightTexture (uiNode_t *node, float q);
 public:
-	void draw(uiNode_t* node) OVERRIDE;
-	void onMouseUp(uiNode_t* node, int x, int y, int button) OVERRIDE;
-	void onCapturedMouseMove(uiNode_t* node, int x, int y) OVERRIDE;
-	void onCapturedMouseLost(uiNode_t* node) OVERRIDE;
-	void onLoading(uiNode_t* node) OVERRIDE;
-	bool onScroll(uiNode_t* node, int deltaX, int deltaY) OVERRIDE;
-	void onLeftClick(uiNode_t* node, int x, int y) OVERRIDE;
-	bool onStartDragging(uiNode_t* node, int startX, int startY, int currentX, int currentY, int button) OVERRIDE;
+	void draw(uiNode_t* node) override;
+	void onMouseUp(uiNode_t* node, int x, int y, int button) override;
+	void onCapturedMouseMove(uiNode_t* node, int x, int y) override;
+	void onCapturedMouseLost(uiNode_t* node) override;
+	void onLoading(uiNode_t* node) override;
+	bool onScroll(uiNode_t* node, int deltaX, int deltaY) override;
+	void onLeftClick(uiNode_t* node, int x, int y) override;
+	bool onStartDragging(uiNode_t* node, int startX, int startY, int currentX, int currentY, int button) override;
 	void zoom(uiNode_t *node, bool out);
 	void startMouseShifting(uiNode_t *node, int x, int y);
 };

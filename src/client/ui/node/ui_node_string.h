@@ -26,9 +26,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define CLIENT_UI_UI_NODE_STRING_H
 
 class uiStringNode : public uiLocatedNode {
-	void draw(uiNode_t* node) OVERRIDE;
-	void drawTooltip(const uiNode_t* node, int x, int y) const OVERRIDE;
-	void onLoading(uiNode_t* node) OVERRIDE;
+	void draw(uiNode_t* node) override;
+	void drawTooltip(const uiNode_t* node, int x, int y) const override;
+	void onLoading(uiNode_t* node) override;
 };
 
 void UI_RegisterStringNode(uiBehaviour_t *behaviour);

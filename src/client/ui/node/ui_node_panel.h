@@ -28,17 +28,17 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_node_abstractscrollable.h"
 
 class uiPanelNode : public uiAbstractScrollableNode {
-	void draw(uiNode_t* node) OVERRIDE;
-	void onLoaded(uiNode_t* node) OVERRIDE;
-	void onLoading(uiNode_t* node) OVERRIDE;
-	void doLayout(uiNode_t* node) OVERRIDE;
-	void getClientPosition(uiNode_t const* node, vec2_t position) OVERRIDE;
-	void onPropertyChanged(uiNode_t* node, const value_t *property) OVERRIDE;
-	bool onScroll(uiNode_t* node, int deltaX, int deltaY) OVERRIDE;
-	void onMouseUp(uiNode_t* node, int x, int y, int button) OVERRIDE;
-	bool onMouseLongPress(uiNode_t* node, int x, int y, int button) OVERRIDE;
-	bool onStartDragging(uiNode_t* node, int startX, int startY, int currentX, int currentY, int button) OVERRIDE;
-	void onCapturedMouseMove(uiNode_t* node, int x, int y) OVERRIDE;
+	void draw(uiNode_t* node) override;
+	void onLoaded(uiNode_t* node) override;
+	void onLoading(uiNode_t* node) override;
+	void doLayout(uiNode_t* node) override;
+	void getClientPosition(uiNode_t const* node, vec2_t position) override;
+	void onPropertyChanged(uiNode_t* node, const value_t *property) override;
+	bool onScroll(uiNode_t* node, int deltaX, int deltaY) override;
+	void onMouseUp(uiNode_t* node, int x, int y, int button) override;
+	bool onMouseLongPress(uiNode_t* node, int x, int y, int button) override;
+	bool onStartDragging(uiNode_t* node, int startX, int startY, int currentX, int currentY, int button) override;
+	void onCapturedMouseMove(uiNode_t* node, int x, int y) override;
 };
 
 struct uiBehaviour_t;

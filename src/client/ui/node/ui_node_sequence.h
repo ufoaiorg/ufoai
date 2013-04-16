@@ -29,11 +29,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../cinematic/cl_sequence.h"
 
 class uiSequenceNode : public uiLocatedNode {
-	void draw(uiNode_t* node) OVERRIDE;
-	void onLeftClick(uiNode_t* node, int x, int y) OVERRIDE;
-	void onWindowOpened(uiNode_t* node, linkedList_t *params) OVERRIDE;
-	void onWindowClosed(uiNode_t* node) OVERRIDE;
-	void onPropertyChanged(uiNode_t* node, const value_t *property) OVERRIDE;
+	void draw(uiNode_t* node) override;
+	void onLeftClick(uiNode_t* node, int x, int y) override;
+	void onWindowOpened(uiNode_t* node, linkedList_t *params) override;
+	void onWindowClosed(uiNode_t* node) override;
+	void onPropertyChanged(uiNode_t* node, const value_t *property) override;
 };
 
 void UI_RegisterSequenceNode(uiBehaviour_t *behaviour);
