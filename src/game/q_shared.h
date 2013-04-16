@@ -77,7 +77,7 @@ ELEMENTS COMMUNICATED ACROSS THE NET
  * @sa cl_parse.c for event bindings
  */
 typedef enum {
-	EV_nullptr,
+	EV_NULL,
 	EV_RESET,
 	EV_START,
 	EV_ENDROUND,	/**< ends the current team's turn CL_DoEndRound */

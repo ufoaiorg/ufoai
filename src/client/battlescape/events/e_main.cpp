@@ -86,7 +86,7 @@ static bool CL_CheckDefault (const eventRegister_t *self, const dbuffer *msg)
  */
 const eventRegister_t events[] = {
 #define E(x) x, STRINGIFY(x)
-	{E(EV_nullptr), "", nullptr, nullptr, nullptr},
+	{E(EV_NULL), "", nullptr, nullptr, nullptr},
 	{E(EV_RESET), "bb", CL_Reset, nullptr, nullptr},
 	{E(EV_START), "b", CL_StartGame, nullptr, nullptr},
 	{E(EV_ENDROUND), "b", CL_DoEndRound, nullptr, nullptr},
@@ -145,7 +145,7 @@ CASSERT(lengthof(events) == EV_NUM_EVENTS);
 
 const eventRegister_t *CL_GetEvent (const event_t eType)
 {
-	for (int i = EV_nullptr; i < EV_NUM_EVENTS; i++) {
+	for (int i = EV_NULL; i < EV_NUM_EVENTS; i++) {
 		if (events[i].type == eType)
 			return &events[i];
 	}

@@ -65,7 +65,7 @@ int CL_ActorDoMoveTime (const eventRegister_t *self, dbuffer *msg, eventTiming_t
 	NET_ReadByte(msg);
 	NET_ReadByte(msg);
 
-	assert(NET_PeekByte(msg) == EV_nullptr);
+	assert(NET_PeekByte(msg) == EV_NULL);
 
 	eventTiming->nextTime += time + 400;
 

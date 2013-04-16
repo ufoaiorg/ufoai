@@ -329,7 +329,7 @@ static void SV_EndEvents (void)
 	if (!p->pending)
 		return;
 
-	NET_WriteByte(p->buf, EV_nullptr);
+	NET_WriteByte(p->buf, EV_NULL);
 	SV_Multicast(p->playerMask, *p->buf);
 	p->pending = false;
 	delete p->buf;
@@ -342,7 +342,7 @@ typedef struct {
 
 #define M(x) { #x }
 static const eventNames_t eventNames[] = {
-	M(EV_nullptr),
+	M(EV_NULL),
 	M(EV_RESET),
 	M(EV_START),
 	M(EV_ENDROUND),

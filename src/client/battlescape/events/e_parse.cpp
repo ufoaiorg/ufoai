@@ -212,8 +212,8 @@ event_t CL_ParseEvent (dbuffer *msg)
 {
 	static eventTiming_t eventTiming;
 	int eType = NET_ReadByte(msg);
-	if (eType == EV_nullptr)
-		return EV_nullptr;
+	if (eType == EV_NULL)
+		return EV_NULL;
 
 	bool now;
 	/* check instantly flag */
