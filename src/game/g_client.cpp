@@ -381,16 +381,11 @@ static bool G_ActionCheck (const Player *player, Edict *ent)
  * @param[in] TU The time units to check against the ones ent has.
  * the action with
  */
-bool G_ActionCheckForCurrentTeam (const Player *player, Edict *ent, int TU)
+bool G_ActionCheckForCurrentTeam (const Player &player, Edict *ent, int TU)
 {
-	/* don't check for a player - but maybe a server action */
-	assert(player);	/* let's see if this ever happens...(Duke) */
-	if (!player)
-		return true;
-
 	/* a generic tester if an action could be possible */
-	if (level.activeTeam != player->getTeam()) {
-		G_ClientPrintf(*player, PRINT_HUD, _("Can't perform action - it is not your turn!"));
+	if (level.activeTeam != player.getTeam()) {
+		G_ClientPrintf(player, PRINT_HUD, _("Can't perform action - it is not your turn!"));
 		return false;
 	}
 
@@ -398,7 +393,7 @@ bool G_ActionCheckForCurrentTeam (const Player *player, Edict *ent, int TU)
 		return false;
 	}
 
-	return G_ActionCheck(player, ent);
+	return G_ActionCheck(&player, ent);
 }
 
 /**
@@ -426,7 +421,7 @@ static void G_ClientTurn (Player &player, Edict *ent, dvec_t dvec)
 	const int dir = getDVdir(dvec);
 
 	/* check if action is possible */
-	if (!G_ActionCheckForCurrentTeam(&player, ent, TU_TURN))
+	if (!G_ActionCheckForCurrentTeam(player, ent, TU_TURN))
 		return;
 
 	/* check if we're already facing that direction */
@@ -483,7 +478,7 @@ static void G_ClientStateChangeUpdate (Edict &ent)
 void G_ClientStateChange (const Player &player, Edict *ent, int reqState, bool checkaction)
 {
 	/* Check if any action is possible. */
-	if (checkaction && !G_ActionCheckForCurrentTeam(&player, ent, 0))
+	if (checkaction && !G_ActionCheckForCurrentTeam(player, ent, 0))
 		return;
 
 	if (!reqState)
@@ -492,7 +487,7 @@ void G_ClientStateChange (const Player &player, Edict *ent, int reqState, bool c
 	switch (reqState) {
 	case STATE_CROUCHED: /* Toggle between crouch/stand. */
 		/* Check if player has enough TUs (TU_CROUCH TUs for crouch/uncrouch). */
-		if (!checkaction || G_ActionCheckForCurrentTeam(&player, ent, TU_CROUCH)) {
+		if (!checkaction || G_ActionCheckForCurrentTeam(player, ent, TU_CROUCH)) {
 			if (G_IsCrouched(ent)) {
 				if (!gi.CanActorStandHere(ent->fieldSize, ent->pos))
 					break;
@@ -618,7 +613,7 @@ void G_ClientGetWeaponFromInventory (Edict *ent)
 bool G_ClientUseEdict (const Player &player, Edict *actor, Edict *edict)
 {
 	/* check whether the actor has sufficient TUs to 'use' this edicts */
-	if (!G_ActionCheckForCurrentTeam(&player, actor, edict->TU))
+	if (!G_ActionCheckForCurrentTeam(player, actor, edict->TU))
 		return false;
 
 	if (!G_UseEdict(edict, actor))

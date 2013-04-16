@@ -567,7 +567,7 @@ bool G_ActorInvMove (Edict *actor, const invDef_t *from, invList_t *fItem, const
 
 	/* Check if action is possible */
 	/* TUs are 1 here - but this is only a dummy - the real TU check is done in the inventory functions below */
-	if (checkaction && !G_ActionCheckForCurrentTeam(&player, actor, 1))
+	if (checkaction && !G_ActionCheckForCurrentTeam(player, actor, 1))
 		return false;
 
 	if (!actor->chr.inv.canHoldItemWeight(from->id, toContType->id, *fItem, actor->chr.score.skills[ABILITY_POWER])) {
