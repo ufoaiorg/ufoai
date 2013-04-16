@@ -161,20 +161,24 @@ static void SV_Map_f (void)
 	}
 
 	/* we copy them to buffers because the command pointers might be invalid soon */
-	char bufMap[MAX_QPATH];
-	char bufAssembly[MAX_QPATH] = "";
+	/* the buffers must be as big as the CS_TILES/CS_POSITONS config strings, because the base assembly
+	 * gives the full resolved rma assembly string */
+	char bufMap[MAX_TOKEN_CHARS * MAX_TILESTRINGS];
+	const char *assembly = nullptr;
+	char bufAssembly[MAX_TOKEN_CHARS * MAX_TILESTRINGS] = "";
 	Q_strncpyz(bufMap, Cmd_Argv(2), sizeof(bufMap));
 	/* assembled maps uses position strings */
 	if (Cmd_Argc() == 4) {
 		Q_strncpyz(bufAssembly, Cmd_Argv(3), sizeof(bufAssembly));
+		assembly = bufAssembly;
 	}
 
 	/* check to make sure the level exists */
-	if (!SV_CheckMap(bufMap, bufAssembly))
+	if (!SV_CheckMap(bufMap, assembly))
 		return;
 
 	/* start up the next map */
-	SV_Map(day, bufMap, bufAssembly);
+	SV_Map(day, bufMap, assembly);
 }
 
 /**
