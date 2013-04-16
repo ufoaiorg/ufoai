@@ -1,5 +1,4 @@
-#ifndef ZIPARCHIVE_H_
-#define ZIPARCHIVE_H_
+#pragma once
 
 #include "iarchive.h"
 #include "GenericFileSystem.h"
@@ -48,5 +47,3 @@ class ZipArchive: public Archive
 		bool read_record ();
 		bool read_pkzip ();
 };
-
-#endif /*ZIPARCHIVE_H_*/

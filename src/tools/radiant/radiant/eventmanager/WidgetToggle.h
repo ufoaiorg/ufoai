@@ -1,5 +1,4 @@
-#ifndef WIDGETTOGGLE_H_
-#define WIDGETTOGGLE_H_
+#pragma once
 
 #include "ieventmanager.h"
 #include "Toggle.h"
@@ -48,5 +47,3 @@ private:
 	void hideWidgets();
 
 }; // class WidgetToggle
-
-#endif /*WIDGETTOGGLE_H_*/

@@ -1,5 +1,4 @@
-#ifndef DEFLATEDARCHIVETEXTFILE_H_
-#define DEFLATEDARCHIVETEXTFILE_H_
+#pragma once
 
 #include "iarchive.h"
 #include "archivelib.h"
@@ -42,5 +41,3 @@ class DeflatedArchiveTextFile: public ArchiveTextFile
 			return m_textStream;
 		}
 };
-
-#endif /* DEFLATEDARCHIVETEXTFILE_H_ */

@@ -1,5 +1,4 @@
-#ifndef DEFLATEDARCHIVEFILE_H_
-#define DEFLATEDARCHIVEFILE_H_
+#pragma once
 
 #include "iarchive.h"
 #include "stream/filestream.h"
@@ -36,5 +35,3 @@ class DeflatedArchiveFile: public ArchiveFile
 			return m_zipstream;
 		}
 };
-
-#endif /* DEFLATEDARCHIVEFILE_H_ */

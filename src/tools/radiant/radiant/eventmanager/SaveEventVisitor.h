@@ -1,5 +1,4 @@
-#ifndef SAVEEVENTVISITOR_H_
-#define SAVEEVENTVISITOR_H_
+#pragma once
 
 #include "ieventmanager.h"
 
@@ -68,5 +67,3 @@ public:
 	}
 
 }; // class SaveEvent
-
-#endif /*SAVEEVENTVISITOR_H_*/

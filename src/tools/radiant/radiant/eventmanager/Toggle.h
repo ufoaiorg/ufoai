@@ -1,5 +1,4 @@
-#ifndef TOGGLE_H_
-#define TOGGLE_H_
+#pragma once
 
 #include "ieventmanager.h"
 #include "generic/callback.h"
@@ -67,5 +66,3 @@ public:
 	static gboolean onCheckMenuItemClicked(GtkMenuItem* menuitem, gpointer data);
 
 }; // class Toggle
-
-#endif /*TOGGLE_H_*/

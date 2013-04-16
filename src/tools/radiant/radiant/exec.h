@@ -19,8 +19,7 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef _EXEC_H_
-#define _EXEC_H_
+#pragma once
 
 #include <string>
 #include <gtk/gtk.h>
@@ -72,5 +71,3 @@ ExecState exec_cmd_get_state (ExecCmd *e);
 ExecState exec_cmd_set_state (ExecCmd *e, ExecState state);
 gint exec_count_operations (const Exec *e);
 GList* exec_get_cmd_list (void);
-
-#endif	/*_EXEC_H_*/
