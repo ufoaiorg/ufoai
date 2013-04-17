@@ -23,7 +23,7 @@
 // In the following, we describe the selection of weapons for aliens, but the same
 // procedure is used for initial equipment of phalanx soldiers.
 //
-// Alien weapon assignment procedure, more or less (see inv_shared.c):
+// Alien weapon assignment procedure, more or less (see inventory.cpp, ::EquipActor):
 // For each alien, pick the following:
 // 1. Get a primary weapon:
 // 1a. Get a primary weapon:
