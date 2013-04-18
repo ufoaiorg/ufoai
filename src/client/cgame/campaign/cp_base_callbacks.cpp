@@ -822,12 +822,70 @@ static void B_CheckBuildingStatusForMenu_f (void)
  */
 static void BaseSummary_Init (const base_t *base)
 {
-	static char textStatsBuffer[1024];
-	static char textInfoBuffer[256];
-	int i;
+	/* Init base switcher */
+	cgi->UI_ExecuteConfunc("bsum_clear_bases");
+	base_t *otherBase = NULL;
+	while ((otherBase = B_GetNext(otherBase))) {
+		cgi->UI_ExecuteConfunc("bsum_add_base %d %d", otherBase->idx, (otherBase == base ? 1 : 0));
+	}
 
-	/* wipe away old buffers */
-	textStatsBuffer[0] = textInfoBuffer[0] = 0;
+	int i;
+	/* Main */
+	cgi->UI_ExecuteConfunc("bsum_main_clearlines");
+	int line = 0;
+
+	cgi->UI_ExecuteConfunc("bsum_main_addline %d \"%s\" \"%s\" \"%s\" %d", line++, _("Buildings"), _("Capacity"), _("Amount"), 1);
+	bool anyBuilding = false;
+	for (i = 0; i < ccs.numBuildingTemplates; i++) {
+		const building_t* b = &ccs.buildingTemplates[i];
+
+		/* only show already researched buildings */
+		if (!RS_IsResearched_ptr(b->tech))
+			continue;
+		const baseCapacities_t cap = B_GetCapacityFromBuildingType(b->buildingType);
+		if (cap == MAX_CAP)
+			continue;
+		if (!B_GetNumberOfBuildingsInBaseByBuildingType(base, b->buildingType))
+			continue;
+
+		cgi->UI_ExecuteConfunc("bsum_main_addline %d \"%s\" \"%i/%i\" \"%d\" %d", line++, _(b->name),
+			CAP_GetCurrent(base, cap), CAP_GetMax(base, cap),
+			B_GetNumberOfBuildingsInBaseByBuildingType(base, b->buildingType), 0);
+		anyBuilding = true;
+	}
+	if (!anyBuilding)
+		cgi->UI_ExecuteConfunc("bsum_main_addline %d \"%s\" \"\" \"\" %d", line++, _("No report"), 0);
+	cgi->UI_ExecuteConfunc("bsum_main_addline %d \"\" \"\" \"\" 0", line++);
+
+	cgi->UI_ExecuteConfunc("bsum_main_addline %d \"%s\" \"%s\" \"%s\" %d", line++, _("Production"), _("Quantity"), _("Percent"), 1);
+	const production_queue_t *queue = PR_GetProductionForBase(base);
+	if (queue->numItems > 0) {
+		for (i = 0; i < queue->numItems; i++) {
+			const production_t *production = &queue->items[i];
+			const char *name = PR_GetName(&production->data);
+			cgi->UI_ExecuteConfunc("bsum_main_addline %d \"%s\" \"%d\" \"%.2f%%\" %d", line++, name,
+				production->amount, PR_GetProgress(production) * 100, 0);
+		}
+	} else {
+		cgi->UI_ExecuteConfunc("bsum_main_addline %d \"%s\" \"\" \"\" %d", line++, _("Nothing"), 0);
+	}
+	cgi->UI_ExecuteConfunc("bsum_main_addline %d \"\" \"\" \"\" 0", line++);
+
+	cgi->UI_ExecuteConfunc("bsum_main_addline %d \"%s\" \"%s\" \"%s\" %d", line++, _("Research"), _("Scientists"), _("Percent"), 1);
+	bool anyResearch = false;
+	for (i = 0; i < ccs.numTechnologies; i++) {
+		const technology_t *tech = RS_GetTechByIDX(i);
+		if (tech->base == base && (tech->statusResearch == RS_RUNNING || tech->statusResearch == RS_PAUSED)) {
+			cgi->UI_ExecuteConfunc("bsum_main_addline %d \"%s\" \"%d\" \"%.2f%%\" %d", line++, _(tech->name),
+				tech->scientists, (1.0f - tech->time / tech->overallTime) * 100, 0);
+			anyResearch = true;
+		}
+	}
+	if (!anyResearch)
+		cgi->UI_ExecuteConfunc("bsum_main_addline %d \"%s\" \"\" \"\" %d", line++, _("Nothing"), 0);
+
+	static char textInfoBuffer[1024];
+	textInfoBuffer[0] = 0;
 
 	Q_strcat(textInfoBuffer, _("^BAircraft\n"), sizeof(textInfoBuffer));
 	for (i = 0; i <= MAX_HUMAN_AIRCRAFT_TYPE; i++) {
@@ -835,11 +893,9 @@ static void BaseSummary_Init (const base_t *base)
 		const int count = AIR_CountTypeInBase(base, airType);
 		if (count == 0)
 			continue;
-
 		Q_strcat(textInfoBuffer, va("\t%s:\t\t\t\t%i\n", AIR_GetAircraftString(airType),
 			count), sizeof(textInfoBuffer));
 	}
-
 	Q_strcat(textInfoBuffer, "\n", sizeof(textInfoBuffer));
 
 	Q_strcat(textInfoBuffer, _("^BEmployees\n"), sizeof(textInfoBuffer));
@@ -848,11 +904,9 @@ static void BaseSummary_Init (const base_t *base)
 		const int cnt = E_CountHired(base, emplType);
 		if (cnt == 0)
 			continue;
-
 		const char *desc = E_GetEmployeeString(emplType, cnt);
 		Q_strcat(textInfoBuffer, va("\t%s:\t\t\t\t%i\n", desc, cnt), sizeof(textInfoBuffer));
 	}
-
 	Q_strcat(textInfoBuffer, "\n", sizeof(textInfoBuffer));
 
 	Q_strcat(textInfoBuffer, _("^BAliens\n"), sizeof(textInfoBuffer));
@@ -864,75 +918,7 @@ static void BaseSummary_Init (const base_t *base)
 		}
 		cgi->LIST_Delete(&list);
 	}
-
-	/* link into the menu */
 	cgi->UI_RegisterText(TEXT_STANDARD, textInfoBuffer);
-
-	Q_strcat(textStatsBuffer, _("^BBuildings\t\t\t\t\t\tCapacity\t\t\t\tAmount\n"), sizeof(textStatsBuffer));
-	for (i = 0; i < ccs.numBuildingTemplates; i++) {
-		const building_t* b = &ccs.buildingTemplates[i];
-
-		/* only show already researched buildings */
-		if (!RS_IsResearched_ptr(b->tech))
-			continue;
-
-		const baseCapacities_t cap = B_GetCapacityFromBuildingType(b->buildingType);
-		if (cap == MAX_CAP)
-			continue;
-
-		if (!B_GetNumberOfBuildingsInBaseByBuildingType(base, b->buildingType))
-			continue;
-
-		/* Check if building is functional (see comments in B_UpdateBaseCapacities) */
-		if (B_GetBuildingStatus(base, b->buildingType)) {
-			Q_strcat(textStatsBuffer, va("%s:\t\t\t\t\t\t%i/%i", _(b->name),
-				CAP_GetCurrent(base, cap), CAP_GetMax(base, cap)), sizeof(textStatsBuffer));
-		} else {
-			if (b->buildingStatus == B_STATUS_UNDER_CONSTRUCTION) {
-				const float remaining = B_GetConstructionTimeRemain(b);
-				const float timeLeft = std::max(0.0f, remaining);
-				Q_strcat(textStatsBuffer, va("%s:\t\t\t\t\t\t%3.1f %s", _(b->name), timeLeft, ngettext("day", "days", timeLeft)), sizeof(textStatsBuffer));
-			} else {
-				Q_strcat(textStatsBuffer, va("%s:\t\t\t\t\t\t%i/%i", _(b->name), CAP_GetCurrent(base, cap), 0), sizeof(textStatsBuffer));
-			}
-		}
-		Q_strcat(textStatsBuffer, va("\t\t\t\t%i\n", B_GetNumberOfBuildingsInBaseByBuildingType(base, b->buildingType)), sizeof(textStatsBuffer));
-	}
-
-	Q_strcat(textStatsBuffer, "\n", sizeof(textStatsBuffer));
-
-	Q_strcat(textStatsBuffer, _("^BProduction\t\t\t\t\t\tQuantity\t\t\t\tPercent\n"), sizeof(textStatsBuffer));
-
-	const production_queue_t *queue = PR_GetProductionForBase(base);
-	if (queue->numItems > 0) {
-		for (i = 0; i < queue->numItems; i++) {
-			const production_t *production = &queue->items[i];
-			const char *name = PR_GetName(&production->data);
-			/** @todo use the same method as we do in PR_ProductionInfo */
-			Q_strcat(textStatsBuffer, va(_("%s\t\t\t\t\t\t%d\t\t\t\t%.2f%%\n"), name,
-				production->amount, PR_GetProgress(production) * 100), sizeof(textStatsBuffer));
-		}
-	} else {
-		Q_strcat(textStatsBuffer, _("Nothing\n"), sizeof(textStatsBuffer));
-	}
-
-	Q_strcat(textStatsBuffer, "\n", sizeof(textStatsBuffer));
-
-	Q_strcat(textStatsBuffer, _("^BResearch\t\t\t\t\t\tScientists\t\t\t\tPercent\n"), sizeof(textStatsBuffer));
-	int tmp = 0;
-	for (i = 0; i < ccs.numTechnologies; i++) {
-		const technology_t *tech = RS_GetTechByIDX(i);
-		if (tech->base == base && (tech->statusResearch == RS_RUNNING || tech->statusResearch == RS_PAUSED)) {
-			Q_strcat(textStatsBuffer, va(_("%s\t\t\t\t\t\t%d\t\t\t\t%1.2f%%\n"), _(tech->name),
-				tech->scientists, (1 - tech->time / tech->overallTime) * 100), sizeof(textStatsBuffer));
-			tmp++;
-		}
-	}
-	if (!tmp)
-		Q_strcat(textStatsBuffer, _("Nothing\n"), sizeof(textStatsBuffer));
-
-	/* link into the menu */
-	cgi->UI_RegisterText(TEXT_STATS_BASESUMMARY, textStatsBuffer);
 }
 
 /**
@@ -955,7 +941,6 @@ static void BaseSummary_SelectBase_f (void)
 
 	if (base != nullptr) {
 		BaseSummary_Init(base);
-		cgi->UI_ExecuteConfunc("basesummary_change_color %i", base->idx);
 	}
 }
 

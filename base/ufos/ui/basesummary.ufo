@@ -2,43 +2,42 @@
 // BASE STATISTICS MENU
 // ======================
 
-component cmpBase extends baselayout
+component cmpBaseSwitcher extends baselayout
 {
 	size		"67 72"
 	color		"1 0 0 0.4"
+	bgcolor		"1 1 1 0.4"
 	padding		2
-	onClick 		{
+	onClick {
 		cmd "basesummary_selectbase <baseid>;"
 		cmd "mn_base_select <baseid>;"
 	}
 }
 
+component cmpBSumLine extends panel {
+	{
+		size	"485 20"
+	}
+	string main {
+		pos		"0 0"
+		size	"245 20"
+	}
+	string sub1 {
+		pos		"245 0"
+		size	"120 20"
+		contentalign ALIGN_CR
+	}
+	string sub2 {
+		pos		"365 0"
+		size	"120 20"
+		contentalign ALIGN_CR
+	}
+}
+
 window basesummary
 {
-	/** @todo Remove me */
-	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
-
-	// ==================
-	// background
-	// ==================
-
-	image background
 	{
-		src	"background/base_bg"
-	}
-
-	func reset_color {
-		*cvar:i = 0
-		while ( *cvar:i < 8 ) {
-			*node:root.basenavigation.base<cvar:i>@bgcolor = "1 1 1 0.4"
-			*cvar:i = ( *cvar:i + 1 )
-		}
-	delete *cvar:i
-	}
-
-	confunc basesummary_change_color {
-		call *node:root.reset_color
-		*node:root.basenavigation.base<1>@bgcolor = "1 1 1 0.7"
+		background		"background/base_bg"
 	}
 
 	panel basenavigation {
@@ -46,67 +45,33 @@ window basesummary
 			pos		"621 115"
 			size	"338 211"
 			background	"ui/panel_grey"
-			onWheelUp	{ cmd "mn_base_next;" }
-			onWheelDown	{ cmd "mn_base_prev;" }
 		}
-
 		panel inner_border {
-			{
-				pos		"19 20"
-				size	"298 170"
-				background	"ui/panel_grey_black"
+			pos		"19 20"
+			size	"298 170"
+			background	"ui/panel_grey_black"
+			layout		LAYOUT_COLUMN
+			layoutColumns	4
+			layoutMargin	4
+			padding		9
+		}
+		/**
+		 * @brief Clear base switcher
+		 */
+		confunc bsum_clear_bases {
+			call *node:parent.inner_border@removeAllChild
+		}
+		/**
+		 * @brief Add a base to the base switcher
+		 * @param <1> base index
+		 * @param <2> 1 if this is the actual base 0 otherwise
+		 */
+		confunc bsum_add_base {
+			call *node:parent.inner_border@createchild("base_<1>", "cmpBaseSwitcher")
+			*node:parent.inner_border.base_<1>@baseid = <1>
+			if ( <2> ) {
+				*node:parent.inner_border.base_<1>@bgcolor = "1 1 1 0.7"
 			}
-		}
-
-		// ==================
-		// base layouts
-		// ==================
-		cmpBase base0
-		{
-			pos			"29 30"
-			baseid		0
-		}
-
-		cmpBase base1
-		{
-			pos			"99 30"
-			baseid		1
-		}
-
-		cmpBase base2
-		{
-			pos			"169 30"
-			baseid		2
-		}
-
-		cmpBase base3
-		{
-			pos			"239 30"
-			baseid		3
-		}
-
-		cmpBase base4
-		{
-			pos			"29 105"
-			baseid		4
-		}
-
-		cmpBase base5
-		{
-			pos			"99 105"
-			baseid		5
-		}
-
-		cmpBase base6
-		{
-			pos			"169 105"
-			baseid		6
-		}
-
-		cmpBase base7
-		{
-			pos			"239 105"
-			baseid		7
 		}
 	}
 
@@ -114,38 +79,58 @@ window basesummary
 	// left side text node
 	// ===================
 
-	panel base_summary_bg {
-		pos	"12 103"
-		size	"551 655"
-		background	"ui/panel_grey_green_large"
-	}
-
-	text txt_base_summary
-	{
-		dataid		TEXT_STATS_BASESUMMARY
-		pos			"35 124"
-		size		"485 608"
-		lineheight	16
-		tabwidth	42
-		font		"f_small"
-		rows		"38"
-		longlines	LONGLINES_PRETTYCHOP
-		onViewChange	{
-			*node:root.base_summary_scroll@fullsize = <fullsize>
-			*node:root.base_summary_scroll@current = <viewpos>
-			*node:root.base_summary_scroll@viewsize = <viewsize>
+	panel bsum_main {
+		{
+			pos			"12 103"
+			size		"551 655"
+			background	"ui/panel_grey_green_large"
 		}
-	}
+		panel bsum_mainarea {
+			pos			"23 21"
+			size		"485 608"
+			layout		LAYOUT_TOP_DOWN_FLOW
+			onViewChange	{
+				*node:parent.bsum_mainarea_scroll@fullsize = <fullsize>
+				*node:parent.bsum_mainarea_scroll@current = <viewpos>
+				*node:parent.bsum_mainarea_scroll@viewsize = <viewsize>
+			}
+		}
+		vscrollbar bsum_mainarea_scroll {
+			image		"ui/scrollbar_v_green"
+			pos			"513 21"
+			height		"613"
+			current		0
+			viewsize	30
+			fullsize	30
+			hidewhenunused true
+			onChange	{ *node:parent.bsum_mainarea@viewpos = <current> }
+		}
 
-	vscrollbar base_summary_scroll {
-		image		"ui/scrollbar_v_green"
-		pos			"525 124"
-		height		"608"
-		current		0
-		viewsize	38
-		fullsize	38
-		hidewhenunused true
-		onChange	{ *node:root.txt_base_summary@viewpos = <current> }
+		/**
+		 * @brief clear base summary main panel
+		 */
+		confunc bsum_main_clearlines {
+			call *node:parent.bsum_mainarea@removeAllChild
+		}
+		/**
+		 * @brief add a line to the base summary main panel
+		 * @param <1> index
+		 * @param <2> 1st, main column
+		 * @param <3> 2nd sub column
+		 * @param <4> 3th sub column
+		 * @param <5> 1 if this is a header line 0 otherwise
+		 */
+		confunc bsum_main_addline {
+			call *node:parent.bsum_mainarea@createchild("bsum_main_<1>", "cmpBSumLine")
+			*node:parent.bsum_mainarea.bsum_main_<1>.main@string = <2>
+			*node:parent.bsum_mainarea.bsum_main_<1>.sub1@string = <3>
+			*node:parent.bsum_mainarea.bsum_main_<1>.sub2@string = <4>
+			if ( <5> ) {
+				*node:parent.bsum_mainarea.bsum_main_<1>.main@font = "f_small_bold"
+				*node:parent.bsum_mainarea.bsum_main_<1>.sub1@font = "f_small_bold"
+				*node:parent.bsum_mainarea.bsum_main_<1>.sub2@font = "f_small_bold"
+			}
+		}
 	}
 
 	// ==================
