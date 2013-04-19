@@ -68,9 +68,9 @@ typedef struct aseMaterial_s {
 } aseMaterial_t;
 
 /* Material/SubMaterial management functions */
-static aseMaterial_t* _ase_get_material (aseMaterial_t* list, int mtlIdParent)
+static aseMaterial_t *_ase_get_material (aseMaterial_t *list, int mtlIdParent)
 {
-	aseMaterial_t* mtl = list;
+	aseMaterial_t *mtl = list;
 
 	while (mtl) {
 		if (mtlIdParent == mtl->mtlId) {
@@ -81,10 +81,10 @@ static aseMaterial_t* _ase_get_material (aseMaterial_t* list, int mtlIdParent)
 	return mtl;
 }
 
-static aseSubMaterial_t* _ase_get_submaterial (aseMaterial_t* list, int mtlIdParent, int subMtlId)
+static aseSubMaterial_t *_ase_get_submaterial (aseMaterial_t *list, int mtlIdParent, int subMtlId)
 {
-	aseMaterial_t* parent = _ase_get_material(list, mtlIdParent);
-	aseSubMaterial_t* subMtl = NULL;
+	aseMaterial_t *parent = _ase_get_material(list, mtlIdParent);
+	aseSubMaterial_t *subMtl = NULL;
 
 	if (!parent) {
 		_pico_printf(PICO_ERROR, "No ASE material exists with id %i\n", mtlIdParent);
@@ -101,9 +101,9 @@ static aseSubMaterial_t* _ase_get_submaterial (aseMaterial_t* list, int mtlIdPar
 	return subMtl;
 }
 
-static aseSubMaterial_t* _ase_get_submaterial_or_default (aseMaterial_t* materials, int mtlIdParent, int subMtlId)
+static aseSubMaterial_t *_ase_get_submaterial_or_default (aseMaterial_t *materials, int mtlIdParent, int subMtlId)
 {
-	aseSubMaterial_t* subMtl = _ase_get_submaterial(materials, mtlIdParent, subMtlId);
+	aseSubMaterial_t *subMtl = _ase_get_submaterial(materials, mtlIdParent, subMtlId);
 	if (subMtl != NULL) {
 		return subMtl;
 	}
@@ -118,7 +118,7 @@ static aseSubMaterial_t* _ase_get_submaterial_or_default (aseMaterial_t* materia
 	return NULL;
 }
 
-static aseMaterial_t* _ase_add_material (aseMaterial_t **list, int mtlIdParent)
+static aseMaterial_t *_ase_add_material (aseMaterial_t **list, int mtlIdParent)
 {
 	aseMaterial_t *mtl = _pico_calloc(1, sizeof(aseMaterial_t));
 	mtl->mtlId = mtlIdParent;
@@ -129,7 +129,7 @@ static aseMaterial_t* _ase_add_material (aseMaterial_t **list, int mtlIdParent)
 	return mtl;
 }
 
-static aseSubMaterial_t* _ase_add_submaterial (aseMaterial_t **list, int mtlIdParent, int subMtlId,
+static aseSubMaterial_t *_ase_add_submaterial (aseMaterial_t **list, int mtlIdParent, int subMtlId,
 		picoShader_t *shader)
 {
 	aseMaterial_t *parent = _ase_get_material(*list, mtlIdParent);
@@ -149,11 +149,11 @@ static aseSubMaterial_t* _ase_add_submaterial (aseMaterial_t **list, int mtlIdPa
 
 static void _ase_free_materials (aseMaterial_t **list)
 {
-	aseMaterial_t* mtl = *list;
-	aseSubMaterial_t* subMtl = NULL;
+	aseMaterial_t *mtl = *list;
+	aseSubMaterial_t *subMtl = NULL;
 
-	aseMaterial_t* mtlTemp = NULL;
-	aseSubMaterial_t* subMtlTemp = NULL;
+	aseMaterial_t *mtlTemp = NULL;
+	aseSubMaterial_t *subMtlTemp = NULL;
 
 	while (mtl) {
 		subMtl = mtl->subMtls;
@@ -172,8 +172,8 @@ static void _ase_free_materials (aseMaterial_t **list)
 #ifdef DEBUG_PM_ASE
 static void _ase_print_materials (aseMaterial_t *list)
 {
-	aseMaterial_t* mtl = list;
-	aseSubMaterial_t* subMtl = NULL;
+	aseMaterial_t *mtl = list;
+	aseSubMaterial_t *subMtl = NULL;
 
 	while (mtl) {
 		_pico_printf(PICO_NORMAL, "ASE Material %i", mtl->mtlId);
@@ -256,13 +256,13 @@ typedef aseFace_t* aseFacesIter_t;
  * indexes 3 4 5 = st indexes
  * indexes 6 7 8 = color indexes (new)
  */
-static void _ase_submit_triangles (picoModel_t *model, aseMaterial_t* materials, aseVertex_t* vertices,
-		aseTexCoord_t* texcoords, aseColor_t* colors, aseFace_t* faces, int numFaces)
+static void _ase_submit_triangles (picoModel_t *model, aseMaterial_t *materials, aseVertex_t *vertices,
+		aseTexCoord_t *texcoords, aseColor_t *colors, aseFace_t *faces, int numFaces)
 {
 	aseFacesIter_t i = faces, end = faces + numFaces;
 	for (; i != end; ++i) {
 		/* look up the shader for the material/submaterial pair */
-		aseSubMaterial_t* subMtl = _ase_get_submaterial_or_default(materials, (*i).materialId, (*i).subMaterialId);
+		aseSubMaterial_t *subMtl = _ase_get_submaterial_or_default(materials, (*i).materialId, (*i).subMaterialId);
 		if (subMtl == NULL)
 			return;
 
@@ -315,10 +315,10 @@ static picoModel_t *_ase_load (PM_PARAMS_LOAD)
 	picoParser_t *p;
 	char lastNodeName[1024] = "";
 
-	aseVertex_t* vertices = NULL;
-	aseTexCoord_t* texcoords = NULL;
-	aseColor_t* colors = NULL;
-	aseFace_t* faces = NULL;
+	aseVertex_t *vertices = NULL;
+	aseTexCoord_t *texcoords = NULL;
+	aseColor_t *colors = NULL;
+	aseFace_t *faces = NULL;
 	int numVertices = 0;
 	int numFaces = 0;
 	int numTextureVertices = 0;
@@ -327,7 +327,7 @@ static picoModel_t *_ase_load (PM_PARAMS_LOAD)
 	int numColorVertexFaces = 0;
 	int vertexId = 0;
 
-	aseMaterial_t* materials = NULL;
+	aseMaterial_t *materials = NULL;
 
 #ifdef DEBUG_PM_ASE
 	clock_t start, finish;
