@@ -34,6 +34,8 @@
 #endif
 
 #if __cplusplus < 201103L
+#ifndef nullptr
 /* not typesafe as the real nullptr from c++11 */
 #define nullptr 0
+#endif
 #endif
