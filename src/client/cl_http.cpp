@@ -156,7 +156,7 @@ static void CL_StartHTTPDownload (dlqueue_t *entry, dlhandle_t *dl)
 		/** @todo use the FS_OpenFile function here */
 		Com_sprintf(dl->filePath, sizeof(dl->filePath), "%s/%s", FS_Gamedir(), entry->ufoPath);
 
-		Com_sprintf(tempFile, sizeof(tempFile), BASEDIRNAME"/%s", entry->ufoPath);
+		Com_sprintf(tempFile, sizeof(tempFile), BASEDIRNAME "/%s", entry->ufoPath);
 		CL_EscapeHTTPPath(tempFile, escapedFilePath);
 
 		strcat(dl->filePath, ".tmp");
