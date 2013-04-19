@@ -9,10 +9,10 @@ component cmpAlienContainment extends image {
 	{
 		src		"ui/hosp_button_green"
 		onClick {
-			cmd "ui_aliencont_select <node:this.tech_id@string>;"
+			cmd "ui_aliencont_select <node:this.team_id@string>;"
 		}
 		onRClick {
-			cmd "ui_aliencont_select <node:this.tech_id@string>;"
+			cmd "ui_aliencont_select <node:this.team_id@string>;"
 			cmd "ui_push ufopedia <node:this.tech_id@string>;"
 		}
 		onMouseEnter {
@@ -323,37 +323,32 @@ window aliencont
 	 */
 	confunc ui_aliencont_add {
 		/* if type is in the list adjust values, otherwise add new entry */
-		if ( exists *node:root.ac.species.alien_<3> ) {
-			*node:root.ac.species.alien_<3>.alive@integer = ( *node:root.ac.species.alien_<3>.alive@integer + <7> )
-			*node:root.ac.species.alien_<3>.dead@integer = ( *node:root.ac.species.alien_<3>.dead@integer + <8> )
-		} else {
-			call *node:root.ac.species@createChild("alien_<3>", "cmpAlienContainment")
-			*node:root.ac.species.alien_<3>.team_id@string = "<1>"
-			*node:root.ac.species.alien_<3>.name@string = "<2>"
-			*node:root.ac.species.alien_<3>.tech_id@string = "<3>"
-			*node:root.ac.species.alien_<3>.tech_image@string = "<4>"
-			*node:root.ac.species.alien_<3>.status@string = "<5>"
-			*node:root.ac.species.alien_<3>.tech_progress@current = <6>
-			*node:root.ac.species.alien_<3>.alive@integer = <7>
-			*node:root.ac.species.alien_<3>.dead@integer = <8>
-		}
+		call *node:root.ac.species@createChild("alien_<1>", "cmpAlienContainment")
+		*node:root.ac.species.alien_<1>.team_id@string = "<1>"
+		*node:root.ac.species.alien_<1>.name@string = "<2>"
+		*node:root.ac.species.alien_<1>.tech_id@string = "<3>"
+		*node:root.ac.species.alien_<1>.tech_image@string = "<4>"
+		*node:root.ac.species.alien_<1>.status@string = "<5>"
+		*node:root.ac.species.alien_<1>.tech_progress@current = <6>
+		*node:root.ac.species.alien_<1>.alive@integer = <7>
+		*node:root.ac.species.alien_<1>.dead@integer = <8>
 		/* if there is any alive aliens, enable killing them */
-		if ( *node:root.ac.species.alien_<3>.alive@integer > 0 ) {
+		if ( *node:root.ac.species.alien_<1>.alive@integer > 0 ) {
 			*node:root.bt_alc_killaliens@disabled = false
 
-			*node:root.ac.species.alien_<3>.icon@icon = "icons/alien_kill"
-			*node:root.ac.species.alien_<3>.icon@tooltip = "_Kill this alien"
-			*node:root.ac.species.alien_<3>.kill_zone@invis = false
-			*node:root.ac.species.alien_<3>.autopsy_zone@invis = true
+			*node:root.ac.species.alien_<1>.icon@icon = "icons/alien_kill"
+			*node:root.ac.species.alien_<1>.icon@tooltip = "_Kill this alien"
+			*node:root.ac.species.alien_<1>.kill_zone@invis = false
+			*node:root.ac.species.alien_<1>.autopsy_zone@invis = true
 		} else {
-			*node:root.ac.species.alien_<3>.icon@icon = "icons/alien_surgery"
-			*node:root.ac.species.alien_<3>.icon@tooltip = "_Autopsy"
-			*node:root.ac.species.alien_<3>.kill_zone@invis = true
-			*node:root.ac.species.alien_<3>.autopsy_zone@invis = false
+			*node:root.ac.species.alien_<1>.icon@icon = "icons/alien_surgery"
+			*node:root.ac.species.alien_<1>.icon@tooltip = "_Autopsy"
+			*node:root.ac.species.alien_<1>.kill_zone@invis = true
+			*node:root.ac.species.alien_<1>.autopsy_zone@invis = false
 		}
 		/* if none selected, select this */
-		if ( ( *node:root.selected@string eq "" ) || ( *node:root.selected@string eq "<3>" ) ) {
-			call *node:root.ui_aliencont_select ( <3> )
+		if ( ( *node:root.selected@string eq "" ) || ( *node:root.selected@string eq "<1>" ) ) {
+			call *node:root.ui_aliencont_select ( <1> )
 		}
 	}
 
