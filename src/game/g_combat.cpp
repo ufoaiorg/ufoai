@@ -1063,7 +1063,7 @@ static bool G_PrepareShot (Edict *ent, shoot_types_t shootType, fireDefIndex_t f
 		gi.Error("G_GetShotFromType: unknown shoot type %i.\n", shootType);
 
 	if (IS_SHOT_HEADGEAR(shootType)) {
-		item = ent->chr.inv.getHeadgearContainer();
+		item = ent->chr.inv.getHeadgear();
 		if (!item)
 			return false;
 		*container = CID_HEADGEAR;

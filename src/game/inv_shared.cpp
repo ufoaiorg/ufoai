@@ -902,7 +902,7 @@ invList_t *inventory_t::getLeftHandContainer () const
 	return getContainer2(CID_LEFT);
 }
 
-invList_t *inventory_t::getHeadgearContainer () const
+Item *inventory_t::getHeadgear () const
 {
 	return getContainer2(CID_HEADGEAR);
 }

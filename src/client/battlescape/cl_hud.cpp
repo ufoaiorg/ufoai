@@ -839,7 +839,7 @@ static void HUD_UpdateButtons (const le_t *le)
 		return;
 
 	Item *weaponR = le->getRightHandItem();
-	Item *headgear = le->inv.getHeadgearContainer();
+	Item *headgear = le->inv.getHeadgear();
 
 	Item *weaponL;
 	/* check for two-handed weapon - if not, also define weaponL */
@@ -1125,7 +1125,7 @@ static int HUD_UpdateActorFireMode (le_t *actor)
 
 	/* get weapon */
 	if (IS_MODE_FIRE_HEADGEAR(actor->actorMode)) {
-		selWeapon = actor->inv.getHeadgearContainer();
+		selWeapon = actor->inv.getHeadgear();
 	} else if (IS_MODE_FIRE_LEFT(actor->actorMode)) {
 		selWeapon = HUD_GetLeftHandWeapon(actor, nullptr);
 	} else {

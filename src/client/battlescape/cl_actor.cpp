@@ -1166,7 +1166,7 @@ static void CL_ActorUseHeadgear_f (void)
 	if (!CL_ActorCheckAction(selActor))
 		return;
 
-	Item *headgear = selActor->inv.getHeadgearContainer();
+	Item *headgear = selActor->inv.getHeadgear();
 	if (!headgear)
 		return;
 
