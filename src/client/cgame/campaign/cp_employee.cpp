@@ -1069,17 +1069,14 @@ void E_RemoveInventoryFromStorage (Employee *employee)
 
 	const Container *cont = nullptr;
 	while ((cont = chr->inv.getNextCont(cont))) {
-		const invList_t *invList = cont->_invList;
-
-		while (invList) {
+		Item *item = nullptr;
+		while ((item = cont->getNextItem(item))) {
 			/* Remove ammo */
-			if (invList->ammoDef() && invList->ammoDef() != invList->def())
-				B_UpdateStorageAndCapacity(employee->baseHired, invList->ammoDef(), -1, false);
+			if (item->ammoDef() && item->ammoDef() != item->def())
+				B_UpdateStorageAndCapacity(employee->baseHired, item->ammoDef(), -1, false);
 			/* Remove Item */
-			if (invList->def())
-				B_UpdateStorageAndCapacity(employee->baseHired, invList->def(), -1, false);
-
-			invList = invList->getNext();
+			if (item->def())
+				B_UpdateStorageAndCapacity(employee->baseHired, item->def(), -1, false);
 		}
 	}
 }
