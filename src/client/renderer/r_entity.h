@@ -87,6 +87,11 @@ typedef struct entity_s {
 	lighting_t *lighting;		/**< cached static light source information */
 
 	struct entity_s *next;		/**< for chaining */
+
+	inline entity_s (int flag = 0) {
+		OBJZERO(*this);
+		flags = flag;
+	}
 } entity_t;
 
 /* entity chains for rendering */

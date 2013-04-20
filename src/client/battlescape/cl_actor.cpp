@@ -1545,7 +1545,7 @@ static inline bool CL_AddActorWeapon (int objID)
  */
 bool CL_AddActor (le_t *le, entity_t *ent)
 {
-	entity_t add;
+	entity_t add(RF_NONE);
 
 	if (!cl_showactors->integer)
 		return false;
@@ -1858,14 +1858,10 @@ static const vec3_t halfBoxSize = { BOX_DELTA_WIDTH, BOX_DELTA_LENGTH, BOX_DELTA
  */
 static void CL_AddTargetingBox (pos3_t pos, bool pendBox)
 {
-	entity_t cursor;
-	actorSizeEnum_t actorSize = ACTOR_SIZE_NORMAL;
-
 	if (!cl_showactors->integer)
 		return;
 
-	OBJZERO(cursor);
-	cursor.flags = RF_BOX;
+	entity_t cursor(RF_BOX);
 
 	/* Paint the green box if move is possible ...
 	 * OR paint a dark blue one if move is impossible or the
@@ -1878,6 +1874,7 @@ static void CL_AddTargetingBox (pos3_t pos, bool pendBox)
 
 	/* color */
 	/* if the mouse is over an actor, but not the selected one */
+	actorSizeEnum_t actorSize = ACTOR_SIZE_NORMAL;
 	if (mouseActor && !LE_IsSelected(mouseActor)) {
 		actorSize = mouseActor->fieldSize;
 		cursor.alpha = 0.6 + 0.2 * sin((float) cl.time / 80);
@@ -2072,21 +2069,17 @@ static const vec3_t boxShift = { PLAYER_WIDTH, PLAYER_WIDTH, UNIT_HEIGHT / 2 - D
  */
 static bool CL_AddPathingBox (pos3_t pos, bool addUnreachableCells)
 {
-	entity_t ent;
-	int height; /* The total opening size */
-	int base; /* The floor relative to this cell */
-
 	const int TUneed = CL_ActorMoveLength(selActor, pos);
 	const int TUhave = CL_ActorUsableTUs(selActor);
 	if (!addUnreachableCells && TUhave < TUneed)
 		return false;
 
-	OBJZERO(ent);
-	ent.flags = RF_PATH;
+	entity_t ent(RF_PATH);
 
 	Grid_PosToVec(cl.mapData->routing, ACTOR_GET_FIELDSIZE(selActor), pos, ent.origin);
 	VectorSubtract(ent.origin, boxShift, ent.origin);
 
+	int base; /* The floor relative to this cell */
 	base = Grid_Floor(cl.mapData->routing, ACTOR_GET_FIELDSIZE(selActor), pos);
 
 	/* Paint the box green if it is reachable,
@@ -2102,6 +2095,7 @@ static bool CL_AddPathingBox (pos3_t pos, bool addUnreachableCells)
 	}
 
 	/* Set the box height to the ceiling value of the cell. */
+	int height; /* The total opening size */
 	height = 2 + std::min(TUneed * (UNIT_HEIGHT - 2) / ROUTING_NOT_REACHABLE, 16);
 	ent.oldorigin[2] = height;
 	ent.oldorigin[0] = TUneed;
@@ -2182,12 +2176,10 @@ void CL_ActorPlaySound (const le_t *le, actorSound_t soundType)
  */
 static void CL_AddArrow (vec3_t from, vec3_t to, float red, float green, float blue)
 {
-	entity_t ent;
-
 	/* Com_Printf("Adding arrow (%f, %f, %f) to (%f, %f, %f).\n", from[0], from[1], from[2], to[0], to[1], to[2]); */
 
-	OBJZERO(ent);
-	ent.flags = RF_ARROW;
+	entity_t ent(RF_ARROW);
+
 	VectorCopy(from, ent.origin);
 	VectorCopy(to, ent.oldorigin);
 	VectorSet(ent.color, red, green, blue);

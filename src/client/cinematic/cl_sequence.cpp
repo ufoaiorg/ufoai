@@ -280,7 +280,6 @@ static seq2D_t *SEQ_Find2D (sequenceContext_t *context, const char *name)
  */
 static void SEQ_Render3D (sequenceContext_t *context)
 {
-	entity_t ent;
 	seqEnt_t *se;
 	int i;
 
@@ -304,7 +303,7 @@ static void SEQ_Render3D (sequenceContext_t *context)
 		R_AnimRun(&se->as, se->model, context->animspeed * cls.frametime);
 
 		/* add to scene */
-		OBJZERO(ent);
+		entity_t ent(RF_NONE);
 		ent.model = se->model;
 		ent.skinnum = se->skin;
 		ent.as = se->as;

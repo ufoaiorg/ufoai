@@ -110,7 +110,6 @@ void CL_RecalcRouting (const le_t* le)
 static void LM_AddToSceneOrder (bool parents)
 {
 	localModel_t *lm;
-	entity_t ent;
 	int i;
 
 	for (i = 0, lm = cl.LMs; i < cl.numLMs; i++, lm++) {
@@ -132,7 +131,7 @@ static void LM_AddToSceneOrder (bool parents)
 			continue;
 
 		/* set entity values */
-		OBJZERO(ent);
+		entity_t ent(RF_NONE);
 		assert(lm->model);
 		ent.model = lm->model;
 		ent.skinnum = lm->skin;
@@ -979,10 +978,7 @@ bool LE_BrushModelAction (le_t *le, entity_t *ent)
 			const float ymax = roundf(le->aabb.maxs[1] / UNIT_SIZE) * UNIT_SIZE - 0.1f;
 			for (y = roundf(le->aabb.mins[1] / UNIT_SIZE) * UNIT_SIZE; y < ymax; y += UNIT_SIZE) {
 				const vec3_t pos = {x + UNIT_SIZE / 4.0f, y + UNIT_SIZE / 4.0f, z};
-				entity_t circle;
-
-				OBJZERO(circle);
-				circle.flags = RF_PATH;
+				entity_t circle(RF_PATH);
 				VectorCopy(pos, circle.origin);
 				circle.oldorigin[0] = circle.oldorigin[1] = circle.oldorigin[2] = UNIT_SIZE / 2.0f;
 				VectorCopy(ent->color, circle.color);
@@ -1421,12 +1417,9 @@ static inline bool LE_IsOriginBrush (const le_t *const le)
  */
 static void LE_AddEdictHighlight (const le_t *le)
 {
-	entity_t ent;
 	const cBspModel_t *model = LE_GetClipModel(le);
 
-	OBJZERO(ent);
-
-	ent.flags = RF_BOX;
+	entity_t ent(RF_BOX);
 	VectorSet(ent.color, 1, 1, 1);
 	ent.alpha = (sin(cl.time * 6.28) + 1.0) / 2.0;
 	CalculateMinsMaxs(le->angles, model->mins, model->maxs, le->origin, ent.mins, ent.maxs);
@@ -1441,8 +1434,6 @@ static void LE_AddEdictHighlight (const le_t *le)
 void LE_AddToScene (void)
 {
 	le_t *le;
-	entity_t ent;
-	vec3_t modelOffset;
 	int i;
 
 	for (i = 0, le = cl.LEs; i < cl.numLEs; i++, le++) {
@@ -1459,8 +1450,7 @@ void LE_AddToScene (void)
 			} else if (le->pos[2] > cl_worldlevel->integer)
 				continue;
 
-			OBJZERO(ent);
-
+			entity_t ent(RF_NONE);
 			ent.alpha = le->alpha;
 
 			VectorCopy(le->angles, ent.angles);
@@ -1493,6 +1483,7 @@ void LE_AddToScene (void)
 			switch (le->fieldSize) {
 			case ACTOR_SIZE_NORMAL:
 			case ACTOR_SIZE_2x2:
+				vec3_t modelOffset;
 				ModelOffset(le->fieldSize, modelOffset);
 				R_EntityAddToOrigin(&ent, modelOffset);
 				VectorAdd(ent.oldorigin, modelOffset, ent.oldorigin);

@@ -36,6 +36,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define RDF_IRGOGGLES       2	/**< actor is using ir goggles and everything with RF_IRGOGGLES is visible for him */
 
 /** entity->flags (render flags) */
+#define RF_NONE				0x00000000	/**< for initialization */
 #define RF_TRANSLUCENT      0x00000001
 #define RF_BOX              0x00000002	/**< actor selection box */
 #define RF_PATH             0x01000000	/**< pathing marker, debugging only */

@@ -34,7 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 bool CL_AddUGV (le_t *le, entity_t *ent)
 {
-	entity_t add;
+	entity_t add(RF_NONE);
 
 	if (!LE_IsDead(le)) {
 		/* add weapon */
