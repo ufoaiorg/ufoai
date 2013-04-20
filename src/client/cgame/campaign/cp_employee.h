@@ -40,8 +40,8 @@ typedef enum {
 /** The definition of an employee */
 class Employee {
 private:
-	const employeeType_t _type;			/**< employee type */
-	bool _assigned;				/**< Assigned to a building - currently only used for scientists */
+	const employeeType_t _type;		/**< employee type */
+	bool _assigned;					/**< Assigned to a building - currently only used for scientists */
 	const struct nation_s *_nation;	/**< What nation this employee came from. This is nullptr if the nation is unknown for some (code-related) reason. */
 	const struct ugv_s *_ugv;		/**< if this is an employee of type EMPL_ROBOT then this is a pointer to the matching ugv_t struct. For normal employees this is nullptr. */
 
