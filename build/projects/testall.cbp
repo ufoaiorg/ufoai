@@ -282,6 +282,7 @@
 		<Unit filename="..\..\src\client\renderer\r_corona.cpp" />
 		<Unit filename="..\..\src\client\renderer\r_draw.cpp" />
 		<Unit filename="..\..\src\client\renderer\r_entity.cpp" />
+		<Unit filename="..\..\src\client\renderer\r_entity.h" />
 		<Unit filename="..\..\src\client\renderer\r_flare.cpp" />
 		<Unit filename="..\..\src\client\renderer\r_font.cpp" />
 		<Unit filename="..\..\src\client\renderer\r_framebuffer.cpp" />
