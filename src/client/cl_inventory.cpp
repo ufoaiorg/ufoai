@@ -362,21 +362,21 @@ bool INV_ItemMatchesFilter (const objDef_t *obj, const itemFilterTypes_t filterT
  * @return @c invList_t Pointer to the invList_t/item that is located at x/y or equals "item".
  * @sa inventory_t::getItemAtPos
  */
-invList_t *INV_SearchInInventoryWithFilter (const inventory_t* const inv, const invDef_t *container, const objDef_t *item,  const itemFilterTypes_t filterType)
+invList_t *INV_SearchInInventoryWithFilter (const inventory_t* const inv, const invDef_t *container, const objDef_t *itemType,  const itemFilterTypes_t filterType)
 {
 	invList_t *ic;
 
 	if (inv == nullptr)
 		return nullptr;
 
-	if (item == nullptr)
+	if (itemType == nullptr)
 		return nullptr;
 
 	for (ic = inv->getContainer3(container->id); ic; ic = ic->getNext()) {
 		/* Search only in the items that could get displayed. */
 		if (ic && ic->def() && (filterType == MAX_FILTERTYPES || INV_ItemMatchesFilter(ic->def(), filterType))) {
 			/* We search _everything_, no matter what location it is (i.e. x/y are ignored). */
-			if (item == ic->def())
+			if (itemType == ic->def())
 				return ic;
 		}
 	}
