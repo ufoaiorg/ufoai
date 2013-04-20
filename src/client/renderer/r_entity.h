@@ -31,6 +31,27 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_light.h"
 #include "r_lighting.h"
 
+/** entity->flags (render flags) */
+#define RF_NONE				0x00000000	/**< for initialization */
+#define RF_TRANSLUCENT      0x00000001
+#define RF_BOX              0x00000002	/**< actor selection box */
+#define RF_PATH             0x01000000	/**< pathing marker, debugging only */
+#define RF_ARROW            0x02000000	/**< arrow, debugging only */
+
+/** the following ent flags also draw entity effects */
+#define RF_NO_SHADOW        0x00000004	/**< shadow (when living) for this entity */
+#define RF_BLOOD            0x00000008	/**< blood (when dead) for this entity */
+#define RF_SELECTED         0x00000010	/**< selected actor */
+#define RF_MEMBER           0x00000020	/**< actor in the same team */
+#define RF_ALLIED           0x00000040	/**< actor in an allied team (controlled by another player) */
+#define RF_ACTOR            0x00000080	/**< this is an actor */
+#define RF_PULSE            0x00000100	/**< glowing entity */
+#define RF_IRGOGGLES        0x00000200	/**< this is visible if the actor uses ir goggles */
+#define RF_NEUTRAL			0x00000400	/**< actor from a neutral team */
+#define RF_SHADOW           0x00000800	/**< shadow (when living) for this entity */
+#define RF_OPPONENT         0x00001000	/**< opponent */
+#define RF_IRGOGGLESSHOT	0x00002000	/**< this is the actor that used an irgoggle */
+
 typedef struct animState_s {
 	int frame;
 	int oldframe;
