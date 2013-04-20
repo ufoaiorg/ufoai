@@ -1,5 +1,4 @@
-#ifndef NAMESPACEMODULE_H_
-#define NAMESPACEMODULE_H_
+#pragma once
 
 #include "inamespace.h"
 
@@ -18,5 +17,3 @@ class NamespaceAPI
 
 		INamespace* getTable ();
 };
-
-#endif /* NAMESPACEAPI_H_ */

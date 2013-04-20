@@ -1,5 +1,4 @@
-#ifndef _NAMEOBSERVER_H_
-#define _NAMEOBSERVER_H_
+#pragma once
 
 #include "uniquenames.h"
 #include "generic/callback.h"
@@ -22,5 +21,3 @@ class NameObserver
 
 		const std::string& getName () const;
 };
-
-#endif /* _NAMEOBSERVER_H_ */

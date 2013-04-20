@@ -1,5 +1,4 @@
-#ifndef XMLFILTER_H_
-#define XMLFILTER_H_
+#pragma once
 
 #include <string>
 #include <vector>
@@ -123,5 +122,3 @@ private:
 
 
 }
-
-#endif /*XMLFILTER_H_*/

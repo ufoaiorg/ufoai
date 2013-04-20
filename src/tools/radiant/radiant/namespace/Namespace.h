@@ -1,5 +1,4 @@
-#ifndef BASICNAMESPACE_H_
-#define BASICNAMESPACE_H_
+#pragma once
 
 #include "NameObserver.h"
 #include <map>
@@ -37,5 +36,3 @@ class Namespace: public INamespace
 		 */
 		void mergeClonedNames();
 };
-
-#endif /* BASICNAMESPACE_H_ */

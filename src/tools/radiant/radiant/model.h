@@ -22,10 +22,7 @@
 
  */
 
-#ifndef MODEL_H_
-#define MODEL_H_
+#pragma once
 
 void ModelModules_Init (void);
 void Model_RegisterToggles (void);
-
-#endif /* MODEL_H_ */

@@ -22,8 +22,7 @@
 
  */
 
-#ifndef LEVELFILTER_H_
-#define LEVELFILTER_H_
+#pragma once
 
 #include "ientity.h"
 #include "../brush/Brush.h"
@@ -101,5 +100,3 @@ inline LevelFilter& GlobalLevelFilter ()
 	static LevelFilter _levelFilter;
 	return _levelFilter;
 }
-
-#endif /* LEVELFILTERS_H_ */

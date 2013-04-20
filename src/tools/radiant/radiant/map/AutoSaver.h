@@ -1,5 +1,4 @@
-#ifndef AUTOSAVER_H_
-#define AUTOSAVER_H_
+#pragma once
 
 #include <string>
 #include "iregistry.h"
@@ -70,5 +69,3 @@ private:
 AutoMapSaver& AutoSaver();
 
 } // namespace map
-
-#endif /*AUTOSAVER_H_*/

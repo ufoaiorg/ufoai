@@ -1,5 +1,4 @@
-#ifndef _MAP_FILECHOOSER_PREVIEW_H_
-#define _MAP_FILECHOOSER_PREVIEW_H_
+#pragma once
 
 #include "../ui/common/MapPreview.h"
 #include "gtkutil/filechooser.h"
@@ -46,5 +45,3 @@ namespace map
 	};
 
 } // namespace map
-
-#endif /* _MAP_FILECHOOSER_PREVIEW_H_ */
