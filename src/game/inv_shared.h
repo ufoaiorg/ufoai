@@ -391,90 +391,90 @@ public:
 					 * parsing functions are expecting this to be at least 4 bytes */
 
 
-	inline const objDef_t *ammoDef (void) const
-	{
+	inline const objDef_t *ammoDef (void) const {
 		return _ammoDef;
 	}
-	inline void setAmmoDef (const objDef_t *od)
-	{
+
+	inline void setAmmoDef (const objDef_t *od) {
 		_ammoDef = od;
 	}
-	inline int getAmount () const
-	{
+
+	inline int getAmount () const {
 		return _amount;
 	}
-	inline void setAmount (int value)
-	{
+
+	inline void setAmount (int value) {
 		_amount = value;
 	}
-	inline void addAmount (int value)
-	{
+
+	inline void addAmount (int value) {
 		_amount += value;
 	}
-	inline int getAmmoLeft () const
-	{
+
+	inline int getAmmoLeft () const {
 		return _ammoLeft;
 	}
-	inline void setAmmoLeft (int value)
-	{
+
+	inline void setAmmoLeft (int value) {
 		_ammoLeft = value;
 	}
-	inline Item *getNext () const
-	{
+
+	inline Item *getNext () const {
 		return _next;
 	}
-	inline void setNext (Item *nx)
-	{
+
+	inline void setNext (Item *nx) {
 		_next = nx;
 	}
+
 	Item ();
 	Item (const objDef_t *_itemDef, const objDef_t *ammo=nullptr, int ammoLeft=0);
 
-	inline int getX () const
-	{
+	inline int getX () const {
 		return _x;
 	}
-	inline void setX (const int val)
-	{
+
+	inline void setX (const int val) {
 		_x = val;
 	}
-	inline int getY () const
-	{
+
+	inline int getY () const {
 		return _y;
 	}
-	inline void setY (const int val)
-	{
+
+	inline void setY (const int val) {
 		_y = val;
 	}
-	inline void setDef(const objDef_t *objDef)
-	{
+
+	inline void setDef(const objDef_t *objDef) {
 		_itemDef = objDef;
 	}
-	inline const objDef_t *def (void) const
-	{
+
+	inline const objDef_t *def (void) const {
 		return _itemDef;
 	}
-	inline bool isHeldTwoHanded() const
-	{
+
+	inline bool isHeldTwoHanded() const {
 		return _itemDef->holdTwoHanded;
 	}
-	inline bool isReloadable() const
-	{
+
+	inline bool isReloadable() const {
 		return _itemDef->getReloadTime() > 0;
 	}
-	/** @todo is !mustReload() equivalent to 'usable ?? e.g. grenades are certainly not reloadable, but do they have ammo ??? */
-	inline bool mustReload() const
-	{
+
+	/** @todo is !mustReload() equivalent to 'usable' ?? e.g. grenades are certainly not reloadable, but do they have ammo ??? */
+	inline bool mustReload() const {
 		return isReloadable() && getAmmoLeft() <= 0;
 	}
-	inline bool isWeapon() const
-	{
+
+	inline bool isWeapon() const {
 		return _itemDef->weapon;
 	}
-	inline bool isArmour() const
-	{
+
+	inline bool isArmour() const {
 		return _itemDef->isArmour();
 	}
+
 	bool isSameAs (const Item *const other) const;
 	float getWeight () const;
 	void getFirstShapePosition (int* const x, int* const y) const;
@@ -503,39 +503,39 @@ typedef struct inventory_s {
 	Container containers[MAX_CONTAINERS];
 
 	inventory_s ();
-	inline const Container *getContainer (const containerIndex_t idx) const
-	{
+	inline const Container *getContainer (const containerIndex_t idx) const {
 		return &containers[idx];
 	}
+
 	/** temporary naming while migrating !!
 	 * getContainer2 will return an item, while
 	 * getContainer3 will actually return a container. */
-	inline invList_t *getContainer2 (const containerIndex_t idx) const
-	{
+	inline invList_t *getContainer2 (const containerIndex_t idx) const {
 		return containers[idx]._invList;
 	}
-	inline invList_t *getContainer3 (const containerIndex_t idx) const
-	{
+
+	inline invList_t *getContainer3 (const containerIndex_t idx) const {
 		return containers[idx]._invList;
 	}
-	inline void setContainer (const containerIndex_t idx, invList_t *cont)
-	{
+
+	inline void setContainer (const containerIndex_t idx, invList_t *cont) {
 		containers[idx]._invList = cont;
 	}
-	inline void resetContainer (const containerIndex_t idx)
-	{
+
+	inline void resetContainer (const containerIndex_t idx) {
 		containers[idx]._invList = nullptr;
 	}
+
 	/**
 	 * @brief Searches if there is a specific item already in the inventory&container.
 	 * @param[in] contId Container in the inventory.
 	 * @param[in] item The item to search for.
 	 * @return true if there already is at least one item of this type, otherwise false.
 	 */
-	inline bool containsItem (const containerIndex_t contId, const Item *const item) const
-	{
+	inline bool containsItem (const containerIndex_t contId, const Item *const item) const {
 		return findInContainer(contId, item) ? true : false;
 	}
+
 	Item *getArmour () const;
 	Item *getHeadgear() const;
 	invList_t *getRightHandContainer() const;
