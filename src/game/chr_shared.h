@@ -131,31 +131,27 @@ class FiremodeSettings {
 
 public:
 
-	inline bool isSaneFiremode () const
-	{
+	inline bool isSaneFiremode () const {
 		return _hand > ACTOR_HAND_NOT_SET && _fmIdx >= 0 && _fmIdx < MAX_FIREDEFS_PER_WEAPON && _weapon != nullptr;
 	}
 
-	inline int getFmIdx () const
-	{
+	inline int getFmIdx () const {
 		return _fmIdx;
 	}
-	inline const objDef_t *getWeapon () const
-	{
+
+	inline const objDef_t *getWeapon () const {
 		return _weapon;
 	}
-	inline actorHands_t getHand () const
-	{
+
+	inline actorHands_t getHand () const {
 		return _hand;
 	}
 
-	inline void setHand (const actorHands_t hand)
-	{
+	inline void setHand (const actorHands_t hand) {
 		_hand = hand;
 	}
 
-	inline void set (const actorHands_t hand, const fireDefIndex_t fmIdx, const objDef_t *weapon)
-	{
+	inline void set (const actorHands_t hand, const fireDefIndex_t fmIdx, const objDef_t *weapon) {
 		_hand = hand;
 		_fmIdx = fmIdx;
 		_weapon = weapon;
