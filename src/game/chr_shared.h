@@ -179,6 +179,10 @@ typedef struct chrReservations_s {
 	int shot;	/**< If non-zero we reserved a shot in this turn. */
 	FiremodeSettings shotSettings;	/**< Stores what type of firemode & weapon
 									 * (and hand) was used for "shot" reservation. */
+
+	inline chrReservations_s () {
+		reaction = crouch = shot = 0;
+	}
 } chrReservations_t;
 
 typedef enum {
