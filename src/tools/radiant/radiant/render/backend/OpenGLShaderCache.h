@@ -1,5 +1,4 @@
-#ifndef OPENGLSHADERCACHE_H_
-#define OPENGLSHADERCACHE_H_
+#pragma once
 
 #include "irender.h"
 #include "OpenGLStateManager.h"
@@ -211,5 +210,3 @@ class OpenGLShaderCache: public ShaderCache,
 			m_traverseRenderablesMutex = false;
 		}
 };
-
-#endif /* OPENGLSHADERCACHE_H_ */

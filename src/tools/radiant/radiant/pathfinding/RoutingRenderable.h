@@ -1,5 +1,4 @@
-#ifndef ROUTINGRENDERABLE_H_
-#define ROUTINGRENDERABLE_H_
+#pragma once
 
 #include "irender.h"
 #include <list>
@@ -54,5 +53,3 @@ namespace routing
 			void clear ();
 	};
 }
-
-#endif /* ROUTINGRENDERABLE_H_ */

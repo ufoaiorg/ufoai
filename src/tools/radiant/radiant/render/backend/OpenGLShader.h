@@ -1,5 +1,4 @@
-#ifndef OPENGLSHADER_H_
-#define OPENGLSHADER_H_
+#pragma once
 
 #include "irender.h"
 #include "iglrender.h"
@@ -60,5 +59,3 @@ class OpenGLShader: public Shader {
 
 		void constructNormalShader(const std::string& name);
 };
-
-#endif /* OPENGLSHADER_H_ */

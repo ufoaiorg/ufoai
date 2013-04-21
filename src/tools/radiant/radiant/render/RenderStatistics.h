@@ -1,5 +1,4 @@
-#ifndef RENDERSTATISTICS_H_
-#define RENDERSTATISTICS_H_
+#pragma once
 
 #include "../timer.h"
 #include "stream/stringstream.h"
@@ -49,5 +48,3 @@ class RenderStatistics {
 };
 
 } // namespace render
-
-#endif /*RENDERSTATISTICS_H_*/

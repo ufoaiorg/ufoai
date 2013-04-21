@@ -1,5 +1,4 @@
-#ifndef ROUTINGLUMP_H_
-#define ROUTINGLUMP_H_
+#pragma once
 
 #include <list>
 #include "math/Vector3.h"
@@ -100,4 +99,3 @@ namespace routing
 			void add (const RoutingLumpEntry& dataEntry);
 	};
 }
-#endif /* ROUTINGLUMP_H_ */

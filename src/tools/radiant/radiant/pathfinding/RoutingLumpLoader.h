@@ -1,5 +1,4 @@
-#ifndef ROUTINGLUMPLOADER_H_
-#define ROUTINGLUMPLOADER_H_
+#pragma once
 
 #include "RoutingLump.h"
 #include <string>
@@ -27,4 +26,3 @@ namespace routing
 			routing::RoutingLump& getRoutingLump ();
 	};
 }
-#endif /* ROUTINGLUMPLOADER_H_ */

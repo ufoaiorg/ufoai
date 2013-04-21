@@ -1,5 +1,4 @@
-#ifndef ROUTING_H_
-#define ROUTING_H_
+#pragma once
 
 #include "cullable.h"
 #include "renderable.h"
@@ -48,5 +47,3 @@ namespace routing
 			}
 	};
 }
-
-#endif /* ROUTING_H_ */
