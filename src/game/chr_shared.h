@@ -347,6 +347,10 @@ typedef struct teamDef_s {
 typedef struct woundInfo_s {
 	int woundLevel[BODYPART_MAXTYPE];
 	int treatmentLevel[BODYPART_MAXTYPE];
+
+	inline woundInfo_s () {
+		OBJZERO(*this);
+	}
 } woundInfo_t;
 
 /** @brief Describes a character with all its attributes */
