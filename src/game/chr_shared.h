@@ -131,6 +131,9 @@ class FiremodeSettings {
 
 public:
 
+	inline FiremodeSettings () {
+		OBJZERO(*this);
+	}
 	inline bool isSaneFiremode () const {
 		return _hand > ACTOR_HAND_NOT_SET && _fmIdx >= 0 && _fmIdx < MAX_FIREDEFS_PER_WEAPON && _weapon != nullptr;
 	}
