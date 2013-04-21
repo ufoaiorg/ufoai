@@ -1189,6 +1189,7 @@ craftitem craft_alien_astrogation
 {
 	name				"_Alien Astrogation"
 	crafttype			"electronics"
+	model				"aircraft/craft_item_astro/astrogation"
 	installationTime	-1
 	price				5000
 	size				20 // "light"
