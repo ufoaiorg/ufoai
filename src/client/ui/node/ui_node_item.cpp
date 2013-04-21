@@ -55,8 +55,9 @@ void uiItemNode::draw (uiNode_t *node)
 	od = INVSH_GetItemByIDSilent(ref);
 	if (od) {
 		Item item(od, nullptr, 1); /* 1 so it's not reddish; fake item anyway */
+		const char *model = GAME_GetModelForItem(item.def(), nullptr);
 
-		if (EXTRADATA(node).containerLike || item.isArmour()) {
+		if (EXTRADATA(node).containerLike || Q_strnull(model)) {
 			const vec4_t color = {1, 1, 1, 1};
 			vec3_t itemNodePos;
 			/* We position the model of the item ourself (in the middle of the item
@@ -68,7 +69,7 @@ void uiItemNode::draw (uiNode_t *node)
 			/** @todo we should not use DrawItem but draw the image with render function (remove dependency with container) */
 			UI_DrawItem(node, itemNodePos, &item, -1, -1, EXTRADATA(node).scale, color);
 		} else {
-			UI_DrawModelNode(node, GAME_GetModelForItem(item.def(), nullptr));
+			UI_DrawModelNode(node, model);
 		}
 	} else {
 		GAME_DisplayItemInfo(node, ref);

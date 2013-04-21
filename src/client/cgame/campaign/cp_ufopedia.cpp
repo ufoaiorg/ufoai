@@ -266,7 +266,7 @@ void UP_AircraftItemDescription (const objDef_t *item)
 	tech = RS_GetTechForItem(item);
 	/* select item */
 	cgi->Cvar_Set("mn_item", item->id);
-	cgi->Cvar_Set("mn_itemname", _(tech->name));
+	cgi->Cvar_Set("mn_itemname", _(item->name));
 	if (tech->mdl)
 		cgi->Cvar_Set("mn_upmodel_top", tech->mdl);
 	else
