@@ -126,6 +126,10 @@ typedef struct chrScoreGlobal_s {
 	int assignedMissions;			/**< Number of missions this soldier was assigned to. */
 
 	int rank;						/**< Index of rank (in ccs.ranks). */
+
+	inline chrScoreGlobal_s () {
+		OBJZERO(*this);
+	}
 } chrScoreGlobal_t;
 
 class FiremodeSettings {
