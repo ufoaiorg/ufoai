@@ -100,6 +100,10 @@ typedef struct chrScoreMission_s {
 
 	int heal;				/**< How many hitpoints has this soldier received trough healing in battlescape. */
 	float carriedWeight;	/**< The weight this soldier carried during combat */
+
+	inline chrScoreMission_s () {
+		OBJZERO(*this);
+	}
 } chrScoreMission_t;
 
 /**
