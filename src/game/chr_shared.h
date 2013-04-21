@@ -83,22 +83,22 @@ typedef struct chrScoreMission_s {
 	int stuns[KILLED_NUM_TYPES];	/**< Count of stuns (aliens, civilians, teammates) */
 
 	/* Hits/Misses */
-	int fired[SKILL_NUM_TYPES];				/**< Count of fired "firemodes" (i.e. the count of how many times the soldier started shooting) */
+	int fired[SKILL_NUM_TYPES];					/**< Count of fired "firemodes" (i.e. the count of how many times the soldier started shooting) */
 	int firedTUs[SKILL_NUM_TYPES];				/**< Count of TUs used for the fired "firemodes". (direct hits only)*/
-	bool firedHit[KILLED_NUM_TYPES];	/** Temporarily used for shot-stats calculations and status-tracking. Not used in stats.*/
+	bool firedHit[KILLED_NUM_TYPES];			/** Temporarily used for shot-stats calculations and status-tracking. Not used in stats.*/
 	int hits[SKILL_NUM_TYPES][KILLED_NUM_TYPES];	/**< Count of hits (aliens, civilians or, teammates) per skill.
 													 * It is a sub-count of "fired".
 													 * It's planned to be increased by 1 for each series of shots that dealt _some_ damage. */
-	int firedSplash[SKILL_NUM_TYPES];	/**< Count of fired splash "firemodes". */
-	int firedSplashTUs[SKILL_NUM_TYPES];				/**< Count of TUs used for the fired "firemodes" (splash damage only). */
-	bool firedSplashHit[KILLED_NUM_TYPES];	/** Same as firedHit but for Splash damage. */
-	int hitsSplash[SKILL_NUM_TYPES][KILLED_NUM_TYPES];	/**< Count of splash hits. */
+	int firedSplash[SKILL_NUM_TYPES];				/**< Count of fired splash "firemodes". */
+	int firedSplashTUs[SKILL_NUM_TYPES];			/**< Count of TUs used for the fired "firemodes" (splash damage only). */
+	bool firedSplashHit[KILLED_NUM_TYPES];			/** Same as firedHit but for Splash damage. */
+	int hitsSplash[SKILL_NUM_TYPES][KILLED_NUM_TYPES];			/**< Count of splash hits. */
 	int hitsSplashDamage[SKILL_NUM_TYPES][KILLED_NUM_TYPES];	/**< Count of dealt splash damage (aliens, civilians or, teammates).
 																 * This is counted in overall damage (healthpoint).*/
 	/** @todo Check HEALING of others. */
 	int skillKills[SKILL_NUM_TYPES];	/**< Number of kills related to each skill. */
 
-	int heal;	/**< How many hitpoints has this soldier received trough healing in battlescape. */
+	int heal;				/**< How many hitpoints has this soldier received trough healing in battlescape. */
 	float carriedWeight;	/**< The weight this soldier carried during combat */
 } chrScoreMission_t;
 
@@ -110,18 +110,18 @@ typedef struct chrScoreMission_s {
  * Additionally you have to check the size of the network-transfer in G_SendCharacterData and GAME_CP_Results
  */
 typedef struct chrScoreGlobal_s {
-	int experience[SKILL_NUM_TYPES + 1]; /**< Array of experience values for all skills, and health. @todo What are the mins and maxs for these values */
+	int experience[SKILL_NUM_TYPES + 1];	/**< Array of experience values for all skills, and health. @todo What are the mins and maxs for these values */
 
-	int skills[SKILL_NUM_TYPES];		/**< Array of skills and abilities. This is the total value. */
-	int initialSkills[SKILL_NUM_TYPES + 1];		/**< Array of initial skills and abilities. This is the value generated at character generation time. */
+	int skills[SKILL_NUM_TYPES];			/**< Array of skills and abilities. This is the total value. */
+	int initialSkills[SKILL_NUM_TYPES + 1];	/**< Array of initial skills and abilities. This is the value generated at character generation time. */
 
 	/* Kills & Stuns */
 	int kills[KILLED_NUM_TYPES];	/**< Count of kills (aliens, civilians, teammates) */
 	int stuns[KILLED_NUM_TYPES];	/**< Count of stuns(aliens, civilians, teammates) */
 
-	int assignedMissions;		/**< Number of missions this soldier was assigned to. */
+	int assignedMissions;			/**< Number of missions this soldier was assigned to. */
 
-	int rank;					/**< Index of rank (in ccs.ranks). */
+	int rank;						/**< Index of rank (in ccs.ranks). */
 } chrScoreGlobal_t;
 
 class FiremodeSettings {
