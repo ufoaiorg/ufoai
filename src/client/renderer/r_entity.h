@@ -87,7 +87,7 @@ typedef struct entity_s {
 
 	/* tag positioning */
 	struct entity_s *tagent;	/**< pointer to the parent entity */
-	const char *tagname;				/**< name of the tag */
+	const char *tagname;		/**< name of the tag */
 
 	/* misc */
 	int skinnum;
@@ -101,7 +101,7 @@ typedef struct entity_s {
 
 	transform_t transform;
 
-	vec4_t shell;					/**< shell color */
+	vec4_t shell;				/**< shell color */
 
 	const image_t *texture;
 
