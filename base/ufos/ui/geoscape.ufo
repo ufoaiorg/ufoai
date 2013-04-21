@@ -1010,9 +1010,14 @@ window popup_installationstatus
 		} else {
 			*node:root.buildtime_label@invis = false
 			*node:root.buildtime@invis = false
-			/** @todo Radar and UFO Yard has no manage menu yet */
+			/** @todo Radar has no manage menu yet */
 			/* *node:root.bt_enter@invis = false */
+		}
 
+		if ( *cvar:mn_installation_type eq "orbit" ) {
+			*node:root.bt_destroy@invis = true
+		} else {
+			*node:root.bt_destroy@invis = false
 		}
 	}
 }
