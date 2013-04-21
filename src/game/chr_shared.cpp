@@ -26,6 +26,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "q_shared.h"
 #include "chr_shared.h"
 
+character_s::character_s () {
+	name[0] = path[0] = body[0] = head[0] = 0;
+	ucn = bodySkin = headSkin = HP = minHP = maxHP = STUN = morale = state = gender = 0;
+	fieldSize = 0;
+	scoreMission = nullptr;
+	teamDef = nullptr;
+}
+
 /**
  * @brief Check if a team definition is alien.
  * @param[in] td Pointer to the team definition to check.

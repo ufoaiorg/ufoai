@@ -383,6 +383,8 @@ typedef struct character_s {
 	int gender;						/**< Gender index. */
 	chrReservations_t reservedTus;	/**< Stores the reserved TUs for actions. @sa See chrReserveSettings_t for more. */
 	FiremodeSettings RFmode;		/**< Stores the firemode to be used for reaction fire (if the fireDef allows that) See also reaction_firemode_type_t */
+
+	character_s();					/**< ctor */
 } character_t;
 
 /* ================================ */
