@@ -328,6 +328,11 @@ typedef struct teamDef_s {
 	int numTemplates;
 
 	const BodyData *bodyTemplate;
+
+//	can't add this simple constructor because in scripts.cpp, teamDefValues 'offsetof' is used on teamdef_t
+//	inline teamDef_s () {
+//		OBJZERO(*this);
+//	}
 } teamDef_t;
 
 /** @brief Info on a wound */
