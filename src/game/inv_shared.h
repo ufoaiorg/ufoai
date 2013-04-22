@@ -503,6 +503,8 @@ typedef struct inventory_s {
 	Container containers[MAX_CONTAINERS];
 
 	inventory_s ();
+	void init ();
+
 	inline const Container *getContainer (const containerIndex_t idx) const {
 		return &containers[idx];
 	}

@@ -654,6 +654,13 @@ inventory_s::inventory_s ()
 		containers[i].id = i;
 }
 
+void inventory_s::init ()
+{
+	int i;
+	for (i = 0; i < CID_MAX; i++)
+		containers[i].id = i;
+}
+
 const Container *inventory_t::_getNextCont (const Container *prev) const
 {
 	if (!prev)

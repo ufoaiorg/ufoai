@@ -32,6 +32,7 @@ character_s::character_s () {
 	fieldSize = 0;
 	scoreMission = nullptr;
 	teamDef = nullptr;
+	inv.init();
 }
 
 /**
