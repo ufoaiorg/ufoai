@@ -2250,7 +2250,6 @@ void AIR_RemovePilotFromAssignedAircraft (const base_t* base, const Employee* pi
 int AIR_GetAircraftWeaponRanges (const aircraftSlot_t *slot, int maxSlot, float *weaponRanges)
 {
 	int idxSlot;
-	int idxAllWeap;
 	float allWeaponRanges[MAX_AIRCRAFTSLOT];
 	int numAllWeaponRanges = 0;
 	int numUniqueWeaponRanges = 0;
@@ -2273,6 +2272,7 @@ int AIR_GetAircraftWeaponRanges (const aircraftSlot_t *slot, int maxSlot, float 
 		/* sort the list of all weapon ranges and create an array with only the unique ranges */
 		qsort(allWeaponRanges, numAllWeaponRanges, sizeof(allWeaponRanges[0]), Q_FloatSort);
 
+		int idxAllWeap;
 		for (idxAllWeap = 0; idxAllWeap < numAllWeaponRanges; idxAllWeap++) {
 			if (allWeaponRanges[idxAllWeap] != weaponRanges[numUniqueWeaponRanges - 1] || idxAllWeap == 0) {
 				weaponRanges[numUniqueWeaponRanges] = allWeaponRanges[idxAllWeap];
