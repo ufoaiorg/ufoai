@@ -611,6 +611,13 @@ const objDef_t *Item::getReactionFireWeaponType () const
 	return nullptr;
 }
 
+Container::Container ()
+{
+	_def = nullptr;
+	_invList = nullptr;
+	id = 0;
+}
+
 const invDef_t *Container::def () const
 {
 // can't do the here, function must be const

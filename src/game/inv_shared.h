@@ -493,6 +493,7 @@ public:
 	int id;
 	invList_t *_invList;	/* start of the list of items */
 
+	Container();
 	const invDef_t *def () const;
 	Item *getNextItem (const Item *prev) const;
 	int countItems () const;
