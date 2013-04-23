@@ -48,7 +48,6 @@ private:
 public:
 	Employee (employeeType_t type, const struct nation_s *nation, const struct ugv_s *ugv) :
 			_type(type), _assigned(false), _nation(nation), _ugv(ugv), baseHired(nullptr), transfer(false) {
-		;
 	}
 
 	virtual ~Employee () {
