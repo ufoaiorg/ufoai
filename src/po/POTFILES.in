@@ -10,7 +10,6 @@
 ./client/cgame/campaign/cp_aircraft_callbacks.cpp
 ./client/cgame/campaign/cp_aircraft.cpp
 ./client/cgame/campaign/cp_airfight.cpp
-./client/cgame/campaign/cp_alienbase.cpp
 ./client/cgame/campaign/cp_aliencont_callbacks.cpp
 ./client/cgame/campaign/cp_aliencont.cpp
 ./client/cgame/campaign/cp_auto_mission.cpp
@@ -52,15 +51,12 @@
 ./client/cgame/campaign/cp_uforecovery_callbacks.cpp
 ./client/cgame/campaign/cp_uforecovery.cpp
 ./client/cgame/campaign/missions/cp_mission_baseattack.cpp
-./client/cgame/campaign/missions/cp_mission_harvest.cpp
-./client/cgame/campaign/missions/cp_mission_recon.cpp
 ./client/cgame/campaign/missions/cp_mission_ufocarrier.cpp
 ./client/cgame/cl_game_team.cpp
 ./client/cgame/multiplayer/cl_game_multiplayer.cpp
 ./client/cgame/multiplayer/mp_callbacks.cpp
 ./client/cgame/multiplayer/mp_serverlist.cpp
 ./client/cgame/skirmish/cl_game_skirmish.cpp
-./client/cgame/staticcampaign/scp_missions.cpp
 ./client/cl_console.cpp
 ./client/cl_inventory_callbacks.cpp
 ./client/cl_inventory.cpp
@@ -71,7 +67,6 @@
 ./client/cl_screen.cpp
 ./client/input/cl_input.cpp
 ./client/input/cl_joystick.cpp
-./client/ui/node/ui_node_baseinventory.cpp
 ./client/ui/node/ui_node_container.cpp
 ./client/ui/node/ui_node_keybinding.cpp
 ./client/ui/node/ui_node_window.cpp
