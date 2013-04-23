@@ -1566,7 +1566,6 @@ void B_ParseBaseTemplate (const char *name, const char **text)
 	const char *errhead = "B_ParseBaseTemplate: unexpected end of file (names ";
 	const char *token;
 	baseTemplate_t* baseTemplate;
-	baseBuildingTile_t* tile;
 	vec2_t pos;
 	bool map[BASE_SIZE][BASE_SIZE];
 	byte buildingNums[MAX_BUILDINGS];
@@ -1622,7 +1621,7 @@ void B_ParseBaseTemplate (const char *name, const char **text)
 			cgi->Com_Error(ERR_DROP, "B_ParseBaseTemplate: too many buildings");
 
 		/* check if building type is known */
-		tile = &baseTemplate->buildings[baseTemplate->numBuildings];
+		baseBuildingTile_t* tile = &baseTemplate->buildings[baseTemplate->numBuildings];
 		baseTemplate->numBuildings++;
 
 		for (i = 0; i < ccs.numBuildingTemplates; i++)
