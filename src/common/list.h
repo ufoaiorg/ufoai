@@ -41,7 +41,7 @@ typedef int (*linkedListSort_t) (linkedList_t *entry1, linkedList_t *entry2, con
 #define LIST_Foreach(list, type, var) \
 	for (bool var##__break = false, var##__once = true; var##__once; var##__once = false) \
 		for (linkedList_t const* var##__iter = (list); !var##__break && var##__iter;) \
-			for (type* const var = (var##__break = var##__once = true, (type*)var##__iter->data); var##__once; var##__break = var##__once = false) \
+			for (type* const var = (var##__break = var##__once = true, static_cast<type*>(var##__iter->data)); var##__once; var##__break = var##__once = false) \
 				if (var##__iter = var##__iter->next, false) {} else
 
 /**
