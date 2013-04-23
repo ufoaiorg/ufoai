@@ -525,7 +525,7 @@ int G_ActorGetContentFlags (const vec3_t origin)
 /**
  * @brief Moves an item inside an inventory. Floors are handled special.
  * @param[in] actor The pointer to the selected/used edict/soldier.
- * @param[in] from The container (-id) the item should be moved from.
+ * @param[in] fromContType The container (-id) the item should be moved from.
  * @param[in] fItem The item you want to move.
  * @param[in] toContType The container (-def) the item should be moved to.
  * @param[in] tx x position where you want the item to go in the destination container
