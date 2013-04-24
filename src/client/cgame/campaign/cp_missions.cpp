@@ -115,7 +115,10 @@ void BATTLE_Start (mission_t* mission, const battleParam_t *battleParameters)
 		if (!base)
 			cgi->Com_Error(ERR_DROP, "Baseattack map without base!\n");
 		/* base must be under attack and might not have been destroyed in the meantime. */
-		B_AssembleMap(base);
+		char maps[2048];
+		char coords[2048];
+		B_AssembleMap(maps, sizeof(maps), coords, sizeof(coords), base);
+		cgi->Cbuf_AddText(va("map %s \"%s\" \"%s\"\n", (GEO_IsNight(base->pos) ? "night" : "day"), maps, coords));
 
 		return;
 	}

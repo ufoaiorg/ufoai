@@ -38,6 +38,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../client/cgame/campaign/cp_time.h"
 #include "../client/cgame/campaign/cp_alien_interest.h"
 #include "../client/cgame/campaign/cp_auto_mission.h"
+#include "../shared/parse.h"
 
 static const int TAG_INVENTORY = 1538;
 
@@ -1358,6 +1359,42 @@ static void testEventTrigger (void)
 	}
 }
 
+static void testAssembleMap (void)
+{
+	const int expected = 22;
+	const int maxSize = BASE_SIZE * BASE_SIZE;
+	CU_ASSERT_TRUE(maxSize >= expected);
+
+	ResetCampaignData();
+
+	const vec2_t destination = { 10, 10 };
+	base_t *base = CreateBase("unittestassemble", destination);
+	CU_ASSERT_PTR_NOT_NULL_FATAL(base);
+	char maps[2048];
+	char coords[2048];
+
+	CU_ASSERT_TRUE(B_AssembleMap(maps, sizeof(maps), coords, sizeof(coords), base));
+	const char *str = coords;
+	int coordsAmount = 0;
+	do {
+		Com_Parse(&str);
+		if (str != nullptr)
+			++coordsAmount;
+	} while (str != nullptr);
+
+	str = maps;
+	int mapsAmount = 0;
+	do {
+		Com_Parse(&str);
+		if (str != nullptr)
+			++mapsAmount;
+	} while (str != nullptr);
+
+	/* we have three components, x, y and z for the coordinates */
+	UFO_CU_ASSERT_EQUAL_INT_MSG(coordsAmount / 3, expected, va("coords have %i entries: '%s'", coordsAmount, coords));
+	UFO_CU_ASSERT_EQUAL_INT_MSG(mapsAmount, expected, va("maps have %i entries: '%s'", mapsAmount, maps));
+}
+
 int UFO_AddCampaignTests (void)
 {
 	/* add a suite to the registry */
@@ -1458,6 +1495,9 @@ int UFO_AddCampaignTests (void)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(campaignSuite, testEventTrigger) == NULL)
+		return CU_get_error();
+
+	if (CU_ADD_TEST(campaignSuite, testAssembleMap) == NULL)
 		return CU_get_error();
 
 	return CUE_SUCCESS;

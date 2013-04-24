@@ -558,6 +558,24 @@ float B_GetMaxBuildingLevel (const base_t* base, const buildingType_t type)
 }
 
 /**
+ * @brief Adds a map to the given position to the map string
+ * @param[out] maps The map output string
+ * @param[in] mapsLength The length of the maps string
+ * @param[out] coords The coords output string
+ * @param[in] coordsLength The length of the coords string
+ * @param[in] map The map tile to add
+ * @param[in] row The row to spawn the map at
+ * @param[in] col The col to spawn the map at
+ * @sa SV_Map_f
+ * @sa SV_Map
+ */
+static inline void B_AddMap (char *maps, size_t mapsLength, char *coords, size_t coordsLength, const char *map, int row, int col)
+{
+	Q_strcat(coords, va("%i %i %i ", col * BASE_TILE_UNITS, (BASE_SIZE - row - 1) * BASE_TILE_UNITS, 0), coordsLength);
+	Q_strcat(maps, map, mapsLength);
+}
+
+/**
  * @brief Perform the base assembling in case of an alien attack
  * @param[in,out] base The base to assemble
  * @return @c true if the assembly was successful, @c false if it failed
@@ -565,17 +583,14 @@ float B_GetMaxBuildingLevel (const base_t* base, const buildingType_t type)
  * @todo If a building is still under construction, it will be assembled as a finished part.
  * Otherwise we need mapparts for all the maps under construction.
  */
-bool B_AssembleMap (const base_t *base)
+bool B_AssembleMap (char *maps, size_t mapsLength, char *coords, size_t coordsLength, const base_t *base)
 {
-	int row, col;
-	char maps[2048];
-	char coords[2048];
-	bool used[MAX_BUILDINGS];
-
 	if (!base) {
 		Com_Printf("B_AssembleMap: No base to assemble\n");
 		return false;
 	}
+
+	bool used[MAX_BUILDINGS];
 
 	maps[0] = '\0';
 	coords[0] = '\0';
@@ -583,31 +598,29 @@ bool B_AssembleMap (const base_t *base)
 	/* reset the used flag */
 	OBJZERO(used);
 
-	for (row = 0; row < BASE_SIZE; row++) {
-		for (col = 0; col < BASE_SIZE; col++) {
+	for (int row = 0; row < BASE_SIZE; ++row) {
+		for (int col = 0; col < BASE_SIZE; ++col) {
 			const building_t *entry = base->map[row][col].building;
-			if (entry && B_IsBuildingBuiltUp(entry)) {
-				/* basemaps with needs are not (like the images in B_DrawBase) two maps - but one
-				 * this is why we check the used flag and continue if it was set already */
-				if (B_BuildingGetUsed(used, entry->idx))
-					continue;
-				B_BuildingSetUsed(used, entry->idx);
-
-				if (!entry->mapPart)
-					cgi->Com_Error(ERR_DROP, "MapPart for building '%s' is missing'", entry->id);
-
-				Q_strcat(maps, va("b/%s ", entry->mapPart), sizeof(maps));
-			} else if (entry) {
-				Q_strcat(maps, "b/construction ", sizeof(maps));
-			} else {
-				Q_strcat(maps, "b/empty ", sizeof(maps));
+			if (!entry) {
+				B_AddMap(maps, mapsLength, coords, coordsLength, "b/empty ", col, row);
+				continue;
 			}
+			if (!B_IsBuildingBuiltUp(entry)) {
+				B_AddMap(maps, mapsLength, coords, coordsLength, "b/construction ", col, row);
+				continue;
+			}
+			/* basemaps with needs are not (like the images in B_DrawBase) two maps - but one
+			 * this is why we check the used flag and continue if it was set already */
+			if (B_BuildingGetUsed(used, entry->idx))
+				continue;
+			B_BuildingSetUsed(used, entry->idx);
 
-			Q_strcat(coords, va("%i %i %i ", col * BASE_TILE_UNITS, (BASE_SIZE - row - 1) * BASE_TILE_UNITS, 0), sizeof(coords));
+			if (!entry->mapPart)
+				cgi->Com_Error(ERR_DROP, "MapPart for building '%s' is missing'", entry->id);
+
+			B_AddMap(maps, mapsLength, coords, coordsLength, va("b/%s ", entry->mapPart), col, row);
 		}
 	}
-
-	cgi->Cbuf_AddText(va("map %s \"%s\" \"%s\"\n", (GEO_IsNight(base->pos) ? "night" : "day"), maps, coords));
 
 	return true;
 }

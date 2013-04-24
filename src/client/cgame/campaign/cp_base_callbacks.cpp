@@ -715,7 +715,10 @@ static void B_AssembleMap_f (void)
 		base = B_GetBaseByIDX(baseID);
 	}
 
-	B_AssembleMap(base);
+	char maps[2048];
+	char coords[2048];
+	B_AssembleMap(maps, sizeof(maps), coords, sizeof(coords), base);
+	cgi->Cbuf_AddText(va("map %s \"%s\" \"%s\"\n", (GEO_IsNight(base->pos) ? "night" : "day"), maps, coords));
 }
 
 /**

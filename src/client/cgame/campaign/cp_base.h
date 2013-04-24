@@ -177,7 +177,7 @@ base_t *B_GetFirstUnfoundedBase(void);
 base_t *B_GetCurrentSelectedBase(void);
 void B_SetCurrentSelectedBase(const base_t *base);
 
-bool B_AssembleMap(const base_t *base);
+bool B_AssembleMap(char *maps, size_t mapsLength, char *coords, size_t coordsLength, const base_t *base);
 
 /* building functions */
 #define B_IsTileBlocked(base, x, y) (base)->map[(int)(y)][(int)(x)].blocked
