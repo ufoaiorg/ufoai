@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
 "POT-Creation-Date: 2013-04-23 10:28+0200\n"
-"PO-Revision-Date: 2013-02-13 08:53+0100\n"
+"PO-Revision-Date: 2013-04-24 10:59+0100\n"
 "Last-Translator: Maciej Wierzbicki <voovoos@killfile.pl>\n"
 "Language-Team:  <radius75@interia.pl>\n"
 "Language: pl_PL\n"
@@ -85,7 +85,7 @@ msgstr "Bungalow w lesie"
 #: ../base/maps/frozen.ump:729 ../base/maps/frozen.ump:732
 #: ../base/maps/frozen.ump:802
 msgid "Frozen"
-msgstr ""
+msgstr "Mroźna"
 
 #: ../base/maps/frozen.ump:757
 msgid "Multiplayer Coop"
@@ -217,9 +217,8 @@ msgstr "Rozbite UFO"
 
 #: ../base/maps/village.ump:452 ../base/maps/village.ump:478
 #: ../base/maps/village.ump:505 ../base/maps/village.ump:535
-#, fuzzy
 msgid "Village"
-msgstr "Duża wioska"
+msgstr "Wioska"
 
 #: ../base/ufos/aircraftmanagement.ufo:102
 msgid "Firebird-class Dropship"
@@ -2558,15 +2557,15 @@ msgstr "4vs4vs4"
 
 #: ../base/ufos/gametypes.ufo:108
 msgid "Coop 2 players"
-msgstr "Drużynowo 2 graczy"
+msgstr "Kooperacja 2 graczy"
 
 #: ../base/ufos/gametypes.ufo:121
 msgid "Coop 3 players"
-msgstr "Drużynowo 3 graczy"
+msgstr "Kooperacja 3 graczy"
 
 #: ../base/ufos/gametypes.ufo:134
 msgid "Coop 4 players"
-msgstr "Drużynowo 4 graczy"
+msgstr "Kooperacja 4 graczy"
 
 #: ../base/ufos/installation.ufo:7
 msgid "Radar Tower"
@@ -2806,7 +2805,7 @@ msgstr "Śnieg"
 
 #: ../base/ufos/maps.ufo:1153
 msgid "Snowy Logging Site"
-msgstr "Rejestracja w śnieżnej lokalizacji"
+msgstr "Tartak w śnieżnym rejonie"
 
 #: ../base/ufos/maps.ufo:1498 ../base/ufos/maps.ufo:1542
 #: ../base/ufos/maps.ufo:1584
@@ -23463,7 +23462,6 @@ msgid "missions"
 msgstr "Misje"
 
 #: ../base/ufos/msgoptions.ufo:156
-#, fuzzy
 msgid "buildings"
 msgstr "Budynki"
 
@@ -23549,7 +23547,7 @@ msgstr "Tło wydarzeń"
 #: ../base/ufos/ui/transfer.ufo:159 client/cgame/campaign/cp_geoscape.cpp:310
 #: client/cgame/campaign/cp_transfer_callbacks.cpp:802
 msgid "Aircraft"
-msgstr "Statek powietrzny"
+msgstr "Statek"
 
 #: ../base/ufos/research.ufo:112
 msgid "Base Facilities"
@@ -24783,6 +24781,8 @@ msgid ""
 "Find the control center and place one of your soldiers next to the console "
 "in order to take advantage of the security cameras."
 msgstr ""
+"Odnajdź centrum kontrolne i postaw obok konsoli jednego ze swych żołnierzy, "
+"aby móc skorzystać z kamer bezpieczeństwa."
 
 #: ../base/ufos/ui/_menu.ufo:122 ../base/ufos/ui/geoscape.ufo:191
 msgid "CREDITS"
@@ -25157,9 +25157,8 @@ msgid "Dead:"
 msgstr "Martwych:"
 
 #: ../base/ufos/ui/aliencont.ufo:350
-#, fuzzy
 msgid "Autopsy"
-msgstr "Automatyczne Wstawanie"
+msgstr "Autopsja"
 
 #: ../base/ufos/ui/basedefence.ufo:10
 msgid "Equip Defence Weapons"
@@ -25677,12 +25676,11 @@ msgstr "Gotowy"
 
 #: ../base/ufos/ui/geoscape.ufo:755 ../base/ufos/ui/geoscape.ufo:1063
 msgid "Aircraft:"
-msgstr "Statek powietrzny:"
+msgstr "Statek:"
 
 #: ../base/ufos/ui/geoscape.ufo:765
-#, fuzzy
 msgid "Mission:"
-msgstr "Misje"
+msgstr "Misja:"
 
 #: ../base/ufos/ui/geoscape.ufo:776
 msgid "Aircraft reached desired location - what to do?"
@@ -25840,7 +25838,7 @@ msgstr "Zatrudniono"
 #: ../base/ufos/ui/hospital.ufo:72 ../base/ufos/ui/hospital.ufo:122
 #: ../base/ufos/ui/hospital.ufo:147
 msgid "Unused"
-msgstr "Nienazwany"
+msgstr "Nieużywane"
 
 #: ../base/ufos/ui/hospital.ufo:132
 msgid "Heavily wounded"
@@ -27643,7 +27641,7 @@ msgstr "zmagazynowane"
 
 #: ../base/ufos/ui/popup_installations.ufo:851
 msgid "unknown"
-msgstr "Nieznany"
+msgstr "Brak informacji"
 
 #: ../base/ufos/ui/production.ufo:92
 #: client/cgame/campaign/cp_produce_callbacks.cpp:295
@@ -28464,19 +28462,16 @@ msgid "Ball"
 msgstr "Impulsy"
 
 #: ../base/ufos/weapons_plasma.ufo:369
-#, fuzzy
 msgid "Assault Rifle EP Magazine"
-msgstr "Mag. do kar. szturmowego"
+msgstr "Mag. EP kar. szturmowego"
 
 #: ../base/ufos/weapons_plasma.ufo:476
-#, fuzzy
 msgid "Machine Gun EP Magazine"
-msgstr "Mag. do kar. maszynowego"
+msgstr "Mag. EP kar. maszynowego"
 
 #: ../base/ufos/weapons_plasma.ufo:567
-#, fuzzy
 msgid "Sniper Rifle EP Magazine"
-msgstr "Mag. do kar. snajperskiego"
+msgstr "Mag. EP kar. snajperskiego"
 
 #: ../base/ufos/weapons_ugv.ufo:22
 msgid "ugv_ares_w"
@@ -29096,7 +29091,7 @@ msgstr "Myśliwiec"
 
 #: client/cgame/campaign/cp_aircraft.cpp:534
 msgid "Transporter"
-msgstr "Transportowiec"
+msgstr "Desantowiec"
 
 #: client/cgame/campaign/cp_aircraft.cpp:536
 #: client/cgame/campaign/cp_ufo.cpp:158 client/cgame/campaign/cp_ufo.cpp:159
@@ -29206,17 +29201,19 @@ msgstr "Baza jest poza zasięgiem statku powietrznego."
 #: client/cgame/campaign/cp_aircraft.cpp:1127
 #, c-format
 msgid "Craft %s has returned to %s."
-msgstr "Statek %s powrócił do %s."
+msgstr "Statek powietrzny %s powrócił do %s."
 
 #: client/cgame/campaign/cp_aircraft.cpp:1168
 #, c-format
 msgid "Craft %s couldn't be completely refueled at %s. Not enough antimatter."
-msgstr "Statek %s nie może być w pełni zatankowany w %s. Zabrakło antymaterii."
+msgstr ""
+"Statek powietrzny %s nie może być w pełni zatankowany w %s. Zabrakło "
+"antymaterii."
 
 #: client/cgame/campaign/cp_aircraft.cpp:1184
 #, c-format
 msgid "Craft %s has refueled at %s."
-msgstr "Statek %s został zatankowany w %s"
+msgstr "Statek powietrzny %s został zatankowany w %s"
 
 #: client/cgame/campaign/cp_aircraft.cpp:1228
 #, c-format
@@ -29235,8 +29232,8 @@ msgstr "Zbyt mało paliwa."
 #, c-format
 msgid "Craft %s has not enough fuel to intercept UFO: fly back to %s."
 msgstr ""
-"Statek %s nie ma wystaczającej ilości paliwa do przechwycenia UFO: powraca "
-"do %s."
+"Statek powietrzny %s nie ma wystaczającej ilości paliwa do przechwycenia "
+"UFO: powraca do %s."
 
 #: client/cgame/campaign/cp_aircraft_callbacks.cpp:94
 msgid ""
@@ -30108,9 +30105,8 @@ msgid "Ok"
 msgstr "Ok"
 
 #: client/cgame/campaign/cp_geoscape.cpp:304
-#, fuzzy
 msgid "Mission"
-msgstr "Misje"
+msgstr "Misja"
 
 #: client/cgame/campaign/cp_geoscape.cpp:325
 #: client/cgame/campaign/cp_installation_callbacks.cpp:45
@@ -30119,23 +30115,22 @@ msgstr "Instalacja"
 
 #: client/cgame/campaign/cp_geoscape.cpp:332
 msgid "UFO Sighting"
-msgstr "Zaobserwowano UFO"
+msgstr "Obserwowane UFO"
 
 #: client/cgame/campaign/cp_geoscape.cpp:1497
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Name: %s\n"
 "Objective: %s"
 msgstr ""
-"Lokalizacja: %s\n"
-"Typ: %s\n"
-"Cel: %s"
+"Obiekt: %s\n"
+"Opis: %s"
 
 #: client/cgame/campaign/cp_geoscape.cpp:1513
 #: client/cgame/campaign/cp_geoscape.cpp:1523
 #, c-format
 msgid "Name:\t%s (%i/%i)\n"
-msgstr "Name:\t%s (%i/%i)\n"
+msgstr "Nazwa:\t%s (%i/%i)\n"
 
 #: client/cgame/campaign/cp_geoscape.cpp:1514
 #: client/cgame/campaign/cp_geoscape.cpp:1524
@@ -30501,7 +30496,6 @@ msgid "base_attack"
 msgstr "Baza jest atakowana"
 
 #: client/cgame/campaign/cp_messageoptions.cpp:63
-#, fuzzy
 msgid "building_finished"
 msgstr "Budowa zakończona"
 
@@ -30560,48 +30554,47 @@ msgstr "Zebrane przedmioty (rodzaje/wszystkich)"
 
 #: client/cgame/campaign/cp_missions.cpp:457
 #: client/cgame/campaign/cp_missions.cpp:480
-#, fuzzy, c-format
+#, c-format
 msgid "Crashed %s"
-msgstr "Rozbity"
+msgstr "%s - rozbił się"
 
 #: client/cgame/campaign/cp_missions.cpp:463
-#, fuzzy, c-format
+#, c-format
 msgid "Alien terror in %s"
-msgstr "Materiały obcych"
+msgstr "Terror obcych - %s"
 
 #: client/cgame/campaign/cp_missions.cpp:466
-#, fuzzy, c-format
+#, c-format
 msgid "Base attacked: %s"
-msgstr "Atak na bazę"
+msgstr "Atakowana baza - %s"
 
 #: client/cgame/campaign/cp_missions.cpp:469
-#, fuzzy, c-format
+#, c-format
 msgid "Alien base in %s"
-msgstr "Baza obcych"
+msgstr "Baza obcych - %s"
 
 #: client/cgame/campaign/cp_missions.cpp:483
-#, fuzzy, c-format
+#, c-format
 msgid "Landed %s"
-msgstr "UFO wylądowało"
+msgstr "%s - wylądował"
 
 #: client/cgame/campaign/cp_missions.cpp:488
-#, fuzzy, c-format
+#, c-format
 msgid "Alien activity in %s"
-msgstr "Wykryto aktywność obcych -- %s"
+msgstr "Aktywność obcych - %s"
 
 #: client/cgame/campaign/cp_missions.cpp:490
-#, fuzzy
 msgid "Alien activity"
-msgstr "Typ obcego"
+msgstr "Aktywnośc obcych"
 
 #: client/cgame/campaign/cp_missions.cpp:699
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Go on a rescue mission for %s to save your soldiers, some of whom may still "
 "be alive."
 msgstr ""
-"Rozpocznij misję ratunkową w pobliżu %s, by odzyskać swoich żołnierzy, część "
-"z nich może być nadal żywa"
+"Rozpocznij misję ratunkową dla %s by odzyskać swoich żołnierzy, część z nich "
+"może być nadal żywa"
 
 #: client/cgame/campaign/cp_missions.cpp:703
 #, c-format
@@ -30609,9 +30602,8 @@ msgid "Alien activity has been detected in %s."
 msgstr "%s - wykryto aktywność obcych."
 
 #: client/cgame/campaign/cp_missions.cpp:705
-#, fuzzy
 msgid "Alien activity has been detected."
-msgstr "%s - wykryto aktywność obcych."
+msgstr "Wykryto aktywność obcych."
 
 #: client/cgame/campaign/cp_missions.cpp:1068
 #, c-format
@@ -30752,9 +30744,9 @@ msgid "Change homebase\n"
 msgstr "Zmień bazę macierzystą\n"
 
 #: client/cgame/campaign/cp_popup.cpp:240
-#, fuzzy, c-format
+#, c-format
 msgid "Mission\t%s\n"
-msgstr "Misje"
+msgstr "Misja\t%s\n"
 
 #: client/cgame/campaign/cp_popup.cpp:341
 #, c-format
@@ -31505,22 +31497,22 @@ msgstr "Martwych"
 #: client/cgame/campaign/cp_ufo.cpp:407
 #, c-format
 msgid "A UFO is flying toward %s"
-msgstr "UFO kieruje się w kierunku %s"
+msgstr "UFO podąża w kierunku %s"
 
 #: client/cgame/campaign/cp_ufo.cpp:860
-#, fuzzy, c-format
+#, c-format
 msgid "%s is flying toward %s"
-msgstr "UFO kieruje się w kierunku %s"
+msgstr "%s podąża w kierunku %s"
 
 #: client/cgame/campaign/cp_ufo.cpp:864
-#, fuzzy, c-format
+#, c-format
 msgid "Our radar detected %s near %s"
-msgstr "Nasz rada wykrył UFO blisko %s"
+msgstr "Nasz radar wykrył %s blisko %s"
 
 #: client/cgame/campaign/cp_ufo.cpp:868
-#, fuzzy, c-format
+#, c-format
 msgid "Our radar has lost the tracking on %s"
-msgstr "Radar zgubił namiar na UFO"
+msgstr "Radar zgubił namiar na %s"
 
 #: client/cgame/campaign/cp_ufopedia.cpp:142
 msgid "Cruising speed"
