@@ -52,7 +52,7 @@ void GEO_DrawMarkers(const uiNode_t* node);
 bool GEO_Click(const uiNode_t* node, int x, int y, const vec2_t pos);
 
 nation_t* GEO_GetNation(const vec2_t pos);
-float GEO_AngleOfPath(const vec3_t start, const vec2_t end, vec3_t direction, vec3_t ortVector);
+float GEO_AngleOfPath(const vec2_t start, const vec2_t end, vec3_t direction, vec3_t ortVector);
 void GEO_CalcLine(const vec2_t start, const vec2_t end, mapline_t* line);
 void GEO_Draw(geoscapeData_t* data);
 void GEO_CenterOnPoint_f(void);

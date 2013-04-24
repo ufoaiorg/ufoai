@@ -749,7 +749,7 @@ static void GEO_MapDrawEquidistantPoints (const uiNode_t* node, const vec2_t cen
  * @param[out] ortVector If not nullptr, this will be filled with the normalized vector around which rotation allows to go toward @c direction.
  * @return Angle (degrees) of rotation around the radius axis of earth for @c start going toward @c end. Zero value is the direction of North pole.
  */
-static float GEO_AngleOfPath3D (const vec3_t start, const vec2_t end, vec3_t direction, vec3_t ortVector)
+static float GEO_AngleOfPath3D (const vec2_t start, const vec2_t end, vec3_t direction, vec3_t ortVector)
 {
 	float angle = 0.0f;
 	vec3_t start3D, end3D, north3D, ortToDest, ortToPole, v;
@@ -811,7 +811,7 @@ static float GEO_AngleOfPath3D (const vec3_t start, const vec2_t end, vec3_t dir
  * @param[out] ortVector If not nullptr, this will be filled with the normalized vector around which rotation allows to go toward @c direction.
  * @return Angle (degrees) of rotation around the radius axis of earth for @c start going toward @c end. Zero value is the direction of North pole.
  */
-static float GEO_AngleOfPath2D (const vec3_t start, const vec2_t end, vec3_t direction, vec3_t ortVector)
+static float GEO_AngleOfPath2D (const vec2_t start, const vec2_t end, vec3_t direction, vec3_t ortVector)
 {
 	float angle = 0.0f;
 	vec3_t start3D, end3D, tangentVector, v, rotationAxis;
@@ -869,7 +869,7 @@ static float GEO_AngleOfPath2D (const vec3_t start, const vec2_t end, vec3_t dir
  * @param[out] ortVector If not nullptr, this will be filled with the normalized vector around which rotation allows to go toward @c direction.
  * @return Angle (degrees) of rotation around the radius axis of earth for @c start going toward @c end. Zero value is the direction of North pole.
  */
-float GEO_AngleOfPath (const vec3_t start, const vec2_t end, vec3_t direction, vec3_t ortVector)
+float GEO_AngleOfPath (const vec2_t start, const vec2_t end, vec3_t direction, vec3_t ortVector)
 {
 	uiNode_t *node = geoscapeNode;
 	if (!node)
