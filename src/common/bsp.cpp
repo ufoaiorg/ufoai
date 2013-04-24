@@ -640,7 +640,7 @@ static void CMod_LoadEntityString (MapTile &tile, const char *entityString, mapD
 				Com_Error(ERR_DROP, "CMod_LoadEntityString: EOF without closing brace");
 
 			if (token[0] == '}')
-				Com_Error(ERR_DROP, "CMod_LoadEntityString: closing brace without data");
+				Com_Error(ERR_DROP, "CMod_LoadEntityString: closing brace without data for keyname %s", keyname);
 
 			/* alter value, if needed */
 			if (Q_streq(keyname, "origin")) {
