@@ -1,5 +1,4 @@
-#ifndef MANIPULATEOBSERVER_H_
-#define MANIPULATEOBSERVER_H_
+#pragma once
 
 #include "Device.h"
 #include "RadiantSelectionSystem.h"
@@ -45,5 +44,3 @@ public:
 	typedef MemberCaller1<ManipulateObserver, DeviceVector, &ManipulateObserver::mouseMoved> MouseMovedCaller;
 	typedef MemberCaller1<ManipulateObserver, DeviceVector, &ManipulateObserver::mouseUp> MouseUpCaller;
 };
-
-#endif /*MANIPULATEOBSERVER_H_*/

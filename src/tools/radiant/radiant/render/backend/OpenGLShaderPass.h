@@ -1,5 +1,4 @@
-#ifndef OPENGLSTATEBUCKET_H_
-#define OPENGLSTATEBUCKET_H_
+#pragma once
 
 #include "irender.h"
 #include "iglrender.h"
@@ -52,5 +51,3 @@ class OpenGLShaderPass
 
 		void render (OpenGLState& current, unsigned int globalstate, const Vector3& viewer);
 };
-
-#endif /* OPENGLSTATEBUCKET_H_ */

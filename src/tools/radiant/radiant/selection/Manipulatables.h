@@ -1,5 +1,4 @@
-#ifndef MANIPULATABLES_H_
-#define MANIPULATABLES_H_
+#pragma once
 
 #include "math/Vector3.h"
 #include "math/matrix.h"
@@ -190,5 +189,3 @@ class DragTranslatable : public Translatable {
 
 void transform_local2object (Matrix4& object, const Matrix4& local, const Matrix4& local2object);
 void translation_local2object (Vector3& object, const Vector3& local, const Matrix4& local2object);
-
-#endif /*MANIPULATABLES_H_*/

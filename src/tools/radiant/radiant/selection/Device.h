@@ -1,5 +1,4 @@
-#ifndef DEVICE_H_
-#define DEVICE_H_
+#pragma once
 
 #include "math/Vector2.h"
 #include "container/container.h"
@@ -37,5 +36,3 @@ inline DeviceVector device_constrained(DeviceVector device) {
 typedef Callback1<DeviceVector> MouseEventCallback;
 extern Single<MouseEventCallback> g_mouseUpCallback;
 extern Single<MouseEventCallback> g_mouseMovedCallback;
-
-#endif /*DEVICE_H_*/

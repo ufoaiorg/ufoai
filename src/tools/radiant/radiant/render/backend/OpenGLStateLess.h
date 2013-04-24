@@ -1,5 +1,4 @@
-#ifndef OPENGLSTATELESS_H_
-#define OPENGLSTATELESS_H_
+#pragma once
 
 #include "iglrender.h"
 
@@ -45,5 +44,3 @@ struct OpenGLStateLess {
 			return self < other;
 		}
 };
-
-#endif /*OPENGLSTATELESS_H_*/

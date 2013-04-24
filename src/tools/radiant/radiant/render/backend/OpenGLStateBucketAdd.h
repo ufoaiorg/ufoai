@@ -1,5 +1,4 @@
-#ifndef OPENGLSTATEBUCKETADD_H_
-#define OPENGLSTATEBUCKETADD_H_
+#pragma once
 
 #include "OpenGLShaderPass.h"
 
@@ -19,5 +18,3 @@ class OpenGLStateBucketAdd {
 			m_bucket(bucket), m_renderable(renderable), m_modelview(modelview) {
 		}
 };
-
-#endif /*OPENGLSTATEBUCKETADD_H_*/

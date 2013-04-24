@@ -1,5 +1,4 @@
-#ifndef OPENGLSTATEMAP_H_
-#define OPENGLSTATEMAP_H_
+#pragma once
 
 class OpenGLStateMap: public OpenGLStateLibrary
 {
@@ -42,5 +41,3 @@ class OpenGLStateMap: public OpenGLStateLibrary
 			return m_states.find(name);
 		}
 };
-
-#endif /* OPENGLSTATEMAP_H_ */

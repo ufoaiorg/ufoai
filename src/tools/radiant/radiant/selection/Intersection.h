@@ -1,5 +1,4 @@
-#ifndef INTERSECTION_H_
-#define INTERSECTION_H_
+#pragma once
 
 #include "math/Vector3.h"
 #include "math/line.h"
@@ -37,5 +36,3 @@ inline void constrain_to_axis (Vector3& vec, const Vector3& axis)
 float angle_for_axis (const Vector3& a, const Vector3& b, const Vector3& axis);
 
 float distance_for_axis (const Vector3& a, const Vector3& b, const Vector3& axis);
-
-#endif /*INTERSECTION_H_*/

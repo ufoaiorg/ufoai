@@ -1,5 +1,4 @@
-#ifndef BESTPOINT_H_
-#define BESTPOINT_H_
+#pragma once
 
 #include "math/Vector3.h"
 #include "selectable.h"
@@ -59,5 +58,3 @@ void Quad_BestPoint (const Matrix4& local2view, clipcull_t cull, const PointVert
 typedef FlatShadedVertex* FlatShadedVertexIterator;
 void Triangles_BestPoint (const Matrix4& local2view, clipcull_t cull, FlatShadedVertexIterator first,
 		FlatShadedVertexIterator last, SelectionIntersection& best);
-
-#endif /*BESTPOINT_H_*/
