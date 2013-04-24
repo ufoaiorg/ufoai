@@ -81,3 +81,12 @@ $(addprefix local-,${ISSUE_TYPES}):
 issues: ${ISSUE_TYPES}
 ${ISSUE_TYPES}:
 	@grep --color=auto -in -e '$@:' -e '@$@' -e '$@ ' ${ISSUE_FILES} || true
+
+.PHONY: monthly
+monthly:
+	$(Q)MONTH=$$(LOCATE=C date '+%m'); \
+	MONTHLY_DATE_START=$$(LANG=C date -d "$${MONTH}/1 - 1 month"); \
+	MONTHLY_DATE_END=$$(LANG=C date -d "$${MONTH}/1 - 1 sec"); \
+	echo "show commits from '$${MONTHLY_DATE_START}' until '$${MONTHLY_DATE_END}'"; \
+	echo -n "#commits: "; git log --since="$${MONTHLY_DATE_START}" --until="$${MONTHLY_DATE_END}" --format="%s" | wc -l; \
+	git log --since="$${MONTHLY_DATE_START}" --until="$${MONTHLY_DATE_END}" --format="%s"
