@@ -359,11 +359,14 @@ void G_SendInventory (playermask_t playerMask, const Edict &ent)
 	if (!playerMask)
 		return;
 
-	for (container = 0; container < CID_MAX; container++) {
-		if (!G_IsItem(&ent) && INVDEF(container)->temp)
+	const Container *cont = nullptr;
+	while ((cont = ent.chr.inv.getNextCont(cont, true))) {
+		if (!G_IsItem(&ent) && INVDEF(cont->id)->temp)
 			continue;
-		for (ic = ent.getContainer(container); ic; ic = ic->getNext())
+		Item *item = nullptr;
+		while ((item = cont->getNextItem(item))) {
 			nr++;
+		}
 	}
 
 	/* return if no inventory items to send */
