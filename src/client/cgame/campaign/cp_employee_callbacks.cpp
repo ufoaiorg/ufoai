@@ -254,7 +254,7 @@ int E_GenerateHiredEmployeesList (const base_t *base)
  */
 Employee* E_GetEmployeeByMenuIndex (int num)
 {
-	return (Employee*)cgi->LIST_GetByIdx(employeeList, num);
+	return static_cast<Employee*>(cgi->LIST_GetByIdx(employeeList, num));
 }
 
 /**
