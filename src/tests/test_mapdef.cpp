@@ -291,7 +291,6 @@ static void testMapDefsFootSteps (void)
 	const int texCountMax = 30;
 	char texNames[texCountMax][60];
 	bool done = false;
-	int i = 0;
 
 	OBJZERO(texNames);
 	CU_ASSERT_TRUE(csi.numMDs > 0);
@@ -335,46 +334,45 @@ static void testMapDefsFootSteps (void)
 		for (x = mBox.mins[0]; x <= mBox.maxs[0] && !done; x++) {
 			for (y = mBox.mins[1]; y <= mBox.maxs[1] && !done; y++) {
 				for (z = mBox.mins[2]; z <= mBox.maxs[2]; z++) {
-					int floor = sv->mapData.routing.getFloor(1, x, y,z);
-					if (floor >= 0){						// if we have a floor in that cell
-						AABB noBox(vec3_origin, vec3_origin);	// we're doing a point-trace
-						pos3_t cellPos = {x, y, z};			// the cell inquestion
-						vec3_t from, to;
-						PosToVec(cellPos, from);			// the center of the cell
-						VectorCopy(from, to);				// also base for the endpoint of the trace
-						from[2] -= UNIT_HEIGHT / 2;			// bottom of the cell
-						from[2] += (floor + 2) * QUANT;		// add the height of the floor plus 2 QUANTS
-						to[2] -= 2 * UNIT_HEIGHT;			// we should really hit the ground with this
-						const trace_t trace = SV_Trace(from, noBox, to, NULL, MASK_SOLID);
-						if (trace.surface) {
-							const char *snd = NULL;
-							snd = SV_GetFootstepSound(trace.surface->name);
-							if (!snd) {
-								for (i = 0; i < texCountMax; i++) {
-									if (!texNames[i][0]) {	// found a free slot ?
-										strcpy(texNames[i], trace.surface->name);
-										count++;
-										break;
-									}
-									if (!strcmp(trace.surface->name, texNames[i]))	// already there ?
-										break;
-								}
-								if (count > texCountMax) {
-									done = true;
-									break;	// the z-loop
-								}
-							}
+					const int floor = sv->mapData.routing.getFloor(1, x, y,z);
+					if (floor < 0)						// if we have a floor in that cell
+						continue;
+					const AABB noBox(vec3_origin, vec3_origin);	// we're doing a point-trace
+					const pos3_t cellPos = {x, y, z};			// the cell inquestion
+					vec3_t from, to;
+					PosToVec(cellPos, from);			// the center of the cell
+					VectorCopy(from, to);				// also base for the endpoint of the trace
+					from[2] -= UNIT_HEIGHT / 2;			// bottom of the cell
+					from[2] += (floor + 2) * QUANT;		// add the height of the floor plus 2 QUANTS
+					to[2] -= 2 * UNIT_HEIGHT;			// we should really hit the ground with this
+					const trace_t trace = SV_Trace(from, noBox, to, NULL, MASK_SOLID);
+					if (!trace.surface)
+						continue;
+
+					const char *snd = SV_GetFootstepSound(trace.surface->name);
+					if (snd)
+						continue;
+					for (int i = 0; i < texCountMax; ++i) {
+						if (!texNames[i][0]) {	// found a free slot ?
+							strcpy(texNames[i], trace.surface->name);
+							count++;
+							break;
 						}
+						if (Q_streq(trace.surface->name, texNames[i]))	// already there ?
+							break;
+					}
+					if (count > texCountMax) {
+						done = true;
+						break;	// the z-loop
 					}
 				}
 			}
 		}
 		if (!texNames[0][0]) {
 			Com_Printf("In map %s, ass %s: Nothing detected\n", md->map, md->param);
-		}
-		else {
-			badMapCount++;
-			for (i = 0; i < texCountMax; i++) {
+		} else {
+			++badMapCount;
+			for (int i = 0; i < texCountMax; ++i) {
 				if (texNames[i][0]) {
 					Com_Printf("In map %s, ass %s: No sound for: %s\n", md->map, md->param, texNames[i]);
 				}
@@ -385,10 +383,7 @@ static void testMapDefsFootSteps (void)
 		SV_ShutdownGameProgs();
 		CU_PASS(md->map);
 
-		if (mapCount >= mapCountMax || badMapCount >= badMapCountMax)
-			break;
-
-		if (done)
+		if (done || mapCount >= mapCountMax || badMapCount >= badMapCountMax)
 			break;
 	}
 }
@@ -416,21 +411,19 @@ static void testMapDefsSingleplayer (void)
 		if (filterId && strcmp(filterId, md->id) != 0)
 			continue;
 
-		{
-			/* use a known seed to reproduce an error */
-			unsigned int seed;
-			if (TEST_ExistsProperty("mapdef-seed")) {
-				seed = TEST_GetLongProperty("mapdef-seed");
-			} else {
-				seed = (unsigned int) time(NULL);
-			}
-			srand(seed);
-
-			Com_Printf("testMapDefsSingleplayer: Mapdef %s (seed %u)\n", md->id, seed);
-			SV_Map(true, md->map, md->param);
-			SV_ShutdownGameProgs();
-			CU_PASS(md->map);
+		/* use a known seed to reproduce an error */
+		unsigned int seed;
+		if (TEST_ExistsProperty("mapdef-seed")) {
+			seed = TEST_GetLongProperty("mapdef-seed");
+		} else {
+			seed = (unsigned int) time(NULL);
 		}
+		srand(seed);
+
+		Com_Printf("testMapDefsSingleplayer: Mapdef %s (seed %u)\n", md->id, seed);
+		SV_Map(true, md->map, md->param);
+		SV_ShutdownGameProgs();
+		CU_PASS(md->map);
 	}
 }
 
