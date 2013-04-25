@@ -304,91 +304,89 @@ static void testMapDefsFootSteps (void)
 		if (filterId && strcmp(filterId, md->id) != 0)
 			continue;
 
-		{
-			mapCount++;
-			if (mapCount <= skipCount)
-				continue;
-			/* use a known seed to reproduce an error */
-			unsigned int seed;
-			if (TEST_ExistsProperty("mapdef-seed")) {
-				seed = TEST_GetLongProperty("mapdef-seed");
-			} else {
-				seed = (unsigned int) time(NULL);
-			}
-			srand(seed);
+		mapCount++;
+		if (mapCount <= skipCount)
+			continue;
+		/* use a known seed to reproduce an error */
+		unsigned int seed;
+		if (TEST_ExistsProperty("mapdef-seed")) {
+			seed = TEST_GetLongProperty("mapdef-seed");
+		} else {
+			seed = (unsigned int) time(NULL);
+		}
+		srand(seed);
 
-			Com_Printf("testMapDefsFootSteps: Mapdef %s (seed %u)\n", md->id, seed);
-			SV_Map(true, md->map, md->param);
+		Com_Printf("testMapDefsFootSteps: Mapdef %s (seed %u)\n", md->id, seed);
+		SV_Map(true, md->map, md->param);
 
-			/* now that we have loaded the map, check all cells for walkable places */
-			int x, y, z;
-			GridBox mBox(sv->mapData.mapMin, sv->mapData.mapMax);	// test ALL the cells
+		/* now that we have loaded the map, check all cells for walkable places */
+		int x, y, z;
+		GridBox mBox(sv->mapData.mapMin, sv->mapData.mapMax);	// test ALL the cells
 #if !FOOTSTEPS_FULL
-			if (mapCount >= skipCount + 4) {	// after the first 4 maps, reduce the testing area
-				pos3_t center = {148, 128, 0};
-				mBox.set(center, center);		// the box on the map we're testing
-				mBox.expandXY(10);				// just test a few cells around the center of the map
-				mBox.maxs[2] = 2;				// and 3 levels high
-			}
+		if (mapCount >= skipCount + 4) {	// after the first 4 maps, reduce the testing area
+			pos3_t center = {148, 128, 0};
+			mBox.set(center, center);		// the box on the map we're testing
+			mBox.expandXY(10);				// just test a few cells around the center of the map
+			mBox.maxs[2] = 2;				// and 3 levels high
+		}
 #endif
-			mBox.clipToMaxBoundaries();
+		mBox.clipToMaxBoundaries();
 
-			for (x = mBox.mins[0]; x <= mBox.maxs[0] && !done; x++) {
-				for (y = mBox.mins[1]; y <= mBox.maxs[1] && !done; y++) {
-					for (z = mBox.mins[2]; z <= mBox.maxs[2]; z++) {
-						int floor = sv->mapData.routing.getFloor(1, x, y,z);
-						if (floor >= 0){						// if we have a floor in that cell
-							AABB noBox(vec3_origin, vec3_origin);	// we're doing a point-trace
-							pos3_t cellPos = {x, y, z};			// the cell inquestion
-							vec3_t from, to;
-							PosToVec(cellPos, from);			// the center of the cell
-							VectorCopy(from, to);				// also base for the endpoint of the trace
-							from[2] -= UNIT_HEIGHT / 2;			// bottom of the cell
-							from[2] += (floor + 2) * QUANT;		// add the height of the floor plus 2 QUANTS
-							to[2] -= 2 * UNIT_HEIGHT;			// we should really hit the ground with this
-							const trace_t trace = SV_Trace(from, noBox, to, NULL, MASK_SOLID);
-							if (trace.surface) {
-								const char *snd = NULL;
-								snd = SV_GetFootstepSound(trace.surface->name);
-								if (!snd) {
-									for (i = 0; i < texCountMax; i++) {
-										if (!texNames[i][0]) {	// found a free slot ?
-											strcpy(texNames[i], trace.surface->name);
-											count++;
-											break;
-										}
-										if (!strcmp(trace.surface->name, texNames[i]))	// already there ?
-											break;
+		for (x = mBox.mins[0]; x <= mBox.maxs[0] && !done; x++) {
+			for (y = mBox.mins[1]; y <= mBox.maxs[1] && !done; y++) {
+				for (z = mBox.mins[2]; z <= mBox.maxs[2]; z++) {
+					int floor = sv->mapData.routing.getFloor(1, x, y,z);
+					if (floor >= 0){						// if we have a floor in that cell
+						AABB noBox(vec3_origin, vec3_origin);	// we're doing a point-trace
+						pos3_t cellPos = {x, y, z};			// the cell inquestion
+						vec3_t from, to;
+						PosToVec(cellPos, from);			// the center of the cell
+						VectorCopy(from, to);				// also base for the endpoint of the trace
+						from[2] -= UNIT_HEIGHT / 2;			// bottom of the cell
+						from[2] += (floor + 2) * QUANT;		// add the height of the floor plus 2 QUANTS
+						to[2] -= 2 * UNIT_HEIGHT;			// we should really hit the ground with this
+						const trace_t trace = SV_Trace(from, noBox, to, NULL, MASK_SOLID);
+						if (trace.surface) {
+							const char *snd = NULL;
+							snd = SV_GetFootstepSound(trace.surface->name);
+							if (!snd) {
+								for (i = 0; i < texCountMax; i++) {
+									if (!texNames[i][0]) {	// found a free slot ?
+										strcpy(texNames[i], trace.surface->name);
+										count++;
+										break;
 									}
-									if (count > texCountMax) {
-										done = true;
-										break;	// the z-loop
-									}
+									if (!strcmp(trace.surface->name, texNames[i]))	// already there ?
+										break;
+								}
+								if (count > texCountMax) {
+									done = true;
+									break;	// the z-loop
 								}
 							}
 						}
 					}
 				}
 			}
-			if (!texNames[0][0]) {
-				Com_Printf("In map %s, ass %s: Nothing detected\n", md->map, md->param);
-			}
-			else {
-				badMapCount++;
-				for (i = 0; i < texCountMax; i++) {
-					if (texNames[i][0]) {
-						Com_Printf("In map %s, ass %s: No sound for: %s\n", md->map, md->param, texNames[i]);
-					}
+		}
+		if (!texNames[0][0]) {
+			Com_Printf("In map %s, ass %s: Nothing detected\n", md->map, md->param);
+		}
+		else {
+			badMapCount++;
+			for (i = 0; i < texCountMax; i++) {
+				if (texNames[i][0]) {
+					Com_Printf("In map %s, ass %s: No sound for: %s\n", md->map, md->param, texNames[i]);
 				}
 			}
-			OBJZERO(texNames);
-			count = 0;
-			SV_ShutdownGameProgs();
-			CU_PASS(md->map);
-
-			if (mapCount >= mapCountMax || badMapCount >= badMapCountMax)
-				break;
 		}
+		OBJZERO(texNames);
+		count = 0;
+		SV_ShutdownGameProgs();
+		CU_PASS(md->map);
+
+		if (mapCount >= mapCountMax || badMapCount >= badMapCountMax)
+			break;
 
 		if (done)
 			break;
