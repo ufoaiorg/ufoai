@@ -58,7 +58,6 @@ Employee* E_GetUnhired (employeeType_t type)
 
 /**
  * @brief Tells you if a employee is away from his home base (gone in mission).
- * @param[in] employee Pointer to the employee.
  * @return bool true if the employee is away in mission, false if he is not or he is unhired.
  */
 bool Employee::isAwayFromBase () const
@@ -415,7 +414,6 @@ bool E_HireRobot (base_t* base, const ugv_t *ugvType)
 
 /**
  * @brief Removes the inventory of the employee and also removes him from buildings
- * @param[in,out] employee Employee to unassign from aircraft/buildings
  */
 base_t *Employee::unassign ()
 {
@@ -459,7 +457,6 @@ base_t *Employee::unassign ()
 /**
  * @brief Fires an employee.
  * @note also remove him from the aircraft
- * @param[in] employee The employee who will be fired
  * @sa E_HireEmployee
  * @sa E_HireEmployeeByType
  * @sa CL_RemoveSoldierFromAircraft
