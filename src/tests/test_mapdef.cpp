@@ -98,7 +98,7 @@ static void testMapDefsMassRMA (void)
 			continue;
 		if (md->nocunit)	/* map is WIP and therefore excluded from the tests */
 			continue;
-		if (filterId && strcmp(filterId, md->id) != 0)
+		if (filterId && !Q_streq(filterId, md->id))
 			continue;
 		if (++mapCount <= 0)		/* change 0 to n to skip the first n assemblies */
 			continue;
@@ -167,11 +167,16 @@ static void testMapDefsMassRMA (void)
 
 						bool skip = false;
 						for (skip_info const* e = skip_list; e != endof(skip_list); ++e) {
-							if (e->seed >= 0 && i != e->seed)                  continue;
-							if (e->map       && !Q_streq(p,         e->map))   continue;
-							if (e->param     && !Q_streq(md->param, e->param)) continue;
-							if (e->craft     && !Q_streq(craft,     e->craft)) continue;
-							if (e->ufo       && !Q_streq(ufo,       e->ufo))   continue;
+							if (e->seed >= 0 && i != e->seed)
+								continue;
+							if (e->map && !Q_streq(p, e->map))
+								continue;
+							if (e->param && !Q_streq(md->param, e->param))
+								continue;
+							if (e->craft && !Q_streq(craft, e->craft))
+								continue;
+							if (e->ufo && !Q_streq(ufo, e->ufo))
+								continue;
 							skip = true;
 							break;
 						}
@@ -179,7 +184,7 @@ static void testMapDefsMassRMA (void)
 							continue;
 #endif
 						/* for ufocrash map, the ufoname is the assemblyame */
-						if (!strcmp(p, "ufocrash"))
+						if (Q_streq(p, "ufocrash"))
 							ass = Com_GetRandomMapAssemblyNameForCraft(ufo) + 1;	/* +1 = get rid of the '+' */
 						else
 							ass = md->param;
@@ -407,7 +412,7 @@ static void testMapDefsSingleplayer (void)
 			continue;
 		if (md->nocunit)	/* map is WIP and therefore excluded from the tests */
 			continue;
-		if (filterId && strcmp(filterId, md->id) != 0)
+		if (filterId && !Q_streq(filterId, md->id))
 			continue;
 
 		/* use a known seed to reproduce an error */
@@ -442,7 +447,7 @@ static void testMapDefsMultiplayer (void)
 
 		if (md->nocunit)	/* map is WIP and therefore excluded from the tests */
 			continue;
-		if (filterId && strcmp(filterId, md->id) != 0)
+		if (filterId && !Q_streq(filterId, md->id))
 			continue;
 
 		/* use a known seed to reproduce an error */
