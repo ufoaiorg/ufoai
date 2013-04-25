@@ -396,7 +396,7 @@ void CP_HandleNationData (float minHappiness, mission_t *mis, const nation_t *af
 	int i;
 	const float civilianSum = (float) (results->civiliansSurvived + results->civiliansKilled + results->civiliansKilledFriendlyFire);
 	const float alienSum = (float) (results->aliensSurvived + results->aliensKilled + results->aliensStunned);
-	float performance, performanceAlien, performanceCivilian;
+	float performance;
 	float deltaHappiness = 0.0f;
 	float happinessDivisor = 5.0f;
 
@@ -407,13 +407,13 @@ void CP_HandleNationData (float minHappiness, mission_t *mis, const nation_t *af
 		performance = 0.0f;
 	} else {
 		/* Calculate how well the mission went. */
-		performanceCivilian = (2 * civilianSum - results->civiliansKilled - 2
+		float performanceCivilian = (2 * civilianSum - results->civiliansKilled - 2
 				* results->civiliansKilledFriendlyFire) * 3 / (2 * civilianSum) - 2;
 		/** @todo The score for aliens is always negative or zero currently, but this
 		 * should be dependent on the mission objective.
 		 * In a mission that has a special objective, the amount of killed aliens should
 		 * only serve to increase the score, not reduce the penalty. */
-		performanceAlien = results->aliensKilled + results->aliensStunned - alienSum;
+		float performanceAlien = results->aliensKilled + results->aliensStunned - alienSum;
 		performance = performanceCivilian + performanceAlien;
 	}
 
