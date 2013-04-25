@@ -229,42 +229,40 @@ static void testMapDefStatistic (void)
 		if (filterId && !Q_streq(filterId, md->id))
 			continue;
 
-		{
-			MapInfo *theMap = Mem_AllocType(mapInfo_t);
-			char mapAssName[80];
-			const char *p = md->map;
+		MapInfo *theMap = Mem_AllocType(MapInfo);
+		char mapAssName[80];
+		const char *p = md->map;
 
-			if (*p == '+')
-				p++;
-			else
-				continue;
-			SV_ParseUMP(p, theMap, false);
-			theMap->mAsm = 0;
-			/* overwrite with specified, if any */
-			if (md->param && md->param[0]) {
-				for (j = 0; j < theMap->numAssemblies; j++)
-					if (Q_streq(md->param, theMap->mAssembly[j].id)) {
-						theMap->mAsm = j;
-						break;
-					}
-				if (j == theMap->numAssemblies) {
-					Com_Printf("SV_AssembleMap: Map assembly '%s' not found\n", md->param);
+		if (*p == '+')
+			p++;
+		else
+			continue;
+		SV_ParseUMP(p, nullptr, theMap, false);
+		theMap->asmIdx = 0;
+		/* overwrite with specified, if any */
+		if (md->param && md->param[0]) {
+			for (j = 0; j < theMap->numAssemblies; j++)
+				if (Q_streq(md->param, theMap->assemblies[j].id)) {
+					theMap->asmIdx = j;
+					break;
 				}
+			if (j == theMap->numAssemblies) {
+				Com_Printf("SV_AssembleMap: Map assembly '%s' not found\n", md->param);
 			}
-
-			SV_PrepareTilesToPlace(theMap);
-			Assembly *ass = &theMap->mAssembly[theMap->mAsm];
-
-			required = 0;
-			solids = 0;
-			for (k = 0; k < theMap->numToPlace; k++) {
-				required += theMap->mToPlace[k].min;
-				solids += theMap->mToPlace[k].max * theMap->mToPlace[k].tile->area;
-			}
-
-			Com_sprintf(mapAssName, sizeof(mapAssName), "%s %s", p, md->param);
-			Com_Printf("%22.22s %2.i %2.i %2.i %2.i %3.i %3.i \n", mapAssName, theMap->numTiles, theMap->numToPlace, required, ass->numSeeds, ass->size, solids);
 		}
+
+		SV_PrepareTilesToPlace(theMap);
+		const Assembly *ass = theMap->getCurrentAssembly();
+
+		required = 0;
+		solids = 0;
+		for (k = 0; k < theMap->numToPlace; k++) {
+			required += theMap->mToPlace[k].min;
+			solids += theMap->mToPlace[k].max * theMap->mToPlace[k].tile->area;
+		}
+
+		Com_sprintf(mapAssName, sizeof(mapAssName), "%s %s", p, md->param);
+		Com_Printf("%22.22s %2.i %2.i %2.i %2.i %3.i %3.i \n", mapAssName, theMap->numTiles, theMap->numToPlace, required, ass->numSeeds, ass->size, solids);
 	}
 }
 #endif
