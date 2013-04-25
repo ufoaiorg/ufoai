@@ -349,8 +349,6 @@ static void AII_UpdateOneInstallationDelay (base_t* base, installation_t* instal
 			MSO_CheckAddNewMessage(NT_INSTALLATION_INSTALLED, _("Notice"), cp_messageBuffer);
 		}
 	} else if (slot->installationTime < 0) {
-		const objDef_t *olditem;
-
 		/* the item is being removed */
 		slot->installationTime++;
 		if (slot->installationTime >= 0) {
@@ -358,7 +356,7 @@ static void AII_UpdateOneInstallationDelay (base_t* base, installation_t* instal
 			if (aircraft && aircraft->homebase != base)
 				Sys_Error("AII_UpdateOneInstallationDelay: aircraft->homebase and base pointers are out of sync\n");
 #endif
-			olditem = slot->item;
+			const objDef_t *olditem = slot->item;
 			AII_RemoveItemFromSlot(base, slot, false);
 			if (aircraft) {
 				AII_UpdateAircraftStats(aircraft);
