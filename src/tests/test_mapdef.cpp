@@ -282,14 +282,13 @@ static void testMapDefsFootSteps (void)
 {
 	const char *filterId = TEST_GetStringProperty("mapdef-id");
 	const mapDef_t *md;
-	int count = 0;
 	int mapCount = 0;				// the number of maps read
 	int badMapCount = 0;
 	const int skipCount = 20;		// to skip the first n mapDefs
 	const int badMapCountMax = 25;	// # of maps with missing sounds before this test stops
 	const int mapCountMax = 150;	// should of cause be higher than skip + bad
 	const int texCountMax = 30;
-	char texNames[texCountMax][60];
+	char texNames[texCountMax][MAX_QPATH];
 	bool done = false;
 
 	OBJZERO(texNames);
@@ -300,7 +299,7 @@ static void testMapDefsFootSteps (void)
 			continue;
 		if (md->nocunit)	/* map is WIP and therefore excluded from the tests */
 			continue;
-		if (filterId && strcmp(filterId, md->id) != 0)
+		if (filterId && !Q_streq(filterId, md->id))
 			continue;
 
 		mapCount++;
@@ -315,15 +314,15 @@ static void testMapDefsFootSteps (void)
 		}
 		srand(seed);
 
+		int count = 0;
 		Com_Printf("testMapDefsFootSteps: Mapdef %s (seed %u)\n", md->id, seed);
 		SV_Map(true, md->map, md->param);
 
 		/* now that we have loaded the map, check all cells for walkable places */
-		int x, y, z;
 		GridBox mBox(sv->mapData.mapMin, sv->mapData.mapMax);	// test ALL the cells
 #if !FOOTSTEPS_FULL
 		if (mapCount >= skipCount + 4) {	// after the first 4 maps, reduce the testing area
-			pos3_t center = {148, 128, 0};
+			const pos3_t center = {148, 128, 0};
 			mBox.set(center, center);		// the box on the map we're testing
 			mBox.expandXY(10);				// just test a few cells around the center of the map
 			mBox.maxs[2] = 2;				// and 3 levels high
@@ -331,9 +330,9 @@ static void testMapDefsFootSteps (void)
 #endif
 		mBox.clipToMaxBoundaries();
 
-		for (x = mBox.mins[0]; x <= mBox.maxs[0] && !done; x++) {
-			for (y = mBox.mins[1]; y <= mBox.maxs[1] && !done; y++) {
-				for (z = mBox.mins[2]; z <= mBox.maxs[2]; z++) {
+		for (int x = mBox.mins[0]; x <= mBox.maxs[0] && !done; x++) {
+			for (int y = mBox.mins[1]; y <= mBox.maxs[1] && !done; y++) {
+				for (int z = mBox.mins[2]; z <= mBox.maxs[2]; z++) {
 					const int floor = sv->mapData.routing.getFloor(1, x, y,z);
 					if (floor < 0)						// if we have a floor in that cell
 						continue;
@@ -352,9 +351,10 @@ static void testMapDefsFootSteps (void)
 					const char *snd = SV_GetFootstepSound(trace.surface->name);
 					if (snd)
 						continue;
+
 					for (int i = 0; i < texCountMax; ++i) {
 						if (!texNames[i][0]) {	// found a free slot ?
-							strcpy(texNames[i], trace.surface->name);
+							Q_strncpyz(texNames[i], trace.surface->name, sizeof(texNames[i]));
 							count++;
 							break;
 						}
@@ -379,7 +379,6 @@ static void testMapDefsFootSteps (void)
 			}
 		}
 		OBJZERO(texNames);
-		count = 0;
 		SV_ShutdownGameProgs();
 		CU_PASS(md->map);
 
