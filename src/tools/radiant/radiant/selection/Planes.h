@@ -1,5 +1,4 @@
-#ifndef PLANES_H_
-#define PLANES_H_
+#pragma once
 
 #include "math/Plane3.h"
 #include <set>
@@ -99,6 +98,3 @@ public:
 bool Scene_forEachPlaneSelectable_selectPlanes(scene::Graph& graph, Selector& selector, SelectionTest& test);
 void Scene_forEachPlaneSelectable_selectPlanes(scene::Graph& graph, Selector& selector, SelectionTest& test, const PlaneCallback& selectedPlaneCallback);
 void Scene_forEachPlaneSelectable_selectReversedPlanes(scene::Graph& graph, Selector& selector, const SelectedPlanes& selectedPlanes);
-
-
-#endif /*PLANES_H_*/

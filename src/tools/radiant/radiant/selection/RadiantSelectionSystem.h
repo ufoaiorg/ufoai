@@ -1,5 +1,4 @@
-#ifndef RADIANTSELECTIONSYSTEM_H_
-#define RADIANTSELECTIONSYSTEM_H_
+#pragma once
 
 #include "iselection.h"
 #include "math/matrix.h"
@@ -192,5 +191,3 @@ protected:
 	// Called when GTK is idle to recalculate the workzone (if necessary)
 	virtual void onGtkIdle();
 };
-
-#endif /*RADIANTSELECTIONSYSTEM_H_*/

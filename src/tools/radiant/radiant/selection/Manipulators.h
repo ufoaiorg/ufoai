@@ -1,5 +1,4 @@
-#ifndef MANIPULATORS_H_
-#define MANIPULATORS_H_
+#pragma once
 
 /* greebo: This file contains the manipulator classes like
  *
@@ -362,5 +361,3 @@ public:
     return false;
   }
 }; // class ClipManipulator
-
-#endif /*MANIPULATORS_H_*/

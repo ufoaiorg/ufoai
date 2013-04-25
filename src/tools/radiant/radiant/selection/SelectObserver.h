@@ -1,5 +1,4 @@
-#ifndef SELECTOBSERVER_H_
-#define SELECTOBSERVER_H_
+#pragma once
 
 #include "iselection.h"
 #include "Device.h"
@@ -169,5 +168,3 @@ public:
 	typedef MemberCaller1<SelectObserver, DeviceVector, &SelectObserver::mouseMoved> MouseMovedCaller;
 	typedef MemberCaller1<SelectObserver, DeviceVector, &SelectObserver::mouseUp> MouseUpCaller;
 };
-
-#endif /*SELECTOBSERVER_H_*/

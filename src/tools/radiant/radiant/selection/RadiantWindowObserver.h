@@ -1,5 +1,4 @@
-#ifndef RADIANTWINDOWOBSERVER_H_
-#define RADIANTWINDOWOBSERVER_H_
+#pragma once
 
 #include "../camera/view.h"
 #include "windowobserver.h"
@@ -81,5 +80,3 @@ public:
 
 // Allocates a new Observer on the heap and returns the pointer
 SelectionSystemWindowObserver* NewWindowObserver();
-
-#endif /*RADIANTWINDOWOBSERVER_H_*/

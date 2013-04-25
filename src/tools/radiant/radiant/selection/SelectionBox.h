@@ -1,5 +1,4 @@
-#ifndef SELECTIONBOX_H_
-#define SELECTIONBOX_H_
+#pragma once
 
 #include "generic/callbackfwd.h"
 
@@ -30,5 +29,3 @@ inline const Rectangle SelectionBoxForArea(const float device_point[2], const fl
   selection_box.max[1] = (device_delta[1] > 0) ? (device_point[1] + device_delta[1]) : (device_point[1]);
   return selection_box;
 }
-
-#endif /*SELECTIONBOX_H_*/

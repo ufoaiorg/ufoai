@@ -1,5 +1,4 @@
-#ifndef REMAP_H_
-#define REMAP_H_
+#pragma once
 
 template<typename Triple>
 class TripleRemapXYZ
@@ -129,5 +128,3 @@ inline void draw_arrowhead (const std::size_t segments, const float length, Flat
 		}
 	}
 }
-
-#endif /*REMAP_H_*/

@@ -1,5 +1,4 @@
-#ifndef RENDERABLES_H_
-#define RENDERABLES_H_
+#pragma once
 
 #include "renderable.h"
 
@@ -116,5 +115,3 @@ struct RenderableArrow : public OpenGLRenderable {
 		_line[1].colour = colour;
 	}
 };
-
-#endif /*RENDERABLES_H_*/

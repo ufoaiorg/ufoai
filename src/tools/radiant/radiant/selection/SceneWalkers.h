@@ -1,5 +1,4 @@
-#ifndef SCENEWALKERS_H_
-#define SCENEWALKERS_H_
+#pragma once
 
 #include "ientity.h"
 #include "ieclass.h"
@@ -138,5 +137,3 @@ public:
 		return true;
 	}
 };
-
-#endif /*SCENEWALKERS_H_*/
