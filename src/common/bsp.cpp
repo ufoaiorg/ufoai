@@ -468,14 +468,14 @@ static void CM_MakeTracingNodes (MapTile &tile)
  * @param[in] base The start of the data loaded from the file.
  * @param[in] mapData The loaded data is stored here.
  * @param[in] name The name of the maptile
- * @param[in] l Routing lump ... (routing data lump from bsp file)
+ * @param[in] lump Routing lump ... (routing data lump from bsp file)
  * @param[in] sX The x position on the world plane (grid position) - values from -(PATHFINDING_WIDTH/2) up to PATHFINDING_WIDTH/2 are allowed
  * @param[in] sY The y position on the world plane (grid position) - values from -(PATHFINDING_WIDTH/2) up to PATHFINDING_WIDTH/2 are allowed
  * @param[in] sZ The height level on the world plane (grid position) - values from 0 - PATHFINDING_HEIGHT are allowed
  * @sa CM_AddMapTile
  * @todo TEST z-level routing
  */
-static void CMod_LoadRouting (MapTile &tile, mapData_t *mapData, const byte *base, const char *name, const lump_t *l, const int sX, const int sY, const int sZ)
+static void CMod_LoadRouting (MapTile &tile, mapData_t *mapData, const byte *base, const char *name, const lump_t *lump, const int sX, const int sY, const int sZ)
 {
 	/** @todo this eats a lot of memory - load directory into mapData->map */
 	Routing *tempMap = static_cast<Routing *>(Mem_Alloc(sizeof(Routing)));
@@ -491,17 +491,17 @@ static void CMod_LoadRouting (MapTile &tile, mapData_t *mapData, const byte *bas
 
 	start = time(nullptr);
 
-	if (!l)
+	if (!lump)
 		Com_Error(ERR_DROP, "CMod_LoadRouting: No lump given");
 
-	if (!l->filelen)
+	if (!lump->filelen)
 		Com_Error(ERR_DROP, "CMod_LoadRouting: Map has NO routing lump");
 
 	assert((sX > -(PATHFINDING_WIDTH / 2)) && (sX < (PATHFINDING_WIDTH / 2)));
 	assert((sY > -(PATHFINDING_WIDTH / 2)) && (sY < (PATHFINDING_WIDTH / 2)));
 	assert((sZ >= 0) && (sZ < PATHFINDING_HEIGHT));
 
-	source = base + l->fileofs;
+	source = base + lump->fileofs;
 
 	i = CMod_DeCompressRouting(&source, (byte*)tile.wpMins);
 	length = i;
