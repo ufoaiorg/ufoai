@@ -363,10 +363,7 @@ void G_SendInventory (playermask_t playerMask, const Edict &ent)
 	while ((cont = ent.chr.inv.getNextCont(cont, true))) {
 		if (!G_IsItem(&ent) && INVDEF(cont->id)->temp)
 			continue;
-		Item *item = nullptr;
-		while ((item = cont->getNextItem(item))) {
-			nr++;
-		}
+		nr += cont->countItems();
 	}
 
 	/* return if no inventory items to send */
