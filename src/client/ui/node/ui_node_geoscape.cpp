@@ -180,6 +180,7 @@ void uiGeoscapeNode::smoothTranslate (uiNode_t *node)
 
 /**
  * @brief Applies alpha values to the night overlay image for 2d geoscape
+ * @param[in] node The current menuNode we have clicked on (3dmap or map)
  * @param[in] q The angle the sun is standing against the equator on earth
  */
 void uiGeoscapeNode::calcAndUploadDayAndNightTexture (uiNode_t *node, float q)
