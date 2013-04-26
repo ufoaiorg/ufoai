@@ -424,7 +424,6 @@ static void RS_AssignTechLinks (requirements_t *reqs)
 void RS_RequiredLinksAssign (void)
 {
 	linkedList_t *ll = redirectedTechs;	/**< Use this so we do not change the original redirectedTechs pointer. */
-	technology_t *redirectedTech;
 	int i;
 
 	for (i = 0; i < ccs.numTechnologies; i++) {
@@ -441,7 +440,7 @@ void RS_RequiredLinksAssign (void)
 	while (ll) {
 		/* Get the data stored in the linked list. */
 		assert(ll);
-		redirectedTech = (technology_t *) ll->data;
+		technology_t *redirectedTech = (technology_t *) ll->data;
 		ll = ll->next;
 
 		assert(redirectedTech);

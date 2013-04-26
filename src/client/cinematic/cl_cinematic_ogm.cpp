@@ -482,9 +482,9 @@ static bool CIN_OGM_LoadFrame (cinematic_t *cin)
 	bool anyDataTransferred = true;
 	bool needVOutputData = true;
 	bool audioWantsMoreData = false;
-	int status;
 
 	while (anyDataTransferred && (needVOutputData || audioWantsMoreData)) {
+		int status;
 		anyDataTransferred = false;
 		if (needVOutputData && (status = CIN_OGM_LoadVideoFrame(cin))) {
 			needVOutputData = false;

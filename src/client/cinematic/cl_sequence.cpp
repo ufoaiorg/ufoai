@@ -481,8 +481,6 @@ static void SEQ_StopSequence (sequenceContext_t *context)
  */
 static bool SEQ_Execute (sequenceContext_t *context)
 {
-	seqCmd_t *sc;
-
 	/* we are inside a waiting command */
 	if (context->time > cl.time) {
 		/* if we clicked a button we end the waiting loop */
@@ -501,7 +499,7 @@ static bool SEQ_Execute (sequenceContext_t *context)
 		}
 
 		/* call handler */
-		sc = &seqCmds[context->currentCmd];
+		seqCmd_t *sc = &seqCmds[context->currentCmd];
 		context->currentCmd += sc->handler(context, sc->name, sc->data);
 	}
 
@@ -732,14 +730,13 @@ static int SEQ_ExecuteSound (sequenceContext_t *context, const char *name, const
  */
 static int SEQ_ExecuteObj2D (sequenceContext_t *context, const char *name, const char *data)
 {
-	seq2D_t *s2d;
 	const value_t *vp;
-	int i;
 
 	/* get sequence text */
-	s2d = SEQ_Find2D(context, name);
+	seq2D_t *s2d = SEQ_Find2D(context, name);
 	if (!s2d) {
 		/* create new sequence text */
+		int i;
 		for (i = 0, s2d = context->obj2Ds; i < context->numObj2Ds; i++, s2d++)
 			if (!s2d->inuse)
 				break;

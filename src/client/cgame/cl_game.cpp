@@ -852,7 +852,6 @@ void GAME_SetMode (const cgame_export_t *gametype)
 
 static void UI_MapInfoGetNext (int step)
 {
-	const mapDef_t *md;
 	int ref = cls.currentSelectedMap;
 
 	for (;;) {
@@ -861,7 +860,7 @@ static void UI_MapInfoGetNext (int step)
 			cls.currentSelectedMap = csi.numMDs - 1;
 		cls.currentSelectedMap %= csi.numMDs;
 
-		md = Com_GetMapDefByIDX(cls.currentSelectedMap);
+		const mapDef_t *md = Com_GetMapDefByIDX(cls.currentSelectedMap);
 
 		/* avoid infinit loop */
 		if (ref == cls.currentSelectedMap)
