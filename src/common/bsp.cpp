@@ -478,7 +478,7 @@ static void CM_MakeTracingNodes (MapTile &tile)
 static void CMod_LoadRouting (MapTile &tile, mapData_t *mapData, const byte *base, const char *name, const lump_t *l, const int sX, const int sY, const int sZ)
 {
 	/** @todo this eats a lot of memory - load directory into mapData->map */
-	Routing *tempMap = (Routing *)Mem_Alloc(sizeof(Routing));
+	Routing *tempMap = static_cast<Routing *>(Mem_Alloc(sizeof(Routing)));
 	const byte *source;
 	int length;
 	int x, y, z;
