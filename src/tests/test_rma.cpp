@@ -85,16 +85,14 @@ static void testAssembly (void)
 static void testMassAssemblyTimeout (void)
 {
 	int i;
-	long time;
-	MapInfo *randomMap;
 	char entityString[MAX_TOKEN_CHARS];
 
 	sv_threads->integer = 1;
 	for (i = 0; i < 10; i++) {
 		/** @todo the assemble thread sets a different seed */
 		srand(i);
-		time = Sys_Milliseconds();
-		randomMap = SV_AssembleMap("forest", "large", mapStr, posStr, entityString, i);
+		long time = Sys_Milliseconds();
+		MapInfo *randomMap = SV_AssembleMap("forest", "large", mapStr, posStr, entityString, i);
 		CU_ASSERT(randomMap != NULL);
 		time = Sys_Milliseconds() - time;
 		UFO_CU_ASSERT_TRUE_MSG(time < MAX_ALLOWED_TIME_TO_ASSEMBLE,
@@ -107,16 +105,14 @@ static void testMassAssemblyTimeout (void)
 static void testMassAssemblyParallel (void)
 {
 	int i;
-	long time;
-	MapInfo *randomMap;
 	char entityString[MAX_TOKEN_CHARS];
 
 	sv_threads->integer = 2;
 	for (i = 0; i < 10; i++) {
 		/** @todo the assemble thread sets a different seed */
 		srand(i);
-		time = Sys_Milliseconds();
-		randomMap = SV_AssembleMap("forest", "large", mapStr, posStr, entityString, i);
+		long time = Sys_Milliseconds();
+		MapInfo *randomMap = SV_AssembleMap("forest", "large", mapStr, posStr, entityString, i);
 		CU_ASSERT(randomMap != NULL);
 		time = Sys_Milliseconds() - time;
 		UFO_CU_ASSERT_TRUE_MSG(time < MAX_ALLOWED_TIME_TO_ASSEMBLE,
@@ -130,15 +126,13 @@ static void testMassAssemblyParallel (void)
 static void testMassAssemblySequential (void)
 {
 	int i;
-	long time;
-	MapInfo *randomMap;
 	char entityString[MAX_TOKEN_CHARS];
 
 	sv_threads->integer = 0;
 	for (i = 0; i < 10; i++) {
 		srand(i);
-		time = Sys_Milliseconds();
-		randomMap = SV_AssembleMap("forest", "large", mapStr, posStr, entityString, i);
+		long time = Sys_Milliseconds();
+		MapInfo *randomMap = SV_AssembleMap("forest", "large", mapStr, posStr, entityString, i);
 		CU_ASSERT_PTR_NOT_NULL(randomMap);
 		time = Sys_Milliseconds() - time;
 		UFO_CU_ASSERT_TRUE_MSG(time < MAX_ALLOWED_TIME_TO_ASSEMBLE,
