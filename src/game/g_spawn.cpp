@@ -56,7 +56,7 @@ typedef struct spawn_temp_s {
 	int noEquipment;	/**< spawn the actors with no equipment - must be collected in the map */
 } spawn_temp_t;
 
-static spawn_temp_t st;
+static spawn_temp_t spawnTemp;
 
 static void SP_light(Edict *ent);
 static void SP_dummy(Edict *ent);
@@ -234,9 +234,9 @@ static void ED_ParseField (const char *key, const char *value, Edict *ent)
 		ent->message = ED_NewString(value);
 
 	else if (kvp.isKey("norandomspawn"))
-		st.noRandomSpawn = kvp.asInt();
+		spawnTemp.noRandomSpawn = kvp.asInt();
 	else if (kvp.isKey("noequipment"))
-		st.noEquipment = kvp.asInt();
+		spawnTemp.noEquipment = kvp.asInt();
 }
 
 /**
@@ -250,7 +250,7 @@ static const char *ED_ParseEdict (const char *data, Edict *ent)
 	char keyname[MAX_VAR];
 
 	init = false;
-	OBJZERO(st);
+	OBJZERO(spawnTemp);
 
 	/* go through all the dictionary pairs */
 	while (1) {
@@ -1127,8 +1127,8 @@ static void SP_worldspawn (Edict *ent)
 	ent->inuse = true;
 	ent->classname = "worldspawn";
 
-	level.noEquipment = st.noEquipment;
-	level.noRandomSpawn = st.noRandomSpawn;
+	level.noEquipment = spawnTemp.noEquipment;
+	level.noRandomSpawn = spawnTemp.noRandomSpawn;
 
 	gi.ConfigString(CS_MAXCLIENTS, "%i", sv_maxclients->integer);
 
