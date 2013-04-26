@@ -117,9 +117,6 @@ public:
 	/** @brief Stores the alternatives information for the assembled map */
 	unsigned long curMap[MAX_RANDOM_MAP_HEIGHT][MAX_RANDOM_MAP_WIDTH];
 
-	/** @brief Stores the map rating for the assembled map */
-	char curRating[MAX_RANDOM_MAP_HEIGHT][MAX_RANDOM_MAP_WIDTH];
-
 	/** @brief Stores the Tiles to Place in the map */
 	mToPlace_t mToPlace[MAX_TILETYPES];
 	int numToPlace;								/**< the size of the to place list */

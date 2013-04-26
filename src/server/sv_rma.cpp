@@ -768,27 +768,21 @@ static bool SV_ParseAssembly (MapInfo *map, const char *filename, const char **t
  * @brief Combines the alternatives/connection info of a map with a tile and sets the rating
  * @param[in,out] mapAlts Pointer to the alternatives info field of the map which will be updated.
  * @param[in] tileAlts Pointer to the alternatives info field of the tile.
- * @param[in,out] mapRating Pointer to the rating field of the map.
  * @sa SV_AssembleMap
  * @sa SV_FitTile
  */
-static void SV_CombineAlternatives (unsigned long *mapAlts, const unsigned long tileAlts, char *mapRating)
+static void SV_CombineAlternatives (unsigned long *mapAlts, const unsigned long tileAlts)
 {
 	/* don't touch solid fields of the map, return if tile has no connection info */
 	if (IS_SOLID(*mapAlts) || (tileAlts == ALL_TILES))
 		return;
 
-	/* for an empty map tile the rating must be zero */
-	assert((*mapAlts != ALL_TILES) || (*mapRating == 0));
-
 	/* copy if tile is solid */
 	if (IS_SOLID(tileAlts)) {
 		*mapAlts = tileAlts;
-		*mapRating = 1;
 	/* combine otherways */
 	} else {
 		*mapAlts &= tileAlts;
-		(*mapRating)--;
 	}
 }
 
@@ -799,8 +793,6 @@ static void SV_ClearMap (MapInfo *map)
 {
 	unsigned long *mp = &map->curMap[0][0];
 	const unsigned long *end = &map->curMap[MAX_RANDOM_MAP_HEIGHT - 1][MAX_RANDOM_MAP_WIDTH - 1];
-
-	OBJZERO(map->curRating);
 
 	while (mp <= end)
 		*(mp++) = ALL_TILES;
@@ -936,7 +928,7 @@ static void SV_AddTile (MapInfo *map, const Tile *tile, int x, int y, int idx, i
 			assert(y + ty < MAX_RANDOM_MAP_HEIGHT);
 			assert(x + tx < MAX_RANDOM_MAP_WIDTH);
 
-			SV_CombineAlternatives(&map->curMap[y + ty][x + tx], tile->spec[ty][tx], &map->curRating[y + ty][x + tx]);
+			SV_CombineAlternatives(&map->curMap[y + ty][x + tx], tile->spec[ty][tx]);
 		}
 
 	/* add the tile to the array of placed tiles*/
@@ -995,7 +987,7 @@ static void SV_RemoveTile (MapInfo *map, int* idx, int* pos)
 				assert(y + ty < MAX_RANDOM_MAP_HEIGHT);
 				assert(x + tx < MAX_RANDOM_MAP_WIDTH);
 
-				SV_CombineAlternatives(&map->curMap[y + ty][x + tx], tile->spec[ty][tx], &map->curRating[y + ty][x + tx]);
+				SV_CombineAlternatives(&map->curMap[y + ty][x + tx], tile->spec[ty][tx]);
 			}
 		}
 	}
