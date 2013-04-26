@@ -1144,7 +1144,7 @@ bool G_ClientShoot (const Player &player, Edict *ent, const pos3_t at, shoot_typ
 		if (!G_ActionCheckForCurrentTeam(player, ent, tusNeeded + reactionLeftover))
 			return false;
 	} else {
-		if (!G_ActionCheckForReaction(&player, ent, tusNeeded + reactionLeftover))
+		if (!G_ActionCheckForReaction(player, ent, tusNeeded + reactionLeftover))
 			return false;
 	}
 
