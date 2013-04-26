@@ -40,9 +40,13 @@ typedef struct aiAction_s {
 	pos3_t stop;		/**< grid pos to end turn at (e.g. hiding spots) */
 	shoot_types_t shootType;	/**< the shoot type */
 	byte shots;			/**< how many shoots can this actor do - only set this if the target is an actor */
-	Edict *target;	/**< the target edict */
+	Edict *target;		/**< the target edict */
 	const fireDef_t *fd;/**< the firemode to use for shooting */
 	int z_align;		/**< the z-align for every shoot */
+
+	inline void reset() {
+		OBJZERO(*this);
+	}
 } aiAction_t;
 
 #define SCORE_HIDE			60
@@ -679,7 +683,7 @@ static float AI_FighterCalcActionScore (Edict *ent, const pos3_t to, aiAction_t 
 		return AI_ACTION_NOTHING_FOUND;
 
 	bestActionScore = 0.0;
-	OBJZERO(*aia);
+	aia->reset();
 
 	/* set basic parameters */
 	VectorCopy(to, aia->to);
@@ -795,7 +799,7 @@ static float AI_CivilianCalcActionScore (Edict *ent, const pos3_t to, aiAction_t
 
 	/* set basic parameters */
 	bestActionScore = 0.0;
-	OBJZERO(*aia);
+	aia->reset();
 	VectorCopy(to, aia->to);
 	VectorCopy(to, aia->stop);
 	G_EdictSetOrigin(ent, to);
@@ -912,7 +916,7 @@ static float AI_PanicCalcActionScore (Edict *ent, const pos3_t to, aiAction_t *a
 	const int tu = G_ActorUsableTUs(ent) - move;
 
 	/* set basic parameters */
-	OBJZERO(*aia);
+	aia->reset();
 	VectorCopy(to, aia->to);
 	VectorCopy(to, aia->stop);
 	G_EdictSetOrigin(ent, to);
@@ -983,7 +987,7 @@ static int AI_CheckForMissionTargets (const Player &player, Edict *ent, aiAction
 	int bestActionScore = AI_ACTION_NOTHING_FOUND;
 
 	/* reset any previous given action set */
-	OBJZERO(*aia);
+	aia->reset();
 
 	if (ent->team == TEAM_CIVILIAN) {
 		Edict *checkPoint = nullptr;
@@ -1127,7 +1131,7 @@ static aiAction_t AI_PrepBestAction (const Player &player, Edict *ent)
 
 	/* test for possible death during move. reset bestAia due to dead status */
 	if (G_IsDead(ent))
-		OBJZERO(bestAia);
+		bestAia.reset();
 
 	return bestAia;
 }
