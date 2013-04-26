@@ -768,13 +768,12 @@ static const sanity_functions_t sanity_functions[] = {
  */
 void CP_ScriptSanityCheck (void)
 {
-	bool status;
 	const sanity_functions_t *s;
 
 	Com_Printf("Sanity check for script data\n");
 	s = sanity_functions;
 	while (s->check) {
-		status = s->check();
+		bool status = s->check();
 		Com_Printf("...%s %s\n", s->name, (status ? "ok" : "failed"));
 		s++;
 	}

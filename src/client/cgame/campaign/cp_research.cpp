@@ -385,10 +385,9 @@ void RS_MarkResearchable (const base_t* base, bool init)
 static void RS_AssignTechLinks (requirements_t *reqs)
 {
 	int i;
-	requirement_t *req;
 
 	for (i = 0; i < reqs->numLinks; i++) {
-		req = &reqs->links[i];
+		requirement_t *req = &reqs->links[i];
 		switch (req->type) {
 		case RS_LINK_TECH:
 		case RS_LINK_TECH_NOT:
