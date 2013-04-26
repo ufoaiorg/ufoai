@@ -43,7 +43,7 @@ int r_numImages;
 /* Wicked for()-loop to go through all images in the r_images linked list. Parameters are: (int i, image_t *image, imageArray_t *imageArray) */
 #define FOR_EACH_IMAGE(i, image, imageArray) \
 	for (i = 0, imageArray = &r_images, image = &imageArray->images[0]; i < r_numImages; i++, image++, \
-			i % IMAGE_ARRAY_SIZE ? 0 : (image = (imageArray = imageArray->next) ? &imageArray->images[0] : nullptr))
+			(i % IMAGE_ARRAY_SIZE) ? 0 : (image = (imageArray = imageArray->next) ? &imageArray->images[0] : nullptr))
 
 
 /* generic environment map */
