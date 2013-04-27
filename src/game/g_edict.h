@@ -171,49 +171,38 @@ public:
 
 	bool active;
 
-	inline invList_t *getContainer (const containerIndex_t idx) const
-	{
+	inline invList_t *getContainer (const containerIndex_t idx) const {
 		return chr.inv.getContainer3(idx);
 	}
-	inline void resetContainer (const containerIndex_t idx)
-	{
+	inline void resetContainer (const containerIndex_t idx) {
 		chr.inv.resetContainer(idx);
 	}
-	inline Item *getArmour () const
-	{
+	inline Item *getArmour () const {
 		return chr.inv.getArmour();
 	}
-	inline Item *getRightHandItem () const
-	{
+	inline Item *getRightHandItem () const {
 		return chr.inv.getRightHandContainer();
 	}
-	inline Item *getLeftHandItem () const
-	{
+	inline Item *getLeftHandItem () const {
 		return chr.inv.getLeftHandContainer();
 	}
-	inline Item *getHandItem (actorHands_t hand) const
-	{
+	inline Item *getHandItem (actorHands_t hand) const {
 		if (hand == ACTOR_HAND_RIGHT)
 			return chr.inv.getRightHandContainer();
 		else if (hand == ACTOR_HAND_LEFT)
 			return chr.inv.getLeftHandContainer();
 		else return nullptr;
 	}
-	inline invList_t *getFloor () const
-	{
+	inline invList_t *getFloor () const {
 		return chr.inv.getFloorContainer();
 	}
-	inline void setFloor (const Edict *other)
-	{
+	inline void setFloor (const Edict *other) {
 		chr.inv.setFloorContainer(other->getFloor());
 	}
-	inline void resetFloor ()
-	{
+	inline void resetFloor () {
 		chr.inv.setFloorContainer(nullptr);
 	}
-	inline Player &getPlayer () const
-	{
+	inline Player &getPlayer () const {
 		return game.players[this->pnum];
-
 	}
 };
