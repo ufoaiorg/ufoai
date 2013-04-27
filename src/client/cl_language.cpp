@@ -56,18 +56,15 @@ static char *msgIDText;
 
 static void CL_ParseMessageID (const char *name, const char **text)
 {
-	const char *errhead = "CL_ParseMessageID: unexpected end of file (msgid ";
-	const char *token;
-	int i;
-
 	/* get it's body */
-	token = Com_Parse(text);
+	const char *token = Com_Parse(text);
 	if (!*text || *token != '{') {
 		Com_Printf("CL_ParseMessageID: msgid \"%s\" without body ignored\n", name);
 		return;
 	}
 
 	/* search for game types with same name */
+	int i;
 	for (i = 0; i < numMsgIDs; i++)
 		if (Q_streq(token, msgIDs[i].id))
 			break;
@@ -84,6 +81,7 @@ static void CL_ParseMessageID (const char *name, const char **text)
 		HASH_Add(msgIDHash, msgid, hash);
 
 		do {
+			const char *errhead = "CL_ParseMessageID: unexpected end of file (msgid ";
 			token = Com_EParse(text, errhead, name);
 			if (!*text)
 				break;

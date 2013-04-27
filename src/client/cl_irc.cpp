@@ -370,9 +370,8 @@ static bool Irc_Proto_Disconnect (void)
 	const bool status = Irc_Net_Disconnect();
 	if (!status) {
 		irc_bucket_message_t *msg = irc_bucket.first_msg;
-		irc_bucket_message_t *prev;
 		while (msg) {
-			prev = msg;
+			irc_bucket_message_t *prev = msg;
 			msg = msg->next;
 			Mem_Free(prev->msg);
 			Mem_Free(prev);

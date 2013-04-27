@@ -462,7 +462,6 @@ void Con_DrawConsole (float frac)
 	int i, x, y;
 	int rows, row;
 	unsigned int lines;
-	short *text;
 	char consoleMessage[128];
 
 	lines = viddef.context.height * frac;
@@ -512,7 +511,7 @@ void Con_DrawConsole (float frac)
 		if (con.currentLine - row >= con.totalLines)
 			break;				/* past scrollback wrap point */
 
-		text = con.text + (row % con.totalLines) * con.lineWidth;
+		short *text = con.text + (row % con.totalLines) * con.lineWidth;
 
 		Con_DrawText(text, 0, y, con.lineWidth);
 	}
