@@ -78,7 +78,7 @@ static int UFO_CleanSuiteInventory (void)
 
 static void testItemAdd (void)
 {
-	inventory_t inv;
+	Inventory inv;
 	const objDef_t *od;
 	const invDef_t *container;
 
@@ -103,7 +103,7 @@ static void testItemAdd (void)
 
 static void testItemDel (void)
 {
-	inventory_t inv;
+	Inventory inv;
 	const objDef_t *od;
 	const invDef_t *container;
 	invList_t *addedItem;
@@ -133,7 +133,7 @@ static void testItemDel (void)
 
 static void testItemMove (void)
 {
-	inventory_t inv;
+	Inventory inv;
 	const objDef_t *od;
 	const invDef_t *container, *containerTo;
 	invList_t *addedItem;
@@ -168,7 +168,7 @@ static void testItemMove (void)
 
 static void testItemReload (void)
 {
-	inventory_t inv;
+	Inventory inv;
 	const objDef_t *od, *ad;
 	const invDef_t *container, *containerFrom;
 	invList_t *addedItem;
@@ -238,7 +238,7 @@ static void testItemReload (void)
 	CU_ASSERT(inv.containsItem(container->id, &item) == true);
 }
 
-static bool testAddSingle (inventory_t *inv, const objDef_t *od, const invDef_t *container)
+static bool testAddSingle (Inventory *inv, const objDef_t *od, const invDef_t *container)
 {
 	Item item(od);
 
@@ -247,7 +247,7 @@ static bool testAddSingle (inventory_t *inv, const objDef_t *od, const invDef_t 
 
 static void testItemMassActions (void)
 {
-	inventory_t inv;
+	Inventory inv;
 	const objDef_t *od;
 	const invDef_t *container;
 	bool addedItem;
@@ -311,7 +311,7 @@ static void testItemMassActions (void)
 
 static void testItemToHeadgear (void)
 {
-	inventory_t inv;
+	Inventory inv;
 	const objDef_t *od;
 	const invDef_t *container;
 

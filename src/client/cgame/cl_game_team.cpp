@@ -37,7 +37,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define TEAM_SAVE_FILE_VERSION 4
 
-static inventory_t game_inventory;
+static Inventory game_inventory;
 static bool characterActive[MAX_ACTIVETEAM];
 
 typedef struct teamSaveFileHeader_s {
@@ -430,7 +430,7 @@ static void GAME_GetEquipment (void)
 	GAME_UpdateInventory(&game_inventory, ed);
 }
 
-void GAME_UpdateInventory (inventory_t *inv, const equipDef_t *ed)
+void GAME_UpdateInventory (Inventory *inv, const equipDef_t *ed)
 {
 	if (!LIST_IsEmpty(chrDisplayList))
 		ui_inventory = &((character_t*)chrDisplayList->data)->inv;
@@ -525,7 +525,7 @@ static void GAME_SaveItem (xmlNode_t *p, const Item *item, containerIndex_t cont
  * @sa GAME_SaveItem
  * @sa GAME_LoadInventory
  */
-static void GAME_SaveInventory (xmlNode_t *p, const inventory_t *inv)
+static void GAME_SaveInventory (xmlNode_t *p, const Inventory *inv)
 {
 	containerIndex_t container;
 
@@ -595,7 +595,7 @@ static void GAME_LoadItem (xmlNode_t *n, Item *item, containerIndex_t *container
  * @sa GAME_LoadItem
  * @sa I_AddToInventory
   */
-static void GAME_LoadInventory (xmlNode_t *p, inventory_t *inv, int maxLoad)
+static void GAME_LoadInventory (xmlNode_t *p, Inventory *inv, int maxLoad)
 {
 	xmlNode_t *s;
 

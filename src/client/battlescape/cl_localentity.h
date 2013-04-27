@@ -142,7 +142,7 @@ typedef struct le_s {
 	ptl_t *ptl;				/**< particle pointer to display */
 	const char *ref1, *ref2;
 	const struct le_s *ref3;
-	inventory_t inv;
+	Inventory inv;
 	int left, right, extension, headgear;	/**< item indices that the actor holds in his hands */
 	actorSizeEnum_t fieldSize;				/**< ACTOR_SIZE_* */
 

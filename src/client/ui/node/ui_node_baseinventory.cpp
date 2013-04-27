@@ -73,7 +73,7 @@ static const invList_t *dragInfoIC;
  * @param[in] filterType Filter used.
  * @todo Remove filter it is not a generic concept, and here it mean nothing
  * @return invList_t Pointer to the invList_t/item that is located at x/y or equals "item".
- * @sa inventory_t::getItemAtPos
+ * @sa Inventory::getItemAtPos
  */
 static invList_t *UI_ContainerNodeGetExistingItem (const uiNode_t *node, const objDef_t *item, const itemFilterTypes_t filterType)
 {

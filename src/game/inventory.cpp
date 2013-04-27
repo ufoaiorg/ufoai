@@ -49,7 +49,7 @@ void InventoryInterface::removeInvList (invList_t *invList)
 	}
 }
 
-invList_t *InventoryInterface::addInvList (inventory_t *const inv, const invDef_t *container)
+invList_t *InventoryInterface::addInvList (Inventory *const inv, const invDef_t *container)
 {
 	invList_t *newEntry = (invList_t*)alloc(sizeof(invList_t));
 	newEntry->setNext(nullptr);	/* not really needed - but for better readability */
@@ -84,7 +84,7 @@ invList_t *InventoryInterface::addInvList (inventory_t *const inv, const invDef_
  * @sa removeFromInventory
  * @return the @c invList_t pointer the item was added to, or @c nullptr in case of an error (item wasn't added)
  */
-invList_t *InventoryInterface::addToInventory (inventory_t *const inv, const Item* const item, const invDef_t *container, int x, int y, int amount)
+invList_t *InventoryInterface::addToInventory (Inventory *const inv, const Item* const item, const invDef_t *container, int x, int y, int amount)
 {
 	if (!item->def())
 		return nullptr;
@@ -145,7 +145,7 @@ invList_t *InventoryInterface::addToInventory (inventory_t *const inv, const Ite
  * @return false If nothing was removed or an error occurred.
  * @sa addToInventory
  */
-bool InventoryInterface::removeFromInventory (inventory_t* const inv, const invDef_t *container, invList_t *fItem)
+bool InventoryInterface::removeFromInventory (Inventory* const inv, const invDef_t *container, invList_t *fItem)
 {
 	assert(inv);
 	assert(container);
@@ -230,7 +230,7 @@ bool InventoryInterface::removeFromInventory (inventory_t* const inv, const invD
  * @return IA_ARMOUR when placing an armour on the actor.
  * @return IA_MOVE when just moving an item.
  */
-inventory_action_t InventoryInterface::moveInInventory (inventory_t* const inv, const invDef_t *from, invList_t *fItem, const invDef_t *to, int tx, int ty, int *TU, invList_t ** uponItem)
+inventory_action_t InventoryInterface::moveInInventory (Inventory* const inv, const invDef_t *from, invList_t *fItem, const invDef_t *to, int tx, int ty, int *TU, invList_t ** uponItem)
 {
 	invList_t *ic;
 
@@ -465,7 +465,7 @@ inventory_action_t InventoryInterface::moveInInventory (inventory_t* const inv, 
  * @sa findSpace
  * @sa addToInventory
  */
-bool InventoryInterface::tryAddToInventory (inventory_t* const inv, const Item *const item, const invDef_t *container)
+bool InventoryInterface::tryAddToInventory (Inventory* const inv, const Item *const item, const invDef_t *container)
 {
 	int x, y;
 
@@ -496,7 +496,7 @@ bool InventoryInterface::tryAddToInventory (inventory_t* const inv, const Item *
  * e.g. the container of a dropped weapon in tactical mission (ET_ITEM)
  * in every other case just set the pointer to nullptr for a temp container like CID_EQUIP or CID_FLOOR
  */
-void InventoryInterface::emptyContainer (inventory_t* const inv, const containerIndex_t containerId)
+void InventoryInterface::emptyContainer (Inventory* const inv, const containerIndex_t containerId)
 {
 	invList_t *ic;
 
@@ -518,7 +518,7 @@ void InventoryInterface::emptyContainer (inventory_t* const inv, const container
  * for real containers @c emptyContainer is called.
  * @sa emptyContainer
  */
-void InventoryInterface::destroyInventory (inventory_t* const inv)
+void InventoryInterface::destroyInventory (Inventory* const inv)
 {
 	if (!inv)
 		return;
@@ -537,7 +537,7 @@ void InventoryInterface::destroyInventory (inventory_t* const inv)
  * @param[out] slowestFd The TU needed to use the slowest fireDef in the inventory.
  * @note temp containers are excluded.
  */
-float InventoryInterface::GetInventoryState (const inventory_t *inventory, int &slowestFd)
+float InventoryInterface::GetInventoryState (const Inventory *inventory, int &slowestFd)
 {
 	float weight = 0;
 
@@ -568,7 +568,7 @@ float InventoryInterface::GetInventoryState (const inventory_t *inventory, int &
  */
 int InventoryInterface::PackAmmoAndWeapon (character_t* const chr, const objDef_t *weapon, int missedPrimary, const equipDef_t *ed, int maxWeight)
 {
-	inventory_t* const inv = &chr->inv;
+	Inventory* const inv = &chr->inv;
 	const int speed = chr->score.skills[ABILITY_SPEED];
 	const objDef_t *ammo = nullptr;
 	bool allowLeft;
@@ -688,7 +688,7 @@ int InventoryInterface::PackAmmoAndWeapon (character_t* const chr, const objDef_
  * @param[in] td Pointer to a team definition.
  * @note Weapons assigned here cannot be collected in any case. These are dummy "actor weapons".
  */
-void InventoryInterface::EquipActorMelee (inventory_t* const inv, const teamDef_t *td)
+void InventoryInterface::EquipActorMelee (Inventory* const inv, const teamDef_t *td)
 {
 	assert(td->onlyWeapon);
 
@@ -711,7 +711,7 @@ void InventoryInterface::EquipActorMelee (inventory_t* const inv, const teamDef_
  * @param[in] inv The inventory that will get the weapon.
  * @param[in] weapon Pointer to the item which being added to robot's inventory.
  */
-void InventoryInterface::EquipActorRobot (inventory_t* const inv, const objDef_t *weapon)
+void InventoryInterface::EquipActorRobot (Inventory* const inv, const objDef_t *weapon)
 {
 	assert(weapon);
 
@@ -749,7 +749,7 @@ typedef enum {
  */
 void InventoryInterface::EquipActor (character_t* const chr, const equipDef_t *ed, int maxWeight)
 {
-	inventory_t* const inv = &chr->inv;
+	Inventory* const inv = &chr->inv;
 	const teamDef_t *td = chr->teamDef;
 	const int speed = chr->score.skills[ABILITY_SPEED];
 	int i;

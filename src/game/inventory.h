@@ -47,23 +47,23 @@ class InventoryInterface
 
 public:
 	void initInventory (const char *name, const csi_t *csi, const inventoryImport_t *import);
-	bool removeFromInventory (inventory_t* const inv, const invDef_t *container, invList_t *fItem) __attribute__((warn_unused_result));
-	invList_t *addToInventory (inventory_t *const inv, const Item* const item, const invDef_t *container, int x, int y,
+	bool removeFromInventory (Inventory* const inv, const invDef_t *container, invList_t *fItem) __attribute__((warn_unused_result));
+	invList_t *addToInventory (Inventory *const inv, const Item* const item, const invDef_t *container, int x, int y,
 			int amount) __attribute__((warn_unused_result));
 
-	inventory_action_t moveInInventory (inventory_t* const inv, const invDef_t *from, invList_t *item, const invDef_t *to,
+	inventory_action_t moveInInventory (Inventory* const inv, const invDef_t *from, invList_t *item, const invDef_t *to,
 			int tx, int ty, int *TU, invList_t ** icp);
 
-	bool tryAddToInventory (inventory_t* const inv, const Item *const item, const invDef_t *container);
-	void destroyInventory (inventory_t* const inv);
+	bool tryAddToInventory (Inventory* const inv, const Item *const item, const invDef_t *container);
+	void destroyInventory (Inventory* const inv);
 	void destroyInventoryInterface(void);
-	void emptyContainer (inventory_t* const inv, const containerIndex_t container);
+	void emptyContainer (Inventory* const inv, const containerIndex_t container);
 
 	void EquipActor (character_t* const chr, const equipDef_t *ed, int maxWeight);
 
-	void EquipActorMelee (inventory_t* const inv, const teamDef_t *td);
+	void EquipActorMelee (Inventory* const inv, const teamDef_t *td);
 
-	void EquipActorRobot (inventory_t* const inv, const objDef_t *weapon);
+	void EquipActorRobot (Inventory* const inv, const objDef_t *weapon);
 
 	int GetUsedSlots ();
 
@@ -78,7 +78,7 @@ protected:
 		import->Free(data);
 	}
 	void removeInvList (invList_t *invList);
-	invList_t *addInvList (inventory_t *const inv, const invDef_t *container);
-	float GetInventoryState (const inventory_t *inventory, int &slowestFd);
+	invList_t *addInvList (Inventory *const inv, const invDef_t *container);
+	float GetInventoryState (const Inventory *inventory, int &slowestFd);
 	int PackAmmoAndWeapon (character_t* const chr, const objDef_t *weapon, int missedPrimary, const equipDef_t *ed, int maxWeight);
 };

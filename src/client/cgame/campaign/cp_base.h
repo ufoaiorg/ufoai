@@ -130,7 +130,7 @@ typedef struct base_s {
 
 	equipDef_t storage;	/**< weapons, etc. stored in base */
 
-	inventory_t bEquipment;	/**< The equipment of the base; needn't be saved */
+	Inventory bEquipment;	/**< The equipment of the base; needn't be saved */
 
 	baseWeapon_t batteries[MAX_BASE_SLOT];	/**< Missile batteries assigned to base. */
 	int numBatteries;

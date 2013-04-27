@@ -95,7 +95,7 @@ int main (int argc, char **argv)
 	TYPESIZE(eventMail_t);
 	TYPESIZE(gametype_t);
 	TYPESIZE(image_t);
-	TYPESIZE(inventory_t);
+	TYPESIZE(Inventory);
 	TYPESIZE(InventoryInterface);
 	TYPESIZE(le_t);
 	TYPESIZE(lighting_t);

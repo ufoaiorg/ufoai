@@ -83,7 +83,7 @@ static void CP_TEAM_AssignSoldierByUCN_f (void)
  */
 static void CP_TEAM_SetEquipContainer (character_t *chr)
 {
-	inventory_t *uiInv = *cgi->ui_inventory;
+	Inventory *uiInv = *cgi->ui_inventory;
 	if (uiInv && uiInv != &chr->inv) {
 		chr->inv.setContainer(CID_EQUIP, uiInv->getContainer2(CID_EQUIP));
 		/* set 'old' CID_EQUIP to nullptr */

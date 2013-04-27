@@ -356,7 +356,7 @@ typedef struct invDef_s {
 	bool headgear;	/**< Only headgear items can be stored in this container. */
 	bool all;		/**< Every item type can be stored in this container. */
 	bool temp;		/**< This is only a pointer to another inventory definitions. */
-	/** Scroll information. @sa inventory_t */
+	/** Scroll information. @sa Inventory */
 	bool scroll;	/**< Set if the container is scrollable */
 	uint32_t shape[SHAPE_BIG_MAX_HEIGHT];	/**< The inventory form/shape. */
 	int in, out;	/**< parsed: TU costs for moving items in and out. */
@@ -500,33 +500,35 @@ public:
 };
 
 /** @brief inventory definition with all its containers */
-typedef struct inventory_s {
-	Container containers[MAX_CONTAINERS];
-
-	inventory_s ();
+class Inventory {
+protected:
+	Container _containers[MAX_CONTAINERS];
+public:
+	Inventory ();
+	virtual ~Inventory() {}
 	void init ();
 
 	inline const Container *getContainer (const containerIndex_t idx) const {
-		return &containers[idx];
+		return &_containers[idx];
 	}
 
 	/** temporary naming while migrating !!
 	 * getContainer2 will return an item, while
 	 * getContainer3 will actually return a container. */
 	inline invList_t *getContainer2 (const containerIndex_t idx) const {
-		return containers[idx]._invList;
+		return _containers[idx]._invList;
 	}
 
 	inline invList_t *getContainer3 (const containerIndex_t idx) const {
-		return containers[idx]._invList;
+		return _containers[idx]._invList;
 	}
 
 	inline void setContainer (const containerIndex_t idx, invList_t *cont) {
-		containers[idx]._invList = cont;
+		_containers[idx]._invList = cont;
 	}
 
 	inline void resetContainer (const containerIndex_t idx) {
-		containers[idx]._invList = nullptr;
+		_containers[idx]._invList = nullptr;
 	}
 
 	/**
@@ -559,7 +561,7 @@ typedef struct inventory_s {
 	const Container *_getNextCont (const Container *prev) const;
 	const Container *getNextCont (const Container *prev, bool inclTemp = false) const;
 	int countItems () const;
-} inventory_t;
+};
 
 #define MAX_EQUIPDEFS   64
 

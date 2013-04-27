@@ -141,7 +141,7 @@ static bool INVSH_CheckShapeCollision (const uint32_t *shape, const uint32_t ite
  * @sa canHoldItem
  * @return false if the item does not fit, true if it fits.
  */
-static bool INVSH_CheckToInventory_shape (const inventory_t *const inv, const invDef_t *container, const uint32_t itemShape, const int x, const int y, const Item *ignoredItem)
+static bool INVSH_CheckToInventory_shape (const Inventory *const inv, const invDef_t *container, const uint32_t itemShape, const int x, const int y, const Item *ignoredItem)
 {
 	static uint32_t mask[SHAPE_BIG_MAX_HEIGHT];
 
@@ -641,7 +641,7 @@ int Container::countItems () const
 	return nr;
 }
 
-inventory_s::inventory_s ()
+Inventory::Inventory ()
 {
 // This (prototype-)constructor does not work as intended. Seems like the first inventory is created before CSI is set.
 // There is the static game_inventory, static character_t, static le_t ...
@@ -651,21 +651,21 @@ inventory_s::inventory_s ()
 // Plan B: add an 'id' member to class Container and init it here
 	int i;
 	for (i = 0; i < CID_MAX; i++)
-		containers[i].id = i;
+		_containers[i].id = i;
 }
 
-void inventory_s::init ()
+void Inventory::init ()
 {
 	int i;
 	for (i = 0; i < CID_MAX; i++)
-		containers[i].id = i;
+		_containers[i].id = i;
 }
 
-const Container *inventory_t::_getNextCont (const Container *prev) const
+const Container *Inventory::_getNextCont (const Container *prev) const
 {
 	if (!prev)
-		return &containers[0];	/* the first one */
-	else if (prev >= &containers[CID_MAX - 1])
+		return &_containers[0];	/* the first one */
+	else if (prev >= &_containers[CID_MAX - 1])
 		return nullptr;			/* prev was the last one */
 	else
 		prev++;
@@ -673,15 +673,15 @@ const Container *inventory_t::_getNextCont (const Container *prev) const
 	return prev;
 }
 
-const Container *inventory_t::getNextCont (const Container *prev, bool inclTemp) const
+const Container *Inventory::getNextCont (const Container *prev, bool inclTemp) const
 {
 	const Container *cont = prev;
 
 	while ((cont = _getNextCont(cont))) {
 		if (!inclTemp) {						/* if we don't want to inlude the temp containers ... */
-			if (cont == &containers[CID_FLOOR])
+			if (cont == &_containers[CID_FLOOR])
 				continue;						/* ...skip them ! */
-			if (cont == &containers[CID_EQUIP])
+			if (cont == &_containers[CID_EQUIP])
 				continue;
 		}
 		break;
@@ -690,7 +690,7 @@ const Container *inventory_t::getNextCont (const Container *prev, bool inclTemp)
 }
 
 /** @brief Count the number of items in the inventory (without temp containers) */
-int inventory_t::countItems () const
+int Inventory::countItems () const
 {
 	int nr = 0;
 	const Container *cont = nullptr;
@@ -710,7 +710,7 @@ int inventory_t::countItems () const
  * @return INV_FITS_ONLY_ROTATED if it fits only when rotated 90 degree (to the left).
  * @return INV_FITS_BOTH if it fits either normally or when rotated 90 degree (to the left).
  */
-int inventory_t::canHoldItem (const invDef_t *container, const objDef_t *od, const int x, const int y, const Item *ignoredItem) const
+int Inventory::canHoldItem (const invDef_t *container, const objDef_t *od, const int x, const int y, const Item *ignoredItem) const
 {
 	int fits;
 	assert(container);
@@ -788,7 +788,7 @@ int inventory_t::canHoldItem (const invDef_t *container, const objDef_t *od, con
  * @param[in] x/y Position in the container that you want to check.
  * @return invList_t Pointer to the invList_t/item that is located at x/y.
  */
-invList_t *inventory_t::getItemAtPos (const invDef_t *container, const int x, const int y) const
+invList_t *Inventory::getItemAtPos (const invDef_t *container, const int x, const int y) const
 {
 	assert(container);
 
@@ -820,7 +820,7 @@ invList_t *inventory_t::getItemAtPos (const invDef_t *container, const int x, co
  * @sa canHoldItem
  * @note x and y are NONE if no free space is available
  */
-void inventory_t::findSpace (const invDef_t *container, const Item *item, int* const px, int* const py, const Item *ignoredItem) const
+void Inventory::findSpace (const invDef_t *container, const Item *item, int* const px, int* const py, const Item *ignoredItem) const
 {
 	int x, y;
 
@@ -865,7 +865,7 @@ void inventory_t::findSpace (const invDef_t *container, const Item *item, int* c
  * @param[in] maxWeight The max permitted weight.
  * @return @c true if it is Ok to add the item @c false otherwise.
  */
-bool inventory_t::canHoldItemWeight (containerIndex_t from, containerIndex_t to, const Item &item, int maxWeight) const
+bool Inventory::canHoldItemWeight (containerIndex_t from, containerIndex_t to, const Item &item, int maxWeight) const
 {
 	if (CSI->ids[to].temp || !CSI->ids[from].temp)
 		return true;
@@ -881,7 +881,7 @@ bool inventory_t::canHoldItemWeight (containerIndex_t from, containerIndex_t to,
  * @brief Get the weight of the items in the given inventory (excluding those in temp containers).
  * @return The total weight of the inventory items (excluding those in temp containers)
  */
-float inventory_t::getWeight () const
+float Inventory::getWeight () const
 {
 	float weight = 0;
 	const Container *cont = nullptr;
@@ -894,42 +894,42 @@ float inventory_t::getWeight () const
 	return weight;
 }
 
-void inventory_t::setFloorContainer(invList_t *cont)
+void Inventory::setFloorContainer(invList_t *cont)
 {
 	setContainer(CID_FLOOR, cont);
 }
 
-invList_t *inventory_t::getRightHandContainer () const
+invList_t *Inventory::getRightHandContainer () const
 {
 	return getContainer2(CID_RIGHT);
 }
 
-invList_t *inventory_t::getLeftHandContainer () const
+invList_t *Inventory::getLeftHandContainer () const
 {
 	return getContainer2(CID_LEFT);
 }
 
-Item *inventory_t::getHeadgear () const
+Item *Inventory::getHeadgear () const
 {
 	return getContainer2(CID_HEADGEAR);
 }
 
-invList_t *inventory_t::getHolsterContainer () const
+invList_t *Inventory::getHolsterContainer () const
 {
 	return getContainer3(CID_HOLSTER);
 }
 
-invList_t *inventory_t::getFloorContainer () const
+invList_t *Inventory::getFloorContainer () const
 {
 	return getContainer3(CID_FLOOR);
 }
 
-invList_t *inventory_t::getEquipContainer () const
+invList_t *Inventory::getEquipContainer () const
 {
 	return getContainer3(CID_EQUIP);
 }
 
-Item *inventory_t::getArmour () const
+Item *Inventory::getArmour () const
 {
 	return getContainer2(CID_ARMOUR);
 }
@@ -940,7 +940,7 @@ Item *inventory_t::getArmour () const
  * @param[in] searchItem The item to search for.
  * @return Pointer to the first item of this type found, otherwise @c nullptr.
  */
-Item *inventory_t::findInContainer (const containerIndex_t contId, const Item *const searchItem) const
+Item *Inventory::findInContainer (const containerIndex_t contId, const Item *const searchItem) const
 {
 	const Container *cont = getContainer(contId);
 	Item *item = nullptr;
@@ -955,7 +955,7 @@ Item *inventory_t::findInContainer (const containerIndex_t contId, const Item *c
 /**
  * @brief Checks if there is a weapon in the hands that can be used for reaction fire.
  */
-bool inventory_t::holdsReactionFireWeapon () const
+bool Inventory::holdsReactionFireWeapon () const
 {
 	if (getRightHandContainer()->getReactionFireWeaponType())
 		return true;

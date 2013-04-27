@@ -37,7 +37,7 @@ void GAME_SaveTeamState_f(void);
 void GAME_ToggleActorForTeam_f(void);
 void GAME_AutoTeam_f(void);
 void GAME_AutoTeam(const char *equipmentDefinitionID, int teamMembers);
-void GAME_UpdateInventory(inventory_t *inv, const equipDef_t *ed);
+void GAME_UpdateInventory(Inventory *inv, const equipDef_t *ed);
 void GAME_UpdateTeamMenuParameters_f(void);
 void GAME_ActorSelect_f(void);
 bool GAME_LoadDefaultTeam(bool force);

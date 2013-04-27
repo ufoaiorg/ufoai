@@ -366,7 +366,7 @@ static void GAME_Free (void *ptr)
 	Mem_Free(ptr);
 }
 
-static void GAME_DestroyInventory (inventory_t * const inv)
+static void GAME_DestroyInventory (Inventory * const inv)
 {
 	cls.i.destroyInventory(inv);
 }
@@ -376,17 +376,17 @@ static void GAME_EquipActor (character_t* const chr, const equipDef_t *ed, int m
 	cls.i.EquipActor(chr, ed, maxWeight);
 }
 
-static void GAME_EquipActorMelee (inventory_t* const inv, const teamDef_t *td)
+static void GAME_EquipActorMelee (Inventory* const inv, const teamDef_t *td)
 {
 	cls.i.EquipActorMelee(inv, td);
 }
 
-static void GAME_EquipActorRobot (inventory_t* const inv, const objDef_t *weapon)
+static void GAME_EquipActorRobot (Inventory* const inv, const objDef_t *weapon)
 {
 	cls.i.EquipActorRobot(inv, weapon);
 }
 
-static bool GAME_RemoveFromInventory (inventory_t* const i, const invDef_t *container, invList_t *fItem)
+static bool GAME_RemoveFromInventory (Inventory* const i, const invDef_t *container, invList_t *fItem)
 {
 	return cls.i.removeFromInventory(i, container, fItem);
 }
@@ -401,7 +401,7 @@ static int GAME_GetNextUniqueCharacterNumber (void)
 	return cls.nextUniqueCharacterNumber;
 }
 
-static void GAME_CollectItems (void *data, int won, void (*collectItem)(void*, const objDef_t*, int), void (*collectAmmo) (void *, const invList_t *), void (*ownitems) (const inventory_t *))
+static void GAME_CollectItems (void *data, int won, void (*collectItem)(void*, const objDef_t*, int), void (*collectAmmo) (void *, const invList_t *), void (*ownitems) (const Inventory *))
 {
 	le_t *le = nullptr;
 	while ((le = LE_GetNextInUse(le))) {
@@ -1227,7 +1227,7 @@ static void GAME_NetSendItem (dbuffer *buf, const Item *item, containerIndex_t c
 /**
  * @sa G_SendInventory
  */
-static void GAME_NetSendInventory (dbuffer *buf, const inventory_t *inv)
+static void GAME_NetSendInventory (dbuffer *buf, const Inventory *inv)
 {
 	int nr = inv->countItems();
 
@@ -1308,7 +1308,7 @@ static void GAME_SendCurrentTeamSpawningInfo (dbuffer *buf, linkedList_t *team)
 	NET_WriteByte(buf, teamSize);
 
 	LIST_Foreach(team, character_t, chr) {
-		inventory_t *inv = &chr->inv;
+		Inventory *inv = &chr->inv;
 		containerIndex_t container;
 
 		/* unlink all temp containers */
