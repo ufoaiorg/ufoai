@@ -33,7 +33,7 @@ static bool G_CameraUse (Edict *self, Edict *activator)
 		return false;
 	}
 
-	self->active ^= true;
+	self->toggleActive();
 
 	return false;
 }

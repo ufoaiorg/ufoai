@@ -171,6 +171,9 @@ public:
 
 	bool active;
 
+	inline void toggleActive() {
+		active ^= true;
+	}
 	inline invList_t *getContainer (const containerIndex_t idx) const {
 		return chr.inv.getContainer3(idx);
 	}
