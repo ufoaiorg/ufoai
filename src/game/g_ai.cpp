@@ -1550,7 +1550,7 @@ Player *AI_CreatePlayer (int team)
 	p = nullptr;
 	while ((p = G_PlayerGetNextAI(p))) {
 		if (!p->isInUse()) {
-			OBJZERO(*p);
+			p->reset();
 			p->setInUse(true);
 			p->setNum(p - game.players);
 			p->pers.ai = true;

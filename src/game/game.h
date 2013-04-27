@@ -109,6 +109,9 @@ public:
 
 	client_persistent_t pers;
 
+	inline void reset () {
+		OBJZERO(*this);
+	}
 	inline bool isInUse () const {
 		return inuse;
 	}
