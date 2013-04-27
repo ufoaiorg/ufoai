@@ -59,9 +59,9 @@ public:
 	vec3_t absmin, absmax;	/**< position of min and max points - relative to world's origin */
 	vec3_t size;
 
-	Edict *child;	/**< e.g. the trigger for this edict */
-	Edict *owner;	/**< e.g. the door model in case of func_door */
-	int modelindex;	/**< inline model index */
+	Edict *child;			/**< e.g. the trigger for this edict */
+	Edict *owner;			/**< e.g. the door model in case of func_door */
+	int modelindex;			/**< inline model index */
 	const char *classname;
 #endif
 	/*================================ */
@@ -75,7 +75,7 @@ public:
 	/** only used locally in game, not by server */
 
 	Edict *particleLink;
-	const Edict *link;		/**< can be used to store another edict that e.g. interacts with the current one */
+	const Edict *link;			/**< can be used to store another edict that e.g. interacts with the current one */
 	entity_type_t type;
 	teammask_t visflags;		/**< bitmask of teams that can see this edict */
 
@@ -149,7 +149,7 @@ public:
 	bool (*use)(Edict *self, Edict *activator);
 	bool (*destroy)(Edict *self);
 
-	Edict *touchedNext;		/**< entity list of edict that are currently touching the trigger_touch */
+	Edict *touchedNext;			/**< entity list of edict that are currently touching the trigger_touch */
 	int doorState;				/**< open or closed */
 
 	moveinfo_t		moveinfo;
@@ -160,7 +160,7 @@ public:
 	 * have the above mentioned flag set.
 	 * @sa G_FindEdictGroups */
 	Edict *groupChain;
-	Edict *groupMaster;		/**< first entry in the list */
+	Edict *groupMaster;			/**< first entry in the list */
 	int flags;					/**< FL_* */
 
 	AI_t AI; 					/**< The character's artificial intelligence */
