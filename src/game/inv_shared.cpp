@@ -444,17 +444,17 @@ uint32_t objDef_t::getShapeRotated () const
 
 	for (w = SHAPE_SMALL_MAX_WIDTH - 1; w >= 0; w--) {
 		for (h = 0; h < SHAPE_SMALL_MAX_HEIGHT; h++) {
-			if (INVSH_CheckShapeSmall(shape, w, h)) {
-				if (w >= SHAPE_SMALL_MAX_HEIGHT) {
-					/* Object can't be rotated (code-wise), it is longer than SHAPE_SMALL_MAX_HEIGHT allows. */
-					return shape;
-				}
-
-				if (maxWidth < 0)
-					maxWidth = w;
-
-				shapeNew = INVSH_ShapeSetBit(shapeNew, h, maxWidth - w);
+			if (!INVSH_CheckShapeSmall(shape, w, h))
+				continue;
+			if (w >= SHAPE_SMALL_MAX_HEIGHT) {
+				/* Object can't be rotated (code-wise), it is longer than SHAPE_SMALL_MAX_HEIGHT allows. */
+				return shape;
 			}
+
+			if (maxWidth < 0)
+				maxWidth = w;
+
+			shapeNew = INVSH_ShapeSetBit(shapeNew, h, maxWidth - w);
 		}
 	}
 
