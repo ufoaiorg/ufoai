@@ -421,7 +421,7 @@ Edict *G_Spawn (const char *classname)
 	else
 		ent->classname = "noclass";
 	ent->fieldSize = ACTOR_SIZE_NORMAL;
-	ent->active = true;		/* only used by camera */
+	ent->setActive();		/* only used by camera */
 	return ent;
 }
 

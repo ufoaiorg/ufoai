@@ -169,8 +169,11 @@ public:
 								 * hold a list of grid positions that are blocked by the aabb of the model */
 	int forbiddenListSize;		/**< amount of entries in the forbiddenListPos */
 
-	bool active;
+	bool active;				/** only used by camera */
 
+	inline void setActive() {
+		active = true;
+	}
 	inline void toggleActive() {
 		active ^= true;
 	}
