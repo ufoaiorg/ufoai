@@ -255,11 +255,10 @@ bool objDef_t::isBaseDefenceItem () const
  */
 const objDef_t *INVSH_GetItemByIDSilent (const char *id)
 {
-	int i;
-
 	if (!id)
 		return nullptr;
-	for (i = 0; i < CSI->numODs; i++) {	/* i = item index */
+
+	for (int i = 0; i < CSI->numODs; ++i) {	/* i = item index */
 		const objDef_t *item = &CSI->ods[i];
 		if (Q_streq(id, item->id)) {
 			return item;
@@ -306,7 +305,7 @@ const invDef_t *INVSH_GetInventoryDefinitionByID (const char *id)
 	containerIndex_t i;
 	const invDef_t *container;
 
-	for (i = 0, container = CSI->ids; i < CID_MAX; container++, i++)
+	for (i = 0, container = CSI->ids; i < CID_MAX; ++container, ++i)
 		if (Q_streq(id, container->name))
 			return container;
 
@@ -322,7 +321,6 @@ bool objDef_t::isLoadableInWeapon (const objDef_t *weapon) const
 {
 	int i;
 
-	assert(this);
 	assert(weapon);
 
 	/* check whether the weapon is only linked to itself. */
@@ -369,9 +367,7 @@ const fireDef_t *FIRESH_GetFiredef (const objDef_t *obj, const weaponFireDefInde
  */
 void INVSH_MergeShapes (uint32_t *shape, const uint32_t itemShape, const int x, const int y)
 {
-	int i;
-
-	for (i = 0; (i < SHAPE_SMALL_MAX_HEIGHT) && (y + i < SHAPE_BIG_MAX_HEIGHT); i++)
+	for (int i = 0; (i < SHAPE_SMALL_MAX_HEIGHT) && (y + i < SHAPE_BIG_MAX_HEIGHT); ++i)
 		shape[y + i] |= ((itemShape >> i * SHAPE_SMALL_MAX_WIDTH) & 0xFF) << x;
 }
 
@@ -384,7 +380,7 @@ void INVSH_MergeShapes (uint32_t *shape, const uint32_t itemShape, const int x, 
 bool INVSH_CheckShape (const uint32_t *shape, const int x, const int y)
 {
 	const uint32_t row = shape[y];
-	int position = pow(2, x);
+	const int position = pow(2, x);
 
 	if (y >= SHAPE_BIG_MAX_HEIGHT || x >= SHAPE_BIG_MAX_WIDTH || x < 0 || y < 0) {
 		Com_Printf("INVSH_CheckShape: Bad x or y value: (x=%i, y=%i)\n", x, y);
@@ -393,8 +389,8 @@ bool INVSH_CheckShape (const uint32_t *shape, const int x, const int y)
 
 	if ((row & position) == 0)
 		return false;
-	else
-		return true;
+
+	return true;
 }
 
 /**
@@ -406,11 +402,10 @@ bool INVSH_CheckShape (const uint32_t *shape, const int x, const int y)
 int INVSH_ShapeSize (const uint32_t shape)
 {
 	int bitCounter = 0;
-	int i;
 
-	for (i = 0; i < SHAPE_SMALL_MAX_HEIGHT * SHAPE_SMALL_MAX_WIDTH; i++)
+	for (int i = 0; i < SHAPE_SMALL_MAX_HEIGHT * SHAPE_SMALL_MAX_WIDTH; ++i)
 		if (shape & (1 << i))
-			bitCounter++;
+			++bitCounter;
 
 	return bitCounter;
 }
@@ -531,8 +526,6 @@ void Item::getFirstShapePosition (int* const x, int* const y) const
 {
 	int tempX, tempY;
 
-	assert(this);
-
 	for (tempX = 0; tempX < SHAPE_SMALL_MAX_HEIGHT; tempX++)
 		for (tempY = 0; tempY < SHAPE_SMALL_MAX_HEIGHT; tempY++)
 			if (INVSH_ShapeCheckPosition(this, this->getX() + tempX, this->getY() + tempY)) {
@@ -643,7 +636,7 @@ int Container::countItems () const
 	Item *item = nullptr;
 	while ((item = getNextItem(item))) {
 		/** For temp containers, we neglect Item::amount. */
-		nr++;
+		++nr;
 	}
 	return nr;
 }
@@ -679,6 +672,7 @@ const Container *inventory_t::_getNextCont (const Container *prev) const
 
 	return prev;
 }
+
 const Container *inventory_t::getNextCont (const Container *prev, bool inclTemp) const
 {
 	const Container *cont = prev;
@@ -719,7 +713,6 @@ int inventory_t::countItems () const
 int inventory_t::canHoldItem (const invDef_t *container, const objDef_t *od, const int x, const int y, const Item *ignoredItem) const
 {
 	int fits;
-	assert(this);
 	assert(container);
 	assert(od);
 
