@@ -353,6 +353,7 @@ void G_SendInventory (playermask_t playerMask, const Edict &ent)
 {
 	invList_t *ic;
 	int nr = 0;
+	containerIndex_t container;
 
 	/* test for pointless player mask */
 	if (!playerMask)
@@ -370,14 +371,13 @@ void G_SendInventory (playermask_t playerMask, const Edict &ent)
 		return;
 
 	G_EventInventoryAdd(ent, playerMask, nr);
-	cont = nullptr;
-	while ((cont = ent.chr.inv.getNextCont(cont, true))) {
-		if (!G_IsItem(&ent) && INVDEF(cont->id)->temp)
+	for (container = 0; container < CID_MAX; container++) {
+		if (!G_IsItem(&ent) && INVDEF(container)->temp)
 			continue;
-		for (ic = ent.getContainer(cont->id); ic; ic = ic->getNext()) {
+		for (ic = ent.getContainer(container); ic; ic = ic->getNext()) {
 			/* send a single item */
 			assert(ic->def());
-			G_WriteItem(*ic, cont->id, ic->getX(), ic->getY());
+			G_WriteItem(*ic, container, ic->getX(), ic->getY());
 		}
 	}
 	G_EventEnd();
