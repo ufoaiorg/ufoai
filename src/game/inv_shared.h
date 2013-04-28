@@ -515,10 +515,12 @@ public:
 	/** temporary naming while migrating !!
 	 * getContainer2 will return an item, while
 	 * getContainer3 will actually return a container. */
+	/** @todo this should return a reference - can't be null */
 	inline invList_t *getContainer2 (const containerIndex_t idx) const {
 		return _containers[idx]._invList;
 	}
 
+	/** @todo this should return a reference - can't be null */
 	inline invList_t *getContainer3 (const containerIndex_t idx) const {
 		return _containers[idx]._invList;
 	}
@@ -543,10 +545,15 @@ public:
 
 	Item *getArmour () const;
 	Item *getHeadgear() const;
+	/** @todo this should return a reference - can't be null */
 	invList_t *getRightHandContainer() const;
+	/** @todo this should return a reference - can't be null */
 	invList_t *getLeftHandContainer () const;
+	/** @todo this should return a reference - can't be null */
 	invList_t *getHolsterContainer() const;
+	/** @todo this should return a reference - can't be null */
 	invList_t *getEquipContainer () const;
+	/** @todo this should return a reference - can't be null */
 	invList_t *getFloorContainer() const;
 	void setFloorContainer(invList_t *cont);
 
