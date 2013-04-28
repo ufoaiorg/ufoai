@@ -1,5 +1,4 @@
-#ifndef SELECTIONTEST_H_
-#define SELECTIONTEST_H_
+#pragma once
 
 #include "math/matrix.h"
 #include "math/Vector3.h"
@@ -97,5 +96,3 @@ inline void ConstructSelectionTest(View& view, const Rectangle& selection_box) {
 	view.EnableScissor(selection_box.min[0], selection_box.max[0],
 						selection_box.min[1], selection_box.max[1]);
 }
-
-#endif /*SELECTIONTEST_H_*/

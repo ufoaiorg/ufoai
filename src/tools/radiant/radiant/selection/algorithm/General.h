@@ -1,5 +1,4 @@
-#ifndef SELECTION_ALGORITHM_GENERAL_H_
-#define SELECTION_ALGORITHM_GENERAL_H_
+#pragma once
 
 #include <list>
 #include <string>
@@ -67,5 +66,3 @@ namespace selection {
 
 	} // namespace algorithm
 } // namespace selection
-
-#endif /* SELECTION_ALGORITHM_GENERAL_H_ */

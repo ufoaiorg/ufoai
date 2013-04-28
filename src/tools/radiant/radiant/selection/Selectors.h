@@ -1,5 +1,4 @@
-#ifndef SELECTOR_H_
-#define SELECTOR_H_
+#pragma once
 
 #include <map>
 #include "selectable.h"
@@ -134,5 +133,3 @@ public:
     return _bestSelectable;
   }
 };
-
-#endif /*SELECTOR_H_*/

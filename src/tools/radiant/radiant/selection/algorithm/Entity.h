@@ -1,5 +1,4 @@
-#ifndef SELECTION_ALGORITHM_ENTITY_H_
-#define SELECTION_ALGORITHM_ENTITY_H_
+#pragma once
 
 #include <string>
 
@@ -18,5 +17,3 @@ namespace selection {
 
 	} // namespace algorithm
 } // namespace selection
-
-#endif /* SELECTION_ALGORITHM_ENTITY_H_ */

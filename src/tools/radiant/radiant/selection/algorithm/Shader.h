@@ -1,5 +1,4 @@
-#ifndef SELECTION_ALGORITHM_SHADER_H_
-#define SELECTION_ALGORITHM_SHADER_H_
+#pragma once
 
 #include <string>
 #include "math/Vector2.h"
@@ -122,5 +121,3 @@ namespace selection {
 
 	} // namespace algorithm
 } // namespace selection
-
-#endif /*SELECTION_ALGORITHM_SHADER_H_*/

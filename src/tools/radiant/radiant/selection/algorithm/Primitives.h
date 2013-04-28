@@ -1,5 +1,4 @@
-#ifndef PRIMITIVES_H_
-#define PRIMITIVES_H_
+#pragma once
 
 #include <string>
 #include <stdexcept>
@@ -60,5 +59,3 @@ namespace selection {
 
 	} // namespace algorithm
 } // namespace selection
-
-#endif /*PRIMITIVES_H_*/

@@ -1,5 +1,4 @@
-#ifndef SELECTIONGROUP_H_
-#define SELECTIONGROUP_H_
+#pragma once
 
 #include "iselection.h"
 #include <list>
@@ -32,5 +31,3 @@ namespace selection {
 
 	} // namespace algorithm
 } // namespace selection
-
-#endif /*SELECTIONGROUP_H_*/
