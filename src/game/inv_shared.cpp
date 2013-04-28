@@ -644,8 +644,7 @@ Inventory::Inventory ()
 	 * containers[CID_LEFT]._def = &CSI->ids[CID_LEFT]; */
 
 	/* Plan B: add an 'id' member to class Container and init it here */
-	for (int i = 0; i < CID_MAX; ++i)
-		_containers[i].id = i;
+	init();
 }
 
 void Inventory::init ()
