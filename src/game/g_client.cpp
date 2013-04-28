@@ -578,18 +578,18 @@ void G_ClientGetWeaponFromInventory (Edict *ent)
 	int tu = 100;
 	const Container *cont = nullptr;
 	while ((cont = ent->chr.inv.getNextCont(cont, true))) {
-		if (cont->def()->out < tu) {
-			Item *item = nullptr;
-			while ((item = cont->getNextItem(item))) {
-				/* We are looking for the *fastest* way to get a weapon,
-				 * no matter what kind of weapon it is. */
-				assert(item->def());
-				if (item->isWeapon() && !item->mustReload()) {
-					theWeapon = item;
-					bestContainer = cont->def();
-					tu = bestContainer->out;
-					break;
-				}
+		if (cont->def()->out >= tu)
+			continue;
+		Item *item = nullptr;
+		while ((item = cont->getNextItem(item))) {
+			/* We are looking for the *fastest* way to get a weapon,
+			 * no matter what kind of weapon it is. */
+			assert(item->def());
+			if (item->isWeapon() && !item->mustReload()) {
+				theWeapon = item;
+				bestContainer = cont->def();
+				tu = bestContainer->out;
+				break;
 			}
 		}
 	}

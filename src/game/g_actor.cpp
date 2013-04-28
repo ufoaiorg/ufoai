@@ -771,19 +771,19 @@ void G_ActorReload (Edict *ent, const invDef_t *invDef)
 	int tu = 100;
 	const Container *cont = nullptr;
 	while ((cont = ent->chr.inv.getNextCont(cont, true))) {
-		if (cont->def()->out < tu) {
-			/* Once we've found at least one clip, there's no point
-			 * searching other containers if it would take longer
-			 * to retrieve the ammo from them than the one
-			 * we've already found. */
-			Item *item = nullptr;
-			while ((item = cont->getNextItem(item))) {
-				if (item->def()->isLoadableInWeapon(weapon)) {
-					ammoItem = item;
-					bestContainer = INVDEF(cont->id);
-					tu = bestContainer->out;
-					break;
-				}
+		if (cont->def()->out >= tu)
+			continue;
+		/* Once we've found at least one clip, there's no point
+		 * searching other containers if it would take longer
+		 * to retrieve the ammo from them than the one
+		 * we've already found. */
+		Item *item = nullptr;
+		while ((item = cont->getNextItem(item))) {
+			if (item->def()->isLoadableInWeapon(weapon)) {
+				ammoItem = item;
+				bestContainer = INVDEF(cont->id);
+				tu = bestContainer->out;
+				break;
 			}
 		}
 	}

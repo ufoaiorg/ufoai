@@ -945,22 +945,21 @@ int CL_ActorGetContainerForReload (invList_t **invList, const Inventory *inv, co
 	containerIndex_t bestContainer = NONE;
 
 	/* also search the linked ground floor tile (temp container) */
-	for (container = 0; container < CID_MAX; container++) {
-		if (INVDEF(container)->out < tu) {
-			invList_t *ic;
-			/* Once we've found at least one clip, there's no point
-			 * searching other containers if it would take longer
-			 * to retrieve the ammo from them than the one
-			 * we've already found. */
-			for (ic = inv->getContainer3(container); ic; ic = ic->getNext()) {
-				const objDef_t *od = ic->def();
-				if (od->isLoadableInWeapon(weapon) && GAME_ItemIsUseable(od)) {
-					tu = INVDEF(container)->out;
-					bestContainer = container;
-					*invList = ic;
-					break;
-				}
-			}
+	for (container = 0; container < CID_MAX; ++container) {
+		if (INVDEF(container)->out >= tu)
+			continue;
+		/* Once we've found at least one clip, there's no point
+		 * searching other containers if it would take longer
+		 * to retrieve the ammo from them than the one
+		 * we've already found. */
+		for (invList_t *ic = inv->getContainer3(container); ic; ic = ic->getNext()) {
+			const objDef_t *od = ic->def();
+			if (!od->isLoadableInWeapon(weapon) || !GAME_ItemIsUseable(od))
+				continue;
+			tu = INVDEF(container)->out;
+			bestContainer = container;
+			*invList = ic;
+			break;
 		}
 	}
 	return bestContainer;
