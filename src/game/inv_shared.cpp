@@ -613,11 +613,6 @@ Container::Container ()
 
 const invDef_t *Container::def () const
 {
-// can't do the here, function must be const
-//	if (_def)
-//		_def = &CSI->ids[id];
-//	assert(_def);
-//	return _def;
 	return &CSI->ids[id];
 }
 Item *Container::getNextItem (const Item *prev) const
