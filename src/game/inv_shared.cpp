@@ -671,9 +671,11 @@ const Container *Inventory::getNextCont (const Container *prev, bool inclTemp) c
 	const Container *cont = prev;
 
 	while ((cont = _getNextCont(cont))) {
-		if (!inclTemp) {						/* if we don't want to inlude the temp containers ... */
+		/* if we don't want to include the temp containers ... */
+		if (!inclTemp) {
+			/* ...skip them ! */
 			if (cont == &_containers[CID_FLOOR])
-				continue;						/* ...skip them ! */
+				continue;
 			if (cont == &_containers[CID_EQUIP])
 				continue;
 		}
