@@ -817,8 +817,6 @@ invList_t *Inventory::getItemAtPos (const invDef_t *container, const int x, cons
  */
 void Inventory::findSpace (const invDef_t *container, const Item *item, int* const px, int* const py, const Item *ignoredItem) const
 {
-	int x, y;
-
 	assert(container);
 	assert(!cacheCheckToInventory);
 
@@ -830,8 +828,8 @@ void Inventory::findSpace (const invDef_t *container, const Item *item, int* con
 
 	/** @todo optimize for single containers */
 
-	for (y = 0; y < SHAPE_BIG_MAX_HEIGHT; y++) {
-		for (x = 0; x < SHAPE_BIG_MAX_WIDTH; x++) {
+	for (int y = 0; y < SHAPE_BIG_MAX_HEIGHT; y++) {
+		for (int x = 0; x < SHAPE_BIG_MAX_WIDTH; x++) {
 			const int checkedTo = canHoldItem(container, item->def(), x, y, ignoredItem);
 			if (checkedTo) {
 				cacheCheckToInventory = INV_DOES_NOT_FIT;
@@ -867,7 +865,7 @@ bool Inventory::canHoldItemWeight (containerIndex_t from, containerIndex_t to, c
 
 	const bool swapArmour = item.isArmour() && getArmour();
 	const float invWeight = getWeight() - (swapArmour ? getArmour()->getWeight() : 0);
-	float itemWeight = item.getWeight();
+	const float itemWeight = item.getWeight();
 
 	return (maxWeight < 0 || maxWeight >= invWeight + itemWeight);
 }
@@ -962,13 +960,13 @@ bool Inventory::holdsReactionFireWeapon () const
 /**
  * @brief Combine the rounds of partially used clips.
  */
-void equipDef_t::addClip(const Item *item)
+void equipDef_t::addClip (const Item *item)
 {
-	int aidx = item->ammoDef()->idx;
-	numItemsLoose[aidx] += item->getAmmoLeft();
+	const int ammoIdx = item->ammoDef()->idx;
+	numItemsLoose[ammoIdx] += item->getAmmoLeft();
 	/* Accumulate loose ammo into clips */
-	if (numItemsLoose[aidx] >= item->def()->ammo) {
-		numItemsLoose[aidx] -= item->def()->ammo;
-		numItems[aidx]++;
+	if (numItemsLoose[ammoIdx] >= item->def()->ammo) {
+		numItemsLoose[ammoIdx] -= item->def()->ammo;
+		numItems[ammoIdx]++;
 	}
 }
