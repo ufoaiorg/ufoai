@@ -507,9 +507,9 @@ static void UI_ContainerNodeDrawGrid (uiNode_t *node, const objDef_t *highlightT
 	UI_GetNodeAbsPos(node, pos);
 	pos[2] = 0;
 
-	const Container *cont = ui_inventory->getContainer(EXTRADATA(node).container->id);
+	const Container &cont = ui_inventory->getContainer(EXTRADATA(node).container->id);
 	Item *item = nullptr;
-	while ((item = cont->getNextItem(item))) {
+	while ((item = cont.getNextItem(item))) {
 		assert(item->def());
 		if (highlightType && highlightType->isLoadableInWeapon(item->def()))
 			UI_DrawItem(node, pos, item, item->getX(), item->getY(), scale, colorLoadable);

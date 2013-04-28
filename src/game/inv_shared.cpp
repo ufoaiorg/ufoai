@@ -161,9 +161,9 @@ static bool INVSH_CheckToInventory_shape (const Inventory *const inv, const invD
 			mask[j] = ~container->shape[j];
 
 		/* Add other items to mask. (i.e. merge their shapes at their location into the generated mask) */
-		const Container *cont = inv->getContainer(container->id);
+		const Container &cont = inv->getContainer(container->id);
 		Item *item = nullptr;
-		while ((item = cont->getNextItem(item))) {
+		while ((item = cont.getNextItem(item))) {
 			if (ignoredItem == item)
 				continue;
 
@@ -545,7 +545,6 @@ void Item::getFirstShapePosition (int* const x, int* const y) const
  */
 const fireDef_t *Item::getFiredefs () const
 {
-	int i;
 	const objDef_t *ammodef = ammoDef();
 	const objDef_t *weapon = def();
 
@@ -557,7 +556,7 @@ const fireDef_t *Item::getFiredefs () const
 	if (!ammodef)
 		return nullptr;
 
-	for (i = 0; i < ammodef->numWeapons; i++) {
+	for (int i = 0; i < ammodef->numWeapons; ++i) {
 		if (weapon == ammodef->weapons[i])
 			return &ammodef->fd[i][0];
 	}
@@ -577,7 +576,7 @@ const fireDef_t *Item::getSlowestFireDef () const
 	if (fdArray == nullptr)
 		return nullptr;
 
-	for (int i = 0; i < MAX_FIREDEFS_PER_WEAPON; i++)
+	for (int i = 0; i < MAX_FIREDEFS_PER_WEAPON; ++i)
 		if (fdArray[i].time > fdArray[slowest].time)
 			slowest = i;
 
@@ -650,7 +649,7 @@ Inventory::Inventory ()
 void Inventory::init ()
 {
 	for (int i = 0; i < CID_MAX; ++i)
-		_containers[i].id = i;
+			_containers[i].id = i;
 }
 
 const Container *Inventory::_getNextCont (const Container *prev) const
@@ -794,9 +793,9 @@ invList_t *Inventory::getItemAtPos (const invDef_t *container, const int x, cons
 		Sys_Error("getItemAtPos: Scrollable containers (%i:%s) are not supported by this function.", container->id, container->name);
 
 	/* More than one item - search for the item that is located at location x/y in this container. */
-	const Container *cont = getContainer(container->id);
+	const Container &cont = getContainer(container->id);
 	Item *item = nullptr;
-	while ((item = cont->getNextItem(item)))
+	while ((item = cont.getNextItem(item)))
 		if (INVSH_ShapeCheckPosition(item, x, y))
 			return item;
 
@@ -827,8 +826,8 @@ void Inventory::findSpace (const invDef_t *container, const Item *item, int* con
 
 	/** @todo optimize for single containers */
 
-	for (int y = 0; y < SHAPE_BIG_MAX_HEIGHT; y++) {
-		for (int x = 0; x < SHAPE_BIG_MAX_WIDTH; x++) {
+	for (int y = 0; y < SHAPE_BIG_MAX_HEIGHT; ++y) {
+		for (int x = 0; x < SHAPE_BIG_MAX_WIDTH; ++x) {
 			const int checkedTo = canHoldItem(container, item->def(), x, y, ignoredItem);
 			if (checkedTo) {
 				cacheCheckToInventory = INV_DOES_NOT_FIT;
@@ -934,9 +933,9 @@ Item *Inventory::getArmour () const
  */
 Item *Inventory::findInContainer (const containerIndex_t contId, const Item *const searchItem) const
 {
-	const Container *cont = getContainer(contId);
+	const Container &cont = getContainer(contId);
 	Item *item = nullptr;
-	while ((item = cont->getNextItem(item)))
+	while ((item = cont.getNextItem(item)))
 		if (item->isSameAs(searchItem)) {
 			return item;
 		}

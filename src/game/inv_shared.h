@@ -503,13 +503,17 @@ public:
 class Inventory {
 protected:
 	Container _containers[MAX_CONTAINERS];
+
+	/** @todo: convert into iterator */
+	const Container *_getNextCont (const Container *prev) const;
+
 public:
 	Inventory ();
 	virtual ~Inventory() {}
 	void init ();
 
-	inline const Container *getContainer (const containerIndex_t idx) const {
-		return &_containers[idx];
+	inline const Container& getContainer (const containerIndex_t idx) const {
+		return _containers[idx];
 	}
 
 	/** temporary naming while migrating !!
@@ -517,12 +521,12 @@ public:
 	 * getContainer3 will actually return a container. */
 	/** @todo this should return a reference - can't be null */
 	inline invList_t *getContainer2 (const containerIndex_t idx) const {
-		return _containers[idx]._invList;
+		return getContainer(idx)._invList;
 	}
 
 	/** @todo this should return a reference - can't be null */
 	inline invList_t *getContainer3 (const containerIndex_t idx) const {
-		return _containers[idx]._invList;
+		return getContainer(idx)._invList;
 	}
 
 	inline void setContainer (const containerIndex_t idx, invList_t *cont) {
@@ -565,7 +569,6 @@ public:
 	bool canHoldItemWeight (containerIndex_t from, containerIndex_t to, const Item &item, int maxWeight) const;
 	bool holdsReactionFireWeapon () const;
 	/** @todo: convert into iterator */
-	const Container *_getNextCont (const Container *prev) const;
 	const Container *getNextCont (const Container *prev, bool inclTemp = false) const;
 	int countItems () const;
 };

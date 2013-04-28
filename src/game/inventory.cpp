@@ -266,22 +266,23 @@ inventory_action_t InventoryInterface::moveInInventory (Inventory* const inv, co
 		if (from->scroll)
 			return IA_NONE;
 
-		const Container *cont = inv->getContainer(from->id);
+		const Container &cont = inv->getContainer(from->id);
 		Item *item = nullptr;
-		while ((item = cont->getNextItem(item))) {
-			if (item == fItem) {
-				if (item->getAmount() > 1) {
-					checkedTo = inv->canHoldItem(to, item->def(), tx, ty, fItem);
-					if (checkedTo & INV_FITS) {
-						item->setX(tx);
-						item->setY(ty);
-						if (uponItem)
-							*uponItem = item;
-						return IA_MOVE;
-					}
-					return IA_NONE;
-				}
-			}
+		while ((item = cont.getNextItem(item))) {
+			if (item != fItem)
+				continue;
+
+			if (item->getAmount() <= 1)
+				continue;
+			checkedTo = inv->canHoldItem(to, item->def(), tx, ty, fItem);
+			if (!(checkedTo & INV_FITS))
+				return IA_NONE;
+
+			item->setX(tx);
+			item->setY(ty);
+			if (uponItem)
+				*uponItem = item;
+			return IA_MOVE;
 		}
 	}
 
