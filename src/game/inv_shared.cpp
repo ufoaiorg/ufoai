@@ -649,7 +649,7 @@ Inventory::Inventory ()
 void Inventory::init ()
 {
 	for (int i = 0; i < CID_MAX; ++i)
-			_containers[i].id = i;
+		_containers[i].id = i;
 }
 
 const Container *Inventory::_getNextCont (const Container *prev) const
