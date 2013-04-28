@@ -403,7 +403,6 @@ void R_UpdateLightList (entity_t *ent)
 	lighting_t *ltng; /**< Lighting data for the entity being processed */
 	vec3_t diametralVec; /** < conservative estimate of entity's bounding sphere diameter, in vector form */
 	float diameter; /** < value of this entity's diameter (approx) */
-	vec3_t fakeSunPos; /**< as if sun wasn't at infinite distance */
 	bool cached = false;
 
 	/* Find the root of tagent tree which actually owns the lighting data; it is assumed that there is no loops,
@@ -444,6 +443,7 @@ void R_UpdateLightList (entity_t *ent)
 	/* Check if origin of this entity is hit by sunlight (not the best test, but at least fast) */
 	if (!cached) {
 		if (ent->flags & RF_ACTOR) { /** @todo Hack to avoid dropships being shadowed by lightclips placed at them. Should be removed once correct global illumination model is done */
+			vec3_t fakeSunPos; /**< as if sun wasn't at infinite distance */
 			VectorMA(pos, 8192.0, refdef.sunVector, fakeSunPos);
 			R_Trace(pos, fakeSunPos, 0, MASK_SOLID);
 			ltng->inShadow = refdef.trace.fraction != 1.0;

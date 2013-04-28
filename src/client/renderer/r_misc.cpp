@@ -101,7 +101,7 @@ enum {
 void R_ScreenShot (int x, int y, int width, int height, const char *filename, const char *ext)
 {
 	char	checkName[MAX_OSPATH];
-	int		type, shotNum, quality = 100;
+	int		type, quality = 100;
 	qFILE	f;
 	int rowPack;
 
@@ -148,6 +148,7 @@ void R_ScreenShot (int x, int y, int width, int height, const char *filename, co
 	if (filename) {
 		Com_sprintf(checkName, sizeof(checkName), "scrnshot/%s.%s", filename, ext);
 	} else {
+		int shotNum;
 		for (shotNum = 0; shotNum < 1000; shotNum++) {
 			Com_sprintf(checkName, sizeof(checkName), "scrnshot/ufo%i%i.%s", shotNum / 10, shotNum % 10, ext);
 			if (FS_CheckFile("%s", checkName) == -1)

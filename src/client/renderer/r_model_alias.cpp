@@ -35,7 +35,7 @@ ALIAS MODELS
 
 void R_ModLoadAnims (mAliasModel_t *mod, const char *animname)
 {
-	const char *text, *token;
+	const char *text;
 	mAliasAnim_t *anim;
 	int n;
 	/* load the tags */
@@ -66,7 +66,7 @@ void R_ModLoadAnims (mAliasModel_t *mod, const char *animname)
 
 	do {
 		/* get the name */
-		token = Com_Parse(&text);
+		const char *token = Com_Parse(&text);
 		if (!text)
 			break;
 		Q_strncpyz(anim->name, token, sizeof(anim->name));
