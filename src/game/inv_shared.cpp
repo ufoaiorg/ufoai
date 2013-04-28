@@ -650,21 +650,20 @@ Inventory::Inventory ()
 
 void Inventory::init ()
 {
-	int i;
-	for (i = 0; i < CID_MAX; i++)
+	for (int i = 0; i < CID_MAX; ++i)
 		_containers[i].id = i;
 }
 
 const Container *Inventory::_getNextCont (const Container *prev) const
 {
 	if (!prev)
-		return &_containers[0];	/* the first one */
-	else if (prev >= &_containers[CID_MAX - 1])
-		return nullptr;			/* prev was the last one */
-	else
-		prev++;
+		/* the first one */
+		return &_containers[0];
+	if (prev >= &_containers[CID_MAX - 1])
+		/* prev was the last one */
+		return nullptr;
 
-	return prev;
+	return ++prev;
 }
 
 const Container *Inventory::getNextCont (const Container *prev, bool inclTemp) const
