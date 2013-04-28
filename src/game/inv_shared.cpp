@@ -638,14 +638,13 @@ int Container::countItems () const
 
 Inventory::Inventory ()
 {
-// This (prototype-)constructor does not work as intended. Seems like the first inventory is created before CSI is set.
-// There is the static game_inventory, static character_t, static le_t ...
-//	containers[CID_LEFT]._invList = nullptr;
-//	containers[CID_LEFT]._def = &CSI->ids[CID_LEFT];
+	/* This (prototype-)constructor does not work as intended. Seems like the first inventory is created before CSI is set.
+	 * There is the static game_inventory, static character_t, static le_t ...
+	 * containers[CID_LEFT]._invList = nullptr;
+	 * containers[CID_LEFT]._def = &CSI->ids[CID_LEFT]; */
 
-// Plan B: add an 'id' member to class Container and init it here
-	int i;
-	for (i = 0; i < CID_MAX; i++)
+	/* Plan B: add an 'id' member to class Container and init it here */
+	for (int i = 0; i < CID_MAX; ++i)
 		_containers[i].id = i;
 }
 
