@@ -102,6 +102,9 @@ typedef struct chrScoreMission_s {
 	float carriedWeight;	/**< The weight this soldier carried during combat */
 
 	inline chrScoreMission_s () {
+		init();
+	}
+	inline void init () {
 		OBJZERO(*this);
 	}
 } chrScoreMission_t;

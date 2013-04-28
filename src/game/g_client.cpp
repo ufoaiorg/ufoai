@@ -1199,7 +1199,7 @@ static void G_ClientSkipActorInfo (void)
 static void G_ClientAssignDefaultActorValues (Edict *ent)
 {
 	/* Mission Scores */
-	OBJZERO(scoreMission[scoreMissionNum]);
+	scoreMission[scoreMissionNum].init();
 	ent->chr.scoreMission = &scoreMission[scoreMissionNum];
 	scoreMissionNum++;
 
