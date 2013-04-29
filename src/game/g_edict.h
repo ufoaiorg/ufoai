@@ -171,6 +171,11 @@ public:
 
 	bool active;				/** only used by camera */
 
+
+	inline void init () {
+		OBJZERO(*this);
+		chr.inv.init();
+	}
 	inline void setActive() {
 		active = true;
 	}

@@ -45,7 +45,7 @@ void G_FreeEdict (Edict *ent)
 	/* unlink from world */
 	gi.UnlinkEdict(ent);
 
-	OBJZERO(*ent);
+	ent->init();
 	ent->classname = "freed";
 	ent->inuse = false;
 }

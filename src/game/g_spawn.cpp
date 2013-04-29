@@ -282,7 +282,7 @@ static const char *ED_ParseEdict (const char *data, Edict *ent)
 	}
 
 	if (!init)
-		OBJZERO(*ent);
+		ent->init();
 
 	return data;
 }
