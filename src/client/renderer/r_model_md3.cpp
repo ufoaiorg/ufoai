@@ -40,12 +40,8 @@ void R_ModLoadAliasMD3Model (model_t *mod, byte *buffer, int bufSize)
 	int version, i, j, l;
 	const dmd3_t *md3;
 	const dmd3frame_t *pinframe;
-	const dmd3tag_t *pintag;
 	const dmd3mesh_t *pinmesh;
-	const dmd3skin_t *pinskin;
-	const dmd3coord_t *pincoord;
 	const dmd3vertex_t *pinvert;
-	const int32_t *pinindex;
 	float lat, lng;
 
 	md3 = (dmd3_t *)buffer;
@@ -99,7 +95,7 @@ void R_ModLoadAliasMD3Model (model_t *mod, byte *buffer, int bufSize)
 
 	/* load the tags */
 	if (mod->alias.num_tags) {
-		pintag = (const dmd3tag_t *)((const byte *)md3 + LittleLong(md3->ofs_tags));
+		const dmd3tag_t *pintag = (const dmd3tag_t *)((const byte *)md3 + LittleLong(md3->ofs_tags));
 		mAliasTag_t* pouttag = mod->alias.tags = Mem_PoolAllocTypeN(mAliasTag_t, mod->alias.num_tags, vid_modelPool);
 
 		/** @todo the tag loading is broken - the order is different in the md3 file */
@@ -149,7 +145,7 @@ void R_ModLoadAliasMD3Model (model_t *mod, byte *buffer, int bufSize)
 			Com_Error(ERR_DROP, "mesh %i in model %s has too many vertices", i, mod->name);
 
 		/* register all skins */
-		pinskin = (const dmd3skin_t *)((const byte *)pinmesh + LittleLong(pinmesh->ofs_skins));
+		const dmd3skin_t *pinskin = (const dmd3skin_t *)((const byte *)pinmesh + LittleLong(pinmesh->ofs_skins));
 		poutmesh->skins = Mem_PoolAllocTypeN(mAliasSkin_t, poutmesh->num_skins, vid_modelPool);
 
 		for (j = 0; j < poutmesh->num_skins; j++) {
@@ -159,7 +155,7 @@ void R_ModLoadAliasMD3Model (model_t *mod, byte *buffer, int bufSize)
 		}
 
 		/* load the indexes */
-		pinindex = (const int32_t *)((const byte *)pinmesh + LittleLong(pinmesh->ofs_tris));
+		const int32_t *pinindex = (const int32_t *)((const byte *)pinmesh + LittleLong(pinmesh->ofs_tris));
 		int32_t* poutindex = poutmesh->indexes = Mem_PoolAllocTypeN(int32_t, poutmesh->num_tris * 3, vid_modelPool);
 
 		for (j = 0; j < poutmesh->num_tris; j++, pinindex += 3, poutindex += 3) {
@@ -169,7 +165,7 @@ void R_ModLoadAliasMD3Model (model_t *mod, byte *buffer, int bufSize)
 		}
 
 		/* load the texture coordinates */
-		pincoord = (const dmd3coord_t *)((const byte *)pinmesh + LittleLong(pinmesh->ofs_tcs));
+		const dmd3coord_t *pincoord = (const dmd3coord_t *)((const byte *)pinmesh + LittleLong(pinmesh->ofs_tcs));
 		poutmesh->stcoords = Mem_PoolAllocTypeN(mAliasCoord_t, poutmesh->num_verts, vid_modelPool);
 
 		for (j = 0; j < poutmesh->num_verts; j++, pincoord++) {

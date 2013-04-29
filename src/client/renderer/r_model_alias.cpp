@@ -576,7 +576,6 @@ image_t* R_AliasModelState (const model_t *mod, int *mesh, int *frame, int *oldF
 void R_FillArrayData (mAliasModel_t* mod, mAliasMesh_t *mesh, float backlerp, int framenum, int oldframenum, bool prerender)
 {
 	const mAliasFrame_t *frame, *oldframe;
-	vec3_t move;
 	const float frontlerp = 1.0 - backlerp;
 	vec_t *texcoord_array, *vertex_array_3d;
 
@@ -621,6 +620,7 @@ void R_FillArrayData (mAliasModel_t* mod, mAliasMesh_t *mesh, float backlerp, in
 	} else { /* otherwise, we have to do it on the CPU */
 		const mAliasVertex_t *v, *ov;
 		vec3_t r_mesh_verts[MAX_ALIAS_VERTS];
+		vec3_t move;
 		int i;
 		assert(mesh->num_verts < lengthof(r_mesh_verts));
 		v = &mesh->vertexes[framenum * mesh->num_verts];

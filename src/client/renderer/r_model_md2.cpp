@@ -116,7 +116,6 @@ static void R_ModLoadAliasMD2MeshUnindexed (model_t *mod, const dMD2Model_t *md2
 	int indRemap[MD2_MAX_TRIANGLES * 3];
 	int frameSize, numVerts;
 	double isw;
-	const char *md2Path;
 	int md2Verts;
 
 	outMesh = &mod->alias.meshes[mod->alias.num_meshes - 1];
@@ -134,6 +133,7 @@ static void R_ModLoadAliasMD2MeshUnindexed (model_t *mod, const dMD2Model_t *md2
 	outMesh->num_verts = md2Verts;
 
 	if (mod->alias.num_meshes == 1) {
+		const char *md2Path;
 		if (R_UseActorSkin() && Q_strstart(outMesh->name, "models/soldiers/")) {
 			image_t *defaultSkin;
 			md2Path = (const char *) md2 + LittleLong(md2->ofs_skins);
@@ -294,7 +294,6 @@ static void R_ModLoadAliasMD2MeshIndexed (model_t *mod, const dMD2Model_t *md2, 
 	int32_t *outIndex;
 	int frameSize, numIndexes, numVerts;
 	double isw;
-	const char *md2Path;
 	int md2Verts;
 
 	outMesh = &mod->alias.meshes[mod->alias.num_meshes - 1];
@@ -324,7 +323,7 @@ static void R_ModLoadAliasMD2MeshIndexed (model_t *mod, const dMD2Model_t *md2, 
 			Com_Error(ERR_DROP, "Could not load model '%s' - invalid num_skins value: %i\n", mod->name, outMesh->num_skins);
 
 		outMesh->skins = Mem_PoolAllocTypeN(mAliasSkin_t, outMesh->num_skins, vid_modelPool);
-		md2Path = (const char *) md2 + LittleLong(md2->ofs_skins);
+		const char *md2Path = (const char *) md2 + LittleLong(md2->ofs_skins);
 		for (i = 0; i < outMesh->num_skins; i++) {
 			outMesh->skins[i].skin = R_AliasModelGetSkin(mod->name, md2Path + i * MD2_MAX_SKINNAME);
 			Q_strncpyz(outMesh->skins[i].name, outMesh->skins[i].skin->name, sizeof(outMesh->skins[i].name));
