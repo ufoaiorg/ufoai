@@ -530,6 +530,7 @@ void InventoryInterface::destroyInventory (Inventory* const inv)
 	}
 
 	OBJZERO(*inv);
+	inv->init();
 }
 
 /**
