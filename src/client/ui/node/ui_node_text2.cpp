@@ -145,7 +145,6 @@ void uiText2Node::drawText (uiNode_t* node, const linkedList_t *list, bool noDra
 	char newFont[MAX_VAR];
 	const char* oldFont = nullptr;
 	int fullSizeY;
-	int x1; /* variable x position */
 	const char *font = UI_GetFontFromNode(node);
 	vec2_t pos;
 	int x, y, width;
@@ -186,6 +185,7 @@ void uiText2Node::drawText (uiNode_t* node, const linkedList_t *list, bool noDra
 	fullSizeY = 0;
 	while (list) {
 		const char *cur = (const char*)list->data;
+		int x1; /* variable x position */
 
 		/* new line starts from node x position */
 		x1 = x;

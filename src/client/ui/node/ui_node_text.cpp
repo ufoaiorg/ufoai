@@ -162,7 +162,6 @@ void uiTextNode::drawText (uiNode_t* node, const char *text, const linkedList_t 
 	vec4_t colorSelectedHover;
 	char *cur, *tab, *end;
 	int fullSizeY;
-	int x1; /* variable x position */
 	const char *font = UI_GetFontFromNode(node);
 	vec2_t pos;
 	int x, y, width;
@@ -220,6 +219,7 @@ void uiTextNode::drawText (uiNode_t* node, const char *text, const linkedList_t 
 	fullSizeY = 0;
 	do {
 		bool haveTab;
+		int x1; /* variable x position */
 		/* new line starts from node x position */
 		x1 = x;
 		if (oldFont) {

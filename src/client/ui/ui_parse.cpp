@@ -1101,7 +1101,6 @@ bool UI_ParseUIModel (const char *name, const char **text)
 	uiModel_t *model;
 	const char *token;
 	int i;
-	const value_t *v = nullptr;
 	const char *errhead = "UI_ParseUIModel: unexpected end of file (names ";
 
 	/* search for a UI models with same name */
@@ -1136,6 +1135,7 @@ bool UI_ParseUIModel (const char *name, const char **text)
 	ui_global.numModels++;
 
 	do {
+		const value_t *v = nullptr;
 		/* get the name type */
 		token = Com_EParse(text, errhead, name);
 		if (!*text)

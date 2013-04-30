@@ -497,12 +497,10 @@ static size_t R_PreprocessShaderR (const char *name, const char **inPtr, char *o
 				FS_FreeFile(buf);
 			} else if (!strncmp((*inPtr), "unroll", 6)) {
 				/* loop unrolling */
-				int j = 0,
-					z = 0;
 				size_t subLength = 0;
 				byte* const buffer = Mem_PoolAllocTypeN(byte, SHADER_BUF_SIZE, vid_imagePool);
 				(*inPtr) += 6;
-				z = Cvar_GetValue(Com_Parse(inPtr));
+				int z = Cvar_GetValue(Com_Parse(inPtr));
 				while (*(*inPtr)) {
 					if (!strncmp((*inPtr), "#endunroll", 10)) {
 						(*inPtr) += 10;
@@ -513,7 +511,7 @@ static size_t R_PreprocessShaderR (const char *name, const char **inPtr, char *o
 						Com_Error(ERR_FATAL, "R_PreprocessShaderR: Overflow in shader loading '%s'", name);
 				}
 				if (out) {
-					for (; j < z; j++) {
+					for (int j = 0; j < z; j++) {
 						int l = 0;
 						for (; l < subLength; l++) {
 							if (buffer[l] == '$') {
