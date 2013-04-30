@@ -421,10 +421,9 @@ static size_t R_PreprocessShaderR (const char *name, const char **inPtr, char *o
 
 			if (!strncmp((*inPtr), "if ", 3)) {
 				/* The line looks like "#if r_postprocess".*/
-				float f = 0.0f;
 				(*inPtr) += 3;
 				/* Get the corresponding cvar value.*/
-				f = Cvar_GetValue(Com_Parse(inPtr));
+				float f = Cvar_GetValue(Com_Parse(inPtr));
 				if (f) { /* Condition is true, recursively preprocess #if block, and skip over #else block, if any */
 					int size = R_PreprocessShaderR(name, inPtr, out, remainingOutChars, true, false);
 					if (out) out += size;
