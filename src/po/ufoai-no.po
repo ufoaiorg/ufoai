@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: UFO: Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
 "POT-Creation-Date: 2013-04-23 10:28+0200\n"
-"PO-Revision-Date: 2013-04-15 01:52+0100\n"
+"PO-Revision-Date: 2013-05-02 07:54+0100\n"
 "Last-Translator: Johnny A. Solbu <johnny@solbu.net>\n"
 "Language-Team: Norwegian Bokmal\n"
 "Language: nb_NO\n"
@@ -98,7 +98,7 @@ msgstr "Liten bungalo i skogen"
 #: ../base/maps/frozen.ump:729 ../base/maps/frozen.ump:732
 #: ../base/maps/frozen.ump:802
 msgid "Frozen"
-msgstr ""
+msgstr "Frosset"
 
 #: ../base/maps/frozen.ump:757
 msgid "Multiplayer Coop"
@@ -231,9 +231,8 @@ msgstr "Styrtet ufo"
 
 #: ../base/maps/village.ump:452 ../base/maps/village.ump:478
 #: ../base/maps/village.ump:505 ../base/maps/village.ump:535
-#, fuzzy
 msgid "Village"
-msgstr "Landsby stor"
+msgstr "Landsby"
 
 #: ../base/ufos/aircraftmanagement.ufo:102
 msgid "Firebird-class Dropship"
@@ -4926,6 +4925,16 @@ msgid ""
 "\n"
 "Cdr. Navarre"
 msgstr ""
+"Kommandant, armeringshuden pakket rundt kanonbåt-Ufoen som vi undersøkte "
+"antydet flere nyvinninger vi kan være i stand til å distribuere i våre egne "
+"fly. Det var ikke bare tykkere, som de fleste fremmede panserforbedringer "
+"har vært. Det var lettere og mer holdbart enn noe vi har sett.\n"
+"\n"
+"Gi oss litt tid i laboratoriet, sir, og kanskje vi kan komme opp med nye "
+"panser fabrikasjonsteknikker hentet fra denne Ufoen til å utstyre våre egne "
+"fly.\n"
+"\n"
+"Cdr. Navarre"
 
 #: ../base/ufos/msgid/aircraftitems.ufo:144
 msgid ""
@@ -5124,6 +5133,15 @@ msgid ""
 "\n"
 "Cdr. Navarre"
 msgstr ""
+"Kommandant, da våre ingeniører utførte den siste Ufo-demonteringen merket de "
+"noe som syntes å være noen modifikasjoner av fremdriftssystemmekanismer. "
+"Hvis de utenomjordiske oppgraderer sine antimateriemotorer trenger vi å lære "
+"så mye som vi kan fra dem.\n"
+"\n"
+"Jeg sender denne forespørselen for å ta en nærmere titt. Det kan være "
+"nøkkelen til å vinne kampen om herredømmet i vårt luftrom.\n"
+"\n"
+"Cdr. Navarre"
 
 #: ../base/ufos/msgid/aircraftitems.ufo:220
 msgid ""
@@ -5959,6 +5977,20 @@ msgid ""
 "\n"
 "Cdr. Navarre"
 msgstr ""
+"Kommandant, vår forskning på romvesen rakettkaster og antimaterie missil har "
+"eksponert hvor svake våre nåværende missilsystemer er. Når vi står overfor "
+"stadig sterkere og bedre utstyrte Ufoer henger vi etter i kampen for å holde "
+"dem borte fra luftrommet vårt.\n"
+"\n"
+"Den nye fremmede utskytningsrampen vi møter er i stand til å projisere sine "
+"raketter med en så høy hastighet at våre piloter har svært lite tid til å "
+"foreta unnamanøvrer. Men antimaterie i de fremmede missiler er kostbart og "
+"vi har ikke råd til å utstyre hvert jagerfly med dem. Jeg oppfordrer deg til "
+"å godkjenne forskning på et nytt missilsystem utviklet for å fungere i de "
+"fremmede rakettrampene. Jeg er overbevist om at vi kan oppnå større "
+"hastigheter og kinetisk effekt enn noen missilsystem som er i bruk.\n"
+"\n"
+"Cdr. Navarre"
 
 #: ../base/ufos/msgid/aircraftitems.ufo:634
 msgid ""
@@ -6176,7 +6208,6 @@ msgid ""
 msgstr ""
 
 #: ../base/ufos/msgid/aliens.ufo:68 ../base/ufos/msgid/aliens.ufo:396
-#, fuzzy
 msgid ""
 "Commander,\n"
 "\n"
@@ -6189,8 +6220,8 @@ msgid ""
 msgstr ""
 "Kommandant, \n"
 "\n"
-"Vi har funnet et nytt fremmed lik fra slagmarken. Vi bør begynne disseksjon "
-"og vurdering så snart som mulig. \n"
+"Vi har funnet et nytt fremmed lik fra slagmarken. Disseksjon og evaluering "
+"kunne gi oss innsikt i dets evner.\n"
 "\n"
 "Vennlig hilsen, \n"
 "\n"
@@ -8700,6 +8731,9 @@ msgid ""
 "the soldiers on site to eliminate the threat. Security cameras placed around "
 "the base will help you track their locations."
 msgstr ""
+"Romvesenene penetrerte baseforsvaret og er inne på området. Samle soldatene "
+"på stedet for å eliminere trusselen. Overvåkingskameraer plassert rundt "
+"basen vil hjelpe deg å spore dem."
 
 #: ../base/ufos/msgid/news.ufo:16
 msgid ""
@@ -11371,7 +11405,6 @@ msgstr ""
 "Kommandant. Navarre"
 
 #: ../base/ufos/msgid/tips.ufo:22
-#, fuzzy
 msgid ""
 "Commander,\n"
 "\n"
@@ -11395,21 +11428,20 @@ msgid ""
 msgstr ""
 "Kommandant, \n"
 "\n"
-"Vi må fange noen romvesener levende hvis vi noen gang kommer til å forstå "
-"vår fiende. Vi kan lære mye av å utføre en obduksjon på romvesenes lik, men "
-"for å finne ut hva som trigger disse skapningene må vi observere levende "
-"eksemplarer.\n"
+"Vi må fange noen romvesener levende hvis vi overhode skal forstå fienden. Å "
+"utføre flere obduksjoner vil hjelpe oss å forstå deres biologi og utvikle "
+"mindre enn dødelige verktøy for å uskadeliggjøre dem. For å finne ut hva som "
+"trigger disse skapningene må vi observere levende eksemplarer.\n"
 "\n"
-"Hvis du kan svimeslå romvesener på slagmarken og bringe dem i live til en "
-"base med et romvesenoppbevaringanlegg, er det ikke godt å si hva vi kunne "
-"oppnå. Vi kan se bedre hvordan deres biologiske organismer fungere og "
+"Hvis du kan svimeslå eller deaktivere romvesener på slagmarken og bringe dem "
+"i live til en base med et forvaringsanlegg, er det ikke godt å si hva vi "
+"kunne oppnå. Vi kan se bedre hvordan deres biologiske organismer fungere og "
 "undersøke dem for svakheter. Med tiden kan vi selv være i stand til å "
 "utvikle en måte å kommunisere med dem.\n"
 "\n"
 "Jeg vet det er en stor risiko for soldatene dine til å fange dem levende, "
 "sir, men det er en risiko vi må ta hvis vi noen gang kommer til å vinne "
-"denne krigen. Send dine menn ut med noen elektrosjokkgranater og sørg for at "
-"de bruker dem.\n"
+"denne krigen.\n"
 "\n"
 "Vennlig hilsen,\n"
 "\n"
@@ -13520,8 +13552,8 @@ msgid ""
 "Cdr. Navarre"
 msgstr ""
 "Våre notater har produsert mange design, og dette er muligens den "
-"vanskeligste å bringe til virkelighet: et deuterium-fluorid laservåpen på "
-"størrelse med en vanlig pistol \n"
+"vanskeligste å virkeliggjøre: et deuterium-fluorid laservåpen på størrelse "
+"med en vanlig pistol \n"
 ".\n"
 "Vanskeligheten i å gjøre dette til en realitet vil være å få deler små nok "
 "og lett nok til at de vil passe inn i en pistoldimensjonert pakke som er "
@@ -14999,7 +15031,7 @@ msgstr ""
 
 #: ../base/ufos/msgid/weapons.ufo:1879
 msgid "stungren_alien_txt"
-msgstr ""
+msgstr "stungren_alien_txt"
 
 #: ../base/ufos/msgid/weapons.ufo:1905
 msgid ""
@@ -15133,7 +15165,6 @@ msgid ""
 msgstr ""
 
 #: ../base/ufos/msgid/weapons.ufo:1945
-#, fuzzy
 msgid ""
 "Commander, we've recovered a dangerous new alien pistol that seems to fire "
 "high-energy particle beams -- an extremely nasty new threat to our troops on "
@@ -15145,11 +15176,11 @@ msgid ""
 "\n"
 "Cdr. Navarre"
 msgstr ""
-"Kommandant Vi har funnet en farlig ny fremmed pistol som ser ut til å avfyre "
-"høy-energi partiklerstråler - mer dødelig enn lasere, mer nøyaktig enn "
-"plasmavåpen, og en svært stygg ny trussel mot våre tropper på slagmarken. "
-"Foreløpige tester mot skjold har produsert foruroligende resultater. Vi må "
-"utføre mer forskning på disse våpnene umiddelbart.\n"
+"Kommandant, vi har funnet en farlig ny fremmed pistol som ser ut til å "
+"avfyre høy-energi-partikkelstråler, en svært stygg ny trussel mot våre "
+"tropper på slagmarken. Foreløpige tester mot skjold har produsert "
+"foruroligende resultater. Vi må utføre mer forskning på disse våpnene "
+"umiddelbart.\n"
 "\n"
 "Vennligst godkjenn dette programmet så snart som mulig.\n"
 "\n"
@@ -15195,7 +15226,7 @@ msgid ""
 "\n"
 "Cdr. Navarre"
 msgstr ""
-"Kommandant Vi har funnet et stor romvesenes kanon som skyter høy-energi "
+"Kommandant, vi har funnet et stor romvesenes kanon som skyter høy-energi "
 "partiklerstråler. Det er ekstremt dødelig og har skremmende effekt på skjold "
 "under tidlige tester. Vi må utføre mer forskning på disse våpnene "
 "umiddelbart.\n"
@@ -15240,7 +15271,6 @@ msgid ""
 msgstr ""
 
 #: ../base/ufos/msgid/weapons.ufo:1993
-#, fuzzy
 msgid ""
 "Commander, we've recovered an alien rifle that fires high-energy particle "
 "beams. It's more deadly than anything we've seen -- an extremely nasty new "
@@ -15252,12 +15282,11 @@ msgid ""
 "\n"
 "Cdr. Navarre"
 msgstr ""
-"Kommandant, vi har funnet en fremmed rifle som skyter høyenergi "
-"partikkelstråler. Det er mer dødelig enn lasere, mer nøyaktige enn plasma "
-"våpen, og en svært stygg ny trussel mot våre tropper på slagmarken. "
-"Foreløpige tester mot skjold bekrefter at de utenomjordiske har seriøst "
-"oppgradert sine tropper. Vi må utføre mer forskning på disse våpnene "
-"umiddelbart.\n"
+"Kommandant, vi har funnet en fremmed rifle som skyter høyenergi-"
+"partikkelstråler. Det er mer dødelig enn noe vi har sett, en svært stygg ny "
+"trussel mot våre tropper på slagmarken. Foreløpige tester mot skjold "
+"bekrefter at de utenomjordiske har oppgradert sine troppers våpen kraftig. "
+"Vi må utføre mer forskning på disse våpnene umiddelbart.\n"
 "\n"
 "Vennligst godkjenn dette programmet så snart som mulig.\n"
 "\n"
@@ -15447,9 +15476,8 @@ msgid "missions"
 msgstr "oppdrag"
 
 #: ../base/ufos/msgoptions.ufo:156
-#, fuzzy
 msgid "buildings"
-msgstr "Byggninger"
+msgstr "bygninger"
 
 #: ../base/ufos/nations.ufo:28
 msgid "The Revolutionary Countries"
@@ -16738,6 +16766,8 @@ msgid ""
 "Find the control center and place one of your soldiers next to the console "
 "in order to take advantage of the security cameras."
 msgstr ""
+"Finn kontrollsenteret og plasser en av dine soldater ved siden av konsollen "
+"for å dra nytte av overvåkingskameraene."
 
 #: ../base/ufos/ui/_menu.ufo:122 ../base/ufos/ui/geoscape.ufo:191
 msgid "CREDITS"
@@ -17110,9 +17140,8 @@ msgid "Dead:"
 msgstr "Døde:"
 
 #: ../base/ufos/ui/aliencont.ufo:350
-#, fuzzy
 msgid "Autopsy"
-msgstr "Autostå"
+msgstr "Obduksjon"
 
 #: ../base/ufos/ui/basedefence.ufo:10
 msgid "Equip Defence Weapons"
@@ -17636,9 +17665,8 @@ msgid "Aircraft:"
 msgstr "Fly:"
 
 #: ../base/ufos/ui/geoscape.ufo:765
-#, fuzzy
 msgid "Mission:"
-msgstr "Oppdrag"
+msgstr "Oppdrag:"
 
 #: ../base/ufos/ui/geoscape.ufo:776
 msgid "Aircraft reached desired location - what to do?"
@@ -20471,19 +20499,16 @@ msgid "Ball"
 msgstr "Kule"
 
 #: ../base/ufos/weapons_plasma.ufo:369
-#, fuzzy
 msgid "Assault Rifle EP Magazine"
-msgstr "Magasin til angrepsrifle"
+msgstr "Angrepsrifle EP-magasin"
 
 #: ../base/ufos/weapons_plasma.ufo:476
-#, fuzzy
 msgid "Machine Gun EP Magazine"
-msgstr "Maskinpistolmagasin"
+msgstr "Maskinpistol EP-magasin"
 
 #: ../base/ufos/weapons_plasma.ufo:567
-#, fuzzy
 msgid "Sniper Rifle EP Magazine"
-msgstr "Snikskytterrifle magasin"
+msgstr "Snikskytterrifle EP-magasin"
 
 #: ../base/ufos/weapons_ugv.ufo:22
 msgid "ugv_ares_w"
@@ -22119,7 +22144,6 @@ msgid "Ok"
 msgstr "Ok"
 
 #: client/cgame/campaign/cp_geoscape.cpp:304
-#, fuzzy
 msgid "Mission"
 msgstr "Oppdrag"
 
@@ -22133,13 +22157,12 @@ msgid "UFO Sighting"
 msgstr "Ufo sett"
 
 #: client/cgame/campaign/cp_geoscape.cpp:1497
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Name: %s\n"
 "Objective: %s"
 msgstr ""
-"Plassering: %s\n"
-"Type: %s\n"
+"Navn: %s\n"
 "Mål: %s"
 
 #: client/cgame/campaign/cp_geoscape.cpp:1513
@@ -22509,7 +22532,6 @@ msgid "base_attack"
 msgstr "Baseangrep"
 
 #: client/cgame/campaign/cp_messageoptions.cpp:63
-#, fuzzy
 msgid "building_finished"
 msgstr "Bygning ferdig"
 
@@ -22568,47 +22590,46 @@ msgstr "Innsamlet utstyr (typer/alle)"
 
 #: client/cgame/campaign/cp_missions.cpp:457
 #: client/cgame/campaign/cp_missions.cpp:480
-#, fuzzy, c-format
+#, c-format
 msgid "Crashed %s"
-msgstr "Styrtet"
+msgstr "Styrtet %s"
 
 #: client/cgame/campaign/cp_missions.cpp:463
-#, fuzzy, c-format
+#, c-format
 msgid "Alien terror in %s"
-msgstr "Romvesen-materialer"
+msgstr "Romvesen-terror i %s"
 
 #: client/cgame/campaign/cp_missions.cpp:466
-#, fuzzy, c-format
+#, c-format
 msgid "Base attacked: %s"
-msgstr "Baseangrep"
+msgstr "Baseangrep: %s"
 
 #: client/cgame/campaign/cp_missions.cpp:469
-#, fuzzy, c-format
+#, c-format
 msgid "Alien base in %s"
-msgstr "Fremmed base"
+msgstr "Romvesenbase i %s"
 
 #: client/cgame/campaign/cp_missions.cpp:483
-#, fuzzy, c-format
+#, c-format
 msgid "Landed %s"
-msgstr "Landet UFO"
+msgstr "Landet %s"
 
 #: client/cgame/campaign/cp_missions.cpp:488
-#, fuzzy, c-format
+#, c-format
 msgid "Alien activity in %s"
-msgstr "Romvesenaktivitet rapportert -- %s"
+msgstr "Romvesenaktivitet i %s"
 
 #: client/cgame/campaign/cp_missions.cpp:490
-#, fuzzy
 msgid "Alien activity"
-msgstr "Utenomjordisk oppdagelse"
+msgstr "Romvesenaktivitet "
 
 #: client/cgame/campaign/cp_missions.cpp:699
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Go on a rescue mission for %s to save your soldiers, some of whom may still "
 "be alive."
 msgstr ""
-"Dra på et redningsoppdrag på %s for å redde dine soldater, noen av dem kan "
+"Dra på et redningsoppdrag for %s for å redde dine soldater, noen av dem kan "
 "fortsatt være i live."
 
 #: client/cgame/campaign/cp_missions.cpp:703
@@ -22617,9 +22638,8 @@ msgid "Alien activity has been detected in %s."
 msgstr "Romvesenaktivitet er oppdaget i %s."
 
 #: client/cgame/campaign/cp_missions.cpp:705
-#, fuzzy
 msgid "Alien activity has been detected."
-msgstr "Romvesenaktivitet er oppdaget i %s."
+msgstr "Romvesenaktivitet er oppdaget."
 
 #: client/cgame/campaign/cp_missions.cpp:1068
 #, c-format
@@ -22760,9 +22780,9 @@ msgid "Change homebase\n"
 msgstr "Endre hjemmebase\n"
 
 #: client/cgame/campaign/cp_popup.cpp:240
-#, fuzzy, c-format
+#, c-format
 msgid "Mission\t%s\n"
-msgstr "Oppdrag"
+msgstr "Oppdrag\t%s\n"
 
 #: client/cgame/campaign/cp_popup.cpp:341
 #, c-format
@@ -23515,19 +23535,19 @@ msgid "A UFO is flying toward %s"
 msgstr "En ufo flyr mot %s"
 
 #: client/cgame/campaign/cp_ufo.cpp:860
-#, fuzzy, c-format
+#, c-format
 msgid "%s is flying toward %s"
-msgstr "En ufo flyr mot %s"
+msgstr "%s flyr mot %s"
 
 #: client/cgame/campaign/cp_ufo.cpp:864
-#, fuzzy, c-format
+#, c-format
 msgid "Our radar detected %s near %s"
-msgstr "Radaren har oppdaget en ny ufo nær %s"
+msgstr "Radaren har oppdaget %s nær %s"
 
 #: client/cgame/campaign/cp_ufo.cpp:868
-#, fuzzy, c-format
+#, c-format
 msgid "Our radar has lost the tracking on %s"
-msgstr "Vår radar har mistet sporingen av en ufo"
+msgstr "Radaren har mistet sporingen av %s"
 
 #: client/cgame/campaign/cp_ufopedia.cpp:142
 msgid "Cruising speed"
