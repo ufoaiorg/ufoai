@@ -595,7 +595,6 @@ static void CMod_LoadRouting (MapTile &tile, mapData_t *mapData, const byte *bas
  */
 static void CMod_LoadEntityString (MapTile &tile, const char *entityString, mapData_t *mapData, const byte *base, const lump_t *l, const vec3_t shift)
 {
-	const char *token;
 	const char *es;
 	char keyname[256];
 	vec3_t v;
@@ -614,7 +613,7 @@ static void CMod_LoadEntityString (MapTile &tile, const char *entityString, mapD
 	while (1) {
 		cBspModel_t *model = nullptr;
 		/* parse the opening brace */
-		token = Com_Parse(&es);
+		const char *token = Com_Parse(&es);
 		if (!es)
 			break;
 		if (token[0] != '{')
@@ -926,7 +925,6 @@ static void CMod_RerouteMap (mapTiles_t *mapTiles, mapData_t *mapData)
  */
 void CM_LoadMap (const char *tiles, bool day, const char *pos, const char *entityString, mapData_t *mapData, mapTiles_t *mapTiles)
 {
-	const char *token;
 	char name[MAX_VAR];
 	char base[MAX_QPATH];
 	int i;
@@ -946,7 +944,7 @@ void CM_LoadMap (const char *tiles, bool day, const char *pos, const char *entit
 	/* load tiles */
 	while (tiles) {
 		/* get tile name */
-		token = Com_Parse(&tiles);
+		const char *token = Com_Parse(&tiles);
 		if (!tiles) {
 			CMod_RerouteMap(mapTiles, mapData);
 			return;

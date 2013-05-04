@@ -577,7 +577,7 @@ void Cmd_BufClear (void)
  */
 void Cmd_TokenizeString (const char *text, bool macroExpand)
 {
-	const char *com_token, *expanded;
+	const char *expanded;
 
 	Cmd_BufClear();
 
@@ -608,7 +608,7 @@ void Cmd_TokenizeString (const char *text, bool macroExpand)
 			Com_Chop(cmd_args);
 		}
 
-		com_token = Com_Parse(&text);
+		const char *com_token = Com_Parse(&text);
 		if (!text)
 			return;
 
