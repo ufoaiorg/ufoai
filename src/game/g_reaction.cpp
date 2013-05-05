@@ -534,6 +534,7 @@ bool G_ReactionFireSettingsReserveTUs (Edict *ent)
 class ReactionFire
 {
 public:
+	bool isPossible(Edict *ent, const Edict *target);
 	bool checkExecution(const Edict *target);
 };
 static ReactionFire rf;
@@ -544,7 +545,7 @@ static ReactionFire rf;
  * @param[in] target The entity that might be fired at
  * @return @c true if 'ent' can actually fire at 'target', @c false otherwise
  */
-static bool G_ReactionFireIsPossible (Edict *ent, const Edict *target)
+bool ReactionFire::isPossible (Edict *ent, const Edict *target)
 {
 	/* an entity can't reaction fire at itself */
 	if (ent == target)
@@ -612,7 +613,7 @@ static void G_ReactionFireTargetsUpdateAll (const Edict *target)
 	/* check all possible shooters */
 	while ((shooter = G_EdictsGetNextLivingActor(shooter))) {
 		/* check whether reaction fire is possible (friend/foe, LoS */
-		if (G_ReactionFireIsPossible(shooter, target)) {
+		if (rf.isPossible(shooter, target)) {
 			const int TUs = G_ReactionFireGetTUsForItem(shooter, target);
 			if (TUs < 0)
 				continue;	/* no suitable weapon */
@@ -679,7 +680,7 @@ static bool G_ReactionFireTryToShoot (Edict *shooter, const Edict *target)
 
 	/* shooter can't take a reaction shot if it's not possible - and check that
 	 * the target is still alive */
-	if (!G_ReactionFireIsPossible(shooter, target)) {
+	if (!rf.isPossible(shooter, target)) {
 		rft.remove(shooter, target);
 		return false;
 	}
