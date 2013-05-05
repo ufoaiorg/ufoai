@@ -534,67 +534,67 @@ bool G_ReactionFireSettingsReserveTUs (Edict *ent)
 class ReactionFire
 {
 public:
-	bool isPossible(Edict *ent, const Edict *target);
+	bool isPossible(Edict *shooter, const Edict *target);
 	bool checkExecution(const Edict *target);
 };
 static ReactionFire rf;
 
 /**
- * @brief Check whether ent can reaction fire at target, i.e. that it can see it and neither is dead etc.
- * @param[in] ent The entity that might be firing
+ * @brief Check whether shooter can reaction fire at target, i.e. that it can see it and neither is dead etc.
+ * @param[in] shooter The entity that might be firing
  * @param[in] target The entity that might be fired at
- * @return @c true if 'ent' can actually fire at 'target', @c false otherwise
+ * @return @c true if 'shooter' can actually fire at 'target', @c false otherwise
  */
-bool ReactionFire::isPossible (Edict *ent, const Edict *target)
+bool ReactionFire::isPossible (Edict *shooter, const Edict *target)
 {
 	/* an entity can't reaction fire at itself */
-	if (ent == target)
+	if (shooter == target)
 		return false;
 
 	/* Don't react in your own turn */
-	if (ent->team == level.activeTeam)
+	if (shooter->team == level.activeTeam)
 		return false;
 
-	/* ent can't use RF if is in STATE_DAZED (flashbang impact) */
-	if (G_IsDazed(ent))
+	/* shooter can't use RF if is in STATE_DAZED (flashbang impact) */
+	if (G_IsDazed(shooter))
 		return false;
 
 	if (G_IsDead(target))
 		return false;
 
-	/* check ent has reaction fire enabled */
-	if (!G_IsReaction(ent))
+	/* check shooter has reaction fire enabled */
+	if (!G_IsReaction(shooter))
 		return false;
 
-	/* check ent has weapon in RF hand */
-	if (!ent->getHandItem(ent->chr.RFmode.getHand())) {
+	/* check shooter has weapon in RF hand */
+	if (!shooter->getHandItem(shooter->chr.RFmode.getHand())) {
 		/* print character info if this happens, for now */
 		gi.DPrintf("Reaction fire enabled but no weapon for hand (name=%s,entnum=%i,hand=%i,fmIdx=%i)\n",
-				ent->chr.name, ent->number, ent->chr.RFmode.getHand(), ent->chr.RFmode.getFmIdx());
-		G_RemoveReaction(ent);
+				shooter->chr.name, shooter->number, shooter->chr.RFmode.getHand(), shooter->chr.RFmode.getFmIdx());
+		G_RemoveReaction(shooter);
 		return false;
 	}
 
-	if (!G_IsVisibleForTeam(target, ent->team))
+	if (!G_IsVisibleForTeam(target, shooter->team))
 		return false;
 
 	/* If reaction fire is triggered by a friendly unit
 	 * and the shooter is still sane, don't shoot;
 	 * well, if the shooter isn't sane anymore... */
-	if (G_IsCivilian(target) || target->team == ent->team)
-		if (!G_IsShaken(ent) || (float) ent->morale / mor_shaken->value > frand())
+	if (G_IsCivilian(target) || target->team == shooter->team)
+		if (!G_IsShaken(shooter) || (float) shooter->morale / mor_shaken->value > frand())
 			return false;
 
 	/* check in range and visible */
-	const int spotDist = G_VisCheckDist(ent);
-	if (VectorDistSqr(ent->origin, target->origin) > spotDist * spotDist)
+	const int spotDist = G_VisCheckDist(shooter);
+	if (VectorDistSqr(shooter->origin, target->origin) > spotDist * spotDist)
 		return false;
 
-	const bool frustum = G_FrustumVis(ent, target->origin);
+	const bool frustum = G_FrustumVis(shooter, target->origin);
 	if (!frustum)
 		return false;
 
-	const float actorVis = G_ActorVis(ent->origin, ent, target, true);
+	const float actorVis = G_ActorVis(shooter->origin, shooter, target, true);
 	if (actorVis <= 0.2)
 		return false;
 
