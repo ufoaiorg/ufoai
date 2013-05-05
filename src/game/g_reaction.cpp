@@ -531,6 +531,13 @@ bool G_ReactionFireSettingsReserveTUs (Edict *ent)
 	return false;
 }
 
+class ReactionFire
+{
+public:
+	bool checkExecution(const Edict *target);
+};
+static ReactionFire rf;
+
 /**
  * @brief Check whether ent can reaction fire at target, i.e. that it can see it and neither is dead etc.
  * @param[in] ent The entity that might be firing
@@ -695,7 +702,7 @@ static bool G_ReactionFireTryToShoot (Edict *shooter, const Edict *target)
  * @sa G_ReactionFireOnMovement
  * @sa G_ReactionFirePostShot
  */
-static bool G_ReactionFireCheckExecution (const Edict *target)
+bool ReactionFire::checkExecution (const Edict *target)
 {
 	Edict *shooter = nullptr;
 	bool fired = false;
@@ -759,7 +766,7 @@ bool G_ReactionFireOnMovement (Edict *target)
 	G_ReactionFirePrintSituation (target);
 #endif
 	/* Check to see whether this resolves any reaction fire */
-	const bool fired = G_ReactionFireCheckExecution(target);
+	const bool fired = rf.checkExecution(target);
 
 	/* Check to see whether this triggers any reaction fire */
 	G_ReactionFireTargetsUpdateAll(target);
@@ -808,7 +815,7 @@ void G_ReactionFirePreShot (const Edict *target, const int fdTime)
 void G_ReactionFirePostShot (Edict *target)
 {
 	/* Check to see whether this resolves any reaction fire */
-	G_ReactionFireCheckExecution(target);
+	rf.checkExecution(target);
 }
 
 /**
