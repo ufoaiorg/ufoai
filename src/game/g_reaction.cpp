@@ -536,6 +536,7 @@ class ReactionFire
 public:
 	bool isEnemy(Edict *shooter, const Edict *target);
 	bool canReact(Edict *shooter, const Edict *target);
+	bool canSee(Edict *shooter, const Edict *target);
 	bool isPossible(Edict *shooter, const Edict *target);
 	bool checkExecution(const Edict *target);
 	void updateAllTargets(const Edict *target);
@@ -598,19 +599,12 @@ bool ReactionFire::canReact (Edict *shooter, const Edict *target)
 }
 
 /**
- * @brief Check whether shooter can reaction fire at target, i.e. that it can see it and neither is dead etc.
+ * @brief Check whether shooter can see his target well enough
  * @param[in] shooter The entity that might be firing
  * @param[in] target The entity that might be fired at
- * @return @c true if 'shooter' can actually fire at 'target', @c false otherwise
  */
-bool ReactionFire::isPossible (Edict *shooter, const Edict *target)
+bool ReactionFire::canSee (Edict *shooter, const Edict *target)
 {
-	if (!isEnemy(shooter, target))
-		return false;
-
-	if (!canReact(shooter, target))
-		return false;
-
 	if (!G_IsVisibleForTeam(target, shooter->team))
 		return false;
 
@@ -625,6 +619,26 @@ bool ReactionFire::isPossible (Edict *shooter, const Edict *target)
 
 	const float actorVis = G_ActorVis(shooter->origin, shooter, target, true);
 	if (actorVis <= 0.2)
+		return false;
+
+	return true;
+}
+
+/**
+ * @brief Check whether shooter can reaction fire at target, i.e. that it can see it and neither is dead etc.
+ * @param[in] shooter The entity that might be firing
+ * @param[in] target The entity that might be fired at
+ * @return @c true if 'shooter' can actually fire at 'target', @c false otherwise
+ */
+bool ReactionFire::isPossible (Edict *shooter, const Edict *target)
+{
+	if (!isEnemy(shooter, target))
+		return false;
+
+	if (!canReact(shooter, target))
+		return false;
+
+	if (!canSee(shooter, target))
 		return false;
 
 	/* okay do it then */
