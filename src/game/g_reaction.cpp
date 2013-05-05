@@ -534,18 +534,18 @@ bool G_ReactionFireSettingsReserveTUs (Edict *ent)
 class ReactionFire
 {
 public:
+	bool isEnemy(Edict *shooter, const Edict *target);
 	bool isPossible(Edict *shooter, const Edict *target);
 	bool checkExecution(const Edict *target);
 };
 static ReactionFire rf;
 
 /**
- * @brief Check whether shooter can reaction fire at target, i.e. that it can see it and neither is dead etc.
+ * @brief Check whether we want to shoot at the target.
  * @param[in] shooter The entity that might be firing
  * @param[in] target The entity that might be fired at
- * @return @c true if 'shooter' can actually fire at 'target', @c false otherwise
  */
-bool ReactionFire::isPossible (Edict *shooter, const Edict *target)
+bool ReactionFire::isEnemy (Edict *shooter, const Edict *target)
 {
 	/* an entity can't reaction fire at itself */
 	if (shooter == target)
@@ -555,11 +555,32 @@ bool ReactionFire::isPossible (Edict *shooter, const Edict *target)
 	if (shooter->team == level.activeTeam)
 		return false;
 
-	/* shooter can't use RF if is in STATE_DAZED (flashbang impact) */
-	if (G_IsDazed(shooter))
+	if (G_IsDead(target))
 		return false;
 
-	if (G_IsDead(target))
+	/* If reaction fire is triggered by a friendly unit
+	 * and the shooter is still sane, don't shoot;
+	 * well, if the shooter isn't sane anymore... */
+	if (G_IsCivilian(target) || target->team == shooter->team)
+		if (!G_IsShaken(shooter) || (float) shooter->morale / mor_shaken->value > frand())
+			return false;
+
+	return true;
+}
+
+/**
+ * @brief Check whether shooter can reaction fire at target, i.e. that it can see it and neither is dead etc.
+ * @param[in] shooter The entity that might be firing
+ * @param[in] target The entity that might be fired at
+ * @return @c true if 'shooter' can actually fire at 'target', @c false otherwise
+ */
+bool ReactionFire::isPossible (Edict *shooter, const Edict *target)
+{
+	if (!isEnemy(shooter, target))
+		return false;
+
+	/* shooter can't use RF if is in STATE_DAZED (flashbang impact) */
+	if (G_IsDazed(shooter))
 		return false;
 
 	/* check shooter has reaction fire enabled */
@@ -577,13 +598,6 @@ bool ReactionFire::isPossible (Edict *shooter, const Edict *target)
 
 	if (!G_IsVisibleForTeam(target, shooter->team))
 		return false;
-
-	/* If reaction fire is triggered by a friendly unit
-	 * and the shooter is still sane, don't shoot;
-	 * well, if the shooter isn't sane anymore... */
-	if (G_IsCivilian(target) || target->team == shooter->team)
-		if (!G_IsShaken(shooter) || (float) shooter->morale / mor_shaken->value > frand())
-			return false;
 
 	/* check in range and visible */
 	const int spotDist = G_VisCheckDist(shooter);
