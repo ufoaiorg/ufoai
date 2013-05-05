@@ -538,6 +538,7 @@ public:
 	bool canReact(Edict *shooter, const Edict *target);
 	bool isPossible(Edict *shooter, const Edict *target);
 	bool checkExecution(const Edict *target);
+	bool tryToShoot(Edict *shooter, const Edict *target);
 };
 static ReactionFire rf;
 
@@ -696,11 +697,11 @@ static bool G_ReactionFireShoot (Edict *shooter, const pos3_t at, shoot_types_t 
 
 /**
  * @brief Resolve the reaction fire for an entity, this checks that the entity can fire and then takes the shot
- * @param[in] shooter The entity to resolve reaction fire for
+ * @param[in] shooter The entity using reaction fire
  * @param[in] target The victim of the reaction fire
- * @return true if the entity fired (or would have fired if mock), false otherwise
+ * @return true if the entity fired, false otherwise
  */
-static bool G_ReactionFireTryToShoot (Edict *shooter, const Edict *target)
+bool ReactionFire::tryToShoot (Edict *shooter, const Edict *target)
 {
 	/* check for valid target */
 	assert(target);
@@ -740,7 +741,7 @@ bool ReactionFire::checkExecution (const Edict *target)
 		const int tus = G_ReactionFireGetTUsForItem(shooter, target);
 		if (tus > 1) {	/* indicates an RF weapon is there */
 			if (rft.hasExpired(shooter, target, 0)) {
-				if (G_ReactionFireTryToShoot(shooter, target)) {
+				if (rf.tryToShoot(shooter, target)) {
 					rft.advance(shooter, tus);
 					fired |= true;
 				}
@@ -825,7 +826,7 @@ void G_ReactionFirePreShot (const Edict *target, const int fdTime)
 			const int entTUs = G_ReactionFireGetTUsForItem(shooter, target);
 			if (entTUs > 1) {	/* indicates an RF weapon is there */
 				if (rft.hasExpired(shooter, target, fdTime)) {
-					if (G_ReactionFireTryToShoot(shooter, target)) {
+					if (rf.tryToShoot(shooter, target)) {
 						repeat = true;
 						rft.advance(shooter, fdTime);
 					}
