@@ -538,6 +538,7 @@ public:
 	bool canReact(Edict *shooter, const Edict *target);
 	bool isPossible(Edict *shooter, const Edict *target);
 	bool checkExecution(const Edict *target);
+	void updateAllTargets(const Edict *target);
 	bool tryToShoot(Edict *shooter, const Edict *target);
 };
 static ReactionFire rf;
@@ -634,7 +635,7 @@ bool ReactionFire::isPossible (Edict *shooter, const Edict *target)
  * @brief Check whether 'target' has just triggered any new reaction fire
  * @param[in] target The entity triggering fire
  */
-static void G_ReactionFireTargetsUpdateAll (const Edict *target)
+void ReactionFire::updateAllTargets (const Edict *target)
 {
 	Edict *shooter = nullptr;
 
@@ -798,7 +799,7 @@ bool G_ReactionFireOnMovement (Edict *target)
 	const bool fired = rf.checkExecution(target);
 
 	/* Check to see whether this triggers any reaction fire */
-	G_ReactionFireTargetsUpdateAll(target);
+	rf.updateAllTargets(target);
 
 	return fired;
 }
@@ -814,7 +815,7 @@ void G_ReactionFirePreShot (const Edict *target, const int fdTime)
 	bool repeat = true;
 
 	/* Check to see whether this triggers any reaction fire */
-	G_ReactionFireTargetsUpdateAll(target);
+	rf.updateAllTargets(target);
 
 	/* if any reaction fire occurs, we have to loop through all entities again to allow
 	 * multiple (fast) RF snap shots before a (slow) aimed shot from the target occurs. */
