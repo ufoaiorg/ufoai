@@ -535,6 +535,7 @@ class ReactionFire
 {
 public:
 	bool isEnemy(Edict *shooter, const Edict *target);
+	bool canReact(Edict *shooter, const Edict *target);
 	bool isPossible(Edict *shooter, const Edict *target);
 	bool checkExecution(const Edict *target);
 };
@@ -569,16 +570,12 @@ bool ReactionFire::isEnemy (Edict *shooter, const Edict *target)
 }
 
 /**
- * @brief Check whether shooter can reaction fire at target, i.e. that it can see it and neither is dead etc.
+ * @brief Check whether shooter can reaction fire at target at all.
  * @param[in] shooter The entity that might be firing
  * @param[in] target The entity that might be fired at
- * @return @c true if 'shooter' can actually fire at 'target', @c false otherwise
  */
-bool ReactionFire::isPossible (Edict *shooter, const Edict *target)
+bool ReactionFire::canReact (Edict *shooter, const Edict *target)
 {
-	if (!isEnemy(shooter, target))
-		return false;
-
 	/* shooter can't use RF if is in STATE_DAZED (flashbang impact) */
 	if (G_IsDazed(shooter))
 		return false;
@@ -595,6 +592,22 @@ bool ReactionFire::isPossible (Edict *shooter, const Edict *target)
 		G_RemoveReaction(shooter);
 		return false;
 	}
+	return true;
+}
+
+/**
+ * @brief Check whether shooter can reaction fire at target, i.e. that it can see it and neither is dead etc.
+ * @param[in] shooter The entity that might be firing
+ * @param[in] target The entity that might be fired at
+ * @return @c true if 'shooter' can actually fire at 'target', @c false otherwise
+ */
+bool ReactionFire::isPossible (Edict *shooter, const Edict *target)
+{
+	if (!isEnemy(shooter, target))
+		return false;
+
+	if (!canReact(shooter, target))
+		return false;
 
 	if (!G_IsVisibleForTeam(target, shooter->team))
 		return false;
