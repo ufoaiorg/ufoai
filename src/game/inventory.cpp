@@ -51,7 +51,7 @@ void InventoryInterface::removeInvList (invList_t *invList)
 
 invList_t *InventoryInterface::addInvList (Inventory *const inv, const invDef_t *container)
 {
-	invList_t *newEntry = (invList_t*)alloc(sizeof(invList_t));
+	invList_t *newEntry = static_cast<invList_t*>(alloc(sizeof(invList_t)));
 	newEntry->setNext(nullptr);	/* not really needed - but for better readability */
 
 	Com_DPrintf(DEBUG_SHARED, "AddInvList: add one slot (%s)\n", invName);
