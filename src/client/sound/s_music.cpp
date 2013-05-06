@@ -49,6 +49,7 @@ typedef struct music_s {
 	char currentTrack[MAX_QPATH];
 	char nextTrack[MAX_QPATH];
 	Mix_Music *data;
+	int category;
 	byte *buffer;
 	bool playingStream; /**< if this is set no action to M_Start and M_Stop might happen, otherwise we might run
 	 * into a deadlock. This is due to the installed hook function for music mixing that is used
@@ -192,7 +193,7 @@ static void M_Start (const char *file)
 
 	Q_strncpyz(music.currentTrack, name, sizeof(music.currentTrack));
 	music.buffer = musicBuf;
-	if (Mix_FadeInMusic(music.data, -1, 1500) == -1)
+	if (Mix_FadeInMusic(music.data, 1, 1500) == -1)
 		Com_Printf("M_Start: Could not play music: 'music/%s' (%s)!\n", name, Mix_GetError());
 }
 
@@ -235,6 +236,19 @@ static void M_RandomTrack_f (void)
 	}
 }
 
+static bool M_PlayRandomByCategory (int category)
+{
+	if (category != MUSIC_BATTLESCAPE && CL_OnBattlescape())
+		return false;
+	if (!musicArrayLength[category])
+		return false;
+	const int rnd = rand() % musicArrayLength[category];
+	music.category = category;
+	Com_Printf("Music: track changed from %s to %s.\n", snd_music->string, musicArrays[category][rnd]);
+	Cvar_Set("snd_music", musicArrays[category][rnd]);
+	return true;
+}
+
 /**
  * @brief Changes the music if it suits the current situation
  * @todo Make the music a scriptable list
@@ -242,7 +256,6 @@ static void M_RandomTrack_f (void)
 static void M_Change_f (void)
 {
 	const char* type;
-	int rnd;
 	int category;
 
 	if (!s_env.initialized)
@@ -275,9 +288,8 @@ static void M_Change_f (void)
 		Com_Printf("M_Change_f: Could not find any %s themed music tracks!\n", type);
 		return;
 	}
-	rnd = rand() % musicArrayLength[category];
-	Com_Printf("Music: %s track changed from %s to %s.\n", type, snd_music->string, musicArrays[category][rnd]);
-	Cvar_Set("snd_music", musicArrays[category][rnd]);
+
+	M_PlayRandomByCategory(category);
 }
 
 static int M_CompleteMusic (const char *partial, const char **match)
@@ -317,11 +329,14 @@ void M_Frame (void)
 
 	if (music.playingStream) {
 		M_MusicStreamUpdate();
-	} else if (music.nextTrack[0] != '\0') {
-		if (!Mix_PlayingMusic()) {
-			M_Stop(); /* free the allocated memory */
+	} else if (!Mix_PlayingMusic()) {
+		M_Stop(); /* free the allocated memory */
+		if (Q_strvalid(music.nextTrack)) {
 			M_Start(music.nextTrack);
 			music.nextTrack[0] = '\0';
+		} else {
+			if (!M_PlayRandomByCategory(music.category))
+				M_Start(music.currentTrack);
 		}
 	}
 }
