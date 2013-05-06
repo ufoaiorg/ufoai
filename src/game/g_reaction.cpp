@@ -533,11 +533,11 @@ bool G_ReactionFireSettingsReserveTUs (Edict *ent)
 
 class ReactionFire
 {
-public:
 	bool isEnemy(Edict *shooter, const Edict *target);
 	bool canReact(Edict *shooter, const Edict *target);
 	bool canSee(Edict *shooter, const Edict *target);
 	bool isPossible(Edict *shooter, const Edict *target);
+public:
 	bool checkExecution(const Edict *target);
 	void updateAllTargets(const Edict *target);
 	bool tryToShoot(Edict *shooter, const Edict *target);
