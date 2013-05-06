@@ -537,6 +537,7 @@ class ReactionFire
 	bool canReact(Edict *shooter, const Edict *target);
 	bool canSee(Edict *shooter, const Edict *target);
 	bool isPossible(Edict *shooter, const Edict *target);
+	bool shoot(Edict *shooter, const pos3_t at, shoot_types_t type, fireDefIndex_t firemode);
 public:
 	bool checkExecution(const Edict *target);
 	void updateAllTargets(const Edict *target);
@@ -676,7 +677,7 @@ void ReactionFire::updateAllTargets (const Edict *target)
  * @return true if everything went ok (i.e. the shot(s) where fired ok), otherwise false.
  * @sa G_ClientShoot
  */
-static bool G_ReactionFireShoot (Edict *shooter, const pos3_t at, shoot_types_t type, fireDefIndex_t firemode)
+bool ReactionFire::shoot (Edict *shooter, const pos3_t at, shoot_types_t type, fireDefIndex_t firemode)
 {
 	const int minhit = 30;
 	shot_mock_t mock;
@@ -729,7 +730,7 @@ bool ReactionFire::tryToShoot (Edict *shooter, const Edict *target)
 	}
 
 	/* take the shot */
-	const bool tookShot = G_ReactionFireShoot(shooter, target->pos, ST_RIGHT_REACTION, shooter->chr.RFmode.getFmIdx());
+	const bool tookShot = rf.shoot(shooter, target->pos, ST_RIGHT_REACTION, shooter->chr.RFmode.getFmIdx());
 
 	if (tookShot) {
 		/* clear any shakenness */
