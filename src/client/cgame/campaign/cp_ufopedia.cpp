@@ -835,13 +835,13 @@ static void UP_GenerateSummary (void)
 		/* Check if there are any researched or collected items in this chapter ... */
 		bool researchedEntries = false;
 		upCurrentTech = chapter->first;
-		do {
+		while (upCurrentTech) {
 			if (UP_TechGetsDisplayed(upCurrentTech)) {
 				researchedEntries = true;
 				break;
 			}
 			upCurrentTech = upCurrentTech->upNext;
-		} while (upCurrentTech);
+		}
 
 		/* .. and if so add them to the displaylist of chapters. */
 		if (researchedEntries) {
