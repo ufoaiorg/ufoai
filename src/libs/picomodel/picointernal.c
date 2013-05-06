@@ -1005,7 +1005,6 @@ int _pico_parse_float_def (picoParser_t *p, float *out, float def)
 
 int _pico_parse_vec (picoParser_t *p, picoVec3_t out)
 {
-	char *token;
 	int i;
 
 	/* sanity checks */
@@ -1017,7 +1016,7 @@ int _pico_parse_vec (picoParser_t *p, picoVec3_t out)
 
 	/* parse three vector components */
 	for (i = 0; i < 3; i++) {
-		token = _pico_parse(p, 0);
+		char *token = _pico_parse(p, 0);
 		if (token == NULL) {
 			_pico_zero_vec(out);
 			return 0;
@@ -1030,7 +1029,6 @@ int _pico_parse_vec (picoParser_t *p, picoVec3_t out)
 
 int _pico_parse_vec_def (picoParser_t *p, picoVec3_t out, picoVec3_t def)
 {
-	char *token;
 	int i;
 
 	/* sanity checks */
@@ -1042,7 +1040,7 @@ int _pico_parse_vec_def (picoParser_t *p, picoVec3_t out, picoVec3_t def)
 
 	/* parse three vector components */
 	for (i = 0; i < 3; i++) {
-		token = _pico_parse(p, 0);
+		char *token = _pico_parse(p, 0);
 		if (token == NULL) {
 			_pico_copy_vec(def, out);
 			return 0;
@@ -1055,7 +1053,6 @@ int _pico_parse_vec_def (picoParser_t *p, picoVec3_t out, picoVec3_t def)
 
 int _pico_parse_vec2 (picoParser_t *p, picoVec2_t out)
 {
-	char *token;
 	int i;
 
 	/* sanity checks */
@@ -1067,7 +1064,7 @@ int _pico_parse_vec2 (picoParser_t *p, picoVec2_t out)
 
 	/* parse two vector components */
 	for (i = 0; i < 2; i++) {
-		token = _pico_parse(p, 0);
+		char *token = _pico_parse(p, 0);
 		if (token == NULL) {
 			_pico_zero_vec2(out);
 			return 0;
@@ -1080,7 +1077,6 @@ int _pico_parse_vec2 (picoParser_t *p, picoVec2_t out)
 
 int _pico_parse_vec2_def (picoParser_t *p, picoVec2_t out, picoVec2_t def)
 {
-	char *token;
 	int i;
 
 	/* sanity checks */
@@ -1092,7 +1088,7 @@ int _pico_parse_vec2_def (picoParser_t *p, picoVec2_t out, picoVec2_t def)
 
 	/* parse two vector components */
 	for (i = 0; i < 2; i++) {
-		token = _pico_parse(p, 0);
+		char *token = _pico_parse(p, 0);
 		if (token == NULL) {
 			_pico_copy_vec2(def, out);
 			return 0;
@@ -1105,7 +1101,6 @@ int _pico_parse_vec2_def (picoParser_t *p, picoVec2_t out, picoVec2_t def)
 
 int _pico_parse_vec4 (picoParser_t *p, picoVec4_t out)
 {
-	char *token;
 	int i;
 
 	/* sanity checks */
@@ -1117,7 +1112,7 @@ int _pico_parse_vec4 (picoParser_t *p, picoVec4_t out)
 
 	/* parse four vector components */
 	for (i = 0; i < 4; i++) {
-		token = _pico_parse(p, 0);
+		char *token = _pico_parse(p, 0);
 		if (token == NULL) {
 			_pico_zero_vec4(out);
 			return 0;
@@ -1130,7 +1125,6 @@ int _pico_parse_vec4 (picoParser_t *p, picoVec4_t out)
 
 int _pico_parse_vec4_def (picoParser_t *p, picoVec4_t out, picoVec4_t def)
 {
-	char *token;
 	int i;
 
 	/* sanity checks */
@@ -1142,7 +1136,7 @@ int _pico_parse_vec4_def (picoParser_t *p, picoVec4_t out, picoVec4_t def)
 
 	/* parse four vector components */
 	for (i = 0; i < 4; i++) {
-		token = _pico_parse(p, 0);
+		char *token = _pico_parse(p, 0);
 		if (token == NULL) {
 			_pico_copy_vec4(def, out);
 			return 0;
