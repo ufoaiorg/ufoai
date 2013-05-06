@@ -95,7 +95,6 @@ void CalcTextureReflectivity (void)
 static winding_t *WindingFromFace (const dBspSurface_t *f)
 {
 	int i, v;
-	dBspVertex_t *dv;
 	winding_t *w;
 
 	w = AllocWinding(f->numedges);
@@ -108,7 +107,7 @@ static winding_t *WindingFromFace (const dBspSurface_t *f)
 		else
 			v = curTile->edges[se].v[0];
 
-		dv = &curTile->vertexes[v];
+		dBspVertex_t *dv = &curTile->vertexes[v];
 		VectorCopy(dv->point, w->p[i]);
 	}
 

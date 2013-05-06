@@ -58,7 +58,7 @@ void EmitPlanes (void)
 static void EmitLeaf (const node_t *node)
 {
 	dBspLeaf_t *leaf_p;
-	int i, brushnum;
+	int i;
 	const bspbrush_t *b;
 
 	/* emit a leaf */
@@ -81,7 +81,7 @@ static void EmitLeaf (const node_t *node)
 		if (curTile->numleafbrushes >= MAX_MAP_LEAFBRUSHES)
 			Sys_Error("MAX_MAP_LEAFBRUSHES (%i)", curTile->numleafbrushes);
 
-		brushnum = b->original - mapbrushes;
+		int brushnum = b->original - mapbrushes;
 		for (i = leaf_p->firstleafbrush; i < curTile->numleafbrushes; i++)
 			if (curTile->leafbrushes[i] == brushnum)
 				break;

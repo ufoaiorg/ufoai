@@ -272,7 +272,7 @@ static void MakeNodePortal (node_t *node)
 static void SplitNodePortals (node_t *node)
 {
 	portal_t *p, *next_portal, *new_portal;
-	node_t *f, *b, *other_node;
+	node_t *f, *b;
 	int side = 0;
 	plane_t *plane;
 	winding_t *frontwinding, *backwinding;
@@ -290,7 +290,7 @@ static void SplitNodePortals (node_t *node)
 			Sys_Error("SplitNodePortals: mislinked portal");
 		next_portal = p->next[side];
 
-		other_node = p->nodes[!side];
+		node_t *other_node = p->nodes[!side];
 		RemovePortalFromNode(p, p->nodes[0]);
 		RemovePortalFromNode(p, p->nodes[1]);
 

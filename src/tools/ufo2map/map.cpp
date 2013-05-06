@@ -1142,7 +1142,7 @@ static void ParseUMP (const char *name, char *entityString, bool inherit)
 {
 	char filename[MAX_QPATH];
 	byte *buf;
-	const char *text, *token;
+	const char *text;
 
 	*entityString = '\0';
 
@@ -1155,7 +1155,7 @@ static void ParseUMP (const char *name, char *entityString, bool inherit)
 	/* parse it */
 	text = (const char*)buf;
 	do {
-		token = Com_Parse(&text);
+		const char *token = Com_Parse(&text);
 		if (!text)
 			break;
 
