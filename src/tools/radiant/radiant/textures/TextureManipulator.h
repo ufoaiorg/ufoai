@@ -7,7 +7,6 @@
 #include "preferencesystem.h"
 typedef unsigned char byte;
 
-namespace {
 // The OpenGL Texture render modes
 enum ETexturesMode
 {
@@ -18,7 +17,6 @@ enum ETexturesMode
 	eTextures_LINEAR_MIPMAP_NEAREST = 4,
 	eTextures_LINEAR_MIPMAP_LINEAR = 5
 };
-}
 
 namespace shaders {
 
