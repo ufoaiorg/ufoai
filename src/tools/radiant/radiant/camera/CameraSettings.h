@@ -15,19 +15,19 @@ const std::string RKEY_CUBIC_SCALE = "user/ui/camera/cubicScale";
 const std::string RKEY_ENABLE_FARCLIP = "user/ui/camera/enableCubicClipping";
 const std::string RKEY_DRAWMODE = "user/ui/camera/drawMode";
 const std::string RKEY_SOLID_SELECTION_BOXES = "user/ui/xyview/solidSelectionBoxes";
+}
 
 enum CameraDrawMode
 {
 	drawWire, drawSolid, drawTexture
 };
 
-}
 /* greebo: This is the home of all the camera settings. As this class derives
  * from a RegistryKeyObserver, it can be connected to the according registry keys
- * and gets notified if any of the observed keys are changed.*/
-
+ * and gets notified if any of the observed keys are changed. */
 class CameraSettings: public RegistryKeyObserver, public PreferenceConstructor
 {
+	private:
 		bool _callbackActive;
 
 		int _movementSpeed;
