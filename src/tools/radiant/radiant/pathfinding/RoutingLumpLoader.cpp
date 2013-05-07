@@ -227,7 +227,7 @@ namespace routing
 			for (x = minX; x <= maxX; x++)
 				for (y = minY; y <= maxY; y++)
 					for (z = minZ; z <= maxZ; z++) {
-						pos3_t pos = { x, y, z };
+						pos3_t pos = { static_cast<pos_t>(x), static_cast<pos_t>(y), static_cast<pos_t>(z) };
 						vec3_t vect;
 						PosToVec(pos,vect);
 						/**@todo add other data to constructor: accessibility + connection states */
