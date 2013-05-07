@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-04-23 10:28+0200\n"
+"POT-Creation-Date: 2013-05-07 15:12+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Igor Balasyuk <balasar@mail.ru>\n"
 "Language-Team:  <ufoai-developer@lists.sourceforge.net>\n"
@@ -293,7 +293,7 @@ msgstr "Перехоплювач \"Скат\""
 msgid "Stingray"
 msgstr "Скат П"
 
-#: ../base/ufos/aircraftmanagement.ufo:500 ../base/ufos/research.ufo:3846
+#: ../base/ufos/aircraftmanagement.ufo:500 ../base/ufos/research.ufo:3932
 msgid "UFO - Scout"
 msgstr "НЛО - \"Розвідник\" "
 
@@ -301,7 +301,7 @@ msgstr "НЛО - \"Розвідник\" "
 msgid "Scout U"
 msgstr "Розвідник Н"
 
-#: ../base/ufos/aircraftmanagement.ufo:527 ../base/ufos/research.ufo:3888
+#: ../base/ufos/aircraftmanagement.ufo:527 ../base/ufos/research.ufo:3974
 msgid "UFO - Fighter"
 msgstr "НЛО - \"Винищувач\""
 
@@ -309,7 +309,7 @@ msgstr "НЛО - \"Винищувач\""
 msgid "Fighter U"
 msgstr "Винищувач Н"
 
-#: ../base/ufos/aircraftmanagement.ufo:561 ../base/ufos/research.ufo:4187
+#: ../base/ufos/aircraftmanagement.ufo:561 ../base/ufos/research.ufo:4273
 msgid "UFO - Harvester"
 msgstr "НЛО - \"Пожинач\""
 
@@ -318,7 +318,7 @@ msgid "Harvester U"
 msgstr "Пожинач Н"
 
 # хабарник ? :)
-#: ../base/ufos/aircraftmanagement.ufo:607 ../base/ufos/research.ufo:4059
+#: ../base/ufos/aircraftmanagement.ufo:607 ../base/ufos/research.ufo:4145
 msgid "UFO - Corrupter"
 msgstr "НЛО - \"Руйнівник\""
 
@@ -326,7 +326,7 @@ msgstr "НЛО - \"Руйнівник\""
 msgid "Corrupter U"
 msgstr "Руйнівник Н"
 
-#: ../base/ufos/aircraftmanagement.ufo:647 ../base/ufos/research.ufo:3931
+#: ../base/ufos/aircraftmanagement.ufo:647 ../base/ufos/research.ufo:4017
 msgid "UFO - Supply Ship"
 msgstr "НЛО - Судно постачання"
 
@@ -336,7 +336,7 @@ msgstr "Постачальник Н"
 
 # Канонірка?..
 # Артилерист
-#: ../base/ufos/aircraftmanagement.ufo:674 ../base/ufos/research.ufo:4102
+#: ../base/ufos/aircraftmanagement.ufo:674 ../base/ufos/research.ufo:4188
 msgid "UFO - Gunboat"
 msgstr "НЛО - \"Гаубиця\""
 
@@ -344,7 +344,7 @@ msgstr "НЛО - \"Гаубиця\""
 msgid "Gunboat U"
 msgstr "Гаубиця Н"
 
-#: ../base/ufos/aircraftmanagement.ufo:732 ../base/ufos/research.ufo:4017
+#: ../base/ufos/aircraftmanagement.ufo:732 ../base/ufos/research.ufo:4103
 msgid "UFO - Bomber"
 msgstr "НЛО - \"Бомбардувальник\""
 
@@ -352,7 +352,7 @@ msgstr "НЛО - \"Бомбардувальник\""
 msgid "Bomber U"
 msgstr "Бомбардувальник Н"
 
-#: ../base/ufos/aircraftmanagement.ufo:797 ../base/ufos/research.ufo:4144
+#: ../base/ufos/aircraftmanagement.ufo:797 ../base/ufos/research.ufo:4230
 msgid "UFO - Ripper"
 msgstr "НЛО - \"Спустошувач\""
 
@@ -360,7 +360,7 @@ msgstr "НЛО - \"Спустошувач\""
 msgid "Ripper U"
 msgstr "Спустошувач Н"
 
-#: ../base/ufos/aircraftmanagement.ufo:854 ../base/ufos/research.ufo:3974
+#: ../base/ufos/aircraftmanagement.ufo:854 ../base/ufos/research.ufo:4060
 msgid "UFO - Carrier"
 msgstr "НЛО - \"Перевізник\""
 
@@ -368,7 +368,7 @@ msgstr "НЛО - \"Перевізник\""
 msgid "Carrier U"
 msgstr "Перевізник Н"
 
-#: ../base/ufos/aircraftmanagement.ufo:876 ../base/ufos/research.ufo:4230
+#: ../base/ufos/aircraftmanagement.ufo:876 ../base/ufos/research.ufo:4316
 msgid "UFO - Mothership"
 msgstr "НЛО - \"Матка\""
 
@@ -376,7 +376,7 @@ msgstr "НЛО - \"Матка\""
 msgid "Mothership U"
 msgstr "Матка Н"
 
-#: ../base/ufos/aircraftmanagement.ufo:892 ../base/ufos/research.ufo:5037
+#: ../base/ufos/aircraftmanagement.ufo:892 ../base/ufos/research.ufo:5123
 #, fuzzy
 msgid "Aerial Laser Cannon"
 msgstr "Лазерна авіагармата"
@@ -386,12 +386,12 @@ msgid "Shiva Rotary Cannon"
 msgstr "Роторна гармата SHIVA"
 
 # бронебійні запалюючі
-#: ../base/ufos/aircraftmanagement.ufo:934 ../base/ufos/research.ufo:5104
+#: ../base/ufos/aircraftmanagement.ufo:934 ../base/ufos/research.ufo:5190
 msgid "SHIVA 20mm API Rounds"
 msgstr "20мм ББЗ набої SHIVA "
 
 # фугасні запалюючі
-#: ../base/ufos/aircraftmanagement.ufo:950 ../base/ufos/research.ufo:5125
+#: ../base/ufos/aircraftmanagement.ufo:950 ../base/ufos/research.ufo:5211
 msgid "SHIVA 20mm HEI Rounds"
 msgstr "20мм ФЗ набої SHIVA"
 
@@ -408,83 +408,83 @@ msgstr "Ракетний модуль ПП \"Перепелиця\""
 msgid "Sparrowhawk Missile"
 msgstr "Ракета класу ПП \"Перепелиця\""
 
-#: ../base/ufos/aircraftmanagement.ufo:1005 ../base/ufos/research.ufo:5184
+#: ../base/ufos/aircraftmanagement.ufo:1005 ../base/ufos/research.ufo:5270
 msgid "TR-20 Rocket Pod"
 msgstr "Ракетоблок TR-20"
 
-#: ../base/ufos/aircraftmanagement.ufo:1018 ../base/ufos/research.ufo:5201
+#: ../base/ufos/aircraftmanagement.ufo:1018 ../base/ufos/research.ufo:5287
 msgid "TR-20 Rocket"
 msgstr "Ракета TR-20"
 
 # Випромінююча зброя ?
 # Променева
-#: ../base/ufos/aircraftmanagement.ufo:1037 ../base/ufos/research.ufo:5220
+#: ../base/ufos/aircraftmanagement.ufo:1037 ../base/ufos/research.ufo:5306
 #, fuzzy
 msgid "Particle Beam Weapon"
 msgstr "Опромінююча зброя"
 
-#: ../base/ufos/aircraftmanagement.ufo:1067 ../base/ufos/research.ufo:5277
+#: ../base/ufos/aircraftmanagement.ufo:1067 ../base/ufos/research.ufo:5363
 #, fuzzy
 msgid "Alien Launcher"
 msgstr "Гранатомет"
 
-#: ../base/ufos/aircraftmanagement.ufo:1077 ../base/ufos/research.ufo:5324
+#: ../base/ufos/aircraftmanagement.ufo:1077 ../base/ufos/research.ufo:5410
 #, fuzzy
 msgid "Antimatter Missile"
 msgstr "Антиматерія"
 
-#: ../base/ufos/aircraftmanagement.ufo:1094 ../base/ufos/research.ufo:5373
+#: ../base/ufos/aircraftmanagement.ufo:1094 ../base/ufos/research.ufo:5459
 msgid "Hybrid Missile"
 msgstr ""
 
-#: ../base/ufos/aircraftmanagement.ufo:1111 ../base/ufos/research.ufo:5407
+#: ../base/ufos/aircraftmanagement.ufo:1111 ../base/ufos/research.ufo:5493
 msgid "Targeting Computer"
 msgstr "Система націлювання"
 
-#: ../base/ufos/aircraftmanagement.ufo:1123 ../base/ufos/research.ufo:5423
+#: ../base/ufos/aircraftmanagement.ufo:1123 ../base/ufos/research.ufo:5509
 msgid "Fuel Pod"
 msgstr "Додатковий паливний бак"
 
-#: ../base/ufos/aircraftmanagement.ufo:1137 ../base/ufos/research.ufo:4783
+#: ../base/ufos/aircraftmanagement.ufo:1137 ../base/ufos/research.ufo:4869
 msgid "Polymer Aircraft Armour"
 msgstr "Полімерна авіаброня"
 
-#: ../base/ufos/aircraftmanagement.ufo:1151 ../base/ufos/research.ufo:4800
+#: ../base/ufos/aircraftmanagement.ufo:1151 ../base/ufos/research.ufo:4886
 msgid "Alien Aircraft Plating"
 msgstr "Броня НЛО"
 
-#: ../base/ufos/aircraftmanagement.ufo:1165 ../base/ufos/research.ufo:4842
+#: ../base/ufos/aircraftmanagement.ufo:1165 ../base/ufos/research.ufo:4928
 #, fuzzy
 msgid "Alien Polymer Armour"
 msgstr "Бронежилет прибульців"
 
-#: ../base/ufos/aircraftmanagement.ufo:1179 ../base/ufos/research.ufo:5439
+#: ../base/ufos/aircraftmanagement.ufo:1179 ../base/ufos/research.ufo:5525
 msgid "Alien Electronic Warfare Suite"
 msgstr ""
 
-#: ../base/ufos/aircraftmanagement.ufo:1190 ../base/ufos/research.ufo:4884
+#: ../base/ufos/aircraftmanagement.ufo:1190 ../base/ufos/research.ufo:4970
 msgid "Alien Astrogation"
 msgstr "Астронавігаційна система НЛО"
 
-#: ../base/ufos/aircraftmanagement.ufo:1199 ../base/ufos/research.ufo:4922
+#: ../base/ufos/aircraftmanagement.ufo:1200 ../base/ufos/research.ufo:5008
 msgid "Alien Propulsion"
 msgstr "Рушійна система НЛО"
 
-#: ../base/ufos/aircraftmanagement.ufo:1208 ../base/ufos/research.ufo:4960
+#: ../base/ufos/aircraftmanagement.ufo:1209 ../base/ufos/research.ufo:5046
 #, fuzzy
 msgid "Advanced Alien Propulsion"
 msgstr "Рушійна система НЛО"
 
-#: ../base/ufos/aircraftmanagement.ufo:1217 ../base/ufos/research.ufo:4999
+#: ../base/ufos/aircraftmanagement.ufo:1218 ../base/ufos/research.ufo:5085
 msgid "Alien Detection"
 msgstr "Локаційна система НЛО"
 
 # Можливо ПП51
-#: ../base/ufos/aircraftmanagement.ufo:1230 ../base/ufos/research.ufo:4735
+#: ../base/ufos/aircraftmanagement.ufo:1231 ../base/ufos/research.ufo:4821
 msgid "AA51 missile launcher"
 msgstr "Ракетно-пусковий комплекс AA51"
 
-#: ../base/ufos/aircraftmanagement.ufo:1260 ../base/ufos/research.ufo:162
+#: ../base/ufos/aircraftmanagement.ufo:1261 ../base/ufos/research.ufo:248
 msgid "Base-Defence Laser Turret"
 msgstr "Захисна споруда бази - Лазерна башта"
 
@@ -603,7 +603,7 @@ msgstr "Удосконалений радар"
 msgid "Hospital"
 msgstr "Шпиталь"
 
-#: ../base/ufos/basemanagement.ufo:231 ../base/ufos/research.ufo:3546
+#: ../base/ufos/basemanagement.ufo:231 ../base/ufos/research.ufo:3632
 msgid "Antimatter Storage"
 msgstr "Сховище антиматерії"
 
@@ -3127,7 +3127,7 @@ msgid "Coin"
 msgstr "Медаль"
 
 #: ../base/ufos/medals.ufo:30 ../base/ufos/team_humans.ufo:168
-#: client/cgame/campaign/cp_employee.cpp:180
+#: client/cgame/campaign/cp_employee.cpp:179
 msgid "Scientist"
 msgid_plural "Scientists"
 msgstr[0] "Вчений"
@@ -3135,7 +3135,7 @@ msgstr[1] "Вчених"
 msgstr[2] "Вчених"
 
 #: ../base/ufos/medals.ufo:39 ../base/ufos/team_humans.ufo:236
-#: client/cgame/campaign/cp_employee.cpp:184
+#: client/cgame/campaign/cp_employee.cpp:183
 msgid "Pilot"
 msgid_plural "Pilots"
 msgstr[0] "Пілот"
@@ -3144,7 +3144,7 @@ msgstr[2] "Пілотів"
 
 # Безпілотна(бойова) наземна платформа
 #: ../base/ufos/medals.ufo:48 ../base/ufos/team_names.ufo:660
-#: ../base/ufos/team_names.ufo:669 client/cgame/campaign/cp_employee.cpp:186
+#: ../base/ufos/team_names.ufo:669 client/cgame/campaign/cp_employee.cpp:185
 #, fuzzy
 msgid "UGV"
 msgid_plural "UGVs"
@@ -3153,7 +3153,7 @@ msgstr[1] "БНП"
 msgstr[2] "БНП"
 
 #: ../base/ufos/medals.ufo:57 ../base/ufos/team_humans.ufo:295
-#: client/cgame/campaign/cp_employee.cpp:182
+#: client/cgame/campaign/cp_employee.cpp:181
 msgid "Worker"
 msgid_plural "Workers"
 msgstr[0] "Робітник"
@@ -11861,6 +11861,204 @@ msgid ""
 "We're under-staffed. Until next time, thanks for playing.\n"
 "\n"
 "-- UFO: Alien Invasion Development Team"
+msgstr ""
+
+#: ../base/ufos/msgid/concepts.ufo:9
+msgid ""
+"PHALANX will need to conduct a broad research program to combat the "
+"superiority of alien technology. Our scientists will examine any artifacts "
+"recovered from a successful combat mission and deliver new research "
+"proposals via the mail client.\n"
+"\n"
+"To develop the research program, build new laboratory facilities, hire more "
+"scientists and set them to work on a specific research project. With luck, "
+"we will be able to leverage what we learn to deploy more effectively on the "
+"battlefield and maybe one day take the fight to the enemy.\n"
+"\n"
+"Addendum\n"
+"\n"
+"Artifacts must be stored in the same base where they are researched. If a "
+"research project is listed as unable to be researched at a particular base, "
+"it may be stored at a different base or you may need to research another "
+"project before it can be adequately studied."
+msgstr ""
+
+#: ../base/ufos/msgid/concepts.ufo:15
+msgid ""
+"We may be able to repurpose captured alien technology for use in the war, "
+"but PHALANX will also need to produce its own advanced Terran technology and "
+"aircraft.\n"
+"\n"
+"Our initial base has workshop space for a few engineers, but to improve the "
+"pace of production we'll need to build additional workshops, hire more "
+"engineers and set them to work on something."
+msgstr ""
+
+#: ../base/ufos/msgid/concepts.ufo:29
+msgid ""
+"We can't just wait around for the aliens to come knocking at our door. We "
+"need to detect alien craft and shoot them down whenever possible. The "
+"initial PHALANX base includes a powerful radar facility, but we'll need to "
+"build off-site radar towers to cover more of the sky.\n"
+"\n"
+"Once a UFO has been detected, we'll need to dispatch our nearest "
+"interceptors to try to shoot it down. But we're heavily outgunned in the "
+"air, so we should send multiple aircraft whenever possible.\n"
+"\n"
+"Addenda\n"
+"\n"
+"Off-site radar towers have a smaller detection range than our in-base "
+"installations.\n"
+"\n"
+"Previously unseen types of UFOs should be approached with extreme caution "
+"until our scientists and engineers can establish their combat capabilities.\n"
+"\n"
+"Alien activity will often go undetected in areas where our radar coverage "
+"doesn't reach and the funding nations will be angry when PHALANX fails to "
+"respond to these attacks."
+msgstr ""
+
+#: ../base/ufos/msgid/concepts.ufo:39
+msgid ""
+"Disassembling captured UFOs will be vital in the battle to uncover secrets "
+"about the alien technology. PHALANX will need to build a UFO Yard -- an off-"
+"base installation to house the recovered crafts -- as soon as possible.\n"
+"\n"
+"Our engineers will need to travel to the storage site and transport the "
+"components back to their workshop, so UFO Yards should be built close to the "
+"base where work will occur.\n"
+"\n"
+"Addendum\n"
+"\n"
+"Before our engineers can disassemble a UFO in a way that will yield usable "
+"materials, they'll need the complete technical readout from the research "
+"teams."
+msgstr ""
+
+#: ../base/ufos/msgid/concepts.ufo:45
+msgid ""
+"PHALANX is a UN organisation that is permitted and funded by the unanimous "
+"support of its member nations. If we neglect the defense and security of one "
+"of our sponsors, they'll soon lose faith in our capabilities and withdraw "
+"their funding. Let the relationship deteriorate too far and they may shut "
+"the whole operation down.\n"
+"\n"
+"To keep up satisfaction in the performance of PHALANX, make sure the "
+"organisation can cover as much of the globe as possible and confront alien "
+"attacks all around the world."
+msgstr ""
+
+#: ../base/ufos/msgid/concepts.ufo:55
+msgid ""
+"A soldier can only do so much in a single turn. Each soldier has a limited "
+"number of Time Units (TUs) they can spend each turn on moving, crouching, "
+"looking around and firing their weapon. They move faster when standing and "
+"spend more TUs walking in a crouched position.\n"
+"\n"
+"Monitor a soldier's TU carefully. Some firemodes -- like aimed shots and "
+"automatic fire -- take more TUs than others. Running low on time in the "
+"wrong spot can be a deadly mistake.\n"
+"\n"
+"Addendum\n"
+"\n"
+"TUs are refreshed each turn, but if an enemy flashbang goes off in front of "
+"a soldier they will lose all of their TUs for the next turn."
+msgstr ""
+
+#: ../base/ufos/msgid/concepts.ufo:69
+msgid ""
+"Units can fire on enemy units when they wander into their field of view "
+"during the enemy's turn. Soldiers will execute a reaction shot when an enemy "
+"unit spends more Time Units (TU) in their field of view than the cost of "
+"their reaction fire.\n"
+"\n"
+"This means that a unit which has been set to execute a reaction shot that "
+"costs 8 TU will take the shot after the enemy spends 9 or more TU within "
+"their field of view. But be careful -- aliens can take reaction shots just "
+"like PHALANX soldiers.\n"
+"\n"
+"Soldiers firing weapons with low TU costs will execute more reaction shots "
+"-- and receive less reaction fire from the enemy -- than soldiers who fire "
+"weapons which cost more TUs.\n"
+"\n"
+"Addenda\n"
+"\n"
+"A soldier will not perform reaction fire unless they have saved enough Time "
+"Units in the last turn and reaction fire has been enabled in the soldier's "
+"control panel. Commanders can choose the firemode the soldier should use "
+"with reaction fire in the firemode selection window.\n"
+"\n"
+"If an enemy unit wanders out of a unit's view -- even for a moment -- the "
+"reaction fire counter will be reset. A unit must spend enough TUs "
+"consecutively in view of a unit to receive reaction fire."
+msgstr ""
+
+#: ../base/ufos/msgid/concepts.ufo:77
+msgid ""
+"Soldiers must be able to fight quickly and effectively. Load them up with "
+"too much equipment and they will slow down, reducing the number of Time "
+"Units (TUs) they have to use each turn. Soldiers will get a speed boost if "
+"they're carrying a light load.\n"
+"\n"
+"Addendum\n"
+"\n"
+"Monitor a soldier's load carefully in the equipment screen. If he is "
+"carrying more than 50 per cent of his maximum capacity, he'll lose TUs and "
+"may not be able to use all of his fire modes. If he is carrying less than 20 "
+"per cent of his maximum capacity, he'll gain extra TUs."
+msgstr ""
+
+#: ../base/ufos/msgid/concepts.ufo:85
+msgid ""
+"Our soldiers can receive wounds if they are injured by enemy fire. These "
+"wounds can effect their firing accuracy, firing speed and movement speed. "
+"Injuries will degrade a soldier's health each turn and may lead to death if "
+"they are not treated by a medikit. A PHALANX squad should bring along plenty "
+"of medikits to perform combat stabilisation of wounds.\n"
+"\n"
+"Addenda\n"
+"\n"
+"Wounds can be tracked in the character stats window. A medikit can heal "
+"wounds to prevent a soldier from dying from their wounds on the battlefield, "
+"but it will only restore a small amount of health. Soldiers will need time "
+"to recover once they've returned to the base. Build a hospital facility to "
+"greatly increase their recovery times."
+msgstr ""
+
+#: ../base/ufos/msgid/concepts.ufo:103
+msgid ""
+"The aliens deploy powerful weaponry to deadly effect on the battlefield. "
+"Engaging them in a shootout on open terrain is a sure way to get killed "
+"quickly, so PHALANX soldiers must be adept at using auxiliary equipment to "
+"overcome the extraterrestrial forces on the battlefield.\n"
+"\n"
+"PHALANX soldiers should equip themselves with smoke grenades to hide their "
+"positions when in the line of sight of alien forces. Incendiary grenades and "
+"rockets can produce fields of fire that damage alien forces before they come "
+"within range of our soldiers. And flashbangs can be used to temporarily "
+"disable an alien unit.\n"
+"\n"
+"If a soldier comes face to face with an alien and is not capable of taking "
+"it down without suffering deadly reaction fire, indirect weaponry such as "
+"grenades -- launched by hand or through a grenade launcher -- should be used "
+"to take out the enemy from a safe position.\n"
+"\n"
+"We'll always need conventional firearms on the battlefield, but auxiliary "
+"weaponry deployed defensively will be key if we're to overcome the aliens' "
+"technological dominance on the battlefield.\n"
+"\n"
+"Addenda\n"
+"\n"
+"Smoke clouds will block line of sight on the battlefield.\n"
+"\n"
+"Flashbangs will remove Time Units when deployed effectively. A unit that has "
+"been effected by a flashbang will lose any Time Units it had when the "
+"flashbang exploded and will not receive more Time Units during its next "
+"turn. Flashbangs are only effective when they explode close to the target "
+"and within its field of view.\n"
+"\n"
+"Incendiary fields cause a small amount of damage to units which pass through "
+"them."
 msgstr ""
 
 #: ../base/ufos/msgid/irc.ufo:20
@@ -23177,13 +23375,13 @@ msgstr "Росія"
 msgid "The Commonwealth of Oceania"
 msgstr "Співдружність Океанії"
 
-#: ../base/ufos/otheritems.ufo:7 ../base/ufos/research.ufo:211
-#: ../base/ufos/research.ufo:250
+#: ../base/ufos/otheritems.ufo:7 ../base/ufos/research.ufo:297
+#: ../base/ufos/research.ufo:336
 msgid "Antimatter"
 msgstr "Антиматерія"
 
-#: ../base/ufos/otheritems.ufo:15 ../base/ufos/research.ufo:5477
-#: ../base/ufos/research.ufo:5516
+#: ../base/ufos/otheritems.ufo:15 ../base/ufos/research.ufo:5563
+#: ../base/ufos/research.ufo:5602
 msgid "Alien Materials"
 msgstr "Іншопланетні матеріали"
 
@@ -23214,353 +23412,409 @@ msgid "gettext_text2"
 msgstr ""
 
 #: ../base/ufos/research.ufo:109
+msgid "Basic Concepts (Campaign)"
+msgstr ""
+
+#: ../base/ufos/research.ufo:110
+msgid "Basic Concepts (Ground Combat)"
+msgstr ""
+
+#: ../base/ufos/research.ufo:111
 #, fuzzy
 msgid "Skills and Abilities"
 msgstr "Здібності бійця"
 
-#: ../base/ufos/research.ufo:110
+#: ../base/ufos/research.ufo:112
 msgid "Background"
 msgstr "Передісторія"
 
-#: ../base/ufos/research.ufo:111 ../base/ufos/ui/bases.ufo:125
-#: ../base/ufos/ui/geoscape.ufo:1331 ../base/ufos/ui/market.ufo:138
+#: ../base/ufos/research.ufo:113 ../base/ufos/ui/bases.ufo:125
+#: ../base/ufos/ui/geoscape.ufo:1336 ../base/ufos/ui/market.ufo:138
 #: ../base/ufos/ui/production.ufo:80 ../base/ufos/ui/transfer.ufo:139
 #: ../base/ufos/ui/transfer.ufo:159 client/cgame/campaign/cp_geoscape.cpp:310
 #: client/cgame/campaign/cp_transfer_callbacks.cpp:802
 msgid "Aircraft"
 msgstr "Авіація"
 
-#: ../base/ufos/research.ufo:112
+#: ../base/ufos/research.ufo:114
 msgid "Base Facilities"
 msgstr "Інфраструктура бази"
 
-#: ../base/ufos/research.ufo:113
+#: ../base/ufos/research.ufo:115
 msgid "Research Reports"
 msgstr "Результат дослідження"
 
-#: ../base/ufos/research.ufo:114 ../base/ufos/ui/aircraft.ufo:102
+#: ../base/ufos/research.ufo:116 ../base/ufos/ui/aircraft.ufo:102
 #: ../base/ufos/ui/transfer.ufo:133 ../base/ufos/ui/transfer.ufo:144
 #: ../base/ufos/ui/transfer.ufo:507
 msgid "Equipment"
 msgstr "Спорядження"
 
-#: ../base/ufos/research.ufo:115
+#: ../base/ufos/research.ufo:117
 msgid "Alien Artifacts"
 msgstr "Артефакти прибульців"
 
-#: ../base/ufos/research.ufo:116
+#: ../base/ufos/research.ufo:118
 msgid "Autopsies & Observation"
 msgstr "Розтини та Спостереження"
 
-#: ../base/ufos/research.ufo:117
+#: ../base/ufos/research.ufo:119
 msgid "The Alien Threat"
 msgstr "Загроза прибульців"
 
-#: ../base/ufos/research.ufo:128
+#: ../base/ufos/research.ufo:129 ../base/ufos/ui/bases.ufo:146
+#: client/cgame/campaign/cp_base_callbacks.cpp:877
+msgid "Research"
+msgstr "Дослідження"
+
+#: ../base/ufos/research.ufo:137 ../base/ufos/ui/bases.ufo:153
+#: client/cgame/campaign/cp_base_callbacks.cpp:863
+msgid "Production"
+msgstr "Виробництво"
+
+#: ../base/ufos/research.ufo:145
+#, fuzzy
+msgid "UFO Interception"
+msgstr "Перехоплення"
+
+#: ../base/ufos/research.ufo:153
+#, fuzzy
+msgid "UFO Disassembly"
+msgstr "Демонтаж"
+
+#: ../base/ufos/research.ufo:161
+#, fuzzy
+msgid "Nation Happiness"
+msgstr "невдоволення націй"
+
+#: ../base/ufos/research.ufo:169
+#, fuzzy
+msgid "Time Units"
+msgstr "Затрати ОЧ:\t%i\n"
+
+#: ../base/ufos/research.ufo:177
+#, fuzzy
+msgid "Reaction Fire"
+msgstr "Вогонь увідповідь"
+
+#: ../base/ufos/research.ufo:185
+msgid "Soldier Weight and Encumbrance"
+msgstr ""
+
+#: ../base/ufos/research.ufo:193
+msgid "Wounds and Healing"
+msgstr ""
+
+#: ../base/ufos/research.ufo:201
+#, fuzzy
+msgid "Auxiliary Equipment"
+msgstr "%s допоміжне обладнання\n"
+
+#: ../base/ufos/research.ufo:214
 msgid "Continuous Wave Laser Operation"
 msgstr "Лазер неперервної дії"
 
-#: ../base/ufos/research.ufo:268
+#: ../base/ufos/research.ufo:354
 msgid "Live Alien"
 msgstr "Живий прибулець"
 
-#: ../base/ufos/research.ufo:308
+#: ../base/ufos/research.ufo:394
 msgid "Alien Breathing Apparatus"
 msgstr "Дихальний апарат прибульців"
 
-#: ../base/ufos/research.ufo:350
+#: ../base/ufos/research.ufo:436
 msgid "The Alien Mind"
 msgstr "Розум Прибульців"
 
-#: ../base/ufos/research.ufo:390
+#: ../base/ufos/research.ufo:476
 msgid "Odd Behaviour"
 msgstr "Дивна поведінка"
 
-#: ../base/ufos/research.ufo:430
+#: ../base/ufos/research.ufo:516
 msgid "Alien Communication"
 msgstr "Звя'зок прибульів"
 
-#: ../base/ufos/research.ufo:471 client/cgame/campaign/cp_missions.cpp:471
+#: ../base/ufos/research.ufo:557 client/cgame/campaign/cp_missions.cpp:474
 msgid "Alien base"
 msgstr "База прибульців"
 
-#: ../base/ufos/research.ufo:497
+#: ../base/ufos/research.ufo:583
 msgid "The Universal Serum"
 msgstr "Універсальна Сироватка"
 
-#: ../base/ufos/research.ufo:536
+#: ../base/ufos/research.ufo:622
 msgid "Alien Origins"
 msgstr "Походження прибульців"
 
-#: ../base/ufos/research.ufo:571
+#: ../base/ufos/research.ufo:657
 msgid "UFO Theory"
 msgstr "Теорія НЛО"
 
-#: ../base/ufos/research.ufo:1015 ../base/ufos/weapons_human.ufo:1716
+#: ../base/ufos/research.ufo:1101 ../base/ufos/weapons_human.ufo:1716
 msgid "Electromagnetic Rifle"
 msgstr "Електромагнітна гвинтівка"
 
-#: ../base/ufos/research.ufo:1055 ../base/ufos/weapons_human.ufo:1738
+#: ../base/ufos/research.ufo:1141 ../base/ufos/weapons_human.ufo:1738
 msgid "Electromagnetic Rifle Magazine"
 msgstr "Магазин для ЕМ-гвинтівки"
 
-#: ../base/ufos/research.ufo:1073 ../base/ufos/weapons_human.ufo:1806
+#: ../base/ufos/research.ufo:1159 ../base/ufos/weapons_human.ufo:1806
 #, fuzzy
 msgid "Electromagnetic Rifle Antimatter Magazine"
 msgstr "Магазин для ЕМ-гвинтівки"
 
-#: ../base/ufos/research.ufo:1139
+#: ../base/ufos/research.ufo:1225
 #, fuzzy
 msgid "Monomolecular Blades"
 msgstr "Мономолекулярні леза"
 
-#: ../base/ufos/research.ufo:1356
+#: ../base/ufos/research.ufo:1442
 #, fuzzy
 msgid "Plasma And The Grenade Launcher"
 msgstr "Плазма та Гранатомет"
 
-#: ../base/ufos/research.ufo:1420
+#: ../base/ufos/research.ufo:1506
 msgid "Alien Artifact - Kerrblade"
 msgstr "Артефакт прибульців — Керр-лезо"
 
-#: ../base/ufos/research.ufo:1716 ../base/ufos/research.ufo:1763
+#: ../base/ufos/research.ufo:1802 ../base/ufos/research.ufo:1849
 #, fuzzy
 msgid "Alien Artifact - Plasma Pistol"
 msgstr "Артефакт прибульців - Плазмовий пістолет"
 
-#: ../base/ufos/research.ufo:1787 ../base/ufos/research.ufo:1833
+#: ../base/ufos/research.ufo:1873 ../base/ufos/research.ufo:1919
 #, fuzzy
 msgid "Alien Artifact - Plasma Blaster"
 msgstr "Артефакт прибульців - Плазмовий бластер"
 
-#: ../base/ufos/research.ufo:1857
+#: ../base/ufos/research.ufo:1943
 #, fuzzy
 msgid "Alien Artifact - Plasma Blade"
 msgstr "Артефакт прибульців - Плазмове лезо"
 
-#: ../base/ufos/research.ufo:1903
+#: ../base/ufos/research.ufo:1989
 #, fuzzy
 msgid "Alien Artifact - Plasma Grenade"
 msgstr "Артефакт прибульців - Плазмова граната"
 
-#: ../base/ufos/research.ufo:1948 ../base/ufos/research.ufo:1994
+#: ../base/ufos/research.ufo:2034 ../base/ufos/research.ufo:2080
 #, fuzzy
 msgid "Alien Artifact - Plasma Rifle"
 msgstr "Артефакт прибульців - Плазмова гвинтівка"
 
-#: ../base/ufos/research.ufo:2018
+#: ../base/ufos/research.ufo:2104
 msgid "Encased Plasma Rounds"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2137 ../base/ufos/research.ufo:2229
+#: ../base/ufos/research.ufo:2223 ../base/ufos/research.ufo:2315
 #: ../base/ufos/weapons_aliens.ufo:6
 #, fuzzy
 msgid "Needler Gun"
 msgstr "Голкомет"
 
-#: ../base/ufos/research.ufo:2183 ../base/ufos/weapons_aliens.ufo:28
+#: ../base/ufos/research.ufo:2269 ../base/ufos/weapons_aliens.ufo:28
 #, fuzzy
 msgid "Heavy Needler Gun"
 msgstr "Важкий Голкомет"
 
-#: ../base/ufos/research.ufo:2267 ../base/ufos/research.ufo:2275
+#: ../base/ufos/research.ufo:2353 ../base/ufos/research.ufo:2361
 #: ../base/ufos/weapons_human.ufo:435
 #, fuzzy
 msgid "Coilgun"
 msgstr "Індукційна гвинтівка"
 
-#: ../base/ufos/research.ufo:2499
+#: ../base/ufos/research.ufo:2585
 #, fuzzy
 msgid "Anti-Alien Gas"
 msgstr "Газ \"Анти-Чужий\""
 
-#: ../base/ufos/research.ufo:2546
+#: ../base/ufos/research.ufo:2632
 #, fuzzy
 msgid "Alien Anti-Human Gas"
 msgstr "Газ прибульців \"Анти-Людство\""
 
-#: ../base/ufos/research.ufo:2631 ../base/ufos/research.ufo:2676
+#: ../base/ufos/research.ufo:2717 ../base/ufos/research.ufo:2762
 #, fuzzy
 msgid "Alien Artifact - Particle Beam Pistol"
 msgstr "Артефакт прибульців - Опромінюючий пістолет"
 
-#: ../base/ufos/research.ufo:2695 ../base/ufos/research.ufo:2741
+#: ../base/ufos/research.ufo:2781 ../base/ufos/research.ufo:2827
 #, fuzzy
 msgid "Alien Artifact - Particle Beam Cannon"
 msgstr "Артефакт прибульців - Опромінююча гармата"
 
-#: ../base/ufos/research.ufo:2760 ../base/ufos/research.ufo:2805
+#: ../base/ufos/research.ufo:2846 ../base/ufos/research.ufo:2891
 #, fuzzy
 msgid "Alien Artifact - Particle Beam Rifle"
 msgstr "Артефакт прибульців - Променева рушниця"
 
-#: ../base/ufos/research.ufo:2825
+#: ../base/ufos/research.ufo:2911
 #, fuzzy
 msgid "Man-Portable Particle Beams"
 msgstr "Артефакт прибульців - Опромінююча гвинтівка"
 
-#: ../base/ufos/research.ufo:3040
+#: ../base/ufos/research.ufo:3126
 msgid "Blast Damage Type"
 msgstr "Тип ураження: вибух"
 
-#: ../base/ufos/research.ufo:3053
+#: ../base/ufos/research.ufo:3139
 msgid "Fire Damage Type"
 msgstr "Тип ураження: вогонь"
 
-#: ../base/ufos/research.ufo:3066
+#: ../base/ufos/research.ufo:3152
 msgid "Laser Damage Type"
 msgstr "Тип ураження: лазер"
 
-#: ../base/ufos/research.ufo:3084
+#: ../base/ufos/research.ufo:3170
 msgid "Impact Damage Type"
 msgstr "Тип ураження: звичайне"
 
-#: ../base/ufos/research.ufo:3097
+#: ../base/ufos/research.ufo:3183
 msgid "Shock Damage Type"
 msgstr "Тип ураження: шок"
 
-#: ../base/ufos/research.ufo:3110
+#: ../base/ufos/research.ufo:3196
 msgid "Plasma Damage Type"
 msgstr "Тип ураження: плазма"
 
-#: ../base/ufos/research.ufo:3131
+#: ../base/ufos/research.ufo:3217
 msgid "Stun Damage Type"
 msgstr "Тип ураження: параліч"
 
-#: ../base/ufos/research.ufo:3144
+#: ../base/ufos/research.ufo:3230
 msgid "Particle Beam Damage Type"
 msgstr "Тип ураження: променеве"
 
-#: ../base/ufos/research.ufo:3162
+#: ../base/ufos/research.ufo:3248
 msgid "Accuracy Attribute"
 msgstr "Атрибут: Влучність"
 
-#: ../base/ufos/research.ufo:3175
+#: ../base/ufos/research.ufo:3261
 msgid "Assault Guns Proficiency"
 msgstr "Володіння штурмовою зброєю"
 
-#: ../base/ufos/research.ufo:3188
+#: ../base/ufos/research.ufo:3274
 msgid "Close Combat Proficiency"
 msgstr "Навики Ближнього бою"
 
-#: ../base/ufos/research.ufo:3201
+#: ../base/ufos/research.ufo:3287
 msgid "High-Explosives Proficiency"
 msgstr "Знання Вибухової справи"
 
-#: ../base/ufos/research.ufo:3214
+#: ../base/ufos/research.ufo:3300
 msgid "Heavy Weapons Proficiency"
 msgstr "Володіння важкою зброєю"
 
-#: ../base/ufos/research.ufo:3227
+#: ../base/ufos/research.ufo:3313
 msgid "Mind Attribute"
 msgstr "Атрибут: Інтелект"
 
-#: ../base/ufos/research.ufo:3240
+#: ../base/ufos/research.ufo:3326
 msgid "Power Attribute"
 msgstr "Атрибут: Сила"
 
-#: ../base/ufos/research.ufo:3253
+#: ../base/ufos/research.ufo:3339
 msgid "Sniper Rifles Proficiency"
 msgstr "Володіння снайперькою зброєю"
 
-#: ../base/ufos/research.ufo:3266
+#: ../base/ufos/research.ufo:3352
 msgid "Speed Attribute"
 msgstr "Атрибут: Швидкість"
 
-#: ../base/ufos/research.ufo:4278
+#: ../base/ufos/research.ufo:4364
 msgid "Alien Autopsy - Bloodspider"
 msgstr "Розтин прибульця - Кровопивець"
 
-#: ../base/ufos/research.ufo:4332
+#: ../base/ufos/research.ufo:4418
 #, fuzzy
 msgid "Alien Autopsy - Combat Bloodspider"
 msgstr "Розтин прибульця - Кровопивець"
 
-#: ../base/ufos/research.ufo:4388
+#: ../base/ufos/research.ufo:4474
 msgid "Alien Autopsy - Ortnok"
 msgstr "Розтин прибульця - Ортнок"
 
-#: ../base/ufos/research.ufo:4432
+#: ../base/ufos/research.ufo:4518
 msgid "Alien Autopsy - Taman"
 msgstr "Розтин прибульця -Таман"
 
-#: ../base/ufos/research.ufo:4476
+#: ../base/ufos/research.ufo:4562
 msgid "Alien Autopsy - Shevaar"
 msgstr "Розтин прибульця - Шеваар"
 
-#: ../base/ufos/research.ufo:4520
+#: ../base/ufos/research.ufo:4606
 #, fuzzy
 msgid "Alien Autopsy - Hovernet"
 msgstr "Розтин прибульця - Ортнок"
 
-#: ../base/ufos/research.ufo:4576
+#: ../base/ufos/research.ufo:4662
 #, fuzzy
 msgid "Alien Autopsy - Combat Hovernet"
 msgstr "Розтин прибульця -Таман"
 
-#: ../base/ufos/research.ufo:4638 ../base/ufos/team_humans.ufo:344
+#: ../base/ufos/research.ufo:4724 ../base/ufos/team_humans.ufo:344
 #, fuzzy
 msgid "Phoenix UGV"
 msgstr "БНП \"Фенікс\""
 
-#: ../base/ufos/research.ufo:4658 ../base/ufos/team_humans.ufo:401
+#: ../base/ufos/research.ufo:4744 ../base/ufos/team_humans.ufo:401
 msgid "Ares W (UGV)"
 msgstr "Арес W (БНП)"
 
-#: ../base/ufos/research.ufo:4766
+#: ../base/ufos/research.ufo:4852
 msgid "'Raven' ECM Unit"
 msgstr "Модуль РЕП \"Крук\""
 
-#: ../base/ufos/research.ufo:5087
+#: ../base/ufos/research.ufo:5173
 msgid "SHIVA Rotary Cannon"
 msgstr "Роторна гармата SHIVA"
 
-#: ../base/ufos/research.ufo:5146
+#: ../base/ufos/research.ufo:5232
 msgid "'Sparrowhawk' AA Missile Rack"
 msgstr "Ракетний модуль \"Перепелиця\""
 
-#: ../base/ufos/research.ufo:5163
+#: ../base/ufos/research.ufo:5249
 msgid "'Sparrowhawk' Missile"
 msgstr "Ракета \"Перепелиця\""
 
-#: ../base/ufos/research.ufo:5538
+#: ../base/ufos/research.ufo:5624
 msgid "Political Situation Before The Invasion"
 msgstr "Політична обстановка перед Вторгненням"
 
-#: ../base/ufos/research.ufo:5551
+#: ../base/ufos/research.ufo:5637
 msgid "After The War"
 msgstr "Після Війни"
 
-#: ../base/ufos/research.ufo:5564
+#: ../base/ufos/research.ufo:5650
 msgid "PHALANX And The Mumbai Aftermath"
 msgstr "PHALANX і наслідки подій в Мумбаї"
 
-#: ../base/ufos/research.ufo:5576
+#: ../base/ufos/research.ufo:5662
 msgid "A New Twist"
 msgstr "Новий Поворот"
 
-#: ../base/ufos/research.ufo:5605
+#: ../base/ufos/research.ufo:5691
 msgid "The Enemy On Earth"
 msgstr "Ворог на Землі"
 
-#: ../base/ufos/research.ufo:5644
+#: ../base/ufos/research.ufo:5730
 msgid "XVI Census"
 msgstr "ПЗВІ - перепис населення"
 
-#: ../base/ufos/research.ufo:5685
+#: ../base/ufos/research.ufo:5771
 msgid "The Alien Strategy"
 msgstr "Стратегія прибульців"
 
-#: ../base/ufos/research.ufo:5724
+#: ../base/ufos/research.ufo:5810
 msgid "Orbital UFO Activity"
 msgstr "Орбітальна активність НЛО"
 
-#: ../base/ufos/research.ufo:5767
+#: ../base/ufos/research.ufo:5853
 #, fuzzy
 msgid "Alien Psi Device"
 msgstr "Виявлено базу прибульців -- %s"
 
-#: ../base/ufos/research.ufo:5799
+#: ../base/ufos/research.ufo:5885
 #, fuzzy
 msgid "Human Vaccine"
 msgstr ""
@@ -24783,8 +25037,8 @@ msgstr "Набої для цієї зброї"
 msgid "Select this slot"
 msgstr "Вибрати цей відсік"
 
-#: ../base/ufos/ui/aircraft_info.ufo:42 ../base/ufos/ui/geoscape.ufo:1070
-#: ../base/ufos/ui/geoscape.ufo:1212
+#: ../base/ufos/ui/aircraft_info.ufo:42 ../base/ufos/ui/geoscape.ufo:1075
+#: ../base/ufos/ui/geoscape.ufo:1217
 #: ../base/ufos/ui/popup_installations.ufo:614
 msgid "Status:"
 msgstr "Стан:"
@@ -24913,7 +25167,7 @@ msgstr "Призначчити бійців"
 msgid "No soldiers assigned"
 msgstr "Жодног бійця не призначено"
 
-#: ../base/ufos/ui/aliencont.ufo:53 ../base/ufos/ui/aliencont.ufo:345
+#: ../base/ufos/ui/aliencont.ufo:53 ../base/ufos/ui/aliencont.ufo:340
 msgid "Kill this alien"
 msgstr "Вбити цього прибульця"
 
@@ -24941,7 +25195,7 @@ msgstr "Живих:"
 msgid "Dead:"
 msgstr "Мертвих:"
 
-#: ../base/ufos/ui/aliencont.ufo:350
+#: ../base/ufos/ui/aliencont.ufo:345
 #, fuzzy
 msgid "Autopsy"
 msgstr "Автостоп:"
@@ -24952,7 +25206,7 @@ msgstr "Спорядити захисну зброю"
 
 #: ../base/ufos/ui/basedefence.ufo:30
 #: ../base/ufos/ui/popup_installations.ufo:452
-#: client/cgame/campaign/cp_base.cpp:2060
+#: client/cgame/campaign/cp_base.cpp:2072
 msgid "Information"
 msgstr "Інформація"
 
@@ -24997,8 +25251,8 @@ msgid "Surface to Air defences"
 msgstr "Захисні системи земля-повітря"
 
 #: ../base/ufos/ui/basedefence.ufo:310 ../base/ufos/ui/geoscape.ufo:851
-#: ../base/ufos/ui/geoscape.ufo:949 ../base/ufos/ui/geoscape.ufo:1205
-#: ../base/ufos/ui/geoscape.ufo:1277 ../base/ufos/ui/irc.ufo:202
+#: ../base/ufos/ui/geoscape.ufo:949 ../base/ufos/ui/geoscape.ufo:1210
+#: ../base/ufos/ui/geoscape.ufo:1282 ../base/ufos/ui/irc.ufo:202
 #: ../base/ufos/ui/main.ufo:110 ../base/ufos/ui/multiplayer.ufo:412
 #: ../base/ufos/ui/popup_installations.ufo:155
 #: ../base/ufos/ui/popup_installations.ufo:482
@@ -25050,6 +25304,7 @@ msgid "Back to geoscape"
 msgstr "Назад до Глобусу"
 
 #: ../base/ufos/ui/bases.ufo:118
+#: client/cgame/campaign/cp_base_callbacks.cpp:840
 msgid "Buildings"
 msgstr "Споруди"
 
@@ -25086,18 +25341,10 @@ msgid "Transfer equipment, aircraft, UGV, aliens and employees to other bases"
 msgstr ""
 "Транспортування спорядження, техніки, прибульців та персоналу до інших баз"
 
-#: ../base/ufos/ui/bases.ufo:146
-msgid "Research"
-msgstr "Дослідження"
-
 #: ../base/ufos/ui/bases.ufo:147
 #: client/cgame/campaign/cp_base_callbacks.cpp:325
 msgid "Research new technology"
 msgstr "Дослідження нових технологій"
-
-#: ../base/ufos/ui/bases.ufo:153
-msgid "Production"
-msgstr "Виробництво"
 
 #: ../base/ufos/ui/bases.ufo:154
 #: client/cgame/campaign/cp_base_callbacks.cpp:330
@@ -25142,6 +25389,7 @@ msgstr ""
 
 #: ../base/ufos/ui/bases.ufo:242 ../base/ufos/ui/bases.ufo:249
 #: ../base/ufos/ui/hire.ufo:674
+#: client/cgame/campaign/cp_base_callbacks.cpp:877
 msgid "Scientists"
 msgstr "Науковці"
 
@@ -25438,16 +25686,16 @@ msgstr "Статистика діяльності"
 msgid "Create installation"
 msgstr "Нова споруда"
 
-#: ../base/ufos/ui/geoscape.ufo:590 ../base/ufos/ui/geoscape.ufo:1445
+#: ../base/ufos/ui/geoscape.ufo:590 ../base/ufos/ui/geoscape.ufo:1450
 msgid "Highlight nation borders"
 msgstr "Показати кордони держав"
 
-#: ../base/ufos/ui/geoscape.ufo:600 ../base/ufos/ui/geoscape.ufo:1469
+#: ../base/ufos/ui/geoscape.ufo:600 ../base/ufos/ui/geoscape.ufo:1474
 msgid "Show radar range"
 msgstr "Показати покриття радарів"
 
 # ПозаЗемна Вірусна Інфекція
-#: ../base/ufos/ui/geoscape.ufo:611 ../base/ufos/ui/geoscape.ufo:1489
+#: ../base/ufos/ui/geoscape.ufo:611 ../base/ufos/ui/geoscape.ufo:1494
 msgid "Show XVI map"
 msgstr "Показати карту ПЗВІ"
 
@@ -25463,7 +25711,7 @@ msgstr "Перейти в Налаштування"
 msgid "Ready"
 msgstr "Готово"
 
-#: ../base/ufos/ui/geoscape.ufo:755 ../base/ufos/ui/geoscape.ufo:1063
+#: ../base/ufos/ui/geoscape.ufo:755 ../base/ufos/ui/geoscape.ufo:1068
 msgid "Aircraft:"
 msgstr "Авіасудно:"
 
@@ -25519,65 +25767,65 @@ msgstr "Управління"
 msgid "Manage installation"
 msgstr "Управління спорудою"
 
-#: ../base/ufos/ui/geoscape.ufo:1032
+#: ../base/ufos/ui/geoscape.ufo:1037
 msgid "Anti-UFO defence"
 msgstr "Протидія НЛО"
 
-#: ../base/ufos/ui/geoscape.ufo:1045
+#: ../base/ufos/ui/geoscape.ufo:1050
 msgid "Aircraft interception"
 msgstr "Авіаперехоплення"
 
-#: ../base/ufos/ui/geoscape.ufo:1049
+#: ../base/ufos/ui/geoscape.ufo:1054
 msgid "SAM defence"
 msgstr "ППО захист"
 
-#: ../base/ufos/ui/geoscape.ufo:1077 ../base/ufos/ui/geoscape.ufo:1219
+#: ../base/ufos/ui/geoscape.ufo:1082 ../base/ufos/ui/geoscape.ufo:1224
 msgid "Base:"
 msgstr "База:"
 
-#: ../base/ufos/ui/geoscape.ufo:1125
+#: ../base/ufos/ui/geoscape.ufo:1130
 msgid "Surface-to-air missile site:"
 msgstr "Ракетна установка земля-повітря:"
 
-#: ../base/ufos/ui/geoscape.ufo:1200
+#: ../base/ufos/ui/geoscape.ufo:1205
 msgid "Select aircraft"
 msgstr "Виберіть авіасудно"
 
-#: ../base/ufos/ui/geoscape.ufo:1226
+#: ../base/ufos/ui/geoscape.ufo:1231
 #: ../base/ufos/ui/popup_installations.ufo:638
 #: ../base/ufos/ui/transfer.ufo:604
 msgid "ETA:"
 msgstr "РТП:"
 
-#: ../base/ufos/ui/geoscape.ufo:1264
+#: ../base/ufos/ui/geoscape.ufo:1269
 msgid "Select item"
 msgstr "Виберіть предмет"
 
-#: ../base/ufos/ui/geoscape.ufo:1269
+#: ../base/ufos/ui/geoscape.ufo:1274
 msgid "Type:"
 msgstr "Тип:"
 
-#: ../base/ufos/ui/geoscape.ufo:1336
+#: ../base/ufos/ui/geoscape.ufo:1341
 msgid "Action:"
 msgstr "Дія:"
 
-#: ../base/ufos/ui/geoscape.ufo:1344
+#: ../base/ufos/ui/geoscape.ufo:1349
 msgid "Description:"
 msgstr "Опис:"
 
-#: ../base/ufos/ui/geoscape.ufo:1399
+#: ../base/ufos/ui/geoscape.ufo:1404
 msgid "Geoscape options"
 msgstr "Налаштування глобальної карти"
 
-#: ../base/ufos/ui/geoscape.ufo:1411
+#: ../base/ufos/ui/geoscape.ufo:1416
 msgid "Geoscape projection mode:"
 msgstr "Режим відображення глобусу:"
 
-#: ../base/ufos/ui/geoscape.ufo:1421
+#: ../base/ufos/ui/geoscape.ufo:1426
 msgid "2D"
 msgstr "2D"
 
-#: ../base/ufos/ui/geoscape.ufo:1425
+#: ../base/ufos/ui/geoscape.ufo:1430
 msgid "3D"
 msgstr "3D"
 
@@ -26083,6 +26331,7 @@ msgid "Price"
 msgstr "Ціна:"
 
 #: ../base/ufos/ui/market.ufo:308
+#: client/cgame/campaign/cp_base_callbacks.cpp:840
 #, fuzzy
 msgid "Capacity"
 msgstr "Вміст:"
@@ -27780,6 +28029,7 @@ msgid "Cargo"
 msgstr ""
 
 #: ../base/ufos/ui/transfer.ufo:287
+#: client/cgame/campaign/cp_base_callbacks.cpp:840
 msgid "Amount"
 msgstr ""
 
@@ -28448,67 +28698,67 @@ msgstr "Винятково"
 msgid "It is not your turn!"
 msgstr "Зарас не ваш хід!"
 
-#: client/battlescape/cl_actor.cpp:1007
+#: client/battlescape/cl_actor.cpp:1006
 #, fuzzy
 msgid "You cannot reload this unknown item."
 msgstr "Ви не можете перезарядити цей невідомий предмет.\n"
 
-#: client/battlescape/cl_actor.cpp:1047 client/cl_inventory.cpp:76
+#: client/battlescape/cl_actor.cpp:1046 client/cl_inventory.cpp:76
 #: game/g_actor.cpp:574
 msgid "This soldier can not carry anything else."
 msgstr ""
 
-#: client/battlescape/cl_actor.cpp:1047 client/battlescape/cl_hud.cpp:1386
+#: client/battlescape/cl_actor.cpp:1046 client/battlescape/cl_hud.cpp:1386
 #: client/cl_inventory.cpp:76 client/cl_inventory_callbacks.cpp:380
 #, fuzzy
 msgid "Warning"
 msgstr "Наннін"
 
-#: client/battlescape/cl_actor.cpp:1897
+#: client/battlescape/cl_actor.cpp:1893
 msgid "Unknown alien race"
 msgstr "Прибулець невідомої раси"
 
-#: client/battlescape/cl_actor.cpp:2570
+#: client/battlescape/cl_actor.cpp:2561
 msgid "Toggle to next living actor"
 msgstr "До наступного живого бійця"
 
-#: client/battlescape/cl_actor.cpp:2571
+#: client/battlescape/cl_actor.cpp:2562
 msgid "Toggle to previous living actor"
 msgstr "До попереднього живого бійця"
 
-#: client/battlescape/cl_actor.cpp:2572
+#: client/battlescape/cl_actor.cpp:2563
 msgid "Select an actor from list"
 msgstr "Вибрати бійця з переліку"
 
-#: client/battlescape/cl_actor.cpp:2573
+#: client/battlescape/cl_actor.cpp:2564
 msgid "Update an actor"
 msgstr "Оновити бійця"
 
-#: client/battlescape/cl_actor.cpp:2574
+#: client/battlescape/cl_actor.cpp:2565
 msgid "Toggle stand/crouch."
 msgstr "Перемикач положень встати/присісти."
 
-#: client/battlescape/cl_actor.cpp:2575
+#: client/battlescape/cl_actor.cpp:2566
 msgid "Toggle the headgear"
 msgstr "Одягти на голову"
 
-#: client/battlescape/cl_actor.cpp:2576
+#: client/battlescape/cl_actor.cpp:2567
 msgid "Use"
 msgstr "Вжити"
 
-#: client/battlescape/cl_actor.cpp:2577
+#: client/battlescape/cl_actor.cpp:2568
 msgid "Confirm the current action"
 msgstr "Підтвердити поточну дію"
 
-#: client/battlescape/cl_actor.cpp:2578
+#: client/battlescape/cl_actor.cpp:2569
 msgid "Toggle to the next alien in sight of the selected actor."
 msgstr "Перемкнути на наступного ворога в полі зору цього бійця."
 
-#: client/battlescape/cl_actor.cpp:2580
+#: client/battlescape/cl_actor.cpp:2571
 msgid "Toggle camera to the next visible alien."
 msgstr "Перейти до наступного видимого ворога."
 
-#: client/battlescape/cl_actor.cpp:2581
+#: client/battlescape/cl_actor.cpp:2572
 msgid "Toggle camera to the previous visible alien."
 msgstr "Перейти до попереднього видимого ворога."
 
@@ -29067,35 +29317,35 @@ msgstr "Нове авіасудно %s готове (на базі %s)"
 #: client/cgame/campaign/cp_auto_mission.cpp:768
 #: client/cgame/campaign/cp_auto_mission.cpp:771
 #: client/cgame/campaign/cp_auto_mission.cpp:826
-#: client/cgame/campaign/cp_base.cpp:1333
-#: client/cgame/campaign/cp_base.cpp:1383
-#: client/cgame/campaign/cp_base.cpp:2293
-#: client/cgame/campaign/cp_base.cpp:2298
-#: client/cgame/campaign/cp_base.cpp:2949
+#: client/cgame/campaign/cp_base.cpp:1346
+#: client/cgame/campaign/cp_base.cpp:1396
+#: client/cgame/campaign/cp_base.cpp:2305
+#: client/cgame/campaign/cp_base.cpp:2310
+#: client/cgame/campaign/cp_base.cpp:2961
 #: client/cgame/campaign/cp_base_callbacks.cpp:70
 #: client/cgame/campaign/cp_base_callbacks.cpp:201
 #: client/cgame/campaign/cp_base_callbacks.cpp:247
 #: client/cgame/campaign/cp_base_callbacks.cpp:586
 #: client/cgame/campaign/cp_base_callbacks.cpp:601
-#: client/cgame/campaign/cp_base_callbacks.cpp:744
-#: client/cgame/campaign/cp_base_callbacks.cpp:750
-#: client/cgame/campaign/cp_base_callbacks.cpp:770
-#: client/cgame/campaign/cp_base_callbacks.cpp:780
-#: client/cgame/campaign/cp_base_callbacks.cpp:790
-#: client/cgame/campaign/cp_base_callbacks.cpp:796
-#: client/cgame/campaign/cp_base_callbacks.cpp:803
-#: client/cgame/campaign/cp_base_callbacks.cpp:807
-#: client/cgame/campaign/cp_base_callbacks.cpp:812
+#: client/cgame/campaign/cp_base_callbacks.cpp:747
+#: client/cgame/campaign/cp_base_callbacks.cpp:753
+#: client/cgame/campaign/cp_base_callbacks.cpp:773
+#: client/cgame/campaign/cp_base_callbacks.cpp:783
+#: client/cgame/campaign/cp_base_callbacks.cpp:793
+#: client/cgame/campaign/cp_base_callbacks.cpp:799
+#: client/cgame/campaign/cp_base_callbacks.cpp:806
+#: client/cgame/campaign/cp_base_callbacks.cpp:810
+#: client/cgame/campaign/cp_base_callbacks.cpp:815
 #: client/cgame/campaign/cp_installation_callbacks.cpp:131
 #: client/cgame/campaign/cp_mapfightequip.cpp:349
-#: client/cgame/campaign/cp_mapfightequip.cpp:370
-#: client/cgame/campaign/cp_mapfightequip.cpp:375
-#: client/cgame/campaign/cp_mapfightequip.cpp:386
+#: client/cgame/campaign/cp_mapfightequip.cpp:368
+#: client/cgame/campaign/cp_mapfightequip.cpp:373
+#: client/cgame/campaign/cp_mapfightequip.cpp:384
 #: client/cgame/campaign/cp_market_callbacks.cpp:193
 #: client/cgame/campaign/cp_market_callbacks.cpp:199
 #: client/cgame/campaign/cp_mission_callbacks.cpp:63
-#: client/cgame/campaign/cp_missions.cpp:732
-#: client/cgame/campaign/cp_missions.cpp:1070
+#: client/cgame/campaign/cp_missions.cpp:735
+#: client/cgame/campaign/cp_missions.cpp:1073
 #: client/cgame/campaign/cp_nation.cpp:828
 #: client/cgame/campaign/cp_nation.cpp:846
 #: client/cgame/campaign/cp_nation.cpp:859
@@ -29308,45 +29558,45 @@ msgstr ""
 msgid "Collected alien bodies"
 msgstr "Зібрано тіла прибульців"
 
-#: client/cgame/campaign/cp_base.cpp:986
+#: client/cgame/campaign/cp_base.cpp:999
 msgid "Not set"
 msgstr "Не вказано"
 
-#: client/cgame/campaign/cp_base.cpp:992
+#: client/cgame/campaign/cp_base.cpp:1005
 #, c-format
 msgid "Already %i in base"
 msgstr "%i вже існує на цій базі"
 
-#: client/cgame/campaign/cp_base.cpp:999
+#: client/cgame/campaign/cp_base.cpp:1012
 msgid "Construction finished"
 msgstr "Спорудження завершено"
 
-#: client/cgame/campaign/cp_base.cpp:1003
+#: client/cgame/campaign/cp_base.cpp:1016
 msgid "Working 100%"
 msgstr "Функціонує на 100%"
 
-#: client/cgame/campaign/cp_base.cpp:1007
+#: client/cgame/campaign/cp_base.cpp:1020
 msgid "Not operational, depends on"
 msgstr "Непрацездатний, залежить від"
 
-#: client/cgame/campaign/cp_base.cpp:1011
+#: client/cgame/campaign/cp_base.cpp:1024
 msgid "Down"
 msgstr "Від'єднано"
 
-#: client/cgame/campaign/cp_base.cpp:1333
+#: client/cgame/campaign/cp_base.cpp:1346
 msgid "Not enough credits to build this\n"
 msgstr "Недостатньо коштів, щоб збудувати це\n"
 
-#: client/cgame/campaign/cp_base.cpp:1383
+#: client/cgame/campaign/cp_base.cpp:1396
 msgid "You must build next to existing buildings."
 msgstr "Будувати необхідно поряд з існуючими будівлями."
 
-#: client/cgame/campaign/cp_base.cpp:1437
+#: client/cgame/campaign/cp_base.cpp:1450
 #, c-format
 msgid "Costs:\t%i c\n"
 msgstr "Вартість:\t%i кр\n"
 
-#: client/cgame/campaign/cp_base.cpp:1440
+#: client/cgame/campaign/cp_base.cpp:1453
 #, c-format
 msgid "%i Day to build\n"
 msgid_plural "%i Days to build\n"
@@ -29354,19 +29604,19 @@ msgstr[0] "%i доба для побудови\n"
 msgstr[1] "%i доби для побудови\n"
 msgstr[2] "%i діб для побудови\n"
 
-#: client/cgame/campaign/cp_base.cpp:1443
+#: client/cgame/campaign/cp_base.cpp:1456
 #: client/cgame/campaign/cp_ufopedia.cpp:232
 #, c-format
 msgid "Running costs:\t%i c\n"
 msgstr "Обслуговування:\t%i кр\n"
 
-#: client/cgame/campaign/cp_base.cpp:1446
+#: client/cgame/campaign/cp_base.cpp:1459
 #: client/cgame/campaign/cp_ufopedia.cpp:229
 #, c-format
 msgid "Needs:\t%s\n"
 msgstr "Потребує:\t%s\n"
 
-#: client/cgame/campaign/cp_base.cpp:2048
+#: client/cgame/campaign/cp_base.cpp:2060
 msgid ""
 "No aircraft in this base - You first have to purchase or transfer an "
 "aircraft\n"
@@ -29374,8 +29624,8 @@ msgstr ""
 "На цій базі нема авіації. Спочатку ви повинні купити авіасудно чи "
 "переправити його з іншої базаи\n"
 
-#: client/cgame/campaign/cp_base.cpp:2048
-#: client/cgame/campaign/cp_base.cpp:2050
+#: client/cgame/campaign/cp_base.cpp:2060
+#: client/cgame/campaign/cp_base.cpp:2062
 #: client/cgame/campaign/cp_market_callbacks.cpp:173
 #: client/cgame/campaign/cp_market_callbacks.cpp:178
 #: client/cgame/campaign/cp_market_callbacks.cpp:183
@@ -29384,29 +29634,29 @@ msgstr ""
 msgid "Note"
 msgstr "ПРИМІТКА"
 
-#: client/cgame/campaign/cp_base.cpp:2050
+#: client/cgame/campaign/cp_base.cpp:2062
 msgid "No aircraft in this base - You first have to purchase an aircraft\n"
 msgstr "На цій базі нема авіації. Спочатку ви повинні купити авіасудно\n"
 
-#: client/cgame/campaign/cp_base.cpp:2060
+#: client/cgame/campaign/cp_base.cpp:2072
 msgid "Antimatter (current/max):"
 msgstr "К-сть антиматерії (у наявності/макс):"
 
-#: client/cgame/campaign/cp_base.cpp:2229
+#: client/cgame/campaign/cp_base.cpp:2241
 #, c-format
 msgid "Construction of %s building finished in %s."
 msgstr "Завершено спорудження модуля %s на %s."
 
-#: client/cgame/campaign/cp_base.cpp:2230
+#: client/cgame/campaign/cp_base.cpp:2242
 msgid "Building finished"
 msgstr "Будівництво завершене"
 
-#: client/cgame/campaign/cp_base.cpp:2291
+#: client/cgame/campaign/cp_base.cpp:2303
 #, c-format
 msgid "By selling %s you gathered %i credits."
 msgstr "За продаж %s отримано %i кр."
 
-#: client/cgame/campaign/cp_base.cpp:2292
+#: client/cgame/campaign/cp_base.cpp:2304
 #, c-format
 msgid "%i collected item"
 msgid_plural "%i collected items"
@@ -29414,12 +29664,12 @@ msgstr[0] "%i предмет складено"
 msgstr[1] "%i предмети складено"
 msgstr[2] "%i предметів складено"
 
-#: client/cgame/campaign/cp_base.cpp:2296
+#: client/cgame/campaign/cp_base.cpp:2308
 #, c-format
 msgid "Not enough storage space in %s. %s"
 msgstr "Недостатньо місця у %s. %s"
 
-#: client/cgame/campaign/cp_base.cpp:2297
+#: client/cgame/campaign/cp_base.cpp:2309
 #, c-format
 msgid "%i item was sold for %i credits."
 msgid_plural "%i items were sold for %i credits."
@@ -29427,7 +29677,7 @@ msgstr[0] "%i предмет продано за %i кредитів."
 msgstr[1] "%i предмети продано за %i кредитів."
 msgstr[2] "%i предметів продано за %i кредитів."
 
-#: client/cgame/campaign/cp_base.cpp:2947
+#: client/cgame/campaign/cp_base.cpp:2959
 #, c-format
 msgid ""
 "%s does not have Antimatter Storage Facility. %i units of antimatter got "
@@ -29602,15 +29852,15 @@ msgstr "Ви впевнені, що хочете демонтувати цю с�
 msgid "Destroy building"
 msgstr "Демонтувати споруду"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:744
+#: client/cgame/campaign/cp_base_callbacks.cpp:747
 msgid "Base is under attack, you can't access this building !"
 msgstr "Базу атаковано, немає доступу до цієї споруди!"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:750
+#: client/cgame/campaign/cp_base_callbacks.cpp:753
 msgid "You need at least one Hangar (and its dependencies) to use aircraft."
 msgstr "Вам потрібен ангар для користування авіацією."
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:770
+#: client/cgame/campaign/cp_base_callbacks.cpp:773
 #, c-format
 msgid ""
 "Construction of building will be over in %i day.\n"
@@ -29628,17 +29878,17 @@ msgstr[2] ""
 "Спорудження модуля закінчиться через %i  діб.\n"
 "Будь-ласка зачекайте."
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:780
+#: client/cgame/campaign/cp_base_callbacks.cpp:783
 #, c-format
 msgid "You need a building %s to make building %s functional."
 msgstr "Потрібно збудувати %s для роботи %s."
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:790
+#: client/cgame/campaign/cp_base_callbacks.cpp:793
 #, c-format
 msgid "Building %s is not finished yet, and is needed to use building %s."
 msgstr "Спорудження %s не завершено, і необхідно для використання %s."
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:796
+#: client/cgame/campaign/cp_base_callbacks.cpp:799
 #, c-format
 msgid ""
 "Make sure that the dependencies of building %s (%s) are operational, so that "
@@ -29647,65 +29897,49 @@ msgstr ""
 "Впевнітся, що необхідні споруди %s (%s) працездатні, оскільки вони необхідні "
 "для функціонування %s."
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:803
-#: client/cgame/campaign/cp_base_callbacks.cpp:807
+#: client/cgame/campaign/cp_base_callbacks.cpp:806
+#: client/cgame/campaign/cp_base_callbacks.cpp:810
 #, c-format
 msgid "You need to recruit %s to use building %s."
 msgstr "Вам необхідно найняти %s для використання споруди %s."
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:812
+#: client/cgame/campaign/cp_base_callbacks.cpp:815
 #, c-format
 msgid "Build a %s first."
 msgstr "Спочатку збудуйте %s."
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:832
+#: client/cgame/campaign/cp_base_callbacks.cpp:860
+msgid "No report"
+msgstr ""
+
+#: client/cgame/campaign/cp_base_callbacks.cpp:863
+#: client/cgame/campaign/cp_base_callbacks.cpp:877
+msgid "Percent"
+msgstr ""
+
+#: client/cgame/campaign/cp_base_callbacks.cpp:863
+msgid "Quantity"
+msgstr ""
+
+#: client/cgame/campaign/cp_base_callbacks.cpp:873
+#: client/cgame/campaign/cp_base_callbacks.cpp:888
+#, fuzzy
+msgid "Nothing"
+msgstr "Нічого\n"
+
+#: client/cgame/campaign/cp_base_callbacks.cpp:893
 msgid "^BAircraft\n"
 msgstr "^BАвіація\n"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:845
+#: client/cgame/campaign/cp_base_callbacks.cpp:904
 msgid "^BEmployees\n"
 msgstr "^BПерсонал\n"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:858
+#: client/cgame/campaign/cp_base_callbacks.cpp:915
 msgid "^BAliens\n"
 msgstr "^BПрибульці\n"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:871
-msgid "^BBuildings\t\t\t\t\t\tCapacity\t\t\t\tAmount\n"
-msgstr "^BСпоруди\t\t\t\t\t\tВміст\t\t\t\tК-сть\n"
-
-#: client/cgame/campaign/cp_base_callbacks.cpp:894
-#: client/cgame/campaign/cp_installation_callbacks.cpp:265
-msgid "day"
-msgid_plural "days"
-msgstr[0] "доба"
-msgstr[1] "доби"
-msgstr[2] "діб"
-
-#: client/cgame/campaign/cp_base_callbacks.cpp:904
-msgid "^BProduction\t\t\t\t\t\tQuantity\t\t\t\tPercent\n"
-msgstr "^BВиробництво\t\t\t\t\t\tК-сть\t\t\t\tСтан\n"
-
-#: client/cgame/campaign/cp_base_callbacks.cpp:912
-#, c-format
-msgid "%s\t\t\t\t\t\t%d\t\t\t\t%.2f%%\n"
-msgstr "%s\t\t\t\t\t\t%d\t\t\t\t%.2f%%\n"
-
-#: client/cgame/campaign/cp_base_callbacks.cpp:916
-#: client/cgame/campaign/cp_base_callbacks.cpp:932
-msgid "Nothing\n"
-msgstr "Нічого\n"
-
-#: client/cgame/campaign/cp_base_callbacks.cpp:921
-msgid "^BResearch\t\t\t\t\t\tScientists\t\t\t\tPercent\n"
-msgstr "^BДослідження\t\t\t\t\t\tНауковці\t\t\t\tСтан\n"
-
-#: client/cgame/campaign/cp_base_callbacks.cpp:926
-#, c-format
-msgid "%s\t\t\t\t\t\t%d\t\t\t\t%1.2f%%\n"
-msgstr "%s\t\t\t\t\t\t%d\t\t\t\t%1.2f%%\n"
-
-#: client/cgame/campaign/cp_base_callbacks.cpp:990
+#: client/cgame/campaign/cp_base_callbacks.cpp:978
 #: client/cgame/campaign/cp_campaign.cpp:671
 #, c-format
 msgid "%i c"
@@ -29906,18 +30140,18 @@ msgstr[2] "%3.1f діб залишилось"
 msgid "Rank: %s"
 msgstr "Звання: %s"
 
-#: client/cgame/campaign/cp_employee.cpp:178
+#: client/cgame/campaign/cp_employee.cpp:177
 msgid "Soldier"
 msgid_plural "Soldiers"
 msgstr[0] "Боєць"
 msgstr[1] "Бійці"
 msgstr[2] "Бійців"
 
-#: client/cgame/campaign/cp_employee.cpp:360
+#: client/cgame/campaign/cp_employee.cpp:359
 msgid "Not enough quarters"
 msgstr "Немає місць в казармах"
 
-#: client/cgame/campaign/cp_employee.cpp:360
+#: client/cgame/campaign/cp_employee.cpp:359
 msgid ""
 "You don't have enough quarters for your employees.\n"
 "Build more quarters."
@@ -30219,6 +30453,13 @@ msgstr "Забути"
 msgid "Condition: %3.0f%%"
 msgstr "Стан:% 3.0f%%"
 
+#: client/cgame/campaign/cp_installation_callbacks.cpp:265
+msgid "day"
+msgid_plural "days"
+msgstr[0] "доба"
+msgstr[1] "доби"
+msgstr[2] "діб"
+
 #: client/cgame/campaign/cp_mapfightequip.cpp:340
 #, c-format
 msgid "%s was successfully installed into aircraft %s at %s."
@@ -30234,41 +30475,41 @@ msgstr "%s успішно встановлено на об'єкт %s."
 msgid "%s was successfully installed at %s."
 msgstr "%s успішно встановлено на базі %s."
 
-#: client/cgame/campaign/cp_mapfightequip.cpp:368
+#: client/cgame/campaign/cp_mapfightequip.cpp:366
 #, c-format
 msgid "%s was successfully removed from aircraft %s at %s."
 msgstr "%s успішно знято з авіасудна %s (%s)."
 
-#: client/cgame/campaign/cp_mapfightequip.cpp:373
+#: client/cgame/campaign/cp_mapfightequip.cpp:371
 #, c-format
 msgid ""
 "%s was successfully removed, starting installation of %s into aircraft %s at "
 "%s"
 msgstr "%s знято, розпочато установку %s на судно %s (%s)"
 
-#: client/cgame/campaign/cp_mapfightequip.cpp:380
+#: client/cgame/campaign/cp_mapfightequip.cpp:378
 #, c-format
 msgid "%s was successfully removed from installation %s."
 msgstr "%s демонтовано з об'єкту %s."
 
-#: client/cgame/campaign/cp_mapfightequip.cpp:383
+#: client/cgame/campaign/cp_mapfightequip.cpp:381
 #, c-format
 msgid "%s was successfully removed from %s."
 msgstr "%s успішно знято (%s)."
 
-#: client/cgame/campaign/cp_mapfightequip.cpp:1342
+#: client/cgame/campaign/cp_mapfightequip.cpp:1340
 msgid "Light weight"
 msgstr "Мала вага"
 
-#: client/cgame/campaign/cp_mapfightequip.cpp:1345
+#: client/cgame/campaign/cp_mapfightequip.cpp:1343
 msgid "Medium weight"
 msgstr "Середня вага"
 
-#: client/cgame/campaign/cp_mapfightequip.cpp:1348
+#: client/cgame/campaign/cp_mapfightequip.cpp:1346
 msgid "Heavy weight"
 msgstr "Велика вага"
 
-#: client/cgame/campaign/cp_mapfightequip.cpp:1351
+#: client/cgame/campaign/cp_mapfightequip.cpp:1349
 msgid "Unknown weight"
 msgstr "Вага невідома"
 
@@ -30520,43 +30761,43 @@ msgstr "Цивільних осіб врятовано"
 msgid "Gathered items (types/all)"
 msgstr "Зібрано предметів (типів/усіх)"
 
-#: client/cgame/campaign/cp_missions.cpp:457
-#: client/cgame/campaign/cp_missions.cpp:480
+#: client/cgame/campaign/cp_missions.cpp:460
+#: client/cgame/campaign/cp_missions.cpp:483
 #, fuzzy, c-format
 msgid "Crashed %s"
 msgstr "Підбито"
 
-#: client/cgame/campaign/cp_missions.cpp:463
+#: client/cgame/campaign/cp_missions.cpp:466
 #, fuzzy, c-format
 msgid "Alien terror in %s"
 msgstr "Іншопланетні матеріали"
 
-#: client/cgame/campaign/cp_missions.cpp:466
+#: client/cgame/campaign/cp_missions.cpp:469
 #, fuzzy, c-format
 msgid "Base attacked: %s"
 msgstr "Напад на базу"
 
-#: client/cgame/campaign/cp_missions.cpp:469
+#: client/cgame/campaign/cp_missions.cpp:472
 #, fuzzy, c-format
 msgid "Alien base in %s"
 msgstr "База прибульців"
 
-#: client/cgame/campaign/cp_missions.cpp:483
+#: client/cgame/campaign/cp_missions.cpp:486
 #, fuzzy, c-format
 msgid "Landed %s"
 msgstr "Мічце посадки НЛО"
 
-#: client/cgame/campaign/cp_missions.cpp:488
+#: client/cgame/campaign/cp_missions.cpp:491
 #, fuzzy, c-format
 msgid "Alien activity in %s"
 msgstr "Повідомлення про активність прибульців - %s"
 
-#: client/cgame/campaign/cp_missions.cpp:490
+#: client/cgame/campaign/cp_missions.cpp:493
 #, fuzzy
 msgid "Alien activity"
 msgstr "Локаційна система НЛО"
 
-#: client/cgame/campaign/cp_missions.cpp:699
+#: client/cgame/campaign/cp_missions.cpp:702
 #, fuzzy, c-format
 msgid ""
 "Go on a rescue mission for %s to save your soldiers, some of whom may still "
@@ -30565,17 +30806,17 @@ msgstr ""
 "Направляйтесь на рятувальну операцію в %s. Деякі з ваших солдатів, можливо, "
 "ще живі."
 
-#: client/cgame/campaign/cp_missions.cpp:703
+#: client/cgame/campaign/cp_missions.cpp:706
 #, c-format
 msgid "Alien activity has been detected in %s."
 msgstr "У \"%s\" зафіксовано активність прибульців."
 
-#: client/cgame/campaign/cp_missions.cpp:705
+#: client/cgame/campaign/cp_missions.cpp:708
 #, fuzzy
 msgid "Alien activity has been detected."
 msgstr "У \"%s\" зафіксовано активність прибульців."
 
-#: client/cgame/campaign/cp_missions.cpp:1068
+#: client/cgame/campaign/cp_missions.cpp:1071
 #, c-format
 msgid "Defence of base: %s successful!"
 msgstr "Оборону бази: %s  - успішно завершено!"
@@ -30952,7 +31193,7 @@ msgstr "Нова невідома технологія потребує досл
 msgid "Unknown Technology found"
 msgstr "Знайдено невідому технологію"
 
-#: client/cgame/campaign/cp_research.cpp:684
+#: client/cgame/campaign/cp_research.cpp:682
 msgid ""
 "No free space in laboratories left.\n"
 "Build more laboratories.\n"
@@ -30960,26 +31201,26 @@ msgstr ""
 "Немає вільного місця у лабораторіях.\n"
 "Будуйте більше лабораторій.\n"
 
-#: client/cgame/campaign/cp_research.cpp:684
+#: client/cgame/campaign/cp_research.cpp:682
 msgid "Not enough laboratories"
 msgstr "Недостатньо лабораторій"
 
-#: client/cgame/campaign/cp_research.cpp:806
-#: client/cgame/campaign/cp_research.cpp:830
+#: client/cgame/campaign/cp_research.cpp:804
+#: client/cgame/campaign/cp_research.cpp:828
 #, c-format
 msgid "Research prerequisites of %s do not met at %s. Research halted!"
 msgstr "Вимоги для дослідження %s не  виконано на %s. Дослідження зупинено!"
 
-#: client/cgame/campaign/cp_research.cpp:807
-#: client/cgame/campaign/cp_research.cpp:831
+#: client/cgame/campaign/cp_research.cpp:805
+#: client/cgame/campaign/cp_research.cpp:829
 msgid "Research halted"
 msgstr "Дослідження зупинено"
 
-#: client/cgame/campaign/cp_research.cpp:1188
+#: client/cgame/campaign/cp_research.cpp:1186
 msgid "No description available."
 msgstr "Опис відсутній."
 
-#: client/cgame/campaign/cp_research.cpp:1189
+#: client/cgame/campaign/cp_research.cpp:1187
 msgid "No research proposal available."
 msgstr "Дослідницькі пропозиції відсутні."
 
@@ -31124,8 +31365,8 @@ msgstr "Помилка зберігання гри."
 
 #: client/cgame/campaign/cp_save.cpp:471 client/cgame/campaign/cp_save.cpp:494
 #: client/cgame/campaign/cp_save.cpp:612
-#: client/cgame/multiplayer/mp_callbacks.cpp:62 client/cl_irc.cpp:1212
-#: client/cl_irc.cpp:1437 client/cl_main.cpp:529 client/cl_main.cpp:533
+#: client/cgame/multiplayer/mp_callbacks.cpp:62 client/cl_irc.cpp:1211
+#: client/cl_irc.cpp:1436 client/cl_main.cpp:529 client/cl_main.cpp:533
 #: client/cl_main.cpp:557
 msgid "Error"
 msgstr "Помилка"
@@ -32141,11 +32382,11 @@ msgstr ""
 "Неможливо виконати:\n"
 "недостатньо ОЧ.\n"
 
-#: client/cl_irc.cpp:1437
+#: client/cl_irc.cpp:1436
 msgid "Server closed connection"
 msgstr "Сервер закрив з'єднання"
 
-#: client/cl_language.cpp:419
+#: client/cl_language.cpp:417
 msgid "..."
 msgstr "..."
 
@@ -32550,6 +32791,21 @@ msgstr "прибулець"
 #: po/OTHER_STRINGS:6
 msgid "Take a screenshot"
 msgstr "Зробити скриншот"
+
+#~ msgid "^BBuildings\t\t\t\t\t\tCapacity\t\t\t\tAmount\n"
+#~ msgstr "^BСпоруди\t\t\t\t\t\tВміст\t\t\t\tК-сть\n"
+
+#~ msgid "^BProduction\t\t\t\t\t\tQuantity\t\t\t\tPercent\n"
+#~ msgstr "^BВиробництво\t\t\t\t\t\tК-сть\t\t\t\tСтан\n"
+
+#~ msgid "%s\t\t\t\t\t\t%d\t\t\t\t%.2f%%\n"
+#~ msgstr "%s\t\t\t\t\t\t%d\t\t\t\t%.2f%%\n"
+
+#~ msgid "^BResearch\t\t\t\t\t\tScientists\t\t\t\tPercent\n"
+#~ msgstr "^BДослідження\t\t\t\t\t\tНауковці\t\t\t\tСтан\n"
+
+#~ msgid "%s\t\t\t\t\t\t%d\t\t\t\t%1.2f%%\n"
+#~ msgstr "%s\t\t\t\t\t\t%d\t\t\t\t%1.2f%%\n"
 
 #~ msgid "Alien landing - Snow"
 #~ msgstr "Місцевість висадки - Сніг"

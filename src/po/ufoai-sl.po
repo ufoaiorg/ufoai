@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-04-23 10:28+0200\n"
+"POT-Creation-Date: 2013-05-07 15:12+0200\n"
 "PO-Revision-Date: 2013-01-24 14:59+0100\n"
 "Last-Translator: Kostia (Kildor) Romanov <kostia@ngs.ru>\n"
 "Language-Team: inzenir <simon.cedula@guest.arnes.si>\n"
@@ -293,7 +293,7 @@ msgstr "Stingray prestreznik"
 msgid "Stingray"
 msgstr "Stingray"
 
-#: ../base/ufos/aircraftmanagement.ufo:500 ../base/ufos/research.ufo:3846
+#: ../base/ufos/aircraftmanagement.ufo:500 ../base/ufos/research.ufo:3932
 msgid "UFO - Scout"
 msgstr "NLP - Izvidnik"
 
@@ -301,7 +301,7 @@ msgstr "NLP - Izvidnik"
 msgid "Scout U"
 msgstr "Izvidnik U"
 
-#: ../base/ufos/aircraftmanagement.ufo:527 ../base/ufos/research.ufo:3888
+#: ../base/ufos/aircraftmanagement.ufo:527 ../base/ufos/research.ufo:3974
 msgid "UFO - Fighter"
 msgstr "NLP - Bojevnik"
 
@@ -309,7 +309,7 @@ msgstr "NLP - Bojevnik"
 msgid "Fighter U"
 msgstr "Bojevnik U"
 
-#: ../base/ufos/aircraftmanagement.ufo:561 ../base/ufos/research.ufo:4187
+#: ../base/ufos/aircraftmanagement.ufo:561 ../base/ufos/research.ufo:4273
 msgid "UFO - Harvester"
 msgstr "NLP - Pobiralec"
 
@@ -317,7 +317,7 @@ msgstr "NLP - Pobiralec"
 msgid "Harvester U"
 msgstr "Pobiralec U"
 
-#: ../base/ufos/aircraftmanagement.ufo:607 ../base/ufos/research.ufo:4059
+#: ../base/ufos/aircraftmanagement.ufo:607 ../base/ufos/research.ufo:4145
 msgid "UFO - Corrupter"
 msgstr "NLP - Pokvarjenec"
 
@@ -325,7 +325,7 @@ msgstr "NLP - Pokvarjenec"
 msgid "Corrupter U"
 msgstr "Pokvarjenec U"
 
-#: ../base/ufos/aircraftmanagement.ufo:647 ../base/ufos/research.ufo:3931
+#: ../base/ufos/aircraftmanagement.ufo:647 ../base/ufos/research.ufo:4017
 msgid "UFO - Supply Ship"
 msgstr "NLP - Oskrbovalna ladja"
 
@@ -333,7 +333,7 @@ msgstr "NLP - Oskrbovalna ladja"
 msgid "Supply U"
 msgstr "Oskrbovalna U"
 
-#: ../base/ufos/aircraftmanagement.ufo:674 ../base/ufos/research.ufo:4102
+#: ../base/ufos/aircraftmanagement.ufo:674 ../base/ufos/research.ufo:4188
 msgid "UFO - Gunboat"
 msgstr "NLP - Bojno plovilo"
 
@@ -341,7 +341,7 @@ msgstr "NLP - Bojno plovilo"
 msgid "Gunboat U"
 msgstr "Bojna ladja"
 
-#: ../base/ufos/aircraftmanagement.ufo:732 ../base/ufos/research.ufo:4017
+#: ../base/ufos/aircraftmanagement.ufo:732 ../base/ufos/research.ufo:4103
 msgid "UFO - Bomber"
 msgstr "NLP - Bombnik"
 
@@ -349,7 +349,7 @@ msgstr "NLP - Bombnik"
 msgid "Bomber U"
 msgstr "Bombnik U"
 
-#: ../base/ufos/aircraftmanagement.ufo:797 ../base/ufos/research.ufo:4144
+#: ../base/ufos/aircraftmanagement.ufo:797 ../base/ufos/research.ufo:4230
 msgid "UFO - Ripper"
 msgstr "NLP - Uničevalec"
 
@@ -357,7 +357,7 @@ msgstr "NLP - Uničevalec"
 msgid "Ripper U"
 msgstr "Uničevalec U"
 
-#: ../base/ufos/aircraftmanagement.ufo:854 ../base/ufos/research.ufo:3974
+#: ../base/ufos/aircraftmanagement.ufo:854 ../base/ufos/research.ufo:4060
 msgid "UFO - Carrier"
 msgstr "NLP - Nosilec"
 
@@ -365,7 +365,7 @@ msgstr "NLP - Nosilec"
 msgid "Carrier U"
 msgstr "Nosilec U"
 
-#: ../base/ufos/aircraftmanagement.ufo:876 ../base/ufos/research.ufo:4230
+#: ../base/ufos/aircraftmanagement.ufo:876 ../base/ufos/research.ufo:4316
 msgid "UFO - Mothership"
 msgstr "NLP - Matično plovilo"
 
@@ -373,7 +373,7 @@ msgstr "NLP - Matično plovilo"
 msgid "Mothership U"
 msgstr "Matično plovilo U"
 
-#: ../base/ufos/aircraftmanagement.ufo:892 ../base/ufos/research.ufo:5037
+#: ../base/ufos/aircraftmanagement.ufo:892 ../base/ufos/research.ufo:5123
 msgid "Aerial Laser Cannon"
 msgstr "Laserski top"
 
@@ -381,11 +381,11 @@ msgstr "Laserski top"
 msgid "Shiva Rotary Cannon"
 msgstr "Shiva top"
 
-#: ../base/ufos/aircraftmanagement.ufo:934 ../base/ufos/research.ufo:5104
+#: ../base/ufos/aircraftmanagement.ufo:934 ../base/ufos/research.ufo:5190
 msgid "SHIVA 20mm API Rounds"
 msgstr "SHIVA 20mm API naboji"
 
-#: ../base/ufos/aircraftmanagement.ufo:950 ../base/ufos/research.ufo:5125
+#: ../base/ufos/aircraftmanagement.ufo:950 ../base/ufos/research.ufo:5211
 msgid "SHIVA 20mm HEI Rounds"
 msgstr "SHIVA 20mm HEI naboji"
 
@@ -401,77 +401,77 @@ msgstr "Sparrowhawk AA nosilec raket"
 msgid "Sparrowhawk Missile"
 msgstr "Sparrowhawk raketa"
 
-#: ../base/ufos/aircraftmanagement.ufo:1005 ../base/ufos/research.ufo:5184
+#: ../base/ufos/aircraftmanagement.ufo:1005 ../base/ufos/research.ufo:5270
 msgid "TR-20 Rocket Pod"
 msgstr "TR-20 nosilec raket"
 
-#: ../base/ufos/aircraftmanagement.ufo:1018 ../base/ufos/research.ufo:5201
+#: ../base/ufos/aircraftmanagement.ufo:1018 ../base/ufos/research.ufo:5287
 msgid "TR-20 Rocket"
 msgstr "TR-20 raketa"
 
-#: ../base/ufos/aircraftmanagement.ufo:1037 ../base/ufos/research.ufo:5220
+#: ../base/ufos/aircraftmanagement.ufo:1037 ../base/ufos/research.ufo:5306
 msgid "Particle Beam Weapon"
 msgstr "Partiklov letalski top"
 
-#: ../base/ufos/aircraftmanagement.ufo:1067 ../base/ufos/research.ufo:5277
+#: ../base/ufos/aircraftmanagement.ufo:1067 ../base/ufos/research.ufo:5363
 msgid "Alien Launcher"
 msgstr "Metalec granat nezemljanov"
 
-#: ../base/ufos/aircraftmanagement.ufo:1077 ../base/ufos/research.ufo:5324
+#: ../base/ufos/aircraftmanagement.ufo:1077 ../base/ufos/research.ufo:5410
 msgid "Antimatter Missile"
 msgstr "Antimaterijska raketa"
 
-#: ../base/ufos/aircraftmanagement.ufo:1094 ../base/ufos/research.ufo:5373
+#: ../base/ufos/aircraftmanagement.ufo:1094 ../base/ufos/research.ufo:5459
 msgid "Hybrid Missile"
 msgstr "Hibridna raketa"
 
-#: ../base/ufos/aircraftmanagement.ufo:1111 ../base/ufos/research.ufo:5407
+#: ../base/ufos/aircraftmanagement.ufo:1111 ../base/ufos/research.ufo:5493
 msgid "Targeting Computer"
 msgstr "Računalnik za ciljanje"
 
-#: ../base/ufos/aircraftmanagement.ufo:1123 ../base/ufos/research.ufo:5423
+#: ../base/ufos/aircraftmanagement.ufo:1123 ../base/ufos/research.ufo:5509
 msgid "Fuel Pod"
 msgstr "Posoda za gorivo"
 
-#: ../base/ufos/aircraftmanagement.ufo:1137 ../base/ufos/research.ufo:4783
+#: ../base/ufos/aircraftmanagement.ufo:1137 ../base/ufos/research.ufo:4869
 msgid "Polymer Aircraft Armour"
 msgstr "Polimerni letalni oklep"
 
-#: ../base/ufos/aircraftmanagement.ufo:1151 ../base/ufos/research.ufo:4800
+#: ../base/ufos/aircraftmanagement.ufo:1151 ../base/ufos/research.ufo:4886
 msgid "Alien Aircraft Plating"
 msgstr "Oklep plovila nezemljanov"
 
-#: ../base/ufos/aircraftmanagement.ufo:1165 ../base/ufos/research.ufo:4842
+#: ../base/ufos/aircraftmanagement.ufo:1165 ../base/ufos/research.ufo:4928
 #, fuzzy
 msgid "Alien Polymer Armour"
 msgstr "Telesni oklep nezemljanov"
 
-#: ../base/ufos/aircraftmanagement.ufo:1179 ../base/ufos/research.ufo:5439
+#: ../base/ufos/aircraftmanagement.ufo:1179 ../base/ufos/research.ufo:5525
 msgid "Alien Electronic Warfare Suite"
 msgstr "Nezemljanska Elektronska bojna oprema"
 
-#: ../base/ufos/aircraftmanagement.ufo:1190 ../base/ufos/research.ufo:4884
+#: ../base/ufos/aircraftmanagement.ufo:1190 ../base/ufos/research.ufo:4970
 msgid "Alien Astrogation"
 msgstr "Astrogacija nezemljanov"
 
-#: ../base/ufos/aircraftmanagement.ufo:1199 ../base/ufos/research.ufo:4922
+#: ../base/ufos/aircraftmanagement.ufo:1200 ../base/ufos/research.ufo:5008
 msgid "Alien Propulsion"
 msgstr "Pogon nezemljanov"
 
-#: ../base/ufos/aircraftmanagement.ufo:1208 ../base/ufos/research.ufo:4960
+#: ../base/ufos/aircraftmanagement.ufo:1209 ../base/ufos/research.ufo:5046
 #, fuzzy
 msgid "Advanced Alien Propulsion"
 msgstr "Pogon nezemljanov"
 
-#: ../base/ufos/aircraftmanagement.ufo:1217 ../base/ufos/research.ufo:4999
+#: ../base/ufos/aircraftmanagement.ufo:1218 ../base/ufos/research.ufo:5085
 msgid "Alien Detection"
 msgstr "Detekcija nezemljanov"
 
-#: ../base/ufos/aircraftmanagement.ufo:1230 ../base/ufos/research.ufo:4735
+#: ../base/ufos/aircraftmanagement.ufo:1231 ../base/ufos/research.ufo:4821
 msgid "AA51 missile launcher"
 msgstr "AA51 izstrelovalec raket"
 
-#: ../base/ufos/aircraftmanagement.ufo:1260 ../base/ufos/research.ufo:162
+#: ../base/ufos/aircraftmanagement.ufo:1261 ../base/ufos/research.ufo:248
 msgid "Base-Defence Laser Turret"
 msgstr "Laserski to za obrambo baze"
 
@@ -583,7 +583,7 @@ msgstr "Napredni radar"
 msgid "Hospital"
 msgstr "Bolnišnica"
 
-#: ../base/ufos/basemanagement.ufo:231 ../base/ufos/research.ufo:3546
+#: ../base/ufos/basemanagement.ufo:231 ../base/ufos/research.ufo:3632
 msgid "Antimatter Storage"
 msgstr "Antimaterijsko skladišče"
 
@@ -3076,7 +3076,7 @@ msgid "Coin"
 msgstr "Kovanec"
 
 #: ../base/ufos/medals.ufo:30 ../base/ufos/team_humans.ufo:168
-#: client/cgame/campaign/cp_employee.cpp:180
+#: client/cgame/campaign/cp_employee.cpp:179
 msgid "Scientist"
 msgid_plural "Scientists"
 msgstr[0] "Znanstvenik"
@@ -3085,7 +3085,7 @@ msgstr[2] "Znanstvenik"
 msgstr[3] "Znanstvenik"
 
 #: ../base/ufos/medals.ufo:39 ../base/ufos/team_humans.ufo:236
-#: client/cgame/campaign/cp_employee.cpp:184
+#: client/cgame/campaign/cp_employee.cpp:183
 msgid "Pilot"
 msgid_plural "Pilots"
 msgstr[0] "Pilot"
@@ -3094,7 +3094,7 @@ msgstr[2] "Pilot"
 msgstr[3] "Pilot"
 
 #: ../base/ufos/medals.ufo:48 ../base/ufos/team_names.ufo:660
-#: ../base/ufos/team_names.ufo:669 client/cgame/campaign/cp_employee.cpp:186
+#: ../base/ufos/team_names.ufo:669 client/cgame/campaign/cp_employee.cpp:185
 msgid "UGV"
 msgid_plural "UGVs"
 msgstr[0] "UGVs"
@@ -3103,7 +3103,7 @@ msgstr[2] "UGVs"
 msgstr[3] "UGVs"
 
 #: ../base/ufos/medals.ufo:57 ../base/ufos/team_humans.ufo:295
-#: client/cgame/campaign/cp_employee.cpp:182
+#: client/cgame/campaign/cp_employee.cpp:181
 msgid "Worker"
 msgid_plural "Workers"
 msgstr[0] "Delavec"
@@ -11881,6 +11881,204 @@ msgid ""
 "We're under-staffed. Until next time, thanks for playing.\n"
 "\n"
 "-- UFO: Alien Invasion Development Team"
+msgstr ""
+
+#: ../base/ufos/msgid/concepts.ufo:9
+msgid ""
+"PHALANX will need to conduct a broad research program to combat the "
+"superiority of alien technology. Our scientists will examine any artifacts "
+"recovered from a successful combat mission and deliver new research "
+"proposals via the mail client.\n"
+"\n"
+"To develop the research program, build new laboratory facilities, hire more "
+"scientists and set them to work on a specific research project. With luck, "
+"we will be able to leverage what we learn to deploy more effectively on the "
+"battlefield and maybe one day take the fight to the enemy.\n"
+"\n"
+"Addendum\n"
+"\n"
+"Artifacts must be stored in the same base where they are researched. If a "
+"research project is listed as unable to be researched at a particular base, "
+"it may be stored at a different base or you may need to research another "
+"project before it can be adequately studied."
+msgstr ""
+
+#: ../base/ufos/msgid/concepts.ufo:15
+msgid ""
+"We may be able to repurpose captured alien technology for use in the war, "
+"but PHALANX will also need to produce its own advanced Terran technology and "
+"aircraft.\n"
+"\n"
+"Our initial base has workshop space for a few engineers, but to improve the "
+"pace of production we'll need to build additional workshops, hire more "
+"engineers and set them to work on something."
+msgstr ""
+
+#: ../base/ufos/msgid/concepts.ufo:29
+msgid ""
+"We can't just wait around for the aliens to come knocking at our door. We "
+"need to detect alien craft and shoot them down whenever possible. The "
+"initial PHALANX base includes a powerful radar facility, but we'll need to "
+"build off-site radar towers to cover more of the sky.\n"
+"\n"
+"Once a UFO has been detected, we'll need to dispatch our nearest "
+"interceptors to try to shoot it down. But we're heavily outgunned in the "
+"air, so we should send multiple aircraft whenever possible.\n"
+"\n"
+"Addenda\n"
+"\n"
+"Off-site radar towers have a smaller detection range than our in-base "
+"installations.\n"
+"\n"
+"Previously unseen types of UFOs should be approached with extreme caution "
+"until our scientists and engineers can establish their combat capabilities.\n"
+"\n"
+"Alien activity will often go undetected in areas where our radar coverage "
+"doesn't reach and the funding nations will be angry when PHALANX fails to "
+"respond to these attacks."
+msgstr ""
+
+#: ../base/ufos/msgid/concepts.ufo:39
+msgid ""
+"Disassembling captured UFOs will be vital in the battle to uncover secrets "
+"about the alien technology. PHALANX will need to build a UFO Yard -- an off-"
+"base installation to house the recovered crafts -- as soon as possible.\n"
+"\n"
+"Our engineers will need to travel to the storage site and transport the "
+"components back to their workshop, so UFO Yards should be built close to the "
+"base where work will occur.\n"
+"\n"
+"Addendum\n"
+"\n"
+"Before our engineers can disassemble a UFO in a way that will yield usable "
+"materials, they'll need the complete technical readout from the research "
+"teams."
+msgstr ""
+
+#: ../base/ufos/msgid/concepts.ufo:45
+msgid ""
+"PHALANX is a UN organisation that is permitted and funded by the unanimous "
+"support of its member nations. If we neglect the defense and security of one "
+"of our sponsors, they'll soon lose faith in our capabilities and withdraw "
+"their funding. Let the relationship deteriorate too far and they may shut "
+"the whole operation down.\n"
+"\n"
+"To keep up satisfaction in the performance of PHALANX, make sure the "
+"organisation can cover as much of the globe as possible and confront alien "
+"attacks all around the world."
+msgstr ""
+
+#: ../base/ufos/msgid/concepts.ufo:55
+msgid ""
+"A soldier can only do so much in a single turn. Each soldier has a limited "
+"number of Time Units (TUs) they can spend each turn on moving, crouching, "
+"looking around and firing their weapon. They move faster when standing and "
+"spend more TUs walking in a crouched position.\n"
+"\n"
+"Monitor a soldier's TU carefully. Some firemodes -- like aimed shots and "
+"automatic fire -- take more TUs than others. Running low on time in the "
+"wrong spot can be a deadly mistake.\n"
+"\n"
+"Addendum\n"
+"\n"
+"TUs are refreshed each turn, but if an enemy flashbang goes off in front of "
+"a soldier they will lose all of their TUs for the next turn."
+msgstr ""
+
+#: ../base/ufos/msgid/concepts.ufo:69
+msgid ""
+"Units can fire on enemy units when they wander into their field of view "
+"during the enemy's turn. Soldiers will execute a reaction shot when an enemy "
+"unit spends more Time Units (TU) in their field of view than the cost of "
+"their reaction fire.\n"
+"\n"
+"This means that a unit which has been set to execute a reaction shot that "
+"costs 8 TU will take the shot after the enemy spends 9 or more TU within "
+"their field of view. But be careful -- aliens can take reaction shots just "
+"like PHALANX soldiers.\n"
+"\n"
+"Soldiers firing weapons with low TU costs will execute more reaction shots "
+"-- and receive less reaction fire from the enemy -- than soldiers who fire "
+"weapons which cost more TUs.\n"
+"\n"
+"Addenda\n"
+"\n"
+"A soldier will not perform reaction fire unless they have saved enough Time "
+"Units in the last turn and reaction fire has been enabled in the soldier's "
+"control panel. Commanders can choose the firemode the soldier should use "
+"with reaction fire in the firemode selection window.\n"
+"\n"
+"If an enemy unit wanders out of a unit's view -- even for a moment -- the "
+"reaction fire counter will be reset. A unit must spend enough TUs "
+"consecutively in view of a unit to receive reaction fire."
+msgstr ""
+
+#: ../base/ufos/msgid/concepts.ufo:77
+msgid ""
+"Soldiers must be able to fight quickly and effectively. Load them up with "
+"too much equipment and they will slow down, reducing the number of Time "
+"Units (TUs) they have to use each turn. Soldiers will get a speed boost if "
+"they're carrying a light load.\n"
+"\n"
+"Addendum\n"
+"\n"
+"Monitor a soldier's load carefully in the equipment screen. If he is "
+"carrying more than 50 per cent of his maximum capacity, he'll lose TUs and "
+"may not be able to use all of his fire modes. If he is carrying less than 20 "
+"per cent of his maximum capacity, he'll gain extra TUs."
+msgstr ""
+
+#: ../base/ufos/msgid/concepts.ufo:85
+msgid ""
+"Our soldiers can receive wounds if they are injured by enemy fire. These "
+"wounds can effect their firing accuracy, firing speed and movement speed. "
+"Injuries will degrade a soldier's health each turn and may lead to death if "
+"they are not treated by a medikit. A PHALANX squad should bring along plenty "
+"of medikits to perform combat stabilisation of wounds.\n"
+"\n"
+"Addenda\n"
+"\n"
+"Wounds can be tracked in the character stats window. A medikit can heal "
+"wounds to prevent a soldier from dying from their wounds on the battlefield, "
+"but it will only restore a small amount of health. Soldiers will need time "
+"to recover once they've returned to the base. Build a hospital facility to "
+"greatly increase their recovery times."
+msgstr ""
+
+#: ../base/ufos/msgid/concepts.ufo:103
+msgid ""
+"The aliens deploy powerful weaponry to deadly effect on the battlefield. "
+"Engaging them in a shootout on open terrain is a sure way to get killed "
+"quickly, so PHALANX soldiers must be adept at using auxiliary equipment to "
+"overcome the extraterrestrial forces on the battlefield.\n"
+"\n"
+"PHALANX soldiers should equip themselves with smoke grenades to hide their "
+"positions when in the line of sight of alien forces. Incendiary grenades and "
+"rockets can produce fields of fire that damage alien forces before they come "
+"within range of our soldiers. And flashbangs can be used to temporarily "
+"disable an alien unit.\n"
+"\n"
+"If a soldier comes face to face with an alien and is not capable of taking "
+"it down without suffering deadly reaction fire, indirect weaponry such as "
+"grenades -- launched by hand or through a grenade launcher -- should be used "
+"to take out the enemy from a safe position.\n"
+"\n"
+"We'll always need conventional firearms on the battlefield, but auxiliary "
+"weaponry deployed defensively will be key if we're to overcome the aliens' "
+"technological dominance on the battlefield.\n"
+"\n"
+"Addenda\n"
+"\n"
+"Smoke clouds will block line of sight on the battlefield.\n"
+"\n"
+"Flashbangs will remove Time Units when deployed effectively. A unit that has "
+"been effected by a flashbang will lose any Time Units it had when the "
+"flashbang exploded and will not receive more Time Units during its next "
+"turn. Flashbangs are only effective when they explode close to the target "
+"and within its field of view.\n"
+"\n"
+"Incendiary fields cause a small amount of damage to units which pass through "
+"them."
 msgstr ""
 
 #: ../base/ufos/msgid/irc.ufo:20
@@ -22636,13 +22834,13 @@ msgstr "Rusija"
 msgid "The Commonwealth of Oceania"
 msgstr "Skupno bogastvo Oceanija"
 
-#: ../base/ufos/otheritems.ufo:7 ../base/ufos/research.ufo:211
-#: ../base/ufos/research.ufo:250
+#: ../base/ufos/otheritems.ufo:7 ../base/ufos/research.ufo:297
+#: ../base/ufos/research.ufo:336
 msgid "Antimatter"
 msgstr "Antimaterija"
 
-#: ../base/ufos/otheritems.ufo:15 ../base/ufos/research.ufo:5477
-#: ../base/ufos/research.ufo:5516
+#: ../base/ufos/otheritems.ufo:15 ../base/ufos/research.ufo:5563
+#: ../base/ufos/research.ufo:5602
 msgid "Alien Materials"
 msgstr "Materiali nezemljanov"
 
@@ -22673,332 +22871,388 @@ msgid "gettext_text2"
 msgstr "gettext_text2"
 
 #: ../base/ufos/research.ufo:109
+msgid "Basic Concepts (Campaign)"
+msgstr ""
+
+#: ../base/ufos/research.ufo:110
+msgid "Basic Concepts (Ground Combat)"
+msgstr ""
+
+#: ../base/ufos/research.ufo:111
 #, fuzzy
 msgid "Skills and Abilities"
 msgstr "sposobnosti vojaka"
 
-#: ../base/ufos/research.ufo:110
+#: ../base/ufos/research.ufo:112
 msgid "Background"
 msgstr "Ozadje"
 
-#: ../base/ufos/research.ufo:111 ../base/ufos/ui/bases.ufo:125
-#: ../base/ufos/ui/geoscape.ufo:1331 ../base/ufos/ui/market.ufo:138
+#: ../base/ufos/research.ufo:113 ../base/ufos/ui/bases.ufo:125
+#: ../base/ufos/ui/geoscape.ufo:1336 ../base/ufos/ui/market.ufo:138
 #: ../base/ufos/ui/production.ufo:80 ../base/ufos/ui/transfer.ufo:139
 #: ../base/ufos/ui/transfer.ufo:159 client/cgame/campaign/cp_geoscape.cpp:310
 #: client/cgame/campaign/cp_transfer_callbacks.cpp:802
 msgid "Aircraft"
 msgstr "Plovilo"
 
-#: ../base/ufos/research.ufo:112
+#: ../base/ufos/research.ufo:114
 msgid "Base Facilities"
 msgstr "Bazne ustanove"
 
-#: ../base/ufos/research.ufo:113
+#: ../base/ufos/research.ufo:115
 msgid "Research Reports"
 msgstr "Poročila raziskav"
 
-#: ../base/ufos/research.ufo:114 ../base/ufos/ui/aircraft.ufo:102
+#: ../base/ufos/research.ufo:116 ../base/ufos/ui/aircraft.ufo:102
 #: ../base/ufos/ui/transfer.ufo:133 ../base/ufos/ui/transfer.ufo:144
 #: ../base/ufos/ui/transfer.ufo:507
 msgid "Equipment"
 msgstr "Oprema"
 
-#: ../base/ufos/research.ufo:115
+#: ../base/ufos/research.ufo:117
 msgid "Alien Artifacts"
 msgstr "Artefakti nezemljanov"
 
-#: ../base/ufos/research.ufo:116
+#: ../base/ufos/research.ufo:118
 msgid "Autopsies & Observation"
 msgstr "Avtopsije & opazovanja"
 
-#: ../base/ufos/research.ufo:117
+#: ../base/ufos/research.ufo:119
 msgid "The Alien Threat"
 msgstr "Grožnja nezemljanov"
 
-#: ../base/ufos/research.ufo:128
+#: ../base/ufos/research.ufo:129 ../base/ufos/ui/bases.ufo:146
+#: client/cgame/campaign/cp_base_callbacks.cpp:877
+msgid "Research"
+msgstr "Raziskovanje "
+
+#: ../base/ufos/research.ufo:137 ../base/ufos/ui/bases.ufo:153
+#: client/cgame/campaign/cp_base_callbacks.cpp:863
+msgid "Production"
+msgstr "Proizvodnja"
+
+#: ../base/ufos/research.ufo:145
+#, fuzzy
+msgid "UFO Interception"
+msgstr "Prestrezanje"
+
+#: ../base/ufos/research.ufo:153
+#, fuzzy
+msgid "UFO Disassembly"
+msgstr "Razstavi"
+
+#: ../base/ufos/research.ufo:161
+#, fuzzy
+msgid "Nation Happiness"
+msgstr "nacija_razpoloženje"
+
+#: ../base/ufos/research.ufo:169
+#, fuzzy
+msgid "Time Units"
+msgstr "Časovne enote:\t%i\n"
+
+#: ../base/ufos/research.ufo:177
+#, fuzzy
+msgid "Reaction Fire"
+msgstr "Reakcijski ogenj"
+
+#: ../base/ufos/research.ufo:185
+msgid "Soldier Weight and Encumbrance"
+msgstr ""
+
+#: ../base/ufos/research.ufo:193
+msgid "Wounds and Healing"
+msgstr ""
+
+#: ../base/ufos/research.ufo:201
+#, fuzzy
+msgid "Auxiliary Equipment"
+msgstr "%s pomožna oprema\n"
+
+#: ../base/ufos/research.ufo:214
 msgid "Continuous Wave Laser Operation"
 msgstr "Opreacije neprekinjen laserski val"
 
-#: ../base/ufos/research.ufo:268
+#: ../base/ufos/research.ufo:354
 msgid "Live Alien"
 msgstr "Živi nezemljan"
 
-#: ../base/ufos/research.ufo:308
+#: ../base/ufos/research.ufo:394
 msgid "Alien Breathing Apparatus"
 msgstr "Dihalne aparatre nezemljanov"
 
-#: ../base/ufos/research.ufo:350
+#: ../base/ufos/research.ufo:436
 msgid "The Alien Mind"
 msgstr "Um nezemljanov"
 
-#: ../base/ufos/research.ufo:390
+#: ../base/ufos/research.ufo:476
 msgid "Odd Behaviour"
 msgstr "Čudno obnašanje"
 
-#: ../base/ufos/research.ufo:430
+#: ../base/ufos/research.ufo:516
 msgid "Alien Communication"
 msgstr "Komunikacija nezemljanov"
 
-#: ../base/ufos/research.ufo:471 client/cgame/campaign/cp_missions.cpp:471
+#: ../base/ufos/research.ufo:557 client/cgame/campaign/cp_missions.cpp:474
 msgid "Alien base"
 msgstr "Bazan nezemljanov"
 
-#: ../base/ufos/research.ufo:497
+#: ../base/ufos/research.ufo:583
 msgid "The Universal Serum"
 msgstr "Univerzalni napoj"
 
-#: ../base/ufos/research.ufo:536
+#: ../base/ufos/research.ufo:622
 msgid "Alien Origins"
 msgstr "Izvor nezemljanov"
 
-#: ../base/ufos/research.ufo:571
+#: ../base/ufos/research.ufo:657
 msgid "UFO Theory"
 msgstr "NLP Teorija"
 
-#: ../base/ufos/research.ufo:1015 ../base/ufos/weapons_human.ufo:1716
+#: ../base/ufos/research.ufo:1101 ../base/ufos/weapons_human.ufo:1716
 msgid "Electromagnetic Rifle"
 msgstr "Elektromagnetna puška"
 
-#: ../base/ufos/research.ufo:1055 ../base/ufos/weapons_human.ufo:1738
+#: ../base/ufos/research.ufo:1141 ../base/ufos/weapons_human.ufo:1738
 msgid "Electromagnetic Rifle Magazine"
 msgstr "Naboj elektromagnetne puške"
 
-#: ../base/ufos/research.ufo:1073 ../base/ufos/weapons_human.ufo:1806
+#: ../base/ufos/research.ufo:1159 ../base/ufos/weapons_human.ufo:1806
 #, fuzzy
 msgid "Electromagnetic Rifle Antimatter Magazine"
 msgstr "Naboj elektromagnetne puške"
 
-#: ../base/ufos/research.ufo:1139
+#: ../base/ufos/research.ufo:1225
 msgid "Monomolecular Blades"
 msgstr "enomolekularno rezilo"
 
-#: ../base/ufos/research.ufo:1356
+#: ../base/ufos/research.ufo:1442
 msgid "Plasma And The Grenade Launcher"
 msgstr "Plazma in metalec granat"
 
-#: ../base/ufos/research.ufo:1420
+#: ../base/ufos/research.ufo:1506
 msgid "Alien Artifact - Kerrblade"
 msgstr "Alien Artifact - Kerr-rezilo"
 
-#: ../base/ufos/research.ufo:1716 ../base/ufos/research.ufo:1763
+#: ../base/ufos/research.ufo:1802 ../base/ufos/research.ufo:1849
 msgid "Alien Artifact - Plasma Pistol"
 msgstr "Alien Artifact - Plazemska pištola"
 
-#: ../base/ufos/research.ufo:1787 ../base/ufos/research.ufo:1833
+#: ../base/ufos/research.ufo:1873 ../base/ufos/research.ufo:1919
 msgid "Alien Artifact - Plasma Blaster"
 msgstr "Alien Artifact - Plazemska udarnik"
 
-#: ../base/ufos/research.ufo:1857
+#: ../base/ufos/research.ufo:1943
 msgid "Alien Artifact - Plasma Blade"
 msgstr "Alien Artifact - Plazemsko rezilo"
 
-#: ../base/ufos/research.ufo:1903
+#: ../base/ufos/research.ufo:1989
 msgid "Alien Artifact - Plasma Grenade"
 msgstr "Alien Artifact - Plazemska granata"
 
-#: ../base/ufos/research.ufo:1948 ../base/ufos/research.ufo:1994
+#: ../base/ufos/research.ufo:2034 ../base/ufos/research.ufo:2080
 msgid "Alien Artifact - Plasma Rifle"
 msgstr "Alien Artifact - Plazemska puška"
 
-#: ../base/ufos/research.ufo:2018
+#: ../base/ufos/research.ufo:2104
 msgid "Encased Plasma Rounds"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2137 ../base/ufos/research.ufo:2229
+#: ../base/ufos/research.ufo:2223 ../base/ufos/research.ufo:2315
 #: ../base/ufos/weapons_aliens.ufo:6
 msgid "Needler Gun"
 msgstr "Puška Igličarka"
 
-#: ../base/ufos/research.ufo:2183 ../base/ufos/weapons_aliens.ufo:28
+#: ../base/ufos/research.ufo:2269 ../base/ufos/weapons_aliens.ufo:28
 msgid "Heavy Needler Gun"
 msgstr "Težka puška Needler"
 
-#: ../base/ufos/research.ufo:2267 ../base/ufos/research.ufo:2275
+#: ../base/ufos/research.ufo:2353 ../base/ufos/research.ufo:2361
 #: ../base/ufos/weapons_human.ufo:435
 msgid "Coilgun"
 msgstr "Cevna puška"
 
-#: ../base/ufos/research.ufo:2499
+#: ../base/ufos/research.ufo:2585
 msgid "Anti-Alien Gas"
 msgstr "Plin proti nezemljanom"
 
-#: ../base/ufos/research.ufo:2546
+#: ../base/ufos/research.ufo:2632
 msgid "Alien Anti-Human Gas"
 msgstr "Nezemljanski protičloveški plin"
 
-#: ../base/ufos/research.ufo:2631 ../base/ufos/research.ufo:2676
+#: ../base/ufos/research.ufo:2717 ../base/ufos/research.ufo:2762
 msgid "Alien Artifact - Particle Beam Pistol"
 msgstr "Nezemljanski artefakt - Partiklova pištola"
 
-#: ../base/ufos/research.ufo:2695 ../base/ufos/research.ufo:2741
+#: ../base/ufos/research.ufo:2781 ../base/ufos/research.ufo:2827
 msgid "Alien Artifact - Particle Beam Cannon"
 msgstr "Nezemlansko artefakt - Partiklov top"
 
-#: ../base/ufos/research.ufo:2760 ../base/ufos/research.ufo:2805
+#: ../base/ufos/research.ufo:2846 ../base/ufos/research.ufo:2891
 msgid "Alien Artifact - Particle Beam Rifle"
 msgstr "Nezemlansko artefakt - Partiklova puška"
 
-#: ../base/ufos/research.ufo:2825
+#: ../base/ufos/research.ufo:2911
 msgid "Man-Portable Particle Beams"
 msgstr "Prenosna Partiklova orožja"
 
-#: ../base/ufos/research.ufo:3040
+#: ../base/ufos/research.ufo:3126
 msgid "Blast Damage Type"
 msgstr "Tip poškodb pri udarcu"
 
-#: ../base/ufos/research.ufo:3053
+#: ../base/ufos/research.ufo:3139
 msgid "Fire Damage Type"
 msgstr "Tip ognjenih poškodb"
 
-#: ../base/ufos/research.ufo:3066
+#: ../base/ufos/research.ufo:3152
 msgid "Laser Damage Type"
 msgstr "Tip laserskih poškodb"
 
-#: ../base/ufos/research.ufo:3084
+#: ../base/ufos/research.ufo:3170
 msgid "Impact Damage Type"
 msgstr "Tip poškodb pri udaru"
 
-#: ../base/ufos/research.ufo:3097
+#: ../base/ufos/research.ufo:3183
 msgid "Shock Damage Type"
 msgstr "Tip električnih poškodb"
 
-#: ../base/ufos/research.ufo:3110
+#: ../base/ufos/research.ufo:3196
 msgid "Plasma Damage Type"
 msgstr "Tip plazemskih poškodb"
 
-#: ../base/ufos/research.ufo:3131
+#: ../base/ufos/research.ufo:3217
 msgid "Stun Damage Type"
 msgstr "Tip poškodb ob omotici"
 
-#: ../base/ufos/research.ufo:3144
+#: ../base/ufos/research.ufo:3230
 msgid "Particle Beam Damage Type"
 msgstr "Tip partiklovih poškodb"
 
-#: ../base/ufos/research.ufo:3162
+#: ../base/ufos/research.ufo:3248
 msgid "Accuracy Attribute"
 msgstr "Pripisana natančnost"
 
-#: ../base/ufos/research.ufo:3175
+#: ../base/ufos/research.ufo:3261
 msgid "Assault Guns Proficiency"
 msgstr "Usposobljenost za jurišna orožja"
 
-#: ../base/ufos/research.ufo:3188
+#: ../base/ufos/research.ufo:3274
 msgid "Close Combat Proficiency"
 msgstr "Usposobljenost za boj od blizu"
 
-#: ../base/ufos/research.ufo:3201
+#: ../base/ufos/research.ufo:3287
 msgid "High-Explosives Proficiency"
 msgstr "Usposobljenost za eksplozive"
 
-#: ../base/ufos/research.ufo:3214
+#: ../base/ufos/research.ufo:3300
 msgid "Heavy Weapons Proficiency"
 msgstr "Usposobljenost za težka orožja"
 
-#: ../base/ufos/research.ufo:3227
+#: ../base/ufos/research.ufo:3313
 msgid "Mind Attribute"
 msgstr "Pripisani um"
 
-#: ../base/ufos/research.ufo:3240
+#: ../base/ufos/research.ufo:3326
 msgid "Power Attribute"
 msgstr "Pripisana energija"
 
-#: ../base/ufos/research.ufo:3253
+#: ../base/ufos/research.ufo:3339
 msgid "Sniper Rifles Proficiency"
 msgstr "Usposobljenost za ostrostrelska orožja"
 
-#: ../base/ufos/research.ufo:3266
+#: ../base/ufos/research.ufo:3352
 msgid "Speed Attribute"
 msgstr "Pripisana hitrost"
 
-#: ../base/ufos/research.ufo:4278
+#: ../base/ufos/research.ufo:4364
 msgid "Alien Autopsy - Bloodspider"
 msgstr "Bloodspider - obdukcija"
 
-#: ../base/ufos/research.ufo:4332
+#: ../base/ufos/research.ufo:4418
 msgid "Alien Autopsy - Combat Bloodspider"
 msgstr "Bojni Bloodspider - obdukcija"
 
-#: ../base/ufos/research.ufo:4388
+#: ../base/ufos/research.ufo:4474
 msgid "Alien Autopsy - Ortnok"
 msgstr "Ortnok - obdukcija"
 
-#: ../base/ufos/research.ufo:4432
+#: ../base/ufos/research.ufo:4518
 msgid "Alien Autopsy - Taman"
 msgstr "Taman - obdukcija"
 
-#: ../base/ufos/research.ufo:4476
+#: ../base/ufos/research.ufo:4562
 msgid "Alien Autopsy - Shevaar"
 msgstr "Shevaar - obdukcija"
 
-#: ../base/ufos/research.ufo:4520
+#: ../base/ufos/research.ufo:4606
 msgid "Alien Autopsy - Hovernet"
 msgstr "Hovernet - obdukcija"
 
-#: ../base/ufos/research.ufo:4576
+#: ../base/ufos/research.ufo:4662
 msgid "Alien Autopsy - Combat Hovernet"
 msgstr "Bojni Hovernet - obdukcija"
 
-#: ../base/ufos/research.ufo:4638 ../base/ufos/team_humans.ufo:344
+#: ../base/ufos/research.ufo:4724 ../base/ufos/team_humans.ufo:344
 msgid "Phoenix UGV"
 msgstr "Phoenix UGV"
 
-#: ../base/ufos/research.ufo:4658 ../base/ufos/team_humans.ufo:401
+#: ../base/ufos/research.ufo:4744 ../base/ufos/team_humans.ufo:401
 msgid "Ares W (UGV)"
 msgstr "Ares W (UGV)"
 
-#: ../base/ufos/research.ufo:4766
+#: ../base/ufos/research.ufo:4852
 msgid "'Raven' ECM Unit"
 msgstr "'Raven' ECM enota"
 
-#: ../base/ufos/research.ufo:5087
+#: ../base/ufos/research.ufo:5173
 msgid "SHIVA Rotary Cannon"
 msgstr "SHIVA Rotacijski top"
 
-#: ../base/ufos/research.ufo:5146
+#: ../base/ufos/research.ufo:5232
 msgid "'Sparrowhawk' AA Missile Rack"
 msgstr "'Sparrowhawk' AA nosilec raket"
 
-#: ../base/ufos/research.ufo:5163
+#: ../base/ufos/research.ufo:5249
 msgid "'Sparrowhawk' Missile"
 msgstr "'Sparrowhawk' raketa"
 
-#: ../base/ufos/research.ufo:5538
+#: ../base/ufos/research.ufo:5624
 msgid "Political Situation Before The Invasion"
 msgstr "Politično stanje pred invazijo"
 
-#: ../base/ufos/research.ufo:5551
+#: ../base/ufos/research.ufo:5637
 msgid "After The War"
 msgstr "Po vojni"
 
-#: ../base/ufos/research.ufo:5564
+#: ../base/ufos/research.ufo:5650
 msgid "PHALANX And The Mumbai Aftermath"
 msgstr ""
 
-#: ../base/ufos/research.ufo:5576
+#: ../base/ufos/research.ufo:5662
 msgid "A New Twist"
 msgstr "Nov preobrat"
 
-#: ../base/ufos/research.ufo:5605
+#: ../base/ufos/research.ufo:5691
 msgid "The Enemy On Earth"
 msgstr "Sovražnik na Zemlji"
 
-#: ../base/ufos/research.ufo:5644
+#: ../base/ufos/research.ufo:5730
 msgid "XVI Census"
 msgstr "XVI Crnzos"
 
-#: ../base/ufos/research.ufo:5685
+#: ../base/ufos/research.ufo:5771
 msgid "The Alien Strategy"
 msgstr "Strategija nezemljanov"
 
-#: ../base/ufos/research.ufo:5724
+#: ../base/ufos/research.ufo:5810
 msgid "Orbital UFO Activity"
 msgstr "NLP aktivnost v orbiti"
 
-#: ../base/ufos/research.ufo:5767
+#: ../base/ufos/research.ufo:5853
 msgid "Alien Psi Device"
 msgstr "Psi naprava nezemljanov"
 
-#: ../base/ufos/research.ufo:5799
+#: ../base/ufos/research.ufo:5885
 msgid "Human Vaccine"
 msgstr "Človeško cepivo"
 
@@ -23970,8 +24224,8 @@ msgstr "NAboj za to orožje"
 msgid "Select this slot"
 msgstr "Iberi to režo"
 
-#: ../base/ufos/ui/aircraft_info.ufo:42 ../base/ufos/ui/geoscape.ufo:1070
-#: ../base/ufos/ui/geoscape.ufo:1212
+#: ../base/ufos/ui/aircraft_info.ufo:42 ../base/ufos/ui/geoscape.ufo:1075
+#: ../base/ufos/ui/geoscape.ufo:1217
 #: ../base/ufos/ui/popup_installations.ufo:614
 msgid "Status:"
 msgstr "Stanje:"
@@ -24100,7 +24354,7 @@ msgstr "Dodeljeni vojaki"
 msgid "No soldiers assigned"
 msgstr "Vojak ni dodeljen"
 
-#: ../base/ufos/ui/aliencont.ufo:53 ../base/ufos/ui/aliencont.ufo:345
+#: ../base/ufos/ui/aliencont.ufo:53 ../base/ufos/ui/aliencont.ufo:340
 msgid "Kill this alien"
 msgstr "Ubij tega nezemljana"
 
@@ -24128,7 +24382,7 @@ msgstr "Živi:"
 msgid "Dead:"
 msgstr "Mrtvi:"
 
-#: ../base/ufos/ui/aliencont.ufo:350
+#: ../base/ufos/ui/aliencont.ufo:345
 #, fuzzy
 msgid "Autopsy"
 msgstr "Samdejno vstani"
@@ -24139,7 +24393,7 @@ msgstr "Opremi obrambna orožja"
 
 #: ../base/ufos/ui/basedefence.ufo:30
 #: ../base/ufos/ui/popup_installations.ufo:452
-#: client/cgame/campaign/cp_base.cpp:2060
+#: client/cgame/campaign/cp_base.cpp:2072
 msgid "Information"
 msgstr "Informacija"
 
@@ -24184,8 +24438,8 @@ msgid "Surface to Air defences"
 msgstr "Zemlja zrak obramba"
 
 #: ../base/ufos/ui/basedefence.ufo:310 ../base/ufos/ui/geoscape.ufo:851
-#: ../base/ufos/ui/geoscape.ufo:949 ../base/ufos/ui/geoscape.ufo:1205
-#: ../base/ufos/ui/geoscape.ufo:1277 ../base/ufos/ui/irc.ufo:202
+#: ../base/ufos/ui/geoscape.ufo:949 ../base/ufos/ui/geoscape.ufo:1210
+#: ../base/ufos/ui/geoscape.ufo:1282 ../base/ufos/ui/irc.ufo:202
 #: ../base/ufos/ui/main.ufo:110 ../base/ufos/ui/multiplayer.ufo:412
 #: ../base/ufos/ui/popup_installations.ufo:155
 #: ../base/ufos/ui/popup_installations.ufo:482
@@ -24237,6 +24491,7 @@ msgid "Back to geoscape"
 msgstr "Nazaj na zemljevid"
 
 #: ../base/ufos/ui/bases.ufo:118
+#: client/cgame/campaign/cp_base_callbacks.cpp:840
 msgid "Buildings"
 msgstr "Zgradbe"
 
@@ -24272,18 +24527,10 @@ msgstr "Prenesi "
 msgid "Transfer equipment, aircraft, UGV, aliens and employees to other bases"
 msgstr ""
 
-#: ../base/ufos/ui/bases.ufo:146
-msgid "Research"
-msgstr "Raziskovanje "
-
 #: ../base/ufos/ui/bases.ufo:147
 #: client/cgame/campaign/cp_base_callbacks.cpp:325
 msgid "Research new technology"
 msgstr "Razišči novo tehnologijo"
-
-#: ../base/ufos/ui/bases.ufo:153
-msgid "Production"
-msgstr "Proizvodnja"
 
 #: ../base/ufos/ui/bases.ufo:154
 #: client/cgame/campaign/cp_base_callbacks.cpp:330
@@ -24328,6 +24575,7 @@ msgstr ""
 
 #: ../base/ufos/ui/bases.ufo:242 ../base/ufos/ui/bases.ufo:249
 #: ../base/ufos/ui/hire.ufo:674
+#: client/cgame/campaign/cp_base_callbacks.cpp:877
 msgid "Scientists"
 msgstr "Znanstveniki"
 
@@ -24621,15 +24869,15 @@ msgstr "Statistike organizacije"
 msgid "Create installation"
 msgstr "Zgradi objekt"
 
-#: ../base/ufos/ui/geoscape.ufo:590 ../base/ufos/ui/geoscape.ufo:1445
+#: ../base/ufos/ui/geoscape.ufo:590 ../base/ufos/ui/geoscape.ufo:1450
 msgid "Highlight nation borders"
 msgstr "Prikaži meje nacij"
 
-#: ../base/ufos/ui/geoscape.ufo:600 ../base/ufos/ui/geoscape.ufo:1469
+#: ../base/ufos/ui/geoscape.ufo:600 ../base/ufos/ui/geoscape.ufo:1474
 msgid "Show radar range"
 msgstr "Pokaži domet radarja"
 
-#: ../base/ufos/ui/geoscape.ufo:611 ../base/ufos/ui/geoscape.ufo:1489
+#: ../base/ufos/ui/geoscape.ufo:611 ../base/ufos/ui/geoscape.ufo:1494
 msgid "Show XVI map"
 msgstr "Pokaži XVI mapo"
 
@@ -24645,7 +24893,7 @@ msgstr "Pojdi v nastavitve"
 msgid "Ready"
 msgstr "Pripravljen "
 
-#: ../base/ufos/ui/geoscape.ufo:755 ../base/ufos/ui/geoscape.ufo:1063
+#: ../base/ufos/ui/geoscape.ufo:755 ../base/ufos/ui/geoscape.ufo:1068
 msgid "Aircraft:"
 msgstr "Plovilo:"
 
@@ -24701,65 +24949,65 @@ msgstr "Uredi"
 msgid "Manage installation"
 msgstr "Uredi objekte"
 
-#: ../base/ufos/ui/geoscape.ufo:1032
+#: ../base/ufos/ui/geoscape.ufo:1037
 msgid "Anti-UFO defence"
 msgstr "Obrampa proti NLP"
 
-#: ../base/ufos/ui/geoscape.ufo:1045
+#: ../base/ufos/ui/geoscape.ufo:1050
 msgid "Aircraft interception"
 msgstr "Prestrezi plovilo"
 
-#: ../base/ufos/ui/geoscape.ufo:1049
+#: ../base/ufos/ui/geoscape.ufo:1054
 msgid "SAM defence"
 msgstr "SAM obramba"
 
-#: ../base/ufos/ui/geoscape.ufo:1077 ../base/ufos/ui/geoscape.ufo:1219
+#: ../base/ufos/ui/geoscape.ufo:1082 ../base/ufos/ui/geoscape.ufo:1224
 msgid "Base:"
 msgstr "Baza:"
 
-#: ../base/ufos/ui/geoscape.ufo:1125
+#: ../base/ufos/ui/geoscape.ufo:1130
 msgid "Surface-to-air missile site:"
 msgstr "Zemlja zrak raketna ploščad:"
 
-#: ../base/ufos/ui/geoscape.ufo:1200
+#: ../base/ufos/ui/geoscape.ufo:1205
 msgid "Select aircraft"
 msgstr "Izberi plovilo"
 
-#: ../base/ufos/ui/geoscape.ufo:1226
+#: ../base/ufos/ui/geoscape.ufo:1231
 #: ../base/ufos/ui/popup_installations.ufo:638
 #: ../base/ufos/ui/transfer.ufo:604
 msgid "ETA:"
 msgstr "ETA:"
 
-#: ../base/ufos/ui/geoscape.ufo:1264
+#: ../base/ufos/ui/geoscape.ufo:1269
 msgid "Select item"
 msgstr "Izberi predmet"
 
-#: ../base/ufos/ui/geoscape.ufo:1269
+#: ../base/ufos/ui/geoscape.ufo:1274
 msgid "Type:"
 msgstr "Tip:"
 
-#: ../base/ufos/ui/geoscape.ufo:1336
+#: ../base/ufos/ui/geoscape.ufo:1341
 msgid "Action:"
 msgstr "Akcija:"
 
-#: ../base/ufos/ui/geoscape.ufo:1344
+#: ../base/ufos/ui/geoscape.ufo:1349
 msgid "Description:"
 msgstr "Opis:"
 
-#: ../base/ufos/ui/geoscape.ufo:1399
+#: ../base/ufos/ui/geoscape.ufo:1404
 msgid "Geoscape options"
 msgstr "Nastavitve"
 
-#: ../base/ufos/ui/geoscape.ufo:1411
+#: ../base/ufos/ui/geoscape.ufo:1416
 msgid "Geoscape projection mode:"
 msgstr "Način projekcije zemljevida:"
 
-#: ../base/ufos/ui/geoscape.ufo:1421
+#: ../base/ufos/ui/geoscape.ufo:1426
 msgid "2D"
 msgstr "2D"
 
-#: ../base/ufos/ui/geoscape.ufo:1425
+#: ../base/ufos/ui/geoscape.ufo:1430
 msgid "3D"
 msgstr "3D"
 
@@ -25261,6 +25509,7 @@ msgid "Price"
 msgstr "Cena"
 
 #: ../base/ufos/ui/market.ufo:308
+#: client/cgame/campaign/cp_base_callbacks.cpp:840
 #, fuzzy
 msgid "Capacity"
 msgstr "Kapacitete:"
@@ -26868,6 +27117,7 @@ msgid "Cargo"
 msgstr ""
 
 #: ../base/ufos/ui/transfer.ufo:287
+#: client/cgame/campaign/cp_base_callbacks.cpp:840
 #, fuzzy
 msgid "Amount"
 msgstr "Samodejno "
@@ -27488,66 +27738,66 @@ msgstr "Suprer človek"
 msgid "It is not your turn!"
 msgstr "Nisi na vrsti!"
 
-#: client/battlescape/cl_actor.cpp:1007
+#: client/battlescape/cl_actor.cpp:1006
 msgid "You cannot reload this unknown item."
 msgstr "Ne moreš ponovno naložiti ta neznani predmet."
 
-#: client/battlescape/cl_actor.cpp:1047 client/cl_inventory.cpp:76
+#: client/battlescape/cl_actor.cpp:1046 client/cl_inventory.cpp:76
 #: game/g_actor.cpp:574
 msgid "This soldier can not carry anything else."
 msgstr ""
 
-#: client/battlescape/cl_actor.cpp:1047 client/battlescape/cl_hud.cpp:1386
+#: client/battlescape/cl_actor.cpp:1046 client/battlescape/cl_hud.cpp:1386
 #: client/cl_inventory.cpp:76 client/cl_inventory_callbacks.cpp:380
 #, fuzzy
 msgid "Warning"
 msgstr "Nanning"
 
-#: client/battlescape/cl_actor.cpp:1897
+#: client/battlescape/cl_actor.cpp:1893
 msgid "Unknown alien race"
 msgstr "Neznana vrsta nezemljanov"
 
-#: client/battlescape/cl_actor.cpp:2570
+#: client/battlescape/cl_actor.cpp:2561
 msgid "Toggle to next living actor"
 msgstr "Preklopi na naslednjega živega akterja"
 
-#: client/battlescape/cl_actor.cpp:2571
+#: client/battlescape/cl_actor.cpp:2562
 msgid "Toggle to previous living actor"
 msgstr "Preklopi na prejšnjega živega akterja"
 
-#: client/battlescape/cl_actor.cpp:2572
+#: client/battlescape/cl_actor.cpp:2563
 msgid "Select an actor from list"
 msgstr "Izberi akterja iz seznama"
 
-#: client/battlescape/cl_actor.cpp:2573
+#: client/battlescape/cl_actor.cpp:2564
 msgid "Update an actor"
 msgstr "Posodobi lik"
 
-#: client/battlescape/cl_actor.cpp:2574
+#: client/battlescape/cl_actor.cpp:2565
 msgid "Toggle stand/crouch."
 msgstr "Uredi stoj/kleči."
 
-#: client/battlescape/cl_actor.cpp:2575
+#: client/battlescape/cl_actor.cpp:2566
 msgid "Toggle the headgear"
 msgstr "Uredi opremo glave"
 
-#: client/battlescape/cl_actor.cpp:2576
+#: client/battlescape/cl_actor.cpp:2567
 msgid "Use"
 msgstr "Uporabi"
 
-#: client/battlescape/cl_actor.cpp:2577
+#: client/battlescape/cl_actor.cpp:2568
 msgid "Confirm the current action"
 msgstr "Potrdi dogajane:"
 
-#: client/battlescape/cl_actor.cpp:2578
+#: client/battlescape/cl_actor.cpp:2569
 msgid "Toggle to the next alien in sight of the selected actor."
 msgstr "Preklopi na naslednjega vidnega nezemljana."
 
-#: client/battlescape/cl_actor.cpp:2580
+#: client/battlescape/cl_actor.cpp:2571
 msgid "Toggle camera to the next visible alien."
 msgstr "Preklopi kamero na naslednjega vidnega nezemljana."
 
-#: client/battlescape/cl_actor.cpp:2581
+#: client/battlescape/cl_actor.cpp:2572
 msgid "Toggle camera to the previous visible alien."
 msgstr "Preklopi kamero na prejšnjega vidnega nezemljana."
 
@@ -28062,35 +28312,35 @@ msgstr "Nov %s je pripravljen v %s"
 #: client/cgame/campaign/cp_auto_mission.cpp:768
 #: client/cgame/campaign/cp_auto_mission.cpp:771
 #: client/cgame/campaign/cp_auto_mission.cpp:826
-#: client/cgame/campaign/cp_base.cpp:1333
-#: client/cgame/campaign/cp_base.cpp:1383
-#: client/cgame/campaign/cp_base.cpp:2293
-#: client/cgame/campaign/cp_base.cpp:2298
-#: client/cgame/campaign/cp_base.cpp:2949
+#: client/cgame/campaign/cp_base.cpp:1346
+#: client/cgame/campaign/cp_base.cpp:1396
+#: client/cgame/campaign/cp_base.cpp:2305
+#: client/cgame/campaign/cp_base.cpp:2310
+#: client/cgame/campaign/cp_base.cpp:2961
 #: client/cgame/campaign/cp_base_callbacks.cpp:70
 #: client/cgame/campaign/cp_base_callbacks.cpp:201
 #: client/cgame/campaign/cp_base_callbacks.cpp:247
 #: client/cgame/campaign/cp_base_callbacks.cpp:586
 #: client/cgame/campaign/cp_base_callbacks.cpp:601
-#: client/cgame/campaign/cp_base_callbacks.cpp:744
-#: client/cgame/campaign/cp_base_callbacks.cpp:750
-#: client/cgame/campaign/cp_base_callbacks.cpp:770
-#: client/cgame/campaign/cp_base_callbacks.cpp:780
-#: client/cgame/campaign/cp_base_callbacks.cpp:790
-#: client/cgame/campaign/cp_base_callbacks.cpp:796
-#: client/cgame/campaign/cp_base_callbacks.cpp:803
-#: client/cgame/campaign/cp_base_callbacks.cpp:807
-#: client/cgame/campaign/cp_base_callbacks.cpp:812
+#: client/cgame/campaign/cp_base_callbacks.cpp:747
+#: client/cgame/campaign/cp_base_callbacks.cpp:753
+#: client/cgame/campaign/cp_base_callbacks.cpp:773
+#: client/cgame/campaign/cp_base_callbacks.cpp:783
+#: client/cgame/campaign/cp_base_callbacks.cpp:793
+#: client/cgame/campaign/cp_base_callbacks.cpp:799
+#: client/cgame/campaign/cp_base_callbacks.cpp:806
+#: client/cgame/campaign/cp_base_callbacks.cpp:810
+#: client/cgame/campaign/cp_base_callbacks.cpp:815
 #: client/cgame/campaign/cp_installation_callbacks.cpp:131
 #: client/cgame/campaign/cp_mapfightequip.cpp:349
-#: client/cgame/campaign/cp_mapfightequip.cpp:370
-#: client/cgame/campaign/cp_mapfightequip.cpp:375
-#: client/cgame/campaign/cp_mapfightequip.cpp:386
+#: client/cgame/campaign/cp_mapfightequip.cpp:368
+#: client/cgame/campaign/cp_mapfightequip.cpp:373
+#: client/cgame/campaign/cp_mapfightequip.cpp:384
 #: client/cgame/campaign/cp_market_callbacks.cpp:193
 #: client/cgame/campaign/cp_market_callbacks.cpp:199
 #: client/cgame/campaign/cp_mission_callbacks.cpp:63
-#: client/cgame/campaign/cp_missions.cpp:732
-#: client/cgame/campaign/cp_missions.cpp:1070
+#: client/cgame/campaign/cp_missions.cpp:735
+#: client/cgame/campaign/cp_missions.cpp:1073
 #: client/cgame/campaign/cp_nation.cpp:828
 #: client/cgame/campaign/cp_nation.cpp:846
 #: client/cgame/campaign/cp_nation.cpp:859
@@ -28296,45 +28546,45 @@ msgstr ""
 msgid "Collected alien bodies"
 msgstr "Pobrana trupla nezemljanov"
 
-#: client/cgame/campaign/cp_base.cpp:986
+#: client/cgame/campaign/cp_base.cpp:999
 msgid "Not set"
 msgstr "Ni nastavljeno"
 
-#: client/cgame/campaign/cp_base.cpp:992
+#: client/cgame/campaign/cp_base.cpp:1005
 #, c-format
 msgid "Already %i in base"
 msgstr "Že %i v bazi"
 
-#: client/cgame/campaign/cp_base.cpp:999
+#: client/cgame/campaign/cp_base.cpp:1012
 msgid "Construction finished"
 msgstr "Zgradba končana"
 
-#: client/cgame/campaign/cp_base.cpp:1003
+#: client/cgame/campaign/cp_base.cpp:1016
 msgid "Working 100%"
 msgstr "Deluje na 100%"
 
-#: client/cgame/campaign/cp_base.cpp:1007
+#: client/cgame/campaign/cp_base.cpp:1020
 msgid "Not operational, depends on"
 msgstr ""
 
-#: client/cgame/campaign/cp_base.cpp:1011
+#: client/cgame/campaign/cp_base.cpp:1024
 msgid "Down"
 msgstr "Ustavljeno"
 
-#: client/cgame/campaign/cp_base.cpp:1333
+#: client/cgame/campaign/cp_base.cpp:1346
 msgid "Not enough credits to build this\n"
 msgstr "Nimaš dovolj denarja, da bi zgradil\n"
 
-#: client/cgame/campaign/cp_base.cpp:1383
+#: client/cgame/campaign/cp_base.cpp:1396
 msgid "You must build next to existing buildings."
 msgstr "Graditi morate zraven že obstoječe zgradeb."
 
-#: client/cgame/campaign/cp_base.cpp:1437
+#: client/cgame/campaign/cp_base.cpp:1450
 #, c-format
 msgid "Costs:\t%i c\n"
 msgstr "Stroški:\t%i c\n"
 
-#: client/cgame/campaign/cp_base.cpp:1440
+#: client/cgame/campaign/cp_base.cpp:1453
 #, c-format
 msgid "%i Day to build\n"
 msgid_plural "%i Days to build\n"
@@ -28343,26 +28593,26 @@ msgstr[1] "%i Dni gradnje\n"
 msgstr[2] "%i Dni gradnje\n"
 msgstr[3] "%i Dni gradnje\n"
 
-#: client/cgame/campaign/cp_base.cpp:1443
+#: client/cgame/campaign/cp_base.cpp:1456
 #: client/cgame/campaign/cp_ufopedia.cpp:232
 #, c-format
 msgid "Running costs:\t%i c\n"
 msgstr "Tekoči stroški:\t%i c\n"
 
-#: client/cgame/campaign/cp_base.cpp:1446
+#: client/cgame/campaign/cp_base.cpp:1459
 #: client/cgame/campaign/cp_ufopedia.cpp:229
 #, c-format
 msgid "Needs:\t%s\n"
 msgstr "Odvisno od:\t%s\n"
 
-#: client/cgame/campaign/cp_base.cpp:2048
+#: client/cgame/campaign/cp_base.cpp:2060
 msgid ""
 "No aircraft in this base - You first have to purchase or transfer an "
 "aircraft\n"
 msgstr "V tej bazi ni plovila- Najprej morate ploviko kupiti ali prenesti\n"
 
-#: client/cgame/campaign/cp_base.cpp:2048
-#: client/cgame/campaign/cp_base.cpp:2050
+#: client/cgame/campaign/cp_base.cpp:2060
+#: client/cgame/campaign/cp_base.cpp:2062
 #: client/cgame/campaign/cp_market_callbacks.cpp:173
 #: client/cgame/campaign/cp_market_callbacks.cpp:178
 #: client/cgame/campaign/cp_market_callbacks.cpp:183
@@ -28371,29 +28621,29 @@ msgstr "V tej bazi ni plovila- Najprej morate ploviko kupiti ali prenesti\n"
 msgid "Note"
 msgstr "Opomba"
 
-#: client/cgame/campaign/cp_base.cpp:2050
+#: client/cgame/campaign/cp_base.cpp:2062
 msgid "No aircraft in this base - You first have to purchase an aircraft\n"
 msgstr "V tej bazi ni plovila- Najprej morate plovilo kupiti\n"
 
-#: client/cgame/campaign/cp_base.cpp:2060
+#: client/cgame/campaign/cp_base.cpp:2072
 msgid "Antimatter (current/max):"
 msgstr "Antimaterija (trenutno/maksimalno):"
 
-#: client/cgame/campaign/cp_base.cpp:2229
+#: client/cgame/campaign/cp_base.cpp:2241
 #, c-format
 msgid "Construction of %s building finished in %s."
 msgstr "Gradnja %s zgradbe je končana v%s."
 
-#: client/cgame/campaign/cp_base.cpp:2230
+#: client/cgame/campaign/cp_base.cpp:2242
 msgid "Building finished"
 msgstr "Zgradba končana"
 
-#: client/cgame/campaign/cp_base.cpp:2291
+#: client/cgame/campaign/cp_base.cpp:2303
 #, c-format
 msgid "By selling %s you gathered %i credits."
 msgstr "Pri prodaji %s ste prejeli %i denarja."
 
-#: client/cgame/campaign/cp_base.cpp:2292
+#: client/cgame/campaign/cp_base.cpp:2304
 #, c-format
 msgid "%i collected item"
 msgid_plural "%i collected items"
@@ -28402,12 +28652,12 @@ msgstr[1] "%i pobrani poredmet"
 msgstr[2] "%i pobrani poredmet"
 msgstr[3] "%i pobrani poredmet"
 
-#: client/cgame/campaign/cp_base.cpp:2296
+#: client/cgame/campaign/cp_base.cpp:2308
 #, c-format
 msgid "Not enough storage space in %s. %s"
 msgstr "Ni dovolj prostora za skladiščenje v %s. %s"
 
-#: client/cgame/campaign/cp_base.cpp:2297
+#: client/cgame/campaign/cp_base.cpp:2309
 #, c-format
 msgid "%i item was sold for %i credits."
 msgid_plural "%i items were sold for %i credits."
@@ -28416,7 +28666,7 @@ msgstr[1] "%i predmet je bil prodan za %i denarja."
 msgstr[2] "%i predmet je bil prodan za %i denarja."
 msgstr[3] "%i predmet je bil prodan za %i denarja."
 
-#: client/cgame/campaign/cp_base.cpp:2947
+#: client/cgame/campaign/cp_base.cpp:2959
 #, c-format
 msgid ""
 "%s does not have Antimatter Storage Facility. %i units of antimatter got "
@@ -28582,15 +28832,15 @@ msgstr "Ste prepričani, da želite uničiti to zgradbo?"
 msgid "Destroy building"
 msgstr "Uniči zgradbo"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:744
+#: client/cgame/campaign/cp_base_callbacks.cpp:747
 msgid "Base is under attack, you can't access this building !"
 msgstr "Baza je napadena, ne moreš dostopati do te zgradbe!"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:750
+#: client/cgame/campaign/cp_base_callbacks.cpp:753
 msgid "You need at least one Hangar (and its dependencies) to use aircraft."
 msgstr ""
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:770
+#: client/cgame/campaign/cp_base_callbacks.cpp:773
 #, c-format
 msgid ""
 "Construction of building will be over in %i day.\n"
@@ -28611,83 +28861,66 @@ msgstr[3] ""
 "Gradnja zgradbe bo končana v %i dneh.\n"
 "Prosim pokajte na vstop."
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:780
+#: client/cgame/campaign/cp_base_callbacks.cpp:783
 #, c-format
 msgid "You need a building %s to make building %s functional."
 msgstr "Potrebujete %s stavbo, da bo %s obratovala."
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:790
+#: client/cgame/campaign/cp_base_callbacks.cpp:793
 #, c-format
 msgid "Building %s is not finished yet, and is needed to use building %s."
 msgstr ""
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:796
+#: client/cgame/campaign/cp_base_callbacks.cpp:799
 #, c-format
 msgid ""
 "Make sure that the dependencies of building %s (%s) are operational, so that "
 "building %s may be used."
 msgstr ""
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:803
-#: client/cgame/campaign/cp_base_callbacks.cpp:807
+#: client/cgame/campaign/cp_base_callbacks.cpp:806
+#: client/cgame/campaign/cp_base_callbacks.cpp:810
 #, c-format
 msgid "You need to recruit %s to use building %s."
 msgstr "Za uporabo stavbe %s morate zaposliti rekrute %s ."
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:812
+#: client/cgame/campaign/cp_base_callbacks.cpp:815
 #, c-format
 msgid "Build a %s first."
 msgstr "Najprej zgradi %s."
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:832
+#: client/cgame/campaign/cp_base_callbacks.cpp:860
+msgid "No report"
+msgstr ""
+
+#: client/cgame/campaign/cp_base_callbacks.cpp:863
+#: client/cgame/campaign/cp_base_callbacks.cpp:877
+msgid "Percent"
+msgstr ""
+
+#: client/cgame/campaign/cp_base_callbacks.cpp:863
+msgid "Quantity"
+msgstr ""
+
+#: client/cgame/campaign/cp_base_callbacks.cpp:873
+#: client/cgame/campaign/cp_base_callbacks.cpp:888
+#, fuzzy
+msgid "Nothing"
+msgstr "Nič\n"
+
+#: client/cgame/campaign/cp_base_callbacks.cpp:893
 msgid "^BAircraft\n"
 msgstr "^BPlovilo\n"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:845
+#: client/cgame/campaign/cp_base_callbacks.cpp:904
 msgid "^BEmployees\n"
 msgstr "^BZaposleni\n"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:858
+#: client/cgame/campaign/cp_base_callbacks.cpp:915
 msgid "^BAliens\n"
 msgstr "^BNezemljani\n"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:871
-msgid "^BBuildings\t\t\t\t\t\tCapacity\t\t\t\tAmount\n"
-msgstr "^BStavbe\t\t\t\t\t\tKoličina\t\t\t\tZnesek\n"
-
-#: client/cgame/campaign/cp_base_callbacks.cpp:894
-#: client/cgame/campaign/cp_installation_callbacks.cpp:265
-msgid "day"
-msgid_plural "days"
-msgstr[0] "dan"
-msgstr[1] "dan"
-msgstr[2] "dan"
-msgstr[3] "dan"
-
-#: client/cgame/campaign/cp_base_callbacks.cpp:904
-msgid "^BProduction\t\t\t\t\t\tQuantity\t\t\t\tPercent\n"
-msgstr "^BProizvodnja\t\t\t\t\t\tKoličina\t\t\t\tProcent\n"
-
-#: client/cgame/campaign/cp_base_callbacks.cpp:912
-#, c-format
-msgid "%s\t\t\t\t\t\t%d\t\t\t\t%.2f%%\n"
-msgstr "%s\t\t\t\t\t\t%d\t\t\t\t%.2f%%\n"
-
-#: client/cgame/campaign/cp_base_callbacks.cpp:916
-#: client/cgame/campaign/cp_base_callbacks.cpp:932
-msgid "Nothing\n"
-msgstr "Nič\n"
-
-#: client/cgame/campaign/cp_base_callbacks.cpp:921
-msgid "^BResearch\t\t\t\t\t\tScientists\t\t\t\tPercent\n"
-msgstr "^BRaziskava\t\t\t\t\t\tZnanstveniki\t\t\t\tProcent\n"
-
-#: client/cgame/campaign/cp_base_callbacks.cpp:926
-#, c-format
-msgid "%s\t\t\t\t\t\t%d\t\t\t\t%1.2f%%\n"
-msgstr "%s\t\t\t\t\t\t%d\t\t\t\t%1.2f%%\n"
-
-#: client/cgame/campaign/cp_base_callbacks.cpp:990
+#: client/cgame/campaign/cp_base_callbacks.cpp:978
 #: client/cgame/campaign/cp_campaign.cpp:671
 #, c-format
 msgid "%i c"
@@ -28880,7 +29113,7 @@ msgstr[3] "%3.1f preostalih dni"
 msgid "Rank: %s"
 msgstr "Mesto: %s"
 
-#: client/cgame/campaign/cp_employee.cpp:178
+#: client/cgame/campaign/cp_employee.cpp:177
 msgid "Soldier"
 msgid_plural "Soldiers"
 msgstr[0] "Vojak"
@@ -28888,11 +29121,11 @@ msgstr[1] "Vojak"
 msgstr[2] "Vojak"
 msgstr[3] "Vojak"
 
-#: client/cgame/campaign/cp_employee.cpp:360
+#: client/cgame/campaign/cp_employee.cpp:359
 msgid "Not enough quarters"
 msgstr "Ni dovolj življenskih prostora"
 
-#: client/cgame/campaign/cp_employee.cpp:360
+#: client/cgame/campaign/cp_employee.cpp:359
 msgid ""
 "You don't have enough quarters for your employees.\n"
 "Build more quarters."
@@ -29180,6 +29413,14 @@ msgstr "Pozabi"
 msgid "Condition: %3.0f%%"
 msgstr "Stanje: %3.0f%%"
 
+#: client/cgame/campaign/cp_installation_callbacks.cpp:265
+msgid "day"
+msgid_plural "days"
+msgstr[0] "dan"
+msgstr[1] "dan"
+msgstr[2] "dan"
+msgstr[3] "dan"
+
 #: client/cgame/campaign/cp_mapfightequip.cpp:340
 #, c-format
 msgid "%s was successfully installed into aircraft %s at %s."
@@ -29195,12 +29436,12 @@ msgstr "%s je bilo uspešno nameščeno na objekt %s."
 msgid "%s was successfully installed at %s."
 msgstr "%s je bila uspešno nameščena v %s."
 
-#: client/cgame/campaign/cp_mapfightequip.cpp:368
+#: client/cgame/campaign/cp_mapfightequip.cpp:366
 #, c-format
 msgid "%s was successfully removed from aircraft %s at %s."
 msgstr "%s je bilo uspešno odstranjeno na plovilo %s v %s."
 
-#: client/cgame/campaign/cp_mapfightequip.cpp:373
+#: client/cgame/campaign/cp_mapfightequip.cpp:371
 #, c-format
 msgid ""
 "%s was successfully removed, starting installation of %s into aircraft %s at "
@@ -29208,29 +29449,29 @@ msgid ""
 msgstr ""
 "%s je bilo uspešno odstranjeno, začenjaneje nameščanje%s na plovilo %s v %s"
 
-#: client/cgame/campaign/cp_mapfightequip.cpp:380
+#: client/cgame/campaign/cp_mapfightequip.cpp:378
 #, c-format
 msgid "%s was successfully removed from installation %s."
 msgstr "%s je bilo uspešno osdtranjeno z objekta %s."
 
-#: client/cgame/campaign/cp_mapfightequip.cpp:383
+#: client/cgame/campaign/cp_mapfightequip.cpp:381
 #, c-format
 msgid "%s was successfully removed from %s."
 msgstr "%s je bilo uspešno odstranjeno %s."
 
-#: client/cgame/campaign/cp_mapfightequip.cpp:1342
+#: client/cgame/campaign/cp_mapfightequip.cpp:1340
 msgid "Light weight"
 msgstr "Lahek"
 
-#: client/cgame/campaign/cp_mapfightequip.cpp:1345
+#: client/cgame/campaign/cp_mapfightequip.cpp:1343
 msgid "Medium weight"
 msgstr "Srednje težek"
 
-#: client/cgame/campaign/cp_mapfightequip.cpp:1348
+#: client/cgame/campaign/cp_mapfightequip.cpp:1346
 msgid "Heavy weight"
 msgstr "Težek"
 
-#: client/cgame/campaign/cp_mapfightequip.cpp:1351
+#: client/cgame/campaign/cp_mapfightequip.cpp:1349
 msgid "Unknown weight"
 msgstr "Neznana teža"
 
@@ -29476,60 +29717,60 @@ msgstr "Rešeni civilisti"
 msgid "Gathered items (types/all)"
 msgstr "Zbrani predmeti (tip/vsi)"
 
-#: client/cgame/campaign/cp_missions.cpp:457
-#: client/cgame/campaign/cp_missions.cpp:480
+#: client/cgame/campaign/cp_missions.cpp:460
+#: client/cgame/campaign/cp_missions.cpp:483
 #, fuzzy, c-format
 msgid "Crashed %s"
 msgstr "Strmoglavljeno"
 
-#: client/cgame/campaign/cp_missions.cpp:463
+#: client/cgame/campaign/cp_missions.cpp:466
 #, fuzzy, c-format
 msgid "Alien terror in %s"
 msgstr "Materiali nezemljanov"
 
-#: client/cgame/campaign/cp_missions.cpp:466
+#: client/cgame/campaign/cp_missions.cpp:469
 #, fuzzy, c-format
 msgid "Base attacked: %s"
 msgstr "Napadena baza"
 
-#: client/cgame/campaign/cp_missions.cpp:469
+#: client/cgame/campaign/cp_missions.cpp:472
 #, fuzzy, c-format
 msgid "Alien base in %s"
 msgstr "Bazan nezemljanov"
 
-#: client/cgame/campaign/cp_missions.cpp:483
+#: client/cgame/campaign/cp_missions.cpp:486
 #, fuzzy, c-format
 msgid "Landed %s"
 msgstr "Pristanek NLP"
 
-#: client/cgame/campaign/cp_missions.cpp:488
+#: client/cgame/campaign/cp_missions.cpp:491
 #, fuzzy, c-format
 msgid "Alien activity in %s"
 msgstr "Opažena je bila nezemeljska aktivnost: '%s'"
 
-#: client/cgame/campaign/cp_missions.cpp:490
+#: client/cgame/campaign/cp_missions.cpp:493
 #, fuzzy
 msgid "Alien activity"
 msgstr "Nezemeljske vrste"
 
-#: client/cgame/campaign/cp_missions.cpp:699
+#: client/cgame/campaign/cp_missions.cpp:702
 #, c-format
 msgid ""
 "Go on a rescue mission for %s to save your soldiers, some of whom may still "
 "be alive."
 msgstr ""
 
-#: client/cgame/campaign/cp_missions.cpp:703
+#: client/cgame/campaign/cp_missions.cpp:706
 #, c-format
 msgid "Alien activity has been detected in %s."
 msgstr "Opažena je bila aktivnost nezemljanov: %s"
 
-#: client/cgame/campaign/cp_missions.cpp:705
+#: client/cgame/campaign/cp_missions.cpp:708
 #, fuzzy
 msgid "Alien activity has been detected."
 msgstr "Opažena je bila aktivnost nezemljanov: %s"
 
-#: client/cgame/campaign/cp_missions.cpp:1068
+#: client/cgame/campaign/cp_missions.cpp:1071
 #, c-format
 msgid "Defence of base: %s successful!"
 msgstr "Obramba baze: %s uspešna!"
@@ -29892,7 +30133,7 @@ msgstr "Neznano tehnologijo je možno raziskati"
 msgid "Unknown Technology found"
 msgstr "Najdena neznana tehnologija"
 
-#: client/cgame/campaign/cp_research.cpp:684
+#: client/cgame/campaign/cp_research.cpp:682
 msgid ""
 "No free space in laboratories left.\n"
 "Build more laboratories.\n"
@@ -29900,26 +30141,26 @@ msgstr ""
 "Ni več prostora v laboratorijih.\n"
 "Zgradi več laboratorijev.\n"
 
-#: client/cgame/campaign/cp_research.cpp:684
+#: client/cgame/campaign/cp_research.cpp:682
 msgid "Not enough laboratories"
 msgstr "Ni dovol laboratorijev"
 
-#: client/cgame/campaign/cp_research.cpp:806
-#: client/cgame/campaign/cp_research.cpp:830
+#: client/cgame/campaign/cp_research.cpp:804
+#: client/cgame/campaign/cp_research.cpp:828
 #, c-format
 msgid "Research prerequisites of %s do not met at %s. Research halted!"
 msgstr ""
 
-#: client/cgame/campaign/cp_research.cpp:807
-#: client/cgame/campaign/cp_research.cpp:831
+#: client/cgame/campaign/cp_research.cpp:805
+#: client/cgame/campaign/cp_research.cpp:829
 msgid "Research halted"
 msgstr "Raziskava ustavljena"
 
-#: client/cgame/campaign/cp_research.cpp:1188
+#: client/cgame/campaign/cp_research.cpp:1186
 msgid "No description available."
 msgstr "Opis ni na voljo."
 
-#: client/cgame/campaign/cp_research.cpp:1189
+#: client/cgame/campaign/cp_research.cpp:1187
 msgid "No research proposal available."
 msgstr "Ni novih raziskav."
 
@@ -30061,8 +30302,8 @@ msgstr "Napaka shranjevanja igre"
 
 #: client/cgame/campaign/cp_save.cpp:471 client/cgame/campaign/cp_save.cpp:494
 #: client/cgame/campaign/cp_save.cpp:612
-#: client/cgame/multiplayer/mp_callbacks.cpp:62 client/cl_irc.cpp:1212
-#: client/cl_irc.cpp:1437 client/cl_main.cpp:529 client/cl_main.cpp:533
+#: client/cgame/multiplayer/mp_callbacks.cpp:62 client/cl_irc.cpp:1211
+#: client/cl_irc.cpp:1436 client/cl_main.cpp:529 client/cl_main.cpp:533
 #: client/cl_main.cpp:557
 msgid "Error"
 msgstr "Napaka"
@@ -31052,11 +31293,11 @@ msgstr "Nezano - ni mogoče uporabiti"
 msgid "Warning: Not enough TUs..."
 msgstr "Ne morem izvesti dejanja - ni dovolj korakov!\n"
 
-#: client/cl_irc.cpp:1437
+#: client/cl_irc.cpp:1436
 msgid "Server closed connection"
 msgstr "Server je prekinil povezavo"
 
-#: client/cl_language.cpp:419
+#: client/cl_language.cpp:417
 msgid "..."
 msgstr "..."
 
@@ -31423,6 +31664,21 @@ msgstr "Nezemljan"
 #: po/OTHER_STRINGS:6
 msgid "Take a screenshot"
 msgstr "Zajemi sliko zaslona"
+
+#~ msgid "^BBuildings\t\t\t\t\t\tCapacity\t\t\t\tAmount\n"
+#~ msgstr "^BStavbe\t\t\t\t\t\tKoličina\t\t\t\tZnesek\n"
+
+#~ msgid "^BProduction\t\t\t\t\t\tQuantity\t\t\t\tPercent\n"
+#~ msgstr "^BProizvodnja\t\t\t\t\t\tKoličina\t\t\t\tProcent\n"
+
+#~ msgid "%s\t\t\t\t\t\t%d\t\t\t\t%.2f%%\n"
+#~ msgstr "%s\t\t\t\t\t\t%d\t\t\t\t%.2f%%\n"
+
+#~ msgid "^BResearch\t\t\t\t\t\tScientists\t\t\t\tPercent\n"
+#~ msgstr "^BRaziskava\t\t\t\t\t\tZnanstveniki\t\t\t\tProcent\n"
+
+#~ msgid "%s\t\t\t\t\t\t%d\t\t\t\t%1.2f%%\n"
+#~ msgstr "%s\t\t\t\t\t\t%d\t\t\t\t%1.2f%%\n"
 
 #~ msgid "Alien landing - Snow"
 #~ msgstr "Pristanek nezemljanov  - Sneg"
