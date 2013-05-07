@@ -536,7 +536,6 @@ class ReactionFire
 	bool isEnemy(Edict *shooter, const Edict *target);
 	bool canReact(Edict *shooter, const Edict *target);
 	bool canSee(Edict *shooter, const Edict *target);
-	bool isPossible(Edict *shooter, const Edict *target);
 	bool shoot(Edict *shooter, const pos3_t at, shoot_types_t type, fireDefIndex_t firemode);
 public:
 	bool checkExecution(const Edict *target);
@@ -626,27 +625,6 @@ bool ReactionFire::canSee (Edict *shooter, const Edict *target)
 }
 
 /**
- * @brief Check whether shooter can reaction fire at target, i.e. that it can see it and neither is dead etc.
- * @param[in] shooter The entity that might be firing
- * @param[in] target The entity that might be fired at
- * @return @c true if 'shooter' can actually fire at 'target', @c false otherwise
- */
-bool ReactionFire::isPossible (Edict *shooter, const Edict *target)
-{
-	if (!isEnemy(shooter, target))
-		return false;
-
-	if (!canReact(shooter, target))
-		return false;
-
-	if (!canSee(shooter, target))
-		return false;
-
-	/* okay do it then */
-	return true;
-}
-
-/**
  * @brief Check whether 'target' has just triggered any new reaction fire
  * @param[in] target The entity triggering fire
  */
@@ -657,7 +635,9 @@ void ReactionFire::updateAllTargets (const Edict *target)
 	/* check all possible shooters */
 	while ((shooter = G_EdictsGetNextLivingActor(shooter))) {
 		/* check whether reaction fire is possible (friend/foe, LoS */
-		if (rf.isPossible(shooter, target)) {
+		if ( isEnemy(shooter, target)
+		  && canReact(shooter, target)
+		  && canSee(shooter, target)) {
 			const int TUs = G_ReactionFireGetTUsForItem(shooter, target);
 			if (TUs < 0)
 				continue;	/* no suitable weapon */
@@ -724,7 +704,9 @@ bool ReactionFire::tryToShoot (Edict *shooter, const Edict *target)
 
 	/* shooter can't take a reaction shot if it's not possible - and check that
 	 * the target is still alive */
-	if (!rf.isPossible(shooter, target)) {
+	if (!( isEnemy(shooter, target)
+		&& canReact(shooter, target)
+		&& canSee(shooter, target) )) {
 		rft.remove(shooter, target);
 		return false;
 	}
