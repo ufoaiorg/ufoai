@@ -277,7 +277,7 @@ item machinegun_ammo
 			sndonce				true
 			speed				3000
 			spread				"1.8 1.8"
-			crouch				1.2
+			crouch				0.85
 			range				100
 			shots				5
 			ammo				5
@@ -300,7 +300,7 @@ item machinegun_ammo
 			sndonce				true
 			speed				3000
 			spread				"2.4 2.4"
-			crouch				1.2
+			crouch				0.85
 			range				100
 			shots				20
 			ammo				20
@@ -323,7 +323,7 @@ item machinegun_ammo
 			sndonce				true
 			speed				3000
 			spread				"3 20"
-			crouch				1.2
+			crouch				0.85
 			range				100
 			shots				20
 			ammo				20
@@ -391,7 +391,7 @@ item sniper_ammo
 			bodysnd 	"impact/bullet-bodyimpact"
 			speed		3600
 			spread		"2.5 2.5"
-			crouch		1
+			crouch		0.85
 			range		100
 			shots		1
 			ammo		1
@@ -482,7 +482,7 @@ item coilgun_ammo
 			bodysnd 	"impact/nail-bodyimpact"
 			speed		2000
 			spread		"2.5 2.5"
-			crouch		1
+			crouch		0.85
 			range		100
 			shots		1
 			ammo		1
@@ -572,7 +572,7 @@ item pistol_ammo
 			bodysnd 	"impact/bullet-bodyimpact"
 			speed		3000
 			spread		"2 2"
-			crouch		1
+			crouch		0.9
 			range		40
 			shots		1
 			ammo		1
@@ -593,7 +593,7 @@ item pistol_ammo
 			bodysnd 			"impact/bullet-bodyimpact"
 			speed				3000
 			spread				"1.5 1.5"
-			crouch				1
+			crouch				0.9
 			range				40
 			shots				1
 			ammo				1
@@ -660,7 +660,7 @@ item pistol2_ammo
 			bodysnd 	"impact/bullet-bodyimpact"
 			speed		3000
 			spread		"2 2"
-			crouch		1
+			crouch		0.9
 			range		40
 			shots		1
 			ammo		1
@@ -681,7 +681,7 @@ item pistol2_ammo
 			bodysnd 			"impact/bullet-bodyimpact"
 			speed				3000
 			spread				"2.5 2.5"
-			crouch				1
+			crouch				0.9
 			range				40
 			shots				3
 			ammo				3
@@ -703,7 +703,7 @@ item pistol2_ammo
 			bodysnd 			"impact/bullet-bodyimpact"
 			speed				3000
 			spread				"3.5 3.5"
-			crouch				1
+			crouch				0.9
 			range				40
 			shots				10
 			ammo				10
@@ -864,7 +864,7 @@ item shotgun2_slug_ammo
 			sndonce				true
 			speed				3000
 			spread				"3 3"
-			crouch				1
+			crouch				0.9
 			range				20
 			shots				1
 			ammo				1
@@ -932,7 +932,7 @@ item shotgun_micro_ammo
 			sndonce				true
 			speed				3000
 			spread				"5 5"
-			crouch				1
+			crouch				0.9
 			range				15
 			shots				8
 			ammo				1
@@ -960,7 +960,7 @@ item shotgun_micro_ammo
 			sndonce				true
 			speed				3000
 			spread				"4 4"
-			crouch				1
+			crouch				0.9
 			range				15
 			shots				8
 			ammo				1
@@ -1028,7 +1028,7 @@ item flamer_ammo
 			sndonce				true
 			speed				300
 			spread				"1.5 0.5"
-			crouch				1.5
+			crouch				0.9
 			range				8
 			shots				30
 			ammo				1
@@ -1049,7 +1049,7 @@ item flamer_ammo
 			sndonce				true
 			speed				300
 			spread				"1.5 0.5"
-			crouch				1.5
+			crouch				0.9
 			range				8
 			shots				60
 			ammo				2
@@ -1070,7 +1070,7 @@ item flamer_ammo
 			sndonce				true
 			speed				300
 			spread				"1 10"
-			crouch				1.5
+			crouch				0.9
 			range				8
 			shots				60
 			ammo				2
@@ -1302,6 +1302,7 @@ item grenl_ammo
 			gravity				true
 			launched			true
 			spread				"0 2"
+			crouch				0.9
 			range				20
 			shots				1
 			ammo				1
@@ -1328,6 +1329,7 @@ item grenl_ammo
 			gravity				true
 			launched			true
 			spread				"0 1.5"
+			crouch				0.9
 			range				20
 			shots				1
 			ammo				1
@@ -1357,6 +1359,7 @@ item grenl_ammo
 			bounce				5
 			bncfac				0.6
 			spread				"0 2"
+			crouch				0.9
 			range				20
 			shots				1
 			ammo				1
@@ -1386,6 +1389,7 @@ item grenl_ammo
 			bounce				5
 			bncfac				0.6
 			spread				"0 1.5"
+			crouch				0.9
 			range				20
 			shots				1
 			ammo				1
@@ -1433,6 +1437,7 @@ item grenl_incendiary_ammo
 			gravity				true
 			launched			true
 			spread				"0 2"
+			crouch				0.9
 			range				20
 			shots				1
 			ammo				1
@@ -1460,6 +1465,7 @@ item grenl_incendiary_ammo
 			gravity				true
 			launched			true
 			spread				"0 1.5"
+			crouch				0.9
 			range				20
 			shots				1
 			ammo				1
@@ -1490,6 +1496,7 @@ item grenl_incendiary_ammo
 			bounce				5
 			bncfac				0.6
 			spread				"0 2"
+			crouch				0.9
 			range				20
 			shots				1
 			ammo				1
@@ -1520,6 +1527,7 @@ item grenl_incendiary_ammo
 			bounce				5
 			bncfac				0.6
 			spread				"0 1.5"
+			crouch				0.9
 			range				20
 			shots				1
 			ammo				1
@@ -1567,6 +1575,7 @@ item grenl_fle_ammo
 			firesnd				"weapons/bullet-flechette"
 			speed				3000
 			spread				"4 4"
+			crouch				0.9
 			range				10
 			shots				8
 			ammo				1
@@ -1612,6 +1621,7 @@ item grenl_plasma_ammo
 			gravity				true
 			launched			true
 			spread				"0 2"
+			crouch				0.9
 			range				20
 			shots				1
 			ammo				1
@@ -1638,6 +1648,7 @@ item grenl_plasma_ammo
 			gravity				true
 			launched			true
 			spread				"0 1.5"
+			crouch				0.9
 			range				20
 			shots				1
 			ammo				1
@@ -1666,6 +1677,7 @@ item grenl_plasma_ammo
 			bounce				5
 			bncfac				0.6
 			spread				"0 2"
+			crouch				0.9
 			range				20
 			shots				1
 			ammo				1
@@ -1694,6 +1706,7 @@ item grenl_plasma_ammo
 			bounce				5
 			bncfac				0.6
 			spread				"0 1.5"
+			crouch				0.9
 			range				20
 			shots				1
 			ammo				1
@@ -1765,7 +1778,7 @@ item bolterrifle_ammo
 			sndonce		true
 			speed		2000
 			spread		"2.5 2.5"
-			crouch		1
+			crouch		0.85
 			range		100
 			shots		1
 			ammo		1
@@ -1833,7 +1846,7 @@ item bolterrifle_am_ammo
 			sndonce		true
 			speed		2000
 			spread		"2.5 2.5"
-			crouch		1
+			crouch		0.85
 			range		100
 			shots		1
 			ammo		1

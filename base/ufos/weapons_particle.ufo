@@ -52,7 +52,7 @@ item pbeampistol_ammo
 			bodysnd 	"impact/laser-bodyimpact"
 			speed		0
 			spread		"2.5 2.5"
-			crouch		1
+			crouch		0.9
 			range		30
 			shots		1
 			ammo		1
@@ -73,7 +73,7 @@ item pbeampistol_ammo
 			bodysnd 			"impact/laser-bodyimpact"
 			speed				0
 			spread				"2 2"
-			crouch				1
+			crouch				0.9
 			range				30
 			shots				1
 			ammo				1
@@ -252,7 +252,7 @@ item pbeamcannon_ammo
 			bodysnd 			"impact/laser-bodyimpact"
 			speed				0
 			spread				"1.5 1.5"
-			crouch				1
+			crouch				0.85
 			range				200
 			shots				1
 			ammo				1
@@ -274,7 +274,7 @@ item pbeamcannon_ammo
 			bodysnd 			"impact/laser-bodyimpact"
 			speed				0
 			spread				"2.5 2.5"
-			crouch				1
+			crouch				0.85
 			range				200
 			shots				4
 			ammo				4
@@ -296,7 +296,7 @@ item pbeamcannon_ammo
 			bodysnd 	"impact/laser-bodyimpact"
 			speed		0
 			spread		"1.8 1.8"
-			crouch		1
+			crouch		0.85
 			range		200
 			shots		1
 			ammo		8

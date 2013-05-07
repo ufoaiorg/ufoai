@@ -52,7 +52,7 @@ item plaspistol_ammo
 			bodysnd 			"impact/plasma-bodyimpact"
 			speed				1500
 			spread				"2.2 2.2"
-			crouch				1
+			crouch				0.9
 			range				40
 			shots				1
 			ammo				1
@@ -74,7 +74,7 @@ item plaspistol_ammo
 			bodysnd 			"impact/plasma-bodyimpact"
 			speed				1500
 			spread				"2.8 2.8"
-			crouch				1
+			crouch				0.9
 			range				40
 			shots				3
 			ammo				3
@@ -95,7 +95,7 @@ item plaspistol_ammo
 			bodysnd 			"impact/plasma-bodyimpact"
 			speed				1500
 			spread				"2 2"
-			crouch				1
+			crouch				0.9
 			range				40
 			shots				1
 			ammo				1
@@ -300,7 +300,7 @@ item plasblaster_ammo
 			bodysnd 			"impact/plasmaball-impact"
 			speed				600
 			spread				"3 3"
-			crouch 				1
+			crouch 				0.9
 			range				20
 			shots				1
 			ammo				10
@@ -325,7 +325,7 @@ item plasblaster_ammo
 			sndonce				true
 			speed				0
 			spread				"2 2"
-			crouch				1
+			crouch				0.9
 			range				35
 			shots				1
 			ammo				1
@@ -348,7 +348,7 @@ item plasblaster_ammo
 			sndonce				true
 			speed				0
 			spread				"2.5 2.5"
-			crouch				1
+			crouch				0.9
 			range				35
 			shots				3
 			ammo				3
@@ -503,7 +503,7 @@ item encased_plasma_mg_ammo
 			sndonce				true
 			speed				3000
 			spread				"1.8 1.8"
-			crouch				1.2
+			crouch				0.85
 			range				100
 			shots				5
 			ammo				5
@@ -526,7 +526,7 @@ item encased_plasma_mg_ammo
 			sndonce				true
 			speed				3000
 			spread				"2.4 2.4"
-			crouch				1.2
+			crouch				0.85
 			range				100
 			shots				20
 			ammo				20
@@ -549,7 +549,7 @@ item encased_plasma_mg_ammo
 			sndonce				true
 			speed				3000
 			spread				"3 20"
-			crouch				1.2
+			crouch				0.85
 			range				100
 			shots				20
 			ammo				20
@@ -592,7 +592,7 @@ item encased_plasma_sniper_ammo
 			bodysnd 	"impact/bullet-bodyimpact"
 			speed		3600
 			spread		"2.5 2.5"
-			crouch		1
+			crouch		0.85
 			range		100
 			shots		1
 			ammo		1

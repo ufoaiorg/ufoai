@@ -60,7 +60,7 @@ item chaingun_ammo
 			sndonce				true
 			speed				3000
 			spread				"2 2"
-			crouch				1.4
+			crouch				0.9
 			range				100
 			shots				5
 			ammo				5
@@ -84,7 +84,7 @@ item chaingun_ammo
 			sndonce				true
 			speed				3000
 			spread				"4 4"
-			crouch				1.4
+			crouch				0.9
 			range				100
 			shots				40
 			ammo				40
@@ -107,7 +107,7 @@ item chaingun_ammo
 			sndonce				true
 			speed				3000
 			spread				"4 20"
-			crouch				1.4
+			crouch				0.9
 			range				100
 			shots				40
 			ammo				40
@@ -177,7 +177,7 @@ item shotgun_ammo
 			sndonce				true
 			speed				3000
 			spread				"3.5 3.5"
-			crouch				1.0
+			crouch				0.9
 			range				15
 			shots				8
 			ammo				1
@@ -200,7 +200,7 @@ item shotgun_ammo
 			sndonce				true
 			speed				3000
 			spread				"4 4"
-			crouch				1.0
+			crouch				0.9
 			range				15
 			shots				16
 			ammo				2
@@ -296,7 +296,7 @@ item xaw95_ammo
 			sndonce				true
 			speed				3000
 			spread				"2 2"
-			crouch				1.2
+			crouch				0.9
 			range				100
 			shots				10
 			ammo				10
@@ -320,7 +320,7 @@ item xaw95_ammo
 			sndonce				true
 			speed				3000
 			spread				"3 3"
-			crouch				1.2
+			crouch				0.9
 			range				100
 			shots				40
 			ammo				40
@@ -343,7 +343,7 @@ item xaw95_ammo
 			sndonce				true
 			speed				3000
 			spread				"3.5 20"
-			crouch				1.2
+			crouch				0.9
 			range				100
 			shots				40
 			ammo				40
