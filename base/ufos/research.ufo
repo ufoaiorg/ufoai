@@ -106,6 +106,8 @@
 // Ufopedia categories
 //========================
 
+up_chapter concepts_campaign { name "_Basic Concepts (Campaign)" }
+up_chapter concepts_combat { name "_Basic Concepts (Ground Combat)" }
 up_chapter skill { name "_Skills and Abilities" }
 up_chapter news	{ name "_Background" }
 up_chapter crafts { name "_Aircraft" }
@@ -118,6 +120,90 @@ up_chapter threat { name "_The Alien Threat" }
 
 // chapter without name are not displayed into ufopedia
 up_chapter damage {}
+
+//====================
+// Basic Game Concepts
+//====================
+tech rs_concept_research
+{
+	name			"_Research"
+	type			"news"
+	up_chapter		concepts_campaign
+	description {	default "*msgid:concept_research_txt"	}
+	time		0
+}
+tech rs_concept_production
+{
+	name			"_Production"
+	type			"news"
+	up_chapter		concepts_campaign
+	description {	default "*msgid:concept_production_txt"	}
+	time		0
+}
+tech rs_concept_interception
+{
+	name			"_UFO Interception"
+	type			"news"
+	up_chapter		concepts_campaign
+	description {	default "*msgid:concept_interception_txt"	}
+	time		0
+}
+tech rs_concept_disassembly
+{
+	name			"_UFO Disassembly"
+	type			"news"
+	up_chapter		concepts_campaign
+	description {	default "*msgid:concept_disassembly_txt"	}
+	time		0
+}
+tech rs_concept_nation_happiness
+{
+	name			"_Nation Happiness"
+	type			"news"
+	up_chapter		concepts_campaign
+	description {	default "*msgid:concept_nation_happiness_txt"	}
+	time		0
+}
+tech rs_concept_time_units
+{
+	name			"_Time Units"
+	type			"news"
+	up_chapter		concepts_combat
+	description {	default "*msgid:concept_time_units_txt"	}
+	time		0
+}
+tech rs_concept_reaction_fire
+{
+	name			"_Reaction Fire"
+	type			"news"
+	up_chapter		concepts_combat
+	description {	default "*msgid:concept_reaction_fire_txt"	}
+	time		0
+}
+tech rs_concept_weight
+{
+	name			"_Soldier Weight and Encumbrance"
+	type			"news"
+	up_chapter		concepts_combat
+	description {	default "*msgid:concept_weight_txt"	}
+	time		0
+}
+tech rs_concept_wounds
+{
+	name			"_Wounds and Healing"
+	type			"news"
+	up_chapter		concepts_combat
+	description {	default "*msgid:concept_wounds_txt"	}
+	time		0
+}
+tech rs_concept_equipment
+{
+	name			"_Auxiliary Equipment"
+	type			"news"
+	up_chapter		concepts_combat
+	description {	default "*msgid:concept_equipment_txt"	}
+	time		0
+}
 
 //============================
 // Main Research Technologies
