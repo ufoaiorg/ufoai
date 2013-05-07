@@ -110,7 +110,7 @@ item assault_ammo
 		firedef
 		{
 			name		"_Aimed Shot"
-			skill		"sniper"
+			skill		"assault"
 			projtl		bullet
 			impact		bulletImpact
 			hitbody		null
@@ -199,7 +199,7 @@ item assault_ammo
 		firedef
 		{
 			name		"_Aimed Shot"
-			skill		"sniper"
+			skill		"assault"
 			projtl		bullet
 			impact		bulletImpact
 			hitbody		null
@@ -382,7 +382,7 @@ item sniper_ammo
 		firedef
 		{
 			name		"_Snap Shot"
-			skill		"assault"
+			skill		"sniper"
 			projtl		bullet_sniper
 			impact		bulletImpact
 			hitbody		null
@@ -473,7 +473,7 @@ item coilgun_ammo
 		firedef
 		{
 			name		"_Snap Shot"
-			skill		"assault"
+			skill		"sniper"
 			projtl		bolter
 			impact		bolterImpact
 			hitbody		null
@@ -1755,7 +1755,7 @@ item bolterrifle_ammo
 		firedef
 		{
 			name		"_Snap Shot"
-			skill		"assault"
+			skill		"sniper"
 			projtl		bolter
 			impact		bolterImpact
 			hitbody		null
@@ -1823,7 +1823,7 @@ item bolterrifle_am_ammo
 		firedef
 		{
 			name		"_Snap Shot"
-			skill		"assault"
+			skill		"sniper"
 			projtl		bolter
 			impact		bolterImpact
 			hitbody		null

@@ -220,7 +220,7 @@ item plasrifle_ammo
 		firedef
 		{
 			name				"_Aimed Shot"
-			skill				"sniper"
+			skill				"assault"
 			projtl				plasmaPulse
 			impact				plasmaImpactCharged
 			hitbody				plasmaImpactCharged
@@ -451,7 +451,7 @@ item encased_plasma_assault_ammo
 		firedef
 		{
 			name		"_Aimed Shot"
-			skill		"sniper"
+			skill		"assault"
 			projtl		bullet
 			impact		bulletImpact
 			hitbody		null
@@ -583,7 +583,7 @@ item encased_plasma_sniper_ammo
 		firedef
 		{
 			name		"_Snap Shot"
-			skill		"assault"
+			skill		"sniper"
 			projtl		bullet_sniper
 			impact		bulletImpact
 			hitbody		null

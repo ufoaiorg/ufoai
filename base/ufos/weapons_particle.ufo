@@ -175,7 +175,7 @@ item pbeamrifle_ammo
 		firedef
 		{
 			name		"_Aimed Shot"
-			skill		"sniper"
+			skill		"assault"
 			projtl		pbeamBeam
 			impact		pbeamImpact
 			hitbody		pbeamImpact
