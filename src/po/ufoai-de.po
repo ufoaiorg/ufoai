@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
 "POT-Creation-Date: 2013-05-07 15:12+0200\n"
-"PO-Revision-Date: 2013-01-20 23:22+0100\n"
+"PO-Revision-Date: 2013-05-07 15:28+0100\n"
 "Last-Translator: Martin Gerhardy <tlh2000@users.sourceforge.net>\n"
 "Language-Team: \n"
 "Language: de\n"
@@ -128,9 +128,8 @@ msgstr "Gelandetes UFO"
 #: ../base/maps/industrial.ump:364 ../base/ufos/maps.ufo:1758
 #: ../base/ufos/maps.ufo:1801 ../base/ufos/maps.ufo:1845
 #: ../base/ufos/maps.ufo:1888
-#, fuzzy
 msgid "Industrial Site"
-msgstr "Industriegebiet"
+msgstr "Industrieanlage"
 
 #: ../base/maps/italy.ump:61
 msgid "Italy"
@@ -221,9 +220,8 @@ msgstr "Abgestürztes UFO"
 
 #: ../base/maps/village.ump:452 ../base/maps/village.ump:478
 #: ../base/maps/village.ump:505 ../base/maps/village.ump:535
-#, fuzzy
 msgid "Village"
-msgstr "Dorf (groß)"
+msgstr "Dorf"
 
 #: ../base/ufos/aircraftmanagement.ufo:102
 msgid "Firebird-class Dropship"
@@ -2444,9 +2442,8 @@ msgid "Alien Skirmish"
 msgstr "Einzelgefecht"
 
 #: ../base/ufos/equipment.ufo:108
-#, fuzzy
 msgid "Multiplayer Phalanx"
-msgstr "Mehrspieler"
+msgstr "Mehrspieler Phalanx"
 
 #: ../base/ufos/equipment.ufo:189
 msgid "Assault Rifles Only"
@@ -2523,14 +2520,12 @@ msgid "media/languages.ttf"
 msgstr "media/languages.ttf"
 
 #: ../base/ufos/gamemodes.ufo:16
-#, fuzzy
 msgid "Full Campaign"
-msgstr "Kampagne"
+msgstr "Volle Kampagne"
 
 #: ../base/ufos/gamemodes.ufo:21
-#, fuzzy
 msgid "Simple Campaign"
-msgstr "Statische Kampagne"
+msgstr "Einfache Kampagne"
 
 #: ../base/ufos/gamemodes.ufo:26
 msgid "Skirmish"
@@ -2807,13 +2802,12 @@ msgstr "Abgestürzter Sammler"
 #: ../base/ufos/maps.ufo:601 ../base/ufos/maps.ufo:643
 #: ../base/ufos/maps.ufo:682 ../base/ufos/maps.ufo:726
 msgid "Farm"
-msgstr ""
+msgstr "Bauernhof"
 
 #: ../base/ufos/maps.ufo:778 ../base/ufos/maps.ufo:818
 #: ../base/ufos/maps.ufo:858 ../base/ufos/maps.ufo:898
-#, fuzzy
 msgid "Forest"
-msgstr "Im Lager"
+msgstr "Wald"
 
 #: ../base/ufos/maps.ufo:942 ../base/ufos/maps.ufo:995
 #: ../base/ufos/maps.ufo:1050 ../base/ufos/maps.ufo:1103
@@ -2848,9 +2842,8 @@ msgid "Middle Eastern Suburb"
 msgstr ""
 
 #: ../base/ufos/maps.ufo:2429
-#, fuzzy
 msgid "Crashed Scout"
-msgstr "Abgestürztes Kundschafter-UFO"
+msgstr "Abgestürzter Kundschafter"
 
 #: ../base/ufos/maps.ufo:2471 ../base/ufos/maps.ufo:2511
 #: ../base/ufos/maps.ufo:2554
@@ -2876,9 +2869,8 @@ msgid "PHALANX Base Under Attack"
 msgstr "Basis wird angegriffen"
 
 #: ../base/ufos/maps.ufo:2830
-#, fuzzy
 msgid "Cemetery"
-msgstr "Kleiner Friedhof"
+msgstr "Friedhof"
 
 #: ../base/ufos/maps.ufo:2872
 #, fuzzy
@@ -2896,9 +2888,8 @@ msgid "Community Centre"
 msgstr "Gemeindezentrum"
 
 #: ../base/ufos/maps.ufo:3015
-#, fuzzy
 msgid "Construction Site"
-msgstr "Konstruktion"
+msgstr "Baustelle"
 
 #: ../base/ufos/maps.ufo:3070
 #, fuzzy
@@ -2910,7 +2901,6 @@ msgid "Mountain Estate"
 msgstr ""
 
 #: ../base/ufos/maps.ufo:3172
-#, fuzzy
 msgid "Gas Station"
 msgstr "Tankstelle"
 
@@ -2919,9 +2909,8 @@ msgid "Luxury House"
 msgstr ""
 
 #: ../base/ufos/maps.ufo:3324
-#, fuzzy
 msgid "Supermarket"
-msgstr "Übernatürlich"
+msgstr "Supermarkt"
 
 #: ../base/ufos/maps.ufo:3377
 #, fuzzy
@@ -2943,11 +2932,11 @@ msgstr ""
 
 #: ../base/ufos/maps.ufo:3679 ../base/ufos/maps.ufo:4582
 msgid "Office Complex"
-msgstr ""
+msgstr "Bürokomplex"
 
 #: ../base/ufos/maps.ufo:3734
 msgid "Warehouse"
-msgstr ""
+msgstr "Warenlager"
 
 #: ../base/ufos/maps.ufo:3782
 #, fuzzy
@@ -2997,9 +2986,8 @@ msgid "Archaeological Dig"
 msgstr ""
 
 #: ../base/ufos/maps.ufo:4252
-#, fuzzy
 msgid "Ferry"
-msgstr "Eine Fähre."
+msgstr "Fähre"
 
 #: ../base/ufos/maps.ufo:4302
 #, fuzzy
@@ -3013,7 +3001,7 @@ msgstr "Zusatztank"
 
 #: ../base/ufos/maps.ufo:4391
 msgid "Secret Depot"
-msgstr ""
+msgstr "Geheimes Depot"
 
 #: ../base/ufos/maps.ufo:4439
 #, fuzzy
@@ -3022,7 +3010,7 @@ msgstr "Portland"
 
 #: ../base/ufos/maps.ufo:4485
 msgid "Old Mine"
-msgstr ""
+msgstr "Alte Mine"
 
 #: ../base/ufos/maps.ufo:4538
 #, fuzzy
@@ -3035,9 +3023,8 @@ msgid "Sewerage Construction Site"
 msgstr "Unterirdische Rohrleitungsanlage"
 
 #: ../base/ufos/maps.ufo:4722
-#, fuzzy
 msgid "Luxurious Resort"
-msgstr "Eine luxuriöse Urlaubsanlage."
+msgstr "Eine luxuriöse Urlaubsanlage"
 
 #: ../base/ufos/maps.ufo:4768
 msgid "Old Town Center"
@@ -3053,9 +3040,8 @@ msgid "Small Suburban Street"
 msgstr ""
 
 #: ../base/ufos/maps.ufo:4886
-#, fuzzy
 msgid "Subway Station"
-msgstr "Sättigung:"
+msgstr "U-Bahn Station"
 
 #: ../base/ufos/maps.ufo:4979
 msgid "Wilderness"
@@ -12534,11 +12520,11 @@ msgstr ""
 #: ../base/ufos/msgid/missionbriefing.ufo:2
 msgid "Good luck commander. Bring our soldiers back alive."
 msgstr ""
+"Viel Glück Herr Kommandant. Bringen Sie alle gesund und unversehrt zurück."
 
 #: ../base/ufos/msgid/missionbriefing.ufo:5
-#, fuzzy
 msgid "Kill all the aliens."
-msgstr "Spiele die Außerirdischen"
+msgstr "Töte alle Außerirdischen."
 
 #: ../base/ufos/msgid/missionbriefing.ufo:8
 msgid ""
@@ -12559,9 +12545,8 @@ msgid ""
 msgstr ""
 
 #: ../base/ufos/msgid/missionbriefing.ufo:17
-#, fuzzy
 msgid "Kill all the aliens to secure the base."
-msgstr "Töte alle Außerirdischen in dieser Basis"
+msgstr "Töte alle Außerirdischen um die Basis zu sichern."
 
 #: ../base/ufos/msgid/missionbriefing.ufo:20
 msgid "The dropship has arrived at the crash site."
@@ -24250,11 +24235,11 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:109
 msgid "Basic Concepts (Campaign)"
-msgstr ""
+msgstr "Grundkonzepte (Kampagne)"
 
 #: ../base/ufos/research.ufo:110
 msgid "Basic Concepts (Ground Combat)"
-msgstr ""
+msgstr "Grundkonzepte (Bodeneinsatz)"
 
 #: ../base/ufos/research.ufo:111
 #, fuzzy
@@ -24310,27 +24295,22 @@ msgid "Production"
 msgstr "Produktion"
 
 #: ../base/ufos/research.ufo:145
-#, fuzzy
 msgid "UFO Interception"
-msgstr "Abfangen"
+msgstr "UFO Abfangen"
 
 #: ../base/ufos/research.ufo:153
-#, fuzzy
 msgid "UFO Disassembly"
-msgstr "Demontage"
+msgstr "UFO Demontage"
 
 #: ../base/ufos/research.ufo:161
-#, fuzzy
 msgid "Nation Happiness"
-msgstr "Nationale Zufriedenheit"
+msgstr "Zufriedenheit der Nationen"
 
 #: ../base/ufos/research.ufo:169
-#, fuzzy
 msgid "Time Units"
-msgstr "Zeiteinheiten:\t%i\n"
+msgstr "Zeiteinheiten"
 
 #: ../base/ufos/research.ufo:177
-#, fuzzy
 msgid "Reaction Fire"
 msgstr "Reaktionsfeuer"
 
@@ -24396,9 +24376,8 @@ msgid "Electromagnetic Rifle Magazine"
 msgstr "Magazin für Elektromagnetisches Gewehr"
 
 #: ../base/ufos/research.ufo:1159 ../base/ufos/weapons_human.ufo:1806
-#, fuzzy
 msgid "Electromagnetic Rifle Antimatter Magazine"
-msgstr "Magazin für Elektromagnetisches Gewehr"
+msgstr "Antimateriemagazin für Elektromagnetisches Gewehr"
 
 #: ../base/ufos/research.ufo:1225
 msgid "Monomolecular Blades"
@@ -24635,44 +24614,40 @@ msgid "Human Vaccine"
 msgstr "Menschliches Serum"
 
 #: ../base/ufos/seq_credits.ufo:44
-#, fuzzy
 msgid "http://www.ufoai.org"
-msgstr "http://ufoai.sf.net"
+msgstr "http://www.ufoai.org"
 
 #: ../base/ufos/seq_credits.ufo:56
-#, fuzzy
 msgid "Project lead"
 msgstr "Projektleiter"
 
 #: ../base/ufos/seq_credits.ufo:66
-#, fuzzy
 msgid "Martin Gerhardy (mattn)"
-msgstr "Martin Gerhardy (mattn/tlh2000)"
+msgstr "Martin Gerhardy (mattn)"
 
 #: ../base/ufos/seq_credits.ufo:77
-#, fuzzy
 msgid "Team members"
-msgstr "Teammitglieder:"
+msgstr "Teammitglieder"
 
 #: ../base/ufos/seq_credits.ufo:87
 msgid "aDuke"
-msgstr ""
+msgstr "aDuke"
 
 #: ../base/ufos/seq_credits.ufo:97
 msgid "Alexander Tishin (Sandro)"
-msgstr ""
+msgstr "Alexander Tishin (Sandro)"
 
 #: ../base/ufos/seq_credits.ufo:107
 msgid "bayo"
-msgstr ""
+msgstr "bayo"
 
 #: ../base/ufos/seq_credits.ufo:117
 msgid "Christian Hoffmann (crystan)"
-msgstr ""
+msgstr "Christian Hoffmann (crystan)"
 
 #: ../base/ufos/seq_credits.ufo:127
 msgid "DarkRain"
-msgstr ""
+msgstr "DarkRain"
 
 #: ../base/ufos/seq_credits.ufo:137
 msgid "Tamas Fehervari (geever)"
@@ -24680,15 +24655,15 @@ msgstr "Tamas Fehervari (geever)"
 
 #: ../base/ufos/seq_credits.ufo:147
 msgid "Nate Wright (H-Hour)"
-msgstr ""
+msgstr "Nate Wright (H-Hour)"
 
 #: ../base/ufos/seq_credits.ufo:157
 msgid "Pawel Michalkiewicz"
-msgstr ""
+msgstr "Pawel Michalkiewicz"
 
 #: ../base/ufos/seq_credits.ufo:167
 msgid "Holger Gellrich (ShipIt)"
-msgstr ""
+msgstr "Holger Gellrich (ShipIt)"
 
 #: ../base/ufos/seq_credits.ufo:181
 msgid "Other contributors"
@@ -24699,9 +24674,8 @@ msgid "Bas Fournier (BTAxis)"
 msgstr "Bas Fournier (BTAxis)"
 
 #: ../base/ufos/seq_credits.ufo:201
-#, fuzzy
 msgid "Werner Hohrer (Hoehrer)"
-msgstr "Werner Hoehrer (hoehrer)"
+msgstr "Werner Hohrer (Hoehrer)"
 
 #: ../base/ufos/seq_credits.ufo:211
 msgid "Kostia Romanov (Kildor)"
@@ -24709,7 +24683,7 @@ msgstr "Kostia Romanov (Kildor)"
 
 #: ../base/ufos/seq_credits.ufo:221
 msgid "Olivier Alloschery (Kracken)"
-msgstr ""
+msgstr "Olivier Alloschery (Kracken)"
 
 #: ../base/ufos/seq_credits.ufo:231
 msgid "Forest Hale (LordHavoc)"
@@ -24717,30 +24691,27 @@ msgstr "Forest Hale (LordHavoc)"
 
 #: ../base/ufos/seq_credits.ufo:241
 msgid "Christoph Mallon (Tron)"
-msgstr ""
+msgstr "Christoph Mallon (Tron)"
 
 #: ../base/ufos/seq_credits.ufo:251
 msgid "Ryan A. Span. (Winter)"
 msgstr "Ryan A. Span. (Winter)"
 
 #: ../base/ufos/seq_credits.ufo:261
-#, fuzzy
 msgid "Maciej Wierzbicki (Zenerka)"
-msgstr "Maciej Wierzbicki (Zenerka/Voovoos)"
+msgstr "Maciej Wierzbicki (Zenerka)"
 
 #: ../base/ufos/seq_credits.ufo:275
-#, fuzzy
 msgid "Original team"
-msgstr "Originales HUD"
+msgstr "Ursprüngliches Team"
 
 #: ../base/ufos/seq_credits.ufo:285
 msgid "Herby"
 msgstr "Herby"
 
 #: ../base/ufos/seq_credits.ufo:295
-#, fuzzy
 msgid "SparXX"
-msgstr "SparX"
+msgstr "SparXX"
 
 #: ../base/ufos/seq_credits.ufo:305
 msgid "Rastaman"
@@ -24755,22 +24726,20 @@ msgid "Vanethian"
 msgstr "Vanethian"
 
 #: ../base/ufos/seq_credits.ufo:339
-#, fuzzy
 msgid "Special thanks to"
 msgstr "Besonderer Dank an"
 
 #: ../base/ufos/seq_credits.ufo:349
 msgid "id Software for the Quake 2 engine"
-msgstr ""
+msgstr "id Software für die Quake 2 Engine"
 
 #: ../base/ufos/seq_credits.ufo:359
 msgid "NineX for hosting us"
 msgstr ""
 
 #: ../base/ufos/seq_credits.ufo:369
-#, fuzzy
 msgid "To the community and everyone who supported us"
-msgstr "Alle die uns unterstützten"
+msgstr "Die Community und alle die uns unterstützten"
 
 #: ../base/ufos/seq_intro.ufo:36
 msgid "intro_sentence1"
@@ -25948,9 +25917,8 @@ msgid "Dead:"
 msgstr "Tot:"
 
 #: ../base/ufos/ui/aliencont.ufo:345
-#, fuzzy
 msgid "Autopsy"
-msgstr "Automatisches Aufstehen"
+msgstr "Autopsie"
 
 #: ../base/ufos/ui/basedefence.ufo:10
 msgid "Equip Defence Weapons"
@@ -26362,7 +26330,7 @@ msgstr "Einheit umbenennen"
 #: ../base/ufos/ui/equipment.ufo:692 ../base/ufos/ui/inventory.ufo:252
 #: ../base/ufos/ui/team.ufo:622
 msgid "0/0 Kg"
-msgstr ""
+msgstr "0/0 Kg"
 
 #: ../base/ufos/ui/equipment.ufo:718 ../base/ufos/ui/team.ufo:639
 msgid "Done"
@@ -26467,9 +26435,8 @@ msgid "Aircraft:"
 msgstr "Flugzeug:"
 
 #: ../base/ufos/ui/geoscape.ufo:765
-#, fuzzy
 msgid "Mission:"
-msgstr "Missionen"
+msgstr "Mission:"
 
 #: ../base/ufos/ui/geoscape.ufo:776
 msgid "Aircraft reached desired location - what to do?"
@@ -26973,7 +26940,7 @@ msgstr "Tutorials"
 
 #: ../base/ufos/ui/main.ufo:58
 msgid "Developers"
-msgstr ""
+msgstr "Entwickler"
 
 #: ../base/ufos/ui/main.ufo:94
 msgid "Initial settings"
@@ -27080,9 +27047,8 @@ msgstr "Preis"
 
 #: ../base/ufos/ui/market.ufo:308
 #: client/cgame/campaign/cp_base_callbacks.cpp:840
-#, fuzzy
 msgid "Capacity"
-msgstr "Kapazität:"
+msgstr "Kapazität"
 
 #: ../base/ufos/ui/market.ufo:315 ../base/ufos/ui/popup_installations.ufo:287
 #: ../base/ufos/ui/popup_installations.ufo:888
@@ -27244,14 +27210,12 @@ msgstr ""
 "Linksklick aktiviert alle Kategorien, Rechtsklick deaktiviert sie."
 
 #: ../base/ufos/ui/missionbriefing.ufo:59
-#, fuzzy
 msgid "Victory conditions:"
-msgstr "Unittest-Kondition"
+msgstr "Ziele:"
 
 #: ../base/ufos/ui/missionbriefing.ufo:73
-#, fuzzy
 msgid "Start"
-msgstr "Spiel beginnen"
+msgstr "Start"
 
 #: ../base/ufos/ui/missionbriefing.ufo:74
 #, fuzzy
@@ -28760,23 +28724,21 @@ msgid "Aliens"
 msgstr "Außerirdische"
 
 #: ../base/ufos/ui/transfer.ufo:193
-#, fuzzy
 msgid "From"
-msgstr "Von:"
+msgstr "Von"
 
 #: ../base/ufos/ui/transfer.ufo:200
-#, fuzzy
 msgid "To"
-msgstr "An:"
+msgstr "An"
 
 #: ../base/ufos/ui/transfer.ufo:279
 msgid "Cargo"
-msgstr ""
+msgstr "Ladung"
 
 #: ../base/ufos/ui/transfer.ufo:287
 #: client/cgame/campaign/cp_base_callbacks.cpp:840
 msgid "Amount"
-msgstr ""
+msgstr "Anzahl"
 
 #: ../base/ufos/ui/transfer.ufo:339
 msgid "Destination base"
@@ -29407,9 +29369,8 @@ msgstr ""
 
 #: client/battlescape/cl_actor.cpp:1046 client/battlescape/cl_hud.cpp:1386
 #: client/cl_inventory.cpp:76 client/cl_inventory_callbacks.cpp:380
-#, fuzzy
 msgid "Warning"
-msgstr "Nanning"
+msgstr "Warnung"
 
 #: client/battlescape/cl_actor.cpp:1893
 msgid "Unknown alien race"
@@ -29690,7 +29651,7 @@ msgstr ""
 
 #: client/battlescape/cl_hud.cpp:1390 client/cl_inventory_callbacks.cpp:384
 msgid "Kg"
-msgstr ""
+msgstr "Kg"
 
 #: client/battlescape/cl_hud.cpp:1409
 msgid "Currently panics!\n"
@@ -29816,7 +29777,6 @@ msgid "A civilian was stunned."
 msgstr "Ein Zivilist wurde betäubt."
 
 #: client/battlescape/events/event/actor/e_event_actordie.cpp:108
-#, fuzzy
 msgid "A civilian has died."
 msgstr "Ein Zivilist wurde getötet."
 
@@ -29829,7 +29789,6 @@ msgid "An alien was stunned."
 msgstr "Ein Alien wurde betäubt."
 
 #: client/battlescape/events/event/actor/e_event_actordie.cpp:116
-#, fuzzy
 msgid "An alien has died."
 msgstr "Ein Alien wurde getötet."
 
@@ -29842,7 +29801,6 @@ msgid "A soldier was stunned."
 msgstr "Ein Soldat wurde betäubt."
 
 #: client/battlescape/events/event/actor/e_event_actordie.cpp:124
-#, fuzzy
 msgid "A soldier has died."
 msgstr "Ein Soldat wurde getötet."
 
@@ -30587,7 +30545,7 @@ msgstr ""
 #: client/cgame/campaign/cp_base_callbacks.cpp:863
 #: client/cgame/campaign/cp_base_callbacks.cpp:877
 msgid "Percent"
-msgstr ""
+msgstr "Prozent"
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:863
 msgid "Quantity"
@@ -30595,9 +30553,8 @@ msgstr ""
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:873
 #: client/cgame/campaign/cp_base_callbacks.cpp:888
-#, fuzzy
 msgid "Nothing"
-msgstr "Keine\n"
+msgstr "Keine"
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:893
 msgid "^BAircraft\n"
@@ -30967,9 +30924,8 @@ msgid "Ok"
 msgstr "OK"
 
 #: client/cgame/campaign/cp_geoscape.cpp:304
-#, fuzzy
 msgid "Mission"
-msgstr "Missionen"
+msgstr "Mission"
 
 #: client/cgame/campaign/cp_geoscape.cpp:325
 #: client/cgame/campaign/cp_installation_callbacks.cpp:45
@@ -33052,9 +33008,8 @@ msgid "Unknown - not useable"
 msgstr "Unbekannte Technologie - nicht benutzbar"
 
 #: client/cl_inventory_callbacks.cpp:385
-#, fuzzy
 msgid "Warning: Not enough TUs..."
-msgstr "Nicht genug Zeiteinheiten.\n"
+msgstr "Warnung: Nicht genug Zeiteinheiten."
 
 #: client/cl_irc.cpp:1436
 msgid "Server closed connection"
