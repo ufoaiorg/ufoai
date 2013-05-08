@@ -1,27 +1,42 @@
 // MAP DESCRIPTIONS
 //
 // valid terrain values:
-// * desert, arctic, cold, water, mountain, wasted, tropical, grass, "coast"
+// * "desert", "arctic", "cold", "water", "mountain", "wasted", "tropical", "grass", "coast"
 // valid culture values:
-// * eastern, western, oriental, "african"
+// * "eastern", "western", "oriental", "african"
 // valid population values:
-// * urban, suburban, village, rural, "nopopulation"
+// * "urban", "suburban", "village", "rural", "nopopulation"
 // See also http://ufoai.org/wiki/index.php/Mapping/Terrain_Types
 // valid civilianteam values:
 // * Nation Civilians: africa, asia, europe, latin, middle, states, oceania, russia
 // * Non-Nation Civilians: armysoldier, miner, scientist, worker
 //
+// valid UFO values:
+// * craft_ufo_scout		craft_crash_scout
+// * craft_ufo_fighter		craft_crash_fighter
+// * craft_ufo_harvester	craft_crash_harvester
+// * craft_ufo_bomber		craft_crash_bomber
+// * craft_ufo_corrupter	craft_crash_corrupter
+// * craft_ufo_supply		craft_crash_supply
+//
+// valid aircraft values (skirmish only):
+// * craft_drop_firebird
+// * craft_drop_herakles
+// * craft_drop_raptor
+// * craft_drop_dragon
+//
 // Empty block means 'any' value
 //
 // singleplayer: available for single player games (default true)
 // multiplayer: available for multiplayer games (default false)
+// campaign: available in campaign games (default true)
+//
 // nocunit: map is WIP and therefore excluded from the tests (default false)
 // hwclass: skip this map everywhere if hwclass is higher than that of the pc (default 0).
 //			5 is an i7 with a medium gfx-card
 //			3 a dual core with 2 GB of RAM
 //			2 EeePc with 1 GB
 //			1 Android Smartphone
-// campaign: available in campaign games (default true)
 //
 // Triggers:
 // onwin onlose
@@ -33,20 +48,6 @@
 //   "Function to raise or lower nation happiness."
 // * cp_endgame
 //   "This command will end the current campaign"
-//
-// valid UFO values:
-// * craft_ufo_scout,       craft_crash_scout,
-// * craft_ufo_fighter,     craft_crash_fighter,
-// * craft_ufo_harvester,   craft_crash_harvester,
-// * craft_ufo_bomber,      craft_crash_bomber
-// * craft_ufo_corrupter,   craft_crash_corrupter
-// * craft_ufo_supply,      craft_crash_supply
-//
-// valid aircraft values (skirmish only):
-// * craft_drop_firebird
-// * craft_drop_herakles
-// * craft_drop_raptor
-// * craft_drop_dragon
 //
 // Briefing texts are taken from /ufos/msgid/missionbriefing.ufo:
 // * missionbriefing		the text to be shown in the mission briefing window, e.g. "*msgid:mission_briefing_fueldump"
