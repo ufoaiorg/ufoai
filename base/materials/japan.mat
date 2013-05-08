@@ -85,3 +85,13 @@
 		lightmap
 	}
 }
+
+/* ufo2_12: Engines */
+{
+	material tex_ufo/ufo2_12
+	{
+		texture tex_ufo/ufo2_12_glow
+		blend GL_SRC_COLOR GL_SRC_ALPHA
+		pulse 0.5
+	}
+}

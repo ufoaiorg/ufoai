@@ -6852,6 +6852,7 @@ base/textures/tex_ufo/ufo2_11c_nm.png | GNU General Public License 2.0 or later 
 base/textures/tex_ufo/ufo2_11d.png | GNU General Public License 2.0 | "SparX" Beyeler, Georges "TRaK" Grondin, Nate Wright
 base/textures/tex_ufo/ufo2_11d_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_ufo/ufo2_12.png | GNU General Public License 2.0 or later | "SparX" Beyeler
+base/textures/tex_ufo/ufo2_12_glow.png | GNU General Public License 2.0 or later | Holger "ShipIt" Gellrich | base/textures/tex_ufo/ufo2_12.png
 base/textures/tex_ufo/ufo2_12_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_ufo/ufo2_13.png | GNU General Public License 2.0 or later | "SparX" Beyeler
 base/textures/tex_ufo/ufo2_13_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy

@@ -108,6 +108,16 @@
 	}
 }
 
+// engines
+{
+	material tex_ufo/ufo2_12
+	{
+		texture tex_ufo/ufo2_12_glow
+		blend GL_SRC_COLOR GL_SRC_ALPHA
+		pulse 0.5
+	}
+}
+
 {
 	material tex_ufo/ufo2_17
 	bump 1.0
@@ -116,15 +126,5 @@
 	specular 5.0
 	{
 		lightmap
-	}
-}
-
-// engines
-{
-	material tex_ufo/ufo2_12
-	{
-		texture tex_ufo/ufo2_12
-		blend GL_SRC_COLOR GL_SRC_ALPHA
-		pulse 0.5
 	}
 }
