@@ -3682,6 +3682,37 @@ tech rs_installation_ufo_yard
 	provides	ufoyard
 	time	0
 }
+tech rs_installation_sam_site
+{
+	name	"_SAM Site"
+	type	"tech"
+	description {
+		default "*msgid:installation_sam_site_txt"
+	}
+	up_chapter	installations
+
+	provides	samsite
+	time	0
+}
+tech rs_installation_orbital_launcher
+{
+	name	"_Orbital Rocket Launcher"
+	type	"tech"
+	description {
+		default "*msgid:orbital_ufo_activity_txt"
+	}
+	pre_description {
+		default "*msgid:orbital_ufo_activity_pre_txt"
+	}
+	up_chapter	installations
+
+	require_AND
+	{
+		tech	rs_orbital_ufo_activity
+	}
+
+	time	0
+}
 
 //========================
 // Craft - Human

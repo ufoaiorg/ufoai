@@ -67,3 +67,35 @@ Addenda
 
 None."
 }
+
+msgid installation_sam_site_txt {
+text "_Blueprints -- SAM Site
+
+CLASSIFIED LEVEL BLACK
+
+PHALANX Extraterrestrial Response Unit
+
+Construction Precis, Sigma Clearance -- Commander's Eyes Only
+
+Filed: 18 March 2084
+
+By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command
+
+
+
+Overview
+
+I hope you've had a chance to read the blueprints I submitted earlier today for a surface-to-air missile defense facility we can build at PHALANX bases. We've hastily adapted those blueprints to design an off-base installation that can run on its own grid.
+
+This facility can provide additional defensive hardpoints around key strategic points. Although they remain vulnerable to detection and destruction from alien craft, they at least provide additional assurances that missile launchers won't expose the location of our bases.
+
+
+Recommended Doctrine
+
+Once built you'll need to equip the SAM site with missile batteries before it will be able to engage alien craft.
+
+
+Addenda
+
+None."
+}
