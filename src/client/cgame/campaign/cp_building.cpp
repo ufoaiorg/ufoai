@@ -316,6 +316,20 @@ building_t *B_GetBuildingTemplate (const char *buildingName)
 }
 
 /**
+ * @brief Returns the building template in the global building-types list for a buildingType.
+ * @param[in] type Building type.
+ */
+const building_t *B_GetBuildingTemplateByType(buildingType_t type)
+{
+	for (int i = 0; i < ccs.numBuildingTemplates; i++) {
+		const building_t *buildingTemplate = &ccs.buildingTemplates[i];
+		if (buildingTemplate->buildingType == type)
+			return buildingTemplate;
+	}
+	return nullptr;
+}
+
+/**
  * @brief Check that the dependences of a building is operationnal
  * @param[in] building Pointer to the building to check
  * @return true if base contains needed dependence for entering building

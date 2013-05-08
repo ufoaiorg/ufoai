@@ -160,22 +160,6 @@ static const char *UP_AircraftStatToName (int stat)
 }
 
 /**
- * @brief Translate a aircraft size integer to a translated string
- * @sa aircraftSize_t
- */
-static const char *UP_AircraftSizeToName (int aircraftSize)
-{
-	switch (aircraftSize) {
-	case AIRCRAFT_SMALL:
-		return _("Small");
-	case AIRCRAFT_LARGE:
-		return _("Large");
-	default:
-		return _("Unknown aircraft size");
-	}
-}
-
-/**
  * @brief Displays the tech tree dependencies in the UFOpaedia
  * @sa UP_Article
  * @todo Add support for "requireAND"
@@ -375,7 +359,12 @@ void UP_AircraftDescription (const technology_t* tech)
 				break;
 			}
 		}
-		Q_strcat(upBuffer, va(_("Required Hangar:\t%s\n"), UP_AircraftSizeToName(aircraft->size)), sizeof(upBuffer));
+
+		const baseCapacities_t cap = AIR_GetCapacityByAircraftWeight(aircraft);
+		const buildingType_t buildingType = B_GetBuildingTypeByCapacity(cap);
+		const building_t *building = B_GetBuildingTemplateByType(buildingType);
+
+		Q_strcat(upBuffer, va(_("Required Hangar:\t%s\n"), _(building->name)), sizeof(upBuffer));
 		/* @note: while MAX_ACTIVETEAM limits the number of soldiers on a craft
 		 * there is no use to show this in case of an UFO (would be misleading): */
 		if (!AIR_IsUFO(aircraft))
