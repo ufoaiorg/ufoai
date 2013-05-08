@@ -3216,12 +3216,15 @@ mapdef gasstation
 
 mapdef italy
 {
-	map			"+italy"
-	param		"default"
-	description	"_Luxury House"
-	teams		2
-	multiplayer	true
-	gametypes (
+	map				"+italy"
+	param			"default"
+	description		"_Luxury House"
+	maxaliens		9
+
+	multiplayer		true
+	teams			2
+	gametypes
+	(
 		fight1on1
 		fight2on2
 		coop2
@@ -3229,7 +3232,7 @@ mapdef italy
 		coop4
 	)
 
-	maxaliens		22
+
 
 	aircraft
 	(
@@ -3238,9 +3241,10 @@ mapdef italy
 		craft_drop_raptor
 	)
 
-//	ufos
-//	(
-//	)
+	ufos
+	(
+		// any
+	)
 
 	terrains
 	(
@@ -3250,7 +3254,7 @@ mapdef italy
 
 	cultures
 	(
-		//any
+		// any
 	)
 
 	populations
