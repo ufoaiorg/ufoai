@@ -112,6 +112,7 @@ up_chapter skill { name "_Skills and Abilities" }
 up_chapter news	{ name "_Background" }
 up_chapter crafts { name "_Aircraft" }
 up_chapter buildings { name "_Base Facilities" }
+up_chapter installations { name "_Global Installations" }
 up_chapter tech { name "_Research Reports" }
 up_chapter equipment { name "_Equipment" }
 up_chapter artifacts { name "_Alien Artifacts" }
@@ -3652,6 +3653,34 @@ tech rs_building_antimatter
 
 	provides	building_amstorage
 	time		0
+}
+
+//========================
+// Installations
+//========================
+tech rs_installation_radar
+{
+	name	"_Radar Tower"
+	type	"tech"
+	description {
+		default "*msgid:installation_radar_txt"
+	}
+	up_chapter	installations
+
+	provides	radar_tower
+	time	0
+}
+tech rs_installation_ufo_yard
+{
+	name	"_UFO Yard"
+	type	"tech"
+	description {
+		default "*msgid:installation_ufo_yard_txt"
+	}
+	up_chapter	installations
+
+	provides	ufoyard
+	time	0
 }
 
 //========================
