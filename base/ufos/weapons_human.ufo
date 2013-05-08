@@ -1147,8 +1147,8 @@ item rpg_ammo
 			ammo		1
 			time		24
 			damage		"0 0"
-			spldmg		"170 20"
-			splrad		4
+			spldmg		"250 20"
+			splrad		7
 			dmgweight	"blast"
 		}
 	}
@@ -1190,9 +1190,9 @@ item rpg_incendiary_ammo
 			shots		1
 			ammo		1
 			time		24
-			damage		"15 10"	//Fire field damage
-			spldmg		"75 20"
-			splrad		4
+			damage		"25 10"	//Fire field damage
+			spldmg		"100 20"
+			splrad		7
 			dmgweight	"incendiary"
 			rounds		4
 		}
@@ -1236,8 +1236,8 @@ item rpg_hybrid_ammo
 			ammo		1
 			time		24
 			damage		"0 0"
-			spldmg		"260 20"
-			splrad		5
+			spldmg		"350 20"
+			splrad		7
 			dmgweight	"blast"
 		}
 	}
