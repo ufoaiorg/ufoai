@@ -353,7 +353,7 @@ item sniper
 	center			"9 0 3"
 	scale			1.05
 	ammo			8
-	reload			15
+	reload			12
 	reloadsound		"weapons/reload-sniper"
 	price			1300
 	size			60
@@ -444,7 +444,7 @@ item coilgun
 	center			"9 2.7 3.2"
 	scale			0.9
 	ammo			4
-	reload			15
+	reload			12
 	reloadsound		"weapons/reload-sniper"
 	price			3000
 	size			30
@@ -503,7 +503,7 @@ item coilgun_ammo
 			impsnd		"impact/nail-impact"
 			bodysnd 	"impact/nail-bodyimpact"
 			speed		2000
-			spread		"0.65 0.65"
+			spread		"0.55 0.55"
 			crouch		0.6
 			range		100
 			shots		1
@@ -1737,7 +1737,7 @@ item bolterrifle
 	center			"4 1 1.1"
 	scale			1.2
 	ammo			2
-	reload			15
+	reload			12
 	reloadsound		"weapons/reload-rifle"
 	price			2000
 	size			45
@@ -1783,7 +1783,7 @@ item bolterrifle_ammo
 			shots		1
 			ammo		1
 			time		18
-			damage		"140 20"
+			damage		"160 20"
 			dmgweight	"normal_heavy"
 			reaction	true
 			throughwall 2
@@ -1800,13 +1800,13 @@ item bolterrifle_ammo
 			impsnd				"impact/nail-impact"
 			bodysnd 			"impact/nail-bodyimpact"
 			speed				2000
-			spread				"0.65 0.65"
+			spread				"0.55 0.55"
 			crouch				0.6
 			range				100
 			shots				1
 			ammo				1
 			time				24
-			damage				"140 20"
+			damage				"160 20"
 			dmgweight			"normal_heavy"
 			reaction	true
 			throughwall 2
@@ -1851,7 +1851,7 @@ item bolterrifle_am_ammo
 			shots		1
 			ammo		1
 			time		18
-			damage		"220 20"
+			damage		"250 20"
 			dmgweight	"blast"
 			reaction	true
 			throughwall 2
@@ -1868,13 +1868,13 @@ item bolterrifle_am_ammo
 			impsnd				"impact/nail-impact"
 			bodysnd 			"impact/nail-bodyimpact"
 			speed				2000
-			spread				"0.65 0.65"
+			spread				"0.55 0.55"
 			crouch				0.6
 			range				100
 			shots				1
 			ammo				1
 			time				24
-			damage				"220 20"
+			damage				"250 20"
 			dmgweight			"blast"
 			reaction	true
 			throughwall 2
