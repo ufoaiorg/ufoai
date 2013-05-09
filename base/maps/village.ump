@@ -276,6 +276,42 @@ tile +nature_06
 0		0		0		0
 }
 
+tile +nature_07
+	// a single tree, A- C-
+{
+3 3
+0		0		0
+0		+a		0
+0		0		0
+}
+
+tile +nature_08
+	// a single rock , A- C-
+{
+3 3
+0		0		0
+0		+a		0
+0		0		0
+}
+
+tile +nature_09
+	// dead tree , A- C-
+{
+3 3
+0		0		0
+0		+a		0
+0		0		0
+}
+
+tile +nature_10
+	// fence, barrel, plants , A- C-
+{
+3 3
+0		0		0
+0		+a		0
+0		0		0
+}
+
 // buildings -------------------------------------------------------*
 
 tile +bungalow
@@ -462,6 +498,10 @@ tileset nature {
 	+nature_03
 	+nature_04
 	+nature_05
+	+nature_07
+	+nature_08
+	+nature_09
+	+nature_10
 }
 
 tileset street_01 {
