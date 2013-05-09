@@ -422,3 +422,9 @@
 "spawnflags" "255"
 "angles" "0 90 0"
 }
+// entity 3
+{
+"classname" "info_civilian_start"
+"origin" "144 80 28"
+"angle" "-90"
+}

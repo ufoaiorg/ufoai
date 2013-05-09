@@ -422,3 +422,8 @@
 "spawnflags" "255"
 "skin" "3"
 }
+// entity 3
+{
+"classname" "info_civilian_start"
+"origin" "16 80 28"
+}

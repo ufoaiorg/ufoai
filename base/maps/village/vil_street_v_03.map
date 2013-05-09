@@ -358,3 +358,9 @@
 "skin" "0"
 "modelscale_vec" "0.85 1.3 1.1"
 }
+// entity 2
+{
+"classname" "info_civilian_start"
+"origin" "112 80 28"
+"angle" "90"
+}

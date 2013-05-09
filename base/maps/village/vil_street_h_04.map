@@ -328,3 +328,8 @@
 "skin" "0"
 "angles" "0 -90 0"
 }
+// entity 3
+{
+"classname" "info_civilian_start"
+"origin" "112 144 28"
+}

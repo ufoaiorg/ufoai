@@ -387,3 +387,8 @@
 "origin" "118 160 4"
 "angles" "0 -180 0"
 }
+// entity 2
+{
+"classname" "info_civilian_start"
+"origin" "112 80 28"
+}

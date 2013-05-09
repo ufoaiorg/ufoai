@@ -1090,3 +1090,8 @@
 "model" "models/objects/cars/buggy/buggy.md2"
 "angles" "0 -90 0"
 }
+// entity 2
+{
+"classname" "info_civilian_start"
+"origin" "112 208 28"
+}
