@@ -299,3 +299,32 @@
 "spawnflags" "1"
 "origin" "76 172 68"
 }
+// entity 6
+{
+"classname" "misc_model"
+"spawnflags" "255"
+"model" "models/objects/vegi/tropic/tropic01.md2"
+"origin" "174 58 5"
+}
+// entity 7
+{
+"classname" "misc_model"
+"spawnflags" "255"
+"model" "models/objects/vegi/tropic/tropic01.md2"
+"origin" "102 110 5"
+}
+// entity 8
+{
+"classname" "misc_model"
+"origin" "77 44 5"
+"model" "models/objects/vegi/tropic/tropic01.md2"
+"spawnflags" "255"
+}
+// entity 9
+{
+"classname" "misc_model"
+"spawnflags" "255"
+"model" "models/objects/vegi/bush/bush01.md2"
+"angles" "0 -25.0955 0"
+"origin" "109.189 75.85 18"
+}

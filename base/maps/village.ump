@@ -212,6 +212,15 @@ tile +misc_02
 
 // nature ----------------------------------------------------------*
 
+tile +nature_00
+	// plain, empty, A- C-
+{
+3 3
+0		0		0
+0		+a		0
+0		0		0
+}
+
 tile +nature_01
 	// a single tree, A- C-
 {
@@ -291,6 +300,19 @@ tile +diner_01
 0		h		h		0
 }
 
+/* wip
+tile +diner_01
+	// diner, A2 C3
+{
+4 5
+0		0		0		0
+0		+a		+a		0
+0		+a		+a		0
+0		h		+h		h
+0		0		0		0
+}
+*/
+
 tile +garage_01
 	// garage at vertical street
 {
@@ -320,6 +342,19 @@ tile +gasstation_01
 0		+a		+a		v
 0		0		0		0
 }
+
+/* wip
+tile +gasstation_01
+	// gas station, A3, C1
+{
+5 5
+0		0		0		0		0
+0		0		+a		v		0
+0		+a		+a		+v		0
+0		+a		+a		v		0
+0		0		0		0		0
+}
+*/
 
 tile +house_01
 	// big house with wooden roof, wooden fence, A3 C3
@@ -363,6 +398,20 @@ tile +mart_01
 0		0		0		0
 }
 
+/* wip
+tile +mart_01
+	// small market, A3, C2
+	// TODO connect to street, add parking site
+{
+4 5
+0		0		0		0
+0		h		+h		h
+0		+a		+a		0
+0		+a		+a		0
+0		0		0		0
+}
+*/
+
 // recreational ----------------------------------------------------*
 
 tile +park_01
@@ -396,6 +445,12 @@ v		+a		0
 }
 
 // tilesets --------------------------------------------------------*
+
+tileset commercial {
+	+diner_01
+	+gasstation_01
+	+mart_01
+}
 
 tileset garage {
 	+garage_01
@@ -460,12 +515,13 @@ title "_Village"
 +mart_01			"0 1"
 +misc_01			"0 1"
 +misc_02			"0 1"
++nature_00			"0 35"
 +nature_02			"0 1"
 +nature_06			"0 1"
 +park_01			"0 1"
 +playground_01		"0 1"
 tileset garage		"0 1"
-tileset nature		"0 22"
+tileset nature		"0 5"
 tileset street_h	"0 6"
 tileset street_v	"0 5"
 *rm_drop +craft_drop_firebird "1 1"
@@ -486,12 +542,13 @@ title "_Village"
 +misc_01			"0 1"
 +misc_02			"0 1"
 +mart_01			"0 1"
++nature_00			"0 35"
 +nature_02			"0 1"
 +nature_06			"0 1"
 +park_01			"0 1"
 +playground_01		"0 1"
 tileset garage		"0 1"
-tileset nature		"0 18"
+tileset nature		"0 5"
 tileset street_02	"0 1"
 tileset street_03	"0 1"
 tileset street_h	"0 5"
@@ -504,23 +561,24 @@ assembly small
 size "7 7"
 title "_Village"
 +bungalow			"0 1"
-+diner_01			"0 1"
+// +diner_01			"0 1"
 +fountain_01		"0 1"
-+gasstation_01		"0 1"
+// +gasstation_01		"0 1"
 +house_01			"0 1"
 +house_02			"0 1"
 +house_03			"0 1"
-+mart_01			"0 1"
+// +mart_01			"0 1"
 +misc_01			"0 1"
 +misc_02			"0 1"
++nature_00			"0 20"
 +nature_01			"0 1"
 +nature_02			"0 1"
-+nature_03			"0 1"
-+nature_04			"0 1"
-+nature_05			"0 14"
++nature_06			"0 1"
 +park_01			"0 1"
 +playground_01		"0 1"
+tileset commercial	"1 1"
 tileset garage		"0 1"
+tileset nature		"0 5"
 tileset street_h	"0 5"
 tileset street_v	"0 5"
 *rm_drop +craft_drop_firebird "1 1"
