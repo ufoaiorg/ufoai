@@ -94,7 +94,79 @@ h		+ah		h
 0		0		0
 }
 
+tile +street_h_02
+	// buggy, heading west
+{
+3 3
+0		0		0
+h		+ah		h
+0		0		0
+}
+
+tile +street_h_03
+	// big silver car, heading west
+{
+3 3
+0		0		0
+h		+ah		h
+0		0		0
+}
+
+tile +street_h_04
+	// Van (grey), heading east
+{
+3 3
+0		0		0
+h		+ah		h
+0		0		0
+}
+
+tile +street_h_05
+	// Golf (red), heading east
+{
+3 3
+0		0		0
+h		+ah		h
+0		0		0
+}
+
 tile +street_v_01
+{
+3 3
+0		v		0
+0		+av		0
+0		v		0
+}
+
+tile +street_v_02
+	// van (golden), heading north
+{
+3 3
+0		v		0
+0		+av		0
+0		v		0
+}
+
+tile +street_v_03
+	// big transport, heading north
+{
+3 3
+0		v		0
+0		+av		0
+0		v		0
+}
+
+tile +street_v_04
+	// transport (red), heading south
+{
+3 3
+0		v		0
+0		+av		0
+0		v		0
+}
+
+tile +street_v_05
+	// Golf (silver), heading south
 {
 3 3
 0		v		0
@@ -532,10 +604,24 @@ tileset street_03 {
 
 tileset street_h {
 	+street_h_01
+	+street_h_01
+	+street_h_01
+	+street_h_01
+	+street_h_02
+	+street_h_03
+	+street_h_04
+	+street_h_05
 }
 
 tileset street_v {
 	+street_v_01
+	+street_v_01
+	+street_v_01
+	+street_v_01
+	+street_v_02
+	+street_v_03
+	+street_v_04
+	+street_v_05
 }
 
 
