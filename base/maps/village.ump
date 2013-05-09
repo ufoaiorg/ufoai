@@ -399,27 +399,16 @@ tile +bungalow
 }
 
 tile +diner_01
-	// diner, A2 C3
+	// diner, A4 C3
 {
-4 4
-0		0		0		0
-0		+a		+a		0
-0		+a		+a		0
-0		h		h		0
+5 6
+0		0		0		0		0
+0		+a		+a		+a		0
+0		+a		+a		+a		0
+0		+a		+a		+a		0
+h		+h		h		0		0
+0		0		0		0		0
 }
-
-/* wip
-tile +diner_01
-	// diner, A2 C3
-{
-4 5
-0		0		0		0
-0		+a		+a		0
-0		+a		+a		0
-0		h		+h		h
-0		0		0		0
-}
-*/
 
 tile +garage_01
 	// garage at vertical street
@@ -624,7 +613,6 @@ tileset street_v {
 	+street_v_05
 }
 
-
 // map assemblies --------------------------------------------------*
 
 assembly medium
@@ -687,13 +675,10 @@ assembly small
 size "7 7"
 title "_Village"
 +bungalow			"0 1"
-// +diner_01			"0 1"
 +fountain_01		"0 1"
-// +gasstation_01		"0 1"
 +house_01			"0 1"
 +house_02			"0 1"
 +house_03			"0 1"
-// +mart_01			"0 1"
 +misc_01			"0 1"
 +misc_02			"0 1"
 +nature_00			"0 20"
