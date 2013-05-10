@@ -174,8 +174,6 @@ equipment alien_workers5
 	item (plasblaster		50)
 	item (plasblaster_ammo	1)
 	item (plasblade			50)
-	item (needlergun		20)
-	item (needlergun_ammo	1)
 
 	// Misc
 	item (kerrblade	100)
@@ -190,14 +188,11 @@ equipment alien_workers6
 	maxinterest	10000
 
 	// Primary
-	item (pbeampistol		50)
-	item (pbeampistol_ammo	1)
-	item (pbeamrifle		50)
-	item (pbeamrifle_ammo	1)
-	item (pbeamcannon		50)
-	item (pbeamcannon_ammo	1)
-	item (needlerheavy		50)
-	item (needlergun_ammo	1)
+	item (plasrifle			50)
+	item (plasrifle_ammo	1)
+	item (plasblaster		50)
+	item (plasblaster_ammo	1)
+	item (plasblade			50)
 
 	// Misc
 	item (plasmagrenade		100)
