@@ -518,7 +518,7 @@
 "origin" "140 108 5.25"
 "spawnflags" "255"
 "skin" "2"
-"modelscale_vec" "1.25 1.25 1.25"
+"modelscale_vec" "2 2 2"
 }
 // entity 6
 {
@@ -544,7 +544,7 @@
 "origin" "176 176 6"
 "model" "models/objects/vegi/tree02/tree2_a.md2"
 "spawnflags" "255"
-"skin" "0"
+"skin" "5"
 "modelscale_vec" "1 1 2"
 "angles" "0 -90 0"
 }
