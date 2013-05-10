@@ -334,7 +334,6 @@ int FS_CheckFile (const char *fmt, ...)
  */
 int FS_Read2 (void *buffer, int len, qFILE *f, bool failOnEmptyRead)
 {
-	int block, remaining;
 	int read;
 	byte *buf;
 	int tries;
@@ -349,10 +348,10 @@ int FS_Read2 (void *buffer, int len, qFILE *f, bool failOnEmptyRead)
 		return read;
 	}
 
-	remaining = len;
+	int remaining = len;
 	tries = 0;
 	while (remaining) {
-		block = remaining;
+		int block = remaining;
 		if (block > MAX_READ)
 			block = MAX_READ;
 		read = fread(buf, 1, block, f->f);
@@ -511,7 +510,6 @@ static char const* const pakFileExt[] = {
  */
 void FS_AddGameDirectory (const char *dir, bool write)
 {
-	char **dirnames = nullptr;
 	int ndirs = 0, i;
 	char pakfile_list[MAX_PACKFILES][MAX_OSPATH];
 	int pakfile_count = 0;
@@ -530,6 +528,7 @@ void FS_AddGameDirectory (const char *dir, bool write)
 
 	for (char const* const* extList = pakFileExt; *extList; ++extList) {
 		Com_sprintf(pattern, sizeof(pattern), "%s/*.%s", dir, *extList);
+		char **dirnames = nullptr;
 		dirnames = FS_ListFiles(pattern, &ndirs, 0, SFF_SUBDIR | SFF_HIDDEN | SFF_SYSTEM);
 		if (dirnames != nullptr) {
 			for (i = 0; i < ndirs - 1; i++) {
@@ -820,7 +819,6 @@ static void FS_Dir_f (void)
 	char const *wildcard = Cmd_Argc() != 1 ? Cmd_Argv(1) : "*.*";
 	const char *path = nullptr;
 	char findname[1024];
-	char **dirnames;
 	int ndirs;
 
 	while ((path = FS_NextPath(path)) != nullptr) {
@@ -830,7 +828,7 @@ static void FS_Dir_f (void)
 		Com_Printf("Directory of %s\n", findname);
 		Com_Printf("----\n");
 
-		dirnames = FS_ListFiles(findname, &ndirs, 0, SFF_SUBDIR | SFF_HIDDEN | SFF_SYSTEM);
+		char **dirnames = FS_ListFiles(findname, &ndirs, 0, SFF_SUBDIR | SFF_HIDDEN | SFF_SYSTEM);
 		if (dirnames != nullptr) {
 			int i;
 
@@ -1544,21 +1542,16 @@ int FS_Printf (qFILE *f, const char *msg, ...)
  */
 int FS_Write (const void *buffer, int len, qFILE * f)
 {
-	int block, remaining;
-	int written;
-	const byte *buf;
-	int tries;
-
 	if (!f->f)
 		return 0;
 
-	buf = (const byte *) buffer;
+	const byte *buf = (const byte *) buffer;
 
-	remaining = len;
-	tries = 0;
+	int remaining = len;
+	int tries = 0;
 	while (remaining) {
-		block = remaining;
-		written = fwrite(buf, 1, block, f->f);
+		int block = remaining;
+		int written = fwrite(buf, 1, block, f->f);
 		if (written == 0) {
 			if (!tries) {
 				tries = 1;
