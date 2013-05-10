@@ -1322,3 +1322,75 @@
 "origin" "144 336 28"
 "angle" "180"
 }
+// entity 32
+{
+"classname" "light"
+"origin" "216 596 79"
+"spawnflags" "1"
+"_color" "1 1 0.69"
+"light" "255"
+}
+// entity 33
+{
+"classname" "light"
+"origin" "296 596 79"
+"spawnflags" "1"
+"_color" "1 1 0.69"
+"light" "255"
+}
+// entity 34
+{
+"classname" "light"
+"origin" "56 596 77"
+"spawnflags" "1"
+"_color" "1.00 1.00 0.69"
+"light" "255"
+}
+// entity 35
+{
+"classname" "light"
+"origin" "456 596 79"
+"spawnflags" "1"
+"_color" "1 1 0.69"
+"light" "255"
+}
+// entity 36
+{
+"classname" "light"
+"origin" "204 592 184"
+"spawnflags" "1"
+"_color" "1 1 1"
+"light" "200"
+}
+// entity 37
+{
+"classname" "light"
+"origin" "308 594 184"
+"spawnflags" "1"
+"_color" "1 1 1"
+"light" "200"
+}
+// entity 38
+{
+"classname" "light"
+"origin" "254 594 184"
+"spawnflags" "1"
+"_color" "1 1 1"
+"light" "200"
+}
+// entity 39
+{
+"classname" "light"
+"origin" "56 596 173"
+"spawnflags" "1"
+"_color" "1 1 1"
+"light" "255"
+}
+// entity 40
+{
+"classname" "light"
+"origin" "456 596 175"
+"spawnflags" "1"
+"_color" "1 1 1"
+"light" "255"
+}
