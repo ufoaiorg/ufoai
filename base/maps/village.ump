@@ -533,7 +533,6 @@ tile +mart_01
 
 tile +park_01
 	// park, A5 C1
-	// TODO move hedges away from tile borders
 {
 5 4
 0		0		0		0		0

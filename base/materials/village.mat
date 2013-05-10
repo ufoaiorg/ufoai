@@ -69,6 +69,17 @@
 	}
 }
 
+{
+	material tex_buildings/floor_se04
+	hardness 0.0
+	parallax 4.0
+	{
+		texture tex_dirt/dirt001
+		dirtmap 0.4
+		lightmap
+	}
+}
+
 /* UFO textures*/
 
 // hull main textures
