@@ -429,6 +429,26 @@ h		+ah		h
 0		0		0
 }
 
+tile +garage_03
+	// garage complex connecting west to vertical street, Hummer facing north, thrash container, A3 C1
+{
+4 4
+0		0		v		0
+0		+a		+av		0
+0		+a		+av		0
+0		0		v		0
+}
+
+tile +garage_04
+	// 	// garage complex connecting south to horizontal street, Puma facing west, thrash container, A1 C3
+{
+4 4
+0		0		0		0
+h		+ah		+ah		h
+0		+a		+a		0
+0		0		0		0
+}
+
 tile +gasstation_01
 	// gas station, A3, C1
 {
@@ -447,7 +467,7 @@ tile +gasstation_01
 5 5
 0		0		0		0		0
 0		0		+a		v		0
-0		+a		+a		+v		0
+0		+a		+a		+av		0
 0		+a		+a		v		0
 0		0		0		0		0
 }
@@ -502,7 +522,7 @@ tile +mart_01
 {
 4 5
 0		0		0		0
-0		h		+h		h
+0		h		+ah		h
 0		+a		+a		0
 0		+a		+a		0
 0		0		0		0
@@ -552,6 +572,8 @@ tileset commercial {
 tileset garage {
 	+garage_01
 	+garage_02
+	+garage_03
+	+garage_04
 }
 
 tileset nature {
@@ -634,7 +656,7 @@ title "_Village"
 +nature_06			"0 1"
 +park_01			"0 1"
 +playground_01		"0 1"
-tileset garage		"0 1"
+tileset garage		"0 2"
 tileset nature		"0 5"
 tileset street_h	"0 6"
 tileset street_v	"0 5"
@@ -661,7 +683,7 @@ title "_Village"
 +nature_06			"0 1"
 +park_01			"0 1"
 +playground_01		"0 1"
-tileset garage		"0 1"
+tileset garage		"0 2"
 tileset nature		"0 5"
 tileset street_02	"0 1"
 tileset street_03	"0 1"
@@ -688,7 +710,7 @@ title "_Village"
 +park_01			"0 1"
 +playground_01		"0 1"
 tileset commercial	"1 1"
-tileset garage		"0 1"
+tileset garage		"0 2"
 tileset nature		"0 5"
 tileset street_h	"0 5"
 tileset street_v	"0 5"
@@ -720,7 +742,7 @@ title "_Village"
 +playground_01		"0 1"
 +park_01			"0 1"
 +fountain_01		"0 1"
-tileset garage		"0 1"
+tileset garage		"0 2"
 tileset street_02	"0 1"
 tileset street_03	"0 1"
 tileset street_h	"0 5"
