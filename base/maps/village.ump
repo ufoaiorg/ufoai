@@ -497,11 +497,11 @@ tile +house_02
 tile +house_03
 	// modern house, A3 C1
 {
-4 4
-0		0		0		0
-v		+a		+a		0
-v		+a		+a		0
-0		0		0		0
+6 4
+0		v		0		0		0		0
+0		+av		+a		+a		+a		0
+0		v		0		+a		+a		0
+0		0		0		0		0		0
 }
 
 tile +mart_01
@@ -647,7 +647,7 @@ title "_Village"
 +gasstation_01		"0 1"
 +house_01			"0 1"
 +house_02			"0 1"
-+house_03			"0 1"
++house_03			"1 1"
 +mart_01			"0 1"
 +misc_01			"0 1"
 +misc_02			"0 1"
