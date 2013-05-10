@@ -1,5 +1,4 @@
-#ifndef SURFACEINSPECTOR_H_
-#define SURFACEINSPECTOR_H_
+#pragma once
 
 #include <map>
 #include "iselection.h"
@@ -230,5 +229,3 @@ class SurfaceInspector: public RegistryKeyObserver,
 }; // class SurfaceInspector
 
 } // namespace ui
-
-#endif /*SURFACEINSPECTOR_H_*/

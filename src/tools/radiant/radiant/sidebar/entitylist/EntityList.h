@@ -1,5 +1,4 @@
-#ifndef ENTITYLIST_H_
-#define ENTITYLIST_H_
+#pragma once
 
 #include "iselection.h"
 #include "iscenegraph.h"
@@ -60,5 +59,3 @@ private:
 };
 
 } // namespace ui
-
-#endif /*ENTITYLIST_H_*/

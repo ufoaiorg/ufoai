@@ -1,5 +1,4 @@
-#ifndef OGGFILESTREAM_H_
-#define OGGFILESTREAM_H_
+#pragma once
 
 /** greebo: A wrapper class for use with the ov_open_callbacks() method
  * 			in vorbsfile.h. This provides the four callback
@@ -90,5 +89,3 @@ namespace sound
 	};
 
 } // namespace sound
-
-#endif /*OGGFILESTREAM_H_*/

@@ -1,5 +1,4 @@
-#ifndef TEXTURABLE_H_
-#define TEXTURABLE_H_
+#pragma once
 
 #include <string>
 #include "selectable.h"
@@ -53,5 +52,3 @@ class ClosestTexturableFinder: public scene::Graph::Walker
 } // namespace algorithm
 
 } // namespace selection
-
-#endif /*TEXTURABLE_H_*/

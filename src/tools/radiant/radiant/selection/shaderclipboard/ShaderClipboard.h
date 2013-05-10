@@ -1,5 +1,4 @@
-#ifndef SHADERCLIPBOARD_H_
-#define SHADERCLIPBOARD_H_
+#pragma once
 
 #include "Texturable.h"
 
@@ -43,5 +42,3 @@ class ShaderClipboard
 } // namespace selection
 
 selection::ShaderClipboard& GlobalShaderClipboard ();
-
-#endif /*SHADERCLIPBOARD_H_*/

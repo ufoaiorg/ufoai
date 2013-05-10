@@ -1,5 +1,4 @@
-#ifndef _SELECTION_SET_MANAGER_H_
-#define _SELECTION_SET_MANAGER_H_
+#pragma once
 
 #include "iselectionset.h"
 #include "iradiant.h"
@@ -51,5 +50,3 @@ private:
 };
 
 } // namespace
-
-#endif /* _SELECTION_SET_MANAGER_H_ */

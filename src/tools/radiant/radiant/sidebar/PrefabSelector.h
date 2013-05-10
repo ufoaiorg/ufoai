@@ -22,8 +22,7 @@
 
  */
 
-#ifndef PREFABS_H_
-#define PREFABS_H_
+#pragma once
 
 #include <gtk/gtk.h>
 #include <string>
@@ -80,5 +79,3 @@ namespace sidebar
 			const std::string getTitle() const;
 	};
 }
-
-#endif

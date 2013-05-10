@@ -1,5 +1,4 @@
-#ifndef _SELECTION_SET_TOOL_MENU_H_
-#define _SELECTION_SET_TOOL_MENU_H_
+#pragma once
 
 #include "iselectionset.h"
 
@@ -46,5 +45,3 @@ private:
 typedef SelectionSetToolmenu* SelectionSetToolmenuPtr;
 
 } // namespace selection
-
-#endif /* _SELECTION_SET_TOOL_MENU_H_ */

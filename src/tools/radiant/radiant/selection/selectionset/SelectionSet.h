@@ -1,5 +1,4 @@
-#ifndef _SELECTION_SET_H_
-#define _SELECTION_SET_H_
+#pragma once
 
 #include <set>
 
@@ -51,5 +50,3 @@ public:
 typedef SelectionSet* SelectionSetPtr;
 
 } // namespace
-
-#endif /* _SELECTION_SET_H_ */

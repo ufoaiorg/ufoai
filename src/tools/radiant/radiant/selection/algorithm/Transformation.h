@@ -1,5 +1,4 @@
-#ifndef SELECTION_TRANSFORMATION_H_
-#define SELECTION_TRANSFORMATION_H_
+#pragma once
 
 #include "math/Vector3.h"
 
@@ -34,5 +33,3 @@ namespace selection {
 
 	} // namespace algorithm
 } // namespace selection
-
-#endif /*SELECTION_TRANSFORMATION_H_*/
