@@ -546,9 +546,6 @@ typedef struct leaf_check_s {
  */
 static void TR_BoxLeafnums_r (boxtrace_t *traceData, int32_t nodenum, leaf_check_t *lc)
 {
-	TR_PLANE_TYPE *plane;
-	TR_NODE_TYPE *node;
-	int s;
 	TR_TILE_TYPE *myTile = traceData->tile;
 
 	while (1) {
@@ -562,14 +559,16 @@ static void TR_BoxLeafnums_r (boxtrace_t *traceData, int32_t nodenum, leaf_check
 		}
 
 		assert(nodenum < myTile->numnodes + 6); /* +6 => bbox */
-		node = &myTile->nodes[nodenum];
+		TR_NODE_TYPE *node = &myTile->nodes[nodenum];
+
+		TR_PLANE_TYPE *plane;
 #ifdef COMPILE_UFO
 		plane = node->plane;
 #else
 		plane = myTile->planes + node->planenum;
 #endif
 
-		s = TR_BoxOnPlaneSide(traceData->absmins, traceData->absmaxs, plane);
+		int s = TR_BoxOnPlaneSide(traceData->absmins, traceData->absmaxs, plane);
 		if (s == PSIDE_FRONT)
 			nodenum = node->children[0];
 		else if (s == PSIDE_BACK)
@@ -621,7 +620,6 @@ static void TR_ClipBoxToBrush (boxtrace_t *traceData, cBspBrush_t *brush, TR_LEA
 	float dist;
 	float enterfrac, leavefrac;
 	vec3_t ofs;
-	float d1, d2;
 	bool getout, startout;
 #ifdef COMPILE_UFO
 	TR_BRUSHSIDE_TYPE *leadside = nullptr;
@@ -662,8 +660,8 @@ static void TR_ClipBoxToBrush (boxtrace_t *traceData, cBspBrush_t *brush, TR_LEA
 			dist = plane->dist;
 		}
 
-		d1 = DotProduct(traceData->start, plane->normal) - dist;
-		d2 = DotProduct(traceData->end, plane->normal) - dist;
+		float d1 = DotProduct(traceData->start, plane->normal) - dist;
+		float d2 = DotProduct(traceData->end, plane->normal) - dist;
 
 		if (d2 > 0)
 			getout = true;		/* endpoint is not in solid */
@@ -726,9 +724,7 @@ static void TR_TestBoxInBrush (boxtrace_t *traceData, cBspBrush_t *brush)
 {
 	int i, j;
 	TR_PLANE_TYPE *plane;
-	float dist;
 	vec3_t ofs;
-	float d1;
 	TR_TILE_TYPE *myTile = traceData->tile;
 
 	if (!brush || !brush->numsides)
@@ -751,10 +747,10 @@ static void TR_TestBoxInBrush (boxtrace_t *traceData, cBspBrush_t *brush)
 			else
 				ofs[j] = traceData->mins[j];
 		}
-		dist = DotProduct(ofs, plane->normal);
+		float dist = DotProduct(ofs, plane->normal);
 		dist = plane->dist - dist;
 
-		d1 = DotProduct(traceData->start, plane->normal) - dist;
+		float d1 = DotProduct(traceData->start, plane->normal) - dist;
 
 		/* if completely in front of face, no intersection */
 		if (d1 > 0)
