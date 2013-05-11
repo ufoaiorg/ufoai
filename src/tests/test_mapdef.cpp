@@ -87,6 +87,7 @@ char posStr[MAX_TOKEN_CHARS * MAX_TILESTRINGS];
  */
 static void testMapDefsMassRMA (void)
 {
+	/** You can test a certain assembly by passing "-Dmapdef-id=assembly" to testall. */
 	const char *filterId = TEST_GetStringProperty("mapdef-id");
 	const mapDef_t *md;
 	int mapCount = 0;
