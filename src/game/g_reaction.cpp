@@ -363,10 +363,8 @@ static int G_ReactionFireGetTUsForItem (const Edict *shooter, const Edict *targe
 
 		if (fmSetting->getFmIdx() >= 0 && fmSetting->getFmIdx() < MAX_FIREDEFS_PER_WEAPON) { /* If firemode is sane. */
 			const fireDefIndex_t fmIdx = fmSetting->getFmIdx();
-			const int reactionFire = shooter->getPlayer().reactionLeftover;
-			assert(reactionFire == 0);	/* check if this is still in use */
 			const fireDef_t *fd = &fdArray[fmIdx];
-			const int tus = G_ActorGetModifiedTimeForFiredef(shooter, fd, true) + reactionFire;
+			const int tus = G_ActorGetModifiedTimeForFiredef(shooter, fd, true);
 
 			if (tus <= shooter->TU && fd->range > VectorDist(shooter->origin, target->origin)) {
 				return tus;

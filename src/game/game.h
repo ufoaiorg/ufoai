@@ -104,7 +104,6 @@ public:
 	bool began;				/**< the player sent his 'begin' already */
 	bool roundDone;			/**< ready to end his turn */
 	int lastSeen;			/**< the round the player has last seen an ai controlled enemy */
-	int reactionLeftover;	/**< Minimum TU left over by reaction fire */
 	bool autostand;			/**< autostand for long walks */
 
 	client_persistent_t pers;

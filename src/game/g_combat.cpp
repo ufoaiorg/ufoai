@@ -1113,7 +1113,7 @@ bool G_ClientShoot (const Player &player, Edict *ent, const pos3_t at, shoot_typ
 	const fireDef_t *fd;
 	Item *weapon;
 	vec3_t dir, center, target, shotOrigin;
-	int i, ammo, prevDir, reactionLeftover, shots;
+	int i, ammo, prevDir, shots;
 	containerIndex_t container;
 	int mask;
 	bool quiet;
@@ -1135,16 +1135,14 @@ bool G_ClientShoot (const Player &player, Edict *ent, const pos3_t at, shoot_typ
 
 	ammo = weapon->getAmmoLeft();
 	tusNeeded = G_ActorGetModifiedTimeForFiredef(ent, fd, IS_SHOT_REACTION(shootType));
-	/* if this is reaction fire, don't keep trying to reserve TUs for reaction fire */
-	reactionLeftover = IS_SHOT_REACTION(shootType) ? std::max(0, player.reactionLeftover - ent->chr.reservedTus.reaction) : 0;
 
 	/* check if action is possible
 	 * if allowReaction is false, it is a shot from reaction fire, so don't check the active team */
 	if (allowReaction) {
-		if (!G_ActionCheckForCurrentTeam(player, ent, tusNeeded + reactionLeftover))
+		if (!G_ActionCheckForCurrentTeam(player, ent, tusNeeded))
 			return false;
 	} else {
-		if (!G_ActionCheckForReaction(player, ent, tusNeeded + reactionLeftover))
+		if (!G_ActionCheckForReaction(player, ent, tusNeeded))
 			return false;
 	}
 
