@@ -44,13 +44,12 @@ const char *Info_ValueForKey (const char *s, const char *key)
 
 	/* work without stomping on each other */
 	static int valueindex = 0;
-	char *o;
 
 	valueindex ^= 1;
 	if (*s == '\\' && *s != '\n')
 		s++;
 	while (1) {
-		o = pkey;
+		char *o = pkey;
 		while (*s != '\\' && *s != '\n') {
 			if (!*s)
 				return "";
@@ -95,10 +94,8 @@ int Info_IntegerForKey (const char *s, const char *key)
  */
 void Info_RemoveKey (char *s, const char *key)
 {
-	char *start;
 	char pkey[512];
 	char value[512];
-	char *o;
 
 	if (strstr(key, "\\")) {
 /*		Com_Printf("Can't use a key with a \\\n"); */
@@ -106,10 +103,10 @@ void Info_RemoveKey (char *s, const char *key)
 	}
 
 	while (1) {
-		start = s;
+		char *start = s;
 		if (*s == '\\')
 			s++;
-		o = pkey;
+		char *o = pkey;
 		while (*s != '\\') {
 			if (!*s)
 				return;
@@ -136,7 +133,6 @@ void Info_RemoveKey (char *s, const char *key)
 		if (!*s)
 			return;
 	}
-
 }
 
 
