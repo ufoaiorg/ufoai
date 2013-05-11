@@ -1720,7 +1720,7 @@ void SV_PrepareTilesToPlace (MapInfo *map)
  */
 static int SV_AssemblyThread (void *data)
 {
-	MapInfo *map = (MapInfo*) data;
+	MapInfo *map = static_cast<MapInfo*>(data);
 
 	Com_SetRandomSeed(time(nullptr));
 
