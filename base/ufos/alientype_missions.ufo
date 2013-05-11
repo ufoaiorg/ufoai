@@ -119,7 +119,7 @@ alienteam workers
 		maxinterest 	309
 		minaliencount	8
 		maxaliencount	12
-		team 			(taman/alien_taman shevaar ortnok)
+		team 			(taman/alien_taman shevaar)
 	}
 	teaminterest
 	{
@@ -127,7 +127,7 @@ alienteam workers
 		maxinterest 	10000
 		minaliencount	8
 		maxaliencount	12
-		team 			(taman/alien_taman_heavy shevaar ortnok)
+		team 			(taman/alien_taman_heavy shevaar)
 	}
 }
 
