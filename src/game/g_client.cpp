@@ -1406,7 +1406,6 @@ void G_ClientUserinfoChanged (Player &player, const char *userinfo)
 	Q_strncpyz(player.pers.netname, Info_ValueForKey(userinfo, "cl_name"), sizeof(player.pers.netname));
 	Q_strncpyz(player.pers.userinfo, userinfo, sizeof(player.pers.userinfo));
 	player.autostand = Info_IntegerForKey(userinfo, "cl_autostand");
-	player.reactionLeftover = Info_IntegerForKey(userinfo, "cl_reactionleftover");
 	player.setReady(Info_IntegerForKey(userinfo, "cl_ready"));
 
 	/* send the updated config string */

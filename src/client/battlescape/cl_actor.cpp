@@ -44,7 +44,6 @@ static cvar_t *confirm_actions;
 /** @brief Player preference: should the server make guys stand for long walks, to save TU. */
 static cvar_t *cl_autostand;
 static cvar_t *cl_showactors;
-static cvar_t *cl_reactionleftover;
 
 /* public */
 le_t *selActor;
@@ -2554,7 +2553,6 @@ static void CL_ActorConfirmAction_f (void)
 
 void ACTOR_InitStartup (void)
 {
-	cl_reactionleftover = Cvar_Get("cl_reactionleftover", "0", CVAR_USERINFO | CVAR_ARCHIVE, "Minimum TUs left over by reaction fire.");
 	cl_autostand = Cvar_Get("cl_autostand","1", CVAR_USERINFO | CVAR_ARCHIVE, "Prevent accidental wasting of TUs by allowing the actor to automatically stand up before starting long walks.");
 	confirm_actions = Cvar_Get("confirm_actions", "0", CVAR_ARCHIVE, "Confirm all actions in tactical mode");
 	cl_showactors = Cvar_Get("cl_showactors", "1", 0, "Show actors on the battlefield");

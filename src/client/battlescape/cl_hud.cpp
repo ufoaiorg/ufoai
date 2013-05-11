@@ -820,9 +820,7 @@ static int HUD_ReactionFireGetTUs (const le_t *actor)
 
 		const fireDefIndex_t fmIdx = fmSetting.getFmIdx();
 		if (fmIdx >= 0 && fmIdx < MAX_FIREDEFS_PER_WEAPON) {
-			return CL_ActorTimeForFireDef(actor, &fdArray[fmIdx], true)
-					/* @todo this cvar seems to be unused */
-					+ Cvar_GetInteger("cl_reactionleftover");
+			return CL_ActorTimeForFireDef(actor, &fdArray[fmIdx], true);
 		}
 	}
 
