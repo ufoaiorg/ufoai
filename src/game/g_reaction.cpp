@@ -677,7 +677,6 @@ bool ReactionFire::shoot (Edict *shooter, const pos3_t at, shoot_types_t type, f
 
 	/* calculate the mock values - e.g. how many friendly units we would hit
 	 * when opening the reaction fire */
-	OBJZERO(mock);
 	for (i = 0; i < 100; i++)
 		if (!G_ClientShoot(player, shooter, at, type, firemode, &mock, false, 0))
 			break;

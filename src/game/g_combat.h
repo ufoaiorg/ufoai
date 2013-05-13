@@ -35,6 +35,10 @@ typedef struct shot_mock_s {
 	int self;				/**< @todo incorrect actor facing or shotOrg, or bug in trace code? */
 	int damage;
 	bool allow_self;
+
+	inline shot_mock_s () {
+		OBJZERO(*this);
+	}
 } shot_mock_t;
 
 int G_ApplyProtection(const Edict *target, const byte dmgWeight, int damage);
