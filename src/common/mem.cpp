@@ -543,7 +543,6 @@ static void Mem_Stats_f (void)
 	uint32_t totalBlocks, totalBytes;
 	memPool_t *pool;
 	uint32_t poolNum, i;
-	int j = 0;
 
 	if (Cmd_Argc() > 1) {
 		memPool_t *best;
@@ -571,6 +570,7 @@ static void Mem_Stats_f (void)
 		Com_Printf("----- ----- -------------------- ---------- \n");
 
 		totalBytes = 0;
+		int j = 0;
 		for (j = 0; j < MEM_HASH; j++) {
 			for (i = 0, mem = best->blocks[j]; mem; mem = mem->next, i++) {
 				if (i & 1)

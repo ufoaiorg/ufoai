@@ -511,7 +511,6 @@ bool Step::isPossible (const pathing_t *path)
  */
 void Grid_CalcPathing (const Routing &routing, const actorSizeEnum_t actorSize, pathing_t *path, const pos3_t from, int maxTUs, byte ** fb_list, int fb_length)
 {
-	int count;
 	priorityQueue_t pqueue;
 	pos4_t epos; /**< Extended position; includes crouching state */
 	pos3_t pos;
@@ -541,7 +540,7 @@ void Grid_CalcPathing (const Routing &routing, const actorSizeEnum_t actorSize, 
 		Vector4Set(epos, from[0], from[1], from[2], amst);
 		PQueuePush(&pqueue, epos, 0);
 
-		count = 0;
+		int count = 0;
 		while (!PQueueIsEmpty(&pqueue)) {
 			int dir;
 			PQueuePop(&pqueue, epos);

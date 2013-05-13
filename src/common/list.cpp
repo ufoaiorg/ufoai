@@ -227,8 +227,8 @@ bool LIST_Remove (linkedList_t **list, const void *data)
  */
 static linkedList_t *_LIST_Sort (linkedList_t *list, linkedListSort_t sorter, const void *userData)
 {
-	linkedList_t *p, *q, *e, *tail;
-	int insize, nmerges, psize, qsize, i;
+	linkedList_t *p, *q, *e;
+	int insize, psize, qsize, i;
 
 	/*
 	 * Silly special case: if `list' was passed in as nullptr, return
@@ -242,9 +242,9 @@ static linkedList_t *_LIST_Sort (linkedList_t *list, linkedListSort_t sorter, co
 	while (1) {
 		p = list;
 		list = nullptr;
-		tail = nullptr;
+		linkedList_t *tail = nullptr;
 
-		nmerges = 0; /* count number of merges we do in this pass */
+		int nmerges = 0; /* count number of merges we do in this pass */
 
 		while (p) {
 			nmerges++; /* there exists a merge to be done */
