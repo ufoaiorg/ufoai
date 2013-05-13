@@ -84,8 +84,6 @@ static void testItemAdd (void)
 
 	ResetInventoryList();
 
-	OBJZERO(inv);
-
 	od = INVSH_GetItemByIDSilent("assault");
 	CU_ASSERT_PTR_NOT_NULL(od);
 
@@ -109,8 +107,6 @@ static void testItemDel (void)
 	invList_t *addedItem;
 
 	ResetInventoryList();
-
-	OBJZERO(inv);
 
 	od = INVSH_GetItemByIDSilent("assault");
 	CU_ASSERT_PTR_NOT_NULL(od);
@@ -139,8 +135,6 @@ static void testItemMove (void)
 	invList_t *addedItem;
 
 	ResetInventoryList();
-
-	OBJZERO(inv);
 
 	od = INVSH_GetItemByIDSilent("assault");
 	CU_ASSERT_PTR_NOT_NULL(od);
@@ -174,8 +168,6 @@ static void testItemReload (void)
 	invList_t *addedItem;
 
 	ResetInventoryList();
-
-	OBJZERO(inv);
 
 	od = INVSH_GetItemByIDSilent("rpg");
 	CU_ASSERT_PTR_NOT_NULL(od);
@@ -255,8 +247,6 @@ static void testItemMassActions (void)
 
 	ResetInventoryList();
 
-	OBJZERO(inv);
-
 	od = INVSH_GetItemByIDSilent("assault");
 	CU_ASSERT_PTR_NOT_NULL_FATAL(od);
 
@@ -316,8 +306,6 @@ static void testItemToHeadgear (void)
 	const invDef_t *container;
 
 	ResetInventoryList();
-
-	OBJZERO(inv);
 
 	od = INVSH_GetItemByIDSilent("irgoggles");
 	CU_ASSERT_PTR_NOT_NULL_FATAL(od);
