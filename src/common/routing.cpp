@@ -983,12 +983,11 @@ static int RT_MicroTrace (RoutingData *rtd, const place_t *from, const int ax, c
 	int i, current_h, highest_h, highest_i = 0, skipped, newBottom;
 	vec3_t start, end;
 	pos3_t pos;
-	int last_step;
 
 	/* First prepare the two known end values. */
 	bases[0] = from->floor;
 	const int floorVal = rtd->routing.getFloor(rtd->actorSize, ax, ay, az);
-	bases[steps] = last_step = std::max(0, floorVal) + az * CELL_HEIGHT;
+	bases[steps] = std::max(0, floorVal) + az * CELL_HEIGHT;
 
 	/* Initialize the starting vector */
 	SizedPosToVec(from->cell, rtd->actorSize, start);
