@@ -306,7 +306,7 @@ void *_Mem_Alloc (size_t size, bool zeroFill, memPool_t *pool, const int tagNum,
 
 	/* Add header and round to cacheline */
 	size = (size + sizeof(memBlock_t) + sizeof(memBlockFoot_t) + 31) & ~31;
-	mem = (memBlock_t *)malloc(size);
+	mem = static_cast<memBlock_t *>(malloc(size));
 	if (!mem)
 		Sys_Error("Mem_Alloc: failed on allocation of '" UFO_SIZE_T "' bytes\n" "alloc: %s:#%i", size, fileName, fileLine);
 
