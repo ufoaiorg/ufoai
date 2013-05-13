@@ -1,5 +1,4 @@
-#ifndef SOUNDMANAGER_H_
-#define SOUNDMANAGER_H_
+#pragma once
 
 #include "SoundPlayer.h"
 
@@ -62,5 +61,3 @@ class SoundManager: public ISoundManager
 }
 
 void GlobalSoundManager_switchPlaybackEnabledFlag ();
-
-#endif /*SOUNDMANAGER_H_*/

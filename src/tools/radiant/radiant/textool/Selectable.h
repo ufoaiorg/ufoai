@@ -1,5 +1,4 @@
-#ifndef TEXTOOL_SELECTABLE_H_
-#define TEXTOOL_SELECTABLE_H_
+#pragma once
 
 #include "math/Vector2.h"
 #include "math/aabb.h"
@@ -61,5 +60,3 @@ public:
 }; // class Selectable
 
 } // namespace TexTool
-
-#endif /*TEXTOOL_SELECTABLE_H_*/

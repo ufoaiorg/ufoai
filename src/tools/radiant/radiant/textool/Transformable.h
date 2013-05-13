@@ -1,5 +1,4 @@
-#ifndef TEXTOOL_TRANSFORMABLE_H_
-#define TEXTOOL_TRANSFORMABLE_H_
+#pragma once
 
 #include "Selectable.h"
 
@@ -63,5 +62,3 @@ public:
 };
 
 } // namespace TexTool
-
-#endif /*TEXTOOL_TRANSFORMABLE_H_*/

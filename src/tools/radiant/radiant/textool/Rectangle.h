@@ -1,5 +1,4 @@
-#ifndef RECTANGLE_H_
-#define RECTANGLE_H_
+#pragma once
 
 #include "math/Vector2.h"
 
@@ -37,5 +36,3 @@ public:
 };
 
 } // namespace textool
-
-#endif /*RECTANGLE_H_*/

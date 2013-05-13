@@ -22,8 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef RADIANT_OPENAL_H_
-#define RADIANT_OPENAL_H_
+#pragma once
 
 #ifdef __APPLE__
 # include <OpenAL/al.h>
@@ -31,6 +30,4 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #else
 # include <AL/al.h>
 # include <AL/alc.h>
-#endif
-
 #endif

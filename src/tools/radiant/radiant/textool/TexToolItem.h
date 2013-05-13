@@ -1,5 +1,4 @@
-#ifndef TEXTOOLITEM_H_
-#define TEXTOOLITEM_H_
+#pragma once
 
 #include "Selectable.h"
 #include "Transformable.h"
@@ -141,5 +140,3 @@ public:
 };
 
 } // namespace textool
-
-#endif /*TEXTOOLITEM_H_*/

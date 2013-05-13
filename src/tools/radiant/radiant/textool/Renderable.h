@@ -1,5 +1,4 @@
-#ifndef TEXTOOL_RENDERABLE_H_
-#define TEXTOOL_RENDERABLE_H_
+#pragma once
 
 namespace textool {
 
@@ -14,5 +13,3 @@ public:
 };
 
 } // namespace TexTool
-
-#endif /*TEXTOOL_RENDERABLE_H_*/

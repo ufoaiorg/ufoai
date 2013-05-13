@@ -1,5 +1,4 @@
-#ifndef WAV_FILE_LOADER_H_
-#define WAV_FILE_LOADER_H_
+#pragma once
 
 #include <stdexcept>
 #include "OpenAL.h"
@@ -155,5 +154,3 @@ namespace sound
 	};
 
 } // namespace sound
-
-#endif /* WAV_FILE_LOADER_H_ */

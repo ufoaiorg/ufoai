@@ -1,5 +1,4 @@
-#ifndef SOUNDPLAYER_H_
-#define SOUNDPLAYER_H_
+#pragma once
 
 #include <string>
 #include "OpenAL.h"
@@ -58,5 +57,3 @@ namespace sound
 	};
 
 } // namespace sound
-
-#endif /*SOUNDPLAYER_H_*/

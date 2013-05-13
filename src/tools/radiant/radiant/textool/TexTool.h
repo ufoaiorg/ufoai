@@ -1,5 +1,4 @@
-#ifndef TEXTOOL_H_
-#define TEXTOOL_H_
+#pragma once
 
 #include <gtk/gtkwidget.h>
 #include "gtkutil/WindowPosition.h"
@@ -257,5 +256,3 @@ private:
 }; // class TexTool
 
 } // namespace ui
-
-#endif /*TEXTOOL_H_*/
