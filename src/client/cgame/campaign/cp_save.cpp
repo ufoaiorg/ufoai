@@ -346,7 +346,7 @@ static bool SAV_GameSave (const char *filename, const char *comment, char **erro
 	}
 
 	/* last step - write data */
-	res = FS_WriteFile(fbuf, bufLen + sizeof(header), savegame);
+	FS_WriteFile(fbuf, bufLen + sizeof(header), savegame);
 	Mem_Free(fbuf);
 
 	return true;
