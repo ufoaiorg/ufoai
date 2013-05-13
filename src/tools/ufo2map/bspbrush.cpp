@@ -36,11 +36,10 @@ static int c_active_brushes;
 static void BoundBrush (bspbrush_t *brush)
 {
 	int i, j;
-	winding_t *w;
 
 	ClearBounds(brush->mins, brush->maxs);
 	for (i = 0; i < brush->numsides; i++) {
-		w = brush->sides[i].winding;
+		winding_t *w = brush->sides[i].winding;
 		if (!w)
 			continue;
 		for (j = 0; j < w->numpoints; j++)
@@ -95,14 +94,13 @@ bspbrush_t *BrushFromBounds (const vec3_t mins, const vec3_t maxs)
 	bspbrush_t *b;
 	int i;
 	vec3_t normal;
-	vec_t dist;
 
 	b = AllocBrush(6);
 	b->numsides = 6;
 	for (i = 0; i < 3; i++) {
 		VectorClear(normal);
 		normal[i] = 1;
-		dist = maxs[i];
+		vec_t dist = maxs[i];
 		b->sides[i].planenum = FindOrCreateFloatPlane(normal, dist);
 
 		normal[i] = -1;
@@ -373,13 +371,12 @@ static int BrushMostlyOnSide (const bspbrush_t *brush, const plane_t *plane)
 static bool DoesPlaneSplitBrush (const bspbrush_t *brush, int planenum)
 {
 	int i, j;
-	winding_t *w;
 	plane_t *plane  = &mapplanes[planenum];
 	int front_cnt = 0, back_cnt = 0;
 
 	/* check all points */
 	for (i = 0; i < brush->numsides; i++) {
-		w = brush->sides[i].winding;
+		winding_t *w = brush->sides[i].winding;
 		if (!w)
 			continue;
 		for (j = 0; j < w->numpoints; j++) {
@@ -565,7 +562,7 @@ void SplitBrush (const bspbrush_t *brush, uint16_t planenum, bspbrush_t **front,
 	bspbrush_t *b[2];
 	int i, j;
 	winding_t *w, *cw[2], *midwinding;
-	plane_t *plane, *plane2;
+	plane_t *plane;
 	float d_front, d_back;
 
 	*front = *back = nullptr;
@@ -599,7 +596,7 @@ void SplitBrush (const bspbrush_t *brush, uint16_t planenum, bspbrush_t **front,
 	/* create a new winding from the split plane */
 	w = BaseWindingForPlane(plane->normal, plane->dist);
 	for (i = 0; i < brush->numsides && w; i++) {
-		plane2 = &mapplanes[brush->sides[i].planenum ^ 1];
+		plane_t *plane2 = &mapplanes[brush->sides[i].planenum ^ 1];
 		ChopWindingInPlace(&w, plane2->normal, plane2->dist, 0); /* PLANESIDE_EPSILON); */
 	}
 
