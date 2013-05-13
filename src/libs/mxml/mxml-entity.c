@@ -154,10 +154,6 @@ mxmlEntityRemoveCallback(
 int					/* O - Unicode value or -1 */
 _mxml_entity_cb(const char *name)	/* I - Entity name */
 {
-  int	diff,				/* Difference between names */
-	current,			/* Current entity in search */
-	first,				/* First entity in search */
-	last;				/* Last entity in search */
   static const struct
   {
     const char	*name;			/* Entity name */
@@ -428,12 +424,13 @@ _mxml_entity_cb(const char *name)	/* I - Entity name */
   * Do a binary search for the named entity...
   */
 
-  first = 0;
-  last  = (int)(sizeof(entities) / sizeof(entities[0]) - 1);
+  int first = 0;	/* First entity in search */
+  int last  = (int)(sizeof(entities) / sizeof(entities[0]) - 1);	/* Last entity in search */
 
   while ((last - first) > 1)
   {
-    current = (first + last) / 2;
+    int current = (first + last) / 2;	/* Current entity in search */
+    int diff;							/* Difference between names */
 
     if ((diff = strcmp(name, entities[current].name)) == 0)
       return (entities[current].val);

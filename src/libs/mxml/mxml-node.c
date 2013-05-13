@@ -197,9 +197,6 @@ mxmlAdd(mxml_node_t *parent,		/* I - Parent node */
 void
 mxmlDelete(mxml_node_t *node)		/* I - Node to delete */
 {
-  int	i;				/* Looping var */
-
-
 #ifdef DEBUG
   fprintf(stderr, "mxmlDelete(node=%p)\n", node);
 #endif /* DEBUG */
@@ -236,6 +233,7 @@ mxmlDelete(mxml_node_t *node)		/* I - Node to delete */
 
 	if (node->value.element.num_attrs)
 	{
+	  int	i;				/* Looping var */
 	  for (i = 0; i < node->value.element.num_attrs; i ++)
 	  {
 	    if (node->value.element.attrs[i].name)
