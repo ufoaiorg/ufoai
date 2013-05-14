@@ -1,5 +1,4 @@
-#ifndef TERRAIN_H_
-#define TERRAIN_H_
+#pragma once
 
 #include "../common/Parser.h"
 
@@ -29,5 +28,3 @@ namespace scripts
 			const DataBlock* getTerrainDefitionForTexture (const std::string& texture);
 	};
 }
-
-#endif /* TERRAIN_H_ */

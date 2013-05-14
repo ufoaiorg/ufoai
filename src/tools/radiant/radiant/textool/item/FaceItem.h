@@ -1,5 +1,4 @@
-#ifndef FACEITEM_H_
-#define FACEITEM_H_
+#pragma once
 
 #include "../TexToolItem.h"
 
@@ -54,5 +53,3 @@ private:
 };
 
 } // namespace TexTool
-
-#endif /*FACEITEM_H_*/

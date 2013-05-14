@@ -1,5 +1,4 @@
-#ifndef MAPDEF_H_
-#define MAPDEF_H_
+#pragma once
 
 #include "../common/Parser.h"
 
@@ -33,5 +32,3 @@ namespace scripts
 			void showMapDefinition ();
 	};
 }
-
-#endif /* MAPDEF_H_ */

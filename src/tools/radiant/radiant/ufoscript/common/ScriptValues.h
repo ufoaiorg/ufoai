@@ -1,5 +1,4 @@
-#ifndef SCRIPTVALUE_H_
-#define SCRIPTVALUE_H_
+#pragma once
 
 #include <vector>
 #include <string>
@@ -74,5 +73,3 @@ namespace scripts
 			std::size_t size () const;
 	};
 }
-
-#endif /* SCRIPTVALUE_H_ */

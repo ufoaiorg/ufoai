@@ -1,5 +1,4 @@
-#ifndef COLOURSCHEME_H_
-#define COLOURSCHEME_H_
+#pragma once
 
 #include <string>
 #include <map>
@@ -87,5 +86,3 @@ class ColourScheme {
 }; // class ColourScheme
 
 } // namespace ui
-
-#endif /*COLOURSCHEME_H_*/

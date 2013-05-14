@@ -1,5 +1,4 @@
-#ifndef FACE_VERTEX_ITEM_H_
-#define FACE_VERTEX_ITEM_H_
+#pragma once
 
 #include "../../brush/Face.h"
 #include "math/aabb.h"
@@ -50,5 +49,3 @@ private:
 };
 
 } // namespace textool
-
-#endif /* FACE_VERTEX_ITEM_H_ */

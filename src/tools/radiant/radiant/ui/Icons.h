@@ -1,5 +1,4 @@
-#ifndef ICONS_H_
-#define ICONS_H_
+#pragma once
 
 namespace ui
 {
@@ -109,4 +108,3 @@ namespace ui
 		}
 	}
 }
-#endif /* ICONS_H_ */

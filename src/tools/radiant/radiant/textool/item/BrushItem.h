@@ -1,5 +1,4 @@
-#ifndef BRUSHITEM_H_
-#define BRUSHITEM_H_
+#pragma once
 
 #include "../../brush/Brush.h"
 #include "../TexToolItem.h"
@@ -26,5 +25,3 @@ public:
 }; // class BrushItem
 
 } // namespace TexTool
-
-#endif /*BRUSHITEM_H_*/

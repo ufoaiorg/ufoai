@@ -1,5 +1,4 @@
-#ifndef PARSER_H_
-#define PARSER_H_
+#pragma once
 
 #include <string>
 #include <vector>
@@ -42,5 +41,3 @@ namespace scripts
 			DataBlock* getEntryForID (const std::string& id);
 	};
 }
-
-#endif /* PARSER_H_ */

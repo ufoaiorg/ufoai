@@ -1,5 +1,4 @@
-#ifndef DATABLOCK_H_
-#define DATABLOCK_H_
+#pragma once
 
 #include <string>
 
@@ -47,5 +46,3 @@ namespace scripts
 			std::size_t getLineNumber() const;
 	};
 }
-
-#endif /* DATABLOCK_H_ */
