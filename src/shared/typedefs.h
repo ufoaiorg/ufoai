@@ -2,6 +2,7 @@
 
 #include "defines.h"
 #include "mathlib.h"
+#include "shared.h"
 #include "../common/filesys.h"
 
 /*
@@ -239,6 +240,9 @@ class Routing
 	routing_t routes[ACTOR_MAX_SIZE];	/**< routing table */
 public:
 
+	inline void init () {
+		OBJZERO(*this);
+	}
 	inline void setFloor (const int actorSize, const int x, const int y, const int z, const int val) {
 		routes[actorSize - 1].setFloor(x, y, z, val);
 	}
