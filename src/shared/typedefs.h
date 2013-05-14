@@ -239,30 +239,23 @@ class Routing
 	routing_t routes[ACTOR_MAX_SIZE];	/**< routing table */
 public:
 
-	inline void setFloor (const int actorSize, const int x, const int y, const int z, const int val)
-	{
+	inline void setFloor (const int actorSize, const int x, const int y, const int z, const int val) {
 		routes[actorSize - 1].setFloor(x, y, z, val);
 	}
-	inline signed char getFloor (const actorSizeEnum_t actorSize, const pos3_t pos) const
-	{
+	inline signed char getFloor (const actorSizeEnum_t actorSize, const pos3_t pos) const {
 		return routes[actorSize - 1].getFloor(pos);
 	}
-	inline signed char getFloor (const actorSizeEnum_t actorSize, const int x, const int y, const int z) const
-	{
+	inline signed char getFloor (const actorSizeEnum_t actorSize, const int x, const int y, const int z) const {
 		return routes[actorSize - 1].getFloor(x, y, z);
 	}
 
-
-	inline void setCeiling (const actorSizeEnum_t actorSize, const int x, const int y, const int z, const int val)
-	{
+	inline void setCeiling (const actorSizeEnum_t actorSize, const int x, const int y, const int z, const int val) {
 		routes[actorSize - 1].setCeiling(x, y, z, val);
 	}
-	inline byte getCeiling (const int actorSize, const pos3_t pos) const
-	{
+	inline byte getCeiling (const int actorSize, const pos3_t pos) const {
 		return routes[actorSize - 1].getCeiling(pos);
 	}
-	inline byte getCeiling (const int actorSize, const int x, const int y, const int z) const
-	{
+	inline byte getCeiling (const int actorSize, const int x, const int y, const int z) const {
 		return routes[actorSize - 1].getCeiling(x, y, z);
 	}
 
@@ -275,38 +268,30 @@ public:
 		}
 	}
 
-	inline void setConn (const int actorSize, const int x, const int y, const int z, const int dir, const int val)
-	{
+	inline void setConn (const int actorSize, const int x, const int y, const int z, const int dir, const int val) {
 		routes[actorSize - 1].setConn(x, y, z, dir, val);
 	}
-	inline byte getConn (const int actorSize, const int x, const int y, const int z, const int dir) const
-	{
+	inline byte getConn (const int actorSize, const int x, const int y, const int z, const int dir) const {
 		return routes[actorSize - 1].getConn(x, y, z, dir);
 	}
-	inline byte getConn (const actorSizeEnum_t actorSize, const pos3_t pos, const int dir) const
-	{
+	inline byte getConn (const actorSizeEnum_t actorSize, const pos3_t pos, const int dir) const {
 		return routes[actorSize - 1].getConn(pos[0], pos[1], pos[2], dir);
 	}
 
-	inline void setStepup (const int actorSize, const int x, const int y, const int z, const int dir, const int val)
-	{
+	inline void setStepup (const int actorSize, const int x, const int y, const int z, const int dir, const int val) {
 		routes[actorSize - 1].setStepup(x, y, z, dir, val);
 	}
-	inline byte getStepup (const int actorSize, const int x, const int y, const int z, const int dir) const
-	{
+	inline byte getStepup (const int actorSize, const int x, const int y, const int z, const int dir) const {
 		return routes[actorSize - 1].getStepup(x, y, z, dir);
 	}
 	/** @brief return the value without the flags for z-level change */
-	inline byte getStepupHeight (const int actorSize, const int x, const int y, const int z, const int dir) const
-	{
+	inline byte getStepupHeight (const int actorSize, const int x, const int y, const int z, const int dir) const {
 		return routes[actorSize - 1].getStepup(x, y, z, dir) & ~(PATHFINDING_BIG_STEPDOWN | PATHFINDING_BIG_STEPUP);
 	}
-	inline byte isStepDownLevel (const actorSizeEnum_t actorSize, const pos3_t pos, const int dir) const
-	{
+	inline byte isStepDownLevel (const actorSizeEnum_t actorSize, const pos3_t pos, const int dir) const {
 		return routes[actorSize - 1].getStepup(pos[0], pos[1], pos[2], dir) & PATHFINDING_BIG_STEPDOWN;
 	}
-	inline byte isStepUpLevel (const actorSizeEnum_t actorSize, const pos3_t pos, const int dir) const
-	{
+	inline byte isStepUpLevel (const actorSizeEnum_t actorSize, const pos3_t pos, const int dir) const {
 		return routes[actorSize - 1].getStepup(pos[0], pos[1], pos[2], dir) & PATHFINDING_BIG_STEPUP;
 	}
 
