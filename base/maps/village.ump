@@ -532,12 +532,42 @@ tile +mart_01
 // recreational ----------------------------------------------------*
 
 tile +park_01
-	// park, A5 C1
+	// park, A2 C3
 {
 5 4
 0		0		0		0		0
-0		+ar		+ar		+ar		0
-0		+ar		+ar		+ar		0
+0		+a		+a		+a		0
+0		+a		+a		+a		0
+0		0		0		0		0
+}
+
+tile +park_02
+	// park (playground), A2 C3
+{
+5 4
+0		0		0		0		0
+0		+a		+a		+a		0
+0		+a		+a		+a		0
+0		0		0		0		0
+}
+
+tile +park_03
+	// park (trees), A2 C3
+{
+5 4
+0		0		0		0		0
+0		+a		+a		+a		0
+0		+a		+a		+a		0
+0		0		0		0		0
+}
+
+tile +park_04
+	// park (fountain), A2 C3
+{
+5 4
+0		0		0		0		0
+0		+a		+a		+a		0
+0		+a		+a		+a		0
 0		0		0		0		0
 }
 
@@ -584,6 +614,14 @@ tileset nature {
 	+nature_08
 	+nature_09
 	+nature_10
+}
+
+tileset park {
+	+park_01
+	+park_02
+	+park_03
+	+park_04
+	+playground_01
 }
 
 tileset street_01 {
@@ -653,10 +691,9 @@ title "_Village"
 +nature_00			"0 35"
 +nature_02			"0 1"
 +nature_06			"0 1"
-+park_01			"0 1"
-+playground_01		"0 1"
 tileset garage		"0 2"
 tileset nature		"0 5"
+tileset park		"0 2"
 tileset street_h	"0 6"
 tileset street_v	"0 5"
 *rm_drop +craft_drop_firebird "1 1"
@@ -680,10 +717,9 @@ title "_Village"
 +nature_00			"0 35"
 +nature_02			"0 1"
 +nature_06			"0 1"
-+park_01			"0 1"
-+playground_01		"0 1"
 tileset garage		"0 2"
 tileset nature		"0 5"
+tileset park		"0 2"
 tileset street_02	"0 1"
 tileset street_03	"0 1"
 tileset street_h	"0 5"
@@ -706,11 +742,10 @@ title "_Village"
 +nature_01			"0 1"
 +nature_02			"0 1"
 +nature_06			"0 1"
-+park_01			"0 1"
-+playground_01		"0 1"
 tileset commercial	"1 1"
 tileset garage		"0 2"
 tileset nature		"0 5"
+tileset park		"0 2"
 tileset street_h	"0 5"
 tileset street_v	"0 5"
 *rm_drop +craft_drop_firebird "1 1"
