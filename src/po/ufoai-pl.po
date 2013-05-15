@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
 "POT-Creation-Date: 2013-05-07 15:12+0200\n"
-"PO-Revision-Date: 2013-04-24 10:59+0100\n"
+"PO-Revision-Date: 2013-05-07 21:31+0100\n"
 "Last-Translator: Maciej Wierzbicki <voovoos@killfile.pl>\n"
 "Language-Team:  <radius75@interia.pl>\n"
 "Language: pl_PL\n"
@@ -23733,11 +23733,11 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:109
 msgid "Basic Concepts (Campaign)"
-msgstr ""
+msgstr "Pojęcia Podstawowe (Kampania)"
 
 #: ../base/ufos/research.ufo:110
 msgid "Basic Concepts (Ground Combat)"
-msgstr ""
+msgstr "Pojęcia Podstawowe (Walka)"
 
 #: ../base/ufos/research.ufo:111
 msgid "Skills and Abilities"
@@ -23792,42 +23792,36 @@ msgid "Production"
 msgstr "Produkcja"
 
 #: ../base/ufos/research.ufo:145
-#, fuzzy
 msgid "UFO Interception"
-msgstr "Przechwycenie"
+msgstr "Przechwycenie UFO"
 
 #: ../base/ufos/research.ufo:153
-#, fuzzy
 msgid "UFO Disassembly"
-msgstr "Demontaż"
+msgstr "Demontaż UFO"
 
 #: ../base/ufos/research.ufo:161
-#, fuzzy
 msgid "Nation Happiness"
-msgstr "Zadowolenie narodów"
+msgstr "Zadowolenie Narodu"
 
 #: ../base/ufos/research.ufo:169
-#, fuzzy
 msgid "Time Units"
-msgstr "Jedn. czasu:\t%i\n"
+msgstr "Punkty Ruchu"
 
 #: ../base/ufos/research.ufo:177
-#, fuzzy
 msgid "Reaction Fire"
-msgstr "Ogień reakcyjny"
+msgstr "Ogień Reakcyjny"
 
 #: ../base/ufos/research.ufo:185
 msgid "Soldier Weight and Encumbrance"
-msgstr ""
+msgstr "Masa i Obciążenie Żołnierza"
 
 #: ../base/ufos/research.ufo:193
 msgid "Wounds and Healing"
-msgstr ""
+msgstr "Rany i Uleczanie"
 
 #: ../base/ufos/research.ufo:201
-#, fuzzy
 msgid "Auxiliary Equipment"
-msgstr "%s - dodatkowe wyposażenie\n"
+msgstr "Wyposażenie Dodatkowe"
 
 #: ../base/ufos/research.ufo:214
 msgid "Continuous Wave Laser Operation"
@@ -29960,22 +29954,21 @@ msgstr "Najpierw zbuduj moduł %s."
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:860
 msgid "No report"
-msgstr ""
+msgstr "Brak raportu"
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:863
 #: client/cgame/campaign/cp_base_callbacks.cpp:877
 msgid "Percent"
-msgstr ""
+msgstr "Procent"
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:863
 msgid "Quantity"
-msgstr ""
+msgstr "Ilość"
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:873
 #: client/cgame/campaign/cp_base_callbacks.cpp:888
-#, fuzzy
 msgid "Nothing"
-msgstr "Brak\n"
+msgstr "Brak"
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:893
 msgid "^BAircraft\n"
