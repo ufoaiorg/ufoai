@@ -210,7 +210,6 @@ static picoModel_t *_md2_load (PM_PARAMS_LOAD)
 	picoByte_t *bb;
 	picoModel_t *picoModel;
 	picoSurface_t *picoSurface;
-	picoShader_t *picoShader;
 	picoColor_t color;
 
 	int numIndexes, numVerts;
@@ -322,7 +321,7 @@ static picoModel_t *_md2_load (PM_PARAMS_LOAD)
 		}
 		_pico_setfext(skinname, "");
 
-		picoShader = PicoNewShader(picoModel);
+		picoShader_t *picoShader = PicoNewShader(picoModel);
 		if (picoShader == NULL) {
 			_pico_printf(PICO_ERROR, "Unable to allocate a new model shader");
 			PicoFreeModel(picoModel);

@@ -140,7 +140,6 @@ static picoModel_t *_md3_load (PM_PARAMS_LOAD)
 	picoByte_t *bb;
 	md3_t *md3;
 	md3Surface_t *surface;
-	md3Shader_t *shader;
 	md3TexCoord_t *texCoord;
 	md3Frame_t *frame;
 	md3Triangle_t *triangle;
@@ -148,8 +147,6 @@ static picoModel_t *_md3_load (PM_PARAMS_LOAD)
 	double lat, lng;
 
 	picoModel_t *picoModel;
-	picoSurface_t *picoSurface;
-	picoShader_t *picoShader;
 	picoVec3_t xyz, normal;
 	picoVec2_t st;
 	picoColor_t color;
@@ -268,7 +265,9 @@ static picoModel_t *_md3_load (PM_PARAMS_LOAD)
 	/* run through md3 surfaces */
 	for (i = 0; i < md3->numSurfaces; i++) {
 		/* allocate new pico surface */
-		picoSurface = PicoNewSurface(picoModel);
+		md3Shader_t *shader;
+		picoShader_t *picoShader;
+		picoSurface_t *picoSurface = PicoNewSurface(picoModel);
 		if (picoSurface == NULL) {
 			_pico_printf(PICO_ERROR, "Unable to allocate a new model surface");
 			PicoFreeModel(picoModel); /* sea */
