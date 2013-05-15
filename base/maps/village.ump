@@ -68,8 +68,8 @@ tile +craft_ufo_harvester
 0		a		a		+c		+c		+c		a
 a		+c		+c		+c		+c		+c		a
 a		+c		+c		+c		+c		+c		a
-0		h		+ch		+c		+c		+ch		h
-0		a		a		a		+av		a		0
+0		0		h		+ch		+c		+ch		h
+0		0		a		a		+av		a		0
 0		0		0		0		v		0		0
 }
 
@@ -697,7 +697,7 @@ tileset garage		"0 2"
 tileset nature		"0 5"
 tileset park		"0 2"
 tileset street_h	"0 6"
-tileset street_v	"0 5"
+tileset street_v	"0 6"
 *rm_drop +craft_drop_firebird "1 1"
 *rm_ufo +craft_ufo_harvester "1 1"
 }
