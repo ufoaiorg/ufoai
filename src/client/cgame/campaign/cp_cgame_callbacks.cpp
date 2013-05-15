@@ -591,7 +591,7 @@ void GAME_CP_InitMissionBriefing (const char **title, linkedList_t **victoryCond
 		cgi->LIST_AddString(missionBriefingMsgIDs, md->missionBriefing);
 	}
 	if (Q_strvalid(md->description)) {
-		*title = md->description;
+		*title = _(md->description);
 	}
 }
 
