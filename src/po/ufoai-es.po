@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
 "POT-Creation-Date: 2013-05-07 15:12+0200\n"
-"PO-Revision-Date: 2013-04-01 18:33+0100\n"
-"Last-Translator: Mif <supermif2@users.sourceforge.net >\n"
+"PO-Revision-Date: 2013-05-15 15:11-0600\n"
+"Last-Translator: DarkRain <dark.rain@zoho.com>\n"
 "Language-Team: \n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
@@ -85,7 +85,7 @@ msgstr "Pequeña cabaña en el bosque"
 #: ../base/maps/frozen.ump:729 ../base/maps/frozen.ump:732
 #: ../base/maps/frozen.ump:802
 msgid "Frozen"
-msgstr ""
+msgstr "Glacial"
 
 #: ../base/maps/frozen.ump:757
 msgid "Multiplayer Coop"
@@ -217,9 +217,8 @@ msgstr "OVNI caído"
 
 #: ../base/maps/village.ump:452 ../base/maps/village.ump:478
 #: ../base/maps/village.ump:505 ../base/maps/village.ump:535
-#, fuzzy
 msgid "Village"
-msgstr "Aldea grande"
+msgstr "Aldea"
 
 #: ../base/ufos/aircraftmanagement.ufo:102
 msgid "Firebird-class Dropship"
@@ -4402,7 +4401,6 @@ msgstr ""
 "Cte. Navarre"
 
 #: ../base/ufos/msgid/aircraft.ufo:310
-#, fuzzy
 msgid ""
 "Commander, my team and I have just finished another UFO report for you. Here "
 "is my summary for your review.\n"
@@ -4440,10 +4438,10 @@ msgstr ""
 "Comandante, mi equipo y yo hemos completado el informe sobre el nuevo OVNI. "
 "Le presento mi resumen para su revisión.\n"
 "\n"
-"Hasta donde podemos determinar, esta clase de OVNI es alguna clase de "
-"transporte, puede transportar materiales en sus almacenes y hasta 12 "
-"alienígenas en un compartimiento de pasajeros detrás de la cabina del "
-"piloto. Satélites de vigilancia han captado a estas naves aterrizando en "
+"Hasta donde podemos determinar, esta clase de OVNI es algún tipo de "
+"transporte, puede transportar materiales en sus almacenes y un considerable "
+"número de alienígenas en un compartimiento de pasajeros detrás de la cabina "
+"del piloto. Satélites de vigilancia han captado a estas naves aterrizando en "
 "posiciones ocupadas por los alienígenas y descargando material y pasajeros. "
 "Esta evidencia apoya nuestra teoría de la 'nave de abastecimiento', y "
 "estamos seguros de que es correcta.\n"
@@ -4465,11 +4463,6 @@ msgstr ""
 "para observarlas directamente. La presencia regular de Naves de "
 "Abastecimiento en cierta área podría indicar que existe una instalación "
 "alienígena en construcción o, peor aún, una que ya esté operando.\n"
-"\n"
-"Por otra parte, si podemos impedir que las Naves de Abastecimiento lleguen a "
-"las posiciones alienígenas, podríamos dejar que se debiliten por el hambre "
-"antes de enviar nuestras tropas. Esto podría darnos una ventaja táctica "
-"crucial.\n"
 "\n"
 "En conclusión, aunque parecen ser de menor importancia que otros OVNI que "
 "hemos encontrado, las Naves de Abastecimiento deben ser enfrentadas siempre "
@@ -4602,7 +4595,6 @@ msgstr ""
 "Cte. Navarre"
 
 #: ../base/ufos/msgid/aircraft.ufo:366
-#, fuzzy
 msgid ""
 "Commander, my team and I have just finished another UFO report for you. Here "
 "is my summary for your review.\n"
@@ -5840,7 +5832,6 @@ msgstr ""
 "Cte. Navarre"
 
 #: ../base/ufos/msgid/aircraftitems.ufo:208
-#, fuzzy
 msgid ""
 "Commander, when our engineers were performing the latest UFO disassembly, "
 "they noticed what appeared to be some modifications to the propulsion "
@@ -5852,13 +5843,14 @@ msgid ""
 "\n"
 "Cdr. Navarre"
 msgstr ""
-"Comandante, cuando nuestros ingenieros estaban desmantelando el OVNI Nave de "
-"Abastecimiento, notaron lo que parecen ser modificaciones a los mecanismos "
-"de propulsión. Si los alienígenas están mejorando sus propulsores de "
-"antimateria, necesitamos averiguar tanto como podamos de ellos.\n"
+"Comandante, cuando nuestros ingenieros estaban llevando a cabo el más "
+"reciente desmantelamiento OVNI, notaron lo que parecen ser modificaciones a "
+"los mecanismos de propulsión. Si los alienígenas están mejorando sus "
+"propulsores de antimateria, necesitamos averiguar tanto como podamos de "
+"ellos.\n"
 "\n"
 "Le estoy enviando esta petición para realizar un examen más detallado. "
-"Podria ser clave para ganar la batalla por la supremacía en nuestros "
+"Podría ser clave para ganar la batalla por la supremacía en nuestros "
 "cielos.\n"
 "\n"
 "Cte. Navarre"
@@ -7687,7 +7679,6 @@ msgstr ""
 "Dr. Connor"
 
 #: ../base/ufos/msgid/aliens.ufo:34
-#, fuzzy
 msgid ""
 "Commander,\n"
 "\n"
@@ -7752,9 +7743,8 @@ msgstr ""
 "Sanguinaria revelaron que es muy resistente y tiene una excelente capacidad "
 "de aislamiento, siendo efectivo contra una amplia variedad de armas.\n"
 "\n"
-"- El blindaje es muy resistente a los láseres, la electricidad y la munición "
-"incendiaria, pero puede ser traspasada por municiones perforadoras de "
-"blindaje de alta velocidad.\n"
+"- El blindaje es muy resistente a la electricidad, pero puede ser traspasado "
+"por municiones perforadoras de blindaje de alta velocidad.\n"
 "\n"
 "- Los explosivos potentes también resultan efectivos, ya que dañan las "
 "vulnerables articulaciones de las patas. Este podría ser el método más "
@@ -7771,7 +7761,6 @@ msgstr ""
 "Dr. Connor"
 
 #: ../base/ufos/msgid/aliens.ufo:58
-#, fuzzy
 msgid ""
 "Commander,\n"
 "\n"
@@ -7798,25 +7787,22 @@ msgstr ""
 "recuperada por nuestros agentes, y hemos preparado un informe para su "
 "revisión.\n"
 "\n"
-"Esta criatura es similar a la Araña Sanguinaria que hemos encontrado "
-"anteriormente en el campo de batalla, pero ha recibido mejoras que la hacen "
-"mucho más letal. Sus filosas navajas son más largas y su blindaje ha "
-"recibido significativas revisiones. Estas criaturas son aterradoras en el "
-"campo de batalla si logran acercarse, y esta nueva variante es más capaz de "
-"sobrevivir algunos disparos de nuestros soldados y continuar su carga. "
-"Tendremos que enfrentar a la Araña de Combate en grupos.\n"
+"Esta criatura rebotica equipada con mandíbulas afiladísimas y ha sido "
+"observada desmembrando a sus victimas y almacenando material orgánico en sus "
+"cavidades internas. Por esta razón, creemos que este alienígena tiene algún "
+"propósito científico relacionado con la recolección de biomasa, pero es "
+"realmente brutal en la persecución de su objetivo.\n"
 "\n"
-"No podemos asegurarlo, pero tememos que las mejoras al blindaje hayan sido "
-"diseñadas como respuesta a la experiencia en combate contra nosotros. Si "
-"esto es cierto, significa que los alienígenas podrían estar mejorando otros "
-"de sus sistemas de combate también.\n"
+"Estas criaturas son aterradoras en combate si logran acercarse en masa, "
+"pesado blindaje aumenta las probabilidades de que sobrevivan a algunos "
+"disparos de nuestros soldados y sigan combatiendo. Necesitaremos cazar a las "
+"Arañas de Combate en grupos.\n"
 "\n"
-"Atentamente,\n"
+"Sinceramente,\n"
 "\n"
 "Dr. Connor "
 
 #: ../base/ufos/msgid/aliens.ufo:68 ../base/ufos/msgid/aliens.ufo:396
-#, fuzzy
 msgid ""
 "Commander,\n"
 "\n"
@@ -7829,10 +7815,11 @@ msgid ""
 msgstr ""
 "Comandante,\n"
 "\n"
-"Hemos recuperado un nuevo cuerpo alienígena del campo de batalla. Deberíamos "
-"empezar su disección y análisis lo antes posible.\n"
+"Hemos recuperado un nuevo cuerpo alienígena del campo de batalla. Su "
+"disección y análisis podría darnos noción de las capacidades de este nuevo "
+"alienígena.\n"
 "\n"
-"Atentamente,\n"
+"Sinceramente,\n"
 "\n"
 "Dr. Connor"
 
@@ -8872,7 +8859,6 @@ msgstr ""
 "Dr. Connor"
 
 #: ../base/ufos/msgid/aliens.ufo:358
-#, fuzzy
 msgid ""
 "Commander,\n"
 "\n"
@@ -8923,21 +8909,20 @@ msgstr ""
 "El dispositivo en si mismo es un disco móvil, pequeño, pero pesado, capaz de "
 "flotar sobre el suelo. A causa de su movimiento aéreo, es capaz de cruzar el "
 "campo de batalla rápidamente. Nuestros soldados tendrán que derribarlo antes "
-"de que logre ponerse en rango de tiro, lo cual no será fácil considerando su "
-"tamaño y capacidad de movimiento.\n"
+"de que logre ponerse a distancia de tiro, lo cual no será fácil considerando "
+"su tamaño y capacidad de movimiento.\n"
 "\n"
 "Los modelos descubiertos están equipados con un arma de plasma capaz de "
 "realizar disparos individuales. Cualquiera que sea sorprendido dentro de su "
-"rango lo lamentará. Dado su tamaño y funcionalidad limitada, creemos que "
-"este alienígena esta diseñado únicamente para misiones de combate ligero - "
-"tal vez como una unidad de reconocimiento.\n"
+"rango de alcance lo lamentará. Dado su tamaño y funcionalidad limitada, "
+"creemos que este alienígena esta diseñado únicamente para misiones de "
+"combate ligero - tal vez como una unidad de reconocimiento.\n"
 "\n"
-"Atentamente,\n"
+"Sinceramente,\n"
 "\n"
 "Dr. Connor "
 
 #: ../base/ufos/msgid/aliens.ufo:386
-#, fuzzy
 msgid ""
 "Commander,\n"
 "\n"
@@ -8971,18 +8956,21 @@ msgstr ""
 "My equipo ha completado su análisis de la criatura alienígena que "
 "recuperamos.\n"
 "\n"
-"Como lo sospechamos, se trata de una versión más avanzada y letal del "
-"Hovernet. El armamento de plasma ha sido considerablemente mejorado. El "
-"Hovernet de Combate puede disparar ráfagas de tres disparos con una "
-"precisión no acostumbrada por la errática munición. \n"
+"Hemos llamado a esta criatura el Hovernet de Combate en reconocimiento de "
+"sus características mecánicas claramente orientadas al combate. Pero una "
+"pequeña biomasa, incluyendo uan especie de 'cerebro', se aloja en su centro "
+"y parece controlar la maquina.\n"
 "\n"
 "Toda la criatura ha sido envuelta en blindaje avanzado y los estabilizadores "
-"que la mantienen a flote y en su blanco son mucho más potentes. Estos "
-"modelos no serán tan fáciles de derribar y, hasta ser destruidos, serán una "
-"seria amenaza para nuestras tropas.\n"
+"que la mantienen a flote y en su blanco son mucho más potentes de lo que "
+"esperaríamos de un modelo no orientado al combate. El arma de plasma "
+"instalada en este modelo puede disparar ráfagas de tres disparos con una "
+"precisión no acostumbrada por la errática munición. Estos modelos no serán "
+"tan fáciles de derribar y, hasta ser destruidos, serán una seria amenaza "
+"para nuestras tropas.\n"
 "\n"
 "Al estar protegidos por la misma armadura alienígena usada por otras "
-"unidades som resistentes al armamento normal y de plasma. Pero también "
+"unidades son resistentes al armamento normal y de plasma. Pero también "
 "comparten la vulnerabilidad de la armadura alienígena al armamento láser e "
 "incendiario.\n"
 "\n"
@@ -12172,6 +12160,24 @@ msgid ""
 "it may be stored at a different base or you may need to research another "
 "project before it can be adequately studied."
 msgstr ""
+"PHALANX necesitará realizar un amplio programa de investigación para "
+"combatir la superioridad de la tecnología alienígena. Nuestros científicos "
+"examinaran cualquier artefacto recuperado en una misión de combate exitosa y "
+"enviaran nuevas propuestas de investigación mediante el cliente de correo.\n"
+"\n"
+"Para desarrollar el programa de investigación, construye nuevos "
+"laboratorios, contrata más científicos y asignales un proyecto especifico. "
+"Con suerte, seremos capaces de aprovechar lo que aprendamos para mejorar "
+"nuestro desempeño en el campo de batalla y tal vez un día llevar la batalla "
+"al campo enemigo.\n"
+"\n"
+"Apéndice\n"
+"\n"
+"Los artefactos deberán estar almacenados en la misma base donde se lleva a "
+"cabo la investigación. Si un proyecto de investigación se lista como "
+"inaccesible en una base en particular, puede estar almacenado en otra base o "
+"es posible que se necesite completar otro proyecto antes de que pueda ser "
+"estudiado de forma adecuada."
 
 #: ../base/ufos/msgid/concepts.ufo:15
 msgid ""
@@ -12183,6 +12189,13 @@ msgid ""
 "pace of production we'll need to build additional workshops, hire more "
 "engineers and set them to work on something."
 msgstr ""
+"Tal vez seamos capaces de reutilizar la tecnología alienígena capturada para "
+"nuestro esfuerzo bélico, pero PHALANX también necesitará producir su propia "
+"tecnología y aeronaves terrestres avanzadas.\n"
+"\n"
+"Nuestra base inicial tiene un taller con espacio para algunos ingenieros, "
+"pero para mejorar la velocidad de producción será necesario construir "
+"talleres adicionales, contratar más ingenieros y ponerlos a trabajar en algo."
 
 #: ../base/ufos/msgid/concepts.ufo:29
 msgid ""
@@ -12207,6 +12220,29 @@ msgid ""
 "doesn't reach and the funding nations will be angry when PHALANX fails to "
 "respond to these attacks."
 msgstr ""
+"No podemos simplemente esperar a que los alienígenas vengan a tocar a la "
+"puerta. Necesitamos detectar las naves alienígenas y derribarlas siempre que "
+"sea posible. La base inicial de PHALANX incluye una poderosa instalación de "
+"radar, pero necesitaremos construir instalaciones de radar externas para "
+"cubrir una mayor área.\n"
+"\n"
+"Una vez que un OVNI ha sido detectado, deberemos enviar nuestros "
+"interceptores más cercanos para intentar derribarlo. Pero estaremos en seria "
+"desventaja en el aire, por lo que deberemos enviar múltiples aeronaves "
+"siempre que sea posible.\n"
+"\n"
+"Apéndice\n"
+"\n"
+"Las instalaciones de radar externas tienen una menor área de detección que "
+"las instalaciones en la base.\n"
+"\n"
+"Debemos aproximarnos a los OVNI de clases previamente desconocidas con "
+"extrema cautela hasta que nuestros ingenieros sean capaces de establecer sus "
+"capacidades de combate.\n"
+"\n"
+"La actividad alienígena usualmente no será detectada en las áreas fuera de "
+"la cobertura de nuestros radares y las naciones patrocinadoras se molestaran "
+"cuando PHALANX falle en responder a estos ataques."
 
 #: ../base/ufos/msgid/concepts.ufo:39
 msgid ""
@@ -12224,6 +12260,20 @@ msgid ""
 "materials, they'll need the complete technical readout from the research "
 "teams."
 msgstr ""
+"Desmantelar los OVNI capturados será vital en la lucha por descubrir los "
+"secretos de la tecnología alienígena. Será necesario que PHALANX construya "
+"un almacén para OVNI -una instalación externa para albergar las naves "
+"recuperadas- tan pronto como sea posible.\n"
+"\n"
+"Nuestros ingenieros tendrán que viajar hasta el sitio de almacenamiento y "
+"transportar los componentes de vuelta a su taller, así que los almacenes "
+"para OVNI deberían estar cerca de la base donde se llevará a cabo el "
+"trabajo.\n"
+"\n"
+"Apéndice\n"
+"Antes de que nuestros ingenieros puedan desmantelar un OVNI de forma que se "
+"puedan recuperar materiales utilizables, necesitaran que nuestros equipos de "
+"investigación les provean una evaluación técnica completa."
 
 #: ../base/ufos/msgid/concepts.ufo:45
 msgid ""
@@ -12237,6 +12287,15 @@ msgid ""
 "organisation can cover as much of the globe as possible and confront alien "
 "attacks all around the world."
 msgstr ""
+"PHALANX es una organización de las Naciones Unidas que es autorizada y "
+"financiada por el soporte unánimo de las naciones miembro. Si desatendemos "
+"la defensa y seguridad de alguna de estas, perderán rápidamente la fe en "
+"nuestra capacidad y retirarán su apoyo financiero. Si la relación se "
+"deteriora demasiado podrían incluso dar por terminada la operación.\n"
+"\n"
+"Para mantenerlas satisfechas con el desempeño de PHALANX, debemos "
+"asegurarnos de que la organización puede cubrir la mayor parte posible del "
+"globo y confrontar los ataques alienígenas alrededor de todo el mundo."
 
 #: ../base/ufos/msgid/concepts.ufo:55
 msgid ""
@@ -12254,6 +12313,21 @@ msgid ""
 "TUs are refreshed each turn, but if an enemy flashbang goes off in front of "
 "a soldier they will lose all of their TUs for the next turn."
 msgstr ""
+"Un soldado solo puede causar una cantidad limitada de daño cada turno. Cada "
+"soldado tiene un numero limitado de Unidades de Tiempo (UT) que pueden "
+"utilizar para moverse, cambiar de postura, mirar a su alrededor y utilizar "
+"su arma. Se mueven más rápido cuando están de pie mientras que moverse "
+"estando agachados toma más UT.\n"
+"\n"
+"Se debe prestar mucha atención a la cantidad de UT de cada soldado. Algunos "
+"modos de disparo -tales como los disparos de precisión y el modo automático- "
+"requieren de más UT que otros. Quedarse sin suficientes UT en el lugar "
+"equivocado puede ser un error mortal.\n"
+"\n"
+"Apéndice\n"
+"\n"
+"Las UT se renuevan cada turno, pero si el enemigo utiliza una granada "
+"aturdidora enfrente del soldado perderán todas sus UT para el próximo turno."
 
 #: ../base/ufos/msgid/concepts.ufo:69
 msgid ""
@@ -12282,6 +12356,34 @@ msgid ""
 "reaction fire counter will be reset. A unit must spend enough TUs "
 "consecutively in view of a unit to receive reaction fire."
 msgstr ""
+"Los soldados pueden disparar contra las unidades enemigas cuando estas "
+"atraviesan su campo de visión durante el turno enemigo. Los soldados "
+"realizarán un disparo de reacción cuando una unidad enemiga utilice más "
+"Unidades de Tiempo (UT) que el costo del disparo de reacción dentro de su "
+"campo de visión.\n"
+"\n"
+"Esto significa que por ejemplo un soldado que a sido asignado a ejecutar un "
+"disparo de reacción con un costo de 8 UT realizará el disparo después que el "
+"enemigo utilice 9 o más UT dentro de su campo de visión. Pero ten cuidado - "
+"los alienígenas pueden realizar disparos de reacción de la misma forma que "
+"los soldados de PHALANX.\n"
+"\n"
+"Los soldados que usen armas con costos de UT más bajos realizarán más "
+"disparos de reacción -y recibirán menos disparos de reacción del enemigo- "
+"que los soldados que usan armas con altos costos de UT.\n"
+"\n"
+"Apéndice\n"
+"\n"
+"Un soldado no realizará disparos de reacción a menos que haya reservado "
+"suficientes Unidades de Tiempo durante su turno previo y el disparo de "
+"reacción esté activado en el panel de control del soldado. Cada comandante "
+"puede escoger el modo de disparo que deberá usar el soldado para sus "
+"disparos de reacción en la ventana de selección de modo de disparo.\n"
+"\n"
+"Si la unidad enemiga sale del campo de visión del soldado -incluso por solo "
+"un momento- el conteo de disparo de reacción se reiniciará. Una unidad debe "
+"utilizar suficientes UT de forma consecutiva dentro del campo de visión del "
+"soldado para recibir disparos de reacción."
 
 #: ../base/ufos/msgid/concepts.ufo:77
 msgid ""
@@ -12297,6 +12399,18 @@ msgid ""
 "may not be able to use all of his fire modes. If he is carrying less than 20 "
 "per cent of his maximum capacity, he'll gain extra TUs."
 msgstr ""
+"Los soldados deben ser capaces de combatir de forma rápida y efectiva. Si "
+"los cargas con demasiado equipo se volverán más lentos, reduciendo la "
+"cantidad de Unidades de Tiempo (UT) que tienen disponibles para cada turno. "
+"En cambio tendrán mayor velocidad cuando su carga sea ligera.\n"
+"\n"
+"Apéndice\n"
+"\n"
+"Se debe prestar atención a la carga de cada soldado al asignarles su "
+"equipamiento. Si alguien carga más del cincuenta por ciento de su capacidad "
+"máxima, perderá UT y podría ser incapaz de utilizar todos sus modos de "
+"disparo. Si alguien carga menos del veinte por ciento de su capacidad "
+"máxima, ganará UT extra."
 
 #: ../base/ufos/msgid/concepts.ufo:85
 msgid ""
@@ -12314,6 +12428,20 @@ msgid ""
 "to recover once they've returned to the base. Build a hospital facility to "
 "greatly increase their recovery times."
 msgstr ""
+"Nuestros soldados pueden recibir heridas si son alcanzados por el fuego "
+"enemigo. Estas heridas pueden afectar su puntería, velocidad de disparo y "
+"velocidad de movimiento. La salud de los soldados heridos se deteriorará "
+"cada turno y podría llevar a la muerte si no son tratados con un Kit Médico. "
+"Un escuadrón de PHALANX debería portar suficientes Kits Médicos para llevar "
+"a cabo la estabilización de las heridas durante el combate.\n"
+"\n"
+"Apéndice\n"
+"Se puede llevar el seguimiento de las heridas en la ventana de estado físico "
+"del soldado. Un Kit Médico puede tratar las heridas para prevenir que el "
+"soldado muera a consecuencia de ellas en el campo de batalla, pero con esto "
+"solamente recuperara un mínima de salud, los soldados necesitarán tiempo "
+"para recuperarse una vez que regresen a la base. Construye un hospital para "
+"acelerar grandemente la velocidad de recuperación."
 
 #: ../base/ufos/msgid/concepts.ufo:103
 msgid ""
@@ -12350,6 +12478,41 @@ msgid ""
 "Incendiary fields cause a small amount of damage to units which pass through "
 "them."
 msgstr ""
+"Los alienígenas poderoso armamento con un efecto letal en el campo de "
+"batalla. Enfrentarlos en tiroteos en terreno abierto es una forma segura de "
+"encontrar una muerte veloz, así que los soldados de PHALANX deben ser "
+"expertos en usar equipo auxiliar para superar a las fuerzas extraterrestres "
+"en el campo de batalla.\n"
+"\n"
+"Los soldados de PHALANX deberían equiparse con granadas de humo para ocultar "
+"sus posiciones cuando se encuentren a la vista de las fuerzas alienígenas. "
+"Las granadas y misiles incendiarios pueden producir campos de llamas que "
+"dañan a las fuerzas alienígenas antes de que se acerquen a nuestros "
+"soldados. Finalmente granadas aturdidoras pueden usarse para inhabilitar "
+"temporalmente a una unidad alienígena.\n"
+"\n"
+"Si un soldado se encuentra cara a cara con un alienígena y no es capaz de "
+"eliminarlo sin exponerse a un disparo de reacción posiblemente mortal, armas "
+"que causen daño inderecto tales como granadas -lanzadas a mano o desde un "
+"lanzagranadas- deberán usarse desde una posición segura.\n"
+"\n"
+"Las armas convencionales siempre serán necesarias en el campo de batalla, "
+"pero el armamento auxiliar desplegado de forma efectiva será clave si "
+"queremos sobreponernos al dominio tecnológico de los alienígenas en el campo "
+"de batalla.\n"
+"\n"
+"Apéndice\n"
+"Las nubes de humo bloquearán la visibilidad en el campo de batalla.\n"
+"\n"
+"Las granadas aturdidoras removerán las Unidades de Tiempo cuando sean usadas "
+"de forma efectiva. Una unidad que sea afectada por una granada aturdidora "
+"perderá todas las Unidades de Tiempo que tenía cuando la granada estalló y "
+"no recibirá más Unidades de Tiempo el siguiente turno. Las granadas "
+"aturdidoras solo son efectivas cuando estallan cerca del objetivo y dentro "
+"de su campo de visión.\n"
+"\n"
+"Los campos incendiarios causan una pequeña cantidad de daño a las unidades "
+"que pasan a través de ellos."
 
 #: ../base/ufos/msgid/irc.ufo:20
 msgid ""
@@ -12599,6 +12762,10 @@ msgid ""
 "the soldiers on site to eliminate the threat. Security cameras placed around "
 "the base will help you track their locations."
 msgstr ""
+"Los Alienígenas han penetrado las defensas de tu base y se encuentran dentro "
+"del complejo. Reúne a los soldados disponibles para eliminar la amenaza. Las "
+"cámaras de seguridad localizadas alrededor de la base te serán de ayuda para "
+"localizarlos."
 
 #: ../base/ufos/msgid/news.ufo:16
 msgid ""
@@ -16735,7 +16902,6 @@ msgstr ""
 "Cte. Navarre "
 
 #: ../base/ufos/msgid/tips.ufo:22
-#, fuzzy
 msgid ""
 "Commander,\n"
 "\n"
@@ -16760,14 +16926,15 @@ msgstr ""
 "Comandante,\n"
 "\n"
 "Necesitamos capturar algunos alienígenas con vida si queremos llegar a "
-"entender a nuestros enemigos. Podemos aprender mucho por medio de realizar "
-"autopsias a los cadáveres alienígenas, pero para entender realmente a estas "
-"criaturas debemos observar ejemplares vivos.\n"
+"entender a nuestros enemigos. Realizar autopsias a los cadáveres alienígenas "
+"nos ayudara a entender su biología y desarrollar armas no letales para "
+"incapacitarlos, Necesitaremos ejemplares vivos para entender realmente a "
+"estas criaturas.\n"
 "\n"
 "Si fuera posible neutralizar a los alienígenas en el campo de batalla y "
 "llevarlos con vida a una base con una Celda para Alienígenas, no hay "
 "palabras para describir lo que podríamos lograr. Podríamos ver más "
-"claramente como funcionan sus sistemas biológicos y realizarles pruebas para "
+"claramente como funcionan sus sistemas biológicos y realizar pruebas para "
 "determinar sus debilidades. Con el tiempo podríamos incluso desarrollar una "
 "forma de comunicarnos con ellos.\n"
 "\n"
@@ -16775,7 +16942,7 @@ msgstr ""
 "señor, pero es un riesgo que tendremos que correr si algún día esperamos "
 "ganar esta guerra.\n"
 "\n"
-"Atentamente,\n"
+"Sinceramente,\n"
 "\n"
 "Dr. Connor "
 
@@ -17731,7 +17898,6 @@ msgstr ""
 "Ninguno."
 
 #: ../base/ufos/msgid/weapons.ufo:308
-#, fuzzy
 msgid ""
 "Technical Specifications: MG12 Machine Gun\n"
 "\n"
@@ -17853,10 +18019,7 @@ msgstr ""
 "limita la velocidad de disparo y la duración de las municiones, pero es "
 "también la razón de la versatilidad de esta arma. El proceso de recarga de "
 "la GPG es casi tan rápido y sencillo como el de un rifle de asalto, y los "
-"cartuchos contienen 100 balas cada uno. Esto permite que la GPG sea usada "
-"casi como un rifle pesado de asalto. Los cartuchos son algo voluminosos, "
-"pero aún lo suficientemente ligeros y pequeños para permitir que un soldado "
-"lleve varios de ellos al campo de batalla.\n"
+"cartuchos contienen 100 balas cada uno.\n"
 "\n"
 "Sorprendentemente esta arma tiene pocos componentes computarizados, "
 "solamente un poderoso sistema compensador de retroceso y de absorción de "
@@ -17884,13 +18047,8 @@ msgstr ""
 "Doctrina Recomendada\n"
 "\n"
 "La MG12 será una herramienta muy valiosa para controlar el campo de batalla. "
-"Se puede utilizar para establecer puntos fortificados móviles desde los "
-"cuales lanzar ataques contra las posiciones alienígenas, puede proveer fuego "
-"de supresión o de distracción a cualquier distancia, o puede ser usada "
-"simplemente como una poderosa arma de asalto a media distancia.\n"
-"\n"
-"Debe ser una de las primeras opciones para cualquier soldado con "
-"entrenamiento en armas pesadas.\n"
+"Su gran volumen de disparo se puede utilizar para derribar a un enemigo "
+"poderoso o acertar a un enemigo a distancia utilizando fuego sostenido.\n"
 "\n"
 "\n"
 "Apéndices\n"
@@ -17898,7 +18056,6 @@ msgstr ""
 "Ninguno."
 
 #: ../base/ufos/msgid/weapons.ufo:342
-#, fuzzy
 msgid ""
 "Technical Specifications: Machine Gun Drum\n"
 "\n"
@@ -17957,7 +18114,7 @@ msgstr ""
 "\n"
 "Descripción\n"
 "\n"
-"Este cartucho tipo tambor contiene 100 bala sin casquillo calibre 4.7 x "
+"Este cartucho tipo tambor contiene 100 balas sin casquillo calibre 4.7 x "
 "33mm, perforadoras de blindaje. A diferencia de los cartuchos para rifle, "
 "están unidas entre sí formando una larga cinta en vez de estar arregladas en "
 "forma de columna. Las balas están unidas mediante un plástico especial que "
@@ -17973,8 +18130,8 @@ msgstr ""
 "Doctrina Recomendada\n"
 "\n"
 "Todo soldado equipado con una Ametralladora debería cargar, al menos, un "
-"cartucho de recarga cuando salga al campo de batalla. No es recomendable "
-"enviar tropas al combate sin cartuchos extra.\n"
+"cartucho de recarga cuando salga al campo de batalla. Cuando esto no sea "
+"posible otro soldado podría llevar municiones extra.\n"
 "\n"
 "\n"
 "Apéndices\n"
@@ -23842,7 +23999,6 @@ msgstr ""
 "Dr. Connor"
 
 #: ../base/ufos/msgid/weapons.ufo:1937
-#, fuzzy
 msgid ""
 "Commander, I've got the specs of the new alien pistol for you, and they're "
 "not good.\n"
@@ -23873,10 +24029,10 @@ msgstr ""
 "usted, y no son buenas.\n"
 "\n"
 "Siempre sospechamos que un verdadero ejército alienígena tendría mejor "
-"armamento que solo armas de plasma y sables Kerr. Y ahora han probado que "
-"estábamos en lo correcto. Este armamento de flujo de partículas es en "
-"extremo avanzado, muy superior a las armas de plasma y miniaturizado muy por "
-"encima de nuestra capacidad para duplicarlo.\n"
+"armamento. Y ahora han probado que estábamos en lo correcto. Este armamento "
+"de flujo de partículas es en extremo avanzado, muy superior a las armas que "
+"hemos visto hasta ahora,  miniaturizado muy por encima de nuestra capacidad "
+"para duplicarlo.\n"
 "\n"
 "El armamento de flujo de partículas está diseñado para golpear al objetivo "
 "con una ráfaga de partículas aceleradas a velocidades cercanas a la de la "
@@ -23887,27 +24043,16 @@ msgstr ""
 "La pistola en sí misma es bastante simple en su construcción, no es más que "
 "una cubierta de metal alrededor de un juego de magnetos y lentes "
 "electrostáticos, utilizados para enfocar y concentrar el flujo de "
-"partículas. Todo esto no es nada que no podamos duplicar fácilmente con "
-"suficiente dinero y esfuerzo. Lo único que aun no comprendemos es la "
-"provisión de municiones. Las lecturas de energía que hemos obtenido de los "
-"cartucho son extremas, y a pesar de nuestros esfuerzos, no hemos logrado "
-"desactivar o desarmar uno para abrirlo de forma segura. Incluso gastar todos "
-"los disparos no desactiva completamente el cartucho. Más investigación será "
-"necesaria antes de poder tratar de entender cómo funcionan, mucho menos "
-"reproducirlos.\n"
+"partículas.\n"
 "\n"
 "Ciertamente esta pistola es la más peligrosa que he visto en toda mi "
 "carrera, con capacidad impresionante para perforar blindajes y extremo "
 "potencial de daño. No es tan precisa como la pistola láser, pero tiene un "
 "poder extraordinario para un arma de respaldo.\n"
 "\n"
-"Le mantendré informado sobre nuestro progreso con los cartuchos, "
-"Comandante.\n"
-"\n"
 "Cte. Navarre"
 
 #: ../base/ufos/msgid/weapons.ufo:1945
-#, fuzzy
 msgid ""
 "Commander, we've recovered a dangerous new alien pistol that seems to fire "
 "high-energy particle beams -- an extremely nasty new threat to our troops on "
@@ -23920,8 +24065,7 @@ msgid ""
 "Cdr. Navarre"
 msgstr ""
 "Comandante, hemos recuperado una peligrosa pistola alienígena nueva que "
-"parece disparar un flujo de partículas de alta energía - más letal que los "
-"láseres, más precisa que las armas de plasma, y una nueva amenaza "
+"parece disparar un flujo de partículas de alta energía - una nueva amenaza "
 "extremadamente peligrosa para nuestras tropas en el campo de batalla. "
 "Pruebas preliminares contra nuestra armadura han producido resultados "
 "alarmantes. Necesitamos realizar más investigación sobre estas armas "
@@ -23932,7 +24076,6 @@ msgstr ""
 "Cte. Navarre"
 
 #: ../base/ufos/msgid/weapons.ufo:1961
-#, fuzzy
 msgid ""
 "Commander, we've finished work on this big damned cannon we brought back.\n"
 "\n"
@@ -23964,8 +24107,8 @@ msgstr ""
 "vuelta.\n"
 "\n"
 "Este armamento de flujo de partículas es en extremo avanzado, muy superior a "
-"las armas de plasma y miniaturizado muy por encima de nuestra capacidad para "
-"duplicarlo.\n"
+"las armas alienígenas existentes y miniaturizado muy por encima de nuestra "
+"capacidad para duplicarlo.\n"
 "\n"
 "El armamento de flujo de partículas está diseñado para golpear al objetivo "
 "con una ráfaga de partículas aceleradas a velocidades cercanas a la de la "
@@ -23986,17 +24129,7 @@ msgstr ""
 "armadura de infantería se desempeñara solo un poco mejor, pero la deflexión "
 "ayudara un poco.\n"
 "\n"
-"La mecánica del cañón es bastante simple, nada que no podamos duplicar con "
-"suficiente dinero y esfuerzo. Lo único que aun no comprendemos es la "
-"provisión de municiones. Las lecturas de energía que hemos obtenido de los "
-"cartucho son extremas, y a pesar de nuestros esfuerzos, no hemos logrado "
-"desactivar o desarmar uno para abrirlo de forma segura. Incluso gastar todos "
-"los disparos no desactiva completamente el cartucho. Más investigación será "
-"necesaria antes de poder tratar de entender cómo funcionan, mucho menos "
-"reproducirlos.\n"
-"\n"
-"Eso es todo lo que tengo para usted en este momento, Comandante. Le "
-"mantendré informado de nuestro progreso con los cartuchos.\n"
+"Eso es todo lo que tengo para usted en este momento, Comandante.\n"
 "\n"
 "Cte. Navarre"
 
@@ -24021,7 +24154,6 @@ msgstr ""
 "Cte. Navarre"
 
 #: ../base/ufos/msgid/weapons.ufo:1985
-#, fuzzy
 msgid ""
 "Commander, we've gotten all the info we can from this new alien rifle. It's "
 "more bad news, I'm afraid.\n"
@@ -24059,10 +24191,10 @@ msgstr ""
 "rifle alienígena. Temo que son más malas noticias.\n"
 "\n"
 "Siempre sospechamos que un verdadero ejército alienígena tendría mejor "
-"armamento que solo armas de plasma y sables Kerr. Y ahora han probado que "
-"estábamos en lo correcto. Este armamento de flujo de partículas es en "
-"extremo avanzado, muy superior a las armas de plasma y miniaturizado muy por "
-"encima de nuestra capacidad para duplicarlo.\n"
+"armamento. Y ahora han probado que estábamos en lo correcto. Este armamento "
+"de flujo de partículas es en extremo avanzado, muy superior a las armas que "
+"hemos encontrado, miniaturizado muy por encima de nuestra capacidad para "
+"duplicarlo.\n"
 "\n"
 "El armamento de flujo de partículas está diseñado para golpear al objetivo "
 "con una ráfaga de partículas aceleradas a velocidades cercanas a la de la "
@@ -24073,15 +24205,7 @@ msgstr ""
 "El rifle sigue un diseño modular muy básico, muy distinto de las armas de "
 "plasma que hemos observado hasta ahora. Todas las partes pueden ser añadidas "
 "o retiradas del arma simplemente presionando un interruptor de liberación "
-"convenientemente colocado. Extrañamente, ninguna de las partes del arma es "
-"de tecnología particularmente avanzada o impresionante, nada que no podamos "
-"duplicar fácilmente con suficiente dinero y esfuerzo. Lo único que aun no "
-"comprendemos es la provisión de municiones. Las lecturas de energía que "
-"hemos obtenido de los cartucho son extremas, y a pesar de nuestros "
-"esfuerzos, no hemos logrado desactivar o desarmar uno para abrirlo de forma "
-"segura. Incluso gastar todos los disparos no desactiva completamente el "
-"cartucho. Más investigación será necesaria antes de poder tratar de entender "
-"cómo funcionan, mucho menos reproducirlos.\n"
+"convenientemente colocado.\n"
 "\n"
 "Lo que me alarmó principalmente sobre esta arma es su desempeño contra "
 "nuestra armadura de infantería. Las partículas de alta energía en el flujo "
@@ -24096,18 +24220,9 @@ msgstr ""
 "pérdida significativa de tropas a causa del armamento de flujo de partículas "
 "alienígena si no lo hacemos.\n"
 "\n"
-"Por último, la forma del rifle no es adecuada para el cuerpo humano en "
-"absoluto, e incluso con adaptaciones estará pobremente balanceado para los "
-"tiradores humanos. Si lo usamos con nuestros escuadrones, nuestra precisión "
-"no será tan buena como la de los alienígenas.\n"
-"\n"
-"Le mantendré informado sobre nuestro progreso con los cartuchos, "
-"Comandante.\n"
-"\n"
 "Cte. Navarre"
 
 #: ../base/ufos/msgid/weapons.ufo:1993
-#, fuzzy
 msgid ""
 "Commander, we've recovered an alien rifle that fires high-energy particle "
 "beams. It's more deadly than anything we've seen -- an extremely nasty new "
@@ -24120,12 +24235,11 @@ msgid ""
 "Cdr. Navarre"
 msgstr ""
 "Comandante, hemos recuperado un rifle alienígena que dispara un flujo de "
-"partículas de alta energía. Es más letal que los láseres, más preciso que "
-"las armas de plasma, y una nueva amenaza extremadamente peligrosa para "
-"nuestras tropas en el campo de batalla. Pruebas preliminares contra nuestra "
-"armadura confirman que los alienígenas han mejorado seriamente el armamento "
-"de sus tropas. Necesitamos realizar más investigación sobre estas armas "
-"inmediatamente.\n"
+"partículas de alta energía. Es más letal que cualquier otro que hemos  visto "
+"- una nueva amenaza extremadamente peligrosa para nuestras tropas en el "
+"campo de batalla. Pruebas preliminares contra nuestra armadura confirman que "
+"los alienígenas han mejorado seriamente el armamento de sus tropas. "
+"Necesitamos realizar más investigación sobre estas armas inmediatamente.\n"
 "\n"
 "Por favor autorice este programa tan pronto como le sea posible.\n"
 "\n"
@@ -24319,7 +24433,6 @@ msgid "missions"
 msgstr "Misiones"
 
 #: ../base/ufos/msgoptions.ufo:156
-#, fuzzy
 msgid "buildings"
 msgstr "Instalaciones"
 
@@ -24394,16 +24507,15 @@ msgstr "gettext_text2"
 
 #: ../base/ufos/research.ufo:109
 msgid "Basic Concepts (Campaign)"
-msgstr ""
+msgstr "Conceptos Básicos (Campaña)"
 
 #: ../base/ufos/research.ufo:110
 msgid "Basic Concepts (Ground Combat)"
-msgstr ""
+msgstr "Conceptos Básicos (Combate Terrestre)"
 
 #: ../base/ufos/research.ufo:111
-#, fuzzy
 msgid "Skills and Abilities"
-msgstr "Habilidades del Soldado"
+msgstr "Destrezas y Habilidades"
 
 #: ../base/ufos/research.ufo:112
 msgid "Background"
@@ -24454,42 +24566,36 @@ msgid "Production"
 msgstr "Producción"
 
 #: ../base/ufos/research.ufo:145
-#, fuzzy
 msgid "UFO Interception"
-msgstr "Intercepción"
+msgstr "Intercepción de OVNI"
 
 #: ../base/ufos/research.ufo:153
-#, fuzzy
 msgid "UFO Disassembly"
-msgstr "Desmantelar"
+msgstr "Desmantelamiento de OVNI"
 
 #: ../base/ufos/research.ufo:161
-#, fuzzy
 msgid "Nation Happiness"
 msgstr "Actitud de las Naciones"
 
 #: ../base/ufos/research.ufo:169
-#, fuzzy
 msgid "Time Units"
-msgstr "Unidades de Tiempo:\t%i\n"
+msgstr "Unidades de Tiempo"
 
 #: ../base/ufos/research.ufo:177
-#, fuzzy
 msgid "Reaction Fire"
-msgstr "Reacción de disparo"
+msgstr "Disparo de Reacción"
 
 #: ../base/ufos/research.ufo:185
 msgid "Soldier Weight and Encumbrance"
-msgstr ""
+msgstr "Los Soldados y su Capacidad de Carga"
 
 #: ../base/ufos/research.ufo:193
 msgid "Wounds and Healing"
-msgstr ""
+msgstr "Heridas y Recuperación"
 
 #: ../base/ufos/research.ufo:201
-#, fuzzy
 msgid "Auxiliary Equipment"
-msgstr "Equipo auxiliar usado con %s\n"
+msgstr "Equipo auxiliar"
 
 #: ../base/ufos/research.ufo:214
 msgid "Continuous Wave Laser Operation"
@@ -25703,6 +25809,8 @@ msgid ""
 "Find the control center and place one of your soldiers next to the console "
 "in order to take advantage of the security cameras."
 msgstr ""
+"Encuentra el centro de control y estaciona a uno de tus soldados junto a la "
+"consola para tomar ventaja de las cámaras de seguridad."
 
 #: ../base/ufos/ui/_menu.ufo:122 ../base/ufos/ui/geoscape.ufo:191
 msgid "CREDITS"
@@ -26076,9 +26184,8 @@ msgid "Dead:"
 msgstr "Muertos:"
 
 #: ../base/ufos/ui/aliencont.ufo:345
-#, fuzzy
 msgid "Autopsy"
-msgstr "Levantarse para caminar"
+msgstr "Autopsia"
 
 #: ../base/ufos/ui/basedefence.ufo:10
 msgid "Equip Defence Weapons"
@@ -26594,9 +26701,8 @@ msgid "Aircraft:"
 msgstr "Aeronave:"
 
 #: ../base/ufos/ui/geoscape.ufo:765
-#, fuzzy
 msgid "Mission:"
-msgstr "Misiones"
+msgstr "Misión:"
 
 #: ../base/ufos/ui/geoscape.ufo:776
 msgid "Aircraft reached desired location - what to do?"
@@ -27206,9 +27312,8 @@ msgstr "Precio"
 
 #: ../base/ufos/ui/market.ufo:308
 #: client/cgame/campaign/cp_base_callbacks.cpp:840
-#, fuzzy
 msgid "Capacity"
-msgstr "Capacidad:"
+msgstr "Capacidad"
 
 #: ../base/ufos/ui/market.ufo:315 ../base/ufos/ui/popup_installations.ufo:287
 #: ../base/ufos/ui/popup_installations.ufo:888
@@ -29434,19 +29539,16 @@ msgid "Ball"
 msgstr "Esfera"
 
 #: ../base/ufos/weapons_plasma.ufo:369
-#, fuzzy
 msgid "Assault Rifle EP Magazine"
-msgstr "Cargador de Rifle de Asalto"
+msgstr "Cargador PE de Rifle de Asalto"
 
 #: ../base/ufos/weapons_plasma.ufo:476
-#, fuzzy
 msgid "Machine Gun EP Magazine"
-msgstr "Cartucho de Ametralladora"
+msgstr "Cartucho PE de Ametralladora"
 
 #: ../base/ufos/weapons_plasma.ufo:567
-#, fuzzy
 msgid "Sniper Rifle EP Magazine"
-msgstr "Cargador de Rifle de Francotirador"
+msgstr "Cargador PE de Rifle de Francotirador"
 
 #: ../base/ufos/weapons_ugv.ufo:22
 #, fuzzy
@@ -30702,22 +30804,21 @@ msgstr "Primero construye un %s."
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:860
 msgid "No report"
-msgstr ""
+msgstr "No hay nada que reportar"
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:863
 #: client/cgame/campaign/cp_base_callbacks.cpp:877
 msgid "Percent"
-msgstr ""
+msgstr "Porcentaje"
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:863
 msgid "Quantity"
-msgstr ""
+msgstr "Cantidad"
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:873
 #: client/cgame/campaign/cp_base_callbacks.cpp:888
-#, fuzzy
 msgid "Nothing"
-msgstr "Ninguno(a)\n"
+msgstr "Nada"
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:893
 msgid "^BAircraft\n"
@@ -31087,9 +31188,8 @@ msgid "Ok"
 msgstr "Funcional"
 
 #: client/cgame/campaign/cp_geoscape.cpp:304
-#, fuzzy
 msgid "Mission"
-msgstr "Misiones"
+msgstr "Misión"
 
 #: client/cgame/campaign/cp_geoscape.cpp:325
 #: client/cgame/campaign/cp_installation_callbacks.cpp:45
@@ -31101,13 +31201,12 @@ msgid "UFO Sighting"
 msgstr "Avistamiento OVNI"
 
 #: client/cgame/campaign/cp_geoscape.cpp:1497
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Name: %s\n"
 "Objective: %s"
 msgstr ""
-"Ubicación: %s\n"
-"Tipo: %s\n"
+"Nombre: %s\n"
 "Objetivo: %s"
 
 #: client/cgame/campaign/cp_geoscape.cpp:1513
@@ -31544,42 +31643,41 @@ msgstr "Objetos recolectados (tipos/total)"
 
 #: client/cgame/campaign/cp_missions.cpp:460
 #: client/cgame/campaign/cp_missions.cpp:483
-#, fuzzy, c-format
+#, c-format
 msgid "Crashed %s"
-msgstr "Lugar del choque:"
+msgstr "%s caido"
 
 #: client/cgame/campaign/cp_missions.cpp:466
-#, fuzzy, c-format
+#, c-format
 msgid "Alien terror in %s"
-msgstr "Materiales Alienígenas"
+msgstr "Alienígenas aterrorizan %s"
 
 #: client/cgame/campaign/cp_missions.cpp:469
-#, fuzzy, c-format
+#, c-format
 msgid "Base attacked: %s"
-msgstr "Ataque a la base"
+msgstr "Ataque a la base: %s"
 
 #: client/cgame/campaign/cp_missions.cpp:472
-#, fuzzy, c-format
+#, c-format
 msgid "Alien base in %s"
-msgstr "Base Alienígena"
+msgstr "Base alienígena en %s"
 
 #: client/cgame/campaign/cp_missions.cpp:486
-#, fuzzy, c-format
+#, c-format
 msgid "Landed %s"
-msgstr "Aterrizaje OVNI"
+msgstr "%s en tierra"
 
 #: client/cgame/campaign/cp_missions.cpp:491
-#, fuzzy, c-format
+#, c-format
 msgid "Alien activity in %s"
-msgstr "Actividad Alienígena ha sido Reportada -- '%s'"
+msgstr "Actividad Alienígena en '%s"
 
 #: client/cgame/campaign/cp_missions.cpp:493
-#, fuzzy
 msgid "Alien activity"
-msgstr "Razas de Extraterrestres"
+msgstr "Actividad alienígena"
 
 #: client/cgame/campaign/cp_missions.cpp:702
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Go on a rescue mission for %s to save your soldiers, some of whom may still "
 "be alive."
@@ -31593,9 +31691,8 @@ msgid "Alien activity has been detected in %s."
 msgstr "Actividad alienígena ha sido reportada en '%s'"
 
 #: client/cgame/campaign/cp_missions.cpp:708
-#, fuzzy
 msgid "Alien activity has been detected."
-msgstr "Actividad alienígena ha sido reportada en '%s'"
+msgstr "Se ha detectado actividad alienígena."
 
 #: client/cgame/campaign/cp_missions.cpp:1071
 #, c-format
@@ -31735,9 +31832,9 @@ msgid "Change homebase\n"
 msgstr "Mudar de base\n"
 
 #: client/cgame/campaign/cp_popup.cpp:240
-#, fuzzy, c-format
+#, c-format
 msgid "Mission\t%s\n"
-msgstr "Misiones"
+msgstr "Misión\t%s\n"
 
 #: client/cgame/campaign/cp_popup.cpp:341
 #, c-format
@@ -32498,19 +32595,19 @@ msgid "A UFO is flying toward %s"
 msgstr "Un OVNI se aproxima a %s"
 
 #: client/cgame/campaign/cp_ufo.cpp:860
-#, fuzzy, c-format
+#, c-format
 msgid "%s is flying toward %s"
-msgstr "Un OVNI se aproxima a %s"
+msgstr "%s se aproxima a %s"
 
 #: client/cgame/campaign/cp_ufo.cpp:864
-#, fuzzy, c-format
+#, c-format
 msgid "Our radar detected %s near %s"
-msgstr "Nuestro radar ha detectado un OVNI cerca de %s"
+msgstr "Nuevo contacto en el radar: %s cerca de %s"
 
 #: client/cgame/campaign/cp_ufo.cpp:868
-#, fuzzy, c-format
+#, c-format
 msgid "Our radar has lost the tracking on %s"
-msgstr "Nuestro radar ha perdido contacto con un OVNI"
+msgstr "Se ha perdido el contacto de radar con %s"
 
 #: client/cgame/campaign/cp_ufopedia.cpp:142
 msgid "Cruising speed"
@@ -33167,11 +33264,8 @@ msgid "Unknown - not useable"
 msgstr "Desconocido - no puede usarse"
 
 #: client/cl_inventory_callbacks.cpp:385
-#, fuzzy
 msgid "Warning: Not enough TUs..."
-msgstr ""
-"No se puede efectuar la acción:\n"
-"No hay suficientes UT."
+msgstr "Advertencia: No hay suficientes UT..."
 
 #: client/cl_irc.cpp:1436
 msgid "Server closed connection"
