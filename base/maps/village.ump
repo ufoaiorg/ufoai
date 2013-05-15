@@ -584,11 +584,13 @@ r		+ar		+ar		0
 tile +fountain_01
 	// a fountain, A- C-
 {
-3 3
-0		0		0
-v		+a		0
-0		h		0
+4 4
+0		0		0		0
+r		+a		+a		0
+r		+a		+a		0
+0		0		0		0
 }
+
 
 // tilesets --------------------------------------------------------*
 
@@ -617,6 +619,7 @@ tileset nature {
 }
 
 tileset park {
+	+fountain_01
 	+park_01
 	+park_02
 	+park_03
@@ -680,7 +683,6 @@ size "9 9"
 title "_Village"
 +bungalow			"0 1"
 +diner_01			"0 1"
-+fountain_01		"0 1"
 +gasstation_01		"0 1"
 +house_01			"0 1"
 +house_02			"0 1"
@@ -706,7 +708,6 @@ size "8 8"
 title "_Village"
 +bungalow			"0 1"
 +diner_01			"0 1"
-+fountain_01		"0 1"
 +gasstation_01		"0 1"
 +house_01			"0 1"
 +house_02			"0 1"
@@ -732,7 +733,6 @@ assembly small
 size "7 7"
 title "_Village"
 +bungalow			"0 1"
-+fountain_01		"0 1"
 +house_01			"0 1"
 +house_02			"0 1"
 +house_03			"0 1"
