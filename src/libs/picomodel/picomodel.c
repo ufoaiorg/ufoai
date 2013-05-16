@@ -135,7 +135,7 @@ static picoModel_t *PicoModuleLoadModel (const picoModule_t *pm, const char *fil
  */
 picoModel_t *PicoLoadModel (char *fileName, int frameNum)
 {
-	const picoModule_t **modules, *pm;
+	const picoModule_t **modules;
 	picoModel_t *model;
 	picoByte_t *buffer;
 	int bufSize;
@@ -163,7 +163,7 @@ picoModel_t *PicoLoadModel (char *fileName, int frameNum)
 	 * to find a loader that fits the given file data */
 	for (; *modules != NULL; modules++) {
 		/* get module */
-		pm = *modules;
+		const picoModule_t *pm = *modules;
 
 		/* sanity check */
 		if (pm == NULL)
@@ -1588,7 +1588,6 @@ void PicoAddTriangleToModel (picoModel_t *model, picoVec3_t **xyz, picoVec3_t **
 		int numColors, picoColor_t **colors, picoShader_t *shader, picoIndex_t *smoothingGroup)
 {
 	int i, j;
-	int vertDataIndex;
 	picoSurface_t *workSurface = NULL;
 
 	/* see if a surface already has the shader */
@@ -1620,7 +1619,7 @@ void PicoAddTriangleToModel (picoModel_t *model, picoVec3_t **xyz, picoVec3_t **
 		int newVertIndex = PicoGetSurfaceNumIndexes(workSurface);
 
 		/* get the index of the vertex that we're going to store at newVertIndex */
-		vertDataIndex = PicoFindSurfaceVertexNum(workSurface, *xyz[i], *normals[i], numSTs, st[i], numColors, colors[i],
+		int vertDataIndex = PicoFindSurfaceVertexNum(workSurface, *xyz[i], *normals[i], numSTs, st[i], numColors, colors[i],
 				smoothingGroup[i]);
 
 		/* the vertex wasn't found, so create a new vertex in the pool from the data we have */

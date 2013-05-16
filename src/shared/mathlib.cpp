@@ -349,10 +349,10 @@ void GLMatrixAssemble (const vec3_t origin, const vec3_t angles, float* matrix)
  */
 void GLMatrixMultiply (const float a[16], const float b[16], float c[16])
 {
-	int i, j, k;
+	int i, j;
 
 	for (j = 0; j < 4; j++) {
-		k = j * 4;
+		int k = j * 4;
 		for (i = 0; i < 4; i++)
 			c[i + k] = a[i] * b[k] + a[i + 4] * b[k + 1] + a[i + 8] * b[k + 2] + a[i + 12] * b[k + 3];
 	}
@@ -1085,10 +1085,8 @@ void ClearBounds (vec3_t mins, vec3_t maxs)
 void AddPointToBounds (const vec3_t v, vec3_t mins, vec3_t maxs)
 {
 	int i;
-	vec_t val;
-
 	for (i = 0; i < 3; i++) {
-		val = v[i];
+		vec_t val = v[i];
 		if (val < mins[i])
 			mins[i] = val;
 		if (val > maxs[i])

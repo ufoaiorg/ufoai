@@ -247,13 +247,10 @@ skipwhite:
  */
 void Com_SkipBlock (const char **text)
 {
-	const char *token;
-	int depth;
-
-	depth = 1;
+	int depth = 1;
 
 	do {
-		token = Com_Parse(text);
+		const char *token = Com_Parse(text);
 		if (*token == '{')
 			depth++;
 		else if (*token == '}')
