@@ -161,7 +161,7 @@ static void TR_CargoList (void)
 				if (emplType == EMPL_SOLDIER) {
 					const rank_t *rank = CL_GetRankByIdx(employee->chr.score.rank);
 					cgi->UI_ExecuteConfunc("ui_cargolist_add \"ucn:%d\" \"%s %s %s\" %d", employee->chr.ucn,
-						E_GetEmployeeString((employeeType_t)emplType, 1), rank->shortname, employee->chr.name, 1);
+						E_GetEmployeeString((employeeType_t)emplType, 1), _(rank->shortname), employee->chr.name, 1);
 				} else {
 					cgi->UI_ExecuteConfunc("ui_cargolist_add \"ucn:%d\" \"%s %s\" %d", employee->chr.ucn,
 						E_GetEmployeeString((employeeType_t)emplType, 1), employee->chr.name, 1);
@@ -278,7 +278,7 @@ static void TR_FillEmployees (const base_t *srcBase, const base_t *destBase)
 
 				if (emplType == EMPL_SOLDIER) {
 					const rank_t *rank = CL_GetRankByIdx(employee->chr.score.rank);
-					Com_sprintf(str, sizeof(str), "%s %s %s", E_GetEmployeeString(emplType, 1), rank->shortname, employee->chr.name);
+					Com_sprintf(str, sizeof(str), "%s %s %s", E_GetEmployeeString(emplType, 1), _(rank->shortname), employee->chr.name);
 				} else {
 					Com_sprintf(str, sizeof(str), "%s %s", E_GetEmployeeString(emplType, 1), employee->chr.name);
 				}
