@@ -344,7 +344,7 @@ typedef struct mapData_s {
 		return mapMin[0];
 	}
 	inline float getWidthX () const {
-		return mapMax[0] - mapMin[0];
+		return mapMax[0] - getMinX();
 	}
 	inline float getWidthY () const {
 		return mapMax[1] - mapMin[1];

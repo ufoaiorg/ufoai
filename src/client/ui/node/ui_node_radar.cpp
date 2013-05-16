@@ -312,7 +312,7 @@ static void UI_InitRadar (const uiNode_t *node)
 				tile->mapWidth = tile->gridWidth * 8 * UNIT_SIZE;
 				tile->mapHeight = tile->gridHeight * 8 * UNIT_SIZE;
 			} else {
-				tile->mapX = cl.mapData->mapMin[0];
+				tile->mapX = cl.mapData->getMinX();
 				tile->mapY = cl.mapData->mapMin[1];
 				tile->mapWidth = cl.mapData->getWidthX();
 				tile->mapHeight = cl.mapData->getWidthY();
@@ -572,7 +572,7 @@ void uiRadarNode::draw (uiNode_t *node)
 		if (maxlevel >= tile->maxlevel)
 			maxlevel = tile->maxlevel - 1;
 		assert(tile->path[maxlevel]);
-		imagePos[0] = radar.x + mapCoefX * (tile->mapX - cl.mapData->mapMin[0]);
+		imagePos[0] = radar.x + mapCoefX * (tile->mapX - cl.mapData->getMinX());
 		imagePos[1] = radar.y + mapCoefY * (tile->mapY - cl.mapData->mapMin[1]);
 
 		UI_DrawNormImageByName(false, imagePos[0], imagePos[1],
@@ -598,7 +598,7 @@ void uiRadarNode::draw (uiNode_t *node)
 			continue;
 
 		/* convert to radar area coordinates */
-		itempos[0] = pos[0] + (le->origin[0] - cl.mapData->mapMin[0]) * mapCoefX;
+		itempos[0] = pos[0] + (le->origin[0] - cl.mapData->getMinX()) * mapCoefX;
 		itempos[1] = pos[1] + (mapHeight - (le->origin[1] - cl.mapData->mapMin[1])) * mapCoefY;
 
 		switch (le->type) {
