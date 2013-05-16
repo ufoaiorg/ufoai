@@ -240,6 +240,9 @@ class Routing
 	routing_t routes[ACTOR_MAX_SIZE];	/**< routing table */
 public:
 
+	Routing () {
+		init();
+	}
 	inline void init () {
 		OBJZERO(*this);
 	}
