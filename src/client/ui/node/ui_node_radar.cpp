@@ -338,7 +338,7 @@ static void UI_InitRadar (const uiNode_t *node)
 			max[1] = tile->mapY + tile->mapHeight;
 	}
 	/* compute translation */
-	min[0] = cl.mapData->mapMin[0] + (cl.mapData->getWidthX() - (max[0] - min[0])) * 0.5 - min[0];
+	min[0] = cl.mapData->getMinX() + (cl.mapData->getWidthX() - (max[0] - min[0])) * 0.5 - min[0];
 	min[1] = cl.mapData->mapMin[1] + (cl.mapData->getWidthY() - (max[1] - min[1])) * 0.5 - min[1];
 	for (j = 0; j < radar.numImages; j++) {
 		hudRadarImage_t *tile = &radar.images[j];
@@ -639,7 +639,7 @@ void uiRadarNode::onCapturedMouseMove (uiNode_t *node, int x, int y)
 	UI_NodeAbsoluteToRelativePos(node, &x, &y);
 
 	/* from node to map */
-	pos[0] = cl.mapData->mapMin[0] + x / mapCoefX;
+	pos[0] = cl.mapData->getMinX() + x / mapCoefX;
 	pos[1] = cl.mapData->mapMax[1] - y / mapCoefY;
 	pos[2] = 0;
 

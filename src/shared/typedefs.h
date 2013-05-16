@@ -340,6 +340,9 @@ typedef struct mapData_s {
 	 */
 	vec3_t mapMin, mapMax;
 
+	inline float getMinX () const {
+		return mapMin[0];
+	}
 	inline float getWidthX () const {
 		return mapMax[0] - mapMin[0];
 	}

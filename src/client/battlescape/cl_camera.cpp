@@ -73,8 +73,8 @@ cvar_t *cl_centerview;
  */
 static inline void CL_ClampCamToMap (const float border)
 {
-	if (cl.cam.origin[0] < cl.mapData->mapMin[0] - border)
-		cl.cam.origin[0] = cl.mapData->mapMin[0] - border;
+	if (cl.cam.origin[0] < cl.mapData->getMinX() - border)
+		cl.cam.origin[0] = cl.mapData->getMinX() - border;
 	else if (cl.cam.origin[0] > cl.mapData->mapMax[0] + border)
 		cl.cam.origin[0] = cl.mapData->mapMax[0] + border;
 
