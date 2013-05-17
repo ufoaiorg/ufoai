@@ -564,12 +564,12 @@ float B_GetMaxBuildingLevel (const base_t* base, const buildingType_t type)
  * @param[out] coords The coords output string
  * @param[in] coordsLength The length of the coords string
  * @param[in] map The map tile to add
- * @param[in] row The row to spawn the map at
  * @param[in] col The col to spawn the map at
+ * @param[in] row The row to spawn the map at
  * @sa SV_Map_f
  * @sa SV_Map
  */
-static inline void B_AddMap (char *maps, size_t mapsLength, char *coords, size_t coordsLength, const char *map, int row, int col)
+static inline void B_AddMap (char *maps, size_t mapsLength, char *coords, size_t coordsLength, const char *map, int col, int row)
 {
 	Q_strcat(coords, va("%i %i %i ", col * BASE_TILE_UNITS, (BASE_SIZE - row - 1) * BASE_TILE_UNITS, 0), coordsLength);
 	Q_strcat(maps, map, mapsLength);
