@@ -1,4 +1,15 @@
 {
+	material tex_misc/advertbb
+	specular 2.0
+	hardness 2.0
+	{
+		texture tex_misc/advertbb0
+		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+		anim 8 3.0
+	}
+}
+
+{
 	material tex_tech/tv
 	hardness 2.0
 	specular 2.0
@@ -18,6 +29,13 @@
 		terrain 4.5 30
 		lightmap
 	}
+}
+
+{
+	material tex_nature/patatoes
+	hardness 0.0
+	bump 0.1
+	parallax 0.2
 }
 
 {

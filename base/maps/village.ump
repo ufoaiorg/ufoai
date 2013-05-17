@@ -449,6 +449,7 @@ h		+ah		+ah		h
 0		0		0		0
 }
 
+/*
 tile +gasstation_01
 	// gas station, A3, C1
 {
@@ -459,19 +460,18 @@ tile +gasstation_01
 0		+a		+a		v
 0		0		0		0
 }
+*/
 
-/* wip
 tile +gasstation_01
 	// gas station, A3, C1
 {
-5 5
-0		0		0		0		0
-0		0		+a		v		0
-0		+a		+a		+av		0
-0		+a		+a		v		0
-0		0		0		0		0
+6 5
+0		0		0		0		0		0
+0		0		+a		+a		v		0
+0		+a		+a		+a		+av		0
+0		+a		+a		+a		v		0
+0		0		0		0		0		0
 }
-*/
 
 tile +house_01
 	// big house with wooden roof, wooden fence, A3 C3
@@ -756,11 +756,11 @@ tileset street_v	"0 5"
 
 assembly test
 {
-size "8 8"
+size "7 7"
 title "_Village"
-+bungalow			"1 1"
++bungalow			"0 1"
 +mart_01			"0 1"
-+gasstation_01		"0 1"
++gasstation_01		"1 1"
 +diner_01			"0 1"
 +house_01			"0 1"
 +house_02			"0 1"
