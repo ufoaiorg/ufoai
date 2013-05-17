@@ -307,10 +307,8 @@ static void testEmployeeHandling (void)
 
 	{
 		int i, cnt;
-		Employee *e;
-
 		for (i = 0; i < 512; i++) {
-			e = E_CreateEmployee(EMPL_SOLDIER, NULL, NULL);
+			Employee *e = E_CreateEmployee(EMPL_SOLDIER, NULL, NULL);
 			CU_ASSERT_PTR_NOT_NULL(e);
 
 			cnt = E_CountUnhired(EMPL_SOLDIER);

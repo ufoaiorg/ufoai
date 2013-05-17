@@ -38,13 +38,14 @@ byte *CompressRouting (byte *dataStart, byte *destStart, int l)
 {
 	int c;
 	byte val;
-	byte *data, *dend, *dest_p, *count_p;
+	byte *data, *dend, *dest_p;
 
 	dest_p = destStart;
 	data = dataStart;
 	dend = dataStart + l;
 
 	while (data < dend) {
+		byte *count_p;
 		if (data + 1 < dend && *data == *(data + 1)) {
 			/* repetitions */
 			val = *data++;

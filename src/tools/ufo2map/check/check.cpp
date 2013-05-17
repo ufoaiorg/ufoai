@@ -1375,14 +1375,14 @@ static int Check_CalculateLevelFlagFill (int contentFlags)
  */
 void CheckFillLevelFlags (void)
 {
-	int i, j, flagFill;
+	int i, j;
 
 	for (i = 0; i < nummapbrushes; i++) {
 		mapbrush_t *brush = &mapbrushes[i];
 
 		/* CheckLevelFlags should be done first, so we will boldly
 		 * assume that levelflags are the same on each face */
-		flagFill = Check_CalculateLevelFlagFill(brush->original_sides[0].contentFlags);
+		int flagFill = Check_CalculateLevelFlagFill(brush->original_sides[0].contentFlags);
 		if (flagFill) {
 			Check_Printf(VERB_CHECK, true, brush->entitynum, brush->brushnum, "making set levelflags continuous by setting");
 			DisplayContentFlags(flagFill);
@@ -1399,14 +1399,14 @@ void CheckFillLevelFlags (void)
 void CheckLevelFlags (void)
 {
 	int i, j;
-	bool allNodraw, setFlags;
+	bool setFlags;
 	int allLevelFlagsForBrush;
 
 	for (i = 0; i < nummapbrushes; i++) {
 		mapbrush_t *brush = &mapbrushes[i];
 
 		/* test if all faces are nodraw */
-		allNodraw = true;
+		bool allNodraw = true;
 		for (j = 0; j < brush->numsides; j++) {
 			const side_t *side = &brush->original_sides[j];
 			assert(side);
@@ -1637,11 +1637,11 @@ void CheckTexturesBasedOnFlags (void)
 void CheckPropagateParserContentFlags(mapbrush_t *b)
 {
 	int notInformedMixedFace = 1;
-	int m, contentFlagDiff;
+	int m;
 	int transferFlags = (CONTENTS_DETAIL | CONTENTS_TRANSLUCENT);
 
 	for (m = 0; m < b->numsides; m++) {
-		contentFlagDiff = (b->original_sides[m].contentFlags ^ b->contentFlags) & transferFlags;
+		int contentFlagDiff = (b->original_sides[m].contentFlags ^ b->contentFlags) & transferFlags;
 		if (contentFlagDiff) {
 			/* only tell them once per brush */
 			if (notInformedMixedFace) {
