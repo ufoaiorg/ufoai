@@ -5642,6 +5642,7 @@ base/textures/tex_mattn/street002.jpg | GNU General Public License 2.0 or later 
 base/textures/tex_mattn/street010.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_mattn/street010_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_mattn/street011.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_mattn/street011_nm.png | GNU General Public License 2.0 or later | Holger "ShipIt" Gellrich
 base/textures/tex_mattn/street012.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_mattn/subway_berlin.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_mattn/tech001.png | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -6319,6 +6320,7 @@ base/textures/tex_nature/drymud_nm.png | GNU General Public License 2.0 or later
 base/textures/tex_nature/flower.jpg | GNU General Public License 2.0 or later | Willem Sitters
 base/textures/tex_nature/grass.jpg | GNU General Public License 2.0 | OpenArena
 base/textures/tex_nature/grass001.jpg | GNU General Public License 2.0 |  | grass_lash.tga
+base/textures/tex_nature/grass001_nm.png | GNU General Public License 2.0 | Holger "ShipIt" Gellrich
 base/textures/tex_nature/grass003.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_nature/grass003_way_d2r.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_nature/grass003_way_hor.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
@@ -6677,10 +6679,12 @@ base/textures/tex_streets/park1v_g.png | GNU General Public License 2.0 or later
 base/textures/tex_streets/park1v_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_streets/pavement001.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_streets/street001.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_streets/street001_nm.png | GNU General Public License 2.0 | Holger "ShipIt" Gellrich
 base/textures/tex_streets/street002.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_streets/street003.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_streets/street004.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_streets/street005.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_streets/street005_nm.png | GNU General Public License 2.0 | Holger "ShipIt" Gellrich
 base/textures/tex_streets/street006.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_streets/street008.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_streets/street009.png | GNU General Public License 2.0 or later | Martin Gerhardy
