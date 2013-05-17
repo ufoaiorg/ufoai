@@ -301,6 +301,7 @@ static picoModel_t *_md2_load (PM_PARAMS_LOAD)
 	PicoSetModelFileName(picoModel, fileName);
 
 	for (i = 0; i < md2->numSkins; i++) {
+		picoShader_t *picoShader;
 		char *offsetSkin = (char*) (bb + md2->ofsSkins) + i * MD2_MAX_SKINNAME;
 		/* set Skin Name */
 		strncpy(skinname, offsetSkin, MD2_MAX_SKINNAME);
@@ -321,7 +322,7 @@ static picoModel_t *_md2_load (PM_PARAMS_LOAD)
 		}
 		_pico_setfext(skinname, "");
 
-		picoShader_t *picoShader = PicoNewShader(picoModel);
+		picoShader = PicoNewShader(picoModel);
 		if (picoShader == NULL) {
 			_pico_printf(PICO_ERROR, "Unable to allocate a new model shader");
 			PicoFreeModel(picoModel);
