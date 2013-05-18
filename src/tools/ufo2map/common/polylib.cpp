@@ -424,14 +424,13 @@ winding_t *ChopWinding (winding_t *in, vec3_t normal, vec_t dist)
 bool WindingIsTiny (winding_t *w)
 {
 	int i, edges;
-	vec_t len;
 	vec3_t delta;
 
 	edges = 0;
 	for (i = 0; i < w->numpoints; i++) {
 		const int j = ((i == w->numpoints - 1) ? 0 : i) + 1;
 		VectorSubtract(w->p[j], w->p[i], delta);
-		len = VectorLength(delta);
+		vec_t len = VectorLength(delta);
 		if (len > EDGE_LENGTH) {
 			if (++edges == 3)
 				return false;
@@ -465,7 +464,6 @@ bool WindingIsHuge (const winding_t *w)
 static void SnapWeldVector (const vec3_t a, const vec3_t b, vec3_t out)
 {
 	int i;
-	vec_t outi;
 
 	/* dummy check */
 	if (a == nullptr || b == nullptr || out == nullptr)
@@ -490,7 +488,7 @@ static void SnapWeldVector (const vec3_t a, const vec3_t b, vec3_t out)
 			out[i] = b[i];
 
 		/* snap */
-		outi = rint(out[i]);
+		vec_t outi = rint(out[i]);
 		if (fabs(outi - out[i]) <= SNAP_EPSILON)
 			out[i] = outi;
 	}

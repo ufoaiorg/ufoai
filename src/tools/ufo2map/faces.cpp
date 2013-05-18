@@ -307,7 +307,6 @@ static void FixFaceEdges (node_t *node, face_t *f)
 {
 	int i, base;
 	vec3_t e2;
-	vec_t len;
 	int count[MAX_SUPERVERTS], start[MAX_SUPERVERTS];
 
 	if (f->merged || f->split[0] || f->split[1])
@@ -325,7 +324,7 @@ static void FixFaceEdges (node_t *node, face_t *f)
 		FindEdgeVerts(edge_start, e2);
 
 		VectorSubtract(e2, edge_start, edge_dir);
-		len = VectorNormalize(edge_dir);
+		vec_t len = VectorNormalize(edge_dir);
 
 		start[i] = numsuperverts;
 		TestEdge(0, len, p1, p2, 0);
