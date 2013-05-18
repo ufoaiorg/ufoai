@@ -648,6 +648,7 @@ Inventory::Inventory ()
 
 void Inventory::init ()
 {
+	OBJZERO(*this);
 	for (int i = 0; i < CID_MAX; ++i)
 		_containers[i].id = i;
 }
