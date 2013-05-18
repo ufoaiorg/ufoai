@@ -426,7 +426,7 @@ static void GAME_GetEquipment (void)
 	ed = GAME_GetEquipmentDefinition();
 	*ed = *edFromScript;
 
-	OBJZERO(game_inventory);
+	game_inventory.init();
 	GAME_UpdateInventory(&game_inventory, ed);
 }
 
