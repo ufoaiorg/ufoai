@@ -183,6 +183,8 @@ size_t GAME_GetCharacterArraySize (void)
 void GAME_ResetCharacters (void)
 {
 	OBJZERO(characters);
+	for (int i = 0; i < MAX_ACTIVETEAM; i++)
+		characters[i].inv.init();
 	LIST_Delete(&chrDisplayList);
 }
 
