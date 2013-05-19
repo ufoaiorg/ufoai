@@ -388,6 +388,7 @@ typedef struct character_s {
 	FiremodeSettings RFmode;		/**< Stores the firemode to be used for reaction fire (if the fireDef allows that) See also reaction_firemode_type_t */
 
 	character_s();					/**< ctor */
+	void init ();
 } character_t;
 
 /* ================================ */
