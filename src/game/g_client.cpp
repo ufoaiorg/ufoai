@@ -1133,6 +1133,7 @@ static void G_ClientReadCharacter (Edict *ent)
 	int k;
 	int teamDefIdx;
 
+	ent->chr.init();
 	/* model */
 	ent->chr.ucn = gi.ReadShort();
 	gi.ReadString(ent->chr.name, sizeof(ent->chr.name));
