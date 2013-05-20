@@ -707,6 +707,7 @@ base/maps/ufocrash.ump | GNU General Public License 2.0 or later
 base/maps/village.map | GNU General Public License 2.0 or later | "SparX" Beyeler
 base/maps/village.ump | GNU General Public License 2.0 or later
 base/maps/village/vil_bungalow.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | base/maps/bungalow.map
+base/maps/village/vil_bungalow2.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | base/maps/bungalow2.map
 base/maps/village/vil_craft_drop_firebird.map | GNU General Public License 2.0 or later
 base/maps/village/vil_craft_drop_herakles.map | GNU General Public License 2.0 or later
 base/maps/village/vil_craft_drop_raptor.map | GNU General Public License 2.0 or later
@@ -737,6 +738,7 @@ base/maps/village/vil_nature_07.map | GNU General Public License 2.0 or later | 
 base/maps/village/vil_nature_08.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
 base/maps/village/vil_nature_09.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
 base/maps/village/vil_nature_10.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/village/vil_nature_11.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | base/maps/bungalow2.map
 base/maps/village/vil_park_01.map | GNU General Public License 2.0 or later
 base/maps/village/vil_park_02.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | Derivative work from UFO:AI
 base/maps/village/vil_park_03.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | Derivative work from UFO:AI

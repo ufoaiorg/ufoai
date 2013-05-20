@@ -1,3 +1,10 @@
+/* tv in vil_bungalow2.map */
+{
+	material tex_anim/anim_back_0
+	specular 2.0
+	hardness 2.0
+}
+
 {
 	material tex_misc/advertbb
 	specular 2.0
