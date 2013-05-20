@@ -2633,10 +2633,18 @@ mapdef village_bungalow
 {
 	map				"+village"
 	param			"bungalow"
-	description		"_House"
-	multiplayer		false
+	description		"_Bungalow"
 	size			"small"
 	maxaliens		6
+
+	multiplayer		true
+	teams			2
+	gametypes (
+		fight1on1
+		fight2on2
+		fight3on3
+		fight4on4
+	)
 
 	aircraft
 	(
@@ -2671,9 +2679,17 @@ mapdef village_bungalow2
 	map				"+village"
 	param			"bungalow2"
 	description		"_House"
-	multiplayer		false
 	size			"small"
 	maxaliens		6
+
+	multiplayer		true
+	teams			2
+	gametypes (
+		fight1on1
+		fight2on2
+		fight3on3
+		fight4on4
+	)
 
 	aircraft
 	(

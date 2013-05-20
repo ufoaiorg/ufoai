@@ -397,6 +397,7 @@ tile +nature_11
 
 tile +bungalow
 	// large house, A6 C3
+	// starting points for mp team 4
 {
 5 6
 0		0		0		0		0
@@ -409,6 +410,7 @@ tile +bungalow
 
 tile +bungalow2
 	// large house, A9 C2
+	// starting points for mp team 3
 {
 6 6
 0		0		0		0		0		0

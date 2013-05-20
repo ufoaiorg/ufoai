@@ -12131,3 +12131,59 @@
 ( 32 464 46.5 ) ( 31 464 46.5 ) ( 32 464 6 ) tex_material/c_black 0 0 0 1 1 402718210 0 0
 }
 }
+// entity 111
+{
+"classname" "info_player_start"
+"team" "4"
+"origin" "304 656 30"
+"angle" "180"
+}
+// entity 112
+{
+"classname" "info_player_start"
+"team" "4"
+"origin" "336 624 30"
+"angle" "-1.4033e-014"
+}
+// entity 113
+{
+"classname" "info_player_start"
+"team" "4"
+"origin" "336 592 30"
+"angle" "-90"
+}
+// entity 114
+{
+"classname" "info_player_start"
+"team" "4"
+"origin" "304 592 30"
+"angle" "-90"
+}
+// entity 115
+{
+"classname" "info_player_start"
+"team" "4"
+"origin" "304 624 30"
+"angle" "180"
+}
+// entity 116
+{
+"classname" "info_player_start"
+"team" "4"
+"origin" "336 656 30"
+"angle" "90"
+}
+// entity 117
+{
+"classname" "info_player_start"
+"team" "4"
+"origin" "336 560 30"
+"angle" "-90"
+}
+// entity 118
+{
+"classname" "info_player_start"
+"team" "4"
+"origin" "304 560 30"
+"angle" "-90"
+}
