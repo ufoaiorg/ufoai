@@ -6356,6 +6356,7 @@ base/textures/tex_nature/grass_tall_green_a.jpg | GNU General Public License 2.0
 base/textures/tex_nature/grass_tall_green_b.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar) | http://dplogin.com/forums/index.php?topic=7836.0 - further modifed by eleazar
 base/textures/tex_nature/grass_tall_green_c.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar) | http://dplogin.com/forums/index.php?topic=7836.0 - further modifed by eleazar
 base/textures/tex_nature/hedge001.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0  - modified by eleazar
+base/textures/tex_nature/hedge001_nm.png | GNU General Public License 2.0 |  Holger "ShipIt" Gellrich | base/textures/tex_nature/hedge001.jpg
 base/textures/tex_nature/ice001.jpg | Public Domain |  | Public Domain Golgotha
 base/textures/tex_nature/ice001_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_nature/ice002.png | GNU General Public License 2.0 or later | Nobiax, Nate Wright
@@ -6380,6 +6381,7 @@ base/textures/tex_nature/pjrock21_nm.png | GNU General Public License 2.0 | MCR
 base/textures/tex_nature/pjrock6.png | GNU General Public License 2.0 | MCR | http://www.burningwell.org/gallery2/v/textures/ground/otherground/S7000812.JPG.html
 base/textures/tex_nature/pjrock6_nm.png | GNU General Public License 2.0 | MCR
 base/textures/tex_nature/potatoes.png | Public Domain | FWishbringer
+base/textures/tex_nature/potatoes_nm.png | Public Domain | Holger "ShipIt" Gellrich | base/textures/tex_nature/potatoes.png
 base/textures/tex_nature/railway.png | Public Domain | FWishbringer
 base/textures/tex_nature/railway_nm.png | GNU General Public License 2.0 | MCR
 base/textures/tex_nature/rock001.png | GNU General Public License 2.0 | MCR | http://www.burningwell.org/gallery2/v/textures/ground/rocks/P1170628.JPG.html
