@@ -558,19 +558,18 @@ static void GatherSampleLight (vec3_t pos, const vec3_t normal, float *sample, f
 {
 	light_t *l;
 	vec3_t delta;
-	float dot, dot2;
-	float dist;
 	int *headhint;
 
 	for (l = lights[config.compile_for_day], headhint = headhints; l; l = l->next, headhint++) {
 		float light = 0.0;
+		float dot2;
 
 		/* Com_Printf("Looking with next hint.\n"); */
 
 		VectorSubtract(l->origin, pos, delta);
-		dist = VectorNormalize(delta);
+		float dist = VectorNormalize(delta);
 
-		dot = DotProduct(delta, normal);
+		float dot = DotProduct(delta, normal);
 		if (dot <= 0.001)
 			continue;	/* behind sample surface */
 
@@ -1012,15 +1011,12 @@ static const vec3_t luminosity = {0.2125, 0.7154, 0.0721};
  */
 void FinalLightFace (unsigned int facenum)
 {
-	dBspSurface_t *f;
 	int j, k;
 	vec3_t dir, intensity;
-	facelight_t	*fl;
-	float max, d;
 	byte *dest;
 
-	f = &curTile->faces[facenum];
-	fl = &facelight[config.compile_for_day][facenum];
+	dBspSurface_t *f = &curTile->faces[facenum];
+	facelight_t	*fl = &facelight[config.compile_for_day][facenum];
 
 	/* none-lit texture */
 	if (curTile->texinfo[f->texinfo].surfaceFlags & SURF_WARP)
@@ -1058,7 +1054,7 @@ void FinalLightFace (unsigned int facenum)
 		/* apply global scale factor */
 		VectorScale(temp, config.brightness, temp);
 
-		max = 0.0;
+		float max = 0.0;
 
 		/* find the brightest component */
 		for (k = 0; k < 3; k++) {
@@ -1087,7 +1083,7 @@ void FinalLightFace (unsigned int facenum)
 		}
 
 		/* apply saturation */
-		d = DotProduct(temp, luminosity);
+		float d = DotProduct(temp, luminosity);
 
 		VectorSet(intensity, d, d, d);
 		VectorMix(intensity, temp, config.saturation, temp);
