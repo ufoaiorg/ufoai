@@ -698,6 +698,16 @@ tileset street_v {
 
 // map assemblies --------------------------------------------------*
 
+assembly bungalow
+{
+size "4 5"
++bungalow			"1 1"
++nature_11			"0 1"
+fix +start			"0 2"
+tileset nature		"0 6"
+tileset street_h	"0 4"
+}
+
 assembly bungalow2
 {
 size "4 5"
@@ -821,12 +831,4 @@ tileset street_03	"0 1"
 tileset street_h	"0 5"
 tileset street_v	"0 5"
 *rm_drop +craft_drop_firebird "1 1"
-}
-
-assembly bungalow
-{
-size "4 4"
-fix +bungalow		"1 0"
-fix +start			"0 0"
-tileset nature		"0 3"
 }
