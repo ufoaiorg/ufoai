@@ -698,6 +698,16 @@ tileset street_v {
 
 // map assemblies --------------------------------------------------*
 
+assembly bungalow2
+{
+size "4 5"
+fix +bungalow2		"0 0"
++nature_11			"0 1"
++start				"1 1"
+tileset nature		"0 1"
+tileset street_h	"0 1"
+}
+
 assembly medium
 {
 size "9 9"

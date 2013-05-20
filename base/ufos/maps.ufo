@@ -2629,6 +2629,43 @@ mapdef ufocrash
 // VILLAGE RANDOM MAPS //
 /////////////////////////
 
+mapdef village_bungalow2
+{
+	map				"+village"
+	param			"bungalow2"
+	description		"_House"
+	multiplayer		false
+	size			"small"
+	maxaliens		6
+
+	aircraft
+	(
+		// any
+	)
+
+	ufos
+	(
+		// any
+	)
+
+	terrains
+	(
+		// any
+	)
+
+	cultures
+	(
+		"western"
+	)
+
+	populations
+	(
+		"village"
+		"suburban"
+		"rural"
+	)
+}
+
 mapdef village_medium
 {
 	map				"+village"
