@@ -408,9 +408,9 @@ item stungrenade
 			ammo	1
 			delaybetweenshots		1
 			time	8
-			damage	"28 5"	//Gas field damage
+			damage	"45 5"	//Gas field damage
 			spldmg	"140 10"
-			splrad	4
+			splrad	3
 			dmgweight "stun_gas"
 			rounds	4
 		}
@@ -437,9 +437,9 @@ item stungrenade
 			ammo	1
 			delaybetweenshots		1
 			time	8
-			damage	"28 5"	//Gas field damage
+			damage	"45 5"	//Gas field damage
 			spldmg	"140 10"
-			splrad	4
+			splrad	3
 			dmgweight "stun_gas"
 			rounds	4
 		}

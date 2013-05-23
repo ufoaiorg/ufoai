@@ -174,14 +174,14 @@ item armour_medium
 
 	rating {
 		normal				40
-		blast				40
+		blast				50
 		fire				25
 		shock				0
-		plasma				45
+		plasma				40
 		laser				10
-		particlebeam		0
-		stun_electro		10
-		stun_gas			25
+		particlebeam		20
+		stun_electro		15
+		stun_gas			30
 	}
 }
 
@@ -237,14 +237,14 @@ item armour_power
 	}
 
 	rating {
-		normal				60
+		normal				50
 		blast				70
 		fire				50
 		shock				100
-		plasma				65
+		plasma				50
 		laser				15
-		particlebeam		0
-		stun_electro		20
+		particlebeam		50
+		stun_electro		30
 		stun_gas			100
 	}
 }
@@ -305,15 +305,15 @@ item armour_light_alien
 	}
 
 	rating {
-		normal			10
-		blast			30
+		normal			20
+		blast			20
 		fire			20
-		shock			10
+		shock			0
 		plasma			30
-		laser			20
-		particlebeam	30
-		stun_electro	10
-		stun_gas		10
+		laser			5
+		particlebeam	20
+		stun_electro	0
+		stun_gas		0
 	}
 }
 
@@ -364,19 +364,19 @@ item armour_medium_alien
 		particlebeam_medium	40
 		particlebeam_heavy	50
 
-		stun_electro	10
-		stun_gas		10
+		stun_electro	15
+		stun_gas		30
 	}
 
 	rating {
 		normal			40
 		blast			50
-		fire			40
+		fire			35
 		shock			30
 		plasma			50
-		laser			40
+		laser			30
 		particlebeam	50
-		stun_electro	30
+		stun_electro	15
 		stun_gas		30
 	}
 }
