@@ -612,9 +612,8 @@ static void GenerateFootstepList (const char *filename, int mipTexIndex)
 static void ParseBrush (entity_t *mapent, const char *filename)
 {
 	mapbrush_t *b;
-	int i, j, k, m, mt;
+	int i, j, k, m;
 	side_t *side;
-	int planenum;
 	brush_texture_t td;
 	vec3_t planepts[3];
 	const int checkOrFix = config.performMapCheck || config.fixMap ;
@@ -678,7 +677,7 @@ static void ParseBrush (entity_t *mapent, const char *filename)
 		td.scale[1] = atof(parsedToken);
 
 		/* find default flags and values */
-		mt = FindMiptex(td.name);
+		int mt = FindMiptex(td.name);
 		side->surfaceFlags = td.surfaceFlags = side->contentFlags = td.value = 0;
 
 		if (TokenAvailable()) {
@@ -729,7 +728,7 @@ static void ParseBrush (entity_t *mapent, const char *filename)
 		GenerateMaterialFile(filename, mt, side);
 
 		/* find the plane number */
-		planenum = PlaneFromPoints(b, planepts[0], planepts[1], planepts[2]);
+		int planenum = PlaneFromPoints(b, planepts[0], planepts[1], planepts[2]);
 		if (planenum == PLANENUM_LEAF) {
 			Com_Printf("Entity %i, Brush %i: plane with no normal at line %i\n", b->entitynum, b->brushnum, GetScriptLine());
 			continue;
