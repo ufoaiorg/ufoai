@@ -739,7 +739,7 @@ particle green_smoke
 	init
 	{
 		v      "0 0 0"
-		tps    25.0
+		tps    6.0
 		spawn  greensmokebig
 	}
 	think
@@ -1604,6 +1604,7 @@ particle greensmokebig
 		pop			*s
 		crand		vector "150 150 1000"
 		add			*v
+		physics		false
 	}
 	run
 	{
