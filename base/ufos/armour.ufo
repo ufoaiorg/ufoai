@@ -20,17 +20,17 @@
 damagetypes standard
 {
 	"_normal" // Most often for phalanx weapons
-	"normal_light"
-	"normal_spray" // Shotguns and other weapons that spray several bullets
+	"normal_light" // Pistols and other light firearms
+	"normal_spray" // SMG, flechette shells and other weapons that spray several bullets
 	"normal_medium"
 	"normal_heavy"
 	"normal_steelblade" // Combat knife
 	"normal_monomolecularblade" // Kerrblade and similar blades to ensure superior tech better against armour
 	"normal_needle" // Needler and heavy Needler (very small damage, but large number of shots and high pierce).
 	"_blast"
-	"_fire" // Incendiary grenades only for now
-	"fire_light" // Currently unused, but may be useful for future if fire on map is implemented
-	"fire_medium"
+	"_fire"
+	"fire_light" // Currently unused
+	"fire_medium" // Currently unused
 	"fire_heavy" // Currently unused
 	"fire_flamer" // Flamethrower only for now
 	"_shock" // Flashbang grenade only for now
