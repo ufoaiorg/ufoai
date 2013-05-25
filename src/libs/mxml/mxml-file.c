@@ -2623,18 +2623,18 @@ mxml_write_name(const char *s,		/* I - Name to write */
     {
       if ((name = mxmlEntityGetName(*s)) != NULL)
       {
-	if ((*putc_cb)('&', p) < 0)
-          return (-1);
+	    if ((*putc_cb)('&', p) < 0)
+		  return (-1);
 
-        while (*name)
-	{
-	  if ((*putc_cb)(*name, p) < 0)
+	    while (*name)
+	    {
+	      if ((*putc_cb)(*name, p) < 0)
             return (-1);
 
           name ++;
-	}
+	    }
 
-	if ((*putc_cb)(';', p) < 0)
+	    if ((*putc_cb)(';', p) < 0)
           return (-1);
       }
       else if ((*putc_cb)(*s, p) < 0)
@@ -2659,7 +2659,7 @@ mxml_write_name(const char *s,		/* I - Name to write */
     while (*s)
     {
       if ((*putc_cb)(*s, p) < 0)
-	return (-1);
+	    return (-1);
 
       s ++;
     }
