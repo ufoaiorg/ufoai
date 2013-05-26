@@ -310,24 +310,21 @@ typedef struct objDef_s {
 	float weight;			/**< The weight of the item */
 	bool notOnMarket;		/**< True if this item should not be available on market. */
 
+
 	uint32_t getShapeRotated () const;
 	bool isCraftItem () const;
 	bool isBaseDefenceItem () const;
 	bool isLoadableInWeapon (const objDef_s *weapon) const;
-	inline bool isAmmo ()	const
-	{
+	inline bool isAmmo () const {
 		return Q_streq(this->type, "ammo");
 	}
-	inline bool isArmour ()	const
-	{
+	inline bool isArmour ()	const {
 		return Q_streq(this->type, "armour");
 	}
-	inline int getReloadTime () const
-	{
+	inline int getReloadTime () const {
 		return _reload;
 	}
-	inline bool isReloadable () const
-	{
+	inline bool isReloadable () const {
 		return getReloadTime() > 0;
 	}
 
