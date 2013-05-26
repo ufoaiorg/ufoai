@@ -111,7 +111,7 @@ typedef struct fireDef_s {
 	fireDefIndex_t fdIdx;		/**< Self link of the fd in the objDef_t->fd[][fdIdx] array. */
 
 	bool soundOnce;		/**< when set, firing sound is played only once, see CL_ActorDoThrow() and CL_ActorShootHidden() */
-	bool gravity;		/**< Does gravity has any influence on this item? */
+	bool gravity;		/**< Does gravity have any influence on this item? */
 	bool launched;		/**< used for calculating parabolas in Com_GrenadeTarget() */
 	bool rolled;		/**< Can it be rolled - e.g. grenades - used in "Roll" firemodes, see Com_GrenadeTarget() */
 	bool reaction;		/**< This firemode can be used/selected for reaction fire.*/
