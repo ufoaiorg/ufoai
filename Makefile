@@ -24,6 +24,7 @@ DISABLED    := $(filter-out $(TARGETS),$(TARGETS_TMP))
 ifeq ($(DISABLE_DEPENDENCY_TRACKING),)
   DEP_FLAGS := -MP -MD -MT $$@
 endif
+CONFIGURE_PREFIX ?=
 
 INSTALL         ?= install
 INSTALL_PROGRAM ?= $(INSTALL) -m 755 -s
@@ -33,7 +34,15 @@ INSTALL_MAN     ?= $(INSTALL) -m 444
 INSTALL_DATA    ?= $(INSTALL) -m 444
 
 .PHONY: all
+ifeq ($(TARGET_OS),html5)
+ifeq ($(EMSCRIPTEN_CALLED),1)
 all: $(TARGETS)
+else
+all: emscripten
+endif
+else
+all: $(TARGETS)
+endif
 
 include build/flags.mk
 include build/platforms/$(TARGET_OS).mk
@@ -65,7 +74,8 @@ install: install-pre $(addprefix install-,$(TARGETS))
 strip: $(addprefix strip-,$(TARGETS))
 
 config.h: configure
-	$(Q)./configure $(CONFIGURE_OPTIONS)
+config.h: configure
+	$(Q)$(CONFIGURE_PREFIX) ./configure $(CONFIGURE_OPTIONS)
 
 define BUILD_RULE
 ifndef $(1)_DISABLE
@@ -136,3 +146,7 @@ include build/lang.mk
 include build/maps.mk
 include build/models.mk
 include build/various.mk
+
+.PHONY: emscripten
+emscripten:
+	$(Q)$(EMSCRIPTEN_ROOT)/emmake $(MAKE) EMSCRIPTEN_CALLED=1
