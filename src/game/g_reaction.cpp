@@ -341,6 +341,25 @@ void G_ReactionFireTargetsCreate (const Edict *shooter)
 	rft.create(shooter);
 }
 
+static const fireDef_t* G_ReactionFireGetFireDef (const Edict *shooter)
+{
+	const FiremodeSettings *fmSetting = &shooter->chr.RFmode;
+	if (!fmSetting->isSaneFiremode())
+		return nullptr;
+
+	const Item *weapon = shooter->getHandItem(fmSetting->getHand());
+
+	if (weapon && weapon->ammoDef() && weapon->isWeapon() && !weapon->mustReload()) {
+		const fireDef_t *fdArray = weapon->getFiredefs();
+		if (fdArray == nullptr)
+			return nullptr;
+
+		const fireDefIndex_t fmIdx = fmSetting->getFmIdx();
+		return &fdArray[fmIdx];
+	}
+	return nullptr;
+}
+
 /**
  * @brief Get the weapon firing TUs of the item in the hand of the shooter.
  * @return -1 if no firedef was found for the item or the reaction fire mode is not activated.
@@ -352,24 +371,14 @@ void G_ReactionFireTargetsCreate (const Edict *shooter)
  */
 static int G_ReactionFireGetTUsForItem (const Edict *shooter, const Edict *target)
 {
-	const FiremodeSettings *fmSetting = &shooter->chr.RFmode;
-	if (!fmSetting->isSaneFiremode())
+	const fireDef_t *fd = G_ReactionFireGetFireDef(shooter);
+	if (!fd)
 		return -1;
 
-	const Item *weapon = shooter->getHandItem(fmSetting->getHand());
+	const int tus = G_ActorGetModifiedTimeForFiredef(shooter, fd, true);
 
-	if (weapon && weapon->ammoDef() && weapon->isWeapon() && !weapon->mustReload()) {
-		const fireDef_t *fdArray = weapon->getFiredefs();
-		if (fdArray == nullptr)
-			return -1;
-
-		const fireDefIndex_t fmIdx = fmSetting->getFmIdx();
-		const fireDef_t *fd = &fdArray[fmIdx];
-		const int tus = G_ActorGetModifiedTimeForFiredef(shooter, fd, true);
-
-		if (tus <= shooter->TU && fd->range > VectorDist(shooter->origin, target->origin)) {
-			return tus;
-		}
+	if (tus <= shooter->TU && fd->range > VectorDist(shooter->origin, target->origin)) {
+		return tus;
 	}
 
 	return -1;
