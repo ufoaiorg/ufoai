@@ -342,13 +342,12 @@ void G_ReactionFireTargetsCreate (const Edict *shooter)
 }
 
 /**
- * @brief Get the weapon firing TUs of the item in the right hand of the edict.
- * @return -1 if no firedef was found for the item or the reaction fire mode is not activated for the right hand.
- * @todo why only right hand?
+ * @brief Get the weapon firing TUs of the item in the hand of the shooter.
+ * @return -1 if no firedef was found for the item or the reaction fire mode is not activated.
  * @param[in] shooter The reaction firing actor
  * @param[in] target The target to check reaction fire for (e.g. check whether the weapon that was marked for
  * using in reaction fire situations can handle the distance between the shooter and the target)
- * @note This does 'not' return the weapon (lowest TU costs, highest damage, highest accuracy) but the first weapon that
+ * @note This does 'not' return the best weapon (lowest TU costs, highest damage, highest accuracy) but the first weapon that
  * would fit for reaction fire.
  */
 static int G_ReactionFireGetTUsForItem (const Edict *shooter, const Edict *target)
