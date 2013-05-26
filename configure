@@ -502,9 +502,36 @@ while [ $# -gt 0 ]; do
 	shift
 done
 
-[ "${TARGET_OS}" = "mingw32" ] && TARGET_ARCH=i386
-[ "${TARGET_OS}" = "android" ] && TARGET_ARCH=arm && enable_only ufo
-[ "${TARGET_OS}" = "darwin" ] && USE_SIGNALS=
+case ${TARGET_OS} in
+mingw32)
+	TARGET_ARCH=i386
+	;;
+mingw64)
+	TARGET_ARCH=i386
+	;;
+mingw64_64)
+	TARGET_ARCH=x86_64
+	;;
+android)
+	TARGET_ARCH=arm
+	enable_only ufo
+	;;
+html5)
+	if [ -z "$EMSCRIPTEN_ROOT" ]; then
+		EMSCRIPTEN_ROOT=$(python -c "import os, sys, re, json, shutil; exec(open(os.path.expanduser('~/.emscripten'), 'r').read()); print EMSCRIPTEN_ROOT")
+		CONFIGURE_PREFIX=${EMSCRIPTEN_ROOT}/emconfigure
+		EMSCRIPTEN_ROOT="${EMSCRIPTEN_ROOT}" CONFIGURE_PREFIX="${EMSCRIPTEN_ROOT}/emconfigure" $CONFIGURE_PREFIX ./configure $ARGS
+		exit
+	else
+		add_to_makefile_local EMSCRIPTEN_ROOT "Emscripten found at ${EMSCRIPTEN_ROOT}"
+		add_to_makefile_local CONFIGURE_PREFIX "Use ${EMSCRIPTEN_ROOT}/emconfigure"
+	fi
+	enable_only ufo
+	;;
+darwin)
+	USE_SIGNALS=
+	;;
+esac
 
 PKGDATADIR=${PKGDATADIR:-${PREFIX}/games/ufoai}
 PKGBINDIR=${PKGBINDIR:-${PREFIX}/bin}

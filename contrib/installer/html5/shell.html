@@ -1,0 +1,122 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+    <head>
+        <meta charset="utf-8"></meta>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"></meta>
+        <title>UFO: Alien Invasion</title>
+        <style TYPE="text/css">
+		<!--
+			* {
+			  margin: 0px;
+			  padding: 0px;
+			  font-family: "Courier New", Courier, monospace;
+			}
+
+			.download {
+			  border-radius: 2px;
+			  color: #ffffff;
+			  padding: 0.25em;
+			  background-color: #e85d00;
+			  font-size: 90%;
+			  font-weight: bold;
+			  text-align: center;
+			  margin-top: -2em;
+			  float: right;
+			  width: 8em;
+			  transition: .35s ease;
+			  text-transform: uppercase;
+			}
+
+			body {
+			  background-color: black;
+			}
+
+			div.image {
+				align: center;
+				margin: 16px;
+				padding: 16px;
+			}
+
+			div.image p {
+				text-align: center;
+				font-style: italic;
+				font-size: smaller;
+				text-indent: 0;
+			}
+
+			.emscripten {
+				padding-right: 0;
+				margin-left: auto;
+				margin-right: auto;
+				display: block;
+			}
+
+			textarea.emscripten {
+				font-family: "Courier New", Courier, monospace;
+				width: 80%;
+				font-size: 75%;
+				margin-top: 16px;
+				background-color: #333333;
+				border-width: 1px;
+				border-color: #333333;
+				color: #00CC00;
+			}
+
+			div.emscripten {
+				text-align: center;
+			}
+
+			div.emscripten_border {
+				border: 0px none;
+			}
+
+			/* the canvas *must not* have any border or padding, or mouse coords will be wrong */
+			canvas.emscripten {
+				border: 0px none;
+				background-color: #333333;
+			}
+		-->
+		</style>
+    </head>
+    <body>
+        <div class="page">
+            <!-- emscripten canvas -->
+            <div class="emscripten_border">
+                <canvas class="emscripten" id="canvas" width="1024" height="768" oncontextmenu="event.preventDefault()"></canvas>
+            </div>
+
+            <!-- emscripten output console -->
+            <textarea class="emscripten" id="output" rows="8"></textarea>
+
+            <script type='text/javascript'>
+                // connect to canvas
+                var Module = {
+                    preRun: [],
+                    postRun: [],
+                    print: (function() {
+                            var element = document.getElementById('output');
+                            element.value = ''; // clear browser cache
+                            return function(text) {
+                                text = Array.prototype.slice.call(arguments).join(' ');
+                                element.value += text + "\n";
+                                element.scrollTop = 99999; // focus on bottom
+                            };
+                    })(),
+                    printErr: function(text) {
+                        text = Array.prototype.slice.call(arguments).join(' ');
+                        console.log(text);
+                    },
+                    canvas: document.getElementById('canvas'),
+                    setStatus: function(text) {
+                    },
+                    totalDependencies: 0,
+                    monitorRunDependencies: function(left) {
+                    }
+                };
+            </script>
+            <script type='text/javascript'>
+                {{{ SCRIPT_CODE }}}
+            </script>
+        </div>
+    </body>
+</html>
