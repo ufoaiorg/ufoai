@@ -353,6 +353,9 @@ void G_ReactionFireTargetsCreate (const Edict *shooter)
 static int G_ReactionFireGetTUsForItem (const Edict *shooter, const Edict *target)
 {
 	const FiremodeSettings *fmSetting = &shooter->chr.RFmode;
+	if (!fmSetting->isSaneFiremode())
+		return -1;
+
 	const Item *weapon = shooter->getHandItem(fmSetting->getHand());
 
 	if (weapon && weapon->ammoDef() && weapon->isWeapon() && !weapon->mustReload()) {
@@ -360,14 +363,12 @@ static int G_ReactionFireGetTUsForItem (const Edict *shooter, const Edict *targe
 		if (fdArray == nullptr)
 			return -1;
 
-		if (fmSetting->getFmIdx() >= 0 && fmSetting->getFmIdx() < MAX_FIREDEFS_PER_WEAPON) { /* If firemode is sane. */
-			const fireDefIndex_t fmIdx = fmSetting->getFmIdx();
-			const fireDef_t *fd = &fdArray[fmIdx];
-			const int tus = G_ActorGetModifiedTimeForFiredef(shooter, fd, true);
+		const fireDefIndex_t fmIdx = fmSetting->getFmIdx();
+		const fireDef_t *fd = &fdArray[fmIdx];
+		const int tus = G_ActorGetModifiedTimeForFiredef(shooter, fd, true);
 
-			if (tus <= shooter->TU && fd->range > VectorDist(shooter->origin, target->origin)) {
-				return tus;
-			}
+		if (tus <= shooter->TU && fd->range > VectorDist(shooter->origin, target->origin)) {
+			return tus;
 		}
 	}
 
