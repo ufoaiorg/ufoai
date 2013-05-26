@@ -341,6 +341,11 @@ void G_ReactionFireTargetsCreate (const Edict *shooter)
 	rft.create(shooter);
 }
 
+/**
+ * @brief Get the fireDef for the RF settings of the shooter.
+ * @param[in] shooter The reaction firing actor
+ * @return nullptr if something is wrong
+ */
 static const fireDef_t* G_ReactionFireGetFireDef (const Edict *shooter)
 {
 	const FiremodeSettings *fmSetting = &shooter->chr.RFmode;
