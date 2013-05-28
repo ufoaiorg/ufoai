@@ -708,10 +708,10 @@ entity misc_item {
 		item		"The item to spawn - item id from ufo script definition"
 		spawnflags	"level flags"
 		origin		"Position"
-		targetname	"The id of this entity"
 	}
 
 	optional {
+		targetname	"The id of this entity"
 		group		"The trigger group"
 	}
 
