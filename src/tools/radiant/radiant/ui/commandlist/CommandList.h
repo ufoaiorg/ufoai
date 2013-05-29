@@ -1,5 +1,4 @@
-#ifndef COMMANDLIST_H_
-#define COMMANDLIST_H_
+#pragma once
 
 #include <string>
 #include <iostream>
@@ -59,5 +58,3 @@ class CommandListDialog: public gtkutil::BlockingTransientWindow
 
 // This is the actual command that instantiates the dialog
 void ShowCommandListDialog ();
-
-#endif /*COMMANDLIST_H_*/

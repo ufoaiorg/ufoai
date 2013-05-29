@@ -1,5 +1,4 @@
-#ifndef COMMANDLISTPOPULATOR_H_
-#define COMMANDLISTPOPULATOR_H_
+#pragma once
 
 #include "ieventmanager.h"
 
@@ -36,5 +35,3 @@ class CommandListPopulator: public IEventVisitor
 }; // class CommandListPopulator
 
 } // namespace ui
-
-#endif /*COMMANDLISTPOPULATOR_H_*/

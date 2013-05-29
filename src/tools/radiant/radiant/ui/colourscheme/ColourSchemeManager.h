@@ -1,5 +1,4 @@
-#ifndef COLOURSCHEMEMANAGER_H_
-#define COLOURSCHEMEMANAGER_H_
+#pragma once
 
 #include <string>
 #include <map>
@@ -54,5 +53,3 @@ class ColourSchemeManager {
 };
 
 } // namespace ui
-
-#endif /*COLOURSCHEMEMANAGER_H_*/

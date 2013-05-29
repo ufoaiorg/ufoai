@@ -1,5 +1,4 @@
-#ifndef _MAP_PREVIEW_VIEW_H_
-#define _MAP_PREVIEW_VIEW_H_
+#pragma once
 
 #include "cullable.h"
 #include "math/matrix.h"
@@ -85,5 +84,3 @@ namespace ui
 	};
 
 } // namespace ui
-
-#endif /* _MAP_PREVIEW_VIEW_H_ */

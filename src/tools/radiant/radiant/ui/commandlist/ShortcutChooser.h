@@ -1,5 +1,4 @@
-#ifndef SHORTCUTCHOOSER_H_
-#define SHORTCUTCHOOSER_H_
+#pragma once
 
 #include <string>
 #include "ieventmanager.h"
@@ -49,5 +48,3 @@ private:
 }; // class ShortcutChooser
 
 } // namespace ui
-
-#endif /*SHORTCUTCHOOSER_H_*/

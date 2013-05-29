@@ -1,5 +1,4 @@
-#ifndef MATERIAL_DEFINITION_VIEW_H_
-#define MATERIAL_DEFINITION_VIEW_H_
+#pragma once
 
 #include <string>
 #include "gtkutil/SourceView.h"
@@ -37,5 +36,3 @@ namespace ui
 	};
 
 } // namespace ui
-
-#endif /* MATERIAL_DEFINITION_VIEW_H_ */

@@ -1,5 +1,4 @@
-#ifndef MODELPREVIEW_H_
-#define MODELPREVIEW_H_
+#pragma once
 
 #include "imodel.h"
 #include "math/matrix.h"
@@ -99,5 +98,3 @@ namespace ui
 	};
 
 }
-
-#endif /*MODELPREVIEW_H_*/

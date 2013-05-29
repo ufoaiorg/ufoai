@@ -1,5 +1,4 @@
-#ifndef _MAP_PREVIEW_WIDGET_H_
-#define _MAP_PREVIEW_WIDGET_H_
+#pragma once
 
 #include "math/matrix.h"
 #include <gtk/gtkwidget.h>
@@ -88,5 +87,3 @@ namespace ui
 	};
 
 } // namespace ui
-
-#endif /* _MAP_PREVIEW_WIDGET_H_ */

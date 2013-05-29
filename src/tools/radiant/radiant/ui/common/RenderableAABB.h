@@ -1,5 +1,4 @@
-#ifndef RENDERABLEAABB_H_
-#define RENDERABLEAABB_H_
+#pragma once
 
 #include "irender.h"
 #include "math/aabb.h"
@@ -32,5 +31,3 @@ namespace ui
 	};
 
 }
-
-#endif /*RENDERABLEAABB_H_*/

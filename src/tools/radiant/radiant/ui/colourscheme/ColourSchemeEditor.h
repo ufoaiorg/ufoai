@@ -1,5 +1,4 @@
-#ifndef COLOURSCHEMEEDITOR_H_
-#define COLOURSCHEMEEDITOR_H_
+#pragma once
 
 #include <gtk/gtk.h>
 #include <string>
@@ -84,5 +83,3 @@ class ColourSchemeEditor
 }; // class ColourSchemeEditor
 
 } // namespace ui
-
-#endif /*COLOURSCHEMEEDITOR_H_*/
