@@ -296,12 +296,11 @@ tile +i09
 // Special tiles ---------------------------------------------------*
 
 tile +fueldump
-	// a fuel depot, A4, C3
+	// a fuel depot, A10, C4
 {
-7 7
+7 6
 0		0		0		0		0		0		0
-0		+a		+a		+a		+a		+a		x
-0		+a		+a		+a		+a		+a		x
+0		0		0		0		+a		+a		x
 0		+a		+a		+a		+a		+a		x
 0		+a		+a		+a		+a		+a		x
 0		+a		+a		+a		+a		+a		x
@@ -559,7 +558,13 @@ assembly fueldump
 {
 size "5 5"
 title "_Frozen"
-+fueldump	"1 1"
+fix +fueldump "0 0"
+fix +start "0 4"
++n01 "0 1"
++n02 "0 1"
++n03 "0 1"
++n04 "0 7"
++n07 "0 1"
 }
 
 assembly industrial_large

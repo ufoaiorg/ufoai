@@ -941,15 +941,18 @@ mapdef fueldump
 	map				"+frozen"
 	param			"fueldump"
 	description		"_Fuel Depot"
+	civilianteam	worker
+	maxaliens		10
+
+	missionbriefing		"*msgid:mission_briefing_fueldump"
+	victorycondition	"*msgid:victory_condition_fueldump"
+
 	multiplayer		true
 	teams			2
 	gametypes (
 		fight1on1
 		fight2on2
 	)
-	maxaliens		10
-	missionbriefing		"*msgid:mission_briefing_fueldump"
-	victorycondition	"*msgid:victory_condition_fueldump"
 
 	aircraft
 	(
