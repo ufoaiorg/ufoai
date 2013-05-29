@@ -1357,7 +1357,7 @@ le_t* LE_GetNextInUse (le_t* lastLE)
  * @param[in] from The entity to start the search from. @c nullptr will start from the beginning.
  * @param[in] org The origin that is the center of the circle.
  * @param[in] rad radius to search an edict in.
- * @param[in] type Type of local entity. @c ET_nullptr to ignore the type.
+ * @param[in] type Type of local entity. @c ET_NULL to ignore the type.
  */
 le_t *LE_FindRadius (le_t *from, const vec3_t org, float rad, entity_type_t type)
 {
@@ -1370,7 +1370,7 @@ le_t *LE_FindRadius (le_t *from, const vec3_t org, float rad, entity_type_t type
 			eorg[j] = org[j] - (le->origin[j] + (le->aabb.mins[j] + le->aabb.maxs[j]) * 0.5);
 		if (VectorLength(eorg) > rad)
 			continue;
-		if (type != ET_nullptr && le->type != type)
+		if (type != ET_NULL && le->type != type)
 			continue;
 		return le;
 	}

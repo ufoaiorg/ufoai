@@ -48,7 +48,7 @@ static int mouseScrollY;
 void uiTextNode::validateCache (uiNode_t *node)
 {
 	int v;
-	if (EXTRADATA(node).dataID == TEXT_nullptr || node->text != nullptr)
+	if (EXTRADATA(node).dataID == TEXT_NULL || node->text != nullptr)
 		return;
 
 	v = UI_GetDataVersion(EXTRADATA(node).dataID);
@@ -350,7 +350,7 @@ void uiTextNode::updateCache (uiNode_t *node)
 {
 	const uiSharedData_t *shared;
 
-	if (EXTRADATA(node).dataID == TEXT_nullptr && node->text != nullptr)
+	if (EXTRADATA(node).dataID == TEXT_NULL && node->text != nullptr)
 		return;
 
 	shared = &ui_global.sharedData[EXTRADATA(node).dataID];
@@ -379,7 +379,7 @@ void uiTextNode::draw (uiNode_t *node)
 {
 	const uiSharedData_t *shared;
 
-	if (EXTRADATA(node).dataID == TEXT_nullptr && node->text != nullptr) {
+	if (EXTRADATA(node).dataID == TEXT_NULL && node->text != nullptr) {
 		const char* t = CL_Translate(UI_GetReferenceString(node, node->text));
 		drawText(node, t, nullptr, false);
 		return;
@@ -509,7 +509,7 @@ void uiTextNode::onLoaded (uiNode_t *node)
 	}
 #endif
 
-	if (node->text == nullptr && EXTRADATA(node).dataID == TEXT_nullptr)
+	if (node->text == nullptr && EXTRADATA(node).dataID == TEXT_NULL)
 		Com_Printf("UI_TextNodeLoaded: 'textid' property of node '%s' is not set\n", UI_GetPath(node));
 }
 

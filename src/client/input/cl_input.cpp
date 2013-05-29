@@ -397,7 +397,7 @@ static void CL_SelectUp_f (void)
 	battlescapeMouseDraggingActive = false;
 	if (IN_GetMouseSpace() == MS_UI)
 		return;
-	IN_SetMouseSpace(MS_nullptr);
+	IN_SetMouseSpace(MS_NULL);
 }
 
 static void CL_ProcessMouseDragging (void)
@@ -431,7 +431,7 @@ static void CL_ActionUp_f (void)
 		return;
 	if (in_pantilt.msec < 250)
 		CL_ActorActionMouse();
-	IN_SetMouseSpace(MS_nullptr);
+	IN_SetMouseSpace(MS_NULL);
 }
 
 /**
@@ -449,7 +449,7 @@ static void CL_TurnUp_f (void)
 {
 	if (IN_GetMouseSpace() == MS_UI)
 		return;
-	IN_SetMouseSpace(MS_nullptr);
+	IN_SetMouseSpace(MS_NULL);
 }
 
 /**
@@ -579,7 +579,7 @@ float CL_GetKeyMouseState (int dir)
  */
 static void IN_Parse (void)
 {
-	IN_SetMouseSpace(MS_nullptr);
+	IN_SetMouseSpace(MS_NULL);
 
 	/* standard menu and world mouse handling */
 	if (UI_IsMouseOnWindow()) {
@@ -1018,12 +1018,12 @@ static cursorChange_t cursorChange;
 
 void IN_SetMouseSpace (mouseSpace_t mspace)
 {
-	if (mspace != MS_nullptr) {
+	if (mspace != MS_NULL) {
 		if (mspace != cursorChange.prevSpace) {
 			SCR_ChangeCursor(cursorChange.cursor);
 		}
 	}
-	if (mouseSpace != MS_nullptr && mouseSpace != cursorChange.prevSpace) {
+	if (mouseSpace != MS_NULL && mouseSpace != cursorChange.prevSpace) {
 		cursorChange.prevSpace = mouseSpace;
 		cursorChange.cursor = Cvar_GetValue("cursor");
 	}

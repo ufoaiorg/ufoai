@@ -1115,7 +1115,7 @@ static const value_t valid_tech_vars[] = {
 	{"image", V_HUNK_STRING, offsetof(technology_t, image), 0},
 	{"model", V_HUNK_STRING, offsetof(technology_t, mdl), 0},
 
-	{nullptr, V_nullptr, 0, 0}
+	{nullptr, V_NULL, 0, 0}
 };
 
 /**
@@ -1129,7 +1129,7 @@ static const value_t valid_techmail_vars[] = {
 	{"icon", V_HUNK_STRING, offsetof(techMail_t, icon), 0},
 	{"model", V_HUNK_STRING, offsetof(techMail_t, model), 0},
 
-	{nullptr, V_nullptr, 0, 0}
+	{nullptr, V_NULL, 0, 0}
 };
 
 /**

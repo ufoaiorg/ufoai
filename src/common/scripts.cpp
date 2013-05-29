@@ -373,7 +373,7 @@ CASSERT(lengthof(fade_names) == FADE_LAST);
 
 /** @brief target sizes for buffer */
 static const size_t vt_sizes[] = {
-	0,	/* V_nullptr */
+	0,	/* V_NULL */
 	sizeof(bool),	/* V_BOOL */
 	sizeof(char),	/* V_CHAR */
 	sizeof(int),	/* V_INT */
@@ -405,7 +405,7 @@ CASSERT(lengthof(vt_sizes) == V_NUM_TYPES);
 
 /** @brief natural align for each targets */
 static const size_t vt_aligns[] = {
-	0,	/* V_nullptr */
+	0,	/* V_NULL */
 	sizeof(bool),	/* V_BOOL */
 	sizeof(char),	/* V_CHAR */
 	sizeof(int),	/* V_INT */
@@ -454,8 +454,8 @@ void *Com_AlignPtr (const void *memory, valueTypes_t type)
 {
 	const size_t align = vt_aligns[type];
 	assert(memory != nullptr);
-	if (align == V_nullptr)
-		Sys_Error("Com_AlignPtr: can't align V_nullptr");
+	if (align == V_NULL)
+		Sys_Error("Com_AlignPtr: can't align V_NULL");
 	if (type >= V_NUM_TYPES)
 		Sys_Error("Com_AlignPtr: type hit V_NUM_TYPES");
 	return ALIGN_PTR(memory, align);
@@ -505,7 +505,7 @@ resultStatus_t Com_ParseValue (void *base, const char *token, valueTypes_t type,
 		snprintf(parseErrorMessage, sizeof(parseErrorMessage), "V_HUNK_STRING is not parsed here");
 		return RESULT_ERROR;
 
-	case V_nullptr:
+	case V_NULL:
 		*writtenBytes = 0;
 		break;
 
@@ -912,7 +912,7 @@ int Com_SetValue (void *base, const void *set, valueTypes_t type, int ofs, size_
 #endif
 
 	switch (type) {
-	case V_nullptr:
+	case V_NULL:
 		return 0;
 
 	case V_BOOL:
@@ -1110,7 +1110,7 @@ const char *Com_ValueToStr (const void *base, const valueTypes_t type, const int
 #endif
 
 	switch (type) {
-	case V_nullptr:
+	case V_NULL:
 		return 0;
 
 	case V_HUNK_STRING:
@@ -1489,7 +1489,7 @@ static const value_t od_vals[] = {
 	{"is_dummy", V_BOOL, offsetof(objDef_t, isDummy), MEMBER_SIZEOF(objDef_t, isDummy)},
 	{"virtual", V_BOOL, offsetof(objDef_t, isVirtual), MEMBER_SIZEOF(objDef_t, isVirtual)},
 
-	{nullptr, V_nullptr, 0, 0}
+	{nullptr, V_NULL, 0, 0}
 };
 
 /* =========================================================== */
@@ -1527,7 +1527,7 @@ static const value_t fdps[] = {
 	{"dmgweight", V_DAMAGE, offsetof(fireDef_t, dmgweight), MEMBER_SIZEOF(fireDef_t, dmgweight)},
 	{"irgoggles", V_BOOL, offsetof(fireDef_t, irgoggles), MEMBER_SIZEOF(fireDef_t, irgoggles)},
 	{"rounds", V_INT, offsetof(fireDef_t, rounds), MEMBER_SIZEOF(fireDef_t, rounds)},
-	{nullptr, V_nullptr, 0, 0}
+	{nullptr, V_NULL, 0, 0}
 };
 
 
@@ -1884,7 +1884,7 @@ static const value_t idps[] = {
 	/* time units for moving something out */
 	{"out", V_INT, offsetof(invDef_t, out), MEMBER_SIZEOF(invDef_t, out)},
 
-	{nullptr, V_nullptr, 0, 0}
+	{nullptr, V_NULL, 0, 0}
 };
 
 static void Com_ParseInventory (const char *name, const char **text)
@@ -1958,7 +1958,7 @@ static const value_t equipment_definition_vals[] = {
 	{"maxinterest", V_INT, offsetof(equipDef_t, maxInterest), MEMBER_SIZEOF(equipDef_t, maxInterest)},
 	{"name", V_TRANSLATION_STRING, offsetof(equipDef_t, name), 0},
 
-	{nullptr, V_nullptr, 0, 0}
+	{nullptr, V_NULL, 0, 0}
 };
 
 static void Com_ParseEquipment (const char *name, const char **text)
@@ -2508,7 +2508,7 @@ static const value_t teamDefValues[] = {
 	{"team", V_TEAM, offsetof(teamDef_t, team), MEMBER_SIZEOF(teamDef_t, team)},
 	{"robot", V_BOOL, offsetof(teamDef_t, robot), MEMBER_SIZEOF(teamDef_t, robot)},
 
-	{nullptr, V_nullptr, 0, 0}
+	{nullptr, V_NULL, 0, 0}
 };
 
 static void Com_ParseTeam (const char *name, const char **text)
@@ -2660,7 +2660,7 @@ static const value_t ugvValues[] = {
 	{"actors", V_STRING, offsetof(ugv_t, actors), 0},
 	{"price", V_INT, offsetof(ugv_t, price), 0},
 
-	{nullptr, V_nullptr, 0, 0}
+	{nullptr, V_NULL, 0, 0}
 };
 
 /**
@@ -2761,7 +2761,7 @@ static const value_t bodyPartValues[] = {
 		{"bleed", V_INT, offsetof(BodyPartData, bleedingFactor), MEMBER_SIZEOF(BodyPartData, bleedingFactor)},
 		{"threshold", V_INT, offsetof(BodyPartData, woundThreshold), MEMBER_SIZEOF(BodyPartData, woundThreshold)},
 
-		{nullptr, V_nullptr, 0, 0}
+		{nullptr, V_NULL, 0, 0}
 };
 
 static const char *const penaltyNames[MODIFIER_MAX] = {
@@ -2896,7 +2896,7 @@ static const value_t terrainTypeValues[] = {
 	{"footstepvolume", V_FLOAT, offsetof(terrainType_t, footstepVolume), 0},
 	{"bouncefraction", V_FLOAT, offsetof(terrainType_t, bounceFraction), 0},
 
-	{nullptr, V_nullptr, 0, 0}
+	{nullptr, V_NULL, 0, 0}
 };
 
 /**
@@ -2957,7 +2957,7 @@ GAMETYPE INTERPRETER
 /** @brief possible gametype values for the gameserver (ufo-scriptfiles) */
 static const value_t gameTypeValues[] = {
 	{"name", V_TRANSLATION_STRING, offsetof(gametype_t, name), 0}, /**< translated game-type name for menu displaying */
-	{nullptr, V_nullptr, 0, 0}
+	{nullptr, V_NULL, 0, 0}
 };
 
 static void Com_ParseGameTypes (const char *name, const char **text)
@@ -3317,7 +3317,7 @@ static const value_t mapdef_vals[] = {
 	{"cultures", V_LIST, offsetof(mapDef_t, cultures), 0},
 	{"gametypes", V_LIST, offsetof(mapDef_t, gameTypes), 0},
 
-	{nullptr, V_nullptr, 0, 0}
+	{nullptr, V_NULL, 0, 0}
 };
 
 static void Com_ParseMapDefinition (const char *name, const char **text)

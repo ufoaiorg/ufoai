@@ -106,7 +106,7 @@ static void UI_CheckActionTokenTypeSanity (void)
  * @param[in] token Requested token
  * @param[in] group Requested group, EA_ACTION, EA_BINARYOPERATOR, or EA_UNARYOPERATOR
  * @sa actionTokens
- * @return a action type from the requested group, else EA_nullptr
+ * @return a action type from the requested group, else EA_NULL
  */
 int UI_GetActionTokenType (const char* token, int group)
 {
@@ -123,7 +123,7 @@ int UI_GetActionTokenType (const char* token, int group)
 			if (actionTokens[mid].group == group)
 				return actionTokens[mid].type;
 			else
-				return EA_nullptr;
+				return EA_NULL;
 		}
 
 		if (diff > 0)
@@ -131,7 +131,7 @@ int UI_GetActionTokenType (const char* token, int group)
 		else
 			min = mid + 1;
 	}
-	return EA_nullptr;
+	return EA_NULL;
 }
 
 /**
@@ -530,7 +530,7 @@ static void UI_ReleaseVariable (uiValue_t *variable)
 static void UI_ExecuteAction (const uiAction_t* action, uiCallContext_t *context)
 {
 	switch (action->type) {
-	case EA_nullptr:
+	case EA_NULL:
 		/* do nothing */
 		break;
 

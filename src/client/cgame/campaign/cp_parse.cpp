@@ -68,7 +68,7 @@ static const value_t alien_group_vals[] = {
 	{"maxinterest", V_INT, offsetof(alienTeamGroup_t, maxInterest), 0},
 	{"minaliencount", V_INT, offsetof(alienTeamGroup_t, minAlienCount), 0},
 	{"maxaliencount", V_INT, offsetof(alienTeamGroup_t, maxAlienCount), 0},
-	{nullptr, V_nullptr, 0, 0}
+	{nullptr, V_NULL, 0, 0}
 };
 
 /**
@@ -318,7 +318,7 @@ static const value_t salary_vals[] = {
 	{"admin_pilot", V_INT, offsetof(salary_t, admin[EMPL_PILOT]), MEMBER_SIZEOF(salary_t, admin[EMPL_PILOT])},
 	{"admin_robot", V_INT, offsetof(salary_t, admin[EMPL_ROBOT]), MEMBER_SIZEOF(salary_t, admin[EMPL_ROBOT])},
 	{"debt_interest", V_FLOAT, offsetof(salary_t, debtInterest), MEMBER_SIZEOF(salary_t, debtInterest)},
-	{nullptr, V_nullptr, 0, 0}
+	{nullptr, V_NULL, 0, 0}
 };
 
 /**
@@ -369,7 +369,7 @@ static const value_t campaign_vals[] = {
 	{"initialinterest", V_INT, offsetof(campaign_t, initialInterest), MEMBER_SIZEOF(campaign_t, initialInterest)},
 	{"employeerate", V_FLOAT, offsetof(campaign_t, employeeRate), MEMBER_SIZEOF(campaign_t, employeeRate)},
 	{"alienbaseinterest", V_INT, offsetof(campaign_t, alienBaseInterest), MEMBER_SIZEOF(campaign_t, alienBaseInterest)},
-	{nullptr, V_nullptr, 0, 0}
+	{nullptr, V_NULL, 0, 0}
 };
 
 /**
@@ -493,7 +493,7 @@ static const value_t components_type_vals[] = {
 	{"id", V_STRING, offsetof(component_type_data_t, id), 0},
 	{"amount", V_STRING, offsetof(component_type_data_t, amount), 0},
 	{"numbercrash", V_STRING, offsetof(component_type_data_t, numbercrash), 0},
-	{nullptr, V_nullptr, 0, 0}
+	{nullptr, V_NULL, 0, 0}
 };
 
 /**

@@ -135,7 +135,7 @@ void G_ActorFall (Edict *ent)
 	if (oldZ == ent->pos[2])
 		return;
 
-	entAtPos = G_GetEdictFromPos(ent->pos, ET_nullptr);
+	entAtPos = G_GetEdictFromPos(ent->pos, ET_NULL);
 	if (entAtPos != nullptr && (G_IsBreakable(entAtPos) || G_IsBlockingMovementActor(entAtPos))) {
 		const int diff = oldZ - ent->pos[2];
 		G_TakeDamage(entAtPos, (int)(FALLING_DAMAGE_FACTOR * (float)diff));

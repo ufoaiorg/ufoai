@@ -170,7 +170,7 @@ static const value_t seqCamera_vals[] = {
 	{"ddist", V_FLOAT, offsetof(seqCamera_t, ddist), MEMBER_SIZEOF(seqCamera_t, ddist)},
 	{"zoom", V_FLOAT, offsetof(seqCamera_t, zoom), MEMBER_SIZEOF(seqCamera_t, zoom)},
 	{"dzoom", V_FLOAT, offsetof(seqCamera_t, dzoom), MEMBER_SIZEOF(seqCamera_t, dzoom)},
-	{nullptr, V_nullptr, 0, 0}
+	{nullptr, V_NULL, 0, 0}
 };
 
 /** @brief valid entity names for a sequence */
@@ -185,7 +185,7 @@ static const value_t seqEnt_vals[] = {
 	{"color", V_VECTOR, offsetof(seqEnt_t, color), MEMBER_SIZEOF(seqEnt_t, color)},
 	{"parent", V_STRING, offsetof(seqEnt_t, parent), 0},
 	{"tag", V_STRING, offsetof(seqEnt_t, tag), 0},
-	{nullptr, V_nullptr, 0, 0}
+	{nullptr, V_NULL, 0, 0}
 };
 
 /** @brief valid id names for 2d entity */
@@ -204,7 +204,7 @@ static const value_t seq2D_vals[] = {
 	{"align", V_ALIGN, offsetof(seq2D_t, align), MEMBER_SIZEOF(seq2D_t, align)},
 	{"inbackground", V_BOOL, offsetof(seq2D_t, inBackground), MEMBER_SIZEOF(seq2D_t, inBackground)},
 	{"relative", V_BOOL, offsetof(seq2D_t, relativePos), MEMBER_SIZEOF(seq2D_t, relativePos)},
-	{nullptr, V_nullptr, 0, 0}
+	{nullptr, V_NULL, 0, 0}
 };
 
 /**

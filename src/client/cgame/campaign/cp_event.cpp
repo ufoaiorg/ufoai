@@ -82,7 +82,7 @@ static const value_t eventMail_vals[] = {
 	{"model", V_HUNK_STRING, offsetof(eventMail_t, model), 0},
 	{"skipmessage", V_BOOL, offsetof(eventMail_t, skipMessage), MEMBER_SIZEOF(eventMail_t, skipMessage)},
 
-	{nullptr, V_nullptr, 0, 0}
+	{nullptr, V_NULL, 0, 0}
 };
 
 /**
@@ -345,7 +345,7 @@ static const value_t event_vals[] = {
 	{"command", V_HUNK_STRING, offsetof(campaignTriggerEvent_t, command), 0},
 	{"once", V_BOOL, offsetof(campaignTriggerEvent_t, once), MEMBER_SIZEOF(campaignTriggerEvent_t, once)},
 
-	{nullptr, V_nullptr, 0, 0}
+	{nullptr, V_NULL, 0, 0}
 };
 
 #define EVENTCONSTANTS_NAMESPACE "eventTrigger::"

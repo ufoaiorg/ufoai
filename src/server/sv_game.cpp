@@ -296,7 +296,7 @@ static void SV_ReadFormat (const char *format, ...)
 	va_list ap;
 
 	assert(format);
-	if (!*format) /* PA_nullptr */
+	if (!*format) /* PA_NULL */
 		return;
 
 	va_start(ap, format);

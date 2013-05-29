@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /** @brief linked into ui_global.sharedData - defined in UI scripts via dataId property */
 enum uiDataIDs_t {
-	TEXT_nullptr,		/**< default value, should not be used */
+	TEXT_NULL,		/**< default value, should not be used */
 	TEXT_STANDARD,
 	TEXT_LIST,
 	TEXT_LIST2,

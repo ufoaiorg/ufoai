@@ -695,7 +695,7 @@ static const value_t actorskin_vals[] = {
 	{"singleplayer", V_BOOL, offsetof(actorSkin_t, singleplayer), MEMBER_SIZEOF(actorSkin_t, singleplayer)},
 	{"multiplayer", V_BOOL, offsetof(actorSkin_t, multiplayer), MEMBER_SIZEOF(actorSkin_t, multiplayer)},
 
-	{nullptr, V_nullptr, 0, 0}
+	{nullptr, V_NULL, 0, 0}
 };
 
 

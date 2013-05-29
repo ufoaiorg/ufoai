@@ -1360,7 +1360,7 @@ static const value_t aircraft_param_vals[] = {
 	{"accuracy", V_INT, offsetof(aircraft_t, stats[AIR_STATS_ACCURACY]), MEMBER_SIZEOF(aircraft_t, stats[0])},
 	{"antimatter", V_INT, offsetof(aircraft_t, stats[AIR_STATS_ANTIMATTER]), MEMBER_SIZEOF(aircraft_t, stats[0])},
 
-	{nullptr, V_nullptr, 0, 0}
+	{nullptr, V_NULL, 0, 0}
 };
 
 /** @brief Valid aircraft definition values from script files. */
@@ -1382,7 +1382,7 @@ static const value_t aircraft_vals[] = {
 	{"productioncost", V_INT, offsetof(aircraft_t, productionCost), MEMBER_SIZEOF(aircraft_t, productionCost)},
 	{"building", V_HUNK_STRING, offsetof(aircraft_t, building), 0},
 
-	{nullptr, V_nullptr, 0, 0}
+	{nullptr, V_NULL, 0, 0}
 };
 
 /** @brief Valid radar definition values for an airtcraft from script files. */
@@ -1391,7 +1391,7 @@ static const value_t aircraft_radar_vals[] = {
 	{"trackingrange", V_INT, offsetof(aircraft_t, radar.trackingRange), MEMBER_SIZEOF(aircraft_t, radar.trackingRange)},
 	{"detectionprobability", V_FLOAT, offsetof(aircraft_t, radar.ufoDetectionProbability), MEMBER_SIZEOF(aircraft_t, radar.ufoDetectionProbability)},
 
-	{nullptr, V_nullptr, 0, 0}
+	{nullptr, V_NULL, 0, 0}
 };
 
 /**

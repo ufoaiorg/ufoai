@@ -386,7 +386,7 @@ static const value_t materialValues[] = {
 	{"specular", V_FLOAT, offsetof(material_t, specular), 0},
 	{"hardness", V_FLOAT, offsetof(material_t, hardness), 0},
 
-	{nullptr, V_nullptr, 0, 0},
+	{nullptr, V_NULL, 0, 0},
 };
 
 
@@ -418,7 +418,7 @@ static const value_t materialStageValues[] = {
 	{"blend.src", V_INT, offsetof(materialStage_t, blend.src), 0},
 	{"blend.dest", V_INT, offsetof(materialStage_t, blend.dest), 0},
 
-	{nullptr, V_nullptr, 0, 0},
+	{nullptr, V_NULL, 0, 0},
 };
 
 static void UI_MaterialEditorChangeValue_f (void)

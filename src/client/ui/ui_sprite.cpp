@@ -53,7 +53,7 @@ const value_t ui_spriteProperties[] = {
 	{"disabledcolor", V_COLOR, offsetof(uiSprite_t, color[SPRITE_STATUS_DISABLED]), MEMBER_SIZEOF(uiSprite_t, color[SPRITE_STATUS_DISABLED])},
 	{"clickedcolor", V_COLOR, offsetof(uiSprite_t, color[SPRITE_STATUS_CLICKED]), MEMBER_SIZEOF(uiSprite_t, color[SPRITE_STATUS_CLICKED])},
 
-	{nullptr, V_nullptr, 0, 0}
+	{nullptr, V_NULL, 0, 0}
 };
 
 /**

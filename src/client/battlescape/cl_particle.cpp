@@ -202,7 +202,7 @@ static const value_t pps[] = {
 	{"lightintensity", V_FLOAT, offsetof(ptl_t, lightIntensity), MEMBER_SIZEOF(ptl_t, lightIntensity)},
 	{"lightsustain", V_FLOAT, offsetof(ptl_t, lightSustain), MEMBER_SIZEOF(ptl_t, lightSustain)},
 
-	{nullptr, V_nullptr, 0, 0}
+	{nullptr, V_NULL, 0, 0}
 };
 
 /* =========================================================== */

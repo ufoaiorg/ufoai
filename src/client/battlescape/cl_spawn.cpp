@@ -104,7 +104,7 @@ static const value_t localEntityValues[] = {
 	{"angles_night", V_POS, offsetof(localEntityParse_t, nightSunAngles), MEMBER_SIZEOF(localEntityParse_t, nightSunAngles)},
 	{"color_night", V_VECTOR, offsetof(localEntityParse_t, nightSunColor), MEMBER_SIZEOF(localEntityParse_t, nightSunColor)},
 
-	{nullptr, V_nullptr, 0, 0}
+	{nullptr, V_NULL, 0, 0}
 };
 
 static void SP_worldspawn(const localEntityParse_t *entData);

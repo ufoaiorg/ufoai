@@ -688,7 +688,7 @@ uiAction_t *UI_ParseExpression (const char **text)
 		expression = UI_AllocStaticAction();
 		expression->d.nonTerminal.left = e;
 		expression->type = UI_GetActionTokenType(token, EA_BINARYOPERATOR);
-		if (expression->type == EA_nullptr) {
+		if (expression->type == EA_NULL) {
 			Com_Printf("UI_ParseExpression: Invalid 'expression' statement. Unknown '%s' operator\n", token);
 			return nullptr;
 		}
@@ -707,7 +707,7 @@ uiAction_t *UI_ParseExpression (const char **text)
 		return expression;
 	} else {
 		const int type = UI_GetActionTokenType(token, EA_UNARYOPERATOR);
-		if (type == EA_nullptr) {
+		if (type == EA_NULL) {
 			Com_UnParseLastToken();
 			return UI_ParseValueExpression(text);
 		} else {

@@ -47,7 +47,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @sa vt_sizes
  */
 typedef enum {
-	V_nullptr,
+	V_NULL,
 	V_BOOL,
 	V_CHAR,
 	V_INT,

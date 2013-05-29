@@ -66,7 +66,7 @@ static const value_t rankValues[] = {
 	{"killed_others", V_INT, offsetof(rank_t, killedOthers), MEMBER_SIZEOF(rank_t, killedOthers)},
 	{"factor", V_FLOAT, offsetof(rank_t, factor), MEMBER_SIZEOF(rank_t, factor)},
 	{"level", V_INT, offsetof(rank_t, level), MEMBER_SIZEOF(rank_t, level)},
-	{nullptr, V_nullptr, 0, 0}
+	{nullptr, V_NULL, 0, 0}
 };
 
 /**

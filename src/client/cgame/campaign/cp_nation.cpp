@@ -288,7 +288,7 @@ static const value_t nation_vals[] = {
 	{"workers", V_INT, offsetof(nation_t, maxWorkers), MEMBER_SIZEOF(nation_t, maxWorkers)},
 	{"pilots", V_INT, offsetof(nation_t, maxPilots), MEMBER_SIZEOF(nation_t, maxPilots)},
 
-	{nullptr, V_nullptr, 0, 0}
+	{nullptr, V_NULL, 0, 0}
 };
 
 /**
@@ -364,7 +364,7 @@ static const value_t city_vals[] = {
 	{"name", V_TRANSLATION_STRING, offsetof(city_t, name), 0},
 	{"pos", V_POS, offsetof(city_t, pos), MEMBER_SIZEOF(city_t, pos)},
 
-	{nullptr, V_nullptr, 0, 0}
+	{nullptr, V_NULL, 0, 0}
 };
 
 /**

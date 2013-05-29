@@ -33,7 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @sa MSG_Write_PA */
 const char *pa_format[] =
 {
-	"",					/**< PA_nullptr */
+	"",					/**< PA_NULL */
 	"s",				/**< PA_TURN */
 	"g",				/**< PA_MOVE */
 	"s",				/**< PA_STATE - don't use a bitmask here - only one value

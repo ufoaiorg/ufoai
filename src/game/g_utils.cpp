@@ -61,7 +61,7 @@ Edict *G_GetEdictFromPos (const pos3_t pos, const entity_type_t type)
 	Edict *ent = nullptr;
 
 	while ((ent = G_EdictsGetNextInUse(ent))) {
-		if (type > ET_nullptr && ent->type != type)
+		if (type > ET_NULL && ent->type != type)
 			continue;
 		if (!VectorCompare(pos, ent->pos))
 			continue;
@@ -403,7 +403,7 @@ void G_PrintActorStats (const Edict *victim, const Edict *attacker, const fireDe
  * @param[in] from The entity to start the search from. @c nullptr will start from the beginning.
  * @param[in] org The origin that is the center of the circle.
  * @param[in] rad radius to search an edict in.
- * @param[in] type Type of entity. @c ET_nullptr to ignore the type.
+ * @param[in] type Type of entity. @c ET_NULL to ignore the type.
  * @code
  * Edict *ent = nullptr;
  * while ((ent = G_FindRadius(ent, origin, rad, type)) != nullptr) {
@@ -422,7 +422,7 @@ Edict *G_FindRadius (Edict *from, const vec3_t org, float rad, entity_type_t typ
 			eorg[j] = org[j] - (ent->origin[j] + (ent->mins[j] + ent->maxs[j]) * 0.5);
 		if (VectorLength(eorg) > rad)
 			continue;
-		if (type != ET_nullptr && ent->type != type)
+		if (type != ET_NULL && ent->type != type)
 			continue;
 		return ent;
 	}

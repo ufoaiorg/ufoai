@@ -137,7 +137,7 @@ typedef enum {
 } event_t;
 
 typedef enum {
-	ET_nullptr,
+	ET_NULL,
 	ET_ACTORSPAWN,
 	ET_ACTOR,
 	ET_ITEM,
@@ -181,7 +181,7 @@ typedef enum {
 #define DOOR_ROTATION_ANGLE 90
 
 typedef enum {
-	PA_nullptr,
+	PA_NULL,
 	PA_TURN,
 	PA_MOVE,
 	PA_STATE,

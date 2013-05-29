@@ -32,7 +32,7 @@
 static const value_t mission_vals[] = {
 	{"pos", V_POS, offsetof(staticMission_t, pos), 0},
 
-	{nullptr, V_nullptr, 0, 0}
+	{nullptr, V_NULL, 0, 0}
 };
 
 static void SCP_ParseMission (const char *name, const char **text)
@@ -147,7 +147,7 @@ static const value_t stageset_vals[] = {
 	{"endstage", V_STRING, offsetof(stageSet_t, endstage), 0},
 	{"commands", V_STRING, offsetof(stageSet_t, cmds), 0},
 
-	{nullptr, V_nullptr, 0, 0}
+	{nullptr, V_NULL, 0, 0}
 };
 
 static void SCP_ParseStageSet (const char *name, const char **text)

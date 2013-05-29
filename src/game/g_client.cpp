@@ -659,7 +659,7 @@ int G_ClientAction (Player &player)
 	format = pa_format[action];
 
 	switch (action) {
-	case PA_nullptr:
+	case PA_NULL:
 		/* do nothing on a null action */
 		break;
 
@@ -1312,7 +1312,7 @@ static void G_ClientSendEdictsAndBrushModels (const Player &player)
 			continue;
 
 		/* skip the world(s) in case of map assembly */
-		if (ent->type > ET_nullptr) {
+		if (ent->type > ET_NULL) {
 			G_EventAddBrushModel(mask, *ent);
 			G_VisFlagsAdd(*ent, ~ent->visflags);
 		}

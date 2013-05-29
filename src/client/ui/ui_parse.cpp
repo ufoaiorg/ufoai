@@ -50,14 +50,14 @@ static uiNode_t *UI_ParseNode(uiNode_t *parent, const char **text, const char **
 /** @brief valid properties for a UI model definition */
 static const value_t uiModelProperties[] = {
 	{"model", V_HUNK_STRING, offsetof(uiModel_t, model), 0},
-	{"need", V_nullptr, 0, 0},
+	{"need", V_NULL, 0, 0},
 	{"anim", V_HUNK_STRING, offsetof(uiModel_t, anim), 0},
 	{"skin", V_INT, offsetof(uiModel_t, skin), sizeof(int)},
 	{"color", V_COLOR, offsetof(uiModel_t, color), sizeof(vec4_t)},
 	{"tag", V_HUNK_STRING, offsetof(uiModel_t, tag), 0},
 	{"parent", V_HUNK_STRING, offsetof(uiModel_t, parent), 0},
 
-	{nullptr, V_nullptr, 0, 0},
+	{nullptr, V_NULL, 0, 0},
 };
 
 /** @brief reserved token preventing calling a node with it
@@ -441,7 +441,7 @@ static uiAction_t *UI_ParseActionList (uiNode_t *node, const char **text, const 
 
 	while (true) {
 		bool result;
-		int type = EA_nullptr;
+		int type = EA_NULL;
 
 		/* get new token */
 		*token = Com_EParse(text, errhead, nullptr);
@@ -453,11 +453,11 @@ static uiAction_t *UI_ParseActionList (uiNode_t *node, const char **text, const 
 
 		type = UI_GetActionTokenType(*token, EA_ACTION);
 		/* setter form */
-		if (type == EA_nullptr && (*token)[0] == '*')
+		if (type == EA_NULL && (*token)[0] == '*')
 			type = EA_ASSIGN;
 
 		/* unknown, we break the parsing */
-		if (type == EA_nullptr) {
+		if (type == EA_NULL) {
 			Com_Printf("UI_ParseActionList: unknown token \"%s\" ignored (in event) (node: %s)\n", *token, UI_GetPath(node));
 			return nullptr;
 		}
@@ -666,7 +666,7 @@ static bool UI_ParseProperty (void *object, const value_t *property, const char*
 	int result;
 	const int specialType = property->type & V_UI_MASK;
 
-	if (property->type == V_nullptr) {
+	if (property->type == V_NULL) {
 		return false;
 	}
 
@@ -1149,7 +1149,7 @@ bool UI_ParseUIModel (const char *name, const char **text)
 			return false;
 		}
 
-		if (v->type == V_nullptr) {
+		if (v->type == V_NULL) {
 			if (Q_streq(v->string, "need")) {
 				token = Com_EParse(text, errhead, name);
 				if (!*text)

@@ -51,7 +51,7 @@ static void UI_TextNodeGenerateLineSplit (uiNode_t *node)
 
 	if (node->text != nullptr)
 		data = UI_GetReferenceString(node, node->text);
-	else if (EXTRADATA(node).super.dataID != TEXT_nullptr) {
+	else if (EXTRADATA(node).super.dataID != TEXT_NULL) {
 		const uiSharedData_t *shared;
 		shared = &ui_global.sharedData[EXTRADATA(node).super.dataID];
 		switch (shared->type) {
@@ -233,7 +233,7 @@ void uiText2Node::updateCache (uiNode_t *node)
 
 	UI_TextNodeGenerateLineSplit(node);
 
-	if (EXTRADATA(node).super.dataID == TEXT_nullptr && node->text != nullptr) {
+	if (EXTRADATA(node).super.dataID == TEXT_NULL && node->text != nullptr) {
 		drawText(node, EXTRADATA(node).lineSplit, true);
 		return;
 	}
@@ -258,7 +258,7 @@ void uiText2Node::draw (uiNode_t *node)
 
 	validateCache(node);
 
-	if (EXTRADATA(node).super.dataID == TEXT_nullptr && node->text != nullptr) {
+	if (EXTRADATA(node).super.dataID == TEXT_NULL && node->text != nullptr) {
 		drawText(node, EXTRADATA(node).lineSplit, false);
 		return;
 	}
@@ -358,7 +358,7 @@ void uiText2Node::onLoaded (uiNode_t *node)
 	}
 #endif
 
-	if (node->text == nullptr && EXTRADATA(node).super.dataID == TEXT_nullptr)
+	if (node->text == nullptr && EXTRADATA(node).super.dataID == TEXT_NULL)
 		Com_Printf("UI_TextNodeLoaded: 'textid' property of node '%s' is not set\n", UI_GetPath(node));
 }
 
