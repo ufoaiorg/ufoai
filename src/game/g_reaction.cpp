@@ -351,6 +351,7 @@ public:
 	bool checkExecution(const Edict *target);
 	void updateAllTargets(const Edict *target);
 	bool tryToShoot(Edict *shooter, const Edict *target);
+	const fireDef_t* getFireDef (const Edict *shooter);
 };
 static ReactionFire rf;
 
@@ -359,7 +360,7 @@ static ReactionFire rf;
  * @param[in] shooter The reaction firing actor
  * @return nullptr if something is wrong
  */
-static const fireDef_t* G_ReactionFireGetFireDef (const Edict *shooter)
+const fireDef_t* ReactionFire::getFireDef (const Edict *shooter)
 {
 	const FiremodeSettings *fmSetting = &shooter->chr.RFmode;
 	if (!fmSetting->isSaneFiremode())
@@ -389,7 +390,7 @@ static const fireDef_t* G_ReactionFireGetFireDef (const Edict *shooter)
  */
 static int G_ReactionFireGetTUsForItem (const Edict *shooter, const Edict *target)
 {
-	const fireDef_t *fd = G_ReactionFireGetFireDef(shooter);
+	const fireDef_t *fd = rf.getFireDef(shooter);
 	if (!fd)
 		return -1;
 
