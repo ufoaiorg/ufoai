@@ -382,6 +382,7 @@ const fireDef_t* ReactionFire::getFireDef (const Edict *shooter)
 
 bool ReactionFire::isInWeaponRange (const Edict *shooter, const Edict *target, const fireDef_t* fd)
 {
+	assert(fd);
 	return fd->range > VectorDist(shooter->origin, target->origin) ? false : true;
 }
 
