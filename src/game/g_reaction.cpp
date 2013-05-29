@@ -351,6 +351,7 @@ public:
 	bool checkExecution(const Edict *target);
 	void updateAllTargets(const Edict *target);
 	bool tryToShoot(Edict *shooter, const Edict *target);
+	bool isInWeaponRange (const Edict *shooter, const Edict *target, const fireDef_t* fd);
 	const fireDef_t* getFireDef (const Edict *shooter);
 };
 static ReactionFire rf;
@@ -379,6 +380,11 @@ const fireDef_t* ReactionFire::getFireDef (const Edict *shooter)
 	return nullptr;
 }
 
+bool ReactionFire::isInWeaponRange (const Edict *shooter, const Edict *target, const fireDef_t* fd)
+{
+	return fd->range > VectorDist(shooter->origin, target->origin) ? false : true;
+}
+
 /**
  * @brief Get the weapon firing TUs of the item in the hand of the shooter.
  * @return -1 if no firedef was found for the item or the reaction fire mode is not activated.
@@ -396,7 +402,7 @@ static int G_ReactionFireGetTUsForItem (const Edict *shooter, const Edict *targe
 
 	const int tus = G_ActorGetModifiedTimeForFiredef(shooter, fd, true);
 
-	if (tus <= shooter->TU && fd->range > VectorDist(shooter->origin, target->origin)) {
+	if (tus <= shooter->TU && rf.isInWeaponRange(shooter, target, fd)) {
 		return tus;
 	}
 
