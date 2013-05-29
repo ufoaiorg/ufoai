@@ -392,8 +392,6 @@ bool ReactionFire::isInWeaponRange (const Edict *shooter, const Edict *target, c
  * @param[in] shooter The reaction firing actor
  * @param[in] target The target to check reaction fire for (e.g. check whether the weapon that was marked for
  * using in reaction fire situations can handle the distance between the shooter and the target)
- * @note This does 'not' return the best weapon (lowest TU costs, highest damage, highest accuracy) but the first weapon that
- * would fit for reaction fire.
  */
 static int G_ReactionFireGetTUsForItem (const Edict *shooter, const Edict *target)
 {
