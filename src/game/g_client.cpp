@@ -334,39 +334,35 @@ int G_GetActiveTeam (void)
  * @param[in] player Which player (human player) is trying to do the action
  * @param[in] ent Which of his units is trying to do the action.
  */
-static bool G_ActionCheck (const Player *player, Edict *ent)
+static bool G_ActionCheck (const Player &player, Edict *ent)
 {
-	/* don't check for a player - but maybe a server action */
-	if (!player)
-		return true;
-
 	if (!ent || !ent->inuse) {
-		G_ClientPrintf(*player, PRINT_HUD, _("Can't perform action - object not present!"));
+		G_ClientPrintf(player, PRINT_HUD, _("Can't perform action - object not present!"));
 		return false;
 	}
 
 	if (ent->type != ET_ACTOR && ent->type != ET_ACTOR2x2) {
-		G_ClientPrintf(*player, PRINT_HUD, _("Can't perform action - not an actor!"));
+		G_ClientPrintf(player, PRINT_HUD, _("Can't perform action - not an actor!"));
 		return false;
 	}
 
 	if (G_IsStunned(ent)) {
-		G_ClientPrintf(*player, PRINT_HUD, _("Can't perform action - actor is stunned!"));
+		G_ClientPrintf(player, PRINT_HUD, _("Can't perform action - actor is stunned!"));
 		return false;
 	}
 
 	if (G_IsDead(ent)) {
-		G_ClientPrintf(*player, PRINT_HUD, _("Can't perform action - actor is dead!"));
+		G_ClientPrintf(player, PRINT_HUD, _("Can't perform action - actor is dead!"));
 		return false;
 	}
 
-	if (ent->team != player->getTeam()) {
-		G_ClientPrintf(*player, PRINT_HUD, _("Can't perform action - not on same team!"));
+	if (ent->team != player.getTeam()) {
+		G_ClientPrintf(player, PRINT_HUD, _("Can't perform action - not on same team!"));
 		return false;
 	}
 
-	if (ent->pnum != player->getNum()) {
-		G_ClientPrintf(*player, PRINT_HUD, _("Can't perform action - no control over allied actors!"));
+	if (ent->pnum != player.getNum()) {
+		G_ClientPrintf(player, PRINT_HUD, _("Can't perform action - no control over allied actors!"));
 		return false;
 	}
 
@@ -393,7 +389,7 @@ bool G_ActionCheckForCurrentTeam (const Player &player, Edict *ent, int TU)
 		return false;
 	}
 
-	return G_ActionCheck(&player, ent);
+	return G_ActionCheck(player, ent);
 }
 
 /**
@@ -410,7 +406,7 @@ bool G_ActionCheckForReaction (const Player &player, Edict *ent, int TU)
 		return false;
 	}
 
-	return G_ActionCheck(&player, ent);
+	return G_ActionCheck(player, ent);
 }
 
 /**
