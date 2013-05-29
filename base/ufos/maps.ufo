@@ -936,6 +936,47 @@ mapdef forest_small_crash
 // FROZEN RANDOM MAPS //
 ////////////////////////
 
+mapdef fueldump
+{
+	map				"+frozen"
+	param			"fueldump"
+	description		"_Fuel Depot"
+	multiplayer		true
+	teams			2
+	gametypes (
+		fight1on1
+		fight2on2
+	)
+	maxaliens		10
+	missionbriefing		"*msgid:mission_briefing_fueldump"
+	victorycondition	"*msgid:victory_condition_fueldump"
+
+	aircraft
+	(
+		// any
+	)
+
+	ufos
+	(
+		// any
+	)
+
+	terrains
+	(
+		"cold"
+	)
+
+	cultures
+	(
+		// any
+	)
+
+	populations
+	(
+		"village"
+	)
+}
+
 mapdef frozen_industrial_large
 {
 	map				"+frozen"
@@ -4349,48 +4390,6 @@ mapdef fighter_crash
 		"village"
 		"nopopulation"
 		"rural"
-	)
-}
-
-// FUELDUMP MAP //
-
-mapdef fueldump
-{
-	map				"fueldump"
-	description		"_Fuel Depot"
-	multiplayer		true
-	teams			2
-	gametypes (
-		fight1on1
-		fight2on2
-	)
-	maxaliens		10
-	missionbriefing		"*msgid:mission_briefing_fueldump"
-	victorycondition	"*msgid:victory_condition_fueldump"
-
-	aircraft
-	(
-		// any
-	)
-
-	ufos
-	(
-		// any
-	)
-
-	terrains
-	(
-		"cold"
-	)
-
-	cultures
-	(
-		// any
-	)
-
-	populations
-	(
-		"village"
 	)
 }
 

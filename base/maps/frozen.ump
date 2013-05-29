@@ -293,6 +293,21 @@ tile +i09
 0		0		0		0		0
 }
 
+// Special tiles ---------------------------------------------------*
+
+tile +fueldump
+	// a fuel depot, A4, C3
+{
+7 7
+0		0		0		0		0		0		0
+0		+a		+a		+a		+a		+a		x
+0		+a		+a		+a		+a		+a		x
+0		+a		+a		+a		+a		+a		x
+0		+a		+a		+a		+a		+a		x
+0		+a		+a		+a		+a		+a		x
+0		x		x		x		x		x		0
+}
+
 // Dropship tiles --------------------------------------------------*
 
 tile +craft_drop_firebird
@@ -539,6 +554,13 @@ tileset rock {
 // Map assemblies for campaign / skirmish --------------------------*
 
 // TODO assemblies should be nature (nopoulation), industrial and civ (populated)
+
+assembly fueldump
+{
+size "5 5"
+title "_Frozen"
++fueldump	"1 1"
+}
 
 assembly industrial_large
 {

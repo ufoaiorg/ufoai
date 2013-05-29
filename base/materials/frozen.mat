@@ -58,6 +58,16 @@
 	}
 }
 
+/* blend some snow onto the street of the fueldump map */
+{
+	material tex_nature/dirt_se05
+	{
+		texture tex_nature/snow002
+		terrain 0 4
+		lightmap
+	}
+}
+
 /* Bomber UFO */
 
 // hull main textures
