@@ -341,6 +341,19 @@ void G_ReactionFireTargetsCreate (const Edict *shooter)
 	rft.create(shooter);
 }
 
+class ReactionFire
+{
+	bool isEnemy(Edict *shooter, const Edict *target);
+	bool canReact(Edict *shooter, const Edict *target);
+	bool canSee(Edict *shooter, const Edict *target);
+	bool shoot(Edict *shooter, const pos3_t at, shoot_types_t type, fireDefIndex_t firemode);
+public:
+	bool checkExecution(const Edict *target);
+	void updateAllTargets(const Edict *target);
+	bool tryToShoot(Edict *shooter, const Edict *target);
+};
+static ReactionFire rf;
+
 /**
  * @brief Get the fireDef for the RF settings of the shooter.
  * @param[in] shooter The reaction firing actor
@@ -542,19 +555,6 @@ bool G_ReactionFireSettingsReserveTUs (Edict *ent)
 	G_ActorReserveTUs(ent, 0, ent->chr.reservedTus.shot, ent->chr.reservedTus.crouch);
 	return false;
 }
-
-class ReactionFire
-{
-	bool isEnemy(Edict *shooter, const Edict *target);
-	bool canReact(Edict *shooter, const Edict *target);
-	bool canSee(Edict *shooter, const Edict *target);
-	bool shoot(Edict *shooter, const pos3_t at, shoot_types_t type, fireDefIndex_t firemode);
-public:
-	bool checkExecution(const Edict *target);
-	void updateAllTargets(const Edict *target);
-	bool tryToShoot(Edict *shooter, const Edict *target);
-};
-static ReactionFire rf;
 
 /**
  * @brief Check whether we want to shoot at the target.
