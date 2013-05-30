@@ -1,5 +1,4 @@
-#ifndef SOUNDSHADERPREVIEW_H_
-#define SOUNDSHADERPREVIEW_H_
+#pragma once
 
 #include <string>
 
@@ -58,5 +57,3 @@ namespace ui
 	};
 
 } // namespace ui
-
-#endif /*SOUNDSHADERPREVIEW_H_*/

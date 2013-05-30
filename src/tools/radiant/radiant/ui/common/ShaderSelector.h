@@ -1,5 +1,4 @@
-#ifndef SHADERSELECTOR_H_
-#define SHADERSELECTOR_H_
+#pragma once
 
 #include <string>
 #include <vector>
@@ -124,5 +123,3 @@ private:
 };
 
 } // namespace ui
-
-#endif /*SHADERSELECTOR_H_*/

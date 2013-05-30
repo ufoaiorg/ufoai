@@ -1,5 +1,4 @@
-#ifndef SOUNDCHOOSER_H_
-#define SOUNDCHOOSER_H_
+#pragma once
 
 #include <gtk/gtkwidget.h>
 #include <gtk/gtktreestore.h>
@@ -58,5 +57,3 @@ namespace ui
 	};
 
 }
-
-#endif /*SOUNDCHOOSER_H_*/

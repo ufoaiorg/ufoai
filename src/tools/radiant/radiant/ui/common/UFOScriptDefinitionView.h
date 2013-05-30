@@ -1,5 +1,4 @@
-#ifndef UFO_SCRIPT_DEFINITION_VIEW_H_
-#define UFO_SCRIPT_DEFINITION_VIEW_H_
+#pragma once
 
 #include <string>
 #include "gtkutil/SourceView.h"
@@ -38,5 +37,3 @@ namespace ui
 	};
 
 } // namespace ui
-
-#endif /* UFO_SCRIPT_DEFINITION_VIEW_H_ */

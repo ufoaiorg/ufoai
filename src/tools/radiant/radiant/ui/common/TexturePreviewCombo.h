@@ -1,5 +1,4 @@
-#ifndef TEXTUREPREVIEWCOMBO_H_
-#define TEXTUREPREVIEWCOMBO_H_
+#pragma once
 
 #include <string>
 
@@ -59,5 +58,3 @@ namespace ui
 			}
 	};
 }
-
-#endif /*TEXTUREPREVIEWCOMBO_H_*/

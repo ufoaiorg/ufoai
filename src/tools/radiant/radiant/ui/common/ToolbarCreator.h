@@ -1,5 +1,4 @@
-#ifndef TOOLBAR_H_
-#define TOOLBAR_H_
+#pragma once
 
 #include <gtk/gtk.h>
 #include <string>
@@ -41,5 +40,3 @@ namespace ui {
 	}; // class ToolbarCreator
 
 } // namespace toolbar
-
-#endif /*TOOLBAR_H_*/

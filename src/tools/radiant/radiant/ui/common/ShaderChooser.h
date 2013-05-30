@@ -1,5 +1,4 @@
-#ifndef SHADERCHOOSER_H_
-#define SHADERCHOOSER_H_
+#pragma once
 
 #include "ShaderSelector.h"
 #include "gtkutil/WindowPosition.h"
@@ -89,5 +88,3 @@ private:
 };
 
 } // namespace ui
-
-#endif /*SHADERCHOOSER_H_*/
