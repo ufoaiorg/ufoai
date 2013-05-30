@@ -605,43 +605,23 @@ window mp_create_server extends abstract_multiplayer
 		// ===================
 		// GAME TYPE
 		// ===================
-		todo todo1 {
-			string	"use a selectbox for the game type"
-			pos		"500 40"
-		}
-
 		string gametype_str
 		{
 			string		"_Gametype:"
 			pos			"85 40"
 			size		"280 20"
 		}
-		string gametype_value
+		selectbox gametype_selector
 		{
-			string		*cvar:sv_gametype
-			pos			"380 40"
-			size		"80 20"
+			dataid		TEXT_LIST
+			cvar		*cvar:sv_gametype
+			pos			"245 40"
+			size		"256 215"
+			lineheight	"20"
 			contentalign	ALIGN_UC
-			onWheelUp	{ cmd "mp_prevgametype;" }
-			onWheelDown	{ cmd "mp_nextgametype;" }
-		}
-		button gametype_dec
-		{
-			pos			"364 40"
-			size		"16 16"
-			icon		"icons/prev"
-			onClick		{ cmd "mp_prevgametype;" }
-			onWheelUp	{ cmd "mp_prevgametype;" }
-			onWheelDown	{ cmd "mp_nextgametype;" }
-		}
-		button gametype_inc
-		{
-			pos			"460 40"
-			size		"16 16"
-			icon		"icons/next"
-			onClick		{ cmd "mp_nextgametype;" }
-			onWheelUp	{ cmd "mp_prevgametype;" }
-			onWheelDown	{ cmd "mp_nextgametype;" }
+			onChange {
+				cmd "mp_updategametype;"
+			}
 		}
 
 		// ===================
@@ -656,7 +636,7 @@ window mp_create_server extends abstract_multiplayer
 		checkbox_blue server_teamplay_value
 		{
 			current		*cvar:sv_teamplay
-			pos			"410 70"
+			pos			"245 70"
 			size		"20 18"
 		}
 	}
@@ -678,13 +658,28 @@ window mp_create_server extends abstract_multiplayer
 			size		"256 20"
 		}
 
-		string string_gametypes
+		textlist list_gametypes_text
 		{
-			string		*cvar:mn_mapgametypes
-			pos			"170 245"
-			size		"256 32"
+			dataid		TEXT_LIST2
+			pos			"190 245"
+			size		"230 115"
 			font		"f_verysmall"
 			longlines	LONGLINES_WRAP
+			onViewChange {
+				*node:parent.list_gametypes_scroll@fullsize = <fullsize>
+				*node:parent.list_gametypes_scroll@viewsize = <viewsize>
+				*node:parent.list_gametypes_scroll@current = <viewpos>
+			}
+		}
+
+		vscrollbar list_gametypes_scroll {
+			image		"ui/scrollbar_v_green"
+			pos			"420 245"
+			height		"115"
+			hidewhenunused	true
+			onChange {
+				*node:parent.list_gametypes_text@viewpos = <current>
+			}
 		}
 	}
 

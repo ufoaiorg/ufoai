@@ -106,89 +106,23 @@ static void GAME_MP_StartServer_f (void)
  */
 static void GAME_MP_UpdateGametype_f (void)
 {
-	cgi->Com_SetGameType();
-}
-
-/**
- * @brief Switch to the next multiplayer game type
- * @sa UI_PrevGametype_f
- */
-static void GAME_MP_ChangeGametype_f (void)
-{
-	const mapDef_t *md;
-	const char *newGameTypeID = nullptr;
-	bool next = true;
 	const int numGTs = cgi->csi->numGTs;
-	const char *gameType = cgi->Cvar_GetString("sv_gametype");
-
 	/* no types defined or parsed */
 	if (numGTs == 0)
 		return;
 
-	md = cgi->GAME_GetCurrentSelectedMap();
+	const mapDef_t *md = cgi->GAME_GetCurrentSelectedMap();
 	if (!md || !md->multiplayer) {
 		cgi->Com_Printf("UI_ChangeGametype_f: No mapdef for the map\n");
 		return;
 	}
 
-	/* previous? */
-	if (Q_streq(cgi->Cmd_Argv(0), "mp_prevgametype")) {
-		next = false;
-	}
-
-	if (md->gameTypes) {
-		linkedList_t *list = md->gameTypes;
-		linkedList_t *old = nullptr;
-		while (list) {
-			if (Q_streq((const char*)list->data, gameType)) {
-				if (next) {
-					if (list->next)
-						newGameTypeID = (const char *)list->next->data;
-					else
-						newGameTypeID = (const char *)md->gameTypes->data;
-				} else {
-					/* only one or the first entry */
-					if (old) {
-						newGameTypeID = (const char *)old->data;
-					} else {
-						while (list->next)
-							list = list->next;
-						newGameTypeID = (const char *)list->data;
-					}
-				}
-				break;
-			}
-			old = list;
-			list = list->next;
-		}
+	const char *gameType = cgi->Cvar_GetString("sv_gametype");
+	if (md->gameTypes && !cgi->LIST_ContainsString(md->gameTypes, gameType))
 		/* current value is not valid for this map, set to first valid gametype */
-		if (!list)
-			newGameTypeID = (const char *)md->gameTypes->data;
-	} else {
-		int i;
-		for (i = 0; i < numGTs; i++) {
-			const gametype_t *gt = &cgi->csi->gts[i];
-			if (Q_streq(gt->id, gameType)) {
-				int newType;
-				if (next) {
-					newType = (i + 1);
-					if (newType >= numGTs)
-						newType = 0;
-				} else {
-					newType = (i - 1);
-					if (newType < 0)
-						newType = numGTs - 1;
-				}
+		cgi->Cvar_Set("sv_gametype", static_cast<const char*>(md->gameTypes->data));
 
-				newGameTypeID = cgi->csi->gts[newType].id;
-				break;
-			}
-		}
-	}
-	if (newGameTypeID) {
-		cgi->Cvar_Set("sv_gametype", newGameTypeID);
-		cgi->Com_SetGameType();
-	}
+	cgi->Com_SetGameType();
 }
 
 /**
@@ -241,20 +175,25 @@ static const mapDef_t *GAME_MP_MapInfo (int step)
 	}
 
 	md = cgi->GAME_GetCurrentSelectedMap();
+	cgi->UI_ResetData(TEXT_LIST);
+	cgi->UI_ResetData(TEXT_LIST2);
 
-	if (md->gameTypes) {
-		char buf[256] = "";
-		LIST_Foreach(md->gameTypes, char, gameTypeStr) {
-			Q_strcat(buf, va("%s ", gameTypeStr), sizeof(buf));
+	uiNode_t *gameTypes = nullptr;
+	linkedList_t *gameNames = nullptr;
+	for (i = 0; i < cgi->csi->numGTs; i++) {
+		const gametype_t *gt = &cgi->csi->gts[i];
+		if (!md->gameTypes || cgi->LIST_ContainsString(md->gameTypes, gt->id)) {
+			cgi->UI_AddOption(&gameTypes, gt->id,  _(gt->name), gt->id);
+			cgi->LIST_AddString(&gameNames, _(gt->name));
 		}
-		cgi->Cvar_Set("mn_mapgametypes", buf);
-	} else {
-		cgi->Cvar_Set("mn_mapgametypes", _("all"));
 	}
+
+	cgi->UI_RegisterOption(TEXT_LIST, gameTypes);
+	cgi->UI_RegisterLinkedListText(TEXT_LIST2, gameNames);
+	cgi->UI_ExecuteConfunc("mp_updategametype");
 
 	return md;
 }
-
 
 static linkedList_t *mp_chatMessageStack = nullptr;
 
@@ -294,8 +233,6 @@ static void GAME_MP_InitStartup (void)
 
 	cgi->Cmd_AddCommand("mp_startserver", GAME_MP_StartServer_f, nullptr);
 	cgi->Cmd_AddCommand("mp_updategametype", GAME_MP_UpdateGametype_f, "Update the menu values with current gametype values");
-	cgi->Cmd_AddCommand("mp_nextgametype", GAME_MP_ChangeGametype_f, "Switch to the next multiplayer game type");
-	cgi->Cmd_AddCommand("mp_prevgametype", GAME_MP_ChangeGametype_f, "Switch to the previous multiplayer game type");
 	MP_CallbacksInit(cgi);
 	MP_ServerListInit(cgi);
 
@@ -311,8 +248,6 @@ static void GAME_MP_Shutdown (void)
 {
 	cgi->Cmd_RemoveCommand("mp_startserver");
 	cgi->Cmd_RemoveCommand("mp_updategametype");
-	cgi->Cmd_RemoveCommand("mp_nextgametype");
-	cgi->Cmd_RemoveCommand("mp_prevgametype");
 	MP_CallbacksShutdown();
 	MP_ServerListShutdown();
 
