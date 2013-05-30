@@ -271,6 +271,11 @@ window market extends objectinfo {
 			*node:root.itemlist.item_<1>.autosell@invis = true
 		} else {
 			*node:root.itemlist.item_<1>.autosell@current = <7>
+			if ( *node:root.itemlist.item_<1>.autosell@current != 0 ) {
+				*node:root.itemlist.item_<1>.autosell@tooltip = "_Item autosell enabled"
+			} else {
+				*node:root.itemlist.item_<1>.autosell@tooltip = "_Item autosell disabled"
+			}
 		}
 		*node:root.itemlist.item_<1>.id@string = <8>
 		if ( *node:root.itemlist.item_<1>.id@string ne "-" ) {
