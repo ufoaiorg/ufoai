@@ -1,11 +1,7 @@
-
 // entity 0
 {
 "classname" "worldspawn"
 "subdivide" "64"
-"angles_night" "-75 20"
-"maxlevel" "8"
-"angles_day" "-75 10"
 // brush 0
 {
 ( 512 512 132 ) ( 512 0 128 ) ( 512 0 132 ) tex_buildings/concrete008 0 0 0 0.25 0.25 65280 0 0

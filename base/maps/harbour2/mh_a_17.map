@@ -1,10 +1,6 @@
-
 // entity 0
 {
 "classname" "worldspawn"
-"maxlevel" "8"
-"angles_day" "-75 10"
-"angles_night" "-75 20"
 // brush 0
 {
 ( 128 320 196 ) ( 128 384 196 ) ( 192 320 196 ) tex_misc/box004 240 0 180 0.25 0.25 65280 0 0
