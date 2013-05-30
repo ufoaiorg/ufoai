@@ -186,8 +186,9 @@ static void gtk_error_redirect (const gchar *domain, GLogLevelFlags log_level, c
 	// spam it...
 	globalOutputStream() << buf.toString();
 
-	if (is_fatal)
+	if (is_fatal) {
 		ERROR_MESSAGE("GTK+ error: " << buf.toString());
+	}
 }
 
 class Lock
