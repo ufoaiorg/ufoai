@@ -49,8 +49,8 @@ public:
 	vec3_t absmin, absmax; /**< position of min and max points - relative to world's origin */
 	vec3_t size;
 
-	SrvEdict *child;		/**< e.g. the trigger for this edict */
-	SrvEdict *owner;		/**< e.g. the door model in case of func_door */
+	SrvEdict *child;	/**< e.g. the trigger for this edict */
+	SrvEdict *owner;	/**< e.g. the door model in case of func_door */
 	int modelindex;		/**< inline model index */
 
 	const char *classname;
