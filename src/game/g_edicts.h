@@ -30,8 +30,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "g_local.h"
 
-Edict *G_EdictsInit(void);
-void G_EdictsReset(void);
+Edict *G_EdictsConstruct(void);
+void G_EdictsInit(void);
 Edict *G_EdictsGetNewEdict(void);
 Edict *G_EdictDuplicate(const Edict *edict);
 int G_EdictsGetNumber(const Edict *ent);

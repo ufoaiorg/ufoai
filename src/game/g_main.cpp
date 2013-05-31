@@ -249,7 +249,7 @@ static void G_Init (void)
 	game.sv_maxplayersperteam = sv_maxplayersperteam->integer;
 
 	/* initialize the entity storage */
-	globals.edicts = G_EdictsInit();
+	globals.edicts = G_EdictsConstruct();
 	globals.max_edicts = game.sv_maxentities;
 	globals.num_edicts = game.sv_maxplayersperteam;
 

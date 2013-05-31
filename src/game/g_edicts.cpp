@@ -36,7 +36,7 @@ static Edict *g_edicts;
  * @brief Allocate space for the entity pointers.
  * @note No need to set it to zero, G_TagMalloc will do that for us
  */
-Edict *G_EdictsInit (void)
+Edict *G_EdictsConstruct (void)
 {
 	g_edicts = (Edict *)G_TagMalloc(game.sv_maxentities * sizeof(g_edicts[0]), TAG_GAME);
 	return g_edicts;
@@ -45,7 +45,7 @@ Edict *G_EdictsInit (void)
 /**
  * @brief Reset the entity pointers for eg. a new game.
  */
-void G_EdictsReset (void)
+void G_EdictsInit (void)
 {
 	for (int i = 0; i < game.sv_maxentities; i++)
 		g_edicts[i].init();

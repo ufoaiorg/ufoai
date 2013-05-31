@@ -340,7 +340,7 @@ void G_SpawnEntities (const char *mapname, bool day, const char *entities)
 	OBJZERO(level);
 	level.pathingMap = (pathing_t *)G_TagMalloc(sizeof(*level.pathingMap), TAG_LEVEL);
 
-	G_EdictsReset();
+	G_EdictsInit();
 
 	/* initialize reactionFire data */
 	G_ReactionFireTargetsInit();
