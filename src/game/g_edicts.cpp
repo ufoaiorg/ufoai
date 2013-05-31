@@ -47,7 +47,8 @@ Edict *G_EdictsInit (void)
  */
 void G_EdictsReset (void)
 {
-	memset(g_edicts, 0, game.sv_maxentities * sizeof(g_edicts[0]));
+	for (int i = 0; i < game.sv_maxentities; i++)
+		g_edicts[i].init();
 }
 
 /**
