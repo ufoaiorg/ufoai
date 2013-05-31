@@ -129,8 +129,6 @@ makefile_local() {
 	add_to_makefile_local_quote PKGLIBDIR "Using libdir ${PKGLIBDIR}"
 	add_to_makefile_local_quote LOCALEDIR "Using localedir ${LOCALEDIR}"
 	add_to_makefile_local_quote PREFIX "Using prefix ${PREFIX}"
-	add_to_makefile_local_quote PROGRAM_ZIP "Found zip"
-	add_to_makefile_local_quote PROGRAM_PYTHON "Found python"
 
 	echo "Build modules:"
 	for i in `get_modules`; do
@@ -324,15 +322,15 @@ check_ccache() {
 }
 
 check_program() {
-	HAVE=PROGRAM_`echo $1 | tr '[a-z]' '[A-Z]'`
-	$1 --help > /dev/null 2>&1
-	if [ $? -ne 127 ]; then
-		echo "Found $1"
-		set_var $HAVE $1
-	else
-		echo "Could not find $1"
-		set_var $HAVE
+	BINARY=$1
+	TOOL=${2:-${BINARY}}
+	MANDATORY=${3:-0}
+	HAVE=PROGRAM_`echo ${BINARY%.*} | sed 's,/,_,g' | tr '[a-z]' '[A-Z]'`
+	command -v ${BINARY} > /dev/null 2>&1
+	if [ $? -eq 0 ]; then
+		set_var $HAVE "$1"
 	fi
+	add_to_makefile_local $HAVE "Found ${BINARY} from ${TOOL}" "Could not find ${BINARY} from ${TOOL}" $MANDATORY
 }
 
 check_programs() {
@@ -547,9 +545,9 @@ PKGLIBDIR=${PKGLIBDIR:-${PREFIX}/lib}
 
 check_compiler
 check_ccache
-check_programs
 makefile_local
 config_h
+check_programs
 check_headers
 
 cat > ${MAKEFILE_LOCAL} << EOF
