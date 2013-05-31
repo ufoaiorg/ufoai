@@ -547,9 +547,9 @@ PKGLIBDIR=${PKGLIBDIR:-${PREFIX}/lib}
 
 check_compiler
 check_ccache
+check_programs
 makefile_local
 config_h
-check_programs
 check_headers
 
 cat > ${MAKEFILE_LOCAL} << EOF
