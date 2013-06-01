@@ -34,7 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @sa inv_shared.c:INV_GetFilterTypeID
  */
 typedef enum {
-	/* All types starting with "FILTER_S_" contain items that can used on/with soldiers (i.e. personal equipment). */
+	/* All types starting with "FILTER_S_" contain items that can be used on/with soldiers (i.e. personal equipment). */
 	FILTER_S_PRIMARY,		/**< All 'Primary' weapons and their ammo for soldiers (Except for heavy weapons). */
 	FILTER_S_SECONDARY,		/**< All 'Secondary' weapons and their ammo for soldiers. */
 	FILTER_S_HEAVY,			/**< Heavy weapons for soldiers. */
