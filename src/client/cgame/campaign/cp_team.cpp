@@ -257,20 +257,20 @@ void CP_CleanupAircraftTeam (aircraft_t *aircraft, equipDef_t *ed)
 void CP_CleanTempInventory (base_t* base)
 {
 	E_Foreach(EMPL_SOLDIER, employee) {
-		int k;
-		for (k = 0; k < CID_MAX; k++) {
+		const Container *cont = nullptr;
+		while ((cont = employee->chr.inv.getNextCont(cont, true))) {
 			/* CID_FLOOR and CID_EQUIP are temp */
-			if (INVDEF(k)->temp)
-				employee->chr.inv.resetContainer(k);
+			if (INVDEF(cont->id)->temp)
+				employee->chr.inv.resetContainer(cont->id);
 		}
 	}
 
 	E_Foreach(EMPL_ROBOT, employee) {
-		int k;
-		for (k = 0; k < CID_MAX; k++) {
+		const Container *cont = nullptr;
+		while ((cont = employee->chr.inv.getNextCont(cont, true))) {
 			/* CID_FLOOR and CID_EQUIP are temp */
-			if (INVDEF(k)->temp)
-				employee->chr.inv.resetContainer(k);
+			if (INVDEF(cont->id)->temp)
+				employee->chr.inv.resetContainer(cont->id);
 		}
 	}
 
