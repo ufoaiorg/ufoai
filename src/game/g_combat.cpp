@@ -722,6 +722,10 @@ static void G_ShootGrenade (const Player &player, Edict *ent, const fireDef_t *f
 					G_EventThrow(mask, fd, dt, impactFlags, last, startV);
 				}
 
+				/* Grenade flew out of map! */
+				if (tr.fraction > 1.0)
+					return;
+
 				tr.endpos[2] += 10;
 				VectorCopy(tr.endpos, impact);
 
@@ -1315,22 +1319,26 @@ bool G_ClientShoot (const Player &player, Edict *ent, const pos3_t at, shoot_typ
 			G_ShootSingle(ent, fd, shotOrigin, at, mask, weapon, mock, z_align, i, shootType, impact);
 
 	if (!mock) {
-		if (fd->obj->dmgtype == gi.csi->damSmoke) {
-			const int rounds = std::max(2, fd->rounds);
-			G_SpawnSmokeField(impact, "smokefield", rounds, fd->splrad);
-		} else if (fd->obj->dmgtype == gi.csi->damIncendiary) {
-			const int damage = std::max(0.0f, fd->damage[0] + fd->damage[1] * crand());
-			const int rounds = std::max(2, fd->rounds);
-			G_SpawnFireField(impact, "firefield", rounds, damage, fd->splrad);
-		} else if (fd->obj->dmgtype == gi.csi->damStunGas) {
-			const int damage = std::max(0.0f, fd->damage[0] + fd->damage[1] * crand());
-			const int rounds = std::max(2, fd->rounds);
-			G_SpawnStunSmokeField(impact, "green_smoke", rounds, damage, fd->splrad);
+		/* Ignore off-map impacts, currently only checks for shots that fly out of the path finding
+		 * height limits: mainly gravity shots falling off-map */
+		if (static_cast<pos_t>((impact[2] + MAX_WORLD_WIDTH) / UNIT_HEIGHT - MAX_WORLD_WIDTH / UNIT_HEIGHT) < PATHFINDING_HEIGHT) {
+			if (fd->obj->dmgtype == gi.csi->damSmoke) {
+				const int rounds = std::max(2, fd->rounds);
+				G_SpawnSmokeField(impact, "smokefield", rounds, fd->splrad);
+			} else if (fd->obj->dmgtype == gi.csi->damIncendiary) {
+				const int damage = std::max(0.0f, fd->damage[0] + fd->damage[1] * crand());
+				const int rounds = std::max(2, fd->rounds);
+				G_SpawnFireField(impact, "firefield", rounds, damage, fd->splrad);
+			} else if (fd->obj->dmgtype == gi.csi->damStunGas) {
+				const int damage = std::max(0.0f, fd->damage[0] + fd->damage[1] * crand());
+				const int rounds = std::max(2, fd->rounds);
+				G_SpawnStunSmokeField(impact, "green_smoke", rounds, damage, fd->splrad);
+			}
 		}
 
 		/* check whether this caused a touch event for close actors */
-		/* NOTE: Right now stunned actors can't are skipped from activating triggers, which makes sense
-		 * if triggers could only be activated by walking in them (wich was the original behaviour), now
+		/* NOTE: Right now stunned actors are skipped from activating triggers, which makes sense
+		 * if triggers could only be activated by walking in them (which was the original behaviour), now
 		 * its use here implies that may not always be the case (it does make sense that they would affected
 		 * by fire fields and similar triggers after all) */
 		/* @todo decide if stunned should be able to touch some triggers and adjust accordingly */
