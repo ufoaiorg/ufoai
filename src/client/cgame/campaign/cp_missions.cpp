@@ -1288,8 +1288,9 @@ void CP_SpawnRescueMission (aircraft_t *aircraft, aircraft_t *ufo)
 
 	/* Check if ufo was destroyed too */
 	if (!ufo) {
-		/** @todo find out what to do in this case */
 		Com_Printf("CP_SpawnRescueMission: UFO was also destroyed.\n");
+		/** @todo find out what to do in this case */
+		AIR_DestroyAircraft(aircraft, pilotSurvived);
 		return;
 	}
 

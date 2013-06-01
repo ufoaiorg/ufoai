@@ -2831,6 +2831,9 @@ bool AIR_AircraftAllowed (const base_t* base)
  */
 bool AIR_CanIntercept (const aircraft_t *aircraft)
 {
+	if (aircraft->status == AIR_NONE || aircraft->status == AIR_CRASHED)
+		return false;
+
 	/* if dependencies of hangar are missing, you can't send aircraft */
 	if (aircraft->size == AIRCRAFT_SMALL && !B_GetBuildingStatus(aircraft->homebase, B_SMALL_HANGAR))
 		return false;
