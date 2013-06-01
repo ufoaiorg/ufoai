@@ -185,15 +185,17 @@ static bool G_InventoryPlaceItemAdjacent (Edict *ent)
 			floorAdjacent = G_SpawnFloor(ent->pos);
 		} else {
 			/* destroy this edict (send this event to all clients that see the edict) */
-			G_EventPerish(floorAdjacent);
-			G_VisFlagsReset(floorAdjacent);
+			G_EventPerish(*floorAdjacent);
+			G_VisFlagsReset(*floorAdjacent);
 		}
 
-		floorAdjacent->i.findSpace(INVDEF(CID_FLOOR), &ic->item, &x, &y, ic);
+		Item* ic = nullptr;
+		int x, y;
+		floorAdjacent->chr.inv.findSpace(INVDEF(CID_FLOOR), ic, &x, &y, ic);
 		if (x != NONE) {
-			ic->x = x;
-			ic->y = y;
-			ic->next = floorAdjacent->getFloor());
+			ic->setX(x);
+			ic->setY(y);
+			ic->setNext(floorAdjacent->getFloor());
 			floorAdjacent->chr.inv.setFloorContainer(ic);
 			break;
 		}
