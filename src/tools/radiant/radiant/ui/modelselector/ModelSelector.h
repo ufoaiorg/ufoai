@@ -1,5 +1,4 @@
-#ifndef MODELSELECTOR_H_
-#define MODELSELECTOR_H_
+#pragma once
 
 #include <gtk/gtk.h>
 #include <string>
@@ -122,5 +121,3 @@ namespace ui
 			static ModelAndSkin chooseModel ();
 	};
 }
-
-#endif /*MODELSELECTOR_H_*/

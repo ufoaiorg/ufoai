@@ -1,5 +1,4 @@
-#ifndef UMPMENU_H_
-#define UMPMENU_H_
+#pragma once
 
 #include <glib.h>
 
@@ -22,5 +21,3 @@ class UMPMenu
 };
 
 }
-
-#endif /*UMPMENU_H_*/

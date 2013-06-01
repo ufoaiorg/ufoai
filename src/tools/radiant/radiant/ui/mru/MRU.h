@@ -1,5 +1,4 @@
-#ifndef MRU_H_
-#define MRU_H_
+#pragma once
 
 #include <vector>
 #include "iregistry.h"
@@ -82,5 +81,3 @@ private:
 
 // The accessor function to the global MRU instance
 ui::MRU& GlobalMRU();
-
-#endif /*MRU_H_*/

@@ -1,5 +1,4 @@
-#ifndef FILTERSMENU_H_
-#define FILTERSMENU_H_
+#pragma once
 
 namespace ui
 {
@@ -26,5 +25,3 @@ public:
 };
 
 }
-
-#endif /*FILTERSMENU_H_*/

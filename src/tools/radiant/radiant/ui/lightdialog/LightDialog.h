@@ -1,5 +1,4 @@
-#ifndef LIGHTDIALOG_H_
-#define LIGHTDIALOG_H_
+#pragma once
 
 #include <gtk/gtkwidget.h>
 #include <string>
@@ -80,5 +79,3 @@ namespace ui
 			bool isAborted ();
 	};
 }
-
-#endif /*LIGHTDIALOG_H_*/

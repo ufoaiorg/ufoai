@@ -1,5 +1,4 @@
-#ifndef ERRORCHECKDIALOG_H_
-#define ERRORCHECKDIALOG_H_
+#pragma once
 
 #include <string>
 #include <gtk/gtkwidget.h>
@@ -47,5 +46,3 @@ class ErrorCheckDialog: public gtkutil::PersistentTransientWindow
 };
 
 }
-
-#endif

@@ -1,5 +1,4 @@
-#ifndef UMP_DEFINITION_VIEW_H_
-#define UMP_DEFINITION_VIEW_H_
+#pragma once
 
 #include <string>
 #include "gtkutil/SourceView.h"
@@ -36,5 +35,3 @@ namespace ui
 	};
 
 } // namespace ui
-
-#endif /* UMP_DEFINITION_VIEW_H_ */

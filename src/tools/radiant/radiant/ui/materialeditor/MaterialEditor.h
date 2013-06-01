@@ -1,5 +1,4 @@
-#ifndef MATERIALEDITOR_H_
-#define MATERIALEDITOR_H_
+#pragma once
 
 #include <string>
 #include <gtk/gtk.h>
@@ -26,5 +25,3 @@ namespace ui
 			void show ();
 	};
 }
-
-#endif /* MATERIALEDITOR_H_ */
