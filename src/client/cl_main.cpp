@@ -893,7 +893,7 @@ static void CL_InitLocal (void)
 	Cmd_AddCommand("check_cvars", CL_CheckCvars_f, "Check cvars like playername and so on");
 	Cmd_AddCommand("targetalign", CL_ActorTargetAlign_f, N_("Target your shot to the ground"));
 
-	Cmd_AddCommand("cl_setratiofilter", CL_SetRatioFilter_f, "Filter the resolution screen list with a ration");
+	Cmd_AddCommand("cl_setratiofilter", CL_SetRatioFilter_f, "Filter the resolution screen list with a ratio");
 
 	Cmd_AddCommand("cmd", CL_ForwardToServer_f, "Forward to server");
 	Cmd_AddCommand("cl_userinfo", CL_UserInfo_f, "Prints your userinfo string");
