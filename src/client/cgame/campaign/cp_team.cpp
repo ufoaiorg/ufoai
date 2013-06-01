@@ -260,7 +260,7 @@ void CP_CleanTempInventory (base_t* base)
 		const Container *cont = nullptr;
 		while ((cont = employee->chr.inv.getNextCont(cont, true))) {
 			/* CID_FLOOR and CID_EQUIP are temp */
-			if (INVDEF(cont->id)->temp)
+			if (cont->def()->temp)
 				employee->chr.inv.resetContainer(cont->id);
 		}
 	}
@@ -269,7 +269,7 @@ void CP_CleanTempInventory (base_t* base)
 		const Container *cont = nullptr;
 		while ((cont = employee->chr.inv.getNextCont(cont, true))) {
 			/* CID_FLOOR and CID_EQUIP are temp */
-			if (INVDEF(cont->id)->temp)
+			if (cont->def()->temp)
 				employee->chr.inv.resetContainer(cont->id);
 		}
 	}
