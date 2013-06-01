@@ -516,7 +516,6 @@ public:
 	/** temporary naming while migrating !!
 	 * getContainer2 will return an item, while
 	 * getContainer3 will actually return a container. */
-	/** @todo this should return a reference - can't be null */
 	inline invList_t *getContainer2 (const containerIndex_t idx) const {
 		return getContainer(idx)._invList;
 	}
