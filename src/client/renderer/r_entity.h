@@ -109,8 +109,11 @@ typedef struct entity_s {
 
 	struct entity_s *next;		/**< for chaining */
 
-	inline entity_s (int flag = RF_NONE) {
+	inline void init () {
 		OBJZERO(*this);
+	}
+	inline entity_s (int flag = RF_NONE) {
+		init();
 		flags = flag;
 	}
 } entity_t;

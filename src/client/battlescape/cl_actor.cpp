@@ -1560,7 +1560,7 @@ bool CL_AddActor (le_t *le, entity_t *ent)
 		const bool addRightHandWeapon = CL_AddActorWeapon(le->right);
 		/* add left hand weapon */
 		if (addLeftHandWeapon) {
-			OBJZERO(add);
+			add.init();
 
 			add.model = cls.modelPool[le->left];
 			if (!add.model)
@@ -1575,7 +1575,7 @@ bool CL_AddActor (le_t *le, entity_t *ent)
 
 		/* add right hand weapon */
 		if (addRightHandWeapon) {
-			OBJZERO(add);
+			add.init();
 
 			add.alpha = le->alpha;
 			add.model = cls.modelPool[le->right];
@@ -1592,7 +1592,7 @@ bool CL_AddActor (le_t *le, entity_t *ent)
 
 	if (hasTagHead) {
 		/* add head */
-		OBJZERO(add);
+		add.init();
 
 		add.alpha = le->alpha;
 		add.model = le->model2;
