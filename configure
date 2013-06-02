@@ -151,7 +151,21 @@ check_header_cc() {
 
 check_header() {
 	HEADER=$1
-	HAVE=HAVE_`echo ${HEADER%.*} | sed 's,/,_,g' | tr '[a-z]' '[A-Z]'`_H
+	PACKAGE=$2
+
+	PACKAGE=${PACKAGE%+*}
+	HEADER=${HEADER%.*}
+
+	if [ "$PACKAGE" != "" ]; then
+		PACKAGE="`echo ${PACKAGE} | sed 's,\.,_,g' | sed 's,-,_,g' | tr '[a-z]' '[A-Z]'`_"
+		HEADER=${HEADER##*/}
+	else
+		HEADER="`echo ${HEADER} | sed 's,/,_,g'`"
+	fi
+
+	HEADER="`echo ${HEADER} | sed 's,\.,_,g' | sed 's,-,_,g' | tr '[a-z]' '[A-Z]'`"
+
+	HAVE=HAVE_${PACKAGE}${HEADER}_H
 	VALUE=`get_var $HAVE`
 	if [ "$VALUE" != "no" ]; then
 		set_var $HAVE `check_header_cc $1 $2`
@@ -169,8 +183,12 @@ check_headers() {
 	check_header "bfd.h"
 	check_header "sys/utsname.h"
 	check_header "link.h"
+	check_header "jpeglib.h"
 	check_header "CUnit/Basic.h"
 	check_header "mxml.h"
+	check_header "SDL.h" "sdl"
+	check_header "SDL_mixer.h" "SDL_mixer"
+	check_header "SDL_ttf.h" "SDL_ttf"
 	check_header "picomodel.h"
 	check_header "gtk/gtk.h" "gtk+-2.0"
 	check_header "gtksourceview/gtksourceview.h" "gtksourceview-2.0"
