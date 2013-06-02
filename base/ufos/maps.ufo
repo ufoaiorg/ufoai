@@ -4685,7 +4685,7 @@ mapdef oriental
 mapdef pipes_const
 {
 	map				"pipes_const"
-	description		"_Sewerage Construction Site"
+	description		"_Sewage Pipe Construction"
 	multiplayer		true
 	teams			3
 	gametypes (
