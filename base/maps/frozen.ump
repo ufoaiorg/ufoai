@@ -84,7 +84,7 @@ tile +n07
 }
 
 tile +n08
-	// a huge rock, eastern part, A-
+	// a huge rock, eastern part, A4
 {
 4 5
 0		0		0		0
@@ -95,7 +95,7 @@ r		+ar		+ar		0
 }
 
 tile +n09
-	// a huge rock, western part, A-
+	// a huge rock, western part, A5
 {
 4 5
 0		0		0		0
