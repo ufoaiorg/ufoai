@@ -527,18 +527,12 @@ static void GAME_SaveItem (xmlNode_t *p, const Item *item, containerIndex_t cont
  */
 static void GAME_SaveInventory (xmlNode_t *p, const Inventory *inv)
 {
-	containerIndex_t container;
-
-	for (container = 0; container < CID_MAX; container++) {
-		invList_t *ic = inv->getContainer3(container);
-
-		/* ignore items linked from any temp container */
-		if (INVDEF(container)->temp)
-			continue;
-
-		for (; ic; ic = ic->getNext()) {
+	const Container *cont = nullptr;
+	while ((cont = inv->getNextCont(cont, false))) {
+		Item *item = nullptr;
+		while ((item = cont->getNextItem(item))) {
 			xmlNode_t *s = XML_AddNode(p, SAVE_INVENTORY_ITEM);
-			GAME_SaveItem(s, ic, container, ic->getX(), ic->getY());
+			GAME_SaveItem(s, item, cont->id, item->getX(), item->getY());
 		}
 	}
 }
