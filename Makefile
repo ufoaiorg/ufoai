@@ -74,7 +74,6 @@ install: install-pre $(addprefix install-,$(TARGETS))
 strip: $(addprefix strip-,$(TARGETS))
 
 config.h: configure
-config.h: configure
 	$(Q)$(CONFIGURE_PREFIX) ./configure $(CONFIGURE_OPTIONS)
 
 define BUILD_RULE
