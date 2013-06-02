@@ -355,30 +355,22 @@ static void UI_CloseAllWindow (void)
 
 /**
  * @brief Init the stack to start with a window, and have an alternative window with ESC
+ * @note Illustration about when/how we should use this http://ufoai.org/wiki/index.php/Image:UI_InitStack.jpg
  * @param[in] activeWindow The first active window of the stack, else nullptr
  * @param[in] mainWindow The alternative window, else nullptr if nothing
- * @param[in] popAll If true, clean up the stack first
- * @param[in] pushActive If true, push the active window into the stack
  * @todo remove Cvar_Set we have direct access to the cvar
- * @todo check why activeWindow can be nullptr. It should never be nullptr: a stack must not be empty
  * @todo We should only call it a very few time. When we switch from/to this different par of the game: main-option-interface / geoscape-and-base / battlescape
- * @todo Update the code: popAll should be every time true
- * @todo Update the code: pushActive should be every time true
- * @todo Illustration about when/how we should use UI_InitStack http://ufoai.org/wiki/index.php/Image:UI_InitStack.jpg
  */
-void UI_InitStack (const char* activeWindow, const char* mainWindow, bool popAll, bool pushActive)
+void UI_InitStack (const char* activeWindow, const char* mainWindow)
 {
 	UI_FinishInit();
+	UI_PopWindow(true);
 
-	if (popAll)
-		UI_PopWindow(true);
-	if (activeWindow) {
-		Cvar_Set("ui_sys_active", activeWindow);
-		/* prevent calls before UI script initialization */
-		if (ui_global.numWindows != 0) {
-			if (pushActive)
-				UI_PushWindow(activeWindow);
-		}
+	assert(activeWindow != nullptr);
+	Cvar_Set("ui_sys_active", activeWindow);
+	/* prevent calls before UI script initialization */
+	if (ui_global.numWindows != 0) {
+		UI_PushWindow(activeWindow);
 	}
 
 	if (mainWindow)
@@ -672,21 +664,20 @@ void UI_FinishWindowsInit (void)
 	}
 }
 
-static void UI_InitStack_f (void) {
-	const char *mainWindow;
-	const char *optionWindow = nullptr;
-
+static void UI_InitStack_f (void)
+{
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <mainwindow> [<optionwindow>]\n", Cmd_Argv(0));
 		return;
 	}
 
-	mainWindow = Cmd_Argv(1);
+	const char *mainWindow = Cmd_Argv(1);
+	const char *optionWindow = nullptr;
 	if (Cmd_Argc() == 3) {
 		optionWindow = Cmd_Argv(2);
 	}
 
-	UI_InitStack(mainWindow, optionWindow, true, true);
+	UI_InitStack(mainWindow, optionWindow);
 }
 
 /**

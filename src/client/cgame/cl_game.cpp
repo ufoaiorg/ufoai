@@ -834,7 +834,7 @@ void GAME_SetMode (const cgame_export_t *gametype)
 
 		/* we dont need to go back to "main" stack if we are already on this stack */
 		if (!UI_IsWindowOnStack("main"))
-			UI_InitStack("main", "", true, true);
+			UI_InitStack("main", "");
 	}
 
 	cls.gametype = gametype;
@@ -1379,8 +1379,7 @@ void GAME_StartBattlescape (bool isTeamPlay)
 	if (list != nullptr && list->StartBattlescape) {
 		list->StartBattlescape(isTeamPlay);
 	} else {
-		UI_InitStack(nullptr, "singleplayermission", true, false);
-		HUD_InitUI(nullptr, true);
+		HUD_InitUI("singleplayermission");
 		GAME_InitMissionBriefing(_(CL_GetConfigString(CS_MAPTITLE)));
 	}
 }
@@ -1531,7 +1530,7 @@ void GAME_Drop (void)
 
 		GAME_UnloadGame();
 
-		UI_InitStack("main", nullptr, false, true);
+		UI_InitStack("main", nullptr);
 	}
 }
 

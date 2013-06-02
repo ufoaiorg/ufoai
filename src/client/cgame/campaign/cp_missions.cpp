@@ -91,9 +91,6 @@ void BATTLE_Start (mission_t* mission, const battleParam_t *battleParameters)
 {
 	const char *param = nullptr;
 
-	/* prepare */
-	cgi->UI_InitStack(nullptr, "singleplayermission", true, false);
-
 	assert(mission->mapDef->map);
 
 	/* set the mapZone - this allows us to replace the ground texture

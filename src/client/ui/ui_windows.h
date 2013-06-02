@@ -37,7 +37,7 @@ void UI_InitWindows(void);
 /* window stack */
 int UI_GetLastFullScreenWindow(void);
 uiNode_t* UI_PushWindow(const char *name, const char *parentName = nullptr, linkedList_t *params = nullptr);
-void UI_InitStack(const char* activeWindow, const char* mainWindow, bool popAll, bool pushActive);
+void UI_InitStack(const char* activeWindow, const char* mainWindow);
 void UI_PopWindow(bool all);
 void UI_PopWindowWithEscKey(void);
 void UI_CloseWindow(const char* name);

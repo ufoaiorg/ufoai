@@ -1601,16 +1601,14 @@ static bool HUD_CheckCLHud (cvar_t *cvar)
 /**
  * @brief Display the user interface
  * @param optionWindowName Name of the window used to display options, else nullptr if nothing
- * @param popAll If true
- * @todo Remove popAll when it is possible. It should always be true
  */
-void HUD_InitUI (const char *optionWindowName, bool popAll)
+void HUD_InitUI (const char *optionWindowName)
 {
 	OBJZERO(buttonStates);
 	if (!HUD_CheckCLHud(cl_hud)) {
 		Cvar_Set("cl_hud", "hud_default");
 	}
-	UI_InitStack(cl_hud->string, optionWindowName, popAll, true);
+	UI_InitStack(cl_hud->string, optionWindowName);
 
 	UI_ExecuteConfunc("hudinit");
 }

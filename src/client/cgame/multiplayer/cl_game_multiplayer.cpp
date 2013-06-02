@@ -37,13 +37,13 @@ CGAME_HARD_LINKED_FUNCTIONS
 static void GAME_MP_StartBattlescape (bool isTeamPlay)
 {
 	cgi->UI_ExecuteConfunc("multiplayer_setTeamplay %i", isTeamPlay);
-	cgi->UI_InitStack("multiplayer_wait", nullptr, true, true);
+	cgi->UI_InitStack("multiplayer_wait", nullptr);
 }
 
 static void GAME_MP_NotifyEvent (event_t eventType)
 {
 	if (eventType == EV_RESET)
-		cgi->HUD_InitUI("multiplayerInGame", true);
+		cgi->HUD_InitUI("multiplayerInGame");
 }
 
 static void GAME_MP_EndRoundAnnounce (int playerNum, int team)
@@ -98,7 +98,7 @@ static void GAME_MP_StartServer_f (void)
 
 	cgi->Cmd_ExecuteString(map);
 
-	cgi->UI_InitStack("multiplayer_wait", "multiplayerInGame", false, true);
+	cgi->UI_InitStack("multiplayer_wait", "multiplayerInGame");
 }
 
 /**

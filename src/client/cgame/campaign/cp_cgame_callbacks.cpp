@@ -306,7 +306,7 @@ void GAME_CP_Results (dbuffer *msg, int winner, int *numSpawned, int *numAlive, 
 		ccs.missionResultCallback(results);
 	}
 
-	cgi->UI_InitStack("geoscape", "campaign_main", true, true);
+	cgi->UI_InitStack("geoscape", "campaign_main");
 
 	if (won)
 		cgi->UI_PushWindow("won");
@@ -339,9 +339,6 @@ bool GAME_CP_Spawn (linkedList_t **chrList)
 
 	/* clean temp inventory */
 	CP_CleanTempInventory(base);
-
-	/* activate hud */
-	cgi->HUD_InitUI(nullptr, false);
 
 	return true;
 }
@@ -383,7 +380,7 @@ character_t* GAME_CP_GetSelectedChr (void)
 void GAME_CP_Drop (void)
 {
 	/** @todo maybe create a savegame? */
-	cgi->UI_InitStack("geoscape", "campaign_main", true, true);
+	cgi->UI_InitStack("geoscape", "campaign_main");
 
 	cgi->SV_Shutdown("Mission end", false);
 	cgi->CL_Disconnect();

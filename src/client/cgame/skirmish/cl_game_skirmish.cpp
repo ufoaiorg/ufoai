@@ -49,12 +49,6 @@ static void GAME_SK_InitMissionBriefing (const char **title, linkedList_t **vict
 	}
 }
 
-static void GAME_SK_NotifyEvent (event_t eventType)
-{
-	if (eventType == EV_RESET)
-		cgi->HUD_InitUI(nullptr, true);
-}
-
 static inline const char* GAME_SK_GetRandomMapAssemblyNameForCraft (const char *name)
 {
 	return cgi->Com_GetRandomMapAssemblyNameForCraft(name);
@@ -130,9 +124,6 @@ static void GAME_SK_Start_f (void)
 
 	assert(md->map);
 	Com_sprintf(map, sizeof(map), "map %s %s %s;", cgi->Cvar_GetInteger("mn_serverday") ? "day" : "night", md->map, md->param ? md->param : "");
-
-	/* prepare */
-	cgi->UI_InitStack(nullptr, "singleplayermission", true, false);
 
 	cgi->Cbuf_AddText(map);
 }
@@ -374,7 +365,6 @@ const cgame_export_t *GetCGameSkirmishAPI (const cgame_import_t *import)
 	e.MapInfo = GAME_SK_MapInfo;
 	e.Results = GAME_SK_Results;
 	e.InitMissionBriefing = GAME_SK_InitMissionBriefing;
-	e.NotifyEvent = GAME_SK_NotifyEvent;
 
 	cgi = import;
 

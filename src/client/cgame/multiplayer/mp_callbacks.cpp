@@ -76,7 +76,7 @@ static void CL_Connect_f (void)
 
 	cgi->CL_SetClientState(ca_connecting);
 
-	cgi->UI_InitStack(nullptr, "multiplayerInGame", false, false);
+	cgi->HUD_InitUI("multiplayerInGame");
 }
 
 static void CL_RconCallback (struct net_stream *s)

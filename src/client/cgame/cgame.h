@@ -105,7 +105,7 @@ typedef struct cgame_import_s {
 	void (IMPORT *UI_ExecuteConfunc) (const char *fmt, ...) __attribute__((format(__printf__, 1, 2)));
 	void (IMPORT *UI_PopWindow) (bool all);
 	void (IMPORT *UI_PushWindow) (const char *name);
-	void (IMPORT *UI_InitStack) (const char* activeMenu, const char* mainMenu, bool popAll, bool pushActive);
+	void (IMPORT *UI_InitStack) (const char* activeMenu, const char* mainMenu);
 	void (IMPORT *UI_Popup) (const char *title, const char *format, ...);
 	uiNode_t* (IMPORT *UI_AddOption) (uiNode_t** tree, const char* name, const char* label, const char* value);
 	void (IMPORT *UI_RegisterOption) (int dataId, uiNode_t* option);
@@ -119,7 +119,7 @@ typedef struct cgame_import_s {
 	void (IMPORT *UI_TextNodeSelectLine) (uiNode_t* node, int num);
 	uiNode_t* (IMPORT *UI_PopupList) (const char *title, const char *headline, linkedList_t* entries, const char *clickAction);
 	void (IMPORT *UI_UpdateInvisOptions) (uiNode_t* option, const linkedList_t *stringList);
-	void (IMPORT *HUD_InitUI) (const char *optionWindowName, bool popAll);
+	void (IMPORT *HUD_InitUI) (const char *optionWindowName);
 	void (IMPORT *HUD_DisplayMessage) (const char *text);
 	uiNode_t* (IMPORT *UI_GetOption) (int dataId);
 	void (IMPORT *UI_SortOptions) (uiNode_t** first);

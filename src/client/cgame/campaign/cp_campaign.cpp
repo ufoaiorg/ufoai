@@ -312,9 +312,9 @@ void CP_EndCampaign (bool won)
 	cgi->Cmd_ExecuteString("game_exit");
 
 	if (won)
-		cgi->UI_InitStack("endgame", nullptr, true, true);
+		cgi->UI_InitStack("endgame", nullptr);
 	else
-		cgi->UI_InitStack("lostgame", nullptr, true, true);
+		cgi->UI_InitStack("lostgame", nullptr);
 
 	cgi->Com_Drop();
 }
@@ -1156,7 +1156,7 @@ void CP_CampaignInit (campaign_t *campaign, bool load)
 
 	CP_XVIInit();
 
-	cgi->UI_InitStack("geoscape", "campaign_main", true, true);
+	cgi->UI_InitStack("geoscape", "campaign_main");
 
 	if (load) {
 		return;
