@@ -1,5 +1,4 @@
-#ifndef MRULIST_H_
-#define MRULIST_H_
+#pragma once
 
 #include <string>
 #include <list>
@@ -59,5 +58,3 @@ public:
 }; // class MRUList
 
 } // namespace ui
-
-#endif /*MRULIST_H_*/

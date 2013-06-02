@@ -1,5 +1,4 @@
-#ifndef PARTICLEEDITOR_H_
-#define PARTICLEEDITOR_H_
+#pragma once
 
 #include <gtk/gtk.h>
 #include <string>
@@ -44,5 +43,3 @@ namespace ui
 			void showAndBlock (const std::string& particleID);
 	};
 }
-
-#endif /* PARTICLEEDITOR_H_ */

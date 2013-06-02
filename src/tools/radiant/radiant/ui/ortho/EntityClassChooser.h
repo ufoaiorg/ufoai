@@ -1,5 +1,4 @@
-#ifndef ENTITYCLASSCHOOSER_H_
-#define ENTITYCLASSCHOOSER_H_
+#pragma once
 
 #include <gtk/gtk.h>
 
@@ -86,5 +85,3 @@ namespace ui
 			static void displayInstance (const Vector3& point);
 	};
 }
-
-#endif /*ENTITYCLASSCHOOSER_H_*/

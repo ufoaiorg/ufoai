@@ -1,5 +1,4 @@
-#ifndef ORTHOCONTEXTMENU_H_
-#define ORTHOCONTEXTMENU_H_
+#pragma once
 
 #include <gtk/gtk.h>
 
@@ -94,5 +93,3 @@ namespace ui
 			static void displayInstance (const Vector3& point);
 	};
 }
-
-#endif /*ORTHOCONTEXTMENU_H_*/

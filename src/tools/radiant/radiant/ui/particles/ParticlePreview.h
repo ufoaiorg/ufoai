@@ -1,5 +1,4 @@
-#ifndef PARTICLEPREVIEW_H_
-#define PARTICLEPREVIEW_H_
+#pragma once
 
 #include "math/matrix.h"
 
@@ -76,5 +75,3 @@ namespace ui
 			}
 	};
 }
-
-#endif /*PARTICLEPREVIEW_H_*/

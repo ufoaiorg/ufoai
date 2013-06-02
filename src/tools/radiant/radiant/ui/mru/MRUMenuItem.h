@@ -1,5 +1,4 @@
-#ifndef MRUMENUITEM_H_
-#define MRUMENUITEM_H_
+#pragma once
 
 #include <string>
 
@@ -56,5 +55,3 @@ public:
 }; // class MRUMenuItem
 
 } // namespace ui
-
-#endif /*MRUMENUITEM_H_*/
