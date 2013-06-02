@@ -9,6 +9,7 @@
 /config.mk
 /debug-*/
 /Makefile.local
+/config.log
 /memory
 /memory.exe
 /release-*/
