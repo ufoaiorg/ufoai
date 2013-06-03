@@ -125,6 +125,15 @@ window physdata
 	// background
 	// ==================
 
+	// drag controls extended over the whole window
+	controls drag {
+		pos		"10 10"
+		size	"492 492"
+		OnRClick { cmd "ui_pop;" }
+		onWheelUp	{ cmd "actor_next;" }
+		onWheelDown	{ cmd "actor_prev;" }
+	}
+
 	image bar_physdata_deco
 	{
 		src		"hud/bar_phys_deco"
@@ -333,15 +342,6 @@ window physdata
 	string	kills_lbl { pos "37 465" size "180 20" string *cvar:mn_kills_label_string }
 	string	kills_val { pos "240 465" size "165 20" string *cvar:mn_chrkillalien contentalign ALIGN_UR }
 
-	// drag controls extended over the whole window
-	controls drag {
-		pos		"10 10"
-		size	"492 492"
-		OnRClick { cmd "ui_pop;" }
-		onWheelUp	{ cmd "actor_next;" }
-		onWheelDown	{ cmd "actor_prev;" }
-	}
-
 	// ==================
 	// rank
 	// ==================
@@ -441,7 +441,7 @@ window physdata
 			*node:root.wounds.wound_<1>.wound_icon@icon = "icons/message_info"
 		}
 		*node:root.wounds.wound_<1>.wound_string@string = "<3>"
-		*node:root.wounds.wound_<1>.wound_string@tooltip = "<3>"
+		*node:root.wounds.wound_<1>@tooltip = "<3>"
 	}
 
 	confunc updateactorwounds {
