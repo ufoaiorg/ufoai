@@ -343,8 +343,6 @@ static void testInventoryTempContainerLinks (void)
 	if (FS_CheckFile("maps/%s.bsp", mapName) != -1) {
 		edict_t *ent;
 		int nr;
-		containerIndex_t container;
-		const invList_t *ic;
 
 		/* the other tests didn't call the server shutdown function to clean up */
 		OBJZERO(*sv);
@@ -354,11 +352,11 @@ static void testInventoryTempContainerLinks (void)
 		/* first alien that should die and drop its inventory */
 		ent = G_EdictsGetNextLivingActorOfTeam(NULL, TEAM_ALIEN);
 		nr = 0;
-		for (container = 0; container < CID_MAX; container++) {
-			if (container == CID_ARMOUR || container == CID_FLOOR)
+		const Container *cont = nullptr;
+		while ((cont = ent->chr.inv.getNextCont(cont, true))) {
+			if (cont->id == CID_ARMOUR || cont->id == CID_FLOOR)
 				continue;
-			for (ic = ent->getContainer(container); ic; ic = ic->getNext())
-				nr++;
+			nr += cont->countItems();
 		}
 		CU_ASSERT_TRUE(nr > 0);
 
@@ -368,11 +366,11 @@ static void testInventoryTempContainerLinks (void)
 		CU_ASSERT_PTR_EQUAL(G_GetFloorItemFromPos(ent->pos)->getFloor(), ent->getFloor());
 
 		nr = 0;
-		for (container = 0; container < CID_MAX; container++) {
-			if (container == CID_ARMOUR || container == CID_FLOOR)
+		cont = nullptr;
+		while ((cont = ent->chr.inv.getNextCont(cont, true))) {
+			if (cont->id == CID_ARMOUR || cont->id == CID_FLOOR)
 				continue;
-			for (ic = ent->getContainer(container); ic; ic = ic->getNext())
-				nr++;
+			nr += cont->countItems();
 		}
 		CU_ASSERT_EQUAL(nr, 0);
 
