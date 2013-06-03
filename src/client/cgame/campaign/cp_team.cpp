@@ -257,21 +257,11 @@ void CP_CleanupAircraftTeam (aircraft_t *aircraft, equipDef_t *ed)
 void CP_CleanTempInventory (base_t* base)
 {
 	E_Foreach(EMPL_SOLDIER, employee) {
-		const Container *cont = nullptr;
-		while ((cont = employee->chr.inv.getNextCont(cont, true))) {
-			/* CID_FLOOR and CID_EQUIP are temp */
-			if (cont->def()->temp)
-				employee->chr.inv.resetContainer(cont->id);
-		}
+		employee->chr.inv.resetTempContainers();
 	}
 
 	E_Foreach(EMPL_ROBOT, employee) {
-		const Container *cont = nullptr;
-		while ((cont = employee->chr.inv.getNextCont(cont, true))) {
-			/* CID_FLOOR and CID_EQUIP are temp */
-			if (cont->def()->temp)
-				employee->chr.inv.resetContainer(cont->id);
-		}
+		employee->chr.inv.resetTempContainers();
 	}
 
 	if (!base)

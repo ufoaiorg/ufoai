@@ -532,6 +532,14 @@ public:
 	inline void resetContainer (const containerIndex_t idx) {
 		_containers[idx]._invList = nullptr;
 	}
+	inline void resetTempContainers () {
+		const Container *cont = nullptr;
+		while ((cont = getNextCont(cont, true))) {
+			/* CID_FLOOR and CID_EQUIP are temp */
+			if (cont->def()->temp)
+				resetContainer(cont->id);
+		}
+	}
 
 	/**
 	 * @brief Searches if there is a specific item already in the inventory&container.
