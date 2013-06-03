@@ -209,131 +209,131 @@ window physdata
 	// abilities
 	// ==================
 
-		image pwr_bar_full
-			{
-				pos "224 50"
-				src		"ui/bar_attribute_disabled"
-			}
-		cmpPhysNamedTbar pwr {
-			{
-				pos "220 32"
-			}
-			tbar bar   { current *cvar:mn_vpwr }
-			string lbl { string "_Strength:" }
-			string val { string *cvar:mn_tpwr }
+	image pwr_bar_full
+		{
+			pos "224 50"
+			src		"ui/bar_attribute_disabled"
 		}
+	cmpPhysNamedTbar pwr {
+		{
+			pos "220 32"
+		}
+		tbar bar   { current *cvar:mn_vpwr }
+		string lbl { string "_Strength:" }
+		string val { string *cvar:mn_tpwr }
+	}
 
-		image spd_bar_full
-			{
-				pos "224 82"
-				src		"ui/bar_attribute_disabled"
-			}
-		cmpPhysNamedTbar spd {
-			{
-				pos "220 64"
-			}
-			tbar bar   { current *cvar:mn_vspd }
-			string lbl { string "_Speed:" }
-			string val { string *cvar:mn_tspd }
+	image spd_bar_full
+		{
+			pos "224 82"
+			src		"ui/bar_attribute_disabled"
 		}
+	cmpPhysNamedTbar spd {
+		{
+			pos "220 64"
+		}
+		tbar bar   { current *cvar:mn_vspd }
+		string lbl { string "_Speed:" }
+		string val { string *cvar:mn_tspd }
+	}
 
-		image acc_bar_full
-			{
-				pos "224 114"
-				src		"ui/bar_attribute_disabled"
-			}
-		cmpPhysNamedTbar acc {
-			{
-				pos "220 96"
-			}
-			tbar bar   { current *cvar:mn_vacc }
-			string lbl { string "_Accuracy:" }
-			string val { string *cvar:mn_tacc }
+	image acc_bar_full
+		{
+			pos "224 114"
+			src		"ui/bar_attribute_disabled"
 		}
+	cmpPhysNamedTbar acc {
+		{
+			pos "220 96"
+		}
+		tbar bar   { current *cvar:mn_vacc }
+		string lbl { string "_Accuracy:" }
+		string val { string *cvar:mn_tacc }
+	}
 
-		image mnd_bar_full
-			{
-				pos "224 146"
-				src		"ui/bar_attribute_disabled"
-			}
-		cmpPhysNamedTbar mnd {
-			{
-				pos "220 128"
-			}
-			tbar bar   { current *cvar:mn_vmnd }
-			string lbl { string "_Mind:" }
-			string val { string *cvar:mn_tmnd }
+	image mnd_bar_full
+		{
+			pos "224 146"
+			src		"ui/bar_attribute_disabled"
 		}
+	cmpPhysNamedTbar mnd {
+		{
+			pos "220 128"
+		}
+		tbar bar   { current *cvar:mn_vmnd }
+		string lbl { string "_Mind:" }
+		string val { string *cvar:mn_tmnd }
+	}
 
-		image cls_bar_full
-			{
-				pos "224 184"
-				src		"ui/bar_skill_disabled"
-			}
-		cmpPhysNamedTbar cls {
-			{
-				pos "220 166"
-			}
-			tbar bar   { current *cvar:mn_vcls image "ui/bar_skill" }
-			string lbl { string "_Close Combat:" }
-			string val { string *cvar:mn_tcls }
+	image cls_bar_full
+		{
+			pos "224 184"
+			src		"ui/bar_skill_disabled"
 		}
+	cmpPhysNamedTbar cls {
+		{
+			pos "220 166"
+		}
+		tbar bar   { current *cvar:mn_vcls image "ui/bar_skill" }
+		string lbl { string "_Close Combat:" }
+		string val { string *cvar:mn_tcls }
+	}
 
-		image hvy_bar_full
-			{
-				pos "224 216"
-				src		"ui/bar_skill_disabled"
-			}
-		cmpPhysNamedTbar hvy {
-			{
-				pos "220 198"
-			}
-			tbar bar   { current *cvar:mn_vhvy image "ui/bar_skill" }
-			string lbl { string "_Heavy Weapons:" }
-			string val { string *cvar:mn_thvy }
+	image hvy_bar_full
+		{
+			pos "224 216"
+			src		"ui/bar_skill_disabled"
 		}
+	cmpPhysNamedTbar hvy {
+		{
+			pos "220 198"
+		}
+		tbar bar   { current *cvar:mn_vhvy image "ui/bar_skill" }
+		string lbl { string "_Heavy Weapons:" }
+		string val { string *cvar:mn_thvy }
+	}
 
-		image ass_bar_full
-			{
-				pos "224 248"
-				src		"ui/bar_skill_disabled"
-			}
-		cmpPhysNamedTbar ass {
-			{
-				pos "220 230"
-			}
-			tbar bar   { current *cvar:mn_vass image "ui/bar_skill" }
-			string lbl { string "_Assault Weapons:" }
-			string val { string *cvar:mn_tass }
+	image ass_bar_full
+		{
+			pos "224 248"
+			src		"ui/bar_skill_disabled"
 		}
+	cmpPhysNamedTbar ass {
+		{
+			pos "220 230"
+		}
+		tbar bar   { current *cvar:mn_vass image "ui/bar_skill" }
+		string lbl { string "_Assault Weapons:" }
+		string val { string *cvar:mn_tass }
+	}
 
-		image snp_bar_full
-			{
-				pos "224 280"
-				src		"ui/bar_skill_disabled"
-			}
-		cmpPhysNamedTbar snp {
-			{
-				pos "220 262"
-			}
-			tbar bar   { current *cvar:mn_vsnp image "ui/bar_skill" }
-			string lbl { string "_Sniper Rifles:" }
-			string val { string *cvar:mn_tsnp }
+	image snp_bar_full
+		{
+			pos "224 280"
+			src		"ui/bar_skill_disabled"
 		}
+	cmpPhysNamedTbar snp {
+		{
+			pos "220 262"
+		}
+		tbar bar   { current *cvar:mn_vsnp image "ui/bar_skill" }
+		string lbl { string "_Sniper Rifles:" }
+		string val { string *cvar:mn_tsnp }
+	}
 
-		image exp_bar_full
-			{
-				pos "224 314"
-				src		"ui/bar_skill_disabled"
-			}
-		cmpPhysNamedTbar exp {
-			{
-				pos "220 296"
-			}
-			tbar bar   { current *cvar:mn_vexp image "ui/bar_skill" }
-			string lbl { string "_High-Explosives:" }
-			string val { string *cvar:mn_texp }
+	image exp_bar_full
+		{
+			pos "224 314"
+			src		"ui/bar_skill_disabled"
 		}
+	cmpPhysNamedTbar exp {
+		{
+			pos "220 296"
+		}
+		tbar bar   { current *cvar:mn_vexp image "ui/bar_skill" }
+		string lbl { string "_High-Explosives:" }
+		string val { string *cvar:mn_texp }
+	}
 
 	// these cvars do just exist in campaign mode, otherwise strings are empty
 	string	missions_lbl { pos "37 445" size "180 20" string *cvar:mn_missions_label_string }
