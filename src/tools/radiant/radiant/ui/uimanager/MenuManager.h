@@ -1,5 +1,4 @@
-#ifndef MENUMANAGER_H_
-#define MENUMANAGER_H_
+#pragma once
 
 #include <string>
 #include <list>
@@ -102,5 +101,3 @@ private:
 };
 
 } // namespace ui
-
-#endif /*MENUMANAGER_H_*/

@@ -1,5 +1,4 @@
-#ifndef UNDOOPERATION_H_
-#define UNDOOPERATION_H_
+#pragma once
 
 namespace undo {
 
@@ -26,5 +25,3 @@ public:
 }; // class UndoOperation
 
 } // namespace undo
-
-#endif /*UNDOOPERATION_H_*/

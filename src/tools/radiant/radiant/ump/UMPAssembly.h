@@ -1,5 +1,4 @@
-#ifndef UMPASSEMBLY_H_
-#define UMPASSEMBLY_H_
+#pragma once
 
 #include <string>
 #include <sstream>
@@ -90,5 +89,3 @@ namespace map
 		};
 	}
 }
-
-#endif /* UMPASSEMBLY_H_ */

@@ -1,6 +1,4 @@
-#ifndef TRANSFORMDIALOG_H_
-#define TRANSFORMDIALOG_H_
-
+#pragma once
 #include <string>
 #include <map>
 #include "iselection.h"
@@ -115,6 +113,3 @@ private:
 }; // class TransformDialog
 
 } // namespace ui
-
-
-#endif /*TRANSFORMDIALOG_H_*/

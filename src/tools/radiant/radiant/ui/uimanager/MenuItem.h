@@ -1,5 +1,4 @@
-#ifndef MENUITEM_H_
-#define MENUITEM_H_
+#pragma once
 
 #include "xmlutil/Node.h"
 #include "iuimanager.h"
@@ -127,5 +126,3 @@ private:
 };
 
 } // namespace ui
-
-#endif /*MENUITEM_H_*/

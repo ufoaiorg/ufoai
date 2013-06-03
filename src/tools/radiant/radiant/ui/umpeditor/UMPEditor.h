@@ -1,5 +1,4 @@
-#ifndef UMPEDITOR_H_
-#define UMPEDITOR_H_
+#pragma once
 
 #include <string>
 #include <gtk/gtk.h>
@@ -24,5 +23,3 @@ namespace ui
 			void show ();
 	};
 }
-
-#endif /* UMPEDITOR_H_ */

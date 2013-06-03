@@ -1,5 +1,4 @@
-#ifndef UMPFILE_H_
-#define UMPFILE_H_
+#pragma once
 
 #include <string>
 #include <vector>
@@ -125,5 +124,3 @@ namespace map
 		};
 	}
 }
-
-#endif /* UMPFILE_H_ */

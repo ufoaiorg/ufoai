@@ -1,5 +1,4 @@
-#ifndef UIMANAGER_H_
-#define UIMANAGER_H_
+#pragma once
 
 #include "iuimanager.h"
 
@@ -25,5 +24,3 @@ public:
 }; // class UIManager
 
 } // namespace ui
-
-#endif /*UIMANAGER_H_*/

@@ -1,5 +1,4 @@
-#ifndef UMPEXCEPTION_H_
-#define UMPEXCEPTION_H_
+#pragma once
 
 namespace map
 {
@@ -22,5 +21,3 @@ namespace map
 		};
 	}
 }
-
-#endif /* UMPEXCEPTION_H_ */

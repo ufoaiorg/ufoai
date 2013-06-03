@@ -1,5 +1,4 @@
-#ifndef UMPTILE_H_
-#define UMPTILE_H_
+#pragma once
 
 #include <string>
 
@@ -46,5 +45,3 @@ namespace map
 		};
 	}
 }
-
-#endif /* UMPTILE_H_ */
