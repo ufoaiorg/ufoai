@@ -102,15 +102,15 @@ mxmlEntityGetName(int val)		/* I - Character value */
 int					/* O - Character value or -1 on error */
 mxmlEntityGetValue(const char *name)	/* I - Entity name */
 {
-  int		i;			/* Looping var */
-  int		ch;			/* Character value */
   _mxml_global_t *global = _mxml_global();
 					/* Global data */
 
-
-  for (i = 0; i < global->num_entity_cbs; i ++)
+  int i;
+  for (i = 0; i < global->num_entity_cbs; i ++) {
+	int ch;			/* Character value */
     if ((ch = (global->entity_cbs[i])(name)) >= 0)
       return (ch);
+  }
 
   return (-1);
 }

@@ -2605,7 +2605,6 @@ mxml_write_name(const char *s,		/* I - Name to write */
 		int        (*putc_cb)(int, void *))
 					/* I - Write callback */
 {
-  const char	*name;			/* Entity name */
 
 
   if (*s == '\"' || *s == '\'')
@@ -2621,6 +2620,7 @@ mxml_write_name(const char *s,		/* I - Name to write */
 
     while (*s && *s != quote)
     {
+	  const char	*name;			/* Entity name */
       if ((name = mxmlEntityGetName(*s)) != NULL)
       {
 	    if ((*putc_cb)('&', p) < 0)
@@ -2952,13 +2952,13 @@ static int				/* O - 0 on success, -1 on failure */
 mxml_write_string(
     const char      *s,			/* I - String to write */
     void            *p,			/* I - Write pointer */
-    _mxml_putc_cb_t putc_cb)		/* I - Write callback */
+    _mxml_putc_cb_t putc_cb)	/* I - Write callback */
 {
-  const char	*name;			/* Entity name, if any */
 
 
   while (*s)
   {
+	const char	*name;			/* Entity name, if any */
     if ((name = mxmlEntityGetName(*s)) != NULL)
     {
       if ((*putc_cb)('&', p) < 0)
