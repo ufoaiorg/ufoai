@@ -1,5 +1,4 @@
-#ifndef REGISTRYTREE_H_
-#define REGISTRYTREE_H_
+#pragma once
 
 #include "xmlutil/Document.h"
 
@@ -69,5 +68,3 @@ public:
 	std::string prepareKey(const std::string& key);
 
 }; // class RegistryTree
-
-#endif /*REGISTRYTREE_H_*/

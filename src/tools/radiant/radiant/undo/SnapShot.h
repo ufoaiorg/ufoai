@@ -1,5 +1,4 @@
-#ifndef SNAPSHOT_H_
-#define SNAPSHOT_H_
+#pragma once
 
 #include "iundo.h"
 
@@ -78,5 +77,3 @@ public:
 }; // class Snapshot
 
 } // namespace undo
-
-#endif /*SNAPSHOT_H_*/

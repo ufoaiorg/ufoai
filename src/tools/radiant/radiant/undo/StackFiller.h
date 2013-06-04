@@ -1,5 +1,4 @@
-#ifndef STACKFILLER_H_
-#define STACKFILLER_H_
+#pragma once
 
 namespace undo {
 
@@ -33,5 +32,3 @@ public:
 };
 
 } // namespace undo
-
-#endif /*STACKFILLER_H_*/

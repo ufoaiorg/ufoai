@@ -1,5 +1,4 @@
-#ifndef XMLREGISTRY_H_
-#define XMLREGISTRY_H_
+#pragma once
 
 /*	This is the implementation of the XMLRegistry structure providing easy methods to store
  * 	all kinds of information like ui state, toolbar structures and anything that fits into an XML file.
@@ -156,5 +155,3 @@ private:
 	// Cycles through the key observers and notifies the ones that observe the given <changedKey>
 	void notifyKeyObservers(const std::string& changedKey, const std::string& newVal);
 };
-
-#endif /* XMLREGISTRY_H_ */

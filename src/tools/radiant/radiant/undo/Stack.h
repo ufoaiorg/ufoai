@@ -1,5 +1,4 @@
-#ifndef UNDOSTACK_H_
-#define UNDOSTACK_H_
+#pragma once
 
 namespace undo {
 
@@ -117,5 +116,3 @@ public:
 }; // class UndoStack
 
 } // namespace undo
-
-#endif /*UNDOSTACK_H_*/
