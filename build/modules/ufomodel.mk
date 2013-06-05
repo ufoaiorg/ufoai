@@ -39,7 +39,7 @@ $(TARGET)_SRCS      = \
 	client/renderer/r_model_md3.cpp \
 	client/renderer/r_model_obj.cpp
 
-ifeq ($(TARGET_OS),mingw32)
+ifneq ($(findstring $(TARGET_OS), mingw32 mingw64),)
 	$(TARGET)_SRCS+=\
 		ports/windows/win_shared.cpp
 else

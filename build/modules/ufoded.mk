@@ -70,7 +70,7 @@ ifneq ($(findstring $(TARGET_OS), netbsd freebsd linux),)
 		ports/unix/unix_main.cpp
 endif
 
-ifeq ($(TARGET_OS),mingw32)
+ifneq ($(findstring $(TARGET_OS), mingw32 mingw64),)
 	$(TARGET)_SRCS += \
 		ports/windows/win_backtrace.cpp \
 		ports/windows/win_console.cpp \

@@ -381,7 +381,7 @@ $(TARGET)_SRCS      = \
 	\
 	$(PICOMODEL_SRCS)
 
-ifeq ($(TARGET_OS),mingw32)
+ifneq ($(findstring $(TARGET_OS), mingw32 mingw64),)
 	$(TARGET)_SRCS += $(RADIANT_BASE)/radiant/radiant.rc
 endif
 

@@ -282,7 +282,7 @@ $(TARGET)_SRCS_TMP      = \
 	\
 	$(MUMBLE_SRCS)
 
-ifeq ($(TARGET_OS),mingw32)
+ifneq ($(findstring $(TARGET_OS), mingw32 mingw64),)
 	$(TARGET)_SRCS_TMP += \
 		ports/windows/win_backtrace.cpp \
 		ports/windows/win_console.cpp \

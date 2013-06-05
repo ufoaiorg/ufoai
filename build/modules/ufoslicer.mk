@@ -32,7 +32,7 @@ $(TARGET)_SRCS      = \
 	shared/shared.cpp \
 	shared/utf8.cpp
 
-ifeq ($(TARGET_OS),mingw32)
+ifneq ($(findstring $(TARGET_OS), mingw32 mingw64),)
 	$(TARGET)_SRCS+=\
 		ports/windows/win_shared.cpp
 else
