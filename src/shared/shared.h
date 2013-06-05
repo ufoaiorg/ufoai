@@ -134,7 +134,9 @@ _CRTIMP int __cdecl	_strnicmp (const char*, const char*, size_t);
 
 #define Q_strcaseeq(a, b) (Q_strcasecmp(a, b) == 0)
 #define Q_streq(a, b) (strcmp(a, b) == 0)
-#define Q_strnull(string) ((string) == nullptr || (string)[0] == '\0')
+inline bool Q_strnull (const char *string) {
+	return string == nullptr || string[0] == '\0';
+}
 #define Q_strvalid(string) !Q_strnull(string)
 
 #ifndef DEBUG
