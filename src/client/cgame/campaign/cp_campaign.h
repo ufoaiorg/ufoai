@@ -105,7 +105,7 @@ struct campaign_s;
 /* Maximum alien groups per alien team category */
 #define MAX_ALIEN_GROUP_PER_CATEGORY	8
 /* Maximum alien team category defined in scripts */
-#define ALIENCATEGORY_MAX	8
+#define ALIENCATEGORY_MAX	64
 #define BID_FACTOR 0.9
 #define MAX_PROJECTILESONGEOSCAPE 32
 
