@@ -36,8 +36,8 @@ PARSING STUFF
 typedef struct {
 	char	filename[MAX_OSPATH];
 	char	*buffer;
-	char	*script_p;
-	char	*end_p;
+	const char *script_p;
+	const char *end_p;
 	int     line;
 } script_t;
 
@@ -87,73 +87,19 @@ void ParseFromMemory (char *buffer, int size)
 	script.end_p = script.buffer + size;
 }
 
-static bool EndOfScript ()
-{
-	/* not if the current script is a memory buffer */
-	if (!Q_streq(script.filename, "memory buffer"))
-		Mem_Free(script.buffer);
-	return false;
-}
-
 /**
  * @brief Parses the next token from the current script on the stack
- * and store the result in parsedToken
- * @param[in] crossline The next token may not be seperated by
- * comment or newline if this is true - everything must be on the same line
+ * and store the result in @c parsedToken
  */
 bool GetToken ()
 {
-	char *token_p;
-
-	if (script.script_p >= script.end_p)
-		return EndOfScript();
-
-	/* skip space */
-skipspace:
-	while (*script.script_p <= ' ') {
-		if (script.script_p >= script.end_p)
-			return EndOfScript();
-		if (*script.script_p++ == '\n') {
-			script.line++;
-		}
+	Com_Parse(&script.script_p, parsedToken, sizeof(parsedToken));
+	if (!script.script_p) {
+		/* not if the current script is a memory buffer */
+		if (!Q_streq(script.filename, "memory buffer"))
+			Mem_Free(script.buffer);
+		return false;
 	}
-
-	if (script.script_p >= script.end_p)
-		return EndOfScript();
-
-	/* // comments */
-	if (script.script_p[0] == '/' && script.script_p[1] == '/') {
-		while (*script.script_p++ != '\n')
-			if (script.script_p >= script.end_p)
-				return EndOfScript();
-		script.line++;
-		goto skipspace;
-	}
-
-	/* copy token */
-	token_p = parsedToken;
-
-	if (*script.script_p == '"') {
-		/* quoted token */
-		script.script_p++;
-		while (*script.script_p != '"') {
-			*token_p++ = *script.script_p++;
-			if (script.script_p == script.end_p)
-				break;
-			if (token_p == &parsedToken[MAX_TOKEN_CHARS])
-				Sys_Error("Token too large on line %i", script.line);
-		}
-		script.script_p++;
-	} else	/* regular token */
-		while (*script.script_p > ' ') {
-			*token_p++ = *script.script_p++;
-			if (script.script_p == script.end_p)
-				break;
-			if (token_p == &parsedToken[MAX_TOKEN_CHARS])
-				Sys_Error("Token too large on line %i", script.line);
-		}
-
-	*token_p = 0;
 
 	return true;
 }
