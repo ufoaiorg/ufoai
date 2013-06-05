@@ -38,17 +38,11 @@ typedef struct {
 	char	*buffer;
 	const char *script_p;
 	const char *end_p;
-	int     line;
 } script_t;
 
 static script_t script;
 
 char parsedToken[MAX_TOKEN_CHARS];
-
-int GetScriptLine (void)
-{
-	return script.line;
-}
 
 void LoadScriptFile (const char *filename)
 {
@@ -57,8 +51,6 @@ void LoadScriptFile (const char *filename)
 	const int size = FS_LoadFile(script.filename, (byte **)&script.buffer);
 	if (size == -1)
 		Sys_Error("file '%s' doesn't exist", script.filename);
-
-	script.line = 1;
 
 	script.script_p = script.buffer;
 	script.end_p = script.buffer + size;
@@ -72,7 +64,6 @@ void ParseFromMemory (char *buffer, int size)
 	Q_strncpyz(script.filename, "memory buffer", sizeof(script.filename));
 
 	script.buffer = buffer;
-	script.line = 1;
 	script.script_p = script.buffer;
 	script.end_p = script.buffer + size;
 }
