@@ -41,16 +41,13 @@ typedef struct {
 	int     line;
 } script_t;
 
-#define	MAX_INCLUDES	2
-static script_t scriptstack[MAX_INCLUDES];
-static script_t *script;
+static script_t script;
 
 char parsedToken[MAX_TOKEN_CHARS];
 
 int GetScriptLine (void)
 {
-	assert(script);
-	return script->line;
+	return script.line;
 }
 
 /**
@@ -60,26 +57,20 @@ static void AddScriptToStack (const char *filename)
 {
 	int size;
 
-	assert(script);
+	strncpy(script.filename, filename, sizeof(script.filename));
 
-	script++;
-	if (script == &scriptstack[MAX_INCLUDES])
-		Sys_Error("script file exceeded MAX_INCLUDES");
-	strncpy(script->filename, filename, sizeof(script->filename));
-
-	size = FS_LoadFile(script->filename, (byte **)&script->buffer);
+	size = FS_LoadFile(script.filename, (byte **)&script.buffer);
 	if (size == -1)
-		Sys_Error("file '%s' doesn't exist", script->filename);
+		Sys_Error("file '%s' doesn't exist", script.filename);
 
-	script->line = 1;
+	script.line = 1;
 
-	script->script_p = script->buffer;
-	script->end_p = script->buffer + size;
+	script.script_p = script.buffer;
+	script.end_p = script.buffer + size;
 }
 
 void LoadScriptFile (const char *filename)
 {
-	script = scriptstack;
 	AddScriptToStack(filename);
 }
 
@@ -88,33 +79,20 @@ void LoadScriptFile (const char *filename)
  */
 void ParseFromMemory (char *buffer, int size)
 {
-	script = scriptstack;
-	script++;
-	if (script == &scriptstack[MAX_INCLUDES])
-		Sys_Error("script file exceeded MAX_INCLUDES");
-	Q_strncpyz(script->filename, "memory buffer", sizeof(script->filename));
+	Q_strncpyz(script.filename, "memory buffer", sizeof(script.filename));
 
-	script->buffer = buffer;
-	script->line = 1;
-	script->script_p = script->buffer;
-	script->end_p = script->buffer + size;
+	script.buffer = buffer;
+	script.line = 1;
+	script.script_p = script.buffer;
+	script.end_p = script.buffer + size;
 }
 
 static bool EndOfScript ()
 {
-	assert(script);
-
 	/* not if the current script is a memory buffer */
-	if (Q_streq(script->filename, "memory buffer"))
-		return false;
-
-	Mem_Free(script->buffer);
-	if (script == scriptstack + 1)
-		return false;
-
-	script--;
-	Com_Printf("returning to %s\n", script->filename);
-	return GetToken();
+	if (!Q_streq(script.filename, "memory buffer"))
+		Mem_Free(script.buffer);
+	return false;
 }
 
 /**
@@ -127,54 +105,52 @@ bool GetToken ()
 {
 	char *token_p;
 
-	assert(script);
-
-	if (script->script_p >= script->end_p)
+	if (script.script_p >= script.end_p)
 		return EndOfScript();
 
 	/* skip space */
 skipspace:
-	while (*script->script_p <= ' ') {
-		if (script->script_p >= script->end_p)
+	while (*script.script_p <= ' ') {
+		if (script.script_p >= script.end_p)
 			return EndOfScript();
-		if (*script->script_p++ == '\n') {
-			script->line++;
+		if (*script.script_p++ == '\n') {
+			script.line++;
 		}
 	}
 
-	if (script->script_p >= script->end_p)
+	if (script.script_p >= script.end_p)
 		return EndOfScript();
 
 	/* // comments */
-	if (script->script_p[0] == '/' && script->script_p[1] == '/') {
-		while (*script->script_p++ != '\n')
-			if (script->script_p >= script->end_p)
+	if (script.script_p[0] == '/' && script.script_p[1] == '/') {
+		while (*script.script_p++ != '\n')
+			if (script.script_p >= script.end_p)
 				return EndOfScript();
-		script->line++;
+		script.line++;
 		goto skipspace;
 	}
 
 	/* copy token */
 	token_p = parsedToken;
 
-	if (*script->script_p == '"') {
+	if (*script.script_p == '"') {
 		/* quoted token */
-		script->script_p++;
-		while (*script->script_p != '"') {
-			*token_p++ = *script->script_p++;
-			if (script->script_p == script->end_p)
+		script.script_p++;
+		while (*script.script_p != '"') {
+			*token_p++ = *script.script_p++;
+			if (script.script_p == script.end_p)
 				break;
 			if (token_p == &parsedToken[MAX_TOKEN_CHARS])
-				Sys_Error("Token too large on line %i", script->line);
+				Sys_Error("Token too large on line %i", script.line);
 		}
-		script->script_p++;
+		script.script_p++;
 	} else	/* regular token */
-		while (*script->script_p > ' ') {
-			*token_p++ = *script->script_p++;
-			if (script->script_p == script->end_p)
+		while (*script.script_p > ' ') {
+			*token_p++ = *script.script_p++;
+			if (script.script_p == script.end_p)
 				break;
 			if (token_p == &parsedToken[MAX_TOKEN_CHARS])
-				Sys_Error("Token too large on line %i", script->line);
+				Sys_Error("Token too large on line %i", script.line);
 		}
 
 	*token_p = 0;
@@ -187,20 +163,16 @@ skipspace:
  */
 bool TokenAvailable (void)
 {
-	char *search_p;
+	const char *search_p = script.script_p;
 
-	assert(script);
-
-	search_p = script->script_p;
-
-	if (search_p >= script->end_p)
+	if (search_p >= script.end_p)
 		return false;
 
 	while (*search_p <= ' ') {
 		if (*search_p == '\n')
 			return false;
 		search_p++;
-		if (search_p == script->end_p)
+		if (search_p == script.end_p)
 			return false;
 	}
 
