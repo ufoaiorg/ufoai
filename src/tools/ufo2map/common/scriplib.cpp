@@ -50,16 +50,11 @@ int GetScriptLine (void)
 	return script.line;
 }
 
-/**
- * @sa LoadScriptFile
- */
-static void AddScriptToStack (const char *filename)
+void LoadScriptFile (const char *filename)
 {
-	int size;
-
 	strncpy(script.filename, filename, sizeof(script.filename));
 
-	size = FS_LoadFile(script.filename, (byte **)&script.buffer);
+	const int size = FS_LoadFile(script.filename, (byte **)&script.buffer);
 	if (size == -1)
 		Sys_Error("file '%s' doesn't exist", script.filename);
 
@@ -67,11 +62,6 @@ static void AddScriptToStack (const char *filename)
 
 	script.script_p = script.buffer;
 	script.end_p = script.buffer + size;
-}
-
-void LoadScriptFile (const char *filename)
-{
-	AddScriptToStack(filename);
 }
 
 /**
