@@ -677,7 +677,7 @@ static void ParseBrush (entity_t *mapent, const char *filename)
 		td.scale[1] = atof(parsedToken);
 
 		/* find default flags and values */
-		int mt = FindMiptex(td.name);
+		const int mt = FindMiptex(td.name);
 		side->surfaceFlags = td.surfaceFlags = side->contentFlags = td.value = 0;
 
 		if (TokenAvailable()) {
