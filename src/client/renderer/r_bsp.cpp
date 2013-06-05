@@ -344,8 +344,6 @@ void R_ClearBspRRefs (void)
  */
 void R_AddBspRRef (const mBspModel_t *model, const vec3_t origin, const vec3_t angles, const bool forceVisibility)
 {
-	bspRenderRef_t *bspRR;
-
 	if (numBspRRefs >= MAX_BSPS_TO_RENDER) {
 		Com_Printf("Cannot add BSP model rendering reference: MAX_BSPS_TO_RENDER exceeded\n");
 		return;
@@ -356,20 +354,18 @@ void R_AddBspRRef (const mBspModel_t *model, const vec3_t origin, const vec3_t a
 		return;
 	}
 
-	bspRR = &bspRRefs[numBspRRefs++];
-
+	bspRenderRef_t *bspRR = &bspRRefs[numBspRRefs++];
 	bspRR->bsp = model;
 	VectorCopy(origin, bspRR->origin);
 	VectorCopy(angles, bspRR->angles);
 
-	if (forceVisibility) {
-		int i;
-		mBspSurface_t *surf = &model->surfaces[model->firstmodelsurface];
+	if (!forceVisibility)
+		return;
 
-		for (i = 0; i < model->nummodelsurfaces; i++, surf++) {
-			/* visible flag for rendering */
-			surf->frame = r_locals.frame;
-		}
+	mBspSurface_t *surf = &model->surfaces[model->firstmodelsurface];
+	for (int i = 0; i < model->nummodelsurfaces; i++, surf++) {
+		/* visible flag for rendering */
+		surf->frame = r_locals.frame;
 	}
 }
 
@@ -380,12 +376,10 @@ typedef void (*drawSurfaceFunc)(const mBspSurfaces_t *surfs, GLushort *indexPtr)
  */
 static void R_RenderBspRRefs (drawSurfaceFunc drawFunc, surfaceArrayType_t surfType)
 {
-	int i;
-
 	glEnable(GL_CULL_FACE);
 	glCullFace(GL_FRONT); /* our triangles are backwards to what OpenGL expects, so tell it to render only back faces */
 
-	for (i = 0; i < numBspRRefs; i++) {
+	for (int i = 0; i < numBspRRefs; i++) {
 		const bspRenderRef_t *const bspRR = &bspRRefs[i];
 		const mBspModel_t *const bsp = bspRR->bsp;
 		const mBspModel_t *const tile = &r_mapTiles[bsp->maptile]->bsp; /* This is required to find the tile (world) bsp model to which arrays belong (submodels do not own arrays, but use world model ones) */
