@@ -30,7 +30,7 @@ extern char parsedToken[MAX_TOKEN_CHARS];
 void LoadScriptFile(const char *filename);
 void ParseFromMemory(char *buffer, int size);
 
-bool GetToken(bool crossline);
+bool GetToken();
 bool TokenAvailable(void);
 int GetScriptLine(void);
 

@@ -439,7 +439,7 @@ epair_t *ParseEpair (void)
 {
 	StripTrailingWhitespaces(parsedToken);
 	const char *key = Mem_StrDup(parsedToken);
-	GetToken(false);
+	GetToken();
 	StripTrailingWhitespaces(parsedToken);
 	const char *value = Mem_StrDup(parsedToken);
 	return AddEpair(key, value);
@@ -452,7 +452,7 @@ static entity_t *ParseEntity (void)
 {
 	entity_t *mapent;
 
-	if (!GetToken(true))
+	if (!GetToken())
 		return nullptr;
 
 	if (parsedToken[0] != '{')
@@ -465,7 +465,7 @@ static entity_t *ParseEntity (void)
 	num_entities++;
 
 	do {
-		if (!GetToken(true))
+		if (!GetToken())
 			Sys_Error("ParseEntity: EOF without closing brace");
 		if (*parsedToken == '}') {
 			break;

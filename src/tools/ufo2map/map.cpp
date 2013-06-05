@@ -628,7 +628,7 @@ static void ParseBrush (entity_t *mapent, const char *filename)
 	b->brushnum = nummapbrushes - mapent->firstbrush;
 
 	do {
-		if (!GetToken(true))
+		if (!GetToken())
 			break;
 		if (*parsedToken == '}')
 			break;
@@ -640,22 +640,22 @@ static void ParseBrush (entity_t *mapent, const char *filename)
 		/* read the three point plane definition */
 		for (i = 0; i < 3; i++) {
 			if (i != 0)
-				GetToken(true);
+				GetToken();
 			if (*parsedToken != '(')
 				Sys_Error("parsing brush at line %i", GetScriptLine());
 
 			for (j = 0; j < 3; j++) {
-				GetToken(false);
+				GetToken();
 				planepts[i][j] = atof(parsedToken);
 			}
 
-			GetToken(false);
+			GetToken();
 			if (*parsedToken != ')')
 				Sys_Error("parsing brush at line %i", GetScriptLine());
 		}
 
 		/* read the texturedef */
-		GetToken(false);
+		GetToken();
 		if (strlen(parsedToken) >= MAX_TEXPATH) {
 			if (config.performMapCheck || config.fixMap)
 				Com_Printf("  ");/* hack to make this look like output from Check_Printf() */
@@ -665,15 +665,15 @@ static void ParseBrush (entity_t *mapent, const char *filename)
 		}
 		Q_strncpyz(td.name, parsedToken, sizeof(td.name));
 
-		GetToken(false);
+		GetToken();
 		td.shift[0] = atof(parsedToken);
-		GetToken(false);
+		GetToken();
 		td.shift[1] = atof(parsedToken);
-		GetToken(false);
+		GetToken();
 		td.rotate = atof(parsedToken);
-		GetToken(false);
+		GetToken();
 		td.scale[0] = atof(parsedToken);
-		GetToken(false);
+		GetToken();
 		td.scale[1] = atof(parsedToken);
 
 		/* find default flags and values */
@@ -681,11 +681,11 @@ static void ParseBrush (entity_t *mapent, const char *filename)
 		side->surfaceFlags = td.surfaceFlags = side->contentFlags = td.value = 0;
 
 		if (TokenAvailable()) {
-			GetToken(false);
+			GetToken();
 			side->contentFlags = atoi(parsedToken);
-			GetToken(false);
+			GetToken();
 			side->surfaceFlags = td.surfaceFlags = atoi(parsedToken);
-			GetToken(false);
+			GetToken();
 			td.value = atoi(parsedToken);
 		}
 
@@ -954,7 +954,7 @@ static bool ParseMapEntity (const char *filename, const char *entityString)
 	static int worldspawnCount = 0;
 	int notCheckOrFix = !(config.performMapCheck || config.fixMap);
 
-	if (!GetToken(true))
+	if (!GetToken())
 		return false;
 
 	if (*parsedToken != '{')
@@ -969,7 +969,7 @@ static bool ParseMapEntity (const char *filename, const char *entityString)
 	mapent->numbrushes = 0;
 
 	do {
-		if (!GetToken(true))
+		if (!GetToken())
 			Sys_Error("ParseMapEntity: EOF without closing brace");
 		if (*parsedToken == '}')
 			break;

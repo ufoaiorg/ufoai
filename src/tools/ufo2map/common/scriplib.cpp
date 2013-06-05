@@ -100,12 +100,9 @@ void ParseFromMemory (char *buffer, int size)
 	script->end_p = script->buffer + size;
 }
 
-static bool EndOfScript (bool crossline)
+static bool EndOfScript ()
 {
 	assert(script);
-
-	if (!crossline)
-		Sys_Error("Line %i is incomplete\n", script->line);
 
 	/* not if the current script is a memory buffer */
 	if (Q_streq(script->filename, "memory buffer"))
@@ -117,7 +114,7 @@ static bool EndOfScript (bool crossline)
 
 	script--;
 	Com_Printf("returning to %s\n", script->filename);
-	return GetToken(crossline);
+	return GetToken();
 }
 
 /**
@@ -126,37 +123,33 @@ static bool EndOfScript (bool crossline)
  * @param[in] crossline The next token may not be seperated by
  * comment or newline if this is true - everything must be on the same line
  */
-bool GetToken (bool crossline)
+bool GetToken ()
 {
 	char *token_p;
 
 	assert(script);
 
 	if (script->script_p >= script->end_p)
-		return EndOfScript(crossline);
+		return EndOfScript();
 
 	/* skip space */
 skipspace:
 	while (*script->script_p <= ' ') {
 		if (script->script_p >= script->end_p)
-			return EndOfScript(crossline);
+			return EndOfScript();
 		if (*script->script_p++ == '\n') {
-			if (!crossline)
-				Sys_Error("Line %i is incomplete\n", script->line);
 			script->line++;
 		}
 	}
 
 	if (script->script_p >= script->end_p)
-		return EndOfScript(crossline);
+		return EndOfScript();
 
 	/* // comments */
 	if (script->script_p[0] == '/' && script->script_p[1] == '/') {
-		if (!crossline)
-			Sys_Error("Line %i is incomplete\n", script->line);
 		while (*script->script_p++ != '\n')
 			if (script->script_p >= script->end_p)
-				return EndOfScript(crossline);
+				return EndOfScript();
 		script->line++;
 		goto skipspace;
 	}
@@ -188,7 +181,6 @@ skipspace:
 
 	return true;
 }
-
 
 /**
  * @brief Returns true if there is another token on the line
