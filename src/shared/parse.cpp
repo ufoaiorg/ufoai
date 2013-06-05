@@ -228,7 +228,7 @@ skipwhite:
 		c = *data;
 		if (c == '{' || c == '}' || c == '(' || c == ')' || c == ',')
 			break;
-	} while (c > 32);
+	} while (c > ' ');
 
 	if (len == size) {
 		len = 0;
