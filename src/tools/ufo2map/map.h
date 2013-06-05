@@ -24,8 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef UFO2MAP_MAP_H
-#define UFO2MAP_MAP_H
+#pragma once
 
 #include "../../shared/mathlib.h"
 #include "../../shared/defines.h"
@@ -119,6 +118,3 @@ typedef struct portal_s {
 	struct side_s		*side;			/**< nullptr = non-visible */
 	face_t		*face[2];		/**< output face in bsp file */
 } portal_t;
-
-
-#endif

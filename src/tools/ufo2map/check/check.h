@@ -24,8 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef UFO2MAP_CHECK_CHECK_H
-#define UFO2MAP_CHECK_CHECK_H
+#pragma once
 
 #include "../map.h"
 
@@ -58,5 +57,3 @@ void SetImpliedFlags (side_t *side, brush_texture_t *tex, const mapbrush_t *brus
 void CheckPropagateParserContentFlags(mapbrush_t *b);
 void Check_ContainedBrushes(void);
 void CheckZFighting(void);
-
-#endif

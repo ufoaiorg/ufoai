@@ -22,8 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef UFO2MAP_BSPBRUSH_H
-#define UFO2MAP_BSPBRUSH_H
+#pragma once
 
 #include "../../shared/mathlib.h"	/* for vec3_t */
 
@@ -54,5 +53,3 @@ void FreeBrush(bspbrush_t *brushes);
 void FreeBrushList(bspbrush_t *brushes);
 uint32_t BrushListCalcContents(bspbrush_t *brushlist);
 void BrushlistCalcStats(bspbrush_t *brushlist, vec3_t mins, vec3_t maxs);
-
-#endif /* UFO2MAP_BSPBRUSH_H */

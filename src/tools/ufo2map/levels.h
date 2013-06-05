@@ -22,13 +22,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef UFO2MAP_LEVELS_H
-#define UFO2MAP_LEVELS_H
+#pragma once
 
 void ClearWorldBounds(void);
 void PushInfo(void);
 void PopInfo(void);
 void ProcessLevelEntityNumber(int entityNumber);
 void ProcessLevel(unsigned int levelnum);
-
-#endif /* UFO2MAP_LEVELS_H */

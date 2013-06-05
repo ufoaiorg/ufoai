@@ -22,8 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef _POLYLIB
-#define _POLYLIB
+#pragma once
 
 #include "../../../shared/mathlib.h"
 
@@ -54,6 +53,3 @@ void ChopWindingInPlace(winding_t **w, const vec3_t normal, const vec_t dist, co
 bool WindingIsTiny(winding_t *w);
 bool WindingIsHuge(const winding_t *w);
 bool FixWinding(winding_t *w);
-
-
-#endif /* POLYLIB */

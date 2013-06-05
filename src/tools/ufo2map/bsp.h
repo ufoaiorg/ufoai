@@ -22,8 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef UFO2MAP_BSP_H
-#define UFO2MAP_BSP_H
+#pragma once
 
 #include <assert.h>
 
@@ -39,7 +38,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 extern dMapTile_t *curTile;
 extern mapTiles_t mapTiles;
-
 
 typedef struct node_s {
 	/** both leafs and nodes */
@@ -86,13 +84,11 @@ uint16_t FindOrCreateFloatPlane(vec3_t normal, vec_t dist);
 /*============================================================================= */
 
 /* csg.c */
-
 int MapBrushesBounds(const int startbrush, const int endbrush, const int level, const vec3_t clipmins, const vec3_t clipmaxs, vec3_t mins, vec3_t maxs);
 bspbrush_t *MakeBspBrushList(int startbrush, int endbrush, int level, const AABB& clip);
 bspbrush_t *ChopBrushes(bspbrush_t *head);
 
 /* portals.c */
-
 uint32_t VisibleContents(uint32_t contents);
 void MarkVisibleSides(tree_t *tree, int start, int end);
 void FreePortal(portal_t *p);
@@ -102,7 +98,6 @@ void RemovePortalFromNode(portal_t *portal, node_t *l);
 /*============================================================================= */
 
 /* writebsp.c */
-
 void SetModelNumbers(void);
 
 void BeginBSPFile(void);
@@ -114,14 +109,12 @@ void EmitBrushes(void);
 void EmitPlanes(void);
 
 /* faces.c */
-
 void MakeFaces(node_t *headnode);
 void FixTjuncs(node_t *headnode);
 int GetEdge(int v1, int v2, const face_t *f);
 void FreeFace(face_t *f);
 
 /* tree.c */
-
 node_t *AllocNode(void);
 tree_t *AllocTree(void);
 tree_t *BuildTree(bspbrush_t *brushlist, const vec3_t mins, const vec3_t maxs);
@@ -129,16 +122,11 @@ void FreeTree(tree_t *tree);
 void PruneNodes(node_t *node);
 
 /* trace.c */
-
 void MakeTracingNodes(int levels);
 void CloseTracingNodes(void);
 
 /* routing.c */
-
 void DoRouting(void);
 
 /* bsp.c */
-
 void ProcessModels(const char *filename);
-
-#endif /* UFO2MAP_BSP_H */

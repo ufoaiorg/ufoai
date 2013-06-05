@@ -24,8 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef UFO2MAP_TEXTURES_H
-#define UFO2MAP_TEXTURES_H
+#pragma once
 
 #include "../../shared/mathlib.h"	/* for vec3_t */
 #include "../../shared/defines.h"
@@ -37,9 +36,6 @@ typedef struct {
 	bool	materialMarked; /**< only print it once to the material file */
 } textureref_t;
 
-
-extern	textureref_t	textureref[MAX_MAP_TEXTURES];
+extern textureref_t textureref[MAX_MAP_TEXTURES];
 int	FindMiptex(const char *name);
 int TexinfoForBrushTexture(plane_t *plane, brush_texture_t *bt, const vec3_t origin, bool isTerrain);
-
-#endif

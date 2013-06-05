@@ -22,8 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef _SHARED_H
-#define _SHARED_H
+#pragma once
 
 #include "../../../shared/ufotypes.h"
 #include "../../../common/unzip.h"
@@ -150,5 +149,3 @@ void RunSingleThreadOn(void (*func)(unsigned int), unsigned int workcount, bool 
 
 void Sys_Error(const char *error, ...) __attribute__((noreturn, format(__printf__, 1, 2)));
 void Com_Printf(const char *format, ...) __attribute__((format(__printf__, 1, 2)));
-
-#endif /* _SHARED_H */

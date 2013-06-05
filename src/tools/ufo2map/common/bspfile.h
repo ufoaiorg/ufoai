@@ -22,8 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef _BSPFILE
-#define _BSPFILE
+#pragma once
 
 #include "../../../common/qfiles.h"
 
@@ -69,5 +68,3 @@ void GetVectorForKey(const entity_t *ent, const char *key, vec3_t vec);
 epair_t *ParseEpair(void);
 epair_t *AddEpair(const char *key, const char *value);
 byte *CompressRouting(byte *dataStart, byte *destStart, int l);
-
-#endif /* _BSP_FILE */

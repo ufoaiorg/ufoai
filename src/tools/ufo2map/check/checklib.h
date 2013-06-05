@@ -24,8 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef _CHECKLIB_H
-#define _CHECKLIB_H
+#pragma once
 
 #include "../common/shared.h"
 
@@ -37,5 +36,3 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 void Check_Printf(const verbosityLevel_t msgVerbLevel, bool change, int entnum, int brushnum, const char *format, ...) __attribute__((format(__printf__, 5, 6)));
 void Check_InitEntityDefs(void);
 void Check_Free(void);
-
-#endif /* _CHECKLIB_H */

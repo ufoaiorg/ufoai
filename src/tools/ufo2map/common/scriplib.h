@@ -22,8 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef _SCRIPTLIB
-#define _SCRIPTLIB
+#pragma once
 
 extern char parsedToken[MAX_TOKEN_CHARS];
 
@@ -33,5 +32,3 @@ void ParseFromMemory(char *buffer, int size);
 const char* GetToken();
 bool TokenAvailable(void);
 int GetScriptLine(void);
-
-#endif /* _SCRIPTLIB */

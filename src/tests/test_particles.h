@@ -22,9 +22,6 @@
 
  */
 
-#ifndef TEST_PARTICLE_H
-#define TEST_PARTICLE_H
+#pragma once
 
 int UFO_AddParticlesTests(void);
-
-#endif
