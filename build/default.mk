@@ -60,7 +60,9 @@ MXML_SRCS                 = libs/mxml/mxml-attr.c \
                             libs/mxml/mxml-set.c \
                             libs/mxml/mxml-string.c
 MXML_CFLAGS               = -Isrc/libs/mxml
-MXML_LIBS                 =
+ifeq ($(findstring $(TARGET_OS), mingw32 mingw64),)
+MXML_LIBS                 = -lpthread
+endif
 else
 MXML_SRCS                 =
 endif
