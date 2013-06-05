@@ -165,7 +165,7 @@ class Brush: public TransformNode,
 		void planeChanged ();
 		void shaderChanged ();
 
-		void evaluateBRep () const;
+		void evaluateBoundaryRepresentation () const;
 
 		void transformChanged ();
 		typedef MemberCaller<Brush, &Brush::transformChanged> TransformChangedCaller;
@@ -303,5 +303,5 @@ class Brush: public TransformNode,
 		bool buildWindings ();
 
 		/// \brief Constructs the face windings and updates anything that depends on them.
-		void buildBRep ();
+		void buildBoundaryRepresentation ();
 }; // class Brush

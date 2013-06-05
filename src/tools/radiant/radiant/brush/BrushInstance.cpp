@@ -204,7 +204,7 @@ void BrushInstance::evaluateViewDependent (const VolumeTest& volume, const Matri
 
 void BrushInstance::renderComponentsSelected (Renderer& renderer, const VolumeTest& volume, const Matrix4& localToWorld) const
 {
-	m_brush.evaluateBRep();
+	m_brush.evaluateBoundaryRepresentation();
 
 	update_selected();
 	if (!m_render_selected.empty()) {
@@ -217,7 +217,7 @@ void BrushInstance::renderComponentsSelected (Renderer& renderer, const VolumeTe
 
 void BrushInstance::renderComponents (Renderer& renderer, const VolumeTest& volume) const
 {
-	m_brush.evaluateBRep();
+	m_brush.evaluateBoundaryRepresentation();
 
 	const Matrix4& localToWorld = Instance::localToWorld();
 
@@ -281,7 +281,7 @@ void BrushInstance::renderWireframe (Renderer& renderer, const VolumeTest& volum
 
 void BrushInstance::renderSolid (Renderer& renderer, const VolumeTest& volume) const
 {
-	m_brush.evaluateBRep();
+	m_brush.evaluateBoundaryRepresentation();
 
 	renderClipPlane(renderer, volume);
 
@@ -290,7 +290,7 @@ void BrushInstance::renderSolid (Renderer& renderer, const VolumeTest& volume) c
 
 void BrushInstance::renderWireframe (Renderer& renderer, const VolumeTest& volume) const
 {
-	m_brush.evaluateBRep();
+	m_brush.evaluateBoundaryRepresentation();
 
 	renderClipPlane(renderer, volume);
 

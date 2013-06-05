@@ -152,7 +152,7 @@ void CSG_MakeHollow (void)
 
 static BrushSplitType Brush_classifyPlane (const Brush& brush, const Plane3& plane)
 {
-	brush.evaluateBRep();
+	brush.evaluateBoundaryRepresentation();
 	BrushSplitType split;
 	for (Brush::const_iterator i(brush.begin()); i != brush.end(); ++i) {
 		if ((*i)->contributes()) {
@@ -169,12 +169,12 @@ static bool Brush_subtract_orig (const Brush& brush, const Brush& other, brush_v
 
 		Brush cutter(other);
 		cutter.removeEmptyFaces(); /* clean out the brush to be subtracted */
-		cutter.evaluateBRep();
+		cutter.evaluateBoundaryRepresentation();
 		fragments.reserve(cutter.size());
 
 		Brush back(brush);
 		back.removeEmptyFaces();
-		back.evaluateBRep();
+		back.evaluateBoundaryRepresentation();
 
 		for (Brush::const_iterator i(cutter.begin()); i != cutter.end(); ++i) {
 			if ((*i)->contributes()) {
@@ -194,7 +194,7 @@ static bool Brush_subtract_orig (const Brush& brush, const Brush& other, brush_v
 
 					back.chopWithPlane(basePoints[0],basePoints[1],basePoints[2],splittingFace->GetShader(),projection);
 					back.removeEmptyFaces();
-					back.evaluateBRep();
+					back.evaluateBoundaryRepresentation();
 				} else if (split.counts[ePlaneBack] == 0) {
 					for (brush_vector_t::iterator i = fragments.begin(); i != fragments.end(); ++i) {
 						delete (*i);
@@ -217,7 +217,7 @@ static bool Brush_subtract (const Brush& brush, const Brush& other, brush_vector
 
 		Brush cutter(other);
 		cutter.removeEmptyFaces(); /* clean out the brush to be subtracted */
-		cutter.evaluateBRep();
+		cutter.evaluateBoundaryRepresentation();
 		fragments.reserve(cutter.size());
 
 		Vector3 apex = cutter.getCentroid();
@@ -471,7 +471,7 @@ static bool Brush_merge (Brush& brush, const brush_vector_t& in, bool onlyshape)
 		/* rebuild brushes, if changed */
 		/** @todo what if we have a broken brush? Maybe remove empty faces first? */
 		for (brush_vector_t::const_iterator i(in.begin()); i != in.end(); ++i)
-			(*i)->evaluateBRep();
+			(*i)->evaluateBoundaryRepresentation();
 
 		/* gather potential outer faces */
 		for (brush_vector_t::const_iterator i(in.begin()); i != in.end(); ++i) {

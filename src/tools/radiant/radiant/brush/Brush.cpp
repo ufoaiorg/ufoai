@@ -136,11 +136,11 @@ void Brush::shaderChanged ()
 	ui::SurfaceInspector::Instance().queueUpdate();
 }
 
-void Brush::evaluateBRep () const
+void Brush::evaluateBoundaryRepresentation () const
 {
 	if (m_planeChanged) {
 		m_planeChanged = false;
-		const_cast<Brush*> (this)->buildBRep();
+		const_cast<Brush*> (this)->buildBoundaryRepresentation();
 	}
 }
 
@@ -168,7 +168,7 @@ void Brush::aabbChanged ()
 }
 const AABB& Brush::localAABB () const
 {
-	evaluateBRep();
+	evaluateBoundaryRepresentation();
 	return m_aabb_local;
 }
 
@@ -306,7 +306,7 @@ Face* Brush::chopWithPlane (const Vector3& p0, const Vector3& p1, const Vector3&
 		return 0;
 	}
 
-	evaluateBRep();
+	evaluateBoundaryRepresentation();
 
 	/* remove faces that will be cut away */
 	Faces::iterator faceIt = m_faces.begin();
@@ -461,7 +461,7 @@ bool Brush::hasContributingFaces () const
 /// Note: removal of empty faces is not performed during direct brush manipulations, because it would make a manipulation irreversible if it created an empty face.
 void Brush::removeEmptyFaces ()
 {
-	evaluateBRep();
+	evaluateBoundaryRepresentation();
 
 	std::size_t i = 0;
 	while (i < m_faces.size()) {
@@ -800,7 +800,7 @@ inline std::size_t ProximalVertexArray_index (const ProximalVertexArray& array, 
 }
 
 /// \brief Constructs the face windings and updates anything that depends on them.
-void Brush::buildBRep ()
+void Brush::buildBoundaryRepresentation ()
 {
 	bool degenerate = buildWindings();
 

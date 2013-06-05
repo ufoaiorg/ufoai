@@ -215,7 +215,7 @@ BrushTokenExporter::BrushTokenExporter (const Brush& brush) :
 }
 void BrushTokenExporter::exportTokens (TokenWriter& writer) const
 {
-	m_brush.evaluateBRep(); // ensure b-rep is up-to-date, so that non-contributing faces can be identified.
+	m_brush.evaluateBoundaryRepresentation(); // ensure b-rep is up-to-date, so that non-contributing faces can be identified.
 
 	if (!m_brush.hasContributingFaces()) {
 		return;
