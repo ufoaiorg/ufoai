@@ -98,8 +98,8 @@
 
 equipment alien_workers1
 {
-	mininterest	0
-	maxinterest	79
+	mininterest		0
+	maxinterest		79
 
 	// Primary
 
@@ -108,13 +108,13 @@ equipment alien_workers1
 	item (plaspistol_ammo	1)
 
 	// Misc
-	item (kerrblade	100)
+	item (kerrblade		100)
 }
 
 equipment alien_workers2
 {
-	mininterest	80
-	maxinterest	109
+	mininterest		80
+	maxinterest		109
 
 	// Primary
 	item (plasrifle			50)
@@ -123,13 +123,13 @@ equipment alien_workers2
 	item (plasblaster_ammo	1)
 
 	// Misc
-	item (kerrblade	100)
+	item (kerrblade		100)
 }
 
 equipment alien_workers3
 {
-	mininterest	110
-	maxinterest	199
+	mininterest		110
+	maxinterest		199
 
 	// Primary
 	item (plasrifle			50)
@@ -138,7 +138,7 @@ equipment alien_workers3
 	item (plasblaster_ammo	1)
 
 	// Misc
-	item (kerrblade	100)
+	item (kerrblade		100)
 
 	// Armour
 	item (armour_light_alien	100)
@@ -146,18 +146,18 @@ equipment alien_workers3
 
 equipment alien_workers4
 {
-	mininterest	200
-	maxinterest	249
+	mininterest		200
+	maxinterest		249
 
 	// Primary
 	item (plasrifle			50)
 	item (plasrifle_ammo	1)
 	item (plasblaster		50)
 	item (plasblaster_ammo	1)
-	item (plasblade			50)
 
 	// Misc
-	item (kerrblade	100)
+	item (kerrblade		100)
+	item (plasblade		150)
 
 	// Armour
 	item (armour_light_alien	100)
@@ -165,18 +165,18 @@ equipment alien_workers4
 
 equipment alien_workers5
 {
-	mininterest	250
-	maxinterest	309
+	mininterest		250
+	maxinterest		309
 
 	// Primary
 	item (plasrifle			50)
 	item (plasrifle_ammo	1)
 	item (plasblaster		50)
 	item (plasblaster_ammo	1)
-	item (plasblade			50)
 
 	// Misc
-	item (kerrblade	100)
+	item (kerrblade		100)
+	item (plasblade		150)
 
 	// Armour
 	item (armour_light_alien	100)
@@ -184,19 +184,19 @@ equipment alien_workers5
 
 equipment alien_workers6
 {
-	mininterest	310
-	maxinterest	10000
+	mininterest		310
+	maxinterest		10000
 
 	// Primary
 	item (plasrifle			50)
 	item (plasrifle_ammo	1)
 	item (plasblaster		50)
 	item (plasblaster_ammo	1)
-	item (plasblade			50)
 
 	// Misc
-	item (plasmagrenade		100)
-	item (kerrblade	100)
+	item (kerrblade		100)
+	item (plasblade		150)
+	item (plasmagrenade	100)
 
 	// Armour
 	item (armour_medium_alien	100)
@@ -204,8 +204,8 @@ equipment alien_workers6
 
 equipment alien_soldiers1
 {
-	mininterest	0
-	maxinterest	79
+	mininterest		0
+	maxinterest		79
 
 	// Primary
 
@@ -214,13 +214,13 @@ equipment alien_soldiers1
 	item (plaspistol_ammo	1)
 
 	// Misc
-	item (kerrblade	100)
+	item (kerrblade		100)
 }
 
 equipment alien_soldiers2
 {
-	mininterest	80
-	maxinterest	109
+	mininterest		80
+	maxinterest		109
 
 	// Primary
 	item (plasrifle			50)
@@ -231,8 +231,8 @@ equipment alien_soldiers2
 
 equipment alien_soldiers3
 {
-	mininterest	110
-	maxinterest	199
+	mininterest		110
+	maxinterest		199
 
 	// Primary
 	item (plasrifle			50)
@@ -249,18 +249,18 @@ equipment alien_soldiers3
 
 equipment alien_soldiers4
 {
-	mininterest	200
-	maxinterest	249
+	mininterest		200
+	maxinterest		249
 
 	// Primary
 	item (plasrifle			50)
 	item (plasrifle_ammo	1)
 	item (plasblaster		50)
 	item (plasblaster_ammo	1)
-	item (plasblade			50)
 
 	// Misc
-	item (plasmagrenade		100)
+	item (plasmagrenade	100)
+	item (plasblade		150)
 
 	// Armour
 	item (armour_light_alien	100)
@@ -268,20 +268,20 @@ equipment alien_soldiers4
 
 equipment alien_soldiers5
 {
-	mininterest	250
-	maxinterest	309
+	mininterest		250
+	maxinterest		309
 
 	// Primary
-	item (plasrifle			50)
+	item (plasrifle			30)
 	item (plasrifle_ammo	1)
-	item (plasblaster		50)
+	item (plasblaster		30)
 	item (plasblaster_ammo	1)
-	item (plasblade			50)
-	item (needlergun		50)
+	item (needlergun		40)
 	item (needlergun_ammo	1)
 
 	// Misc
-	item (plasmagrenade		100)
+	item (plasblade		150)
+	item (plasmagrenade	100)
 
 	// Armour
 	item (armour_light_alien	100)
@@ -289,12 +289,10 @@ equipment alien_soldiers5
 
 equipment alien_soldiers6
 {
-	mininterest	310
-	maxinterest	10000
+	mininterest		310
+	maxinterest		10000
 
 	// Primary
-	item (pbeampistol		50)
-	item (pbeampistol_ammo	1)
 	item (pbeamrifle		50)
 	item (pbeamrifle_ammo	1)
 	item (pbeamcannon		25)
@@ -302,8 +300,13 @@ equipment alien_soldiers6
 	item (needlerheavy		25)
 	item (needlergun_ammo	1)
 
+	// Secondary
+	item (pbeampistol		50)
+	item (pbeampistol_ammo	1)
+
 	// Misc
-	item (plasmagrenade		100)
+	item (plasblade		150)
+	item (plasmagrenade	100)
 
 	// Armour
 	item (armour_medium_alien	100)
@@ -311,18 +314,18 @@ equipment alien_soldiers6
 
 equipment alien_base1
 {
-	mininterest	0
-	maxinterest	249
+	mininterest		0
+	maxinterest		249
 
 	// Primary
 	item (plasrifle			50)
 	item (plasrifle_ammo	1)
 	item (plasblaster		50)
 	item (plasblaster_ammo	1)
-	item (plasblade			50)
 
 	// Misc
-	item (plasmagrenade		100)
+	item (plasblade		150)
+	item (plasmagrenade	100)
 
 	// Armour
 	item (armour_light_alien	100)
@@ -330,20 +333,20 @@ equipment alien_base1
 
 equipment alien_base2
 {
-	mininterest	250
-	maxinterest	309
+	mininterest		250
+	maxinterest		309
 
 	// Primary
-	item (plasrifle			50)
+	item (plasrifle			30)
 	item (plasrifle_ammo	1)
-	item (plasblaster		50)
+	item (plasblaster		30)
 	item (plasblaster_ammo	1)
-	item (plasblade			50)
-	item (needlergun		50)
+	item (needlergun		40)
 	item (needlergun_ammo	1)
 
 	// Misc
-	item (plasmagrenade		100)
+	item (plasblade		150)
+	item (plasmagrenade	100)
 
 	// Armour
 	item (armour_light_alien	100)
@@ -351,21 +354,24 @@ equipment alien_base2
 
 equipment alien_base3
 {
-	mininterest	310
-	maxinterest	10000
+	mininterest		310
+	maxinterest		10000
 
 	// Primary
-	item (pbeampistol		50)
-	item (pbeampistol_ammo	1)
 	item (pbeamrifle		50)
 	item (pbeamrifle_ammo	1)
-	item (pbeamcannon		50)
+	item (pbeamcannon		25)
 	item (pbeamcannon_ammo	1)
-	item (needlerheavy		50)
+	item (needlerheavy		25)
 	item (needlergun_ammo	1)
 
+	// Secondary
+	item (pbeampistol		50)
+	item (pbeampistol_ammo	1)
+
 	// Misc
-	item (plasmagrenade		100)
+	item (plasblade		150)
+	item (plasmagrenade	100)
 
 	// Armour
 	item (armour_medium_alien	100)
