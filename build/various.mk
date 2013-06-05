@@ -87,6 +87,17 @@ monthly:
 	$(Q)MONTH=$$(LOCATE=C date '+%m'); \
 	MONTHLY_DATE_START=$$(LANG=C date -d "$${MONTH}/1 - 1 month"); \
 	MONTHLY_DATE_END=$$(LANG=C date -d "$${MONTH}/1 - 1 sec"); \
+	COMMITS=$$(git log --since="$${MONTHLY_DATE_START}" --until="$${MONTHLY_DATE_END}" --format="%s" | wc -l); \
+	MONTH=$$(LANG=C date '+%B'); \
+	YEAR=$$(LANG=C date '+%Y'); \
 	echo "show commits from '$${MONTHLY_DATE_START}' until '$${MONTHLY_DATE_END}'"; \
-	echo -n "#commits: "; git log --since="$${MONTHLY_DATE_START}" --until="$${MONTHLY_DATE_END}" --format="%s" | wc -l; \
-	git log --since="$${MONTHLY_DATE_START}" --until="$${MONTHLY_DATE_END}" --format="%s"
+	echo "{{news"; \
+	echo "|title=Monthly update for $${MONTH}, $${YEAR}"; \
+	echo "|author=$${USER}"; \
+	echo "|date=$$(LANG=C date '+%Y-%m-%d')"; \
+	echo "|content="; \
+	git log --since="$${MONTHLY_DATE_START}" --until="$${MONTHLY_DATE_END}" --format="%s" | sed 's/\(.*\)bug #\([0-9]\+\)\(.*\)/\1{{bug|\2}}\3/g'; \
+	echo "" ; \
+	echo "" ; \
+	echo "In total, $${COMMITS} commits were made in the UFO:AI repository in $${MONTH}." ;\
+	echo "}}";
