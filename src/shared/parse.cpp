@@ -48,7 +48,7 @@ void Com_UnParseLastToken (void)
  * @brief Get the current token value
  * @return The current token value
  */
-const char *Com_GetToken(const char **data_p)
+const char *Com_GetToken (const char **data_p)
 {
 	return com_token;
 }
@@ -57,7 +57,7 @@ const char *Com_GetToken(const char **data_p)
  * @brief Get the current token type
  * @return The current token type
  */
-Com_TokenType_t Com_GetType(const char **data_p)
+Com_TokenType_t Com_GetType (const char **data_p)
 {
 	return type;
 }
@@ -66,7 +66,7 @@ Com_TokenType_t Com_GetType(const char **data_p)
  * @brief Compute the next token
  * @return Type of the next token
  */
-Com_TokenType_t Com_NextToken(const char **data_p)
+Com_TokenType_t Com_NextToken (const char **data_p)
 {
 	Com_Parse(data_p);
 	return type;
