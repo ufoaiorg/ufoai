@@ -71,7 +71,7 @@ static void UI_TopDownFlowLayout (uiNode_t *node, int margin)
 	const int width = node->box.size[0] - node->padding - node->padding;
 	int positionY = node->padding;
 	uiNode_t *child = node->firstChild;
-	vec2_t newSize = {width, 0};
+	vec2_t newSize = Vector2FromInt(width, 0);
 
 	while (child) {
 		if (!UI_Node_IsDrawable(child)) {
@@ -110,7 +110,7 @@ static void UI_LeftRightFlowLayout (uiNode_t *node, int margin)
 	const int height = node->box.size[1] - node->padding - node->padding;
 	int positionX = node->padding;
 	uiNode_t *child = node->firstChild;
-	vec2_t newSize = {0, height};
+	vec2_t newSize = Vector2FromInt(0, height);
 
 	while (child) {
 		if (!UI_Node_IsDrawable(child)) {
