@@ -297,9 +297,9 @@ equipment alien_soldiers6
 	item (pbeampistol_ammo	1)
 	item (pbeamrifle		50)
 	item (pbeamrifle_ammo	1)
-	item (pbeamcannon		50)
+	item (pbeamcannon		25)
 	item (pbeamcannon_ammo	1)
-	item (needlerheavy		50)
+	item (needlerheavy		25)
 	item (needlergun_ammo	1)
 
 	// Misc
