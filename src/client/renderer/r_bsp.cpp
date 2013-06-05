@@ -208,9 +208,6 @@ void R_DrawBspNormals (int tile)
  */
 static void R_RecursiveVisibleWorldNode (const mBspNode_t *node, int tile)
 {
-	int i;
-	mBspSurface_t *surf;
-
 	/* if a leaf node, nothing to mark */
 	if (node->contents > CONTENTS_NODE)
 		return;
@@ -218,8 +215,8 @@ static void R_RecursiveVisibleWorldNode (const mBspNode_t *node, int tile)
 	/* pathfinding nodes are invalid here */
 	assert(node->plane);
 
-	surf = r_mapTiles[tile]->bsp.surfaces + node->firstsurface;
-	for (i = 0; i < node->numsurfaces; i++, surf++)
+	mBspSurface_t *surf = r_mapTiles[tile]->bsp.surfaces + node->firstsurface;
+	for (int i = 0; i < node->numsurfaces; i++, surf++)
 		surf->frame = r_locals.frame;
 
 	/* recurse down the children */
@@ -296,25 +293,20 @@ static void R_RecurseWorld (const mBspNode_t *node, int tile)
  */
 void R_GetLevelSurfaceLists (void)
 {
-	int i, tile, mask;
-
 	if (!r_drawworld->integer)
 		return;
 
-	mask = 1 << refdef.worldlevel;
+	const int mask = 1 << refdef.worldlevel;
 
-	for (tile = 0; tile < r_numMapTiles; tile++) {
+	for (int tile = 0; tile < r_numMapTiles; tile++) {
 		/* don't draw weaponclip, actorclip and stepon */
-		for (i = 0; i <= LEVEL_LASTVISIBLE; i++) {
-			mBspHeader_t *header;
-			mBspModel_t *bspModel;
-
+		for (int i = 0; i <= LEVEL_LASTVISIBLE; i++) {
 			/* check the worldlevel flags */
 			if (i && !(i & mask))
 				continue;
 
-			bspModel = &r_mapTiles[tile]->bsp;
-			header = &bspModel->submodels[i];
+			mBspModel_t *bspModel = &r_mapTiles[tile]->bsp;
+			mBspHeader_t *header = &bspModel->submodels[i];
 			if (!header->numfaces)
 				continue;
 
