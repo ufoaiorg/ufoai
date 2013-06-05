@@ -72,17 +72,17 @@ void ParseFromMemory (char *buffer, int size)
  * @brief Parses the next token from the current script on the stack
  * and store the result in @c parsedToken
  */
-bool GetToken ()
+const char* GetToken ()
 {
-	Com_Parse(&script.script_p, parsedToken, sizeof(parsedToken));
+	const char *token = Com_Parse(&script.script_p, parsedToken, sizeof(parsedToken));
 	if (!script.script_p) {
 		/* not if the current script is a memory buffer */
 		if (!Q_streq(script.filename, "memory buffer"))
 			Mem_Free(script.buffer);
-		return false;
+		return nullptr;
 	}
 
-	return true;
+	return token;
 }
 
 /**
