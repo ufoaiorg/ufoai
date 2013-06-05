@@ -121,7 +121,7 @@ const char *Com_Parse (const char *data_p[], char *target, size_t size)
 
 	data = *data_p;
 	len = 0;
-	target[0] = 0;
+	target[0] = '\0';
 
 	if (!data) {
 		*data_p = nullptr;
